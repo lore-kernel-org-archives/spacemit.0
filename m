@@ -1,74 +1,101 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551FB32C85
-	for <spacemit@lists.linux.dev>; Tue, 28 Jan 2025 02:41:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86080194A65
+	for <spacemit@lists.linux.dev>; Tue, 28 Jan 2025 04:23:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738032086; cv=none; b=NG1ALzWlZjLZbYzG34EWOnvjcr+wUUtKHFhgWy0q22t+nknZzdpq3cx56mNYiy/ITnVI23XQdLLlKWNSTak60SYwMhvT5NpJa6ThyCfhW8EeSCF86gE/o5SezGcx+p18sZMPPvCYu/gGMzIWX794PnlbQ2hG65ZDC8cCtDSt3sM=
+	t=1738038204; cv=none; b=d+DqAqLZzIrk0fbD37OztMRQEd573KQ8YBAl/jOcCrKsButKH8MWSWoLUc1mb6IyU7LjfLiO1ZwoS+eW9KM8vKdBltTkwirisB4s5cI/iHT1t7TsoedGJnXV09bj7x2OhSDAhRBfmcO2xn2wiZPRRFyYE/GoFjCJvgKfaXuHleQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738032086; c=relaxed/simple;
-	bh=QsZFotQgKDOlLBKfwgaGZq0NXWyvU7kZDwZsaqECxxI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=AJZLqkuOiE3z2CxoT3+n9HfJVdkctMiEjubk1I5x+hpX9ahj+CSWafoZICSzbbVDZDLZYpn33Rm6CLsFbeNWBmmeZqXsVm9djHHMqQAN1eA5B5TdLVgaAPaZiryzGgaUVRKn3Zx7Y5nn8fy1oOtoOMXGNOJkvWPKSdkE+ByrXXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=contractor.linuxfoundation.org; spf=pass smtp.mailfrom=contractor.linuxfoundation.org; dkim=pass (2048-bit key) header.d=contractor.linuxfoundation.org header.i=@contractor.linuxfoundation.org header.b=ToOoXmAF; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=contractor.linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=contractor.linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=contractor.linuxfoundation.org header.i=@contractor.linuxfoundation.org header.b="ToOoXmAF"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53f757134cdso5692162e87.2
-        for <spacemit@lists.linux.dev>; Mon, 27 Jan 2025 18:41:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=contractor.linuxfoundation.org; s=google; t=1738032082; x=1738636882; darn=lists.linux.dev;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/Onvocl7z9tTV39RCCW1Yld6Uw1oloVdWrBn7K39z6I=;
-        b=ToOoXmAFw/BP5YH1pweB9bCSfVIhZwxZRIM90gzLZKp0H2bDLrISBAGOwLJQhgDj5T
-         mUlNajGUftTiobUYCe/Kz2mBWugL3d2wynC/9jK9xs1o+kakOfqtI90ArP5AV42IHKDW
-         Y6rnYif6Zq52La0wzchLbS9UotAo9+Sq+jrr6AjYHejgrP6umehlRlzodFMapAnrQcoN
-         heFg8CepRGx40vWAo2w9Mh6/SaRuPblTf5qa35qfxpbLZtgQmY5WphFfZgVZ4yCkalc5
-         Avx9vYuFkJn9MQl76VAN9wUNavYT8G33Buki6qIwWckZIA08HhTASWl2+MR4KjPjZy8Z
-         +FlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738032082; x=1738636882;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/Onvocl7z9tTV39RCCW1Yld6Uw1oloVdWrBn7K39z6I=;
-        b=wmKOadN2dXFItN6ahHGIv2aKjRsASSOAUb9DMPVp2GTUBUn2G3dXcbGIAoJcjrQiQB
-         dYA0NNa8uIblfaYDcEggcST1R6EYZINaGrfk4+wkYUxzzKxCEHA2SujmRI7Y9GDAaQBx
-         eljeTV8O2JBoW497O+9BYmLES+lwVc5F8qBaF4V4jtd18YotaQCyLVdodDtFPP/IrNml
-         zLOvFEDyByuKYTBmRkbndB4UquEYoK1MBXt3vdhgE3LpPFy03e0tDeCePW5jzjo+IBkP
-         CwsS6vhsOb3roSbvwLj+IOZYQ2i4DbtUyA1UM6p9W3dBXsxuVIgcj0fA743zht/pvwuH
-         qPYw==
-X-Gm-Message-State: AOJu0YxUX0mRlznn9CRVKtPP/syEp7vsw0CgWbQrIZlfqAHhPskywizD
-	lV4g9q5vnGyznH1kkKCvfpPaCNVYJvWGh6NeQvimqRgF2ldXtkFcLeDsbnTaujZKUz4zESqf04E
-	Kz0nKbHvwkltvXEsDj4RuEk8XTyvq0O493+UAQVSAvP+TtD6t5dI=
-X-Gm-Gg: ASbGncu+VmCqPhRNFNpEQBwRp8J1lcapiNeYBju3WrrFFj+VjNJxery+stnjKsTfkOV
-	6ANDl3uAnzBRz/0zRAcMC1TUyTJxvUSgdGlo/U9zhQZ5PlfGdUYVi9fm+WpyRvb2cJtH8jwVtEB
-	+GYWRTK7FkFg==
-X-Google-Smtp-Source: AGHT+IGOYELtp1pqe6bqlrM0euwkv0bNQk1oZNupNf+VhgI7F23rW7/5yRcIKMpHskdHvec4aB+HLeXHdS1TVrWTkGw=
-X-Received: by 2002:ac2:4e11:0:b0:542:29a6:a063 with SMTP id
- 2adb3069b0e04-5439c27d18emr17751591e87.43.1738032081871; Mon, 27 Jan 2025
- 18:41:21 -0800 (PST)
+	s=arc-20240116; t=1738038204; c=relaxed/simple;
+	bh=p6KU/SgyEOlkeT46rnX6gRJRS45BoDhxbwx01TtZJDQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mhrgyzYcZ+4CrSb3HCojFPwkhaoRPxqW4Xu3dOrHKQPr/6GXYp+gjNTVHExhsEFhg7ILlq8IeT+dDBewor80Cy9uSBMY61DM5jTSpmdVDCEdRmhszgOKOVDKBqSolhYkzVQDwHl3BuEPcQOQqiy/3VuKn/XViXfmnAnfldrlABs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [127.0.0.1] (unknown [116.232.60.140])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E345D343581;
+	Tue, 28 Jan 2025 04:23:16 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+Date: Tue, 28 Jan 2025 12:22:52 +0800
+Subject: [PATCH] MAINTAINERS: spacemit: update various info
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: Shyam Kumar <skachukattu@contractor.linuxfoundation.org>
-Date: Tue, 28 Jan 2025 08:11:11 +0530
-X-Gm-Features: AWEUYZlH9djAjXNgVPGmRgqt10BrE4VskX6hKB9EqxLhmP-NYJ54FCx36GoI5Z4
-Message-ID: <CAH=dH9-oSnYFbJFsuZWB+pR3PAEA3aNZ5PeUh6nxtm9DtBNS=g@mail.gmail.com>
-Subject: Test mail
-To: spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250128-k1-maintainer-1-v1-1-e5dec4f379eb@gentoo.org>
+X-B4-Tracking: v=1; b=H4sIAJtbmGcC/x2MMQqAMAwAvyKZDTTRgvoVcSg2ahCrtCKC+HeLw
+ w033D2QJKok6IoHolyadA9ZqCxgXFyYBdVnBzZsDXGDK+HmNJwZiUhopbZkWs+OK8jVEWXS+z/
+ 2w/t+E4yIEWEAAAA=
+X-Change-ID: 20250128-k1-maintainer-1-5e45109d2a23
+To: Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Conor Dooley <conor@kernel.org>, Yangyu Chen <cyy@cyyself.name>, 
+ Jisheng Zhang <jszhang@kernel.org>, Jesse Taube <mr.bossman075@gmail.com>, 
+ Inochi Amaoto <inochiama@outlook.com>, Icenowy Zheng <uwu@icenowy.me>, 
+ Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, 
+ Alex Elder <elder@kernel.org>, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1058; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=p6KU/SgyEOlkeT46rnX6gRJRS45BoDhxbwx01TtZJDQ=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBnmFuxRUZZwhzGuJ/gHNR4f948psYZrAXIDBEon
+ dmv6/Bvs7uJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCZ5hbsV8UgAAAAAAuAChp
+ c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277UASD/0b4GlbXp5c8ZX1Ba
+ 3j8FSvY2Me2hcGBbdlGKiLnFjk8qqGtZ76qxclx7z7oaCY4Rtagi6Z/WWznZo4lg2sJWGkdn5K8
+ OcLfoWS2WbYy6ALD0k2lUtCtybM01Laq3srQxljpZV1IXDJ5d8YwKe+EacS/lLiGXt46fwPiunx
+ 6Yd5p0WkQmt05G11Lz3Ytkpxs71eiUfRrct3M/+jvmhUtwjGtcYlRLWDH5IzqQrhDWwtoCpbBH0
+ FW5X13JiBU/rzIXcYvQSTkl0jXPHpEtKtzmz47lOGsi+EF1uNw7tqQ5KmdZAc8+OWE7uYjXEAlE
+ A+zR7ClwBc53+i78WoFjKbB/lkJixhcIVjVhuMbD/69jdJhmJcmhCFs9KKSt6MSOSqvgdBc8Fcp
+ PuVS1GSv78LVg+B6m9lmKA243D4erh902v46Cso4JtMZ23GKbWFCLcrcoP+aGNvb6di8U32a/20
+ PtbhJa321YPSWEceHfdk4LVAFsPRGmsXPsRIj/6opF0E8YBzkEv28Y4Ke3N/p+NOeiUV2X1ME5j
+ wCqdrLirx7HRkCdoBiCn6FcKppi6b/UxDeyQoqoAyGtzQLesmEnD6k4E9fcq6HzWmw1/dhd1x/M
+ M2ZUTC/25wRsLbBfepWhK0LSYvHRiWaTncHYUDrRBrTWos6Twy/cdn+aDKM1WpvzembA==
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hello:
+Add a wiki page to track status of mainline effort, add a dedicated
+mailing list which can reduce the email's CC list a bit, the irc
+channel should be useful for people to communicate.
 
- This is a test message to test successful delivery and start the
- archive for the list. Please ignore.
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Add additional wiki, mailing list, irc information
+---
+ MAINTAINERS | 3 +++
+ 1 file changed, 3 insertions(+)
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d49306cc17e3403dbc06e2c7927d6cfce514481b..bf30f31e412fb50af8c0aa49fd25483ef229d37c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -20326,7 +20326,10 @@ F:	drivers/perf/riscv_pmu_sbi.c
+ RISC-V SPACEMIT SoC Support
+ M:	Yixun Lan <dlan@gentoo.org>
+ L:	linux-riscv@lists.infradead.org
++L:	spacemit@lists.linux.dev
+ S:	Maintained
++W:	https://github.com/spacemit-com/linux/wiki
++C:	irc://irc.libera.chat/spacemit
+ T:	git https://github.com/spacemit-com/linux
+ F:	arch/riscv/boot/dts/spacemit/
+ N:	spacemit
+
+---
+base-commit: f34b580514c9816a317764e6b138ec66a4adab25
+change-id: 20250128-k1-maintainer-1-5e45109d2a23
+
+Best regards,
 -- 
-Regards
-Shyam Kumar
-The Linux Foundation Core Projects
+Yixun Lan
+
