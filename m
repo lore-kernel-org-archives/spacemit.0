@@ -1,45 +1,78 @@
-Received: from mail.bix.bg (mail.bix.bg [193.105.196.21])
-	by smtp.subspace.kernel.org (Postfix) with SMTP id 243161BDA95
-	for <spacemit@lists.linux.dev>; Thu, 30 Jan 2025 12:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.105.196.21
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C45C2563
+	for <spacemit@lists.linux.dev>; Fri, 31 Jan 2025 02:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738240742; cv=none; b=aBFhBgi1GdxvHX7OWHJ3ux514OhabHQHzy5ZDhrPskONQD1MWhYao1V1vrhDXC7+8Gs0nFkwswLxWWcpqUtEGqdiXgEh5sl5Xjnw047izP+UZL965KsapAQNgViVVjk92rAVLs123QiSf4SmStpcAUDGIId3o/S8J7JVfwdxkMI=
+	t=1738291127; cv=none; b=RY6sWrybKMNHRdNl2vezM6/RW38QOCliPPF/A/3VDw9/5PpJeP8HPzS2LKmjDnXbYmSBuiDastyWynR9PcF4zOr8GL/zuqCxG6i82TXUKAKSyrp74JInyZu3tTHvPp7KOyrhH5QNjkuWDwIBoKzAfJ1PYYPdNlXNZ7jZMxfjPoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738240742; c=relaxed/simple;
-	bh=5X1Gw2D3nBUK6Wo1qNhsMVt881bmwDacBFNRrgik31I=;
-	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=Bl3q6SSX6KyHuaJmZBSAKvOw7Vx6sLG5AUyPr4pvRdZjzfRtLuTFdiuuz/2w+CizjmR+2/cXXYE8rk/YhasHp98WQIFosUmtwCMDKtLpiS70OPkyEEJunJZczXyfpAuPoC4dtPmwXQcgQ/7/iUSZXCxnZwxuwBAZ1h9DUfQ3YjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=declera.com; spf=pass smtp.mailfrom=declera.com; arc=none smtp.client-ip=193.105.196.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=declera.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=declera.com
-Received: (qmail 27132 invoked from network); 30 Jan 2025 12:32:17 -0000
-Received: from d2.declera.com (HELO ?212.116.131.122?) (212.116.131.122)
-  by indigo.declera.com with SMTP; 30 Jan 2025 12:32:17 -0000
-Message-ID: <4b4b0448f3482717910e2b48d43cc4ffe909c1ae.camel@declera.com>
-Subject: Hello and some questions
-From: Yanko Kaneti <yaneti@declera.com>
-To: spacemit@lists.linux.dev
-Date: Thu, 30 Jan 2025 14:32:17 +0200
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.55.1 (3.55.1-2.1.fc42) 
+	s=arc-20240116; t=1738291127; c=relaxed/simple;
+	bh=on6/0ok63OPgdbRNbRTd8S36mrF8eFwWcU/42UHDm1s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iQBf6bSsXCvX6niFWIjoRTpDuKB0Jq2XuIS0tkxWAzV5Nj2DVWtxSmjjr1NOwspllLc9PO3fbuJV8A4gxeKbELNAuDF2OXV+Zbr/S1gRrFT+96fk528Lse9gRVYOh2xzUX0HncEdjPbFdJ7iyd6cCicz+HMPDHxrtLonxND6dv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.60.140])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C2CB434310A;
+	Fri, 31 Jan 2025 02:38:44 +0000 (UTC)
+Date: Fri, 31 Jan 2025 02:38:35 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Yanko Kaneti <yaneti@declera.com>
+Cc: spacemit@lists.linux.dev
+Subject: Re: Hello and some questions
+Message-ID: <20250131023835-GYA54139@gentoo>
+References: <4b4b0448f3482717910e2b48d43cc4ffe909c1ae.camel@declera.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4b4b0448f3482717910e2b48d43cc4ffe909c1ae.camel@declera.com>
 
-Hi,
+Hi Yanko:
 
-I was wandering is anybody from SpacemiT actually involved in this
-(upstreaming) effort (i.e. at least reading this list) or is it all non-
-spacemit volunteer based?
+On 14:32 Thu 30 Jan     , Yanko Kaneti wrote:
+> Hi,
+> 
+> I was wandering is anybody from SpacemiT actually involved in this
+> (upstreaming) effort (i.e. at least reading this list) 
+not sure, but I hope so
 
-Does anybody know if https://github.com/spacemit-com/ is officially
-maintained by them ?
+> or is it all non-spacemit volunteer based?
+> 
+this is public mailing list which dedicated for mainline effort of spacemit SoC,
+currently it's community driven, but it's not restricted to anyone,
+so people are welcome to join..
 
-Can anybody address some basic issues like
-https://github.com/spacemit-com/linux-k1x/issues/7 before even talking
-about upstreaming..
+> Does anybody know if https://github.com/spacemit-com/ is officially
+> maintained by them ?
+> 
+I took over the maintenance for https://github.com/spacemit-com/linux,
+other repos are took care by SpacemiT people
 
-- Yanko
+> Can anybody address some basic issues like
+> https://github.com/spacemit-com/linux-k1x/issues/7 before even talking
+> about upstreaming..
+> 
+please wait and be patient as SpacemiT people already respond to the issue,
+besides they are off as it's the chinese new year holiday currently
+
+BTW, for upstream, we won't bother firmware/mcu/remote in the near term as
+we currently focus on very basic stuff..
+
+> - Yanko
+> 
+
+-- 
+Yixun Lan (dlan)
+Gentoo Linux Developer
+GPG Key ID AABEFD55
