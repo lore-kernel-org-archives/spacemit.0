@@ -1,139 +1,105 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DF520E00F
-	for <spacemit@lists.linux.dev>; Wed, 12 Feb 2025 14:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B182135CD
+	for <spacemit@lists.linux.dev>; Thu, 13 Feb 2025 10:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739369869; cv=none; b=dZfbkx5wpWx6XNrooO/uRM4V67d9zP0p8NkpZxI2YNOc0qZSa0cwQYJkNPJDwqBkpVh5rLfyRFxpJFzbCvhTJCpjsGS6K3ulLb6BTrPisYkhM2F7e6a4clvoqhEEkzliAludlCEQl5D12kAup6kVzbmuvP94pTX8K4azk15Uoo4=
+	t=1739444356; cv=none; b=Ti1nHV2Y+s0JEIUAeqQVinn12vbMMxe17kIuVH2wVvpifqVkV1w+3aN7bC9rC20W/593r5+M2ydRr/UP8OpC9lYz1cl7ze8hdH41ZsyVwxejoESdAJ2xY3CiDVjFhRX0373hcHuaaNFfEq6CwrKB50+eeNpIPt8c273QREAJGzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739369869; c=relaxed/simple;
-	bh=mJxBysoRgZGhkya7SXolEV5gKdR7CjNvQTnBQE2fKxQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V+D8e3EC/YVekVAapmr3owww6ipX+a8RO+gN/jzTqorLIR8/qBNKFyp1shGg61F/2o5Sm92ig/DSBO/eZ60kUVcE66C7S3uibav+43Z8B/ee1zzKcIy/28V6e9S7OWbRYWZzUdR/TZJimMkxVx0IFuI4Wjf3hqYKKoeWAo/qFso=
+	s=arc-20240116; t=1739444356; c=relaxed/simple;
+	bh=KUjOvF9P/vuDVqGQh2F5bKA4gVmwZUblVLO61U/+eqQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=p9jhvYGeuRC/d0zOeyN4o1MsthGTDTfaPlIrQjEPHC21Smai/WC4Hj2eaOuMRxUi1PTo8TA98ihcaJRJUsnDsbhxfcG0Neuo3iZARLDlxcvf3FiXohKDRE7o8lVsBts74i1TNXroptsiMjCCm7YEXPCN1IeEvG+1yYpcs8aadnM=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [180.172.76.141])
+Received: from [127.0.0.1] (unknown [180.172.76.141])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 0BBAF343065;
-	Wed, 12 Feb 2025 14:17:46 +0000 (UTC)
-Date: Wed, 12 Feb 2025 14:17:41 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 49D01343097;
+	Thu, 13 Feb 2025 10:59:11 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>, Alex Elder <elder@kernel.org>,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, spacemit@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: Re: [PATCH v2] pinctrl: spacemit: enable config option
-Message-ID: <20250212141741-GYA18065@gentoo>
-References: <20250212-k1-pinctrl-option-v2-1-bde7da0bc0d9@gentoo.org>
- <b67abe31-5647-4450-b025-2bbacee5fa72@riscstar.com>
+Subject: [PATCH RFC 0/2] soc: spacemit: add sdhci support to K1 SoC
+Date: Thu, 13 Feb 2025 18:58:23 +0800
+Message-Id: <20250213-20-k1-sdhci-v1-0-1f4362a980cd@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b67abe31-5647-4450-b025-2bbacee5fa72@riscstar.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAE/QrWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDI0MjXSMD3WxD3eKUjORMXXOzRBNLA0MDY4OUJCWgjoKi1LTMCrBp0Up
+ Bbs5KsbW1ALI1TyViAAAA
+X-Change-ID: 20250212-20-k1-sdhci-76a4901030db
+To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1743; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=KUjOvF9P/vuDVqGQh2F5bKA4gVmwZUblVLO61U/+eqQ=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBnrdB1HCsrUFt90NBRwSRSbpxoBCyz7HLpYIHgp
+ ywEzaSCdv+JApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCZ63QdV8UgAAAAAAuAChp
+ c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277aGGD/98joLcC6mB9wphN+
+ FXiPW/KOgj6Tf00aKYHoPjaaDB2/lOISt9IA++IxeyP5ICmLODeULPpdN6a/T0mT23+w5M0opUa
+ /WM2YjeovA+SdeUBRyTytBrmZETt7HM6N2vH64FWHEj8hlraPpa1QMSBoJRMBYNtcHJe0WO8cgU
+ 2kY3dwBhceVUqYS9Ppo+Jg8oV3v0LL/4kw+s/1l6VYibVjM2Lbk6sQzlKGbltnBYVdfvZ1kkMm9
+ 0KTtpoLTyjBsrrxS5z43VViJ+8Kzqnq4re0N7NM3T6Auf9KqlmEJbTVfIQrRQy8fhzgd62lq0oB
+ 3FKdCQfV6NIKbwkC1vX6VeykjrkmsOpoMaIQ2XOO0fp2OUdyuQO+/l6wf9sksDRjUmYc7S1Cehn
+ 5IcTl5lfz+i7NUbQVC5+LeF/JG3MjkAl6g8MJlzDFQ+dIxiRP2rhBRdNNOOpNGt3MCNPKWiJXiW
+ P37fHYyzlT1R4o+xOnXr7ZnCuiKH88eHbY/XNzQBccKa6c3cCf8+la0Jv7TM8OoSsGM2iwf0c9f
+ AIr/sMpJS9qk7VUlWveL7K1lHF87Lnkg3doko3WUibdHgbSmgvFynz6ebVGbvQlDIZpyBXdMlwK
+ bkiPT4r4tUtdBEmBnA/T6GdHH4AEJgQgiQ64vBX9UehvW+W0JzkN9Wvh35mNjo3Hpcgw==
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Alex:
+Add support for the SD/eMMC Host Controller found in SpacemiT K1 SoC,
+The controller supports data transmission of MMC, SDIO, and SD protocol.
 
-On 07:50 Wed 12 Feb     , Alex Elder wrote:
-> On 2/12/25 2:27 AM, Yixun Lan wrote:
-> > Pinctrl is an essential driver for SpacemiT's SoC,
-> > so let's enable it by default for this SoC.
-> > 
-> > The CONFIG_PINCTRL_SPACEMIT_K1 isn't enabled when using
-> > 'make defconfig' to select kernel configuration options.
-> > This result in a broken uart driver where fail at probe()
-> > stage due to no pins found.
-> > 
-> > Fixes: a83c29e1d145 ("pinctrl: spacemit: add support for SpacemiT K1 SoC")
-> > Reported-by: Alex Elder <elder@kernel.org>
-> > Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> > Tested-by: Alex Elder <elder@riscstar.com>
-> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> 
-> I just tested this version of the patch.  By default
-> PINCTRL_SPACEMIT_K1 is "y".  But since it's tristate,
-> perhaps it should be default=m so it's not built in
-> for everyone.  Yixun I assume the K1 pinctrl driver
-> actually *works* as a kernel module.
-> 
-in theory, making it built as module, it should work fine if all drivers
-can handle "deferred probe" gracefully, but since pinctrl is an essential
- basic driver, I'd prefer to make it built-in ..
+The SD/eMMC Host Controller has the following features:
+- MMC/eMMC 5.1 specification compliant
+- Supports PIO mode and SDMA mode data transfer
+- Supports ADMA1 and ADMA 2 (64-bit addressing) data transfer
+- Supports 1-bit/4-bit SD memory and SDIO
+- Supports 1-bit/8-bit MMC and CE-ATA cards
+- SPI mode supported for eMMC card
+Full docs can be found at SpacemiT's developer web, chapter 10.4 SD/eMMC [1]
 
-I didn't bother to change this module from tristate to bool,
-as there is additional COMPILE_TEST option(maybe it want to test as module?)
+In this patch series, only MMC part has been implemented and tested.
+This driver also requires clock support which currently isn't in mainline [2].
 
-> Anyway, I suggest this change to be a module; Conor
-> should weigh in.  Either way is good for me, and I
-> have tested both.
-> 
-no, I don't think making it as module is a good idea,
+There is a WIP branch at SpacemiT's repo for people who interested [3].
 
-I can adjust this driver from tristate to bool if necessary,
-also adjust to builtin_platform_driver() in driver..
+I've marked this patch series as RFC, due to incomplete clock and SD/SDIO support.
 
-let me know what you think
+Link: https://developer.spacemit.com/documentation?token=WZNvwFDkYinYx0k9jzPcMK5WnIe [1]
+Link: https://lore.kernel.org/all/20250103215636.19967-2-heylenay@4d2.org/ [2]
+Link: https://github.com/spacemit-com/linux/tree/k1/wip-sdhci [3]
 
-> Reviewed-by: Alex Elder <elder@riscstar.com>
-> 
-> > ---
-> > This should fix problem that CONFIG_PINCTRL_SPACEMIT_K1 is not enabled
-> > when using make defconfig, thus fail to initilize uart driver which requst
-> > pins during probe stage.
-> > ---
-> > Changes in v2:
-> > - set default as y
-> > - Link to v1: https://lore.kernel.org/r/20250207-k1-pinctrl-option-v1-1-e8a7e4d8404f@gentoo.org
-> > ---
-> >   arch/riscv/Kconfig.socs          | 1 +
-> >   drivers/pinctrl/spacemit/Kconfig | 1 +
-> >   2 files changed, 2 insertions(+)
-> > 
-> > diff --git a/arch/riscv/Kconfig.socs b/arch/riscv/Kconfig.socs
-> > index 1916cf7ba450ec9958265de2ca41dc504d4d2f7c..17606940bb5239d0fdfc6b5aefb50eeb982d14aa 100644
-> > --- a/arch/riscv/Kconfig.socs
-> > +++ b/arch/riscv/Kconfig.socs
-> > @@ -26,6 +26,7 @@ config ARCH_SOPHGO
-> >   
-> >   config ARCH_SPACEMIT
-> >   	bool "SpacemiT SoCs"
-> > +	select PINCTRL
-> >   	help
-> >   	  This enables support for SpacemiT SoC platform hardware.
-> >   
-> > diff --git a/drivers/pinctrl/spacemit/Kconfig b/drivers/pinctrl/spacemit/Kconfig
-> > index 168f8a5ffbb952cbeae3e3401c11149558e0a84b..c18d879274e72df251e0bc82a308603ce23738bd 100644
-> > --- a/drivers/pinctrl/spacemit/Kconfig
-> > +++ b/drivers/pinctrl/spacemit/Kconfig
-> > @@ -7,6 +7,7 @@ config PINCTRL_SPACEMIT_K1
-> >   	tristate "SpacemiT K1 SoC Pinctrl driver"
-> >   	depends on ARCH_SPACEMIT || COMPILE_TEST
-> >   	depends on OF
-> > +	default y
-> >   	select GENERIC_PINCTRL_GROUPS
-> >   	select GENERIC_PINMUX_FUNCTIONS
-> >   	select GENERIC_PINCONF
-> > 
-> > ---
-> > base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
-> > change-id: 20250207-k1-pinctrl-option-de5bdfd6b42e
-> > 
-> > Best regards,
-> 
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Yixun Lan (2):
+      dt-bindings: mmc: spacemit,sdhci: add support for K1 SoC
+      mmc: sdhci-of-k1: add support for SpacemiT K1 SoC
 
+ .../devicetree/bindings/mmc/spacemit,sdhci.yaml    |  53 ++++
+ drivers/mmc/host/Kconfig                           |  14 +
+ drivers/mmc/host/Makefile                          |   1 +
+ drivers/mmc/host/sdhci-of-k1.c                     | 320 +++++++++++++++++++++
+ 4 files changed, 388 insertions(+)
+---
+base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+change-id: 20250212-20-k1-sdhci-76a4901030db
+
+Best regards,
 -- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+Yixun Lan
+
