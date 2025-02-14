@@ -1,166 +1,162 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F94D2676C4
-	for <spacemit@lists.linux.dev>; Fri, 14 Feb 2025 15:17:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2291E04AC
+	for <spacemit@lists.linux.dev>; Fri, 14 Feb 2025 16:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739546263; cv=none; b=MIiUytPl0ZPsJc7fZVAndc5cMVbAf4RKArixUERzl2FkpKuZsYk/o2Be16R97wAP8qvPp1sR4O0pa9y2J3r8774o0VdlVK9eDVIFAXYQ5sN7wPwtiXRMk2lFpjnV/Oga6YgYP5DsHRe/vOhax/su4MCfgZ7EphRzWmNR66ilN/8=
+	t=1739550414; cv=none; b=WQTSJojESYmCU/TR6xThcKoh/FkGgCLMhHRppKKAaF3BLqc39QwfCWePqwjGv+msMvtoaaXCct2x1tmhkF3h7YWsRsmKlFUF6S/0MMVP7RMdxObPkAM3NL7TMfjv1yeWJ7O3wBP6CBfS5e+Ija4TwGDpx6bT2zBKKXFzaBD1xk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739546263; c=relaxed/simple;
-	bh=JW1oohGJWsBc3d6n5iD7RAtqQIWyKDAHKpAXb1hkGTs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:content-type; b=G/qA15G1ylkQap4yXHCEuWTHVtOVovhv0b2TNpk0xlJHimQsD2t8cERMYYlLVJFscxB4kwL7VKTgJXy+FyXGWftjT3KTZ4MsIALmA2XcqBGlHc7Hhv0oXybyCSzFvOQQJP5Pnz5WE/Opfg6FTRvfzpbNVVhZupCQewpiZGuSpUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=bf2fCtXp; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1739550414; c=relaxed/simple;
+	bh=fqAE2/JMrhghnr7h0URaZiiOx0VrL9ZGjPBLMqFnJro=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BPBTT4qehqtsxlhxXN6NQv1TnMPvXehvV0AvGw3qxGWWe4TPQRmaFjs4fRCVVm40C+vZGzRUV8JS+fKgKs7rcpmwquSr/ewtUHYT8DAuY1H/1qPLgzJHl5B/VSHaq6ieQmJMk/x4WAOmcw8+sNFDuOA/6r6O+cjWWh0F2qeBhc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=Uw20gyFT; arc=none smtp.client-ip=209.85.221.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="bf2fCtXp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1739546261;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0SshwRt8Gl3GApBo9RGajwM4sy4zKiOT3YLnoVCQViY=;
-	b=bf2fCtXp8swBxWUagnZKBizkzQ8aFQTHp5JDIgzO42vuPhiS0Bgf5ShbeIEbOGPgFyNqWs
-	XOYkBjWTI1OtycSoZ8d7chdMMZnfA5ttDgZ5mCWaLCPsczzbKzF8lL8YKQmWAR4J0ZxMXL
-	UGEZAFvjYESI2pHB2KrDP4hT8Txx6go=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-28-dFzfZYFDOzGluRdy0JiZ4g-1; Fri, 14 Feb 2025 10:17:38 -0500
-X-MC-Unique: dFzfZYFDOzGluRdy0JiZ4g-1
-X-Mimecast-MFC-AGG-ID: dFzfZYFDOzGluRdy0JiZ4g_1739546257
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-43933bdcce0so17421445e9.2
-        for <spacemit@lists.linux.dev>; Fri, 14 Feb 2025 07:17:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="Uw20gyFT"
+Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-38f265c6cb0so1038287f8f.2
+        for <spacemit@lists.linux.dev>; Fri, 14 Feb 2025 08:26:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1739550409; x=1740155209; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yYahPJ7CPZFZpNoRGXLgzm0+xcyc7qKygSX7eH5P6s0=;
+        b=Uw20gyFTTk2Sdw45TZFQtbK2QU/WZ98kyK1IeCXlh0GFeA5SuQB+c97u741I8QuBSf
+         dXuOT15MtpmUb+iu3/+YW8SaGMFIQ1FIVCZSkPKyc2MTNLY6EdLZJTae3uTe+XYcMxf5
+         GsfxLgm0OfCn02gIaurWXChUAGbMRnW1m1W0MYIGfbUSOxh15/hj4Mmr8EHDzj8UAhxc
+         dpM/Q0fUGtj/d/BzaUpzCSzeqF5Fcm+qu2+fBQOnniyKAVIb1diNVUmt94bWPzI/pBLB
+         CTRl7vXCD9VcHPJ1009Gmaw6xpPcQXJtU518Yniid8alOLgFPomfqZckNH9KZiwahZrR
+         rNOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739546257; x=1740151057;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0SshwRt8Gl3GApBo9RGajwM4sy4zKiOT3YLnoVCQViY=;
-        b=KKraAG07zbaz4zuSdEv3C5tz1ClLl784IymWHZUMuOKgknDMM95TEQ8MDCRF5YP5VJ
-         TV3emKeIWipcNLOQgGC1jvN+9odq9hpLMZTrgJKzV7/docIJuE8IQqNg9i82/QVWoBh8
-         gXkqBQsTTcoLdjAPaOr7p8xYP6QjfTQ+xON/H+qB8xBReT+6ENo0qvZ/FOSiEbKGOPQe
-         tZA8fv7LCxjL4XrUPUSY/K5MH2dJWywdpAUWlYi8DQp5lyT7SdrzqJ8r5UnUURRnAahR
-         G12kfFo6WkvNVCcpG3W0e9VBPuQ7qpenaXdYktJEY1N3T9DKP4ruO9tl+Etx0ju2Y7lC
-         dLaA==
-X-Forwarded-Encrypted: i=1; AJvYcCU/0EqjmGr79TAWKP+MnaKFR1zUtKkIFild41ZnGksLi0Tp5JdR26Dp32rcAdJy7ZdUE5aLxQl0UA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyyJ5WZzZ4Q0YOjoiSrORmb/o+6gyh2zkThGKI75mzBoivf9huA
-	fqvF1AzI2DaogEotap4bxWEnqIrq4ctAhXVEq0NFSjrqRk6bHIUGR8ZXA/P9qxUFYS1IoYjKeAM
-	Xx/68N0ytuop2sTnPbaphyJOBszapo7yaKLmGXusg7xmUP5LSho0iYJRh
-X-Gm-Gg: ASbGncv7TNkFiXQT91jCTE0+hHzXEghBnaZSzsdbS7a+BE9rklHH4ln0O6Fohjf+VvQ
-	GwqYX06YcoPW9zDkkX4oPyPfkmYaeoV54rvWyxPntjnKkPbBOWPUIyQcD5298cKbHqGbvewlO1o
-	KT6+na+LHDC7nlpcgvfXq1Vj++zMpGY1LEkYD+BzY5rx+TamYODN9UBo0C13DvM3PmiKtyvImHC
-	+uFaVGGSWL2qp5jj0mkI4puOlYmEHQxx3CyNw33BwwMHSANYyfbo6WugB0Ccph8Tc9ZkiUTbm+u
-	3diPQTe3zH0yM2wgxAVY6XFgAodoiw==
-X-Received: by 2002:a05:600c:3542:b0:439:6e12:fdb4 with SMTP id 5b1f17b1804b1-4396e13034cmr4345e9.14.1739546256893;
-        Fri, 14 Feb 2025 07:17:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF3/3JFKYy9eGyD7IGPX1BVb9PSRrb5ZVdMvOU2CUr5TK3oN3GiUFe6oGPOq5SoYQYtuJNygg==
-X-Received: by 2002:a05:600c:3542:b0:439:6e12:fdb4 with SMTP id 5b1f17b1804b1-4396e13034cmr3705e9.14.1739546256365;
-        Fri, 14 Feb 2025 07:17:36 -0800 (PST)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259d5ef9sm4841762f8f.76.2025.02.14.07.17.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 07:17:35 -0800 (PST)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: linux-kernel@vger.kernel.org
-Cc: javier@dowhile0.org,
-	rjones@redhat.com,
-	abologna@redhat.com,
-	spacemit@lists.linux.dev,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Rob Herring <robh@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH 2/2] riscv: dts: spacemit: Add Milk-V Jupiter board device tree
-Date: Fri, 14 Feb 2025 16:16:38 +0100
-Message-ID: <20250214151700.666544-3-javierm@redhat.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250214151700.666544-1-javierm@redhat.com>
-References: <20250214151700.666544-1-javierm@redhat.com>
+        d=1e100.net; s=20230601; t=1739550409; x=1740155209;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yYahPJ7CPZFZpNoRGXLgzm0+xcyc7qKygSX7eH5P6s0=;
+        b=tRdCpoWuIf8z3EdSPsY0hqV24zWYBCLyL+Q2LCu87qw/oVIy3Wemlnq6tcGqjDOdq0
+         QBr06t40a5OQGIvzabWdw/Ge/E7s571v0vkCvPxiIek3Ine2Zuqo3NvwCrbv94OfNztu
+         bjdlRk2WrIqcPBvpE5FJqSvqVy4CSJZ8x7cUA1hEykOBf5GyRWZ8G0ZigS7QgcLFnjKj
+         ZON4zisUDzmdj/AZtpTHNWdPhIJG/KPjin0tfQQNN/lpis7Y54d7i2WPMsLAJT5YF15v
+         +Zvm+5AcpE2pan4IY1nxYeMQ8KuCjypaFtrZjLt1DzYPM4we5TDZkK3k+teH/WSeDHK9
+         qysw==
+X-Forwarded-Encrypted: i=1; AJvYcCXQP26qNGlKMc0AYumUzH8xRDG6FK9ZtoB98BLMCXsHrBqkVCExHiHnY8vDoEry4a6mnlD5M2EBEQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwlF4J6DqOCTOsMzY+zqac40R8QwlBvymsu7+GYIitOJIF3Ospw
+	LRaZZuSkfXxrkF0RvySketfmSn13FYgxksCHNWg9pbWz7ifsPmmksE78pM9MiH0=
+X-Gm-Gg: ASbGncsnYyhLqDx3yROyrOrK8JMdVrAWDtaJSJpeF19AEFlhorKXFhQ4FZbS0FqjXFz
+	W7fYQufK+6bTBKw4JUeWAEWxPClT8GndJShsH5BCTtGD8aXcDMsyjXVUQyO4g/sHCanPZZx5n8Z
+	qpisB3GRQwqMqSlnJnHFKZZY/kk3LgotoO5Hp23XowchPwen6++PI/Gm52BCKFtBk+cDaMPIdDZ
+	MuhDxjFb4/Pd7PyxFoDkllIUMpK2PpfJlbzOQf8GFQoMJqASlvoP7McCkzwh7AkNDo3W5aM9Yuq
+	9MvncNnsRAqs
+X-Google-Smtp-Source: AGHT+IGD0ZwSKP2SVlV7tCbb67DNu8v1KQBEuuR8bN5t8fbcPighOdQVzKxfEH8x4T2JZ2zth1XX9A==
+X-Received: by 2002:a05:6000:1546:b0:38d:c2d7:b5a1 with SMTP id ffacd0b85a97d-38dea26ecdfmr12656044f8f.19.1739550409013;
+        Fri, 14 Feb 2025 08:26:49 -0800 (PST)
+Received: from [192.168.2.177] ([81.0.8.231])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258dab74sm5084116f8f.32.2025.02.14.08.26.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Feb 2025 08:26:48 -0800 (PST)
+Message-ID: <05ec141f-8d2d-456c-830f-f5ea2adce671@suse.com>
+Date: Fri, 14 Feb 2025 17:26:46 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: URKVgvRqbP2MNQrkH2T4fAGMKpPcpJ9djtRTmG1xRWo_1739546257
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: riscv: spacemit: Add Milk-V Jupiter
+ board compatible
+To: Javier Martinez Canillas <javierm@redhat.com>,
+ linux-kernel@vger.kernel.org
+Cc: javier@dowhile0.org, rjones@redhat.com, abologna@redhat.com,
+ spacemit@lists.linux.dev, Albert Ou <aou@eecs.berkeley.edu>,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Matthias Brugger <matthias.bgg@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Rob Herring <robh@kernel.org>,
+ Yangyu Chen <cyy@cyyself.name>, Yixun Lan <dlan@gentoo.org>,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org
+References: <20250214151700.666544-1-javierm@redhat.com>
+ <20250214151700.666544-2-javierm@redhat.com>
+Content-Language: en-US, ca-ES, es-ES
+From: Matthias Brugger <mbrugger@suse.com>
+Autocrypt: addr=mbrugger@suse.com; keydata=
+ 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
+ PVrr2NoUqi/bxI8fFQJD1jVj8K0=
+In-Reply-To: <20250214151700.666544-2-javierm@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add initial support for the Milk-V Jupiter board [1], which is a Mini ITX
-computer based on the SpacemiT K1/M1 Octa-Core X60 64-bit RISC-V SoC [2].
 
-There are two variant for this board, one using the K1 chip and another
-using the M1 chip. The main difference is that the M1 can run at a higher
-frequency than the K1, thanks to its packaging.
 
-For now, only a DTS for the K1 variant is added since there isn't support
-yet for the X60 cores operating performance and thermal trip points.
+On 14/02/2025 16:16, Javier Martinez Canillas wrote:
+> Document the compatible string for Milk-V Jupiter board [1], which
+> is a Mini ITX computer based on the SpacemiT K1/M1 RISC-V SoC [2].
+> 
+> Link: https://milkv.io/jupiter [1]
+> Link: https://www.spacemit.com/en/key-stone-k1 [2]
+> Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 
-The support is minimal, but at least allows to boot into a serial console.
+Reviewed-by: Matthias Brugger <mbrugger@suse.com>
 
-Link: https://milkv.io/jupiter [1]
-Link: https://www.spacemit.com/en/key-stone-k1 [2]
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
----
-
- arch/riscv/boot/dts/spacemit/Makefile         |  1 +
- .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 27 +++++++++++++++++++
- 2 files changed, 28 insertions(+)
- create mode 100644 arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-
-diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-index ac617319a574..92e13ce1c16d 100644
---- a/arch/riscv/boot/dts/spacemit/Makefile
-+++ b/arch/riscv/boot/dts/spacemit/Makefile
-@@ -1,2 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
-+dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
-diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-new file mode 100644
-index 000000000000..448319214104
---- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-@@ -0,0 +1,27 @@
-+// SPDX-License-Identifier: GPL-2.0 OR MIT
-+/*
-+ * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
-+ * Copyright (C) 2025 Javier Martinez Canillas <javierm@redhat.com>
-+ */
-+
-+#include "k1.dtsi"
-+#include "k1-pinctrl.dtsi"
-+
-+/ {
-+	model = "Milk-V Jupiter (K1)";
-+	compatible = "milkv,jupiter", "spacemit,k1";
-+
-+	aliases {
-+		serial0 = &uart0;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+};
-+
-+&uart0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart0_2_cfg>;
-+	status = "okay";
-+};
--- 
-2.48.1
+> ---
+> 
+>   Documentation/devicetree/bindings/riscv/spacemit.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> index 52e55077af1a..077b94f10dca 100644
+> --- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> +++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> @@ -21,6 +21,7 @@ properties:
+>         - items:
+>             - enum:
+>                 - bananapi,bpi-f3
+> +              - milkv,jupiter
+>             - const: spacemit,k1
+>   
+>   additionalProperties: true
 
