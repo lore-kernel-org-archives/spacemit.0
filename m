@@ -1,38 +1,53 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E721C860A
-	for <spacemit@lists.linux.dev>; Sun, 23 Feb 2025 12:06:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFBAEEA9;
+	Mon, 24 Feb 2025 20:06:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740312406; cv=none; b=cp7EL2TfkOjMjMkh9U+ni+6Au+qKd+odb/6PTO39+Ekfk1ZefTDwN8+zsaUxe62sAfrmjLslBJrL1rjyLBO7SDgqOo6IRnUrCl2p+WeGFI2cQCCFUvjBFVUIH79SzNOTiwQxU+89PFSw7YjPWIU4zdR+fbQao5R9qWI3E85W4nI=
+	t=1740427570; cv=none; b=coYHiwXvFv1BlPfRGQ/3iskofl/7n9G72el+QtQxGis+8jQ4lYi5X9iAB7po74VE/3o22u7toDFjnVrGya5UVDTGB4fXengOl9a3wY1md9HGl8gglegEJdOCJaVmiDy3rI8F6xfLpDBMdmjYDaV6YRjC7UGZboU4PlOxQyw8zto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740312406; c=relaxed/simple;
-	bh=L853LGGQMzlJq6txYGySmcOYQdIGRGwO5NgCBY5oOwU=;
+	s=arc-20240116; t=1740427570; c=relaxed/simple;
+	bh=stM2IVR3b2kvR088SM8/A8kfusx7eVUGjEIOksI9LxM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d09BXRfXb5I0/Rk4Amxo80JgFfrn09I+i/vklZPZJsB8/dLVrKse9InsAcR27D5TmpS0mqRABFibWACjhx6rjr915ZWbrFvHfEaOdy6Nbs+GPchMLoJNsn421QXPG0b2KWYGFFIqft4px5A8VwAiYEBUeSFD9gWiYjGlkVZ43/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [180.172.118.52])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 987443431E1;
-	Sun, 23 Feb 2025 12:06:43 +0000 (UTC)
-Date: Sun, 23 Feb 2025 12:06:38 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: Linus Walleij <linus.walleij@linaro.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=M21jG8gZOXq8JJhmHZ4ZS8oWunWejGi9F3Zx38wYVJXvfEPxfGONC/7PUEnsf/r1Zj5ngQiXcD3adcCxp6oBbnF4ZWxC2iivEd55K4I4CXLpLdsb8rK/MzC7S1ovmUpS1s4t8o5JnIP4TUfZTqWtRCipif7wpn4Hqbb5ndi0Byg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fTxJYGAH; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fTxJYGAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2CAC4CED6;
+	Mon, 24 Feb 2025 20:06:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740427570;
+	bh=stM2IVR3b2kvR088SM8/A8kfusx7eVUGjEIOksI9LxM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fTxJYGAHV6FCp80DxZ0l0De/AoUhpsBvWAIfLfrdXZ80o3hrfPZJcAVurzbA8BNSE
+	 ASaGSNB347y5MyVhE+qziw0Ce1PMKxGyGf/2RcUzQwZuKkKrPnC1FWrk5kCtXJ4B32
+	 EEmrUZ1DwdjL4ABOXWIy1G8XsVVIHMU7oiLYdBYcfIsJe8OgeR01gjkkyrMYbQMjrQ
+	 1A2EZ8pjVSfvY8vlXok+kOgJGBJTLJ8knBy9aqg7pxs8LY/azao9rfsT7RG9v+VBCw
+	 hcxR6nQ8GJYBFQn8qTxlh5RZ3DeoF4fX86xb4wlOxj3g2MkPC7b40S5aSc2mYAGnLb
+	 1lcWhvij8UAGQ==
+Date: Mon, 24 Feb 2025 14:06:08 -0600
+From: Rob Herring <robh@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Conor Dooley <conor@kernel.org>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alex Elder <elder@kernel.org>, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-	spacemit@lists.linux.dev, Conor Dooley <conor.dooley@microchip.com>,
-	Alex Elder <elder@riscstar.com>
-Subject: Re: [PATCH v3] pinctrl: spacemit: enable config option
-Message-ID: <20250223120638-GYA39613@gentoo>
-References: <20250218-k1-pinctrl-option-v3-1-36e031e0da1b@gentoo.org>
+	Palmer Dabbelt <palmer@dabbelt.com>, Yangyu Chen <cyy@cyyself.name>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Jesse Taube <mr.bossman075@gmail.com>,
+	Inochi Amaoto <inochiama@outlook.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v6 1/4] dt-bindings: gpio: spacemit: add support for K1
+ SoC
+Message-ID: <20250224200608.GA4014994-robh@kernel.org>
+References: <20250223-03-k1-gpio-v6-0-db2e4adeef1c@gentoo.org>
+ <20250223-03-k1-gpio-v6-1-db2e4adeef1c@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -41,99 +56,116 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250218-k1-pinctrl-option-v3-1-36e031e0da1b@gentoo.org>
+In-Reply-To: <20250223-03-k1-gpio-v6-1-db2e4adeef1c@gentoo.org>
 
-Hi Linus Walleij:
-
-On 08:31 Tue 18 Feb     , Yixun Lan wrote:
-> Pinctrl is an essential driver for SpacemiT's SoC,
-> The uart driver requires it, same as sd card driver,
-> so let's enable it by default for this SoC.
+On Sun, Feb 23, 2025 at 07:49:32PM +0800, Yixun Lan wrote:
+> The GPIO controller of K1 support basic functions as input/output,
+> all pins can be used as interrupt which route to one IRQ line,
+> trigger type can be select between rising edge, falling edge, or both.
+> There are four GPIO banks, each consisting of 32 pins.
 > 
-> The CONFIG_PINCTRL_SPACEMIT_K1 isn't enabled when using
-> 'make defconfig' to select kernel configuration options.
-> This result in a broken uart driver where fail at probe()
-> stage due to no pins found.
-> 
-
-Can you take this patch via pinctrl fixes tree? if possible in this cycle
-
-> Fixes: a83c29e1d145 ("pinctrl: spacemit: add support for SpacemiT K1 SoC")
-> Reported-by: Alex Elder <elder@kernel.org>
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> Tested-by: Alex Elder <elder@riscstar.com>
 > Signed-off-by: Yixun Lan <dlan@gentoo.org>
 > ---
-> This should fix problem that CONFIG_PINCTRL_SPACEMIT_K1 is not enabled
-> when using make defconfig, thus fail to initilize uart driver which requst
-> pins during probe stage.
-> ---
-> Changes in v3:
-> - switch PINCTRL_SPACEMIT_K1 from tristate to bool
-> - Link to v2: https://lore.kernel.org/r/20250212-k1-pinctrl-option-v2-1-bde7da0bc0d9@gentoo.org
+>  .../devicetree/bindings/gpio/spacemit,k1-gpio.yaml | 81 ++++++++++++++++++++++
+>  1 file changed, 81 insertions(+)
 > 
-> Changes in v2:
-> - set default as y
-> - Link to v1: https://lore.kernel.org/r/20250207-k1-pinctrl-option-v1-1-e8a7e4d8404f@gentoo.org
-> ---
->  arch/riscv/Kconfig.socs               | 1 +
->  drivers/pinctrl/spacemit/Kconfig      | 3 ++-
->  drivers/pinctrl/spacemit/pinctrl-k1.c | 2 +-
->  3 files changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/riscv/Kconfig.socs b/arch/riscv/Kconfig.socs
-> index 1916cf7ba450ec9958265de2ca41dc504d4d2f7c..17606940bb5239d0fdfc6b5aefb50eeb982d14aa 100644
-> --- a/arch/riscv/Kconfig.socs
-> +++ b/arch/riscv/Kconfig.socs
-> @@ -26,6 +26,7 @@ config ARCH_SOPHGO
->  
->  config ARCH_SPACEMIT
->  	bool "SpacemiT SoCs"
-> +	select PINCTRL
->  	help
->  	  This enables support for SpacemiT SoC platform hardware.
->  
-> diff --git a/drivers/pinctrl/spacemit/Kconfig b/drivers/pinctrl/spacemit/Kconfig
-> index 168f8a5ffbb952cbeae3e3401c11149558e0a84b..a2f98b3f8a75580d2d157008997cc48f42a89368 100644
-> --- a/drivers/pinctrl/spacemit/Kconfig
-> +++ b/drivers/pinctrl/spacemit/Kconfig
-> @@ -4,9 +4,10 @@
->  #
->  
->  config PINCTRL_SPACEMIT_K1
-> -	tristate "SpacemiT K1 SoC Pinctrl driver"
-> +	bool "SpacemiT K1 SoC Pinctrl driver"
->  	depends on ARCH_SPACEMIT || COMPILE_TEST
->  	depends on OF
-> +	default y
->  	select GENERIC_PINCTRL_GROUPS
->  	select GENERIC_PINMUX_FUNCTIONS
->  	select GENERIC_PINCONF
-> diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
-> index a32579d736130c80bd12f0f9d8b3b2f69c428b3d..59fd555ff38d4453f446263a8fdb4a61faf63cfc 100644
-> --- a/drivers/pinctrl/spacemit/pinctrl-k1.c
-> +++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
-> @@ -1044,7 +1044,7 @@ static struct platform_driver k1_pinctrl_driver = {
->  		.of_match_table		= k1_pinctrl_ids,
->  	},
->  };
-> -module_platform_driver(k1_pinctrl_driver);
-> +builtin_platform_driver(k1_pinctrl_driver);
->  
->  MODULE_AUTHOR("Yixun Lan <dlan@gentoo.org>");
->  MODULE_DESCRIPTION("Pinctrl driver for the SpacemiT K1 SoC");
-> 
-> ---
-> base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
-> change-id: 20250207-k1-pinctrl-option-de5bdfd6b42e
-> 
-> Best regards,
-> -- 
-> Yixun Lan
-> 
-> 
+> diff --git a/Documentation/devicetree/bindings/gpio/spacemit,k1-gpio.yaml b/Documentation/devicetree/bindings/gpio/spacemit,k1-gpio.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..017165d325565a6868700a9ac8298b61dffcfef4
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/gpio/spacemit,k1-gpio.yaml
+> @@ -0,0 +1,81 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/gpio/spacemit,k1-gpio.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: SpacemiT K1 GPIO controller
+> +
+> +maintainers:
+> +  - Yixun Lan <dlan@gentoo.org>
+> +
+> +description:
+> +  The controller's registers are organized as sets of eight 32-bit
+> +  registers with each set of port controlling 32 pins.  A single
+> +  interrupt line is shared for all of the pins by the controller.
+> +
+> +properties:
+> +  $nodename:
+> +    pattern: "^gpio@[0-9a-f]+$"
+> +
+> +  compatible:
+> +    const: spacemit,k1-gpio
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  gpio-controller: true
+> +
+> +  "#gpio-cells":
+> +    const: 3
+> +    description:
+> +      The first two cells are the GPIO bank index and offset inside the bank,
+> +      the third cell should specify GPIO flag.
+> +
+> +  gpio-ranges: true
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  "#interrupt-cells":
+> +    const: 3
+> +    description:
+> +      The first two cells are the GPIO bank index and offset inside the bank,
+> +      the third cell should specify interrupt flag. The controller does not
+> +      support level interrupts, so flags of IRQ_TYPE_LEVEL_HIGH, IRQ_TYPE_LEVEL_LOW
+> +      should not be used. Refer <dt-bindings/interrupt-controller/irq.h> for valid flags.
 
--- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+Wrap lines at 80 chars.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - gpio-controller
+> +  - "#gpio-cells"
+> +  - interrupts
+> +  - interrupt-controller
+> +  - "#interrupt-cells"
+> +  - gpio-ranges
+> +
+> +additionalProperties: false
+> +
+> +dependencies:
+> +  interrupt-controller: [ interrupts ]
+
+You made 'interrupts' always required, so this is redundant.
+
+> +
+> +examples:
+> +  - |
+> +    gpio: gpio@d4019000 {
+
+Drop unused labels.
+
+> +      compatible = "spacemit,k1-gpio";
+> +      reg = <0xd4019000 0x800>;
+> +      gpio-controller;
+> +      #gpio-cells = <3>;
+> +      interrupts = <58>;
+> +      interrupt-controller;
+> +      interrupt-parent = <&plic>;
+> +      #interrupt-cells = <3>;
+> +      gpio-ranges = <&pinctrl 0 0 0 32>,
+> +                    <&pinctrl 1 0 32 32>,
+> +                    <&pinctrl 2 0 64 32>,
+> +                    <&pinctrl 3 0 96 32>;
+> +    };
+> +...
+> 
+> -- 
+> 2.48.1
+> 
