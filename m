@@ -1,171 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFBAEEA9;
-	Mon, 24 Feb 2025 20:06:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6822F18F2FB
+	for <spacemit@lists.linux.dev>; Tue, 25 Feb 2025 16:19:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740427570; cv=none; b=coYHiwXvFv1BlPfRGQ/3iskofl/7n9G72el+QtQxGis+8jQ4lYi5X9iAB7po74VE/3o22u7toDFjnVrGya5UVDTGB4fXengOl9a3wY1md9HGl8gglegEJdOCJaVmiDy3rI8F6xfLpDBMdmjYDaV6YRjC7UGZboU4PlOxQyw8zto=
+	t=1740500382; cv=none; b=HBFaBudADjO7VBGC/1WZ/FMk8+GemnenTHGn2lVAIv7pfWBKBqgx/XL8thxWijuwl7n9WQv2E8Yy81G3CERWZaqMSEpIWNRObROlCAGsh2cuOpnkPwrHgZ2E4iUGM6lv6311pgGOPX//6dP2HJRQNy8zTUYKPcCRClsUz97tpyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740427570; c=relaxed/simple;
-	bh=stM2IVR3b2kvR088SM8/A8kfusx7eVUGjEIOksI9LxM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M21jG8gZOXq8JJhmHZ4ZS8oWunWejGi9F3Zx38wYVJXvfEPxfGONC/7PUEnsf/r1Zj5ngQiXcD3adcCxp6oBbnF4ZWxC2iivEd55K4I4CXLpLdsb8rK/MzC7S1ovmUpS1s4t8o5JnIP4TUfZTqWtRCipif7wpn4Hqbb5ndi0Byg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fTxJYGAH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740500382; c=relaxed/simple;
+	bh=Tyh+RhXcKnxQU4MXzN9oE4S19Yl573Q7D+3G4DQFujQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jkO2liEJgAbZA8LJbiHS+roDlKe7cJwf7PArJRpimX/3aL/8YQsiGHzGlFdsRvjcW5DsRd1RAUVmNlSFEAv1ro32cCDnqQQFylLYzGrmgnvqQxWjSjv12f4VF6HaIgrXQkoxBFh3E92VgfNu2W72AV/B5xEdyDYg+Av+9OB+oWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V1BNu+la; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fTxJYGAH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2CAC4CED6;
-	Mon, 24 Feb 2025 20:06:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740427570;
-	bh=stM2IVR3b2kvR088SM8/A8kfusx7eVUGjEIOksI9LxM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fTxJYGAHV6FCp80DxZ0l0De/AoUhpsBvWAIfLfrdXZ80o3hrfPZJcAVurzbA8BNSE
-	 ASaGSNB347y5MyVhE+qziw0Ce1PMKxGyGf/2RcUzQwZuKkKrPnC1FWrk5kCtXJ4B32
-	 EEmrUZ1DwdjL4ABOXWIy1G8XsVVIHMU7oiLYdBYcfIsJe8OgeR01gjkkyrMYbQMjrQ
-	 1A2EZ8pjVSfvY8vlXok+kOgJGBJTLJ8knBy9aqg7pxs8LY/azao9rfsT7RG9v+VBCw
-	 hcxR6nQ8GJYBFQn8qTxlh5RZ3DeoF4fX86xb4wlOxj3g2MkPC7b40S5aSc2mYAGnLb
-	 1lcWhvij8UAGQ==
-Date: Mon, 24 Feb 2025 14:06:08 -0600
-From: Rob Herring <robh@kernel.org>
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Conor Dooley <conor@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>, Yangyu Chen <cyy@cyyself.name>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Jesse Taube <mr.bossman075@gmail.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v6 1/4] dt-bindings: gpio: spacemit: add support for K1
- SoC
-Message-ID: <20250224200608.GA4014994-robh@kernel.org>
-References: <20250223-03-k1-gpio-v6-0-db2e4adeef1c@gentoo.org>
- <20250223-03-k1-gpio-v6-1-db2e4adeef1c@gentoo.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V1BNu+la"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-54622e97753so5296698e87.0
+        for <spacemit@lists.linux.dev>; Tue, 25 Feb 2025 08:19:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740500377; x=1741105177; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tyh+RhXcKnxQU4MXzN9oE4S19Yl573Q7D+3G4DQFujQ=;
+        b=V1BNu+laVRO477L6BG/XopujhR9kWRfYXjs+lbwMGcvys9p4RSGlrPSITrIITk0SzB
+         8tzldwopL35+NNu8l/oAJ8Huc7zZezqO69J4vz2IcLHHZNvthrdDagdrMjhF0qEXPXCx
+         l8n5bi+E6DAW8j3kTPh0012W2PR+XKYr96s2kT7Et3ux5f+yTOpZ+y0XhRRRyELecmJ8
+         0m2NVBtMbw8MJNM8cWnp7MYenthi7En0NXfxgc2xAZupDLICbJIoh4qcKQ23YsWmTDpB
+         ZOFbKQE4xP+J6eKaeLwuLLtXWeByCQsMK85ahDJya/OJNdi09KSkz18KfsD/32kN+m1a
+         SSAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740500377; x=1741105177;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Tyh+RhXcKnxQU4MXzN9oE4S19Yl573Q7D+3G4DQFujQ=;
+        b=HJjN8P66kZ00C40LZEWs60Bk+plRKfveHR76QRK5YW/kA1gJU4DdV+KDW3jALQCYG5
+         Y8KqtMkUbMcHHXopjDkfutg5RrCXoN/zOY8e/8afprydJTfQZ+e8kpXMjCb2YJkPsWBs
+         xhlpvyF19FLnlhvyDu3qfjTfj9U8hhrXIUBXhiLhSz93AOb4hQzSjUQsOgPz4kDuFKzV
+         XufBegcTFWiYM94jXGAaEhD+GRDzHncaIsKGkyILaiJFFH+Yk+IllObGYNvZo9cxdfVT
+         JwPAozzv+u0Pnht/oj4B5cIUPnNyhAWASiAiH+SnqV6tJCXtsx8pI9TiRof/h6oYG4FO
+         1oZA==
+X-Forwarded-Encrypted: i=1; AJvYcCUmYSpfaOv5atX2z1c8sXIKE4WJQGSl4SgncxnS8+vY4RjqJNA2JMjccL1WoaRfixKhKmeRCu6oLg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwhH+bx2Eg8eA4HeEtqO5vF/tLtooeVFZFXWi7wAIqbfU5UU5d+
+	EwH/qgYKd/auhWhA5UnvOT2dAcLV8aLK2qaxHe/rck/CKKVmTb9SSx7dFW/2C5dUX4z25SjVv0O
+	OXGe/pnJfBixHgLcqFmB5u7/DF0JkVgKfDkngMA==
+X-Gm-Gg: ASbGnctxBPuqPkmAY0XaFbysmkWq6PkjDvbxEYWHPVattpsxk0WZSaTaO91H0D3WSa1
+	oBD3h34eTfwXgaY+rNAXVhdwWB/UMAPFuEJRsKimY8ashocN08a3QFQhXvQ7D50OreOn8fDHMNf
+	GxHsh4IoI=
+X-Google-Smtp-Source: AGHT+IFPKsmkV/8GrQlu1UecaEKHzDdnmY+GOqvsye/6W95YDRH8BC1ZvlN9fdjoiYBCyRDAZX7jrfC7MDoNbdARl/s=
+X-Received: by 2002:a05:6512:2353:b0:545:240:55ba with SMTP id
+ 2adb3069b0e04-54838cd2edcmr5801739e87.26.1740500377437; Tue, 25 Feb 2025
+ 08:19:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250223-03-k1-gpio-v6-1-db2e4adeef1c@gentoo.org>
+References: <20250223-03-k1-gpio-v6-0-db2e4adeef1c@gentoo.org> <20250223-03-k1-gpio-v6-2-db2e4adeef1c@gentoo.org>
+In-Reply-To: <20250223-03-k1-gpio-v6-2-db2e4adeef1c@gentoo.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 25 Feb 2025 17:19:26 +0100
+X-Gm-Features: AWEUYZlYJub0FzdxL7Mpr1knr2_W3_lmRrr6Vhou8bb5JqpMdWieVnvejFVMY8M
+Message-ID: <CACRpkda5=nSnYZ5XJsC_A5MhfdPHwcTndjNr4vGfSb4YJ4Bi6w@mail.gmail.com>
+Subject: Re: [PATCH v6 2/4] gpio: spacemit: add support for K1 SoC
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Conor Dooley <conor@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Yangyu Chen <cyy@cyyself.name>, 
+	Jisheng Zhang <jszhang@kernel.org>, Jesse Taube <mr.bossman075@gmail.com>, 
+	Inochi Amaoto <inochiama@outlook.com>, Icenowy Zheng <uwu@icenowy.me>, 
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Feb 23, 2025 at 07:49:32PM +0800, Yixun Lan wrote:
-> The GPIO controller of K1 support basic functions as input/output,
-> all pins can be used as interrupt which route to one IRQ line,
-> trigger type can be select between rising edge, falling edge, or both.
-> There are four GPIO banks, each consisting of 32 pins.
-> 
+On Sun, Feb 23, 2025 at 12:50=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
+
+> Implement GPIO functionality which capable of setting pin as
+> input, output. Also, each pin can be used as interrupt which
+> support rising, falling, or both edge type trigger.
+>
 > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> ---
->  .../devicetree/bindings/gpio/spacemit,k1-gpio.yaml | 81 ++++++++++++++++++++++
->  1 file changed, 81 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/gpio/spacemit,k1-gpio.yaml b/Documentation/devicetree/bindings/gpio/spacemit,k1-gpio.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..017165d325565a6868700a9ac8298b61dffcfef4
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/gpio/spacemit,k1-gpio.yaml
-> @@ -0,0 +1,81 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/gpio/spacemit,k1-gpio.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: SpacemiT K1 GPIO controller
-> +
-> +maintainers:
-> +  - Yixun Lan <dlan@gentoo.org>
-> +
-> +description:
-> +  The controller's registers are organized as sets of eight 32-bit
-> +  registers with each set of port controlling 32 pins.  A single
-> +  interrupt line is shared for all of the pins by the controller.
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^gpio@[0-9a-f]+$"
-> +
-> +  compatible:
-> +    const: spacemit,k1-gpio
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  gpio-controller: true
-> +
-> +  "#gpio-cells":
-> +    const: 3
-> +    description:
-> +      The first two cells are the GPIO bank index and offset inside the bank,
-> +      the third cell should specify GPIO flag.
-> +
-> +  gpio-ranges: true
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  interrupt-controller: true
-> +
-> +  "#interrupt-cells":
-> +    const: 3
-> +    description:
-> +      The first two cells are the GPIO bank index and offset inside the bank,
-> +      the third cell should specify interrupt flag. The controller does not
-> +      support level interrupts, so flags of IRQ_TYPE_LEVEL_HIGH, IRQ_TYPE_LEVEL_LOW
-> +      should not be used. Refer <dt-bindings/interrupt-controller/irq.h> for valid flags.
 
-Wrap lines at 80 chars.
+I really like how this turned out! :)
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - gpio-controller
-> +  - "#gpio-cells"
-> +  - interrupts
-> +  - interrupt-controller
-> +  - "#interrupt-cells"
-> +  - gpio-ranges
-> +
-> +additionalProperties: false
-> +
-> +dependencies:
-> +  interrupt-controller: [ interrupts ]
-
-You made 'interrupts' always required, so this is redundant.
-
-> +
-> +examples:
-> +  - |
-> +    gpio: gpio@d4019000 {
-
-Drop unused labels.
-
-> +      compatible = "spacemit,k1-gpio";
-> +      reg = <0xd4019000 0x800>;
-> +      gpio-controller;
-> +      #gpio-cells = <3>;
-> +      interrupts = <58>;
-> +      interrupt-controller;
-> +      interrupt-parent = <&plic>;
-> +      #interrupt-cells = <3>;
-> +      gpio-ranges = <&pinctrl 0 0 0 32>,
-> +                    <&pinctrl 1 0 32 32>,
-> +                    <&pinctrl 2 0 64 32>,
-> +                    <&pinctrl 3 0 96 32>;
-> +    };
-> +...
-> 
-> -- 
-> 2.48.1
-> 
+Yours,
+Linus Walleij
