@@ -1,115 +1,189 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7730D238165
-	for <spacemit@lists.linux.dev>; Wed, 26 Feb 2025 10:24:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF576216E19
+	for <spacemit@lists.linux.dev>; Wed, 26 Feb 2025 12:00:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740565483; cv=none; b=IKApHcEvlU/feZ0IgKwoS4OQSgGlFoT5UNWtU2p42R4PStV76yr0aZAXQw2SSm2HwFl8+suhIUuFfPoYJ5oqMgYwYIFdNw0L726SnZVLf1KUE/fo5eWicMRkwEy1k++fXK54wGcBMrgHAmqI3wbC3CcvtfXAm7ZRmEfrXZa6QuI=
+	t=1740571205; cv=none; b=EvHfmikrgSXo5w8kFTNstOIR5XaCa+ngZJu/d5jkvHGOBUIlebKgfkT1Z5q9GIywdgRY9fyNDMsghxqTCDBYZMDHbanpswFgv1smYF/NCAuWYhFJhEyf6vIBKi277UXg5t9FNR2j0HZUCr9uRBmhdsbh9tAmKgQrHgu4frM5ZuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740565483; c=relaxed/simple;
-	bh=f8hhLyZlJLg3VVOM9RdCgNWjzvtlFruSMQ7KM6g2fZU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IOvOATWo6zGP/ulaRT7lCVdDOc3q6XNDa7yVTMDqRS6DJf0cGl0b0cdEeXBc3QDI1nWV2dc/tdiHeVd7XnfBUAfWHsFbyrB3vA+9yMY0hxuXrPCvFWOPzbGiiGc2k9o6x+rmSDd9D+EXimExJ9LW4tHAEAvXs+43zKBs5XpSI7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x1qHEHIh; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x1qHEHIh"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5452efeb87aso6637976e87.3
-        for <spacemit@lists.linux.dev>; Wed, 26 Feb 2025 02:24:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740565479; x=1741170279; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LVtrqvkPNmYmY0oGPxOkrh36jDkhWLE+ptRBX0xtIwg=;
-        b=x1qHEHIhoJY2Xi11+J6qQIugX7vH6XtWk/ZslWWOUhgUraA0U3pXsl79pGdhO5+4OW
-         cClQGPQhYmA6XOyVRC5z/g1aKosTH83cEuj5PtYtzC5jyZ35dYOE6yJBLE2hXJS8uzZl
-         OQ1cY3Y1qhWDn/8noH9ROdkEnNjaeT5dGg3wwATIbFVc6AveFyK0hvEfNYrGrWc+nbW6
-         5hvgWVfD4/UmaACYN9uRE1KIujZjjTDDqXPA9ZTib1ltDtoMIV5zcdxV71KWuY/nIiqJ
-         nNUrSZHawYAbpjZk+m/kmgXGZ1JqwGx0vFjs+WGcytl8Q6gphjL3+0y8pmCBwvBi+NXD
-         pYWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740565479; x=1741170279;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LVtrqvkPNmYmY0oGPxOkrh36jDkhWLE+ptRBX0xtIwg=;
-        b=R2XI/xuizdc1BCwGnUnbumYWRV4eRzJR3qQlLvxKEsQC1sr7DXj/pGk+0ULY8HoUpO
-         vRrmUWGc2CTIHkzVISWcK32Gm8L2lgJpOWOExWQPrNjInluy+kv7n/hFa/p1dX1hA6kn
-         bHvp2PlXAQNzg7ymAAvAFLexYjH38WnW5OhaUWpMrIUwuSbyvJ707TcCi0BW4Yl+5srJ
-         IT9odFLOZE6h/MabDFxLaI0kWe/IeRdGcFjH6BH522DpCWexzUbtrRESZ6xLxiwlD7p9
-         zSWunGbEN98ndwTrQdGVwOjO/xhj2WjUIWm7yDehtp/8AAdl7KmgMNpW/IE0JUakBMvI
-         o9Hw==
-X-Forwarded-Encrypted: i=1; AJvYcCXvG6cem0o1BJ2UyyRQyqgTyYYD2IKqKH700Mva3RAwet6RlndMmm2Q7CdbrAHa+7Pj2Fv3fbVcsA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzURBXLfFVfVeh3o9/ahagQPf9OvXvKOCnKcdn3SYXInc2L1eMR
-	RAl9lWS8Jp6OF6xVuh37GOJO2D+gc1dgtG0gfXBYEOeNaN5nehahABpf66LBNI0nDh0AIBr/Cyn
-	5lJQmGpdQHJomZZthYQdHzoHdBAqGj2RSABpSGw==
-X-Gm-Gg: ASbGncuxFk0Is/acjKyiNxdzVtCJHroqJXIWtwaSyFSQikH6YKCdBHieUbA6NpLyop7
-	nCldw04yWoQv2hZhp5WWMO4z+CDeia4+rJtjhVGa2n82djpoIAPCqbcEJWg+MFXLt7UuXbLXYad
-	pFdAmp5So=
-X-Google-Smtp-Source: AGHT+IG7rCTedQa3N//tlOn/Z+rwnS1xGhASGu57SObkcmSjqd8E+pQMLoYev9jUwKtQyOyzKJ6ryDKvddvmmgwJH44=
-X-Received: by 2002:a05:6512:2211:b0:545:aa5:d451 with SMTP id
- 2adb3069b0e04-5493c5837d3mr1960628e87.25.1740565478561; Wed, 26 Feb 2025
- 02:24:38 -0800 (PST)
+	s=arc-20240116; t=1740571205; c=relaxed/simple;
+	bh=1rPLZ7Ny+tavg+eVzEq79uWoftJ4xcrjRHDV3jxiGGI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jo+x+Bgc50sOmDftw0iUezZlUGt1C2pHJTwsypnm0shftDgrS1Hba1vAN8zwZ6tVRmiM8qpaef1FhUdA1bokzmhk41UhVbmf4DMq4zyOP6ahkDP1Q8Q0c3iU+sUBvPs3Ab0KGKRPZWK/JoVHXdBrkKMPxsN1sMq+wdIIxFGtgKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.55.252])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 7197134133B;
+	Wed, 26 Feb 2025 12:00:01 +0000 (UTC)
+Date: Wed, 26 Feb 2025 11:59:57 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Conor Dooley <conor@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Alex Elder <elder@riscstar.com>, Yangyu Chen <cyy@cyyself.name>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Jesse Taube <mr.bossman075@gmail.com>,
+	Inochi Amaoto <inochiama@outlook.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v7 0/4] riscv: spacemit: add gpio support for K1 SoC
+Message-ID: <20250226115957-GYA45508@gentoo>
+References: <20250226-03-k1-gpio-v7-0-be489c4a609b@gentoo.org>
+ <20250226010108-GYA44567@gentoo>
+ <CACRpkdY7nzzu3-+FwpSYqmX+O559LoXHiqcvP2OxkhX+9f-3wg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250226-03-k1-gpio-v7-0-be489c4a609b@gentoo.org> <20250226010108-GYA44567@gentoo>
-In-Reply-To: <20250226010108-GYA44567@gentoo>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 26 Feb 2025 11:24:27 +0100
-X-Gm-Features: AQ5f1JpPbkJVEZf5u-mwEpqGT95jx-dhaIMZLx12Jfkquh3vL3NT-QkCOF6Pjgo
-Message-ID: <CACRpkdY7nzzu3-+FwpSYqmX+O559LoXHiqcvP2OxkhX+9f-3wg@mail.gmail.com>
-Subject: Re: [PATCH v7 0/4] riscv: spacemit: add gpio support for K1 SoC
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Conor Dooley <conor@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Alex Elder <elder@riscstar.com>, Yangyu Chen <cyy@cyyself.name>, 
-	Jisheng Zhang <jszhang@kernel.org>, Jesse Taube <mr.bossman075@gmail.com>, 
-	Inochi Amaoto <inochiama@outlook.com>, Icenowy Zheng <uwu@icenowy.me>, 
-	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, linux-gpio@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACRpkdY7nzzu3-+FwpSYqmX+O559LoXHiqcvP2OxkhX+9f-3wg@mail.gmail.com>
 
-On Wed, Feb 26, 2025 at 2:01=E2=80=AFAM Yixun Lan <dlan@gentoo.org> wrote:
+Hi Linus Walleij:
 
-> Current this v7 version work great with request irq from gpio, like:
->         pin =3D devm_gpiod_get_optional(dev, "myirq", GPIOD_IN);
->         irq =3D gpiod_to_irq(pin);
->         devm_request_threaded_irq(dev, irq, ..)
->
-> but have problem if request irq via of_irq_get(), something like this:
-> DT part
->         mytst {
->                 ..
->                 interrupt-parent =3D <&gpio>;
->                 interrupts =3D <1 28 IRQ_TYPE_EDGE_RISING>;
->                 interrupt-names =3D "wakeup";
->         }
->
-> In source code
->         irq =3D of_irq_get_byname(dev->of_node, "wakeup");
->
-> I've made an attempt to patch gpiolib to support three cells "interrupts"
-> syntax, but still fail, it always get last gpio irqchip of four, thus usi=
-ng
-> the wrong pin (e.g: will always get 3 from gpiochips 0, 1, 2, 3)
+On 11:24 Wed 26 Feb     , Linus Walleij wrote:
+> On Wed, Feb 26, 2025 at 2:01 AM Yixun Lan <dlan@gentoo.org> wrote:
+> 
+> > Current this v7 version work great with request irq from gpio, like:
+> >         pin = devm_gpiod_get_optional(dev, "myirq", GPIOD_IN);
+> >         irq = gpiod_to_irq(pin);
+> >         devm_request_threaded_irq(dev, irq, ..)
+> >
+> > but have problem if request irq via of_irq_get(), something like this:
+> > DT part
+> >         mytst {
+> >                 ..
+> >                 interrupt-parent = <&gpio>;
+> >                 interrupts = <1 28 IRQ_TYPE_EDGE_RISING>;
+> >                 interrupt-names = "wakeup";
+> >         }
+> >
+> > In source code
+> >         irq = of_irq_get_byname(dev->of_node, "wakeup");
+> >
+> > I've made an attempt to patch gpiolib to support three cells "interrupts"
+> > syntax, but still fail, it always get last gpio irqchip of four, thus using
+> > the wrong pin (e.g: will always get 3 from gpiochips 0, 1, 2, 3)
+> 
+> Right, we need a proper patch to fix this.
+> 
+> Can you paste your patch so I can see if I can spot/fix
+> the problem?
+> 
+> I think the irq cell parser needs to call out to
+> of_node_instance_match() - or similar - as well.
+do you have any suggestion where to implement this similar function?
 
-Right, we need a proper patch to fix this.
+I actually miss this logic, the patch here only support parsing
+interrupts with 3 cells
 
-Can you paste your patch so I can see if I can spot/fix
-the problem?
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 679ed764cb14..9aa88c3fa485 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -1454,6 +1454,10 @@ static int gpiochip_hierarchy_irq_domain_translate(struct irq_domain *d,
+ 		return irq_domain_translate_twocell(d, fwspec, hwirq, type);
+ 	}
+ 
++	if (is_of_node(fwspec->fwnode) && fwspec->param_count == 3) {
++		return irq_domain_translate_threecell(d, fwspec, hwirq, type);
++	}
++
+ 	/* This is for board files and others not using DT */
+ 	if (is_fwnode_irqchip(fwspec->fwnode)) {
+ 		int ret;
+@@ -1758,7 +1762,8 @@ static const struct irq_domain_ops gpiochip_domain_ops = {
+ 	.map	= gpiochip_irq_map,
+ 	.unmap	= gpiochip_irq_unmap,
+ 	/* Virtually all GPIO irqchips are twocell:ed */
+-	.xlate	= irq_domain_xlate_twocell,
++	/* FIXME: force switch to three cells */
++	.xlate	= irq_domain_xlate_threecell,
+ };
+ 
+ static struct irq_domain *gpiochip_simple_create_domain(struct gpio_chip *gc)
+diff --git a/include/linux/irqdomain.h b/include/linux/irqdomain.h
+index e432b6a12a32..69a9540ec253 100644
+--- a/include/linux/irqdomain.h
++++ b/include/linux/irqdomain.h
+@@ -568,10 +568,18 @@ int irq_domain_xlate_onecell(struct irq_domain *d, struct device_node *ctrlr,
+ int irq_domain_xlate_twocell(struct irq_domain *d, struct device_node *ctrlr,
+ 			const u32 *intspec, unsigned int intsize,
+ 			irq_hw_number_t *out_hwirq, unsigned int *out_type);
++int irq_domain_xlate_threecell(struct irq_domain *d, struct device_node *ctrlr,
++			const u32 *intspec, unsigned int intsize,
++			irq_hw_number_t *out_hwirq, unsigned int *out_type);
+ int irq_domain_xlate_onetwocell(struct irq_domain *d, struct device_node *ctrlr,
+ 			const u32 *intspec, unsigned int intsize,
+ 			irq_hw_number_t *out_hwirq, unsigned int *out_type);
+ 
++int irq_domain_translate_threecell(struct irq_domain *d,
++				 struct irq_fwspec *fwspec,
++				 unsigned long *out_hwirq,
++				 unsigned int *out_type);
++
+ int irq_domain_translate_twocell(struct irq_domain *d,
+ 				 struct irq_fwspec *fwspec,
+ 				 unsigned long *out_hwirq,
+diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+index ec6d8e72d980..995e5e0ec2db 100644
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -1132,6 +1132,17 @@ int irq_domain_xlate_twocell(struct irq_domain *d, struct device_node *ctrlr,
+ }
+ EXPORT_SYMBOL_GPL(irq_domain_xlate_twocell);
+ 
++int irq_domain_xlate_threecell(struct irq_domain *d, struct device_node *ctrlr,
++			const u32 *intspec, unsigned int intsize,
++			irq_hw_number_t *out_hwirq, unsigned int *out_type)
++{
++	struct irq_fwspec fwspec;
++
++	of_phandle_args_to_fwspec(ctrlr, intspec, intsize, &fwspec);
++	return irq_domain_translate_threecell(d, &fwspec, out_hwirq, out_type);
++}
++EXPORT_SYMBOL_GPL(irq_domain_xlate_threecell);
++
+ /**
+  * irq_domain_xlate_onetwocell() - Generic xlate for one or two cell bindings
+  * @d:		Interrupt domain involved in the translation
+@@ -1216,6 +1227,19 @@ int irq_domain_translate_twocell(struct irq_domain *d,
+ }
+ EXPORT_SYMBOL_GPL(irq_domain_translate_twocell);
+ 
++int irq_domain_translate_threecell(struct irq_domain *d,
++				 struct irq_fwspec *fwspec,
++				 unsigned long *out_hwirq,
++				 unsigned int *out_type)
++{
++	if (WARN_ON(fwspec->param_count < 3))
++		return -EINVAL;
++	*out_hwirq = fwspec->param[1];
++	*out_type = fwspec->param[2] & IRQ_TYPE_SENSE_MASK;
++	return 0;
++}
++EXPORT_SYMBOL_GPL(irq_domain_translate_threecell);
++
+ int irq_domain_alloc_descs(int virq, unsigned int cnt, irq_hw_number_t hwirq,
+ 			   int node, const struct irq_affinity_desc *affinity)
+ {
 
-I think the irq cell parser needs to call out to
-of_node_instance_match() - or similar - as well.
-
-Yours,
-Linus Walleij
+-- 
+Yixun Lan (dlan)
+Gentoo Linux Developer
+GPG Key ID AABEFD55
