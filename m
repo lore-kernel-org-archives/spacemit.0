@@ -1,245 +1,86 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5571918CC10
-	for <spacemit@lists.linux.dev>; Wed, 26 Feb 2025 13:56:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9476414D2B7
+	for <spacemit@lists.linux.dev>; Wed, 26 Feb 2025 15:45:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740578201; cv=none; b=HF3lRABOt+t7fhveuplhj3xh1ZGp0BSdito11UM3kjKR69fyAf3TepXhUGkmZ4jO8nQW63Qa1z2y8vE7jqd2UCTc3l/EC7xXLFpxDvasiqPe8AZ6bstyng87MBedTvkjkTmYOr8EH5qXsFERxrT03gVJQneHIx3fGgBdgYjbjqM=
+	t=1740584711; cv=none; b=k/c6h5QlTLHR+yDkCnLSxU5nlG1bIphVtar0J4gQazPBlJSmYcGJqayGJDOFQmD7PmT3T9e2Hp8dKAgQfgZoc3K/Vwlg4oeN3UTetK2n1dzI6a35CMInIyFFxhyLxwSGiA4qv0eGs3b2lJP3k1rn8TdYzQV+bVlNv8FJjtTkBZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740578201; c=relaxed/simple;
-	bh=U9JYgXlhNDPZ4KKWBvxoTR0Ovs8uIhSzmgYhtbuhjuw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pJWooMA2JmqQRelbBfwIEQq1yX9O3TPDfpFSaUE13jiDH7MGB8CC+nsCk1m/56ZEOUkUtcOg6Bk0cVujuBCNyKeclw11o7FsypBt7zVK8Dl6S2sLJkKaV+WHFbOfJdCgGsxkW8oAADjMYxZnnr0rNlBUfk5YI+Uw+C7JuFFYEgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.55.252])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 3A33E34309B;
-	Wed, 26 Feb 2025 13:56:38 +0000 (UTC)
-Date: Wed, 26 Feb 2025 13:56:35 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: Linus Walleij <linus.walleij@linaro.org>
+	s=arc-20240116; t=1740584711; c=relaxed/simple;
+	bh=JAsKYRCmpSi3tnXTqqLf4H3CovqP6Od5db5bBj4KatA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QrwM1NnII137aXS8FG9yZvbyj9ysdU9JwMt0O3inLhfxxfPO3sNnN4aRTCZw13CWDM53j5TWuleUmlVt/KPBuN+S13kdfjjg6ScwXORi6+Vx0FgicRT8RP+zVHxInFUfCtutkDkwNawKYhN4Ube5UlkzAoPUnzfpWM/K68WA/rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Kv9/3dWd; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ixIkh3m0; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Kv9/3dWd";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ixIkh3m0"
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1740584707;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=s9YAfmlQr9Pd5bXVqXHzhDo0hk63Ti5/f8ktIw5AJhI=;
+	b=Kv9/3dWd+GXsGs7cU1xLIlW2zlePQy31R7G6Jy6QJFpJYBbsDogO0A4tPcqH2iqy6FlsJ+
+	YJk/B9nxmFA+MHnOA5EB5BazjUZeXo6ZO2GhQ0a2odsrE0E5pf/JF4UlNInVv+1AS14qV5
+	8SDQwtT8m3Jp50XfzUOOsnhjBuO9ZK7WHUIDQO/queig6lykW1ZfuXsqIi1NE7RNtPwL/c
+	1ubsW8nlIrnKz0QuzMEA1aFYFs2v2rCg2zxSeLSQ1ne86Cq4FQpOeD1L+HwRiy8DIZuPoc
+	uo9TcSrDqf/s5V4bB+NkfCaTvTvtKgOHTjpU0X8aujMZabOz2GZ7wsVL2CLN5g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1740584707;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=s9YAfmlQr9Pd5bXVqXHzhDo0hk63Ti5/f8ktIw5AJhI=;
+	b=ixIkh3m0apqeFPy9Qpy7CjIrvlJ4/WlAEuk0T/7wkqfv/ktP1pgsZB5HNeC5O7xJsKatxe
+	FnzDFatK/PE7L1DA==
+To: Yixun Lan <dlan@gentoo.org>, Linus Walleij <linus.walleij@linaro.org>
 Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Conor Dooley <conor@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Alex Elder <elder@riscstar.com>, Yangyu Chen <cyy@cyyself.name>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Jesse Taube <mr.bossman075@gmail.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Conor Dooley <conor@kernel.org>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, Alex
+ Elder <elder@riscstar.com>, Yangyu Chen <cyy@cyyself.name>, Jisheng Zhang
+ <jszhang@kernel.org>, Jesse Taube <mr.bossman075@gmail.com>, Inochi Amaoto
+ <inochiama@outlook.com>, Icenowy Zheng <uwu@icenowy.me>, Meng Zhang
+ <zhangmeng.kevin@linux.spacemit.com>, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
 Subject: Re: [PATCH v7 0/4] riscv: spacemit: add gpio support for K1 SoC
-Message-ID: <20250226135635-GYA45740@gentoo>
+In-Reply-To: <20250226135635-GYA45740@gentoo>
 References: <20250226-03-k1-gpio-v7-0-be489c4a609b@gentoo.org>
  <20250226010108-GYA44567@gentoo>
  <CACRpkdY7nzzu3-+FwpSYqmX+O559LoXHiqcvP2OxkhX+9f-3wg@mail.gmail.com>
- <20250226115957-GYA45508@gentoo>
+ <20250226115957-GYA45508@gentoo> <20250226135635-GYA45740@gentoo>
+Date: Wed, 26 Feb 2025 16:45:07 +0100
+Message-ID: <87tt8gemm4.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250226115957-GYA45508@gentoo>
+Content-Type: text/plain
 
-Hi Linus Walleij:
-
-I went ahead and made further progress on this, and now
-the 3 cell interrupts model work fine, although still few issues left
-
-see patch below
-
-On 12:00 Wed 26 Feb     , Yixun Lan wrote:
-> Hi Linus Walleij:
-> 
-> On 11:24 Wed 26 Feb     , Linus Walleij wrote:
-> > On Wed, Feb 26, 2025 at 2:01 AM Yixun Lan <dlan@gentoo.org> wrote:
-> > 
-> > > Current this v7 version work great with request irq from gpio, like:
-> > >         pin = devm_gpiod_get_optional(dev, "myirq", GPIOD_IN);
-> > >         irq = gpiod_to_irq(pin);
-> > >         devm_request_threaded_irq(dev, irq, ..)
-> > >
-> > > but have problem if request irq via of_irq_get(), something like this:
-> > > DT part
-> > >         mytst {
-> > >                 ..
-> > >                 interrupt-parent = <&gpio>;
-> > >                 interrupts = <1 28 IRQ_TYPE_EDGE_RISING>;
-> > >                 interrupt-names = "wakeup";
-> > >         }
-> > >
-> > > In source code
-> > >         irq = of_irq_get_byname(dev->of_node, "wakeup");
-> > >
-> > > I've made an attempt to patch gpiolib to support three cells "interrupts"
-> > > syntax, but still fail, it always get last gpio irqchip of four, thus using
-> > > the wrong pin (e.g: will always get 3 from gpiochips 0, 1, 2, 3)
-> > 
-> > Right, we need a proper patch to fix this.
-> > 
-> > Can you paste your patch so I can see if I can spot/fix
-> > the problem?
-> > 
-> > I think the irq cell parser needs to call out to
-> > of_node_instance_match() - or similar - as well.
-> do you have any suggestion where to implement this similar function?
-> 
-> I actually miss this logic, the patch here only support parsing
-> interrupts with 3 cells
-> 
-> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-> index 679ed764cb14..9aa88c3fa485 100644
-> --- a/drivers/gpio/gpiolib.c
-> +++ b/drivers/gpio/gpiolib.c
-> @@ -1454,6 +1454,10 @@ static int gpiochip_hierarchy_irq_domain_translate(struct irq_domain *d,
->  		return irq_domain_translate_twocell(d, fwspec, hwirq, type);
->  	}
->  
-> +	if (is_of_node(fwspec->fwnode) && fwspec->param_count == 3) {
-> +		return irq_domain_translate_threecell(d, fwspec, hwirq, type);
-> +	}
-> +
->  	/* This is for board files and others not using DT */
->  	if (is_fwnode_irqchip(fwspec->fwnode)) {
->  		int ret;
-> @@ -1758,7 +1762,8 @@ static const struct irq_domain_ops gpiochip_domain_ops = {
->  	.map	= gpiochip_irq_map,
->  	.unmap	= gpiochip_irq_unmap,
->  	/* Virtually all GPIO irqchips are twocell:ed */
-> -	.xlate	= irq_domain_xlate_twocell,
-> +	/* FIXME: force switch to three cells */
-> +	.xlate	= irq_domain_xlate_threecell,
->  };
->  
->  static struct irq_domain *gpiochip_simple_create_domain(struct gpio_chip *gc)
-> diff --git a/include/linux/irqdomain.h b/include/linux/irqdomain.h
-> index e432b6a12a32..69a9540ec253 100644
-> --- a/include/linux/irqdomain.h
-> +++ b/include/linux/irqdomain.h
-> @@ -568,10 +568,18 @@ int irq_domain_xlate_onecell(struct irq_domain *d, struct device_node *ctrlr,
->  int irq_domain_xlate_twocell(struct irq_domain *d, struct device_node *ctrlr,
->  			const u32 *intspec, unsigned int intsize,
->  			irq_hw_number_t *out_hwirq, unsigned int *out_type);
-> +int irq_domain_xlate_threecell(struct irq_domain *d, struct device_node *ctrlr,
-> +			const u32 *intspec, unsigned int intsize,
-> +			irq_hw_number_t *out_hwirq, unsigned int *out_type);
->  int irq_domain_xlate_onetwocell(struct irq_domain *d, struct device_node *ctrlr,
->  			const u32 *intspec, unsigned int intsize,
->  			irq_hw_number_t *out_hwirq, unsigned int *out_type);
->  
-> +int irq_domain_translate_threecell(struct irq_domain *d,
-> +				 struct irq_fwspec *fwspec,
-> +				 unsigned long *out_hwirq,
-> +				 unsigned int *out_type);
-> +
->  int irq_domain_translate_twocell(struct irq_domain *d,
->  				 struct irq_fwspec *fwspec,
->  				 unsigned long *out_hwirq,
+On Wed, Feb 26 2025 at 13:56, Yixun Lan wrote:
+> sounds we need to implement .select() or .match() in irq_domain_ops,
+> then find the irq_domain.. here is a prototype version 
 > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-> index ec6d8e72d980..995e5e0ec2db 100644
+> index 995e5e0ec2db..c4d18267e86e 100644
 > --- a/kernel/irq/irqdomain.c
 > +++ b/kernel/irq/irqdomain.c
-> @@ -1132,6 +1132,17 @@ int irq_domain_xlate_twocell(struct irq_domain *d, struct device_node *ctrlr,
->  }
->  EXPORT_SYMBOL_GPL(irq_domain_xlate_twocell);
->  
-> +int irq_domain_xlate_threecell(struct irq_domain *d, struct device_node *ctrlr,
-> +			const u32 *intspec, unsigned int intsize,
-> +			irq_hw_number_t *out_hwirq, unsigned int *out_type)
-> +{
-> +	struct irq_fwspec fwspec;
-> +
-> +	of_phandle_args_to_fwspec(ctrlr, intspec, intsize, &fwspec);
-> +	return irq_domain_translate_threecell(d, &fwspec, out_hwirq, out_type);
-> +}
-> +EXPORT_SYMBOL_GPL(irq_domain_xlate_threecell);
-> +
->  /**
->   * irq_domain_xlate_onetwocell() - Generic xlate for one or two cell bindings
->   * @d:		Interrupt domain involved in the translation
-> @@ -1216,6 +1227,19 @@ int irq_domain_translate_twocell(struct irq_domain *d,
->  }
->  EXPORT_SYMBOL_GPL(irq_domain_translate_twocell);
->  
-> +int irq_domain_translate_threecell(struct irq_domain *d,
-> +				 struct irq_fwspec *fwspec,
-> +				 unsigned long *out_hwirq,
-> +				 unsigned int *out_type)
-> +{
-> +	if (WARN_ON(fwspec->param_count < 3))
-> +		return -EINVAL;
-> +	*out_hwirq = fwspec->param[1];
-> +	*out_type = fwspec->param[2] & IRQ_TYPE_SENSE_MASK;
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(irq_domain_translate_threecell);
-> +
->  int irq_domain_alloc_descs(int virq, unsigned int cnt, irq_hw_number_t hwirq,
->  			   int node, const struct irq_affinity_desc *affinity)
->  {
-> 
+> @@ -553,7 +553,7 @@ struct irq_domain *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
+>  	 */
+>  	mutex_lock(&irq_domain_mutex);
+>  	list_for_each_entry(h, &irq_domain_list, link) {
+> -		if (h->ops->select && bus_token != DOMAIN_BUS_ANY)
+> +		if (h->ops->select /* && bus_token != DOMAIN_BUS_ANY */)
 
-sounds we need to implement .select() or .match() in irq_domain_ops,
-then find the irq_domain.. here is a prototype version 
+This breaks existing usage and reintroduces the regression, which was
+fixed with the commit which added the bus token check....
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 9aa88c3fa485..73caba47bd2d 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -1758,9 +1758,25 @@ static void gpiochip_irq_unmap(struct irq_domain *d, unsigned int irq)
- 	irq_set_chip_data(irq, NULL);
- }
- 
-+static int gpiochip_irq_select(struct irq_domain *d, struct irq_fwspec *fwspec,
-+			enum irq_domain_bus_token bus_token)
-+{
-+	struct fwnode_handle *fwnode = fwspec->fwnode;
-+	struct gpio_chip *gc = d->host_data;
-+	unsigned int index = fwspec->param[0];
-+
-+	if (gc->of_gpio_n_cells == 3 && gc->of_node_instance_match)
-+		return gc->of_node_instance_match(gc, index);
-+
-+	return ((fwnode != NULL) && (d->fwnode == fwnode) &&
-+		((bus_token == DOMAIN_BUS_ANY) ||
-+		(d->bus_token == bus_token)));
-+}
-+
- static const struct irq_domain_ops gpiochip_domain_ops = {
- 	.map	= gpiochip_irq_map,
- 	.unmap	= gpiochip_irq_unmap,
-+	.select	= gpiochip_irq_select,
- 	/* Virtually all GPIO irqchips are twocell:ed */
- 	/* FIXME: force switch to three cells */
- 	.xlate	= irq_domain_xlate_threecell,
-diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-index 995e5e0ec2db..c4d18267e86e 100644
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -553,7 +553,7 @@ struct irq_domain *irq_find_matching_fwspec(struct irq_fwspec *fwspec,
- 	 */
- 	mutex_lock(&irq_domain_mutex);
- 	list_for_each_entry(h, &irq_domain_list, link) {
--		if (h->ops->select && bus_token != DOMAIN_BUS_ANY)
-+		if (h->ops->select /* && bus_token != DOMAIN_BUS_ANY */)
- 			rc = h->ops->select(h, fwspec, bus_token);
- 		else if (h->ops->match)
- 			rc = h->ops->match(h, to_of_node(fwnode), bus_token);
--- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+Thanks,
+
+        tglx
