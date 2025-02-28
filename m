@@ -1,109 +1,98 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16280270ED5
-	for <spacemit@lists.linux.dev>; Thu, 27 Feb 2025 20:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3794A2528F3
+	for <spacemit@lists.linux.dev>; Fri, 28 Feb 2025 08:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740688923; cv=none; b=u4aB2Umf501pt2mem7c4TdqdvqUTlM2pjFPTYB7/kZLPQ6a2SJhZjpj+HMil6nl2EJacioah2a5IEVgNyvUiS+Cl29b8dkgfWhsFI7vay2eEteaMbu/Kj1WhKhpTgNKGX5rU42bWXSb7rZFcgg2r6FjepSYoboW9dA+DRbccpdI=
+	t=1740732288; cv=none; b=aHG545RZcujq10CndSyo7Gv0axbWNW8bQ0G/xAHFltgUv3EkKeb/tNmx78BOn9yrsUG/zYl9N41kJUGcGhXLUWwz2Md3rKDX4TNpdgn7wXlZxUgL0KOCJaVmJ2k61IZApxzqI228V/7cyd7+Yp2o5/4ZiYvzQYLJeSHliwQzwZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740688923; c=relaxed/simple;
-	bh=C4un7h2vLOJXmNoYfRXp1pL8mPiY/UKkzqFRlYn3W8E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NZEJvKGQNAD66w76n7mK0fcO8IMIkl6qzpSwlwfdUfst/elwqEILfKpmdMDBGPJXbiqTDWdnREyaDkBLHlQyrTpj+qzBwKkQlkipSnCAwjjhiMUq68wdIWo3SeSFXcSZR0Rrjs5HMnjJU2MyTlxcMnIzyzh+KVJ7C2IeaVbUGmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.55.252])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 068D9343018;
-	Thu, 27 Feb 2025 20:42:00 +0000 (UTC)
-Date: Thu, 27 Feb 2025 20:41:55 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/2] irqdomain: support three-cell scheme interrupts
-Message-ID: <20250227204155-GYA51171@gentoo>
-References: <20250227-04-gpio-irq-threecell-v1-0-4ae4d91baadc@gentoo.org>
- <20250227-04-gpio-irq-threecell-v1-1-4ae4d91baadc@gentoo.org>
- <8fce8a9c-7946-4e3c-bbf3-25f8b4f4466f@riscstar.com>
+	s=arc-20240116; t=1740732288; c=relaxed/simple;
+	bh=Zkf8l0uryByZdz9QVPXFiiID4xittvMYr6H6I5rroZI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YCgGXJkUX/C8Pvqbu7b1WttJ+6yu8NqpLQvYENv/yKU2gR2nhBbwgqVzQoAfGcaHFXDdAF3nFthPfaxcOciFqukHujPAfdBE96wzQUu8IXjKT90OumlCMuHqz9W5mjxxyCz/BPppBV4oAwNI0Ja0Sr3u//buwh9kfTcB9J3z/0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HD7EyKZv; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HD7EyKZv"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3061513d353so19941501fa.2
+        for <spacemit@lists.linux.dev>; Fri, 28 Feb 2025 00:44:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740732285; x=1741337085; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kY06bAcZIeFxZq+rVVGy8xdQWazfVF+gu1V9CdHTqzs=;
+        b=HD7EyKZvkPiv1cMEQV4L18xxCQ3jJeM4+hJXhvoDh18iZLrjVa6gY3ne3CNC7pkeFm
+         rG+dxDFItDmdcF5yjrqSlPfdS0vwKARiCtygkT+Aw17D4HnL+WiHzRp3ofvVIEsfuMyc
+         L0br4EUKqfe3dkhNyEFYeqvnuBFR4R6Z+CcFebOgixoq/31maNQaeo9Wl2kL9qbYGVhB
+         n+1Bdx4kNlUiCgPh0nIJg1MVHQT8gBkk+U6tPkvLkY8aIenUU4ZuB+xbYnrmptQ4+yz4
+         UjCnlb5oYmfE+jxsRtKVKuAh5OaAUPU7hiFZNZLxswgkTB3wbvA/79E3tsK+mMonDGNA
+         Ok/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740732285; x=1741337085;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kY06bAcZIeFxZq+rVVGy8xdQWazfVF+gu1V9CdHTqzs=;
+        b=O4XXVwd00dBbPVOpclSLf90g6IQvTXhz8lMS5oPQobhaK9sqUE9oHIqLpt58ZREjZC
+         xgpjXTkbfbwvvWgfV8q7Yl5bR8mR1txEv4aEWzzPTrCM+3YxWGBeUQswRfYzLFhaIRE0
+         xT7BuinmMKB7KpW2EHzoSL1zR/bRsTYCSI7KvMk1jDpfBk/I4LS4TwLtU5AuwtHFatgz
+         tr7S1W7FDuAiF+IuJ0b6arK67WcvAzTBGWOVwYa6fkLVxJaul9hqaYpztrsRCDsI1GPY
+         mwuFGzWPZZhc/9LXwxshn7BLM5Ia/ECNKJEZgc9hj23PezPWLWLQXG5y+Ph8G63Qhp4a
+         CgYg==
+X-Forwarded-Encrypted: i=1; AJvYcCVGVRdYhXKtIIWnJPhN0a4JsQvc5QPy8iSnmZCHAI6SdrpIUys94AXzFKON4dPX+7u/eZZR5CGFrw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxK9ApADN2iKVrec4pVNnr1uAug93RdavcE8TB3k3C076CkZ0zf
+	KtocmkVcZPEJpRHKXDwHr7MO2JCah6EhED0+Xewt1RE9Jrm82MK01Ra5c/YywgVwtUkZp5Ks847
+	ffs1mIAs0RvdK9t/awg5xw57nXogzRpvblM/o2A==
+X-Gm-Gg: ASbGncuBmdLxSHAPsSlzTKUEvpvRDXQr9bS77h1gfDBwdpxAnqV6spEg2VK8EYD2QsN
+	k3gdrZ6EX/Pzwbr4VV6Lp6g3Aj/a2Hg1XNT5n1g7jBtqNVyCWnWM4NQc/zl07Hkw3zotHyPVkW1
+	fFMPzp/ro=
+X-Google-Smtp-Source: AGHT+IE62towVdCnTrudnvaIoU1TJ6pTFTYV/chtSrCWTC1Ko1AEApipZL64MrBly6WJNXyhwZwLLXLgsny92LECsFE=
+X-Received: by 2002:a2e:9fc9:0:b0:308:ec50:e841 with SMTP id
+ 38308e7fff4ca-30b9330f13fmr8612541fa.25.1740732285416; Fri, 28 Feb 2025
+ 00:44:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8fce8a9c-7946-4e3c-bbf3-25f8b4f4466f@riscstar.com>
+References: <20250227-04-gpio-irq-threecell-v1-0-4ae4d91baadc@gentoo.org>
+ <20250227-04-gpio-irq-threecell-v1-1-4ae4d91baadc@gentoo.org>
+ <8fce8a9c-7946-4e3c-bbf3-25f8b4f4466f@riscstar.com> <20250227204155-GYA51171@gentoo>
+In-Reply-To: <20250227204155-GYA51171@gentoo>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Fri, 28 Feb 2025 09:44:33 +0100
+X-Gm-Features: AQ5f1Jo79JYnCkWBYG5UqJJb1LGSJ1JmSW8NVl43VT942aaOGBkJP3E28SChE-c
+Message-ID: <CACRpkdas4TsMQx2Cvu_JR3kTStqWaOt1N+Cmq7nFesMzpGnZ+g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] irqdomain: support three-cell scheme interrupts
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Alex Elder <elder@riscstar.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Thomas Gleixner <tglx@linutronix.de>, Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Feb 27, 2025 at 9:42=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
 
-On 10:12 Thu 27 Feb     , Alex Elder wrote:
-> On 2/27/25 5:24 AM, Yixun Lan wrote:
-> > The is a prerequisite patch to support parsing three-cell
-> > interrupts which encoded as <instance hwirq irqflag>,
-> > the translate function will always retrieve irq number and
-> > flag from last two cells.
-> > 
-> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> > ---
-> >   kernel/irq/irqdomain.c | 11 +++++++++--
-> >   1 file changed, 9 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-> > index ec6d8e72d980f604ded2bfa2143420e0e0095920..cb874ab5e54a4763d601122becd63b6d759e55d2 100644
-> > --- a/kernel/irq/irqdomain.c
-> > +++ b/kernel/irq/irqdomain.c
-> > @@ -1208,10 +1208,17 @@ int irq_domain_translate_twocell(struct irq_domain *d,
-> >   				 unsigned long *out_hwirq,
-> >   				 unsigned int *out_type)
-> >   {
-> 
-> This function is meant for "twocell".  There is also another function
-> irq_domain_translate_onecell().  Why don't you just create
-> irq_domain_translate_threecell" instead?
-> 
-good question!
+> > This function is meant for "twocell".  There is also another function
+> > irq_domain_translate_onecell().  Why don't you just create
+> > irq_domain_translate_threecell" instead?
+> >
+> good question!
+>
+> it's too many changes for adding "threecell" which I thought not worth
+> the effort, or maybe we can rename the function to *twothreecell()?
+>
+> I'm not sure which way to go is the best, ideas from maintainer are
+> welcome
 
-it's too many changes for adding "threecell" which I thought not worth
-the effort, or maybe we can rename the function to *twothreecell()?
+Yeah just rename it twothreecell, that's fine, we will understand it :)
 
-I'm not sure which way to go is the best, ideas from maintainer are
-welcome
+Thanks for driving this change, much appreciated!
 
-> 
-> > +	u32 irq, type;
-> > +
-> >   	if (WARN_ON(fwspec->param_count < 2))
-> >   		return -EINVAL;
-> > -	*out_hwirq = fwspec->param[0];
-> > -	*out_type = fwspec->param[1] & IRQ_TYPE_SENSE_MASK;
-> > +
-> > +	irq = fwspec->param_count - 2;
-> > +	type = fwspec->param_count - 1;
-no matter two or three cell, it's always parse the last two cells,
-virtually they are same syntax, which can reuse the *_translate_twocell()
-function perfectly..
-
-> > +
-> > +	*out_hwirq = fwspec->param[irq];
-> > +	*out_type = fwspec->param[type] & IRQ_TYPE_SENSE_MASK;
-> > +
-> >   	return 0;
-> >   }
-> >   EXPORT_SYMBOL_GPL(irq_domain_translate_twocell);
-> > 
-> 
-
--- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+Yours,
+Linus Walleij
