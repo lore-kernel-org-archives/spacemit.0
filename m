@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A48125BAB9
-	for <spacemit@lists.linux.dev>; Fri, 28 Feb 2025 10:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12DA25D218
+	for <spacemit@lists.linux.dev>; Fri, 28 Feb 2025 10:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740737463; cv=none; b=EsrdfXsb3Ke8mjKgfI6vYEOvQDfFzs4SEZR3po/xUWgrxg2TEoPJyj1SbAuFGBlU2FcHUm/591WNPa6wbrFMQkC6bG/mcedKEl+lcKZjuZ7gCpKz+/tHHsIEG8BIK+/VXfT/LAt538VJKxvw4yXNOiy3jRWuEdxPAZscEBnKbpA=
+	t=1740739973; cv=none; b=j2n8dBHcH6sYZrH1deQE6DKCXcourzmA/IfIUfq+WQP+pn2HcUalmdp6CTA7bNRqbb5SZq6lBLz7D932Hylh+s/ktjSubDEp16NgJ0iAOSBO0Q8AKRnnhuLJAiYq7jeXWhAIafOpthwYWi3NUI+gJ/8sMLqVla9eHlLODGnF4YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740737463; c=relaxed/simple;
-	bh=bZincy8IQtpp48xIeSYrIpThQT8WWHr6JB5Sd1KtJbw=;
+	s=arc-20240116; t=1740739973; c=relaxed/simple;
+	bh=/0+86uU2ASMRXpJZLh1YvPRZ699dY/lJcv07yGaA3k4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AFxfvHNYsZKRI++EUVHXj6wneQme2hC5/8fATneKWK7PnqCCbrSOXM8E3kaD23ULIFX6DJ5SwVfEG1F67AP0iEm21VQCifgfnWcda7T81Dyem3j2qPfVfW4NKNnI4gJ+6beRtif/rXaiAyBkkepE2jdLzyxPVwSrGfvg197cFxE=
+	 Content-Type:Content-Disposition:In-Reply-To; b=UG4zBJZPSlrvXpVkTcRPQFsQDRVtytVB1LXfqh0Q03wDxgPOAZ6wXZXWgj9n/lCJwULYAkOxouP8ltmcxRZ1ug4X290xnzvgVLfRpLOR7vZJMfssYREcLA6xKUnFjebs83PlxJee/hbRuRp6zFw8aegnO6HevRB/OPj9UbJiYpU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,23 +19,23 @@ Received: from localhost (unknown [116.232.55.252])
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id EEAAD343132;
-	Fri, 28 Feb 2025 10:10:54 +0000 (UTC)
-Date: Fri, 28 Feb 2025 10:10:50 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id A03F834317F;
+	Fri, 28 Feb 2025 10:52:51 +0000 (UTC)
+Date: Fri, 28 Feb 2025 10:52:47 +0000
 From: Yixun Lan <dlan@gentoo.org>
 To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+Cc: Alex Elder <elder@riscstar.com>, Bartosz Golaszewski <brgl@bgdev.pl>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Alex Elder <elder@riscstar.com>,
 	Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org,
 	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev
-Subject: Re: [PATCH 2/2] gpiolib: support parsing gpio three-cell interrupts
- scheme
-Message-ID: <20250228101050-GYA52883@gentoo>
+Subject: Re: [PATCH 1/2] irqdomain: support three-cell scheme interrupts
+Message-ID: <20250228105247-GYB52883@gentoo>
 References: <20250227-04-gpio-irq-threecell-v1-0-4ae4d91baadc@gentoo.org>
- <20250227-04-gpio-irq-threecell-v1-2-4ae4d91baadc@gentoo.org>
- <CACRpkdZ1X5kF-AyRBg9BYMiJscv0v-SGzcdetS0XDK3oPSu9QQ@mail.gmail.com>
+ <20250227-04-gpio-irq-threecell-v1-1-4ae4d91baadc@gentoo.org>
+ <8fce8a9c-7946-4e3c-bbf3-25f8b4f4466f@riscstar.com>
+ <20250227204155-GYA51171@gentoo>
+ <CACRpkdas4TsMQx2Cvu_JR3kTStqWaOt1N+Cmq7nFesMzpGnZ+g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,86 +45,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACRpkdZ1X5kF-AyRBg9BYMiJscv0v-SGzcdetS0XDK3oPSu9QQ@mail.gmail.com>
+In-Reply-To: <CACRpkdas4TsMQx2Cvu_JR3kTStqWaOt1N+Cmq7nFesMzpGnZ+g@mail.gmail.com>
 
 Hi Linus Walleij:
 
-On 10:11 Fri 28 Feb     , Linus Walleij wrote:
-> Hi Yixun,
+On 09:44 Fri 28 Feb     , Linus Walleij wrote:
+> On Thu, Feb 27, 2025 at 9:42 PM Yixun Lan <dlan@gentoo.org> wrote:
 > 
-> thanks for working so hard on this!
-> 
-> I'm really happy to see the threecell support integrated into gpiolib.
-> 
-> On Thu, Feb 27, 2025 at 12:25 PM Yixun Lan <dlan@gentoo.org> wrote:
-> 
-> > gpio irq which using three-cell scheme should always call
-> > instance_match() function to find the correct irqdomain.
+> > > This function is meant for "twocell".  There is also another function
+> > > irq_domain_translate_onecell().  Why don't you just create
+> > > irq_domain_translate_threecell" instead?
+> > >
+> > good question!
 > >
-> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> > ---
-> > The select() function will be called with !DOMAIN_BUS_ANY,
-> > kernel/irq/irqdomain.c:556: if (h->ops->select && bus_token != DOMAIN_BUS_ANY)
+> > it's too many changes for adding "threecell" which I thought not worth
+> > the effort, or maybe we can rename the function to *twothreecell()?
 > >
-> > so vendor gpio driver need to explicitly set bus_token, something like:
-> >
-> > drivers/gpio/gpio-spacemit-k1.c
-> >   irq_domain_update_bus_token(girq->domain, DOMAIN_BUS_WIRED);
-> >
-> > I hope this is a feasible way..
+> > I'm not sure which way to go is the best, ideas from maintainer are
+> > welcome
 > 
-> Yes this looks fair, I think you can put the description into the
-> commit message.
+> Yeah just rename it twothreecell, that's fine, we will understand it :)
 > 
-ok, will do
-> >         /* We support standard DT translation */
-> > -       if (is_of_node(fwspec->fwnode) && fwspec->param_count == 2) {
-> > +       if (is_of_node(fwspec->fwnode) && fwspec->param_count <= 3)
-> >                 return irq_domain_translate_twocell(d, fwspec, hwirq, type);
-> > -       }
-> 
-> This looks good.
-> 
-> > +static int gpiochip_irq_select(struct irq_domain *d, struct irq_fwspec *fwspec,
-> > +                       enum irq_domain_bus_token bus_token)
-> > +{
-> > +       struct fwnode_handle *fwnode = fwspec->fwnode;
-> > +       struct gpio_chip *gc = d->host_data;
-> > +       unsigned int index = fwspec->param[0];
-> > +
-> > +       if ((gc->of_gpio_n_cells == 3) && gc->of_node_instance_match)
-> > +               return gc->of_node_instance_match(gc, index);
-> 
-> We need to hide the OF-specific things into gpiolib-of.c|h so systems
-> not using OF does not need to see it.
-> 
-> Something like:
-> 
-> if (fwspec->param_count == 3) {
->      if (is_of_node(fwnode))
->          return of_gpiochip_instance_match(gc, index);
->     /* Add other threeparam handlers here */
-not sure if non OF-specific driver will also support threecells mode?
-we probably can adjust when it really does, so now I would simply make it
+there will be quite a lot files to touch, which looks a little bit scary
+but anyway, I'm fine with either way..
 
-if (fwspec->param_count == 3 && is_of_node(fwnode))
-	return of_gpiochip_instance_match(gc, index);
+$ git grep irq_domain_translate_twocell | cut -f 1 -d ':' | sort -u | wc -l
+11
 
-> }
-> 
-> Then add of_gpiochip_instance_match() into gpiolib-of.h as a
-> static inline (no need to an entire extern function...)
-> 
-> static inline bool of_gpiochip_instance_match(struct gpio_chip *gc, int index)
-> {
->     if ((gc->of_gpio_n_cells == 3) && gc->of_node_instance_match)
->               return gc->of_node_instance_match(gc, index);
-> }
-> 
-> And also an empty stub for !CONFIG_OF_GPIO so we get this compiled
-> out if OF is not configured in.
-> 
-ok, I got your idea, thanks
+Thomas Gleixner, do you agree with this direction? then I can work on it
 
 -- 
 Yixun Lan (dlan)
