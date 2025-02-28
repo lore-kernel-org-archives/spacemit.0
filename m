@@ -1,98 +1,149 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3794A2528F3
-	for <spacemit@lists.linux.dev>; Fri, 28 Feb 2025 08:44:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33B6276D3B
+	for <spacemit@lists.linux.dev>; Fri, 28 Feb 2025 09:12:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740732288; cv=none; b=aHG545RZcujq10CndSyo7Gv0axbWNW8bQ0G/xAHFltgUv3EkKeb/tNmx78BOn9yrsUG/zYl9N41kJUGcGhXLUWwz2Md3rKDX4TNpdgn7wXlZxUgL0KOCJaVmJ2k61IZApxzqI228V/7cyd7+Yp2o5/4ZiYvzQYLJeSHliwQzwZ4=
+	t=1740733931; cv=none; b=ATFgqAAxisbZi+yfT/zWSxobdP3lD707dHppH6suo7CT3oH0Bv/7wGPLjeHT4X2hdpxdgzgdFZgaTsVEB1m4XeaY3ThwnGpff6PexBEQa3xKnYcibL7O7BaBH1Jaz2By6tnp9LW6qN2Q3RvZIsHZbl/4ZsNt7Tbjy1JeFHowpjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740732288; c=relaxed/simple;
-	bh=Zkf8l0uryByZdz9QVPXFiiID4xittvMYr6H6I5rroZI=;
+	s=arc-20240116; t=1740733931; c=relaxed/simple;
+	bh=Lwg8wE5Xiedb892k4N/ekZfZJuMIFhCBkPXW1WUwn90=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YCgGXJkUX/C8Pvqbu7b1WttJ+6yu8NqpLQvYENv/yKU2gR2nhBbwgqVzQoAfGcaHFXDdAF3nFthPfaxcOciFqukHujPAfdBE96wzQUu8IXjKT90OumlCMuHqz9W5mjxxyCz/BPppBV4oAwNI0Ja0Sr3u//buwh9kfTcB9J3z/0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HD7EyKZv; arc=none smtp.client-ip=209.85.208.176
+	 To:Cc:Content-Type; b=MgDT939/gDdjmO+s2+gIWfHMMHnJtpoo+mk/Rb+IQ8a6mLTkZ6nrEw8La0DmwTrX2V0ETPXUh+6UJxnpThmUuQeLjcnQjBw7lnmrm4W/T3GGfafupz3KPRuM/z6/jTqy9+vmworTPlNnGBJRij8xik1CWDH7F7th+1Bo/fmLGJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hw9U+Duh; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HD7EyKZv"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3061513d353so19941501fa.2
-        for <spacemit@lists.linux.dev>; Fri, 28 Feb 2025 00:44:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hw9U+Duh"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5485646441cso1909746e87.2
+        for <spacemit@lists.linux.dev>; Fri, 28 Feb 2025 01:12:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1740732285; x=1741337085; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1740733928; x=1741338728; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kY06bAcZIeFxZq+rVVGy8xdQWazfVF+gu1V9CdHTqzs=;
-        b=HD7EyKZvkPiv1cMEQV4L18xxCQ3jJeM4+hJXhvoDh18iZLrjVa6gY3ne3CNC7pkeFm
-         rG+dxDFItDmdcF5yjrqSlPfdS0vwKARiCtygkT+Aw17D4HnL+WiHzRp3ofvVIEsfuMyc
-         L0br4EUKqfe3dkhNyEFYeqvnuBFR4R6Z+CcFebOgixoq/31maNQaeo9Wl2kL9qbYGVhB
-         n+1Bdx4kNlUiCgPh0nIJg1MVHQT8gBkk+U6tPkvLkY8aIenUU4ZuB+xbYnrmptQ4+yz4
-         UjCnlb5oYmfE+jxsRtKVKuAh5OaAUPU7hiFZNZLxswgkTB3wbvA/79E3tsK+mMonDGNA
-         Ok/A==
+        bh=b8NBOP2GQ2KlGT1kMn03prIoC3D0wUg1PxgjvTKjfnk=;
+        b=hw9U+Duh13ZJDRhBBYLOlgs1wQhgKgemu9xXj/y0CtgCNZwXmdgMQeuZc3zh7rqGrX
+         EJ9W2Hv55tLg92BzMw6IZZ63xaiaC5VyWTVJuY0E05Txceh9zYvgtMOb0l2xEC+pOSy8
+         ese25BeLlGt9eNTI5gR9z+wWSnPVp5fPOcs4fBT+0a0rup3UqgPSTrsHa3Ar6yeSbD2P
+         HkKuDETyuUbnVeh0B6PMO2sC03RqJ5/Kz9xTTs8Ph4BR2K+m8AA87w+WKM6+Q7/47A2Q
+         3VJGiaMNklduQ42mMhIV8rCwsptpNTY4GJKjtcsH1VxMgmRVO43pFMOPfFLmgWixMDU+
+         8eWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740732285; x=1741337085;
+        d=1e100.net; s=20230601; t=1740733928; x=1741338728;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kY06bAcZIeFxZq+rVVGy8xdQWazfVF+gu1V9CdHTqzs=;
-        b=O4XXVwd00dBbPVOpclSLf90g6IQvTXhz8lMS5oPQobhaK9sqUE9oHIqLpt58ZREjZC
-         xgpjXTkbfbwvvWgfV8q7Yl5bR8mR1txEv4aEWzzPTrCM+3YxWGBeUQswRfYzLFhaIRE0
-         xT7BuinmMKB7KpW2EHzoSL1zR/bRsTYCSI7KvMk1jDpfBk/I4LS4TwLtU5AuwtHFatgz
-         tr7S1W7FDuAiF+IuJ0b6arK67WcvAzTBGWOVwYa6fkLVxJaul9hqaYpztrsRCDsI1GPY
-         mwuFGzWPZZhc/9LXwxshn7BLM5Ia/ECNKJEZgc9hj23PezPWLWLQXG5y+Ph8G63Qhp4a
-         CgYg==
-X-Forwarded-Encrypted: i=1; AJvYcCVGVRdYhXKtIIWnJPhN0a4JsQvc5QPy8iSnmZCHAI6SdrpIUys94AXzFKON4dPX+7u/eZZR5CGFrw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxK9ApADN2iKVrec4pVNnr1uAug93RdavcE8TB3k3C076CkZ0zf
-	KtocmkVcZPEJpRHKXDwHr7MO2JCah6EhED0+Xewt1RE9Jrm82MK01Ra5c/YywgVwtUkZp5Ks847
-	ffs1mIAs0RvdK9t/awg5xw57nXogzRpvblM/o2A==
-X-Gm-Gg: ASbGncuBmdLxSHAPsSlzTKUEvpvRDXQr9bS77h1gfDBwdpxAnqV6spEg2VK8EYD2QsN
-	k3gdrZ6EX/Pzwbr4VV6Lp6g3Aj/a2Hg1XNT5n1g7jBtqNVyCWnWM4NQc/zl07Hkw3zotHyPVkW1
-	fFMPzp/ro=
-X-Google-Smtp-Source: AGHT+IE62towVdCnTrudnvaIoU1TJ6pTFTYV/chtSrCWTC1Ko1AEApipZL64MrBly6WJNXyhwZwLLXLgsny92LECsFE=
-X-Received: by 2002:a2e:9fc9:0:b0:308:ec50:e841 with SMTP id
- 38308e7fff4ca-30b9330f13fmr8612541fa.25.1740732285416; Fri, 28 Feb 2025
- 00:44:45 -0800 (PST)
+        bh=b8NBOP2GQ2KlGT1kMn03prIoC3D0wUg1PxgjvTKjfnk=;
+        b=VPyQo5XIcv5gganNfHNxRAR0oEiuCsvqhBuk1viyBoInJoh5qMkmt1Nbvt0bMG5p8i
+         PXw8F2W95GjK0NIsQky7pRts/eaXpclXcZjrLbUM4ic06/KgwrQF42fKvNJRuqVk249i
+         SFDvbgHXFmtfb+iIYLY+US4ZIv/dZ32xrY2qnZdV5uhh8pHDM+Cqf+XPYWLEnrxskTX1
+         DHgaBAYr1tvgi7dWMo3L0VcjRsmrX5n4c8yW00sDxL0Wyr3ijDIPogb2NI6sKUUcfOKt
+         rr3wRPPQWwU4RifNa7e6M5l2Vx+eRkBm4KqWgdfRTGIBDz44573FHmB0RvZs+fd4nN3y
+         KB+A==
+X-Forwarded-Encrypted: i=1; AJvYcCXdok38W7ARRUEN8y6ZbS61KPFh6nZDfdgZoLYUVagxsyTqqh6GGO+mhgd9+J6L+ylnr/3zXbANVg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwS8q5dnUUgSUdO2xNhKD+NTag2Wfme3ulYqa28cVTKeO0G+1Af
+	BdXoHZC+c6gbQ8Sg2G38WC/5vhjl2laO2BrGlIgfJgyt1boBmUhhbta3Qml5qLBR0XGT5l4AigM
+	4g7zrUdW6avPQuwpuSbqgc7T360tLj6OHwOCfrw==
+X-Gm-Gg: ASbGncvjbnxkhqVKi+UHCh0WE6kT1tYUDHzaYQpi76WYY4ELUqn4ygL/Kdb36SuU/DR
+	FXlCnPY0Mv2aLRA9BGSck29E/1lRbJpeQNmKTwmvkQDZzSMj2uJsI6Au5u8FIxg5v0IwzXT89Fm
+	qskkkADwY=
+X-Google-Smtp-Source: AGHT+IFtHDQUwtIkZEmn26SAZGpaLbJ0ZA70JYYMxkjqCpaxYAkU8WvU0gBdbKbqlduqxgwjid1hfQ77kVQK8Hlzc1Q=
+X-Received: by 2002:a05:6512:108a:b0:545:2b20:5b21 with SMTP id
+ 2adb3069b0e04-5494c36869dmr947565e87.50.1740733927813; Fri, 28 Feb 2025
+ 01:12:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250227-04-gpio-irq-threecell-v1-0-4ae4d91baadc@gentoo.org>
- <20250227-04-gpio-irq-threecell-v1-1-4ae4d91baadc@gentoo.org>
- <8fce8a9c-7946-4e3c-bbf3-25f8b4f4466f@riscstar.com> <20250227204155-GYA51171@gentoo>
-In-Reply-To: <20250227204155-GYA51171@gentoo>
+References: <20250227-04-gpio-irq-threecell-v1-0-4ae4d91baadc@gentoo.org> <20250227-04-gpio-irq-threecell-v1-2-4ae4d91baadc@gentoo.org>
+In-Reply-To: <20250227-04-gpio-irq-threecell-v1-2-4ae4d91baadc@gentoo.org>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 28 Feb 2025 09:44:33 +0100
-X-Gm-Features: AQ5f1Jo79JYnCkWBYG5UqJJb1LGSJ1JmSW8NVl43VT942aaOGBkJP3E28SChE-c
-Message-ID: <CACRpkdas4TsMQx2Cvu_JR3kTStqWaOt1N+Cmq7nFesMzpGnZ+g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] irqdomain: support three-cell scheme interrupts
+Date: Fri, 28 Feb 2025 10:11:56 +0100
+X-Gm-Features: AQ5f1JrL-KjS4W2cfXdgdW4fA0i_u-8CysEWcjvk-omutRUMfq6vTHu0adnO6VY
+Message-ID: <CACRpkdZ1X5kF-AyRBg9BYMiJscv0v-SGzcdetS0XDK3oPSu9QQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] gpiolib: support parsing gpio three-cell interrupts scheme
 To: Yixun Lan <dlan@gentoo.org>
-Cc: Alex Elder <elder@riscstar.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Thomas Gleixner <tglx@linutronix.de>, Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org, 
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Thomas Gleixner <tglx@linutronix.de>, Alex Elder <elder@riscstar.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org, 
 	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org, 
 	spacemit@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 27, 2025 at 9:42=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
+Hi Yixun,
 
-> > This function is meant for "twocell".  There is also another function
-> > irq_domain_translate_onecell().  Why don't you just create
-> > irq_domain_translate_threecell" instead?
-> >
-> good question!
+thanks for working so hard on this!
+
+I'm really happy to see the threecell support integrated into gpiolib.
+
+On Thu, Feb 27, 2025 at 12:25=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
+
+> gpio irq which using three-cell scheme should always call
+> instance_match() function to find the correct irqdomain.
 >
-> it's too many changes for adding "threecell" which I thought not worth
-> the effort, or maybe we can rename the function to *twothreecell()?
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> ---
+> The select() function will be called with !DOMAIN_BUS_ANY,
+> kernel/irq/irqdomain.c:556: if (h->ops->select && bus_token !=3D DOMAIN_B=
+US_ANY)
 >
-> I'm not sure which way to go is the best, ideas from maintainer are
-> welcome
+> so vendor gpio driver need to explicitly set bus_token, something like:
+>
+> drivers/gpio/gpio-spacemit-k1.c
+>   irq_domain_update_bus_token(girq->domain, DOMAIN_BUS_WIRED);
+>
+> I hope this is a feasible way..
 
-Yeah just rename it twothreecell, that's fine, we will understand it :)
+Yes this looks fair, I think you can put the description into the
+commit message.
 
-Thanks for driving this change, much appreciated!
+>         /* We support standard DT translation */
+> -       if (is_of_node(fwspec->fwnode) && fwspec->param_count =3D=3D 2) {
+> +       if (is_of_node(fwspec->fwnode) && fwspec->param_count <=3D 3)
+>                 return irq_domain_translate_twocell(d, fwspec, hwirq, typ=
+e);
+> -       }
+
+This looks good.
+
+> +static int gpiochip_irq_select(struct irq_domain *d, struct irq_fwspec *=
+fwspec,
+> +                       enum irq_domain_bus_token bus_token)
+> +{
+> +       struct fwnode_handle *fwnode =3D fwspec->fwnode;
+> +       struct gpio_chip *gc =3D d->host_data;
+> +       unsigned int index =3D fwspec->param[0];
+> +
+> +       if ((gc->of_gpio_n_cells =3D=3D 3) && gc->of_node_instance_match)
+> +               return gc->of_node_instance_match(gc, index);
+
+We need to hide the OF-specific things into gpiolib-of.c|h so systems
+not using OF does not need to see it.
+
+Something like:
+
+if (fwspec->param_count =3D=3D 3) {
+     if (is_of_node(fwnode))
+         return of_gpiochip_instance_match(gc, index);
+    /* Add other threeparam handlers here */
+}
+
+Then add of_gpiochip_instance_match() into gpiolib-of.h as a
+static inline (no need to an entire extern function...)
+
+static inline bool of_gpiochip_instance_match(struct gpio_chip *gc, int ind=
+ex)
+{
+    if ((gc->of_gpio_n_cells =3D=3D 3) && gc->of_node_instance_match)
+              return gc->of_node_instance_match(gc, index);
+}
+
+And also an empty stub for !CONFIG_OF_GPIO so we get this compiled
+out if OF is not configured in.
 
 Yours,
 Linus Walleij
