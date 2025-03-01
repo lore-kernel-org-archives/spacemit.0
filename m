@@ -1,142 +1,114 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7C926BDBB
-	for <spacemit@lists.linux.dev>; Fri, 28 Feb 2025 13:44:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46898635
+	for <spacemit@lists.linux.dev>; Sat,  1 Mar 2025 23:15:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740750281; cv=none; b=lpr5v83HucgM6NztfbSz246y3Bzk88FhDABjVcrt25pasTiL9fhujhKZ+QbX/GjPOcu/LN06du0a/FACIiGfn7lvz50IjEbyyPCO9SAa/z+eA/AqnDFnvVx8JldQyAXWXkLkT4DftQoxZ3YIr9/hlPYFnU5pWcYpUMm/hLc2ElI=
+	t=1740870960; cv=none; b=NnZcbuK/rMz10T6VIwe286hyVRw/IWjzt6UY5gTOI7pA4zfJ66XGY9MtNmj5qqVjqRHXAiJIyiiXWsfOkiy21NOURxWbNPkAZkt61H6wRng8rCPW6SM5aVnokLlLBu6w3EUZIozz8oXJ85DiTlxl4by/xyeCFMjHqOs1QVItljU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740750281; c=relaxed/simple;
-	bh=qsH6o8fcr8KIivNvOtBKztdbPy08AQY/IX0+74VcbZw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UTRPq77cIhst3VN2oiACWBsWYuNDNUAQWgdFJx+Dx2Et9ERny4NkPTqkYYESzEZDwSNvHIp7kdLieiZnqWkpbrDGrJwIhjpeHZFaYBPJRfVEWjZBdap4dCQLAvMSh18qX/riNul4EKVit5pDHCyTbcwr3/YoyKNRalfjF/tFI18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=qVYTqV+a; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=yLCrTvGT; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="qVYTqV+a";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="yLCrTvGT"
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1740750277;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xT5+WG3VHi4NewtOLqTVlQbqf36jSOz2HnCAsZWMVDY=;
-	b=qVYTqV+aE6XVgHtMV0wbBmT0Pkl0w2415c+t42gYFc7tG0aiHNwqp0dWW3yNctqBUnqjhn
-	gfcoLyz/UcQgNqB38YM45iZIhoa0VLV+6/TRT7K/IqVRfmOBoUaSQ/50Q59fPNh/TflxzG
-	JKJvHLL2sU7aTLp0oXMz1AOYkZOKbKGQAtTZYmy4FBP4J0N4sKCHYefMcMo1Qhro1521H7
-	qy2O8f4MMD25J6XCX8IM7TmWX4gQkcl3inQi7ia7essMeIP/oJzuezaN8H+iiRN+Ym3HKZ
-	HWN77mrN63cZ9Y73NZNespXKdk3gd0lPYwMdwduqeM53am1IZ5LNiFyDBUnJAw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1740750277;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xT5+WG3VHi4NewtOLqTVlQbqf36jSOz2HnCAsZWMVDY=;
-	b=yLCrTvGTYw0fg8jZFBrxswcSZsKpYPj5EIvwiPDBktdjbvuloIxsOxgz6j+lA5hS2qt8uv
-	3QRdstTL3J/NrkBA==
-To: Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski
- <brgl@bgdev.pl>, Inochi Amaoto <inochiama@gmail.com>,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/2] irqdomain: support three-cell scheme interrupts
-In-Reply-To: <20250227204155-GYA51171@gentoo>
-References: <20250227-04-gpio-irq-threecell-v1-0-4ae4d91baadc@gentoo.org>
- <20250227-04-gpio-irq-threecell-v1-1-4ae4d91baadc@gentoo.org>
- <8fce8a9c-7946-4e3c-bbf3-25f8b4f4466f@riscstar.com>
- <20250227204155-GYA51171@gentoo>
-Date: Fri, 28 Feb 2025 14:44:36 +0100
-Message-ID: <871pvidvzv.ffs@tglx>
+	s=arc-20240116; t=1740870960; c=relaxed/simple;
+	bh=so9PRmptskHbOFYIWe2JX2iUt5C4l77HzSi62jfpQMo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KORHmM5U16gzjvTRMqep1nHDg4dwaPq1o99oT7hdZYaRlJF6zvubnCuLj9CEetxeUL+PK5cL0FruemwktRV2gY0HweFgPATGc8yIW1c2rlIwJ50eIVqP9aJRzrB0cUnaO7GJTHnRFFgHjiBrXSFDKWTJPYqU3cxHaPtt4armXPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [127.0.0.1] (unknown [116.232.55.252])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id B03F9342FA1;
+	Sat, 01 Mar 2025 23:15:55 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+Subject: [PATCH v2 0/2] gpio: irq: support describing three-cell interrupts
+Date: Sun, 02 Mar 2025 07:15:31 +0800
+Message-Id: <20250302-04-gpio-irq-threecell-v2-0-34f13ad37ea4@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABSVw2cC/4WPTW7DIBSErxKxLhX/hqxyjyqLZ3i2kRKTALFaR
+ b57sb3prssZaWa+eZOCOWIh59ObZFxiiWluQnyciJ9gHpHG0DQRTGgmREeZouMjJhrzk9YpI3q
+ 83agxyJF10ltmSMs+Mg7xe+/9uh464/PV6uthkh4KUp/u91jbHOPKOw1Da0OJnfGgQBunDThpU
+ Ehh5cB0T/5ibbENincHUd78Qof0yjuT1dZaCIK7AOdFko1jiqWm/LPfXfgO8s+zhVNGFaAKjvc
+ AwV9GnGtKnymP5Lqu6y9OfPKyQwEAAA==
+X-Change-ID: 20250227-04-gpio-irq-threecell-66e1e073c806
+To: Linus Walleij <linus.walleij@linaro.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, Thomas Gleixner <tglx@linutronix.de>
+Cc: Alex Elder <elder@riscstar.com>, Inochi Amaoto <inochiama@gmail.com>, 
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1865; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=so9PRmptskHbOFYIWe2JX2iUt5C4l77HzSi62jfpQMo=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBnw5UhTFh03pEtuGT1fh5CNzoD7XrtexFESEOci
+ KJY1G1CekeJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCZ8OVIV8UgAAAAAAuAChp
+ c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277aRRD/oDYbxDwhPB4+ObLy
+ 9O5VeFjcL41cY7FdWUA0LVSXuLNPDqGBw2KCtyvK8Z/grbuay6/J+NbjYjIE0u2FDlxHaMPkwqC
+ t+PfdO5UP9EdtDD7FwMBLu9WF3clFMOhJspNn0RGIr/z8nOPLqV230rLmpNNFgyBBRxK3oVYAx8
+ a99NRCAh5awd/OkRI3Q35UH6vVxhXk70b56rjBNm/H9bPYMObDLGBw4UoONDpPNt9kiCuQYVsMG
+ tp98AcbqVsCpOyDgC7qB+0tptCSrpQ9HfUr1syBEO78RmyhB6ab0BbaTiHWwEOuEoTY5JlFsx2F
+ jWIcO1r5DjEAWhsYaYZT+Q40frA16sa7ypDk5tJxE/NOpgzN5HYEqHSUUNdIs6hhVoNbQ1Q3r2T
+ VGuIw2UxuUHBdl01MZUJRqCZ04a+FI4NcNli5WRRHG/DtfuhI9mwBdAeFLln4LgTbRHDn1sKbiG
+ z6k1N71x7LJsI7zB7AKYbh62vMDNc2wBIg5kzj6MkwIhIa/ltgYYpcLfs8tZpxyMi7l0UlzWw8L
+ o5NGmLI7WJ3ed0dcOomR1vaC0mHWNthj8YqegKvMjN8rncQWk3XqgoqMW0TDmop/O8HM2sTWyzs
+ ivQ8L9QsqYjCrkXqRlzGmsNghRbbt/+JbqblPvnoYc3kV3tGgS4fW+l1Z+7lmW33mfiw==
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On Thu, Feb 27 2025 at 20:41, Yixun Lan wrote:
-> On 10:12 Thu 27 Feb     , Alex Elder wrote:
->> On 2/27/25 5:24 AM, Yixun Lan wrote:
->> > 
->> > diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
->> > index ec6d8e72d980f604ded2bfa2143420e0e0095920..cb874ab5e54a4763d601122becd63b6d759e55d2 100644
->> > --- a/kernel/irq/irqdomain.c
->> > +++ b/kernel/irq/irqdomain.c
->> > @@ -1208,10 +1208,17 @@ int irq_domain_translate_twocell(struct irq_domain *d,
->> >   				 unsigned long *out_hwirq,
->> >   				 unsigned int *out_type)
->> >   {
->> 
->> This function is meant for "twocell".  There is also another function
->> irq_domain_translate_onecell().  Why don't you just create
->> irq_domain_translate_threecell" instead?
->> 
-> good question!
->
-> it's too many changes for adding "threecell" which I thought not worth
-> the effort, or maybe we can rename the function to *twothreecell()?
->
-> I'm not sure which way to go is the best, ideas from maintainer are
-> welcome
+In this patch [1], the GPIO controller add support for describing
+hardware with a three-cell scheme:
 
-We really want to have explicit functions for two and three cells.
- 
->> > +	u32 irq, type;
->> > +
->> >   	if (WARN_ON(fwspec->param_count < 2))
->> >   		return -EINVAL;
->> > -	*out_hwirq = fwspec->param[0];
->> > -	*out_type = fwspec->param[1] & IRQ_TYPE_SENSE_MASK;
->> > +
->> > +	irq = fwspec->param_count - 2;
->> > +	type = fwspec->param_count - 1;
-> no matter two or three cell, it's always parse the last two cells,
-> virtually they are same syntax, which can reuse the *_translate_twocell()
-> function perfectly..
+    gpios = <&gpio instance offset flags>;
 
-Yes, that works but the code is completely non-obvious. So what you
-really want is something like this:
+It also result describing interrupts in three-cell as this in DT:
 
-int irq_domain_translate_cells(struct irq_domain *d, unsigned long *hwirq,
-			       unsigned int *type)
-{
-        unsigned int cells = fwspec->param_count;
+    node {
+            interrupt-parent = <&gpio>;
+            interrupts = <instance hwirq irqflag>;
+    }
 
-        switch (cells) {
-       	case 1:
-                *hwirq = fwspec->param[0];
-                *type = IRQ_TYPE_NONE;
-                return 0;
-       	case 2..3:
-	        /*
-        	 * For multi cell translations the hardware interrupt number and type
-	         * are in the last two cells.
-	         */
-		*hwirq = fwspec->param[cells - 2];
-        	*type = fwspec->param[cells - 1] & IRQ_TYPE_SENSE_MASK;
-                return 0;
-        default:
-   		return -EINVAL;
-        }
-}
+This series try to extend describing interrupts with three-cell scheme.
 
-Then have inline helpers:
+The first patch will add capability for parsing irq number and flag
+from last two cells which eventually will support the three-cells
+interrupt, the second patch support finding irqdomain according to
+interrupt instance index.
 
-static inline int irq_domain_translate_XXXcell(struct irq_domain *d, unsigned long *hwirq,
-					       unsigned int *type)
-{
-        return irq_domain_translate_cells(d, hwirq, type);
-}
+Link: https://lore.kernel.org/all/20250225-gpio-ranges-fourcell-v3-0-860382ba4713@linaro.org [1]
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Changes in v2:
+- introduce generic irq_domain_translate_cells(), other inline cells function 
+- hide the OF-specific things into gpiolib-of.c|h
+- Link to v1: https://lore.kernel.org/r/20250227-04-gpio-irq-threecell-v1-0-4ae4d91baadc@gentoo.org
 
-That avoids changing all call sites at once and merges the one cell
-translation into it.
+---
+Yixun Lan (2):
+      irqdomain: support three-cell scheme interrupts
+      gpiolib: support parsing gpio three-cell interrupts scheme
 
-You get the idea....
+ drivers/gpio/gpiolib-of.c |  8 +++++++
+ drivers/gpio/gpiolib-of.h |  6 +++++
+ drivers/gpio/gpiolib.c    | 23 +++++++++++++++----
+ include/linux/irqdomain.h | 37 +++++++++++++++++++++++--------
+ kernel/irq/irqdomain.c    | 56 +++++++++++++++++++----------------------------
+ 5 files changed, 83 insertions(+), 47 deletions(-)
+---
+base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+change-id: 20250227-04-gpio-irq-threecell-66e1e073c806
+prerequisite-change-id: 20250217-gpio-ranges-fourcell-85888ad219da:v3
+prerequisite-patch-id: 9d4c8b05cc56d25bfb93f3b06420ba6e93340d31
+prerequisite-patch-id: 7949035abd05ec02a9426bb17819d9108e66e0d7
 
-Thanks,
+Best regards,
+-- 
+Yixun Lan
 
-        tglx
