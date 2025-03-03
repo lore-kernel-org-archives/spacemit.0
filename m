@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FCD7082D
-	for <spacemit@lists.linux.dev>; Mon,  3 Mar 2025 09:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759B61E5B78
+	for <spacemit@lists.linux.dev>; Mon,  3 Mar 2025 12:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740994519; cv=none; b=An2PkPqfE7j6RmGVchy7P5KB0cZha0Tull+sAef8oLnj6w72JXiZ8xOv1Pc3eBvQpM+7ZASrAQ2BT/F/Ckyu3TI1tO2vj4//XEuj6BoJ8ifSi9435V5w4w2+mkVdaaS1mVDXX7K1nPQAWwhw7drrRR5zexs7NAjra3UDAUZ0tbY=
+	t=1741005617; cv=none; b=X99yoFoeFGPFFbjoCAHXZHdw9Z4y1KYw45ECC6eZpVEsCCLYDCd1iTwvJRIdQRvJzq87JUR9qEcEQRFS+bFTaVFupDtEvfvDK7j9ub1zK9+V6v126hs1291hS8TklxahQxmxQL3sT8kSlau7wyPVYLQk4m9+hntPHvIiAT2igug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740994519; c=relaxed/simple;
-	bh=gCpNNSve1jlt1V5SnYQVpGjhoChNTjthXctFbRk7RpM=;
+	s=arc-20240116; t=1741005617; c=relaxed/simple;
+	bh=r2XBzxVbY183ENmxhOU6qKFdYiUysRWHJxDNkNuv0aQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UnSNFKgjwGA+u83XWvDMIRQbVi+rPGrqoagmjMJqBZwtynQvJP3oJTD4wQYX6VXOqaUNfHSeKBlyNRU8OUMpLiMLF87tXpKSKNVawkaELYSTaiWZQVZ8ifD1GKFm7alszXsIsDoJSBdLWr72SDRALSiMopfvUEapsboqMffy6/Y=
+	 Content-Type:Content-Disposition:In-Reply-To; b=WJzL/WrErBuqUd4H+wQjkIGVisKi1fTi6QsiuAr1iiBKY+QM9s3dwXBFoob9TkD0E1ydcJE5IC6jwrInDxsxCRVTB3nK53A8fRNtcQTVfFaCvH8NZq5ADNiSvKo/tIiDBrcNZZE+83vgkixLzw1BzY5v+I4DwlWy+ZLaSIj/PDg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,22 +19,22 @@ Received: from localhost (unknown [116.232.55.252])
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 06910342FAE;
-	Mon, 03 Mar 2025 09:35:16 +0000 (UTC)
-Date: Mon, 3 Mar 2025 09:35:06 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 46A66342FEA;
+	Mon, 03 Mar 2025 12:40:15 +0000 (UTC)
+Date: Mon, 3 Mar 2025 12:40:11 +0000
 From: Yixun Lan <dlan@gentoo.org>
-To: Troy Mitchell <troymitchell988@gmail.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-riscv@lists.infradead.org,
-	linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: Re: [PATCH RESEND v5 1/2] dt-bindings: i2c: spacemit: add support
- for K1 SoC
-Message-ID: <20250303093506-GYA58937@gentoo>
-References: <20250303-k1-i2c-master-v5-0-21dfc7adfe37@gmail.com>
- <20250303-k1-i2c-master-v5-1-21dfc7adfe37@gmail.com>
+To: Thomas Gleixner <tglx@linutronix.de>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Alex Elder <elder@riscstar.com>,
+	Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org,
+	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v2 1/2] irqdomain: support three-cell scheme interrupts
+Message-ID: <20250303124011-GYA59067@gentoo>
+References: <20250302-04-gpio-irq-threecell-v2-0-34f13ad37ea4@gentoo.org>
+ <20250302-04-gpio-irq-threecell-v2-1-34f13ad37ea4@gentoo.org>
+ <87jz97cml1.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,100 +43,137 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250303-k1-i2c-master-v5-1-21dfc7adfe37@gmail.com>
+In-Reply-To: <87jz97cml1.ffs@tglx>
 
-On 13:30 Mon 03 Mar     , Troy Mitchell wrote:
-> The I2C of K1 supports fast-speed-mode and high-speed-mode,
-> and supports FIFO transmission.
-> 
-> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-> Signed-off-by: Troy Mitchell <troymitchell988@gmail.com>
-> ---
->  .../devicetree/bindings/i2c/spacemit,k1-i2c.yaml   | 59 ++++++++++++++++++++++
->  1 file changed, 59 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml b/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..db49f1f473e6f166f534b276c86b3951d86341c3
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
-> @@ -0,0 +1,59 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/i2c/spacemit,k1-i2c.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: I2C controller embedded in SpacemiT's K1 SoC
-> +
-> +maintainers:
-> +  - Troy Mitchell <troymitchell988@gmail.com>
-> +
-> +properties:
-> +  compatible:
-> +    const: spacemit,k1-i2c
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-..
-> +  clocks:
-> +    minItems: 2
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    minItems: 2
-> +    maxItems: 2
-I'd suggest to give a brief description and explicit clock name here,
-you can consult marvell,mv64xxx-i2c.yaml for example
+Hello, Thomas Gleixner:
 
-> +
-> +  clock-frequency:
-> +    description: |
-> +      K1 support three different modes which running different frequencies
-> +      standard speed mode: up to 100000 (100Hz)
-> +      fast speed mode    : up to 400000 (400Hz)
-> +      high speed mode    : up to 3300000 (3.3Mhz)
-> +    default: 400000
-> +    maximum: 3300000
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - clocks
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    i2c@d4010800 {
-> +        compatible = "spacemit,k1-i2c";
-> +        reg = <0xd4010800 0x38>;
-> +        interrupt-parent = <&plic>;
-> +        interrupts = <36>;
-> +        clocks = <&ccu 176>, <&ccu 90>;
-> +        clock-names = "apb", "twsi";
-9.1.4.61 TWSI0 CLOCK RESET CONTROL REGISTER(APBC_TWSI0_CLK_RST)
-https://developer.spacemit.com/documentation?token=LCrKwWDasiJuROkVNusc2pWTnEb#part594
-from above docs, there are two clocks 
-bit[1] - FNCLK, TWSI0 Functional Clock Enable/Disable
-bit[0] - APBCLK, TWSI0 APB Bus Clock Enable/Disable
-
-I'd suggest to name it according to the functionality, thus 'func', 'bus'
-clock, not its source.. which would make it more system wide consistent
-
-> +        clock-frequency = <100000>;
-> +    };
-> +
-> +...
+On 19:30 Sun 02 Mar     , Thomas Gleixner wrote:
+> On Sun, Mar 02 2025 at 07:15, Yixun Lan wrote:
+> > The is a prerequisite patch to support parsing three-cell
+> > interrupts which encoded as <instance hwirq irqflag>,
+> > the translate function will always retrieve irq number and
+> > flag from last two cells.
+> >
+> > In this patch, we introduce a generic interrupt cells translation
+> > function, others functions will be inline version.
 > 
-> -- 
-> 2.34.1
+> Please read:
 > 
+>   https://www.kernel.org/doc/html/latest/process/maintainer-tip.html#changelog
+>   https://www.kernel.org/doc/html/latest/process/submitting-patches.html#describe-changes
+> 
+> > +int irq_domain_translate_cells(struct irq_domain *d,
+> > +			       struct irq_fwspec *fwspec,
+> > +			       unsigned long *out_hwirq,
+> > +			       unsigned int *out_type);
+> 
+> Please get rid of the extra line breaks. You have 100 (99) characters available.
+> 
+> > +static inline int irq_domain_translate_onecell(struct irq_domain *d,
+> > +					       struct irq_fwspec *fwspec,
+> > +					       unsigned long *out_hwirq,
+> > +					       unsigned int *out_type)
+> > +{
+> > +	return irq_domain_translate_cells(d, fwspec, out_hwirq, out_type);
+> > +}
+> > +
+> > +static inline int irq_domain_translate_twocell(struct irq_domain *d,
+> > +					       struct irq_fwspec *fwspec,
+> > +					       unsigned long *out_hwirq,
+> > +					       unsigned int *out_type)
+> > +{
+> > +	return irq_domain_translate_cells(d, fwspec, out_hwirq, out_type);
+> > +}
+> > +
+> > +static inline int irq_domain_translate_threecell(struct irq_domain *d,
+> > +						 struct irq_fwspec *fwspec,
+> > +						 unsigned long *out_hwirq,
+> > +						 unsigned int *out_type)
+> > +{
+> > +	return irq_domain_translate_cells(d, fwspec, out_hwirq, out_type);
+> > +}
+> 
+> What's this for? It's not used. The onecell/twocell wrappers are just
+> there to keep the current code working.
+>   
+> > +int irq_domain_translate_cells(struct irq_domain *d,
+> > +			       struct irq_fwspec *fwspec,
+> > +			       unsigned long *out_hwirq,
+> > +			       unsigned int *out_type)
+> 
+> Please remove the extra line breaks.
+> 
+> int irq_domain_translate_cells(struct irq_domain *d, struct irq_fwspec *fwspec,
+> 			       unsigned long *out_hwirq, unsigned int *out_type)
+> 
+> is perfectly fine.
+> 
+> >  {
+> > -	if (WARN_ON(fwspec->param_count < 1))
+> > -		return -EINVAL;
+> > -	*out_hwirq = fwspec->param[0];
+> > -	*out_type = IRQ_TYPE_NONE;
+> > -	return 0;
+> > -}
+> > -EXPORT_SYMBOL_GPL(irq_domain_translate_onecell);
+> > +	unsigned int cells = fwspec->param_count;
+> >  
+> > -/**
+> > - * irq_domain_translate_twocell() - Generic translate for direct two cell
+> > - * bindings
+> > - * @d:		Interrupt domain involved in the translation
+> > - * @fwspec:	The firmware interrupt specifier to translate
+> > - * @out_hwirq:	Pointer to storage for the hardware interrupt number
+> > - * @out_type:	Pointer to storage for the interrupt type
+> > - *
+> > - * Device Tree IRQ specifier translation function which works with two cell
+> > - * bindings where the cell values map directly to the hwirq number
+> > - * and linux irq flags.
+> > - */
+> > -int irq_domain_translate_twocell(struct irq_domain *d,
+> > -				 struct irq_fwspec *fwspec,
+> > -				 unsigned long *out_hwirq,
+> > -				 unsigned int *out_type)
+> > -{
+> > -	if (WARN_ON(fwspec->param_count < 2))
+> > +	switch (cells) {
+> > +	case 1:
+> > +		*out_hwirq = fwspec->param[0];
+> > +		*out_type = IRQ_TYPE_NONE;
+> > +		return 0;
+> > +	case 2 ... 3:
+> 
+> I have second thoughts about this when looking deeper.
+> 
+> The current one/two cell implementations validate that param_count is at
+> least the number of parameters. Which means that the parameter count
+> could be larger, but only evaluates the first one or the first two.
+> 
+> I have no idea whether this matters or not, but arguably a two cell
+> fwspec could be successfully fed into translate_onecell(), no?
+> 
+> And that triggers a related question.
+> 
+> Why is the three cell translation not following the one/two cell scheme
+> and has the parameters at the same place (index 0,1), i.e. adding the
+> extra information at the end? That makes sense to me as the extra cell
+> is obviously not directly related to the interrupt mapping.
+
+this from gpio DT
+ gpios = <&gpio instance offset flags>;
+
+I think we currently just following the scheme with gpio cells order
+scheme, which is (index(instance) offset flag..), the index and offset
+are parameters to locate the irq which can easily derive from global
+gpio pin number, so I thought it's more intuitive to group them 
+orderly together..
+
+But you really raise a good suggestion here, if we follow appending extra
+information at the end, then it will make threecell translate scheme
+compatible with twocell, which mean we don't really need extra function
+to prase, and can eventually drop this patch, I personally like this direction.
+
+hi, Linus Walleij, what do you think on this?
 
 -- 
 Yixun Lan (dlan)
