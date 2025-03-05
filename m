@@ -1,133 +1,114 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71D719CC2E
-	for <spacemit@lists.linux.dev>; Wed,  5 Mar 2025 04:01:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BAA205E2B
+	for <spacemit@lists.linux.dev>; Wed,  5 Mar 2025 10:27:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741147274; cv=none; b=Bfmjl8KvIGT+1G8FWGthYncki/3znn1kAVluzkMPRKiVQKxZhmoZZtVMNSDaScgJ4eJLf2hI7iNZGc35UCGdcBhIAMF5KkFmaxTdPlYTt1dRJ9hRvy/ihTXNOhp+6Uc6p2Ik0evA9Ay26b6s+lVksJ+jRaGBKzzsInBeT6KjZN0=
+	t=1741170444; cv=none; b=eCUBEUvSJsrITrjKx4BXJBW5MV0FBs68iGsJnd5qupApWuPWq5+Me0N/Z6oNxvD+PCvGdX2e2AXVHke//ykHbKE4N4vbrFugDo44jMg8MMhQMH+OvZVJsSOu6BqS35nr+tEnB/rXaU0zg7RIuzKDgPC3cYVeaUe+SevhmP8u+6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741147274; c=relaxed/simple;
-	bh=c7n8loHullD7JXhQoqt6oq4ipwinlvGcRtIih2cRmuc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ou0xlGEEMW4d07Pq8K4mUg+gF/XoKWnBoRJGTnQ/uK9cuOMDZ0a1a26GWC6HWLdhi+2xpKJ8UIqVGyUxuFal3VhBb108cEkeXXYoY74Xl6W+fXPVDc7Y+zQz5c8W71YzW4Sm6E+8y9rp//dSQju2InilpntW2ssvGGpIPdyflrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=cHtp20Z7; arc=none smtp.client-ip=209.85.166.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sifive.com
+	s=arc-20240116; t=1741170444; c=relaxed/simple;
+	bh=LHkL3KRuNaccS9Vjluq7eDHrzCRV9vjozDXsO9ZgV+0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=o3iZ86dmsLl6Ph2qNDnX8JBrwuJ5N04sm8G5iy15HNM/pg16tU5b2rQZQGyz6V59W4jaNoAg6OjKNEIT5vq+3lUAI7GfojTf/JdRSZGnzxLvaixwOdbgGFQGgclxRdRljZfOWBxN1AvJ4JEfaFxQFPigkq9rxsfP/FkeNthNOsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=XmfQz31z; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="cHtp20Z7"
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3d1a428471fso50814755ab.2
-        for <spacemit@lists.linux.dev>; Tue, 04 Mar 2025 20:01:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="XmfQz31z"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43948021a45so60213505e9.1
+        for <spacemit@lists.linux.dev>; Wed, 05 Mar 2025 02:27:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sifive.com; s=google; t=1741147272; x=1741752072; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IAzReoWSx6Ky4BsTRXhDGhpk0Fac7rFxEYq0+DJkXWk=;
-        b=cHtp20Z7kchBVRqNRMHghYiTkVbWRmuESFWtn5jKbyOPQaEOuZRXHafo4kIrLsNqsy
-         GBe/cYS6QaMXIMZ4AElpocSMR7B3g7p04/Jnnb7/IM2LkMrpFqwZhFBdHYBOlXppKVSJ
-         TdEayg6LHF9aOzQF9aot5czlvaL1qdi2XbedoTgXCTunDHLqUMvWYePAJz1kh3nF8Qlc
-         WJ4Bqp71cxYZvGCYeRAZ++/04SHh6ers/H4nqXx0yRcKtyctgO16CpwRzaybDD0CLpUz
-         ODTpUuvvD+flmDcW6uEHQgT0EUsoxMPJdMBJ0GuXi19lbNysjQJKlz2W5qEa+B7yHQyV
-         t3zg==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1741170440; x=1741775240; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mCPKjpK6VO4lMEf73NVEG6/3JrmmaR4wPO/hIV6JAAc=;
+        b=XmfQz31zF/2tjA4DybtKzyO1OwUXZd+BKdxAMCI1Hj9TsKptZjWyrVz7MFL5OExvTL
+         sSo3wqgAkprMB0skGnwY/tYTYLsDcqbmFvIRNtFU6hW+JWFlas9t3zfXdGk1PbCtWuOo
+         q+Srjwj6fRMLf+4ag2jRtmxaGtudpcSW/WjsTDx9WaMmEjF5y+zmnmUySnqYdOAUA8xI
+         K3sM0mh3otYl7Leqv2r1cMdRT6EPXVb9OWxVUX0P3lHjNKtg+u1SQjtnTmyM7SPGKO7R
+         X3xAPrbfTNfvGq4u3NbImmB5Hd3yZMTCSToL4ZPek1+ERjFTf5IM5jJxduc8AVqu6dEy
+         WtWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741147272; x=1741752072;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IAzReoWSx6Ky4BsTRXhDGhpk0Fac7rFxEYq0+DJkXWk=;
-        b=SKoiDF4Iuf+DZeySYu/SO+/YdasHK8TfA5HirUY7yHIdEFkpssN0Y1bK4rCNGLYioU
-         rQl5UveL70iIHdPZqkjNars6CJ6B5SlZouQDLzw4BOctPLvqc5AvjI+M7yb+WdAn78hs
-         jQCM5v/F+ygNJspGQADYaHLyMJvxVSQapGTiDVl5PpZlGlWB6Vfk+XCaiWko+X4p1IZd
-         H5sA6H1gvGrR8MoIQ3ZT3sQP/DAIUcYhojBl7TAWN9HzD5+ybGr0jGTZ5zo+iH1HZCXT
-         5tJDWtIvrrwWGh6JP6UfKBSwgnqZMvObjIzsNVceLSTkVRb3vzkUKOJLUWNqh4FboLCs
-         b/Lw==
-X-Forwarded-Encrypted: i=1; AJvYcCUAfZKuhnxocax+Q8GiFzHI2bPM8IfAnhtz+GpFX9HKlGcBX3LS+O1nT4MJK5evmqF1QGd/k1n8Bw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz6Dvb1Mt/cSq0K13DNYKPN8mPqQJSiyzqy1ilqSCywjSZ/h6b2
-	iHtfvheoTXkdIDHMwkxcbyteMWixPERx00MTwXk+yLavrBpgAdkhXCugT052OUQ=
-X-Gm-Gg: ASbGncsilasd38+YtAlWppgOxVtSyHTz9vFFzuR8pkoAbv/2UmOodD7XvRzn0NFDS3i
-	8kunex9MAMSGX+gXXBR+f+f6wVhZhvHlwbPjYwzqNQqMPVELWOe0nMHL8ss6W4Q7y9nEoMZefC+
-	dYkg6sgBT/Xvh6ELc3Dp18HBvBTyl8Blu9d9+z8FuSYSL/rkgyEyepwrRLnIOsN/ycPwoB3vwgn
-	FndmXfvwweuAgP+PQLdyfDkM7uRn5UR3oH0VuOYs8hbe6bs2FNzPkDrzA1flU9T0QfAhy7XlG29
-	r4WfDjTB7U+gbE/dzB3UmVL6UluB4a6OtKUs9cg=
-X-Google-Smtp-Source: AGHT+IHu3MJTjF5+qGVR/U5nf98lXZ/G6BYq/rEMfIvyKQ41zfGyelWGxeEJNcGMavArNtzdZ37kIw==
-X-Received: by 2002:a05:6e02:1d03:b0:3d3:e2d9:5a58 with SMTP id e9e14a558f8ab-3d42b97c976mr17539195ab.17.1741147271939;
-        Tue, 04 Mar 2025 20:01:11 -0800 (PST)
-Received: from [100.64.0.1] ([170.85.6.166])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3d3deee5121sm34666245ab.65.2025.03.04.20.01.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Mar 2025 20:01:11 -0800 (PST)
-Message-ID: <eda41d6d-fa08-413b-8f3c-ce044e171615@sifive.com>
-Date: Tue, 4 Mar 2025 22:01:09 -0600
+        d=1e100.net; s=20230601; t=1741170440; x=1741775240;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mCPKjpK6VO4lMEf73NVEG6/3JrmmaR4wPO/hIV6JAAc=;
+        b=okzVok9H/9DuIMrSWIlQX2WUrzEBx5qBKn6WhraolcFa9VWUIlqVf0z1BY23AqUnaG
+         VMW4v01n6NBOGQL7M7tPT89an7AEsJ0xdLTaiEr86KRfgBqPtGq1iJ5dtIaZwhKNg/v2
+         NhUgGl/FveuTGsCjvSMyTqpZ0eXasZlz7+PsGHvhn5CE4pBVXAV5ha6pxhyjxqYZRYFG
+         0qNSAvmaygFZSvoSsxBUNcvTZ8S1mBjf1K+bqfyp49Uzz1cHsLLwxPzwtxNnzY7Aky+z
+         Xt6myXftN+wXmQE59i0Uoi0sK6CY0pciPGB6M38M0hiCn/Z1uv0Ctyu9NETe6BC6KApD
+         SSHw==
+X-Forwarded-Encrypted: i=1; AJvYcCXz5WWEFtmW/oGKTLDLdegOWrih61YB12AQ0znuav7adbpGYKRwZS/nOx9jlp8qjcJXpavZ4dvXhQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzJEUmhsFx5S9khkGuRKEw1HVObywIpFF5bDUPtCyXV2KmJCbcp
+	6MNXVV66I83zCOyXf+OoQdY9gWxgA7oyHLlD3AyioDqds/SpRgGym5i2OmsIk48=
+X-Gm-Gg: ASbGncvAcCovRR27knm41XS5szm1dr00n9AEoWgcPykJCqRBpLxQ2ViakupE1k0SkPk
+	esbE9X/XYonLoejLyMG1sU0o13aKFZKxuAn4prMx+qQNDcVNzPC6otSS5CXyW4DpPWi7tBwwdZV
+	+x/sWs5Fnua/Ak49YrHJaSgcFIjcl/vXgtZgbYvS4W4BLeX+tansGJAzKYaYcMl5CXeOUYXM7AU
+	EnCogfnq6R5zL4En1+xzpH7WIYsXk7oVyYghaIVJGF1L0NJxwCuQvCBMhj7yCxVfHjpwKegFTG4
+	xD+706znR3gxhjsCZKYW8Zn9LVNh+M3fGzwaOHMvXXVm
+X-Google-Smtp-Source: AGHT+IHMvKES4+39p/GD/gutXcsrB/9GUV4+AbW8RNvVpOWUIzKEe0uSKYCHBVcKeGfHAgKJtsSHgg==
+X-Received: by 2002:a05:600c:5120:b0:43b:c316:1fee with SMTP id 5b1f17b1804b1-43bd298f96fmr19612845e9.15.1741170439670;
+        Wed, 05 Mar 2025 02:27:19 -0800 (PST)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:e514:53b3:5af8:e408])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e485ddedsm20185004f8f.89.2025.03.05.02.27.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Mar 2025 02:27:18 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Linus Walleij <linus.walleij@linaro.org>,
+	Yixun Lan <dlan@gentoo.org>
+Cc: linux-gpio@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH] pinctrl: spacemit: destroy mutex at driver detach
+Date: Wed,  5 Mar 2025 11:27:10 +0100
+Message-ID: <20250305102710.52762-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v5 1/2] dt-bindings: i2c: spacemit: add support for
- K1 SoC
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Troy Mitchell <troymitchell988@gmail.com>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-riscv@lists.infradead.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
- Conor Dooley <conor.dooley@microchip.com>
-References: <20250303-k1-i2c-master-v5-0-21dfc7adfe37@gmail.com>
- <20250303-k1-i2c-master-v5-1-21dfc7adfe37@gmail.com>
- <20250303093506-GYA58937@gentoo>
- <ab10e069-d9e1-4df7-9454-8b0fc910443d@sifive.com>
- <20250305030540-GYA62563@gentoo>
-From: Samuel Holland <samuel.holland@sifive.com>
-Content-Language: en-US
-In-Reply-To: <20250305030540-GYA62563@gentoo>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 2025-03-04 9:05 PM, Yixun Lan wrote:
->>>> +        clocks = <&ccu 176>, <&ccu 90>;
->>>> +        clock-names = "apb", "twsi";
->>> 9.1.4.61 TWSI0 CLOCK RESET CONTROL REGISTER(APBC_TWSI0_CLK_RST)
->>> https://developer.spacemit.com/documentation?token=LCrKwWDasiJuROkVNusc2pWTnEb#part594
->>> from above docs, there are two clocks 
->>> bit[1] - FNCLK, TWSI0 Functional Clock Enable/Disable
->>> bit[0] - APBCLK, TWSI0 APB Bus Clock Enable/Disable
->>>
->>> I'd suggest to name it according to the functionality, thus 'func', 'bus'
->>> clock, not its source.. which would make it more system wide consistent
->>
->> Also in that same register is:
->>
->> 2	RST	RW	0x1	TWSI0 Reset Generation
->> This field resets both the APB and functional domain.
->> - 0: No Reset
->> - 1: Reset
->>
->> Which means you need a 'resets' property in the binding as well.
->>
-> right, there is reset needed
-> 
-> I'd suggest to add it as an incremental patch later, when we
-> implement real reset driver, and also complete the calling reset
-> consumer API in i2c driver
-> 
-> but, let me know if this is not the right way to go
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-If you add the resets property later, that's a breaking change to the DT,
-because existing devicetrees will not have that property. So you would have to
-make the reset consumer in the driver optional, even if it's not really
-optional, to work with older DTs. So it is _possible_ to add incrementally, but
-not recommended because it adds "legacy" code that never really goes away.
+The mutex initialized in probe() is never cleaned up. Use
+devm_mutex_init() to destroy it automatically.
 
-It's okay to define the binding as requiring the resets property now, even
-before the reset controller driver is merged. You just won't be able to add the
-I2C controller to the DTS until the reset controller binding is merged. But
-since the reset controller is the same IP block as the clock controller, its
-binding should be available soon anyway.
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+ drivers/pinctrl/spacemit/pinctrl-k1.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Regards,
-Samuel
+diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
+index 59fd555ff38d..67e867b04a02 100644
+--- a/drivers/pinctrl/spacemit/pinctrl-k1.c
++++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
+@@ -9,6 +9,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/spinlock.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ 
+ #include <linux/pinctrl/pinconf-generic.h>
+ #include <linux/pinctrl/pinconf.h>
+@@ -749,7 +750,10 @@ static int spacemit_pinctrl_probe(struct platform_device *pdev)
+ 	pctrl->data = pctrl_data;
+ 	pctrl->dev = dev;
+ 	raw_spin_lock_init(&pctrl->lock);
+-	mutex_init(&pctrl->mutex);
++
++	ret = devm_mutex_init(dev, &pctrl->mutex);
++	if (ret)
++		return ret;
+ 
+ 	platform_set_drvdata(pdev, pctrl);
+ 
+-- 
+2.45.2
 
