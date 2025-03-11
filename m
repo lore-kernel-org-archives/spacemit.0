@@ -1,753 +1,2011 @@
-Received: from mail-pj1-f68.google.com (mail-pj1-f68.google.com [209.85.216.68])
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2499221A444
-	for <spacemit@lists.linux.dev>; Fri,  7 Mar 2025 13:16:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C68C225764
+	for <spacemit@lists.linux.dev>; Tue, 11 Mar 2025 23:19:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741353411; cv=none; b=LE2+WDnYJBrsMbJevGpr6o6kyL9rtdt6ilspQD1VYvfrZI/RaE7MSD0nNqiOhk237y37l4brwMO6qaAnQbZ/LBRqbeXyNNJBec0OqEOW6C3wC4gNN0fMj2mBPXcRB2w8StfauQiCsevwRnBicwfmYG5Ai2Rhprqh/MjksCXQn/U=
+	t=1741735199; cv=none; b=cOFiNZpQdaWaDomzO423CouSnEsaE3Am+TVF02QbTaqWGGq+cbXEXN9rJ/Q4eG6Rl7pe3e6VlWJBoBDwkWsU1qolTm2r3cQ8IUUju9dJLyOilXWWoV3xEg4i3QutL7NT8ycXlAv9RDf8hw+iBkpiVE4PXzY+oE6zmWoRJJd1kfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741353411; c=relaxed/simple;
-	bh=sgsadTwwgq/XWsfw4TFlRKeDYQbR51Wv9V3/aiDoG2A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=q70g89x7DONzob/+odZvA5Nr4W+ww3u8YIdOqZHt1ex6xSJvuPhPwThjuKYx6B/FlMtWp3km2dD51VbyvMb1IztnwAg9gNiWNUKb0LNja3n7/f3T4y38YRpfdSOG66IdP3800BpcoX7IqKf1fqeQA1cfwCUXugoo4Ywjyk7aNXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RNIxZt/+; arc=none smtp.client-ip=209.85.216.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741735199; c=relaxed/simple;
+	bh=RN6X8vB1dszqILdwQiWmD0f7+U50L1BcQaks8GYd6Zc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k3z3QCgX7Z4jlhGBgXtMIoVheofX3ePNBSIWO88NwND0qq7mXxIGhsT2UQJwV/AbwfXfjfPI4EC5TKaL1y4vHBywrieb5917j/YJGvHWLsTC18XCYAm8lo+UuG94VDH9guuxgB1g7Up/Upo5BY7dubzrANMYEfMJ/wJ97aiB8vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ruZjgL0j; arc=none smtp.client-ip=209.85.166.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RNIxZt/+"
-Received: by mail-pj1-f68.google.com with SMTP id 98e67ed59e1d1-2fecba90cc3so3805215a91.2
-        for <spacemit@lists.linux.dev>; Fri, 07 Mar 2025 05:16:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ruZjgL0j"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-85aec8c95c4so492816539f.1
+        for <spacemit@lists.linux.dev>; Tue, 11 Mar 2025 16:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741353408; x=1741958208; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xzja5MTwmKusdpgio0+yGK24Gu9ZSgnAl6PDC2ElthI=;
-        b=RNIxZt/+za8TyCUGm6i2IzdikNDHQdjpFsqbgD663VGEo3O/HgNTcUmOjRyHFxfnxm
-         GRk2P++D6kxn/Bm6AICj39SiSHKW3Yyo932fcmH7szGpEab0IThHluoN7uwVsHry7YiP
-         zeisUEu3ufyAZWGTkfGIBYrXe5X5BJQkCuX2kMz2cLf2RXy5oohbvHtDNOERDtiy/Zwg
-         Z6VOafdU/PqqU3rNxsoHy2p5iR96XwlqKoc3DuuUBOdS4oiUslKuu8YCymkRt9paPanp
-         buCDunvGBaDb3xraufKcne35CTksQiis2h6zQie1AnKX+RXqh9FpcQgl3hxInUA2lPdZ
-         KUOw==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1741735194; x=1742339994; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q/yuA5CJJnNTGrxF6fDBil1DEwDO1Je5mq9iGAGFoUs=;
+        b=ruZjgL0j6Cpw0cewSd3JYTUhG8xDeilLeqvN1vfjZrupCbosJRYcmSvRUCpF39KDL0
+         SKgSTLIfXkqhcPSsIqPH7NvVdAXX56XiEHBY2XzSgBlp1DYSz/s5qF97r8vRhaf/7Yra
+         f+rLBH1mgTs2owo8M2dj7LN4W7RfYm/6+uPiM/gkQbf4ERGJxdzyrPHU9qOP9W2mm5fa
+         G+3libn5Onx/wm6kMjUd6PwXv1uNMMzaoW6WYguRx2BR/epaZ7l2V3tZjzeqbyuTuKj6
+         N7FLonS2Rm8WYGeEKH3KUyZT821GfH7nwwK46EfFmYiFQx6sLHlZj4hEnJTOFJ6VG2jn
+         D/2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741353408; x=1741958208;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xzja5MTwmKusdpgio0+yGK24Gu9ZSgnAl6PDC2ElthI=;
-        b=ZgkPzS90Y/qqkRfWuM9bC1SHK2NNiZqEP8ef7iSdlbYaGcRUeOQ70CWr5B64h3NlLD
-         oLKz/BGYUo9Annue4UUEYqlk4qyP6B0Yru5+4h+StahNg3iAiuRjFh+FOX9ElpvP5r13
-         CQ5eS3GaAHm3034A5Wu5AOtMDwqgCY2aIjHs3O4VQKrYHdqxpsFj9U597OrmF8GJDIRB
-         gIDZiIfWpFom5SnzQRufjWpvkubhi/kSJQqTOHprRMu4wHVQKSq01KHTzcUueRE33mps
-         /I1Ohx4dSiJBvodsUXrecdBeKHCMTsMvhhFQ2Jzo+ljVlIEzHipJnP1qmyWj6PB2OxIv
-         Mv4w==
-X-Forwarded-Encrypted: i=1; AJvYcCVxEUUmPDtiyPnmRCO+wCPqjFCY4xODZhRD+gcprIzFv6NgNwgBVDKYwKGyuMuBAnWoB4kMwVUBNQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxeWPUl1qfoGUd7jGNKBaWZd0Dkwg/CKwoZv53LyNSEkgjxYo6E
-	jR1+dAii1qiq+UVFsu9KeFY2UhTCUENNTyK/Dy68rjsB7XlCyR/v
-X-Gm-Gg: ASbGnctlhXMyV4rx3eyA8AMuuuSE50+7D5h/WMGOF9zH9kjB1Eh21rleB3VZ1D0riZV
-	MhuXfeILiX5a7UT5x0NwL4CXOuMj0GpkihJaoSbtrtQR3wmG5S6OigXa1brceDI0pOwj5W7r2PK
-	Ba1FMVzL/bZqTtuPtX8VGUqs+A7G++I1qICzHTtOaR2z0zJwPjBkjwA3tCa7V3ApcfXvU2InXog
-	ponntU1SJ8NI0IwF6qJJM00tFlEvHj/iMP0hyOnsupF6NknFTmAcVXX9OvRocOz6uYPtIFzzvLn
-	ThGia1lF7vri7L8Fnlk7EZlxCbp/
-X-Google-Smtp-Source: AGHT+IE+QPBrIGp/dtmnVoBNMSEI48iDBTNS8PjVZotmvs3U67peoFEl0Z12pFBy40vFPdbrReU57Q==
-X-Received: by 2002:a17:90b:1d0a:b0:2ea:83a0:47a5 with SMTP id 98e67ed59e1d1-2ff7ce457acmr5221230a91.4.1741353408158;
-        Fri, 07 Mar 2025 05:16:48 -0800 (PST)
-Received: from [127.0.1.1] ([2602:f919:106::1b8])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff693f7cebsm2984589a91.45.2025.03.07.05.16.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Mar 2025 05:16:47 -0800 (PST)
-From: Troy Mitchell <troymitchell988@gmail.com>
-Date: Fri, 07 Mar 2025 21:13:47 +0800
-Subject: [PATCH v6 2/2] i2c: spacemit: add support for SpacemiT K1 SoC
+        d=1e100.net; s=20230601; t=1741735194; x=1742339994;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q/yuA5CJJnNTGrxF6fDBil1DEwDO1Je5mq9iGAGFoUs=;
+        b=gjXn3r5x5Y/ZEh8Jos2FYdJF6d8FKj/KiOX5+U2weAM0vcNMVROb/zkuyHixZ3AAkc
+         /1QKohmK0pL2JJ5EnARHWFFR9evDBs9aq/yW5jhG7gvcDX2ebxlkCPGPUD40EmkOlBnR
+         r3IiYNP/TgwncqNHJp0mOvSStIAVC6wdrPF6nRWtaVuWpWVvGE1GfRDb/JkxHLaqCjH0
+         rj1vIt6c+HoP5C5DlY3Klbx884GrWMjqiN4ARJrA53dLyUsfBY1DGlkvgKXBfAx6eeZM
+         Vtn/4rwkk6y4ZFEkt+oUeLrizpchRl8uTNvGnQLaeIBW+PBLontTV1ASD3wt0uerso6a
+         u0cg==
+X-Forwarded-Encrypted: i=1; AJvYcCU21SAHt6wSGfuX+w7kZ3F3/eVfyxdmuRzP+305bb8sxw3O4I+ZDBvhU6mbtr029AJRNLYhiRcLIA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yynmgqwb7BIrWl9LMiotsXK5/Mk65AN4JTURyflk3ZK7vE8eVrq
+	caeK2Ss3puLAbdOqytEpJ/hM6cajZVwXzitwM4SOPp9Yng8FtfhcjR0GB1BV6To=
+X-Gm-Gg: ASbGncvYcV7ctkMnw9qrhAKnF+7O1fayqy3x0h8v04p7cY6qYRhqa3LtoADBORLlgS+
+	+//pKMYK79kP2tYwVw91WS3EeMaIgOcYQ4Dv75EorsevEskoO9KEFcIKNbdGn9B/zp+pFRjAxGs
+	DVBuQqyfqOQ8TFWbcgqQxafBFFBPDU264y1f/Zf1/eFOvQl8kr9GTmc35AKXsxN2asXW6gSmhrs
+	8A+7CYosXknIR/6h2qK/CRExCt6uRBqmRmSLbljejHbzNWdkB0U+KaGGlmCM6W6xXfoTxpeCS3i
+	jsjiKkn5fc/DycwfUvRRdmpIpoGVQ8czmvBLQ6VM9Ar7zYYnq/yLwUmD8FN+VFzmw9wx19RyV6P
+	CZmFYc/kN
+X-Google-Smtp-Source: AGHT+IEUhE/b4sL1a0QlZr/ZVnzaK6rtIwyh3HAuBSBl1n+Ue+iq1MflhdSXrDJYs6O8fMByD8XefA==
+X-Received: by 2002:a05:6e02:1a83:b0:3d4:e6:d872 with SMTP id e9e14a558f8ab-3d4418cd5fbmr220663935ab.9.1741735193921;
+        Tue, 11 Mar 2025 16:19:53 -0700 (PDT)
+Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f254c4889csm155371173.139.2025.03.11.16.19.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Mar 2025 16:19:53 -0700 (PDT)
+Message-ID: <d625c473-789c-42f9-918c-8a649d058513@riscstar.com>
+Date: Tue, 11 Mar 2025 18:19:51 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/5] clk: spacemit: Add clock support for Spacemit K1
+ SoC
+To: Haylen Chu <heylenay@4d2.org>, Michael Turquette
+ <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Haylen Chu <heylenay@outlook.com>,
+ Yixun Lan <dlan@gentoo.org>
+Cc: linux-riscv@lists.infradead.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ spacemit@lists.linux.dev, Inochi Amaoto <inochiama@outlook.com>,
+ Chen Wang <unicornxdotw@foxmail.com>, Jisheng Zhang <jszhang@kernel.org>,
+ Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+ Guodong Xu <guodong@riscstar.com>
+References: <20250306175750.22480-2-heylenay@4d2.org>
+ <20250306175750.22480-5-heylenay@4d2.org>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20250306175750.22480-5-heylenay@4d2.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250307-k1-i2c-master-v6-2-34f17d2dae1c@gmail.com>
-References: <20250307-k1-i2c-master-v6-0-34f17d2dae1c@gmail.com>
-In-Reply-To: <20250307-k1-i2c-master-v6-0-34f17d2dae1c@gmail.com>
-To: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Troy Mitchell <troymitchell988@gmail.com>
-Cc: linux-riscv@lists.infradead.org, linux-i2c@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- spacemit@lists.linux.dev
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1741353244; l=20443;
- i=troymitchell988@gmail.com; h=from:subject:message-id;
- bh=sgsadTwwgq/XWsfw4TFlRKeDYQbR51Wv9V3/aiDoG2A=;
- b=SOEaH2avZ+orX3dh2vwml042emN63e+p/iuaRakR19JpfDJ3jE8qGzOfiHR59Lz2CC8Tj7gk6
- 6mjIF39ypHeAjUOA8C1T7UnSy4hYI9j1aoX5MTmj4n7EgfkpJnZAsO6
-X-Developer-Key: i=troymitchell988@gmail.com; a=ed25519;
- pk=2spEMGBd/Wkpd36N1aD9KFWOk0aHrhVxZQt+jxLXVC0=
 
-This patch introduces basic I2C support for the SpacemiT K1 SoC,
-utilizing interrupts for transfers.
+On 3/6/25 11:57 AM, Haylen Chu wrote:
+> The clock tree of K1 SoC contains three main types of clock hardware
+> (PLL/DDN/MIX) and has control registers split into several multifunction
+> devices: APBS (PLLs), MPMU, APBC and APMU.
+> 
+> All register operations are done through regmap to ensure atomiciy
+> between concurrent operations of clock driver and reset,
+> power-domain driver that will be introduced in the future.
+> 
+> Signed-off-by: Haylen Chu <heylenay@4d2.org>
 
-The driver has been tested using i2c-tools on a Bananapi-F3 board,
-and basic I2C read/write operations have been confirmed to work.
+I'm very glad you have the DT issues resolved now.
 
-Signed-off-by: Troy Mitchell <troymitchell988@gmail.com>
----
- drivers/i2c/busses/Kconfig  |  17 ++
- drivers/i2c/busses/Makefile |   1 +
- drivers/i2c/busses/i2c-k1.c | 601 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 619 insertions(+)
+I again have lots of comments on the code, and I think I've
+identified a few bugs.  Most of my comments, however, are
+suggesting minor changes for consistency and readability.
 
-diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index fc438f4457713d5559d163840a7b11e8cdbb8f58..12d0e99566d8625aa374279956b71a4034ded4ac 100644
---- a/drivers/i2c/busses/Kconfig
-+++ b/drivers/i2c/busses/Kconfig
-@@ -783,6 +783,23 @@ config I2C_JZ4780
- 
- 	 If you don't know what to do here, say N.
- 
-+config I2C_K1
-+	tristate "Spacemit K1 I2C adapter"
-+	depends on ARCH_SPACEMIT || COMPILE_TEST
-+	depends on OF
-+	help
-+	  This option enables support for the I2C interface on the Spacemit K1
-+	  platform.
-+
-+	  If you enable this configuration, the kernel will include support for
-+	  the I2C adapter specific to the Spacemit K1 platform. This driver can
-+	  be used to manage I2C bus transactions, which are necessary for
-+	  interfacing with I2C peripherals such as sensors, EEPROMs, and other
-+	  devices.
-+
-+	  This driver can also be built as a module.  If so, the
-+	  module will be called `i2c-k1`.
-+
- config I2C_KEBA
- 	tristate "KEBA I2C controller support"
- 	depends on HAS_IOMEM
-diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
-index 1c2a4510abe44a689dfe67d2d64cf0cf3434f510..c1252e2b779e2e47492d66179b442f2202ec0416 100644
---- a/drivers/i2c/busses/Makefile
-+++ b/drivers/i2c/busses/Makefile
-@@ -74,6 +74,7 @@ obj-$(CONFIG_I2C_IMX)		+= i2c-imx.o
- obj-$(CONFIG_I2C_IMX_LPI2C)	+= i2c-imx-lpi2c.o
- obj-$(CONFIG_I2C_IOP3XX)	+= i2c-iop3xx.o
- obj-$(CONFIG_I2C_JZ4780)	+= i2c-jz4780.o
-+obj-$(CONFIG_I2C_K1)		+= i2c-k1.o
- obj-$(CONFIG_I2C_KEBA)		+= i2c-keba.o
- obj-$(CONFIG_I2C_KEMPLD)	+= i2c-kempld.o
- obj-$(CONFIG_I2C_LPC2K)		+= i2c-lpc2k.o
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..1ef98a303fb14ce10d283225ce0617a0b9f405f7
---- /dev/null
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -0,0 +1,601 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2024 Troy Mitchell <troymitchell988@gmail.com>
-+ */
-+
-+ #include <linux/clk.h>
-+ #include <linux/i2c.h>
-+ #include <linux/iopoll.h>
-+ #include <linux/module.h>
-+ #include <linux/of_address.h>
-+ #include <linux/platform_device.h>
-+
-+/* spacemit i2c registers */
-+#define SPACEMIT_ICR		 0x0		/* Control Register */
-+#define SPACEMIT_ISR		 0x4		/* Status Register */
-+#define SPACEMIT_IDBR		 0xc		/* Data Buffer Register */
-+#define SPACEMIT_IBMR		 0x1c		/* Bus monitor register */
-+
-+/* SPACEMIT_ICR register fields */
-+#define SPACEMIT_CR_START        BIT(0)		/* start bit */
-+#define SPACEMIT_CR_STOP         BIT(1)		/* stop bit */
-+#define SPACEMIT_CR_ACKNAK       BIT(2)		/* send ACK(0) or NAK(1) */
-+#define SPACEMIT_CR_TB           BIT(3)		/* transfer byte bit */
-+/* Bits 4-7 are reserved */
-+#define SPACEMIT_CR_MODE_FAST    BIT(8)		/* bus mode (master operation) */
-+/* Bit 9 is reserved */
-+#define SPACEMIT_CR_UR           BIT(10)	/* unit reset */
-+/* Bits 11-12 are reserved */
-+#define SPACEMIT_CR_SCLE         BIT(13)	/* master clock enable */
-+#define SPACEMIT_CR_IUE          BIT(14)	/* unit enable */
-+/* Bits 15-17 are reserved */
-+#define SPACEMIT_CR_ALDIE        BIT(18)	/* enable arbitration interrupt */
-+#define SPACEMIT_CR_DTEIE        BIT(19)	/* enable tx interrupts */
-+#define SPACEMIT_CR_DRFIE        BIT(20)	/* enable rx interrupts */
-+#define SPACEMIT_CR_GCD          BIT(21)	/* general call disable */
-+#define SPACEMIT_CR_BEIE         BIT(22)	/* enable bus error ints */
-+/* Bits 23-24 are reserved */
-+#define SPACEMIT_CR_MSDIE        BIT(25)	/* master STOP detected int enable */
-+#define SPACEMIT_CR_MSDE         BIT(26)	/* master STOP detected enable */
-+#define SPACEMIT_CR_TXDONEIE     BIT(27)	/* transaction done int enable */
-+#define SPACEMIT_CR_TXEIE        BIT(28)	/* transmit FIFO empty int enable */
-+#define SPACEMIT_CR_RXHFIE       BIT(29)	/* receive FIFO half-full int enable */
-+#define SPACEMIT_CR_RXFIE        BIT(30)	/* receive FIFO full int enable */
-+#define SPACEMIT_CR_RXOVIE       BIT(31)	/* receive FIFO overrun int enable */
-+
-+#define SPACEMIT_I2C_INT_CTRL_MASK	(SPACEMIT_CR_ALDIE | SPACEMIT_CR_DTEIE | \
-+					 SPACEMIT_CR_DRFIE | SPACEMIT_CR_BEIE | \
-+					 SPACEMIT_CR_TXDONEIE | SPACEMIT_CR_TXEIE | \
-+					 SPACEMIT_CR_RXHFIE | SPACEMIT_CR_RXFIE | \
-+					 SPACEMIT_CR_RXOVIE | SPACEMIT_CR_MSDIE)
-+
-+/* SPACEMIT_ISR register fields */
-+/* Bits 0-13 are reserved */
-+#define SPACEMIT_SR_ACKNAK       BIT(14)	/* ACK/NACK status */
-+#define SPACEMIT_SR_UB           BIT(15)	/* unit busy */
-+#define SPACEMIT_SR_IBB          BIT(16)	/* i2c bus busy */
-+#define SPACEMIT_SR_EBB          BIT(17)	/* early bus busy */
-+#define SPACEMIT_SR_ALD          BIT(18)	/* arbitration loss detected */
-+#define SPACEMIT_SR_ITE          BIT(19)	/* tx buffer empty */
-+#define SPACEMIT_SR_IRF          BIT(20)	/* rx buffer full */
-+#define SPACEMIT_SR_GCAD         BIT(21)	/* general call address detected */
-+#define SPACEMIT_SR_BED          BIT(22)	/* bus error no ACK/NAK */
-+#define SPACEMIT_SR_SAD          BIT(23)	/* slave address detected */
-+#define SPACEMIT_SR_SSD          BIT(24)	/* slave stop detected */
-+/* Bit 25 is reserved */
-+#define SPACEMIT_SR_MSD          BIT(26)	/* master stop detected */
-+#define SPACEMIT_SR_TXDONE       BIT(27)	/* transaction done */
-+#define SPACEMIT_SR_TXE          BIT(28)	/* tx FIFO empty */
-+#define SPACEMIT_SR_RXHF         BIT(29)	/* rx FIFO half-full */
-+#define SPACEMIT_SR_RXF          BIT(30)	/* rx FIFO full */
-+#define SPACEMIT_SR_RXOV         BIT(31)	/* RX FIFO overrun */
-+
-+#define SPACEMIT_I2C_INT_STATUS_MASK	(SPACEMIT_SR_RXOV | SPACEMIT_SR_RXF | SPACEMIT_SR_RXHF | \
-+					SPACEMIT_SR_TXE | SPACEMIT_SR_TXDONE | SPACEMIT_SR_MSD | \
-+					SPACEMIT_SR_SSD | SPACEMIT_SR_SAD | SPACEMIT_SR_BED | \
-+					SPACEMIT_SR_GCAD | SPACEMIT_SR_IRF | SPACEMIT_SR_ITE | \
-+					SPACEMIT_SR_ALD)
-+
-+/* SPACEMIT_IBMR register fields */
-+#define SPACEMIT_BMR_SDA         BIT(0)		/* SDA line level */
-+#define SPACEMIT_BMR_SCL         BIT(1)		/* SCL line level */
-+
-+/* i2c bus recover timeout: us */
-+#define SPACEMIT_I2C_BUS_BUSY_TIMEOUT	100000
-+
-+#define SPACEMIT_SR_ERR	(SPACEMIT_SR_BED | SPACEMIT_SR_RXOV | SPACEMIT_SR_ALD)
-+
-+#define SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ	100000
-+#define SPACEMIT_I2C_MAX_FAST_MODE_FREQ		400000
-+
-+enum spacemit_i2c_state {
-+	STATE_IDLE,
-+	STATE_START,
-+	STATE_READ,
-+	STATE_WRITE,
-+};
-+
-+/* i2c-spacemit driver's main struct */
-+struct spacemit_i2c_dev {
-+	struct device *dev;
-+	struct i2c_adapter adapt;
-+
-+	/* hardware resources */
-+	void __iomem *base;
-+	int irq;
-+	u32 clock_freq;
-+
-+	struct i2c_msg *msgs;
-+	int msg_num;
-+
-+	/* index of the current message being processed */
-+	int msg_idx;
-+	u8 *msg_buf;
-+	/* the number of unprocessed bytes remaining in each message  */
-+	size_t unprocessed;
-+
-+	enum spacemit_i2c_state state;
-+	bool read;
-+	struct completion complete;
-+	u32 status;
-+};
-+
-+static void spacemit_i2c_enable(struct spacemit_i2c_dev *i2c)
-+{
-+	u32 val;
-+
-+	val = readl(i2c->base + SPACEMIT_ICR);
-+	val |= SPACEMIT_CR_IUE;
-+	writel(val, i2c->base + SPACEMIT_ICR);
-+}
-+
-+static void spacemit_i2c_disable(struct spacemit_i2c_dev *i2c)
-+{
-+	u32 val;
-+
-+	val = readl(i2c->base + SPACEMIT_ICR);
-+	val &= ~SPACEMIT_CR_IUE;
-+	writel(val, i2c->base + SPACEMIT_ICR);
-+}
-+
-+static void spacemit_i2c_reset(struct spacemit_i2c_dev *i2c)
-+{
-+	writel(SPACEMIT_CR_UR, i2c->base + SPACEMIT_ICR);
-+	udelay(5);
-+	writel(0, i2c->base + SPACEMIT_ICR);
-+}
-+
-+static int spacemit_i2c_handle_err(struct spacemit_i2c_dev *i2c)
-+{
-+	dev_dbg(i2c->dev, "i2c error status: 0x%08x\n", i2c->status);
-+
-+	if (i2c->status & (SPACEMIT_SR_BED | SPACEMIT_SR_ALD)) {
-+		spacemit_i2c_reset(i2c);
-+		return -EAGAIN;
-+	}
-+
-+	return i2c->status & SPACEMIT_SR_ACKNAK ? -ENXIO : -EIO;
-+}
-+
-+static void spacemit_i2c_conditionally_reset_bus(struct spacemit_i2c_dev *i2c)
-+{
-+	u32 status;
-+
-+	/* if bus is locked, reset unit. 0: locked */
-+	status = readl(i2c->base + SPACEMIT_IBMR);
-+	if ((status & SPACEMIT_BMR_SDA) && (status & SPACEMIT_BMR_SCL))
-+		return;
-+
-+	spacemit_i2c_reset(i2c);
-+	usleep_range(10, 20);
-+
-+	/* check scl status again */
-+	status = readl(i2c->base + SPACEMIT_IBMR);
-+	if (!(status & SPACEMIT_BMR_SCL))
-+		dev_warn_ratelimited(i2c->dev, "unit reset failed\n");
-+}
-+
-+static int spacemit_i2c_wait_bus_busy(struct spacemit_i2c_dev *i2c)
-+{
-+	int ret;
-+	u32 val;
-+
-+	val = readl(i2c->base + SPACEMIT_ISR);
-+	if (!(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)))
-+		return 0;
-+
-+	ret = readl_poll_timeout(i2c->base + SPACEMIT_ISR,
-+				 val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
-+				 1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
-+	if (ret)
-+		spacemit_i2c_reset(i2c);
-+
-+	return ret;
-+}
-+
-+static void spacemit_i2c_check_bus_release(struct spacemit_i2c_dev *i2c)
-+{
-+	/* in case bus is not released after transfer completes */
-+	if (readl(i2c->base + SPACEMIT_ISR) & SPACEMIT_SR_EBB) {
-+		spacemit_i2c_conditionally_reset_bus(i2c);
-+		usleep_range(90, 150);
-+	}
-+}
-+
-+static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
-+{
-+	u32 val;
-+
-+	/*
-+	 * Unmask interrupt bits for all xfer mode:
-+	 * bus error, arbitration loss detected.
-+	 * For transaction complete signal, we use master stop
-+	 * interrupt, so we don't need to unmask SPACEMIT_CR_TXDONEIE.
-+	 */
-+	val = SPACEMIT_CR_BEIE | SPACEMIT_CR_ALDIE;
-+
-+	/*
-+	 * Unmask interrupt bits for interrupt xfer mode:
-+	 * DBR rx full.
-+	 * For tx empty interrupt SPACEMIT_CR_DTEIE, we only
-+	 * need to enable when trigger byte transfer to start
-+	 * data sending.
-+	 */
-+	val |= SPACEMIT_CR_DRFIE;
-+
-+	if (i2c->clock_freq == SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
-+		val |= SPACEMIT_CR_MODE_FAST;
-+
-+	/* disable response to general call */
-+	val |= SPACEMIT_CR_GCD;
-+
-+	/* enable SCL clock output */
-+	val |= SPACEMIT_CR_SCLE;
-+
-+	/* enable master stop detected */
-+	val |= SPACEMIT_CR_MSDE | SPACEMIT_CR_MSDIE;
-+
-+	writel(val, i2c->base + SPACEMIT_ICR);
-+}
-+
-+static inline void
-+spacemit_i2c_clear_int_status(struct spacemit_i2c_dev *i2c, u32 mask)
-+{
-+	writel(mask & SPACEMIT_I2C_INT_STATUS_MASK, i2c->base + SPACEMIT_ISR);
-+}
-+
-+static void spacemit_i2c_start(struct spacemit_i2c_dev *i2c)
-+{
-+	u32 slave_addr_rw, val;
-+	struct i2c_msg *cur_msg = i2c->msgs + i2c->msg_idx;
-+
-+	i2c->read = !!(cur_msg->flags & I2C_M_RD);
-+
-+	i2c->state = STATE_START;
-+
-+	slave_addr_rw = (cur_msg->addr & 0x7f) << 1;
-+	if (cur_msg->flags & I2C_M_RD)
-+		slave_addr_rw |= 1;
-+
-+	writel(slave_addr_rw, i2c->base + SPACEMIT_IDBR);
-+
-+	/* send start pulse */
-+	val = readl(i2c->base + SPACEMIT_ICR);
-+	val &= ~SPACEMIT_CR_STOP;
-+	val |= SPACEMIT_CR_START | SPACEMIT_CR_TB | SPACEMIT_CR_DTEIE;
-+	writel(val, i2c->base + SPACEMIT_ICR);
-+}
-+
-+static void spacemit_i2c_stop(struct spacemit_i2c_dev *i2c)
-+{
-+	u32 val;
-+
-+	val = readl(i2c->base + SPACEMIT_ICR);
-+	val |= SPACEMIT_CR_STOP | SPACEMIT_CR_ALDIE | SPACEMIT_CR_TB;
-+
-+	if (i2c->read)
-+		val |= SPACEMIT_CR_ACKNAK;
-+
-+	writel(val, i2c->base + SPACEMIT_ICR);
-+}
-+
-+static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
-+{
-+	unsigned long time_left;
-+
-+	for (i2c->msg_idx = 0; i2c->msg_idx < i2c->msg_num; i2c->msg_idx++) {
-+		i2c->msg_buf = (i2c->msgs + i2c->msg_idx)->buf;
-+		i2c->status = 0;
-+		i2c->unprocessed = (i2c->msgs + i2c->msg_idx)->len;
-+
-+		reinit_completion(&i2c->complete);
-+
-+		spacemit_i2c_start(i2c);
-+
-+		time_left = wait_for_completion_timeout(&i2c->complete,
-+							i2c->adapt.timeout);
-+		if (time_left == 0) {
-+			dev_err(i2c->dev, "msg completion timeout\n");
-+			spacemit_i2c_conditionally_reset_bus(i2c);
-+			spacemit_i2c_reset(i2c);
-+			return -ETIMEDOUT;
-+		}
-+
-+		if (i2c->status & SPACEMIT_SR_ERR)
-+			return spacemit_i2c_handle_err(i2c);
-+	}
-+
-+	return 0;
-+}
-+
-+static bool spacemit_i2c_is_last_msg(struct spacemit_i2c_dev *i2c)
-+{
-+	if (i2c->msg_idx != i2c->msg_num - 1)
-+		return false;
-+
-+	if (i2c->read)
-+		return i2c->unprocessed == 1;
-+
-+	return !i2c->unprocessed;
-+}
-+
-+static void spacemit_i2c_handle_write(struct spacemit_i2c_dev *i2c)
-+{
-+	/* if transfer completes, SPACEMIT_ISR will handle it */
-+	if (i2c->status & SPACEMIT_SR_MSD)
-+		return;
-+
-+	if (i2c->unprocessed) {
-+		writel(*i2c->msg_buf++, i2c->base + SPACEMIT_IDBR);
-+		i2c->unprocessed--;
-+		return;
-+	}
-+
-+	/* STATE_IDLE avoids trigger next byte */
-+	i2c->state = STATE_IDLE;
-+	complete(&i2c->complete);
-+}
-+
-+static void spacemit_i2c_handle_read(struct spacemit_i2c_dev *i2c)
-+{
-+	if (i2c->unprocessed) {
-+		*i2c->msg_buf++ = readl(i2c->base + SPACEMIT_IDBR);
-+		i2c->unprocessed--;
-+	}
-+
-+	/* if transfer completes, SPACEMIT_ISR will handle it */
-+	if (i2c->status & (SPACEMIT_SR_MSD | SPACEMIT_SR_ACKNAK))
-+		return;
-+
-+	/* it has to append stop bit in icr that read last byte */
-+	if (i2c->unprocessed)
-+		return;
-+
-+	/* STATE_IDLE avoids trigger next byte */
-+	i2c->state = STATE_IDLE;
-+	complete(&i2c->complete);
-+}
-+
-+static void spacemit_i2c_handle_start(struct spacemit_i2c_dev *i2c)
-+{
-+	i2c->state = i2c->read ? STATE_READ : STATE_WRITE;
-+	if (i2c->state == STATE_WRITE)
-+		spacemit_i2c_handle_write(i2c);
-+}
-+
-+static void spacemit_i2c_err_check(struct spacemit_i2c_dev *i2c)
-+{
-+	u32 val;
-+
-+	/*
-+	 * send transaction complete signal:
-+	 * error happens, detect master stop
-+	 */
-+	if (!(i2c->status & (SPACEMIT_SR_ERR | SPACEMIT_SR_MSD)))
-+		return;
-+
-+	/*
-+	 * Here the transaction is already done, we don't need any
-+	 * other interrupt signals from now, in case any interrupt
-+	 * happens before spacemit_i2c_xfer to disable irq and i2c unit,
-+	 * we mask all the interrupt signals and clear the interrupt
-+	 * status.
-+	 */
-+	val = readl(i2c->base + SPACEMIT_ICR);
-+	val &= ~SPACEMIT_I2C_INT_CTRL_MASK;
-+	writel(val, i2c->base + SPACEMIT_ICR);
-+
-+	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
-+
-+	i2c->state = STATE_IDLE;
-+	complete(&i2c->complete);
-+}
-+
-+static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
-+{
-+	struct spacemit_i2c_dev *i2c = devid;
-+	u32 status, val;
-+
-+	status = readl(i2c->base + SPACEMIT_ISR);
-+	if (!status)
-+		return IRQ_HANDLED;
-+
-+	i2c->status = status;
-+
-+	spacemit_i2c_clear_int_status(i2c, status);
-+
-+	if (i2c->status & SPACEMIT_SR_ERR)
-+		goto err_out;
-+
-+	val = readl(i2c->base + SPACEMIT_ICR);
-+	val &= ~(SPACEMIT_CR_TB | SPACEMIT_CR_ACKNAK | SPACEMIT_CR_STOP | SPACEMIT_CR_START);
-+	writel(val, i2c->base + SPACEMIT_ICR);
-+
-+	switch (i2c->state) {
-+	case STATE_START:
-+		spacemit_i2c_handle_start(i2c);
-+		break;
-+	case STATE_READ:
-+		spacemit_i2c_handle_read(i2c);
-+		break;
-+	case STATE_WRITE:
-+		spacemit_i2c_handle_write(i2c);
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	if (i2c->state != STATE_IDLE) {
-+		if (spacemit_i2c_is_last_msg(i2c)) {
-+			/* trigger next byte with stop */
-+			spacemit_i2c_stop(i2c);
-+		} else {
-+			/* trigger next byte */
-+			val |= SPACEMIT_CR_ALDIE | SPACEMIT_CR_TB;
-+			writel(val, i2c->base + SPACEMIT_ICR);
-+		}
-+	}
-+
-+err_out:
-+	spacemit_i2c_err_check(i2c);
-+	return IRQ_HANDLED;
-+}
-+
-+static void spacemit_i2c_calc_timeout(struct spacemit_i2c_dev *i2c)
-+{
-+	unsigned long timeout;
-+	int idx = 0, cnt = 0;
-+
-+	while (idx < i2c->msg_num) {
-+		cnt += (i2c->msgs + idx)->len + 1;
-+		idx++;
-+	}
-+
-+	/*
-+	 * multiply by 9 because each byte in I2C transmission requires
-+	 * 9 clock cycles: 8 bits of data plus 1 ACK/NACK bit.
-+	 */
-+	timeout = cnt * 9 * USEC_PER_SEC / i2c->clock_freq;
-+
-+	i2c->adapt.timeout = usecs_to_jiffies(timeout + USEC_PER_SEC / 2) / i2c->msg_num;
-+}
-+
-+static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-+{
-+	struct spacemit_i2c_dev *i2c = i2c_get_adapdata(adapt);
-+	int ret;
-+
-+	i2c->msgs = msgs;
-+	i2c->msg_num = num;
-+
-+	spacemit_i2c_calc_timeout(i2c);
-+
-+	spacemit_i2c_init(i2c);
-+
-+	spacemit_i2c_enable(i2c);
-+
-+	ret = spacemit_i2c_wait_bus_busy(i2c);
-+	if (!ret)
-+		spacemit_i2c_xfer_msg(i2c);
-+
-+	if (ret < 0)
-+		dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
-+	else if (ret)
-+		spacemit_i2c_check_bus_release(i2c);
-+
-+	spacemit_i2c_disable(i2c);
-+
-+	if (ret == -ETIMEDOUT || ret == -EAGAIN)
-+		dev_alert(i2c->dev, "i2c transfer failed, ret %d err 0x%lx\n",
-+			  ret, i2c->status & SPACEMIT_SR_ERR);
-+
-+	return ret < 0 ? ret : num;
-+}
-+
-+static u32 spacemit_i2c_func(struct i2c_adapter *adap)
-+{
-+	return I2C_FUNC_I2C | (I2C_FUNC_SMBUS_EMUL & ~I2C_FUNC_SMBUS_QUICK);
-+}
-+
-+static const struct i2c_algorithm spacemit_i2c_algo = {
-+	.xfer = spacemit_i2c_xfer,
-+	.functionality = spacemit_i2c_func,
-+};
-+
-+static int spacemit_i2c_probe(struct platform_device *pdev)
-+{
-+	struct clk *clk;
-+	struct device *dev = &pdev->dev;
-+	struct device_node *of_node = pdev->dev.of_node;
-+	struct spacemit_i2c_dev *i2c;
-+	int ret;
-+
-+	i2c = devm_kzalloc(dev, sizeof(*i2c), GFP_KERNEL);
-+	if (!i2c)
-+		return -ENOMEM;
-+
-+	ret = of_property_read_u32(of_node, "clock-frequency", &i2c->clock_freq);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to read clock-frequency property");
-+
-+	/* For now, this driver doesn't support high-speed. */
-+	if (i2c->clock_freq < 1 || i2c->clock_freq > SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
-+		dev_warn(dev, "unsupport clock frequency: %d, default: %d",
-+			 i2c->clock_freq, SPACEMIT_I2C_MAX_FAST_MODE_FREQ);
-+		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
-+	} else if (i2c->clock_freq < SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
-+		i2c->clock_freq = SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ;
-+	}
-+
-+	i2c->dev = &pdev->dev;
-+
-+	i2c->base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(i2c->base))
-+		return dev_err_probe(dev, PTR_ERR(i2c->base), "failed to do ioremap");
-+
-+	i2c->irq = platform_get_irq(pdev, 0);
-+	if (i2c->irq < 0)
-+		return dev_err_probe(dev, i2c->irq, "failed to get irq resource");
-+
-+	ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
-+			       IRQF_NO_SUSPEND | IRQF_ONESHOT, dev_name(i2c->dev), i2c);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to request irq");
-+
-+	clk = devm_clk_get_enabled(dev, "func");
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable func clock");
-+
-+	clk = devm_clk_get_enabled(dev, "bus");
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable bus clock");
-+
-+	spacemit_i2c_reset(i2c);
-+
-+	i2c_set_adapdata(&i2c->adapt, i2c);
-+	i2c->adapt.owner = THIS_MODULE;
-+	i2c->adapt.algo = &spacemit_i2c_algo;
-+	i2c->adapt.dev.parent = i2c->dev;
-+	i2c->adapt.nr = pdev->id;
-+
-+	i2c->adapt.dev.of_node = of_node;
-+	i2c->adapt.algo_data = i2c;
-+
-+	strscpy(i2c->adapt.name, "spacemit-i2c-adapter", sizeof(i2c->adapt.name));
-+
-+	init_completion(&i2c->complete);
-+
-+	platform_set_drvdata(pdev, i2c);
-+
-+	ret = i2c_add_numbered_adapter(&i2c->adapt);
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "failed to add i2c adapter");
-+
-+	return 0;
-+}
-+
-+static void spacemit_i2c_remove(struct platform_device *pdev)
-+{
-+	struct spacemit_i2c_dev *i2c = platform_get_drvdata(pdev);
-+
-+	i2c_del_adapter(&i2c->adapt);
-+}
-+
-+static const struct of_device_id spacemit_i2c_of_match[] = {
-+	{ .compatible = "spacemit,k1-i2c", },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, spacemit_i2c_of_match);
-+
-+static struct platform_driver spacemit_i2c_driver = {
-+	.probe = spacemit_i2c_probe,
-+	.remove = spacemit_i2c_remove,
-+	.driver = {
-+		.name = "i2c-k1",
-+		.of_match_table = spacemit_i2c_of_match,
-+	},
-+};
-+module_platform_driver(spacemit_i2c_driver);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("I2C bus driver for SpacemiT K1 SoC");
+I'm going to skip over a lot of "ccu-k1.c" because most of what I
+say applies to the definitions in the header files.
 
--- 
-2.34.1
+> ---
+>   drivers/clk/Kconfig               |    1 +
+>   drivers/clk/Makefile              |    1 +
+>   drivers/clk/spacemit/Kconfig      |   20 +
+>   drivers/clk/spacemit/Makefile     |    5 +
+>   drivers/clk/spacemit/ccu-k1.c     | 1714 +++++++++++++++++++++++++++++
+>   drivers/clk/spacemit/ccu_common.h |   47 +
+>   drivers/clk/spacemit/ccu_ddn.c    |   80 ++
+>   drivers/clk/spacemit/ccu_ddn.h    |   48 +
+>   drivers/clk/spacemit/ccu_mix.c    |  284 +++++
+>   drivers/clk/spacemit/ccu_mix.h    |  246 +++++
+>   drivers/clk/spacemit/ccu_pll.c    |  146 +++
+>   drivers/clk/spacemit/ccu_pll.h    |   76 ++
+>   12 files changed, 2668 insertions(+)
+>   create mode 100644 drivers/clk/spacemit/Kconfig
+>   create mode 100644 drivers/clk/spacemit/Makefile
+>   create mode 100644 drivers/clk/spacemit/ccu-k1.c
+>   create mode 100644 drivers/clk/spacemit/ccu_common.h
+>   create mode 100644 drivers/clk/spacemit/ccu_ddn.c
+>   create mode 100644 drivers/clk/spacemit/ccu_ddn.h
+>   create mode 100644 drivers/clk/spacemit/ccu_mix.c
+>   create mode 100644 drivers/clk/spacemit/ccu_mix.h
+>   create mode 100644 drivers/clk/spacemit/ccu_pll.c
+>   create mode 100644 drivers/clk/spacemit/ccu_pll.h
+> 
+> diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+> index 713573b6c86c..19c1ed280fd7 100644
+> --- a/drivers/clk/Kconfig
+> +++ b/drivers/clk/Kconfig
+> @@ -517,6 +517,7 @@ source "drivers/clk/samsung/Kconfig"
+>   source "drivers/clk/sifive/Kconfig"
+>   source "drivers/clk/socfpga/Kconfig"
+>   source "drivers/clk/sophgo/Kconfig"
+> +source "drivers/clk/spacemit/Kconfig"
+>   source "drivers/clk/sprd/Kconfig"
+>   source "drivers/clk/starfive/Kconfig"
+>   source "drivers/clk/sunxi/Kconfig"
+> diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
+> index bf4bd45adc3a..42867cd37c33 100644
+> --- a/drivers/clk/Makefile
+> +++ b/drivers/clk/Makefile
+> @@ -145,6 +145,7 @@ obj-$(CONFIG_COMMON_CLK_SAMSUNG)	+= samsung/
+>   obj-$(CONFIG_CLK_SIFIVE)		+= sifive/
+>   obj-y					+= socfpga/
+>   obj-y					+= sophgo/
+> +obj-y					+= spacemit/
+>   obj-$(CONFIG_PLAT_SPEAR)		+= spear/
+>   obj-y					+= sprd/
+>   obj-$(CONFIG_ARCH_STI)			+= st/
+> diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kconfig
+> new file mode 100644
+> index 000000000000..76090cd85668
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/Kconfig
+> @@ -0,0 +1,20 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +
+> +config SPACEMIT_CCU
+> +	tristate "Clock support for Spacemit SoCs"
+> +	default y
+> +	depends on ARCH_SPACEMIT || COMPILE_TEST
+> +	select MFD_SYSCON
+> +	help
+> +	  Say Y to enable clock controller unit support for Spacemit SoCs.
+> +
+> +if SPACEMIT_CCU
+> +
+> +config SPACEMIT_K1_CCU
+> +	tristate "Support for Spacemit K1 SoC"
+> +	default y
+> +	depends on ARCH_SPACEMIT || COMPILE_TEST
 
+It's great to include COMPILE_TEST.
+
+> +	help
+> +	  Support for clock controller unit in Spacemit K1 SoC.
+> +
+> +endif
+> diff --git a/drivers/clk/spacemit/Makefile b/drivers/clk/spacemit/Makefile
+> new file mode 100644
+> index 000000000000..5ec6da61db98
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/Makefile
+> @@ -0,0 +1,5 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +
+> +obj-$(CONFIG_SPACEMIT_K1_CCU)	= spacemit-ccu-k1.o
+> +spacemit-ccu-k1-y		= ccu_pll.o ccu_mix.o ccu_ddn.o
+> +spacemit-ccu-k1-y		+= ccu-k1.o
+> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+> new file mode 100644
+> index 000000000000..5974a0a1b5f6
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/ccu-k1.c
+> @@ -0,0 +1,1714 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+> + * Copyright (c) 2024 Haylen Chu <heylenay@4d2.org>
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/delay.h>
+> +#include <linux/mfd/syscon.h>
+> +#include <linux/minmax.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +
+> +#include "ccu_common.h"
+> +#include "ccu_pll.h"
+> +#include "ccu_mix.h"
+> +#include "ccu_ddn.h"
+> +
+> +#include <dt-bindings/clock/spacemit,k1-ccu.h>
+> +
+> +/*	APBS register offset	*/
+
+Use spaces, not tabs above (same as you've done elsewhere).
+
+> +#define APBS_PLL1_SWCR1			0x100
+> +#define APBS_PLL1_SWCR2			0x104
+> +#define APBS_PLL1_SWCR3			0x108
+> +#define APBS_PLL2_SWCR1			0x118
+> +#define APBS_PLL2_SWCR2			0x11c
+> +#define APBS_PLL2_SWCR3			0x120
+> +#define APBS_PLL3_SWCR1			0x124
+> +#define APBS_PLL3_SWCR2			0x128
+> +#define APBS_PLL3_SWCR3			0x12c
+> +
+> +/* MPMU register offset */
+> +#define MPMU_POSR			0x10
+> +#define POSR_PLL1_LOCK			BIT(27)
+> +#define POSR_PLL2_LOCK			BIT(28)
+> +#define POSR_PLL3_LOCK			BIT(29)
+> +
+> +#define MPMU_WDTPCR			0x200
+> +#define MPMU_RIPCCR			0x210
+> +#define MPMU_ACGR			0x1024
+> +#define MPMU_SUCCR			0x14
+> +#define MPMU_ISCCR			0x44
+
+Somehow the fact that you used just two digits for the above
+two made me think maybe they were field values rather than
+offsets.
+
+If you used 4 digits for all offsets (with leading 0's) maybe
+that consistency would reinforce the difference between an
+offset and other values.
+
+Also, please sort the offset definitions in increasing
+numeric order (within the groups); that too will help
+readability.
+
+> +#define MPMU_SUCCR_1			0x10b0
+> +#define MPMU_APBCSCR			0x1050
+> +
+> +/* APBC register offset */
+> +#define APBC_UART1_CLK_RST		0x0
+> +#define APBC_UART2_CLK_RST		0x4
+> +#define APBC_GPIO_CLK_RST		0x8
+
+. . .
+
+> +#define APBC_PWM17_CLK_RST		0xdc
+> +#define APBC_PWM18_CLK_RST		0xe0
+> +#define APBC_PWM19_CLK_RST		0xe4
+> +
+
+I realize that these symbols are named based on the
+underlying hardware register names.  But the above
+uses "CLK_RST" to indicate a clock/reset control
+register.  But the definitions below spell "reset"
+differently:  "CLK_RES".  What do you think about
+using a consistent naming scheme in the code?
+
+> +/* APMU register offset */
+> +#define APMU_JPG_CLK_RES_CTRL		0x20
+> +#define APMU_CSI_CCIC2_CLK_RES_CTRL	0x24
+> +#define APMU_ISP_CLK_RES_CTRL		0x38
+> +#define APMU_LCD_CLK_RES_CTRL1		0x44
+> +#define APMU_LCD_SPI_CLK_RES_CTRL	0x48
+> +#define APMU_LCD_CLK_RES_CTRL2		0x4c
+> +#define APMU_CCIC_CLK_RES_CTRL		0x50
+> +#define APMU_SDH0_CLK_RES_CTRL		0x54
+> +#define APMU_SDH1_CLK_RES_CTRL		0x58
+> +#define APMU_USB_CLK_RES_CTRL		0x5c
+> +#define APMU_QSPI_CLK_RES_CTRL		0x60
+> +#define APMU_DMA_CLK_RES_CTRL		0x64
+> +#define APMU_AES_CLK_RES_CTRL		0x68
+> +#define APMU_VPU_CLK_RES_CTRL		0xa4
+> +#define APMU_GPU_CLK_RES_CTRL		0xcc
+> +#define APMU_SDH2_CLK_RES_CTRL		0xe0
+> +#define APMU_PMUA_MC_CTRL		0xe8
+> +#define APMU_PMU_CC2_AP			0x100
+> +#define APMU_PMUA_EM_CLK_RES_CTRL	0x104
+> +#define APMU_AUDIO_CLK_RES_CTRL		0x14c
+> +#define APMU_HDMI_CLK_RES_CTRL		0x1b8
+> +#define APMU_CCI550_CLK_CTRL		0x300
+> +#define APMU_ACLK_CLK_CTRL		0x388
+> +#define APMU_CPU_C0_CLK_CTRL		0x38C
+> +#define APMU_CPU_C1_CLK_CTRL		0x390
+> +#define APMU_PCIE_CLK_RES_CTRL_0	0x3cc
+> +#define APMU_PCIE_CLK_RES_CTRL_1	0x3d4
+> +#define APMU_PCIE_CLK_RES_CTRL_2	0x3dc
+> +#define APMU_EMAC0_CLK_RES_CTRL		0x3e4
+> +#define APMU_EMAC1_CLK_RES_CTRL		0x3ec
+> +
+> +/*	APBS clocks start	*/
+> +
+> +/* Frequency of pll{1,2} should not be updated at runtime */
+
+Given the clock tables below only define a single entry,
+I don't believe it's even possible to update pll{1,2} at
+runtime.  Maybe the above comment could go away.  If
+you keep it, I'd say "must not" rather than "should not."
+
+> +static const struct ccu_pll_rate_tbl pll1_rate_tbl[] = {
+> +	CCU_PLL_RATE(2457600000UL, 0x0050dd64, 0x330ccccd),
+> +};
+> +
+> +static const struct ccu_pll_rate_tbl pll2_rate_tbl[] = {
+> +	CCU_PLL_RATE(3000000000UL, 0x0050dd66, 0x3fe00000),
+> +};
+> +
+> +static const struct ccu_pll_rate_tbl pll3_rate_tbl[] = {
+> +	CCU_PLL_RATE(2457600000UL, 0x0050dd64, 0x330ccccd),
+> +	CCU_PLL_RATE(3000000000UL, 0x0050dd66, 0x3fe00000),
+> +	CCU_PLL_RATE(3200000000UL, 0x0050dd67, 0x43eaaaab),
+> +};
+> +
+
+I'm going to restate this later.  But I think you can include
+"static" in the definition of your CCU_*_DEFINE() macros,
+because all defined clocks will be static.  I believe they
+can also get the const qualifier here.
+
+> +static CCU_PLL_DEFINE(pll1, pll1_rate_tbl,
+> +		      APBS_PLL1_SWCR1, APBS_PLL1_SWCR3,
+> +		      MPMU_POSR, POSR_PLL1_LOCK, CLK_SET_RATE_GATE);
+> +static CCU_PLL_DEFINE(pll2, pll2_rate_tbl,
+> +		      APBS_PLL2_SWCR1, APBS_PLL2_SWCR3,
+> +		      MPMU_POSR, POSR_PLL2_LOCK, CLK_SET_RATE_GATE);
+> +static CCU_PLL_DEFINE(pll3, pll3_rate_tbl,
+> +		      APBS_PLL3_SWCR1, APBS_PLL2_SWCR3,
+> +		      MPMU_POSR, POSR_PLL3_LOCK, CLK_SET_RATE_GATE);
+> +
+> +static CCU_GATE_FACTOR_DEFINE(pll1_d2, CCU_PARENT_HW(pll1),
+> +			      APBS_PLL1_SWCR2,
+> +			      BIT(1), 2, 1, 0);
+
+You seem to try to use multiple lines for these definitions
+to possibly aid readability.  I think that's a good idea in
+general.  But it isn't really consistent (I'll point out
+a few examples below), and so it doesn't always work.  For
+many (maybe all), the first line is consistent, but the rest
+seem to vary a bit.
+
+These definitions are basically hardware definitions.  So
+assuming you get them all correct initially, they'll never
+change (for a given platform, like K1), and readability is
+less of an issue.
+
+This time around I haven't scrutinized these in that much
+detail.  But I think--once you're confident the definitions
+are correct--you can simply format all of these clock
+definitions to fit within 80 columns, and save a bunch of
+lines in the source file.
+
+> +static CCU_GATE_FACTOR_DEFINE(pll1_d3, CCU_PARENT_HW(pll1),
+> +			      APBS_PLL1_SWCR2,
+> +			      BIT(2), 3, 1, 0);
+
+. . .
+
+> +static CCU_GATE_FACTOR_DEFINE(pll3_d8, CCU_PARENT_HW(pll3),
+> +			      APBS_PLL3_SWCR2,
+> +			      BIT(7), 8, 1, 0);
+> +
+
+Here (below) you define these PLL "factor" clocks all on one line.
+
+> +static CCU_FACTOR_DEFINE(pll3_20, CCU_PARENT_HW(pll3_d8), 20, 1);
+> +static CCU_FACTOR_DEFINE(pll3_40, CCU_PARENT_HW(pll3_d8), 10, 1);
+> +static CCU_FACTOR_DEFINE(pll3_80, CCU_PARENT_HW(pll3_d8), 5, 1);
+> +
+> +/*	APBS clocks end		*/
+
+Use spaces rather than tabs, above and below (and throughout).
+Or...  Use tabs consistently.  Pick one.
+
+> +
+> +/*	MPMU clocks start	*/
+> +static CCU_GATE_DEFINE(pll1_d8_307p2, CCU_PARENT_HW(pll1_d8),
+> +		       MPMU_ACGR,
+> +		       BIT(13), 0);
+
+But here you define the "factor" clock on two lines.  I'm sure
+this is for line length.  I'd say just define them all according
+to line length--make them fit within 80 columns, but otherwise
+don't bother with extra lines for readability.
+
+> +static CCU_FACTOR_DEFINE(pll1_d32_76p8, CCU_PARENT_HW(pll1_d8_307p2),
+> +			 4, 1);
+
+. . .
+
+> +
+> +static const struct clk_parent_data apb_parents[] = {
+> +	CCU_PARENT_HW(pll1_d96_25p6),
+> +	CCU_PARENT_HW(pll1_d48_51p2),
+> +	CCU_PARENT_HW(pll1_d96_25p6),
+> +	CCU_PARENT_HW(pll1_d24_102p4),
+> +};
+
+I think you should have a blank line after this definition (and
+all other similar ones in this file).  In some cases you have
+no blank line above this sort of definition, and you should.
+
+> +static CCU_MUX_DEFINE(apb_clk, apb_parents,
+> +		      MPMU_APBCSCR,
+> +		      0, 2,
+> +		      0);
+> +
+> +static CCU_GATE_DEFINE(wdt_bus_clk, CCU_PARENT_HW(apb_clk),
+> +		       MPMU_WDTPCR,
+> +		       BIT(0),
+> +		       0);
+> +
+> +static CCU_GATE_DEFINE(ripc_clk, CCU_PARENT_HW(apb_clk),
+> +		       MPMU_RIPCCR,
+> +		       0x1,
+> +		       0);
+> +/*	MPMU clocks end		*/
+> +
+> +/*	APBC clocks start	*/
+> +static const struct clk_parent_data uart_clk_parents[] = {
+> +	CCU_PARENT_HW(pll1_m3d128_57p6),
+> +	CCU_PARENT_HW(slow_uart1_14p74),
+> +	CCU_PARENT_HW(slow_uart2_48),
+> +};
+
+Here you're putting the control register and flags field on
+separate lines.  I'd say just join them.
+
+> +static CCU_MUX_GATE_DEFINE(uart0_clk, uart_clk_parents,
+> +			   APBC_UART1_CLK_RST,
+> +			   4, 3, BIT(1),
+> +			   CLK_IS_CRITICAL);
+
+. . .
+
+> +struct spacemit_ccu_clk {
+> +	int id;
+> +	struct clk_hw *hw;
+> +};
+> +
+
+The following array defines the clocks under what is matched
+as "spacemit,k1-pll".  I know it's the "apbs" (APB Spare)
+memory region, but I think it would be better to have the
+name here match the compatible string.  Add a comment if
+you want to make sure people understand the "PLL<->APBS"
+relationship.
+
+> +static struct spacemit_ccu_clk k1_ccu_apbs_clks[] = {
+> +	{ CLK_PLL1,		&pll1.common.hw },
+> +	{ CLK_PLL2,		&pll2.common.hw },
+> +	{ CLK_PLL3,		&pll3.common.hw },
+
+. . .
+
+> +static int spacemit_ccu_register(struct device *dev,
+> +				 struct regmap *regmap, struct regmap *lock_regmap,
+> +				 const struct spacemit_ccu_clk *clks)
+> +{
+> +	const struct spacemit_ccu_clk *clk;
+> +	int i, ret, max_id = 0;
+> +
+> +	for (clk = clks; clk->hw; clk++)
+> +		max_id = max(max_id, clk->id);
+> +
+> +	struct clk_hw_onecell_data *clk_data;
+
+The definition of clk_data belongs at the top of the function.
+
+> +
+> +	clk_data = devm_kzalloc(dev, struct_size(clk_data, hws, max_id + 1), GFP_KERNEL);
+> +	if (!clk_data)
+> +		return -ENOMEM;
+> +
+> +	for (i = 0; i <= max_id; i++)
+> +		clk_data->hws[i] = ERR_PTR(-ENOENT);
+> +
+> +	for (clk = clks; clk->hw; clk++) {
+> +		struct ccu_common *common = hw_to_ccu_common(clk->hw);
+> +		const char *name = clk->hw->init->name;
+> +
+> +		common->regmap		= regmap;
+> +		common->lock_regmap	= lock_regmap;
+> +
+> +		ret = devm_clk_hw_register(dev, clk->hw);
+> +		if (ret) {
+> +			dev_err(dev, "Cannot register clock %d - %s\n",
+> +				i, name);
+> +			return ret;
+> +		}
+> +
+> +		clk_data->hws[clk->id] = clk->hw;
+> +	}
+> +
+> +	clk_data->num = max_id + 1;
+> +
+> +	return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
+> +}
+> +
+> +static int k1_ccu_probe(struct platform_device *pdev)
+> +{
+> +	struct regmap *base_regmap, *lock_regmap = NULL;
+> +	struct device *dev = &pdev->dev;
+> +	int ret;
+> +
+> +	base_regmap = device_node_to_regmap(dev->of_node);
+> +	if (IS_ERR(base_regmap))
+> +		return dev_err_probe(dev, PTR_ERR(base_regmap),
+> +				     "failed to get regmap\n");
+> +
+
+You should add a comment here explaining why there is a special
+additional regmap for the PLL clock type (because it requires a
+lock that's found in that that device node's memory region).
+
+> +	if (of_device_is_compatible(dev->of_node, "spacemit,k1-pll")) {
+> +		struct device_node *mpmu = of_parse_phandle(dev->of_node,
+> +							    "spacemit,mpmu", 0);
+> +		if (!mpmu)
+> +			return dev_err_probe(dev, -ENODEV,
+> +					     "Cannot parse MPMU region\n");
+> +
+> +		lock_regmap = device_node_to_regmap(mpmu);
+> +		of_node_put(mpmu);
+> +
+> +		if (IS_ERR(lock_regmap))
+> +			return dev_err_probe(dev, PTR_ERR(lock_regmap),
+> +					     "failed to get lock regmap\n");
+> +	}
+> +
+> +	ret = spacemit_ccu_register(dev, base_regmap, lock_regmap,
+> +				    of_device_get_match_data(dev));
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to register clocks\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id of_k1_ccu_match[] = {
+> +	{
+> +		.compatible	= "spacemit,k1-pll",
+> +		.data		= k1_ccu_apbs_clks,
+> +	},
+> +	{
+> +		.compatible	= "spacemit,k1-syscon-mpmu",
+> +		.data		= k1_ccu_mpmu_clks,
+> +	},
+> +	{
+> +		.compatible	= "spacemit,k1-syscon-apbc",
+> +		.data		= k1_ccu_apbc_clks,
+> +	},
+> +	{
+> +		.compatible	= "spacemit,k1-syscon-apmu",
+> +		.data		= k1_ccu_apmu_clks,
+> +	},
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, of_k1_ccu_match);
+> +
+> +static struct platform_driver k1_ccu_driver = {
+> +	.driver = {
+> +		.name		= "spacemit,k1-ccu",
+> +		.of_match_table = of_k1_ccu_match,
+> +	},
+> +	.probe	= k1_ccu_probe,
+> +};
+> +module_platform_driver(k1_ccu_driver);
+> +
+> +MODULE_DESCRIPTION("Spacemit K1 CCU driver");
+> +MODULE_AUTHOR("Haylen Chu <heylenay@4d2.org>");
+> +MODULE_LICENSE("GPL");
+> diff --git a/drivers/clk/spacemit/ccu_common.h b/drivers/clk/spacemit/ccu_common.h
+> new file mode 100644
+> index 000000000000..494cde96fe3c
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/ccu_common.h
+> @@ -0,0 +1,47 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+> + * Copyright (c) 2024 Haylen Chu <heylenay@4d2.org>
+> + */
+> +
+> +#ifndef _CCU_COMMON_H_
+> +#define _CCU_COMMON_H_
+> +
+> +#include <linux/regmap.h>
+> +
+
+I'm not going to suggest it at this point, but it might
+have worked out more nicely if you defined a top-level CCU
+structure that contained a union of structs, one for each
+type of clock (PLL, DDN, mix).
+
+> +struct ccu_common {
+> +	struct regmap *regmap;
+> +	struct regmap *lock_regmap;
+
+The lock_regmap is only used for PLL type clocks, right?
+So it could be included in the PLL struct within the union
+below?
+
+> +
+> +	union {
+> +		/* For DDN and MIX */
+> +		struct {
+> +			u32 reg_ctrl;
+> +			u32 reg_fc;
+> +			u32 fc;
+
+The fc field is a bit mask, and with a single bit set.
+
+Other fields you define use the convention "mask" in the name
+to indicate it is a bit mask.  So I suggest you name "fc" to
+be "mask_fc" or "fc_mask" (but in the latter case, I'd rename
+the registers to be "fc_reg" and "ctrl_reg"--you decide).
+
+Since fc is a (nonzero) mask, you could use a zero fc value
+to indicate that reg_fc is the same as reg_ctrl.
+
+> +		};
+> +
+> +		/* For PLL */
+> +		struct {
+> +			u32 reg_swcr1;
+> +			u32 reg_swcr2;
+
+The reg_swcr2 is no longer used (now that you've dropped it
+from the ccu_pll_rate_tbl structure).
+
+> +			u32 reg_swcr3;
+
+You define PLL_SWCR3_EN in "ccu_pll.c" to have value BIT(31).
+that's good.  But you should define its inverse, to define
+which bits in the reg_swcr3 field are the valid "magic" part.
+In both cases, I would define them here in this file, where
+the structure type is defined (not in "ccu_pll.c").
+
+#define SPACEMIT_PLL_SWCR3_EN	(u32)BIT(31)
+#define SPACEMIT_PLL_SWCR3_MASK	~(SPACEMIT_PLL_SWCR3_EN)
+
+> +		};
+> +	};
+> +
+> +	struct clk_hw hw;
+> +};
+> +
+> +static inline struct ccu_common *hw_to_ccu_common(struct clk_hw *hw)
+> +{
+> +	return container_of(hw, struct ccu_common, hw);
+> +}
+> +
+
+This isn't a huge deal, but I think since your functions here
+are named ccu_*(), the first argument should be the CCU (or
+ccu_common) structure.
+
+> +#define ccu_read(reg, c, val)	regmap_read((c)->regmap, (c)->reg_##reg, val)
+
+I commented before that you're not checking return values for
+regmap_read() and regmap_write().  You said you don't expect
+MMIO accesses to ever fail.
+
+If we assume that, I'd like to see ccu_read() defined differently,
+so that it returns a value (rather than taking the assigned-to
+address as an argument).  To me, it makes it much easier to
+understand in places it's used, making it more obvious an
+assignment is getting made.
+
+static inline u32 _ccu_read(struct ccu_common *common, u32 offset)
+{
+	u32 val;
+
+	(void)regmap_read(common->regmap, offset>reg_##reg, &val);
+
+	return val;
+}
+#define ccu_read(reg, c)	_ccu_read((c), (c)->reg_##reg)
+
+	val = ccu_read(ctrl, &ddn->common);
+
+
+> +#define ccu_update(reg, c, mask, val) \
+> +	regmap_update_bits((c)->regmap, (c)->reg_##reg, mask, val)7
+> +#define ccu_poll(reg, c, tmp, cond, sleep, timeout) \
+> +	regmap_read_poll_timeout_atomic((c)->regmap, (c)->reg_##reg,	\
+> +					tmp, cond, sleep, timeout)
+> +
+> +#endif /* _CCU_COMMON_H_ */
+> diff --git a/drivers/clk/spacemit/ccu_ddn.c b/drivers/clk/spacemit/ccu_ddn.c
+> new file mode 100644
+> index 000000000000..ee187687d0c4
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/ccu_ddn.c
+> @@ -0,0 +1,80 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Spacemit clock type ddn
+> + *
+> + * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+> + * Copyright (c) 2024 Haylen Chu <heylenay@4d2.org>
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/rational.h>
+> +
+> +#include "ccu_ddn.h"
+> +
+> +/*
+> + * DDN stands for "Divider Denominator Numerator", it's M/N clock with a
+> + * constant x2 factor. This clock hardware follows the equation below,
+> + *
+> + *	      numerator       Fin
+> + *	2 * ------------- = -------
+> + *	     denominator      Fout
+> + *
+> + * Thus, Fout could be calculated with,
+> + *
+> + *		Fin	denominator
+> + *	Fout = ----- * -------------
+> + *		 2	 numerator
+
+Thank you for this clear explanation.  I still think the terminology
+is weird but with the above it's at least understandable.
+
+> + */
+> +
+> +static unsigned long clk_ddn_calc_best_rate(struct ccu_ddn *ddn,
+> +					    unsigned long rate, unsigned long prate,
+> +					    unsigned long *num, unsigned long *den)
+> +{
+> +	rational_best_approximation(rate, prate / 2,
+> +				    ddn->den_mask, ddn->num_mask,
+> +				    den, num);
+
+Using rational_best_approximation() is excellent.  However I
+think you have a bug, and I don't think the exact way you're
+using it is clear (and might be wrong).
+
+The bug is that the third and fourth arguments are the maximum
+numerator and denominator, respectively.  You are passing mask
+values, which in some sense represent the maximums.  However,
+your masks are not always in the low-order bits.  Here is one
+example:
+
+static CCU_DDN_DEFINE(slow_uart1_14p74, pll1_d16_153p6,
+                       MPMU_SUCCR,
+                       GENMASK(28, 16), 16, GENMASK(12, 0), 0,
+                       0);
+
+The "_num_mask" argument to this macro is 0x1fff0000, and the
+"_den_mask" is 0x00000fff.  The latter value (which gets passed
+as the max_numerator argument to rational_best_approximation())
+is fine, but the former is not.  So you need to shift both masks
+right by their corresponding shift value.
+
+Beyond that bug, rational_best_approximation() wants its first
+two arguments to define the desired rate (as a fraction).  So
+the desired rate should be the actual desired rate divided by 1
+(rather than being divided by the half the parent rate).  So
+this too might be a bug.
+
+Maybe I'm misinterpreting this, but the bottom line is I'm
+pretty certain this is not producing the correct numerator
+and denominator that would produce the closest rate supported
+by the hardware.
+
+> +	return prate / 2 * *den / *num;
+
+The above matches your explanation of how the output rate
+is computed based on the "denominator" and "numerator".
+You could encapsulate simply that in a function, given
+tnat you used it here and another time below.
+
+You might get slightly better precision by deferring the
+divide-by-2.
+
+
+> +}
+> +
+> +static long clk_ddn_round_rate(struct clk_hw *hw, unsigned long rate,
+> +			       unsigned long *prate)
+> +{
+> +	struct ccu_ddn *ddn = hw_to_ccu_ddn(hw);
+> +	unsigned long num = 0, den = 0;
+
+There should be no need to initialize num and den to 0.
+
+> +
+> +	return clk_ddn_calc_best_rate(ddn, rate, *prate, &num, &den);
+> +}
+> +
+> +static unsigned long clk_ddn_recalc_rate(struct clk_hw *hw, unsigned long prate)
+> +{
+> +	struct ccu_ddn *ddn = hw_to_ccu_ddn(hw);
+> +	unsigned int val, num, den;
+> +
+> +	ccu_read(ctrl, &ddn->common, &val);
+> +
+> +	num = (val & ddn->num_mask) >> ddn->num_shift;
+> +	den = (val & ddn->den_mask) >> ddn->den_shift;
+
+I have a strong preference to use a single mask value rather
+than a shift and width (or in this case, shift and mask).
+But  I know FIELD_GET() requires a constant mask value.
+
+I'll add a comment below (in "ccu_ddn.h") that might address
+my concerns a little bit in this case.
+
+> +
+> +	return prate / 2 * den / num;
+> +}
+> +
+> +static int clk_ddn_set_rate(struct clk_hw *hw, unsigned long rate,
+> +			    unsigned long prate)
+> +{
+> +	struct ccu_ddn *ddn = hw_to_ccu_ddn(hw);
+> +	unsigned long num, den;
+> +
+> +	clk_ddn_calc_best_rate(ddn, rate, prate, &num, &den);
+> +
+> +	ccu_update(ctrl, &ddn->common,
+> +		   ddn->num_mask | ddn->den_mask,
+> +		   (num << ddn->num_shift) | (den << ddn->den_shift));
+> +
+> +	return 0;
+> +}
+> +
+> +const struct clk_ops spacemit_ccu_ddn_ops = {
+> +	.recalc_rate	= clk_ddn_recalc_rate,
+> +	.round_rate	= clk_ddn_round_rate,
+> +	.set_rate	= clk_ddn_set_rate,
+> +};
+> diff --git a/drivers/clk/spacemit/ccu_ddn.h b/drivers/clk/spacemit/ccu_ddn.h
+> new file mode 100644
+> index 000000000000..3746d084e1e7
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/ccu_ddn.h
+> @@ -0,0 +1,48 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+> + * Copyright (c) 2024 Haylen Chu <heylenay@4d2.org>
+> + */
+> +
+> +#ifndef _CCU_DDN_H_
+> +#define _CCU_DDN_H_
+> +
+> +#include <linux/clk-provider.h>
+> +
+> +#include "ccu_common.h"
+> +
+> +struct ccu_ddn {
+> +	struct ccu_common common;
+> +	unsigned int num_mask;
+> +	unsigned int num_shift;
+> +	unsigned int den_mask;
+> +	unsigned int den_shift;
+> +};
+> +
+> +#define CCU_DDN_INIT(_name, _parent, _flags) \
+> +	CLK_HW_INIT_HW(#_name, &_parent.common.hw, &spacemit_ccu_ddn_ops, _flags)
+> +
+
+In CCU_DDN_DEFINE(), both the numerator and denominator masks
+consist of a contiguous block of 1 bits, with zero or more 0
+bits to their left and right.  They are always constant (both
+times it's used...).
+
+For that reason, I'd like you to drop the _num_shift and _den_shift
+arguments from this macro.  Instead, use __ffs(_num_mask) and
+__ffs(_den_mask) when assigning the num_shift and den_shift field
+values.
+
+> +#define CCU_DDN_DEFINE(_name, _parent, _reg_ctrl,				\
+> +		       _num_mask, _num_shift, _den_mask, _den_shift,		\
+> +		       _flags)							\
+
+As I mentioned earlier, I'm sure that every one of these defined
+clocks should be both private (static) and constant (const).  I
+recommend you include both of those keywords in these CCU_*_DEFINE()
+macro definitions.
+
+static const struct ccu_ddn _name = { \
+
+Also, in the definitions of these CCU_*_DEFINE() macros later, you
+align the struct below at the left column.  Do that here too.
+
+> +	struct ccu_ddn _name = {						\
+> +		.common = {							\
+> +			.reg_ctrl = _reg_ctrl,					\
+> +			.hw.init  = CCU_DDN_INIT(_name, _parent, _flags),	\
+> +		},								\
+> +		.num_mask = _num_mask,						\
+> +		.num_shift = _num_shift,					\
+> +		.den_mask = _den_mask,						\
+> +		.den_shift = _den_shift,					\
+> +	}
+> +
+> +static inline struct ccu_ddn *hw_to_ccu_ddn(struct clk_hw *hw)
+> +{
+> +	struct ccu_common *common = hw_to_ccu_common(hw);
+> +
+> +	return container_of(common, struct ccu_ddn, common);
+> +}
+> +
+> +extern const struct clk_ops spacemit_ccu_ddn_ops;
+> +
+> +#endif
+> diff --git a/drivers/clk/spacemit/ccu_mix.c b/drivers/clk/spacemit/ccu_mix.c
+> new file mode 100644
+> index 000000000000..a5c13000e062
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/ccu_mix.c
+> @@ -0,0 +1,284 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Spacemit clock type mix(div/mux/gate/factor)
+> + *
+> + * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+> + * Copyright (c) 2024 Haylen Chu <heylenay@4d2.org>
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +
+> +#include "ccu_mix.h"
+> +
+
+I think the name of this constant should include "FC", and a
+comment should indicate it is a number of microseconds.  "FC"
+stands for "frequency change"; I think you should have a comment
+explaining exactly what that means (somewhere).
+
+> +#define MIX_TIMEOUT	10000
+> +
+> +static void ccu_gate_disable(struct clk_hw *hw)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +	struct ccu_common *common = &mix->common;
+> +
+> +	ccu_update(ctrl, common, mix->gate.mask, 0);
+> +}
+
+Maybe drop the second local variable and do:
+
+	ccu_update(ctrl, &mix->common, mix->gate.mask, 0);
+
+And this can be done several times below.
+
+> +
+> +static int ccu_gate_enable(struct clk_hw *hw)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +	struct ccu_common *common = &mix->common;
+> +	struct ccu_gate_config *gate = &mix->gate;
+> +
+> +	ccu_update(ctrl, common, gate->mask, gate->mask);
+> +
+> +	return 0;
+> +}
+> +
+> +static int ccu_gate_is_enabled(struct clk_hw *hw)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +	struct ccu_common *common = &mix->common;
+> +	u32 tmp;
+> +
+> +	ccu_read(ctrl, common, &tmp);
+> +
+
+The next line won't necessarily work.  The gate mask
+value in a few cases contains more than one set bit
+(rtc_clk is an exmaple).  Therefore this will return
+true even if just one of those bits is set.  This is
+most likely a bug.
+
+This needs to be:
+
+	return (tmp & mix->gete.mask) == mix->gate.mask;
+
+> +	return !!(tmp & mix->gate.mask);
+> +}
+> +
+> +static unsigned long ccu_factor_recalc_rate(struct clk_hw *hw,
+> +					    unsigned long parent_rate)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +
+> +	return parent_rate * mix->factor.mul / mix->factor.div;
+> +}
+> +
+> +static unsigned long ccu_div_recalc_rate(struct clk_hw *hw,
+> +					 unsigned long parent_rate)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +	struct ccu_common *common = &mix->common;
+> +	struct ccu_div_config *div = &mix->div;
+> +	unsigned long val;
+> +	u32 reg;
+> +
+> +	ccu_read(ctrl, common, &reg);
+> +
+> +	val = reg >> div->shift;
+> +	val &= (1 << div->width) - 1;
+> +
+> +	val = divider_recalc_rate(hw, parent_rate, val, NULL, 0, div->width);
+> +
+> +	return val;
+> +}
+> +
+> +static int ccu_mix_trigger_fc(struct clk_hw *hw)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +	struct ccu_common *common = &mix->common;
+
+You don't use the mix pointer, so you can just do:
+
+	struct ccu_common *common = hw_to_ccu_common(hw);
+
+> +	unsigned int val = 0;
+> +
+
+I'm pretty sure you don't need to initialze val to 0, given
+you're assuming regmap_read() won't return errors.
+
+Have this function return 0 immediately if there is no
+frequency control register/mask:
+
+	if (!common->fc_mask)
+		return 0;
+
+This will simplify the callers.
+		
+> +	ccu_update(fc, common, common->fc, common->fc);
+> +
+> +	return ccu_poll(fc, common, val, !(val & common->fc),
+> +			5, MIX_TIMEOUT);
+
+You should add this above, where you define MIX_TIMEOUT, and
+use it here.
+
+#define CCU_FC_MIX_DELAY	5	/* microseconds */
+
+> +}
+> +
+> +static long ccu_factor_round_rate(struct clk_hw *hw, unsigned long rate,
+> +				  unsigned long *prate)
+> +{
+> +	return ccu_factor_recalc_rate(hw, *prate);
+> +}
+> +
+> +static int ccu_factor_set_rate(struct clk_hw *hw, unsigned long rate,
+> +			       unsigned long parent_rate)
+> +{
+> +	return 0;
+> +}
+> +
+> +static unsigned long
+> +ccu_mix_calc_best_rate(struct clk_hw *hw, unsigned long rate,
+> +		       struct clk_hw **best_parent,
+> +		       unsigned long *best_parent_rate,
+> +		       u32 *div_val)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +	unsigned int parent_num = clk_hw_get_num_parents(hw);
+> +	struct ccu_div_config *div = &mix->div;
+> +	u32 div_max = 1 << div->width;
+> +	unsigned long best_rate = 0;
+> +
+> +	for (int i = 0; i < parent_num; i++) {
+> +		struct clk_hw *parent = clk_hw_get_parent_by_index(hw, i);
+> +		unsigned long parent_rate;
+> +
+> +		if (!parent)
+> +			continue;
+> +
+> +		parent_rate = clk_hw_get_rate(parent);
+> +
+> +		for (int j = 1; j <= div_max; j++) {
+> +			unsigned long tmp = DIV_ROUND_UP_ULL(parent_rate, j);
+
+I might have asked this before.  Why round up?  Why not
+round closest?
+
+> +
+> +			if (abs(tmp - rate) < abs(best_rate - rate)) {
+> +				best_rate = tmp;
+> +
+> +				if (div_val)
+> +					*div_val = j - 1;
+> +
+> +				if (best_parent) {
+> +					*best_parent      = parent;
+> +					*best_parent_rate = parent_rate;
+> +				}
+> +			}
+> +		}
+> +	}
+> +
+> +	return best_rate;
+> +}
+> +
+> +static int ccu_mix_determine_rate(struct clk_hw *hw,
+> +				  struct clk_rate_request *req)
+> +{
+> +	req->rate = ccu_mix_calc_best_rate(hw, req->rate,
+> +					   &req->best_parent_hw,
+> +					   &req->best_parent_rate,
+> +					   NULL);
+> +	return 0;
+> +}
+> +
+> +static int ccu_mix_set_rate(struct clk_hw *hw, unsigned long rate,
+> +			    unsigned long parent_rate)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +	struct ccu_common *common = &mix->common;
+> +	struct ccu_div_config *div = &mix->div;
+> +	int ret = 0, tmp = 0;
+
+No need to initialize ret or tmp.
+
+> +	u32 current_div, target_div;
+> +
+> +	ccu_mix_calc_best_rate(hw, rate, NULL, NULL, &target_div);
+> +
+> +	ccu_read(ctrl, common, &tmp);
+> +
+> +	current_div = tmp >> div->shift;
+> +	current_div &= (1 << div->width) - 1;
+> +
+> +	if (current_div == target_div)
+> +		return 0;
+> +
+> +	tmp = GENMASK(div->width + div->shift - 1, div->shift);
+> +
+> +	ccu_update(ctrl, common, tmp, target_div << div->shift);
+> +
+> +	if (common->reg_fc)
+> +		ret = ccu_mix_trigger_fc(hw);
+
+Drop the test for reg_fc here, and hide those details
+inside the called function.  Then:
+
+	return ccu_mix_trigger_fc(hw);
+
+> +
+> +	return ret;
+> +}
+> +
+> +static u8 ccu_mux_get_parent(struct clk_hw *hw)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +	struct ccu_common *common = &mix->common;
+> +	struct ccu_mux_config *mux = &mix->mux;
+> +	u32 reg;
+> +	u8 parent;
+> +
+> +	ccu_read(ctrl, common, &reg);
+> +
+> +	parent = reg >> mux->shift;
+> +	parent &= (1 << mux->width) - 1;
+> +
+> +	return parent;
+> +}
+> +
+> +static int ccu_mux_set_parent(struct clk_hw *hw, u8 index)
+> +{
+> +	struct ccu_mix *mix = hw_to_ccu_mix(hw);
+> +	struct ccu_common *common = &mix->common;
+> +	struct ccu_mux_config *mux = &mix->mux;
+> +	int ret = 0;
+> +	u32 mask;
+> +
+
+I'm not sure it will ever happen, but if index is out of range
+this most likely won't do the right thing.
+
+	if (WARN_ON(index >= 1 << mux->width))
+		return -EINVAL;
+
+> +	mask = GENMASK(mux->width + mux->shift - 1, mux->shift);
+> +
+> +	ccu_update(ctrl, common, mask, index << mux->shift);
+> +
+> +	if (common->reg_fc)
+> +		ret = ccu_mix_trigger_fc(hw);
+> +
+> +	return ret;
+> +}
+> +
+
+I think your naming for these should follow a pattern, for
+example:
+   gate then (factor or div) then mux then fc
+
+
+> +const struct clk_ops spacemit_ccu_gate_ops = {
+> +	.disable	= ccu_gate_disable,
+> +	.enable		= ccu_gate_enable,
+> +	.is_enabled	= ccu_gate_is_enabled,
+> +};
+> +
+> +const struct clk_ops spacemit_ccu_factor_ops = {
+> +	.round_rate	= ccu_factor_round_rate,
+> +	.recalc_rate	= ccu_factor_recalc_rate,
+> +	.set_rate	= ccu_factor_set_rate,
+> +};
+> +
+> +const struct clk_ops spacemit_ccu_mux_ops = {
+> +	.determine_rate = ccu_mix_determine_rate,
+> +	.get_parent	= ccu_mux_get_parent,
+> +	.set_parent	= ccu_mux_set_parent,
+> +};
+> +
+> +const struct clk_ops spacemit_ccu_div_ops = {
+> +	.determine_rate = ccu_mix_determine_rate,
+> +	.recalc_rate	= ccu_div_recalc_rate,
+> +	.set_rate	= ccu_mix_set_rate,
+> +};
+> +
+> +const struct clk_ops spacemit_ccu_gate_factor_ops = {
+> +	.disable	= ccu_gate_disable,
+> +	.enable		= ccu_gate_enable,
+> +	.is_enabled	= ccu_gate_is_enabled,
+> +
+> +	.round_rate	= ccu_factor_round_rate,
+> +	.recalc_rate	= ccu_factor_recalc_rate,
+> +	.set_rate	= ccu_factor_set_rate,
+> +};
+> +
+
+If you follow the pattern I said above, this would be
+spacemit_ccu_gate_mux_ops().
+
+(And so on.)
+
+> +const struct clk_ops spacemit_ccu_mux_gate_ops = {
+> +	.disable	= ccu_gate_disable,
+> +	.enable		= ccu_gate_enable,
+> +	.is_enabled	= ccu_gate_is_enabled,
+> +
+> +	.determine_rate = ccu_mix_determine_rate,
+> +	.get_parent	= ccu_mux_get_parent,
+> +	.set_parent	= ccu_mux_set_parent,
+> +};
+> +
+> +const struct clk_ops spacemit_ccu_div_gate_ops = {
+> +	.disable	= ccu_gate_disable,
+> +	.enable		= ccu_gate_enable,
+> +	.is_enabled	= ccu_gate_is_enabled,
+> +
+> +	.determine_rate = ccu_mix_determine_rate,
+> +	.recalc_rate	= ccu_div_recalc_rate,
+> +	.set_rate	= ccu_mix_set_rate,
+> +};
+> +
+> +const struct clk_ops spacemit_ccu_div_mux_gate_ops = {
+> +	.disable	= ccu_gate_disable,
+> +	.enable		= ccu_gate_enable,
+> +	.is_enabled	= ccu_gate_is_enabled,
+> +
+> +	.get_parent	= ccu_mux_get_parent,
+> +	.set_parent	= ccu_mux_set_parent,
+> +
+> +	.determine_rate = ccu_mix_determine_rate,
+> +	.recalc_rate	= ccu_div_recalc_rate,
+> +	.set_rate	= ccu_mix_set_rate,
+> +};
+> +
+> +const struct clk_ops spacemit_ccu_div_mux_ops = {
+> +	.get_parent	= ccu_mux_get_parent,
+> +	.set_parent	= ccu_mux_set_parent,
+> +
+> +	.determine_rate = ccu_mix_determine_rate,
+> +	.recalc_rate	= ccu_div_recalc_rate,
+> +	.set_rate	= ccu_mix_set_rate,
+> +};
+> diff --git a/drivers/clk/spacemit/ccu_mix.h b/drivers/clk/spacemit/ccu_mix.h
+> new file mode 100644
+> index 000000000000..a3aa292d073d
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/ccu_mix.h
+> @@ -0,0 +1,246 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+> + * Copyright (c) 2024 Haylen Chu <heylenay@4d2.org>
+> + */
+> +
+> +#ifndef _CCU_MIX_H_
+> +#define _CCU_MIX_H_
+> +
+> +#include <linux/clk-provider.h>
+> +
+> +#include "ccu_common.h"
+> +
+> +struct ccu_gate_config {
+> +	u32 mask;
+
+Add a comment indicating this mask can contain more than just
+one set bit.
+
+> +};
+> +
+> +struct ccu_factor_config {
+> +	u32 div;
+> +	u32 mul;
+> +};
+> +
+> +struct ccu_mux_config {
+> +	u8 shift;
+> +	u8 width;
+
+There's a small chance that these being defined with u8 will
+require them to be promoted to u32 where used.  I think the
+u8 is just fine, but you might need to be careful.
+
+> +};
+> +
+> +struct ccu_div_config {
+> +	u8 shift;
+> +	u8 width;
+> +};
+> +
+> +struct ccu_mix {
+> +	struct ccu_factor_config factor;
+> +	struct ccu_gate_config gate;
+> +	struct ccu_div_config div;
+> +	struct ccu_mux_config mux;
+> +	struct ccu_common common;
+> +};
+> +
+
+I suggest aligning the "{" in the next few lines.
+
+> +#define CCU_GATE_INIT(_mask) { .mask = _mask }
+> +#define CCU_FACTOR_INIT(_div, _mul) { .div = _div, .mul = _mul }
+> +#define CCU_MUX_INIT(_shift, _width) { .shift = _shift, .width = _width }
+> +#define CCU_DIV_INIT(_shift, _width) { .shift = _shift, .width = _width }
+> +
+
+I think you should define these next two with their types.
+
+> +#define CCU_PARENT_HW(_parent)		{ .hw = &_parent.common.hw }
+> +#define CCU_PARENT_NAME(_name)		{ .fw_name = #_name }
+> +
+#define CCU_PARENT_HW(_parent) \
+	(struct clk_parent_data){ .hw = &_parent.common.hw }
+
+> +#define CCU_MIX_INITHW(_name, _parent, _ops, _flags)			\
+> +	(&(struct clk_init_data) {					\
+
+I'm pretty sure the left parenthesis above and its matching
+right parenthesis below are not needed.
+
+> +		.flags		= _flags,				\
+> +		.name		= #_name,				\
+
+If the type is defined above, you don't need to cast it here.
+Also the curly braces around _parent look strange to me.  The
+parent_data field is a pointer, and ideally there should be
+no need to use a type cast here.
+
+> +		.parent_data	= (const struct clk_parent_data[])	\
+> +					{ _parent },			\
+> +		.num_parents	= 1,					\
+> +		.ops		= &_ops,				\
+> +	})
+> +
+> +#define CCU_MIX_INITHW_PARENTS(_name, _parents, _ops, _flags)		\
+> +	CLK_HW_INIT_PARENTS_DATA(#_name, _parents, &_ops, _flags)
+> +
+
+Many/most of the other CCU_*_DEFINE() macros use the name
+_ctrl_reg for the register.  I suggest you use that here
+(and everywhere, for consistency).
+
+> +#define CCU_GATE_DEFINE(_name, _parent, _reg, _gate_mask, _flags)		\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.gate	= CCU_GATE_INIT(_gate_mask),					\
+> +	.common	= {								\
+> +		.reg_ctrl	= _reg,						\
+
+Why do you have a tab before the equal sign here?  (But not
+elsewhere?)  Whatever you decide, be consistent.
+
+> +		.hw.init = CCU_MIX_INITHW(_name, _parent,			\
+> +					  spacemit_ccu_gate_ops, _flags),	\
+> +	}									\
+> +}
+> +
+> +#define CCU_FACTOR_DEFINE(_name, _parent, _div, _mul)				\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.factor	= CCU_FACTOR_INIT(_div, _mul),					\
+> +	.common = {								\
+> +		.hw.init = CCU_MIX_INITHW(_name, _parent,			\
+> +					  spacemit_ccu_factor_ops, 0),		\
+> +	}									\
+> +}
+> +
+> +#define CCU_MUX_DEFINE(_name, _parents, _reg, _shift, _width, _flags)		\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.mux	= CCU_MUX_INIT(_shift, _width),					\
+> +	.common = {								\
+> +		.reg_ctrl	= _reg,						\
+> +		.hw.init = CCU_MIX_INITHW_PARENTS(_name, _parents,		\
+> +						  spacemit_ccu_mux_ops,	_flags),\
+> +	}									\
+> +}
+> +
+> +#define CCU_DIV_DEFINE(_name, _parent, _reg, _shift, _width, _flags)		\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.div	= CCU_DIV_INIT(_shift, _width),					\
+> +	.common = {								\
+> +		.reg_ctrl	= _reg,						\
+> +		.hw.init = CCU_MIX_INITHW(_name, _parent,			\
+> +					  spacemit_ccu_div_ops, _flags)		\
+> +	}									\
+> +}
+> +
+> +#define CCU_GATE_FACTOR_DEFINE(_name, _parent,					\
+> +			       _reg,						\
+> +			       _gate_mask,					\
+> +			       _div, _mul,					\
+> +			       _flags)						\
+
+static const struct ccu_mix _name = { \
+
+I believe the value of _flags is always zero, so that argument
+could be eliminated (it can be added back in the future if it's
+ever needed).
+
+There are only two cases where the value of _mul is different
+from 1.  You could define a slightly different macro for those
+cases, and for this, remove the multiplier argument.
+
+> +struct ccu_mix _name = {							\
+> +	.gate	= CCU_GATE_INIT(_gate_mask),					\
+> +	.factor	= CCU_FACTOR_INIT(_div, _mul),					\
+> +	.common = {								\
+> +		.reg_ctrl	= _reg,						\
+> +		.hw.init = CCU_MIX_INITHW(_name, _parent,			\
+> +					  spacemit_ccu_gate_factor_ops, _flags)	\
+> +	}									\
+> +}
+> +
+> +#define CCU_MUX_GATE_DEFINE(_name, _parents,					\
+> +			    _reg,						\
+> +			    _shift, _width,					\
+> +			    _gate_mask,						\
+> +			    _flags)						\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.gate	= CCU_GATE_INIT(_gate_mask),					\
+> +	.mux	= CCU_MUX_INIT(_shift, _width),					\
+> +	.common = {								\
+> +		.reg_ctrl	= _reg,						\
+> +		.hw.init = CCU_MIX_INITHW_PARENTS(_name, _parents,		\
+> +						  spacemit_ccu_mux_gate_ops,	\
+> +						  _flags),			\
+> +	}									\
+> +}
+> +
+> +#define CCU_DIV_GATE_DEFINE(_name, _parent,					\
+> +			    _reg,						\
+> +			    _shift, _width,					\
+> +			    _gate_mask,						\
+> +			    _flags)						\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.gate	= CCU_GATE_INIT(_gate_mask),					\
+> +	.div	= CCU_DIV_INIT(_shift, _width),					\
+> +	.common = {								\
+> +		.reg_ctrl	= _reg,						\
+> +		.hw.init = CCU_MIX_INITHW(_name, _parent,			\
+> +					  spacemit_ccu_div_gate_ops, _flags),	\
+> +	}									\
+> +}
+> +
+> +#define CCU_DIV_MUX_GATE_DEFINE(_name, _parents,				\
+> +				_reg_ctrl,					\
+> +				_mshift, _mwidth, _muxshift, _muxwidth,		\
+> +				_gate_mask,					\
+> +				_flags)						\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.gate	= CCU_GATE_INIT(_gate_mask),					\
+> +	.div	= CCU_DIV_INIT(_mshift, _mwidth),				\
+> +	.mux	= CCU_MUX_INIT(_muxshift, _muxwidth),				\
+> +	.common	= {								\
+> +		.reg_ctrl	= _reg_ctrl,					\
+> +		.hw.init = CCU_MIX_INITHW_PARENTS(_name, _parents,		\
+> +						  spacemit_ccu_div_mux_gate_ops,\
+> +						  _flags),			\
+> +	},									\
+> +}
+> +
+
+I think I might have said this elsewhere;  use _fc_mask
+(or something similar) to define what you call _fc here.
+
+> +#define CCU_DIV_SPLIT_FC_MUX_GATE_DEFINE(_name, _parents,			\
+> +					 _reg_ctrl, _reg_fc,			\
+> +					 _mshift, _mwidth,			\
+> +					 _fc,					\
+> +					 _muxshift, _muxwidth,			\
+> +					 _gate_mask,				\
+> +					 _flags)				\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.gate	= CCU_GATE_INIT(_gate_mask),					\
+> +	.div	= CCU_DIV_INIT(_mshift, _mwidth),				\
+> +	.mux	= CCU_MUX_INIT(_muxshift, _muxwidth),				\
+> +	.common = {								\
+> +		.reg_ctrl	= _reg_ctrl,					\
+> +		.reg_fc		= _reg_fc,					\
+> +		.fc		= _fc,						\
+
+In all cases, these FC masks have a single bit set; this is
+something I think is worth mentioning in a comment.
+
+> +		.hw.init = CCU_MIX_INITHW_PARENTS(_name, _parents,		\
+> +						  spacemit_ccu_div_mux_gate_ops,\
+> +						  _flags),			\
+> +	},									\
+> +}
+> +
+> +#define CCU_DIV_FC_MUX_GATE_DEFINE(_name, _parents,				\
+> +				   _reg_ctrl,					\
+> +				   _mshift, _mwidth,				\
+> +				   _fc,						\
+> +				   _muxshift, _muxwidth,			\
+> +				   _gate_mask, _flags)		\
+> +CCU_DIV_SPLIT_FC_MUX_GATE_DEFINE(_name, _parents, _reg_ctrl, _reg_ctrl,		\
+> +				 _mshift, _mwidth, _fc, _muxshift, _muxwidth,		\
+> +				 _gate_mask, _flags)
+> +
+> +#define CCU_DIV_FC_MUX_DEFINE(_name, _parents,					\
+> +			      _reg_ctrl,					\
+> +			      _mshift, _mwidth,					\
+> +			      _fc,						\
+> +			      _muxshift, _muxwidth,				\
+> +			      _flags)						\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.div	= CCU_DIV_INIT(_mshift, _mwidth),				\
+> +	.mux	= CCU_MUX_INIT(_muxshift, _muxwidth),				\
+> +	.common = {								\
+> +		.reg_ctrl	= _reg_ctrl,					\
+> +		.reg_fc		= _reg_ctrl,					\
+
+I suggested elsewhere that you could use a non-zero FC mask
+to indicate the FC register is the same as the reg_ctrl
+register.  (Despite my repeated suggestion, what you're
+doing already is fine...)
+
+> +		.fc		= _fc,						\
+> +		.hw.init = CCU_MIX_INITHW_PARENTS(_name, _parents,		\
+> +						  spacemit_ccu_div_mux_ops,	\
+> +						  _flags),			\
+> +	},									\
+> +}
+> +
+> +#define CCU_MUX_FC_DEFINE(_name, _parents,					\
+> +			  _reg_ctrl,						\
+> +			  _fc,							\
+> +			  _muxshift, _muxwidth,					\
+> +			  _flags)						\
+
+static const struct ccu_mix _name = { \
+
+> +struct ccu_mix _name = {							\
+> +	.mux	= CCU_MUX_INIT(_muxshift, _muxwidth),				\
+> +	.common = {								\
+> +		.reg_ctrl	= _reg_ctrl,					\
+> +		.reg_fc		= _reg_ctrl,					\
+> +		.fc		= _fc,						\
+> +		.hw.init = CCU_MIX_INITHW_PARENTS(_name, _parents,		\
+> +						  spacemit_ccu_mux_ops,	_flags)	\
+> +	},									\
+> +}
+> +
+> +static inline struct ccu_mix *hw_to_ccu_mix(struct clk_hw *hw)
+> +{
+> +	struct ccu_common *common = hw_to_ccu_common(hw);
+> +
+> +	return container_of(common, struct ccu_mix, common);
+> +}
+> +
+
+I think you can define each ops variable on its own line.
+
+> +extern const struct clk_ops spacemit_ccu_gate_ops, spacemit_ccu_factor_ops;
+> +extern const struct clk_ops spacemit_ccu_mux_ops, spacemit_ccu_div_ops;
+> +
+> +extern const struct clk_ops spacemit_ccu_gate_factor_ops;
+> +extern const struct clk_ops spacemit_ccu_div_gate_ops;
+> +extern const struct clk_ops spacemit_ccu_mux_gate_ops;
+> +extern const struct clk_ops spacemit_ccu_div_mux_ops;
+> +
+> +extern const struct clk_ops spacemit_ccu_div_mux_gate_ops;
+> +#endif /* _CCU_DIV_H_ */
+> diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
+> new file mode 100644
+> index 000000000000..9df2149f6c98
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/ccu_pll.c
+> @@ -0,0 +1,146 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Spacemit clock type pll
+> + *
+> + * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+> + * Copyright (c) 2024 Haylen Chu <heylenay@4d2.org>
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/regmap.h>
+> +
+> +#include "ccu_common.h"
+> +#include "ccu_pll.h"
+> +
+
+Name this just PLL_TIMEOUT, or maybe CCU_PLL_TIMEOUT, and
+indicate in a comment that it is a period in microseconds.
+
+> +#define PLL_DELAY_TIME	3000
+
+You should also define this, as done earlier when polling
+for the frequency change:
+
+#define PLL_DELAY		5	/* microseconds */
+
+> +#define PLL_SWCR3_EN	BIT(31)
+
+Define this with the type; otherwise it's possible to get
+warnings when you bitwise invert it.
+
+#define PLL_SWCR3_EN	(u32)BIT(31)
+
+> +
+> +static int ccu_pll_is_enabled(struct clk_hw *hw)
+> +{
+> +	struct ccu_pll *p = hw_to_ccu_pll(hw);
+
+	struct ccu_common *common = hw_to_ccu_common(hw);
+
+> +	u32 tmp;
+> +
+> +	ccu_read(swcr3, &p->common, &tmp);
+> +
+> +	return tmp & PLL_SWCR3_EN;
+
+	return !!(tmp & PLL_SWCR3_EN);
+> +}
+> +
+> +/* frequency unit Mhz, return pll vco freq */
+> +static unsigned long ccu_pll_get_vco_freq(struct clk_hw *hw)
+> +{
+> +	const struct ccu_pll_rate_tbl *pll_rate_table;
+> +	struct ccu_pll *p = hw_to_ccu_pll(hw);
+> +	struct ccu_common *common = &p->common;
+> +	u32 swcr1, swcr3, size;
+> +	int i;
+> +
+> +	ccu_read(swcr1, common, &swcr1);
+> +	ccu_read(swcr3, common, &swcr3);
+
+You are masking off the EN bit, but you should really be
+using a mask defining which bits are valid instead.  As
+I said earlier:
+
+#define SPACEMIT_PLL_SWCR3_MASK	~(SPACEMIT_PLL_SWCR3_EN)
+
+> +	swcr3 &= ~PLL_SWCR3_EN;
+
+	swcr3 &= SPACEMIT_PLL_SWCR3_MASK;
+> +
+> +	pll_rate_table = p->pll.rate_tbl;
+> +	size = p->pll.tbl_size;
+> +
+> +	for (i = 0; i < size; i++) {
+> +		if (pll_rate_table[i].swcr1 == swcr1 &&
+> +		    pll_rate_table[i].swcr3 == swcr3)
+> +			return pll_rate_table[i].rate;
+> +	}
+> +
+
+I have a general question here.  Once you set one of these
+clock rates, it will always use one of the rates defined
+in the table.
+
+But what about initially?  Could the hardware start in a
+state that is not defined by this code?  Do you *set* the
+rate initially?  Should you (at least the first time the
+clock is prepared/enabled)?
+
+> +	WARN_ON_ONCE(1);
+
+Maybe WARN_ONCE(true, "msg");
+
+> +
+> +	return 0;
+> +}
+> +
+> +static int ccu_pll_enable(struct clk_hw *hw)
+> +{
+> +	struct ccu_pll *p = hw_to_ccu_pll(hw);
+> +	struct ccu_common *common = &p->common;
+> +	unsigned int tmp;
+> +	int ret;
+> +
+
+Get rid of ret (see below).
+
+Will clk_ops->enable() ever be called when it's already
+enabled?  (If it won't, this isn't needed.  If it will,
+this checks the hardware, which is good.)
+
+> +	if (ccu_pll_is_enabled(hw))
+> +		return 0;
+> +
+> +	ccu_update(swcr3, common, PLL_SWCR3_EN, PLL_SWCR3_EN);
+> +
+> +	/* check lock status */
+> +	ret = regmap_read_poll_timeout_atomic(common->lock_regmap,
+> +					      p->pll.reg_lock,
+> +					      tmp,
+> +					      tmp & p->pll.lock_enable_bit,
+> +					      5, PLL_DELAY_TIME);
+
+Just:
+
+	return regmap_read_poll_timeout_atomic(...);
+
+I note that you call this here, but you hide the call
+to regmap_read_poll_timeout_atomic() behind the macro
+ccu_poll().  And ccu_poll() (used for the FC bit) is
+also only called once.
+
+I suggest you get rid of regmap_poll() and just open-code
+it.
+
+(You use ccu_read() and ccu_update() numerous times, so
+your "saving some characters" is justified.)
+
+> +
+> +	return ret;
+> +}
+> +
+> +static void ccu_pll_disable(struct clk_hw *hw)
+> +{
+> +	struct ccu_pll *p = hw_to_ccu_pll(hw);
+> +	struct ccu_common *common = &p->common;
+
+	struct ccu_common *common = hw_to_ccu_common(hw);
+
+> +
+> +	ccu_update(swcr3, common, PLL_SWCR3_EN, 0);
+> +}
+> +
+> +/*
+> + * PLLs must be gated before changing rate, which is ensured by
+> + * flag CLK_SET_RATE_GATE.
+> + */
+> +static int ccu_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+> +			    unsigned long parent_rate)
+> +{
+> +	struct ccu_pll *p = hw_to_ccu_pll(hw);
+> +	struct ccu_common *common = &p->common;
+> +	struct ccu_pll_config *params = &p->pll;
+> +	const struct ccu_pll_rate_tbl *entry = NULL;
+> +	int i;
+> +
+> +	for (i = 0; i < params->tbl_size; i++) {
+> +		if (rate == params->rate_tbl[i].rate) {
+> +			entry = &params->rate_tbl[i];
+> +			break;
+> +		}
+> +	}
+> +
+> +	if (WARN_ON_ONCE(!entry))
+> +		return -EINVAL;
+> +
+
+The next line contains a bug.  The third argument defines
+a mask of which bits get updated.  Therefore, any zero bits
+in that mask will *not* get updated in the swcr1 register
+even if they should be.
+
+Example:
+Old SWCR1:	0x01234567
+New SWCR1:	0x00112233
+
+Updated:	0x01336777
+Want:		0x00112233
+
+You should either define ccu_write() (my preference), or
+you you should call:
+
+	ccu_update(swcr1, common, ~0, entry->swcr1);
+
+
+> +	ccu_update(swcr1, common, entry->swcr1, entry->swcr1);
+
+You should use SPACEMIT_PLL_SWCR3_MASK below.  No
+cast should be needed (define the symbol with one).
+
+> +	ccu_update(swcr3, common, (u32)~PLL_SWCR3_EN, entry->swcr3);
+> +
+> +	return 0;
+> +}
+> +
+> +static unsigned long ccu_pll_recalc_rate(struct clk_hw *hw,
+> +					 unsigned long parent_rate)
+> +{
+> +	return ccu_pll_get_vco_freq(hw);
+> +}
+> +
+> +static long ccu_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+> +			       unsigned long *prate)
+> +{
+> +	struct ccu_pll *p = hw_to_ccu_pll(hw);
+> +	struct ccu_pll_config *params = &p->pll;
+> +	unsigned int i;
+> +
+
+I'm pretty sure I mentioned this before.  If you cant find a
+matching rate, you return the closest rate *less than* what
+is requested, which might not be as close as the closest
+rate *greater than* the requested rate.
+
+In ccu_mix_calc_best_rate() you actually take this into account
+(though you use DIV_ROUND_UP_ULL() there too).
+
+> +	for (i = 0; i < params->tbl_size; i++) {
+> +		if (params->rate_tbl[i].rate > rate) {
+> +			i--;
+> +			break;
+> +		}
+> +	}
+> +
+> +	return rate;
+> +}
+> +
+> +const struct clk_ops spacemit_ccu_pll_ops = {
+> +	.enable		= ccu_pll_enable,
+> +	.disable	= ccu_pll_disable,
+> +	.set_rate	= ccu_pll_set_rate,
+> +	.recalc_rate	= ccu_pll_recalc_rate,
+> +	.round_rate	= ccu_pll_round_rate,
+> +	.is_enabled	= ccu_pll_is_enabled,
+> +};
+> +
+> diff --git a/drivers/clk/spacemit/ccu_pll.h b/drivers/clk/spacemit/ccu_pll.h
+> new file mode 100644
+> index 000000000000..c6a3a5cce995
+> --- /dev/null
+> +++ b/drivers/clk/spacemit/ccu_pll.h
+> @@ -0,0 +1,76 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2024 SpacemiT Technology Co. Ltd
+> + * Copyright (c) 2024 Haylen Chu <heylenay@4d2.org>
+> + */
+> +
+> +#ifndef _CCU_PLL_H_
+> +#define _CCU_PLL_H_
+> +
+> +#include <linux/clk-provider.h>
+> +
+> +#include "ccu_common.h"
+> +
+
+You should add a comment above this structure definition explaining
+how exactly it's used.  Namely that SWCR1 and SWCR3 contain encoded
+values, and each particular pair of these values creates an output
+clock rate that's indicated.  Also note that while all bits in SWCR1
+are valid, only the bottom 31 bits of SWCR3 are (its top bit is
+used for locking).
+
+> +struct ccu_pll_rate_tbl {
+> +	unsigned long rate;
+> +	u32 swcr1;
+> +	u32 swcr3;
+> +};
+> +
+> +struct ccu_pll_config {
+> +	const struct ccu_pll_rate_tbl *rate_tbl;
+> +	u32 tbl_size;
+
+I dislike "size" as a name for something that is a "count".
+To me, "size" is a number of bytes.
+
+You (and clock code) use "num" elsewhere, but either way,
+please use something different from "size" here.
+
+> +	u32 reg_lock;
+> +	u32 lock_enable_bit;
+
+Use "lock_mask" here, hopefully matching a pattern you use
+elsewhere that you define a register and a bit mask.  These
+masks (all three places this is used) all have just one bit set.
+
+> +};
+> +
+> +#define CCU_PLL_RATE(_rate, _swcr1, _swcr3) \
+> +	{									\
+> +		.rate	= _rate,							\
+> +		.swcr1	= _swcr1,						\
+> +		.swcr3	= _swcr3,						\
+> +	}
+> +
+> +struct ccu_pll {
+> +	struct ccu_pll_config	pll;
+> +	struct ccu_common	common;
+> +};
+> +
+> +#define CCU_PLL_CONFIG(_table, _reg_lock, _lock_enable_bit) \
+> +	{									\
+> +		.rate_tbl	 = _table,					\
+> +		.tbl_size	 = ARRAY_SIZE(_table),				\
+> +		.reg_lock	 = (_reg_lock),					\
+> +		.lock_enable_bit = (_lock_enable_bit),				\
+> +	}
+> +
+> +#define CCU_PLL_HWINIT(_name, _flags)						\
+> +	(&(struct clk_init_data) {						\
+> +		.name		= #_name,					\
+> +		.ops		= &spacemit_ccu_pll_ops,			\
+> +		.parent_data	= &(struct clk_parent_data) { .index = 0 },	\
+> +		.num_parents	= 1,						\
+> +		.flags		= _flags,					\
+> +	})
+> +
+> +#define CCU_PLL_DEFINE(_name, _table, _reg_swcr1, _reg_swcr3,			\
+> +		       _reg_lock, _lock_enable_bit, _flags)			\
+
+static const struct ccu_pll _name = { \
+
+					-Alex
+
+> +	struct ccu_pll _name = {						\
+> +		.pll	= CCU_PLL_CONFIG(_table, _reg_lock, _lock_enable_bit),	\
+> +		.common = {							\
+> +			.reg_swcr1	= _reg_swcr1,				\
+> +			.reg_swcr3	= _reg_swcr3,				\
+> +			.hw.init	= CCU_PLL_HWINIT(_name, _flags)		\
+> +		}								\
+> +	}
+> +
+> +static inline struct ccu_pll *hw_to_ccu_pll(struct clk_hw *hw)
+> +{
+> +	struct ccu_common *common = hw_to_ccu_common(hw);
+> +
+> +	return container_of(common, struct ccu_pll, common);
+> +}
+> +
+> +extern const struct clk_ops spacemit_ccu_pll_ops;
+> +
+> +#endif
+	
