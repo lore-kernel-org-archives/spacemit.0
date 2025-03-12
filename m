@@ -1,83 +1,694 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0360D2594
-	for <spacemit@lists.linux.dev>; Wed, 12 Mar 2025 00:30:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036B542A94
+	for <spacemit@lists.linux.dev>; Wed, 12 Mar 2025 01:46:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741739437; cv=none; b=qavthhfh/cfj1M0by9d3SzyY4BRQjk/24QM54LA7vVuA7paQLhCcKLrMx2xt0jWIfCbuFeX/G45bcyhxGWXDUYtLqqDa7bBxK9I0l4bVOF0wvKNhPXN3N7rlWQrJIg6e1G6egLpYxekz/dCrShfc43OQ+7+ini7lQg53QFPuFIg=
+	t=1741743997; cv=none; b=KNg1acCOCymLn7GugIi/7rlz+8sdHKc8ots6O/QMZZktuz440sKRI66Npr3HbZi3OWbnMjl5qh502j/eq2rD7OvmaPlD6+5x4kWjzgN5SYW145kCHdzkRgdlimY2Vb1+3aGox78KXhb/vGyB/5V2C+BpLpmWVm4va1FooIwTPaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741739437; c=relaxed/simple;
-	bh=cXzXgxJw4BfZbHJoxbEuCD45od5Yh7nLFzCNoRlhu/0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=VbVGvdg0FKTyM2n1AQF+wnw1mkrtrfm6cQka9dBRITGVRGIbQTC3ffpoha4IcON8WMKAQ5HYY1o+RmAuSxtIwkJNtp7cwK3E3101eUsfXOQlxaQAcJg+nN8BkUdrlvOLs6iwKxISdgfjGHa4jDKwwAsBQiiAHBPEEVwtULQpccA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.40])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id BAC8534313D;
-	Wed, 12 Mar 2025 00:30:33 +0000 (UTC)
-Date: Wed, 12 Mar 2025 00:30:23 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: soc@kernel.org
-Cc: Conor Dooley <conor@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	linux-riscv <linux-riscv@lists.infradead.org>,
-	spacemit@lists.linux.dev
-Subject: [GIT PULL] RISC-V SpacemiT Devicetrees for v6.15
-Message-ID: <20250312003023-GYA76989@gentoo>
+	s=arc-20240116; t=1741743997; c=relaxed/simple;
+	bh=hd70bcPfXIsu30lUfwpwqnh173v3xCJQRNp8TB6j1Gg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CS/aCMs1X/sFO/HyN4+Rii72DpO08y/Ufa3zk600rdkuzRyIRWzhBjDVSF2LUEyEgOVaJY+ABLJqh44L7ok8keOv2QMQvPqpskyMUjTaEPW/ETxZPx/azNwtJjrpdhUGBy+V7A+afcDGZHYfqt4YrXekSdcSvCYU1PKfEw6wSG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=xL75gx2p; arc=none smtp.client-ip=209.85.166.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="xL75gx2p"
+Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-3d03ac846a7so19685905ab.2
+        for <spacemit@lists.linux.dev>; Tue, 11 Mar 2025 18:46:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1741743994; x=1742348794; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FB2V6QtdCcfZkX+JuKOMy58zGXvLKnGeA8XbC/5PkiM=;
+        b=xL75gx2pya8yJBmNwtfLq8K7TbYqOrQE2SzQP4udphQlDew701VRSebRSoo+lXaCId
+         mPwEG2CF8xoOAEJ1WQLD4saTi3CrmUEoVLaX3WcDBt1f4LM7B27plS9wnC9EgIJ0n9OT
+         6CXuDykgY+QY0wUzDmj2PICNrA54HPbKeOtnWyTd74aA6Md8kXEZXRDEBGFQUbgYNav/
+         uxi4y6CEa31hTKxf0Dziu9AYXOvHOJLGKtxIIdknYkZxPqtBnGDNSeDwShpH8ObgGaQ+
+         efFyQXuHfYSxGUqQVeByZL6J21DPgnawemKBfa/ngdIqHbJyYtHLVK5J11HgRieJ+cxu
+         uNvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741743994; x=1742348794;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FB2V6QtdCcfZkX+JuKOMy58zGXvLKnGeA8XbC/5PkiM=;
+        b=pCKG+ebeyGfBr4gXyO84kFOeg6z0JnsgemP20Jy9LtWjrBavX8+BVoZpKdRt5nxP/U
+         JDP6GNQlrP6Hwg/vwa40ET0mnAYs1s3mix1qt9xObQhRk4F8NEudxUYNnpnfpH01d7Jt
+         hdoQ295YSKp/7SjYr7N7TqzrdQpu8x5JKTdi3edur2x/qa+DpXhYkqRztXcYPQCBvORh
+         8xP6fiizvWDgv7alQ4THqjWIzdPfpmNCDvLP8K5v8CRa58ZhswUlCEfVklVDBVIBBcLH
+         aWxBU5IufhVE0/uPPR32Ekw6tPvTPBfX2cYcvXTz8LF9KKRr2MHVzAnzeRdHsdwRyi2n
+         jO2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXVbckwT4AJSw3YJPJA2k5AFX+2l98hPCoWnnjz3/d9D3K85tje2hw6C+T7FqN2BCSHCezyJ6iouA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwzNosKZe6qnUDFsZWxYyHTdmuWK/iWZOvQZu2uB2ozYr3ojPK2
+	FRTkNavjGnVW8ZcqlVGwUo8dEHr0/SAubkuEKreQsqwHhmOmB4NZ8VUlqLSLcRs=
+X-Gm-Gg: ASbGncvR7HuKH7xnXp/ihW4J05WNDRS3C8IuELCt1OcsrrOJh0YFmqSaAfPUDLZMv3a
+	k8/m2uQSavZKwRE5OBNJ2yP3o1bdrVPz2+yMHwNOAo3VwN4Qxu0ZMRodN6iMKE3m9/JpbQa++MJ
+	/8pWyQGnlwEz9MgGPgAzvEcZcBRjljHVFE1oPHHvey1pJ4ssY00wS7Y47PqNl/pqfnvCE9Kedn1
+	rA18KKaT5ji06p8ATbbdVVcpLI7bEPDTazJVD6qMsNohiK8zRzKS0QkVy05YqwY0+Qu5YD+Qwlp
+	MIXobWZUPBvl+0MZBROxkodZpYzigJRpNhoJwVi9roerjsxum+iJCcdcf+ktH5bGnbf5Y2f9Bxc
+	d9ZzKiUzd
+X-Google-Smtp-Source: AGHT+IFNl/LOv6cvvb25Zi+xeko7zVBW5q6yh0IgPfpjtyHa74TInbGv9C4bATUIo7PS9ZWxshZtgA==
+X-Received: by 2002:a92:c56a:0:b0:3d4:3eed:2755 with SMTP id e9e14a558f8ab-3d4418fd32amr210624095ab.12.1741743993898;
+        Tue, 11 Mar 2025 18:46:33 -0700 (PDT)
+Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3d43b4f69f8sm28699735ab.23.2025.03.11.18.46.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Mar 2025 18:46:33 -0700 (PDT)
+Message-ID: <7d9e90ba-8c23-44dc-b64f-80213216faf7@riscstar.com>
+Date: Tue, 11 Mar 2025 20:46:31 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/2] i2c: spacemit: add support for SpacemiT K1 SoC
+To: Troy Mitchell <troymitchell988@gmail.com>,
+ Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>
+Cc: linux-riscv@lists.infradead.org, linux-i2c@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ spacemit@lists.linux.dev, Guodong Xu <guodong@riscstar.com>
+References: <20250307-k1-i2c-master-v6-0-34f17d2dae1c@gmail.com>
+ <20250307-k1-i2c-master-v6-2-34f17d2dae1c@gmail.com>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20250307-k1-i2c-master-v6-2-34f17d2dae1c@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Arnd:
+On 3/7/25 7:13 AM, Troy Mitchell wrote:
+> This patch introduces basic I2C support for the SpacemiT K1 SoC,
+> utilizing interrupts for transfers.
+> 
+> The driver has been tested using i2c-tools on a Bananapi-F3 board,
+> and basic I2C read/write operations have been confirmed to work.
+> 
+> Signed-off-by: Troy Mitchell <troymitchell988@gmail.com>
 
-Here is SpacemiT's device tree changes for v6.15, thanks
+I have a bunch of really small suggestions.  Please consider
+them, but whatever you choose to do this looks good to me.
 
+Reviewed-by: Alex Elder <elder@riscstar.com>
 
-The following changes since commit 2014c95afecee3e76ca4a56956a936e23283f05b:
+> ---
+>   drivers/i2c/busses/Kconfig  |  17 ++
+>   drivers/i2c/busses/Makefile |   1 +
+>   drivers/i2c/busses/i2c-k1.c | 601 ++++++++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 619 insertions(+)
+> 
+> diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
+> index fc438f4457713d5559d163840a7b11e8cdbb8f58..12d0e99566d8625aa374279956b71a4034ded4ac 100644
+> --- a/drivers/i2c/busses/Kconfig
+> +++ b/drivers/i2c/busses/Kconfig
+> @@ -783,6 +783,23 @@ config I2C_JZ4780
+>   
+>   	 If you don't know what to do here, say N.
+>   
+> +config I2C_K1
+> +	tristate "Spacemit K1 I2C adapter"
+> +	depends on ARCH_SPACEMIT || COMPILE_TEST
+> +	depends on OF
+> +	help
+> +	  This option enables support for the I2C interface on the Spacemit K1
+> +	  platform.
+> +
+> +	  If you enable this configuration, the kernel will include support for
+> +	  the I2C adapter specific to the Spacemit K1 platform. This driver can
+> +	  be used to manage I2C bus transactions, which are necessary for
+> +	  interfacing with I2C peripherals such as sensors, EEPROMs, and other
+> +	  devices.
 
-  Linux 6.14-rc1 (2025-02-02 15:39:26 -0800)
+Does SpacemiT prefer to have the T at the end of their name
+capitalized?
 
-are available in the Git repository at:
+> +
+> +	  This driver can also be built as a module.  If so, the
+> +	  module will be called `i2c-k1`.
+> +
+>   config I2C_KEBA
+>   	tristate "KEBA I2C controller support"
+>   	depends on HAS_IOMEM
+> diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
+> index 1c2a4510abe44a689dfe67d2d64cf0cf3434f510..c1252e2b779e2e47492d66179b442f2202ec0416 100644
+> --- a/drivers/i2c/busses/Makefile
+> +++ b/drivers/i2c/busses/Makefile
+> @@ -74,6 +74,7 @@ obj-$(CONFIG_I2C_IMX)		+= i2c-imx.o
+>   obj-$(CONFIG_I2C_IMX_LPI2C)	+= i2c-imx-lpi2c.o
+>   obj-$(CONFIG_I2C_IOP3XX)	+= i2c-iop3xx.o
+>   obj-$(CONFIG_I2C_JZ4780)	+= i2c-jz4780.o
+> +obj-$(CONFIG_I2C_K1)		+= i2c-k1.o
+>   obj-$(CONFIG_I2C_KEBA)		+= i2c-keba.o
+>   obj-$(CONFIG_I2C_KEMPLD)	+= i2c-kempld.o
+>   obj-$(CONFIG_I2C_LPC2K)		+= i2c-lpc2k.o
+> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..1ef98a303fb14ce10d283225ce0617a0b9f405f7
+> --- /dev/null
+> +++ b/drivers/i2c/busses/i2c-k1.c
+> @@ -0,0 +1,601 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (C) 2024 Troy Mitchell <troymitchell988@gmail.com>
 
-  https://github.com/spacemit-com/linux tags/spacemit-dt-for-6.15-1
+Maybe update your copyright date(s) to include this year before
+your final version of the patch.
 
-for you to fetch changes up to 5b90a3d6092d9292d3c4fe4eef8969282e070ae3:
+> + */
+> +
+> + #include <linux/clk.h>
+> + #include <linux/i2c.h>
+> + #include <linux/iopoll.h>
+> + #include <linux/module.h>
+> + #include <linux/of_address.h>
+> + #include <linux/platform_device.h>
+> +
+> +/* spacemit i2c registers */
+> +#define SPACEMIT_ICR		 0x0		/* Control Register */
 
-  riscv: dts: spacemit: Add Milk-V Jupiter board device tree (2025-02-17 21:11:50 +0800)
+s/Register/register/
 
-----------------------------------------------------------------
-RISC-V SpacemiT DT changes for 6.15
+> +#define SPACEMIT_ISR		 0x4		/* Status Register */
 
-- Add Milk-V Jupiter board
-- MAINTAINERS info
+s/Register/register/
 
-----------------------------------------------------------------
-Javier Martinez Canillas (2):
-      dt-bindings: riscv: spacemit: Add Milk-V Jupiter board compatible
-      riscv: dts: spacemit: Add Milk-V Jupiter board device tree
+> +#define SPACEMIT_IDBR		 0xc		/* Data Buffer Register */
+s/Buffer Re/buffer re/
 
-Yixun Lan (1):
-      MAINTAINERS: spacemit: update various info
+> +#define SPACEMIT_IBMR		 0x1c		/* Bus monitor register */
+> +
+> +/* SPACEMIT_ICR register fields */
+> +#define SPACEMIT_CR_START        BIT(0)		/* start bit */
+> +#define SPACEMIT_CR_STOP         BIT(1)		/* stop bit */
+> +#define SPACEMIT_CR_ACKNAK       BIT(2)		/* send ACK(0) or NAK(1) */
+> +#define SPACEMIT_CR_TB           BIT(3)		/* transfer byte bit */
+> +/* Bits 4-7 are reserved */
+> +#define SPACEMIT_CR_MODE_FAST    BIT(8)		/* bus mode (master operation) */
+> +/* Bit 9 is reserved */
+> +#define SPACEMIT_CR_UR           BIT(10)	/* unit reset */
+> +/* Bits 11-12 are reserved */
+> +#define SPACEMIT_CR_SCLE         BIT(13)	/* master clock enable */
+> +#define SPACEMIT_CR_IUE          BIT(14)	/* unit enable */
+> +/* Bits 15-17 are reserved */
+> +#define SPACEMIT_CR_ALDIE        BIT(18)	/* enable arbitration interrupt */
+> +#define SPACEMIT_CR_DTEIE        BIT(19)	/* enable tx interrupts */
+> +#define SPACEMIT_CR_DRFIE        BIT(20)	/* enable rx interrupts */
+> +#define SPACEMIT_CR_GCD          BIT(21)	/* general call disable */
+> +#define SPACEMIT_CR_BEIE         BIT(22)	/* enable bus error ints */
+> +/* Bits 23-24 are reserved */
+> +#define SPACEMIT_CR_MSDIE        BIT(25)	/* master STOP detected int enable */
+> +#define SPACEMIT_CR_MSDE         BIT(26)	/* master STOP detected enable */
+> +#define SPACEMIT_CR_TXDONEIE     BIT(27)	/* transaction done int enable */
+> +#define SPACEMIT_CR_TXEIE        BIT(28)	/* transmit FIFO empty int enable */
+> +#define SPACEMIT_CR_RXHFIE       BIT(29)	/* receive FIFO half-full int enable */
+> +#define SPACEMIT_CR_RXFIE        BIT(30)	/* receive FIFO full int enable */
+> +#define SPACEMIT_CR_RXOVIE       BIT(31)	/* receive FIFO overrun int enable */
+> +
+> +#define SPACEMIT_I2C_INT_CTRL_MASK	(SPACEMIT_CR_ALDIE | SPACEMIT_CR_DTEIE | \
+> +					 SPACEMIT_CR_DRFIE | SPACEMIT_CR_BEIE | \
+> +					 SPACEMIT_CR_TXDONEIE | SPACEMIT_CR_TXEIE | \
+> +					 SPACEMIT_CR_RXHFIE | SPACEMIT_CR_RXFIE | \
+> +					 SPACEMIT_CR_RXOVIE | SPACEMIT_CR_MSDIE)
+> +
+> +/* SPACEMIT_ISR register fields */
+> +/* Bits 0-13 are reserved */
+> +#define SPACEMIT_SR_ACKNAK       BIT(14)	/* ACK/NACK status */
+> +#define SPACEMIT_SR_UB           BIT(15)	/* unit busy */
+> +#define SPACEMIT_SR_IBB          BIT(16)	/* i2c bus busy */
+> +#define SPACEMIT_SR_EBB          BIT(17)	/* early bus busy */
+> +#define SPACEMIT_SR_ALD          BIT(18)	/* arbitration loss detected */
+> +#define SPACEMIT_SR_ITE          BIT(19)	/* tx buffer empty */
+> +#define SPACEMIT_SR_IRF          BIT(20)	/* rx buffer full */
+> +#define SPACEMIT_SR_GCAD         BIT(21)	/* general call address detected */
+> +#define SPACEMIT_SR_BED          BIT(22)	/* bus error no ACK/NAK */
+> +#define SPACEMIT_SR_SAD          BIT(23)	/* slave address detected */
+> +#define SPACEMIT_SR_SSD          BIT(24)	/* slave stop detected */
+> +/* Bit 25 is reserved */
+> +#define SPACEMIT_SR_MSD          BIT(26)	/* master stop detected */
+> +#define SPACEMIT_SR_TXDONE       BIT(27)	/* transaction done */
+> +#define SPACEMIT_SR_TXE          BIT(28)	/* tx FIFO empty */
+> +#define SPACEMIT_SR_RXHF         BIT(29)	/* rx FIFO half-full */
+> +#define SPACEMIT_SR_RXF          BIT(30)	/* rx FIFO full */
+> +#define SPACEMIT_SR_RXOV         BIT(31)	/* RX FIFO overrun */
 
- .../devicetree/bindings/riscv/spacemit.yaml        |  1 +
- MAINTAINERS                                        |  3 +++
- arch/riscv/boot/dts/spacemit/Makefile              |  1 +
- arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts  | 27 ++++++++++++++++++++++
- 4 files changed, 32 insertions(+)
- create mode 100644 arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+s/RX FIFO/rx FIFO/
 
--- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+Or preferably, use "TX" and "RX" an all the comments (and anywhere
+else you use "tx" and "rx" in the file).
+
+> +
+> +#define SPACEMIT_I2C_INT_STATUS_MASK	(SPACEMIT_SR_RXOV | SPACEMIT_SR_RXF | SPACEMIT_SR_RXHF | \
+> +					SPACEMIT_SR_TXE | SPACEMIT_SR_TXDONE | SPACEMIT_SR_MSD | \
+> +					SPACEMIT_SR_SSD | SPACEMIT_SR_SAD | SPACEMIT_SR_BED | \
+> +					SPACEMIT_SR_GCAD | SPACEMIT_SR_IRF | SPACEMIT_SR_ITE | \
+> +					SPACEMIT_SR_ALD)
+> +
+> +/* SPACEMIT_IBMR register fields */
+> +#define SPACEMIT_BMR_SDA         BIT(0)		/* SDA line level */
+> +#define SPACEMIT_BMR_SCL         BIT(1)		/* SCL line level */
+> +
+> +/* i2c bus recover timeout: us */
+> +#define SPACEMIT_I2C_BUS_BUSY_TIMEOUT	100000
+
+Align the 100000 above with the frequency values below.
+
+> +
+> +#define SPACEMIT_SR_ERR	(SPACEMIT_SR_BED | SPACEMIT_SR_RXOV | SPACEMIT_SR_ALD)
+> +
+
+Maybe it's obvious but you could comment that the unit
+for these values is Hz.
+
+> +#define SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ	100000
+> +#define SPACEMIT_I2C_MAX_FAST_MODE_FREQ		400000
+> +
+> +enum spacemit_i2c_state {
+> +	STATE_IDLE,
+> +	STATE_START,
+> +	STATE_READ,
+> +	STATE_WRITE,
+> +};
+> +
+> +/* i2c-spacemit driver's main struct */
+> +struct spacemit_i2c_dev {
+> +	struct device *dev;
+> +	struct i2c_adapter adapt;
+> +
+> +	/* hardware resources */
+> +	void __iomem *base;
+> +	int irq;
+> +	u32 clock_freq;
+> +
+> +	struct i2c_msg *msgs;
+> +	int msg_num;
+
+You'll never have a negative number of messages.  (I see
+it's assigned an int value, but my statement is still true.)
+So this can be unsigned (u32).
+
+> +
+> +	/* index of the current message being processed */
+> +	int msg_idx;
+
+msg_idx can also be unsigned.
+
+> +	u8 *msg_buf;
+> +	/* the number of unprocessed bytes remaining in each message  */
+
+s/each/the current/
+
+> +	size_t unprocessed;
+
+Why is unprocessed a size_t?  It's OK, but msg_idx is a
+simple (unsigned) int.
+
+> +
+> +	enum spacemit_i2c_state state;
+> +	bool read;
+> +	struct completion complete;
+> +	u32 status;
+> +};
+> +
+> +static void spacemit_i2c_enable(struct spacemit_i2c_dev *i2c)
+> +{
+> +	u32 val;
+> +
+> +	val = readl(i2c->base + SPACEMIT_ICR);
+> +	val |= SPACEMIT_CR_IUE;
+> +	writel(val, i2c->base + SPACEMIT_ICR);
+> +}
+> +
+> +static void spacemit_i2c_disable(struct spacemit_i2c_dev *i2c)
+> +{
+> +	u32 val;
+> +
+> +	val = readl(i2c->base + SPACEMIT_ICR);
+> +	val &= ~SPACEMIT_CR_IUE;
+> +	writel(val, i2c->base + SPACEMIT_ICR);
+> +}
+> +
+> +static void spacemit_i2c_reset(struct spacemit_i2c_dev *i2c)
+> +{
+> +	writel(SPACEMIT_CR_UR, i2c->base + SPACEMIT_ICR);
+> +	udelay(5);
+> +	writel(0, i2c->base + SPACEMIT_ICR);
+> +}
+> +
+> +static int spacemit_i2c_handle_err(struct spacemit_i2c_dev *i2c)
+> +{
+> +	dev_dbg(i2c->dev, "i2c error status: 0x%08x\n", i2c->status);
+> +
+> +	if (i2c->status & (SPACEMIT_SR_BED | SPACEMIT_SR_ALD)) {
+> +		spacemit_i2c_reset(i2c);
+> +		return -EAGAIN;
+> +	}
+> +
+> +	return i2c->status & SPACEMIT_SR_ACKNAK ? -ENXIO : -EIO;
+> +}
+> +
+> +static void spacemit_i2c_conditionally_reset_bus(struct spacemit_i2c_dev *i2c)
+> +{
+> +	u32 status;
+> +
+> +	/* if bus is locked, reset unit. 0: locked */
+> +	status = readl(i2c->base + SPACEMIT_IBMR);
+> +	if ((status & SPACEMIT_BMR_SDA) && (status & SPACEMIT_BMR_SCL))
+> +		return;
+> +
+> +	spacemit_i2c_reset(i2c);
+> +	usleep_range(10, 20);
+> +
+> +	/* check scl status again */
+> +	status = readl(i2c->base + SPACEMIT_IBMR);
+> +	if (!(status & SPACEMIT_BMR_SCL))
+> +		dev_warn_ratelimited(i2c->dev, "unit reset failed\n");
+> +}
+> +
+
+I think this is waiting for the bus to *not* be busy.
+So spacemit_i2c_wait_bus_free() (or maybe _idle()) would
+make more sense.
+
+> +static int spacemit_i2c_wait_bus_busy(struct spacemit_i2c_dev *i2c)
+> +{
+> +	int ret;
+> +	u32 val;
+> +
+> +	val = readl(i2c->base + SPACEMIT_ISR);
+> +	if (!(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)))
+> +		return 0;
+> +
+> +	ret = readl_poll_timeout(i2c->base + SPACEMIT_ISR,
+> +				 val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
+> +				 1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
+> +	if (ret)
+> +		spacemit_i2c_reset(i2c);
+> +
+> +	return ret;
+> +}
+> +
+> +static void spacemit_i2c_check_bus_release(struct spacemit_i2c_dev *i2c)
+> +{
+> +	/* in case bus is not released after transfer completes */
+> +	if (readl(i2c->base + SPACEMIT_ISR) & SPACEMIT_SR_EBB) {
+> +		spacemit_i2c_conditionally_reset_bus(i2c);
+> +		usleep_range(90, 150);
+> +	}
+> +}
+> +
+> +static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
+> +{
+> +	u32 val;
+> +
+> +	/*
+> +	 * Unmask interrupt bits for all xfer mode:
+> +	 * bus error, arbitration loss detected.
+> +	 * For transaction complete signal, we use master stop
+> +	 * interrupt, so we don't need to unmask SPACEMIT_CR_TXDONEIE.
+> +	 */
+> +	val = SPACEMIT_CR_BEIE | SPACEMIT_CR_ALDIE;
+> +
+> +	/*
+> +	 * Unmask interrupt bits for interrupt xfer mode:
+> +	 * DBR rx full.
+> +	 * For tx empty interrupt SPACEMIT_CR_DTEIE, we only
+> +	 * need to enable when trigger byte transfer to start
+> +	 * data sending.
+> +	 */
+> +	val |= SPACEMIT_CR_DRFIE;
+> +
+> +	if (i2c->clock_freq == SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
+> +		val |= SPACEMIT_CR_MODE_FAST;
+> +
+> +	/* disable response to general call */
+> +	val |= SPACEMIT_CR_GCD;
+> +
+> +	/* enable SCL clock output */
+> +	val |= SPACEMIT_CR_SCLE;
+> +
+> +	/* enable master stop detected */
+> +	val |= SPACEMIT_CR_MSDE | SPACEMIT_CR_MSDIE;
+> +
+> +	writel(val, i2c->base + SPACEMIT_ICR);
+> +}
+> +
+> +static inline void
+
+s/inline //
+
+> +spacemit_i2c_clear_int_status(struct spacemit_i2c_dev *i2c, u32 mask)
+> +{
+> +	writel(mask & SPACEMIT_I2C_INT_STATUS_MASK, i2c->base + SPACEMIT_ISR);
+> +}
+> +
+> +static void spacemit_i2c_start(struct spacemit_i2c_dev *i2c)
+> +{
+> +	u32 slave_addr_rw, val;
+> +	struct i2c_msg *cur_msg = i2c->msgs + i2c->msg_idx;
+> +
+> +	i2c->read = !!(cur_msg->flags & I2C_M_RD);
+> +
+> +	i2c->state = STATE_START;
+> +
+> +	slave_addr_rw = (cur_msg->addr & 0x7f) << 1;
+> +	if (cur_msg->flags & I2C_M_RD)
+> +		slave_addr_rw |= 1;
+> +
+> +	writel(slave_addr_rw, i2c->base + SPACEMIT_IDBR);
+> +
+> +	/* send start pulse */
+> +	val = readl(i2c->base + SPACEMIT_ICR);
+> +	val &= ~SPACEMIT_CR_STOP;
+> +	val |= SPACEMIT_CR_START | SPACEMIT_CR_TB | SPACEMIT_CR_DTEIE;
+> +	writel(val, i2c->base + SPACEMIT_ICR);
+> +}
+> +
+> +static void spacemit_i2c_stop(struct spacemit_i2c_dev *i2c)
+> +{
+> +	u32 val;
+> +
+> +	val = readl(i2c->base + SPACEMIT_ICR);
+> +	val |= SPACEMIT_CR_STOP | SPACEMIT_CR_ALDIE | SPACEMIT_CR_TB;
+> +
+> +	if (i2c->read)
+> +		val |= SPACEMIT_CR_ACKNAK;
+> +
+> +	writel(val, i2c->base + SPACEMIT_ICR);
+> +}
+> +
+> +static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
+> +{
+> +	unsigned long time_left;
+> +
+> +	for (i2c->msg_idx = 0; i2c->msg_idx < i2c->msg_num; i2c->msg_idx++) {
+> +		i2c->msg_buf = (i2c->msgs + i2c->msg_idx)->buf;
+> +		i2c->status = 0;
+> +		i2c->unprocessed = (i2c->msgs + i2c->msg_idx)->len;
+
+I think this might be more understandable.  The array syntax
+shows it's really an array; and the local variable simplifies
+the right-hand sides.
+
+	struct i2c_msg *msg = &i2c->msgs[i2c->msg_idx];
+
+	i2c->msg_buf = msg->buf;
+	i2c->unprocessed = msg->len;
+	i2c->status = 0;
+
+> +
+> +		reinit_completion(&i2c->complete);
+> +
+> +		spacemit_i2c_start(i2c);
+> +
+> +		time_left = wait_for_completion_timeout(&i2c->complete,
+> +							i2c->adapt.timeout);
+> +		if (time_left == 0) {
+
+		if (!time_left) {
+
+> +			dev_err(i2c->dev, "msg completion timeout\n");
+> +			spacemit_i2c_conditionally_reset_bus(i2c);
+> +			spacemit_i2c_reset(i2c);
+> +			return -ETIMEDOUT;
+> +		}
+> +
+> +		if (i2c->status & SPACEMIT_SR_ERR)
+> +			return spacemit_i2c_handle_err(i2c);
+> +	}
+> +
+> +	return 0;
+> +}
+
+. . .
+
+> +static void spacemit_i2c_calc_timeout(struct spacemit_i2c_dev *i2c)
+> +{
+> +	unsigned long timeout;
+> +	int idx = 0, cnt = 0;
+> +
+> +	while (idx < i2c->msg_num) {
+> +		cnt += (i2c->msgs + idx)->len + 1;
+> +		idx++;
+> +	}
+> +
+> +	/*
+> +	 * multiply by 9 because each byte in I2C transmission requires
+> +	 * 9 clock cycles: 8 bits of data plus 1 ACK/NACK bit.
+> +	 */
+> +	timeout = cnt * 9 * USEC_PER_SEC / i2c->clock_freq;
+> +
+> +	i2c->adapt.timeout = usecs_to_jiffies(timeout + USEC_PER_SEC / 2) / i2c->msg_num;
+
+I think the half second pad on your timeout will essentially
+always dominate the timeout period.  If you transfer a
+maximally-sized message at 100000 Hz it'll take almost
+6 seconds.  But in practice I'm sure transfers are under
+32 bytes (maybe 256?).  At 256 bytes you're looking at
+23 milliseconds (plus 500000) at 100 KHz.
+
+I looked around and the timeouts used for I2C adapters are
+all over the map.  50 seconds, 1 second, 100 milliseconds,
+and so on, so I guess what you're doing is fine.
+
+That said, it might not be very important to be as precise
+as you are here.
+
+> +}
+> +
+
+. . .
+
+> +static const struct i2c_algorithm spacemit_i2c_algo = {
+> +	.xfer = spacemit_i2c_xfer,
+> +	.functionality = spacemit_i2c_func,
+> +};
+> +
+> +static int spacemit_i2c_probe(struct platform_device *pdev)
+> +{
+> +	struct clk *clk;
+> +	struct device *dev = &pdev->dev;
+> +	struct device_node *of_node = pdev->dev.of_node;
+> +	struct spacemit_i2c_dev *i2c;
+> +	int ret;
+> +
+> +	i2c = devm_kzalloc(dev, sizeof(*i2c), GFP_KERNEL);
+> +	if (!i2c)
+> +		return -ENOMEM;
+> +
+> +	ret = of_property_read_u32(of_node, "clock-frequency", &i2c->clock_freq);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to read clock-frequency property");
+
+Your binding doesn't say that the "clock-frequency" property is
+required.  If it's not found, you should default to 400000 Hz.
+There should be no error here.
+
+> +
+> +	/* For now, this driver doesn't support high-speed. */
+
+The clock frequency is unsigned, so:
+
+	if (!i2c->clock_freq || ...) {
+
+> +	if (i2c->clock_freq < 1 || i2c->clock_freq > SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
+> +		dev_warn(dev, "unsupport clock frequency: %d, default: %d",
+
+	dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+
+> +			 i2c->clock_freq, SPACEMIT_I2C_MAX_FAST_MODE_FREQ);
+> +		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
+> +	} else if (i2c->clock_freq < SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+
+I would issue the same warning message here.
+
+> +		i2c->clock_freq = SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ;
+> +	}
+> +
+> +	i2c->dev = &pdev->dev;
+> +
+> +	i2c->base = devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(i2c->base))
+> +		return dev_err_probe(dev, PTR_ERR(i2c->base), "failed to do ioremap");
+> +
+> +	i2c->irq = platform_get_irq(pdev, 0);
+> +	if (i2c->irq < 0)
+> +		return dev_err_probe(dev, i2c->irq, "failed to get irq resource");
+> +
+> +	ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
+> +			       IRQF_NO_SUSPEND | IRQF_ONESHOT, dev_name(i2c->dev), i2c);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to request irq");
+> +
+> +	clk = devm_clk_get_enabled(dev, "func");
+> +	if (IS_ERR(clk))
+> +		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable func clock");
+> +
+> +	clk = devm_clk_get_enabled(dev, "bus");
+> +	if (IS_ERR(clk))
+> +		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable bus clock");
+> +
+> +	spacemit_i2c_reset(i2c);
+> +
+> +	i2c_set_adapdata(&i2c->adapt, i2c);
+> +	i2c->adapt.owner = THIS_MODULE;
+> +	i2c->adapt.algo = &spacemit_i2c_algo;
+> +	i2c->adapt.dev.parent = i2c->dev;
+> +	i2c->adapt.nr = pdev->id;
+> +
+> +	i2c->adapt.dev.of_node = of_node;
+> +	i2c->adapt.algo_data = i2c;
+
+I don't think you ever use i2c->adapt.algo_data.  All you
+need is the i2c pointer you set with i2c_set_adapdata().
+
+That's it!
+
+					-Alex
+
+> +
+> +	strscpy(i2c->adapt.name, "spacemit-i2c-adapter", sizeof(i2c->adapt.name));
+> +
+> +	init_completion(&i2c->complete);
+> +
+> +	platform_set_drvdata(pdev, i2c);
+> +
+> +	ret = i2c_add_numbered_adapter(&i2c->adapt);
+> +	if (ret)
+> +		return dev_err_probe(&pdev->dev, ret, "failed to add i2c adapter");
+> +
+> +	return 0;
+> +}
+> +
+> +static void spacemit_i2c_remove(struct platform_device *pdev)
+> +{
+> +	struct spacemit_i2c_dev *i2c = platform_get_drvdata(pdev);
+> +
+> +	i2c_del_adapter(&i2c->adapt);
+> +}
+> +
+> +static const struct of_device_id spacemit_i2c_of_match[] = {
+> +	{ .compatible = "spacemit,k1-i2c", },
+> +	{ /* sentinel */ }
+> +};
+> +MODULE_DEVICE_TABLE(of, spacemit_i2c_of_match);
+> +
+> +static struct platform_driver spacemit_i2c_driver = {
+> +	.probe = spacemit_i2c_probe,
+> +	.remove = spacemit_i2c_remove,
+> +	.driver = {
+> +		.name = "i2c-k1",
+> +		.of_match_table = spacemit_i2c_of_match,
+> +	},
+> +};
+> +module_platform_driver(spacemit_i2c_driver);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("I2C bus driver for SpacemiT K1 SoC");
+> 
+
