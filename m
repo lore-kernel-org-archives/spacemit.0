@@ -1,71 +1,44 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C646B1E98E0;
-	Wed, 12 Mar 2025 20:17:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C4417E;
+	Thu, 13 Mar 2025 00:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741810665; cv=none; b=InMESVfWFM2fu9KV1GNFqNtNclpDTkFEbLuCTC6UP39YGKh7ZfG7ZKhVX+UElX9avT7rYzCQHcYTXSXSIcmho4wggDtG7oLEAsxihXRGEMJ8YIhS4PX89AAOxO4xZwKJIkp7aKcP01LdaCMDP0Q1uG3FisQnT1aWWJYhhHHyRUM=
+	t=1741824627; cv=none; b=Taz5P67+3cmwxehino1nJqcNyO3ApepKLmu3zlBiuSkZl0hoNtL0gXe2ENhAOb2xVzOMOATSY8l+Q4uikGTW8MQTHzosxiaCdduQU8jIRXqW22XZgFOhtgEgkDs822U/bZn3xwsqNF7oYCCCBiWrK3O+NyvpSZ9XNtFHmkhLZc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741810665; c=relaxed/simple;
-	bh=v+BY+g55F6T5NMcwLkcGpN4Z2yA59ha5GDHqdirKEVw=;
+	s=arc-20240116; t=1741824627; c=relaxed/simple;
+	bh=8soeqXNN5au4hvLPUpIInyAV09m1jrjYWHYC7wip3jI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UscJNWRp9QuyeiSm6la61svGYj4GbBs4PLl0VPU7y8DCAydcmunB5Iu2SUieKptTFViBkoZF57oFtuxGZwoh+rADr6JlzcIU6UsrhR3OrN7ZGhWT2QyOacA930O0tFypnSQzKOtkTQC/L2r+MnReomjebImcX8JOHH12diuWghE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cPp6tt1W; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=RIC36/G081J+qcaWhJuzBQvRKcGGSYt83fKei33hhH4y/ek6OIVPa3Plql8DY01+ikCEnOpdh1dfD6xki+E61NEqcnISmxM7AzHyBxolCC1VmdpgwvR31oSD6bUZCjq+qWqguqtYJtjrfRev/wNZs2mdnjQUcTcQcs/0MlNJogI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j8YYd/W1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cPp6tt1W"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741810664; x=1773346664;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=v+BY+g55F6T5NMcwLkcGpN4Z2yA59ha5GDHqdirKEVw=;
-  b=cPp6tt1WzSKd2MCxN8MlUTjxEmjZxzSx6uz48v1Kb0UEU0iykDHbERNn
-   TYYCqjInHnt2nu+miZrVaG28AVPR7lbhwzW7O9HeDjpEGN1CTlDwZks5z
-   kczy4suBh7LNtqIJCgfsW40VwkHfw2fmvLgZjnmCSAgRccG1OjcWEl+pk
-   qUX4wBZBmeGnMXtZwZDrJFEkY0IjcXBi2Z5m3T5QA0g3rGlD49EL0dDPy
-   fz+w5UMiTs5EjDA7FpSF+zuQnyuNXcDHYa2LFfZ1iWgtx8LtUW8jQCe+7
-   AVty6TF3NJxlsqLmzt1+BKdSc8JLFUVJPYA+M2Ypa7GYkeE/USn4n9QYT
-   g==;
-X-CSE-ConnectionGUID: LzGjnb9tS5KGCXaLN46aBw==
-X-CSE-MsgGUID: Bx62Lh8YSfyQlYU9sugFDg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11371"; a="53117511"
-X-IronPort-AV: E=Sophos;i="6.14,242,1736841600"; 
-   d="scan'208";a="53117511"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2025 13:17:43 -0700
-X-CSE-ConnectionGUID: JTTkifBISISmGQpCwqs/oQ==
-X-CSE-MsgGUID: WlY3h+hsT3OFna6ZjLLUfg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,242,1736841600"; 
-   d="scan'208";a="120698425"
-Received: from lkp-server02.sh.intel.com (HELO a4747d147074) ([10.239.97.151])
-  by orviesa010.jf.intel.com with ESMTP; 12 Mar 2025 13:17:39 -0700
-Received: from kbuild by a4747d147074 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tsSWG-0008rs-2S;
-	Wed, 12 Mar 2025 20:17:36 +0000
-Date: Thu, 13 Mar 2025 04:17:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: Haylen Chu <heylenay@4d2.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Haylen Chu <heylenay@outlook.com>, Yixun Lan <dlan@gentoo.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Chen Wang <unicornxdotw@foxmail.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
-Subject: Re: [PATCH v5 3/5] clk: spacemit: Add clock support for Spacemit K1
- SoC
-Message-ID: <202503130314.Y8KFKZWW-lkp@intel.com>
-References: <20250306175750.22480-5-heylenay@4d2.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j8YYd/W1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC902C4CEDD;
+	Thu, 13 Mar 2025 00:10:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741824626;
+	bh=8soeqXNN5au4hvLPUpIInyAV09m1jrjYWHYC7wip3jI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=j8YYd/W1Va4DqX+vWN/hqTBRjVKF52OQw9S5xTtXKNEZEaKCZKKvvpARrh7h4KA37
+	 NdGwZajanvod9BZutuW0zg316W5OPu8BLBYfMIv7Al3se+N/DZz8E+aHXldMkdViXA
+	 dC9SjaKMbmCPHdlEoRGQEVM9RJ/M4ajF27khsvyzXlUYikoFPBfL3CHLsenxxQdlzG
+	 DVMHdVSBT4kBJnNgzRb+GG6O4n34K0EcgF3oflK3Pw9HQpTydjHL0eY+g8CPNOjI1X
+	 QwNIevz66YQRxs9YN761dVFpdo6raXh+t+9q1Y7gurd3sd7F7zOYppaGe8O0S52gI8
+	 5EQZGS3NJ8cJA==
+Date: Thu, 13 Mar 2025 01:10:11 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: Troy Mitchell <troymitchell988@gmail.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, linux-riscv@lists.infradead.org, 
+	linux-i2c@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	spacemit@lists.linux.dev, Guodong Xu <guodong@riscstar.com>
+Subject: Re: [PATCH v6 2/2] i2c: spacemit: add support for SpacemiT K1 SoC
+Message-ID: <nrmoj7gookedlz2e3fgu3hvn3s5fc6vrxgjueynyp5orj63k4b@cqlhflioxv7h>
+References: <20250307-k1-i2c-master-v6-0-34f17d2dae1c@gmail.com>
+ <20250307-k1-i2c-master-v6-2-34f17d2dae1c@gmail.com>
+ <7d9e90ba-8c23-44dc-b64f-80213216faf7@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -74,67 +47,36 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250306175750.22480-5-heylenay@4d2.org>
+In-Reply-To: <7d9e90ba-8c23-44dc-b64f-80213216faf7@riscstar.com>
 
-Hi Haylen,
+Hi,
 
-kernel test robot noticed the following build warnings:
+On Tue, Mar 11, 2025 at 08:46:31PM -0500, Alex Elder wrote:
+> On 3/7/25 7:13 AM, Troy Mitchell wrote:
+> > This patch introduces basic I2C support for the SpacemiT K1 SoC,
+> > utilizing interrupts for transfers.
+> > 
+> > The driver has been tested using i2c-tools on a Bananapi-F3 board,
+> > and basic I2C read/write operations have been confirmed to work.
+> > 
+> > Signed-off-by: Troy Mitchell <troymitchell988@gmail.com>
+> 
+> I have a bunch of really small suggestions.  Please consider
+> them, but whatever you choose to do this looks good to me.
+> 
+> Reviewed-by: Alex Elder <elder@riscstar.com>
 
-[auto build test WARNING on spacemit/for-next]
-[also build test WARNING on spacemit/fixes clk/clk-next robh/for-next linus/master v6.14-rc6 next-20250312]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+thanks Alex for reviewing, I will wait for a v7 with your
+suggestions.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Haylen-Chu/dt-bindings-soc-spacemit-Add-spacemit-k1-syscon/20250307-020635
-base:   https://github.com/spacemit-com/linux for-next
-patch link:    https://lore.kernel.org/r/20250306175750.22480-5-heylenay%404d2.org
-patch subject: [PATCH v5 3/5] clk: spacemit: Add clock support for Spacemit K1 SoC
-config: powerpc64-randconfig-r131-20250312 (https://download.01.org/0day-ci/archive/20250313/202503130314.Y8KFKZWW-lkp@intel.com/config)
-compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
-reproduce: (https://download.01.org/0day-ci/archive/20250313/202503130314.Y8KFKZWW-lkp@intel.com/reproduce)
+Overall the patch looks good to me, as well, even though I have
+to give some credit to Wolfram's previous comments about the
+i2c-pxa similarities.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503130314.Y8KFKZWW-lkp@intel.com/
+I checked the two drivers last night and I can see some
+similarities, on the other hand I also understand that it might
+require some extra effort.
 
-sparse warnings: (new ones prefixed by >>)
->> drivers/clk/spacemit/ccu_pll.c:110:9: sparse: sparse: cast truncates bits from constant value (ffffffff7fffffff becomes 7fffffff)
+I want to check it again, though, before applying.
 
-vim +110 drivers/clk/spacemit/ccu_pll.c
-
-    85	
-    86	/*
-    87	 * PLLs must be gated before changing rate, which is ensured by
-    88	 * flag CLK_SET_RATE_GATE.
-    89	 */
-    90	static int ccu_pll_set_rate(struct clk_hw *hw, unsigned long rate,
-    91				    unsigned long parent_rate)
-    92	{
-    93		struct ccu_pll *p = hw_to_ccu_pll(hw);
-    94		struct ccu_common *common = &p->common;
-    95		struct ccu_pll_config *params = &p->pll;
-    96		const struct ccu_pll_rate_tbl *entry = NULL;
-    97		int i;
-    98	
-    99		for (i = 0; i < params->tbl_size; i++) {
-   100			if (rate == params->rate_tbl[i].rate) {
-   101				entry = &params->rate_tbl[i];
-   102				break;
-   103			}
-   104		}
-   105	
-   106		if (WARN_ON_ONCE(!entry))
-   107			return -EINVAL;
-   108	
-   109		ccu_update(swcr1, common, entry->swcr1, entry->swcr1);
- > 110		ccu_update(swcr3, common, (u32)~PLL_SWCR3_EN, entry->swcr3);
-   111	
-   112		return 0;
-   113	}
-   114	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Andi
