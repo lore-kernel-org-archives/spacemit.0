@@ -1,104 +1,90 @@
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3DB7346D
-	for <spacemit@lists.linux.dev>; Thu, 13 Mar 2025 01:19:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF87B1F2B90
+	for <spacemit@lists.linux.dev>; Fri, 14 Mar 2025 10:02:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741828765; cv=none; b=WIK7FxrWNPu1t4UnrV0JhixS4/u1zSGim12rCJqOafhS4399Q7CKxxh/4dkH8XEguivOJZr/3H/QVFlumbjlstzoQOWhe5XHJ3mdtigGkKITVAb+HyOehZwBXsrbz3qW0KlNqjJk/gUWiubzfSSp6vvUEwGeNnULc9Ro4YhI3R0=
+	t=1741946565; cv=none; b=EZ9ZDJxZBY8gC0A3y5MLfQgFmtpTbygRtzenf8ufcirFoVy2eeRxNiN/2lfPYOU4/S7xl0nrmi9kEgP5hM1eC6NFK17iV2ASCK3WIFZoGn+b9X+owQ6v0nDKncupgr1ybya3LpRvf69ZOHJj6zGZKPD/H1UCh2ZKWE31uHTIGjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741828765; c=relaxed/simple;
-	bh=DB68pVaJJ4VS0y+Z+2ellm8XL9+PFw9fg9mxEwWFP1s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dva1sWC59FsU4lt9bQjg7vdrviaJd20fWR1BbSdQwjJVQ6o1E/qbZs7KGjmRLiE4r6NfHTx2A+rLm72J7R6MqPjxXB1U99mnukzKeX7Y7crq8uHAGd280URr460I6mJ3LtBTFqkruZ7r5PZV34Gukwbgw6UbHckFUHWvSr20Ee8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=BXPR9wXN; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+	s=arc-20240116; t=1741946565; c=relaxed/simple;
+	bh=KgDGPJH/f2nB2c+Evt/o3RF6NVVH+v37aRKEs7m2bog=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VLodn2j6K3cPzfKwl8T8JJ0X+iR8+vQcpM+31fEwgpJrYikEBiJZCdM0dft92yHqIl+4akFaoJUPcFjp2RJTu+2vSEqCgj2Q+2mAYSjUTIu9JAJDUyNV3N6IKAtEczpxSILQNSe/6E3SuL7S1zoiQaRvKKHJYAURAx8VK7mNE5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fVeuvDRx; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="BXPR9wXN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=DB68
-	pVaJJ4VS0y+Z+2ellm8XL9+PFw9fg9mxEwWFP1s=; b=BXPR9wXNEzGvWgE7maOj
-	Z2BxD7vbxL5FWMIlcQDzKY6qPnmNui2p07GkK87cf/jjk29HLYbAWaXPU3ER+sDM
-	i0P6cPvK7yKnKYa4mIBQBqaLBzdk/604S+QyMH1OOTDgd5zi5y9c1aVc2opvsBvI
-	gS/TWPT2PIbOuXN72teTk/P5XiPjOcnU239brcOqE6jKiSM01odL0bmoJL8QRubv
-	5ujbeytgi6TngDyzZI/z/2dPtNGTgOKqQzakbf5QgdiltMCnDavT7edmW7Qz4RB7
-	5NHfIEokx5q9y49JMBAhiOKciVhe9yl5Nqz7U+HQBsVZPbzzBPpxE8UssewYCJqv
-	3Q==
-Received: (qmail 1441578 invoked from network); 13 Mar 2025 02:19:13 +0100
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 13 Mar 2025 02:19:13 +0100
-X-UD-Smtp-Session: l3s3148p1@OGcbHC8wPJcgAQnoAFAeAGR2+CrWUxoz
-Date: Thu, 13 Mar 2025 02:19:13 +0100
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: Andi Shyti <andi.shyti@kernel.org>
-Cc: Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	linux-riscv@lists.infradead.org, linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev, Guodong Xu <guodong@riscstar.com>
-Subject: Re: [PATCH v6 2/2] i2c: spacemit: add support for SpacemiT K1 SoC
-Message-ID: <Z9IykQgaOL8_Yh_Y@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	linux-riscv@lists.infradead.org, linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev, Guodong Xu <guodong@riscstar.com>
-References: <20250307-k1-i2c-master-v6-0-34f17d2dae1c@gmail.com>
- <20250307-k1-i2c-master-v6-2-34f17d2dae1c@gmail.com>
- <7d9e90ba-8c23-44dc-b64f-80213216faf7@riscstar.com>
- <nrmoj7gookedlz2e3fgu3hvn3s5fc6vrxgjueynyp5orj63k4b@cqlhflioxv7h>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fVeuvDRx"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-543d8badc30so2203666e87.0
+        for <spacemit@lists.linux.dev>; Fri, 14 Mar 2025 03:02:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1741946562; x=1742551362; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KgDGPJH/f2nB2c+Evt/o3RF6NVVH+v37aRKEs7m2bog=;
+        b=fVeuvDRxJjjfStD0XNwWSfAbBBmx3XBLadYcpVN0eWcrdLyoW1TO527qUXNItgB5rv
+         4YOqc1PFMUed8Lt9zhOcALVfeAKjA1v7aiq7uHiWyQ84/twHJMHCdlAcVi7TLZgH7UtM
+         2CpWAsMSiDDXZMhWUmQCluGC5L3hixKCMMX2WSkwrYPobhviY5a9i9BPpemwdJ9p6xGO
+         4s/MmqmlA60lvpbR2soh36XiYOmpKT/2dIhhA9W1d+wN4+pDAsSiivba4vZaPCZQPeMb
+         v+RV4zVIQjvQeeKRNAEjPQW7dTpsJOPR4OQHuL4B2xqy39RpIW0zCMUTfoBxJ2HtNIXV
+         7S+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741946562; x=1742551362;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KgDGPJH/f2nB2c+Evt/o3RF6NVVH+v37aRKEs7m2bog=;
+        b=wiuRyn9l0qcjIQZpTTHNBOeqD6KeSe14G7tSOnGxAne7esM0cfATAdSOsMaXeZx6Dw
+         F/ziz0BGrqcoaWBCpKDiagDZNvEdfbFSab1R+0S9rUBNrPDOjF3o88qz5Ji7w+Rf9vQp
+         i7ot3pJfJcCXL34Ru2rF96G7G0uO8fS7zoZRkMr1WRL/44hwD7uEqnOgafc7k6y5L32C
+         CjXJAyISbnO0GVK9wt8ojkpEVjHAJbE71irys8v1xd/SpbAHcKBOBX4rKVPV4Fjo2xkr
+         GhIzA1BggAAvQennRdaZQ/NgTj4GhEzds4JOhlbMJ9UacLLIipxGWJYqKep8xVqjHX+W
+         MiXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVHRD/JRBLaVR/e0CzKqTdh3HF41gIpqX7JggjptDSyNQ1bpvFwu6aLaNUHlFV74X6aeyvRwjEuaw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy61z17N6ItpPUn0kZLV+E7IrmIeMFMgMI5tX4r7ff78Ay1vSR6
+	967Gr56OX7QMrcLNK6ekxI2mTu/eZ87aXByX71+5NsuHO5zmEiD1L/4NBFpW7JgVXZ0n5Rh0Vi5
+	vgd9Y/2+l9CakihZWNADIG2PUA8ROgKqjrQLSeSVt9ZCxyFRB
+X-Gm-Gg: ASbGnctUFPXV2D2822h1YtolLTaFR+XtD8wUD48lg2qmwcDF3hGPdT4ihDoHFY2N12g
+	sCVRSBmXPuOxSId/U/BbVn8zBRmWKkwDySgxQgKoZKUeSHL+NrSp7xfGu15SUBdg0X8o32A9CRg
+	WXy73S4lLARAN1J+Hd873WZwc=
+X-Google-Smtp-Source: AGHT+IEEU7fjMObFqi/KtorNaUacAgpVCp1R7kdy9gSMkZkxP5Vzr2YrX/ekX9hw0P90QrGqnfIHas94yzAS0vLKMiQ=
+X-Received: by 2002:a05:6512:2823:b0:545:5a5:b69f with SMTP id
+ 2adb3069b0e04-549c38f542bmr532360e87.9.1741946562016; Fri, 14 Mar 2025
+ 03:02:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CpEyUD+s7U217eGg"
-Content-Disposition: inline
-In-Reply-To: <nrmoj7gookedlz2e3fgu3hvn3s5fc6vrxgjueynyp5orj63k4b@cqlhflioxv7h>
+References: <20250305102710.52762-1-brgl@bgdev.pl>
+In-Reply-To: <20250305102710.52762-1-brgl@bgdev.pl>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Fri, 14 Mar 2025 11:02:30 +0100
+X-Gm-Features: AQ5f1JoBxpl_Z6DDGsIcNQamKwhe2gdhb1zrS5tCM67ikkg1OHhuzYaOr8bu7bg
+Message-ID: <CACRpkdYOVoLBwd6N9xSSjufguXzN+9y-Et2uDAQDjYvXyJftCA@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: spacemit: destroy mutex at driver detach
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Yixun Lan <dlan@gentoo.org>, linux-gpio@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Mar 5, 2025 at 11:27=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
 
---CpEyUD+s7U217eGg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> The mutex initialized in probe() is never cleaned up. Use
+> devm_mutex_init() to destroy it automatically.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
+Patch applied!
 
-> I checked the two drivers last night and I can see some
-> similarities, on the other hand I also understand that it might
-> require some extra effort.
-
-I think it is okay that it is a seperate driver. If register sets are
-too different, the resulting combined driver would be a maintenance
-nightmare.
-
-
---CpEyUD+s7U217eGg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmfSMo0ACgkQFA3kzBSg
-KbYCDxAAkhFVL8kRdmj5c8fja6ix5dc1ANAZJYGlh/G5aNdbj9MhxbQn1OgWSvxZ
-Ap7DZ/G1dkvv/CN7mjMUjqQOaOJzuNdL4m8+pzbVjWwt9odvqe2dzlx2f1Odn/Nj
-g+3FTwbctyi+W4sxkYsv9Fvu6+Z4VybShwmwBzai8HcLvDYrMCTXYUFefX4xodi7
-ZD9mvoGSzRGEKiOITWxDaR6u/6YDZ9fQE2LDEbqGluz6ecDE4YHjIOa/tH6HBx9y
-ut8KLeze7qRvFbkKTVSAXzTnICPRzhE74arEscNQgJDAa0HjJaTPCHT26Z+dS8ne
-+uyF37G/pzBw21/78IEmvaPr40YYn0oJ6nYL8Z6hankoJPA2MpCGhEPFqv1zxRMo
-fnD/CkZSrarzdzZ/5hWPau5cTiqfhvJXOHGXy1Qc0ZT95lAKoynxpmqSxKsFBjmr
-wUZ3fEcR07oMH4NibpI+pTW/q6ah9aUpESH7SDEZrhJ5UQ1Iqhs3Abym02cNc31z
-XckFbHTT3ED1NNvImxNx7lH0AD8rWwWJiiCHTM3SPPAuCjXX01nwCOYhUu0s53iK
-jXmQq8IFMQ8w+QFpVJ52yzlSoTzWB4QRpoztES4C74EWEznf/azvRi3GGQKCdfEK
-k7yd47ORfzrtVqrCNKJQLsODzFbAvo1is5nfxcWpD2KOttuXI28=
-=2C6g
------END PGP SIGNATURE-----
-
---CpEyUD+s7U217eGg--
+Yours,
+Linus Walleij
