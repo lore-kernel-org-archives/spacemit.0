@@ -1,169 +1,246 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CAE1DE3BD
-	for <spacemit@lists.linux.dev>; Tue, 18 Mar 2025 05:44:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980731D9A49
+	for <spacemit@lists.linux.dev>; Tue, 18 Mar 2025 05:44:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742276651; cv=none; b=Jg5u/icjHsQYSYJIj3MwWRTJHpaYDtU3q4USXSoF5JJMGPdTjCALFg9eMiPwGSui+T0RGR0jjorIuxLAmQBanc8vc6WWcbZ0lr6zWghDSBTEVVZMSZ/h4zndMg0bncg9eyelxCyETTEGx4ECC9VqXRApzB0ky1+Cic7LE9q938Y=
+	t=1742276658; cv=none; b=qVOwTRoLM4ZZ7b5KW5eWthU135ewUXeMI7yCMUeMt3QWnbYPArWiCFwsX5JYQp+6dvuHVzilCZNy5ZA/P+Vhg3vBNFRUrS1QOe4XHCsE6VijKftRJ3YxuabvI9hCWPaL71mr0osV/blltBGL2Dvp+Y6XCIVC73JLEaUyAuOqiT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742276651; c=relaxed/simple;
-	bh=T8pUQSZ6nXVl1MPwVY3xpS3rfghdPQEDEwopbbkvAfM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L2gXGyGyKxs+DlTWigfHbJLyRlhqq0k9P93V26V5hFN/9UCMCyp6Fm2jn7BlNua/ucMcNkKbYrfdLNR7bjfGv79AlGsOeJ+bcRLMbRCQnAEgylHTkrJa45KkBvPD/Swyu1TvjgjeI4jlo+0i/uCEDGtr9UDxqheRSI1+SbaaJ3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KBjN/vSA; arc=none smtp.client-ip=209.85.219.50
+	s=arc-20240116; t=1742276658; c=relaxed/simple;
+	bh=++xiDYQBqwQPWf46v+TtQ6Rz7NRDZMdVj8iDgBtc3GY=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=JdWjTVQyaqcrn5/Y62X1zthwS60ckwrx3vsH9I65DlkkLAvL8nSLd9u3h7GL2UJMiHvYs74loRQ0/MxauVRzqKjefs/nha6/kFjg187z+SQ3CWmr1OmcD+ozVUeSEBbiWrToHksr0CJ8aB2JBTLImHh2HYI8QL7Ybr7Q5s8PhlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bv5w8NDh; arc=none smtp.client-ip=209.85.214.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KBjN/vSA"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6e89a2501a0so51107096d6.1
-        for <spacemit@lists.linux.dev>; Mon, 17 Mar 2025 22:44:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bv5w8NDh"
+Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-223594b3c6dso107010375ad.2
+        for <spacemit@lists.linux.dev>; Mon, 17 Mar 2025 22:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742276648; x=1742881448; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rwFdLf1c7kbfx/fdwSi1PJ2VuLIMc4Zv90ArV+gVLqE=;
-        b=KBjN/vSAwxL7uQeKLp7Zyc7tSDpIWidGqeTPWX3c0Srqlxdx+yQN67IlH6UiUznwgg
-         FY+l3lASWoJnUgFQN9ClajW7TGnsYg1ZpnhsFiEmMUPZEWvO4PmCwgXCq20S4NDPChg1
-         r5NODshUV7jPcRYVQ6+jJ2lwjbTmorgo1btNUouIfRVxhYfwCf5Bm1UTsl7MusGnayAf
-         UMeOQciogqqTrQPQoFdddOnlc5wZLymNRev+qLzapryoQa4U12iVOclFw0mcSRgGJwbj
-         xYGr0/nqaDmL5fiwxsMioin22OKoynQUnTwf5FSL1UCYoJRexXiUNWyp1j4tXK5bMd6O
-         dPEw==
+        d=gmail.com; s=20230601; t=1742276656; x=1742881456; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:cc:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4PjJyZg36ViwqvSldxrB9EBP1m7xv7NYMkTSh+jaEjw=;
+        b=bv5w8NDhYHlzxSIJ7Yw9sjKkcESkh7ZuMk8hPxXs8I7b5pJER7e43DBnjuLuDo1J1q
+         ooS9iZEnsauJ+CJICeDzS9FL+aKioIaWnjAkdTxVW8ZcBFHmr0ya9gqYf4L6SWsDjvya
+         g0tok7EiZM7A0eZydLX+O26TpZWigQ+Xqt5lvFll5Wkzy5Yx1ELBV6wBAf4qwDTMTFyq
+         YWJ/wM4K5/lbNu9WrNvcJnKhB3swC3qIXII9fxCm/Bbe5kh/sPN6o3Wy1D63HtDVi6RN
+         96eoMiV/zp71xiCZ2kTWkSe4QNLrYnrVAVyseB+4dBD6Thalj4AuZnYIekMI+hevmOAh
+         p/fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742276648; x=1742881448;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rwFdLf1c7kbfx/fdwSi1PJ2VuLIMc4Zv90ArV+gVLqE=;
-        b=FfI8s0QZcq9x2ev9gfZrgVGAFsKO2EVSYz0WZ0Xy5iUZe2WIxazwPTiKnBECmIBYXX
-         SGCl8HmFt3VS7/eTYEWP9trMreJai/yRRK66AFoS3UfbYUbm9Q/6bZ3tfIXsboB51InL
-         vqE2XCrzwB+E9LCCJgc3N+KpMZU4UnfzEGJgGntj35HGou+D6YzysSbjs2bLipEzklhs
-         3OlZKqIfwYGyt14xfaER2Piau47solRGblhLnBmo2OUvnWv6Bibd13Hjm1EJ3muXNIks
-         Tr5apBgpJpMGmOD0dKlxuewNkk+HEovaQEFQXe1RnYY15xK2nBNySWMrT1J0M80Nr87G
-         iL8w==
-X-Forwarded-Encrypted: i=1; AJvYcCV4c8sWIexnKohM1yImT1H7X+bGdEp1ICvDV59Y3gI7UopZAiXt5JdKVRxhfWmWMievWKxLtmaMlw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwRTpKtFtHexHwBUmcrztunR+13ZKBOyXn7tAlbIeeXCbmDu/qP
-	lKMzJhwWSX39V7OhA7wVy6I7yJARveLtm60M5vmfb7jLX+pa2gyS
-X-Gm-Gg: ASbGncu6GLvsU44V8lvQGyMh8SBnaRolHArw2HE/Jvi0NbtOvvu0QtL3lfdb+egs5Rf
-	9V7kbu3C4pJbBQQqicTkH3KMEuFo+h1C7T1G8UlFyqSm9ClYYpOQSuBs1GACaaqV9qWQWLU77ne
-	wyeoCQZgWU+7l/b/3uLjrbmG87c2sO0oZIEypiGkd2xxxHY9D+QflIGXP75oRqsnoduESiG5sCG
-	uOarlQ61iT7cIkel2IsfMsBuSgsnvwdOTVXat4h2TqDEq6Hciq4hrqo0hoIvDnsyKXfQeZeSmDE
-	gPslWceuuI4Jwpu6GRZzdTvJ48Xfv0Y=
-X-Google-Smtp-Source: AGHT+IGuMQhkzUcBs7MzT4DYgtuD7a9Q+hOatvcVV/vkg2Yr9NtbNUqUpAe6FnTc1MisRqrMXkfHwA==
-X-Received: by 2002:ad4:5d65:0:b0:6e8:e8dd:30d1 with SMTP id 6a1803df08f44-6eaeaa5fa9amr264171126d6.22.1742276648364;
-        Mon, 17 Mar 2025 22:44:08 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eade231bcbsm63413776d6.36.2025.03.17.22.44.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Mar 2025 22:44:07 -0700 (PDT)
-Date: Tue, 18 Mar 2025 13:43:52 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Yixun Lan <dlan@gentoo.org>, Haylen Chu <heylenay@4d2.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Haylen Chu <heylenay@outlook.com>, linux-riscv@lists.infradead.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
-	Inochi Amaoto <inochiama@outlook.com>, Chen Wang <unicornxdotw@foxmail.com>, 
-	Jisheng Zhang <jszhang@kernel.org>, Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
-Subject: Re: [PATCH v5 3/5] clk: spacemit: Add clock support for Spacemit K1
- SoC
-Message-ID: <xwo2jjqy634z4rimgyrbjmxlgzxzauxmqzl57qr5oasph74qwj@7we45fnhwfzh>
-References: <20250306175750.22480-2-heylenay@4d2.org>
- <20250306175750.22480-5-heylenay@4d2.org>
- <20250318053736-GYA2516@gentoo>
+        d=1e100.net; s=20230601; t=1742276656; x=1742881456;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:cc:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4PjJyZg36ViwqvSldxrB9EBP1m7xv7NYMkTSh+jaEjw=;
+        b=k43Du9e93hklqDy4eFVB6gBeesqJi+82R5oDGn6sf1gyj467fy+ScLxzDwcmr3Krht
+         sKJcfBm5NPN8LWNxvjdbfp2Qck07Cgew5OSCTLv4Hfkt6/9ui6cVq4DC/2IHONh98hDf
+         MIv89DVGD69pb3dQZy6IKQjgxdt/pwqhjCsibZFn7yznAgHWP1mId/Qyn/LSqh+JE580
+         wsGAWZ3vGLcR2w+kTUGJdVDdVOoBDxrj/JtC+eCU3booHjlv0/IpIwjI7y25L32uniEE
+         n7sNiyDW563KfDDJW1osOvXJoLdptRZPIkjGacZerhdcWtvjPgFTtg/2mGjk7H0eFD/t
+         ufog==
+X-Forwarded-Encrypted: i=1; AJvYcCUWAWjJkelR3yLZBU7VRL3Q/NjodzAq66VHKw2d/YuMbIxMROJ8zJxUzK0zk2RACPhJrQLNo1J7Ag==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy0L6Q6ExGpYmNGfCJM42vAY1xrOn6Vy72LJ5zQT80xIwpYzDs5
+	r+9ee1nye/LNPcyGd2jvUVsFaBgy8+bbWg3GnO1pAZQlfuZ+U0Gl
+X-Gm-Gg: ASbGncuJbsigY3gWJ6BSnemAKwPIw3b+E9HUuExWjHhb5syutjeiXSsmChkTEAJ+I3+
+	AlLRCSk3L+caSvOgEgkXvwiYN1m2rlil0/WEVzEV4xHYXm1+2gXGgiDcj5JSJO1bAtkAOad7K+P
+	oJFhond3HOvC1p+pZU3zfDTQL3qUn/Hrtn+39dy3phBbrVxRTdBwDQFJqcod/lal4ajppOuCEUS
+	nDFOIIC43aG1z7TSJnU1rg+F2Zw+Kfqt7e4HMW9pWEsfnLCl1curFuYPBP+GsG48aDWIAxWo3Xb
+	L4ACrTwsDgaxItAutepyU496m/11XN0eMg==
+X-Google-Smtp-Source: AGHT+IEG4+hnkrP/C2d3aMrojCXyVkPU61K+TAm8adcwhXu+66VTKGntSE5/7EnwZH0/VFjuGJm+Xg==
+X-Received: by 2002:a17:903:228d:b0:21f:61a9:be7d with SMTP id d9443c01a7336-225e0b195fbmr207827245ad.49.1742276655724;
+        Mon, 17 Mar 2025 22:44:15 -0700 (PDT)
+Received: from [192.168.5.101] ([2602:f919:106::1b8])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bd4df4sm85134265ad.240.2025.03.17.22.44.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Mar 2025 22:44:15 -0700 (PDT)
+Message-ID: <c7dc26a0-7cbc-4909-b2ac-582d108fc5e7@gmail.com>
+Date: Tue, 18 Mar 2025 13:44:06 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250318053736-GYA2516@gentoo>
+User-Agent: Mozilla Thunderbird
+Cc: troymitchell988@gmail.com, linux-riscv@lists.infradead.org,
+ linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
+ Alex Elder <elder@riscstar.com>
+Subject: Re: [PATCH v7 2/2] i2c: spacemit: add support for SpacemiT K1 SoC
+To: Alex Elder <elder@ieee.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>
+References: <20250316-k1-i2c-master-v7-0-f2d5c43e2f40@gmail.com>
+ <20250316-k1-i2c-master-v7-2-f2d5c43e2f40@gmail.com>
+ <401059d0-6b2c-4c40-8c4d-51749dca27f3@ieee.org>
+Content-Language: en-US
+From: Troy Mitchell <troymitchell988@gmail.com>
+In-Reply-To: <401059d0-6b2c-4c40-8c4d-51749dca27f3@ieee.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 18, 2025 at 05:37:36AM +0000, Yixun Lan wrote:
-> Hi Haylen Chu:
+
+On 2025/3/18 05:42, Alex Elder wrote:
+> On 3/16/25 2:43 AM, Troy Mitchell wrote:
+>> This patch introduces basic I2C support for the SpacemiT K1 SoC,
+>> utilizing interrupts for transfers.
+>>
+>> The driver has been tested using i2c-tools on a Bananapi-F3 board,
+>> and basic I2C read/write operations have been confirmed to work.
+>>
+>> Reviewed-by: Alex Elder <elder@riscstar.com>
+>> Link:
+>> https://lore.kernel.org/all/20250128-k1-maintainer-1-v1-1-e5dec4f379eb@gentoo.org [1]
+>> Signed-off-by: Troy Mitchell <troymitchell988@gmail.com>
 > 
-> On 17:57 Thu 06 Mar     , Haylen Chu wrote:
-> > The clock tree of K1 SoC contains three main types of clock hardware
-> > (PLL/DDN/MIX) and has control registers split into several multifunction
-> > devices: APBS (PLLs), MPMU, APBC and APMU.
-> > 
-> > All register operations are done through regmap to ensure atomiciy
-> > between concurrent operations of clock driver and reset,
-> > power-domain driver that will be introduced in the future.
-> > 
-> > Signed-off-by: Haylen Chu <heylenay@4d2.org>
-> > ---
-> >  drivers/clk/Kconfig               |    1 +
-> >  drivers/clk/Makefile              |    1 +
-> >  drivers/clk/spacemit/Kconfig      |   20 +
-> >  drivers/clk/spacemit/Makefile     |    5 +
-> >  drivers/clk/spacemit/ccu-k1.c     | 1714 +++++++++++++++++++++++++++++
-> >  drivers/clk/spacemit/ccu_common.h |   47 +
-> >  drivers/clk/spacemit/ccu_ddn.c    |   80 ++
-> >  drivers/clk/spacemit/ccu_ddn.h    |   48 +
-> >  drivers/clk/spacemit/ccu_mix.c    |  284 +++++
-> >  drivers/clk/spacemit/ccu_mix.h    |  246 +++++
-> >  drivers/clk/spacemit/ccu_pll.c    |  146 +++
-> >  drivers/clk/spacemit/ccu_pll.h    |   76 ++
-> >  12 files changed, 2668 insertions(+)
-> >  create mode 100644 drivers/clk/spacemit/Kconfig
-> >  create mode 100644 drivers/clk/spacemit/Makefile
-> >  create mode 100644 drivers/clk/spacemit/ccu-k1.c
-> >  create mode 100644 drivers/clk/spacemit/ccu_common.h
-> >  create mode 100644 drivers/clk/spacemit/ccu_ddn.c
-> >  create mode 100644 drivers/clk/spacemit/ccu_ddn.h
-> >  create mode 100644 drivers/clk/spacemit/ccu_mix.c
-> >  create mode 100644 drivers/clk/spacemit/ccu_mix.h
-> >  create mode 100644 drivers/clk/spacemit/ccu_pll.c
-> >  create mode 100644 drivers/clk/spacemit/ccu_pll.h
-> > 
-> > diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
-> > index 713573b6c86c..19c1ed280fd7 100644
-> > --- a/drivers/clk/Kconfig
-> > +++ b/drivers/clk/Kconfig
-> > @@ -517,6 +517,7 @@ source "drivers/clk/samsung/Kconfig"
-> >  source "drivers/clk/sifive/Kconfig"
-> >  source "drivers/clk/socfpga/Kconfig"
-> >  source "drivers/clk/sophgo/Kconfig"
-> > +source "drivers/clk/spacemit/Kconfig"
-> >  source "drivers/clk/sprd/Kconfig"
-> >  source "drivers/clk/starfive/Kconfig"
-> >  source "drivers/clk/sunxi/Kconfig"
-> > diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
-> > index bf4bd45adc3a..42867cd37c33 100644
-> > --- a/drivers/clk/Makefile
-> > +++ b/drivers/clk/Makefile
-> > @@ -145,6 +145,7 @@ obj-$(CONFIG_COMMON_CLK_SAMSUNG)	+= samsung/
-> >  obj-$(CONFIG_CLK_SIFIVE)		+= sifive/
-> >  obj-y					+= socfpga/
-> >  obj-y					+= sophgo/
-> > +obj-y					+= spacemit/
-> >  obj-$(CONFIG_PLAT_SPEAR)		+= spear/
-> >  obj-y					+= sprd/
-> >  obj-$(CONFIG_ARCH_STI)			+= st/
-> > diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kconfig
-> > new file mode 100644
-> > index 000000000000..76090cd85668
-> > --- /dev/null
-> > +++ b/drivers/clk/spacemit/Kconfig
-> > @@ -0,0 +1,20 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only
-> > +
-> > +config SPACEMIT_CCU
-> > +	tristate "Clock support for Spacemit SoCs"
-> > +	default y
-> similar reason to pinctrl with these patches [1], [2]
-> I'd suggest switch to "bool + default ARCH_SPACEMIT" 
+> I know I said it was fine, but I'm going to reiterate two comments in
+> the probe function.
+Hi, Alex.
+Thanks for your review!
 > 
-> Link: https://lore.kernel.org/all/20250218-k1-pinctrl-option-v3-1-36e031e0da1b@gentoo.org [1]
-> Link: https://lore.kernel.org/all/6881b8d1ad74ac780af8a974e604b5ef3f5d4aad.1742198691.git.geert+renesas@glider.be [2]
+>> ---
+>>   drivers/i2c/busses/Kconfig  |  17 ++
+>>   drivers/i2c/busses/Makefile |   1 +
+>>   drivers/i2c/busses/i2c-k1.c | 605 ++++++++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 623 insertions(+)
+>>
+> 
+> . . .
+> 
+>> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+>> new file mode 100644
+>> index
+>> 0000000000000000000000000000000000000000..ae43dcd31e8aa480766b44be91656657c7aaaf4a
+>> --- /dev/null
+>> +++ b/drivers/i2c/busses/i2c-k1.c
+>> @@ -0,0 +1,605 @@
+> 
+> . . .
+> 
+>> +static int spacemit_i2c_probe(struct platform_device *pdev)
+>> +{
+>> +    struct clk *clk;
+>> +    struct device *dev = &pdev->dev;
+>> +    struct device_node *of_node = pdev->dev.of_node;
+>> +    struct spacemit_i2c_dev *i2c;
+>> +    int ret;
+>> +
+>> +    i2c = devm_kzalloc(dev, sizeof(*i2c), GFP_KERNEL);
+>> +    if (!i2c)
+>> +        return -ENOMEM;
+>> +
+>> +    ret = of_property_read_u32(of_node, "clock-frequency", &i2c->clock_freq);
+>> +    if (ret)
+>> +        dev_warn(dev, "failed to read clock-frequency property\n");
+> 
+> If the property doesn't exist, I don't think this warrants a warning,
+> because it's optional.  Perhaps if a different error (something other
+> than -EINVAL) is returned it would warrant a warning.
+> 
+>> +
+>> +    /* For now, this driver doesn't support high-speed. */
+>> +    if (!i2c->clock_freq || i2c->clock_freq < 1 ||
+> 
+> For an unsigned value, !i2c->clock_freq is *the same as*
+> i2c->clock_freq < 1.  Get rid of the latter.
+> 
+> I'll leave it up to the maintainer to decide whether these
+> comments can just be ignored--my Reviewed-by is fine, even
+> if you don't change these.
+> 
+>                     -Alex
+I know it's right what you said.
+But I don't know if it's worth to send v8?
+Maybe I can fix it when I add FIFO function?
+If I'm wrong, let me know.
+> 
+>> +        i2c->clock_freq > SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
+>> +        dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+>> +             i2c->clock_freq, SPACEMIT_I2C_MAX_FAST_MODE_FREQ);
+>> +        i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
+>> +    } else if (i2c->clock_freq < SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+>> +        dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+>> +             i2c->clock_freq,  SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ);
+>> +        i2c->clock_freq = SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ;
+>> +    }
+>> +
+>> +    i2c->dev = &pdev->dev;
+>> +
+>> +    i2c->base = devm_platform_ioremap_resource(pdev, 0);
+>> +    if (IS_ERR(i2c->base))
+>> +        return dev_err_probe(dev, PTR_ERR(i2c->base), "failed to do ioremap");
+>> +
+>> +    i2c->irq = platform_get_irq(pdev, 0);
+>> +    if (i2c->irq < 0)
+>> +        return dev_err_probe(dev, i2c->irq, "failed to get irq resource");
+>> +
+>> +    ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
+>> +                   IRQF_NO_SUSPEND | IRQF_ONESHOT, dev_name(i2c->dev), i2c);
+>> +    if (ret)
+>> +        return dev_err_probe(dev, ret, "failed to request irq");
+>> +
+>> +    clk = devm_clk_get_enabled(dev, "func");
+>> +    if (IS_ERR(clk))
+>> +        return dev_err_probe(dev, PTR_ERR(clk), "failed to enable func clock");
+>> +
+>> +    clk = devm_clk_get_enabled(dev, "bus");
+>> +    if (IS_ERR(clk))
+>> +        return dev_err_probe(dev, PTR_ERR(clk), "failed to enable bus clock");
+>> +
+>> +    spacemit_i2c_reset(i2c);
+>> +
+>> +    i2c_set_adapdata(&i2c->adapt, i2c);
+>> +    i2c->adapt.owner = THIS_MODULE;
+>> +    i2c->adapt.algo = &spacemit_i2c_algo;
+>> +    i2c->adapt.dev.parent = i2c->dev;
+>> +    i2c->adapt.nr = pdev->id;
+>> +
+>> +    i2c->adapt.dev.of_node = of_node;
+>> +
+>> +    strscpy(i2c->adapt.name, "spacemit-i2c-adapter", sizeof(i2c->adapt.name));
+>> +
+>> +    init_completion(&i2c->complete);
+>> +
+>> +    platform_set_drvdata(pdev, i2c);
+>> +
+>> +    ret = i2c_add_numbered_adapter(&i2c->adapt);
+>> +    if (ret)
+>> +        return dev_err_probe(&pdev->dev, ret, "failed to add i2c adapter");
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static void spacemit_i2c_remove(struct platform_device *pdev)
+>> +{
+>> +    struct spacemit_i2c_dev *i2c = platform_get_drvdata(pdev);
+>> +
+>> +    i2c_del_adapter(&i2c->adapt);
+>> +}
+>> +
+>> +static const struct of_device_id spacemit_i2c_of_match[] = {
+>> +    { .compatible = "spacemit,k1-i2c", },
+>> +    { /* sentinel */ }
+>> +};
+>> +MODULE_DEVICE_TABLE(of, spacemit_i2c_of_match);
+>> +
+>> +static struct platform_driver spacemit_i2c_driver = {
+>> +    .probe = spacemit_i2c_probe,
+>> +    .remove = spacemit_i2c_remove,
+>> +    .driver = {
+>> +        .name = "i2c-k1",
+>> +        .of_match_table = spacemit_i2c_of_match,
+>> +    },
+>> +};
+>> +module_platform_driver(spacemit_i2c_driver);
+>> +
+>> +MODULE_LICENSE("GPL");
+>> +MODULE_DESCRIPTION("I2C bus driver for SpacemiT K1 SoC");
+>>
 > 
 
-Clk subsystem prefers no defalt and set it in defconfig,
-so should no default there.
-
-Regards,
-Inochi
+-- 
+Troy Mitchell
