@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293DE1F1505
-	for <spacemit@lists.linux.dev>; Fri, 21 Mar 2025 22:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F4620F07D
+	for <spacemit@lists.linux.dev>; Fri, 21 Mar 2025 23:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742595959; cv=none; b=FBFMMdn2y1azhRKERfNWT76eqPSoO8G2SF+iTipD+wkkWtzp2iYafvySfq8bCdwI9kJVymwL9NIkhbvaFKbzPPdPjwguhOHeqA+Y/KWym0YPw8HwC2UN6Acp9Nbx14G0RwEkLYKQWNEUw4zzb14Ze2R74sOv4DsCcW4EBn/b9tU=
+	t=1742601519; cv=none; b=OzMrclyoHFuGTtX1nPXWyFoWUKHpnA8Au/fpEkqGt4F881aEEgcz1QCrv3Sh8coLcYrD2sdwzSY98Sw7UV6FJwp+pawtbjrcy0gc14xNV2A8E6WzQ7/qKGD/+e8olQf/CXSamr7elZEIJrpg+l0/9Ld2aiLE4eFeq8qNJwZZkiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742595959; c=relaxed/simple;
-	bh=vYmiiL+JAp1wGAkVFDCwFvS+vkrR9HpnBuY5stT1Bsc=;
+	s=arc-20240116; t=1742601519; c=relaxed/simple;
+	bh=m6UkBiq2OBDMQY/NyxsU5FKMcCkOsNgG/0k+DWls0wk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZJ9S2qU75byIsJ8QMAeSnoQCDtcvswOJ5NFTSL9+HUZiomaUov8vzGhbp+8H192Nh5YYzF563dn2atpFapQ2tk583kpbnGOofwfqFSTcNLME541/yMOupjYiv2SYRciMIIuEmKOMESKHip/2iGCrLUq/u6w4GnxkOeFuAtFeqmw=
+	 Content-Type:Content-Disposition:In-Reply-To; b=FW3Ybm5fFUlJUGhAJgRVDcTJXaiM/ENu8knQncVrzKCEgKYCP/W+7HyZZbLQLunnqI8J/uhEBxPP78t4aGOX/8MkTmtbtRRPR2KoGxaOI/GiLdlH0JECwu5iAaDvAshpAoepUVxFEfVmLIfYHsdFOgLPydw/47qPdUpmUcOj0sc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,22 +19,22 @@ Received: from localhost (unknown [116.232.48.233])
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 17D023430C5;
-	Fri, 21 Mar 2025 22:25:56 +0000 (UTC)
-Date: Fri, 21 Mar 2025 22:25:46 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 3CC7F343162;
+	Fri, 21 Mar 2025 23:58:34 +0000 (UTC)
+Date: Fri, 21 Mar 2025 23:58:30 +0000
 From: Yixun Lan <dlan@gentoo.org>
 To: Alex Elder <elder@riscstar.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	p.zabel@pengutronix.de, mturquette@baylibre.com, sboyd@kernel.org,
-	heylenay@4d2.org, guodong@riscstar.com, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, spacemit@lists.linux.dev,
-	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND 1/7] dt-bindings: soc: spacemit: define
- spacemit,k1-ccu resets
-Message-ID: <20250321222546-GYA11633@gentoo>
-References: <20250321151831.623575-1-elder@riscstar.com>
- <20250321151831.623575-2-elder@riscstar.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>, linux-mmc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 2/2] mmc: sdhci-of-k1: add support for SpacemiT K1 SoC
+Message-ID: <20250321235830-GYA13359@gentoo>
+References: <20250213-20-k1-sdhci-v1-0-1f4362a980cd@gentoo.org>
+ <20250213-20-k1-sdhci-v1-2-1f4362a980cd@gentoo.org>
+ <b0583550-eb2c-4918-b9e7-7041d3fd2e9e@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,232 +43,203 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250321151831.623575-2-elder@riscstar.com>
+In-Reply-To: <b0583550-eb2c-4918-b9e7-7041d3fd2e9e@riscstar.com>
 
-hi Alex:
+Hi Alex:
 
-On 10:18 Fri 21 Mar     , Alex Elder wrote:
-> There are additional SpacemiT syscon CCUs whose registers control both
-> clocks and resets:  RCPU, RCPU2, and APBC2. Unlike those defined
-> previously, these will initially support only resets.  They do not
-> incorporate power domain functionality.
+On 11:51 Fri 21 Mar     , Alex Elder wrote:
+> On 2/13/25 4:58 AM, Yixun Lan wrote:
+> > The SDHCI controller found in SpacemiT K1 SoC features SD,
+> > SDIO, eMMC support, such as:
+> > 
+> > - Compatible for 4-bit SDIO 3.0 UHS-I protocol, up to SDR104
+> > - Compatible for 4-bit SD 3.0 UHS-I protocol, up to SDR104
+> > - Compatible for 8bit eMMC5.1, up to HS400
+> > 
+> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
 > 
-> Define the index values for resets associated with all SpacemiT K1
-> syscon nodes, including those with clocks already defined, as well as
-> the new ones (without clocks).
+> Why is this RFC? Have you tested it?
 > 
-> Signed-off-by: Alex Elder <elder@riscstar.com>
-> ---
->  .../soc/spacemit/spacemit,k1-syscon.yaml      |  13 +-
->  include/dt-bindings/clock/spacemit,k1-ccu.h   | 134 ++++++++++++++++++
->  2 files changed, 143 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
-> index 07a6728e6f864..333c28e075b6c 100644
-> --- a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
-> +++ b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
-> @@ -19,6 +19,9 @@ properties:
->        - spacemit,k1-syscon-apbc
->        - spacemit,k1-syscon-apmu
->        - spacemit,k1-syscon-mpmu
-> +      - spacemit,k1-syscon-rcpu
-> +      - spacemit,k1-syscon-rcpu2
-> +      - spacemit,k1-syscon-apbc2
->  
->    reg:
->      maxItems: 1
-> @@ -57,13 +60,15 @@ allOf:
->        properties:
->          compatible:
->            contains:
-> -            const: spacemit,k1-syscon-apbc
-> +            enum:
-> +              - spacemit,k1-syscon-apmu
-> +              - spacemit,k1-syscon-mpmu
->      then:
-> -      properties:
-> -        "#power-domain-cells": false
-> -    else:
->        required:
->          - "#power-domain-cells"
-> +    else:
-> +      properties:
-> +        "#power-domain-cells": false
->  
->  additionalProperties: false
->  
-> diff --git a/include/dt-bindings/clock/spacemit,k1-ccu.h b/include/dt-bindings/clock/spacemit,k1-ccu.h
-> index 4a0c7163257e3..a1e1b1fe714ce 100644
-> --- a/include/dt-bindings/clock/spacemit,k1-ccu.h
-> +++ b/include/dt-bindings/clock/spacemit,k1-ccu.h
-> @@ -78,6 +78,9 @@
->  #define CLK_APB			31
->  #define CLK_WDT_BUS		32
->  
-> +/*	MPMU resets	*/
-> +#define RST_WDT			0
-> +
->  /*	APBC clocks	*/
->  #define CLK_UART0		0
->  #define CLK_UART2		1
-> @@ -109,6 +112,7 @@
->  #define CLK_PWM17		27
->  #define CLK_PWM18		28
->  #define CLK_PWM19		29
-> +
-as Rob point out, this isn't necessary, not related to reset
+I'd explicitly mark it as RFC before clock/reset driver merged,
+in case there is anything changed break this driver, and also
+ notify maintainer to only review the code but not merge it.
 
->  #define CLK_SSP3		30
->  #define CLK_RTC			31
->  #define CLK_TWSI0		32
-> @@ -180,6 +184,60 @@
->  #define CLK_TSEN_BUS		98
->  #define CLK_IPC_AP2AUD_BUS	99
->  
-> +/*	APBC resets	*/
-> +
-I'd also suggest to drop above blank line, keep style consistent
-with others in this file, some same below that I won't comment
-> +#define RST_UART0		0
-> +#define RST_UART2		1
-> +#define RST_UART3		2
-> +#define RST_UART4		3
-> +#define RST_UART5		4
-> +#define RST_UART6		5
-> +#define RST_UART7		6
-> +#define RST_UART8		7
-> +#define RST_UART9		8
-> +#define RST_GPIO		9
-> +#define RST_PWM0		10
-> +#define RST_PWM1		11
-> +#define RST_PWM2		12
-> +#define RST_PWM3		13
-> +#define RST_PWM4		14
-> +#define RST_PWM5		15
-> +#define RST_PWM6		16
-> +#define RST_PWM7		17
-> +#define RST_PWM8		18
-> +#define RST_PWM9		19
-> +#define RST_PWM10		20
-> +#define RST_PWM11		21
-> +#define RST_PWM12		22
-> +#define RST_PWM13		23
-> +#define RST_PWM14		24
-> +#define RST_PWM15		25
-> +#define RST_PWM16		26
-> +#define RST_PWM17		27
-> +#define RST_PWM18		28
-> +#define RST_PWM19		29
-> +#define RST_SSP3		30
-> +#define RST_RTC			31
-> +#define RST_TWSI0		32
-> +#define RST_TWSI1		33
-> +#define RST_TWSI2		34
-> +#define RST_TWSI4		35
-> +#define RST_TWSI5		36
-> +#define RST_TWSI6		37
-> +#define RST_TWSI7		38
-> +#define RST_TWSI8		39
-> +#define RST_TIMERS1		40
-> +#define RST_TIMERS2		41
-> +#define RST_AIB			42
-> +#define RST_ONEWIRE		43
-> +#define RST_SSPA0		44
-> +#define RST_SSPA1		45
-> +#define RST_DRO			46
-> +#define RST_IR			47
-> +#define RST_TSEN		48
-> +#define RST_IPC_AP2AUD		49
-> +#define RST_CAN0		50
-> +
->  /*	APMU clocks	*/
->  #define CLK_CCI550		0
->  #define CLK_CPU_C0_HI		1
-> @@ -244,4 +302,80 @@
->  #define CLK_V2D			60
->  #define CLK_EMMC_BUS		61
->  
-> +/*	APMU resets	*/
-> +
-> +#define RST_CCIC_4X		0
-> +#define RST_CCIC1_PHY		1
-> +#define RST_SDH_AXI		2
-> +#define RST_SDH0		3
-> +#define RST_SDH1		4
-> +#define RST_SDH2		5
-> +#define RST_USBP1_AXI		6
-> +#define RST_USB_AXI		7
-> +#define RST_USB3_0		8
-> +#define RST_QSPI		9
-> +#define RST_QSPI_BUS		10
-> +#define RST_DMA			11
-> +#define RST_AES			12
-> +#define RST_VPU			13
-> +#define RST_GPU			14
-> +#define RST_EMMC		15
-> +#define RST_EMMC_X		16
-> +#define RST_AUDIO		17
-> +#define RST_HDMI		18
-> +#define RST_PCIE0		19
-> +#define RST_PCIE1		20
-> +#define RST_PCIE2		21
-> +#define RST_EMAC0		22
-> +#define RST_EMAC1		23
-> +#define RST_JPG			24
-> +#define RST_CCIC2PHY		25
-> +#define RST_CCIC3PHY		26
-> +#define RST_CSI			27
-> +#define RST_ISP_CPP		28
-> +#define RST_ISP_BUS		29
-> +#define RST_ISP			30
-> +#define RST_ISP_CI		31
-> +#define RST_DPU_MCLK		32
-> +#define RST_DPU_ESC		33
-> +#define RST_DPU_HCLK		34
-> +#define RST_DPU_SPIBUS		35
-> +#define RST_DPU_SPI_HBUS	36
-> +#define RST_V2D			37
-> +#define RST_MIPI		38
-> +#define RST_MC			39
-> +
-> +/*	RCPU resets	*/
-> +
-> +#define RST_RCPU_SSP0		0
-> +#define RST_RCPU_I2C0		1
-> +#define RST_RCPU_UART1		2
-> +#define RST_RCPU_IR		3
-> +#define RST_RCPU_CAN		4
-> +#define RST_RCPU_UART0		5
-> +#define RST_RCPU_HDMI_AUDIO	6
-> +
-> +/*	RCPU2 resets	*/
-> +
-> +#define RST_RCPU2_PWM0		0
-> +#define RST_RCPU2_PWM1		1
-> +#define RST_RCPU2_PWM2		2
-> +#define RST_RCPU2_PWM3		3
-> +#define RST_RCPU2_PWM4		4
-> +#define RST_RCPU2_PWM5		5
-> +#define RST_RCPU2_PWM6		6
-> +#define RST_RCPU2_PWM7		7
-> +#define RST_RCPU2_PWM8		8
-> +#define RST_RCPU2_PWM9		9
-> +
-> +/*	APBC2 resets	*/
-> +
-> +#define RST_APBC2_UART1		0
-> +#define RST_APBC2_SSP2		1
-> +#define RST_APBC2_TWSI3		2
-> +#define RST_APBC2_RTC		3
-> +#define RST_APBC2_TIMERS0	4
-> +#define RST_APBC2_KPC		5
-> +#define RST_APBC2_GPIO		6
-> +
->  #endif /* _DT_BINDINGS_SPACEMIT_CCU_H_ */
-> -- 
-> 2.43.0
+Yes, I've tested, it works
+
+> I have a few minor comments but this seems reasonable to me.
 > 
+> > ---
+> >   drivers/mmc/host/Kconfig       |  14 ++
+> >   drivers/mmc/host/Makefile      |   1 +
+> >   drivers/mmc/host/sdhci-of-k1.c | 320 +++++++++++++++++++++++++++++++++++++++++
+> >   3 files changed, 335 insertions(+)
 > 
+> . . .
+> 
+> > +#define SDHC_PHY_DLLCFG			0x168
+> > +#define  DLL_PREDLY_NUM			0x04
+> > +#define  DLL_FULLDLY_RANGE		0x10
+> > +#define  DLL_VREG_CTRL			0x40
+> > +#define  DLL_ENABLE			0x80000000
+> > +#define  DLL_REFRESH_SWEN_SHIFT		0x1C
+> > +#define  DLL_REFRESH_SW_SHIFT		0x1D
+> > +
+> > +#define SDHC_PHY_DLLCFG1		0x16C
+> > +#define  DLL_REG2_CTRL			0x0C
+> > +#define  DLL_REG3_CTRL_MASK		0xFF
+> 
+> As Adrian said, please use GENMASK() (or BIT()) to define
+> these masks, and FIELD_GET() or similar to manipulate them.
+> I prefer lower-case hex digits too.
+> 
+ok, will fix in next version
+
+> > +#define  DLL_REG3_CTRL_SHIFT		0x10
+> > +#define  DLL_REG2_CTRL_MASK		0xFF
+> > +#define  DLL_REG2_CTRL_SHIFT		0x08
+> > +#define  DLL_REG1_CTRL			0x92
+> > +#define  DLL_REG1_CTRL_MASK		0xFF
+> > +#define  DLL_REG1_CTRL_SHIFT		0x00
+> > +
+> > +#define SDHC_PHY_DLLSTS			0x170
+> > +#define  DLL_LOCK_STATE			0x01
+> > +
+> > +#define SDHC_PHY_DLLSTS1		0x174
+> > +#define  DLL_MASTER_DELAY_MASK		0xFF
+> > +#define  DLL_MASTER_DELAY_SHIFT		0x10
+> > +
+> > +#define SDHC_PHY_PADCFG_REG		0x178
+> > +#define  RX_BIAS_CTRL			BIT(5)
+> > +#define  PHY_DRIVE_SEL_MASK		0x7
+> > +#define  PHY_DRIVE_SEL_DEFAULT		0x4
+> > +
+> > +struct spacemit_sdhci_host {
+> > +	struct clk *clk_core;
+> > +	struct clk *clk_io;
+> > +};
+> > +
+> 
+> I don't think the next few functions add any real value.
+> 
+> Just call sdhci_writel() and sdhci_readl() directly.  It
+> might even take fewer characters (but above all, I think
+> it's clearer without the function hiding what's done).
+> 
+on the opposite, I thought introducing a helper function make it more readable
+1) give a function name as setbits(), clrbits(), we know clearly what's doing here
+2) without helper, we either need to break the code into several lines -
+read first, then write, or if put them into one line, then reg variable usually
+come as macro which quite long and need to repeat twice which easily exceed max line number
+
+
+> > +static inline void spacemit_sdhci_setbits(struct sdhci_host *host, u32 val, int reg)
+> > +{
+> > +	sdhci_writel(host, sdhci_readl(host, reg) | val, reg);
+> > +}
+> > +
+> > +static inline void spacemit_sdhci_clrbits(struct sdhci_host *host, u32 val, int reg)
+> > +{
+> > +	sdhci_writel(host, sdhci_readl(host, reg) & ~val, reg);
+> > +}
+> > +
+> 
+> This too, just open-code this function in the two places it's used.
+> 
+> > +static inline void spacemit_sdhci_clrsetbits(struct sdhci_host *host, u32 clr, u32 set, int reg)
+> > +{
+> > +	u32 val = sdhci_readl(host, reg);
+> > +
+> > +	val = (val & ~clr) | set;
+> > +	sdhci_writel(host, val, reg);
+> > +}
+> > +
+> > +static void spacemit_sdhci_reset(struct sdhci_host *host, u8 mask)
+> > +{
+> > +	struct platform_device *pdev;
+> > +
+> 
+> . . .
+> 
+> > +	udelay(5);
+> > +
+> > +	spacemit_sdhci_setbits(host, PHY_FUNC_EN | PHY_PLL_LOCK, SDHC_PHY_CTRL_REG);
+> > +}
+> > +
+> 
+> I don't feel as strongly about this, but...
+> 
+> Here too, what the next function does is very typical and all
+> of it could go in the probe function.  I do understand that it
+> groups the clock-related code though.
+> 
+I would like to keep it as is if possible, or if other maintainer has objection?
+
+the motivation here is breaking the logic into more small parts, then 
+people review probe() can move more quickly, and if want to further audit
+clock (maybe reset - plan to group them together), then can do it separately
+
+> But aside from that, I think assigning pltfm_host->clock could
+> be done in the probe function rather than hiding it in here.
+> 
+I'd consider all clock related, so reasonable to put them together
+
+in another perspective, introducing spacemit_sdhci_host which only 
+contain clk_core, clk_io sounds not necessary in current stage as they
+are not used in later functions, but will eventually do when implement
+suspend/resume functionality.
+
+> > +static inline int spacemit_sdhci_get_clocks(struct device *dev,
+> > +					    struct sdhci_pltfm_host *pltfm_host)
+> > +{
+> > +	struct spacemit_sdhci_host *sdhst = sdhci_pltfm_priv(pltfm_host);
+> > +
+> > +	sdhst->clk_core = devm_clk_get_enabled(dev, "core");
+> > +	if (IS_ERR(sdhst->clk_core))
+> > +		return -EINVAL;
+> > +
+> > +	sdhst->clk_io = devm_clk_get_enabled(dev, "io");
+> > +	if (IS_ERR(sdhst->clk_io))
+> > +		return -EINVAL;
+> > +
+> > +	pltfm_host->clk = sdhst->clk_io;
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static const struct sdhci_ops spacemit_sdhci_ops = {
+> > +	.get_max_clock		= spacemit_sdhci_clk_get_max_clock,
+> > +	.reset			= spacemit_sdhci_reset,
+> > +	.set_bus_width		= sdhci_set_bus_width,
+> > +	.set_clock		= spacemit_sdhci_set_clock,
+> > +	.set_uhs_signaling	= spacemit_sdhci_set_uhs_signaling,
+> > +};
+> > +
+> 
+> I think you should make the next structure be used as platform
+> data for "spacemit,k1-sdhci", rather than just a global.  That
+> way you could conceivably use the same driver with slightly
+> different (or even the same) quirks for future hardware.
+> 
+I'm not sure if we should do it now, or postpone later in future
+ when we really come to it (lazy implementation).
+
+As I have no idea of how future hardware is, they may change to 
+use another IP.
+
+> 					-Alex
+> 
+> > +static const struct sdhci_pltfm_data spacemit_sdhci_k1_pdata = {
+> > +	.ops = &spacemit_sdhci_ops,
+> > +	.quirks = SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK |
+> > +		  SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC |
+> > +		  SDHCI_QUIRK_32BIT_ADMA_SIZE |
+> > +		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN |
+> > +		  SDHCI_QUIRK_BROKEN_CARD_DETECTION |
+> > +		  SDHCI_QUIRK_BROKEN_TIMEOUT_VAL,
+> > +	.quirks2 = SDHCI_QUIRK2_BROKEN_64_BIT_DMA |
+> > +		   SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
+> > +};
+> > +. . .
 
 -- 
 Yixun Lan (dlan)
