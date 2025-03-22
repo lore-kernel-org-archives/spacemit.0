@@ -1,149 +1,228 @@
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717B922155E
-	for <spacemit@lists.linux.dev>; Sat, 22 Mar 2025 14:27:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D87722F38B
+	for <spacemit@lists.linux.dev>; Sat, 22 Mar 2025 15:50:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742653658; cv=none; b=R+LBHc2WTeUAcqlcU9TiC/eQAIQTYKDQz6BYUQGCOdq3rrIIRnjmaCs9KmQ6TrDM7ko1VjAE+zLk47MXKpw3/1aALUe8IzhzQgWXyV2PLK+BkZUE9mb8QBOlHG1he9T+XtqdX/CnapF+GCYtBA1+AtAL2IjodAXmeEsnaZRuq9w=
+	t=1742658641; cv=none; b=Yk/CadieM6sYgX+Vr+z9sfv8kok47mJrgPtdrWhVVoZREKAqxjdhHWY3unvc3t4KEg/qRf2SlDZmEgasMuTI55koyJW21IPWJLnbg488o7h2oat3FKESpeW/OZpdU58wvwMhrRHd4ik3RZBoZ3AfJKd+dbb1OyM0VwHIncG+DkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742653658; c=relaxed/simple;
-	bh=wpCm+hqOG2wsbtPLPSsueiJdiduXYzbm2JN6/V7qei4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y3j/jGG+xyoUuyJNFLvCdGLEDd3q59pQOcymkTROVpmJDypWb6X9U0dPUuWCjgcshjWpdTMJdZRoT0SiIWPkG19pY7il4dMsrDuT/4w2mKga18SsGAqOdP5DYx3Qeyoh6qXGuCyR/ji0h/5/D6JXnrit9gKgyRK/eK9mjF1k9QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=BiuKT+Ea; arc=none smtp.client-ip=209.85.166.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="BiuKT+Ea"
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3ce868498d3so9886235ab.3
-        for <spacemit@lists.linux.dev>; Sat, 22 Mar 2025 07:27:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1742653654; x=1743258454; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZxLNYJpvB/TXLfXAqOdKhmy/q9FPbJFzYq67r8P8xbE=;
-        b=BiuKT+Ea8NGeCsZjJO7xqeL9eGD4CXIyPvfZpAdz5tj9qTUZHRKSR81IpX5VVTdrkA
-         X1gNvL/F4F9kZkOCaA0CymxUxHqzN0+IU+2sN2YUvNrpkwa+IZyUZhvAhVwE+7FA6yFc
-         7DSNJRhAlXn7fj5OGa8XGT8dtlYwRTFvzix6fh18d4jDNDeC58rK2LgupOkhkZLFeU/n
-         6m5Isxvo6LWl+ZeOkNYbR7Yw576Iob0bRHXrXYt49v3y26LjF5a7cniBKvAosgKsNeCA
-         tgYAZnqXiuLLm78XdeYuOEX5Ia4eQ/VmuWMWYvlybVlzTy7ml39yQmxkhrLLabBYgn1F
-         nkjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742653654; x=1743258454;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZxLNYJpvB/TXLfXAqOdKhmy/q9FPbJFzYq67r8P8xbE=;
-        b=DU+mZ9syjlkdmnC0mrYxjq+Cy0itaNhhEdKvbz6aeV2ABkNJttyzQLZko7H9rc8AOv
-         v91AexYBCBFR7WsLGy7XW3/cbd7O17APJRJfSz+owhhF5F8pu7EIqRgyVEBDzBbW8Gz3
-         U22b+z9MLXYQLfyD7HinXW6GPbl397eKMkUZCAsejXE7BNy895bHcwVbzN/9hvDVaY+R
-         VPciprrbU461FEcSHSYZrhDWr5XhKD6EmywYwFH6tVu6I+eFFcOsYs+i0RRC6D8oRSsU
-         gKwkKNuqrjWcZqBgPBKlZ4kfQl/BX6S8a8MwIvO+h2kNU20B/94wb6Wm82clvDyBlw4h
-         XnhA==
-X-Forwarded-Encrypted: i=1; AJvYcCWJdLpjfIxqWfQKfNeDHT05Om0dx1MLA8t1SJuw/JWO4nxIDUzIWlLQVPZEO1wqzmPg+BGTnMcurA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxCFs1qjCKT2kwFj1UFswu+9b3PfzhruZwFyWj7H9Jj+U+QdC6c
-	gIJSOLODvKYgQOaV1nAEnBpYR56d2ZNXuqGZTUAeAhk6ojmaVD4nzUpq9ORwAkA=
-X-Gm-Gg: ASbGncuqFucnumevfeDrzgDeUmRQIL61AL+XyX1ZXuyyfIstdT4VCvH2mVLzQNG/Jy2
-	Vwdg/0ZBMJ2BrdajS0OO4noPqzDxiA3pIYSkkc/PpVLdpjac51RXvwEfdUK4lw76KPEojOlDN5t
-	A4QyKF1qY2N/8sBoFtZK2CiRv7JEzFhSNBIpmvE5jaW8eing/UYzJa75QU039ZbkWnzYQbX4pGV
-	YJ/eHYfvmpE4z1pHU4ZzUuwsw0mgXywo42AKsdbWfKOARzQA8wzGXQ8Q3KlOdhQr/d44VzuQeHQ
-	hdFf0c+0PhzHyG02ro+SemDQ7oUxFGWcBYFYO/Gmck16VPIbCzWEzeFrlaETKAUWFyldIOXcC3j
-	Ur7/yJtsMk1ofvPfmqA==
-X-Google-Smtp-Source: AGHT+IHxH2JRqswkpmkABiwFlVLWGLbm4QGv8PyCPkc/LYC5FudrlksXf1TKCySAHhTc+btPlG9CLg==
-X-Received: by 2002:a05:6e02:2585:b0:3d0:235b:4810 with SMTP id e9e14a558f8ab-3d5960bf9b9mr82023985ab.2.1742653654335;
-        Sat, 22 Mar 2025 07:27:34 -0700 (PDT)
-Received: from [10.211.55.5] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f2cbecb453sm908223173.142.2025.03.22.07.27.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Mar 2025 07:27:33 -0700 (PDT)
-Message-ID: <1d79fb7e-4501-4c62-8379-f00515dec3e4@riscstar.com>
-Date: Sat, 22 Mar 2025 09:27:32 -0500
+	s=arc-20240116; t=1742658641; c=relaxed/simple;
+	bh=ToanPTkWfdU1oudw87qywX95hSjmLXb5mXOdPJgmqT0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GI5+Scq/bTdWxlAQXEXpWMGd1FdKsg7UxqJOb6CtZ7XJzmsmbqT0VUmY3zqtNqLygWJpSqqM8VU+iRq8JCruGlI1x6v2vpf0slL9rt/m2YyKEOqAyYemr0btkmc5+bJG/j8lFVos13BDJwUSOwUvV6eie+uH9a1s4TZA3z6ZNRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.233])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 137C73431B5;
+	Sat, 22 Mar 2025 15:50:38 +0000 (UTC)
+Date: Sat, 22 Mar 2025 15:50:34 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: p.zabel@pengutronix.de, mturquette@baylibre.com, sboyd@kernel.org,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	heylenay@4d2.org, guodong@riscstar.com, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, spacemit@lists.linux.dev,
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RESEND 2/7] clk: spacemit: define struct k1_ccu_data
+Message-ID: <20250322155034-GYB11633@gentoo>
+References: <20250321151831.623575-1-elder@riscstar.com>
+ <20250321151831.623575-3-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND 1/7] dt-bindings: soc: spacemit: define
- spacemit,k1-ccu resets
-To: Yixun Lan <dlan@gentoo.org>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- p.zabel@pengutronix.de, mturquette@baylibre.com, sboyd@kernel.org,
- heylenay@4d2.org, guodong@riscstar.com, paul.walmsley@sifive.com,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, spacemit@lists.linux.dev,
- devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20250321151831.623575-1-elder@riscstar.com>
- <20250321151831.623575-2-elder@riscstar.com> <20250321222546-GYA11633@gentoo>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20250321222546-GYA11633@gentoo>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250321151831.623575-3-elder@riscstar.com>
 
-On 3/21/25 5:25 PM, Yixun Lan wrote:
-> hi Alex:
+Hi Alex:
+
+this patch change relate to clock only, so how about let's fold
+it into clk patches (which now has not been merged), so we make
+the code right at first place? cause some moving around and renaming
+
+On 10:18 Fri 21 Mar     , Alex Elder wrote:
+> Define a new structure type to be used for describing the OF match data.
+> Rather than using the array of spacemit_ccu_clk structures for match
+> data, we use this structure instead.
 > 
-> On 10:18 Fri 21 Mar     , Alex Elder wrote:
->> There are additional SpacemiT syscon CCUs whose registers control both
->> clocks and resets:  RCPU, RCPU2, and APBC2. Unlike those defined
->> previously, these will initially support only resets.  They do not
->> incorporate power domain functionality.
->>
->> Define the index values for resets associated with all SpacemiT K1
->> syscon nodes, including those with clocks already defined, as well as
->> the new ones (without clocks).
->>
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> ---
->>   .../soc/spacemit/spacemit,k1-syscon.yaml      |  13 +-
->>   include/dt-bindings/clock/spacemit,k1-ccu.h   | 134 ++++++++++++++++++
->>   2 files changed, 143 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
->> index 07a6728e6f864..333c28e075b6c 100644
->> --- a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
->> +++ b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
->> @@ -19,6 +19,9 @@ properties:
->>         - spacemit,k1-syscon-apbc
->>         - spacemit,k1-syscon-apmu
->>         - spacemit,k1-syscon-mpmu
->> +      - spacemit,k1-syscon-rcpu
->> +      - spacemit,k1-syscon-rcpu2
->> +      - spacemit,k1-syscon-apbc2
->>   
->>     reg:
->>       maxItems: 1
+> Move the definition of the spacemit_ccu_clk structure closer to the top
+> of the source file, and add the new structure definition below it.
+> 
+> Shorten the name of spacemit_ccu_register() to be k1_ccu_register().
+any good reason to change this? it make the code style inconsistent,
+do you just change it for shorten function, or want it to be more k1
+specific, so next SoC - e.g maybe k2? will introduce another function?
 
-. . .
+> 
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+>  drivers/clk/spacemit/ccu-k1.c | 58 ++++++++++++++++++++++++++---------
+>  1 file changed, 43 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+> index 44db48ae71313..f7367271396a0 100644
+> --- a/drivers/clk/spacemit/ccu-k1.c
+> +++ b/drivers/clk/spacemit/ccu-k1.c
+> @@ -129,6 +129,15 @@
+>  #define APMU_EMAC0_CLK_RES_CTRL		0x3e4
+>  #define APMU_EMAC1_CLK_RES_CTRL		0x3ec
+>  
+> +struct spacemit_ccu_clk {
+> +	int id;
+> +	struct clk_hw *hw;
+> +};
+> +
+> +struct k1_ccu_data {
+> +	struct spacemit_ccu_clk *clk;		/* array with sentinel */
+> +};
+> +
+>  /*	APBS clocks start	*/
+>  
+>  /* Frequency of pll{1,2} should not be updated at runtime */
+> @@ -1359,11 +1368,6 @@ static CCU_GATE_DEFINE(emmc_bus_clk, CCU_PARENT_HW(pmua_aclk),
+>  		       0);
+>  /*	APMU clocks end		*/
+>  
+> -struct spacemit_ccu_clk {
+> -	int id;
+> -	struct clk_hw *hw;
+> -};
+> -
+>  static struct spacemit_ccu_clk k1_ccu_apbs_clks[] = {
+>  	{ CLK_PLL1,		&pll1.common.hw },
+>  	{ CLK_PLL2,		&pll2.common.hw },
+> @@ -1403,6 +1407,10 @@ static struct spacemit_ccu_clk k1_ccu_apbs_clks[] = {
+>  	{ 0,			NULL },
+>  };
+>  
+> +static const struct k1_ccu_data k1_ccu_apbs_data = {
+> +	.clk		= k1_ccu_apbs_clks,
+> +};
+> +
+>  static struct spacemit_ccu_clk k1_ccu_mpmu_clks[] = {
+>  	{ CLK_PLL1_307P2,	&pll1_d8_307p2.common.hw },
+>  	{ CLK_PLL1_76P8,	&pll1_d32_76p8.common.hw },
+> @@ -1440,6 +1448,10 @@ static struct spacemit_ccu_clk k1_ccu_mpmu_clks[] = {
+>  	{ 0,			NULL },
+>  };
+>  
+> +static const struct k1_ccu_data k1_ccu_mpmu_data = {
+> +	.clk		= k1_ccu_mpmu_clks,
+> +};
+> +
+>  static struct spacemit_ccu_clk k1_ccu_apbc_clks[] = {
+>  	{ CLK_UART0,		&uart0_clk.common.hw },
+>  	{ CLK_UART2,		&uart2_clk.common.hw },
+> @@ -1544,6 +1556,10 @@ static struct spacemit_ccu_clk k1_ccu_apbc_clks[] = {
+>  	{ 0,			NULL },
+>  };
+>  
+> +static const struct k1_ccu_data k1_ccu_apbc_data = {
+> +	.clk		= k1_ccu_apbc_clks,
+> +};
+> +
+>  static struct spacemit_ccu_clk k1_ccu_apmu_clks[] = {
+>  	{ CLK_CCI550,		&cci550_clk.common.hw },
+>  	{ CLK_CPU_C0_HI,	&cpu_c0_hi_clk.common.hw },
+> @@ -1610,9 +1626,13 @@ static struct spacemit_ccu_clk k1_ccu_apmu_clks[] = {
+>  	{ 0,			NULL },
+>  };
+>  
+> -static int spacemit_ccu_register(struct device *dev,
+> -				 struct regmap *regmap, struct regmap *lock_regmap,
+> -				 const struct spacemit_ccu_clk *clks)
+> +static const struct k1_ccu_data k1_ccu_apmu_data = {
+> +	.clk		= k1_ccu_apmu_clks,
+> +};
+> +
+> +static int k1_ccu_register(struct device *dev, struct regmap *regmap,
+> +			   struct regmap *lock_regmap,
+> +			   struct spacemit_ccu_clk *clks)
+>  {
+>  	const struct spacemit_ccu_clk *clk;
+>  	int i, ret, max_id = 0;
+> @@ -1648,15 +1668,24 @@ static int spacemit_ccu_register(struct device *dev,
+>  
+>  	clk_data->num = max_id + 1;
+>  
+> -	return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
+> +	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
+> +	if (ret)
+> +		dev_err(dev, "error %d adding clock hardware provider\n", ret);
+> +
+> +	return ret;
+I'd use "return 0;", nothing different, just explicitly short
 
-32
->> @@ -180,6 +184,60 @@
->>   #define CLK_TSEN_BUS		98
->>   #define CLK_IPC_AP2AUD_BUS	99
->>   
->> +/*	APBC resets	*/
->> +
-> I'd also suggest to drop above blank line, keep style consistent
-> with others in this file, some same below that I won't comment
+ok, I can understand this change ease debug procedure once there is problem.
+(but I'm fine with either way, failure should rarely happen & will
+identify early)
 
-OK, I'll fix the weird extra line and will drop these blank
-lines as you suggest in v2.  I'll post another version after
-Sunday.  I recognize the merge window means I can't expect
-reviews during that time, but this code is waiting for the
-clock code to get accepted anyway.
+>  }
+>  
+>  static int k1_ccu_probe(struct platform_device *pdev)
+>  {
+>  	struct regmap *base_regmap, *lock_regmap = NULL;
+>  	struct device *dev = &pdev->dev;
+> +	const struct k1_ccu_data *data;
+>  	int ret;
+>  
+> +	data = of_device_get_match_data(dev);
+> +	if (!data)
+> +		return -EINVAL;
+> +
+>  	base_regmap = device_node_to_regmap(dev->of_node);
+>  	if (IS_ERR(base_regmap))
+>  		return dev_err_probe(dev, PTR_ERR(base_regmap),
+> @@ -1677,8 +1706,7 @@ static int k1_ccu_probe(struct platform_device *pdev)
+>  					     "failed to get lock regmap\n");
+>  	}
+>  
+> -	ret = spacemit_ccu_register(dev, base_regmap, lock_regmap,
+> -				    of_device_get_match_data(dev));
+> +	ret = k1_ccu_register(dev, base_regmap, lock_regmap, data->clk);
+>  	if (ret)
+>  		return dev_err_probe(dev, ret, "failed to register clocks\n");
+>  
+> @@ -1688,19 +1716,19 @@ static int k1_ccu_probe(struct platform_device *pdev)
+>  static const struct of_device_id of_k1_ccu_match[] = {
+>  	{
+>  		.compatible	= "spacemit,k1-pll",
+> -		.data		= k1_ccu_apbs_clks,
+> +		.data		= &k1_ccu_apbs_data,
+>  	},
+>  	{
+>  		.compatible	= "spacemit,k1-syscon-mpmu",
+> -		.data		= k1_ccu_mpmu_clks,
+> +		.data		= &k1_ccu_mpmu_data,
+>  	},
+>  	{
+>  		.compatible	= "spacemit,k1-syscon-apbc",
+> -		.data		= k1_ccu_apbc_clks,
+> +		.data		= &k1_ccu_apbc_data,
+>  	},
+>  	{
+>  		.compatible	= "spacemit,k1-syscon-apmu",
+> -		.data		= k1_ccu_apmu_clks,
+> +		.data		= &k1_ccu_apmu_data,
+>  	},
+>  	{ }
+	{ /* sentinel */ }
+>  };
+> -- 
+> 2.43.0
+> 
 
-Thanks a lot.
-
-					-Alex
-
->> +#define RST_UART0		0
->> +#define RST_UART2		1
->> +#define RST_UART3		2
->> +#define RST_UART4		3
->> +#define RST_UART5		4
-
-. . .
+-- 
+Yixun Lan (dlan)
+Gentoo Linux Developer
+GPG Key ID AABEFD55
