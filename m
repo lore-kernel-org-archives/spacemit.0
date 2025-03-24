@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F142134D4
-	for <spacemit@lists.linux.dev>; Mon, 24 Mar 2025 06:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A23C17BEBF
+	for <spacemit@lists.linux.dev>; Mon, 24 Mar 2025 06:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742796421; cv=none; b=n5kW38JOwKRscJwlTXezw36XPnnCZWFLTfN1E3TsmmmsY7a+VYtPhYh3W/BTEV6inXTvnIiMSN3B+thZip4xd8bq8i3CHp+xUnA22yhko4lV9IkuzrCXz5t7GgO6bdV6kcC/HYcgZI59Ry38rHsZ5UPV++ovl8xmI3NS8O8wNj0=
+	t=1742797297; cv=none; b=BFmz6Lt3a0zMEqp5ZsNi+8OiwpIftDYuXqQewtHNQrgBKrvO84zS9XWDbLxCVtQ6un177rv4bgx9qU2a87MNavKNN2ExP6JXtsJdApJeWItd3rGnzo4yc6RLo94Y4YJUNeWX6cADLO7EIeb4cAFfuOVX65UMcO94qmwCJKWSURM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742796421; c=relaxed/simple;
-	bh=Qo1ZzOp+qIGtCdYkQjGaL8gkmFFkTlO4yGdZmiKINGE=;
+	s=arc-20240116; t=1742797297; c=relaxed/simple;
+	bh=Tlj9VvXILtWn+p7on4L5BkMzIkf6ETB+uWCXF9joqrA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IPU29lPzV/e73dNb5JoxA/kWiMvOvKoxSjVTHjHzu74pJFU7CnynIfjed6R0s3q5b+gaMOcD8r1B7f5KITd5VVRA0wcQ3Q/DD+zpjOFAoGBIJO0GLve0+/STYiCoMcEedWJOylzXTi4IfIxhz6yGcveBT4rRTuBq/c33W69iKc8=
+	 Content-Type:Content-Disposition:In-Reply-To; b=UTpRINVwmQ/ai35lENCM9dj8t3RNbr0Rj31s96uGLvp09ZZOk+X4QY0GpomxH5/yOG6e6EFFHPRTwNIj5drtvZznf+E31yFQIWSvu7zgxTEk1hXBi/2fX9AnFnkOjswEwF2ETt6z6uBmWPkXPrdxBr8wmOOCki6N4HnaouHhLaQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,24 +19,24 @@ Received: from localhost (unknown [116.232.48.233])
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 247763432FE;
-	Mon, 24 Mar 2025 06:06:57 +0000 (UTC)
-Date: Mon, 24 Mar 2025 06:06:53 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id DB3C83432B0;
+	Mon, 24 Mar 2025 06:21:33 +0000 (UTC)
+Date: Mon, 24 Mar 2025 06:21:29 +0000
 From: Yixun Lan <dlan@gentoo.org>
 To: Alex Elder <elder@riscstar.com>
 Cc: p.zabel@pengutronix.de, mturquette@baylibre.com, sboyd@kernel.org,
 	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	heylenay@4d2.org, guodong@riscstar.com, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, spacemit@lists.linux.dev,
+	heylenay@4d2.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+	aou@eecs.berkeley.edu, spacemit@lists.linux.dev,
 	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
 	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND 7/7] riscv: dts: spacemit: add reset support for
- the K1 SoC
-Message-ID: <20250324060653-GYA18687@gentoo>
+Subject: Re: [PATCH RESEND 6/7] clk: spacemit: define new syscons with only
+ resets
+Message-ID: <20250324062129-GYA19363@gentoo>
 References: <20250321151831.623575-1-elder@riscstar.com>
- <20250321151831.623575-8-elder@riscstar.com>
- <20250322164830-GYE11633@gentoo>
- <b5af3a7a-c5da-497a-ad67-c99edfdf665e@riscstar.com>
+ <20250321151831.623575-7-elder@riscstar.com>
+ <20250322164247-GYD11633@gentoo>
+ <c080eb55-943e-4564-8dcc-dd5f27b296a9@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,97 +45,209 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b5af3a7a-c5da-497a-ad67-c99edfdf665e@riscstar.com>
+In-Reply-To: <c080eb55-943e-4564-8dcc-dd5f27b296a9@riscstar.com>
 
 Hi Alex:
 
 On 08:23 Sun 23 Mar     , Alex Elder wrote:
-> On 3/22/25 11:48 AM, Yixun Lan wrote:
+> On 3/22/25 11:42 AM, Yixun Lan wrote:
+> > Hi Alex:
+> > 
+> > It occur to me it's a little odd to implemnt reset driver
+> > for RCPU block, but after check with vendor the RCPU region can
+> > be accessed both by ACPU and RCPU, then I'm fine with this.
+> 
+> I implemented just the resets that were found in the downstream
+> code.
+> 
+> I first implemented a separate reset driver, very simple, which
+> only implemented the resets.  I had a separate DTS binding (like
+> was done for the PLLs).  I was ready to post it for review, then
+> noticed that the registers used were shared with clocks.  So I
+> merged all of that separate code into the clock driver, as you
+> see here.
+> 
+ok
+
+> > ACPU - RISC-V Main CPU, with mmu, running Linux
+> > RCPU - real time CPU, without mmu, running RT-OS
+> 
+> I didn't realize there was a separate CPU running its
+> own OS.  Is this managed as a remoteproc by the RISC-V AP?
+> The reset signals, I hope, are only touched by the AP
+> and not the real-time CPU.  Can you provide any further
+> information about this?
+> 
+As far as I know, the RCPU region can be acccesed via AP and real-time CPU
+from hardware perspective, there is no guarantee of isolation,
+so maybe software should take care of this in case only one side can touch
+
+for remoteproc, I haven't checked, and it's unrelated to this discussion
+(doesn't change shared resource fact whether remoteproc supported or not)
+
 > > On 10:18 Fri 21 Mar     , Alex Elder wrote:
-> >> Define syscon nodes for the RCPU, RCPU2, and APBC2 SpacemiT CCUS, which
-> >> currently support resets but not clocks in the SpacemiT K1.
+> >> Enable support for three additional syscon CCUs which support reset
+> >> controls but no clocks:  ARCPU, RCPU2, and APBC2.
 > >>
 > >> Signed-off-by: Alex Elder <elder@riscstar.com>
 > >> ---
-> >>   arch/riscv/boot/dts/spacemit/k1.dtsi | 18 ++++++++++++++++++
-> >>   1 file changed, 18 insertions(+)
+> >>   drivers/clk/spacemit/ccu-k1.c | 106 ++++++++++++++++++++++++++++++++++
+> >>   1 file changed, 106 insertions(+)
 > >>
-> >> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> >> index 09a9100986b19..f86d1b58c6d35 100644
-> >> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> >> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> >> @@ -350,6 +350,18 @@ soc {
-> >>   		dma-noncoherent;
-> >>   		ranges;
+> >> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+> >> index 17e321c25959a..bf5a3e2048619 100644
+> >> --- a/drivers/clk/spacemit/ccu-k1.c
+> >> +++ b/drivers/clk/spacemit/ccu-k1.c
+> >> @@ -130,6 +130,37 @@
+> >>   #define APMU_EMAC0_CLK_RES_CTRL		0x3e4
+> >>   #define APMU_EMAC1_CLK_RES_CTRL		0x3ec
 > >>   
-> >> +		syscon_rcpu: system-controller@c0880000 {
-> > I'm not sure if syscon_rcpu is good name to go, it's AUDIO Peripherals
-> > in docs, see
-> > 
-> > 7.2 Main CPU Domain Address Mapping
-> > https://developer.spacemit.com/documentation?token=LzJyw97BCipK1dkUygrcbT0NnMg
+> >> +/* RCPU register offsets */
+> >> +#define RCPU_SSP0_CLK_RST		0x0028
+> >> +#define RCPU_I2C0_CLK_RST		0x0030
+> >> +#define RCPU_UART1_CLK_RST		0x003c
+> >> +#define RCPU_CAN_CLK_RST		0x0048
+> >> +#define RCPU_IR_CLK_RST			0x004c
+> >> +#define RCPU_UART0_CLK_RST		0x00d8
+> >> +/* XXX Next one is part of the AUD_AUDCLOCK region @ 0xc0882000 */
+> > this comment looks odd, XXX?
 > 
-> They call it "AUD_MCUSYSCTRL section <RCPU(0xC0880000)>",
-> where the registers layouts are defined, and the register
-> names use the "RCPU" prefix by convention.
+> Yeah, I meant to remove that before sending but I forgot.
 > 
-> I guess I could use "AUDIO" instead, but I think it's
-> "RCPU" is a little better because of the way things in
-> the region are named.  It's a little like how "pll" is
-> used for the DT node name for things in the "APBS" region.
-> I don't really like that, because the connection between
-> the two isn't very clear.
+> The downstream code treats this one register as being
+> part of the RCPU memory region, and extends that region
+> to be 0x2048 bytes to "fit" it.
 > 
-ok, by whatever you choose, I'd be fine
-in case you go with RCPU, can you put a comment above? explain
-there is slightly a devergence with docs from SpacemiT's web
-
-also I noticed the io size you written here is smaller than described in
-docs which I think usually it's fine (docs may give larger number - 0x80000)
-just make sure you checked? so all real io region will be covered, same
-for rcpu2
-
-> >> +			compatible = "spacemit,k1-syscon-rcpu";
-> >> +			reg = <0x0 0xc0880000 0x0 0x2048>;
-> >> +			#reset-cells = <1>;
-> >> +		};
-> >> +
-> >> +		syscon_rcpu2: system-controller@c0888000 {
-> > not found this address mapping in above docs link
+> The hardware documentation actually defines a different
+> "RCPU Audio Clock" memory region, and it might be more
+> correct (though less convenient) to define that as a
+> distinct region of memory.
 > 
-> You're right.  I was following what the downstream code did.
-> I'll gladly just include this in the main "RCPU" node.
+> What do you think?
 > 
-> Thank you very much for the review Yixun.
-> 
+I'm not sure, but from DT perspective, is it an independent device?
+if yes, then need to describe as a distinct region..
 > 					-Alex
 > 
-> >> +			compatible = "spacemit,k1-syscon-rcpu2";
-> >> +			reg = <0x0 0xc0888000 0x0 0x28>;
-> >> +			#reset-cells = <1>;
-> >> +		};
+> >> +#define AUDIO_HDMI_CLK_CTRL		0x2044
 > >> +
-> >>   		syscon_apbc: system-control@d4015000 {
-> >>   			compatible = "spacemit,k1-syscon-apbc";
-> >>   			reg = <0x0 0xd4015000 0x0 0x1000>;
-> >> @@ -518,6 +530,12 @@ clint: timer@e4000000 {
-> >>   					      <&cpu7_intc 3>, <&cpu7_intc 7>;
-> >>   		};
+> >> +/* RCPU2 register offsets */
+> >> +#define RCPU2_PWM0_CLK_RST		0x0000
+> >> +#define RCPU2_PWM1_CLK_RST		0x0004
+> >> +#define RCPU2_PWM2_CLK_RST		0x0008
+> >> +#define RCPU2_PWM3_CLK_RST		0x000c
+> >> +#define RCPU2_PWM4_CLK_RST		0x0010
+> >> +#define RCPU2_PWM5_CLK_RST		0x0014
+> >> +#define RCPU2_PWM6_CLK_RST		0x0018
+> >> +#define RCPU2_PWM7_CLK_RST		0x001c
+> >> +#define RCPU2_PWM8_CLK_RST		0x0020
+> >> +#define RCPU2_PWM9_CLK_RST		0x0024
+> >> +
+> >> +/* APBC2 register offsets */
+> >> +#define APBC2_UART1_CLK_RST		0x0000
+> >> +#define APBC2_SSP2_CLK_RST		0x0004
+> >> +#define APBC2_TWSI3_CLK_RST		0x0008
+> >> +#define APBC2_RTC_CLK_RST		0x000c
+> >> +#define APBC2_TIMERS0_CLK_RST		0x0010
+> >> +#define APBC2_KPC_CLK_RST		0x0014
+> >> +#define APBC2_GPIO_CLK_RST		0x001c
+> >> +
+> >>   struct spacemit_ccu_clk {
+> >>   	int id;
+> >>   	struct clk_hw *hw;
+> >> @@ -1781,6 +1812,69 @@ static const struct k1_ccu_data k1_ccu_apmu_data = {
+> >>   	.rst_data	= &apmu_reset_controller_data,
+> >>   };
 > >>   
-> >> +		syscon_apbc2: system-controller@f0610000 {
-> >> +			compatible = "spacemit,k1-syscon-apbc2";
-> >> +			reg = <0x0 0xf0610000 0x0 0x20>;
-> >> +			#reset-cells = <1>;
-> >> +		};
+> >> +static const struct ccu_reset_data rcpu_reset_data[] = {
+> >> +	[RST_RCPU_SSP0]		= RST_DATA(RCPU_SSP0_CLK_RST,	0, BIT(0)),
+> >> +	[RST_RCPU_I2C0]		= RST_DATA(RCPU_I2C0_CLK_RST,	0, BIT(0)),
+> >> +	[RST_RCPU_UART1]	= RST_DATA(RCPU_UART1_CLK_RST,	0, BIT(0)),
+> >> +	[RST_RCPU_IR]		= RST_DATA(RCPU_CAN_CLK_RST,	0, BIT(0)),
+> >> +	[RST_RCPU_CAN]		= RST_DATA(RCPU_IR_CLK_RST,	0, BIT(0)),
+> >> +	[RST_RCPU_UART0]	= RST_DATA(RCPU_UART0_CLK_RST,	0, BIT(0)),
+> >> +	[RST_RCPU_HDMI_AUDIO]	= RST_DATA(AUDIO_HDMI_CLK_CTRL,	0, BIT(0)),
+> >> +};
 > >> +
-> >>   		sec_uart1: serial@f0612000 {
-> >>   			compatible = "spacemit,k1-uart", "intel,xscale-uart";
-> >>   			reg = <0x0 0xf0612000 0x0 0x100>;
+> >> +static const struct ccu_reset_controller_data rcpu_reset_controller_data = {
+> >> +	.count		= ARRAY_SIZE(rcpu_reset_data),
+> >> +	.data		= rcpu_reset_data,
+> >> +};
+> >> +
+> >> +static struct k1_ccu_data k1_ccu_rcpu_data = {
+> >> +	/* No clocks in the RCPU CCU */
+> >> +	.rst_data	= &rcpu_reset_controller_data,
+> >> +};
+> >> +
+> >> +static const struct ccu_reset_data rcpu2_reset_data[] = {
+> >> +	[RST_RCPU2_PWM0]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +	[RST_RCPU2_PWM1]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +	[RST_RCPU2_PWM2]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +	[RST_RCPU2_PWM3]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +	[RST_RCPU2_PWM4]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +	[RST_RCPU2_PWM5]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +	[RST_RCPU2_PWM6]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +	[RST_RCPU2_PWM7]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +	[RST_RCPU2_PWM8]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +	[RST_RCPU2_PWM9]	= RST_DATA(RCPU2_PWM9_CLK_RST,	BIT(2), BIT(0)),
+> >> +};
+> >> +
+> >> +static const struct ccu_reset_controller_data rcpu2_reset_controller_data = {
+> >> +	.count		= ARRAY_SIZE(rcpu2_reset_data),
+> >> +	.data		= rcpu2_reset_data,
+> >> +};
+> >> +
+> >> +static struct k1_ccu_data k1_ccu_rcpu2_data = {
+> >> +	/* No clocks in the RCPU2 CCU */
+> >> +	.rst_data	= &rcpu2_reset_controller_data,
+> >> +};
+> >> +
+> >> +static const struct ccu_reset_data apbc2_reset_data[] = {
+> >> +	[RST_APBC2_UART1]	= RST_DATA(APBC2_UART1_CLK_RST,	BIT(2), (0)),
+> >> +	[RST_APBC2_SSP2]	= RST_DATA(APBC2_SSP2_CLK_RST,	BIT(2), (0)),
+> >> +	[RST_APBC2_TWSI3]	= RST_DATA(APBC2_TWSI3_CLK_RST,	BIT(2), (0)),
+> >> +	[RST_APBC2_RTC]		= RST_DATA(APBC2_RTC_CLK_RST,	BIT(2), (0)),
+> >> +	[RST_APBC2_TIMERS0]	= RST_DATA(APBC2_TIMERS0_CLK_RST, BIT(2), (0)),
+> >> +	[RST_APBC2_KPC]		= RST_DATA(APBC2_KPC_CLK_RST,	BIT(2), (0)),
+> >> +	[RST_APBC2_GPIO]	= RST_DATA(APBC2_GPIO_CLK_RST,	BIT(2), (0)),
+> >> +};
+> >> +
+> >> +static const struct ccu_reset_controller_data apbc2_reset_controller_data = {
+> >> +	.count		= ARRAY_SIZE(apbc2_reset_data),
+> >> +	.data		= apbc2_reset_data,
+> >> +};
+> >> +
+> >> +static struct k1_ccu_data k1_ccu_apbc2_data = {
+> >> +	/* No clocks in the RCPU2 CCU */
+> >> +	.rst_data	= &apbc2_reset_controller_data,
+> >> +};
+> >> +
+> >>   static struct ccu_reset_controller *
+> >>   rcdev_to_controller(struct reset_controller_dev *rcdev)
+> >>   {
+> >> @@ -1959,6 +2053,18 @@ static const struct of_device_id of_k1_ccu_match[] = {
+> >>   		.compatible	= "spacemit,k1-syscon-apmu",
+> >>   		.data		= &k1_ccu_apmu_data,
+> >>   	},
+> >> +	{
+> >> +		.compatible	= "spacemit,k1-syscon-rcpu",
+> >> +		.data		= &k1_ccu_rcpu_data,
+> >> +	},
+> >> +	{
+> >> +		.compatible	= "spacemit,k1-syscon-rcpu2",
+> >> +		.data		= &k1_ccu_rcpu2_data,
+> >> +	},
+> >> +	{
+> >> +		.compatible	= "spacemit,k1-syscon-apbc2",
+> >> +		.data		= &k1_ccu_apbc2_data,
+> >> +	},
+> >>   	{ }
+> >>   };
+> >>   MODULE_DEVICE_TABLE(of, of_k1_ccu_match);
 > >> -- 
 > >> 2.43.0
 > >>
 > > 
-> 
 > 
 
 -- 
