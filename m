@@ -1,64 +1,63 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4951EF37B
-	for <spacemit@lists.linux.dev>; Fri, 28 Mar 2025 21:02:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306E21F0999
+	for <spacemit@lists.linux.dev>; Fri, 28 Mar 2025 21:02:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743195764; cv=none; b=E7jAhsdW8IUt/bLJG/mkF5PSi9mJglZ9ey4adxpTe1hYTBL7rxmhUBLYeXZ9c59sGhx7DULz02Eylba6KWc7alF019Twh7SpGRRWVPC205nR1vl7+ujRTdtl6iD1PjqBwkDcwrS6XNj22s9SqC9bq27ccGBk++I+P2D1Nwz8ifs=
+	t=1743195766; cv=none; b=aHkOQjimhQVC0D6Vz6/V0giZz3neMvMdj48hh/ClXmvNxm2ineV/JDVioNBzU0Fxz61gK/9oQ4vgirQjwZv6F+erjgv+fRSnpkKIdvwXFnTKlV0igGucETRlAyAEh9G5xvUXCn/9mzKTwNszD9pHGopPRuNzXLezyx1URXiGr+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743195764; c=relaxed/simple;
-	bh=6FlCg2/7rbYUWEjOuL3AL98oCZf3VJwOCkyx0uJUr8Y=;
+	s=arc-20240116; t=1743195766; c=relaxed/simple;
+	bh=9zUPWZeOQ/R1eTEpGXSpH3rIudE06VzuWBvwIDMYYc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8c3HTYDVVRw2Fsqw3nzq37Jy0+4Z8dU/FbOGQlSzSRZKVEyCaIM7bmP9IyAJQ7NSWWEvS55oLOfFyJ7E9pr6H7TQZaEGptIHSVt4wBheA3yIbvD/AlMUsZBOiM/U0U7ickzOmWBFPArlEIvZRDDvJ43I41HXUQRYNk7b9QDuVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ULaNrw87; arc=none smtp.client-ip=209.85.166.173
+	 MIME-Version; b=qfqqKt93YE0+JIO9j0tUVKPnluV7ysYj+cllk9s8nqQGopjFF7I6RCRmxjwvjDWfiSuUiaQ/CW6Ra1vLsNjh03WFJdxDRs4c0rVggh1uaNVonP5IrYUn1LT00onUIgpSlpSqkV01qUojTYiun9oHRbPFdpB+0CmsEKuPX5bak/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=J8JsUM0q; arc=none smtp.client-ip=209.85.166.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ULaNrw87"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3cfce97a3d9so9216535ab.2
-        for <spacemit@lists.linux.dev>; Fri, 28 Mar 2025 14:02:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="J8JsUM0q"
+Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-3d4436ba324so19366465ab.2
+        for <spacemit@lists.linux.dev>; Fri, 28 Mar 2025 14:02:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1743195762; x=1743800562; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1743195763; x=1743800563; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FIUpk1T7UnnKdNmxEWfla8NigtjlAU2jHuPthzllD9o=;
-        b=ULaNrw87ycI9gGHTnL2vsrQ2QiTbAhMv7ao8U495WbDclvj3YWc8xIMIL2RiXa5w58
-         2CYsuIxiQd/VAEG+RkICSUktMfHNRgjhjQo5wepsdYYlLqNtHF0hz4p8sv9hyksEhUWh
-         ZyMrXd4p7RfWiZzeLJ7W0Zf0OygVAiVbKxiwuRKb+w6/y8OgfuLW5qLNeQ19QzUi+9w8
-         4Unena39AQ4lms5nU05/fpItsUf4xLhnqt24enM2WzVOFOOvEF86sBp7+k1bRNnPqotY
-         Ex3YR8xNXtC7KtTL1GAGvjjiVMQ0NlWfj8TIrXpGlPWQLiShSnSrYtUaSsXjbHB2IXXn
-         wOtA==
+        bh=ndQqR2MnSXfwHsDu2XmXqV7CwtML+mkAPgKOSkm6+Z8=;
+        b=J8JsUM0qT7kzET46HtwvX2G0GMg2L+GDLdIBodOgixG+RcfJw3G+wK7x5+82uDLyVt
+         XWVMpuO6iebP4UVvhcU0hF6weGgmB0RlrLBSzT4gacrzvLO0O7SgyF9RwzDIUd+TU+Lt
+         tCDuNe2LvinnMi/D2sYcxfTOrCEB4WhoSstrQ5QrCfPHI1GvbTxwohBdCoxR76sI4Vgc
+         leAUfPI8t68nGGJKXs6Zgqpdvc1XwFvl0FVCmwhmozwWp+Cr87gp9yPEe+LHyyMib3z9
+         B2BJpS+DnDkDs2CHyzctPyaGGvlIf5cPCw281wbwXhy4IraX7Xs29SI+FjycyfL4u7f0
+         2KUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743195762; x=1743800562;
+        d=1e100.net; s=20230601; t=1743195763; x=1743800563;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FIUpk1T7UnnKdNmxEWfla8NigtjlAU2jHuPthzllD9o=;
-        b=aT2MCpdLu3tFau+haLXdGizsUTKKpmi3OdEyfePkN3MnYNCyiUm7IaZ+ieqzNe20ki
-         w3BgTpa3g9pk50ulQ3v7AC8RoD0vmBpGayHx9GPW0+6MO+k8tO9hVo1YT2l0iROGksJN
-         Foe8KlKO5vMnb6K0nKyzdIsRWDJY7T608Y2TkQnWUl1TcghzkpoRbxvhvgzRTXh5vhdl
-         Jn54t6B65nLxDkhGP97In+r1vTyKYMr6xubKYGmTkZvjKU6yvr5z1kwkqqqwhgn1ORQA
-         rjtGLWvrg/+1KLHZWAWkF3R4cjSZDAp1Ag9nw5m0iHUzfFhOOUVqUoI1DGvgLPBlVdSE
-         gJfw==
-X-Forwarded-Encrypted: i=1; AJvYcCW+tRipjIcjjvO5xI1YMVgacFNOjV+OVOGIdtq8aT7kkapNNGfLCZAS8yDhm8Sdd2tOS75WrnaEbg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxgL1ltnzDMNoggqA2LmW17uLlelmLd3M1tnBML+Bacg3OdaMuZ
-	IjKl0cmkZX8+kYaQ25/lIYrwi9BQLzE1sp9rLC/TTgVs/NWBCWySP/xg127/5ctVrUK/ehVNiHd
-	vXtvsPA==
-X-Gm-Gg: ASbGncsM7fCnlnff6WepHjeW9CrD5vyGdgt3fyu1fatAsoUHZhciqx94SetO8haU3K6
-	yb0VVH8ycpyOSjZYM+PC23nn547hfLxgR3ItMeKe0dDlAjcj0ItrFBuVHuGXqllfNl/8XYlcik6
-	KWy5dHmGgvUn7BRK3/O7pYiuhSaWp7pQzO+pKtMpTm6Abhgynowrn2l9R1QejUrH4/uZnlci48v
-	wvjeU6yMecb03JcEJaUbivh+jQShG9S0sxQEz6qx2ZXNwdOwooiAvm1QEM9bBzpx/yAcFxg2hsv
-	o3oIW5QIc4NfOGmf/e+n1oBcxKTWFaEPBKq/8kfWpmg1x8/+Ia6sZGkJYmHf0lnmF5qraa6+pOL
-	JcGKX7hjztWdAP8dTH7zhBTe8yFG+
-X-Google-Smtp-Source: AGHT+IECKvdnGHV+2dD/S9BOB5FzsYtTtuEs5MGoEBeKOGx5i4Vk45Sjo1VplD8ywIkPbA8ikLjZxg==
-X-Received: by 2002:a05:6e02:3d04:b0:3d0:4e2b:9bbb with SMTP id e9e14a558f8ab-3d5e0a0063cmr13188765ab.21.1743195761696;
-        Fri, 28 Mar 2025 14:02:41 -0700 (PDT)
+        bh=ndQqR2MnSXfwHsDu2XmXqV7CwtML+mkAPgKOSkm6+Z8=;
+        b=lngYCwNY+OqlsCfB2BMs+Z04CV/zqf3is7f/9rR1voRSkCl07W/qenFzxBZ3zY90qQ
+         OM96Oh3mV0WouPAySRPlRVzieQtAzlV9iwdDSr7J/NZCuqjxee1eeoqPbLEAo9R/2wpf
+         2/I+uuK1Y17CcRTyUf6QazQH1MmBludJjbcKFW6q7Sr0Kaku2ef8LnL8OQp2REQUCrO7
+         zlrSjMXjLaCBDOQGwj+ugh0a7s2uiIDdwdHmJphLmu5MPHw+0RM4BiPP8YC3FjsQajPq
+         Hrp8ajeKoz/Jv3NzqiHfOOsxj+haDxW6CCkweGYM8qYMxwEdvRcwyasPgKR1GxLLZ9n+
+         Xung==
+X-Forwarded-Encrypted: i=1; AJvYcCWiEJxbcryan5xRgMtydOHAZPsT4l4goYIc64+jpg9swRuw/ZxXgj8ML7cffxiTlCub5UTrOkXk6g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzXLmofYF0zCw1Ofl59j1gzEopr1dpIfF7vA/ZUbJRJFFu9PGxJ
+	cqnxGR/K9bIr2RH1MWYz4W1YxwcKlzyLH63hq05ASq+PoL+nrEXJ+hOOUUPlw8s=
+X-Gm-Gg: ASbGncsyQAQ7vJNAjc+WNAh/HeUjFzKGIU8AuEqnwL1QwKEs0oxGD6JkZShEr+yCe3R
+	uelMkH6OIsHATURu0spXYijru+pOjOgIpcZnXfkmrZAOtbaD55cPzBHev/Z9AhyVo2yQCBZhKk4
+	ig06ae5OX9KLRdpsVH498I1rtbhH29D/rz4skTfmSHr740WjemC5slpOsoAgPLQX33/48+c91q+
+	CY6R9ZTNQy+0AMitcKNyD8xrEcK+D00WawIS0R5xdrN42MyOIMIAYP020zQfGhpQerimb3UjYo/
+	IiAUhp9kP8cN9FPX2d7164WRp8NW6hof2AO2YYggjzMW1OLNhxz0VtBdrWR/E6OF8pIdOeop6E7
+	Xu1mWl739AkQDbWDCxA==
+X-Google-Smtp-Source: AGHT+IGYNBFx2dcGbCxvROlSnCzW59gk5DbZ/q57cPod8CZTD46n3GkkkCO+ZAW+eAHPbibdDHNAZA==
+X-Received: by 2002:a05:6e02:184e:b0:3d4:35d3:87d3 with SMTP id e9e14a558f8ab-3d5e08e994fmr12120515ab.4.1743195763096;
+        Fri, 28 Mar 2025 14:02:43 -0700 (PDT)
 Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3d5d5a74286sm6769405ab.39.2025.03.28.14.02.40
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3d5d5a74286sm6769405ab.39.2025.03.28.14.02.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Mar 2025 14:02:41 -0700 (PDT)
+        Fri, 28 Mar 2025 14:02:42 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
 To: p.zabel@pengutronix.de,
 	mturquette@baylibre.com,
@@ -77,9 +76,9 @@ Cc: robh@kernel.org,
 	linux-clk@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/7] clk: spacemit: add reset controller support
-Date: Fri, 28 Mar 2025 16:02:28 -0500
-Message-ID: <20250328210233.1077035-4-elder@riscstar.com>
+Subject: [PATCH v2 4/7] clk: spacemit: define existing syscon resets
+Date: Fri, 28 Mar 2025 16:02:29 -0500
+Message-ID: <20250328210233.1077035-5-elder@riscstar.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250328210233.1077035-1-elder@riscstar.com>
 References: <20250328210233.1077035-1-elder@riscstar.com>
@@ -91,164 +90,193 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Define ccu_reset_data as a structure that contains the constant
-register offset and bitmasks used to assert and deassert a reset
-control on a SpacemiT K1 CCU. Define ccu_reset_controller_data as
-a structure that contains the address of an array of those structures
-and a count of the number of elements in the array.
-
-Add a pointer to a ccu_reset_controller_data structure to the
-spacemit_ccu_data structure.  Reset support is optional for
-SpacemiT CCUs; the new pointer field will be null for CCUs
-without any resets.
-
-Finally, define a new ccu_reset_controller structure, which (for
-a CCU with resets) contains a pointer to the constant reset data,
-the regmap to be used for the controller, and an embedded a reset
-controller structure.
-
-Each reset control is asserted or deasserted by updating bits in
-a register.  The bits used are defined by an assert mask and a
-deassert mask.  In some cases, one (non-zero) mask asserts reset
-and a different (non-zero) mask deasserts it.  Otherwise one mask
-is nonzero, and the other is zero.  Either way, the bits in
-both masks are cleared, then either the assert mask or the deassert
-mask is set in a register to affect the state of a reset control.
+Define reset controls associated with the MPMU, APBC, and APMU
+SpacemiT K1 CCUs.  These already have clocks associated with them.
 
 Signed-off-by: Alex Elder <elder@riscstar.com>
 ---
-v2: - Use regmap_update_bits() to safely update a register
-    - Symbols are named RESET* and reset* rather than RST* and rst*
-    - Reordered some assignments in the registration function
-    - Allowed some longs to exceed 80 column width
+v2: - Symbols are named RESET* and reset* rather than RST* and rst*
 
- drivers/clk/spacemit/ccu-k1.c | 83 +++++++++++++++++++++++++++++++++++
- 1 file changed, 83 insertions(+)
+ drivers/clk/spacemit/ccu-k1.c | 132 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 132 insertions(+)
 
 diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-index 5cadb395a7dd6..9c7c7108cfe38 100644
+index 9c7c7108cfe38..f837d2c2f31fc 100644
 --- a/drivers/clk/spacemit/ccu-k1.c
 +++ b/drivers/clk/spacemit/ccu-k1.c
-@@ -10,6 +10,7 @@
- #include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/reset-controller.h>
- 
- #include "ccu_common.h"
- #include "ccu_pll.h"
-@@ -134,8 +135,26 @@ struct spacemit_ccu_clk {
- 	struct clk_hw *hw;
+@@ -151,6 +151,13 @@ struct spacemit_ccu_data {
+ 	const struct ccu_reset_controller_data *reset_data;
  };
  
-+struct ccu_reset_data {
-+	u32 offset;
-+	u32 assert_mask;
-+	u32 deassert_mask;
-+};
++#define RESET_DATA(_offset, _assert_mask, _deassert_mask)	\
++	{							\
++		.offset		= (_offset),			\
++		.assert_mask	= (_assert_mask),		\
++		.deassert_mask	= (_deassert_mask),		\
++	}
 +
-+struct ccu_reset_controller_data {
-+	u32 count;
-+	const struct ccu_reset_data *data;	/* array */
-+};
-+
- struct spacemit_ccu_data {
- 	struct spacemit_ccu_clk *clk;		/* array with sentinel */
-+	const struct ccu_reset_controller_data *reset_data;
-+};
-+
-+struct ccu_reset_controller {
-+	struct regmap *regmap;
-+	const struct ccu_reset_controller_data *data;
-+	struct reset_controller_dev rcdev;
+ struct ccu_reset_controller {
+ 	struct regmap *regmap;
+ 	const struct ccu_reset_controller_data *data;
+@@ -1428,6 +1435,7 @@ static struct spacemit_ccu_clk k1_ccu_apbs_clks[] = {
+ 
+ static const struct spacemit_ccu_data k1_ccu_apbs_data = {
+ 	.clk		= k1_ccu_apbs_clks,
++	/* No resets in the APBS CCU */
  };
  
- /*	APBS clocks start	*/
-@@ -1630,6 +1649,39 @@ static const struct spacemit_ccu_data k1_ccu_apmu_data = {
+ static struct spacemit_ccu_clk k1_ccu_mpmu_clks[] = {
+@@ -1467,8 +1475,18 @@ static struct spacemit_ccu_clk k1_ccu_mpmu_clks[] = {
+ 	{ 0,			NULL },
+ };
+ 
++static const struct ccu_reset_data mpmu_reset_data[] = {
++	[RESET_WDT]	= RESET_DATA(MPMU_WDTPCR,		BIT(2), 0),
++};
++
++static const struct ccu_reset_controller_data mpmu_reset_controller_data = {
++	.count		= ARRAY_SIZE(mpmu_reset_data),
++	.data		= mpmu_reset_data,
++};
++
+ static const struct spacemit_ccu_data k1_ccu_mpmu_data = {
+ 	.clk		= k1_ccu_mpmu_clks,
++	.reset_data	= &mpmu_reset_controller_data,
+ };
+ 
+ static struct spacemit_ccu_clk k1_ccu_apbc_clks[] = {
+@@ -1575,8 +1593,68 @@ static struct spacemit_ccu_clk k1_ccu_apbc_clks[] = {
+ 	{ 0,			NULL },
+ };
+ 
++static const struct ccu_reset_data apbc_reset_data[] = {
++	[RESET_UART0]	= RESET_DATA(APBC_UART1_CLK_RST,	BIT(2),	0),
++	[RESET_UART2]	= RESET_DATA(APBC_UART2_CLK_RST,	BIT(2), 0),
++	[RESET_GPIO]	= RESET_DATA(APBC_GPIO_CLK_RST,		BIT(2), 0),
++	[RESET_PWM0]	= RESET_DATA(APBC_PWM0_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM1]	= RESET_DATA(APBC_PWM1_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM2]	= RESET_DATA(APBC_PWM2_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM3]	= RESET_DATA(APBC_PWM3_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM4]	= RESET_DATA(APBC_PWM4_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM5]	= RESET_DATA(APBC_PWM5_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM6]	= RESET_DATA(APBC_PWM6_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM7]	= RESET_DATA(APBC_PWM7_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM8]	= RESET_DATA(APBC_PWM8_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM9]	= RESET_DATA(APBC_PWM9_CLK_RST,		BIT(2), BIT(0)),
++	[RESET_PWM10]	= RESET_DATA(APBC_PWM10_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_PWM11]	= RESET_DATA(APBC_PWM11_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_PWM12]	= RESET_DATA(APBC_PWM12_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_PWM13]	= RESET_DATA(APBC_PWM13_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_PWM14]	= RESET_DATA(APBC_PWM14_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_PWM15]	= RESET_DATA(APBC_PWM15_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_PWM16]	= RESET_DATA(APBC_PWM16_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_PWM17]	= RESET_DATA(APBC_PWM17_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_PWM18]	= RESET_DATA(APBC_PWM18_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_PWM19]	= RESET_DATA(APBC_PWM19_CLK_RST,	BIT(2), BIT(0)),
++	[RESET_SSP3]	= RESET_DATA(APBC_SSP3_CLK_RST,		BIT(2), 0),
++	[RESET_UART3]	= RESET_DATA(APBC_UART3_CLK_RST,	BIT(2), 0),
++	[RESET_RTC]	= RESET_DATA(APBC_RTC_CLK_RST,		BIT(2), 0),
++	[RESET_TWSI0]	= RESET_DATA(APBC_TWSI0_CLK_RST,	BIT(2), 0),
++	[RESET_TIMERS1]	= RESET_DATA(APBC_TIMERS1_CLK_RST,	BIT(2), 0),
++	[RESET_AIB]	= RESET_DATA(APBC_AIB_CLK_RST,		BIT(2), 0),
++	[RESET_TIMERS2]	= RESET_DATA(APBC_TIMERS2_CLK_RST,	BIT(2), 0),
++	[RESET_ONEWIRE]	= RESET_DATA(APBC_ONEWIRE_CLK_RST,	BIT(2), 0),
++	[RESET_SSPA0]	= RESET_DATA(APBC_SSPA0_CLK_RST,	BIT(2), 0),
++	[RESET_SSPA1]	= RESET_DATA(APBC_SSPA1_CLK_RST,	BIT(2), 0),
++	[RESET_DRO]	= RESET_DATA(APBC_DRO_CLK_RST,		BIT(2), 0),
++	[RESET_IR]	= RESET_DATA(APBC_IR_CLK_RST,		BIT(2), 0),
++	[RESET_TWSI1]	= RESET_DATA(APBC_TWSI1_CLK_RST,	BIT(2), 0),
++	[RESET_TSEN]	= RESET_DATA(APBC_TSEN_CLK_RST,		BIT(2), 0),
++	[RESET_TWSI2]	= RESET_DATA(APBC_TWSI2_CLK_RST,	BIT(2), 0),
++	[RESET_TWSI4]	= RESET_DATA(APBC_TWSI4_CLK_RST,	BIT(2), 0),
++	[RESET_TWSI5]	= RESET_DATA(APBC_TWSI5_CLK_RST,	BIT(2), 0),
++	[RESET_TWSI6]	= RESET_DATA(APBC_TWSI6_CLK_RST,	BIT(2), 0),
++	[RESET_TWSI7]	= RESET_DATA(APBC_TWSI7_CLK_RST,	BIT(2), 0),
++	[RESET_TWSI8]	= RESET_DATA(APBC_TWSI8_CLK_RST,	BIT(2), 0),
++	[RESET_IPC_AP2AUD] = RESET_DATA(APBC_IPC_AP2AUD_CLK_RST, BIT(2), 0),
++	[RESET_UART4]	= RESET_DATA(APBC_UART4_CLK_RST,	BIT(2), 0),
++	[RESET_UART5]	= RESET_DATA(APBC_UART5_CLK_RST,	BIT(2), 0),
++	[RESET_UART6]	= RESET_DATA(APBC_UART6_CLK_RST,	BIT(2), 0),
++	[RESET_UART7]	= RESET_DATA(APBC_UART7_CLK_RST,	BIT(2), 0),
++	[RESET_UART8]	= RESET_DATA(APBC_UART8_CLK_RST,	BIT(2), 0),
++	[RESET_UART9]	= RESET_DATA(APBC_UART9_CLK_RST,	BIT(2), 0),
++	[RESET_CAN0]	= RESET_DATA(APBC_CAN0_CLK_RST,		BIT(2), 0),
++};
++
++static const struct ccu_reset_controller_data apbc_reset_controller_data = {
++	.count		= ARRAY_SIZE(apbc_reset_data),
++	.data		= apbc_reset_data,
++};
++
+ static const struct spacemit_ccu_data k1_ccu_apbc_data = {
+ 	.clk		= k1_ccu_apbc_clks,
++	.reset_data	= &apbc_reset_controller_data,
+ };
+ 
+ static struct spacemit_ccu_clk k1_ccu_apmu_clks[] = {
+@@ -1645,8 +1723,62 @@ static struct spacemit_ccu_clk k1_ccu_apmu_clks[] = {
+ 	{ 0,			NULL },
+ };
+ 
++static const struct ccu_reset_data apmu_reset_data[] = {
++	[RESET_CCIC_4X]	= RESET_DATA(APMU_CCIC_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_CCIC1_PHY] = RESET_DATA(APMU_CCIC_CLK_RES_CTRL,	0, BIT(2)),
++	[RESET_SDH_AXI]	= RESET_DATA(APMU_SDH0_CLK_RES_CTRL,	0, BIT(0)),
++	[RESET_SDH0]	= RESET_DATA(APMU_SDH0_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_SDH1]	= RESET_DATA(APMU_SDH1_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_SDH2]	= RESET_DATA(APMU_SDH2_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_USBP1_AXI] = RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(4)),
++	[RESET_USB_AXI]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(0)),
++	[RESET_USB3_0]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
++				      BIT(11) | BIT(10) | BIT(9)),
++	[RESET_QSPI]	= RESET_DATA(APMU_QSPI_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_QSPI_BUS] = RESET_DATA(APMU_QSPI_CLK_RES_CTRL,	0, BIT(0)),
++	[RESET_DMA]	= RESET_DATA(APMU_DMA_CLK_RES_CTRL,	0, BIT(0)),
++	[RESET_AES]	= RESET_DATA(APMU_AES_CLK_RES_CTRL,	0, BIT(4)),
++	[RESET_VPU]	= RESET_DATA(APMU_VPU_CLK_RES_CTRL,	0, BIT(0)),
++	[RESET_GPU]	= RESET_DATA(APMU_GPU_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_EMMC]	= RESET_DATA(APMU_PMUA_EM_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_EMMC_X]	= RESET_DATA(APMU_PMUA_EM_CLK_RES_CTRL,	0, BIT(0)),
++	[RESET_AUDIO]	= RESET_DATA(APMU_AUDIO_CLK_RES_CTRL,	0,
++				   BIT(3) | BIT(2) | BIT(0)),
++	[RESET_HDMI]	= RESET_DATA(APMU_HDMI_CLK_RES_CTRL,	0, BIT(9)),
++	[RESET_PCIE0]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_0,	BIT(8),
++				   BIT(5) | BIT(4) | BIT(3)),
++	[RESET_PCIE1]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_1,	BIT(8),
++				   BIT(5) | BIT(4) | BIT(3)),
++	[RESET_PCIE2]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_2,	BIT(8),
++				   BIT(5) | BIT(4) | BIT(3)),
++	[RESET_EMAC0]	= RESET_DATA(APMU_EMAC0_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_EMAC1]	= RESET_DATA(APMU_EMAC1_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_JPG]	= RESET_DATA(APMU_JPG_CLK_RES_CTRL,	0, BIT(0)),
++	[RESET_CCIC2PHY] = RESET_DATA(APMU_CSI_CCIC2_CLK_RES_CTRL, 0, BIT(2)),
++	[RESET_CCIC3PHY] = RESET_DATA(APMU_CSI_CCIC2_CLK_RES_CTRL, 0, BIT(29)),
++	[RESET_CSI]	= RESET_DATA(APMU_CSI_CCIC2_CLK_RES_CTRL, 0, BIT(1)),
++	[RESET_ISP]	= RESET_DATA(APMU_ISP_CLK_RES_CTRL,	0, BIT(0)),
++	[RESET_ISP_CPP]	= RESET_DATA(APMU_ISP_CLK_RES_CTRL,	0, BIT(27)),
++	[RESET_ISP_BUS]	= RESET_DATA(APMU_ISP_CLK_RES_CTRL,	0, BIT(3)),
++	[RESET_ISP_CI]	= RESET_DATA(APMU_ISP_CLK_RES_CTRL,	0, BIT(16)),
++	[RESET_DPU_MCLK] = RESET_DATA(APMU_LCD_CLK_RES_CTRL2,	0, BIT(9)),
++	[RESET_DPU_ESC]	= RESET_DATA(APMU_LCD_CLK_RES_CTRL1,	0, BIT(3)),
++	[RESET_DPU_HCLK] = RESET_DATA(APMU_LCD_CLK_RES_CTRL1,	0, BIT(4)),
++	[RESET_DPU_SPIBUS] = RESET_DATA(APMU_LCD_SPI_CLK_RES_CTRL, 0, BIT(4)),
++	[RESET_DPU_SPI_HBUS] = RESET_DATA(APMU_LCD_SPI_CLK_RES_CTRL, 0, BIT(2)),
++	[RESET_V2D]	= RESET_DATA(APMU_LCD_CLK_RES_CTRL1,	0, BIT(27)),
++	[RESET_MIPI]	= RESET_DATA(APMU_LCD_CLK_RES_CTRL1,	0, BIT(15)),
++	[RESET_MC]	= RESET_DATA(APMU_PMUA_MC_CTRL,		0, BIT(0)),
++};
++
++static const struct ccu_reset_controller_data apmu_reset_controller_data = {
++	.count		= ARRAY_SIZE(apmu_reset_data),
++	.data		= apmu_reset_data,
++};
++
+ static const struct spacemit_ccu_data k1_ccu_apmu_data = {
  	.clk		= k1_ccu_apmu_clks,
++	.reset_data	= &apmu_reset_controller_data,
  };
  
-+static int spacemit_reset_update(struct reset_controller_dev *rcdev,
-+				 unsigned long id, bool assert)
-+{
-+	struct ccu_reset_controller *controller;
-+	const struct ccu_reset_data *data;
-+	u32 mask;
-+	u32 val;
-+
-+	controller = container_of(rcdev, struct ccu_reset_controller, rcdev);
-+	data = &controller->data->data[id];
-+	mask = data->assert_mask | data->deassert_mask;
-+	val = assert ? data->assert_mask : data->deassert_mask;
-+
-+	return regmap_update_bits(controller->regmap, data->offset, mask, val);
-+}
-+
-+static int spacemit_reset_assert(struct reset_controller_dev *rcdev,
-+				 unsigned long id)
-+{
-+	return spacemit_reset_update(rcdev, id, true);
-+}
-+
-+static int spacemit_reset_deassert(struct reset_controller_dev *rcdev,
-+				   unsigned long id)
-+{
-+	return spacemit_reset_update(rcdev, id, false);
-+}
-+
-+static const struct reset_control_ops spacemit_reset_control_ops = {
-+	.assert		= spacemit_reset_assert,
-+	.deassert	= spacemit_reset_deassert,
-+};
-+
- static int spacemit_ccu_register(struct device *dev,
- 				 struct regmap *regmap, struct regmap *lock_regmap,
- 				 struct spacemit_ccu_clk *clks)
-@@ -1675,6 +1727,33 @@ static int spacemit_ccu_register(struct device *dev,
- 	return ret;
- }
- 
-+static int spacemit_reset_controller_register(struct device *dev,
-+					      struct regmap *regmap,
-+					      const struct ccu_reset_controller_data *data)
-+{
-+	struct ccu_reset_controller *controller;
-+	struct reset_controller_dev *rcdev;
-+
-+	/* Resets are optional */
-+	if (!data)
-+		return 0;
-+
-+	controller = devm_kzalloc(dev, sizeof(*controller), GFP_KERNEL);
-+	if (!controller)
-+		return -ENOMEM;
-+
-+	controller->regmap = regmap;
-+	controller->data = data;
-+
-+	rcdev = &controller->rcdev;
-+	rcdev->ops = &spacemit_reset_control_ops;
-+	rcdev->owner = THIS_MODULE;
-+	rcdev->of_node = dev->of_node;
-+	rcdev->nr_resets = data->count;
-+
-+	return devm_reset_controller_register(dev, rcdev);
-+}
-+
- static int k1_ccu_probe(struct platform_device *pdev)
- {
- 	struct regmap *base_regmap, *lock_regmap = NULL;
-@@ -1708,6 +1787,10 @@ static int k1_ccu_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to register clocks\n");
- 
-+	ret = spacemit_reset_controller_register(dev, base_regmap, data->reset_data);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to register reset controller\n");
-+
- 	return 0;
- }
- 
+ static int spacemit_reset_update(struct reset_controller_dev *rcdev,
 -- 
 2.45.2
 
