@@ -1,456 +1,408 @@
 Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7EB135A53
-	for <spacemit@lists.linux.dev>; Sat, 29 Mar 2025 10:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000FF20E6E1
+	for <spacemit@lists.linux.dev>; Tue,  1 Apr 2025 17:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743243717; cv=none; b=uiKEARAvGkkRbza/kUTBd398Cvx/V34m4tYGw9sIbSpBZFhRDvwo12k6+VrK0im0gRMfHr1NJkwZ7ThCacP0uXWCJEVMd/br7iuU9bHd2wsf5saODlysW0ZcdiWUDb+wzL/vHth77cPP4ksZ9r/R/Tyt2XDJ4PIyHcJr79ImXJo=
+	t=1743528296; cv=none; b=ejHb2PhL/7yD6s/M/8I741n9np89Sk6Qfs7e6i6ncZac4KpFCDlcwyEcJy1XO+57JmvOrJ7d1kqFXkANyLnN2Njkqsdz1jOuOdQPTulp4t2U0eweedt62T8Sz5mq8wyWa4W+/yKtoxNGBzJUWQ6krMUq9Mjvre8oeCGG6ngklQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743243717; c=relaxed/simple;
-	bh=fhA90Tx9eI1SkiVBFprOFxj8QYdAvN7Gsg11849kV7w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qNXXemNpWW/inXdJOcP+x5SDeymCu4DZnWQLNSXL7tEIqy+abhYS+puoa6ykeKSofEIL511kfvcbzE6ZxIQjBRACJ0GsMPO7f+NPHzOeLCLPuuA8Xh1sBdxvNoS2/kvuplE4UvhBfZhlhm+StiXe4uouP1oiSfAzTrypS5CBsWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=fb8y+ap7; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=voX2CYEl; arc=none smtp.client-ip=155.254.16.17
+	s=arc-20240116; t=1743528296; c=relaxed/simple;
+	bh=FeUiLSUe8wj7dt0M38twYoeyAWpif9rAC5K+gAkMce4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OFqJRXwoJr9LTj9Mm7ltm0d7aghdd9fFrQrQzvdpoxwVMyhQW4NtoTywviZnkIyBPCAuKTBfNcW5mn//0/w0kqts0v7bsBo5qBOe6SPeZrQRhZFQnAq7jH9i3Z15HBJAxw8mkw5OTjKVWkC0iskdmqt8EmZfKPi6kcZhGmy2dGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=qtO9GA4/; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=lRRI8g8u; arc=none smtp.client-ip=155.254.16.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="fb8y+ap7";
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="voX2CYEl"
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="qtO9GA4/";
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="lRRI8g8u"
 Received: from bayard.4d2.org (bayard.4d2.org [127.0.0.1])
-	by bayard.4d2.org (Postfix) with ESMTP id ED04FEC59F9;
-	Sat, 29 Mar 2025 03:21:47 -0700 (PDT)
+	by bayard.4d2.org (Postfix) with ESMTP id 5C0BDEC59FE;
+	Tue, 01 Apr 2025 10:24:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1743243708; bh=fhA90Tx9eI1SkiVBFprOFxj8QYdAvN7Gsg11849kV7w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fb8y+ap7DBFY1LJ6n2D6DONFzaF6mhO+7+hgOC99FiAZsPJK8w/meTLkSqU7QWULK
-	 V2ck4SIV97dvsaxFGZqHqpEnF1yJr05wm/frUWsNfM3XRFPuXEN29Mtpxg22vdLpYZ
-	 IDWu9RfpD7gFCubi87Ob4jBdGii0HksDLLW2IMv0BEfLxeEJQ9mez4mMQRyPiihswo
-	 scxtJhsnQ+hshim06Y80tgL6hlbyDdLhbBA0vl+b+HeUcb4dV74XrxQ6riNj8fgwxQ
-	 DJJHAqWvuhJFuENxlFiKOg7fkSB2do6mLViCXWOgaWtN+QgFf8/CLQx5hULZw8YhaS
-	 itEkSikIZbkFQ==
+	t=1743528294; bh=FeUiLSUe8wj7dt0M38twYoeyAWpif9rAC5K+gAkMce4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qtO9GA4/5E/GAcM2hgUvUwhkJeO0X5Rd/V8uvVlvn0M6TtrP7AUv4gvb+lIF051g2
+	 cmFKSS6mbhrvEGUXzH/zUb5bW0rtsDk2N+Qd/6r9xL6qOD9lKSfQNG8x9bFWgek4Bm
+	 HuQ0YIcQOf8pT4s3GmESTkfeKDN0if0As5kMUsmkJbA2jXR7yrx+EXaEhEH4MrDEBy
+	 fKWYx8SKKv4JlvG9zOuEYAa7r51gox92tULWX0wvwQukUijY5t4X9ti3DBZxynw5r/
+	 ptSJAKvMfTvGeYGIR0QpN2xPzLcf2kw9ZQAZQxC3uLv0w5hna7Mfp2SpYB88DsCTS/
+	 nuCLO1ACD/7IQ==
 X-Virus-Scanned: amavisd-new at 4d2.org
+Authentication-Results: bayard.4d2.org (amavisd-new); dkim=pass (2048-bit key)
+ header.d=4d2.org
 Received: from bayard.4d2.org ([127.0.0.1])
  by bayard.4d2.org (bayard.4d2.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id KLKqUTbdVgti; Sat, 29 Mar 2025 03:21:45 -0700 (PDT)
-Received: from ketchup (unknown [183.217.80.175])
+ with ESMTP id BoZijOi-vwPz; Tue,  1 Apr 2025 10:24:51 -0700 (PDT)
+Received: from localhost.localdomain (unknown [183.217.81.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: heylenay@4d2.org)
-	by bayard.4d2.org (Postfix) with ESMTPSA id DF13BEC59F8;
-	Sat, 29 Mar 2025 03:21:40 -0700 (PDT)
+	by bayard.4d2.org (Postfix) with ESMTPSA id F17B3EC59FC;
+	Tue, 01 Apr 2025 10:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1743243704; bh=fhA90Tx9eI1SkiVBFprOFxj8QYdAvN7Gsg11849kV7w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=voX2CYElcjGryqXnLzklh0uk6LbuUxt46gQyvHJeKaAJ2fR77jLi8H9g0OO+I5kKg
-	 ATZaZvrKZhNu0sHGwJO+NH/e7yDxZ56RdFXqnZXY8dWMKnCsfMLkTGZVe6nVFCvVZg
-	 +B2A6IAn4qlDCL91e5NMf/DMJaza/Llge0oDrW9az4LQgDsLlwXB9CGs9SBYe3i32y
-	 1+0FPJ+BOlLATdOf4790A+EjoiOJdjacQNPiPu/HXJKzO/5BeHkEy5hqo3hjjcM9EQ
-	 g/BtB1CwdQ10rgiR/tSOcbLGbNCu6UZPbTiDlqR3FQdpPeGwM4YDsTXx/yXqJAYqW6
-	 0h3Fxm+zxG8wg==
-Date: Sat, 29 Mar 2025 10:21:36 +0000
+	t=1743528291; bh=FeUiLSUe8wj7dt0M38twYoeyAWpif9rAC5K+gAkMce4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=lRRI8g8uEhxV6S8aYl+sfGYNAVEBQP+koZjQuRpfB18lma2wX5TGWO5TC7DcF6sIl
+	 zTirzk9m4XLm7zHXzkO+zgrfU2nD+9dYkmt787yBc37QkrUvddilO2RjazUvoSBh2r
+	 o6sSa3TkjIbk2/iiocKPsx9HwrV9fZzEoToZpEqGpSQUbavyigJRphOO4Rtnv+IRJ4
+	 V0HhLMSGHLIEAy7D2uaWdP6XmteI1/ZZlNrREPz67emyx7t3z59mChE20X6AUtocYb
+	 TUGpPTHlgVCu4KiFINUbmiNUyjLvRB3q3vlWZHuHWEcnomTLQnaEOafqRvWzNFtXmh
+	 w/lkv6cUk3kbg==
 From: Haylen Chu <heylenay@4d2.org>
-To: Alex Elder <elder@riscstar.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Haylen Chu <heylenay@outlook.com>, Yixun Lan <dlan@gentoo.org>
-Cc: linux-riscv@lists.infradead.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev, Inochi Amaoto <inochiama@outlook.com>,
+	Haylen Chu <heylenay@outlook.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-riscv@lists.infradead.org,
+	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	Inochi Amaoto <inochiama@outlook.com>,
 	Chen Wang <unicornxdotw@foxmail.com>,
 	Jisheng Zhang <jszhang@kernel.org>,
 	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
-	Guodong Xu <guodong@riscstar.com>
-Subject: Re: [PATCH v5 3/5] clk: spacemit: Add clock support for Spacemit K1
- SoC
-Message-ID: <Z-fJsC_OnmE_0yys@ketchup>
-References: <20250306175750.22480-2-heylenay@4d2.org>
- <20250306175750.22480-5-heylenay@4d2.org>
- <d625c473-789c-42f9-918c-8a649d058513@riscstar.com>
- <Z-E-nhNzUx_YFFZZ@ketchup>
- <188bd370-6e9d-4104-8731-926ce4f3c211@riscstar.com>
+	Haylen Chu <heylenay@4d2.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v6 1/6] dt-bindings: soc: spacemit: Add spacemit,k1-syscon
+Date: Tue,  1 Apr 2025 17:24:29 +0000
+Message-ID: <20250401172434.6774-2-heylenay@4d2.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250401172434.6774-1-heylenay@4d2.org>
+References: <20250401172434.6774-1-heylenay@4d2.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <188bd370-6e9d-4104-8731-926ce4f3c211@riscstar.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Mar 28, 2025 at 09:00:40AM -0500, Alex Elder wrote:
-> On 3/24/25 6:14 AM, Haylen Chu wrote:
-> > On Tue, Mar 11, 2025 at 06:19:51PM -0500, Alex Elder wrote:
-> > > On 3/6/25 11:57 AM, Haylen Chu wrote:
-> > > > The clock tree of K1 SoC contains three main types of clock hardware
-> > > > (PLL/DDN/MIX) and has control registers split into several multifunction
-> > > > devices: APBS (PLLs), MPMU, APBC and APMU.
-> > > > 
-> > > > All register operations are done through regmap to ensure atomiciy
-> > > > between concurrent operations of clock driver and reset,
-> > > > power-domain driver that will be introduced in the future.
-> > > > 
-> > > > Signed-off-by: Haylen Chu <heylenay@4d2.org>
-> > > 
-> > > I'm very glad you have the DT issues resolved now.
-> > > 
-> > > I again have lots of comments on the code, and I think I've
-> > > identified a few bugs.  Most of my comments, however, are
-> > > suggesting minor changes for consistency and readability.
-> > > 
-> > > I'm going to skip over a lot of "ccu-k1.c" because most of what I
-> > > say applies to the definitions in the header files.
-> 
-> Sorry I didn't respond to this earlier.
+Document APMU, MPMU and APBC syscons found on SpacemiT K1 SoC, which are
+capable of generating clock and reset signals. Additionally, APMU and MPMU
+manage power domains.
 
-I've already started to work on the v6, so it doesn't matter. I'll also
-cover some new decisions made during improving v6 in the reply.
+Signed-off-by: Haylen Chu <heylenay@4d2.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../soc/spacemit/spacemit,k1-syscon.yaml      |  80 +++++++
+ .../dt-bindings/clock/spacemit,k1-syscon.h    | 210 ++++++++++++++++++
+ 2 files changed, 290 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
+ create mode 100644 include/dt-bindings/clock/spacemit,k1-syscon.h
 
-> > > > ---
-> > > >    drivers/clk/Kconfig               |    1 +
-> > > >    drivers/clk/Makefile              |    1 +
-> > > >    drivers/clk/spacemit/Kconfig      |   20 +
-> > > >    drivers/clk/spacemit/Makefile     |    5 +
-> > > >    drivers/clk/spacemit/ccu-k1.c     | 1714 +++++++++++++++++++++++++++++
-> > > >    drivers/clk/spacemit/ccu_common.h |   47 +
-> > > >    drivers/clk/spacemit/ccu_ddn.c    |   80 ++
-> > > >    drivers/clk/spacemit/ccu_ddn.h    |   48 +
-> > > >    drivers/clk/spacemit/ccu_mix.c    |  284 +++++
-> > > >    drivers/clk/spacemit/ccu_mix.h    |  246 +++++
-> > > >    drivers/clk/spacemit/ccu_pll.c    |  146 +++
-> > > >    drivers/clk/spacemit/ccu_pll.h    |   76 ++
-> > > >    12 files changed, 2668 insertions(+)
-> > > >    create mode 100644 drivers/clk/spacemit/Kconfig
-> > > >    create mode 100644 drivers/clk/spacemit/Makefile
-> > > >    create mode 100644 drivers/clk/spacemit/ccu-k1.c
-> > > >    create mode 100644 drivers/clk/spacemit/ccu_common.h
-> > > >    create mode 100644 drivers/clk/spacemit/ccu_ddn.c
-> > > >    create mode 100644 drivers/clk/spacemit/ccu_ddn.h
-> > > >    create mode 100644 drivers/clk/spacemit/ccu_mix.c
-> > > >    create mode 100644 drivers/clk/spacemit/ccu_mix.h
-> > > >    create mode 100644 drivers/clk/spacemit/ccu_pll.c
-> > > >    create mode 100644 drivers/clk/spacemit/ccu_pll.h
-> > > > 
-> > 
-> > ...
-> > 
-> > > > diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-> > > > new file mode 100644
-> > > > index 000000000000..5974a0a1b5f6
-> > > > --- /dev/null
-> > > > +++ b/drivers/clk/spacemit/ccu-k1.c
+diff --git a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
+new file mode 100644
+index 000000000000..30aaf49da03d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
+@@ -0,0 +1,80 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/soc/spacemit/spacemit,k1-syscon.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: SpacemiT K1 SoC System Controller
++
++maintainers:
++  - Haylen Chu <heylenay@4d2.org>
++
++description:
++  System controllers found on SpacemiT K1 SoC, which are capable of
++  clock, reset and power-management functions.
++
++properties:
++  compatible:
++    enum:
++      - spacemit,k1-syscon-apbc
++      - spacemit,k1-syscon-apmu
++      - spacemit,k1-syscon-mpmu
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 4
++
++  clock-names:
++    items:
++      - const: osc
++      - const: vctcxo_1m
++      - const: vctcxo_3m
++      - const: vctcxo_24m
++
++  "#clock-cells":
++    const: 1
++    description:
++      See <dt-bindings/clock/spacemit,k1-syscon.h> for valid indices.
++
++  "#power-domain-cells":
++    const: 1
++
++  "#reset-cells":
++    const: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - "#clock-cells"
++  - "#reset-cells"
++
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: spacemit,k1-syscon-apbc
++    then:
++      properties:
++        "#power-domain-cells": false
++    else:
++      required:
++        - "#power-domain-cells"
++
++additionalProperties: false
++
++examples:
++  - |
++    system-controller@d4050000 {
++        compatible = "spacemit,k1-syscon-mpmu";
++        reg = <0xd4050000 0x209c>;
++        clocks = <&osc>, <&vctcxo_1m>, <&vctcxo_3m>, <&vctcxo_24m>;
++        clock-names = "osc", "vctcxo_1m", "vctcxo_3m", "vctcxo_24m";
++        #clock-cells = <1>;
++        #power-domain-cells = <1>;
++        #reset-cells = <1>;
++    };
+diff --git a/include/dt-bindings/clock/spacemit,k1-syscon.h b/include/dt-bindings/clock/spacemit,k1-syscon.h
+new file mode 100644
+index 000000000000..61c8d7360cf8
+--- /dev/null
++++ b/include/dt-bindings/clock/spacemit,k1-syscon.h
+@@ -0,0 +1,210 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (C) 2024 Haylen Chu <heylenay@outlook.com>
++ */
++
++#ifndef _DT_BINDINGS_SPACEMIT_CCU_H_
++#define _DT_BINDINGS_SPACEMIT_CCU_H_
++
++/* MPMU clocks */
++#define CLK_PLL1_307P2		0
++#define CLK_PLL1_76P8		1
++#define CLK_PLL1_61P44		2
++#define CLK_PLL1_153P6		3
++#define CLK_PLL1_102P4		4
++#define CLK_PLL1_51P2		5
++#define CLK_PLL1_51P2_AP	6
++#define CLK_PLL1_57P6		7
++#define CLK_PLL1_25P6		8
++#define CLK_PLL1_12P8		9
++#define CLK_PLL1_12P8_WDT	10
++#define CLK_PLL1_6P4		11
++#define CLK_PLL1_3P2		12
++#define CLK_PLL1_1P6		13
++#define CLK_PLL1_0P8		14
++#define CLK_PLL1_409P6		15
++#define CLK_PLL1_204P8		16
++#define CLK_PLL1_491		17
++#define CLK_PLL1_245P76		18
++#define CLK_PLL1_614		19
++#define CLK_PLL1_47P26		20
++#define CLK_PLL1_31P5		21
++#define CLK_PLL1_819		22
++#define CLK_PLL1_1228		23
++#define CLK_SLOW_UART		24
++#define CLK_SLOW_UART1		25
++#define CLK_SLOW_UART2		26
++#define CLK_WDT			27
++#define CLK_RIPC		28
++#define CLK_I2S_SYSCLK		29
++#define CLK_I2S_BCLK		30
++#define CLK_APB			31
++#define CLK_WDT_BUS		32
++
++/* APBC clocks */
++#define CLK_UART0		0
++#define CLK_UART2		1
++#define CLK_UART3		2
++#define CLK_UART4		3
++#define CLK_UART5		4
++#define CLK_UART6		5
++#define CLK_UART7		6
++#define CLK_UART8		7
++#define CLK_UART9		8
++#define CLK_GPIO		9
++#define CLK_PWM0		10
++#define CLK_PWM1		11
++#define CLK_PWM2		12
++#define CLK_PWM3		13
++#define CLK_PWM4		14
++#define CLK_PWM5		15
++#define CLK_PWM6		16
++#define CLK_PWM7		17
++#define CLK_PWM8		18
++#define CLK_PWM9		19
++#define CLK_PWM10		20
++#define CLK_PWM11		21
++#define CLK_PWM12		22
++#define CLK_PWM13		23
++#define CLK_PWM14		24
++#define CLK_PWM15		25
++#define CLK_PWM16		26
++#define CLK_PWM17		27
++#define CLK_PWM18		28
++#define CLK_PWM19		29
++#define CLK_SSP3		30
++#define CLK_RTC			31
++#define CLK_TWSI0		32
++#define CLK_TWSI1		33
++#define CLK_TWSI2		34
++#define CLK_TWSI4		35
++#define CLK_TWSI5		36
++#define CLK_TWSI6		37
++#define CLK_TWSI7		38
++#define CLK_TWSI8		39
++#define CLK_TIMERS1		40
++#define CLK_TIMERS2		41
++#define CLK_AIB			42
++#define CLK_ONEWIRE		43
++#define CLK_SSPA0		44
++#define CLK_SSPA1		45
++#define CLK_DRO			46
++#define CLK_IR			47
++#define CLK_TSEN		48
++#define CLK_IPC_AP2AUD		49
++#define CLK_CAN0		50
++#define CLK_CAN0_BUS		51
++#define CLK_UART0_BUS		52
++#define CLK_UART2_BUS		53
++#define CLK_UART3_BUS		54
++#define CLK_UART4_BUS		55
++#define CLK_UART5_BUS		56
++#define CLK_UART6_BUS		57
++#define CLK_UART7_BUS		58
++#define CLK_UART8_BUS		59
++#define CLK_UART9_BUS		60
++#define CLK_GPIO_BUS		61
++#define CLK_PWM0_BUS		62
++#define CLK_PWM1_BUS		63
++#define CLK_PWM2_BUS		64
++#define CLK_PWM3_BUS		65
++#define CLK_PWM4_BUS		66
++#define CLK_PWM5_BUS		67
++#define CLK_PWM6_BUS		68
++#define CLK_PWM7_BUS		69
++#define CLK_PWM8_BUS		70
++#define CLK_PWM9_BUS		71
++#define CLK_PWM10_BUS		72
++#define CLK_PWM11_BUS		73
++#define CLK_PWM12_BUS		74
++#define CLK_PWM13_BUS		75
++#define CLK_PWM14_BUS		76
++#define CLK_PWM15_BUS		77
++#define CLK_PWM16_BUS		78
++#define CLK_PWM17_BUS		79
++#define CLK_PWM18_BUS		80
++#define CLK_PWM19_BUS		81
++#define CLK_SSP3_BUS		82
++#define CLK_RTC_BUS		83
++#define CLK_TWSI0_BUS		84
++#define CLK_TWSI1_BUS		85
++#define CLK_TWSI2_BUS		86
++#define CLK_TWSI4_BUS		87
++#define CLK_TWSI5_BUS		88
++#define CLK_TWSI6_BUS		89
++#define CLK_TWSI7_BUS		90
++#define CLK_TWSI8_BUS		91
++#define CLK_TIMERS1_BUS		92
++#define CLK_TIMERS2_BUS		93
++#define CLK_AIB_BUS		94
++#define CLK_ONEWIRE_BUS		95
++#define CLK_SSPA0_BUS		96
++#define CLK_SSPA1_BUS		97
++#define CLK_TSEN_BUS		98
++#define CLK_IPC_AP2AUD_BUS	99
++
++/* APMU clocks */
++#define CLK_CCI550		0
++#define CLK_CPU_C0_HI		1
++#define CLK_CPU_C0_CORE		2
++#define CLK_CPU_C0_ACE		3
++#define CLK_CPU_C0_TCM		4
++#define CLK_CPU_C1_HI		5
++#define CLK_CPU_C1_CORE		6
++#define CLK_CPU_C1_ACE		7
++#define CLK_CCIC_4X		8
++#define CLK_CCIC1PHY		9
++#define CLK_SDH_AXI		10
++#define CLK_SDH0		11
++#define CLK_SDH1		12
++#define CLK_SDH2		13
++#define CLK_USB_P1		14
++#define CLK_USB_AXI		15
++#define CLK_USB30		16
++#define CLK_QSPI		17
++#define CLK_QSPI_BUS		18
++#define CLK_DMA			19
++#define CLK_AES			20
++#define CLK_VPU			21
++#define CLK_GPU			22
++#define CLK_EMMC		23
++#define CLK_EMMC_X		24
++#define CLK_AUDIO		25
++#define CLK_HDMI		26
++#define CLK_PMUA_ACLK		27
++#define CLK_PCIE0_MASTER	28
++#define CLK_PCIE0_SLAVE		29
++#define CLK_PCIE0_DBI		30
++#define CLK_PCIE1_MASTER	31
++#define CLK_PCIE1_SLAVE		32
++#define CLK_PCIE1_DBI		33
++#define CLK_PCIE2_MASTER	34
++#define CLK_PCIE2_SLAVE		35
++#define CLK_PCIE2_DBI		36
++#define CLK_EMAC0_BUS		37
++#define CLK_EMAC0_PTP		38
++#define CLK_EMAC1_BUS		39
++#define CLK_EMAC1_PTP		40
++#define CLK_JPG			41
++#define CLK_CCIC2PHY		42
++#define CLK_CCIC3PHY		43
++#define CLK_CSI			44
++#define CLK_CAMM0		45
++#define CLK_CAMM1		46
++#define CLK_CAMM2		47
++#define CLK_ISP_CPP		48
++#define CLK_ISP_BUS		49
++#define CLK_ISP			50
++#define CLK_DPU_MCLK		51
++#define CLK_DPU_ESC		52
++#define CLK_DPU_BIT		53
++#define CLK_DPU_PXCLK		54
++#define CLK_DPU_HCLK		55
++#define CLK_DPU_SPI		56
++#define CLK_DPU_SPI_HBUS	57
++#define CLK_DPU_SPIBUS		58
++#define CLK_DPU_SPI_ACLK	59
++#define CLK_V2D			60
++#define CLK_EMMC_BUS		61
++
++#endif /* _DT_BINDINGS_SPACEMIT_CCU_H_ */
+-- 
+2.49.0
 
-...
-
-> > > > diff --git a/drivers/clk/spacemit/ccu_common.h b/drivers/clk/spacemit/ccu_common.h
-> > > > new file mode 100644
-> > > > index 000000000000..494cde96fe3c
-> > > > --- /dev/null
-> > > > +++ b/drivers/clk/spacemit/ccu_common.h
-> > > > @@ -0,0 +1,47 @@
-> > > > +/* SPDX-License-Identifier: GPL-2.0-only */
-> > > > +/*
-> > > > + * Copyright (c) 2024 SpacemiT Technology Co. Ltd
-> > > > + * Copyright (c) 2024 Haylen Chu <heylenay@4d2.org>
-> > > > + */
-> > > > +
-> > > > +#ifndef _CCU_COMMON_H_
-> > > > +#define _CCU_COMMON_H_
-> > > > +
-> > > > +#include <linux/regmap.h>
-> > > > +
-> > > 
-> > > I'm not going to suggest it at this point, but it might
-> > > have worked out more nicely if you defined a top-level CCU
-> > > structure that contained a union of structs, one for each
-> > > type of clock (PLL, DDN, mix).
-> > > 
-> > > > +struct ccu_common {
-> > > > +	struct regmap *regmap;
-> > > > +	struct regmap *lock_regmap;
-> > > 
-> > > The lock_regmap is only used for PLL type clocks, right?
-> > > So it could be included in the PLL struct within the union
-> > > below?
-> > 
-> > This makes sense to me.
-> 
-> It might make sense but in part my suggestion makes more
-> sense when taken with the comment I had above (about having
-> a CCU structure with a union rather than separate per-type
-> structures).  I think that would be better, but again I
-> don't want you to have to do all that work if it means
-> delaying getting your code accepted.
-> 
-> So move it to the union if that works, but for now it's
-> fine the way it is.
-
-I'll prefer to keep the regmap lock in the toplevel structure for now.
-Moving the pointer into the union requires special care: we cannot
-simply assign lock_regmap with NULL anymore in spacemit_ccu_register()
-without checking the subtype of clk_hw, or part of the mix/ddn's struct
-may be overwritten.
-
-Keeping lock_regmap out of the union ensures the code is simple and
-makes it less possible to accidentally mess the union up.
-
-> > > > +
-> > > > +	union {
-> > > > +		/* For DDN and MIX */
-> > > > +		struct {
-> > > > +			u32 reg_ctrl;
-> > > > +			u32 reg_fc;
-> > > > +			u32 fc;
-
-...
-
-> > > 
-> > > You define PLL_SWCR3_EN in "ccu_pll.c" to have value BIT(31).
-> > > that's good.  But you should define its inverse, to define
-> > > which bits in the reg_swcr3 field are the valid "magic" part.
-> > > In both cases, I would define them here in this file, where
-> > > the structure type is defined (not in "ccu_pll.c").
-> > > #define SPACEMIT_PLL_SWCR3_EN	(u32)BIT(31)
-> > > #define SPACEMIT_PLL_SWCR3_MASK	~(SPACEMIT_PLL_SWCR3_EN)
-
-I changed my mind and consider it's better to keep these macros in
-ccu_pll.c, since it isn't that useful outside of the file (knowing the
-exact definition of swcr3 doesn't help much, as we're really defining
-some magic values). It's not a strong opinion anyway.
-
-> > > > +		};
-> > > > +	};
-> > > > +
-> > > > +	struct clk_hw hw;
-> > > > +};
-
-...
-
-> > > > diff --git a/drivers/clk/spacemit/ccu_ddn.c b/drivers/clk/spacemit/ccu_ddn.c
-> > > > new file mode 100644
-> > > > index 000000000000..ee187687d0c4
-> > > > --- /dev/null
-> > > > +++ b/drivers/clk/spacemit/ccu_ddn.c
-> > > > @@ -0,0 +1,80 @@
-> > 
-> > ...
-> > 
-> > > > +static unsigned long clk_ddn_calc_best_rate(struct ccu_ddn *ddn,
-> > > > +					    unsigned long rate, unsigned long prate,
-> > > > +					    unsigned long *num, unsigned long *den)
-> > > > +{
-> > > > +	rational_best_approximation(rate, prate / 2,
-> > > > +				    ddn->den_mask, ddn->num_mask,
-> > > > +				    den, num);
-> > > 
-> > > Using rational_best_approximation() is excellent.  However I
-> > > think you have a bug, and I don't think the exact way you're
-> > > using it is clear (and might be wrong).
-> > > 
-> > > The bug is that the third and fourth arguments are the maximum
-> > > numerator and denominator, respectively.  You are passing mask
-> > > values, which in some sense represent the maximums.  However,
-> > > your masks are not always in the low-order bits.  Here is one
-> > > example:
-> > > 
-> > > static CCU_DDN_DEFINE(slow_uart1_14p74, pll1_d16_153p6,
-> > >                        MPMU_SUCCR,
-> > >                        GENMASK(28, 16), 16, GENMASK(12, 0), 0,
-> > >                        0);
-> > > 
-> > > The "_num_mask" argument to this macro is 0x1fff0000, and the
-> > > "_den_mask" is 0x00000fff.  The latter value (which gets passed
-> > > as the max_numerator argument to rational_best_approximation())
-> > > is fine, but the former is not.  So you need to shift both masks
-> > > right by their corresponding shift value.
-> > 
-> > Thanks for finding it! I forget to change the function when redefining
-> > struct ccu_ddn.
-> > 
-> > > Beyond that bug, rational_best_approximation() wants its first
-> > > two arguments to define the desired rate (as a fraction).
-> > 
-> > I don't think it's the way that rational_best_approximation() works.
-> > The first two arguments define the desired fraction, not the rate.
-> > 
-> > > So the desired rate should be the actual desired rate divided by 1
-> > > (rather than being divided by the half the parent rate).  So
-> > > this too might be a bug.
-> 
-> OK I took another look at this.  And I looked at the first commit
-> that used this function to understand how to use it:
->   534fca068ec80 imx: serial: use rational library function
-> 
-> You want to know what are the best available numerator and
-> denominator values to use (which fit into your register fields).
-> These should be as close as possible to the fraction you're after.
-> 
->     Fout = Fin * num / denom
-> 
-> Fin is the parent rate (always divided by two in this case),
-> or "prate / 2".  Fout is the desired rate, or "rate".  You might
-> get a better result if you express the "/ 2" in the parent rate
-> as "* 2" in the desired rate.
-> 
->     num_max = ddn->num_mask >> __ffs(ddn->num_mask);
->     den_max = ddn->den_mask >> __ffs(ddn->den_mask);
->     rational_best_approximation(rate * 2, prate,
-> 				num_max, den_max, &num, &den)
-
-Thanks, this should help :)
-
-...
-
-> > > > diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
-> > > > new file mode 100644
-> > > > index 000000000000..9df2149f6c98
-> > > > --- /dev/null
-> > > > +++ b/drivers/clk/spacemit/ccu_pll.c
-
-...
-
-> > > > +/* frequency unit Mhz, return pll vco freq */
-> > > > +static unsigned long ccu_pll_get_vco_freq(struct clk_hw *hw)
-> > > > +{
-> > > > +	const struct ccu_pll_rate_tbl *pll_rate_table;
-> > > > +	struct ccu_pll *p = hw_to_ccu_pll(hw);
-> > > > +	struct ccu_common *common = &p->common;
-> > > > +	u32 swcr1, swcr3, size;
-> > > > +	int i;
-> > > > +
-> > > > +	ccu_read(swcr1, common, &swcr1);
-> > > > +	ccu_read(swcr3, common, &swcr3);
-> > > 
-> > > You are masking off the EN bit, but you should really be
-> > > using a mask defining which bits are valid instead.  As
-> > > I said earlier:
-> > > 
-> > > #define SPACEMIT_PLL_SWCR3_MASK	~(SPACEMIT_PLL_SWCR3_EN)
-> > > 
-> > > > +	swcr3 &= ~PLL_SWCR3_EN;
-> > > 
-> > > 	swcr3 &= SPACEMIT_PLL_SWCR3_MASK;
-> > > > +
-> > > > +	pll_rate_table = p->pll.rate_tbl;
-> > > > +	size = p->pll.tbl_size;
-> > > > +
-> > > > +	for (i = 0; i < size; i++) {
-> > > > +		if (pll_rate_table[i].swcr1 == swcr1 &&
-> > > > +		    pll_rate_table[i].swcr3 == swcr3)
-> > > > +			return pll_rate_table[i].rate;
-> > > > +	}
-> > > > +
-> > > 
-> > > I have a general question here.  Once you set one of these
-> > > clock rates, it will always use one of the rates defined
-> > > in the table.
-> > > 
-> > > But what about initially?  Could the hardware start in a
-> > > state that is not defined by this code?  Do you *set* the
-> > > rate initially?  Should you (at least the first time the
-> > > clock is prepared/enabled)?
-> > 
-> > Thanks, I've also seen your later report. Here we may support
-> > clk_ops.init and reinitialize the PLL if it's not in a good state.
-> > 
-> > Could you please provide a possible reproducing scenario for me to test
-> > against the PLL problem?
-> 
-> What I can tell you is that I see the warning, perhaps when
-> I'm using the clock.  I'll try to narrow down a test case but
-> right now I don't have one.
-> 
-> [    0.145906] WARNING: CPU: 0 PID: 1 at drivers/clk/spacemit/ccu_pll.c:51
-> ccu_pll_recalc_rate+0x76/0x9a
-> 
-> I added code to report the swcr1 and swcr3 values but I don't
-> have those right now.
-
-I guess I've roughly located the cause, the warning is probably
-triggered by PLL3,
-
-- Comparing with vendor U-Boot, the driver is missing three or four
-  entries and one of them matches the SWCR1 value (0x0050cd61)
-- There's a typo when defining PLL3,
-
-+static CCU_PLL_DEFINE(pll3, pll3_rate_tbl,
-+                     APBS_PLL3_SWCR1, APBS_PLL2_SWCR3,
-+                     MPMU_POSR, POSR_PLL3_LOCK, CLK_SET_RATE_GATE);
-
-  here APBS_PLL2_SWCR3 should be APBS_PLL3_SWCR3. This explains the
-  value of SWCR3 (0x3fe00000) in your case, where it's actually read
-  from PLL2's register.
-
-I'll add the missing configuration entries and fix the typo in v6.
-
-> > 
-> > > > +	WARN_ON_ONCE(1);
-> > > 
-> > > Maybe WARN_ONCE(true, "msg");
-> > > 
-> > > > +
-> > > > +	return 0;
-> > > > +}
-> > > > +
-> > > > +static int ccu_pll_enable(struct clk_hw *hw)
-> > > > +{
-> > > > +	struct ccu_pll *p = hw_to_ccu_pll(hw);
-> > > > +	struct ccu_common *common = &p->common;
-> > > > +	unsigned int tmp;
-> > > > +	int ret;
-> > > > +
-> > > 
-> > > Get rid of ret (see below).
-> > > 
-> > > Will clk_ops->enable() ever be called when it's already
-> > > enabled?  (If it won't, this isn't needed.  If it will,
-> > > this checks the hardware, which is good.)
-> > 
-> > CCF holds a refcounter of clock consumers, so we could drop the check.
-
-I didn't expect calls to ccu_pll_enable() may happen when the
-previous stage bootloaders have already initialized the PLL. So the
-right anwswer is yes, clk_ops->enable() may be called when the
-underlying clock hardware has been enabled, but remove the check
-shouldn't hurt, either: it's okay to rewrite the register as long as
-we don't change rate-related settings if the PLL is enabled.
-
-> > > > +	if (ccu_pll_is_enabled(hw))
-> > > > +		return 0;
-> > > > +
-> > > > +	ccu_update(swcr3, common, PLL_SWCR3_EN, PLL_SWCR3_EN);
-> > > > +
-> > > > +	/* check lock status */
-> > > > +	ret = regmap_read_poll_timeout_atomic(common->lock_regmap,
-> > > > +					      p->pll.reg_lock,
-> > > > +					      tmp,
-> > > > +					      tmp & p->pll.lock_enable_bit,
-> > > > +					      5, PLL_DELAY_TIME);
-> > > 
-> > > Just:
-> > > 
-> > > 	return regmap_read_poll_timeout_atomic(...);
-> > > 
-> > > I note that you call this here, but you hide the call
-> > > to regmap_read_poll_timeout_atomic() behind the macro
-> > > ccu_poll().  And ccu_poll() (used for the FC bit) is
-> > > also only called once.
-> > > 
-> > > I suggest you get rid of regmap_poll() and just open-code
-> > > it.
-> > > 
-> > > (You use ccu_read() and ccu_update() numerous times, so
-> > > your "saving some characters" is justified.)
-> > 
-> > Makes sense to me, will take it.
-> > 
-> > > > +
-> > > > +	return ret;
-> > > > +}
-
-Thanks,
-Haylen Chu
