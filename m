@@ -1,238 +1,121 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D9824C082
-	for <spacemit@lists.linux.dev>; Mon,  7 Apr 2025 12:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678AC23A9B6;
+	Mon,  7 Apr 2025 13:18:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744029631; cv=none; b=bSs8u6u3UwE+2sFZNL4CRPGc+Q8RE2BzmCaONhwiNj33DvEVpsSr0frwiqe6yttlQTV0XkukB6i4474Z8laj9814c2eRKz1SlZLSSXZPa+wx8e4uG9tmnwe1zoveEFPwmCffEQ2xr/igz+Lshre2MMhkbYIDxz7jdtNDQGbPFRc=
+	t=1744031938; cv=none; b=g0AQU3VLcppxWHgSvwCbet3S8c/PfRvtT9bSi8peTizthccsPplwMgrMasgvxDKEDJRksDNKy56KFQEmBL4xqz4Ipl0PTXhyO+NALlcGu4dMcTQtumOYn1THTzeLfKf8RvQyT6SzaY5BLHdX//+N7sr7KjimJ6iSAVvsZy7Be38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744029631; c=relaxed/simple;
-	bh=9b/CmXLUb4oO7usHoGG4t62ZEhc9XM1xbRBgYVUAIi8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XkhnJv5+hnxYZrDye9e5NHgpdg4v8WDJSxRKOqnxQGr5EaMZN076tUl+CGK8VODNV9nC01ymMBK6cMTsj+miFcFGwV11jGyPxuPUH7BlRx86EnUQXK51jMsNRidymx2vYKA9Ph9E33AfmwH5CeX2YVvE7ahw0HYFDXDMnT0y8Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from [127.0.0.1] (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [27.18.106.237])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 10f021907;
-	Mon, 7 Apr 2025 20:40:19 +0800 (GMT+08:00)
-From: Ze Huang <huangze@whut.edu.cn>
-Date: Mon, 07 Apr 2025 20:38:52 +0800
-Subject: [PATCH 7/7] riscv: dts: spacemit: add usb3.0 support for K1
+	s=arc-20240116; t=1744031938; c=relaxed/simple;
+	bh=v1NRki44ZNsg11HwuI5lbdH0wmJphUEXdqHPrVHt4dw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=icxERXfm1CZawVPaI5Iozq/IHRAgG5zezKLB7cqy8ZA2xiPTlXdbaoU8vUCCGoTtmk/l4JUrrA/pZZkyKrRVrzUOcoby9YIhYds46E5mVyxqtHeTiuQ1dEhcD8VApk5L1ojaxpaTMEAFcFnVVzcYMgL/Ephwtr0ZPagLg70cfik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BzfSUKFV; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BzfSUKFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73452C4CEDD;
+	Mon,  7 Apr 2025 13:18:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744031937;
+	bh=v1NRki44ZNsg11HwuI5lbdH0wmJphUEXdqHPrVHt4dw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=BzfSUKFVEpf0b9QkyCwYgoqYngi01GfaCOmSO7DOi5Ik36vH6qRv7isKR9eWSdXb+
+	 cBo+ifa02XLZ4OjgqVo+GwClE3157DdGsWBq/QjH22e9seMOLo/xU3kNaj3h3rvXe0
+	 npHsD2YUE8VSizzc/Pu63CbZ6Vvl6VhhihD5JmVL+ULVqF1ZsIY0iTuvLH4GuRm0gY
+	 J18IchOfnFU1109RueLHMAb7SnVT8NwTsfbALQQRgHy6Ad0G2XehMnP4JyU5LnvBkT
+	 GHRHJFRVpUM49HIi16FO9YNq9sxWQQw1G5/GMw11NMbayBpgJndcsoJYynwNuVkrrP
+	 JEwGs1AEWZTbg==
+Message-ID: <02157e96-9524-4590-9ca6-e4390176d74e@kernel.org>
+Date: Mon, 7 Apr 2025 15:18:51 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250407-b4-k1-usb3-v3-2-v1-7-bf0bcc41c9ba@whut.edu.cn>
-References: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
-In-Reply-To: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Ze Huang <huangze@whut.edu.cn>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] dt-bindings: phy: spacemit: add K1 USB2 PHY
+To: Ze Huang <huangze@whut.edu.cn>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
  Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
  linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1744029565; l=4966;
- i=huangze@whut.edu.cn; s=20250325; h=from:subject:message-id;
- bh=9b/CmXLUb4oO7usHoGG4t62ZEhc9XM1xbRBgYVUAIi8=;
- b=3KOUzEqgq3ngS8e6srGkEQ9llihvefBkIa8EYXsF8TW74OrzSONs6LXCSRXUK8I5VWyz1+N0r
- I7ecfweIWlhCt+kdQHfdPCR10sWfIpcv4hO+OU7QGL2NcGBdLp1l/yG
-X-Developer-Key: i=huangze@whut.edu.cn; a=ed25519;
- pk=C3zfn/kH6oMJickaXBa8dxTZO68EBiD93F+tAenboRA=
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDQksaVh4dTRhKGBlKQxgYH1YeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJTFVKQ1VKS01VSUhMWVdZFhoPEhUdFFlBWU9LSFVKS0lPT09LVUpLS1VLWQ
-	Y+
-X-HM-Tid: 0a96104417d303a1kunm10f021907
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6KzI6Mww4DDIBH0wMKBcDGjMo
-	OCwaCkxVSlVKTE9PS0lCTUlMSkNKVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
-	TFVKQ1VKS01VSUhMWVdZCAFZQU1NS043Bg++
+References: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
+ <20250407-b4-k1-usb3-v3-2-v1-1-bf0bcc41c9ba@whut.edu.cn>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250407-b4-k1-usb3-v3-2-v1-1-bf0bcc41c9ba@whut.edu.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add USB 3.0 support for the SpacemiT K1 SoC, including the
-following components:
+On 07/04/2025 14:38, Ze Huang wrote:
+> +
+> +properties:
+> +  compatible:
+> +    const: spacemit,k1-usb2-phy
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+No supplies? No resets? Are you sure hardware does not use them?
 
-- USB 2.0 PHY node (usb_phy2)
-- USB 3.0 combo PHY node (usb_phy3)
-- USB 3.0 host controller (dwc3 glue + core)
-- USB 3.0 hub and vbus regulator (usb3_vhub, usb3_vbus)
-- DRAM interconnect node for USB DMA ("dma-mem")
-
-The `usb3_vbus` and `usb3_vhub` regulator node provides a fixed 5V
-supply to power the onboard USB 3.0 hub and usb vbus.
-
-On K1, some DMA transfers from devices to memory use separate buses with
-different DMA address translation rules from the parent node. We express
-this relationship through the interconnects node("dma-mem").
-
-Signed-off-by: Ze Huang <huangze@whut.edu.cn>
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 55 +++++++++++++++++++++++++
- arch/riscv/boot/dts/spacemit/k1.dtsi            | 52 +++++++++++++++++++++++
- 2 files changed, 107 insertions(+)
-
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 816ef1bc358ec490aff184d5915d680dbd9f00cb..9353432f171fc895fdd465654bc8166a1bc65e0b 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -28,6 +28,25 @@ led1 {
- 			default-state = "on";
- 		};
- 	};
-+
-+	usb3_vhub: regulator-vhub-5v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB30_VHUB";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
-+
-+	usb3_vbus: regulator-vbus-5v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB30_VBUS";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		regulator-always-on;
-+		gpio = <&gpio K1_GPIO(97) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
- };
- 
- &uart0 {
-@@ -35,3 +54,39 @@ &uart0 {
- 	pinctrl-0 = <&uart0_2_cfg>;
- 	status = "okay";
- };
-+
-+&usb3_phy0 {
-+	status = "okay";
-+};
-+
-+&usb3_phy1 {
-+	status = "okay";
-+};
-+
-+&usb3 {
-+	status = "okay";
-+	vbus-supply = <&usb3_vbus>;
-+
-+	usb@0 {
-+		dr_mode = "host";
-+		phy_type = "utmi";
-+		snps,hsphy_interface = "utmi";
-+		snps,dis_enblslpm_quirk;
-+		snps,dis-u1u2-quirk;
-+		snps,dis-u2-freeclk-exists-quirk;
-+		snps,dis-del-phy-power-chg-quirk;
-+		snps,dis_u2_susphy_quirk;
-+		snps,dis_u3_susphy_quirk;
-+		snps,dis_rxdet_inp3_quirk;
-+		snps,xhci-trb-ent-quirk;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		hub@1 {
-+			compatible = "usb2109,817";
-+			reg = <0x1>;
-+			vdd-supply = <&usb3_vhub>;
-+			reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+};
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index dc675f7e9b131256c50e2ca4ff347ae54e4b62ae..be3648cdcecd715e656fb8bde8a434ace752c012 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -4,6 +4,8 @@
-  */
- 
- #include <dt-bindings/clock/spacemit,k1-ccu.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/phy/phy.h>
- 
- /dts-v1/;
- / {
-@@ -350,6 +352,14 @@ soc {
- 		dma-noncoherent;
- 		ranges;
- 
-+		dram_range0: dram_range@0 {
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>;
-+			#interconnect-cells = <0>;
-+			status = "okay";
-+		};
-+
- 		syscon_rcpu: system-controller@c0880000 {
- 			compatible = "spacemit,k1-syscon-rcpu";
- 			reg = <0x0 0xc0880000 0x0 0x2048>;
-@@ -362,6 +372,48 @@ syscon_rcpu2: system-controller@c0888000 {
- 			#reset-cells = <1>;
- 		};
- 
-+		usb3: usb@c0a00000 {
-+			compatible = "spacemit,k1-dwc3";
-+			clocks = <&syscon_apmu CLK_USB30>;
-+			clock-names = "usbdrd30";
-+			interrupt-parent = <&plic>;
-+			interrupts = <149>;
-+			interconnects = <&dram_range0>;
-+			interconnect-names = "dma-mem";
-+			ranges = <0x0 0x0 0x0 0xc0a00000 0x0 0x10000>;
-+			resets = <&syscon_apmu RESET_USB3_0>;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			status = "disabled";
-+
-+			usb@0 {
-+				compatible = "snps,dwc3";
-+				reg = <0x0 0x0 0x0 0x10000>;
-+				interrupt-parent = <&plic>;
-+				interrupts = <125>;
-+				phys = <&usb3_phy0>, <&usb3_phy1 PHY_TYPE_USB3>;
-+				phy-names = "usb2-phy", "usb3-phy";
-+			};
-+		};
-+
-+		usb3_phy0: usb-phy@0xc0a30000 {
-+			compatible = "spacemit,k1-usb2-phy";
-+			reg = <0x0 0xc0a30000 0x0 0x200>;
-+			clocks = <&syscon_apmu CLK_USB30>;
-+			#phy-cells = <0>;
-+			status = "disabled";
-+		};
-+
-+		usb3_phy1: combphy@c0b10000 {
-+			compatible = "spacemit,k1-combphy";
-+			reg = <0x0 0xc0b10000 0x0 0x800>,
-+			      <0x0 0xd4282910 0x0 0x400>;
-+			reg-names = "phy_ctrl", "phy_sel";
-+			resets = <&syscon_apmu RESET_PCIE0>;
-+			#phy-cells = <1>;
-+			status = "disabled";
-+		};
-+
- 		syscon_apbc: system-control@d4015000 {
- 			compatible = "spacemit,k1-syscon-apbc";
- 			reg = <0x0 0xd4015000 0x0 0x1000>;
-
--- 
-2.49.0
-
+Best regards,
+Krzysztof
