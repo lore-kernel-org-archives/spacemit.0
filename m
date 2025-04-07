@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF8F253F21;
-	Mon,  7 Apr 2025 13:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FC82459CF;
+	Mon,  7 Apr 2025 13:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744032020; cv=none; b=hLoeeL+nwKQVTZQwNPyp58VbS+5DTUpIqdQxw1eSc9LlJISwvcNP/163NI2G+sJhELOVNpqywYKi5BhmsOM3y0BzCzF1oLZvbbAQ0ddrsD+LXrYsFikbq9aXvEhzyxzuBbrCOosFA+8KRRfOdFwHw5JaqwbJTsIyj7ghh4SiNF0=
+	t=1744032165; cv=none; b=Ew6Y2MzXw7PyJ5+KM7TRmVhVOic175bggdMpxcZ5dbpAGp0iCKm4Jwt/or2Ve2Iz4q3Qg8K09XmjDoBRQPkPC0uzMryQwGOH7z62zI/VmwSP0R4LeFIHisJOUosTYbxQ9c0iNts809GLAk6mcLmaHoRFFn+i8fBwe9nW66fXFN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744032020; c=relaxed/simple;
-	bh=filjrS06rqZ0ew/T3d0sXhHExTLXZr6chgbI6OChQmE=;
+	s=arc-20240116; t=1744032165; c=relaxed/simple;
+	bh=jQI55o6gDq6Ihy8UgZ0aKohlSxN7HHUG5gb5QI2QUiQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JKDGKNFMpXP4ncYVXavxyBXHsnMcZ5MfTjco9YSCuRw2fdYckqkh3nUDQUsLVrVcOWT16zjjm3y7VzLyR/f8dHR8vqYygqoDoPKGw3+ecJzX4/WDMMJFx62IyVgbfcpM2LsmEbTr0GYGTKKROpjzCq3j+kCTN6rCwYjmRPOyuA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a/yNomVj; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=JpxgV0jY9I8e6++hHMQrTVW5m8gq/ogbvzjW7sAoy1OHTAd2lhNOB3l/2Rjh4NhCOtfKcE5ZBD7NMcpv1B+3HfLBQ/lHOQhI+2mvjYW/CJivBI9ZWjmXZy3DJFSv2awiJ3t7eABP5MbBDqZ2MZgvbWCYUslz9AJLdX1t7xom8O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTl/s9Pn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a/yNomVj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A3DC4CEDD;
-	Mon,  7 Apr 2025 13:20:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTl/s9Pn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FCFC4CEDD;
+	Mon,  7 Apr 2025 13:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744032018;
-	bh=filjrS06rqZ0ew/T3d0sXhHExTLXZr6chgbI6OChQmE=;
+	s=k20201202; t=1744032164;
+	bh=jQI55o6gDq6Ihy8UgZ0aKohlSxN7HHUG5gb5QI2QUiQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=a/yNomVjn7s86TOYejdygiH1sC/wzPEjFMGUQTb/FZ1Kp1Zl0AskZHojDh37MF9rp
-	 bVsVNviFb0fNioBtNNKl5Qq8c/9wspSr2td0bwJyaguUsxdPW8ZTbkSYFWHsNnULib
-	 01PqflKsNQuGb9+g2G9hcOCuB0TGRF6VvkQUFTm/lIwh0C4bC7bHqAOJ3wGtx1wf7q
-	 rOYYVwDiq0EggDefaSeE+ksRKj8pXAEa7P/EpyGfDGwPHJ5wP2rh557lUjvSKWXXwr
-	 iGVB64MxsWkbcKf2kU90a2BQ/ypR1cygnM95c4lcfUjQr/mciUjN+twBapFbDRWUqA
-	 NuJP3LfCJg5Pg==
-Message-ID: <74bb9d27-fd6f-4332-9965-e967c3a31c63@kernel.org>
-Date: Mon, 7 Apr 2025 15:20:12 +0200
+	b=XTl/s9Pned0E+A720LhQLzbDpBCBrEN1RqNlogeq/jQRWknu1x7fdRRwpHHmG/yQs
+	 8QSml85zXlo1DNF2+uDZHI/I9GASi3+RkWFi30VmRi4GiI4Y4SGympAdXQJd+89188
+	 GR42DXT1JxbAsmEVWMq2IT7LZ+iOqIwVT7/RccS+E7k/nWX/9Vb2FSEotXnQI42uFj
+	 Rs+I5EBtYgQshajW/epixhGi/6UTK2aDZlvGml8W0KeLIiHS4+q9DqulHu1XeaHPkc
+	 lYuz95BqL0mIufgjmrtIU/euubFEZcoyKf6yWI4londUvWobksHoe0LnQ7Tq2tVZ3h
+	 jjRAGEADnivvg==
+Message-ID: <ac9fd6b3-2184-4d75-83e5-6caee4f3758d@kernel.org>
+Date: Mon, 7 Apr 2025 15:22:38 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -35,8 +35,7 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] dt-bindings: phy: spacemit: add K1 PCIe/USB3 combo
- PHY
+Subject: Re: [PATCH 3/7] dt-bindings: usb: add SpacemiT K1 DWC3 glue
 To: Ze Huang <huangze@whut.edu.cn>, Vinod Koul <vkoul@kernel.org>,
  Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -51,7 +50,7 @@ Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
  linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
  linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
 References: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
- <20250407-b4-k1-usb3-v3-2-v1-2-bf0bcc41c9ba@whut.edu.cn>
+ <20250407-b4-k1-usb3-v3-2-v1-3-bf0bcc41c9ba@whut.edu.cn>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -97,75 +96,111 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250407-b4-k1-usb3-v3-2-v1-2-bf0bcc41c9ba@whut.edu.cn>
+In-Reply-To: <20250407-b4-k1-usb3-v3-2-v1-3-bf0bcc41c9ba@whut.edu.cn>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 07/04/2025 14:38, Ze Huang wrote:
-> Introduce support for SpacemiT K1 PCIe/USB3 combo PHY controller.
-> 
-> PCIe portA and USB3 controller share this phy, only one of them can work
-> at any given application scenario.
+> Add support for SpacemiT DWC3 glue driver, which manages interrupt,
+> reset and clock resource.
 > 
 > Signed-off-by: Ze Huang <huangze@whut.edu.cn>
 > ---
->  .../bindings/phy/spacemit,k1-combphy.yaml          | 53 ++++++++++++++++++++++
->  1 file changed, 53 insertions(+)
+>  .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 78 ++++++++++++++++++++++
+>  1 file changed, 78 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-combphy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-combphy.yaml
+> diff --git a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+
+Combining 3 subsystems into one patchset is a poor idea.
+
 > new file mode 100644
-> index 0000000000000000000000000000000000000000..450157b65410b27129603ea1f3523776a1b0a75e
+> index 0000000000000000000000000000000000000000..40ce3fd1330d5f371ec69155c237e10a65a9d8f4
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/spacemit,k1-combphy.yaml
-> @@ -0,0 +1,53 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +++ b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> @@ -0,0 +1,78 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/phy/spacemit,k1-combphy.yaml#
+> +$id: http://devicetree.org/schemas/usb/spacemit,k1-dwc3.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Spacemit K1 PCIe/USB3 PHY
+> +title: SpacemiT K1 SuperSpeed DWC3 USB SoC Controller Glue
 > +
 > +maintainers:
 > +  - Ze Huang <huangze@whut.edu.cn>
 > +
-> +description:
-> +  Combo PHY on SpacemiT K1 SoC.PCIe port A and USB3 controller share this
-> +  phy, only one of PCIe port A and USB3 port can work at any given application
-> +  scenario.
-> +
 > +properties:
 > +  compatible:
-> +    const: spacemit,k1-combphy
+> +    const: spacemit,k1-dwc3
 > +
-> +  reg:
-> +    maxItems: 2
-
-List and describe the items instead
-
+> +  ranges:
+> +    maxItems: 1
 > +
-> +  reg-names:
-> +    items:
-> +      - const: phy_ctrl
-
-drop phy_
-
-> +      - const: phy_sel
-
-ditto
-
+> +  clocks:
+> +    maxItems: 1
 > +
 > +  resets:
 > +    maxItems: 1
 > +
-> +  "#phy-cells":
-> +    const: 1
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  interconnects:
 
-What is the cell argument?
+Missing maxItems
 
-Also no supplies?
+> +    description:
+> +      On SpacemiT K1, USB performs DMA through bus other than parent DT node.
+> +      The 'interconnects' property explicitly describes this path, ensuring
+> +      correct address translation.
+> +
+> +  interconnect-names:
+> +    const: dma-mem
+> +
+> +  # optional
 
-> 
+Drop, Don't repeat constraints in free form text.
+
+> +  vbus-supply:
+> +    description: A phandle to the regulator supplying the VBUS voltage.
+> +
+> +patternProperties:
+> +  '^usb@':
+> +    $ref: snps,dwc3.yaml#
+
+No, rather fold child into the parent.
+
+> +
+> +additionalProperties: false
+
+This goes after required:, always.
+
+> +
+> +required:
+> +  - compatible
+> +  - ranges
+> +  - clocks
+> +  - resets
+> +  - interrupts
+> +  - interconnects
+> +  - interconnect-names
+> +
+> +examples:
+> +  - |
+> +    usb@c0a00000 {
+> +        compatible = "spacemit,k1-dwc3";
+> +        clocks = <&syscon_apmu 16>;
+> +        interrupts = <149>;
+> +        interconnects = <&dram_range0>;
+> +        interconnect-names = "dma-mem";
+> +        ranges = <0x0 0xc0a00000 0x10000>;
+> +        resets = <&syscon_apmu 8>;
+> +        #address-cells = <1>;
+> +        #size-cells = <1>;
+> +        status = "disabled";
+
+Nope, drop.
+
 
 
 Best regards,
