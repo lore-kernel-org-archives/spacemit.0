@@ -1,107 +1,94 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36912641E9
-	for <spacemit@lists.linux.dev>; Tue,  8 Apr 2025 08:59:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D738B22332A
+	for <spacemit@lists.linux.dev>; Tue,  8 Apr 2025 09:04:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744102785; cv=none; b=kA6ZmQioxz0ZcRk6bUMe6oCfwppTlQOOatGYxeXVDHdgS4W0alpkg9FUn+9MVlYXaXp7MheFiik0Rl6vVk3fMHSbKu3WMgh1B4szln2IgZQZtuBI0Z8CoI4H9YyrFJ6i5ObzU5KMq2PQgqqfTayElUXANELdQmIqOaAemqZa8bc=
+	t=1744103054; cv=none; b=BtRwCXMxfGnHiAPWfgrXFUID6pHl3Cq3eXwqSgo68CW3BGPZhswy9DoS/aZoPMrUeZ5Ul9V9mOzSN2y/dA1l7PnJvFPnW0ofgTw0DnyTSWOvEcbvNsBe9R/tLuGsKq+RJP1tK9s02KJVh+cCypCEFJBJ7Un5wWOZZ3jhEe+VujE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744102785; c=relaxed/simple;
-	bh=lNiYZkdnErtTzxt0Uq6hCnSDgBoG7jrmCa6HXR2axIs=;
+	s=arc-20240116; t=1744103054; c=relaxed/simple;
+	bh=n3yPhKBmkrZrKNmGGkYKVNWI2VnNkodGMszFRz7nRK4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WOEqUJSFTVZI8JjYL/HRtSeoTrllMN/Wvv7LcKgeRT8YQ9PUomiIXdo56j16GsKlFOat/3RcmGJ4rwNa94vAkqThRuufFAkYH189d7kZUwYZdPA0xluK1VP8kaprq4VKlQc7ZPq7roSvR0Zrhi8J5407hwT7ColnDZ+rO1nQCzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=ocTMnoTq; arc=none smtp.client-ip=209.85.167.53
+	 To:Cc:Content-Type; b=ZtqN4DEZ6D8aBycOx3Mk2gNB6BS8k9mai6R9xNiTVSBUYCvgdGj9iJSXoHaTeXa6A+YGOQK3RKKn7go4OCsihjZw3OMkWAaZeDh6F04PXaCPSi9EcWKeI17ZhoJFWb51UhemIQsLOMrZRlL7jJsP8X8cAnLHkKePvhWcCaDbawU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=CR51dbM7; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="ocTMnoTq"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5499d2134e8so6520855e87.0
-        for <spacemit@lists.linux.dev>; Tue, 08 Apr 2025 01:59:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="CR51dbM7"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-549b116321aso6082652e87.3
+        for <spacemit@lists.linux.dev>; Tue, 08 Apr 2025 02:04:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1744102782; x=1744707582; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1744103051; x=1744707851; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=n1ti+glIs7kbdo7Cmb4p1nzhkGIqNEX/Na3aCrAR2g8=;
-        b=ocTMnoTq6hufdMXsfk/391MgCpauddy2kkYa+EvNiU4OuupVMDoTrxEFeC3o3oNXWl
-         OiDKoOwzq+QpaifvXZeL8qq4nrOgU2GEDY0ZXT/3g1VxgYNJbsWVmEP50uQNkMGYP9Iw
-         nMcGCyOvOMq9olU88uIljMBZvG3B19Hnx/bbIt2WCrnUXj9Sbz4hjxqHmrwu4M0MIoR/
-         k0auJrCHZ0TVsOsySCApF64nwFgPxvy/aI2Jx7bRn63C4lmusXwqeVOL2PrCqrxcYk2F
-         8I/DQk+p3Y4EbpFmxFF/5AT7IY99BM8kOOgkIirFqGnGZTX/Xszu6mx5FomObdQNNYQ5
-         axrQ==
+        bh=LtKT5PB+I8jgGburlz5n6UrHfPzs2dxAk/yRT6NP0dQ=;
+        b=CR51dbM7NaAQMLHqndpLP/argslx2u00nxe4AV5LGl4j9D8369UkrStrH+FoHEKXXV
+         CumWRZWxUK1xn1CNxF60AaCTTUnD0KWl6z5gSibWTHoiDiUuYRA8ZdpDPI5InZqWL8dT
+         2Ae82fY3VBi5KLtg9/O6XRLfK6sishwwepS594igdVghld8tu2axRMg5PDl1sFv//4Ie
+         6iznO1BYjkX58YcRbC9V/E9O1BgOVLvsX/VWDBBrUgThztSUuNET2x7W2+E0tryMqXjM
+         OmOU5Z1S7C0i2lnw+yk25yjkfkQ4jJvyLSfe5dakpGl3d+OQemtLEiXEhSTWyrXV0dpC
+         en+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744102782; x=1744707582;
+        d=1e100.net; s=20230601; t=1744103051; x=1744707851;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=n1ti+glIs7kbdo7Cmb4p1nzhkGIqNEX/Na3aCrAR2g8=;
-        b=plG/ICJxU9tL9gBvn1HIDr12ygXV7B5C/cCO0ee7KsJRyYVb0HLi+Aii/WztAI31IJ
-         mYfMtfYSuaEsf+Zbq8kpRA28lnfvusyGUGR34wIGiy0DdpeDlsjTveyxK3bJV3okrDnl
-         tPqr0DyEY3+01zFyjqaVQ2tWiUoRfY1qoQkvZeSXtr+rW8/OnhiL7tn6a8ng91vzWQR1
-         0U3eM/+LpHtdRBSLWa2pN6Mn/erEvlgc/sQgk5pEq6NOkj8lx3pRbF9sMpOaP53EZNnp
-         i9ibGD8aYovE5Yg0053hmLfKqAO3R5IqM9kYjtYFKnHpK4jd3ToPVwuuKOwo88Q+YzxS
-         0tEA==
-X-Forwarded-Encrypted: i=1; AJvYcCUxNYDQhAyQyJ2uTTtYVb1figTwl6xZgJdZ5GubT3XUyfLU0DqhM0sXakhTWszWPQOiECXsDPXmgA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxK8GJ0rXurp0ogGVDU21U8tNlLT9atbU8tuWECNPXKXvKey1kw
-	ApNtcjVGerFKqxBzwGEVfGKnInAoec1ZK40ASTW+5b6qbQAo4pK8wYTOilefqHKseEFGTfoxCsN
-	n3W4jw3Bi44a53C5FfTQqgH7xsw+EYbtPZLCNtg==
-X-Gm-Gg: ASbGncuJ2crfdJct8sWvH5cQ9V68eo3VZ1s1IOlVUW4MFwQ9TE9pdINq/1uJ6MJRVk+
-	hDWHjgcPEtPweBSVS9rshOaNZcWq3DB/E2I/kmsqhzN/nms7U3r0TfG3hk28TNtUZ9A0nJjUXE9
-	nO/E7zHBUA65htO/5pSHHOn3ezEmfAPzx6I4pnawMBgVkdpsInlpTGVBiNqg==
-X-Google-Smtp-Source: AGHT+IFhU+IhVBAJzBIMUxOBAo7QfFVW11UL24yOIyLgi1oINyxWjy4Dxkzmcdvr4r4k1H5XdlGKfbxf2ZKflqozVaw=
-X-Received: by 2002:a05:6512:1328:b0:545:2eca:863 with SMTP id
- 2adb3069b0e04-54c29836e84mr3493147e87.42.1744102781735; Tue, 08 Apr 2025
- 01:59:41 -0700 (PDT)
+        bh=LtKT5PB+I8jgGburlz5n6UrHfPzs2dxAk/yRT6NP0dQ=;
+        b=GnSED3o02MPMpijd0CtRxXJGfo4c5qtYPWlwsNn9EhKP7WYgKpJ9xZ4NhQRqU8GO6j
+         ZiXen70T94YohfAU1EGFxWmSeQcz+HAnAYMx4gh5f7NPbuY9yihkBKt1svMN5etwpVmm
+         vNW8jAZzbZmCYgsyk3yPoe67bpFbMJVomJ5JYnqlWgKMfSr3WiUuyXvMC1j89MtszKs6
+         d/E73MOxRdvjaSzylJ9r3YLfFY88JHC6TsLpRXf3uzcKBCYz07CoIIcpC7SUFvlkAZNb
+         A5XDTt5gfZdfpJhEKVDigrFSPBZ7UmeF4qJNnr+Nu/JTICdeqV1osBwhu/4hN2nR3NFX
+         /ewQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVAYKlMtZoHvaohe5S1XxlSW1rYFyVdKjTARJAV3Gyi4ZCgSF4PsE1fQcwrVeF53qbwUkMtWqL+5w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwjqF/0lTkpr0inE8zMiFEptOr+Tjp3Qqe73Aoe5eY0CVouO2BN
+	l4/woEnVw05xcTVNYJ6jKeQ4mXxRgM/LFBbZNw311+cZTLpFXy0MDHnWpxbABOssnYlbnuzzx4C
+	YxzgJc9FGg87PCK9f2VkKCFVxNhI/xXKj2rHevQ==
+X-Gm-Gg: ASbGncsnhvYT5i/f4fCKpucfQ4HH8FDDeWvuXT2GhDnQ0fdqKIld/tzZpPmo7CYMeGA
+	FA8+ZNLlxlhIV05ZVZliXeTL11eNf3uo/LKfM1nXywzrjLXP0EqIj4c3MiiMbBNtySwgngGaYPI
+	LrDqF6YS9hU9CbQaZ7JXZON3OlkmKY9Wwpf/Gt+dp8MZn34kUw/M9G85tiTg==
+X-Google-Smtp-Source: AGHT+IF2WUkxm68ddIms01ocssUC4e0WNcZHFUed8nlsJd3SMfdqBt0sV6DP/H5TRFqdUI/lrkaIskfxxDirqwxdZyw=
+X-Received: by 2002:a05:6512:3f16:b0:549:8c86:9bf6 with SMTP id
+ 2adb3069b0e04-54c227dc869mr4261598e87.39.1744103050753; Tue, 08 Apr 2025
+ 02:04:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250326-04-gpio-irq-threecell-v3-0-aab006ab0e00@gentoo.org>
- <20250326-04-gpio-irq-threecell-v3-2-aab006ab0e00@gentoo.org>
- <20250407103320-GYA13974@gentoo> <CAMRc=MeFK1gX69CWH2gkYUqkLU-KCOcwHcA+gjN1RXFA++B_eQ@mail.gmail.com>
- <87r023ujiv.ffs@tglx>
-In-Reply-To: <87r023ujiv.ffs@tglx>
+References: <20250326-04-gpio-irq-threecell-v3-0-aab006ab0e00@gentoo.org> <20250326-04-gpio-irq-threecell-v3-2-aab006ab0e00@gentoo.org>
+In-Reply-To: <20250326-04-gpio-irq-threecell-v3-2-aab006ab0e00@gentoo.org>
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 8 Apr 2025 10:59:30 +0200
-X-Gm-Features: ATxdqUFtpGaiXd9grNQP3Ib6EubxTwZJQ656Dn7NldoLYjiAufIbT8WtF0ED4JY
-Message-ID: <CAMRc=MdP09b-cm2uZeqbbCP20kNjQJ8CbXTXSTxQEihdoXjGJw@mail.gmail.com>
+Date: Tue, 8 Apr 2025 11:03:59 +0200
+X-Gm-Features: ATxdqUGccJrFjcEWKyhVa646awyIsRz2HGjGAguvah1n6zT984GzRInZSF_52-w
+Message-ID: <CAMRc=McnW0YRMmikwu6qWSdWD5Zu227dBRwd4VeWZcfcEFUMDg@mail.gmail.com>
 Subject: Re: [PATCH v3 2/2] gpiolib: support parsing gpio three-cell
  interrupts scheme
-To: Thomas Gleixner <tglx@linutronix.de>
-Cc: Yixun Lan <dlan@gentoo.org>, Linus Walleij <linus.walleij@linaro.org>, 
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, 
 	Alex Elder <elder@riscstar.com>, Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org, 
 	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org, 
 	spacemit@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 8, 2025 at 10:47=E2=80=AFAM Thomas Gleixner <tglx@linutronix.de=
-> wrote:
+On Tue, Mar 25, 2025 at 11:08=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
 >
-> On Mon, Apr 07 2025 at 13:26, Bartosz Golaszewski wrote:
-> > On Mon, Apr 7, 2025 at 12:33=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wro=
-te:
-> >> On 06:06 Wed 26 Mar     , Yixun Lan wrote:
-> >>   I'd assume this patch [2/2] will go via pinctrl's tree?
-> >> as patch [1/2] has been accepted by Thomas into tip tree [1]..
-> >>   Additonally need to pull that commit first? since it's a dependency
-> >>
-> >
-> > No, this should go through the GPIO tree but for that I'd need an
-> > immutable tag with patch 1/2.
+> gpio irq which using three-cell scheme should always call
+> instance_match() function to find the correct irqdomain.
 >
-> Here you go:
+> The select() function will be called with !DOMAIN_BUS_ANY,
+> so for specific gpio irq driver, it need to set bus token
+> explicitly, something like:
+>   irq_domain_update_bus_token(girq->domain, DOMAIN_BUS_WIRED);
 >
->    git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git irqdomain-04=
--08-25
->
-> Thanks,
->
->         tglx
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> ---
 
-Thanks, pulled.
+This doesn't apply on top of my gpio/for-next branch. Please rebase
+your patch and resend. Patch 1/2 is already on that branch.
 
 Bartosz
