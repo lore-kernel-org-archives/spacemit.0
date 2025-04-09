@@ -1,128 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sg-1-19.ptr.blmpb.com (sg-1-19.ptr.blmpb.com [118.26.132.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FF625D210;
-	Wed,  9 Apr 2025 10:10:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14852566CB
+	for <spacemit@lists.linux.dev>; Wed,  9 Apr 2025 11:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=118.26.132.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744193424; cv=none; b=GiYSy9dLfqMm5iGyla7LrPX6kqsrjz87dV/1HgS5OuFYgzlM+x+hxi7SDK3G6sJE7oIFzMBBBjqiPnS9faF1FqbTkFrbAn6QQOMMHZdjTTJEgJWeD3fI7rH3q1MD4C5UoZ2wmL3nkmcLjQq4SC1PhXRAY1xHZjU5pijeXFwj9nM=
+	t=1744198729; cv=none; b=rM7xe6Yj/C3lFsOO7NW9/npkq8w8RMD7+yDJ63kmiIUsi6De+ThV4znWjSO87VD1B378GLmRxBhxcOWZGYBxQd0LkENBEXaZFHYuQP2GZm1tagnzRY+cgybjAimAUVK0Glcznd2IRXJAJEM3XbFhZwWzAjovw4GARl5snSGGStc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744193424; c=relaxed/simple;
-	bh=4ztBQyoanieoKs9OTTceiNvpf/RWS8ZPBb//xn5jov8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Iw4npBHPaRDdd9tmVp8c31ubb0wkWZ9Cyz+z5QwtVDh6L5ZrMj43lL3PUQ+lypJEnTbtqtseHtTeNZKlmjtRxefKoctbGZVDkLtvzo3XS8aaLidHAp5wzuUY7CPcWCCgL0+eloi7UYeCkrOP071pxjJYXJAXqwSlsp2W6+AtG6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dFID15ZN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1744198729; c=relaxed/simple;
+	bh=Oe8aDUQAq4T02rUk+a7NU/+Tifl5LtSGzTZvSbTGRuU=;
+	h=To:References:Content-Type:Mime-Version:In-Reply-To:Date:
+	 Message-Id:Cc:Subject:From; b=EiNgaTsrWGxaLSm8KHI1Cfpq3nm6Bwb+xuiDiuxBrPYyD7nXwmEYK6SC1Bjjukl9TYALn/Yvx5mmF2zvSG9ttW1A3DWe5KZiHd54dSEqLWHgzc2oah8idEMe53aFZqWZVqd3NdlQyiu69tyIlWeiI95lWN0Dnuc+eC5LNVNdGM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=spacemit.com; spf=pass smtp.mailfrom=spacemit.com; dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b=rKkxpWV+; arc=none smtp.client-ip=118.26.132.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dFID15ZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DCAC4CEE3;
-	Wed,  9 Apr 2025 10:10:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744193423;
-	bh=4ztBQyoanieoKs9OTTceiNvpf/RWS8ZPBb//xn5jov8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dFID15ZNeiCoJdac35gYsEbpDFHxZtnxup0htMt2eLG0vVVoCHGx4dD6IFoAxiBeT
-	 WH1x43zrXfi6Cheassia6Yf+XpyC4rBnFn8uGIuvnCIAfRWHf9vXkaE0AI/wTfESn4
-	 sppKrvIvtK4+fheWn/u8h/4VFo+DAWIroO/N9ZdWbDcwIL5xcjDU1BC7Adoz8TJARK
-	 73xHEYSQ1gT3CitgU5oGMq18AAAbt8w8s9YLsWXOfV5qK4yAGSl1YXKHEojErm3JEi
-	 S+5xrp2yJXa+C0XGk9U4oocnF8Cwm7zcQLxkiQaS9VVM5YOu9ECWiELzPJXf/ysEFG
-	 +8Hn7ehGqv+vg==
-Message-ID: <21698603-2780-4f23-8a77-7be98fdd3ab3@kernel.org>
-Date: Wed, 9 Apr 2025 12:10:16 +0200
+	dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b="rKkxpWV+"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=feishu2303021642; d=spacemit.com; t=1744198718; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=Oe8aDUQAq4T02rUk+a7NU/+Tifl5LtSGzTZvSbTGRuU=;
+ b=rKkxpWV+4D0TrxLogpHta3M/JVPt7Cr7OYljS1tbl+Gz412K2g77vJZ2AhL3ZpYkWO1elf
+ o2NrMXe1gpv90LVcffYr+IUGyGYIsJmRpUZknrAuJpeUsz8kV6teegpnDh4ubLFHEi3Kdm
+ wcW7+X0nMxrkDzxgu+85UtbgIC1RiTTop2mLtsr9QeHdiRBfoymLuxoL0o8qI/ILkkWaGq
+ VgUpN4PmEmXoVNStq941sVBQ6VZMmXVclMVijMRqW9Zhy5BhrZhiWif8jKFU0Id3wS5tKK
+ Iq11FOZmcB1/yPkzRNzADNE0encJIQn7Kk/4AtRdpy/A+eaIeTNA+F6UdLyiAg==
+To: "Ze Huang" <huangze@whut.edu.cn>
+References: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
+	<20250407-b4-k1-usb3-v3-2-v1-5-bf0bcc41c9ba@whut.edu.cn>
+X-Lms-Return-Path: <lba+167f65c3c+5d49a2+lists.linux.dev+junzhong.pan@spacemit.com>
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] phy: spacemit: add USB3 support for K1 PCIe/USB3
- combo PHY
-To: Ze Huang <huangze@whut.edu.cn>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
- <20250407-b4-k1-usb3-v3-2-v1-5-bf0bcc41c9ba@whut.edu.cn>
- <74770bec-eeda-4823-b494-bea177fe26b0@kernel.org>
- <a71f45fc-d266-447d-8fb0-1ff0897f5bff@whut.edu.cn>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <a71f45fc-d266-447d-8fb0-1ff0897f5bff@whut.edu.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+In-Reply-To: <20250407-b4-k1-usb3-v3-2-v1-5-bf0bcc41c9ba@whut.edu.cn>
+Content-Transfer-Encoding: base64
+Date: Wed, 09 Apr 2025 19:38:35 +0800
+Message-Id: <e65434ad476fc113aa6f8acea48f4579bf5fa27a.b2769c19.b098.4e58.9cf1.1eb975cc2227@feishu.cn>
+Cc: "Vinod Koul" <vkoul@kernel.org>, 
+	"Kishon Vijay Abraham I" <kishon@kernel.org>, 
+	"Rob Herring" <robh@kernel.org>, 
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
+	"Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@gentoo.org>, 
+	"Ze Huang" <huangze@whut.edu.cn>, 
+	"Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, 
+	"Philipp Zabel" <p.zabel@pengutronix.de>, 
+	"Thinh Nguyen" <Thinh.Nguyen@synopsys.com>, 
+	"Paul Walmsley" <paul.walmsley@sifive.com>, 
+	"Palmer Dabbelt" <palmer@dabbelt.com>, 
+	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, 
+	<linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>, 
+	<linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, 
+	<linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>
+Subject: Re: [PATCH 5/7] phy: spacemit: add USB3 support for K1 PCIe/USB3 combo PHY
+From: "Pan Junzhong" <junzhong.pan@spacemit.com>
 
-On 09/04/2025 11:43, Ze Huang wrote:
->>> +	priv->phy = devm_phy_create(dev, NULL, &spacemit_combphy_ops);
->>> +	if (IS_ERR(priv->phy))
->>> +		return dev_err_probe(dev, PTR_ERR(priv->phy),
->>> +				     "failed to create combphy\n");
->>> +
->>> +	dev_set_drvdata(dev, priv);
->>> +	phy_set_drvdata(priv->phy, priv);
->> Both make no sense. Look what this function does.
-> 
-> It does seem redundant at first glance, but pdev->dev is the parent of 
-> phy->dev.
-> pdev->dev->driver_data will be used in spacemit_combphy_xlate()
-> phy->dev->driver_data  will be used in phy_ops functions
-> 
-> I've checked some other drivers that did the same:
->      - phy-zynqmp.c at lines 990 and 1026
->      - phy-rockchip-samsung-hdptx.c at lines 1989 and 2000
-
-Indeed, right. It's fine.
-
-Best regards,
-Krzysztof
+SGkgWmUsCgo+ICtzdGF0aWMgaW50IHNwYWNlbWl0X2NvbWJwaHlfaW5pdF91c2Ioc3RydWN0IHNw
+YWNlbWl0X2NvbWJwaHlfcHJpdiAqcHJpdikKClRoZSBVU0IzIHBoeSBkcml2ZXIgaXMgdXBkYXRl
+ZCBpbiB0aGUgdmVuZG9yJ3MgdHJlZS7CoApodHRwczovL2dpdGVlLmNvbS9iaWFuYnUtbGludXgv
+bGludXgtNi42L2NvbW1pdC8xYzBiM2I0YjljNzdkMjJjYTg4NmM4YTRjNDRlNjJiNTg5MWY4YWJj
+CgpZb3UgY2FuIHN1Ym1pdCB2MiB0b2dldGhlciB3aXRoIHRoZSBjaGFuZ2Ugb2YgbGZwc190aHJl
+cyAod3JpdGVzIDB4NTggcmVnaXN0ZXIpCndpdGhvdXQgYWRkaW5nIG5ldyBwcm9wZXJ0aWVzIGZv
+ciBkdCBub2RlLgoKQi5SLgoNCgpUaGlzIG1lc3NhZ2UgYW5kIGFueSBhdHRhY2htZW50IGFyZSBj
+b25maWRlbnRpYWwgYW5kIG1heSBiZSBwcml2aWxlZ2VkIG9yIG90aGVyd2lzZSBwcm90ZWN0ZWQg
+ZnJvbSBkaXNjbG9zdXJlLiBJZiB5b3UgYXJlIG5vdCBhbiBpbnRlbmRlZCByZWNpcGllbnQgb2Yg
+dGhpcyBtZXNzYWdlLCBwbGVhc2UgZGVsZXRlIGl0IGFuZCBhbnkgYXR0YWNobWVudCBmcm9tIHlv
+dXIgc3lzdGVtIGFuZCBub3RpZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseSBieSByZXBseSBlLW1h
+aWwuIFVuaW50ZW5kZWQgcmVjaXBpZW50cyBzaG91bGQgbm90IHVzZSwgY29weSwgZGlzY2xvc2Ug
+b3IgdGFrZSBhbnkgYWN0aW9uIGJhc2VkIG9uIHRoaXMgbWVzc2FnZSBvciBhbnkgaW5mb3JtYXRp
+b24gY29udGFpbmVkIGluIHRoaXMgbWVzc2FnZS4gRW1haWxzIGNhbm5vdCBiZSBndWFyYW50ZWVk
+IHRvIGJlIHNlY3VyZSBvciBlcnJvciBmcmVlIGFzIHRoZXkgY2FuIGJlIGludGVyY2VwdGVkLCBh
+bWVuZGVkLCBsb3N0IG9yIGRlc3Ryb3llZCwgYW5kIHlvdSBzaG91bGQgdGFrZSBmdWxsIHJlc3Bv
+bnNpYmlsaXR5IGZvciBzZWN1cml0eSBjaGVja2luZy4gCiAK5pys6YKu5Lu25Y+K5YW25Lu75L2V
+6ZmE5Lu25YW35pyJ5L+d5a+G5oCn6LSo77yM5bm25Y+v6IO95Y+X5YW25LuW5L+d5oqk5oiW5LiN
+5YWB6K646KKr5oqr6Zyy57uZ56ys5LiJ5pa544CC5aaC6ZiB5LiL6K+v5pS25Yiw5pys6YKu5Lu2
+77yM5pWs6K+356uL5Y2z5Lul5Zue5aSN55S15a2Q6YKu5Lu255qE5pa55byP6YCa55+l5Y+R5Lu2
+5Lq677yM5bm25bCG5pys6YKu5Lu25Y+K5YW25Lu75L2V6ZmE5Lu25LuO6ZiB5LiL57O757uf5Lit
+5LqI5Lul5Yig6Zmk44CC5aaC6ZiB5LiL5bm26Z2e5pys6YKu5Lu25YaZ5piO5LmL5pS25Lu25Lq6
+77yM5pWs6K+35YiH5Yu/5L2/55So44CB5aSN5Yi244CB5oqr6Zyy5pys6YKu5Lu25oiW5YW25Lu7
+5L2V5YaF5a6577yM5Lqm6K+35YiH5Yu/5L6d5pys6YKu5Lu25oiW5YW25Lu75L2V5YaF5a656ICM
+6YeH5Y+W5Lu75L2V6KGM5Yqo44CC55S15a2Q6YKu5Lu25peg5rOV5L+d6K+B5piv5LiA56eN5a6J
+5YWo5ZKM5LiN5Lya5Ye6546w5Lu75L2V5beu6ZSZ55qE6YCa5L+h5pa55byP77yM5Y+v6IO95Lya
+6KKr5oum5oiq44CB5L+u5pS544CB5Lii5aSx5oiW5o2f5Z2P77yM5pS25Lu25Lq66ZyA6Ieq6KGM
+6LSf6LSj5YGa5aW95a6J5YWo5qOA5p+l44CC
