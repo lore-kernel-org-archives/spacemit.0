@@ -1,24 +1,24 @@
 Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6E418FC75
-	for <spacemit@lists.linux.dev>; Wed,  9 Apr 2025 08:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C07125D531
+	for <spacemit@lists.linux.dev>; Wed,  9 Apr 2025 08:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744186714; cv=none; b=oo4nDzq3YRUZ6rdSQ07h11gKmDzTsD8ovPIYb/5qEytFY84Fj3Z/VRORJDP8+goVbyRQefn+XglD72ylEmXzWKMGQ/XFXTrJEa7u/anWGDFKWYoN2bmXEN1RQITq3SLp8uN7Oya2sRCAM0gbSDOy1Q1NzYMn4gDM6eO/xRf+SqQ=
+	t=1744187442; cv=none; b=fSB7vsq8EqdsMcZOd+HIr25M1kbu5TWhYnJQ3JLuZcb6mbUeH82bnSQRylvyxXNpqtFGK8RNXdAGlMZdg0V0fpgCbLE/ksfFN91V2dwz5ODHu/aXGQZJVi5zJKnGB5b8I4Sf5YqHLZbWcwxowux7JfC32Lrmctf//YKoTmbigwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744186714; c=relaxed/simple;
-	bh=bDLklmSuD1z4loHKQkbi7DxMd1QQgqBE6trMGJKNdyk=;
+	s=arc-20240116; t=1744187442; c=relaxed/simple;
+	bh=7RJbB0wwplKFvV8WjY6nmxdD97+VB6jb4eBmvgMPSLw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lAB8niHPe5LcxGSRCVMoN3EvVTNNMGSt9CbCr+Lce2VHfArdXYsLaFJcEoaGJKpgIgtf516X3EPRccUsjgLN+sBl79LK1aOBCq8x6tf/5H2Ns2vCLKG+zw9G8xLerYYubefkQ7B2qWJkCO6jF+yND+JXoZJakEl9QVBHB+nGZIc=
+	 In-Reply-To:Content-Type; b=upJeanmo8D5s9Pb/7OXkkN3b2hkoP8aJYvKeH/qZIUhSeBl4MY38S1yICltCKrDOXiwVeQ2KerkxQ2BbZI4EKr56ZkQagUyod9csZE4j9Wd2MHsUHwb+8xNqJQ8F9UHOdGFQ8YAl7xNuecXfJtMkP/4ISGRbbY20l6MsAU1ZFLM=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from [198.18.0.1] (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [27.18.106.237])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 1135140cf;
-	Wed, 9 Apr 2025 16:18:22 +0800 (GMT+08:00)
-Message-ID: <2986e9bd-0e01-4361-86ed-e4d92406c911@whut.edu.cn>
-Date: Wed, 9 Apr 2025 16:18:22 +0800
+Received: from [198.18.0.1] (gy-adaptive-ssl-proxy-4-entmail-virt151.gy.ntes [27.18.106.237])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 113514274;
+	Wed, 9 Apr 2025 16:30:29 +0800 (GMT+08:00)
+Message-ID: <756177ef-f2a7-4a8a-afa4-a68d68e5c733@whut.edu.cn>
+Date: Wed, 9 Apr 2025 16:30:29 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -26,61 +26,85 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] phy: spacemit: support K1 USB2.0 PHY controller
-To: Krzysztof Kozlowski <krzk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+Subject: Re: [PATCH 3/7] dt-bindings: usb: add SpacemiT K1 DWC3 glue
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Conor Dooley <conor+dt@kernel.org>,
+ Thinh Nguyen <Thinh.Nguyen@synopsys.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+ Yixun Lan <dlan@gentoo.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Alexandre Ghiti <alex@ghiti.fr>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Albert Ou <aou@eecs.berkeley.edu>, Philipp Zabel <p.zabel@pengutronix.de>,
+ linux-phy@lists.infradead.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
 References: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
- <20250407-b4-k1-usb3-v3-2-v1-4-bf0bcc41c9ba@whut.edu.cn>
- <abac53a6-cba7-4962-9f34-ab2eac9e6e3d@kernel.org>
+ <20250407-b4-k1-usb3-v3-2-v1-3-bf0bcc41c9ba@whut.edu.cn>
+ <174403387085.2155711.16403180293126338183.robh@kernel.org>
 Content-Language: en-US
 From: Ze Huang <huangze@whut.edu.cn>
-In-Reply-To: <abac53a6-cba7-4962-9f34-ab2eac9e6e3d@kernel.org>
+In-Reply-To: <174403387085.2155711.16403180293126338183.robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZH05CVkMfH0tOGB5IGUIeSlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJTFVKQ1VKS01VSUhMWVdZFhoPEhUdFFlBWU9LSFVKS0hKTkxPVUpLS1VKQk
-	tLWQY+
-X-HM-Tid: 0a9619a0fb7503a1kunm1135140cf
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCHh1OVk9MHksZTUlPGUIYSVYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlJTFVKQ1VKS01VSUhMWVdZFhoPEhUdFFlBWU9LSFVKS0lCTUpKVUpLS1VLWQ
+	Y+
+X-HM-Tid: 0a9619ac159503a1kunm113514274
 X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6NlE6GQw6ITIBPD1JGVYxAS09
-	DCgKFD5VSlVKTE9PSkNNTEtCTklPVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
-	TFVKQ1VKS01VSUhMWVdZCAFZQUlLTkI3Bg++
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6PDo6CSo*CjJOQz1NN1FJAUkf
+	ExgwCklVSlVKTE9PSkNMT0hMSUlJVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
+	TFVKQ1VKS01VSUhMWVdZCAFZQUhMSE83Bg++
 
-On 4/7/25 9:25 PM, Krzysztof Kozlowski wrote:
-> On 07/04/2025 14:38, Ze Huang wrote:
->> +static const struct of_device_id spacemit_usb2phy_dt_match[] = {
->> +	{ .compatible = "spacemit,k1-usb2-phy", },
->> +	{ /* sentinal */ }
->> +};
->> +MODULE_DEVICE_TABLE(of, spacemit_usb2phy_dt_match);
->> +
->> +static struct platform_driver spacemit_usb2_phy_driver = {
->> +	.probe	= spacemit_usb2phy_probe,
->> +	.driver = {
->> +		.name   = "spacemit-usb2-phy",
->> +		.owner  = THIS_MODULE,
+On 4/7/25 9:51 PM, Rob Herring (Arm) wrote:
+> On Mon, 07 Apr 2025 20:38:48 +0800, Ze Huang wrote:
+>> Add support for SpacemiT DWC3 glue driver, which manages interrupt,
+>> reset and clock resource.
+>>
+>> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+>> ---
+>>   .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 78 ++++++++++++++++++++++
+>>   1 file changed, 78 insertions(+)
+>>
+> My bot found errors running 'make dt_binding_check' on your patch:
 >
-> Take recent drivers and use them as base. There is no such 'owner' since
-> 10 years.
+> yamllint warnings/errors:
+>
+> dtschema/dtc warnings/errors:
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.example.dtb: usb@c0a00000 (spacemit,k1-dwc3): '#address-cells', '#size-cells' do not match any of the regexes: '^usb@', 'pinctrl-[0-9]+'
+> 	from schema $id: http://devicetree.org/schemas/usb/spacemit,k1-dwc3.yaml#
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.example.dtb: usb@c0a00000 (spacemit,k1-dwc3): usb@0:reg: [[0, 0], [0, 65536]] is too long
+> 	from schema $id: http://devicetree.org/schemas/usb/spacemit,k1-dwc3.yaml#
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.example.dtb: usb@0 (snps,dwc3): reg: [[0, 0], [0, 65536]] is too long
+> 	from schema $id: http://devicetree.org/schemas/usb/snps,dwc3.yaml#
 
-Will follow. Thank you for pointing that out.
+Thanks for the report!
+I’ll add '#address-cells' and '#size-cells' under properties to resolve 
+the error.
+because if I drop them from the example, I get warnings like:
+
+Warning (avoid_default_addr_size): /example-0/usb@c0a00000/usb@0: 
+Relying on default #address-cells value
 
 >
+> doc reference errors (make refcheckdocs):
 >
-> Best regards,
-> Krzysztof
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250407-b4-k1-usb3-v3-2-v1-3-bf0bcc41c9ba@whut.edu.cn
+>
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+>
+> pip3 install dtschema --upgrade
+>
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+>
 >
 >
 
