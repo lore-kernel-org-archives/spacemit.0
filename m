@@ -1,89 +1,81 @@
-Received: from sg-1-19.ptr.blmpb.com (sg-1-19.ptr.blmpb.com [118.26.132.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14852566CB
-	for <spacemit@lists.linux.dev>; Wed,  9 Apr 2025 11:38:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=118.26.132.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315572222D4
+	for <spacemit@lists.linux.dev>; Wed,  9 Apr 2025 11:42:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744198729; cv=none; b=rM7xe6Yj/C3lFsOO7NW9/npkq8w8RMD7+yDJ63kmiIUsi6De+ThV4znWjSO87VD1B378GLmRxBhxcOWZGYBxQd0LkENBEXaZFHYuQP2GZm1tagnzRY+cgybjAimAUVK0Glcznd2IRXJAJEM3XbFhZwWzAjovw4GARl5snSGGStc=
+	t=1744198945; cv=none; b=Yn0PdN531WJrsKYSpSJfKULxRZOy4GJjT0xVR+pZyZ2S2VxCzEVjZ6BG92JljwuzDxLQ9W8ybgl0CJI9Ekcd9YEbtW+MJNHBnz/U+mxa0E+02aLm+VnWZhPLdMB+RU3vE+2EKXRoZG0K2DijH9CKAnSqwstLf9dFw674e18Igeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744198729; c=relaxed/simple;
-	bh=Oe8aDUQAq4T02rUk+a7NU/+Tifl5LtSGzTZvSbTGRuU=;
-	h=To:References:Content-Type:Mime-Version:In-Reply-To:Date:
-	 Message-Id:Cc:Subject:From; b=EiNgaTsrWGxaLSm8KHI1Cfpq3nm6Bwb+xuiDiuxBrPYyD7nXwmEYK6SC1Bjjukl9TYALn/Yvx5mmF2zvSG9ttW1A3DWe5KZiHd54dSEqLWHgzc2oah8idEMe53aFZqWZVqd3NdlQyiu69tyIlWeiI95lWN0Dnuc+eC5LNVNdGM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=spacemit.com; spf=pass smtp.mailfrom=spacemit.com; dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b=rKkxpWV+; arc=none smtp.client-ip=118.26.132.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b="rKkxpWV+"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=feishu2303021642; d=spacemit.com; t=1744198718; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=Oe8aDUQAq4T02rUk+a7NU/+Tifl5LtSGzTZvSbTGRuU=;
- b=rKkxpWV+4D0TrxLogpHta3M/JVPt7Cr7OYljS1tbl+Gz412K2g77vJZ2AhL3ZpYkWO1elf
- o2NrMXe1gpv90LVcffYr+IUGyGYIsJmRpUZknrAuJpeUsz8kV6teegpnDh4ubLFHEi3Kdm
- wcW7+X0nMxrkDzxgu+85UtbgIC1RiTTop2mLtsr9QeHdiRBfoymLuxoL0o8qI/ILkkWaGq
- VgUpN4PmEmXoVNStq941sVBQ6VZMmXVclMVijMRqW9Zhy5BhrZhiWif8jKFU0Id3wS5tKK
- Iq11FOZmcB1/yPkzRNzADNE0encJIQn7Kk/4AtRdpy/A+eaIeTNA+F6UdLyiAg==
-To: "Ze Huang" <huangze@whut.edu.cn>
-References: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
-	<20250407-b4-k1-usb3-v3-2-v1-5-bf0bcc41c9ba@whut.edu.cn>
-X-Lms-Return-Path: <lba+167f65c3c+5d49a2+lists.linux.dev+junzhong.pan@spacemit.com>
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1744198945; c=relaxed/simple;
+	bh=9zaPk/m310/l4Dbzp80UZSQ/cTGM3yR4rain7uqIOb4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lhWPaIH2pUjACF1AOhMvlzbNZGZYi2qGBJZO3Et2BhmhR/FYo/4kSnU4E/UHgxlDbjBClfah6thttCUsGlsP3/Yas88PZqKykirCVeS7K+oS1S+PWpasHwFvYwuqaI/YQBRY3q0isz7IrkiuUa3eH+bRDu0LqrHiDa5fVvIyjuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
+Received: from [198.18.0.1] (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [27.18.106.237])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 113bd567b;
+	Wed, 9 Apr 2025 19:42:11 +0800 (GMT+08:00)
+Message-ID: <28abc527-5e73-418f-a242-e4a2ebf0d94a@whut.edu.cn>
+Date: Wed, 9 Apr 2025 19:42:10 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-In-Reply-To: <20250407-b4-k1-usb3-v3-2-v1-5-bf0bcc41c9ba@whut.edu.cn>
-Content-Transfer-Encoding: base64
-Date: Wed, 09 Apr 2025 19:38:35 +0800
-Message-Id: <e65434ad476fc113aa6f8acea48f4579bf5fa27a.b2769c19.b098.4e58.9cf1.1eb975cc2227@feishu.cn>
-Cc: "Vinod Koul" <vkoul@kernel.org>, 
-	"Kishon Vijay Abraham I" <kishon@kernel.org>, 
-	"Rob Herring" <robh@kernel.org>, 
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
-	"Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@gentoo.org>, 
-	"Ze Huang" <huangze@whut.edu.cn>, 
-	"Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, 
-	"Philipp Zabel" <p.zabel@pengutronix.de>, 
-	"Thinh Nguyen" <Thinh.Nguyen@synopsys.com>, 
-	"Paul Walmsley" <paul.walmsley@sifive.com>, 
-	"Palmer Dabbelt" <palmer@dabbelt.com>, 
-	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, 
-	<linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>, 
-	<linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, 
-	<linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>
-Subject: Re: [PATCH 5/7] phy: spacemit: add USB3 support for K1 PCIe/USB3 combo PHY
-From: "Pan Junzhong" <junzhong.pan@spacemit.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] phy: spacemit: add USB3 support for K1 PCIe/USB3
+ combo PHY
+To: Pan Junzhong <junzhong.pan@spacemit.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-usb@vger.kernel.org
+References: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
+ <20250407-b4-k1-usb3-v3-2-v1-5-bf0bcc41c9ba@whut.edu.cn>
+ <e65434ad476fc113aa6f8acea48f4579bf5fa27a.b2769c19.b098.4e58.9cf1.1eb975cc2227@feishu.cn>
+Content-Language: en-US
+From: Ze Huang <huangze@whut.edu.cn>
+In-Reply-To: <e65434ad476fc113aa6f8acea48f4579bf5fa27a.b2769c19.b098.4e58.9cf1.1eb975cc2227@feishu.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZHUwdVkwfShhJSR8fSRhIH1YeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlJTFVKQ1VKS01VSUhMWVdZFhoPEhUdFFlBWU9LSFVKS0hJTEJLVUpLS1VKQk
+	tLWQY+
+X-HM-Tid: 0a961a5b942c03a1kunm113bd567b
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6MRg6KDo4LzJMHjwOMB1MTh46
+	KgIKCj9VSlVKTE9PSkJDQkhDT09NVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
+	TFVKQ1VKS01VSUhMWVdZCAFZQUhKSEw3Bg++
 
-SGkgWmUsCgo+ICtzdGF0aWMgaW50IHNwYWNlbWl0X2NvbWJwaHlfaW5pdF91c2Ioc3RydWN0IHNw
-YWNlbWl0X2NvbWJwaHlfcHJpdiAqcHJpdikKClRoZSBVU0IzIHBoeSBkcml2ZXIgaXMgdXBkYXRl
-ZCBpbiB0aGUgdmVuZG9yJ3MgdHJlZS7CoApodHRwczovL2dpdGVlLmNvbS9iaWFuYnUtbGludXgv
-bGludXgtNi42L2NvbW1pdC8xYzBiM2I0YjljNzdkMjJjYTg4NmM4YTRjNDRlNjJiNTg5MWY4YWJj
-CgpZb3UgY2FuIHN1Ym1pdCB2MiB0b2dldGhlciB3aXRoIHRoZSBjaGFuZ2Ugb2YgbGZwc190aHJl
-cyAod3JpdGVzIDB4NTggcmVnaXN0ZXIpCndpdGhvdXQgYWRkaW5nIG5ldyBwcm9wZXJ0aWVzIGZv
-ciBkdCBub2RlLgoKQi5SLgoNCgpUaGlzIG1lc3NhZ2UgYW5kIGFueSBhdHRhY2htZW50IGFyZSBj
-b25maWRlbnRpYWwgYW5kIG1heSBiZSBwcml2aWxlZ2VkIG9yIG90aGVyd2lzZSBwcm90ZWN0ZWQg
-ZnJvbSBkaXNjbG9zdXJlLiBJZiB5b3UgYXJlIG5vdCBhbiBpbnRlbmRlZCByZWNpcGllbnQgb2Yg
-dGhpcyBtZXNzYWdlLCBwbGVhc2UgZGVsZXRlIGl0IGFuZCBhbnkgYXR0YWNobWVudCBmcm9tIHlv
-dXIgc3lzdGVtIGFuZCBub3RpZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseSBieSByZXBseSBlLW1h
-aWwuIFVuaW50ZW5kZWQgcmVjaXBpZW50cyBzaG91bGQgbm90IHVzZSwgY29weSwgZGlzY2xvc2Ug
-b3IgdGFrZSBhbnkgYWN0aW9uIGJhc2VkIG9uIHRoaXMgbWVzc2FnZSBvciBhbnkgaW5mb3JtYXRp
-b24gY29udGFpbmVkIGluIHRoaXMgbWVzc2FnZS4gRW1haWxzIGNhbm5vdCBiZSBndWFyYW50ZWVk
-IHRvIGJlIHNlY3VyZSBvciBlcnJvciBmcmVlIGFzIHRoZXkgY2FuIGJlIGludGVyY2VwdGVkLCBh
-bWVuZGVkLCBsb3N0IG9yIGRlc3Ryb3llZCwgYW5kIHlvdSBzaG91bGQgdGFrZSBmdWxsIHJlc3Bv
-bnNpYmlsaXR5IGZvciBzZWN1cml0eSBjaGVja2luZy4gCiAK5pys6YKu5Lu25Y+K5YW25Lu75L2V
-6ZmE5Lu25YW35pyJ5L+d5a+G5oCn6LSo77yM5bm25Y+v6IO95Y+X5YW25LuW5L+d5oqk5oiW5LiN
-5YWB6K646KKr5oqr6Zyy57uZ56ys5LiJ5pa544CC5aaC6ZiB5LiL6K+v5pS25Yiw5pys6YKu5Lu2
-77yM5pWs6K+356uL5Y2z5Lul5Zue5aSN55S15a2Q6YKu5Lu255qE5pa55byP6YCa55+l5Y+R5Lu2
-5Lq677yM5bm25bCG5pys6YKu5Lu25Y+K5YW25Lu75L2V6ZmE5Lu25LuO6ZiB5LiL57O757uf5Lit
-5LqI5Lul5Yig6Zmk44CC5aaC6ZiB5LiL5bm26Z2e5pys6YKu5Lu25YaZ5piO5LmL5pS25Lu25Lq6
-77yM5pWs6K+35YiH5Yu/5L2/55So44CB5aSN5Yi244CB5oqr6Zyy5pys6YKu5Lu25oiW5YW25Lu7
-5L2V5YaF5a6577yM5Lqm6K+35YiH5Yu/5L6d5pys6YKu5Lu25oiW5YW25Lu75L2V5YaF5a656ICM
-6YeH5Y+W5Lu75L2V6KGM5Yqo44CC55S15a2Q6YKu5Lu25peg5rOV5L+d6K+B5piv5LiA56eN5a6J
-5YWo5ZKM5LiN5Lya5Ye6546w5Lu75L2V5beu6ZSZ55qE6YCa5L+h5pa55byP77yM5Y+v6IO95Lya
-6KKr5oum5oiq44CB5L+u5pS544CB5Lii5aSx5oiW5o2f5Z2P77yM5pS25Lu25Lq66ZyA6Ieq6KGM
-6LSf6LSj5YGa5aW95a6J5YWo5qOA5p+l44CC
+On 4/9/25 7:38 PM, Pan Junzhong wrote:
+> Hi Ze,
+>
+>> +static int spacemit_combphy_init_usb(struct spacemit_combphy_priv *priv)
+> The USB3 phy driver is updated in the vendor's tree.
+> https://gitee.com/bianbu-linux/linux-6.6/commit/1c0b3b4b9c77d22ca886c8a4c44e62b5891f8abc
+>
+> You can submit v2 together with the change of lfps_thres (writes 0x58 register)
+> without adding new properties for dt node.
+
+OK, thanks!
+
+> B.R.
+>
+>
+> This message and any attachment are confidential and may be privileged or otherwise protected from disclosure. If you are not an intended recipient of this message, please delete it and any attachment from your system and notify the sender immediately by reply e-mail. Unintended recipients should not use, copy, disclose or take any action based on this message or any information contained in this message. Emails cannot be guaranteed to be secure or error free as they can be intercepted, amended, lost or destroyed, and you should take full responsibility for security checking.
+>   
+> 本邮件及其任何附件具有保密性质，并可能受其他保护或不允许被披露给第三方。如阁下误收到本邮件，敬请立即以回复电子邮件的方式通知发件人，并将本邮件及其任何附件从阁下系统中予以删除。如阁下并非本邮件写明之收件人，敬请切勿使用、复制、披露本邮件或其任何内容，亦请切勿依本邮件或其任何内容而采取任何行动。电子邮件无法保证是一种安全和不会出现任何差错的通信方式，可能会被拦截、修改、丢失或损坏，收件人需自行负责做好安全检查。
+
