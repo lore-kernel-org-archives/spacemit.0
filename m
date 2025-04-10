@@ -1,129 +1,177 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B0C6F099
-	for <spacemit@lists.linux.dev>; Thu, 10 Apr 2025 01:55:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2771E17588
+	for <spacemit@lists.linux.dev>; Thu, 10 Apr 2025 02:10:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744250156; cv=none; b=hBnE0+ETLPie/8034fNYL+BvhpgU6Y4KTc7PGsI9iyz5RHLQW2L8WNuAQQ5nzC6d7ZV/oti64JXpHOxr2Ht+0yQqxMwfdDgjzKD7QbVADU5vzu+7UI/ULWz/X61d01q/eg3VdfBSb3VehfJltcD1OZYkjhb2KRoT2DGCdnfWY0k=
+	t=1744251016; cv=none; b=kYhkD4vsOyDKDQWSEXvXAjGNUWDN+FBL4QO94cY/+StbV6BN+YmnpyTwOwix9NUrM6x2YdSS+dOTbm4GLy3T6bbMVEPfrqk1Ki7uAg2KaI+mQXEbFXMltXJEzMp96supVSwqLkX2ipTwSn+/S4uEc0M9od0b+z4tdtpXIofSeJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744250156; c=relaxed/simple;
-	bh=XmaKd+S/DqswSqfYVPzLG9jI4c9YIGnYHhOZDkKiBnE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nz0RgF9XQJDoOdtLam8Yz8ZZ80BnPW2uVjSDgCz/2wvJjpZHejE/A27x8l82OWT883hM7fAPwqOxwU6zpS54kFAfQn4dFvEfyT+SyBpJ7c1MalfsTR1XSY1Fg9cWEzsVLt0AK/KX6l7XGqbLsdmpYX2E07Q57/+Re/oieOmJYR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.27.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 3882934322C;
-	Thu, 10 Apr 2025 01:55:53 +0000 (UTC)
-Date: Thu, 10 Apr 2025 01:55:49 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Haylen Chu <heylenay@outlook.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-riscv@lists.infradead.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev, Inochi Amaoto <inochiama@outlook.com>,
-	Chen Wang <unicornxdotw@foxmail.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
-Subject: Re: [PATCH v6 3/6] clk: spacemit: Add clock support for SpacemiT K1
- SoC
-Message-ID: <20250410015549-GYA19471@gentoo>
-References: <20250401172434.6774-1-heylenay@4d2.org>
- <20250401172434.6774-4-heylenay@4d2.org>
- <8fe0aaaa-b8e9-45dd-b792-c32be49cca1a@riscstar.com>
- <20250410003756-GYA19359@gentoo>
- <dm4lwnplwcxj3t3qx3a3bdxtziowjfoqdy4vrd3ahmzkhejrov@fa5rujatatew>
- <z27ri5eue43ti6b2te2cbxiow66mtgbnyudoo5cs4quabgbx5r@uipzoxvfoysi>
- <a8e5adca-8eff-4bbb-a7fa-ce4489b63fa5@riscstar.com>
- <sl752im2sn5sz6yzc23ctprh3rwryuhgtggsaauxixn3b267ag@6sf5fahu6b5i>
+	s=arc-20240116; t=1744251016; c=relaxed/simple;
+	bh=rusP4e8kCFAczgQY3Sdj8q9TkHCZznQjrAV+7N+Q6mc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dkaznzGvTzPUjbpfCqsFhOWU0t77tmElwavYmIUhCqHEvL7aNS9NXSugJSFlZBjB35sYidv98aZpqLuUXwPo4O+tWsjnJrhJEk+oGKWRrwthIuWi2RepMJEd5IK/uzuNc3zT+ypnLpO3upWyJNwL0Uq/th+WRNO+stQO2IU92kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
+Received: from [198.18.0.1] (gy-adaptive-ssl-proxy-1-entmail-virt204.gy.ntes [27.18.106.237])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 114dfc3d8;
+	Thu, 10 Apr 2025 09:34:38 +0800 (GMT+08:00)
+Message-ID: <d500b879-a4fe-4f29-a9d0-c29826d21e31@whut.edu.cn>
+Date: Thu, 10 Apr 2025 09:34:38 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sl752im2sn5sz6yzc23ctprh3rwryuhgtggsaauxixn3b267ag@6sf5fahu6b5i>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/7] usb: dwc3: add spacemit dwc3 glue layer driver
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>,
+ "linux-phy@lists.infradead.org" <linux-phy@lists.infradead.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
+ "spacemit@lists.linux.dev" <spacemit@lists.linux.dev>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>
+References: <20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn>
+ <20250407-b4-k1-usb3-v3-2-v1-6-bf0bcc41c9ba@whut.edu.cn>
+ <20250409223452.svwckotac4dbze6v@synopsys.com>
+Content-Language: en-US
+From: Ze Huang <huangze@whut.edu.cn>
+In-Reply-To: <20250409223452.svwckotac4dbze6v@synopsys.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZGUNPVh9LTkoYTBpKQk4fTlYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlJTFVKQ1VKS01VSUhMWVdZFhoPEhUdFFlBWU9LSFVKS0hKTkxPVUpLS1VKQk
+	tLWQY+
+X-HM-Tid: 0a961d55b85703a1kunm114dfc3d8
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Ogg6OTo4MTJNDjJKEiIDSwwp
+	LjQwCh5VSlVKTE9PSU9DQ0NOTUNIVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
+	TFVKQ1VKS01VSUhMWVdZCAFZQU5KQ0w3Bg++
 
-Hi Inochi,
+On 4/10/25 6:34 AM, Thinh Nguyen wrote:
+> On Mon, Apr 07, 2025, Ze Huang wrote:
+>> Add SpacemiT glue logic to support dwc3 HC on K1 SoC. The driver manages
+>> clock, reset and interrupt resource.
+>>
+>> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+>> ---
+>>   drivers/usb/dwc3/Kconfig         |   7 +++
+>>   drivers/usb/dwc3/Makefile        |   1 +
+>>   drivers/usb/dwc3/dwc3-spacemit.c | 127 +++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 135 insertions(+)
+>>
+>> diff --git a/drivers/usb/dwc3/Kconfig b/drivers/usb/dwc3/Kconfig
+>> index 310d182e10b50b253d7e5a51674806e6ec442a2a..3c30680fa4f83565fc03c6800e867c6ced0fe101 100644
+>> --- a/drivers/usb/dwc3/Kconfig
+>> +++ b/drivers/usb/dwc3/Kconfig
+>> @@ -189,4 +189,11 @@ config USB_DWC3_RTK
+>>   	  or dual-role mode.
+>>   	  Say 'Y' or 'M' if you have such device.
+>>   
+>> +config USB_DWC3_SPACEMIT
+>> +	tristate "Spacemit Platforms"
+> Does this depend on other configs like OF and COMMON_CLK?
 
-On 09:20 Thu 10 Apr     , Inochi Amaoto wrote:
-> On Wed, Apr 09, 2025 at 08:10:53PM -0500, Alex Elder wrote:
-> > On 4/9/25 7:57 PM, Inochi Amaoto wrote:
-> > > > > > > diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kconfig
-> > > > > > > new file mode 100644
-> > > > > > > index 000000000000..4c4df845b3cb
-> > > > > > > --- /dev/null
-> > > > > > > +++ b/drivers/clk/spacemit/Kconfig
-> > > > > > > @@ -0,0 +1,18 @@
-> > > > > > > +# SPDX-License-Identifier: GPL-2.0-only
-> > > > > > > +
-> > > > > > > +config SPACEMIT_CCU
-> > > > > > > +	tristate "Clock support for SpacemiT SoCs"
-> > > > > > I don't know the answer to this, but...  Should this be a Boolean
-> > > > > > rather than tristate?  Can a SpacemiT K1 SoC function without the
-> > > > > > clock driver built in to the kernel?
-> > > > > > 
-> > > > > I agree to make it a Boolean, we've already made pinctrl driver Boolean
-> > > > > and pinctrl depend on clk, besides, the SoC is unlikely functional
-> > > > > without clock built in as it's such critical..
-> > > > > 
-> > > > I disagree. The kernel is only for spacemit only, and the pinctrl
-> > > Sorry for a mistake, this first "only" should be "not".
-> > 
-> > This is a general problem.  You can't make a bootable
-> > SpacemiT kernel unless you define this as built-in (at
-> > least, that's what Yixun is saying). 
-> 
-> Why not putting the module in the initramfs? I have tested
-> this in quite a lot of boards (Allwinner, rockchip, sophgo,
-> starfive and etc.), all of them work well.
-> 
-it works, but not optimal, why delay clk initialzation at modules load stage?
-IMO, it brings more overhead for using initramfs..
+Yes, depends on them, will fix Kconfig entries in next version
 
-but there is always tradeoff and bikeshedding..
-
-> > But we'd really rather *only* build it in to the kernel
-> > for SpacemiT builds. You clearly want to minimize what
-> > must be built in, but what if this is indeed required?
-> > What goes in defconfig?
-> > 
-> 
-> As defconfig is more like for a minimum example system. It
-> is OK to put a y in the defconfig. But for a custom system,
-> you do give a choice for the builder to remove your module
-> in non spacemit system.
-
-I get your meaning here to remove/disable at run time stage, while
-we do provide compile time option, if don't want spacemit system
-just disable CONFIG_ARCH_SPACEMIT I mentioned, clk/pinctrl will be gone
-
-anyway, I'm open for this, make it tristate do provide more choices,
-and it's probably better leave users to decide..
-
-Ok, I'm fine with leave clk as tristate with proper default deconfig,
-but if people want to pursue more to make more driver(pinctrl) modulized
-feel free to test and send patches, I just won't put efforts myself.
+>
+>> +	default USB_DWC3
+>> +	help
+>> +	  Support SPACEMIT platforms with DesignWare Core USB3 IP.
+>> +	  Say 'Y' or 'M' here if you have one such device
+>> +
+>>   endif
+>> diff --git a/drivers/usb/dwc3/Makefile b/drivers/usb/dwc3/Makefile
+>> index 124eda2522d9c1f4caab222ec9770d0deaf655fc..61a87765c0c591e0a53c33b5a6544db056166f96 100644
+>> --- a/drivers/usb/dwc3/Makefile
+>> +++ b/drivers/usb/dwc3/Makefile
+>> @@ -56,3 +56,4 @@ obj-$(CONFIG_USB_DWC3_IMX8MP)		+= dwc3-imx8mp.o
+>>   obj-$(CONFIG_USB_DWC3_XILINX)		+= dwc3-xilinx.o
+>>   obj-$(CONFIG_USB_DWC3_OCTEON)		+= dwc3-octeon.o
+>>   obj-$(CONFIG_USB_DWC3_RTK)		+= dwc3-rtk.o
+>> +obj-$(CONFIG_USB_DWC3_SPACEMIT)		+= dwc3-spacemit.o
+...
+>> +
+>> +#ifdef CONFIG_PM_SLEEP
+>> +static int dwc3_spacemit_suspend(struct device *dev)
+>> +{
+>> +	struct dwc3_spacemit *spacemit = dev_get_drvdata(dev);
+>> +
+>> +	clk_disable_unprepare(spacemit->clk);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int dwc3_spacemit_resume(struct device *dev)
+>> +{
+>> +	struct dwc3_spacemit *spacemit = dev_get_drvdata(dev);
+>> +	int ret;
+>> +
+>> +	ret = clk_prepare_enable(spacemit->clk);
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static const struct dev_pm_ops dwc3_spacemit_dev_pm_ops = {
+>> +	SET_SYSTEM_SLEEP_PM_OPS(dwc3_spacemit_suspend, dwc3_spacemit_resume)
+>> +};
+>> +#endif /* CONFIG_PM_SLEEP */
+>> +
+> Use DEFINE_SIMPLE_DEV_PM_OPS to remove the CONFIG_PM_SLEEP guards.
 
 thanks
 
--- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+>
+>> +static struct platform_driver dwc3_spacemit_driver = {
+>> +	.probe		= dwc3_spacemit_probe,
+>> +	.remove		= dwc3_spacemit_remove,
+>> +	.driver		= {
+>> +		.name	= "spacemit-dwc3",
+>> +		.of_match_table = spacemit_dwc3_match,
+>> +#ifdef CONFIG_PM_SLEEP
+>> +		.pm	= &dwc3_spacemit_dev_pm_ops,
+>> +#endif /* CONFIG_PM_SLEEP */
+>> +	},
+>> +};
+>> +module_platform_driver(dwc3_spacemit_driver);
+>> +
+>> +MODULE_AUTHOR("Wilson <long.wan@spacemit.com>");
+> The author is different than the commiter? Also, is there a last name?
+
+You're right, I missed Signed-off-by tag for Wilson in commit message
+
+>
+>> +MODULE_LICENSE("GPL");
+>> +MODULE_DESCRIPTION("DesignWare USB3 Spacemit Glue Layer");
+>>
+>> -- 
+>> 2.49.0
+>>
+> The logic in this glue driver looks quite simple. Can this platform work
+> as dwc3-of-simple?
+
+Yes, indeed simple.
+As Krzysztof mentioned, creating glue nodes is not ideal for DWC USB. I
+would drop the glue driver and use dwc3/core.c as fallback, similar to
+what Rockchip did[1].
+
+[1] 
+https://www.kernel.org/doc/Documentation/devicetree/bindings/usb/rockchip%2Cdwc3.yaml
+
+>
+> Thanks,
+> Thinh
+
