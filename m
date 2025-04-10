@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081C11E5B67
-	for <spacemit@lists.linux.dev>; Wed,  9 Apr 2025 23:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368CA1DFE1
+	for <spacemit@lists.linux.dev>; Thu, 10 Apr 2025 00:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744243156; cv=none; b=YnFl10UB/7uJfJF1WcWDJoRdz5ygJl5Pw3NoQEBDG+tI15ptWwy8JkXhB63Waw5GKEN9u3ewSl16lZ25StKjCzafJmQVwFde+qvM8BfJT4Rpytd89OwDxdWjGJvj51nMaG/AayQIkIgLAm5bMOlHdZAJ31giiXwPDDzkNkS5ivU=
+	t=1744245483; cv=none; b=LvI6NBsfPU42x26ggigwuYtSQIIKf19wL4p5xg7HvWnHjJGZw21ET26Nb1kchdTbEpJTHmWATnw4Nm9qhDe3SMqeWKwXCKMuyeBqGkn9kM/2HSQ43KlGrfM6OLLcAhVdHdVcjLdR1oHkmkiBe+WGAxpvPRK+SsRG0p0skzvb6LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744243156; c=relaxed/simple;
-	bh=fbizQkJURv/VI4ti6Z1JNgUGnYq1ZQ73QlfCFSh6YFs=;
+	s=arc-20240116; t=1744245483; c=relaxed/simple;
+	bh=Pib55EvMjvIrTsAVmhgO6uA6SgdnIcsHusx8WQ6efgo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W6nlW2LRMf6B96rhCfd4S0gF2n5i64ly1P4ZYFBXNasR9bWce8sE6hVpyc9FRmhi2RjUu7LY1N/NDp/dczhlZ5KAmmPg0bv2nYrotnH+9ZQlIqQ7gB8JtAvql7AidNUSVkA9VWeUnvl0T65hZlu+XJdhkKtAjrRT/4YKZLQVXBs=
+	 Content-Type:Content-Disposition:In-Reply-To; b=EtFQ/CRNDsRX4dMro4N2huE5GcsFEBcGw643+Wz5yXV30pDat+49nA8g5s2fJbVmTouK8cypygpnsCN1oKr/riQp6Yh6WOzPntEQq35E12Frna7Jasl2YDdGogTReKBLTt4W5X09zAqzY9VN+2s8DK4sMR4uTYdc0wZQggqPj0I=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,25 +19,32 @@ Received: from localhost (unknown [116.232.27.72])
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id C5016343371;
-	Wed, 09 Apr 2025 23:59:13 +0000 (UTC)
-Date: Wed, 9 Apr 2025 23:59:09 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 12FDC3432CF;
+	Thu, 10 Apr 2025 00:38:00 +0000 (UTC)
+Date: Thu, 10 Apr 2025 00:37:56 +0000
 From: Yixun Lan <dlan@gentoo.org>
 To: Alex Elder <elder@riscstar.com>
-Cc: gregkh@linuxfoundation.org, jirislaby@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org,
-	benjamin.larsson@genexis.eu, bastien.curutchet@bootlin.com,
-	andriy.shevchenko@linux.intel.com, u.kleine-koenig@baylibre.com,
-	lkundrak@v3.sk, devicetree@vger.kernel.org,
-	linux-serial@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] serial: 8250_of: add support for an optional bus
- clock
-Message-ID: <20250409235909-GYB19066@gentoo>
-References: <20250409192213.1130181-1-elder@riscstar.com>
- <20250409192213.1130181-3-elder@riscstar.com>
- <20250409214345-GYA19066@gentoo>
- <04facbe3-cd40-4d79-a204-2b91880da331@riscstar.com>
+Cc: Haylen Chu <heylenay@4d2.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Haylen Chu <heylenay@outlook.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-riscv@lists.infradead.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, Inochi Amaoto <inochiama@outlook.com>,
+	Chen Wang <unicornxdotw@foxmail.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
+Subject: Re: [PATCH v6 3/6] clk: spacemit: Add clock support for SpacemiT K1
+ SoC
+Message-ID: <20250410003756-GYA19359@gentoo>
+References: <20250401172434.6774-1-heylenay@4d2.org>
+ <20250401172434.6774-4-heylenay@4d2.org>
+ <8fe0aaaa-b8e9-45dd-b792-c32be49cca1a@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -46,78 +53,132 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <04facbe3-cd40-4d79-a204-2b91880da331@riscstar.com>
+In-Reply-To: <8fe0aaaa-b8e9-45dd-b792-c32be49cca1a@riscstar.com>
 
-Hi Alex,
-
-On 17:47 Wed 09 Apr     , Alex Elder wrote:
-> On 4/9/25 4:43 PM, Yixun Lan wrote:
-> > Hi Alex,
+On 14:37 Tue 08 Apr     , Alex Elder wrote:
+> On 4/1/25 12:24 PM, Haylen Chu wrote:
+> > The clock tree of K1 SoC contains three main types of clock hardware
+> > (PLL/DDN/MIX) and has control registers split into several multifunction
+> > devices: APBS (PLLs), MPMU, APBC and APMU.
 > > 
-> > On 14:22 Wed 09 Apr     , Alex Elder wrote:
-> >> The SpacemiT UART requires a bus clock to be enabled, in addition to
-> >> it's "normal" core clock.  Look up the optional bus clock by name,
-> >> and if that's found, look up the core clock using the name "core".
-> >>
-> >> Supplying a bus clock is optional.  If no bus clock is needed, the
-> >> the first/only clock is used for the core clock.
-> >>
-> >> Signed-off-by: Alex Elder <elder@riscstar.com>
-> >> ---
-> >> v2: Update logic to more check for the optional bus clock first
-> >>
-> >>   drivers/tty/serial/8250/8250_of.c | 11 ++++++++++-
-> >>   1 file changed, 10 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/tty/serial/8250/8250_of.c b/drivers/tty/serial/8250/8250_of.c
-> >> index 11c860ea80f60..a90a5462aa72a 100644
-> >> --- a/drivers/tty/serial/8250/8250_of.c
-> >> +++ b/drivers/tty/serial/8250/8250_of.c
-> >> @@ -123,7 +123,16 @@ static int of_platform_serial_setup(struct platform_device *ofdev,
-> >>   
-> >>   	/* Get clk rate through clk driver if present */
-> >>   	if (!port->uartclk) {
-> >> -		info->clk = devm_clk_get_enabled(dev, NULL);
-> >> +		struct clk *bus_clk;
-> > we also need to handle clk in suspend/resume procedure, so
-> > I think you need to put bus_clk inside struct of_serial_info..
-> 
-> OK, I didn't do anything for that in previous versions of the
-> series.
-> 
-> I think that means we'd call clk_disable_unprepare() on
-> the bus clock after doing so for the function clock.  And
-> clk_prepare_enable() on the bus clock before doing that for
-> the function clock in of_serial_resume().  That's easy.
-> 
-right, pretty much similar to info->clk
-
-> Is there anything further you think is required?  There is
-> no clock rate associated with the bus clock that I know of,
-> so even if the function clock rate changes, the bus clock
-> can remain as-is.
-> 
-no further info I know of, my best guess, the rate doesn't
-really matter, a wide clk range should just work fine.
-
+> > All register operations are done through regmap to ensure atomiciy
+> > between concurrent operations of clock driver and reset,
+> > power-domain driver that will be introduced in the future.
 > > 
-> >> +
-> >> +		bus_clk = devm_clk_get_optional_enabled(dev, "bus");
-> > for the 'optional', we can interpret it's optional for other vendor
-> > UART, but a must required clk for SpacemiT's k1 UART controller
+> > Signed-off-by: Haylen Chu <heylenay@4d2.org>
+> 
+> I have a few more comments here but I think this is getting very
+> close to ready.  You addressed pretty much everything I mentioned.
+> 
+> > ---
+> >   drivers/clk/Kconfig               |    1 +
+> >   drivers/clk/Makefile              |    1 +
+> >   drivers/clk/spacemit/Kconfig      |   18 +
+> >   drivers/clk/spacemit/Makefile     |    5 +
+> >   drivers/clk/spacemit/apbc_clks    |  100 +++
+> >   drivers/clk/spacemit/ccu-k1.c     | 1316 +++++++++++++++++++++++++++++
+> >   drivers/clk/spacemit/ccu_common.h |   48 ++
+> >   drivers/clk/spacemit/ccu_ddn.c    |   83 ++
+> >   drivers/clk/spacemit/ccu_ddn.h    |   47 ++
+> >   drivers/clk/spacemit/ccu_mix.c    |  268 ++++++
+> >   drivers/clk/spacemit/ccu_mix.h    |  218 +++++
+> >   drivers/clk/spacemit/ccu_pll.c    |  157 ++++
+> >   drivers/clk/spacemit/ccu_pll.h    |   86 ++
+> >   13 files changed, 2348 insertions(+)
+> >   create mode 100644 drivers/clk/spacemit/Kconfig
+> >   create mode 100644 drivers/clk/spacemit/Makefile
+> >   create mode 100644 drivers/clk/spacemit/apbc_clks
+> >   create mode 100644 drivers/clk/spacemit/ccu-k1.c
+> >   create mode 100644 drivers/clk/spacemit/ccu_common.h
+> >   create mode 100644 drivers/clk/spacemit/ccu_ddn.c
+> >   create mode 100644 drivers/clk/spacemit/ccu_ddn.h
+> >   create mode 100644 drivers/clk/spacemit/ccu_mix.c
+> >   create mode 100644 drivers/clk/spacemit/ccu_mix.h
+> >   create mode 100644 drivers/clk/spacemit/ccu_pll.c
+> >   create mode 100644 drivers/clk/spacemit/ccu_pll.h
 > > 
-> > would it better to guard this inside a compatible test or even introduce
-> > a flag in compatible data?
+> > diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+> > index 713573b6c86c..19c1ed280fd7 100644
+> > --- a/drivers/clk/Kconfig
+> > +++ b/drivers/clk/Kconfig
+> > @@ -517,6 +517,7 @@ source "drivers/clk/samsung/Kconfig"
+> >   source "drivers/clk/sifive/Kconfig"
+> >   source "drivers/clk/socfpga/Kconfig"
+> >   source "drivers/clk/sophgo/Kconfig"
+> > +source "drivers/clk/spacemit/Kconfig"
+> >   source "drivers/clk/sprd/Kconfig"
+> >   source "drivers/clk/starfive/Kconfig"
+> >   source "drivers/clk/sunxi/Kconfig"
+> > diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
+> > index bf4bd45adc3a..42867cd37c33 100644
+> > --- a/drivers/clk/Makefile
+> > +++ b/drivers/clk/Makefile
+> > @@ -145,6 +145,7 @@ obj-$(CONFIG_COMMON_CLK_SAMSUNG)	+= samsung/
+> >   obj-$(CONFIG_CLK_SIFIVE)		+= sifive/
+> >   obj-y					+= socfpga/
+> >   obj-y					+= sophgo/
+> > +obj-y					+= spacemit/
+> >   obj-$(CONFIG_PLAT_SPEAR)		+= spear/
+> >   obj-y					+= sprd/
+> >   obj-$(CONFIG_ARCH_STI)			+= st/
+> > diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kconfig
+> > new file mode 100644
+> > index 000000000000..4c4df845b3cb
+> > --- /dev/null
+> > +++ b/drivers/clk/spacemit/Kconfig
+> > @@ -0,0 +1,18 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only
+> > +
+> > +config SPACEMIT_CCU
+> > +	tristate "Clock support for SpacemiT SoCs"
 > 
-> I don't personally think so. We could, but the DT binding is going
-> out of its way to define when the bus clock is required.  This is
-> simpler, and generic.
+> I don't know the answer to this, but...  Should this be a Boolean
+> rather than tristate?  Can a SpacemiT K1 SoC function without the
+> clock driver built in to the kernel?
 > 
-I would personally choose the way of introducing a flag of compatible data,
-but it's a lot change of the code (may not worth the effort)..
+I agree to make it a Boolean, we've already made pinctrl driver Boolean
+and pinctrl depend on clk, besides, the SoC is unlikely functional
+without clock built in as it's such critical..
 
-anyway, I'm fine with your current version, and yes, it's generic
-thanks for doing this..
+> > +	depends on ARCH_SPACEMIT || COMPILE_TEST
+> > +	select MFD_SYSCON
+> > +	help
+> > +	  Say Y to enable clock controller unit support for SpacemiT SoCs.
+> > +
+> > +if SPACEMIT_CCU
+> > +
+> > +config SPACEMIT_K1_CCU
+> > +	tristate "Support for SpacemiT K1 SoC"
+> 
+> If you decide SPACEMIT_CCU needs to be Boolean, this one should
+> be Boolean too.
+> 
+[...] 
+> > +	CCU_PLL_RATE(1600000000UL, 0x0050cd61, 0x43eaaaab),
+> > +	CCU_PLL_RATE(1800000000UL, 0x0050cd61, 0x4b000000),
+> > +	CCU_PLL_RATE(2000000000UL, 0x0050dd62, 0x2aeaaaab),
+> > +	CCU_PLL_RATE(2457600000UL, 0x0050dd64, 0x330ccccd),
+> > +	CCU_PLL_RATE(3000000000UL, 0x0050dd66, 0x3fe00000),
+> > +	CCU_PLL_RATE(3200000000UL, 0x0050dd67, 0x43eaaaab),
+> > +};
+> > +
+> > +CCU_PLL_DEFINE(pll1, pll1_rate_tbl, APBS_PLL1_SWCR1, APBS_PLL1_SWCR3, MPMU_POSR,
+> > +	       POSR_PLL1_LOCK, CLK_SET_RATE_GATE);
+> > +CCU_PLL_DEFINE(pll2, pll2_rate_tbl, APBS_PLL2_SWCR1, APBS_PLL2_SWCR3, MPMU_POSR,
+> > +	       POSR_PLL2_LOCK, CLK_SET_RATE_GATE);
+> > +CCU_PLL_DEFINE(pll3, pll3_rate_tbl, APBS_PLL3_SWCR1, APBS_PLL3_SWCR3, MPMU_POSR,
+> > +	       POSR_PLL3_LOCK, CLK_SET_RATE_GATE);
+> > +
+> 
+> I suspect Yixun would like you to have lines like the next one be
+> 84 characters wide--slighly wider than the 80 column limit.
+> 
+> I'm not going to ask you to change it (but he might).
+> 
+Yes, I do prefer 100 cloumn.. please check more of this files
+
+But anyway, I can bear with it if clk subsystem maintainer have enforced
+80 column policy for the whole clk subsystem, to make consistent
 
 -- 
 Yixun Lan (dlan)
