@@ -1,66 +1,65 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684851C5F27
-	for <spacemit@lists.linux.dev>; Thu, 10 Apr 2025 01:21:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C5D19005E
+	for <spacemit@lists.linux.dev>; Thu, 10 Apr 2025 01:36:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744248074; cv=none; b=mXAILGlmkyKFjKZwMUyzA6OrogkJlyCBxXBaoaCO+NxxZTE1DQl7Tt5EX/Si+6s+2/nhjNxAsxnZnwv8tKNd7VlHiLHKymL8GA5r8+TxSMVQAlHSp8UbOFoM/HBUK70Xt6Wu/Yx9GUndIfkgq2TEYry8sJ+/CXbqcjtZqWFJ4/Y=
+	t=1744248967; cv=none; b=kIYmcr3pKz9iA1BoyqQiAwjOa9TCtj5Qz3tRpgiCk/1EYVABXWb5Re63L3PPDWyey7HxbTjr3u9r2Ind6bgCjpQGiAc3ScOy7kJHpjn1npO5WT+OtyKxm1d75SgnyngqaOpFxsKYYcrBK1ox4x2oaZtGQgdrFS5f38/E0x5Fhgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744248074; c=relaxed/simple;
-	bh=vvwNWBQOV68UD1wQ5GAz54lrRLCKIA0ppmjhWwL5XhE=;
+	s=arc-20240116; t=1744248967; c=relaxed/simple;
+	bh=WfWVNKFhuyMXuKAZwzpdGkYOiQAtyEHVdr/tazfGwgM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eomg0+6/RSuIzoR+vZA/av7h0wWkYeSAOe0rIxKHoYBvZoyV50V6dlXcTDOxHNjJVSZ7Ogu18Bst9xB4PyXYhenLxOrh0d6dYD8tiyDAmPOihUQExUo4WrcvI8MiRxe6+WwOAO/mDlx169SGgQGkOrnI9mwPIUJ4ZK15UAL1bgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gryVo1l3; arc=none smtp.client-ip=209.85.160.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=ge820sZI3cQ0jIwidf3YH6QlRfsgpDY78FsO7aUpjHmt1TvtaiytpAQZL44r0q1mtXtJeGSvY5n+UtamNcwMTRMDE+1u9B/4eBpDgOXjpTbVB49GgXdMYd5t5gxCWQJ55R6BS4AWB6i7Klee84KrveFIxBif3GT47YGpIk6KEpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=npLyYibD; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gryVo1l3"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-476b89782c3so2727681cf.1
-        for <spacemit@lists.linux.dev>; Wed, 09 Apr 2025 18:21:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="npLyYibD"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7c54a9d3fcaso31226485a.2
+        for <spacemit@lists.linux.dev>; Wed, 09 Apr 2025 18:36:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744248071; x=1744852871; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1744248964; x=1744853764; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pS6d3AN8lttz2UBagEPNT7oB3nkS/KEu1Jsz1U5vt+0=;
-        b=gryVo1l3onxHCK5oLRxZIEoFpDERFxC6ioiSPLKTQRzZ3q4sA5t1ZP5EJdpXIyUw5n
-         /iS14RgyTTksJg193pnhDL4CES8qmw2/sfJa2J4uEwatqmqeIy+QiG8rd2QDFOpuKfw4
-         WAK3LSwpbJ+t+8KLEMlKW1URdPqXA7ewRy1bDx0IYuJPbB2ItpqTjS84H8kmsCQQrrk6
-         Jk0HHU6m2MFJTYxmYyoF0Iy8Kep+tJGD5FZbffXCTe9vS1biyyq8MLQKKLyyLNfhzpJV
-         C0RYUDWi6N6uRbb5wLBOo1ZxL2diSAQzzBBm2mb9uB7VUFnhoTGiSCjT9GNFNZ3P36XH
-         4yFw==
+        bh=Mn77HHPqYcQPNS+D6QKMYch27BNofJCne2UJ+gPfHFk=;
+        b=npLyYibD+l8Hrek8czSSVYCIhoCEbkU/0auAK4S8pRKHKWZSdxdEk/I5YAfBDnIJVw
+         HLZknHbnuXm2nCR/wvg/xuPmzIrunPs5M3ahGk6LuSKslBTXxKYDn3mrd1i3KoDXh7OF
+         6dTHZsnMOelP9k0SmR4l1iLxMondHDHFBpz3oD4weCm4gpxzMoM2aYqntbqZxdY1zkJ4
+         gLjs2MGSKV8GwBMJSIyO7y88H5+7bnR5HML4g/Muv+d2QlmtfhNLTrNUWGIIaFZfuaAW
+         FsgdgpgJVEBKbjBjyWwa2h6fDbYyzPaxM/P8PkGIIeO4td6zmfsZxJEWuR/ptqDqVVKl
+         ZEBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744248071; x=1744852871;
+        d=1e100.net; s=20230601; t=1744248964; x=1744853764;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pS6d3AN8lttz2UBagEPNT7oB3nkS/KEu1Jsz1U5vt+0=;
-        b=eJPi+ifPolmMJ43Z0pAJi2+tIeZ+aPqhib3K2IAxl4AHdBtJqndkaftCwlsCLcUnse
-         /r4icAYC3AzIxToUlnTYkRr50gCRqUdNuEPqBGfisKiJDaUT5riOOuY+gnbRgefVuGlN
-         ev/AJEPvA3P5ah1oISF25IjcOpkoUnigBEqm+ugAMVwSW7r4n9He6lUPWaTgxqZlIXUL
-         gKFNqVziYQ7qTZWdh0iY1r6CWsi74uOLWLBL6F2YXqA+f9pcXYnmuJQMTZT6fYiSNO4l
-         0iJZ+sRoJeK/ULX0013rNQUlL+nmNxNW0tUJ/MtN8qc2M7UdNMSTFO71O+0VDeY0zgcs
-         wIkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVOddwo7mSJZyrKinb9pN6ciQM/LWiXivn+DqZX9C/m76qUIpISL9SvlnVYRtgcXyPjhZfVKzJa4Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzge5qdU37NoZlNnRvdZXx1j4q3JJpEpDpHoBsqzYh+saf4wk83
-	i9sow5pwaZnmS6UwTta+qll5rSzPZFtc/1wQjWm5L8hkoS+UGlmGLGMe0g==
-X-Gm-Gg: ASbGncvPyJJUr+VIU15jGMEisbNTWOazA7fCXv6pYVDyEBs6Ornu9+L9Y3Fl0Lio0p5
-	XLE6SUbs43ypZzZwRrDaNvtnn7R9IZgXdvsiGMf2uUTXRWf8nP/Vv40af9G+gfJ5AvjX+vNe772
-	msdhm3L0hL2woess59iED9MGeV+aosfRyfD1kNUSj2z4QBsxQfmqQtSXB1YuXR7ePQKnh71tAqH
-	m5DUNqowsKtFpTBcyKsoH978Xh3dL0JboCzU+THoayEroYmOeNHlWPEmtKSbc8q3dILEW3pN2yR
-	vsSygDHzXJNd617gJ1DPV3oEX8I=
-X-Google-Smtp-Source: AGHT+IG8syti+yUH9KMAV4gl0fZ6aSPAfqkjK2G+9Pu2agDv4XCz3CIBPgGk+tD7029TOWlX0vLivA==
-X-Received: by 2002:ac8:5e4e:0:b0:476:80ce:a614 with SMTP id d75a77b69052e-4796cbb6131mr12911801cf.19.1744248071267;
-        Wed, 09 Apr 2025 18:21:11 -0700 (PDT)
+        bh=Mn77HHPqYcQPNS+D6QKMYch27BNofJCne2UJ+gPfHFk=;
+        b=wFTaTcRx5MLU4gTHNOPlixBnab3SgMiLCONUdAnGzst2T6eJUC0+8hRIk5dgj2kaoT
+         lZ+BFYjgPSEm6yuRo2wjSwSiLPstWWJ0NMBc+zfTnX1VAGRFpYc1EVAM54Utp8O6WyIT
+         s0JBJGo37diLcA+ekZdbn8UKykbESaGzdGGpBN4YYGNAUrYD4FJ0pIjJkWbfT+gVHw+d
+         L34YGn9sHk8OnsW2Y22vjQ5nlMQS+hifsef0VACrBX1JUh1yW7hZ0+Z4mGBeKUq5mXcU
+         6s+UGmTrUpIwT/b73dH92IefmGAtb6a76ApZfY/pTVra3swdJXa866zZvQVp2BU2wRrc
+         lbYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVJKuwl89M70l+0yV9IBlqrxHHW6L5L+YET79Z2yHtTTj13DgL66b7lAKE2QHRwaYkZrfUL5x0gaw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YySSuzFR+ciLRKVej901kG5jqbaR08Xw3bznLCJ8/HdqamdsGVq
+	xMD6v1aMnkZnkVZ/JTbxVfE/U/xnmeMchA7x3WAyzEComHvAd7Md
+X-Gm-Gg: ASbGncuozLsTv6PAkhAEpjazfUPAuOp+YnuYqRieeSCLkuj5iQo5c4Fzl+MUPzACQf2
+	2bpizmIVgp7XbJyvxcQwN6Bov4zxam/NuOTmFpDmbW6peIgZeGOW2W/RN7GL2ri6O9MEvHYc0v+
+	QGpmLLegptb3b/w7cG1jciNjK2QMf0qUQfofNaO36Y1xbU3dV2ynbOPxdnAiWWtqvFUaH5pPl7x
+	6p2U3ku+nngsKn8TSuJD8UMc0czMwa4fjkUzYZawvT7tP1DvGqNapP8c3FNMNEBYkeFZ1idpMwo
+	bE9Sz2GP2kIaUywuwrqCu4wPNXQ=
+X-Google-Smtp-Source: AGHT+IEcWmffQfvCuChtXQXpnroPXYRrhJX1q2n+tT6bZYpbzl+MegNQoZB3XFLgQsUM9dwmK7XvZA==
+X-Received: by 2002:a05:620a:3941:b0:7c5:5a51:d2d1 with SMTP id af79cd13be357-7c7a81c7994mr96263385a.55.1744248964263;
+        Wed, 09 Apr 2025 18:36:04 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4796ed9ccd0sm1065881cf.57.2025.04.09.18.21.10
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c7a8969e5bsm13726985a.53.2025.04.09.18.36.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Apr 2025 18:21:10 -0700 (PDT)
-Date: Thu, 10 Apr 2025 09:20:33 +0800
+        Wed, 09 Apr 2025 18:36:03 -0700 (PDT)
+Date: Thu, 10 Apr 2025 09:35:25 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Alex Elder <elder@riscstar.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Yixun Lan <dlan@gentoo.org>
-Cc: Haylen Chu <heylenay@4d2.org>, 
+To: Yixun Lan <dlan@gentoo.org>, Inochi Amaoto <inochiama@gmail.com>
+Cc: Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>, 
 	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Haylen Chu <heylenay@outlook.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
@@ -71,14 +70,14 @@ Cc: Haylen Chu <heylenay@4d2.org>,
 	Jisheng Zhang <jszhang@kernel.org>, Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
 Subject: Re: [PATCH v6 3/6] clk: spacemit: Add clock support for SpacemiT K1
  SoC
-Message-ID: <sl752im2sn5sz6yzc23ctprh3rwryuhgtggsaauxixn3b267ag@6sf5fahu6b5i>
+Message-ID: <mnkjxqswewyr7agadnv7rprckqafpryotmmi64ckmocwily2yy@mzjwc2qp2wdd>
 References: <20250401172434.6774-1-heylenay@4d2.org>
  <20250401172434.6774-4-heylenay@4d2.org>
  <8fe0aaaa-b8e9-45dd-b792-c32be49cca1a@riscstar.com>
  <20250410003756-GYA19359@gentoo>
  <dm4lwnplwcxj3t3qx3a3bdxtziowjfoqdy4vrd3ahmzkhejrov@fa5rujatatew>
  <z27ri5eue43ti6b2te2cbxiow66mtgbnyudoo5cs4quabgbx5r@uipzoxvfoysi>
- <a8e5adca-8eff-4bbb-a7fa-ce4489b63fa5@riscstar.com>
+ <20250410011611-GYC19359@gentoo>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -87,10 +86,80 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a8e5adca-8eff-4bbb-a7fa-ce4489b63fa5@riscstar.com>
+In-Reply-To: <20250410011611-GYC19359@gentoo>
 
-On Wed, Apr 09, 2025 at 08:10:53PM -0500, Alex Elder wrote:
-> On 4/9/25 7:57 PM, Inochi Amaoto wrote:
+On Thu, Apr 10, 2025 at 01:16:11AM +0000, Yixun Lan wrote:
+> Hi Inochi,
+> 
+> On 08:57 Thu 10 Apr     , Inochi Amaoto wrote:
+> > On Thu, Apr 10, 2025 at 08:54:51AM +0800, Inochi Amaoto wrote:
+> > > On Thu, Apr 10, 2025 at 12:37:56AM +0000, Yixun Lan wrote:
+> > > > On 14:37 Tue 08 Apr     , Alex Elder wrote:
+> > > > > On 4/1/25 12:24 PM, Haylen Chu wrote:
+> > > > > > The clock tree of K1 SoC contains three main types of clock hardware
+> > > > > > (PLL/DDN/MIX) and has control registers split into several multifunction
+> > > > > > devices: APBS (PLLs), MPMU, APBC and APMU.
+> > > > > > 
+> > > > > > All register operations are done through regmap to ensure atomiciy
+> > > > > > between concurrent operations of clock driver and reset,
+> > > > > > power-domain driver that will be introduced in the future.
+> > > > > > 
+> > > > > > Signed-off-by: Haylen Chu <heylenay@4d2.org>
+> > > > > 
+> > > > > I have a few more comments here but I think this is getting very
+> > > > > close to ready.  You addressed pretty much everything I mentioned.
+> > > > > 
+> > > > > > ---
+> > > > > >   drivers/clk/Kconfig               |    1 +
+> > > > > >   drivers/clk/Makefile              |    1 +
+> > > > > >   drivers/clk/spacemit/Kconfig      |   18 +
+> > > > > >   drivers/clk/spacemit/Makefile     |    5 +
+> > > > > >   drivers/clk/spacemit/apbc_clks    |  100 +++
+> > > > > >   drivers/clk/spacemit/ccu-k1.c     | 1316 +++++++++++++++++++++++++++++
+> > > > > >   drivers/clk/spacemit/ccu_common.h |   48 ++
+> > > > > >   drivers/clk/spacemit/ccu_ddn.c    |   83 ++
+> > > > > >   drivers/clk/spacemit/ccu_ddn.h    |   47 ++
+> > > > > >   drivers/clk/spacemit/ccu_mix.c    |  268 ++++++
+> > > > > >   drivers/clk/spacemit/ccu_mix.h    |  218 +++++
+> > > > > >   drivers/clk/spacemit/ccu_pll.c    |  157 ++++
+> > > > > >   drivers/clk/spacemit/ccu_pll.h    |   86 ++
+> > > > > >   13 files changed, 2348 insertions(+)
+> > > > > >   create mode 100644 drivers/clk/spacemit/Kconfig
+> > > > > >   create mode 100644 drivers/clk/spacemit/Makefile
+> > > > > >   create mode 100644 drivers/clk/spacemit/apbc_clks
+> > > > > >   create mode 100644 drivers/clk/spacemit/ccu-k1.c
+> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_common.h
+> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_ddn.c
+> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_ddn.h
+> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_mix.c
+> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_mix.h
+> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_pll.c
+> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_pll.h
+> > > > > > 
+> > > > > > diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+> > > > > > index 713573b6c86c..19c1ed280fd7 100644
+> > > > > > --- a/drivers/clk/Kconfig
+> > > > > > +++ b/drivers/clk/Kconfig
+> > > > > > @@ -517,6 +517,7 @@ source "drivers/clk/samsung/Kconfig"
+> > > > > >   source "drivers/clk/sifive/Kconfig"
+> > > > > >   source "drivers/clk/socfpga/Kconfig"
+> > > > > >   source "drivers/clk/sophgo/Kconfig"
+> > > > > > +source "drivers/clk/spacemit/Kconfig"
+> > > > > >   source "drivers/clk/sprd/Kconfig"
+> > > > > >   source "drivers/clk/starfive/Kconfig"
+> > > > > >   source "drivers/clk/sunxi/Kconfig"
+> > > > > > diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
+> > > > > > index bf4bd45adc3a..42867cd37c33 100644
+> > > > > > --- a/drivers/clk/Makefile
+> > > > > > +++ b/drivers/clk/Makefile
+> > > > > > @@ -145,6 +145,7 @@ obj-$(CONFIG_COMMON_CLK_SAMSUNG)	+= samsung/
+> > > > > >   obj-$(CONFIG_CLK_SIFIVE)		+= sifive/
+> > > > > >   obj-y					+= socfpga/
+> > > > > >   obj-y					+= sophgo/
+> > > > > > +obj-y					+= spacemit/
+> > > > > >   obj-$(CONFIG_PLAT_SPEAR)		+= spear/
+> > > > > >   obj-y					+= sprd/
+> > > > > >   obj-$(CONFIG_ARCH_STI)			+= st/
 > > > > > > diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kconfig
 > > > > > > new file mode 100644
 > > > > > > index 000000000000..4c4df845b3cb
@@ -101,6 +170,7 @@ On Wed, Apr 09, 2025 at 08:10:53PM -0500, Alex Elder wrote:
 > > > > > > +
 > > > > > > +config SPACEMIT_CCU
 > > > > > > +	tristate "Clock support for SpacemiT SoCs"
+> > > > > 
 > > > > > I don't know the answer to this, but...  Should this be a Boolean
 > > > > > rather than tristate?  Can a SpacemiT K1 SoC function without the
 > > > > > clock driver built in to the kernel?
@@ -109,27 +179,26 @@ On Wed, Apr 09, 2025 at 08:10:53PM -0500, Alex Elder wrote:
 > > > > and pinctrl depend on clk, besides, the SoC is unlikely functional
 > > > > without clock built in as it's such critical..
 > > > > 
+> > > 
 > > > I disagree. The kernel is only for spacemit only, and the pinctrl
+> > 
 > > Sorry for a mistake, this first "only" should be "not".
+> > 
+> > > should also be a module. It is the builder's right to decide whether
+> > > the driver is builtin or a module. In this view, you should always
+> > > allow the driver to be built as a module if possible.
+> > > 
+> No, we've already made pinctrl as Boolean (still depend on ARCH_SPACEMIT)
+> if people don't want this feature, he/she can disable CONFIG_ARCH_SPACEMIT
 > 
-> This is a general problem.  You can't make a bootable
-> SpacemiT kernel unless you define this as built-in (at
-> least, that's what Yixun is saying). 
+> https://github.com/torvalds/linux/blob/master/drivers/pinctrl/spacemit/Kconfig#L7
 
-Why not putting the module in the initramfs? I have tested
-this in quite a lot of boards (Allwinner, rockchip, sophgo,
-starfive and etc.), all of them work well.
-
-> But we'd really rather *only* build it in to the kernel
-> for SpacemiT builds. You clearly want to minimize what
-> must be built in, but what if this is indeed required?
-> What goes in defconfig?
-> 
-
-As defconfig is more like for a minimum example system. It
-is OK to put a y in the defconfig. But for a custom system,
-you do give a choice for the builder to remove your module
-in non spacemit system.
+I have a question for this. Does the minimum system can boot without
+pinctrl (I mean purge the pinctrl node in dts and use uart only)? If
+so, why you treat it a must? In some cases, probe fail without pinctrl
+driver is a expected behavior. And if the pin config can be optional,
+it will be better to fix the driver and the pinctrl framework, but
+not to just convert the module as built-in. It is a waste of space.
 
 Regards,
 Inochi
