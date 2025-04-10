@@ -1,83 +1,55 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C5D19005E
-	for <spacemit@lists.linux.dev>; Thu, 10 Apr 2025 01:36:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B0C6F099
+	for <spacemit@lists.linux.dev>; Thu, 10 Apr 2025 01:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744248967; cv=none; b=kIYmcr3pKz9iA1BoyqQiAwjOa9TCtj5Qz3tRpgiCk/1EYVABXWb5Re63L3PPDWyey7HxbTjr3u9r2Ind6bgCjpQGiAc3ScOy7kJHpjn1npO5WT+OtyKxm1d75SgnyngqaOpFxsKYYcrBK1ox4x2oaZtGQgdrFS5f38/E0x5Fhgs=
+	t=1744250156; cv=none; b=hBnE0+ETLPie/8034fNYL+BvhpgU6Y4KTc7PGsI9iyz5RHLQW2L8WNuAQQ5nzC6d7ZV/oti64JXpHOxr2Ht+0yQqxMwfdDgjzKD7QbVADU5vzu+7UI/ULWz/X61d01q/eg3VdfBSb3VehfJltcD1OZYkjhb2KRoT2DGCdnfWY0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744248967; c=relaxed/simple;
-	bh=WfWVNKFhuyMXuKAZwzpdGkYOiQAtyEHVdr/tazfGwgM=;
+	s=arc-20240116; t=1744250156; c=relaxed/simple;
+	bh=XmaKd+S/DqswSqfYVPzLG9jI4c9YIGnYHhOZDkKiBnE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ge820sZI3cQ0jIwidf3YH6QlRfsgpDY78FsO7aUpjHmt1TvtaiytpAQZL44r0q1mtXtJeGSvY5n+UtamNcwMTRMDE+1u9B/4eBpDgOXjpTbVB49GgXdMYd5t5gxCWQJ55R6BS4AWB6i7Klee84KrveFIxBif3GT47YGpIk6KEpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=npLyYibD; arc=none smtp.client-ip=209.85.222.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="npLyYibD"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7c54a9d3fcaso31226485a.2
-        for <spacemit@lists.linux.dev>; Wed, 09 Apr 2025 18:36:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744248964; x=1744853764; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mn77HHPqYcQPNS+D6QKMYch27BNofJCne2UJ+gPfHFk=;
-        b=npLyYibD+l8Hrek8czSSVYCIhoCEbkU/0auAK4S8pRKHKWZSdxdEk/I5YAfBDnIJVw
-         HLZknHbnuXm2nCR/wvg/xuPmzIrunPs5M3ahGk6LuSKslBTXxKYDn3mrd1i3KoDXh7OF
-         6dTHZsnMOelP9k0SmR4l1iLxMondHDHFBpz3oD4weCm4gpxzMoM2aYqntbqZxdY1zkJ4
-         gLjs2MGSKV8GwBMJSIyO7y88H5+7bnR5HML4g/Muv+d2QlmtfhNLTrNUWGIIaFZfuaAW
-         FsgdgpgJVEBKbjBjyWwa2h6fDbYyzPaxM/P8PkGIIeO4td6zmfsZxJEWuR/ptqDqVVKl
-         ZEBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744248964; x=1744853764;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Mn77HHPqYcQPNS+D6QKMYch27BNofJCne2UJ+gPfHFk=;
-        b=wFTaTcRx5MLU4gTHNOPlixBnab3SgMiLCONUdAnGzst2T6eJUC0+8hRIk5dgj2kaoT
-         lZ+BFYjgPSEm6yuRo2wjSwSiLPstWWJ0NMBc+zfTnX1VAGRFpYc1EVAM54Utp8O6WyIT
-         s0JBJGo37diLcA+ekZdbn8UKykbESaGzdGGpBN4YYGNAUrYD4FJ0pIjJkWbfT+gVHw+d
-         L34YGn9sHk8OnsW2Y22vjQ5nlMQS+hifsef0VACrBX1JUh1yW7hZ0+Z4mGBeKUq5mXcU
-         6s+UGmTrUpIwT/b73dH92IefmGAtb6a76ApZfY/pTVra3swdJXa866zZvQVp2BU2wRrc
-         lbYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVJKuwl89M70l+0yV9IBlqrxHHW6L5L+YET79Z2yHtTTj13DgL66b7lAKE2QHRwaYkZrfUL5x0gaw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YySSuzFR+ciLRKVej901kG5jqbaR08Xw3bznLCJ8/HdqamdsGVq
-	xMD6v1aMnkZnkVZ/JTbxVfE/U/xnmeMchA7x3WAyzEComHvAd7Md
-X-Gm-Gg: ASbGncuozLsTv6PAkhAEpjazfUPAuOp+YnuYqRieeSCLkuj5iQo5c4Fzl+MUPzACQf2
-	2bpizmIVgp7XbJyvxcQwN6Bov4zxam/NuOTmFpDmbW6peIgZeGOW2W/RN7GL2ri6O9MEvHYc0v+
-	QGpmLLegptb3b/w7cG1jciNjK2QMf0qUQfofNaO36Y1xbU3dV2ynbOPxdnAiWWtqvFUaH5pPl7x
-	6p2U3ku+nngsKn8TSuJD8UMc0czMwa4fjkUzYZawvT7tP1DvGqNapP8c3FNMNEBYkeFZ1idpMwo
-	bE9Sz2GP2kIaUywuwrqCu4wPNXQ=
-X-Google-Smtp-Source: AGHT+IEcWmffQfvCuChtXQXpnroPXYRrhJX1q2n+tT6bZYpbzl+MegNQoZB3XFLgQsUM9dwmK7XvZA==
-X-Received: by 2002:a05:620a:3941:b0:7c5:5a51:d2d1 with SMTP id af79cd13be357-7c7a81c7994mr96263385a.55.1744248964263;
-        Wed, 09 Apr 2025 18:36:04 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c7a8969e5bsm13726985a.53.2025.04.09.18.36.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Apr 2025 18:36:03 -0700 (PDT)
-Date: Thu, 10 Apr 2025 09:35:25 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Yixun Lan <dlan@gentoo.org>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Haylen Chu <heylenay@outlook.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, linux-riscv@lists.infradead.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
-	Inochi Amaoto <inochiama@outlook.com>, Chen Wang <unicornxdotw@foxmail.com>, 
-	Jisheng Zhang <jszhang@kernel.org>, Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=nz0RgF9XQJDoOdtLam8Yz8ZZ80BnPW2uVjSDgCz/2wvJjpZHejE/A27x8l82OWT883hM7fAPwqOxwU6zpS54kFAfQn4dFvEfyT+SyBpJ7c1MalfsTR1XSY1Fg9cWEzsVLt0AK/KX6l7XGqbLsdmpYX2E07Q57/+Re/oieOmJYR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.27.72])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 3882934322C;
+	Thu, 10 Apr 2025 01:55:53 +0000 (UTC)
+Date: Thu, 10 Apr 2025 01:55:49 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Haylen Chu <heylenay@outlook.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-riscv@lists.infradead.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, Inochi Amaoto <inochiama@outlook.com>,
+	Chen Wang <unicornxdotw@foxmail.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
 Subject: Re: [PATCH v6 3/6] clk: spacemit: Add clock support for SpacemiT K1
  SoC
-Message-ID: <mnkjxqswewyr7agadnv7rprckqafpryotmmi64ckmocwily2yy@mzjwc2qp2wdd>
+Message-ID: <20250410015549-GYA19471@gentoo>
 References: <20250401172434.6774-1-heylenay@4d2.org>
  <20250401172434.6774-4-heylenay@4d2.org>
  <8fe0aaaa-b8e9-45dd-b792-c32be49cca1a@riscstar.com>
  <20250410003756-GYA19359@gentoo>
  <dm4lwnplwcxj3t3qx3a3bdxtziowjfoqdy4vrd3ahmzkhejrov@fa5rujatatew>
  <z27ri5eue43ti6b2te2cbxiow66mtgbnyudoo5cs4quabgbx5r@uipzoxvfoysi>
- <20250410011611-GYC19359@gentoo>
+ <a8e5adca-8eff-4bbb-a7fa-ce4489b63fa5@riscstar.com>
+ <sl752im2sn5sz6yzc23ctprh3rwryuhgtggsaauxixn3b267ag@6sf5fahu6b5i>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -86,119 +58,72 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250410011611-GYC19359@gentoo>
+In-Reply-To: <sl752im2sn5sz6yzc23ctprh3rwryuhgtggsaauxixn3b267ag@6sf5fahu6b5i>
 
-On Thu, Apr 10, 2025 at 01:16:11AM +0000, Yixun Lan wrote:
-> Hi Inochi,
-> 
-> On 08:57 Thu 10 Apr     , Inochi Amaoto wrote:
-> > On Thu, Apr 10, 2025 at 08:54:51AM +0800, Inochi Amaoto wrote:
-> > > On Thu, Apr 10, 2025 at 12:37:56AM +0000, Yixun Lan wrote:
-> > > > On 14:37 Tue 08 Apr     , Alex Elder wrote:
-> > > > > On 4/1/25 12:24 PM, Haylen Chu wrote:
-> > > > > > The clock tree of K1 SoC contains three main types of clock hardware
-> > > > > > (PLL/DDN/MIX) and has control registers split into several multifunction
-> > > > > > devices: APBS (PLLs), MPMU, APBC and APMU.
+Hi Inochi,
+
+On 09:20 Thu 10 Apr     , Inochi Amaoto wrote:
+> On Wed, Apr 09, 2025 at 08:10:53PM -0500, Alex Elder wrote:
+> > On 4/9/25 7:57 PM, Inochi Amaoto wrote:
+> > > > > > > diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kconfig
+> > > > > > > new file mode 100644
+> > > > > > > index 000000000000..4c4df845b3cb
+> > > > > > > --- /dev/null
+> > > > > > > +++ b/drivers/clk/spacemit/Kconfig
+> > > > > > > @@ -0,0 +1,18 @@
+> > > > > > > +# SPDX-License-Identifier: GPL-2.0-only
+> > > > > > > +
+> > > > > > > +config SPACEMIT_CCU
+> > > > > > > +	tristate "Clock support for SpacemiT SoCs"
+> > > > > > I don't know the answer to this, but...  Should this be a Boolean
+> > > > > > rather than tristate?  Can a SpacemiT K1 SoC function without the
+> > > > > > clock driver built in to the kernel?
 > > > > > > 
-> > > > > > All register operations are done through regmap to ensure atomiciy
-> > > > > > between concurrent operations of clock driver and reset,
-> > > > > > power-domain driver that will be introduced in the future.
-> > > > > > 
-> > > > > > Signed-off-by: Haylen Chu <heylenay@4d2.org>
+> > > > > I agree to make it a Boolean, we've already made pinctrl driver Boolean
+> > > > > and pinctrl depend on clk, besides, the SoC is unlikely functional
+> > > > > without clock built in as it's such critical..
 > > > > > 
-> > > > > I have a few more comments here but I think this is getting very
-> > > > > close to ready.  You addressed pretty much everything I mentioned.
-> > > > > 
-> > > > > > ---
-> > > > > >   drivers/clk/Kconfig               |    1 +
-> > > > > >   drivers/clk/Makefile              |    1 +
-> > > > > >   drivers/clk/spacemit/Kconfig      |   18 +
-> > > > > >   drivers/clk/spacemit/Makefile     |    5 +
-> > > > > >   drivers/clk/spacemit/apbc_clks    |  100 +++
-> > > > > >   drivers/clk/spacemit/ccu-k1.c     | 1316 +++++++++++++++++++++++++++++
-> > > > > >   drivers/clk/spacemit/ccu_common.h |   48 ++
-> > > > > >   drivers/clk/spacemit/ccu_ddn.c    |   83 ++
-> > > > > >   drivers/clk/spacemit/ccu_ddn.h    |   47 ++
-> > > > > >   drivers/clk/spacemit/ccu_mix.c    |  268 ++++++
-> > > > > >   drivers/clk/spacemit/ccu_mix.h    |  218 +++++
-> > > > > >   drivers/clk/spacemit/ccu_pll.c    |  157 ++++
-> > > > > >   drivers/clk/spacemit/ccu_pll.h    |   86 ++
-> > > > > >   13 files changed, 2348 insertions(+)
-> > > > > >   create mode 100644 drivers/clk/spacemit/Kconfig
-> > > > > >   create mode 100644 drivers/clk/spacemit/Makefile
-> > > > > >   create mode 100644 drivers/clk/spacemit/apbc_clks
-> > > > > >   create mode 100644 drivers/clk/spacemit/ccu-k1.c
-> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_common.h
-> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_ddn.c
-> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_ddn.h
-> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_mix.c
-> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_mix.h
-> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_pll.c
-> > > > > >   create mode 100644 drivers/clk/spacemit/ccu_pll.h
-> > > > > > 
-> > > > > > diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
-> > > > > > index 713573b6c86c..19c1ed280fd7 100644
-> > > > > > --- a/drivers/clk/Kconfig
-> > > > > > +++ b/drivers/clk/Kconfig
-> > > > > > @@ -517,6 +517,7 @@ source "drivers/clk/samsung/Kconfig"
-> > > > > >   source "drivers/clk/sifive/Kconfig"
-> > > > > >   source "drivers/clk/socfpga/Kconfig"
-> > > > > >   source "drivers/clk/sophgo/Kconfig"
-> > > > > > +source "drivers/clk/spacemit/Kconfig"
-> > > > > >   source "drivers/clk/sprd/Kconfig"
-> > > > > >   source "drivers/clk/starfive/Kconfig"
-> > > > > >   source "drivers/clk/sunxi/Kconfig"
-> > > > > > diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
-> > > > > > index bf4bd45adc3a..42867cd37c33 100644
-> > > > > > --- a/drivers/clk/Makefile
-> > > > > > +++ b/drivers/clk/Makefile
-> > > > > > @@ -145,6 +145,7 @@ obj-$(CONFIG_COMMON_CLK_SAMSUNG)	+= samsung/
-> > > > > >   obj-$(CONFIG_CLK_SIFIVE)		+= sifive/
-> > > > > >   obj-y					+= socfpga/
-> > > > > >   obj-y					+= sophgo/
-> > > > > > +obj-y					+= spacemit/
-> > > > > >   obj-$(CONFIG_PLAT_SPEAR)		+= spear/
-> > > > > >   obj-y					+= sprd/
-> > > > > >   obj-$(CONFIG_ARCH_STI)			+= st/
-> > > > > > diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kconfig
-> > > > > > new file mode 100644
-> > > > > > index 000000000000..4c4df845b3cb
-> > > > > > --- /dev/null
-> > > > > > +++ b/drivers/clk/spacemit/Kconfig
-> > > > > > @@ -0,0 +1,18 @@
-> > > > > > +# SPDX-License-Identifier: GPL-2.0-only
-> > > > > > +
-> > > > > > +config SPACEMIT_CCU
-> > > > > > +	tristate "Clock support for SpacemiT SoCs"
-> > > > > 
-> > > > > I don't know the answer to this, but...  Should this be a Boolean
-> > > > > rather than tristate?  Can a SpacemiT K1 SoC function without the
-> > > > > clock driver built in to the kernel?
-> > > > > 
-> > > > I agree to make it a Boolean, we've already made pinctrl driver Boolean
-> > > > and pinctrl depend on clk, besides, the SoC is unlikely functional
-> > > > without clock built in as it's such critical..
-> > > > 
-> > > 
-> > > I disagree. The kernel is only for spacemit only, and the pinctrl
+> > > > I disagree. The kernel is only for spacemit only, and the pinctrl
+> > > Sorry for a mistake, this first "only" should be "not".
 > > 
-> > Sorry for a mistake, this first "only" should be "not".
-> > 
-> > > should also be a module. It is the builder's right to decide whether
-> > > the driver is builtin or a module. In this view, you should always
-> > > allow the driver to be built as a module if possible.
-> > > 
-> No, we've already made pinctrl as Boolean (still depend on ARCH_SPACEMIT)
-> if people don't want this feature, he/she can disable CONFIG_ARCH_SPACEMIT
+> > This is a general problem.  You can't make a bootable
+> > SpacemiT kernel unless you define this as built-in (at
+> > least, that's what Yixun is saying). 
 > 
-> https://github.com/torvalds/linux/blob/master/drivers/pinctrl/spacemit/Kconfig#L7
+> Why not putting the module in the initramfs? I have tested
+> this in quite a lot of boards (Allwinner, rockchip, sophgo,
+> starfive and etc.), all of them work well.
+> 
+it works, but not optimal, why delay clk initialzation at modules load stage?
+IMO, it brings more overhead for using initramfs..
 
-I have a question for this. Does the minimum system can boot without
-pinctrl (I mean purge the pinctrl node in dts and use uart only)? If
-so, why you treat it a must? In some cases, probe fail without pinctrl
-driver is a expected behavior. And if the pin config can be optional,
-it will be better to fix the driver and the pinctrl framework, but
-not to just convert the module as built-in. It is a waste of space.
+but there is always tradeoff and bikeshedding..
 
-Regards,
-Inochi
+> > But we'd really rather *only* build it in to the kernel
+> > for SpacemiT builds. You clearly want to minimize what
+> > must be built in, but what if this is indeed required?
+> > What goes in defconfig?
+> > 
+> 
+> As defconfig is more like for a minimum example system. It
+> is OK to put a y in the defconfig. But for a custom system,
+> you do give a choice for the builder to remove your module
+> in non spacemit system.
+
+I get your meaning here to remove/disable at run time stage, while
+we do provide compile time option, if don't want spacemit system
+just disable CONFIG_ARCH_SPACEMIT I mentioned, clk/pinctrl will be gone
+
+anyway, I'm open for this, make it tristate do provide more choices,
+and it's probably better leave users to decide..
+
+Ok, I'm fine with leave clk as tristate with proper default deconfig,
+but if people want to pursue more to make more driver(pinctrl) modulized
+feel free to test and send patches, I just won't put efforts myself.
+
+thanks
+
+-- 
+Yixun Lan (dlan)
+Gentoo Linux Developer
+GPG Key ID AABEFD55
