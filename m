@@ -1,94 +1,140 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B351EE7D3
-	for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 20:16:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C61280CE6
+	for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 20:38:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744402566; cv=none; b=ExTaprAVopmEU9fp4D1JmZjuJH9+1vKnUlpOfOF0i9gmOe9TCAK3qp+ij3TrcSr70VKawfQJ12i1yG4HXqdK4+RYmjgxlEf1o+UYhD2s2V23CEIJhqVFnt8vovLoMwFSfgRocitb4R+SGbMNiPG87EjlMr6fuopdKqtaf485HAw=
+	t=1744403917; cv=none; b=lb9xjWWmzGp9nhKueUZr7VYsSTureKMbv5lZ+9ZoHU1tRmpD8GMpD5Ylh+OvMJvYnlR7Ybt/w3ognG9DdGINSf8FofqpP37W1SHWVB7PgdFbMBE7/TaJAnmcN5lAW0dqAliwuD3vP4AvhkCwQd9tp/EmTwmGH6QVCUvJk48Ebqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744402566; c=relaxed/simple;
-	bh=+XRrdLQjbVC+DwwNqBKs9alqnaihfnHPxzvcydtyUiA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U2jBK3T1ur73DH2HcNR+RZ6qIaw0Pun4c3s5OlntWOWIDDuXTjsOFlq6d7nCiZ3+hQo5tiveaCuMi1ruSnAHUsDmH1PZmRduA0uvV5KXOUih/mpyQ6lcO3rrj2T4bXMjjnQv4LR5ac96jt3CuuGGtu+i16fZ00YafRgEAyaLQro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Og7S3Oce; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744403917; c=relaxed/simple;
+	bh=jP2gH2HxizlXVnfCoefiIXX50CVQy/awrI7TNYRAzsk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JRs4uYoISdiQYrxR/mRAx1HgVucZC6eWgP7qyGJT+taQ5QVqCDFrcG+IPKUsE/GxUeJxbn3OMfc5zRcz9/tZFrLNEUfjZbyzrORKxhDvdR7JFztLv3Ry0UvETFULjTA4ykCo3zkPQhwBDs+qabHAtNKwbrk6VHcPVJs8B13CpsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ShsrLyFm; arc=none smtp.client-ip=209.85.166.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Og7S3Oce"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ac298c8fa50so388930366b.1
-        for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 13:16:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ShsrLyFm"
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-8616987c261so76427939f.3
+        for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 13:38:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744402563; x=1745007363; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+XRrdLQjbVC+DwwNqBKs9alqnaihfnHPxzvcydtyUiA=;
-        b=Og7S3OceEepfStFSLK2zU59ybJteS0OSTcmhN+DvD+ThRcpw9pk3NJJ3qhzWANM6z9
-         D7SsQDdqr7UozSgJm6mDozK7PrjRt2peDYZFTG7r6EECZ1RtGIQgS1gFQQ8HDYlGfiwt
-         H2qwlfp53W2SWJnr6ZCQlxSU2GiFK8ZQBzhyH5eo9LINuNKPxmTugwiXqVK90xSmUc2B
-         pco24IXZPwfqyZebz+2bN1FKJjsFv7/5JdCy5atNBsWM23O4nMbOlktmClo6hZ8AF59k
-         5uH+5YLDHJxoQH2Lrd/KoAjmhgVT7b4n/Q8/bz1S37z3ZZ3YeSdoQiaHT6pxDyJypzmy
-         Y8AQ==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1744403913; x=1745008713; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=G2ZInTEwsl47QZUkjk8fk2tvbcX5FPggXx8vW7X4elk=;
+        b=ShsrLyFmp2onBoe7fW33pESzxXoY2njkEttbatUMHZ76BzwM39pDh2G6DYYx+QdQkX
+         75YrNM4Nn5AkpDQQdeZuxVZ/utFSwdDjZPyKcUBSKwQ7Fedh+fHJz9+OsoCT0Zy4ib7R
+         fP4AYzq2lAt1EzOnrAbCzsImPyu1qcsvlOPk+WK6A0ATggcqZPkBiwVnySyUcVdmbrgP
+         JRFtomUxRtykohPYpuQVYOXlgrvW1CQkZTQ0StUfpF0oS19hlsqDrKYIUIrnfP7w6Qdv
+         rtnawGMwD6pPzH2a/ymbotDlyX934YMlC0BGL9T0NCLBcv8LRFNYlYZiW2E56cHBCbIy
+         CNNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744402563; x=1745007363;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+XRrdLQjbVC+DwwNqBKs9alqnaihfnHPxzvcydtyUiA=;
-        b=JUGZIbr1Z1IGXvXJl9Qwk2o1zOA+TkK0eMIb4AglL/a3WB0wTF0mReDhe6nj6E8Sp7
-         saTBkuYxY9vjR7xJAtTOJclfrXXZddlb99vbLaxcoXicjq1qMIR/HsPVWuDE5NGjMfIz
-         J9H/WMgg52a47UUT4F4Pr1VeNbM2U2p0v3O9yEAO/BqjcaVkgx+WOwNGjoaTHvd9pzth
-         JEj2Y2aOz9KlzH7QgMMNUqPmWKNr2UOAQlH9u7UGFX08ngq79Wvbpp4q885T6TPr1dhM
-         pVu5NHu1cy7Q8/sYH/U/kV7tfbeYxP6jQ6kbhLzhI4GwsuEik9o+LPEgiq72pgs8Gja8
-         Bf3g==
-X-Forwarded-Encrypted: i=1; AJvYcCXgC0NpuA9GT3OOXVyt7nfoH0z1URtweP8fJR3aJ9BfnwbYSV45Xo+MYhuR2d0IhkMOSRPYQTUXGg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx5MEvb1teXjK0acQwbXWfdUR58kbL1IXTxNGN460kSSx+DqTxs
-	R+s0/rM8zxdkfoZjEduSfpwXnhzljImZ3OQR9EpLKBhrByLlDhi3HiomDy8almrgsAtn/9AsTB5
-	MAeS8rt4/vsQUo8DJzM3aLSjiAlE=
-X-Gm-Gg: ASbGncsw51SqUdQHRybwn3EQHr/e2zxJUhJ8pX23vIC1HwwslUTLz7YwA4BklOZKp7p
-	8NeHMM4KzMV+UptzngzNy5f3wkuG5RtOXLaCfTewWpt3kBTacNRs2aqqH/2gHz95sk+ujnHcPA0
-	V1hKfJ4qxdYFqMkjlOZVBrMA==
-X-Google-Smtp-Source: AGHT+IEZaZAWkd4kV8I3YpLTjYmCJWDI/4A+MRh05C4NiDzsXUA03h3kae5kQ4a316zTbon+mczO7k+6BBDiH5VtnPA=
-X-Received: by 2002:a17:907:2ce5:b0:ac6:ba91:ca4d with SMTP id
- a640c23a62f3a-acad34c9a32mr343863066b.31.1744402562545; Fri, 11 Apr 2025
- 13:16:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744403913; x=1745008713;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G2ZInTEwsl47QZUkjk8fk2tvbcX5FPggXx8vW7X4elk=;
+        b=Z6PJILk/d02z8AvWz3cGhj2pjcNsa3/lfVLGy//0Kl9PfUScHdGt4jn3CCNY9Fj3Z5
+         EiiU7KV3oKV8LOf5OdMEc+oR5YydVlW96yS/Th8qkp+QnomYaFviY0dGdSbltmsp45Yy
+         5u+xlqXn8BFUC8+Dc3ZnteNH2Qg3sdB2fxSVVQGft+St8iC1ypqB+G4N8Pim+T6sS8Ec
+         QXZOsjQQOBUqHXILlI5TcOZhcZHXGBtCn04XTLAeDX+PYP7qbqvjugjRS3Dxxfu1GtzJ
+         /J/jiJ0/gViBFmrpFi0gVPx1j5pE2rtj1po8P/Rd63vrxra3Tj0edbhYUq8N0u0pa6+M
+         MBQg==
+X-Forwarded-Encrypted: i=1; AJvYcCVjCCfLKvxyjdeU0PBoIJARzcfowBeCzm8NYMP7P5ZWPfy1xQt6EStpQAx8tqKvOE5aDprLePnnfQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyGDO415u/UcS8Bm4paXMsY9vm1vl0HNqF1puvPdfJn6VtkvoFw
+	5yr30qXMT09BwQAZMtoB23sNtWyXeWVoBimPMtO6XEU6bs8wWVs2Ua9a5om+K5Q=
+X-Gm-Gg: ASbGnctRYk68rW8THyMkh8pVGxUPMTrCOyUbAgt8NlmYnbc1nW44tYcU9/0/fCGhXv8
+	RpjKQe/Vw8kEXNMbHJ6YlmDKClp6lrwKHRnvlt9f3LbuXUxWIIhlcXJSJtOhrvXeNB4olJANdp1
+	IcBbaF9x06XsgW5RMf9CpNTkTR+IHEn2y8j/Cc8wP0sRSGbUQM+0pgadUSDhjgRT/oHc6fgVkIv
+	YBpG4Snv3HA2nrye4lkwySY0eTRu0r0vHlXXAJt+e7BfbTieROMXdgN8dsczQK3gizicemqJLYv
+	Vr+HPb/Qdbte0XOcQyFDKiZsXzmoYXSLpFXNadfJG+GK9KPvI4jkop+A9ygK5brb8NOZU9tI/wd
+	v8juZmNAsXmSNtbJ9MIcTwvnW
+X-Google-Smtp-Source: AGHT+IF64rFuEmhScHDoMsL9QXFX4Agysz2oW5sGUVVn3Q82xJQ20AI5xuTlCrtn92K/dBEu6SxbnQ==
+X-Received: by 2002:a92:c267:0:b0:3d6:cb9b:cbe9 with SMTP id e9e14a558f8ab-3d7ec1caab5mr44116655ab.5.1744403913131;
+        Fri, 11 Apr 2025 13:38:33 -0700 (PDT)
+Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f505e2ea1esm1420787173.123.2025.04.11.13.38.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Apr 2025 13:38:32 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: andy.shevchenko@gmail.com,
+	dlan@gentoo.org,
+	benjamin.larsson@genexis.eu,
+	bastien.curutchet@bootlin.com,
+	andriy.shevchenko@linux.intel.com,
+	u.kleine-koenig@baylibre.com,
+	lkundrak@v3.sk,
+	devicetree@vger.kernel.org,
+	linux-serial@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v4 0/3] serial: 8250_of: support an optional bus clock
+Date: Fri, 11 Apr 2025 15:38:24 -0500
+Message-ID: <20250411203828.1491595-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250411154419.1379529-1-elder@riscstar.com> <20250411154419.1379529-4-elder@riscstar.com>
- <Z_ltyAO-OBzl0adV@surfacebook.localdomain> <a3b2d0cc-c055-4cf0-9e03-3ea73041642a@riscstar.com>
- <CAHp75VchEcpP67oPC8xD+tYrY_A0BGSJqK=1au939-W60_qQoQ@mail.gmail.com> <925ea396-fd60-460e-a3c2-968d0d837a61@riscstar.com>
-In-Reply-To: <925ea396-fd60-460e-a3c2-968d0d837a61@riscstar.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Fri, 11 Apr 2025 23:15:26 +0300
-X-Gm-Features: ATxdqUFiElisjjk-BrvNvfHnahnRHi3i4WdHUyY93YRJhwdS1w4TdJrF0zeP38I
-Message-ID: <CAHp75VdA4VPf90NQAqMLNejmugHCiAxhXwrH14+238KWiPvfgg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] serial: 8250_of: manage bus clock in suspend/resume
-To: Alex Elder <elder@riscstar.com>
-Cc: gregkh@linuxfoundation.org, jirislaby@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, dlan@gentoo.org, 
-	benjamin.larsson@genexis.eu, bastien.curutchet@bootlin.com, 
-	andriy.shevchenko@linux.intel.com, u.kleine-koenig@baylibre.com, 
-	lkundrak@v3.sk, devicetree@vger.kernel.org, linux-serial@vger.kernel.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Apr 11, 2025 at 10:56=E2=80=AFPM Alex Elder <elder@riscstar.com> wr=
-ote:
-> On 4/11/25 2:44 PM, Andy Shevchenko wrote:
+The SpacemiT UART hardware requires a bus clock to be enabled in addition
+to the primary function clock.
 
-...
+This series makes it possible to specify both clocks via DTS.  If a
+bus clock is required, it and the primary clock are fetched by name.
 
-> when Greg informed me
-> he had already accepted the first two patches.
+This code is available here:
+  https://github.com/riscstar/linux/tree/outgoing/serial-v4
 
-Indeed. Just send a last patch in a simplified form as I suggested here.
+Changes between v3 and v4:
+  - I simplified the third patch by reusing the local variable, as
+    suggested by Andy Shevchenko
+  - The first two patches are identical to what was in v3
 
---=20
-With Best Regards,
-Andy Shevchenko
+Here is version 3 of this series:
+  https://lore.kernel.org/lkml/20250411154419.1379529-1-elder@riscstar.com/
+
+Changes between v2 and v3:
+  - A third patch was added to disable the bus clock on suspend and
+    enable it again on resume, as requested by Yixun Lan
+  - Rob's Reviewed-by tag has been added to patch 1
+  - The first two patches are otherwise identical to what was in v2
+
+Here is version 2 of this series:
+  https://lore.kernel.org/lkml/20250409192213.1130181-1-elder@riscstar.com/
+
+Changes between v1 and v2:
+  - The DT binding was fixed to properly define the number of clocks and
+    clock names based on the compatible string, as suggested by Rob Herring
+  - Logic to look up the optional bus clock was changed as requested
+    by Andy Shevchenko
+  - The bus clock pointer (which was never used after it was enabled)
+    was renmoved from the of_serial_info structure
+
+Here is the first version of this series:
+  https://lore.kernel.org/lkml/20250408175146.979557-1-elder@riscstar.com/
+
+					-Alex
+
+Alex Elder (3):
+  dt-bindings: serial: 8250: support an optional second clock
+  serial: 8250_of: add support for an optional bus clock
+  serial: 8250_of: manage bus clock in suspend/resume
+
+ .../devicetree/bindings/serial/8250.yaml      | 30 ++++++++++++++++++-
+ drivers/tty/serial/8250/8250_of.c             | 15 +++++++++-
+ 2 files changed, 43 insertions(+), 2 deletions(-)
+
+
+base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+-- 
+2.45.2
+
