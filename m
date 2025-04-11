@@ -1,62 +1,62 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E61320B7F1
-	for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 22:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44612278E4D
+	for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 22:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744411889; cv=none; b=hLfMPUlA7mc5Rc/vG1cmKfhTgevPW5ZSm7A29jTmR7mgXc2tsEyG2yTmvLPRFoR4e/KmQ1wRaHZI2XFQT/0svGEB3pDcq1EXyR/i+tQM2nZPcLNsEnpzDyGlTaLyppvt+d/I0DQuhLUQTq3Ndds3sF3IXTqFWXZjdLpuiQgfg6Q=
+	t=1744411966; cv=none; b=IQyMcqaJkrM08EGbIC38esFQSMBkwtdRnX2xsQXnpS6XjY+c8STeSUJRA3pBmAtAKSzYmBjrzcrkNbvRzMP+ESNgqADKV2vzKMDaecbKU0Ck+kQihElB35eYpfRVaQS3F6Jlmt/+Hv9x1rXl4pUp3IlxDOp3MxHSngNiACvjuMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744411889; c=relaxed/simple;
-	bh=H2dEAfc/t00J965VIE7MUieNVqutIi14syjh4T7cAUs=;
+	s=arc-20240116; t=1744411966; c=relaxed/simple;
+	bh=ATjW5hPmtzhuRMZnNpxT2hdn9PN575jnzUepPgCmueA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qd5V22/Iwa8mItXLz3HrRR7OdRCJjWKrUmJuyi/7roAKAnfEKsARtQLBL+yFRHVWO/cp4cMT3zJAmU46J/c8ynMVamPmaZyfeguNGmOV0sDEq5TA2R2xq4F3XhfN7DjmgnnlhqRO+M1TII0KALSsc0m8Od9YMIWXlMK4I7/7NUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AaUECmj9; arc=none smtp.client-ip=209.85.222.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=nhCK1gPZ3rudHNXhrmiqbddAvEOBcAaEHOUCF1ulskjq8snOrQMZNW6PGRdyNkgBt8Rkbm2xBW+643m7k4AogMFoMbnZ5qoXLfwboBsNsMB8j41M7A5STOcdlmOklThg7IGiOLm1ZEY2FN+u4gKzJcJjrG1Hd/ZhygZqhlZlW0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VTezsUxt; arc=none smtp.client-ip=209.85.219.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AaUECmj9"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7c7913bab2cso244274985a.0
-        for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 15:51:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VTezsUxt"
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6e8f254b875so22812266d6.1
+        for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 15:52:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744411887; x=1745016687; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1744411963; x=1745016763; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HEQDjb5KDxAGEAba9XLVOTbfFbTRrFjtfkQU13uIchk=;
-        b=AaUECmj9fiBUsPZRS5zYYxaTkaeMUIfefduUpoKzcqCH/j1LfMbhgt6hpFktDGIKii
-         A3q654tshQckAdy2BLZ5zDcR7ue5beOxOf5bndYnpv66GfUbla5RlXS6we8suLxZvuKz
-         De/HrANlbY7QQZLmWejauB4KZNCzfKQ/AuyPEssrbrtx1PY/UKg+m3D32HIwFihEnuUC
-         Mljlquf13Ac5a7vv6BBzHBhzPAd1l08dx5owM0+7moBY9un3F1QgIv78R3jgg8neSIe5
-         ap5NcwFp4HqlMXBmNQU3zq5ksRoNlJc+7HHukFABi8mkC1Qg8iQaoElXdtxlhuVJSWf+
-         j7tg==
+        bh=+pL39NwqtcbYwkvvLQB2h2yxEcQFSSiMNcOUnB8oXOc=;
+        b=VTezsUxt3Sy/y4ux9X6owTMDnZBH7BCraFTIIV/BQIR8Lb7CjB2y/vGibWx8+poAml
+         CxFCBTqihBGnvdeJJWU3R7VjWHwHFXkz2wdkCzYX/vtwSyoUxnZnWz5T05fnzyibHorK
+         zpjlAymRx0tsRaatQpUvIDwReDuNcvQxqioSPx2XsvEpcipUj/I2De9k4BNd3ZXHwBkK
+         DQgVfucDpoV+yJz6v7+iDwFahG74aMezsrkSUSFPhV+aXXQi+oxZ2iu95OoHyMK6wcN/
+         ibY8btugWUYVpVOv7SwILIqjLwager4agQZXwzaH4d5YDqiB00Q8R0FRZHp2i+6MgpOA
+         QAhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744411887; x=1745016687;
+        d=1e100.net; s=20230601; t=1744411963; x=1745016763;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HEQDjb5KDxAGEAba9XLVOTbfFbTRrFjtfkQU13uIchk=;
-        b=UOMS8AgqqIEnfCUFZpxRTIYd+RQ767oCtlp64fnixE302awputT8h1Ycc46wXTsKxd
-         /GWcgUlHDkYPfU1uO5NhwcIbSBvuFKrfMShUdaiLNfWZyX5PFU8/6ufVWprCVv/RW/EQ
-         h+mZqqdQpsj0VIZJTzNjFKHc7aga51ENAcj57zDXJT+L24FOs5TIZYFL5uC+3zO+fCel
-         gMR7BjiTu0r4aB1C4j4QF4DuH5usL8eYy54qDxkCW+ikzqAL6Db1wkxpjvMbY7GIzPv6
-         c3njhM/RBDpNYJWr3WrMmd9vFtzorca6i39X5H0a2VOr6CjRjYfjv7+Pn/cnhhS91gk6
-         Ajlw==
-X-Forwarded-Encrypted: i=1; AJvYcCU6FgoFT1USisgjFEpWYXqnNg68GmBquhIFn3BdWoECpuU7ug9/plZ/KXWhYXYkutpf/xT2sMEn4Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw7/L8ATW/qn/1r1M4XzmO0OSadGCravL028XQZMQsPDiUKHqJu
-	DEREY1C4katvd/kbKHeZbKVjLEQJyG/jVzVKa25i4I/qfbpwP5Gt
-X-Gm-Gg: ASbGnctNyVTAUzqSGvxLdMAGR0BJdFPH9cqAr1X+ztrJTVZxqzPnSmOCwQGalMJQzKt
-	obR+9vwnI68a7R+/qZ/Sy/xPS+w3H/kTK2jkQWyccykQ4E1nY7Z9DvsBEZwpLE6dX2s58Uk8zSE
-	86IE6sbndfMFKimChp05CeyETtPgvRU75/M6/wSuov1DnelFkObn2lC2LXPoHkBUoJIC8VtP8tY
-	S7HcpccQEiu0hqKMEFX5fy50kdJio+GM0Tf6haF1j8g2q5B2LOkibVBOYhAm67c+XxVTJhjo56Y
-	xRsTaMJ48O7o0AJf
-X-Google-Smtp-Source: AGHT+IGuYAfAK/ysb3ONfMtlfqBs3eOj3RFMg0gm7baoEe6QDUIz8+Gcn1rGlG9Y2X1CtFTB7l/gCw==
-X-Received: by 2002:a05:620a:4399:b0:7c5:6396:f161 with SMTP id af79cd13be357-7c7af20ba80mr809021285a.49.1744411886951;
-        Fri, 11 Apr 2025 15:51:26 -0700 (PDT)
+        bh=+pL39NwqtcbYwkvvLQB2h2yxEcQFSSiMNcOUnB8oXOc=;
+        b=Jb8qGLAcLi/qOROmPG+4lieqtA2QQPDBcF9o9rEN2TXpEfxR8ScoxxUuHYlLXRVyLS
+         ilPeFnIVsrQNYXqJqtk72SrAaEM7PqWjVIzNo5HKvNdZiH26vPJWCn9iB0Ys9lOaWFfJ
+         KYpSNwyjBKJyKb9fQYQUJDdI0rGd076dTOC+AsgLQiIiUrZj9PC1TGKvteBJg1O4Vn8s
+         R8ZWv9TZ4g9LhIQbrCGI9kM+Bm76AtuucoP+40I44q9SWOcApPHF6Bgu2iJtrIjmcxCy
+         lgf/Vz7MFYKHWOqQ+LfJJp6M75S9F3dmHqbAtTwT0ZTXd5tlSrcHL+RfaF3ntzgNoPVd
+         Zd9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWENbki5PTapFjWmBgHXGPIdwBt9wRJfKWpAbzGlJs1vsqAG9iLj4RL2HvIPQf842fGvYIqk2jGug==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxyg4tJqIGY6Ed6txNppECuvly4C86YGEsPy0/Opt63KI+9Zjg7
+	DXL87nwca+3LqqSDjZEMbd39VSYNaWKBYMcVmEk/zRp0GL2Qi+H9
+X-Gm-Gg: ASbGncvHXo7cZN774ahq3H/8Qdg386xrAC/k+ViYVeLu6jUtMNz3GNLlPmbFkPtT0Md
+	A7vZMtGCNeH+QkRjZSoVVGiWEHvQCVG8sTOq+vanQk2Cp5WM6JCeIlBCqEh4aC2wYmbj98NMJb0
+	umtnN3TIvI+k/T+7J9S0eirAdMYXqR6PDhf0JjkYLHRLCCToqldR2uM6FA0TLe8rZD5P82DA/Mm
+	Pib8nqqMKOqCPUzjw9QGAHTpLlD8Q2BOtcgzGt+8fYUlFPArctLCWZ68kG1fY4w8gOTIYoAcPCS
+	bOXLIkIibvLZuVFh
+X-Google-Smtp-Source: AGHT+IEtXcGKPfNuWYv/aDDJ2tC8l5U6EHJb2KzYLLEpb/rDKTBSVSyfh6IvpIF3Bho/Sys5i6hwmg==
+X-Received: by 2002:ad4:4ea2:0:b0:6e8:fe16:4d45 with SMTP id 6a1803df08f44-6f23f16135bmr58411176d6.41.1744411962994;
+        Fri, 11 Apr 2025 15:52:42 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c7a895181csm322699285a.32.2025.04.11.15.51.25
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f0de95fdfbsm42753596d6.1.2025.04.11.15.52.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Apr 2025 15:51:26 -0700 (PDT)
-Date: Sat, 12 Apr 2025 06:50:46 +0800
+        Fri, 11 Apr 2025 15:52:42 -0700 (PDT)
+Date: Sat, 12 Apr 2025 06:52:03 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Guodong Xu <guodong@riscstar.com>, ukleinek@kernel.org, 
 	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
@@ -67,11 +67,11 @@ To: Guodong Xu <guodong@riscstar.com>, ukleinek@kernel.org,
 Cc: elder@riscstar.com, linux-pwm@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
 	spacemit@lists.linux.dev
-Subject: Re: [PATCH 6/9] riscv: dts: spacemit: Add pinctrl configurations for
- PWM0-PWM19
-Message-ID: <ujkfb3ajvoebrkvoepztgh3afzw5dq7djefvdddiboo5gxu63x@dlflpzwpv26u>
+Subject: Re: [PATCH 9/9] riscv: defconfig: Enable PWM support for SpacemiT K1
+ SoC
+Message-ID: <6fywndrxglozw2oqrfs66l3hxxsrv5uf5hdiuyv4a2uczwiiki@tmijrmuidlin>
 References: <20250411131423.3802611-1-guodong@riscstar.com>
- <20250411131423.3802611-7-guodong@riscstar.com>
+ <20250411131423.3802611-10-guodong@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -80,29 +80,34 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250411131423.3802611-7-guodong@riscstar.com>
+In-Reply-To: <20250411131423.3802611-10-guodong@riscstar.com>
 
-On Fri, Apr 11, 2025 at 09:14:20PM +0800, Guodong Xu wrote:
-> Add pinctrl configurations for PWM0 to PWM19 in the SpacemiT K1
-> device tree source file. Each PWM instance is assigned multiple
-> pinmux configurations corresponding to different GPIOs and
-> function modes.
-> 
-> Configurations include:
-> - Mapping GPIOs to appropriate pinctrl nodes for PWM functionality
-> - Specifying bias-pull-up and drive-strength attributes
-> 
-> These updates ensure proper pin multiplexing and drive strength
-> settings for PWM signals on the SpacemiT K1 SoC when selected.
+On Fri, Apr 11, 2025 at 09:14:23PM +0800, Guodong Xu wrote:
+> Enable CONFIG_PWM and CONFIG_PWM_PXA in the defconfig
+> to support the PWM controller used on the SpacemiT K1 SoC.
 > 
 > Signed-off-by: Guodong Xu <guodong@riscstar.com>
 > ---
->  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi | 315 +++++++++++++++++++
->  1 file changed, 315 insertions(+)
+>  arch/riscv/configs/defconfig | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
+> diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
+> index 4888529df1d8..9bd972867e0a 100644
+> --- a/arch/riscv/configs/defconfig
+> +++ b/arch/riscv/configs/defconfig
+> @@ -259,6 +259,8 @@ CONFIG_RPMSG_CTRL=y
+>  CONFIG_RPMSG_VIRTIO=y
+>  CONFIG_PM_DEVFREQ=y
+>  CONFIG_IIO=y
+> +CONFIG_PWM=y
 
-I think this is too much, I think it is necessary to leave
-already used one.
+> +CONFIG_PWM_PXA=y
 
-Regards,
-Inochi
+Why not m? This can reduce the Image size.
+
+>  CONFIG_THEAD_C900_ACLINT_SSWI=y
+>  CONFIG_PHY_SUN4I_USB=m
+>  CONFIG_PHY_STARFIVE_JH7110_DPHY_RX=m
+> -- 
+> 2.43.0
+> 
