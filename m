@@ -1,132 +1,126 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B437A13D8A3
-	for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 14:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E6A126C13
+	for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 15:44:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744382759; cv=none; b=fjh1+/hWxg/EzDBYJa26ATvjnoWfGI2l9/6MIb5VfHrrGlJOM97WgNpkMYhSpR00z/Q2Lgh9Bd1GZMVsqptB0XOUyVTpGkIpZcpPUbIiMNAB6pP2S928zJfN3XWOtgU3DZLLEc7QQ0vWLGIzFDI+pHOD+jnVQPYqT54hrQ24O7U=
+	t=1744386268; cv=none; b=cRMnhHb9OI/KvjIt4kHLCQJMa9GzC4XFZClEKC0psK8Lo+ZewDcXwGVL2NOGDNP2mGMvyj8ACg1FMH0fK+K1ml95QSb0T/NieNi8lwtaL8BIH9k18qDUQ+KMxyMNy4k6ZBVAI9K+HqTMgx/SR3GFznhnrsXMgkXoYGcfFIsUD6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744382759; c=relaxed/simple;
-	bh=2qew7d5QYGHupMXom6yEmImq3ecfWDyQOuyLEHQb2Aw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qkMYZYJBGT8lBgHwg9VQtlSGH9li2sF/Mi7A+UQ2vJAeNKhMDwUQUqM7Kon21v8j8hC66wh21UnEf7WMHJy6uQfa9LAnQv3fs4Iqc7+hyBmfkxqQhQtB45vlpqPkZwUGtsg2tndSllb4xhAuI2cKBIj/Aj3C3OQCDLbROQj2RTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.27.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id DC77E3436BC;
-	Fri, 11 Apr 2025 14:45:55 +0000 (UTC)
-Date: Fri, 11 Apr 2025 14:45:49 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: Guodong Xu <guodong@riscstar.com>, ukleinek@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, drew@pdp7.com, inochiama@gmail.com,
-	geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de,
-	hal.feng@starfivetech.com, unicorn_wang@outlook.com,
-	duje.mihanovic@skole.hr, linux-pwm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 7/9] riscv: dts: spacemit: Add PWM14 backlight support
- for BPI-F3
-Message-ID: <20250411144549-GYA22568@gentoo>
-References: <20250411131423.3802611-1-guodong@riscstar.com>
- <20250411131423.3802611-8-guodong@riscstar.com>
- <20250411140510-GYA22364@gentoo>
- <d2c26d3e-787a-490e-9134-8ffe2f6b8333@riscstar.com>
+	s=arc-20240116; t=1744386268; c=relaxed/simple;
+	bh=2wgs8xkLPcDzrMkx5fPptVOf8gKg9PkOJJY3p/JCOtE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dlbxfhgnZ601mRcvnUyJ7IWMy50YeYPq8YVzh43K71ThgjVj1zBvqZ463iOt52nHJCNhn3RCyvOtVPWhrGdEPynVGCEGKU4dqicHkGCjar1Hc/7z0SPGboZ3+gP/R1qt3ZsHddeHaHIHr6iiwyObNgbxN907N09NpIyrfbEG71M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=YdfpVGUk; arc=none smtp.client-ip=209.85.166.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="YdfpVGUk"
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3d434c84b7eso13908415ab.1
+        for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 08:44:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1744386265; x=1744991065; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2r1c/vOhjgtnKBMGLqUCUilpq9yxWP4WtszcGjN9x5E=;
+        b=YdfpVGUkDdGARDIL9mmmGjK8Crm0TlZFDZnGEyqePUhlDKopsudgBWuSyx3fFbX9IK
+         OWd3uDlbiGz2YprZln8QluRPMWsvJnPHYxGbZdjkJm28Mgf0VVyLP1h9m+soPXnWCDMT
+         ktMEMg/MukQIILyvM/bQhH0qrQ55pCJsL+5q3J0pqEEelWLabQvDqcU57e5TytZuVY7n
+         fykYd8L/2UL8FqxdgIXHHFcWJqTA/Bi2mEjT7iZ51gHe2HwBV2ULzBhTXhs050oZ5GI8
+         eewq6moxA0BM12852oq20RKITLQKAh4IxPataItlFBd3eW7DN6QqVUzcZcf5DyLXeM0T
+         XTPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744386265; x=1744991065;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2r1c/vOhjgtnKBMGLqUCUilpq9yxWP4WtszcGjN9x5E=;
+        b=PitEZoiS7PZai6iH/UtCNnDU4h6Ivg7TPQVcX7h84KCug9raECHe6dUBDGp0mkpCYg
+         6nXT300VhYSbmKEgeWuOcSPWnJongmUrLCLVfvM99iaB3AQVdovm/u25A2D/MK9+NJLh
+         nkEdzUOwYH4/G9NkOcEE1wGghHpYVi9HD/n7zyh2zjpH6jpyXOXc7Y9OSwh+h9vq9GQL
+         sA53qz8ZQt7g3Fw+Dn0moYO44leh9iTrg5qe+2TrlhzSJScuzcVF3eDhZ/8fuZDMENN1
+         y801BXtAi65EkCA7lOwR5v1Y58C3nQVdq5iYGrNuAjDU/fOgj9ijpiEIN9IMFCK67vRd
+         +7Aw==
+X-Forwarded-Encrypted: i=1; AJvYcCWlLkKIey11TrvdTeE6bKiMTlXi06Tl/VT0XhAdQZnwdpIE3NI502DwuaOTgCvJcD9AVsS3PbxEXw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz0eoHd/Aaes+ObofUoxSeij+S8ttdi8JfQ+ieDWufaGKeSbfnR
+	BUg4CzWC9HB7ZXn8WFB6outjYmiQXExHfLnqliZ/eLYLMJIHGCQB+VRcsNlumcs=
+X-Gm-Gg: ASbGncsUgscwPf0gx+wXf18X8pNmPOkKgreF5XcwM51d3u4jGGwzjOdnMd1LmJbQHxv
+	ExFFPJUOMiGy45sB1H4WFdcO0sjsGBoOd5lhbSaLlhveV3mzACzysI1eidfob43MDVBx2OI31e9
+	fEmAefi5JzpJgmOT9lHidpGpVu7uMzIfmAFaEanq+vmbiyV2IyPeO79+kcOTd3Kvf60SRQVKkdi
+	ZGN38n/nyPy2ogTZadrYoIQKK5sE9inQVUSxZPj06uglGZjLOKg75Q7RbLwIYvvHN70pOeS3swC
+	13VILA5y6aKHofYBfyTHfHI5o0ZyIkq0iNamuaVU8NMfTLjohCB2VPAPtl/YvfgVBed49jPeK8O
+	2hXmj/eUYIxRzEw==
+X-Google-Smtp-Source: AGHT+IFK5sdaLIBjH4lJHrLTb46aftzH6TysHI0IthYxIBi/kqyaLNxSazBe9csKjIFKMCbouX8yUw==
+X-Received: by 2002:a05:6e02:3601:b0:3d0:4bce:cfa8 with SMTP id e9e14a558f8ab-3d7ec1dc7f4mr34974745ab.3.1744386264887;
+        Fri, 11 Apr 2025 08:44:24 -0700 (PDT)
+Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f505cf812dsm1276326173.18.2025.04.11.08.44.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Apr 2025 08:44:24 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: dlan@gentoo.org,
+	benjamin.larsson@genexis.eu,
+	bastien.curutchet@bootlin.com,
+	andriy.shevchenko@linux.intel.com,
+	u.kleine-koenig@baylibre.com,
+	lkundrak@v3.sk,
+	devicetree@vger.kernel.org,
+	linux-serial@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/3] serial: 8250_of: support an optional bus clock
+Date: Fri, 11 Apr 2025 10:44:15 -0500
+Message-ID: <20250411154419.1379529-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d2c26d3e-787a-490e-9134-8ffe2f6b8333@riscstar.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Alex,
+The SpacemiT UART hardware requires a bus clock to be enabled in addition
+to the primary function clock.
 
-On 09:23 Fri 11 Apr     , Alex Elder wrote:
-> On 4/11/25 9:05 AM, Yixun Lan wrote:
-> > 
-> > On 21:14 Fri 11 Apr     , Guodong Xu wrote:
-> >> Add a PWM-based backlight node for the Banana Pi BPI-F3 board,
-> >> using PWM14. The backlight is defined as a 'pwm-backlight' device with
-> >> brightness levels and a default brightness setting. PWM14 is assigned
-> >> a period length of 2000 nanoseconds.
-> >>
-> >> This configuration was used to verify PWM driver changes, with PWM14
-> >> tested and its waveform confirmed as correct.
-> >>
-> >> The node status is set to "disabled", and should be enabled when the
-> >> display driver is ready.
-> >>
-> > .. see comments below
-> >> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> >> ---
-> >>   .../boot/dts/spacemit/k1-bananapi-f3.dts      | 32 +++++++++++++++++++
-> >>   1 file changed, 32 insertions(+)
-> >>
-> >> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> >> index 816ef1bc358e..d04b57ddeb46 100644
-> >> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> >> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> >> @@ -28,6 +28,32 @@ led1 {
-> >>   			default-state = "on";
-> >>   		};
-> >>   	};
-> >> +
-> >> +	pwm_bl: lcd_backlight {
-> >> +		compatible = "pwm-backlight";
-> >> +
-> >> +		pwms = <&pwm14 2000>;
-> >> +		brightness-levels = <
-> >> +			0   40  40  40  40  40  40  40  40  40  40  40  40  40  40  40
-> >> +			40  40  40  40  40  40  40  40  40  40  40  40  40  40  40  40
-> >> +			40  40  40  40  40  40  40  40  40  41  42  43  44  45  46  47
-> >> +			48  49  50  51  52  53  54  55  56  57  58  59  60  61  62  63
-> >> +			64  65  66  67  68  69  70  71  72  73  74  75  76  77  78  79
-> >> +			80  81  82  83  84  85  86  87  88  89  90  91  92  93  94  95
-> >> +			96  97  98  99  100 101 102 103 104 105 106 107 108 109 110 111
-> >> +			112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127
-> >> +			128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143
-> >> +			144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159
-> >> +			160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175
-> >> +			176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191
-> >> +			192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207
-> >> +			208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223
-> >> +			224 225 226 227 228 229 230 231 232 233 234 235 236 237 238 239
-> >> +			240 241 242 243 244 245 246 247 248 249 250 251 252 253 254 255
-> >> +		>;
-> >> +		default-brightness-level = <100>;
-> >> +		status = "disabled";
-> > I'm confused, has DT in board file with disabled status doesn't make sense?
-> > it doesn't really useful for placeholder, even worse that functionality may not
-> > verified, so I'd suggest sending along with display driver while at it..
-> 
-> I think I suggested he include this.  Guodong tested PWM using
-> a backlight on a display connected to a Banana Pi PBI-F3 board.
-> The above numbers come directly from the downstream code, which
-> uses this PWM consistently as a display back light.
-> 
-> But you're right, the exact set of numbers to use is dependent
-> on the display used, so it's better to add them when the display
-> gets integrated.
-> 
-Ok
-> The pwm14 node could update still be added here, but that too
-> might as well wait until there's something to use it.  So I
-> think this patch can just be dropped.
-> 
-thanks for the explanation
+This series makes it possible to specify both clocks via DTS.  If a
+bus clock is required, it and the primary clock are fetched by name.
 
+Changes between v2 and v3:
+  - A third patch was added to disable the bus clock on suspend and
+    enable it again on resume, as requested by Yixun Lan
+  - Rob's Reviewed-by tag has been added to patch 1
+  - The first two patches are otherwise identical to what was in v2
+
+Here is version 2 of this series:
+  https://lore.kernel.org/lkml/20250409192213.1130181-1-elder@riscstar.com/
+
+Changes between v1 and v2:
+  - The DT binding was fixed to properly define the number of clocks and
+    clock names based on the compatible string, as suggested by Rob Herring
+  - Logic to look up the optional bus clock was changed as requested
+    by Andy Shevchenko
+  - The bus clock pointer (which was never used after it was enabled)
+    was renmoved from the of_serial_info structure
+
+Here is the first version of this series:
+  https://lore.kernel.org/lkml/20250408175146.979557-1-elder@riscstar.com/
+
+					-Alex
+Alex Elder (3):
+  dt-bindings: serial: 8250: support an optional second clock
+  serial: 8250_of: add support for an optional bus clock
+  serial: 8250_of: manage bus clock in suspend/resume
+
+ .../devicetree/bindings/serial/8250.yaml      | 30 ++++++++++++++++++-
+ drivers/tty/serial/8250/8250_of.c             | 13 +++++++-
+ 2 files changed, 41 insertions(+), 2 deletions(-)
+
+base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
 -- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+2.45.2
+
