@@ -1,40 +1,43 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E79D1A83F2
-	for <spacemit@lists.linux.dev>; Sat, 12 Apr 2025 13:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753641C3C08;
+	Sat, 12 Apr 2025 18:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744466159; cv=none; b=MDZY5IJRuXNVti1P+wnDTt1euRUzjosjlmuYvWz9lJPrJNuNitomZwz6YHJT6ILMVLm46VEgh4tvy0088NufuPlD/ETRf2XSQmQXReClRXhEyE3rNmedCN6bP/MhOgThYAZJRmVIVYZSlG9k8k8/WoHwocRFeWlxRF709T/EPco=
+	t=1744482459; cv=none; b=fNEX2h49bjSSceONFmlViFb0iX+wmPFBhdoEKheENgQ2mWt08NP6ualc0hE/W3OiykEOWbEQ3bZ0XkSRSjjfrKZfF+da34RvTYTA7MFe2urVmLnrnEr5yvRrpStdihtHDDXdYEZIvVzD1gK2kynEtLDqAg4F68fTldFQDSMBu+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744466159; c=relaxed/simple;
-	bh=+6wEJrVQgRWapbNpAFHkDEtn6wDDNb/Tzgc9b0oM3Vs=;
+	s=arc-20240116; t=1744482459; c=relaxed/simple;
+	bh=5jrniUTmToNcT6JYZS1XF5QtKtluIwGUs3hnv44XPvY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hTmubBatxtCmbzvquyfmBLMaABugWbSxRAzYEx0Pe4v6w+mLYy6XuPzv99Fmr9i/JCMNT0gDyt6Hsz8/GjYw4164xdH/qFfrVxzzctBtXdlsbwc1iOOwivdzxM8O7gYcd/h7JEVidlZpNY/VTHCjEairCJtFwltznRrmV0C0atw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.27.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 443283439C7;
-	Sat, 12 Apr 2025 13:55:56 +0000 (UTC)
-Date: Sat, 12 Apr 2025 13:55:51 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: ALOK TIWARI <alok.a.tiwari@oracle.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y7yxJOpyV5wMdeguWjDHEvl7mupT/iGEhvtz3PfLSInD763IvC3uVXoJzjsuXijrfULTPgBHorZ5HfI5bAjdm4lGtqYyNOR8KYLjt/Wt0bjUG/mtoXN3mMaZkzFDHYCoH02BS/rubX6BW58l02l1Wog7Xf1+RNkKM1szKH6Ae3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TaDTUKSR; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TaDTUKSR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD05C4CEE3;
+	Sat, 12 Apr 2025 18:27:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744482458;
+	bh=5jrniUTmToNcT6JYZS1XF5QtKtluIwGUs3hnv44XPvY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TaDTUKSRACe488kdE+7xZwixRfG6BNyTWwTGWMOcvOHy/C/21FsAKHRHY0mL8rnAc
+	 DjkTG+MgoTRtGul7YElGwKc2Mrd4pkxv0Ecgsgc4x+OOo27Qj5W5yQd7wspvUzGUI3
+	 sk//jx1faHzWqhn+ONT8inmPPMXvPIrLBzFvjAlX1Y1UXWUnULQ3BiBQ3BP+xO3Br5
+	 79WW4A5hivdxH+WNW+OxhFiDPn8OuKNOHypUgQarvvtvdZNkAB/xialBmbf1lceRwt
+	 7Dkm/SP+/8zRf9QYgx+GztyVVMNzBPpx/148Xz+yru7AVL2iqyDWJgjAtkVEfYSrYh
+	 6B6EWuQ6IQ0+g==
+Date: Sat, 12 Apr 2025 13:27:37 -0500
+From: Rob Herring <robh@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, linux-gpio@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: spacemit: add clock and reset
- property
-Message-ID: <20250412135551-GYA24603@gentoo>
+Subject: Re: [PATCH 2/2] pinctrl: spacemit: add clock support for K1 SoC
+Message-ID: <20250412182737.GA1425287-robh@kernel.org>
 References: <20250412-02-k1-pinctrl-clk-v1-0-e39734419a2d@gentoo.org>
- <20250412-02-k1-pinctrl-clk-v1-1-e39734419a2d@gentoo.org>
- <194dfb6c-d290-49f7-b060-3654307c4887@oracle.com>
+ <20250412-02-k1-pinctrl-clk-v1-2-e39734419a2d@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,25 +46,52 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <194dfb6c-d290-49f7-b060-3654307c4887@oracle.com>
+In-Reply-To: <20250412-02-k1-pinctrl-clk-v1-2-e39734419a2d@gentoo.org>
 
-Hi ALOK,
+On Sat, Apr 12, 2025 at 02:58:11PM +0800, Yixun Lan wrote:
+> For SpacemiT K1 SoC's pinctrl, explicitly acquiring clocks in
+> the driver instead of relying on bootloader or default hardware
+> settings to enable it.
+> 
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> ---
+>  drivers/pinctrl/spacemit/pinctrl-k1.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
+> index 67e867b04a02ea1887d93aedfdea5bda037f88b1..3805fb09c1bc3b8cf2ccfc22dd25367292b397b9 100644
+> --- a/drivers/pinctrl/spacemit/pinctrl-k1.c
+> +++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
+> @@ -2,6 +2,7 @@
+>  /* Copyright (c) 2024 Yixun Lan <dlan@gentoo.org> */
+>  
+>  #include <linux/bits.h>
+> +#include <linux/clk.h>
+>  #include <linux/cleanup.h>
+>  #include <linux/io.h>
+>  #include <linux/of.h>
+> @@ -721,6 +722,7 @@ static int spacemit_pinctrl_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev = &pdev->dev;
+>  	struct spacemit_pinctrl *pctrl;
+> +	struct clk *func_clk, *bus_clk;
+>  	const struct spacemit_pinctrl_data *pctrl_data;
+>  	int ret;
+>  
+> @@ -739,6 +741,14 @@ static int spacemit_pinctrl_probe(struct platform_device *pdev)
+>  	if (IS_ERR(pctrl->regs))
+>  		return PTR_ERR(pctrl->regs);
+>  
+> +	func_clk = devm_clk_get_optional_enabled(dev, "func");
+> +	if (IS_ERR(func_clk))
+> +		return dev_err_probe(dev, PTR_ERR(func_clk), "failed to get func clock\n");
+> +
+> +	bus_clk = devm_clk_get_optional_enabled(dev, "bus");
+> +	if (IS_ERR(bus_clk))
+> +		return dev_err_probe(dev, PTR_ERR(bus_clk), "failed to get bus clock\n");
 
-On 17:01 Sat 12 Apr     , ALOK TIWARI wrote:
-> 
-> 
-> On 12-04-2025 12:28, Yixun Lan wrote:
-> > SpacemiT K1 SoC's pinctrl controller requires two clocks in order
-> > to work propertly, also has one reset line from hardware persepective.
-> 
-> typo in commit message
-> propertly -> properly
-> persepective -> perspective
-> 
-thanks for catching this..
-will wait for more comments, and fix in next version
+Do you really need these to be optional? Yes, it maintains 
+compatibility, but if this platform isn't stable, then do you really 
+need that?
 
--- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+Rob
