@@ -1,103 +1,127 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F99B29DB96
-	for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 23:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE322907
+	for <spacemit@lists.linux.dev>; Sat, 12 Apr 2025 04:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744414366; cv=none; b=XPBoixcG7+VOw6UxOBNXRTpsIcGOZIsueF28RI+2oElMEIyZ81XeublvQkdW4K5/16RaAO8FU8GkzTtLFIQCkTPgvN0tYWuf7ygdH7+zBCWMkTjydyvFxcyp+pRObT5FI7W2Sj6boWaBuoW7AEHQDmlucGZ5Yoe8RcbOcsmLmjI=
+	t=1744430470; cv=none; b=LMsHg0zHm48BNdnW9YuB1IBLF2qyBKCjyXxEFnVezalXTBSIDsqFYEo5ifR0YKIG8sBL8sYxyumxcVfFFpxZmJyj87m/DrQ3Trpicc4fS7RbD2Tf1ReYk0SmNz11vMDziNW7jnp3h6puVwo5k9hwid83OG2vsC1Go7np78FgSxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744414366; c=relaxed/simple;
-	bh=ez3lQ50wt4PHNJjw/2DzRy5zUu0J1UdIhacJCZQJdao=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QJz5c1kb0eGhuDIF4ulKQedLBeYYeR5175X5eMg6jsFWfldW8iH70vMIMpJuqYjjdm6hWg5ajEVXT0pRNJFzmcXY9FBrAr9xO+TcoWtNXUdBLHZflj1lQKD6p3lsf78tiyXf0U541IUvTW10DP6UVR16F9iYtw8dCe8/MCiriQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [127.0.0.1] (unknown [116.232.27.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id CED6834386C;
-	Fri, 11 Apr 2025 23:32:38 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-Date: Sat, 12 Apr 2025 07:31:32 +0800
-Subject: [PATCH v8 5/5] riscv: dts: spacemit: add gpio LED for system
- heartbeat
+	s=arc-20240116; t=1744430470; c=relaxed/simple;
+	bh=/oaDy5SzWfzyFBs8bTU2LHsjy16/G0IhlbubH2Ym338=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=i/wx8jpIVv0YcZjW78JFzhPTCQ9Lx8+XblAT+dh/PI+RGuB/BLwegpMwP/n7Kf6CxU6+S3yXXMC0YVi7UHLnlu1gVYN4DMpYMeGd9voVTNMQbChXgi8G/wMi4BXSmhhBszFvllnm9NKDwSqyaoDDbYqFSfYeT2xLrkiRjkF3ylg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=q6RgWMm3; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="q6RgWMm3"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5ed43460d6bso4157160a12.0
+        for <spacemit@lists.linux.dev>; Fri, 11 Apr 2025 21:01:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1744430466; x=1745035266; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/CRPWfzlQeNRznSdwAcCFwL0YU/Q8vcd3a6wdTbE3VY=;
+        b=q6RgWMm3E8XzLmE0RW7gU+QJDi2A7bDAz948I1BLQa5gqWQFTsKvIW7W/0crdH1eUc
+         GcoETzdngX1PyEElMMAWbIbB8hmpPaXfpUgSDR0TDCekKY42AtFOV1k93bwQHIwFDDpp
+         qiBC6AOQqxiAtFZ9BnFxMrkHGhU5jKNSutdQPpQnF6aF9UPnv7jcaF/zI4npCftGEOac
+         veTSyAhrqhf8tAz8lfLMcjViGsI8aaFr21ZANAF6SkXkp/Tko+ZVrMimaUQ5GzZPvvn3
+         5XhJ389XJQAnTYOlyk6UgItIQISf3K9Mwep76ErHMrP37kSR69i7MfmVqAQ2iUAoxpqP
+         4JkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744430466; x=1745035266;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/CRPWfzlQeNRznSdwAcCFwL0YU/Q8vcd3a6wdTbE3VY=;
+        b=KMp4fbxWX5ibPqiNFUyrHydhiGk34D9mc6DViG6py5Njov4+wH/slO3d2X5Ckq1URE
+         L6T0mWkHIujJaMU5xyhT+g9mftkBcDzj7FSlQ+3045rt9B5PVTUJ+oVaMSVEE4IWgKC5
+         i1OJcAdhFMIv9HS4DBaQPkW8fwCPJWIgaOaJzcYY+HyiviGI8NCp+VRxiW//oUYxaR3j
+         baFBOKdFt9FdeK9KghJGXV2jhrzyn/8xg9idRFUi2jITJvVdHtgIo+l2rbBqfizRSVi5
+         N9d/aZY9iGVBpHOSZ060a7L02EFtc5QFYnhKE5AolcvilwvyAr+DxKfZxZoNTas7V0iA
+         xPMg==
+X-Forwarded-Encrypted: i=1; AJvYcCWU/40hWixV4GN9kqTyoadlni7EeGSlnd9qqxNr1nVSMSy/9EM5Za5qC9u+DjvI2CzNQkI9fWRw6g==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy8bX2WqKH2ta89XOo8PwINNylxP1AZ/IBBuNwS72/zydtRs/9d
+	GOT7wvpxYxHgAuYAV0FtqT6r1/ykJdv2IAZqSyAQYVtCAk7GCheke7+WSeW+DfRAI56FghFRb6W
+	flbiM270eLdipptC+M17TjP+0J2FQbPT00I4jng==
+X-Gm-Gg: ASbGncuy1FTyQApohQ9H+6jGm9a/rf3hVqm8M0/CHBw5IErNOO2liH17k/fBF+P1gxq
+	6rOUezAaKyoskljV2igSRamwNUuk3pr42SWP+GhNdCaImaCySDsCT0bTT+ali31YJp8wbtSxThg
+	DhoxGOxlsic/3mH0I8n0o47s5hsg==
+X-Google-Smtp-Source: AGHT+IENp9Rsn1tl1gtpbQVTMzSC6/93PX9bXuEoDkAlRHWwSvf7X/I+LUs0PiXsS9JvQ3CIAnw0CeEUzESATSMDzW8=
+X-Received: by 2002:a17:907:c22:b0:ac1:e881:8997 with SMTP id
+ a640c23a62f3a-acad3445eb0mr424260766b.3.1744430465564; Fri, 11 Apr 2025
+ 21:01:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250412-03-k1-gpio-v8-5-1c6862d272ec@gentoo.org>
-References: <20250412-03-k1-gpio-v8-0-1c6862d272ec@gentoo.org>
-In-Reply-To: <20250412-03-k1-gpio-v8-0-1c6862d272ec@gentoo.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>, 
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Conor Dooley <conor@kernel.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alex Elder <elder@riscstar.com>, Yangyu Chen <cyy@cyyself.name>, 
- Jisheng Zhang <jszhang@kernel.org>, Jesse Taube <mr.bossman075@gmail.com>, 
- Inochi Amaoto <inochiama@outlook.com>, Icenowy Zheng <uwu@icenowy.me>, 
- Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, linux-gpio@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- Yixun Lan <dlan@gentoo.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=866; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=ez3lQ50wt4PHNJjw/2DzRy5zUu0J1UdIhacJCZQJdao=;
- b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBn+aZxfiI6vSFppUJQZcclFJxoGxukFzknzKGWI
- bSazNSymHmJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCZ/mmcV8UgAAAAAAuAChp
- c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
- CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277aefD/9NlWbYn29Msk3Awk
- JEFX4IoCMm//CCjVRGM9538q9qidfJrfb8Eoh93p+BTEL7GH9VJs6QUaXb5xF3jG7rO5vAtQD/8
- D7UjxTtBlKeW2TVsBVVIkPr/mX6utN4uERzdFF9gr/+7tI3TcMWeHt+nPknCAYq74gfdY2t0pcc
- xzW7l9Qpj026YMdE5OpU/obV7jTWPUaSdrISKV+Brj+Z5dQQ2JQt5Av8MMGeH0bgMjn1w79DZxB
- HfFWvzahQOAT7h+HXndZ7QMC3gT7mSRhFk+fH5xWR+rbasYseok12T3CuPm1tslK044v/kkHxCC
- YQeN/byAURzjLDPGFIy+LmNVs4d7IhDR2PVugjlpftNtiFfBlro1hgrXab13IfxbtpmjVs40PGy
- gv15fhqGtrRXvXuaWhPQDXnlgvtLYNm336jGAnWvYN0AUNFMQYEhQv6NYoHOEHbDW7FUC7VSZ1J
- w65vdLBlqOoKotUL/DUGo5TS8zA7rLDdKo0LFIQ5u0vZ50U2HT/FrNoOK+KopKzrEpL9CD60+Wj
- zYRG797irsmcXl/n5IEVPpoxswpUztkAz+3SILGSqjGYh/W4CxUjGYYTlLrNuvCxIYrr4kbYGz2
- YamsKUmzR2HZQHLUFr5KCuns0xWiv2sQE3baUi7A+4gZXTEU4xbMEdxKPQWxO7RKhZdw==
-X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+References: <20250411131423.3802611-1-guodong@riscstar.com>
+ <20250411131423.3802611-4-guodong@riscstar.com> <20250411-spoiler-dispatch-8f709700a996@spud>
+In-Reply-To: <20250411-spoiler-dispatch-8f709700a996@spud>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Sat, 12 Apr 2025 12:00:53 +0800
+X-Gm-Features: ATxdqUGgkB-PsMfv6YqmcddOd__4CXMlcvN5r0cbFMC6NhGoCTmz_wliYFT0jOQ
+Message-ID: <CAH1PCMZcevte5kJ9PUO3cvoaFwdido=WboNcLV9dTk9SJuLGBQ@mail.gmail.com>
+Subject: Re: [PATCH 3/9] dt-bindings: pwm: marvell,pxa: add support to
+ spacemit K1
+To: Conor Dooley <conor@kernel.org>
+Cc: ukleinek@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, alex@ghiti.fr, dlan@gentoo.org, p.zabel@pengutronix.de, 
+	drew@pdp7.com, inochiama@gmail.com, geert+renesas@glider.be, heylenay@4d2.org, 
+	tglx@linutronix.de, hal.feng@starfivetech.com, unicorn_wang@outlook.com, 
+	duje.mihanovic@skole.hr, elder@riscstar.com, linux-pwm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Leverage GPIO to support system LED to indicate activity of CPUs.
+On Sat, Apr 12, 2025 at 12:43=E2=80=AFAM Conor Dooley <conor@kernel.org> wr=
+ote:
+>
+> On Fri, Apr 11, 2025 at 09:14:17PM +0800, Guodong Xu wrote:
+> > Add "spacemit,k1-pwm" as a compatible string to support the PWM
+> > controller on the SpacemiT K1 platform.
+> >
+> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > ---
+> >  Documentation/devicetree/bindings/pwm/marvell,pxa-pwm.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/pwm/marvell,pxa-pwm.yaml=
+ b/Documentation/devicetree/bindings/pwm/marvell,pxa-pwm.yaml
+> > index 9640d4b627c2..1e3cabf6a89a 100644
+> > --- a/Documentation/devicetree/bindings/pwm/marvell,pxa-pwm.yaml
+> > +++ b/Documentation/devicetree/bindings/pwm/marvell,pxa-pwm.yaml
+> > @@ -19,6 +19,7 @@ properties:
+> >        - marvell,pxa270-pwm
+> >        - marvell,pxa168-pwm
+> >        - marvell,pxa910-pwm
+> > +      - spacemit,k1-pwm
+>
+> The driver doesn't appear to handle this differently to existing
+> compatibles, why is a fallback not used?
+>
 
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+The only difference in the SpacemiT K1 PWM controller is the addition of
+a resets line. This property is not used by any existing PXA-based platform=
+s.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 1d617b40a2d51ee464b57234d248798aeb218643..816ef1bc358ec490aff184d5915d680dbd9f00cb 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -17,6 +17,17 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0";
- 	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		led1 {
-+			label = "sys-led";
-+			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "heartbeat";
-+			default-state = "on";
-+		};
-+	};
- };
- 
- &uart0 {
+Since resets is defined as optional, I agree that continuing to use
+the existing marvell,pxa... compatible string is reasonable.
 
--- 
-2.49.0
+I'll update the next version accordingly and include an explanation of this
+decision in the commit message.
 
+-Guodong
+
+> >
+> >    reg:
+> >      # Length should be 0x10
+> > --
+> > 2.43.0
+> >
