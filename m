@@ -1,78 +1,121 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75DD1ACECD
-	for <spacemit@lists.linux.dev>; Mon, 14 Apr 2025 08:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2972741A1
+	for <spacemit@lists.linux.dev>; Mon, 14 Apr 2025 16:42:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744617837; cv=none; b=J/6en4528Vp5YimmwFimoONQ59ZoafPbGrjDcQRcFIC/1aasM1124uTyhLaOk1sFQL+eJaWLSjRWYhgB6IpncGjYMA6JnohEefDF5E1eH+4SFxK6yOsrmHi+cjauy8uzSrN9UfIW2DXMajYas/IO8p4p2BBpSN7cAj6j9GCgaxY=
+	t=1744648935; cv=none; b=hc/nw6vHpKQ0zh3AG4URNzTKn20uVYtG6vuQTcBOSb9HIeJlEv/hkrWRzsQTxhqWQl06tsF6+gjH9FdzRx3Z+lhVizssMqolZryaLONKFxYE4wohcHQ3tPMFCmu2uvBlgnG3MvvWJcBaeN7E59EO+qaVijwmYAAKqF+rpizEbXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744617837; c=relaxed/simple;
-	bh=UUj7ArAKKBHBo3T95CmKN7qumBdR3O7wa+qSurIRlCw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uOgS7YI8TZUrIW+wWAQSj9zZ2Qir2LxN+kdR6ihYDYjZ6ajS9vYuz75OB7/ZPtU2J3/ytISNUQwLePeajERA+azPZBLNrgs2yaK9VHIaAgsRUSGds9hwhVHSU+HKAEfaKoh36dO9Ixnnkt7I+DGrQOVtGaoJH8UWwt1Msr0DJlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.27.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 7AD2B343029;
-	Mon, 14 Apr 2025 08:03:54 +0000 (UTC)
-Date: Mon, 14 Apr 2025 08:03:44 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
-Cc: Guodong Xu <guodong@riscstar.com>, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
-	drew@pdp7.com, inochiama@gmail.com, geert+renesas@glider.be,
-	heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com,
-	unicorn_wang@outlook.com, duje.mihanovic@skole.hr,
-	elder@riscstar.com, linux-pwm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 7/9] riscv: dts: spacemit: Add PWM14 backlight support
- for BPI-F3
-Message-ID: <20250414080344-GYA28186@gentoo>
-References: <20250411131423.3802611-1-guodong@riscstar.com>
- <20250411131423.3802611-8-guodong@riscstar.com>
- <5lfnxricxm2k3fuf6nfvjd6cbkmsjkx7inoi52uy5uwwvld7sq@abn4i62tdics>
+	s=arc-20240116; t=1744648935; c=relaxed/simple;
+	bh=/66OOPt3HW87DIGt0O3zeDKL07onErJWuovRqfFxozI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aRqLxa5cjhBsNhAWffpz26IP3ytxXwB7xibu0xGGyxQBEAxUT5yljxdD5i/jIDiAKAqfJ/uKOI/Xck3GERdTL15J6ITaE2Aa9OdIEUwThKCXqGMGgx32+O0ICHBlIeeXCWVYS4Bczoa7u6vCgxUykTzd0wn20oyY2kfYYKNucAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=Hw+Wx4hL; arc=none smtp.client-ip=209.85.166.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sifive.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="Hw+Wx4hL"
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3d6d6d82633so14986185ab.0
+        for <spacemit@lists.linux.dev>; Mon, 14 Apr 2025 09:42:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sifive.com; s=google; t=1744648932; x=1745253732; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4Nkt4V2QTjnSapTTILkS8+oLHV4hk8aXAHawaxgiQGU=;
+        b=Hw+Wx4hLo4XW2Wq8m7UKJkKBmGVDJVBWdZ5mW/wnKh0XeH2sYg+HNJiiTZZjr7dp67
+         uXQK+OmnyqqWy5/VglSZ87l2HdKJULGxhi3mJWkpVf9Yg0ganwaW8QrH5IcWaI53IeN6
+         TbwwRrOG4/RZqfeVkeSDYddfeZAJ8E0JCwFEA+T/IIUo55iZddXSxGMIlP4jkJTB8Cfh
+         j9G2C1ud9RrH5B2BGwLPBnh4RxM2pBuBEiOzh7EI5Nqh4LEyUnQRNyGiPCF20+lx7lJp
+         qNxB0TE+GZznYoFKjbIKDnimuEobpUesTWm6P/UTajrYBdfDFroW8PjQyyudEx8Miu6G
+         k71A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744648932; x=1745253732;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Nkt4V2QTjnSapTTILkS8+oLHV4hk8aXAHawaxgiQGU=;
+        b=UG7bOI6xxHB4lXMjSTNVFSOmCxtVYpu0jWedr+znzz2lSz/e6PGADRM6UWKDXV9yM9
+         4zxqrhvRdwtLeHlWdZLsx25XIAjL7SSS6RCs5kZFyzc0vtOONPnIomD1uhEr143QS2QQ
+         JX+Fz544a2vMC1eFI3zzThuSbmqePcQBTFnSXoXKH1ugn8KsXb2r/a9w/J+KQFhgKCf6
+         2S9MlcKckpJNLJ7qdWaSOBGS5PrxuXuHaSliowo9toj5VfMLD/KWxyo2LuyDMmq+BAsj
+         LEEbtJHFjWco/p2hkB4D9Y8APODdzsbmSmojBDWHBInR6BwBaN0WXOeG21oBjCmkobQD
+         8jXg==
+X-Forwarded-Encrypted: i=1; AJvYcCXLPsV7HIBnTXrwYKci9eFfMwqlXafVFyS/f1Ua0xyrlteaSYwxmNX0fo7L9vv8c/zhXcOFnzR7Nw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzCxVF4nTlQuI1Cb/gfCPQI9eyhJ5fTuF2cxCq+Oy12nEW6GP4d
+	HQNmJlvPOXMPp4A5IR8sGTJQgoIGE8LNvn70Nm4oqjip+He/dgmm5R2NtzFtQOM=
+X-Gm-Gg: ASbGnct11Qnak1lK4e39+1wauIkC4F1kimr6ozVELOXTKwjlkYuXAqq10DCd5PVQULn
+	TXgc1S+OsJKa8tHRLIEQsHdPpTOOY023iXb30Av9mdUevmwueOWNjZ2NnWT+nzjSpa3r6++s6s0
+	hlDhUgqZ2p4w0gK+NtcMmZoZOIFnzH+niUFppcYYphHUkWBiklLemgnofVm1epW+Jn/lfWW3Ny2
+	vFAy2xCysAP49ZJd9VvCMfdvwvYdjHetxXCtEYtTcVOQ5Y1dLlxco7x1ugh5ePdQFGYLQcYoF4K
+	Ct3UAxSfl0BNDpY/lgKKBLRGaAmHs5K/M4RVOrUg6VTK1YcEmTZeDnW4UA==
+X-Google-Smtp-Source: AGHT+IHXcv1gAGtPs5um9SWMJJd18WOJ6IiYOGvEA56wWlYHbTbN9OhrdEHa3Nng5MJO18XCSyHZBw==
+X-Received: by 2002:a05:6e02:338b:b0:3d5:bdac:c927 with SMTP id e9e14a558f8ab-3d7ec27c9eemr148288925ab.18.1744648932034;
+        Mon, 14 Apr 2025 09:42:12 -0700 (PDT)
+Received: from [100.64.0.1] ([170.85.6.166])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3d7dba9bb63sm27527735ab.38.2025.04.14.09.42.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Apr 2025 09:42:11 -0700 (PDT)
+Message-ID: <9a51fbfb-cd06-489d-8deb-4323eca496fe@sifive.com>
+Date: Mon, 14 Apr 2025 11:42:09 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5lfnxricxm2k3fuf6nfvjd6cbkmsjkx7inoi52uy5uwwvld7sq@abn4i62tdics>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/9] riscv: dts: spacemit: Add pinctrl configurations for
+ PWM0-PWM19
+To: Inochi Amaoto <inochiama@gmail.com>, Guodong Xu <guodong@riscstar.com>,
+ ukleinek@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, alex@ghiti.fr, dlan@gentoo.org,
+ p.zabel@pengutronix.de, drew@pdp7.com, geert+renesas@glider.be,
+ heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com,
+ unicorn_wang@outlook.com, duje.mihanovic@skole.hr
+Cc: elder@riscstar.com, linux-pwm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+References: <20250411131423.3802611-1-guodong@riscstar.com>
+ <20250411131423.3802611-7-guodong@riscstar.com>
+ <ujkfb3ajvoebrkvoepztgh3afzw5dq7djefvdddiboo5gxu63x@dlflpzwpv26u>
+From: Samuel Holland <samuel.holland@sifive.com>
+Content-Language: en-US
+In-Reply-To: <ujkfb3ajvoebrkvoepztgh3afzw5dq7djefvdddiboo5gxu63x@dlflpzwpv26u>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Uwe,
+Hi Inochi,
 
-On 07:58 Mon 14 Apr     , Uwe Kleine-König wrote:
-> Hello,
+On 2025-04-11 5:50 PM, Inochi Amaoto wrote:
+> On Fri, Apr 11, 2025 at 09:14:20PM +0800, Guodong Xu wrote:
+>> Add pinctrl configurations for PWM0 to PWM19 in the SpacemiT K1
+>> device tree source file. Each PWM instance is assigned multiple
+>> pinmux configurations corresponding to different GPIOs and
+>> function modes.
+>>
+>> Configurations include:
+>> - Mapping GPIOs to appropriate pinctrl nodes for PWM functionality
+>> - Specifying bias-pull-up and drive-strength attributes
+>>
+>> These updates ensure proper pin multiplexing and drive strength
+>> settings for PWM signals on the SpacemiT K1 SoC when selected.
+>>
+>> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+>> ---
+>>  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi | 315 +++++++++++++++++++
+>>  1 file changed, 315 insertions(+)
+>>
 > 
-> On Fri, Apr 11, 2025 at 09:14:21PM +0800, Guodong Xu wrote:
-> > +&pwm14 {
-> > +	pinctrl-names = "default";
-> > +	pinctrl-0 = <&pwm14_1_cfg>;
-> > +	status = "disabled";
-> > +};
-> 
-> I wonder if the pinctrl properties can better be added to the SoC's
-> .dtsi file. (Only applies if this is a canonical choice, i.e. there is
-> no other possible output configuration.)
-> 
-I'd agree it's a good idea and should follow, but unfortunately in the
-practical case, all pwm able to route to at least two different pins..
+> I think this is too much, I think it is necessary to leave
+> already used one.
 
-https://developer.spacemit.com/documentation?token=YiJZwXA2Ri4nJikV9E1cp6nqnMh
-see section: 4.5 Multi-Function I/O Pin Assignments
+If your concern is about compiled DTB size, you can use /omit-if-no-ref/ for
+each of these nodes, so only the pinmux nodes actually referenced by a
+controller are included in the DTB.
 
--- 
-Yixun Lan (dlan)
-Gentoo Linux Developer
-GPG Key ID AABEFD55
+Regards,
+Samuel
+
