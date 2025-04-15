@@ -1,79 +1,47 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCF6D517
-	for <spacemit@lists.linux.dev>; Tue, 15 Apr 2025 01:01:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21ED2DFA35
+	for <spacemit@lists.linux.dev>; Tue, 15 Apr 2025 02:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744678870; cv=none; b=oOvVDhiRKlQvg9qtn9HPZO29paW8HU8ZE+CGpgqDBouYUesfS9oA3PfQ7FdglGa6JBrh+ELnoOE2STgOdp8F01eQq9H2GF54FSgsC1fAAxEUxJTAbMKTUbGX/hzapC5MgfQp9/6uLSTKyjf6E3AU50rtphR5btA5V/FhQ+B2MJI=
+	t=1744684361; cv=none; b=mFg/HgoIU03EC3ypiDt5t87hGtk7SG1f6soige/14SkWWtStHT3c8qMTQT3z2S5Z6Gc51jcu9tT+uiWA1baaXHgYPNj7uPlbd0U+y5lLRFw9T9964qQ6JqJV+iW5OQEIR5jfEENtWsOMJrGzvpLt3wV+7G3QLWbPVvFrzXnrFDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744678870; c=relaxed/simple;
-	bh=v4w5DfE/sYNT5ehoSrvg4/ugdIQziaDkEkahrOSBX+4=;
+	s=arc-20240116; t=1744684361; c=relaxed/simple;
+	bh=5aU/+jQzMsPhnk/kxaQnQS5SJH3IK8b/Do4X0eL5/oI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e8m4UIl+IHvTTVB4x0SmbtoAm1xVN3XnDlaa4t3Yv90CcxtpHMZB4egiydG6zY9E+1Iz+QLr9aTm7MD8wdnqyVzptcVD+e89jd6LDNbkd8OEScD5yS+I8zDMk3p24DR5fdk8UgsNPSPxsqp6MABFwH2GKnwJ5vu7MiCg0hXMLpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fuZ4R55E; arc=none smtp.client-ip=209.85.222.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fuZ4R55E"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-86718c2c3b9so1898211241.2
-        for <spacemit@lists.linux.dev>; Mon, 14 Apr 2025 18:01:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744678867; x=1745283667; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uy7YAJZKOai1D7ABZjjN+bQn5zDwS2Ij5HcVijKw7Bs=;
-        b=fuZ4R55Ec9uhqCo6j5DpW/L+MVHPjs/Qo3/QyxXAW0KQzHd2KUufldT7mdymF1BAhY
-         JqOrj2clNZLyJOoRe8Pkpxo/9b0agsKU5Vmjoj2xnt1+apZKqh1u6Aw3rJLJqHNtMM2v
-         GY6pj1M9EqQOtxtpRC+istgCefNR5/EU+tFjsAFfA3IQdPU9XrhL86Z3Z24XrQrQ8+KN
-         pR0at5BSsjIU5qkVqNTvuWAjSbNal4h/QD289jlKBW9dYmhLLQWI/xN3VhLKYn2nJMb/
-         4cdYjJPaf2jKVVrhQxMBTSykTTNEI9A4qmVAjWQoT3c9FmLD5wUEOq0uLYcxjYrmGtSp
-         BGgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744678867; x=1745283667;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uy7YAJZKOai1D7ABZjjN+bQn5zDwS2Ij5HcVijKw7Bs=;
-        b=vpBy4Tpt6Xt6mUb49en0DbMeZv9cRufRQ+fqMqUCbjUPsSuErgnsvL6zkxTbFkrLF2
-         2pCWKQB725VcWwU/w4I2CBDHPfCztnSAYStbZXMvE+5At129fUn+CmjPAoAd7HBlVDVs
-         zYxwhbKdaHxoIQ6uDdi+YqAppF9kHPl9u9Bk2eiFZb9hiqZ/DJ/55uO9YBFCOTO/DSTg
-         VWKGf4ob9zFHUtQEoiOejhbuO3y7deiY21FO+TwCFlWe94G0D0N4/+qWdS2hT3rIxlPv
-         teejelzFnk83rnPGo1TJ2nRlfoCDNxKBAJz8D43dhuhuAj1Dt1p8K5vaylTCE5XfY2U/
-         5Azg==
-X-Forwarded-Encrypted: i=1; AJvYcCW8GPgisdm6sCnw2haMt/z8yl6au1Ome+s13gUEtmtbVh2SwQsNXkEC0BDSHwOFnoOtxH8tvOomDQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw8F6qRNo9yU7MA4sY+upszon+3Mbo5H19lozZ7DF+sIUfcQz56
-	MBsMMD20eTu84Fj1UBip25e7ZMxAQOWroU9/lhoZKe57PhrHzujb
-X-Gm-Gg: ASbGncsxPOVCjtN54iC18qNOCtj5hmJMdULLyNLZRK+6XLnFFcjDB0lQNn31KgWQY2G
-	cohnrZ+IgKxb3XLoYueyH0atZ03O6EocOLbFCJYCHqQw+OrHe7Djd4DtcvKnMIp2SBvOyWYQooe
-	5FIQYBLzZPrQYwMVWU9ETGAUL2YjyIiw6QHkOa3ZOBFUwqftfPkKVotkKwiAn045GtQb0dwGcE2
-	AJzpPsxgGEwfqQ9NuwRgXZr0iXB/tXZLFrScWKEPyUdwJce2bMXxGAt9vzVmGK2ML883qo66+JJ
-	RFPb7FHZvts0iX1y
-X-Google-Smtp-Source: AGHT+IEg5WHo6qDq3mTM3+gnVU2hOs9hdPqiMDeyWKuT5X6RpeIxFCETbXntue45FyG12HX43MWGmQ==
-X-Received: by 2002:a05:6102:5489:b0:4c1:924e:1a2a with SMTP id ada2fe7eead31-4c9e504c3aemr10457091137.25.1744678866709;
-        Mon, 14 Apr 2025 18:01:06 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f0de970badsm92754026d6.26.2025.04.14.18.01.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Apr 2025 18:01:06 -0700 (PDT)
-Date: Tue, 15 Apr 2025 09:00:24 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Haylen Chu <heylenay@4d2.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Haylen Chu <heylenay@outlook.com>, Yixun Lan <dlan@gentoo.org>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-riscv@lists.infradead.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
-	Inochi Amaoto <inochiama@outlook.com>, Chen Wang <unicornxdotw@foxmail.com>, 
-	Jisheng Zhang <jszhang@kernel.org>, Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, 
-	Inochi Amaoto <inochiama@gmail.com>
-Subject: Re: [PATCH v7 3/6] clk: spacemit: Add clock support for SpacemiT K1
- SoC
-Message-ID: <smgd2dymwnxkuvi4nevukt2fxcz3b5vuqt6wnuc2cf2bqaxisf@vtj7qnd5ws4t>
-References: <20250412074423.38517-2-heylenay@4d2.org>
- <20250412074423.38517-5-heylenay@4d2.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ROl2WyhTxHZFz+zzEUb4LzSgadSi8mEdt+noTqUjlBGm6Sr5VnXxIcAF5o/pSvDYoWWH3wi2XEQP9dGR8fVL7OhxM3UfdbR8cWPixJLctYoDzf4aqB7DOCpxVP5hnMRNq28uAUcnO0kCKqdAbkGd0mx0nGxNdeZmFUO5xz4fAVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.27.72])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 8CC5E34309F;
+	Tue, 15 Apr 2025 02:32:38 +0000 (UTC)
+Date: Tue, 15 Apr 2025 02:32:34 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Conor Dooley <conor@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alex Elder <elder@riscstar.com>, Yangyu Chen <cyy@cyyself.name>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Jesse Taube <mr.bossman075@gmail.com>,
+	Inochi Amaoto <inochiama@outlook.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v8 0/5] riscv: spacemit: add gpio support for K1 SoC
+Message-ID: <20250415023234-GYA29961@gentoo>
+References: <20250412-03-k1-gpio-v8-0-1c6862d272ec@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -82,45 +50,132 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250412074423.38517-5-heylenay@4d2.org>
+In-Reply-To: <20250412-03-k1-gpio-v8-0-1c6862d272ec@gentoo.org>
 
-On Sat, Apr 12, 2025 at 07:44:21AM +0000, Haylen Chu wrote:
-> The clock tree of K1 SoC contains three main types of clock hardware
-> (PLL/DDN/MIX) and has control registers split into several multifunction
-> devices: APBS (PLLs), MPMU, APBC and APMU.
+Hi Bartosz,
+  I think this version is good to go, if you agree,
+can you take patch [1,2 / 5] through gpio tree?
+
+Hi Palmer,
+  I believe the change to riscv's defconfig file should
+ go via riscv tree?
+
+ thanks
+
+On 07:31 Sat 12 Apr     , Yixun Lan wrote:
+> The gpio controller of K1 support basic GPIO functions,
+> which capable of enabling as input, output. It can also be used
+> as GPIO interrupt which able to detect rising edge, falling edge,
+> or both. There are four GPIO ports, each consisting of 32 pins and
+> has indepedent register sets, while still sharing IRQ line and clocks.
+> The GPIO controller request the two clock sources from APBC block.
 > 
-> All register operations are done through regmap to ensure atomiciy
-> between concurrent operations of clock driver and reset,
-> power-domain driver that will be introduced in the future.
+> Due to first three GPIO ports has interleave register settings, some
+> resources (IRQ, clock) are shared by all pins.
 > 
-> Signed-off-by: Haylen Chu <heylenay@4d2.org>
+> The GPIO docs of K1 SoC can be found here, chapter 16.4 GPIO [1]
+> 
+> This patch series has been tested on Bananapi-F3 board,
+> with following GPIO cases passed:
+>  1) gpio input
+>  2) gpio output - set to high, low
+>  3) gpio interrupt - rising trigger, falling trigger, both edge trigger
+> 
+> This version should resolve DT related concern in V4, and register each bank as
+> indepedent gpio chip in driver, no more sub children gpio DT node needed.
+> 
+> Please notice in this version, the reset property is added, but optional.
+> as I see no need to activate it in driver, instead I suspect it may
+> break cases if bootloader did some prerequisite settings, so I'm leaving
+> it for future implementation if really necessary.
+> 
+> The DT part (patches 4, 5) has no clock property populated which result
+> some DT warnings, I will fix it and re-spin the DT part once clock driver merged,
+> so it's included here for completeness only, please ignore these warnings.
+> 
+> Link: https://developer.spacemit.com/documentation?token=Rn9Kw3iFHirAMgkIpTAcV2Arnkf [1]
+> Link: https://lore.kernel.org/all/20240730-k1-01-basic-dt-v5-0-98263aae83be@gentoo.org [2]
+> Link: https://lore.kernel.org/all/20241016-02-k1-pinctrl-v5-0-03d395222e4f@gentoo.org/ [3]
+> Link: https://lore.kernel.org/all/20250218-gpio-ranges-fourcell-v1-0-b1f3db6c8036@linaro.org [4]
+> Link: https://lore.kernel.org/all/20250225-gpio-ranges-fourcell-v3-0-860382ba4713@linaro.org [5]
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
 > ---
->  drivers/clk/Kconfig               |    1 +
->  drivers/clk/Makefile              |    1 +
->  drivers/clk/spacemit/Kconfig      |   18 +
->  drivers/clk/spacemit/Makefile     |    5 +
->  drivers/clk/spacemit/ccu-k1.c     | 1154 +++++++++++++++++++++++++++++
->  drivers/clk/spacemit/ccu_common.h |   48 ++
->  drivers/clk/spacemit/ccu_ddn.c    |   83 +++
->  drivers/clk/spacemit/ccu_ddn.h    |   47 ++
->  drivers/clk/spacemit/ccu_mix.c    |  268 +++++++
->  drivers/clk/spacemit/ccu_mix.h    |  218 ++++++
->  drivers/clk/spacemit/ccu_pll.c    |  157 ++++
->  drivers/clk/spacemit/ccu_pll.h    |   86 +++
->  12 files changed, 2086 insertions(+)
->  create mode 100644 drivers/clk/spacemit/Kconfig
->  create mode 100644 drivers/clk/spacemit/Makefile
->  create mode 100644 drivers/clk/spacemit/ccu-k1.c
->  create mode 100644 drivers/clk/spacemit/ccu_common.h
->  create mode 100644 drivers/clk/spacemit/ccu_ddn.c
->  create mode 100644 drivers/clk/spacemit/ccu_ddn.h
->  create mode 100644 drivers/clk/spacemit/ccu_mix.c
->  create mode 100644 drivers/clk/spacemit/ccu_mix.h
->  create mode 100644 drivers/clk/spacemit/ccu_pll.c
->  create mode 100644 drivers/clk/spacemit/ccu_pll.h
+> Changes in v8:
+> - rebased to v6.15-rc1
+> - adjust dt-binding/code to request clocks
+> - add reset property
+> - call irq_domain_update_bus_token() to support threecells interrupt mode
+> - use devm_platform_ioremap_resource(), so drop "struct resource"
+> - fix Kconfig
+>   - select GPIO_GENERIC as calling bgpio_init()
+>   - change to tristate, make it possible to build as module
+> - adjust defconfig to enable gpio 
+> - Link to v7: https://lore.kernel.org/r/20250226-03-k1-gpio-v7-0-be489c4a609b@gentoo.org
+> 
+> Changes in v7:
+> - dt-binding: fix 80 column, drop unneeded dependencies
+> - tested with patch v3 of "gpiolib: of: Handle threecell gpios" [5]
+> - collect review tags
+> - Link to v6: https://lore.kernel.org/r/20250223-03-k1-gpio-v6-0-db2e4adeef1c@gentoo.org
+> 
+> Changes in v6:
+> - rebase to threecell gpio patch which proposed by LinusW at [4], 
+>   drop unneeded *xlate(), *add_pin_range() function
+> - add SPACEMIT prefix to macro
+> - adjust register comments
+> - drop 'index' member, instead calculate from offset
+> - add IRQCHIP_SKIP_SET_WAKE as gpio doesn't support irq wake up
+> - drop #ifdef CONFIG_OF_GPIO
+> - move interrupt mask disabling/enabling into irq_*mask()
+> - Link to v5: https://lore.kernel.org/r/20250217-03-k1-gpio-v5-0-2863ec3e7b67@gentoo.org
+> 
+> Changes in v5:
+> - export add_pin_range() from gpio core, support to add custom version
+> - change to 3 gpio cells, model to <bank number>, <bank offset>, <gpio flag>
+> - fold children DT nodes into parent
+> - Link to v4: https://lore.kernel.org/r/20250121-03-k1-gpio-v4-0-4641c95c0194@gentoo.org
+> 
+> Changes in v4:
+> - gpio: re-construct gpio as four independent ports, also leverage gpio mmio API
+> - gpio interrupt: convert to generic gpio irqchip
+> - Link to v3: https://lore.kernel.org/r/20241225-03-k1-gpio-v3-0-27bb7b441d62@gentoo.org
+> 
+> Changes in v3:
+> - dt: drop ranges, interrupt-names property
+> - Link to v2: https://lore.kernel.org/r/20241219-03-k1-gpio-v2-0-28444fd221cd@gentoo.org
+> 
+> Changes in v2:
+> - address dt-bindings comments, simplify example
+> - rebase to 6.13-rc3 
+> - Link to v1: https://lore.kernel.org/r/20240904-03-k1-gpio-v1-0-6072ebeecae0@gentoo.org
+> 
+> ---
+> Yixun Lan (5):
+>       dt-bindings: gpio: spacemit: add support for K1 SoC
+>       gpio: spacemit: add support for K1 SoC
+>       riscv: defconfig: spacemit: enable gpio support for K1 SoC
+>       riscv: dts: spacemit: add gpio support for K1 SoC
+>       riscv: dts: spacemit: add gpio LED for system heartbeat
+> 
+>  .../devicetree/bindings/gpio/spacemit,k1-gpio.yaml |  96 +++++++
+>  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    |  11 +
+>  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       |   3 +
+>  arch/riscv/boot/dts/spacemit/k1.dtsi               |  15 ++
+>  arch/riscv/configs/defconfig                       |   1 +
+>  drivers/gpio/Kconfig                               |   9 +
+>  drivers/gpio/Makefile                              |   1 +
+>  drivers/gpio/gpio-spacemit-k1.c                    | 293 +++++++++++++++++++++
+>  8 files changed, 429 insertions(+)
+> ---
+> base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+> change-id: 20240828-03-k1-gpio-61bf92f9032c
+> 
+> Best regards,
+> -- 
+> Yixun Lan
 > 
 
-If possible, split the patch into multiple one by the compatible
-so others can review easily. Otherwise, it is LGTM.
-
-Reviewed-by: Inochi Amaoto <inochiama@outlook.com>
+-- 
+Yixun Lan (dlan)
+Gentoo Linux Developer
+GPG Key ID AABEFD55
