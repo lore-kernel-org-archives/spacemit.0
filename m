@@ -1,93 +1,206 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268D017A31F
-	for <spacemit@lists.linux.dev>; Tue, 15 Apr 2025 07:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C441F460E
+	for <spacemit@lists.linux.dev>; Tue, 15 Apr 2025 08:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744702529; cv=none; b=ncg4c14AeQ9Hr+cv5lcW0T7rALkpev6tkvgRK4/OXgeWNHUJ8q3gEQOmIwqHhrjquXyRYrr7EHtoFzqLpBjY3sjFFeS1qCLrxn9cuK4w0Gs3jEqTPUhG/f60EMgf9BSyE625d+WSO40cqfaH2CX8U+AZy4e6Gn0685OmWXNdQGs=
+	t=1744705384; cv=none; b=PYrvuA8+OYsit1/aPIAvezmuGLztvFFrQIi9LEH2a4yCqbTx51V2mMv/WPAmQQrtj6C/ejCcd+xRZBshY+LrsKqa3w2s8hvFuv/b2BS0GxRbAfCI/cgTiEmLHGd81OlB6AiSycobL/6wqPgPEqlwmwNoPbXWbZ96iWIn0A4W0v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744702529; c=relaxed/simple;
-	bh=/t01dfXvGRgfX4KTskLD9RHr8QjggEKBR5una7CkTdM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HRKrklqNZCZ3FET/DuraB5TN7fmPeC1LgkfFZEdazXZWXnKLhR2L0lsEyAjISbNWzttjAXzjA4jxuNF/BYjNtd4LSH62Da8CqWcf/Najgk8KfkSTa65sl7JXL4jLcYHUnBW2NRr+2e/LnEgsssLsmtC7/YHlnLPaYeYuC32Kv0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l4XwNXP2; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l4XwNXP2"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-3105ef2a071so25134491fa.1
-        for <spacemit@lists.linux.dev>; Tue, 15 Apr 2025 00:35:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1744702526; x=1745307326; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z5s8lHjULdMShwAF8jjer9y5ggl6mu2Z2yK+KvFB6hE=;
-        b=l4XwNXP2nLdwzF928JiPdI7sd8+MyZBY76GzKqBUEQycGneOz50s8Q5+vr7B02N2Xi
-         kRbVmS4fz/hSzyO8Gt7J3MnwDwyuYDTCT4q59BfZaazTypb2j17HpNAcjXZfg8AjzF1X
-         xNxq5FJb2pl2zFFB6+HU1WLBjQ+un5Hamg5cWLqkDngCzI56XO56RBSf011/KnKpDrLP
-         CnuN5iuV1kwrVWgegYZEzxQjwoaL0D5PzP4ihbMHx4gmwW/U9BJtqny2KZi6+clLOffi
-         fKddSALN5nzSDeMpQBgZHBhWmiWFmfM6/qq0Wt/FZt6927dIdpYGE2TllI4UEa+qnXTU
-         6glQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744702526; x=1745307326;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z5s8lHjULdMShwAF8jjer9y5ggl6mu2Z2yK+KvFB6hE=;
-        b=WzV8/gan8AIPfYBJ4Oiqpr2O5YIidEiE9Y+/ueHus9FP7ZksQ6yhY1tWBeGxWeaRq3
-         vHuVygGPmTbMCx7riexT2oDtU7zxXkDq3yOb8a7HJO3oGNZdoBJVz1JJHVwQjZqMpgxZ
-         OTk2kof+3foedrXlmh45kwBZZVo1irKE3C4d04+RC8ulIJ2GVRzA6wsDJyljfuLVUX6s
-         Je0ZJ+oaLMXep323MSOc3/QjaJ3KQqgTNF4DXp/uTv8Y8mHUIDonYNw35iYacwR0rX9j
-         2qM6WHOsfR5oP/HSMi4W1zEjIfEz+DqIQwHhpX4+5grPBwQW700PyB/hOY2YdC6GrpKa
-         xP/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUQftbkOGGurPPbNTs58B5SWgz9jjLnpuGG9Uh3k+nKEtO+Qxpyc9IxjcsORLlg8jg39ttE2daPOA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxNK2gjPawV0HxOP6iGFGwXHAJW2Hp6yrdFvlSXzssky6gCwEzu
-	5cMGYSLOq0rvjabA24+FGOzSG+XXvPHye3bIvvTDHgS3AsibvzvM6ZVPxFEWef6RbH7cUaQvyzS
-	AFlnHghOIUceS9VKT7UnVYKyiftLrPHHdz6H2bIUXYF2j8eDO
-X-Gm-Gg: ASbGncsP6rJJ3snjf91RWpYEz6mN4BW6AQCVuYnbKCSWyuVvd7OUGCnNwigrP7Yg7VQ
-	02v0oyIAEtavSalavh+cJ8DyfLrOAcJ8yQQ9SfccVFntlA5nULnF0H5urTkHwu1fuHnwjJEY07V
-	sVSrlU8wn3t6Mgj9dpPQbOGU+PXY8krHtS
-X-Google-Smtp-Source: AGHT+IF/f3ma4C5o9c0efnyvduCTab9wDDK72+7lhXFZsmhgzu8nGsMsG6D4c0qe2PhRQIiyrICHnRVYY1XaZjetoDw=
-X-Received: by 2002:a05:651c:30c1:b0:30d:b3d1:a71 with SMTP id
- 38308e7fff4ca-31049a80682mr54317271fa.33.1744702526493; Tue, 15 Apr 2025
- 00:35:26 -0700 (PDT)
+	s=arc-20240116; t=1744705384; c=relaxed/simple;
+	bh=JpGjNbvJ68b1+c8DHkGd85uMGGsQlUTSW2ospchYelE=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ianrEu70TvAFci/jR4/p7QmbuoqTRbW/yooUNHLvf21GpPaXpRImeQt7w521bic/n9GfJm3FXD0Y6NXPkoyKEK1HMQCHO8bsRaB3vLgToF5dmY7Yhc3+6FDIKOrmfXlN+RaMWsjsQw3/kQw4SD0O28LQUfbAfO+R6otm31+ZnMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1u4bYu-0001z5-0U; Tue, 15 Apr 2025 10:22:32 +0200
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1u4bYs-000O14-3C;
+	Tue, 15 Apr 2025 10:22:31 +0200
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1u4bYs-0003Kq-2s;
+	Tue, 15 Apr 2025 10:22:30 +0200
+Message-ID: <eee41968ecb0c16da214819b9a43e9dd881fcf13.camel@pengutronix.de>
+Subject: Re: [PATCH v4 6/7] clk: spacemit: define new syscons with only
+ resets
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Alex Elder <elder@riscstar.com>, mturquette@baylibre.com,
+ sboyd@kernel.org,  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: dlan@gentoo.org, heylenay@4d2.org, guodong@riscstar.com, 
+ paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+ spacemit@lists.linux.dev, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org,  linux-riscv@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+Date: Tue, 15 Apr 2025 10:22:30 +0200
+In-Reply-To: <20250414191715.2264758-7-elder@riscstar.com>
+References: <20250414191715.2264758-1-elder@riscstar.com>
+	 <20250414191715.2264758-7-elder@riscstar.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250412-03-k1-gpio-v8-0-1c6862d272ec@gentoo.org> <20250415023234-GYA29961@gentoo>
-In-Reply-To: <20250415023234-GYA29961@gentoo>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 15 Apr 2025 09:35:15 +0200
-X-Gm-Features: ATxdqUFrvoN3oToav7nR6RzJi6WKzvpJz5pszWK5ULoM2MOJjET7tU5z2QtEKvY
-Message-ID: <CACRpkdZ6A0xORRQBnNNPFcNHg3xL=U3_xAcePmaDN3_ZYMzsaA@mail.gmail.com>
-Subject: Re: [PATCH v8 0/5] riscv: spacemit: add gpio support for K1 SoC
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Conor Dooley <conor@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Alex Elder <elder@riscstar.com>, Yangyu Chen <cyy@cyyself.name>, 
-	Jisheng Zhang <jszhang@kernel.org>, Jesse Taube <mr.bossman075@gmail.com>, 
-	Inochi Amaoto <inochiama@outlook.com>, Icenowy Zheng <uwu@icenowy.me>, 
-	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, linux-gpio@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: spacemit@lists.linux.dev
 
-On Tue, Apr 15, 2025 at 4:32=E2=80=AFAM Yixun Lan <dlan@gentoo.org> wrote:
+On Mo, 2025-04-14 at 14:17 -0500, Alex Elder wrote:
+> Enable support for three additional syscon CCUs which support reset
+> controls but no clocks:  ARCPU, RCPU2, and APBC2.
+>=20
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+>  drivers/clk/spacemit/ccu-k1.c | 93 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 93 insertions(+)
+>=20
+> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.=
+c
+> index 7494c97c3c7ec..cd1a0668bd203 100644
+> --- a/drivers/clk/spacemit/ccu-k1.c
+> +++ b/drivers/clk/spacemit/ccu-k1.c
+> @@ -130,6 +130,36 @@
+>  #define APMU_EMAC0_CLK_RES_CTRL		0x3e4
+>  #define APMU_EMAC1_CLK_RES_CTRL		0x3ec
+> =20
+> +/* RCPU register offsets */
+> +#define RCPU_SSP0_CLK_RST		0x0028
+> +#define RCPU_I2C0_CLK_RST		0x0030
+> +#define RCPU_UART1_CLK_RST		0x003c
+> +#define RCPU_CAN_CLK_RST		0x0048
+> +#define RCPU_IR_CLK_RST			0x004c
+> +#define RCPU_UART0_CLK_RST		0x00d8
+> +#define AUDIO_HDMI_CLK_CTRL		0x2044
+> +
+> +/* RCPU2 register offsets */
+> +#define RCPU2_PWM0_CLK_RST		0x0000
+> +#define RCPU2_PWM1_CLK_RST		0x0004
+> +#define RCPU2_PWM2_CLK_RST		0x0008
+> +#define RCPU2_PWM3_CLK_RST		0x000c
+> +#define RCPU2_PWM4_CLK_RST		0x0010
+> +#define RCPU2_PWM5_CLK_RST		0x0014
+> +#define RCPU2_PWM6_CLK_RST		0x0018
+> +#define RCPU2_PWM7_CLK_RST		0x001c
+> +#define RCPU2_PWM8_CLK_RST		0x0020
+> +#define RCPU2_PWM9_CLK_RST		0x0024
+> +
+> +/* APBC2 register offsets */
+> +#define APBC2_UART1_CLK_RST		0x0000
+> +#define APBC2_SSP2_CLK_RST		0x0004
+> +#define APBC2_TWSI3_CLK_RST		0x0008
+> +#define APBC2_RTC_CLK_RST		0x000c
+> +#define APBC2_TIMERS0_CLK_RST		0x0010
+> +#define APBC2_KPC_CLK_RST		0x0014
+> +#define APBC2_GPIO_CLK_RST		0x001c
+> +
+>  struct ccu_reset_data {
+>  	u32 offset;
+>  	u32 assert_mask;
+> @@ -1177,6 +1207,57 @@ static const struct spacemit_ccu_data k1_ccu_apmu_=
+data =3D {
+>  	.reset_num	=3D ARRAY_SIZE(apmu_reset_data),
+>  };
+> =20
+> +static const struct ccu_reset_data rcpu_reset_data[] =3D {
+> +	[RESET_RCPU_SSP0]	=3D RESET_DATA(RCPU_SSP0_CLK_RST,	0, BIT(0)),
+> +	[RESET_RCPU_I2C0]	=3D RESET_DATA(RCPU_I2C0_CLK_RST,	0, BIT(0)),
+> +	[RESET_RCPU_UART1]	=3D RESET_DATA(RCPU_UART1_CLK_RST, 0, BIT(0)),
+> +	[RESET_RCPU_IR]		=3D RESET_DATA(RCPU_CAN_CLK_RST,	0, BIT(0)),
+> +	[RESET_RCPU_CAN]	=3D RESET_DATA(RCPU_IR_CLK_RST,	0, BIT(0)),
+> +	[RESET_RCPU_UART0]	=3D RESET_DATA(RCPU_UART0_CLK_RST, 0, BIT(0)),
+> +	[RESET_RCPU_HDMI_AUDIO]	=3D RESET_DATA(AUDIO_HDMI_CLK_CTRL, 0, BIT(0)),
+> +};
+> +
+> +static struct spacemit_ccu_data k1_ccu_rcpu_data =3D {
 
-> Hi Bartosz,
->   I think this version is good to go, if you agree,
-> can you take patch [1,2 / 5] through gpio tree?
+Could be const.
 
-I agree with this, it's the final piece making use of all the nice
-infrastructure we put in for threecell GPIO and threecell
-IRQ so let's merge patches 1+2!
+> +	/* No clocks in the RCPU CCU */
+> +	.reset_data	=3D rcpu_reset_data,
+> +	.reset_num	=3D ARRAY_SIZE(rcpu_reset_data),
+> +};
+> +
+> +static const struct ccu_reset_data rcpu2_reset_data[] =3D {
+> +	[RESET_RCPU2_PWM0]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM1]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM2]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM3]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM4]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM5]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM6]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM7]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM8]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM9]	=3D RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +};
+> +
+> +static struct spacemit_ccu_data k1_ccu_rcpu2_data =3D {
 
-Yours,
-Linus Walleij
+const
+
+> +	/* No clocks in the RCPU2 CCU */
+> +	.reset_data	=3D rcpu2_reset_data,
+> +	.reset_num	=3D ARRAY_SIZE(rcpu2_reset_data),
+> +};
+> +
+> +static const struct ccu_reset_data apbc2_reset_data[] =3D {
+> +	[RESET_APBC2_UART1]	=3D RESET_DATA(APBC2_UART1_CLK_RST, BIT(2), (0)),
+> +	[RESET_APBC2_SSP2]	=3D RESET_DATA(APBC2_SSP2_CLK_RST, BIT(2), (0)),
+> +	[RESET_APBC2_TWSI3]	=3D RESET_DATA(APBC2_TWSI3_CLK_RST, BIT(2), (0)),
+> +	[RESET_APBC2_RTC]	=3D RESET_DATA(APBC2_RTC_CLK_RST,	BIT(2), (0)),
+> +	[RESET_APBC2_TIMERS0]	=3D RESET_DATA(APBC2_TIMERS0_CLK_RST, BIT(2), (0)=
+),
+> +	[RESET_APBC2_KPC]	=3D RESET_DATA(APBC2_KPC_CLK_RST,	BIT(2), (0)),
+> +	[RESET_APBC2_GPIO]	=3D RESET_DATA(APBC2_GPIO_CLK_RST, BIT(2), (0)),
+
+Superfluous parentheses.
+
+> +};
+> +
+> +static struct spacemit_ccu_data k1_ccu_apbc2_data =3D {
+
+const
+
+> +	/* No clocks in the APBC2 CCU */
+> +	.reset_data	=3D apbc2_reset_data,
+> +	.reset_num	=3D ARRAY_SIZE(apbc2_reset_data),
+> +};
+> +
+>  static int spacemit_reset_update(struct reset_controller_dev *rcdev,
+>  				 unsigned long id, bool assert)
+>  {
+> @@ -1351,6 +1432,18 @@ static const struct of_device_id of_k1_ccu_match[]=
+ =3D {
+>  		.compatible	=3D "spacemit,k1-syscon-apmu",
+>  		.data		=3D &k1_ccu_apmu_data,
+>  	},
+> +	{
+> +		.compatible	=3D "spacemit,k1-syscon-rcpu",
+> +		.data		=3D &k1_ccu_rcpu_data,
+> +	},
+> +	{
+> +		.compatible	=3D "spacemit,k1-syscon-rcpu2",
+> +		.data		=3D &k1_ccu_rcpu2_data,
+> +	},
+> +	{
+> +		.compatible	=3D "spacemit,k1-syscon-apbc2",
+> +		.data		=3D &k1_ccu_apbc2_data,
+> +	},
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, of_k1_ccu_match);
+
+regards
+Philipp
