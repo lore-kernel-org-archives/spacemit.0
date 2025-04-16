@@ -1,117 +1,123 @@
-Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800B421577A
-	for <spacemit@lists.linux.dev>; Wed, 16 Apr 2025 13:54:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A3B171658;
+	Wed, 16 Apr 2025 14:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744811694; cv=none; b=ZleDT28hS0NlAKnzG4yeGT1kYVoiZNbyuVUYrCnIRrYUmlq+EPrEbYtk7JcaP+unh0pMsHjhupuOtKg6KTnQiXCNBceQQrzVtWDr6meFdnKxtZ6MhsCESfF2woYKQea9pxsFrj/QYcXWGfPIb5t+F22w/iNQyPPRS60tw+7EP88=
+	t=1744815383; cv=none; b=JgRg7oyAryh0J7TOIGZahE4KLCaSgthDrVbxudU9SxU6Sw8YL5zaCjfjn5KK291eGYUqskEPjxruB8HEMzmLSj+CqxM0aZe2H7ai9UXHajZnylMql2GXn/mznJ/rfIZ9YLIuDwaMAY258pk3T4cwNZ+9XuKxTBeUwlB8inVcrR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744811694; c=relaxed/simple;
-	bh=cDKUc2qr4xy2aliQgEkwRBtZ1Kb2bgQimbu1j0KwCEU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gn2CKjfgNYcvpc2vho7N7AwQf95acLvCd4xWmqisiu9qjXbN1eh+MWNfcY4eVSSh1N0nEa6fTc4k7JBbxN19iH/pbxwclb6blqKKUQnbx6LNKXUrij7ud/742aBzSs26wUsg1sHgCXKjWZm08L7HcYB2dv4F2gbG+85N6p+fNjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=1f2FbHye; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=GA4W0h1c; arc=none smtp.client-ip=155.254.16.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
+	s=arc-20240116; t=1744815383; c=relaxed/simple;
+	bh=YgDN44xj67UxlkGlXq/z4BMLc1kLJK45drEaqMMTO8w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lUmmQfzGfNGIkJiNUuzsMIdSvUw2jZqWaBA1oDayL9b3x0ps66GkzUdapiswHa9MTG1nPIfRXAU5EMqgYpubDNzDw29XO5/nzCM+owo/wcAj9c4r+PX5de+7N+a/HDYpfip+uNWiOH7oetLeOujjAW9xOK0NdKDjbe7mf8MiugA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oN++NVpN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="1f2FbHye";
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="GA4W0h1c"
-Received: from bayard.4d2.org (bayard.4d2.org [127.0.0.1])
-	by bayard.4d2.org (Postfix) with ESMTP id E68DB12FB450;
-	Wed, 16 Apr 2025 06:54:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1744811693; bh=cDKUc2qr4xy2aliQgEkwRBtZ1Kb2bgQimbu1j0KwCEU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1f2FbHyedv1LxNbEscPXYOKxmEUzp+P9fVOn1ar4X3F8Vyf2j30/9K1ucuccF0rzh
-	 blS89fA0tVl+gDb0gAhF3G/C64FD9SkpMabIKpV8vOt/zXgP7Xm+64nAHMXm37l5Ss
-	 qBnGX7LQgyZNMNAUb+KzV5V5Z2vimmGRdiYOYcBhmlNRhY6QT9sCZPi2QUJbBBQbvh
-	 zxmg3eHbU3m79dlF4DPTLZMNklaI6DmAoQhQLqaXnv7qbWOSAOCUp84pNM9jKO93fo
-	 sfaU6hhIFtQIL7P8cEoMHzcSaKcF3tGh8iipXtAsmbgEMJ54jeFj6XpsgWnxFSOf/3
-	 G9c4E6Eqa5W7Q==
-X-Virus-Scanned: amavisd-new at 4d2.org
-Authentication-Results: bayard.4d2.org (amavisd-new); dkim=pass (2048-bit key)
- header.d=4d2.org
-Received: from bayard.4d2.org ([127.0.0.1])
- by bayard.4d2.org (bayard.4d2.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 9Gr--WM_oGMm; Wed, 16 Apr 2025 06:54:51 -0700 (PDT)
-Received: from localhost.localdomain (unknown [183.217.80.190])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: heylenay@4d2.org)
-	by bayard.4d2.org (Postfix) with ESMTPSA id 5EB7F12FB435;
-	Wed, 16 Apr 2025 06:54:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1744811691; bh=cDKUc2qr4xy2aliQgEkwRBtZ1Kb2bgQimbu1j0KwCEU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GA4W0h1cMddHFj1ML5LOIBXpOSH4kWwboRpf/NvRm0BTWH77v8OmUSvg30W9tMt0Z
-	 kZbNOPgxCw6VNWCvP4U+Kq/RNuCzu35uvUo256V1iDpspnfupP84t8Bp5VmQ9gXa4v
-	 oplbZPNk5rjzchwDmR3CKZmysdccg5L8qvWd1GtU4qfQq+/H6qpHMT/VFHiu/Lhi93
-	 kAYiStQpizJT1YZuk6vu7yP/ERfFv0Qov7VciIRGZGrMO07bZ96BPwvz3IrqogrM5Q
-	 R7XM8RmW4nPsqeS3TGElT3kXiCWEs2IINu4BSltK8fJXMHhwDu+wGWbRXsowaY+gQS
-	 ITUF2bOI8ajhA==
-From: Haylen Chu <heylenay@4d2.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Haylen Chu <heylenay@outlook.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-riscv@lists.infradead.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Chen Wang <unicornxdotw@foxmail.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
-	Haylen Chu <heylenay@4d2.org>,
-	Alex Elder <elder@riscstar.com>
-Subject: [PATCH v8 6/6] riscv: defconfig: spacemit: enable clock controller driver for SpacemiT K1
-Date: Wed, 16 Apr 2025 13:54:06 +0000
-Message-ID: <20250416135406.16284-7-heylenay@4d2.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250416135406.16284-1-heylenay@4d2.org>
-References: <20250416135406.16284-1-heylenay@4d2.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oN++NVpN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CDAC4CEE2;
+	Wed, 16 Apr 2025 14:56:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744815382;
+	bh=YgDN44xj67UxlkGlXq/z4BMLc1kLJK45drEaqMMTO8w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oN++NVpNhHYAZSEooP4+g77Qm4SP7b7H6zm/n6fwLi56f0PdK07SvLGmtuq0ExnQQ
+	 As5qC6nXvV/vYxKxVc3cpmD/djdYE9R1Wk/R2hc/R4jjshOxsTKKaHjFGIJMD3ApDu
+	 C8V/D9Z/VwmG+QNTvDhJEvt+cIHp31kaYmuON349pMuuGuSIFct1v925eY0G4LyVxz
+	 P7Lv5PeKZznsEX0CLYOLxq54s6pJimYGsU82/S9WEI89ZCQuIyNJ2ZIxgGttyzq6XB
+	 gNd2dTGxboZxUrK2OG8XDjq04HNXatCdHpt6iC0CWX/LX4gm6bihIFhDdpZJ26xVOg
+	 33cUK6i1KxNPg==
+Date: Wed, 16 Apr 2025 16:56:19 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Conor Dooley <conor@kernel.org>, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, drew@pdp7.com, 
+	inochiama@gmail.com, geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, 
+	hal.feng@starfivetech.com, unicorn_wang@outlook.com, duje.mihanovic@skole.hr, 
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/9] dt-bindings: pwm: marvell,pxa: add optional property
+ resets
+Message-ID: <bnrfclqrbzqzg43b2yjypsolvvukpppa7lxceoocfm6ww6kjes@gkuoeygu5vwz>
+References: <20250411131423.3802611-1-guodong@riscstar.com>
+ <20250411131423.3802611-2-guodong@riscstar.com>
+ <20250411-confider-spinster-35f23040d188@spud>
+ <89b6142bacecd4a7742341b88dc1e28c4454527a.camel@pengutronix.de>
+ <CAH1PCMZnJDcYKJR35WirQT95hte0NWvGBe4fjDuyZEgagvunAA@mail.gmail.com>
+ <20250415101249-GYA30674@gentoo>
+ <0bbd2842-72bc-47a7-832a-fc8833163e32@riscstar.com>
+ <20250415122807-GYA30943@gentoo>
+ <hogqotzzpzcow2xjrwh34qcuiu7ooc2qnvlhuvexzvqkrcsfop@mhz26t5vu35p>
+ <3dfc300f-081c-4824-97c3-842f72d2a7d3@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nvbqpn6aaa4mvleg"
+Content-Disposition: inline
+In-Reply-To: <3dfc300f-081c-4824-97c3-842f72d2a7d3@riscstar.com>
 
-Clock controller unit, or CCU, generates various clocks frequency for
-peripherals integrated in SpacemiT K1 SoC and is essential for normal
-operation. Let's enable it as built-in driver in defconfig.
 
-Signed-off-by: Haylen Chu <heylenay@4d2.org>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
----
- arch/riscv/configs/defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+--nvbqpn6aaa4mvleg
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 1/9] dt-bindings: pwm: marvell,pxa: add optional property
+ resets
+MIME-Version: 1.0
 
-diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-index 3c8e16d71e17..4888529df1d8 100644
---- a/arch/riscv/configs/defconfig
-+++ b/arch/riscv/configs/defconfig
-@@ -250,6 +250,8 @@ CONFIG_CLK_SOPHGO_CV1800=y
- CONFIG_CLK_SOPHGO_SG2042_PLL=y
- CONFIG_CLK_SOPHGO_SG2042_CLKGEN=y
- CONFIG_CLK_SOPHGO_SG2042_RPGATE=y
-+CONFIG_SPACEMIT_CCU=y
-+CONFIG_SPACEMIT_K1_CCU=y
- CONFIG_SUN8I_DE2_CCU=m
- CONFIG_SUN50I_IOMMU=y
- CONFIG_RPMSG_CHAR=y
--- 
-2.49.0
+Hello Alex,
 
+On Wed, Apr 16, 2025 at 06:33:42AM -0500, Alex Elder wrote:
+> On 4/16/25 12:18 AM, Uwe Kleine-K=F6nig wrote:
+> > Hello,
+> >=20
+> > On Tue, Apr 15, 2025 at 12:28:07PM +0000, Yixun Lan wrote:
+> > > maybe there are cases that users don't want to issue a reset..
+> > > so, want to make it optional.. I can think one example that,
+> > > display controller is up and working from bootloader to linux,
+> > > reset it will got a flicker picture..
+> >=20
+> > Agreed. You can just deassert the reset at probe time. That shouldn't
+> > interfere with a PWM that is already producing an output.
+>=20
+> I think you're saying reset can be a required property, to be
+> harmlessly deasserted at probe time?  Yixun was suggesting it
+> should not be required, because it might already be deasserted.
+>=20
+> Anyway, I don't feel strongly either way.  Maybe the DTS
+> maintainers can recommend what to do.
+
+IMHO you shouldn't have to modify the dts if you want to initialize a
+display in the bootloader and than boot flicker-free into Linux.
+
+If the only thing you do with the reset is
+devm_reset_control_get_optional_shared_deasserted() (or a variant of
+it), everything should work just fine.
+
+I'm not a DTS maintainer, but still have my opinion and recommend that.
+:-)
+
+Best regards
+Uwe
+
+--nvbqpn6aaa4mvleg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmf/xREACgkQj4D7WH0S
+/k79QwgAumneJJTU70ctlA9cRnIOTKxwGWl3IxHMtKIMx/Knwy5qCFoGmtBgK5HO
+9UflSaqdQ1pXi7MF5fIY7k8PvgkO9T/sVjAnyhdygEKUqiebkepSX6TCWcd4tJwb
+71HCVPYmc7+YlDiYYgOsHrhBISHSugf4d1RyJ4PNs3Ad4IckmilMC0Wd0x2e45uG
+CEn3JntNTBm1l+ddSW1Vrv3fdZkjJMjjUb2gRC34JFwYVhQF2JUMsE8zW8v6SO0h
+d1Yfh03EEStFFH1HBZfIqOocV13snt9t+SeyaZaHTtnAPXER+97gr1cfoqBZG+kC
+y9eC+Ru1+1AS6Szu5MBpVwSrtD8fyQ==
+=myXU
+-----END PGP SIGNATURE-----
+
+--nvbqpn6aaa4mvleg--
