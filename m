@@ -1,110 +1,101 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5489B156C69
-	for <spacemit@lists.linux.dev>; Wed, 16 Apr 2025 00:16:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBAA2DFA2D;
+	Wed, 16 Apr 2025 05:18:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744762564; cv=none; b=uggc953erDUPGXE2Ve8LhC3gyNVvPZjp2SPNt1u+bz4e9kjxrwoOER55y4zNoYMgcbTJPo1LKXoluPo7+0RGC5BGAlS8mCmrIeac0LFtdntH9WHr8n3tQV3EGLl7Q1eD+e7B7sMGRFOmbm49QAq477HT12vf2Bi7bwEFUKyx+Pk=
+	t=1744780711; cv=none; b=QibJql9VlA8attYgvVIsKBZGxMO8+v/A38dnWC2AzS6/vV8dOPbLtmhvSrhbTJbqg2qzyu7gsYqS6T/zN0AiYidPAkiZxEH0hq8fa3I10Rgw9BLmGHfN9QRRG8UwjyqvLxaVO9dw6JVNEmOZZ4g+GSEhvcn4hboB5xd5Iem5kp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744762564; c=relaxed/simple;
-	bh=hgCxsX2xeB7ssokjMjVuQzAe/R10W2qnEsmZP030Ffw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pcVsNUm86WOnl9X+Yf1D9+tWYzF+EPYsmwKA/LPSoVDcJ9TkCSaIR0I5g5COvPvYa2+3RnsiB8RfpKfRQn7Tc7LN54tqtzURF7JFwOalNsKTKz7MW2j/rHEPs+zYoN2ejbr1kdPQDcRNU4mlvM9goI58ZKHfykSOIMIuN9L13T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [127.0.0.1] (unknown [116.232.27.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 6FD22343030;
-	Wed, 16 Apr 2025 00:15:59 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-Date: Wed, 16 Apr 2025 08:15:28 +0800
-Subject: [PATCH v2 2/2] pinctrl: spacemit: add clock support for K1 SoC
+	s=arc-20240116; t=1744780711; c=relaxed/simple;
+	bh=CmNtU/Ng9a+Jh4xKHpsC8mx2FxYmD+EiYZC+QuZh9+U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lqAZiP/DX+SY5+/LWrZX9I8VKraoDb+pbyuXR/ZPxjq2dpch6NEgokil3q7zv0y2TIerAYWuXAPpnsXsoWa5hsn7G8MQSBKjD/hVperNKAe3vJYu63OkQIHQoWFDo2ObE4RsrhexKViDl5rvcYlHG6AsteZlo24K89xcY9T/D9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T4YsDyhl; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T4YsDyhl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A5DC4CEEC;
+	Wed, 16 Apr 2025 05:18:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744780711;
+	bh=CmNtU/Ng9a+Jh4xKHpsC8mx2FxYmD+EiYZC+QuZh9+U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=T4YsDyhl2RK//iQoGDJ4oxeuQ2oGCVN46wS8ndM2H1q8BTeAJYZse3I3Hpeb6+MNu
+	 PqY6HWPYLsznjFBt6m8JzrR/fXLChkABbOeyyF9rGB6uco9jqrCgPgnGAGePFdDDfH
+	 2ly5/wQBDFv785hDObgMrmIc59qEosIpIkxaACm3mgk6ZnAo/yI9Y9O2VnT4Z30ZTU
+	 vfQO4X/IPfT+u5J11+3LXI283MB3NthqovTArwv6n/Ohmz6DU2T6BfuQTpv4J8GFW3
+	 rV4VppRCG/NS8cr68X0Kp8MDwEI6Y2ZaNvlqjBQwSFwnGvxC+v7LZsHIScZHcg+T5l
+	 W1z+KsnM770wA==
+Date: Wed, 16 Apr 2025 07:18:27 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Alex Elder <elder@riscstar.com>, Guodong Xu <guodong@riscstar.com>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Conor Dooley <conor@kernel.org>, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, paul.walmsley@sifive.com, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, drew@pdp7.com, 
+	inochiama@gmail.com, geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, 
+	hal.feng@starfivetech.com, unicorn_wang@outlook.com, duje.mihanovic@skole.hr, 
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/9] dt-bindings: pwm: marvell,pxa: add optional property
+ resets
+Message-ID: <hogqotzzpzcow2xjrwh34qcuiu7ooc2qnvlhuvexzvqkrcsfop@mhz26t5vu35p>
+References: <20250411131423.3802611-1-guodong@riscstar.com>
+ <20250411131423.3802611-2-guodong@riscstar.com>
+ <20250411-confider-spinster-35f23040d188@spud>
+ <89b6142bacecd4a7742341b88dc1e28c4454527a.camel@pengutronix.de>
+ <CAH1PCMZnJDcYKJR35WirQT95hte0NWvGBe4fjDuyZEgagvunAA@mail.gmail.com>
+ <20250415101249-GYA30674@gentoo>
+ <0bbd2842-72bc-47a7-832a-fc8833163e32@riscstar.com>
+ <20250415122807-GYA30943@gentoo>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250416-02-k1-pinctrl-clk-v2-2-2b5fcbd4183c@gentoo.org>
-References: <20250416-02-k1-pinctrl-clk-v2-0-2b5fcbd4183c@gentoo.org>
-In-Reply-To: <20250416-02-k1-pinctrl-clk-v2-0-2b5fcbd4183c@gentoo.org>
-To: Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1635; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=hgCxsX2xeB7ssokjMjVuQzAe/R10W2qnEsmZP030Ffw=;
- b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBn/vazO0PhBV3WPP1OZXqUueTvxrOgsBekglOzs
- 2flGSx0VBeJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCZ/72s18UgAAAAAAuAChp
- c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
- CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277SahD/0e1oRz5hGAZTG1Et
- g8bInVmC8CEMmr0kzBRpOP1Js4grVnpkKsd9sGQodGaOD6sln3Qwh0O6+DggxzF1SgpQmNqui+j
- HIUSEHKA2AHR4S/vZDJQ+LD2pa/ZFQgRrI4iN+GWZAc2rt2S5jNZ9wuvmwxbP/LCnEMIR1dTxy3
- AX04edMdmRjQE3FkWQCPREeL+Ed1mRBV2LXgeRZW4khOAlWbOe38+AV5jEn+BKGFYRWlO2VJH9+
- 0thGgvE4DgAgy7btKVf7v/Dm9/gpqdlj3ZVl6rRn7VzsnmhmqL42bAmALeZu1jY9YrEHm3nt4zM
- Xu8dR1HbExOZy80xmppsFUVQ/GCCJlBGHn34+NWCgjWPbsYfb1CORhVhB1EpMXF0HpxRGJlP6Gt
- Vjy0AjEliOgdvk3Pf+yhyUlPEfw21h5R/MF3HwvhqfZkf+prNS4VpzIHEQQoEOPb1g8UGa4MTio
- efLoCflAZXFBWfXsv260MRkWSBLJtWTtBV+bejJzpKHtekwn7T3uhRjD2tx0JqoEVhfA4Ue2HK1
- IxmvMj7Ql4JJxRSOSg+BUqmdyyv8Pg2QnWOrMbYLvzcXGpp3tnxzui1aaiaY5lDrhBbnfE8XC4D
- 6c98W1KXB04fYZIOmISajq6/UCoTSUz1T8zEN7OkCf5LC7mgzGAw9bTjlbQ7aBz5yADg==
-X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="drktpjdibffse2jk"
+Content-Disposition: inline
+In-Reply-To: <20250415122807-GYA30943@gentoo>
 
-For SpacemiT K1 SoC's pinctrl, explicitly acquiring clocks in
-the driver instead of relying on bootloader or default hardware
-settings to enable it.
 
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
----
- drivers/pinctrl/spacemit/pinctrl-k1.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+--drktpjdibffse2jk
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: Re: [PATCH 1/9] dt-bindings: pwm: marvell,pxa: add optional property
+ resets
+MIME-Version: 1.0
 
-diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
-index 67e867b04a02ea1887d93aedfdea5bda037f88b1..9996b1c4a07e72f2a3832b759feddcd4e07f2159 100644
---- a/drivers/pinctrl/spacemit/pinctrl-k1.c
-+++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
-@@ -2,6 +2,7 @@
- /* Copyright (c) 2024 Yixun Lan <dlan@gentoo.org> */
- 
- #include <linux/bits.h>
-+#include <linux/clk.h>
- #include <linux/cleanup.h>
- #include <linux/io.h>
- #include <linux/of.h>
-@@ -721,6 +722,7 @@ static int spacemit_pinctrl_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct spacemit_pinctrl *pctrl;
-+	struct clk *func_clk, *bus_clk;
- 	const struct spacemit_pinctrl_data *pctrl_data;
- 	int ret;
- 
-@@ -739,6 +741,14 @@ static int spacemit_pinctrl_probe(struct platform_device *pdev)
- 	if (IS_ERR(pctrl->regs))
- 		return PTR_ERR(pctrl->regs);
- 
-+	func_clk = devm_clk_get_enabled(dev, "func");
-+	if (IS_ERR(func_clk))
-+		return dev_err_probe(dev, PTR_ERR(func_clk), "failed to get func clock\n");
-+
-+	bus_clk = devm_clk_get_enabled(dev, "bus");
-+	if (IS_ERR(bus_clk))
-+		return dev_err_probe(dev, PTR_ERR(bus_clk), "failed to get bus clock\n");
-+
- 	pctrl->pdesc.name = dev_name(dev);
- 	pctrl->pdesc.pins = pctrl_data->pins;
- 	pctrl->pdesc.npins = pctrl_data->npins;
+Hello,
 
--- 
-2.49.0
+On Tue, Apr 15, 2025 at 12:28:07PM +0000, Yixun Lan wrote:
+> maybe there are cases that users don't want to issue a reset..
+> so, want to make it optional.. I can think one example that,
+> display controller is up and working from bootloader to linux,
+> reset it will got a flicker picture..
 
+Agreed. You can just deassert the reset at probe time. That shouldn't
+interfere with a PWM that is already producing an output.
+
+> GPG Key ID AABEFD55
+
+If you advertise your OpenPGP certificate, I recommend using the long
+id. See for example https://keys.openpgp.org/search?q=AABEFD55.
+
+--drktpjdibffse2jk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmf/PaEACgkQj4D7WH0S
+/k6ooQf/d4DhhdyM4QPOcTmcUpZ8HOxH7CFCD701mRLpmOlq1dz3/Mtz5tO4wLL2
+nvfA4N7zRagUW8grFQIpENy3IFx5DP3Rdg5PtVELqlqPrOW+NqTTJGslRBeIAoQ3
+0rybTAJEutOM0DPeL7Ay6iGy78VV/Qosh7dhFUWmzxeF1IBHry2tm+euAw5wKOzP
+PNPY/S0CfuOhb2G1ivYYVTBV3fsgYT5G+VfTJyR9/Gkf7F9yKMbX0LRYcG1LM8Ox
+0ilgkvwEu9kt2Au+q6PivMLURHJ28CtG1Fl+Qn50PZm0witW6kFfQqSA3WN4z6rz
+ueBYfIz0tcqYQIjClrgXnesRcLI+KA==
+=8FCS
+-----END PGP SIGNATURE-----
+
+--drktpjdibffse2jk--
