@@ -1,123 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A3B171658;
-	Wed, 16 Apr 2025 14:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB791E49F
+	for <spacemit@lists.linux.dev>; Thu, 17 Apr 2025 12:35:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744815383; cv=none; b=JgRg7oyAryh0J7TOIGZahE4KLCaSgthDrVbxudU9SxU6Sw8YL5zaCjfjn5KK291eGYUqskEPjxruB8HEMzmLSj+CqxM0aZe2H7ai9UXHajZnylMql2GXn/mznJ/rfIZ9YLIuDwaMAY258pk3T4cwNZ+9XuKxTBeUwlB8inVcrR0=
+	t=1744893312; cv=none; b=ZHBWcPhsbjDjv5cKB0OZOsWWBlKHtinQ2FanDrDcNc1VmlFM3Hyty/+4qd1M80e2LdtXswBqD417ndSd1nyWsjh1djr5j2xfgIRt+boXZCLh/jh5FNidhlAs/7LCs0RVMkOH+SC01zxl6f1slnsDfGRZxvOOWD5YY1fhbzkrpg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744815383; c=relaxed/simple;
-	bh=YgDN44xj67UxlkGlXq/z4BMLc1kLJK45drEaqMMTO8w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lUmmQfzGfNGIkJiNUuzsMIdSvUw2jZqWaBA1oDayL9b3x0ps66GkzUdapiswHa9MTG1nPIfRXAU5EMqgYpubDNzDw29XO5/nzCM+owo/wcAj9c4r+PX5de+7N+a/HDYpfip+uNWiOH7oetLeOujjAW9xOK0NdKDjbe7mf8MiugA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oN++NVpN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1744893312; c=relaxed/simple;
+	bh=KYGjtBdb7XtMLaG0d3QFZTqtsfA5Al+6Ejy4SwFGmOQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ze2/UnvUmRChIpXJY6snb2GaypzMoAUXPfLV4LcJKL7DpXPXnYJ8AMt+uvXHlQYYatA+IsHolCqPWEtqZPkpbFLLm4mFJqOXc7ClMGddtT6prYVvECdTumFX4oU4Hgs0LlnmYThcne0027EwKVleml/zbvdoJI8Cz9SECjGHLLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=BalJtro/; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oN++NVpN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CDAC4CEE2;
-	Wed, 16 Apr 2025 14:56:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744815382;
-	bh=YgDN44xj67UxlkGlXq/z4BMLc1kLJK45drEaqMMTO8w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oN++NVpNhHYAZSEooP4+g77Qm4SP7b7H6zm/n6fwLi56f0PdK07SvLGmtuq0ExnQQ
-	 As5qC6nXvV/vYxKxVc3cpmD/djdYE9R1Wk/R2hc/R4jjshOxsTKKaHjFGIJMD3ApDu
-	 C8V/D9Z/VwmG+QNTvDhJEvt+cIHp31kaYmuON349pMuuGuSIFct1v925eY0G4LyVxz
-	 P7Lv5PeKZznsEX0CLYOLxq54s6pJimYGsU82/S9WEI89ZCQuIyNJ2ZIxgGttyzq6XB
-	 gNd2dTGxboZxUrK2OG8XDjq04HNXatCdHpt6iC0CWX/LX4gm6bihIFhDdpZJ26xVOg
-	 33cUK6i1KxNPg==
-Date: Wed, 16 Apr 2025 16:56:19 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Conor Dooley <conor@kernel.org>, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, paul.walmsley@sifive.com, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, drew@pdp7.com, 
-	inochiama@gmail.com, geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, 
-	hal.feng@starfivetech.com, unicorn_wang@outlook.com, duje.mihanovic@skole.hr, 
-	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/9] dt-bindings: pwm: marvell,pxa: add optional property
- resets
-Message-ID: <bnrfclqrbzqzg43b2yjypsolvvukpppa7lxceoocfm6ww6kjes@gkuoeygu5vwz>
-References: <20250411131423.3802611-1-guodong@riscstar.com>
- <20250411131423.3802611-2-guodong@riscstar.com>
- <20250411-confider-spinster-35f23040d188@spud>
- <89b6142bacecd4a7742341b88dc1e28c4454527a.camel@pengutronix.de>
- <CAH1PCMZnJDcYKJR35WirQT95hte0NWvGBe4fjDuyZEgagvunAA@mail.gmail.com>
- <20250415101249-GYA30674@gentoo>
- <0bbd2842-72bc-47a7-832a-fc8833163e32@riscstar.com>
- <20250415122807-GYA30943@gentoo>
- <hogqotzzpzcow2xjrwh34qcuiu7ooc2qnvlhuvexzvqkrcsfop@mhz26t5vu35p>
- <3dfc300f-081c-4824-97c3-842f72d2a7d3@riscstar.com>
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="BalJtro/"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43d04ea9d9aso3403275e9.3
+        for <spacemit@lists.linux.dev>; Thu, 17 Apr 2025 05:35:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1744893307; x=1745498107; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VTuj486eMBPlCuVzE5Ghwv5ENmZwB8uFg3Tiow35Sbg=;
+        b=BalJtro/PutRBjeq/l8je/QtE9YylCZ00tC3o4Ot7bzvPr6CVghAGK74qHTBbjjLVx
+         zFh2ml7X1EdTo/BPyVDV8vskR2vDpukiaC+GHpswdyxRwNFak+OSPwgup5SFA5SycNr6
+         dB3fouSIp4KMuCbpZRINv9nEFO59SGm5kzT/+vjx3WDHOZPai4ay2q/7vlB8N3ex1C1U
+         CMrwpDz/3Abi3kkt2XFXBnAoowC0lg1b8x2SDvGjcMOCu/wlcriUo8AXLgKZnOSH5aJH
+         YOa30J2nDZvHEljZwMPOguPs9v6gtZAZPYcaiRKy/hiygGmNvBZjWKRTj+RqRCvzLgxb
+         dmog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744893307; x=1745498107;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VTuj486eMBPlCuVzE5Ghwv5ENmZwB8uFg3Tiow35Sbg=;
+        b=qmtdlpjA24iuop44mwlJvAqg/fL6urCinxi2VCmEYcMu+8/UGeFbPHN3/3bH7+Stvt
+         j8J0MJPlTsjnNXVcZjP/YDQJCvYfDWVYiNo+vUh19xQnls8MKdLJ+CIECPGen64wrHgN
+         uVHvhw+nhl3WrHkz50MlvN580WEEn0mhkU1eDKU2A7wsGUYcRhBqs52vCMBK9460ZsBd
+         TINbpt5U1S3ARkeO9PC8DC3ycYidr+GMRyDiXdeeLON1oyNjfcjqWhuNeVScNGhT/2b+
+         N7rTQ4VLGiEYLpqyH/0fktYuYykziW21ccUS8O4Vh7/SPFhzuXA2xKbjF1Qdtzz2Jon8
+         hJsg==
+X-Forwarded-Encrypted: i=1; AJvYcCUEgaG/tfaJb9QwT1BHvHEOfePFfnGhp6Fk0RrD+nCU9vfHd76kVXKJ5bM3Pbuq5XFpWw1wV3kd+A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyQyEzl1oBNjfqJzofTChWJl//68n0mSYP7uKXkMrGzdfDN8hc5
+	zIQO0D0gAPfLbClGYjRxGPep5x5ak7VK6E+/2SuHNLTLlj5lWCezoSwaBrWV9ac=
+X-Gm-Gg: ASbGncv8HYUSZDy/qPmm9CE/kXdykNUUbohvR3TwnzKrcyP5HTSB04rx1AjZSW/radm
+	VD0SVt/yAN3E3do9La7VhZZd2eGFEvgdPzPD9ORqziDtP4RKZbQAb2h0kfZqAGYOJ91hjMpDwoc
+	r+Mt8IKPMj3HoggQqQA0mkzd7kxKlNENBvbjMDEush15bo1oa3P1Ofi48lmSM4kFAdDUqcXLtuP
+	gkSnOJ0oQzKwH74Z1A8srzX1IoX24+27ES65CMiRfdObx88Gg+8+fXcs8YYzWangtcs5wwNVSFB
+	MomZOXY9RItHCHkAfWzPq9eEXd5uvVh72ngzEGduXKfkj+b/VIc=
+X-Google-Smtp-Source: AGHT+IHsx+KpPXNauX7YJ1CpF7I0pEn6OThh/kiz1Tij3RGxo6jg5fZyTZOC2u0bvjB+NaEYetVrHQ==
+X-Received: by 2002:a05:6000:402b:b0:38f:3a89:fdb5 with SMTP id ffacd0b85a97d-39ee5b13247mr5200859f8f.11.1744893307325;
+        Thu, 17 Apr 2025 05:35:07 -0700 (PDT)
+Received: from brgl-pocket.lan ([2001:861:4445:5860:9b49:d51a:4244:693c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-440666705c5sm14418765e9.14.2025.04.17.05.35.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Apr 2025 05:35:07 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Linus Walleij <linus.walleij@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Conor Dooley <conor@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Yixun Lan <dlan@gentoo.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+	Alex Elder <elder@riscstar.com>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Jesse Taube <mr.bossman075@gmail.com>,
+	Inochi Amaoto <inochiama@outlook.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	linux-gpio@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: (subset) [PATCH v8 0/5] riscv: spacemit: add gpio support for K1 SoC
+Date: Thu, 17 Apr 2025 14:35:05 +0200
+Message-ID: <174489329731.7849.17910336598453828998.b4-ty@bgdev.pl>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250412-03-k1-gpio-v8-0-1c6862d272ec@gentoo.org>
+References: <20250412-03-k1-gpio-v8-0-1c6862d272ec@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nvbqpn6aaa4mvleg"
-Content-Disposition: inline
-In-Reply-To: <3dfc300f-081c-4824-97c3-842f72d2a7d3@riscstar.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
 
---nvbqpn6aaa4mvleg
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 1/9] dt-bindings: pwm: marvell,pxa: add optional property
- resets
-MIME-Version: 1.0
+On Sat, 12 Apr 2025 07:31:27 +0800, Yixun Lan wrote:
+> The gpio controller of K1 support basic GPIO functions,
+> which capable of enabling as input, output. It can also be used
+> as GPIO interrupt which able to detect rising edge, falling edge,
+> or both. There are four GPIO ports, each consisting of 32 pins and
+> has indepedent register sets, while still sharing IRQ line and clocks.
+> The GPIO controller request the two clock sources from APBC block.
+> 
+> [...]
 
-Hello Alex,
+Applied, thanks!
 
-On Wed, Apr 16, 2025 at 06:33:42AM -0500, Alex Elder wrote:
-> On 4/16/25 12:18 AM, Uwe Kleine-K=F6nig wrote:
-> > Hello,
-> >=20
-> > On Tue, Apr 15, 2025 at 12:28:07PM +0000, Yixun Lan wrote:
-> > > maybe there are cases that users don't want to issue a reset..
-> > > so, want to make it optional.. I can think one example that,
-> > > display controller is up and working from bootloader to linux,
-> > > reset it will got a flicker picture..
-> >=20
-> > Agreed. You can just deassert the reset at probe time. That shouldn't
-> > interfere with a PWM that is already producing an output.
->=20
-> I think you're saying reset can be a required property, to be
-> harmlessly deasserted at probe time?  Yixun was suggesting it
-> should not be required, because it might already be deasserted.
->=20
-> Anyway, I don't feel strongly either way.  Maybe the DTS
-> maintainers can recommend what to do.
+[1/5] dt-bindings: gpio: spacemit: add support for K1 SoC
+      https://git.kernel.org/brgl/linux/c/378ce04c79d14c730fcee6db9f3076da4078b65f
+[2/5] gpio: spacemit: add support for K1 SoC
+      https://git.kernel.org/brgl/linux/c/6149376c9ad1777aa4214e13d844f12f88e22dea
 
-IMHO you shouldn't have to modify the dts if you want to initialize a
-display in the bootloader and than boot flicker-free into Linux.
-
-If the only thing you do with the reset is
-devm_reset_control_get_optional_shared_deasserted() (or a variant of
-it), everything should work just fine.
-
-I'm not a DTS maintainer, but still have my opinion and recommend that.
-:-)
-
-Best regards
-Uwe
-
---nvbqpn6aaa4mvleg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmf/xREACgkQj4D7WH0S
-/k79QwgAumneJJTU70ctlA9cRnIOTKxwGWl3IxHMtKIMx/Knwy5qCFoGmtBgK5HO
-9UflSaqdQ1pXi7MF5fIY7k8PvgkO9T/sVjAnyhdygEKUqiebkepSX6TCWcd4tJwb
-71HCVPYmc7+YlDiYYgOsHrhBISHSugf4d1RyJ4PNs3Ad4IckmilMC0Wd0x2e45uG
-CEn3JntNTBm1l+ddSW1Vrv3fdZkjJMjjUb2gRC34JFwYVhQF2JUMsE8zW8v6SO0h
-d1Yfh03EEStFFH1HBZfIqOocV13snt9t+SeyaZaHTtnAPXER+97gr1cfoqBZG+kC
-y9eC+Ru1+1AS6Szu5MBpVwSrtD8fyQ==
-=myXU
------END PGP SIGNATURE-----
-
---nvbqpn6aaa4mvleg--
+Best regards,
+-- 
+Bartosz Golaszewski <brgl@bgdev.pl>
