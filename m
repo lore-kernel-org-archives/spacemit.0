@@ -1,81 +1,87 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A3B2528FB
-	for <spacemit@lists.linux.dev>; Fri, 18 Apr 2025 23:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5BA254B05
+	for <spacemit@lists.linux.dev>; Fri, 18 Apr 2025 23:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745019886; cv=none; b=tN28OVPqvit1mbM0HgRf3Kn5ZCg0PJBvnqwO+v7yfSmjxDe146WN6SBR+mHTpVDZEUeIeXarhrhvzWMNkGWSs5QAO32VCo83sqF4sJOe2SOUvkYVK6BiO8xe5HUh3vKq7G2CVGqM7Tk/tra3STgHsoQiGTIIqtaW75ajSsl1yj4=
+	t=1745020750; cv=none; b=JvpI3J7ZBgta8PTUN/1HNwyek2Qnj5WAOeD19rrFvLNrpQceSvXBxrTU3G5CxLsz+p5CEvsjAo9Lmzcxz3SYy38z/JWpcgNnrWl283FIJNGvpadtaxaKw39eUfEay4VWMDWusqA8NSRMfNZi+30DvDFrm3X/BEq1hzOfOn/FJe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745019886; c=relaxed/simple;
-	bh=XFDIYIQjHzy9o4L7SDPJIzPd5miWJdDMZWzI/U5nZjQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E2IQRIITpSKDczltCc62q/prfYL1VZr4peEdgoUfQWQMvZtxJlDO+SfeFP06/FxbeYP6f5+QPmn82g/j3IHuvLcp6AqpxEanH+TTF1Myc7Vo7h9EgfR6oTfKw42d54LnBA76+oaeMGZGEc22pIGro1bjIuFXHZiBvD8ZEjZILoQ=
+	s=arc-20240116; t=1745020750; c=relaxed/simple;
+	bh=r4ShnKaPDMsDiKTEtiQxcaFuIttTo8iXusa45azuNkg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L5cqbhnlEmJJ7jiblqjZEPNPZMlr0Kpt6Yuiz78fiuag21B5eV3wf+3wTXwIGsra8MpbCjLf0m7Z+BpLmLulKZgjJ0ByvOmMhnogTgiA4dSw9WDvJNUHMf8bBvzlKO+PduesFmc6AqDL7WwBjKLAFDFDQTrUOcTh5abFyd9UF1A=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost.localdomain (unknown [116.232.27.72])
+Received: from localhost (unknown [116.232.27.72])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 632B234301B;
-	Fri, 18 Apr 2025 23:44:38 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 5850434301C;
+	Fri, 18 Apr 2025 23:59:08 +0000 (UTC)
+Date: Fri, 18 Apr 2025 23:59:04 +0000
 From: Yixun Lan <dlan@gentoo.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+To: Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Haylen Chu <heylenay@outlook.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Haylen Chu <heylenay@4d2.org>
-Cc: Yixun Lan <dlan@gentoo.org>,
-	linux-riscv@lists.infradead.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Chen Wang <unicornxdotw@foxmail.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
-Subject: Re: (subset) [PATCH v8 0/6] Add clock controller support for SpacemiT K1
-Date: Sat, 19 Apr 2025 07:44:24 +0800
-Message-ID: <174484367987.156293.8818431955085592220.b4-ty@gentoo.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250416135406.16284-1-heylenay@4d2.org>
-References: <20250416135406.16284-1-heylenay@4d2.org>
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] pinctrl: spacemit: add clock/reset support
+Message-ID: <20250418235904-GYA38034@gentoo>
+References: <20250416-02-k1-pinctrl-clk-v2-0-2b5fcbd4183c@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250416-02-k1-pinctrl-clk-v2-0-2b5fcbd4183c@gentoo.org>
 
+Hi Linus,
 
-On Wed, 16 Apr 2025 13:54:00 +0000, Haylen Chu wrote:
-> The clock tree of SpacemiT K1 is managed by several independent
-> multifunction devices, some of them are
+On 08:15 Wed 16 Apr     , Yixun Lan wrote:
+> SpacemiT K1 pinctrl requires two clocks in order to be functional,
+> also one reset line from hardware persepective.
 > 
-> - Application Power Manage Unit, APMU
-> - Main Power Manage Unit, MPMU
-> - APB Bus Clock Unit, APBC
-> - APB Spare, APBS
+> In this series, adding clock property in dt-binding, and activate
+> them in the driver. But for reset, making it optional for now.
 > 
-> [...]
+> For DT part patch, I plan to submit after clock driver merged.
+> This may result dtb warnings in this version due to the mising
+> clock property in pinctrl dt node.
+> 
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> ---
+> Changes in v2:
+> - fix typo
+> - drop the _optional_ API
+> - Link to v1: https://lore.kernel.org/r/20250412-02-k1-pinctrl-clk-v1-0-e39734419a2d@gentoo.org
+> 
+> ---
+> Yixun Lan (2):
+>       dt-bindings: pinctrl: spacemit: add clock and reset property
+>       pinctrl: spacemit: add clock support for K1 SoC
+> 
+>  .../bindings/pinctrl/spacemit,k1-pinctrl.yaml          | 18 ++++++++++++++++++
+>  drivers/pinctrl/spacemit/pinctrl-k1.c                  | 10 ++++++++++
+>  2 files changed, 28 insertions(+)
+> ---
+> base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+> change-id: 20250412-02-k1-pinctrl-clk-9649d6ad22c4
+> 
 
-Applied, thanks!
+I think this series is good to go, can you queue for 6.16,
+we need it along with clock merged (see link below)..
 
-[5/6] riscv: dts: spacemit: Add clock tree for SpacemiT K1
-      https://github.com/spacemit-com/linux/commit/279d51ad9f6dc0c667f6f141a669b2c921277d1a
+thanks
 
-Best regards,
+https://lore.kernel.org/r/174484549885.160158.3249067849153986093.b4-ty@gentoo.org
+
+
 -- 
-Yixun Lan
-
+Yixun Lan (dlan)
