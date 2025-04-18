@@ -1,355 +1,166 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C86027978E
-	for <spacemit@lists.linux.dev>; Fri, 18 Apr 2025 13:21:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9044F1D54E9
+	for <spacemit@lists.linux.dev>; Fri, 18 Apr 2025 14:54:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744982473; cv=none; b=iqwJ8MYqEHRTrMF19yTlwdU068WXEaDvxdBIsYLWjR1x3hbiaV27iopbCT/v0NcInc7OkYcTxYJY/HPtVWPpZCB9v7YRjR6vbhdy4zg0WrOaU/s6KmqCp+dsQ6AGg0exaJ0tM++6CvPEa4ZO/mly255AEfziNTEmYjuIXpOlnVg=
+	t=1744988050; cv=none; b=ihSRPx6vr1fHaGxuuPWRaoqKKF31iQvhsQ2RzoHhaed/QduZjp54DMrWdVm2MqtesIzcsV2JCn+kOkWrAlCWOGFfKp3EDAjyHt9bb/vI+c6OT69A/LHo3EIbMCtxGLNYNFqlGdU+Id937Hno7PPsydRxtMSuoiKsZSrwL5C0EvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744982473; c=relaxed/simple;
-	bh=D3lMowTCmBQgmDedVETXxSZd+5kyo7+v+a+kj2y35rs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=X5Yl4nipMleg4Yjgohh5cyXjAfVithTe9Sehj4nZ/iW4xGiZBzkDPyudgtmW7HJwZpQX6eUou+GOMs3gG9l6neHnj261F1saS5FF80u1wuZ2PCrA0JvniEQZaiOrGxNPOig0K8Ly0u69W01adCeRpp6cKHVsYNlF6EumrpAPgLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from [127.0.0.1] (gy-adaptive-ssl-proxy-3-entmail-virt135.gy.ntes [27.18.99.221])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 125ec878c;
-	Fri, 18 Apr 2025 21:21:03 +0800 (GMT+08:00)
-From: Ze Huang <huangze@whut.edu.cn>
-Date: Fri, 18 Apr 2025 21:19:53 +0800
-Subject: [PATCH v2 4/4] phy: spacemit: add USB3 support for K1 PCIe/USB3
- combo PHY
+	s=arc-20240116; t=1744988050; c=relaxed/simple;
+	bh=dlNXHuUORBV8qyM4a+/YpF7hE5uuPIDHKUaPv4eKnS4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QVSdzOVMPMPoFld8EkNqGWGtW3G3s4pSQhjE00L1QB0iqzy1qtT+Ptf2tML5trGU1A9PV9375Nrvu1aYEvDIPsVEFJuEpAksuYDCdMYrnLPtHbnYnBXpwCAFVECg7uNxUJmqTvGjtJvPQ0BVNGJHcUyVrpNvBRqg6p1jSH+dHYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=NFV+Mdoj; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="NFV+Mdoj"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-477296dce8dso18122421cf.3
+        for <spacemit@lists.linux.dev>; Fri, 18 Apr 2025 07:54:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1744988046; x=1745592846; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HpNDOPRCFGOfXdIE71HVXdbzEYefPrTNzqdoa96DBP0=;
+        b=NFV+Mdojo90QJy3gy86FeDtyUL4/rPyiDjUUm/upAoYVi1xyIslX1vhjw7LItYFcKZ
+         7WY5Q1IvV13kOwaS5HC3d0+bZS5TpLFTZeJ0jYaAY8bwzG/1ISEzP8Zr6+LrteARaLE0
+         xJ79TheINWD/cCBnsqTTftrKEO95RbEYAPZxQ4s15hainr1kGixFfcbUurGFt7xO+9ns
+         HRwEJdjmtAgQ50W3M6tYY7zS1/XT1kZ6gdwG4BBYz5df7cVXP4c+lpyPQaWpZCRuL4l6
+         U40eMkzg5d+RZNActeKxqC6FWcrZIpJIKVL+QXRS+ZXuV9jLXSShfL50qrQMd9ghjNjC
+         OxFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744988046; x=1745592846;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HpNDOPRCFGOfXdIE71HVXdbzEYefPrTNzqdoa96DBP0=;
+        b=BkX5aGoR+dUs86pJu0SUy+nD2SKF21RQHJqO2NqTz/r5ga6vsLlQoeRIIyFuP7L3og
+         qB8zO6iE4NGE+LVePtHTbX9WEBu9ee0XNXJ9UMEipfjnLDAGf7o1eZuOYi7HdhYLTJOD
+         WVMOWyFunA5WqX71jRQd2IyJNOlouMOZnUFvyQLfeAhj6KV/5mjLeEmOyBzIvcYByI7D
+         LreQbcC5C42fKHuY3+xS3Q9yP8kH9a2564UCxYQiVRUbcD12uYGv4zllO5OgK9XNfxiG
+         sFGK5/bo43w4tqFnzAk0CZ8yCTDSM+ukzrvxsMzSx5tKpEVOAbzkRXJuop2Mn63Td7GY
+         P6rA==
+X-Forwarded-Encrypted: i=1; AJvYcCXmdXusSbhvOsBao7d8FUv7Q93jXwt1qDPUaFZPxhI9Qer4YedwqhjUZJHDD/tzq8HYgWCdyAEZAw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxL3Mq9nznWxCJmNnZqEk9brLjPTUyCN1mzdfSQjsmmTqMb1FaM
+	pML6zpADFsJkfFK+FvkCu+AwfZhKsX4I1VYy0Jp5Y1fNsOrkFLPFNExpnXDSNnI=
+X-Gm-Gg: ASbGncsS7a7E3K7XAjIy3jsTrVclQncQdbXezW6hq/oTwEZCJdqtSG2CCfHyo7pLyR8
+	/EfdGM4dl2NBnkiNG8dOSnC2j8rshgyg9kRRqmoLVDkTeiMA+WdrvkSKVwMaDiV1UAOAepp3++K
+	2VuaAr5/5ptnijMIqyQ4cNXB6CZvXA4YHXPuJpi4RXm7fb3xowaxVw6NLSXiuCfoqc554t/In0v
+	BL/NfZPBn4jNTHAayOdEdGgLHh6CbLUdZXz3eaFYwPh1wX468XHQhvO9wVPtVEvPFn0y5xlxNlj
+	nk8JQj7XFmBMuawcHRe4y5yn9t6n4mtkSUXULqZ1ceXRBmCIUL2C1wc0nGFfVoF9mBxCIy6TKQ8
+	92mb+YtRkgBoV7+mBmOhtWZyc
+X-Google-Smtp-Source: AGHT+IHiEG1eSrMtmu7ABawgdFJIO6lV2wB6Q3AXU/kHDB1pdQpbBxefqDVD369wLGK+b6k5u7CG9g==
+X-Received: by 2002:ac8:5a92:0:b0:476:7327:382b with SMTP id d75a77b69052e-47aec396ac0mr52829231cf.16.1744988046352;
+        Fri, 18 Apr 2025 07:54:06 -0700 (PDT)
+Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-47ae9c16ddesm11329201cf.3.2025.04.18.07.54.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Apr 2025 07:54:05 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: mturquette@baylibre.com,
+	sboyd@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: p.zabel@pengutronix.de,
+	dlan@gentoo.org,
+	heylenay@4d2.org,
+	guodong@riscstar.com,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	spacemit@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v5 0/7] clk: spacemit: add K1 reset support
+Date: Fri, 18 Apr 2025 09:53:52 -0500
+Message-ID: <20250418145401.2603648-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250418-b4-k1-usb3-phy-v2-v2-4-b69e02da84eb@whut.edu.cn>
-References: <20250418-b4-k1-usb3-phy-v2-v2-0-b69e02da84eb@whut.edu.cn>
-In-Reply-To: <20250418-b4-k1-usb3-phy-v2-v2-0-b69e02da84eb@whut.edu.cn>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Ze Huang <huangze@whut.edu.cn>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1744982442; l=8732;
- i=huangze@whut.edu.cn; s=20250325; h=from:subject:message-id;
- bh=D3lMowTCmBQgmDedVETXxSZd+5kyo7+v+a+kj2y35rs=;
- b=N0Euq8c4iQgLpwAQsWdBVg5CWhy7oS2xb5D3pD8ckTe1BhDou2TIFpzsQh37qCyxkKBpAuypm
- ajiVb2h2MfSASYMiSmFB4dTW89/ShoxuEK0VZ8rt0t0gJQsFwdHuHL3
-X-Developer-Key: i=huangze@whut.edu.cn; a=ed25519;
- pk=C3zfn/kH6oMJickaXBa8dxTZO68EBiD93F+tAenboRA=
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaS0oeVh5MTkgaTxhPGUwaHlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVJSUpZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0tVSktLVUtZBg
-	++
-X-HM-Tid: 0a96490f56f903a1kunm125ec878c
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6NDI6LQw5SzIDDgkCLwkQEUkT
-	Lz0aCjNVSlVKTE9PQkNJT01DQk9JVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
-	TFVKQ1VCQlVJSUpZV1kIAVlBSktKSks3Bg++
+Content-Transfer-Encoding: 8bit
 
-Add support for USB 3.0 mode on the K1 PCIe/USB3 combo PHY. Currently,
-only USB mode is supported; PCIe support is not included in this change.
+This series adds reset controller support for the SpacemiT K1 SoC.
 
-Signed-off-by: Ze Huang <huangze@whut.edu.cn>
----
- drivers/phy/spacemit/Kconfig          |   8 ++
- drivers/phy/spacemit/Makefile         |   1 +
- drivers/phy/spacemit/phy-k1-combphy.c | 251 ++++++++++++++++++++++++++++++++++
- 3 files changed, 260 insertions(+)
+Most of the the clock controller driver that Haylen Chu had out for
+review has been accepted (at v8).  So this time this series is
+based on the "for-next" branch in the SpacemiT repository:
+  https://github.com/spacemit-com/linux/tree/for-next
 
-diff --git a/drivers/phy/spacemit/Kconfig b/drivers/phy/spacemit/Kconfig
-index 0136aee2e8a2f5f484da136b26f80130794b992c..ccc6bf9ea49f4988a27f79a4dcd024b18cbd78b0 100644
---- a/drivers/phy/spacemit/Kconfig
-+++ b/drivers/phy/spacemit/Kconfig
-@@ -11,3 +11,11 @@ config PHY_SPACEMIT_K1_USB2
- 	help
- 	  Enable this to support K1 USB 2.0 PHY driver. This driver takes care of
- 	  enabling and clock setup and will be used by K1 udc/ehci/otg/xhci driver.
-+
-+config PHY_SPACEMIT_K1_COMBPHY
-+	tristate "SpacemiT K1 PCIe/USB3 combo PHY support"
-+	depends on (ARCH_SPACEMIT || COMPILE_TEST) && OF
-+	depends on COMMON_CLK
-+	select GENERIC_PHY
-+	help
-+	  USB3/PCIe Combo PHY Support for SpacemiT K1 SoC
-diff --git a/drivers/phy/spacemit/Makefile b/drivers/phy/spacemit/Makefile
-index fec0b425a948541b39b814caef0b05e1e002d92f..1fd0c65f2c5cd10ea2f70e43e62c70588d1ffae9 100644
---- a/drivers/phy/spacemit/Makefile
-+++ b/drivers/phy/spacemit/Makefile
-@@ -1,2 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+obj-$(CONFIG_PHY_SPACEMIT_K1_COMBPHY)	+= phy-k1-combphy.o
- obj-$(CONFIG_PHY_SPACEMIT_K1_USB2)		+= phy-k1-usb2.o
-diff --git a/drivers/phy/spacemit/phy-k1-combphy.c b/drivers/phy/spacemit/phy-k1-combphy.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..a291b7a78fae2f4072b74c1d2cc65847ed821bec
---- /dev/null
-+++ b/drivers/phy/spacemit/phy-k1-combphy.c
-@@ -0,0 +1,251 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * SpacemiT K1 PCIE/USB3 PHY driver
-+ *
-+ * Copyright (C) 2025 SpacemiT (Hangzhou) Technology Co. Ltd
-+ * Copyright (C) 2025 Ze Huang <huangze@whut.edu.cn>
-+ */
-+
-+#include <dt-bindings/phy/phy.h>
-+#include <linux/clk.h>
-+#include <linux/iopoll.h>
-+#include <linux/phy/phy.h>
-+#include <linux/platform_device.h>
-+#include <linux/reset.h>
-+#include <linux/usb/of.h>
-+
-+#define COMBPHY_USB_REG1		0x68
-+#define  COMBPHY_USB_REG1_VAL		0x00
-+#define COMBPHY_USB_REG2		0x48
-+#define  COMBPHY_USB_REG2_VAL		0x603a2276
-+#define COMBPHY_USB_REG3		0x08
-+#define  COMBPHY_USB_REG3_VAL		0x97c
-+#define COMBPHY_USB_REG4		0x18
-+#define  COMBPHY_USB_REG4_VAL		0x00
-+#define  COMBPHY_USB_TERM_SHORT_MASK	0x3000
-+#define  COMBPHY_USB_TERM_SHORT_VAL	0x3000
-+#define COMBPHY_USB_PLL_REG		0x08
-+#define  COMBPHY_USB_PLL_MASK		0x01
-+#define  COMBPHY_USB_PLL_VAL		0x01
-+#define COMBPHY_USB_LFPS_REG		0x58
-+#define  COMBPHY_USB_LFPS_MASK		0x700
-+#define  COMBPHY_USB_LFPS_THRES_DEFAULT	0x03
-+
-+#define COMBPHY_MODE_SEL	BIT(3)
-+#define COMBPHY_WAIT_TIMEOUT	1000
-+
-+struct spacemit_combphy_priv {
-+	struct device *dev;
-+	struct phy *phy;
-+	struct reset_control *phy_rst;
-+	void __iomem *phy_ctrl;
-+	void __iomem *phy_sel;
-+	bool rx_always_on;
-+	u8 lfps_threshold;
-+	u8 type;
-+};
-+
-+static void spacemit_reg_update(void __iomem *reg, u32 offset, u32 mask, u32 val)
-+{
-+	u32 tmp;
-+
-+	tmp = readl(reg + offset);
-+	tmp = (tmp & ~(mask)) | val;
-+	writel(tmp, reg + offset);
-+}
-+
-+static int spacemit_combphy_wait_ready(struct spacemit_combphy_priv *priv,
-+				       u32 offset, u32 mask, u32 val)
-+{
-+	u32 reg_val;
-+	int ret = 0;
-+
-+	ret = read_poll_timeout(readl, reg_val, (reg_val & mask) == val,
-+				1000, COMBPHY_WAIT_TIMEOUT * 1000, false,
-+				priv->phy_ctrl + offset);
-+
-+	return ret;
-+}
-+
-+static int spacemit_combphy_set_mode(struct spacemit_combphy_priv *priv)
-+{
-+	int ret = 0;
-+
-+	switch (priv->type) {
-+	case PHY_TYPE_USB3:
-+		spacemit_reg_update(priv->phy_sel, 0, 0, COMBPHY_MODE_SEL);
-+		break;
-+	default:
-+		dev_err(priv->dev, "PHY type %x not supported\n", priv->type);
-+		ret = -EINVAL;
-+		break;
-+	}
-+
-+	return ret;
-+}
-+
-+static int spacemit_combphy_init_usb(struct spacemit_combphy_priv *priv)
-+{
-+	void __iomem *base = priv->phy_ctrl;
-+	int ret;
-+
-+	writel(COMBPHY_USB_REG1_VAL, base + COMBPHY_USB_REG1);
-+	writel(COMBPHY_USB_REG2_VAL, base + COMBPHY_USB_REG2);
-+	writel(COMBPHY_USB_REG3_VAL, base + COMBPHY_USB_REG3);
-+	writel(COMBPHY_USB_REG4_VAL, base + COMBPHY_USB_REG4);
-+
-+	ret = spacemit_combphy_wait_ready(priv, COMBPHY_USB_PLL_REG,
-+					  COMBPHY_USB_PLL_MASK,
-+					  COMBPHY_USB_PLL_VAL);
-+
-+	dev_dbg(priv->dev, "USB3 PHY init lfps threshold %d\n", priv->lfps_threshold);
-+	spacemit_reg_update(base, COMBPHY_USB_LFPS_REG,
-+			    COMBPHY_USB_LFPS_MASK,
-+			    (priv->lfps_threshold << 8));
-+
-+	if (priv->rx_always_on)
-+		spacemit_reg_update(base, COMBPHY_USB_REG4,
-+				    COMBPHY_USB_TERM_SHORT_MASK,
-+				    COMBPHY_USB_TERM_SHORT_VAL);
-+
-+	if (ret)
-+		dev_err(priv->dev, "USB3 PHY init timeout!\n");
-+
-+	return ret;
-+}
-+
-+static int spacemit_combphy_init(struct phy *phy)
-+{
-+	struct spacemit_combphy_priv *priv = phy_get_drvdata(phy);
-+	int ret;
-+
-+	ret = spacemit_combphy_set_mode(priv);
-+	if (ret) {
-+		dev_err(priv->dev, "failed to set mode for PHY type %x\n",
-+			priv->type);
-+		goto out;
-+	}
-+
-+	ret = reset_control_deassert(priv->phy_rst);
-+	if (ret) {
-+		dev_err(priv->dev, "failed to deassert rst\n");
-+		goto err_rst;
-+	}
-+
-+	switch (priv->type) {
-+	case PHY_TYPE_USB3:
-+		ret = spacemit_combphy_init_usb(priv);
-+		break;
-+	default:
-+		dev_err(priv->dev, "PHY type %x not supported\n", priv->type);
-+		ret = -EINVAL;
-+		break;
-+	}
-+
-+	if (ret)
-+		goto err_rst;
-+
-+	return 0;
-+
-+err_rst:
-+	reset_control_assert(priv->phy_rst);
-+out:
-+	return ret;
-+}
-+
-+static int spacemit_combphy_exit(struct phy *phy)
-+{
-+	struct spacemit_combphy_priv *priv = phy_get_drvdata(phy);
-+
-+	reset_control_assert(priv->phy_rst);
-+
-+	return 0;
-+}
-+
-+static struct phy *spacemit_combphy_xlate(struct device *dev,
-+					  const struct of_phandle_args *args)
-+{
-+	struct spacemit_combphy_priv *priv = dev_get_drvdata(dev);
-+
-+	if (args->args_count != 1) {
-+		dev_err(dev, "invalid number of arguments\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	if (priv->type != PHY_NONE && priv->type != args->args[0])
-+		dev_warn(dev, "PHY type %d is selected to override %d\n",
-+			 args->args[0], priv->type);
-+
-+	priv->type = args->args[0];
-+
-+	if (args->args_count > 1)
-+		dev_dbg(dev, "combo phy idx: %d selected",  args->args[1]);
-+
-+	return priv->phy;
-+}
-+
-+static const struct phy_ops spacemit_combphy_ops = {
-+	.init = spacemit_combphy_init,
-+	.exit = spacemit_combphy_exit,
-+	.owner = THIS_MODULE,
-+};
-+
-+static int spacemit_combphy_probe(struct platform_device *pdev)
-+{
-+	struct spacemit_combphy_priv *priv;
-+	struct phy_provider *phy_provider;
-+	struct device *dev = &pdev->dev;
-+
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	priv->phy_ctrl = devm_platform_ioremap_resource_byname(pdev, "ctrl");
-+	if (IS_ERR(priv->phy_ctrl))
-+		return PTR_ERR(priv->phy_ctrl);
-+
-+	priv->phy_sel = devm_platform_ioremap_resource_byname(pdev, "sel");
-+	if (IS_ERR(priv->phy_sel))
-+		return PTR_ERR(priv->phy_sel);
-+
-+	priv->lfps_threshold = COMBPHY_USB_LFPS_THRES_DEFAULT;
-+	device_property_read_u8(&pdev->dev, "spacemit,lfps-threshold", &priv->lfps_threshold);
-+
-+	priv->rx_always_on = device_property_read_bool(&pdev->dev, "spacemit,rx-always-on");
-+	priv->type = PHY_NONE;
-+	priv->dev = dev;
-+
-+	priv->phy_rst = devm_reset_control_get(dev, NULL);
-+	if (IS_ERR(priv->phy_rst))
-+		return dev_err_probe(dev, PTR_ERR(priv->phy_rst),
-+				     "failed to get phy reset\n");
-+
-+	priv->phy = devm_phy_create(dev, NULL, &spacemit_combphy_ops);
-+	if (IS_ERR(priv->phy))
-+		return dev_err_probe(dev, PTR_ERR(priv->phy),
-+				     "failed to create combphy\n");
-+
-+	dev_set_drvdata(dev, priv);
-+	phy_set_drvdata(priv->phy, priv);
-+	phy_provider = devm_of_phy_provider_register(dev, spacemit_combphy_xlate);
-+
-+	return PTR_ERR_OR_ZERO(phy_provider);
-+}
-+
-+static const struct of_device_id spacemit_combphy_of_match[] = {
-+	{ .compatible = "spacemit,k1-combphy", },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, spacemit_combphy_of_match);
-+
-+static struct platform_driver spacemit_combphy_driver = {
-+	.probe	= spacemit_combphy_probe,
-+	.driver = {
-+		.name = "spacemit-k1-combphy",
-+		.of_match_table = spacemit_combphy_of_match,
-+	},
-+};
-+module_platform_driver(spacemit_combphy_driver);
-+
-+MODULE_DESCRIPTION("Spacemit PCIE/USB3.0 COMBO PHY driver");
-+MODULE_LICENSE("GPL");
+All of these patches are available here:
+  https://github.com/riscstar/linux/tree/outgoing/reset-v5
 
+Between version 4 and version 5:
+  - Added Haylen's Reviewed-by on the second patch.
+  - Added Philipp's Reviewed-by on the third patch.
+  - In patch 4, added a const qualifier to some structures, and removed
+    parentheses surrounding integer constants, as suggested by Philipp
+  - Now based on the SpacemiT for-next branch
+
+Here is version 4 of this series.
+  https://lore.kernel.org/lkml/20250414191715.2264758-1-elder@riscstar.com/
+
+Between version 3 and version 4:
+  - Now based on Haylen Chu's v7 clock code, built on v6.15-rc2.
+  - Added Krzysztof's Reviewed-by on the first patch.
+
+Here is version 3 of this series.
+  https://lore.kernel.org/lkml/20250409211741.1171584-1-elder@riscstar.com/
+
+Between version 2 and version 3 there was no feedback, however:
+  - Haylen posted v6 of the clock series, and it included some changes
+    that affected the logic in this reset code.
+  - I was informed that defining CCU nodes without any clocks led to
+    warnings about "clocks" being a required property when running
+    "make dtbs_check".  For that reason, I made clock properties
+    optional for reset-only CCU nodes.
+  - This code is now based on v6.15-rc1, which includes a few commits
+    that were listed as dependencies previously.
+
+Here is version 2 of this series.
+  https://lore.kernel.org/lkml/20250328210233.1077035-1-elder@riscstar.com/
+
+Between version 1 and version 2:
+  - Added Rob's Reviewed-by tag on the first patch
+  - Renamed the of_match_data data type (and one or two other symbols) to
+    use "spacemit" rather than "k1".
+  - Replaced the abbreviated "rst" or "RST" in names of newly-defined
+    sympols with "reset" or "RESET" respectively.
+  - Eliminated rcdev_to_controller(), which was only used once.
+  - Changed a function that unsafely did a read/modify/write of a register
+    to use regmap_update_bits() instead as suggested by Haylen.
+  - Eliminated a null check for a pointer known to be non-null.
+  - Reordered the assignment of reset controller device fields.
+  - Added a "sentinel" comment as requested by Yixun.
+  - Updated to be based on Linux v6.14 final.
+
+Here is the first version of this series.
+  https://lore.kernel.org/lkml/20250321151831.623575-1-elder@riscstar.com/
+*** BLURB HERE ***
+
+Alex Elder (7):
+  dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
+  clk: spacemit: rename spacemit_ccu_data fields
+  clk: spacemit: add reset controller support
+  clk: spacemit: define existing syscon resets
+  clk: spacemit: make clocks optional
+  clk: spacemit: define new syscons with only resets
+  riscv: dts: spacemit: add reset support for the K1 SoC
+
+ .../soc/spacemit/spacemit,k1-syscon.yaml      |  29 +-
+ arch/riscv/boot/dts/spacemit/k1.dtsi          |  18 +
+ drivers/clk/spacemit/ccu-k1.c                 | 330 +++++++++++++++++-
+ .../dt-bindings/clock/spacemit,k1-syscon.h    | 128 +++++++
+ 4 files changed, 482 insertions(+), 23 deletions(-)
+
+
+base-commit: 279d51ad9f6dc0c667f6f141a669b2c921277d1a
 -- 
-2.49.0
+2.45.2
 
