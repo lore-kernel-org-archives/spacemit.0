@@ -1,54 +1,26 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AB32AF00
-	for <spacemit@lists.linux.dev>; Fri, 18 Apr 2025 00:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA612750E3
+	for <spacemit@lists.linux.dev>; Fri, 18 Apr 2025 13:20:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744935765; cv=none; b=T9qRnFjmQ7ZDWtCKUTL2res65VkYv45b/k4um1fYxcxIuTW3fBMJPCQoqfWbJ2eJAByEMCdeubVzlByDR5ao9wTy0aAkYrvvAPNOBzJBSWa3qmywyorxPLgY1ehW27UDSsvqqXXxbjFg2mFcyMNsXJOoaec6ZdnF8ArT5J36FHo=
+	t=1744982460; cv=none; b=clplumf4QLv1gElhUjgYCHIU8hxeE9vzN+JgUhGEZphDZMNmRuLwbIBg7hHQ6NemI8XfcOW9vzl/wO3Qjv3uB73E/b9gI6aBYTJ2d/1Xat1Db3BVzq8wLNwa8fptJsK39ArZ90oyN06rZrtSOyrlMs7g2NiYCv1KyofH7lMbZus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744935765; c=relaxed/simple;
-	bh=eCJzhCM/N9tfeIoXxAgMxE9th3g84gBE4CoN6UFnlco=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lQURFE4gYkB2g9bbOV+L76jKILiY0VqMDImPA8OS9Ot09nW/0xN6KVbJKqhffqrx2UaZqFqmV0AKGP5S0aVZ6GFVxN57NKrecaqX7pcpdvdEX5ICpUadwaQoBY/UFH+74z7GSF+4nn25zGt6d0CSS6NpA+w8JcrP5pm6ss2odTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost.localdomain (unknown [116.232.27.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 624F7342FE7;
-	Fri, 18 Apr 2025 00:22:37 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Haylen Chu <heylenay@outlook.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Haylen Chu <heylenay@4d2.org>
-Cc: Yixun Lan <dlan@gentoo.org>,
-	linux-riscv@lists.infradead.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Chen Wang <unicornxdotw@foxmail.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
-Subject: Re: (subset) [PATCH v8 0/6] Add clock controller support for SpacemiT K1
-Date: Fri, 18 Apr 2025 08:22:03 +0800
-Message-ID: <174484549885.160158.3249067849153986093.b4-ty@gentoo.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250416135406.16284-1-heylenay@4d2.org>
-References: <20250416135406.16284-1-heylenay@4d2.org>
+	s=arc-20240116; t=1744982460; c=relaxed/simple;
+	bh=Hb/aiNAu0w7LHL/2ZZsWq3IRTJh3NmFxda3Izyu8pb0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=lWY5g7OhEKqYyzwb+B9SyReS18dEUvj3kBOqPLIEMvJgxyNT2h+jgkarafY2RJaxJAA6Qk/qxWjARRMzoy0G5V0Ez7tWKVAXGPqJLynIHjfXLb9bPvv/1L01YELC2QEMlZB29EvhsbWCwxnRqAUhuTrsw/DVSCDsDvHeF6l05jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
+Received: from [127.0.0.1] (gy-adaptive-ssl-proxy-3-entmail-virt135.gy.ntes [27.18.99.221])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 125ec8780;
+	Fri, 18 Apr 2025 21:20:42 +0800 (GMT+08:00)
+From: Ze Huang <huangze@whut.edu.cn>
+Subject: [PATCH v2 0/4] Add USB2.0 PHY and USB3.0 PHY support for SpacemiT
+ K1
+Date: Fri, 18 Apr 2025 21:19:49 +0800
+Message-Id: <20250418-b4-k1-usb3-phy-v2-v2-0-b69e02da84eb@whut.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -56,32 +28,102 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHVRAmgC/3WO3Y6CQAyFX4XM9ZbQscNfjPE9Nl4MUGWyAtoiW
+ WJ8d0fd2738Tvqd07tRlsBq6uRuhJegYRoj2K/EtL0fTwyhi2xsZl1GWEBD8INw02YDl36FxcK
+ xQSYsqcqoMtG7CB/D77vz+/Bh4estVs+f0DReGdppGMJcJ0ueogNp8eUOrOrfo3Wy/dvMceMoi
+ 1e5LQkQel7PPPp1T51NJznt/hMJKyzQpdbmVLgyqnzuWPYStNXZSxpf2JnD4/EETSN5IwYBAAA
+ =
+X-Change-ID: 20250417-b4-k1-usb3-phy-v2-fb1e41849049
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Ze Huang <huangze@whut.edu.cn>, 
+ Junzhong Pan <junzhong.pan@spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1744982442; l=2916;
+ i=huangze@whut.edu.cn; s=20250325; h=from:subject:message-id;
+ bh=Hb/aiNAu0w7LHL/2ZZsWq3IRTJh3NmFxda3Izyu8pb0=;
+ b=NXT0rPNES/7G050TaJYJZTD9dEqbLiK6Za+goYuUk3ogIETwWyzTrxTFQcuPXVSP9jUluMk1Y
+ zStiKMijLIdD13FNm6XF1h7He1fOzVNo5MQGZbdgUJ/Tyd0nyYKb1Lc
+X-Developer-Key: i=huangze@whut.edu.cn; a=ed25519;
+ pk=C3zfn/kH6oMJickaXBa8dxTZO68EBiD93F+tAenboRA=
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZQklNVkhPGUkYGh8YHkIfS1YeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVJSUpZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0tVSktLVUtZBg
+	++
+X-HM-Tid: 0a96490f023e03a1kunm125ec8780
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Pjo6Cyo4TTJPOAkQERQQEQE9
+	MzMwCghVSlVKTE9PQkNJT09MTk5DVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
+	TFVKQ1VCQlVJSUpZV1kIAVlBT05OSTcG
 
+This patch series introduces support for the USB2.0 PHY and PCIe/USB3.0
+Combo PHY on the SpacemiT K1 SoC. The implementation has been tested on the
+Milk-V Jupiter and BananaPi-f3.
 
-On Wed, 16 Apr 2025 13:54:00 +0000, Haylen Chu wrote:
-> The clock tree of SpacemiT K1 is managed by several independent
-> multifunction devices, some of them are
-> 
-> - Application Power Manage Unit, APMU
-> - Main Power Manage Unit, MPMU
-> - APB Bus Clock Unit, APBC
-> - APB Spare, APBS
-> 
-> [...]
+K1 includes three USB ports as follows[1]:
+- A USB2.0 OTG Port
+- A USB2.0 Host Only Port
+- A USB3.0 Port with a USB2.0 DRD interface
 
-Applied, thanks!
+USB3.0 PHY for USB3.0 Port is shared with PCIe port A, meaning that only one of
+these interfaces (PCIe or USB3.0) can be active at a given time.
 
-[1/6] dt-bindings: soc: spacemit: Add spacemit,k1-syscon
-      https://github.com/spacemit-com/linux/commit/61e312a001a394a93998c353af859841ddf50d5d
-[2/6] dt-bindings: clock: spacemit: Add spacemit,k1-pll
-      https://github.com/spacemit-com/linux/commit/8090804045066ab8cd92737c8e2adfb46f166c0f
-[3/6] clk: spacemit: Add clock support for SpacemiT K1 SoC
-      https://github.com/spacemit-com/linux/commit/1b72c59db0add8e47fa116b21f78ed0b09a264f3
-[4/6] clk: spacemit: k1: Add TWSI8 bus and function clocks
-      https://github.com/spacemit-com/linux/commit/49625c6e4d90a9221127c49a11eb8c95732bb690
+Link: https://developer.spacemit.com/documentation?token=AjHDwrW78igAAEkiHracBI9HnTb#part5 [1]
+
+Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+---
+Changes in v2:
+- combphy dt-bindings:
+  - fix reg-names
+  - describe reg
+  - describe #phy-cells argument
+- drop stale ".owner" in driver struct
+- add support for usb lfps_thres in combphy
+- fix Kconfig depends on
+- Link to v1: https://lore.kernel.org/all/20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn
+
+---
+Ze Huang (4):
+      dt-bindings: phy: spacemit: add K1 USB2 PHY
+      dt-bindings: phy: spacemit: add K1 PCIe/USB3 combo PHY
+      phy: spacemit: support K1 USB2.0 PHY controller
+      phy: spacemit: add USB3 support for K1 PCIe/USB3 combo PHY
+
+ .../bindings/phy/spacemit,k1-combphy.yaml          |  72 ++++++
+ .../devicetree/bindings/phy/spacemit,usb2-phy.yaml |  40 ++++
+ drivers/phy/Kconfig                                |   1 +
+ drivers/phy/Makefile                               |   1 +
+ drivers/phy/spacemit/Kconfig                       |  21 ++
+ drivers/phy/spacemit/Makefile                      |   3 +
+ drivers/phy/spacemit/phy-k1-combphy.c              | 251 +++++++++++++++++++++
+ drivers/phy/spacemit/phy-k1-usb2.c                 | 131 +++++++++++
+ 8 files changed, 520 insertions(+)
+---
+base-commit: 64e9fdfc89a76fed38d8ddeed72d42ec71957ed9
+change-id: 20250417-b4-k1-usb3-phy-v2-fb1e41849049
+prerequisite-message-id: <20250416135406.16284-1-heylenay@4d2.org>
+prerequisite-patch-id: 19b7f061557b184b9565e10ccfc0aab5754dfa73
+prerequisite-patch-id: a56183c8b71a141ca6f5d401b67a5456f40d4a9c
+prerequisite-patch-id: a4a3c44d4c3e44f5209bff2b2bd0b49cd5a9eebe
+prerequisite-patch-id: 471fe02daa5297e85e9cee8dfef873375a348e9f
+prerequisite-patch-id: 717bc3d50f0924f7697312cb78280b15a029ce2c
+prerequisite-patch-id: 585a2a9ce37a5e2a036f7351ff8ff4ed859bbe3e
+prerequisite-message-id: <20250414191715.2264758-1-elder@riscstar.com>
+prerequisite-patch-id: a7769b6451bfd80d5e5366013753c5fc870b2255
+prerequisite-patch-id: 8a8d0eefd0b4423d87f3c093b451a0fa60622ec4
+prerequisite-patch-id: 30f92f93e5b3577bde61424303f21c709a715ec5
+prerequisite-patch-id: d774b8281b5c6a822445365ee94925e1ab6c7a93
+prerequisite-patch-id: 54a4f5d065eb9f212fd99efec6e7e06abbb9bad8
+prerequisite-patch-id: db30b8a180a5f04f499d851384d4a7f95ccb00b3
+prerequisite-patch-id: 5f53f8bf16fb067628092daebc4831293261aa01
 
 Best regards,
 -- 
-Yixun Lan
+Ze Huang <huangze@whut.edu.cn>
 
