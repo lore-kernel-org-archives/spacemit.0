@@ -1,187 +1,115 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E992114
-	for <spacemit@lists.linux.dev>; Sat, 19 Apr 2025 03:33:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2386D191F77
+	for <spacemit@lists.linux.dev>; Sat, 19 Apr 2025 09:43:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745033584; cv=none; b=ImCMKpYLwn2SsmyoL0X3DdNKRddn1PgSRZwvozv5W+/M0zGNy1b5pTR86dV8l8srpHZ6reoctMKMkFAGRfnwUt3e+tZvPqQDpXzmKKJef6xbSB7UZyMiYYwQocKFSmoiLiXIH7OnJ04LX5YbcoOp3zVNdyXEuYrLYau7uXkCVmE=
+	t=1745055794; cv=none; b=BOIF2effXCbjLMGxYcMYXV8a/StgGq4whfZCVfQmn19ywUmPEZQnq3QgAZu/PE/3KVcfdRkIaaKW2PxWHpqpXq44puM8AybNPIpATLrOKCrYivD1ugBxQ7t/6f7RiNaZZxk9zwRCKt3fFL2tuBnrcW8X7L28Yd6X28YRPtofQj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745033584; c=relaxed/simple;
-	bh=qG33W8pZh9cohXq8CNvMyPhQr05ENy2yUo6n0wyKswk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=R9oPmsb7yiVBLAWb7L+UAxsR7yLVTWBrLrfZRZBONhLbdQL7wyogCzIS5Jo73bCRtjtXvbA6WOlc0C4/WvZMEVp5swuxsUG27oIB/Vzx5YD0vs6ws70+gKqyOpFYmtLCYXsIFMhlKZNUOQfsDZ/ni6sXUxIR86tv9DWD/5XtjOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [127.0.0.1] (unknown [116.232.27.72])
+	s=arc-20240116; t=1745055794; c=relaxed/simple;
+	bh=TOBj/1ChDvQnz19HxGfDD7N1HbsUAezNiKIuArHitj0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LHft8G3V38+uEnRBTkktkDyB7iMr4NS4S6FwhmHzELkMQfE+4jq9/JXG1lOGKOTgwRmGJezmQqELarZVd7VqfBX1Ij4dCb9tx+19EobkihO9hSTEDIwcItszTpdyNzuDQud63xBGg7Noj7Xeo9vPM6a8QfXSYIB2mmDcX1ZemvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=bNiPjR1W; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=wr5TvnpU; arc=none smtp.client-ip=155.254.16.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="bNiPjR1W";
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="wr5TvnpU"
+Received: from bayard.4d2.org (bayard.4d2.org [127.0.0.1])
+	by bayard.4d2.org (Postfix) with ESMTP id 509B812FB42D;
+	Sat, 19 Apr 2025 02:43:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1745055784; bh=TOBj/1ChDvQnz19HxGfDD7N1HbsUAezNiKIuArHitj0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bNiPjR1WKT0/qO+GEwYV3ti6DJ49pPMOi+jbfO3N4GODOi6p9j7inA8FOc4vLpH0j
+	 dASyRqNb9Ps//zuysI/icCS/35r1suh21OW8Dyvi8U21b3KGu1skl21hqr4nujNhPS
+	 fK9kkNKbisx1GGZYD8p4g7ufqTrBNPrBtKILL4eq7aALULnaYuBWd+BO0x+S2h2jez
+	 rtx7zRUEblW9Qo3MFEJWNC343Bx4N7zSpd+K5ngRlq4ZRV2f8iuKnD6hmFl25XlTwZ
+	 PpufaHD2LZCRWQ+IeSezOZCOTVJxXre1ccd4tqIENSw4w+pgSMXBeWSOltGEziruhb
+	 b5TXUlIq0VYXQ==
+X-Virus-Scanned: amavisd-new at 4d2.org
+Received: from bayard.4d2.org ([127.0.0.1])
+ by bayard.4d2.org (bayard.4d2.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 0FlYzok8K45B; Sat, 19 Apr 2025 02:42:58 -0700 (PDT)
+Received: from ketchup (unknown [183.217.80.191])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 18798342FFE;
-	Sat, 19 Apr 2025 03:32:56 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-Date: Sat, 19 Apr 2025 11:32:31 +0800
-Subject: [PATCH 2/2] riscv: dts: spacemit: Acquire clocks for UART
+	(Authenticated sender: heylenay@4d2.org)
+	by bayard.4d2.org (Postfix) with ESMTPSA id 45D7A12FB42F;
+	Sat, 19 Apr 2025 02:42:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1745055778; bh=TOBj/1ChDvQnz19HxGfDD7N1HbsUAezNiKIuArHitj0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=wr5TvnpUG18QOtD4HGV0Oi94la5waO52Jiofd6Nl/C7t150TDDWF6P9nogJSy4wwj
+	 QO0Vc3/weoQtsh5XMDhY4DECXbfbUA+1utkqvvQDj/xIjvytH7eVGMIA5ULw8bHZ9D
+	 5O36SRf6xhB+L2cBZmyEscMyH4QVLxuQyD/fmiUYr+x5l8Hy26AE9rq7c93CKU902Q
+	 5MjNu38Nw76QU2Wffp/kIgzp6yDLwAbpEE0RVOrkOiq3D1AViAx2VqFwkPKhZJtY7y
+	 KxSnacvzI3AEoySjQZZYh/o50y+d5G/kQ1Wksix/r4ixg2HdLakYBjozgfRqCVuCGv
+	 R9ImEj7ciEC8A==
+Date: Sat, 19 Apr 2025 09:42:49 +0000
+From: Haylen Chu <heylenay@4d2.org>
+To: Yixun Lan <dlan@gentoo.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: Alex Elder <elder@riscstar.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] riscv: dts: spacemit: Add clocks to pinctrl and UART
+Message-ID: <aANwGZCIpMcd47IB@ketchup>
+References: <20250419-05-dts-clock-v1-0-1cce5d59aba2@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250419-05-dts-clock-v1-2-1cce5d59aba2@gentoo.org>
-References: <20250419-05-dts-clock-v1-0-1cce5d59aba2@gentoo.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20250419-05-dts-clock-v1-0-1cce5d59aba2@gentoo.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Yixun Lan <dlan@gentoo.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4275; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=qG33W8pZh9cohXq8CNvMyPhQr05ENy2yUo6n0wyKswk=;
- b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoAxla/CuSzJaQd3efb8dgbHtSmb3zQpqQCiCBL
- CBemk1p3raJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaAMZWl8UgAAAAAAuAChp
- c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
- CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277Y8uD/0aDEL9y1ipWFny2s
- Q/8scp0VWSTj7mU1DwAhO65jJ3yS9eYJChvJasDXDZukcMrHXxCMXTo5NEL+x0dTAd67TehU9Cb
- KogxfclpbSgkCHrQe0MTxrByjFd9DUHXU5i4a67KmT4exYcl1D4BbJKXS/1KU1n/68GYgZ4YApr
- cZkMd6T0gkY/jdrUF2VWCilp0iabpPhFMLcHjTzALtsfjJMb/24ZVwdyDUO2c5nWx3qDeaxVbf7
- 0J7uWfTCamGpWePfnjQfl163ZjzLIcpfzsyGCQ+ctoAOdEwnHiLNyQXhyMqdbZAOZ5WBgL6kpq3
- zo88xoGGNvjj1Th9ECoHAcBGs/Uz1Cqy3ngtarlaBL+d4jI/sJb71r8PdWp6EFzwmWLZ+leM1s6
- vNL+U/jH0kFkwkmq+xjj0Ve6vjRAO+LDIYGz0V5J4D2sDmiu3ykgaTO2U5n7+3Y04PFCGbPw0fE
- MCX686u7nxNoJUFr29tY5zRsTN5TmjhGCa+kQGw8SOavaF8JrIQYaHDvNu6bwFyDm06YZmVOrT1
- qVVhWDniWCAD1qZ1Hmof1kknBWbF1bGJ5qGsu5mrFtgbftllfTMGc0lFsUk6AAUgaTt1VTckHT8
- Mlog5Mqv6LGA71hkoOBziQvFKNxrXO/I4MbKZCvULP6+ECXSogvynude9N9/yISgzBhA==
-X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-The K1 SoC features two clocks for UART controller,
-Acquire them explicitly in the driver.
+On Sat, Apr 19, 2025 at 11:32:29AM +0800, Yixun Lan wrote:
+> Populate clock property for pinctrl and UART controller.
+> 
+> The pinctrl's clock dt-binding patch is still waiting to be merged[1].
+> 
+> The UART's dt-binding and driver code has already been accepted[2],
+> so we now are only sending the DT part patch.
+> 
+> These two patches are abased on SpacemiT SoC tree's for-next branch[3]
+> 
+> Link: https://lore.kernel.org/r/20250416-02-k1-pinctrl-clk-v2-0-2b5fcbd4183c@gentoo.org [1]
+> Link: https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git/log/?h=tty-next [2]
+> Link: https://github.com/spacemit-com/linux/tree/for-next [3]
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
 
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 36 +++++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+Generally this looks good to me, but I realized that splitting the
+commit that introduces clock controllers and the one that correctly
+fills clock properties for various peripherals may cause bisectable
+issues, i.e. the UART won't function with only the clock controller
+introduced and no clk_ignore_unused specified on commandline.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 153fd1160182b42fe1a2f7f042c9c1da90f63b0c..415e1c3e1c78db987cbb65759adc26e98aaa24d3 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -360,8 +360,10 @@ syscon_apbc: system-control@d4015000 {
- 		uart0: serial@d4017000 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017000 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART0>,
-+				 <&syscon_apbc CLK_UART0_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <42>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -370,8 +372,10 @@ uart0: serial@d4017000 {
- 		uart2: serial@d4017100 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017100 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART2>,
-+				 <&syscon_apbc CLK_UART2_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <44>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -380,8 +384,10 @@ uart2: serial@d4017100 {
- 		uart3: serial@d4017200 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017200 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART3>,
-+				 <&syscon_apbc CLK_UART3_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <45>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -390,8 +396,10 @@ uart3: serial@d4017200 {
- 		uart4: serial@d4017300 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017300 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART4>,
-+				 <&syscon_apbc CLK_UART4_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <46>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -400,8 +408,10 @@ uart4: serial@d4017300 {
- 		uart5: serial@d4017400 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017400 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART5>,
-+				 <&syscon_apbc CLK_UART5_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <47>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -410,8 +420,10 @@ uart5: serial@d4017400 {
- 		uart6: serial@d4017500 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017500 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART6>,
-+				 <&syscon_apbc CLK_UART6_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <48>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -420,8 +432,10 @@ uart6: serial@d4017500 {
- 		uart7: serial@d4017600 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017600 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART7>,
-+				 <&syscon_apbc CLK_UART7_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <49>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -431,7 +445,9 @@ uart8: serial@d4017700 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017700 0x0 0x100>;
- 			interrupts = <50>;
--			clock-frequency = <14857000>;
-+			clocks = <&syscon_apbc CLK_UART8>,
-+				 <&syscon_apbc CLK_UART8_BUS>;
-+			clock-names = "core", "bus";
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -441,7 +457,9 @@ uart9: serial@d4017800 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017800 0x0 0x100>;
- 			interrupts = <51>;
--			clock-frequency = <14857000>;
-+			clocks = <&syscon_apbc CLK_UART9>,
-+				 <&syscon_apbc CLK_UART9_BUS>;
-+			clock-names = "core", "bus";
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
+If this isn't really a problem, for the whole series,
 
--- 
-2.49.0
+Reviewed-by: Haylen Chu <heylenay@4d2.org>
 
+> ---
+> Yixun Lan (2):
+>       riscv: dts: spacemit: Acquire clocks for pinctrl
+>       riscv: dts: spacemit: Acquire clocks for UART
+> 
+>  arch/riscv/boot/dts/spacemit/k1.dtsi | 39 +++++++++++++++++++++++++++---------
+>  1 file changed, 30 insertions(+), 9 deletions(-)
+> ---
+> base-commit: 279d51ad9f6dc0c667f6f141a669b2c921277d1a
+> change-id: 20250419-05-dts-clock-026bfca75e5b
+> 
+> Best regards,
+> -- 
+> Yixun Lan
+> 
