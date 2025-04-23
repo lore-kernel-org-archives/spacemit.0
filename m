@@ -1,138 +1,94 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49DB1EDA11
-	for <spacemit@lists.linux.dev>; Mon, 21 Apr 2025 19:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B9C1E0DE3
+	for <spacemit@lists.linux.dev>; Wed, 23 Apr 2025 08:39:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745262686; cv=none; b=ZgRzJGQgoVvRb5/xgt+OgqNVgwmtFcwo6yGl093Tlmb+qeKp/URCfVrovfnU82JCST0Ec4rWyxv//uFVq1ukRirjWMd76qvmsBuhfKLVqh+C2aEDUVoHnkJDZADzoazeDSQmHSC9RadaU2+BVlacHrocAMSc4HiF5epP+CLTgHo=
+	t=1745397581; cv=none; b=Snnq0PPjEW+ws6+4QdjPGG9V9gwGCp0WbKuNm8qjFR/bZP6Pd+4Zcjn9Z3D6OS7E1ms2a6hOgcVmfDSAFXBrMb3OhuzEaxGqAA4KJyFT7QlH+YFigequvr3pqGVrhXzZhWdc3bwqid26XUkXvofygGfVRMoQ1HRne+p1g52b5qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745262686; c=relaxed/simple;
-	bh=5AIG1sMY/MlIZGAcS5S5t2hhJlsih5VEaj99xoBne6s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GRT1PCwQQK4938v1QQwDKTn51WwadZw7UVwtrI94aYW1NwFKQsElgg2ryal8MjWOIEz4ClniZ/NfjvmNspvFnwgWcvKPv7NpPs484YgKnQFA16oLQMCLXfj2WXYWNJEPlU6F5sgc9xtTO3FY0/DY+t/V5LdwcPtCjT4kmENLnGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=Lsqhuv6m; arc=none smtp.client-ip=209.85.160.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1745397581; c=relaxed/simple;
+	bh=grgPkLeDaak7FHXRcZ5Lz333Opab1u40+CL8LBRoWz4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lD2RzYroUuMqmD6BGK+1p7GnMgDfNX/BLM/LgotWypp4z3+SwiS1JUUqnsCfOyRSmnof1El/YITTa0zvqcDCPqWo0fyKa24UEilB5H1aOJws1BBbFC0qF7xK7IuAWDAMhLXF/UTtknHrh07NcuFyOJ3vsdelmCaEsuFyn9QJhDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J6OqQVgB; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="Lsqhuv6m"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-476a1acf61eso42618601cf.1
-        for <spacemit@lists.linux.dev>; Mon, 21 Apr 2025 12:11:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J6OqQVgB"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-54298ec925bso8984390e87.3
+        for <spacemit@lists.linux.dev>; Wed, 23 Apr 2025 01:39:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1745262680; x=1745867480; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gI2L4uhiI02NJe/WReim9SGsmkpDN8uWBBFo4WhEb3I=;
-        b=Lsqhuv6mJf8zKT778R9BeO5omb/49YU3HD0fZwjoEP6ZL8AzuIBmOjVVTe+OjGoqm+
-         vxJdWm6RKJ4JsU4d2JyNE+pyF5Zamw22AlRWnJqWMj+yLkBT7ZTnNqcntLMBkZVfKvTU
-         8eUQRi/bDFrQsg4UdbYJQS9TP3cM1Ply4xb7kS/N7V100PFhUAFEVDCaMA6u++s6Y2L/
-         rz/RgEXi+BH+ccKMf9CFvWfjeZGlNsbkRqo5Ygdmy/EEk7m//GPtiYIyPULfClQtDPRL
-         5O0PvKBFmZcqcQBivXqfwHEEpc5ui5F4b7HEAeaHww0+M09vjjD8Er3UGCQib9HD1kwD
-         HZUQ==
+        d=linaro.org; s=google; t=1745397577; x=1746002377; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=grgPkLeDaak7FHXRcZ5Lz333Opab1u40+CL8LBRoWz4=;
+        b=J6OqQVgBiYui+CMKQudWIxtDDxRP+lAEKBTcSWPhaY7XbU50Ngx4MWjvg9uNoFYCN6
+         TK7mTJ5lz9i9sjKNJbiqxf/jksKu8URulN4JPgYk9Q8hWLAdYe3ziaCUfTe36j5DN5Td
+         ZPvnxHg7AJxLGSgpVtRklu3K3TRJH4mJ3iJV0PdOgquuP8JpLGUyZC2xowGlDQ/kAHvi
+         vkdeQDvTNjxMt09/WSWgffyyghj7rPQF+PUJieANPzMinhmOLa6PAgey7XxvQ2A+op2S
+         bv+Kr5CVzg7XBVNoCnN+d9iFyW4HNkgh815V0nxqzLnPSRQetjUas42ASUhHMJ0+dMYq
+         ZCeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745262680; x=1745867480;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gI2L4uhiI02NJe/WReim9SGsmkpDN8uWBBFo4WhEb3I=;
-        b=v1o/sTxsMsY2pvmCsjdBMCkfLEe9AUdPbVWi05aib0pMyOTWf92MGW9fsTmalUdowC
-         GGUR+ajZH4sTZi3eXUYlLtTHG04PrYd2RGuBqsJuNE7IdehvPLQ/xUdhp7WPZjhuLkMS
-         QxQs3pTFz+sm530UzOZNKM4JD8A+naYPGK4hDO3ilONuhKOCaXvt5Ftm1FNPjClb/n1y
-         rW7ss1vvq5AStROWn1RaDjX+5ZySYmYWSdSX8WLaqWWUDdrLA1RwmaulpXGfCbAZ2aII
-         A75I6eFrVOBpOR/NzHD6t5zXawRKBUIJrDgbF7VEoPy8aT4OEn1Sq9E3xmVcOzGrwhQA
-         e3ug==
-X-Forwarded-Encrypted: i=1; AJvYcCXZBNSQVgNEMwYV5YsiccL0wF0vIYT78Gwe45Duib5hRf5bfK2P4A48oEuu1MTiENo0YGqCa/68GQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxCq4feTm0TzTq9Oq7DluNZwTnOEQuLrROnsW9gE+PCZ8H+ygJo
-	zBEbJ7l7r4UiSkcpHfmxfIbH56vzXWVixK9RHgxv3pruwTCzENlSdk/k/PpkIqk=
-X-Gm-Gg: ASbGncvYzjev8ErRLA9t3K0XAslEGRWrXOjz7gneEq/WIYWKk+63qoChOsQGeHYonEJ
-	ksgOmbDBKvrI+VH5I4pkVD3BVSjGQu1CeQ4nqBPuWMg2MRufX5LC4SUGMeHlJdOawWlhave6kJM
-	1Bhv6Zu75wQuqIEqsmrFCbUZZSOaSpC6HNKB/b5hTwMm8Ta/lmOFOTT5B7buVqBSr6CWsc5/GvM
-	KXW3sv2fYquF9ISTjJ4z0IkIOUUp0w0VTt+tNLb4ZAoF1evuDZZWl5E4hJc1r+V0Bmb0t/O0dHb
-	zzckdsTmveXNzBaAAyXuBlSF/C0fOXNMT8JxUyL0z3yFthrTb/f7R3Juw/J+ZJg2Da6E+RhPUph
-	7a+62
-X-Google-Smtp-Source: AGHT+IHP/Ty/ZP20dA5qBvEvFjaNUxmyfhkG77rGIDC4dMEZdaAtit8jzrqmhWV8xbqy0JUyq8twcQ==
-X-Received: by 2002:ac8:5e4f:0:b0:474:db2f:bd32 with SMTP id d75a77b69052e-47aec4b971emr238825011cf.38.1745262679762;
-        Mon, 21 Apr 2025 12:11:19 -0700 (PDT)
-Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-47ae9c188a8sm45206481cf.8.2025.04.21.12.11.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Apr 2025 12:11:19 -0700 (PDT)
-Message-ID: <29954f84-75b9-436f-8e36-f52bf26a905f@riscstar.com>
-Date: Mon, 21 Apr 2025 14:11:18 -0500
+        d=1e100.net; s=20230601; t=1745397577; x=1746002377;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=grgPkLeDaak7FHXRcZ5Lz333Opab1u40+CL8LBRoWz4=;
+        b=d4eztSE/Y7UV2SbyeflcL4UKV9gEzkzwFgNRxEUW8fx0j+TNSVGS3FOOkmTwmvE1ru
+         EtNjcXSUWCeHjNFuqlNiLfdWtsczoTaolMOe23F5fyEpCnMX3c3NVeqyJc79lxV/puLS
+         a9E3QZN6m3Xo9+dW9rFs0m5KWqbp+Tji54gKh+ScqX6QplNrlTSZz0Motd7W6JYXHnUc
+         yfQvyAwbHBDdYqbG48I06CjwaefFRqt4AqN3V/4AEDW2qURx6CxD2oO01BlWuK23B+4j
+         iS9U3bSd+EVIJJc2qqsZwozIO/niTr2Im5r5zll53F/WNaZVCeqWrBZPwxKfd1hOk47k
+         /sfA==
+X-Forwarded-Encrypted: i=1; AJvYcCXZCQDppSvah6wayjakPsu4lTCYKxm396aAHISIh5UtI3HuVEGVg1Gl1wlYmXZCoXFoDZTFiTOAhA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzROCt/Zx3Qx5EbL/sLBpjKbA/LiHHjYrTF8EWYz8W8ev9JMsxo
+	QVSqyJF+iYFCrXGB2lLCgz0nOEhgzJU74/jCsZW8jXFo8etEAt5TWC5Ad21Z6CtqMZzKAdULdlo
+	8GngOMbdYBZeUIkWVh9d3wgX0511V4LfWy4CujA==
+X-Gm-Gg: ASbGnctQ7M7T0lA/rRUXzEdbDUCSCmHzaYApXTLpnj+XBbez49mK8G6dTsIwX6fjlSF
+	aXAi+eutTq1ASYQgOUZKO9LkBzr8+QuzBs4N1Qa9X42FYzI+6NC1AKlhcwZcqWJaw0huAqxVFPf
+	uRW7f3wHuSVq8LmLjYKqVOIA==
+X-Google-Smtp-Source: AGHT+IFZTOoQ/SIoYXTZQ5HrYq6ViTZKpu7Uh98dkIsdaRSVIhl5RakX+3hvzmtcTmlbY+w9Vf4quwvNHMW9rpoPCBY=
+X-Received: by 2002:a05:6512:3d8f:b0:54b:f10:fe46 with SMTP id
+ 2adb3069b0e04-54d6e633c8cmr4512868e87.25.1745397577343; Wed, 23 Apr 2025
+ 01:39:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] pinctrl: spacemit: add clock support for K1 SoC
-To: Yixun Lan <dlan@gentoo.org>, Linus Walleij <linus.walleij@linaro.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
 References: <20250416-02-k1-pinctrl-clk-v2-0-2b5fcbd4183c@gentoo.org>
- <20250416-02-k1-pinctrl-clk-v2-2-2b5fcbd4183c@gentoo.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20250416-02-k1-pinctrl-clk-v2-2-2b5fcbd4183c@gentoo.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20250416-02-k1-pinctrl-clk-v2-0-2b5fcbd4183c@gentoo.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 23 Apr 2025 10:39:25 +0200
+X-Gm-Features: ATxdqUHd2AvWX21KS5yncubJtaT0PJGEz4DTRXuWL1cWY2BMp_E6mT4BPCkdw64
+Message-ID: <CACRpkdZpHHvbu41xkK2n8-Hzf0euU14T6F42hXLsM277LJA29g@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] pinctrl: spacemit: add clock/reset support
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 4/15/25 7:15 PM, Yixun Lan wrote:
-> For SpacemiT K1 SoC's pinctrl, explicitly acquiring clocks in
-> the driver instead of relying on bootloader or default hardware
-> settings to enable it.
-> 
+On Wed, Apr 16, 2025 at 2:15=E2=80=AFAM Yixun Lan <dlan@gentoo.org> wrote:
+
+> SpacemiT K1 pinctrl requires two clocks in order to be functional,
+> also one reset line from hardware persepective.
+>
+> In this series, adding clock property in dt-binding, and activate
+> them in the driver. But for reset, making it optional for now.
+>
+> For DT part patch, I plan to submit after clock driver merged.
+> This may result dtb warnings in this version due to the mising
+> clock property in pinctrl dt node.
+>
 > Signed-off-by: Yixun Lan <dlan@gentoo.org>
 
-It might be nice at some point to set the clock rates
-to whatever is preferred.  But this looks good to me.
+Patches applied!
 
-Reviewed-by: Alex Elder <elder@riscstar.com>
-
-
-> ---
->   drivers/pinctrl/spacemit/pinctrl-k1.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
-> index 67e867b04a02ea1887d93aedfdea5bda037f88b1..9996b1c4a07e72f2a3832b759feddcd4e07f2159 100644
-> --- a/drivers/pinctrl/spacemit/pinctrl-k1.c
-> +++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
-> @@ -2,6 +2,7 @@
->   /* Copyright (c) 2024 Yixun Lan <dlan@gentoo.org> */
->   
->   #include <linux/bits.h>
-> +#include <linux/clk.h>
->   #include <linux/cleanup.h>
->   #include <linux/io.h>
->   #include <linux/of.h>
-> @@ -721,6 +722,7 @@ static int spacemit_pinctrl_probe(struct platform_device *pdev)
->   {
->   	struct device *dev = &pdev->dev;
->   	struct spacemit_pinctrl *pctrl;
-> +	struct clk *func_clk, *bus_clk;
->   	const struct spacemit_pinctrl_data *pctrl_data;
->   	int ret;
->   
-> @@ -739,6 +741,14 @@ static int spacemit_pinctrl_probe(struct platform_device *pdev)
->   	if (IS_ERR(pctrl->regs))
->   		return PTR_ERR(pctrl->regs);
->   
-> +	func_clk = devm_clk_get_enabled(dev, "func");
-> +	if (IS_ERR(func_clk))
-> +		return dev_err_probe(dev, PTR_ERR(func_clk), "failed to get func clock\n");
-> +
-> +	bus_clk = devm_clk_get_enabled(dev, "bus");
-> +	if (IS_ERR(bus_clk))
-> +		return dev_err_probe(dev, PTR_ERR(bus_clk), "failed to get bus clock\n");
-> +
->   	pctrl->pdesc.name = dev_name(dev);
->   	pctrl->pdesc.pins = pctrl_data->pins;
->   	pctrl->pdesc.npins = pctrl_data->npins;
-> 
-
+Yours,
+Linus Walleij
