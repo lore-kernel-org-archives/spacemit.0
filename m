@@ -1,49 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B67B298CB0;
-	Wed, 23 Apr 2025 15:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1762D289359;
+	Wed, 23 Apr 2025 15:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745421807; cv=none; b=fL/q7hCnKs8HTFOdg8RKXscYmXK9nuy5Oz/eaVT5/C6uP1o6Qs0Qv/S8Xt/lblqQ58vJkL/A5rlpAOx0DZEnGOUn6uxsVhi/7/X+gdOmBRfFIBucPWH/mmYKzITPfHX5As58c4gg78YjNBNCTbIhVO/o5OrYK87edsjDuuu9/lA=
+	t=1745422862; cv=none; b=KDU7jAbLOWlzKyz3vLXzlxDPXD1Y87KGTYjJxxS/+OASfVScGRZtDJnmK92US3BwIjiO1T7g6p8OEWQJpaHEbxWQnCTNgBeVzNHUCRKl5QLsYPJXuJhKSNwO6L167DeYrf9ADH0+/uoLmLa0flTvqq1toRmUFGIXKKawrciIqbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745421807; c=relaxed/simple;
-	bh=ttYFtyupJCMupeSXwyqSaNxnbRiKjhqkBV9hyVnYY30=;
+	s=arc-20240116; t=1745422862; c=relaxed/simple;
+	bh=ERyjr27hGL4DKu520p+lnJcSombmkSYoRmQUhyArPT4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A7dLB4nmy3LkG3ZMebUsb/0cCDJkKzTqqqw9BDvxIlOFb5uOcJH7t3kvtaCZE42BMOi/mg/KS5DjLu5Rk/fQUdm5TFbnzxO8qPmMrfJ2FPKU9mJ/kfGSaJaF6gATeyh24Osabd+S16nRMUxxJzhyd93Tlnf2e/yz9KzpGCKtrMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fLQsHTSR; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ti6QvEuZ/wv4oWchDvv3Jddiv9ejkHWELjWRzuT2Y2BhrbHpO+ICvZGbT2Nmi3HGaiJVtcMtIdk4wtBzPNO6TLFOjBzBAbEwuXZG0XlW+lcVmSdeg/CRE9E8Km3gSxhX5dF48vCicAEelxZu6V6HTRvBhVOTrl0DJWej/gjkV6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lF6z6ujC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fLQsHTSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D98C4CEE2;
-	Wed, 23 Apr 2025 15:23:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lF6z6ujC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB82C4CEE2;
+	Wed, 23 Apr 2025 15:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745421806;
-	bh=ttYFtyupJCMupeSXwyqSaNxnbRiKjhqkBV9hyVnYY30=;
+	s=k20201202; t=1745422861;
+	bh=ERyjr27hGL4DKu520p+lnJcSombmkSYoRmQUhyArPT4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fLQsHTSROUAK6ThwkWXhF5VTQtSjbjK5MKQgPWBeAYm3OnQl3xo9vUW3c5NIrFpzg
-	 z+lp7GpBGY+WxxQMdQI0S5e9vR73KD0m+fgVfer7oIVylZ0pDaQSMvatCNmhoAYjJz
-	 WjC+opRME537JuHl44GZKOV0qEjjp92qrZ18eFetM0akxL79A+P90DDu+CKlRgaKUc
-	 +2oRVCZHEj7iQ802qNTm67K8mbY+93IrU7H5otIH+P13xmfpnzMl3ELoTX0YE+MNMi
-	 zDHktPncfG76nUvxqFwQANV/QL0RWZHJPaNKtMlkPxd2+oKXeWR5eToaz5f6GmRs6a
-	 qhWfSTuHn/N6Q==
-Date: Wed, 23 Apr 2025 10:23:25 -0500
+	b=lF6z6ujCQiNWGWZ+GJRZCdwDz3m9udIxxNLIwteB6pkVucQDIcVL39LXdrkpgmcHs
+	 NU3jd26BpNpHWjXuefwLSLmESkRcL2Lkkdtpg6o12onX6/4/nmuHLYA5IqtsrxFb3y
+	 tzbQZRV5G6p9IJyf0c3EIe3y+u8SSKpjDgly2HBmGeanm7Qy7iGLlp2l6iIq63axpW
+	 fWiEiieVheQeRkGCgVrVcH3nQ+9TcINtQ7oURNBy3eCle7ciRVvJWpLdYjEMX0b+x4
+	 mbIn7BZex1D89baBOlK9kW8V3AldU4yIFz9IppzT9I6v/6R0wR2RO7qANgCsMLnnpL
+	 xwiuePUNzpONg==
+Date: Wed, 23 Apr 2025 10:40:59 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Ze Huang <huangze@whut.edu.cn>
-Cc: linux-phy@lists.infradead.org, linux-riscv@lists.infradead.org,
-	Junzhong Pan <junzhong.pan@spacemit.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>,
-	devicetree@vger.kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 2/4] dt-bindings: phy: spacemit: add K1 PCIe/USB3
- combo PHY
-Message-ID: <174542180456.549434.17717366396864684617.robh@kernel.org>
-References: <20250418-b4-k1-usb3-phy-v2-v2-0-b69e02da84eb@whut.edu.cn>
- <20250418-b4-k1-usb3-phy-v2-v2-2-b69e02da84eb@whut.edu.cn>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: p.zabel@pengutronix.de, hal.feng@starfivetech.com, elder@riscstar.com,
+	aou@eecs.berkeley.edu, linux-riscv@lists.infradead.org,
+	paul.walmsley@sifive.com, spacemit@lists.linux.dev,
+	conor+dt@kernel.org, dlan@gentoo.org, inochiama@gmail.com,
+	palmer@dabbelt.com, linux-pwm@vger.kernel.org, tglx@linutronix.de,
+	linux-kernel@vger.kernel.org, drew@pdp7.com,
+	devicetree@vger.kernel.org, geert+renesas@glider.be,
+	krzk+dt@kernel.org, heylenay@4d2.org, duje.mihanovic@skole.hr,
+	ukleinek@kernel.org, alex@ghiti.fr, unicorn_wang@outlook.com
+Subject: Re: [PATCH v2 1/6] dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT
+ K1 PWM support
+Message-ID: <174542285923.570390.16199020429609870497.robh@kernel.org>
+References: <20250420070251.378950-1-guodong@riscstar.com>
+ <20250420070251.378950-2-guodong@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -52,20 +51,31 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250418-b4-k1-usb3-phy-v2-v2-2-b69e02da84eb@whut.edu.cn>
+In-Reply-To: <20250420070251.378950-2-guodong@riscstar.com>
 
 
-On Fri, 18 Apr 2025 21:19:51 +0800, Ze Huang wrote:
-> Introduce support for SpacemiT K1 PCIe/USB3 combo PHY controller.
+On Sun, 20 Apr 2025 15:02:46 +0800, Guodong Xu wrote:
+> The SpacemiT K1 SoC reuses the Marvell PXA910-compatible PWM controller
+> with one notable difference: the addition of a resets property. To make
+> the device tree pass schema validation (make dtbs_check W=3), this patch
+> updates the binding to accept spacemit,k1-pwm as a compatible string, when
+> used in conjunction with the fallback marvell,pxa910-pwm.
 > 
-> PCIe portA and USB3 controller share this phy, only one of them can work
-> at any given application scenario.
+> Support for the optional resets property is also added, as it is required
+> by the K1 integration but was not present in the original Marvell bindings.
 > 
-> Co-developed-by: Junzhong Pan <junzhong.pan@spacemit.com>
-> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+> Since the PWM reset line may be deasserted during the early bootloader
+> stage, making the resets property optional avoids potential
+> double-deassertion, which could otherwise cause flickering on displays
+> that use PWM for backlight control.
+> 
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
 > ---
->  .../bindings/phy/spacemit,k1-combphy.yaml          | 72 ++++++++++++++++++++++
->  1 file changed, 72 insertions(+)
+> v2: Accept spacemit,k1-pwm as a compatible string, when used in conjunction
+>     with the fallback marvell,pxa910-pwm
+> 
+> .../bindings/pwm/marvell,pxa-pwm.yaml           | 17 ++++++++++++-----
+>  1 file changed, 12 insertions(+), 5 deletions(-)
 > 
 
 Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
