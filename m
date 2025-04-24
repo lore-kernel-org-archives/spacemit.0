@@ -1,82 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1762D289359;
-	Wed, 23 Apr 2025 15:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AEB2206A4;
+	Thu, 24 Apr 2025 07:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745422862; cv=none; b=KDU7jAbLOWlzKyz3vLXzlxDPXD1Y87KGTYjJxxS/+OASfVScGRZtDJnmK92US3BwIjiO1T7g6p8OEWQJpaHEbxWQnCTNgBeVzNHUCRKl5QLsYPJXuJhKSNwO6L167DeYrf9ADH0+/uoLmLa0flTvqq1toRmUFGIXKKawrciIqbU=
+	t=1745479844; cv=none; b=I8w3d5pIxXJt+zJ4epADw2HAa5U6LXJJQwNtJWG7W9w23GlAzPf9vV2I/qATdHGtKA9t+79arNOtnFc5dJXEpBQsrt0Mar+2VOV/JoTnd0ZCXd9otzm2ClGoTXPD7pAqstPmxrjcA8gJwAj4MDzYxyXI4v2ZWaAkQtrEyp/jc0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745422862; c=relaxed/simple;
-	bh=ERyjr27hGL4DKu520p+lnJcSombmkSYoRmQUhyArPT4=;
+	s=arc-20240116; t=1745479844; c=relaxed/simple;
+	bh=kWaWSxfzAOeVQlRkq60NVI4QsIYjUWB1A9Y9Nj3yPCw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ti6QvEuZ/wv4oWchDvv3Jddiv9ejkHWELjWRzuT2Y2BhrbHpO+ICvZGbT2Nmi3HGaiJVtcMtIdk4wtBzPNO6TLFOjBzBAbEwuXZG0XlW+lcVmSdeg/CRE9E8Km3gSxhX5dF48vCicAEelxZu6V6HTRvBhVOTrl0DJWej/gjkV6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lF6z6ujC; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=rxyPswiG4sEs2kphvW34PdJKmbMZq/85kf2Bf5BWDL+THi7c4dSuPrwu/e8Dx9Fc74oxluUCNTsZxxp73iMiG/BMpYKOt4TwZjKBJ7HD4HUwGAUoU8uNPTMiXYqfxTobyXlRX0nFommHbLZxXE2/WXNDS9AqWsGXPkGlx9qB7+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HQ7OlNoc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lF6z6ujC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB82C4CEE2;
-	Wed, 23 Apr 2025 15:41:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HQ7OlNoc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332E6C4CEE3;
+	Thu, 24 Apr 2025 07:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745422861;
-	bh=ERyjr27hGL4DKu520p+lnJcSombmkSYoRmQUhyArPT4=;
+	s=k20201202; t=1745479843;
+	bh=kWaWSxfzAOeVQlRkq60NVI4QsIYjUWB1A9Y9Nj3yPCw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lF6z6ujCQiNWGWZ+GJRZCdwDz3m9udIxxNLIwteB6pkVucQDIcVL39LXdrkpgmcHs
-	 NU3jd26BpNpHWjXuefwLSLmESkRcL2Lkkdtpg6o12onX6/4/nmuHLYA5IqtsrxFb3y
-	 tzbQZRV5G6p9IJyf0c3EIe3y+u8SSKpjDgly2HBmGeanm7Qy7iGLlp2l6iIq63axpW
-	 fWiEiieVheQeRkGCgVrVcH3nQ+9TcINtQ7oURNBy3eCle7ciRVvJWpLdYjEMX0b+x4
-	 mbIn7BZex1D89baBOlK9kW8V3AldU4yIFz9IppzT9I6v/6R0wR2RO7qANgCsMLnnpL
-	 xwiuePUNzpONg==
-Date: Wed, 23 Apr 2025 10:40:59 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
+	b=HQ7OlNocl570YDHdFBrRWtojdEaHxy3uXCFJRTphSz6caEYX3Mjrrd6kfU1f4GW/P
+	 Wr2bPOYaIcwazz3rZYitkGXDa7+2r/bhW8k9aXIzvjjzBqWD710ELJEgb2FN6nmykn
+	 eS2AGgfNb/x2F9IzAYl5tJ0Oom5DX/RLtMfxahI8Bu5hqlqPYaNNJ26hMuBvQ8kOXJ
+	 5Ef0Y0kKWreEavHMtkQcFro+VaXMdOcRg/evsCGlChHVV4WtbKS/rH8/w5pRDdNZva
+	 C5n6kNNPbX4Jr46Kp49tR1KVSw5pkVo2LTP4yfk3K318mnq4nRzj2t13pcdTekq/Uz
+	 or9QNBxC28Hmg==
+Date: Thu, 24 Apr 2025 09:30:40 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
 To: Guodong Xu <guodong@riscstar.com>
-Cc: p.zabel@pengutronix.de, hal.feng@starfivetech.com, elder@riscstar.com,
-	aou@eecs.berkeley.edu, linux-riscv@lists.infradead.org,
-	paul.walmsley@sifive.com, spacemit@lists.linux.dev,
-	conor+dt@kernel.org, dlan@gentoo.org, inochiama@gmail.com,
-	palmer@dabbelt.com, linux-pwm@vger.kernel.org, tglx@linutronix.de,
-	linux-kernel@vger.kernel.org, drew@pdp7.com,
-	devicetree@vger.kernel.org, geert+renesas@glider.be,
-	krzk+dt@kernel.org, heylenay@4d2.org, duje.mihanovic@skole.hr,
-	ukleinek@kernel.org, alex@ghiti.fr, unicorn_wang@outlook.com
-Subject: Re: [PATCH v2 1/6] dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT
- K1 PWM support
-Message-ID: <174542285923.570390.16199020429609870497.robh@kernel.org>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+	dlan@gentoo.org, p.zabel@pengutronix.de, drew@pdp7.com, inochiama@gmail.com, 
+	geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com, 
+	unicorn_wang@outlook.com, duje.mihanovic@skole.hr, elder@riscstar.com, 
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 2/6] pwm: pxa: add optional reset control
+Message-ID: <mzfiyc2me2smqrrmiymzkzxvsyjmst6ggy7scq4wxz2yfj2ef5@np3h3k467mbl>
 References: <20250420070251.378950-1-guodong@riscstar.com>
- <20250420070251.378950-2-guodong@riscstar.com>
+ <20250420070251.378950-3-guodong@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7v5t3ymowpvpmtvv"
 Content-Disposition: inline
-In-Reply-To: <20250420070251.378950-2-guodong@riscstar.com>
+In-Reply-To: <20250420070251.378950-3-guodong@riscstar.com>
 
 
-On Sun, 20 Apr 2025 15:02:46 +0800, Guodong Xu wrote:
-> The SpacemiT K1 SoC reuses the Marvell PXA910-compatible PWM controller
-> with one notable difference: the addition of a resets property. To make
-> the device tree pass schema validation (make dtbs_check W=3), this patch
-> updates the binding to accept spacemit,k1-pwm as a compatible string, when
-> used in conjunction with the fallback marvell,pxa910-pwm.
-> 
-> Support for the optional resets property is also added, as it is required
-> by the K1 integration but was not present in the original Marvell bindings.
-> 
-> Since the PWM reset line may be deasserted during the early bootloader
-> stage, making the resets property optional avoids potential
-> double-deassertion, which could otherwise cause flickering on displays
-> that use PWM for backlight control.
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> ---
-> v2: Accept spacemit,k1-pwm as a compatible string, when used in conjunction
->     with the fallback marvell,pxa910-pwm
-> 
-> .../bindings/pwm/marvell,pxa-pwm.yaml           | 17 ++++++++++++-----
->  1 file changed, 12 insertions(+), 5 deletions(-)
-> 
+--7v5t3ymowpvpmtvv
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 2/6] pwm: pxa: add optional reset control
+MIME-Version: 1.0
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Hello,
 
+On Sun, Apr 20, 2025 at 03:02:47PM +0800, Guodong Xu wrote:
+> @@ -49,10 +50,10 @@ MODULE_DEVICE_TABLE(platform, pwm_id_table);
+>  #define PWMDCR_FD	(1 << 10)
+> =20
+>  struct pxa_pwm_chip {
+> -	struct device	*dev;
+> -
+> -	struct clk	*clk;
+> -	void __iomem	*mmio_base;
+> +	struct device		*dev;
+> +	struct clk		*clk;
+> +	void __iomem		*mmio_base;
+> +	struct reset_control	*reset;
+
+Changes like these are the reason I prefer to not align the member
+names. Luckily reset is a write only variable and you can just drop this
+hunk if you use a local variable for it in pwm_probe() below.
+
+>  };
+> =20
+>  static inline struct pxa_pwm_chip *to_pxa_pwm_chip(struct pwm_chip *chip)
+> @@ -179,6 +180,11 @@ static int pwm_probe(struct platform_device *pdev)
+>  	if (IS_ERR(pc->clk))
+>  		return PTR_ERR(pc->clk);
+> =20
+> +	pc->reset =3D devm_reset_control_get_optional_exclusive_deasserted(
+> +			&pdev->dev, NULL);
+> +	if (IS_ERR(pc->reset))
+> +		return PTR_ERR(pc->reset);
+> +
+>  	chip->ops =3D &pxa_pwm_ops;
+> =20
+>  	if (IS_ENABLED(CONFIG_OF))
+
+Best regards
+Uwe
+
+--7v5t3ymowpvpmtvv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmgJ6J4ACgkQj4D7WH0S
+/k6xkwf/eaBJze5ndiNHEnGHJcgfmpTZsHwESV/Cwj5PIp5luRW90TAB1L3SoNyQ
+OHH/mCf9BoZemUdaM1+uHqSp2Uh8OzQqpeEYckqGWi2wYTCsTtlrbpfm27MdnWul
+BQB3NvoFTVtICfchbF3t2qqI9MPmgQTsx/RKES15cnEoscazo3G1o1txQDY1zneP
+U3mHPCwcM1PmKZIjFsySl2ptMiVHqO3G8oKZvk91HPeScVjOkk3mH+qy9aNN/mFf
+veMH70GVkuQSSAUC4tAX/fRjbSZMXdeClEHuZ1yZjYLPVx2HquRP7bnt89wRDGzf
+BnV9zfqbbZHhqmBShnKP2GewNTFnUg==
+=2AE+
+-----END PGP SIGNATURE-----
+
+--7v5t3ymowpvpmtvv--
