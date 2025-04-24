@@ -1,193 +1,108 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C1D1E5B88
-	for <spacemit@lists.linux.dev>; Thu, 24 Apr 2025 07:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E207D529;
+	Thu, 24 Apr 2025 08:18:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745480935; cv=none; b=l+uEVzQ5YrK4Sn9QA4GqpgEqSSmAGCYxc0VCjq0+8Ys8npBQ3azNXMdjAz+9642GO94rUTLxwUTWf/d2SudYrq4he0smK0IHrQn6vx94PYxpWhHh59PA/e+LJp/R+LaEJ8wa6oSSOVHQ6MfWDnuiKEhNP/GTc0SsoQYm1MfhqsU=
+	t=1745482731; cv=none; b=dooVYtbaMdwtMVxuH3M81tbIZUm4SYRujNBzsLwgmIDEW7XhfdAF4/Hd2l1vVOT42vIA39HwTzuGvNlEfCVvBeQ/ezwSPjUYex0BsG11EEE5jq8Xlk+TYe50l6OidQhm1AsLUGPed+VDXjdCCBkdjIHm9lsoiSFrqar6C6U7zAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745480935; c=relaxed/simple;
-	bh=PSBL89fZtJaG8KAAaHC8dhsJ5ZC/9UnwuHL7NKRrOGc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Z2gEnvYn9odmuakBwT3ZB4ir2UCHtp+vQtKLspXehv4rrBdSuqeaIBhB9bD5FyOT3GQ/sOg4+WLcWEZNX3dtg0A1X7dk6B2w0pmeZ2VqVnJIy4YA7IICINIaNsz7BeOBLUf18gzOMgnLrTwkqwv4d8PtiD+Xqv9XqS/7GH2vsnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [127.0.0.1] (unknown [116.232.18.95])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 99EBF342F8C;
-	Thu, 24 Apr 2025 07:48:49 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-Date: Thu, 24 Apr 2025 15:48:09 +0800
-Subject: [PATCH v2 2/2] riscv: dts: spacemit: Acquire clocks for UART
+	s=arc-20240116; t=1745482731; c=relaxed/simple;
+	bh=luBO6reS1AIHdLD0ocQc2V2sYxCZNmU96oc6vvsTJUc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cV+55cf7NDgcwQ5FJOC6zAaLvH4Ms50fdYpklfyrbZzuC+ZCRgNFevx6b1XtbZTyYUb5RyD67ruv2f1ufpAPuz/UMvj9+rDdiEu9eS82WpqGNk/H/2FziymfkwbckWbFzVRR6m7dKaRTJMuy+9ILqLb7s7MVpxwbut7OP6hHDG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QTBJb7/s; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QTBJb7/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43241C4CEEA;
+	Thu, 24 Apr 2025 08:18:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745482730;
+	bh=luBO6reS1AIHdLD0ocQc2V2sYxCZNmU96oc6vvsTJUc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QTBJb7/sOtgibfbZQZRPmB3NDzGuw8WXFuKDiYfD9jo9Tfl1ZSBHPmhHPrqPDbTsi
+	 PqHif8L8cHGYTe8i0k8oHy+9uqiBj85SewJiQ4iGUtwfYZjyZd1tNMsd4bN3MDeI7e
+	 /SLvoq1G4PZmF38YakZaiBvQ9p1SJePpeM0w30Kqbr+NCJoYj+0/E9wlUbYt37+qNU
+	 A3Q3oyisKdK3emcymdrL5r4xLHUSYwn0bOWZDKBHJi1kJVfkos9N8MlFNPNRGtv+xK
+	 HsjFxwezNty60QqB1PXzwj43UxVrbtToJYEG5xxN47QII5bt2SyzZx44/6CeXdgBQM
+	 3ZSjc2+P4yDXA==
+Date: Thu, 24 Apr 2025 10:18:47 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+	dlan@gentoo.org, p.zabel@pengutronix.de, drew@pdp7.com, inochiama@gmail.com, 
+	geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com, 
+	unicorn_wang@outlook.com, duje.mihanovic@skole.hr, elder@riscstar.com, 
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 3/6] riscv: dts: spacemit: add PWM support for K1 SoC
+Message-ID: <kftfye2zn2ogyvuv7diuyrv5qkp43csbpkcqfcms2xp5lsuubm@z2kocdzkb7qk>
+References: <20250420070251.378950-1-guodong@riscstar.com>
+ <20250420070251.378950-4-guodong@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250424-05-dts-clock-v2-2-17d83a705c4c@gentoo.org>
-References: <20250424-05-dts-clock-v2-0-17d83a705c4c@gentoo.org>
-In-Reply-To: <20250424-05-dts-clock-v2-0-17d83a705c4c@gentoo.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Yixun Lan <dlan@gentoo.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4601; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=PSBL89fZtJaG8KAAaHC8dhsJ5ZC/9UnwuHL7NKRrOGc=;
- b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoCezSX9kHDfqtvgPgbGFXPIJ1D/Dd6MYrv6tUm
- 8lqUdp4LQOJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaAns0l8UgAAAAAAuAChp
- c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
- CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277Y0pEACZPoqbaVSl/henUi
- G5cEshGVXKcH2bViUKZbg/rKrVRSRpMCUn9/C5x04sfCCi3SnIQJm/sGv4dA9ZJc61/vG1YTNsx
- Fsfgj4JK50/j28AAvt3qYVVscbctzjoqrvfhKv1MTz3zhxt6Rch9bC8X4jOg8oPlClQutwRC5qt
- L+2OrylGmoT6azAdIisZ6hZ2mOQvFifFO8iw5lDXccYK5ftC5pjUosc5x9uEwM5TM8Ova7nSUjd
- ry7d+X3aRq6SvDmzWeJpys6p9M0xmIRh+B3vrLRBkRmvAyGEwSLplcoTNc6zjchWTWj3ycrS2dB
- chyVfSJMl92a7pRZix1WIEH+XStT1+yeklCcNbW4OlgxPV7vrfseZWKtHgn0qZo4KazDTH9iOex
- 4eJl5/uDgpB7gVqFhbc1LDhu5MheP+uFxEEPWnOVGTrarPw6tzBdt9onB8BkHvDPa9mLNS4KS+v
- P/gpNSxXzQKTekhrhnU3nYLtSsTYjLgAoL1WKg/oMh/+dzYn4DtDjYC524tGVPbkQpgM+UHpGjh
- y2WY0BzQJyu3uI+bynyfR6+daVkb36v+Be6+J8AH+OkNd5sc12lZVye6uJCSKEJwLguJqjhulUE
- MF5oYkyL2de401Slz2DpEvDf/Pq+NgtSEfxp5Wi5qEwOJxqsW0ijI+6Is1y04eUAA0Sw==
-X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rfmkfp7kn4uz32vk"
+Content-Disposition: inline
+In-Reply-To: <20250420070251.378950-4-guodong@riscstar.com>
 
-The K1 SoC features two clocks for UART controller, Acquire them
-explicitly in the driver. Also it is required to remove the
-clock-frequency properties from the uart node, otherwise the new
-clock properties are ignored by of_platform_serial_setup() in "8250_of.c".
 
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Haylen Chu <heylenay@4d2.org>
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 36 +++++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+--rfmkfp7kn4uz32vk
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: Re: [PATCH v2 3/6] riscv: dts: spacemit: add PWM support for K1 SoC
+MIME-Version: 1.0
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 153fd1160182b42fe1a2f7f042c9c1da90f63b0c..7793fd37841ab432c66629b95b94c195b379ecd9 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -360,8 +360,10 @@ syscon_apbc: system-control@d4015000 {
- 		uart0: serial@d4017000 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017000 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART0>,
-+				 <&syscon_apbc CLK_UART0_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <42>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -370,8 +372,10 @@ uart0: serial@d4017000 {
- 		uart2: serial@d4017100 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017100 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART2>,
-+				 <&syscon_apbc CLK_UART2_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <44>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -380,8 +384,10 @@ uart2: serial@d4017100 {
- 		uart3: serial@d4017200 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017200 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART3>,
-+				 <&syscon_apbc CLK_UART3_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <45>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -390,8 +396,10 @@ uart3: serial@d4017200 {
- 		uart4: serial@d4017300 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017300 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART4>,
-+				 <&syscon_apbc CLK_UART4_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <46>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -400,8 +408,10 @@ uart4: serial@d4017300 {
- 		uart5: serial@d4017400 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017400 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART5>,
-+				 <&syscon_apbc CLK_UART5_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <47>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -410,8 +420,10 @@ uart5: serial@d4017400 {
- 		uart6: serial@d4017500 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017500 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART6>,
-+				 <&syscon_apbc CLK_UART6_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <48>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -420,8 +432,10 @@ uart6: serial@d4017500 {
- 		uart7: serial@d4017600 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017600 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART7>,
-+				 <&syscon_apbc CLK_UART7_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <49>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -430,8 +444,10 @@ uart7: serial@d4017600 {
- 		uart8: serial@d4017700 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017700 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART8>,
-+				 <&syscon_apbc CLK_UART8_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <50>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
-@@ -440,8 +456,10 @@ uart8: serial@d4017700 {
- 		uart9: serial@d4017800 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017800 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_UART9>,
-+				 <&syscon_apbc CLK_UART9_BUS>;
-+			clock-names = "core", "bus";
- 			interrupts = <51>;
--			clock-frequency = <14857000>;
- 			reg-shift = <2>;
- 			reg-io-width = <4>;
- 			status = "disabled";
+Hello,
 
--- 
-2.49.0
+On Sun, Apr 20, 2025 at 03:02:48PM +0800, Guodong Xu wrote:
+> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> index c0cc4b99c935..e7dba623e877 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> @@ -556,5 +556,185 @@ sec_uart1: serial@f0612000 {
+>  			reg-io-width = <4>;
+>  			status = "reserved"; /* for TEE usage */
+>  		};
+> +
+> +		pwm0: pwm@d401a000 {
+> +			compatible = "spacemit,k1-pwm", "marvell,pxa910-pwm";
+> +			reg = <0x0 0xd401a000 0x0 0x10>;
+> +			#pwm-cells = <1>;
 
+I want to make all pwms use #pwm-cells = <3> in the long run. Can you
+please use that for the new binding? (Of course this needs adaption in
+the binding doc, the code should already be prepared for that.)
+
+> +			clocks = <&syscon_apbc CLK_PWM0>;
+> +			resets = <&syscon_apbc RESET_PWM0>;
+> +			status = "disabled";
+> +		};
+
+The error that the build bot reports happens (I think) because CLK_PWM0
+isn't known.
+
+Best regards
+Uwe
+
+--rfmkfp7kn4uz32vk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmgJ8+QACgkQj4D7WH0S
+/k6SQQf9F+et5yXHz1s66Oocx6PAunCNSR5NsrxqTGCCJsG7A5Xj5ihj4O5WEUCh
+g1KnQp9haUQ+FUcC6sjHIcs3Mh2V31LduY6wsvyw9etzsVoFtQx6NwojEH+fLNOC
+15oZnNgyhsYlrRS7uY0DHuhPikTq2DezMV5I+3LwvFkcwzTcn6d7D0WOR3PP35OV
+gVJM6w9bTiftCEH7lmCm//w26e2WI1csVZINIcYDe7PY5rnEkuvOcXeqyy+5YNnO
+yjjmRrqptnX7/M5Yk3oekuPEJ/hTPAhIjKlsC8E7QIy5iTWmj6IFzC2Zy5mDAgrn
+ii3bv4Z4tHAYiVyefKztz66LwfcOWg==
+=PFuz
+-----END PGP SIGNATURE-----
+
+--rfmkfp7kn4uz32vk--
