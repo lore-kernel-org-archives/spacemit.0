@@ -1,15 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF968C11
-	for <spacemit@lists.linux.dev>; Thu, 24 Apr 2025 07:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3091F3B97
+	for <spacemit@lists.linux.dev>; Thu, 24 Apr 2025 07:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745480924; cv=none; b=RBS3vxeo+dHiS7xdvB0kSIB7wc3Wn99uitngJYOZ1+KnUNsslk/696URqKzIK585haGM62Av2uw9erPPtd/QVdS3l3lD3IL5kWQpqdtNHzNLLSoWSQw5J7QQWR6zzL6KPM78qcSYro2pKzF2Qw8TF8JJ9ZDvu1XOkyZOL8STIg4=
+	t=1745480931; cv=none; b=sCc6Q1IIjE78r21CE8S2TsuVUainCT1n9R2x7iLMAY7u6jRxcvurl8ccmJVMWpsjyQpDoxPV8h2PXVKKs0NV6mhcYcTUmgaJpAlMHltt6+AawZ8FO4DwajmWWiPBwBMH1VHOv9T4IZR4SgIFaViE+4mo2kC6PpAEhRvrL5DjqME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745480924; c=relaxed/simple;
-	bh=O1rnIa2Nc0xLuYwJRBgZaxKvxjoAvMbb1IroWhNhceQ=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XV/Mqh/vMtss19608JQPsyLKK3jMkf7612CZSK9ZEZaiK7vcEFNBAzNl8CKyuHQjKNIEp9a8DxKnI0Z7AUFiMvBO6AyzxvJVDim5MkQM1DxASqxrKf3YbiNVW0F7GFLBrLqXl7I3e/iQswfj0Am6NCPL+jlur4qfZe5KcavzMvs=
+	s=arc-20240116; t=1745480931; c=relaxed/simple;
+	bh=h8qyXCPlBe/4wFwBbCk4SfrjsMZ6UKaZRbul5coxB50=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=MGBLyHxoJ5UzhLu9SEHb74HSu1OK70SJfwloWItXn17nKMmUKJq36hZSn77QvzAMnurH/h4dOYe3Nt/CFLg2bYkENovnllhGIX8VPR14hLXzQ2/N4CUV5zz5YB4TJLOHQFwU0BkBpRDsr98XNVmufBqbcD154cEzn9OmFiUxUL0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -18,13 +19,11 @@ Received: from [127.0.0.1] (unknown [116.232.18.95])
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id AEB1A343024;
-	Thu, 24 Apr 2025 07:48:37 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 6C78C343030;
+	Thu, 24 Apr 2025 07:48:42 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-Subject: [PATCH v2 0/2] riscv: dts: spacemit: Add clocks to pinctrl and
- UART
-Date: Thu, 24 Apr 2025 15:48:07 +0800
-Message-Id: <20250424-05-dts-clock-v2-0-17d83a705c4c@gentoo.org>
+Date: Thu, 24 Apr 2025 15:48:08 +0800
+Subject: [PATCH v2 1/2] riscv: dts: spacemit: Acquire clocks for pinctrl
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -33,10 +32,9 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALjsCWgC/3XMywrCMBCF4Vcps3YkCUapK99DushlmgalI0kIS
- sm7G7t3+R843waZUqQM12GDRDXmyGsPdRjALWYNhNH3BiWUFic5otDoS0b3ZPdAoc52duaiSVv
- ol1eiOb537j71XmIunD67XuVv/QNViQKlc6S9Ho016hZoLcxHTgGm1toXELm3XqkAAAA=
-X-Change-ID: 20250419-05-dts-clock-026bfca75e5b
+Message-Id: <20250424-05-dts-clock-v2-1-17d83a705c4c@gentoo.org>
+References: <20250424-05-dts-clock-v2-0-17d83a705c4c@gentoo.org>
+In-Reply-To: <20250424-05-dts-clock-v2-0-17d83a705c4c@gentoo.org>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, 
  Paul Walmsley <paul.walmsley@sifive.com>, 
@@ -47,56 +45,47 @@ Cc: Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Yixun Lan <dlan@gentoo.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1207; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=O1rnIa2Nc0xLuYwJRBgZaxKvxjoAvMbb1IroWhNhceQ=;
- b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoCezL/JF4+9LLHuxULoCqqywrxzAnkPGTKoztZ
- wjTAktDuWCJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaAnsy18UgAAAAAAuAChp
+X-Developer-Signature: v=1; a=openpgp-sha256; l=855; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=h8qyXCPlBe/4wFwBbCk4SfrjsMZ6UKaZRbul5coxB50=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoCezOOopeiC4gA5F1SvxOgpKStOhuUDoFDQZj2
+ h02c1imA/qJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaAnszl8UgAAAAAAuAChp
  c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
- CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277XYqD/0YfD4VZu3OE5NtGS
- WolLvLeH74lP8+RcmRqFHX7NyY5R2HuPOfG5YQYFUmg6X5qGwQ98b3B9ua1aJ3GpyMyJDjZo/L4
- m4n40AcasoHdCiQ7h5Z2LvcjnTizqEKjulLcnt4uGD+OJyOMVhvdrUNTbbknEtNFJs3MWsLy8b5
- kiP3FeS2UCuaVcqNLfYYXa48gzs1HjT2SUmvPiBVM1/ikpgZHAbpiNw2p3c5wb3ulCuUqcIdLrL
- TsOMZRlzTyncEkIT8C9Ex6rty8GedfaIw5RVk9iuToysnW7SeuCp9zjAGkIqrm/eTzq2CpgidOo
- tM5WWqluuC6CEk0Mp7O/Wzo+6q3ePUTEthaNLAf4kUEghUlesaAT4XTsiCz78G69Om3bAyPfXvW
- 4FywuWenRSSW8d4/B9CWZJIkQ0yk3GGMbDVhSLNif9yWiYxf8MPtCjcQ1MKGpZH6ebCnXB6Rgtx
- jIz+U7wYz62vRv1/5HRajKrDyuvFUe7AZPtRFl+vCMg7RE8CCOU+jyw+/EvKfiYnI16WNrcQ+C6
- VF6mbpRNDkeWYSDs+XhenAHW1zafAFCMfFaWDSBdsAMOiatFyjiBS/nuN4u0yyr0i177ZZQyCI4
- dJHOZ0w8BEUPCdSp69Qsq3ZxatGHYW4rlU3DSqjKNfOo4zP3m/kew6osbDaFbBYy6HfQ==
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277UajD/9tfu0OAGMk9gZtFA
+ vLMX70/AkgG7K/hM2PQMjy6cVgXuWgCn4MI7sLenRfvNQCLitfvxAGfQnHodP71fjON2lr/Pu+s
+ cAfsfAk/L7583BiUSpUflYbtsyalAaR2cQWdHqLIhPkt5EASMBgBawtW2a45tPieggoj3f/res7
+ tK0ZyTMgHaAUithRz8FtVjhQChKw80JGgDslqFW5aBzEZn5gTiMExbJZFPpRD8wp9x6X5fWzm0F
+ Lt3azzqVn50DWkAqtNivUWCMA45Sy6f3Y88p0swJocX7OFmY5WIsouwvSsjbml9tmwnlnUm1U1e
+ zd36My3Bc3xQDciGWF7RHKq/Gqz3R8DlOlrpMbLtwOKE2aDWIsE3akQ7S5Tzm4MiEwQb3MBVJOc
+ RYvkYID9R4CNkemyb/bVC7AtYFTvwQayxXTs/do6BWC6jZx4/an41grvqTWqPiHAmtwXg1UGwgl
+ /rDMzltm7i14kQ6hls0u7pyfzFNVOYsD0mZ5Qb4RdIgW0f6FanJygQBDLCDamnpbHTpbCgYCWNn
+ nGtf7vodnh3pyNL0E0BjqpihQknSIfN8zJ+qmxjAvoVDANGCyGI2QOa2JvyVbIIkH6QJKzdX/Cr
+ 0ZJECD/PozLC/BT7vf369rCp1sgdZCjO4b/UNCn/qrMrKUyP7+cOvx9hqZRQDEdwnJzA==
 X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Populate clock property for pinctrl and UART controller.
+Pinctrl of K1 SoC need two clocks, so explicitly acquire them.
 
-The pinctrl's clock dt-binding patch is still waiting to be merged[1].
-
-The UART's dt-binding and driver code has already been accepted[2],
-so we now are only sending the DT part patch.
-
-These two patches are abased on SpacemiT SoC tree's for-next branch[3]
-
-Link: https://lore.kernel.org/r/20250416-02-k1-pinctrl-clk-v2-0-2b5fcbd4183c@gentoo.org [1]
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git/log/?h=tty-next [2]
-Link: https://github.com/spacemit-com/linux/tree/for-next [3]
+Reviewed-by: Alex Elder <elder@riscstar.com>
 Signed-off-by: Yixun Lan <dlan@gentoo.org>
 ---
-Changes in v2:
-- collect review tags
-- order DT properties
-- improve commit message
-- Link to v1: https://lore.kernel.org/r/20250419-05-dts-clock-v1-0-1cce5d59aba2@gentoo.org
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
----
-Yixun Lan (2):
-      riscv: dts: spacemit: Acquire clocks for pinctrl
-      riscv: dts: spacemit: Acquire clocks for UART
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index 584f0dbc60f5b0d078c7127cc4021ad6022cb182..153fd1160182b42fe1a2f7f042c9c1da90f63b0c 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -450,6 +450,9 @@ uart9: serial@d4017800 {
+ 		pinctrl: pinctrl@d401e000 {
+ 			compatible = "spacemit,k1-pinctrl";
+ 			reg = <0x0 0xd401e000 0x0 0x400>;
++			clocks = <&syscon_apbc CLK_AIB>,
++				 <&syscon_apbc CLK_AIB_BUS>;
++			clock-names = "func", "bus";
+ 		};
+ 
+ 		syscon_mpmu: system-controller@d4050000 {
 
- arch/riscv/boot/dts/spacemit/k1.dtsi | 39 +++++++++++++++++++++++++++---------
- 1 file changed, 30 insertions(+), 9 deletions(-)
----
-base-commit: 279d51ad9f6dc0c667f6f141a669b2c921277d1a
-change-id: 20250419-05-dts-clock-026bfca75e5b
-
-Best regards,
 -- 
-Yixun Lan
+2.49.0
 
