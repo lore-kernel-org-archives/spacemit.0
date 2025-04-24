@@ -1,116 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AEB2206A4;
-	Thu, 24 Apr 2025 07:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF968C11
+	for <spacemit@lists.linux.dev>; Thu, 24 Apr 2025 07:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745479844; cv=none; b=I8w3d5pIxXJt+zJ4epADw2HAa5U6LXJJQwNtJWG7W9w23GlAzPf9vV2I/qATdHGtKA9t+79arNOtnFc5dJXEpBQsrt0Mar+2VOV/JoTnd0ZCXd9otzm2ClGoTXPD7pAqstPmxrjcA8gJwAj4MDzYxyXI4v2ZWaAkQtrEyp/jc0k=
+	t=1745480924; cv=none; b=RBS3vxeo+dHiS7xdvB0kSIB7wc3Wn99uitngJYOZ1+KnUNsslk/696URqKzIK585haGM62Av2uw9erPPtd/QVdS3l3lD3IL5kWQpqdtNHzNLLSoWSQw5J7QQWR6zzL6KPM78qcSYro2pKzF2Qw8TF8JJ9ZDvu1XOkyZOL8STIg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745479844; c=relaxed/simple;
-	bh=kWaWSxfzAOeVQlRkq60NVI4QsIYjUWB1A9Y9Nj3yPCw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rxyPswiG4sEs2kphvW34PdJKmbMZq/85kf2Bf5BWDL+THi7c4dSuPrwu/e8Dx9Fc74oxluUCNTsZxxp73iMiG/BMpYKOt4TwZjKBJ7HD4HUwGAUoU8uNPTMiXYqfxTobyXlRX0nFommHbLZxXE2/WXNDS9AqWsGXPkGlx9qB7+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HQ7OlNoc; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HQ7OlNoc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332E6C4CEE3;
-	Thu, 24 Apr 2025 07:30:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745479843;
-	bh=kWaWSxfzAOeVQlRkq60NVI4QsIYjUWB1A9Y9Nj3yPCw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HQ7OlNocl570YDHdFBrRWtojdEaHxy3uXCFJRTphSz6caEYX3Mjrrd6kfU1f4GW/P
-	 Wr2bPOYaIcwazz3rZYitkGXDa7+2r/bhW8k9aXIzvjjzBqWD710ELJEgb2FN6nmykn
-	 eS2AGgfNb/x2F9IzAYl5tJ0Oom5DX/RLtMfxahI8Bu5hqlqPYaNNJ26hMuBvQ8kOXJ
-	 5Ef0Y0kKWreEavHMtkQcFro+VaXMdOcRg/evsCGlChHVV4WtbKS/rH8/w5pRDdNZva
-	 C5n6kNNPbX4Jr46Kp49tR1KVSw5pkVo2LTP4yfk3K318mnq4nRzj2t13pcdTekq/Uz
-	 or9QNBxC28Hmg==
-Date: Thu, 24 Apr 2025 09:30:40 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
-	dlan@gentoo.org, p.zabel@pengutronix.de, drew@pdp7.com, inochiama@gmail.com, 
-	geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com, 
-	unicorn_wang@outlook.com, duje.mihanovic@skole.hr, elder@riscstar.com, 
-	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 2/6] pwm: pxa: add optional reset control
-Message-ID: <mzfiyc2me2smqrrmiymzkzxvsyjmst6ggy7scq4wxz2yfj2ef5@np3h3k467mbl>
-References: <20250420070251.378950-1-guodong@riscstar.com>
- <20250420070251.378950-3-guodong@riscstar.com>
+	s=arc-20240116; t=1745480924; c=relaxed/simple;
+	bh=O1rnIa2Nc0xLuYwJRBgZaxKvxjoAvMbb1IroWhNhceQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XV/Mqh/vMtss19608JQPsyLKK3jMkf7612CZSK9ZEZaiK7vcEFNBAzNl8CKyuHQjKNIEp9a8DxKnI0Z7AUFiMvBO6AyzxvJVDim5MkQM1DxASqxrKf3YbiNVW0F7GFLBrLqXl7I3e/iQswfj0Am6NCPL+jlur4qfZe5KcavzMvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [127.0.0.1] (unknown [116.232.18.95])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id AEB1A343024;
+	Thu, 24 Apr 2025 07:48:37 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+Subject: [PATCH v2 0/2] riscv: dts: spacemit: Add clocks to pinctrl and
+ UART
+Date: Thu, 24 Apr 2025 15:48:07 +0800
+Message-Id: <20250424-05-dts-clock-v2-0-17d83a705c4c@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7v5t3ymowpvpmtvv"
-Content-Disposition: inline
-In-Reply-To: <20250420070251.378950-3-guodong@riscstar.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALjsCWgC/3XMywrCMBCF4Vcps3YkCUapK99DushlmgalI0kIS
+ sm7G7t3+R843waZUqQM12GDRDXmyGsPdRjALWYNhNH3BiWUFic5otDoS0b3ZPdAoc52duaiSVv
+ ol1eiOb537j71XmIunD67XuVv/QNViQKlc6S9Ho016hZoLcxHTgGm1toXELm3XqkAAAA=
+X-Change-ID: 20250419-05-dts-clock-026bfca75e5b
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1207; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=O1rnIa2Nc0xLuYwJRBgZaxKvxjoAvMbb1IroWhNhceQ=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoCezL/JF4+9LLHuxULoCqqywrxzAnkPGTKoztZ
+ wjTAktDuWCJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaAnsy18UgAAAAAAuAChp
+ c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277XYqD/0YfD4VZu3OE5NtGS
+ WolLvLeH74lP8+RcmRqFHX7NyY5R2HuPOfG5YQYFUmg6X5qGwQ98b3B9ua1aJ3GpyMyJDjZo/L4
+ m4n40AcasoHdCiQ7h5Z2LvcjnTizqEKjulLcnt4uGD+OJyOMVhvdrUNTbbknEtNFJs3MWsLy8b5
+ kiP3FeS2UCuaVcqNLfYYXa48gzs1HjT2SUmvPiBVM1/ikpgZHAbpiNw2p3c5wb3ulCuUqcIdLrL
+ TsOMZRlzTyncEkIT8C9Ex6rty8GedfaIw5RVk9iuToysnW7SeuCp9zjAGkIqrm/eTzq2CpgidOo
+ tM5WWqluuC6CEk0Mp7O/Wzo+6q3ePUTEthaNLAf4kUEghUlesaAT4XTsiCz78G69Om3bAyPfXvW
+ 4FywuWenRSSW8d4/B9CWZJIkQ0yk3GGMbDVhSLNif9yWiYxf8MPtCjcQ1MKGpZH6ebCnXB6Rgtx
+ jIz+U7wYz62vRv1/5HRajKrDyuvFUe7AZPtRFl+vCMg7RE8CCOU+jyw+/EvKfiYnI16WNrcQ+C6
+ VF6mbpRNDkeWYSDs+XhenAHW1zafAFCMfFaWDSBdsAMOiatFyjiBS/nuN4u0yyr0i177ZZQyCI4
+ dJHOZ0w8BEUPCdSp69Qsq3ZxatGHYW4rlU3DSqjKNfOo4zP3m/kew6osbDaFbBYy6HfQ==
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
+Populate clock property for pinctrl and UART controller.
 
---7v5t3ymowpvpmtvv
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 2/6] pwm: pxa: add optional reset control
-MIME-Version: 1.0
+The pinctrl's clock dt-binding patch is still waiting to be merged[1].
 
-Hello,
+The UART's dt-binding and driver code has already been accepted[2],
+so we now are only sending the DT part patch.
 
-On Sun, Apr 20, 2025 at 03:02:47PM +0800, Guodong Xu wrote:
-> @@ -49,10 +50,10 @@ MODULE_DEVICE_TABLE(platform, pwm_id_table);
->  #define PWMDCR_FD	(1 << 10)
-> =20
->  struct pxa_pwm_chip {
-> -	struct device	*dev;
-> -
-> -	struct clk	*clk;
-> -	void __iomem	*mmio_base;
-> +	struct device		*dev;
-> +	struct clk		*clk;
-> +	void __iomem		*mmio_base;
-> +	struct reset_control	*reset;
+These two patches are abased on SpacemiT SoC tree's for-next branch[3]
 
-Changes like these are the reason I prefer to not align the member
-names. Luckily reset is a write only variable and you can just drop this
-hunk if you use a local variable for it in pwm_probe() below.
+Link: https://lore.kernel.org/r/20250416-02-k1-pinctrl-clk-v2-0-2b5fcbd4183c@gentoo.org [1]
+Link: https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git/log/?h=tty-next [2]
+Link: https://github.com/spacemit-com/linux/tree/for-next [3]
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Changes in v2:
+- collect review tags
+- order DT properties
+- improve commit message
+- Link to v1: https://lore.kernel.org/r/20250419-05-dts-clock-v1-0-1cce5d59aba2@gentoo.org
 
->  };
-> =20
->  static inline struct pxa_pwm_chip *to_pxa_pwm_chip(struct pwm_chip *chip)
-> @@ -179,6 +180,11 @@ static int pwm_probe(struct platform_device *pdev)
->  	if (IS_ERR(pc->clk))
->  		return PTR_ERR(pc->clk);
-> =20
-> +	pc->reset =3D devm_reset_control_get_optional_exclusive_deasserted(
-> +			&pdev->dev, NULL);
-> +	if (IS_ERR(pc->reset))
-> +		return PTR_ERR(pc->reset);
-> +
->  	chip->ops =3D &pxa_pwm_ops;
-> =20
->  	if (IS_ENABLED(CONFIG_OF))
+---
+Yixun Lan (2):
+      riscv: dts: spacemit: Acquire clocks for pinctrl
+      riscv: dts: spacemit: Acquire clocks for UART
 
-Best regards
-Uwe
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 39 +++++++++++++++++++++++++++---------
+ 1 file changed, 30 insertions(+), 9 deletions(-)
+---
+base-commit: 279d51ad9f6dc0c667f6f141a669b2c921277d1a
+change-id: 20250419-05-dts-clock-026bfca75e5b
 
---7v5t3ymowpvpmtvv
-Content-Type: application/pgp-signature; name="signature.asc"
+Best regards,
+-- 
+Yixun Lan
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmgJ6J4ACgkQj4D7WH0S
-/k6xkwf/eaBJze5ndiNHEnGHJcgfmpTZsHwESV/Cwj5PIp5luRW90TAB1L3SoNyQ
-OHH/mCf9BoZemUdaM1+uHqSp2Uh8OzQqpeEYckqGWi2wYTCsTtlrbpfm27MdnWul
-BQB3NvoFTVtICfchbF3t2qqI9MPmgQTsx/RKES15cnEoscazo3G1o1txQDY1zneP
-U3mHPCwcM1PmKZIjFsySl2ptMiVHqO3G8oKZvk91HPeScVjOkk3mH+qy9aNN/mFf
-veMH70GVkuQSSAUC4tAX/fRjbSZMXdeClEHuZ1yZjYLPVx2HquRP7bnt89wRDGzf
-BnV9zfqbbZHhqmBShnKP2GewNTFnUg==
-=2AE+
------END PGP SIGNATURE-----
-
---7v5t3ymowpvpmtvv--
