@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783101F4E4F
-	for <spacemit@lists.linux.dev>; Fri, 25 Apr 2025 23:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413CB13B7A3
+	for <spacemit@lists.linux.dev>; Fri, 25 Apr 2025 23:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745624187; cv=none; b=Gxxgt2jzuzmXCoLvHWM1ERLSdfeCvfbLe4BoZigZG4/uj7R6xIwOVaE6Drj7T/92Cg3BqCkvkXV6vEUmGgcLDjXVMVXJc8inHfdEEfA14fszawflRbii/rUl2e/4VBdyKUcTmakS8WvJlswKULDXqkW4lpD7NtHaEd1wpULEFRg=
+	t=1745624198; cv=none; b=TuuOYtEBsmOEReqhHA3sEYBAzZ+lYemZDrEYujQtX95utL96DWQeoP/UwBjZnsVrvS4ovNLeSZaFtMJbbOjvoCyyEFi47UZoyqvrpUu4T4BfNc9WrLfef3UPoFyEgIhC5Z/xviM/ABimxMyU3iw6yLbVlLppS6aw0p13SzKbf4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745624187; c=relaxed/simple;
-	bh=uC+uqb7UlcVkB/i0xfNXC9o3FUOJRPHTBlXaQvLUIu0=;
+	s=arc-20240116; t=1745624198; c=relaxed/simple;
+	bh=cqlwv2vPIA0AJYCC9J8uX3oIMqf20tDiQvD0X0XAzbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MTFrrRiOPZ5XpyQcDCVvXFyjy1ZNsUjHcFuqs2lz8MBO+cygmLscKlohpG1EdfLsFdNldfsTG42MpyEcz9rwToJjyIu7iXS4g6cuCKMltIcVp+ZSa+waI0EFiQyxIOu/92xPav3Qe8TQSsTL8HicRThSTt/IWVw+yOlVTZGDkIU=
+	 MIME-Version:Content-Type; b=irnqXokS8HgfOc2G4PlWZkk/pqUgfx0G6ytTuJ6ZwWvyOCkBNk1S4JWyZE7GMWcv1BG+vFDGDqvnYSlCoNAMrvETO0hQUNs5K8olFHAdv0Liv1Rm9frKhNjm87Jo08kOdF4Y4hrgrkaqontMxUGJ/3pqV4qLiCq5zEsTj3NzNhg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,29 +19,34 @@ Received: from localhost.localdomain (unknown [116.232.18.95])
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id BFFE6340A12;
-	Fri, 25 Apr 2025 23:36:19 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 4556C340BDE;
+	Fri, 25 Apr 2025 23:36:30 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
+To: Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Yixun Lan <dlan@gentoo.org>
 Cc: Alex Elder <elder@riscstar.com>,
-	Haylen Chu <heylenay@4d2.org>,
-	devicetree@vger.kernel.org,
+	Yangyu Chen <cyy@cyyself.name>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Jesse Taube <mr.bossman075@gmail.com>,
+	Inochi Amaoto <inochiama@outlook.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
 	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
 	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] riscv: dts: spacemit: Add clocks to pinctrl and UART
-Date: Sat, 26 Apr 2025 07:35:39 +0800
-Message-ID: <174562390817.16593.734541789172552483.b4-ty@gentoo.org>
+	devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH v9 0/3] riscv: spacemit: add gpio support for K1 SoC
+Date: Sat, 26 Apr 2025 07:35:40 +0800
+Message-ID: <174562390823.16593.8457766773146505593.b4-ty@gentoo.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250424-05-dts-clock-v2-0-17d83a705c4c@gentoo.org>
-References: <20250424-05-dts-clock-v2-0-17d83a705c4c@gentoo.org>
+In-Reply-To: <20250424-03-k1-gpio-v9-0-eaece8cc5a86@gentoo.org>
+References: <20250424-03-k1-gpio-v9-0-eaece8cc5a86@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -52,22 +57,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 24 Apr 2025 15:48:07 +0800, Yixun Lan wrote:
-> Populate clock property for pinctrl and UART controller.
-> 
-> The pinctrl's clock dt-binding patch is still waiting to be merged[1].
-> 
-> The UART's dt-binding and driver code has already been accepted[2],
-> so we now are only sending the DT part patch.
+On Thu, 24 Apr 2025 17:40:48 +0800, Yixun Lan wrote:
+> The gpio controller of K1 support basic GPIO functions,
+> which capable of enabling as input, output. It can also be used
+> as GPIO interrupt which able to detect rising edge, falling edge,
+> or both. There are four GPIO ports, each consisting of 32 pins and
+> has indepedent register sets, while still sharing IRQ line and clocks.
+> The GPIO controller request the two clock sources from APBC block.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] riscv: dts: spacemit: Acquire clocks for pinctrl
-      https://github.com/spacemit-com/linux/commit/1fa2b7dd8e3efb7b50a24d13f91dc04b25adc43d
-[2/2] riscv: dts: spacemit: Acquire clocks for UART
-      https://github.com/spacemit-com/linux/commit/fe066af241681269d809ece2ad663f334a0d8120
+[2/3] riscv: dts: spacemit: add gpio support for K1 SoC
+      https://github.com/spacemit-com/linux/commit/39efc98da7c60cad066a18049a98d41b8542f44a
+[3/3] riscv: dts: spacemit: add gpio LED for system heartbeat
+      https://github.com/spacemit-com/linux/commit/cb9c3aeae509b36afbdf46942a7a0a0dfc856ce7
 
 Best regards,
 -- 
