@@ -1,65 +1,108 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E74A81E
-	for <spacemit@lists.linux.dev>; Fri, 25 Apr 2025 00:22:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D3D78F4B;
+	Fri, 25 Apr 2025 14:36:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745540576; cv=none; b=qrqs/pQOJ47Ckictd0owyOsXk7netm5+Z7wu36+mVWyZEB0nXso39UGSorT0Sr00HA4OhVN0bYEMmXa4HypwcIsSpKqoR2a6slmDaaHLctGur7e4n5fsJL4QVb9VMUgkwxxx2X4IARdRRs32BnjdSm4FKsuXbcf7obt1r16WCzo=
+	t=1745591811; cv=none; b=AtnDAalzU89bXvRyHhXie5rmdwwtjcDhiCFWP9AxCFf29JhKHaXARq+vKtUwjeurWm8IcysHZjOwyxTD5HImjgc7OBBWrUaQsgZkDuCUdJABK8W+jGoO6m0D3czeq94hTRtmsHimskzGyga9paPnfQtMkch0M4jx45NW0xWWkb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745540576; c=relaxed/simple;
-	bh=/dwvMdYVKjC9JaRSGxPVTV/CoSY3VmlHD55b3+V/7Es=;
+	s=arc-20240116; t=1745591811; c=relaxed/simple;
+	bh=K2RdwYQvxoGdkMb4tRtn11nLabJWv4T2dHWe753R+lE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DdmAJl2wyGq5Tkaz++tpOC80E9E5e24q62Oak3MYzfQ6qUPo3QQAV/Ovyavcjt1hM3N1QD4fnxVCAsyrAHmgcc8q0cY+gXxpnt9atFfrU/G3HFx53m4nsQzVYyueODQ36ebryI6Fu0AOrI73rs02lFlyI1M1a8ldRi2TSBf7ObE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.95])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id CBB5A342FA4;
-	Fri, 25 Apr 2025 00:22:53 +0000 (UTC)
-Date: Fri, 25 Apr 2025 00:22:49 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: Daniel Maslowski <cyrevolt@googlemail.com>
-Cc: u-boot@lists.denx.de, xypron.glpk@gmx.de, spacemit@lists.linux.dev
-Subject: Re: SpacemiT K1x / Ky X1 DRAM init
-Message-ID: <20250425002249-GYA49938@gentoo>
-References: <CAJCpOFyMyXZK7Hz7mTOwHRREQEWf-=ghgLXU5RgzTMxQj7MnZQ@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=TxPIp+bjH6146wIYJCcMt7xu/K8+v6hNgBZCr3NyISdLRTEzdRqNAo8/IWtx8vRzL/d8tRQxIwEzapf5Ue/f/TS4TX0VJMSHqSeKOsX/+T+Aj6qdzyUpO6ncLWFjgWpx92nSILDDATzSvsHoljgQsA3dorL5p+sOb9QA8C5o90w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G0BlZTgl; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G0BlZTgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045ABC4CEE4;
+	Fri, 25 Apr 2025 14:36:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1745591810;
+	bh=K2RdwYQvxoGdkMb4tRtn11nLabJWv4T2dHWe753R+lE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=G0BlZTgliYLpKMPqcPn0s9FTdF2UvlHq4qxPzcEaLoyqevgouX1IzelnR3Hg5t06K
+	 Ik706/6ehA0pE+fOk420fIvbz2USLSeUV6wb61gY2p4Or157l/RNF4WFNha8pFM+5A
+	 ceWIt7io1tvZyuLCj0w4gb08P9cw5ACpSGU0JpNkKTOpTG5fXq0D9K0A9rd72S6p/l
+	 SLZTt4kdl/mTfif4dlaa67I66ReQ+HHtPh7VzoLboicfCqolP3iSBH7l5ofIMYvFr/
+	 qF5sfl292IYrAQGsMxatk7tlFE+mcZ4sF+5FPxN+mi07DtHjl+ecKe/4/tpkVFCxKM
+	 UavRglTEVkZLA==
+Date: Fri, 25 Apr 2025 15:36:44 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Alex Elder <elder@riscstar.com>,
+	Yangyu Chen <cyy@cyyself.name>, Jisheng Zhang <jszhang@kernel.org>,
+	Jesse Taube <mr.bossman075@gmail.com>,
+	Inochi Amaoto <inochiama@outlook.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH v9 1/3] riscv: defconfig: spacemit: enable gpio support
+ for K1 SoC
+Message-ID: <20250425-unsuited-perennial-96d13be0b927@spud>
+References: <20250424-03-k1-gpio-v9-0-eaece8cc5a86@gentoo.org>
+ <20250424-03-k1-gpio-v9-1-eaece8cc5a86@gentoo.org>
+ <20250424-untried-refueling-50c5902d63c9@spud>
+ <20250425000406-GYA49092@gentoo>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="kUnUDH4nBaYcHt5+"
+Content-Disposition: inline
+In-Reply-To: <20250425000406-GYA49092@gentoo>
+
+
+--kUnUDH4nBaYcHt5+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAJCpOFyMyXZK7Hz7mTOwHRREQEWf-=ghgLXU5RgzTMxQj7MnZQ@mail.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 
-Hi Daniel,
+On Fri, Apr 25, 2025 at 12:04:06AM +0000, Yixun Lan wrote:
+> Hi Conor,
+>=20
+> On 16:22 Thu 24 Apr     , Conor Dooley wrote:
+> > On Thu, Apr 24, 2025 at 05:40:49PM +0800, Yixun Lan wrote:
+> > > Enable GPIO support, in order to activate follow-up GPIO LED,
+> > > and ethernet reset pin.
+> > >=20
+> > > Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> >=20
+> > Do you want me to grab this patch, or do you have a defconfig branch to
+> > put it on?
+> >=20
+> Yes, I'd appreciate if you willing to pick it, to avoid potential conflic=
+ts?
 
-On 20:26 Thu 24 Apr     , Daniel Maslowski wrote:
-> Hey everyone,
-> 
-> As discussed in the last community call, I have written a fully open source
-Where did the discussion happen?
+Sure, done.
 
-> implementation of the full DRAM init for the K1x/X1 in Rust, based on the
-> vendor U-Boot code. This would be trivial to translate to C. I would be
-> happy if someone could pick this up for upstream SPL. Feel free to poke me
-> should you have any questions. Thanks! :)
-> 
-I won't start this if speak for myself, but would glad to see anyone
-else push it forward
+> (I currently do not maintain defconfig branch)
+>=20
+> BTW, we might have few more in this cycle, e.g. - clock, reset
 
-> https://github.com/orangecms/oreboot/blob/all-the-things-wip/src/mainboard/spacemit/k1x/bt0/src/dram.rs
-> 
-> I could not find a RISC-V specific mailing list. Please forgive me for
-> being email illiterate.
-It's more likely vendor (SpacemiT) specific rather than RISC-V generic,
-so Ccing spacemit mailing list to see if people interested..
+Cool, just poke me if you need them picked up. I should see an email,
+but failing that, @ me on your IRC channel.
 
--- 
-Yixun Lan (dlan)
+Cheers,
+Conor.
+
+--kUnUDH4nBaYcHt5+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaAud/AAKCRB4tDGHoIJi
+0saMAPwOeQlQUrG6np6OmBikq8VoxLk3DzM+HkXJFjuDkb5spwD/VLAVmmRQJRdW
+7Kd+TdyJ9DvK5K22vsvOBcpQHKAbIAY=
+=qbG6
+-----END PGP SIGNATURE-----
+
+--kUnUDH4nBaYcHt5+--
