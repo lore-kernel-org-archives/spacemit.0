@@ -1,260 +1,145 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67CB267732
-	for <spacemit@lists.linux.dev>; Mon, 28 Apr 2025 09:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E280199EAD
+	for <spacemit@lists.linux.dev>; Mon, 28 Apr 2025 12:47:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745833498; cv=none; b=ckRvNVPqIgGq6El28ibkepc2QH3mFYzwmCpPJBY2lN4mE3kTAkNqR98BrcQo1bxsiYRv5aBG2wrmN5bw3RmbYUqbnSaQP/wV5FxAgKzoAd/A14Je/wvskce67BphThdGEkVVbd9Zb0EJdOmoGzMCg+s3N4H8e2QGK4/cFZnxjGg=
+	t=1745844426; cv=none; b=lmWtilG7PmHYClhTHczV2Pix4S8t9eh5N1Qjl5q0Td5l9YuLjaekJuKpdRkUA8Kla/qo6SXm8I1JJY9x3KOJ7Bwkm0OJtSi/VvKPOuZuGX08c9R5VImQYWHGcCb7SpBslNcN4zXRe2aGJDoYivm9SdBGs+4mte4c0ZAD8LDu7Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745833498; c=relaxed/simple;
-	bh=ARn8mONPmTlVesWVEfl9zh27G6Ld5tHGETk93xsn4Ww=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SlZuV8g9XLgeoCMRP5vQ0pfpSox0XLAOslvuQ/IxjDN2L/HOaB/Thljcj1ognnfkcWNCxlhHrPHyoayc5nEdzRjl9sFL+xuut8sUWjRDgpfpLl1G/D8uqZMQWKjQRBaJXX5NeZY/bmebOj/rbCZcHr1BQHBxJcSD/Obj5swDnos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from [198.18.0.1] (gy-adaptive-ssl-proxy-4-entmail-virt151.gy.ntes [27.18.99.221])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 1364b8143;
-	Mon, 28 Apr 2025 17:44:46 +0800 (GMT+08:00)
-Message-ID: <c94409d9-3bd1-42c3-b5f6-785e994baa77@whut.edu.cn>
-Date: Mon, 28 Apr 2025 17:44:46 +0800
+	s=arc-20240116; t=1745844426; c=relaxed/simple;
+	bh=shKL21xOdXscttpIoQ70VuZ/18DPNvHC/sw5ErEbgtQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ptxOyvwfqVWpBBTlxHA65TAMZbwNvE+m4KSzoPlupJTV7byian0LGQ//EMyBO+woHM45rRSDhuGpOdjB96EnHodTYPQcJ2PWrXD8X39wkfO1ijRz31gW14ViZLg1by298zFpOXmnt2qV8E96/k0pV3rPJry0So61AUfjo8i9vyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=rgQECXqT; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="rgQECXqT"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ac34257295dso807096566b.2
+        for <spacemit@lists.linux.dev>; Mon, 28 Apr 2025 05:47:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1745844422; x=1746449222; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OoDbPOw1p4YqIw8f4N+AkxYNr205WVYeWbe3sl8vltk=;
+        b=rgQECXqTVNQFF67zpdv0nvr2HuzZiGUnL9ueFJAI6K0E9A+YtQ1aOnj9b5n/2lc9Qm
+         gyivhPLvhYLanCRklEgfSb7HEYrCug7jGsi2EiEApwsr9rm9NMN1grX+NTZLXWcb/xYu
+         gdMTGfRyjff7j9juThlUF6aPX0fRVYMlFu+CP5WheQq/0emeidA68lV2pnOUGoftY0yX
+         sllc3AEXSWsCTh2JeGm47DkP5rtPuMLmOl+wykZocnnfPJ4UWJlv1RQNRSY6mTxNG/86
+         Cizk2CZPtk3VPzf59s/OdV+pVIlM3F3RPEnJFkpBJf1rGEIZ08725/ffHaqTV9GZKsZk
+         1i4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745844422; x=1746449222;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OoDbPOw1p4YqIw8f4N+AkxYNr205WVYeWbe3sl8vltk=;
+        b=dmibOPtuaWhv0y+cgvgMZ+3lpMhjSXl61MLsTnsMCLlohC8nNbAwZPK89/mRDHD9CN
+         oocQzpwROJ2sz0vWLLmec3N3XaFqKS5bR7RQPzEhu5Jb1Rl54uiaY8V2zvBckFxCJQ7u
+         E8uYb+H0pgQTULlH41QQpG2d9T9myfDJSdANqWBXipkAxypolI12NNMeJgsmvXOtGkbr
+         AL9yilEzEf5EMJQJaZ+juf8+Icj/tbPLMXr/wcJOKUbvdAPhmX9r75Uc/z5UHTIxI/5X
+         luLEjyqPSONNfFCDoVojNKYauXq2AwAzqRko3h+QBb0yuP2XFNK+cEWmHkNZIruZL5hR
+         Ksjg==
+X-Forwarded-Encrypted: i=1; AJvYcCW+kGi3Ygrxg/KF8w80zjpGtiOG1nzC9n3VvCKJGnSgvATbPnraxfhpODWIAx0rpvUtuSr2cpEAXA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwhPKMPo60bzt53XTZM1xg0mucMluqYTTlc3+OXnsNHTCac5bE2
+	ndflaTp6E5oD75/4zfDLlv3eI41iOsUIyYSahK77m+KaUr8UnIVqO4RQflklC73Ens3pe5iJnEm
+	Yi9KuYVkzR3cHhCO8NzcvBNsa8uL421E+/Y8s8Q==
+X-Gm-Gg: ASbGncvMCWjH9YH23VghoDjABk6xA3akMVqxVcMa61sfgzuc+ZdsX8T7mwt/gj7POQr
+	GMSKsjRcFe1rqLo2PEvPsvciEaTcsrIWuJ7lkccHUdYr91fn8pDH7BP9ZcUvgremHLw2ZTpeyZC
+	onXIJpKc2Q7hgjW22KV8iM8KS2cPFO/LGzZA==
+X-Google-Smtp-Source: AGHT+IGk5TDZtIZeyBrVJJpzccoOP1uFny6dcETQUFtcD2er4S/mHnZ1uSMgcYFWUm241dVvRYAz/RFBf7vixx+9hnA=
+X-Received: by 2002:a17:907:1b0b:b0:ac7:4d45:f13e with SMTP id
+ a640c23a62f3a-ace710a0eacmr1048006166b.13.1745844422192; Mon, 28 Apr 2025
+ 05:47:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: add usb3.0 support for K1
-To: Yao Zi <ziyao@disroot.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20250428-b4-k1-dwc3-v2-v1-0-7cb061abd619@whut.edu.cn>
- <20250428-b4-k1-dwc3-v2-v1-2-7cb061abd619@whut.edu.cn>
- <aA87PjTsbHxxFOdl@pie.lan>
-Content-Language: en-US
-From: Ze Huang <huangze@whut.edu.cn>
-In-Reply-To: <aA87PjTsbHxxFOdl@pie.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZGBhLVkxLQ0oYSEMYTU1DQlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVJSUpZV1kWGg8SFR0UWUFZT0tIVUpLSEpOTE5VSktLVUpCS0
-	tZBg++
-X-HM-Tid: 0a967bc8e9ca03a1kunm1364b8143
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6K1E6OQw5ITIBCTQWIQI9Ng41
-	EEwwChxVSlVKTE9OQ0hIT0JJT0hNVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
-	TFVKQ1VCQlVJSUpZV1kIAVlBTE5NSTcG
+References: <20250420070251.378950-1-guodong@riscstar.com> <20250420070251.378950-4-guodong@riscstar.com>
+ <kftfye2zn2ogyvuv7diuyrv5qkp43csbpkcqfcms2xp5lsuubm@z2kocdzkb7qk>
+In-Reply-To: <kftfye2zn2ogyvuv7diuyrv5qkp43csbpkcqfcms2xp5lsuubm@z2kocdzkb7qk>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Mon, 28 Apr 2025 20:46:50 +0800
+X-Gm-Features: ATxdqUH6-_RHeS-1gOEkcXcvrWC9i9ud1F8bZVmjThNvU434y3rwyRGiOnAAjoM
+Message-ID: <CAH1PCMZC5xrX07rd5bo+06zJoJDiAH3UNHqH5catwEALNJL2dQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] riscv: dts: spacemit: add PWM support for K1 SoC
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <ukleinek@kernel.org>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	alex@ghiti.fr, dlan@gentoo.org, p.zabel@pengutronix.de, drew@pdp7.com, 
+	inochiama@gmail.com, geert+renesas@glider.be, heylenay@4d2.org, 
+	tglx@linutronix.de, hal.feng@starfivetech.com, unicorn_wang@outlook.com, 
+	duje.mihanovic@skole.hr, elder@riscstar.com, linux-pwm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 4/28/25 4:24 PM, Yao Zi wrote:
-> On Mon, Apr 28, 2025 at 03:38:12PM +0800, Ze Huang wrote:
->> Add USB 3.0 support for the SpacemiT K1 SoC, including the
->> following components:
->>
->> - USB 2.0 PHY nodes
->> - USB 3.0 combo PHY node
->> - USB 3.0 host controller
->> - USB 3.0 hub and vbus regulator (usb3_vhub, usb3_vbus)
->> - DRAM interconnect node for USB DMA ("dma-mem")
->>
->> The `usb3_vbus` and `usb3_vhub` regulator node provides a fixed 5V
->> supply to power the onboard USB 3.0 hub and usb vbus.
->>
->> On K1, some DMA transfers from devices to memory use separate buses with
->> different DMA address translation rules from the parent node. We express
->> this relationship through the interconnects node("dma-mem").
->>
->> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
->> ---
->>   arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 52 +++++++++++++++++++++++
->>   arch/riscv/boot/dts/spacemit/k1.dtsi            | 56 +++++++++++++++++++++++++
->>   2 files changed, 108 insertions(+)
->>
->> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
->> index 816ef1bc358ec490aff184d5915d680dbd9f00cb..0c0bf572d31e056955eb2ff377c3262271dcc156 100644
->> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
->> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
->> @@ -28,6 +28,25 @@ led1 {
->>   			default-state = "on";
->>   		};
->>   	};
->> +
->> +	usb3_vhub: regulator-vhub-5v {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "USB30_VHUB";
->> +		regulator-min-microvolt = <5000000>;
->> +		regulator-max-microvolt = <5000000>;
->> +		gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
->> +		enable-active-high;
->> +	};
->> +
->> +	usb3_vbus: regulator-vbus-5v {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "USB30_VBUS";
->> +		regulator-min-microvolt = <5000000>;
->> +		regulator-max-microvolt = <5000000>;
->> +		regulator-always-on;
->> +		gpio = <&gpio K1_GPIO(97) GPIO_ACTIVE_HIGH>;
->> +		enable-active-high;
->> +	};
->>   };
->>   
->>   &uart0 {
->> @@ -35,3 +54,36 @@ &uart0 {
->>   	pinctrl-0 = <&uart0_2_cfg>;
->>   	status = "okay";
->>   };
->> +
->> +&usbphy2 {
->> +	status = "okay";
->> +};
->> +
->> +&combphy {
->> +	status = "okay";
->> +};
->> +
->> +&usb_dwc3 {
->> +	dr_mode = "host";
->> +	phy_type = "utmi";
->> +	snps,hsphy_interface = "utmi";
->> +	snps,dis_enblslpm_quirk;
->> +	snps,dis-u1u2-quirk;
->> +	snps,dis-u2-freeclk-exists-quirk;
->> +	snps,dis-del-phy-power-chg-quirk;
->> +	snps,dis_u2_susphy_quirk;
->> +	snps,dis_u3_susphy_quirk;
->> +	snps,dis_rxdet_inp3_quirk;
->> +	snps,xhci-trb-ent-quirk;
-> I suspect whether it's the correct place to put these quirks: they look
-> like IP quirks which are present in every K1 SoC regardless of the
-> board model, if my understanding is correct they should go into SoC
-> devicetree.
-
-I checked these quirks in differenct board dts in vendor repo, they are 
-actually the same.
-Will follow.
-
+On Thu, Apr 24, 2025 at 4:18=E2=80=AFPM Uwe Kleine-K=C3=B6nig <ukleinek@ker=
+nel.org> wrote:
 >
->> +	vbus-supply = <&usb3_vbus>;
->> +	#address-cells = <1>;
->> +	#size-cells = <0>;
->> +	status = "okay";
->> +
->> +	hub@1 {
->> +		compatible = "usb2109,817";
->> +		reg = <0x1>;
->> +		vdd-supply = <&usb3_vhub>;
->> +		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
->> +	};
->> +};
->> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
->> index c0cc4b99c9356d550a470291dba9f2625b10f8df..c7b86c850da969e5412ad42c63995cd20b4d0484 100644
->> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
->> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
->> @@ -4,6 +4,8 @@
->>    */
->>   
->>   #include <dt-bindings/clock/spacemit,k1-syscon.h>
->> +#include <dt-bindings/gpio/gpio.h>
->> +#include <dt-bindings/phy/phy.h>
->>   
->>   /dts-v1/;
->>   / {
->> @@ -346,6 +348,13 @@ soc {
->>   		dma-noncoherent;
->>   		ranges;
->>   
->> +		dram_range0: dram-range@0 {
->> +			#address-cells = <2>;
->> +			#size-cells = <2>;
->> +			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>;
->> +			#interconnect-cells = <0>;
->> +		};
->> +
->>   		syscon_rcpu: system-controller@c0880000 {
->>   			compatible = "spacemit,k1-syscon-rcpu";
->>   			reg = <0x0 0xc0880000 0x0 0x2048>;
->> @@ -358,6 +367,53 @@ syscon_rcpu2: system-controller@c0888000 {
->>   			#reset-cells = <1>;
->>   		};
->>   
->> +		usb_dwc3: usb@c0a00000 {
->> +			compatible = "spacemit,k1-dwc3", "snps,dwc3";
->> +			reg = <0x0 0xc0a00000 0x0 0x10000>;
->> +			clocks = <&syscon_apmu CLK_USB30>;
->> +			clock-names = "bus_early";
->> +			resets = <&syscon_apmu RESET_USB3_0>;
->> +			interrupt-parent = <&plic>;
->> +			interrupts = <125>;
->> +			interconnects = <&dram_range0>;
->> +			interconnect-names = "dma-mem";
->> +			phys = <&usbphy2>, <&combphy PHY_TYPE_USB3>;
->> +			phy-names = "usb2-phy", "usb3-phy";
->> +			status = "disabled";
->> +		};
->> +
->> +		usbphy0: phy@c0940000 {
->> +			compatible = "spacemit,usb2-phy";
->> +			reg = <0x0 0xc0940000 0x0 0x200>;
->> +			clocks = <&syscon_apmu CLK_USB_AXI>;
->> +			status = "disabled";
->> +		};
->> +
->> +		usbphy1: phy@c09c0000 {
->> +			compatible = "spacemit,usb2-phy";
->> +			reg = <0x0 0xc09c0000 0x0 0x200>;
->> +			clocks = <&syscon_apmu CLK_USB_P1>;
->> +			status = "disabled";
->> +		};
-> Why don't add #phy-cells properties to usbphy{0,1} just like usbphy2?
-> You've claimed #phy-cells as an essential property of
-> spacemit,k1-usb2-phy nodes in the PHY series and I suspect whether this
-> passes dtbs_check.
-
-The DT bindings for the USB PHY were submitted in an earlier patchset,
-some dts checks about PHY were missed.
-
-I will add #phy-cells in next version. thanks!
-
+> Hello,
 >
->> +		usbphy2: phy@0xc0a30000 {
->> +			compatible = "spacemit,k1-usb2-phy";
->> +			reg = <0x0 0xc0a30000 0x0 0x200>;
->> +			clocks = <&syscon_apmu CLK_USB30>;
->> +			#phy-cells = <0>;
->> +			status = "disabled";
->> +		};
->> +
->> +		combphy: phy@c0b10000 {
->> +			compatible = "spacemit,k1-combphy";
->> +			reg = <0x0 0xc0b10000 0x0 0x800>,
->> +			      <0x0 0xd4282910 0x0 0x400>;
->> +			reg-names = "ctrl", "sel";
->> +			resets = <&syscon_apmu RESET_PCIE0>;
->> +			#phy-cells = <1>;
->> +			status = "disabled";
->> +		};
->> +
->>   		syscon_apbc: system-control@d4015000 {
->>   			compatible = "spacemit,k1-syscon-apbc";
->>   			reg = <0x0 0xd4015000 0x0 0x1000>;
->>
->> -- 
->> 2.49.0
->>
->>
-> Best regards,
-> Yao Zi
+> On Sun, Apr 20, 2025 at 03:02:48PM +0800, Guodong Xu wrote:
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts=
+/spacemit/k1.dtsi
+> > index c0cc4b99c935..e7dba623e877 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
+> > +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> > @@ -556,5 +556,185 @@ sec_uart1: serial@f0612000 {
+> >                       reg-io-width =3D <4>;
+> >                       status =3D "reserved"; /* for TEE usage */
+> >               };
+> > +
+> > +             pwm0: pwm@d401a000 {
+> > +                     compatible =3D "spacemit,k1-pwm", "marvell,pxa910=
+-pwm";
+> > +                     reg =3D <0x0 0xd401a000 0x0 0x10>;
+> > +                     #pwm-cells =3D <1>;
 >
->
+> I want to make all pwms use #pwm-cells =3D <3> in the long run. Can you
+
+Sure. I can do this.
+
+> please use that for the new binding? (Of course this needs adaption in
+> the binding doc, the code should already be prepared for that.)
 >
 
+I got what you mean. The code change for that is already integrated into
+v6.15-rc1.
+Commit 895fe4537cc8 ("pwm: Add upgrade path to #pwm-cells =3D <3> for users=
+ of
+of_pwm_single_xlate()")
+
+Now, if I change this #pwm-cells from <1> to <3>, without the dt-binding do=
+c
+changes, I would expect to see warnings (" #pwm-cells: 1 was expected") dur=
+ing
+  make dtbs_check W=3D3
+
+Any suggestions when the dt-binding changes will be merged?
+or I can add your patch as a dependency.
+https://lore.kernel.org/all/cb799d8a5bb284cd861785a691b8d5e329300d99.173884=
+2938.git.u.kleine-koenig@baylibre.com/
+
+> > +                     clocks =3D <&syscon_apbc CLK_PWM0>;
+> > +                     resets =3D <&syscon_apbc RESET_PWM0>;
+> > +                     status =3D "disabled";
+> > +             };
+>
+> The error that the build bot reports happens (I think) because CLK_PWM0
+> isn't known.
+>
+
+Yes, thanks for checking. This patchset depends on the clk and reset.
+I will add them as prerequisite.
+
+-Guodong
+
+
+> Best regards
+> Uwe
