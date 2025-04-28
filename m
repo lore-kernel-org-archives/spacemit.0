@@ -1,92 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF1F1DE8B2;
-	Mon, 28 Apr 2025 15:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB26B199E9A;
+	Mon, 28 Apr 2025 16:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745854039; cv=none; b=tKUGDGTZ1pCfPS2w+MTcEQYkz8VWxzcAhTEhv+9abUT4ZaVLIThooa0rgeHgm6ax4AH8qd9N+nOQyC+DmiADj2AS2ctfLVkcvtQfY7mH/6BooV9mF8M/CYTYtkhEZkcHccTZ/igSShHrb0Pr9lsWUXhX/TeIacv+8uY1ZbHC6To=
+	t=1745857961; cv=none; b=S3Kzs5Seu7AMAoCKxAx3qz+UquyM1qgyK/AnYgte79V62woUW2wgQE8WlAUx7N9xL9Jahb9BLDQHPrZ4gH0MV+3scdAG58Wc6LrIvhkCDXuYsNHDZoNeZmKdxietCAZuZG/znNYXDgxiZetx2MDovkGZaS6xeCQ/j+SSsick1FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745854039; c=relaxed/simple;
-	bh=xe+PC4Ilgkqhp0Kq/uE50DZsnYhsTMuf5xemFibbnIs=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=aySAYkLg1qxoyspfvPk2e2j4/mzvsRJJuy1maY4sg0gIcl7VeGhW1Ig4YhhDE0bTis4oYps9pNdSmKz386vRYsNkBIOwvn5xw8hDZIjZ16uiz47OG1WGe8Otgy/qBdJ1G3M5xYB2xpT7l8gTALp0WInNJw9FomDWQEC2AFoBSII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ODFSBNgl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1745857961; c=relaxed/simple;
+	bh=rF0xSYpUAFZ4WX0DlNZ8bwKocybp6SgvR0ow4RtJX8E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nv16jouz6JAn7QqsU2liNdP32YveJ0RIpiRA0SvG0lXw1dATHEB4Og2pBW0aWoutSuNCDjluSmT5R8heu+8iNr7gFXytibFYbHSV9nJKVLpaiPnH3+/NgGu5laaoKBRrkexmUPMmtyoaIkeJhQSK8+idDdPvU6sOO+70qy9YHpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJ4sApbP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ODFSBNgl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6917C4CEEE;
-	Mon, 28 Apr 2025 15:27:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJ4sApbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2425C4CEEC;
+	Mon, 28 Apr 2025 16:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745854039;
-	bh=xe+PC4Ilgkqhp0Kq/uE50DZsnYhsTMuf5xemFibbnIs=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=ODFSBNglrrH69kLsEZ4zqQ6PmWjGUrG2PziyFNd4uoF9tOTKcZStJ+KI7qdh2tGye
-	 h4i8rcd77w1BBkGNH7cAmosi/GWDb+BCn+nV2hFj5BzmIOg/JvTuSG4EtXCnQpVQAs
-	 ib7xKLiWucIsM190d7dmJYcVfV05UiXz6v0dfsGl/Wo+bl38y5brvby+VnVzIoH1nW
-	 pUmWOKDGA9xu1fx/hlhON/8UKowByzAZ5rsdT/Gb0mW0JVCitrt/7da4Rr/zlWovQb
-	 w76u9kzpa4u8PB1d32X8L297AXQqSs7C/a7gIF74SY7o5VZmoWMROXZ+5xrYskq53K
-	 CLCTrwFzu2Rfw==
-Date: Mon, 28 Apr 2025 10:27:17 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1745857960;
+	bh=rF0xSYpUAFZ4WX0DlNZ8bwKocybp6SgvR0ow4RtJX8E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jJ4sApbPs8cZAPRs6riv1ljCbcQ7CiZzy28hxBSkKktiy9U+LpvzS9AREKfMyb9yD
+	 p6QeLWon7wtV6m9KS93qC9mlhAbJUX2ZA0DqCQn/I84FQAogyi2jkOoEwsJyONzuEs
+	 QrNIQFNkLO4RpCFe1g8To5VoTRdMaDp1NqisJz4Dn74nEwsjvdtAtkV7Cze3IexatV
+	 IdL9aCQYFIrViVXwpkNFusEeupVAIpQoHToWqI04iEEKj374MALpPEcWJUzueqOFA1
+	 o1ZIHPUV1IsZKV/B+HQQb27iQP5dgA2LPQU3IYmAffGsCs4OjvTCF/N4RcjrqK+zN8
+	 ERVr7qwiBhMlg==
+Date: Mon, 28 Apr 2025 18:32:37 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+	dlan@gentoo.org, p.zabel@pengutronix.de, drew@pdp7.com, inochiama@gmail.com, 
+	geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com, 
+	unicorn_wang@outlook.com, duje.mihanovic@skole.hr, elder@riscstar.com, 
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 3/6] riscv: dts: spacemit: add PWM support for K1 SoC
+Message-ID: <t4tnrsyl7t7hwfm752eapz3ajxkkl23nrfemw4jy6a7khi7a7u@gow3c2ba56ib>
+References: <20250420070251.378950-1-guodong@riscstar.com>
+ <20250420070251.378950-4-guodong@riscstar.com>
+ <kftfye2zn2ogyvuv7diuyrv5qkp43csbpkcqfcms2xp5lsuubm@z2kocdzkb7qk>
+ <CAH1PCMZC5xrX07rd5bo+06zJoJDiAH3UNHqH5catwEALNJL2dQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: devicetree@vger.kernel.org, Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Alexandre Ghiti <alex@ghiti.fr>, 
- spacemit@lists.linux.dev, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- linux-usb@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Albert Ou <aou@eecs.berkeley.edu>, linux-riscv@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, 
- Conor Dooley <conor+dt@kernel.org>
-To: Ze Huang <huangze@whut.edu.cn>
-In-Reply-To: <20250428-b4-k1-dwc3-v2-v1-1-7cb061abd619@whut.edu.cn>
-References: <20250428-b4-k1-dwc3-v2-v1-0-7cb061abd619@whut.edu.cn>
- <20250428-b4-k1-dwc3-v2-v1-1-7cb061abd619@whut.edu.cn>
-Message-Id: <174585403717.1072738.12141605070029196613.robh@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: usb: dwc3: add support for SpacemiT
- K1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7d2sgdyj5xap5wjq"
+Content-Disposition: inline
+In-Reply-To: <CAH1PCMZC5xrX07rd5bo+06zJoJDiAH3UNHqH5catwEALNJL2dQ@mail.gmail.com>
 
 
-On Mon, 28 Apr 2025 15:38:11 +0800, Ze Huang wrote:
-> Add support for the USB 3.0 Dual-Role Device (DRD) controller embedded
-> in
-> the SpacemiT K1 SoC. The controller is based on the Synopsys DesignWare
-> Core USB 3 (DWC3) IP, supporting both Host and Device modes for USB 3.0
-> and USB 2.0 standards.
-> 
-> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
-> ---
->  .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 95 ++++++++++++++++++++++
->  1 file changed, 95 insertions(+)
-> 
+--7d2sgdyj5xap5wjq
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 3/6] riscv: dts: spacemit: add PWM support for K1 SoC
+MIME-Version: 1.0
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Hello,
 
-yamllint warnings/errors:
+On Mon, Apr 28, 2025 at 08:46:50PM +0800, Guodong Xu wrote:
+> On Thu, Apr 24, 2025 at 4:18=E2=80=AFPM Uwe Kleine-K=C3=B6nig <ukleinek@k=
+ernel.org> wrote:
+> > I want to make all pwms use #pwm-cells =3D <3> in the long run. Can you
+>=20
+> Sure. I can do this.
+>=20
+> > please use that for the new binding? (Of course this needs adaption in
+> > the binding doc, the code should already be prepared for that.)
+> >
+>=20
+> I got what you mean. The code change for that is already integrated into
+> v6.15-rc1.
+> Commit 895fe4537cc8 ("pwm: Add upgrade path to #pwm-cells =3D <3> for use=
+rs of
+> of_pwm_single_xlate()")
+>=20
+> Now, if I change this #pwm-cells from <1> to <3>, without the dt-binding =
+doc
+> changes, I would expect to see warnings (" #pwm-cells: 1 was expected") d=
+uring
+>   make dtbs_check W=3D3
+>=20
+> Any suggestions when the dt-binding changes will be merged?
+> or I can add your patch as a dependency.
+> https://lore.kernel.org/all/cb799d8a5bb284cd861785a691b8d5e329300d99.1738=
+842938.git.u.kleine-koenig@baylibre.com/
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.example.dtb: usb@c0a00000 (spacemit,k1-dwc3): Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
-	from schema $id: http://devicetree.org/schemas/usb/snps,dwc3.yaml#
+I don't want to merge this very soon given that 895fe4537cc8 isn't that
+old yet. But I suggest you adapt patch #1 to require #pwm-cells =3D <3>
+for the newly added compatible.
 
-doc reference errors (make refcheckdocs):
+Best regards
+Uwe
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250428-b4-k1-dwc3-v2-v1-1-7cb061abd619@whut.edu.cn
+--7d2sgdyj5xap5wjq
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+-----BEGIN PGP SIGNATURE-----
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmgPraMACgkQj4D7WH0S
+/k4dZgf/b8mf9YA0V9HfCWmvx/ccVO/gZNXUxBOUpcUeheEOR03RQ7Ha/Iixpel2
+Jn1AqkzVcS60PqfpZvSgsUPaJrkRJuWnL6nFV1Pi0U8Kal89jC1sxcUTE84I5yon
+hzWokjzGoXi6BPxWGVdKpNkrDF4qn3HXEDDyOX7hAb0kuSsdxFC6owK+MMNoKAGm
+ptA44qdpUR9A7Qko2TB97gaMIqtPGE9qxHvsaCTyi3lMtkoKIGbue3mWqM86nBeQ
+uScZ5heYBT8ix1p1z3nQpKG9XuhPltKPEsMEvUMIMN/F1M0rC1COcD5jl2wwvbBm
+B7MeqakfcpoT/I5Vv5a8ttdORNz/TQ==
+=x5Qe
+-----END PGP SIGNATURE-----
 
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+--7d2sgdyj5xap5wjq--
