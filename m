@@ -1,103 +1,83 @@
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF6726A0CA
-	for <spacemit@lists.linux.dev>; Tue, 29 Apr 2025 21:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F912DC786
+	for <spacemit@lists.linux.dev>; Wed, 30 Apr 2025 00:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745963085; cv=none; b=biMm+s+qnkoThes/WO5bHSCUb/ErTF/Vrgmh35Qkk08zTyHrN/TKAgBJfaTrTozm7yAKkpbI1M8iifUqI/llxS0ZzRNl4VLnCbJlmM4hDtt6tRbrGILNHcrjt8VMabXVme7cgSAZSDf2Q654F47KhFYlmXKuJU0mnutgapkfPPY=
+	t=1745974473; cv=none; b=PR6UQac0o4BMx14ahY0u4HeDRPoktPG+ip4t27ZV5+X7XTMUY4L4T6nMeaD8Ez9frFjLGjA4b1s3bpGt9vdfNc+A4fLC+yo1SFclNvPjQRi1DSccDDIyRSGw4gq0sJ1SPCq94rzub+okbQ9wUbtQhtIXSPiNL6MeTl9fEKRGMME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745963085; c=relaxed/simple;
-	bh=YoNC21QRpvSFFog1sIo2pHLhmbI9Jf1P9KZW35k1YSc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GYXl0ZeCkHZmCWmwrvJNiO0uPCbUV5ugdkm2ZRHP6H93uHiMJXUkO0J6QNd0FEKXdH+pyCuS4qPdNE2N0q4aTpLLfWmWGltYQExndIlUrBNIoT5cgMtWk7lrNg9Ls0ac4Ocj053E/BaKBmOvEV/TRqS+IQKCr5B8qlW7wjlhN8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=G52FcQOJ; arc=none smtp.client-ip=209.85.166.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="G52FcQOJ"
-Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-8613f456960so184550239f.1
-        for <spacemit@lists.linux.dev>; Tue, 29 Apr 2025 14:44:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1745963082; x=1746567882; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4jR6+8yIAI0O5mZLd2KMAqTdJoRJKX7IRlTHsSNPOZQ=;
-        b=G52FcQOJVM4CBH2UKa22uo3yUw+mMfPfa6xO7sNxn2olBEBqTg4vrxM32XtH0Anvi1
-         b/ozKv5FdpRUYl40g7yvn0rzHQlJ10TgJOgIkASIPWsLVG9Uowxefl54Bv5psO0oww2b
-         BJw8oatmfFHyqOjmeWR4OUitYjp7wo+2gsTaM5PqT5ZL09j/RnB1be4mh188JJnsWgBD
-         1JSWj4n35HhN9l4BxvN1/TIEwxtSLzhnEFIk1YNYFMXDRpjmoK5vxZEIfo575tojG+YX
-         w4EoREPcGtNjmpX60JFYU4/DUiB7fWqUGhqOuRYVb51QZlcg6joTmqKPYouVKJ91+qk9
-         uuLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745963082; x=1746567882;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4jR6+8yIAI0O5mZLd2KMAqTdJoRJKX7IRlTHsSNPOZQ=;
-        b=l8xC5tDhVUk93Lj4MtFU3wflW5AklIf3YGceFO74fer1uvJwTwT1EWNOUC1WlQqTKL
-         bQnNDRkqmdRKxepdR2qazFpbBhPWEt0LfPFZhqZV81NVce95khedDsIItg5H4V4QCyST
-         t+SEGiXGd5FgkvsDfjhBcF3HXkTpjVpuUkF5zdyQx927pNGVltJy3VLYVrEGgDEqEmHY
-         /EaC1SpwARiAEq3QJkZxXvUr2mOckL5iW6gVUEPv9dzpro0l4Lg49VurVzC4Vzd9ll5K
-         BD1gtTm4mkxg/RlpzdBZpt7duzM0L+m5+7RgjNQh+v7qnbLPwZxEwhSfiiYy8GvGLlNp
-         wxkg==
-X-Forwarded-Encrypted: i=1; AJvYcCUV8dwu0MvXp2910I5trdDCU/NRq1xbX2ajKDECNu5zdsLObN4ruJiCHbsz4CdEQ/We0Lrk1yNmlQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxdp58vJMJAAbiboUCJQeOuRfBiCOP1rkEUIpWUGt38L7dvG7oP
-	p/EYxeEHwc6HW4XBQZWAOUDHDjCjHhkH0sx40Q0ToHXyZDpc4+MlbRFGa6bVxXU=
-X-Gm-Gg: ASbGncv0FV7aXxqC/VJylPxD8HRvoEOtj3o0Bb2cgf8Dy4GlnoBcEsuJZn5BHQtFZDW
-	OTe+37lZfaw31YrnIbxKhgSX9PiIYaEWXfptHU6jne2RSZ/AxOOzSdGrdjqpQToy3JehhFhxxDe
-	y0tm8cyXK3eDl3iTj2MkLdTGmFwaMUf4o/2BpT0O8iJLemYMby3DB/++Y3QYzO9kzqSCEisnn7T
-	YLxDWenTTZvjmOjWfwWhmYrOeTE4zDcn5CmQ8YpU2ReF7Oeo6RRk9c+4fp94JLMI8RDW/4CCMmo
-	B38KmshMhRlI/oI3mBLHGseV/sNg2zVsXDE7dnVBQ+oEX2DdKXTNpVtDNQ45++FSs3qTyGxVjSI
-	sL61q
-X-Google-Smtp-Source: AGHT+IHC804e4Eix/ozoxmgLuYyu4h8EDtpYTI9mJ8DxF3AanIg+BgD1P4qKeHonfHu4YLobsYIF/Q==
-X-Received: by 2002:a05:6602:400d:b0:85b:577b:37c9 with SMTP id ca18e2360f4ac-86495f0f44emr144632039f.12.1745963082607;
-        Tue, 29 Apr 2025 14:44:42 -0700 (PDT)
-Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-8648c1df315sm42698539f.45.2025.04.29.14.44.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Apr 2025 14:44:42 -0700 (PDT)
-Message-ID: <8b345c2e-876a-4528-b8f5-fe97abd11cb4@riscstar.com>
-Date: Tue, 29 Apr 2025 16:44:40 -0500
+	s=arc-20240116; t=1745974473; c=relaxed/simple;
+	bh=enao3FgooSyOsyIAsaIebLYwspArWySvzWiz0aGleOs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gF1PwoXFXZsqH7socmqNeFh3x8E/SgLMS5P7ge5fF3wPaj7fWxf6MgmR5JKEk/hCXdP/Pxt8HWtk73wB60bOiZ9PTOXv9NA9Qgv8YhrFj1/g10FfX0fi85GTMWp/S/xyZKYRxLvP/p8Buif0tgDRrxzD6TLCBrzOqhukXlrlT+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.147.253])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 974E3342F9C;
+	Wed, 30 Apr 2025 00:54:29 +0000 (UTC)
+Date: Wed, 30 Apr 2025 00:54:15 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Haylen Chu <heylenay@4d2.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Haylen Chu <heylenay@outlook.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-riscv@lists.infradead.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, Inochi Amaoto <inochiama@outlook.com>,
+	Chen Wang <unicornxdotw@foxmail.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Meng Zhang <zhangmeng.kevin@linux.spacemit.com>
+Subject: Re: [PATCH v7 0/6] Add clock controller support for SpacemiT K1
+Message-ID: <20250430005415-GYA187600@gentoo>
+References: <20250412074423.38517-2-heylenay@4d2.org>
+ <20250415004612-GYB29591@gentoo>
+ <deb072638716e9978bd6381352cc721b@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/7] clk: spacemit: add K1 reset support
-To: Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>
-Cc: mturquette@baylibre.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, p.zabel@pengutronix.de, heylenay@4d2.org,
- guodong@riscstar.com, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, spacemit@lists.linux.dev, devicetree@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20250418145401.2603648-1-elder@riscstar.com>
- <20250421134218-GYA42923@gentoo>
- <95c672f35d6e5e1ac91feaa5628cf4fe@kernel.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <95c672f35d6e5e1ac91feaa5628cf4fe@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <deb072638716e9978bd6381352cc721b@kernel.org>
 
-On 4/29/25 3:57 PM, Stephen Boyd wrote:
-> Quoting Yixun Lan (2025-04-21 06:42:18)
->> Hi Alex,
->>    I'm good with this version, but would wait a few more days for
->> people to comment before taking them..
->>
->> Hi Philipp,
->>    Since these reset patches [3, 4, 6] are sitting on top of clk driver,
->> I'd assume you're ok with taking them through clk tree? I'd plan to queue
->> them for 6.16.. if yes, would you be able to give an ACK? I'd appreciate!
->>
+Hi Stephen,
+
+On 13:49 Tue 29 Apr     , Stephen Boyd wrote:
+> Quoting Yixun Lan (2025-04-14 17:46:12)
+> > Hi Haylen Chu:
+> >    I'm quite happy with this version, as all the issues are solved,
+> > Thanks for working on this. I will give my RY and start to queue them.
+> > 
+> > Hi Stephen Boyd,
+> >   My plan to send a PR for inclusion to the clk tree in the 6.16
+> > merge window. But, let me know if there is still problem I overlooked.
 > 
-> No. Please put the reset driver in drivers/reset to get proper review
-> from reset maintainers. Use the auxiliary bus to do that when the device
-> is both a clk and reset controller.
+> You should send the code now. 
+Ok, will do
 
-OK.  I'll send v6 that implements things this way.  Thanks.	-Alex
+> The merge window is when subsystem
+> maintainers like me send code to Linus, not when SoC maintainers send
+> code to subsystem maintainers. 
+Sorry, I was not precise on this. the PR should target for v6.16 via clk tree
+
+> Typically folks wait until around -rc5 or
+> -rc6 to send it for the next merge window.
+Thanks for the information, I was planning to send a PR to you (clk maintainer)
+at v6.15-rc6 which should eventually merged into v6.16 ..
+
+-- 
+Yixun Lan (dlan)
