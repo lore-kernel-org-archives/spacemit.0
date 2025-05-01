@@ -1,102 +1,114 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E572DC792
-	for <spacemit@lists.linux.dev>; Wed, 30 Apr 2025 01:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C521D90C8
+	for <spacemit@lists.linux.dev>; Thu,  1 May 2025 08:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745976593; cv=none; b=T1aM0HKYzwtjnR2M4j2eKPShGcePHexj92q2hDbZw7A6az6nNGVdNEcxY3ed+EtWqjD2vgBw9pNJMXELujDKCTF39+pbAXlfqKke8Pvh8LzRgclSWBxINTa0Ootfk5T4CN9fhD6LqG3MnfVqQXgSUKlEYsfoSusFRDF8x2xE3jQ=
+	t=1746089456; cv=none; b=jPMddS/McnVrkwxC1BK2d3nRau+JiaBTNTcSqVCLp6gwmfKX/XDwaZlcFOI0/jZcTBlh2OjPpmSCMK3SczjDl2Ub+YcJe1Id8fdeMozD4A3uE8/MSA9vxFvSIlICwHBcKJRul5gHVTWiW32S7JX+S6ug4vYzXG7VKR6bIr/Inw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745976593; c=relaxed/simple;
-	bh=UKVayq6dmnr8jrMqKRkAzarMnkoTzDLNG5yvZ7UCGAE=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=bN7zMq0pczVeOcl5WzH/RKN1pw22FzdDFMNlk0eA953Ys0Ci0OcWdcoeGFDnBVWUCJk3pqpa2YV5geXUSk91hiDW+Ysy1oGWAZZjAaD65UyhMGjpawa0DQqtxudKrq4Hp92/o89khqs4X93UifoZYs4CPVfOczVj7jeN9uW5uDg=
+	s=arc-20240116; t=1746089456; c=relaxed/simple;
+	bh=7iG3g5Fpkpmnaw2P8DKAL0enzyTifLCknRgh9KOA600=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sm6Oftzrz6nHEKaFaJWpv+Cr9yX7UF3zotae6CFEia/PvPzCtWZ/DsyX/14ut2XXybc5ya6e8RTlFdF0glRNI7GQlKXk+FiVGSt25x3vYxvyzfdusR7XfxS3c7FyxUfaddtfQ1NEm7VyJ/47fu9YJy2WUTUOkoucR0VjTJTz+nY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.147.253])
+Received: from [127.0.0.1] (unknown [116.232.147.253])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id CAD4D340C40;
-	Wed, 30 Apr 2025 01:29:50 +0000 (UTC)
-Date: Wed, 30 Apr 2025 01:29:41 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id BC823340C39;
+	Thu, 01 May 2025 08:50:49 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>
-Cc: spacemit@lists.linux.dev, linux-clk@vger.kernel.org,
-	linux-riscv@lists.infradead.org, Haylen Chu <heylenay@4d2.org>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Alex Elder <elder@riscstar.com>
-Subject: [GIT PULL] clk: spacemit: Add K1 SoC clk driver for v6.16
-Message-ID: <20250430012941-GYA288294@gentoo>
+Subject: [PATCH v2 0/2] soc: spacemit: add sdhci support to K1 SoC
+Date: Thu, 01 May 2025 16:50:20 +0800
+Message-Id: <20250501-20-k1-sdhci-v2-0-3e7005fae29b@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMw1E2gC/1XOTQrCMBCG4auUrI3MTGtMu/Ie4iI/0zaIjSa1K
+ OLdjYoLl+8H8zAPkTkFzqKrHiLxEnKIUwlaVcKNZhpYBl9aENAGCEkSyCPK7EcX5FaZpgWEGrw
+ V5eKcuA+3j7Y/lB5DnmO6f/AF3+vPqf+cBSVI7JtakWk1OL8beJpjXMc0iMPzKye+XMt785cX1
+ mSWLp5OYe4qMD31yjLahjTWemMVame1Mr5tFHv2oFvjdMGeL5sILsPzAAAA
+X-Change-ID: 20250212-20-k1-sdhci-76a4901030db
+To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alex Elder <elder@riscstar.com>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1960; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=7iG3g5Fpkpmnaw2P8DKAL0enzyTifLCknRgh9KOA600=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoEzXfTy59n2gtVx6jPw4KiofG2dRFcY72qANKR
+ 0UNuoigwqSJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaBM1318UgAAAAAAuAChp
+ c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277T4qD/9J9QVJfXVytcWb2J
+ DpCJg4p11unIBM6rffhwQjI2fJVI4bnrKBDphYWMw06VX3LVWKy6vPvwUaBcfGQ6x6wgSDCZyYi
+ ppdBww4//bTNtHc78DTZaYTxztm3oxNl9mI1XOO0NlsYRHvpobE1eTwjOpMR4Eay6FEQuoNTtB6
+ 2JxHw5vpEyZIWCt4aKbsJJ5hQZZXWFG4FXac9aTupmdJEiUSIYVSOPmQ3++YVmy+gIyEm4qPoha
+ 7xYJ+t6RYVzw91Bcl4GDcjYLZp1RtdebwXDm8Gvkw5zAvKtU+Yy4kyzbzARtqCKD/8yTabcwqMe
+ rHodvBTMMfFFHne8sVfSgvhlRP56q+VmUSWp3xJBo2wnUFewY2X09YsPzR8EcPMLqdRdyL+N44I
+ xae4jgBEUHFlueZbM8tqhh8INlhK3isYJYGsslc5uuGlwHGlK3WAInZJDUokink9yfCrTWcPvmD
+ njUClyQraISF4XG/iOna4+9FuCdLw07qCKq6gv3HOGE8X70EZHcPllfy8UcYlk1fjHnMdJw8w/t
+ 5icbJUWtW/4slKhlNNW4VB18tnsP9DS0hprNm6f53jbncyVxTSJ//t24WXacA6sbBR119f73QmX
+ pPX//ggMKyh/Q1/kV9ni/LW4GaTiyE2/R7fDVPezGveDIeXCQ/YK7ek8gpwyUn9KHM2g==
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Stephen, Mike
+Add support for the SD/eMMC Host Controller found in SpacemiT K1 SoC,
+The controller supports data transmission of MMC, SDIO, and SD protocol.
 
-  Here is clock driver added for SpacemiT K1 SoC, please pull for v6.16
+The SD/eMMC Host Controller has the following features:
+- MMC/eMMC 5.1 specification compliant
+- Supports PIO mode and SDMA mode data transfer
+- Supports ADMA1 and ADMA 2 (64-bit addressing) data transfer
+- Supports 1-bit/4-bit SD memory and SDIO
+- Supports 1-bit/8-bit MMC and CE-ATA cards
+- SPI mode supported for eMMC card
+Full docs can be found at SpacemiT's developer web, chapter 10.4 SD/eMMC [1]
 
-Yixun Lan (dlan)
+In this patch series, only MMC part has been implemented and tested.
+This driver also requires clock support which now is ready for v6.16 [2].
 
-The following changes since commit 0af2f6be1b4281385b618cb86ad946eded089ac8:
+There is a WIP branch at SpacemiT's repo for people who interested [3].
 
-  Linux 6.15-rc1 (2025-04-06 13:11:33 -0700)
+Link: https://developer.spacemit.com/documentation?token=WZNvwFDkYinYx0k9jzPcMK5WnIe [1]
+Link: https://lore.kernel.org/all/20250430012941-GYA288294@gentoo [2]
+Link: https://github.com/spacemit-com/linux/tree/k1/wip-sdhci [3]
 
-are available in the Git repository at:
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Changes in v2:
+- rebase to v6.15-rc1
+- collect review tags
+- drop RFC as clock driver is ready
+- drop spacemit_sdhci_remove(), favor sdhci_pltfm_remove()
+- update register definition using GENMASK(), FIELD_PREP()
+- Link to v1: https://lore.kernel.org/r/20250213-20-k1-sdhci-v1-0-1f4362a980cd@gentoo.org
 
-  https://github.com/spacemit-com/linux tags/spacemit-clk-for-6.16-1
+---
+Yixun Lan (2):
+      dt-bindings: mmc: spacemit,sdhci: add support for K1 SoC
+      mmc: sdhci-of-k1: add support for SpacemiT K1 SoC
 
-for you to fetch changes up to 49625c6e4d90a9221127c49a11eb8c95732bb690:
+ .../devicetree/bindings/mmc/spacemit,sdhci.yaml    |  53 ++++
+ drivers/mmc/host/Kconfig                           |  14 +
+ drivers/mmc/host/Makefile                          |   1 +
+ drivers/mmc/host/sdhci-of-k1.c                     | 306 +++++++++++++++++++++
+ 4 files changed, 374 insertions(+)
+---
+base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+change-id: 20250212-20-k1-sdhci-76a4901030db
 
-  clk: spacemit: k1: Add TWSI8 bus and function clocks (2025-04-17 03:22:56 +0800)
+Best regards,
+-- 
+Yixun Lan
 
-----------------------------------------------------------------
-RISC-V SpacemiT clock changes for 6.16
-
-- Add clock driver for K1 SoC
-- Add TWSI8 clock, workaround the read quirk
-
-----------------------------------------------------------------
-Haylen Chu (4):
-      dt-bindings: soc: spacemit: Add spacemit,k1-syscon
-      dt-bindings: clock: spacemit: Add spacemit,k1-pll
-      clk: spacemit: Add clock support for SpacemiT K1 SoC
-      clk: spacemit: k1: Add TWSI8 bus and function clocks
-
- .../devicetree/bindings/clock/spacemit,k1-pll.yaml |   50 +
- .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  |   80 ++
- drivers/clk/Kconfig                                |    1 +
- drivers/clk/Makefile                               |    1 +
- drivers/clk/spacemit/Kconfig                       |   18 +
- drivers/clk/spacemit/Makefile                      |    5 +
- drivers/clk/spacemit/ccu-k1.c                      | 1164 ++++++++++++++++++++
- drivers/clk/spacemit/ccu_common.h                  |   48 +
- drivers/clk/spacemit/ccu_ddn.c                     |   83 ++
- drivers/clk/spacemit/ccu_ddn.h                     |   48 +
- drivers/clk/spacemit/ccu_mix.c                     |  268 +++++
- drivers/clk/spacemit/ccu_mix.h                     |  218 ++++
- drivers/clk/spacemit/ccu_pll.c                     |  157 +++
- drivers/clk/spacemit/ccu_pll.h                     |   86 ++
- include/dt-bindings/clock/spacemit,k1-syscon.h     |  247 +++++
- 15 files changed, 2474 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/clock/spacemit,k1-pll.yaml
- create mode 100644 Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
- create mode 100644 drivers/clk/spacemit/Kconfig
- create mode 100644 drivers/clk/spacemit/Makefile
- create mode 100644 drivers/clk/spacemit/ccu-k1.c
- create mode 100644 drivers/clk/spacemit/ccu_common.h
- create mode 100644 drivers/clk/spacemit/ccu_ddn.c
- create mode 100644 drivers/clk/spacemit/ccu_ddn.h
- create mode 100644 drivers/clk/spacemit/ccu_mix.c
- create mode 100644 drivers/clk/spacemit/ccu_mix.h
- create mode 100644 drivers/clk/spacemit/ccu_pll.c
- create mode 100644 drivers/clk/spacemit/ccu_pll.h
- create mode 100644 include/dt-bindings/clock/spacemit,k1-syscon.h
