@@ -1,141 +1,456 @@
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823E021ABC6
-	for <spacemit@lists.linux.dev>; Tue,  6 May 2025 21:06:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E75819CC0A
+	for <spacemit@lists.linux.dev>; Tue,  6 May 2025 22:37:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746565614; cv=none; b=kuMvuSCVV0HEqUKr1SMKcfrTw7WyGIJPwUQRMP+qS4vofOeaySevR5PwRcn1RFIXuw9CwjIP4mgsmME+ku+ne70WLaKRCsYk+01Vr8TUB+FEavjacGY6X11xdfYIuShTPdNtsWrf9lsr4f9S3/w9Aj5Ad6lxvsV2szSqN2heZ2c=
+	t=1746571053; cv=none; b=VtQE5GWJgr+JA10utepBgJVOhnVbYc/xTl+gGK0Kr0fcgUPwv0C5HYxMRTmo4SYGDCg58/O+tVdsIU8m86wY9GNDx6qg3VT/CZvHTjwvkBW3vb1B34zU9q25MKy9iq2MdhJKkR+A/mW28uhjYXZKw3bePT0oRGmlpomsmocgHVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746565614; c=relaxed/simple;
-	bh=o+DTlUShzMqTWdpVptHXPZF7T6Hpe95l3FZm/2enEAw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AzrNZ0SEwFJ3F/wTfYrPUQtmyssp49PRYDHBkeB+ho8szrd65N6qYL8TEwZBM1IlQnEjkHhFw6AIHmgQxE2MJiJMoIqBkQz/iEFL+1rqZdHzL6iX3TGqPYe9Xhv/iGhEv1FuhH0HeWL4GCD/P4vv1oE+b5THM4pMbMcGIhCzgww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=e3dte/fb; arc=none smtp.client-ip=209.85.166.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1746571053; c=relaxed/simple;
+	bh=o3nZGdSsIIdCvX9JflP+FvU8JAUpYXnOQHaemBSsMjg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WgQ7TAuocMglx6MFcZmG3vd8i68UellNyCV+NS99AnS2uBRJPH5twpPJhufRB0QDbmR3VktoKIujBHXDSFOH/qMIzQHG82eSA4uTG2vQ6WpJIe33wjRHEyAiO/4/l1JzcGrLXo+zFiQ2fO0UzOPML5m5OJuG7SHJElVe3uE4bIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jjvgjumn; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="e3dte/fb"
-Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-85e15dc801aso560380139f.2
-        for <spacemit@lists.linux.dev>; Tue, 06 May 2025 14:06:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jjvgjumn"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-4774193fdffso11492321cf.1
+        for <spacemit@lists.linux.dev>; Tue, 06 May 2025 15:37:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1746565611; x=1747170411; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f4O20IXLpg8jEm9xUHHnlctypzKfsB1ZRP9Xc0/of3c=;
-        b=e3dte/fbUEMnT6XpnkUElrzEnYx/eF5fZW253wCl27Z7/5iIztQKIUYZjIAxbt0fgt
-         lLl+p2WxiXGXcXpNEnRXng/jVXUNLTyw5zt9JubPhPo7pTwO4OACaTig+OGm6unDlUqM
-         RNlDJ0e+02lRxVBXCvLFeXfAUyeq+Fq/3vdHAJv6ZV7liTUN3UKevZCbxc9/zjgTBy1r
-         RRl1wsKAdXP7gAebgF8FxnDs+G8dRQhdc3RPV+tx7eWupLfxOaMGVuxu7mlNhmNnWL43
-         95ymYHDZZFcWKgBVurkneNjiCnfFLnEK7u88RVORyZKoVgZy7CoehOjeHI30COml483i
-         p1TA==
+        d=gmail.com; s=20230601; t=1746571049; x=1747175849; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YcnWnslX8rItrz+YOuuroqv5GRuVu7eWI4rYUAZg620=;
+        b=JjvgjumnuvCYKelhmXiec5eOzllD3cNFn1RVMxmDP0b8jOFxPWNFK6/7YggR3XHcsS
+         zXCzPdogMUo+k2IB40DIfZskhfwV8XWliDlwoXlKFXJUB4jjwrpjzLQOlyudwbM2ZAAd
+         1QPsGvuu4H7Ha0yN/SwMXAaSw4jWIq0c4bg+7lmp/BfGR1qAwgy2J0tPuq+nK4HHTfVA
+         T9pmRJPbe5vLfs6w1HbfTWufuF4oKNhJfHsflY89oDtZxDDDRWOG81zzWcIcV5AG+3Tv
+         3Xoc1yH+QP4BgaLpBySJpFXVVkdAIWxIekxyz8tT7qQKVlpyZk9kHOg04aFBpMflR7pp
+         0XlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746565611; x=1747170411;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f4O20IXLpg8jEm9xUHHnlctypzKfsB1ZRP9Xc0/of3c=;
-        b=gSedvpgJAQzT7n52gKUNrdc334KDWD9HjDfYfzdpwlxnN0b2hs8INArjx9xnsDklyS
-         uQWGefIU1/KUzoVlEC+ovx5IaqnROD8AMJyxhgKZy9UzgYzwKPS5RsHn0On88NoeE9nD
-         0FK4ZsSKZADT0F3VHAVOzs3Crs5RXvDZdOqcwa2eNHgu4kF7toPSoDrJz//YWWy5Ea3H
-         7U0jrbaynb0953XNRiayMVu//AjC6LxjmYa8Ckxvpt9D+g8mV2Smluc3dBaqhgER+K41
-         sEUHQrOuJljT83I8D6U0vAx5Sq5sQxf35LVov8uh6bl4fDJ7ElRNLEbJENK6CBuUeHMc
-         1t5w==
-X-Forwarded-Encrypted: i=1; AJvYcCWbQT2uHO4xD9aA4OX5ookLw59ciHwezx/ySBun6OBLU9XjIUVZkmNqaupxCIiGLXEMuEoz5gZv5A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyisHQ4rEc/FE00Vxf5JudfEgl2SFtfOAbmj1nwyX3kS/J2nEXO
-	OLOGycVL3rTSlgj8cLwHnjfO3QwyvvPULCBwa83MaEJcxaOnDDQAOgTi12Avrp8=
-X-Gm-Gg: ASbGnct0fF0tYl5h/iKV9tvRgyLnNsdKg+jQBvSKDXoSqQ9GcG8DNlMZFxfoYiwA3AL
-	WSph2CCk64Xmty4RcxoU1mRuu9VOJK/wIIPbNQNnl8RkRpyV1iV8dNW3sRH97p4saCVaw3ts7Ee
-	ZAMlAaRXRlpKPWer0J6AdbM0ellYZ6VPlmEGaKgyCv9wD/GrQ29Uq6R8xlh85VALuzstn7CCz1W
-	S1YHCjzKU859k4IpNVlekT2hWlt1Jmbz6OnK3OOczwZ1k80BB3Vg6zi5NFQM2p1sIxbflooYvlB
-	JvXtnHHqkX+UPd+etkmwtr05dRjdHsW3cLXnfLcApL71g1LGzjHJKvEBk335oWcb5jMihLlSfeT
-	xw3QxRDIVNYbK2Q==
-X-Google-Smtp-Source: AGHT+IEul28rdtLnf24eQSg9o53hrAPhvZHN/Ndz1HzML1us6xJoFlvoRMcUFOXYOR8J/ANloTh/Jg==
-X-Received: by 2002:a05:6602:1350:b0:85d:f316:fabc with SMTP id ca18e2360f4ac-8674731bb70mr129539539f.8.1746565611497;
-        Tue, 06 May 2025 14:06:51 -0700 (PDT)
-Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f88aa588basm2419559173.79.2025.05.06.14.06.50
+        d=1e100.net; s=20230601; t=1746571049; x=1747175849;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YcnWnslX8rItrz+YOuuroqv5GRuVu7eWI4rYUAZg620=;
+        b=Oad3PSgnoAkXYWX06lJoyqZjQLNRaLb7mCmGzzkMF7epNZVaSD3zp9eXBnLB60wq9j
+         4jleBlyqjAr+sE7+jLrVViceDmVc+vPZDD6vhPnpp/ZaPzvbRkPF3dMFV1MXKHZk9FqD
+         j00JiLNNJyfp7pBJTXL3HlOJXXWi3PURuIRounWj/haap6vRDot8DAUZdi5g6+SjuezF
+         FOaWNTy1BiI+u3OUiik6ABu1iJIBD+k1p1tgWxEb0XBLwPw0JOTAPyJIhKdFpjYO2s+S
+         LCNtaQyxZMiqq1fiB6ueFcGEDeNYSD2hOyTiU4UqwqFvV80QoohUx7pyaG7V7cuueH1W
+         U/kw==
+X-Forwarded-Encrypted: i=1; AJvYcCWMPBU4a12b0bpryjuaMnZft5+U5/Yk1Cu0xlozH8cOLLPQV2cFYwZPFvP5nctecRLXBod/gYiTPA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx/gWdGoyz/F/DZwes9UvInJ2APH162ulHxAFd4UJaZXwCAIAZg
+	FLAk4BNjRi0TD3/XCMwXWuIBT1utarEsoBBoZko4XkOYjrx1VoZ7
+X-Gm-Gg: ASbGncs0rdfEtT0xyk3F88/tcp6O8QgJY435yoiGfGZpKeCBXha7V5ps4fpHAgMycxs
+	oaQ/yWuxq4t1rBr/LJKIDAbaT9BbrKEPAmE12U++tFl4I+zIUmf+P4k8QzKiPL4OZSlFpJFnFd1
+	yWd5xmSjo9Fm5+/JaG+xjpzs46QYDD6nPXyTmgaB+QvObP5nycE1YTnBAypm7938+luYmps+9kl
+	+WOk82ZCjPNPkmRO9EUHI0QWgmVu8e4ij4TAcfsOWFGkaytB50wnegroNQzYhqB16E3+QntMTzB
+	GArBzVzMrUApe6/X
+X-Google-Smtp-Source: AGHT+IFD+86jwQVHn10xN0dUtSZW51fxUiySWLnJW6kMe8y8IaqiVPzRdI+ex4x6o/WEcq9mqdjc6A==
+X-Received: by 2002:a05:622a:1445:b0:476:8db0:8cae with SMTP id d75a77b69052e-4922565666dmr11043431cf.10.1746571049349;
+        Tue, 06 May 2025 15:37:29 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-49220f81e03sm3600961cf.10.2025.05.06.15.37.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 14:06:51 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	p.zabel@pengutronix.de,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	dlan@gentoo.org
-Cc: heylenay@4d2.org,
-	inochiama@outlook.com,
-	guodong@riscstar.com,
-	devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
+        Tue, 06 May 2025 15:37:28 -0700 (PDT)
+Date: Wed, 7 May 2025 06:37:05 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Yixun Lan <dlan@gentoo.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alex Elder <elder@riscstar.com>, linux-mmc@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v6 6/6] riscv: dts: spacemit: add reset support for the K1 SoC
-Date: Tue,  6 May 2025 16:06:37 -0500
-Message-ID: <20250506210638.2800228-7-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250506210638.2800228-1-elder@riscstar.com>
-References: <20250506210638.2800228-1-elder@riscstar.com>
+Subject: Re: [PATCH v2 2/2] mmc: sdhci-of-k1: add support for SpacemiT K1 SoC
+Message-ID: <gfrdvfencetztdmkxmeo5q5vdnp3yxmggnuewfprjyxsldzhv2@eur5wtlltqtm>
+References: <20250501-20-k1-sdhci-v2-0-3e7005fae29b@gentoo.org>
+ <20250501-20-k1-sdhci-v2-2-3e7005fae29b@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250501-20-k1-sdhci-v2-2-3e7005fae29b@gentoo.org>
 
-Define syscon nodes for the RCPU, RCPU2, and APBC2 SpacemiT CCUS, which
-currently support resets but not clocks in the SpacemiT K1.
+On Thu, May 01, 2025 at 04:50:22PM +0800, Yixun Lan wrote:
+> The SDHCI controller found in SpacemiT K1 SoC features SD,
+> SDIO, eMMC support, such as:
+> 
+> - Compatible for 4-bit SDIO 3.0 UHS-I protocol, up to SDR104
+> - Compatible for 4-bit SD 3.0 UHS-I protocol, up to SDR104
+> - Compatible for 8bit eMMC5.1, up to HS400
+> 
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> ---
+>  drivers/mmc/host/Kconfig       |  14 ++
+>  drivers/mmc/host/Makefile      |   1 +
+>  drivers/mmc/host/sdhci-of-k1.c | 306 +++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 321 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
+> index 6824131b69b188cae58c8f48076715ca647ca28c..0ce78f22c33cfff916a2d4d680c79e9d19637e0e 100644
+> --- a/drivers/mmc/host/Kconfig
+> +++ b/drivers/mmc/host/Kconfig
+> @@ -250,6 +250,20 @@ config MMC_SDHCI_OF_DWCMSHC
+>  	  If you have a controller with this interface, say Y or M here.
+>  	  If unsure, say N.
+>  
+> +config MMC_SDHCI_OF_K1
+> +	tristate "SDHCI OF support for the SpacemiT K1 SoC"
+> +	depends on ARCH_SPACEMIT || COMPILE_TEST
+> +	depends on MMC_SDHCI_PLTFM
+> +	depends on OF
+> +	depends on COMMON_CLK
+> +	help
+> +	  This selects the Secure Digital Host Controller Interface (SDHCI)
+> +	  found in the SpacemiT K1 SoC.
+> +
+> +	  If you have a controller with this interface, say Y or M here.
+> +
+> +	  If unsure, say N.
+> +
+>  config MMC_SDHCI_OF_SPARX5
+>  	tristate "SDHCI OF support for the MCHP Sparx5 SoC"
+>  	depends on MMC_SDHCI_PLTFM
+> diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
+> index 5147467ec825ffaef3a7bd812fad80545e52b180..75bafc7b162b9e1d4c6c050f5d28b9d7cb582447 100644
+> --- a/drivers/mmc/host/Makefile
+> +++ b/drivers/mmc/host/Makefile
+> @@ -88,6 +88,7 @@ obj-$(CONFIG_MMC_SDHCI_OF_AT91)		+= sdhci-of-at91.o
+>  obj-$(CONFIG_MMC_SDHCI_OF_ESDHC)	+= sdhci-of-esdhc.o
+>  obj-$(CONFIG_MMC_SDHCI_OF_HLWD)		+= sdhci-of-hlwd.o
+>  obj-$(CONFIG_MMC_SDHCI_OF_DWCMSHC)	+= sdhci-of-dwcmshc.o
+> +obj-$(CONFIG_MMC_SDHCI_OF_K1)		+= sdhci-of-k1.o
+>  obj-$(CONFIG_MMC_SDHCI_OF_SPARX5)	+= sdhci-of-sparx5.o
+>  obj-$(CONFIG_MMC_SDHCI_OF_MA35D1)	+= sdhci-of-ma35d1.o
+>  obj-$(CONFIG_MMC_SDHCI_BCM_KONA)	+= sdhci-bcm-kona.o
+> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..8988053eeb33a476fa484d145579db6214b2d0b7
+> --- /dev/null
+> +++ b/drivers/mmc/host/sdhci-of-k1.c
+> @@ -0,0 +1,306 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (C) 2023-2025 SpacemiT (Hangzhou) Technology Co. Ltd
+> + * Copyright (c) 2025 Yixun Lan <dlan@gentoo.org>
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/clk.h>
+> +#include <linux/delay.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/init.h>
+> +#include <linux/mmc/card.h>
+> +#include <linux/mmc/host.h>
+> +#include <linux/mmc/mmc.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+> +
+> +#include "sdhci.h"
+> +#include "sdhci-pltfm.h"
+> +
+> +#define SDHC_MMC_CTRL_REG		0x114
+> +#define  MISC_INT_EN			BIT(1)
+> +#define  MISC_INT			BIT(2)
+> +#define  ENHANCE_STROBE_EN		BIT(8)
+> +#define  MMC_HS400			BIT(9)
+> +#define  MMC_HS200			BIT(10)
+> +#define  MMC_CARD_MODE			BIT(12)
+> +
+> +#define SDHC_TX_CFG_REG			0x11C
+> +#define  TX_INT_CLK_SEL			BIT(30)
+> +#define  TX_MUX_SEL			BIT(31)
+> +
+> +#define SDHC_PHY_CTRL_REG		0x160
+> +#define  PHY_FUNC_EN			BIT(0)
+> +#define  PHY_PLL_LOCK			BIT(1)
+> +#define  HOST_LEGACY_MODE		BIT(31)
+> +
+> +#define SDHC_PHY_FUNC_REG		0x164
+> +#define  PHY_TEST_EN			BIT(7)
+> +#define  HS200_USE_RFIFO		BIT(15)
+> +
+> +#define SDHC_PHY_DLLCFG			0x168
+> +#define  DLL_PREDLY_NUM			GENMASK(3, 2)
+> +#define  DLL_FULLDLY_RANGE		GENMASK(5, 4)
+> +#define  DLL_VREG_CTRL			GENMASK(7, 6)
+> +#define  DLL_ENABLE			BIT(31)
+> +
+> +#define SDHC_PHY_DLLCFG1		0x16C
+> +#define  DLL_REG1_CTRL			GENMASK(7, 0)
+> +#define  DLL_REG2_CTRL			GENMASK(15, 8)
+> +#define  DLL_REG3_CTRL			GENMASK(23, 16)
+> +#define  DLL_REG4_CTRL			GENMASK(31, 24)
+> +
+> +#define SDHC_PHY_DLLSTS			0x170
+> +#define  DLL_LOCK_STATE			BIT(0)
+> +
+> +#define SDHC_PHY_PADCFG_REG		0x178
+> +#define  PHY_DRIVE_SEL			GENMASK(2, 0)
+> +#define  RX_BIAS_CTRL			BIT(5)
+> +
+> +struct spacemit_sdhci_host {
+> +	struct clk *clk_core;
+> +	struct clk *clk_io;
+> +};
+> +
+> +static inline void spacemit_sdhci_setbits(struct sdhci_host *host, u32 val, int reg)
+> +{
+> +	sdhci_writel(host, sdhci_readl(host, reg) | val, reg);
+> +}
+> +
+> +static inline void spacemit_sdhci_clrbits(struct sdhci_host *host, u32 val, int reg)
+> +{
+> +	sdhci_writel(host, sdhci_readl(host, reg) & ~val, reg);
+> +}
+> +
 
-Signed-off-by: Alex Elder <elder@riscstar.com>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+> +static inline void spacemit_sdhci_clrsetbits(struct sdhci_host *host, u32 clr, u32 set, int reg)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 6eec6328c26fe..f4afb35dc6bc9 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -346,6 +346,18 @@ soc {
- 		dma-noncoherent;
- 		ranges;
- 
-+		syscon_rcpu: system-controller@c0880000 {
-+			compatible = "spacemit,k1-syscon-rcpu";
-+			reg = <0x0 0xc0880000 0x0 0x2048>;
-+			#reset-cells = <1>;
-+		};
-+
-+		syscon_rcpu2: system-controller@c0888000 {
-+			compatible = "spacemit,k1-syscon-rcpu2";
-+			reg = <0x0 0xc0888000 0x0 0x28>;
-+			#reset-cells = <1>;
-+		};
-+
- 		syscon_apbc: system-control@d4015000 {
- 			compatible = "spacemit,k1-syscon-apbc";
- 			reg = <0x0 0xd4015000 0x0 0x1000>;
-@@ -553,6 +565,12 @@ clint: timer@e4000000 {
- 					      <&cpu7_intc 3>, <&cpu7_intc 7>;
- 		};
- 
-+		syscon_apbc2: system-controller@f0610000 {
-+			compatible = "spacemit,k1-syscon-apbc2";
-+			reg = <0x0 0xf0610000 0x0 0x20>;
-+			#reset-cells = <1>;
-+		};
-+
- 		sec_uart1: serial@f0612000 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xf0612000 0x0 0x100>;
--- 
-2.45.2
+updatebits?
 
+> +{
+> +	u32 val = sdhci_readl(host, reg);
+> +
+> +	val = (val & ~clr) | set;
+> +	sdhci_writel(host, val, reg);
+> +}
+> +
+> +static void spacemit_sdhci_reset(struct sdhci_host *host, u8 mask)
+> +{
+> +	struct platform_device *pdev;
+> +
+> +	pdev = to_platform_device(mmc_dev(host->mmc));
+> +	sdhci_reset(host, mask);
+> +
+> +	if (mask != SDHCI_RESET_ALL)
+> +		return;
+> +
+> +	spacemit_sdhci_setbits(host, PHY_FUNC_EN | PHY_PLL_LOCK, SDHC_PHY_CTRL_REG);
+> +
+> +	spacemit_sdhci_clrsetbits(host, PHY_DRIVE_SEL,
+> +				  RX_BIAS_CTRL | FIELD_PREP(PHY_DRIVE_SEL, 4),
+> +				  SDHC_PHY_PADCFG_REG);
+> +
+> +	if (!(host->mmc->caps2 & MMC_CAP2_NO_MMC))
+> +		spacemit_sdhci_setbits(host, MMC_CARD_MODE, SDHC_MMC_CTRL_REG);
+> +}
+> +
+> +static void spacemit_sdhci_set_uhs_signaling(struct sdhci_host *host, unsigned int timing)
+> +{
+> +	if (timing == MMC_TIMING_MMC_HS200)
+> +		spacemit_sdhci_setbits(host, MMC_HS200, SDHC_MMC_CTRL_REG);
+> +
+> +	if (timing == MMC_TIMING_MMC_HS400)
+> +		spacemit_sdhci_setbits(host, MMC_HS400, SDHC_MMC_CTRL_REG);
+> +
+> +	sdhci_set_uhs_signaling(host, timing);
+> +
+> +	if (!(host->mmc->caps2 & MMC_CAP2_NO_SDIO))
+> +		spacemit_sdhci_setbits(host, SDHCI_CTRL_VDD_180, SDHCI_HOST_CONTROL2);
+> +}
+> +
+> +static void spacemit_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+> +{
+> +	struct mmc_host *mmc = host->mmc;
+> +
+> +	if (mmc->ios.timing <= MMC_TIMING_UHS_SDR50)
+> +		spacemit_sdhci_setbits(host, TX_INT_CLK_SEL, SDHC_TX_CFG_REG);
+> +	else
+> +		spacemit_sdhci_clrbits(host, TX_INT_CLK_SEL, SDHC_TX_CFG_REG);
+> +
+> +	sdhci_set_clock(host, clock);
+> +};
+> +
+> +static void spacemit_sdhci_phy_dll_init(struct sdhci_host *host)
+> +{
+> +	u32 state;
+> +	int ret;
+> +
+> +	spacemit_sdhci_clrsetbits(host, DLL_PREDLY_NUM | DLL_FULLDLY_RANGE | DLL_VREG_CTRL,
+> +				  FIELD_PREP(DLL_PREDLY_NUM, 1) |
+> +				  FIELD_PREP(DLL_FULLDLY_RANGE, 1) |
+> +				  FIELD_PREP(DLL_VREG_CTRL, 1),
+> +				  SDHC_PHY_DLLCFG);
+> +
+> +	spacemit_sdhci_clrsetbits(host, DLL_REG1_CTRL,
+> +				  FIELD_PREP(DLL_REG1_CTRL, 0x92),
+> +				  SDHC_PHY_DLLCFG1);
+> +
+> +	spacemit_sdhci_setbits(host, DLL_ENABLE, SDHC_PHY_DLLCFG);
+> +
+> +	ret = readl_poll_timeout(host->ioaddr + SDHC_PHY_DLLSTS, state,
+> +				 state & DLL_LOCK_STATE, 2, 100);
+> +	if (ret == -ETIMEDOUT)
+> +		dev_warn(mmc_dev(host->mmc), "fail to lock phy dll in 100us!\n");
+> +}
+> +
+> +static void spacemit_sdhci_hs400_enhanced_strobe(struct mmc_host *mmc, struct mmc_ios *ios)
+> +{
+> +	struct sdhci_host *host = mmc_priv(mmc);
+> +
+> +	if (!ios->enhanced_strobe) {
+> +		spacemit_sdhci_clrbits(host, ENHANCE_STROBE_EN, SDHC_MMC_CTRL_REG);
+> +		return;
+> +	}
+> +
+> +	spacemit_sdhci_setbits(host, ENHANCE_STROBE_EN, SDHC_MMC_CTRL_REG);
+> +	spacemit_sdhci_phy_dll_init(host);
+> +}
+> +
+> +static unsigned int spacemit_sdhci_clk_get_max_clock(struct sdhci_host *host)
+> +{
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +
+> +	return clk_get_rate(pltfm_host->clk);
+> +}
+> +
+> +static int spacemit_sdhci_pre_select_hs400(struct mmc_host *mmc)
+> +{
+> +	struct sdhci_host *host = mmc_priv(mmc);
+> +
+> +	spacemit_sdhci_setbits(host, MMC_HS400, SDHC_MMC_CTRL_REG);
+> +	host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY;
+> +
+> +	return 0;
+> +}
+> +
+> +static void spacemit_sdhci_post_select_hs400(struct mmc_host *mmc)
+> +{
+> +	struct sdhci_host *host = mmc_priv(mmc);
+> +
+> +	spacemit_sdhci_phy_dll_init(host);
+> +	host->mmc->caps &= ~MMC_CAP_WAIT_WHILE_BUSY;
+> +}
+> +
+> +static void spacemit_sdhci_pre_hs400_to_hs200(struct mmc_host *mmc)
+> +{
+> +	struct sdhci_host *host = mmc_priv(mmc);
+> +
+> +	spacemit_sdhci_clrbits(host, PHY_FUNC_EN | PHY_PLL_LOCK, SDHC_PHY_CTRL_REG);
+> +	spacemit_sdhci_clrbits(host, MMC_HS400 | MMC_HS200 | ENHANCE_STROBE_EN, SDHC_MMC_CTRL_REG);
+> +	spacemit_sdhci_clrbits(host, HS200_USE_RFIFO, SDHC_PHY_FUNC_REG);
+> +
+> +	udelay(5);
+> +
+> +	spacemit_sdhci_setbits(host, PHY_FUNC_EN | PHY_PLL_LOCK, SDHC_PHY_CTRL_REG);
+> +}
+> +
+> +static inline int spacemit_sdhci_get_clocks(struct device *dev,
+> +					    struct sdhci_pltfm_host *pltfm_host)
+> +{
+> +	struct spacemit_sdhci_host *sdhst = sdhci_pltfm_priv(pltfm_host);
+> +
+> +	sdhst->clk_core = devm_clk_get_enabled(dev, "core");
+> +	if (IS_ERR(sdhst->clk_core))
+> +		return -EINVAL;
+> +
+> +	sdhst->clk_io = devm_clk_get_enabled(dev, "io");
+> +	if (IS_ERR(sdhst->clk_io))
+> +		return -EINVAL;
+> +
+> +	pltfm_host->clk = sdhst->clk_io;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct sdhci_ops spacemit_sdhci_ops = {
+> +	.get_max_clock		= spacemit_sdhci_clk_get_max_clock,
+> +	.reset			= spacemit_sdhci_reset,
+> +	.set_bus_width		= sdhci_set_bus_width,
+> +	.set_clock		= spacemit_sdhci_set_clock,
+> +	.set_uhs_signaling	= spacemit_sdhci_set_uhs_signaling,
+> +};
+> +
+> +static const struct sdhci_pltfm_data spacemit_sdhci_k1_pdata = {
+> +	.ops = &spacemit_sdhci_ops,
+> +	.quirks = SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK |
+> +		  SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC |
+> +		  SDHCI_QUIRK_32BIT_ADMA_SIZE |
+> +		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN |
+> +		  SDHCI_QUIRK_BROKEN_CARD_DETECTION |
+> +		  SDHCI_QUIRK_BROKEN_TIMEOUT_VAL,
+> +	.quirks2 = SDHCI_QUIRK2_BROKEN_64_BIT_DMA |
+> +		   SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
+> +};
+> +
+> +static const struct of_device_id spacemit_sdhci_of_match[] = {
+> +	{ .compatible = "spacemit,k1-sdhci" },
+> +	{ /* sentinel */ }
+> +};
+> +MODULE_DEVICE_TABLE(of, spacemit_sdhci_of_match);
+> +
+> +static int spacemit_sdhci_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct spacemit_sdhci_host *sdhst;
+> +	struct sdhci_pltfm_host *pltfm_host;
+> +	struct sdhci_host *host;
+> +	struct mmc_host_ops *mops;
+> +	int ret;
+> +
+> +	host = sdhci_pltfm_init(pdev, &spacemit_sdhci_k1_pdata, sizeof(*sdhst));
+> +	if (IS_ERR(host))
+> +		return PTR_ERR(host);
+> +
+> +	pltfm_host = sdhci_priv(host);
+> +
+> +	ret = mmc_of_parse(host->mmc);
+> +	if (ret)
+> +		goto err_pltfm;
+> +
+> +	sdhci_get_of_property(pdev);
+> +
+> +	if (!(host->mmc->caps2 & MMC_CAP2_NO_MMC)) {
+> +		mops = &host->mmc_host_ops;
+> +		mops->hs400_prepare_ddr	= spacemit_sdhci_pre_select_hs400;
+> +		mops->hs400_complete	= spacemit_sdhci_post_select_hs400;
+> +		mops->hs400_downgrade	= spacemit_sdhci_pre_hs400_to_hs200;
+> +		mops->hs400_enhanced_strobe = spacemit_sdhci_hs400_enhanced_strobe;
+> +	}
+> +
+> +	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+> +
+> +	if (spacemit_sdhci_get_clocks(dev, pltfm_host))
+> +		goto err_pltfm;
+> +
+> +	ret = sdhci_add_host(host);
+> +	if (ret)
+> +		goto err_pltfm;
+> +
+> +	return 0;
+> +
+> +err_pltfm:
+> +	sdhci_pltfm_free(pdev);
+> +	return ret;
+> +}
+> +
+> +static struct platform_driver spacemit_sdhci_driver = {
+> +	.driver		= {
+> +		.name	= "sdhci-spacemit",
+
+> +		.of_match_table = of_match_ptr(spacemit_sdhci_of_match),
+
+I think the of_match_ptr is not needed.
+
+> +	},
+> +	.probe		= spacemit_sdhci_probe,
+> +	.remove		= sdhci_pltfm_remove,
+> +};
+> +module_platform_driver(spacemit_sdhci_driver);
+> +
+> +MODULE_DESCRIPTION("SpacemiT SDHCI platform driver");
+> +MODULE_LICENSE("GPL");
+> 
+> -- 
+> 2.49.0
+> 
