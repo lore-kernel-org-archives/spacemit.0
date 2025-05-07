@@ -1,75 +1,42 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B1125D523
-	for <spacemit@lists.linux.dev>; Wed,  7 May 2025 12:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805968BF8
+	for <spacemit@lists.linux.dev>; Wed,  7 May 2025 22:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746619794; cv=none; b=kHt2Xw1k7O8gYsr2SrMabMiYuiu48mnOBmIoh/U0bXDyVCHa2iSHcXJoLwdaSG2s0PP2CCSC16Th89Sr9vmBCkznaXD5xD87KqGz0TzhJTZD+hgUOXHiR82gZMIc6ISmRWG8gFPEgXp1sEwiRuQ0t5iHRYXyPXToDdPSSa9C1MA=
+	t=1746657361; cv=none; b=clQvNMf3WC13BU3KTxz6G6IlCsJK0k0IiyP8veBWvW2W/MKyeBoBX+leHGoENDTTdNpwEoqzMyqugHVCnn7FFrwXHofGzK1Cex/B+2PE3Qnol6fQyVJGfAq0GxgFPmXVE6qPmfKzgGkN/qR4ESordX23vvtQOPZmLBiczNmIAdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746619794; c=relaxed/simple;
-	bh=soIZGu6TRK2l02DX9aX6wOFip886FCWVOON52muT2Ho=;
+	s=arc-20240116; t=1746657361; c=relaxed/simple;
+	bh=HatrC2ZmLN8Nl17ZhtTK2kiutE2CHcwuvTNTKkyyf7w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G1k+qOk3JHi4ad6qswhRcgxm68N6kb4IB2LRqTEPboHpPI/lTIHb0SFrnmwPRO9yhZzdBgUc4s9WWt/NhC2kI/BOQ0lAbInT61IbNPlrERIEMnXf17auFqoz1CN5D4g1bkTh6uWzJf3XzSk6/Ve4EsbkXxQ3IIcVc/+GlcSGxMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mpF3L1VP; arc=none smtp.client-ip=209.85.160.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mpF3L1VP"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-477282401b3so75238551cf.1
-        for <spacemit@lists.linux.dev>; Wed, 07 May 2025 05:09:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746619791; x=1747224591; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wzvCqlM6V4NoRraLw8v4M7ajYBzOkSRv0bJeZomdZWU=;
-        b=mpF3L1VPO2JRQYc91dHOcr/9kwNpgwcFabTUAZ+rcfQ305FLT/0iUpihl3GI5D1iui
-         tQM3ualwqIRirhnRl2Nt37bnxsGa8rrWrA9T0CLodnjkNzSVwD6X/d4YPRe8ftgyaky6
-         wqDvoMWKZtX6gfaXPMkocJ3RXd53cVvpBnW/H/CqaRQbJshhv4OCLCJTMJad7IDf+A+7
-         M5ViA8NfTB3V6QcBGeNwSoBOJv2NjushdKe6AGH7u/olFvHKynVozyTVrx7UZoEN52BY
-         BPFFQWDxjmK+XEgdmOcCaUcebkmy0WyitKpJfAFpYrB+tr+UUfnDXkjul4wYutlCpxKB
-         FkoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746619791; x=1747224591;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wzvCqlM6V4NoRraLw8v4M7ajYBzOkSRv0bJeZomdZWU=;
-        b=Nddb2QeRPc32GS+MTnHTCYkEcjB9yGUh/uZVmHkZB1LgdzWFURl5tQTPZ5nXXB+yyk
-         MPnNRknuWvNdcV83GLXBHE3nTXa0K+yemwpuTMN6tSV2YeC6hqueMU13yiNg44PNIFnn
-         DeFKTJjrYgDMNik/BrENuJlNVchGCTyGLa1PNMY00n0qkg10Yqf7K2ptbXNfrnPPqHPh
-         bNmytFGJTAMaSFXzDwQM3fZHWdEQeRaZp5zdWsmo1IjPixGzOICm/Pi27aIRAhchddkW
-         cqBksoMoLVfCKtMMZ7gfJ8gd1pi1YO0pdwhlxR3eZNgMGK3WO7ni9uklxi1qVDcUyKa/
-         neeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVEKWs90ILNoV4JVYlI7OVbS0PmZorNXgiNOSH7EXDzG95k/wQ5iFZb36/AeVfcbCPxhHuxpBNMKQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzz8e4OnQ8SkcEN3z9PW1CgpfIuUH1trlztJcB+0WBIOwi/EQmb
-	0iXoKjdIItFVOis7/tYEvLNtgBMmwbk+I7jUv5e/XzJuBT95b4Yq
-X-Gm-Gg: ASbGncu5MPDTKI+82iZHncY75WIq8qa+RSBwHiiIl3iMAYGpOZwxm1MNTkBhjDkl3IK
-	NxO4fe+cC7M2dpnGzWTg0P2JmAs5quDy7CtjGBsMFGtt/FJzGfA7zO7nz9xf34uB4/isVBxQ/QC
-	GyfmZUTA4I8EYegHw7qrXZbPgQ8dWisjGAeTAm/ikpLP7ws3WQomL+pqmlkyW0jmG0uFfqh/C3A
-	Xg8RFnxKt9l3e+A1DbhhzhRMt4zccqjwmJRbvwf1dVZxeBA/ylNEDrzpok7X2mLwwnZdvYsHlfp
-	oFoa7uZcH2n3wZZ9
-X-Google-Smtp-Source: AGHT+IH7wKlghg8C9MW5UbE15J0DCcdrY3Ipd1gx5YTdMrj+JDWaSANUBcKoxE/1t95TYjo8l1Xxyw==
-X-Received: by 2002:a05:622a:cd:b0:476:9847:7c73 with SMTP id d75a77b69052e-492265e977fmr37240231cf.26.1746619790754;
-        Wed, 07 May 2025 05:09:50 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-49222da009dsm13199261cf.58.2025.05.07.05.09.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 May 2025 05:09:50 -0700 (PDT)
-Date: Wed, 7 May 2025 20:09:25 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Yixun Lan <dlan@gentoo.org>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Alex Elder <elder@riscstar.com>, linux-mmc@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] mmc: sdhci-of-k1: add support for SpacemiT K1 SoC
-Message-ID: <acvqiaaptw4s54zekvbkdpfzam4x7juiajcxyohzpfcuf5xpxs@addpa5x73efo>
-References: <20250501-20-k1-sdhci-v2-0-3e7005fae29b@gentoo.org>
- <20250501-20-k1-sdhci-v2-2-3e7005fae29b@gentoo.org>
- <gfrdvfencetztdmkxmeo5q5vdnp3yxmggnuewfprjyxsldzhv2@eur5wtlltqtm>
- <20250506225720-GYA499202@gentoo>
+	 Content-Type:Content-Disposition:In-Reply-To; b=q1IPaQHHJ+IvfwUPCfEEVfNEJH95671NVQn/Qik8fs5KKj46QWaDgqL4xUEPiHbuAx4NvmeOPvoc0nIexfM0BIgNIJXF6OUaOnScn584a1NYLQGUJX5M+E9K9dwgVe1XjUXUE/DT5LJnDqgtueIOwczD9fmHN2ipOh2bIJYTi6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.147.253])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 6C7E6342FF8;
+	Wed, 07 May 2025 22:35:58 +0000 (UTC)
+Date: Wed, 7 May 2025 22:35:54 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	mturquette@baylibre.com, sboyd@kernel.org, p.zabel@pengutronix.de,
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	alex@ghiti.fr, heylenay@4d2.org, inochiama@outlook.com,
+	guodong@riscstar.com, devicetree@vger.kernel.org,
+	linux-clk@vger.kernel.org, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v6 1/6] dt-bindings: soc: spacemit: define
+ spacemit,k1-ccu resets
+Message-ID: <20250507223554-GYA505240@gentoo>
+References: <20250506210638.2800228-1-elder@riscstar.com>
+ <20250506210638.2800228-2-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -78,163 +45,245 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250506225720-GYA499202@gentoo>
+In-Reply-To: <20250506210638.2800228-2-elder@riscstar.com>
 
-On Tue, May 06, 2025 at 10:57:20PM +0000, Yixun Lan wrote:
-> Hi Inochi,
-> 
-> On 06:37 Wed 07 May     , Inochi Amaoto wrote:
-> > On Thu, May 01, 2025 at 04:50:22PM +0800, Yixun Lan wrote:
-> > > The SDHCI controller found in SpacemiT K1 SoC features SD,
-> > > SDIO, eMMC support, such as:
-> > > 
-> > > - Compatible for 4-bit SDIO 3.0 UHS-I protocol, up to SDR104
-> > > - Compatible for 4-bit SD 3.0 UHS-I protocol, up to SDR104
-> > > - Compatible for 8bit eMMC5.1, up to HS400
-> > > 
-> > > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> > > ---
-> > >  drivers/mmc/host/Kconfig       |  14 ++
-> > >  drivers/mmc/host/Makefile      |   1 +
-> > >  drivers/mmc/host/sdhci-of-k1.c | 306 +++++++++++++++++++++++++++++++++++++++++
-> > >  3 files changed, 321 insertions(+)
-> > > 
-> > > diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-> > > index 6824131b69b188cae58c8f48076715ca647ca28c..0ce78f22c33cfff916a2d4d680c79e9d19637e0e 100644
-> > > --- a/drivers/mmc/host/Kconfig
-> > > +++ b/drivers/mmc/host/Kconfig
-> > > @@ -250,6 +250,20 @@ config MMC_SDHCI_OF_DWCMSHC
-> > >  	  If you have a controller with this interface, say Y or M here.
-> > >  	  If unsure, say N.
-> > >  
-> > > +config MMC_SDHCI_OF_K1
-> > > +	tristate "SDHCI OF support for the SpacemiT K1 SoC"
-> > > +	depends on ARCH_SPACEMIT || COMPILE_TEST
-> > > +	depends on MMC_SDHCI_PLTFM
-> > > +	depends on OF
-> > > +	depends on COMMON_CLK
-> > > +	help
-> > > +	  This selects the Secure Digital Host Controller Interface (SDHCI)
-> > > +	  found in the SpacemiT K1 SoC.
-> > > +
-> > > +	  If you have a controller with this interface, say Y or M here.
-> > > +
-> > > +	  If unsure, say N.
-> > > +
-> > >  config MMC_SDHCI_OF_SPARX5
-> > >  	tristate "SDHCI OF support for the MCHP Sparx5 SoC"
-> > >  	depends on MMC_SDHCI_PLTFM
-> > > diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
-> > > index 5147467ec825ffaef3a7bd812fad80545e52b180..75bafc7b162b9e1d4c6c050f5d28b9d7cb582447 100644
-> > > --- a/drivers/mmc/host/Makefile
-> > > +++ b/drivers/mmc/host/Makefile
-> > > @@ -88,6 +88,7 @@ obj-$(CONFIG_MMC_SDHCI_OF_AT91)		+= sdhci-of-at91.o
-> > >  obj-$(CONFIG_MMC_SDHCI_OF_ESDHC)	+= sdhci-of-esdhc.o
-> > >  obj-$(CONFIG_MMC_SDHCI_OF_HLWD)		+= sdhci-of-hlwd.o
-> > >  obj-$(CONFIG_MMC_SDHCI_OF_DWCMSHC)	+= sdhci-of-dwcmshc.o
-> > > +obj-$(CONFIG_MMC_SDHCI_OF_K1)		+= sdhci-of-k1.o
-> > >  obj-$(CONFIG_MMC_SDHCI_OF_SPARX5)	+= sdhci-of-sparx5.o
-> > >  obj-$(CONFIG_MMC_SDHCI_OF_MA35D1)	+= sdhci-of-ma35d1.o
-> > >  obj-$(CONFIG_MMC_SDHCI_BCM_KONA)	+= sdhci-bcm-kona.o
-> > > diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
-> > > new file mode 100644
-> > > index 0000000000000000000000000000000000000000..8988053eeb33a476fa484d145579db6214b2d0b7
-> > > --- /dev/null
-> > > +++ b/drivers/mmc/host/sdhci-of-k1.c
-> > > @@ -0,0 +1,306 @@
-> > > +// SPDX-License-Identifier: GPL-2.0
-> > > +/*
-> > > + * Copyright (C) 2023-2025 SpacemiT (Hangzhou) Technology Co. Ltd
-> > > + * Copyright (c) 2025 Yixun Lan <dlan@gentoo.org>
-> > > + */
-> > > +
-> > > +#include <linux/bitfield.h>
-> > > +#include <linux/clk.h>
-> > > +#include <linux/delay.h>
-> > > +#include <linux/iopoll.h>
-> > > +#include <linux/init.h>
-> > > +#include <linux/mmc/card.h>
-> > > +#include <linux/mmc/host.h>
-> > > +#include <linux/mmc/mmc.h>
-> > > +#include <linux/module.h>
-> > > +#include <linux/of.h>
-> > > +#include <linux/of_device.h>
-> > > +#include <linux/platform_device.h>
-> > > +
-> > > +#include "sdhci.h"
-> > > +#include "sdhci-pltfm.h"
-> > > +
-> > > +#define SDHC_MMC_CTRL_REG		0x114
-> > > +#define  MISC_INT_EN			BIT(1)
-> > > +#define  MISC_INT			BIT(2)
-> > > +#define  ENHANCE_STROBE_EN		BIT(8)
-> > > +#define  MMC_HS400			BIT(9)
-> > > +#define  MMC_HS200			BIT(10)
-> > > +#define  MMC_CARD_MODE			BIT(12)
-> > > +
-> > > +#define SDHC_TX_CFG_REG			0x11C
-> > > +#define  TX_INT_CLK_SEL			BIT(30)
-> > > +#define  TX_MUX_SEL			BIT(31)
-> > > +
-> > > +#define SDHC_PHY_CTRL_REG		0x160
-> > > +#define  PHY_FUNC_EN			BIT(0)
-> > > +#define  PHY_PLL_LOCK			BIT(1)
-> > > +#define  HOST_LEGACY_MODE		BIT(31)
-> > > +
-> > > +#define SDHC_PHY_FUNC_REG		0x164
-> > > +#define  PHY_TEST_EN			BIT(7)
-> > > +#define  HS200_USE_RFIFO		BIT(15)
-> > > +
-> > > +#define SDHC_PHY_DLLCFG			0x168
-> > > +#define  DLL_PREDLY_NUM			GENMASK(3, 2)
-> > > +#define  DLL_FULLDLY_RANGE		GENMASK(5, 4)
-> > > +#define  DLL_VREG_CTRL			GENMASK(7, 6)
-> > > +#define  DLL_ENABLE			BIT(31)
-> > > +
-> > > +#define SDHC_PHY_DLLCFG1		0x16C
-> > > +#define  DLL_REG1_CTRL			GENMASK(7, 0)
-> > > +#define  DLL_REG2_CTRL			GENMASK(15, 8)
-> > > +#define  DLL_REG3_CTRL			GENMASK(23, 16)
-> > > +#define  DLL_REG4_CTRL			GENMASK(31, 24)
-> > > +
-> > > +#define SDHC_PHY_DLLSTS			0x170
-> > > +#define  DLL_LOCK_STATE			BIT(0)
-> > > +
-> > > +#define SDHC_PHY_PADCFG_REG		0x178
-> > > +#define  PHY_DRIVE_SEL			GENMASK(2, 0)
-> > > +#define  RX_BIAS_CTRL			BIT(5)
-> > > +
-> > > +struct spacemit_sdhci_host {
-> > > +	struct clk *clk_core;
-> > > +	struct clk *clk_io;
-> > > +};
-> > > +
-> > > +static inline void spacemit_sdhci_setbits(struct sdhci_host *host, u32 val, int reg)
-> > > +{
-> > > +	sdhci_writel(host, sdhci_readl(host, reg) | val, reg);
-> > > +}
-> > > +
-> > > +static inline void spacemit_sdhci_clrbits(struct sdhci_host *host, u32 val, int reg)
-> > > +{
-> > > +	sdhci_writel(host, sdhci_readl(host, reg) & ~val, reg);
-> > > +}
-> > > +
-> > 
-> > > +static inline void spacemit_sdhci_clrsetbits(struct sdhci_host *host, u32 clr, u32 set, int reg)
-> > 
-> > updatebits?
-> > 
-> IMO, it's more ambiguous to use updatebits(), so I will just keep it
-> 
-> besides, these above helper functions should really be carefully used,
-> setbits() only set bits of 'val' while preserve other bits,
-> clrsetbits() will first clear bits, then set, while still preserve others
-> 
-> I will try to put a comment for them while updating next version
+hi Alex,
 
-This is like something "regmap_update_bits". I think "update_bits" may
-be better? I agree that it is good to put a comment here, whatever the
-function name is. So this is fine for me, do it in the way you prefer.
+On 16:06 Tue 06 May     , Alex Elder wrote:
+> There are additional SpacemiT syscon CCUs whose registers control both
+> clocks and resets:  RCPU, RCPU2, and APBC2. Unlike those defined
+> previously, these will (initially) support only resets.  They do not
+> incorporate power domain functionality.
+> 
+> Previously the clock properties were required for all compatible nodes.
+> Make that requirement only apply to the three existing CCUs (APBC, APMU,
+> and MPMU), so that the new reset-only CCUs can go without specifying them.
+> 
+> Define the index values for resets associated with all SpacemiT K1
+> syscon nodes, including those with clocks already defined, as well as
+> the new ones (without clocks).
+> 
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../soc/spacemit/spacemit,k1-syscon.yaml      |  29 +++-
+>  .../dt-bindings/clock/spacemit,k1-syscon.h    | 128 ++++++++++++++++++
+>  2 files changed, 150 insertions(+), 7 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
+> index 30aaf49da03d3..133a391ee68cd 100644
+> --- a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
+> +++ b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
+> @@ -19,6 +19,9 @@ properties:
+>        - spacemit,k1-syscon-apbc
+>        - spacemit,k1-syscon-apmu
+>        - spacemit,k1-syscon-mpmu
+> +      - spacemit,k1-syscon-rcpu
+> +      - spacemit,k1-syscon-rcpu2
+> +      - spacemit,k1-syscon-apbc2
+>  
+>    reg:
+>      maxItems: 1
+> @@ -47,9 +50,6 @@ properties:
+>  required:
+>    - compatible
+>    - reg
+> -  - clocks
+> -  - clock-names
+> -  - "#clock-cells"
+>    - "#reset-cells"
+>  
+>  allOf:
+> @@ -57,13 +57,28 @@ allOf:
+>        properties:
+>          compatible:
+>            contains:
+> -            const: spacemit,k1-syscon-apbc
+> +            enum:
+> +              - spacemit,k1-syscon-apmu
+> +              - spacemit,k1-syscon-mpmu
+>      then:
+> -      properties:
+> -        "#power-domain-cells": false
+> -    else:
+>        required:
+>          - "#power-domain-cells"
+> +    else:
+> +      properties:
+> +        "#power-domain-cells": false
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - spacemit,k1-syscon-apbc
+> +              - spacemit,k1-syscon-apmu
+> +              - spacemit,k1-syscon-mpmu
+> +    then:
+> +      required:
+> +        - clocks
+> +        - clock-names
+> +        - "#clock-cells"
+>  
+>  additionalProperties: false
+>  
+> diff --git a/include/dt-bindings/clock/spacemit,k1-syscon.h b/include/dt-bindings/clock/spacemit,k1-syscon.h
+> index 35968ae982466..f5965dda3b905 100644
+> --- a/include/dt-bindings/clock/spacemit,k1-syscon.h
+> +++ b/include/dt-bindings/clock/spacemit,k1-syscon.h
+would it be better to move all reset definition to its dedicated dir?
+which like: include/dt-bindings/reset/spacemit,k1-syscon.h?
 
-Regards,
-Inochi
+> @@ -78,6 +78,9 @@
+>  #define CLK_APB			31
+>  #define CLK_WDT_BUS		32
+>  
+> +/* MPMU resets */
+> +#define RESET_WDT		0
+> +
+>  /* APBC clocks */
+>  #define CLK_UART0		0
+>  #define CLK_UART2		1
+> @@ -180,6 +183,59 @@
+>  #define CLK_TSEN_BUS		98
+>  #define CLK_IPC_AP2AUD_BUS	99
+>  
+> +/* APBC resets */
+> +#define RESET_UART0		0
+> +#define RESET_UART2		1
+> +#define RESET_UART3		2
+> +#define RESET_UART4		3
+> +#define RESET_UART5		4
+> +#define RESET_UART6		5
+> +#define RESET_UART7		6
+> +#define RESET_UART8		7
+> +#define RESET_UART9		8
+> +#define RESET_GPIO		9
+> +#define RESET_PWM0		10
+> +#define RESET_PWM1		11
+> +#define RESET_PWM2		12
+> +#define RESET_PWM3		13
+> +#define RESET_PWM4		14
+> +#define RESET_PWM5		15
+> +#define RESET_PWM6		16
+> +#define RESET_PWM7		17
+> +#define RESET_PWM8		18
+> +#define RESET_PWM9		19
+> +#define RESET_PWM10		20
+> +#define RESET_PWM11		21
+> +#define RESET_PWM12		22
+> +#define RESET_PWM13		23
+> +#define RESET_PWM14		24
+> +#define RESET_PWM15		25
+> +#define RESET_PWM16		26
+> +#define RESET_PWM17		27
+> +#define RESET_PWM18		28
+> +#define RESET_PWM19		29
+> +#define RESET_SSP3		30
+> +#define RESET_RTC		31
+> +#define RESET_TWSI0		32
+> +#define RESET_TWSI1		33
+> +#define RESET_TWSI2		34
+> +#define RESET_TWSI4		35
+> +#define RESET_TWSI5		36
+> +#define RESET_TWSI6		37
+> +#define RESET_TWSI7		38
+> +#define RESET_TWSI8		39
+> +#define RESET_TIMERS1		40
+> +#define RESET_TIMERS2		41
+> +#define RESET_AIB		42
+> +#define RESET_ONEWIRE		43
+> +#define RESET_SSPA0		44
+> +#define RESET_SSPA1		45
+> +#define RESET_DRO		46
+> +#define RESET_IR		47
+> +#define RESET_TSEN		48
+> +#define RESET_IPC_AP2AUD	49
+> +#define RESET_CAN0		50
+> +
+>  /* APMU clocks */
+>  #define CLK_CCI550		0
+>  #define CLK_CPU_C0_HI		1
+> @@ -244,4 +300,76 @@
+>  #define CLK_V2D			60
+>  #define CLK_EMMC_BUS		61
+>  
+> +/* APMU resets */
+> +#define RESET_CCIC_4X		0
+> +#define RESET_CCIC1_PHY		1
+> +#define RESET_SDH_AXI		2
+> +#define RESET_SDH0		3
+> +#define RESET_SDH1		4
+> +#define RESET_SDH2		5
+> +#define RESET_USBP1_AXI		6
+> +#define RESET_USB_AXI		7
+> +#define RESET_USB3_0		8
+> +#define RESET_QSPI		9
+> +#define RESET_QSPI_BUS		10
+> +#define RESET_DMA		11
+> +#define RESET_AES		12
+> +#define RESET_VPU		13
+> +#define RESET_GPU		14
+> +#define RESET_EMMC		15
+> +#define RESET_EMMC_X		16
+> +#define RESET_AUDIO		17
+> +#define RESET_HDMI		18
+> +#define RESET_PCIE0		19
+> +#define RESET_PCIE1		20
+> +#define RESET_PCIE2		21
+> +#define RESET_EMAC0		22
+> +#define RESET_EMAC1		23
+> +#define RESET_JPG		24
+> +#define RESET_CCIC2PHY		25
+> +#define RESET_CCIC3PHY		26
+> +#define RESET_CSI		27
+> +#define RESET_ISP_CPP		28
+> +#define RESET_ISP_BUS		29
+> +#define RESET_ISP		30
+> +#define RESET_ISP_CI		31
+> +#define RESET_DPU_MCLK		32
+> +#define RESET_DPU_ESC		33
+> +#define RESET_DPU_HCLK		34
+> +#define RESET_DPU_SPIBUS	35
+> +#define RESET_DPU_SPI_HBUS	36
+> +#define RESET_V2D		37
+> +#define RESET_MIPI		38
+> +#define RESET_MC		39
+> +
+> +/*	RCPU resets	*/
+> +#define RESET_RCPU_SSP0		0
+> +#define RESET_RCPU_I2C0		1
+> +#define RESET_RCPU_UART1		2
+> +#define RESET_RCPU_IR		3
+> +#define RESET_RCPU_CAN		4
+> +#define RESET_RCPU_UART0		5
+> +#define RESET_RCPU_HDMI_AUDIO	6
+> +
+> +/*	RCPU2 resets	*/
+> +#define RESET_RCPU2_PWM0		0
+> +#define RESET_RCPU2_PWM1		1
+> +#define RESET_RCPU2_PWM2		2
+> +#define RESET_RCPU2_PWM3		3
+> +#define RESET_RCPU2_PWM4		4
+> +#define RESET_RCPU2_PWM5		5
+> +#define RESET_RCPU2_PWM6		6
+> +#define RESET_RCPU2_PWM7		7
+> +#define RESET_RCPU2_PWM8		8
+> +#define RESET_RCPU2_PWM9		9
+> +
+> +/*	APBC2 resets	*/
+> +#define RESET_APBC2_UART1	0
+> +#define RESET_APBC2_SSP2	1
+> +#define RESET_APBC2_TWSI3	2
+> +#define RESET_APBC2_RTC		3
+> +#define RESET_APBC2_TIMERS0	4
+> +#define RESET_APBC2_KPC		5
+> +#define RESET_APBC2_GPIO	6
+> +
+>  #endif /* _DT_BINDINGS_SPACEMIT_CCU_H_ */
+> -- 
+> 2.45.2
+> 
+
+-- 
+Yixun Lan (dlan)
