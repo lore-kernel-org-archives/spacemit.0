@@ -1,272 +1,108 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EA3195
-	for <spacemit@lists.linux.dev>; Mon, 12 May 2025 15:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3674C22AE45
+	for <spacemit@lists.linux.dev>; Mon, 12 May 2025 16:27:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747064834; cv=none; b=oZL0xqrsNayliPpSLdqLhJa/l8RXZizqMv61DCp+mnF8/cWPeDuckCzs/MPbd6axXesXQPTeZk3fAhwOvvRtctVI8TsdYrpWcuV+pN025eD5zbOtGnPjD1ZbdYUh3N6eoUpCkhhvZD2t2YAWkdIKbfjjTKtlEUfUG0gtFOqC+Pk=
+	t=1747067249; cv=none; b=mTa/QcKHu7lVHQdoCpdsq5bZw7K0l+DNWRbk3aIBxQCFEu3d8vcAA9WaWeks4pWx+KIlKf4DCudfswEi7GTxXoUr1CctRdwQbQRyZJDYvYebPJKamkb4Uc62QbkJgO5JagKM8FMJPwuBwPSaTrGEvSBFfgdriM/1MpUv+di1hd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747064834; c=relaxed/simple;
-	bh=tUkGeaZlP3x1PEPFhPd7Xaku48ipwY2NnrpefVgMago=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Z7SECm7xzRjd0gYKBFvGvNhWCI6VGE6DPuNg1O2ScYKoJ8S61Bbpxp3ojqNumYo2ZEcTHK3H5T6mDMxKJH+CWIe94YXBnGCBna8rbkISd6eDzD7IsalhonvU4hMUH2pQvDqCsza4d5SPoXZBshg8elzhs0nVYcNjGBKg9IWE4xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1uEVMh-0002iA-9Q; Mon, 12 May 2025 17:46:51 +0200
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1uEVMe-002OVJ-27;
-	Mon, 12 May 2025 17:46:49 +0200
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1uEVMf-000IW0-01;
-	Mon, 12 May 2025 17:46:49 +0200
-Message-ID: <91afcfde275a28127ba0df962a9abf4d07ba6b8b.camel@pengutronix.de>
-Subject: Re: [PATCH v8 3/6] clk: spacemit: set up reset auxiliary devices
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Alex Elder <elder@riscstar.com>, Yixun Lan <dlan@gentoo.org>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
- mturquette@baylibre.com, sboyd@kernel.org, paul.walmsley@sifive.com, 
- palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, heylenay@4d2.org,
-  inochiama@outlook.com, guodong@riscstar.com, devicetree@vger.kernel.org, 
- linux-clk@vger.kernel.org, spacemit@lists.linux.dev, 
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Date: Mon, 12 May 2025 17:46:48 +0200
-In-Reply-To: <abfd4c78-2592-4b8a-97be-109a8fd1bed6@riscstar.com>
-References: <20250509112032.2980811-1-elder@riscstar.com>
-	 <20250509112032.2980811-4-elder@riscstar.com>
-	 <20250512135429-GYA517867@gentoo>
-	 <abfd4c78-2592-4b8a-97be-109a8fd1bed6@riscstar.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1747067249; c=relaxed/simple;
+	bh=J2u66nb+ZRnekPNZzRKWIEEdjXCW8XvffK8/9kLcR0Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=d6ALQRK34K2ru+SceoFoQktK7e/0J7+qHH/Hw9YDfZSduKDQ3gBsGbQBrfoiZA0NGhV0qq85J56t8AYZ2lMCfmp8jemtYOYfmrRDAriBHnpDpD+y01tfTiV7ovJ8/F2S0tRd2+WiwqbkYf0q9FftdgbX6aExtBK/qEOF/yKKSzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=XjbBjMLR; arc=none smtp.client-ip=209.85.166.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="XjbBjMLR"
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3cfce97a3d9so32997095ab.2
+        for <spacemit@lists.linux.dev>; Mon, 12 May 2025 09:27:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1747067247; x=1747672047; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tAY5Ws/2zHP7f1+msXoBsYcHSMzdc5Is7v349rd+4sk=;
+        b=XjbBjMLRd1xsHtE+CHT9aBZDGSmv8s9xCgnMnXCeaWiEN5F1I3/zo0ps5p255WId/Y
+         v4VaiJHNy9ejiy8SgML5dP+Sld8CECQhxlXsIeSuHz7gApKAiseOLKX3xUwD8nRr/Mg3
+         wTGYY2BHRqFHHNCrNGJgvBhUGe4cCUwBRoRwNfsCVbkvE4tHXX9ZtAqTJd8HgqrbBlJc
+         dYKrT3Bc/GRKnLl+mfmjcQFATvSmhOArd/muAnTcm/d682cyr5mIc8zG/fYAPOo7RVbw
+         w+bASMsZ15kn05CJQJgJoMm9IrjAZpTR+tPQhMgfGghn94nYMmgFojpWEEiIHwFPNlmw
+         d08A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747067247; x=1747672047;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tAY5Ws/2zHP7f1+msXoBsYcHSMzdc5Is7v349rd+4sk=;
+        b=sO2chBhd54UVftYQmVj8y9XEPJFeLzLNJqQ41o3+CXJAcA6bR99kS9BnpxkgWqNrrn
+         8hYUgyL9Sxn0l2ggvxdKOx52jnYc/NUMF3K0j4cSSbFQ7TyvokCd6bg7td9rSEI081XV
+         hrQg2j24h1TePw9SgJqtIgiSU+2GFWz814tg1c1BwPSPKhNmMhq881Vr9qycLFe5v2sJ
+         kpFjPVbTFWh/DRKttkL71mSo2N3meo6K8L6hQa97ZwJ291eP3ZC/lL7/O4IAkGNCEP4l
+         BvkZf/yhKodNi1v0cQmXd7nUSbpcCHu42Sg7SxQmz5gL19ysJfRO+75tXBj+/oORkZQl
+         37aA==
+X-Forwarded-Encrypted: i=1; AJvYcCUuL2MsuUq61DxT84iprBK1SZ4xi5Akzpv1nGWWPhA6j0MK6687ntceZikNhMDZDJYALImRlO0/Gw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxW7QWdl/B5x4DGOiZStYNO8KlrD5jI/Etl7O/hMVvuiMiRuo+D
+	IP2KiITq7JX8lmqWgOByF1+h4REy6ctcN62P2A6j8HUVbQm9xm3Im7EEmJIH/E8=
+X-Gm-Gg: ASbGncs6FKp8etPDjj3kY7wmXCh3kIGZwdBmoCF/d/5rHOg0RBWCAp6LSJF3hGiPHLv
+	iJAcXCjXYv1EDEGHsDxyRSHLptseTYdvX/l2yCZDRHiiEs8soMfR+cLrBOEDF94zbFrviOIiJrq
+	tLRCvteMgcB2yRXmToD9Y22XJ44XB6DiPccf1dpa9gPNVajomjTGWp5oARxLpLsi91dZ4e+ALSf
+	0VLz0KeXX0LpLe08aq8D/Rqs1Wt+pESnOoALrXV/4JJn5w0VyZJ2tdadgur45BcHYRAWBFcBZpV
+	0qxC8mbZ5nwZPAF1Y06N6ZB3rlOfolUjcjSp2G1F0f3/Ux0rVxVGJsETOgmJyLPN5MKIWQy0NTl
+	vdQRh9ltd1ELVTK2nSWDRsOdqbw==
+X-Google-Smtp-Source: AGHT+IHMljbBOih9XI5ChNfY5x9ORAxK3ZQZvd0UNipzv1F6zPCMndWOAl1ZZJYumsZfCVB/PanfHw==
+X-Received: by 2002:a92:cda7:0:b0:3d9:66c7:d1e8 with SMTP id e9e14a558f8ab-3da7e165314mr150329395ab.0.1747067247243;
+        Mon, 12 May 2025 09:27:27 -0700 (PDT)
+Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4fa2a9ac275sm1503877173.80.2025.05.12.09.27.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 May 2025 09:27:26 -0700 (PDT)
+Message-ID: <5674cfb0-fabe-4b58-98fd-8479c4d3ff79@riscstar.com>
+Date: Mon, 12 May 2025 11:27:25 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: spacemit@lists.linux.dev
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 3/6] clk: spacemit: set up reset auxiliary devices
+To: Philipp Zabel <p.zabel@pengutronix.de>, Yixun Lan <dlan@gentoo.org>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, heylenay@4d2.org,
+ inochiama@outlook.com, guodong@riscstar.com, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org, spacemit@lists.linux.dev,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20250509112032.2980811-1-elder@riscstar.com>
+ <20250509112032.2980811-4-elder@riscstar.com>
+ <20250512135429-GYA517867@gentoo>
+ <abfd4c78-2592-4b8a-97be-109a8fd1bed6@riscstar.com>
+ <91afcfde275a28127ba0df962a9abf4d07ba6b8b.camel@pengutronix.de>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <91afcfde275a28127ba0df962a9abf4d07ba6b8b.camel@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mo, 2025-05-12 at 10:34 -0500, Alex Elder wrote:
-> On 5/12/25 8:54 AM, Yixun Lan wrote:
-> > On 06:20 Fri 09 May     , Alex Elder wrote:
-> > > Add a new reset_name field to the spacemit_ccu_data structure.  If it=
- is
-> > > non-null, the CCU implements a reset controller, and the name will be
-> > > used in the name for the auxiliary device that implements it.
-> > >=20
-> > > Define a new type to hold an auxiliary device as well as the regmap
-> > > pointer that will be needed by CCU reset controllers.  Set up code to
-> > > initialize and add an auxiliary device for any CCU that implements re=
-set
-> > > functionality.
-> > >=20
-> > > Make it optional for a CCU to implement a clock controller.  This
-> > > doesn't apply to any of the existing CCUs but will for some new ones
-> > > that will be added soon.
-> > >=20
-> > > Signed-off-by: Alex Elder <elder@riscstar.com>
-> > > ---
-> > > v8: Allocate the auxiliary device using kzalloc(), not devm_kzalloc()
-> > >=20
-> > >   drivers/clk/spacemit/Kconfig     |  1 +
-> > >   drivers/clk/spacemit/ccu-k1.c    | 90 ++++++++++++++++++++++++++++-=
----
-> > >   include/soc/spacemit/k1-syscon.h | 12 +++++
-> > >   3 files changed, 93 insertions(+), 10 deletions(-)
-> > >=20
-> > > diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kcon=
-fig
-> > > index 4c4df845b3cb2..3854f6ae6d0ea 100644
-> > > --- a/drivers/clk/spacemit/Kconfig
-> > > +++ b/drivers/clk/spacemit/Kconfig
-> > > @@ -3,6 +3,7 @@
-> > >   config SPACEMIT_CCU
-> > >   	tristate "Clock support for SpacemiT SoCs"
-> > >   	depends on ARCH_SPACEMIT || COMPILE_TEST
-> > > +	select AUXILIARY_BUS
-> > >   	select MFD_SYSCON
-> > >   	help
-> > >   	  Say Y to enable clock controller unit support for SpacemiT SoCs.
-> > > diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu=
--k1.c
-> > > index 801150f4ff0f5..551df9d076859 100644
-> > > --- a/drivers/clk/spacemit/ccu-k1.c
-> > > +++ b/drivers/clk/spacemit/ccu-k1.c
-> > > @@ -5,12 +5,14 @@
-> > >    */
-> > >  =20
-> > >   #include <linux/array_size.h>
-> > > +#include <linux/auxiliary_bus.h>
-> > >   #include <linux/clk-provider.h>
-> > >   #include <linux/delay.h>
-> > >   #include <linux/mfd/syscon.h>
-> > >   #include <linux/minmax.h>
-> > >   #include <linux/module.h>
-> > >   #include <linux/platform_device.h>
-> > > +#include <linux/slab.h>
-> > >   #include <soc/spacemit/k1-syscon.h>
-> > >  =20
-> > >   #include "ccu_common.h"
-> > > @@ -21,6 +23,7 @@
-> > >   #include <dt-bindings/clock/spacemit,k1-syscon.h>
-> > >  =20
-> > >   struct spacemit_ccu_data {
-> > > +	const char *reset_name;
-> > see my comment below..
-> >=20
-> > >   	struct clk_hw **hws;
-> > >   	size_t num;
-> > >   };
-> > > @@ -710,8 +713,9 @@ static struct clk_hw *k1_ccu_pll_hws[] =3D {
-> > >   };
-> > >  =20
-> > >   static const struct spacemit_ccu_data k1_ccu_pll_data =3D {
-> > > -	.hws	=3D k1_ccu_pll_hws,
-> > > -	.num	=3D ARRAY_SIZE(k1_ccu_pll_hws),
-> > > +	/* The PLL CCU implements no resets */
-> > > +	.hws		=3D k1_ccu_pll_hws,
-> > > +	.num		=3D ARRAY_SIZE(k1_ccu_pll_hws),
-> > >   };
-> > >  =20
-> > >   static struct clk_hw *k1_ccu_mpmu_hws[] =3D {
-> > > @@ -751,8 +755,9 @@ static struct clk_hw *k1_ccu_mpmu_hws[] =3D {
-> > >   };
-> > >  =20
-> > >   static const struct spacemit_ccu_data k1_ccu_mpmu_data =3D {
-> > > -	.hws	=3D k1_ccu_mpmu_hws,
-> > > -	.num	=3D ARRAY_SIZE(k1_ccu_mpmu_hws),
-> > > +	.reset_name	=3D "mpmu-reset",
-> > > +	.hws		=3D k1_ccu_mpmu_hws,
-> > > +	.num		=3D ARRAY_SIZE(k1_ccu_mpmu_hws),
-> > >   };
-> > >  =20
-> > >   static struct clk_hw *k1_ccu_apbc_hws[] =3D {
-> > > @@ -859,8 +864,9 @@ static struct clk_hw *k1_ccu_apbc_hws[] =3D {
-> > >   };
-> > >  =20
-> > >   static const struct spacemit_ccu_data k1_ccu_apbc_data =3D {
-> > > -	.hws	=3D k1_ccu_apbc_hws,
-> > > -	.num	=3D ARRAY_SIZE(k1_ccu_apbc_hws),
-> > > +	.reset_name	=3D "apbc-reset",
-> > > +	.hws		=3D k1_ccu_apbc_hws,
-> > > +	.num		=3D ARRAY_SIZE(k1_ccu_apbc_hws),
-> > >   };
-> > >  =20
-> > >   static struct clk_hw *k1_ccu_apmu_hws[] =3D {
-> > > @@ -929,8 +935,9 @@ static struct clk_hw *k1_ccu_apmu_hws[] =3D {
-> > >   };
-> > >  =20
-> > >   static const struct spacemit_ccu_data k1_ccu_apmu_data =3D {
-> > > -	.hws	=3D k1_ccu_apmu_hws,
-> > > -	.num	=3D ARRAY_SIZE(k1_ccu_apmu_hws),
-> > > +	.reset_name	=3D "apmu-reset",
-> > > +	.hws		=3D k1_ccu_apmu_hws,
-> > > +	.num		=3D ARRAY_SIZE(k1_ccu_apmu_hws),
-> > >   };
-> > >  =20
-> > >   static int spacemit_ccu_register(struct device *dev,
-> > > @@ -941,6 +948,10 @@ static int spacemit_ccu_register(struct device *=
-dev,
-> > >   	struct clk_hw_onecell_data *clk_data;
-> > >   	int i, ret;
-> > >  =20
-> > > +	/* Nothing to do if the CCU does not implement any clocks */
-> > > +	if (!data->hws)
-> > > +		return 0;
-> > > +
-> > >   	clk_data =3D devm_kzalloc(dev, struct_size(clk_data, hws, data->nu=
-m),
-> > >   				GFP_KERNEL);
-> > >   	if (!clk_data)
-> > > @@ -981,9 +992,63 @@ static int spacemit_ccu_register(struct device *=
-dev,
-> > >   	return ret;
-> > >   }
-> > >  =20
-> > > +static void spacemit_cadev_release(struct device *dev)
-> > why this function define as _cadev_ prefix, while below as _adev_
-> > is it a typo? or c short for ccu, I just feel it isn't consistent..
->=20
-> It is not a typo.  Yes, it was intended to represent CCU
-> Auxiliary device, while "adev" represents just Auxiliary
-> Device.  It is releasing (freeing) a spacemit_ccu_adev
-> structure.
->=20
-> > > +{
-> > > +	struct auxiliary_device *adev =3D to_auxiliary_dev(dev);
-> > > +
-> > > +	kfree(to_spacemit_ccu_adev(adev));
-> > > +}
-> > > +
->=20
-> This function is operating on an auxiliary_device structure,
-> so "adev" is used in its name.
->=20
-> > > +static void spacemit_adev_unregister(void *data)
-> > > +{
-> > > +	struct auxiliary_device *adev =3D data;
-> > > +
-> > > +	auxiliary_device_delete(adev);
-> > > +	auxiliary_device_uninit(adev);
-> > > +}
-> > > +
-> > > +static int spacemit_ccu_reset_register(struct device *dev,
-> > > +				       struct regmap *regmap,
-> > > +				       const char *reset_name)
-> > > +{
-> > > +	struct spacemit_ccu_adev *cadev;
-> > > +	struct auxiliary_device *adev;
-> > > +	static u32 next_id;
-> > > +	int ret;
-> > > +
-> > > +	/* Nothing to do if the CCU does not implement a reset controller *=
-/
-> > > +	if (!reset_name)
-> > > +		return 0;
-> > > +
-> > > +	cadev =3D kzalloc(sizeof(*cadev), GFP_KERNEL);
-> > > +	if (!cadev)
-> > > +		return -ENOMEM;
-> > add one blank line here?
->=20
-> If I do a new version that's easy but this was intentional.
->=20
-> > > +	cadev->regmap =3D regmap;
-> > > +
-> > > +	adev =3D &cadev->adev;
-> > > +	adev->name =3D reset_name;
-> > > +	adev->dev.parent =3D dev;
-> > > +	adev->dev.release =3D spacemit_cadev_release;
-> > > +	adev->dev.of_node =3D dev->of_node;
-> > [..]
-> > > +	adev->id =3D next_id++;
-> > so I'd assume the underlying device doesn't really care the id?
-> > but with different order of registration, it will result random id for =
-the device
->=20
-> These things are identified in DTS files by their index values
-> defined in "spacemit,k1-syscon.h".  If there is a need for the
-> assigned device ID to be consistent, I'm not aware of it.  Can
-> you think of one?  I think all that matters is that they're
-> unique, and this ensures that (for up to 2^32 PMICs).
+On 5/12/25 10:46 AM, Philipp Zabel wrote:
+>>> so I'd assume the underlying device doesn't really care the id?
+>>> but with different order of registration, it will result random id for the device
+>> These things are identified in DTS files by their index values
+>> defined in "spacemit,k1-syscon.h".  If there is a need for the
+>> assigned device ID to be consistent, I'm not aware of it.  Can
+>> you think of one?  I think all that matters is that they're
+>> unique, and this ensures that (for up to 2^32 PMICs).
+> If there are multiple reset controllers and the driver can be unbound,
+> it's trivial to provoke a collision by keeping one device bound and
+> unbinding/binding the second one until next_id wraps.
+> This could be fixed by using ida_alloc/free to manage the id.
+> 
+> regards
+> Philipp
 
-If there are multiple reset controllers and the driver can be unbound,
-it's trivial to provoke a collision by keeping one device bound and
-unbinding/binding the second one until next_id wraps.
-This could be fixed by using ida_alloc/free to manage the id.
+OK thank you.  I'll put together v9 of this series and will use
+an IDA to set the device ID.  Thanks again for the explanation.
 
-regards
-Philipp
+					-Alex
