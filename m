@@ -1,61 +1,63 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A01535D8
-	for <spacemit@lists.linux.dev>; Mon, 12 May 2025 18:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6483255235
+	for <spacemit@lists.linux.dev>; Mon, 12 May 2025 18:32:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747074740; cv=none; b=LfUvVmUcIVjn3YJYhIkU4H7GroH6sM/sazKW6vg9pZoAjGzeZZy1e4/F8kVMALgCwO5lpMaAX4rXl0SaBZVRmmsj3jJKKZRtweRtd0rkh3muJX8+5mqti3I9Y3Z5Gl2h7g5ByyKvuFgmecfITRDF9hxM4tK8ZgXgyjSrg7KfjWE=
+	t=1747074740; cv=none; b=tsP/U8/MO3hsEC0d7OZ9aGu/T3BPr55KQqkyA46kUogBBaJMDijyc6Iqtow0O7NG6Q6qrHoPANq114Ng62mNg9yVnva8cVsTUfG8rAEgvdCbtZxdqSr4pKINB71T0ChoZlr0l3wvM0ofAEmktInvvbJuarSTKh8WiRvEYVU6t70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747074740; c=relaxed/simple;
-	bh=cNV23VwDv69uP/6gK3LiM6nRmaksJESB2bF4ACMarY4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rJzBFavB+eQ48Uv8YfMd3XFuaXsJIQeWWitLCrT9Et3JCUlm7miBvkA7Gy7B04XyGO6xSglBigAQjt08779/+1mFpTgH3qLLdUT9dl+yPv5umyiN/c0weTUKL1isnWnLKQCLe4N+2Ip/FhlIy46VPbwzliNhbrD2ZIqKhpJL0wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=yOnFAvlL; arc=none smtp.client-ip=209.85.166.173
+	bh=JbvxIKNnm2l02MeokP48X8vc1GIBXzEECfh/a24p9gk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=nc8Fqu9mkChRnDwQPMl0M/b3bwTFuukZ3jbAB45zsoy3gjbUfQ8OeLpjYTMifwmQUshE4BzlrOSMTvnL2HuBhqjt4CIu16syiSHYeE1X91TEIjfaFa/5geaB1aG36EahYGUER20tRRnB1zBv2AHDaaB+oOWzYSqrQH3TDLfyiS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=Jdz4eaXY; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="yOnFAvlL"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3da73df6b6bso16276545ab.3
-        for <spacemit@lists.linux.dev>; Mon, 12 May 2025 11:32:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="Jdz4eaXY"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-861d7a09c88so79017839f.2
+        for <spacemit@lists.linux.dev>; Mon, 12 May 2025 11:32:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1747074737; x=1747679537; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=H5sF5S4WoA46QFbSi1L1CMmO0LFLi0JLWxGsdZ5Mz7U=;
-        b=yOnFAvlLRUF8fK7s5JCtxitoeYOv4PoCGYOYVXQyizq1CfyyAOud5B0vW/qW/RNLNm
-         zWaoabIZtBGYNFgkMEVsYdAbeo0DCEzlV+0P2AQ5km1FPNkx4yhpMHP2GXTH+yf9BALC
-         Hz3e0JW2vo36WGvnReklfvQ2141IWsjj38GT0cPZ4Ep3pupE8J8MVLXaVn1fCXTeiYqy
-         kSs6HFC5zGStnG/cDMngBkEKTNvanohjMmohdKtcfBt6UIvEle9fdkZudtLIkzHzwgrC
-         hgdeSmGlYsxRxPdFQpFJjASzXRufI4OVXHvWNKWiAKvqbzfwBaSgTlOMh1VdOHJsjcRo
-         ofPQ==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1747074738; x=1747679538; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=81a1v+nMC7nJeIGTMZQ54emwTNg/YN8dMbbTK1LgyT8=;
+        b=Jdz4eaXYwybj33e/1o0p6ZmVQDVvFbNRUnv9D7Frc3Y8g2zA5wJVEpW3jna1Xf1Hz+
+         q5MCkMupacpAJ+8+TvoeYU7h74x8/6f3mbMoQlxWRSSlOac+yEjOgNq+sxjZ703yIS6i
+         FiUyJBZwc9WTFOqGprjj2WVMy1uLav7Tvx4ziKVx46v+ooDemsbnYN5EpMSv7xFNllMU
+         Ss+S5PJf7n7kBdpA4auurZpCHUeIFHKqSmpduoCQ7xD0++gwQQxv01RQJvT7DKk49xlQ
+         luDP2ffhpjtmWQrDbWxWXYbmZaCP2g4CnBUTQTikoiiddQTuyLywpsyFQog1+h/FZmDA
+         h1yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747074737; x=1747679537;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=H5sF5S4WoA46QFbSi1L1CMmO0LFLi0JLWxGsdZ5Mz7U=;
-        b=i6Osj00X3l7zGTPTb2m1UTKzXREDaZ6+ug3prfJh+vHauo202qgJgHf+Px5gwnTKFM
-         i/c1T2FoL/ssRUJqUKQC5a6QHrSQhqCfFlWFSgspdbWhZ6niqkeAPHjQTWKj0mBMi9hM
-         9pcRECYhXpi2A5cn4p22qEfd8Tg268ggX4NRPFL/aYtMvscliaFwgXZceOubggpRaa7N
-         +G5cNOvgcFDl77PunRSX/TkIR+pb9bil6R9mM/WDaYMa9N5NfKJQhspI7MCGuDfEgYzv
-         iPtQZI95X3IzeOwEx/B/0/+TJDA435uW6+dzrZBRGlR1ZTWjHfTVyZ179MmJkDtYO8hq
-         ce6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWq2NatNo25p4jQkkzeFAF9kBAGdTdVY36JpPvVKjeJgGTRSfD60c+nNRJSL3iGFpLewrwO61C49g==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw2QGyO1YiIo5TIHOhd3uhgvi3b24eBPuSOKGGzRnCjQa84QJVU
-	G9GJ3d0JsK6ZrKkFiD8WUu7/IuLT1+hhkkkzGAmuTAbhl3RGz0JIt/reG4LrXDU=
-X-Gm-Gg: ASbGncuBvnbjDnHlpnkC1cUAWm1CUgYs4ONBBRFpVrgfIVV57VclwmtWL0xeVXq4d2M
-	9IJqWdQ9XFhvfHjZR4rdPJvYS3RJi3axWDUXU7w6tXPU18BdOtqs9NqZ7D8Q+DyyqVix0uJdn21
-	Hl/Qe6aF6R54PaokDuExA31Tg8LmX51X+d2Vl+mAP91o6PU2juMjAozWMsEgFcPouU1kVZbAC8X
-	NmAzVKxmrVamu0AYXALpXuS5kwRlVE/B+VVhH6aGnXXalbIUOiucVqDmS2hWZ58G4mCSoZF5c9A
-	t6ABrt10uAT2Ohdxfnhcp21knJf5fpc96odZ0DTBk9m9Wz/cMPNlEoDlQwbfT12qDrDbo8U0/gM
-	+PomDrkfexRa9QZzhuGamBoDR
-X-Google-Smtp-Source: AGHT+IH8SMFCBxxWn3abIuKGOB7o7zwQCx8+T8NAJEP1pyotvXX4Tn/Jp/UkbpGJ3ju1m6yqyuZcVA==
-X-Received: by 2002:a05:6e02:1fc5:b0:3d6:cbed:3305 with SMTP id e9e14a558f8ab-3da7e1e7608mr156233785ab.10.1747074736564;
-        Mon, 12 May 2025 11:32:16 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747074738; x=1747679538;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=81a1v+nMC7nJeIGTMZQ54emwTNg/YN8dMbbTK1LgyT8=;
+        b=ZErYKjbW1jUhzU0iaW4ruOPpTcRWipzMkl6cAGicCxjh3Jt9S9KGC6MtcGLTNe41VS
+         p6jZZmFCoxtoHJqrd9N7ueIIXBBzm5hTzM818bWaqjZIIhJIrin2Q61IHRDVGLUqgp1d
+         mV594Wi9YFLsjKle7CeFROq9OagfFvL1W1eubSIEHzXbKdwP2tmpPZ0zHWB/UY9iAwfq
+         rnGVRiDtbw7ht/+nNriT0eCvjpYAv84p8rXcX3O0I1tN+f4Je3j/sHw81D8Jk54A10Uk
+         zqWxiApCMSph1RTkzJIG/cAGYjB010RJu9N3QZnpVwosigUSzDriy7aQYgMR5IAXkcFm
+         W1tA==
+X-Forwarded-Encrypted: i=1; AJvYcCWy0QybIzNHTFJQGUMq3zBQ4DytV8aiF/nH7zMf5ZlcVLV0ftonv42FwNnWB1qwJ+6NJN3bDhsqWw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw7hHn4KsyksFClmYdUG/dTCVSq2Oqp7QUvXCtwkm/Uk6NNB0h3
+	YxVCoope6gWXSn9L4oMZxNuW+Uwj9B24Dxntvu4ldWTsBBL0QK0HHDZpQVAmois=
+X-Gm-Gg: ASbGncsYWVSiocMByrUVXebVms/qskXBB68qt4jm6L+D+rJs7NkirX4bp4rnmh0iRsb
+	JRN/pAKwAb+SRo5y/2iLrcioC6cDHozXbtcO7LJUTXz5uQ3x0iGObQzmWyZsRcls/b7zOVkWLtV
+	+7lDl0hL4tL6W/787oSB2jyyteRAqwfv/G/wSl23UKdK/haa3WyBoInVlLQz8/cCu9UONx0gCG2
+	zYGF+c7z79S12v2SKnQVhyErYfeN3poJhVsYLVrZJezCd0P9p1ZX/kTwXDFWJBllX9diAHRGE0F
+	ct6+/EqeqfC87SICAdyIDe3kdysBNWDP5K8tsqUKIAMot8kQ7HIMRX9oWKj/ADu9t9pOa60WaFE
+	U5g1TirS+lTxqyAAHFgI9ys1u
+X-Google-Smtp-Source: AGHT+IHLBc46s/8w3VzN167Tg4Yt0RbtevuFNIqx3Ypi3S5QvXRt1r/AuSD1ctpzGzbcc3mBdprKFA==
+X-Received: by 2002:a05:6e02:3813:b0:3d4:276:9a1b with SMTP id e9e14a558f8ab-3da7e20da7amr141836045ab.16.1747074737904;
+        Mon, 12 May 2025 11:32:17 -0700 (PDT)
 Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4fa22496e9fsm1740333173.11.2025.05.12.11.32.15
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4fa22496e9fsm1740333173.11.2025.05.12.11.32.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 May 2025 11:32:16 -0700 (PDT)
+        Mon, 12 May 2025 11:32:17 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
 To: robh@kernel.org,
 	krzk+dt@kernel.org,
@@ -75,11 +77,14 @@ Cc: heylenay@4d2.org,
 	linux-clk@vger.kernel.org,
 	spacemit@lists.linux.dev,
 	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v9 0/6] reset: spacemit: add K1 reset support
-Date: Mon, 12 May 2025 13:32:05 -0500
-Message-ID: <20250512183212.3465963-1-elder@riscstar.com>
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v9 1/6] dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
+Date: Mon, 12 May 2025 13:32:06 -0500
+Message-ID: <20250512183212.3465963-2-elder@riscstar.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250512183212.3465963-1-elder@riscstar.com>
+References: <20250512183212.3465963-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -88,139 +93,234 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series adds reset controller support for the SpacemiT K1 SoC.
-A SpacemiT reset controller is implemented as an auxiliary device
-associated with a clock controller (CCU).  A new header file
-holds definitions used by both the clock and reset drivers.
+There are additional SpacemiT syscon CCUs whose registers control both
+clocks and resets:  RCPU, RCPU2, and APBC2. Unlike those defined
+previously, these will (initially) support only resets.  They do not
+incorporate power domain functionality.
 
-This code builds upon the clock controller driver from Haylen Chu.
+Previously the clock properties were required for all compatible nodes.
+Make that requirement only apply to the three existing CCUs (APBC, APMU,
+and MPMU), so that the new reset-only CCUs can go without specifying them.
 
-This version uses ida_alloc() to assign a unique auxiliary device
-ID rather than the value of an ever-incrementing static variable.
+Define the index values for resets associated with all SpacemiT K1
+syscon nodes, including those with clocks already defined, as well as
+the new ones (without clocks).
 
-This series is based on the "for-next" branch in the SpacemiT
-repository:
-  https://github.com/spacemit-com/linux/tree/for-next
+Signed-off-by: Alex Elder <elder@riscstar.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../soc/spacemit/spacemit,k1-syscon.yaml      |  29 +++-
+ .../dt-bindings/clock/spacemit,k1-syscon.h    | 128 ++++++++++++++++++
+ 2 files changed, 150 insertions(+), 7 deletions(-)
 
-All of these patches are available here:
-  https://github.com/riscstar/linux/tree/outgoing/reset-v9
-
-					-Alex
-
-Between version 8 and version 9:
-  - The auxiliary device ID is now allocated using ida_alloc(), to
-    avoid colliding device IDs, as suggested by Philipp.
-
-Here is version 8 of this series.
-  https://lore.kernel.org/lkml/20250509112032.2980811-1-elder@riscstar.com/
-
-Between version 7 and version 8:
-  - The structure containing the auxiliary device is now allocated
-    using kzalloc().  That means its lifetime is not tied to the
-    parent device, and auxiliary device's release function is
-    correct in freeing the structure.
-
-Here is version 7 of this series.
-  https://lore.kernel.org/lkml/20250508195409.2962633-1-elder@riscstar.com/
-
-Between version 6 and version 7:
-  - The new shared header file is now named "k1-syscon.h" (suggested
-    by Haylen Chu)
-  - The SPACEMIT_CCU_K1 config option has been removed (suggested
-    by Philipp Zabel)
-  - The SPACEMIT_CCU config option is now tristate, and selects
-    AUXILIARY_BUS (suggested by Haylen Chu)
-  - All code is concentrated into a single file "reset-spacemit.c"
-    rather than in a directory (suggested by Philipp Zabel)
-  - A bogus return value has been fixed, and a few irrelevant comments
-    have been removed (suggested by Philipp Zabel)
-  - MODULE_AUTHOR(), MODULE_DESCRIPTION(), and MODULE_LICENSE() are
-    now supplied (suggested by Haylen Chu)
-
-Here is version 6 of this series.
-  https://lore.kernel.org/lkml/20250506210638.2800228-1-elder@riscstar.com/
-
-Between version 5 and version 6:
-  - Reworked the code to use the auxiliary device framework.
-  - Moved the code supporting reset under drivers/reset/spacemit.
-  - Created a new header file shared by reset and clock.
-  - Separated generic from SoC-specific code in the reset driver.
-  - Dropped two Reviewed-by tags.
-
-Here is version 5 of this series.
-  https://lore.kernel.org/lkml/20250418145401.2603648-1-elder@riscstar.com/
-
-Between version 4 and version 5:
-  - Added Haylen's Reviewed-by on the second patch.
-  - Added Philipp's Reviewed-by on the third patch.
-  - In patch 4, added a const qualifier to some structures, and removed
-    parentheses surrounding integer constants, as suggested by Philipp
-  - Now based on the SpacemiT for-next branch
-
-Here is version 4 of this series.
-  https://lore.kernel.org/lkml/20250414191715.2264758-1-elder@riscstar.com/
-
-Between version 3 and version 4:
-  - Now based on Haylen Chu's v7 clock code, built on v6.15-rc2.
-  - Added Krzysztof's Reviewed-by on the first patch.
-
-Here is version 3 of this series.
-  https://lore.kernel.org/lkml/20250409211741.1171584-1-elder@riscstar.com/
-
-Between version 2 and version 3 there was no feedback, however:
-  - Haylen posted v6 of the clock series, and it included some changes
-    that affected the logic in this reset code.
-  - I was informed that defining CCU nodes without any clocks led to
-    warnings about "clocks" being a required property when running
-    "make dtbs_check".  For that reason, I made clock properties
-    optional for reset-only CCU nodes.
-  - This code is now based on v6.15-rc1, which includes a few commits
-    that were listed as dependencies previously.
-
-Here is version 2 of this series.
-  https://lore.kernel.org/lkml/20250328210233.1077035-1-elder@riscstar.com/
-
-Between version 1 and version 2:
-  - Added Rob's Reviewed-by tag on the first patch
-  - Renamed the of_match_data data type (and one or two other symbols) to
-    use "spacemit" rather than "k1".
-  - Replaced the abbreviated "rst" or "RST" in names of newly-defined
-    sympols with "reset" or "RESET" respectively.
-  - Eliminated rcdev_to_controller(), which was only used once.
-  - Changed a function that unsafely did a read/modify/write of a register
-    to use regmap_update_bits() instead as suggested by Haylen.
-  - Eliminated a null check for a pointer known to be non-null.
-  - Reordered the assignment of reset controller device fields.
-  - Added a "sentinel" comment as requested by Yixun.
-  - Updated to be based on Linux v6.14 final.
-
-Here is the first version of this series.
-  https://lore.kernel.org/lkml/20250321151831.623575-1-elder@riscstar.com/
-
-
-Alex Elder (6):
-  dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
-  soc: spacemit: create a header for clock/reset registers
-  clk: spacemit: set up reset auxiliary devices
-  reset: spacemit: add support for SpacemiT CCU resets
-  reset: spacemit: define three more CCUs
-  riscv: dts: spacemit: add reset support for the K1 SoC
-
- .../soc/spacemit/spacemit,k1-syscon.yaml      |  29 +-
- arch/riscv/boot/dts/spacemit/k1.dtsi          |  18 ++
- drivers/clk/spacemit/Kconfig                  |   1 +
- drivers/clk/spacemit/ccu-k1.c                 | 239 +++++++-------
- drivers/reset/Kconfig                         |   9 +
- drivers/reset/Makefile                        |   1 +
- drivers/reset/reset-spacemit.c                | 297 ++++++++++++++++++
- .../dt-bindings/clock/spacemit,k1-syscon.h    | 128 ++++++++
- include/soc/spacemit/k1-syscon.h              | 160 ++++++++++
- 9 files changed, 755 insertions(+), 127 deletions(-)
- create mode 100644 drivers/reset/reset-spacemit.c
- create mode 100644 include/soc/spacemit/k1-syscon.h
-
-
-base-commit: 3f7ca16338830d8726b0b38458b2916b3b303aad
+diff --git a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
+index 30aaf49da03d3..133a391ee68cd 100644
+--- a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
++++ b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
+@@ -19,6 +19,9 @@ properties:
+       - spacemit,k1-syscon-apbc
+       - spacemit,k1-syscon-apmu
+       - spacemit,k1-syscon-mpmu
++      - spacemit,k1-syscon-rcpu
++      - spacemit,k1-syscon-rcpu2
++      - spacemit,k1-syscon-apbc2
+ 
+   reg:
+     maxItems: 1
+@@ -47,9 +50,6 @@ properties:
+ required:
+   - compatible
+   - reg
+-  - clocks
+-  - clock-names
+-  - "#clock-cells"
+   - "#reset-cells"
+ 
+ allOf:
+@@ -57,13 +57,28 @@ allOf:
+       properties:
+         compatible:
+           contains:
+-            const: spacemit,k1-syscon-apbc
++            enum:
++              - spacemit,k1-syscon-apmu
++              - spacemit,k1-syscon-mpmu
+     then:
+-      properties:
+-        "#power-domain-cells": false
+-    else:
+       required:
+         - "#power-domain-cells"
++    else:
++      properties:
++        "#power-domain-cells": false
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - spacemit,k1-syscon-apbc
++              - spacemit,k1-syscon-apmu
++              - spacemit,k1-syscon-mpmu
++    then:
++      required:
++        - clocks
++        - clock-names
++        - "#clock-cells"
+ 
+ additionalProperties: false
+ 
+diff --git a/include/dt-bindings/clock/spacemit,k1-syscon.h b/include/dt-bindings/clock/spacemit,k1-syscon.h
+index 35968ae982466..f5965dda3b905 100644
+--- a/include/dt-bindings/clock/spacemit,k1-syscon.h
++++ b/include/dt-bindings/clock/spacemit,k1-syscon.h
+@@ -78,6 +78,9 @@
+ #define CLK_APB			31
+ #define CLK_WDT_BUS		32
+ 
++/* MPMU resets */
++#define RESET_WDT		0
++
+ /* APBC clocks */
+ #define CLK_UART0		0
+ #define CLK_UART2		1
+@@ -180,6 +183,59 @@
+ #define CLK_TSEN_BUS		98
+ #define CLK_IPC_AP2AUD_BUS	99
+ 
++/* APBC resets */
++#define RESET_UART0		0
++#define RESET_UART2		1
++#define RESET_UART3		2
++#define RESET_UART4		3
++#define RESET_UART5		4
++#define RESET_UART6		5
++#define RESET_UART7		6
++#define RESET_UART8		7
++#define RESET_UART9		8
++#define RESET_GPIO		9
++#define RESET_PWM0		10
++#define RESET_PWM1		11
++#define RESET_PWM2		12
++#define RESET_PWM3		13
++#define RESET_PWM4		14
++#define RESET_PWM5		15
++#define RESET_PWM6		16
++#define RESET_PWM7		17
++#define RESET_PWM8		18
++#define RESET_PWM9		19
++#define RESET_PWM10		20
++#define RESET_PWM11		21
++#define RESET_PWM12		22
++#define RESET_PWM13		23
++#define RESET_PWM14		24
++#define RESET_PWM15		25
++#define RESET_PWM16		26
++#define RESET_PWM17		27
++#define RESET_PWM18		28
++#define RESET_PWM19		29
++#define RESET_SSP3		30
++#define RESET_RTC		31
++#define RESET_TWSI0		32
++#define RESET_TWSI1		33
++#define RESET_TWSI2		34
++#define RESET_TWSI4		35
++#define RESET_TWSI5		36
++#define RESET_TWSI6		37
++#define RESET_TWSI7		38
++#define RESET_TWSI8		39
++#define RESET_TIMERS1		40
++#define RESET_TIMERS2		41
++#define RESET_AIB		42
++#define RESET_ONEWIRE		43
++#define RESET_SSPA0		44
++#define RESET_SSPA1		45
++#define RESET_DRO		46
++#define RESET_IR		47
++#define RESET_TSEN		48
++#define RESET_IPC_AP2AUD	49
++#define RESET_CAN0		50
++
+ /* APMU clocks */
+ #define CLK_CCI550		0
+ #define CLK_CPU_C0_HI		1
+@@ -244,4 +300,76 @@
+ #define CLK_V2D			60
+ #define CLK_EMMC_BUS		61
+ 
++/* APMU resets */
++#define RESET_CCIC_4X		0
++#define RESET_CCIC1_PHY		1
++#define RESET_SDH_AXI		2
++#define RESET_SDH0		3
++#define RESET_SDH1		4
++#define RESET_SDH2		5
++#define RESET_USBP1_AXI		6
++#define RESET_USB_AXI		7
++#define RESET_USB3_0		8
++#define RESET_QSPI		9
++#define RESET_QSPI_BUS		10
++#define RESET_DMA		11
++#define RESET_AES		12
++#define RESET_VPU		13
++#define RESET_GPU		14
++#define RESET_EMMC		15
++#define RESET_EMMC_X		16
++#define RESET_AUDIO		17
++#define RESET_HDMI		18
++#define RESET_PCIE0		19
++#define RESET_PCIE1		20
++#define RESET_PCIE2		21
++#define RESET_EMAC0		22
++#define RESET_EMAC1		23
++#define RESET_JPG		24
++#define RESET_CCIC2PHY		25
++#define RESET_CCIC3PHY		26
++#define RESET_CSI		27
++#define RESET_ISP_CPP		28
++#define RESET_ISP_BUS		29
++#define RESET_ISP		30
++#define RESET_ISP_CI		31
++#define RESET_DPU_MCLK		32
++#define RESET_DPU_ESC		33
++#define RESET_DPU_HCLK		34
++#define RESET_DPU_SPIBUS	35
++#define RESET_DPU_SPI_HBUS	36
++#define RESET_V2D		37
++#define RESET_MIPI		38
++#define RESET_MC		39
++
++/*	RCPU resets	*/
++#define RESET_RCPU_SSP0		0
++#define RESET_RCPU_I2C0		1
++#define RESET_RCPU_UART1		2
++#define RESET_RCPU_IR		3
++#define RESET_RCPU_CAN		4
++#define RESET_RCPU_UART0		5
++#define RESET_RCPU_HDMI_AUDIO	6
++
++/*	RCPU2 resets	*/
++#define RESET_RCPU2_PWM0		0
++#define RESET_RCPU2_PWM1		1
++#define RESET_RCPU2_PWM2		2
++#define RESET_RCPU2_PWM3		3
++#define RESET_RCPU2_PWM4		4
++#define RESET_RCPU2_PWM5		5
++#define RESET_RCPU2_PWM6		6
++#define RESET_RCPU2_PWM7		7
++#define RESET_RCPU2_PWM8		8
++#define RESET_RCPU2_PWM9		9
++
++/*	APBC2 resets	*/
++#define RESET_APBC2_UART1	0
++#define RESET_APBC2_SSP2	1
++#define RESET_APBC2_TWSI3	2
++#define RESET_APBC2_RTC		3
++#define RESET_APBC2_TIMERS0	4
++#define RESET_APBC2_KPC		5
++#define RESET_APBC2_GPIO	6
++
+ #endif /* _DT_BINDINGS_SPACEMIT_CCU_H_ */
 -- 
 2.45.2
 
