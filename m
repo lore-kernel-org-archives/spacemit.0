@@ -1,89 +1,76 @@
-Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCCD189BB5
-	for <spacemit@lists.linux.dev>; Tue, 13 May 2025 05:02:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EA321420B
+	for <spacemit@lists.linux.dev>; Tue, 13 May 2025 09:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747112576; cv=none; b=RxAbSz2mW8vJQWVU9T84myTavS3w2Uq1ET0QFcDk1b0l1DrK8KJYizjyd/Rt3E+RAHk3T7bMsuc+E4uvDmQYCHingXA3pHeBT0ea1yl1M/2CWEVnkltueM2JsdKSxXhVgJpIdlaXQPhQwOVvoAs7+5wvVazbK6gUxtp8IKjabCA=
+	t=1747128095; cv=none; b=n3lcVVL6yNJ42/MAbvo5yngX84EiIUAFT61Iuzj1AMfae7kEapf3ciq3eGi5nAvJsuqAe3a8ocPFGdnl88s4kBBZSn1WPcAKfOZKnq9JpMX/E2A+f+8YWieUs9OH1h7gkpufQzxk1BDCNNvbLybOApKQA+SN4Agp8yLpVSxizVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747112576; c=relaxed/simple;
-	bh=pmGvFHuiA36wKd6QquoJOIas6H2vuUJqSpbTefp3dbw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pEWmMuoZWnlfMB5vaIPv7kG/j8YQ39+Afdqr6OWTNdhfdWxv/nDzaQmSEDyTZ3mUmIiPu9WkWBvpQK/P4efDg2SfCZ+SbxnTQmbA9qKBY+UdaCDIYyOpuCsQmMRbHmlVjMi8jsjI2YEYzpvW+TBxKBStfdG7M1aCMpQB9L4Aub8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=IGs/vfV1; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=LMSinbuv; arc=none smtp.client-ip=155.254.16.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="IGs/vfV1";
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="LMSinbuv"
-Received: from bayard.4d2.org (bayard.4d2.org [127.0.0.1])
-	by bayard.4d2.org (Postfix) with ESMTP id A2F3B12FB43C;
-	Mon, 12 May 2025 22:02:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1747112573; bh=pmGvFHuiA36wKd6QquoJOIas6H2vuUJqSpbTefp3dbw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IGs/vfV1iC52O+WkyE/wYDMnLrJ3APRv4bTF+gxydJtWry/9ShYrlF+lp4d2bryAt
-	 B0mI49+HtWdxvnbXHFY1AgZJZTInRE6IIEq3ahR+mqOMCCM7pEdYGpXUb4nFHvBjyZ
-	 K3+nUgC7av0W4ReGkm/Q8SK7DHQWdE27rpY869Vdp4pm3wdj6PTVyrqPr/EfnxrFmo
-	 +UiBTvewauOW2Oq4jpZ4kZBcQR7ZhFXH272aP0hUQ9vjOUS7x4zjo6Klh/gtWIjJXG
-	 fn/uQUBMp9mpMRx6PQ2bfX/E77ddq68Pm+50V60+ny1BA9cce8zmXJe51fZ0pUZmO8
-	 WiBCZF+BrA2qA==
-X-Virus-Scanned: amavisd-new at 4d2.org
-Received: from bayard.4d2.org ([127.0.0.1])
- by bayard.4d2.org (bayard.4d2.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id e67-jXa9ihwv; Mon, 12 May 2025 22:02:19 -0700 (PDT)
-Received: from ketchup (unknown [183.217.81.95])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: heylenay@4d2.org)
-	by bayard.4d2.org (Postfix) with ESMTPSA id CD09412FB430;
-	Mon, 12 May 2025 22:02:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1747112539; bh=pmGvFHuiA36wKd6QquoJOIas6H2vuUJqSpbTefp3dbw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LMSinbuvmBlIB3o55y//CuXRRaaeUjcWmLfx3o4KOUTWfjyFaaYjVN+fPv5KX1yFt
-	 NagZC9lR1Lhm0wjyx6quKhNsE3NoYMuM8p3Sp/i8JoKcw7UWG2oRI042Z+U2qFfugy
-	 GNNTQCoDF5Kh5AI13q0VJiSY5GaICGMnEE+tmFonykLKhTn6uXB0zxn+CH+0B+dsfR
-	 K0L7Mvpishm3Shk99WFEbHEaEz7hMVH+Olab9dj0pLfOqN1xIREMo4Di66kLv1YL7j
-	 ZTCzzEkRqborJ0Dk7rCDe9hr6JcV+94wyJxgYHXy3AujGXtaJZuAjxutbHYOATk7dj
-	 TbBQY4nFYRpBQ==
-Date: Tue, 13 May 2025 05:02:12 +0000
-From: Haylen Chu <heylenay@4d2.org>
-To: Alex Elder <elder@riscstar.com>, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-	p.zabel@pengutronix.de, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	dlan@gentoo.org
-Cc: inochiama@outlook.com, guodong@riscstar.com, devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v9 2/6] soc: spacemit: create a header for clock/reset
- registers
-Message-ID: <aCLSVB-AIF-fg_2a@ketchup>
+	s=arc-20240116; t=1747128095; c=relaxed/simple;
+	bh=L7l7fK4yzt+8ARLihCJvli/AWMvTKu+OyqzgTNEXlgY=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=cld/GyVgcJxyscUzJInEhNV6P2iEWWjG1LgPdmm4kdRuSYNEwpFHlY+QQAC6Q1N7l73e92eQDaxFzC1S4ViTEDSyexqSGsAySb4yYf1e2y3k0EFmGb8f7sI8PFHQDcA8wVBIbPzv04fVSojKMLbuc+UhbiWB1Euc/WK5zTCeQVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uElox-0008Gs-Cv; Tue, 13 May 2025 11:21:07 +0200
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uElow-002W0l-2L;
+	Tue, 13 May 2025 11:21:07 +0200
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uElox-0004YW-0K;
+	Tue, 13 May 2025 11:21:07 +0200
+Message-ID: <ecf46fa3116690b85f51539edf7f6a47c612fca5.camel@pengutronix.de>
+Subject: Re: [PATCH v9 5/6] reset: spacemit: define three more CCUs
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Alex Elder <elder@riscstar.com>, robh@kernel.org, krzk+dt@kernel.org, 
+ conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org, 
+ paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr,  dlan@gentoo.org
+Cc: heylenay@4d2.org, inochiama@outlook.com, guodong@riscstar.com, 
+ devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+ spacemit@lists.linux.dev,  linux-riscv@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+Date: Tue, 13 May 2025 11:21:07 +0200
+In-Reply-To: <20250512183212.3465963-6-elder@riscstar.com>
 References: <20250512183212.3465963-1-elder@riscstar.com>
- <20250512183212.3465963-3-elder@riscstar.com>
+	 <20250512183212.3465963-6-elder@riscstar.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250512183212.3465963-3-elder@riscstar.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: spacemit@lists.linux.dev
 
-On Mon, May 12, 2025 at 01:32:07PM -0500, Alex Elder wrote:
-> Move the definitions of register offsets and fields used by the SpacemiT
-> K1 SoC CCUs into a separate header file, so that they can be shared by
-> the reset driver that will be found under drivers/reset.
-> 
+On Mo, 2025-05-12 at 13:32 -0500, Alex Elder wrote:
+> Three more CCUs on the SpacemiT K1 SoC implement only resets, not clocks.
+> Define these resets so they can be used.
+>=20
 > Signed-off-by: Alex Elder <elder@riscstar.com>
 > ---
->  drivers/clk/spacemit/ccu-k1.c    | 111 +----------------------------
->  include/soc/spacemit/k1-syscon.h | 118 +++++++++++++++++++++++++++++++
->  2 files changed, 119 insertions(+), 110 deletions(-)
->  create mode 100644 include/soc/spacemit/k1-syscon.h
+>  drivers/clk/spacemit/ccu-k1.c    | 24 +++++++++++++++
+>  drivers/reset/reset-spacemit.c   | 51 ++++++++++++++++++++++++++++++++
+>  include/soc/spacemit/k1-syscon.h | 30 +++++++++++++++++++
 
-Reviewed-by: Haylen Chu <heylenay@4d2.org>
+Could you split this into clk: and reset: parts? The reset changes are
+
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+
+regards
+Philipp
