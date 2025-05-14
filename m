@@ -1,143 +1,93 @@
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1023C207DEF
-	for <spacemit@lists.linux.dev>; Tue, 13 May 2025 21:53:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D3F1F4167
+	for <spacemit@lists.linux.dev>; Wed, 14 May 2025 04:48:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747173241; cv=none; b=HKwHChTFy0pbn3EgyQDMKp/Lq67ZIlwDRcgb4+33cEkRBQ3OtKpwaC/qFE6f/aqMJvOFkPJqGiU/8v1KpfZVujByY4o/3NGWfgUdRMVP1O0Kma+8zsE984Eys2SbxKRwxrQQ7kVkc8wUJc6hdJo2ubzS/biJ9l8VDc9c7pJB4RY=
+	t=1747198128; cv=none; b=tfDbBDQ1qSbixbSWJ0XYfUhsESug/OwMa43hVHADyz+s23COcHlp5SEA313tJFfC3zZffbRI3dOs5AM6OHZsMe+Iby4P5IgnuRSMHGxtRuWZIznyyDSDKscXbo3nM6ViHXNINGzccqkfbrV4JvabMqXsOUGLUkmLPh05EEKFa5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747173241; c=relaxed/simple;
-	bh=ofhrWzbkHpmkRBFTa000gjfyL5s3fJzmMKuP+Rinp2c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EwLCJmi+NIdxEMt7XVVyffEV1pFAZOlTRSA7iKQ55jYNz1MfJmclxMENUnGHnkGjSge5abQfEbXFxvtmbC4xLV1h2RRIlg8Ipgscl2d8G75koksTMaGEhiQO0Xg0wsZuwZhHIXW37XRskCfoIqGjV3ykf57IbMIEy/krv030qZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=hKGim58E; arc=none smtp.client-ip=209.85.166.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="hKGim58E"
-Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-85d9a87660fso640097339f.1
-        for <spacemit@lists.linux.dev>; Tue, 13 May 2025 14:53:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1747173238; x=1747778038; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hXQ0rLrEsZDkkO0xDOFrK28pA119DtQt4oQHk7dYEkk=;
-        b=hKGim58EZD8ke/5UDBunRq/z4S0Kx/ry6M9Qa2Oopyy9ymNuCCWY797fS0sLOLkl11
-         rKL2VDzOEhUnBBDei4JPYTFAd0/YWnwjMiP8ldHE0qd/vCvhRNSV/mqXEN3KXV2/ten3
-         DuTxweb22KGsFml3zW8NMH9FL0FL6XnmfxOk0+JUrAf+LfSlDZZJmQI+ROJMHZLxFqwf
-         FjeVNZuRm2OkVVYm3fhJi5WYfNN6+1BE30pWWi6SLpoSS1I7mJNFlWyfU68ieCDA0w3f
-         dYu9H7VL23WWlCukUViCdbQtfAaPsB7WM9Ky6SLYGeJdKVwcDTpZtyqueimheQwQWUpX
-         WeNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747173238; x=1747778038;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hXQ0rLrEsZDkkO0xDOFrK28pA119DtQt4oQHk7dYEkk=;
-        b=XBnsnmgZjSJlucLnETpPSkjF5lpnbfUOBnQPTN/8fmelmzBr8PBtB0rA79nHtue+H2
-         vPmUeDZV3qRTAXRMdFZhTsEc5uRmbm9MfDmiFklwC/1A3Q9rD8Up5jnt5eFHup3VcpqM
-         o/wJCVVqd6/sRv3IAitM8NysrgcoZDVZQy21wXIMrsqUA438og/mOSqK7raeF2U7SJ+L
-         gCJs9QSn4V/kwUHTnd0/b4uiEjhSqp75fBmdCe1gh+1fHZTSo6laAKjMbFXqno8nTBrV
-         htOzlGy+rLG/JiNv2ieiSUplx8UJVXe7Z6PjnJXrjVpQjnDBVZ2ltxVmzHf8Qsneao4l
-         8BUA==
-X-Forwarded-Encrypted: i=1; AJvYcCWxEyriMwkb4ogQVGf6k2xDccZ4Gpezdbxbe02quaJ9cGstKowKeZyhrHQkGrGb0yIG/LrPAf3K2Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yze9v8UeHCMbYlPEVvXCpmzfzPDt6kBYUWVOYuw1JGRwjyMVpQj
-	XCWFwxUnUb2yAUo9Xln6rZzwawtseb8G3++m/DRrAFxOtkfsk8vPAqL6EpBYI/c=
-X-Gm-Gg: ASbGncuAy7xOKWfp7qYcM8dzc7YBrXBTv/lK5UMN0oQjkhiSBinpBQbjQrWod7tQy/4
-	h6nwY2GoVxB6rPLHvs/b/8KHs9gfRQbXJvENpXp2jWdBgL4GQmpMmdVusU9f+1DBf2UYbLdrBmG
-	TGKtf5xzr4AZmevtpGGsCjBnmkoy8rF7IodpHC/GtX7I8Jf3drzFQXdbU4fU61WyAvj0CfujO3J
-	ZT2YASD7kxqVd/VkoAgcWLeQh+PlUDKyyhTA2DwbT+N3QFVcPzFyO2uYpYqQTRqhacZOn/ZIg2a
-	/j2f3kyf6sgz1TmbshqK5xlorhwDxP0cSwX71Xhl2ayOjoCda0nEF/UwaWKG5Q9BUzGaiUfbzku
-	Y9qT1LpXGTXr081alPvW5beTT
-X-Google-Smtp-Source: AGHT+IHAidM+Hnbk1eCF9zik0cgy840UdEyeKKKxABRP4OWyRlKVuC+CHVe97np7fF3lS1j5FvMYHQ==
-X-Received: by 2002:a05:6602:36c8:b0:85b:3885:1592 with SMTP id ca18e2360f4ac-86a08e40afemr117157839f.10.1747173238154;
-        Tue, 13 May 2025 14:53:58 -0700 (PDT)
-Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-867636e0dedsm239622539f.32.2025.05.13.14.53.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 May 2025 14:53:57 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	p.zabel@pengutronix.de,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	dlan@gentoo.org
-Cc: heylenay@4d2.org,
-	inochiama@outlook.com,
-	guodong@riscstar.com,
-	devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v10 6/6] riscv: dts: spacemit: add reset support for the K1 SoC
-Date: Tue, 13 May 2025 16:53:44 -0500
-Message-ID: <20250513215345.3631593-7-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250513215345.3631593-1-elder@riscstar.com>
-References: <20250513215345.3631593-1-elder@riscstar.com>
+	s=arc-20240116; t=1747198128; c=relaxed/simple;
+	bh=GxaUcFGYaz+B0AiRsGQ/HWk9RekqZ44abVdxA5e2Lsg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=X5/Xh+mrchi7zX1uwnGp5G5rRg19lysb4uh40ZwRwMFcIm0mirpN2Fdn/J+C/DGlCXrNAHY7dD2k2noOhIcdGeiUXxgm5yfs1WY0QlH0uNxoMLUIaIawaQskL5+QYC5H3bGuJZTttEzLCmVS+x/KIXhFVfNNIDbCqHPA1uA68jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.143])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C761234348B;
+	Wed, 14 May 2025 04:48:45 +0000 (UTC)
+Date: Wed, 14 May 2025 04:48:41 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: soc@kernel.org, Arnd Bergmann <arnd@arndb.de>
+Cc: spacemit@lists.linux.dev, linux-riscv@lists.infradead.org
+Subject: [GIT PULL] RISC-V SpacemiT Devicetrees for v6.16
+Message-ID: <20250514044841-GYA524674@gentoo>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Define syscon nodes for the RCPU, RCPU2, and APBC2 SpacemiT CCUS, which
-currently support resets but not clocks in the SpacemiT K1.
+Hi Arnd,
 
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+  Please pull SpacemiT's device tree changes for v6.16, thanks
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index c0f8c5fca975d..de403bda2b878 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -346,6 +346,18 @@ soc {
- 		dma-noncoherent;
- 		ranges;
- 
-+		syscon_rcpu: system-controller@c0880000 {
-+			compatible = "spacemit,k1-syscon-rcpu";
-+			reg = <0x0 0xc0880000 0x0 0x2048>;
-+			#reset-cells = <1>;
-+		};
-+
-+		syscon_rcpu2: system-controller@c0888000 {
-+			compatible = "spacemit,k1-syscon-rcpu2";
-+			reg = <0x0 0xc0888000 0x0 0x28>;
-+			#reset-cells = <1>;
-+		};
-+
- 		syscon_apbc: system-controller@d4015000 {
- 			compatible = "spacemit,k1-syscon-apbc";
- 			reg = <0x0 0xd4015000 0x0 0x1000>;
-@@ -553,6 +565,12 @@ clint: timer@e4000000 {
- 					      <&cpu7_intc 3>, <&cpu7_intc 7>;
- 		};
- 
-+		syscon_apbc2: system-controller@f0610000 {
-+			compatible = "spacemit,k1-syscon-apbc2";
-+			reg = <0x0 0xf0610000 0x0 0x20>;
-+			#reset-cells = <1>;
-+		};
-+
- 		sec_uart1: serial@f0612000 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xf0612000 0x0 0x100>;
--- 
-2.45.2
+  Please note, there are clock dt-binding dependencies which also included 
+in this PR, they are exactly same commits (same hash) which already queued
+at clock's tree[1].
 
+  Let me know if this works for you.
+
+Link: https://lore.kernel.org/all/a28e4eca6e2a9522cb8e707845a9117b@kernel.org/ [1]
+
+Yixun Lan (dlan)
+
+The following changes since commit 0af2f6be1b4281385b618cb86ad946eded089ac8:
+
+  Linux 6.15-rc1 (2025-04-06 13:11:33 -0700)
+
+are available in the Git repository at:
+
+  https://github.com/spacemit-com/linux tags/spacemit-dt-for-6.16-1
+
+for you to fetch changes up to 3aa64cd126b4fd298ba5d28227ea3f82cd6f541c:
+
+  riscv: dts: spacemit: add gpio LED for system heartbeat (2025-05-14 11:43:59 +0800)
+
+----------------------------------------------------------------
+RISC-V SpacemiT DT changes for 6.16
+
+- Add clock driver, fix for pinctrl/uart
+- Add gpio support, enable LED heartbeat
+
+----------------------------------------------------------------
+Haylen Chu (3):
+      dt-bindings: soc: spacemit: Add spacemit,k1-syscon
+      dt-bindings: clock: spacemit: Add spacemit,k1-pll
+      riscv: dts: spacemit: Add clock tree for SpacemiT K1
+
+Yixun Lan (5):
+      Merge tag 'spacemit-clk-binding-for-6.16' of https://github.com/spacemit-com/linux into spacemit-dt-for-6.16
+      riscv: dts: spacemit: Acquire clocks for pinctrl
+      riscv: dts: spacemit: Acquire clocks for UART
+      riscv: dts: spacemit: add gpio support for K1 SoC
+      riscv: dts: spacemit: add gpio LED for system heartbeat
+
+ .../devicetree/bindings/clock/spacemit,k1-pll.yaml |  50 +++++
+ .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  |  80 +++++++
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    |  11 +
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       |   3 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi               | 132 ++++++++++-
+ include/dt-bindings/clock/spacemit,k1-syscon.h     | 247 +++++++++++++++++++++
+ 6 files changed, 514 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/spacemit,k1-pll.yaml
+ create mode 100644 Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
+ create mode 100644 include/dt-bindings/clock/spacemit,k1-syscon.h
