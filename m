@@ -1,347 +1,171 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7081E47B7
-	for <spacemit@lists.linux.dev>; Wed, 21 May 2025 14:42:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8318B17BB6
+	for <spacemit@lists.linux.dev>; Thu, 22 May 2025 11:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747838540; cv=none; b=EHB0S+G2XgEUitjZ3lGbZLY/3Merz+VICY5qZYD2kKZ307T2FyNEHZ1F8CEtBhnIykEvGnag1+0EvS8erLlc44Dnc8Cj/zCVqTCTBak1enc2ycYCyXGPb0n76JHPUNGJ7PvREc2e2eDaPMMEJnotO0EkElHBVl8mJJ401WNq5Yc=
+	t=1747911829; cv=none; b=VvstFDixoUwlsykk9nhdAzVOrDoucDiP+iP0fuVwNaYWvf6Ud9flgTx3UsD7URz8fDL1v/vdoOmMaeggTwo+Tx+lKbR5sNvzYQglWkbWA6LJF8nmi9W825tlRe8LDXtCopPygbslaCjam2PPR7gPD8wfe/q8cVS3+8jJ5vvbNKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747838540; c=relaxed/simple;
-	bh=LBNFvz6isHb0XpIaBbzzP2bkphvC+OQsaypRWo1qlS8=;
+	s=arc-20240116; t=1747911829; c=relaxed/simple;
+	bh=eEvo3LknW+2PwByaViXA1NM51KqZpfaAISstO/YCbc8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sv7wnHzLrncnoP5fUXCvg+w8GpdBfXSsBr58wMdQW5SUAi0Gmhryw34WGbxT7Jo+BZ7XBhdreMVHIaoz73NgAijsMF08125As1d6oL5HY9Aw/73EeN/vK59P/d7YTRZwKEPkkt2rXPMrbOfBYHdPllYy8n8bRUiqfmsu419wG08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from localhost (gy-adaptive-ssl-proxy-4-entmail-virt151.gy.ntes [27.18.99.37])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 15eccc973;
-	Wed, 21 May 2025 22:42:05 +0800 (GMT+08:00)
-Date: Wed, 21 May 2025 22:42:05 +0800
-From: Ze Huang <huangze@whut.edu.cn>
-To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Ze Huang <huangze@whut.edu.cn>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
-	"spacemit@lists.linux.dev" <spacemit@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 2/3] usb: dwc3: add common driver to support flattened
- DT
-Message-ID: <aC3mPZRCJbq7wg1T@jean.localdomain>
-References: <20250518-b4-k1-dwc3-v3-v3-0-7609c8baa2a6@whut.edu.cn>
- <20250518-b4-k1-dwc3-v3-v3-2-7609c8baa2a6@whut.edu.cn>
- <20250519233723.zky3t6ynchg2a32z@synopsys.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=QYoX555I5EKwSagxneJt5tnmxTRlmnzbdIoX4BQBh07mWTJ0J9zxCYeGRoxICidBubteNAaVva/r+N+vrqvZ1fBQh/4bMJoLyNdHYBbxS1oC7mLmahRVqlZfGwJ/H/To8zTCjUd2yYTTM5nyznPHkl7bXJvTrDfZtmukBMSabL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.143])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 3B7F63430BD;
+	Thu, 22 May 2025 11:03:44 +0000 (UTC)
+Date: Thu, 22 May 2025 11:03:33 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alex Elder <elder@riscstar.com>, linux-mmc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] mmc: sdhci-of-k1: add support for SpacemiT K1 SoC
+Message-ID: <20250522110333-GYA30672@gentoo>
+References: <20250501-20-k1-sdhci-v2-0-3e7005fae29b@gentoo.org>
+ <20250501-20-k1-sdhci-v2-2-3e7005fae29b@gentoo.org>
+ <CAPDyKFoDWS6DWdKOaxTDEYeKv3hjVDoR7XGi19nESVssc-RG8g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250519233723.zky3t6ynchg2a32z@synopsys.com>
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZGE1OVh5CSh5CTE9JGE5MH1YeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVITFlXWRYaDxIVHRRZQVlPS0hVSktISk5MT1VKS0tVSkJLS1
-	kG
-X-HM-Tid: 0a96f34b614703a1kunmbf1ba85e166a3a
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Mio6STo4FjE1Mh1ISi1WNThM
-	C0sKCjRVSlVKTE9MQ0hDTklMS0hPVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
-	TFVKQ1VCQlVITFlXWQgBWUFKS0hDQzcG
+In-Reply-To: <CAPDyKFoDWS6DWdKOaxTDEYeKv3hjVDoR7XGi19nESVssc-RG8g@mail.gmail.com>
 
-On Mon, May 19, 2025 at 11:37:35PM +0000, Thinh Nguyen wrote:
-> On Sun, May 18, 2025, Ze Huang wrote:
-> > To support flattened dwc3 dt model and drop the glue layer, introduce the
-> > `dwc3-common` driver. This enables direct binding of the DWC3 core driver
-> > and offers an alternative to the existing glue driver `dwc3-of-simple`.
-> > 
-> > Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+Hi Ulf,
+
+On 13:34 Mon 19 May     , Ulf Hansson wrote:
+> On Thu, 1 May 2025 at 10:51, Yixun Lan <dlan@gentoo.org> wrote:
+> >
+> > The SDHCI controller found in SpacemiT K1 SoC features SD,
+> > SDIO, eMMC support, such as:
+> >
+> > - Compatible for 4-bit SDIO 3.0 UHS-I protocol, up to SDR104
+> > - Compatible for 4-bit SD 3.0 UHS-I protocol, up to SDR104
+> > - Compatible for 8bit eMMC5.1, up to HS400
+> >
+> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
 > > ---
-> >  drivers/usb/dwc3/Kconfig       |   9 ++
-> >  drivers/usb/dwc3/Makefile      |   1 +
-> >  drivers/usb/dwc3/dwc3-common.c | 191 +++++++++++++++++++++++++++++++++++++++++
-> 
-> Let's rename the dwc3-common to dwc3-generic-plat. I'd associate
-> "common" to common code that exists in all drivers; where as this is
-> mainly for generic platform driver.
-> 
-
-You're right, will do.
-
-> >  3 files changed, 201 insertions(+)
-> > 
-> > diff --git a/drivers/usb/dwc3/Kconfig b/drivers/usb/dwc3/Kconfig
-> > index 310d182e10b50b253d7e5a51674806e6ec442a2a..852f94f906e4f339dcbb562e1ce708409ba77b76 100644
-> > --- a/drivers/usb/dwc3/Kconfig
-> > +++ b/drivers/usb/dwc3/Kconfig
-> > @@ -118,6 +118,15 @@ config USB_DWC3_OF_SIMPLE
-> >  	  Currently supports Xilinx and Qualcomm DWC USB3 IP.
-> >  	  Say 'Y' or 'M' if you have one such device.
-> >  
-> > +config USB_DWC3_COMMON
-> 
-> Let's rename to USB_DWC3_GENERIC_PLAT.
-
-Will do
-
-> I would expect to also have USB_DWC3_GENERIC_PCI at some point in the future.
-> 
-> Side note: flattened driver for PCI driver will allow the dwc3
-> host controllers to take advantage of MSIX interrupts going through the
-> dwc3 code path.
->
-
-Thanks for pointing that out.
-
-I don’t have a convenient setup to test PCI-based DWC3 controllers by the time,
-but I’ll definitely look into it when the opportunity arises.
-
-> 
-> > +       tristate "DWC3 Platform common Driver"
-> > +       depends on OF && COMMON_CLK
-> > +       default USB_DWC3
-> > +       help
-> > +         Support USB3 functionality in simple SoC integrations.
-> > +         Currently supports SpacemiT DWC USB3 IP.
-> > +         Say 'Y' or 'M' if you have one such device.
+> >  drivers/mmc/host/Kconfig       |  14 ++
+> >  drivers/mmc/host/Makefile      |   1 +
+> >  drivers/mmc/host/sdhci-of-k1.c | 306 +++++++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 321 insertions(+)
+> >
+> > [...]
 > > +
-> >  config USB_DWC3_ST
-> >  	tristate "STMicroelectronics Platforms"
-> >  	depends on (ARCH_STI || COMPILE_TEST) && OF
-> > diff --git a/drivers/usb/dwc3/Makefile b/drivers/usb/dwc3/Makefile
-> > index 830e6c9e5fe073c1f662ce34b6a4a2da34c407a2..ad1b0705c4d464f19e79ed0c3c63d942446e4742 100644
-> > --- a/drivers/usb/dwc3/Makefile
-> > +++ b/drivers/usb/dwc3/Makefile
-> > @@ -57,3 +57,4 @@ obj-$(CONFIG_USB_DWC3_IMX8MP)		+= dwc3-imx8mp.o
-> >  obj-$(CONFIG_USB_DWC3_XILINX)		+= dwc3-xilinx.o
-> >  obj-$(CONFIG_USB_DWC3_OCTEON)		+= dwc3-octeon.o
-> >  obj-$(CONFIG_USB_DWC3_RTK)		+= dwc3-rtk.o
-> > +obj-$(CONFIG_USB_DWC3_COMMON)		+= dwc3-common.o
-> > diff --git a/drivers/usb/dwc3/dwc3-common.c b/drivers/usb/dwc3/dwc3-common.c
-> > new file mode 100644
-> > index 0000000000000000000000000000000000000000..afd9a7bec14b68dfd4f2353d714041882660a1a4
-> > --- /dev/null
-> > +++ b/drivers/usb/dwc3/dwc3-common.c
-> > @@ -0,0 +1,191 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * dwc3-common.c - DesignWare USB3 common driver
-> > + *
-> > + * Copyright (C) 2025 Ze Huang <huangze@whut.edu.cn>
-> > + *
-> > + * Inspired by dwc3-qcom.c and dwc3-of-simple.c
-> > + */
+> > +#include "sdhci.h"
+> > +#include "sdhci-pltfm.h"
 > > +
-> > +#include <linux/clk.h>
-> > +#include <linux/delay.h>
-> > +#include <linux/of_platform.h>
-> > +#include <linux/of_address.h>
-> > +#include <linux/platform_device.h>
-> > +#include <linux/reset.h>
-> > +#include "glue.h"
+> > +#define SDHC_MMC_CTRL_REG              0x114
+I will add 'SPACEMIT_' prefix for the register definitions,
+AFAIK, vendor will continue to reuse this IP for their next generation SoC
+
+> > +#define  MISC_INT_EN                   BIT(1)
+> > +#define  MISC_INT                      BIT(2)
+for BITs definition, it's also quite generic.. I could add
+'SDHC_' prefix to make them slightly unique, and as all those registers
+fall into SDHC category..
+
+> 
+> These define-names look a bit too generic to me. Please add some
+> additional prefixes so it becomes more clear what they are.
+> 
+Initially, I've followed the datasheet closely for creating those naming..
+
+https://developer.spacemit.com/documentation?token=WZNvwFDkYinYx0k9jzPcMK5WnIe#12.5.4.36-sdhc_mmc_ctrl_reg-register
+
+> This applies to all the others below too.
+> 
+> > +#define  ENHANCE_STROBE_EN             BIT(8)
+> > +#define  MMC_HS400                     BIT(9)
+> > +#define  MMC_HS200                     BIT(10)
+> > +#define  MMC_CARD_MODE                 BIT(12)
 > > +
-> > +struct dwc3_common {
-> > +	struct device		*dev;
-> > +	struct dwc3		dwc;
-> > +	struct clk_bulk_data	*clks;
-> > +	int			num_clocks;
-> > +	struct reset_control	*resets;
-> > +};
+> > +#define SDHC_TX_CFG_REG                        0x11C
+> > +#define  TX_INT_CLK_SEL                        BIT(30)
+> > +#define  TX_MUX_SEL                    BIT(31)
 > > +
-> > +static int dwc3_common_probe(struct platform_device *pdev)
+> > +#define SDHC_PHY_CTRL_REG              0x160
+> > +#define  PHY_FUNC_EN                   BIT(0)
+> > +#define  PHY_PLL_LOCK                  BIT(1)
+> > +#define  HOST_LEGACY_MODE              BIT(31)
+> > +
+> > +#define SDHC_PHY_FUNC_REG              0x164
+> > +#define  PHY_TEST_EN                   BIT(7)
+> > +#define  HS200_USE_RFIFO               BIT(15)
+> > +
+> > +#define SDHC_PHY_DLLCFG                        0x168
+> > +#define  DLL_PREDLY_NUM                        GENMASK(3, 2)
+> > +#define  DLL_FULLDLY_RANGE             GENMASK(5, 4)
+> > +#define  DLL_VREG_CTRL                 GENMASK(7, 6)
+> > +#define  DLL_ENABLE                    BIT(31)
+> > +
+> > +#define SDHC_PHY_DLLCFG1               0x16C
+> > +#define  DLL_REG1_CTRL                 GENMASK(7, 0)
+> > +#define  DLL_REG2_CTRL                 GENMASK(15, 8)
+> > +#define  DLL_REG3_CTRL                 GENMASK(23, 16)
+> > +#define  DLL_REG4_CTRL                 GENMASK(31, 24)
+> > +
+> > +#define SDHC_PHY_DLLSTS                        0x170
+> > +#define  DLL_LOCK_STATE                        BIT(0)
+> > +
+> > +#define SDHC_PHY_PADCFG_REG            0x178
+> > +#define  PHY_DRIVE_SEL                 GENMASK(2, 0)
+> > +#define  RX_BIAS_CTRL                  BIT(5)
+> 
+> [...]
+> 
+> > +
+> > +static int spacemit_sdhci_pre_select_hs400(struct mmc_host *mmc)
 > > +{
-> > +	struct dwc3_probe_data probe_data = {};
-> > +	struct device *dev = &pdev->dev;
-> > +	struct dwc3_common *dwc3c;
-> > +	struct resource *res;
-> > +	int ret;
+> > +       struct sdhci_host *host = mmc_priv(mmc);
 > > +
-> > +	dwc3c = devm_kzalloc(dev, sizeof(*dwc3c), GFP_KERNEL);
-> > +	if (!dwc3c)
-> > +		return -ENOMEM;
+> > +       spacemit_sdhci_setbits(host, MMC_HS400, SDHC_MMC_CTRL_REG);
+> > +       host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY;
+> 
+> At least this deserves a comment. Isn't MMC_CAP_WAIT_WHILE_BUSY
+> working for all cases?
+> 
+I mostly copy the logic from vendor driver while refactoring the code,
+and again check the logic, it sounds a little bit weird that the flag
+is enabled in pre_select_hs400(), then disabled in post_select_hs400(),
+I really don't understand the logic behind this, or even any quirk?..
+
+while, I've tested both cases of enabling or disabling the flag globally,
+they both works fine as result.. so to be conservative, I plan to drop
+this "enable-and-disable" logic, and would revisit them once adding
+"SD card/SDIO" support in the future
+
 > > +
-> > +	dwc3c->dev = dev;
-> > +
-> > +	platform_set_drvdata(pdev, dwc3c);
-> > +
-> > +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> > +	if (!res) {
-> > +		dev_err(&pdev->dev, "missing memory resource\n");
-> > +		return -ENODEV;
-> > +	}
-> > +
-> > +	dwc3c->resets = of_reset_control_array_get_optional_exclusive(dev->of_node);
-> > +	if (IS_ERR(dwc3c->resets))
-> > +		return dev_err_probe(dev, PTR_ERR(dwc3c->resets), "failed to get reset\n");
-> > +
-> > +	ret = reset_control_assert(dwc3c->resets);
-> > +	if (ret)
-> > +		return dev_err_probe(dev, ret, "failed to assert reset\n");
-> > +
-> > +	usleep_range(10, 1000);
-> > +
-> > +	ret = reset_control_deassert(dwc3c->resets);
-> > +	if (ret) {
-> > +		dev_err(dev, "failed to deassert reset\n");
-> > +		goto reset_assert;
-> > +	}
-> > +
-> > +	ret = clk_bulk_get_all(dwc3c->dev, &dwc3c->clks);
-> > +	if (ret < 0) {
-> > +		dev_err(dev, "failed to get clocks\n");
-> > +		goto reset_assert;
-> > +	}
-> > +
-> > +	dwc3c->num_clocks = ret;
-> > +
-> > +	ret = clk_bulk_prepare_enable(dwc3c->num_clocks, dwc3c->clks);
-> > +	if (ret) {
-> > +		dev_err(dev, "failed to enable clocks\n");
-> > +		goto reset_assert;
-> > +	}
-> > +
-> > +	dwc3c->dwc.dev = dev;
-> > +	probe_data.dwc = &dwc3c->dwc;
-> > +	probe_data.res = res;
-> > +	probe_data.ignore_clocks_and_resets = true;
-> > +	ret = dwc3_core_probe(&probe_data);
-> > +	if (ret)  {
-> > +		dev_err(dev, "failed to register DWC3 Core\n");
-> > +		goto clk_disable;
-> > +	}
-> > +
-> > +	return 0;
-> > +
-> > +clk_disable:
-> > +	clk_bulk_disable_unprepare(dwc3c->num_clocks, dwc3c->clks);
-> > +	clk_bulk_put_all(dwc3c->num_clocks, dwc3c->clks);
-> > +
-> > +reset_assert:
-> > +	reset_control_assert(dwc3c->resets);
-> > +
-> > +	return ret;
+> > +       return 0;
 > > +}
 > > +
-> > +static void dwc3_common_remove(struct platform_device *pdev)
+> > +static void spacemit_sdhci_post_select_hs400(struct mmc_host *mmc)
 > > +{
-> > +	struct dwc3_common *dwc3c = platform_get_drvdata(pdev);
+> > +       struct sdhci_host *host = mmc_priv(mmc);
 > > +
-> > +	dwc3_core_remove(&dwc3c->dwc);
-> > +
-> > +	clk_bulk_disable_unprepare(dwc3c->num_clocks, dwc3c->clks);
-> > +	clk_bulk_put_all(dwc3c->num_clocks, dwc3c->clks);
-> > +
-> > +	reset_control_assert(dwc3c->resets);
-> > +}
-> > +
-> > +#ifdef CONFIG_PM_SLEEP
+> > +       spacemit_sdhci_phy_dll_init(host);
+> > +       host->mmc->caps &= ~MMC_CAP_WAIT_WHILE_BUSY;
 > 
-> Use the new SYSTEM_SLEEP_PM_OPS macros and we can do away with these PM
-> guards.
+> Dito.
 > 
-
-Will follow, thanks
-
-> > +static int dwc3_common_suspend(struct device *dev)
-> > +{
-> > +	struct dwc3_common *dwc3c = dev_get_drvdata(dev);
-> > +	int ret;
-> > +
-> > +	ret = dwc3_pm_suspend(&dwc3c->dwc);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	clk_bulk_disable_unprepare(dwc3c->num_clocks, dwc3c->clks);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int dwc3_common_resume(struct device *dev)
-> > +{
-> > +	struct dwc3_common *dwc3c = dev_get_drvdata(dev);
-> > +	int ret;
-> > +
-> > +	ret = clk_bulk_prepare_enable(dwc3c->num_clocks, dwc3c->clks);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = dwc3_pm_resume(&dwc3c->dwc);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int dwc3_common_runtime_suspend(struct device *dev)
-> > +{
-> > +	struct dwc3_common *dwc3c = dev_get_drvdata(dev);
-> > +
-> > +	return dwc3_runtime_suspend(&dwc3c->dwc);
-> > +}
-> > +
-> > +static int dwc3_common_runtime_resume(struct device *dev)
-> > +{
-> > +	struct dwc3_common *dwc3c = dev_get_drvdata(dev);
-> > +
-> > +	return dwc3_runtime_resume(&dwc3c->dwc);
-> > +}
-> > +
-> > +static int dwc3_common_runtime_idle(struct device *dev)
-> > +{
-> > +	struct dwc3_common *dwc3c = dev_get_drvdata(dev);
-> > +
-> > +	return dwc3_runtime_idle(&dwc3c->dwc);
-> > +}
-> > +
-> > +static const struct dev_pm_ops dwc3_common_dev_pm_ops = {
-> > +	SET_SYSTEM_SLEEP_PM_OPS(dwc3_common_suspend, dwc3_common_resume)
-> > +	RUNTIME_PM_OPS(dwc3_common_runtime_suspend, dwc3_common_runtime_resume,
-> > +		       dwc3_common_runtime_idle)
-> > +};
-> > +#endif /* CONFIG_PM_SLEEP */
-> > +
-> > +static const struct of_device_id dwc3_common_of_match[] = {
-> > +	{ .compatible = "spacemit,k1-dwc3", },
-> > +	{ /* sentinel */ }
-> > +};
-> > +MODULE_DEVICE_TABLE(of, dwc3_common_of_match);
-> > +
-> > +static struct platform_driver dwc3_common_driver = {
-> > +	.probe		= dwc3_common_probe,
-> > +	.remove		= dwc3_common_remove,
-> > +	.driver		= {
-> > +		.name	= "dwc3-common",
-> > +		.of_match_table = dwc3_common_of_match,
-> > +#ifdef CONFIG_PM_SLEEP
-> > +		.pm	= &dwc3_common_dev_pm_ops,
-> > +#endif /* CONFIG_PM_SLEEP */
-> > +	},
-> > +};
-> > +module_platform_driver(dwc3_common_driver);
-> > +
-> > +MODULE_LICENSE("GPL");
-> > +MODULE_DESCRIPTION("DesignWare USB3 common driver");
-> > 
-> > -- 
-> > 2.49.0
-> > 
+> [...]
 > 
-> Thanks for the work. Going forward, I hope more platforms will move to
-> this and take advantage of this new flattened model.
-> 
+> Kind regards
+> Uffe
 
-Thanks for the feedback! Looking forward to seeing it adopted more widely :-)
-
-> Thanks,
-> Thinh
+-- 
+Yixun Lan (dlan)
