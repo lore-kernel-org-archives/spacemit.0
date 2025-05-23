@@ -1,171 +1,132 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8318B17BB6
-	for <spacemit@lists.linux.dev>; Thu, 22 May 2025 11:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2AA2576
+	for <spacemit@lists.linux.dev>; Fri, 23 May 2025 13:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747911829; cv=none; b=VvstFDixoUwlsykk9nhdAzVOrDoucDiP+iP0fuVwNaYWvf6Ud9flgTx3UsD7URz8fDL1v/vdoOmMaeggTwo+Tx+lKbR5sNvzYQglWkbWA6LJF8nmi9W825tlRe8LDXtCopPygbslaCjam2PPR7gPD8wfe/q8cVS3+8jJ5vvbNKY=
+	t=1748006492; cv=none; b=auwVPXxYKMK0FFZndJGKRlIay/njshV9H6EcEcFwqe91sj3uel+Tth5APmjGklS0SrOt0Y91qyTQUNjYfr/cnXJMDyKtsJznXuOveFi0mUSWxX9JAZ4q7zt0i77GVwMMucUGkB0JXDBrw9TUQAkO+oFl75MAk8pDNFgyuHyuIIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747911829; c=relaxed/simple;
-	bh=eEvo3LknW+2PwByaViXA1NM51KqZpfaAISstO/YCbc8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QYoX555I5EKwSagxneJt5tnmxTRlmnzbdIoX4BQBh07mWTJ0J9zxCYeGRoxICidBubteNAaVva/r+N+vrqvZ1fBQh/4bMJoLyNdHYBbxS1oC7mLmahRVqlZfGwJ/H/To8zTCjUd2yYTTM5nyznPHkl7bXJvTrDfZtmukBMSabL8=
+	s=arc-20240116; t=1748006492; c=relaxed/simple;
+	bh=/uUt2+APUt4s0Nz60O85gXCqiHDW+NUda7bgTQ9s4zA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VF0LrLYyENjBKvFFA8w0LMQ7N90RGgDrOgCKNa1ozzxyo2Kb4DU6dW/f9urrf4Z6kHJnvXtHs7Fi5ELdx3p629CK/ySBLnwBSfExQrblq4H9AEsicBXyrbSpUhIeOeBQIEc0o++jvans3ZoYHKfRPUFIbuzHhf+uLCbqUdTUofo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.143])
+Received: from [127.0.0.1] (unknown [116.232.18.143])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 3B7F63430BD;
-	Thu, 22 May 2025 11:03:44 +0000 (UTC)
-Date: Thu, 22 May 2025 11:03:33 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 2C661341214;
+	Fri, 23 May 2025 13:21:24 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alex Elder <elder@riscstar.com>, linux-mmc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] mmc: sdhci-of-k1: add support for SpacemiT K1 SoC
-Message-ID: <20250522110333-GYA30672@gentoo>
-References: <20250501-20-k1-sdhci-v2-0-3e7005fae29b@gentoo.org>
- <20250501-20-k1-sdhci-v2-2-3e7005fae29b@gentoo.org>
- <CAPDyKFoDWS6DWdKOaxTDEYeKv3hjVDoR7XGi19nESVssc-RG8g@mail.gmail.com>
+Date: Fri, 23 May 2025 21:21:04 +0800
+Subject: [PATCH] riscv: dts: spacemit: enable eMMC for K1 SoC
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFoDWS6DWdKOaxTDEYeKv3hjVDoR7XGi19nESVssc-RG8g@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250523-22-k1-sdhci-v1-1-6e0adddf7494@gentoo.org>
+X-B4-Tracking: v=1; b=H4sIAD92MGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDUyMjXSDKNtQtTslIztS1NE02N7VMtDA3SzJVAuooKEpNy6wAmxYdW1s
+ LAKTyPGldAAAA
+X-Change-ID: 20250522-22-k1-sdhci-95c759a876b5
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2046; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=/uUt2+APUt4s0Nz60O85gXCqiHDW+NUda7bgTQ9s4zA=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoMHZRXIKtowFCnagfr9Rq++0L2B169bs0Js09E
+ u79NhUnKKWJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaDB2UV8UgAAAAAAuAChp
+ c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277agqEACEg1JERuzP6GAAfe
+ +/iOIQofq6ZZHkvXp8Ex5h4rWrCz5Qc+PeSiVr86NAaueGn/eCdbOu2HOxmR2EbfDCXeRBSRwv5
+ ygzktFwRVDpy5cHa3mtBKUWJLGQWrAYafFeS63cfDctwCf/NzRKxO6rr9zVZzMHZPcgD3zdbw4w
+ PTE91toi733KC5fClm7+KXm+uBX3+aP9sGD5T985J1RoOjseWmk6O4ubX35ID3YEMvZV67aBYjK
+ N2fPaAL6F8jweW4uZg+hBCnskT8oZLtjFZC3WKF7KM/6HBorSRvSWnAQ4YZvKtKZIlyW36aQjE0
+ wxCz6DZfoncaiki0kvqEhfrQ5pRh5Tk1blFWS1gChSKBXODBTUAmiyPPFinOhTPm/Cj3hO55XYe
+ VFEycSiwa/lUlSGiyP7CC9YYm/2F6kaGLvNnfm/I5TGZj+0wfpxTPCeio6lZQiEqwsIgOjmWQBK
+ 2tez2ZGxANDjNVbxJ+l1gSZuG2VQFM7IVuSzrgRoId70cc0GKIL56A0r9uV/T8Fv+gwAhN36Kfz
+ cECmBNH59D8iKh+7tMuXGsYTFy4sFokiSoB/qMhnxoNWFvQke+iZvd3DFy4zZ1SPXjOUir0bJHV
+ IC0l/FaS5t9bPPjkq5Q6ymq3puIBw3FUwsHzQoLsHvQcsqdB6uzJAwhiggi2XvW+raNw==
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Ulf,
+Enable eMMC support for SpacemiT K1 SoC, successfully tested on
+Bananapi-F3 board which shipped with a 16GB eMMC chip - KLMAG1JETD-B041.
 
-On 13:34 Mon 19 May     , Ulf Hansson wrote:
-> On Thu, 1 May 2025 at 10:51, Yixun Lan <dlan@gentoo.org> wrote:
-> >
-> > The SDHCI controller found in SpacemiT K1 SoC features SD,
-> > SDIO, eMMC support, such as:
-> >
-> > - Compatible for 4-bit SDIO 3.0 UHS-I protocol, up to SDR104
-> > - Compatible for 4-bit SD 3.0 UHS-I protocol, up to SDR104
-> > - Compatible for 8bit eMMC5.1, up to HS400
-> >
-> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> > ---
-> >  drivers/mmc/host/Kconfig       |  14 ++
-> >  drivers/mmc/host/Makefile      |   1 +
-> >  drivers/mmc/host/sdhci-of-k1.c | 306 +++++++++++++++++++++++++++++++++++++++++
-> >  3 files changed, 321 insertions(+)
-> >
-> > [...]
-> > +
-> > +#include "sdhci.h"
-> > +#include "sdhci-pltfm.h"
-> > +
-> > +#define SDHC_MMC_CTRL_REG              0x114
-I will add 'SPACEMIT_' prefix for the register definitions,
-AFAIK, vendor will continue to reuse this IP for their next generation SoC
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Adjust DTS to enable eMMC support for K1 SoC, tested on Bananapi-F3
+board.
 
-> > +#define  MISC_INT_EN                   BIT(1)
-> > +#define  MISC_INT                      BIT(2)
-for BITs definition, it's also quite generic.. I could add
-'SDHC_' prefix to make them slightly unique, and as all those registers
-fall into SDHC category..
+This patch is currently based on SpacemiT SoC tree[1] for-next branch.
 
-> 
-> These define-names look a bit too generic to me. Please add some
-> additional prefixes so it becomes more clear what they are.
-> 
-Initially, I've followed the datasheet closely for creating those naming..
+Link: https://github.com/spacemit-com/linux/ [1]
+---
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 10 ++++++++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi            |  9 +++++++++
+ 2 files changed, 19 insertions(+)
 
-https://developer.spacemit.com/documentation?token=WZNvwFDkYinYx0k9jzPcMK5WnIe#12.5.4.36-sdhc_mmc_ctrl_reg-register
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index 816ef1bc358ec490aff184d5915d680dbd9f00cb..fe22c747c5012fe56d42ac8a7efdbbdb694f31b6 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -30,6 +30,16 @@ led1 {
+ 	};
+ };
+ 
++&emmc {
++	bus-width = <8>;
++	mmc-hs400-1_8v;
++	mmc-hs400-enhanced-strobe;
++	non-removable;
++	no-sd;
++	no-sdio;
++	status = "okay";
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_2_cfg>;
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index c0f8c5fca975d73b6ea6886da13fcf55289cb16c..14097f1f6f447bd33ff3aaa07382d27ca8e59a48 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -511,6 +511,15 @@ pll: clock-controller@d4090000 {
+ 			#clock-cells = <1>;
+ 		};
+ 
++		emmc: mmc@d4281000 {
++			compatible = "spacemit,k1-sdhci";
++			reg = <0x0 0xd4281000 0x0 0x200>;
++			clocks = <&syscon_apmu CLK_SDH_AXI>, <&syscon_apmu CLK_SDH2>;
++			clock-names = "core", "io";
++			interrupts = <101>;
++			status = "disabled";
++		};
++
+ 		syscon_apmu: system-controller@d4282800 {
+ 			compatible = "spacemit,k1-syscon-apmu";
+ 			reg = <0x0 0xd4282800 0x0 0x400>;
 
-> This applies to all the others below too.
-> 
-> > +#define  ENHANCE_STROBE_EN             BIT(8)
-> > +#define  MMC_HS400                     BIT(9)
-> > +#define  MMC_HS200                     BIT(10)
-> > +#define  MMC_CARD_MODE                 BIT(12)
-> > +
-> > +#define SDHC_TX_CFG_REG                        0x11C
-> > +#define  TX_INT_CLK_SEL                        BIT(30)
-> > +#define  TX_MUX_SEL                    BIT(31)
-> > +
-> > +#define SDHC_PHY_CTRL_REG              0x160
-> > +#define  PHY_FUNC_EN                   BIT(0)
-> > +#define  PHY_PLL_LOCK                  BIT(1)
-> > +#define  HOST_LEGACY_MODE              BIT(31)
-> > +
-> > +#define SDHC_PHY_FUNC_REG              0x164
-> > +#define  PHY_TEST_EN                   BIT(7)
-> > +#define  HS200_USE_RFIFO               BIT(15)
-> > +
-> > +#define SDHC_PHY_DLLCFG                        0x168
-> > +#define  DLL_PREDLY_NUM                        GENMASK(3, 2)
-> > +#define  DLL_FULLDLY_RANGE             GENMASK(5, 4)
-> > +#define  DLL_VREG_CTRL                 GENMASK(7, 6)
-> > +#define  DLL_ENABLE                    BIT(31)
-> > +
-> > +#define SDHC_PHY_DLLCFG1               0x16C
-> > +#define  DLL_REG1_CTRL                 GENMASK(7, 0)
-> > +#define  DLL_REG2_CTRL                 GENMASK(15, 8)
-> > +#define  DLL_REG3_CTRL                 GENMASK(23, 16)
-> > +#define  DLL_REG4_CTRL                 GENMASK(31, 24)
-> > +
-> > +#define SDHC_PHY_DLLSTS                        0x170
-> > +#define  DLL_LOCK_STATE                        BIT(0)
-> > +
-> > +#define SDHC_PHY_PADCFG_REG            0x178
-> > +#define  PHY_DRIVE_SEL                 GENMASK(2, 0)
-> > +#define  RX_BIAS_CTRL                  BIT(5)
-> 
-> [...]
-> 
-> > +
-> > +static int spacemit_sdhci_pre_select_hs400(struct mmc_host *mmc)
-> > +{
-> > +       struct sdhci_host *host = mmc_priv(mmc);
-> > +
-> > +       spacemit_sdhci_setbits(host, MMC_HS400, SDHC_MMC_CTRL_REG);
-> > +       host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY;
-> 
-> At least this deserves a comment. Isn't MMC_CAP_WAIT_WHILE_BUSY
-> working for all cases?
-> 
-I mostly copy the logic from vendor driver while refactoring the code,
-and again check the logic, it sounds a little bit weird that the flag
-is enabled in pre_select_hs400(), then disabled in post_select_hs400(),
-I really don't understand the logic behind this, or even any quirk?..
+---
+base-commit: 3aa64cd126b4fd298ba5d28227ea3f82cd6f541c
+change-id: 20250522-22-k1-sdhci-95c759a876b5
 
-while, I've tested both cases of enabling or disabling the flag globally,
-they both works fine as result.. so to be conservative, I plan to drop
-this "enable-and-disable" logic, and would revisit them once adding
-"SD card/SDIO" support in the future
-
-> > +
-> > +       return 0;
-> > +}
-> > +
-> > +static void spacemit_sdhci_post_select_hs400(struct mmc_host *mmc)
-> > +{
-> > +       struct sdhci_host *host = mmc_priv(mmc);
-> > +
-> > +       spacemit_sdhci_phy_dll_init(host);
-> > +       host->mmc->caps &= ~MMC_CAP_WAIT_WHILE_BUSY;
-> 
-> Dito.
-> 
-> [...]
-> 
-> Kind regards
-> Uffe
-
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan
+
