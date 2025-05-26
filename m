@@ -1,102 +1,127 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3922A1F4282
-	for <spacemit@lists.linux.dev>; Mon, 26 May 2025 10:04:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2957B20C487
+	for <spacemit@lists.linux.dev>; Mon, 26 May 2025 14:31:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748253885; cv=none; b=dMh1u9v0xLRh2q/3ryO4jG3Xpb3X0fSo3ACbxAKnXIlhx7Knibxb+iXMyUCemobv7kcWLiXNsl/aBVTD3HmoFgO8YkwI0P9OzPHWPWuJHFHP6MLIXUoe78WFh7XvC8fWDx/2aC49BIa/9pDZoVXbEHjAhNOP5TeYuv50wUKD+FY=
+	t=1748269889; cv=none; b=O/jtH4JJKa9zyAXVL0szsOUf4DBuMdq9FAKHQhnQNHzYUKpeul5W4TRJGTMPSNHoBVNSdhWYNorML1FSc4Vh9+n/A+hoSJ6KKr7pPUbJxpM9kmWDYOlqfTgt5X6pFd4UfM1Jil9c0bTHAOM7Q7U2BlODovknK1I9IsRFT/DCAGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748253885; c=relaxed/simple;
-	bh=ec8uspt4ncriXx6kL8YZ0OGhFSLMb29Sj7o0PRhfb4I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IqeKphx2AjoHvIsY2mm0hrZnTjnInbJoStHkumYzTWgTmBR2NFpSdRHqlRC9Uy4Zmx9KeVM+DHaI8mcWSSGBK/mztZzqt6pwmLG6V311beeiCVXf7KB310XWlgEsp+gvek8VZUVFiWfiid5OYojRbQAkga9U5JjTIgRgwTB5Ypk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.143])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id DBB9D34306C;
-	Mon, 26 May 2025 10:04:42 +0000 (UTC)
-Date: Mon, 26 May 2025 10:04:33 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: Binbin Zhou <zhoubinbin@loongson.cn>
-Cc: Binbin Zhou <zhoubb.aaron@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>, linux-mmc@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 22/34] mmc: sdhci-of-k1: Drop the use of
- sdhci_pltfm_free()
-Message-ID: <20250526100433-GYA52596@gentoo>
-References: <cover.1747792905.git.zhoubinbin@loongson.cn>
- <a0906b1172c9452f700d97ff72484fda3023fbae.1747792905.git.zhoubinbin@loongson.cn>
+	s=arc-20240116; t=1748269889; c=relaxed/simple;
+	bh=gcnis70+Pp4V6XwUCZWMe9laz5neKSKoON4lydmTiBs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=D7P17+/Sj7VZnPfqBL7i/ttMqapRCUYxGpAnscgaCoGPkeARJA7m7pcqQuMnGwmSJzhC8Lzn4stkXJgCq+PavNx47mKNnqVMr1AibywCjwgqebUgL8wX6SjHxlKCoU1aEX+i7SoOKse6EtrZLUR1+f/kra1aYDcStV7eWQJj+GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
+Received: from [127.0.0.1] (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [27.18.99.37])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 1670631d8;
+	Mon, 26 May 2025 22:31:10 +0800 (GMT+08:00)
+From: Ze Huang <huangze@whut.edu.cn>
+Subject: [PATCH v4 0/4] Add USB2.0 PHY and USB3.0 PHY support for SpacemiT
+ K1
+Date: Mon, 26 May 2025 22:30:58 +0800
+Message-Id: <20250526-b4-k1-usb3-phy-v2-v4-0-eca668fc16a2@whut.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a0906b1172c9452f700d97ff72484fda3023fbae.1747792905.git.zhoubinbin@loongson.cn>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACJ7NGgC/22OzQ6CMBCEX4X07JL+C558D+OBwiKNEbCFqjG8u
+ 7WaGBOSvcxm5pt5Eo/Ooie77EkcBuvt0EchNxmpu6o/IdgmasIpV1SyLRgJZwazNwLG7gGBQ2s
+ YSlbIksqSxNzosLX3xDwcP9rhdY7o6fMkpvII9XC52GmXBZ0zBa5m5G3urJ8G90h7Ak/ub3WxU
+ h2PgtElUt5UhUSzv3XzlGMz53WfeEH8GGp1fhCRgVQrpZmomBb/jGVZXunqzn8lAQAA
+X-Change-ID: 20250417-b4-k1-usb3-phy-v2-fb1e41849049
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Ze Huang <huangze@whut.edu.cn>, 
+ Junzhong Pan <junzhong.pan@spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1748269870; l=2723;
+ i=huangze@whut.edu.cn; s=20250325; h=from:subject:message-id;
+ bh=gcnis70+Pp4V6XwUCZWMe9laz5neKSKoON4lydmTiBs=;
+ b=ES3T8ThBYPhnWFUdpEYEU0elZxFQRV/oNOoXbaLOtRVXr/P8egaWbxEcEp7RGZbceLhhRSwXC
+ iy/qrUjrBNrCb9BdULuDQHxhLGPTfiVPf0paMZn+mdKw3Pd66AIGx1k
+X-Developer-Key: i=huangze@whut.edu.cn; a=ed25519;
+ pk=C3zfn/kH6oMJickaXBa8dxTZO68EBiD93F+tAenboRA=
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCSkhPVh9LTBpNGU8fGklMSFYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVITFlXWRYaDxIVHRRZQVlPS0hVSktJQkxNTFVKS0tVS1kG
+X-HM-Tid: 0a970d012dea03a1kunm41fed85011971
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6MlE6LSo5TDE9EAwQTzU4FRpW
+	FgowCktVSlVKTE9DSU1CQ0xNS01JVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
+	TFVKQ1VCQlVITFlXWQgBWUFPSE9MNwY+
 
-hi Binbin,
+This patch series introduces support for the USB2.0 PHY and PCIe/USB3.0
+Combo PHY on the SpacemiT K1 SoC. The implementation has been tested on the
+Milk-V Jupiter and BananaPi-f3.
 
-On 14:06 Mon 26 May     , Binbin Zhou wrote:
-> Since the devm_mmc_alloc_host() helper is already in
-> use, sdhci_pltfm_free() is no longer needed.
-> 
-> Cc: Yixun Lan <dlan@gentoo.org>
-> Cc: linux-riscv@lists.infradead.org
-> Cc: spacemit@lists.linux.dev
-> Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-> ---
->  drivers/mmc/host/sdhci-of-k1.c | 15 ++++-----------
->  1 file changed, 4 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
-> index 6880d3e9ab62..40c1929f2de2 100644
-> --- a/drivers/mmc/host/sdhci-of-k1.c
-> +++ b/drivers/mmc/host/sdhci-of-k1.c
-> @@ -262,7 +262,7 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
->  
->  	ret = mmc_of_parse(host->mmc);
->  	if (ret)
-> -		goto err_pltfm;
-> +		return ret;
->  
->  	sdhci_get_of_property(pdev);
->  
-> @@ -276,18 +276,11 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
->  
->  	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
->  
-> -	if (spacemit_sdhci_get_clocks(dev, pltfm_host))
-> -		goto err_pltfm;
-> -
-> -	ret = sdhci_add_host(host);
-> +	ret = spacemit_sdhci_get_clocks(dev, pltfm_host);
->  	if (ret)
-> -		goto err_pltfm;
-> -
-> -	return 0;
-> +		return ret;
->  
-> -err_pltfm:
-> -	sdhci_pltfm_free(pdev);
-> -	return ret;
-> +	return sdhci_add_host(host);
->  }
->  
+K1 includes three USB ports as follows[1]:
+- A USB2.0 OTG Port
+- A USB2.0 Host Only Port
+- A USB3.0 Port with a USB2.0 DRD interface
 
-although this patch looks good, but can you preserve the goto scheme?
-we might add other error handlings as implement SD/SDIO in the future
-(it also keeps the change minimal and easy to review)
- 
+USB3.0 PHY for USB3.0 Port is shared with PCIe port A, meaning that only one of
+these interfaces (PCIe or USB3.0) can be active at a given time.
+
+Link: https://developer.spacemit.com/documentation?token=AjHDwrW78igAAEkiHracBI9HnTb#part5 [1]
+
+Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+---
+Changes in v4:
+- combphy driver:
+  - add in-code comments to indicate that PCIe mode is not yet supported.
+  - replace custom spacemit_reg_update() with standard regmap API.
+  - drop spacemit_combphy_wait_ready helper function as only used once.
+  - Fix PHY init timeout handling: ensure proper error reporting when PLL
+    lock fails during USB3 PHY initialization
+- Link to v3: https://lore.kernel.org/r/20250517-b4-k1-usb3-phy-v2-v3-0-e0655613a163@whut.edu.cn
+
+Changes in v3:
+- improve commit message, provide more info about phy hardware
+- drop superfluous local variable in `spacemit_combphy_wait_ready`
+- replace devm_reset_control_get with devm_reset_control_get_exclusive
+- Link to v2: https://lore.kernel.org/r/20250418-b4-k1-usb3-phy-v2-v2-0-b69e02da84eb@whut.edu.cn
+
+Changes in v2:
+- combphy dt-bindings:
+  - fix reg-names
+  - describe reg
+  - describe #phy-cells argument
+- drop stale ".owner" in driver struct
+- add support for usb lfps_thres in combphy
+- fix Kconfig depends on
+- Link to v1: https://lore.kernel.org/all/20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn
+
+---
+Ze Huang (4):
+      dt-bindings: phy: spacemit: add K1 USB2 PHY
+      dt-bindings: phy: spacemit: add K1 PCIe/USB3 combo PHY
+      phy: spacemit: support K1 USB2.0 PHY controller
+      phy: spacemit: add USB3 support for K1 PCIe/USB3 combo PHY
+
+ .../bindings/phy/spacemit,k1-combphy.yaml          |  72 ++++++
+ .../devicetree/bindings/phy/spacemit,usb2-phy.yaml |  40 ++++
+ drivers/phy/Kconfig                                |   1 +
+ drivers/phy/Makefile                               |   1 +
+ drivers/phy/spacemit/Kconfig                       |  21 ++
+ drivers/phy/spacemit/Makefile                      |   3 +
+ drivers/phy/spacemit/phy-k1-combphy.c              | 266 +++++++++++++++++++++
+ drivers/phy/spacemit/phy-k1-usb2.c                 | 131 ++++++++++
+ 8 files changed, 535 insertions(+)
+---
+base-commit: 64e9fdfc89a76fed38d8ddeed72d42ec71957ed9
+change-id: 20250417-b4-k1-usb3-phy-v2-fb1e41849049
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Ze Huang <huangze@whut.edu.cn>
+
