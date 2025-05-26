@@ -1,114 +1,102 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D70113B284
-	for <spacemit@lists.linux.dev>; Mon, 26 May 2025 06:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3922A1F4282
+	for <spacemit@lists.linux.dev>; Mon, 26 May 2025 10:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748239625; cv=none; b=iqKsr6n4luOpZgywzCqb8qZTYu3H016F8dIdw/w+L6QJGxrNlpPuHeHdF/aQRFzEzf5GBHHjskeeMP6NtScxpgxtcduRfncPKjzmq0/TvAgCwJVh4lju/W5rH6e/gh6ujN4QNOK3iOPaNJpwzie0P2mU9PDF9XhIKkDseh9K5W0=
+	t=1748253885; cv=none; b=dMh1u9v0xLRh2q/3ryO4jG3Xpb3X0fSo3ACbxAKnXIlhx7Knibxb+iXMyUCemobv7kcWLiXNsl/aBVTD3HmoFgO8YkwI0P9OzPHWPWuJHFHP6MLIXUoe78WFh7XvC8fWDx/2aC49BIa/9pDZoVXbEHjAhNOP5TeYuv50wUKD+FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748239625; c=relaxed/simple;
-	bh=eRScWYMeOVfhLk+v4uvOfwPvDBOBopykwlEU79z4R/I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHsrTWHMVVYzaaO9bZwte1B48eCPN+pOzPN/A5ibFEIeRl0P1m793vIbHVlBbkhtvyAYMMEuyOaKKTIm4WKvFIjHT57Nhha0m6tqV+yvZVWyHa5r+RT6EcgqPErvmXtD+KqCoeVamQfKX1joY3SFi6ZPep1iJ7uOF5CFkn6wzG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [223.64.69.3])
-	by gateway (Coremail) with SMTP id _____8AxWXEDBTRo5IX8AA--.14208S3;
-	Mon, 26 May 2025 14:06:59 +0800 (CST)
-Received: from localhost.localdomain (unknown [223.64.69.3])
-	by front1 (Coremail) with SMTP id qMiowMAxj8X_BDRofwTyAA--.34621S4;
-	Mon, 26 May 2025 14:06:58 +0800 (CST)
-From: Binbin Zhou <zhoubinbin@loongson.cn>
-To: Binbin Zhou <zhoubb.aaron@gmail.com>,
+	s=arc-20240116; t=1748253885; c=relaxed/simple;
+	bh=ec8uspt4ncriXx6kL8YZ0OGhFSLMb29Sj7o0PRhfb4I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IqeKphx2AjoHvIsY2mm0hrZnTjnInbJoStHkumYzTWgTmBR2NFpSdRHqlRC9Uy4Zmx9KeVM+DHaI8mcWSSGBK/mztZzqt6pwmLG6V311beeiCVXf7KB310XWlgEsp+gvek8VZUVFiWfiid5OYojRbQAkga9U5JjTIgRgwTB5Ypk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.143])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id DBB9D34306C;
+	Mon, 26 May 2025 10:04:42 +0000 (UTC)
+Date: Mon, 26 May 2025 10:04:33 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Binbin Zhou <zhoubinbin@loongson.cn>
+Cc: Binbin Zhou <zhoubb.aaron@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>
-Cc: Huacai Chen <chenhuacai@kernel.org>,
-	linux-mmc@vger.kernel.org,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Yixun Lan <dlan@gentoo.org>,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: [PATCH 22/34] mmc: sdhci-of-k1: Drop the use of sdhci_pltfm_free()
-Date: Mon, 26 May 2025 14:06:44 +0800
-Message-ID: <a0906b1172c9452f700d97ff72484fda3023fbae.1747792905.git.zhoubinbin@loongson.cn>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <cover.1747792905.git.zhoubinbin@loongson.cn>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Huacai Chen <chenhuacai@kernel.org>, linux-mmc@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 22/34] mmc: sdhci-of-k1: Drop the use of
+ sdhci_pltfm_free()
+Message-ID: <20250526100433-GYA52596@gentoo>
 References: <cover.1747792905.git.zhoubinbin@loongson.cn>
+ <a0906b1172c9452f700d97ff72484fda3023fbae.1747792905.git.zhoubinbin@loongson.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowMAxj8X_BDRofwTyAA--.34621S4
-X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW7AF13CrW3tryUZw4DWF4rZwc_yoW8Jw48pa
-	nxWFZ7Cr48WF4rG3ykXwsrZF1Fkw4Ivay7KrW8Cws7ZrZ8GF1Dtrs7CFWUtF95AFWfGw47
-	XF4DXF18uF98JabCm3ZEXasCq-sJn29KB7ZKAUJUUUUx529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUm2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E
-	14v26F4UJVW0owAaw2AFwI0_JF0_Jw1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2
-	xF0cIa020Ex4CE44I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_
-	Gryq6s0DMcIj6I8E87Iv67AKxVW8Jr0_Cr1UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0x
-	vY0x0EwIxGrwACjcxG6xCI17CEII8vrVW3JVW8Jr1lc7CjxVAaw2AFwI0_JF0_Jw1l42xK
-	82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_JF0_Jw1lx2
-	IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v2
-	6r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_tr0E3s1lIxAIcVC0I7IYx2
-	IY6xkF7I0E14v26r4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r4UJVWxJr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvj
-	DU0xZFpf9x07b3iihUUUUU=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a0906b1172c9452f700d97ff72484fda3023fbae.1747792905.git.zhoubinbin@loongson.cn>
 
-Since the devm_mmc_alloc_host() helper is already in
-use, sdhci_pltfm_free() is no longer needed.
+hi Binbin,
 
-Cc: Yixun Lan <dlan@gentoo.org>
-Cc: linux-riscv@lists.infradead.org
-Cc: spacemit@lists.linux.dev
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
----
- drivers/mmc/host/sdhci-of-k1.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+On 14:06 Mon 26 May     , Binbin Zhou wrote:
+> Since the devm_mmc_alloc_host() helper is already in
+> use, sdhci_pltfm_free() is no longer needed.
+> 
+> Cc: Yixun Lan <dlan@gentoo.org>
+> Cc: linux-riscv@lists.infradead.org
+> Cc: spacemit@lists.linux.dev
+> Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+> ---
+>  drivers/mmc/host/sdhci-of-k1.c | 15 ++++-----------
+>  1 file changed, 4 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+> index 6880d3e9ab62..40c1929f2de2 100644
+> --- a/drivers/mmc/host/sdhci-of-k1.c
+> +++ b/drivers/mmc/host/sdhci-of-k1.c
+> @@ -262,7 +262,7 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+>  
+>  	ret = mmc_of_parse(host->mmc);
+>  	if (ret)
+> -		goto err_pltfm;
+> +		return ret;
+>  
+>  	sdhci_get_of_property(pdev);
+>  
+> @@ -276,18 +276,11 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+>  
+>  	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+>  
+> -	if (spacemit_sdhci_get_clocks(dev, pltfm_host))
+> -		goto err_pltfm;
+> -
+> -	ret = sdhci_add_host(host);
+> +	ret = spacemit_sdhci_get_clocks(dev, pltfm_host);
+>  	if (ret)
+> -		goto err_pltfm;
+> -
+> -	return 0;
+> +		return ret;
+>  
+> -err_pltfm:
+> -	sdhci_pltfm_free(pdev);
+> -	return ret;
+> +	return sdhci_add_host(host);
+>  }
+>  
 
-diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
-index 6880d3e9ab62..40c1929f2de2 100644
---- a/drivers/mmc/host/sdhci-of-k1.c
-+++ b/drivers/mmc/host/sdhci-of-k1.c
-@@ -262,7 +262,7 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+although this patch looks good, but can you preserve the goto scheme?
+we might add other error handlings as implement SD/SDIO in the future
+(it also keeps the change minimal and easy to review)
  
- 	ret = mmc_of_parse(host->mmc);
- 	if (ret)
--		goto err_pltfm;
-+		return ret;
- 
- 	sdhci_get_of_property(pdev);
- 
-@@ -276,18 +276,11 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
- 
- 	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
- 
--	if (spacemit_sdhci_get_clocks(dev, pltfm_host))
--		goto err_pltfm;
--
--	ret = sdhci_add_host(host);
-+	ret = spacemit_sdhci_get_clocks(dev, pltfm_host);
- 	if (ret)
--		goto err_pltfm;
--
--	return 0;
-+		return ret;
- 
--err_pltfm:
--	sdhci_pltfm_free(pdev);
--	return ret;
-+	return sdhci_add_host(host);
- }
- 
- static struct platform_driver spacemit_sdhci_driver = {
 -- 
-2.47.1
-
+Yixun Lan (dlan)
