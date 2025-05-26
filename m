@@ -1,120 +1,98 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA14BA2D
-	for <spacemit@lists.linux.dev>; Mon, 26 May 2025 16:13:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3103D994;
+	Mon, 26 May 2025 16:54:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748276013; cv=none; b=eUeFbY3XuLCOnjYkbfWVKGwHcA8aVZygL0sYId6md0he7q/UDgzMOMmCE9OCsHzq9gUOh+0DA1nsK5DITIyjm4CdxkTRqbZfLwMaEij6qXHfd8tNgyrl7hFhn4bGe5QYdZHvRLYX9/bUcvOH3wQOHmURBbdpvXk+Cjk/euMfWsE=
+	t=1748278494; cv=none; b=gLa56YD3pNWJyBZK1YC6l2HMBYrzrmVa7AcxdepjFNcnG02e6ZKFscnJ8BkhokPw0fI3PBHeXFXwUW5xq71Fy3bgJ2lK/BYv1BgYvR88td6UVPxkPsIK/4JPinJLKaXCaO/fcHK5E9kYfMuAQbPtpxjgTLa/2fB1mXR4WY15KvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748276013; c=relaxed/simple;
-	bh=Mxu3zih8rVxIa8U4gXvsG/YABdlmId8tC9PX3ZTiJbk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D4w5kHJl/acFFrcFkYUsDyksHUBSPIssI6WELgP0XCD/DdnRj0/KOIhsV9BsIzjAOKsoiKA5oZybUaME3PSBeANrpFgZAElWgvwGkPVwA44bjIirLikq5mNbb77fI+rqpX0ail1/Pul5eXrw3KzVg+3XL5Xfo+23TjJ6YZ1W1ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from [198.18.0.1] (gy-adaptive-ssl-proxy-4-entmail-virt151.gy.ntes [113.57.237.88])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 16718ef7d;
-	Tue, 27 May 2025 00:13:22 +0800 (GMT+08:00)
-Message-ID: <0a90fb41-6e24-464f-bf2b-cdd76bfb7f08@whut.edu.cn>
-Date: Tue, 27 May 2025 00:13:22 +0800
+	s=arc-20240116; t=1748278494; c=relaxed/simple;
+	bh=lBm90pZvZ+UoOxLMSy6TVhe9roiPZ8LaELnS6zZuHww=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bNrPdN08hntFzlrlCJyHBX29o4tNBEfkTQXWxTrBWuIYzxzDu6yO9xHIZw1apxZLK2LW7Vx84zJMeljL+rW30zXErkhqcoi/sgM0c0HJYTB1I7YlE4oz5g7jpsBxNcTbWv2zetN5eovFxERoi9mAX/8eh5nGlZesn95w+WRuMKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UnWclTp+; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UnWclTp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E162C4CEE7;
+	Mon, 26 May 2025 16:54:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748278494;
+	bh=lBm90pZvZ+UoOxLMSy6TVhe9roiPZ8LaELnS6zZuHww=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UnWclTp+ovOobfxziqbCaFoppus1w1swSUgBUAGMwnV6zUv+jhpbZze9RZH129Y7m
+	 +rBgYCFh056fteBEXupwrfYHPmVKIwTAYQnOwK5y6hnZv0ZRSTeIzSWS16YZZN1nRD
+	 5iPfE4dnVudevPF2feoFUNvFzjtA0G40OVTAqvHmlF+byXTvkTDcvh0CT866a5alox
+	 spVzf+e4rJ+X2YbRj5V3YgW4yIa5YVvjaATkcfUlK4xetO+MfgLuLsR2K5PMxoxdg7
+	 ESZsUBa0qkD5X2Kz5kVVZB7pb922zVoOaNxm3xY9O6HaSqC+SS3xazMbqaPYlIopme
+	 ixzInJUpR3JgQ==
+Date: Mon, 26 May 2025 18:54:51 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+	dlan@gentoo.org, p.zabel@pengutronix.de, drew@pdp7.com, inochiama@gmail.com, 
+	geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com, 
+	unicorn_wang@outlook.com, duje.mihanovic@skole.hr, heikki.krogerus@linux.intel.com, 
+	elder@riscstar.com, linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v3 4/6] riscv: dts: spacemit: add pwm14_1 pinctrl setting
+Message-ID: <paasmwjel652r25nxobidydtpxfjy7emerilmwqhvhtgrrtg6v@gowpzqdzvlfz>
+References: <20250429085048.1310409-1-guodong@riscstar.com>
+ <20250429085048.1310409-5-guodong@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Linux)
-Subject: Re: [PATCH v4 3/4] phy: spacemit: support K1 USB2.0 PHY controller
-To: Neil Armstrong <neil.armstrong@linaro.org>, Vinod Koul
- <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20250526-b4-k1-usb3-phy-v2-v4-0-eca668fc16a2@whut.edu.cn>
- <20250526-b4-k1-usb3-phy-v2-v4-3-eca668fc16a2@whut.edu.cn>
- <39e6b2e7-2aae-4f11-8cb0-2e911c2d7793@linaro.org>
-Content-Language: en-US
-From: Ze Huang <huangze@whut.edu.cn>
-In-Reply-To: <39e6b2e7-2aae-4f11-8cb0-2e911c2d7793@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaTRhKVhodHU5CSB0ZSk9MH1YeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSkhVTkxVSUhMVUNDWVdZFhoPEhUdFFlBWU9LSFVKS0hKTkxOVUpLS1VKQk
-	tLWQY+
-X-HM-Tid: 0a970d5ebe4303a1kunmdb12c2341c809
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Pwg6Dyo6FzE6Pgw6GDQ4SywU
-	PRIwC0pVSlVKTE9DSUxNS0tMTk9OVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlK
-	SkhVTkxVSUhMVUNDWVdZCAFZQUlCTk83Bg++
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="og4jf76cno5lbodv"
+Content-Disposition: inline
+In-Reply-To: <20250429085048.1310409-5-guodong@riscstar.com>
 
-On 5/26/25 11:51 PM, neil.armstrong@linaro.org wrote:
-> Hi,
->
-> On 26/05/2025 16:31, Ze Huang wrote:
->> The SpacemiT K1 SoC includes three USB ports:
->>
->> - One USB2.0 OTG port
->> - One USB2.0 host-only port
->> - One USB3.0 port with an integrated USB2.0 DRD interface
->>
->> Each of these ports is connected to a USB2.0 PHY responsible for USB2
->> transmission.
->>
->> This commit adds support for the SpacemiT K1 USB2.0 PHY, which is
->> compliant with the USB 2.0 specification and supports both 8-bit 60MHz
->> and 16-bit 30MHz parallel interfaces.
->>
->> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
->> ---
->>   drivers/phy/Kconfig                |   1 +
->>   drivers/phy/Makefile               |   1 +
->>   drivers/phy/spacemit/Kconfig       |  13 ++++
->>   drivers/phy/spacemit/Makefile      |   2 +
->>   drivers/phy/spacemit/phy-k1-usb2.c | 131 
->> +++++++++++++++++++++++++++++++++++++
->>   5 files changed, 148 insertions(+)
->>
-...
->> +
->> +static const struct of_device_id spacemit_usb2phy_dt_match[] = {
->> +    { .compatible = "spacemit,k1-usb2-phy", },
->> +    { /* sentinal */ }
->
-> => sentinel
 
-Thanks!
+--og4jf76cno5lbodv
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: Re: [PATCH v3 4/6] riscv: dts: spacemit: add pwm14_1 pinctrl setting
+MIME-Version: 1.0
 
->
->> +};
->> +MODULE_DEVICE_TABLE(of, spacemit_usb2phy_dt_match);
->> +
->> +static struct platform_driver spacemit_usb2_phy_driver = {
->> +    .probe    = spacemit_usb2phy_probe,
->> +    .driver = {
->> +        .name   = "spacemit-usb2-phy",
->> +        .of_match_table = spacemit_usb2phy_dt_match,
->> +    },
->> +};
->> +module_platform_driver(spacemit_usb2_phy_driver);
->> +
->> +MODULE_DESCRIPTION("Spacemit USB 2.0 PHY driver");
->> +MODULE_LICENSE("GPL");
->>
->
-> It looks fine, but why didn't also convert thid driver to regmap ?
+On Tue, Apr 29, 2025 at 04:50:46PM +0800, Guodong Xu wrote:
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> index 283663647a86..195eb8874f3c 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> @@ -20,4 +20,11 @@ uart0-2-pins {
+>  			drive-strength = <32>;
+>  		};
+>  	};
+> +	pwm14_1_cfg: pwm14-1-cfg {
+> +		pwm14-1-pins {
+> +			pinmux = <K1_PADCONF(44, 4)>;
+> +			bias-pull-up = <0>;
+> +			drive-strength = <32>;
+> +		};
+> +	};
 
-Will do
+There is a newline expected before the pwm14-1-cfg node, isn't there?
 
->
-> Thanks,
-> Neil
->
->
->
+Best regards
+Uwe
 
+--og4jf76cno5lbodv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmg0nNgACgkQj4D7WH0S
+/k4F9Af/Zpy8tXv2q3vdClmG4OFmDlQUd6y7BYw45X1lE4OtNCQADFVZsyy6WU6l
+Xtwwi1fftGGiPz+7BWuZWzSlRKLDryGktzeQI/GYoO/4mRDESCNCG+qI8hGjmVAC
+kX2TmSxV6PQUSszOdWBGUYI3YiK3Wy4T4LcMM0JuAIhehj1zwBNL5YFvmlmgf9r/
+zq7fUmV0h0+TiLERutwSOfZUUmEp6Z3LPS2pDKSoGbF0JYE+mOHJtYaa70jH/QHX
+C3RaQgQZ+ENrMf5DGs33pB/QulhfAm/aUUIXLycp+mm8rYnVu1t7GiTRLSfwmp+U
+35w4lolFUSrs1hzShLHpE4spKswutQ==
+=Bsm/
+-----END PGP SIGNATURE-----
+
+--og4jf76cno5lbodv--
