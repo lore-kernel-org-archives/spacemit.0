@@ -1,25 +1,26 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D3D212B0C
-	for <spacemit@lists.linux.dev>; Mon, 26 May 2025 14:31:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2766B20F089
+	for <spacemit@lists.linux.dev>; Mon, 26 May 2025 14:31:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748269891; cv=none; b=K5ggKXjfQLWdQTGSa5JXdDOm4CmShCwDGpDPXf8lpfINjuwQSo1pQIAaOSkMnwgRsRqgX9pG7h2J0+D8ApfVxp0wij6Uhc4k/pcKRRWTYxCUoUHGUD6fo/6xSDmVFEnAiBwplfaB8UcNzRWdXVIgDrxMEkbkZb7If2aURsz1c/E=
+	t=1748269897; cv=none; b=PGgGl7UiuVUGX2oPJxH/qNyEAEK+vvyIbc6Jbl/Ap3JyNes6X486dbwvLZjNW/E+hoH3/zmxW1P/tceJh5nf/oInt6J3XYUj6x2CYTWSizpAEVl25uFCHwb6ZRRfkmiemTvjFmeLYLAQjnbQAXAMTCo47aKqi7TaCtW+9uv/+ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748269891; c=relaxed/simple;
-	bh=6axFiIRurV8uBHlsjxfe3KUp3NNI09locCbJCSS9qJQ=;
+	s=arc-20240116; t=1748269897; c=relaxed/simple;
+	bh=7wRZijPTWkMIjtlbhD5lqHbIBKaLm3eG7ixPg9G+vh4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Y8WEvabW5y7/Fo7E3gV+67LFjngF3/MDALGaDBNfeVUuvn8vevz4OXaxCjOpJ9d4RgrLFdmvj547iZQWdoyV2vX9wHlqWcxXfldiV1SN0Sw+mdatf6mmS1Jp7CdlLchXTXZQkC5RZCyznMG38NREKS8A4Fq4B3cRO4B7ZqvLYms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.198
+	 In-Reply-To:To:Cc; b=cjFQyCB6GNKYJ1uXmClgZcvPvXTU3b3MUiZfLaLydYJ3tDNjiM8fwvbeo5OU3ciys0aj1SGVsXrvkl0tbw7KooPY+ELxWq1As0yPH3fbw57Nmu3GsdXFj/z1ZqP7k5TQbYBf5qdT5QV3ZmvMGF1Sx3YP/tiWN2eZLhSjHB4+E9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=101.71.155.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
 Received: from [127.0.0.1] (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [27.18.99.37])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 1670631dd;
-	Mon, 26 May 2025 22:31:16 +0800 (GMT+08:00)
+	by smtp.qiye.163.com (Hmail) with ESMTP id 1670631e3;
+	Mon, 26 May 2025 22:31:21 +0800 (GMT+08:00)
 From: Ze Huang <huangze@whut.edu.cn>
-Date: Mon, 26 May 2025 22:30:59 +0800
-Subject: [PATCH v4 1/4] dt-bindings: phy: spacemit: add K1 USB2 PHY
+Date: Mon, 26 May 2025 22:31:00 +0800
+Subject: [PATCH v4 2/4] dt-bindings: phy: spacemit: add K1 PCIe/USB3 combo
+ PHY
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -28,7 +29,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250526-b4-k1-usb3-phy-v2-v4-1-eca668fc16a2@whut.edu.cn>
+Message-Id: <20250526-b4-k1-usb3-phy-v2-v4-2-eca668fc16a2@whut.edu.cn>
 References: <20250526-b4-k1-usb3-phy-v2-v4-0-eca668fc16a2@whut.edu.cn>
 In-Reply-To: <20250526-b4-k1-usb3-phy-v2-v4-0-eca668fc16a2@whut.edu.cn>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -38,78 +39,115 @@ To: Vinod Koul <vkoul@kernel.org>,
  Philipp Zabel <p.zabel@pengutronix.de>
 Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
  linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Ze Huang <huangze@whut.edu.cn>
+ linux-kernel@vger.kernel.org, Ze Huang <huangze@whut.edu.cn>, 
+ Junzhong Pan <junzhong.pan@spacemit.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748269870; l=1416;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1748269870; l=2717;
  i=huangze@whut.edu.cn; s=20250325; h=from:subject:message-id;
- bh=6axFiIRurV8uBHlsjxfe3KUp3NNI09locCbJCSS9qJQ=;
- b=wrLg/LNm7lSg/17Lhxi4LLOJhwCHlK/urcWawQFjdPfhkvf2gM9j154iBL+bPUEY/RtAbwvRy
- pGc0cUypID2B8PfdWRY9GkF6T4fqAGqqksdtTi7GTw26MiY0q4KoWLw
+ bh=7wRZijPTWkMIjtlbhD5lqHbIBKaLm3eG7ixPg9G+vh4=;
+ b=Zn5CP2nXRZDHZQO7ADSxxOmVSpAEdLXfbXKk7fNk2j9aDm5YbaFxOPG6zZaImbljExR/YgIwi
+ CgDASEUaL4dAdbqnz1J9aHonVwMXny6GcpQJ/S8D2S58STJ7eh+XVal
 X-Developer-Key: i=huangze@whut.edu.cn; a=ed25519;
  pk=C3zfn/kH6oMJickaXBa8dxTZO68EBiD93F+tAenboRA=
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDHk9DVhlPTEwfSB4fGUNOH1YeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVITFlXWRYaDxIVHRRZQVlPS0hVSktJSEJLQ1VKS0tVSkJZBg
-	++
-X-HM-Tid: 0a970d0144ce03a1kunm41fed85011999
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDGUMZVk5CSx8ZGkgeGUxLTFYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVITFlXWRYaDxIVHRRZQVlPS0hVSktJQk1KSlVKS0tVS1kG
+X-HM-Tid: 0a970d0158bd03a1kunm41fed850119dc
 X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6OBA6IRw*FTE8IgwXMCsiFS85
-	CzUKCQpVSlVKTE9DSU1CQ0NKSE1CVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
-	TFVKQ1VCQlVITFlXWQgBWUFJTExNNwY+
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6NRQ6NCo*STE8IgwOCjQ9FR85
+	Tg0aCxJVSlVKTE9DSU1CQ0NNQ09DVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
+	TFVKQ1VCQlVITFlXWQgBWUFPSkhONwY+
 
-Add support for USB2 PHY found on SpacemiT K1 SoC.
+Introduce support for SpacemiT K1 PCIe/USB3 combo PHY controller.
+
+PCIe portA and USB3 controller share this phy, only one of them can work
+at any given application scenario.
 
 Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Co-developed-by: Junzhong Pan <junzhong.pan@spacemit.com>
+Signed-off-by: Junzhong Pan <junzhong.pan@spacemit.com>
 Signed-off-by: Ze Huang <huangze@whut.edu.cn>
 ---
- .../devicetree/bindings/phy/spacemit,usb2-phy.yaml | 40 ++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ .../bindings/phy/spacemit,k1-combphy.yaml          | 72 ++++++++++++++++++++++
+ 1 file changed, 72 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml
+diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-combphy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-combphy.yaml
 new file mode 100644
-index 0000000000000000000000000000000000000000..8a91b730cb8733ddf29f1b94fc31e6ba920dbc1b
+index 0000000000000000000000000000000000000000..93f7a3bb06bba380def77f87f6db0184af26e9e6
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml
-@@ -0,0 +1,40 @@
++++ b/Documentation/devicetree/bindings/phy/spacemit,k1-combphy.yaml
+@@ -0,0 +1,72 @@
 +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/phy/spacemit,usb2-phy.yaml#
++$id: http://devicetree.org/schemas/phy/spacemit,k1-combphy.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: SpacemiT K1 SoC USB 2.0 PHY
++title: SpacemiT K1 PCIe/USB3 Combo PHY
 +
 +maintainers:
 +  - Ze Huang <huangze9015@gmail.com>
 +
++description:
++  Combo PHY on SpacemiT K1 SoC. PCIe port A and USB3 controller share this
++  phy, only one of PCIe port A and USB3 port can work at any given application
++  scenario.
++
 +properties:
 +  compatible:
-+    const: spacemit,k1-usb2-phy
++    const: spacemit,k1-combphy
 +
 +  reg:
-+    maxItems: 1
++    items:
++      - description: PHY control registers
++      - description: PCIe/USB3 mode selection register
 +
-+  clocks:
++  reg-names:
++    items:
++      - const: ctrl
++      - const: sel
++
++  resets:
 +    maxItems: 1
 +
 +  "#phy-cells":
-+    const: 0
++    const: 1
++    description:
++      Indicates the PHY mode to select. The value determines whether the PHY
++      operates in PCIe or USB3 mode.
++
++  spacemit,lfps-threshold:
++    description:
++      Controls the LFPS signal detection threshold, affects polling.LFPS
++      handshake. Lower the threshold when core voltage rises.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    minimum: 0
++    maximum: 0xff
++
++  spacemit,rx-always-on:
++    description:
++      Affects RX.detect, enhance compatibility of some DFPs in device mode but
++      increase power consumption.
++    type: boolean
 +
 +required:
 +  - compatible
 +  - reg
-+  - clocks
++  - reg-names
++  - resets
 +  - "#phy-cells"
 +
 +additionalProperties: false
 +
 +examples:
 +  - |
-+    usb-phy@c09c0000 {
-+        compatible = "spacemit,k1-usb2-phy";
-+        reg = <0xc09c0000 0x200>;
-+        clocks = <&syscon_apmu 15>;
-+        #phy-cells = <0>;
++    phy@c0b10000 {
++        compatible = "spacemit,k1-combphy";
++        reg = <0xc0b10000 0x800>,
++              <0xd4282910 0x400>;
++        reg-names = "ctrl", "sel";
++        resets = <&syscon_apmu 19>;
++        #phy-cells = <1>;
 +    };
 
 -- 
