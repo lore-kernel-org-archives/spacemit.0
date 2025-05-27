@@ -1,73 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708A02AF10;
-	Tue, 27 May 2025 06:54:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E531F582A
+	for <spacemit@lists.linux.dev>; Tue, 27 May 2025 06:58:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748328885; cv=none; b=n4AXHE6JU9cp+PwdFV4IW7kS4Yn1YG2vdZPikhIUzuOFL1bX8BJ29u0ajaA5d8mMXBvLTXJVJ7x/ls+UBzJbRxxVpza3PqTcQQhvI8QJrlg3UbhGP6BnaYqkOa5HaABtrCzyOX3w2vC0mkYIopZaXncfFBan+G+ABY3B1M5pvTA=
+	t=1748329129; cv=none; b=PO45xnB2fYANIf0yrqiqFKayF57KyU6Lkq7zFjtAWLTHS9DNFu8ZYD6w+OnPyG+aR7x0PLGDX7DFjztWPVytj2u2LNtQviD5oWVVsFBBJVrHiUN5Taoa1Dp2JBiqa4kmM2HKEtBYO0nZ/+2QhBhEx7KeNPrO5UAKD3x+OMr+EjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748328885; c=relaxed/simple;
-	bh=QfDd2n6cFYxP02STJxzyK1KJcbrSY/2E6tZlrCZsMhQ=;
+	s=arc-20240116; t=1748329129; c=relaxed/simple;
+	bh=+nmJhTqJFkRyprJewCSUIRAOqsTIpamR0GF6tmQGjrA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gW95PuX06ojVeIeX+kXl8PCaxjzZZyC/UlnIYxt2Sf0Mg46F+qYH5zw8jTQftrH+WmjunNBiB63HNNS3Blj+wn2Tvdx7iVo4XsNkK++R+mnlp31lXaZP7b3sCHTFkQOSCFhGZDyp7RbLdA+I0LmBfXoCOB2k3ayZzmnugYdBees=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bclxlVw2; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bclxlVw2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC18C4CEEA;
-	Tue, 27 May 2025 06:54:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748328885;
-	bh=QfDd2n6cFYxP02STJxzyK1KJcbrSY/2E6tZlrCZsMhQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bclxlVw2IYLcWxr58kYfVjk0uBUQyDLV/GHEOoTneMgUy1l6skSnG2YZaAcRDGiRe
-	 oy1AWYOskvfgAISsj/OjcESMUi+PqsaeSW1k+hAgjxDCWVk1OJGgmtoAxLiUJAIkPM
-	 UiuVQfOUgwK8KIvSZ+lOwu+IbBClMOxw34TMbLraUfL5KH1V4U9PtmjoD0SBX9SaAW
-	 UphDeyBTfNyhfJcX+TYSfVFqdaQYpX5cBZBWr03Lmou/LZZrf1OJW8jXG087wCtXLp
-	 WAV++B+Q1OiBEVhDPdKozWvOQd8402m0HSApU9ZrofZ5skcwzsD+V7miYb73d3UsOT
-	 PXuELbK0ZMHPQ==
-Date: Tue, 27 May 2025 08:54:42 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ze Huang <huangze@whut.edu.cn>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, linux-usb@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/4] dt-bindings: soc: spacemit: Add K1 MBUS controller
-Message-ID: <20250527-friendly-armadillo-of-snow-5bec9e@kuoka>
-References: <20250526-b4-k1-dwc3-v3-v4-0-63e4e525e5cb@whut.edu.cn>
- <20250526-b4-k1-dwc3-v3-v4-2-63e4e525e5cb@whut.edu.cn>
+	 Content-Type:Content-Disposition:In-Reply-To; b=iy8SYGyef56km3z6yta+vjKwfb3kXobFe7qwjegIW7uUloDS4/pQE79VvhA3CMwHW4Ir1mB0wlkYJddyUkddNhQrYBqEojC/29n26q8+MD3xqT4sIkPCCeezl5COG5d3NKOjGc5VSrU+490apz3VboUwmdda0VZElb2XmqG4Om8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.143])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 54030343086;
+	Tue, 27 May 2025 06:58:46 +0000 (UTC)
+Date: Tue, 27 May 2025 06:58:41 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>, linux-mmc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH next] mmc: sdhci-of-k1: Fix error code in probe()
+Message-ID: <20250527065841-GYB55693@gentoo>
+References: <aDVTtQdXVtRhxOrb@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250526-b4-k1-dwc3-v3-v4-2-63e4e525e5cb@whut.edu.cn>
+In-Reply-To: <aDVTtQdXVtRhxOrb@stanley.mountain>
 
-On Mon, May 26, 2025 at 10:40:18PM GMT, Ze Huang wrote:
-> Some devices on the SpacemiT K1 SoC perform DMA through a memory bus
-> (MBUS) that is not their immediate parent in the device tree. This bus
-> uses a different address mapping than the CPU.
+Hi Dan,
+
+On 08:55 Tue 27 May     , Dan Carpenter wrote:
+> If spacemit_sdhci_get_clocks() fails, then propagate the error code.
+> Don't return success.
 > 
-> To express this topology properly, devices are expected to use the
-> interconnects with name "dma-mem" to reference the MBUS controller.
-> 
-> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+> Fixes: e5502d15b0f3 ("mmc: sdhci-of-k1: add support for SpacemiT K1 SoC")
+> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 > ---
->  .../bindings/soc/spacemit/spacemit,k1-mbus.yaml    | 55 ++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
+>  drivers/mmc/host/sdhci-of-k1.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-mbus.yaml b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-mbus.yaml
+> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+> index 6880d3e9ab62..2e5da7c5834c 100644
+> --- a/drivers/mmc/host/sdhci-of-k1.c
+> +++ b/drivers/mmc/host/sdhci-of-k1.c
+> @@ -276,7 +276,8 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+>  
+>  	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+>  
+> -	if (spacemit_sdhci_get_clocks(dev, pltfm_host))
+> +	ret = spacemit_sdhci_get_clocks(dev, pltfm_host);
+> +	if (ret)
+>  		goto err_pltfm;
+>  
+>  	ret = sdhci_add_host(host);
+> -- 
+> 2.47.2
+> 
+Thanks for catching this..
 
-Memory bus controllers go to /memory-controllers/ directory.
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
 
-Best regards,
-Krzysztof
-
+-- 
+Yixun Lan (dlan)
