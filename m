@@ -1,100 +1,207 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54D7F50F;
-	Tue, 27 May 2025 09:03:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A9827145B
+	for <spacemit@lists.linux.dev>; Tue, 27 May 2025 11:13:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748336607; cv=none; b=a8B15eCc2j08cP7zJq44Mch4dwSFOkVnCv4RevKeDtQQqHWPHSAuytFNUfjKqRjshmVDla7ZaM6uiEyZuSPXVkdS6k4+aJBgUdz3nkJUrSN3Jsv7Fk05D6MYMfCsNarSoQIP9OsEdohqKcLKKVR8SbfImjvIZdvXDM5rmAMmVlM=
+	t=1748344393; cv=none; b=OTp4eQiChxROXNsTdyW1wX9xkGaeMZx5leyikrbkGUmNSxcHWrwhSXHS8LjYvnm7jXTBdE9ajrfcXNI32NP52RP/M9AYOrtKVQ8OxW6SAdSabUHmYPzWrnX5CiTDI2sIjljRSkPeYNcy0quthLLNBkExNB1gWJNmfPO7X6FcMXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748336607; c=relaxed/simple;
-	bh=CepjyP+8Q0P8lM7xYgC7fRcPO5/D444YGpDm/oPFMSc=;
+	s=arc-20240116; t=1748344393; c=relaxed/simple;
+	bh=BRmYYMvaki8BNTEhpCWVyr4VVraTkLE+BoW8c4vBS88=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GvEzRuIR6WqypzJDV3yG3DYLMD1cZqmZZTMYgwpxEMNb23D6G9Kf2f4cV4xLQjFT8+WbCMRH4w50LXNueziPjvuJMzfsCC+OXgo+OZtMd4z3R2bmc5AW86QuEQrANtkxd8shQZyPUAW58AQPcxpzHa9nMgycWLEsCIi0JCEfw1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qsr3+FxZ; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qsr3+FxZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD77C4CEE9;
-	Tue, 27 May 2025 09:03:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748336606;
-	bh=CepjyP+8Q0P8lM7xYgC7fRcPO5/D444YGpDm/oPFMSc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qsr3+FxZDJEeNzjVpWICNvLCrY2dAQ6fM+iHHjwd1LIfkdiIacQV2KvO7a0ud7U0c
-	 jUi8nOf1811mTewLQB1jrm4TbfRivKocjf91TNEBbmpv9nH7zAYFnTnrMT2KYQ0x6W
-	 brNuYokQS0qR6oF38Y+sfENS3vY5ppIGfsjfK9kfEXQg3ue9KlbfHhRBhx9bRAsDFq
-	 dvqPzC3It9Es2eUYtcOuuKoD5VvbtbuWfVdUtJfSR5nov2OjhuDwbEd80uIVjCShn/
-	 x4WkaUsCQtiOza4xi4S9+dieTwxB9ofpwIfXbdNakLQplD6zxHKqp3GnYqIpyx9Cqg
-	 xY+MiDA26ekiA==
-Date: Tue, 27 May 2025 11:03:23 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
-	dlan@gentoo.org, p.zabel@pengutronix.de, drew@pdp7.com, inochiama@gmail.com, 
-	geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com, 
-	unicorn_wang@outlook.com, duje.mihanovic@skole.hr, heikki.krogerus@linux.intel.com, 
-	elder@riscstar.com, linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v3 0/6] pwm: Update PWM_PXA driver for SpacemiT K1
-Message-ID: <e2erhnhqfeeb5b74x5aspowgdiqdnywmfswl7vhgr7wt3pacns@j2lbkcnjl7ne>
-References: <20250429085048.1310409-1-guodong@riscstar.com>
- <lgjntm2v4qtp3uwccriodxdefdc4vqydzl4dmula4avhws4zfi@xevkgzfuhyhl>
- <CAH1PCMZBBmDibwSLUAhDAyjAORgpS+D-U5_kfLJkbZ2r=XpFDA@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=UHYPtTqSuA+FnB9Tq+z9BOynI+FA1iK6TiYRmhqYyIDj+lQVPgQpfzpE/HrotpxwlPMKmtChUY+w+ikzBNk0pjlN/5ZgpUomsoeaobeP0xMqQymcfeLbRinGTFjK7A+dLo+rjTRwuitYzRjHofSQfywHMYQ4DmdCrnmhV5Mzjtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
+Received: from localhost (gy-adaptive-ssl-proxy-3-entmail-virt135.gy.ntes [27.18.99.37])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 1691f3ea4;
+	Tue, 27 May 2025 19:13:05 +0800 (GMT+08:00)
+Date: Tue, 27 May 2025 19:13:05 +0800
+From: Ze Huang <huangze@whut.edu.cn>
+To: Krzysztof Kozlowski <krzk@kernel.org>, Ze Huang <huangze@whut.edu.cn>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/4] dt-bindings: soc: spacemit: Add K1 MBUS controller
+Message-ID: <aDWeQfqKfxrgTA__@jean.localdomain>
+References: <20250526-b4-k1-dwc3-v3-v4-0-63e4e525e5cb@whut.edu.cn>
+ <20250526-b4-k1-dwc3-v3-v4-2-63e4e525e5cb@whut.edu.cn>
+ <20250527-energetic-pink-cricket-a282fd@kuoka>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="26g7v56eogwogiqd"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAH1PCMZBBmDibwSLUAhDAyjAORgpS+D-U5_kfLJkbZ2r=XpFDA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250527-energetic-pink-cricket-a282fd@kuoka>
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDHhkdVk9NHx8fTx4aGklLGlYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVITFlXWRYaDxIVHRRZQVlPS0hVSktISk5MT1VKS0tVSkJLS1
+	kG
+X-HM-Tid: 0a971172311503a1kunm501ea4fda7052
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6MDo6Cgw5CjE6PlY3ORchTzcP
+	MD8aFBVVSlVKTE9DSE9PSENNQkxIVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
+	TFVKQ1VCQlVITFlXWQgBWUFNSUJINwY+
 
+On Tue, May 27, 2025 at 08:51:19AM +0200, Krzysztof Kozlowski wrote:
+> On Mon, May 26, 2025 at 10:40:18PM GMT, Ze Huang wrote:
+> > Some devices on the SpacemiT K1 SoC perform DMA through a memory bus
+> > (MBUS) that is not their immediate parent in the device tree. This bus
+> > uses a different address mapping than the CPU.
+> > 
+> > To express this topology properly, devices are expected to use the
+> > interconnects with name "dma-mem" to reference the MBUS controller.
+> 
+> I don't get it, sorry. Devices performing DMA through foo-bar should use
+> dmas property for foo-bar DMA controller. Interconnects is not for that.
+> 
 
---26g7v56eogwogiqd
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v3 0/6] pwm: Update PWM_PXA driver for SpacemiT K1
-MIME-Version: 1.0
+Hi Krzysztof,
 
-Hello Guodong,
+Sorry for not clarifying this earlier - let me provide some context.
 
-On Tue, May 27, 2025 at 10:41:20AM +0800, Guodong Xu wrote:
-> You're right that patches 1, 2, and 5 do not depend on that reset series
-> and can be applied independently.
->=20
-> > [...]
->=20
-> Yeah. And I confirm that they can be applied without the reset
-> dependencies.
+The purpose of this node is to describe the address translation used for DMA
+device to memory transactions. I’m using the "interconnects" property with the
+reserved name "dma-mem" [1] in consumer devices to express this relationship.
+The actual translation is handled by the `of_translate_dma_address()` [2].
+This support was introduced in the series linked in [3].
 
-Thanks for the confirmation, pushed as is to
+This setup is similar to what we see on platforms like Allwinner sun5i,
+sun8i-r40, and NVIDIA Tegra. [4][5]
 
-	https://git.kernel.org/pub/scm/linux/kernel/git/ukleinek/linux.git pwm/for=
--nexxt
+I considered reusing the existing Allwinner MBUS driver and bindings.
+However, the Allwinner MBUS includes additional functionality such as
+bandwidth monitoring and frequency control - features that are either
+absent or undocumented on the SpacemiT K1 SoC.
 
-(i.e. as material for the 6.17-rc1 merge window as the PWM PR for
-6.16-rc1 is already sent).
+For this reason, I opted to introduce a minimal binding that only expresses
+the required DMA mapping relationship.
 
-Best regards
-Uwe
+Let me know if this makes sense or if you'd like me to adjust further.
 
---26g7v56eogwogiqd
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks!
 
------BEGIN PGP SIGNATURE-----
+Ze
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmg1f9cACgkQj4D7WH0S
-/k6Dhgf/X9WuY7qFhMFlefMe19qBwAufGzkajhCdv+bnqB05R5v/Jt+kVwQmhzec
-6mBTGEvmeuNhKUA+kXqLyiTEs36yUqVI6LScD9LHe6QzBQaCmMqYelh8SgcfZ4iO
-kubD1Zz0uZdhiqzajOI7+z+foBW6rZ7qgNYuOlvjPaNP2YCUYRNd8ypUGCYVn9Zr
-mwZvDCDrnH2G+4Cchw+4quN/mGHULoyJawC9djxSfLhWPg72AxLlABSovzvIC+hh
-b/uI5FRi/EIzcate4L1hKTVHF9rFIipT3gUv9sFbINCtAUKLhvZ/MlBVLeGWGiiK
-40qWRrtpvZ859pNH+jYQzAHk2rmYYQ==
-=GMeA
------END PGP SIGNATURE-----
+Link: https://elixir.bootlin.com/linux/v6.15/source/Documentation/devicetree/bindings/interconnect/interconnect.txt#L60 [1]
+Link: https://elixir.bootlin.com/linux/v6.15/source/drivers/of/address.c#L635 [2]
+Link: https://lore.kernel.org/all/cover.f8909884585996f28d97f4ef95efbcab19527dc4.1554108995.git-series.maxime.ripard@bootlin.com/ [3]
+Link: https://elixir.bootlin.com/linux/v6.15/source/arch/arm/boot/dts/allwinner/sun8i-r40.dtsi#L328 [4]
+Link: https://elixir.bootlin.com/linux/v6.15/source/arch/arm64/boot/dts/nvidia/tegra234.dtsi#L3052 [5]
 
---26g7v56eogwogiqd--
+> 
+> > 
+> > Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+> > ---
+> >  .../bindings/soc/spacemit/spacemit,k1-mbus.yaml    | 55 ++++++++++++++++++++++
+> >  1 file changed, 55 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-mbus.yaml b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-mbus.yaml
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..533cf99dff689cf55a159118c32a676054294ffa
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-mbus.yaml
+> > @@ -0,0 +1,55 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/soc/spacemit/spacemit,k1-mbus.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: SpacemiT Memory Bus controller
+> > +
+> > +maintainers:
+> > +  - Ze Huang <huangze9015@gmail.com>
+> > +
+> > +description: |
+> > +  On the SpacemiT K1 SoC, some devices do not perform DMA through their
+> > +  immediate parent node in the device tree. Instead, they access memory
+> > +  through a separate memory bus (MBUS) that uses a different address
+> > +  mapping from the CPU.
+> > +
+> > +  To correctly describe the DMA path, such devices must reference the MBUS
+> > +  controller through an interconnect with the reserved name "dma-mem".
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: spacemit,k1-mbus
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  dma-ranges:
+> > +    maxItems: 1
+> > +
+> > +  "#address-cells": true
+> > +
+> > +  "#size-cells": true
+> 
+> No improvements.
+> 
+> 
+> > +
+> > +  "#interconnect-cells":
+> > +    const: 0
+> 
+> This is not a interconnect provider, but DMA controller, according to
+> youro description.
+> 
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - dma-ranges
+> > +  - "#interconnect-cells"
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    dram-controller@0 {
+> 
+> Either dma-controller or memory-controller, decide what is this.
+> 
+
+I think memory-controller is better.
+
+>
+> > +        compatible = "spacemit,k1-mbus";
+> > +        reg = <0x00000000 0x80000000>;
+> > +        dma-ranges = <0x00000000 0x00000000 0x80000000>;
+> > +        #address-cells = <1>;
+> > +        #size-cells = <1>;
+> 
+> Nothing improved.
+> 
+
+The #address-cells and #size-cells properties are included here to satisfy
+`make dt_binding_check` and `make CHECK_DTBS`.
+
+Without them, warnings will be triggered during validation.
+
+    dram-controller@0: dma-ranges: [[0], [0], [0], [2147483648]] is too long
+
+>
+> > +        #interconnect-cells = <0>;
+> > +    };
+> > 
+> > -- 
+> > 2.49.0
+> > 
+> 
+> 
+> 
