@@ -1,162 +1,123 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB4017D7
-	for <spacemit@lists.linux.dev>; Tue, 27 May 2025 02:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE395149E17
+	for <spacemit@lists.linux.dev>; Tue, 27 May 2025 02:48:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748313704; cv=none; b=eySDMPGu0Ox8F+1flP7eErBP3p7Foh00EVw/1UB96hYD+ZpuC2JwTkb5faejRVCSz+bd19HmKlSEM81bCCTw1nsYcA06g/c2BIsBMuPf2H6ZkftqHLNbj3keFE0xFITBk5C/QI/K74/V89fT4TNrVR877LACtIdIqq5W8aaDxr4=
+	t=1748314113; cv=none; b=eda2+1FGUnHPyWNsOeEDBUYkf3bo/P913WCC37cM0Il1MDW9HJb1Cu7CrgtXjQxRF9xhqIYOdCS49DrLYMjzPlVki+2C7sK8zkr7oU1lEzPDhUsBFDRtRasEaqYXt8KqmjUB7b0L+Q3BQmCUZFJ7LaOA65RwaGjo5ZboxlUh2Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748313704; c=relaxed/simple;
-	bh=hFopwnwGuxFX70zetyJsWh8D7vCNnSwoCh/cnSFt3tk=;
+	s=arc-20240116; t=1748314113; c=relaxed/simple;
+	bh=1sIkGvLRc4q9F0wAGlww0AgdOxuNbiq/W5VJZQg3ebE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SVBlHqkXgZepiPiEoOIgf0G8ebjHiYn4lKeiZG17u9s+zbsaE2vvilAL+6/P6UR9PQbE2bDf6+fGjzkVWoEe5STGYIXLtXLmZad+NGSLX/seQjC06RTjcbQjz1ppoG1K/0+bPYnT1toMNLprf9VbMWnzJxB/z7GpF6itS36RA8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=X3qcvVrE; arc=none smtp.client-ip=209.85.218.49
+	 To:Cc:Content-Type; b=ICd+JDYn4wCK3exJHsNadcpFKEEU30MSbIrrJ8IF3Lkq4SItqWBy/134eRc4/8hRV4SMJ5CuZXydyxr2KquamgQX8CV9BDezrgUfW3N29WHl1+TzAHOsXEaDn4Wo91d8HkjHV2qNA40Rqs72eCFXDWf9qRvv6vCXXzVOxQbht/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=QK5/Np4p; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="X3qcvVrE"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ad564b7aea9so765675466b.1
-        for <spacemit@lists.linux.dev>; Mon, 26 May 2025 19:41:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="QK5/Np4p"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-604e299b5b6so1916535a12.0
+        for <spacemit@lists.linux.dev>; Mon, 26 May 2025 19:48:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1748313699; x=1748918499; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1748314110; x=1748918910; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6ZERauyRIXerSc9GUNUPNmoyTTV2jjjUNrho3ew4khU=;
-        b=X3qcvVrEVu66GL7Vdb9poHIfdN8HGgd+ChIXX7OpFYbl4l5R0XL/EHh/iAIlw4Xga3
-         R/I54jOzUcwbs1Pqjk15dUiVBbgFK5Rmi/7MoITCdwW52bUHKmXxSRgljzgWgrlGmEbw
-         L8KYq7tX/an5PMHes6pSufnToRW5SOIRRZDj9vnlPGYbzAZrVnQqnb6FdOypmEgqMpET
-         NtpO4FpVlZv3Xlp11/TCqt3/ZmWtxOwQGcx3aWvtel5CtpWm5mI5aIw99xZWPb/7nY1T
-         3MSEXMSSNUZ4qMlmE1hWCoiLz0BVhrc65qWwS6e7IfqMBEbyVbhFGk4QvgMzX6ceNtft
-         T5/g==
+        bh=vxISWGK2XQPkm4Hhr1US0gvD1FZ3zYyiGOuHAQJE5eo=;
+        b=QK5/Np4p+btJo7UV28U8wczj13UZCD8u5yptjRBF4umCmbqRKyPg4o3aqqsCK2FeEB
+         ZLwBZiyl8xwods8yl4d0xq0+9Z0V9d0kSKhSorgdGJ6/k+/p2LEa5zYIrcWTcu4nTz6g
+         B9GEmDRqfHwAMhCihHrrCSwEsvfvWoUskhd61RqP0t+/boICBVMnQxQh1vgzvKJNBDUZ
+         ilautJOBrRW2Z5qche72vuQC2C5sC1zC8+TFFRdKOt5QgIQk5Flq3W6weOnR4E4NSr7R
+         s9803/DljJ8DCcTk6XVkjheKh1C4AXKWfkWRc60NML3sS/4fhbAF0IqPbwl5T+re9sLt
+         nnHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748313699; x=1748918499;
+        d=1e100.net; s=20230601; t=1748314110; x=1748918910;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6ZERauyRIXerSc9GUNUPNmoyTTV2jjjUNrho3ew4khU=;
-        b=VLCskae7ge/DgqpyHMvcZyzqZqkkwMmggOeGV1BBTAAjPqe3VlWWbrZEfkxOFTqoZh
-         uuisv/nfitshTzUCoh3mw22rfWAxGNeJMA0CZmvH/anpYzSIgpiZVkqBkSwVHcgJYQpm
-         l/ff73Q4BmjCPu6HsNcDt77yGG7eqijzWbVfO7EcbZSg8YYa2fE+X6e3DQkYoIxUVkOg
-         82RPun+n1wmiyTJlof6szc7kJ29uqCO74wZbGiY49OnBzhAWhMGRYrwSBZt2fk64URcd
-         aPOuPCLKjY9ZhUvqgKkD2vqujwA3gM8sl9Txg9+mhxdr1THdLjcOzHAr/Z+yqMY/NaG3
-         Dbqg==
-X-Forwarded-Encrypted: i=1; AJvYcCX5Zuc6FbhWeJy79p9j+S0FT6RuGTy/rOQjtOOL74DWs+cf7s13T6mHpbWHq6fRYZT/yhNjZsFtqQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwKXhnvIetFPVbIUCtFYVlSgxndwIdzjAE2QReOJIoybd9VBKS7
-	JXUbBGV8qEDRHwlfzkv9QhesjPR7swbXoUPauwRlk5HMZb1oGDUJ1kaqOl0OxRnuMUjTNKkEGVv
-	0ajqwrM0loM3SEQ66zuVpNC+sjbuCR5ZVL84nvNCSjA==
-X-Gm-Gg: ASbGncvdE37lULa0Q7zVkdGrhW9GTJXnS7bRAMNw3EHB01hWmv7ZYllh1+vFWZ0ECiY
-	auSCuZ21JPUY7+i/IHL7ELg5WY3Z4H+eW1VPYRID+XrT2vmYP7Vr7xYf78bwlXdN5TIm24eu+FO
-	lGonl25dM6J40Hq4YeRJnwesKlw0UPPQtebQ==
-X-Google-Smtp-Source: AGHT+IEwDBoO6fPNQbhz18OXkU1emYXVf9ol8i2RRW8+CYwMWPShuzxk64vRiGzkPz9segng6DJBOqMGPdvXU6MevTk=
-X-Received: by 2002:a17:907:3ea9:b0:ad2:2fdb:b0ab with SMTP id
- a640c23a62f3a-ad859b5436emr1083211866b.29.1748313699251; Mon, 26 May 2025
- 19:41:39 -0700 (PDT)
+        bh=vxISWGK2XQPkm4Hhr1US0gvD1FZ3zYyiGOuHAQJE5eo=;
+        b=WIe8JhHkTbQMfBMtYy+MCBp2Pqkv1yT/EO+1MlKUV4lEszHIiMiAqldP1dGlixo8bw
+         xoE3Fc7hx1GeZmFxdHObUAN9ZMu6ZStBB1ye5Cyw7a8QAYDqxijaWGe5SlCTg022wc/o
+         EByU69Uwd1wCKEB9d0pDIX07L0RAThRaa8q8pl0PfWdX4EJDQjkEX/Ca+zAEwhXs607g
+         TIKQB/OF+A5+6DGd8pviR5CO/GQyRcKoBKby58EbqfLqcnzosVO4zalcFH8jJLRSc5ts
+         A7C4nLqnIVEeGFt69M4MteZCvbVWmZ/JfXN5WVkersQVkHhPWlEy+tXsAxS3BKnNPL8L
+         s47w==
+X-Forwarded-Encrypted: i=1; AJvYcCUbWZQ/ch63+3H+01ezsyUB4CRV4r8+MmXIeHURFf0qvPrtbUYt0VDKD6sg1ihzJaGjeUj6vpCqdA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YziNrJawveZgLPO6DCmQLZUWEzXPsuKveFyJj0OV+zcsr24rso8
+	Ald/oIEn6yY48XtOCyrcF3Ja8POmd5cMYM//xtIjhMiSC0a93eOlbZdCefXMwfDcIByDdfs8ctB
+	3PC1OoJQEnlPw7f3S/9wr/LAEtBOAx+xaO5jw6qg47Q==
+X-Gm-Gg: ASbGncsoHOLIfVgHKskQfejCy8TDgs7IZdMPbcZig6GjmKl7BTgYHV65mpdaaRCc9j6
+	18P7zVUpNAx5AloYGE9v6aNhJBlGan/eNF12Mu0RgSrDV1APtqyofM94KEkbeh9uQM5sY2y+mSv
+	oRHD4bN1ixiqp0pWJldcdQwTFMm9bqQ2e21Q==
+X-Google-Smtp-Source: AGHT+IGlQnBA51IfLDQtlV4Tsj0DcivukafO3WpRjoRYo7aZ2XNkgT/ISpHO9OKoKdboUS/Oi+TdrQgc1gVBGNRrhUg=
+X-Received: by 2002:a17:907:9303:b0:ad1:d0e7:a698 with SMTP id
+ a640c23a62f3a-ad8596d8c4emr1099084466b.2.1748314109982; Mon, 26 May 2025
+ 19:48:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250429085048.1310409-1-guodong@riscstar.com> <lgjntm2v4qtp3uwccriodxdefdc4vqydzl4dmula4avhws4zfi@xevkgzfuhyhl>
-In-Reply-To: <lgjntm2v4qtp3uwccriodxdefdc4vqydzl4dmula4avhws4zfi@xevkgzfuhyhl>
+References: <20250429085048.1310409-1-guodong@riscstar.com>
+ <20250429085048.1310409-5-guodong@riscstar.com> <paasmwjel652r25nxobidydtpxfjy7emerilmwqhvhtgrrtg6v@gowpzqdzvlfz>
+ <20250526215243-GYA53128@gentoo>
+In-Reply-To: <20250526215243-GYA53128@gentoo>
 From: Guodong Xu <guodong@riscstar.com>
-Date: Tue, 27 May 2025 10:41:20 +0800
-X-Gm-Features: AX0GCFtJk0m16OgxkbmqVbr299LwditdBcOLPf3TQyBjUg1Ado6GD-l3Ru51kO0
-Message-ID: <CAH1PCMZBBmDibwSLUAhDAyjAORgpS+D-U5_kfLJkbZ2r=XpFDA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] pwm: Update PWM_PXA driver for SpacemiT K1
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <ukleinek@kernel.org>
+Date: Tue, 27 May 2025 10:48:18 +0800
+X-Gm-Features: AX0GCFvI_6k3vBVjk-TWBpWmMUcHskFmulTKZz7Kxcz7kFRTgK5PHEc_K-e3F1M
+Message-ID: <CAH1PCMZhS4_u3nTdAQDfTTRVJ_61n-OYjmMuv2m4DHYDzGE0XA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] riscv: dts: spacemit: add pwm14_1 pinctrl setting
+To: Yixun Lan <dlan@gentoo.org>, =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <ukleinek@kernel.org>
 Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
 	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	alex@ghiti.fr, dlan@gentoo.org, p.zabel@pengutronix.de, drew@pdp7.com, 
-	inochiama@gmail.com, geert+renesas@glider.be, heylenay@4d2.org, 
-	tglx@linutronix.de, hal.feng@starfivetech.com, unicorn_wang@outlook.com, 
-	duje.mihanovic@skole.hr, heikki.krogerus@linux.intel.com, elder@riscstar.com, 
+	alex@ghiti.fr, p.zabel@pengutronix.de, drew@pdp7.com, inochiama@gmail.com, 
+	geert+renesas@glider.be, heylenay@4d2.org, tglx@linutronix.de, 
+	hal.feng@starfivetech.com, unicorn_wang@outlook.com, duje.mihanovic@skole.hr, 
+	heikki.krogerus@linux.intel.com, elder@riscstar.com, 
 	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
 	spacemit@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 27, 2025 at 1:22=E2=80=AFAM Uwe Kleine-K=C3=B6nig <ukleinek@ker=
-nel.org> wrote:
+On Tue, May 27, 2025 at 5:52=E2=80=AFAM Yixun Lan <dlan@gentoo.org> wrote:
 >
-> Hello,
+> Hi Guodong, Uwe,
 >
-> On Tue, Apr 29, 2025 at 04:50:42PM +0800, Guodong Xu wrote:
-> > This patchset adds support for the SpacemiT K1 SoC in the PWM_PXA drive=
-r
-> > and updates related device tree bindings. The changes enable PWM
-> > functionality on the K1 platform through driver enhancements,
-> > configuration updates, and device tree additions.
+> On 18:54 Mon 26 May     , Uwe Kleine-K=C3=B6nig wrote:
+> > On Tue, Apr 29, 2025 at 04:50:46PM +0800, Guodong Xu wrote:
+> > > diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/risc=
+v/boot/dts/spacemit/k1-pinctrl.dtsi
+> > > index 283663647a86..195eb8874f3c 100644
+> > > --- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> > > +++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> > > @@ -20,4 +20,11 @@ uart0-2-pins {
+> > >                     drive-strength =3D <32>;
+> > >             };
+> > >     };
+> > > +   pwm14_1_cfg: pwm14-1-cfg {
+> > > +           pwm14-1-pins {
+> > > +                   pinmux =3D <K1_PADCONF(44, 4)>;
+> > > +                   bias-pull-up =3D <0>;
+> > > +                   drive-strength =3D <32>;
+> > > +           };
+> > > +   };
 > >
-> > Functionality has been verified on the Banana Pi BPI-F3 board using PWM=
-14,
-> > configured as a pwm-backlight. Per community feedback, the actual
-> > pwm-backlight node is not included in this patchset but can be found in
-> > patch 7 of the v1 series, with modification of pwms property to 4-cell
-> > format to match updated binding (#pwm-cells =3D <3>) since v3.
+> > There is a newline expected before the pwm14-1-cfg node, isn't there?
 > >
-> > +             pwms =3D <&pwm14 0 2000 0>;
-> >
-> > This patchset is based on [spacemit/for-next]
-> >   base: https://github.com/spacemit-com/linux for-next
-> >
-> > Plus the following dependencies:
-> > 1. Clock controller driver, posted by Heylen Chu (v8), with most of it =
-has
-> >    been accepted:
-> > https://lore.kernel.org/all/20250416135406.16284-1-heylenay@4d2.org/
-> > 2. Reset controller driver, posted by Alex Elder (v5):
-> > https://lore.kernel.org/all/20250418145401.2603648-1-elder@riscstar.com=
-/
->
-> It's not clear to me if I have to look into this github tree and the
-> listed dependencies. My impression is that it can go in on without these
-> changes. Maybe it only starts working when these are also applied, but
-> that shouldn't stop me applying this series, right?
+> Right, I could amend this and fix it while applying this patch
+> (so if there is no other serious issue, no need to resend)
 >
 
-Thanks Uwe for the review.
+Thanks, Yixun.
 
-The dependency is in patch 3, where I added the PWM nodes (pwm0-pwm19) to
-k1.dtsi. These nodes reference RESET_PWM0 to RESET_PWM19, which are only
-defined after applying the spacemit reset patchset (Patch 1/6),
-available here:
-
-https://lore.kernel.org/all/20250513215345.3631593-2-elder@riscstar.com/
-
-You're right that patches 1, 2, and 5 do not depend on that reset series
-and can be applied independently.
-
-> There is a patch in pwm/for-6.16-rc1 (namely commit df08fff8add2 ("pwm:
-> pxa: Improve using dev_err_probe()")) that conflicts with this series.
-> I applied patches 1, 2 and 5 on top of my pwm/for-nexxt branch resolving
-> that conflict and rewording the commit log of patch 5. The result was
-> pushed to
->
->         https://git.kernel.org/pub/scm/linux/kernel/git/ukleinek/linux.gi=
-t pwm/pxa-spacemit
->
-
-I've reviewed the three patches in pwm/pxa-spacemit, and they look good
-to me.
-
-Thanks again for handling the conflict and rewording the commit log.
-
-> . If you confirm that you're happy with my modifications and it's
-> correct to apply them without the listed dependencies I will add the
-> patches to my queue for 6.17-rc1.
->
-
-Yeah. And I confirm that they can be applied without the reset
-dependencies.
-
-Thanks.
+By the way, do you plan to take patches 3 and 4 of this series into
+your tree? They only apply if the SpacemiT reset patchset is applied
+first.
 
 BR,
 Guodong
 
-> Best regards
-> Uwe
+> --
+> Yixun Lan (dlan)
