@@ -1,74 +1,77 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7960223703
-	for <spacemit@lists.linux.dev>; Thu, 29 May 2025 12:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF415202F6D;
+	Thu, 29 May 2025 12:56:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748521354; cv=none; b=sB+XNlNpFTQmRFpGYJTz2Ny/1ZSiswDF+vzuCu7gdeyF40cUSBtCqYfqhkt/lPDcnVYR1rx18WkIDUBYf7B0Zid9l7dsCv1Qgu57BUoelGIDUPXBUH+nYrXd6iwxNe3HzXK+XZyvUruvn6wcWsF42hDUpfsQbXv7hPCIbzV1hvk=
+	t=1748523399; cv=none; b=u4PJ0uU9C2hIKvtnuYXPXrhklqN07AgUTrlvlinsaYDdZBqZ8+0RGOeWR9iHZnMh+y+NrHL2Hd/Lwx7HAviZSpcQ96ND5p2FhQf5yNmHdh4XgOxxyofe1Vt9FARzZ5HME0/hM4py+tR5d1gomyaFEHbrUowTDrR2tTWfZJ3ksbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748521354; c=relaxed/simple;
-	bh=8Q54xoWFm5dD4JeLp5GkvQ1SCkN6YSxoGPXQB+KAnIE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=a3nabaCidcVxOlxm+m5BGdtedE/HlZqgCO+FuI4hr/SDcOgzqJrAtm24MVXYEHhBsCGy3UfVY5P2/jLxbWLPE9YRj1Ez79BiSar8kG+O0vpFq/0URlWqFMNvyPKQmG5Ms5hfcyZArL4Vtlvt9HVN2SmHiHw3b0BKf8GHplKMpjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=CbwA2O+A; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="CbwA2O+A"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6f8a70fe146so15213686d6.0
-        for <spacemit@lists.linux.dev>; Thu, 29 May 2025 05:22:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1748521351; x=1749126151; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KfZYXxSa6TDC4D9WbSYlB6mVhhaETHCcZWNW+QLW+Ek=;
-        b=CbwA2O+ArgZy40RHcYTY4UtRKx1G+e8zk0vclQB+NqZ+jMjm17pnD6hek8fUZWUSdq
-         2EvziYTteoDG6gFJgw6U9z+W8KYU63mUUFU2Urbg9pqkDhMxEMJMQbSN20TYtrAGm+s9
-         I1ck6+TX0LCslKq49qDPhgErv62Uik5XtkRis55ngoAMcJZ5OCAkXTytSH6ssIZmbPwP
-         e0B2zydPZAJFDvSsMw/Psj4mxGhk7WBWrbO2gIXTmsI1jYNQ2BS4bLWjU/XsPJTKON8V
-         DZcLgkLE969sfaJR8SUgFhz++a00t85gjT+jOxQ1sPe6uPKhUYra2MicMIQk/5pN0b+V
-         /ywg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748521351; x=1749126151;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KfZYXxSa6TDC4D9WbSYlB6mVhhaETHCcZWNW+QLW+Ek=;
-        b=UEfJUXHV9Rh0UxCT805VoFp3XEwONhmd9YgKx5mfEDyVeekKX0bVdnWDBKRE5pxXpg
-         QDAETIpL9R6v7fKY9J8LgK7nzZ3uq6FDAcciOuX6Yq0xbTq4LcN9nGStI8ViG6ZwcCnN
-         J/MZAwKh4Xg/FHryXHY/bLCp2O52CWADwPYsWCG4US3akgKq04k7hvtbsTWEK/GHftJr
-         c8gwEapVj67wQS4I50684vpAnGm18UxTME3i4n0G/ExLQD7SaWDjgbJrDLK19TvbVJxT
-         L9Cq6igm4m/ygeRdj58dmczc+SO3gg6sZQ/WFGT7KZlIVICCm7HwoATRDJf6wtTt0ZPK
-         YAhw==
-X-Forwarded-Encrypted: i=1; AJvYcCUrZEm/h8u2cFdvr55hGE1fcfwQBFXTWol8XwGYwGJyAF5UnsyRlZWtBi04liMzE0zuzeraqNv0nQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzcFN4fnHZZScTNVPNgil5O91icfpgBEsWz2nw8A2bI0o5Zcfk1
-	pAyh+7ieZEInz65WVv08y5n5o2Yk60x5frROzk6tV/1WObLPvVH0wtTqQUtO4qm24f0=
-X-Gm-Gg: ASbGncsgFcQ5NxthXqf5dVBmBUMnOc492VBjwk7otSDAsot6wUWJsXyL2VBm2x3h9kM
-	1HXoYMGqh8icLJkbwAQhIwliiPz2MfkLO9JQRjuTE4BBiY9FEC++gd1BwWJRZ/CGkgRWd19IDGQ
-	Wi5IyRFZv8Pe0WwxZYZFi0I9FQIOmTNLSDUaG6Rx96QGEbuvVFWiQz52OoKZ0jA81bMxhTAqw4l
-	1sYATSl7uA9MtDCwemCm7m/RvnzT1BzvPt4BxNNxkGIo7uovrLdvLcCHdADRmQaCgpEYYGJ94eG
-	vewQWlMJAJS9gqfQVkqZmOxWxnThc5Inbqj8Cytco+HAAXTYjWnb4ORYfDUKC4rKokQNnPImxjE
-	40Mr1mUW7SFJyF1dzNb8Qpg8B
-X-Google-Smtp-Source: AGHT+IGKJiOHPciyv3QtiOSyy/RZt9nsdwc7fAQpB3gb8J6aM4q7mvFoREGf65Wv1z/Aaq14437gYA==
-X-Received: by 2002:a05:6214:212e:b0:6fa:c44f:2ae6 with SMTP id 6a1803df08f44-6fac44f2d96mr79427466d6.38.1748521351418;
-        Thu, 29 May 2025 05:22:31 -0700 (PDT)
-Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fac6d5bd30sm8814346d6.67.2025.05.29.05.22.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 May 2025 05:22:30 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: andi.shyti@kernel.org,
-	dlan@gentoo.org,
-	troymitchell988@gmail.com
-Cc: elder@riscstar.com,
-	spacemit@lists.linux.dev,
-	linux-i2c@vger.kernel.org,
+	s=arc-20240116; t=1748523399; c=relaxed/simple;
+	bh=I/bPDChe/3u4CvRovBNpwJl3q2TTdxNMwFY7EzT22PU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TmGczbH2lTf9iWTSz/Upt+8rZvNe5+dPfotjPgDgAUwqq5gh1xQXlTSHiIAQre397wbuAGIJZDJ7MuMCbYXgvnzcvIMbTPHYYjqR0W30UUZncpF96NF96iFJrgl0OYmpzqZIAkmCeJWabtxI5mPkIdMrF43vxcePfIOL5fRUZVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.69.3])
+	by gateway (Coremail) with SMTP id _____8Axx2l_WThoIikCAQ--.53145S3;
+	Thu, 29 May 2025 20:56:31 +0800 (CST)
+Received: from localhost.localdomain (unknown [223.64.69.3])
+	by front1 (Coremail) with SMTP id qMiowMCxbsV1WThoTrH6AA--.60122S2;
+	Thu, 29 May 2025 20:56:27 +0800 (CST)
+From: Binbin Zhou <zhoubinbin@loongson.cn>
+To: Binbin Zhou <zhoubb.aaron@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>,
+	linux-mmc@vger.kernel.org,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Ben Dooks <ben-linux@fluff.org>,
+	Jaehoon Chung <jh80.chung@samsung.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>,
+	Scott Branden <sbranden@broadcom.com>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Al Cooper <alcooperx@gmail.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	imx@lists.linux.dev,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	openbmc@lists.ozlabs.org,
+	Michal Simek <michal.simek@amd.com>,
+	Joel Stanley <joel@jms.id.au>,
+	linux-aspeed@lists.ozlabs.org,
+	Aubin Constans <aubin.constans@microchip.com>,
+	Eugen Hristev <eugen.hristev@linaro.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Yixun Lan <dlan@gentoo.org>,
 	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] i2c: k1: check for transfer error
-Date: Thu, 29 May 2025 07:22:26 -0500
-Message-ID: <20250529122227.1921611-1-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
+	spacemit@lists.linux.dev,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	linux-tegra@vger.kernel.org,
+	Hu Ziji <huziji@marvell.com>,
+	Binbin Zhou <zhoubinbin@loongson.cn>
+Subject: [PATCH v2 00/35] mmc: Cleanup sdhci_pltfm_free()/sdhci_free_host() usage
+Date: Thu, 29 May 2025 20:56:10 +0800
+Message-ID: <cover.1748515612.git.zhoubinbin@loongson.cn>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -76,46 +79,133 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowMCxbsV1WThoTrH6AA--.60122S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Xw1kXr43tFy8Ary7GFW5CFX_yoW7GrW5pa
+	ySqrWa9r43Cr95WrZxJw1UZw15Xr4rX39Fgry5tw4FqFW3Ca4UKrsrAFy0qryDZ3yxJr48
+	t3WDJw1UGr95K3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUA529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUB2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+	6rxl6s0DM2kKe7AKxVWUtVW8ZwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYI
+	kI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUtVWr
+	XwAv7VC2z280aVAFwI0_Cr0_Gr1UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwI
+	xGrwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
+	JVW8JwCFI7km07C267AKxVWUtVW8ZwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
+	vE14v26r106r1rMI8E67AF67kF1VAFwI0_Wrv_Gr1UMIIYrxkI7VAKI48JMIIF0xvE2Ix0
+	cI8IcVAFwI0_Gr0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8V
+	AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E
+	14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU-JKIDUUUU
 
-If spacemit_i2c_xfer_msg() times out waiting for a message transfer to
-complete, or if the hardware reports an error, it returns a negative
-error code (-ETIMEDOUT, -EAGAIN, -ENXIO. or -EIO).
+Hi all:
 
-The sole caller of spacemit_i2c_xfer_msg() is spacemit_i2c_xfer(),
-which is the i2c_algorithm->xfer callback function.  It currently
-does not save the value returned by spacemit_i2c_xfer_msg().
+After the first part of the cleanup[1], there are sdhci related
+drivers that need further cleanup.
 
-The result is that transfer errors go unreported, and a caller
-has no indication anything is wrong.
+This patchset is the second part of the cleanup series, and since sdhci has
+sdhci_alloc_host() as the general interface, our main job is to clean up
+sdhci_pltfm_free() and sdhci_free_host().
 
-When this code was out for review, the return value *was* checked
-in early versions.  But for some reason, that assignment got dropped
-between versions 5 and 6 of the series, perhaps related to reworking
-the code to merge spacemit_i2c_xfer_core() into spacemit_i2c_xfer().
+[1]:https://lore.kernel.org/all/cover.1747877175.git.zhoubinbin@loongson.cn/
 
-Simply assigning the value returned to "ret" fixes the problem.
+Thanks.
 
-Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-Signed-off-by: Alex Elder <elder@riscstar.com>
----
- drivers/i2c/busses/i2c-k1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+-----
+V2:
+- Collect Reviewed-by and Acked-by tags.
+Patch-01:
+ - Set sdhci_free_host() to empty, rather than dropping it.
+Patch-07:
+ - Set sdhci_pltfm_free() to empty, rather than dropping it.
+Patch-22:
+ - As requested by Yixun, keep the goto scheme.
+Patch-35:
+ - New patch;
+ - Since all calls have been cleaned up, sdhci_pltfm_free()/sdhci_free_host()
+   are now dropped directly;
 
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-index 5965b4cf6220e..b68a21fff0b56 100644
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -477,7 +477,7 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
- 
- 	ret = spacemit_i2c_wait_bus_idle(i2c);
- 	if (!ret)
--		spacemit_i2c_xfer_msg(i2c);
-+		ret = spacemit_i2c_xfer_msg(i2c);
- 	else if (ret < 0)
- 		dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
- 	else
+Link to V1:
+https://lore.kernel.org/all/cover.1747792905.git.zhoubinbin@loongson.cn/
 
-base-commit: a5806cd506af5a7c19bcd596e4708b5c464bfd21
+Binbin Zhou (35):
+  mmc: sdhci: Use devm_mmc_alloc_host() helper
+  mmc: sdhci-acpi: Drop the use of sdhci_free_host()
+  mmc: sdhci-milbeaut: Drop the use of sdhci_free_host()
+  mmc: sdhci-pci: Drop the use of sdhci_free_host()
+  mmc: sdhci-s3c: Drop the use of sdhci_free_host()
+  mmc: sdhci-spear: Drop the use of sdhci_free_host()
+  mmc: sdhci-pltfm: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-bcm-kona: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-brcmstb: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-cadence: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-dove: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-esdhc-imx: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-esdhc-mcf: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-iproc: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-msm: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-npcm: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-of-arasan: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-of-aspeed: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-of-at91: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-of-dwcmshc: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-of-esdhc: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-of-k1: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-of-ma35d1: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-of-sparx5: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-omap: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-pic32: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-pxav2: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-pxav3: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-sprd: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-st: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-tegra: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci-xenon: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci_am654: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci_f_sdh30: Drop the use of sdhci_pltfm_free()
+  mmc: sdhci: Drop sdhci_free_host()/sdhci_pltfm_free() definitions
+
+ drivers/mmc/host/sdhci-acpi.c       |  3 ---
+ drivers/mmc/host/sdhci-bcm-kona.c   |  2 --
+ drivers/mmc/host/sdhci-brcmstb.c    |  1 -
+ drivers/mmc/host/sdhci-cadence.c    | 21 ++++++------------
+ drivers/mmc/host/sdhci-dove.c       | 12 ++---------
+ drivers/mmc/host/sdhci-esdhc-imx.c  |  3 ---
+ drivers/mmc/host/sdhci-esdhc-mcf.c  | 25 ++++++----------------
+ drivers/mmc/host/sdhci-iproc.c      | 18 ++++------------
+ drivers/mmc/host/sdhci-milbeaut.c   | 19 ++++++-----------
+ drivers/mmc/host/sdhci-msm.c        | 11 ++++------
+ drivers/mmc/host/sdhci-npcm.c       | 15 +++----------
+ drivers/mmc/host/sdhci-of-arasan.c  | 26 +++++++----------------
+ drivers/mmc/host/sdhci-of-aspeed.c  | 10 ++-------
+ drivers/mmc/host/sdhci-of-at91.c    | 23 +++++++-------------
+ drivers/mmc/host/sdhci-of-dwcmshc.c | 14 +++++-------
+ drivers/mmc/host/sdhci-of-esdhc.c   | 11 ++--------
+ drivers/mmc/host/sdhci-of-k1.c      |  1 -
+ drivers/mmc/host/sdhci-of-ma35d1.c  | 23 +++++++-------------
+ drivers/mmc/host/sdhci-of-sparx5.c  | 24 +++++++--------------
+ drivers/mmc/host/sdhci-omap.c       | 21 ++++++------------
+ drivers/mmc/host/sdhci-pci-core.c   |  9 ++------
+ drivers/mmc/host/sdhci-pic32.c      |  9 +++-----
+ drivers/mmc/host/sdhci-pltfm.c      | 16 +-------------
+ drivers/mmc/host/sdhci-pltfm.h      |  1 -
+ drivers/mmc/host/sdhci-pxav2.c      | 26 ++++++-----------------
+ drivers/mmc/host/sdhci-pxav3.c      |  7 +-----
+ drivers/mmc/host/sdhci-s3c.c        | 16 ++++----------
+ drivers/mmc/host/sdhci-spear.c      | 11 ++++------
+ drivers/mmc/host/sdhci-sprd.c       | 33 +++++++++--------------------
+ drivers/mmc/host/sdhci-st.c         |  6 ++----
+ drivers/mmc/host/sdhci-tegra.c      |  9 +++-----
+ drivers/mmc/host/sdhci-xenon.c      |  9 ++------
+ drivers/mmc/host/sdhci.c            |  9 +-------
+ drivers/mmc/host/sdhci.h            |  1 -
+ drivers/mmc/host/sdhci_am654.c      | 20 ++++++-----------
+ drivers/mmc/host/sdhci_f_sdh30.c    | 13 ++++--------
+ 36 files changed, 129 insertions(+), 349 deletions(-)
+
+
+base-commit: d2c6acff6386f43ed307822454b970c831c48f1b
 -- 
-2.45.2
+2.47.1
 
