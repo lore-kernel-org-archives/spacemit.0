@@ -1,23 +1,23 @@
 Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C6632253FC;
-	Thu, 29 May 2025 12:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DD074C9D
+	for <spacemit@lists.linux.dev>; Thu, 29 May 2025 13:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748523476; cv=none; b=MY9lnsvNugd4JK+7saIbHUynpzlMsdwnvvuR34Fcegn7i3XwlzUkK3UWC/uD9IKsRj22pp5YTb+FSXuj9skHcgbGmaz2gLM9irUzdce3LVwn0Wt7F2NW3YD+0lyYo6SAd7mW3NTUY9aME2rRIqCdX5BUKH4/xOqbecSfGroOCiY=
+	t=1748523643; cv=none; b=JVvIjm8clcX2mljbKFFpPY6g7aZ/76p8qQIZ2MtqmWl/tAzCmkeLE40OcME8eri8e2qKJw9gjDNDHLIWS79ac2UoS88vZ/p9hGEDWAq76+tArulScrJ0LC4H6ZAy419GnAbWyJLjG0o9kdFNfhMEZs+xM56Vd5jqLa/oLJUboUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748523476; c=relaxed/simple;
-	bh=w1aW6iR8xVaRd1vJmdSlTeAlrZLzIRQgMsYeIstCWNw=;
+	s=arc-20240116; t=1748523643; c=relaxed/simple;
+	bh=yRxQbGXnhZoZ7Dm1Wb1yIpX2Q8JMNrUY0jFy86X7ruo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CsVDKqW+3vDW9wGg0TGV/LNaodzYjqlU8ac4q/Fr7f4Eajth+eo6fzA3DTNqZpZlGmR8F8xzU8kcZ1d+NaNpB0GQPjAckN3blfyZk9/FpQ7iolDHV51PBnR03M4teG8Zt658wkFvAOtktD0PR+uOcR36cSgsC0kHCWsDl12KohA=
+	 MIME-Version; b=JLObSmWJMnJCkQE9t9FRKIlzV5nHZEiYfmMG83qW2jPEzbs1AELtkgSevmUXVD9qAvhSPUETyz7tjRmszEcb2ahSzwuGpt4cBcx6zIlauVmn7qY+M5ai2GcZrxOgogF3Md5xxJKgdDRKAJ4vlInTRi4OSIKozCHSiSHdaH3LYPg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
 Received: from loongson.cn (unknown [223.64.69.3])
-	by gateway (Coremail) with SMTP id _____8BxIK_PWTho2SkCAQ--.19799S3;
-	Thu, 29 May 2025 20:57:51 +0800 (CST)
+	by gateway (Coremail) with SMTP id _____8BxIK91Wjho2SsCAQ--.19815S3;
+	Thu, 29 May 2025 21:00:37 +0800 (CST)
 Received: from localhost.localdomain (unknown [223.64.69.3])
-	by front1 (Coremail) with SMTP id qMiowMCx7MTGWThoD7L6AA--.56046S2;
-	Thu, 29 May 2025 20:57:49 +0800 (CST)
+	by front1 (Coremail) with SMTP id qMiowMBxLsduWjhovLP6AA--.61125S4;
+	Thu, 29 May 2025 21:00:36 +0800 (CST)
 From: Binbin Zhou <zhoubinbin@loongson.cn>
 To: Binbin Zhou <zhoubb.aaron@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>,
@@ -26,52 +26,13 @@ To: Binbin Zhou <zhoubb.aaron@gmail.com>,
 Cc: Huacai Chen <chenhuacai@kernel.org>,
 	linux-mmc@vger.kernel.org,
 	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Ben Dooks <ben-linux@fluff.org>,
-	Jaehoon Chung <jh80.chung@samsung.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Al Cooper <alcooperx@gmail.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	imx@lists.linux.dev,
-	Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>,
-	Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>,
-	openbmc@lists.ozlabs.org,
-	Michal Simek <michal.simek@amd.com>,
-	Joel Stanley <joel@jms.id.au>,
-	linux-aspeed@lists.ozlabs.org,
-	Aubin Constans <aubin.constans@microchip.com>,
-	Eugen Hristev <eugen.hristev@linaro.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
 	Yixun Lan <dlan@gentoo.org>,
 	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	linux-tegra@vger.kernel.org,
-	Hu Ziji <huziji@marvell.com>,
-	Binbin Zhou <zhoubinbin@loongson.cn>
-Subject: [PATCH v2 01/35] mmc: sdhci: Use devm_mmc_alloc_host() helper
-Date: Thu, 29 May 2025 20:57:34 +0800
-Message-ID: <32aabc8159336a27010a95cf8b177eaebe810824.1748515612.git.zhoubinbin@loongson.cn>
+	spacemit@lists.linux.dev
+Subject: [PATCH v2 22/35] mmc: sdhci-of-k1: Drop the use of sdhci_pltfm_free()
+Date: Thu, 29 May 2025 21:00:18 +0800
+Message-ID: <84cc84004d0bdbb2ee1c68dbea4b23eeefe8845b.1748515612.git.zhoubinbin@loongson.cn>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1748515612.git.zhoubinbin@loongson.cn>
 References: <cover.1748515612.git.zhoubinbin@loongson.cn>
@@ -82,58 +43,50 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowMCx7MTGWThoD7L6AA--.56046S2
+X-CM-TRANSID:qMiowMBxLsduWjhovLP6AA--.61125S4
 X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj9xXoWruw48ZFy8Xr1kCrW3XF4fJFc_yoWkArc_Cr
-	y3Xr1xWr1UArykXw1j934IqrWrKrs5Wr1vvFWrtrWay3ZrXw1kG3Wxur1DZryUur4jkFZ8
-	Cw1rJr1xZr42kosvyTuYvTs0mTUanT9S1TB71UUUU17qnTZGkaVYY2UrUUUUj1kv1TuYvT
+X-Coremail-Antispam: 1Uk129KBj9xXoWrur45KrWrCF4fJF13Aw4xuFX_yoW3JFgEka
+	45Wws7WFyrCrWvv34xt3WSyr97KFnagF1kuF4rKw4a9ry8Zrn5Ga47Zr1DX3yUuFW0kFW5
+	CayUGw4xZrWjkosvyTuYvTs0mTUanT9S1TB71UUUUjDqnTZGkaVYY2UrUUUUj1kv1TuYvT
 	s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
-	cSsGvfJTRUUUbh8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+	cSsGvfJTRUUUbkxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
 	vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
-	w2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+	w2x7M28EF7xvwVC0I7IYx2IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
 	W8Jr0_Cr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
-	6rxl6s0DM2kKe7AKxVWUtVW8ZwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYI
-	kI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWrXVW3
-	AwAv7VC2z280aVAFwI0_Cr0_Gr1UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwI
-	xGrwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
-	JVW8JwCFI7km07C267AKxVWUtVW8ZwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
-	vE14v26r106r1rMI8E67AF67kF1VAFwI0_Wrv_Gr1UMIIYrxkI7VAKI48JMIIF0xvE2Ix0
-	cI8IcVAFwI0_Ar0_tr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26F4j6r4UJwCI42IY6xAIw2
-	0EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Cr0_Gr1UMIIF0xvEx4A2jsIEc7Cj
-	xVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjxUhGNtUUUUU
+	6rxl6s0DM2kKe7AKxVWUAVWUtwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYI
+	kI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVW8Xw0E
+	3s1lYx0Ex4A2jsIE14v26r4UJVWxJr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7V
+	AKI48JM4x0Y40E4IxF1VCIxcxG6Fyj6r4UJwCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY
+	0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxVWUAVWUtwC20s026c
+	02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_
+	GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWDJVCq3wCI42IY6xIIjxv20xvEc7
+	CjxVAFwI0_Gr1j6F4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAF
+	wI0_Gr1j6F4UJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2KfnxnUUI43
+	ZEXa7IUYyMKtUUUUU==
 
-Use new function devm_mmc_alloc_host() to simplify the code.
+Since the devm_mmc_alloc_host() helper is already in use,
+sdhci_pltfm_free() is no longer needed.
 
-Although sdhci_free_host() is no longer needed, to avoid drivers that still
-use this function from failing to compile, sdhci_free_host() is temporarily
-set to empty. Finally, it will be removed when there are no more callers.
-
+Cc: Yixun Lan <dlan@gentoo.org>
+Cc: linux-riscv@lists.infradead.org
+Cc: spacemit@lists.linux.dev
 Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
 ---
- drivers/mmc/host/sdhci.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-of-k1.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index 32fa0b2bb912..ee5a5ae4db31 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -4076,7 +4076,7 @@ struct sdhci_host *sdhci_alloc_host(struct device *dev,
+diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+index 6880d3e9ab62..026dc79af292 100644
+--- a/drivers/mmc/host/sdhci-of-k1.c
++++ b/drivers/mmc/host/sdhci-of-k1.c
+@@ -286,7 +286,6 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+ 	return 0;
  
- 	WARN_ON(dev == NULL);
- 
--	mmc = mmc_alloc_host(sizeof(struct sdhci_host) + priv_size, dev);
-+	mmc = devm_mmc_alloc_host(dev, sizeof(struct sdhci_host) + priv_size);
- 	if (!mmc)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -5002,7 +5002,6 @@ EXPORT_SYMBOL_GPL(sdhci_remove_host);
- 
- void sdhci_free_host(struct sdhci_host *host)
- {
--	mmc_free_host(host->mmc);
+ err_pltfm:
+-	sdhci_pltfm_free(pdev);
+ 	return ret;
  }
  
- EXPORT_SYMBOL_GPL(sdhci_free_host);
 -- 
 2.47.1
 
