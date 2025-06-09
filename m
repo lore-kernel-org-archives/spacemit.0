@@ -1,104 +1,108 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEBB258CFF
-	for <spacemit@lists.linux.dev>; Mon,  9 Jun 2025 14:25:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D870425CC54
+	for <spacemit@lists.linux.dev>; Mon,  9 Jun 2025 14:25:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749479141; cv=none; b=HhTId/u22PY2ln5UjCy7kWafxu08RVyqXwU3eXg1vIaK2tO0AjqqilHnxyzT/6lSylpIxDj0FZDvO2SxYnOlNOkj/bwOehMjPAf4FtiRHX520IFiSqQY6z/p2s3Vu4TGG28Bc7A0NnlUvNSpTKZn/KAH5eFUz4mdwZ9M6ocMh38=
+	t=1749479152; cv=none; b=lUHGu3bubZqnRlFKjW8wB9g64txpNuy/fY1UZhVaSSIsIOqWQIgJ+IwAcs9GrtkDgMWKyn54yLWVG+mB+SivuRUADk79rPxMlXHEFqHlpP/yZv67hLbr3miDmdSCo9b5TQVp1K1S2mm0Lt11ex2FoKGaWcVFpTUI+811lP9CsGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749479141; c=relaxed/simple;
-	bh=kyCZGylePIRPc6/p6l1PQEVjFz3QH7t1Uv+tm5q9j3E=;
+	s=arc-20240116; t=1749479152; c=relaxed/simple;
+	bh=tpgFqrLkSn1DVjpGW60JOm0C0+VLH7tHHY59kM5bL/Y=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XiANugmX+B/7acyUntfmbB5q6e1jwGYhm87ijM+Ib401hVjy5XWPJpCsKR89r1/Y8zDCQ26IcjUYrdRudKyX2mtHQfUUtqmB2/HsK6BHpBUdf4a6AZIj9RIpS7l9FfZXzwzS50tlH/C4mYgzGd8qAbMuQttF9jnQTRo0ynCcq5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HN89P1th; arc=none smtp.client-ip=209.85.219.175
+	 To:Cc:Content-Type; b=m3zVrKNTG9D53iz6Tm/2m/DbMsbGhyUr8GSnckNCEOA9y8mSnNf3fH0bSEdKW/ADgdIdgz4/89pT2amq50Whp8uTgewe3HLpBLusOQc3WxBGZQjEy0WahSamfNZK0Cwr8p9HHtDWinB6VIq6xh6/4bWZYjFDSJ17Mpx/OaGkyGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gvcDjsi3; arc=none smtp.client-ip=209.85.219.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HN89P1th"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e81749142b3so3778224276.3
-        for <spacemit@lists.linux.dev>; Mon, 09 Jun 2025 07:25:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gvcDjsi3"
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e81a7d90835so3054426276.1
+        for <spacemit@lists.linux.dev>; Mon, 09 Jun 2025 07:25:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1749479138; x=1750083938; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1749479150; x=1750083950; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=08IPBfBcl0I5u93yG1iOBKn0aIO2SlE43zAjUb4+G4A=;
-        b=HN89P1thOFquzfe9VQ7N51pnlvfxuN1y00anqiI4oMQNb+sbpdXIAd/REM1UxyoRUH
-         YJnLGVmQFEAwt/5mQD5wCj7B2O+TYXS8SZ0K0v1xb8QNZyQPTVYVzQfUlaK0RgCxpYaY
-         GFRbZQNMn2aqZ66XX+CyE4HIIiLZHRJvQgT8QWTxSNsvIAGXiZdbOys+PEu9bSG3Ox5Z
-         qVGdBvGoPvdCO85BAKC9W7OofhF+HTdifnbFE5acmemM7FiUdHwHA4H36D1yZtDteLGN
-         z8sUKy08FE60YqfvthJTjyUWlevMUlM3Z5lKqklECmWaIn0+3j5B45vV5iR6NJjFbn2c
-         z2fg==
+        bh=/DHcPIW+FNlaQudxh/1xCvJS+KJ4L+7fwYUL5LAEe78=;
+        b=gvcDjsi3Uosb6fCd18Y9Xm+Car0oYBJuq2lVFmmhOGNm2JVwT+GFH/9C6QNKtkFw88
+         pXiPn/J3GhrlSVCH/z2c8uwS/tocg9pz76MPgDPRAMIpXHojV0UEvbXikClbWrHhM6P/
+         JOzm2hn7sOue/eMuGHV2VikUPq+0vhlQmX4rbb0/JunNxp2tu2UQKahhiafaPjEcsP7o
+         tDySGH4yZAM9yEfVbyuIn00WcygM+QPmzN6sWwecPGYYglQ+sjO5eLMepzWPE9Xlfo1b
+         6Ive+lA05CiJOfUxgr9zDZKD5q7vxl5v93O9kXH0dYlHo4UHpOCxQv6UpZEK5cP9NBTp
+         PmxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749479138; x=1750083938;
+        d=1e100.net; s=20230601; t=1749479150; x=1750083950;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=08IPBfBcl0I5u93yG1iOBKn0aIO2SlE43zAjUb4+G4A=;
-        b=sR+kIbWJ3TCc6eliY7RmJvEk8dDJ8/teOiwrsfHggWMMeSg67IUakhiqVdWE3uzarQ
-         bcxOYh+1o2x5FU1AzY1Rzr8Nl0oLYNVIJwcusggButlkOcBfJT6PiqqcOu+mzTSUAaqG
-         cit3aTLueGpKjSvkaVbyNncXhpmPPSdf6TDKZ6pBHO6dxVr3U1JQEGHX5bFJkO/7sSk4
-         RHX22RSZtY9kMyCa7WVoKZWQe/BI2I0OPKpvqbY//SgDZIXRIw6zec4B2Qk6FhQC+ttE
-         Qr6HJJ/wtBTFzUViePzwHzjQn4uZ4cMJVnNR/7zHhtpwSn7M+i4nLSJ+oXJhJY0Z31zC
-         BU6w==
-X-Forwarded-Encrypted: i=1; AJvYcCXhPJXfIcKRpQfmFIZMLtOd00AEph1BQjlgb6WtR01L1BLD33RDXl4UYrKRsVA4T6b6UIb6j4pexQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxMb/tnFvE5BrwJr0ru2GGZveIVF//lvwHi+VhPRh+/kjqtve7N
-	O7VcSKLQAKNW0pMs+3jSNMrrh9iRxEyxQ0GkEKTTRO643+nPDNsbygSgxbDczOPWocyUTxbZrz1
-	1o5qYUlEBk4XWIxqGRDcKl/Y6qRwUhJPuRrcDNdCj0g==
-X-Gm-Gg: ASbGnctE2ouHhtb3Uea5lnVU7jB+83P0yHW09EPpPDfvWMyaFYhgN/tgfre2RqO8N8q
-	Sfkvkdx2zX91Y5El5Swx+56gZYM63q8mwPqtV6eBjkw/qJ+uYECOr+KBHV6UgCkS+R4tOx9AHtR
-	0lgrBzWIHak9qqV7+c5qhoIMa29Cuu81MHmjVtikzM4gtB
-X-Google-Smtp-Source: AGHT+IFJR4aUEYQFFbDZaS8lUqINbO+uSj5liG0a2YzJSs3reQoye8CT00DeZ0MCmOmCgc5uVI1W+JPgVoRQgVJQkXI=
-X-Received: by 2002:a05:6902:2d82:b0:e81:9581:4b8d with SMTP id
- 3f1490d57ef6-e81a22e28damr12881553276.27.1749479137932; Mon, 09 Jun 2025
- 07:25:37 -0700 (PDT)
+        bh=/DHcPIW+FNlaQudxh/1xCvJS+KJ4L+7fwYUL5LAEe78=;
+        b=sX105BhiRmmi/pRBKKnOkn+oNdYp76dAYujT8DNROXD/vv5g+wNf4w/Fhs4Ecz/L99
+         T4myO45FDtmzFmSG8SUKgYQUQtrT9S0lpW0pUtxzVrdYmqGjjgTce3OkQG4IUtoz03JU
+         LtLBMLkPtv6O4YuY2AG1i1iXkWZ3q4jk+9IboYMdsl6Dm+feFXsHv+5we3cBp6lQ+XWo
+         /UT1lAjVo9LMFaQbIVx2bbgJQSECp+KLMG6zfhCXlsaZmS4e9Lz873IisS9l8fhEb7Mp
+         6K6ui/go7KQJxwKVD2roVBX20pcQHbe9vcwwGZK+PPBbxtTpLB5rLLuvXcas8gBZMslz
+         8BGA==
+X-Forwarded-Encrypted: i=1; AJvYcCUzTzmy5vGqqswBMrIM9AFqrodFqTeV+z8pqJJKwfI4409ZN8RRqONLjyfJUx4DRWp4c+W/7/tU+w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyGjt2XAB3yll6eb4sh+rGwI8+AAbUf4y6vD/AddOrLm++kxbVh
+	BBaX7hA4IajIgIrT/QQIXs5D0yKrZuTF/vvmD2eAnUBKCgO4wHcwiEuNML2JtgWL4E7QJs1AC1N
+	wMiFkBqyZtTjJeIhiH5WluIM1q0TXRtVKMf3uuTlFq888pHfYJvWoVaU=
+X-Gm-Gg: ASbGncvbk/T2ZbzcVKAQc5yCKbGZ6HmpvdwCnB8kXOPESlUut+VcbuuUW70tfwT0Ntg
+	2n4D5RX0RN+nd3JuRHRzdFF/aX1JkeltSgRrddkYAQpZ5+sFM+ElvmHe6qEKKPZynZQE+e1SX8b
+	ZEaIDXhUxHCbTkV9YyDi0Temvvt+0yESUOQw==
+X-Google-Smtp-Source: AGHT+IH/Pnd5J+NF0FnDZghYVyvpxu7EjsURZfHbZf+7AxkvSsyWy0aeXxECpBSIWdWQ+pB3LafvHHvF9PpdbwIrqGk=
+X-Received: by 2002:a05:6902:2686:b0:e81:cfde:3d46 with SMTP id
+ 3f1490d57ef6-e81cfde4149mr9130040276.16.1749479149876; Mon, 09 Jun 2025
+ 07:25:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250523-21-k1-sdhci-v1-0-9f293116a7e7@gentoo.org>
-In-Reply-To: <20250523-21-k1-sdhci-v1-0-9f293116a7e7@gentoo.org>
+References: <aDVTtQdXVtRhxOrb@stanley.mountain>
+In-Reply-To: <aDVTtQdXVtRhxOrb@stanley.mountain>
 From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Mon, 9 Jun 2025 16:25:02 +0200
-X-Gm-Features: AX0GCFurOqp9D4c4_5rdTPaeyNA34lDzrdQDOcopYfWdJ2pwCdIenMEDwksvwR0
-Message-ID: <CAPDyKFqUkjG8=f35CmGmTjN60_HzGnF7XihK7t8X1KA=kNSGig@mail.gmail.com>
-Subject: Re: [PATCH 0/2] sdhci: spacemit: improvement of register defintion
- and HW busy detection
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>, linux-mmc@vger.kernel.org, 
+Date: Mon, 9 Jun 2025 16:25:12 +0200
+X-Gm-Features: AX0GCFvaiXF4lOm-GilksSFMvid8SMz438Y_wsOtUwqxJmS3jsDnPCnS_PeSI8Q
+Message-ID: <CAPDyKFqMmOUsEWjE7X2oj0Nuc+FU6g_0p=+JCQ8xgGXJXNN-0g@mail.gmail.com>
+Subject: Re: [PATCH next] mmc: sdhci-of-k1: Fix error code in probe()
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Yixun Lan <dlan@gentoo.org>, Adrian Hunter <adrian.hunter@intel.com>, linux-mmc@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev
+	spacemit@lists.linux.dev, kernel-janitors@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 23 May 2025 at 16:47, Yixun Lan <dlan@gentoo.org> wrote:
+On Tue, 27 May 2025 at 07:55, Dan Carpenter <dan.carpenter@linaro.org> wrote:
 >
-> These series address two comments from Ulf during the review cycle
-> of version 2 [1].
+> If spacemit_sdhci_get_clocks() fails, then propagate the error code.
+> Don't return success.
 >
-> - improve register/BITs definition to make them less generic
-> - drop MMC_CAP_WAIT_WHILE_BUSY flag to disable HW busy detection,
->   this is tested on Bananapi-F3 board.
->
-> Link: https://lore.kernel.org/all/CAPDyKFoDWS6DWdKOaxTDEYeKv3hjVDoR7XGi19nESVssc-RG8g@mail.gmail.com/ [1]
-> Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> ---
-> Yixun Lan (2):
->       mmc: sdhci-of-k1: make register definition vendor specific
->       mmc: sdhci-of-k1: disable HW busy detection
->
->  drivers/mmc/host/sdhci-of-k1.c | 140 +++++++++++++++++++++--------------------
->  1 file changed, 72 insertions(+), 68 deletions(-)
-> ---
-> base-commit: f7f05c5ea4af0f28cccfa49fe1af65e85dba5ef6
-> change-id: 20250522-21-k1-sdhci-c987fd67c82f
->
-> Best regards,
-> --
-> Yixun Lan
+> Fixes: e5502d15b0f3 ("mmc: sdhci-of-k1: add support for SpacemiT K1 SoC")
+> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 
-Applied for next, thanks!
+Applied for fixes, thanks!
 
 Kind regards
 Uffe
+
+
+> ---
+>  drivers/mmc/host/sdhci-of-k1.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+> index 6880d3e9ab62..2e5da7c5834c 100644
+> --- a/drivers/mmc/host/sdhci-of-k1.c
+> +++ b/drivers/mmc/host/sdhci-of-k1.c
+> @@ -276,7 +276,8 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+>
+>         host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+>
+> -       if (spacemit_sdhci_get_clocks(dev, pltfm_host))
+> +       ret = spacemit_sdhci_get_clocks(dev, pltfm_host);
+> +       if (ret)
+>                 goto err_pltfm;
+>
+>         ret = sdhci_add_host(host);
+> --
+> 2.47.2
+>
