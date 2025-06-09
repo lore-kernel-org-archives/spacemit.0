@@ -1,64 +1,68 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B569192B7D;
-	Sun,  8 Jun 2025 19:31:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DC13A1DB
+	for <spacemit@lists.linux.dev>; Mon,  9 Jun 2025 04:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749411105; cv=none; b=QpltcHaq4eS6jav3f87YFKc/oyykgQ1+657/3oOZ72HWReSLUQEFATx9lGQpms59S8sS13wL7lcUh3ijTmPk31FEhOOpK7GujBF89/QdtFS8/yW9BceH58AKeg9gH/yzLRE9KR8fWO0SU0D8Fgt/mCMKaMvIxRJSEgDOpAdg37I=
+	t=1749442912; cv=none; b=ixU+VKauMh8fPAOIgJFLeewmGQq05x5j2okhmotsK2+2yZfimqiROZjFne/OXaNE1ZIgce3LkuKkJlczEWmfAzbOHcBXjDf5cZabwir7101xKPHSXrCctw2O5MdPP5DfiSmKtGH2uZyLyp0B48kVfaDTjhNbXZk53fsBcGO12A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749411105; c=relaxed/simple;
-	bh=gifPlaHBYfzezWCVEDpNS3T26y78KL1GGVGcXJ1yV2g=;
+	s=arc-20240116; t=1749442912; c=relaxed/simple;
+	bh=jS0cEzQw8X9ASmmTWmyjGvXq7CYOImtqUSmMlKYOQ7k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lO5KYPm2/ZJT8YsQc8K5+W1noqBpwKw4XyAGGnavKbPpq+QL7pbeUsCIF8ahwmkg/QTG1Nt9H3kXrG2t1dMvWP2/GOkH5610jlAuQkUQgV41w9M0H5oS7yaRyoMy99IMboVJc63hbUQsErnYNiMokZ13mTrbAIgUJtVEt4RMSkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iwiFYwLP; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=gqTIPNWIEVQrD0ydZtnUtOZAP2/FhTdJxlU+/Gm9e8GOhRzZGI2G9fxqmiIJPTEGg3QaATYH+vS6Do3cqCP+oK/VRlZsL1TSETmB61Sg611f8BwUd8IxvVqP/IKHuzjCgeVKYKvg+zME766KdeDbRKVgWQZEvCx0CkCG3yCFdaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=wpF99Ev9; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=zbaw+kg3; arc=none smtp.client-ip=155.254.16.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iwiFYwLP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749411103; x=1780947103;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=gifPlaHBYfzezWCVEDpNS3T26y78KL1GGVGcXJ1yV2g=;
-  b=iwiFYwLPc2mP+zG/JuK56fSm2g9p9g1lxinNI10EvkB2hpAInPd9yRC+
-   zpdTjOLlyFpyISMCnckXm1gk2eSHO49lR22n0dVrXdAl5ajJF6i9bxSfB
-   MblavJs5Js1Jul8bMFabevlAP6CAZXcTJ7Bn2NPuQ8DynErknXrGzxx8j
-   TEgludIDWMaHwzoqj9lGIJUUcSDAMbnGwYL4V0nE7leSJzQSNYJTbu8vO
-   51TqXsp/BI7MPsd3qy9eDolXbzkbJ+T60+a2WFn+uY82gNKUmJdflDE3A
-   Pv4XgS++62QMpyOKSF0rvkk6v2/+jUNC46qwKc6+M7NjiWGYikaTWVM5x
-   A==;
-X-CSE-ConnectionGUID: buFR5wcqR5KuT5uR7kLGLw==
-X-CSE-MsgGUID: azY0zcKgR3SQfCfpFNYhPA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11458"; a="51636821"
-X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; 
-   d="scan'208";a="51636821"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2025 12:31:42 -0700
-X-CSE-ConnectionGUID: +iDqu+SLTnmB9lbjJ9Zhjg==
-X-CSE-MsgGUID: a3JqnYI8TYC8kncyZS6nww==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; 
-   d="scan'208";a="177264927"
-Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
-  by orviesa002.jf.intel.com with ESMTP; 08 Jun 2025 12:31:39 -0700
-Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uOLk0-0006X7-1I;
-	Sun, 08 Jun 2025 19:31:36 +0000
-Date: Mon, 9 Jun 2025 03:30:50 +0800
-From: kernel test robot <lkp@intel.com>
-To: Alex Elder <elder@riscstar.com>, mturquette@baylibre.com,
-	sboyd@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, dlan@gentoo.org, heylenay@4d2.org,
-	inochiama@outlook.com, elder@riscstar.com,
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="wpF99Ev9";
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="zbaw+kg3"
+Received: from bayard.4d2.org (bayard.4d2.org [127.0.0.1])
+	by bayard.4d2.org (Postfix) with ESMTP id 7995812FB41C;
+	Sun, 08 Jun 2025 21:21:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1749442908; bh=jS0cEzQw8X9ASmmTWmyjGvXq7CYOImtqUSmMlKYOQ7k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=wpF99Ev9a1i3kYzbIH8xr9WdebuCDfK5QA0LVjIOfyUqwwfetuWYZf1d4C2miIIbt
+	 vwI0K65ufIRSKKDBuEDxTmDYJ/f7xqPrfZJxQ491KFwC5LJ1TeaBaxUXGYB180MWTb
+	 /SDBJCEWCFz49iIyzlGuHieYs+YvOlTzDR4ivA2TjsNtYdwXSkhJ1DaeAfjm82FM16
+	 SqS67RH0O3eBwbpUjwk0ieSrnIwiAB2no+uHSoekILYWJa3ScUJTaCxz/M+uJUOvvM
+	 ztlKorjuRtkLdXQJwjzGA0AR3NFFlkyw/H3KRofWxs5owqTmvqxJaYOzZuzEfaW9Ab
+	 dD0y0aJuHVkhw==
+X-Virus-Scanned: amavisd-new at 4d2.org
+Received: from bayard.4d2.org ([127.0.0.1])
+ by bayard.4d2.org (bayard.4d2.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id Q-z2SKhicKqm; Sun,  8 Jun 2025 21:21:45 -0700 (PDT)
+Received: from ketchup (unknown [183.217.80.254])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: heylenay@4d2.org)
+	by bayard.4d2.org (Postfix) with ESMTPSA id 1082D12FB401;
+	Sun, 08 Jun 2025 21:21:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1749442905; bh=jS0cEzQw8X9ASmmTWmyjGvXq7CYOImtqUSmMlKYOQ7k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=zbaw+kg3PaM6bHrS+UWUsB27CpmMy8q0fPqD4qLEwRWvYm2ovPE8+PC0AcRKgVvMJ
+	 HALTz+cSrlxDOrYDOlplmYc3qUovcSrjGtJcP5ubfO/X5IE1A6fah+Y13qeKBH1LZP
+	 5d6xQKArlcgrC+uFnqEMCvkQVBa1Rlvvgychc+5hwt5B2JJ9s/LC916wU6Bqz0tBTP
+	 /0lIGkjH3aUbEztmUtIRTkzvTtT5K9zArUEMIBEFb5HxCPNKYmd5/XA9Fj4WXvlvqq
+	 foGBgGl0qLo7mOVvhs4CLgTja3MbhLYvdmxksv4IDPafiBWdM14FPMxV/EQ5zrlzp8
+	 Qwi0l8o7HDkDw==
+Date: Mon, 9 Jun 2025 04:21:39 +0000
+From: Haylen Chu <heylenay@4d2.org>
+To: Alex Elder <elder@riscstar.com>, Yixun Lan <dlan@gentoo.org>
+Cc: mturquette@baylibre.com, sboyd@kernel.org, inochiama@outlook.com,
 	linux-clk@vger.kernel.org, spacemit@lists.linux.dev,
 	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
 	Guodong Xu <guodong@riscstar.com>
 Subject: Re: [PATCH] clk: spacemit: mark K1 pll1_d8 as critical
-Message-ID: <202506090339.Jy504MGo-lkp@intel.com>
+Message-ID: <aEZhU5kk7pMnl7F9@ketchup>
 References: <20250607202759.4180579-1-elder@riscstar.com>
+ <20250608002453-GYA108101@gentoo>
+ <52c27139-20aa-4995-b3b5-290df13f1ec9@riscstar.com>
+ <aEUVwvKHCu4hr6xs@ketchup>
+ <ef696db8-20ca-4710-b642-8d22263d4ffe@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -67,167 +71,288 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250607202759.4180579-1-elder@riscstar.com>
+In-Reply-To: <ef696db8-20ca-4710-b642-8d22263d4ffe@riscstar.com>
 
-Hi Alex,
+On Sun, Jun 08, 2025 at 01:31:42PM -0500, Alex Elder wrote:
+> On 6/7/25 11:46 PM, Haylen Chu wrote:
+> > On Sat, Jun 07, 2025 at 09:46:03PM -0500, Alex Elder wrote:
+> 
+> I respond below.  I'm leaving all the context for now.
+> 
+> > > On 6/7/25 7:24 PM, Yixun Lan wrote:
+> > > > Hi Alex,
+> > > > 
+> > > > On 15:27 Sat 07 Jun     , Alex Elder wrote:
+> > > > > The pll1_d8 clock is enabled by the boot loader, and is ultimately a
+> > > > > parent for numerous clocks.  Guodong Xu was recently testing DMA,
+> > > >               ~~~~~~~~~this is still vague, numerous isn't equal to critical
+> > > 
+> > > I will give you a full explanation of what I observed, below.
+> > > 
+> > > > > adding a reset property, and discovered that the needed reset was
+> > > > > not yet ready during initial probe.  It dropped its clock reference,
+> > > > > which dropped parent references, and along the way it dropped the sole
+> > > > > reference to pll1_d8 (from its prior clk_get()).  Clock pll1_d8 got
+> > > > > disabled, which resulted in a non-functioning system.
+> > > > > 
+> > > > So, I'm trying to understand the problem, and would like to evaluate if
+> > > > the "critical" flag is necessary..
+> > > > 
+> > > > It occurs to me, the DMA driver should request and enable clock first,
+> > > > then request and issue a reset, it probably could be solved by proper
+> > > 
+> > > No, that is not the issue.  The reset is never deasserted.
+> > > 
+> > > > order? so what's the real problem here? is DMA or reset? dropped the
+> > > > clock? or does driver fail to request a reset before clock is ready?
+> > > 
+> > > The problem is with the pll1_d8 clock.  That clock is enabled
+> > > successfully.  However the reset isn't ready, so the clock
+> > > gets disabled, and its parent (and other ancestors) also get
+> > > disabled while recovering from that.
+> > > 
+> > > I'll give you a high-level summary, then will lay out a ton of
+> > > detail.
+> > > 
+> > > In the DMA driver probe function, several initial things happen
+> > > and then, a clock is requested (enabled):
+> > >    <&syscon_apmu CLK_DMA>
+> > > That succeeds.
+> > > 
+> > > Next, a reset is requested:
+> > >    <&syscon_apmu RESET_DMA>
+> > > But that fails, because the reset driver probe function hasn't
+> > > been called yet.  The request gets -EPROBE_DEFER as its result,
+> > > and the DMA driver starts unwinding everything so that it can
+> > > be probed again later.  Dropping the clock reference results
+> > > in parent clocks dropping references.  And because pll1_div8
+> > > initially had a reference count of 0 (despite being on),
+> > > dropping this single reference means it gets disabled.  Then
+> > > we're stuck.
+> > > 
+> > > 
+> > > Here is how the DMA clock is supplied (at boot time):
+> > > 
+> > > pll1 -> pll1_d8 -> pll1_d8_307p2 -> pmua_aclk -> dma_clk
+> > > 
+> > > pll1 and pll1_d8 are enabled by the boot loader, but at this
+> > > time the drivers for various hardware that require them aren't
+> > > "getting" and enabling them (yet).
+> > > 
+> > > devm_clk_get_optional_enabled() causes clk_prepare_enable()
+> > > to be called on the target clock (pll1_d8).  That simply calls
+> > > clk_prepare() and clk_enable().  Let's focus on the latter.
+> > >      clk_enable(dma_clk)
+> > >        clk_core_enable_lock()
+> > > 
+> > > So now the clock enable lock is held.  The target clock's
+> > > enable_count for pll1_d8 is 0.
+> > > 
+> > >    clk_core_enable(dma_clk)
+> > >      clk_core_enable(parent = pmua_aclk)
+> > >      ...
+> > >      enable_count++ (on dma_clk)
+> > > 
+> > > The parent gets enabled (I'm fairly certain pmua_clk's
+> > > enable_count is also 0).
+> > > 
+> > >    clk_core_enable(pmua_aclk)
+> > >      clk_core_enable(parent = pll1_d8_307p2)
+> > >      ...
+> > >      enable_count++ (on pmua_clk)
+> > > 
+> > > And so on.  When the clk_enable(dma_clk) completes, we have
+> > > these enable counts:
+> > >    dma_clk:		1
+> > >    pmua_clk:		1
+> > >    pll1_d8_307p2:	1
+> > >    pll1_d8:		1
+> > >    pll1:			1? (I don't recall)
+> > > 
+> > > The -EPROBE_DEFER causes the  devm_clk_get_optional_enabled()
+> > > for dma_clk to get undone.  That means clk_disable_unprepare()
+> > > gets called on dma_clk.  Let's just focus on clk_disable().
+> > > 
+> > >    clk_disable(dma_clk)
+> > >      clk_core_disable_lock(dma_clk)
+> > >        (takes clk_enable lock)
+> > >        clk_core_disable()
+> > >          --enable_count becomes 0 (on dma_clk)
+> > >          (disables dma_clk)
+> > >          clk_core_disable(core->parent = pmua_aclk)
+> > > 
+> > >    clk_core_disable(pmua_aclk)
+> > >      --enable_count becomes 0 (on pmua_clk)
+> > >      (disables pmua_clk)
+> > >      clk_core_dissable(core->parent = pll1_d8_307p2)
+> > > 
+> > >    clk_core_disable(pll1_d8_307p2)
+> > >      --enable_count becomes 0 (on pll1_d8_307p2)
+> > >      (disables pll1_d8_307p2)
+> > >      clk_core_dissable(core->parent = pll1_d8)
+> > > 
+> > >    clk_core_disable(pll1_d8\)
+> > >      --enable_count becomes 0 (on pll1)
+> > >      (disables pll1_d8)
+> > >      BOOM
+> > 
+> > Yeah, I got the reason that pll1_d8 is disabled, but I don't still
+> > understand why it matters: pll1_d8 is a simple factor gate, though being
+> > parent of various peripheral clocks, it's okay to enable it again later
+> > if some peripherals decide to use it or one of its child, isn't it?
+> 
+> When it gets disabled, the system becomes non-functional.  What that
+> means is that everything stops, no more output, and even when I
+> enabled KDB it did not drop into KDB.  *Something* depends on it,
+> but there is no driver that properly enables the clock (yet).
+> This means--for now--it seems to be a critical clock.
+> 
+> > I could come up with several scenarios where disabling the clock really
+> > causes problems,
+> > 
+> > 1. Some essential SoC components are actually supplied by pll1_d8 or one
+> >     of its children, but isn't described in devicetree or the driver,
+> >     thus disabling pll1_d8 leads to an SoC hang. We should mark the
+> 
+> This is what I believe is happening.  So my fix marks the one clock
+> as critical in the driver.  I would not want to mark it critical
+> in DT.
 
-kernel test robot noticed the following build warnings:
+Okay. Then please make it more explicit in the commit message, "pll1_d8
+seems to supply critical SoC components" describes the situation more
+precisely than "Clock pll1_d8 got disabled, which resulted in a
+non-functioning system".
 
-[auto build test WARNING on linus/master]
-[also build test WARNING on next-20250606]
-[cannot apply to v6.15]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> >     precise clock that being essential as critcal, instead of setting
+> >     pll1_d8 as critical to work around the problem.
+> 
+> I provided the chain of clocks leading to the dma_clk.  Disabling
+> the dma_clk did not cause harm; disabling pmua_aclk did not cause
+> harm; disabling pll1_d8_307p2 did not cause harm.  Only when pll1_d8
+> was disabled did the machine become unusable.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Alex-Elder/clk-spacemit-mark-K1-pll1_d8-as-critical/20250608-042952
-base:   linus/master
-patch link:    https://lore.kernel.org/r/20250607202759.4180579-1-elder%40riscstar.com
-patch subject: [PATCH] clk: spacemit: mark K1 pll1_d8 as critical
-config: csky-randconfig-r111-20250608 (https://download.01.org/0day-ci/archive/20250609/202506090339.Jy504MGo-lkp@intel.com/config)
-compiler: csky-linux-gcc (GCC) 15.1.0
-reproduce: (https://download.01.org/0day-ci/archive/20250609/202506090339.Jy504MGo-lkp@intel.com/reproduce)
+I don't think this is an evidence strong enough to prove pll1_d8 itself
+is critical.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202506090339.Jy504MGo-lkp@intel.com/
+pll1_d8 supplies not only pll1_d8_307p2 and its children, but also
+pll1_d16_153p6, pll1_d24_102p4 and many more. It's totally possible that
+not pll1_d8 but actually pll1_d16_153p6 or pll1_d24_102p4 is critical
+for SoC operation: in a normal functioning system with a working UART,
+these two clocks are always enabled since they (indirectly) supply UART
+bus and func clocks, hidding the problem.
 
-sparse warnings: (new ones prefixed by >>)
->> drivers/clk/spacemit/ccu-k1.c:168:1: sparse: sparse: symbol 'pll1_d3' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:170:1: sparse: sparse: symbol 'pll1_d5' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:172:1: sparse: sparse: symbol 'pll1_d7' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:175:1: sparse: sparse: symbol 'pll1_d11_223p4' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:176:1: sparse: sparse: symbol 'pll1_d13_189' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:177:1: sparse: sparse: symbol 'pll1_d23_106p8' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:178:1: sparse: sparse: symbol 'pll1_d64_38p4' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:179:1: sparse: sparse: symbol 'pll1_aud_245p7' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:180:1: sparse: sparse: symbol 'pll1_aud_24p5' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:182:1: sparse: sparse: symbol 'pll2_d1' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:183:1: sparse: sparse: symbol 'pll2_d2' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:184:1: sparse: sparse: symbol 'pll2_d3' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:185:1: sparse: sparse: symbol 'pll2_d4' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:186:1: sparse: sparse: symbol 'pll2_d5' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:187:1: sparse: sparse: symbol 'pll2_d6' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:188:1: sparse: sparse: symbol 'pll2_d7' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:189:1: sparse: sparse: symbol 'pll2_d8' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:191:1: sparse: sparse: symbol 'pll3_d1' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:192:1: sparse: sparse: symbol 'pll3_d2' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:193:1: sparse: sparse: symbol 'pll3_d3' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:194:1: sparse: sparse: symbol 'pll3_d4' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:195:1: sparse: sparse: symbol 'pll3_d5' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:196:1: sparse: sparse: symbol 'pll3_d6' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:197:1: sparse: sparse: symbol 'pll3_d7' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:198:1: sparse: sparse: symbol 'pll3_d8' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:214:1: sparse: sparse: symbol 'pll1_d24_102p4' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:215:1: sparse: sparse: symbol 'pll1_d48_51p2' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:216:1: sparse: sparse: symbol 'pll1_d48_51p2_ap' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:217:1: sparse: sparse: symbol 'pll1_m3d128_57p6' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:218:1: sparse: sparse: symbol 'pll1_d96_25p6' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:219:1: sparse: sparse: symbol 'pll1_d192_12p8' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:220:1: sparse: sparse: symbol 'pll1_d192_12p8_wdt' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:221:1: sparse: sparse: symbol 'pll1_d384_6p4' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:228:1: sparse: sparse: symbol 'pll1_d12_204p8' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:231:1: sparse: sparse: symbol 'pll1_d10_245p76' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:234:1: sparse: sparse: symbol 'pll1_d52_47p26' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:235:1: sparse: sparse: symbol 'pll1_d78_31p5' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:247:1: sparse: sparse: symbol 'i2s_sysclk' was not declared. Should it be static?
->> drivers/clk/spacemit/ccu-k1.c:248:1: sparse: sparse: symbol 'i2s_bclk' was not declared. Should it be static?
+In your case, when DMA driver reverts the enable operation, the UART
+driver don't seem to be probed yet (or enable count of pll1_d8 won't
+decrease to zero). Disabling the parent may cause an SoC hang as well if
+pll1_d16_153p6 or pll1_d24_102p4 is critcal in fact.
 
-vim +/pll1_d3 +168 drivers/clk/spacemit/ccu-k1.c
+> > 2. There're bugs in our clock driver, thus it fails to bring pll1_d8
+> >     (or maybe also its children) back to a sound state. If so we should
+> >     fix the driver.
+> 
+> No, I found that pll1_d8 had an enable count of 1 after dma_clk
+> was enabled.  And then the set of disables that resulted from the
+> -EPROBE_DEFER discovered its enable count was zero, and therefore
+> disabled pll1_d8 (after dma_clk, pmua_aclk, and pll1_d8_307p2 were
+> disabled).  I do not suspect the clock *driver* is at fault.
 
-1b72c59db0add8 Haylen Chu 2025-04-16  159  
-1b72c59db0add8 Haylen Chu 2025-04-16  160  CCU_PLL_DEFINE(pll1, pll1_rate_tbl, APBS_PLL1_SWCR1, APBS_PLL1_SWCR3, MPMU_POSR, POSR_PLL1_LOCK,
-1b72c59db0add8 Haylen Chu 2025-04-16  161  	       CLK_SET_RATE_GATE);
-1b72c59db0add8 Haylen Chu 2025-04-16  162  CCU_PLL_DEFINE(pll2, pll2_rate_tbl, APBS_PLL2_SWCR1, APBS_PLL2_SWCR3, MPMU_POSR, POSR_PLL2_LOCK,
-1b72c59db0add8 Haylen Chu 2025-04-16  163  	       CLK_SET_RATE_GATE);
-1b72c59db0add8 Haylen Chu 2025-04-16  164  CCU_PLL_DEFINE(pll3, pll3_rate_tbl, APBS_PLL3_SWCR1, APBS_PLL3_SWCR3, MPMU_POSR, POSR_PLL3_LOCK,
-1b72c59db0add8 Haylen Chu 2025-04-16  165  	       CLK_SET_RATE_GATE);
-1b72c59db0add8 Haylen Chu 2025-04-16  166  
-1b72c59db0add8 Haylen Chu 2025-04-16  167  CCU_FACTOR_GATE_DEFINE(pll1_d2, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(1), 2, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @168  CCU_FACTOR_GATE_DEFINE(pll1_d3, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(2), 3, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  169  CCU_FACTOR_GATE_DEFINE(pll1_d4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(3), 4, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @170  CCU_FACTOR_GATE_DEFINE(pll1_d5, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(4), 5, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  171  CCU_FACTOR_GATE_DEFINE(pll1_d6, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(5), 6, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @172  CCU_FACTOR_GATE_DEFINE(pll1_d7, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(6), 7, 1);
-5d0122955ef9fd Alex Elder 2025-06-07  173  CCU_FACTOR_GATE_FLAGS_DEFINE(pll1_d8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(7), 8, 1,
-5d0122955ef9fd Alex Elder 2025-06-07  174  		CLK_IS_CRITICAL);
-1b72c59db0add8 Haylen Chu 2025-04-16 @175  CCU_FACTOR_GATE_DEFINE(pll1_d11_223p4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(15), 11, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @176  CCU_FACTOR_GATE_DEFINE(pll1_d13_189, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(16), 13, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @177  CCU_FACTOR_GATE_DEFINE(pll1_d23_106p8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(20), 23, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @178  CCU_FACTOR_GATE_DEFINE(pll1_d64_38p4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(0), 64, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @179  CCU_FACTOR_GATE_DEFINE(pll1_aud_245p7, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(10), 10, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @180  CCU_FACTOR_GATE_DEFINE(pll1_aud_24p5, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(11), 100, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  181  
-1b72c59db0add8 Haylen Chu 2025-04-16 @182  CCU_FACTOR_GATE_DEFINE(pll2_d1, CCU_PARENT_HW(pll2), APBS_PLL2_SWCR2, BIT(0), 1, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @183  CCU_FACTOR_GATE_DEFINE(pll2_d2, CCU_PARENT_HW(pll2), APBS_PLL2_SWCR2, BIT(1), 2, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @184  CCU_FACTOR_GATE_DEFINE(pll2_d3, CCU_PARENT_HW(pll2), APBS_PLL2_SWCR2, BIT(2), 3, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @185  CCU_FACTOR_GATE_DEFINE(pll2_d4, CCU_PARENT_HW(pll2), APBS_PLL2_SWCR2, BIT(3), 4, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @186  CCU_FACTOR_GATE_DEFINE(pll2_d5, CCU_PARENT_HW(pll2), APBS_PLL2_SWCR2, BIT(4), 5, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @187  CCU_FACTOR_GATE_DEFINE(pll2_d6, CCU_PARENT_HW(pll2), APBS_PLL2_SWCR2, BIT(5), 6, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @188  CCU_FACTOR_GATE_DEFINE(pll2_d7, CCU_PARENT_HW(pll2), APBS_PLL2_SWCR2, BIT(6), 7, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @189  CCU_FACTOR_GATE_DEFINE(pll2_d8, CCU_PARENT_HW(pll2), APBS_PLL2_SWCR2, BIT(7), 8, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  190  
-1b72c59db0add8 Haylen Chu 2025-04-16 @191  CCU_FACTOR_GATE_DEFINE(pll3_d1, CCU_PARENT_HW(pll3), APBS_PLL3_SWCR2, BIT(0), 1, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @192  CCU_FACTOR_GATE_DEFINE(pll3_d2, CCU_PARENT_HW(pll3), APBS_PLL3_SWCR2, BIT(1), 2, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @193  CCU_FACTOR_GATE_DEFINE(pll3_d3, CCU_PARENT_HW(pll3), APBS_PLL3_SWCR2, BIT(2), 3, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @194  CCU_FACTOR_GATE_DEFINE(pll3_d4, CCU_PARENT_HW(pll3), APBS_PLL3_SWCR2, BIT(3), 4, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @195  CCU_FACTOR_GATE_DEFINE(pll3_d5, CCU_PARENT_HW(pll3), APBS_PLL3_SWCR2, BIT(4), 5, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @196  CCU_FACTOR_GATE_DEFINE(pll3_d6, CCU_PARENT_HW(pll3), APBS_PLL3_SWCR2, BIT(5), 6, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @197  CCU_FACTOR_GATE_DEFINE(pll3_d7, CCU_PARENT_HW(pll3), APBS_PLL3_SWCR2, BIT(6), 7, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @198  CCU_FACTOR_GATE_DEFINE(pll3_d8, CCU_PARENT_HW(pll3), APBS_PLL3_SWCR2, BIT(7), 8, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  199  
-1b72c59db0add8 Haylen Chu 2025-04-16  200  CCU_FACTOR_DEFINE(pll3_20, CCU_PARENT_HW(pll3_d8), 20, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  201  CCU_FACTOR_DEFINE(pll3_40, CCU_PARENT_HW(pll3_d8), 10, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  202  CCU_FACTOR_DEFINE(pll3_80, CCU_PARENT_HW(pll3_d8), 5, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  203  
-1b72c59db0add8 Haylen Chu 2025-04-16  204  /* APBS clocks end */
-1b72c59db0add8 Haylen Chu 2025-04-16  205  
-1b72c59db0add8 Haylen Chu 2025-04-16  206  /* MPMU clocks start */
-1b72c59db0add8 Haylen Chu 2025-04-16  207  CCU_GATE_DEFINE(pll1_d8_307p2, CCU_PARENT_HW(pll1_d8), MPMU_ACGR, BIT(13), 0);
-1b72c59db0add8 Haylen Chu 2025-04-16  208  
-1b72c59db0add8 Haylen Chu 2025-04-16  209  CCU_FACTOR_DEFINE(pll1_d32_76p8, CCU_PARENT_HW(pll1_d8_307p2), 4, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  210  
-1b72c59db0add8 Haylen Chu 2025-04-16  211  CCU_FACTOR_DEFINE(pll1_d40_61p44, CCU_PARENT_HW(pll1_d8_307p2), 5, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  212  
-1b72c59db0add8 Haylen Chu 2025-04-16  213  CCU_FACTOR_DEFINE(pll1_d16_153p6, CCU_PARENT_HW(pll1_d8), 2, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @214  CCU_FACTOR_GATE_DEFINE(pll1_d24_102p4, CCU_PARENT_HW(pll1_d8), MPMU_ACGR, BIT(12), 3, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @215  CCU_FACTOR_GATE_DEFINE(pll1_d48_51p2, CCU_PARENT_HW(pll1_d8), MPMU_ACGR, BIT(7), 6, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @216  CCU_FACTOR_GATE_DEFINE(pll1_d48_51p2_ap, CCU_PARENT_HW(pll1_d8), MPMU_ACGR, BIT(11), 6, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @217  CCU_FACTOR_GATE_DEFINE(pll1_m3d128_57p6, CCU_PARENT_HW(pll1_d8), MPMU_ACGR, BIT(8), 16, 3);
-1b72c59db0add8 Haylen Chu 2025-04-16 @218  CCU_FACTOR_GATE_DEFINE(pll1_d96_25p6, CCU_PARENT_HW(pll1_d8), MPMU_ACGR, BIT(4), 12, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @219  CCU_FACTOR_GATE_DEFINE(pll1_d192_12p8, CCU_PARENT_HW(pll1_d8), MPMU_ACGR, BIT(3), 24, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @220  CCU_FACTOR_GATE_DEFINE(pll1_d192_12p8_wdt, CCU_PARENT_HW(pll1_d8), MPMU_ACGR, BIT(19), 24, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @221  CCU_FACTOR_GATE_DEFINE(pll1_d384_6p4, CCU_PARENT_HW(pll1_d8), MPMU_ACGR, BIT(2), 48, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  222  
-1b72c59db0add8 Haylen Chu 2025-04-16  223  CCU_FACTOR_DEFINE(pll1_d768_3p2, CCU_PARENT_HW(pll1_d384_6p4), 2, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  224  CCU_FACTOR_DEFINE(pll1_d1536_1p6, CCU_PARENT_HW(pll1_d384_6p4), 4, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  225  CCU_FACTOR_DEFINE(pll1_d3072_0p8, CCU_PARENT_HW(pll1_d384_6p4), 8, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  226  
-1b72c59db0add8 Haylen Chu 2025-04-16  227  CCU_GATE_DEFINE(pll1_d6_409p6, CCU_PARENT_HW(pll1_d6), MPMU_ACGR, BIT(0), 0);
-1b72c59db0add8 Haylen Chu 2025-04-16 @228  CCU_FACTOR_GATE_DEFINE(pll1_d12_204p8, CCU_PARENT_HW(pll1_d6), MPMU_ACGR, BIT(5), 2, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  229  
-1b72c59db0add8 Haylen Chu 2025-04-16  230  CCU_GATE_DEFINE(pll1_d5_491p52, CCU_PARENT_HW(pll1_d5), MPMU_ACGR, BIT(21), 0);
-1b72c59db0add8 Haylen Chu 2025-04-16 @231  CCU_FACTOR_GATE_DEFINE(pll1_d10_245p76, CCU_PARENT_HW(pll1_d5), MPMU_ACGR, BIT(18), 2, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  232  
-1b72c59db0add8 Haylen Chu 2025-04-16  233  CCU_GATE_DEFINE(pll1_d4_614p4, CCU_PARENT_HW(pll1_d4), MPMU_ACGR, BIT(15), 0);
-1b72c59db0add8 Haylen Chu 2025-04-16 @234  CCU_FACTOR_GATE_DEFINE(pll1_d52_47p26, CCU_PARENT_HW(pll1_d4), MPMU_ACGR, BIT(10), 13, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @235  CCU_FACTOR_GATE_DEFINE(pll1_d78_31p5, CCU_PARENT_HW(pll1_d4), MPMU_ACGR, BIT(6), 39, 2);
-1b72c59db0add8 Haylen Chu 2025-04-16  236  
-1b72c59db0add8 Haylen Chu 2025-04-16  237  CCU_GATE_DEFINE(pll1_d3_819p2, CCU_PARENT_HW(pll1_d3), MPMU_ACGR, BIT(14), 0);
-1b72c59db0add8 Haylen Chu 2025-04-16  238  
-1b72c59db0add8 Haylen Chu 2025-04-16  239  CCU_GATE_DEFINE(pll1_d2_1228p8, CCU_PARENT_HW(pll1_d2), MPMU_ACGR, BIT(16), 0);
-1b72c59db0add8 Haylen Chu 2025-04-16  240  
-1b72c59db0add8 Haylen Chu 2025-04-16  241  CCU_GATE_DEFINE(slow_uart, CCU_PARENT_NAME(osc), MPMU_ACGR, BIT(1), CLK_IGNORE_UNUSED);
-1b72c59db0add8 Haylen Chu 2025-04-16  242  CCU_DDN_DEFINE(slow_uart1_14p74, pll1_d16_153p6, MPMU_SUCCR, 16, 13, 0, 13, 0);
-1b72c59db0add8 Haylen Chu 2025-04-16  243  CCU_DDN_DEFINE(slow_uart2_48, pll1_d4_614p4, MPMU_SUCCR_1, 16, 13, 0, 13, 0);
-1b72c59db0add8 Haylen Chu 2025-04-16  244  
-1b72c59db0add8 Haylen Chu 2025-04-16  245  CCU_GATE_DEFINE(wdt_clk, CCU_PARENT_HW(pll1_d96_25p6), MPMU_WDTPCR, BIT(1), 0);
-1b72c59db0add8 Haylen Chu 2025-04-16  246  
-1b72c59db0add8 Haylen Chu 2025-04-16 @247  CCU_FACTOR_GATE_DEFINE(i2s_sysclk, CCU_PARENT_HW(pll1_d16_153p6), MPMU_ISCCR, BIT(31), 50, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16 @248  CCU_FACTOR_GATE_DEFINE(i2s_bclk, CCU_PARENT_HW(i2s_sysclk), MPMU_ISCCR, BIT(29), 1, 1);
-1b72c59db0add8 Haylen Chu 2025-04-16  249  
+A correct enable count doesn't mean the hardware is configured
+correctly.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+> > Unless you could confirm pll1_d8 (not its child) really supplies some
+> > essential SoC components, I don't think simply marking pll1_d8 as
+> > critical is the correct solution.
+> 
+> I did confirm this.  The child gets disabled before the parent in
+> clk_core_disable().
+> 
+> > And, I don't even know what "non-functioning system" behaves like. Could
+> > you please provide more information, like soC behaviours or dmesg when
+> > disabling pll1_d8 causes problems? Thanks.
+> 
+> Maybe you could, as an experiment, pretend <&syscon_apmu CLK_DMA>
+> is a clock for something and get it during probe, using
+> devm_clk_get_optional_enabled().  Then just return -EPROBE_DEFER
+> after that, and I think you'll reproduce the issue.  In fact,
+> you might hit the issue more quickly if you used CLK_PLL1_D8.
+> 
+> 					-Alex
+
+Thanks,
+Haylen Chu
+
+> > > I hope this is clear.
+> > > 
+> > > 					-Alex
+> > 
+> > Regards,
+> > Haylen Chu
+> > 
+> > > 
+> > > > > Mark that clock critical so it doesn't get turned off in this case.
+> > > > > We might be able to turn this flag off someday, but for now it
+> > > > > resolves the problem Guodong encountered.
+> > > > > 
+> > > > > Define a new macro CCU_FACTOR_GATE_DEFINE() to allow clock flags to
+> > > > > be supplied for a CCU_FACTOR_GATE clock.
+> > > > > 
+> > > > > Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+> > > > > Signed-off-by: Alex Elder <elder@riscstar.com>
+> > > > > Tested-by: Guodong Xu <guodong@riscstar.com>
+> > > > > ---
+> > > > >    drivers/clk/spacemit/ccu-k1.c  |  3 ++-
+> > > > >    drivers/clk/spacemit/ccu_mix.h | 21 +++++++++++++--------
+> > > > >    2 files changed, 15 insertions(+), 9 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+> > > > > index cdde37a052353..df65009a07bb1 100644
+> > > > > --- a/drivers/clk/spacemit/ccu-k1.c
+> > > > > +++ b/drivers/clk/spacemit/ccu-k1.c
+> > > > > @@ -170,7 +170,8 @@ CCU_FACTOR_GATE_DEFINE(pll1_d4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(3), 4,
+> > > > >    CCU_FACTOR_GATE_DEFINE(pll1_d5, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(4), 5, 1);
+> > > > >    CCU_FACTOR_GATE_DEFINE(pll1_d6, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(5), 6, 1);
+> > > > >    CCU_FACTOR_GATE_DEFINE(pll1_d7, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(6), 7, 1);
+> > > > > -CCU_FACTOR_GATE_DEFINE(pll1_d8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(7), 8, 1);
+> > > > > +CCU_FACTOR_GATE_FLAGS_DEFINE(pll1_d8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(7), 8, 1,
+> > > > > +		CLK_IS_CRITICAL);
+> > > > >    CCU_FACTOR_GATE_DEFINE(pll1_d11_223p4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(15), 11, 1);
+> > > > >    CCU_FACTOR_GATE_DEFINE(pll1_d13_189, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(16), 13, 1);
+> > > > >    CCU_FACTOR_GATE_DEFINE(pll1_d23_106p8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(20), 23, 1);
+> > > > > diff --git a/drivers/clk/spacemit/ccu_mix.h b/drivers/clk/spacemit/ccu_mix.h
+> > > > > index 51d19f5d6aacb..668c8139339e1 100644
+> > > > > --- a/drivers/clk/spacemit/ccu_mix.h
+> > > > > +++ b/drivers/clk/spacemit/ccu_mix.h
+> > > > > @@ -101,16 +101,21 @@ static struct ccu_mix _name = {							\
+> > > > >    	}									\
+> > > > >    }
+> > > > > +#define CCU_FACTOR_GATE_FLAGS_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
+> > > > > +			       _mul, _flags)					\
+> > > > > +struct ccu_mix _name = {							\
+> > > > > +	.gate	= CCU_GATE_INIT(_mask_gate),					\
+> > > > > +	.factor	= CCU_FACTOR_INIT(_div, _mul),					\
+> > > > > +	.common = {								\
+> > > > > +		.reg_ctrl	= _reg_ctrl,					\
+> > > > > +		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_factor_gate_ops, _flags)	\
+> > > > > +	}									\
+> > > > > +}
+> > > > > +
+> > > > >    #define CCU_FACTOR_GATE_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
+> > > > >    			       _mul)						\
+> > > > > -static struct ccu_mix _name = {							\
+> > > > > -	.gate	= CCU_GATE_INIT(_mask_gate),					\
+> > > > > -	.factor	= CCU_FACTOR_INIT(_div, _mul),					\
+> > > > > -	.common = {								\
+> > > > > -		.reg_ctrl	= _reg_ctrl,					\
+> > > > > -		CCU_MIX_INITHW(_name, _parent, spacemit_ccu_factor_gate_ops, 0)	\
+> > > > > -	}									\
+> > > > > -}
+> > > > > +	CCU_FACTOR_GATE_FLAGS_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
+> > > > > +			       _mul, 0)
+> > > > >    #define CCU_MUX_GATE_DEFINE(_name, _parents, _reg_ctrl, _shift, _width,		\
+> > > > >    			    _mask_gate, _flags)					\
+> > > > > -- 
+> > > > > 2.45.2
+> > > > > 
+> > > > 
+> > > 
+> 
