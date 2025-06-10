@@ -1,86 +1,75 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2070220F23
-	for <spacemit@lists.linux.dev>; Mon,  9 Jun 2025 20:14:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5AB25B675
+	for <spacemit@lists.linux.dev>; Tue, 10 Jun 2025 02:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749500070; cv=none; b=KbIN4r3B6SS6wWcTkoDCNCT6jw96ZbW1uwFtDrwJZSbuM0O2klxyDi9Oi7ee1LRrq2Tpz1SLdJl78GyCLgZYRpj+drbccYi1j8Mju6WUgo8ecRVUWdOpYtgGeiVzxs8JvslgjLN52sd4dalIAk4aRCMQop8LFxZ+yCP3Dvl448Y=
+	t=1749522316; cv=none; b=IyzZJW+2j5zCTjnZwuzh0S54UrFUvDaI4XL2V4hoTgMxAzf3cHNTMYeT8aCOo1DCMyZBozs4uMUjYZ07NcU/RF37sUqiGIXEDnXktIslK66eMzcdLfc9keR3ExLpGtCqjsXloYS1lUJzllWy+9Urck3qhbdEpgfhwKUwgPpn00o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749500070; c=relaxed/simple;
-	bh=cc13l7pbpIRdIEC25QVqWj0lamcvY3YyLME1tijvOPE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rMdMSewq9/6F55Oar7nmYR7vN0Oe6uIOhFzQry3XYgAibcSkEsWi7MtJJGvM9Ympbg5+DAGdC0i19R69URYQJEvSzZKdSDgIf9vO7xPaUqjlo+PUDYC/bMJZoI8dZf0rGHN+/KZ/r99/P15b0u4WoK5euUbB7lOxJrYEyxGLccA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=0rTsKOdg; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1749522316; c=relaxed/simple;
+	bh=IMmtBik7W10xX4m9PnqOtXcNyM+mtowpc5+2eIWNlD4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PwTbEL/AEOH1TN/oXgqqfekwV4dOitWdGH7MPTcZaARPzcukDUyWqxp5qM5mXBsvGVyidfOCFC9eAIClTeI+t3GeLMv78/qyh4qmeK2AuoprH6LHdSH2Jm3wkVXjS8bs7TWQ1yXPidBngXlPGXXU45PZxdp25YI0P8k6uWqNfiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=gEAqROr9; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=r9h7iXFX; arc=none smtp.client-ip=155.254.16.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="0rTsKOdg"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6fabb948e5aso50880026d6.1
-        for <spacemit@lists.linux.dev>; Mon, 09 Jun 2025 13:14:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1749500067; x=1750104867; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bFj+rnVnwrli61+RW3pW0hp2hmvQPvdmAdNSR40r1ZE=;
-        b=0rTsKOdgzfFUBx3SuRBR0M5njiH7NeZhU6+1p28JmXtlgmkkMKr5xKYOqgizFTIGMs
-         qM8iUljLKeQU72mo1sawux61ySBAAMWMaZMOqvXsF6Kt9CotC0O0nGEI/O/F2Fq5Mksr
-         W2VovaHn79aIoFHpBf1XcSCjXOXiRGhsq617m8qow0vaHWIH4615iHpV+hzxyTrIAaxy
-         d/3bUGyoXaW4gTW7DDO8ALjO+fXaf5CJf0GIA2s8EdWSOu6uaTOGT0Urz6uaGeEBxdlZ
-         gGBXINp/lVVxTcbPix90ogF/NfsubM+yg//QhElDv9lFFI8p0MhJ4gd3lZI4rcEUD/H9
-         jZSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749500067; x=1750104867;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bFj+rnVnwrli61+RW3pW0hp2hmvQPvdmAdNSR40r1ZE=;
-        b=r5KvU5S2X3exWmwblZNyMtYuu4Omqd0+X8K9+VThc+jANelgsEZZQzGAulwDLMLAeF
-         +VnQFBgs3Y7+fecYzXI0pKv/f9FM9N2K6sCAefQlwKTe7mGhFNqouESLX8xSxlqUoh1a
-         9f/Bibr9rEHegJnMGQDC2Y6DnHAFSE7Q8S2HkSW9b/S9jEsRxgGNjqbGSlT3QI2TRCmX
-         Z+3JsTFiKShxZxqDW2QfThzHRtmq7hUlwhXBbStPwlCyZsI0BVnmyxlZImaJI8Lg2EOZ
-         NEJMRU8aKmFR/H/RCLO82PMp6DFGGnibhmNlUd37yFSak5PXhNGoe9NOCcFmLFpcOQ3M
-         X7PA==
-X-Forwarded-Encrypted: i=1; AJvYcCX+Yp9Id/tX1NNyZF5BAeAUmJvtEyA1dphFCGWHjEqsQijeTtl1ARZIyGWuamJLER4r1xSI7bRUDA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwK8WXga73IN7qL1gJkrrVA1nAoHM1GsBwTkpxH3PzYQBBjj5ZJ
-	bmz8IclIfByG6KSI22wCcd1FrTak6OX8EmyA/rSKgtPu7i5p6iq7TtfEy0q+hNlSXcE=
-X-Gm-Gg: ASbGncvEDQ3jTSYVxT9SQIRXpjzk0UuZh/3LtmYdCkr5l8aux1oMYiDaxyU4I6+tNI/
-	ZrNCw1mGqZzoHzQh2vVmiONA9zN0/fzGLaQJInnjOVws3F9apTq/SYspnH09jB8ilQF0sX3RT/v
-	ApsmEU3Q7Ml3kUEfqSfKzkE+d1brCa5BX2vVus3ks6uwv7bJMu6xvSOqyAkqrO88WgwMclBYTlv
-	q+nilD2sYS6Ct3k+xJzZPE1vDPRCvZt7lx0jAjkRMVSQQriB9nQ/7T/zvtdCq4pWToFXfgjYCx0
-	UYQjf8fC0Me4CPyMCCpeRMr1g05RbVvv+Ky7eMmrx5Vi08kfpTPtB6Ln78dL52eZvQi9iiJ8VSs
-	Ds5Bv2lPzY4Jbu1AAYFA4XqUZO6KHE6ZisWdJ
-X-Google-Smtp-Source: AGHT+IEoxsMyfv1zl4Eq2z6OuyNYN5zJiRV3axkBglw2RaCBqnFhaHAJb4H6tYu0A3sn+TFxdgVaMQ==
-X-Received: by 2002:a05:6214:1256:b0:6fb:14:5e89 with SMTP id 6a1803df08f44-6fb08fe7f6fmr255840366d6.19.1749500067642;
-        Mon, 09 Jun 2025 13:14:27 -0700 (PDT)
-Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fb09ac8415sm56510096d6.27.2025.06.09.13.14.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jun 2025 13:14:27 -0700 (PDT)
-Message-ID: <17a7ab55-aa1a-4d1d-b8f6-27bbe51fe761@riscstar.com>
-Date: Mon, 9 Jun 2025 15:14:26 -0500
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="gEAqROr9";
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="r9h7iXFX"
+Received: from bayard.4d2.org (bayard.4d2.org [127.0.0.1])
+	by bayard.4d2.org (Postfix) with ESMTP id 20F6712FB433;
+	Mon, 09 Jun 2025 19:25:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1749522307; bh=IMmtBik7W10xX4m9PnqOtXcNyM+mtowpc5+2eIWNlD4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gEAqROr9VweQBKcxEhpxmEHnT+4pFORbcR3Ot5zp/XR+EvhEZlo1o7gJ3EnFtwa0V
+	 t1NbZ2Xn9zeaqUu/i+P5oCGqElASp7V8dRgM5BTnOiNj+hwq8WapPeFqVSVa1a5Up1
+	 T3Ud4pJu8bAzkHiHbY6y6BUioJ+bOl7gnGNXDwBk6uTweGFtnm+3SL5NSOt4/FN7lD
+	 iKEd254k86K3+QLxRkU9cLngbuxXNH/1H5jRWaqSqjn63BhBpPsnRbCusVxmkqhxap
+	 aLzCNnOtYNKEwzhVk/SrbG8OOOmga8iql766DFsC53TB94TgvLBU9D9NPB8EWD9lJm
+	 7OsvVimrfI9qg==
+X-Virus-Scanned: amavisd-new at 4d2.org
+Received: from bayard.4d2.org ([127.0.0.1])
+ by bayard.4d2.org (bayard.4d2.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id i9cSwMwTxp-i; Mon,  9 Jun 2025 19:25:05 -0700 (PDT)
+Received: from ketchup (unknown [183.217.82.129])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: heylenay@4d2.org)
+	by bayard.4d2.org (Postfix) with ESMTPSA id 7C6DA12FB401;
+	Mon, 09 Jun 2025 19:25:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1749522304; bh=IMmtBik7W10xX4m9PnqOtXcNyM+mtowpc5+2eIWNlD4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=r9h7iXFXydWGsUipKqKnrQ3i4Ns+MWx0DvfJhmKPRaEVBu0GlKiV5XOe6wrf9Fs22
+	 kuZRj4cj53NsBZ0+M+gsSDaoD8/cSZwTdXjJxRKI6yxJp46162CL1JTOWphEAszrF/
+	 qndRGSzI+RpT/uk+WZRbKRoRip/C63yocEz4CRXSDRfcm2kiG1uqj+i5keGORlwF4K
+	 J9sU/L+WQBfnIOTsMCfck/0ztHDLg35wGYE7uuAIiawixKyQr32oUftBxHHvN8ejAL
+	 bjE4lndqsbhjd7RnSnskF1/J3EX1L1A4Xycwf/PKZ773FltMgRQ5ptMApFk3cLSr2/
+	 DTA7h5zMCEQnA==
+Date: Tue, 10 Jun 2025 02:24:58 +0000
+From: Haylen Chu <heylenay@4d2.org>
+To: Alex Elder <elder@riscstar.com>, mturquette@baylibre.com,
+	sboyd@kernel.org
+Cc: dlan@gentoo.org, inochiama@outlook.com, linux-clk@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, Guodong Xu <guodong@riscstar.com>
+Subject: Re: [PATCH] clk: spacemit: mark K1 pll1_d8 as critical
+Message-ID: <aEeXepzJ2Qkv45qm@ketchup>
+References: <20250609200822.468482-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: spacemit: mark K1 pll1_d8 as critical
-To: mturquette@baylibre.com, sboyd@kernel.org
-Cc: dlan@gentoo.org, heylenay@4d2.org, inochiama@outlook.com,
- linux-clk@vger.kernel.org, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- Guodong Xu <guodong@riscstar.com>
-References: <20250609200822.468482-1-elder@riscstar.com>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20250609200822.468482-1-elder@riscstar.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 6/9/25 3:08 PM, Alex Elder wrote:
+On Mon, Jun 09, 2025 at 03:08:21PM -0500, Alex Elder wrote:
 > The pll1_d8 clock is enabled by the boot loader, and is ultimately a
 > parent for numerous clocks, including those used by APB and AXI buses.
 > Guodong Xu discovered that this clock got disabled while responding to
@@ -101,44 +90,46 @@ On 6/9/25 3:08 PM, Alex Elder wrote:
 > Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
 > Signed-off-by: Alex Elder <elder@riscstar.com>
 > Tested-by: Guodong Xu <guodong@riscstar.com>
-
-I'm very sorry, this path is v2 and I neglected to indicate that
-in the subject line.  Here is v1:
-   https://lore.kernel.org/lkml/20250607202759.4180579-1-elder@riscstar.com/
-
-					-Alex
 > ---
 > v2: Reworded the description to provide better detail
 > 
->   drivers/clk/spacemit/ccu-k1.c  |  3 ++-
->   drivers/clk/spacemit/ccu_mix.h | 21 +++++++++++++--------
->   2 files changed, 15 insertions(+), 9 deletions(-)
+>  drivers/clk/spacemit/ccu-k1.c  |  3 ++-
+>  drivers/clk/spacemit/ccu_mix.h | 21 +++++++++++++--------
+>  2 files changed, 15 insertions(+), 9 deletions(-)
 > 
 > diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
 > index cdde37a052353..df65009a07bb1 100644
 > --- a/drivers/clk/spacemit/ccu-k1.c
 > +++ b/drivers/clk/spacemit/ccu-k1.c
 > @@ -170,7 +170,8 @@ CCU_FACTOR_GATE_DEFINE(pll1_d4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(3), 4,
->   CCU_FACTOR_GATE_DEFINE(pll1_d5, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(4), 5, 1);
->   CCU_FACTOR_GATE_DEFINE(pll1_d6, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(5), 6, 1);
->   CCU_FACTOR_GATE_DEFINE(pll1_d7, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(6), 7, 1);
+>  CCU_FACTOR_GATE_DEFINE(pll1_d5, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(4), 5, 1);
+>  CCU_FACTOR_GATE_DEFINE(pll1_d6, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(5), 6, 1);
+>  CCU_FACTOR_GATE_DEFINE(pll1_d7, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(6), 7, 1);
 > -CCU_FACTOR_GATE_DEFINE(pll1_d8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(7), 8, 1);
 > +CCU_FACTOR_GATE_FLAGS_DEFINE(pll1_d8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(7), 8, 1,
 > +		CLK_IS_CRITICAL);
->   CCU_FACTOR_GATE_DEFINE(pll1_d11_223p4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(15), 11, 1);
->   CCU_FACTOR_GATE_DEFINE(pll1_d13_189, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(16), 13, 1);
->   CCU_FACTOR_GATE_DEFINE(pll1_d23_106p8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(20), 23, 1);
+>  CCU_FACTOR_GATE_DEFINE(pll1_d11_223p4, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(15), 11, 1);
+>  CCU_FACTOR_GATE_DEFINE(pll1_d13_189, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(16), 13, 1);
+>  CCU_FACTOR_GATE_DEFINE(pll1_d23_106p8, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR2, BIT(20), 23, 1);
 > diff --git a/drivers/clk/spacemit/ccu_mix.h b/drivers/clk/spacemit/ccu_mix.h
 > index 51d19f5d6aacb..668c8139339e1 100644
 > --- a/drivers/clk/spacemit/ccu_mix.h
 > +++ b/drivers/clk/spacemit/ccu_mix.h
 > @@ -101,16 +101,21 @@ static struct ccu_mix _name = {							\
->   	}									\
->   }
->   
+>  	}									\
+>  }
+>  
 > +#define CCU_FACTOR_GATE_FLAGS_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
 > +			       _mul, _flags)					\
 > +struct ccu_mix _name = {							\
+
+This should be defined as static as well. I think this is the cause of
+CI warnings in v1.
+
+With this fixed,
+
+Reviewed-by: Haylen Chu <heylenay@4d2.org>
+
 > +	.gate	= CCU_GATE_INIT(_mask_gate),					\
 > +	.factor	= CCU_FACTOR_INIT(_div, _mul),					\
 > +	.common = {								\
@@ -147,8 +138,8 @@ in the subject line.  Here is v1:
 > +	}									\
 > +}
 > +
->   #define CCU_FACTOR_GATE_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
->   			       _mul)						\
+>  #define CCU_FACTOR_GATE_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
+>  			       _mul)						\
 > -static struct ccu_mix _name = {							\
 > -	.gate	= CCU_GATE_INIT(_mask_gate),					\
 > -	.factor	= CCU_FACTOR_INIT(_div, _mul),					\
@@ -159,9 +150,11 @@ in the subject line.  Here is v1:
 > -}
 > +	CCU_FACTOR_GATE_FLAGS_DEFINE(_name, _parent, _reg_ctrl, _mask_gate, _div,	\
 > +			       _mul, 0)
->   
->   #define CCU_MUX_GATE_DEFINE(_name, _parents, _reg_ctrl, _shift, _width,		\
->   			    _mask_gate, _flags)					\
+>  
+>  #define CCU_MUX_GATE_DEFINE(_name, _parents, _reg_ctrl, _shift, _width,		\
+>  			    _mask_gate, _flags)					\
 > 
 > base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
-
+> -- 
+> 2.45.2
+> 
