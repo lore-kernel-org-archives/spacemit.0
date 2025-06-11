@@ -1,126 +1,132 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526BC2BD5A7
-	for <spacemit@lists.linux.dev>; Wed, 11 Jun 2025 14:40:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB622BD5B1
+	for <spacemit@lists.linux.dev>; Wed, 11 Jun 2025 14:56:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749652843; cv=none; b=C51aN3Os0Smm3DAC0tzL4NetOjBYYYTi46DOJ/EG5iyjmPcF8pWhCkPiZ2CIdt7Nrwq6wLu8qEGCYOhcW+JTPUA0LIliFym7+FiQDEBvbydrXiQy64yiMIc0e24Dz7oAfQyVNFc5aPT22l5UNa4ExA3IKgCsyRqsmOUamjR9aK0=
+	t=1749653791; cv=none; b=AG9ej2f/aT5p1TmpfRkTr0u9u2WXrgV04fEbdju/CvW0X37Br22wekvVoHYAYG/OSK0x1r9LIcii2I1t1rNscniBIZ/K70zRp1ptHWTWqjl1OuINoRCkqTSn7U6bmq6TeF0FWvwzF7uz5ijcWdLD5g0geNoBXQNIJglkyPOnLPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749652843; c=relaxed/simple;
-	bh=Ves9IAlDOG6rT2wK3GTXUgHQbJsl7xwyic6gvh9n1D8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KlfmF1SU2dnBcibc77OxuceeYMDbXtLlkAPWj0k3K90M7iPF/2BpUbeKe3bv0boO4lk10VWmdTehvXVgmWSDxYHUMfAVvod/yD9DV1mzHzJ+Bzej/RmGoP4sa+Ef5m0jPDKFK3V87sQ9XYSyobwZGfzdmPICCTH//nqSsb85r0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=g6lYasHP; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="g6lYasHP"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-604bff84741so12753820a12.2
-        for <spacemit@lists.linux.dev>; Wed, 11 Jun 2025 07:40:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1749652839; x=1750257639; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VanCGAV853jeZl/piu55b8cOeQ1lh3SiVReRL2SvGyU=;
-        b=g6lYasHPBUaCer8M9GAFAu42XGehKjygfHD2E6QolXke/hZyfxZeFB24zt4dqv9UVO
-         S4NisBrWdt5YUl5rzbAiek/nGWa2KvTjeFswOKcTVSKdRVG9ivsmTuS1V7LRxCMPRGY/
-         mjswQXBu1LrC3qsONprSFIlYpP4DnYJfLN61DHlgfpWXEDWxO9SgmxHWJ9mchgd5Xrmx
-         3VQpykb3wxiCwxXsCXKCwOOo9c2Yo0MhKDUByxjluLkjk+q55GhL/rZOpuKluAeM+P0P
-         drTql0Uln+Ya0Oo8Cr2Z2GbtbsBezx93DK+qCo87oTREXsmYUd1nAls+ZkBe3O4DgIR0
-         tQ5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749652839; x=1750257639;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VanCGAV853jeZl/piu55b8cOeQ1lh3SiVReRL2SvGyU=;
-        b=XgW1+fPJY1+3PQCptA8ta23ZK+qbUEF35zp63aYd63utWa8TkZq6NaHvCap5cM9BGK
-         /3hLAPWXI/ParpfaBVGKR2FUB//ZQ7aglNLLVYqIRSUJWHEihAK4I65hzVxHtywaFKqE
-         M+2GNrlHqGZRuxGL2rCs9QIdFwtwC6W5yYRirHkImaDe839ZxGVyV9nPT5mcY/SdqtLJ
-         KDgSIbCqoZYJijYtmXZvsIU7XW1NqgA3nDbttS+5cSBZSYzMvoUp7yDLBeXL1ZtjDE69
-         kDKav7sHpsAn0y7436PEZC8pf3+9SyE9fiIAK9nMJsJxJOnzu0FmhRR6wSPLSIDrJtya
-         rDcw==
-X-Forwarded-Encrypted: i=1; AJvYcCVP6/od3O5HWKNJymTxqXJ0kvalBTzbMzKKRqb3J2PE5d42r+M0/vjlzVvWSZBB9Tu4Gk+NNPLUFQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxOKSOWx35Q7gQml19LiO0UEN79QxF6xEuXzOmRcDu6fzBC7XFb
-	bMHXH/Iz/Kikp5oSqUFynFVwk5roHpTSLv5uo1FM/LWTwJj+O7ozfanpFUugDneilxawD0tV3dv
-	899OqfeKARJU5CTk84w5cANolXsJM8NIIlWQCt7BvsQ==
-X-Gm-Gg: ASbGncvvXjwwwfZx9o9BgueHOOEIiP+IaRcdk6ALn0f/YJguk6s7uZ/AX3s8y/hzXR/
-	NBNdr4nK6mj6ishHZeGBVsoEDY3HlqcSyx1IdHGeArL2tmRK3F5rkfFBWjdsWC5P+1iciZZL8zY
-	8teO+mIC7m1LEIE6c0eEAoPoldxSyRe2xGFwop6Otp2aAZ
-X-Google-Smtp-Source: AGHT+IHDSmTZDyiDRZOD1n1VEoO2BN/q5+1t3d32dZUsxmTdSpg0xwKQkFHQYBpUpsmp4CIhNRKBUUObLCw4k1Y89D8=
-X-Received: by 2002:a17:907:968a:b0:adb:1804:db93 with SMTP id
- a640c23a62f3a-ade8c8eff15mr309077666b.49.1749652839519; Wed, 11 Jun 2025
- 07:40:39 -0700 (PDT)
+	s=arc-20240116; t=1749653791; c=relaxed/simple;
+	bh=AQT8gj4xTBMw8so4kCxpdxtX6at/oNsMVTMEr/8Woqg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Ur0TCnLvNw0Kx8M7u/ro27DsX+wUF6qUEMkVb701qmkO5jEceZHhRN5nxsFB+AQVj+DRNeN48rU6fJ/WVcB5w1OexPBIhzIvyFyf51iiigpMQ/j+7rtLwv7PIy7IbGbGFRoC2JZI39V4Vt9vTe3mSD7OxBex+C7UA2iUBLuMoqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [127.0.0.1] (unknown [116.232.147.71])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C628C33BDFF;
+	Wed, 11 Jun 2025 14:56:25 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+Date: Wed, 11 Jun 2025 22:56:04 +0800
+Subject: [PATCH] riscv: defconfig: run savedefconfig to reorder it
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250611125723.181711-1-guodong@riscstar.com> <20250611125723.181711-8-guodong@riscstar.com>
- <20250611135116-GYB125008@gentoo>
-In-Reply-To: <20250611135116-GYB125008@gentoo>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Wed, 11 Jun 2025 22:40:28 +0800
-X-Gm-Features: AX0GCFtLP8n8AGHV29EjK0zTceQ99c8B_7Z1bY9fkoSHAd2Q1BdFWQkZ6Pv-a54
-Message-ID: <CAH1PCMbP54PRq27p7Ss+cdvB86M8k3CQepzxJwfpwfJPPnrMag@mail.gmail.com>
-Subject: Re: [PATCH 7/8] dma: Kconfig: MMP_PDMA: Add support for ARCH_SPACEMIT
-To: Yixun Lan <dlan@gentoo.org>
-Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	alex@ghiti.fr, p.zabel@pengutronix.de, drew@pdp7.com, 
-	emil.renner.berthing@canonical.com, inochiama@gmail.com, 
-	geert+renesas@glider.be, tglx@linutronix.de, hal.feng@starfivetech.com, 
-	joel@jms.id.au, duje.mihanovic@skole.hr, elder@riscstar.com, 
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250611-01-riscv-defconfig-v1-1-b48fc3517498@gentoo.org>
+X-B4-Tracking: v=1; b=H4sIAAOZSWgC/x3MQQqAIBBA0avIrBtQo6yuEi1CZ2o2FgoShHdPW
+ r7F/y9kSkIZFvVCoiJZrthgOgX+3ONBKKEZrLaDHo1BbTBJ9gUDsb8iy4GOZ82uD3bqA7TwTsT
+ y/NN1q/UD2NZiTWQAAAA=
+X-Change-ID: 20250611-01-riscv-defconfig-7f90f73d283d
+To: Conor Dooley <conor@kernel.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Guodong Xu <guodong@riscstar.com>, linux-riscv@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
+ Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1945; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=AQT8gj4xTBMw8so4kCxpdxtX6at/oNsMVTMEr/8Woqg=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoSZkWufTaZdRh6DX6w+W5fpSc/YuCt9t8gi33q
+ JnaMfzti6OJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaEmZFl8UgAAAAAAuAChp
+ c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277bWrD/9d/QMkMszVaP2n4l
+ /Tek7n0hbNq7jnvIjdleHffHTxI/1uxI1MvK/FA7lqD8Riqoj+3F8XIuw8Wim2/HOP8uqb42FLI
+ d6xpWrnJDwcfwdin2MkWm2Zw8zQTUGXule5fcAAesPefiBlyPPJxixxIV+/D3hQKb2nqjK/8U/S
+ kMrKVybm4oSXxvv4qAeAwOTYjDSJK5aPLqbeeRNmIY+h2LToPnr91JxVt795TNNEwpLT/ZCnDEM
+ 9xtZIC0KbLd/NDwfiVSXuTQBKWi2JMA2ZIqdJBfxC4FfmvR7yitvyuO4t3MnXmwwzD4UzL9UOnt
+ mQ1xo3XnOg7ff1Y7qYFxpib06+fqRH3CsxRsUT79uVPSk/13LrKko9iZ8vYzGUPV3UBmHlynV0n
+ Kd3LfSxcYQpd+vroxoTnDt54lcDoe7mq9E1zqfCt2X7aDmTiDx9MGYuMUI4mOj/2yeXV/gsge7B
+ rIsqDw5ZM8A8P+g6ZsExk5eEiZP2R7o48TiKSkNCGBPIUn/PtaAa7/uR/mJLjCaQlZ1HC1eyYyG
+ iGUyKpQOGaNC6QnYVZoRo+Nw04mMay5MrnwGbGLy8FrEec2ojkbysOdBknr9wfBsY32nEalhKy0
+ M4O4UU7DKoSoaEHuBH+3S9xZAjObvA76Evr+9wMuZK2YOQPbcM4PkZwmSB5BgPgHPePg==
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On Wed, Jun 11, 2025 at 9:51=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
->
-> Hi Guodong,
->   I'd suggest moving this patch after 4/8, as both of them should go
-> via DMA susbystem tree, or simply squash them?
->
+Changes to defconfig should be always updated via 'make
+savedefconfig', run this command to make it aligned again.
 
-Thanks for your advice. Agree. It makes sense.
-I will arrange them.
+This will ease the effort of reviewing changes of defconfig
+in the future.
 
--Guodong
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Update PDMA config bring in unnecessary changes[1], let's fix
+it by run savedefconfig first.
 
-> On 20:57 Wed 11 Jun     , Guodong Xu wrote:
-> > Extend the MMP_PDMA driver to support the SpacemiT architecture
-> > by adding ARCH_SPACEMIT as a dependency in Kconfig.
-> >
-> > This allows the driver to be built for SpacemiT-based platforms
-> > alongside existing ARCH_MMP and ARCH_PXA architectures.
-> >
-> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> > ---
-> >  drivers/dma/Kconfig | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-> > index db87dd2a07f7..fff70f66c773 100644
-> > --- a/drivers/dma/Kconfig
-> > +++ b/drivers/dma/Kconfig
-> > @@ -451,7 +451,7 @@ config MILBEAUT_XDMAC
-> >
-> >  config MMP_PDMA
-> >       tristate "MMP PDMA support"
-> > -     depends on ARCH_MMP || ARCH_PXA || COMPILE_TEST
-> > +     depends on ARCH_MMP || ARCH_PXA || ARCH_SPACEMIT || COMPILE_TEST
-> >       select DMA_ENGINE
-> >       help
-> >         Support the MMP PDMA engine for PXA and MMP platform.
-> > --
-> > 2.43.0
-> >
-> >
->
-> --
-> Yixun Lan (dlan)
+This patch is based on top of tag 6.16-rc1.
+
+Link: https://lore.kernel.org/all/20250611134859-GYA125008@gentoo/ [1]
+---
+ arch/riscv/configs/defconfig | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
+index fe8bd8afb4183ce871020fb2992a21a13bccbc87..37c98c0f98ffc0ee9d021e4d07aa37a27d342f7a 100644
+--- a/arch/riscv/configs/defconfig
++++ b/arch/riscv/configs/defconfig
+@@ -134,6 +134,7 @@ CONFIG_MACB=y
+ CONFIG_E1000E=y
+ CONFIG_R8169=y
+ CONFIG_STMMAC_ETH=m
++CONFIG_DWMAC_THEAD=m
+ CONFIG_MICREL_PHY=y
+ CONFIG_MICROSEMI_PHY=y
+ CONFIG_MOTORCOMM_PHY=y
+@@ -151,7 +152,6 @@ CONFIG_HW_RANDOM_JH7110=m
+ CONFIG_I2C=y
+ CONFIG_I2C_CHARDEV=m
+ CONFIG_I2C_DESIGNWARE_CORE=y
+-CONFIG_I2C_DESIGNWARE_PLATFORM=y
+ CONFIG_I2C_MV64XXX=m
+ CONFIG_SPI=y
+ CONFIG_SPI_CADENCE_QUADSPI=m
+@@ -159,11 +159,11 @@ CONFIG_SPI_PL022=m
+ CONFIG_SPI_SIFIVE=y
+ CONFIG_SPI_SUN6I=y
+ # CONFIG_PTP_1588_CLOCK is not set
++CONFIG_PINCTRL_TH1520=y
+ CONFIG_PINCTRL_SOPHGO_CV1800B=y
+ CONFIG_PINCTRL_SOPHGO_CV1812H=y
+ CONFIG_PINCTRL_SOPHGO_SG2000=y
+ CONFIG_PINCTRL_SOPHGO_SG2002=y
+-CONFIG_PINCTRL_TH1520=y
+ CONFIG_GPIO_DWAPB=y
+ CONFIG_GPIO_SIFIVE=y
+ CONFIG_GPIO_SPACEMIT_K1=y
+@@ -240,7 +240,6 @@ CONFIG_RTC_DRV_SUN6I=y
+ CONFIG_DMADEVICES=y
+ CONFIG_DMA_SUN6I=m
+ CONFIG_DW_AXI_DMAC=y
+-CONFIG_DWMAC_THEAD=m
+ CONFIG_VIRTIO_PCI=y
+ CONFIG_VIRTIO_BALLOON=y
+ CONFIG_VIRTIO_INPUT=y
+
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250611-01-riscv-defconfig-7f90f73d283d
+
+Best regards,
+-- 
+Yixun Lan
+
