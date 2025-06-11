@@ -1,82 +1,68 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266C016EB7C
-	for <spacemit@lists.linux.dev>; Wed, 11 Jun 2025 15:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BBB1AC891
+	for <spacemit@lists.linux.dev>; Wed, 11 Jun 2025 15:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749654157; cv=none; b=oTE6WxMZbo9F9rP7nxOu3RTIDYBd849nGTRZ/w0nl33AJ7MBt8QRy4smqK+RlNWMAkqIjxRYX7UD7OLhEiZSZvC1jubQ/P8k4BA8KU6e8vDZSem1YhZPMJuPugfkwHPbEXNVyRYsFraHrbNNyUuk1dabzyWF1XoLGiTIWNnhUto=
+	t=1749654935; cv=none; b=kma3IL2kiJJJWbdlwiDUAHJVuVeB0UWfRMUkv+hPaH52I8mrLtEz+/TUDQ+pVISy58wlu6ZSqoeiBt3vk81zMX64j82qu7lbS7BFVymDXNDJilqPzVWKhWtzjb7sADIkCsX2k6vs7C/7BBow2gHpH9MMao/Kkv9AOHr21JVnmU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749654157; c=relaxed/simple;
-	bh=R51eJwT5fuIM/kOLvJJLfDor4mLaTCANFivMFtewIu0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nvUCrb+OPxlrmzR1vT4tiEFallIevjm2kEUsELeax9HmN6BTcnyMYA2fntG4iTMOuAPf1sbbTNTUYAVgQiPihyglVwcFvYR0zQD3j05dXM4jwvJTZTjDPu5p0eVr7QS/998bgMS1Tu5JqK95XoDRuhqoi4SGcPd7YQpci8Q7l4E=
+	s=arc-20240116; t=1749654935; c=relaxed/simple;
+	bh=SkmWsUzdGujwGykgrZxaYqoTD2t/kuu5qyKPRe6ASK8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HiFzgEm6tNk7VAijATwFrprK4Ca0XXMEZEdnNbeoPzxRfFZOLpt97dlGuqBXNfeGNRM/iGxUlDxLZ4iUnNBA56ID22xDwJwlRGMaW3OxZvmOe5CFJ+8EvDSPPdP6sxJUlvYeYGapBikXWllkpLjUoiSzMz+ARXshcJGEk195qnQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.147.71])
+Received: from localhost.localdomain (unknown [116.232.147.71])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id BBBDC340D21;
-	Wed, 11 Jun 2025 15:02:34 +0000 (UTC)
-Date: Wed, 11 Jun 2025 15:02:27 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E9846340824;
+	Wed, 11 Jun 2025 15:15:27 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
-	drew@pdp7.com, emil.renner.berthing@canonical.com,
-	inochiama@gmail.com, geert+renesas@glider.be, tglx@linutronix.de,
-	hal.feng@starfivetech.com, joel@jms.id.au, duje.mihanovic@skole.hr,
-	elder@riscstar.com, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 6/8] riscv: dts: spacemit: Enable PDMA0 controller on
- Banana Pi F3
-Message-ID: <20250611150227-GYA127466@gentoo>
-References: <20250611125723.181711-1-guodong@riscstar.com>
- <20250611125723.181711-7-guodong@riscstar.com>
- <20250611135757-GYC125008@gentoo>
- <CAH1PCMbt3wLbeomQ+kgR6yZZ18TZ=_LF-kCcnLqad55FSHBhDA@mail.gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@gentoo.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>,
+	linux-mmc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] riscv: dts: spacemit: enable eMMC for K1 SoC
+Date: Wed, 11 Jun 2025 23:15:07 +0800
+Message-ID: <174965447661.1611186.10400081292030756093.b4-ty@gentoo.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250523-22-k1-sdhci-v1-1-6e0adddf7494@gentoo.org>
+References: <20250523-22-k1-sdhci-v1-1-6e0adddf7494@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH1PCMbt3wLbeomQ+kgR6yZZ18TZ=_LF-kCcnLqad55FSHBhDA@mail.gmail.com>
 
-Hi Guodong,
 
-On 22:32 Wed 11 Jun     , Guodong Xu wrote:
-> On Wed, Jun 11, 2025 at 9:58 PM Yixun Lan <dlan@gentoo.org> wrote:
-> >
-> > Hi Guodong,
-> >
-> > On 20:57 Wed 11 Jun     , Guodong Xu wrote:
-> > > Enable the Peripheral DMA controller (PDMA0) on the SpacemiT K1-based
-> > > Banana Pi F3 board by setting its status to "okay". This board-specific
-> > > configuration activates the PDMA controller defined in the SoC's base
-> > > device tree.
-> > >
-> >   Although this series is actively developed under Bananapi-f3 board
-> > but it should work fine with jupiter board, so I'd suggest to enable
-> > it too, thanks
-> >
+On Fri, 23 May 2025 21:21:04 +0800, Yixun Lan wrote:
+> Enable eMMC support for SpacemiT K1 SoC, successfully tested on
+> Bananapi-F3 board which shipped with a 16GB eMMC chip - KLMAG1JETD-B041.
 > 
-> I'd be glad to include the Jupiter board as well. Since I don't have Jupiter
-> hardware for testing, could someone with access verify it works before I
-> add it to the series?
 > 
-Do you have any suggestion how to test? like if any test cases there?
 
-I would assume it work fine on jupiter since it's a SoC level feature?
-instead of board specific..
+Applied, thanks!
 
+[1/1] riscv: dts: spacemit: enable eMMC for K1 SoC
+      https://github.com/spacemit-com/linux/commit/37df56ac500222384d6a6a13c69c489e01fb686c
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan <dlan@gentoo.org>
