@@ -1,197 +1,146 @@
-Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A426F1DB54C
-	for <spacemit@lists.linux.dev>; Tue, 10 Jun 2025 19:57:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E7528640D
+	for <spacemit@lists.linux.dev>; Wed, 11 Jun 2025 12:59:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749585476; cv=none; b=YZf3ciGIhnAFpGDBb9OKU4OyN/6LKslerNqGS9UkPSgSZtImgngpZItokT27pqBXVkcgGhn3ci1szOTC7VrU01PCo/AvDVpxpY2VRJ/FZm1DZKkmbCxNh3bCa6uRtlr1AlPPHXo8s9RfMCEzFD/RLGEOG/FAqZlRekNYYL7HNRU=
+	t=1749646747; cv=none; b=gJOvG3Egoi6uUnooUO98oAlbmzLA1pariUHZbEKPC75FxLx2Cqf/WGM910B7fh+Vb7dATBf8GGLs8b59WAEQQWOTvIA19f1q/wi/R62atYwyOWJjiSqjqqgg4fHanSUGpmb3uqwEyL6k1a50XiWi/TKatQgKg4aFvmmjGOV0bfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749585476; c=relaxed/simple;
-	bh=s6e6ud95i060by5ZDgVZWMBtZhqk8xi9O9Hn2Hs928U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pn4rEJkgOiyxJ7Udjhg5XkPgJfuLvZFJ0Yee/ugQFcmnepJqmJp/AGrTRDyVOja4fpUBEsG+XQRAcYtZZIgucM7CZ8iTSnTPb2YrEdwUNWUeFXOH23J9W7P7GVQ+wxWE78F/2UFQvbBab67G7AhGXWwGn+xE0EfqlxTsCetwBD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieee.org; spf=pass smtp.mailfrom=ieee.org; dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b=S2TAso3P; arc=none smtp.client-ip=209.85.166.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ieee.org
+	s=arc-20240116; t=1749646747; c=relaxed/simple;
+	bh=c4q9hKJ0GfSD4cmrQLce0PPykLtXw5caieViAR29pPA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=C0CQLIvZQv00xZ3pM8TfZ3z7vDOhh9kYA26Y2sjSv1kv5KS5qdbNVa5NfG2FslDHQoFNSVoYYX55b2ivF0ynQpvye9r+Bu3lI+u9S3T+Vbyg/a3+hVAHkBjsIGsCwb1g2t/rjbsEfHyeRpAXEWAvpU0xVKOqQNcMT0BbFVkdZbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=lwgX4Ig1; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b="S2TAso3P"
-Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-3dddbdef7f0so24630205ab.0
-        for <spacemit@lists.linux.dev>; Tue, 10 Jun 2025 12:57:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="lwgX4Ig1"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-235e1d4cba0so55413255ad.2
+        for <spacemit@lists.linux.dev>; Wed, 11 Jun 2025 05:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee.org; s=google; t=1749585472; x=1750190272; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8arP5MQ8o2r6kwstCGi8yYOLU/0CwgGbynmW/R6CU1w=;
-        b=S2TAso3Pj1g9y/7V6ywQGzfwT1D6KoCNJIJ03bBMnhLx59krscWsZ9LgGbod6zVp+a
-         8moCWGumaULAXvib1Hg5T2520asaP0R7DevzMpQ3CZ39Qs9u4d4VpOyIT3Ha1aOG0GGt
-         mB0FT2bdZ8yVV1jj9hJgcM/rzIbDHEK77uGdk=
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1749646744; x=1750251544; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=x4QOx+b/QncvHLv/sLMwOKnuymoyk68+Yx3qOBYw2f8=;
+        b=lwgX4Ig1MW1wEfJaDoaPOxvVJCGRx/mBNekSbRhvwe8okG67CpixlJB0SZOAviFVfG
+         2NtjoKiwS3LAjaCMMQoVdN5gha75nG4hpzKAgaXLMXD5U4cOd6DdyCEMbjiDXpO1xKSb
+         Je9uMJ7vDNO+bOQHNwmkP3Y+MHf1QbPF7cI49fa/Qn3y4ESUh/IMrjvew2k+dDRKUsnU
+         0R11RoKb2Gw3CBBcrnT6k7CjmLyY/6aVyZTFGNGy9MFKL5fUclJyYShz6t8euTpD+iyD
+         E9bO1umGnhxs2RHiPThGM4xPL9svCApDdBqB66A27WX7vFiB5qo0B6D+VJFEX2yat0s5
+         qFzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749585472; x=1750190272;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8arP5MQ8o2r6kwstCGi8yYOLU/0CwgGbynmW/R6CU1w=;
-        b=iswXQEkCf23j8lVLeeNE1SYtPT4lmcYUnlRrKlNty4lOCtggvPJjNV3NwVUYnG1iSd
-         ditv1Mv0ujIPIQA+kO1GzSYQmrJ+aB6AvEyF1+yZ79GI8D3TLiyFmrXW7h93XGnWi6ne
-         QgEz7eg0Ah7USNfTqxNvV7LWifjgVz+jydc5hPrmee71N0nNOR4h8SeqgyOAbiX+ijv4
-         qeyMcFs0bJ9dwqZXw/QM6Uu6qV4JJlaAvWuRsXMbW+M3i9UJWJnRJbO6LUFggTKV79BF
-         yxEP7bw0VnVBNzPWtfGO4lNfx/4XRrGXJ/nd8SR9P0C8VCLCTtdfQ7zsj8Aes9iIYUue
-         nS4w==
-X-Forwarded-Encrypted: i=1; AJvYcCWNqbiZ8X053ks+vP+QW0EErRRUSKqkpkuocohsNDs8efdLU/yv/c1+Oa+1Do3rNOZ4d7PEX86gOA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyUgSjEaBLEyeO2n3pUV2O2b+K4ZE88i3mT4JaLZWoWV2BD1P4n
-	rFJWLGa7S+bVEprj4mvYBz07+M+aa0VULpI8V/y3sKDRv7rGQFcaluw4He1tK35xWw==
-X-Gm-Gg: ASbGncvJ+EdrqLYvtvhQqNGTzgHEFZ1l4I4Mmp2UvCxoUXbBs/K+WkX1MwZLYSb9zVQ
-	mP1xBtrzLUCGozYmnLSKvTgewq1dmiv0+f0bvPXjiwEBikz7OLr2NKHKs2+WH7jvt7LPe7Paz4Q
-	4RmJxLrowCJJk0ujsPP0dx2V5HLUCLfYnywUkPX1FXZjou5ciKVfWY8RKbmnMj8VJyJM+qNRqna
-	GTXjsZuL5k5lHByB9qG1HNzZ8AtXyIsRsAG7LqtHsVJSSf8yI696UJ/9ZetVgWpU61Gm4Mj3Rpf
-	pbP4ee+yJT174mTsMXeTnDzhVUayeQapdtyrX0dG7MajwV5FGYsoPoPutdBBxkVYW3BSe7z146X
-	MB33v0B6BetKANYW9G1JU
-X-Google-Smtp-Source: AGHT+IHA9PT4YsWq3Yi8UtnOBccsoGJ8i5Yqo7UNIrwpHrqWTEgWuM/Hzq+BjXEkalsT57ohB6FBsg==
-X-Received: by 2002:a05:6e02:1528:b0:3dc:8109:d64b with SMTP id e9e14a558f8ab-3ddf4d54d2amr367215ab.5.1749585471672;
-        Tue, 10 Jun 2025 12:57:51 -0700 (PDT)
-Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.googlemail.com with ESMTPSA id 8926c6da1cb9f-5012aaa2869sm52955173.69.2025.06.10.12.57.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Jun 2025 12:57:50 -0700 (PDT)
-Message-ID: <5084a99a-9140-4c4f-9873-f5478f48a49d@ieee.org>
-Date: Tue, 10 Jun 2025 14:57:48 -0500
+        d=1e100.net; s=20230601; t=1749646744; x=1750251544;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x4QOx+b/QncvHLv/sLMwOKnuymoyk68+Yx3qOBYw2f8=;
+        b=PKVu9G/hWr4JWKvpPG97oyNMCURG3dqwraeQzvXwack3UzlIaGP4pC/pOijB4UN0BE
+         VSmJzQNJZYU60/ZW1pThvhpj+cTWmQzxzo4xopfgJzkbSpMt2izneaR/5Ta6KFLJxftO
+         GJtlMxnhPMIjdlUkan+eIJ5sG4fnD1xGcbKqie+v794M5znvozV2SfNjv6I22ImgC/Hm
+         4cl1dATlC3z4GnY8s0UnADBNxFFDKCBPe8B9nMBu08rOASTJaKIEf83gI8HKaAN6bF1L
+         WETm8BPzRK0B0oWn8PjmAQj830wdkBp10/WLwRaQc2CukwpUpi0RTCveUCPCro5v6dtR
+         GqUA==
+X-Forwarded-Encrypted: i=1; AJvYcCU+7CURpnlLZ3Zzr9wJmXhl3HssaVMbEgvtDC1u8tEFuuVYN1CbVwWKyC9d86c3dnt/bDYKPr33XQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwAt7/z32Wl54/D7V5dusCeFAbKxWYkAtb1tGBNvhI2IXG0U8wI
+	x5/ULizFOfAJoc5nN1K1GKxufSYQNy7Ui7jy14x1/IR6/ERQYioPVFFtisK02fDM6Yk=
+X-Gm-Gg: ASbGnctDfjlj9rUv1l6+rs8UKHeTNBcqIUBadWnK4hkhA85VMMnCVvLVCo2bC2k7w+D
+	OY5sK6xaDn8BjwKWrK1OeUxikWG/FQDhajLLVzuPl1ZGSzTAtNq6ePMo0vbadca0lLF0Hwbu3mp
+	AwfbIp8pAn4Yld/KLeLGhQeghUEZ7Nw/hZ0oKicNZwxIEDchrcPimkBdfTbJ8qV+MH2UxAGxtwa
+	G2VBZWqBqcoZlHyji74OXyJfW+W3B3ijfMrcNsCb/4+rgaem4gMCCJ7igYNBIKPW7VBwy1iQgXi
+	KKq0JbumWyJ9Pdv/bUS69ZVZmgcCfZG3ewiOz6SY/FueBkqSKrNCVwQJz0psZIsmNPmF3x6mDsc
+	RLIpoqBoDlYBMJoqOHqnFjA==
+X-Google-Smtp-Source: AGHT+IHeeQKbfAGNGeX62nkTUoAIUb+/0YEOPG1s+np4s8lIc4gcrO2OCn3QlplFdVVleQo4sYhIgw==
+X-Received: by 2002:a17:902:e74b:b0:234:f182:a759 with SMTP id d9443c01a7336-23641af07efmr51079475ad.28.1749646744203;
+        Wed, 11 Jun 2025 05:59:04 -0700 (PDT)
+Received: from localhost.localdomain ([2409:8a00:31a4:6520:3d67:ceb1:7c60:9098])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-236030925e3sm86984115ad.53.2025.06.11.05.58.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jun 2025 05:59:03 -0700 (PDT)
+From: Guodong Xu <guodong@riscstar.com>
+To: vkoul@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	dlan@gentoo.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	p.zabel@pengutronix.de,
+	drew@pdp7.com,
+	emil.renner.berthing@canonical.com,
+	inochiama@gmail.com,
+	geert+renesas@glider.be,
+	tglx@linutronix.de,
+	hal.feng@starfivetech.com,
+	joel@jms.id.au,
+	duje.mihanovic@skole.hr
+Cc: guodong@riscstar.com,
+	elder@riscstar.com,
+	dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: [PATCH 0/8] dma: mmp_pdma: Add SpacemiT K1 SoC support with 64-bit addressing
+Date: Wed, 11 Jun 2025 20:57:15 +0800
+Message-ID: <20250611125723.181711-1-guodong@riscstar.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/4] dt-bindings: phy: spacemit: add K1 PCIe/USB3 combo
- PHY
-To: Ze Huang <huangze@whut.edu.cn>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org, Junzhong Pan <junzhong.pan@spacemit.com>
-References: <20250527-b4-k1-usb3-phy-v2-v5-0-2d366b0af999@whut.edu.cn>
- <20250527-b4-k1-usb3-phy-v2-v5-2-2d366b0af999@whut.edu.cn>
-Content-Language: en-US
-From: Alex Elder <elder@ieee.org>
-In-Reply-To: <20250527-b4-k1-usb3-phy-v2-v5-2-2d366b0af999@whut.edu.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 5/27/25 7:01 AM, Ze Huang wrote:
-> Introduce support for SpacemiT K1 PCIe/USB3 combo PHY controller.
-> 
-> PCIe portA and USB3 controller share this phy, only one of them can work
-> at any given application scenario.
-> 
-> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-> Co-developed-by: Junzhong Pan <junzhong.pan@spacemit.com>
-> Signed-off-by: Junzhong Pan <junzhong.pan@spacemit.com>
-> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+This series extends the existing MMP PDMA driver to support SpacemiT PDMA
+controllers with 64-bit addressing capabilities, as used in the K1 SoC.
 
-This PHY has an interaction with PCIe port A.
+The SpacemiT K1 SoC contains a PDMA controller that is largely compatible
+with the existing Marvell MMP PDMA, but adds support for 64-bit physical
+addressing through Long Physical Address Extension (LPAE) mode. This
+requires programming additional high address registers (DDADRH, DSADRH,
+DTADRH) and enabling the DCSR_LPAEEN control bit.
 
-In practice this PHY is only used for USB 3.0 (not PCIe).
+The implementation maintains full backward compatibility with existing
+32-bit Marvell platforms while adding the necessary infrastructure for
+64-bit address handling through a flexible configuration-based approach.
 
-However I am told that only the PHY used for port A is capable
-of performing a resistor termination/tuning process (not ports
-B and C).  As a result, the PCIe driver needs this process to
-complete on the PHY for port A; it can then read the port A TX
-and RX calibration values (4 bits each).  It uses these values
-to configure the PHYs for ports B and C.
+Key features added:
+- 64-bit DMA address support via LPAE mode
+- Platform-specific operation abstractions (mmp_pdma_ops)
+- Optional clock and reset controller support for modern SoCs
+- Device tree integration for SpacemiT K1 SoC and Banana Pi F3 board
 
-For this reason, this PHY code (and binding) should not be
-merged until we are sure that the solution will also satisfy
-these PCIe requirements.
+Testing:
+This patchset has been tested on SpacemiT K1-based Banana Pi F3 hardware
+to ensure the PDMA controller operates correctly with 64-bit addressing.
+Existing functionality on 32-bit platforms remains unchanged.
 
-					-Alex
+This patchset is based on [spacemit/for-next]
+  base: https://github.com/spacemit-com/linux for-next
+Plus the reset controller driver, posted by Alex Elder (v10):
+https://lore.kernel.org/all/20250513215345.3631593-1-elder@riscstar.com/
 
+Guodong Xu (8):
+  dt-bindings: dma: marvell,mmp-dma: Add SpacemiT PDMA compatibility
+  dma: mmp_pdma: Add optional clock support
+  dma: mmp_pdma: Add optional reset controller support
+  dma: mmp_pdma: Add SpacemiT PDMA support with 64-bit addressing
+  riscv: dts: spacemit: Add dma bus and PDMA node for K1 SoC
+  riscv: dts: spacemit: Enable PDMA0 controller on Banana Pi F3
+  dma: Kconfig: MMP_PDMA: Add support for ARCH_SPACEMIT
+  riscv: defconfig: Enable MMP_PDMA support for SpacemiT K1 SoC
 
-> ---
->   .../bindings/phy/spacemit,k1-combphy.yaml          | 72 ++++++++++++++++++++++
->   1 file changed, 72 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-combphy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-combphy.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..93f7a3bb06bba380def77f87f6db0184af26e9e6
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/spacemit,k1-combphy.yaml
-> @@ -0,0 +1,72 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/phy/spacemit,k1-combphy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: SpacemiT K1 PCIe/USB3 Combo PHY
-> +
-> +maintainers:
-> +  - Ze Huang <huangze9015@gmail.com>
-> +
-> +description:
-> +  Combo PHY on SpacemiT K1 SoC. PCIe port A and USB3 controller share this
-> +  phy, only one of PCIe port A and USB3 port can work at any given application
-> +  scenario.
-> +
-> +properties:
-> +  compatible:
-> +    const: spacemit,k1-combphy
-> +
-> +  reg:
-> +    items:
-> +      - description: PHY control registers
-> +      - description: PCIe/USB3 mode selection register
-> +
-> +  reg-names:
-> +    items:
-> +      - const: ctrl
-> +      - const: sel
-> +
-> +  resets:
-> +    maxItems: 1
-> +
-> +  "#phy-cells":
-> +    const: 1
-> +    description:
-> +      Indicates the PHY mode to select. The value determines whether the PHY
-> +      operates in PCIe or USB3 mode.
-> +
-> +  spacemit,lfps-threshold:
-> +    description:
-> +      Controls the LFPS signal detection threshold, affects polling.LFPS
-> +      handshake. Lower the threshold when core voltage rises.
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 0
-> +    maximum: 0xff
-> +
-> +  spacemit,rx-always-on:
-> +    description:
-> +      Affects RX.detect, enhance compatibility of some DFPs in device mode but
-> +      increase power consumption.
-> +    type: boolean
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - resets
-> +  - "#phy-cells"
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    phy@c0b10000 {
-> +        compatible = "spacemit,k1-combphy";
-> +        reg = <0xc0b10000 0x800>,
-> +              <0xd4282910 0x400>;
-> +        reg-names = "ctrl", "sel";
-> +        resets = <&syscon_apmu 19>;
-> +        #phy-cells = <1>;
-> +    };
-> 
+ .../bindings/dma/marvell,mmp-dma.yaml         |  17 ++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      |   4 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          | 234 ++++++++--------
+ arch/riscv/configs/defconfig                  |   3 +-
+ drivers/dma/Kconfig                           |   2 +-
+ drivers/dma/mmp_pdma.c                        | 249 +++++++++++++++---
+ 6 files changed, 370 insertions(+), 139 deletions(-)
+
+-- 
+2.43.0
 
