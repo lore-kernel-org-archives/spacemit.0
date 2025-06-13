@@ -1,143 +1,129 @@
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4F01F9F7C
-	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 01:11:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FC01A01B9
+	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 02:12:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749777118; cv=none; b=cTAbBM25IISDTF1djNCXrcYkprn0bQbRE2Dutz1Olj/ahSwhlBhRaGZxYr9SNpzLtw2xQoCTGhL8/nmgtnHFQBioVl7oirPWUA8Hdded+JQyFn9ZApA8qt4PRbS3FcuxReh3eBlUEj8PhrTlgOGH//VD5c47Or7gxAtOtB3JkbE=
+	t=1749780736; cv=none; b=TQNQYvU0CK+T8oQGZxXtT+LpWZXe5GOBVeC1OitoZ5JpNDJuIiCl2MfPiO4vdcxQ+6rBLr0pCcaFUf72RSD+/1D6qzUofX2mWQeZsCRGbT1Ml8SWeLU2bvNsoH6zYkoMPenowPIPaSY+IH+bB8Qc4QerQlUHrxKG/X27HuoBiFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749777118; c=relaxed/simple;
-	bh=ofhrWzbkHpmkRBFTa000gjfyL5s3fJzmMKuP+Rinp2c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/+ELNz4X1mp3I+vMu3TkM2Sp1iaAB4jJMQDunww54W3j6HyRA98etJmWYBl2DL+JGCUYBAPXLID4K0Rr6n+/wHHZMZtF05OvFpNZBxwolyTkUUy7lllId5Gva8/ElogfllRXwhkphCIFY1vKfUD6UHyStz5t6yJINTnEqpCunw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=QZV+ohU9; arc=none smtp.client-ip=209.85.161.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1749780736; c=relaxed/simple;
+	bh=oV2F7jyiXlkuJRhDsFyY1YWgqEbzKbiBKXchw7JTdGU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dibsj/EVYGKllBYkxwlE7WtPPJxrrb9I6Tcxs06u8Mn7UehkQjzfc/IyKz/uR3/38DhsZdQQ8hUO8R95hLpb5L7Bx2VUq3xqm5G9zRmLt3vIk6M23bbteO/FWgbWZ/qGV44oh+WlNKHOJX9czRv4+TGYSwk/VRESU1QpFfWZwuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lyQviZZ3; arc=none smtp.client-ip=209.85.214.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="QZV+ohU9"
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-610dfa45fa2so916068eaf.2
-        for <spacemit@lists.linux.dev>; Thu, 12 Jun 2025 18:11:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lyQviZZ3"
+Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-236192f8770so11452215ad.0
+        for <spacemit@lists.linux.dev>; Thu, 12 Jun 2025 19:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1749777116; x=1750381916; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hXQ0rLrEsZDkkO0xDOFrK28pA119DtQt4oQHk7dYEkk=;
-        b=QZV+ohU9jqm36eS6UEYx2alAj259jcID1GVEJwA9AVlkOnmh7Y2OWgETS5kP6QwbZY
-         UtrtcqAz6Ebyp6j/pz5C3VfIDKo9t7uIUBUkIa36HD4Fw9TxAD5wNLspogtFACHbMJv7
-         nAhKKvv3fmH3tHcBXTkjok+waB9zs1CWlp6CccA/s/v1JZyAOHhm1oEFU1QlIJhBta7F
-         +eCse/Cl90Own4VrUjH0q0V9IHfiSguzFoOBF7qG/dChXf3qfBUBNJvDMevjqayf6KMx
-         W2vsSjo2ta+G4P5OQ8T7PRt7VPn0v8QU1vWx1M0y+96B8x8TGxyYFGtWQHJ+VpAEKnDE
-         rLmg==
+        d=gmail.com; s=20230601; t=1749780735; x=1750385535; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/hna0O+LUaLx+0oktXX+K8llS+HEe3f1PFlR9cMiAfc=;
+        b=lyQviZZ3IqFw4v36LQqVPiDV3rZpWzQw7Rxewdz09OCddT4CcYbCsUeiD1VWIMcr+n
+         /8cAQGMBHISeiGSndBX/d/CHDB0nhxDLpZbtFAWEscwKMc+HdB0nShrq7nGODHIbwNhc
+         P+iRTeycZzu+iobfvkXEYi91wquistg1ltxBYtwqQ7s/a4wV8D+WLospTqucgZoF9Qvn
+         wsrrVTM2eHgRcE+5tKwOnoNZ4bdpuKtA2xwXf+8kaJ1hodbLNICKdKHPNTmFxY9BsNXT
+         VgUEzWao9zvb7F30Xxx6K0vbO3QWgIr4a8IOq9kSQhvTe2p/Bvxc+p+mveg/5HGb0aZ5
+         Fk8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749777116; x=1750381916;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hXQ0rLrEsZDkkO0xDOFrK28pA119DtQt4oQHk7dYEkk=;
-        b=Ql89Ep0T8ONjKrnoJphg+1RYlQapbCU8DIylcPb/ZgmJK2Lsuid3bdApx38pdJPbFq
-         Dpv1CfTa2eIhRAYp/wPkXdN/M/oDtAZ8eP/LNVtJcnshhNKJe3wK6cigoDRL/CYSpMQZ
-         pQEuWEn8QvtEZpcZYTBrAbaGCa3LXoDi78x+8FmqR1o4QifGuKetBm4hEPPHYAr0W/l/
-         JCcCaoc4yGfqmzMudw/HdT1JG1Vnv5Vm4uDwyhfwAkYXq7ZL4Klx+PYrGtDjoQOg/j0I
-         5eq1MV6Y1GcaodAv5n21a5LpuH662xpt8AZQnOfyUc9jmkdrw/t0AhZqco0KxpjDAGS3
-         cZGg==
-X-Forwarded-Encrypted: i=1; AJvYcCXR78OeCdY3Hv9tJnAqibTnp0WutVaYPy3+NDowXLxjdhxeMXU3ss041MWhu+AEe+XrVCL34wZRRQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyM9SRbJowK+r4BEJeZiD9RvpncrTUbrAPyKvhK4be/akDU/w8S
-	IY52q1lbaHW69cRJ/zyg+BgpCjiKW6kVAbF90PFqxEUiIceGAOAk+tomMpoGUjPvX8g=
-X-Gm-Gg: ASbGncthAvKi3Oloa8UR+TcN7Cuj7VQayfesf1iYjLjKwZMYG9aSeY/AbxGlWYVehXG
-	+Zlzq4ymCrLb3/8Nfz8USf+PHi2Yq8b57E4Pv5Rh9dG66zATOlnvuRl50iK1nHiGKRAkF656vwT
-	Bmzh2O/Hhj+zxdJWDDbwn7stGqgINUBx7YH1ROxzlVRNWWjHSBFLIoWcNe5Ads8sIQs22VouOHx
-	6pGR4tX7IcXsEwUwtuI//YacqfHNpvcnqoYNjXYOTT6oBpe1Uz2EG9c3chOU9UvPri0uliqvpb7
-	xPwu6TyjARzfB7JCIcD/3hqB/SJT1KnW7600a7J7Sz113TtbM5YStCgNcalYq2cHG0x7sVx+XJ2
-	70ZlYQJLM+ua4jyK2kSMSMLQ63Z+X5oM=
-X-Google-Smtp-Source: AGHT+IHLGWUc6QmwDBxYgPL11fCgmmDxgrSTZTWJDq5NM0vixs6NHFASZt4TXSVYr14kHaayK453+w==
-X-Received: by 2002:a05:6870:ce88:b0:2ea:d491:eb45 with SMTP id 586e51a60fabf-2ead510a3fbmr744385fac.18.1749777115684;
-        Thu, 12 Jun 2025 18:11:55 -0700 (PDT)
-Received: from presto.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2eac0c17211sm407685fac.18.2025.06.12.18.11.54
+        d=1e100.net; s=20230601; t=1749780735; x=1750385535;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/hna0O+LUaLx+0oktXX+K8llS+HEe3f1PFlR9cMiAfc=;
+        b=XHx67RyRpcNlRZxPlr/D/PEwxwAlUcZvzpA+p3NuOhjg+H3HRnJX5WGmUSqcHzPXZa
+         BX6lGxEEi74nj/0JRWzlSp5TU7XWDWfX/x85c/Nugi31g966PnYM8sIpukq4d12j5pBz
+         RI/f6FGidfkBobfjOv9/sZffkvaapI04EhhUQ/0CuaPgKYZN0RGppjkyiHXr9T5FDlUW
+         pkKbNERWts4/G8I7V3DDd/0BJlSRZA9f0RiAABc4PmMO6eli38Tmc6Xia3oiMO4nDXw3
+         8uu80EGBnxXXCkvp06OtkOy7wiFPXFN18CZqwcsIB+Wd4L8P8rA05S1TGKag6BrOF/u9
+         TuaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUe7zROYvY8PBmmRuzstWu72C5oTFjJCPzUCkdROP9lUShP3zUoL6YKHVNTZDn1QqkzAxpw6dciFg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxxAag9V8aXIJsbTKYWl3eFreMYU5dzW92tnPKyqU5pcHuTY4R+
+	PfKX20ftaclfWdpRHyKAA7z6idQTz+NDEjD/SM/aeDZ3NLgiVOj+SiZv
+X-Gm-Gg: ASbGncs2vbN86vn/uQb5ibfElQwgG2P2rxGZPVXIkqQIQ8os3SiWrHO889uB+aMZ0qy
+	BwfRIsU2n+KUb6JMZDaEvXhpmenjGFdJpPp/A7JsNNlMR2q49YbCbSIoQaOyj+ugQCcW62aggI/
+	mKQWhsNTPtuJ7htcPetJheLsSum9KohivnasnEzgPjjcHQnxE7nWzx+XtFhahzOpOsKpxqP1rRB
+	k0vp+dv9cByT/ciVTHrT3IPX5tlG0p9T0e/rydhScW4GetkiehdYGQMSqzBYu9LGF9a1lZeaDol
+	AoBXhJJ0dnbSvBXHvnQgGLNrJBpEVAO0O/z8DktH5SaRglP11iJRWQ==
+X-Google-Smtp-Source: AGHT+IEn+f3gutrZsuGdkCNgFErV5PdSC6Hef2d/nsG5l9WFwb349LMISTX9gwCyLloUOhY8JzqgdQ==
+X-Received: by 2002:a17:902:ecc1:b0:21f:5063:d3ca with SMTP id d9443c01a7336-2365fb3dde4mr12310335ad.16.1749780734677;
+        Thu, 12 Jun 2025 19:12:14 -0700 (PDT)
+Received: from localhost ([2602:f919:106::1b8])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b2fe1639e5bsm403153a12.2.2025.06.12.19.12.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jun 2025 18:11:55 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	p.zabel@pengutronix.de,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	dlan@gentoo.org
-Cc: heylenay@4d2.org,
-	inochiama@outlook.com,
-	guodong@riscstar.com,
-	devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v11 6/6] riscv: dts: spacemit: add reset support for the K1 SoC
-Date: Thu, 12 Jun 2025 20:11:38 -0500
-Message-ID: <20250613011139.1201702-7-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250613011139.1201702-1-elder@riscstar.com>
-References: <20250613011139.1201702-1-elder@riscstar.com>
+        Thu, 12 Jun 2025 19:12:14 -0700 (PDT)
+Date: Fri, 13 Jun 2025 10:12:07 +0800
+From: Troy Mitchell <troymitchell988@gmail.com>
+To: Alex Elder <elder@riscstar.com>, andi.shyti@kernel.org, dlan@gentoo.org,
+	troymitchell988@gmail.com
+Cc: linux-i2c@vger.kernel.org, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	Troy Mitchell <troy.mitchell@linux.dev>
+Subject: Re: [PATCH] i2c: k1: check for transfer error
+Message-ID: <aEuI9-QWCv6CRUyX@troy-wujie14pro-arch>
+References: <20250612225627.1106735-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250612225627.1106735-1-elder@riscstar.com>
 
-Define syscon nodes for the RCPU, RCPU2, and APBC2 SpacemiT CCUS, which
-currently support resets but not clocks in the SpacemiT K1.
+On Thu, Jun 12, 2025 at 05:56:25PM -0500, Alex Elder wrote:
+> If spacemit_i2c_xfer_msg() times out waiting for a message transfer to
+> complete, or if the hardware reports an error, it returns a negative
+> error code (-ETIMEDOUT, -EAGAIN, -ENXIO. or -EIO).
+> 
+> The sole caller of spacemit_i2c_xfer_msg() is spacemit_i2c_xfer(),
+> which is the i2c_algorithm->xfer callback function.  It currently
+> does not save the value returned by spacemit_i2c_xfer_msg().
+> 
+> The result is that transfer errors go unreported, and a caller
+> has no indication anything is wrong.
+> 
+> When this code was out for review, the return value *was* checked
+> in early versions.  But for some reason, that assignment got dropped
+> between versions 5 and 6 of the series, perhaps related to reworking
+> the code to merge spacemit_i2c_xfer_core() into spacemit_i2c_xfer().
+> 
+> Simply assigning the value returned to "ret" fixes the problem.
+> 
+> Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> Reviewed-by: Troy Mitchell <troymitchell988@gmail.com>
+> ---
+> v2: Added Troy's Reviewed-by
+Hi Alex, you added the changelog, but the subject line 
+doesn't have the "V2" suffix. Is this a mistake?
 
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+            - Troy
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index c0f8c5fca975d..de403bda2b878 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -346,6 +346,18 @@ soc {
- 		dma-noncoherent;
- 		ranges;
- 
-+		syscon_rcpu: system-controller@c0880000 {
-+			compatible = "spacemit,k1-syscon-rcpu";
-+			reg = <0x0 0xc0880000 0x0 0x2048>;
-+			#reset-cells = <1>;
-+		};
-+
-+		syscon_rcpu2: system-controller@c0888000 {
-+			compatible = "spacemit,k1-syscon-rcpu2";
-+			reg = <0x0 0xc0888000 0x0 0x28>;
-+			#reset-cells = <1>;
-+		};
-+
- 		syscon_apbc: system-controller@d4015000 {
- 			compatible = "spacemit,k1-syscon-apbc";
- 			reg = <0x0 0xd4015000 0x0 0x1000>;
-@@ -553,6 +565,12 @@ clint: timer@e4000000 {
- 					      <&cpu7_intc 3>, <&cpu7_intc 7>;
- 		};
- 
-+		syscon_apbc2: system-controller@f0610000 {
-+			compatible = "spacemit,k1-syscon-apbc2";
-+			reg = <0x0 0xf0610000 0x0 0x20>;
-+			#reset-cells = <1>;
-+		};
-+
- 		sec_uart1: serial@f0612000 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xf0612000 0x0 0x100>;
--- 
-2.45.2
-
+> 
+>  drivers/i2c/busses/i2c-k1.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+> index 5965b4cf6220e..b68a21fff0b56 100644
+> --- a/drivers/i2c/busses/i2c-k1.c
+> +++ b/drivers/i2c/busses/i2c-k1.c
+> @@ -477,7 +477,7 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
+>  
+>  	ret = spacemit_i2c_wait_bus_idle(i2c);
+>  	if (!ret)
+> -		spacemit_i2c_xfer_msg(i2c);
+> +		ret = spacemit_i2c_xfer_msg(i2c);
+>  	else if (ret < 0)
+>  		dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
+>  	else
+> 
+> base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+> -- 
+> 2.45.2
+> 
