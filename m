@@ -1,73 +1,84 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3725232785
-	for <spacemit@lists.linux.dev>; Thu, 12 Jun 2025 22:56:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CF81EEA47
+	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 01:11:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749768994; cv=none; b=uq1oAKQOyqJpe0K/4IyX/zKaNcJInVAkUZBMkTVooOoUjY+b2JA6rkyD4WBpG3q9H3UKsfmeXt8ZJnY9D7E03/IESiJDjvs3pCDTvvSSkatTxWfweTbgOYrNuPueP9dbq4qC8h1tvUlVtfER1EdA8DVYdEpbP8GhwsyDABL2wOA=
+	t=1749777107; cv=none; b=AN0KimpgBihYphReHm6tqwXFsaCHECUN5FemQBkausbITsapNR4etH1e8fJeNlaNmiBlH1A9E/2V4fYT8nmJxX4llvS9tWx6D0TyXsdq/kqse2scLDnokKL2BPB6H7KP9xlHoVdMO3MnZIBvEEPFeNE1YDoK/RVC7LGOlSwHNUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749768994; c=relaxed/simple;
-	bh=rzO2vUG3qFvZz9nVJkEDXegLFrtHvbT/BioXWBPlI5E=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pRTLpDLKKXHEu7CCev8zajJRql2vfVBhZijxjhq/zGZZQFP10YsuHJ50/tZ2Vrz+on5yyudbXgwnpD2RFMZffOK1Af6e2l2GZrEci8LRXH/4gAtwt+Ds9unLffM0zCxA29qAI5DYoUcsx+nqp1WoVRhVEkePQM1PwWWNgA0PeRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=GE0j1M5u; arc=none smtp.client-ip=209.85.166.180
+	s=arc-20240116; t=1749777107; c=relaxed/simple;
+	bh=8u736JUylRMKJQJC8tFKjjHmAF3VB42qomu/hTIe6UM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I/CGMbq+dr3Pleo4lcvVWSULRPdTyJXiBshUXxjTf3YSNSILf4aVqGfNsnFNZ6IM3904su5IMt1L7ciAnvHIbMsMoYobQIu3YUJ+spnU0wRqnHPuYOE5nz0ol+WLoQiVqa3/5oEDfItjODPlEVFABikwHUq3e+aqL7Y+bzEEyPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=a5H1B9JM; arc=none smtp.client-ip=209.85.160.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="GE0j1M5u"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3ddd68aeb4fso11671935ab.2
-        for <spacemit@lists.linux.dev>; Thu, 12 Jun 2025 15:56:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="a5H1B9JM"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-2d09d495c6cso425414fac.3
+        for <spacemit@lists.linux.dev>; Thu, 12 Jun 2025 18:11:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1749768991; x=1750373791; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1749777104; x=1750381904; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gIRR5bCoil2FaR591vuDwUpsGCoeLZpb18iQYK0axhg=;
-        b=GE0j1M5uxDF2MVkaJWOpgjMzZtfFiEXf8rSUtWcENBLW0BfPOxq+aCCrMjn882crYg
-         J9ZKehAemf7R1meWDuU+e/o7wRnVG3Z4FBBLNW+S/SK8qO1OwKTXJOVkfO1qkTu/ofJK
-         oTMNMcJHqFc9BoaImU3Y6hlPrSpY31BHAzDUN3O8zwh/LLmasp3AGtRkaANSu/Rohh4b
-         rhRDf9ij2OFvApmzqZzZbm2uvg2QZy+etiuKDRJ2WnQDICrW4QMljB8DFPfDzRdBKxux
-         1UHUSs2NQMX+sQMS/1RqcgwsZ+Llgzu/ol/+FbFYGTas1ju1O+JF/EDGO0s0C1qox+hS
-         lNng==
+        bh=qLjk8AtIe7EkG0gXs3iZYCpvTmGpW65yPt2cGZeyPVs=;
+        b=a5H1B9JMlCm2On31YCoM1YxUA5JWWaNEugvKUGX/0WOQ3rccK8Glu3FiJZmENjYWc6
+         GvMdNR5jd96YHhC6b40zBCrQSHdhTZw3EL9Ei7u9jtdyJge34GaLNlp1ykOWA95Lvgcw
+         i0M1fDBMVeBBy5SLEkmTl4qZHNDZH8ZgXBwyrxoTiokF9C40YNMii6K2n4wpiI60Iem5
+         J3j2TwSm0sr6NQdAGE0o/hCQAAcCVOvKYpEoea6ctAstSZUQio7hALvWVlSnlqPlMQtg
+         bGqssCVokWeUn9KTRi3qxtjUpnK9O2AgvC9wywooYCCUWR5+DvzsMIls9jvKIEbhQZ5D
+         bGFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749768991; x=1750373791;
+        d=1e100.net; s=20230601; t=1749777104; x=1750381904;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=gIRR5bCoil2FaR591vuDwUpsGCoeLZpb18iQYK0axhg=;
-        b=Of6hcqc0a5xF+cai9FBin+wL2kOb1Uvhn12CtPuI4H3OZMN9lX2DuK9sTaL80Tzq7V
-         2fD9kdkpnO88ppBVcvelu12cQjFS6EE6wNQg5dwOlu/Wh2912Dz11PUT8aubFAdBjNIk
-         i+GVESE2YUETt/l4Hmf/iMrslbfSksWChM3weTsV+UBBklwGnmOfYP4lNr6Vxry2Ycz0
-         D/fE50Ca+E0RSfs4dfKq4msUwh0kQ3DGbtJsMPc58YjLDl9PWz9uK09RoRguNorjcRIq
-         +eihhW+k5JpLWCoOqonHcfxyru2G72SgII3C+DECF8URCocvLM6WtCqMtGul+NN5xwKq
-         DElg==
-X-Forwarded-Encrypted: i=1; AJvYcCVLl0OAhIJHr03cKouHrzHoGCKF/WKH/axl9Tx0uqvXGXw7cTgZcEdus3YqP6M31PLgBZwxsglvnQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyDlIL0T56DWKOuMYWtwvCf5xakUdPyhysMdqHzOP/yfKGkjeAz
-	9OQVHdprJyHlZeLYtGnBEgiwQ4oWH8KghMph2sBxKj8a4MQqLxrIw0VYh2NsY765qnM=
-X-Gm-Gg: ASbGncvPQNhMIwd0KtrNdd9ouOmazstmGaKKa0eV5yWYApQDJAyQrv+NIGO/wAGSruG
-	tJr83k/14AuC0L4DnKpmEpWpe9t2up0QfELp4btSEFe0/K7r5QdO+y+Br9u/fU35k4KwTezw+II
-	oDGvC5COeqASNlHOSySLMGJTMyWuNgJDFLz9eUAmO39Rm5hnFvuwNHSmxjk0ogncS+n91/m5zh3
-	5la55obeKSgfrGruWGTrBjOgIYx77d6hz7aoHuGeO/Nlax5rrrEavkSE7hBgq9QfOtmz6llGuih
-	g50jWR2gQmz/y16Tveo/CGwOcvjrxrSLOltQIhU2YHWrf/EZgKeOFDazmS4hJJSaI1TPE9lI7K9
-	qO7L4VpuYfORmi2bEgtHQSPjE/wI1SrXDALDZpxeG7A==
-X-Google-Smtp-Source: AGHT+IFl/qtFDEOg7fq5AKLUPKjkJzQ1QBSvDDw3zCkODT+b5Ce6LNmP5J2eqcw2VDryqjSPHaqh3g==
-X-Received: by 2002:a05:6e02:184a:b0:3dd:d6c0:cccd with SMTP id e9e14a558f8ab-3de00bd309amr7524375ab.13.1749768990866;
-        Thu, 12 Jun 2025 15:56:30 -0700 (PDT)
+        bh=qLjk8AtIe7EkG0gXs3iZYCpvTmGpW65yPt2cGZeyPVs=;
+        b=mSyk8zUmUt8FbI04wLtrApaWYGB04ebYQXE3j0m6qxrEXc0Vb88D9xzLXn3OzeyNGk
+         djDayCilrdd4gZZD/dPvfqcrHUl3t0UNXFdNZqO9JpO1GuLSbQT5+4OvG6Dssacy9HB6
+         ENyuLuqHQhh1Fu5kxx/u+fhTubHsk9zvZ0bbO8t8ufQaHEQ76HUm07LeXmBJt1sd1Wr/
+         NJ38quAy3MapUA3dDghQy8TqNiLxaXwokvWSPavDTXMNtfDxqwXlrTX6+QDkWEFpBH+6
+         ySd+01ZXGpQM2X+YODpJm59e+2weyYNmE3mtlTR6qofMC6Om3oa/3+DkT+iVdLT2MbEH
+         IlpA==
+X-Forwarded-Encrypted: i=1; AJvYcCXEqprD4DZlzfxVo8knYLGPQ5Lhq84xRN7Aa6hJx84mXZ7rsCbqb3V7odSzYvVbduFsHs/D4fqSSg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxSwSBYGqMt4d7xelUGlMaV2ZBruRZOsdlYmxUmNAguNmX/5ez4
+	ZWGeQe9lKaESJW9vq0VawZYNlRQiZ9KXhytO4dYXoFJg/wz192jOjIEUP6NCv992XD0=
+X-Gm-Gg: ASbGncs96vlyN0pYYuMmoPoV2RKw+1xtgOFXKO4BGlC6RDkHqw6AYyVv/09K56JoAi3
+	l4AljgxVvAPWWkCpuw6To1KhFMljJkm9a36sUXlc+GBDvAcIzExZ53co42sq3g+0az/uMmZmNnw
+	D9d4hvBBEYq9oMnlHdKgYcuGE0esjrkiVwyn2wis0iPtLJyKy4R55KwF2irvJ2jHx82z/dYJCrJ
+	EELACQbfhU0tQJnJKrptuyEtzC5XSykeE7/iwERZy9fIyxutReI1DcIG9bdnyhERZbLAasXieZ+
+	17R/iPjvrSLVGXABMSI5gw/A0fLusz7ZvoiU1+u3Dij69wwJvqiyJy5VAeZdLHIgvHJboU69bJQ
+	QxZel9kOdHzcFatcYlMx5K7sHuEG0uSsJIrI4Sc/pfg==
+X-Google-Smtp-Source: AGHT+IGuYA1UmF+qyhDFUECuEGO+2TaO/UuS30QC1CnU/pGEOag7zhyk90q5MH8bH5ojGbCRLTOPgQ==
+X-Received: by 2002:a05:6870:ab09:b0:2e8:7505:638e with SMTP id 586e51a60fabf-2ead51cc4c8mr724652fac.39.1749777104481;
+        Thu, 12 Jun 2025 18:11:44 -0700 (PDT)
 Received: from presto.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3de019d0c4bsm209125ab.28.2025.06.12.15.56.29
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2eac0c17211sm407685fac.18.2025.06.12.18.11.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jun 2025 15:56:30 -0700 (PDT)
+        Thu, 12 Jun 2025 18:11:43 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
-To: andi.shyti@kernel.org,
-	dlan@gentoo.org,
-	troymitchell988@gmail.com
-Cc: elder@riscstar.com,
-	linux-i2c@vger.kernel.org,
+To: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	mturquette@baylibre.com,
+	sboyd@kernel.org,
+	p.zabel@pengutronix.de,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	dlan@gentoo.org
+Cc: heylenay@4d2.org,
+	inochiama@outlook.com,
+	guodong@riscstar.com,
+	devicetree@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	spacemit@lists.linux.dev,
 	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH] i2c: k1: check for transfer error
-Date: Thu, 12 Jun 2025 17:56:25 -0500
-Message-ID: <20250612225627.1106735-1-elder@riscstar.com>
+Subject: [PATCH v11 0/6] reset: spacemit: add K1 reset support
+Date: Thu, 12 Jun 2025 20:11:32 -0500
+Message-ID: <20250613011139.1201702-1-elder@riscstar.com>
 X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
@@ -77,46 +88,66 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If spacemit_i2c_xfer_msg() times out waiting for a message transfer to
-complete, or if the hardware reports an error, it returns a negative
-error code (-ETIMEDOUT, -EAGAIN, -ENXIO. or -EIO).
+This series adds reset controller support for the SpacemiT K1 SoC.
+A SpacemiT reset controller is implemented as an auxiliary device
+associated with a clock controller (CCU).  A new header file
+holds definitions used by both the clock and reset drivers.
 
-The sole caller of spacemit_i2c_xfer_msg() is spacemit_i2c_xfer(),
-which is the i2c_algorithm->xfer callback function.  It currently
-does not save the value returned by spacemit_i2c_xfer_msg().
+In this version several "multi-bit" resets have been redefined as
+individual ones.  For example, RESET_AUDIO had a mask that included
+3 bits.  Now there are 3 separate resets (one for each bit):
+RESET_AUDIO_SYS; RESET_AUDIO_MCU_CORE; and RESET_AUDIO_APMU.
 
-The result is that transfer errors go unreported, and a caller
-has no indication anything is wrong.
+The reset symbols affected (their previous names) are:
+    RESET_USB3_0 ->
+      RESET_USB30_AHB,  RESET_USB30_VCC, RESET_USB30_PHY 
+    RESET_AUDIO ->
+      RESET_AUDIO_SYS, RESET_AUDIO_MCU, RESET_AUDIO_APMU
+    RESET_PCIE0 ->
+      RESET_PCI0_DBI, RESET_PCI0_SLV, RESET_PCI0_MSTR, RESET_PCI0_GLB
+    RESET_PCIE1 ->
+      RESET_PCI1_DBI, RESET_PCI1_SLV, RESET_PCI1_MSTR, RESET_PCI1_GLB
+    RESET_PCIE2 ->
+      RESET_PCI2_DBI, RESET_PCI2_SLV, RESET_PCI2_MSTR, RESET_PCI2_GLB
 
-When this code was out for review, the return value *was* checked
-in early versions.  But for some reason, that assignment got dropped
-between versions 5 and 6 of the series, perhaps related to reworking
-the code to merge spacemit_i2c_xfer_core() into spacemit_i2c_xfer().
+No other code has changed since v10.
 
-Simply assigning the value returned to "ret" fixes the problem.
+All of these patches are available here:
+  https://github.com/riscstar/linux/tree/outgoing/reset-v11
 
-Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Troy Mitchell <troymitchell988@gmail.com>
----
-v2: Added Troy's Reviewed-by
+					-Alex
 
- drivers/i2c/busses/i2c-k1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Between version 10 and version 11:
+  - Rebased onto Linux v6.16-rc1
+  - Redefined several "multi-bit" resets as individual ones.
 
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-index 5965b4cf6220e..b68a21fff0b56 100644
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -477,7 +477,7 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
- 
- 	ret = spacemit_i2c_wait_bus_idle(i2c);
- 	if (!ret)
--		spacemit_i2c_xfer_msg(i2c);
-+		ret = spacemit_i2c_xfer_msg(i2c);
- 	else if (ret < 0)
- 		dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
- 	else
+Here is version 10 of this series.
+  https://lore.kernel.org/lkml/20250513215345.3631593-1-elder@riscstar.com/
+
+All other history is available via that link, so I won't reproduce
+it again here.
+
+Alex Elder (6):
+  dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
+  soc: spacemit: create a header for clock/reset registers
+  clk: spacemit: set up reset auxiliary devices
+  clk: spacemit: define three reset-only CCUs
+  reset: spacemit: add support for SpacemiT CCU resets
+  riscv: dts: spacemit: add reset support for the K1 SoC
+
+ .../soc/spacemit/spacemit,k1-syscon.yaml      |  29 +-
+ arch/riscv/boot/dts/spacemit/k1.dtsi          |  18 ++
+ drivers/clk/spacemit/Kconfig                  |   1 +
+ drivers/clk/spacemit/ccu-k1.c                 | 239 +++++++-------
+ drivers/reset/Kconfig                         |   9 +
+ drivers/reset/Makefile                        |   1 +
+ drivers/reset/reset-spacemit.c                | 304 ++++++++++++++++++
+ .../dt-bindings/clock/spacemit,k1-syscon.h    | 141 ++++++++
+ include/soc/spacemit/k1-syscon.h              | 160 +++++++++
+ 9 files changed, 775 insertions(+), 127 deletions(-)
+ create mode 100644 drivers/reset/reset-spacemit.c
+ create mode 100644 include/soc/spacemit/k1-syscon.h
+
 
 base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
 -- 
