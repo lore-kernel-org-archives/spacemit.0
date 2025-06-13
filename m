@@ -1,97 +1,95 @@
-Received: from kuriko.dram.page (kuriko.dram.page [65.108.252.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0277A18BC0C
-	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 03:15:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.108.252.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A62F24DD1A
+	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 09:25:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749784525; cv=none; b=MEzQgjM8VhcN8T5j7ybCDtJO2CL9VJPqKc7Q1DgYzgX5fKTqYCHp1JMLMgBeaOesppCcyC8bNvtkGMQuliAiGkuKs/q2qLeAd61hShqJUMkuXWQOOclootFSte4mpedezyikWm3fMigdakQZkIvgA/Es0gTq932OnApliW1waiw=
+	t=1749806751; cv=none; b=GPCHtVsHN08k5L1jv5FJLgRJt+RKx9fxgSizSxwtc2gEP/ypDKve8lyZnwV+ESy4JP9Vt4BI4RHKBxVdW8wLkND1+Lm8mgGP0GQuJM/TzsLDVt+bNbKYUVCVLOLAR5E2KfuO8++v8xaDvr9/PY38FPO2Ykh4jWFxzttHjNbXZzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749784525; c=relaxed/simple;
-	bh=o1SVX9nJPrwKUdAsGD/Hl7CBOsTjbHs500QARTgB8c4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HLflacs6RWZYJIxBuOtYZejUt1ISXwGatoE+a74idLIIEeyUpwG9cDCF85Of8pTAbrB2B+goKkjG33CbHhQeESI9Dmp+2/CpSyCu54+aheRnHf1jDPCwyYI4MixUAI0fSjunxXsJHMr3eXpSjeMoLgGhhSjHsHrenmXHLCXC6NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dram.page; spf=pass smtp.mailfrom=dram.page; dkim=pass (1024-bit key) header.d=dram.page header.i=@dram.page header.b=AQSmdXxd; arc=none smtp.client-ip=65.108.252.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dram.page
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dram.page
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=dram.page header.i=@dram.page header.b="AQSmdXxd"
-Message-ID: <2b17769e-2620-4f22-9ea5-f15d4adcb27b@dram.page>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dram.page; s=mail;
-	t=1749784027; bh=cA+IcBU1gia9Td2DjCXd/ukireOfXEXdOVKdoG1N2b8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=AQSmdXxdX0T+5qO8FcZSVfEVbNkoeROXd5dG+BsEBuS+BEYtoDnVBsbFPRTxiCUXg
-	 BVx7OXq9YmitSfaTIx5PtVZPSuQ1fOVirJfwl1eIwT4uypvHc5MqeHyOIiw9pnxrb0
-	 CbSrJQuRXmzHWeJdhPwA00Zqmhu/QawSrHUWxh6w=
-Date: Fri, 13 Jun 2025 11:06:43 +0800
+	s=arc-20240116; t=1749806751; c=relaxed/simple;
+	bh=4LsCH4BXnTTvUOxPK3fqPjjvv8ORrsKY7zJ0+so7tnI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hz44w9VAKv08Jj4W57UBTK68Tgyr5akwip8f0oGx7VTAnZmct25nWbd83Xny6Zieev5KypR4k5vcF3VRKPBKEH4j9aRJDfOX3wsm4BjKlIAE4YwSx6evAkR5MKuSNfnQ6Sg2lqMPgCZrg+rbGaDOuVUZEV++tnKSwdknkSbWZ44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [210.73.43.2])
+	by APP-01 (Coremail) with SMTP id qwCowAAn1tSP7ktoxvw7Bg--.2681S2;
+	Fri, 13 Jun 2025 17:25:37 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Fri, 13 Jun 2025 17:25:33 +0800
+Subject: [PATCH] gpio: spacemit: Add missing MODULE_DEVICE_TABLE
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 5/8] riscv: dts: spacemit: Add dma bus and PDMA node for
- K1 SoC
-To: Guodong Xu <guodong@riscstar.com>, vkoul@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, dlan@gentoo.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, p.zabel@pengutronix.de, drew@pdp7.com,
- emil.renner.berthing@canonical.com, inochiama@gmail.com,
- geert+renesas@glider.be, tglx@linutronix.de, hal.feng@starfivetech.com,
- joel@jms.id.au, duje.mihanovic@skole.hr, Ze Huang <huangze@whut.edu.cn>
-Cc: elder@riscstar.com, dmaengine@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-References: <20250611125723.181711-1-guodong@riscstar.com>
- <20250611125723.181711-6-guodong@riscstar.com>
-Content-Language: en-US
-From: Vivian Wang <uwu@dram.page>
-In-Reply-To: <20250611125723.181711-6-guodong@riscstar.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250613-k1-gpio-of-table-v1-1-9015da8fdfdb@iscas.ac.cn>
+X-B4-Tracking: v=1; b=H4sIAI3uS2gC/x3MTQqAIBBA4avIrBvQ6Q+6SrTImmooVDQiiO6et
+ PwW7z2QOAon6NQDkS9J4l2GKRRM2+hWRpmzgTTVujEl7gbXIB79gudoD0YispVtG1vVJeQsRF7
+ k/pf98L4fKAWyM2IAAAA=
+X-Change-ID: 20250613-k1-gpio-of-table-222b4b76b453
+To: Linus Walleij <linus.walleij@linaro.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, Yixun Lan <dlan@gentoo.org>, 
+ Alex Elder <elder@riscstar.com>
+Cc: Vivian Wang <uwu@dram.page>, linux-gpio@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Vivian Wang <wangruikang@iscas.ac.cn>
+X-Mailer: b4 0.14.2
+X-CM-TRANSID:qwCowAAn1tSP7ktoxvw7Bg--.2681S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Jr15ur4DCry5GF43JFWDJwb_yoW8Jr1xpF
+	45Zr9ak3y5GF43tasFvan7ZF18ua1vgFyIgF12kw1xZ3WqkrnFgF4jyFZF934UXryrJrW7
+	Xa1DGFyDWF18Ar7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9F14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
+	JVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
+	CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+	2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJV
+	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2
+	Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x
+	0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2
+	zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF
+	4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWU
+	CwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcS
+	sGvfC2KfnxnUUI43ZEXa7VUb8hL5UUUUU==
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Hi Guodong,
+The gpio-spacemit-k1 driver can be compiled as a module. Add missing
+MODULE_DEVICE_TABLE so it can be matched by modalias and automatically
+loaded by udev.
 
-On 6/11/25 20:57, Guodong Xu wrote:
-> <snip>
->
-> -			status = "disabled";
-> +		dma_bus: bus@4 {
-> +			compatible = "simple-bus";
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
-> +				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
-> +			ranges;
->  		};
+Fixes: d00553240ef8 ("gpio: spacemit: add support for K1 SoC")
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+---
+This patch is available at:
 
-Can the addition of dma_bus and movement of nodes under it be extracted
-into a separate patch, and ideally, taken up by Yixun Lan without going
-through dmaengine? Not specifically "dram_range4", but all of these
-translations affects many devices on the SoC, including ethernet and
-USB3. See:
+https://github.com/dramforever/linux/tree/k1/gpio-of-table/v1
+---
+ drivers/gpio/gpio-spacemit-k1.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-https://lore.kernel.org/all/20250526-b4-k1-dwc3-v3-v4-2-63e4e525e5cb@whut.edu.cn/
-https://lore.kernel.org/all/20250613-net-k1-emac-v1-0-cc6f9e510667@iscas.ac.cn/
+diff --git a/drivers/gpio/gpio-spacemit-k1.c b/drivers/gpio/gpio-spacemit-k1.c
+index f027066365ff8741f99da076d1e7b6339a6c1a22..3cc75c701ec40194e602b80d3f96f23204ce3b4d 100644
+--- a/drivers/gpio/gpio-spacemit-k1.c
++++ b/drivers/gpio/gpio-spacemit-k1.c
+@@ -278,6 +278,7 @@ static const struct of_device_id spacemit_gpio_dt_ids[] = {
+ 	{ .compatible = "spacemit,k1-gpio" },
+ 	{ /* sentinel */ }
+ };
++MODULE_DEVICE_TABLE(of, spacemit_gpio_dt_ids);
+ 
+ static struct platform_driver spacemit_gpio_driver = {
+ 	.probe		= spacemit_gpio_probe,
 
-(I haven't put eth{0,1} under dma_bus5 because in 6.16-rc1 there is
-none, but ideally we should fix this.)
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250613-k1-gpio-of-table-222b4b76b453
 
-DMA address translation does not depend on PDMA. It would be best if we
-get all the possible dma-ranges buses handled in one place, instead of
-everyone moving nodes around.
-
-@Ze Huang: This affects your "MBUS" changes as well. Please take a look,
-thanks.
-
->  
->  		gpio: gpio@d4019000 {
-> @@ -792,3 +693,124 @@ pwm19: pwm@d4022c00 {
->  		};
->  	};
->  };
-> +
-> +&dma_bus {
->
-> <snip>
+Best regards,
+-- 
+Vivian "dramforever" Wang
 
