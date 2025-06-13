@@ -1,530 +1,196 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DB419FA93
-	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 15:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026A924169B
+	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 21:01:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749827072; cv=none; b=F6wAFWPzR8YuXP8rRrmkqIN4Cv71ZdorGdEspiIc9fWyTCstW+dF030VLQb41SuJnkR/Fc5/xip/yzPhHoo9FHJUNGzkOEo2Ze43yAXAV9RogJeZ591sRLZy5TMT9VRAtXAnAPxlN/RKXua5gT8PSlB3PAh1/KIRyN+nT2skm64=
+	t=1749848518; cv=none; b=l4KGbNqNrCd9s25+j/WmhAEIWdI4nohkFtpRXLAxG7vKLvcgj3QOdJGoxRYOx50VY4pp8BNUNK5xTtvnuRCCZ/+L0CgFAwcz1JPIeRDQsoXnq0WcxmqryaOa0URJ72Ms692q7p76IbvCrHREyz9ff7aPdKRn9UvTlRYdz+FovSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749827072; c=relaxed/simple;
-	bh=emPt7KVQco9+jsiiDbiVTaJPf6cGPplminFGPTzr5DI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dkZ32dd04iw2uowsMHVc8q78GS5QKcEfion3JDsB2KAGH/q+hGzDF0katCGmi/a91+r8B+jghnZ3SnLyWM88K32VufLJV3g9JU6cEuEqB2m0hvxq6GYDejw6lXh1xomzjeZZs1L0TfYywzFnCq+92AbzBPljdVhNP/WASkKkAqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AaM9rxBt; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1749848518; c=relaxed/simple;
+	bh=M3WU8j8D3ectPH33ard93KigKB3ohcn/1yhzmCZv54c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Z964CXm0KzHUAuQ5RZiL9kOdBbSrpJ7/Dr6/rqcnpNRZU00MhfsOOPbCgk7cwjg479NSpjxgwAXBeOaU4IwpWtVVYob37V4CxX4o+tfm5orHz78FC4ybvmtCMUAupo23jpac09E5BNqKdApQN7PVh3Mq0bHhoQ3QOO3TcwjX/tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=hI2jKFu1; arc=none smtp.client-ip=209.85.166.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AaM9rxBt"
-Message-ID: <d59be8aa-a288-4db5-9f93-1716ed1dd64e@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1749827055;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IG+OxXsu7kERE/GwIe4zOanlV/094OyCDQjHMWVkmNQ=;
-	b=AaM9rxBtu+HXwYZecQVSVweu/MkF8RykOPy0Q6Y/bPFnMh1MgnwpHo7OPXvn50P6GimC/N
-	l5rWB5fWOeD8cA8Jue6rElXn/Algd5cpradoIKTeONWjvv1xTXy0YjB0LbTudQSZEOsOJE
-	VppqJO9IdVGc02Uocj12fKCDFH/5YFI=
-Date: Fri, 13 Jun 2025 16:04:07 +0100
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="hI2jKFu1"
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3da82c6c5d4so22182255ab.1
+        for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 14:01:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1749848516; x=1750453316; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3+0/C0PNGm7MxpNKW6kFIim9vzj9ziDhSWBIAnwFt1E=;
+        b=hI2jKFu1n8UvFSizSZ+qxlDl12OBOYKtkrAsyAAbzn7ha2pvjx16lFVZWClEsbJ9CB
+         Fqw5nCA33L8y/zzJ4Tc59P1wFghBkzJsfcZY56INTZsmYNQWigbftib54x76DsXYcw3f
+         /n1H0B2iuMXrH5EQ1brYxhcYmNVDIoeq7w/UbqgrCqBMa5CFRARQjon5n9WWq9PPSwLB
+         X/OqbTZzr4WKvfc6ndfKkccB3PjAIpSWTxxukumBVdbOjSBVuda/DuSc/QgJY+XZhpWF
+         cH+NF0qh3JRZaoC9Ebg91Lh/QSiaRWCigTx6K05l2Js2lXw6IIMYaAp4sm/d1tCHluMs
+         0cVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749848516; x=1750453316;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3+0/C0PNGm7MxpNKW6kFIim9vzj9ziDhSWBIAnwFt1E=;
+        b=LRh1O3lDMAZfLe6+qQwsy6B8LaUugjkLzepnCV616eHxeqYIIlDGxHQfV1hFazDDsr
+         pAP7B5c5MuzSs69vVQPzmfwRrtjjeJKTl3bxx/B2QQJ9ni4rIUk0n+wrync5Dacg37I/
+         B7yJB1Dv01VF3GOeKtNp7OZbWZQ4NJPokPpIvZBj4DjOm6WDOp4qYSdsy0x6CW7QIxCg
+         N1WdB5TDchFoypLhOP8viHk+ZQmPuU74XG1JwkRwUpPKbOtDozVQrXw0GpuOJsQzICsQ
+         LtDHcDP2LPqP2bdphZjcgTqqcHJEJolEjycDS23EMzQRINenewe4jDo0sqPwt6ExGZ5X
+         Ay/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW7Gi6DoD+syZ9lUWISv5ELpXzdYbog5WuxKiPu3WYpoVJC/oYliwC50zEuR3M5/uNKtSwUw6a8cw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxgdSVN5YbfwjgYBpKYJW0do53JQmeGyw3z1LN45BtZ+8TnMs8s
+	cLCbtoTrfhKh7zt+FDCMCQg07drZXPC1XPUklPbwyHfemOlR5kNd1cm7M7GnKeNqL+Q=
+X-Gm-Gg: ASbGncs7Gqcrgf7rRcwU+9625UU/jaAr2Vpr9od0+Nxm3WB5bbENMIFnuXGPshbnh+g
+	PMEJNlKU85g7AGc23xOF/cI/zMtJ1PWFy8oSubpQtPZqEKcXirfAIDmBYDVauRS17Nvwuzh5dca
+	fPK0aGHftp8QcQCoY67dGM9oY+P9+e4Aplr1fMcioh8SJZ8N1vhsnDy7islnLeRhDg7mLGmIPJR
+	IoSp5Uy0LDMJKUDvFJRXifbW+dyogSiKMq5Fboba5jetyrPbVtJYS+Zz/H23cm/81ZJieMIvKQY
+	7ZTYZpgjPN/fwiMMDT2pdTrq3EA89rMF9OzhlBmOxXBfK/T/fCnxaSxN8kryOVf1yjhM3uzxnKA
+	YZTKdGMvTfByi/ECUYoZXgNzXQykJUrrE0VPJem3YfA==
+X-Google-Smtp-Source: AGHT+IEAOZ4barh42QKEXjGCUuoE1CDyPc/l1EZnesaJ69ndQkqwdIOJcioQ8OP3PoKFNIqk9kUDPg==
+X-Received: by 2002:a05:6e02:184b:b0:3dc:76c6:436f with SMTP id e9e14a558f8ab-3de07d018b2mr17478295ab.21.1749848516110;
+        Fri, 13 Jun 2025 14:01:56 -0700 (PDT)
+Received: from presto.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3de019b44b3sm4996315ab.10.2025.06.13.14.01.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jun 2025 14:01:55 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: lee@kernel.org,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	dlan@gentoo.org
+Cc: paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	troymitchell988@gmail.com,
+	guodong@riscstar.com,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 1/6] dt-bindings: mfd: add support the SpacmiT P1 PMIC
+Date: Fri, 13 Jun 2025 16:01:44 -0500
+Message-ID: <20250613210150.1468845-2-elder@riscstar.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250613210150.1468845-1-elder@riscstar.com>
+References: <20250613210150.1468845-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH net-next 2/4] net: spacemit: Add K1 Ethernet MAC
-To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
- <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Richard Cochran <richardcochran@gmail.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Russell King <linux@armlinux.org.uk>
-Cc: Vivian Wang <uwu@dram.page>, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20250613-net-k1-emac-v1-0-cc6f9e510667@iscas.ac.cn>
- <20250613-net-k1-emac-v1-2-cc6f9e510667@iscas.ac.cn>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-In-Reply-To: <20250613-net-k1-emac-v1-2-cc6f9e510667@iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-On 13/06/2025 03:15, Vivian Wang wrote:
-> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
-> that only superficially resembles some other embedded MACs. SpacemiT
-> refers to them as "EMAC", so let's just call the driver "k1_emac".
-> 
-> This driver is based on "k1x-emac" in the same directory in the vendor's
-> tree [1]. Some debugging tunables have been fixed to vendor-recommended
-> defaults, and PTP support is not included yet.
-> 
-> [1]: https://github.com/spacemit-com/linux-k1x
-> 
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-> ---
->   drivers/net/ethernet/Kconfig            |    1 +
->   drivers/net/ethernet/Makefile           |    1 +
->   drivers/net/ethernet/spacemit/Kconfig   |   29 +
->   drivers/net/ethernet/spacemit/Makefile  |    6 +
->   drivers/net/ethernet/spacemit/k1_emac.c | 2059 +++++++++++++++++++++++++++++++
->   drivers/net/ethernet/spacemit/k1_emac.h |  416 +++++++
->   6 files changed, 2512 insertions(+)
+Enable the SpacemiT P1, which is an I2C-controlled PMIC.  Initially we
+only the regulators will be supported.
 
-[...]
+Signed-off-by: Alex Elder <elder@riscstar.com>
+---
+ .../devicetree/bindings/mfd/spacemit,p1.yaml  | 86 +++++++++++++++++++
+ 1 file changed, 86 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
 
-> +
-> +static int emac_init_hw(struct emac_priv *priv)
-> +{
-> +	u32 val = 0;
-> +
-> +	regmap_set_bits(priv->regmap_apmu,
-> +			priv->regmap_apmu_offset + APMU_EMAC_CTRL_REG,
-> +			AXI_SINGLE_ID);
-> +
-> +	/* Disable transmit and receive units */
-> +	emac_wr(priv, MAC_RECEIVE_CONTROL, 0x0);
-> +	emac_wr(priv, MAC_TRANSMIT_CONTROL, 0x0);
-> +
-> +	/* Enable mac address 1 filtering */
-> +	emac_wr(priv, MAC_ADDRESS_CONTROL, MREGBIT_MAC_ADDRESS1_ENABLE);
-> +
-> +	/* Zero initialize the multicast hash table */
-> +	emac_wr(priv, MAC_MULTICAST_HASH_TABLE1, 0x0);
-> +	emac_wr(priv, MAC_MULTICAST_HASH_TABLE2, 0x0);
-> +	emac_wr(priv, MAC_MULTICAST_HASH_TABLE3, 0x0);
-> +	emac_wr(priv, MAC_MULTICAST_HASH_TABLE4, 0x0);
-> +
-> +	/* Configure Thresholds */
-> +	emac_wr(priv, MAC_TRANSMIT_FIFO_ALMOST_FULL, DEFAULT_TX_ALMOST_FULL);
-> +	emac_wr(priv, MAC_TRANSMIT_PACKET_START_THRESHOLD, DEFAULT_TX_THRESHOLD);
-> +	emac_wr(priv, MAC_RECEIVE_PACKET_START_THRESHOLD, DEFAULT_RX_THRESHOLD);
-> +
-> +	/* RX IRQ mitigation */
-> +	val = EMAC_RX_FRAMES & MREGBIT_RECEIVE_IRQ_FRAME_COUNTER_MASK;
-> +	val |= (EMAC_RX_COAL_TIMEOUT
-> +		<< MREGBIT_RECEIVE_IRQ_TIMEOUT_COUNTER_SHIFT) &
-> +	       MREGBIT_RECEIVE_IRQ_TIMEOUT_COUNTER_MASK;
-> +
-> +	val |= MREGBIT_RECEIVE_IRQ_MITIGATION_ENABLE;
-> +	emac_wr(priv, DMA_RECEIVE_IRQ_MITIGATION_CTRL, val);
-> +
-> +	/* Disable and reset DMA */
-> +	emac_wr(priv, DMA_CONTROL, 0x0);
-> +
-> +	emac_wr(priv, DMA_CONFIGURATION, MREGBIT_SOFTWARE_RESET);
-> +	usleep_range(9000, 10000);
-> +	emac_wr(priv, DMA_CONFIGURATION, 0x0);
-> +	usleep_range(9000, 10000);
-> +
-> +	val |= MREGBIT_STRICT_BURST;
-> +	val |= MREGBIT_DMA_64BIT_MODE;
-> +	val |= DEFAULT_DMA_BURST;
-
-        val here will have bits of MREGBIT_RECEIVE_IRQ_FRAME_COUNTER_MASK
-        and MREGBIT_RECEIVE_IRQ_TIMEOUT_COUNTER_MASK set. Not sure if
-        it's intended
-
-> +
-> +	emac_wr(priv, DMA_CONFIGURATION, val);
-> +
-> +	return 0;
-> +}
-> +
-> +static void emac_set_mac_addr(struct emac_priv *priv, const unsigned char *addr)
-> +{
-> +	emac_wr(priv, MAC_ADDRESS1_HIGH, ((addr[1] << 8) | addr[0]));
-> +	emac_wr(priv, MAC_ADDRESS1_MED, ((addr[3] << 8) | addr[2]));
-> +	emac_wr(priv, MAC_ADDRESS1_LOW, ((addr[5] << 8) | addr[4]));
-> +}
-> +
-> +static void emac_dma_start_transmit(struct emac_priv *priv)
-> +{
-> +	emac_wr(priv, DMA_TRANSMIT_POLL_DEMAND, 0xFF);
-> +}
-> +
-> +static void emac_enable_interrupt(struct emac_priv *priv)
-> +{
-> +	u32 val;
-> +
-> +	val = emac_rd(priv, DMA_INTERRUPT_ENABLE);
-> +	val |= MREGBIT_TRANSMIT_TRANSFER_DONE_INTR_ENABLE;
-> +	val |= MREGBIT_RECEIVE_TRANSFER_DONE_INTR_ENABLE;
-> +	emac_wr(priv, DMA_INTERRUPT_ENABLE, val);
-> +}
-> +
-> +static void emac_disable_interrupt(struct emac_priv *priv)
-> +{
-> +	u32 val;
-> +
-> +	val = emac_rd(priv, DMA_INTERRUPT_ENABLE);
-> +	val &= ~MREGBIT_TRANSMIT_TRANSFER_DONE_INTR_ENABLE;
-> +	val &= ~MREGBIT_RECEIVE_TRANSFER_DONE_INTR_ENABLE;
-> +	emac_wr(priv, DMA_INTERRUPT_ENABLE, val);
-> +}
-> +
-> +static inline u32 emac_tx_avail(struct emac_priv *priv)
-
-please, avoid "static inline" in .c files, let the compiler to choose
-what to inline.
-
-> +{
-> +	struct emac_desc_ring *tx_ring = &priv->tx_ring;
-> +	u32 avail;
-> +
-> +	if (tx_ring->tail > tx_ring->head)
-> +		avail = tx_ring->tail - tx_ring->head - 1;
-> +	else
-> +		avail = tx_ring->total_cnt - tx_ring->head + tx_ring->tail - 1;
-> +
-> +	return avail;
-> +}
-> +
-> +static void emac_tx_coal_timer_resched(struct emac_priv *priv)
-> +{
-> +	mod_timer(&priv->txtimer,
-> +		  jiffies + usecs_to_jiffies(priv->tx_coal_timeout));
-> +}
-> +
-> +static void emac_tx_coal_timer(struct timer_list *t)
-> +{
-> +	struct emac_priv *priv = timer_container_of(priv, t, txtimer);
-> +
-> +	napi_schedule(&priv->napi);
-> +}
-> +
-> +static bool emac_tx_coal_should_interrupt(struct emac_priv *priv, u32 pkt_num)
-> +{
-> +	bool should_interrupt;
-> +
-> +	/* Manage TX mitigation */
-> +	priv->tx_count_frames += pkt_num;
-> +	if (likely(priv->tx_coal_frames > priv->tx_count_frames)) {
-> +		emac_tx_coal_timer_resched(priv);
-> +		should_interrupt = false;
-> +	} else {
-> +		priv->tx_count_frames = 0;
-> +		should_interrupt = true;
-> +	}
-> +
-> +	return should_interrupt;
-> +}
-> +
-> +static void emac_sw_init(struct emac_priv *priv)
-> +{
-> +	priv->dma_buf_sz = EMAC_DEFAULT_BUFSIZE;
-> +
-> +	priv->tx_ring.total_cnt = DEFAULT_TX_RING_NUM;
-> +	priv->rx_ring.total_cnt = DEFAULT_RX_RING_NUM;
-> +
-> +	spin_lock_init(&priv->stats_lock);
-> +
-> +	INIT_WORK(&priv->tx_timeout_task, emac_tx_timeout_task);
-> +
-> +	priv->tx_coal_frames = EMAC_TX_FRAMES;
-> +	priv->tx_coal_timeout = EMAC_TX_COAL_TIMEOUT;
-> +
-> +	timer_setup(&priv->txtimer, emac_tx_coal_timer, 0);
-> +}
-> +
-> +static int emac_ioctl(struct net_device *ndev, struct ifreq *rq, int cmd)
-> +{
-> +	int ret = -EOPNOTSUPP;
-> +
-> +	if (!netif_running(ndev))
-> +		return -EINVAL;
-> +
-> +	switch (cmd) {
-> +	case SIOCGMIIPHY:
-> +	case SIOCGMIIREG:
-> +	case SIOCSMIIREG:
-> +		if (!ndev->phydev)
-> +			return -EINVAL;
-> +		ret = phy_mii_ioctl(ndev->phydev, rq, cmd);
-> +		break;
-> +	default:
-> +		break;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static irqreturn_t emac_interrupt_handler(int irq, void *dev_id)
-> +{
-> +	struct net_device *ndev = (struct net_device *)dev_id;
-> +	struct emac_priv *priv = netdev_priv(ndev);
-> +	bool should_schedule = false;
-> +	u32 status;
-> +	u32 clr = 0;
-> +
-> +	if (test_bit(EMAC_DOWN, &priv->state))
-> +		return IRQ_HANDLED;
-> +
-> +	status = emac_rd(priv, DMA_STATUS_IRQ);
-> +
-> +	if (status & MREGBIT_TRANSMIT_TRANSFER_DONE_IRQ) {
-> +		clr |= MREGBIT_TRANSMIT_TRANSFER_DONE_IRQ;
-> +		should_schedule = true;
-> +	}
-> +
-> +	if (status & MREGBIT_TRANSMIT_DES_UNAVAILABLE_IRQ)
-> +		clr |= MREGBIT_TRANSMIT_DES_UNAVAILABLE_IRQ;
-> +
-> +	if (status & MREGBIT_TRANSMIT_DMA_STOPPED_IRQ)
-> +		clr |= MREGBIT_TRANSMIT_DMA_STOPPED_IRQ;
-> +
-> +	if (status & MREGBIT_RECEIVE_TRANSFER_DONE_IRQ) {
-> +		clr |= MREGBIT_RECEIVE_TRANSFER_DONE_IRQ;
-> +		should_schedule = true;
-> +	}
-> +
-> +	if (status & MREGBIT_RECEIVE_DES_UNAVAILABLE_IRQ)
-> +		clr |= MREGBIT_RECEIVE_DES_UNAVAILABLE_IRQ;
-> +
-> +	if (status & MREGBIT_RECEIVE_DMA_STOPPED_IRQ)
-> +		clr |= MREGBIT_RECEIVE_DMA_STOPPED_IRQ;
-> +
-> +	if (status & MREGBIT_RECEIVE_MISSED_FRAME_IRQ)
-> +		clr |= MREGBIT_RECEIVE_MISSED_FRAME_IRQ;
-> +
-> +	if (should_schedule) {
-> +		if (napi_schedule_prep(&priv->napi)) {
-> +			emac_disable_interrupt(priv);
-> +			__napi_schedule_irqoff(&priv->napi);
-> +		}
-> +	}
-> +
-> +	emac_wr(priv, DMA_STATUS_IRQ, clr);
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static void emac_configure_tx(struct emac_priv *priv)
-> +{
-> +	u32 val;
-> +
-> +	/* Set base address */
-> +	val = (u32)(priv->tx_ring.desc_dma_addr);
-> +
-> +	emac_wr(priv, DMA_TRANSMIT_BASE_ADDRESS, val);
-> +
-> +	/* TX Inter-frame gap value, enable transmit */
-> +	val = emac_rd(priv, MAC_TRANSMIT_CONTROL);
-> +	val &= ~MREGBIT_IFG_LEN;
-> +	val |= MREGBIT_TRANSMIT_ENABLE;
-> +	val |= MREGBIT_TRANSMIT_AUTO_RETRY;
-> +	emac_wr(priv, MAC_TRANSMIT_CONTROL, val);
-> +
-> +	emac_wr(priv, DMA_TRANSMIT_AUTO_POLL_COUNTER, 0x0);
-> +
-> +	/* Start TX DMA */
-> +	val = emac_rd(priv, DMA_CONTROL);
-> +	val |= MREGBIT_START_STOP_TRANSMIT_DMA;
-> +	emac_wr(priv, DMA_CONTROL, val);
-> +}
-> +
-> +static void emac_configure_rx(struct emac_priv *priv)
-> +{
-> +	u32 val;
-> +
-> +	/* Set base address */
-> +	val = (u32)(priv->rx_ring.desc_dma_addr);
-> +	emac_wr(priv, DMA_RECEIVE_BASE_ADDRESS, val);
-> +
-> +	/* Enable receive */
-> +	val = emac_rd(priv, MAC_RECEIVE_CONTROL);
-> +	val |= MREGBIT_RECEIVE_ENABLE;
-> +	val |= MREGBIT_STORE_FORWARD;
-> +	emac_wr(priv, MAC_RECEIVE_CONTROL, val);
-> +
-> +	/* Start RX DMA */
-> +	val = emac_rd(priv, DMA_CONTROL);
-> +	val |= MREGBIT_START_STOP_RECEIVE_DMA;
-> +	emac_wr(priv, DMA_CONTROL, val);
-> +}
-> +
-> +static void emac_free_tx_buf(struct emac_priv *priv, int i)
-> +{
-> +	struct emac_tx_desc_buffer *tx_buf;
-> +	struct emac_desc_ring *tx_ring;
-> +	struct desc_buf *buf;
-> +	int j;
-> +
-> +	tx_ring = &priv->tx_ring;
-> +	tx_buf = &tx_ring->tx_desc_buf[i];
-> +
-> +	for (j = 0; j < 2; j++) {
-> +		buf = &tx_buf->buf[j];
-> +		if (buf->dma_addr) {
-> +			if (buf->map_as_page)
-> +				dma_unmap_page(&priv->pdev->dev, buf->dma_addr,
-> +					       buf->dma_len, DMA_TO_DEVICE);
-> +			else
-> +				dma_unmap_single(&priv->pdev->dev,
-> +						 buf->dma_addr, buf->dma_len,
-> +						 DMA_TO_DEVICE);
-> +
-> +			buf->dma_addr = 0;
-> +			buf->map_as_page = false;
-> +			buf->buff_addr = NULL;
-> +		}
-> +	}
-> +
-> +	if (tx_buf->skb) {
-> +		dev_kfree_skb_any(tx_buf->skb);
-> +		tx_buf->skb = NULL;
-> +	}
-> +}
-> +
-> +static void emac_clean_tx_desc_ring(struct emac_priv *priv)
-> +{
-> +	struct emac_desc_ring *tx_ring = &priv->tx_ring;
-> +	u32 i;
-> +
-> +	/* Free all the TX ring skbs */
-> +	for (i = 0; i < tx_ring->total_cnt; i++)
-> +		emac_free_tx_buf(priv, i);
-> +
-> +	tx_ring->head = 0;
-> +	tx_ring->tail = 0;
-> +}
-> +
-> +static void emac_clean_rx_desc_ring(struct emac_priv *priv)
-> +{
-> +	struct emac_rx_desc_buffer *rx_buf;
-> +	struct emac_desc_ring *rx_ring;
-> +	u32 i;
-> +
-> +	rx_ring = &priv->rx_ring;
-> +
-> +	/* Free all the RX ring skbs */
-> +	for (i = 0; i < rx_ring->total_cnt; i++) {
-> +		rx_buf = &rx_ring->rx_desc_buf[i];
-> +		if (rx_buf->skb) {
-> +			dma_unmap_single(&priv->pdev->dev, rx_buf->dma_addr,
-> +					 rx_buf->dma_len, DMA_FROM_DEVICE);
-> +
-> +			dev_kfree_skb(rx_buf->skb);
-> +			rx_buf->skb = NULL;
-> +		}
-> +	}
-> +
-> +	rx_ring->tail = 0;
-> +	rx_ring->head = 0;
-> +}
-> +
-> +static int emac_up(struct emac_priv *priv)
-> +{
-> +	struct platform_device *pdev = priv->pdev;
-> +	struct net_device *ndev = priv->ndev;
-> +	int ret;
-> +
-> +#ifdef CONFIG_PM_SLEEP
-> +	pm_runtime_get_sync(&pdev->dev);
-> +#endif
-
-Not sure why do you depend on CONFIG_PM_SLEEP, but 
-pm_runtime_get_sync/pm_runtime_put_sync are available with and without 
-CONFIG_PM, no need
-for ifdef
-
-> +
-> +	ret = emac_phy_connect(ndev);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "emac_phy_connect failed\n");
-> +		goto err;
-> +	}
-> +
-> +	emac_init_hw(priv);
-> +
-> +	emac_set_mac_addr(priv, ndev->dev_addr);
-> +	emac_configure_tx(priv);
-> +	emac_configure_rx(priv);
-> +
-> +	emac_alloc_rx_desc_buffers(priv);
-> +
-> +	if (ndev->phydev)
-> +		phy_start(ndev->phydev);
-> +
-> +	ret = request_irq(priv->irq, emac_interrupt_handler, IRQF_SHARED,
-> +			  ndev->name, ndev);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "request_irq failed\n");
-> +		goto request_irq_failed;
-> +	}
-> +
-> +	/* Don't enable MAC interrupts */
-> +	emac_wr(priv, MAC_INTERRUPT_ENABLE, 0x0);
-> +
-> +	/* Enable DMA interrupts */
-> +	emac_wr(priv, DMA_INTERRUPT_ENABLE,
-> +		MREGBIT_TRANSMIT_TRANSFER_DONE_INTR_ENABLE |
-> +			MREGBIT_TRANSMIT_DMA_STOPPED_INTR_ENABLE |
-> +			MREGBIT_RECEIVE_TRANSFER_DONE_INTR_ENABLE |
-> +			MREGBIT_RECEIVE_DMA_STOPPED_INTR_ENABLE |
-> +			MREGBIT_RECEIVE_MISSED_FRAME_INTR_ENABLE);
-> +
-> +	napi_enable(&priv->napi);
-> +
-> +	netif_start_queue(ndev);
-> +	return 0;
-> +
-> +request_irq_failed:
-> +	emac_reset_hw(priv);
-> +	if (ndev->phydev) {
-> +		phy_stop(ndev->phydev);
-> +		phy_disconnect(ndev->phydev);
-> +	}
-> +err:
-> +#ifdef CONFIG_PM_SLEEP
-> +	pm_runtime_put_sync(&pdev->dev);
-> +#endif
-> +	return ret;
-> +}
-> +
-> +static int emac_down(struct emac_priv *priv)
-> +{
-> +	struct platform_device *pdev = priv->pdev;
-> +	struct net_device *ndev = priv->ndev;
-> +
-> +	netif_stop_queue(ndev);
-> +
-> +	if (ndev->phydev) {
-> +		phy_stop(ndev->phydev);
-> +		phy_disconnect(ndev->phydev);
-> +	}
-> +
-> +	priv->link = false;
-> +	priv->duplex = DUPLEX_UNKNOWN;
-> +	priv->speed = SPEED_UNKNOWN;
-> +
-> +	emac_wr(priv, MAC_INTERRUPT_ENABLE, 0x0);
-> +	emac_wr(priv, DMA_INTERRUPT_ENABLE, 0x0);
-> +
-> +	free_irq(priv->irq, ndev);
-> +
-> +	napi_disable(&priv->napi);
-> +
-> +	emac_reset_hw(priv);
-> +	netif_carrier_off(ndev);
-> +
-> +#ifdef CONFIG_PM_SLEEP
-> +	pm_runtime_put_sync(&pdev->dev);
-> +#endif
-
-ditto
-
-> +	return 0;
-> +}
-> +
-
-[...]
+diff --git a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+new file mode 100644
+index 0000000000000..5cc34d4934b54
+--- /dev/null
++++ b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+@@ -0,0 +1,86 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/mfd/spacemit,p1.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: SpacemiT P1 Power Management Integrated Circuit
++
++maintainers:
++  - Troy Mitchell <troymitchell988@gmail.com>
++
++description:
++  P1 is an I2C-controlled PMIC produced by SpacemiT.  It implements six
++  constant-on-time buck converters and twelve low-dropout regulators.
++  It also contains a load switch, watchdog timer, real-time clock, eight
++  12-bit ADC channels, and six GPIOs.  Additional details are available
++  in the "Power Stone/P1" section at the following link.
++    https://developer.spacemit.com/documentation
++
++properties:
++  compatible:
++    const: spacemit,p1
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  vin-supply:
++    description: Input supply phandle.
++
++  regulators:
++    type: object
++
++    patternProperties:
++      "^(buck[1-6]|aldo[1-4]|dldo[1-7])$":
++        type: object
++        $ref: /schemas/regulator/regulator.yaml#
++        unevaluatedProperties: false
++
++    unevaluatedProperties: false
++
++required:
++  - compatible
++  - reg
++  - interrupts
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    i2c {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        pmic@41 {
++            compatible = "spacemit,p1";
++            reg = <0x41>;
++            interrupts = <64>;
++
++            regulators {
++                buck1 {
++                    regulator-name = "buck1";
++                    regulator-min-microvolt = <500000>;
++                    regulator-max-microvolt = <3450000>;
++                    regulator-ramp-delay = <5000>;
++                    regulator-always-on;
++                };
++
++                aldo1 {
++                    regulator-name = "aldo1";
++                    regulator-min-microvolt = <500000>;
++                    regulator-max-microvolt = <3400000>;
++                    regulator-boot-on;
++                };
++
++                dldo1 {
++                    regulator-name = "dldo1";
++                    regulator-min-microvolt = <500000>;
++                    regulator-max-microvolt = <3400000>;
++                    regulator-boot-on;
++                };
++            };
++        };
++    };
+-- 
+2.45.2
 
