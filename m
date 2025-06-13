@@ -1,144 +1,166 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8339C2F430F
-	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 02:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24CF610C
+	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 02:19:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749780971; cv=none; b=crIb5P04sKVfatbPkwBhD8HKKsZvV/3CAdgN3JbvlmUurGK2AYykMceuwnYB1Ilv2P3MxjzDJ47x1AJgJNQ2gzECNTXlPPysFii0PiyTjw5ql18EBXNIG7LV5xeDFGuQ2Hdi29STb6I393i3t1rcUaf4JRHySlSLQ25ij2Ddww8=
+	t=1749781198; cv=none; b=idhKHTQh1WAynZxATjWVNtCKneIPMlwxuOj3l9HlYMmzEeGQ6mSOuQ+FYRYiGxu569I0MQi76pizmnX3VOylIdv7UvaNRxzikC5O61PPvtD2Te+Xt91HG4qFvwlqHdJZdXIeWO+4N50FIk5TZCcrCBsEs14y2QAiU45inJVj+PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749780971; c=relaxed/simple;
-	bh=bq8ZvLLY3sBFobFVReFNoN1iLHim74L7lvCBMNa9U60=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FkgWpeAgssMo0VjtxrPOwq3xaBJsvqRrS62LfW2b1dWdGfcU5poZl16Mph4f+60m7QJ1RQdyQokQtHWOn9oFl5z63t5lOnt6w1lCSLYDiKu+ijPYRCutYIU00txhi++OcMUrf3p0iMWYI3ViRdsDa3EAD3yqS83d00ByT2zw2uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=iQUHwdZV; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="iQUHwdZV"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6faff792f9bso15782956d6.1
-        for <spacemit@lists.linux.dev>; Thu, 12 Jun 2025 19:16:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1749780967; x=1750385767; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hkp2SwT2RePaCxrYCauyGX41s3IGrIg/X27XfJMOji4=;
-        b=iQUHwdZVwsEgiRwcu+F5xU0HLFJgaGWmjUIVolLXFhAB55bnZFlWeWY/OY8ob+93HW
-         73doQ5qUa7LHNqEqCzwYa0NiLTMcBIxbPXX5JUoffkxwEL0ZQcQ8KLnPbTCju3yVvwGj
-         /VNaeRfxw+eYKpx1xPfA0JuOxmEiFNc06TKzMbrERBVnCpqCL+cUFGrhlevpzrT7wwXg
-         pH6h185lJVrCP+widSKnqVX0568gJhtnCRo0UDS9e6svIrx4t6QP3T3pEp7Vblr1pEwq
-         lpCDd4glnSoSZvMc22c39OYfZAhAWBKw65ODcd8or+XVyhrgrJpj0zkfopBkhNq1LhTE
-         kDxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749780967; x=1750385767;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hkp2SwT2RePaCxrYCauyGX41s3IGrIg/X27XfJMOji4=;
-        b=uG78gCYCWHrpCAo1lv30z+t/4NiU8O1X9rMjyX8zLyLAliwH2ASXNsDue8aOwkUXsW
-         hdR0xOLeD2RBqdNZk1i3i2aY8Ru4hFIop1MugAYEQt3jJBzkRENnPpQPp1C/SO3Ak/S+
-         EYy8TQ75QIEjN2kX3PwRL3lY1mFRAc+wmyP/5gvd65tcTV7cAWNHi8A+ODvkX4H7eOyu
-         IrPaLYCCB+aRAHH6SGGOCRQKKQ4SphkR/0nvQJQJPsLkJJUlu3onwRJkdj1abgVCauJZ
-         qa2GMwB+AQX9Fy+VX8JTvRI4GOMlZjcyQZ1coM7WGvn8gQxaDmGpllOHOABKm8n/KYtF
-         QP9g==
-X-Forwarded-Encrypted: i=1; AJvYcCXnKl9QXPeqfFBaLoYe7f5DuGxkWMmS8raNPLXZzJ+H72GQHX5hjYiYaFP31nrHe93QF6Uciaw85w==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyOvSBBf7ChYL0XbeCYouDQQB1Ffl75hYBhpAEQ8+1W3Y2on24i
-	cauzPLQYvu5QIxljfFtzVi+aG9+Nhpn8Oxebqp0cNlZu2DB5+xY9h8RgV/RiNSF1eLU=
-X-Gm-Gg: ASbGncv9nMBLClgOhamqkHqnLx173FUjcK3VWWMg3DECSZbSuhcHTD181D3bZs0mFUC
-	psDNL8aVJn1s19wnMezmdr0I7gBxA//nDrKp1gCdDd8+o7Wa/38LuRX0e1JaGpWyDbxONSxgWK8
-	b38mke8ZOVd1Jj4eNWQqljoMZ0bonvpqh5RYUBwD4oG6eJpOnp4qr0+JGX8upYRhK5fgNqVvAZh
-	/cMRyoQYpvMK8YhLMOs+beipd9XXYCFy7HRwyqUXL+U1hZzlIbmU5VJgl7jGPekrsSORB2BWGs2
-	5b3PbNjdH3FACT0mUQq2qwGN7I6gBXnQqOTPVLWbse8fxygl9Cu7UaHzbXC+JSN5U+NsLXxeUbr
-	2Ts2GykGb/VFCg9AX5Zmlr/g9qQ==
-X-Google-Smtp-Source: AGHT+IEPrCYVuYaf2snbGSL6nYTSnkJ5v4bgC7WUqyASAClJfsf2Fn+WgQFF908p7KrLOpj+L5tcig==
-X-Received: by 2002:a05:6214:230a:b0:6e8:fbb7:6764 with SMTP id 6a1803df08f44-6fb3e629659mr19306186d6.45.1749780967455;
-        Thu, 12 Jun 2025 19:16:07 -0700 (PDT)
-Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fb35c895f2sm16333826d6.116.2025.06.12.19.16.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jun 2025 19:16:07 -0700 (PDT)
-Message-ID: <d7f7dc4c-5d2a-4f63-9451-5e4d2e53cf1b@riscstar.com>
-Date: Thu, 12 Jun 2025 21:16:05 -0500
+	s=arc-20240116; t=1749781198; c=relaxed/simple;
+	bh=UgyT9j3cebbq/AEom9+OrJNg8D4y6n9rhoReUWyeVFU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=KGbwRaE8cf61PJjpqykqNtQja8A8mfVBrh8UzS/dhjF6TVLweAQxSs/T+Lh/+NB8t691xkfCI0BkBZ1BQFezWkx+6PYV8cXNJhoIoRfqJwmSVNlV7Pf+4x2CrYFRrlgiyWNkuc2W0QN8FhquKaIuzexjjan2X1YLPmuZEN2xiP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [210.73.43.2])
+	by APP-01 (Coremail) with SMTP id qwCowABXB9aviktoIvMtBg--.44541S3;
+	Fri, 13 Jun 2025 10:19:28 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Fri, 13 Jun 2025 10:15:07 +0800
+Subject: [PATCH net-next 1/4] dt-bindings: net: Add support for SpacemiT K1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i2c: k1: check for transfer error
-To: Troy Mitchell <troymitchell988@gmail.com>, andi.shyti@kernel.org,
- dlan@gentoo.org
-Cc: linux-i2c@vger.kernel.org, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- Troy Mitchell <troy.mitchell@linux.dev>
-References: <20250612225627.1106735-1-elder@riscstar.com>
- <aEuI9-QWCv6CRUyX@troy-wujie14pro-arch>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <aEuI9-QWCv6CRUyX@troy-wujie14pro-arch>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250613-net-k1-emac-v1-1-cc6f9e510667@iscas.ac.cn>
+References: <20250613-net-k1-emac-v1-0-cc6f9e510667@iscas.ac.cn>
+In-Reply-To: <20250613-net-k1-emac-v1-0-cc6f9e510667@iscas.ac.cn>
+To: Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Richard Cochran <richardcochran@gmail.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Russell King <linux@armlinux.org.uk>, Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Vivian Wang <uwu@dram.page>, netdev@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-CM-TRANSID:qwCowABXB9aviktoIvMtBg--.44541S3
+X-Coremail-Antispam: 1UD129KBjvJXoW7Cry3WF45WFyfJw1UAF1DJrb_yoW8KF47pF
+	Z3Crs3Gr48KF13Jw4fXFykuF1fGws5AF1DGwsFvw13tas5KF90qr4akryfX3WUurW8Ja43
+	XF1DAryDKr1DAaUanT9S1TB71UUUUj7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUQE14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
+	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJw
+	A2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26F4UJVW0
+	owAaw2AFwI0_JF0_Jw1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I
+	8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCF
+	s4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFI
+	xGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67AK6r4UMxAI
+	w28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr
+	4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxG
+	rwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr
+	1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvE
+	x4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0pRleHhUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On 6/12/25 9:12 PM, Troy Mitchell wrote:
-> On Thu, Jun 12, 2025 at 05:56:25PM -0500, Alex Elder wrote:
->> If spacemit_i2c_xfer_msg() times out waiting for a message transfer to
->> complete, or if the hardware reports an error, it returns a negative
->> error code (-ETIMEDOUT, -EAGAIN, -ENXIO. or -EIO).
->>
->> The sole caller of spacemit_i2c_xfer_msg() is spacemit_i2c_xfer(),
->> which is the i2c_algorithm->xfer callback function.  It currently
->> does not save the value returned by spacemit_i2c_xfer_msg().
->>
->> The result is that transfer errors go unreported, and a caller
->> has no indication anything is wrong.
->>
->> When this code was out for review, the return value *was* checked
->> in early versions.  But for some reason, that assignment got dropped
->> between versions 5 and 6 of the series, perhaps related to reworking
->> the code to merge spacemit_i2c_xfer_core() into spacemit_i2c_xfer().
->>
->> Simply assigning the value returned to "ret" fixes the problem.
->>
->> Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> Reviewed-by: Troy Mitchell <troymitchell988@gmail.com>
->> ---
->> v2: Added Troy's Reviewed-by
-> Hi Alex, you added the changelog, but the subject line
-> doesn't have the "V2" suffix. Is this a mistake?
+The Ethernet MACs on SpacemiT K1 appears to be a custom design. SpacemiT
+refers to them as "EMAC", so let's just call them "spacemit,k1-emac".
 
-Yes it's a mistake.  I contemplated sending an immediate
-"oops, this was v2!!!" but opted to wait until someone
-like you asked about it.
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+---
+ .../devicetree/bindings/net/spacemit,k1-emac.yaml  | 81 ++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
-This *is* version 2, and I made the updates I describe.
+diff --git a/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml b/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..500a3e1daa230ea3a1fad30d8ea56a7822fccb3d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml
+@@ -0,0 +1,81 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/spacemit,k1-emac.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: SpacemiT K1 Ethernet MAC
++
++allOf:
++  - $ref: ethernet-controller.yaml#
++
++maintainers:
++  - Vivian Wang <wangruikang@iscas.ac.cn>
++
++properties:
++  compatible:
++    const: spacemit,k1-emac
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  mdio-bus:
++    $ref: mdio.yaml#
++    unevaluatedProperties: false
++
++  resets:
++    maxItems: 1
++
++  spacemit,apmu:
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    items:
++      - items:
++          - description: phandle to syscon that controls this MAC
++          - description: offset of control registers
++    description:
++      A phandle to syscon with byte offset to control registers for this MAC
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - interrupts
++  - resets
++  - spacemit,apmu
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/spacemit,k1-syscon.h>
++
++    ethernet@cac80000 {
++        compatible = "spacemit,k1-emac";
++        reg = <0xcac80000 0x00000420>;
++        clocks = <&syscon_apmu CLK_EMAC0_BUS>;
++        interrupts = <131>;
++        mac-address = [ 00 00 00 00 00 00 ];
++        phy-handle = <&rgmii0>;
++        phy-mode = "rgmii-id";
++        pinctrl-names = "default";
++        pinctrl-0 = <&gmac0_cfg>;
++        resets = <&syscon_apmu RESET_EMAC0>;
++        rx-internal-delay-ps = <0>;
++        tx-internal-delay-ps = <0>;
++        spacemit,apmu = <&syscon_apmu 0x3e4>;
++
++        mdio-bus {
++            #address-cells = <0x1>;
++            #size-cells = <0x0>;
++
++            rgmii0: phy@1 {
++                reg = <0x1>;
++            };
++        };
++    };
 
-					-Alex
-> 
->              - Troy
-> 
->>
->>   drivers/i2c/busses/i2c-k1.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
->> index 5965b4cf6220e..b68a21fff0b56 100644
->> --- a/drivers/i2c/busses/i2c-k1.c
->> +++ b/drivers/i2c/busses/i2c-k1.c
->> @@ -477,7 +477,7 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
->>   
->>   	ret = spacemit_i2c_wait_bus_idle(i2c);
->>   	if (!ret)
->> -		spacemit_i2c_xfer_msg(i2c);
->> +		ret = spacemit_i2c_xfer_msg(i2c);
->>   	else if (ret < 0)
->>   		dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
->>   	else
->>
->> base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
->> -- 
->> 2.45.2
->>
+-- 
+2.49.0
 
