@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917FC2C3266
-	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 09:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3033F54BC6
+	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 13:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749807220; cv=none; b=hD3qR6ac2uubANcCCO5We3/90t8+04XPoj8hT3FRBKD2rP8ZIN/tR5uPCyFdNv45v3/exY6RptrRp/rcGLWG6ex4JiWBXNOu2a/pXh9SJrurejv+JpmAHlIdFIC46sbqW8V9FPGrYf/AHAxg1wICpKAKwPVtDdsN2CZ7pjBYb6Q=
+	t=1749820957; cv=none; b=G5fhxeKatV6u/DGXkzBGedMOf+ebaB0h1D/0IzJG5lNNy2HgpCdc1UuePasGZ1wbdxsLaSTtsQ1tZl8x/Hx4xVNCJ0xJsXuP0WCFsH7/7uNmB0Se41MWM/RtyBKIbMpATvcBI0lmlBeW75YNZXARdm1Vj5Gg50NQESP9RnjrRxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749807220; c=relaxed/simple;
-	bh=fDgtgb5GEdz7WxNqfO/RgAmZUe+TYXa1200aBCMzWPY=;
+	s=arc-20240116; t=1749820957; c=relaxed/simple;
+	bh=ZStFIAdXWvcgH+i6/QJnkTysUtDb1IVoiav26flpgDs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZhcD72a/HXQdtPdWzFvG3sIKVU5lLTmLMyOo+FjkcI7Sz5Zd+KEUE0vmkT0QW8pbo1lnFJfk4UA/FmSXvwTtH49OvqucOPn+ooZ1vSTWitLdqyZ60vVuuhZDQR90vC/gZbEf1NznuWLpro5djjDwG1rQ/zDRxiCUmy/MSBF3p0w=
+	 Content-Type:Content-Disposition:In-Reply-To; b=DIbVbCIYMuqRZpA1BEQ7PyYO0QRIOgJLwb39/mapN+fJKGVS45KFdqTZy/vRpkM8HxGnGto8JkjCAZ50zXZ00mZvJKGLS4oVZtVdpTkrFnQrKXRcpbHW98UG+VTI3brdYJR+Bc9Cj13hsJW0F7AcB5Obse/KYN5G2c2Tjxr5yIg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,19 +19,28 @@ Received: from localhost (unknown [116.232.48.232])
 	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 6409A342371;
-	Fri, 13 Jun 2025 09:33:37 +0000 (UTC)
-Date: Fri, 13 Jun 2025 09:33:33 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id A915E3422ED;
+	Fri, 13 Jun 2025 13:22:33 +0000 (UTC)
+Date: Fri, 13 Jun 2025 13:22:27 +0000
 From: Yixun Lan <dlan@gentoo.org>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Alex Elder <elder@riscstar.com>, Vivian Wang <uwu@dram.page>,
-	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] gpio: spacemit: Add missing MODULE_DEVICE_TABLE
-Message-ID: <20250613093333-GYA135173@gentoo>
-References: <20250613-k1-gpio-of-table-v1-1-9015da8fdfdb@iscas.ac.cn>
+To: Vivian Wang <uwu@dram.page>
+Cc: Guodong Xu <guodong@riscstar.com>, vkoul@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, drew@pdp7.com,
+	emil.renner.berthing@canonical.com, inochiama@gmail.com,
+	geert+renesas@glider.be, tglx@linutronix.de,
+	hal.feng@starfivetech.com, joel@jms.id.au, duje.mihanovic@skole.hr,
+	Ze Huang <huangze@whut.edu.cn>, elder@riscstar.com,
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH 5/8] riscv: dts: spacemit: Add dma bus and PDMA node for
+ K1 SoC
+Message-ID: <20250613132227-GYB135173@gentoo>
+References: <20250611125723.181711-1-guodong@riscstar.com>
+ <20250611125723.181711-6-guodong@riscstar.com>
+ <2b17769e-2620-4f22-9ea5-f15d4adcb27b@dram.page>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -40,49 +49,63 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250613-k1-gpio-of-table-v1-1-9015da8fdfdb@iscas.ac.cn>
+In-Reply-To: <2b17769e-2620-4f22-9ea5-f15d4adcb27b@dram.page>
 
-Hi Vivian,
+Hi Vivian, Guodong,
 
-On 17:25 Fri 13 Jun     , Vivian Wang wrote:
-> The gpio-spacemit-k1 driver can be compiled as a module. Add missing
-> MODULE_DEVICE_TABLE so it can be matched by modalias and automatically
-> loaded by udev.
+On 11:06 Fri 13 Jun     , Vivian Wang wrote:
+> Hi Guodong,
 > 
-> Fixes: d00553240ef8 ("gpio: spacemit: add support for K1 SoC")
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-LGTM
+> On 6/11/25 20:57, Guodong Xu wrote:
+> > <snip>
+> >
+> > -			status = "disabled";
+> > +		dma_bus: bus@4 {
+> > +			compatible = "simple-bus";
+> > +			#address-cells = <2>;
+> > +			#size-cells = <2>;
+> > +			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
+> > +				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
+> > +			ranges;
+> >  		};
+> 
+> Can the addition of dma_bus and movement of nodes under it be extracted
+> into a separate patch, and ideally, taken up by Yixun Lan without going
+> through dmaengine? Not specifically "dram_range4", but all of these
+> translations affects many devices on the SoC, including ethernet and
+> USB3. See:
+Right, we've had an offline discussion, and agreed on this - have *bus
+patches separated and let other patches depend on it.
 
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
+But seems Guodong failed to do this or just sent out an old version
+of the PDMA patch?
 
-> ---
-> This patch is available at:
 > 
-> https://github.com/dramforever/linux/tree/k1/gpio-of-table/v1
-> ---
->  drivers/gpio/gpio-spacemit-k1.c | 1 +
->  1 file changed, 1 insertion(+)
+> https://lore.kernel.org/all/20250526-b4-k1-dwc3-v3-v4-2-63e4e525e5cb@whut.edu.cn/
+> https://lore.kernel.org/all/20250613-net-k1-emac-v1-0-cc6f9e510667@iscas.ac.cn/
 > 
-> diff --git a/drivers/gpio/gpio-spacemit-k1.c b/drivers/gpio/gpio-spacemit-k1.c
-> index f027066365ff8741f99da076d1e7b6339a6c1a22..3cc75c701ec40194e602b80d3f96f23204ce3b4d 100644
-> --- a/drivers/gpio/gpio-spacemit-k1.c
-> +++ b/drivers/gpio/gpio-spacemit-k1.c
-> @@ -278,6 +278,7 @@ static const struct of_device_id spacemit_gpio_dt_ids[] = {
->  	{ .compatible = "spacemit,k1-gpio" },
->  	{ /* sentinel */ }
->  };
-> +MODULE_DEVICE_TABLE(of, spacemit_gpio_dt_ids);
->  
->  static struct platform_driver spacemit_gpio_driver = {
->  	.probe		= spacemit_gpio_probe,
+> (I haven't put eth{0,1} under dma_bus5 because in 6.16-rc1 there is
+> none, but ideally we should fix this.)
 > 
-> ---
-> base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
-> change-id: 20250613-k1-gpio-of-table-222b4b76b453
+> DMA address translation does not depend on PDMA. It would be best if we
+> get all the possible dma-ranges buses handled in one place, instead of
+> everyone moving nodes around.
 > 
-> Best regards,
-> -- 
-> Vivian "dramforever" Wang
+I agree
+
+> @Ze Huang: This affects your "MBUS" changes as well. Please take a look,
+> thanks.
+> 
+> >  
+> >  		gpio: gpio@d4019000 {
+> > @@ -792,3 +693,124 @@ pwm19: pwm@d4022c00 {
+> >  		};
+> >  	};
+> >  };
+> > +
+> > +&dma_bus {
+> >
+> > <snip>
 > 
 
 -- 
