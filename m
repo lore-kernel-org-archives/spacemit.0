@@ -1,112 +1,70 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3033F54BC6
-	for <spacemit@lists.linux.dev>; Fri, 13 Jun 2025 13:22:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4088A4409;
+	Fri, 13 Jun 2025 13:31:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749820957; cv=none; b=G5fhxeKatV6u/DGXkzBGedMOf+ebaB0h1D/0IzJG5lNNy2HgpCdc1UuePasGZ1wbdxsLaSTtsQ1tZl8x/Hx4xVNCJ0xJsXuP0WCFsH7/7uNmB0Se41MWM/RtyBKIbMpATvcBI0lmlBeW75YNZXARdm1Vj5Gg50NQESP9RnjrRxw=
+	t=1749821507; cv=none; b=QpwcGIKa8tqamKZB1NQyLNQoqAjegJBYtfPvHnqtvKTx5fFbzc0UxFddE67gZnOnvCk//XcZCE/kzX08hGz0ClqGjXiPBtMu+T/FRYRMSCJCN5eq6aaipgFmaZjz1sOBUHPRw5KgGOU/v+isCpOI1XknbO9+y+rWTP36q49o37w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749820957; c=relaxed/simple;
-	bh=ZStFIAdXWvcgH+i6/QJnkTysUtDb1IVoiav26flpgDs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DIbVbCIYMuqRZpA1BEQ7PyYO0QRIOgJLwb39/mapN+fJKGVS45KFdqTZy/vRpkM8HxGnGto8JkjCAZ50zXZ00mZvJKGLS4oVZtVdpTkrFnQrKXRcpbHW98UG+VTI3brdYJR+Bc9Cj13hsJW0F7AcB5Obse/KYN5G2c2Tjxr5yIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.48.232])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id A915E3422ED;
-	Fri, 13 Jun 2025 13:22:33 +0000 (UTC)
-Date: Fri, 13 Jun 2025 13:22:27 +0000
-From: Yixun Lan <dlan@gentoo.org>
-To: Vivian Wang <uwu@dram.page>
-Cc: Guodong Xu <guodong@riscstar.com>, vkoul@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, drew@pdp7.com,
-	emil.renner.berthing@canonical.com, inochiama@gmail.com,
-	geert+renesas@glider.be, tglx@linutronix.de,
-	hal.feng@starfivetech.com, joel@jms.id.au, duje.mihanovic@skole.hr,
-	Ze Huang <huangze@whut.edu.cn>, elder@riscstar.com,
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 5/8] riscv: dts: spacemit: Add dma bus and PDMA node for
- K1 SoC
-Message-ID: <20250613132227-GYB135173@gentoo>
-References: <20250611125723.181711-1-guodong@riscstar.com>
- <20250611125723.181711-6-guodong@riscstar.com>
- <2b17769e-2620-4f22-9ea5-f15d4adcb27b@dram.page>
+	s=arc-20240116; t=1749821507; c=relaxed/simple;
+	bh=MkEOfV0i8W8Lzd3l73+lQlM1om1xg080yIUMBBKWzQ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=u+qwTDDwbdx1cLSvQEJAtbgiIodaHNpJEtbmEUpGYfm+VLRfXDTqeTUmcAw5lXu+aWIOU/LlyTCGZJmnzSrvOTsPqzdoMhxaatLIWS3OG8nsCi5o2JtVqn7tPEOznHDZIo1U1OC8Et+vZ1ZbvZ7LCv8nbdQFEviFjo7kMpULsFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O/VPNTzU; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O/VPNTzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D37C4CEE3;
+	Fri, 13 Jun 2025 13:31:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749821506;
+	bh=MkEOfV0i8W8Lzd3l73+lQlM1om1xg080yIUMBBKWzQ4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=O/VPNTzUz05NC3yjAiux2hvUTE/Ka6AwFOVYrWp6ZFWiu4VJ+IgLHUlOBs4Jl0OKl
+	 MNDujlBTFjcz2gII6bn14jE28wbxEB/BDoHFBRXPLTH/TlkClG4dV/0IZRs3DO7uT2
+	 xp17cInINFkYJ+Ied5DPAOnBnOOr4x129XlGI/S1dyQEaKdwFa4z5XRdYA+MVJWdVK
+	 UJAJJ90dwdseQJ9jytb5XAypir0dPpjXGMPLwsjQtLbFAPudlFXY1/hmAaYJoCooP4
+	 ULDcQEeOBWLKVKx8lESCsQtDCdNEfaBm6oQd0VFH5ZDOJkWO8+HwuXNWYGeu5i99TM
+	 9i5tmtAqtt4cQ==
+Date: Fri, 13 Jun 2025 06:31:45 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan
+ <dlan@gentoo.org>, Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti
+ <alex@ghiti.fr>, Richard Cochran <richardcochran@gmail.com>, Philipp Zabel
+ <p.zabel@pengutronix.de>, Russell King <linux@armlinux.org.uk>, Vivian Wang
+ <uwu@dram.page>, netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 2/4] net: spacemit: Add K1 Ethernet MAC
+Message-ID: <20250613063145.62871999@kernel.org>
+In-Reply-To: <20250613-net-k1-emac-v1-2-cc6f9e510667@iscas.ac.cn>
+References: <20250613-net-k1-emac-v1-0-cc6f9e510667@iscas.ac.cn>
+	<20250613-net-k1-emac-v1-2-cc6f9e510667@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2b17769e-2620-4f22-9ea5-f15d4adcb27b@dram.page>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hi Vivian, Guodong,
+On Fri, 13 Jun 2025 10:15:08 +0800 Vivian Wang wrote:
+> +	rx_ring->desc_addr = dma_alloc_coherent(&pdev->dev, rx_ring->total_size,
+> +						&rx_ring->desc_dma_addr,
+> +						GFP_KERNEL);
+> +	if (!rx_ring->desc_addr) {
+> +		kfree(rx_ring->rx_desc_buf);
+> +		return -ENOMEM;
+> +	}
+> +
+> +	memset(rx_ring->desc_addr, 0, rx_ring->total_size);
 
-On 11:06 Fri 13 Jun     , Vivian Wang wrote:
-> Hi Guodong,
-> 
-> On 6/11/25 20:57, Guodong Xu wrote:
-> > <snip>
-> >
-> > -			status = "disabled";
-> > +		dma_bus: bus@4 {
-> > +			compatible = "simple-bus";
-> > +			#address-cells = <2>;
-> > +			#size-cells = <2>;
-> > +			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
-> > +				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
-> > +			ranges;
-> >  		};
-> 
-> Can the addition of dma_bus and movement of nodes under it be extracted
-> into a separate patch, and ideally, taken up by Yixun Lan without going
-> through dmaengine? Not specifically "dram_range4", but all of these
-> translations affects many devices on the SoC, including ethernet and
-> USB3. See:
-Right, we've had an offline discussion, and agreed on this - have *bus
-patches separated and let other patches depend on it.
-
-But seems Guodong failed to do this or just sent out an old version
-of the PDMA patch?
-
-> 
-> https://lore.kernel.org/all/20250526-b4-k1-dwc3-v3-v4-2-63e4e525e5cb@whut.edu.cn/
-> https://lore.kernel.org/all/20250613-net-k1-emac-v1-0-cc6f9e510667@iscas.ac.cn/
-> 
-> (I haven't put eth{0,1} under dma_bus5 because in 6.16-rc1 there is
-> none, but ideally we should fix this.)
-> 
-> DMA address translation does not depend on PDMA. It would be best if we
-> get all the possible dma-ranges buses handled in one place, instead of
-> everyone moving nodes around.
-> 
-I agree
-
-> @Ze Huang: This affects your "MBUS" changes as well. Please take a look,
-> thanks.
-> 
-> >  
-> >  		gpio: gpio@d4019000 {
-> > @@ -792,3 +693,124 @@ pwm19: pwm@d4022c00 {
-> >  		};
-> >  	};
-> >  };
-> > +
-> > +&dma_bus {
-> >
-> > <snip>
-> 
-
+dma_alloc_coherent() already clears memory.
 -- 
-Yixun Lan (dlan)
+pw-bot: cr
