@@ -1,466 +1,93 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2E42AD00
-	for <spacemit@lists.linux.dev>; Mon, 16 Jun 2025 03:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1560B1E1DF1
+	for <spacemit@lists.linux.dev>; Mon, 16 Jun 2025 06:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750043095; cv=none; b=XKdWbWv6SwbW6czac0XBcP+PXLv5aELrMa1i0ANrd2anNa5bd54a2X2y146SUH06lhAlZdCF2skHy359EqlUhXlBltFAbRQ0LuJ4ZHSiVk8Hm5X7lYI5LxvOYmxSTh18X0IL2MufSro/VUriTy0v1jjM32PeWPT67UnCE6AKKJM=
+	t=1750055647; cv=none; b=i97+7Nu9N3pCC7wnPga0/HZWDcPVwzZ+scQN4lrZNVJiKyeG9jeaEDaDJwS7DyOj+4r0KCLoofB91Cy4WUrCS+I3c6Qm3MVMN+UuvJXYjgGKlPCWG+61ABvyUuPaJidyZUTOM4CyexR4RojqMeWmV9/xcNhR+TzMiiYJtESciFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750043095; c=relaxed/simple;
-	bh=QtT/c1m1WQn/tRePHxP4aSrTjgxlsffKC1b2lD0/iLI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=G4vN7/Sl8zczFlGKAh6ncft/Rhzpqv71rlEYt+ub9wT2WKSy+sf6yBn8mFeG5cm2GYudBHHkh44dRr8Wj53Ybiy41n3qa5nOBSfsdDRWf3z46tkwQsfbI9XqfUVHU6YK2VyFl/oU/pTsmYyDr0difkSbLMVv3UeSrYpJT/QkRQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.33.113] (unknown [210.73.43.2])
-	by APP-01 (Coremail) with SMTP id qwCowACH+9nEiU9orVzWBg--.22797S2;
-	Mon, 16 Jun 2025 11:04:37 +0800 (CST)
-Message-ID: <c60e9579-c261-41e3-ad5a-f96ce6d76820@iscas.ac.cn>
-Date: Mon, 16 Jun 2025 11:04:36 +0800
+	s=arc-20240116; t=1750055647; c=relaxed/simple;
+	bh=awRmJsvDQMfQhTEvVJL9wh2SPLV5UZFK4UZQ8MfiOWE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OrOc+2uAUKUVtuG5/wmNbinsMzuXnz7uC3ymAKJxeLXRlCKfaQUeaPeobkXkxOy8En80aphdvSKgH9Awkvl4soVRy3+JdgEDHnVL0BGq0TGlU8XEElSsQEV822dr7MhvavFucOM1TBExI/77Oy/PAauyxOjftNJH+1YAMk0grF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=HXYee8EJ; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="HXYee8EJ"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=VreY7vwdfbnY43YQuZ8tmmMfYatLVGTYphJA07D57n0=; b=HXYee8EJsUuQvF0URuDLGg086h
+	SnAnFNwakfQlbI1lRghIWcyofnzQZ/GrOR5lCW1YgzV8Bcj7b6/ja2mbAKKSluskglLR/pxMNmEOM
+	KircGnHZ5CmoqdJHmaD4IWW5ZdFMUK3UrGwRRYiQOK4f0p9A0IQ+J/ygDWw149VHf86b51xJkQHia
+	wF9jnzO/2Jb85Iv/1jCUILiyzrQczA5C7GlO0jcyiIN8SU791XVij/8xTpEwW5jFPHHyBFy3WOxcD
+	Dt+nBADyJTqcq0ZToW27s0qoz1f83nZCP6WFO8s1oJGug/E0O327uIe9ruwxc7rWyWv7ksGkdYVja
+	dskbDnxA==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:48550)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1uR3PQ-0003HC-07;
+	Mon, 16 Jun 2025 07:33:32 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1uR3PI-0004ak-2W;
+	Mon, 16 Jun 2025 07:33:24 +0100
+Date: Mon, 16 Jun 2025 07:33:24 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>, Vivian Wang <uwu@dram.page>,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 2/4] net: spacemit: Add K1 Ethernet MAC
+Message-ID: <aE-6tPMpMfRD1Zgu@shell.armlinux.org.uk>
+References: <20250613-net-k1-emac-v1-0-cc6f9e510667@iscas.ac.cn>
+ <20250613-net-k1-emac-v1-2-cc6f9e510667@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Subject: Re: [PATCH net-next 2/4] net: spacemit: Add K1 Ethernet MAC
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Richard Cochran <richardcochran@gmail.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Russell King
- <linux@armlinux.org.uk>, Vivian Wang <uwu@dram.page>,
- netdev@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20250613-net-k1-emac-v1-0-cc6f9e510667@iscas.ac.cn>
- <20250613-net-k1-emac-v1-2-cc6f9e510667@iscas.ac.cn>
- <7dfcfb04-8a7f-4884-9c91-413a6fb2a56b@lunn.ch>
-Content-Language: en-US
-In-Reply-To: <7dfcfb04-8a7f-4884-9c91-413a6fb2a56b@lunn.ch>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:qwCowACH+9nEiU9orVzWBg--.22797S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3tr48Gw1DJw45ur4xKr4kWFg_yoWkXFW3pa
-	yDJFZ5GF17ZFy7Wr4qqr4DXr1Ivrn5tF4Ika4Yyan8Xr9Ikr1fCryrKrW2k3s3Cr909F45
-	uw1UZFsrWF4DKrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9mb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6r1S6rWUM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4
-	vEx4A2jsIEc7CjxVAFwI0_Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVAC
-	Y4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVW8JV
-	WxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkI
-	wI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67AK6r48MxAIw28IcxkI7VAKI48JMxC20s
-	026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_
-	JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14
-	v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IY
-	s7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr
-	0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07bfzV8UUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250613-net-k1-emac-v1-2-cc6f9e510667@iscas.ac.cn>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-Hi Andrew,
+On Fri, Jun 13, 2025 at 10:15:08AM +0800, Vivian Wang wrote:
+> +config SPACEMIT_K1_EMAC
+> +	tristate "SpacemiT K1 Ethernet MAC driver"
+> +	depends on ARCH_SPACEMIT || COMPILE_TEST
+> +	depends on MFD_SYSCON
+> +	depends on OF
+> +	default m if ARCH_SPACEMIT
+> +	select PHYLIB
 
-Thanks for your review and suggestions.
+This driver uses phylib...
 
-On 6/13/25 22:32, Andrew Lunn wrote:
->> +static inline void emac_wr(struct emac_priv *priv, u32 reg, u32 val)
->> +{
->> +	writel(val, priv->iobase + reg);
->> +}
->> +
->> +static inline int emac_rd(struct emac_priv *priv, u32 reg)
->> +{
->> +	return readl(priv->iobase + reg);
->> +}
-> I only took a very quick look at the code. I'm sure there are more
-> issues....
->
-> Please do not user inline functions in a .c file. Let the compiler
-> decide.
-I will remove "inline" in next version.
->> +static void emac_alloc_rx_desc_buffers(struct emac_priv *priv);
->> +static int emac_phy_connect(struct net_device *dev);
->> +static void emac_tx_timeout_task(struct work_struct *work);
-> No forward declarations. Move the code around so they are not needed.
-I will reorganize in next version.
->> +static int emac_ioctl(struct net_device *ndev, struct ifreq *rq, int cmd)
->> +{
->> +	int ret = -EOPNOTSUPP;
->> +
->> +	if (!netif_running(ndev))
->> +		return -EINVAL;
->> +
->> +	switch (cmd) {
->> +	case SIOCGMIIPHY:
->> +	case SIOCGMIIREG:
->> +	case SIOCSMIIREG:
-> There is no need to test for these values. Just call phy_mii_ioctl()
-> and it will only act on IOCTLs it knows.
-I will simplify in next version.
->> +		if (!ndev->phydev)
->> +			return -EINVAL;
->> +		ret = phy_mii_ioctl(ndev->phydev, rq, cmd);
->> +		break;
->> +	default:
->> +		break;
->> +	}
->> +
->> +	return ret;
->> +}
->> +static int emac_up(struct emac_priv *priv)
->> +{
->> +	struct platform_device *pdev = priv->pdev;
->> +	struct net_device *ndev = priv->ndev;
->> +	int ret;
->> +
->> +#ifdef CONFIG_PM_SLEEP
->> +	pm_runtime_get_sync(&pdev->dev);
->> +#endif
-> You don't need this #ifdef, there is a stub function is PM_SLEEP is
-> not enabled.
-I will remove "#ifdef" in next version.
->> +
->> +	ret = emac_phy_connect(ndev);
->> +	if (ret) {
->> +		dev_err(&pdev->dev, "emac_phy_connect failed\n");
->> +		goto err;
->> +	}
->> +
->> +	emac_init_hw(priv);
->> +
->> +	emac_set_mac_addr(priv, ndev->dev_addr);
->> +	emac_configure_tx(priv);
->> +	emac_configure_rx(priv);
->> +
->> +	emac_alloc_rx_desc_buffers(priv);
->> +
->> +	if (ndev->phydev)
->> +		phy_start(ndev->phydev);
-> Is it possible to not have a PHY? emac_phy_connect() seems to return
-> an error if it cannot find one.
->
-I will remove unnecessary if (ndev->phydev) checks in next version.
->> +static int emac_down(struct emac_priv *priv)
->> +{
->> +	struct platform_device *pdev = priv->pdev;
->> +	struct net_device *ndev = priv->ndev;
->> +
->> +	netif_stop_queue(ndev);
->> +
->> +	if (ndev->phydev) {
->> +		phy_stop(ndev->phydev);
->> +		phy_disconnect(ndev->phydev);
->> +	}
->> +
->> +	priv->link = false;
->> +	priv->duplex = DUPLEX_UNKNOWN;
->> +	priv->speed = SPEED_UNKNOWN;
->> +
->> +	emac_wr(priv, MAC_INTERRUPT_ENABLE, 0x0);
->> +	emac_wr(priv, DMA_INTERRUPT_ENABLE, 0x0);
->> +
->> +	free_irq(priv->irq, ndev);
->> +
->> +	napi_disable(&priv->napi);
->> +
->> +	emac_reset_hw(priv);
->> +	netif_carrier_off(ndev);
-> phylib will of done this when phy_stop() is called. Let phylib manage
-> the carrier. The only thing you probably need is netif_carrier_off()
-> in probe().
-I will remove netif_carrier_off here and add to probe.
->> +static int emac_change_mtu(struct net_device *ndev, int mtu)
->> +{
->> +	struct emac_priv *priv = netdev_priv(ndev);
->> +	u32 frame_len;
->> +
->> +	if (netif_running(ndev)) {
->> +		netdev_err(ndev, "must be stopped to change MTU\n");
->> +		return -EBUSY;
->> +	}
->> +
->> +	frame_len = mtu + ETHERNET_HEADER_SIZE + ETHERNET_FCS_SIZE;
->> +
->> +	if (frame_len < MINIMUM_ETHERNET_FRAME_SIZE ||
->> +	    frame_len > EMAC_RX_BUF_4K) {
->> +		netdev_err(ndev, "Invalid MTU setting\n");
->> +		return -EINVAL;
->> +	}
-> If you set ndev->mtu_max and ndev->mtu_min, the core will check this
-> for you.
->
-I will remove this check and use mtu_{min,max} instead.
->> +static void emac_reset(struct emac_priv *priv)
->> +{
->> +	if (!test_and_clear_bit(EMAC_RESET_REQUESTED, &priv->state))
->> +		return;
->> +	if (test_bit(EMAC_DOWN, &priv->state))
->> +		return;
->> +
->> +	netdev_err(priv->ndev, "Reset controller\n");
->> +
->> +	rtnl_lock();
->> +	netif_trans_update(priv->ndev);
->> +	while (test_and_set_bit(EMAC_RESETING, &priv->state))
->> +		usleep_range(1000, 2000);
-> Don't do endless loops waiting for the hardware. It may never
-> happen. Please use something from iopoll.h
-It seems that I had misunderstood the original code here. I will
-simplify the logic here in next version.
->> +static int emac_mii_read(struct mii_bus *bus, int phy_addr, int regnum)
->> +{
->> +	struct emac_priv *priv = bus->priv;
->> +	u32 cmd = 0;
->> +	u32 val;
->> +
->> +	cmd |= phy_addr & 0x1F;
->> +	cmd |= (regnum & 0x1F) << 5;
->> +	cmd |= MREGBIT_START_MDIO_TRANS | MREGBIT_MDIO_READ_WRITE;
->> +
->> +	emac_wr(priv, MAC_MDIO_DATA, 0x0);
->> +	emac_wr(priv, MAC_MDIO_CONTROL, cmd);
->> +
->> +	if (readl_poll_timeout(priv->iobase + MAC_MDIO_CONTROL, val,
->> +			       !((val >> 15) & 0x1), 100, 10000))
->> +		return -EBUSY;
-> readl_poll_timeout() returns an error code. Don't replace it.
-I will fix it next version.
->> +static void emac_adjust_link(struct net_device *dev)
->> +{
->> +	struct emac_priv *priv = netdev_priv(dev);
->> +	struct phy_device *phydev = dev->phydev;
->> +	bool link_changed = false;
->> +	u32 ctrl;
->> +
->> +	if (!phydev)
->> +		return;
-> How does that happen?
->
->> +	if (phydev->link) {
->> +		ctrl = emac_rd(priv, MAC_GLOBAL_CONTROL);
->> +
->> +		/* Update duplex and speed from PHY */
->> +
->> +		if (phydev->duplex != priv->duplex) {
->> +			link_changed = true;
->> +
->> +			if (!phydev->duplex)
->> +				ctrl &= ~MREGBIT_FULL_DUPLEX_MODE;
->> +			else
->> +				ctrl |= MREGBIT_FULL_DUPLEX_MODE;
->> +			priv->duplex = phydev->duplex;
->> +		}
->> +
->> +		if (phydev->speed != priv->speed) {
->> +			link_changed = true;
->> +
->> +			ctrl &= ~MREGBIT_SPEED;
->> +
->> +			switch (phydev->speed) {
->> +			case SPEED_1000:
->> +				ctrl |= MREGBIT_SPEED_1000M;
->> +				break;
->> +			case SPEED_100:
->> +				ctrl |= MREGBIT_SPEED_100M;
->> +				break;
->> +			case SPEED_10:
->> +				ctrl |= MREGBIT_SPEED_10M;
->> +				break;
->> +			default:
->> +				netdev_err(dev, "Unknown speed: %d\n",
->> +					   phydev->speed);
->> +				phydev->speed = SPEED_UNKNOWN;
->> +				break;
->> +			}
->> +
->> +			if (phydev->speed != SPEED_UNKNOWN)
->> +				priv->speed = phydev->speed;
->> +		}
->> +
->> +		emac_wr(priv, MAC_GLOBAL_CONTROL, ctrl);
->> +
->> +		if (!priv->link) {
->> +			priv->link = true;
->> +			link_changed = true;
->> +		}
->> +	} else if (priv->link) {
->> +		priv->link = false;
->> +		link_changed = true;
->> +		priv->duplex = DUPLEX_UNKNOWN;
->> +		priv->speed = SPEED_UNKNOWN;
->> +	}
->> +
->> +	if (link_changed)
->> +		phy_print_status(phydev);
-> Can this ever be false?
->
-I will remove these checks in next version.
->> +static int emac_phy_connect(struct net_device *ndev)
->> +{
->> +	struct emac_priv *priv = netdev_priv(ndev);
->> +	struct device *dev = &priv->pdev->dev;
->> +	struct phy_device *phydev;
->> +	struct device_node *np;
->> +	int ret;
->> +
->> +	ret = of_get_phy_mode(dev->of_node, &priv->phy_interface);
->> +	if (ret) {
->> +		dev_err(dev, "No phy-mode found");
->> +		return ret;
->> +	}
->> +
->> +	np = of_parse_phandle(dev->of_node, "phy-handle", 0);
->> +	if (!np && of_phy_is_fixed_link(dev->of_node))
->> +		np = of_node_get(dev->of_node);
->> +	if (!np) {
->> +		dev_err(dev, "No PHY specified");
->> +		return -ENODEV;
->> +	}
->> +
->> +	ret = emac_phy_interface_config(priv);
->> +	if (ret)
->> +		goto err_node_put;
->> +
->> +	phydev = of_phy_connect(ndev, np, &emac_adjust_link, 0,
->> +				priv->phy_interface);
->> +	if (IS_ERR_OR_NULL(phydev)) {
->> +		dev_err(dev, "Could not attach to PHY\n");
->> +		ret = phydev ? PTR_ERR(phydev) : -ENODEV;
->> +		goto err_node_put;
->> +	}
->> +
->> +	dev_info(dev, "%s: attached to PHY (UID 0x%x) Link = %d\n", ndev->name,
->> +		 phydev->phy_id, phydev->link);
-> Don't spam the log. Only output something if something unexpected
-> happens, an error etc.
-I will remove this in next version.
->> +static int emac_mdio_init(struct emac_priv *priv)
->> +{
->> +	struct device *dev = &priv->pdev->dev;
->> +	struct device_node *mii_np;
->> +	struct mii_bus *mii;
->> +	int ret;
->> +
->> +	mii_np = of_get_child_by_name(dev->of_node, "mdio-bus");
->> +	if (!mii_np) {
->> +		if (of_phy_is_fixed_link(dev->of_node)) {
->> +			if ((of_phy_register_fixed_link(dev->of_node) < 0))
->> +				return -ENODEV;
->> +
->> +			return 0;
->> +		}
->> +
->> +		dev_err(dev, "no %s child node found", "mdio-bus");
-> Why is that an error?
-I will remove this in the next version.
->> +		return -ENODEV;
->> +	}
->> +
->> +	if (!of_device_is_available(mii_np)) {
->> +		ret = -ENODEV;
->> +		goto err_put_node;
->> +	}
->> +
->> +	mii = devm_mdiobus_alloc(dev);
->> +	priv->mii = mii;
->> +
->> +	if (!mii) {
->> +		ret = -ENOMEM;
->> +		goto err_put_node;
->> +	}
->> +	mii->priv = priv;
->> +	mii->name = "emac mii";
->> +	mii->read = emac_mii_read;
->> +	mii->write = emac_mii_write;
->> +	mii->parent = dev;
->> +	mii->phy_mask = 0xffffffff;
->> +	snprintf(mii->id, MII_BUS_ID_SIZE, "%s", priv->pdev->name);
->> +
->> +	ret = devm_of_mdiobus_register(dev, mii, mii_np);
->> +	if (ret) {
->> +		dev_err_probe(dev, ret, "Failed to register mdio bus.\n");
->> +		goto err_put_node;
->> +	}
->> +
->> +	priv->phy = phy_find_first(mii);
->> +	if (!priv->phy) {
->> +		dev_err(dev, "no PHY found\n");
->> +		ret = -ENODEV;
-> Please don't use phy_find_first(). Use phy-handle to point to the phy.
->
-I will remove this next version.
->> +static void emac_ethtool_get_regs(struct net_device *dev,
->> +				  struct ethtool_regs *regs, void *space)
->> +{
->> +	struct emac_priv *priv = netdev_priv(dev);
->> +	u32 *reg_space = space;
->> +	int i;
->> +
->> +	regs->version = 1;
->> +
->> +	memset(reg_space, 0x0, EMAC_REG_SPACE_SIZE);
-> Is that needed?
-I will remove in next version.
->> +static int emac_get_link_ksettings(struct net_device *ndev,
->> +				   struct ethtool_link_ksettings *cmd)
->> +{
->> +	if (!ndev->phydev)
->> +		return -ENODEV;
->> +
->> +	phy_ethtool_ksettings_get(ndev->phydev, cmd);
-> phy_ethtool_get_link_ksettings().
-I will use phy_ethtool_{get,set}_link_ksettings in next version.
->> +	if (priv->tx_delay > EMAC_MAX_DELAY_PS) {
->> +		dev_err(&pdev->dev, "tx-internal-delay-ps delay too large, clamped");
-> Please return -EINVAL;
->
->> +		priv->tx_delay = EMAC_MAX_DELAY_PS;
->> +	}
->> +
->> +	if (priv->rx_delay > EMAC_MAX_DELAY_PS) {
->> +		dev_err(&pdev->dev, "rx-internal-delay-ps delay too large, clamped");
-> and here. The device tree is broken, and we want the developer to
-> notice and fix it. The easiest way to do that is to refuse to load the
-> driver.
->
->> +		priv->rx_delay = EMAC_MAX_DELAY_PS;
->> +	}
->> +
->> +	if (priv->tx_delay || priv->rx_delay) {
-> Why the if () ?
->
->> +		priv->tx_delay = delay_ps_to_unit(priv->tx_delay);
->> +		priv->rx_delay = delay_ps_to_unit(priv->rx_delay);
->> +
->> +		/* Show rounded result here for convenience */
->> +		dev_info(&pdev->dev,
->> +			 "MAC internal delay: TX: %u ps, RX: %u ps",
->> +			 delay_unit_to_ps(priv->tx_delay),
->> +			 delay_unit_to_ps(priv->rx_delay));
-> Please don't. 
-I will simplify the checking logic and remove the print in next version.
->> +static void emac_shutdown(struct platform_device *pdev)
->> +{
->> +}
+> +#include <linux/phy.h>
+> +#include <linux/phylink.h>
 
-I will get rid of it in next version.
+but includes phylink's header file? Does it use anything from this
+header?
 
-Thanks again for the review.
-
-Regards,
-Vivian "dramforever" Wang
-
-> Since it is empty, is it needed?
->
-> 	Andrew
-
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
