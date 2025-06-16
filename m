@@ -1,104 +1,122 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B7F1FF5EC
-	for <spacemit@lists.linux.dev>; Mon, 16 Jun 2025 07:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC697285C9B
+	for <spacemit@lists.linux.dev>; Mon, 16 Jun 2025 12:51:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750059846; cv=none; b=O1RBit59E/6fO5/dE8jnH2YLfQEBq73KgkuxYiVptgTVEOqfLa4bFLfEPALB061W2mHOatjqujCx9TGi4p7YeOewX4ghsP+FqIQK7Br7G1LH1p3hY77l+x+7RcNc7B/9ROL9RmHWyn5PsIv2EckyRF/Qp+0kdrPErAAZzSlnodk=
+	t=1750078304; cv=none; b=WIrwk+PdiMvrP4Pn5yll58VFryBitcC+D48mCPsXyHi2j51hj0xntiH4Bguju0UfrmFw/WiMmnqGzkU3zcquogbDFhTasX6+ZxZ/uJcErRQdQkFHDK+5sN9Y88lvLA3/d73p5UzniV5LvXXGqPR2jga2krvsWV1KJjZohltioew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750059846; c=relaxed/simple;
-	bh=96OTwG6/iG28bTHQxzabxipQYNEL3wxef+/smJwNLYA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eCsrgAEYHrTJq64i6PcvQcoUThmvfrdEKiiZ35d8WRadIKkGwhlwYVg2kdfumuCLWV9Aoz11jf2bj76wDfEVs3ZINrNVjCwPuKnPaC+2F1qcCWESh4UVt1We1WaHM76621pEdQiTC6r5Ftz3qasgcUkugTJLaFmvJlOOhcmJ5cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=2o3mLcTO; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+	s=arc-20240116; t=1750078304; c=relaxed/simple;
+	bh=9k9Wh/NoYsqbKlKsFE6tFkqP7y1xy/55zKbtVtGtJXE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ToHqQSKk7hxBQUfRcV9phJBsF4SLUrT5V0+1QBLmjpzw40e0Jsne1mTkrlN7jsX6STBZspR6MYmAz3u5xcIHMp5JkrsVDfBb1pnjwRluTlU5n3GLhSMCvCTzgJpQbnntUPUiDtZc6IhMCo+vS3CR6znq736i+sIBDTMVu0BLL9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=a2x+BYt5; arc=none smtp.client-ip=209.85.166.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="2o3mLcTO"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a5096158dcso3615357f8f.1
-        for <spacemit@lists.linux.dev>; Mon, 16 Jun 2025 00:44:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="a2x+BYt5"
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-86d0c598433so119018439f.3
+        for <spacemit@lists.linux.dev>; Mon, 16 Jun 2025 05:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750059843; x=1750664643; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tMMpwu5AAcujXLKEmXFe7RXmxtH0nNb2sC3DH3erLCo=;
-        b=2o3mLcTOJvtDYYRUQRMC12ObguVXWo/tRWGQlskQcBZvynK2dYY9NEr96NKSCYHZ+T
-         XRJhOiQOaRFIyi4W/03YWAFjfySXtg/9k+E+f4oBPZrDV/Fi6b1X70CUvOncnMqLMUhB
-         xxVud+a2SORDR05GrmFXjQhU/jB6mat60zZbkAhrKUBeBr7RtNupq1p9a/5BxnxvvNsV
-         ewW/pKC7qQNaN9vo16ogRPGr6r+c5XyikBigXDXhyCFMjPRXnv1l3fRHP0Mx+HAn3br4
-         Fvpy5L4l8W4ap32UzvxFYYyUXeHBB78nGyholVStjRbKVvMl09qpmqgXzYrH3oiFdcvK
-         jluA==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1750078301; x=1750683101; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=S/rRqga4nciTe+40s1lGUJde2Ttgzu3tg/+nM/gCFAE=;
+        b=a2x+BYt5XQJj08cklb+ywTiyWzfz958TNNbXf1Wb2zQtcI2fJrXW5l4CqZf9VquXZU
+         CcpsfTA8zLLoJkAtbHZkANaFzkVPBXOJ5hntjRo2IzQYy0jov0L1c27pzIXYIZ5QWdUf
+         bDJB15bvDpVQD4u2lf8LNDsXpfcMqyjiKM48TGze+ORToba7jCKMIeE0tY9h4qLJ6VUr
+         MpbMdfu4MYUTlearu8Anof4KBdNZnVZAebhPN0Sa6cX4iUVzYut9QV6aVctAballC21y
+         VfwTnS0Vzz9tZzXA1RszZr726DO2T76vOA2NonGec8OzNVa76haHb7sdt4MjfHtBJ732
+         y3nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750059843; x=1750664643;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tMMpwu5AAcujXLKEmXFe7RXmxtH0nNb2sC3DH3erLCo=;
-        b=smp1v3V1HpOWNecpmNJLqbSR94cRxPkuCpoWMWiaiGFLFQFQmEFpeqMeKa/I7ridYK
-         0hZWevJDD4apBLYuGcIgEm7Ts7gADPv6/cRgcUmxX1T9SfxjP4s4z5KoP6+OONvtKQwe
-         hG1dO957zhE2F9KJPQWES717uKlytGZV8c+f8Qc/7PAEpHdgNrl3wbchEEUVmGeF9JgK
-         FPDqP8W8vjmD9cIBl3vaOscYSFy59nwwkhmqDt+CHHrG7YikZCKmA1sWU+FJsp6dkWty
-         1nethVpMxRM6RfzcgtxTXSsARBHUngQFILw5aSSVmL6l+FLwraYtZzmOFELAkWC+RSdm
-         osbA==
-X-Forwarded-Encrypted: i=1; AJvYcCVp19CVOddciKojCt8UWgKJH1hmEkz9aLBur+wRIR243O+d+GS/xdJpCSFph6LOesAoqWmrhlIm6A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyWN7HSmjeOaNuUNkSGSPYrkNtqsYcnJsMEQTmdBlNAhUaLWJLo
-	uSqePdWVOkHZxMFNlYkFrk0ZwNaixpAZs3L/uTYukWQz8/tlAoydZkgPaoIg50DMpEw=
-X-Gm-Gg: ASbGncs1Q3tiwGKbS6/YseBTE8rQ3J5F3LdnrNV63/ChBT2Agp58b+ozc8eCYlCa5SU
-	CrG4F8tEg4nqO3oeZIfmlEcgsgciJRjbFs8CKGaT2YhDtFgE6Pvm6sa8cRPz7+p8Ei0RuY6sMH0
-	sntf5Zpu4vMK2Q8akQpYBoEWEzxtBuzFdOyd3y7CtBiCUKSvTz8a7NBiN/ctOpjrL2MiutTT/ut
-	vRpcY0uZmPiltmarafyQeBS7DGXn7D9qhZowjADN1nlsYN7sW2i7vaStZw7aHBS+JL2KsLk5rkZ
-	LlAmepohmCmwJZlwOrzfT7mEWu23FHZ3l0tcVK5R2pXzKIiH+1k+HNr3G2EDVdo=
-X-Google-Smtp-Source: AGHT+IFyiwrOAI2w1hU8cdsv4G6PwQ9rykHzyJGCDN95ThomN6k4mm9h9BfNGYN1cWwJ8JWTOJssQg==
-X-Received: by 2002:a05:6000:400b:b0:3a4:f2ed:217e with SMTP id ffacd0b85a97d-3a5723af786mr6649593f8f.42.1750059842782;
-        Mon, 16 Jun 2025 00:44:02 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:4238:f8a4:c034:8590])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e2618f0sm134543945e9.37.2025.06.16.00.44.02
+        d=1e100.net; s=20230601; t=1750078301; x=1750683101;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S/rRqga4nciTe+40s1lGUJde2Ttgzu3tg/+nM/gCFAE=;
+        b=t9e8di9U0GJXkxfWUavDY1skoejTdRngjJ/cG0UXTGnsNcHm/w414UZulU4xkZcAbw
+         ra/BrLh7fh7a8bcf1AXM9fkim25sQSc41fT2TrDNni4O5QLcXiWQROISLBA08WuLQ3Id
+         sztRHMb5NgkTxvxtIni4hl/bDLXX3Yjky7mrW6BDBrYTMIHZz64jKaztCNW22xXiwwnK
+         kuZ+FAAyE2vbxXFFmlH2UYmRKXbQXJyxOmnom+h8/Iv7zEk31cggiqLexUySom266cF6
+         +VbGIWePAcr7PhLM+KHKUmDywG2e5WuoX2RdGlMm0tSQYnn4Wmm52BJe5axqIvfO3Vu0
+         BmeA==
+X-Forwarded-Encrypted: i=1; AJvYcCVoHOBVObB3RCA6/cwmK6TN2NoiOmSheqRFpOzwtHrzvMI6Ez30mse1MFyneLYbZXUx46jsBQzHaw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz4skQPyhka6pkdkdRtlb0N8dbCOz2Tsx8TFj9NC0zCGZMaLi/9
+	97PMERyDsKvD7hspE8ZTAZ3ZY3cr2hdYojwh22KLd3wq7iDMQRpGR7mUvEKXzZ5aq4k=
+X-Gm-Gg: ASbGncvaeyzRFs8c/qEtiXVbLf+vOIQW0MpXgGConveVUDoq9RJ3TbygOvaCcaXg7P5
+	Imtz6O91OWI1VDxPNtpE8iDMUI95npb0ZQLy1IZ6htVhNmpE4ZCnOvqkfF4usiHIXRZs6wrUXrC
+	M526pEPZcXXJbWrIU02qG1YoJMvwqPKNLd69nFCjst8AJOPFvJSZ0/ul/Vl1jmINOXjHkUH0Y2o
+	/Fs+l4nRSm+WMbK7wkp7GBJJJyxYB0fYuFKloQh+35rZUsOT7+q9asJ6Mb/mph7HcXHOAqkWoPI
+	f9hnz5MEQlmZBogNcHADizP5vFMA4/TdeFPJm0CcIZZBZ0yMiUWH6Zs+HwXxD1K7ET0oasD6AUk
+	yp35h50S9M+qjYi2Iel8j2aTE+zZA42I=
+X-Google-Smtp-Source: AGHT+IGBM9IfcIVPXLIx3r77XwCbfXk8tkksQXCR2d/8SBqn06Uhn07s7o49RLoWiyjUv193p5+5QQ==
+X-Received: by 2002:a05:6e02:1529:b0:3dd:cbbb:b731 with SMTP id e9e14a558f8ab-3de07c55b92mr92098655ab.9.1750078300563;
+        Mon, 16 Jun 2025 05:51:40 -0700 (PDT)
+Received: from presto.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3de019b442fsm20352865ab.2.2025.06.16.05.51.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jun 2025 00:44:02 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Vivian Wang <uwu@dram.page>,
-	linux-gpio@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+        Mon, 16 Jun 2025 05:51:40 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: andi.shyti@kernel.org,
+	dlan@gentoo.org,
+	troymitchell988@gmail.com
+Cc: elder@riscstar.com,
+	linux-i2c@vger.kernel.org,
 	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] gpio: spacemit: Add missing MODULE_DEVICE_TABLE
-Date: Mon, 16 Jun 2025 09:44:00 +0200
-Message-ID: <175005983908.15867.5595150226500672210.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250613-k1-gpio-of-table-v1-1-9015da8fdfdb@iscas.ac.cn>
-References: <20250613-k1-gpio-of-table-v1-1-9015da8fdfdb@iscas.ac.cn>
+Subject: [PATCH v3] i2c: k1: check for transfer error
+Date: Mon, 16 Jun 2025 07:51:36 -0500
+Message-ID: <20250616125137.1555453-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+If spacemit_i2c_xfer_msg() times out waiting for a message transfer to
+complete, or if the hardware reports an error, it returns a negative
+error code (-ETIMEDOUT, -EAGAIN, -ENXIO. or -EIO).
 
+The sole caller of spacemit_i2c_xfer_msg() is spacemit_i2c_xfer(),
+which is the i2c_algorithm->xfer callback function.  It currently
+does not save the value returned by spacemit_i2c_xfer_msg().
 
-On Fri, 13 Jun 2025 17:25:33 +0800, Vivian Wang wrote:
-> The gpio-spacemit-k1 driver can be compiled as a module. Add missing
-> MODULE_DEVICE_TABLE so it can be matched by modalias and automatically
-> loaded by udev.
-> 
-> 
+The result is that transfer errors go unreported, and a caller
+has no indication anything is wrong.
 
-Applied, thanks!
+When this code was out for review, the return value *was* checked
+in early versions.  But for some reason, that assignment got dropped
+between versions 5 and 6 of the series, perhaps related to reworking
+the code to merge spacemit_i2c_xfer_core() into spacemit_i2c_xfer().
 
-[1/1] gpio: spacemit: Add missing MODULE_DEVICE_TABLE
-      https://git.kernel.org/brgl/linux/c/e6382fcf989074566bb9a54bbd3c514d7bb99397
+Simply assigning the value returned to "ret" fixes the problem.
 
-Best regards,
+Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+Signed-off-by: Alex Elder <elder@riscstar.com>
+Reviewed-by: Troy Mitchell <troymitchell988@gmail.com>
+---
+v3: Rebased on v6.16-rc2; included version in message subject
+
+ drivers/i2c/busses/i2c-k1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+index 5965b4cf6220e..b68a21fff0b56 100644
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -477,7 +477,7 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
+ 
+ 	ret = spacemit_i2c_wait_bus_idle(i2c);
+ 	if (!ret)
+-		spacemit_i2c_xfer_msg(i2c);
++		ret = spacemit_i2c_xfer_msg(i2c);
+ 	else if (ret < 0)
+ 		dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
+ 	else
 -- 
-Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+2.45.2
+
