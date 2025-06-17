@@ -1,33 +1,24 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C1223B606;
-	Tue, 17 Jun 2025 06:21:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8859428BAAA
+	for <spacemit@lists.linux.dev>; Tue, 17 Jun 2025 08:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750141317; cv=none; b=gp0jVN5QJHCx3D6hu+Y4vf2QcSKywqAEhPVsRNAFs6bs52weNtTvUoy75omNm/90cd9/6cBqHl6I+cCZEERZaPMM09EUaQrLhn96rUA1CG8xNQ760/h4Ws9DeUzQR9Fg0mJLk19+cCGbH+BvYd1BlM95H+YBV1WjB1g88PkAyFE=
+	t=1750150121; cv=none; b=dylmT/EkqFJ85qNVB1tomyqOguZTWxf9SNPVcrZl5/MZ2zPa4E7grSH+rdbpPFWdbMBqAVIeUplcrSZIN/RaVfz9Nj7j5T7KHcRy16UOSgUfUuHK4FgqDIxHfomAtBP8IEjLqIm0Qjs67NLJ0w8qwQ3Sb7jcEtbRpzKTDrNXp3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750141317; c=relaxed/simple;
-	bh=PRf1TQGc91W+MBcp+JrNM86Phml+lx1uiU82f4QGL+Q=;
+	s=arc-20240116; t=1750150121; c=relaxed/simple;
+	bh=vuoNr13Rqzsj6LgDL0QJ3v3rep1txRGacEWw//RdxO0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j62vC42j8z691RWJPR/GyPivLhHQLrfxaxubHY7TEcfFiNToSqXUYUp2Le05XIQ8EKk4OiyK8+09znD9ook51JgHEuaAJ94BF2ty7jT7Z19ynDu1z/z7PLlniV8LeJaUOyQ4QxhfDMO3HesAFFuau4uCNo5KmarIxR9aRQRDC7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TM7snzrJ; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TM7snzrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FD2C4CEE3;
-	Tue, 17 Jun 2025 06:21:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750141317;
-	bh=PRf1TQGc91W+MBcp+JrNM86Phml+lx1uiU82f4QGL+Q=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TM7snzrJHgfVCbcORkMvQZwsSqpRCZqk7wEaCRWx/7RBNeCzhJIVxS3lomNDz3RKH
-	 aoahLvyMEY2EDH3Jx2tPGRGq9cp55nRllYRNvyaUucV8a47nSi+/woQVK7DCPi+cer
-	 N39QM9j5kQzOT8IT/TCje9bdPnni/vAup9jDuzDYOp5CXgcISGwN5ft8tv/toeWlVd
-	 VCw78EBMsCtgGFFbb/0p47893A1Vbbq6G+BOz5GmWbGUfGSr2IG50MhxuVhJwYjPOf
-	 VE8xE83ZLJSDKcolJcaq0cyHR7Zmb0U8QW2SXBsF29xUIBOtCbsEtPImvTJTibONS+
-	 Xc6nnheKFWyfw==
-Message-ID: <74e3c488-4457-4026-9597-806b98fd4e11@kernel.org>
-Date: Tue, 17 Jun 2025 08:21:51 +0200
+	 In-Reply-To:Content-Type; b=TIQRClIZphAnFFtORkjwksYQovsfL3ABuacvTPPG+ifQwBixMo0wm1jjxW0nRaXSoAAN2ujqrn1kE3dp0ASlJkoJC0Y0bsdCPyS6nxe2CSypq9qOHEoiqdPP4hm6SZQKT35lp/ti4bkyuE5yiq0TeDer0YXtXHvHa+YSsFyzQAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.33.151] (unknown [210.73.43.2])
+	by APP-01 (Coremail) with SMTP id qwCowAAn2dfZK1FoBBEkBw--.8277S2;
+	Tue, 17 Jun 2025 16:48:26 +0800 (CST)
+Message-ID: <10ab212f-e06b-4214-99cd-a687659fcf71@iscas.ac.cn>
+Date: Tue, 17 Jun 2025 16:48:25 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -37,7 +28,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH RFC] riscv: dts: spacemit: Add DMA translation buses for
  K1
-To: Vivian Wang <wangruikang@iscas.ac.cn>, Yixun Lan <dlan@gentoo.org>,
+To: Krzysztof Kozlowski <krzk@kernel.org>, Yixun Lan <dlan@gentoo.org>,
  Guodong Xu <guodong@riscstar.com>, Ze Huang <huangze@whut.edu.cn>,
  spacemit@lists.linux.dev
 Cc: Vivian Wang <uwu@dram.page>, Rob Herring <robh@kernel.org>,
@@ -47,72 +38,71 @@ Cc: Vivian Wang <uwu@dram.page>, Rob Herring <robh@kernel.org>,
  Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org,
  linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
 References: <20250617-k1-dma-buses-rfc-wip-v1-1-c8ec192fbf58@iscas.ac.cn>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250617-k1-dma-buses-rfc-wip-v1-1-c8ec192fbf58@iscas.ac.cn>
+ <74e3c488-4457-4026-9597-806b98fd4e11@kernel.org>
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <74e3c488-4457-4026-9597-806b98fd4e11@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qwCowAAn2dfZK1FoBBEkBw--.8277S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Kw4kCw13Kr1kWF1rZw15CFg_yoW8CF45pr
+	Z3u3ZayFZrAF40gws29rZrWa4ruwn7Za15JFn5Gr1rAFZ8XFyagrWxJw1j9w1UXrZ5Xa47
+	Xa1DZ3s7uF4UJr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9Ib7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6r1S6rWUM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
+	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v26r4j6F4UMc
+	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
+	1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4I
+	kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
+	WwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
+	0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
+	JVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
+	IYCTnIWIevJa73UjIFyTuYvjxUy38nDUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On 17/06/2025 07:21, Vivian Wang wrote:
-> The SpacemiT K1 has various static translations of DMA accesses. Add
-> these as simple-bus nodes. Devices actually using these translation will
-> be added in later patches.
-> 
-> The bus names are assigned according to consensus with SpacemiT [1].
+Hi Krzysztof,
 
+On 6/17/25 14:21, Krzysztof Kozlowski wrote:
+> On 17/06/2025 07:21, Vivian Wang wrote:
+>> The SpacemiT K1 has various static translations of DMA accesses. Add
+>> these as simple-bus nodes. Devices actually using these translation will
+>> be added in later patches.
+>>
+>> The bus names are assigned according to consensus with SpacemiT [1].
+>
+> Read the feedback there:
+>
+> "So, as you are submitting the first node(s) under network_bus: bus@5, you
+> should have this added into your patchset, instead of sending out with
+> none."
+As mentioned in the patch extra message, this is an RFC meant for
+achieving consensus on what the bus nodes should look like, not an
+actual patch meant to be taken. I was hoping I was clear on that, but I
+guess that paragraph was buried too deep. Well...
+> Plus simple bus within MMIO node needs unit address. IOW, don't mix MMIO
+> with non-MMIO. I also suspect this does not pass checks, so the tools
+> can do our review...
 
-Read the feedback there:
+This DT passes "make dtbs_check" fine, with only unrelated warnings on
+sec_uart1 that was already there before:
 
-"So, as you are submitting the first node(s) under network_bus: bus@5, you
-should have this added into your patchset, instead of sending out with
-none."
+  DTC [C] arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dtb
+.../arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dtb: serial@f0612000
+(spacemit,k1-uart): 'clock-names' is a required property
+        from schema $id: http://devicetree.org/schemas/serial/8250.yaml#
+  DTC [C] arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dtb
+.../arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dtb: serial@f0612000
+(spacemit,k1-uart): 'clock-names' is a required property
+        from schema $id: http://devicetree.org/schemas/serial/8250.yaml#
 
-Plus simple bus within MMIO node needs unit address. IOW, don't mix MMIO
-with non-MMIO. I also suspect this does not pass checks, so the tools
-can do our review...
+To be honest, I don't understand what "within MMIO node" means here.
+Should the buses be taken out of /soc and added as its siblings?
 
-Best regards,
-Krzysztof
+Thanks,
+Vivian "dramforever" Wang
+
+> Best regards,
+> Krzysztof
+
