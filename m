@@ -1,83 +1,118 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E57199924;
-	Tue, 17 Jun 2025 06:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C1223B606;
+	Tue, 17 Jun 2025 06:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750140170; cv=none; b=LiZS6illaEm3SGect5LHmgT0MX8cYEooYLK/yDufrhIIaA28zcYy40ei4hUPOUiHeEe9GaQmdoU39CIExfSJVAixR55iP3FA28n1tdzNyZNeAYQkNu2w1CScjCpfn9feoBByMaer1IBzHxwv6iCcql/yFo6v1T8P0oX99kSMEHw=
+	t=1750141317; cv=none; b=gp0jVN5QJHCx3D6hu+Y4vf2QcSKywqAEhPVsRNAFs6bs52weNtTvUoy75omNm/90cd9/6cBqHl6I+cCZEERZaPMM09EUaQrLhn96rUA1CG8xNQ760/h4Ws9DeUzQR9Fg0mJLk19+cCGbH+BvYd1BlM95H+YBV1WjB1g88PkAyFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750140170; c=relaxed/simple;
-	bh=y3LjvVl5E7KxK3T3g5NR+r6/2sbufh9dPYcDzRkbfdk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B8ATYWOcTq4aZQEiozy/xuaTwREyauZJ+JE8LTwTclizO75hCnQ9joC6VYJopZ5G/sv+k/D/5ThQ36FRMtUf2sOwi0yLWz1NaWRb7SYmnBJTQy3w9kHYVLYC98a74DwjJEY18GA4CMLw0SbGKLK9xVGoXQj1t2Z3MUolTF7rgQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vDqEObYq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750141317; c=relaxed/simple;
+	bh=PRf1TQGc91W+MBcp+JrNM86Phml+lx1uiU82f4QGL+Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j62vC42j8z691RWJPR/GyPivLhHQLrfxaxubHY7TEcfFiNToSqXUYUp2Le05XIQ8EKk4OiyK8+09znD9ook51JgHEuaAJ94BF2ty7jT7Z19ynDu1z/z7PLlniV8LeJaUOyQ4QxhfDMO3HesAFFuau4uCNo5KmarIxR9aRQRDC7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TM7snzrJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vDqEObYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985FCC4CEE3;
-	Tue, 17 Jun 2025 06:02:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TM7snzrJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FD2C4CEE3;
+	Tue, 17 Jun 2025 06:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750140170;
-	bh=y3LjvVl5E7KxK3T3g5NR+r6/2sbufh9dPYcDzRkbfdk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vDqEObYqJgZsr3HsU3JEM5UdeuznK8bpOubp16XshTnWA4lQcYuVdnMkfpsodMRMN
-	 z1a5IKqyB0y+o1RcfgyJ46ItVjTYPamCYQ/Qm71gkCNlStAGZGVQpx7sl7POMeF4RK
-	 0KI7oe4MIJZRktHYrKioauhHZHUHpGzYfPBZLjSFxMfDwc8vxkBrqLffqXvZzq+yMv
-	 29xWo4gTwmZYpvTUlPH2ujpdU+I74jbP+MKRW+m2zbr+92LlD1kG7Y8n9iRHR1mI4h
-	 UbKYyQBeARoIQF8nW7oaH3tr2pDf6moA0Yyfo4Ya6y1MNnRDwqg3RQT6UWWp1Gy/e1
-	 TmSHYwDY4gMyg==
-Date: Tue, 17 Jun 2025 11:32:46 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	dlan@gentoo.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
-	drew@pdp7.com, emil.renner.berthing@canonical.com,
-	inochiama@gmail.com, geert+renesas@glider.be, tglx@linutronix.de,
-	hal.feng@starfivetech.com, joel@jms.id.au, duje.mihanovic@skole.hr,
-	elder@riscstar.com, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 4/8] dma: mmp_pdma: Add SpacemiT PDMA support with 64-bit
- addressing
-Message-ID: <aFEFBss3RT7NbQkV@vaman>
-References: <20250611125723.181711-1-guodong@riscstar.com>
- <20250611125723.181711-5-guodong@riscstar.com>
+	s=k20201202; t=1750141317;
+	bh=PRf1TQGc91W+MBcp+JrNM86Phml+lx1uiU82f4QGL+Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=TM7snzrJHgfVCbcORkMvQZwsSqpRCZqk7wEaCRWx/7RBNeCzhJIVxS3lomNDz3RKH
+	 aoahLvyMEY2EDH3Jx2tPGRGq9cp55nRllYRNvyaUucV8a47nSi+/woQVK7DCPi+cer
+	 N39QM9j5kQzOT8IT/TCje9bdPnni/vAup9jDuzDYOp5CXgcISGwN5ft8tv/toeWlVd
+	 VCw78EBMsCtgGFFbb/0p47893A1Vbbq6G+BOz5GmWbGUfGSr2IG50MhxuVhJwYjPOf
+	 VE8xE83ZLJSDKcolJcaq0cyHR7Zmb0U8QW2SXBsF29xUIBOtCbsEtPImvTJTibONS+
+	 Xc6nnheKFWyfw==
+Message-ID: <74e3c488-4457-4026-9597-806b98fd4e11@kernel.org>
+Date: Tue, 17 Jun 2025 08:21:51 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250611125723.181711-5-guodong@riscstar.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC] riscv: dts: spacemit: Add DMA translation buses for
+ K1
+To: Vivian Wang <wangruikang@iscas.ac.cn>, Yixun Lan <dlan@gentoo.org>,
+ Guodong Xu <guodong@riscstar.com>, Ze Huang <huangze@whut.edu.cn>,
+ spacemit@lists.linux.dev
+Cc: Vivian Wang <uwu@dram.page>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20250617-k1-dma-buses-rfc-wip-v1-1-c8ec192fbf58@iscas.ac.cn>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250617-k1-dma-buses-rfc-wip-v1-1-c8ec192fbf58@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 11-06-25, 20:57, Guodong Xu wrote:
-> Extend the MMP PDMA driver to support SpacemiT PDMA controllers with
-> 64-bit physical addressing capabilities, as used in the K1 SoC. This
-> change introduces a flexible architecture that maintains compatibility
-> with existing 32-bit Marvell platforms while adding 64-bit support.
+On 17/06/2025 07:21, Vivian Wang wrote:
+> The SpacemiT K1 has various static translations of DMA accesses. Add
+> these as simple-bus nodes. Devices actually using these translation will
+> be added in later patches.
 > 
-> Key changes:
-> - Add struct mmp_pdma_config to abstract platform-specific behaviors
-> - Implement 64-bit address support through:
->   * New high address registers (DDADRH, DSADRH, DTADRH)
->   * DCSR_LPAEEN bit for Long Physical Address Extension mode
->   * Helper functions for 32/64-bit address handling
-> - Add "spacemit,pdma-1.0" compatible string with associated config
-> - Extend descriptor structure to support 64-bit addresses
-> - Refactor address handling code to be platform-agnostic
-> - Add proper DMA mask configuration for both 32-bit and 64-bit modes
-> 
-> The implementation uses a configuration-based approach to keeps all
-> platform-specific code isolated in config structures. It maintains clean
-> separation between 32-bit and 64-bit code paths, provides consistent
-> API for both addressing modes and preserves backward compatibility.
+> The bus names are assigned according to consensus with SpacemiT [1].
 
-I would ask for this to be split, first to to driver changes for adding
-new ops and then adding new soc support. This way the two changes are
-independent
 
--- 
-~Vinod
+Read the feedback there:
+
+"So, as you are submitting the first node(s) under network_bus: bus@5, you
+should have this added into your patchset, instead of sending out with
+none."
+
+Plus simple bus within MMIO node needs unit address. IOW, don't mix MMIO
+with non-MMIO. I also suspect this does not pass checks, so the tools
+can do our review...
+
+Best regards,
+Krzysztof
