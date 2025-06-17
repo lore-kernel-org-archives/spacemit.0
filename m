@@ -1,120 +1,75 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41B1291C13
-	for <spacemit@lists.linux.dev>; Tue, 17 Jun 2025 10:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17232F530F;
+	Tue, 17 Jun 2025 21:59:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750155064; cv=none; b=YO8zJWz6hYiDhyio440rrfAO8GBe5Ozh7i36nvaLjzhUSL2Ihg3b5aXwS16tcwmmX+wzLHPtZEb026CQA+6pgrYGLWCq73T46SiUzzyAPwRL+6HTSK0OXg4XRfdK/eS0J4EJqxmOQaxHRcyq20yl90/OFc74RkZf+NWgv7fhsRg=
+	t=1750197595; cv=none; b=JEvL9rqGhYdS3D9AiRRi/INOZYklApTSiURYEq499m6siEtvFMtT5ON/IkIr88y07vAzCSwKvmkvWUaGFtyMYjW/7XYgWp2sJl9zUOjhd7hAFcFcLM80ttltjuYSL6MMzTcsqKftigVFfacejvBvxsGL84HO5uoEOvPmMhQ4O7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750155064; c=relaxed/simple;
-	bh=VhqtVe/12RyNdzwO39QyuBj46xkJKX8jJtYoD60M2rE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QQyP33OcUDuOYTOS6+GrP3DJNqn4O1SnxTDnMneLv024mTFG9gNmuphuFHZ/NLAtKglzWsVjrCpJJkbprpuO6LmMzY8crf4nKW1GyTT7bOy1eIcFJiw+YX7DP/69RDItlTrtdkCT7tOBsKp/IA9fPybjuereKutpMeQiQ5+8Cw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.33.151] (unknown [210.73.43.2])
-	by APP-03 (Coremail) with SMTP id rQCowACnvFQoP1FokJcgBw--.2075S2;
-	Tue, 17 Jun 2025 18:10:50 +0800 (CST)
-Message-ID: <fd9b3bbc-3318-4845-90ca-7f245049665e@iscas.ac.cn>
-Date: Tue, 17 Jun 2025 18:10:48 +0800
+	s=arc-20240116; t=1750197595; c=relaxed/simple;
+	bh=xHHJixx3Lxtq00FONQcRlica1C/F7ozio9W9iiXkh7g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pOGnsh2o0awGNlsTBlcFZdlxgMY5BaLFOjRtB3DfyXOmB9Ib4qZhTdi4bisfSmCCrAVvpVWczP+tncaknVYStPPQD9nzsPsQnPTEwwrMTD6Hay+j/1ocGqRCsu1EUaaA+EI0xBJ/iqEnFper9hHbgrus8MRZ7UAWkcw3Re6jXnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XZduI9lL; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XZduI9lL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42247C4CEEE;
+	Tue, 17 Jun 2025 21:59:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750197594;
+	bh=xHHJixx3Lxtq00FONQcRlica1C/F7ozio9W9iiXkh7g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XZduI9lL6OMAMscActEx013XDU/ayDjOiiDBPbZEjoDIV6gsYdfGEIWe37onzI9Q/
+	 2xP5OAubN2dqsesmxEd/kbCxIn1w2r6CStRV4E3w/IHvAlzZg/O7Sb8g/ta4/7+ynQ
+	 8HR1V4DBam6pQmIRp9PF8iTU0aDqrG6GttY2MhTO9URNoNwSCWw4+Dw6s+6KqRd0Um
+	 jGslPQWP3GHJtlmkVDy3hF4aLKev8S3snfPnCcmy0UGDqpVRTQn4ATp17z2pGa1Ecx
+	 oUjzib5uBz2+l18YDB2pU4BBUfla+Z7Vtq3Ipvyb9vQ46pASRgfhhMwPGAwpQfLihq
+	 kk4Yn85/w71/g==
+Date: Tue, 17 Jun 2025 23:59:48 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: dlan@gentoo.org, troymitchell988@gmail.com, linux-i2c@vger.kernel.org, 
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] i2c: k1: check for transfer error
+Message-ID: <ivxsr6vvchk4eiih3mkwrmskquywuzit33ibt4hrxwif5k6h3z@rxx4q2jhrrli>
+References: <20250616125137.1555453-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] riscv: dts: spacemit: Add DMA translation buses for
- K1
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Vivian Wang <wangruikang@iscas.ac.cn>, Yixun Lan <dlan@gentoo.org>,
- Guodong Xu <guodong@riscstar.com>, Ze Huang <huangze@whut.edu.cn>,
- spacemit@lists.linux.dev
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley
- <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20250617-k1-dma-buses-rfc-wip-v1-1-c8ec192fbf58@iscas.ac.cn>
- <74e3c488-4457-4026-9597-806b98fd4e11@kernel.org>
- <10ab212f-e06b-4214-99cd-a687659fcf71@iscas.ac.cn>
- <2dc8ab35-4f58-49d3-8e8b-3e463fa592ae@kernel.org>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <2dc8ab35-4f58-49d3-8e8b-3e463fa592ae@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:rQCowACnvFQoP1FokJcgBw--.2075S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxCrWfKrWrJFyDJrW3Xw15twb_yoW5GFy7pF
-	Z3GF9akFZ2yFyxWrs2vrnrW340yws7Z3W5Jrs5GryrAFZ8WFySgrs7tw1Y934UXr4rJay7
-	ZF4UZ3s7uF45ArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvC14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY
-	04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r
-	1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CE
-	b7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0x
-	vE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAI
-	cVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2Kf
-	nxnUUI43ZEXa7VUb8hL5UUUUU==
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250616125137.1555453-1-elder@riscstar.com>
 
-On 6/17/25 17:35, Krzysztof Kozlowski wrote:
-> On 17/06/2025 10:48, Vivian Wang wrote:
->> Hi Krzysztof,
->>
->> On 6/17/25 14:21, Krzysztof Kozlowski wrote:
->>> On 17/06/2025 07:21, Vivian Wang wrote:
->>>> The SpacemiT K1 has various static translations of DMA accesses. Add
->>>> these as simple-bus nodes. Devices actually using these translation will
->>>> be added in later patches.
->>>>
->>>> The bus names are assigned according to consensus with SpacemiT [1].
->>> Read the feedback there:
->>>
->>> "So, as you are submitting the first node(s) under network_bus: bus@5, you
->>> should have this added into your patchset, instead of sending out with
->>> none."
->> As mentioned in the patch extra message, this is an RFC meant for
->> achieving consensus on what the bus nodes should look like, not an
->> actual patch meant to be taken. I was hoping I was clear on that, but I
->> guess that paragraph was buried too deep. Well...
->>> Plus simple bus within MMIO node needs unit address. IOW, don't mix MMIO
->>> with non-MMIO. I also suspect this does not pass checks, so the tools
->>> can do our review...
->> This DT passes "make dtbs_check" fine, with only unrelated warnings on
->> sec_uart1 that was already there before:
->>
->>   DTC [C] arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dtb
->> .../arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dtb: serial@f0612000
->> (spacemit,k1-uart): 'clock-names' is a required property
->>         from schema $id: http://devicetree.org/schemas/serial/8250.yaml#
->>   DTC [C] arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dtb
->> .../arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dtb: serial@f0612000
->> (spacemit,k1-uart): 'clock-names' is a required property
->>         from schema $id: http://devicetree.org/schemas/serial/8250.yaml#
->>
->> To be honest, I don't understand what "within MMIO node" means here.
->> Should the buses be taken out of /soc and added as its siblings?
-> These looks like children of simple-bus. If that's right: children of
-> simple-bus are supposed to have unit addresses (see also simple-bus in
-> the DT schema).
+Hi Alex,
 
-The history of the simple-bus.yaml bindings file suggests that a
-simple-bus with empty ranges and no unit address as a child of a parent
-simple-bus is intentionally allowed [1]. The commit message also
-suggests that even in older versions of the same file it was not the
-intention to disallow such nested buses.
+On Mon, Jun 16, 2025 at 07:51:36AM -0500, Alex Elder wrote:
+> If spacemit_i2c_xfer_msg() times out waiting for a message transfer to
+> complete, or if the hardware reports an error, it returns a negative
+> error code (-ETIMEDOUT, -EAGAIN, -ENXIO. or -EIO).
+> 
+> The sole caller of spacemit_i2c_xfer_msg() is spacemit_i2c_xfer(),
+> which is the i2c_algorithm->xfer callback function.  It currently
+> does not save the value returned by spacemit_i2c_xfer_msg().
+> 
+> The result is that transfer errors go unreported, and a caller
+> has no indication anything is wrong.
+> 
+> When this code was out for review, the return value *was* checked
+> in early versions.  But for some reason, that assignment got dropped
+> between versions 5 and 6 of the series, perhaps related to reworking
+> the code to merge spacemit_i2c_xfer_core() into spacemit_i2c_xfer().
+> 
+> Simply assigning the value returned to "ret" fixes the problem.
+> 
+> Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> Reviewed-by: Troy Mitchell <troymitchell988@gmail.com>
 
-[1]: https://github.com/devicetree-org/dt-schema/commit/ed9190d20f146d13e262cc9138506326f7d4da91
+merged to i2c/i2c-host-fixes.
 
-Regards,
-Vivian "dramforever" Wang
-
+Thanks,
+Andi
