@@ -1,195 +1,102 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3321FC2D1
-	for <spacemit@lists.linux.dev>; Tue, 17 Jun 2025 05:22:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3F928BA88;
+	Tue, 17 Jun 2025 06:00:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750137728; cv=none; b=cr94JDIthH7McVx2A0lIUfziAUMM/JWa8Yw6bHgQRGWk4URzK7BcE8CRlLQvgTS4BEVHMDbxv+jSV0jQm9tRtBngtJ67OLCukLVX6PfkbHOhyGTGfaDx7y5tBqzaIBybQOB0A5OxePkJ7MA1sLZN88/vN1J9xEp00NN+NXe5O7s=
+	t=1750140044; cv=none; b=ORccjx36T3ECqPW8Kp32evLQoc0fxMBJKeRN9UZl/CnnoXUU0ry4J1Fyxk+p2U0Y7etKjRbnF13UHRV62k1VdgpTtmeomboGwqf2SZQPAMlseXRS9qAY37k9nr/QBq7JvcmAsdv6fj0O5/+U91NHZ6bl6LNxVt4eL5nSYOy0B/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750137728; c=relaxed/simple;
-	bh=cRnTftsQUjF6W+K/7/X6ySP9QjlBwNHRD1tSe1u4PtA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=NIy6i3ea0HKY68BWNeGvvyF87kEwYcZUA8qtyf9xu5pyL+W3B9xVzAMDOj3UR/JV5y2b20ohDE/ejK0PHYP68yETT2GvYJRbu6OIGooRMDQhv49sWGZxaIgaE16L8b5VlSl/y1L3OH/P4AUWRwG981GHJ4XZMDo9cJqrblAnhOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [210.73.43.2])
-	by APP-01 (Coremail) with SMTP id qwCowAAXjNpn+1Bo4TccBw--.27922S2;
-	Tue, 17 Jun 2025 13:21:44 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Tue, 17 Jun 2025 13:21:02 +0800
-Subject: [PATCH RFC] riscv: dts: spacemit: Add DMA translation buses for K1
+	s=arc-20240116; t=1750140044; c=relaxed/simple;
+	bh=12KagmyykjPqQMTUr7/Xg6vcmrHrd0PDZscIpv7eR6E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M2AVzz7H8GqM1Sipp8sHCoJgcIAFH+1Q1NsrulJmWUjqo8QrRVEdtW+Agh7IH6tYLAhkeWQYgdPd6hT1tOLmq/mtAnG9oJfZZ186SlCryZ1lby5peXoNBfQFGnBRpAWxwesm7hlkEZTxyoWl5H/zLpoSUBDUUML3kUo4Vd9QMTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q+n75FWs; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q+n75FWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C90C4CEE3;
+	Tue, 17 Jun 2025 06:00:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750140042;
+	bh=12KagmyykjPqQMTUr7/Xg6vcmrHrd0PDZscIpv7eR6E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q+n75FWsGqTzvmHUfHuMgS8O6lwy9yaKs48ViOPWs569cr3u+we5FiHAA0vYfyqk+
+	 my6j6uttoFlsLTeK0k49Nj1iRK3xyV/SjceCjivB1g9kE3w3AQiaGhUjNEaRZNx6ME
+	 wYsci9Ej9IZ7BSag4Bx0P8gxTFfX/Z6x+hKnVxO9ET+FzwfZGKeyDy/aYwZR8u+Obr
+	 gWoUbDVHZDcivZLjzpmcY8l0/UH8QWcenREytrBpxe9f5bNsjHfHzH8FbC7EOZvL6g
+	 GmxGfx+IxjKctiwGB2tKQovlgzAELQpypBfLvhOIBcySeYGe6aA+ypExS5hDA4f2GX
+	 qQ0/CB6XuX+DA==
+Date: Tue, 17 Jun 2025 11:30:38 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	dlan@gentoo.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+	drew@pdp7.com, emil.renner.berthing@canonical.com,
+	inochiama@gmail.com, geert+renesas@glider.be, tglx@linutronix.de,
+	hal.feng@starfivetech.com, joel@jms.id.au, duje.mihanovic@skole.hr,
+	elder@riscstar.com, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 2/8] dma: mmp_pdma: Add optional clock support
+Message-ID: <aFEEhik8x2k5_myN@vaman>
+References: <20250611125723.181711-1-guodong@riscstar.com>
+ <20250611125723.181711-3-guodong@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250617-k1-dma-buses-rfc-wip-v1-1-c8ec192fbf58@iscas.ac.cn>
-X-B4-Tracking: v=1; b=H4sIAD37UGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDM0Mz3WxD3ZTcRN2k0uLUYt2itGTd8swCXeOkVPNEA8M0E/NkCyWg1oK
- i1LTMCrCx0UpBbs5KsbW1APFqdbdrAAAA
-X-Change-ID: 20250616-k1-dma-buses-rfc-wip-3be7a01f47c8
-To: Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>, 
- Ze Huang <huangze@whut.edu.cn>, spacemit@lists.linux.dev
-Cc: Vivian Wang <uwu@dram.page>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Vivian Wang <wangruikang@iscas.ac.cn>
-X-Mailer: b4 0.14.2
-X-CM-TRANSID:qwCowAAXjNpn+1Bo4TccBw--.27922S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxAFy3AFy3Xr4ktFyfKFyDJrb_yoWrCrWrpr
-	WDAFs5KrWkJr17AwsxZrW2q3W8Ja1vkFWkGr1DGry5ArnYqF4Utr4Ut343WFyUJr1xXwnI
-	qFsrAr1kKF1DA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9K14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
-	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
-	n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_GrWl42xK82IYc2Ij64vIr4
-	1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK
-	67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI
-	8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAv
-	wI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14
-	v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUYku4DUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250611125723.181711-3-guodong@riscstar.com>
 
-The SpacemiT K1 has various static translations of DMA accesses. Add
-these as simple-bus nodes. Devices actually using these translation will
-be added in later patches.
+On 11-06-25, 20:57, Guodong Xu wrote:
+> Add support for retrieving and enabling an optional clock using
+> devm_clk_get_optional_enabled() during mmp_pdma_probe().
 
-The bus names are assigned according to consensus with SpacemiT [1].
+Its dmaengine, please tag them as such
 
-[1] https://lore.kernel.org/all/CAH1PCMaC+imcMZCFYtRdmH6ge=dPgnANn_GqVfsGRS=+YhyJCw@mail.gmail.com/
+> 
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> ---
+>  drivers/dma/mmp_pdma.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+> index a95d31103d30..4a6dbf558237 100644
+> --- a/drivers/dma/mmp_pdma.c
+> +++ b/drivers/dma/mmp_pdma.c
+> @@ -15,6 +15,7 @@
+>  #include <linux/device.h>
+>  #include <linux/platform_data/mmp_dma.h>
+>  #include <linux/dmapool.h>
+> +#include <linux/clk.h>
+>  #include <linux/of_dma.h>
+>  #include <linux/of.h>
+>  
+> @@ -1019,6 +1020,7 @@ static int mmp_pdma_probe(struct platform_device *op)
+>  {
+>  	struct mmp_pdma_device *pdev;
+>  	struct mmp_dma_platdata *pdata = dev_get_platdata(&op->dev);
+> +	struct clk *clk;
+>  	int i, ret, irq = 0;
+>  	int dma_channels = 0, irq_num = 0;
+>  	const enum dma_slave_buswidth widths =
+> @@ -1037,6 +1039,10 @@ static int mmp_pdma_probe(struct platform_device *op)
+>  	if (IS_ERR(pdev->base))
+>  		return PTR_ERR(pdev->base);
+>  
+> +	clk = devm_clk_get_optional_enabled(pdev->dev, NULL);
+> +	if (IS_ERR(clk))
+> +		return PTR_ERR(clk);
+> +
+>  	if (pdev->dev->of_node) {
+>  		/* Parse new and deprecated dma-channels properties */
+>  		if (of_property_read_u32(pdev->dev->of_node, "dma-channels",
+> -- 
+> 2.43.0
 
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
----
-This is my concrete proposal for representing DMA translations for
-SpacemiT K1.
-
-For context, memory on the SpacemiT K1 is split into two chunks:
-
-- 0x0000_0000 to 0x8000_0000: First 2 GiB of memory
-- 0x1_0000_0000 above: Rest of memory
-
-DMA-capable devices on the K1 all have access to the lower 2G of memory
-through an identity mapping. However, for the upper region of memory,
-each device falls under one of six different mappings. The mappings are
-provided in this patch as simple-bus nodes that device nodes should be
-added to.
-
-This patch is an RFC because it is not meant to be applied, or at least,
-not certainly meant to be applied. Instead, this is an attempt to come
-to a consensus on how these bus nodes should look like.
-
-More specifically, I propose that the process proceeds as follows:
-
-- Firstly, relevant parties agree on these bus nodes given here.
-- After that, each time the first user of a bus appears, the series
-  should include a patch to add the bus required for that driver.
-- If a driver being submitted uses the same bus as another one that has
-  been submitted but hasn't yet landed, it can depend on the bus patch
-  from that previous series.
-
-For conventions regarding coding style, I propose that:
-
-- #address-cells and #size-cells are 2 for consistency
-- These bus nodes are put at the end of /soc, inside /soc
-- These bus nodes are sorted alphabetically, not in vendor's order
-- Devices are added into *-bus nodes directly, not appended towards the
-  end with a label reference
- 
-The K1 DMA translations are *not* interconnects, since they do not
-provide any configuration capabilities.
-
-These bus nodes names and properties are provided compliant with
-"simple-bus" bindings, and should pass "make dtbs_check".
-
-Remaining questions:
-
-- Should storage-bus exist? Or should drivers under it simply specify
-  32-bit DMA?
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 53 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
-
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index c0f8c5fca975d73b6ea6886da13fcf55289cb16c..efefed21b9fa1ab9c6ac3d24cd0cca8958b85184 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -562,5 +562,58 @@ sec_uart1: serial@f0612000 {
- 			reg-io-width = <4>;
- 			status = "reserved"; /* for TEE usage */
- 		};
-+
-+		camera-bus {
-+			compatible = "simple-bus";
-+			ranges;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
-+				     <0x0 0x80000000 0x1 0x00000000 0x1 0x80000000>;
-+		};
-+
-+		dma-bus {
-+			compatible = "simple-bus";
-+			ranges;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
-+				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
-+		};
-+
-+		multimedia-bus {
-+			compatible = "simple-bus";
-+			ranges;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
-+				     <0x0 0x80000000 0x1 0x00000000 0x3 0x80000000>;
-+		};
-+
-+		network-bus {
-+			compatible = "simple-bus";
-+			ranges;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
-+				     <0x0 0x80000000 0x1 0x00000000 0x0 0x80000000>;
-+		};
-+
-+		pcie-bus {
-+			compatible = "simple-bus";
-+			ranges;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
-+				     <0x0 0xb8000000 0x1 0x38000000 0x3 0x48000000>;
-+		};
-+
-+		storage-bus {
-+			compatible = "simple-bus";
-+			ranges;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>;
-+		};
- 	};
- };
-
----
-base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
-change-id: 20250616-k1-dma-buses-rfc-wip-3be7a01f47c8
-
-Best regards,
 -- 
-Vivian "dramforever" Wang
-
+~Vinod
