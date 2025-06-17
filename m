@@ -1,122 +1,195 @@
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC697285C9B
-	for <spacemit@lists.linux.dev>; Mon, 16 Jun 2025 12:51:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3321FC2D1
+	for <spacemit@lists.linux.dev>; Tue, 17 Jun 2025 05:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750078304; cv=none; b=WIrwk+PdiMvrP4Pn5yll58VFryBitcC+D48mCPsXyHi2j51hj0xntiH4Bguju0UfrmFw/WiMmnqGzkU3zcquogbDFhTasX6+ZxZ/uJcErRQdQkFHDK+5sN9Y88lvLA3/d73p5UzniV5LvXXGqPR2jga2krvsWV1KJjZohltioew=
+	t=1750137728; cv=none; b=cr94JDIthH7McVx2A0lIUfziAUMM/JWa8Yw6bHgQRGWk4URzK7BcE8CRlLQvgTS4BEVHMDbxv+jSV0jQm9tRtBngtJ67OLCukLVX6PfkbHOhyGTGfaDx7y5tBqzaIBybQOB0A5OxePkJ7MA1sLZN88/vN1J9xEp00NN+NXe5O7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750078304; c=relaxed/simple;
-	bh=9k9Wh/NoYsqbKlKsFE6tFkqP7y1xy/55zKbtVtGtJXE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ToHqQSKk7hxBQUfRcV9phJBsF4SLUrT5V0+1QBLmjpzw40e0Jsne1mTkrlN7jsX6STBZspR6MYmAz3u5xcIHMp5JkrsVDfBb1pnjwRluTlU5n3GLhSMCvCTzgJpQbnntUPUiDtZc6IhMCo+vS3CR6znq736i+sIBDTMVu0BLL9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=a2x+BYt5; arc=none smtp.client-ip=209.85.166.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="a2x+BYt5"
-Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-86d0c598433so119018439f.3
-        for <spacemit@lists.linux.dev>; Mon, 16 Jun 2025 05:51:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1750078301; x=1750683101; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=S/rRqga4nciTe+40s1lGUJde2Ttgzu3tg/+nM/gCFAE=;
-        b=a2x+BYt5XQJj08cklb+ywTiyWzfz958TNNbXf1Wb2zQtcI2fJrXW5l4CqZf9VquXZU
-         CcpsfTA8zLLoJkAtbHZkANaFzkVPBXOJ5hntjRo2IzQYy0jov0L1c27pzIXYIZ5QWdUf
-         bDJB15bvDpVQD4u2lf8LNDsXpfcMqyjiKM48TGze+ORToba7jCKMIeE0tY9h4qLJ6VUr
-         MpbMdfu4MYUTlearu8Anof4KBdNZnVZAebhPN0Sa6cX4iUVzYut9QV6aVctAballC21y
-         VfwTnS0Vzz9tZzXA1RszZr726DO2T76vOA2NonGec8OzNVa76haHb7sdt4MjfHtBJ732
-         y3nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750078301; x=1750683101;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=S/rRqga4nciTe+40s1lGUJde2Ttgzu3tg/+nM/gCFAE=;
-        b=t9e8di9U0GJXkxfWUavDY1skoejTdRngjJ/cG0UXTGnsNcHm/w414UZulU4xkZcAbw
-         ra/BrLh7fh7a8bcf1AXM9fkim25sQSc41fT2TrDNni4O5QLcXiWQROISLBA08WuLQ3Id
-         sztRHMb5NgkTxvxtIni4hl/bDLXX3Yjky7mrW6BDBrYTMIHZz64jKaztCNW22xXiwwnK
-         kuZ+FAAyE2vbxXFFmlH2UYmRKXbQXJyxOmnom+h8/Iv7zEk31cggiqLexUySom266cF6
-         +VbGIWePAcr7PhLM+KHKUmDywG2e5WuoX2RdGlMm0tSQYnn4Wmm52BJe5axqIvfO3Vu0
-         BmeA==
-X-Forwarded-Encrypted: i=1; AJvYcCVoHOBVObB3RCA6/cwmK6TN2NoiOmSheqRFpOzwtHrzvMI6Ez30mse1MFyneLYbZXUx46jsBQzHaw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz4skQPyhka6pkdkdRtlb0N8dbCOz2Tsx8TFj9NC0zCGZMaLi/9
-	97PMERyDsKvD7hspE8ZTAZ3ZY3cr2hdYojwh22KLd3wq7iDMQRpGR7mUvEKXzZ5aq4k=
-X-Gm-Gg: ASbGncvaeyzRFs8c/qEtiXVbLf+vOIQW0MpXgGConveVUDoq9RJ3TbygOvaCcaXg7P5
-	Imtz6O91OWI1VDxPNtpE8iDMUI95npb0ZQLy1IZ6htVhNmpE4ZCnOvqkfF4usiHIXRZs6wrUXrC
-	M526pEPZcXXJbWrIU02qG1YoJMvwqPKNLd69nFCjst8AJOPFvJSZ0/ul/Vl1jmINOXjHkUH0Y2o
-	/Fs+l4nRSm+WMbK7wkp7GBJJJyxYB0fYuFKloQh+35rZUsOT7+q9asJ6Mb/mph7HcXHOAqkWoPI
-	f9hnz5MEQlmZBogNcHADizP5vFMA4/TdeFPJm0CcIZZBZ0yMiUWH6Zs+HwXxD1K7ET0oasD6AUk
-	yp35h50S9M+qjYi2Iel8j2aTE+zZA42I=
-X-Google-Smtp-Source: AGHT+IGBM9IfcIVPXLIx3r77XwCbfXk8tkksQXCR2d/8SBqn06Uhn07s7o49RLoWiyjUv193p5+5QQ==
-X-Received: by 2002:a05:6e02:1529:b0:3dd:cbbb:b731 with SMTP id e9e14a558f8ab-3de07c55b92mr92098655ab.9.1750078300563;
-        Mon, 16 Jun 2025 05:51:40 -0700 (PDT)
-Received: from presto.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3de019b442fsm20352865ab.2.2025.06.16.05.51.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jun 2025 05:51:40 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: andi.shyti@kernel.org,
-	dlan@gentoo.org,
-	troymitchell988@gmail.com
-Cc: elder@riscstar.com,
-	linux-i2c@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v3] i2c: k1: check for transfer error
-Date: Mon, 16 Jun 2025 07:51:36 -0500
-Message-ID: <20250616125137.1555453-1-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1750137728; c=relaxed/simple;
+	bh=cRnTftsQUjF6W+K/7/X6ySP9QjlBwNHRD1tSe1u4PtA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=NIy6i3ea0HKY68BWNeGvvyF87kEwYcZUA8qtyf9xu5pyL+W3B9xVzAMDOj3UR/JV5y2b20ohDE/ejK0PHYP68yETT2GvYJRbu6OIGooRMDQhv49sWGZxaIgaE16L8b5VlSl/y1L3OH/P4AUWRwG981GHJ4XZMDo9cJqrblAnhOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [210.73.43.2])
+	by APP-01 (Coremail) with SMTP id qwCowAAXjNpn+1Bo4TccBw--.27922S2;
+	Tue, 17 Jun 2025 13:21:44 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Tue, 17 Jun 2025 13:21:02 +0800
+Subject: [PATCH RFC] riscv: dts: spacemit: Add DMA translation buses for K1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250617-k1-dma-buses-rfc-wip-v1-1-c8ec192fbf58@iscas.ac.cn>
+X-B4-Tracking: v=1; b=H4sIAD37UGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDM0Mz3WxD3ZTcRN2k0uLUYt2itGTd8swCXeOkVPNEA8M0E/NkCyWg1oK
+ i1LTMCrCx0UpBbs5KsbW1APFqdbdrAAAA
+X-Change-ID: 20250616-k1-dma-buses-rfc-wip-3be7a01f47c8
+To: Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>, 
+ Ze Huang <huangze@whut.edu.cn>, spacemit@lists.linux.dev
+Cc: Vivian Wang <uwu@dram.page>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ Vivian Wang <wangruikang@iscas.ac.cn>
+X-Mailer: b4 0.14.2
+X-CM-TRANSID:qwCowAAXjNpn+1Bo4TccBw--.27922S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxAFy3AFy3Xr4ktFyfKFyDJrb_yoWrCrWrpr
+	WDAFs5KrWkJr17AwsxZrW2q3W8Ja1vkFWkGr1DGry5ArnYqF4Utr4Ut343WFyUJr1xXwnI
+	qFsrAr1kKF1DA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9K14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
+	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
+	n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_GrWl42xK82IYc2Ij64vIr4
+	1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK
+	67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI
+	8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAv
+	wI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14
+	v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUYku4DUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-If spacemit_i2c_xfer_msg() times out waiting for a message transfer to
-complete, or if the hardware reports an error, it returns a negative
-error code (-ETIMEDOUT, -EAGAIN, -ENXIO. or -EIO).
+The SpacemiT K1 has various static translations of DMA accesses. Add
+these as simple-bus nodes. Devices actually using these translation will
+be added in later patches.
 
-The sole caller of spacemit_i2c_xfer_msg() is spacemit_i2c_xfer(),
-which is the i2c_algorithm->xfer callback function.  It currently
-does not save the value returned by spacemit_i2c_xfer_msg().
+The bus names are assigned according to consensus with SpacemiT [1].
 
-The result is that transfer errors go unreported, and a caller
-has no indication anything is wrong.
+[1] https://lore.kernel.org/all/CAH1PCMaC+imcMZCFYtRdmH6ge=dPgnANn_GqVfsGRS=+YhyJCw@mail.gmail.com/
 
-When this code was out for review, the return value *was* checked
-in early versions.  But for some reason, that assignment got dropped
-between versions 5 and 6 of the series, perhaps related to reworking
-the code to merge spacemit_i2c_xfer_core() into spacemit_i2c_xfer().
-
-Simply assigning the value returned to "ret" fixes the problem.
-
-Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Troy Mitchell <troymitchell988@gmail.com>
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
 ---
-v3: Rebased on v6.16-rc2; included version in message subject
+This is my concrete proposal for representing DMA translations for
+SpacemiT K1.
 
- drivers/i2c/busses/i2c-k1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+For context, memory on the SpacemiT K1 is split into two chunks:
 
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-index 5965b4cf6220e..b68a21fff0b56 100644
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -477,7 +477,7 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
+- 0x0000_0000 to 0x8000_0000: First 2 GiB of memory
+- 0x1_0000_0000 above: Rest of memory
+
+DMA-capable devices on the K1 all have access to the lower 2G of memory
+through an identity mapping. However, for the upper region of memory,
+each device falls under one of six different mappings. The mappings are
+provided in this patch as simple-bus nodes that device nodes should be
+added to.
+
+This patch is an RFC because it is not meant to be applied, or at least,
+not certainly meant to be applied. Instead, this is an attempt to come
+to a consensus on how these bus nodes should look like.
+
+More specifically, I propose that the process proceeds as follows:
+
+- Firstly, relevant parties agree on these bus nodes given here.
+- After that, each time the first user of a bus appears, the series
+  should include a patch to add the bus required for that driver.
+- If a driver being submitted uses the same bus as another one that has
+  been submitted but hasn't yet landed, it can depend on the bus patch
+  from that previous series.
+
+For conventions regarding coding style, I propose that:
+
+- #address-cells and #size-cells are 2 for consistency
+- These bus nodes are put at the end of /soc, inside /soc
+- These bus nodes are sorted alphabetically, not in vendor's order
+- Devices are added into *-bus nodes directly, not appended towards the
+  end with a label reference
  
- 	ret = spacemit_i2c_wait_bus_idle(i2c);
- 	if (!ret)
--		spacemit_i2c_xfer_msg(i2c);
-+		ret = spacemit_i2c_xfer_msg(i2c);
- 	else if (ret < 0)
- 		dev_dbg(i2c->dev, "i2c transfer error: %d\n", ret);
- 	else
+The K1 DMA translations are *not* interconnects, since they do not
+provide any configuration capabilities.
+
+These bus nodes names and properties are provided compliant with
+"simple-bus" bindings, and should pass "make dtbs_check".
+
+Remaining questions:
+
+- Should storage-bus exist? Or should drivers under it simply specify
+  32-bit DMA?
+---
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 53 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index c0f8c5fca975d73b6ea6886da13fcf55289cb16c..efefed21b9fa1ab9c6ac3d24cd0cca8958b85184 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -562,5 +562,58 @@ sec_uart1: serial@f0612000 {
+ 			reg-io-width = <4>;
+ 			status = "reserved"; /* for TEE usage */
+ 		};
++
++		camera-bus {
++			compatible = "simple-bus";
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
++				     <0x0 0x80000000 0x1 0x00000000 0x1 0x80000000>;
++		};
++
++		dma-bus {
++			compatible = "simple-bus";
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
++				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
++		};
++
++		multimedia-bus {
++			compatible = "simple-bus";
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
++				     <0x0 0x80000000 0x1 0x00000000 0x3 0x80000000>;
++		};
++
++		network-bus {
++			compatible = "simple-bus";
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
++				     <0x0 0x80000000 0x1 0x00000000 0x0 0x80000000>;
++		};
++
++		pcie-bus {
++			compatible = "simple-bus";
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
++				     <0x0 0xb8000000 0x1 0x38000000 0x3 0x48000000>;
++		};
++
++		storage-bus {
++			compatible = "simple-bus";
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>;
++		};
+ 	};
+ };
+
+---
+base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+change-id: 20250616-k1-dma-buses-rfc-wip-3be7a01f47c8
+
+Best regards,
 -- 
-2.45.2
+Vivian "dramforever" Wang
 
