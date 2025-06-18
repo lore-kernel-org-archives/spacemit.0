@@ -1,174 +1,140 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2401DB551
-	for <spacemit@lists.linux.dev>; Wed, 18 Jun 2025 03:41:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0957C29826D
+	for <spacemit@lists.linux.dev>; Wed, 18 Jun 2025 11:17:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750218110; cv=none; b=He1vDHOTTmmnfv29v+zdUAFDcc0Y9h5wuARnzgxu4wSmNPrvJHx0e4Dh+SJu7y1TzVLj++/YgOIcJ22yGrYqjHx/WPZzwvSf7vNmk6RGJIZQrMiB1EVU4ALxQgV9zGL08PMCLKhG54yzpaAXnLk/IFzraVjcUlQImlMcgoFLhKs=
+	t=1750245470; cv=none; b=obSRlRdOeRawRMnFTs0J3lYolY/thrjhRlu2lus7VJCtZcIeHZN1+aBWZr6bzRmc+qiqJ7kqLxdQOJVxjgcW9M1hcHqGQ7NXnojrokd+0D3fd8y1F1ugSqH0NK8+7LRkFxOy4kaG77OPEzu43KOtJEUakQP1dyX/8Oh8AvHlmV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750218110; c=relaxed/simple;
-	bh=Z9hdqahs2Rbblv01YhByI69TeKnDwVGAeUoJCjCuv90=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gy0WnNMJzPpgXi+L5Kw63L+P9owDBu6drg5ZjrgA7RD9XgZhpmNFRFWgN4jXu3JfosNeX2608AmrW4KPhGQLtY9JjY7H/531KqbHaT9IDAdQERjr4DkO/qZd/lNi+N+iCbWdtRXMib93Ta6UhuechvDvINkIV6Ljsu8DBFv1cpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [210.73.43.2])
-	by APP-01 (Coremail) with SMTP id qwCowABnFtVpNVJoV95NBw--.6548S6;
-	Wed, 18 Jun 2025 11:41:31 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Wed, 18 Jun 2025 11:40:49 +0800
-Subject: [PATCH net-next v2 4/6] riscv: dts: spacemit: Add Ethernet support
- for K1
+	s=arc-20240116; t=1750245470; c=relaxed/simple;
+	bh=iVOLCRiVLGdX5WKR0FF1NvG8noE1FplUV3SfRDoqnzU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lhv1LgVnOC3aNAuyN7+Ru2k42rGI71Mggg5+O6IrYOOFAR7RlVwd2FfSypkIurdSN433BLJJh6eOR73gxqu3izc1k5cMN7ABWJN+QNSSfujl/VEEPvp6KIZ00F9a1FGTf6g9AJe1vZpBpD4F2tW8FFJOAzyhXm+ISTq/SDLN3IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.232])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E2552341E5E;
+	Wed, 18 Jun 2025 11:17:47 +0000 (UTC)
+Date: Wed, 18 Jun 2025 11:17:37 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Alex Elder <elder@riscstar.com>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	mturquette@baylibre.com, sboyd@kernel.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	heylenay@4d2.org, inochiama@outlook.com, guodong@riscstar.com,
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v11 0/6] reset: spacemit: add K1 reset support
+Message-ID: <20250618111737-GYA157089@gentoo>
+References: <20250613011139.1201702-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250618-net-k1-emac-v2-4-94f5f07227a8@iscas.ac.cn>
-References: <20250618-net-k1-emac-v2-0-94f5f07227a8@iscas.ac.cn>
-In-Reply-To: <20250618-net-k1-emac-v2-0-94f5f07227a8@iscas.ac.cn>
-To: Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Vivian Wang <wangruikang@iscas.ac.cn>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Vivian Wang <uwu@dram.page>, Lukas Bulwahn <lukas.bulwahn@redhat.com>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>, 
- netdev@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-CM-TRANSID:qwCowABnFtVpNVJoV95NBw--.6548S6
-X-Coremail-Antispam: 1UD129KBjvJXoWxurW7tw43KF47XFW7GFWrAFb_yoW5tF47pa
-	yUAFs3Cr4xCw1rCwnayF9rWFs5Ga1FkFyrGr9rGFWxGF4rtry7tFn0yry3Xw48Zws8A3y8
-	Gr48XrWxKFnrtw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUQa14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
-	kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
-	z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
-	4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr1j
-	6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6x
-	IIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_
-	Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8c
-	xan2IY04v7MxkF7I0En4kS14v26r4a6rW5MxkIecxEwVAFwVW8GwCF04k20xvY0x0EwIxG
-	rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
-	vE14v26r106r1rMI8E67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IY
-	x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJwCI42IY6xAIw2
-	0EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x02
-	67AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x0pRrsqJUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250613011139.1201702-1-elder@riscstar.com>
 
-Add nodes for each of the two Ethernet MACs on K1 with generic
-properties. Also add "gmac" pins to pinctrl config.
+Hi ALL,
+  As the reset driver going through several review cycles,
+it becomes quite calm down now, I'd like to request to merge
+it into v6.17, because various drivers (pwm, emac..) will depend
+on it, even in the worst case if there is problem, I believe Alex
+will help to address..
 
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
----
- arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi | 48 ++++++++++++++++++++++++++++
- arch/riscv/boot/dts/spacemit/k1.dtsi         | 22 +++++++++++++
- 2 files changed, 70 insertions(+)
+Hi Philipp,
+  I'd like to query if you willing to take the reset driver -
+patch [5/6] through the reset tree? It sounds more intuitive,
+which also will avoid potential conflicts with Kconfig/Makefile..
+  I've created a prerequisite immutable tag which could be
+shared between clock and reset subsytem. It's tag -
+spacemit-reset-deps-for-6.17 at SpacemiT's SoC tree [1], which 
+effectively are patches [1-4] of this series.
+But, to make your life easy, I've also applied patch [5/6] at tag
+spacemit-reset-drv-for-6.17 [2] which has a small macro adjustment
+requested by Alex at [3]
+  Let me know what you think of this, thanks
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-index 283663647a86ff137917ced8bfe79a129c86342a..4a7fbb40858dc1e7d2a55d4bb8547d5472ec4fc3 100644
---- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-@@ -20,4 +20,52 @@ uart0-2-pins {
- 			drive-strength = <32>;
- 		};
- 	};
-+
-+	gmac0_cfg: gmac0-cfg {
-+		gmac0-pins {
-+			pinmux = <K1_PADCONF(0, 1)>,	/* gmac0_rxdv */
-+				 <K1_PADCONF(1, 1)>,	/* gmac0_rx_d0 */
-+				 <K1_PADCONF(2, 1)>,	/* gmac0_rx_d1 */
-+				 <K1_PADCONF(3, 1)>,	/* gmac0_rx_clk */
-+				 <K1_PADCONF(4, 1)>,	/* gmac0_rx_d2 */
-+				 <K1_PADCONF(5, 1)>,	/* gmac0_rx_d3 */
-+				 <K1_PADCONF(6, 1)>,	/* gmac0_tx_d0 */
-+				 <K1_PADCONF(7, 1)>,	/* gmac0_tx_d1 */
-+				 <K1_PADCONF(8, 1)>,	/* gmac0_tx */
-+				 <K1_PADCONF(9, 1)>,	/* gmac0_tx_d2 */
-+				 <K1_PADCONF(10, 1)>,	/* gmac0_tx_d3 */
-+				 <K1_PADCONF(11, 1)>,	/* gmac0_tx_en */
-+				 <K1_PADCONF(12, 1)>,	/* gmac0_mdc */
-+				 <K1_PADCONF(13, 1)>,	/* gmac0_mdio */
-+				 <K1_PADCONF(14, 1)>,	/* gmac0_int_n */
-+				 <K1_PADCONF(45, 1)>;	/* gmac0_clk_ref */
-+
-+			bias-pull-up = <0>;
-+			drive-strength = <21>;
-+		};
-+	};
-+
-+	gmac1_cfg: gmac1-cfg {
-+		gmac1-pins {
-+			pinmux = <K1_PADCONF(29, 1)>,	/* gmac1_rxdv */
-+				 <K1_PADCONF(30, 1)>,	/* gmac1_rx_d0 */
-+				 <K1_PADCONF(31, 1)>,	/* gmac1_rx_d1 */
-+				 <K1_PADCONF(32, 1)>,	/* gmac1_rx_clk */
-+				 <K1_PADCONF(33, 1)>,	/* gmac1_rx_d2 */
-+				 <K1_PADCONF(34, 1)>,	/* gmac1_rx_d3 */
-+				 <K1_PADCONF(35, 1)>,	/* gmac1_tx_d0 */
-+				 <K1_PADCONF(36, 1)>,	/* gmac1_tx_d1 */
-+				 <K1_PADCONF(37, 1)>,	/* gmac1_tx */
-+				 <K1_PADCONF(38, 1)>,	/* gmac1_tx_d2 */
-+				 <K1_PADCONF(39, 1)>,	/* gmac1_tx_d3 */
-+				 <K1_PADCONF(40, 1)>,	/* gmac1_tx_en */
-+				 <K1_PADCONF(41, 1)>,	/* gmac1_mdc */
-+				 <K1_PADCONF(42, 1)>,	/* gmac1_mdio */
-+				 <K1_PADCONF(43, 1)>,	/* gmac1_int_n */
-+				 <K1_PADCONF(46, 1)>;	/* gmac1_clk_ref */
-+
-+			bias-pull-up = <0>;
-+			drive-strength = <21>;
-+		};
-+	};
- };
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index b1b87ce1ab70faa8fb61fb27bc1845fe40b35561..819d3bf18a103c083f17ad494fb3470c9eebd8bc 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -588,6 +588,28 @@ network-bus {
- 			#size-cells = <2>;
- 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
- 				     <0x0 0x80000000 0x1 0x00000000 0x0 0x80000000>;
-+
-+			eth0: ethernet@cac80000 {
-+				compatible = "spacemit,k1-emac";
-+				reg = <0x0 0xcac80000 0x0 0x420>;
-+				clocks = <&syscon_apmu CLK_EMAC0_BUS>;
-+				interrupts = <131>;
-+				mac-address = [ 00 00 00 00 00 00 ];
-+				resets = <&syscon_apmu RESET_EMAC0>;
-+				spacemit,apmu = <&syscon_apmu 0x3e4>;
-+				status = "disabled";
-+			};
-+
-+			eth1: ethernet@cac81000 {
-+				compatible = "spacemit,k1-emac";
-+				reg = <0x0 0xcac81000 0x0 0x420>;
-+				clocks = <&syscon_apmu CLK_EMAC1_BUS>;
-+				interrupts = <133>;
-+				mac-address = [ 00 00 00 00 00 00 ];
-+				resets = <&syscon_apmu RESET_EMAC1>;
-+				spacemit,apmu = <&syscon_apmu 0x3ec>;
-+				status = "disabled";
-+			};
- 		};
- 	};
- };
+
+Link: https://github.com/spacemit-com/linux/releases/tag/spacemit-reset-deps-for-6.17 [1]
+Link: https://github.com/spacemit-com/linux/releases/tag/spacemit-reset-drv-for-6.17 [2]
+Link: https://lore.kernel.org/all/528522d9-0467-428c-820a-9e9c8a6166e7@riscstar.com/ [3]
+
+On 20:11 Thu 12 Jun     , Alex Elder wrote:
+> This series adds reset controller support for the SpacemiT K1 SoC.
+> A SpacemiT reset controller is implemented as an auxiliary device
+> associated with a clock controller (CCU).  A new header file
+> holds definitions used by both the clock and reset drivers.
+> 
+> In this version several "multi-bit" resets have been redefined as
+> individual ones.  For example, RESET_AUDIO had a mask that included
+> 3 bits.  Now there are 3 separate resets (one for each bit):
+> RESET_AUDIO_SYS; RESET_AUDIO_MCU_CORE; and RESET_AUDIO_APMU.
+> 
+> The reset symbols affected (their previous names) are:
+>     RESET_USB3_0 ->
+>       RESET_USB30_AHB,  RESET_USB30_VCC, RESET_USB30_PHY 
+>     RESET_AUDIO ->
+>       RESET_AUDIO_SYS, RESET_AUDIO_MCU, RESET_AUDIO_APMU
+>     RESET_PCIE0 ->
+>       RESET_PCI0_DBI, RESET_PCI0_SLV, RESET_PCI0_MSTR, RESET_PCI0_GLB
+>     RESET_PCIE1 ->
+>       RESET_PCI1_DBI, RESET_PCI1_SLV, RESET_PCI1_MSTR, RESET_PCI1_GLB
+>     RESET_PCIE2 ->
+>       RESET_PCI2_DBI, RESET_PCI2_SLV, RESET_PCI2_MSTR, RESET_PCI2_GLB
+> 
+> No other code has changed since v10.
+> 
+> All of these patches are available here:
+>   https://github.com/riscstar/linux/tree/outgoing/reset-v11
+> 
+> 					-Alex
+> 
+> Between version 10 and version 11:
+>   - Rebased onto Linux v6.16-rc1
+>   - Redefined several "multi-bit" resets as individual ones.
+> 
+> Here is version 10 of this series.
+>   https://lore.kernel.org/lkml/20250513215345.3631593-1-elder@riscstar.com/
+> 
+> All other history is available via that link, so I won't reproduce
+> it again here.
+> 
+> Alex Elder (6):
+>   dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
+>   soc: spacemit: create a header for clock/reset registers
+>   clk: spacemit: set up reset auxiliary devices
+>   clk: spacemit: define three reset-only CCUs
+>   reset: spacemit: add support for SpacemiT CCU resets
+>   riscv: dts: spacemit: add reset support for the K1 SoC
+> 
+>  .../soc/spacemit/spacemit,k1-syscon.yaml      |  29 +-
+>  arch/riscv/boot/dts/spacemit/k1.dtsi          |  18 ++
+>  drivers/clk/spacemit/Kconfig                  |   1 +
+>  drivers/clk/spacemit/ccu-k1.c                 | 239 +++++++-------
+>  drivers/reset/Kconfig                         |   9 +
+>  drivers/reset/Makefile                        |   1 +
+>  drivers/reset/reset-spacemit.c                | 304 ++++++++++++++++++
+>  .../dt-bindings/clock/spacemit,k1-syscon.h    | 141 ++++++++
+>  include/soc/spacemit/k1-syscon.h              | 160 +++++++++
+>  9 files changed, 775 insertions(+), 127 deletions(-)
+>  create mode 100644 drivers/reset/reset-spacemit.c
+>  create mode 100644 include/soc/spacemit/k1-syscon.h
+> 
+> 
+> base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
+> -- 
+> 2.45.2
+> 
 
 -- 
-2.49.0
-
+Yixun Lan (dlan)
