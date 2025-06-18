@@ -1,75 +1,137 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17232F530F;
-	Tue, 17 Jun 2025 21:59:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8081DB92C
+	for <spacemit@lists.linux.dev>; Wed, 18 Jun 2025 03:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750197595; cv=none; b=JEvL9rqGhYdS3D9AiRRi/INOZYklApTSiURYEq499m6siEtvFMtT5ON/IkIr88y07vAzCSwKvmkvWUaGFtyMYjW/7XYgWp2sJl9zUOjhd7hAFcFcLM80ttltjuYSL6MMzTcsqKftigVFfacejvBvxsGL84HO5uoEOvPmMhQ4O7w=
+	t=1750218105; cv=none; b=Ljk+gS11sJcxOS1TmZVCoDz3QeGfD7e8E+DLECgJ499jEr3d7WA9xbd8WKk+41CI3Qlg5qPx4jJP8JpdFSRAbUMptllp/w/hEtMYrTcOyQEHzUCEkH/rSyko7mXm/fcCXhmMpN+/kWolQEL/k1gWQXYhV9LBmJUo06g9gxPm2zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750197595; c=relaxed/simple;
-	bh=xHHJixx3Lxtq00FONQcRlica1C/F7ozio9W9iiXkh7g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pOGnsh2o0awGNlsTBlcFZdlxgMY5BaLFOjRtB3DfyXOmB9Ib4qZhTdi4bisfSmCCrAVvpVWczP+tncaknVYStPPQD9nzsPsQnPTEwwrMTD6Hay+j/1ocGqRCsu1EUaaA+EI0xBJ/iqEnFper9hHbgrus8MRZ7UAWkcw3Re6jXnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XZduI9lL; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XZduI9lL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42247C4CEEE;
-	Tue, 17 Jun 2025 21:59:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750197594;
-	bh=xHHJixx3Lxtq00FONQcRlica1C/F7ozio9W9iiXkh7g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XZduI9lL6OMAMscActEx013XDU/ayDjOiiDBPbZEjoDIV6gsYdfGEIWe37onzI9Q/
-	 2xP5OAubN2dqsesmxEd/kbCxIn1w2r6CStRV4E3w/IHvAlzZg/O7Sb8g/ta4/7+ynQ
-	 8HR1V4DBam6pQmIRp9PF8iTU0aDqrG6GttY2MhTO9URNoNwSCWw4+Dw6s+6KqRd0Um
-	 jGslPQWP3GHJtlmkVDy3hF4aLKev8S3snfPnCcmy0UGDqpVRTQn4ATp17z2pGa1Ecx
-	 oUjzib5uBz2+l18YDB2pU4BBUfla+Z7Vtq3Ipvyb9vQ46pASRgfhhMwPGAwpQfLihq
-	 kk4Yn85/w71/g==
-Date: Tue, 17 Jun 2025 23:59:48 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: dlan@gentoo.org, troymitchell988@gmail.com, linux-i2c@vger.kernel.org, 
-	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] i2c: k1: check for transfer error
-Message-ID: <ivxsr6vvchk4eiih3mkwrmskquywuzit33ibt4hrxwif5k6h3z@rxx4q2jhrrli>
-References: <20250616125137.1555453-1-elder@riscstar.com>
+	s=arc-20240116; t=1750218105; c=relaxed/simple;
+	bh=9H77K1wXIVMrkUEhdLbj9zONFcFfIqerrrUftTrchLI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=TkAoq5p+9hSdj62Jjl4csJFof8Q1T3NXmmGFzMdB8Szwlrux98/2NFcTlEFPSSt4MRWKLlYH5GhcMdCnE9x0VJ3W93g6/P6CDhRMfnVqd0JHpwCsGOHO9ulUSQ7RyquaQ3tgUTvBOIZRsTd1u51SIUyHdymnsHh21YUAd6ANy84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [210.73.43.2])
+	by APP-01 (Coremail) with SMTP id qwCowABnFtVpNVJoV95NBw--.6548S7;
+	Wed, 18 Jun 2025 11:41:31 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Wed, 18 Jun 2025 11:40:50 +0800
+Subject: [PATCH net-next v2 5/6] riscv: dts: spacemit: Add Ethernet support
+ for BPI-F3
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250616125137.1555453-1-elder@riscstar.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250618-net-k1-emac-v2-5-94f5f07227a8@iscas.ac.cn>
+References: <20250618-net-k1-emac-v2-0-94f5f07227a8@iscas.ac.cn>
+In-Reply-To: <20250618-net-k1-emac-v2-0-94f5f07227a8@iscas.ac.cn>
+To: Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Vivian Wang <wangruikang@iscas.ac.cn>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Vivian Wang <uwu@dram.page>, Lukas Bulwahn <lukas.bulwahn@redhat.com>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>, 
+ netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-CM-TRANSID:qwCowABnFtVpNVJoV95NBw--.6548S7
+X-Coremail-Antispam: 1UD129KBjvJXoW7Ary5JF47JFyxWw1UGrW7Arb_yoW8Wr1Dpr
+	WYkFs3urWDGr1Syw43Zryq9r4fGan5XrZ5G343uF1rJ3yqvF90vw15Kwn7tr1DWrW5X345
+	Wr4xtFWUur1qkw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUQa14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
+	kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
+	z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
+	4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr1j
+	6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6x
+	IIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_
+	Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8c
+	xan2IY04v7MxkF7I0En4kS14v26r4a6rW5MxkIecxEwVAFwVW8GwCF04k20xvY0x0EwIxG
+	rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
+	vE14v26r106r1rMI8E67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IY
+	x2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJwCI42IY6xAIw2
+	0EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x02
+	67AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x0pRrsqJUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Hi Alex,
+Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
+reset.
 
-On Mon, Jun 16, 2025 at 07:51:36AM -0500, Alex Elder wrote:
-> If spacemit_i2c_xfer_msg() times out waiting for a message transfer to
-> complete, or if the hardware reports an error, it returns a negative
-> error code (-ETIMEDOUT, -EAGAIN, -ENXIO. or -EIO).
-> 
-> The sole caller of spacemit_i2c_xfer_msg() is spacemit_i2c_xfer(),
-> which is the i2c_algorithm->xfer callback function.  It currently
-> does not save the value returned by spacemit_i2c_xfer_msg().
-> 
-> The result is that transfer errors go unreported, and a caller
-> has no indication anything is wrong.
-> 
-> When this code was out for review, the return value *was* checked
-> in early versions.  But for some reason, that assignment got dropped
-> between versions 5 and 6 of the series, perhaps related to reworking
-> the code to merge spacemit_i2c_xfer_core() into spacemit_i2c_xfer().
-> 
-> Simply assigning the value returned to "ret" fixes the problem.
-> 
-> Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-> Signed-off-by: Alex Elder <elder@riscstar.com>
-> Reviewed-by: Troy Mitchell <troymitchell988@gmail.com>
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 46 +++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-merged to i2c/i2c-host-fixes.
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index 816ef1bc358ec490aff184d5915d680dbd9f00cb..6b841dacb61ec6592339f174267f4936c0579597 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -35,3 +35,49 @@ &uart0 {
+ 	pinctrl-0 = <&uart0_2_cfg>;
+ 	status = "okay";
+ };
++
++&eth0 {
++	phy-handle = <&rgmii0>;
++	phy-mode = "rgmii-id";
++	pinctrl-names = "default";
++	pinctrl-0 = <&gmac0_cfg>;
++	rx-internal-delay-ps = <0>;
++	tx-internal-delay-ps = <0>;
++	status = "okay";
++
++	mdio-bus {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
++		reset-delay-us = <10000>;
++		reset-post-delay-us = <100000>;
++
++		rgmii0: phy@1 {
++			reg = <0x1>;
++		};
++	};
++};
++
++&eth1 {
++	phy-handle = <&rgmii1>;
++	phy-mode = "rgmii-id";
++	pinctrl-names = "default";
++	pinctrl-0 = <&gmac1_cfg>;
++	rx-internal-delay-ps = <0>;
++	tx-internal-delay-ps = <250>;
++	status = "okay";
++
++	mdio-bus {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
++		reset-delay-us = <10000>;
++		reset-post-delay-us = <100000>;
++
++		rgmii1: phy@1 {
++			reg = <0x1>;
++		};
++	};
++};
 
-Thanks,
-Andi
+-- 
+2.49.0
+
