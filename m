@@ -1,152 +1,126 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A909634
-	for <spacemit@lists.linux.dev>; Thu, 19 Jun 2025 03:33:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E222242D8C
+	for <spacemit@lists.linux.dev>; Thu, 19 Jun 2025 05:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750303988; cv=none; b=qWPCc90kjxggCiCLaWXLFcoSnR/oe8fzqZe7fB3Nt0iem6H3cLnY8DGynxlt7cRIWZ4DgX86WG3Xli/pYOuVerqq88t7paRISeVpBsLhVOR2nnUJVP8wZBHRGL2SRDcrELTaFnSG6WRoSOMtjj48sBSbteuKN1jraQdtZYE6R3I=
+	t=1750312004; cv=none; b=DzPcBcbbhoz3wn9ejIcEjROQwphcFYOf7Aub399J/DNrd0CE52YGuj6VtCpB3ok3Dtg9m8JF48x7c0e/o6sDOr5bglEdo+PPNlZ+LxVu6JGgMPcoU86okIU4Dc8XWum7QgOEvnFTAhqzZ1L2y/P5PB4fj0mpqkfQGheRPUc5iWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750303988; c=relaxed/simple;
-	bh=o1cKqqrl3WcFN3B0siBCxSoKZjsWO26WSrvEnr5m2so=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Nc0ZSLXpQ5yEKor/6HmAubDn8OPDY/xjwBCLsw4MZB7ECXd+Yftuv2Pu13ulsOJDY2Kj7p58UZr44yY/5ZkV2XQVWFItkRGTiWzcr3AoOfhs/3zLR7/PsB8T7QFEUTgO4VByydxWPkMrQsmAXH8whnr5Gi7Bd1oMZZtwg2I+BZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=2sSPsgOu; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="2sSPsgOu"
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e812fc35985so322050276.0
-        for <spacemit@lists.linux.dev>; Wed, 18 Jun 2025 20:33:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1750303985; x=1750908785; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=60xy8wKrKO+1t7u1ffpNKlJu/zpqbkDRJr1SZgFpJWI=;
-        b=2sSPsgOuxZB0gCs/gNUtOi9H9MpmZHCcMwkzc8cLgSmV1Be3Yac4Bg/3NC5L95uNct
-         mreHh51z2uJf3/NLSMFZweJ/Zd5gkmM1yfQU2F5Is5Tyu4/kgHeI0ZfGl+ksydAthh7s
-         LKBDxrXRjPvV+DoK8f/On1/OL9DClyGNZ7WWqBkViH2YyGWFL2Gsd5OPXjyX/sCntMPJ
-         X+1MKf3Hll4ajHEP7PtUsQFTS9We24HdewN6hwj0OHHR+y0NkMNZnr6C7/Lksflf2N1m
-         hrcCrYUKptwSCns9O1hnCzcfufVmZptH9sBGVPc9l2FKX8WUFFkGulPvHceEWmSjkUWp
-         6Opg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750303985; x=1750908785;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=60xy8wKrKO+1t7u1ffpNKlJu/zpqbkDRJr1SZgFpJWI=;
-        b=miKucqMNsHgtQSdXfzjfwoy7/bwrrJOYPUGWPzFTQgveGKfCOIRx6y0q51YeKoFiLr
-         YsNVBoonAr7LEUv0SQiD+jG1aNxOzpYHOqmyuEiINNXwppC7nbRszCzme9qGruPhm6X4
-         dmDeYVab0uikic0p2inIA61m3fztIGWhJYd8XFhu78RK+8hMU6GP18uqO4Un8bd00IZG
-         qZPinjoc7YRrJ0C8ESkBoT6/ixtjmoiCLGHJFh4SQXMxJRh3R7Xmib2D6dYgf8xCvJ36
-         7kbf4jVy8pVRHMSGc8CxeTyxGp5CDX5gECmJ9WZ8uBnahY2w94hOxaaWVZXHnkK8lLkq
-         dloQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVP3eKWDLYuHp0jqA7Q2Z9ASFaBCwmXlo/CBLkYczGOxCgoAiZN1Ni8Ce+1VfoBzaK2skDstj/qfQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxVYLBCSGgyQX2hQp+3Pg+np+Z9C57428Qc1sRjfthxUAZr8iHj
-	DHyKtn8eFtbeDT+6D/fvU0UcWAGn+ihO1VaYWnmW+pYy3vX9wthbKDvfOH9OJei8tWXBy9hJoJu
-	vVv0+Q1hgkRrH7YMUBhY+YKbcDkMq6K/4pfC7YURpJw==
-X-Gm-Gg: ASbGncslHdC6vGE3HS7GmYuFJ3wobnNXAyEeF3ACK4K/C9becD/FgBuRwypeHBYetni
-	WraRtUYT0bgxSSZEYp+Qmvu4Xoza+3CjjMaBlGCtf0lYSILxLY9ckmNIQsMLbBhR4uJWTD/GT/X
-	BN6tHbuLQc56N1BkOcRUmoX+wy31RzEhBgZdFgwg+CrA==
-X-Google-Smtp-Source: AGHT+IGcgeMo27lTgaDy9bbMAdcQR1xe3fMVRu8/9DI/Df3XMM3eOfwyhPsLvfFCCnJDn+wQXZA6c6yxRggua+A+pZ4=
-X-Received: by 2002:a05:690c:3501:b0:70a:36b2:8f94 with SMTP id
- 00721157ae682-7117544b8a1mr301360657b3.18.1750303985204; Wed, 18 Jun 2025
- 20:33:05 -0700 (PDT)
+	s=arc-20240116; t=1750312004; c=relaxed/simple;
+	bh=4S9XGg4nCpCNQhlQ1zGgYNASrs4TqBa8i2Q9xURUCkA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=s9vaWo3xhKjtesP8tkS5CR1kTuhMRxMQhsOBh/2pDQEdm6p9YlV65I36de2zAZ167hRZo5ViX7QDRnGl7OoCkhA6N+75zSlxJj5b13I4yPqwpMWcPvOY2YTaYe5NvEQ5u3bTvtn8Cu1SJoey4DVkI3GE/KHjDdViimM8u0vri1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.33.139] (unknown [210.73.43.2])
+	by APP-01 (Coremail) with SMTP id qwCowAAHt9UrpFNods+JBw--.6421S2;
+	Thu, 19 Jun 2025 13:46:20 +0800 (CST)
+Message-ID: <4036e3c2-8324-4eeb-9aa8-df1fbe9c7943@iscas.ac.cn>
+Date: Thu, 19 Jun 2025 13:46:19 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <221b0b7c-1879-4944-b9c4-cfb9fad9ae91@ghiti.fr> <mhng-131B0C4B-6AD9-4B65-BC91-927FD725E63F@palmerdabbelt-mac>
-In-Reply-To: <mhng-131B0C4B-6AD9-4B65-BC91-927FD725E63F@palmerdabbelt-mac>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Thu, 19 Jun 2025 11:32:54 +0800
-X-Gm-Features: AX0GCFtELZSRZqubW6lHS8cOASUCtzDo1F3xvWoK2w2WWudZIiFtQ6t7sUz4_vI
-Message-ID: <CAH1PCMYR2L8TeuveA-XTorQE70wmJVA1Vbt3Qhz0864Vr206PQ@mail.gmail.com>
-Subject: Re: [PATCH] riscv: defconfig: run savedefconfig to reorder it
-To: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, dlan@gentoo.org, Conor Dooley <conor@kernel.org>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, aou@eecs.berkeley.edu, 
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] mfd: spacemit: add support for SpacemiT PMICs
+To: Alex Elder <elder@riscstar.com>, lee@kernel.org, lgirdwood@gmail.com,
+ broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, dlan@gentoo.org
+Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr, troymitchell988@gmail.com, guodong@riscstar.com,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20250613210150.1468845-1-elder@riscstar.com>
+ <20250613210150.1468845-3-elder@riscstar.com>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20250613210150.1468845-3-elder@riscstar.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qwCowAAHt9UrpFNods+JBw--.6421S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7WF48Aw17uw17Ar1rAry5urg_yoW8Wry3pF
+	Z8Zr93uF1UZFWF9w4DWrsruFyrGan7uFWjqFy3JwsIqFyq934jkr4DtFW7ZrWDJrWkGr42
+	gw4F9r9rWF4UJa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9Sb7Iv0xC_Zr1lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6r1S6rWUM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
+	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr
+	1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7
+	MxkF7I0En4kS14v26r4a6rW5MxkIecxEwVAFwVW8WwCF04k20xvY0x0EwIxGrwCFx2IqxV
+	CFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r10
+	6r1rMI8E67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxV
+	WUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG
+	6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
+	1UYxBIdaVFxhVjvjDU0xZFpf9x07jkNVkUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Fri, Jun 13, 2025 at 2:57=E2=80=AFAM Palmer Dabbelt <palmer@dabbelt.com>=
- wrote:
+On 6/14/25 05:01, Alex Elder wrote:
+> <snip>
 >
-> On Thu, 12 Jun 2025 06:12:09 PDT (-0700), Alexandre Ghiti wrote:
-> > On 6/12/25 11:32, Yixun Lan wrote:
-> >> Hi Alexandre,
-> >>
-> >> On 10:37 Thu 12 Jun     , Alexandre Ghiti wrote:
-> >>> Hi Yixun,
-> >>>
-> >>> On 6/11/25 16:56, Yixun Lan wrote:
-> >>>> Changes to defconfig should be always updated via 'make
-> >>>> savedefconfig', run this command to make it aligned again.
-> >>>>
-> >>>> This will ease the effort of reviewing changes of defconfig
-> >>>> in the future.
-> >>>>
-> >>>> Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> >>>> ---
-> >>>> Update PDMA config bring in unnecessary changes[1], let's fix
-> >>>> it by run savedefconfig first.
-> >>>
-> >>> It would be easier if this patch was part of the PDMA series since th=
-e
-> >>> last patch will depend on it: @Guodong can you integrate this patch t=
-o
-> >>> your next revision of your patchset?
-> >>>
-> >> I'd rather make this patch independent, as nothing strongly ralated wi=
-th PDMA,
-> >> and it probably would take several rounds for PDMA patch to be settled=
- down..
->
-> Ya, I agree.
->
-> >> Besides, there is no problem for PDMA patch to depend on this patch if
-> >> needed (easy to use b4 to handle this..)
->
-> Yep, something like "b4 shazam -lts --merge --merge-base 958097bdf88"
-> should do it on the merge side -- and maybe you don't even need the
-> merge base, if all the b4 send side stuff picks it up right.
->
-> >> The idea here is to get this patch merged as early as possible, as it'=
-s
-> >> quite straightforward, and other people may have similar problem inste=
-ad
-> >> of PDMA here
-> >
-> >
-> > Ok makes sense, so let's Guodong deal with that then.
->
-> (for some reason this isn't showing up in patchwork)
->
-> I'm going to merge it as a single patch into for-next.  It'll loop
+> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+> index 6fb3768e3d71c..c59ae6cc2dd8d 100644
+> --- a/drivers/mfd/Kconfig
+> +++ b/drivers/mfd/Kconfig
+> @@ -1182,6 +1182,17 @@ config MFD_QCOM_RPM
+>  	  Say M here if you want to include support for the Qualcomm RPM as a
+>  	  module. This will build a module called "qcom_rpm".
+>  
+> +config MFD_SPACEMIT_PMIC
+> +	tristate "SpacemiT PMIC"
+> +	depends on ARCH_SPACEMIT || COMPILE_TEST
+> +	depends on I2C && OF
+> +	select MFD_CORE
+> +	select REGMAP_I2C
+> +	default ARCH_SPACEMIT
+> +	help
+> +	  This option enables support for SpacemiT I2C based PMICs.  At
+> +	  this time only the P1 PMIC (used with the K1 SoC) is supported.
+> +
 
-Sounds good. Thank you.
-I will rebase, (or have it as a prerequisite in v2 of my PDMA
-patchset).
+Module name?
 
-Guodong
++	  To compile this driver as a module, choose M here: the
++	  module will be called spacemit-pmic.
 
-> through the tester, but things look in good shape so it shouldn't take
-> too long.  This way there's a stable hash people can base stuff off,
-> rather than waiting for some other patch set.
+>  config MFD_SPMI_PMIC
+>  	tristate "Qualcomm SPMI PMICs"
+>  	depends on ARCH_QCOM || COMPILE_TEST
 >
-> >
-> > Thanks,
-> >
-> > Alex
-> >
-> >
-> >>
-> >>> Thanks,
-> >>>
-> >>> Alex
-> >>>
+> <snip>
+>
+> +static struct i2c_driver spacemit_pmic_i2c_driver = {
+> +	.driver = {
+> +		.name = "spacemit-pmic",
+> +		.of_match_table = spacemit_pmic_match,
+> +	},
+> +	.probe    = spacemit_pmic_probe,
+> +};
+> +
+> +static int __init spacemit_pmic_init(void)
+> +{
+> +	return i2c_add_driver(&spacemit_pmic_i2c_driver);
+> +}
+> +
+> +static void __exit spacemit_pmic_exit(void)
+> +{
+> +	i2c_del_driver(&spacemit_pmic_i2c_driver);
+> +}
+> +
+> +module_init(spacemit_pmic_init);
+> +module_exit(spacemit_pmic_exit);
+> +
+
+module_i2c_driver
+
+Regards,
+Vivian "dramforever" Wang
+
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("SpacemiT multi-function PMIC driver");
+
