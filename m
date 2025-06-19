@@ -1,345 +1,142 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A67227979F;
-	Wed, 18 Jun 2025 21:18:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F9C1EA7DB
+	for <spacemit@lists.linux.dev>; Thu, 19 Jun 2025 02:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750281495; cv=none; b=irrP6yyiPoMtsknq5VbsmR7JdO9XdwVkTZibJMydjQpsJ87WKlShNPnN9E5h0GQs8R9UerrUyAD0E8USwKg01bOmKeQlUK4ELQkuGWYWM4+e/nz5WanQroljlafd8hPQV57Ds5BRpDylNSM2ltrMpwkO6U/yMv6CH+7fjjA6zmg=
+	t=1750300169; cv=none; b=NPgdyE+o7FCW1tBKy26pI0/wVaknJwh4NxexOOUmtedcLYip53e7hkk6385qeeXRY4F5uocjH6TlT4JBZbrDiNOK/N3i5sAVk/vPgOeEab6lPk8j5wBQHlyEQAWLTiGvRt2tjhoS0L63rq75/fg5EDgx2csU1JHc/M+Tl0iiu1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750281495; c=relaxed/simple;
-	bh=cmQ02WE1thnbt+FouBpjl05lTRtmfIAFPeNWTSd/KDg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BJ+fm4XN1Ha5N7jn2bUIEznSJqx3bjDh1RXfoCj8S60ENWjz5i93cBNDwwPsBFn+bz0uXs1z+og3rXtvhuK5muxnnTfWdsnQDaGBcoe5p1TZbdF9kWPDUBKn+KxhpBHI7+vKOm5vFwUjBkG4XzMFWS8j1iG0us/EkUXcw5aCjOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=hpg2gypn; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1750300169; c=relaxed/simple;
+	bh=L2w4QtkDjTcxS3Jiw42nicI67aVG96GPyXoun25RMB4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QF7VN1vTM5KtEvnQFUATfjjkAsJgb9x4GNxzt/Z0fkCRwUpptq4Oi8uoxQ/n7SbqRViDTTBRg9KhE+rQIsJdkMM33fhq1USB44LBJ8o3T2dCC60zhwVRNxovtCDoqjzLRWppgqNdCp6TnC+DT+E5UATRJIDlCsBYjP+3TBopDgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=PtyAisX6; arc=none smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="hpg2gypn"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=iYf/tNomgSGgOz7BCTF6vtkNgttRW7/vxsBrfT0uQsA=; b=hpg2gypn+kJFjDrCSZDUtil1Ba
-	6pMf9kt6UtVYEtL93a9okv/tzvA3XIQ9sOuWURR+YsyExYPt/oEk7cg8Zr6pSnT4pchtnt3Q5e+jk
-	AmvFCPd2dx3Rx2sepkzQzk/4rO2/K5tnJWedHXp5LA+ozr8KFyO1WitOnTimRiE3c7pk=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1uS0A5-00GL1Y-7J; Wed, 18 Jun 2025 23:17:37 +0200
-Date: Wed, 18 Jun 2025 23:17:37 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Vivian Wang <uwu@dram.page>,
-	Lukas Bulwahn <lukas.bulwahn@redhat.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v2 2/6] net: spacemit: Add K1 Ethernet MAC
-Message-ID: <e55d8a16-5e2c-4a46-99fd-8ea485269843@lunn.ch>
-References: <20250618-net-k1-emac-v2-0-94f5f07227a8@iscas.ac.cn>
- <20250618-net-k1-emac-v2-2-94f5f07227a8@iscas.ac.cn>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="PtyAisX6"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-70e767ce72eso3290817b3.1
+        for <spacemit@lists.linux.dev>; Wed, 18 Jun 2025 19:29:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1750300166; x=1750904966; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cDeHL9d8vuK42id4GVmvojG1LbxVd4OxULlS/3TaFoo=;
+        b=PtyAisX66kpIb+uuGEspFVH3e41jR9SGVrweXisHVWZP0hCfUoz+y0JALdA9PN4UDO
+         zQaBed6S56UKH84qUqaodym1++PimU5UZ7AA3YM1nG8eEhh/Hry6BKypneNvl4A9NkyE
+         80LTrQrTxkO+FF7SGLq7Mr1I5DuOPuGEM8QSjFxWlphYooJje6vb6SJZYCvZa5sCO3Go
+         DGbCWXmeEa/TMn1uXkO0WzxiK03ddmaO20rsvbru8u1I32cNRyR9Q/dkKW1vvz4FFJtV
+         fSEK3KF15exm002fyuKUgQ5+E3PaoBo6GuWLP/lPswjtrOFaxnCZQ9uAV933EagSV98k
+         cAcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750300166; x=1750904966;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cDeHL9d8vuK42id4GVmvojG1LbxVd4OxULlS/3TaFoo=;
+        b=i0kxQn4MuvO9pQPW7nOtLjD2C/2VjEDyKRM9+DeLVMxPm672QUcjX1hEjPG2dOJJTu
+         wWgeBktBslQZnCBBIar/F0qDAiJkQ6dzrLL17Gy5COz8eR0v28A+GyLrOXt8ySJa5hnh
+         VMgQhUqRO1qoGOdAmndoT2s7sy65cqa4T8p/UV4UPUqOjDhMD0xxw1KB0J9DVLEcHQPo
+         p17Oon2ZWKdzlt+bBneQM2q+XVWVMMP0AgrsKwesQxTlcRoyZrUC3pZ1AzxDSrvI0yo0
+         9tTgCxdSMmk1nyRTU5p4FuXXl6rs9KBTrH6vGwYQxTnMdlMbe1T2PliDVNfaLXPohdu6
+         uFEw==
+X-Forwarded-Encrypted: i=1; AJvYcCXisxwU8lCM+PktnornTG3tPDfPsfg/7JXn26pc4K7Fh26orhW8y+xb443c8b0bmxsjfQAipeEzsA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzTsXWPCtzf8SzbL6j3U57ykRqKK3+ixCktVgBIOr7U+HtD4AMj
+	5bjlBF0dee+xmuQyR1VYYjj2fvabv3xBMPHQihPhDMX3KklAzh1FIlwlM+S8RpnO8BE97Lizlvs
+	Pi18LyJvvK5L/SeLKs5TgiRZc31/9+Fj63L03l+ncRw==
+X-Gm-Gg: ASbGnct8qZxqgE6LoeorBtHBdGAy+zm4rMONK1Psf+k2O6M1XDyh1MlnMpW+8BwUzPD
+	JE6Evxqv6O75kf4x9tysI4lFd2+uTtBHreeMPc54kV8VmqSwspcLVZVALuBKH4GeW0N3AtR+ssP
+	VOVyeVj9LY5/ROq5aZm2cHahVFy07qBRVzWbdm1HsUXQ==
+X-Google-Smtp-Source: AGHT+IGTWcMJ9e18SuuZAjhMb+1RhUC5KbFMVpAzHRzN1h0rYVrbKTgujtHTi15citzRIXK4WE/50371Bg3VPce6S3o=
+X-Received: by 2002:a05:690c:4442:b0:70e:29af:844a with SMTP id
+ 00721157ae682-711755076b4mr289656047b3.18.1750300166249; Wed, 18 Jun 2025
+ 19:29:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250618-net-k1-emac-v2-2-94f5f07227a8@iscas.ac.cn>
+References: <20250611125723.181711-1-guodong@riscstar.com> <20250611125723.181711-3-guodong@riscstar.com>
+ <aFEEhik8x2k5_myN@vaman>
+In-Reply-To: <aFEEhik8x2k5_myN@vaman>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Thu, 19 Jun 2025 10:29:14 +0800
+X-Gm-Features: AX0GCFsoo3SDAFCWa_VQKJiemtWkvUSERAjA5vBX4NjZ4H9AqhsVRRlcUwFSJ3A
+Message-ID: <CAH1PCMaD1muAQWRUfDJNKZL+-y31MBbw=aeD8VgEGxJE3eATbA@mail.gmail.com>
+Subject: Re: [PATCH 2/8] dma: mmp_pdma: Add optional clock support
+To: Vinod Koul <vkoul@kernel.org>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, dlan@gentoo.org, 
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	alex@ghiti.fr, p.zabel@pengutronix.de, drew@pdp7.com, 
+	emil.renner.berthing@canonical.com, inochiama@gmail.com, 
+	geert+renesas@glider.be, tglx@linutronix.de, hal.feng@starfivetech.com, 
+	joel@jms.id.au, duje.mihanovic@skole.hr, elder@riscstar.com, 
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +/* The sizes (in bytes) of a ethernet packet */
-> +#define ETHERNET_HEADER_SIZE		14
+On Tue, Jun 17, 2025 at 2:00=E2=80=AFPM Vinod Koul <vkoul@kernel.org> wrote=
+:
+>
+> On 11-06-25, 20:57, Guodong Xu wrote:
+> > Add support for retrieving and enabling an optional clock using
+> > devm_clk_get_optional_enabled() during mmp_pdma_probe().
+>
+> Its dmaengine, please tag them as such
 
-Please replace with ETH_HLEN
+Got it. I will do.
 
-> +#define MINIMUM_ETHERNET_FRAME_SIZE	64 /* Incl. FCS */
+Thank you, Vinod.
 
-I assume this device supports VLANS? If so, the minimum should
-actually be 68. You can then use ETH_MIN_MTU
 
-> +#define ETHERNET_FCS_SIZE		4
-
-ETH_FCS_LEN
-
-> +static int emac_tx_mem_map(struct emac_priv *priv, struct sk_buff *skb,
-> +			   u32 max_tx_len, u32 frag_num)
-> +{
-> +	struct emac_desc tx_desc, *tx_desc_addr;
-> +	u32 skb_linear_len = skb_headlen(skb);
-> +	struct emac_tx_desc_buffer *tx_buf;
-> +	u32 len, i, f, first, buf_idx = 0;
-> +	struct emac_desc_ring *tx_ring;
-> +	phys_addr_t addr;
-> +
-> +	tx_ring = &priv->tx_ring;
-> +
-> +	i = tx_ring->head;
-> +	first = i;
-> +
-> +	if (++i == tx_ring->total_cnt)
-> +		i = 0;
-> +
-> +	/* If the data is fragmented */
-> +	for (f = 0; f < frag_num; f++) {
-> +		const skb_frag_t *frag = &skb_shinfo(skb)->frags[f];
-> +
-> +		len = skb_frag_size(frag);
-> +
-> +		buf_idx = (f + 1) % 2;
-> +
-> +		/* First frag fill into second buffer of first descriptor */
-> +		if (f == 0) {
-> +			tx_buf = &tx_ring->tx_desc_buf[first];
-> +			tx_desc_addr = &((struct emac_desc *)
-> +						 tx_ring->desc_addr)[first];
-> +			memset(&tx_desc, 0, sizeof(tx_desc));
-> +		} else {
-> +			/*
-> +			 * From second frags to more frags,
-> +			 * we only get new descriptor when frag num is odd.
-> +			 */
-> +			if (!buf_idx) {
-> +				tx_buf = &tx_ring->tx_desc_buf[i];
-> +				tx_desc_addr = &((struct emac_desc *)
-> +							 tx_ring->desc_addr)[i];
-> +				memset(&tx_desc, 0, sizeof(tx_desc));
-> +			}
-> +		}
-> +		tx_buf->buf[buf_idx].dma_len = len;
-> +
-> +		addr = skb_frag_dma_map(&priv->pdev->dev, frag, 0,
-> +					skb_frag_size(frag), DMA_TO_DEVICE);
-> +
-> +		if (dma_mapping_error(&priv->pdev->dev, addr)) {
-> +			netdev_err(priv->ndev, "fail to map dma page: %d\n", f);
-> +			goto dma_map_err;
-> +		}
-> +		tx_buf->buf[buf_idx].dma_addr = addr;
-> +
-> +		tx_buf->buf[buf_idx].map_as_page = true;
-> +
-> +		/* Every desc has two buffers for packet */
-> +		if (buf_idx) {
-> +			tx_desc.buffer_addr_2 = addr;
-> +			tx_desc.desc1 |= make_buf_size_2(len);
-> +		} else {
-> +			tx_desc.buffer_addr_1 = addr;
-> +			tx_desc.desc1 = make_buf_size_1(len);
-> +
-> +			if (++i == tx_ring->total_cnt) {
-> +				tx_desc.desc1 |= TX_DESC_1_END_RING;
-> +				i = 0;
-> +			}
-> +		}
-> +
-> +		if (f == 0) {
-> +			*tx_desc_addr = tx_desc;
-> +			continue;
-> +		}
-> +
-> +		if (f == frag_num - 1) {
-> +			tx_desc.desc1 |= TX_DESC_1_LAST_SEGMENT;
-> +			tx_buf->skb = skb;
-> +			if (emac_tx_should_interrupt(priv, frag_num + 1))
-> +				tx_desc.desc1 |=
-> +					TX_DESC_1_INTERRUPT_ON_COMPLETION;
-> +		}
-> +
-> +		*tx_desc_addr = tx_desc;
-> +		dma_wmb();
-> +		WRITE_ONCE(tx_desc_addr->desc0, tx_desc.desc0 | TX_DESC_0_OWN);
-> +	}
-> +
-> +	/* fill out first descriptor for skb linear data */
-> +	tx_buf = &tx_ring->tx_desc_buf[first];
-> +
-> +	tx_buf->buf[0].dma_len = skb_linear_len;
-> +
-> +	addr = dma_map_single(&priv->pdev->dev, skb->data, skb_linear_len,
-> +			      DMA_TO_DEVICE);
-> +	if (dma_mapping_error(&priv->pdev->dev, addr)) {
-> +		netdev_err(priv->ndev, "dma_map_single failed\n");
-> +		goto dma_map_err;
-> +	}
-> +
-> +	tx_buf->buf[0].dma_addr = addr;
-> +
-> +	tx_buf->buf[0].buff_addr = skb->data;
-> +	tx_buf->buf[0].map_as_page = false;
-> +
-> +	/* Fill TX descriptor */
-> +	tx_desc_addr = &((struct emac_desc *)tx_ring->desc_addr)[first];
-> +
-> +	tx_desc = *tx_desc_addr;
-> +
-> +	tx_desc.buffer_addr_1 = addr;
-> +	tx_desc.desc1 |= make_buf_size_1(skb_linear_len);
-> +	tx_desc.desc1 |= TX_DESC_1_FIRST_SEGMENT;
-> +
-> +	/* If last desc for ring, set end ring flag */
-> +	if (first == tx_ring->total_cnt - 1)
-> +		tx_desc.desc1 |= TX_DESC_1_END_RING;
-> +
-> +	/*
-> +	 * If frag_num is more than 1, data need another desc, so current
-> +	 * descriptor isn't last piece of packet data.
-> +	 */
-> +	tx_desc.desc1 |= frag_num > 1 ? 0 : TX_DESC_1_LAST_SEGMENT;
-> +
-> +	if (frag_num <= 1 && emac_tx_should_interrupt(priv, 1))
-> +		tx_desc.desc1 |= TX_DESC_1_INTERRUPT_ON_COMPLETION;
-> +
-> +	/* Only last descriptor has skb pointer */
-> +	if (tx_desc.desc1 & TX_DESC_1_LAST_SEGMENT)
-> +		tx_buf->skb = skb;
-> +
-> +	*tx_desc_addr = tx_desc;
-> +	dma_wmb();
-> +	WRITE_ONCE(tx_desc_addr->desc0, tx_desc.desc0 | TX_DESC_0_OWN);
-> +
-> +	emac_dma_start_transmit(priv);
-> +
-> +	tx_ring->head = i;
-> +
-> +	return 0;
-> +
-> +dma_map_err:
-> +	dev_kfree_skb_any(skb);
-> +	priv->ndev->stats.tx_dropped++;
-> +	return 0;
-> +}
-
-This is a rather large function. Can parts of it be pulled out into
-helpers? The Coding style document says:
-
-  Functions should be short and sweet, and do just one thing. They
-  should fit on one or two screenfuls of text (the ISO/ANSI screen
-  size is 80x24, as we all know), and do one thing and do that well.
-
-> +static int emac_mdio_init(struct emac_priv *priv)
-> +{
-> +	struct device *dev = &priv->pdev->dev;
-> +	struct device_node *mii_np;
-> +	struct mii_bus *mii;
-> +	int ret;
-> +
-> +	mii_np = of_get_available_child_by_name(dev->of_node, "mdio-bus");
-> +	if (!mii_np) {
-> +		if (of_phy_is_fixed_link(dev->of_node)) {
-> +			if ((of_phy_register_fixed_link(dev->of_node) < 0))
-> +				return -ENODEV;
-> +
-> +			return 0;
-> +		}
-> +
-> +		dev_info(dev, "No mdio-bus child node found");
-> +		return 0;
-> +	}
-
-An mdio-bus node is normally optional. You can pass NULL to
-devm_of_mdiobus_register() and it will do the correct thing, register
-the bus, and scan it for devices.
-
-An MDIO bus and fixed link are also not mutually exclusive. When the
-MAC is connected to an Ethernet switch, you often see an fixed-link,
-and have an MDIO bus, with the switches management interface being
-MDIO.
-
-> +static int emac_ethtool_get_regs_len(struct net_device *dev)
-> +{
-> +	return EMAC_REG_SPACE_SIZE;
-> +}
-> +
-> +static void emac_ethtool_get_regs(struct net_device *dev,
-> +				  struct ethtool_regs *regs, void *space)
-> +{
-> +	struct emac_priv *priv = netdev_priv(dev);
-> +	u32 *reg_space = space;
-> +	int i;
-> +
-> +	regs->version = 1;
-> +
-> +	for (i = 0; i < EMAC_DMA_REG_CNT; i++)
-> +		reg_space[i] = emac_rd(priv, DMA_CONFIGURATION + i * 4);
-> +
-> +	for (i = 0; i < EMAC_MAC_REG_CNT; i++)
-> +		reg_space[i + EMAC_DMA_REG_CNT] =
-> +			emac_rd(priv, MAC_GLOBAL_CONTROL + i * 4);
-> +}
-
-Given this implementation, it would be more readable, and less future
-extension error prone, if emac_ethtool_get_regs_len() returned
-
-EMAC_DMA_REG_CNT + EMAC_MAC_REG_CNT
-
-> +static int emac_ioctl(struct net_device *ndev, struct ifreq *rq, int cmd)
-> +{
-> +	if (!netif_running(ndev))
-> +		return -EINVAL;
-> +
-> +	return phy_mii_ioctl(ndev->phydev, rq, cmd);
-> +}
-
-phy_do_ioctl_running().
-
-> +static int emac_phy_connect(struct net_device *ndev)
-> +{
-> +	struct emac_priv *priv = netdev_priv(ndev);
-> +	struct device *dev = &priv->pdev->dev;
-> +	struct phy_device *phydev;
-> +	struct device_node *np;
-> +	int ret;
-> +
-> +	ret = of_get_phy_mode(dev->of_node, &priv->phy_interface);
-> +	if (ret) {
-> +		dev_err(dev, "No phy-mode found");
-> +		return ret;
-> +	}
-> +
-> +	np = of_parse_phandle(dev->of_node, "phy-handle", 0);
-> +	if (!np && of_phy_is_fixed_link(dev->of_node))
-> +		np = of_node_get(dev->of_node);
-> +	if (!np) {
-> +		dev_err(dev, "No PHY specified");
-> +		return -ENODEV;
-> +	}
-> +
-> +	ret = emac_phy_interface_config(priv);
-> +	if (ret)
-> +		goto err_node_put;
-> +
-> +	phydev = of_phy_connect(ndev, np, &emac_adjust_link, 0,
-> +				priv->phy_interface);
-> +	if (IS_ERR_OR_NULL(phydev)) {
-> +		dev_err(dev, "Could not attach to PHY\n");
-> +		ret = phydev ? PTR_ERR(phydev) : -ENODEV;
-> +		goto err_node_put;
-> +	}
-
-The documentation for of_phy_connect() says:
-
- * If successful, returns a pointer to the phy_device with the embedded
- * struct device refcount incremented by one, or NULL on failure. The
- * refcount must be dropped by calling phy_disconnect() or phy_detach().
-
-An error code is not possible. So you can simply this.
-	
-    Andrew
-
----
-pw-bot: cr
+>
+> >
+> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > ---
+> >  drivers/dma/mmp_pdma.c | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+> > index a95d31103d30..4a6dbf558237 100644
+> > --- a/drivers/dma/mmp_pdma.c
+> > +++ b/drivers/dma/mmp_pdma.c
+> > @@ -15,6 +15,7 @@
+> >  #include <linux/device.h>
+> >  #include <linux/platform_data/mmp_dma.h>
+> >  #include <linux/dmapool.h>
+> > +#include <linux/clk.h>
+> >  #include <linux/of_dma.h>
+> >  #include <linux/of.h>
+> >
+> > @@ -1019,6 +1020,7 @@ static int mmp_pdma_probe(struct platform_device =
+*op)
+> >  {
+> >       struct mmp_pdma_device *pdev;
+> >       struct mmp_dma_platdata *pdata =3D dev_get_platdata(&op->dev);
+> > +     struct clk *clk;
+> >       int i, ret, irq =3D 0;
+> >       int dma_channels =3D 0, irq_num =3D 0;
+> >       const enum dma_slave_buswidth widths =3D
+> > @@ -1037,6 +1039,10 @@ static int mmp_pdma_probe(struct platform_device=
+ *op)
+> >       if (IS_ERR(pdev->base))
+> >               return PTR_ERR(pdev->base);
+> >
+> > +     clk =3D devm_clk_get_optional_enabled(pdev->dev, NULL);
+> > +     if (IS_ERR(clk))
+> > +             return PTR_ERR(clk);
+> > +
+> >       if (pdev->dev->of_node) {
+> >               /* Parse new and deprecated dma-channels properties */
+> >               if (of_property_read_u32(pdev->dev->of_node, "dma-channel=
+s",
+> > --
+> > 2.43.0
+>
+> --
+> ~Vinod
