@@ -1,219 +1,98 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E378C28C00D
-	for <spacemit@lists.linux.dev>; Thu, 19 Jun 2025 13:52:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F9512B71
+	for <spacemit@lists.linux.dev>; Thu, 19 Jun 2025 14:13:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750341126; cv=none; b=Y2gARDgguKMebrKozaZ4fSJ3RFJpwJ+CtnoZUWEyne/URCCZidl+kxOrKjquG2Ra6tEHelfXmzJ0neOMP9KlO/lD53jYU+3dT6thZuP6ehIBVYyu+GMkQzBVODkEGI9zHdZRdOk7VSmMpYLin42FtsZVc+K5ZtmXZdxgKnRSZw0=
+	t=1750342409; cv=none; b=CuQx7knbs7Ud0Y53P+1Hfysf9v9kPNqj7h5dr/KBV1ljf2UeGO40ML68pnEQmDmaDnq7R8+4I9r1OM25IVObmRIWi1o7u6In8AoGO7FrU7yZCtGQQuAqjK/N1FK10ldK3doQLA05ZWPt9jrunOYSPFNjxWLgejpPSyV2yE/zJCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750341126; c=relaxed/simple;
-	bh=WGruvn+Gqs/wHzBEiTs0RVm377PpbfSqb1Lgjf4ooI8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXelymK1m6CCqWsZ1jjBvag+i1tyjiBGA5KQbU7bS1UseyZeQjnmVzNjQLsRmBETYKXrWo/mogzlAjulj6eExC9tQgTuA7UtbW6dGF68S++AImy+UKPT19P7vyaMCHmEKxW2LKxiDmBy8pd0rXsTBbkp5e+UvEBshhqJxQQcZfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=XVwWJJRH; arc=none smtp.client-ip=209.85.166.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="XVwWJJRH"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3ddb4a7ac19so2263655ab.3
-        for <spacemit@lists.linux.dev>; Thu, 19 Jun 2025 06:52:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1750341123; x=1750945923; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ihUO+G2zPvFD7djd8+4VxSPuuLI+GNqieXaQtnBxio4=;
-        b=XVwWJJRHQXluBoRtYvik6JwrrnQgvoukzgPSZu0v1/pNASbKptjEFUWwoml/rsJfqQ
-         wsnwFTLXR2cFoATQut/bZThzfAOkFXvrR/ivZNqIT+ows/m8gs0XAm0H8YSNBCi7A6kC
-         NfI2lDodivwfaF5mV9A5YS6ySShpe+5nHt0zCw7yo1SfGveeFREpuElVKc3A/StTT62y
-         W84qXeK8k429igXzDjZygU13xefIVCiIctZ03Uzq9Ib2hkqSISoC4WoG5WlJJSh6jvKQ
-         bUH/SlKnQPZpvHJA6FJQvjbgYTNswasE9HevF93WYvGYc677N3lL3bsn3rL6HIpInTEC
-         k16Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750341123; x=1750945923;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ihUO+G2zPvFD7djd8+4VxSPuuLI+GNqieXaQtnBxio4=;
-        b=wANlpabhMFq/Q9sALbJLM5opiSEd1Wm5hglzP1SZLHXWNUWVb06vHB5Wam3ocN7f4L
-         ms4/q4rDzVuounxt6PAQ6VSnB70DtlFXB1Ebt4YMDKSWR2WXd9fJDSXdKQBBqhugXS/X
-         ndG/4oBYmxqAQd1ux+HBcG+Mxa4yjKDrVnJ6dr8B4e2I1aeXU4XQmJLjCtI1rgTe9EJq
-         cVVvaW4BykKEvHzwyFCRlN5+LdaXM64mcy39J0Af7m1bNEDADmxOFMvfL/XCrMLe8uaR
-         HjYbyglfjSMVs4a7K+flml9U6oUv8mZI6qSKL9q4vYrfW6P8m5oOoPn3sI0/ZwhEnXC0
-         ybgw==
-X-Forwarded-Encrypted: i=1; AJvYcCVmwHX6z1l+9KKZEwqsSASNL/QMcmHM8E/mS8ps30VrdkjpAJplcJjJLckufCLjXWfPqRBcQpacbg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz7BmGtlolDJ574X14piRz948NIhnupRB556q6dkGv3mpWWSyOy
-	5TvTq8hErL5IZzw+LGfvU9VawTh6S7+PEKXJlkyntFZLGUycDHmJOxRvJpM5E9hb22s=
-X-Gm-Gg: ASbGncskTwjSYS7XxuHxwf0WHje52T+Ll3yVpzI/ABu6Mvw0+asoBS9y/MbmGaki0DQ
-	kfJXxLJ2z/fXC6z7MHJmqnrLQj3VrrJX8wEiwpZ3YdrWT+RrCxiUK2Z+CpmTbvaF5yGohrdGpBr
-	HK/kZabYH6fmdx90+SC5JRJ2uO5exrXPncHNlhWpG7JDpopiC9xiXHlaMPW77DtzCFGQK3Fhp8f
-	qfmv+p/8u4J5kEGqIwnt1Czram/Gdgni7p+ML4kWbneEX/igtzn4iOs3wu7LrteUUc9fDlc5YJL
-	nhHrPsOSc3GZvGRo0ntw4v8bhmEJ777U1VutaHlJl4hplPrY1itYCjy8XrDJtd7aACWmNfyHc0O
-	2Xfc+2zDU8xgfyf7sELi2c1XY/yk8kY1ceth3+2FSug==
-X-Google-Smtp-Source: AGHT+IExem0l4ezDbiC0YunjYTLQzP9AWFOBkBc8gw8zgbBmASiZICSB36WYhCAntpWfGoVKA6+PlQ==
-X-Received: by 2002:a05:6e02:1a8a:b0:3dd:ebb4:bcd8 with SMTP id e9e14a558f8ab-3de07c5cc98mr247003285ab.9.1750341122994;
-        Thu, 19 Jun 2025 06:52:02 -0700 (PDT)
-Received: from presto.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3de01a453b4sm38246015ab.47.2025.06.19.06.52.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jun 2025 06:52:02 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: lee@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	broonie@kernel.org,
-	lgirdwood@gmail.com
-Cc: wangruikang@iscas.ac.cn,
-	dlan@gentoo.org,
-	troymitchell988@gmail.com,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	devicetree@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 6/6] riscv: dts: spacemit: define regulator constraints
-Date: Thu, 19 Jun 2025 08:51:50 -0500
-Message-ID: <20250619135151.3206258-7-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250619135151.3206258-1-elder@riscstar.com>
-References: <20250619135151.3206258-1-elder@riscstar.com>
+	s=arc-20240116; t=1750342409; c=relaxed/simple;
+	bh=U6yVuvluXAhR/fr0dFbQGKpCGEQa4jO8zcrBl72oYAs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=D5pa2QvqtA+wlIigb9LOcoahsk/OPg5dlTyeW/+Vxqpe8tUJv7wgNIaChvbjLkr0SkIFffitQ0ksrOJpOxdOFin4Fp/FiDr/IB3hGv6ZgkZN3vTZA/d0EeSsbKjt7Q0hoVBzPgLyMmrWNGTXKeRmdPlchbSeeFITUBzWVFxtLAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.110] (unknown [114.241.87.235])
+	by APP-03 (Coremail) with SMTP id rQCowACH2VHxGlRoB2WXBw--.1804S2;
+	Thu, 19 Jun 2025 22:13:07 +0800 (CST)
+Message-ID: <b73c0d8e-9869-469e-a46a-ddec9328885e@iscas.ac.cn>
+Date: Thu, 19 Jun 2025 22:13:05 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] regulator: spacemit: support SpacemiT P1 regulators
+To: Alex Elder <elder@riscstar.com>, lee@kernel.org, lgirdwood@gmail.com,
+ broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, dlan@gentoo.org
+Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr, troymitchell988@gmail.com, guodong@riscstar.com,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20250613210150.1468845-1-elder@riscstar.com>
+ <20250613210150.1468845-4-elder@riscstar.com>
+ <acac9522-fb19-4659-8e1a-544bf75f3864@iscas.ac.cn>
+ <6504c609-f8b5-42e3-88ad-5cbee30a52ed@riscstar.com>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <6504c609-f8b5-42e3-88ad-5cbee30a52ed@riscstar.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:rQCowACH2VHxGlRoB2WXBw--.1804S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Xw1xtryfJrWkGF4rtF1UZFb_yoW8Jr1fpF
+	4av3sIkwn5JFW8Zr4Durn7X3WFgF48Xa47Jr15Xr43Z34DWa129Fs2ka1Yvay8Xr95GF12
+	9w4qqryvkFyDZrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvqb7Iv0xC_Zr1lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
+	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
+	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
+	1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
+	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
+	wI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
+	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
+	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
+	ZFpf9x07jgPEfUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Define basic constraints for the regulators in the SpacemiT P1 PMIC,
-as implemented in the Banana Pi BPI-F3.
+On 6/19/25 21:23, Alex Elder wrote:
+> On 6/19/25 1:15 AM, Vivian Wang wrote:
+>> Also, consider naming this consistently: "spacemit-p1", or
+>> "spacemit-p1-regulator"?
+>
+> Let me see if I understand your comment, by explaining the
+> naming I used.
+>
+> The PMIC driver could support a different PMIC.  Its OF
+> match table specifies a compatible string with matching
+> data, and the data describes attributes of the P1 PMIC.
+> So that driver uses MOD_NAME "spacemit-pmic".
+>
+> This driver describes specifically the regulators found
+> in the P1 PMIC, so it uses "spacemit-p1-regulator" as
+> its MOD_NAME.
+>
+> You might still be right; but does this change what you
+> are suggesting?
 
-Signed-off-by: Alex Elder <elder@riscstar.com>
----
- .../boot/dts/spacemit/k1-bananapi-f3.dts      | 104 ++++++++++++++++++
- 1 file changed, 104 insertions(+)
+Oh sorry it was simpler than that. It's just I've noted that this 
+regulator module file is called "spacemit-p1":
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index a1c184b814262..83907cc1d5ccf 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -70,7 +70,111 @@ pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
- 		interrupts = <64>;
-+		vin-supply = <&reg_vcc_4v>;
- 		status = "okay";
-+
-+		regulators {
-+			buck1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3300000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			aldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			aldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			dldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo7 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+		};
- 	};
- };
- 
--- 
-2.45.2
+> +obj-$(CONFIG_REGULATOR_SPACEMIT_P1) += spacemit-p1.o
+
+... but the MOD_NAME is "spacemit-p1-regulator", and I was wondering if 
+it made sense to rename the module to also "spacemit-p1-regulator". In 
+addition to consistency, modules are free to have all sorts of names in 
+Linux, but the names have to be unique, so if this is only the regulator 
+driver part, the name should reflect that.
+
+Vivian "dramforever" Wang
+
 
