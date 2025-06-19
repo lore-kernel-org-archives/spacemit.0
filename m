@@ -1,123 +1,152 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49C0225401
-	for <spacemit@lists.linux.dev>; Thu, 19 Jun 2025 02:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A909634
+	for <spacemit@lists.linux.dev>; Thu, 19 Jun 2025 03:33:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750300686; cv=none; b=O1ojDnAsIVSX72uJn0wUahceqM7Z9s1VEs/t026SISU/p9oPDVY8iakOlL2kIDzWdvicXfRBCE7hpRLwy5Iu6xxxx409SrJS9VNzkccSkCZqSn1E95ED8ry0ABjzSY5CLseoMTE0eRbLUvAOc1EDr2Zcz8x/f/JFjQVGMvRlYCM=
+	t=1750303988; cv=none; b=qWPCc90kjxggCiCLaWXLFcoSnR/oe8fzqZe7fB3Nt0iem6H3cLnY8DGynxlt7cRIWZ4DgX86WG3Xli/pYOuVerqq88t7paRISeVpBsLhVOR2nnUJVP8wZBHRGL2SRDcrELTaFnSG6WRoSOMtjj48sBSbteuKN1jraQdtZYE6R3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750300686; c=relaxed/simple;
-	bh=R6t76eWH2HzIq2TB7HLKHxRY/f1IWLs6nx6TUFl7QAo=;
+	s=arc-20240116; t=1750303988; c=relaxed/simple;
+	bh=o1cKqqrl3WcFN3B0siBCxSoKZjsWO26WSrvEnr5m2so=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rjWTVlie37/ppbBVt3kJH/NWD7G+f0OYJpppedTYZhBGCx++2YDLCXlqz73Nbxja2BI2cJlItApzWpTx1GBRk8pdhRbcBqTrjrmblp0vjYDvF6JDQMzAD3Plf6+MkH/qiCrmYVYKeVAmhK783fhnEyuHJSQxwi5AmbAf7HEjLzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=Xtv7RxO0; arc=none smtp.client-ip=209.85.128.175
+	 To:Cc:Content-Type; b=Nc0ZSLXpQ5yEKor/6HmAubDn8OPDY/xjwBCLsw4MZB7ECXd+Yftuv2Pu13ulsOJDY2Kj7p58UZr44yY/5ZkV2XQVWFItkRGTiWzcr3AoOfhs/3zLR7/PsB8T7QFEUTgO4VByydxWPkMrQsmAXH8whnr5Gi7Bd1oMZZtwg2I+BZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=2sSPsgOu; arc=none smtp.client-ip=209.85.219.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="Xtv7RxO0"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-711756ae8c9so3115727b3.3
-        for <spacemit@lists.linux.dev>; Wed, 18 Jun 2025 19:38:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="2sSPsgOu"
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e812fc35985so322050276.0
+        for <spacemit@lists.linux.dev>; Wed, 18 Jun 2025 20:33:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1750300684; x=1750905484; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1750303985; x=1750908785; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mJvyWk8eVLm4Tc980PDphhjuFD7XIh64AkzzgoplEgI=;
-        b=Xtv7RxO0+QzIS7R3KWUK+J1f0RaA+DFUWbC7NI8nGp9JqppB53UlRSF45mv9yKWg2z
-         uhjKIHqLnuj/ESpiQmVz7kpRmfNkdD1PAzgT3y3Uii4Nq9H/udTLG83JIpOp/Yz56JFD
-         ExRuVQnlBxzThdQ7i8496Mr3sg5j1X7K+q6L69juGgwVZQWSdAnAVoOA+7dgFftkQrHZ
-         AxXXvRu7hx28UFON7WDmYv4nfynFwuzGO/nwu6eIxPArYvyhzQOckWUQi57h95Db5SNS
-         qAw6zHzXcCT6wT26Gy2RMT83x48T06t0I6Ul92QgORByaCzc8zHwwuU3/Ub7IVXinf9f
-         c9TQ==
+        bh=60xy8wKrKO+1t7u1ffpNKlJu/zpqbkDRJr1SZgFpJWI=;
+        b=2sSPsgOuxZB0gCs/gNUtOi9H9MpmZHCcMwkzc8cLgSmV1Be3Yac4Bg/3NC5L95uNct
+         mreHh51z2uJf3/NLSMFZweJ/Zd5gkmM1yfQU2F5Is5Tyu4/kgHeI0ZfGl+ksydAthh7s
+         LKBDxrXRjPvV+DoK8f/On1/OL9DClyGNZ7WWqBkViH2YyGWFL2Gsd5OPXjyX/sCntMPJ
+         X+1MKf3Hll4ajHEP7PtUsQFTS9We24HdewN6hwj0OHHR+y0NkMNZnr6C7/Lksflf2N1m
+         hrcCrYUKptwSCns9O1hnCzcfufVmZptH9sBGVPc9l2FKX8WUFFkGulPvHceEWmSjkUWp
+         6Opg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750300684; x=1750905484;
+        d=1e100.net; s=20230601; t=1750303985; x=1750908785;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mJvyWk8eVLm4Tc980PDphhjuFD7XIh64AkzzgoplEgI=;
-        b=TtHynI+xXiJZYxO2y19K1YvTC2FETlR8PVV6X+IXiozxo3GDxIgMIdKvz1aPRO8x6w
-         A/j4UHl4psxMbgOpcXFTiL3wbeVBx+qXRMNt//l2fdh9b+MSUpx+MrhfaKXJPomGLruB
-         S35JuPWt+MWBLoN6CiZ13KUm94lYil+N2Vk7SMzShCTySg1yryL9uk2pwdHogqqGd4MS
-         VawqOVZT/3XdMJwcqXqKpXIjUwYyP1f3fX+bfCfC9RObUjNfp74Fq0So+476/LmwxEAF
-         Jni43UJJzOVdBXL52WuxuGN24UX/aenAjd45RiGTFuPkZ30rVI000savEFg3Dt19u1ue
-         77Lw==
-X-Forwarded-Encrypted: i=1; AJvYcCUdVE25U19D/UzsIuMIAbn0GEnaqX7h/9OB/4BKdQWsMndVoEsYg0goqf0F/0c/SxIBWy47snxIlw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyeyAORTCFWp8yiYUyFBrRnPPcqFljuNws3jkF55RUWsrA8Q75R
-	ZUmAMdo0DEU0j2cI3QOGqE8c05qDbJiMf/D6qDVp2zNKPt0Vwb6VXftRBc7u7GgvBmeT7q11rHi
-	cEk//Yxmtsp2tVSWZj5uOfZ3fT2WN7Kyf0Dylyi+TBA==
-X-Gm-Gg: ASbGncsScEvR+0kYCd+IEaA/ACzT/Rc7ZrhOv5F8NgGVAXxt01FU+Ybn312BT8TCuzP
-	jbEQANBKFfq8Ww2FBbANoHWflUiu82170fBND2OPZ2ZSqdI9J6uHPi7Tk8hzeKEYdGuroN2BWs7
-	ZdxJd/kGZYlg1HFEvMmiSupICC5K+nS36RobgxNEDFBOKUjWmcbKMI
-X-Google-Smtp-Source: AGHT+IFLz3Vl5G1STkCpTHnFizE3p8mAf9pvpCYG1N2QfqDuoM9RrsfGR/H2ltgphKQYCTDpc5ZM+HFUSOw07SlczgM=
-X-Received: by 2002:a05:690c:8e0d:b0:70e:7503:1181 with SMTP id
- 00721157ae682-7117543370amr238070227b3.18.1750300683598; Wed, 18 Jun 2025
- 19:38:03 -0700 (PDT)
+        bh=60xy8wKrKO+1t7u1ffpNKlJu/zpqbkDRJr1SZgFpJWI=;
+        b=miKucqMNsHgtQSdXfzjfwoy7/bwrrJOYPUGWPzFTQgveGKfCOIRx6y0q51YeKoFiLr
+         YsNVBoonAr7LEUv0SQiD+jG1aNxOzpYHOqmyuEiINNXwppC7nbRszCzme9qGruPhm6X4
+         dmDeYVab0uikic0p2inIA61m3fztIGWhJYd8XFhu78RK+8hMU6GP18uqO4Un8bd00IZG
+         qZPinjoc7YRrJ0C8ESkBoT6/ixtjmoiCLGHJFh4SQXMxJRh3R7Xmib2D6dYgf8xCvJ36
+         7kbf4jVy8pVRHMSGc8CxeTyxGp5CDX5gECmJ9WZ8uBnahY2w94hOxaaWVZXHnkK8lLkq
+         dloQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVP3eKWDLYuHp0jqA7Q2Z9ASFaBCwmXlo/CBLkYczGOxCgoAiZN1Ni8Ce+1VfoBzaK2skDstj/qfQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxVYLBCSGgyQX2hQp+3Pg+np+Z9C57428Qc1sRjfthxUAZr8iHj
+	DHyKtn8eFtbeDT+6D/fvU0UcWAGn+ihO1VaYWnmW+pYy3vX9wthbKDvfOH9OJei8tWXBy9hJoJu
+	vVv0+Q1hgkRrH7YMUBhY+YKbcDkMq6K/4pfC7YURpJw==
+X-Gm-Gg: ASbGncslHdC6vGE3HS7GmYuFJ3wobnNXAyEeF3ACK4K/C9becD/FgBuRwypeHBYetni
+	WraRtUYT0bgxSSZEYp+Qmvu4Xoza+3CjjMaBlGCtf0lYSILxLY9ckmNIQsMLbBhR4uJWTD/GT/X
+	BN6tHbuLQc56N1BkOcRUmoX+wy31RzEhBgZdFgwg+CrA==
+X-Google-Smtp-Source: AGHT+IGcgeMo27lTgaDy9bbMAdcQR1xe3fMVRu8/9DI/Df3XMM3eOfwyhPsLvfFCCnJDn+wQXZA6c6yxRggua+A+pZ4=
+X-Received: by 2002:a05:690c:3501:b0:70a:36b2:8f94 with SMTP id
+ 00721157ae682-7117544b8a1mr301360657b3.18.1750303985204; Wed, 18 Jun 2025
+ 20:33:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250611125723.181711-1-guodong@riscstar.com> <20250611125723.181711-5-guodong@riscstar.com>
- <aFEFBss3RT7NbQkV@vaman>
-In-Reply-To: <aFEFBss3RT7NbQkV@vaman>
+References: <221b0b7c-1879-4944-b9c4-cfb9fad9ae91@ghiti.fr> <mhng-131B0C4B-6AD9-4B65-BC91-927FD725E63F@palmerdabbelt-mac>
+In-Reply-To: <mhng-131B0C4B-6AD9-4B65-BC91-927FD725E63F@palmerdabbelt-mac>
 From: Guodong Xu <guodong@riscstar.com>
-Date: Thu, 19 Jun 2025 10:37:52 +0800
-X-Gm-Features: AX0GCFusS0Wf6JwTzVWm3sY_lYpO92NDTczE7xfKgCKObXd32EKaOhpP7K8QAJc
-Message-ID: <CAH1PCMYL57eEVyx7qy3offcsuKsN23qO73H+YTnffZe4kBxzMA@mail.gmail.com>
-Subject: Re: [PATCH 4/8] dma: mmp_pdma: Add SpacemiT PDMA support with 64-bit addressing
-To: Vinod Koul <vkoul@kernel.org>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, dlan@gentoo.org, 
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	alex@ghiti.fr, p.zabel@pengutronix.de, drew@pdp7.com, 
-	emil.renner.berthing@canonical.com, inochiama@gmail.com, 
-	geert+renesas@glider.be, tglx@linutronix.de, hal.feng@starfivetech.com, 
-	joel@jms.id.au, duje.mihanovic@skole.hr, elder@riscstar.com, 
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+Date: Thu, 19 Jun 2025 11:32:54 +0800
+X-Gm-Features: AX0GCFtELZSRZqubW6lHS8cOASUCtzDo1F3xvWoK2w2WWudZIiFtQ6t7sUz4_vI
+Message-ID: <CAH1PCMYR2L8TeuveA-XTorQE70wmJVA1Vbt3Qhz0864Vr206PQ@mail.gmail.com>
+Subject: Re: [PATCH] riscv: defconfig: run savedefconfig to reorder it
+To: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, dlan@gentoo.org, Conor Dooley <conor@kernel.org>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, aou@eecs.berkeley.edu, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
 	spacemit@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 17, 2025 at 2:02=E2=80=AFPM Vinod Koul <vkoul@kernel.org> wrote=
-:
+On Fri, Jun 13, 2025 at 2:57=E2=80=AFAM Palmer Dabbelt <palmer@dabbelt.com>=
+ wrote:
 >
-> On 11-06-25, 20:57, Guodong Xu wrote:
-> > Extend the MMP PDMA driver to support SpacemiT PDMA controllers with
-> > 64-bit physical addressing capabilities, as used in the K1 SoC. This
-> > change introduces a flexible architecture that maintains compatibility
-> > with existing 32-bit Marvell platforms while adding 64-bit support.
-> >
-> > Key changes:
-> > - Add struct mmp_pdma_config to abstract platform-specific behaviors
-> > - Implement 64-bit address support through:
-> >   * New high address registers (DDADRH, DSADRH, DTADRH)
-> >   * DCSR_LPAEEN bit for Long Physical Address Extension mode
-> >   * Helper functions for 32/64-bit address handling
-> > - Add "spacemit,pdma-1.0" compatible string with associated config
-> > - Extend descriptor structure to support 64-bit addresses
-> > - Refactor address handling code to be platform-agnostic
-> > - Add proper DMA mask configuration for both 32-bit and 64-bit modes
-> >
-> > The implementation uses a configuration-based approach to keeps all
-> > platform-specific code isolated in config structures. It maintains clea=
-n
-> > separation between 32-bit and 64-bit code paths, provides consistent
-> > API for both addressing modes and preserves backward compatibility.
+> On Thu, 12 Jun 2025 06:12:09 PDT (-0700), Alexandre Ghiti wrote:
+> > On 6/12/25 11:32, Yixun Lan wrote:
+> >> Hi Alexandre,
+> >>
+> >> On 10:37 Thu 12 Jun     , Alexandre Ghiti wrote:
+> >>> Hi Yixun,
+> >>>
+> >>> On 6/11/25 16:56, Yixun Lan wrote:
+> >>>> Changes to defconfig should be always updated via 'make
+> >>>> savedefconfig', run this command to make it aligned again.
+> >>>>
+> >>>> This will ease the effort of reviewing changes of defconfig
+> >>>> in the future.
+> >>>>
+> >>>> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> >>>> ---
+> >>>> Update PDMA config bring in unnecessary changes[1], let's fix
+> >>>> it by run savedefconfig first.
+> >>>
+> >>> It would be easier if this patch was part of the PDMA series since th=
+e
+> >>> last patch will depend on it: @Guodong can you integrate this patch t=
+o
+> >>> your next revision of your patchset?
+> >>>
+> >> I'd rather make this patch independent, as nothing strongly ralated wi=
+th PDMA,
+> >> and it probably would take several rounds for PDMA patch to be settled=
+ down..
 >
-> I would ask for this to be split, first to to driver changes for adding
-> new ops and then adding new soc support. This way the two changes are
-> independent
+> Ya, I agree.
+>
+> >> Besides, there is no problem for PDMA patch to depend on this patch if
+> >> needed (easy to use b4 to handle this..)
+>
+> Yep, something like "b4 shazam -lts --merge --merge-base 958097bdf88"
+> should do it on the merge side -- and maybe you don't even need the
+> merge base, if all the b4 send side stuff picks it up right.
+>
+> >> The idea here is to get this patch merged as early as possible, as it'=
+s
+> >> quite straightforward, and other people may have similar problem inste=
+ad
+> >> of PDMA here
+> >
+> >
+> > Ok makes sense, so let's Guodong deal with that then.
+>
+> (for some reason this isn't showing up in patchwork)
+>
+> I'm going to merge it as a single patch into for-next.  It'll loop
 
-Hi, Vinod
+Sounds good. Thank you.
+I will rebase, (or have it as a prerequisite in v2 of my PDMA
+patchset).
 
-Thank you for the feedback. I agree with that.
-I'll send v2 with this split approach.
-
--
 Guodong
 
+> through the tester, but things look in good shape so it shouldn't take
+> too long.  This way there's a stable hash people can base stuff off,
+> rather than waiting for some other patch set.
 >
-> --
-> ~Vinod
+> >
+> > Thanks,
+> >
+> > Alex
+> >
+> >
+> >>
+> >>> Thanks,
+> >>>
+> >>> Alex
+> >>>
