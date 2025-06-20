@@ -1,123 +1,281 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16B528FAA5
-	for <spacemit@lists.linux.dev>; Fri, 20 Jun 2025 14:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC3E28E578
+	for <spacemit@lists.linux.dev>; Fri, 20 Jun 2025 14:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750428649; cv=none; b=oJKHoLspSGxyNczyQtWZqjaTmFGHPaFiFgLHvoJBvctd+pzSazi1HlXIvs6xbmKpuKPcJcDPsuI3OV8IZfWCSq+APAI/nUcvp1FFqMLtXLskE94x2FOCa6qv4nkxeD4do5CDob8pzB4ICQGSbi4owIysRWqXM+7hjZseX6qbaXc=
+	t=1750431480; cv=none; b=OSDzVinrXzzdUxd5neiZHvrNHIpPxDD1JSX/fdbFQF+Xiamgdo+C1gaAUvQGU23aIZ3O5ntDHeGtXUrNM+hhPT/MB8H6b8F8lsETdyAHmpg45BVhkhYiFu0chsr/nVYfCwOh5BiMz3xc/1kaJmy0m0MwlhDNTfIsQqc4YK/2SdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750428649; c=relaxed/simple;
-	bh=AbfY+khRhmnoM2GrJwd2PvwKLx/Otd5i6x62C7zENKE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SFWaryB6yx5V4a3cOHgFqBFZDjsDDIStaPIKe9g/k8Ab63hYxWJa6RULc/XO4v87Kct1G87E1iXNHBOs+MPfTWemW7lHzQZZDtjNUBwXvgFCQPqnhmVr/VTsLAhVdG2fOId8T+HZyyRTagk8frlo3p3MGBlqog/1rH7lPwofM/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=L3mmmN0F; arc=none smtp.client-ip=209.85.166.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="L3mmmN0F"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-86d0c598433so52470339f.3
-        for <spacemit@lists.linux.dev>; Fri, 20 Jun 2025 07:10:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1750428647; x=1751033447; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/V0jiwDrSai/Ua3D+JcI8BdoFAg+vd8bUJc9dl+oAL0=;
-        b=L3mmmN0F96a0VDwZYCmyUmXUWrv8/N9w64lNekKvJ89GN3sIJGCV6/Fr5d7pnMCEpM
-         UqtwWzqH0NjB4QM0ZdOhkh5Shmm2UMZ2jSfbcg9Ry76n6fBGkbQ9do2HhJQTqBbwd0qi
-         MDtFTjqRgcqy8J6eLeb4HF/ZSnxAGCHafiZEmWzKcT1aKiJ03bu1vXfSIf1VIEcZM1bx
-         CXEvopMTq40fGcQiT7BkDPB55f1DwtL3+Y7ipdcxi9px4eaHo8aQKLatxWgE7/THvCvm
-         tuJq+ce5pNjscgK8DHOPhzgI7/K/9Ar9fqHA2wmCgXqu3Ve8Ri5CGmCMqGY8HcSR31Ov
-         Fj6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750428647; x=1751033447;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/V0jiwDrSai/Ua3D+JcI8BdoFAg+vd8bUJc9dl+oAL0=;
-        b=OeOnRAGNe9aeZ218JvXcWege1xgOy3BIY7oGwC19EIp3syMZxSPlC0M9tQJZb0BsBA
-         RIoPqhXpHEwwc303LJQ4kRKvxYh1FGAJapXMTAdGtFOxdloLUWrDV1j4YGbblJe0S96z
-         I5pqaepvGkCPNq1o0YPLumkQD1qHBkt35rPrsWRIcTCS6INaf7PI9mm/HWsnQP8CV8Za
-         T+QAppduk2bIBsiNTZhgx485FmmvzOJ1PN7jcyHr5SqcQsMhq3yx2FLHeKrgbJ5lbhSX
-         qBrfXeLlZoVqzrZFfvE1YEm5eL2dDrkH4ag2QUIJO+5C6VXeZ0OFNuOJcDx4nMkuEkEX
-         m0LA==
-X-Forwarded-Encrypted: i=1; AJvYcCU/K521vscCdbBw3ncc53wOhK0p+3kSaoujkRaBPv0Zc7G3HHb5jp9+9y9iN9SEOXBI2JRGM/79MA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxN3C6nFPbfLYy7MIcJM3eGSS7Oe3mIHFxT6yS8QJg6tf/lyKE0
-	X790w9OF88pcjePVmMoOtoVSYWU7+5PsaWSeVmQMo9zPivBKpI1A/G4W2kO2ggiGsIY=
-X-Gm-Gg: ASbGncuzKopHoAj7RtKi9QsuHPQKaPs6djqtoVRxQMavRE9vUnDBsK2f1XHXqClC801
-	w84B9GFYSmTgZdbKBq7Gd0S9PiYfTXSgpM/U/yiYLCR+ZMmNnInw2WJoE0cHqSCpTU4efUBugXG
-	xnvVpYcmyqkDUG1ANj7o0Mw21caLDn3Fh7Rb/A+KyRMSy4cN8mvG6m4WU2KlGYwLixJTlStwu1h
-	UxoMnq1L5QKNW27lCjOlYSBVVQyyCHdS1eq+LMA0UjTaonu73uB4PoG3vHzDQNDO7xjedOlX59E
-	xkW8xG8fyYpWOVSAuBraaorLTt3SCH/ReyMB2l3Ya1VIqQET+97Kg9a8tAjlLH07xGDC94B8Vdf
-	AbPZ0/ukb7M+RlQQTpL1ScWvQcw==
-X-Google-Smtp-Source: AGHT+IF191sx1Gw+x8ilTUOKPF8dmHGnHILkCee7ddq/TBaGfyhQHSrZPkzvoftsWVolVXrmsAPBTg==
-X-Received: by 2002:a05:6602:380d:b0:873:1ad3:e353 with SMTP id ca18e2360f4ac-8762d1e8c96mr306397539f.9.1750428646946;
-        Fri, 20 Jun 2025 07:10:46 -0700 (PDT)
-Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-8762b7adc23sm50782439f.35.2025.06.20.07.10.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jun 2025 07:10:46 -0700 (PDT)
-Message-ID: <a694de5a-50d3-4637-a8c3-f90971bf33f8@riscstar.com>
-Date: Fri, 20 Jun 2025 09:10:45 -0500
+	s=arc-20240116; t=1750431480; c=relaxed/simple;
+	bh=rtf6fKS0X3lTK+Oyq/JlhDhHWr2lGFEUs4boALAlBYM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n0X8lw6J5vaWy6CoQjdLEcKnVS8vUIOYhejoueDwxL42poLEoVmekuBm6rhsnktCPz6bTC4JMUkCzbvhHEfVz//djS/O+2wrbxEG/rREwUCcPiMXGuGeAGtv2E114Yqmv8yGjXdGpq6LDShVR3TbrFMdo0Ne/xpkqa2nZ1IpPg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.232])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id DDCA7340E0E;
+	Fri, 20 Jun 2025 14:57:56 +0000 (UTC)
+Date: Fri, 20 Jun 2025 14:57:51 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: Vivian Wang <wangruikang@iscas.ac.cn>, Alex Elder <elder@ieee.org>,
+	Ze Huang <huangze@whut.edu.cn>, spacemit@lists.linux.dev,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC] riscv: dts: spacemit: Add DMA translation buses for
+ K1
+Message-ID: <20250620145751-GYB165049@gentoo>
+References: <20250617-k1-dma-buses-rfc-wip-v1-1-c8ec192fbf58@iscas.ac.cn>
+ <5cc644f8-7394-48f2-b62b-1e7cd5ce27d3@ieee.org>
+ <9e5e54a9-ef90-4a87-b082-d6eb9c7468c5@iscas.ac.cn>
+ <20250620105619-GYA165049@gentoo>
+ <CAH1PCMZibCc-P7JQf4WyhkKuT607bWppKfKQ-7eo7-PyNGDAOg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] mfd: spacemit: add support for SpacemiT PMICs
-To: Lee Jones <lee@kernel.org>
-Cc: lgirdwood@gmail.com, broonie@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, dlan@gentoo.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, troymitchell988@gmail.com, guodong@riscstar.com,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20250613210150.1468845-1-elder@riscstar.com>
- <20250613210150.1468845-3-elder@riscstar.com>
- <20250619144023.GG795775@google.com> <20250619144147.GH795775@google.com>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20250619144147.GH795775@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAH1PCMZibCc-P7JQf4WyhkKuT607bWppKfKQ-7eo7-PyNGDAOg@mail.gmail.com>
 
-On 6/19/25 9:41 AM, Lee Jones wrote:
-> On Thu, 19 Jun 2025, Lee Jones wrote:
+Hi Guodong,
+
+On 22:10 Fri 20 Jun     , Guodong Xu wrote:
+> On Fri, Jun 20, 2025 at 6:56 PM Yixun Lan <dlan@gentoo.org> wrote:
+> >
+> > Hi Vivian, Alex,
+> >
+> > On 23:42 Thu 19 Jun     , Vivian Wang wrote:
+> > > Hi Alex,
+> > >
+> > > Thank you for your comments on this.
+> > >
+> > > On 6/19/25 23:11, Alex Elder wrote:
+> > > > On 6/17/25 12:21 AM, Vivian Wang wrote:
+> > > >> The SpacemiT K1 has various static translations of DMA accesses. Add
+> > > >> these as simple-bus nodes. Devices actually using these translation will
+> > > >> be added in later patches.
+> > > >>
+> > > >> The bus names are assigned according to consensus with SpacemiT [1].
+> > > >>
+> > > >> [1]
+> > > >> https://lore.kernel.org/all/CAH1PCMaC+imcMZCFYtRdmH6ge=dPgnANn_GqVfsGRS=+YhyJCw@mail.gmail.com/
+> > > >
+> > > > So what you include here very closely matches what Guodong
+> > > > said in the message above.  Yours differs from his proposal
+> > > > and that makes it hard to compare them.  I have a few comments
+> > > > on that below.
+> > > >
+> > > >> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+> > > >> ---
+> > > >> This is my concrete proposal for representing DMA translations for
+> > > >> SpacemiT K1.
+> > > >
+> > > > It's worth acknowledging that this is derived from what Guodong
+> > > > proposed (it's not "your" proposal in that respect).  That said,
+> > > > yours is a more complete and "formal" RFP than what he wrote.
+> > > >
+> > > I had thought that since the addresses were already there in vendor's DT
+> > > [2], and the names were provided by SpacemiT, anything other than the
+> > > names was "well-known information". In retrospect, I should have made
+> > > the chain of information of this clearer and make it explicit that this
+> > > was based on Guodong's note.
+> > >
+> > > So, just to be clear, the information in my proposal is based on
+> > > Guodong's reply [1] (link the quoted text), which I had assumed, but not
+> > > explicitly confirmed, was based on already addresses in SpacemiT's DT
+> > > and names provided by SpacemiT.
+> > >
+> > > [2]: https://github.com/spacemit-com/linux-k1x/blob/k1/arch/riscv/boot/dts/spacemit/k1-x.dtsi
+> > >
+> > > >> For context, memory on the SpacemiT K1 is split into two chunks:
+> > > >>
+> > > >> - 0x0000_0000 to 0x8000_0000: First 2 GiB of memory
+> > > >> - 0x1_0000_0000 above: Rest of memory
+> > > >>
+> > > >> DMA-capable devices on the K1 all have access to the lower 2G of memory
+> > > >> through an identity mapping. However, for the upper region of memory,
+> > > >> each device falls under one of six different mappings. The mappings are
+> > > >> provided in this patch as simple-bus nodes that device nodes should be
+> > > >> added to.
+> > > >>
+> > > >> This patch is an RFC because it is not meant to be applied, or at least,
+> > > >> not certainly meant to be applied. Instead, this is an attempt to come
+> > > >> to a consensus on how these bus nodes should look like.
+> > > >
+> > > > I think the above is what Krzysztof might not have seen.  Perhaps
+> > > > it could have been made more clear--maybe in the "main" description
+> > > > section (above the ---) or even the subject line.
+> > > >
+> > > Yeah, that's my mistake in organizing the paragraphs.
+> > >
+> > > >> More specifically, I propose that the process proceeds as follows:
+> > > >>
+> > > >> - Firstly, relevant parties agree on these bus nodes given here.
+> > > >> - After that, each time the first user of a bus appears, the series
+> > > >>    should include a patch to add the bus required for that driver.
+> > > >> - If a driver being submitted uses the same bus as another one that has
+> > > >>    been submitted but hasn't yet landed, it can depend on the bus patch
+> > > >>    from that previous series.
+> > > >
+> > > > Getting agreement is good, but otherwise this is basically
+> > > > the process Guodong was suggesting, right?
+> > >
+> > > Hmm, actually re-reading the discussion now, I realized that I may have
+> > > come to this late and missed out on some previous discussions, which
+> > > were alluded to in Yixun's messages. (This is again thread around link
+> > > [1] in quoted text.) This led me to believe that some of these were not
+> > > really agreed upon.
+> > >
+> > > I also realized I think one of the things I may have not yet made clear
+> > > is that I would like the bus node to be a *separate* patch. I think this
+> > > makes sense, because it's dealing with two different subsystems.
+> > >
+> > > >
+> > > >> For conventions regarding coding style, I propose that:
+> > > >>
+> > > >> - #address-cells and #size-cells are 2 for consistency
+> > > >> - These bus nodes are put at the end of /soc, inside /soc
+> > > >> - These bus nodes are sorted alphabetically, not in vendor's order
+> > > >> - Devices are added into *-bus nodes directly, not appended towards the
+> > > >>    end with a label reference
+> > > >
+> > > > I do like that you're trying to be more complete and explicit
+> > > > on what you think needs agreement on.
+> > > >
+> > > Being thorough was the main goal of this RFC. If there was previous
+> > > agreement on how dma-ranges should be done, I'm sorry for missing them,
+> > > but from my observations on the mailing list on how these ended up into
+> > > patches I really haven't seen much consistency. Maybe there was
+> > > misunderstanding, which I'm hoping to clear up.
+> > >
+> > > (Although see my paragraph above, maybe I haven't been thorough enough.)
+> > >
+> > > >> The K1 DMA translations are *not* interconnects, since they do not
+> > > >> provide any configuration capabilities.
+> > > >>
+> > > >> These bus nodes names and properties are provided compliant with
+> > > >> "simple-bus" bindings, and should pass "make dtbs_check".
+> > > >>
+> > > >> Remaining questions:
+> > > >>
+> > > >> - Should storage-bus exist? Or should drivers under it simply specify
+> > > >>    32-bit DMA?
+> > > >
+> > > > Explicitly saying storage devices have one-to-one mapping
+> > > > seems informative, to me.
+> > sounds good to be explicit
+> >
+> > > >
+> > > >> ---
+> > > >>   arch/riscv/boot/dts/spacemit/k1.dtsi | 53
+> > > >> ++++++++++++++++++++++++++++++++++++
+> > > >>   1 file changed, 53 insertions(+)
+> > > >
+> > > > The short summary of what differs between your proposal
+> > > > and what Guodong said is:
+> > > > - You sort nodes alphabetically, Guodong did not
+> > > > - You dropped the unit address
+> > I'd agree with not adding unit number to the simple-bus
+> >
+> > > > - You dropped the comments he had, which indicated which
+> > > >   devices "belonged" to each mapping
+> > I went ahead and checked those comments, and found them all about
+> > devices under specific bus, I'm not strongly against adding the
+> > comments but feel it's kind of unnecessary, or even in worst cases,
+> > it may bring extra confusions.. on the other hand, you can always
+> > check  device nodes under the bus to find what's there.
+> >
+> > exmaple for dram4_range(vendor code)/dma_bus, the comments is
+> >  /* DMA controller, and users */
+> > what's is 'users'? still have to check the dts, and find them -
+> > uart, spi, i2c, qspi, hdmi, sounds..
+> >
+> > If people really want to add comments and help others to understand
+> > this patch, then I'd suggest to add explanation in commit message(better?)
+> > to fully describe all the busses, or why choose this name? -
+> >  storage/multimedia/pcie/camera/dma/network_bus
+> > pretty much in much high level perspective..
+> >
+> > > > - You added a compatible property to each ("simple-bus")
+> > > > - You added an explicit (empty) ranges property to each
+> > > > - You add #address-cells and #size-cells properties, both 2
+> > > > - Your dma-ranges properties are identical to Guodong's,
+> > > >   for all nodes
+> > I think those all above already exist in Guodong's version which
+> > align his idea
+> >
+> > > >
+> > > That was a good summary. Thanks!
+> > >
+> > > My main goal of organizing the bus this way is making it actually pass
+> > > "make dtbs_check". I'm not sure if Krzysztof still objects to my reading
+> > > of simple-bus.yaml though.
+> > It would be great if DT maintainer can clarify, or give an ACK
+> >
+> > >
+> > > By the way, I don't think I will be making an RFC v2 of this. I think we
+> > > should get everything sorted under this one thread.
+> > >
+> > Instead, from a SoC tree maintainer's perspective (whom taking care of
+> > merging all the dts files), I'd rather perfer an independent or
+> > separated patch for this given every party reached consesus, so we could
+> > get this patch merged first and early, instead of getting them distributed all
+> > over in different series, IMO, separated patches brings more dedependencies
+> > if more than two series require one bus and result in more merge conflicts..
+> > Besides, introducing new busses result in re-arrangement of previous nodes,
+> > those like uart, i2c (even they have no DMA feature implemented currently)..
+> >
 > 
->> On Fri, 13 Jun 2025, Alex Elder wrote:
->>
->>> Add support for SpacemiT PMICs. Initially only the P1 PMIC is supported
->>> but the driver is structured to allow support for others to be added.
->>>
->>> The P1 PMIC is controlled by I2C, and is normally implemented with the
->>> SpacemiT K1 SoC.  This PMIC provides six buck converters and 12 LDO
->>
->> six or 12.  Please pick a format and remain consistent.
->>
->>> regulators.  It also implements a switch, watchdog timer, real-time clock,
->>> and more, but initially we will only support its regulators.
->>
->> You have to provide support for more than one device for this to be
->> accepted into MFD.
->>
->>> Signed-off-by: Alex Elder <elder@riscstar.com>
->>> ---
->>>   drivers/mfd/Kconfig         | 11 +++++
->>>   drivers/mfd/Makefile        |  1 +
->>>   drivers/mfd/spacemit-pmic.c | 91 +++++++++++++++++++++++++++++++++++++
->>>   3 files changed, 103 insertions(+)
->>>   create mode 100644 drivers/mfd/spacemit-pmic.c
+> Hi Yixun,
 > 
-> Right now, it looks like all you need is:
+> So, here is my proposed plan: I will submit two patches. The first
+> patch will introduce the dma-bus node and move the relevant (uart0, uart2
+> ..uart9) device nodes under it. The second patch will then add the pdma0
+> node itself. Please let me know if you have a different approach in mind.
 > 
-> drivers/mfd/simple-mfd-i2c.c
+..
+> Maybe you want to see an independent patchset with just the first patch? This
+> way it can be merged early without waiting for the pdma0 series.
+> Let me know. Thanks.
+yes, I prefer this way, this will also help other drivers - usb/emac,
+since they all wait for those bus nodes..
 
-Now *that* is a good suggestion.  I'll look at that now and will use
-that if I can.
+please submit following two parts a) introduce bus b) move relevant nodes.
+notice, I don't mind who (you or Vivian) doing the job, but keep in
+mind don't duplicate the work..
 
-Thanks.
+> 
+> On a side note, you mentioned I2C. I searched for upstream I2C DTS nodes
+> for the K1 but couldn't find any. I checked the for-next/dt-for-next
+> branches in the spacemit-com/linux.git repository. Did I miss something?
+> 
+you right here, the i2c driver is accepted, but not dts..
+btw, the PMIC series do introduce i2c nodes at patch 3/6
 
-					-Alex
+> BR,
+> Guodong
+> 
+> 
+> > >
+> >
+> > --
+> > Yixun Lan (dlan)
+
+-- 
+Yixun Lan (dlan)
