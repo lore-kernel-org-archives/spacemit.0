@@ -1,348 +1,189 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mx-out.tlen.pl (mx-out.tlen.pl [193.222.135.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4347F23BF80
-	for <spacemit@lists.linux.dev>; Mon, 23 Jun 2025 10:04:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF25F136348
+	for <spacemit@lists.linux.dev>; Mon, 23 Jun 2025 19:01:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.222.135.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750673083; cv=none; b=i5Nt2+IdmRvfX/Fg+sWdPfDDc9D9rb8tMU1SkDtjUyAjbV/TFk9ol/cM1bMmwlwBQnJgdTFjtfKt9FBCXlDxOeuOJ/F0pjszdEAu+0/9r9rxckCxhR30mQiuiwUocoBAVUpjt7ZuHFeB24Z/nfCPqxMUuhFsJLqFhmmWkP7nXq4=
+	t=1750705290; cv=none; b=o+nZDaEoCFUILtmNX4vrt2Xyq8zwvwTo7QpFp1npxD5K1mRniml23s3dFWfpEaUTAvTV8ryr7InwyhRkEu32y2dhAGk6PPGZ8a/9x9j4XADsSt/ghPUPQA4rT9Iy2mbuvDYlDZ57MGra/PcCHPg55c50WPZ81B+lO00FRmmaKFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750673083; c=relaxed/simple;
-	bh=NXEjDcq4AnGCDN/NnKqbEE5G4xjgu/VcsJZ9NfuevUY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aV5oyt6VHMxxb7XiRmX+px3WdYSjJzxnEZr7pjK5RnSD37CQQMquShmspiIVf+6T58PyMu1sqVtAY4zUfDEoT1WbxhMlH7+GowA4BnW+KsFVdmsJeo7AmVfLgV+9kLzf+90H/xUtW+yhqrYwnr8ByrjhQpKxuT04CK9v99kgZJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [210.73.43.2])
-	by APP-01 (Coremail) with SMTP id qwCowAD3ptWtJlloxg+rCA--.29805S4;
-	Mon, 23 Jun 2025 18:04:30 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Mon, 23 Jun 2025 18:04:17 +0800
-Subject: [PATCH 2/3] riscv: dts: spacemit: Move UARTs under dma-bus for K1
+	s=arc-20240116; t=1750705290; c=relaxed/simple;
+	bh=N2zbhzGML9mW7ANH5aTTPrIxrgBTYuz63hjBnrZ9A0Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JTPJkS4FX2hTiQ+EX6/2mWtinbQquO5OpZPNpelgnZaZtP2TIltwBFMNBTE6hGEYsumJkYLVHPa2tORwgvdF5WKSaTjzCyj4WpK4V76gA4G4ra2SdBrEaYoOAMWrmkkDR64DjSTVtxBSKzYOth71uhiudatuhD6xRZ2KYKnE3+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl; spf=pass smtp.mailfrom=o2.pl; dkim=pass (2048-bit key) header.d=o2.pl header.i=@o2.pl header.b=EVSnBIP/; arc=none smtp.client-ip=193.222.135.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=o2.pl
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=o2.pl header.i=@o2.pl header.b="EVSnBIP/"
+Received: (wp-smtpd smtp.tlen.pl 4453 invoked from network); 23 Jun 2025 20:54:38 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2.pl; s=20241105;
+          t=1750704878; bh=Nz/MLAtc2Q0OF2vCJ2qL2BfXnH2qMBB6O1rcR/uerOo=;
+          h=Subject:To:Cc:From;
+          b=EVSnBIP/yqYSauTNAm3iKv1XB4wKe+Y0LOwmxgi6daIhtHsEqShlac/mIQd/oTab0
+           BFKu42f5dzCleanEHICAtmecj6/KjJBZmop/AhaX3pKsLKGi8A0xk5RlyuDgJoi1AY
+           80dtzBvcURtla+X7VtAgQRiNqd/nPpEkjw69yuIzsE0cVd8MzplGphAuoIAHYTJy55
+           GX/cdyD8p9229vzHQS1A/KymHly7mW6cikZBNsP9rUxEeekse5FgC2U4clcDVYwV1n
+           1HPTOpWjr4oSOw+WlqFakuL1wLXnTYqyAAAmYViidjk/0rxZ1S5rY/l/zRtlQmi2if
+           UHaJ8TPQGP1WA==
+Received: from apn-31-0-3-138.dynamic.gprs.plus.pl (HELO [192.168.1.22]) (mat.jonczyk@o2.pl@[31.0.3.138])
+          (envelope-sender <mat.jonczyk@o2.pl>)
+          by smtp.tlen.pl (WP-SMTPD) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
+          for <elder@riscstar.com>; 23 Jun 2025 20:54:38 +0200
+Message-ID: <d35922c4-fbd0-4d13-9bcd-2688b48c0045@o2.pl>
+Date: Mon, 23 Jun 2025 20:54:34 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250623-k1-dma-buses-rfc-wip-v1-2-c0144082061f@iscas.ac.cn>
-References: <20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn>
-In-Reply-To: <20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn>
-To: Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>, 
- Ze Huang <huangze@whut.edu.cn>, Alex Elder <elder@riscstar.com>, 
- spacemit@lists.linux.dev, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Vivian Wang <uwu@dram.page>, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Vivian Wang <wangruikang@iscas.ac.cn>
-X-Mailer: b4 0.14.2
-X-CM-TRANSID:qwCowAD3ptWtJlloxg+rCA--.29805S4
-X-Coremail-Antispam: 1UD129KBjvJXoWxtF4rGF43XrWkXrWfJw48tFb_yoW3GF1Up3
-	yxCFZ3CrWvqF1Yvwn0qFZrKrWkGFW8Ka93WwnFyw1fJF9agFWqvF4xJFyxtF1UX34DZw45
-	tF95Arykta10qw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUQj14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jryl82xGYIkIc2
-	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
-	Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
-	8EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AI
-	xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
-	vE14v26r106r15McIj6I8E87Iv67AKxVW8Jr0_Cr1UMcvjeVCFs4IE7xkEbVWUJVW8JwAC
-	jcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2ka0x
-	kIwI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67AK6r4DMxAIw28IcxkI7VAKI48JMxC2
-	0s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI
-	0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE
-	14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2
-	IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_
-	Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUbYFAUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/7] rtc: spacemit: support the SpacemiT P1 RTC
+To: Alex Elder <elder@riscstar.com>, lee@kernel.org,
+ alexandre.belloni@bootlin.com, lgirdwood@gmail.com, broonie@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: dlan@gentoo.org, wangruikang@iscas.ac.cn, paul.walmsley@sifive.com,
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+ troymitchell988@gmail.com, guodong@riscstar.com, devicetree@vger.kernel.org,
+ spacemit@lists.linux.dev, linux-rtc@vger.kernel.org,
+ linux-riscv@lists.infradead.org
+References: <20250622032941.3768912-1-elder@riscstar.com>
+ <20250622032941.3768912-5-elder@riscstar.com>
+Content-Language: en-GB, pl
+From: =?UTF-8?Q?Mateusz_Jo=C5=84czyk?= <mat.jonczyk@o2.pl>
+Autocrypt: addr=mat.jonczyk@o2.pl; keydata=
+ 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
+ TANkZ3QqXNX2
+In-Reply-To: <20250622032941.3768912-5-elder@riscstar.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-WP-MailID: 2af6533f687966590cf5e4cd8b367565
+X-WP-AV: skaner antywirusowy Poczty o2
+X-WP-SPAM: NO 0000000 [UUNh]                               
 
-UART devices in Spacemit K1 use dma-bus DMA translations. Move these
-nodes under dma-bus to reflect this fact.
+W dniu 22.06.2025 o 05:29, Alex Elder pisze:
+> Add support for the RTC found in the SpacemiT P1 PMIC.  Initially
+> only setting and reading the time are supported.
+>
+> The PMIC is implemented as a multi-function device.  This RTC is
+> probed based on this driver being named in a MFD cell in the simple
+> MFD I2C driver.
+>
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+> v3: - Added this driver to the series, in response to Lee Jones saying
+>        more than one MFD sub-device was required to be acceptable
+[snip]
+> +static int p1_rtc_read_time(struct device *dev, struct rtc_time *t)
+> +{
+> +	struct p1_rtc *p1 = dev_get_drvdata(dev);
+> +	u8 time[tu_count];
+> +	int ret;
+> +
+> +	ret = regmap_bulk_read(p1->regmap, RTC_COUNT_BASE, &time, sizeof(time));
+> +	if (ret)
+> +		return ret;
 
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 246 ++++++++++++++++++-----------------
- 1 file changed, 128 insertions(+), 118 deletions(-)
+Hello,
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 99c76997b367f733c9dda2c30dd85817294ef9b7..0d41694699851e672a833601b62c2b2ad3daae79 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -357,114 +357,6 @@ syscon_apbc: system-controller@d4015000 {
- 			#reset-cells = <1>;
- 		};
- 
--		uart0: serial@d4017000 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xd4017000 0x0 0x100>;
--			clocks = <&syscon_apbc CLK_UART0>,
--				 <&syscon_apbc CLK_UART0_BUS>;
--			clock-names = "core", "bus";
--			interrupts = <42>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "disabled";
--		};
--
--		uart2: serial@d4017100 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xd4017100 0x0 0x100>;
--			clocks = <&syscon_apbc CLK_UART2>,
--				 <&syscon_apbc CLK_UART2_BUS>;
--			clock-names = "core", "bus";
--			interrupts = <44>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "disabled";
--		};
--
--		uart3: serial@d4017200 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xd4017200 0x0 0x100>;
--			clocks = <&syscon_apbc CLK_UART3>,
--				 <&syscon_apbc CLK_UART3_BUS>;
--			clock-names = "core", "bus";
--			interrupts = <45>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "disabled";
--		};
--
--		uart4: serial@d4017300 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xd4017300 0x0 0x100>;
--			clocks = <&syscon_apbc CLK_UART4>,
--				 <&syscon_apbc CLK_UART4_BUS>;
--			clock-names = "core", "bus";
--			interrupts = <46>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "disabled";
--		};
--
--		uart5: serial@d4017400 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xd4017400 0x0 0x100>;
--			clocks = <&syscon_apbc CLK_UART5>,
--				 <&syscon_apbc CLK_UART5_BUS>;
--			clock-names = "core", "bus";
--			interrupts = <47>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "disabled";
--		};
--
--		uart6: serial@d4017500 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xd4017500 0x0 0x100>;
--			clocks = <&syscon_apbc CLK_UART6>,
--				 <&syscon_apbc CLK_UART6_BUS>;
--			clock-names = "core", "bus";
--			interrupts = <48>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "disabled";
--		};
--
--		uart7: serial@d4017600 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xd4017600 0x0 0x100>;
--			clocks = <&syscon_apbc CLK_UART7>,
--				 <&syscon_apbc CLK_UART7_BUS>;
--			clock-names = "core", "bus";
--			interrupts = <49>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "disabled";
--		};
--
--		uart8: serial@d4017700 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xd4017700 0x0 0x100>;
--			clocks = <&syscon_apbc CLK_UART8>,
--				 <&syscon_apbc CLK_UART8_BUS>;
--			clock-names = "core", "bus";
--			interrupts = <50>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "disabled";
--		};
--
--		uart9: serial@d4017800 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xd4017800 0x0 0x100>;
--			clocks = <&syscon_apbc CLK_UART9>,
--				 <&syscon_apbc CLK_UART9_BUS>;
--			clock-names = "core", "bus";
--			interrupts = <51>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "disabled";
--		};
--
- 		gpio: gpio@d4019000 {
- 			compatible = "spacemit,k1-gpio";
- 			reg = <0x0 0xd4019000 0x0 0x100>;
-@@ -562,16 +454,6 @@ clint: timer@e4000000 {
- 					      <&cpu7_intc 3>, <&cpu7_intc 7>;
- 		};
- 
--		sec_uart1: serial@f0612000 {
--			compatible = "spacemit,k1-uart", "intel,xscale-uart";
--			reg = <0x0 0xf0612000 0x0 0x100>;
--			interrupts = <43>;
--			clock-frequency = <14857000>;
--			reg-shift = <2>;
--			reg-io-width = <4>;
--			status = "reserved"; /* for TEE usage */
--		};
--
- 		camera-bus {
- 			compatible = "simple-bus";
- 			ranges;
-@@ -588,6 +470,134 @@ dma-bus {
- 			#size-cells = <2>;
- 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
- 				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
-+
-+			uart0: serial@d4017000 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xd4017000 0x0 0x100>;
-+				clocks = <&syscon_apbc CLK_UART0>,
-+					 <&syscon_apbc CLK_UART0_BUS>;
-+				clock-names = "core", "bus";
-+				interrupts = <42>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "disabled";
-+			};
-+
-+			uart2: serial@d4017100 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xd4017100 0x0 0x100>;
-+				clocks = <&syscon_apbc CLK_UART2>,
-+					 <&syscon_apbc CLK_UART2_BUS>;
-+				clock-names = "core", "bus";
-+				interrupts = <44>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "disabled";
-+			};
-+
-+			uart3: serial@d4017200 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xd4017200 0x0 0x100>;
-+				clocks = <&syscon_apbc CLK_UART3>,
-+					 <&syscon_apbc CLK_UART3_BUS>;
-+				clock-names = "core", "bus";
-+				interrupts = <45>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "disabled";
-+			};
-+
-+			uart4: serial@d4017300 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xd4017300 0x0 0x100>;
-+				clocks = <&syscon_apbc CLK_UART4>,
-+					 <&syscon_apbc CLK_UART4_BUS>;
-+				clock-names = "core", "bus";
-+				interrupts = <46>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "disabled";
-+			};
-+
-+			uart5: serial@d4017400 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xd4017400 0x0 0x100>;
-+				clocks = <&syscon_apbc CLK_UART5>,
-+					 <&syscon_apbc CLK_UART5_BUS>;
-+				clock-names = "core", "bus";
-+				interrupts = <47>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "disabled";
-+			};
-+
-+			uart6: serial@d4017500 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xd4017500 0x0 0x100>;
-+				clocks = <&syscon_apbc CLK_UART6>,
-+					 <&syscon_apbc CLK_UART6_BUS>;
-+				clock-names = "core", "bus";
-+				interrupts = <48>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "disabled";
-+			};
-+
-+			uart7: serial@d4017600 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xd4017600 0x0 0x100>;
-+				clocks = <&syscon_apbc CLK_UART7>,
-+					 <&syscon_apbc CLK_UART7_BUS>;
-+				clock-names = "core", "bus";
-+				interrupts = <49>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "disabled";
-+			};
-+
-+			uart8: serial@d4017700 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xd4017700 0x0 0x100>;
-+				clocks = <&syscon_apbc CLK_UART8>,
-+					 <&syscon_apbc CLK_UART8_BUS>;
-+				clock-names = "core", "bus";
-+				interrupts = <50>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "disabled";
-+			};
-+
-+			uart9: serial@d4017800 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xd4017800 0x0 0x100>;
-+				clocks = <&syscon_apbc CLK_UART9>,
-+					 <&syscon_apbc CLK_UART9_BUS>;
-+				clock-names = "core", "bus";
-+				interrupts = <51>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "disabled";
-+			};
-+
-+			sec_uart1: serial@f0612000 {
-+				compatible = "spacemit,k1-uart",
-+					     "intel,xscale-uart";
-+				reg = <0x0 0xf0612000 0x0 0x100>;
-+				interrupts = <43>;
-+				clock-frequency = <14857000>;
-+				reg-shift = <2>;
-+				reg-io-width = <4>;
-+				status = "reserved"; /* for TEE usage */
-+			};
- 		};
- 
- 		multimedia-bus {
+Are you sure that you read the time parts consistently here? I mean:
+is there a risk that the clock is updating below you - so that for
+example during the transition
 
--- 
-2.49.0
+12:59:59 -> 13:00:00
+
+you are going to read 12:00:00 or 12:59:00?
+
+If so, you could for example read the time in a loop until you get
+two same readouts.
+
+> +
+> +	t->tm_sec = time[tu_second] & GENMASK(5, 0);
+> +	t->tm_min = time[tu_minute] & GENMASK(5, 0);
+> +	t->tm_hour = time[tu_hour] & GENMASK(4, 0);
+> +	t->tm_mday = (time[tu_day] & GENMASK(4, 0)) + 1;
+> +	t->tm_mon = time[tu_month] & GENMASK(3, 0);
+> +	t->tm_year = (time[tu_year] & GENMASK(5, 0)) + 100;
+
+Is it necessary to use the bitmasks here? Are the higher bits undefined
+in hardware? If so, is it necessary to mask them while writing the time
+in p1_rtc_set_time()?
+
+> +	/* tm_wday, tm_yday, and tm_isdst aren't used */
+> +
+> +	return 0;
+> +}
+> +
+> +static int p1_rtc_set_time(struct device *dev, struct rtc_time *t)
+> +{
+> +	struct p1_rtc *p1 = dev_get_drvdata(dev);
+> +	u8 time[tu_count];
+> +	int ret;
+> +
+> +	time[tu_second] = t->tm_sec;
+> +	time[tu_minute] = t->tm_min;
+> +	time[tu_hour] = t->tm_hour;
+> +	time[tu_day] = t->tm_mday - 1;
+> +	time[tu_month] = t->tm_mon;
+> +	time[tu_year] = t->tm_year - 100;
+> +
+> +	/* Disable the RTC to update; re-enable again when done */
+> +	ret = regmap_update_bits(p1->regmap, RTC_CTRL, RTC_EN, 0);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = regmap_bulk_write(p1->regmap, RTC_COUNT_BASE, time, sizeof(time));
+> +
+> +	(void)regmap_update_bits(p1->regmap, RTC_CTRL, RTC_EN, RTC_EN);
+Perhaps you shouldn't ignore any errors here - failing to restart
+the clock should make p1_rtc_set_time() return an error code.
+> +
+> +	return ret;
+> +}
+> +
+
+Greetings,
+
+Mateusz
 
