@@ -1,221 +1,357 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A40114B06C
-	for <spacemit@lists.linux.dev>; Sun, 22 Jun 2025 03:29:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6D433E1
+	for <spacemit@lists.linux.dev>; Mon, 23 Jun 2025 03:28:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750562998; cv=none; b=rugMygoKyuOEyMw6oeqehnZ+4L8rwJNut17bscyii5lB1ccAF2GDkh8RsUupC5wgUDud8KaNNxslnWHRmRe6Ti4tAQH/IW+qqH5O3uHTqHqKyp9fpqpya+2OxMfODdtm6ZHQTd33NcKVxGh3+WOThEjIRF9tK4iA1TjKTAa4wvk=
+	t=1750649339; cv=none; b=dsDAt8i0mdljj9HuINtaqkyLeDBN5DhUmvcW/GJnO3aGuSucAvZGKKdWaOy8O17bW0aYDPHwagdZT4wUFQk5cwKzU3TlI2cKNAsSGirnP16qwfdN+SrqVoty69JC235J3fyZOdnke14sbge3dEIHFJT6zogeDjb7ktKbNZDX/T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750562998; c=relaxed/simple;
-	bh=WGruvn+Gqs/wHzBEiTs0RVm377PpbfSqb1Lgjf4ooI8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdFRleVgj86MVdJwq7mj4QO1MNmWAriaVqbzmhIQinMlAMHe9FgWFOajvowGUTAPUJU63whcJskXTrqW0q+8T38qumQUli56YbWHn3UpoAHl3POW+1yqcWrh5AZehFva464Ugi9YALLEBwtAbzQ2fKW4SvXyODw9Oigh+CJiv7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=aegys52Z; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="aegys52Z"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4a43afb04a7so22028501cf.0
-        for <spacemit@lists.linux.dev>; Sat, 21 Jun 2025 20:29:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1750562995; x=1751167795; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ihUO+G2zPvFD7djd8+4VxSPuuLI+GNqieXaQtnBxio4=;
-        b=aegys52ZkdIFQ+hsfEFQMp81A8U8xoiFaKdJsSgiQFfY+I7nEapa121OIjRzy7iXus
-         JUlUgDOV/cg568k+eMwUxOuNo5ruLSkBcT3MYyWFuMngJJKy3H9e41i1XZNHdt60dNI3
-         EM6jZv2En4wsRAbyz/v/Yrm/iu3/2WczpCvl0NfGED9cBa6SuMzNvst6wM3lVfLbAr2w
-         WRz5s7qZnMG+T7XzX3a481i+ymJhnDDcIp66jwX0Oo+HvmfUDqCLtg24XlP2V3d+6otR
-         5hISsXI8dnC/oIqui6bQGhdQdwiNuRl7eNLmsv7SgzRLiIjBHDE/IkWRWIkEmd97oepk
-         IXyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750562995; x=1751167795;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ihUO+G2zPvFD7djd8+4VxSPuuLI+GNqieXaQtnBxio4=;
-        b=suCgtf3/qT305FDpCBysMCd6WpJf5ORjsvCjsV2EMwwMUNxtE2Kwl8XAK7QfRfiBIg
-         dKprpU+NN/UoOsSFGRLJYgBykdiHZggU0BHe+W4JOqIdQ3MqGPYpr/rTyygjUfH+0Rgu
-         U5QmWDfgutkIgWef1Vf3jOndCL+2aFYlWtdtkw8V2YxdT+h7NamiuKS+0c6m14VGHPvE
-         EzSqVPIH0foNwzN13wDFaMS/W3ZtdLTRsk6AHhkHFAECmuQZyuYDdImNRQlq5A86eV70
-         h5BPSZnruzlQNFWf/aaPXgUFZXHbWNKZ1kHdtyAmpIz4yyc8afvLo4mS3403grbEhB+e
-         s/vw==
-X-Forwarded-Encrypted: i=1; AJvYcCUGtfoQl9cbmB3bkUx0CyPYPrVWqatUGCgX6WDrwUwy2O7gXuzowHb0frRaZHYQFVQC4CWfsEq2lA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YySAXOr5Ur5QkCUVmw9d0OPsmNHUMSyjXX7R7KDdQEBIFlCZMWC
-	PxHYTNLXqA9E2Qk1wxkF6EZnazUHtbf4vakyTUn0joYEGzC6oiH1dkvfEm2P++DWaDw=
-X-Gm-Gg: ASbGncu3BAC9MaGV+vYuEXC2vqPRS6cYxs1HRK+ZaKWuqpX3S3mLciJ2I6EwI1iixRH
-	j0GJv4V0yWbnnxWUuNsqJevA6p0/oPimT+t12S5hQCD5bP5KQD4nidMf6LMXzLp8j8UjaOWg1F5
-	b8PTcqFR0o62RkxGKFV1UswkoJr0ghT60Q+7jQViAsve7lcGIu6/bCdX8zDOy3T0SV9CWTNX7fo
-	O+c2AhT+xz0XERMoSWt8dvkeTmNrQtCXNSaq/DCGOBI99We/DlexvqbEQiWl6kYVYeSmzRDKLi2
-	EwBnCjLms6eREDIS999oKrUgRyn6L3M0Fpxr/eIGUyaqMGKPUKcTQeUOpRBkVs4iexRFCbAJBPC
-	CKI9uk4t+RgtEVn3ofTIGlZ0unfyWy/o0XkRCJtVBj3IZSg==
-X-Google-Smtp-Source: AGHT+IECbHxini7Bpk4pSil8XqWCldpFqGPbjiNx6S6FZjM9RIZ/M0w9L9+hwhK6KfptNTvkIzyZsA==
-X-Received: by 2002:a05:6214:1c4d:b0:6fb:16a:da41 with SMTP id 6a1803df08f44-6fd0a31cd2fmr142653846d6.0.1750562995562;
-        Sat, 21 Jun 2025 20:29:55 -0700 (PDT)
-Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fd0945183dsm30014526d6.44.2025.06.21.20.29.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Jun 2025 20:29:55 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: lee@kernel.org,
-	alexandre.belloni@bootlin.com,
-	lgirdwood@gmail.com,
-	broonie@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org
-Cc: dlan@gentoo.org,
-	wangruikang@iscas.ac.cn,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	troymitchell988@gmail.com,
-	guodong@riscstar.com,
-	devicetree@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-rtc@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH v3 7/7] riscv: dts: spacemit: define regulator constraints
-Date: Sat, 21 Jun 2025 22:29:39 -0500
-Message-ID: <20250622032941.3768912-8-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250622032941.3768912-1-elder@riscstar.com>
-References: <20250622032941.3768912-1-elder@riscstar.com>
+	s=arc-20240116; t=1750649339; c=relaxed/simple;
+	bh=+rRuBhBzIYUKAbpQE+AXBRiE27nUn5eOiSsOQKj5bZo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ncjORC5Ar2gWuDowltcsCfOAxYSJ+30jnIYJfKUTRNLCeYquDaRDqeKsDDCQ3LJpRYlqHsHAhvuXHHdyfY4mypT7vZa3DYbacBjKjTKG0lGHnfU/SSxUPttm+GIARW0pVJRJ8hRv5sk4HZ0b1TWPPyG0We5nn9m6FQx5Asap7Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.33.186] (unknown [210.73.43.2])
+	by APP-01 (Coremail) with SMTP id qwCowAAn1tTYyVhoj96TCA--.26777S2;
+	Mon, 23 Jun 2025 11:28:27 +0800 (CST)
+Message-ID: <ebe1a61b-0ba5-455a-b29b-5e1506abe900@iscas.ac.cn>
+Date: Mon, 23 Jun 2025 11:28:24 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v2 2/6] net: spacemit: Add K1 Ethernet MAC
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Vivian Wang <uwu@dram.page>,
+ Lukas Bulwahn <lukas.bulwahn@redhat.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20250618-net-k1-emac-v2-0-94f5f07227a8@iscas.ac.cn>
+ <20250618-net-k1-emac-v2-2-94f5f07227a8@iscas.ac.cn>
+ <e55d8a16-5e2c-4a46-99fd-8ea485269843@lunn.ch>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <e55d8a16-5e2c-4a46-99fd-8ea485269843@lunn.ch>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qwCowAAn1tTYyVhoj96TCA--.26777S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3XFyrWr1xAw47AFyUJw4rAFb_yoW3KFW5pF
+	W8KFWkAF1Utry3ur1FqrWUAFnFvF18Gr409FyFva4Yk3sIkr18Cry8GrW7CayrCr909r4j
+	vw4jva43W3Z8KrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9vb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
+	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Gr1j6F
+	4UJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkI
+	wI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67AK6r48MxAIw28IcxkI7VAKI48JMxC20s
+	026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_
+	JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14
+	v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xva
+	j40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JV
+	W8JrUvcSsGvfC2KfnxnUUI43ZEXa7IUYvJmUUUUUU==
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Define basic constraints for the regulators in the SpacemiT P1 PMIC,
-as implemented in the Banana Pi BPI-F3.
+Hi Andrew,
 
-Signed-off-by: Alex Elder <elder@riscstar.com>
----
- .../boot/dts/spacemit/k1-bananapi-f3.dts      | 104 ++++++++++++++++++
- 1 file changed, 104 insertions(+)
+Thank you for your suggestions.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index a1c184b814262..83907cc1d5ccf 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -70,7 +70,111 @@ pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
- 		interrupts = <64>;
-+		vin-supply = <&reg_vcc_4v>;
- 		status = "okay";
-+
-+		regulators {
-+			buck1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3300000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			aldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			aldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			dldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo7 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+		};
- 	};
- };
- 
--- 
-2.45.2
+On 6/19/25 05:17, Andrew Lunn wrote:
+>> +/* The sizes (in bytes) of a ethernet packet */
+>> +#define ETHERNET_HEADER_SIZE		14
+> Please replace with ETH_HLEN
+>
+>> +#define MINIMUM_ETHERNET_FRAME_SIZE	64 /* Incl. FCS */
+> I assume this device supports VLANS? If so, the minimum should
+> actually be 68. You can then use ETH_MIN_MTU
+>
+>> +#define ETHERNET_FCS_SIZE		4
+> ETH_FCS_LEN
+
+I will fix usage of these constants in next version.
+
+>> +static int emac_tx_mem_map(struct emac_priv *priv, struct sk_buff *skb,
+>> +			   u32 max_tx_len, u32 frag_num)
+>> +{
+>> +	struct emac_desc tx_desc, *tx_desc_addr;
+>> +	u32 skb_linear_len = skb_headlen(skb);
+>> +	struct emac_tx_desc_buffer *tx_buf;
+>> +	u32 len, i, f, first, buf_idx = 0;
+>> +	struct emac_desc_ring *tx_ring;
+>> +	phys_addr_t addr;
+>> +
+>> +	tx_ring = &priv->tx_ring;
+>> +
+>> +	i = tx_ring->head;
+>> +	first = i;
+>> +
+>> +	if (++i == tx_ring->total_cnt)
+>> +		i = 0;
+>> +
+>> +	/* If the data is fragmented */
+>> +	for (f = 0; f < frag_num; f++) {
+>> +		const skb_frag_t *frag = &skb_shinfo(skb)->frags[f];
+>> +
+>> +		len = skb_frag_size(frag);
+>> +
+>> +		buf_idx = (f + 1) % 2;
+>> +
+>> +		/* First frag fill into second buffer of first descriptor */
+>> +		if (f == 0) {
+>> +			tx_buf = &tx_ring->tx_desc_buf[first];
+>> +			tx_desc_addr = &((struct emac_desc *)
+>> +						 tx_ring->desc_addr)[first];
+>> +			memset(&tx_desc, 0, sizeof(tx_desc));
+>> +		} else {
+>> +			/*
+>> +			 * From second frags to more frags,
+>> +			 * we only get new descriptor when frag num is odd.
+>> +			 */
+>> +			if (!buf_idx) {
+>> +				tx_buf = &tx_ring->tx_desc_buf[i];
+>> +				tx_desc_addr = &((struct emac_desc *)
+>> +							 tx_ring->desc_addr)[i];
+>> +				memset(&tx_desc, 0, sizeof(tx_desc));
+>> +			}
+>> +		}
+>> +		tx_buf->buf[buf_idx].dma_len = len;
+>> +
+>> +		addr = skb_frag_dma_map(&priv->pdev->dev, frag, 0,
+>> +					skb_frag_size(frag), DMA_TO_DEVICE);
+>> +
+>> +		if (dma_mapping_error(&priv->pdev->dev, addr)) {
+>> +			netdev_err(priv->ndev, "fail to map dma page: %d\n", f);
+>> +			goto dma_map_err;
+>> +		}
+>> +		tx_buf->buf[buf_idx].dma_addr = addr;
+>> +
+>> +		tx_buf->buf[buf_idx].map_as_page = true;
+>> +
+>> +		/* Every desc has two buffers for packet */
+>> +		if (buf_idx) {
+>> +			tx_desc.buffer_addr_2 = addr;
+>> +			tx_desc.desc1 |= make_buf_size_2(len);
+>> +		} else {
+>> +			tx_desc.buffer_addr_1 = addr;
+>> +			tx_desc.desc1 = make_buf_size_1(len);
+>> +
+>> +			if (++i == tx_ring->total_cnt) {
+>> +				tx_desc.desc1 |= TX_DESC_1_END_RING;
+>> +				i = 0;
+>> +			}
+>> +		}
+>> +
+>> +		if (f == 0) {
+>> +			*tx_desc_addr = tx_desc;
+>> +			continue;
+>> +		}
+>> +
+>> +		if (f == frag_num - 1) {
+>> +			tx_desc.desc1 |= TX_DESC_1_LAST_SEGMENT;
+>> +			tx_buf->skb = skb;
+>> +			if (emac_tx_should_interrupt(priv, frag_num + 1))
+>> +				tx_desc.desc1 |=
+>> +					TX_DESC_1_INTERRUPT_ON_COMPLETION;
+>> +		}
+>> +
+>> +		*tx_desc_addr = tx_desc;
+>> +		dma_wmb();
+>> +		WRITE_ONCE(tx_desc_addr->desc0, tx_desc.desc0 | TX_DESC_0_OWN);
+>> +	}
+>> +
+>> +	/* fill out first descriptor for skb linear data */
+>> +	tx_buf = &tx_ring->tx_desc_buf[first];
+>> +
+>> +	tx_buf->buf[0].dma_len = skb_linear_len;
+>> +
+>> +	addr = dma_map_single(&priv->pdev->dev, skb->data, skb_linear_len,
+>> +			      DMA_TO_DEVICE);
+>> +	if (dma_mapping_error(&priv->pdev->dev, addr)) {
+>> +		netdev_err(priv->ndev, "dma_map_single failed\n");
+>> +		goto dma_map_err;
+>> +	}
+>> +
+>> +	tx_buf->buf[0].dma_addr = addr;
+>> +
+>> +	tx_buf->buf[0].buff_addr = skb->data;
+>> +	tx_buf->buf[0].map_as_page = false;
+>> +
+>> +	/* Fill TX descriptor */
+>> +	tx_desc_addr = &((struct emac_desc *)tx_ring->desc_addr)[first];
+>> +
+>> +	tx_desc = *tx_desc_addr;
+>> +
+>> +	tx_desc.buffer_addr_1 = addr;
+>> +	tx_desc.desc1 |= make_buf_size_1(skb_linear_len);
+>> +	tx_desc.desc1 |= TX_DESC_1_FIRST_SEGMENT;
+>> +
+>> +	/* If last desc for ring, set end ring flag */
+>> +	if (first == tx_ring->total_cnt - 1)
+>> +		tx_desc.desc1 |= TX_DESC_1_END_RING;
+>> +
+>> +	/*
+>> +	 * If frag_num is more than 1, data need another desc, so current
+>> +	 * descriptor isn't last piece of packet data.
+>> +	 */
+>> +	tx_desc.desc1 |= frag_num > 1 ? 0 : TX_DESC_1_LAST_SEGMENT;
+>> +
+>> +	if (frag_num <= 1 && emac_tx_should_interrupt(priv, 1))
+>> +		tx_desc.desc1 |= TX_DESC_1_INTERRUPT_ON_COMPLETION;
+>> +
+>> +	/* Only last descriptor has skb pointer */
+>> +	if (tx_desc.desc1 & TX_DESC_1_LAST_SEGMENT)
+>> +		tx_buf->skb = skb;
+>> +
+>> +	*tx_desc_addr = tx_desc;
+>> +	dma_wmb();
+>> +	WRITE_ONCE(tx_desc_addr->desc0, tx_desc.desc0 | TX_DESC_0_OWN);
+>> +
+>> +	emac_dma_start_transmit(priv);
+>> +
+>> +	tx_ring->head = i;
+>> +
+>> +	return 0;
+>> +
+>> +dma_map_err:
+>> +	dev_kfree_skb_any(skb);
+>> +	priv->ndev->stats.tx_dropped++;
+>> +	return 0;
+>> +}
+> This is a rather large function. Can parts of it be pulled out into
+> helpers? The Coding style document says:
+>
+>   Functions should be short and sweet, and do just one thing. They
+>   should fit on one or two screenfuls of text (the ISO/ANSI screen
+>   size is 80x24, as we all know), and do one thing and do that well.
+I will reorganize this function in next version.
+>> +static int emac_mdio_init(struct emac_priv *priv)
+>> +{
+>> +	struct device *dev = &priv->pdev->dev;
+>> +	struct device_node *mii_np;
+>> +	struct mii_bus *mii;
+>> +	int ret;
+>> +
+>> +	mii_np = of_get_available_child_by_name(dev->of_node, "mdio-bus");
+>> +	if (!mii_np) {
+>> +		if (of_phy_is_fixed_link(dev->of_node)) {
+>> +			if ((of_phy_register_fixed_link(dev->of_node) < 0))
+>> +				return -ENODEV;
+>> +
+>> +			return 0;
+>> +		}
+>> +
+>> +		dev_info(dev, "No mdio-bus child node found");
+>> +		return 0;
+>> +	}
+> An mdio-bus node is normally optional. You can pass NULL to
+> devm_of_mdiobus_register() and it will do the correct thing, register
+> the bus, and scan it for devices.
+>
+> An MDIO bus and fixed link are also not mutually exclusive. When the
+> MAC is connected to an Ethernet switch, you often see an fixed-link,
+> and have an MDIO bus, with the switches management interface being
+> MDIO.
+
+I understand now. I will fix the handling of fixed-link and mdio-bus in
+the next version.
+
+>> +static int emac_ethtool_get_regs_len(struct net_device *dev)
+>> +{
+>> +	return EMAC_REG_SPACE_SIZE;
+>> +}
+>> +
+>> +static void emac_ethtool_get_regs(struct net_device *dev,
+>> +				  struct ethtool_regs *regs, void *space)
+>> +{
+>> +	struct emac_priv *priv = netdev_priv(dev);
+>> +	u32 *reg_space = space;
+>> +	int i;
+>> +
+>> +	regs->version = 1;
+>> +
+>> +	for (i = 0; i < EMAC_DMA_REG_CNT; i++)
+>> +		reg_space[i] = emac_rd(priv, DMA_CONFIGURATION + i * 4);
+>> +
+>> +	for (i = 0; i < EMAC_MAC_REG_CNT; i++)
+>> +		reg_space[i + EMAC_DMA_REG_CNT] =
+>> +			emac_rd(priv, MAC_GLOBAL_CONTROL + i * 4);
+>> +}
+> Given this implementation, it would be more readable, and less future
+> extension error prone, if emac_ethtool_get_regs_len() returned
+>
+> EMAC_DMA_REG_CNT + EMAC_MAC_REG_CNT
+I will simplify this next version.
+>> +static int emac_ioctl(struct net_device *ndev, struct ifreq *rq, int cmd)
+>> +{
+>> +	if (!netif_running(ndev))
+>> +		return -EINVAL;
+>> +
+>> +	return phy_mii_ioctl(ndev->phydev, rq, cmd);
+>> +}
+> phy_do_ioctl_running().
+I will simplify in next version.
+>> +static int emac_phy_connect(struct net_device *ndev)
+>> +{
+>> +	struct emac_priv *priv = netdev_priv(ndev);
+>> +	struct device *dev = &priv->pdev->dev;
+>> +	struct phy_device *phydev;
+>> +	struct device_node *np;
+>> +	int ret;
+>> +
+>> +	ret = of_get_phy_mode(dev->of_node, &priv->phy_interface);
+>> +	if (ret) {
+>> +		dev_err(dev, "No phy-mode found");
+>> +		return ret;
+>> +	}
+>> +
+>> +	np = of_parse_phandle(dev->of_node, "phy-handle", 0);
+>> +	if (!np && of_phy_is_fixed_link(dev->of_node))
+>> +		np = of_node_get(dev->of_node);
+>> +	if (!np) {
+>> +		dev_err(dev, "No PHY specified");
+>> +		return -ENODEV;
+>> +	}
+>> +
+>> +	ret = emac_phy_interface_config(priv);
+>> +	if (ret)
+>> +		goto err_node_put;
+>> +
+>> +	phydev = of_phy_connect(ndev, np, &emac_adjust_link, 0,
+>> +				priv->phy_interface);
+>> +	if (IS_ERR_OR_NULL(phydev)) {
+>> +		dev_err(dev, "Could not attach to PHY\n");
+>> +		ret = phydev ? PTR_ERR(phydev) : -ENODEV;
+>> +		goto err_node_put;
+>> +	}
+> The documentation for of_phy_connect() says:
+>
+>  * If successful, returns a pointer to the phy_device with the embedded
+>  * struct device refcount incremented by one, or NULL on failure. The
+>  * refcount must be dropped by calling phy_disconnect() or phy_detach().
+>
+> An error code is not possible. So you can simply this.
+> 	
+
+I will simplify this in next version.
+
+Thanks,
+Vivian "dramforever" Wang
 
