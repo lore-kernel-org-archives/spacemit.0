@@ -1,26 +1,25 @@
 Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925E22A1C9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E9B22FE17
 	for <spacemit@lists.linux.dev>; Mon, 23 Jun 2025 10:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750673082; cv=none; b=nH5N/uZ1jMX/BX5FisAl90KdqPUHDu5Duym+dwHF+iiX9bT5lKULJ6EukGAFQEiONXBT2LU7xkIqPsY5/lPTbygY/yBF2ITYBwGe/zYC2GExe9l6VMYyPnK/kcKRWNC/DIhw0mQQtf+yr9xG+eef6fv3rziBKBQ5IR7facnAPGs=
+	t=1750673082; cv=none; b=NN6ZersrxX19b681wiEcP/lTDeIlKcAkESt9piNB6MOdUfz+8IBwUkJqgeFVc1K/BEQZmPPAnwY2X2tTZUgw3DPc7UFhkUIRTZMxrZ7hefxghVphatJJcfDPKXYePZiNRBFNuOoa3Mkr2ULCz4SB0zLtQxL9PwViKYccCjBoURg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750673082; c=relaxed/simple;
-	bh=bXmCnr9T6aBc3USTUb76kIZUoHlN7k9TMoPzlD9mi3c=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EVbm0hOtSlKwCyobPcp8U40ku5Yo9haNNsen+6EEtjJlZwrIInM1/waaC5vUz3YOLZeEJqYY9l4ONwCO6zuMlA6u76r3Wzn9MpGSuJmpkhPA8K5JyexWWsxvcDsWsY6XUdxSoWwjbyalHZMzu9/BuFj2qvthutPyuanCBy3WQZw=
+	bh=vipnkNgUoh8epWZYj8+rXAcynGvmE/NRgqg8z9mtprA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=JtobOkflEtfYZTs1D8FcgX5tYeE3/pFBG8LMBu3W01hPpe/mq61K5skee8e+xiu+jregd0yGM2R3MLrMyRsl/xlVAS9JyxY358gUasnS1G+G48O2ptJUF34NDrHN5fZucHh5TgF6HYvjg7MZkFu2sxflEsb8OIQJR0BhS69orUE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from [127.0.0.2] (unknown [210.73.43.2])
-	by APP-01 (Coremail) with SMTP id qwCowAD3ptWtJlloxg+rCA--.29805S5;
+	by APP-01 (Coremail) with SMTP id qwCowAD3ptWtJlloxg+rCA--.29805S2;
 	Mon, 23 Jun 2025 18:04:30 +0800 (CST)
 From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Mon, 23 Jun 2025 18:04:18 +0800
-Subject: [PATCH 3/3] riscv: dts: spacemit: Move eMMC under storage-bus for
- K1
+Subject: [PATCH 0/3] riscv: dts: spacemit: Add DMA translation buses for K1
+Date: Mon, 23 Jun 2025 18:04:15 +0800
+Message-Id: <20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -29,9 +28,12 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250623-k1-dma-buses-rfc-wip-v1-3-c0144082061f@iscas.ac.cn>
-References: <20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn>
-In-Reply-To: <20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn>
+X-B4-Tracking: v=1; b=H4sIAJ8mWWgC/23PTW6DMBAF4KsgrzsIO/wFVVXuUWVhxmMYVeDUQ
+ 2irKHevAXXX5RvJ73t+KKHIJKrLHirSysJhTkG/ZApHOw8E7FJWpjBVUesaPjS4yUJ/FxKIHuG
+ Lb3DqqbGF9mWDrUpPb5E8f++179eUR5YlxJ9dWfV2/Sts/i9cNWjAllCfje991V5Y0EpuMcdZX
+ Z+HEenznhYvB6R6KwQYpomXLlvrPK2NqLc9E4nY/S9d9rrLlTmBMRsubkQ+wJoK65zzTXkuLwP
+ NSwh5iMNbAp+/R12YhioBAAA=
+X-Change-ID: 20250616-k1-dma-buses-rfc-wip-3be7a01f47c8
 To: Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>, 
  Ze Huang <huangze@whut.edu.cn>, Alex Elder <elder@riscstar.com>, 
  spacemit@lists.linux.dev, Rob Herring <robh@kernel.org>, 
@@ -44,72 +46,66 @@ Cc: Vivian Wang <uwu@dram.page>, devicetree@vger.kernel.org,
  linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
  Vivian Wang <wangruikang@iscas.ac.cn>
 X-Mailer: b4 0.14.2
-X-CM-TRANSID:qwCowAD3ptWtJlloxg+rCA--.29805S5
-X-Coremail-Antispam: 1UD129KBjvJXoW7tw48Ar48Xw1ruF18Ar1kXwb_yoW8XryUp3
-	9rCrZ3CrWIvF4Fkw4aqrZrWr4kGFZYkFs5Jw1DCryrJws8XFWjqr48Jw1fJFyUXryfA3sF
-	gF1kXr1UKr1UAaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUQ014x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JrWl82xGYIkIc2
-	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
-	Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
-	8EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AI
-	xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
-	vE14v26r106r15McIj6I8E87Iv67AKxVW8Jr0_Cr1UMcvjeVCFs4IE7xkEbVWUJVW8JwAC
-	jcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2ka0x
-	kIwI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67AK6r4DMxAIw28IcxkI7VAKI48JMxC2
-	0s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI
-	0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE
-	14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2
-	IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_
-	Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfUUXdbUUUUU
+X-CM-TRANSID:qwCowAD3ptWtJlloxg+rCA--.29805S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Kr1DWF4UAFyfXFyUWw1ftFb_yoW8Ww1kpF
+	WfursxArW3trWIkFs2k3y2vr1rKrsYgF4UWrnrKwn5JFsrZF4qvrWI9r4xCryDXryru342
+	vr1vqr1kWF42ywUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9E14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r106r15McIj6I8E87Iv67AKxVW8Jr0_Cr1UMcvjeVCFs4IE7xkEbVWUJV
+	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2
+	Y2ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67AK6r4DMxAIw28IcxkI7VAKI4
+	8JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xv
+	wVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjx
+	v20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20E
+	Y4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267
+	AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUUnXo7UUUUU==
 X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-SDHCI devices in Spacemit K1 use storage-bus translations. Move the node
-emmc under storage-bus to reflect this fact.
+The SpacemiT K1 has various static translations of DMA accesses. This
+series adds all the DMA translation bus nodes and also moves existing
+nodes as necessary.
 
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+According to SpacemiT DT maintainer Yixun Lan [1], it's preferable from
+a SoC DT maintainer's perspective to have this done at once instead of
+spreading these changes into various driver series. Once this is merged,
+life will be easier for future users of the buses.
+
+This series contains no bindings changes.
+
+Patch 3 moves the eMMC node added in [1].
+
+These patches can also be pulled from:
+
+https://github.com/dramforever/linux/tree/k1/dma-ranges/v1
+
+[1]: https://lore.kernel.org/r/20250623070147-GYA193822@gentoo
+[2]: https://lore.kernel.org/r/20250523-22-k1-sdhci-v1-1-6e0adddf7494@gentoo.org
+
 ---
- arch/riscv/boot/dts/spacemit/k1.dtsi | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+Changes since RFC
+- Reworded patch messages
+- Also moved existing nodes under relevant buses
+- Link to RFC: https://lore.kernel.org/r/20250617-k1-dma-buses-rfc-wip-v1-1-c8ec192fbf58@iscas.ac.cn
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 0d41694699851e672a833601b62c2b2ad3daae79..2d40360994d87edfbdaefc364ae706712022ba09 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -403,15 +403,6 @@ pll: clock-controller@d4090000 {
- 			#clock-cells = <1>;
- 		};
- 
--		emmc: mmc@d4281000 {
--			compatible = "spacemit,k1-sdhci";
--			reg = <0x0 0xd4281000 0x0 0x200>;
--			clocks = <&syscon_apmu CLK_SDH_AXI>, <&syscon_apmu CLK_SDH2>;
--			clock-names = "core", "io";
--			interrupts = <101>;
--			status = "disabled";
--		};
--
- 		syscon_apmu: system-controller@d4282800 {
- 			compatible = "spacemit,k1-syscon-apmu";
- 			reg = <0x0 0xd4282800 0x0 0x400>;
-@@ -633,6 +624,16 @@ storage-bus {
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>;
-+
-+			emmc: mmc@d4281000 {
-+				compatible = "spacemit,k1-sdhci";
-+				reg = <0x0 0xd4281000 0x0 0x200>;
-+				clocks = <&syscon_apmu CLK_SDH_AXI>,
-+					 <&syscon_apmu CLK_SDH2>;
-+				clock-names = "core", "io";
-+				interrupts = <101>;
-+				status = "disabled";
-+			};
- 		};
- 	};
- };
+---
+Vivian Wang (3):
+      riscv: dts: spacemit: Add DMA translation buses for K1
+      riscv: dts: spacemit: Move UARTs under dma-bus for K1
+      riscv: dts: spacemit: Move eMMC under storage-bus for K1
 
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 314 +++++++++++++++++++++--------------
+ 1 file changed, 189 insertions(+), 125 deletions(-)
+---
+base-commit: d9946fe286439c2aeaa7953b8c316efe5b83d515
+change-id: 20250616-k1-dma-buses-rfc-wip-3be7a01f47c8
+prerequisite-message-id: <20250523-22-k1-sdhci-v1-1-6e0adddf7494@gentoo.org>
+prerequisite-patch-id: 53fc23b06e26ab0ebb2c52ee09f4b2cffab889e2
+
+Best regards,
 -- 
-2.49.0
+Vivian "dramforever" Wang
 
