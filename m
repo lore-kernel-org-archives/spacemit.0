@@ -1,24 +1,24 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377E91DFFC
-	for <spacemit@lists.linux.dev>; Tue, 24 Jun 2025 12:52:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058E41311AC
+	for <spacemit@lists.linux.dev>; Wed, 25 Jun 2025 03:21:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750769536; cv=none; b=GmUJBvNReVv28I0JmUJed7nDhRM0OgI3y8R2ebqw64NRY/xSNRFyS/7ENxpuQggu/YsfD52edAP/g6N8e7/y/6ZIUxQ0TpylHOwJxduLCMtTNMYEVJrxtsqW53R6kDJADxdp1p/bVo4BGIlj3WZi1NGC7sRX86fx5anSPRF0UQI=
+	t=1750821706; cv=none; b=pDJc4f1cwpJbRMoy1eVV5vUiKnMg4Zwk6Z6ynHqBtFi6cefuytn63bV1+nnQoO/odBois4ZaGoTWGbI1Dcucds6Gj2LxEZaiBJwFMExVDyeWeUvFxeZSC4DJ/Ygs/agr/GvH0C0PgC1SvrT5MeQwPhz0D6xsvNxXLbh2u9DKQrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750769536; c=relaxed/simple;
-	bh=VaPTYJDkXtYftHizaw2auTaOnEWyZ69JJZUc2N8WFzw=;
+	s=arc-20240116; t=1750821706; c=relaxed/simple;
+	bh=auKUwDNEzSM73v/abj4MgCTJOYrYqJpWEqtbm5AFlUg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oVuo1N97e9mtmr9SQ7gwFrSoS0s8eEkmt+QBPxGFmKWVcoMPP3ZiLTdRT1vNS/H5sZrnmpHfZlWOxmeW1VBoyqYL9R7WE/ix8rYK1Yi+SNlEhP/dbRON9W92eXk+pAp2VM+1eWW4yMwwUxmcClgR4rDDAzymuEWWRJ7nyPMiytI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+	 In-Reply-To:Content-Type; b=Iki7B9LGF93KCvTxLtVWR70Wys44veB6yvzbEdWIzVTbGF25SJ8FrdZYdMRWv8kMAE7KiS3GhQSxvzEsHk8DmlbX3BI/GXSqo7ZT62etW56e/q/uOVYukd6Yr75OZ9HqjPBGRtdtKM3Wacf67WuIQqunDIbj/YjIpA6jolsPZeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.107] (unknown [114.241.87.235])
-	by APP-01 (Coremail) with SMTP id qwCowACnWNdnn1po+ZrnCA--.56515S2;
-	Tue, 24 Jun 2025 20:51:53 +0800 (CST)
-Message-ID: <78227da5-52a9-4378-a6b2-4b2e01444399@iscas.ac.cn>
-Date: Tue, 24 Jun 2025 20:51:51 +0800
+Received: from [192.168.33.186] (unknown [210.73.43.2])
+	by APP-05 (Coremail) with SMTP id zQCowAA3vgw4a1toj5shCQ--.56893S2;
+	Wed, 25 Jun 2025 11:21:30 +0800 (CST)
+Message-ID: <965d5dca-72b0-47da-bd9d-efeca16db826@iscas.ac.cn>
+Date: Wed, 25 Jun 2025 11:21:28 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -42,58 +42,64 @@ References: <20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn>
 Content-Language: en-US
 From: Vivian Wang <wangruikang@iscas.ac.cn>
 In-Reply-To: <CAH1PCMZ1YUC9SLOSEuCL3oUhYN23UOL+kLrOk8fbJ+EG-w3Umg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowACnWNdnn1po+ZrnCA--.56515S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Jr1rZw1fur1fCFy5CFyUJrb_yoW8Jr1rpa
-	9xXFsxGw1ktr48JrWqvF1qgrWvgrsYvF48WryDG3Z8ZFWDXF1IgF4Skry7try2grn5Aw1F
-	yFsYva4v9F15XrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvqb7Iv0xC_Cr1lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-CM-TRANSID:zQCowAA3vgw4a1toj5shCQ--.56893S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7CryxGr1rtFy7tr45CF47XFb_yoW8GrW5pa
+	y7Xr4kKrWkJr4kArnrXF1qgFWfWr4Sqa4xCFyDGwn8Za98WF12qFWSkr9Fkry7Wwn5Aa1I
+	yanava4q9FW5XaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_Zr1lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
 	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
 	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
-	1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
-	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
-	wI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
-	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
-	ZFpf9x07j1rWrUUUUU=
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
+	c7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
+	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
+	14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
+	IFyTuYvjxU2X_-DUUUU
 X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-
 On 6/24/25 20:21, Guodong Xu wrote:
-> On Mon, Jun 23, 2025 at 6:04 PM Vivian Wang <wangruikang@iscas.ac.cn> wrote:
+> On Mon, Jun 23, 2025 at 6:04=E2=80=AFPM Vivian Wang <wangruikang@iscas.=
+ac.cn> wrote:
 >> UART devices in Spacemit K1 use dma-bus DMA translations. Move these
 >> nodes under dma-bus to reflect this fact.
-...
+=2E..
 >>
 >> -               sec_uart1: serial@f0612000 {
->> -                       compatible = "spacemit,k1-uart", "intel,xscale-uart";
->> -                       reg = <0x0 0xf0612000 0x0 0x100>;
->> -                       interrupts = <43>;
->> -                       clock-frequency = <14857000>;
->> -                       reg-shift = <2>;
->> -                       reg-io-width = <4>;
->> -                       status = "reserved"; /* for TEE usage */
+>> -                       compatible =3D "spacemit,k1-uart", "intel,xsca=
+le-uart";
+>> -                       reg =3D <0x0 0xf0612000 0x0 0x100>;
+>> -                       interrupts =3D <43>;
+>> -                       clock-frequency =3D <14857000>;
+>> -                       reg-shift =3D <2>;
+>> -                       reg-io-width =3D <4>;
+>> -                       status =3D "reserved"; /* for TEE usage */
 >> -               };
 >> -
-> Are you sure sec_uart1 should be placed under the dma_bus? Please double
+> Are you sure sec_uart1 should be placed under the dma_bus? Please doubl=
+e
 > check. If sec_uart1 and other peripherals supported by the secure DMA
-> (base address: 0xF0600000) share the same address mapping as dma_bus, and
+> (base address: 0xF0600000) share the same address mapping as dma_bus, a=
+nd
 > if they can be accessed by the linux kernel in some cases (as saying
 > 'reserved'), then that makes sense. If not, better not move them.
 
-Bianbu's DT from SpacemiT [1] shows sec_uart1 using dram_range4, and it 
-made sense to me. However just to be sure I will ask SpacemiT for 
-confirmation.
+Hi Guodong,
+
+I have confirmed with SpacemiT that sec_uart1 uses dram_range4, a.k.a.
+dma-bus, which is same as the rest of the UARTs.
+
+Also, sec_uart1 is usable in e.g. Linux, but only if no TEE is in use.
+Using status =3D "reserved" is the safe choice here. Platforms that do no=
+t
+run a TEE (or anything similar that would disable access to the
+0xf000_0000 to 0xffff_ffff range) and wishing to enable use of sec_uart1
+can change the status to "okay".
 
 Vivian "dramforever" Wang
-
-[1]: https://gitee.com/bianbu-linux/linux-6.6/blob/k1-bl-v2.2.y/arch/riscv/boot/dts/spacemit/k1-x.dtsi
-
-> --
-> Guodong
 
