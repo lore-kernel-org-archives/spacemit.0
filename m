@@ -1,105 +1,322 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058E41311AC
-	for <spacemit@lists.linux.dev>; Wed, 25 Jun 2025 03:21:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B752A15A86B;
+	Wed, 25 Jun 2025 08:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750821706; cv=none; b=pDJc4f1cwpJbRMoy1eVV5vUiKnMg4Zwk6Z6ynHqBtFi6cefuytn63bV1+nnQoO/odBois4ZaGoTWGbI1Dcucds6Gj2LxEZaiBJwFMExVDyeWeUvFxeZSC4DJ/Ygs/agr/GvH0C0PgC1SvrT5MeQwPhz0D6xsvNxXLbh2u9DKQrc=
+	t=1750839715; cv=none; b=OG2uA2QvOpnzgcXVvQ9b+e9GTFBbNpKBmnUj+NHFTOx8A1HwvqxxVZ1VEx8Kkd5ZOS29uEJfHWTERKtEhZQpmu0ZwA7vg1/S/GqTckqhYtJ+VvyT74sqQB+WTUhnqJFgHj5l5V1ze8TF8rqFERebdkLewE4FI7pxIWErbbSFTIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750821706; c=relaxed/simple;
-	bh=auKUwDNEzSM73v/abj4MgCTJOYrYqJpWEqtbm5AFlUg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Iki7B9LGF93KCvTxLtVWR70Wys44veB6yvzbEdWIzVTbGF25SJ8FrdZYdMRWv8kMAE7KiS3GhQSxvzEsHk8DmlbX3BI/GXSqo7ZT62etW56e/q/uOVYukd6Yr75OZ9HqjPBGRtdtKM3Wacf67WuIQqunDIbj/YjIpA6jolsPZeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.33.186] (unknown [210.73.43.2])
-	by APP-05 (Coremail) with SMTP id zQCowAA3vgw4a1toj5shCQ--.56893S2;
-	Wed, 25 Jun 2025 11:21:30 +0800 (CST)
-Message-ID: <965d5dca-72b0-47da-bd9d-efeca16db826@iscas.ac.cn>
-Date: Wed, 25 Jun 2025 11:21:28 +0800
+	s=arc-20240116; t=1750839715; c=relaxed/simple;
+	bh=EWmpGBQr93VwGYphPN1mqtDgtD2Nh9NaQj6utWcWPlw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SZzf2pYN2u2hYxqpvBFAKtWdcmhD/OcpNXGI5ydN7Vs8ORThYIVRWPYrCYGPzP27Nn6/v1LqrCsHNT0xZ9YTID9mo+qaSym1SVEK8ekdLwTM10Y/M4A1Mew8Wbx72KkPmN8ccp6EdZhla90br86PkNzZPG5vNvgT5u1w89hE7fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QNtVW0Pc; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QNtVW0Pc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A48CC4CEEA;
+	Wed, 25 Jun 2025 08:21:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750839715;
+	bh=EWmpGBQr93VwGYphPN1mqtDgtD2Nh9NaQj6utWcWPlw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QNtVW0PciOraX7px3gUf6NBKLnvSlyvsSJ6TLRHWjUzX0iwSm3iR/M3Pr9jiHZWvh
+	 GmOrxW8fPt5ABhZrSrlOmgnBtOUelqqTxqXsxTTyq8bg+mtSiI0CpvFEytlQsIGc7j
+	 nsBIz8QjD+9r9Q8v8TbuHkWQgfCDFifE9+veARSvsKk2BkGFdHG/CmIbYH2+T00qKX
+	 g3RfNFfjUbVV/oWFJyAGxl4ybPu5hIv7t/gAxapfhBnEmSjf0kQ3Gb4aoKBxvGnArX
+	 Uy1qRxAKjVy5TQ582NauhE5PA+vSz5xwXsWIfnVcBHAvYSxibp0pac6B4nuN/cm7Hh
+	 QursECtoS8m7Q==
+Date: Wed, 25 Jun 2025 09:21:49 +0100
+From: Lee Jones <lee@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: lgirdwood@gmail.com, broonie@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, dlan@gentoo.org,
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	alex@ghiti.fr, troymitchell988@gmail.com, guodong@riscstar.com,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/6] mfd: spacemit: add support for SpacemiT PMICs
+Message-ID: <20250625082149.GO795775@google.com>
+References: <20250613210150.1468845-1-elder@riscstar.com>
+ <20250613210150.1468845-3-elder@riscstar.com>
+ <20250619144023.GG795775@google.com>
+ <8126de92-0338-4cd0-98fc-4f8c37500201@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] riscv: dts: spacemit: Move UARTs under dma-bus for K1
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Yixun Lan <dlan@gentoo.org>, Ze Huang <huangze@whut.edu.cn>,
- Alex Elder <elder@riscstar.com>, spacemit@lists.linux.dev,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley
- <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Vivian Wang <uwu@dram.page>, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn>
- <20250623-k1-dma-buses-rfc-wip-v1-2-c0144082061f@iscas.ac.cn>
- <CAH1PCMZ1YUC9SLOSEuCL3oUhYN23UOL+kLrOk8fbJ+EG-w3Umg@mail.gmail.com>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <CAH1PCMZ1YUC9SLOSEuCL3oUhYN23UOL+kLrOk8fbJ+EG-w3Umg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-CM-TRANSID:zQCowAA3vgw4a1toj5shCQ--.56893S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7CryxGr1rtFy7tr45CF47XFb_yoW8GrW5pa
-	y7Xr4kKrWkJr4kArnrXF1qgFWfWr4Sqa4xCFyDGwn8Za98WF12qFWSkr9Fkry7Wwn5Aa1I
-	yanava4q9FW5XaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_Zr1lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
-	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
-	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
-	c7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
-	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
-	14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
-	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
-	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
-	IFyTuYvjxU2X_-DUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8126de92-0338-4cd0-98fc-4f8c37500201@riscstar.com>
 
-On 6/24/25 20:21, Guodong Xu wrote:
-> On Mon, Jun 23, 2025 at 6:04=E2=80=AFPM Vivian Wang <wangruikang@iscas.=
-ac.cn> wrote:
->> UART devices in Spacemit K1 use dma-bus DMA translations. Move these
->> nodes under dma-bus to reflect this fact.
-=2E..
->>
->> -               sec_uart1: serial@f0612000 {
->> -                       compatible =3D "spacemit,k1-uart", "intel,xsca=
-le-uart";
->> -                       reg =3D <0x0 0xf0612000 0x0 0x100>;
->> -                       interrupts =3D <43>;
->> -                       clock-frequency =3D <14857000>;
->> -                       reg-shift =3D <2>;
->> -                       reg-io-width =3D <4>;
->> -                       status =3D "reserved"; /* for TEE usage */
->> -               };
->> -
-> Are you sure sec_uart1 should be placed under the dma_bus? Please doubl=
-e
-> check. If sec_uart1 and other peripherals supported by the secure DMA
-> (base address: 0xF0600000) share the same address mapping as dma_bus, a=
-nd
-> if they can be accessed by the linux kernel in some cases (as saying
-> 'reserved'), then that makes sense. If not, better not move them.
+On Fri, 20 Jun 2025, Alex Elder wrote:
 
-Hi Guodong,
+> On 6/19/25 9:40 AM, Lee Jones wrote:
+> > On Fri, 13 Jun 2025, Alex Elder wrote:
+> > 
+> > > Add support for SpacemiT PMICs. Initially only the P1 PMIC is supported
+> > > but the driver is structured to allow support for others to be added.
+> > > 
+> > > The P1 PMIC is controlled by I2C, and is normally implemented with the
+> > > SpacemiT K1 SoC.  This PMIC provides six buck converters and 12 LDO
+> > 
+> > six or 12.  Please pick a format and remain consistent.
+> 
+> "Numbers smaller than ten should be spelled out."
 
-I have confirmed with SpacemiT that sec_uart1 uses dram_range4, a.k.a.
-dma-bus, which is same as the rest of the UARTs.
+Never heard of that before Googling it.  Formal writing is odd. :)
 
-Also, sec_uart1 is usable in e.g. Linux, but only if no TEE is in use.
-Using status =3D "reserved" is the safe choice here. Platforms that do no=
-t
-run a TEE (or anything similar that would disable access to the
-0xf000_0000 to 0xffff_ffff range) and wishing to enable use of sec_uart1
-can change the status to "okay".
+> But I'll use 6 and 12.
+> 
+> > > regulators.  It also implements a switch, watchdog timer, real-time clock,
+> > > and more, but initially we will only support its regulators.
+> > 
+> > You have to provide support for more than one device for this to be
+> > accepted into MFD.
+> 
+> OK.  I'm looking at the other device functions to see if I
+> can pick the easiest one.
+> 
+> > > Signed-off-by: Alex Elder <elder@riscstar.com>
+> > > ---
+> > >   drivers/mfd/Kconfig         | 11 +++++
+> > >   drivers/mfd/Makefile        |  1 +
+> > >   drivers/mfd/spacemit-pmic.c | 91 +++++++++++++++++++++++++++++++++++++
+> > >   3 files changed, 103 insertions(+)
+> > >   create mode 100644 drivers/mfd/spacemit-pmic.c
+> > > 
+> > > diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+> > > index 6fb3768e3d71c..c59ae6cc2dd8d 100644
+> > > --- a/drivers/mfd/Kconfig
+> > > +++ b/drivers/mfd/Kconfig
+> > > @@ -1182,6 +1182,17 @@ config MFD_QCOM_RPM
+> > >   	  Say M here if you want to include support for the Qualcomm RPM as a
+> > >   	  module. This will build a module called "qcom_rpm".
+> > > +config MFD_SPACEMIT_PMIC
+> > > +	tristate "SpacemiT PMIC"
+> > > +	depends on ARCH_SPACEMIT || COMPILE_TEST
+> > > +	depends on I2C && OF
+> > > +	select MFD_CORE
+> > > +	select REGMAP_I2C
+> > > +	default ARCH_SPACEMIT
+> > > +	help
+> > > +	  This option enables support for SpacemiT I2C based PMICs.  At
+> > > +	  this time only the P1 PMIC (used with the K1 SoC) is supported.
+> > > +
+> > >   config MFD_SPMI_PMIC
+> > >   	tristate "Qualcomm SPMI PMICs"
+> > >   	depends on ARCH_QCOM || COMPILE_TEST
+> > > diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
+> > > index 79495f9f3457b..59d1ec8db3a3f 100644
+> > > --- a/drivers/mfd/Makefile
+> > > +++ b/drivers/mfd/Makefile
+> > > @@ -266,6 +266,7 @@ obj-$(CONFIG_MFD_SUN4I_GPADC)	+= sun4i-gpadc.o
+> > >   obj-$(CONFIG_MFD_STM32_LPTIMER)	+= stm32-lptimer.o
+> > >   obj-$(CONFIG_MFD_STM32_TIMERS) 	+= stm32-timers.o
+> > >   obj-$(CONFIG_MFD_MXS_LRADC)     += mxs-lradc.o
+> > > +obj-$(CONFIG_MFD_SPACEMIT_PMIC)	+= spacemit-pmic.o
+> > >   obj-$(CONFIG_MFD_SC27XX_PMIC)	+= sprd-sc27xx-spi.o
+> > >   obj-$(CONFIG_RAVE_SP_CORE)	+= rave-sp.o
+> > >   obj-$(CONFIG_MFD_ROHM_BD71828)	+= rohm-bd71828.o
+> > > diff --git a/drivers/mfd/spacemit-pmic.c b/drivers/mfd/spacemit-pmic.c
+> > > new file mode 100644
+> > > index 0000000000000..7c3c3e27236da
+> > > --- /dev/null
+> > > +++ b/drivers/mfd/spacemit-pmic.c
+> > > @@ -0,0 +1,91 @@
+> > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > +/*
+> > > + * Copyright (C) 2025 by RISCstar Solutions Corporation.  All rights reserved.
+> > > + * Derived from code from:
+> > > + *	Copyright (C) 2024 Troy Mitchell <troymitchell988@gmail.com>
+> > > + */
+> > > +
+> > > +#include <linux/device.h>
+> > > +#include <linux/err.h>
+> > > +#include <linux/i2c.h>
+> > > +#include <linux/mfd/core.h>
+> > > +#include <linux/module.h>
+> > > +#include <linux/of.h>
+> > > +#include <linux/regmap.h>
+> > > +#include <linux/types.h>
+> > > +
+> > > +struct spacemit_pmic_data {
+> > 
+> > s/data/ddata/
+> 
+> I hadn't noticed that convention.  I'll use it.
+> 
+> > > +	const struct regmap_config *regmap_config;
+> > > +	const struct mfd_cell *mfd_cells;	/* array */
+> > 
+> > Hmm ... this is a red flag.  Let's see.
+> > 
+> > > +	size_t mfd_cell_count;
+> > > +};
+> > > +
+> > > +static const struct regmap_config p1_regmap_config = {
+> > > +	.reg_bits	= 8,
+> > > +	.val_bits	= 8,
+> > > +	.max_register	= 0xaa,
+> > > +};
+> > > +
+> > > +/* The name field defines the *driver* name that should bind to the device */
+> > 
+> > This comment is superfluous.
+> 
+> I'll delete it.
+> 
+> I was expecting the driver to recognize the device, not
+> the device specifying what driver to use, but I guess
+> I'm used to the DT model.
 
-Vivian "dramforever" Wang
+Even in DT, the *driver* compatible is specified.
 
+  .driver.of_match_table->compatible
+
+> > > +static const struct mfd_cell p1_cells[] = {
+> > > +	{
+> > > +		.name		= "spacemit-p1-regulator",
+> > 
+> > This spacing is wonky.  Take a look at all the other drivers here.
+> > 
+> > Also, you probably want to use MFD_CELL_NAME().
+> 
+> Yes, I see that does what I want.
+> 
+> > One is not enough.
+> > 
+> > > +	},
+> > > +};
+> > > +
+> > > +static const struct spacemit_pmic_data p1_pmic_data = {
+> > > +	.regmap_config	= &p1_regmap_config,
+> > > +	.mfd_cells	= p1_cells,
+> > > +	.mfd_cell_count	= ARRAY_SIZE(p1_cells),
+> > > +};
+> > > +
+> > > +static int spacemit_pmic_probe(struct i2c_client *client)
+> > > +{
+> > > +	const struct spacemit_pmic_data *data;
+> > > +	struct device *dev = &client->dev;
+> > > +	struct regmap *regmap;
+> > > +
+> > > +	/* We currently have no need for a device-specific structure */
+> > 
+> > Then why are we adding one?
+> 
+> I don't understand, but it might be moot once I add support
+> for another (sub)device.
+
+There are 2 rules in play here:
+
+  - Only add what you need, when you need it
+  - MFDs must contain more than 1 device
+
+... and you're right.  The second rule moots the first here.
+
+> > > +	data = of_device_get_match_data(dev);
+> > > +	regmap = devm_regmap_init_i2c(client, data->regmap_config);
+> > > +	if (IS_ERR(regmap))
+> > > +		return dev_err_probe(dev, PTR_ERR(regmap),
+> > > +				     "regmap initialization failed");
+> > > +
+> > > +	return devm_mfd_add_devices(dev, PLATFORM_DEVID_AUTO,
+> > > +				    data->mfd_cells, data->mfd_cell_count,
+> > > +				    NULL, 0, NULL);
+> > > +}
+> > > +
+> > > +static const struct of_device_id spacemit_pmic_match[] = {
+> > > +	{
+> > > +		.compatible	= "spacemit,p1",
+> > > +		.data		= &p1_pmic_data,
+> > 
+> > Ah, now I see.
+> > 
+> > We do not allow one data from registration mechanism (MFD) to be piped
+> > through another (OF).  If you have to match platform data to device (you
+> > don't), then pass through identifiers and match on those in a switch()
+> > statement instead.
+> 
+> I haven't done an MFD driver before and it took some time
+> to get this working.  I'll tell you what led me to it.
+> 
+> I used code posted by Troy Mitchell (plus downstream) as a
+> starting point.
+>   https://lore.kernel.org/lkml/20241230-k1-p1-v1-0-aa4e02b9f993@gmail.com/
+> 
+> Krzysztof Kozlowski made this comment on Troy's DT binding:
+>   Drop compatible, regulators are not re-usable blocks.
+> 
+> So my goal was to have the PMIC regulators get bound to a
+> driver without specifying a DT compatible string, and I
+> found this worked.
+> 
+> You say I don't need to match platform data to device, but
+> if I did I would pass through identifiers.  Can you refer
+> me to an example of code that correctly does what I should
+> be doing instead?
+
+git grep -A5 compatible -- drivers/mfd | grep -E "\.data = .*[A-Z]+"
+
+Those identifiers are usually matched in a swtich() statement.
+
+> One other comment/question:
+>   This driver is structured as if it could support a different
+>   PMIC (in addition to P1).  Should I *not* do that, and simply
+>   make a source file hard-coded for this one PMIC?
+
+This comes back to the "add only what you need, when you need it" rule.
+
+> > > +	},
+> > > +	{ }
+> > > +};
+> > > +MODULE_DEVICE_TABLE(of, spacemit_pmic_match);
+> > > +
+> > > +static struct i2c_driver spacemit_pmic_i2c_driver = {
+> > > +	.driver = {
+> > > +		.name = "spacemit-pmic",
+> > > +		.of_match_table = spacemit_pmic_match,
+> > > +	},
+> > > +	.probe    = spacemit_pmic_probe,
+> > 
+> > Remove these odd tabs please.
+> 
+> OK.
+> 
+> > > +};
+> > > +
+> > > +static int __init spacemit_pmic_init(void)
+> > > +{
+> > > +	return i2c_add_driver(&spacemit_pmic_i2c_driver);
+> > > +}
+> > > +
+> > > +static void __exit spacemit_pmic_exit(void)
+> > > +{
+> > > +	i2c_del_driver(&spacemit_pmic_i2c_driver);
+> > > +}
+> > > +
+> > 
+> > Remove this line.
+> 
+> Sure.
+> 
+> > > +module_init(spacemit_pmic_init);
+> > > +module_exit(spacemit_pmic_exit);
+> > 
+> > Are you sure there isn't some boiler plate to do all of this?
+> > 
+> > Ah ha:
+> > 
+> >    module_i2c_driver()
+> 
+> Thanks for Googling that for me.  And thank you very much
+> for the review.
+
+`git grep` is my bestie! =:-)
+
+-- 
+Lee Jones [李琼斯]
