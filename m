@@ -1,65 +1,66 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C10124503E
-	for <spacemit@lists.linux.dev>; Tue,  1 Jul 2025 05:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CFB24E4A1
+	for <spacemit@lists.linux.dev>; Tue,  1 Jul 2025 05:37:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751348271; cv=none; b=Mt3lnOjfD0Rzt0jc2+GWZQcgYq0cdWX18r/OJS4HkTiy6QyrZ/gE/I3b+e5/HVdfwxgDwunkWop9qyzmjOUOU1WoUpqxuss40rVrJPVvJdqDsHBOmAZkmsLKxxUuqCdUYiPWY1tGYKR4MuD3SUBTsq6+2v1e9VqP3Cn0sQrupJU=
+	t=1751348277; cv=none; b=JHUvKIYqe9VJc/dWplWnWdRJCP1yYiBhMaYE04ug1wct/WUMfVZpYSg5XUt/Xh3GHXIEZcNqdMwGZbU2B7A5TR+Cp53ybtZuVSOFcC3MSX2btnNeMhi+JQ7fk1pa3yIDtKSVqpOE+nestBdm1gN93agPfIziBdMlolmPoQLjPFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751348271; c=relaxed/simple;
-	bh=cvJMbBhCxqZy7PEHIdbrxOx/t31kggur4xA0D6K3PIU=;
+	s=arc-20240116; t=1751348277; c=relaxed/simple;
+	bh=n9Us7UC90VOU/li9dlUeh0qJzrEE5RTni5LFzh63b+w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pDA7RiAOHy/HFPcQ2TD10YH5MdowN0UeMo2PYBi6tud6rV0mSjPlX4nEQgjFSOZMgUJow1tgNjyKH2fDn6A/s1hpDjGWBtBh+CBeTYlowxdwZ1EVerhNKRn09esduPTqo4msE0WssanTtUOvsmwnyouQ/1sllqOoS6VzdUt62a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=qRNswHA8; arc=none smtp.client-ip=209.85.214.180
+	 In-Reply-To:To:Cc; b=e291XIK5dbdBDqfvh0foEb39WTm2HuMhwBQuPHbcElaWSgZPQIfny26aVLfCdstbgfgMNLXC60l3ZzCdKtmy6c2fr9dbDAK2Bw1b8gnaBBWb1ZJ/4VC7+bqU+D/4Eje19UinmOOYAdyKl9sfxppil0SuOoPl2Z8USjRgJPKO2m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=dMe9p2NE; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="qRNswHA8"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2352400344aso48825135ad.2
-        for <spacemit@lists.linux.dev>; Mon, 30 Jun 2025 22:37:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="dMe9p2NE"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3135f3511bcso2228957a91.0
+        for <spacemit@lists.linux.dev>; Mon, 30 Jun 2025 22:37:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1751348269; x=1751953069; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1751348275; x=1751953075; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SIPMZwIjwsVXUr19w5dAJ2kyFpb+jn5E1yMbGJ484tE=;
-        b=qRNswHA81Sm1P5AQS2zt3Eg9FsMSeO5i51BwLSB84oGG7W9TPhymqn0B5j85dfFI6i
-         vUo3fYc9oiyPodA5BvstFjr+deR2RM4mMaKFNgQT+xIcQVGWh6YvHx8NcmWrlkwj6+B+
-         OyQcM+pU0kMoOUrRlx6ZwFwGnUckT3XMhcxopWpZcuqS4OECSe2dHpoV7eYadOp+ORlh
-         4kvjHJXkNDRhafML0P2i5nYwFRsbpKucDnnCIVetPWCCIl8iAPVmfI7zhXTI1PYa5YtK
-         KjjTqvFygr63upYejp0vuNz8tPSZzZnGVTMHbd+r3DjceKOLiNgLyUgtwGsNeQUH3sjB
-         W0bw==
+        bh=OgkMXCCp3lXpUTtLPZUq7+FcCnIZ36CClHz2F6hgg/c=;
+        b=dMe9p2NEetginyFIww4ZFAH7/zJyo+qv8XpfVZ9wrZLWdw/BgD3hspbTxdsnwXLQVO
+         WI9kalxb1H3veCMHQLj8Ydy1WQK23Ggi1lknMPLGmCJN5YYOT+YrPEaulD+Usmlj/9il
+         kaV+9z9jBx7URHauWUTPNWdYOuiovpIvwT2Jz5MA0purzDHGZ09J+Mt8rnTj5AlntW5L
+         m9hqnvHJXy5MPTmWbxkHF4zRE5R2WDQrTBsiOmE+qtJrUrzF7KujIEdhbahgNC1ol/9x
+         mW5q5Wd+RiDw3BJOBpEgWSemv+cGEMkg2HnwX9h0me1hC2u+WuEFkHApmn90r7LTfxsJ
+         EQSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751348269; x=1751953069;
+        d=1e100.net; s=20230601; t=1751348275; x=1751953075;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SIPMZwIjwsVXUr19w5dAJ2kyFpb+jn5E1yMbGJ484tE=;
-        b=eLCfziMMGsYnzr07/NOjg8FLUeLJ/4D9dEUaQM0yNfhRaXeMtRETUvn0EoPXTpWayo
-         kaflbO2NemcIl498D4QS9VcLfbVojcO1xedOAba6desU9bL4zX3UTk2AXYJ14TN8VXtk
-         3fQnfGusZmgU11lfzfN0FmISxkQsJ/zk1PJH0Fpegeb1Mtw4BBBpqZ7BWDFW4PI9RZaU
-         iwzfedqElaXvUWf+NtJLH0iMiZ4SvZo6X/db8hmtwCzPglWJYjTGDzgvpiZpt3/yQqVA
-         J3bkGGxcfWd2GOzWAJ9VplzJNf8m9TmFY0WLaBFBuEvMVrs/F1oNieC2M+2P9TcASES+
-         W2yw==
-X-Forwarded-Encrypted: i=1; AJvYcCXFQiFqbEJc0fRNz41iRRcqTNLUKyItqkgCbONzy0X4vsFICYC1U0Pgz4wXquAhTPYma9k3A9B9XA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzCy2FjJ1PvUiRxKN5uede0P1wDMqt5qWi+iitzEMqyHIYAAM8h
-	UP2xxtu3S5S2BdhzzAV6PaqWOI0qFo3PU/2mtFCVi4mVibGF5bkIKZfFsS05Gqcci+E=
-X-Gm-Gg: ASbGncu9c0WQEiClu3jKSC80XUOLxSJjo2HoXd/as+HClCr+SKb4vjZrNGaenCW7c4l
-	v/VaOTx++qrGBBNVzAKSky6SbqPqTEOUYT6ERRKIJhmEAFlug5x8ZmcuIgfjMsQEOehS25rxjgV
-	kovfJ3CA6mDyUWaaEh3i6pTYiOA8qOvUpQbdWrKCERfvdCsuSzywmfUAx7EUQ8QQMXxHjrj+c7L
-	d4Hvu598cZ4dVwh3NT5yrfrpz14/2rIhSGeX/n3qQuFCRPlL7YzRaFg6Qkxkode7+jgv5V6E5NN
-	d2Fjn1QUmumvb/PITc6M+YWGWLq1FTOxz6UIqZg=
-X-Google-Smtp-Source: AGHT+IE16tX1sCq4DSpvKgkQxnN+PHXsI78p3M94DOvhTbzRw8dgntEK2GQnFLXWQ+awumOj/AFs5g==
-X-Received: by 2002:a17:903:244c:b0:224:910:23f6 with SMTP id d9443c01a7336-23ac463e8d8mr248581755ad.45.1751348269319;
-        Mon, 30 Jun 2025 22:37:49 -0700 (PDT)
+        bh=OgkMXCCp3lXpUTtLPZUq7+FcCnIZ36CClHz2F6hgg/c=;
+        b=ttmMSGCTr1DS6ts9TCIwrQuft1eYYvve1mpIhfiEwJwaebKPdplcV6cqEvDBKQwFdg
+         kcs0NOQlB2xQnXrgcxscW2d6D4hKbKS5ae2YpQs2ryDDqeicNnNb72iPtHTHi3CqzoqE
+         TMbxkmrqgYvwCqkpL0Sqpg/op/xya08Etvcx5+3ZZfRkrP/kysFZb2C3zKWk94jjJOkA
+         FT1fUFAv0lw94BuCZnrnXKSibIHJbm/y7ZsVOJRLE+NXAswuI7qFvKbxnhd5l5UwrJ92
+         6IeBiV+pX+0TUftXh3fsn10j7lz5ia6L/AOInMJsjNdg2qucqYDyfXNJODmEYr8iKhAj
+         Dx4A==
+X-Forwarded-Encrypted: i=1; AJvYcCUoIohPccmbW3HcJxGlq/QcGnor5aU9JNPbg1eo34Wbz0ZMInbnievTauFZREVQzWpAUW7l3TVr1w==@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywd6ZwhgpNgfK1TlPwXAaBaPZLGaxlihQYgCQgzLMB5AttSf8Va
+	1X2WWEJ3rk9rSsGBi/eRonijWm92Tphbm/jMmJ2fWqZiAr06fu33PidTVaF/1pIlL+g=
+X-Gm-Gg: ASbGnctWAZxBXenkCZGEu29A1qlRmOdbEwAWk8kzuiNizNukQ3u1idXZ+kMOR29iYhF
+	N0K5oCAk/asNJwszLxorDwZqMvgjpngrYvmVOjjbB8XPGyH0T6XIy+J4ozLkqvAvYyly7CYDJa+
+	9hnejBQvlStiPfp6WdROOnhnshKwNj00Twly5dBPaoojDv8AbF5tcK1gIS/LX0dBwDwr/aNNPh6
+	sB92JtghIgVZ0sDu7EYrBo2a9XBPfjHDtUGfHCWh7Cw6CkF+nJVw2Q7tfm05dgIIv8W1YOwO+jk
+	2i49VyNHRZZ4MXcHp8QEARxo5D5BM8ocp9kJPjI=
+X-Google-Smtp-Source: AGHT+IHiipoIqFDXP36F8aMSuW4HpbiTpTi3qEOpw0AtYIq3Z5klUPs1xtkEis7GRnmZy5rq7VtuOQ==
+X-Received: by 2002:a17:90b:50cf:b0:314:7e4a:db08 with SMTP id 98e67ed59e1d1-318c9243f36mr27007305a91.18.1751348275126;
+        Mon, 30 Jun 2025 22:37:55 -0700 (PDT)
 Received: from [127.0.1.1] ([2403:2c80:6::3092])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb39bf5fsm101729865ad.115.2025.06.30.22.37.43
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb39bf5fsm101729865ad.115.2025.06.30.22.37.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 22:37:49 -0700 (PDT)
+        Mon, 30 Jun 2025 22:37:54 -0700 (PDT)
 From: Guodong Xu <guodong@riscstar.com>
-Date: Tue, 01 Jul 2025 13:36:56 +0800
-Subject: [PATCH v2 2/8] dmaengine: mmp_pdma: Add optional clock support
+Date: Tue, 01 Jul 2025 13:36:57 +0800
+Subject: [PATCH v2 3/8] dmaengine: mmp_pdma: Add optional reset controller
+ support
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,7 +69,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250701-working_dma_0701_v2-v2-2-ab6ee9171d26@riscstar.com>
+Message-Id: <20250701-working_dma_0701_v2-v2-3-ab6ee9171d26@riscstar.com>
 References: <20250701-working_dma_0701_v2-v2-0-ab6ee9171d26@riscstar.com>
 In-Reply-To: <20250701-working_dma_0701_v2-v2-0-ab6ee9171d26@riscstar.com>
 To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -85,43 +86,44 @@ Cc: Alex Elder <elder@riscstar.com>, Vivian Wang <wangruikang@iscas.ac.cn>,
  spacemit@lists.linux.dev, Guodong Xu <guodong@riscstar.com>
 X-Mailer: b4 0.14.2
 
-Add support for retrieving and enabling an optional clock during
-mmp_pdma_probe().
+Add support to acquire and deassert an optional hardware reset controller
+during mmp_pdma_probe().
 
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 ---
 v2: No change.
 ---
- drivers/dma/mmp_pdma.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/dma/mmp_pdma.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index a95d31103d3063a1d11177a1a37b89ac2fd213e9..4a6dbf55823722d26cc69379d22aaa88fbe19313 100644
+index 4a6dbf55823722d26cc69379d22aaa88fbe19313..fe627efeaff07436647f86ab5ec5333144a3c92d 100644
 --- a/drivers/dma/mmp_pdma.c
 +++ b/drivers/dma/mmp_pdma.c
-@@ -15,6 +15,7 @@
- #include <linux/device.h>
+@@ -16,6 +16,7 @@
  #include <linux/platform_data/mmp_dma.h>
  #include <linux/dmapool.h>
-+#include <linux/clk.h>
+ #include <linux/clk.h>
++#include <linux/reset.h>
  #include <linux/of_dma.h>
  #include <linux/of.h>
  
-@@ -1019,6 +1020,7 @@ static int mmp_pdma_probe(struct platform_device *op)
- {
+@@ -1021,6 +1022,7 @@ static int mmp_pdma_probe(struct platform_device *op)
  	struct mmp_pdma_device *pdev;
  	struct mmp_dma_platdata *pdata = dev_get_platdata(&op->dev);
-+	struct clk *clk;
+ 	struct clk *clk;
++	struct reset_control *rst;
  	int i, ret, irq = 0;
  	int dma_channels = 0, irq_num = 0;
  	const enum dma_slave_buswidth widths =
-@@ -1037,6 +1039,10 @@ static int mmp_pdma_probe(struct platform_device *op)
- 	if (IS_ERR(pdev->base))
- 		return PTR_ERR(pdev->base);
+@@ -1043,6 +1045,11 @@ static int mmp_pdma_probe(struct platform_device *op)
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
  
-+	clk = devm_clk_get_optional_enabled(pdev->dev, NULL);
-+	if (IS_ERR(clk))
-+		return PTR_ERR(clk);
++	rst = devm_reset_control_get_optional_exclusive_deasserted(pdev->dev,
++								   NULL);
++	if (IS_ERR(rst))
++		return PTR_ERR(rst);
 +
  	if (pdev->dev->of_node) {
  		/* Parse new and deprecated dma-channels properties */
