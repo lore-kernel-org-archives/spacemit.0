@@ -1,134 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6232D51022;
-	Tue,  1 Jul 2025 07:37:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322B026A0ED
+	for <spacemit@lists.linux.dev>; Tue,  1 Jul 2025 08:20:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751355446; cv=none; b=aoBuJb7S2oJ8mt1TWNOqEh786S2GYzWTTwftkbjcCUOrY1rR/1uPxKFRo5ul5WBi+3Z/hZGt4Sw5PFhaLhVbBXAy55chp5sARwjtWQp+nku2eYmvShXufIS8F9sFWyN6wEt0I5I/lz0xkZN+OsznYUBuTWWj5WaTidhF4toxwEU=
+	t=1751358007; cv=none; b=hq1ENkRzidObHpjbgMdzSnl2Y0uU61XDUVxpWcnZxvk2xFIajH3I3iopnFFOY3nD/IQI/2eeEqop1WYuSTCll6aqsdniA39LPmA0Kie3yFj7JDzB7yy7JQNHTFcjZP9SbTN2fZdyHUZ5zRM1wAyXzoBg8Tjw54RUngUVqqF2DOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751355446; c=relaxed/simple;
-	bh=tz9T+HYGlllDN1MZ/abac2KVF7+1D3682xOF+HsLY5c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M72xHMxU8sh7hoc8MBXz4mlJgJABif0XT2BQflfMdsfSp3WC2wdwPbvt48nGTGAzQXjvzJda+QGUxbU45NBdXeUr1e2AZlGkjOg0GuE/N9Xnp+PEmtXP+PXTfpsTCbLtyLCdM3OPeTXOn03T5ASfi1UDhV5jTxlT3JWst5Ediqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t30PodeJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751358007; c=relaxed/simple;
+	bh=TUPLhW/JmtwEUv3AE6ZmIEitSNuWEsD/cufR7kVF8ys=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=g9SgECc2ecFsrloYfXW3bx9GllcQTV3QM8RV4308BglOROWzAiUcFV4MNXX0SLACcUUyhOZ0fDORAoWy2Qk5S0+cE/WM3r1ZEaU9x0yGOBKolTndug554K3dFI1op04IcB/ovKcwqvhv98NYxvGvTB7l3IYobhw2Gt/h+aZgjBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=HBXSiM0c; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t30PodeJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23E6C4CEEB;
-	Tue,  1 Jul 2025 07:37:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751355445;
-	bh=tz9T+HYGlllDN1MZ/abac2KVF7+1D3682xOF+HsLY5c=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=t30PodeJ3I6msIWp7IWV431di3gpRjTmkfmEMSwWjQGMdqwdd7ipv46rKvf4ptqee
-	 ZLeWbSjMlzbDZcTXIImM0ErJpTjelcfi6T0KwYSLidLqLyXrye4nbbF6OKID6cGDku
-	 qHKkEzNluWuUmKhL95mNI46oj7S/z6HconCiy/AwUySzRLbiIuigky+ZXSiajqsh7k
-	 sJ+I+CmNRGPBXrWrKt1SuOSQKjWrMyEGCLnBBX5fBWCEW6x/swF0WYGw2vA5TmZenp
-	 pyKEVN3w8Zh6jcrfW2tH6lQKKa4srM7NSRDkFA0rZanVf6yuDpmiEmfF6pFZErElEj
-	 zx2HsR+Kw3nOQ==
-Message-ID: <a329e8a9-d581-4af1-ac0f-9f104a810bc9@kernel.org>
-Date: Tue, 1 Jul 2025 09:37:19 +0200
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="HBXSiM0c"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-70e4043c5b7so28830807b3.1
+        for <spacemit@lists.linux.dev>; Tue, 01 Jul 2025 01:20:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1751358004; x=1751962804; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FbuOsRMFTiJD9Z73+tptA9tOlUhWfVFv9XwbRhZntqs=;
+        b=HBXSiM0ctH96quEMRZsRu+65xZXiz69yttnhIv1647aEcdTDOsymVjhFhDrNbOsSIR
+         l9feWbFoXd8MRhAmTEhGrN/rtsmRCVmEl8+vOMZWTET8zMPFkWXShDgaqGxD9mjAAYk0
+         31DPMYhIDJW3kiHnQr2Qim2PxjbHIpq6WWDX+mr0ukEFlaKKV3fF5CXAdjcj1XjaSK0E
+         eqkPEb1baaN/E0Ah8KTxJY86y9WXEKOW2twc+Jka7SwH4Cg1aqoIEeBXLzvjFk3RdnKq
+         yd2IYc28HqaYDndlIDZ0pGInLG/xD/QzV7xeh8BsoEowXzWWe7Y/Q8FNH6KsbDOAokA9
+         /2XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751358004; x=1751962804;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FbuOsRMFTiJD9Z73+tptA9tOlUhWfVFv9XwbRhZntqs=;
+        b=P57l4biTwnFqOOxz+2o6z/tf/BLxMXAAkC6rcZ1FCJgaqmZOcobMbpi9k+/mqtLsq6
+         wUVVXJ1Jb5z13nDoOMPT7DHNz5Nt0/7tLXkfy4lTNYFGc+mtiDxr1j9aMoDL8CrcJbOw
+         qLZRJSPT3xvzVdogrsIo4J+Jc4ZjKtI05X20Y4uQgRqwijueXeB3ArN60LPnZQHMKmQv
+         9du28Dw/bp2g3xdfMbb26xTV5Pds5fwpMa6zk2KrNOnYaUhjqW2bLZvua+vc/DhHaD9+
+         7Nrp4QeHXPZ88Vs5tarK9oapIyPj5DKWyDDZ4n3xlBhF4cwmAzvXF2iTq1GpKTcG8/0y
+         O1PA==
+X-Forwarded-Encrypted: i=1; AJvYcCW6SrMdp9hUUnEYiDwm7rjb5oEG/uei9oWUPaI0qYsfcpxHVm1F/zoSTVsncDe/lI73fI0978ZECw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzXEZz3GI74iOGhgaz2u9MKoT76Djcly1bm7NUln/AX2Nt8QARz
+	aNvtZiyR2txoVXHVG4Ks0LF7ejwj2Ady0MesUygpNtnMfFQ/XnLU7UXrpYNuTsBEIjCEUdeS3B3
+	XI6xXncWkGovIVVZigBk4Uo1AX1Mx34Rbr169iqciuA==
+X-Gm-Gg: ASbGncu2j0papi1SGXb4RNsFHMAG6tB0PLfyUvs6puWJT7NPh5fdh+J/Ok+dk1o1Bev
+	4RUMBZurDycdGXS+2NfVtze31WpurXL0DEFqQ59cr50tOf16iRZwdZWLT2sToT+JilfyAMEoaro
+	5OhFNFl+BOzv1w5yCTNx5DLebERq7z8CkO3B05wwt4X6yqyClP
+X-Google-Smtp-Source: AGHT+IFre+CwhTt7pE+B50luWB9F2Nl0i0HpZdG4/qK3UkvJ4Pwbg0TDxDpw39sn7GQMRaKyZ8jEL4jGCSy8+Dou2x8=
+X-Received: by 2002:a05:690c:30d:b0:70f:84c8:312e with SMTP id
+ 00721157ae682-7151713d346mr246421247b3.1.1751358003665; Tue, 01 Jul 2025
+ 01:20:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] riscv: dts: spacemit: Add PDMA0 node for K1 SoC
-To: Guodong Xu <guodong@riscstar.com>, Vinod Koul <vkoul@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- =?UTF-8?Q?Duje_Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Alex Elder <elder@riscstar.com>, Vivian Wang <wangruikang@iscas.ac.cn>,
- dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev
 References: <20250701-working_dma_0701_v2-v2-0-ab6ee9171d26@riscstar.com>
- <20250701-working_dma_0701_v2-v2-6-ab6ee9171d26@riscstar.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250701-working_dma_0701_v2-v2-6-ab6ee9171d26@riscstar.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <20250701-working_dma_0701_v2-v2-6-ab6ee9171d26@riscstar.com> <a329e8a9-d581-4af1-ac0f-9f104a810bc9@kernel.org>
+In-Reply-To: <a329e8a9-d581-4af1-ac0f-9f104a810bc9@kernel.org>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Tue, 1 Jul 2025 16:19:52 +0800
+X-Gm-Features: Ac12FXz5TtaMdqHj-qXiGBKlygWCWhHUUNjiyvuAFFCHITTv4zQR9b39KeOkZO4
+Message-ID: <CAH1PCMb8OKiqT1R0mHSU1RFxcJvd6VyFyWJWhhKpWc5nKvTi3Q@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] riscv: dts: spacemit: Add PDMA0 node for K1 SoC
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+	=?UTF-8?Q?Duje_Mihanovi=C4=87?= <duje.mihanovic@skole.hr>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Alex Elder <elder@riscstar.com>, 
+	Vivian Wang <wangruikang@iscas.ac.cn>, dmaengine@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 01/07/2025 07:37, Guodong Xu wrote:
-> Add PDMA0 dma-controller node under dma_bus for SpacemiT K1 SoC.
-> 
-> The PDMA0 node is marked as disabled by default, allowing board-specific
-> device trees to enable it as needed.
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> ---
-> v2:
-> - Updated the compatible string.
-> - Rebased. Part of the changes in v1 is now in this patchset:
->    - "riscv: dts: spacemit: Add DMA translation buses for K1"
->    - Link: https://lore.kernel.org/all/20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn/
-> ---
->  arch/riscv/boot/dts/spacemit/k1.dtsi | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> index 8f44c1458123be9e74a80878517b2b785d743bef..69e0b1edf3276df26c07c15d81607f83de0e5d57 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> @@ -591,6 +591,17 @@ uart9: serial@d4017800 {
->  				status = "disabled";
->  			};
->  
-> +			pdma0: dma-controller@d4000000 {
+On Tue, Jul 1, 2025 at 3:37=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.org=
+> wrote:
+>
+> On 01/07/2025 07:37, Guodong Xu wrote:
+> > Add PDMA0 dma-controller node under dma_bus for SpacemiT K1 SoC.
+> >
+> > The PDMA0 node is marked as disabled by default, allowing board-specifi=
+c
+> > device trees to enable it as needed.
+> >
+> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > ---
+> > v2:
+> > - Updated the compatible string.
+> > - Rebased. Part of the changes in v1 is now in this patchset:
+> >    - "riscv: dts: spacemit: Add DMA translation buses for K1"
+> >    - Link: https://lore.kernel.org/all/20250623-k1-dma-buses-rfc-wip-v1=
+-0-c0144082061f@iscas.ac.cn/
+> > ---
+> >  arch/riscv/boot/dts/spacemit/k1.dtsi | 11 +++++++++++
+> >  1 file changed, 11 insertions(+)
+> >
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts=
+/spacemit/k1.dtsi
+> > index 8f44c1458123be9e74a80878517b2b785d743bef..69e0b1edf3276df26c07c15=
+d81607f83de0e5d57 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
+> > +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> > @@ -591,6 +591,17 @@ uart9: serial@d4017800 {
+> >                               status =3D "disabled";
+> >                       };
+> >
+> > +                     pdma0: dma-controller@d4000000 {
+>
+>
+> Oddly placed. Is spacemit not following standard DTS coding style orderin=
+g?
+>
 
+Oh, I see the issue. I will fix this by ordering by "unit address in
+ascending order". Thanks for pointing this out.
 
-Oddly placed. Is spacemit not following standard DTS coding style ordering?
+-Guodong
 
-
-Best regards,
-Krzysztof
+>
+> Best regards,
+> Krzysztof
