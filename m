@@ -1,82 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12C02FD597;
-	Wed,  2 Jul 2025 16:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511FA2BE620;
+	Wed,  2 Jul 2025 18:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751473586; cv=none; b=RmiEDDBxnlSBXq2X3/ERpZBuhEdp4OR1A/QUo1B440J28rCOI4yRNGYX+NaN12as2DXgpiHJt/KNq084Bii3Ce33AWhsm8Ki7EvaKWvT6z4yJ1CgVrnOOX1C/8o9M4XJ+PcOGr5VGmtOkU0GaFeGT4bjn3JbQ9xdIvhKz2vfvXQ=
+	t=1751482325; cv=none; b=YWILJ65WycpSmA8Q/8+3h/7buwegdEuu8r2stufuU4fpxTlyYrsUDObADzkaljZhnFrKk4U5AuYF1OuA7rrbdk8uK7fHcX3FJh+5cuwDK5QJT+kUq6vFxD0PX2Otse2uOrZ7JXSwrni82EDTWtNNepf2OdaWQmm0n6NVgDDdPaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751473586; c=relaxed/simple;
-	bh=MK0TeEDtIYEG+qBbIu9c9zXZjic9aPUL1e3LYCTRgLc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GUkW8wK747bMvZxvb5Mj8QrzDzVxiHS76VtWdec6KhAByL+geI5gZBNYrcJC/effz76L0a5rmvroPeLGo570Jy0cB0n/9frUKDYM/+nbPj2eVW5vrZ2mH4aF6Ge7e5c2ZJCVM7Wo3+NH748XLplgPef5xy88SXwpTfMN0vXyNO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SvIcD3Ie; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751482325; c=relaxed/simple;
+	bh=+uLr3dTzJTV7nrPr55V5auGbMBGpX7ZhNLHcum1L5wM=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=OrQSdm28J4ASXXQLvqy8hMD9NdwNf0lQ0fvlOt3WuBoMbaTaQ6VBm/tAX27fGXspwm/S1hGNOQuzRqyq0ovmu0oGOqZj+bWfH6RBZZlNEtv6HGH9fjch4wJ4gyjdTdjTyX13vual2qcwTVEY/Tbsvd/eKFacjheTAtLrwsizR3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JzXbebKN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SvIcD3Ie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FB9C4AF09;
-	Wed,  2 Jul 2025 16:26:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JzXbebKN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E0CC4CEE7;
+	Wed,  2 Jul 2025 18:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751473586;
-	bh=MK0TeEDtIYEG+qBbIu9c9zXZjic9aPUL1e3LYCTRgLc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SvIcD3Ie5dSYOZ0oz9yAtCTe4rl3T57V8I636/dO+Blo49qAcxJ5YObOaqwmA5LTI
-	 UbEgko3Ae4m1UXqGcu6Zc76uYkHiY9CdVsrjfqxQzoZCLNq30/KYn6TbkEJRDC8eV1
-	 wu0X+hlp+IHSgABor5nc/eSiZ9PZZSYsSDmYt6d3nc+rpsQPzgixUczz57zh1MVDJm
-	 sHQQ2lVrAb4xftyGSltUYjrooYe7fP9hfJK08/DUlOTkfENchV89XlCbA60sRTPsjA
-	 jHgXldVmJd01Y5BGBsSZl6q1MiKBUJs/S3x2cxqXes0juev8I5CRoRlulX4u54DXfc
-	 z9nFhjT70sHuA==
-Date: Wed, 2 Jul 2025 17:26:20 +0100
-From: Lee Jones <lee@kernel.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: lgirdwood@gmail.com, broonie@kernel.org, alexandre.belloni@bootlin.com,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	troymitchell988@gmail.com, guodong@riscstar.com,
-	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/8] mfd: simple-mfd-i2c: specify max_register
-Message-ID: <20250702162620.GA10134@google.com>
-References: <20250627142309.1444135-1-elder@riscstar.com>
- <20250627142309.1444135-3-elder@riscstar.com>
- <20250702152618.GU10134@google.com>
- <0219b698-2f1b-4fcd-bce7-0ba6f6895b11@riscstar.com>
+	s=k20201202; t=1751482324;
+	bh=+uLr3dTzJTV7nrPr55V5auGbMBGpX7ZhNLHcum1L5wM=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=JzXbebKNFfiGvybLuFqc/g9V+1T3qFKFAh9dMjsrZ4JG1gCL4rS0ap7uA3TN6kqSK
+	 s8+XqtwcEMITD5WVifrMW165E30dYuod2nVTuoHkoTH/iZM+F2q2BhV79Ein/NhjV7
+	 67S+/lOaGKt+AGgTPAmBrRO/JoQ0DNUIKznHLB6YIPd/tdOdfX4C8V83C18w+po+bm
+	 TCmKFlEtH2j106BEHX6KlnwRv5YFdsjB3gK/2OyKG9qLSz12Y0ZL+Vu+DVzjIUS4RQ
+	 S/LrXe6HsI6Oj6BEuE+fiG7DlpALfgSES4H3Xf4QWEODyMnwlMgMXMdRB0alzcUi95
+	 0eZ6M5tFOiD9w==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id ADCE6383B273;
+	Wed,  2 Jul 2025 18:52:30 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0219b698-2f1b-4fcd-bce7-0ba6f6895b11@riscstar.com>
+Subject: Re: [PATCH] gpio: spacemit: Add missing MODULE_DEVICE_TABLE
+From: patchwork-bot+linux-riscv@kernel.org
+Message-Id: 
+ <175148234928.828808.7437950953839931814.git-patchwork-notify@kernel.org>
+Date: Wed, 02 Jul 2025 18:52:29 +0000
+References: <20250613-k1-gpio-of-table-v1-1-9015da8fdfdb@iscas.ac.cn>
+In-Reply-To: <20250613-k1-gpio-of-table-v1-1-9015da8fdfdb@iscas.ac.cn>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: linux-riscv@lists.infradead.org, linus.walleij@linaro.org, brgl@bgdev.pl,
+ dlan@gentoo.org, elder@riscstar.com, uwu@dram.page,
+ linux-gpio@vger.kernel.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
 
-On Wed, 02 Jul 2025, Alex Elder wrote:
+Hello:
 
-> On 7/2/25 10:26 AM, Lee Jones wrote:
-> > On Fri, 27 Jun 2025, Alex Elder wrote:
-> > 
-> > > All devices supported by simple MFD use the same 8-bit register
-> > > 8-bit value regmap configuration.  There is an option available
-> > > for a device to specify a custome configuration, but no existing
-> > > device uses it.
-> > > 
-> > > Lee Jones suggested modifying the simple MFD implementation to
-> > > remove the generality of the full regmap configuration and add a
-> > > max_register value to the simple_mfd_data structure.  This can
-> > > be used in the regmap configuration to limit the valid register
-> > > addresses if desired.  It's simpler, and covers all existing and
-> > > anticipated device types.
-> > 
-> > Woah, not like this.  I wanted to make the framework _more_ flexible.
+This patch was applied to riscv/linux.git (fixes)
+by Bartosz Golaszewski <bartosz.golaszewski@linaro.org>:
+
+On Fri, 13 Jun 2025 17:25:33 +0800 you wrote:
+> The gpio-spacemit-k1 driver can be compiled as a module. Add missing
+> MODULE_DEVICE_TABLE so it can be matched by modalias and automatically
+> loaded by udev.
 > 
-> OK, sorry I misunderstood.  I'll send another new version today
-> that does what you suggest.
+> Fixes: d00553240ef8 ("gpio: spacemit: add support for K1 SoC")
+> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+> 
+> [...]
 
-No worries.  Perhaps I wasn't clear enough.
+Here is the summary with links:
+  - gpio: spacemit: Add missing MODULE_DEVICE_TABLE
+    https://git.kernel.org/riscv/c/e6382fcf9890
 
+You are awesome, thank you!
 -- 
-Lee Jones [李琼斯]
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
