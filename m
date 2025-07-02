@@ -1,184 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B35225A47;
-	Wed,  2 Jul 2025 20:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D489523BF91
+	for <spacemit@lists.linux.dev>; Wed,  2 Jul 2025 21:37:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751488687; cv=none; b=NFVX2mMPz7HrSJmB0abMG5fbE+7FTLPDeLJVjugSxSYFWSV1ZbeK9cm2EumyeB3xMMdkoHiQDvdrCUkXnW654to19WCX20PjyCLSlLdtLej2lCyEeGodipq39gUZS5ZQdXPBFQ3hIq0rwjwitGUI3ovLbmm3NY1k++1va+yz1ug=
+	t=1751492228; cv=none; b=FGxlzsjv324CuuYh3G0TYerP2q1MrMwWzJmWAcgf1A/S4HenEWGl8DNroegCU7DxXhWmgKp7rnDaubvhZnCgeQCo0QR3t07XkCeT0KFwKLemG5sOebyrwlByd+qJKTEW9vVk4crffN9G3jv9CXc+ir2Mehteo+HhSKNOeklzhcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751488687; c=relaxed/simple;
-	bh=dDCS6QVJ7nXRWlnC2SiSC9vvqcF5+4EB5/e+hxz2kYg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UI8685KqAWZu7vct0Pzs+IgSVyJfyFeMVkaebg3XJ4xmXdAy0XFriTHzWimyf2ATLcfYaJr785djJ4bJFMOYYFaWKjGXgUq2xyYjig6hgzD4mHtXJnGR6O7Zka8OaG4hcBXzObJSAeQcrAvW3sg5MKZ+Nu3p1fNKHN9uTTrstmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vPRpVWdn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751492228; c=relaxed/simple;
+	bh=9zyhz4ntHJdI/jrj1j/VNTF3enbDJI0+6GNjK+mitZw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RJ6GV1v9W3EIZceTkVrbpVmll7rgZ378nnAuQtmYsPuJtzv4aPC4YncxXYFEzFxqkuM99/wCqPqCrkJpUiDLpVhQvVp/W8bUQvvUwy7sNRCilG2UZCIjlGibDSqJZ1IDoC5SeRN3Fo4c7soIY1g3qprOsG28AnjxgDLS8lpFlG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=tqXIWN+1; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vPRpVWdn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF21EC4CEE7;
-	Wed,  2 Jul 2025 20:38:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751488687;
-	bh=dDCS6QVJ7nXRWlnC2SiSC9vvqcF5+4EB5/e+hxz2kYg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vPRpVWdnh+OJAAA7arYY7PnTcK2jpNELhtnvDh4laCUI4hYVphhNSPs460L2IVWTr
-	 1jpr5XgjEgv88LJM91FV1cNYfzB7YLuH9t4SdJC4DNuy9RqwgcjL+99vF3iuJ1SctZ
-	 ARHOTjY1hY8ZUrKMa/jH/4mi5bmpe0EB6KOC/Y7QKXXjfTaQTMI7TcjZlR4uOWwzpO
-	 npAM2tFfXbRoGuWi1e2mt8hxCh3uiDlhHKU8fHBgR5DetbenJmcGQl54fPFsVTQ3Oh
-	 ieCiVM47209l1++MMj/p6W+sbLAwaZixwCFKlfFnwbk9kM15X/w6gTj592919C4Z9u
-	 PBAsrRUs6476w==
-Message-ID: <43f19fbc-838b-431e-9d02-ecacf5f43731@kernel.org>
-Date: Wed, 2 Jul 2025 22:38:00 +0200
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="tqXIWN+1"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6fb0eb0f0fbso4509706d6.1
+        for <spacemit@lists.linux.dev>; Wed, 02 Jul 2025 14:37:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1751492224; x=1752097024; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vCk4qTQ1xZrDDch6I+2pDpmgEt4recKLbuT/8JykNnk=;
+        b=tqXIWN+1i57kcxBiJyX6x+cnocSApJSjTBFrcCaDfylVeDMjYvQrcKefyhvvcdXnsL
+         7QwpZX3FVFn3ZrsQ50pCqWNt6BA1j2afTX/t2U/HsWyne5/YKJVYlOLnoabHIufHfxft
+         lwTiSgY/UYejLo0b1TPtYMYCNxUkV/jwuV1/Gg88S0gUhOLW1g6lehxhjwXWvjhft7bc
+         jsqnKp3ryIYUzcqpIMjQZmXJZQbEWmKjtcL1ne4sTyYcVW4+MXClfQLNpWzy3hJe1xyM
+         udzVX+ULCxjJecpkuUU8nZIQgSqyZprHCKsbb+mFDNylNLl1vWk74VjMQEKQiG3KVDjB
+         StIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751492224; x=1752097024;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vCk4qTQ1xZrDDch6I+2pDpmgEt4recKLbuT/8JykNnk=;
+        b=BWG7h2qB+4bEgDt4MZYnlrchST0zl10FVMcxza3y8MPGFvO0jN9aS56lOF659KOS0f
+         zpdzL8wX06QyA9ovbv8nIWY/iKk2DPdCN9XL1w4V6fOjUsee+F/UwhXFTxR61bhJ82xh
+         Zxg9I/s8iJdbQgUxWXDJ8fEiMjRh1JYnlUltmjOW41cJUfmEG//g13+nhJBUXXph/UQf
+         R+mfRGQjTELfqdRPPV/A9u0ZYemB38FOoncHuqNYYdIjKI/dynxXBWQiVnlA6/s9c+jf
+         SfzYDc4deDKdHUFODrKesB4UEsD28q8KWaE9txnFWRSzJE+qyRelJHxL8Qh0QM+wNweP
+         ZwtA==
+X-Forwarded-Encrypted: i=1; AJvYcCVUFNziZRyO0pfhVybOtbMgOCXy+Y8bH3OjuRl0ip/d+rD2Tr27urDJtbZbMpCiiz3OyCnvtcljpw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyesHWfNampK6KybC+5GIBl7TqxlheY4LDPOodyusWf7cuyfb7Q
+	QYSc+qift/+enETThGavfKCmKxDw2jscjnTGnOvkqh5APO7z+/yZ6hvHP7TFuF8nzjE=
+X-Gm-Gg: ASbGncv2eAYsMEJnKlh7szDCDt63VA6HOyUjbpLUrcGUGdJ8pAo7MTdKHaMdbN9cXcD
+	rOcJ+bT3z/wYN0asG63PQwzCvQb6d3LfDt1WNx7pgqxzAyOj4PRZ+LKor+x6bf9MIPcRcx1HR4Q
+	sa9W3snjwS7cpNxKZXGCAyvM1hZF8AuOBLgoN9qdgL4eSSHY6MU9Vqo+hLQQITPv9gASCTV1vzE
+	rXToCbwt/xbr5Ngwozjrp37JbOw3NQqyd2r4aCaWioPYQqWKdF/fPHqsJAz3d4Qg7IAsroZZ22S
+	b887qptRIaBYbTMsnHsbP2AeaT8GXMn1aZFcoBvzJ7hd6kyeQh04npjhorvyLe5U41P5niTe4FT
+	FknelpEsdg7xRQ23iReSRm2xTjxmW0WmWLrQ=
+X-Google-Smtp-Source: AGHT+IHErTJvMvE1TJ0g2EYv2CvrFgib6KyBFStvjCoRfS+zf5ffaS+AtP1I5+t4S6JkJyQfcGlk2A==
+X-Received: by 2002:a05:6214:4107:b0:6fa:fc4b:8ea7 with SMTP id 6a1803df08f44-702bc4a73acmr16126856d6.21.1751492223736;
+        Wed, 02 Jul 2025 14:37:03 -0700 (PDT)
+Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fd771bc01bsm105691746d6.40.2025.07.02.14.37.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jul 2025 14:37:03 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: lee@kernel.org,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	alexandre.belloni@bootlin.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: mat.jonczyk@o2.pl,
+	dlan@gentoo.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	troymitchell988@gmail.com,
+	guodong@riscstar.com,
+	linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v7 0/8] spacemit: introduce P1 PMIC support
+Date: Wed,  2 Jul 2025 16:36:49 -0500
+Message-ID: <20250702213658.545163-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] dt-bindings: dma: marvell,mmp-dma: Add SpacemiT K1
- PDMA support
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- =?UTF-8?Q?Duje_Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Alex Elder <elder@riscstar.com>,
- Vivian Wang <wangruikang@iscas.ac.cn>, dmaengine@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-References: <20250701-working_dma_0701_v2-v2-0-ab6ee9171d26@riscstar.com>
- <20250701-working_dma_0701_v2-v2-1-ab6ee9171d26@riscstar.com>
- <de965773-bab1-4c50-b111-19896465e53e@kernel.org>
- <CAH1PCMbKGeXL9Te6M28ZdX8VBvaToKcK7f+JmN6JsCfttG_Mtg@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <CAH1PCMbKGeXL9Te6M28ZdX8VBvaToKcK7f+JmN6JsCfttG_Mtg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 01/07/2025 11:52, Guodong Xu wrote:
-> Hi, Krzysztof
-> 
-> On Tue, Jul 1, 2025 at 3:35 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>
->> On 01/07/2025 07:36, Guodong Xu wrote:
->>> Add "spacemit,k1-pdma" compatible string to support SpacemiT K1 PDMA
->>> controller. This variant requires:
->>
->> Why is this marvell? This should be explained here, it's really unexpected.
->>
-> 
-> SpacemiT K1 SoC uses the same DMA controller as Marvell MMP. They share most
-> of the registers (and address offsets) and only enhanced in addressing space
-> capability (from 32bit to 64bit).
+The SpacemiT P1 is an I2C-controlled PMIC that implements 6 buck
+converters and 12 LDOs.  It contains a load switch, ADC channels,
+GPIOs, a real-time clock, and a watchdog timer.
 
-I hope you got the last comment...
+This series introduces a multifunction driver for the P1 PMIC as well
+as drivers for its regulators and RTC.
 
-> 
-> Also, spacemit,k1-pdma and marvell,pdma-1.0 use the same driver (mmp_pdma.c),
-> that's the reason why I chose keeping them in the same binding file.
+In v6, a new patch was added to change the simple MFD driver to
+allow the regmap max_register value in the simple MFD configuration.
+However it also removed the option of specifying a "full" regmap
+configuration, and that was not what Lee Jones actually wanted.
 
-That's moderate reason. I explained here further - don't grow old
-bindings with completely new devices, because you keep growing old,
-poorer patterns. You have a new device, you can make it right.
+This version adds the max_register option, but also retains the
+ability to supply a full regmap config.  (If both are specified,
+the max_register value is ignored.)
 
+					-Alex
 
-...
+This series is available here:
+  https://github.com/riscstar/linux/tree/outgoing/pmic-v7
 
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            const: spacemit,k1-pdma
->>> +    then:
->>> +      required:
->>> +        - clocks
->>> +        - resets
->>> +    else:
->>> +      properties:
->>> +        clocks: false
->>> +        resets: false
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            enum:
->>> +              - marvell,pdma-1.0
->>> +              - spacemit,k1-pdma
->>> +    then:
->>> +      properties:
->>> +        '#dma-cells':
->>> +          const: 2
->>> +          description:
->>> +            The first cell contains the DMA request number for the peripheral
->>> +            device. The second cell is currently unused but must be present for
->>> +            backward compatibility.
->>> +    else:
->>> +      properties:
->>> +        '#dma-cells':
->>> +          const: 1
->>> +          description:
->>> +            The cell contains the DMA request number for the peripheral device.
->>
->>
->> It's getting complicated. I suggest to make your own schema. Then you
->> would also switch to preferred 'sram' property instead of that legacy
->> 'asram'.
->>
->> Really, ancient schemas should not be grown for new, completely
-> 
-> The reason that they share the same device driver may not be strong enough
-> compared to what you said here.
+Between version 5 and version 6:
+  - Revise patch 2 to preserve the option to provide a full regmap config
 
-If DMA maintainer(s) reject complexity in driver, then it is fine. But
-till that happens, you should rather come with a clean new binding and
-don't grow legacy.
+Here is version 6 of this series:
+  https://lore.kernel.org/lkml/20250627142309.1444135-1-elder@riscstar.com/
+
+Between version 5 and version 6:
+  - Added Rob Herring's reviewed-by to patch 1
+  - Add the simple MFD functionality suggested by Lee Jones
+  - Update patch 3 (previously 2) accordingly
+
+Here is version 5 of this series:
+  https://lore.kernel.org/lkml/20250625164119.1068842-1-elder@riscstar.com/
+
+Between version 4 and version 5:
+  - Only check the seconds register for change when looping on read
+  - Return without re-enabling the RTC if writing registers fails
+  - If the RTC is disabled when reading, return an error
+
+Here is version 4 of this series:
+  https://lore.kernel.org/lkml/20250625164119.1068842-1-elder@riscstar.com/
+
+More complete history is available at that link.
+
+Alex Elder (8):
+  dt-bindings: mfd: add support the SpacemiT P1 PMIC
+  mfd: simple-mfd-i2c: specify max_register
+  mfd: simple-mfd-i2c: add SpacemiT P1 support
+  regulator: spacemit: support SpacemiT P1 regulators
+  rtc: spacemit: support the SpacemiT P1 RTC
+  riscv: dts: spacemit: enable the i2c8 adapter
+  riscv: dts: spacemit: define fixed regulators
+  riscv: dts: spacemit: define regulator constraints
+
+ .../devicetree/bindings/mfd/spacemit,p1.yaml  |  86 +++++++++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      | 138 +++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |   7 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          |  11 ++
+ drivers/mfd/Kconfig                           |  11 ++
+ drivers/mfd/simple-mfd-i2c.c                  |  27 ++-
+ drivers/mfd/simple-mfd-i2c.h                  |   1 +
+ drivers/regulator/Kconfig                     |  12 ++
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/spacemit-p1.c               | 157 ++++++++++++++++
+ drivers/rtc/Kconfig                           |  10 ++
+ drivers/rtc/Makefile                          |   1 +
+ drivers/rtc/rtc-spacemit-p1.c                 | 167 ++++++++++++++++++
+ 13 files changed, 626 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+ create mode 100644 drivers/regulator/spacemit-p1.c
+ create mode 100644 drivers/rtc/rtc-spacemit-p1.c
 
 
-Best regards,
-Krzysztof
+base-commit: 50c8770a42faf8b1c7abe93e7c114337f580a97d
+-- 
+2.45.2
+
