@@ -1,26 +1,26 @@
 Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839C521CA1F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838C2218AC1
 	for <spacemit@lists.linux.dev>; Wed,  2 Jul 2025 06:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751436161; cv=none; b=VjLNC/3Lz+xU4Nfem7sTf+7KC37ncPbGzbSmzu+zanKbtfaTTAPYFW3s81wQ2RgTCuInTqQe0rzUAmr2wcpwwjqZ006BvEHZy4+6ETNpggsEvygBtbixDDu8EbQ0IiipIvcZuSo/2C6Z6CGSQaPM+37Z8GwgCUDBRXcrFS7dsTU=
+	t=1751436161; cv=none; b=Yvdjm3/mKCgq3jg7M1gjAr3ak348wI5VLFz0jy2fpnq+U6pXFGyEJA8ALfSvf7+l7ynFGXnDl420sv+V3ev890h0vQrb3RlIc0pnQdyuZXLjuUr9jFylfS3fHzwjX9BoZnlasOXkeGbtRf2+1P0HwomBQdWz/UjVTLFfo40tbEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1751436161; c=relaxed/simple;
-	bh=zOy0j5gOjuQT2uCiT1Uy8NiDyCMjkgCaKJu/RQgIvkw=;
+	bh=jh5EvUFWkXb95Vb+1mgggdXNgxLNFWJZEz/iNgD5W7U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=J//tgRZEqpJbaoChkWNpNsr7ENQi3Z3ro1K47XAgL12f/aAzt04VP9lybSHTlUAa68CZdkUKhl+mQun7M0pIW0VnnQrfX7AG5Br0JsjcDIt0BPcqv7jKtMCJVO/pueUkq8riYAoqSrxmM0kDxqgcMWm8AfkpOqjR8YrB49fdc2Q=
+	 In-Reply-To:To:Cc; b=iSJzKPt6GwKPe6IFYAmi395dPMuYNjVKzPGq6Efxp4keskUU1x7wkjt27H58RwSZ+sVXaqRbmYRpt4BJSEVdl7ZeGcACaId/paY3X4vHdMLV4Bki4xo6JsvfxHWzVZxN58/V2gz4hH//u5cdc7Dz7od3xC56YKD3fRmx5FlIXXA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from [127.0.0.2] (unknown [210.73.43.2])
-	by APP-01 (Coremail) with SMTP id qwCowAC3pqpny2RomPduAA--.1282S6;
-	Wed, 02 Jul 2025 14:02:17 +0800 (CST)
+	by APP-01 (Coremail) with SMTP id qwCowAC3pqpny2RomPduAA--.1282S3;
+	Wed, 02 Jul 2025 14:02:16 +0800 (CST)
 From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Wed, 02 Jul 2025 14:01:43 +0800
-Subject: [PATCH net-next v3 4/5] riscv: dts: spacemit: Add Ethernet support
- for BPI-F3
+Date: Wed, 02 Jul 2025 14:01:40 +0800
+Subject: [PATCH net-next v3 1/5] dt-bindings: net: Add support for SpacemiT
+ K1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -29,7 +29,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250702-net-k1-emac-v3-4-882dc55404f3@iscas.ac.cn>
+Message-Id: <20250702-net-k1-emac-v3-1-882dc55404f3@iscas.ac.cn>
 References: <20250702-net-k1-emac-v3-0-882dc55404f3@iscas.ac.cn>
 In-Reply-To: <20250702-net-k1-emac-v3-0-882dc55404f3@iscas.ac.cn>
 To: Andrew Lunn <andrew+netdev@lunn.ch>, 
@@ -47,93 +47,124 @@ Cc: Vivian Wang <uwu@dram.page>, Lukas Bulwahn <lukas.bulwahn@redhat.com>,
  Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>, 
  netdev@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org
+ linux-kernel@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>
 X-Mailer: b4 0.14.2
-X-CM-TRANSID:qwCowAC3pqpny2RomPduAA--.1282S6
-X-Coremail-Antispam: 1UD129KBjvJXoW7Ary5JF45JFW8Xr1kAw4fZrb_yoW8WrWDp3
-	yakFs3urWDGr4Skw43Zr9F9r4fGa95XrWkC343uF1rJrWvvas0vw15Kwn7tr1DWrW5X345
-	Xr4xtFWj9r1qkw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUQI14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
-	kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
-	z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
-	4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
-	3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7
-	IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Cr0_Gr1UMcvjeVCFs4IE7xkEbVWUJVW8
-	JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2
-	ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67AK6r47MxAIw28IcxkI7VAKI48J
-	MxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwV
-	AFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv2
-	0xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UMIIF0xvE42xK8V
-	AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E
-	14v26r4UJVWxJrUvcSsGvfC2KfnxnUUI43ZEXa7sRiEoXUUUUUU==
+X-CM-TRANSID:qwCowAC3pqpny2RomPduAA--.1282S3
+X-Coremail-Antispam: 1UD129KBjvJXoW7Cry3WF45trW5KrW5Zr4rGrg_yoW5Jr1xpF
+	4fCrs3Gr48KF13Jw4fXFykuF1fGw4kAF1DJrZFvw13tas5KF90qr4akryfXa4UurW8Ja43
+	XF1DAryDKr1DAaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUmE14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
+	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJw
+	A2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS
+	0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2
+	IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Cr0_Gr1UMcvjeVCFs4IE7xkEbVWUJVW8JwAC
+	jcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2ka0x
+	kIwI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67AK6r47MxAIw28IcxkI7VAKI48JMxC2
+	0s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI
+	0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE
+	14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20x
+	vaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8
+	JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7sRRYFCUUUUUU==
 X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
-reset.
+The Ethernet MACs on SpacemiT K1 appears to be a custom design. SpacemiT
+refers to them as "EMAC", so let's just call them "spacemit,k1-emac".
 
 Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 ---
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 46 +++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ .../devicetree/bindings/net/spacemit,k1-emac.yaml  | 81 ++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index fe22c747c5012fe56d42ac8a7efdbbdb694f31b6..15fa4a5ebd043f3fbb115d37e5a980c9b773a228 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -40,6 +40,52 @@ &emmc {
- 	status = "okay";
- };
- 
-+&eth0 {
-+	phy-handle = <&rgmii0>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac0_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <0>;
-+	status = "okay";
+diff --git a/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml b/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..500a3e1daa230ea3a1fad30d8ea56a7822fccb3d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml
+@@ -0,0 +1,81 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/spacemit,k1-emac.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
++title: SpacemiT K1 Ethernet MAC
 +
-+		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
++allOf:
++  - $ref: ethernet-controller.yaml#
 +
-+		rgmii0: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
++maintainers:
++  - Vivian Wang <wangruikang@iscas.ac.cn>
 +
-+&eth1 {
-+	phy-handle = <&rgmii1>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac1_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <250>;
-+	status = "okay";
++properties:
++  compatible:
++    const: spacemit,k1-emac
 +
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
++  reg:
++    maxItems: 1
 +
-+		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
++  clocks:
++    maxItems: 1
 +
-+		rgmii1: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
++  interrupts:
++    maxItems: 1
 +
- &uart0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&uart0_2_cfg>;
++  mdio-bus:
++    $ref: mdio.yaml#
++    unevaluatedProperties: false
++
++  resets:
++    maxItems: 1
++
++  spacemit,apmu:
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    items:
++      - items:
++          - description: phandle to syscon that controls this MAC
++          - description: offset of control registers
++    description:
++      A phandle to syscon with byte offset to control registers for this MAC
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - interrupts
++  - resets
++  - spacemit,apmu
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/spacemit,k1-syscon.h>
++
++    ethernet@cac80000 {
++        compatible = "spacemit,k1-emac";
++        reg = <0xcac80000 0x00000420>;
++        clocks = <&syscon_apmu CLK_EMAC0_BUS>;
++        interrupts = <131>;
++        mac-address = [ 00 00 00 00 00 00 ];
++        phy-handle = <&rgmii0>;
++        phy-mode = "rgmii-id";
++        pinctrl-names = "default";
++        pinctrl-0 = <&gmac0_cfg>;
++        resets = <&syscon_apmu RESET_EMAC0>;
++        rx-internal-delay-ps = <0>;
++        tx-internal-delay-ps = <0>;
++        spacemit,apmu = <&syscon_apmu 0x3e4>;
++
++        mdio-bus {
++            #address-cells = <0x1>;
++            #size-cells = <0x0>;
++
++            rgmii0: phy@1 {
++                reg = <0x1>;
++            };
++        };
++    };
 
 -- 
 2.49.0
