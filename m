@@ -1,143 +1,157 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D986626D4FC
-	for <spacemit@lists.linux.dev>; Wed,  2 Jul 2025 11:37:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A435A2F2C7C;
+	Wed,  2 Jul 2025 15:26:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751456245; cv=none; b=EJ5i+emgmcuQzcWfg6WDm+V9cMaON4CMGu9V1994HR6jtN6J+o9pec0VWKqcCTrlXonymyuiGM9AY3M6woEd8WKVuOjirWr65BSsphQk+6RV3uJbNU0wDU44/9MQcYuQB4DZyqYyBGyqZwwB/jaBmTZad3I0M+M2yh3dYafKd/A=
+	t=1751469985; cv=none; b=pFcpUqpsXnfADzAAntEgk3+7O0TJ5h+jGBelM1Z1gJXnLMV65KVLrlSUcE5viPocxrt9hhJ0HkbYAVXK5zsSe2fps/MZ0+VkTR+JfauKoi3hoK3Ak+tm84JZISmpxATKdObA3PROFfM2zBg24sWdh58kRi+78CHPlBDDVx+tyq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751456245; c=relaxed/simple;
-	bh=uhCWHyd3B3M9UnF4Ahzw/jZFjxrbH8IJ9YEb9lQ3JC8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eP5XdV18Jze8uXBN7KdmnzXnp0PSIxRO+9AMaYxrIzmSwNiBx4D3gIz2odLa7YwX3GriHBwdgnpMN/m+zWcW1lOE1JabnT1nMYjDjyxUjfBZXytVnfD7uVrlw8UF0AE8GPHixC6PE2VtkwozyNcwDWrPA88ViX+DtCjY+xpkljI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=iRGh0hiW; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1751469985; c=relaxed/simple;
+	bh=6FGi4IEXFYBzu4fdh1wRceFY2PzvofwOUBBMZuvdo+4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a/3twnoRkG0hHGgKUuFC+D+gK5+7hwVUaXiEyjyQlBQOqymdyb4nTxnrQHK6WXD962n788F6xnTME5Ymu7smIX3Uf4FfZGpojNKpQhxX8KUlnePcTVrWhS9wHvvfjHCtX/DaPKRCyu6MH+peFdvNJ51h85sXK/dX2LcDJK2gWP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TYysf/XG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="iRGh0hiW"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6fad79433bbso39948816d6.0
-        for <spacemit@lists.linux.dev>; Wed, 02 Jul 2025 04:37:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1751456242; x=1752061042; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MoP1pXdfqtHiiOeYolqOqMKK+HZ6JiOVPla39TeeGl8=;
-        b=iRGh0hiWz72IUfpxWZDiwzdQlSZGK5xHcTkxsyW53/N0eas8kHdTf4GSYBPsagDfTF
-         AukcbMlCdTAemrXK1ltyHaWXlA95mYDjhCeq3NRNTOpj75G8rYRESjTjde8vJN/EXtZg
-         s7pCxtE50XaOjx8AAVvkgXLUzjZuODEbGQGFvuvyMLrGMWXPbTJwnvxKItSOWnOczEK6
-         oTnmSyndMagHkj+500Kuoy+zotrO+lG9Mj5xr4zuXRYzmrIKa4ZfL89EEqLgET84pq55
-         IN99X5tubkrYtjf6hxMgRTS4K7hecH1BfQ5nmRb/WsYTL/KHQAEs5FcLYlT5JJEddL0y
-         KCgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751456242; x=1752061042;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MoP1pXdfqtHiiOeYolqOqMKK+HZ6JiOVPla39TeeGl8=;
-        b=Efd1/Bth/W+t2SWP3VXlvqOxNhID61c7PxVMAJNQ5byXvgNsXSagAj6rIQlo79NGAy
-         dVlDZm6Yj9DQAclH7aZovLZmuuaF3JkVZfl9BYT9N7+DZKiCDdUB8Zh9V+uL8s4Ly9iN
-         s0oIbUJe09FCp3L+PIdp/FcUzqBkYh2NRDJIAvKhePWZc5ZMOGntEgl8KnUla7uiO7DZ
-         Yvl9QBesjUqXGOeldHSaLnmdDs60Y5ZiHZO5gQiC2NT6+DHYptPmXe3bkjsufQ91b3u2
-         WPDS1lEjxEoBTwaxI8SgOqEn5uls3UOAS/yytSXPTdcg/BhCtzrgwv8U0/GcdyS2RxW3
-         GWZA==
-X-Forwarded-Encrypted: i=1; AJvYcCVCd/ib/hEeJ/jfPMxThOx7I9A7LEB1es9ecc+1k616UjubPbtaUBTeqUxKh02IMMIng2n72jmyCg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YysRvzhFsWsLjIDQQH3sT2J/8+O56Jmi68krG1gkKKqGAG+NqUC
-	kyfgvEqtvZRvzMxn9GYLesn/NaqVAubHxSgUOu0ydBPacx7sUsAyLhFRcSLYQqiUgUE=
-X-Gm-Gg: ASbGnct8R2hr/xZpouMl3GNcatbUMlniDdNW4Tmcf6sGAxaB7dHJGI7hdMA5tOrmFQw
-	gb0kg6R6em/fOB2YD0yzThxai3BF746DOXueeFnCyYvyT0lVtufqcySvgONVmtHzp8it3J7vCqh
-	ZW5gT3jHHB2uC/V2VynJ0IFbY6ch/RrN8I6BTjsjJYDQWehvo8+ri8LpV7HRP2m8loRl1Ip+Ted
-	UW6AF8Eru53Fgt2+VZgic+cm73kf8yNRNLphdeoM4CALkESPkPi2A1fIMWZpsH53jAW08xW/t4w
-	578ZVGBtXWlKR6L5+aExHMc10DR8lm4wNb0ECkwn9YY4qy4CKxQA5zV62lXWh2Kkss+Ktei0Pkc
-	DYxUOHkmX1le3blUVL/2NOBufL66KSryUOvNPbcnP8gJEtw==
-X-Google-Smtp-Source: AGHT+IGVzvYqyb92eSOlmx/sXh5kUAYoEUgvaX7Z5vlbrOx+1z7amBVysl7FNglINMkR5+bJnESH7g==
-X-Received: by 2002:a05:6214:3006:b0:6fb:6040:5d4d with SMTP id 6a1803df08f44-702b1bad9e2mr41519016d6.28.1751456242594;
-        Wed, 02 Jul 2025 04:37:22 -0700 (PDT)
-Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fd7730ac6csm99218046d6.103.2025.07.02.04.37.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 04:37:22 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	p.zabel@pengutronix.de,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	dlan@gentoo.org
-Cc: heylenay@4d2.org,
-	inochiama@outlook.com,
-	guodong@riscstar.com,
-	devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TYysf/XG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A9DC4CEEF;
+	Wed,  2 Jul 2025 15:26:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751469985;
+	bh=6FGi4IEXFYBzu4fdh1wRceFY2PzvofwOUBBMZuvdo+4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TYysf/XGP8UP3XV27Ye7UxMKpGa22OsNG0vhuMOHR+dmAdWzz8r8/bMs2rnjEPKEL
+	 KNdpNUnqcLO5Httn8Wrxu0ecJLIh9lmnMFGQYkQI76pdQMifuh4gvim68NUaLuixCd
+	 l0OOgAi2/bwbB2Twb8/PoEGzMrKbDUtyiGj3HqVz91Wh6uNhZpWQJyxB8lvubQgHuj
+	 XP4TAwPXoemmEHWQoT25cZ5U2kyaFSpAUZrjmOXO59bcK/GCV+OPl76ILeyZ1CcyPU
+	 hCIA4FcIgJoKiG/PMAj+ppZyzkoHFOm5T0hnhNAJre4YgX2Jxmgl6WGK8E16p6BuI0
+	 tmghfMamJW+GA==
+Date: Wed, 2 Jul 2025 16:26:18 +0100
+From: Lee Jones <lee@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: lgirdwood@gmail.com, broonie@kernel.org, alexandre.belloni@bootlin.com,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	troymitchell988@gmail.com, guodong@riscstar.com,
+	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v12 6/6] riscv: dts: spacemit: add reset support for the K1 SoC
-Date: Wed,  2 Jul 2025 06:37:08 -0500
-Message-ID: <20250702113709.291748-7-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250702113709.291748-1-elder@riscstar.com>
-References: <20250702113709.291748-1-elder@riscstar.com>
+Subject: Re: [PATCH v6 2/8] mfd: simple-mfd-i2c: specify max_register
+Message-ID: <20250702152618.GU10134@google.com>
+References: <20250627142309.1444135-1-elder@riscstar.com>
+ <20250627142309.1444135-3-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250627142309.1444135-3-elder@riscstar.com>
 
-Define syscon nodes for the RCPU, RCPU2, and APBC2 SpacemiT CCUS, which
-currently support resets but not clocks in the SpacemiT K1.
+On Fri, 27 Jun 2025, Alex Elder wrote:
 
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+> All devices supported by simple MFD use the same 8-bit register
+> 8-bit value regmap configuration.  There is an option available
+> for a device to specify a custome configuration, but no existing
+> device uses it.
+> 
+> Lee Jones suggested modifying the simple MFD implementation to
+> remove the generality of the full regmap configuration and add a
+> max_register value to the simple_mfd_data structure.  This can
+> be used in the regmap configuration to limit the valid register
+> addresses if desired.  It's simpler, and covers all existing and
+> anticipated device types.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 14097f1f6f447..4bc69bebfebfa 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -346,6 +346,18 @@ soc {
- 		dma-noncoherent;
- 		ranges;
+Woah, not like this.  I wanted to make the framework _more_ flexible.
+
+Just this should do what you want:
+
+diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+index 22159913bea0..f43be10c0e60 100644
+--- a/drivers/mfd/simple-mfd-i2c.c
++++ b/drivers/mfd/simple-mfd-i2c.c
+@@ -44,6 +44,9 @@ static int simple_mfd_i2c_probe(struct i2c_client *i2c)
+        else
+                regmap_config = simple_mfd_data->regmap_config;
  
-+		syscon_rcpu: system-controller@c0880000 {
-+			compatible = "spacemit,k1-syscon-rcpu";
-+			reg = <0x0 0xc0880000 0x0 0x2048>;
-+			#reset-cells = <1>;
-+		};
++       if (simple_mfd_data->max_register)
++               regmap_config->max_register = simple_mfd_data->max_register;
 +
-+		syscon_rcpu2: system-controller@c0888000 {
-+			compatible = "spacemit,k1-syscon-rcpu2";
-+			reg = <0x0 0xc0888000 0x0 0x28>;
-+			#reset-cells = <1>;
-+		};
-+
- 		syscon_apbc: system-controller@d4015000 {
- 			compatible = "spacemit,k1-syscon-apbc";
- 			reg = <0x0 0xd4015000 0x0 0x1000>;
-@@ -562,6 +574,12 @@ clint: timer@e4000000 {
- 					      <&cpu7_intc 3>, <&cpu7_intc 7>;
- 		};
- 
-+		syscon_apbc2: system-controller@f0610000 {
-+			compatible = "spacemit,k1-syscon-apbc2";
-+			reg = <0x0 0xf0610000 0x0 0x20>;
-+			#reset-cells = <1>;
-+		};
-+
- 		sec_uart1: serial@f0612000 {
- 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
- 			reg = <0x0 0xf0612000 0x0 0x100>;
+        regmap = devm_regmap_init_i2c(i2c, regmap_config);
+        if (IS_ERR(regmap))
+                return PTR_ERR(regmap);
+
+Plus the one line change in drivers/mfd/simple-mfd-i2c.h.
+
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> Suggested-by: Lee Jones <lee@kernel.org>
+> ---
+> v6: - New patch, changing the simple MFD functionality
+> 
+>  drivers/mfd/simple-mfd-i2c.c | 18 ++++++------------
+>  drivers/mfd/simple-mfd-i2c.h |  2 +-
+>  2 files changed, 7 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+> index 22159913bea03..c1dc315d44dcf 100644
+> --- a/drivers/mfd/simple-mfd-i2c.c
+> +++ b/drivers/mfd/simple-mfd-i2c.c
+> @@ -24,27 +24,21 @@
+>  
+>  #include "simple-mfd-i2c.h"
+>  
+> -static const struct regmap_config regmap_config_8r_8v = {
+> -	.reg_bits = 8,
+> -	.val_bits = 8,
+> -};
+> -
+>  static int simple_mfd_i2c_probe(struct i2c_client *i2c)
+>  {
+>  	const struct simple_mfd_data *simple_mfd_data;
+> -	const struct regmap_config *regmap_config;
+> +	struct regmap_config regmap_config = { };
+>  	struct regmap *regmap;
+>  	int ret;
+>  
+>  	simple_mfd_data = device_get_match_data(&i2c->dev);
+>  
+> -	/* If no regmap_config is specified, use the default 8reg and 8val bits */
+> -	if (!simple_mfd_data || !simple_mfd_data->regmap_config)
+> -		regmap_config = &regmap_config_8r_8v;
+> -	else
+> -		regmap_config = simple_mfd_data->regmap_config;
+> +	regmap_config.reg_bits = 8;
+> +	regmap_config.val_bits = 8;
+> +	if (simple_mfd_data)
+> +		regmap_config.max_register = simple_mfd_data->max_register;
+>  
+> -	regmap = devm_regmap_init_i2c(i2c, regmap_config);
+> +	regmap = devm_regmap_init_i2c(i2c, &regmap_config);
+>  	if (IS_ERR(regmap))
+>  		return PTR_ERR(regmap);
+>  
+> diff --git a/drivers/mfd/simple-mfd-i2c.h b/drivers/mfd/simple-mfd-i2c.h
+> index 7cb2bdd347d97..4121fe1bc1d70 100644
+> --- a/drivers/mfd/simple-mfd-i2c.h
+> +++ b/drivers/mfd/simple-mfd-i2c.h
+> @@ -24,9 +24,9 @@
+>  #include <linux/regmap.h>
+>  
+>  struct simple_mfd_data {
+> -	const struct regmap_config *regmap_config;
+>  	const struct mfd_cell *mfd_cell;
+>  	size_t mfd_cell_size;
+> +	unsigned int max_register;
+>  };
+>  
+>  #endif /* __MFD_SIMPLE_MFD_I2C_H */
+> -- 
+> 2.45.2
+> 
+
 -- 
-2.45.2
-
+Lee Jones [李琼斯]
