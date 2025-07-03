@@ -1,190 +1,168 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B038A2D46DD
-	for <spacemit@lists.linux.dev>; Thu,  3 Jul 2025 09:02:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751533345; cv=pass; b=T1orvHzRNWwRiV/pPJgkqoUobN8v+Sa8aDL6VXYRzwIC7A2VB+EHx8upZ8tHT0pcOJfRyPJGMDW3j7IiY/PJW0FvZIiDcSHnJSJe8oW7Uj0VUOLU9Ny7E/86/6jobgo1X9nqxlsbI0YB5D4LzPpSKxz9cf9hbf3ROyYZtSzyJBY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751533345; c=relaxed/simple;
-	bh=1x9noGp/YyjeYTaho9SwTajjJAkTELQbXuhXq6ypjTQ=;
-	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
-	 Content-Type; b=eVRpN3fI0+JIeHzSacKPYz1rUWfrD1hRfKPZGtID15Kjn/ngBzeD/aXwlSt3aj3kHAbJBau+5bKBEGUOAAMQFKPh+pN5xKXL8rC0n9WX8Y0sWJQoSENxOm+Lp1Ej8IjxIBsZXS1ntLVLGMjGXs+722R2m1EYpHO/WyTn5O7VnKs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=qXVoJZH4; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="qXVoJZH4"
-ARC-Seal: i=1; a=rsa-sha256; t=1751533249; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=KKVvBkeo3qxgezrXeVABLPlIw6eJ6RvPjxqCLLPR4Wnc8F2rJVoSc/AEIptXtdu4xG8yAAuWEOf9cdgo/kBECOzxLRuHqdPPDDAw/HmE/CuvN4cezsUdL0OCJ0GWzVrpS1LI2/Ciu1SQcN+OkAXEc0lqPwn2fEYKP8P9g+y1ACg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1751533249; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=1x9noGp/YyjeYTaho9SwTajjJAkTELQbXuhXq6ypjTQ=; 
-	b=TRDiAOb2YJWhEJMbR3dNNALR4dGoxA+pcqocs96/m/wERWsEejxGwuKEswbte2hd4eCHqJ37IJcmfQpdtcXRghKbNQxmFwIBZEz0JQqpF5QPbA5aIHFiSRdlqguMcVL2q8hyAMcP+FHQDlYCVZSao3IGgWy6LHN9cWiT2WoY9Kg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1751533249;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=MIME-Version:From:From:To:To:In-Reply-To:Cc:Cc:Subject:Subject:Message-ID:Date:Date:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=1x9noGp/YyjeYTaho9SwTajjJAkTELQbXuhXq6ypjTQ=;
-	b=qXVoJZH4IPSkxKuRWuy6EJrTq8XQNfEpvvT6bKfDt6znEZxc8MF2TGctYNIe6epI
-	Q7bHijO9JmxE/LeFbyiARWeQSK/7g+i/aq/na+ZyVvlj+wBYaPLB93n3J6D4yIr5+r1
-	l5cmMXZN430EDk9vglEow6IExvLngACe4mS9YahQ=
-Received: by mx.zohomail.com with SMTPS id 175153324571033.72754487040095;
-	Thu, 3 Jul 2025 02:00:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B8A265CA6
+	for <spacemit@lists.linux.dev>; Thu,  3 Jul 2025 09:44:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751535860; cv=none; b=oEDKBMgApsVMq0A5ooPmo69i9GiIa9uaS04R7CXFbqxlU828P8O2wpqyZU+QjkGWDc4oNum4J6aFwkECPXyNYjOzHqdC5tbl4/s9F145jyzVD1/AQsNELgCPrzn1hoYRKORpJnuz9ZgKRZrdzkIt14nUld4lXQnXlutiMlTZzDk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751535860; c=relaxed/simple;
+	bh=jh5EvUFWkXb95Vb+1mgggdXNgxLNFWJZEz/iNgD5W7U=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=PhsRbwMcCq7p0HTzHGef4E08PohMuYI82uI8uogS7pebwFM/k/DKlYd/SFX2HRY74alsWhTa2FOQ9A4hHk+zgeC63t2LSinXGOq+Fc6JRcQmtI873/EDqMnptZPT4ysdiNYs//IPEkNtKkVndW59aCvqD95zyu990JdmVffIvBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [210.73.43.2])
+	by APP-03 (Coremail) with SMTP id rQCowAAHX4DWUGZouhe1AA--.40630S3;
+	Thu, 03 Jul 2025 17:43:51 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Thu, 03 Jul 2025 17:42:02 +0800
+Subject: [PATCH net-next v4 1/2] dt-bindings: net: Add support for SpacemiT
+ K1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: "Junhui Liu" <junhui.liu@pigmoral.tech>
-To: "Vivian Wang" <wangruikang@iscas.ac.cn>, 
-	"Andrew Lunn" <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, 
-	"Eric Dumazet" <edumazet@google.com>, "Jakub Kicinski" <kuba@kernel.org>, 
-	"Paolo Abeni" <pabeni@redhat.com>, "Rob Herring" <robh@kernel.org>, 
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
-	"Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@gentoo.org>, 
-	"Philipp Zabel" <p.zabel@pengutronix.de>, 
-	"Paul Walmsley" <paul.walmsley@sifive.com>, 
-	"Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>, 
-	"Alexandre Ghiti" <alex@ghiti.fr>
-In-Reply-To: <ce2881b9-38ed-42b6-824d-72948389e8fa@iscas.ac.cn>
-Cc: "Vivian Wang" <uwu@dram.page>, 
-	"Lukas Bulwahn" <lukas.bulwahn@redhat.com>, 
-	"Geert Uytterhoeven" <geert+renesas@glider.be>, 
-	"Parthiban Veerasooran" <Parthiban.Veerasooran@microchip.com>, 
-	<netdev@vger.kernel.org>, <devicetree@vger.kernel.org>, 
-	<linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, 
-	<linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH net-next v3 5/5] riscv: dts: spacemit: Add Ethernet support
-	 for Jupiter
-Message-ID: <184eb232eceb01f8.c7773f00732f7e87.4136a253a628cb2b@Jude-Air.local>
-Date: Thu, 3 Jul 2025 09:00:36 +0000
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250703-net-k1-emac-v4-1-686d09c4cfa8@iscas.ac.cn>
+References: <20250703-net-k1-emac-v4-0-686d09c4cfa8@iscas.ac.cn>
+In-Reply-To: <20250703-net-k1-emac-v4-0-686d09c4cfa8@iscas.ac.cn>
+To: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Vivian Wang <wangruikang@iscas.ac.cn>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Vivian Wang <uwu@dram.page>, 
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>, 
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Conor Dooley <conor.dooley@microchip.com>
+X-Mailer: b4 0.14.2
+X-CM-TRANSID:rQCowAAHX4DWUGZouhe1AA--.40630S3
+X-Coremail-Antispam: 1UD129KBjvJXoW7Cry3WF45trW5KrW5Zr4rGrg_yoW5Jr1xpF
+	4fCrs3Gr48KF13Jw4fXFykuF1fGw4kAF1DJrZFvw13tas5KF90qr4akryfXa4UurW8Ja43
+	XF1DAryDKr1DAaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUmK14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
+	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
+	8EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AI
+	xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
+	vE14v26r1Y6r17McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xv
+	r2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04
+	v7MxkF7I0En4kS14v26r4a6rW5MxkIecxEwVAFwVW8uwCF04k20xvY0x0EwIxGrwCFx2Iq
+	xVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r
+	106r1rMI8E67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AK
+	xVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7
+	xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j
+	6F4UJbIYCTnIWIevJa73UjIFyTuYvjTRJxhLUUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Hi Vivian,
+The Ethernet MACs on SpacemiT K1 appears to be a custom design. SpacemiT
+refers to them as "EMAC", so let's just call them "spacemit,k1-emac".
 
-On 03/07/2025 15:46, Vivian Wang wrote:
-> Hi Junhui,
->=20
-> On 7/3/25 14:48, Junhui Liu wrote:
->> Hi Vivian,
->> Thanks for you work!
->>
->> On 2025/7/2 14:01, Vivian Wang wrote:
->>> Milk-V Jupiter uses an RGMII PHY for each port and uses GPIO for PHY
->>> reset.
->>>
->>> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
->>
->> Successfully tested with iperf3 on Milk-V Jupiter.
->>
->> TCP Rx: 941 Mbits/sec
->> TCP Tx: 943 Mbits/sec
->> UDP Rx: 956 Mbits/sec
->> UDP Tx: 956 Mbits/sec
->>
->> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>=C2=A0
->>
-> Thanks for the testing! I do not have a Milk-V Jupiter handy, so that
-> was very helpful.
->=20
-> As discussed [1], I will post a v4 soon with minor fixes and also sans
-> the DTS changes. I will put your Tested-by on the driver patch instead
-> of this DTS patch, so it will show up in v4.
->=20
-> Are you okay with this? If you don't like it feel free to tell me.
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+---
+ .../devicetree/bindings/net/spacemit,k1-emac.yaml  | 81 ++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
-It's okay to me. Thanks!
+diff --git a/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml b/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..500a3e1daa230ea3a1fad30d8ea56a7822fccb3d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml
+@@ -0,0 +1,81 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/spacemit,k1-emac.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: SpacemiT K1 Ethernet MAC
++
++allOf:
++  - $ref: ethernet-controller.yaml#
++
++maintainers:
++  - Vivian Wang <wangruikang@iscas.ac.cn>
++
++properties:
++  compatible:
++    const: spacemit,k1-emac
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  mdio-bus:
++    $ref: mdio.yaml#
++    unevaluatedProperties: false
++
++  resets:
++    maxItems: 1
++
++  spacemit,apmu:
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    items:
++      - items:
++          - description: phandle to syscon that controls this MAC
++          - description: offset of control registers
++    description:
++      A phandle to syscon with byte offset to control registers for this MAC
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - interrupts
++  - resets
++  - spacemit,apmu
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/spacemit,k1-syscon.h>
++
++    ethernet@cac80000 {
++        compatible = "spacemit,k1-emac";
++        reg = <0xcac80000 0x00000420>;
++        clocks = <&syscon_apmu CLK_EMAC0_BUS>;
++        interrupts = <131>;
++        mac-address = [ 00 00 00 00 00 00 ];
++        phy-handle = <&rgmii0>;
++        phy-mode = "rgmii-id";
++        pinctrl-names = "default";
++        pinctrl-0 = <&gmac0_cfg>;
++        resets = <&syscon_apmu RESET_EMAC0>;
++        rx-internal-delay-ps = <0>;
++        tx-internal-delay-ps = <0>;
++        spacemit,apmu = <&syscon_apmu 0x3e4>;
++
++        mdio-bus {
++            #address-cells = <0x1>;
++            #size-cells = <0x0>;
++
++            rgmii0: phy@1 {
++                reg = <0x1>;
++            };
++        };
++    };
 
->=20
-> Regards,
-> Vivian "dramforever" Wang
->=20
-> [1]: https://lore.kernel.org/spacemit/a9cad07c-0973-43c3-89f3-95b856b575df=
-@iscas.ac.cn/
->=20
->>> ---
->>> =C2=A0 arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 46
->>> +++++++++++++++++++++++
->>> =C2=A0 1 file changed, 46 insertions(+)
->>>
->>> diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
->>> b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
->>> index
->>> 4483192141049caa201c093fb206b6134a064f42..c5933555c06b66f40e61fe2b9c159b=
-a0770c2fa1
->>> 100644
->>> --- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
->>> +++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
->>> @@ -20,6 +20,52 @@ chosen {
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
->>> =C2=A0 };
->>> =C2=A0 +&eth0 {
->>> +=C2=A0=C2=A0=C2=A0 phy-handle =3D <&rgmii0>;
->>> +=C2=A0=C2=A0=C2=A0 phy-mode =3D "rgmii-id";
->>> +=C2=A0=C2=A0=C2=A0 pinctrl-names =3D "default";
->>> +=C2=A0=C2=A0=C2=A0 pinctrl-0 =3D <&gmac0_cfg>;
->>> +=C2=A0=C2=A0=C2=A0 rx-internal-delay-ps =3D <0>;
->>> +=C2=A0=C2=A0=C2=A0 tx-internal-delay-ps =3D <0>;
->>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
->>> +
->>> +=C2=A0=C2=A0=C2=A0 mdio-bus {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 #address-cells =3D <0x1>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 #size-cells =3D <0x0>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reset-gpios =3D <&gpio K1_GP=
-IO(110) GPIO_ACTIVE_LOW>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reset-delay-us =3D <10000>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reset-post-delay-us =3D <100=
-000>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rgmii0: phy@1 {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reg =
-=3D <0x1>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
->>> +=C2=A0=C2=A0=C2=A0 };
->>> +};
->>> +
->>> +&eth1 {
->>> +=C2=A0=C2=A0=C2=A0 phy-handle =3D <&rgmii1>;
->>> +=C2=A0=C2=A0=C2=A0 phy-mode =3D "rgmii-id";
->>> +=C2=A0=C2=A0=C2=A0 pinctrl-names =3D "default";
->>> +=C2=A0=C2=A0=C2=A0 pinctrl-0 =3D <&gmac1_cfg>;
->>> +=C2=A0=C2=A0=C2=A0 rx-internal-delay-ps =3D <0>;
->>> +=C2=A0=C2=A0=C2=A0 tx-internal-delay-ps =3D <250>;
->>> +=C2=A0=C2=A0=C2=A0 status =3D "okay";
->>> +
->>> +=C2=A0=C2=A0=C2=A0 mdio-bus {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 #address-cells =3D <0x1>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 #size-cells =3D <0x0>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reset-gpios =3D <&gpio K1_GP=
-IO(115) GPIO_ACTIVE_LOW>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reset-delay-us =3D <10000>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reset-post-delay-us =3D <100=
-000>;
->>> +
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rgmii1: phy@1 {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reg =
-=3D <0x1>;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
->>> +=C2=A0=C2=A0=C2=A0 };
->>> +};
->>> +
->>> =C2=A0 &uart0 {
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pinctrl-names =3D "default";
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pinctrl-0 =3D <&uart0_2_cfg>;
->>>
+-- 
+2.49.0
 
---=20
-Best regards,
-Junhui Liu
