@@ -1,222 +1,156 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C032F7CE1
-	for <spacemit@lists.linux.dev>; Wed,  2 Jul 2025 21:37:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751492239; cv=none; b=OKotn3MzZV2JSBA/08gt1y0TSadc1ZXQr5GckQN4u89caUolQ3n/t2r7tpXmRGGjGi77LR/kBow65ZE5Tkw9+lr0TuwHj93feFTPEwWfZj3o8G0Zmkd23Nevd+VZiJ+BC9zZD3huDQER4fR/SWM7gnuuJQWToxTxJY00q8TC6yQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751492239; c=relaxed/simple;
-	bh=WGruvn+Gqs/wHzBEiTs0RVm377PpbfSqb1Lgjf4ooI8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emCLfl29XFr5D/58mz3JZWwymZTqD4qGC3tUR2Y1iusscRsNLvcPhYKCHWxKmDejarup7tpWSv8R08arNDB7NQntE+VHRVRu8G3QS2XM53akF2JN3soW9w47clFW6ETT3K/borqMRcYjgvE9e2iS9hGvxuLlZeLCkvEMBEuKBPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=BqbE9mFq; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A559157A72
+	for <spacemit@lists.linux.dev>; Thu,  3 Jul 2025 06:49:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751525388; cv=pass; b=MfaI+4Duyib+hRqcfGljKXpPqzQ/7D2OCt4DuzhOmKXUR3oYL8A0FPX0pRXCrHQiHTQIl8n5+8vGbMqezWBUdmiM3yYx71JeMonQDkoBtsLUqmluz+fIcZC426CVP7mpne8u2DBTzI1R+HBslAnB8qOhvGfmj1t2Q0yDHXn2LAQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751525388; c=relaxed/simple;
+	bh=CZQd9iOOxuAR4GYOSoR4dRo+S6LB4QgGgQrm5oC59Cg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k+eJQtC9JJLskR5X8k0axKrinJAJ0dVGkC7fA77vEaMumBH3CF08Nhbl6fDl55uQ4JIuHidTBKlbuZlKWLOtJqInUrCQnHaHvzYctr9GhPKuNR26fbjvzLqYU/FJvCvygZ/qJRyqKkIjCpqXFbWrSWeZ8KmcI9bE6fN6QzCpah4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=SB08K3Up; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="BqbE9mFq"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6fad3400ea3so68096856d6.0
-        for <spacemit@lists.linux.dev>; Wed, 02 Jul 2025 14:37:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1751492236; x=1752097036; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ihUO+G2zPvFD7djd8+4VxSPuuLI+GNqieXaQtnBxio4=;
-        b=BqbE9mFqaIhjqwjhPNrvNAvpILFNlxS27By+GAsCGUvvO+QUr2kigApOie+7mFYoZJ
-         VcW4fRV4eL97GvcLUP6fPqLh+fYxU0aCBXZ/eYStKiNQFMzfGV+4wSZSNxRHz9sHubBt
-         QeqhxiBveHVIShIs/w4Z64LzTY5sva/bv8JqDMPlu8pJYlX1xWdwGsVEiCZNkqpkNM20
-         wBYCOmb16+wGuKFS1I8H+jkGBrkeC/9CNENIXZJnGO/eRRhRBKoiCUCXquZcqnPCX5PT
-         7x15N+c3EZ11U0LDjk72zlPmNDpWDMY3b21yJK8YnM7c4cLCxr6dPQScRBpoFl/uAySf
-         apBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751492236; x=1752097036;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ihUO+G2zPvFD7djd8+4VxSPuuLI+GNqieXaQtnBxio4=;
-        b=DyNY+vK1lPRv+CL4C8hGAlruxTmK/aSLsqIjUBR3VrxNMP9LozJkm90VeakMVyaKTV
-         zKpy+7K4p3RjQu3VgIzoJ5VfEXRbYfuIkivj4fa54w+abWM/Lc4ldHXYJmQ58gKp2TOt
-         GfrkjESZ/rfYCDNX+3pkVulgi9A2k9JbFRPrJlMK5detIvKXm6N7GafEGCfWoqwODyaV
-         CMOX39HwhZI2Mi1cQWUs1uiFLaQ5uPnAK9gfjZDZ+T3arvqwZKBVjLl9mEp9Bs1aez3h
-         nEXUWVcMWoAx87SfLcyilCUHAvsFXOAymI/d2eRcPX2odOLdrpR4IAxtQRvI1OzEDtST
-         Go6g==
-X-Forwarded-Encrypted: i=1; AJvYcCWPmbk/AB0SJmVal7ipvvdIqwqFerrsdD1S9oMln+S8jNFc7nMSXlw25hKmBqYuHrgFMkVj5dZPNg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx8l/ui0x8JDn7ldrM6oxtW3CaUZ8X79w51JLN0tdqz8ONdsBuA
-	v4ERs6KYemOaQLlTMYgUOcgC+T2ASQKy6n45mDptNVaODD9Ja4FySywlcP+Zjl7wiUw=
-X-Gm-Gg: ASbGncum4a4ooLZKbLK/5B/PF+dvo0dwQx+Zsfw/ZrEjSXGdK6lFjSEaTKIIu1014k1
-	Xc0+dWZEedIOPvH1HLI3ZQPJCzHmC0Uu1C6/govF1iSnS3mhJEr0YOuIthLmOeDDE7AxziK/rEy
-	H0ghMgJqw7g1MZu5KKvUgY9BvnSwRB6fJqBWVxd2fRyCy9PGGERsh7Yb/dnUbXdhGRI1cAHXcyD
-	14ITnwpEfodqhwltea40NUxu3/YJwOVYEAq5rd57TzEmIY+ONxZVyQiSaFY8rn1OARrV1qliPDN
-	/1BZEy4JXskFwLjBqj1WewMzOsrFuy2Ydx0laqilXp8z0HS/XFNamQeNWvjcOBM2tBUYDx2qxBL
-	2AUXN176/9RbrhkdVGY+ZpnqVoHrcEk+T1ck=
-X-Google-Smtp-Source: AGHT+IFxV9+ZN7uJ4WMWxTezGcNNpASYTQcL8SVuNk4Fu4L3dpgWRu5GuHXUlmrOxNtWzLXL7lsjgg==
-X-Received: by 2002:a05:6214:3da1:b0:6fa:c31a:af20 with SMTP id 6a1803df08f44-702b1a53271mr61275056d6.5.1751492236287;
-        Wed, 02 Jul 2025 14:37:16 -0700 (PDT)
-Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fd771bc01bsm105691746d6.40.2025.07.02.14.37.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 14:37:16 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: lee@kernel.org,
-	lgirdwood@gmail.com,
-	broonie@kernel.org,
-	alexandre.belloni@bootlin.com,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org
-Cc: mat.jonczyk@o2.pl,
-	dlan@gentoo.org,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	troymitchell988@gmail.com,
-	guodong@riscstar.com,
-	linux-rtc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v7 8/8] riscv: dts: spacemit: define regulator constraints
-Date: Wed,  2 Jul 2025 16:36:57 -0500
-Message-ID: <20250702213658.545163-9-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250702213658.545163-1-elder@riscstar.com>
-References: <20250702213658.545163-1-elder@riscstar.com>
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="SB08K3Up"
+ARC-Seal: i=1; a=rsa-sha256; t=1751525332; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=mD8uUny1XYdpWeQP6SVaqolbEt3RDJk6TvOGlAxAVadzbU58ua9UfPewBALDrj9LYp7jYGK1+PDyQTEt18mkEMKhNXJKrTSXJHsjdFe0gSdCH563YyLSeocKbSHgcSdg+PB38ZTlCGQat5ox6UxRlDvsGNKq9840PPfmH+k3cQY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1751525332; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=JHSQpMjUPCAOTe05SvkTtkx5uWkYFZS0xHWecOXz3R4=; 
+	b=iXQOgr+YJdkGpSD4cOaIkMRqrM7MVn7EjI+s8IgbNXDk3oc3E2jImPpM7zP66LansiUnvJ22x+0pQBhf7+rRMoA0NTKtaut2QVNS8hk2e4L1VvFa3C2NcJE7AtwmPy1JEb/PaYd1iDT+kp3y59MhwTWihrr45fqVq4/hXiZedLw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1751525332;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=JHSQpMjUPCAOTe05SvkTtkx5uWkYFZS0xHWecOXz3R4=;
+	b=SB08K3UpsvQeF1hLVykmZ5rpp7nw7Io/5oOUFGLAyhb5sqp5oIF8BpXHxGS42wWf
+	pTZS5fB+YK0aauSLEzaKS8xYdDrcU9wqgZESra8Y7iUPB1E5OrWxjE2YxTbKjtIA/Gy
+	UJND0pWB0MXSctpwf236kTpk5St/yU7YfyTI80KM=
+Received: by mx.zohomail.com with SMTPS id 1751525328226725.9805381687908;
+	Wed, 2 Jul 2025 23:48:48 -0700 (PDT)
+Message-ID: <a2284afb-ee61-457e-aaa8-49a9ce3838f9@pigmoral.tech>
+Date: Thu, 3 Jul 2025 14:48:27 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v3 5/5] riscv: dts: spacemit: Add Ethernet
+ support for Jupiter
+To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Vivian Wang <uwu@dram.page>, Lukas Bulwahn <lukas.bulwahn@redhat.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20250702-net-k1-emac-v3-0-882dc55404f3@iscas.ac.cn>
+ <20250702-net-k1-emac-v3-5-882dc55404f3@iscas.ac.cn>
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+In-Reply-To: <20250702-net-k1-emac-v3-5-882dc55404f3@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-Define basic constraints for the regulators in the SpacemiT P1 PMIC,
-as implemented in the Banana Pi BPI-F3.
+Hi Vivian,
+Thanks for you work!
 
-Signed-off-by: Alex Elder <elder@riscstar.com>
----
- .../boot/dts/spacemit/k1-bananapi-f3.dts      | 104 ++++++++++++++++++
- 1 file changed, 104 insertions(+)
+On 2025/7/2 14:01, Vivian Wang wrote:
+> Milk-V Jupiter uses an RGMII PHY for each port and uses GPIO for PHY
+> reset.
+>
+> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index a1c184b814262..83907cc1d5ccf 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -70,7 +70,111 @@ pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
- 		interrupts = <64>;
-+		vin-supply = <&reg_vcc_4v>;
- 		status = "okay";
-+
-+		regulators {
-+			buck1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3300000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			aldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			aldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			dldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo7 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+		};
- 	};
- };
- 
+Successfully tested with iperf3 on Milk-V Jupiter.
+
+TCP Rx: 941 Mbits/sec
+TCP Tx: 943 Mbits/sec
+UDP Rx: 956 Mbits/sec
+UDP Tx: 956 Mbits/sec
+
+Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
+
+> ---
+>   arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 46 +++++++++++++++++++++++
+>   1 file changed, 46 insertions(+)
+>
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> index 4483192141049caa201c093fb206b6134a064f42..c5933555c06b66f40e61fe2b9c159ba0770c2fa1 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> @@ -20,6 +20,52 @@ chosen {
+>   	};
+>   };
+>   
+> +&eth0 {
+> +	phy-handle = <&rgmii0>;
+> +	phy-mode = "rgmii-id";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&gmac0_cfg>;
+> +	rx-internal-delay-ps = <0>;
+> +	tx-internal-delay-ps = <0>;
+> +	status = "okay";
+> +
+> +	mdio-bus {
+> +		#address-cells = <0x1>;
+> +		#size-cells = <0x0>;
+> +
+> +		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
+> +		reset-delay-us = <10000>;
+> +		reset-post-delay-us = <100000>;
+> +
+> +		rgmii0: phy@1 {
+> +			reg = <0x1>;
+> +		};
+> +	};
+> +};
+> +
+> +&eth1 {
+> +	phy-handle = <&rgmii1>;
+> +	phy-mode = "rgmii-id";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&gmac1_cfg>;
+> +	rx-internal-delay-ps = <0>;
+> +	tx-internal-delay-ps = <250>;
+> +	status = "okay";
+> +
+> +	mdio-bus {
+> +		#address-cells = <0x1>;
+> +		#size-cells = <0x0>;
+> +
+> +		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
+> +		reset-delay-us = <10000>;
+> +		reset-post-delay-us = <100000>;
+> +
+> +		rgmii1: phy@1 {
+> +			reg = <0x1>;
+> +		};
+> +	};
+> +};
+> +
+>   &uart0 {
+>   	pinctrl-names = "default";
+>   	pinctrl-0 = <&uart0_2_cfg>;
+>
 -- 
-2.45.2
-
+Best regards,
+Junhui Liu
