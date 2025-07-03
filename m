@@ -1,118 +1,76 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496AE2E4256
-	for <spacemit@lists.linux.dev>; Thu,  3 Jul 2025 12:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31BA22259F
+	for <spacemit@lists.linux.dev>; Thu,  3 Jul 2025 15:18:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751546385; cv=none; b=u0XXIpPXDIuQI86mrOGZW2h0slbPRmk8DdTKUmLNGMoW51hgNVg++HrRakd/cr78WdWyQYN08KkOVOu77BdGM8nSG3JRZXWmwhxujqP36Ejn/g9zraMBPHRQw8UcEyGnR/gbD8f8XSdjaFTRF308lg3Vd169w639X8B0toAtmsU=
+	t=1751555916; cv=none; b=pRupAHQrVmqDPeq3V2KEu2FBA465Sc9QyRGTGLo4E1kcg+AWI5EhleSh9ya7AVfcGh/noSLLktBjcAGG+mLLzFesar6/Vuv48hVJgHwQzbdGnPhOVGBesq63cXr63GxX4sll25xucavu9x8C05IaL8EtcD/QXU5/4tOXqtDNskw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751546385; c=relaxed/simple;
-	bh=oAFqXq1QyFv35ms999RYltPlUo10N7M57paHMCPoPSc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qOhZdb833znH07c9c1cZ6hOVXL4ahFdXA96SFK85tAOc60CmuLfqnI6RJpmNHzA9oRkXr9gDQZovVe9SnqiKCf9yXgC2uX/EMpl7LfKEiodNbafN+uVd8CDmxlWFS+HBQb2kWNSzW53RSFibd2p7xgdgCssMVj9p5TBcr3vi/EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.105] (unknown [114.241.87.235])
-	by APP-05 (Coremail) with SMTP id zQCowAC3Dl8YeGZoHT+zAA--.45946S2;
-	Thu, 03 Jul 2025 20:31:20 +0800 (CST)
-Message-ID: <17733827-8038-4c85-9bb1-0148a50ca10f@iscas.ac.cn>
-Date: Thu, 3 Jul 2025 20:31:20 +0800
+	s=arc-20240116; t=1751555916; c=relaxed/simple;
+	bh=P70pfd9tdtQjkw7oXculwEXnekh/fTPgtpELUc1VrL8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=A2bS/ber7cgVj+KHV2aOd12A+BDvpiOF8V2e9ahwJ831xBIwDXE24TUYgPFlyg58l+CQsXJpKZPz1ipKyAupL4RkYoctQXr5SvtGdAa3QMRJegWJSBU+Df0wPhbRBIm/Bh6hdvzkU5sLMj4T24lTRGTC36J36KHxTNNzgYi6dNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.207])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 6725734206E;
+	Thu, 03 Jul 2025 15:18:34 +0000 (UTC)
+Date: Thu, 3 Jul 2025 15:18:23 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Alex Elder <elder@riscstar.com>, linux-clk@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [GIT PULL] Immutable tag between SpacemiT's reset and clock trees
+ for v6.17
+Message-ID: <20250703151823-GYA312602@gentoo>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v4 1/2] dt-bindings: net: Add support for
- SpacemiT K1
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-kernel@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>,
- Eric Dumazet <edumazet@google.com>, Junhui Liu <junhui.liu@pigmoral.tech>,
- Conor Dooley <conor.dooley@microchip.com>, netdev@vger.kernel.org,
- Philipp Zabel <p.zabel@pengutronix.de>, Jakub Kicinski <kuba@kernel.org>,
- linux-riscv@lists.infradead.org, Simon Horman <horms@kernel.org>,
- "David S. Miller" <davem@davemloft.net>, devicetree@vger.kernel.org,
- Vivian Wang <uwu@dram.page>, Yixun Lan <dlan@gentoo.org>,
- spacemit@lists.linux.dev, Maxime Chevallier <maxime.chevallier@bootlin.com>,
- Paolo Abeni <pabeni@redhat.com>, Conor Dooley <conor+dt@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Vadim Fedorenko <vadim.fedorenko@linux.dev>
-References: <20250703-net-k1-emac-v4-0-686d09c4cfa8@iscas.ac.cn>
- <20250703-net-k1-emac-v4-1-686d09c4cfa8@iscas.ac.cn>
- <175153978342.612698.13197728053938266111.robh@kernel.org>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <175153978342.612698.13197728053938266111.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:zQCowAC3Dl8YeGZoHT+zAA--.45946S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Cry3WF48Kr4UWryfuF13CFg_yoW8uF43pa
-	ySkwnIkrWjvFy7Jw43tr92v3WFgr4ftFyaqFy2gr17t3Z8XF4ftrWS9r48uF18CrWrJa4f
-	Zw17u3WxGry5AFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_KF4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
-	1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
-	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
-	wI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
-	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73Uj
-	IFyTuYvjxU3wIDUUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+Hi Philipp,
 
-On 7/3/25 18:49, Rob Herring (Arm) wrote:
-> On Thu, 03 Jul 2025 17:42:02 +0800, Vivian Wang wrote:
->> The Ethernet MACs on SpacemiT K1 appears to be a custom design. SpacemiT
->> refers to them as "EMAC", so let's just call them "spacemit,k1-emac".
->>
->> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
->> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
->> ---
->>   .../devicetree/bindings/net/spacemit,k1-emac.yaml  | 81 ++++++++++++++++++++++
->>   1 file changed, 81 insertions(+)
->>
-> My bot found errors running 'make dt_binding_check' on your patch:
->
-> yamllint warnings/errors:
->
-> dtschema/dtc warnings/errors:
-> Error: Documentation/devicetree/bindings/net/spacemit,k1-emac.example.dts:36.36-37 syntax error
-> FATAL ERROR: Unable to parse input tree
+Please pull the following change into the reset tree. This
+allows you to apply the patch 5 of the SpacemiT reset driver [1].
 
-My bad. The example still depends on the reset bindings for the constant 
-RESET_EMAC0. I just tried with reset v12 [1] and that fixes it.
+Thanks,
+Yixun Lan
 
-[1]: https://lore.kernel.org/spacemit/20250702113709.291748-2-elder@riscstar.com/
+Link: https://lore.kernel.org/r/20250702113709.291748-6-elder@riscstar.com [1]
 
-Vivian "dramforever" Wang
+The following changes since commit 19272b37aa4f83ca52bdf9c16d5d81bdd1354494:
 
-> make[2]: *** [scripts/Makefile.dtbs:131: Documentation/devicetree/bindings/net/spacemit,k1-emac.example.dtb] Error 1
-> make[2]: *** Waiting for unfinished jobs....
-> make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1519: dt_binding_check] Error 2
-> make: *** [Makefile:248: __sub-make] Error 2
->
-> doc reference errors (make refcheckdocs):
->
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250703-net-k1-emac-v4-1-686d09c4cfa8@iscas.ac.cn
->
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
->
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
->
-> pip3 install dtschema --upgrade
->
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
+  Linux 6.16-rc1 (2025-06-08 13:44:43 -0700)
+
+are available in the Git repository at:
+
+  https://github.com/spacemit-com/linux tags/spacemit-reset-binding-for-6.17-1
+
+for you to fetch changes up to 25a59e813cd2ca728047f657d64f9b29480be393:
+
+  dt-bindings: soc: spacemit: define spacemit,k1-ccu resets (2025-07-03 22:16:08 +0800)
+
+----------------------------------------------------------------
+RISC-V SpacemiT Binding for 6.17
+
+- Reset DT Binding for K1 SoC
+
+----------------------------------------------------------------
+Alex Elder (1):
+      dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
+
+ .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  |  27 +++-
+ include/dt-bindings/clock/spacemit,k1-syscon.h     | 141 +++++++++++++++++++++
+ 2 files changed, 162 insertions(+), 6 deletions(-)
 
