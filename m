@@ -1,90 +1,75 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC381DDA34
-	for <spacemit@lists.linux.dev>; Fri,  4 Jul 2025 02:41:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277A6239E6B
+	for <spacemit@lists.linux.dev>; Fri,  4 Jul 2025 10:03:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751596905; cv=none; b=XvQVIzzKNXpvd+/HZ9q0tXoOaiMgAH+yh7fiqJharTgHy2Jq7i0f+X3+767LLNKJQlIeXUdn2qBocffzVhargEhw6vNuQzbbt1vSdRG/baDyupXMRGenmurpyLuHK2Dkd8XAYr47Rja7fqVPI2DxURUIbZqMko6KHm6OMdoV4Qc=
+	t=1751623389; cv=none; b=PTTSjvy6B/xCwAOo+WmLdHLT/5n67qsGfLlw9HbeWl1nCAqiiwUeH86tnb0WZBvyAs1lWXFf79SS6m6GFPcOzWA4PvP2spUQWSK4yh7kv0/jvSakvkAcVtrGPownv9R13kNTlJzhMtmxxCemgnNCOlb/PZZzGehHLQMQEIBtVfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751596905; c=relaxed/simple;
-	bh=0tFcrfxkKL9ySeRCFB1ujQs+X0xxH4vdkOtO9MuupoI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e8BGQzlnsM7k3WAKUMIvJuqLiWXNl8+FZo6OOnzjJnrhh1VaUJ8ogbGqDONUXbsQsIq0YtV46qQ3Cp4BGOmnZhi/N7C5QjIXRtOw2f9PIqXSW45BIFGQNP/f9a5vgKoKqCOGVW29Uqtr57+4JDUg5PGvGHOpxqFBnfP37/pGPJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from localhost (gy-adaptive-ssl-proxy-4-entmail-virt151.gy.ntes [114.94.8.21])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 1adedd589;
-	Fri, 4 Jul 2025 10:41:31 +0800 (GMT+08:00)
-Date: Fri, 4 Jul 2025 10:41:31 +0800
-From: Ze Huang <huangze@whut.edu.cn>
-To: Frank Li <Frank.li@nxp.com>, Ze Huang <huangze@whut.edu.cn>
-Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
-	"spacemit@lists.linux.dev" <spacemit@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 3/4] usb: dwc3: add generic driver to support
- flattened DT
-Message-ID: <aGc_W5Gfyiw8deYK@cse-cd03-lnx.ap.qualcomm.com>
-References: <20250526-b4-k1-dwc3-v3-v4-0-63e4e525e5cb@whut.edu.cn>
- <20250526-b4-k1-dwc3-v3-v4-3-63e4e525e5cb@whut.edu.cn>
- <20250603012029.4agja77rdoneeyrl@synopsys.com>
- <aD5jL5DK6S8ii-DT@jean.localdomain>
- <aGc4EibLNTEj/H11@lizhi-Precision-Tower-5810>
+	s=arc-20240116; t=1751623389; c=relaxed/simple;
+	bh=ZGWVSPbloHjfJ3pWvMyOnYMs4sjlJNieDkORmzs4jyw=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=MmjA6bwRM4387POLBegqM27SAnz1eTUwm5Pg0YRQldGaksbtSnUIQ87Zu88yWUNvISjL2n7WbUxZGDQKZJCCcWrJG7niFnGoD2v1UXfThHOaJJ5Yd1q8oa8kPuC07bmu9j6/OEi++CgZ335XcGf6jr96B0S7s8ANxBhrzQC1gFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uXdFx-0008E4-R2; Fri, 04 Jul 2025 12:02:57 +0200
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uXdFx-006kU9-1J;
+	Fri, 04 Jul 2025 12:02:57 +0200
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uXdFx-000BZv-16;
+	Fri, 04 Jul 2025 12:02:57 +0200
+Message-ID: <daf9ddad1aa24ee18abdc11a9b26ef03bdcbae16.camel@pengutronix.de>
+Subject: Re: [GIT PULL] Immutable tag between SpacemiT's reset and clock
+ trees for v6.17
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Alex Elder <elder@riscstar.com>, linux-clk@vger.kernel.org, 
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, 
+	linux-kernel@vger.kernel.org
+Date: Fri, 04 Jul 2025 12:02:57 +0200
+In-Reply-To: <20250703151823-GYA312602@gentoo>
+References: <20250703151823-GYA312602@gentoo>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aGc4EibLNTEj/H11@lizhi-Precision-Tower-5810>
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCS0hJVkhKH08YHk9JSx4YQlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSk9VQk9VQ1VJSllXWRYaDxIVHRRZQVlPS0hVSktJQk1LSlVKS0tVS1kG
-X-HM-Tid: 0a97d34f7e8b03a1kunm074d1ad6206a3a
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6P0k6DQw5VjEyATkZFEMRMDwM
-	LU0aCjBVSlVKTE5KTkJNQ0JISk1PVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlK
-	Sk9VQk9VQ1VJSllXWQgBWUFJT01DNwY+
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: spacemit@lists.linux.dev
 
-On Thu, Jul 03, 2025 at 10:10:26PM -0400, Frank Li wrote:
-> On Tue, Jun 03, 2025 at 10:51:27AM +0800, Ze Huang wrote:
-> > On Tue, Jun 03, 2025 at 01:20:35AM +0000, Thinh Nguyen wrote:
-> > > On Mon, May 26, 2025, Ze Huang wrote:
-> > > > To support flattened dwc3 dt model and drop the glue layer, introduce the
-> > > > `dwc3-generic` driver. This enables direct binding of the DWC3 core driver
-> > > > and offers an alternative to the existing glue driver `dwc3-of-simple`.
-> > > >
-> > > > Signed-off-by: Ze Huang <huangze@whut.edu.cn>
-> > > > ---
-> 
-> Any progress on this patch? If you have not time, I can continue work on
-> this one.
+On Do, 2025-07-03 at 15:18 +0000, Yixun Lan wrote:
+> Hi Philipp,
+>=20
+> Please pull the following change into the reset tree. This
+> allows you to apply the patch 5 of the SpacemiT reset driver [1].
+>=20
+> Thanks,
+> Yixun Lan
+>=20
+> Link: https://lore.kernel.org/r/20250702113709.291748-6-elder@riscstar.co=
+m [1]
 
-Hi Frank,
+Sorry I didn't notice before, this is missing k1-syscon.h from Patch 2.
+=C2=A0
+Can we get a clock maintainer ack to place patch 2 in the shared tag as
+well? Otherwise you could split patch 2 into soc and clk parts.
 
-I was planning to submit everything together for full functionality, but since
-Alex's PHY work[1] is almost done, I'll send out the USB generic driver part
-separately first.
-
-Link: https://lore.kernel.org/all/5084a99a-9140-4c4f-9873-f5478f48a49d@ieee.org/ [1]
-
-> 
-> Frank Li
->
-
-Thanks,
-Ze
+regards
+Philipp
