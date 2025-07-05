@@ -1,48 +1,68 @@
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D12324DD07
-	for <spacemit@lists.linux.dev>; Sat,  5 Jul 2025 13:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4BB2CCC8;
+	Sat,  5 Jul 2025 18:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751721034; cv=none; b=cTAX+5pu45XfkOgeKITZKyDE5fIAGHAg5ywoETshRG+/FghMEZo0/YEahx32/vFHAGOv/NOnrG6BLO9lHB1JncVKbUybNJ2tBsHSQB26M+mDxjlk8HXTnaQ+2xjeR2RyPc/c1hmfrsO0/ORk1OagQwGHcFC/l/zGshNZzc2gEdc=
+	t=1751741194; cv=none; b=U5wKLcD1uSGCDvHlNcbNI6jpT68ufekjQgZf+EWygrYkOQzaT0c16HF9wVTX5iXwN/EwsOPLHChHIDCPKxm0T/tZDvN4Y47XZulY9SWVqN0iz2NJuyv8dgyswcZ+xgpdbs0xuwtB4KyV58ftRcuwQR92vxIdMVBlmcOOQIXF0uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751721034; c=relaxed/simple;
-	bh=3CMNxNiW3+FIc/BUcKb5WWD/6E4scgZ1RkowNRMoOTo=;
+	s=arc-20240116; t=1751741194; c=relaxed/simple;
+	bh=Z0yzV/VPkDfvyUx/xopWYC8B14lYUePBKBtLJOQOW6U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=byC+5ltp07fSiu/TrP9GpznyV1qyHHBDW9dwKy+8KumPD/dDOuCQokNUEemAGeyy9m0OqenbciTazsy1M1rgJmoXXC32sm6Gp33P5pTJ6hKXsWQiYdj46TxPw34RL4l2F9xQPALZKVPYaRrFA0TMxoH8UB0yzQ+3yK1n1x/KoXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=gE760dQL; arc=none smtp.client-ip=91.218.175.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 Content-Type:Content-Disposition:In-Reply-To; b=o5yvpI809P3KmVo/zl8hiYBAMZlXkJSXE4XrqwfltfDGKVuIy2EzEwkNKNir+JIz7/dkxoPPqyDrmkvcP9r/diJPi5vrdWxJ1LdsMxUE6qMfNAbY6hbaLZxpMQbwkJSgEscii7Nfkz/TFdUk1JB9orAS1WLryWcQb2cIK1GIGvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RGjaE1SO; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="gE760dQL"
-Date: Sat, 5 Jul 2025 21:10:13 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1751721018;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4OGIJ7s7TRMTl0Xs4Ki+8/cZ1uyPe+zE5+yenLTGv2o=;
-	b=gE760dQLmmt4M1FpGuvtCjTMneBR22mOZWVOcIZ5eNf90hp4uPPBE6WmbuaR04iddZF/Ob
-	zd2bVNvkTghi3Ig+J/HMvdSiOP22aiX3dXE0voGSFTnxS/TelUvQ9PSKiPL8kzT+Mq/SFW
-	EJ8ClOjPIGy6WwA7d3x1nw9yd/fB+VM=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ze Huang <huang.ze@linux.dev>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RGjaE1SO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1751741191; x=1783277191;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Z0yzV/VPkDfvyUx/xopWYC8B14lYUePBKBtLJOQOW6U=;
+  b=RGjaE1SOpogHbX5ZMvtUtqyxUhHHwtaWEQY+i4i1iBEFZlyFLrZB6LNa
+   OUpKhv+9Uk+tBzCExdoAkTIqpOihQlGwijIhzPxMLGJEAHwmGOu3Iqg0U
+   86Nsp4iFb4ENa1WA9IOuEOwYZT/MBbseyizC78SGiXw/2FhL2XsNDOMKG
+   TQvlwgKnJoQ3l3i9Ec/M1St+HnXqp6TUfHc1jNmvlfSf5inaPuEAJDRnw
+   CBg96iRsBGYifpt1A4OU/RRPMzcw7wy6s1vFyjD3qI5yJDQwJrkcUngl1
+   484lGG6R0AtSUvgwM142LjaRIGe7D13Ce6G+koWemF3lklqNY9VeR60fT
+   g==;
+X-CSE-ConnectionGUID: OIciWgN1SViCkkGsECJvkw==
+X-CSE-MsgGUID: cNECaGGqRtWS6PhUostujg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11485"; a="65079094"
+X-IronPort-AV: E=Sophos;i="6.16,290,1744095600"; 
+   d="scan'208";a="65079094"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2025 11:46:31 -0700
+X-CSE-ConnectionGUID: YtCQ6xlMTd6QNYDFXdZszw==
+X-CSE-MsgGUID: hhfPyBMXRqeKWA/pf1pBJA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,290,1744095600"; 
+   d="scan'208";a="154988400"
+Received: from lkp-server01.sh.intel.com (HELO 0b2900756c14) ([10.239.97.150])
+  by orviesa007.jf.intel.com with ESMTP; 05 Jul 2025 11:46:27 -0700
+Received: from kbuild by 0b2900756c14 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uY7u5-0004fv-0y;
+	Sat, 05 Jul 2025 18:46:25 +0000
+Date: Sun, 6 Jul 2025 02:46:11 +0800
+From: kernel test robot <lkp@intel.com>
+To: Ze Huang <huang.ze@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Ze Huang <huang.ze@linux.dev>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v5 1/2] dt-bindings: usb: dwc3: add support for SpacemiT
- K1
-Message-ID: <aGkkKEMyY1JG7Z80@monica.localdomain>
-References: <20250705-dwc3_generic-v5-0-9dbc53ea53d2@linux.dev>
- <20250705-dwc3_generic-v5-1-9dbc53ea53d2@linux.dev>
+Cc: oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Ze Huang <huang.ze@linux.dev>
+Subject: Re: [PATCH v5 2/2] usb: dwc3: add generic driver to support flattened
+Message-ID: <202507060206.iiBP6CQi-lkp@intel.com>
+References: <20250705-dwc3_generic-v5-2-9dbc53ea53d2@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -51,144 +71,101 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250705-dwc3_generic-v5-1-9dbc53ea53d2@linux.dev>
-X-Migadu-Flow: FLOW_OUT
+In-Reply-To: <20250705-dwc3_generic-v5-2-9dbc53ea53d2@linux.dev>
 
-On Sat, Jul 05, 2025 at 09:01:25PM +0800, Ze Huang wrote:
-> Add support for the USB 3.0 Dual-Role Device (DRD) controller embedded
-> in the SpacemiT K1 SoC. The controller is based on the Synopsys
-> DesignWare Core USB 3 (DWC3) IP, supporting USB3.0 host mode and USB 2.0
-> DRD mode.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Ze Huang <huang.ze@linux.dev>
-> ---
+Hi Ze,
 
-Hi Krzysztof,
+kernel test robot noticed the following build warnings:
 
-I kept your Reviewed-by tag, as this version only includes minor updates:
-- Dropped the `interconnects` property
-- Updated the `resets` property to match the latest convention from Alex's patch
+[auto build test WARNING on d9946fe286439c2aeaa7953b8c316efe5b83d515]
 
-Let me know if you have any concerns.
+url:    https://github.com/intel-lab-lkp/linux/commits/Ze-Huang/dt-bindings-usb-dwc3-add-support-for-SpacemiT-K1/20250705-210419
+base:   d9946fe286439c2aeaa7953b8c316efe5b83d515
+patch link:    https://lore.kernel.org/r/20250705-dwc3_generic-v5-2-9dbc53ea53d2%40linux.dev
+patch subject: [PATCH v5 2/2] usb: dwc3: add generic driver to support flattened
+config: arc-randconfig-001-20250706 (https://download.01.org/0day-ci/archive/20250706/202507060206.iiBP6CQi-lkp@intel.com/config)
+compiler: arc-linux-gcc (GCC) 8.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250706/202507060206.iiBP6CQi-lkp@intel.com/reproduce)
 
->  .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 107 +++++++++++++++++++++
->  1 file changed, 107 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..c967ad6aae50199127a4f8a17d53fc34e8d9480b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
-> @@ -0,0 +1,107 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/usb/spacemit,k1-dwc3.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: SpacemiT K1 SuperSpeed DWC3 USB SoC Controller
-> +
-> +maintainers:
-> +  - Ze Huang <huang.ze@linux.dev>
-> +
-> +description: |
-> +  The SpacemiT K1 embeds a DWC3 USB IP Core which supports Host functions
-> +  for USB 3.0 and DRD for USB 2.0.
-> +
-> +  Key features:
-> +  - USB3.0 SuperSpeed and USB2.0 High/Full/Low-Speed support
-> +  - Supports low-power modes (USB2.0 suspend, USB3.0 U1/U2/U3)
-> +  - Internal DMA controller and flexible endpoint FIFO sizing
-> +
-> +  Communication Interface:
-> +  - Use of PIPE3 (125MHz) interface for USB3.0 PHY
-> +  - Use of UTMI+ (30/60MHz) interface for USB2.0 PHY
-> +
-> +allOf:
-> +  - $ref: snps,dwc3-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: spacemit,k1-dwc3
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    const: usbdrd30
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  phys:
-> +    items:
-> +      - description: phandle to USB2/HS PHY
-> +      - description: phandle to USB3/SS PHY
-> +
-> +  phy-names:
-> +    items:
-> +      - const: usb2-phy
-> +      - const: usb3-phy
-> +
-> +  resets:
-> +    items:
-> +      - description: USB3.0 AHB reset line
-> +      - description: USB3.0 VCC reset line
-> +      - description: USB3.0 PHY reset line
-> +
-> +  vbus-supply:
-> +    description: A phandle to the regulator supplying the VBUS voltage.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - phys
-> +  - phy-names
-> +  - resets
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    usb@c0a00000 {
-> +        compatible = "spacemit,k1-dwc3";
-> +        reg = <0xc0a00000 0x10000>;
-> +        clocks = <&syscon_apmu 16>;
-> +        clock-names = "usbdrd30";
-> +        interrupts = <125>;
-> +        phys = <&usb2phy>, <&usb3phy>;
-> +        phy-names = "usb2-phy", "usb3-phy";
-> +        resets = <&syscon_apmu 8>,
-> +                 <&syscon_apmu 9>,
-> +                 <&syscon_apmu 10>;
-> +        vbus-supply = <&usb3_vbus>;
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        hub_2_0: hub@1 {
-> +            compatible = "usb2109,2817";
-> +            reg = <1>;
-> +            vdd-supply = <&usb3_vhub>;
-> +            peer-hub = <&hub_3_0>;
-> +            reset-gpios = <&gpio 3 28 1>;
-> +        };
-> +
-> +        hub_3_0: hub@2 {
-> +            compatible = "usb2109,817";
-> +            reg = <2>;
-> +            vdd-supply = <&usb3_vhub>;
-> +            peer-hub = <&hub_2_0>;
-> +            reset-gpios = <&gpio 3 28 1>;
-> +        };
-> +    };
-> 
-> -- 
-> 2.50.0
-> 
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202507060206.iiBP6CQi-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/usb/dwc3/dwc3-generic-plat.c:151:12: warning: 'dwc3_generic_runtime_idle' defined but not used [-Wunused-function]
+    static int dwc3_generic_runtime_idle(struct device *dev)
+               ^~~~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/usb/dwc3/dwc3-generic-plat.c:144:12: warning: 'dwc3_generic_runtime_resume' defined but not used [-Wunused-function]
+    static int dwc3_generic_runtime_resume(struct device *dev)
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/usb/dwc3/dwc3-generic-plat.c:137:12: warning: 'dwc3_generic_runtime_suspend' defined but not used [-Wunused-function]
+    static int dwc3_generic_runtime_suspend(struct device *dev)
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/usb/dwc3/dwc3-generic-plat.c:121:12: warning: 'dwc3_generic_resume' defined but not used [-Wunused-function]
+    static int dwc3_generic_resume(struct device *dev)
+               ^~~~~~~~~~~~~~~~~~~
+>> drivers/usb/dwc3/dwc3-generic-plat.c:107:12: warning: 'dwc3_generic_suspend' defined but not used [-Wunused-function]
+    static int dwc3_generic_suspend(struct device *dev)
+               ^~~~~~~~~~~~~~~~~~~~
+
+
+vim +/dwc3_generic_runtime_idle +151 drivers/usb/dwc3/dwc3-generic-plat.c
+
+   106	
+ > 107	static int dwc3_generic_suspend(struct device *dev)
+   108	{
+   109		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
+   110		int ret;
+   111	
+   112		ret = dwc3_pm_suspend(&dwc3->dwc);
+   113		if (ret)
+   114			return ret;
+   115	
+   116		clk_bulk_disable_unprepare(dwc3->num_clocks, dwc3->clks);
+   117	
+   118		return 0;
+   119	}
+   120	
+ > 121	static int dwc3_generic_resume(struct device *dev)
+   122	{
+   123		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
+   124		int ret;
+   125	
+   126		ret = clk_bulk_prepare_enable(dwc3->num_clocks, dwc3->clks);
+   127		if (ret)
+   128			return ret;
+   129	
+   130		ret = dwc3_pm_resume(&dwc3->dwc);
+   131		if (ret)
+   132			return ret;
+   133	
+   134		return 0;
+   135	}
+   136	
+ > 137	static int dwc3_generic_runtime_suspend(struct device *dev)
+   138	{
+   139		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
+   140	
+   141		return dwc3_runtime_suspend(&dwc3->dwc);
+   142	}
+   143	
+ > 144	static int dwc3_generic_runtime_resume(struct device *dev)
+   145	{
+   146		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
+   147	
+   148		return dwc3_runtime_resume(&dwc3->dwc);
+   149	}
+   150	
+ > 151	static int dwc3_generic_runtime_idle(struct device *dev)
+   152	{
+   153		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
+   154	
+   155		return dwc3_runtime_idle(&dwc3->dwc);
+   156	}
+   157	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
