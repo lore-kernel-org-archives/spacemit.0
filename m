@@ -1,171 +1,85 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4BB2CCC8;
-	Sat,  5 Jul 2025 18:46:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D948B1362
+	for <spacemit@lists.linux.dev>; Sun,  6 Jul 2025 04:06:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751741194; cv=none; b=U5wKLcD1uSGCDvHlNcbNI6jpT68ufekjQgZf+EWygrYkOQzaT0c16HF9wVTX5iXwN/EwsOPLHChHIDCPKxm0T/tZDvN4Y47XZulY9SWVqN0iz2NJuyv8dgyswcZ+xgpdbs0xuwtB4KyV58ftRcuwQR92vxIdMVBlmcOOQIXF0uo=
+	t=1751774818; cv=none; b=JgTUbCMtAzR9hBh+bCtEPcu3G0bLs9OnNaIM595J+BcYwsuMf7Xw9uxjq9McyoqvDJsbruB8WTSnxhv+6MoUCEd/OzUxsAnpeF8AZOVVnuibdO3Dl2Ohe2xvuXRH4XQzgIJAiLrtB9QyRKIz2kSTYVFllpfKZCBc/RYJGfiYuKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751741194; c=relaxed/simple;
-	bh=Z0yzV/VPkDfvyUx/xopWYC8B14lYUePBKBtLJOQOW6U=;
+	s=arc-20240116; t=1751774818; c=relaxed/simple;
+	bh=ZvnxcHwiDjSH4zYWbfszHUNhAOzWLerR0q8cLLZfR0Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o5yvpI809P3KmVo/zl8hiYBAMZlXkJSXE4XrqwfltfDGKVuIy2EzEwkNKNir+JIz7/dkxoPPqyDrmkvcP9r/diJPi5vrdWxJ1LdsMxUE6qMfNAbY6hbaLZxpMQbwkJSgEscii7Nfkz/TFdUk1JB9orAS1WLryWcQb2cIK1GIGvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RGjaE1SO; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RGjaE1SO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751741191; x=1783277191;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Z0yzV/VPkDfvyUx/xopWYC8B14lYUePBKBtLJOQOW6U=;
-  b=RGjaE1SOpogHbX5ZMvtUtqyxUhHHwtaWEQY+i4i1iBEFZlyFLrZB6LNa
-   OUpKhv+9Uk+tBzCExdoAkTIqpOihQlGwijIhzPxMLGJEAHwmGOu3Iqg0U
-   86Nsp4iFb4ENa1WA9IOuEOwYZT/MBbseyizC78SGiXw/2FhL2XsNDOMKG
-   TQvlwgKnJoQ3l3i9Ec/M1St+HnXqp6TUfHc1jNmvlfSf5inaPuEAJDRnw
-   CBg96iRsBGYifpt1A4OU/RRPMzcw7wy6s1vFyjD3qI5yJDQwJrkcUngl1
-   484lGG6R0AtSUvgwM142LjaRIGe7D13Ce6G+koWemF3lklqNY9VeR60fT
-   g==;
-X-CSE-ConnectionGUID: OIciWgN1SViCkkGsECJvkw==
-X-CSE-MsgGUID: cNECaGGqRtWS6PhUostujg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11485"; a="65079094"
-X-IronPort-AV: E=Sophos;i="6.16,290,1744095600"; 
-   d="scan'208";a="65079094"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2025 11:46:31 -0700
-X-CSE-ConnectionGUID: YtCQ6xlMTd6QNYDFXdZszw==
-X-CSE-MsgGUID: hhfPyBMXRqeKWA/pf1pBJA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,290,1744095600"; 
-   d="scan'208";a="154988400"
-Received: from lkp-server01.sh.intel.com (HELO 0b2900756c14) ([10.239.97.150])
-  by orviesa007.jf.intel.com with ESMTP; 05 Jul 2025 11:46:27 -0700
-Received: from kbuild by 0b2900756c14 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uY7u5-0004fv-0y;
-	Sat, 05 Jul 2025 18:46:25 +0000
-Date: Sun, 6 Jul 2025 02:46:11 +0800
-From: kernel test robot <lkp@intel.com>
-To: Ze Huang <huang.ze@linux.dev>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>
-Cc: oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Ze Huang <huang.ze@linux.dev>
-Subject: Re: [PATCH v5 2/2] usb: dwc3: add generic driver to support flattened
-Message-ID: <202507060206.iiBP6CQi-lkp@intel.com>
-References: <20250705-dwc3_generic-v5-2-9dbc53ea53d2@linux.dev>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lnbzh3tEruBWvP3peVr6AKLPlSpSefSmCbRfMo17QQjkfCy+sYsa62B7g+THH1aj2TE/zJFVsP5FxJ3AYZ/ne8B0LgUOB+tW3Xb0ZGOKKmhkkFPXwheYT5ioKl83PcSArY823HBxpVSUorGrMFSd+TlmxDMWxBX7/OuYzKBNSRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.207])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id D67A7341EC0;
+	Sun, 06 Jul 2025 04:06:55 +0000 (UTC)
+Date: Sun, 6 Jul 2025 04:06:46 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Alex Elder <elder@riscstar.com>, linux-clk@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [GIT PULL] Immutable tag between SpacemiT's reset and clock
+ trees for v6.17
+Message-ID: <20250706040646-GYA408198@gentoo>
+References: <20250703151823-GYA312602@gentoo>
+ <daf9ddad1aa24ee18abdc11a9b26ef03bdcbae16.camel@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250705-dwc3_generic-v5-2-9dbc53ea53d2@linux.dev>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <daf9ddad1aa24ee18abdc11a9b26ef03bdcbae16.camel@pengutronix.de>
 
-Hi Ze,
+Hi Philipp,
 
-kernel test robot noticed the following build warnings:
+On 12:02 Fri 04 Jul     , Philipp Zabel wrote:
+> On Do, 2025-07-03 at 15:18 +0000, Yixun Lan wrote:
+> > Hi Philipp,
+> > 
+> > Please pull the following change into the reset tree. This
+> > allows you to apply the patch 5 of the SpacemiT reset driver [1].
+> > 
+> > Thanks,
+> > Yixun Lan
+> > 
+> > Link: https://lore.kernel.org/r/20250702113709.291748-6-elder@riscstar.com [1]
+> 
+> Sorry I didn't notice before, this is missing k1-syscon.h from Patch 2.
+>  
+no problem
 
-[auto build test WARNING on d9946fe286439c2aeaa7953b8c316efe5b83d515]
+> Can we get a clock maintainer ack to place patch 2 in the shared tag as
+> well? Otherwise you could split patch 2 into soc and clk parts.
+for the ack, I'd assume Stephen have no objection (Cc him explicitly)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Ze-Huang/dt-bindings-usb-dwc3-add-support-for-SpacemiT-K1/20250705-210419
-base:   d9946fe286439c2aeaa7953b8c316efe5b83d515
-patch link:    https://lore.kernel.org/r/20250705-dwc3_generic-v5-2-9dbc53ea53d2%40linux.dev
-patch subject: [PATCH v5 2/2] usb: dwc3: add generic driver to support flattened
-config: arc-randconfig-001-20250706 (https://download.01.org/0day-ci/archive/20250706/202507060206.iiBP6CQi-lkp@intel.com/config)
-compiler: arc-linux-gcc (GCC) 8.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250706/202507060206.iiBP6CQi-lkp@intel.com/reproduce)
+technically, there is no problem to place more patches in the shared
+tag, since the tag will be both sent(by me) to clock and reset tree,
+so no conflicts in the end.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507060206.iiBP6CQi-lkp@intel.com/
+if you expect to at least pass compiling test with patch 5 in reset
+branch only, then patch 1, 2, 3 should be included, otherwise need to
+pull clk branch for additional dependency patches.
 
-All warnings (new ones prefixed by >>):
+I would propose to have shared tag to include patch 1-4, then you can
+pick patch 5, in this way, it should both pass all tests (both
+compile-time and run-time)
 
->> drivers/usb/dwc3/dwc3-generic-plat.c:151:12: warning: 'dwc3_generic_runtime_idle' defined but not used [-Wunused-function]
-    static int dwc3_generic_runtime_idle(struct device *dev)
-               ^~~~~~~~~~~~~~~~~~~~~~~~~
->> drivers/usb/dwc3/dwc3-generic-plat.c:144:12: warning: 'dwc3_generic_runtime_resume' defined but not used [-Wunused-function]
-    static int dwc3_generic_runtime_resume(struct device *dev)
-               ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->> drivers/usb/dwc3/dwc3-generic-plat.c:137:12: warning: 'dwc3_generic_runtime_suspend' defined but not used [-Wunused-function]
-    static int dwc3_generic_runtime_suspend(struct device *dev)
-               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> drivers/usb/dwc3/dwc3-generic-plat.c:121:12: warning: 'dwc3_generic_resume' defined but not used [-Wunused-function]
-    static int dwc3_generic_resume(struct device *dev)
-               ^~~~~~~~~~~~~~~~~~~
->> drivers/usb/dwc3/dwc3-generic-plat.c:107:12: warning: 'dwc3_generic_suspend' defined but not used [-Wunused-function]
-    static int dwc3_generic_suspend(struct device *dev)
-               ^~~~~~~~~~~~~~~~~~~~
-
-
-vim +/dwc3_generic_runtime_idle +151 drivers/usb/dwc3/dwc3-generic-plat.c
-
-   106	
- > 107	static int dwc3_generic_suspend(struct device *dev)
-   108	{
-   109		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-   110		int ret;
-   111	
-   112		ret = dwc3_pm_suspend(&dwc3->dwc);
-   113		if (ret)
-   114			return ret;
-   115	
-   116		clk_bulk_disable_unprepare(dwc3->num_clocks, dwc3->clks);
-   117	
-   118		return 0;
-   119	}
-   120	
- > 121	static int dwc3_generic_resume(struct device *dev)
-   122	{
-   123		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-   124		int ret;
-   125	
-   126		ret = clk_bulk_prepare_enable(dwc3->num_clocks, dwc3->clks);
-   127		if (ret)
-   128			return ret;
-   129	
-   130		ret = dwc3_pm_resume(&dwc3->dwc);
-   131		if (ret)
-   132			return ret;
-   133	
-   134		return 0;
-   135	}
-   136	
- > 137	static int dwc3_generic_runtime_suspend(struct device *dev)
-   138	{
-   139		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-   140	
-   141		return dwc3_runtime_suspend(&dwc3->dwc);
-   142	}
-   143	
- > 144	static int dwc3_generic_runtime_resume(struct device *dev)
-   145	{
-   146		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-   147	
-   148		return dwc3_runtime_resume(&dwc3->dwc);
-   149	}
-   150	
- > 151	static int dwc3_generic_runtime_idle(struct device *dev)
-   152	{
-   153		struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-   154	
-   155		return dwc3_runtime_idle(&dwc3->dwc);
-   156	}
-   157	
+what do you think?
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Yixun Lan (dlan)
