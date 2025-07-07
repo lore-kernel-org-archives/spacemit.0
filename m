@@ -1,267 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDB01F8755;
-	Mon,  7 Jul 2025 10:01:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFD72951CB
+	for <spacemit@lists.linux.dev>; Mon,  7 Jul 2025 10:44:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751882492; cv=none; b=Wp3B4M6iCSl3dVIqkto9mwTtKwye6vcM1gCB7V7Fs0P89kU1rrGj/Gt466fVZXuv4zRi0mmFqK7TBH7DE321yIDtwGpgb16f7KdX59JeWb3l6VHNkI8f7qH0wB4K++5UOTT5sRvHOHmolQcxEmumSgF073LjvikJgXBoyXJZhHM=
+	t=1751885055; cv=none; b=eUfPi94Qop6KFgsSP20gcgHRIx2IBaLRGcHo601zb0GivzF8V7vXRGXxbJZCTD1EBQ/A0J7fNgNSbpPN1iJ1FoBFq9IOwukZob5c1BUXgzW+9YfAuyT0zLbXCgNCVsZMLfXxnsuxWInPKCle1fRqkxxL851MjsCoQaFiILIFwOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751882492; c=relaxed/simple;
-	bh=LrbLvzvF6gmWIWOl/u5715b2a2XljRasgW9tuQ0jM6Y=;
+	s=arc-20240116; t=1751885055; c=relaxed/simple;
+	bh=c5yRczUDFSdAdgPbN6dY3TNT3pnHLBR0hx9+hGQJrKw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JQcBW/sNuDpSnsFFAdb3XNoAth+9sUHcGeMYl7mOqjS+o3T39z6owG5hRP5HRoy3X/HJtkrZe7MuoQfHjZ9YMVQD++cDkRfm8qjX7lYckGDoOfKiI5Y0eKbuMjt27STq7eVC5cb7ZhbAbhKn8QB/J4Wu70mj/6J1EWkFm+b02ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o6NRB7S8; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o6NRB7S8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181DCC4CEE3;
-	Mon,  7 Jul 2025 10:01:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751882490;
-	bh=LrbLvzvF6gmWIWOl/u5715b2a2XljRasgW9tuQ0jM6Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=o6NRB7S8gi/pE+s4x+hbM9kCMnDJbR3mkeGKx8D65z8RIF9O/zQMzDaF9fKX2lZe5
-	 Nd0DpOG0gitZdCYiaqF1JNSqnOZ5KgaDUP3UqsA9MhbPpJd4J6jWznNxbPwjGew77M
-	 2+2tTI1brE2/H97GiNnLhgMhPy6DOzkvLNMZeNNdjXm9f32tnILnNwf90kIcCXoFlu
-	 VUupgU0UWvQsG9GqD9iFLY/+AbbhxD2252FQtSr1zJ8M1xYhxN0M+/jCQz30+VIqQ+
-	 jp/3pGkDcE+M9uDE4o9E+mIrIGYImdlp9Y0RI7xKh1bPXEfXNroQ1BOhfFc9e3fSvc
-	 4qCcaMf4Trtnw==
-Date: Mon, 7 Jul 2025 11:01:24 +0100
-From: Simon Horman <horms@kernel.org>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>, Vivian Wang <uwu@dram.page>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	 Content-Type:Content-Disposition:In-Reply-To; b=WKTBCaixYPNXxAwuw3EtrHoMo/KTLehoSM8NeBA55uskeBgNC4rafwwPj/lff5Jb+ExqpN6PDiwzRhXfM8Q2aJAFQDHh+GDQbe/UGnxboElPStP2oMblOnQebHOEzhtX3rvawM53Rx0dKOngPykm+WVLfFBe2vWl5a2fHql2Zqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.207])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id CCFDA3410B7;
+	Mon, 07 Jul 2025 10:44:12 +0000 (UTC)
+Date: Mon, 7 Jul 2025 10:44:03 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Alex Elder <elder@riscstar.com>, linux-clk@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v4 2/2] net: spacemit: Add K1 Ethernet MAC
-Message-ID: <20250707100124.GC89747@horms.kernel.org>
-References: <20250703-net-k1-emac-v4-0-686d09c4cfa8@iscas.ac.cn>
- <20250703-net-k1-emac-v4-2-686d09c4cfa8@iscas.ac.cn>
+Subject: Re: [GIT PULL] Immutable tag between SpacemiT's reset and clock
+ trees for v6.17
+Message-ID: <20250707104403-GYA312629@gentoo>
+References: <20250703151823-GYA312602@gentoo>
+ <daf9ddad1aa24ee18abdc11a9b26ef03bdcbae16.camel@pengutronix.de>
+ <20250706040646-GYA408198@gentoo>
+ <3732050b6b756868543012c1a1cebbe7cce74d61.camel@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250703-net-k1-emac-v4-2-686d09c4cfa8@iscas.ac.cn>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3732050b6b756868543012c1a1cebbe7cce74d61.camel@pengutronix.de>
 
-On Thu, Jul 03, 2025 at 05:42:03PM +0800, Vivian Wang wrote:
-> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
-> that only superficially resembles some other embedded MACs. SpacemiT
-> refers to them as "EMAC", so let's just call the driver "k1_emac".
+Hi Philipp,
+
+On 11:46 Mon 07 Jul     , Philipp Zabel wrote:
+> On So, 2025-07-06 at 04:06 +0000, Yixun Lan wrote:
+> > Hi Philipp,
+> > 
+> > On 12:02 Fri 04 Jul     , Philipp Zabel wrote:
+> > > On Do, 2025-07-03 at 15:18 +0000, Yixun Lan wrote:
+> > > > Hi Philipp,
+> > > > 
+> > > > Please pull the following change into the reset tree. This
+> > > > allows you to apply the patch 5 of the SpacemiT reset driver [1].
+> > > > 
+> > > > Thanks,
+> > > > Yixun Lan
+> > > > 
+> > > > Link: https://lore.kernel.org/r/20250702113709.291748-6-elder@riscstar.com [1]
+> > > 
+> > > Sorry I didn't notice before, this is missing k1-syscon.h from Patch 2.
+> > >  
+> > no problem
+> > 
+> > > Can we get a clock maintainer ack to place patch 2 in the shared tag as
+> > > well? Otherwise you could split patch 2 into soc and clk parts.
+> > for the ack, I'd assume Stephen have no objection (Cc him explicitly)
+> > 
+> > technically, there is no problem to place more patches in the shared
+> > tag, since the tag will be both sent(by me) to clock and reset tree,
+> > so no conflicts in the end.
+> > 
+> > if you expect to at least pass compiling test with patch 5 in reset
+> > branch only, then patch 1, 2, 3 should be included, otherwise need to
+> > pull clk branch for additional dependency patches.
 > 
-> This driver is based on "k1x-emac" in the same directory in the vendor's
-> tree [1]. Some debugging tunables have been fixed to vendor-recommended
-> defaults, and PTP support is not included yet.
+> 3 as well? Oh, that's for struct spacemit_ccu_adev. IMHO this patch
+> series is not well structured for applying across trees. This should
+> have been a single patch that adds include/soc/spacemit/k1-syscon.h, to
+> be shared by both clk and reset trees, and no other dependencies
+> between clk and reset patches for this to work well.
+
+I feel this is much difficult, e.g. the patch 2 touches both drivers/clk
+and include/soc/spacemit/k1-syscon.h - moving definitions, and splitting
+into two patches sounds weird
+
 > 
-> [1]: https://github.com/spacemit-com/linux-k1x
+> > I would propose to have shared tag to include patch 1-4, then you can
+> > pick patch 5, in this way, it should both pass all tests (both
+> > compile-time and run-time)would would 
 > 
-> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+> Since this is a new driver, passing run-time tests is not a concern.
+> Compile-time is, since that would break bisectability for everyone.
+> 
+make sense
 
-...
+> > what do you think?
+> 
+> I feel like it's easier and safer for the whole series to be merged via
+> the clk tree. Since this adds a new reset driver, the only possible
+> merge conflicts are trivial ones in drivers/reset/{Kconfig,Makefile}.
+> 
+ok, I agree, then let's route the whole series via clk tree, and I assume 
+Stephen is fine with this, since it's indeed much simple.
 
-> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-
-...
-
-> +/**
-> + * struct emac_desc_ring - Software-side information for one descriptor ring
-> + * Same struture used for both RX and TX
-
-nit: structure
-
-> + * @desc_addr: Virtual address to the descriptor ring memory
-> + * @desc_dma_addr: DMA address of the descriptor ring
-> + * @total_size: Size of ring in bytes
-> + * @total_cnt: Number of descriptors
-> + * @head: Next descriptor to associate a buffer with
-> + * @tail: Next descriptor to check status bit
-> + * @rx_desc_buf: Array of descriptors for RX
-> + * @tx_desc_buf: Array of descriptors for TX, with max of two buffers each
-> + */
-
-...
-
-> +static void emac_set_mac_addr(struct emac_priv *priv, const unsigned char *addr)
-> +{
-> +	emac_wr(priv, MAC_ADDRESS1_HIGH, ((addr[1] << 8) | addr[0]));
-
-nit: no need for inner parentheses here,
-     the order of operations is on your side
-
-	emac_wr(priv, MAC_ADDRESS1_HIGH, addr[1] << 8 | addr[0]);
-
-> +	emac_wr(priv, MAC_ADDRESS1_MED, ((addr[3] << 8) | addr[2]));
-> +	emac_wr(priv, MAC_ADDRESS1_LOW, ((addr[5] << 8) | addr[4]));
-> +}
-
-...
-
-> +static int emac_rx_frame_status(struct emac_priv *priv, struct emac_desc *desc)
-> +{
-> +	/* Drop if not last descriptor */
-> +	if (!(desc->desc0 & RX_DESC_0_LAST_DESCRIPTOR)) {
-> +		netdev_dbg(priv->ndev, "RX not last descriptor\n");
-
-Unless I am mistaken these logs can occur on the basis of user
-(Network packet) input. If so, I think rate limited debug
-messages are more appropriate here and below.
-
-> +		return RX_FRAME_DISCARD;
-> +	}
-> +
-> +	if (desc->desc0 & RX_DESC_0_FRAME_RUNT) {
-> +		netdev_dbg(priv->ndev, "RX runt frame\n");
-> +		return RX_FRAME_DISCARD;
-> +	}
-> +
-> +	if (desc->desc0 & RX_DESC_0_FRAME_CRC_ERR) {
-> +		netdev_dbg(priv->ndev, "RX frame CRC error\n");
-> +		return RX_FRAME_DISCARD;
-> +	}
-> +
-> +	if (desc->desc0 & RX_DESC_0_FRAME_MAX_LEN_ERR) {
-> +		netdev_dbg(priv->ndev, "RX frame exceeds max length\n");
-> +		return RX_FRAME_DISCARD;
-> +	}
-> +
-> +	if (desc->desc0 & RX_DESC_0_FRAME_JABBER_ERR) {
-> +		netdev_dbg(priv->ndev, "RX frame jabber error\n");
-> +		return RX_FRAME_DISCARD;
-> +	}
-> +
-> +	if (desc->desc0 & RX_DESC_0_FRAME_LENGTH_ERR) {
-> +		netdev_dbg(priv->ndev, "RX frame length error\n");
-> +		return RX_FRAME_DISCARD;
-> +	}
-> +
-> +	if (rx_frame_len(desc) <= ETH_FCS_LEN ||
-> +	    rx_frame_len(desc) > priv->dma_buf_sz) {
-> +		netdev_dbg(priv->ndev, "RX frame length unacceptable\n");
-> +		return RX_FRAME_DISCARD;
-> +	}
-> +	return RX_FRAME_OK;
-> +}
-
-...
-
-> +static int emac_resume(struct device *dev)
-> +{
-> +	struct emac_priv *priv = dev_get_drvdata(dev);
-> +	struct net_device *ndev = priv->ndev;
-> +	int ret;
-> +
-> +	ret = clk_prepare_enable(priv->bus_clk);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to enable bus clock: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	if (!netif_running(ndev))
-> +		return 0;
-> +
-> +	ret = emac_open(ndev);
-> +	if (ret)
-
-Smatch flags that priv->bus_clk resources are leaked here, and I agree.
-
-> +		return ret;
-> +
-> +	netif_device_attach(ndev);
-> +	return 0;
-> +}
-
-I would suggest addressing that like this.
-(Compile tested only!)
-
-diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-index 6158e776bc67..ebd02ec2bb01 100644
---- a/drivers/net/ethernet/spacemit/k1_emac.c
-+++ b/drivers/net/ethernet/spacemit/k1_emac.c
-@@ -1843,10 +1843,14 @@ static int emac_resume(struct device *dev)
- 
- 	ret = emac_open(ndev);
- 	if (ret)
--		return ret;
-+		goto err_clk_disable_unprepare;
- 
- 	netif_device_attach(ndev);
- 	return 0;
-+
-+err_clk_disable_unprepare:
-+	clk_disable_unprepare(priv->bus_clk);
-+	return ret;
- }
- 
- static int emac_suspend(struct device *dev)
-
-...
-
-> diff --git a/drivers/net/ethernet/spacemit/k1_emac.h b/drivers/net/ethernet/spacemit/k1_emac.h
-
-...
-
-> +struct emac_hw_stats {
-> +	u32 tx_ok_pkts;
-> +	u32 tx_total_pkts;
-> +	u32 tx_ok_bytes;
-> +	u32 tx_err_pkts;
-> +	u32 tx_singleclsn_pkts;
-> +	u32 tx_multiclsn_pkts;
-> +	u32 tx_lateclsn_pkts;
-> +	u32 tx_excessclsn_pkts;
-> +	u32 tx_unicast_pkts;
-> +	u32 tx_multicast_pkts;
-> +	u32 tx_broadcast_pkts;
-> +	u32 tx_pause_pkts;
-> +	u32 rx_ok_pkts;
-> +	u32 rx_total_pkts;
-> +	u32 rx_crc_err_pkts;
-> +	u32 rx_align_err_pkts;
-> +	u32 rx_err_total_pkts;
-> +	u32 rx_ok_bytes;
-> +	u32 rx_total_bytes;
-> +	u32 rx_unicast_pkts;
-> +	u32 rx_multicast_pkts;
-> +	u32 rx_broadcast_pkts;
-> +	u32 rx_pause_pkts;
-> +	u32 rx_len_err_pkts;
-> +	u32 rx_len_undersize_pkts;
-> +	u32 rx_len_oversize_pkts;
-> +	u32 rx_len_fragment_pkts;
-> +	u32 rx_len_jabber_pkts;
-> +	u32 rx_64_pkts;
-> +	u32 rx_65_127_pkts;
-> +	u32 rx_128_255_pkts;
-> +	u32 rx_256_511_pkts;
-> +	u32 rx_512_1023_pkts;
-> +	u32 rx_1024_1518_pkts;
-> +	u32 rx_1519_plus_pkts;
-> +	u32 rx_drp_fifo_full_pkts;
-> +	u32 rx_truncate_fifo_full_pkts;
-> +};
-
-Many of the stats above appear to cover stats covered by struct
-rtnl_link_stats64, ethtool_pause_stats, struct ethtool_rmon_stats, and
-possibly others standardised in ethtool.h. Please only report standard
-counters using standard mechanisms. And only use get_ethtool_stats to
-report non-standard counters.
-
-Link: https://www.kernel.org/doc/html/v6.16-rc4/networking/statistics.html#notes-for-driver-authors
-
-...
+thanks
 
 -- 
-pw-bot: changes-requested
+Yixun Lan (dlan)
