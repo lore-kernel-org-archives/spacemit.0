@@ -1,89 +1,100 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39DB199939
-	for <spacemit@lists.linux.dev>; Mon,  7 Jul 2025 22:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EFC201269
+	for <spacemit@lists.linux.dev>; Tue,  8 Jul 2025 01:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751927357; cv=none; b=QGzHq1xZ/8X2XwcFsLKw1FhsB5W5oz3XbVwjrvZ6h+RV5COcA1hpcpKnCSMGotwNSvyoTd2hjEk+1NpB1QOzL2RoAd39+y/97Xwn4G/S0PHMzk2IjJ3Dju3aGelnQqJLViq7HYfLMm9b1XLFg8UD72fII+cpWBkFr4QDRafGmeQ=
+	t=1751939111; cv=none; b=TXAvrE22qfIF89//ZTmVim37tBMGK9Eew8bVdIEBH63F8Di7KWTesfAW0ECbCPFVIjuwaUhbLU1jsBdNUQB2wqVtav+xEiqQ1vZoud1Eo1v4A2l6pTO+Byxi1rwZOBBjNYerG+CW/0/OroIoJVPFuWRp0cFcYOaJCod6x0MqR34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751927357; c=relaxed/simple;
-	bh=MDF8zUlS1Pi0x+G3G5UDKyYb4IezZltpmz4zl1fscw4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PlvKatBfn8HaxcLY6xqeQvH/CUcYwlsJUEgNF+gIa13+TgCmF9OSg49E0oc3Ae/NxfjmgjO/wRW8dfN8jsQVN4GYgVVXZ5x9DBtwVzprlM1zKZFuXHgCCmhesLYS5VKqwcEVs7OI2vWYFRqWCtuUrLlcR2BKYk6/hDqI88a50B8=
+	s=arc-20240116; t=1751939111; c=relaxed/simple;
+	bh=DND5Hg+FtbnxrbifP2m8JGMpr6rBRSxqH5N/7bwtAy8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DErSlb5+tXtxU3BcGLXnNT4Bp1LDldiS79kJaVrw7Rdi/OX8R0z4Te6EHTVaaVcpEl98VDTdFGMjWbHK4uTLcHDSf4iw2s0kmjzxJwZihom2xl1u+Shwu1LqZUuzqfiWtIIYUudPsema0+xMgdmdbnuvk9J14d2lw2NuhYUWu14=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.48.207])
+Received: from [127.0.0.1] (unknown [116.232.48.207])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 156F6340F39;
-	Mon, 07 Jul 2025 22:29:14 +0000 (UTC)
-Date: Mon, 7 Jul 2025 22:29:10 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 35948340D1B;
+	Tue, 08 Jul 2025 01:45:05 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Conor Dooley <conor@kernel.org>
-Cc: Guodong Xu <guodong@riscstar.com>, ukleinek@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
-	drew@pdp7.com, inochiama@gmail.com, geert+renesas@glider.be,
-	heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com,
-	unicorn_wang@outlook.com, duje.mihanovic@skole.hr,
-	heikki.krogerus@linux.intel.com, elder@riscstar.com,
-	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v3 6/6] riscv: defconfig: Enable PWM support for SpacemiT
- K1 SoC
-Message-ID: <20250707222910-GYC408198@gentoo>
-References: <20250429085048.1310409-1-guodong@riscstar.com>
- <20250429085048.1310409-7-guodong@riscstar.com>
+Date: Tue, 08 Jul 2025 09:44:56 +0800
+Subject: [PATCH] riscv: defconfig: spacemit: enable sdhci driver for K1 SoC
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250429085048.1310409-7-guodong@riscstar.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250708-02-k1-sdhci-defconfig-v1-1-73c631717338@gentoo.org>
+X-B4-Tracking: v=1; b=H4sIABd4bGgC/x3MTQqAIBBA4avIrBsYpejnKtFCdKwh0FCIQLp70
+ vJbvFehcBYusKgKmW8pkmKD7hS4w8adUXwzGDIDjTQhGTw1Fn84Qc/BpRhkR6Z5dtqbIdgeWnt
+ lDvL833V73w9zJmOmZwAAAA==
+X-Change-ID: 20250708-02-k1-sdhci-defconfig-e099c1d25fa4
+To: Conor Dooley <conor@kernel.org>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, linux-riscv@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
+ Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1203; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=DND5Hg+FtbnxrbifP2m8JGMpr6rBRSxqH5N/7bwtAy8=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBobHge8G18X+Mhp+CBSQ6ZdE9TrfQtejcKsnbZg
+ ewJzJ935l2JApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaGx4Hl8UgAAAAAAuAChp
+ c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277fyLD/9j/olE0QLiTGKumY
+ noTFZYOFJbQi+xwectDOv+C1hN/+Ah+xXeFL+daxQyDZ5ZI+6UF35dIWnQwZ4ROy6rBy4ga73nS
+ cmpOHDlWtOmzAqdxfsMPPbWCxn4s094y4GO420pU9wEDEaUNVG8qdV5/DXrFu+qd0l9gNPgIGZL
+ DxjgQ9pCXKeK9gMHejSXUIeTW1zdTT1WWKW7hRLVIAcWPcgBWfnA1ry750wxlrktcmK5Yfxpdpc
+ k35aRKh4XW81f7sKgN9B9iaip7Qdd8mzTX/csJdjZeEnozy5yuTYs/7XyjZKs3nl/lrRHrnfU0b
+ eiYIOPfsgP4nUtLXmE68r2kNli9ne/MaEJ12XOMTvPJ/W/udzS0V2O4bpK51wgJaK1K2fp1C1gN
+ S8xbGFgJ2N/litO867ikP4ZW90qxRbUlaEEehQmhE+hheTdN9zxLJp7zoj5SMncJ7daTTW050mJ
+ JOKeFFSqJLmbCKGe8mVr9tbBUXIzgkR7V8q+P5KUf387VSGAnpH800VprdwcUGn9gw3qJCA0kW0
+ TjLU+gjaKwM4HgTSc+mQgfpWqsKVfsOpbT//J4tdtVlsE5FV3MSIgpn3eWgmT3nm9/lxr+euHoX
+ Bu/MzhojeqUrvkhfisQd5oyLieG8ZfPGwx5hR6slr8MhTjQiM40ZCB++invQH3VJ6D4Q==
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Conor,
-  Can you take this patch? I've checked with riscv's tree for-next
-branch, it's still applicable and meet the "savedefconfig" criteria.
-  Thanks
+Enable sdhci driver support for SpacemiT K1 SoC, so eMMC storage
+will be probed and activated, Tested on the Banana Pi BPI-F3 board.
 
-On 16:50 Tue 29 Apr     , Guodong Xu wrote:
-> Enable CONFIG_PWM and CONFIG_PWM_PXA in the defconfig
-> to support the PWM controller used on the SpacemiT K1 SoC.
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Since the K1 sdhci driver is already merged, and the DT part is 
+queued for v6.17, so let's enable defconfig of this driver.
 
-> ---
-> v3: No change
-> v2: Changed PWM_PXA from built-in to a loadable module (=m)
-> 
->  arch/riscv/configs/defconfig | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-> index 3c8e16d71e17..3c4d9bb8f01e 100644
-> --- a/arch/riscv/configs/defconfig
-> +++ b/arch/riscv/configs/defconfig
-> @@ -257,6 +257,8 @@ CONFIG_RPMSG_CTRL=y
->  CONFIG_RPMSG_VIRTIO=y
->  CONFIG_PM_DEVFREQ=y
->  CONFIG_IIO=y
-> +CONFIG_PWM=y
-> +CONFIG_PWM_PXA=m
->  CONFIG_THEAD_C900_ACLINT_SSWI=y
->  CONFIG_PHY_SUN4I_USB=m
->  CONFIG_PHY_STARFIVE_JH7110_DPHY_RX=m
-> -- 
-> 2.43.0
-> 
+For the convenience, this patch is based on the branch 'for-next'
+of riscv tree[1], and generated by command "make savedefconfig".
 
+Link: https://git.kernel.org/pub/scm/linux/kernel/git/riscv/linux.git [1]
+---
+ arch/riscv/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
+index 37c98c0f98ffc0ee9d021e4d07aa37a27d342f7a..d8e1593ceeca487c6af67c73cb176c488f38bf13 100644
+--- a/arch/riscv/configs/defconfig
++++ b/arch/riscv/configs/defconfig
+@@ -230,6 +230,7 @@ CONFIG_MMC=y
+ CONFIG_MMC_SDHCI=y
+ CONFIG_MMC_SDHCI_PLTFM=y
+ CONFIG_MMC_SDHCI_OF_DWCMSHC=y
++CONFIG_MMC_SDHCI_OF_K1=y
+ CONFIG_MMC_SDHCI_CADENCE=y
+ CONFIG_MMC_SPI=y
+ CONFIG_MMC_DW=y
+
+---
+base-commit: fda589c286040d9ba2d72a0eaf0a13945fc48026
+change-id: 20250708-02-k1-sdhci-defconfig-e099c1d25fa4
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan
+
