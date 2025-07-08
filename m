@@ -1,59 +1,48 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03401B4223
-	for <spacemit@lists.linux.dev>; Tue,  8 Jul 2025 14:34:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D37E2DD5EF;
+	Tue,  8 Jul 2025 16:41:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751985256; cv=none; b=bQk+8V1cAjppOm5I/HvHAa1Iq8TCZqtLpJnZaaFjuZzFamCKO9kVVxKsJo+jmEsuBFgCxSW1qO8vxbovugri/yJuccWOCaG1o5qau278tKl67LA0sn7wmB4s46FgCTHJoBXTsVhJ16UUv77GtOMYFxTgEuom4fffJtUGS+opAHY=
+	t=1751992909; cv=none; b=JiKa1DIao6dt8uoIQFnFzljBGxDoCUnUlT2QpvXBxLusLzwsIBAJ6b6qmm0UqbOAnu8SToiuryq5KwO1qoHzmEa4Ra9P1rvEB1w+J+YGogRSTEwBTXNSDsb7+/TtZZMpL9WW+q0xSxIAKOJrD+1bAu7MCB81JuuhiHKlD+66T5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751985256; c=relaxed/simple;
-	bh=OP8Xe7kdCGxwZTk0/Uhbn9t7nQoxeuX/Abg2txz/bH0=;
+	s=arc-20240116; t=1751992909; c=relaxed/simple;
+	bh=rdhMhDbDsUjX5hjIU+cPezj8rvV97MeHEnix0pjd8uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p1qKvGFaeZI5cD3e9GtStlUzmu3usMO8shU+jyU++4VqA13OqAIAHbFc12jj4RJGU5kbgYlt+weBATevjBm90/OtPfUhbvli8w218nHc7myOsXYFgjsUUAbibFDnKVLMSJqJ+T0R93uODI/7Vt4Y4qH0SdblHYSxphW1Gpd/r0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from ofsar (unknown [116.232.48.207])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 3A6FC340FFC;
-	Tue, 08 Jul 2025 14:34:03 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-To: ukleinek@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	p.zabel@pengutronix.de,
-	drew@pdp7.com,
-	inochiama@gmail.com,
-	geert+renesas@glider.be,
-	heylenay@4d2.org,
-	tglx@linutronix.de,
-	hal.feng@starfivetech.com,
-	unicorn_wang@outlook.com,
-	duje.mihanovic@skole.hr,
-	heikki.krogerus@linux.intel.com,
-	Guodong Xu <guodong@riscstar.com>
-Cc: Yixun Lan <dlan@gentoo.org>,
-	elder@riscstar.com,
-	linux-pwm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	 MIME-Version:Content-Type; b=pTDREB3LyO+hxg7o9UwKTumZp36nT3rkH8AnkGnjcdcWwppUItsLVuX9vNKw47uZllixNcbu7uz5nE8yqy2qcNHKRo/Dp6J2syNAobxpDUZObuhdqAJiO530ZliA7RuvBHQjd6ZewzVNQxJMR6/HFqrWraQv9uFUanp8VZtFo6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UvoO2R1o; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UvoO2R1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFA4C4CEF5;
+	Tue,  8 Jul 2025 16:41:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751992908;
+	bh=rdhMhDbDsUjX5hjIU+cPezj8rvV97MeHEnix0pjd8uw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UvoO2R1ocwBu3BcUOR6JUthSRVHALJHP3DmQaDLCBk79STEH2VyJD0xBK2AJp5A/W
+	 q0TwEC8ZFJW1veRmOMT33V5fUeqMARCvOa7aEm5nMtYvXF7reYMt7A8oEyhyU+doMe
+	 wjqdG5W1wpSlo6A3fiqMzuz2NOSIjZsLkj1Ne5hl4PUvdbMNo1dKvrG2QMw+Lqjckd
+	 aVS1vAhBB2SHXlYXXDQizdcFW1sxemkSydjJUhkzt4sHAESQ8Oj81Go54x2rI7axDJ
+	 Oa8zJ++ewGd0tFPQ/+QctMy1zZCppeQ04Y0XUSqqm+38e9W+EEhCcgGwEQAg4Fnqch
+	 VkFJXqFBOSyEw==
+From: Conor Dooley <conor@kernel.org>
+To: Conor Dooley <conor@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>
+Cc: Conor Dooley <conor.dooley@microchip.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
 	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
 	spacemit@lists.linux.dev
-Subject: Re: (subset) [PATCH v3 0/6] pwm: Update PWM_PXA driver for SpacemiT K1
-Date: Tue,  8 Jul 2025 22:33:55 +0800
-Message-ID: <175198458423.86859.5882458274157023095.b4-ty@gentoo.org>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250429085048.1310409-1-guodong@riscstar.com>
-References: <20250429085048.1310409-1-guodong@riscstar.com>
+Subject: Re: [PATCH] riscv: defconfig: spacemit: enable sdhci driver for K1 SoC
+Date: Tue,  8 Jul 2025 17:41:28 +0100
+Message-ID: <20250708-doily-concise-12620a7ceda5@spud>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250708-02-k1-sdhci-defconfig-v1-1-73c631717338@gentoo.org>
+References: <20250708-02-k1-sdhci-defconfig-v1-1-73c631717338@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -61,31 +50,22 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=384; i=conor.dooley@microchip.com; h=from:subject:message-id; bh=95Fz3TVw+WlzEnWMLxXYtXF67YYqJlPsPN4hDfqsBVY=; b=owGbwMvMwCFWscWwfUFT0iXG02pJDBm5XtauXyYuEzncynLKUyByqX10zN6dH3uclv1p22kvZ 5T3eIlfRykLgxgHg6yYIkvi7b4WqfV/XHY497yFmcPKBDKEgYtTACZS/YuR4Wbz3XxHiZt531Yb WYif0l6e3rffy83n9Hylj09279E468rwv6ZmTvKRBStSOw/f71O0OlW+ITjkwgMVy9c5W3O7PTZ lsAAA
+X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
 Content-Transfer-Encoding: 8bit
 
+From: Conor Dooley <conor.dooley@microchip.com>
 
-On Tue, 29 Apr 2025 16:50:42 +0800, Guodong Xu wrote:
-> This patchset adds support for the SpacemiT K1 SoC in the PWM_PXA driver
-> and updates related device tree bindings. The changes enable PWM
-> functionality on the K1 platform through driver enhancements,
-> configuration updates, and device tree additions.
+On Tue, 08 Jul 2025 09:44:56 +0800, Yixun Lan wrote:
+> Enable sdhci driver support for SpacemiT K1 SoC, so eMMC storage
+> will be probed and activated, Tested on the Banana Pi BPI-F3 board.
 > 
-> Functionality has been verified on the Banana Pi BPI-F3 board using PWM14,
-> configured as a pwm-backlight. Per community feedback, the actual
-> pwm-backlight node is not included in this patchset but can be found in
-> patch 7 of the v1 series, with modification of pwms property to 4-cell
-> format to match updated binding (#pwm-cells = <3>) since v3.
 > 
-> [...]
 
-Applied, thanks!
+Applied to riscv-config-for-next, thanks!
 
-[3/6] riscv: dts: spacemit: add PWM support for K1 SoC
-      https://github.com/spacemit-com/linux/commit/9aebdfc21f755e0d2766683aa251435fb656ea47
-[4/6] riscv: dts: spacemit: add pwm14_1 pinctrl setting
-      https://github.com/spacemit-com/linux/commit/8709d51024068d4c81dc785d63169d283d147cf3
+[1/1] riscv: defconfig: spacemit: enable sdhci driver for K1 SoC
+      https://git.kernel.org/conor/c/0bb48ad676d5
 
-Best regards,
--- 
-Yixun Lan
-
+Thanks,
+Conor.
