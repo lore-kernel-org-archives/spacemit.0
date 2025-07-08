@@ -1,100 +1,124 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EFC201269
-	for <spacemit@lists.linux.dev>; Tue,  8 Jul 2025 01:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA0335959
+	for <spacemit@lists.linux.dev>; Tue,  8 Jul 2025 02:20:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751939111; cv=none; b=TXAvrE22qfIF89//ZTmVim37tBMGK9Eew8bVdIEBH63F8Di7KWTesfAW0ECbCPFVIjuwaUhbLU1jsBdNUQB2wqVtav+xEiqQ1vZoud1Eo1v4A2l6pTO+Byxi1rwZOBBjNYerG+CW/0/OroIoJVPFuWRp0cFcYOaJCod6x0MqR34=
+	t=1751941215; cv=none; b=MspfZfJkAyfBCu/k+zvTkXL4IMdkdrFcNM3+31982fEz08Ft7jBdJc3oFCXYS3PWRtWm43oDQHv7nC4o/zwz101eG1ZE3uVIoV6+Rq1tzcvZtGD11dH7FA3pmCWV94QMq/FlwzJ1OffxcNxadRwPpsWHYn2f+9129wDirZ7JkuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751939111; c=relaxed/simple;
-	bh=DND5Hg+FtbnxrbifP2m8JGMpr6rBRSxqH5N/7bwtAy8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DErSlb5+tXtxU3BcGLXnNT4Bp1LDldiS79kJaVrw7Rdi/OX8R0z4Te6EHTVaaVcpEl98VDTdFGMjWbHK4uTLcHDSf4iw2s0kmjzxJwZihom2xl1u+Shwu1LqZUuzqfiWtIIYUudPsema0+xMgdmdbnuvk9J14d2lw2NuhYUWu14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [127.0.0.1] (unknown [116.232.48.207])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 35948340D1B;
-	Tue, 08 Jul 2025 01:45:05 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-Date: Tue, 08 Jul 2025 09:44:56 +0800
-Subject: [PATCH] riscv: defconfig: spacemit: enable sdhci driver for K1 SoC
+	s=arc-20240116; t=1751941215; c=relaxed/simple;
+	bh=sn6rljpu0rRcMnoOSCho0NKqgniXWyhTWQpWa6PH9uQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dOks3XHsDgjYLl+CBaSOgCin88fojsVLKdol/As02c/453U2dVw4Dcqx6+XUP+QSn/+2dfu8RxvHIjUKvPuH3ANHm4u2+r0i7nxX95PPv+tBJfV1ybPcMtqHXCNFWR4jceS6vgnqU/GdLGKw9CIuNbrtFYGcuNwDZdtD8TpRXkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.33.69] (unknown [210.73.43.2])
+	by APP-05 (Coremail) with SMTP id zQCowAA3y1s7gGxoHwLzAQ--.7093S2;
+	Tue, 08 Jul 2025 10:19:40 +0800 (CST)
+Message-ID: <8c917152-0260-4442-a944-3cc0b3356e04@iscas.ac.cn>
+Date: Tue, 8 Jul 2025 10:19:38 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250708-02-k1-sdhci-defconfig-v1-1-73c631717338@gentoo.org>
-X-B4-Tracking: v=1; b=H4sIABd4bGgC/x3MTQqAIBBA4avIrBsYpejnKtFCdKwh0FCIQLp70
- vJbvFehcBYusKgKmW8pkmKD7hS4w8adUXwzGDIDjTQhGTw1Fn84Qc/BpRhkR6Z5dtqbIdgeWnt
- lDvL833V73w9zJmOmZwAAAA==
-X-Change-ID: 20250708-02-k1-sdhci-defconfig-e099c1d25fa4
-To: Conor Dooley <conor@kernel.org>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, linux-riscv@lists.infradead.org, 
- linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
- Yixun Lan <dlan@gentoo.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1203; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=DND5Hg+FtbnxrbifP2m8JGMpr6rBRSxqH5N/7bwtAy8=;
- b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBobHge8G18X+Mhp+CBSQ6ZdE9TrfQtejcKsnbZg
- ewJzJ935l2JApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaGx4Hl8UgAAAAAAuAChp
- c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
- CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277fyLD/9j/olE0QLiTGKumY
- noTFZYOFJbQi+xwectDOv+C1hN/+Ah+xXeFL+daxQyDZ5ZI+6UF35dIWnQwZ4ROy6rBy4ga73nS
- cmpOHDlWtOmzAqdxfsMPPbWCxn4s094y4GO420pU9wEDEaUNVG8qdV5/DXrFu+qd0l9gNPgIGZL
- DxjgQ9pCXKeK9gMHejSXUIeTW1zdTT1WWKW7hRLVIAcWPcgBWfnA1ry750wxlrktcmK5Yfxpdpc
- k35aRKh4XW81f7sKgN9B9iaip7Qdd8mzTX/csJdjZeEnozy5yuTYs/7XyjZKs3nl/lrRHrnfU0b
- eiYIOPfsgP4nUtLXmE68r2kNli9ne/MaEJ12XOMTvPJ/W/udzS0V2O4bpK51wgJaK1K2fp1C1gN
- S8xbGFgJ2N/litO867ikP4ZW90qxRbUlaEEehQmhE+hheTdN9zxLJp7zoj5SMncJ7daTTW050mJ
- JOKeFFSqJLmbCKGe8mVr9tbBUXIzgkR7V8q+P5KUf387VSGAnpH800VprdwcUGn9gw3qJCA0kW0
- TjLU+gjaKwM4HgTSc+mQgfpWqsKVfsOpbT//J4tdtVlsE5FV3MSIgpn3eWgmT3nm9/lxr+euHoX
- Bu/MzhojeqUrvkhfisQd5oyLieG8ZfPGwx5hR6slr8MhTjQiM40ZCB++invQH3VJ6D4Q==
-X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v4 1/2] dt-bindings: net: Add support for
+ SpacemiT K1
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-kernel@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>,
+ Eric Dumazet <edumazet@google.com>, Junhui Liu <junhui.liu@pigmoral.tech>,
+ Conor Dooley <conor.dooley@microchip.com>, netdev@vger.kernel.org,
+ Philipp Zabel <p.zabel@pengutronix.de>, Jakub Kicinski <kuba@kernel.org>,
+ linux-riscv@lists.infradead.org, Simon Horman <horms@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>, devicetree@vger.kernel.org,
+ Vivian Wang <uwu@dram.page>, Yixun Lan <dlan@gentoo.org>,
+ spacemit@lists.linux.dev, Maxime Chevallier <maxime.chevallier@bootlin.com>,
+ Paolo Abeni <pabeni@redhat.com>, Conor Dooley <conor+dt@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>
+References: <20250703-net-k1-emac-v4-0-686d09c4cfa8@iscas.ac.cn>
+ <20250703-net-k1-emac-v4-1-686d09c4cfa8@iscas.ac.cn>
+ <175153978342.612698.13197728053938266111.robh@kernel.org>
+ <17733827-8038-4c85-9bb1-0148a50ca10f@iscas.ac.cn>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <17733827-8038-4c85-9bb1-0148a50ca10f@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-CM-TRANSID:zQCowAA3y1s7gGxoHwLzAQ--.7093S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Zr1DCrWfKrWfJF4kAryxXwb_yoW8AF47pa
+	yak3ZIkF1qyr47Aw4avwn29a4F9r1rKFyUXF9Iqw1vqan8X3WftryS9r15u3W8ZrWxAFyY
+	vr15W3W5CFyDAF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9qb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
+	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Cr0_Gr
+	1UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xK
+	xwCY1x0262kKe7AKxVW8ZVWrXwCY02Avz4vE14v_Gr1l42xK82IYc2Ij64vIr41l4I8I3I
+	0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWU
+	GVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI
+	0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0
+	rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJbIYCTnIWIevJa73UjIFyTuYvjxUkWSrDUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Enable sdhci driver support for SpacemiT K1 SoC, so eMMC storage
-will be probed and activated, Tested on the Banana Pi BPI-F3 board.
+On 7/3/25 20:31, Vivian Wang wrote:
+>
+> On 7/3/25 18:49, Rob Herring (Arm) wrote:
+>> On Thu, 03 Jul 2025 17:42:02 +0800, Vivian Wang wrote:
+>>> The Ethernet MACs on SpacemiT K1 appears to be a custom design.
+>>> SpacemiT
+>>> refers to them as "EMAC", so let's just call them "spacemit,k1-emac".=
 
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
----
-Since the K1 sdhci driver is already merged, and the DT part is 
-queued for v6.17, so let's enable defconfig of this driver.
+>>>
+>>> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+>>> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+>>> ---
+>>> =C2=A0 .../devicetree/bindings/net/spacemit,k1-emac.yaml=C2=A0 | 81
+>>> ++++++++++++++++++++++
+>>> =C2=A0 1 file changed, 81 insertions(+)
+>>>
+>> My bot found errors running 'make dt_binding_check' on your patch:
+>>
+>> yamllint warnings/errors:
+>>
+>> dtschema/dtc warnings/errors:
+>> Error:
+>> Documentation/devicetree/bindings/net/spacemit,k1-emac.example.dts:36.=
+36-37
+>> syntax error
+>> FATAL ERROR: Unable to parse input tree
+>
+> My bad. The example still depends on the reset bindings for the
+> constant RESET_EMAC0. I just tried with reset v12 [1] and that fixes it=
+=2E
+>
+> [1]:
+> https://lore.kernel.org/spacemit/20250702113709.291748-2-elder@riscstar=
+=2Ecom/
+>
+> Vivian "dramforever" Wang=C2=A0
+>
+Just for the record for anyone watching this thread, I'm most likely
+going to be holding off sending the next version of this until reset v12
+(probably?) gets at least taken up by a maintainer.
 
-For the convenience, this patch is based on the branch 'for-next'
-of riscv tree[1], and generated by command "make savedefconfig".
+It's a bit of a weird situation over there since they're sending the
+reset controller stuff through the clk tree, but then it's also a
+mega-syscon situation for the K1 and that's how they decided they want
+it, so it is what it is.
 
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/riscv/linux.git [1]
----
- arch/riscv/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+(The DMA bus dependency that was in v3 is all DTS changes with no
+bindings and no driver, so that could be easily handled entirely in the
+SpacemiT SoC tree, which is nice.)
 
-diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-index 37c98c0f98ffc0ee9d021e4d07aa37a27d342f7a..d8e1593ceeca487c6af67c73cb176c488f38bf13 100644
---- a/arch/riscv/configs/defconfig
-+++ b/arch/riscv/configs/defconfig
-@@ -230,6 +230,7 @@ CONFIG_MMC=y
- CONFIG_MMC_SDHCI=y
- CONFIG_MMC_SDHCI_PLTFM=y
- CONFIG_MMC_SDHCI_OF_DWCMSHC=y
-+CONFIG_MMC_SDHCI_OF_K1=y
- CONFIG_MMC_SDHCI_CADENCE=y
- CONFIG_MMC_SPI=y
- CONFIG_MMC_DW=y
+Vivian
 
----
-base-commit: fda589c286040d9ba2d72a0eaf0a13945fc48026
-change-id: 20250708-02-k1-sdhci-defconfig-e099c1d25fa4
-
-Best regards,
--- 
-Yixun Lan
+>> [...]
 
