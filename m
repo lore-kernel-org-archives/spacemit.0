@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C5A274FF2
-	for <spacemit@lists.linux.dev>; Tue,  8 Jul 2025 14:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03401B4223
+	for <spacemit@lists.linux.dev>; Tue,  8 Jul 2025 14:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751984544; cv=none; b=ZVhYoI6N5qqUhSfbgTXMBPvQTkPapQmJr8Yv+y22iYoGJV/3uoU7mtzFjJFPK+1DaBa0JbWdig/1JRAMF5uPJvHGdFWqCqox/EqeopSSoaan/+WJnLAgwCMQKhaknNGKV4d3z4IFgQ+5sos6ctbqrGzKGTzA6XTs99C3oAmdxEw=
+	t=1751985256; cv=none; b=bQk+8V1cAjppOm5I/HvHAa1Iq8TCZqtLpJnZaaFjuZzFamCKO9kVVxKsJo+jmEsuBFgCxSW1qO8vxbovugri/yJuccWOCaG1o5qau278tKl67LA0sn7wmB4s46FgCTHJoBXTsVhJ16UUv77GtOMYFxTgEuom4fffJtUGS+opAHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751984544; c=relaxed/simple;
-	bh=aYV11MEcb7GflSp3VMmGl1ZdpHTzcEkEZNG0Yj98xnw=;
+	s=arc-20240116; t=1751985256; c=relaxed/simple;
+	bh=OP8Xe7kdCGxwZTk0/Uhbn9t7nQoxeuX/Abg2txz/bH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aVhX0Ed73zou6M0+JPXiBmX7Wu4QpqVJ1E6QSYSvBIs2uQ3An48f5N702SYFtEMuw3Lg0jiEkvocc517KsTj2eWUge0uMi0LoDZtH/FJNaRhL/wJV5/XN/GbZpsiYLN4FA9VGUdQE6CCODA4qPeq9Mp8qq8U83z943QJtt5GHgg=
+	 MIME-Version:Content-Type; b=p1qKvGFaeZI5cD3e9GtStlUzmu3usMO8shU+jyU++4VqA13OqAIAHbFc12jj4RJGU5kbgYlt+weBATevjBm90/OtPfUhbvli8w218nHc7myOsXYFgjsUUAbibFDnKVLMSJqJ+T0R93uODI/7Vt4Y4qH0SdblHYSxphW1Gpd/r0w=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,35 +19,41 @@ Received: from ofsar (unknown [116.232.48.207])
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 1397F340F90;
-	Tue, 08 Jul 2025 14:22:15 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 3A6FC340FFC;
+	Tue, 08 Jul 2025 14:34:03 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: robh@kernel.org,
+To: ukleinek@kernel.org,
+	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	p.zabel@pengutronix.de,
 	paul.walmsley@sifive.com,
 	palmer@dabbelt.com,
 	aou@eecs.berkeley.edu,
 	alex@ghiti.fr,
-	Alex Elder <elder@riscstar.com>
-Cc: Yixun Lan <dlan@gentoo.org>,
+	p.zabel@pengutronix.de,
+	drew@pdp7.com,
+	inochiama@gmail.com,
+	geert+renesas@glider.be,
 	heylenay@4d2.org,
-	inochiama@outlook.com,
-	guodong@riscstar.com,
+	tglx@linutronix.de,
+	hal.feng@starfivetech.com,
+	unicorn_wang@outlook.com,
+	duje.mihanovic@skole.hr,
+	heikki.krogerus@linux.intel.com,
+	Guodong Xu <guodong@riscstar.com>
+Cc: Yixun Lan <dlan@gentoo.org>,
+	elder@riscstar.com,
+	linux-pwm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v12 0/6] reset: spacemit: add K1 reset support
-Date: Tue,  8 Jul 2025 22:22:05 +0800
-Message-ID: <175159801109.1876819.10159207553931838865.b4-ty@gentoo.org>
+	spacemit@lists.linux.dev
+Subject: Re: (subset) [PATCH v3 0/6] pwm: Update PWM_PXA driver for SpacemiT K1
+Date: Tue,  8 Jul 2025 22:33:55 +0800
+Message-ID: <175198458423.86859.5882458274157023095.b4-ty@gentoo.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250702113709.291748-1-elder@riscstar.com>
-References: <20250702113709.291748-1-elder@riscstar.com>
+In-Reply-To: <20250429085048.1310409-1-guodong@riscstar.com>
+References: <20250429085048.1310409-1-guodong@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -58,23 +64,26 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 02 Jul 2025 06:37:02 -0500, Alex Elder wrote:
-> This series adds reset controller support for the SpacemiT K1 SoC.
-> A SpacemiT reset controller is implemented as an auxiliary device
-> associated with a clock controller (CCU).  A new header file
-> holds definitions used by both the clock and reset drivers.
+On Tue, 29 Apr 2025 16:50:42 +0800, Guodong Xu wrote:
+> This patchset adds support for the SpacemiT K1 SoC in the PWM_PXA driver
+> and updates related device tree bindings. The changes enable PWM
+> functionality on the K1 platform through driver enhancements,
+> configuration updates, and device tree additions.
 > 
-> The only change in this version is that three of the the four resets
-> associated with each PCIe port have been renamed, to align better
-> with their corresponding clocks.  This affects patches 1 and 5.
-> For example, for PCIe port 0:
+> Functionality has been verified on the Banana Pi BPI-F3 board using PWM14,
+> configured as a pwm-backlight. Per community feedback, the actual
+> pwm-backlight node is not included in this patchset but can be found in
+> patch 7 of the v1 series, with modification of pwms property to 4-cell
+> format to match updated binding (#pwm-cells = <3>) since v3.
 > 
 > [...]
 
 Applied, thanks!
 
-[6/6] riscv: dts: spacemit: add reset support for the K1 SoC
-      https://github.com/spacemit-com/linux/commit/2c0cf4fed0f440200833ddfc24ea02de2cdc217c
+[3/6] riscv: dts: spacemit: add PWM support for K1 SoC
+      https://github.com/spacemit-com/linux/commit/9aebdfc21f755e0d2766683aa251435fb656ea47
+[4/6] riscv: dts: spacemit: add pwm14_1 pinctrl setting
+      https://github.com/spacemit-com/linux/commit/8709d51024068d4c81dc785d63169d283d147cf3
 
 Best regards,
 -- 
