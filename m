@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960AE186E2D
-	for <spacemit@lists.linux.dev>; Wed,  9 Jul 2025 01:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991EA26B2C5
+	for <spacemit@lists.linux.dev>; Wed,  9 Jul 2025 06:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752023735; cv=none; b=cb/aumfbryk4b8A63MFW4Mr6thHhMHQXw5gh3UK9h/02+EUALPiHGJ58W1pp4GrxHUJI0ccu2DUol7I9BPTBcVqnfvaeyvvD+BMUvGxsv+Q3W5W2lMFBVW3hYZXflaokxxPQjraVtMmghzsP9ISXHsfVgbBWy7CvPH0mek4JpGY=
+	t=1752043065; cv=none; b=SwRZDZz4Q/6C9FaGqw1FysZO71qnTzvYrdMMZ8Qcs4ESGCqgwsHmL5UO/l5DyFlA1PJEneZqdV3rOMqe9iZAzV1eKfOAowJVlAaJrK4GfIGlNUENksOqfgUUcmdcRK6j7KEXIyXYOdsbIKr1gbCR8OHP84IHF5pIhzcDfqzPVA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752023735; c=relaxed/simple;
-	bh=JLK441DJrNVNQDrKnZfclHoqzJ7mXRWy4zaT6CrhpkE=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=ubRFHOQMZHccNduVIj0qiAdPmtPEJYpC8byilbas5zQIXSZOITwiJ1y0lAo1OUCTAb7m/6KPpBDfARPb2pT8QmrrMiEoPTnu4rk3ko8G+hqGPyJme4/Vd0IFV9BPLYJzjHogmTlYOUR1ZahojWTbZsG4YvJ0Gw4wpxSkVSPter4=
+	s=arc-20240116; t=1752043065; c=relaxed/simple;
+	bh=xeDoGCEhKBLAJ0n4b59kBuImWVwW2II1d4l3b934NIY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Chv0vyxFBWfnG7ew4HvVLxqymc5t32qiaWSuVvBvSMaSGYhnr8Ro3qgVncZ52rWmSVT0DYO0wK7kDkLYukFgrDKmzpBplYEUZw73CYBexSJz3LmiuhcY0u/bLgYwX6eV57hS/NdSlrdzswz8VeW3Xexkhf5LQC15FjqgEjAjPx8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,18 +19,25 @@ Received: from localhost (unknown [116.232.48.207])
 	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 639E1342044;
-	Wed, 09 Jul 2025 01:15:32 +0000 (UTC)
-Date: Wed, 9 Jul 2025 01:15:28 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 531B0342289;
+	Wed, 09 Jul 2025 06:37:43 +0000 (UTC)
+Date: Wed, 9 Jul 2025 06:37:38 +0000
 From: Yixun Lan <dlan@gentoo.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Alex Elder <elder@riscstar.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Haylen Chu <heylenay@4d2.org>, linux-clk@vger.kernel.org,
+To: ukleinek@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+	drew@pdp7.com, inochiama@gmail.com, geert+renesas@glider.be,
+	heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com,
+	unicorn_wang@outlook.com, duje.mihanovic@skole.hr,
+	heikki.krogerus@linux.intel.com, Guodong Xu <guodong@riscstar.com>
+Cc: elder@riscstar.com, linux-pwm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: [GIT PULL] clk: spacemit: add changes for v6.17
-Message-ID: <20250709011528-GYA487904@gentoo>
+Subject: Re: (subset) [PATCH v3 0/6] pwm: Update PWM_PXA driver for SpacemiT
+ K1
+Message-ID: <20250709063738-GYA488894@gentoo>
+References: <20250429085048.1310409-1-guodong@riscstar.com>
+ <175198458423.86859.5882458274157023095.b4-ty@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -39,67 +46,38 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <175198458423.86859.5882458274157023095.b4-ty@gentoo.org>
 
-Hi Stephen,
+Hi Guodong,
 
- Here is clock changes for v6.17, please pull.
+On 22:33 Tue 08 Jul     , Yixun Lan wrote:
+> 
+> On Tue, 29 Apr 2025 16:50:42 +0800, Guodong Xu wrote:
+> > This patchset adds support for the SpacemiT K1 SoC in the PWM_PXA driver
+> > and updates related device tree bindings. The changes enable PWM
+> > functionality on the K1 platform through driver enhancements,
+> > configuration updates, and device tree additions.
+> > 
+> > Functionality has been verified on the Banana Pi BPI-F3 board using PWM14,
+> > configured as a pwm-backlight. Per community feedback, the actual
+> > pwm-backlight node is not included in this patchset but can be found in
+> > patch 7 of the v1 series, with modification of pwms property to 4-cell
+> > format to match updated binding (#pwm-cells = <3>) since v3.
+> > 
+> > [...]
+> 
+> Applied, thanks!
+> 
+> [3/6] riscv: dts: spacemit: add PWM support for K1 SoC
+>       https://github.com/spacemit-com/linux/commit/9aebdfc21f755e0d2766683aa251435fb656ea47
 
- Basically, what we've added here are two changes:
+found have to re-arrange the nodes according to ascending order of unit address,
+so here is new version I've pushed, just FYI, please check (should have
+no functionality changes)
+       https://github.com/spacemit-com/linux/commit/66f56c7a64213948341521b5310064586a05c80e
 
-  1) Mark pll1_d8 clock as critical to prevent it from being shut down
-     in the resource withdrawal path once the probe phase fails
+> [4/6] riscv: dts: spacemit: add pwm14_1 pinctrl setting
+>       https://github.com/spacemit-com/linux/commit/8709d51024068d4c81dc785d63169d283d147cf3
 
-  2) Extend K1 clock framework to support reset auxiliary devices, and
-     also route the reset driver via clock tree to avoid shared tags,
-     please see discussion here[1] with reset maintainer for more
-     details if needed.
-
-  Thank you!
-
-
-Link: https://lore.kernel.org/r/3732050b6b756868543012c1a1cebbe7cce74d61.camel@pengutronix.de [1]
-
-Yixun Lan
-
-The following changes since commit 19272b37aa4f83ca52bdf9c16d5d81bdd1354494:
-
-  Linux 6.16-rc1 (2025-06-08 13:44:43 -0700)
-
-are available in the Git repository at:
-
-  https://github.com/spacemit-com/linux tags/spacemit-clk-for-6.17-1
-
-for you to fetch changes up to c79550f69f0f21be069385c20cd6490b862ba2a5:
-
-  Merge tag 'spacemit-reset-for-6.17-1' of https://github.com/spacemit-com/linux (2025-07-07 22:07:15 +0800)
-
-----------------------------------------------------------------
-RISC-V SpacemiT clock changes for 6.17
-
-- Mark clock of pll1_d8 as critical
-- Add reset support for K1 SoC
-
-----------------------------------------------------------------
-Alex Elder (6):
-      dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
-      soc: spacemit: create a header for clock/reset registers
-      clk: spacemit: set up reset auxiliary devices
-      clk: spacemit: define three reset-only CCUs
-      clk: spacemit: mark K1 pll1_d8 as critical
-      reset: spacemit: add support for SpacemiT CCU resets
-
-Yixun Lan (1):
-      Merge tag 'spacemit-reset-for-6.17-1' of https://github.com/spacemit-com/linux
-
- .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  |  27 +-
- drivers/clk/spacemit/Kconfig                       |   1 +
- drivers/clk/spacemit/ccu-k1.c                      | 242 ++++++++--------
- drivers/clk/spacemit/ccu_mix.h                     |  11 +-
- drivers/reset/Kconfig                              |   9 +
- drivers/reset/Makefile                             |   1 +
- drivers/reset/reset-spacemit.c                     | 304 +++++++++++++++++++++
- include/dt-bindings/clock/spacemit,k1-syscon.h     | 141 ++++++++++
- include/soc/spacemit/k1-syscon.h                   | 160 +++++++++++
- 9 files changed, 766 insertions(+), 130 deletions(-)
- create mode 100644 drivers/reset/reset-spacemit.c
- create mode 100644 include/soc/spacemit/k1-syscon.h
+-- 
+Yixun Lan (dlan)
