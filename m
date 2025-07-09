@@ -1,82 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E50225414;
-	Tue,  8 Jul 2025 16:50:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960AE186E2D
+	for <spacemit@lists.linux.dev>; Wed,  9 Jul 2025 01:15:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993421; cv=none; b=aODjWFPMIpPM4xEzbwUru6trQrd0h6T+e+OBSSp0JiENZCb+fLEryCBZnelh1s8q76A+Krr+1jq1XVZ98zP6xUN3HeXT7+wSnTjAQ9xeCQfNrxFxiPq1rPgFkuFlXwEMWLKQJ1KJjpHxNuKrikG2UdtvqoYBJOfddntHKPYr12c=
+	t=1752023735; cv=none; b=cb/aumfbryk4b8A63MFW4Mr6thHhMHQXw5gh3UK9h/02+EUALPiHGJ58W1pp4GrxHUJI0ccu2DUol7I9BPTBcVqnfvaeyvvD+BMUvGxsv+Q3W5W2lMFBVW3hYZXflaokxxPQjraVtMmghzsP9ISXHsfVgbBWy7CvPH0mek4JpGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993421; c=relaxed/simple;
-	bh=8A40c7RkWLHp2FPC7aBzNnB7TI99rPspv5sgH1fkE8k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EqFynrS4nT+Caeyljx7JOqxVyO+8daDIT90udLw+VaFtHx5fm9MByVeKG/RsCtvTkWm9DRb4AZTTc9eBLuT2DZ++6VuelBpkAzZl8Ly2FLQfvgbzT0n+2E4gwAjFC1v0oD5S5Sydg+lyiaGAMcs6iZZWTOeRangOBEI28Gh4JnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u4oOoADh; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u4oOoADh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A293C4CEF0;
-	Tue,  8 Jul 2025 16:50:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751993421;
-	bh=8A40c7RkWLHp2FPC7aBzNnB7TI99rPspv5sgH1fkE8k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=u4oOoADhfoGvM18Nn3/ykD59LMcHlKHrizmm2uAARvweNBAoOGZOSVmcbNHR68RRO
-	 lti+FK/MwEGlTEPEUP67aAArp+eYz7Usn7oN6xCwv1n4Yo2hKGvfgea4982oM14o2k
-	 w48iC0Z6TEy3rTGSwSiytK/b6adEgxwyKDQsr/aZUC8sdt4EENGzwR4pJeBUnxrab3
-	 QQ/YWuHCyWcpOGrrwgN1wE1vUzvFn5XkpAW3XFbxGiHI8AWvDhGkPoQO4ouDrXSSyO
-	 6Yx5zdt2oq9VKNLj2dpYLHRH1UH3ZQUYVcDlq9LRnBMKB3HO2pQbOSa0aCpr3pVheB
-	 d4XnQZs/nmR7w==
-Date: Tue, 8 Jul 2025 17:50:14 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Guodong Xu <guodong@riscstar.com>, ukleinek@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
-	drew@pdp7.com, inochiama@gmail.com, geert+renesas@glider.be,
-	heylenay@4d2.org, tglx@linutronix.de, hal.feng@starfivetech.com,
-	unicorn_wang@outlook.com, duje.mihanovic@skole.hr,
-	heikki.krogerus@linux.intel.com, elder@riscstar.com,
-	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v3 6/6] riscv: defconfig: Enable PWM support for SpacemiT
- K1 SoC
-Message-ID: <20250708-wildfowl-curtly-1993ed320572@spud>
-References: <20250429085048.1310409-1-guodong@riscstar.com>
- <20250429085048.1310409-7-guodong@riscstar.com>
- <20250707222910-GYC408198@gentoo>
+	s=arc-20240116; t=1752023735; c=relaxed/simple;
+	bh=JLK441DJrNVNQDrKnZfclHoqzJ7mXRWy4zaT6CrhpkE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ubRFHOQMZHccNduVIj0qiAdPmtPEJYpC8byilbas5zQIXSZOITwiJ1y0lAo1OUCTAb7m/6KPpBDfARPb2pT8QmrrMiEoPTnu4rk3ko8G+hqGPyJme4/Vd0IFV9BPLYJzjHogmTlYOUR1ZahojWTbZsG4YvJ0Gw4wpxSkVSPter4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.207])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 639E1342044;
+	Wed, 09 Jul 2025 01:15:32 +0000 (UTC)
+Date: Wed, 9 Jul 2025 01:15:28 +0000
+From: Yixun Lan <dlan@gentoo.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Alex Elder <elder@riscstar.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Haylen Chu <heylenay@4d2.org>, linux-clk@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: [GIT PULL] clk: spacemit: add changes for v6.17
+Message-ID: <20250709011528-GYA487904@gentoo>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="tqHe0xDpc9gw5L64"
-Content-Disposition: inline
-In-Reply-To: <20250707222910-GYC408198@gentoo>
-
-
---tqHe0xDpc9gw5L64
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Mon, Jul 07, 2025 at 10:29:10PM +0000, Yixun Lan wrote:
-> Hi Conor,
->   Can you take this patch? I've checked with riscv's tree for-next
-> branch, it's still applicable and meet the "savedefconfig" criteria.
+Hi Stephen,
 
-Sure, done.
+ Here is clock changes for v6.17, please pull.
 
---tqHe0xDpc9gw5L64
-Content-Type: application/pgp-signature; name="signature.asc"
+ Basically, what we've added here are two changes:
 
------BEGIN PGP SIGNATURE-----
+  1) Mark pll1_d8 clock as critical to prevent it from being shut down
+     in the resource withdrawal path once the probe phase fails
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaG1MRgAKCRB4tDGHoIJi
-0iMqAQCkQXOHEt1A4XzvWbSQcalLMF/bZO3zekAoxRIfbLq98QEAmuuZF9e149/a
-Dr4NUIYP7HDgky9w/jvCn45mJPQCOQM=
-=tdoU
------END PGP SIGNATURE-----
+  2) Extend K1 clock framework to support reset auxiliary devices, and
+     also route the reset driver via clock tree to avoid shared tags,
+     please see discussion here[1] with reset maintainer for more
+     details if needed.
 
---tqHe0xDpc9gw5L64--
+  Thank you!
+
+
+Link: https://lore.kernel.org/r/3732050b6b756868543012c1a1cebbe7cce74d61.camel@pengutronix.de [1]
+
+Yixun Lan
+
+The following changes since commit 19272b37aa4f83ca52bdf9c16d5d81bdd1354494:
+
+  Linux 6.16-rc1 (2025-06-08 13:44:43 -0700)
+
+are available in the Git repository at:
+
+  https://github.com/spacemit-com/linux tags/spacemit-clk-for-6.17-1
+
+for you to fetch changes up to c79550f69f0f21be069385c20cd6490b862ba2a5:
+
+  Merge tag 'spacemit-reset-for-6.17-1' of https://github.com/spacemit-com/linux (2025-07-07 22:07:15 +0800)
+
+----------------------------------------------------------------
+RISC-V SpacemiT clock changes for 6.17
+
+- Mark clock of pll1_d8 as critical
+- Add reset support for K1 SoC
+
+----------------------------------------------------------------
+Alex Elder (6):
+      dt-bindings: soc: spacemit: define spacemit,k1-ccu resets
+      soc: spacemit: create a header for clock/reset registers
+      clk: spacemit: set up reset auxiliary devices
+      clk: spacemit: define three reset-only CCUs
+      clk: spacemit: mark K1 pll1_d8 as critical
+      reset: spacemit: add support for SpacemiT CCU resets
+
+Yixun Lan (1):
+      Merge tag 'spacemit-reset-for-6.17-1' of https://github.com/spacemit-com/linux
+
+ .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  |  27 +-
+ drivers/clk/spacemit/Kconfig                       |   1 +
+ drivers/clk/spacemit/ccu-k1.c                      | 242 ++++++++--------
+ drivers/clk/spacemit/ccu_mix.h                     |  11 +-
+ drivers/reset/Kconfig                              |   9 +
+ drivers/reset/Makefile                             |   1 +
+ drivers/reset/reset-spacemit.c                     | 304 +++++++++++++++++++++
+ include/dt-bindings/clock/spacemit,k1-syscon.h     | 141 ++++++++++
+ include/soc/spacemit/k1-syscon.h                   | 160 +++++++++++
+ 9 files changed, 766 insertions(+), 130 deletions(-)
+ create mode 100644 drivers/reset/reset-spacemit.c
+ create mode 100644 include/soc/spacemit/k1-syscon.h
