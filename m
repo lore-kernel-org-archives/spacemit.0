@@ -1,185 +1,187 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE05024C068
-	for <spacemit@lists.linux.dev>; Thu, 10 Jul 2025 12:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356382F0C72
+	for <spacemit@lists.linux.dev>; Thu, 10 Jul 2025 17:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752150092; cv=none; b=paJUya0Ms+B1ALEbFmnPjHvfCwvNYI0l9fGoArEMPNmqMAaMEi/wvfuk8FyfWBsFC4z8i5utdEO1nexz/l0Vnupb4dg4UT0I6v/41GUz6IkscXkkSglyPwFdQOITBZktOVpsqrkXHpj+gttI+auR1NyKRZLS8Nu9sRsOr+lSsyI=
+	t=1752169875; cv=none; b=cc9fXJ6R+zxvh2/AYWipZ11ekMs34dUNOANHd7an1oNyay22o6ax1kUDjng3ISJT6jLwjLwsKxmHZqB2HRL7egJ5hFnhd/0eIYVb6DMsCdG2Ea4Nc70FIVWteAV3J5jsuEOQ2S7uv15/SUSFHPTO3SimsV7vsJOCHqkyvoyboyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752150092; c=relaxed/simple;
-	bh=k0sNT1J2hfShDmZMd5oQVwbeYhLtHhM5ZG7gUd/6Xi8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FCHIpfVew0hFcMgmK2nICgiG0IBlFeLsU765j7lW8vkOZkeZK6uxsArSJuTA38ZzRxD5/mtuC4iTK6cFTtnKw0Rl1D7PfZSQR7/ZbQNSS5JNW87nYLbrPA885Rg6zM2xr/txO1rcJ08FmhKbkAe/VjyTflMdB6u0pitWoFScUpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=yrThFr7x; arc=none smtp.client-ip=209.85.222.180
+	s=arc-20240116; t=1752169875; c=relaxed/simple;
+	bh=W2j6rcWF6RbIU1CU28XWFfVkhL/GZ6rbaJ6hA12lgXs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=n2/lBRWyzAjuCpMVk7txktlkUzLzvXQiXkLxjKp2C9Xayy9uvJ2lmoJO12moPjnTEgAARvqBL4ynYyTv/yuWXhsprFfO1jZrW3ueJrNvmFnpVGHcBuX25aS4pRPT2EYKS+8vhwmDVc5qhLz55eiCVdt977CUq2p7Op66pZUK11E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=fv5oPGcZ; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="yrThFr7x"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7d0a0bcd3f3so99243885a.1
-        for <spacemit@lists.linux.dev>; Thu, 10 Jul 2025 05:21:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="fv5oPGcZ"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4a9b09ba106so14216761cf.2
+        for <spacemit@lists.linux.dev>; Thu, 10 Jul 2025 10:51:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1752150090; x=1752754890; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ykmA4VtBEf4m3I9yh9SrcV1DzXur6jCxtcYH7LJI2a0=;
-        b=yrThFr7xWlWD0rEQ8/VTE9yh96fBaLTPh/ouxn8+CXJmKTnteeZ6NndQNe8fUiduyk
-         +D6POu5lFwaAgL6ILU8emiTjpNH7Z3UGXAOGBZure14pjwFX71uazP/kxUga7AAR6Hgk
-         NY/6HQFQF4laM84NF90V2gERC1Xm9QTEO7QxUESkTQ2ZS8/UZX3sIaNnz7vv3zq60DPk
-         qG9QgUxcO/hbN/Hzq9sKDyswWW3NxgVnMXTu8ipT9+p22Cg2JFlFg5vZFIo3AeNQSoo5
-         h4Lfr60DmkSXafJY9gIajSVsBLQfp/LZMwKCOOsrYhcrb4jddDcoZS98wQauw8NR3buD
-         f+tQ==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1752169871; x=1752774671; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JNMqoqzDLeOgTO7xvZUUvwlywxm/pgloUgJcLaLBW1w=;
+        b=fv5oPGcZrjpM/hOuBOAYYMsmHAdQNEbAJR71QO6A506m/5loPZFfyPZwSEN6weTcNu
+         TaWVKDu589RUvOwTxqrnUuLYC9YWRdIeMwTzvy982Fauahzk3X76Wcpb9wm0CBM0p5yU
+         PTqRAMtdQuSKQqCazEeHRk9CzOkHWs05xBsS2Cl+3gf2UqdmMVlL5V4xayvu9mo25+c/
+         xMdQ/Jo6DOPLT7BWb7DOQMXklm0kgeeTDMuM/sWh0YaXZDnmJrGUmkE3/hatA34Q1kSL
+         vYWHj65fb5xkmOtbek+sIXMPq/XCN0mqtzm7Gg/GxP65E3uTfCLg7/gJFDdwB20LXDEg
+         2zJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752150090; x=1752754890;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ykmA4VtBEf4m3I9yh9SrcV1DzXur6jCxtcYH7LJI2a0=;
-        b=cfM8wvrisfsmNlZ2sW/rkQdQ8PFA+3O7PaV9S/NGI0tpJkSPnCxYAEA5vSoW6LtQgc
-         BaJzRbPMWxpCA2DDYun3rhbXIEcNQKiPMofPx2Adf8cR104eH2j9x8vqzWePNFF7priT
-         qGaEB96c70FAlTypbqX6eIY+s5ZbBrQfkW9WhZVwoXHgLbtLXXweDjJDF7A9nijf6YQR
-         YvpnUZq9HQJ2GHwhLbeFtg/fgbpZ33yofIIP7Exp+HEqQCGxNPzS5h8W/7n3V6MREt/o
-         O5rP36Tc0DYPG/MAoXo7a7bOlMaVP7wlsHl3iOtZcSctEmLr1oZqArhrU+Ha+untSz3j
-         iwyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+snnxltvr1EPzTSYA7SvgmxxQQj7jltLe5MBlCWyG2Ea7hm/Adms5si3MfeU5dEYu8V1q0765aw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy846KtX4RrWjMRMVNU8Mt70ja6AreZFl91rWdlFENEnVPK8e00
-	utE5waCOfwKVwoKtG5vK5mwCUgnzf6VEnWRaIjw0+b+bzilW5/feENjwTKxfrN5QGHg=
-X-Gm-Gg: ASbGncvCX49u708YBCBMdL/f3mqulcS9KskLITtUUO3vfpHtFSWTH1veOqF7fcU/EuX
-	MvAwk3q1/iyNH7iSOy7u6ZGdpcpxpcxf7+9IeqdpniVJNLvdzssWyXq8w8trotno8w1GOL3amtV
-	CHdwGBNa2D+g9uQOTrX6AlIkmrGkh3/kb0d4I5vEtaoZ44Dks+GsYAmP1lLV64sOex4DrViqNBQ
-	8PENVc/Tn5K8EfTAoiSxa9M3ZIZExvjdGrRCG7xydZnzSVqdqUhAZfBJyUG0S6Niw690ce20O3N
-	U+4CqIPS4+eF5fksqYdThCegyPJpy339cudtCalxZr3tZHX9pf1lSZ004gtsUaell9zNixBmvPT
-	wvd60v5CAWA5eoReh5Yv8bpJ6gg==
-X-Google-Smtp-Source: AGHT+IHAaGLj0dorD8TmmT+oXd6EpUTGrwAVYRSrLza6IYfI1rY0XCuwxUpREHQ/PIg/XOc23Vol9Q==
-X-Received: by 2002:a05:620a:4408:b0:7d3:d8c8:1e32 with SMTP id af79cd13be357-7dc977d8fe3mr492098085a.3.1752150089600;
-        Thu, 10 Jul 2025 05:21:29 -0700 (PDT)
-Received: from [172.22.22.28] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcde8fd479sm90171685a.99.2025.07.10.05.21.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Jul 2025 05:21:29 -0700 (PDT)
-Message-ID: <f68067fd-328d-496a-8b39-9d0cc6cd05d7@riscstar.com>
-Date: Thu, 10 Jul 2025 07:21:27 -0500
+        d=1e100.net; s=20230601; t=1752169871; x=1752774671;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JNMqoqzDLeOgTO7xvZUUvwlywxm/pgloUgJcLaLBW1w=;
+        b=DdHg8tah8Fbcs7Hnv+5u/ew71tj3BYSHsf0fCWzqkQwrrWdVaxUCH7r/xI3bq7QptG
+         7Kyv/54DFlb/mHiPr6sLA5vbCdB/CDL/YH2feVCzEdKy8s6LHgOyOWtb3yGNyAUndl2C
+         S04/qQEfxw0RdozU0MVATXLYpN6ktwsA0TJr7FADzl9r+BuXB5whLaDmOjcGxSG/uhij
+         yuLb+X5OWy1CuXbML70y9PFS0NQqc6u9NHj6xb5gIqSBoivOVG2HppI4eCgtxdrQRNC1
+         bocmneh2hA2Eozm7KPbACzzLIY8Limf3y73UVXPWDKDLNr4vpBT63mqZUJ4E4iPZFl7G
+         kygw==
+X-Forwarded-Encrypted: i=1; AJvYcCVtyA/MMA9QvLJzvC3gYQxNCvN7AwGaGQLa/+CzXr/1KQPi1Wz91AdcOzNVeK64xAji02k4kq1MCg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyLTtFAMv3x/++su6u4Vm0R9j+b04enzyBmL+gU++XQYTU7OHh5
+	3syRuVrUBFpFdM74CVxe53+VnqAOQ1ffquo+M9cENH50QVCSaP/+CyTI4fPUTklf44o=
+X-Gm-Gg: ASbGncvrBgc/hu5xoveD8qnA08QpT7F4Mfn2LG5CbSN8D0kp2vJx2TN7WIlGVqiXnnr
+	Klwext00CuKlNNJFcQzkTLOtN3nS7MOWTM2sntz6r8DbU+jIV0IdGdTSPYjQ5JS7qsQNtqKqvUu
+	Xon3bQzCWL/BdszkD82olhCKBvzI+/N4AQyxCarxmcs4X8VPuASBDAwTq4jcIf/+2I+BHAh+pQg
+	UgAOrtFHtViLVQqq4msdkkMo3x8Ni3wXxP64aT4G4UbPwNAH5LNfSxdMoPbVIhuB5e+jctjIVn6
+	lIktr5xenRbStGdjFjkS2Jh7rJceGJinMP6+KVT7W5a27TFsvmm7sf3HRQQNLCeaZun3+QXxCu6
+	Hxvkt5CexukufZJ+O05EHWKAr9j3IX1pFPno=
+X-Google-Smtp-Source: AGHT+IFI/jmo2fMFePpFAuOhqVGzgvVfNMFnzvNUuKjn8MCsLC2IQtc9MHCE70TXETEly/c6N52yZg==
+X-Received: by 2002:a05:622a:28e:b0:477:c04:b512 with SMTP id d75a77b69052e-4a9fb89853amr5290841cf.16.1752169870948;
+        Thu, 10 Jul 2025 10:51:10 -0700 (PDT)
+Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a9edeee300sm11165941cf.73.2025.07.10.10.51.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jul 2025 10:51:10 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: lee@kernel.org,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	alexandre.belloni@bootlin.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: mat.jonczyk@o2.pl,
+	dlan@gentoo.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	troymitchell988@gmail.com,
+	guodong@riscstar.com,
+	linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v8 0/8] spacemit: introduce P1 PMIC support
+Date: Thu, 10 Jul 2025 12:50:58 -0500
+Message-ID: <20250710175107.1280221-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/8] mfd: simple-mfd-i2c: specify max_register
-To: Lee Jones <lee@kernel.org>
-Cc: lgirdwood@gmail.com, broonie@kernel.org, alexandre.belloni@bootlin.com,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, mat.jonczyk@o2.pl,
- dlan@gentoo.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, troymitchell988@gmail.com,
- guodong@riscstar.com, linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20250702213658.545163-1-elder@riscstar.com>
- <20250702213658.545163-3-elder@riscstar.com>
- <20250710092448.GA1431498@google.com>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20250710092448.GA1431498@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 7/10/25 4:24 AM, Lee Jones wrote:
-> On Wed, 02 Jul 2025, Alex Elder wrote:
-> 
->> All devices supported by simple MFD use the same 8-bit register
->> 8-bit value regmap configuration.  There is an option available
->> for a device to specify a custom configuration, but no existing
->> device uses it.
->>
->> Rather than specify a "full" regmap configuration to use this
->> option, Lee Jones suggested allowing just the max_register value
->> to be specified in the simple_mfd_data structure.
->>
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> Suggested-by: Lee Jones <lee@kernel.org>
->> ---
->> v2: - Allow max_register *and* regmap_config to be supplied
->>
->>   drivers/mfd/simple-mfd-i2c.c | 15 ++++++++++++---
->>   drivers/mfd/simple-mfd-i2c.h |  1 +
->>   2 files changed, 13 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
->> index 22159913bea03..3f959f4f98261 100644
->> --- a/drivers/mfd/simple-mfd-i2c.c
->> +++ b/drivers/mfd/simple-mfd-i2c.c
->> @@ -33,16 +33,25 @@ static int simple_mfd_i2c_probe(struct i2c_client *i2c)
->>   {
->>   	const struct simple_mfd_data *simple_mfd_data;
->>   	const struct regmap_config *regmap_config;
-> 
->> +	struct regmap_config config;
-> 
-> Why do we need another regmap_config?
-> 
-> Can't we just remove the const and make use of the one above?
+The SpacemiT P1 is an I2C-controlled PMIC that implements 6 buck
+converters and 12 LDOs.  It contains a load switch, ADC channels,
+GPIOs, a real-time clock, and a watchdog timer.
 
-If we change the global one, it changes for all users.
+This series introduces a multifunction driver for the P1 PMIC as well
+as drivers for its regulators and RTC.
 
-In my next version I will modify the global one temporarily and
-zero the max_register field again after the devm_regmap_init_i2c()
-call.  That doesn't protect against concurrent probes but I don't
-think that's a problem.
+Version 7 provided the ability in "simple-mfd-i2c.c" to specify the
+max_register value for the regmap configuration as an alternative
+to providing a "full" regmap structure.  The max_register value is
+ignored if a regmap_config is also supplied in simple_mfd_data.
 
->>   	struct regmap *regmap;
->>   	int ret;
->>   
->>   	simple_mfd_data = device_get_match_data(&i2c->dev);
->>   
->>   	/* If no regmap_config is specified, use the default 8reg and 8val bits */
->> -	if (!simple_mfd_data || !simple_mfd_data->regmap_config)
->> +	if (simple_mfd_data) {
->> +		if (simple_mfd_data->regmap_config)
->> +			config = *simple_mfd_data->regmap_config;
-> 
-> 			regmap_config = simple_mfd_data->regmap_config;
-> 
->> +		else
->> +			config = regmap_config_8r_8v;
-> 
-> 			regmap_config = &regmap_config_8r_8v;
->> +
->> +		if (simple_mfd_data->max_register)
->> +			config.max_register = simple_mfd_data->max_register;
->> +		regmap_config = &config;
->> +	} else {
->>   		regmap_config = &regmap_config_8r_8v;
-> 
-> I suspect we don't need to have this line twice.
-> 
-> Either re-jig the if () above (I suspect this explains the existing
-> complexity [multiple conditions]) or pre-set regmap_config to
-> regmap_config_8r_8v and only over-write it if the conditions are met.
+Lee Jones felt the logic in v7 was more complex than it needed to
+be, and suggested removing the const qualifier from the global
+regmap_config structure used by default.
 
-Sure, that would work, but it won't be needed if I just use
-the (non-const) global config.
+This version does what Lee suggested, and the logic is indeed
+simpler.  However in order to avoid compile warnings the const
+qualifier was removed from other places as well.  (Checkpatch
+even complains about this.)
 
-Thanks for the review.
+Frankly I think my original solution--which simply used the
+existing ability to provide a regmap_config structure--was the
+best (version 5 of the series is done this way).  I don't think
+adding simple_mfd_data->max_register provides real benefit.
+  https://lore.kernel.org/lkml/20250625164119.1068842-1-elder@riscstar.com/
 
 					-Alex
-		
-> 
->> -	else -		regmap_config = simple_mfd_data->regmap_config;
->> +	}
->>   
->>   	regmap = devm_regmap_init_i2c(i2c, regmap_config); if
->>   	(IS_ERR(regmap)) diff --git a/drivers/mfd/simple-mfd-i2c.h
->>   	b/drivers/mfd/simple-mfd-i2c.h index
->>   	7cb2bdd347d97..706b6f53155ff 100644 ---
->>   	a/drivers/mfd/simple-mfd-i2c.h +++
->>   	b/drivers/mfd/simple-mfd-i2c.h @@ -27,6 +27,7 @@ struct
->>   	simple_mfd_data { const struct regmap_config *regmap_config;
->>   	const struct mfd_cell *mfd_cell; size_t mfd_cell_size; +
->>   	unsigned int max_register; };
->>   
->>   #endif /* __MFD_SIMPLE_MFD_I2C_H */ -- 2.45.2
->>
-> 
+
+This series is available here:
+  https://github.com/riscstar/linux/tree/outgoing/pmic-v8
+
+Between version 7 and version 8:
+  - Change the global regmap_config to not be const in patch 2.
+
+Here is version 7 of this series:
+  https://lore.kernel.org/lkml/20250702213658.545163-1-elder@riscstar.com/
+  
+Between version 6 and version 7:
+  - Revise patch 2 to preserve the option to provide a full regmap config
+
+Here is version 6 of this series:
+  https://lore.kernel.org/lkml/20250627142309.1444135-1-elder@riscstar.com/
+
+Between version 5 and version 6:
+  - Added Rob Herring's reviewed-by to patch 1
+  - Add the simple MFD functionality suggested by Lee Jones
+  - Update patch 3 (previously 2) accordingly
+
+Here is version 5 of this series:
+  https://lore.kernel.org/lkml/20250625164119.1068842-1-elder@riscstar.com/
+
+Between version 4 and version 5:
+  - Only check the seconds register for change when looping on read
+  - Return without re-enabling the RTC if writing registers fails
+  - If the RTC is disabled when reading, return an error
+
+Here is version 4 of this series:
+  https://lore.kernel.org/lkml/20250625164119.1068842-1-elder@riscstar.com/
+
+More complete history is available at that link.
+
+
+Alex Elder (8):
+  dt-bindings: mfd: add support the SpacemiT P1 PMIC
+  mfd: simple-mfd-i2c: specify max_register
+  mfd: simple-mfd-i2c: add SpacemiT P1 support
+  regulator: spacemit: support SpacemiT P1 regulators
+  rtc: spacemit: support the SpacemiT P1 RTC
+  riscv: dts: spacemit: enable the i2c8 adapter
+  riscv: dts: spacemit: define fixed regulators
+  riscv: dts: spacemit: define regulator constraints
+
+ .../devicetree/bindings/mfd/spacemit,p1.yaml  |  86 +++++++++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      | 138 +++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |   7 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          |  11 ++
+ drivers/mfd/Kconfig                           |  11 ++
+ drivers/mfd/simple-mfd-i2c.c                  |  20 ++-
+ drivers/mfd/simple-mfd-i2c.h                  |   3 +-
+ drivers/regulator/Kconfig                     |  12 ++
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/spacemit-p1.c               | 157 ++++++++++++++++
+ drivers/rtc/Kconfig                           |  10 ++
+ drivers/rtc/Makefile                          |   1 +
+ drivers/rtc/rtc-spacemit-p1.c                 | 167 ++++++++++++++++++
+ 13 files changed, 621 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+ create mode 100644 drivers/regulator/spacemit-p1.c
+ create mode 100644 drivers/rtc/rtc-spacemit-p1.c
+
+
+base-commit: b551c4e2a98a177a06148cf16505643cd2108386
+-- 
+2.45.2
 
