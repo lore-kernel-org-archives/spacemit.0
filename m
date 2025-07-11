@@ -1,222 +1,156 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB562F5C35
-	for <spacemit@lists.linux.dev>; Thu, 10 Jul 2025 17:51:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7BC21CFF6;
+	Fri, 11 Jul 2025 09:20:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752169885; cv=none; b=Oz07UioQLqhaWMj1AP41MXP1MgEASWsovTcLm5M+FK8WUwFfkLocdflF6lAUXFeCUlIW4SzThjtn9FTaO21/DfAT7I8j/yE4iLOe8ii9nxgUHw7uOdOII9bg5CirH3LQM/Pq9QAXIKcsYAvNlDEmWNttwkkgeGMrbs+JfGPTXo8=
+	t=1752225654; cv=none; b=lsf+B8Oj4xZQ7qd5XJUWYSc0T08UWhp/yDaKzQjukTufxdeHxxwX+bSnaNv14aQzgSx3NGn7wa0PCx9feeqRxAsyXm/LtS4qdkc3FoIgMqdaPPYs34N07ovKBBT6rS0J3DDOG+Vz0OZRwOJ9Dasntn0xSjV/AXCh0jJx3OO71d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752169885; c=relaxed/simple;
-	bh=WGruvn+Gqs/wHzBEiTs0RVm377PpbfSqb1Lgjf4ooI8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOlaa1aHTpqDKCjI+6Bc9t2oGxD68P7bC7Uyx0M0iiZ6dgWxjqaHGNwdxaAoxi7ryAolfLHRau9+jTFE1L0dbQNLjyfLZ5R+K1u5QCdX5z43stNxPZJwcTbkRdM1bZT7UC//mtoNdSAvA7b+QoOTbJI4piLAf6QUt3u82fKZbD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=wy8HZX3s; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1752225654; c=relaxed/simple;
+	bh=ljGZUkwu7/bMzuB6R6jei6eeG2QtIMDml2mCoGRDTj8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CsRA2NXxpy35OWj7VzjmFPzXY6k9OB8avMJbQz3VYwNAHi51DCGaBUQrgIW3WgAPdg2mb1HgvDmLw4HKVfBam41u+Znoq70Hacng16/vBfBsD1L7ZXtCglQfmVJrMNXaQdMYALSbcdEU4ggKXzzkuhiMm6sgTLudpMWggQcXnAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VY4pYBtN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="wy8HZX3s"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7d9f5bf544cso137743285a.0
-        for <spacemit@lists.linux.dev>; Thu, 10 Jul 2025 10:51:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1752169883; x=1752774683; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ihUO+G2zPvFD7djd8+4VxSPuuLI+GNqieXaQtnBxio4=;
-        b=wy8HZX3sPE2XLYu1fD5L6SmIqusJJMgVqSPMtm1/V2loLcT+7a5KK6eiT4FFvL5/pw
-         ujAEU+Q3MRBr/CwPykJqfoCiQy7kQEmtH5W7D89pROOson+lfmaqbQmH0AUVc2ias1vN
-         HpTx+F574QKV97D/R9J5jFV9CoNZKLeu1GdhN/bfcjIOwRDYiPaeuNq3AndCvPM3NrtG
-         k+eC9CbqGOnHQyJNE9xB5pB1EYP8AO0YcT+DJcTc3MyJqSblQZIfjXmxw2Mg6KFy7iLn
-         iAUw7nIY6lqN/qf/oSJhcu6KtGHIdy67g9D74LUVwCaOQpmsIKx36uoCDQ28E4kIpdIG
-         j6cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752169883; x=1752774683;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ihUO+G2zPvFD7djd8+4VxSPuuLI+GNqieXaQtnBxio4=;
-        b=Wz31gCvNRQxupLDMv712Shn2cjNNFsrfCuKGVRGZJrGZCTW/asy4XBdVYkDs1KqHUg
-         UObchZcRcwe07kIGw4Q/ilcgyGLn+cP5R33hc6Hm5ET567FwqZYdsV8Id1gl6YYTDDoG
-         AWxDyhBeLH1F0rWEOeIAk0qRZd0A3h/UeCq4oN7oDImKMSlmK9XCIc56HJmCYVcjEP5j
-         OlmXc7NsRJ1Thu0q+cKG3fJxxCEKNPuVo9UxM7CtQs5QjWvfP9XQXScn/jDSH37fI0gO
-         XXU3gABQk9a5okg3tKrIWXt6JxCSyGUnDw6wfIwvvFOQ4jEimTGMp7lGQfvil7nyZojm
-         8bDg==
-X-Forwarded-Encrypted: i=1; AJvYcCXaYKSQJz0OpUY7h199HBYEWBka9TsReTN+8G3XD1fZ19ksdl5LSqoY26MQP7f4AJ+dPD1CHavQqg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxLKEzYVsnYW+Acaxq2A0lRl5dpTdFMW8/c7TIVu2zoISerP33d
-	CYuE3AED6BFhNSyeTW3H8c8rjR8yLChXJbNfYhdMbu0ozW94F88xuMGdbg0+4y+uj1o=
-X-Gm-Gg: ASbGnctvjXcHn9jbLz0X3XUYsF8xj7XHTRMo902pE1uHBrHAF+dJirGea1XuhYKeCfN
-	k99TUA/q+GxPhi6e7+Bdeb8eLCIkcKqHVO/RIs3Pf44Vthex2KGrcseeTqBlxDbir+xK64pbarf
-	hHlb014dEOTPsloYic1PVsT0WcdadnZ0Csyv8zWiSjKRH/Cr8hLxNcDoYYNANc3b4UMBEj0lPh0
-	SWi15lOh+AFL/L8Cbizo/EM2qfRPEI2yff5AuV7eTrJFvgH8RvuRE28643WSiwdEavuH2ZxZYmf
-	zXye/CHhg5xMYO5LyCvRKWD4jlJ7P5ncU7LigegbvdbbtzC2W8AJhjDC/Xq+YDMLJMOUySHruRK
-	x6c0CS7VuBeyxujlzuassZAc3Tx6lom05Ss1J1jTRE6jGtQ==
-X-Google-Smtp-Source: AGHT+IEoaJ/MKPD+CK7o2MydxVCmaO05jGvY7/XoDfctFPCiw8+3wLCGeJ2afHZxnC3BYh2lChbupQ==
-X-Received: by 2002:a05:620a:4450:b0:7d6:f801:ed52 with SMTP id af79cd13be357-7dde9b5ef8amr61941285a.2.1752169882818;
-        Thu, 10 Jul 2025 10:51:22 -0700 (PDT)
-Received: from localhost.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a9edeee300sm11165941cf.73.2025.07.10.10.51.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 10:51:22 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: lee@kernel.org,
-	lgirdwood@gmail.com,
-	broonie@kernel.org,
-	alexandre.belloni@bootlin.com,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org
-Cc: mat.jonczyk@o2.pl,
-	dlan@gentoo.org,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	troymitchell988@gmail.com,
-	guodong@riscstar.com,
-	linux-rtc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v8 8/8] riscv: dts: spacemit: define regulator constraints
-Date: Thu, 10 Jul 2025 12:51:06 -0500
-Message-ID: <20250710175107.1280221-9-elder@riscstar.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250710175107.1280221-1-elder@riscstar.com>
-References: <20250710175107.1280221-1-elder@riscstar.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VY4pYBtN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD17C4CEF5;
+	Fri, 11 Jul 2025 09:20:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752225652;
+	bh=ljGZUkwu7/bMzuB6R6jei6eeG2QtIMDml2mCoGRDTj8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VY4pYBtN8lnxbpJ+5q/R4BGHr6JoZIz+Bn79H9uX3gcWEz1rlmbz0dIthc4/2AaS/
+	 X9o1EoUnXv31C/HJIy58EWfCPU3L0DZXPBNRTZL2zKyB0ylDbsYWqXjKWVEkaWGws6
+	 yXXFyeY9Pm/A0xHn70Sd436+USpK9YXf9M0OUDb4fBTl0H16RIeL7Y8aWlFLf/83fB
+	 xMWmNmN09av7ZlmccUbm5vIBPPUwqmcisWoMvVqEK40rVmkp/lqA2VfJpWE4TYlMNB
+	 NHC34a+NZAaECbNqKx8GztyEjC7nzAn68rbHzn1P6jltkPy05x2xKBOgONT8in2Y4U
+	 HVyP4hLKvjrZg==
+Date: Fri, 11 Jul 2025 11:20:48 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH] i2c: spacemit: configure ILCR for accurate SCL frequency
+Message-ID: <bf6nkxdfctgz2tacf3vm6tv4qhd72vbqj52gu6kt2fc5erltkw@nufl7i3bddkb>
+References: <20250710-k1-i2c-ilcr-v1-1-188d1f460c7d@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250710-k1-i2c-ilcr-v1-1-188d1f460c7d@linux.spacemit.com>
 
-Define basic constraints for the regulators in the SpacemiT P1 PMIC,
-as implemented in the Banana Pi BPI-F3.
+Hi Troy,
 
-Signed-off-by: Alex Elder <elder@riscstar.com>
----
- .../boot/dts/spacemit/k1-bananapi-f3.dts      | 104 ++++++++++++++++++
- 1 file changed, 104 insertions(+)
+> - #include <linux/clk.h>
+> - #include <linux/i2c.h>
+> - #include <linux/iopoll.h>
+> - #include <linux/module.h>
+> - #include <linux/of_address.h>
+> - #include <linux/platform_device.h>
+> +#include "linux/bits.h"
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index a1c184b814262..83907cc1d5ccf 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -70,7 +70,111 @@ pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
- 		interrupts = <64>;
-+		vin-supply = <&reg_vcc_4v>;
- 		status = "okay";
-+
-+		regulators {
-+			buck1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3300000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			aldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			aldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			dldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo7 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+		};
- 	};
- };
- 
--- 
-2.45.2
+this should be <linux/bits.h>
 
+> +#include <linux/clk.h>
+> +#include <linux/clkdev.h>
+> +#include <linux/clk-provider.h>
+> +#include <linux/i2c.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/module.h>
+> +#include <linux/of_address.h>
+> +#include <linux/platform_device.h>
+
+Is the diff a bit noisy or am I failing to see some differences?
+
+>  /* spacemit i2c registers */
+>  #define SPACEMIT_ICR		 0x0		/* Control register */
+>  #define SPACEMIT_ISR		 0x4		/* Status register */
+>  #define SPACEMIT_IDBR		 0xc		/* Data buffer register */
+> +#define SPACEMIT_ILCR		 0x10		/* Load Count Register */
+>  #define SPACEMIT_IBMR		 0x1c		/* Bus monitor register */
+
+...
+
+> +static int spacemit_i2c_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+> +				unsigned long parent_rate)
+
+here the alignment is a bit off.
+
+> +{
+> +	struct spacemit_i2c_dev *i2c = container_of(hw, struct spacemit_i2c_dev, scl_clk_hw);
+> +	u32 lv, lcr;
+> +
+> +	lv = DIV_ROUND_UP(parent_rate, rate);
+
+do we want to sanity check the lv value here?
+
+> +	lcr = readl(i2c->base + SPACEMIT_ILCR);
+> +	if (i2c->mode == SPACEMIT_MODE_STANDARD) {
+> +		lcr &= ~SPACEMIT_LCR_LV_STANDARD_MASK;
+> +		lcr |= lv << SPACEMIT_LCR_LV_STANDARD_SHIFT;
+> +	} else if (i2c->mode == SPACEMIT_MODE_FAST) {
+> +		lcr &= ~SPACEMIT_LCR_LV_FAST_MASK;
+> +		lcr |= lv << SPACEMIT_LCR_LV_FAST_SHIFT;
+> +	}
+> +	writel(lcr, i2c->base + SPACEMIT_ILCR);
+> +
+> +	return 0;
+> +}
+> +
+> +static long spacemit_i2c_clk_round_rate(struct clk_hw *hw, unsigned long rate,
+> +				unsigned long *parent_rate)
+
+Alignment.
+
+> +{
+> +	u32 lv, freq;
+> +
+> +	lv = DIV_ROUND_UP(*parent_rate, rate);
+> +	freq = DIV_ROUND_UP(*parent_rate, lv);
+> +
+> +	return freq;
+> +}
+> +
+> +static unsigned long spacemit_i2c_clk_recalc_rate(struct clk_hw *hw,
+> +						unsigned long parent_rate)
+
+alignment.
+
+> +{
+
+...
+
+> @@ -519,15 +636,13 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+>  		dev_warn(dev, "failed to read clock-frequency property: %d\n", ret);
+>  
+>  	/* For now, this driver doesn't support high-speed. */
+> -	if (!i2c->clock_freq || i2c->clock_freq > SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
+> -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+> -			 i2c->clock_freq, SPACEMIT_I2C_MAX_FAST_MODE_FREQ);
+> -		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
+> -	} else if (i2c->clock_freq < SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+> -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+> -			 i2c->clock_freq,  SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ);
+> -		i2c->clock_freq = SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ;
+> -	}
+> +	if (i2c->clock_freq > SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ &&
+> +	    i2c->clock_freq <= SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
+> +		i2c->mode = SPACEMIT_MODE_FAST;
+> +	else if (i2c->clock_freq && i2c->clock_freq <= SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ)
+> +		i2c->mode = SPACEMIT_MODE_STANDARD;
+> +	else
+> +		return -EINVAL;
+
+Should we print an error here? And how likely is this case to
+happen? Perhaps we can force the mode even if the frequency is
+off and move forward instead of forcing the failure.
+
+Andi
+
+>  
+>  	i2c->dev = &pdev->dev;
