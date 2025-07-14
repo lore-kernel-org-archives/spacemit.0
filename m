@@ -1,86 +1,195 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F61E37160;
-	Sun, 13 Jul 2025 17:06:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF6D2AD3E
+	for <spacemit@lists.linux.dev>; Mon, 14 Jul 2025 01:12:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752426414; cv=none; b=broDBO0OtuRDYH8I15B3jbUHu2G3b5RujT0fk3nSPierTXWCfSA85d6k+1YuGJDZMx3P5lp6qvxs3f845TIS7OhErsJTkzGkKxCeZ2zPCcQxdHrQj5scyC59yjnV0/ECgDXmiLPevkNSKXnvThzs7Asq4/dJjWEN8qsFFlwZipg=
+	t=1752455546; cv=none; b=COKBGTSZ/dZAWCMl3EZvUQKLtYM0m976XFqNOacFSzruj/TWOFm50ZFJGkYYM5jL+6s1LMBsT9h7gZWUneCj5FCFYxSBfZi0k+TAQ4MD80QSRsgSu98AQm51SoXJyZwUf+XpTIr9sszzo3h/flVbUntCob2WTe9Mue/381CP8Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752426414; c=relaxed/simple;
-	bh=OEZ7eLIEFl1LPSh8Fr+hYgEXUccuy8XYoLUfvat4/l0=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=jgj6oIhS/espuEZOIxXYKoK0uHqObdIDXb0RhPWUSFqwgXbBhz0u5KNrdLXqN9k3128IZf5qrv9W28iLN7Y1bL/YPDlFcvSauEPAdQMNAKATQqXoTHSfVGz2ihSMA3Zw7RLQv/mmshGwnJGtgyjOjiISUCmGqb1IzllgkGdSEPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BLiOSK48; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752455546; c=relaxed/simple;
+	bh=8IpIMTppj7RNZiLYT1pD+ZGIOcFGOOuJZpusmqnD4KY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LyN5jl/d8d+wGzklXjoXNTOvGSTauOmLomaG6N7XNrQJluTqaV1DcYr5mw+2VN1cTrlpIYGzQNdJrG5S/W2RfadWTXjXCUodLARsMbsXbvB+WdzmuHgKdGT7QuFplOaUYrc862xn+hxyqq+uuZibGd7aaozNEBzsmaPRGy6vo6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=BBPlxzk9; arc=none smtp.client-ip=54.243.244.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BLiOSK48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011A0C4CEE3;
-	Sun, 13 Jul 2025 17:06:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752426414;
-	bh=OEZ7eLIEFl1LPSh8Fr+hYgEXUccuy8XYoLUfvat4/l0=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=BLiOSK48+OPpf6pNNiM/B9DEKnRTymJhOdyHgPRpL5CQ12I5bCS1g+GSDNJMuwOhh
-	 04s0XFVwRNpQhZhaNW0eVwppGHfHgKDbPOMr5+ezfVrdicIKC1roDcPWkj2q/hGC04
-	 QIQDyRDKRjrqx++BtIlqg9Jk9unSdJH+1UyS7SWls1uwYgANaB5Q9NmVPFUl7ToigZ
-	 tP/dcYq6q38u81PTDhDuTsetaVNTY48gsA4giD91n4/MSe1n1uEhz5mEyL08mQVxSa
-	 8eXMEaH+TkU16x6n1xl3I44ENC4aAFXazlaq1Leku83ELNbYjWIDVPBYCtXNgr1W/y
-	 BnKnk9MDPk7HA==
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="BBPlxzk9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1752455472;
+	bh=Amtu/BMQ4xmWdYjBSji486U4RjhuzbYA7jha03pBhjg=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=BBPlxzk9Adp+ew3JynSnWvYMw4IvBcfdrKJfvabsUdK+/1Qja0Yzxrw+oNX7zSIiQ
+	 MxFfC4+PGANzE3Pg70aYSynMuQrbTjfiTKs/bGNfmCaX6gSll+k95DzHnfewLwmYZS
+	 WHOo4pT/Vc/44lzj/NUtuE1T30vCYszP+gSNEDqE=
+X-QQ-mid: esmtpgz11t1752455466t98e6bb1f
+X-QQ-Originating-IP: sb1Z4YGB401YU+EpphLSHmw9KA7oI9snJgML1SxSMyk=
+Received: from = ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 14 Jul 2025 09:11:05 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 4221218909025609194
+EX-QQ-RecipientCnt: 7
+Date: Mon, 14 Jul 2025 09:11:05 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Andi Shyti <andi.shyti@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>, linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH] i2c: spacemit: configure ILCR for accurate SCL frequency
+Message-ID: <54384E7E7AD6D77C+aHRZKYHMHTiHXPWW@LT-Guozexi>
+References: <20250710-k1-i2c-ilcr-v1-1-188d1f460c7d@linux.spacemit.com>
+ <bf6nkxdfctgz2tacf3vm6tv4qhd72vbqj52gu6kt2fc5erltkw@nufl7i3bddkb>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20250709011528-GYA487904@gentoo>
-References: <20250709011528-GYA487904@gentoo>
-Subject: Re: [GIT PULL] clk: spacemit: add changes for v6.17
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, Alex Elder <elder@riscstar.com>, Philipp Zabel <p.zabel@pengutronix.de>, Haylen Chu <heylenay@4d2.org>, linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-To: Yixun Lan <dlan@gentoo.org>
-Date: Sun, 13 Jul 2025 10:06:52 -0700
-Message-ID: <175242641282.1004940.6776191948188477776@lazor>
-User-Agent: alot/0.11
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bf6nkxdfctgz2tacf3vm6tv4qhd72vbqj52gu6kt2fc5erltkw@nufl7i3bddkb>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: NSEFX6u+4l+KDZ9Z+o4732aEfDt7l3MfBCgkh3FgU6RdpVeVwB2wXZV/
+	PPMLlq/OSDUd+1z6aSYEZHp+aQ2YnY1omlVxMV70bSSVm8wH0ihSaAclGdQg74xadApPykE
+	oHqVdHpuD7vtS6gpP7LVsQkcuvwgEuuTKVuWDrMLy2BKFC9Ry26j7JzjirzS2GIbK6KHi2x
+	9h2yQkhFVZ4FA4myRI13VKXl7qCgn1Owmop8wF7k942Bnh3QNmV3jJ6S5v+qFhOL256cx1N
+	Nva59Pgw8/pzt7KtKk6Gwau90Op/zz9YRQgcZFNh4r1VgLOQHSHPbhoZn7OpGUz4kPVrPig
+	hrHpsBhlEhHuzNfDqtHrYDqm2U/RIVQsg+vrDzNBqTRS0dyCE6mKKrsEPkAFHD9YUUnzTlu
+	zIeRvVz67LXjBSUAzkNSDDnrl56VUOEeZdNl1or6WO2+TgDsoehL75BS4wPENaupMEorDXU
+	O3rU+JdcFrHCOMxuu+KCfr/RjnokJj2ilYHTtg4WbFHXWlQ4in+oEb/6NX5rh48oorqgHKo
+	LyCQ7zJ/AbdO8zvWg3YxCRx1lRjziBGJHgtetvjcJTEIKkW8c3UhPcj7/V10yYEw1eoZjBn
+	23KfHzef2UXOTY8ARALNGrNh9aewNxUmTsrtdANCvdPi0vmrJ36CexM12KDowHIHcVLIEYT
+	vgkkGkB9hm2NT9p1wIEdm40nM7M6wqkZUAxXQQKnk3Lmzobbkc9fNMW8BjkPosuN2SXhxpt
+	eimSeAlX6QgmxsZ2O1q5emhHvNKmmq3NAWYkLgUGCw4rAMhhDT3sFr24FEQk8pzWdCVdzPm
+	TmKEGCXfAvmZs48U3HrC4gn1lpVJJtCfvr1UYws4PMmpWTLJn+7C7FDpZS6A4GgT4/9g+0Q
+	IpdruTdGlI+Qjw4XCejH2nQ2oxQrQhjDlT+h1LPbGuz8Yw2tqEZaJ1t4XzNHqy6IO/y2s1R
+	tJ+1XmLwlj+Vazh8T6QPXgOiHQEduxH3hdUh3JGqgEuo2NERxg500KmkP6AvIrHe6/f4=
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-RECHKSPAM: 0
 
-Quoting Yixun Lan (2025-07-08 18:15:28)
-> Hi Stephen,
->=20
->  Here is clock changes for v6.17, please pull.
->=20
->  Basically, what we've added here are two changes:
->=20
->   1) Mark pll1_d8 clock as critical to prevent it from being shut down
->      in the resource withdrawal path once the probe phase fails
->=20
->   2) Extend K1 clock framework to support reset auxiliary devices, and
->      also route the reset driver via clock tree to avoid shared tags,
->      please see discussion here[1] with reset maintainer for more
->      details if needed.
->=20
->   Thank you!
->=20
->=20
-> Link: https://lore.kernel.org/r/3732050b6b756868543012c1a1cebbe7cce74d61.=
-camel@pengutronix.de [1]
->=20
-> Yixun Lan
->=20
-> The following changes since commit 19272b37aa4f83ca52bdf9c16d5d81bdd13544=
-94:
->=20
->   Linux 6.16-rc1 (2025-06-08 13:44:43 -0700)
->=20
-> are available in the Git repository at:
->=20
->   https://github.com/spacemit-com/linux tags/spacemit-clk-for-6.17-1
->=20
-> for you to fetch changes up to c79550f69f0f21be069385c20cd6490b862ba2a5:
->=20
->   Merge tag 'spacemit-reset-for-6.17-1' of https://github.com/spacemit-co=
-m/linux (2025-07-07 22:07:15 +0800)
->=20
-> ----------------------------------------------------------------
+Hi Andi, Thanks for your review!
 
-Thanks. Pulled into to clk-next
+On Fri, Jul 11, 2025 at 11:20:48AM +0200, Andi Shyti wrote:
+> Hi Troy,
+> 
+> > - #include <linux/clk.h>
+> > - #include <linux/i2c.h>
+> > - #include <linux/iopoll.h>
+> > - #include <linux/module.h>
+> > - #include <linux/of_address.h>
+> > - #include <linux/platform_device.h>
+> > +#include "linux/bits.h"
+> 
+> this should be <linux/bits.h>
+> 
+> > +#include <linux/clk.h>
+> > +#include <linux/clkdev.h>
+> > +#include <linux/clk-provider.h>
+> > +#include <linux/i2c.h>
+> > +#include <linux/iopoll.h>
+> > +#include <linux/module.h>
+> > +#include <linux/of_address.h>
+> > +#include <linux/platform_device.h>
+> 
+> Is the diff a bit noisy or am I failing to see some differences?
+I removed whitespaces
+
+> 
+> >  /* spacemit i2c registers */
+> >  #define SPACEMIT_ICR		 0x0		/* Control register */
+> >  #define SPACEMIT_ISR		 0x4		/* Status register */
+> >  #define SPACEMIT_IDBR		 0xc		/* Data buffer register */
+> > +#define SPACEMIT_ILCR		 0x10		/* Load Count Register */
+> >  #define SPACEMIT_IBMR		 0x1c		/* Bus monitor register */
+> 
+> ...
+> 
+> > +static int spacemit_i2c_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+> > +				unsigned long parent_rate)
+> 
+> here the alignment is a bit off.
+> 
+> > +{
+> > +	struct spacemit_i2c_dev *i2c = container_of(hw, struct spacemit_i2c_dev, scl_clk_hw);
+> > +	u32 lv, lcr;
+> > +
+> > +	lv = DIV_ROUND_UP(parent_rate, rate);
+> 
+> do we want to sanity check the lv value here?
+Yes, I'll check it in the next version.
+
+> 
+> > +	lcr = readl(i2c->base + SPACEMIT_ILCR);
+> > +	if (i2c->mode == SPACEMIT_MODE_STANDARD) {
+> > +		lcr &= ~SPACEMIT_LCR_LV_STANDARD_MASK;
+> > +		lcr |= lv << SPACEMIT_LCR_LV_STANDARD_SHIFT;
+> > +	} else if (i2c->mode == SPACEMIT_MODE_FAST) {
+> > +		lcr &= ~SPACEMIT_LCR_LV_FAST_MASK;
+> > +		lcr |= lv << SPACEMIT_LCR_LV_FAST_SHIFT;
+> > +	}
+> > +	writel(lcr, i2c->base + SPACEMIT_ILCR);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static long spacemit_i2c_clk_round_rate(struct clk_hw *hw, unsigned long rate,
+> > +				unsigned long *parent_rate)
+> 
+> Alignment.
+> 
+> > +{
+> > +	u32 lv, freq;
+> > +
+> > +	lv = DIV_ROUND_UP(*parent_rate, rate);
+> > +	freq = DIV_ROUND_UP(*parent_rate, lv);
+> > +
+> > +	return freq;
+> > +}
+> > +
+> > +static unsigned long spacemit_i2c_clk_recalc_rate(struct clk_hw *hw,
+> > +						unsigned long parent_rate)
+> 
+> alignment.
+> 
+> > +{
+> 
+> ...
+> 
+> > @@ -519,15 +636,13 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+> >  		dev_warn(dev, "failed to read clock-frequency property: %d\n", ret);
+> >  
+> >  	/* For now, this driver doesn't support high-speed. */
+> > -	if (!i2c->clock_freq || i2c->clock_freq > SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
+> > -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+> > -			 i2c->clock_freq, SPACEMIT_I2C_MAX_FAST_MODE_FREQ);
+> > -		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
+> > -	} else if (i2c->clock_freq < SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+> > -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+> > -			 i2c->clock_freq,  SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ);
+> > -		i2c->clock_freq = SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ;
+> > -	}
+> > +	if (i2c->clock_freq > SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ &&
+> > +	    i2c->clock_freq <= SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
+> > +		i2c->mode = SPACEMIT_MODE_FAST;
+> > +	else if (i2c->clock_freq && i2c->clock_freq <= SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ)
+> > +		i2c->mode = SPACEMIT_MODE_STANDARD;
+> > +	else
+> > +		return -EINVAL;
+> 
+> Should we print an error here? And how likely is this case to
+> happen? Perhaps we can force the mode even if the frequency is
+> off and move forward instead of forcing the failure.
+Yes we can force the mode to fast.
+
+        - Troy
+> 
+> Andi
+> 
+> >  
+> >  	i2c->dev = &pdev->dev;
+> 
