@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A40B67F
-	for <spacemit@lists.linux.dev>; Tue, 15 Jul 2025 01:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BCB4C83
+	for <spacemit@lists.linux.dev>; Tue, 15 Jul 2025 01:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752541716; cv=none; b=HTxnSnUUfgiXZtoC51aQ5vuAs6pyAZTMeeeyJS5npkjUfjn3KHMpdSfRuq5ziA3qy+wnPaggiaC+AaF5JL8Vz2J0uTI1onkwtUfOyUxXNtyffZ7KjY+PyCHd9uxhj+hjwSZej7eSru8y3Jo0R0Oxtu43JFLceYV9uQIZkZuEBpI=
+	t=1752543741; cv=none; b=b9LMUNu9+l57u/WEin8mcE9AkwPFL8QeeyEpf9ULQJWc7ekQil2Ly/0H5JXr7UJpOGVlEYIpnnnIqIHSCkWQIwkcfjMkmSA2FkQfHXg7VIQba4D2C2PBBpI0YAjC3nlxhaZa02nv+DxsYL1sQIheTpppYYOeyDnsrTCxlcPmzcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752541716; c=relaxed/simple;
-	bh=Fu5ixB0hPokbF97TZn3PHSr6gdbMKZ9P5xNxYJ48qfA=;
+	s=arc-20240116; t=1752543741; c=relaxed/simple;
+	bh=BRWhdu9BZAZMFd2tUBpnf/IlIUgJ08AuKoejisfBhqE=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=kAWS5wnLdzsQXrOTCNbzKRFjMVgUmEWVey+VJDepognuA8AWGE4m9WB0I4ewtpa+LHtypUpTQOU0Oj2w1lOvUWEh5v8lZl1dh6EeIe3skC6le/nsjVofJ2z3OsetlldapnMqm0TQKW/nAhNkI9Gc/XGGVmgh8f1dxqTxtrxGXbg=
+	 Content-Disposition; b=jAvrgT6sfht3y3O7T5RwRVksQq5s0P8PLndYh8oAkO4XNV9vhU6cQ3gofngPriBdAP98L3rGWbYieW+0ENHQ2aIjGC5dhCjXRPI3um+tBmdxNuqF3qduWRZWMDcmd6UgGRKDnIKCsYTh6VFgnNF6KSjBgaqX8JxuUno+NIWNjS4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,16 +19,16 @@ Received: from localhost (unknown [116.232.48.207])
 	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id AC25E340E39;
-	Tue, 15 Jul 2025 01:08:33 +0000 (UTC)
-Date: Tue, 15 Jul 2025 01:08:22 +0000
+	by smtp.gentoo.org (Postfix) with ESMTPSA id DEDD1340E65;
+	Tue, 15 Jul 2025 01:42:18 +0000 (UTC)
+Date: Tue, 15 Jul 2025 01:42:14 +0000
 From: Yixun Lan <dlan@gentoo.org>
 To: soc@kernel.org, Arnd Bergmann <arnd@arndb.de>
 Cc: Alex Elder <elder@riscstar.com>, Guodong Xu <guodong@riscstar.com>,
 	Vivian Wang <wangruikang@iscas.ac.cn>, spacemit@lists.linux.dev,
 	linux-riscv@lists.infradead.org
-Subject: pll
-Message-ID: <20250715010822-GYA539814@gentoo>
+Subject: [GIT PULL RESEND] RISC-V SpacemiT Devicetrees for v6.17
+Message-ID: <20250715014214-GYA540030@gentoo>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,6 +43,9 @@ Hi Arnd,
   Please pull SpacemiT's device tree changes for v6.17,
 Note, I've included an immutable shared tag of reset-binding
 in this PR.
+
+  Sorry, I've missed the email title in previous PR, so resend
+to fix this ..
 
   Thanks
 
@@ -92,4 +95,3 @@ Yixun Lan (2):
  arch/riscv/boot/dts/spacemit/k1.dtsi               | 485 ++++++++++++++++-----
  include/dt-bindings/clock/spacemit,k1-syscon.h     | 141 ++++++
  5 files changed, 558 insertions(+), 113 deletions(-)
-
