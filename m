@@ -1,50 +1,40 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E522D239D;
-	Tue, 15 Jul 2025 03:45:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EE521C9F5;
+	Tue, 15 Jul 2025 10:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752551136; cv=none; b=nKo+i3RiaDKFN2dTGfisTfRXnZyDtZivvYaRzmrbRSuf93ovHQipItUrC9xgoVb8TFoYqlznQ+oxQhxfxrmu2BrsSNgZK8QwT4YloeQv0NffpI9Wg36mzY3smJaJ4XzElWFHBztRsRgSzlwIPrmTgkNb2RW5GYEPvoSjZ2qPjDY=
+	t=1752575143; cv=none; b=K00NgEQp07u3MrGDowCFxawODg9i/Qy4BCswyEyIVkRNo/5tN4wcir5HgiIE+rEwM1WjqYUIyQZ2afuFTgZZ8vvtaQWwrdA1b/SZCPmTHi5u9Ec/b9vtA0yMLvIqVqaRi7gBPsIbmqjXxXAD5602furInqZM6xOvaZMIXIdqdkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752551136; c=relaxed/simple;
-	bh=elGNN/7GREr5t/sTwb+Cm6955F1QyvllRbGLbNSu6vA=;
+	s=arc-20240116; t=1752575143; c=relaxed/simple;
+	bh=wwa8tOAdGrPcbMj0Jsm5cHaAzQEuyKFmUHesGXCUd7k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mh+DD+ssXRVnK3FQm524Xfsc8pZg0IHL6DHjg+wB70zDmoM1VZvJdCFwm3LSg2falzHqTs9Lvf4w09/wJORo/Dq3IjigCu1uyw34avyfbe+1G+HTTBUAeEx5KLQ0vRMI4MUTApiVpS9CTNfp1tsXrDluZzgH/jxn0RHLAOrEJQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jcY3U8Hx; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jcY3U8Hx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9F2C4CEE3;
-	Tue, 15 Jul 2025 03:45:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752551134;
-	bh=elGNN/7GREr5t/sTwb+Cm6955F1QyvllRbGLbNSu6vA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jcY3U8Hxj+NyN3DitDeH/2XPSk2vRa49Q01aMRN9C/L4A1tTY96j8+Vf1I78Yfghu
-	 D8y5521xRvUwssBl9afbadX+xI0UdBW0amxz7p3HpOPzn5d5Yomuwm0ed9UHFXnxCp
-	 JK/t/oec1rZhd2uDWJPogmwIk6oNe/mfOQ6fpfa8q53PHMQZ09K/Uj47DGZa+wrlU0
-	 XUqbyB0aBbK6sS2Xn+PvSWIFkxkfRZpSooexnkQAR5ZqLmYb1CHDfK88nu8u+7WA8q
-	 9qq9BZZkdQZdzJzno2R4SuOY2E+Wu0VDH3vBLYYq2DxcMbzgL0hbbgib2q7frsK0Co
-	 MT+60iMC4rb+w==
-Date: Mon, 14 Jul 2025 22:45:33 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: dmaengine@vger.kernel.org, Albert Ou <aou@eecs.berkeley.edu>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Alex Elder <elder@riscstar.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Conor Dooley <conor+dt@kernel.org>, Alexandre Ghiti <alex@ghiti.fr>,
-	Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	linux-riscv@lists.infradead.org,
-	Duje =?utf-8?Q?Mihanovi=C4=87?= <duje.mihanovic@skole.hr>
-Subject: Re: [PATCH v3 1/8] dt-bindings: dma: Add SpacemiT K1 PDMA controller
-Message-ID: <175255113305.1485.18050987625765048681.robh@kernel.org>
-References: <20250714-working_dma_0701_v2-v3-0-8b0f5cd71595@riscstar.com>
- <20250714-working_dma_0701_v2-v3-1-8b0f5cd71595@riscstar.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=YWOE+2WrQ8U7loGmtMGMRhckCYejoJ1H9acV1ofQvwKI2Vo55O5kVBO8OWfSDtBKZ3FNZZa68ae8fKHONftqiy2ebLgug7aLqIm+02/qaTWLA7yhd7trTK9qAamlc9JnCUCSgSVDfJ0n7xfJ6jg+E+gZH/t77jwW1K01XEspsq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.207])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 2900F340DB0;
+	Tue, 15 Jul 2025 10:25:38 +0000 (UTC)
+Date: Tue, 15 Jul 2025 18:25:34 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	paul.walmsley@sifive.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	palmer@dabbelt.com, skhan@linuxfoundation.org,
+	linux-kernel-mentees@lists.linux.dev, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add OrangePi RV2 board device
+ tree
+Message-ID: <20250715102534-GYA542593@gentoo>
+References: <20250711183245.256683-1-hendrik.hamerlinck@hammernet.be>
+ <20250711183245.256683-3-hendrik.hamerlinck@hammernet.be>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -53,20 +43,104 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250714-working_dma_0701_v2-v3-1-8b0f5cd71595@riscstar.com>
+In-Reply-To: <20250711183245.256683-3-hendrik.hamerlinck@hammernet.be>
 
 
-On Mon, 14 Jul 2025 17:39:28 +0800, Guodong Xu wrote:
-> Add device tree binding documentation for the SpacemiT K1 PDMA
-> controller.
+On 20:32 Fri 11 Jul     , Hendrik Hamerlinck wrote:
+> Add initial device tree support for the OrangePi RV2 board [1], which is
+> marketed as using the Ky X1 SoC but has been confirmed to be 
+> identical to the SpacemiT K1 [2].
 > 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> The device tree is adapted from the OrangePi vendor tree [3], and similar
+> integration can be found in the Banana Pi kernel tree [4], confirming SoC
+> compatibility.
+> 
+> This minimal device tree enables booting into a serial console with UART
+> output and a blinking LED.
+> 
+> Link: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-RV2.html [1]
+> Link: https://www.spacemit.com/en/key-stone-k1 [2]
+> Link: https://github.com/BPI-SINOVOIP/pi-linux/blob/linux-6.6.63-k1/arch/riscv/boot/dts/spacemit/k1-x_orangepi-rv2.dts [3]
+> Link: https://github.com/orangepi-xunlong/linux-orangepi/tree/orange-pi-6.6-ky [4]
+> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
 > ---
-> v3: New patch.
-> ---
->  .../devicetree/bindings/dma/spacemit,k1-pdma.yaml  | 68 ++++++++++++++++++++++
->  1 file changed, 68 insertions(+)
+>  arch/riscv/boot/dts/spacemit/Makefile         |  1 +
+>  .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 43 +++++++++++++++++++
+>  2 files changed, 44 insertions(+)
+>  create mode 100644 arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> 
+> diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
+> index 92e13ce1c16d..152832644870 100644
+> --- a/arch/riscv/boot/dts/spacemit/Makefile
+> +++ b/arch/riscv/boot/dts/spacemit/Makefile
+> @@ -1,3 +1,4 @@
+>  # SPDX-License-Identifier: GPL-2.0
+>  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
+>  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
+> +dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> new file mode 100644
+> index 000000000000..8313f9589cd2
+> --- /dev/null
+> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> @@ -0,0 +1,43 @@
+> +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+..
+> +/* Copyright (c) 2023 Ky, Inc */
+Copyright should cover current year, which is 2025..
+what's "Ky" stand for? Can you give a full description here
+
+> +
+> +/dts-v1/;
+> +
+> +#include "k1.dtsi"
+> +#include "k1-pinctrl.dtsi"
+> +
+> +/ {
+> +	model = "OrangePi RV2";
+> +	compatible = "xunlong,orangepi-rv2", "spacemit,k1";
+> +
+..
+> +	memory@0 {
+> +		device_type = "memory";
+> +		reg = <0x0 0x00000000 0x0 0x80000000>;
+> +	};
+> +
+> +	memory@100000000 {
+> +		device_type = "memory";
+> +		reg = <0x1 0x00000000 0x0 0x80000000>;
+> +	};
+> +
+for the memory nodes, there are 2/4/8GB variants from the Link [1], and
+you couldn't cover all of them in one dt
+
+besides, I thought bootloader (u-boot) will populate these info, right?
+so the above nodes isn't really necessary
+
+> +	chosen {
+> +		stdout-path = "serial0";
+> +	};
+> +
+> +	leds {
+> +		compatible = "gpio-leds";
+> +
+> +		led1 {
+> +			label = "sys-led";
+> +			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_LOW>;
+> +			linux,default-trigger = "heartbeat";
+> +			default-state = "on";
+> +		};
+> +	};
+> +};
+> +
+> +&uart0 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart0_2_cfg>;
+> +	status = "okay";
+> +};
+> -- 
+> 2.43.0
 > 
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-
+-- 
+Yixun Lan (dlan)
