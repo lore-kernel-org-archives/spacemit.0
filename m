@@ -1,15 +1,15 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF60A86344
-	for <spacemit@lists.linux.dev>; Fri, 18 Jul 2025 15:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C524A2BE7D5
+	for <spacemit@lists.linux.dev>; Fri, 18 Jul 2025 15:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752851115; cv=none; b=NCXogkD4cFMUpo3SoB8PpZmUdD/jnyPOehviGh5NRndBGAtYQTi/kO4uVmpybD0uBqAHHLiO0ay9hBQm6ZkI793YDaWqM2IYmAqzT8tkMUkvG64fMfATn6oKA7i/haBzpDrvVaWAVXOQudQeidaBVnqTDhAxWRmF1GZjDDdkR4c=
+	t=1752851619; cv=none; b=bqnoHzPAb/ACetm5dFEjIQfNPKvdiqsyEFcyzMZwWh1r1Fix18KHOUdt9bjKdOAfvkSHcnsXioXveJ1X22bOgpM26zBH3eg0vrPPh6XltiSSBgKRP0btMWY0Y9acJbGrfZ080UThVOlITF6fWTD+hj+6t4dVlw0c7IFPG00sHwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752851115; c=relaxed/simple;
-	bh=z5nzeOJWQR/Lo0Neg/++bHT0b0RJvmY2gZnAWASGbw8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BscTXKVCRBHTBgheVbk+Bso38iH5BTKs10TydMoLz14cSTIZLI6AlBCFayXpSICuEfpEoXqDPPrFdkpNc42pJwKLm0eglIhURcjLLpiIHLktgh7fnRCwWa4NvDtEghTVFMRmxrl4UGe+SDadZHbvvg8k2EpQhcjovRLAJ7YUSy0=
+	s=arc-20240116; t=1752851619; c=relaxed/simple;
+	bh=Qc90R/wKlwZzydgUbeWgdwRR5Gjg0u1fsWOFnERsnQ4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hQHxAwFqqbazXXwruqSza40eh1o++Avgtzz9I1Ue+Sgv93nNxwvDnlRWqtnx0zSrbphwY7Y1Dc9biq02UrTntG3JtvxbqpeySVWsAPKdES1ZrEy0+uh/Zf28HO1c7rIgnqrNyKVly7MnFA7r4ySkC2ff5zF21/Te33QPj0B46io=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -18,12 +18,12 @@ Received: from [127.0.0.1] (unknown [116.232.48.207])
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 39350335DBA;
-	Fri, 18 Jul 2025 15:05:08 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id BF3A133BEA5;
+	Fri, 18 Jul 2025 15:13:33 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-Date: Fri, 18 Jul 2025 23:04:37 +0800
-Subject: [PATCH] dt-bindings: serial: 8250: spacemit: set clocks property
- as required
+Date: Fri, 18 Jul 2025 23:13:23 +0800
+Subject: [PATCH] riscv: dts: spacemit: uart: set dummy clock to silent dt
+ warning
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -32,66 +32,83 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250718-01-k1-uart-binding-v1-1-a92e1e14c836@gentoo.org>
-X-B4-Tracking: v=1; b=H4sIAIViemgC/x3MTQqAIBBA4avIrBtQIfu5SrSwHGsILLQiCO+et
- PwW772QKDIl6MULkW5OvIcCVQmYVxsWQnbFoKWuZaNalAo3hZeNJ04cHIcFje06MxnS3mso4RH
- J8/NPhzHnD4xyaCxkAAAA
-X-Change-ID: 20250718-01-k1-uart-binding-6a996b6e2ff2
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>, 
- devicetree@vger.kernel.org, Alex Elder <elder@riscstar.com>
-Cc: linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+Message-Id: <20250718-02-k1-uart-clock-v1-1-698e884aa717@gentoo.org>
+X-B4-Tracking: v=1; b=H4sIAJJkemgC/x3MTQqAIBBA4avErBsYhejnKtEibazBqNCKQLp70
+ vJbvJcgchCO0BUJAt8SZd8yVFmAXcZtZpQpGzTpimrVIGn0Cq8xnGjX3Xokw6Zlp8gxQc6OwE6
+ ef9kP7/sBAWU3SmIAAAA=
+X-Change-ID: 20250718-02-k1-uart-clock-0beb9ef10fe0
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Yixun Lan <dlan@gentoo.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1081; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=z5nzeOJWQR/Lo0Neg/++bHT0b0RJvmY2gZnAWASGbw8=;
- b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoemKhu7vmN4TWmEvIpf6rS0cOUqAVIxlZjiV1l
- Iw/+y0hGlOJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaHpioV8UgAAAAAAuAChp
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1624; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=Qc90R/wKlwZzydgUbeWgdwRR5Gjg0u1fsWOFnERsnQ4=;
+ b=owEBzQIy/ZANAwAKATGq6kdZTbvtAcsmYgBoemSaDXUiJarkoPAv74cbl3GPf+0St8IFpnfeS
+ +CWcnTv4zSJApMEAAEKAH0WIQS1urjJwxtxFWcCI9wxqupHWU277QUCaHpkml8UgAAAAAAuAChp
  c3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9yc2VtYW4ubmV0QjVCQUI4QzlDMzF
- CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277QwxD/9nW529zHpmqRW9pt
- C8kft28pmDPm5VspeYejobS1RqEXsDQxqc5lX2lYd77tX3pz1vD3t2PZWYrrOS3IRS7xad7xD6P
- y+8yj7TgnW9cRG3H4sQGE6wwI0bUycxeI9gUU314ZkuoESGJoEFOrS6BwrTGsuk6xSwv+SLPU5o
- fok2lvIPkefdL4y/RpxX9u7vQhrvyiwJxRrzNweXr2SztBhjMRlHf5JwwsbVmXByO8r/pm1FcRh
- nlWFXJyqPsaz7cIrewKxC2Qk/ph+CttRfEKpzU+3K2Ow9SghxklmESkSCHBM8lGSLnorzdqC8N7
- qZaxsI2hXgcWDuK4oX7+3co+EF6wrX/KIxcgk7Gr6drYLnnORKHesrq0eGaxS4Zup3DTOfIibtE
- waVgE9N15C3OMIbrDcx2Wbl9AVuaRfaSxoggmyWqfbbgre/t5/a6k5pgBsiyYh2JjhL4Q5YqDXX
- Y/vrtIMI30iYAcJBHrxNTzxeR6lK6bY4lg9cQsfh9Ch/yP81UPv8KICTo0ahjZxCkEyViM3NiIo
- AeIuFv/DKl1BMTRCF7SC1wYsrGS1rgtLQbddCyFicnCGB9X/jDjI/ihfJhX4H9zjcTo2CmyBSU8
- ZBx/ZWllNfCXF/jBInW7eMRnBAS12FyQa1c/iAC+DIJJsqIm9f1wTC5t/NH1lTneJMCQ==
+ CNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqupHWU277ZmtD/9VwLCxQcQ0hB0Tcz
+ Hiv7P4pGgYimXWcwy99P2oCnsLxUZVSyviVHcWMACml/PEvWLipk0/B5tBHIL5oj34ugP1rYR+f
+ GdF8k5YVYUYsYlIlyG+XsPfmqMDnb/EWqK5ZKibRm5ar6zHWY0rDkuv3B44sS5mtR7If+VFX+gc
+ elqsMCB3eR8BWLnY+6fN2olUi0X6n2l6AOB6IKNVA+7RS8qbPk15bUB5njopP+OtrphXMe0+GIm
+ RVquSD4+CaWl5/WEtlxP5XwUbC/x1OrGxKm4ruV5/SpB+WCgNyGHJCm/9PB9MzdyjgTmR/pcS/U
+ xazeRCa1FXY06JWQqK1MATtLzzQzOBtVaGZk5qT2otjr/AnJPLl7rtbjT3FHUlKLxO0syT76wWF
+ M1OuN1qFsWdexeFZ5k6mgzJ9lafmZhtbW5k5GM1gZe0bkcsGjjSUmXYWuxjFSzWqKoGinnSqQpU
+ eWQrx/3GfLv3WtCTCsru9iafxpxx1ugWVhHzOxsWmHlHZjpREgN511ven8nGT7cwGW/Hkgwqbsn
+ 3oYI+WMvj4SF6d2+QOWa8QmaH6gTvMebQp3Mfcnbc5Vrr88+rqdPC0669PHt/tlAJ26eb3FL20j
+ s/5ccko2FWSpp5xINaF0xTUal4UNi8N9lum6EUhcl4lAGb/GT6bF4q8VlnsDrZtIo2oA==
 X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-In SpacemiT's K1 SoC, the clocks for UART are mandatory needed, so
-for DT, both clocks and clock-names property should be set as required.
+sec_uart1 is reserved in DT, and no clock is implemented in the CCF
+framework, thus 'make dtbs_check' will eject this warning message:
+  serial@f0612000: 'clock-names' is a required property
 
-Fixes: 2c0594f9f062 ("dt-bindings: serial: 8250: support an optional second clock")
+So, adding a dummy clock to the device tree to fulfill the clock
+requirement, then silent this dt check warning.
+
 Signed-off-by: Yixun Lan <dlan@gentoo.org>
 ---
- Documentation/devicetree/bindings/serial/8250.yaml | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
-index 33d2016b65090d0df257f9780ad8d5e05f7ce798..2c7604ed2a41d029276d3ebe9a3960a8dd44a9d9 100644
---- a/Documentation/devicetree/bindings/serial/8250.yaml
-+++ b/Documentation/devicetree/bindings/serial/8250.yaml
-@@ -239,7 +239,9 @@ if:
-       contains:
-         const: spacemit,k1-uart
- then:
--  required: [clock-names]
-+  required:
-+    - clocks
-+    - clock-names
-   properties:
-     clocks:
-       minItems: 2
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index c0f8c5fca975d73b6ea6886da13fcf55289cb16c..e9b98f2a3b1cc38f569d7de336630df846cbfbe7 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -309,6 +309,13 @@ cluster1_l2_cache: l2-cache1 {
+ 	};
+ 
+ 	clocks {
++		clk_dummy: clock-dummy {
++			compatible = "fixed-clock";
++			#clock-cells = <0>;
++			clock-frequency = <0>;
++			clock-output-names = "clk_dummy";
++		};
++
+ 		vctcxo_1m: clock-1m {
+ 			compatible = "fixed-clock";
+ 			clock-frequency = <1000000>;
+@@ -556,8 +563,9 @@ clint: timer@e4000000 {
+ 		sec_uart1: serial@f0612000 {
+ 			compatible = "spacemit,k1-uart", "intel,xscale-uart";
+ 			reg = <0x0 0xf0612000 0x0 0x100>;
++			clocks = <&clk_dummy>, <&clk_dummy>;
++			clock-names = "core", "bus";
+ 			interrupts = <43>;
+-			clock-frequency = <14857000>;
+ 			reg-shift = <2>;
+ 			reg-io-width = <4>;
+ 			status = "reserved"; /* for TEE usage */
 
 ---
 base-commit: 19272b37aa4f83ca52bdf9c16d5d81bdd1354494
-change-id: 20250718-01-k1-uart-binding-6a996b6e2ff2
+change-id: 20250718-02-k1-uart-clock-0beb9ef10fe0
 
 Best regards,
 -- 
