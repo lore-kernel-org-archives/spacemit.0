@@ -1,147 +1,145 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE235202995
-	for <spacemit@lists.linux.dev>; Mon, 21 Jul 2025 11:03:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7812E55B
+	for <spacemit@lists.linux.dev>; Mon, 21 Jul 2025 11:58:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753095798; cv=none; b=gH3CptB9kM/N48chpK1yXLgu0AIOT8Cl+PX8GE4N10rJEu1irV8pMd2MEz+cYgKWd2HP1EXqpF65ps88FjyhoTzSZf2N3+xd6Qg8bd/xDqISOsUxX+z1sf4KNrqId7giiD9b6LL08apCyq5sCX8YdtBHdKKJQiRB0Y17zdJ1nP8=
+	t=1753099087; cv=none; b=scykS6EUKospg+SufFZhGscVCP/sJLBtuUyEHt/QV5+xCah6vDaMmGAjsxjVsCTt9mbxIzII9mGrwDP2cbY0sw85tuttpprkL6RazFG/dp9KTro8Wu5q4A4HKl08AZSn84tkb0bmKHIObvx/vsxvWatJFC0eigiL/ff8WNwpo0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753095798; c=relaxed/simple;
-	bh=tP1pRW7y+RfdfgdYUK6Db/rhMYAb4jSsqxNDlIgclUc=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Wmomnvl94/p9+QCZelIwrrBjCvqSvi4lr1RiXVtM7PSb1sFdgKSYPr9/k/1SVUe2+pYs3RWXdjBBLQjDVM2OJhCmWfYAxPbxtWLvQe2N4jsIZ1/PFfiAo49RGfxfxsFstwu+L/Ylcb+G27jAxwdF5Bdqk3THOD8N8g6rApC3XeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1udoIJ-00073c-OP; Mon, 21 Jul 2025 13:02:55 +0200
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1udoII-009Xfy-35;
-	Mon, 21 Jul 2025 13:02:54 +0200
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1udoII-000Ebv-2o;
-	Mon, 21 Jul 2025 13:02:54 +0200
-Message-ID: <468961ac17fb5dd4365943a24206040575b0e982.camel@pengutronix.de>
+	s=arc-20240116; t=1753099087; c=relaxed/simple;
+	bh=FWnSi8E8XYIWk4QCaR4TwKiOWABo39dyPNERnvREGtw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A7X2aPnbYdLxh9xnXHdOBxI+0M96wIZJuEt/6ynwoLGn1LtkIdQb3seFdLlLEk2dEsXK7SsXXDfijUO8mlqxON4/ZPk01iaHFo/nxFXX4Ag0ur9lT4sLFgvRoA//RifNSswZpWQ4fEKch08SuMSHV/JNxdsJdpgFz0pfSQSmSHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=p36aVARw; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="p36aVARw"
+Date: Mon, 21 Jul 2025 19:57:56 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1753099082;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bfrHdHadKeOGrxubHlclT+KsEtO7bFXUMTU/oDEY5dQ=;
+	b=p36aVARw7D43XfPT4ZZedi3YcLfN/KR5oUPoLSSqFTzIk6/rRnSzX8rESovL+8J02HVpqK
+	U992BQVKcaz3RmNJ5lrzf3drMvWTqoYIvY1gWUbhXWMl26WB00iJSqa3Ka9D1Z70ZXJrx7
+	02rJ8Oad5yjpUM8tTyLq8oiqLFz/Pgw=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ze Huang <huang.ze@linux.dev>
+To: Philipp Zabel <p.zabel@pengutronix.de>, Ze Huang <huang.ze@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Subject: Re: [PATCH v6 1/2] dt-bindings: usb: dwc3: add support for SpacemiT
  K1
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Ze Huang <huang.ze@linux.dev>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun
- Lan <dlan@gentoo.org>,  Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, Krzysztof Kozlowski
-	 <krzysztof.kozlowski@linaro.org>
-Date: Mon, 21 Jul 2025 13:02:54 +0200
-In-Reply-To: <20250712-dwc3_generic-v6-1-cc87737cc936@linux.dev>
+Message-ID: <aH4rRKPHzB0kd7Ek@monica.localdomain>
 References: <20250712-dwc3_generic-v6-0-cc87737cc936@linux.dev>
-	 <20250712-dwc3_generic-v6-1-cc87737cc936@linux.dev>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+ <20250712-dwc3_generic-v6-1-cc87737cc936@linux.dev>
+ <468961ac17fb5dd4365943a24206040575b0e982.camel@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: spacemit@lists.linux.dev
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <468961ac17fb5dd4365943a24206040575b0e982.camel@pengutronix.de>
+X-Migadu-Flow: FLOW_OUT
 
-On Sa, 2025-07-12 at 15:49 +0800, Ze Huang wrote:
-> Add support for the USB 3.0 Dual-Role Device (DRD) controller embedded
-> in the SpacemiT K1 SoC. The controller is based on the Synopsys
-> DesignWare Core USB 3 (DWC3) IP, supporting USB3.0 host mode and USB 2.0
-> DRD mode.
->=20
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Ze Huang <huang.ze@linux.dev>
-> ---
->  .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 107 +++++++++++++++=
-++++++
->  1 file changed, 107 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml =
-b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..c967ad6aae50199127a4f8a17=
-d53fc34e8d9480b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
-> @@ -0,0 +1,107 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/usb/spacemit,k1-dwc3.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: SpacemiT K1 SuperSpeed DWC3 USB SoC Controller
-> +
-> +maintainers:
-> +  - Ze Huang <huang.ze@linux.dev>
-> +
-> +description: |
-> +  The SpacemiT K1 embeds a DWC3 USB IP Core which supports Host function=
-s
-> +  for USB 3.0 and DRD for USB 2.0.
-> +
-> +  Key features:
-> +  - USB3.0 SuperSpeed and USB2.0 High/Full/Low-Speed support
-> +  - Supports low-power modes (USB2.0 suspend, USB3.0 U1/U2/U3)
-> +  - Internal DMA controller and flexible endpoint FIFO sizing
-> +
-> +  Communication Interface:
-> +  - Use of PIPE3 (125MHz) interface for USB3.0 PHY
-> +  - Use of UTMI+ (30/60MHz) interface for USB2.0 PHY
-> +
-> +allOf:
-> +  - $ref: snps,dwc3-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: spacemit,k1-dwc3
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    const: usbdrd30
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  phys:
-> +    items:
-> +      - description: phandle to USB2/HS PHY
-> +      - description: phandle to USB3/SS PHY
-> +
-> +  phy-names:
-> +    items:
-> +      - const: usb2-phy
-> +      - const: usb3-phy
-> +
-> +  resets:
-> +    items:
-> +      - description: USB3.0 AHB reset line
-> +      - description: USB3.0 VCC reset line
-> +      - description: USB3.0 PHY reset line
+On Mon, Jul 21, 2025 at 01:02:54PM +0200, Philipp Zabel wrote:
+> On Sa, 2025-07-12 at 15:49 +0800, Ze Huang wrote:
+> > Add support for the USB 3.0 Dual-Role Device (DRD) controller embedded
+> > in the SpacemiT K1 SoC. The controller is based on the Synopsys
+> > DesignWare Core USB 3 (DWC3) IP, supporting USB3.0 host mode and USB 2.0
+> > DRD mode.
+> > 
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Signed-off-by: Ze Huang <huang.ze@linux.dev>
+> > ---
+> >  .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 107 +++++++++++++++++++++
+> >  1 file changed, 107 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..c967ad6aae50199127a4f8a17d53fc34e8d9480b
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> > @@ -0,0 +1,107 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/usb/spacemit,k1-dwc3.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: SpacemiT K1 SuperSpeed DWC3 USB SoC Controller
+> > +
+> > +maintainers:
+> > +  - Ze Huang <huang.ze@linux.dev>
+> > +
+> > +description: |
+> > +  The SpacemiT K1 embeds a DWC3 USB IP Core which supports Host functions
+> > +  for USB 3.0 and DRD for USB 2.0.
+> > +
+> > +  Key features:
+> > +  - USB3.0 SuperSpeed and USB2.0 High/Full/Low-Speed support
+> > +  - Supports low-power modes (USB2.0 suspend, USB3.0 U1/U2/U3)
+> > +  - Internal DMA controller and flexible endpoint FIFO sizing
+> > +
+> > +  Communication Interface:
+> > +  - Use of PIPE3 (125MHz) interface for USB3.0 PHY
+> > +  - Use of UTMI+ (30/60MHz) interface for USB2.0 PHY
+> > +
+> > +allOf:
+> > +  - $ref: snps,dwc3-common.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: spacemit,k1-dwc3
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  clocks:
+> > +    maxItems: 1
+> > +
+> > +  clock-names:
+> > +    const: usbdrd30
+> > +
+> > +  interrupts:
+> > +    maxItems: 1
+> > +
+> > +  phys:
+> > +    items:
+> > +      - description: phandle to USB2/HS PHY
+> > +      - description: phandle to USB3/SS PHY
+> > +
+> > +  phy-names:
+> > +    items:
+> > +      - const: usb2-phy
+> > +      - const: usb3-phy
+> > +
+> > +  resets:
+> > +    items:
+> > +      - description: USB3.0 AHB reset line
+> > +      - description: USB3.0 VCC reset line
+> > +      - description: USB3.0 PHY reset line
+> 
+> Are we sure all resets will only ever need to be triggered together?
+>
+> Otherwise it might be safer to add a reset-names property.
+>
 
-Are we sure all resets will only ever need to be triggered together?
-Otherwise it might be safer to add a reset-names property.
+Yeah, that's helpful. Will add reset-names property in next version.
 
-regards
-Philipp
+> 
+> regards
+> Philipp
