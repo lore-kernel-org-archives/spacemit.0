@@ -1,48 +1,45 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E1923DE
-	for <spacemit@lists.linux.dev>; Sun, 20 Jul 2025 06:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD0C566A;
+	Mon, 21 Jul 2025 00:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752993260; cv=none; b=Yt1BAdlRFiOddzmCcYCs/ZXOtJidWvz9m2ASelCu+mHwttWsXxM5KTVis7qnRyH3R8FoqQ7bR7CPNdVMNoria9M59ZBdvKLPbNjkQl3cU5XpRJ4+z+jSQL+YaF3Xtm/7l073/2ljs8ck1fRBaeuASDd3aAfbGFBiRmJ+ncT8fqk=
+	t=1753058388; cv=none; b=m5HAzMvzSK3Aw5/lNsxQMdTh9O5aykaavHHV+6tqtxuMHOfL97B8dJRhT0Egln7C1v04xwarZ7+XN7rjf5J5crUt7kkpaomqlJwF6UUy21+e+2jFNBKwpOsoIfMFL4CrSHdhEc4FAS8RnFc2RlnY6+TP82N/asGvBE46Nfsd8jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752993260; c=relaxed/simple;
-	bh=/fJ5kAJ+93ddS4YMlpRMSjib4Szey4L57kankOohY2M=;
+	s=arc-20240116; t=1753058388; c=relaxed/simple;
+	bh=DcAxps/FGdwNvvt1KUL0mg84vdvjjbvyVNUzZyC1NQk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tMQTe+Xe4ZEqDuwdWPhy943Mcg4W9aTKryVQNI8TTWf4MNJi3QDWaXEsdI+xjblzPukrzfD7Oy/W+D6XS8OU+NogowXiylQDzGyN/fUG3vzrYN81hyVgSg6oR/a1mlkKW3uaTdCW++B8HnaIxYJQ6cRLL3R4T5cpaYWT7UQAmNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=JngO2yWG; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 Content-Type:Content-Disposition:In-Reply-To; b=PuMjVf6yHKBL+bGGf0teo1QhCe6LWStDUqBLODKq1LDpkuPG4hVTUzhJoYNrga0U85mASAJnCYEAOif0am2gLFqRKtW0ak/MFW664YDfxUrgLNpU3puOGBf71tXfOoPTueTPtSwm6pjqXrcVAdAsoJx41LBq68tcyhbFAzucV6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EVXOMk0o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="JngO2yWG"
-Date: Sun, 20 Jul 2025 14:34:07 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1752993255;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4a6BlUCJFTdlEQ0RUAp02uN+GKSkSEWnLMZUJiFP/Xk=;
-	b=JngO2yWGJIX+G68ni4+M6O1sO3WqdOl9dvW1ZsxEuDyoyBlLfX5g4CLYxGldviUuuqCvOb
-	h/EoN6HmwwW/NvPOIah/8/xaWXF+/+RnoPO5OhHIuJyk6/C7cJ5UzPsTDjJSqdfvDXHXVa
-	IdkWEH/vy/bP69RebiZhRlIO29plDBk=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ze Huang <huang.ze@linux.dev>
-To: Alex Elder <elder@ieee.org>, Ze Huang <huang.ze@linux.dev>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EVXOMk0o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3069AC4CEE7;
+	Mon, 21 Jul 2025 00:39:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753058388;
+	bh=DcAxps/FGdwNvvt1KUL0mg84vdvjjbvyVNUzZyC1NQk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EVXOMk0ouM5Coaraip90bgDOb+w452a4nPgiKLNRQ0k17QLIABHBTRf/Wp9Thtdmw
+	 70ozK9bOxCAhB1n80sYSpx/6ptOWUdf+wNnEpvXhyJ1kk/S5WgsHWlaZZykpX1iun+
+	 Z7U1d9GlukCtkVEQHvG4eEusM4Nr2V4x6x28ayGUXdCjWxCPD8UP51KIObxY9R7ZRO
+	 S9+Fp67BSmq7l/nIhleQrenNVkIdyVaSrbnFL/LaB6Oyl0/vyYYvvNZ7lMH7yG2yS4
+	 sZRKdg8RK4Dt/TbmL3jhj3k6wcC9ih6sPxddMSoiD/e61O42/A7ek38r01yrZSQg+h
+	 6Md0qotk0QBog==
+Date: Sun, 20 Jul 2025 19:39:47 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] usb: dwc3: add generic driver to support flattened
-Message-ID: <aHyN3-uoHofF8Hg3@monica.localdomain>
-References: <20250712-dwc3_generic-v6-0-cc87737cc936@linux.dev>
- <20250712-dwc3_generic-v6-2-cc87737cc936@linux.dev>
- <d2e9a521-568e-433d-a59b-9b98138ace2b@ieee.org>
+	Alex Elder <elder@riscstar.com>, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-serial@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>
+Subject: Re: [PATCH] dt-bindings: serial: 8250: spacemit: set clocks property
+ as required
+Message-ID: <175305838704.3151611.2882961129510039332.robh@kernel.org>
+References: <20250718-01-k1-uart-binding-v1-1-a92e1e14c836@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -51,290 +48,19 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d2e9a521-568e-433d-a59b-9b98138ace2b@ieee.org>
-X-Migadu-Flow: FLOW_OUT
+In-Reply-To: <20250718-01-k1-uart-binding-v1-1-a92e1e14c836@gentoo.org>
 
-On Tue, Jul 15, 2025 at 03:50:54PM -0500, Alex Elder wrote:
-> On 7/12/25 2:49 AM, Ze Huang wrote:
-> > To support flattened dwc3 dt model and drop the glue layer, introduce the
-> > `dwc3-generic` driver. This enables direct binding of the DWC3 core driver
-> > and offers an alternative to the existing glue driver `dwc3-of-simple`.
+
+On Fri, 18 Jul 2025 23:04:37 +0800, Yixun Lan wrote:
+> In SpacemiT's K1 SoC, the clocks for UART are mandatory needed, so
+> for DT, both clocks and clock-names property should be set as required.
 > 
-> I'm not familiar with dwc-of-simple.c, and won't comment on
-> how this differs from that (or does not).
-> 
-> Given you're implementing an alternative though, can you explain
-> in a little more detail what's different between the two?  Why
-> would someone choose to use this driver rather than the other one?
-
-They are basically the same.
-
-dwc-generic use a plain dt node while dwc-of-simple will nest the dwc3
-node as its child.
-
-Both will use dwc3_core_probe() to finish the probe process. But now we
-can simplify the process by just calling it, instead of calling
-of_platform_populate() and create another snps,dwc3 device driver.
-
-> 
-> > 
-> > Signed-off-by: Ze Huang <huang.ze@linux.dev>
-> > ---
-> >   drivers/usb/dwc3/Kconfig             |  11 +++
-> >   drivers/usb/dwc3/Makefile            |   1 +
-> >   drivers/usb/dwc3/dwc3-generic-plat.c | 182 +++++++++++++++++++++++++++++++++++
-> >   3 files changed, 194 insertions(+)
-> > 
-> > diff --git a/drivers/usb/dwc3/Kconfig b/drivers/usb/dwc3/Kconfig
-> > index 310d182e10b50b253d7e5a51674806e6ec442a2a..4925d15084f816d3ff92059b476ebcc799b56b51 100644
-> > --- a/drivers/usb/dwc3/Kconfig
-> > +++ b/drivers/usb/dwc3/Kconfig
-> > @@ -189,4 +189,15 @@ config USB_DWC3_RTK
-> >   	  or dual-role mode.
-> >   	  Say 'Y' or 'M' if you have such device.
-> > +config USB_DWC3_GENERIC_PLAT
-> > +	tristate "DWC3 Generic Platform Driver"
-> > +	depends on OF && COMMON_CLK
-> > +	default USB_DWC3
-> > +	help
-> > +	  Support USB3 functionality in simple SoC integrations.
-> > +	  Currently supports SpacemiT DWC USB3. Platforms using
-> > +	  dwc3-of-simple can easily switch to dwc3-generic by flattening
-> > +	  the dwc3 child node in the device tree.
-> > +	  Say 'Y' or 'M' here if your platform integrates DWC3 in a similar way.
-> > +
-> >   endif
-> > diff --git a/drivers/usb/dwc3/Makefile b/drivers/usb/dwc3/Makefile
-> > index 830e6c9e5fe073c1f662ce34b6a4a2da34c407a2..96469e48ff9d189cc8d0b65e65424eae2158bcfe 100644
-> > --- a/drivers/usb/dwc3/Makefile
-> > +++ b/drivers/usb/dwc3/Makefile
-> > @@ -57,3 +57,4 @@ obj-$(CONFIG_USB_DWC3_IMX8MP)		+= dwc3-imx8mp.o
-> >   obj-$(CONFIG_USB_DWC3_XILINX)		+= dwc3-xilinx.o
-> >   obj-$(CONFIG_USB_DWC3_OCTEON)		+= dwc3-octeon.o
-> >   obj-$(CONFIG_USB_DWC3_RTK)		+= dwc3-rtk.o
-> > +obj-$(CONFIG_USB_DWC3_GENERIC_PLAT)	+= dwc3-generic-plat.o
-> > diff --git a/drivers/usb/dwc3/dwc3-generic-plat.c b/drivers/usb/dwc3/dwc3-generic-plat.c
-> > new file mode 100644
-> > index 0000000000000000000000000000000000000000..766f4cf17b6909793956f44660d3b3febad50a23
-> > --- /dev/null
-> > +++ b/drivers/usb/dwc3/dwc3-generic-plat.c
-> > @@ -0,0 +1,182 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * dwc3-generic-plat.c - DesignWare USB3 generic platform driver
-> > + *
-> > + * Copyright (C) 2025 Ze Huang <huang.ze@linux.dev>
-> > + *
-> > + * Inspired by dwc3-qcom.c and dwc3-of-simple.c
-> > + */
-> > +
-> > +#include <linux/clk.h>
-> > +#include <linux/platform_device.h>
-> > +#include <linux/reset.h>
-> > +#include "glue.h"
-> > +
-> > +struct dwc3_generic {
-> > +	struct device		*dev;
-> > +	struct dwc3		dwc;
-> > +	struct clk_bulk_data	*clks;
-> > +	int			num_clocks;
-> > +	struct reset_control	*resets;
-> > +};
-> > +
-> > +static void dwc3_generic_reset_control_assert(void *data)
-> > +{
-> > +	reset_control_assert(data);
-> > +}
-> > +
-> 
-> The next function can go away.  (See below.)
+> Fixes: 2c0594f9f062 ("dt-bindings: serial: 8250: support an optional second clock")
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> ---
+>  Documentation/devicetree/bindings/serial/8250.yaml | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
 
-OK
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
-> > +static void dwc3_generic_clk_bulk_disable_unprepare(void *data)
-> > +{
-> > +	struct dwc3_generic *dwc3 = data;
-> > +
-> > +	clk_bulk_disable_unprepare(dwc3->num_clocks, dwc3->clks);
-> > +}
-> > +
-> > +static int dwc3_generic_probe(struct platform_device *pdev)
-> > +{
-> > +	struct dwc3_probe_data probe_data = {};
-> > +	struct device *dev = &pdev->dev;
-> > +	struct dwc3_generic *dwc3;
-> > +	struct resource *res;
-> > +	int ret;
-> > +
-> > +	dwc3 = devm_kzalloc(dev, sizeof(*dwc3), GFP_KERNEL);
-> > +	if (!dwc3)
-> > +		return -ENOMEM;
-> > +
-> > +	dwc3->dev = dev;
-> > +
-> > +	platform_set_drvdata(pdev, dwc3);
-> > +
-> > +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> > +	if (!res) {
-> > +		dev_err(&pdev->dev, "missing memory resource\n");
-> > +		return -ENODEV;
-> > +	}
-> > +
-> > +	dwc3->resets = devm_reset_control_array_get_optional_exclusive(dev);
-> > +	if (IS_ERR(dwc3->resets))
-> > +		return dev_err_probe(dev, PTR_ERR(dwc3->resets), "failed to get resets\n");
-> > +
-> 
-> It isn't enforced on exclusive resets, but I'm pretty sure
-> resets are assumed to be asserted initially.
-> 
-
-I'd like to keep it. We cannot guarantee what environment was passed
-in (from bootloader), right?
-
-> > +	ret = reset_control_assert(dwc3->resets);
-> > +	if (ret)
-> > +		return dev_err_probe(dev, ret, "failed to assert resets\n");
-> > +
-> > +	ret = devm_add_action_or_reset(dev, dwc3_generic_reset_control_assert, dwc3->resets);
-> > +	if (ret)
-> > +		return ret;
-> 
-> The re-assert shouldn't be set up unless the deassert below
-> succeeds.
-> 
-
-Will move behind the deassert.
-
-> > +	usleep_range(10, 1000);
-> 
-> This seems like a large range.  You could just do msleep(1);
-> Also, can you add a comment explaining why a delay is needed,
-> and why 1 millisecond is the right amount of time to sleep?
-> 
-
-I will check the range with spacemit and reply soon.
-
-> > +	ret = reset_control_deassert(dwc3->resets);
-> > +	if (ret)
-> > +		return dev_err_probe(dev, ret, "failed to deassert resets\n");
-> > +
-> > +	ret = devm_clk_bulk_get_all(dwc3->dev, &dwc3->clks);
-> > +	if (ret < 0)
-> > +		return dev_err_probe(dev, ret, "failed to get clocks\n");
-> 
-> Call devm_clk_bulk_get_all_enabled() instead of doing the two
-> steps separately here.
-> 
-
-Will do, thanks.
-
-> 					-Alex
-> 
-> > +	dwc3->num_clocks = ret;
-> > +
-> > +	ret = clk_bulk_prepare_enable(dwc3->num_clocks, dwc3->clks);
-> > +	if (ret)
-> j> +		return dev_err_probe(dev, ret, "failed to enable clocks\n");
-> > +
-> > +	ret = devm_add_action_or_reset(dev, dwc3_generic_clk_bulk_disable_unprepare, dwc3);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	dwc3->dwc.dev = dev;
-> > +	probe_data.dwc = &dwc3->dwc;
-> > +	probe_data.res = res;
-> > +	probe_data.ignore_clocks_and_resets = true;
-> > +	ret = dwc3_core_probe(&probe_data);
-> > +	if (ret)
-> > +		return dev_err_probe(dev, ret, "failed to register DWC3 Core\n");
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static void dwc3_generic_remove(struct platform_device *pdev)
-> > +{
-> > +	struct dwc3_generic *dwc3 = platform_get_drvdata(pdev);
-> > +
-> > +	dwc3_core_remove(&dwc3->dwc);
-> > +}
-> > +
-> > +static int dwc3_generic_suspend(struct device *dev)
-> > +{
-> > +	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-> > +	int ret;
-> > +
-> > +	ret = dwc3_pm_suspend(&dwc3->dwc);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	clk_bulk_disable_unprepare(dwc3->num_clocks, dwc3->clks);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int dwc3_generic_resume(struct device *dev)
-> > +{
-> > +	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-> > +	int ret;
-> > +
-> > +	ret = clk_bulk_prepare_enable(dwc3->num_clocks, dwc3->clks);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = dwc3_pm_resume(&dwc3->dwc);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int dwc3_generic_runtime_suspend(struct device *dev)
-> > +{
-> > +	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-> > +
-> > +	return dwc3_runtime_suspend(&dwc3->dwc);
-> > +}
-> > +
-> > +static int dwc3_generic_runtime_resume(struct device *dev)
-> > +{
-> > +	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-> > +
-> > +	return dwc3_runtime_resume(&dwc3->dwc);
-> > +}
-> > +
-> > +static int dwc3_generic_runtime_idle(struct device *dev)
-> > +{
-> > +	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-> > +
-> > +	return dwc3_runtime_idle(&dwc3->dwc);
-> > +}
-> > +
-> > +static const struct dev_pm_ops dwc3_generic_dev_pm_ops = {
-> > +	SYSTEM_SLEEP_PM_OPS(dwc3_generic_suspend, dwc3_generic_resume)
-> > +	RUNTIME_PM_OPS(dwc3_generic_runtime_suspend, dwc3_generic_runtime_resume,
-> > +		       dwc3_generic_runtime_idle)
-> > +};
-> > +
-> > +static const struct of_device_id dwc3_generic_of_match[] = {
-> > +	{ .compatible = "spacemit,k1-dwc3", },
-> > +	{ /* sentinel */ }
-> > +};
-> > +MODULE_DEVICE_TABLE(of, dwc3_generic_of_match);
-> > +
-> > +static struct platform_driver dwc3_generic_driver = {
-> > +	.probe		= dwc3_generic_probe,
-> > +	.remove		= dwc3_generic_remove,
-> > +	.driver		= {
-> > +		.name	= "dwc3-generic-plat",
-> > +		.of_match_table = dwc3_generic_of_match,
-> > +		.pm	= pm_ptr(&dwc3_generic_dev_pm_ops),
-> > +	},
-> > +};
-> > +module_platform_driver(dwc3_generic_driver);
-> > +
-> > +MODULE_LICENSE("GPL");
-> > +MODULE_DESCRIPTION("DesignWare USB3 generic platform driver");
-> > 
-> 
