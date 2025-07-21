@@ -1,127 +1,126 @@
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from smtp1.iitb.ac.in (smtpd9.iitb.ac.in [103.21.126.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691DF2BDC15
-	for <spacemit@lists.linux.dev>; Mon, 21 Jul 2025 12:08:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D517221F2F
+	for <spacemit@lists.linux.dev>; Mon, 21 Jul 2025 18:59:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.21.126.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753099697; cv=none; b=YI0YKNeF39Wuoj7gfUT1Y2t1oastzb3DHvqj2wf0IU08UR5NV5ZEJzQKMIi0KejbdxhR1u7qEPTXQeZUmSSyTbFbZrtJP0aoK7WAZNT4cIhiBQRxVWDdkBc1HfWZoiBBH88mzaQO5+nqkaAR5lD4z0ttdxg3dDgxKjSKOJlSK3Q=
+	t=1753124389; cv=none; b=KRQ7uG6M27W3Kzb42PbvOTZYjHh8MRTSFDsj+XoSgrx3o6AxNMw7oZnFISI1/SbxP5KMKOa/B8v2LXjssCkCw33OZ863oPEc22HRT1sjfrjeriJRR8zBPupUXqJw2yea4LGTA3RkGmBtkHpymvHHvDLS4gF6//6qpC4db6zU+eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753099697; c=relaxed/simple;
-	bh=PKt0mTjmvvvkepwsCUMzvM+RF3tsj0b4ozWzqNpeB3s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eBBMbSFc6zu4PbtLJXMt6cWCQD5eY0SJF2mVu3PS0Jzx5jRv4O6hfZisOqmGTdfxvt9KaSd+kZGuObp7N8haE1sLCduyfRmg6QzVleJugXz/Y35gFYpcK61ChMr2VBBoYWJ+078+SIUKil0NKVWELRleOZd5o8ij6Ka2ub5SwwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TaILfvtu; arc=none smtp.client-ip=91.218.175.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1753124389; c=relaxed/simple;
+	bh=HGLwuU4D+TUfqsZVVo04GFZdHAqGvPqWRxCyM/vPrtk=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Vm30ibE+ECHXMWiZBw+14X85M01uKNB5XB0D8Bf6lL53OMJogsHyGkqBofTg/36UD9TBxXs0sC/YHaPNgmtBiZ3agE2CRLHlOrV2Gmif3lQCQBztU3iWNjkz3RTW9mmiI9s41+q9XJv+EvagoS7evPe6Tf/rsOkN79SLpDJC2n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ee.iitb.ac.in; spf=pass smtp.mailfrom=ee.iitb.ac.in; dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b=fgrNnZVu; arc=none smtp.client-ip=103.21.126.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ee.iitb.ac.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ee.iitb.ac.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TaILfvtu"
-Date: Mon, 21 Jul 2025 20:08:06 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1753099692;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8CiyT1LW8S2cprjOA7fuHy478wU5+FE3KPTv6t/QXyg=;
-	b=TaILfvtul8thQUWdU4h/uwNOkqNqAJ/O9St/9Gyyvw2qOPqG6+/08lRNgo4p+1iEBqMIb1
-	jn0o+aou5/+r7/hOr3YnGuvvCGps0mC/HxKpt+TIfKVEPPKGNa9RNZn318dsUI+9JMtAiX
-	24dr4T43X39mGq5d4DvYRTxpoTHFBPM=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ze Huang <huang.ze@linux.dev>
-To: Alex Elder <elder@ieee.org>, Ze Huang <huang.ze@linux.dev>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] usb: dwc3: add generic driver to support flattened
-Message-ID: <aH4tpgVPbf9DOzSe@monica.localdomain>
-References: <20250712-dwc3_generic-v6-0-cc87737cc936@linux.dev>
- <20250712-dwc3_generic-v6-2-cc87737cc936@linux.dev>
- <d2e9a521-568e-433d-a59b-9b98138ace2b@ieee.org>
- <aHyN3-uoHofF8Hg3@monica.localdomain>
+	dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b="fgrNnZVu"
+Received: from ldns1.iitb.ac.in (ldns1.iitb.ac.in [10.200.12.1])
+	by smtp1.iitb.ac.in (Postfix) with SMTP id 7E7FE104CBB0
+	for <spacemit@lists.linux.dev>; Tue, 22 Jul 2025 00:29:34 +0530 (IST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 smtp1.iitb.ac.in 7E7FE104CBB0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=iitb.ac.in; s=mail;
+	t=1753124374; bh=HGLwuU4D+TUfqsZVVo04GFZdHAqGvPqWRxCyM/vPrtk=;
+	h=Date:From:To:Cc:Subject:From;
+	b=fgrNnZVuxHtNXvQhEzFgZbSMESSpacQkPL5pPuuKDddyUMZ3qThYSKgeHDbwQLgXC
+	 f450tK2nYV4C0VXVNK+LGdmMVFctzHDdoIzdZruGdFwODVi8Z6rVODSAJ4yPwWoxcU
+	 Qp4k5G3hCkj9vNvRm3vx6DO7UKMDYnf+BmB5HnRY=
+Received: (qmail 12007 invoked by uid 510); 22 Jul 2025 00:29:34 +0530
+X-Qmail-Scanner-Diagnostics: from 10.200.1.25 by ldns1 (envelope-from <akhilesh@ee.iitb.ac.in>, uid 501) with qmail-scanner-2.11
+ spamassassin: 3.4.1. mhr: 1.0. {clamdscan: 0.101.4/26439} 
+ Clear:RC:1(10.200.1.25):SA:0(0.0/7.0):. Processed in 4.105765 secs; 22 Jul 2025 00:29:34 +0530
+X-Spam-Level: 
+X-Spam-Pyzor: Reported 0 times.
+X-Envelope-From: akhilesh@ee.iitb.ac.in
+X-Qmail-Scanner-Mime-Attachments: |
+X-Qmail-Scanner-Zip-Files: |
+Received: from unknown (HELO ldns1.iitb.ac.in) (10.200.1.25)
+  by ldns1.iitb.ac.in with SMTP; 22 Jul 2025 00:29:30 +0530
+Received: from bhairav.ee.iitb.ac.in (bhairav.ee.iitb.ac.in [10.107.1.1])
+	by ldns1.iitb.ac.in (Postfix) with ESMTP id 390F036003B;
+	Tue, 22 Jul 2025 00:29:29 +0530 (IST)
+Received: from bhairav-test.ee.iitb.ac.in (bhairav.ee.iitb.ac.in [10.107.1.1])
+	(Authenticated sender: akhilesh)
+	by bhairav.ee.iitb.ac.in (Postfix) with ESMTPSA id CA8801E812C1;
+	Tue, 22 Jul 2025 00:29:28 +0530 (IST)
+Date: Tue, 22 Jul 2025 00:29:23 +0530
+From: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+To: mturquette@baylibre.com, sboyd@kernel.org, dlan@gentoo.org,
+	heylenay@4d2.org, elder@riscstar.com, inochiama@outlook.com,
+	akhilesh@ee.iitb.ac.in, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, heylenay@outlook.com, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	unicornxdotw@foxmail.com, jszhang@kernel.org,
+	zhangmeng.kevin@linux.spacemit.com, akhileshpatilvnit@gmail.com,
+	skhan@linuxfoundation.org
+Subject: [PATCH] clk: spacemit: fix error handling in
+ ccu_pll_set_rate/_round_rate
+Message-ID: <aH6OC1aV6IcQnoSC@bhairav-test.ee.iitb.ac.in>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aHyN3-uoHofF8Hg3@monica.localdomain>
-X-Migadu-Flow: FLOW_OUT
 
-On Sun, Jul 20, 2025 at 02:34:07PM +0800, Ze Huang wrote:
-> On Tue, Jul 15, 2025 at 03:50:54PM -0500, Alex Elder wrote:
-> > On 7/12/25 2:49 AM, Ze Huang wrote:
-> > > To support flattened dwc3 dt model and drop the glue layer, introduce the
-> > > `dwc3-generic` driver. This enables direct binding of the DWC3 core driver
-> > > and offers an alternative to the existing glue driver `dwc3-of-simple`.
-> > 
-> > I'm not familiar with dwc-of-simple.c, and won't comment on
-> > how this differs from that (or does not).
-> > 
-> > Given you're implementing an alternative though, can you explain
-> > in a little more detail what's different between the two?  Why
-> > would someone choose to use this driver rather than the other one?
-> 
-> They are basically the same.
-> 
-> dwc-generic use a plain dt node while dwc-of-simple will nest the dwc3
-> node as its child.
-> 
-> Both will use dwc3_core_probe() to finish the probe process. But now we
-> can simplify the process by just calling it, instead of calling
-> of_platform_populate() and create another snps,dwc3 device driver.
+Initialize best_entry pointer with NULL in ccu_pll_lookup_best_rate()
+to avoid returning garbage value when function fails to assign it
+a valid rate entry. Avoid passing invalid rate entry reference to
+ccu_pll_update_param by adding appropriate error handling in
+ccu_pll_set_rate and ccu_pll_round_rate.
+Address the effects of uninitialized pointer as reported
+by smatch and coverity static code analysis tools.
 
-[...]
+Addresses-Coverity-ID: 1649164
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202505111057.ejK2J56K-lkp@intel.com/
+Signed-off-by: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+---
+ drivers/clk/spacemit/ccu_pll.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-> > > +	ret = reset_control_assert(dwc3->resets);
-> > > +	if (ret)
-> > > +		return dev_err_probe(dev, ret, "failed to assert resets\n");
-> > > +
-> > > +	ret = devm_add_action_or_reset(dev, dwc3_generic_reset_control_assert, dwc3->resets);
-> > > +	if (ret)
-> > > +		return ret;
-> > 
-> > The re-assert shouldn't be set up unless the deassert below
-> > succeeds.
-> > 
-> 
-> Will move behind the deassert.
-> 
-> > > +	usleep_range(10, 1000);
-> > 
-> > This seems like a large range.  You could just do msleep(1);
-> > Also, can you add a comment explaining why a delay is needed,
-> > and why 1 millisecond is the right amount of time to sleep?
-> > 
-> 
-> I will check the range with spacemit and reply soon.
-> 
+diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
+index 4427dcfbbb97..3fc6a30f98b7 100644
+--- a/drivers/clk/spacemit/ccu_pll.c
++++ b/drivers/clk/spacemit/ccu_pll.c
+@@ -21,7 +21,7 @@ static const struct ccu_pll_rate_tbl *ccu_pll_lookup_best_rate(struct ccu_pll *p
+ 							       unsigned long rate)
+ {
+ 	struct ccu_pll_config *config = &pll->config;
+-	const struct ccu_pll_rate_tbl *best_entry;
++	const struct ccu_pll_rate_tbl *best_entry = NULL;
+ 	unsigned long best_delta = ULONG_MAX;
+ 	int i;
+ 
+@@ -107,6 +107,10 @@ static int ccu_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	const struct ccu_pll_rate_tbl *entry;
+ 
+ 	entry = ccu_pll_lookup_best_rate(pll, rate);
++
++	if (!entry)
++		return -EINVAL;
++
+ 	ccu_pll_update_param(pll, entry);
+ 
+ 	return 0;
+@@ -129,8 +133,11 @@ static long ccu_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+ 			       unsigned long *prate)
+ {
+ 	struct ccu_pll *pll = hw_to_ccu_pll(hw);
++	const struct ccu_pll_rate_tbl *entry;
++
++	entry = ccu_pll_lookup_best_rate(pll, rate);
+ 
+-	return ccu_pll_lookup_best_rate(pll, rate)->rate;
++	return entry ? entry->rate : 0;
+ }
+ 
+ static int ccu_pll_init(struct clk_hw *hw)
+-- 
+2.34.1
 
-the resets are asynchronous with no strict timing. But to be safe, each
-reset should stay active for at least 1 µs. I’ll switch to a udelay(2)
-and add comment accordingly.
-
-> > > +	ret = reset_control_deassert(dwc3->resets);
-> > > +	if (ret)
-> > > +		return dev_err_probe(dev, ret, "failed to deassert resets\n");
-> > > +
-> > > +	ret = devm_clk_bulk_get_all(dwc3->dev, &dwc3->clks);
-> > > +	if (ret < 0)
-> > > +		return dev_err_probe(dev, ret, "failed to get clocks\n");
-> > 
-> > Call devm_clk_bulk_get_all_enabled() instead of doing the two
-> > steps separately here.
-> > 
-> 
-> Will do, thanks.
-> 
-> > 					-Alex
