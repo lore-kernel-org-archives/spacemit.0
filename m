@@ -1,50 +1,50 @@
 Received: from smtp1.iitb.ac.in (smtpd9.iitb.ac.in [103.21.126.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D517221F2F
-	for <spacemit@lists.linux.dev>; Mon, 21 Jul 2025 18:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2DA1E0DD8
+	for <spacemit@lists.linux.dev>; Mon, 21 Jul 2025 19:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.21.126.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753124389; cv=none; b=KRQ7uG6M27W3Kzb42PbvOTZYjHh8MRTSFDsj+XoSgrx3o6AxNMw7oZnFISI1/SbxP5KMKOa/B8v2LXjssCkCw33OZ863oPEc22HRT1sjfrjeriJRR8zBPupUXqJw2yea4LGTA3RkGmBtkHpymvHHvDLS4gF6//6qpC4db6zU+eQ=
+	t=1753124846; cv=none; b=PUO8A9AvcSWFf/EJRaJWcpcmgDhWVF4WW949eFuYezoUlyejHJxHthcr/Ak8v/VKtLT1UTRRSCL1mJfZlKobWaDUehYv52yygJU/Ba9JSAOISXWH+A30xhnhMUjA9KirFuDWA+m9XF2dsN+GY/BE8U5643S1kMFTUNFpOGF84JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753124389; c=relaxed/simple;
-	bh=HGLwuU4D+TUfqsZVVo04GFZdHAqGvPqWRxCyM/vPrtk=;
+	s=arc-20240116; t=1753124846; c=relaxed/simple;
+	bh=NXP5NHVsGpWELSbR40KFa7hFqpvwth6rjNEAGSXfBtM=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Vm30ibE+ECHXMWiZBw+14X85M01uKNB5XB0D8Bf6lL53OMJogsHyGkqBofTg/36UD9TBxXs0sC/YHaPNgmtBiZ3agE2CRLHlOrV2Gmif3lQCQBztU3iWNjkz3RTW9mmiI9s41+q9XJv+EvagoS7evPe6Tf/rsOkN79SLpDJC2n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ee.iitb.ac.in; spf=pass smtp.mailfrom=ee.iitb.ac.in; dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b=fgrNnZVu; arc=none smtp.client-ip=103.21.126.64
+	 Content-Disposition; b=KUnf5KVD18VL9x4x2csFdt/DkXhPrTsIfPHEB5mw/rUKoBe1DLY5a0dYrWSGq8TEgu0nU/+913eXEXSetd2t7gvXE0C1J4kJyataqTtQ/Q3qlL3WdFF8Ju7Dya4zIoEOIXjKpk2vRs/peqF6xB7CSMxUBzNrSUeQWsWumCrWPEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ee.iitb.ac.in; spf=pass smtp.mailfrom=ee.iitb.ac.in; dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b=w106IHoh; arc=none smtp.client-ip=103.21.126.64
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ee.iitb.ac.in
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ee.iitb.ac.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b="fgrNnZVu"
-Received: from ldns1.iitb.ac.in (ldns1.iitb.ac.in [10.200.12.1])
-	by smtp1.iitb.ac.in (Postfix) with SMTP id 7E7FE104CBB0
-	for <spacemit@lists.linux.dev>; Tue, 22 Jul 2025 00:29:34 +0530 (IST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp1.iitb.ac.in 7E7FE104CBB0
+	dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b="w106IHoh"
+Received: from ldns2.iitb.ac.in (ldns2.iitb.ac.in [10.200.12.2])
+	by smtp1.iitb.ac.in (Postfix) with SMTP id 86F3A101C933
+	for <spacemit@lists.linux.dev>; Tue, 22 Jul 2025 00:37:22 +0530 (IST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 smtp1.iitb.ac.in 86F3A101C933
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=iitb.ac.in; s=mail;
-	t=1753124374; bh=HGLwuU4D+TUfqsZVVo04GFZdHAqGvPqWRxCyM/vPrtk=;
+	t=1753124842; bh=NXP5NHVsGpWELSbR40KFa7hFqpvwth6rjNEAGSXfBtM=;
 	h=Date:From:To:Cc:Subject:From;
-	b=fgrNnZVuxHtNXvQhEzFgZbSMESSpacQkPL5pPuuKDddyUMZ3qThYSKgeHDbwQLgXC
-	 f450tK2nYV4C0VXVNK+LGdmMVFctzHDdoIzdZruGdFwODVi8Z6rVODSAJ4yPwWoxcU
-	 Qp4k5G3hCkj9vNvRm3vx6DO7UKMDYnf+BmB5HnRY=
-Received: (qmail 12007 invoked by uid 510); 22 Jul 2025 00:29:34 +0530
-X-Qmail-Scanner-Diagnostics: from 10.200.1.25 by ldns1 (envelope-from <akhilesh@ee.iitb.ac.in>, uid 501) with qmail-scanner-2.11
- spamassassin: 3.4.1. mhr: 1.0. {clamdscan: 0.101.4/26439} 
- Clear:RC:1(10.200.1.25):SA:0(0.0/7.0):. Processed in 4.105765 secs; 22 Jul 2025 00:29:34 +0530
+	b=w106IHohuBxNDHiEe/p3uAP47adKaV2YYoEEHn46UDIubPNk92jqAJWg9JTfDLavx
+	 2oGR6ifvSO4SOqn1WlFqk4pGeStmY50Twyf7P1Mv0y3nDiDHs96dQNvtjqA95PsA6L
+	 phc2yE+1UoKXJBGzxCfrjaa7YkMizh8u5CUyq0uA=
+Received: (qmail 3119 invoked by uid 510); 22 Jul 2025 00:37:22 +0530
+X-Qmail-Scanner-Diagnostics: from 10.200.1.25 by ldns2 (envelope-from <akhilesh@ee.iitb.ac.in>, uid 501) with qmail-scanner-2.11
+ spamassassin: 3.4.1. mhr: 1.0. {clamdscan: 0.100.0/26337} 
+ Clear:RC:1(10.200.1.25):SA:0(-0.5/7.0):. Processed in 4.222403 secs; 22 Jul 2025 00:37:22 +0530
 X-Spam-Level: 
 X-Spam-Pyzor: Reported 0 times.
 X-Envelope-From: akhilesh@ee.iitb.ac.in
 X-Qmail-Scanner-Mime-Attachments: |
 X-Qmail-Scanner-Zip-Files: |
-Received: from unknown (HELO ldns1.iitb.ac.in) (10.200.1.25)
-  by ldns1.iitb.ac.in with SMTP; 22 Jul 2025 00:29:30 +0530
+Received: from unknown (HELO ldns2.iitb.ac.in) (10.200.1.25)
+  by ldns2.iitb.ac.in with SMTP; 22 Jul 2025 00:37:18 +0530
 Received: from bhairav.ee.iitb.ac.in (bhairav.ee.iitb.ac.in [10.107.1.1])
-	by ldns1.iitb.ac.in (Postfix) with ESMTP id 390F036003B;
-	Tue, 22 Jul 2025 00:29:29 +0530 (IST)
+	by ldns2.iitb.ac.in (Postfix) with ESMTP id C9E2C3414E0;
+	Tue, 22 Jul 2025 00:37:16 +0530 (IST)
 Received: from bhairav-test.ee.iitb.ac.in (bhairav.ee.iitb.ac.in [10.107.1.1])
 	(Authenticated sender: akhilesh)
-	by bhairav.ee.iitb.ac.in (Postfix) with ESMTPSA id CA8801E812C1;
-	Tue, 22 Jul 2025 00:29:28 +0530 (IST)
-Date: Tue, 22 Jul 2025 00:29:23 +0530
+	by bhairav.ee.iitb.ac.in (Postfix) with ESMTPSA id 7C7431E812C1;
+	Tue, 22 Jul 2025 00:37:16 +0530 (IST)
+Date: Tue, 22 Jul 2025 00:37:10 +0530
 From: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
 To: mturquette@baylibre.com, sboyd@kernel.org, dlan@gentoo.org,
 	heylenay@4d2.org, elder@riscstar.com, inochiama@outlook.com,
@@ -56,9 +56,9 @@ Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
 	unicornxdotw@foxmail.com, jszhang@kernel.org,
 	zhangmeng.kevin@linux.spacemit.com, akhileshpatilvnit@gmail.com,
 	skhan@linuxfoundation.org
-Subject: [PATCH] clk: spacemit: fix error handling in
- ccu_pll_set_rate/_round_rate
-Message-ID: <aH6OC1aV6IcQnoSC@bhairav-test.ee.iitb.ac.in>
+Subject: [PATCH] clk: spacemit: ccu_pll: fix error return value in
+ recalc_rate callback
+Message-ID: <aH6P3lChCXhi3pe4@bhairav-test.ee.iitb.ac.in>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,59 +68,28 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-Initialize best_entry pointer with NULL in ccu_pll_lookup_best_rate()
-to avoid returning garbage value when function fails to assign it
-a valid rate entry. Avoid passing invalid rate entry reference to
-ccu_pll_update_param by adding appropriate error handling in
-ccu_pll_set_rate and ccu_pll_round_rate.
-Address the effects of uninitialized pointer as reported
-by smatch and coverity static code analysis tools.
+Return 0 instead of -EINVAL if function ccu_pll_recalc_rate() fails to
+get correct rate entry. Follow .recalc_rate callback documentation
+as mentioned in include/linux/clk-provider.h for error return value.
 
-Addresses-Coverity-ID: 1649164
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202505111057.ejK2J56K-lkp@intel.com/
 Signed-off-by: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
 ---
- drivers/clk/spacemit/ccu_pll.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/clk/spacemit/ccu_pll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
-index 4427dcfbbb97..3fc6a30f98b7 100644
+index 4427dcfbbb97..45f540073a65 100644
 --- a/drivers/clk/spacemit/ccu_pll.c
 +++ b/drivers/clk/spacemit/ccu_pll.c
-@@ -21,7 +21,7 @@ static const struct ccu_pll_rate_tbl *ccu_pll_lookup_best_rate(struct ccu_pll *p
- 							       unsigned long rate)
- {
- 	struct ccu_pll_config *config = &pll->config;
--	const struct ccu_pll_rate_tbl *best_entry;
-+	const struct ccu_pll_rate_tbl *best_entry = NULL;
- 	unsigned long best_delta = ULONG_MAX;
- 	int i;
+@@ -122,7 +122,7 @@ static unsigned long ccu_pll_recalc_rate(struct clk_hw *hw,
  
-@@ -107,6 +107,10 @@ static int ccu_pll_set_rate(struct clk_hw *hw, unsigned long rate,
- 	const struct ccu_pll_rate_tbl *entry;
+ 	WARN_ON_ONCE(!entry);
  
- 	entry = ccu_pll_lookup_best_rate(pll, rate);
-+
-+	if (!entry)
-+		return -EINVAL;
-+
- 	ccu_pll_update_param(pll, entry);
- 
- 	return 0;
-@@ -129,8 +133,11 @@ static long ccu_pll_round_rate(struct clk_hw *hw, unsigned long rate,
- 			       unsigned long *prate)
- {
- 	struct ccu_pll *pll = hw_to_ccu_pll(hw);
-+	const struct ccu_pll_rate_tbl *entry;
-+
-+	entry = ccu_pll_lookup_best_rate(pll, rate);
- 
--	return ccu_pll_lookup_best_rate(pll, rate)->rate;
+-	return entry ? entry->rate : -EINVAL;
 +	return entry ? entry->rate : 0;
  }
  
- static int ccu_pll_init(struct clk_hw *hw)
+ static long ccu_pll_round_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.34.1
 
