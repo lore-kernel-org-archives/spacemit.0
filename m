@@ -1,66 +1,119 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD0C566A;
-	Mon, 21 Jul 2025 00:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF4F2F50
+	for <spacemit@lists.linux.dev>; Mon, 21 Jul 2025 11:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753058388; cv=none; b=m5HAzMvzSK3Aw5/lNsxQMdTh9O5aykaavHHV+6tqtxuMHOfL97B8dJRhT0Egln7C1v04xwarZ7+XN7rjf5J5crUt7kkpaomqlJwF6UUy21+e+2jFNBKwpOsoIfMFL4CrSHdhEc4FAS8RnFc2RlnY6+TP82N/asGvBE46Nfsd8jg=
+	t=1753095733; cv=none; b=pAoT4u77RV2QnSgR7yNsjQtNE21nlHfYXZlvMGP+IuboXB/Fv85v4bSuWI8ZKj+B5cL0mFfxHVIARna/rYXOU0YmNkoYrphpI2q6UZr8RMftmt99mE5M+FkaNJlbIykR5C17ImNONFAbxIxJ0BNuEn8ePqKdQWOfLqmfTez2GqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753058388; c=relaxed/simple;
-	bh=DcAxps/FGdwNvvt1KUL0mg84vdvjjbvyVNUzZyC1NQk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PuMjVf6yHKBL+bGGf0teo1QhCe6LWStDUqBLODKq1LDpkuPG4hVTUzhJoYNrga0U85mASAJnCYEAOif0am2gLFqRKtW0ak/MFW664YDfxUrgLNpU3puOGBf71tXfOoPTueTPtSwm6pjqXrcVAdAsoJx41LBq68tcyhbFAzucV6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EVXOMk0o; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EVXOMk0o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3069AC4CEE7;
-	Mon, 21 Jul 2025 00:39:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753058388;
-	bh=DcAxps/FGdwNvvt1KUL0mg84vdvjjbvyVNUzZyC1NQk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EVXOMk0ouM5Coaraip90bgDOb+w452a4nPgiKLNRQ0k17QLIABHBTRf/Wp9Thtdmw
-	 70ozK9bOxCAhB1n80sYSpx/6ptOWUdf+wNnEpvXhyJ1kk/S5WgsHWlaZZykpX1iun+
-	 Z7U1d9GlukCtkVEQHvG4eEusM4Nr2V4x6x28ayGUXdCjWxCPD8UP51KIObxY9R7ZRO
-	 S9+Fp67BSmq7l/nIhleQrenNVkIdyVaSrbnFL/LaB6Oyl0/vyYYvvNZ7lMH7yG2yS4
-	 sZRKdg8RK4Dt/TbmL3jhj3k6wcC9ih6sPxddMSoiD/e61O42/A7ek38r01yrZSQg+h
-	 6Md0qotk0QBog==
-Date: Sun, 20 Jul 2025 19:39:47 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Yixun Lan <dlan@gentoo.org>
-Cc: linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Alex Elder <elder@riscstar.com>, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-serial@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>
-Subject: Re: [PATCH] dt-bindings: serial: 8250: spacemit: set clocks property
- as required
-Message-ID: <175305838704.3151611.2882961129510039332.robh@kernel.org>
-References: <20250718-01-k1-uart-binding-v1-1-a92e1e14c836@gentoo.org>
+	s=arc-20240116; t=1753095733; c=relaxed/simple;
+	bh=qKZvHgUpkiu4F1ESzD0V0+p+GSfrdPViVD4CQaHR5Qw=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=fU7KRzyeJYweVvouvKq/3Cua/xdenG24ZV6OA4rx8kPXNeQbpDOLVz5SWqisHxaGc9mnEL7uRZV0f76HUJ2/b8RufsOOy3s2kkoK6ccsgaUdiIUutjnVe1Be3W6xz0BaY/bJZf1+os9A4cmeOtv7OnW7vz0R99dL42z48M4BkdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1udoH0-0006cV-Q3; Mon, 21 Jul 2025 13:01:34 +0200
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1udoGw-009Xfi-2H;
+	Mon, 21 Jul 2025 13:01:30 +0200
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1udoGw-000EXA-1x;
+	Mon, 21 Jul 2025 13:01:30 +0200
+Message-ID: <d178cfb17e726597e2b4d4c49de5040646b9e55e.camel@pengutronix.de>
+Subject: Re: [PATCH v6 2/2] usb: dwc3: add generic driver to support
+ flattened
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Alex Elder <elder@ieee.org>, Ze Huang <huang.ze@linux.dev>, Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, Thinh Nguyen
+ <Thinh.Nguyen@synopsys.com>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Date: Mon, 21 Jul 2025 13:01:30 +0200
+In-Reply-To: <d2e9a521-568e-433d-a59b-9b98138ace2b@ieee.org>
+References: <20250712-dwc3_generic-v6-0-cc87737cc936@linux.dev>
+	 <20250712-dwc3_generic-v6-2-cc87737cc936@linux.dev>
+	 <d2e9a521-568e-433d-a59b-9b98138ace2b@ieee.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250718-01-k1-uart-binding-v1-1-a92e1e14c836@gentoo.org>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: spacemit@lists.linux.dev
+
+On Di, 2025-07-15 at 15:50 -0500, Alex Elder wrote:
+> On 7/12/25 2:49 AM, Ze Huang wrote:
+[...]
+> > +static int dwc3_generic_probe(struct platform_device *pdev)
+> > +{
+> > +	struct dwc3_probe_data probe_data =3D {};
+> > +	struct device *dev =3D &pdev->dev;
+> > +	struct dwc3_generic *dwc3;
+> > +	struct resource *res;
+> > +	int ret;
+> > +
+> > +	dwc3 =3D devm_kzalloc(dev, sizeof(*dwc3), GFP_KERNEL);
+> > +	if (!dwc3)
+> > +		return -ENOMEM;
+> > +
+> > +	dwc3->dev =3D dev;
+> > +
+> > +	platform_set_drvdata(pdev, dwc3);
+> > +
+> > +	res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> > +	if (!res) {
+> > +		dev_err(&pdev->dev, "missing memory resource\n");
+> > +		return -ENODEV;
+> > +	}
+> > +
+> > +	dwc3->resets =3D devm_reset_control_array_get_optional_exclusive(dev)=
+;
+> > +	if (IS_ERR(dwc3->resets))
+> > +		return dev_err_probe(dev, PTR_ERR(dwc3->resets), "failed to get rese=
+ts\n");
+> > +
+>=20
+> It isn't enforced on exclusive resets, but I'm pretty sure
+> resets are assumed to be asserted initially.
+
+The reset controller API doesn't guarantee this. Whether reset controls
+are initially asserted depends on the specific SoC/reset controller and
+also on what the bootloader did before.
+
+For example, there are self-deasserting reset controls that start out
+deasserted and can only ever be asserted for a short pulse [1]. Even
+the shared reset API only assumes that the reset line may have been
+asserted at some point before the first assert() [2].
+
+[1] https://docs.kernel.org/driver-api/reset.html#triggering
+[2] https://docs.kernel.org/driver-api/reset.html#assertion-and-deassertion
+
+Whether an explicit reset_control_assert() in the probe function is
+needed depends on which assumptions the driver can make on its own (on
+all platforms it is used on).
+For example, for some devices it may be enough to assume that the
+device has been reset at some point between power-on and probe.
 
 
-On Fri, 18 Jul 2025 23:04:37 +0800, Yixun Lan wrote:
-> In SpacemiT's K1 SoC, the clocks for UART are mandatory needed, so
-> for DT, both clocks and clock-names property should be set as required.
-> 
-> Fixes: 2c0594f9f062 ("dt-bindings: serial: 8250: support an optional second clock")
-> Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> ---
->  Documentation/devicetree/bindings/serial/8250.yaml | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+regards
+Philipp
 
