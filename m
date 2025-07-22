@@ -1,143 +1,110 @@
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCE6195
-	for <spacemit@lists.linux.dev>; Tue, 22 Jul 2025 00:35:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B721581F8
+	for <spacemit@lists.linux.dev>; Tue, 22 Jul 2025 01:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753144519; cv=none; b=Us5lPnIH2ocbNUrUg8f2fy0kjP40Y9zivwYYiv46F1muWzUimemnHGyB/bIzEVm0rCVQJNP/6ig9uYLQydMOVlMNb1Ukxml3tUNEBxMVRcUmiGW4b9tL093fjIQGFgIw9mzX0qvDrx27zX2mY03+/bMFzmqQTrKAN5Oqq5d2t34=
+	t=1753146524; cv=none; b=sittPS9hHPONm7K34XwkmehCES6ZPWEBPNFL+mlOQqYXBhkZWp8dxoGoT/uW9knK4gBKNdYDG54SlnOL161jInftLstKBqVf5YBT7Fgulafj2JrhVmpjVhKhxuzO07DhiQ0a+PyPy1/OF9f/F0tPzBFJXctG2EPy3hVsDIlZr6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753144519; c=relaxed/simple;
-	bh=NVJSthHoVBfvJ0DprsxJsTID3or77ayMtN3PtiGsObQ=;
+	s=arc-20240116; t=1753146524; c=relaxed/simple;
+	bh=hzdmz95quMdnRHb2ogS+Jsja1esz0IU+CTYKaAqwBy4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fVHD/rrwWpeRUgPginqCkBA2H0V7wAlMPkXSarB9HDUYVPjVpYFsWBRjajtjCbzjs0tybA51lkXRSJFhijlAAHQXY0B501g6gG7HW2mJsDGCyzLqLMEOmlHwSHmMRRUj7gMGf+GtfhVwZsfBHdL7yYjqRnhVKXwrpeKFeaQWzt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=kuqp7Svq; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=tpOwJJQb2c1BuyudX9sqfYZhxrTnVsYgI9mLT/MAAiAIQFC/QRhuEKt8Z+7BFCxMUkyjcotjS1x2gwrnAlXWdLpZ9l4k3jlywn2kVx+vXzoP7lHCKvRNfzaPTRBgC0TBxxMJr6WIWlVv0eyIKbq5KJtV7PQhNmMvs0bcHfJv9Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=YpjlIG9X; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=et0UNwGo; arc=none smtp.client-ip=155.254.16.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="kuqp7Svq"
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id 46DFF2082C;
-	Tue, 22 Jul 2025 02:35:14 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id 2AWGV58KjTtc; Tue, 22 Jul 2025 02:35:13 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1753144513; bh=NVJSthHoVBfvJ0DprsxJsTID3or77ayMtN3PtiGsObQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=kuqp7SvqE3+gsACQYmTXKrC6X6J/IBJVAvyya0mbiIsDkonQbEAg4tHtU90nE2fOO
-	 maPB8WmFiNZIQBVtbQ5nZ1VKVgu8ehAoh0wGLNES47exI9ghg7zuUL54J4gtoTdMz5
-	 tJYNXt4HOTIzqW9tNieEM2P/1o7t0VXzKJeO0orz4Bkz5+SPeuGo15x0CxAontFdWS
-	 I/D91B2ADLRNe+Bu1Ta0N7jG3yVEU8LxLvF6XW7tawKRh0QjJP2JNDny4uwpMZXphy
-	 uaoLs/SQ3vpfwD+kycJR2prgJzg5LDK+22uzpxHx+3Y2p1pbHW2o3yIcylVoF1fzU3
-	 34If+OcvH0l6w==
-Date: Tue, 22 Jul 2025 00:34:46 +0000
-From: Yao Zi <ziyao@disroot.org>
-To: Ze Huang <huang.ze@linux.dev>, Alex Elder <elder@ieee.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/2] usb: dwc3: add generic driver to support flattened
-Message-ID: <aH7cpr0faRPVnxXL@pie>
-References: <20250712-dwc3_generic-v6-0-cc87737cc936@linux.dev>
- <20250712-dwc3_generic-v6-2-cc87737cc936@linux.dev>
- <d2e9a521-568e-433d-a59b-9b98138ace2b@ieee.org>
- <aHyN3-uoHofF8Hg3@monica.localdomain>
- <aH4tpgVPbf9DOzSe@monica.localdomain>
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="YpjlIG9X";
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="et0UNwGo"
+Received: from localhost (bayard.4d2.org [127.0.0.1])
+	by bayard.4d2.org (Postfix) with ESMTP id EC46212FB405;
+	Mon, 21 Jul 2025 18:08:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1753146522; bh=hzdmz95quMdnRHb2ogS+Jsja1esz0IU+CTYKaAqwBy4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YpjlIG9X0fYRhCy7fPJxukgUtsATP1cL7cp/jkkFfEypXx4DQ0ZUIuEr7k/FFTBlM
+	 y1YxXEBBOwpkk9cacvkm8XRybsyHXzkxiwCOcP5YsyS5pXNAq4iJb7zWl7dAB/V3hb
+	 WTuytjfzmKPJwLVREVSkEmH2QEDD4hXC+3kzCe07jLdMEM91by8GptsNhMq2nM4V8w
+	 lKrXyTK4AAmkZy85a2SSRowJRloY6lar5ASCefHNuwzqT8Wo0xqkMk5SeAYpotbHfl
+	 d3+n5fZR8P3wtwvUOWCs7Kk0sJ6OpotRKY0K9k5/K6BuYtL4ErUl/mL/Ib/ArKGVVq
+	 2s9t4ThajmKvA==
+X-Virus-Scanned: amavis at 4d2.org
+Received: from bayard.4d2.org ([127.0.0.1])
+ by localhost (bayard.4d2.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id SLCFKPPPdY6W; Mon, 21 Jul 2025 18:08:39 -0700 (PDT)
+Received: from ketchup (unknown [117.171.64.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: heylenay@4d2.org)
+	by bayard.4d2.org (Postfix) with ESMTPSA id A2A2A12FB43F;
+	Mon, 21 Jul 2025 18:08:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1753146519; bh=hzdmz95quMdnRHb2ogS+Jsja1esz0IU+CTYKaAqwBy4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=et0UNwGoYlgBCdiG4K4MpGoiHLRWz+FgFR125Mrse1zkZk7CFpTTBqiri2ZzY4fpm
+	 GQiRwoXFGAR/R0e2usVbi5884N6XQIV5cK1HzIcA1A2qaprVDYD2cnHhY25u8N0NwS
+	 sJ+X4Oj29p/U+BnnrffO499qQIZP9oiT1SWd6Oml2++dGNxc75fSshucIfLbZQz+Sd
+	 3XbTrSCo1cZmuDl2cE2zL71A6Gy9bi8yFHQ9MilMiIV0IzUzUonJ4HgzufCrLbwF4p
+	 qTcRRyFksV57gP5lc98J8nY0ljbWZLIuiAlqnAMQSU99+OieavZypLHDt7dXHOdWAt
+	 7lwgYYyFgS8qQ==
+Date: Tue, 22 Jul 2025 01:08:30 +0000
+From: Haylen Chu <heylenay@4d2.org>
+To: Akhilesh Patil <akhilesh@ee.iitb.ac.in>, mturquette@baylibre.com,
+	sboyd@kernel.org, dlan@gentoo.org, elder@riscstar.com,
+	inochiama@outlook.com, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, heylenay@outlook.com, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	unicornxdotw@foxmail.com, jszhang@kernel.org,
+	zhangmeng.kevin@linux.spacemit.com, akhileshpatilvnit@gmail.com,
+	skhan@linuxfoundation.org
+Subject: Re: [PATCH] clk: spacemit: ccu_pll: fix error return value in
+ recalc_rate callback
+Message-ID: <aH7kjkC_YSEi7dFz@ketchup>
+References: <aH6P3lChCXhi3pe4@bhairav-test.ee.iitb.ac.in>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aH4tpgVPbf9DOzSe@monica.localdomain>
+In-Reply-To: <aH6P3lChCXhi3pe4@bhairav-test.ee.iitb.ac.in>
 
-On Mon, Jul 21, 2025 at 08:08:06PM +0800, Ze Huang wrote:
-> On Sun, Jul 20, 2025 at 02:34:07PM +0800, Ze Huang wrote:
-> > On Tue, Jul 15, 2025 at 03:50:54PM -0500, Alex Elder wrote:
-> > > On 7/12/25 2:49 AM, Ze Huang wrote:
-> > > > To support flattened dwc3 dt model and drop the glue layer, introduce the
-> > > > `dwc3-generic` driver. This enables direct binding of the DWC3 core driver
-> > > > and offers an alternative to the existing glue driver `dwc3-of-simple`.
-> > > 
-> > > I'm not familiar with dwc-of-simple.c, and won't comment on
-> > > how this differs from that (or does not).
-> > > 
-> > > Given you're implementing an alternative though, can you explain
-> > > in a little more detail what's different between the two?  Why
-> > > would someone choose to use this driver rather than the other one?
-> > 
-> > They are basically the same.
-> > 
-> > dwc-generic use a plain dt node while dwc-of-simple will nest the dwc3
-> > node as its child.
-> > 
-> > Both will use dwc3_core_probe() to finish the probe process. But now we
-> > can simplify the process by just calling it, instead of calling
-> > of_platform_populate() and create another snps,dwc3 device driver.
-> 
-> [...]
-> 
-> > > > +	ret = reset_control_assert(dwc3->resets);
-> > > > +	if (ret)
-> > > > +		return dev_err_probe(dev, ret, "failed to assert resets\n");
-> > > > +
-> > > > +	ret = devm_add_action_or_reset(dev, dwc3_generic_reset_control_assert, dwc3->resets);
-> > > > +	if (ret)
-> > > > +		return ret;
-> > > 
-> > > The re-assert shouldn't be set up unless the deassert below
-> > > succeeds.
-> > > 
-> > 
-> > Will move behind the deassert.
-> > 
-> > > > +	usleep_range(10, 1000);
-> > > 
-> > > This seems like a large range.  You could just do msleep(1);
-> > > Also, can you add a comment explaining why a delay is needed,
-> > > and why 1 millisecond is the right amount of time to sleep?
-> > > 
-> > 
-> > I will check the range with spacemit and reply soon.
-> > 
-> 
-> the resets are asynchronous with no strict timing. But to be safe, each
-> reset should stay active for at least 1 µs. I’ll switch to a udelay(2)
-> and add comment accordingly.
+On Tue, Jul 22, 2025 at 12:37:10AM +0530, Akhilesh Patil wrote:
+> Return 0 instead of -EINVAL if function ccu_pll_recalc_rate() fails to
+> get correct rate entry. Follow .recalc_rate callback documentation
+> as mentioned in include/linux/clk-provider.h for error return value.
 
-This may be a little farsight: do you think it's better to make the
-reset timing part of the of_match_data? This is more flexible and
-reduces future burden when introducing a new platform that comes with a
-different reset timing, which is a very likely case we'll face since
-it's a "generic" driver.
+Nice catch, thanks.
 
-> > > > +	ret = reset_control_deassert(dwc3->resets);
-> > > > +	if (ret)
-> > > > +		return dev_err_probe(dev, ret, "failed to deassert resets\n");
-> > > > +
-> > > > +	ret = devm_clk_bulk_get_all(dwc3->dev, &dwc3->clks);
-> > > > +	if (ret < 0)
-> > > > +		return dev_err_probe(dev, ret, "failed to get clocks\n");
-> > > 
-> > > Call devm_clk_bulk_get_all_enabled() instead of doing the two
-> > > steps separately here.
-> > > 
-> > 
-> > Will do, thanks.
-> > 
-> > > 					-Alex
+> Signed-off-by: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+
+Here misses a Fixes tag. With this added,
+
+Reviewed-by: Haylen Chu <heylenay@4d2.org>
+
+> ---
+>  drivers/clk/spacemit/ccu_pll.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-
-Regards,
-Yao Zi
+> diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
+> index 4427dcfbbb97..45f540073a65 100644
+> --- a/drivers/clk/spacemit/ccu_pll.c
+> +++ b/drivers/clk/spacemit/ccu_pll.c
+> @@ -122,7 +122,7 @@ static unsigned long ccu_pll_recalc_rate(struct clk_hw *hw,
+>  
+>  	WARN_ON_ONCE(!entry);
+>  
+> -	return entry ? entry->rate : -EINVAL;
+> +	return entry ? entry->rate : 0;
+>  }
+>  
+>  static long ccu_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+> -- 
+> 2.34.1
+> 
