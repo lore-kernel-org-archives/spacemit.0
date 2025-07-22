@@ -1,95 +1,143 @@
-Received: from smtp1.iitb.ac.in (smtpd9.iitb.ac.in [103.21.126.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2DA1E0DD8
-	for <spacemit@lists.linux.dev>; Mon, 21 Jul 2025 19:07:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.21.126.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCE6195
+	for <spacemit@lists.linux.dev>; Tue, 22 Jul 2025 00:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753124846; cv=none; b=PUO8A9AvcSWFf/EJRaJWcpcmgDhWVF4WW949eFuYezoUlyejHJxHthcr/Ak8v/VKtLT1UTRRSCL1mJfZlKobWaDUehYv52yygJU/Ba9JSAOISXWH+A30xhnhMUjA9KirFuDWA+m9XF2dsN+GY/BE8U5643S1kMFTUNFpOGF84JE=
+	t=1753144519; cv=none; b=Us5lPnIH2ocbNUrUg8f2fy0kjP40Y9zivwYYiv46F1muWzUimemnHGyB/bIzEVm0rCVQJNP/6ig9uYLQydMOVlMNb1Ukxml3tUNEBxMVRcUmiGW4b9tL093fjIQGFgIw9mzX0qvDrx27zX2mY03+/bMFzmqQTrKAN5Oqq5d2t34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753124846; c=relaxed/simple;
-	bh=NXP5NHVsGpWELSbR40KFa7hFqpvwth6rjNEAGSXfBtM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=KUnf5KVD18VL9x4x2csFdt/DkXhPrTsIfPHEB5mw/rUKoBe1DLY5a0dYrWSGq8TEgu0nU/+913eXEXSetd2t7gvXE0C1J4kJyataqTtQ/Q3qlL3WdFF8Ju7Dya4zIoEOIXjKpk2vRs/peqF6xB7CSMxUBzNrSUeQWsWumCrWPEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ee.iitb.ac.in; spf=pass smtp.mailfrom=ee.iitb.ac.in; dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b=w106IHoh; arc=none smtp.client-ip=103.21.126.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ee.iitb.ac.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ee.iitb.ac.in
+	s=arc-20240116; t=1753144519; c=relaxed/simple;
+	bh=NVJSthHoVBfvJ0DprsxJsTID3or77ayMtN3PtiGsObQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fVHD/rrwWpeRUgPginqCkBA2H0V7wAlMPkXSarB9HDUYVPjVpYFsWBRjajtjCbzjs0tybA51lkXRSJFhijlAAHQXY0B501g6gG7HW2mJsDGCyzLqLMEOmlHwSHmMRRUj7gMGf+GtfhVwZsfBHdL7yYjqRnhVKXwrpeKFeaQWzt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=kuqp7Svq; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b="w106IHoh"
-Received: from ldns2.iitb.ac.in (ldns2.iitb.ac.in [10.200.12.2])
-	by smtp1.iitb.ac.in (Postfix) with SMTP id 86F3A101C933
-	for <spacemit@lists.linux.dev>; Tue, 22 Jul 2025 00:37:22 +0530 (IST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp1.iitb.ac.in 86F3A101C933
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=iitb.ac.in; s=mail;
-	t=1753124842; bh=NXP5NHVsGpWELSbR40KFa7hFqpvwth6rjNEAGSXfBtM=;
-	h=Date:From:To:Cc:Subject:From;
-	b=w106IHohuBxNDHiEe/p3uAP47adKaV2YYoEEHn46UDIubPNk92jqAJWg9JTfDLavx
-	 2oGR6ifvSO4SOqn1WlFqk4pGeStmY50Twyf7P1Mv0y3nDiDHs96dQNvtjqA95PsA6L
-	 phc2yE+1UoKXJBGzxCfrjaa7YkMizh8u5CUyq0uA=
-Received: (qmail 3119 invoked by uid 510); 22 Jul 2025 00:37:22 +0530
-X-Qmail-Scanner-Diagnostics: from 10.200.1.25 by ldns2 (envelope-from <akhilesh@ee.iitb.ac.in>, uid 501) with qmail-scanner-2.11
- spamassassin: 3.4.1. mhr: 1.0. {clamdscan: 0.100.0/26337} 
- Clear:RC:1(10.200.1.25):SA:0(-0.5/7.0):. Processed in 4.222403 secs; 22 Jul 2025 00:37:22 +0530
-X-Spam-Level: 
-X-Spam-Pyzor: Reported 0 times.
-X-Envelope-From: akhilesh@ee.iitb.ac.in
-X-Qmail-Scanner-Mime-Attachments: |
-X-Qmail-Scanner-Zip-Files: |
-Received: from unknown (HELO ldns2.iitb.ac.in) (10.200.1.25)
-  by ldns2.iitb.ac.in with SMTP; 22 Jul 2025 00:37:18 +0530
-Received: from bhairav.ee.iitb.ac.in (bhairav.ee.iitb.ac.in [10.107.1.1])
-	by ldns2.iitb.ac.in (Postfix) with ESMTP id C9E2C3414E0;
-	Tue, 22 Jul 2025 00:37:16 +0530 (IST)
-Received: from bhairav-test.ee.iitb.ac.in (bhairav.ee.iitb.ac.in [10.107.1.1])
-	(Authenticated sender: akhilesh)
-	by bhairav.ee.iitb.ac.in (Postfix) with ESMTPSA id 7C7431E812C1;
-	Tue, 22 Jul 2025 00:37:16 +0530 (IST)
-Date: Tue, 22 Jul 2025 00:37:10 +0530
-From: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
-To: mturquette@baylibre.com, sboyd@kernel.org, dlan@gentoo.org,
-	heylenay@4d2.org, elder@riscstar.com, inochiama@outlook.com,
-	akhilesh@ee.iitb.ac.in, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, heylenay@outlook.com, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	unicornxdotw@foxmail.com, jszhang@kernel.org,
-	zhangmeng.kevin@linux.spacemit.com, akhileshpatilvnit@gmail.com,
-	skhan@linuxfoundation.org
-Subject: [PATCH] clk: spacemit: ccu_pll: fix error return value in
- recalc_rate callback
-Message-ID: <aH6P3lChCXhi3pe4@bhairav-test.ee.iitb.ac.in>
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="kuqp7Svq"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id 46DFF2082C;
+	Tue, 22 Jul 2025 02:35:14 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id 2AWGV58KjTtc; Tue, 22 Jul 2025 02:35:13 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1753144513; bh=NVJSthHoVBfvJ0DprsxJsTID3or77ayMtN3PtiGsObQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=kuqp7SvqE3+gsACQYmTXKrC6X6J/IBJVAvyya0mbiIsDkonQbEAg4tHtU90nE2fOO
+	 maPB8WmFiNZIQBVtbQ5nZ1VKVgu8ehAoh0wGLNES47exI9ghg7zuUL54J4gtoTdMz5
+	 tJYNXt4HOTIzqW9tNieEM2P/1o7t0VXzKJeO0orz4Bkz5+SPeuGo15x0CxAontFdWS
+	 I/D91B2ADLRNe+Bu1Ta0N7jG3yVEU8LxLvF6XW7tawKRh0QjJP2JNDny4uwpMZXphy
+	 uaoLs/SQ3vpfwD+kycJR2prgJzg5LDK+22uzpxHx+3Y2p1pbHW2o3yIcylVoF1fzU3
+	 34If+OcvH0l6w==
+Date: Tue, 22 Jul 2025 00:34:46 +0000
+From: Yao Zi <ziyao@disroot.org>
+To: Ze Huang <huang.ze@linux.dev>, Alex Elder <elder@ieee.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 2/2] usb: dwc3: add generic driver to support flattened
+Message-ID: <aH7cpr0faRPVnxXL@pie>
+References: <20250712-dwc3_generic-v6-0-cc87737cc936@linux.dev>
+ <20250712-dwc3_generic-v6-2-cc87737cc936@linux.dev>
+ <d2e9a521-568e-433d-a59b-9b98138ace2b@ieee.org>
+ <aHyN3-uoHofF8Hg3@monica.localdomain>
+ <aH4tpgVPbf9DOzSe@monica.localdomain>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aH4tpgVPbf9DOzSe@monica.localdomain>
 
-Return 0 instead of -EINVAL if function ccu_pll_recalc_rate() fails to
-get correct rate entry. Follow .recalc_rate callback documentation
-as mentioned in include/linux/clk-provider.h for error return value.
+On Mon, Jul 21, 2025 at 08:08:06PM +0800, Ze Huang wrote:
+> On Sun, Jul 20, 2025 at 02:34:07PM +0800, Ze Huang wrote:
+> > On Tue, Jul 15, 2025 at 03:50:54PM -0500, Alex Elder wrote:
+> > > On 7/12/25 2:49 AM, Ze Huang wrote:
+> > > > To support flattened dwc3 dt model and drop the glue layer, introduce the
+> > > > `dwc3-generic` driver. This enables direct binding of the DWC3 core driver
+> > > > and offers an alternative to the existing glue driver `dwc3-of-simple`.
+> > > 
+> > > I'm not familiar with dwc-of-simple.c, and won't comment on
+> > > how this differs from that (or does not).
+> > > 
+> > > Given you're implementing an alternative though, can you explain
+> > > in a little more detail what's different between the two?  Why
+> > > would someone choose to use this driver rather than the other one?
+> > 
+> > They are basically the same.
+> > 
+> > dwc-generic use a plain dt node while dwc-of-simple will nest the dwc3
+> > node as its child.
+> > 
+> > Both will use dwc3_core_probe() to finish the probe process. But now we
+> > can simplify the process by just calling it, instead of calling
+> > of_platform_populate() and create another snps,dwc3 device driver.
+> 
+> [...]
+> 
+> > > > +	ret = reset_control_assert(dwc3->resets);
+> > > > +	if (ret)
+> > > > +		return dev_err_probe(dev, ret, "failed to assert resets\n");
+> > > > +
+> > > > +	ret = devm_add_action_or_reset(dev, dwc3_generic_reset_control_assert, dwc3->resets);
+> > > > +	if (ret)
+> > > > +		return ret;
+> > > 
+> > > The re-assert shouldn't be set up unless the deassert below
+> > > succeeds.
+> > > 
+> > 
+> > Will move behind the deassert.
+> > 
+> > > > +	usleep_range(10, 1000);
+> > > 
+> > > This seems like a large range.  You could just do msleep(1);
+> > > Also, can you add a comment explaining why a delay is needed,
+> > > and why 1 millisecond is the right amount of time to sleep?
+> > > 
+> > 
+> > I will check the range with spacemit and reply soon.
+> > 
+> 
+> the resets are asynchronous with no strict timing. But to be safe, each
+> reset should stay active for at least 1 µs. I’ll switch to a udelay(2)
+> and add comment accordingly.
 
-Signed-off-by: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
----
- drivers/clk/spacemit/ccu_pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This may be a little farsight: do you think it's better to make the
+reset timing part of the of_match_data? This is more flexible and
+reduces future burden when introducing a new platform that comes with a
+different reset timing, which is a very likely case we'll face since
+it's a "generic" driver.
 
-diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
-index 4427dcfbbb97..45f540073a65 100644
---- a/drivers/clk/spacemit/ccu_pll.c
-+++ b/drivers/clk/spacemit/ccu_pll.c
-@@ -122,7 +122,7 @@ static unsigned long ccu_pll_recalc_rate(struct clk_hw *hw,
- 
- 	WARN_ON_ONCE(!entry);
- 
--	return entry ? entry->rate : -EINVAL;
-+	return entry ? entry->rate : 0;
- }
- 
- static long ccu_pll_round_rate(struct clk_hw *hw, unsigned long rate,
--- 
-2.34.1
+> > > > +	ret = reset_control_deassert(dwc3->resets);
+> > > > +	if (ret)
+> > > > +		return dev_err_probe(dev, ret, "failed to deassert resets\n");
+> > > > +
+> > > > +	ret = devm_clk_bulk_get_all(dwc3->dev, &dwc3->clks);
+> > > > +	if (ret < 0)
+> > > > +		return dev_err_probe(dev, ret, "failed to get clocks\n");
+> > > 
+> > > Call devm_clk_bulk_get_all_enabled() instead of doing the two
+> > > steps separately here.
+> > > 
+> > 
+> > Will do, thanks.
+> > 
+> > > 					-Alex
+> 
 
+Regards,
+Yao Zi
