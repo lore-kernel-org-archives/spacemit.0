@@ -1,112 +1,194 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D5C8F58
-	for <spacemit@lists.linux.dev>; Wed, 23 Jul 2025 13:25:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877AC207DE2
+	for <spacemit@lists.linux.dev>; Wed, 23 Jul 2025 21:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753277146; cv=none; b=ua73PzfFrOMVV5J3F4Zes25y4+jaOceCtlHcfETAiWikft4EixZqPWILFtlHqrk9WpNUxyAA6+MEQtpRIr2AIs8nF0b88Rt/mVh2q8rxnbMssFviSM2iT8REjeSKx7SESDbjG6hgm8tzkrAzhmjHhl5lKox9wBuElDMA2/o5z4w=
+	t=1753306810; cv=none; b=hYl92KaUIhgR+8hsyuxhSw+PfLk0JOk174Oz7a0eqMpvie6wLaLHiR5KzwBGRE+hfnS24dpBY0L95gCIX3hlzKI98KdkHvRT/9d0QqSNDVPQ48A0jKx5GsS60VTwNQfRfqvK2T74rtiSrsyo1uM7NWaokniqFTFDfehpIRNoDlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753277146; c=relaxed/simple;
-	bh=IRWOjBedd9/hnuVTcXrjjqnFUAKjZDKX/qV1HyL1jLk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HVFQW2fzpRyImPe3/Z8/CmkUWgyq7wNmwvU4u/8A4J4PwpYKg75feyIC8xyzZkepGKtOIvCHnxqsTbIjN9KX98tcjJCGiHDorhKpflQC7UviaZRdrkXURBD0kn5fqWRDtrif2W/bvitQlNhCqCsEuHJ5LL5838X/5B9cibWmOBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=Vc98fKag; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
+	s=arc-20240116; t=1753306810; c=relaxed/simple;
+	bh=UufNsZizet1xLf97MQ8+VfzME0OpE/bKoTPWe0JIP9U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OBTR+9V+QU7aaCGaNjZWo0P+lkAaeNpUpX/XIPAHqwOVCVN72PFY6FSN02xl0vjxHqqCqM1gdxKregrizTtKxqg79lZ+fRILMmk9ebZSao684lXKFmdniru8J8XkWoonw9Ibv2A2lhSXVgrVjnUoX71WGlA03iKrnrDLAgumqIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ioPP6HYV; arc=none smtp.client-ip=217.70.183.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="Vc98fKag"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a6d1369d4eso4018308f8f.2
-        for <spacemit@lists.linux.dev>; Wed, 23 Jul 2025 06:25:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1753277142; x=1753881942; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/jOFjaGN3CsVqLePSDjEetRndyZpxQTsvQQ0tgo6UDc=;
-        b=Vc98fKag0J4w9WpBHGO9Dxye9gJyiolFfZxXfKR5r5CXB/VhWB4w8uL4dGOCeEDjvj
-         uBt5N0k6NaHd3f6ShRwfjxtQzKTtATszeb0iX3P7AVfZXlVSHHp/eNhSTcve1RaLPCny
-         5Ohc+WLRtdNxyfcWDBT6MAjxavrXLpdyCKOwkr7THuMHUpZuRZIl78SHVpkSMQrlcZtk
-         Cw5pEV4eV2q3BFIK7enMXtP3m2bJobvGcqAhXB+2pk65kqCVL2h1Iiz2Ib8rLiYI7dmY
-         +YSVhJYkxNTtSlJ/m5sII5GAzFhfd2N9Sy4GTvj55hI30AW6B3AwbQLRHPlN9gk+yhsM
-         hAkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753277142; x=1753881942;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/jOFjaGN3CsVqLePSDjEetRndyZpxQTsvQQ0tgo6UDc=;
-        b=OaqXLl9OeHQ2q1LsDdK/06RtoEwN0qO9imd0Js25QyRNGB315AIK9gYjnK1xKorMuA
-         jeL2BNlV+hEfJ3ZAzaI4ZXTcbHSduFEFWH7gs4T2Ng6cLcbopoBrUE4MFbxAx3yd9uco
-         OupAfmXF2DWxMDPLC32VrVfin5z7ouPLUwVje/fcVdGaqcCr8EbHiT11OSCpIpxOZFgN
-         GF8oxRqaqv06P9JqkYxu97lE+K9dfVbKWaHLHrOvknFJrOz5WJsdGSmECJyztHRThft+
-         tLYRoT2PxWiFfrHm/0Lxoy8+3mZljmrE1dFGjr8Jn5xWDaWWhV9nt0/tyC5JgRq+LL3N
-         6kfg==
-X-Forwarded-Encrypted: i=1; AJvYcCW0U6OLnKEaYnPLRMnfkJ+AC1tlb+jLVWKYI1RJwUQ17/Ob4ieOWJ7IDw7GfFbGlnL0KStGYRsj7A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzqYCEf3Rxa6Ww3JsLYR4DsNKqORi2ARqEbvSjGwvlhEvuZnHvG
-	dP96JcMMLKD8gRuK/cuj9ESJQLLZ6j2bt1pofKmg2FPYjSkekAiytun4MxM/96FtjvE=
-X-Gm-Gg: ASbGnctYYYk0Qa1bcA5+esFXs5+ndBoJKRD1+eRSvpDJH1V/9M4YxB4lMVV8fmhEvvy
-	Nsr20H1KQaUTT9EX1Yba8EIZgbvSJBX27ttlu+NtUCJC5oI4szOfUHDiT+Yhoh0B+PCNBc7MDVR
-	M66HHQMakCDq18ghG72BEb2LdJh1f9CyEYZeZFEvrRZCL7JAjHVKcxu2AV1fHQdF+NP5QJSLqb+
-	U6Xe94+QeUE10vILQY9TooimSPmG1jd2DYG85x2nSxOwstebh3hPaeJV9rfgv5gmBoX3aacbM3e
-	+AOyA2wXAira/rWOTYb0XX/Jm/BwZx+LLZ/r1Rp92FQSiyHKeFN+rQVPbmps9kRJ4hazce0/SZ0
-	03wC/L2vRFc0XjAhK/I02Wo4jsH1b4829TbpQIgodUDWJk5uoDA==
-X-Google-Smtp-Source: AGHT+IG7lEmEEOErHvtFjRdp4cL9IAeiY0R7yViDRurEsfQTfNPWbZmrOYW259gPKET6e12uFu2ovw==
-X-Received: by 2002:a05:6000:288a:b0:3a3:67bb:8f3f with SMTP id ffacd0b85a97d-3b768f16391mr2725907f8f.53.1753277141746;
-        Wed, 23 Jul 2025 06:25:41 -0700 (PDT)
-Received: from pop-os.telenet.be ([2a02:1807:2a00:3400:7fcb:5e01:8f11:1009])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca315basm16320109f8f.39.2025.07.23.06.25.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jul 2025 06:25:41 -0700 (PDT)
-From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-To: sboyd@kernel.org,
-	dlan@gentoo.org
-Cc: skhan@linuxfoundation.org,
-	linux-kernel-mentees@lists.linux.dev,
-	linux-clk@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Subject: [PATCH v2] clk: spacemit: fix resource leak in spacemit_ccu_reset_register
-Date: Wed, 23 Jul 2025 15:25:04 +0200
-Message-ID: <20250723132504.66273-1-hendrik.hamerlinck@hammernet.be>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ioPP6HYV"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 1E98343369;
+	Wed, 23 Jul 2025 21:39:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1753306799;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=wTDPZISTAtDJweAfErLxD5sezF7OlcREwST/Cpk6fh8=;
+	b=ioPP6HYV9KFJEssOZLj06yxviLP+9b7qFDJxC8kvbVNfk3am45fuBDB6O9wn4yaeJUlI7u
+	i8jDmTZ9BPZGx1dri2sLgKNrhIQPtni6wbjpbYAOg2h/gF1yjCZhkGqpc9VlAdTF7ZOTES
+	1pcS6O+Y+8qLJfj6URFmNuw/MgL1TKIHjtUpXS2iLH1C14zrNgaRDOLtOK2VyXxhDahVkF
+	fox+A7O5baQHuO/9EQFJkpNUAsDBkkKHn5FTOqdNN7ryQYJnN7bkOEQe+P8o2CR3424bTJ
+	0E/BsoEjG8A8aTVkHaLVqrZG+QBno05WF+S1D+83Z+uhD9O6g59GeZu/PxNw3w==
+Date: Wed, 23 Jul 2025 23:39:56 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Alex Elder <elder@riscstar.com>
+Cc: lee@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	troymitchell988@gmail.com, guodong@riscstar.com,
+	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 5/8] rtc: spacemit: support the SpacemiT P1 RTC
+Message-ID: <20250723213956570da462@mail.local>
+References: <20250710175107.1280221-1-elder@riscstar.com>
+ <20250710175107.1280221-6-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250710175107.1280221-6-elder@riscstar.com>
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejkeekjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheptehlvgigrghnughrvgcuuegvlhhlohhnihcuoegrlhgvgigrnhgurhgvrdgsvghllhhonhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeegieduueethefhkeegjeevfefhiedujeeuhffgleejgfejgeekueejuefgheeggfenucffohhmrghinhepsghoohhtlhhinhdrtghomhenucfkphepvdgrtddumegvtdgrmegsieehmegsvdhftdemkegsleekmeejledtheemrggsvgelmeduhedvvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgdtrgemsgeiheemsgdvfhdtmeeksgelkeemjeeltdehmegrsggvleemudehvddvpdhhvghloheplhhotggrlhhhohhsthdpmhgrihhlfhhrohhmpegrlhgvgigrnhgurhgvrdgsvghllhhonhhisegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopedvtddprhgtphhtthhopegvlhguvghrsehrihhstghsthgrrhdrtghomhdprhgtphhtthhopehlvggvsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlghhirhgufihoohgusehgmhgrihhlr
+ dgtohhmpdhrtghpthhtohepsghrohhonhhivgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhosghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhiikhdoughtsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohhnohhrodgutheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrthdrjhhonhgtiiihkhesohdvrdhplh
+X-GND-Sasl: alexandre.belloni@bootlin.com
 
-The function spacemit_ccu_reset_register() allocates memory for an
-auxiliary device. If auxiliary_device_add() fails, it skips cleanup of
-these resources, resulting in leaks.
+On 10/07/2025 12:51:03-0500, Alex Elder wrote:
+> +static int p1_rtc_read_time(struct device *dev, struct rtc_time *t)
+> +{
+> +	struct p1_rtc *p1 = dev_get_drvdata(dev);
+> +	struct regmap *regmap = p1->regmap;
+> +	u32 count = RTC_READ_TRIES;
+> +	u8 seconds;
+> +	u8 time[6];
+> +	int ret;
+> +
+> +	if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
+> +		return -ENODEV;		/* RTC is disabled */
 
-Fix this by using the appropriate error handling path.
+That should be -EINVAL, as all the other drivers have standardized this.
 
-Fixes: 988543522ebd ("clk: spacemit: set up reset auxiliary devices")
-Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
----
-Changes in v2:
-- Properly place the Fixes tip.
----
- drivers/clk/spacemit/ccu-k1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+With this fixed,
+Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 
-diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-index 65e6de030717..5bb85e32c6cf 100644
---- a/drivers/clk/spacemit/ccu-k1.c
-+++ b/drivers/clk/spacemit/ccu-k1.c
-@@ -1059,7 +1059,7 @@ static int spacemit_ccu_reset_register(struct device *dev,
- 	ret = auxiliary_device_add(adev);
- 	if (ret) {
- 		auxiliary_device_uninit(adev);
--		return ret;
-+		goto err_free_aux_id;
- 	}
- 
- 	return devm_add_action_or_reset(dev, spacemit_adev_unregister, adev);
+
+> +
+> +	ret = regmap_bulk_read(regmap, RTC_TIME, time, sizeof(time));
+> +	if (ret)
+> +		return ret;
+> +
+> +	do {
+> +		seconds = time[0];
+> +		ret = regmap_bulk_read(regmap, RTC_TIME, time, sizeof(time));
+> +		if (ret)
+> +			return ret;
+> +	} while (time[0] != seconds && --count);
+> +
+> +	if (!count)
+> +		return -EIO;		/* Unable to get a consistent result */
+> +
+> +	t->tm_sec = time[0] & GENMASK(5, 0);
+> +	t->tm_min = time[1] & GENMASK(5, 0);
+> +	t->tm_hour = time[2] & GENMASK(4, 0);
+> +	t->tm_mday = (time[3] & GENMASK(4, 0)) + 1;
+> +	t->tm_mon = time[4] & GENMASK(3, 0);
+> +	t->tm_year = (time[5] & GENMASK(5, 0)) + 100;
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * The P1 hardware documentation states that values in the registers are
+> + * latched so when written they represent a consistent time snapshot.
+> + * Nevertheless, this is not guaranteed by the implementation, so we must
+> + * disable the RTC while updating it.
+> + */
+> +static int p1_rtc_set_time(struct device *dev, struct rtc_time *t)
+> +{
+> +	struct p1_rtc *p1 = dev_get_drvdata(dev);
+> +	struct regmap *regmap = p1->regmap;
+> +	u8 time[6];
+> +	int ret;
+> +
+> +	time[0] = t->tm_sec;
+> +	time[1] = t->tm_min;
+> +	time[2] = t->tm_hour;
+> +	time[3] = t->tm_mday - 1;
+> +	time[4] = t->tm_mon;
+> +	time[5] = t->tm_year - 100;
+> +
+> +	/* Disable the RTC to update; re-enable again when done */
+> +	ret = regmap_clear_bits(regmap, RTC_CTRL, RTC_EN);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* If something goes wrong, leave the RTC disabled */
+> +	ret = regmap_bulk_write(regmap, RTC_TIME, time, sizeof(time));
+> +	if (ret)
+> +		return ret;
+> +
+> +	return regmap_set_bits(regmap, RTC_CTRL, RTC_EN);
+> +}
+> +
+> +static const struct rtc_class_ops p1_rtc_class_ops = {
+> +	.read_time = p1_rtc_read_time,
+> +	.set_time = p1_rtc_set_time,
+> +};
+> +
+> +static int p1_rtc_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct rtc_device *rtc;
+> +	struct p1_rtc *p1;
+> +
+> +	p1 = devm_kzalloc(dev, sizeof(*p1), GFP_KERNEL);
+> +	if (!p1)
+> +		return -ENOMEM;
+> +	dev_set_drvdata(dev, p1);
+> +
+> +	p1->regmap = dev_get_regmap(dev->parent, NULL);
+> +	if (!p1->regmap)
+> +		return dev_err_probe(dev, -ENODEV, "failed to get regmap\n");
+> +
+> +	rtc = devm_rtc_allocate_device(dev);
+> +	if (IS_ERR(rtc))
+> +		return dev_err_probe(dev, PTR_ERR(rtc),
+> +				     "error allocating device\n");
+> +	p1->rtc = rtc;
+> +
+> +	rtc->ops = &p1_rtc_class_ops;
+> +	rtc->range_min = RTC_TIMESTAMP_BEGIN_2000;
+> +	rtc->range_max = RTC_TIMESTAMP_END_2063;
+> +
+> +	clear_bit(RTC_FEATURE_ALARM, rtc->features);
+> +	clear_bit(RTC_FEATURE_UPDATE_INTERRUPT, rtc->features);
+> +
+> +	return devm_rtc_register_device(rtc);
+> +}
+> +
+> +static struct platform_driver p1_rtc_driver = {
+> +	.probe = p1_rtc_probe,
+> +	.driver = {
+> +		.name = MOD_NAME,
+> +	},
+> +};
+> +
+> +module_platform_driver(p1_rtc_driver);
+> +
+> +MODULE_DESCRIPTION("SpacemiT P1 RTC driver");
+> +MODULE_LICENSE("GPL");
+> +MODULE_ALIAS("platform:" MOD_NAME);
+> -- 
+> 2.45.2
+> 
+
 -- 
-2.43.0
-
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
