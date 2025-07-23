@@ -1,109 +1,140 @@
-Received: from smtp1.iitb.ac.in (smtpd9.iitb.ac.in [103.21.126.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6E01E1C22
-	for <spacemit@lists.linux.dev>; Wed, 23 Jul 2025 05:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.21.126.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C7B283141;
+	Wed, 23 Jul 2025 09:51:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753249072; cv=none; b=m0BSaV+aTJtWkOXO/4tFostZeap2e3lZbAAjirjpzBYF8oyLyNa+fp1TGMpTGk42R/f654Mc40Sj8kxhEx8UwLjPi+YNZGBXdwkQRYPdepz/bwwNEAJVUaRI7zxw0oB6cxRsFBws0l6imnSZlUYOBDev1zPMXtTpV8uzysOrCLU=
+	t=1753264292; cv=none; b=YjIQovZgjOfLacjpoVqkc4YGiT+T60YddnR4fbjbfFWjd2eN+3Cc4nleYyi/qqP5BXJAWjcYPQR6XdnV1CyNF1wMc73r9uoPcXYgr4Dtb3VdVb48+bjf6Y/TqG9/qjYVjzPVLS0x9zSiLf1GMI4jQHgplsvMiyAfDTvWGOA4Y6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753249072; c=relaxed/simple;
-	bh=jgmU0mVrM9TEWK9SDqyK12S6GaRiPg9G1If9CLN/p8M=;
+	s=arc-20240116; t=1753264292; c=relaxed/simple;
+	bh=wXjG20KF++mohZAH82whMjcdBO3WgxTkFDej6WjYGKw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I1zbaFDpLI/J+TVzmwOawnBkyhA3NJA7okxUHts1N+YyUL3vgAjCxzq1hqlj4YxgDK2z+uZEJ7zLLBw/iH5EqmNYU3Fc8VfoJQaMmsR4umYIF/g0268OX7yOyLueSFuXbMiKUS1E4f9ZjQSEDjrwsZ+aZoDjuNvVXR+Ie8XAGaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ee.iitb.ac.in; spf=pass smtp.mailfrom=ee.iitb.ac.in; dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b=nuvd4NNk; arc=none smtp.client-ip=103.21.126.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ee.iitb.ac.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ee.iitb.ac.in
+	 Content-Type:Content-Disposition:In-Reply-To; b=XB8G01LIHNS1G3U4qekspj5KG8gd0S1/nCNy5nR1VjE8KI1Vr3x9zGUlodsWBi42cJZMOgqlE0HJhgDi1vEC9DHYfUUsoHavIU8fOAZoK0cww+mp0TeBbEe72k7ZKjJNpKgSErXU+K6vbxHJNq/kku4S76Vr9zzF3xhlP/bsIqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jg5aYMkV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iitb.ac.in header.i=@iitb.ac.in header.b="nuvd4NNk"
-Received: from ldns2.iitb.ac.in (ldns2.iitb.ac.in [10.200.12.2])
-	by smtp1.iitb.ac.in (Postfix) with SMTP id 7D3881080251
-	for <spacemit@lists.linux.dev>; Wed, 23 Jul 2025 11:07:47 +0530 (IST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp1.iitb.ac.in 7D3881080251
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=iitb.ac.in; s=mail;
-	t=1753249067; bh=jgmU0mVrM9TEWK9SDqyK12S6GaRiPg9G1If9CLN/p8M=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jg5aYMkV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9761CC4CEE7;
+	Wed, 23 Jul 2025 09:51:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753264292;
+	bh=wXjG20KF++mohZAH82whMjcdBO3WgxTkFDej6WjYGKw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nuvd4NNkx9+OaWJx8MshqRM6HGFPCey7VmVboKOkbDftyBkdZPud0RFn8SnWFzEtt
-	 dupzPgNxoowLXB5IZhR6ulEonRR2v0VyilSdbojQeZP33hmNQfROUlRvE8x2Wetwd7
-	 TWuB1VNhN351k1gOh0+VwWFzwZ53Rl3ryenCN72Y=
-Received: (qmail 15488 invoked by uid 510); 23 Jul 2025 11:07:47 +0530
-X-Qmail-Scanner-Diagnostics: from 10.200.1.25 by ldns2 (envelope-from <akhilesh@ee.iitb.ac.in>, uid 501) with qmail-scanner-2.11
- spamassassin: 3.4.1. mhr: 1.0. {clamdscan: 0.100.0/26337} 
- Clear:RC:1(10.200.1.25):SA:0(0.0/7.0):. Processed in 3.944097 secs; 23 Jul 2025 11:07:47 +0530
-X-Spam-Level: 
-X-Spam-Pyzor: Reported 0 times.
-X-Envelope-From: akhilesh@ee.iitb.ac.in
-X-Qmail-Scanner-Mime-Attachments: |
-X-Qmail-Scanner-Zip-Files: |
-Received: from unknown (HELO ldns2.iitb.ac.in) (10.200.1.25)
-  by ldns2.iitb.ac.in with SMTP; 23 Jul 2025 11:07:43 +0530
-Received: from bhairav.ee.iitb.ac.in (bhairav.ee.iitb.ac.in [10.107.1.1])
-	by ldns2.iitb.ac.in (Postfix) with ESMTP id 4BA853414F2;
-	Wed, 23 Jul 2025 11:07:42 +0530 (IST)
-Received: from bhairav-test.ee.iitb.ac.in (bhairav.ee.iitb.ac.in [10.107.1.1])
-	(Authenticated sender: akhilesh)
-	by bhairav.ee.iitb.ac.in (Postfix) with ESMTPSA id 034231E81366;
-	Wed, 23 Jul 2025 11:07:42 +0530 (IST)
-Date: Wed, 23 Jul 2025 11:07:36 +0530
-From: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
-To: Haylen Chu <heylenay@4d2.org>
-Cc: mturquette@baylibre.com, sboyd@kernel.org, dlan@gentoo.org,
-	elder@riscstar.com, inochiama@outlook.com, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, heylenay@outlook.com,
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, linux-clk@vger.kernel.org,
+	b=jg5aYMkVGz1FmNjRpleo21K2HbOH++CwJlJB5kEXO6Cy00OTib+Kmm14pG6kH65ip
+	 ytlCj34yf2c1WsgTr7JBftxDXfACRw5BsZ0kRr1cxVECFA2qPqZahYsfoYk/Zu89S6
+	 0C5eeDdwg9L2Y5d+OfqT1yHOKlfHuTvSONFoVo5YMf1ADoeHDI2e0/UHjJabLAo+4T
+	 lYWJ1Tw85Ep6j5uHVwu22vaMFYHKIwemckIrB6VeLfBn5qoNYk7hWmWd0uA0MTPYKo
+	 0r9W2dUMrQQOflJdvmXEUKxwFDXlLUMAbx0lBNrDG3UsctiLjCTJ8OATi4iDlZ5/Og
+	 qvPImRcHSSg0A==
+Date: Wed, 23 Jul 2025 10:51:25 +0100
+From: Lee Jones <lee@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: lgirdwood@gmail.com, broonie@kernel.org, alexandre.belloni@bootlin.com,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	troymitchell988@gmail.com, guodong@riscstar.com,
+	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, unicornxdotw@foxmail.com,
-	jszhang@kernel.org, zhangmeng.kevin@linux.spacemit.com,
-	akhileshpatilvnit@gmail.com, skhan@linuxfoundation.org
-Subject: Re: [PATCH] clk: spacemit: ccu_pll: fix error return value in
- recalc_rate callback
-Message-ID: <aIB1IPa9HBDh+Vns@bhairav-test.ee.iitb.ac.in>
-References: <aH6P3lChCXhi3pe4@bhairav-test.ee.iitb.ac.in>
- <aH7kjkC_YSEi7dFz@ketchup>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 2/8] mfd: simple-mfd-i2c: specify max_register
+Message-ID: <20250723095125.GR11056@google.com>
+References: <20250710175107.1280221-1-elder@riscstar.com>
+ <20250710175107.1280221-3-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aH7kjkC_YSEi7dFz@ketchup>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250710175107.1280221-3-elder@riscstar.com>
 
-On Tue, Jul 22, 2025 at 01:08:30AM +0000, Haylen Chu wrote:
-> On Tue, Jul 22, 2025 at 12:37:10AM +0530, Akhilesh Patil wrote:
-> > Return 0 instead of -EINVAL if function ccu_pll_recalc_rate() fails to
-> > get correct rate entry. Follow .recalc_rate callback documentation
-> > as mentioned in include/linux/clk-provider.h for error return value.
-> 
-> Nice catch, thanks.
-> 
-> > Signed-off-by: Akhilesh Patil <akhilesh@ee.iitb.ac.in>
-> 
-> Here misses a Fixes tag. With this added,
-> 
-> Reviewed-by: Haylen Chu <heylenay@4d2.org>
-> 
-Thanks Haylen and Alex for the review. Sent V2 patch with Fixes tag.
+On Thu, 10 Jul 2025, Alex Elder wrote:
 
-> > ---
-> >  drivers/clk/spacemit/ccu_pll.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
-> > index 4427dcfbbb97..45f540073a65 100644
-> > --- a/drivers/clk/spacemit/ccu_pll.c
-> > +++ b/drivers/clk/spacemit/ccu_pll.c
-> > @@ -122,7 +122,7 @@ static unsigned long ccu_pll_recalc_rate(struct clk_hw *hw,
-> >  
-> >  	WARN_ON_ONCE(!entry);
-> >  
-> > -	return entry ? entry->rate : -EINVAL;
-> > +	return entry ? entry->rate : 0;
-> >  }
-> >  
-> >  static long ccu_pll_round_rate(struct clk_hw *hw, unsigned long rate,
-> > -- 
-> > 2.34.1
-> > 
+> All devices supported by simple MFD use the same 8-bit register 8-bit
+> value regmap configuration.  There is an option available for a device
+> to specify a custom configuration, but no existing device uses it.
+> 
+> Rather than specify a "full" regmap configuration to change only
+> the max_register value, Lee Jones suggested allowing max_register
+> to be specified in the simple_mfd_data structure.  If regmap_config
+> and max_register are both supplied, the max_register field is ignored.
+> 
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> Suggested-by: Lee Jones <lee@kernel.org>
+> ---
+> v8: - Use regmap_config_8r_8v, modifying it if max_register supplied
+> 
+>  drivers/mfd/simple-mfd-i2c.c | 8 ++++++--
+>  drivers/mfd/simple-mfd-i2c.h | 3 ++-
+>  2 files changed, 8 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+> index 22159913bea03..5138aa72140b5 100644
+> --- a/drivers/mfd/simple-mfd-i2c.c
+> +++ b/drivers/mfd/simple-mfd-i2c.c
+> @@ -24,15 +24,16 @@
+>  
+>  #include "simple-mfd-i2c.h"
+>  
+> -static const struct regmap_config regmap_config_8r_8v = {
+> +static struct regmap_config regmap_config_8r_8v = {
+>  	.reg_bits = 8,
+>  	.val_bits = 8,
+> +	/* .max_register can be specified in simple_mfd_data */
+
+Drop this comment please.
+
+>  };
+>  
+>  static int simple_mfd_i2c_probe(struct i2c_client *i2c)
+>  {
+>  	const struct simple_mfd_data *simple_mfd_data;
+> -	const struct regmap_config *regmap_config;
+> +	struct regmap_config *regmap_config;
+>  	struct regmap *regmap;
+>  	int ret;
+>  
+> @@ -43,8 +44,11 @@ static int simple_mfd_i2c_probe(struct i2c_client *i2c)
+>  		regmap_config = &regmap_config_8r_8v;
+>  	else
+>  		regmap_config = simple_mfd_data->regmap_config;
+> +	if (simple_mfd_data && !simple_mfd_data->regmap_config)
+> +		regmap_config->max_register = simple_mfd_data->max_register;
+
+If max_register is set in simple_mfd_data, it should take precedence.
+
+if (simple_mfd_data && simple_mfd_data->max_register)
+	regmap_config->max_register = simple_mfd_data->max_register;
+
+>  	regmap = devm_regmap_init_i2c(i2c, regmap_config);
+> +	regmap_config->max_register = 0;
+
+Does max_register definitely have persistence over subsequent calls?
+
+>  	if (IS_ERR(regmap))
+>  		return PTR_ERR(regmap);
+>  
+> diff --git a/drivers/mfd/simple-mfd-i2c.h b/drivers/mfd/simple-mfd-i2c.h
+> index 7cb2bdd347d97..ea2a96af8bce4 100644
+> --- a/drivers/mfd/simple-mfd-i2c.h
+> +++ b/drivers/mfd/simple-mfd-i2c.h
+> @@ -24,7 +24,8 @@
+>  #include <linux/regmap.h>
+>  
+>  struct simple_mfd_data {
+> -	const struct regmap_config *regmap_config;
+> +	struct regmap_config *regmap_config;
+> +	unsigned int max_register;	/* Ignored if regmap_config supplied */
+>  	const struct mfd_cell *mfd_cell;
+>  	size_t mfd_cell_size;
+>  };
+> -- 
+> 2.45.2
+> 
+
+-- 
+Lee Jones [李琼斯]
