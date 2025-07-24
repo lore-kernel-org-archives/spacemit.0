@@ -1,112 +1,205 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB565238149
-	for <spacemit@lists.linux.dev>; Thu, 24 Jul 2025 12:31:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CED250C18
+	for <spacemit@lists.linux.dev>; Thu, 24 Jul 2025 20:25:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753360296; cv=none; b=CVuaecfKYE6LO3X4UQoYL9eORp8/rB6VEOEF2bST/VPxACp0rvwh4zWSa/vWldnaLKNTaAVP1nkIAp8GZ5yxlY4zs/0piY/oX9hQoQ9rtyyzM4NWU78FiMwTx1/9u859S+hWzNi7LGHteV9OaHkTyACDGwiOmttoEb+O17FI8z4=
+	t=1753388718; cv=none; b=evt3VzBxqsJPvpAXaUxCQhcElRxCmYta3QEfiCYDAieVp/VJAmehJFKzejYDfRfqyho9HrKtmndIirpS6tVxr/d2byepemN6O4ZulP2RIPvTVnOQGKLOCjQlHme+249m6ML0z62u2ZBW7ZoLd+s7MyYdYuFNFmF6GiIaPPGMnNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753360296; c=relaxed/simple;
-	bh=6gW1O+8T+ie5JBZvdwtSAFWnQaJdFjlrByrYTH2nYHw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YKXuFj2UzSeGhpP3EIDRJeg1d9dYsHM8Jsm45oZFyfK4VjDpGpEPgAg+vWBKuh5D14vIItHOA1naA1AF254NTZ7mM5vEsMKA53IzC6V5jZykSx5xUfDALHscglMhcb9anJvQIE9G/gb5eHZ0I3pNmwJFAIQvLxHnBVu4wWqduO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.48.207])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id AAFFB341044;
-	Thu, 24 Jul 2025 12:31:33 +0000 (UTC)
-Date: Thu, 24 Jul 2025 20:31:28 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Duje =?utf-8?Q?Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Alex Elder <elder@riscstar.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v3 2/8] dmaengine: mmp_pdma: Add optional clock support
-Message-ID: <20250724123128-GYB748228@gentoo>
-References: <20250714-working_dma_0701_v2-v3-0-8b0f5cd71595@riscstar.com>
- <20250714-working_dma_0701_v2-v3-2-8b0f5cd71595@riscstar.com>
+	s=arc-20240116; t=1753388718; c=relaxed/simple;
+	bh=XqFmUKYyFJuP9gT1VB2HqW1p4rCZAg9SeYxN+uj0LfA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ADqmZhBmr4bjG1eA0lxCNw6m7mbdtKuIvT/Jiv+tlVVFo3b2rOXNXVq7jtExMtdwxbzqGrUB8awKwYTUsQ6YK0v24joHF0J6/gcd4ZCp/fPlDSu1DRnbHgvvJH6bKIkaowit92VXCE9rdeq3CzOvE7REnDMTrgBvK5dRWAMsS1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=UFr3ZM5N; arc=none smtp.client-ip=209.85.166.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="UFr3ZM5N"
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3dda399db09so16434445ab.3
+        for <spacemit@lists.linux.dev>; Thu, 24 Jul 2025 13:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1753388715; x=1753993515; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lrEbbbAkAppzih/TPSBGsQGG4aRG/XXDaMLZfTbNAAw=;
+        b=UFr3ZM5NacDysGos/nRF5I+FmB2KdMnxF61QZOdi+Hu29IRwa6WRePS1fzsaHvv4Gh
+         6t2JsG0q70TfKejBzBewBnde0tOeVXRvGg2ylBIpp6PDoBydpkE6bcJYi3oApQ/jpala
+         fDyl+A6hUspYVCiuUjM7KT9ksYahZ6jKBJRTBLciWtlfM+8PMgInJXOK1ViTwR4BXpMo
+         F0PxE6eD6yc/Jp5ogCUBzYP7tUy9mF4QP8TGYBoe8pIVfaFLAQoOWhEMPfOs48e8yVff
+         3UlCGjsvcfgr1//uZIo530JFaMJg96LCivBxeW2g+7AwfHBgnPn5H6F+zcwQqBJYK20N
+         xXgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753388715; x=1753993515;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lrEbbbAkAppzih/TPSBGsQGG4aRG/XXDaMLZfTbNAAw=;
+        b=EPawZJi435ySUvUTk443clkG39LpDEYtKK9k/GV/ILqfa49mGGO9RTq2i9tWuWQKbH
+         oatcIsM+4tqG4RjXNeMArAZlOwz9TQ8hEwuS9jSPt/7XUPA3qZ/wlsn7bkvdqHFWlBWM
+         kWcq0TYqBQtyUSxFZaESY5BRIfBmqRUCS/MVQJKtYA31p+mWIkTRoh7yHRutxn7LzgMM
+         b/OBGhQYbbD81WZf1LXcdAY9oN6xgdV+rllfkqWsjUtsGp8uRV9ZYd2BEaCi2vIqwYW3
+         Zy01yiUs+m6jVfqv0fx6fSuDIVwPHMEpV8U71IRLhk1Spmabf5GU3yikPKYeCwUBtMQ3
+         LNoA==
+X-Forwarded-Encrypted: i=1; AJvYcCXjBiN97Z8QA9ABgwIiHK0BVnj4+oqN97RGjqa6lOBvHU5egag9XlaB/bPOPekI2U2Jg9HA7ixTEA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwCe7sK/AJx+TziSI70gWUPmYgW1U6van5uzKIraeq7MsSeo6AG
+	0kTTYpSqkvydLOh6gGmIL2a+b4lo0TTrDikhoJokzW74wC3evZkDa84UJBJdTdYBzq0=
+X-Gm-Gg: ASbGncuyh8y3ZziIcRaiAJRxD16K57BcQbVUSnJ4SQ/iAp32s7dPtgQZgn62SY9q3np
+	nJ8TBh+RMlaW/RPmKlul5MmohB+tybq/Xz0jWz52Gfimj5rSGnz3LK0NqaYrsOusBKYPY1OMggo
+	7U982r1PD7/s3TvModrrTWEDFYCN5ppYOAxPjxF/Lz+QggJ1xe5FqBggf8IUSBncF85UGLKhwib
+	CVRKw+bFr29dAxhrtiBWceBQChtzP1yKZqkQ0xzWEu4IRS0jP5pbvahQac7/W5heqZQU8M9DII+
+	5ML9G/Nb7IsK/+K/Pm9yX1ejdVKCCyBfcJ8uBap0oP7cE+X0V2O63CI9a1KhdTTsfwQSUryTPhM
+	NcxNfZynrJycAgvJ9e7z6wuVFPIkT3YcDdzfJwRxr
+X-Google-Smtp-Source: AGHT+IE5uFkVwfcYSkjHyZF/c2W8eIlexXUx47CDYyxHzh9kAbZHbQXPpnACm7peHUuN/ml5vSYqEw==
+X-Received: by 2002:a05:6602:1551:b0:87c:6d49:deb1 with SMTP id ca18e2360f4ac-87c6d4a568fmr1148165839f.8.1753388715572;
+        Thu, 24 Jul 2025 13:25:15 -0700 (PDT)
+Received: from zoltan.localdomain ([199.59.116.160])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-87c74316a3bsm63080239f.23.2025.07.24.13.25.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jul 2025 13:25:14 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: lee@kernel.org,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	alexandre.belloni@bootlin.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: mat.jonczyk@o2.pl,
+	dlan@gentoo.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	linux.amoon@gmail.com,
+	troymitchell988@gmail.com,
+	guodong@riscstar.com,
+	linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v9 0/8] spacemit: introduce P1 PMIC support
+Date: Thu, 24 Jul 2025 15:25:01 -0500
+Message-ID: <20250724202511.499288-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250714-working_dma_0701_v2-v3-2-8b0f5cd71595@riscstar.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Guodong,
+The SpacemiT P1 is an I2C-controlled PMIC that implements 6 buck
+converters and 12 LDOs.  It contains a load switch, ADC channels,
+GPIOs, a real-time clock, and a watchdog timer.
 
-I personally find the word 'optional' introducing some confusions..
-I can understand from driver perspective, it's kind of optional,
-but from SpacemiT K1 perspective, it's mandatory for this driver
-(the 'clocks' property of DT is in 'required' section)
+This series introduces a multifunction driver for the P1 PMIC as well
+as drivers for its regulators and RTC.
 
-feel free to improve the commit message, maybe add some motivation
-hehind this
+Version 8 provided the ability in "simple-mfd-i2c.c" to specify the
+max_register value for the regmap configuration as an alternative
+to providing a "full" regmap structure.  Lee Jones asked that the
+max_register value take precedence if the regmap_config was also
+provided.
 
-On 17:39 Mon 14 Jul     , Guodong Xu wrote:
-> Add support for retrieving and enabling an optional clock during
-> mmp_pdma_probe().
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> ---
-> v3: No change.
-> v2: No change.
-> ---
->  drivers/dma/mmp_pdma.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-> index a95d31103d3063a1d11177a1a37b89ac2fd213e9..4a6dbf55823722d26cc69379d22aaa88fbe19313 100644
-> --- a/drivers/dma/mmp_pdma.c
-> +++ b/drivers/dma/mmp_pdma.c
-> @@ -15,6 +15,7 @@
->  #include <linux/device.h>
->  #include <linux/platform_data/mmp_dma.h>
->  #include <linux/dmapool.h>
-> +#include <linux/clk.h>
->  #include <linux/of_dma.h>
->  #include <linux/of.h>
->  
-> @@ -1019,6 +1020,7 @@ static int mmp_pdma_probe(struct platform_device *op)
->  {
->  	struct mmp_pdma_device *pdev;
->  	struct mmp_dma_platdata *pdata = dev_get_platdata(&op->dev);
-> +	struct clk *clk;
->  	int i, ret, irq = 0;
->  	int dma_channels = 0, irq_num = 0;
->  	const enum dma_slave_buswidth widths =
-> @@ -1037,6 +1039,10 @@ static int mmp_pdma_probe(struct platform_device *op)
->  	if (IS_ERR(pdev->base))
->  		return PTR_ERR(pdev->base);
->  
-> +	clk = devm_clk_get_optional_enabled(pdev->dev, NULL);
-> +	if (IS_ERR(clk))
-> +		return PTR_ERR(clk);
-> +
->  	if (pdev->dev->of_node) {
->  		/* Parse new and deprecated dma-channels properties */
->  		if (of_property_read_u32(pdev->dev->of_node, "dma-channels",
-> 
-> -- 
-> 2.43.0
-> 
+This version changes a few things from v8:
+  - Alexandre Belloni's ack is added to patch 5.
+  - The max_register value in simple_mfd_data is always used if
+    it is non-zero, as requested by Lee Jones.
+  - The global regmap_config_8r_8v structure is back to being
+    const again.
+  - A new function simple_regmap_config() has been added in patch 2
+    to encapsulate the logic that determines what regmap_config
+    structure will be used.
+      - It uses regmap_config_8r_8v if simple_mfd_data is not supplied
+        for some reason.
+      - It uses regmap_config_8r_8v if the simple_mfd_data defines
+        neither regmap_config nor max_register.
+      - Otherwise, it dynamically allocates a regmap_config structure.
+        If simple_mfd_data refers to a regmap_config structure, it is
+	copied into the allocated struct; otherwise regmap_config_8r_8v
+	is copied.
+      - Finally, if the simple_mfd_data structure provides a non-zero
+        max_register value, it is used in the regmap_config.
+  - A small duplicated comment in "simple-mfd-i2c.h" is removed.
 
+  					-Alex
+
+This series is available here:
+  https://github.com/riscstar/linux/tree/outgoing/pmic-v9
+
+Between version 8 and version 9:
+  - The max_config value is always used if it is provided with the
+    simple_mfd_data structure.
+  - The regmap_config structure used is allocated dynamically if
+    necessary; otherwise regmap_config_8r_8v is used.
+  - A small duplicated comment is removed
+
+Here is version 8 of this series:
+  https://lore.kernel.org/lkml/20250710175107.1280221-1-elder@riscstar.com/
+
+Between version 7 and version 8:
+  - Change the global regmap_config to not be const in patch 2.
+
+Here is version 7 of this series:
+  https://lore.kernel.org/lkml/20250702213658.545163-1-elder@riscstar.com/
+
+Between version 6 and version 7:
+  - Revise patch 2 to preserve the option to provide a full regmap config
+
+Here is version 6 of this series:
+  https://lore.kernel.org/lkml/20250627142309.1444135-1-elder@riscstar.com/
+
+Between version 5 and version 6:
+  - Added Rob Herring's reviewed-by to patch 1
+  - Add the simple MFD functionality suggested by Lee Jones
+  - Update patch 3 (previously 2) accordingly
+
+Here is version 5 of this series:
+  https://lore.kernel.org/lkml/20250625164119.1068842-1-elder@riscstar.com/
+
+Between version 4 and version 5:
+  - Only check the seconds register for change when looping on read
+  - Return without re-enabling the RTC if writing registers fails
+  - If the RTC is disabled when reading, return an error
+
+Here is version 4 of this series:
+  https://lore.kernel.org/lkml/20250625164119.1068842-1-elder@riscstar.com/
+
+More complete history is available at that link.
+
+
+Alex Elder (8):
+  dt-bindings: mfd: add support the SpacemiT P1 PMIC
+  mfd: simple-mfd-i2c: specify max_register
+  mfd: simple-mfd-i2c: add SpacemiT P1 support
+  regulator: spacemit: support SpacemiT P1 regulators
+  rtc: spacemit: support the SpacemiT P1 RTC
+  riscv: dts: spacemit: enable the i2c8 adapter
+  riscv: dts: spacemit: define fixed regulators
+  riscv: dts: spacemit: define regulator constraints
+
+ .../devicetree/bindings/mfd/spacemit,p1.yaml  |  86 +++++++++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      | 138 +++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |   7 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          |  11 ++
+ drivers/mfd/Kconfig                           |  11 ++
+ drivers/mfd/simple-mfd-i2c.c                  |  50 +++++-
+ drivers/mfd/simple-mfd-i2c.h                  |   5 +-
+ drivers/regulator/Kconfig                     |  12 ++
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/spacemit-p1.c               | 157 ++++++++++++++++
+ drivers/rtc/Kconfig                           |  10 ++
+ drivers/rtc/Makefile                          |   1 +
+ drivers/rtc/rtc-spacemit-p1.c                 | 167 ++++++++++++++++++
+ 13 files changed, 647 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+ create mode 100644 drivers/regulator/spacemit-p1.c
+ create mode 100644 drivers/rtc/rtc-spacemit-p1.c
+
+
+base-commit: 9ee814bd78e315e4551223ca7548dd3f6bdcf1ae
 -- 
-Yixun Lan (dlan)
+2.43.0
+
