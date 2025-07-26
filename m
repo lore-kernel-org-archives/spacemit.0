@@ -1,99 +1,106 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.smtpout.orange.fr (smtp-69.smtpout.orange.fr [80.12.242.69])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94121114
-	for <spacemit@lists.linux.dev>; Sat, 26 Jul 2025 00:27:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CC3175A5;
+	Sat, 26 Jul 2025 09:17:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753489675; cv=none; b=s4th+ozth6DcVP388VeiqCyISqDEhRZ2dEohO1GDOUcuD2StKM+bFQz7fMSvqr55LtRmnnwWTEXQlluilzk+lBJCFHubKDPaJyvhCglhC+tCQltyBol60E3ZBFgLyYHeddo6w374qg4bzrGRqftVV4dLAwWoXaILHGpLYu0x3uI=
+	t=1753521439; cv=none; b=BWkt00n/FLGdfsRSfX6lIG2yKBQ9t2PmKCg0btU64L7o7PyfAJR/nEuZC7H4UQom0R6DWgXSbhLcmpu9buDOzwMfXBlDnFvm+OfOYZK5zEav4rbVP4HomF69Rp60p0z8mqTZVa58+p+7hEQJBbydT0SLt0lVQFgC98HmO0JWXFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753489675; c=relaxed/simple;
-	bh=8tob3sWcVX51UsBLlPjKYTZ9XEw5Y47tCecx0S+d5YE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dZg0GjD7P9TxMF3oytdZC/KlA/ZHs+cAGpq0EOMHApp3q/55GkWHxw7mReiDnUFs3yyo197BPZ2UNTi8MQF8t1YK7gNEJdCEZdm4J57kKpjqlCFSzTwVst+2+lBE/wROm9pIWysbx7FuZtm7Zi6q45nVmQVq4aU71kcbOFyevhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.48.207])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 90FC3340DF2;
-	Sat, 26 Jul 2025 00:27:52 +0000 (UTC)
-Date: Sat, 26 Jul 2025 08:27:43 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Anand Moon <linux.amoon@gmail.com>
-Cc: Alex Elder <elder@riscstar.com>,
-	"open list:RISC-V MISC SOC SUPPORT" <linux-riscv@lists.infradead.org>,
-	spacemit@lists.linux.dev
-Subject: Re: spacemit: P1 PMIC support on Banana pi F3 testing
-Message-ID: <20250726002743-GYA752238@gentoo>
-References: <CANAwSgT-z-sQoJtT+DVNywObEwnmMSgK4uPXxhk=Bxx8TK483Q@mail.gmail.com>
+	s=arc-20240116; t=1753521439; c=relaxed/simple;
+	bh=rYQXAPwFrkfu4EDcSXActYD6Nyvq+NgQYf/ZkZuhzlo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SLsB6XrqOPvovwsadjxl0fQV6KrlJuwn6yAsm522zDLkwpqU1wwiQlLaZMPkS8XNiIsv9XCUuEpC2hp0thseYlo1iAhCOsreDX2yt/0QldaG6faHSUWQLlHwJs91I7lfr453hDyh7iQFcCyxgPtsWSw/TBPbbXuPFjYl9Gv8qHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=OCvbdlZn; arc=none smtp.client-ip=80.12.242.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="OCvbdlZn"
+Received: from [IPV6:2a01:cb10:785:b00:8347:f260:7456:7662]
+ ([IPv6:2a01:cb10:785:b00:8347:f260:7456:7662])
+	by smtp.orange.fr with ESMTPA
+	id fb0cukqvwUD3Ufb0cuKgwl; Sat, 26 Jul 2025 11:16:04 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1753521365;
+	bh=U9kZSAtVAyocpLhrZ9KiXiugbdUh7RrQVALIu5fxuzo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=OCvbdlZnVDK2N/wzU0aKjr2jm6Nsst80VLqT1nNeVHZbjWWsN6OFia3uA70eSfZNO
+	 7OGU5fjPs/uNw0dxunLKRsUapLSG0ldiYlYJhscbgLMZKmoOfv3NTqNYbu6lk19A+m
+	 /HXeKzkyrTTrq+oCFGpxRy2A4ClYVWK+UbyK+PzpsArrQN4yBmSVxEOrZUE/Axex6i
+	 vBB9GusVrJEi/3wuH5acGlg1RJO6qimGCNkTmKCcN/ola7+YvE16gI9p9G6AmBI5Wa
+	 hesOS78cOiZ1Ri3M6ppMsIF0b92fPNzpsmxcK0oVcU7A18HaisFjz+tlXamheXAE3z
+	 Ud5fC/IqdwhQQ==
+X-ME-Helo: [IPV6:2a01:cb10:785:b00:8347:f260:7456:7662]
+X-ME-Auth: bWFyaW9uLmphaWxsZXRAd2FuYWRvby5mcg==
+X-ME-Date: Sat, 26 Jul 2025 11:16:04 +0200
+X-ME-IP: 2a01:cb10:785:b00:8347:f260:7456:7662
+Message-ID: <ed5fcfec-6330-46e8-a302-5cf1d8b3a9ce@wanadoo.fr>
+Date: Sat, 26 Jul 2025 11:16:02 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] clk: spacemit: fix resource leak in
+ spacemit_ccu_reset_register
+To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>, sboyd@kernel.org,
+ dlan@gentoo.org
+Cc: skhan@linuxfoundation.org, linux-kernel-mentees@lists.linux.dev,
+ linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20250723132504.66273-1-hendrik.hamerlinck@hammernet.be>
+Content-Language: en-US, fr-FR
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20250723132504.66273-1-hendrik.hamerlinck@hammernet.be>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANAwSgT-z-sQoJtT+DVNywObEwnmMSgK4uPXxhk=Bxx8TK483Q@mail.gmail.com>
 
-Hi Anand,
+Le 23/07/2025 à 15:25, Hendrik Hamerlinck a écrit :
+> The function spacemit_ccu_reset_register() allocates memory for an
+> auxiliary device. If auxiliary_device_add() fails, it skips cleanup of
+> these resources, resulting in leaks.
+> 
+> Fix this by using the appropriate error handling path.
+> 
+> Fixes: 988543522ebd ("clk: spacemit: set up reset auxiliary devices")
+> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+> Reviewed-by: Yixun Lan <dlan@gentoo.org>
+> ---
+> Changes in v2:
+> - Properly place the Fixes tip.
+> ---
+>   drivers/clk/spacemit/ccu-k1.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+> index 65e6de030717..5bb85e32c6cf 100644
+> --- a/drivers/clk/spacemit/ccu-k1.c
+> +++ b/drivers/clk/spacemit/ccu-k1.c
+> @@ -1059,7 +1059,7 @@ static int spacemit_ccu_reset_register(struct device *dev,
+>   	ret = auxiliary_device_add(adev);
+>   	if (ret) {
+>   		auxiliary_device_uninit(adev);
+> -		return ret;
+> +		goto err_free_aux_id;
+>   	}
+>   
+>   	return devm_add_action_or_reset(dev, spacemit_adev_unregister, adev);
 
-On 15:26 Thu 24 Jul     , Anand Moon wrote:
-> Hi Alex,
-> 
-> Thank you for your work on the P1 PMIC patch for Spacemit K1 SoC - Banana Pi F3.
-> 
-> I've been testing your patch series for the Banana Pi F3 [0] to enable SD card
-> and eMMC functionality,
-> 
-> [0] https://patchew.org/linux/20250710175107.1280221-1-elder@riscstar.com/
-> 
-> While debugging, I cross-referenced the patch with the BPI-F3-V3 board
-> schematic [1]
-> and noticed several discrepancies in the power configuration:
-> 
-> [1] https://drive.google.com/file/d/19iLJ5xnCB_oK8VeQjkPGjzAn39WYyylv/view
-> 
-> Incorrect Voltage Ranges: The minimum and maximum voltage values for
-> multiple regulators
-> (including BUCKs, ALDOs, and DLDOs) In the patch, do not match the
-> specifications in
-> the schematic's power tree.
-> 
-> Missing/Incorrect Labels: Many regulators are missing accurate labels and names,
-> which makes mapping them to the hardware difficult.
-> 
-> Device Tree Mapping: To configure the power sources correctly, the k1
-> user names from
-> the schematic needs to be properly mapped to its corresponding device
-> tree nodes.
-> 
-> I’ve put together a set of local changes to better align the regulator
-> definitions with the board schematic.
-> These adjustments help improve the hardware mapping to the PMIC
-> regulators, though some details
-> may still need refinement. If you find the changes helpful, please
-> consider incorporating them into
-> the next revision of the patch.
-> 
-> I’d be grateful if you could Cc me on any future communication
-> regarding testing.
-> as I didn’t receive this patch series in my inbox.
-> 
-> Thanks
-> -Anand
-> 
-> Here is the boot log [2] https://pastebin.com/cXybbVar
-> 
-> It's not working on my end., Neither the eMMC nor the SD card is
-> getting detected.
-the mainline driver in tree has no SD card support, but eMMC
-so, you could only test eMMC for now.
 
--- 
-Yixun Lan (dlan)
+Hi,
+
+I'm not sure this is correct.
+
+auxiliary_device_uninit() which is called if auxiliary_device_add() 
+fails should already do the clean-up.
+
+So I would say that this patch adds a double-free issue and should not 
+be applied.
+
+If I'm right, note that Stephen has already added a "Applied to clk-next"
+
+CJ
+
+
