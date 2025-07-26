@@ -1,106 +1,108 @@
-Received: from smtp.smtpout.orange.fr (smtp-69.smtpout.orange.fr [80.12.242.69])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CC3175A5;
-	Sat, 26 Jul 2025 09:17:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15A723313F;
+	Sat, 26 Jul 2025 12:10:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753521439; cv=none; b=BWkt00n/FLGdfsRSfX6lIG2yKBQ9t2PmKCg0btU64L7o7PyfAJR/nEuZC7H4UQom0R6DWgXSbhLcmpu9buDOzwMfXBlDnFvm+OfOYZK5zEav4rbVP4HomF69Rp60p0z8mqTZVa58+p+7hEQJBbydT0SLt0lVQFgC98HmO0JWXFU=
+	t=1753531823; cv=none; b=UmApZlENXCNukLiDaBOsiJr24fY0VSXAE6Hh0hA/Ffeo02VBvxrIjYxdESq2CjIa+zIbbABlG+MYLLlUNDPP1AzT2gLEWTwWb/k/Bg226B9bRNoEiS7HVn0Vzjwt7qR6fpDY0T52Y66q8oGHctq0ssb91MRhrQHFKH/KU2SQL+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753521439; c=relaxed/simple;
-	bh=rYQXAPwFrkfu4EDcSXActYD6Nyvq+NgQYf/ZkZuhzlo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SLsB6XrqOPvovwsadjxl0fQV6KrlJuwn6yAsm522zDLkwpqU1wwiQlLaZMPkS8XNiIsv9XCUuEpC2hp0thseYlo1iAhCOsreDX2yt/0QldaG6faHSUWQLlHwJs91I7lfr453hDyh7iQFcCyxgPtsWSw/TBPbbXuPFjYl9Gv8qHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=OCvbdlZn; arc=none smtp.client-ip=80.12.242.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="OCvbdlZn"
-Received: from [IPV6:2a01:cb10:785:b00:8347:f260:7456:7662]
- ([IPv6:2a01:cb10:785:b00:8347:f260:7456:7662])
-	by smtp.orange.fr with ESMTPA
-	id fb0cukqvwUD3Ufb0cuKgwl; Sat, 26 Jul 2025 11:16:04 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1753521365;
-	bh=U9kZSAtVAyocpLhrZ9KiXiugbdUh7RrQVALIu5fxuzo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=OCvbdlZnVDK2N/wzU0aKjr2jm6Nsst80VLqT1nNeVHZbjWWsN6OFia3uA70eSfZNO
-	 7OGU5fjPs/uNw0dxunLKRsUapLSG0ldiYlYJhscbgLMZKmoOfv3NTqNYbu6lk19A+m
-	 /HXeKzkyrTTrq+oCFGpxRy2A4ClYVWK+UbyK+PzpsArrQN4yBmSVxEOrZUE/Axex6i
-	 vBB9GusVrJEi/3wuH5acGlg1RJO6qimGCNkTmKCcN/ola7+YvE16gI9p9G6AmBI5Wa
-	 hesOS78cOiZ1Ri3M6ppMsIF0b92fPNzpsmxcK0oVcU7A18HaisFjz+tlXamheXAE3z
-	 Ud5fC/IqdwhQQ==
-X-ME-Helo: [IPV6:2a01:cb10:785:b00:8347:f260:7456:7662]
-X-ME-Auth: bWFyaW9uLmphaWxsZXRAd2FuYWRvby5mcg==
-X-ME-Date: Sat, 26 Jul 2025 11:16:04 +0200
-X-ME-IP: 2a01:cb10:785:b00:8347:f260:7456:7662
-Message-ID: <ed5fcfec-6330-46e8-a302-5cf1d8b3a9ce@wanadoo.fr>
-Date: Sat, 26 Jul 2025 11:16:02 +0200
+	s=arc-20240116; t=1753531823; c=relaxed/simple;
+	bh=i8ofqofMPRyEy3xiqiZRYbhA3MBjLpiOaAVO+LMJSPY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u1ZVgXRomVi0ZWxDQW51jwEK3em0lOp+3SpEv9oI4rRzubizGifuu/BWKL6GC/36nsUIbmSGoXA2TLQ41XafMm9AtyDYb6Vey3OXALG9cZCIt+iT3avLlil1hCDc6cQvuPetnTmqn5D+camo/eUb3i3L4GASyyaYo2EGP847esg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.207])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id D284A341004;
+	Sat, 26 Jul 2025 12:10:20 +0000 (UTC)
+Date: Sat, 26 Jul 2025 20:10:14 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>, sboyd@kernel.org,
+	skhan@linuxfoundation.org, linux-kernel-mentees@lists.linux.dev,
+	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] clk: spacemit: fix resource leak in
+ spacemit_ccu_reset_register
+Message-ID: <20250726121014-GYA756241@gentoo>
+References: <20250723132504.66273-1-hendrik.hamerlinck@hammernet.be>
+ <ed5fcfec-6330-46e8-a302-5cf1d8b3a9ce@wanadoo.fr>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] clk: spacemit: fix resource leak in
- spacemit_ccu_reset_register
-To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>, sboyd@kernel.org,
- dlan@gentoo.org
-Cc: skhan@linuxfoundation.org, linux-kernel-mentees@lists.linux.dev,
- linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20250723132504.66273-1-hendrik.hamerlinck@hammernet.be>
-Content-Language: en-US, fr-FR
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <20250723132504.66273-1-hendrik.hamerlinck@hammernet.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <ed5fcfec-6330-46e8-a302-5cf1d8b3a9ce@wanadoo.fr>
 
-Le 23/07/2025 Ã  15:25, Hendrik Hamerlinck a Ã©critÂ :
-> The function spacemit_ccu_reset_register() allocates memory for an
-> auxiliary device. If auxiliary_device_add() fails, it skips cleanup of
-> these resources, resulting in leaks.
+Hi Christophe, 
+
+On 11:16 Sat 26 Jul     , Christophe JAILLET wrote:
+> Le 23/07/2025 à 15:25, Hendrik Hamerlinck a écrit :
+> > The function spacemit_ccu_reset_register() allocates memory for an
+> > auxiliary device. If auxiliary_device_add() fails, it skips cleanup of
+> > these resources, resulting in leaks.
+> > 
+> > Fix this by using the appropriate error handling path.
+> > 
+> > Fixes: 988543522ebd ("clk: spacemit: set up reset auxiliary devices")
+> > Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+> > Reviewed-by: Yixun Lan <dlan@gentoo.org>
+> > ---
+> > Changes in v2:
+> > - Properly place the Fixes tip.
+> > ---
+> >   drivers/clk/spacemit/ccu-k1.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+> > index 65e6de030717..5bb85e32c6cf 100644
+> > --- a/drivers/clk/spacemit/ccu-k1.c
+> > +++ b/drivers/clk/spacemit/ccu-k1.c
+> > @@ -1059,7 +1059,7 @@ static int spacemit_ccu_reset_register(struct device *dev,
+> >   	ret = auxiliary_device_add(adev);
+> >   	if (ret) {
+> >   		auxiliary_device_uninit(adev);
+> > -		return ret;
+> > +		goto err_free_aux_id;
+> >   	}
+> >   
+> >   	return devm_add_action_or_reset(dev, spacemit_adev_unregister, adev);
 > 
-> Fix this by using the appropriate error handling path.
 > 
-> Fixes: 988543522ebd ("clk: spacemit: set up reset auxiliary devices")
-> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-> Reviewed-by: Yixun Lan <dlan@gentoo.org>
-> ---
-> Changes in v2:
-> - Properly place the Fixes tip.
-> ---
->   drivers/clk/spacemit/ccu-k1.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Hi,
 > 
-> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-> index 65e6de030717..5bb85e32c6cf 100644
-> --- a/drivers/clk/spacemit/ccu-k1.c
-> +++ b/drivers/clk/spacemit/ccu-k1.c
-> @@ -1059,7 +1059,7 @@ static int spacemit_ccu_reset_register(struct device *dev,
->   	ret = auxiliary_device_add(adev);
->   	if (ret) {
->   		auxiliary_device_uninit(adev);
-> -		return ret;
-> +		goto err_free_aux_id;
->   	}
->   
->   	return devm_add_action_or_reset(dev, spacemit_adev_unregister, adev);
+> I'm not sure this is correct.
+> 
+> auxiliary_device_uninit() which is called if auxiliary_device_add() 
+> fails should already do the clean-up.
+> 
+thanks for your review,
 
+auxiliary_device_uninit() call put_device() and will trigger release callback,
+which then call spacemit_cadev_release() and do the ida_free()
 
-Hi,
+> So I would say that this patch adds a double-free issue and should not 
+> be applied.
+> 
+I agree
 
-I'm not sure this is correct.
+> If I'm right, note that Stephen has already added a "Applied to clk-next"
+> 
+Stephen, can you drop this patch? or simply revert it if too late..
 
-auxiliary_device_uninit() which is called if auxiliary_device_add() 
-fails should already do the clean-up.
+> CJ
+> 
+> 
 
-So I would say that this patch adds a double-free issue and should not 
-be applied.
-
-If I'm right, note that Stephen has already added a "Applied to clk-next"
-
-CJ
-
-
+-- 
+Yixun Lan (dlan)
