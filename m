@@ -1,127 +1,158 @@
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC912741CF
-	for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 16:43:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B338214B953
+	for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 22:00:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753721017; cv=none; b=TMmCIDXE/pQY8Oz+4Svs3VWGlyoNcZm6Djb6HTUH/6v41B5FIfooThv2S5qhPL16xyPfTRNGjsAxqQ272z31B8Jn0p0d4FK1zkqySP/eZHZDK1JFalds+k5zNKImOjuDKJpzWayEZrln8ki5DFPX8PDBCp0qHSqARNbMAcIpL1w=
+	t=1753740008; cv=none; b=S+h3OkDHPkMdGAATQV1BHhBqk8ZpzSyP/33gBpecdgTUmeTIy7vpMXanA/CpCeE2jUAgLk3bJJsshFDHvenbQtML4CeCcsriu9ICkiRD1C9rdKOWblm0xBZEYo6UoKB4q9dKLvXdpAlFNk0eGQwF/cwJiIakal/dXaGQSsXoD3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753721017; c=relaxed/simple;
-	bh=rhjEXzsTwnZFAF5osPavXR0nQ1U3valXq3FCuGUvhIk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tW9HVdZxw2cX6E06zS/449mcy8dHl9VOWlq9LnefzU+rUcpV0cmYv19RcOALe8WqM9Xw3xTQT9IbD9fL20DZjnuzwOe1B5dnHo86pxvXjKWqY2PUz66h1u6vQxm1wWd7VeOKJjJJJ95hhxRKEPbfeBLCGmd/PVCHfu3wsNjoO1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=M+LtEjuq; arc=none smtp.client-ip=209.85.166.45
+	s=arc-20240116; t=1753740008; c=relaxed/simple;
+	bh=/qAK7aYKKFRgAJnNBp3OG1T2f+7X1+5mXUXNzKDQxr8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=swatAfKqWx/ZsWRB6ECrGUE2gPDkVqt5oMdMI7pPLOWcYX5qVRIPHzzzIC5clqc9+qPOpjjYvBWO3Ju0dEY0oeYSG7svmG1g3zyRMoIK82vltSM9K6FuTTpE5bEYxNjghKhaQ1TwNrH+BfQ6rGKg6OFf+iGNeJDjwMhInTalvjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=texO4g6Q; arc=none smtp.client-ip=209.85.166.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="M+LtEjuq"
-Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-87c79b55898so118821839f.2
-        for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 09:43:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="texO4g6Q"
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3dc9e7d10bdso19394225ab.2
+        for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 15:00:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1753721015; x=1754325815; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ldQSwkThGxTZIExSscNpx1zCzTVrhc9kUZXUJm0UXLk=;
-        b=M+LtEjuqYj8+IyVHcxFRrhATZws6rv+GueMpicyMo+3VJCxZ5bANwpxXnYKYUxrZSL
-         gLgfl6EZpa/m/Ex8aF1+K6TNzHDMo8nr6KfYb7HNE3rubf0wSC2itaSmBChFLGOZEG8P
-         PDW7ucoDk/C/eRAJWuiC5CAw6C0pjr9pq5EECHF2Xf/wWznWIsQODoxCQt0Nked8suaY
-         FCuxg77M+0d2M3DUJfbUoqLKjsecZhq+QZEbJk/+cDM4u3UOi+VcNeBfFy0zZg37CqGF
-         NdgeRkyjIW9FqE9Bs9c2Zx7AijMVTqXwyUEPIbIJ1A5WEUgcGNNAvIHJdy9Cu427UuFe
-         tQZw==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1753740006; x=1754344806; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SW20ypPIfCwWzDyApEVu137flF7JF7gBm3arCQYvIbI=;
+        b=texO4g6QAAwSPbv6sCQ7CtorIXbkVItZBVdHK36mE4IzGPAngrZSwIT7zK5HGwrWF0
+         nf3UkJX/ZRxHm+jpkAW/sm4An4eJ9cTQvlvtd0abHSReM+0eep5x/s7OEllWwDhf+vmA
+         cbK4b06nMsdprkyRI7h6xkbOx5MNppbZwJdZCNbVswzjQHCbF2uXluWsyhEpPOC/xchm
+         geRQVZWiWodmFUxbBEhTgDO7zrShAW2ZnQp9OKHIzCLlyx8yXyqzFoLiugd/qwjPKsyM
+         AdExHfVjh7WiHOLDizv5O8da1CDHUv3vcEMnngwq1hLtJ9jK+qCFojIMS9bMZcAScuiq
+         IOxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753721015; x=1754325815;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ldQSwkThGxTZIExSscNpx1zCzTVrhc9kUZXUJm0UXLk=;
-        b=wkWNTFaGVBq6PkGMLj9hAgIyhv/srsjnoebPPolKN+i/sFvHEksjal12/fDmxfx/SP
-         JEY106GOweUd1cpz4HJPU+CI04pux2l3QAxGGKnhLDXKfGgJLGelb9b/8zqGTe/rJ2LI
-         G/JKPH4HmFACdYVA0UCzdHfherUfcuCo1YYj/Rp84tKAcrt36akFPe2feV3CVc+6m0Rw
-         foHHswv8D+RicfJ6Tl5QXC0Kbls9rWPBRGtCrHzLDkxOPw5P3kzbJ7jZEj0jLPAkukNu
-         4cKbLULJWlPVHtXDgy+ANf3k8kaAtyUmnlQN8IkiPLheTu3RnaXV/cMSL/llfIraRznm
-         wUSw==
-X-Forwarded-Encrypted: i=1; AJvYcCW/qfq+knLswTiSeBYzOQ6GuAT4FfbKeYVCGVqYGQJsRrMhznsNn1WusKvIY9Znw9RJjqDbyusVaA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YylDTQZif7xb5+Mtl8XiGlVE6JghnWFK9igRlzP6iYElUARaMZS
-	wlaLTumxzhiZgmnDFByclSsmVSJoW8gwmMxWGu7bVda7rA14SIze5Dw8fHA9b5pMZ3s=
-X-Gm-Gg: ASbGncvf0xzKY4UK+6Ii0BOqGS7xhLZl4mAOE72c3H1ddDWezcy0HbigpG4KW68Y0ud
-	rAHf18Ry/vML/3hZYpPz+U42cIqeDfDDfybbYAuPohiXL4cZCcuKBWAZDkFBjcH9fFZqMuJNaPJ
-	Csy1TlpujWD5yvqvH6qj6eKgbznQdCWwWnn1VhV13evwGmShkZ6Qu7knXTitPH3Xpp6aPhK9Wkp
-	Q0yR/fB73eom0UgE1d2OlWkCo6xb4Z5eDE6Fm+WPOQi2EVl8Im51PxUmp7/9jZhQyZEYiYDbxWt
-	HwDW+Ynv0cuTR41hlcPSzwzyhW5kbDPnwdH3it0IWIRf3A6+sULMNVx9zoloLmmHa2kqsemGFjS
-	UZQE2BJL+4kttfRyCnIUbnBO7G/1HTXJD7z7hP/WQcK9o045JLjdBe3GCO6hd/P0=
-X-Google-Smtp-Source: AGHT+IEKf13G5VVtKix2Gq667g//FiBaGINonaogdX3yn8hZwcFv6711Pe8N6gMwP+Vbi5i7MjtaZg==
-X-Received: by 2002:a05:6e02:1805:b0:3e2:9f1e:e291 with SMTP id e9e14a558f8ab-3e3c53125b1mr209554715ab.21.1753721014595;
-        Mon, 28 Jul 2025 09:43:34 -0700 (PDT)
-Received: from [172.22.22.234] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3e3cad13c7csm25861755ab.61.2025.07.28.09.43.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Jul 2025 09:43:34 -0700 (PDT)
-Message-ID: <ef2b4526-3725-4a25-9118-ab77a1d91362@riscstar.com>
-Date: Mon, 28 Jul 2025 11:43:32 -0500
+        d=1e100.net; s=20230601; t=1753740006; x=1754344806;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SW20ypPIfCwWzDyApEVu137flF7JF7gBm3arCQYvIbI=;
+        b=iinKGK2K1c8/k6D8OJ/LvuGjRNDW9yfO7hVNO1qpx49Q7fW9PXrpUP4n0YowyEfPvZ
+         0meCAzF3zCX+Irk99lsrGSJ+0TroRppO3XRP8aLS5McqMhauNsmuuW4zM6yVr3vom28G
+         B4AGbtFECNBR7Vze4AK1wVs2z4WCdrDamJwrqVNk1wmngvDQAfEO6LkN/1pMyhDI7QR9
+         c9OKBsesS2gpeqWi1KDAx40hhqLiRPuHOxWt/RXCQhi7P/Vcf6pX0xYedoq6UzA+5kVy
+         XmkDq6xD8utRPakF5fvBouQxrigWQGRepcBHfHx0iBCOTexZ2uv9EG4bS79jgjJ5uDYK
+         iRvA==
+X-Forwarded-Encrypted: i=1; AJvYcCVSyW7xFVW0qto+rm+fvWpJQvAt/s+yEZleefn7Srv6gHN1+MMcni0aSrMzHJfgSi10ksqM8xEHwg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwJypUz42azIei9ff6mhh4vmKhAFjmfUfjJ8UCPUQuT6SC2Ey7B
+	1m3faFDpN9z63cUj5Tp5az/QYZDdTpucQh1vYHEBGm1JwjOmL8mw6/6n8QTS0wrREC0=
+X-Gm-Gg: ASbGncvJDcCcsImA403DM39kcmsDzxw6EFr+SxLbp7SzSTu2XLXTnWWfCJbgKnTN6bw
+	L+gqZ1QHpOuYfDeccMpWC5nMmVRFOXuyYiu4nrdqYhckPQCcKSyeQqLUQprZrGTtrUPmvwN8g5b
+	WjClWTP/vDBO+gchGRt+8ejD+Owl/T/FyysbwhyIe02CIOmLbNocCqcgV8dOHgIZnmrZUzunk2j
+	oaw882MT2Mvq686CTi0lVyyzZY7Fb2/DkcRTSWAUyJ+FCDdWaUWrT0CTCX3HnQsOB1bEzsZtm/k
+	AdFC9qGBj5KFLO8Eu4W4KMB5/yOZxVvHkpC/7VxkboGWrKrLmdx8N8FGogUSfXjqvOIPpIPw1SC
+	vyXqlHFRQ2qVVt/R8Xuo/YUmjz1krHEK9mRVTvuyueDOOf/KXjbuimGc8CIdw4/lyNA==
+X-Google-Smtp-Source: AGHT+IEInGF/Uihao86Df5Hh8l2S/n6kOMKGVWM1LdBNeEbSuGAD9Xt1OLU4ny9gFPGHVpMlKG5tfQ==
+X-Received: by 2002:a05:6e02:1d98:b0:3e3:d185:9163 with SMTP id e9e14a558f8ab-3e3d185932fmr133375445ab.20.1753740005684;
+        Mon, 28 Jul 2025 15:00:05 -0700 (PDT)
+Received: from zippy.localdomain (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-508c91c9fdfsm2167331173.4.2025.07.28.15.00.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Jul 2025 15:00:05 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	dlan@gentoo.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	lkundrak@v3.sk
+Cc: devicetree@vger.kernel.org,
+	linux-serial@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	linux-mediatek@lists.infradead.org,
+	linux-riscv@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH] dt-bindings: serial: 8250: allow "main" and "uart" as clock names
+Date: Mon, 28 Jul 2025 17:00:01 -0500
+Message-ID: <20250728220002.599554-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 4/8] regulator: spacemit: support SpacemiT P1
- regulators
-To: kernel test robot <lkp@intel.com>, lee@kernel.org, lgirdwood@gmail.com,
- broonie@kernel.org, alexandre.belloni@bootlin.com, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: Paul Gazzillo <paul@pgazz.com>,
- Necip Fazil Yildiran <fazilyildiran@gmail.com>,
- oe-kbuild-all@lists.linux.dev, mat.jonczyk@o2.pl, dlan@gentoo.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, linux.amoon@gmail.com, troymitchell988@gmail.com,
- guodong@riscstar.com, linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20250726131003.3137282-5-elder@riscstar.com>
- <202507281558.lZ0NYtth-lkp@intel.com>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <202507281558.lZ0NYtth-lkp@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 7/28/25 2:37 AM, kernel test robot wrote:
-> Hi Alex,
-> 
-> kernel test robot noticed the following build warnings:
+There are two compatible strings defined in "8250.yaml" that require
+two clocks to be specified, along with their names:
+  - "spacemit,k1-uart", used in "spacemit/k1.dtsi"
+  - "nxp,lpc1850-uart", used in "lpc/lpc18xx.dtsi"
 
-I have a fix for this, and will include it in v11 of this series
-when I publish it.  I will wait to do that until I get additional
-feedback.
+When only one clock is used, the name is not required.  However there
+are two places that do specify a name:
+  - In "mediatek/mt7623.dtsi", the clock for the "mediatek,mtk-btif"
+    compatible serial device is named "main"
+  - In "qca/ar9132.dtsi", the clock for the "ns8250" compatible
+    serial device is named "uart"
 
-The fix is to make REGULATOR_SPACEMIT_P1 depend on I2C, in addition
-to ARCH_SPACEMIT || COMPILE_TEST.
+In commit d2db0d7815444 ("dt-bindings: serial: 8250: allow clock 'uartclk'
+and 'reg' for nxp,lpc1850-uart"), Frank Li added the restriction that two
+named clocks be used for the NXP platform mentioned above.  Extend that
+so that the two named clocks used by the SpacemiT platform are similarly
+restricted.
 
-					-Alex
+Add "main" and "uart" as allowed names when a single clock is specified.
 
-> 
-> [auto build test WARNING on d7af19298454ed155f5cf67201a70f5cf836c842]
-> 
-> url:    https://github.com/intel-lab-lkp/linux/commits/Alex-Elder/dt-bindings-mfd-add-support-the-SpacemiT-P1-PMIC/20250726-211530
-> base:   d7af19298454ed155f5cf67201a70f5cf836c842
-> patch link:    https://lore.kernel.org/r/20250726131003.3137282-5-elder%40riscstar.com
-> patch subject: [PATCH v10 4/8] regulator: spacemit: support SpacemiT P1 regulators
-> config: alpha-kismet-CONFIG_MFD_SPACEMIT_P1-CONFIG_REGULATOR_SPACEMIT_P1-0-0 (https://download.01.org/0day-ci/archive/20250728/202507281558.lZ0NYtth-lkp@intel.com/config)
-> reproduce: (https://download.01.org/0day-ci/archive/20250728/202507281558.lZ0NYtth-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202507281558.lZ0NYtth-lkp@intel.com/
-> 
-> kismet warnings: (new ones prefixed by >>)
->>> kismet: WARNING: unmet direct dependencies detected for MFD_SPACEMIT_P1 when selected by REGULATOR_SPACEMIT_P1
->     WARNING: unmet direct dependencies detected for MFD_SPACEMIT_P1
->       Depends on [n]: HAS_IOMEM [=y] && I2C [=n]
->       Selected by [y]:
->       - REGULATOR_SPACEMIT_P1 [=y] && REGULATOR [=y] && (ARCH_SPACEMIT || COMPILE_TEST [=y])
-> 
+Fixes: 2c0594f9f0629 ("dt-bindings: serial: 8250: support an optional second clock")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202507160314.wrC51lXX-lkp@intel.com/
+Signed-off-by: Alex Elder <elder@riscstar.com>
+---
+ .../devicetree/bindings/serial/8250.yaml      | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
+index e46bee8d25bf0..cef52ebd8f7da 100644
+--- a/Documentation/devicetree/bindings/serial/8250.yaml
++++ b/Documentation/devicetree/bindings/serial/8250.yaml
+@@ -61,11 +61,17 @@ allOf:
+             - const: uartclk
+             - const: reg
+     else:
+-      properties:
+-        clock-names:
+-          items:
+-            - const: core
+-            - const: bus
++      if:
++        properties:
++          compatible:
++            contains:
++              const: spacemit,k1-uart
++      then:
++        properties:
++          clock-names:
++            items:
++              - const: core
++              - const: bus
+ 
+ properties:
+   compatible:
+@@ -162,6 +168,9 @@ properties:
+     minItems: 1
+     maxItems: 2
+     oneOf:
++      - enum:
++          - main
++          - uart
+       - items:
+           - const: core
+           - const: bus
+
+base-commit: 0b90c3b6d76ea512dc3dac8fb30215e175b0019a
+-- 
+2.48.1
 
