@@ -1,277 +1,127 @@
-Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F34274B39
-	for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 16:34:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC912741CF
+	for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 16:43:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753720463; cv=none; b=svtR9afOXAbrIcRHrTxPosERhWuhxqjm30407NQ0metqMogWQ5mhEN92RM3E16XFgjl+SeE1Sj8TBHtDC+NF6k9LCnYy3+hDr2lkhN4lgqWKEpCCQd4CwPxFwVYcVHASIgyZ2yA1aP+XOZSDALKD1Xl8mUmqqJ3PuKYNIHfKszk=
+	t=1753721017; cv=none; b=TMmCIDXE/pQY8Oz+4Svs3VWGlyoNcZm6Djb6HTUH/6v41B5FIfooThv2S5qhPL16xyPfTRNGjsAxqQ272z31B8Jn0p0d4FK1zkqySP/eZHZDK1JFalds+k5zNKImOjuDKJpzWayEZrln8ki5DFPX8PDBCp0qHSqARNbMAcIpL1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753720463; c=relaxed/simple;
-	bh=MchF5UPx0mNSiHl2aR2yJe+gbfg+oi9Voc70x1yyFyE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RK+a1a4B4L0D2G61AzgtxjScfQuLHbk64xuGL7NlwR8NEGiWH4Vc61vaTUyy/QIlskrdLkS3V/2QvzwwS0RwV9tS+D8cNhe1Id5pU0GHtTd+GFkzjDulrIK1IJzqO2YNQQ4d29Ih7/S1SLiADlwJixoG80FOlnRWVb43OqtzDto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=BW0su7UK; arc=none smtp.client-ip=91.218.175.185
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1753721017; c=relaxed/simple;
+	bh=rhjEXzsTwnZFAF5osPavXR0nQ1U3valXq3FCuGUvhIk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tW9HVdZxw2cX6E06zS/449mcy8dHl9VOWlq9LnefzU+rUcpV0cmYv19RcOALe8WqM9Xw3xTQT9IbD9fL20DZjnuzwOe1B5dnHo86pxvXjKWqY2PUz66h1u6vQxm1wWd7VeOKJjJJJ95hhxRKEPbfeBLCGmd/PVCHfu3wsNjoO1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=M+LtEjuq; arc=none smtp.client-ip=209.85.166.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="BW0su7UK"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1753720459;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eH2fsvxmviFtEU5C9aDjmTeC8T8d65Crddr7C4wlj1U=;
-	b=BW0su7UK+ZFonSb+IrLIBNhBbtO5zWin2h1Z3n3Er4edGuQIR4YbmwMFwMilePhwkFT4+G
-	aczlLiQB6QPn838yUDGO9X7L8umMc1AauZcS+PQxWiILRQc2TE/ygORVXaxIcB1FMZtAmV
-	K1cdDGLM5Otf6tO5nT4AX2VuJ9fzwkU=
-From: Ze Huang <huang.ze@linux.dev>
-Date: Tue, 29 Jul 2025 00:33:56 +0800
-Subject: [PATCH v7 2/2] usb: dwc3: add generic driver to support flattened
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="M+LtEjuq"
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-87c79b55898so118821839f.2
+        for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 09:43:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1753721015; x=1754325815; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ldQSwkThGxTZIExSscNpx1zCzTVrhc9kUZXUJm0UXLk=;
+        b=M+LtEjuqYj8+IyVHcxFRrhATZws6rv+GueMpicyMo+3VJCxZ5bANwpxXnYKYUxrZSL
+         gLgfl6EZpa/m/Ex8aF1+K6TNzHDMo8nr6KfYb7HNE3rubf0wSC2itaSmBChFLGOZEG8P
+         PDW7ucoDk/C/eRAJWuiC5CAw6C0pjr9pq5EECHF2Xf/wWznWIsQODoxCQt0Nked8suaY
+         FCuxg77M+0d2M3DUJfbUoqLKjsecZhq+QZEbJk/+cDM4u3UOi+VcNeBfFy0zZg37CqGF
+         NdgeRkyjIW9FqE9Bs9c2Zx7AijMVTqXwyUEPIbIJ1A5WEUgcGNNAvIHJdy9Cu427UuFe
+         tQZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753721015; x=1754325815;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ldQSwkThGxTZIExSscNpx1zCzTVrhc9kUZXUJm0UXLk=;
+        b=wkWNTFaGVBq6PkGMLj9hAgIyhv/srsjnoebPPolKN+i/sFvHEksjal12/fDmxfx/SP
+         JEY106GOweUd1cpz4HJPU+CI04pux2l3QAxGGKnhLDXKfGgJLGelb9b/8zqGTe/rJ2LI
+         G/JKPH4HmFACdYVA0UCzdHfherUfcuCo1YYj/Rp84tKAcrt36akFPe2feV3CVc+6m0Rw
+         foHHswv8D+RicfJ6Tl5QXC0Kbls9rWPBRGtCrHzLDkxOPw5P3kzbJ7jZEj0jLPAkukNu
+         4cKbLULJWlPVHtXDgy+ANf3k8kaAtyUmnlQN8IkiPLheTu3RnaXV/cMSL/llfIraRznm
+         wUSw==
+X-Forwarded-Encrypted: i=1; AJvYcCW/qfq+knLswTiSeBYzOQ6GuAT4FfbKeYVCGVqYGQJsRrMhznsNn1WusKvIY9Znw9RJjqDbyusVaA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YylDTQZif7xb5+Mtl8XiGlVE6JghnWFK9igRlzP6iYElUARaMZS
+	wlaLTumxzhiZgmnDFByclSsmVSJoW8gwmMxWGu7bVda7rA14SIze5Dw8fHA9b5pMZ3s=
+X-Gm-Gg: ASbGncvf0xzKY4UK+6Ii0BOqGS7xhLZl4mAOE72c3H1ddDWezcy0HbigpG4KW68Y0ud
+	rAHf18Ry/vML/3hZYpPz+U42cIqeDfDDfybbYAuPohiXL4cZCcuKBWAZDkFBjcH9fFZqMuJNaPJ
+	Csy1TlpujWD5yvqvH6qj6eKgbznQdCWwWnn1VhV13evwGmShkZ6Qu7knXTitPH3Xpp6aPhK9Wkp
+	Q0yR/fB73eom0UgE1d2OlWkCo6xb4Z5eDE6Fm+WPOQi2EVl8Im51PxUmp7/9jZhQyZEYiYDbxWt
+	HwDW+Ynv0cuTR41hlcPSzwzyhW5kbDPnwdH3it0IWIRf3A6+sULMNVx9zoloLmmHa2kqsemGFjS
+	UZQE2BJL+4kttfRyCnIUbnBO7G/1HTXJD7z7hP/WQcK9o045JLjdBe3GCO6hd/P0=
+X-Google-Smtp-Source: AGHT+IEKf13G5VVtKix2Gq667g//FiBaGINonaogdX3yn8hZwcFv6711Pe8N6gMwP+Vbi5i7MjtaZg==
+X-Received: by 2002:a05:6e02:1805:b0:3e2:9f1e:e291 with SMTP id e9e14a558f8ab-3e3c53125b1mr209554715ab.21.1753721014595;
+        Mon, 28 Jul 2025 09:43:34 -0700 (PDT)
+Received: from [172.22.22.234] (c-73-228-159-35.hsd1.mn.comcast.net. [73.228.159.35])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3e3cad13c7csm25861755ab.61.2025.07.28.09.43.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Jul 2025 09:43:34 -0700 (PDT)
+Message-ID: <ef2b4526-3725-4a25-9118-ab77a1d91362@riscstar.com>
+Date: Mon, 28 Jul 2025 11:43:32 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 4/8] regulator: spacemit: support SpacemiT P1
+ regulators
+To: kernel test robot <lkp@intel.com>, lee@kernel.org, lgirdwood@gmail.com,
+ broonie@kernel.org, alexandre.belloni@bootlin.com, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: Paul Gazzillo <paul@pgazz.com>,
+ Necip Fazil Yildiran <fazilyildiran@gmail.com>,
+ oe-kbuild-all@lists.linux.dev, mat.jonczyk@o2.pl, dlan@gentoo.org,
+ paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr, linux.amoon@gmail.com, troymitchell988@gmail.com,
+ guodong@riscstar.com, linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20250726131003.3137282-5-elder@riscstar.com>
+ <202507281558.lZ0NYtth-lkp@intel.com>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <202507281558.lZ0NYtth-lkp@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250729-dwc3_generic-v7-2-5c791bba826f@linux.dev>
-References: <20250729-dwc3_generic-v7-0-5c791bba826f@linux.dev>
-In-Reply-To: <20250729-dwc3_generic-v7-0-5c791bba826f@linux.dev>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Ze Huang <huang.ze@linux.dev>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1753720444; l=6402;
- i=huang.ze@linux.dev; s=20250705; h=from:subject:message-id;
- bh=MchF5UPx0mNSiHl2aR2yJe+gbfg+oi9Voc70x1yyFyE=;
- b=bdBiSp4lensXpWUJE5yMitkGncXQ4e8HK0MKgTPhsVg37K680if5snpggRhdhzKhh3m+vdQmz
- sT4O5d1namxDH8/lpCZe/GuMKEK+m+LAsfhphOurxvegPxgCpcbaMb4
-X-Developer-Key: i=huang.ze@linux.dev; a=ed25519;
- pk=Kzc4PMu5PTo8eZZQ5xmTNL9jeXcQ9Wml0cs+vlQpBkg=
-X-Migadu-Flow: FLOW_OUT
 
-To support flattened dwc3 dt model and drop the glue layer, introduce the
-`dwc3-generic` driver. This enables direct binding of the DWC3 core driver
-and offers an alternative to the existing glue driver `dwc3-of-simple`.
+On 7/28/25 2:37 AM, kernel test robot wrote:
+> Hi Alex,
+> 
+> kernel test robot noticed the following build warnings:
 
-Signed-off-by: Ze Huang <huang.ze@linux.dev>
----
- drivers/usb/dwc3/Kconfig             |  11 +++
- drivers/usb/dwc3/Makefile            |   1 +
- drivers/usb/dwc3/dwc3-generic-plat.c | 167 +++++++++++++++++++++++++++++++++++
- 3 files changed, 179 insertions(+)
+I have a fix for this, and will include it in v11 of this series
+when I publish it.  I will wait to do that until I get additional
+feedback.
 
-diff --git a/drivers/usb/dwc3/Kconfig b/drivers/usb/dwc3/Kconfig
-index 310d182e10b50b253d7e5a51674806e6ec442a2a..4925d15084f816d3ff92059b476ebcc799b56b51 100644
---- a/drivers/usb/dwc3/Kconfig
-+++ b/drivers/usb/dwc3/Kconfig
-@@ -189,4 +189,15 @@ config USB_DWC3_RTK
- 	  or dual-role mode.
- 	  Say 'Y' or 'M' if you have such device.
- 
-+config USB_DWC3_GENERIC_PLAT
-+	tristate "DWC3 Generic Platform Driver"
-+	depends on OF && COMMON_CLK
-+	default USB_DWC3
-+	help
-+	  Support USB3 functionality in simple SoC integrations.
-+	  Currently supports SpacemiT DWC USB3. Platforms using
-+	  dwc3-of-simple can easily switch to dwc3-generic by flattening
-+	  the dwc3 child node in the device tree.
-+	  Say 'Y' or 'M' here if your platform integrates DWC3 in a similar way.
-+
- endif
-diff --git a/drivers/usb/dwc3/Makefile b/drivers/usb/dwc3/Makefile
-index 830e6c9e5fe073c1f662ce34b6a4a2da34c407a2..96469e48ff9d189cc8d0b65e65424eae2158bcfe 100644
---- a/drivers/usb/dwc3/Makefile
-+++ b/drivers/usb/dwc3/Makefile
-@@ -57,3 +57,4 @@ obj-$(CONFIG_USB_DWC3_IMX8MP)		+= dwc3-imx8mp.o
- obj-$(CONFIG_USB_DWC3_XILINX)		+= dwc3-xilinx.o
- obj-$(CONFIG_USB_DWC3_OCTEON)		+= dwc3-octeon.o
- obj-$(CONFIG_USB_DWC3_RTK)		+= dwc3-rtk.o
-+obj-$(CONFIG_USB_DWC3_GENERIC_PLAT)	+= dwc3-generic-plat.o
-diff --git a/drivers/usb/dwc3/dwc3-generic-plat.c b/drivers/usb/dwc3/dwc3-generic-plat.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..abb144867bf5f678223483c948521ceb44d05190
---- /dev/null
-+++ b/drivers/usb/dwc3/dwc3-generic-plat.c
-@@ -0,0 +1,167 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * dwc3-generic-plat.c - DesignWare USB3 generic platform driver
-+ *
-+ * Copyright (C) 2025 Ze Huang <huang.ze@linux.dev>
-+ *
-+ * Inspired by dwc3-qcom.c and dwc3-of-simple.c
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/platform_device.h>
-+#include <linux/reset.h>
-+#include "glue.h"
-+
-+struct dwc3_generic {
-+	struct device		*dev;
-+	struct dwc3		dwc;
-+	struct clk_bulk_data	*clks;
-+	int			num_clocks;
-+	struct reset_control	*resets;
-+};
-+
-+static void dwc3_generic_reset_control_assert(void *data)
-+{
-+	reset_control_assert(data);
-+}
-+
-+static int dwc3_generic_probe(struct platform_device *pdev)
-+{
-+	struct dwc3_probe_data probe_data = {};
-+	struct device *dev = &pdev->dev;
-+	struct dwc3_generic *dwc3;
-+	struct resource *res;
-+	int ret;
-+
-+	dwc3 = devm_kzalloc(dev, sizeof(*dwc3), GFP_KERNEL);
-+	if (!dwc3)
-+		return -ENOMEM;
-+
-+	dwc3->dev = dev;
-+
-+	platform_set_drvdata(pdev, dwc3);
-+
-+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	if (!res) {
-+		dev_err(&pdev->dev, "missing memory resource\n");
-+		return -ENODEV;
-+	}
-+
-+	dwc3->resets = devm_reset_control_array_get_optional_exclusive(dev);
-+	if (IS_ERR(dwc3->resets))
-+		return dev_err_probe(dev, PTR_ERR(dwc3->resets), "failed to get resets\n");
-+
-+	ret = reset_control_assert(dwc3->resets);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to assert resets\n");
-+
-+	/* Not strict timing, just for safety */
-+	udelay(2);
-+
-+	ret = reset_control_deassert(dwc3->resets);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to deassert resets\n");
-+
-+	ret = devm_add_action_or_reset(dev, dwc3_generic_reset_control_assert, dwc3->resets);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_clk_bulk_get_all_enabled(dwc3->dev, &dwc3->clks);
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret, "failed to get clocks\n");
-+
-+	dwc3->num_clocks = ret;
-+	dwc3->dwc.dev = dev;
-+	probe_data.dwc = &dwc3->dwc;
-+	probe_data.res = res;
-+	probe_data.ignore_clocks_and_resets = true;
-+	ret = dwc3_core_probe(&probe_data);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to register DWC3 Core\n");
-+
-+	return 0;
-+}
-+
-+static void dwc3_generic_remove(struct platform_device *pdev)
-+{
-+	struct dwc3_generic *dwc3 = platform_get_drvdata(pdev);
-+
-+	dwc3_core_remove(&dwc3->dwc);
-+}
-+
-+static int dwc3_generic_suspend(struct device *dev)
-+{
-+	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = dwc3_pm_suspend(&dwc3->dwc);
-+	if (ret)
-+		return ret;
-+
-+	clk_bulk_disable_unprepare(dwc3->num_clocks, dwc3->clks);
-+
-+	return 0;
-+}
-+
-+static int dwc3_generic_resume(struct device *dev)
-+{
-+	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = clk_bulk_prepare_enable(dwc3->num_clocks, dwc3->clks);
-+	if (ret)
-+		return ret;
-+
-+	ret = dwc3_pm_resume(&dwc3->dwc);
-+	if (ret)
-+		return ret;
-+
-+	return 0;
-+}
-+
-+static int dwc3_generic_runtime_suspend(struct device *dev)
-+{
-+	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-+
-+	return dwc3_runtime_suspend(&dwc3->dwc);
-+}
-+
-+static int dwc3_generic_runtime_resume(struct device *dev)
-+{
-+	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-+
-+	return dwc3_runtime_resume(&dwc3->dwc);
-+}
-+
-+static int dwc3_generic_runtime_idle(struct device *dev)
-+{
-+	struct dwc3_generic *dwc3 = dev_get_drvdata(dev);
-+
-+	return dwc3_runtime_idle(&dwc3->dwc);
-+}
-+
-+static const struct dev_pm_ops dwc3_generic_dev_pm_ops = {
-+	SYSTEM_SLEEP_PM_OPS(dwc3_generic_suspend, dwc3_generic_resume)
-+	RUNTIME_PM_OPS(dwc3_generic_runtime_suspend, dwc3_generic_runtime_resume,
-+		       dwc3_generic_runtime_idle)
-+};
-+
-+static const struct of_device_id dwc3_generic_of_match[] = {
-+	{ .compatible = "spacemit,k1-dwc3", },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, dwc3_generic_of_match);
-+
-+static struct platform_driver dwc3_generic_driver = {
-+	.probe		= dwc3_generic_probe,
-+	.remove		= dwc3_generic_remove,
-+	.driver		= {
-+		.name	= "dwc3-generic-plat",
-+		.of_match_table = dwc3_generic_of_match,
-+		.pm	= pm_ptr(&dwc3_generic_dev_pm_ops),
-+	},
-+};
-+module_platform_driver(dwc3_generic_driver);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("DesignWare USB3 generic platform driver");
+The fix is to make REGULATOR_SPACEMIT_P1 depend on I2C, in addition
+to ARCH_SPACEMIT || COMPILE_TEST.
 
--- 
-2.50.1
+					-Alex
+
+> 
+> [auto build test WARNING on d7af19298454ed155f5cf67201a70f5cf836c842]
+> 
+> url:    https://github.com/intel-lab-lkp/linux/commits/Alex-Elder/dt-bindings-mfd-add-support-the-SpacemiT-P1-PMIC/20250726-211530
+> base:   d7af19298454ed155f5cf67201a70f5cf836c842
+> patch link:    https://lore.kernel.org/r/20250726131003.3137282-5-elder%40riscstar.com
+> patch subject: [PATCH v10 4/8] regulator: spacemit: support SpacemiT P1 regulators
+> config: alpha-kismet-CONFIG_MFD_SPACEMIT_P1-CONFIG_REGULATOR_SPACEMIT_P1-0-0 (https://download.01.org/0day-ci/archive/20250728/202507281558.lZ0NYtth-lkp@intel.com/config)
+> reproduce: (https://download.01.org/0day-ci/archive/20250728/202507281558.lZ0NYtth-lkp@intel.com/reproduce)
+> 
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202507281558.lZ0NYtth-lkp@intel.com/
+> 
+> kismet warnings: (new ones prefixed by >>)
+>>> kismet: WARNING: unmet direct dependencies detected for MFD_SPACEMIT_P1 when selected by REGULATOR_SPACEMIT_P1
+>     WARNING: unmet direct dependencies detected for MFD_SPACEMIT_P1
+>       Depends on [n]: HAS_IOMEM [=y] && I2C [=n]
+>       Selected by [y]:
+>       - REGULATOR_SPACEMIT_P1 [=y] && REGULATOR [=y] && (ARCH_SPACEMIT || COMPILE_TEST [=y])
+> 
 
