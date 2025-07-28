@@ -1,385 +1,142 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-pl1-f193.google.com (mail-pl1-f193.google.com [209.85.214.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B47526AF3
-	for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 10:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC4828373
+	for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 14:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753697182; cv=none; b=J7mt3dLfN8W4xYrmPLPUrn24w6nuO//ZcOt3bd7sDR4yFe1Xf4OYBpif8wZKyF2Kbi5IYrvHgjnEn3i98UJcXz2THiEc7eqihK4dZ42ONE03gbmr2lL48tgqkstZMxozrRS7IrBNYLA9lp2Hq207dDvFzGCZHfxsXrDvRcoQxaE=
+	t=1753712425; cv=none; b=czgPquBfA277cGkt61BlNEKnjo9DylDUhLeuBMtPygETOoSqW5GCJ4YypUZnidULMIaAQAbNNW4mpAZCaQUcJq6Fxe244AMtWcGBfJZREgNFjHjB3s5nAYrtKJg5mck4+uyKwa1M+iVAGsM+0K1aPe5FXvMtgJZaO3yVo8W93U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753697182; c=relaxed/simple;
-	bh=WqqOAsS8qlDIRF4o1EApKa4mgIksdxNbBUAekET86MM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lT/K2UUZlxrhIHnNSrW3mp6FbMyem8sn+Vc7rKQHfgHkMTbH+vpq9RDHHUKT4nQLnzhQEtAoot9mYTJxtPbKZxFc/qlYeUoT255iLUjuBh5/mMgauFdYV9ze2tOS8Y8hKjJndmXfjplXcXnFM6mDnfALDP0gFZW1eKhXegTJTwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.124.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 1017F340E8C;
-	Mon, 28 Jul 2025 10:06:17 +0000 (UTC)
-Date: Mon, 28 Jul 2025 18:06:07 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Niu Zhihong <zhihong@nzhnb.com>
-Cc: u-boot@lists.denx.de, spacemit@lists.linux.dev
-Subject: Re: [PATCH] board: spacemit: Add SpacemiT MUSE Pi Pro
-Message-ID: <20250728100607-GYA777015@gentoo>
-References: <20250728082547.454505-1-zhihong@nzhnb.com>
+	s=arc-20240116; t=1753712425; c=relaxed/simple;
+	bh=1PggnwSVufJ15eLoLiPtMJonLerZeCTUUrMLHt/MvWE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=V97y9F/CiHlCqnHea717U6vMNIPplHsUo0MR0SvCWgwzl/5nwBGCweNnrxoOV43aAin5ZlxaGBHxVla1cstVTorSbvMvD32ZA84/9TZkUMANJMdSf9qcRjIorcMZfYq4UOMn9R9XljJS2GFxkLXBAtXanH3wdwS1wupliigks/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l9WdGOBI; arc=none smtp.client-ip=209.85.214.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l9WdGOBI"
+Received: by mail-pl1-f193.google.com with SMTP id d9443c01a7336-2401b855980so9226475ad.1
+        for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 07:20:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753712423; x=1754317223; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bZbPgCBxEfjAABl7BFhrPe8nrXtS6lUGZ8fQixqxipg=;
+        b=l9WdGOBIQFl7dm+aNCKDDj7HALGskeG30l1QK8OHOYsxV76upzEVWSMS+Rowf9wPLV
+         nH0s/zyk5aK3MZ3nQHtDbkMDBUGG+i3p/EWvoFZJbOBJYEtdQIaqJdLWj5H9CDHTuZc5
+         YyfdklbMXtCOEz6QQ4arjQgfbMNdpQwgcjMc1iw2LxzVOxch0Z0dh29GQE1Hh9aDHzqW
+         ShLu8QofFSAsZaKVmw7NmXz3pBtr3UUNuAqTPRRMJ3/iRLohi8GFsuuEzyw2ndDoqLDq
+         qFd62V9Rd+/hAHNVzHRciiBlWPdp2oHPXUkZllUgmRKM3Teomm6ynK6KnMYVSY6KMo61
+         T59w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753712423; x=1754317223;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bZbPgCBxEfjAABl7BFhrPe8nrXtS6lUGZ8fQixqxipg=;
+        b=HYWlPti5ToJFizCQ/3VRc3Q39fTg2NWOyNgDX7UjglKpCk0G9Yml+YxXPW8jHLtiYC
+         6uawnNA7DHd5LsbVn2sYhuszAeP/75VtTWoP0cahg0Ovx/Akq6rmQR2bQU7wCSNJnz+X
+         JePbWE7m9uFmfn8g2fwkJDHmmnwgHMf/x7bs/30NuZUKpo+w3evHrPFar1JWHtzlVqnJ
+         7hZrWq8yD2DRj3WAg80i9UqITk9ThM2KRi7CWtADgVYWHcXrmsS4/5db3vSTjU5oVmdG
+         xLeLNo6D/0AYPDlUw8wRdjD2haqG6EYgahrG1hbhpIXsw0FK4VcEzBlQwFc3C1mHdVdt
+         TyYA==
+X-Forwarded-Encrypted: i=1; AJvYcCWso5CUHzgwdFkUp5wNhTsBkZN50l2Z1vsSUKLbFHrAHZvlpjzrGOsQDdt8XYA8D8nBz2aSlgOb+g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxOqL1Ahh3poU6H1MvsCwEHBKfWU+vap33/+CA0BnalzjIG6/yc
+	DPTt5Bf18FuwnqhYV/FLNM+izoFBlX3PJ06+kl8dnHRn8yJqZt1v+PTi1sGn2HS4DDdZtg==
+X-Gm-Gg: ASbGncvDhwVNgVcFPCFP41xwS6SOzF+p08yNyZNK9x2OKNJw1ygL5BX/m49UM8/P8um
+	Atx9FYJSSZHRzUdUuZfsMKPtue4m6+RO/NgbjsihH+bH1o3bUxv78xA0gP1Na7kxbExnTbdaEEP
+	F/AjLFlJJKd5vizM9/GQLmFLMcRtOdL6An27FBBU6xqpfobc5hfTp70CPiy/duY178v8YEQu9k6
+	OTwEmLDuIUsMOi4hfleBkAXoUHFm4VdH1ks4fTMDQS1hk5BD1EsDaGw1AjeNdIKnhpSOB+0Q2E4
+	CblWgZumTMjArBjBK0TRAYPLpTr7dvr+BsIFkWu6+gxpZy7JRxbgKabXantUk1xzNbzpvHFoArv
+	yAzbaLNUq83rnTO5dzjwjrPKQoENKO9nL
+X-Google-Smtp-Source: AGHT+IHtegYM4BlLYXwS9tWAhPo7ODJPuXBsbqpjo4lyceFKEN4p/yLS5sVZ/sven5XQoNC9rK1+NA==
+X-Received: by 2002:a17:903:2054:b0:23f:f68b:fa0b with SMTP id d9443c01a7336-23ff68bfc5cmr57909205ad.37.1753712423167;
+        Mon, 28 Jul 2025 07:20:23 -0700 (PDT)
+Received: from localhost ([2408:8256:2284:4127:de49:6dc9:a446:157a])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23ffa4bc557sm36791405ad.116.2025.07.28.07.20.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Jul 2025 07:20:22 -0700 (PDT)
+From: Troy Mitchell <troymitchell988@gmail.com>
+X-Google-Original-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: [PATCH v3 0/2] clk: spacemit: fix sspax_clk
+Date: Mon, 28 Jul 2025 22:20:14 +0800
+Message-Id: <20250728-k1-clk-i2s-v3-0-5d7579f02227@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250728082547.454505-1-zhihong@nzhnb.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAB6Hh2gC/03Myw6CMBCF4Vchs3YIHSCoK97DsIAylQmXkhYJh
+ vDuVuLC5X+S8+3g2Ql7uEc7OF7Fi51CpJcIdFdPT0ZpQwMllCeFKrBXqIcehTxyRgUZZW4qbyA
+ cZsdGthN7VKE78Yt179Ne6bv+GKJ/ZiVMkMyVW8NpWzdZOcj02mI/15pHWWJtR6iO4/gAm3zi8
+ 60AAAA=
+X-Change-ID: 20250717-k1-clk-i2s-e4272f1f915b
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>, 
+ Inochi Amaoto <inochiama@outlook.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Yao Zi <ziyao@disroot.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1753712415; l=1761;
+ i=troy.mitchell@linux.spacemit.com; s=20250712; h=from:subject:message-id;
+ bh=1PggnwSVufJ15eLoLiPtMJonLerZeCTUUrMLHt/MvWE=;
+ b=8/rLwSFmfnZFKcqahbV5wIBUuymvjJZLulCrEK4AJqVN8GYHfpSpUo+qbM/Du5QUrTG29NJ8b
+ ggVx5UlgBWuDTyPGviJ3GCGDdxHb5d8QjCYF9Y8HM990Ykcu7Pyhy3q
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=zhRP1xE0bftrurqSWI+SzcSdJGIZ0BTTY9Id0ESzqlI=
 
-Hi Niu,
+In the SpacemiT public document, when the FNCLKSEL field of
+the APBC_SSPAX_CLK_RST register is 7 (3'b111),
+which is a reserved value. And BIT3 of the same register is
+a reserved bit.
 
-  You need to split the patch, and prepare a cover letter..
+But the documentation is incorrect. In reality, the value 7 (3'b111)
+of FNCLKSEL is not reserved. Instead, it indicates that i2s_bclk is
+selected as the parent clock. Similarly, bit 3 is not reserved either.
+When FNCLKSEL is set to 7, bit 3 determines whether i2s_bclk is actually
+enabled as the parent clock.
 
-  Have to say, generally, this patch isn't really different comparing
-with current in tree bananapi-f3, so neither it is useful..
+In all other cases (i.e., when FNCLKSEL is not 7), bit 3 has no effect.
 
-  I personally would expect to see more drivers support for K1 SoC,
-then figure out how to have more boards enabled..
-  (I'd propose to not merge this patch, but if maintainer is ok with
-  this, then I'd have no objection)
-  
-  CC spacemit mailing list for more wide comments
+Importantly, whenever FNCLKSEL is set to 7, bit 3 must also be set to 1,
+otherwise the selection of i2s_bclk becomes invalid.
 
-On 16:25 Mon 28 Jul     , Niu Zhihong wrote:
-> MUSE Pi Pro uses spacemit K1,
-> a new generation of octa-core 64-bit RISC-V processor,
-> which includes octa-core X60.
-> 
-> Features tested on a MUSE Pi Pro 16GB:
-> - SD-card boot
-> - eMMC boot
-this brings some confusions, as currently there is no SD/eMMC driver support
-for K1, only means it's able to boot from SD/eMMC (with brom support)
+Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+Changes in v3:
+  - Fixing ABI-breaking behavior
+  - Modify commit msgs
+  - Link to v2: https://lore.kernel.org/r/20250722-k1-clk-i2s-v2-0-2f8edfe3dab4@linux.spacemit.com
+---
+Changes in v2:
+  - Use virtual gate instead of new function for sspa
+  - Add Suggested-by tag: Yao Zi
+  - Add Fixes tag
+  - Link to v1: https://lore.kernel.org/all/20250718-k1-clk-i2s-v1-1-e92c10fd0f60@linux.spacemit.com/
 
-> 
-> Signed-off-by: Niu Zhihong <zhihong@nzhnb.com>
-> ---
->  arch/riscv/Kconfig                     |  4 ++
->  arch/riscv/dts/Makefile                |  1 +
->  arch/riscv/dts/k1-muse-pi-pro.dts      | 27 ++++++++
->  board/spacemit/muse-pi-pro/Kconfig     | 37 +++++++++++
->  board/spacemit/muse-pi-pro/MAINTAINERS |  6 ++
->  board/spacemit/muse-pi-pro/Makefile    |  3 +
->  board/spacemit/muse-pi-pro/board.c     |  8 +++
->  configs/muse-pi-pro_defconfig          |  6 ++
->  doc/board/spacemit/index.rst           |  1 +
->  doc/board/spacemit/muse-pi-pro.rst     | 85 ++++++++++++++++++++++++++
->  include/configs/muse-pi-pro.h          | 11 ++++
->  11 files changed, 189 insertions(+)
->  create mode 100644 arch/riscv/dts/k1-muse-pi-pro.dts
->  create mode 100644 board/spacemit/muse-pi-pro/Kconfig
->  create mode 100644 board/spacemit/muse-pi-pro/MAINTAINERS
->  create mode 100644 board/spacemit/muse-pi-pro/Makefile
->  create mode 100644 board/spacemit/muse-pi-pro/board.c
->  create mode 100644 configs/muse-pi-pro_defconfig
->  create mode 100644 doc/board/spacemit/muse-pi-pro.rst
->  create mode 100644 include/configs/muse-pi-pro.h
-> 
-> diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-> index 8c6feae5735..29430fe4d1c 100644
-> --- a/arch/riscv/Kconfig
-> +++ b/arch/riscv/Kconfig
-> @@ -14,6 +14,9 @@ config TARGET_ANDES_AE350
->  config TARGET_BANANAPI_F3
->  	bool "Support BananaPi F3 Board"
->  
-> +config TARGET_MUSE_PI_PRO
-> +	bool "Support MUSE Pi Pro Board"
-> +
->  config TARGET_K230_CANMV
->  	bool "Support K230 CanMV Board"
->  
-> @@ -112,6 +115,7 @@ source "board/sipeed/maix/Kconfig"
->  source "board/sophgo/milkv_duo/Kconfig"
->  source "board/sophgo/licheerv_nano/Kconfig"
->  source "board/spacemit/bananapi-f3/Kconfig"
-> +source "board/spacemit/muse-pi-pro/Kconfig"
->  source "board/starfive/visionfive2/Kconfig"
->  source "board/thead/th1520_lpi4a/Kconfig"
->  source "board/xilinx/mbv/Kconfig"
-> diff --git a/arch/riscv/dts/Makefile b/arch/riscv/dts/Makefile
-> index 2b10c2d6c01..f959f174f21 100644
-> --- a/arch/riscv/dts/Makefile
-> +++ b/arch/riscv/dts/Makefile
-> @@ -2,6 +2,7 @@
->  
->  dtb-$(CONFIG_TARGET_ANDES_AE350) += ae350_32.dtb ae350_64.dtb
->  dtb-$(CONFIG_TARGET_BANANAPI_F3) += k1-bananapi-f3.dtb
-> +dtb-$(CONFIG_TARGET_MUSE_PI_PRO) += k1-muse-pi-pro.dtb
->  dtb-$(CONFIG_TARGET_K230_CANMV) += k230-canmv.dtb
->  dtb-$(CONFIG_TARGET_MICROCHIP_ICICLE) += mpfs-icicle-kit.dtb
->  dtb-$(CONFIG_TARGET_MILKV_DUO) += cv1800b-milkv-duo.dtb
-> diff --git a/arch/riscv/dts/k1-muse-pi-pro.dts b/arch/riscv/dts/k1-muse-pi-pro.dts
-> new file mode 100644
-> index 00000000000..5e32d696b63
-> --- /dev/null
-> +++ b/arch/riscv/dts/k1-muse-pi-pro.dts
-> @@ -0,0 +1,27 @@
-> +/*
-> + * Copyright The U-Boot Contributors
-> + */
-> +
-> +#include "k1.dtsi"
-> +#include "binman.dtsi"
-> +#include "k1-pinctrl.dtsi"
-> +
-> +/ {
-> +	model = "MUSE Pi Pro";
-> +	compatible = "muse-pi-pro", "spacemit,k1";
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	memory@0 {
-> +		device_type = "memory";
-> +		reg = <0x0 0x0 0x4 0x0>;
-> +	};
-> +};
-> +
-> +&uart0 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&uart0_2_cfg>;
-> +	status = "okay";
-> +};
-> diff --git a/board/spacemit/muse-pi-pro/Kconfig b/board/spacemit/muse-pi-pro/Kconfig
-> new file mode 100644
-> index 00000000000..49a27154c22
-> --- /dev/null
-> +++ b/board/spacemit/muse-pi-pro/Kconfig
-> @@ -0,0 +1,37 @@
-> +if TARGET_MUSE_PI_PRO
-> +
-> +config SYS_BOARD
-> +	default "muse-pi-pro"
-> +
-> +config SYS_VENDOR
-> +	default "spacemit"
-> +
-> +config SYS_CPU
-> +	default "k1"
-> +
-> +config SYS_CONFIG_NAME
-> +	default "muse-pi-pro"
-> +
-> +config TEXT_BASE
-> +	default 0x200000
-> +
-> +config SYS_LOAD_ADDR
-> +	default 0x200000
-> +
-> +config SPL_OPENSBI_LOAD_ADDR
-> +	default 0x00000000
-> +
-> +config SYS_NS16550
-> +	def_bool y
-> +
-> +config HAS_CUSTOM_SYS_INIT_SP_ADDR
-> +	def_bool y
-> +
-> +config CUSTOM_SYS_INIT_SP_ADDR
-> +	default 0x1000000
-> +
-> +config BOARD_SPECIFIC_OPTIONS
-> +	def_bool y
-> +	select SPACEMIT_K1
-> +
-> +endif
-> diff --git a/board/spacemit/muse-pi-pro/MAINTAINERS b/board/spacemit/muse-pi-pro/MAINTAINERS
-> new file mode 100644
-> index 00000000000..671a231c88c
-> --- /dev/null
-> +++ b/board/spacemit/muse-pi-pro/MAINTAINERS
-> @@ -0,0 +1,6 @@
-> +MUSE Pi Pro
-> +M:	Niu Zhihong <zhihong@nzhnb.com>
-> +S:	Maintained
-> +F:	board/spacemit/muse-pi-pro/
-> +F:	configs/muse-pi-pro_defconfig
-> +F:	doc/board/spacemit/muse-pi-pro.rst
-> diff --git a/board/spacemit/muse-pi-pro/Makefile b/board/spacemit/muse-pi-pro/Makefile
-> new file mode 100644
-> index 00000000000..d4ee1504bbd
-> --- /dev/null
-> +++ b/board/spacemit/muse-pi-pro/Makefile
-> @@ -0,0 +1,3 @@
-> +# Copyright The U-Boot Contributors
-> +
-> +obj-y := board.o
-> diff --git a/board/spacemit/muse-pi-pro/board.c b/board/spacemit/muse-pi-pro/board.c
-> new file mode 100644
-> index 00000000000..599e20117e3
-> --- /dev/null
-> +++ b/board/spacemit/muse-pi-pro/board.c
-> @@ -0,0 +1,8 @@
-> +/*
-> + * Copyright The U-Boot Contributors
-> + */
-> +
-> +int board_init(void)
-> +{
-> +	return 0;
-> +}
-this isn't needed, please check
-https://lore.kernel.org/r/20250717024426.26953-1-semen.protsenko@linaro.org
+---
+Troy Mitchell (2):
+      dt-bindings: clock: spacemit: CLK_SSPA_I2S_BCLK for SSPA
+      clk: spacemit: fix sspax_clk
 
-> diff --git a/configs/muse-pi-pro_defconfig b/configs/muse-pi-pro_defconfig
-> new file mode 100644
-> index 00000000000..d35ddfa18be
-> --- /dev/null
-> +++ b/configs/muse-pi-pro_defconfig
-> @@ -0,0 +1,6 @@
-> +CONFIG_RISCV=y
-> +CONFIG_ARCH_RV64I=y
-> +CONFIG_RISCV_SMODE=y
-> +CONFIG_TARGET_MUSE_PI_PRO=y
-> +CONFIG_DEFAULT_DEVICE_TREE="k1-muse-pi-pro"
-> +CONFIG_FIT=y
-I haven't checked the config, but compare to bananapi-f3_defconfig,
-it's more less options than it, please make sure all necessary drivers included..
+ drivers/clk/spacemit/ccu-k1.c                  | 25 +++++++++++++++++++++----
+ include/dt-bindings/clock/spacemit,k1-syscon.h |  2 ++
+ 2 files changed, 23 insertions(+), 4 deletions(-)
+---
+base-commit: 733923397fd95405a48f165c9b1fbc8c4b0a4681
+change-id: 20250717-k1-clk-i2s-e4272f1f915b
 
-> diff --git a/doc/board/spacemit/index.rst b/doc/board/spacemit/index.rst
-> index e7d3d94e459..fa24aaa84b4 100644
-> --- a/doc/board/spacemit/index.rst
-> +++ b/doc/board/spacemit/index.rst
-> @@ -6,4 +6,5 @@ SpacemiT
->     :maxdepth: 1
->  
->     bananapi-f3
-> +   muse-pi-pro
->  
-> diff --git a/doc/board/spacemit/muse-pi-pro.rst b/doc/board/spacemit/muse-pi-pro.rst
-> new file mode 100644
-> index 00000000000..4aa2eab5917
-> --- /dev/null
-> +++ b/doc/board/spacemit/muse-pi-pro.rst
-> @@ -0,0 +1,85 @@
-> +.. Copyright The U-Boot Contributors
-> +
-> +MUSE Pi Pro
-> +================
-> +
-> +Building
-> +~~~~~~~~
-> +
-> +1. Build OpenSBI
-> +
-> +   First, you need to build OpenSBI, which is required by U-Boot.
-> +   You can clone the OpenSBI repository and build it as follows:
-> +.. code-block:: console
-> +
-> +   export CROSS_COMPILE=riscv64-linux-gnu-
-> +   git clone https://gitee.com/bianbu-linux/opensbi.git
-> +   cd opensbi
-> +   make PLATFORM=generic
-> +
-> +
-> +2. Then build U-Boot as following:
-> +
-> +.. code-block:: console
-> +
-> +   cd u-boot
-> +   make muse-pi-pro_defconfig
-> +   make OPENSBI=opensbi/build/platform/generic/firmware/fw_dynamic.bin
-> +
-> +This will generate u-boot.itb
-> +
-> +Burning
-> +~~~~~~~
-> +To burn the U-Boot image to the MUSE Pi Pro board,
-> +you need to write the `u-boot.itb` file to the
-> +fourth partition of the SD card.
-> +
-> +You can use the `dd` command as follows:
-> +
-> +.. code-block:: console
-> +
-> +   dd if=u-boot.itb of=/dev/mmcblk0p4
-there is a prerequisite to prepare all the partitions, so need to flash with
-prebuilt image?
-
-> +
-> +Booting
-> +~~~~~~~
-> +Sample boot log from Banana Pi BPI-F3 board
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> +.. code-block:: none
-> +
-> +   sys: 0x200
-> +   try sd...
-> +   bm:3
-> +   j...
-> +
-> +   U-Boot SPL 2022.10spacemit-dirty (Apr 30 2025 - 05:48:50 +0000)
-> +   [   0.331] DDR type LPDDR4X
-> +   [   0.331] set ddr tx odt to 80ohm!
-> +   [   0.353] lpddr4_silicon_init consume 22ms
-> +   [   0.354] Change DDR data rate to 2400MT/s
-> +   [   0.503] ## Checking hash(es) for config conf-1 ... OK
-> +   [   0.505] ## Checking hash(es) for Image opensbi ... OK
-> +   [   0.511] ## Checking hash(es) for Image uboot ... OK
-> +   [   0.516] ## Checking hash(es) for Image fdt-1 ... OK
-> +   [   0.562] ## Checking hash(es) for config config_1 ... OK
-> +   [   0.564] ## Checking hash(es) for Image opensbi ... crc32+ OK
-> +
-> +
-> +   U-Boot 2025.07-00902-gf2f451d9d6d3-dirty (Jul 28 2025 - 14:38:51 +0800)
-> +
-> +   DRAM:  16 GiB
-> +   Core:  21 devices, 9 uclasses, devicetree: separate
-> +   Loading Environment from nowhere... OK
-> +   In:    serial@d4017000
-> +   Out:   serial@d4017000
-> +   Err:   serial@d4017000
-> +   Net:   No ethernet found.
-> +   => cpu list
-> +   0: cpu@0      spacemit,x60
-> +   1: cpu@1      spacemit,x60
-> +   2: cpu@2      spacemit,x60
-> +   3: cpu@3      spacemit,x60
-> +   4: cpu@4      spacemit,x60
-> +   5: cpu@5      spacemit,x60
-> +   6: cpu@6      spacemit,x60
-> +   7: cpu@7      spacemit,x60
-> +   => 
-> \ No newline at end of file
-> diff --git a/include/configs/muse-pi-pro.h b/include/configs/muse-pi-pro.h
-> new file mode 100644
-> index 00000000000..706dcc7f486
-> --- /dev/null
-> +++ b/include/configs/muse-pi-pro.h
-> @@ -0,0 +1,11 @@
-> +/*
-> + * Copyright The U-Boot Contributors
-copyright isn't correct
-> + */
-> +
-..
-> +#ifndef __CONFIG_H
-> +#define __CONFIG_H
-I'd personally rather have a file specific macro..
-but it seems quite common to use this macro, so I will
-others for comments
-
-> +
-> +#define CFG_SYS_SDRAM_BASE         0x0
-> +#define CFG_SYS_NS16550_IER        0x40
-> +
-> +#endif /* __CONFIG_H */
-> -- 
-> 2.45.2
-
+Best regards,
 -- 
-Yixun Lan (dlan)
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
