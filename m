@@ -1,67 +1,34 @@
-Received: from mail-qk1-f196.google.com (mail-qk1-f196.google.com [209.85.222.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5D226B743
-	for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 14:20:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EA3BE4E
+	for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 16:34:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753712457; cv=none; b=D9HFM2Am4KLcEXFebNpi7/liTZeg9ckQ4B2BmlYglZdTfCOMIAa879GAtDsUL+Z26qlBurtv4kiXx5atYJgb0E89PMhIipDPl65qbyV0N2S1HT/+Bxa8rJ/L0cqGWKkXD4NY76yc2LKdJhWhg7QSFuElHoW0eShuFNdNk9LabRo=
+	t=1753720454; cv=none; b=nWC765gpmV8yGG8id6QXzDLOBOKxzGcXClhVKZzxidJvvHtXjPCnLxraPIj1JDuugvm5KjDq3A6IJ4kjUGqAEQYsJ96fXNVx4gDcGEiblMv8ir9A99i21XTVGDhxrtIautlzObqpqzpSptLZUD1Qp5BTYe0KDvDZqqY4JLn/GDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753712457; c=relaxed/simple;
-	bh=uvU3LuSqoqO9vOKX5HTH0ipYicugJ67Oj+k5+VRnS3M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nIKwyATAVDrSKtixhXadxnGaQSKQLSHpYdHuHqRzPUbqD1QYICyEP/0ofCOuMtjl7h0a4Wd7kcZDduVpEuakQgN7VOC2XhNmw/xDQbVFmL3NFoHfK+ZvyupLh7N6fcEWJk7tV+CWR4KAK+mrxknIDcJmWqbzSImOywR1kt1SaBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XaggACfQ; arc=none smtp.client-ip=209.85.222.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753720454; c=relaxed/simple;
+	bh=U5M21v1xG5FatHMRggmCXqdyme5ZWIYSo7u2Mcsyysg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=rN/XhtMV8vG6i4NAUmx1r2EMmtafnecEQFZWySHUPbqPTpNb4GhV5S5HFJFrxX/r0xqcNLHHBKqlXYWKgfBihk8XbC0fHbaf8qbeGn6yRgayl8+43E7svZUbGrb6G+3J76l5w3cQyYB4C8v9X3fFdh7wb+M59VsWHz2lPu3uies=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Cm49YhQN; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XaggACfQ"
-Received: by mail-qk1-f196.google.com with SMTP id af79cd13be357-7e346ab52e9so571568285a.2
-        for <spacemit@lists.linux.dev>; Mon, 28 Jul 2025 07:20:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753712453; x=1754317253; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kwpHZPpXI0p0rDKtDHDqYa7tblu6wTfxnrUTp9ZaScY=;
-        b=XaggACfQAFfQcyS19M3NAR81VNXww+mPsPlMc3zFe95UZdx8T8wormkdX8I7Ms1SDt
-         v5/LlIkuvUSU7gU7aWmImeeORU5iQdIDebY0f98Wk4OWhCmojs720BmK+TbzwlVGz271
-         w7H7lBbLJwJMJZ5Q6HAZ9a2U+4EtAf6M93G5ya3kRviZA3sgFdKy2+zhRbYPTv8QUr88
-         Hz1GH+o8/AXzy1cFHQkLP3pAKmC2oKZWBPVwLyJ0JKPwB2qiWJXxQn+m5qruWKQw7wRc
-         TyHNtJL2rFbmHuwsElXJV1Utv00akz6nxQ76XFaXTmMKppoNbVGIfgoDz6hIiZQMyGIR
-         jdpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753712453; x=1754317253;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kwpHZPpXI0p0rDKtDHDqYa7tblu6wTfxnrUTp9ZaScY=;
-        b=BF7JqHaAWNZSUxayI+cILizgVmyqLRbyRFRIToltvvumDUQSdJfigwK+T1f/cS7xqx
-         bfCdDlTOqbtgy0y95clClE79VrdX2WD1gDTRlBABBcidmDhQ0a+Fj62ML5QtTSaTRnOR
-         3rDbVTco9hfy/bhs3QxtDVlo5xmaWHIQhRMJrZ+D+LI5EAWvfRtX8IZmBo7RnfvfU07s
-         7F3sXrGpOtWoyBaFfrWGgIYQtBXp3GAf0Rx9FdDypCHPNZK0+JJqG1cOHT8JMg6Peh6i
-         ST9P/Qan/jJZUxBrfqozWT8ckSXD2spsewBYoGF2UZgFs5cWgKH0pU7bXhVUPl6s/4lJ
-         N8Jw==
-X-Forwarded-Encrypted: i=1; AJvYcCXjqamweklu51Aepb3zKHZYze8yeOqHGuq39qniM0cWWeTQv+mRN/6x3MwOEbYt3mTNN/W2UEmg9Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyNJF0qOoWQAs1vR7042MNZGUIfaaIH/ME4VGtSpYi05NFgJd6j
-	j9AyNjxVQdaKE0pLZ4G3vXvlaSSI9kV9IP3p5FKAqzHGIItNB2MxwTEgfOK9qpvDCh7/Ww==
-X-Gm-Gg: ASbGncsJ/lhCAWZaHH2UcEMAFQ/43eZtmOSYNN2nyw86yYLg/p9iRXSrQDhB1FfeYH+
-	SH8ph2BxIresR7GN+dAoCFjfm9D28/BSBO5lKXDhFQ4ABw5MHEEbdwEdztLbdCDt5LfA2i7aup9
-	RcViGxs3frlv3bjWxqd01x8hWtM86VM0WxlSULqDUVC9LqJu4XNtgfLM3+sUNMfcJBQDF8GJ8Cs
-	MVToL2zosKk41n59b0v36ioy2vdMLPsPj6KD9rXbXY+9x0JDcksxA5xz41YsSTK/8AmsCgGq+Q8
-	KfciPU58CFFybtSQaC39Ryv6OkVx0anY8FEkqJHxbCdcb+8xSmTBzM1AUIaJQa/P7JGmwtaeYjk
-	YAOu6Q1dtf18DfPVjirjc6PFjafM7CPxS
-X-Google-Smtp-Source: AGHT+IGNkNTYdf6BLasYK8+uoS65PqFGHaWC/DpiGuyNp2KNVMbN6+x1bh6pNoVy9S9XOmC8dksPIw==
-X-Received: by 2002:a05:6a00:1a8c:b0:746:24c9:c92e with SMTP id d2e1a72fcca58-76332b4ffe8mr20182948b3a.8.1753712440665;
-        Mon, 28 Jul 2025 07:20:40 -0700 (PDT)
-Received: from localhost ([2408:8256:2284:4127:de49:6dc9:a446:157a])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-768faf4bb9asm893691b3a.132.2025.07.28.07.20.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jul 2025 07:20:40 -0700 (PDT)
-From: Troy Mitchell <troymitchell988@gmail.com>
-X-Google-Original-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Mon, 28 Jul 2025 22:20:16 +0800
-Subject: [PATCH v3 2/2] clk: spacemit: fix sspax_clk
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Cm49YhQN"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1753720450;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=9DZ40mw5f4r8qDEbAiC1FxPXibecmQivptnjSUPtpzU=;
+	b=Cm49YhQNTV7t24fD6GzOYYX+7LnjWluptGbxRCgZm+zs9k4oY/VKp5YMynnm+DzsoJtDqv
+	+lXll7c8zzPw2z5MJ5dbXbcmibZcdrAsMh0tjAnSvQCsoxkjDydWzK4t6haVs/82FIAqIf
+	9aUxqx3nyadNxaeFv8HATVFJRMJgNwQ=
+From: Ze Huang <huang.ze@linux.dev>
+Subject: [PATCH v7 0/2] Add SpacemiT K1 USB3.0 host controller support
+Date: Tue, 29 Jul 2025 00:33:54 +0800
+Message-Id: <20250729-dwc3_generic-v7-0-5c791bba826f@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,93 +37,117 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250728-k1-clk-i2s-v3-2-5d7579f02227@linux.spacemit.com>
-References: <20250728-k1-clk-i2s-v3-0-5d7579f02227@linux.spacemit.com>
-In-Reply-To: <20250728-k1-clk-i2s-v3-0-5d7579f02227@linux.spacemit.com>
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>, 
- Inochi Amaoto <inochiama@outlook.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Yao Zi <ziyao@disroot.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1753712415; l=2875;
- i=troy.mitchell@linux.spacemit.com; s=20250712; h=from:subject:message-id;
- bh=uvU3LuSqoqO9vOKX5HTH0ipYicugJ67Oj+k5+VRnS3M=;
- b=RwJKdnLixQKy07JYdGH7iFd0nnjBb6RbhYTaUrhC1Qraje6WyuilaOhHmgkWSnYvZDzbRCoeZ
- d8+uAlhTgKBAJoi9L54Y7Y3XNDmjaIt5i8vUIYspoyyyo0431qObHps
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=zhRP1xE0bftrurqSWI+SzcSdJGIZ0BTTY9Id0ESzqlI=
+X-B4-Tracking: v=1; b=H4sIAHKmh2gC/22OQQ6CMBBFr0K6tqS0aQuuvIcxBqYjNBHQFiqGc
+ HcrbIhx+X/+ezMz8egsenJMZuIwWG/7LgZ9SAg0ZVcjtSZmwhmXTDNJzQvEtcYuYkBzw3guC80
+ 5CBKRh8ObnVbd+bJlh88xWoetJFXpkULftnY4JkGlmaIOMvIdN9YPvXuvrwS5rv9fDZIyWpgKp
+ MBSCsNPd9uNU2owrKKgdnDGf2AVYYBca6EBCqH28LIsH5IGkwwSAQAA
+X-Change-ID: 20250705-dwc3_generic-8d02859722c3
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Ze Huang <huang.ze@linux.dev>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1753720444; l=3766;
+ i=huang.ze@linux.dev; s=20250705; h=from:subject:message-id;
+ bh=U5M21v1xG5FatHMRggmCXqdyme5ZWIYSo7u2Mcsyysg=;
+ b=yNi8pS+gywCkt85wg+CIQaRCAGH3hRRiVoWx6CF5ivOiZJB9F+ZG/8R3OSi9iKwCNw/8ymgeg
+ F26UoMwZAhgD4CV5BzOS8kj38Oe/vHaWUKj+vaxesTv33wUx8KqsNZI
+X-Developer-Key: i=huang.ze@linux.dev; a=ed25519;
+ pk=Kzc4PMu5PTo8eZZQ5xmTNL9jeXcQ9Wml0cs+vlQpBkg=
+X-Migadu-Flow: FLOW_OUT
 
-Hardware Requirement:
-When FNCLKSEL in APBC_SSPAX_CLK_RST is set to 7 (3'b111),
-BIT3 must be set to 1 for the SSPAx parent clock to be I2S_BCLK.
+The USB 3.0 controller found in the SpacemiT K1 SoC[1] supports both USB3.0
+Host and USB2.0 Dual-Role Device (DRD). 
 
-This patch introduces SSPAx_I2S_BCLK as a virtual gate to enable BIT3.
+This controller is compatible with DesignWare Core USB 3 (DWC3) driver.
+However, constraints in the `snps,dwc3` bindings limit the ability to describe
+hardware-specific features in a clean and maintainable way. While
+`dwc3-of-simple` still serves as a glue layer for many platforms, it requires a
+split device tree node structure, which is less desirable in newer platforms.
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Suggested-by: Yao Zi <ziyao@disroot.org>
+To promote a transition toward a flattened `dwc` node structure, this series
+introduces `dwc3-generic-plat`, building upon prior efforts that exposed the
+DWC3 core driver [2].
+
+The device tree support for SpacemiT K1 will be submitted separately when the
+associated PHY driver is ready.
+
+This series is based on 6.16-rc1 and has been tested on BananaPi development
+boards.
+
+Link: https://developer.spacemit.com/documentation?token=AjHDwrW78igAAEkiHracBI9HnTb [1]
+Link: https://lore.kernel.org/all/20250414-dwc3-refactor-v7-3-f015b358722d@oss.qualcomm.com [2]
+
+Signed-off-by: Ze Huang <huang.ze@linux.dev>
 ---
- drivers/clk/spacemit/ccu-k1.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+Changes in v7:
+- dt-bindings:
+  - add reset-names and reset-delay properties
+  - add pcie0 entry in resets for combphy init
+- dwc3 generic plat driver:
+  - drop clock cleanup and handle with devm_clk_bulk_get_all_enabled()
+  - move devm reset action after successful de-assert
+- Link to v6: https://lore.kernel.org/r/20250712-dwc3_generic-v6-0-cc87737cc936@linux.dev
 
-diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-index cdde37a0523537c2f436e481ae8d6ec5a581b87e..24a561499a7c11b6a661c026f0bd2fac28fe7b04 100644
---- a/drivers/clk/spacemit/ccu-k1.c
-+++ b/drivers/clk/spacemit/ccu-k1.c
-@@ -349,7 +349,10 @@ CCU_GATE_DEFINE(aib_clk, CCU_PARENT_NAME(vctcxo_24m), APBC_AIB_CLK_RST, BIT(1),
- 
- CCU_GATE_DEFINE(onewire_clk, CCU_PARENT_NAME(vctcxo_24m), APBC_ONEWIRE_CLK_RST, BIT(1), 0);
- 
--static const struct clk_parent_data sspa_parents[] = {
-+CCU_GATE_DEFINE(sspa0_i2s_bclk, CCU_PARENT_HW(i2s_bclk), APBC_SSPA0_CLK_RST, BIT(3), 0);
-+CCU_GATE_DEFINE(sspa1_i2s_bclk, CCU_PARENT_HW(i2s_bclk), APBC_SSPA1_CLK_RST, BIT(3), 0);
-+
-+static const struct clk_parent_data sspa0_parents[] = {
- 	CCU_PARENT_HW(pll1_d384_6p4),
- 	CCU_PARENT_HW(pll1_d192_12p8),
- 	CCU_PARENT_HW(pll1_d96_25p6),
-@@ -357,10 +360,22 @@ static const struct clk_parent_data sspa_parents[] = {
- 	CCU_PARENT_HW(pll1_d768_3p2),
- 	CCU_PARENT_HW(pll1_d1536_1p6),
- 	CCU_PARENT_HW(pll1_d3072_0p8),
--	CCU_PARENT_HW(i2s_bclk),
-+	CCU_PARENT_HW(sspa0_i2s_bclk),
- };
--CCU_MUX_GATE_DEFINE(sspa0_clk, sspa_parents, APBC_SSPA0_CLK_RST, 4, 3, BIT(1), 0);
--CCU_MUX_GATE_DEFINE(sspa1_clk, sspa_parents, APBC_SSPA1_CLK_RST, 4, 3, BIT(1), 0);
-+CCU_MUX_GATE_DEFINE(sspa0_clk, sspa0_parents, APBC_SSPA0_CLK_RST, 4, 3, BIT(1), 0);
-+
-+static const struct clk_parent_data sspa1_parents[] = {
-+	CCU_PARENT_HW(pll1_d384_6p4),
-+	CCU_PARENT_HW(pll1_d192_12p8),
-+	CCU_PARENT_HW(pll1_d96_25p6),
-+	CCU_PARENT_HW(pll1_d48_51p2),
-+	CCU_PARENT_HW(pll1_d768_3p2),
-+	CCU_PARENT_HW(pll1_d1536_1p6),
-+	CCU_PARENT_HW(pll1_d3072_0p8),
-+	CCU_PARENT_HW(sspa1_i2s_bclk),
-+};
-+CCU_MUX_GATE_DEFINE(sspa1_clk, sspa1_parents, APBC_SSPA1_CLK_RST, 4, 3, BIT(1), 0);
-+
- CCU_GATE_DEFINE(dro_clk, CCU_PARENT_HW(apb_clk), APBC_DRO_CLK_RST, BIT(1), 0);
- CCU_GATE_DEFINE(ir_clk, CCU_PARENT_HW(apb_clk), APBC_IR_CLK_RST, BIT(1), 0);
- CCU_GATE_DEFINE(tsen_clk, CCU_PARENT_HW(apb_clk), APBC_TSEN_CLK_RST, BIT(1), 0);
-@@ -965,6 +980,8 @@ static struct clk_hw *k1_ccu_apbc_hws[] = {
- 	[CLK_SSPA1_BUS]		= &sspa1_bus_clk.common.hw,
- 	[CLK_TSEN_BUS]		= &tsen_bus_clk.common.hw,
- 	[CLK_IPC_AP2AUD_BUS]	= &ipc_ap2aud_bus_clk.common.hw,
-+	[CLK_SSPA0_I2S_BCLK]	= &sspa0_i2s_bclk.common.hw,
-+	[CLK_SSPA1_I2S_BCLK]	= &sspa1_i2s_bclk.common.hw,
- };
- 
- static const struct spacemit_ccu_data k1_ccu_apbc_data = {
+Changes in v6:
+- replace SET_RUNTIME_PM_OPS/SET_SYSTEM_SLEEP_PM_OPS with RUNTIME_PM_OPS/SYSTEM_SLEEP_PM_OPS
+- Link to v5: https://lore.kernel.org/r/20250705-dwc3_generic-v5-0-9dbc53ea53d2@linux.dev
 
+Changes in v5:
+- drop DTS patch (will submit when PHY driver is ready)
+- drop interconnects and update resets property in dt-bindings
+- remove unnecessary __maybe_unused attribute and PM guards
+- switch to devres APIs for reset and clock management
+- Link to v4: https://lore.kernel.org/all/20250526-b4-k1-dwc3-v3-v4-0-63e4e525e5cb@whut.edu.cn/
+
+Changes in v4:
+- dt-bindings spacemit,k1-dwc:
+  - reorder properties
+  - add properties of phys & phy-names
+  - add usb hub nodes in example dt
+- add support for spacemit,k1-mbus
+- dwc3 generic plat driver:
+  - rename dwc3-common.c to dwc3-generic-plat.c
+  - use SYSTEM_SLEEP_PM_OPS macros and drop PM guards
+- dts:
+  - reorder dts properties of usb dwc3 node
+  - move "dr_mode" of dwc3 from dtsi to dts
+- Link to v3: https://lore.kernel.org/r/20250518-b4-k1-dwc3-v3-v3-0-7609c8baa2a6@whut.edu.cn
+
+Changes in v3:
+- introduce dwc3-common for generic dwc3 hardware
+- fix warnings in usb host dt-bindings
+- fix errors in dts
+- Link to v2: https://lore.kernel.org/r/20250428-b4-k1-dwc3-v2-v1-0-7cb061abd619@whut.edu.cn
+
+Changes in v2:
+- dt-bindings:
+  - add missing 'maxItems'
+  - remove 'status' property in exmaple
+  - fold dwc3 node into parent
+- drop dwc3 glue driver and use snps,dwc3 driver directly
+- rename dts nodes and reorder properties to fit coding style
+- Link to v1: https://lore.kernel.org/all/20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn
+
+---
+Ze Huang (2):
+      dt-bindings: usb: dwc3: add support for SpacemiT K1
+      usb: dwc3: add generic driver to support flattened
+
+ .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 124 +++++++++++++++
+ drivers/usb/dwc3/Kconfig                           |  11 ++
+ drivers/usb/dwc3/Makefile                          |   1 +
+ drivers/usb/dwc3/dwc3-generic-plat.c               | 167 +++++++++++++++++++++
+ 4 files changed, 303 insertions(+)
+---
+base-commit: d9946fe286439c2aeaa7953b8c316efe5b83d515
+change-id: 20250705-dwc3_generic-8d02859722c3
+
+Best regards,
 -- 
-2.50.0
+Ze Huang <huang.ze@linux.dev>
 
