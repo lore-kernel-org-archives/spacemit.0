@@ -1,40 +1,25 @@
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5899C1DE4CA
-	for <spacemit@lists.linux.dev>; Tue, 29 Jul 2025 01:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B88486250
+	for <spacemit@lists.linux.dev>; Tue, 29 Jul 2025 05:58:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753753289; cv=none; b=RqULLtAbapyRsIVLlIGUKr18tiAclXCvf14ayJ0yUy8Fpppad0FpedrYzJ2yMCFakLuVIZqC39QSXbSRA/cqA/mQHlVo9uTjxnyfCSD0r/cBfICOmjHck+O6ITGmvk6syXGf8W3IA57VpPeu/GuE899RaROXj/HjyM+CppFHlqY=
+	t=1753768702; cv=none; b=M4JMz+FA8v4FzdRbwItvk6Yxdkwrbi8M4OCDILDi0DbBnRcPzVGPO/4vYdBD/nyouLz9r3iENis31xG8ApprjPbYv8uFHjGFSy1dYfsS4Q8+3s3t7lcwiTJv9T54//VXT0be2hSzV22brcWinfv35RfyKSp5T7JOQuSMiYhGUxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753753289; c=relaxed/simple;
-	bh=7jL0NE4cF4xqYnGuVecwCuQthPBG5AwQZhJM7XTG5Ek=;
+	s=arc-20240116; t=1753768702; c=relaxed/simple;
+	bh=UVtJkUYCbOCf3Xc1JFWl4zmDPnvOktYHaga7VdFr12A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sSrzh1tQ3Zdu/wRGK9XNrQqCJfw2cwLey1f76B0rnECcHRPxK04baGhpdTp7jQy/O0NBQ0twGDuNeWGsZxQAeJtLVmJj8n51IpCQx1yqpaIGuoDhWwaaPGDkG5lXQZ4v0Y966Z5DdhFUtXh5d1xf/YEOA83oMjUPRrhoAiGTOIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=B9KloKMh; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="B9KloKMh"
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id 4A82325D07;
-	Tue, 29 Jul 2025 03:41:23 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id Ckl6WRtZjqNd; Tue, 29 Jul 2025 03:41:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1753753282; bh=7jL0NE4cF4xqYnGuVecwCuQthPBG5AwQZhJM7XTG5Ek=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=B9KloKMhlJyyRh81m9m/G3F+TnYK+unb5HmSIcZYXv9skznThsPV7h/WJffNlxaJj
-	 GgelXZd6oZyPw3DHn2h5K07c7MdBLXmnkcXFhOCDK/lbxmgM2JtehkiPcayyUeZLPA
-	 CxOt4PLcDLpw7MfjzJ569Yu1jHgXTqSh42zh47HsACMyiVQg/6sJJZnjh1TTSjYhfZ
-	 AFWr+MskYiXsSrZT2kLjXuenqSzj67q532Gvy79Xvk/YwuvxoUDyTLwAXRg6ZCfZEk
-	 KOov8Z0BmgN26+ZXXUU1EY2M2Go+57hXmXtLODAkruVnsjzMIf4llmKPDmKGsCh0Pb
-	 Sn3Y0xyX8GMMw==
-Date: Tue, 29 Jul 2025 01:41:01 +0000
-From: Yao Zi <ziyao@disroot.org>
-To: Ze Huang <huang.ze@linux.dev>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=ur8Nok1dXSR265MWkjVhSPaSLZbR05/kn5kgyNA8X/3VxTM4nxX5/HpsBt/TAPfCJzKgTP2gPIXl5wk2GnW7nlsK7RkZWUy17EDsWAy5sBTdorzeAlk6J5Aiy40UXR0j8vNXoGle3U4JGu8Qw201d45geCRGMB63yMH5jlDIRTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
+Received: from localhost (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [114.94.8.21])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 1d9200ef5;
+	Tue, 29 Jul 2025 13:58:13 +0800 (GMT+08:00)
+Date: Tue, 29 Jul 2025 13:58:12 +0800
+From: Ze Huang <huangze@whut.edu.cn>
+To: Yao Zi <ziyao@disroot.org>, Ze Huang <huang.ze@linux.dev>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -44,12 +29,14 @@ To: Ze Huang <huang.ze@linux.dev>,
 Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Ze Huang <huangze@whut.edu.cn>
 Subject: Re: [PATCH v7 1/2] dt-bindings: usb: dwc3: add support for SpacemiT
  K1
-Message-ID: <aIgmrQ7afSO5sjB_@pie>
+Message-ID: <aIhi9JKZvuYh2Rz_@cse-cd03-lnx.ap.qualcomm.com>
 References: <20250729-dwc3_generic-v7-0-5c791bba826f@linux.dev>
  <20250729-dwc3_generic-v7-1-5c791bba826f@linux.dev>
+ <aIgmrQ7afSO5sjB_@pie>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -58,45 +45,73 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250729-dwc3_generic-v7-1-5c791bba826f@linux.dev>
+In-Reply-To: <aIgmrQ7afSO5sjB_@pie>
+X-HM-Tid: 0a9854c28f5e03a1kunm053f6d441bb8a9
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCTx4dVk9CGhgZS0xMGB4aSFYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlKSk9VQk9VQ1VJSllXWRYaDxIVHRRZQVlPS0hVSktJQk1LSlVKS0tVS1kG
 
-On Tue, Jul 29, 2025 at 12:33:55AM +0800, Ze Huang wrote:
-> Add support for the USB 3.0 Dual-Role Device (DRD) controller embedded
-> in the SpacemiT K1 SoC. The controller is based on the Synopsys
-> DesignWare Core USB 3 (DWC3) IP, supporting USB3.0 host mode and USB 2.0
-> DRD mode.
+On Tue, Jul 29, 2025 at 01:41:01AM +0000, Yao Zi wrote:
+> On Tue, Jul 29, 2025 at 12:33:55AM +0800, Ze Huang wrote:
+> > Add support for the USB 3.0 Dual-Role Device (DRD) controller embedded
+> > in the SpacemiT K1 SoC. The controller is based on the Synopsys
+> > DesignWare Core USB 3 (DWC3) IP, supporting USB3.0 host mode and USB 2.0
+> > DRD mode.
+> > 
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Signed-off-by: Ze Huang <huang.ze@linux.dev>
+> > ---
+> >  .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 124 +++++++++++++++++++++
+> >  1 file changed, 124 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..7007e2bd42016ae0e50c4007e75d26bada34d983
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> > @@ -0,0 +1,124 @@
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Ze Huang <huang.ze@linux.dev>
-> ---
->  .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 124 +++++++++++++++++++++
->  1 file changed, 124 insertions(+)
+> ...
 > 
-> diff --git a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..7007e2bd42016ae0e50c4007e75d26bada34d983
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
-> @@ -0,0 +1,124 @@
+> > +  resets:
+> > +    items:
+> > +      - description: USB3.0 AHB reset
+> > +      - description: USB3.0 VCC reset
+> > +      - description: USB3.0 PHY reset
+> > +      - description: PCIE0 global reset (for combo phy)
+> 
+> Why should the USB driver takes care of the PCIe stuff? This sounds
+> strange to me.
+> 
 
-...
+On K1, PHY depends on the clocks and resets it shares with the controller,
+and the controller driver is guarantees that any needed clocks are enabled,
+and any resets that affect the PHY are de-asserted before using the PHY.
 
-> +  resets:
-> +    items:
-> +      - description: USB3.0 AHB reset
-> +      - description: USB3.0 VCC reset
-> +      - description: USB3.0 PHY reset
-> +      - description: PCIE0 global reset (for combo phy)
+RESET_PCIE0_GLOBAL reset is necessary during, and only, the calibration stage
+of combo phy.
 
-Why should the USB driver takes care of the PCIe stuff? This sounds
-strange to me.
+To simplify both the driver architecture and the device tree files,
+RESET_PCIE0_GLOBAL (and some other clk/reset) are now managed by the
+relevant controller driver (either USB3 or PCIe0) instead of PHY driver.
 
-> +  reset-names:
-> +    items:
-> +      - const: ahb
-> +      - const: vcc
-> +      - const: phy
-> +      - const: pcie0
+Only one of USB3.0 SuperSpeed and PCIe-0 will be activated in a boot.
+PCIe-0 will not be affected when it's working.
 
-Best regards,
-Yao Zi
+
+
+Hi Alex, please correct me if anything wrong
+
+> > +  reset-names:
+> > +    items:
+> > +      - const: ahb
+> > +      - const: vcc
+> > +      - const: phy
+> > +      - const: pcie0
+> 
+> Best regards,
+> Yao Zi
+> 
+> 
+> 
