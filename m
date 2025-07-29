@@ -1,68 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5F919D09C;
-	Tue, 29 Jul 2025 09:00:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211BB1E7C27
+	for <spacemit@lists.linux.dev>; Tue, 29 Jul 2025 09:44:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753779624; cv=none; b=lQGLgH8JajBc+mk6h0DHq92nSStOkVJDhJVx6hC/Wlo9Scl/Y2OiXMRRFlfEzNJa1gyeLmsoyAYvgX4bffi1hOYtg9/Kz8UF4BrmMTpOIr7QqYWa7oN6ctgQ9ohgKzUz9fT79xEUtzEvqQmo/pTp5iDoRtNuLA6pH9nN0oI7/Po=
+	t=1753782293; cv=none; b=EihAKqqgpIMpbK+TeM51gpi2YBCwFFHM0QVuNGfNmxdpDIW6xHau8SdbYVZlSprW+iEw+3Vamo1W6PvBf4tN3oiMnIKENv1VqKXgrInjskgew5ZHUOz38Pe4q8JOlnL4zemV5g9OHK6YcjyDRjQUEv/c3EAqsjP117TacWyONkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753779624; c=relaxed/simple;
-	bh=NqJOUVSnRAuwlsdCgD7CCgnH8jeSEv6tZOvVIi96fe0=;
+	s=arc-20240116; t=1753782293; c=relaxed/simple;
+	bh=wwhfdEjKk3TD0g/+LXfOKPPQJZrSqxYsRtEHez2gGEs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iinNY42oSVIUwp42jZ0IOrmp9FOGXzx6+oVi06y0vI9f3nwVq8o09GEY7VR6TxdydcFSmbbYv5dhT1zr8teBTtWA4pkHNRUKxx0Eeygtzw13qE6Pw89lO+kXdODdTmQHdcoW1z3UV6CKZiSY9Y6MtNlCXZ65uedNZMNb51Tsk+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e9/ONf1Q; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=OJga7czfAdAUHwqEJqifQx8cRokHyn0aNnn1WvyFw6EgWlcKfex06CW8HGGk1IatDW9DRHDZsadx95JyeWttTfYTgTxhE76JurT2kCpFYEv6VQTb3KdvxQZ8/45ZQiLuCGnGWfjmrN2/vp7fVuvPUFdG7zWW26kXtT1F5Lx3CQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=b+ta6P8G; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e9/ONf1Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B44EC4CEF5;
-	Tue, 29 Jul 2025 09:00:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753779623;
-	bh=NqJOUVSnRAuwlsdCgD7CCgnH8jeSEv6tZOvVIi96fe0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=e9/ONf1Q+KuJNq6cweFcLhJ18FPRsgO8u0mQMekNt0xpmNy793rHy0kQ+DdM5HYC6
-	 2UzUNmYpjbNGQgiUrH1v8kBq+w+ymTb4f3ng10d8eO7F+yPPbS1qmfo6FkYRcwGL8u
-	 7H0k6BBIsLziLN2niIlGUNTkOOC2tvslr367DVjbiRUGcvQiIABCHOObjB4PpyYpCf
-	 yzlLmNk1je9ZKfwLmQtdonw6uEBeX1ngP8M9R8Nuclo3KHyYV9pCsglI02dZPQCq3y
-	 iobG/xREiel0brKSIRkZkYqIF5ApsV7K0GhKXkgxuGjo4b2zTEst4UFKSDqLuFr7lZ
-	 gcDlvw0zhiDwQ==
-Date: Tue, 29 Jul 2025 11:00:21 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Troy Mitchell <troymitchell988@gmail.com>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>, 
-	Haylen Chu <heylenay@4d2.org>, Inochi Amaoto <inochiama@outlook.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: clock: spacemit: CLK_SSPA_I2S_BCLK
- for SSPA
-Message-ID: <20250729-stylish-antique-cassowary-4e3c4c@kuoka>
-References: <20250728-k1-clk-i2s-v3-0-5d7579f02227@linux.spacemit.com>
- <20250728-k1-clk-i2s-v3-1-5d7579f02227@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="b+ta6P8G"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id AB7BE22E3A;
+	Tue, 29 Jul 2025 11:44:50 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id VG1y5xU0OrVJ; Tue, 29 Jul 2025 11:44:49 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1753782289; bh=wwhfdEjKk3TD0g/+LXfOKPPQJZrSqxYsRtEHez2gGEs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=b+ta6P8GfdeL2XpBmv4IbvF6ca52Tkf9nYHzCEKOcEZ6dxiQC87AOb7dmQjNI0kW+
+	 dTmcsSrR8iTyN4+UCJ6j+A7yJAppQu/CXkc4pasuuAOjgPgWYt+9b9X1RD74kJDDpj
+	 RDYBe8llF+zGEvpP5UnCvPWjMzh3GiB6jUItGfm0MnZ5agxWAWKXOXxjI30y+K/lDo
+	 mJ5W+SDybRsXe3znDYxeRfwjVe1zYkiTpA9+kJSO6rIX3bwyizEtYpQKXe9/lTXJMe
+	 2wDyg7Hue6mL32UTbdQJMQktsth6Jj9Mt8UUzZOHzQSOKslVwfguWhlPTYh3+K1LRD
+	 HYMUPj1/I7W1w==
+Date: Tue, 29 Jul 2025 09:44:37 +0000
+From: Yao Zi <ziyao@disroot.org>
+To: Ze Huang <huangze@whut.edu.cn>, Ze Huang <huang.ze@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v7 1/2] dt-bindings: usb: dwc3: add support for SpacemiT
+ K1
+Message-ID: <aIiYBaEMNWg20f8-@pie>
+References: <20250729-dwc3_generic-v7-0-5c791bba826f@linux.dev>
+ <20250729-dwc3_generic-v7-1-5c791bba826f@linux.dev>
+ <aIgmrQ7afSO5sjB_@pie>
+ <aIhi9JKZvuYh2Rz_@cse-cd03-lnx.ap.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250728-k1-clk-i2s-v3-1-5d7579f02227@linux.spacemit.com>
+In-Reply-To: <aIhi9JKZvuYh2Rz_@cse-cd03-lnx.ap.qualcomm.com>
 
-On Mon, Jul 28, 2025 at 10:20:15PM +0800, Troy Mitchell wrote:
-> In order to use the virtual clock SSPAx_I2S_BCLK in the device tree and
-> register it in the driver, this patch introduces the macro definition.
+On Tue, Jul 29, 2025 at 01:58:12PM +0800, Ze Huang wrote:
+> On Tue, Jul 29, 2025 at 01:41:01AM +0000, Yao Zi wrote:
+> > On Tue, Jul 29, 2025 at 12:33:55AM +0800, Ze Huang wrote:
+> > > Add support for the USB 3.0 Dual-Role Device (DRD) controller embedded
+> > > in the SpacemiT K1 SoC. The controller is based on the Synopsys
+> > > DesignWare Core USB 3 (DWC3) IP, supporting USB3.0 host mode and USB 2.0
+> > > DRD mode.
+> > > 
+> > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > Signed-off-by: Ze Huang <huang.ze@linux.dev>
+> > > ---
+> > >  .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 124 +++++++++++++++++++++
+> > >  1 file changed, 124 insertions(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> > > new file mode 100644
+> > > index 0000000000000000000000000000000000000000..7007e2bd42016ae0e50c4007e75d26bada34d983
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> > > @@ -0,0 +1,124 @@
+> > 
+> > ...
+> > 
+> > > +  resets:
+> > > +    items:
+> > > +      - description: USB3.0 AHB reset
+> > > +      - description: USB3.0 VCC reset
+> > > +      - description: USB3.0 PHY reset
+> > > +      - description: PCIE0 global reset (for combo phy)
+> > 
+> > Why should the USB driver takes care of the PCIe stuff? This sounds
+> > strange to me.
+> > 
 > 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> On K1, PHY depends on the clocks and resets it shares with the controller,
+> and the controller driver is guarantees that any needed clocks are enabled,
+> and any resets that affect the PHY are de-asserted before using the PHY.
 
-Your SoB does not match from.
+So does the "PCIe0 global reset" make effects to both USB3 and PCIe
+**controllers**? If not, this is something wrong in the devicetree side.
 
-> ---
->  include/dt-bindings/clock/spacemit,k1-syscon.h | 2 ++
->  1 file changed, 2 insertions(+)
+> RESET_PCIE0_GLOBAL reset is necessary during, and only, the calibration stage
+> of combo phy.
 
-Best regards,
-Krzysztof
+If it's only used by PHY, why couldn't it be a property of the PHY?
+Sorry, but I still cannot get the point.
 
+Regards,
+Yao Zi
+
+> To simplify both the driver architecture and the device tree files,
+> RESET_PCIE0_GLOBAL (and some other clk/reset) are now managed by the
+> relevant controller driver (either USB3 or PCIe0) instead of PHY driver.
+> 
+> Only one of USB3.0 SuperSpeed and PCIe-0 will be activated in a boot.
+> PCIe-0 will not be affected when it's working.
