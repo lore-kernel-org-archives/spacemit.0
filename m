@@ -1,156 +1,183 @@
-Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0509F33F9
-	for <spacemit@lists.linux.dev>; Fri,  1 Aug 2025 03:43:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A35545C0B
+	for <spacemit@lists.linux.dev>; Sun,  3 Aug 2025 02:58:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754019819; cv=none; b=reKdv3TexNCYUlWSHpI2h0TBOkqsHMVsny9TrVPJWceoNe9ztZRdWxhngpPxfG4pVQJ5PklIRfrNpuqtWhne7vTC4z8QAb3iu/Jd5pKSjpc3O1DhpNXRAL+AlIpETagxK8kkiLOfKAU9+ef+otSrkDAT6SvVCm+9dkTKAuhqgws=
+	t=1754189899; cv=none; b=F2a2X9u4AkJJ/yIOdqfgnskaUM8+cyCLU5LHsDy0kB1NC6NfabUb0kP/fCqGf/eVlDuDUjbznloLfaPWBU+EcEKga3wFumB8v6XjvslqxGyhFgDg8edFgHq4udlrHk2WIY0i5QzU6VO6Lv6A07jB1+J6LEWsMNZbIZSHdmXwRc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754019819; c=relaxed/simple;
-	bh=RyU/06axbOmuAEJla6gJSqqD6WDLQtT4/yHasgWo1pg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HJefEH1X+kS5MHHEgs095OEl/KlCR4DK60/AQueUrH87zLMtsykvDVwr7rhW35crgf/Q5yBHRcHRMuL0Ukh+ILbu7x/DEz8ZtozLQEapf5Ce0Ck0J+ac6sgogXUAKgv6iNRj3PePXnBAzN/LhlyXSJd5DTdQ/ApGnxy59PaptCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=dTD6gLEJ; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=pnRgjqoe; arc=none smtp.client-ip=155.254.16.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
+	s=arc-20240116; t=1754189899; c=relaxed/simple;
+	bh=xS0fwRHul3rDPIx1/b4zCW5Tgi8i7mAJOBcb7BgmG2U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VeOSLExOaYSpHuFfduWI3OxIn8iLVLtiMfTL6/E30pEVKQGdFZI1WedpmjcYyShw6PjIhm/OmBmeRlS/G+6oKv0hE0IcNoYYd5CN+AULIVhbaa6RX+0i1nYGlF2uk1Xt9XIUhNwmnwPmMOxLPs0nxJaAD9XZwGWRur00JC35qRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=053ooUAi; arc=none smtp.client-ip=209.85.166.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="dTD6gLEJ";
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="pnRgjqoe"
-Received: from localhost (bayard.4d2.org [127.0.0.1])
-	by bayard.4d2.org (Postfix) with ESMTP id 77F3F12FB41C;
-	Thu, 31 Jul 2025 20:25:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1754018742; bh=RyU/06axbOmuAEJla6gJSqqD6WDLQtT4/yHasgWo1pg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dTD6gLEJ2CxMefUxfELj+QGXw7f1ofNLfDbbteWeH0CUnHdx0xr3kDgc+CCm60WTv
-	 mP1RYMfwcVQ/EyKU3dx9NbiQcnP1y/NgPN8L6n/tVAKt8X14V/zj7k6I5miD0iJvSQ
-	 M+y8cSVF9F+3h1rLhWuTCH5W7NZSKmSs5UhIZ98vzXJqJUtSkst6j4fW/RdduEC6Ha
-	 0tUV/5BgD7dFkgj9woUOasCD7LjOWjPUJzL1Kpe/MibT3ttBJ2DUxdy13lS8P7Vdjc
-	 4YAjbNfvE89YPtIoHOJyLwVHwyc8eLU722xMB1ko0CfWIuu41vrrkDmJw4UpvNNQ9K
-	 KuPg/DJbTyJRQ==
-X-Virus-Scanned: amavis at 4d2.org
-Received: from bayard.4d2.org ([127.0.0.1])
- by localhost (bayard.4d2.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id W3_rfJeT08lw; Thu, 31 Jul 2025 20:25:39 -0700 (PDT)
-Received: from ketchup (unknown [117.171.66.9])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: heylenay@4d2.org)
-	by bayard.4d2.org (Postfix) with ESMTPSA id C3E1112FB405;
-	Thu, 31 Jul 2025 20:25:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1754018739; bh=RyU/06axbOmuAEJla6gJSqqD6WDLQtT4/yHasgWo1pg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pnRgjqoe3THj7xbnE85paANZv0icsEkbjpr9Ce/YDMcF8rblWRxnJYHNON/ekjKd3
-	 305OiLnwCecZ4BuKK1fhaIYEv4S8/FKCH53aIkZUekhlJ0D4GfdSHyKwYdt054iKvQ
-	 uxpy51q9ELngIZpIOzeYhRUCFdk/fjzf4DWzPyza9oQJVOY0yf3LdJ6FIK2DNXFPtv
-	 LAJuxvSIOw8s/tyc9Yl8bAeaTRMxSg2wXtK99TYKyEQF25L5vbmUweZ3RUNCInRnQF
-	 LqZImkf8dO+8NGI+FWXtyZ8B1DoUKLENjYg37vf5FY9eJ9mxSsuwTjuGvNvHhnGzZp
-	 ROz16puH1/qzg==
-Date: Fri, 1 Aug 2025 03:25:32 +0000
-From: Haylen Chu <heylenay@4d2.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, Yao Zi <ziyao@disroot.org>
-Subject: Re: [PATCH RESEND v3 2/2] clk: spacemit: fix sspax_clk
-Message-ID: <aIwzrHKD-GiZ0oFv@ketchup>
-References: <20250731-k1-clk-i2s-v3-0-2f655ddb0c6f@linux.spacemit.com>
- <20250731-k1-clk-i2s-v3-2-2f655ddb0c6f@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="053ooUAi"
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-8811ab2b559so240817339f.3
+        for <spacemit@lists.linux.dev>; Sat, 02 Aug 2025 19:58:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1754189896; x=1754794696; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oY3Z8dtNrrf7QjfOHcFhMrLBNHKYAu0syOln9u3nSKA=;
+        b=053ooUAiYYkI96vcXO4i31b4bkogwIRYyhPKSFUC1Amqk3pnToqcDkUfOelOx/QLfg
+         vQ5z2hjCvAo7cDp5qksfCFIG3RpQay/HX9dH4Obtpd5jYrlY/DpbnjIUXiHHmgAIVeDo
+         wRAR2hKCKAUzUg6G42TrwWBVLr2ON0pdHmTU3e1LzelN4cELIsF80IlXJpvIkVbvw0iu
+         j3bHoplH3nVMLGKyuk+duBH3G8h99H516qYRXo9RQRxKqs6G/aBkDMbNITDw7tRIJ/ub
+         6PGnh3idQfugJ4pijKNmnTUhN2Ho/ZYHMFKhz4Kn9prs25/wTWxASEfNImS/tQQqDNFS
+         6w4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754189896; x=1754794696;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oY3Z8dtNrrf7QjfOHcFhMrLBNHKYAu0syOln9u3nSKA=;
+        b=W5wSVXw0uvGAA0Njj35CA2t/sgpC9gFaLxIInyA4GhwNbqFTt5TPDHO3nOWeTtTxZs
+         gSKufSTOYBX8SuCFTQlKHpg5VuXgbZnnVbZCvFnKBa+ERb0Yb0Us997aJnfGKPOxNnfO
+         ezzCAmk6AjyLN1Ks2vTab7+4VEVAuwl3CAShieo5BK5Y5OGQAk86lg/EYfomblXfDNsH
+         R/SkQDn9g9Tpm2GwNGTGSUFHNqbIDpxBFbL9uz/3cC7xbPF/HNMsLePwP3Hk79Hd9O+n
+         2J1Xh7IWBdBHiKzux0/dlIxMkqJwInzJzj+0Q180QWjQDPB8XVebJGfPmmvZ1d+rNXzB
+         hmiw==
+X-Forwarded-Encrypted: i=1; AJvYcCWfsZvyN/pj5jz4/bP5JyJCwskKuAEyDovKYBu3gTSYes/i0vlNwgVui18qofS3nQGxvsEBT5cr2w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyGa+Q0uik8bbMwhRHa2kgCKJ7bp8d1PU050Vf3EUeGJqHZY1Tc
+	qZg99K1phdJTL6vyWmVIH5hoyaIusnBKO1sSFxAYBRJiowas6tZgKl8k4g1IQgZKwOM=
+X-Gm-Gg: ASbGncuD0xEHTy15wmUM7oafpqosZknvHTu+smhGZa0zlDZ97NqyDUByJSce7Fcn2B6
+	3Nst7/rSLrvz1hjgugZAnDt3odyAV0+EvYYE6KZjfJMRWJm2kgLdRjbnKgDzLTX7AEsszd6raN1
+	Con8StIDMem91moZ0yJeN9djGn+uZpio2TpyBuZQ+Eou6WtfFk5JlNqY4WP0XuPYaiktDdYeZz8
+	ERaQTYhhCQt8YlWEBawbpwRQD3j/evKTDxycbCc2LelRrUMcf2rITR6lw/EevCI2E1my/+uzEz0
+	zmasq7w+DaB9/fwBceddyZI23e4v3QMJCh7mU5IrpdXp0+W5yxjSVRUzbodQxTrvhlAaTIOa3nJ
+	A6aejLDlVZNuDiEkj+6XgJfcjdzT2sDviru4cZxWsIJnAyzZEh36tUl5EJFFUkRVgZA==
+X-Google-Smtp-Source: AGHT+IHt2PgWb9LhAIhITIOQeAiyN5sN4fCPbyKx7y0/fVbofgmpYs/9kxt/4dYcvv4SBxyTO04ktA==
+X-Received: by 2002:a05:6602:3f87:b0:87c:3d8:17aa with SMTP id ca18e2360f4ac-88168253fc7mr836026839f.0.1754189896369;
+        Sat, 02 Aug 2025 19:58:16 -0700 (PDT)
+Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50a55b1ac2esm2251906173.1.2025.08.02.19.58.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Aug 2025 19:58:15 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: lee@kernel.org,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	alexandre.belloni@bootlin.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: mat.jonczyk@o2.pl,
+	dlan@gentoo.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	linux.amoon@gmail.com,
+	troymitchell988@gmail.com,
+	guodong@riscstar.com,
+	linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v11 0/7] spacemit: introduce P1 PMIC support
+Date: Sat,  2 Aug 2025 21:58:04 -0500
+Message-ID: <20250803025812.373029-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250731-k1-clk-i2s-v3-2-2f655ddb0c6f@linux.spacemit.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 31, 2025 at 10:14:07PM +0800, Troy Mitchell wrote:
-> Hardware Requirement:
-> When FNCLKSEL in APBC_SSPAX_CLK_RST is set to 7 (3'b111),
-> BIT3 must be set to 1 for the SSPAx parent clock to be I2S_BCLK.
+The SpacemiT P1 is an I2C-controlled PMIC that implements 6 buck
+converters and 12 LDOs.  It contains a load switch, ADC channels,
+GPIOs, a real-time clock, and a watchdog timer.
 
-The change itself looks good to me. But additionally, maybe it's helpful
-to have a comment explaining this, just like twsi8_clk's case.
+This series introduces a multifunction driver for the P1 PMIC as
+well as drivers for its regulators and RTC.
 
-> This patch introduces SSPAx_I2S_BCLK as a virtual gate to enable BIT3.
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> Suggested-by: Yao Zi <ziyao@disroot.org>
-> ---
->  drivers/clk/spacemit/ccu-k1.c | 25 +++++++++++++++++++++----
->  1 file changed, 21 insertions(+), 4 deletions(-)
+After a sequence of attempts to add a new "max_register" value
+to the simple_mfd_data structure in a way that would hopefully
+be useful, we have reverted to the solution that was originally
+proposed, which simply defines a regmap_config containing that
+value along with reg_bits and val_bits (both 8).
 
-With a comment added, feel free to add my
+This version removes the second patch, which contained the added
+code to support the simple_mfd_data->max_register field.  It
+also addresses a dependency issue in patch 4 (now 3) that was
+pointed out by the Intel kernel test robot.
 
-Reviewed-by: Haylen Chu <heylenay@4d2.org>
+Note:  Yixun Lan suggested privately that I ensure the I2C_K1
+config option gets enabled, but I'm going to do that as a
+follow-on patch.
 
-Regards,
-Haylen Chu
+					-Alex
 
-> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-> index cdde37a0523537c2f436e481ae8d6ec5a581b87e..24a561499a7c11b6a661c026f0bd2fac28fe7b04 100644
-> --- a/drivers/clk/spacemit/ccu-k1.c
-> +++ b/drivers/clk/spacemit/ccu-k1.c
-> @@ -349,7 +349,10 @@ CCU_GATE_DEFINE(aib_clk, CCU_PARENT_NAME(vctcxo_24m), APBC_AIB_CLK_RST, BIT(1),
->  
->  CCU_GATE_DEFINE(onewire_clk, CCU_PARENT_NAME(vctcxo_24m), APBC_ONEWIRE_CLK_RST, BIT(1), 0);
->  
-> -static const struct clk_parent_data sspa_parents[] = {
-> +CCU_GATE_DEFINE(sspa0_i2s_bclk, CCU_PARENT_HW(i2s_bclk), APBC_SSPA0_CLK_RST, BIT(3), 0);
-> +CCU_GATE_DEFINE(sspa1_i2s_bclk, CCU_PARENT_HW(i2s_bclk), APBC_SSPA1_CLK_RST, BIT(3), 0);
-> +
-> +static const struct clk_parent_data sspa0_parents[] = {
->  	CCU_PARENT_HW(pll1_d384_6p4),
->  	CCU_PARENT_HW(pll1_d192_12p8),
->  	CCU_PARENT_HW(pll1_d96_25p6),
-> @@ -357,10 +360,22 @@ static const struct clk_parent_data sspa_parents[] = {
->  	CCU_PARENT_HW(pll1_d768_3p2),
->  	CCU_PARENT_HW(pll1_d1536_1p6),
->  	CCU_PARENT_HW(pll1_d3072_0p8),
-> -	CCU_PARENT_HW(i2s_bclk),
-> +	CCU_PARENT_HW(sspa0_i2s_bclk),
->  };
-> -CCU_MUX_GATE_DEFINE(sspa0_clk, sspa_parents, APBC_SSPA0_CLK_RST, 4, 3, BIT(1), 0);
-> -CCU_MUX_GATE_DEFINE(sspa1_clk, sspa_parents, APBC_SSPA1_CLK_RST, 4, 3, BIT(1), 0);
-> +CCU_MUX_GATE_DEFINE(sspa0_clk, sspa0_parents, APBC_SSPA0_CLK_RST, 4, 3, BIT(1), 0);
-> +
-> +static const struct clk_parent_data sspa1_parents[] = {
-> +	CCU_PARENT_HW(pll1_d384_6p4),
-> +	CCU_PARENT_HW(pll1_d192_12p8),
-> +	CCU_PARENT_HW(pll1_d96_25p6),
-> +	CCU_PARENT_HW(pll1_d48_51p2),
-> +	CCU_PARENT_HW(pll1_d768_3p2),
-> +	CCU_PARENT_HW(pll1_d1536_1p6),
-> +	CCU_PARENT_HW(pll1_d3072_0p8),
-> +	CCU_PARENT_HW(sspa1_i2s_bclk),
-> +};
-> +CCU_MUX_GATE_DEFINE(sspa1_clk, sspa1_parents, APBC_SSPA1_CLK_RST, 4, 3, BIT(1), 0);
-> +
->  CCU_GATE_DEFINE(dro_clk, CCU_PARENT_HW(apb_clk), APBC_DRO_CLK_RST, BIT(1), 0);
->  CCU_GATE_DEFINE(ir_clk, CCU_PARENT_HW(apb_clk), APBC_IR_CLK_RST, BIT(1), 0);
->  CCU_GATE_DEFINE(tsen_clk, CCU_PARENT_HW(apb_clk), APBC_TSEN_CLK_RST, BIT(1), 0);
-> @@ -965,6 +980,8 @@ static struct clk_hw *k1_ccu_apbc_hws[] = {
->  	[CLK_SSPA1_BUS]		= &sspa1_bus_clk.common.hw,
->  	[CLK_TSEN_BUS]		= &tsen_bus_clk.common.hw,
->  	[CLK_IPC_AP2AUD_BUS]	= &ipc_ap2aud_bus_clk.common.hw,
-> +	[CLK_SSPA0_I2S_BCLK]	= &sspa0_i2s_bclk.common.hw,
-> +	[CLK_SSPA1_I2S_BCLK]	= &sspa1_i2s_bclk.common.hw,
->  };
->  
->  static const struct spacemit_ccu_data k1_ccu_apbc_data = {
-> 
-> -- 
-> 2.50.0
-> 
+This series is available here:
+  https://github.com/riscstar/linux/tree/outgoing/pmic-v11
+
+Between version 9 and version 10:
+  - Abandon trying to implement a simple_mfd_data->max_register field
+  - Fix a missing dependency pointed out by the kernel test robot
+
+Here is version 10 of this series:
+  https://lore.kernel.org/lkml/20250726131003.3137282-1-elder@riscstar.com/
+
+Between version 9 and version 10:
+  - The #address-cells and #size-cells for the i2c8 DTS node
+    were moved into its primary definition in "k1.dtsi".
+  - The interrupts property for the i2c8 DTS node was moved
+    below its clock-related properties.
+  - The status property in the pmic@41 DTS node was dropped.
+  - The function that provides the regmap_config structure
+    to use was reworked a bit.
+  - A new function was added to free the regmap_config
+    structure after it's no longer needed.
+
+Here is version 9 of this series:
+  https://lore.kernel.org/lkml/20250724202511.499288-1-elder@riscstar.com/
+
+Between version 8 and version 9:
+  - The max_config value is always used if it is provided with the
+    simple_mfd_data structure.
+  - The regmap_config structure used is allocated dynamically if
+    necessary; otherwise regmap_config_8r_8v is used.
+  - A small duplicated comment is removed
+
+Here is version 8 of this series:
+  https://lore.kernel.org/lkml/20250710175107.1280221-1-elder@riscstar.com/
+
+More complete history is available at that link.
+
+Alex Elder (7):
+  dt-bindings: mfd: add support the SpacemiT P1 PMIC
+  mfd: simple-mfd-i2c: add SpacemiT P1 support
+  regulator: spacemit: support SpacemiT P1 regulators
+  rtc: spacemit: support the SpacemiT P1 RTC
+  riscv: dts: spacemit: enable the i2c8 adapter
+  riscv: dts: spacemit: define fixed regulators
+  riscv: dts: spacemit: define regulator constraints
+
+ .../devicetree/bindings/mfd/spacemit,p1.yaml  |  86 +++++++++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      | 135 ++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |   7 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          |  13 ++
+ drivers/mfd/Kconfig                           |  11 ++
+ drivers/mfd/simple-mfd-i2c.c                  |  18 ++
+ drivers/regulator/Kconfig                     |  13 ++
+ drivers/regulator/Makefile                    |   1 +
+ drivers/regulator/spacemit-p1.c               | 157 ++++++++++++++++
+ drivers/rtc/Kconfig                           |  10 ++
+ drivers/rtc/Makefile                          |   1 +
+ drivers/rtc/rtc-spacemit-p1.c                 | 167 ++++++++++++++++++
+ 12 files changed, 619 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+ create mode 100644 drivers/regulator/spacemit-p1.c
+ create mode 100644 drivers/rtc/rtc-spacemit-p1.c
+
+
+base-commit: b9ddaa95fd283bce7041550ddbbe7e764c477110
+-- 
+2.48.1
+
