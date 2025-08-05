@@ -1,60 +1,75 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7751E2367D3
-	for <spacemit@lists.linux.dev>; Tue,  5 Aug 2025 13:18:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5549927990B
+	for <spacemit@lists.linux.dev>; Tue,  5 Aug 2025 15:08:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399932; cv=none; b=A9AXi6lVDsxosTwCQVP/Rcekut0e4M4kP1WOhVDtykv+mFoVecZ+pTuzeQo5vJgGfi2vw8VY+jKaqLl7R7C1q+NQcPpbBCfCy5+hjIa4BwU7Hec4TJqp8o7sy2GsxVG/GYudz+W6XLWolP+QQIFT3iMN0oWn5+QvMATZT+kylWY=
+	t=1754406539; cv=none; b=TzTQtNGyMXVY8xM4Wxd808sDcJyHip32t00sBpf0Qujp7Xqk6EWD28sU/QAHKPrQT+SYgYvQN1mxRIDE5Pe4s95hI4GXc2fvYeYtCZXGFKeQvB+HH+qGyFEg1zAam5kxjZTQK3/t/Z6niDdPqVA/RpmpHe4oBnrCTOiDHll6pFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399932; c=relaxed/simple;
-	bh=GXDLqZ9n8KfIJNwv8n0LBseFgDTIjbKd+WPaDTIUSTI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZI0gclo5r8Jiu4Yz57KKBSfeJvsMLP9tWpkIdfyt58p8Iyd2FgOs2YtEZ3DibnjlFJjyh+mLJVL+fE9YplPn5iWsfOQ5fohrC6SpOdIRieo2E/bQplOp4KxJj39aF5byDho/h0XW3+J2HkZozZOCuu4h+48oHyHGUkkFsgRU8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=iHrcESA4; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1754406539; c=relaxed/simple;
+	bh=6ooIakJHfw7YXMmRWfrQTaJz2DBq2g0w8g/ZJdwjlOM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dqkHNRyhujxFqz0EImr3+lcrt1Thi2z6jVjbFEWOFChgm09d9+o2puJxSeyX8WD6zebnj0w5x9svbuut/+lQf3PERV+w5RPJJFZ6AUWir3WQbDzDaiEtspjeacTGlBdTwPa9tMCYe7fEHShw+dX8cOkcAJItqpy5vsqhscL59kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=sVkFCCSa; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="iHrcESA4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1754399820;
-	bh=uKRpwftHd76ByzGCZwStgONS7ug7yWYWivbpDDIKLDM=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=iHrcESA46HWHQvWuWs+uS8NP5R2DXeSeqPeyMpokGzWgKAB2u+Kq4wAQKUtDUEGVT
-	 j4y0X7s67YiuxVtaoVTvoCVN7r0h5LrewyFcUz4y1SsVufZ0YNqMcDV4K55ib+AXlA
-	 hTXd8PvY4EoU+4vdJYJYvV8403PajM75P6icoLhQ=
-X-QQ-mid: zesmtpip2t1754399812tfdd1d4e4
-X-QQ-Originating-IP: v37YLt7kMBXvE8kdPSfrSPPwxyTY26MVd1UE+ZktKOw=
-Received: from = ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 05 Aug 2025 21:16:49 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11721054069434364327
-EX-QQ-RecipientCnt: 16
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: troy.mitchell@linux.spacemit.com
-Cc: conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dlan@gentoo.org,
-	elder@riscstar.com,
-	heylenay@4d2.org,
-	inochiama@outlook.com,
-	krzk+dt@kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="sVkFCCSa"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-459d40d16bdso17064125e9.0
+        for <spacemit@lists.linux.dev>; Tue, 05 Aug 2025 08:08:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1754406534; x=1755011334; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=H1NFToLTMCBICwkF2bXpGG3zLl1KYY37VeQX64wTwe4=;
+        b=sVkFCCSaqM4tQ21zm1ZTseBWRV/jgwSqJKRM21fidqXk8iMmhJiNwGaOP1MYMyM1f7
+         XV5TUIzTK3xcRoRP+X9D7SGDCHn6Xx+u5qPS4YJr8XBpUoKyxa4OBnjtXO3vcBBdUdsp
+         zcd68lRFlVfUiiXegtetjwRIu5skC2kFaIuckWhqGJTGST1Bq/EpAxCG+uwSedgv0s9L
+         9fwoXOVO57XLI5h9S6aJTCzokOpZJBbwdpWmT2Ty0Hx4FJUhnVTr6i3uq1Ui0XnoogWR
+         d+GSKOfdAX7a2N/G6SLsIuQNlhAfBKkhFxX4qIRHqXexVHEX/s33htXBiPuGsiYFetr+
+         rwPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754406534; x=1755011334;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=H1NFToLTMCBICwkF2bXpGG3zLl1KYY37VeQX64wTwe4=;
+        b=U8dLvNWDDAqJESOMedqoLbktMWPi7PnCD9wy7x0UA0LkWca82vJE4/H21plIdZsO/3
+         YJeeDNKmnj66dwkccYelHtp8+2larmb2UJIo+rvwFr9Hb5+M2+A893ObWuwwrXKvWELU
+         m7U1t0EmuPj3yzuM4jyz8Wse4hxWXIHFNsGAEMvqeZLsZvzvJYb+ub0mNxfoE/PBJGrj
+         7kEZ6ouf2dKsOYOYCF4u0/iz0WT1u5/qaw9mIHc96GRM2GZEDIa2tBaxltFoX7w5rt1l
+         hZMZ1ePaxA/5zWijPktW7YDaptDuzHvv1wRRkb8X/WyL+uz31Bz7eBBNaiEbjxN0gqta
+         gdGw==
+X-Forwarded-Encrypted: i=1; AJvYcCUhyWVKu3csQEShExnNsxDvxM1uzIJphQXTDcYO5m2MTb2rDSe9bZsSp2bQkLKsFgQfcsLNILI5cg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxvWKu5bjgPyjvLmCtKNL7Xw6Hlcv8p3XWFeMBIb65v83RyU4Qg
+	8eHudChRb40LEtFN4q93EX0Il5iJbVIAS1TnWadO54Zk7cuWwYAUXyL0tAbpgU7Zwl0=
+X-Gm-Gg: ASbGnctUKo4kQ+BKcU9eJMfFBgTjDW4r+nVpKcZbTodwelkMdpnUmQ0MWh7FS18JNV2
+	QMoEk/4AO3d0IHObIUrN0hPH92dbbjkG1Wwm21X6EFnaWr+EBexOfWwcPiSz63bsntnzU5e4oYl
+	7rcEbgeb3TZUAMvgpNqOW9PXcgNT5VrsAgv3+C2gUhqyPmfy/lN0Cz3yz5LLMF0Hlv4nX67r8nB
+	AADYvhKlpa4RHmj//noCVp8wbDOoZ0GYpfR8WijVJcOn2SBZP0+O7rIJdepmxLxKnwVSHtBTxHD
+	0pU/z/Vi+hcDmFeQTidTXJmB69PY9qW0q8Ke5CUlOQGNfxYt5nnQfQgpvMLbydpIo1faGwm2gbv
+	ODQ/Awf04X+jC0JALSqMzQcA8kScdUugQToC1y9ygFcaQt0Wc
+X-Google-Smtp-Source: AGHT+IFxn5pLwK5DhH3KCFQWy4nsv5vsgTiDMhFW15HhwD65qkQk4OJb8IifzI8vS1mm024ju4SDkg==
+X-Received: by 2002:a05:600c:1c98:b0:459:d8c2:80b2 with SMTP id 5b1f17b1804b1-459d8c2833amr66948015e9.7.1754406534167;
+        Tue, 05 Aug 2025 08:08:54 -0700 (PDT)
+Received: from pop-os.telenet.be ([2a02:1807:2a00:3400:e77f:3816:a0b:2c4d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c469582sm19264199f8f.52.2025.08.05.08.08.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Aug 2025 08:08:53 -0700 (PDT)
+From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+To: linus.walleij@linaro.org,
+	dlan@gentoo.org
+Cc: skhan@linuxfoundation.org,
+	linux-kernel-mentees@lists.linux.dev,
+	linux-gpio@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	mturquette@baylibre.com,
-	robh@kernel.org,
-	sboyd@kernel.org,
 	spacemit@lists.linux.dev,
-	ziyao@disroot.org
-Subject: [PATCH v4 2/2] clk: spacemit: fix sspax_clk
-Date: Tue,  5 Aug 2025 21:16:46 +0800
-Message-ID: <E801E7AF425E08C7+20250805131646.2216375-1-troy.mitchell@linux.spacemit.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250805-k1-clk-i2s-v4-0-038181284dd4@linux.spacemit.com>
-References: <20250805-k1-clk-i2s-v4-0-038181284dd4@linux.spacemit.com>
+	linux-kernel@vger.kernel.org,
+	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Subject: [PATCH] pinctrl: spacemit: remove extra line in debug output
+Date: Tue,  5 Aug 2025 17:07:01 +0200
+Message-ID: <20250805150701.129113-1-hendrik.hamerlinck@hammernet.be>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -62,96 +77,43 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: OW4JKxETGMY2ika1YSmcCMBRvpexh30OCOY7ynTPH8cFLJh4SaZtE9uc
-	eZ58mp8B64uSkR6+OJQ4lTZEie3KgzHeHcKWHMdraJnRB72kI0veI7j0GUfDRbhfIbzrFQo
-	UwvZu1RCOx4Vvompxw9slUaTZjmCs7pRnqBIZ81I0IrmegGRSzVb1hMsvs00T+1Jh+QinB8
-	Sdo5lumiD3JOwM5WjC0qFw8ghIw8AsCGb7Q2nYE/+UZuLgfhsAlIsWiiPI+ox0TOIFzKjfE
-	gscIMAYiDypj9WL0p+r6ULbsVPhVL1z5CeBWEbi9jM03nwo489KuD8dGWCLh4LFk8OWn8va
-	pzMWoeCU1gZVJskJDr2pd7/CjpH+TMXQJsYWHbimvxIukNkdEAr45EBbndN7kRlIiZJVysd
-	KuIFSpSO0xxQHka+vBOkJLYNZHDfYHtf86b7leFzvwmMra84mu5Z0lVupJ7qZCOP3ud95/7
-	61U2zbfeLJz914Maigj9VYJiEWP5XuOTsc5hVWMgy9oCud/5nA5QRaZffuahMCv8wLN73V1
-	CXAdPiZFpmFz2GdXngCYqjXQfis9gYaLSoZFXxd7DJyvTV+J6uNNX4lN0wTQ8GFQETkFfXi
-	sNILsX3HtNF9pSZCjh7scg3OGTN7+IZAJLKi+3C2kgaZs6dtAjyRL0lXSrXz6lBa1WiOwGe
-	nzoti3+crPUisnyPaoYUsvqFOUGKZ5045DWpkV0YrK+Y2IghNGNfGHSmwGWpqv6llsnThuy
-	5kZaqs4dAq561l25Tj37g6QE2bTp5xupcUsCOm45umbL1KlXoGgZ+N5/aokfq7nX/6guVUX
-	2rrREAYm97mi+Ook2V3Boc6r3r1MUxvydrT3+fSbUmOW/l9jRlJKYtjkv85FCHXbw6imf2k
-	IgM8cX2AZ1xMKWhm5ixhWBTOWvuZ6sshJ+GSEG08MvYS7sTdNmNDzIqhLGiJoBcixwhiYHc
-	kaJxyMIhrEUFKAf++R1rgPFXG0NbK9mFaaX9FjI+JlewT/o8yXHUYyiBvzw+/RWgvI9U0Dr
-	0h8tKaJMiGgbNIb0jApi7ZQYaZxVFccbEfHuVWvfPIz+P6UsSjERudbCkUCOhRbAyVLz0bJ
-	rMx0dYh7OTV
-X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
-X-QQ-RECHKSPAM: 0
 
-Hardware Requirement:
-When FNCLKSEL in APBC_SSPAX_CLK_RST is set to 7 (3'b111),
-BIT3 must be set to 1 for the SSPAx parent clock to be I2S_BCLK.
+The debug output for spacemit_pinconf_dbg_show() prints an extra newline
+at the end. This is redundant as pinconf_pins_show() in pinconf.c already
+adds a newline in its for loop.
 
-This patch introduces SSPAx_I2S_BCLK as a virtual gate to enable BIT3.
+Remove the newline to avoid the extra line in the output.
 
-Suggested-by: Yao Zi <ziyao@disroot.org>
-Reviewed-by: Haylen Chu <heylenay@4d2.org>
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Example current output:
+$ cat /sys/kernel/debug/pinctrl/d401e000.pinctrl/pinconf-pins
+Pin config settings per pin
+Format: pin (name): configs
+pin 0 (GPIO_00): , bias pull disabled, io type (Fixed/1V8), drive strength (32 mA), register (0x1041)
+
+pin 1 (GPIO_01): slew rate (0x0), bias pull disabled, io type (Fixed/1V8), drive strength (32 mA), register (0x1041)
+
+pin 2 (GPIO_02): slew rate (0x0), bias pull disabled, io type (Fixed/1V8), drive strength (32 mA), register (0x1041)
+
+...
+
+Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
 ---
- drivers/clk/spacemit/ccu-k1.c | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/pinctrl/spacemit/pinctrl-k1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-index cdde37a05235..4a91d28da2fb 100644
---- a/drivers/clk/spacemit/ccu-k1.c
-+++ b/drivers/clk/spacemit/ccu-k1.c
-@@ -349,7 +349,14 @@ CCU_GATE_DEFINE(aib_clk, CCU_PARENT_NAME(vctcxo_24m), APBC_AIB_CLK_RST, BIT(1),
+diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
+index 9996b1c4a07e..fb361f2acb54 100644
+--- a/drivers/pinctrl/spacemit/pinctrl-k1.c
++++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
+@@ -707,7 +707,7 @@ static void spacemit_pinconf_dbg_show(struct pinctrl_dev *pctldev,
+ 			   spacemit_get_drive_strength_mA(IO_TYPE_1V8, tmp),
+ 			   spacemit_get_drive_strength_mA(IO_TYPE_3V3, tmp));
  
- CCU_GATE_DEFINE(onewire_clk, CCU_PARENT_NAME(vctcxo_24m), APBC_ONEWIRE_CLK_RST, BIT(1), 0);
+-	seq_printf(seq, ", register (0x%04x)\n", value);
++	seq_printf(seq, ", register (0x%04x)", value);
+ }
  
--static const struct clk_parent_data sspa_parents[] = {
-+/*
-+ * When i2s_bclk is selected as the parent clock of sspa,
-+ * the hardware requires bit3 to be set
-+ */
-+CCU_GATE_DEFINE(sspa0_i2s_bclk, CCU_PARENT_HW(i2s_bclk), APBC_SSPA0_CLK_RST, BIT(3), 0);
-+CCU_GATE_DEFINE(sspa1_i2s_bclk, CCU_PARENT_HW(i2s_bclk), APBC_SSPA1_CLK_RST, BIT(3), 0);
-+
-+static const struct clk_parent_data sspa0_parents[] = {
- 	CCU_PARENT_HW(pll1_d384_6p4),
- 	CCU_PARENT_HW(pll1_d192_12p8),
- 	CCU_PARENT_HW(pll1_d96_25p6),
-@@ -357,10 +364,22 @@ static const struct clk_parent_data sspa_parents[] = {
- 	CCU_PARENT_HW(pll1_d768_3p2),
- 	CCU_PARENT_HW(pll1_d1536_1p6),
- 	CCU_PARENT_HW(pll1_d3072_0p8),
--	CCU_PARENT_HW(i2s_bclk),
-+	CCU_PARENT_HW(sspa0_i2s_bclk),
- };
--CCU_MUX_GATE_DEFINE(sspa0_clk, sspa_parents, APBC_SSPA0_CLK_RST, 4, 3, BIT(1), 0);
--CCU_MUX_GATE_DEFINE(sspa1_clk, sspa_parents, APBC_SSPA1_CLK_RST, 4, 3, BIT(1), 0);
-+CCU_MUX_GATE_DEFINE(sspa0_clk, sspa0_parents, APBC_SSPA0_CLK_RST, 4, 3, BIT(1), 0);
-+
-+static const struct clk_parent_data sspa1_parents[] = {
-+	CCU_PARENT_HW(pll1_d384_6p4),
-+	CCU_PARENT_HW(pll1_d192_12p8),
-+	CCU_PARENT_HW(pll1_d96_25p6),
-+	CCU_PARENT_HW(pll1_d48_51p2),
-+	CCU_PARENT_HW(pll1_d768_3p2),
-+	CCU_PARENT_HW(pll1_d1536_1p6),
-+	CCU_PARENT_HW(pll1_d3072_0p8),
-+	CCU_PARENT_HW(sspa1_i2s_bclk),
-+};
-+CCU_MUX_GATE_DEFINE(sspa1_clk, sspa1_parents, APBC_SSPA1_CLK_RST, 4, 3, BIT(1), 0);
-+
- CCU_GATE_DEFINE(dro_clk, CCU_PARENT_HW(apb_clk), APBC_DRO_CLK_RST, BIT(1), 0);
- CCU_GATE_DEFINE(ir_clk, CCU_PARENT_HW(apb_clk), APBC_IR_CLK_RST, BIT(1), 0);
- CCU_GATE_DEFINE(tsen_clk, CCU_PARENT_HW(apb_clk), APBC_TSEN_CLK_RST, BIT(1), 0);
-@@ -965,6 +984,8 @@ static struct clk_hw *k1_ccu_apbc_hws[] = {
- 	[CLK_SSPA1_BUS]		= &sspa1_bus_clk.common.hw,
- 	[CLK_TSEN_BUS]		= &tsen_bus_clk.common.hw,
- 	[CLK_IPC_AP2AUD_BUS]	= &ipc_ap2aud_bus_clk.common.hw,
-+	[CLK_SSPA0_I2S_BCLK]	= &sspa0_i2s_bclk.common.hw,
-+	[CLK_SSPA1_I2S_BCLK]	= &sspa1_i2s_bclk.common.hw,
- };
- 
- static const struct spacemit_ccu_data k1_ccu_apbc_data = {
+ static const struct pinconf_ops spacemit_pinconf_ops = {
 -- 
-2.50.0
+2.43.0
 
