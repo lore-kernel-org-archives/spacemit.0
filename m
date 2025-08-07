@@ -1,116 +1,184 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F290926FA6A;
-	Thu,  7 Aug 2025 16:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C6521CC79
+	for <spacemit@lists.linux.dev>; Thu,  7 Aug 2025 19:18:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754583598; cv=none; b=G4oB1zi+f5bEMwvJt1YimtjMabJM3/5E8GitDTOgFM9b45ZYf9wf6NlPlVk7Jk+Db6IPjAPSYzAIeYcjAtvLQ8x59QW2lKgkwhvJgawsNkKBFuc80URPJRgckmSWxDhCLHAPgMqEd8bOn1O4qOhsM0CYJi4S6gqyR2UCEENqyW0=
+	t=1754594341; cv=none; b=ELqM9IAZupqpS3r52fZ/VAKblI3CSyDNToH952uCWZ5JtXEksxYo2hj2/Z0nDH66kCzVP7xRIoFEGYkmdQcM8gyg0ypUa7UcGPfgtRvbApRMiOz+IGEAl6oNGB4b3bplyZyDNP+Oq2S5BsWSWmJWxZHMX+iT5WoGQuVi9WDgU4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754583598; c=relaxed/simple;
-	bh=71l1WbPfSqzMfZQuYilf4vVUCeTfgFXR+IWoTWtgAZs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z7tl7dV/TM+SOaAHLOKmoyc44Ng2NTc3OgO4ttr3LFC5pUGzAu9cRKWeLl5wQxp8FfV8qpODtR6dP/dAOu8WVtPfH6AJnIU+EZerqKuogCfRwpGxytfqYEufyN3n5ZxbkW//Otdxby7R5hE4M/K0FgtynaDZbREGZbl4sY40MUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iOEoXXJw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754594341; c=relaxed/simple;
+	bh=P6CYGkCBsS2/j/K0E7tBx1r/xDresPDft3Hy8CqhCSI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=giboGZ5SIKHm0/30IuBXjBDjwEYK3nEaG46J9G3DwYbnTSXCKsC8tD38s3/KyAFeMXWMKtKocgqSlzpclc9qajRLflY5CVomKdUOHPfQhQ0vdGwC5X89JvNDM7whcuvPHXaLpFZXFfC5SZZNOj4L1n1hlLnsn5jREHfehKm/xSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=EwJdssL9; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iOEoXXJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B145C4CEF6;
-	Thu,  7 Aug 2025 16:19:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754583597;
-	bh=71l1WbPfSqzMfZQuYilf4vVUCeTfgFXR+IWoTWtgAZs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iOEoXXJwEzKxABOK2piOyFyGcOGYq8gYy7PKw6jSnPdq0qXY4eONlgysv6P+NDBAq
-	 UbXqbOeioVzmwsCyw0FUhLcOtciG47kW0QS7GkC5LE7Wgx/VqL6GzxzpQvhnCJx+Wx
-	 eKA1vFqOH46fkH6dXM2B4hE1DmclhSXeVOsQYyC1NxgA+HFVyvu5/+V1Iu5+R7X7Sr
-	 rsiR8Tc26KmY0AoKwR/Jf5jCzIp7AbJ+pVPU+qqc1pJayJvgWGc+JsgFvaD1nSv2Fq
-	 HWH8q7StUg/0WBQYSIwSJJGhQDPrDcT3tDEZj7r799mvuGHfF19KgLMrc27shTqzks
-	 HXWz0m8QZSWCA==
-Date: Thu, 7 Aug 2025 17:19:51 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
-	Inochi Amaoto <inochiama@outlook.com>, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Jinmei Wei <weijinmei@linux.spacemit.com>
-Subject: Re: [PATCH 1/2] dt-bindings: clock: spacemit: introduce i2s pre-clock
-Message-ID: <20250807-untrained-anthology-bcf760fe73cb@spud>
-References: <20250807-k1-clk-i2s-generation-v1-0-7dc25eb4e4d3@linux.spacemit.com>
- <20250807-k1-clk-i2s-generation-v1-1-7dc25eb4e4d3@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="EwJdssL9"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a6cd1a6fecso974995f8f.3
+        for <spacemit@lists.linux.dev>; Thu, 07 Aug 2025 12:18:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1754594336; x=1755199136; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TMojSpDs0TkBAWsUruscamCHlztjGhkLSL63bamzheI=;
+        b=EwJdssL98N3QdZd2BfYaNfOKjthP9MFMkNfl06XNSe1nTz3LASi0td4bZe6VuuhOuc
+         N2Rem9t1d3jOADCWpkG7I1e4hG9Qx2TTJUlSCuWnxt83w2EbSQ1nlSLmrl4w9Gizhozo
+         3mtlDS8zfiXda81rk/1co9viGoMqNIRvJaipmJvAZhEOQOhCyp+wSVsnQjb3qHgTve98
+         4oSgYAiWOEklK1om7tBaiV8FDMp7PVrTGwZr9ilmeW2tAK/oLELr/buJ72ZaNw9yrB7s
+         9+0turUbHhE0dOWCh+CnkbT+8n6+Y1gtpQZ1Hz4uloK4xf+ucAv79a8lUuYfRZixRN68
+         BBmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754594336; x=1755199136;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TMojSpDs0TkBAWsUruscamCHlztjGhkLSL63bamzheI=;
+        b=A8g/UvNmkcDuXM9WyAUGagXJGe6ubVX3PDOxNByO6BIWeM6n2EpSHRPhBkdxhTz/9E
+         IqYh5ZGpYmO30eiX933IwBRKYbH95bs14dPVunXSnP1wOVbMh00hbIVKp+gDI9u0JKtS
+         HzDOvI9G2fQQS0ZRydAhmWyRkR9IGXZvrXnVsC1PYHeFYLYH0+3KV4Wfez/hma8oie8O
+         wDMTrAbCsdq0lsbOqC/F/Kmk1bC+pFzIpWWPOXqe0hfNJYZUIgjG5OlaGuJizb3QeCTv
+         iFoX1GlDHK/BsjOZ17JNtKM0RYh1KU3ekAlthE+fyGP2ntt2WHJFp1S3dQPGhEESji85
+         zfwA==
+X-Forwarded-Encrypted: i=1; AJvYcCWof/vSp2jZ2XMLE8kv8Vm7fLLiZSRnXXX+Ui3aLFGt40/y4sZ0bsvvuawLHr1065vCUnX/iN1dBg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxync6cORjIXBCdOmY4bQs4tPgX9jSlqMBthfeBoxDS0rdfHBIX
+	va4plEoZcyiLSOsOlnDota1q0R3iaIBym1lBo34yg7j8sME1ysvXvcSOAPDNsOXC/Os=
+X-Gm-Gg: ASbGncsR6ICn4/iSWGgsfJnE8vwDG2U3P0o5YAb20Le9tVAsHrA3wBBZAba1jtIb/M4
+	l6XZMbrLfP3LAsyUMYU8gEPdcpQNqS9eozTQeHeeR/C50l0JnLMzNwpjfm66bJiux0tmAxIZMLJ
+	cyrOuX1I9zy2wqtM45IoXF/vqmGLqJ/GE1BpRnZ6k11v9eiB3dCKyunRVUdBYUjBQdLePwd4tUE
+	CpHfiVdtsCZVs2vPLw1NRy+PeCESoD98QxoHvRKOJAcX4ObIgSV8RWJhca9fil4rhlhua44PW67
+	YJ/rK2thagykKb94YRpq9AGvWmGAXS2BTWjEvJIPKwOIOwVXv0KYQx0rihDb6lN9FfKnMKXPue8
+	a6ghPNM/TXjWs/2dFcZwF3A5bv35pNo979gvTxhEaAZNRby2/Lg==
+X-Google-Smtp-Source: AGHT+IGmsZp5QGEdNPY5skMi/ehXySxn/2GJ+zanQmX1/LX2oBeqJ3fxjEoYN3cf/lF9eTayqWyhUQ==
+X-Received: by 2002:a05:6000:40ce:b0:3a3:65b5:51d7 with SMTP id ffacd0b85a97d-3b900b54b20mr297294f8f.26.1754594335784;
+        Thu, 07 Aug 2025 12:18:55 -0700 (PDT)
+Received: from pop-os.telenet.be ([2a02:1807:2a00:3400:3bcd:db43:406c:324d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3c4d02sm26988589f8f.33.2025.08.07.12.18.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Aug 2025 12:18:54 -0700 (PDT)
+From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+To: dlan@gentoo.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr
+Cc: skhan@linuxfoundation.org,
+	linux-kernel-mentees@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Subject: [PATCH] riscv: dts: spacemit: add UART resets for Soc K1
+Date: Thu,  7 Aug 2025 21:18:17 +0200
+Message-ID: <20250807191817.157494-1-hendrik.hamerlinck@hammernet.be>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MGb6O0jv4+1CWhb1"
-Content-Disposition: inline
-In-Reply-To: <20250807-k1-clk-i2s-generation-v1-1-7dc25eb4e4d3@linux.spacemit.com>
+Content-Transfer-Encoding: 8bit
 
+Add reset control entries for all UARTs in the SpaceMIT K1 SoC Device Tree.
+UART0 was functional as it did not need a reset. But the other UARTs were
+unable to access their registers without the reset being applied.
 
---MGb6O0jv4+1CWhb1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Although perhaps not needed I did add the reset for UART0 as well,
+to ensure consistency across all UARTs. With the current-speed set to
+112500 baud rate, it matches the factory U-Boot settings.
+This should not give issues with early console usage. But perhaps it could
+be a good idea to let somebody else confirm this as well.
 
-On Thu, Aug 07, 2025 at 09:30:10AM +0800, Troy Mitchell wrote:
-> Previously, the K1 clock driver did not include the parent clocks of
-> the I2S sysclk.
->=20
-> This patch adds their definitions to allow proper registration
-> in the driver and usage in the device tree.
->=20
-> Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 S=
-oC")
+Tested this locally on both Orange Pi RV2 and Banana Pi BPI-F3 boards. 
+I enabled the UART9 and was able to use it successfully.
 
-I'm not sure that a fixes tag is suitable here, seems to be some new
-feature/development. The driver change seems to talk about how modelling
-as a fixed-clock is incorrect, but this change mentions none of that.
-Without whatever context that provides, it's hard to see how this can be
-justified as a fix rather than a new feature being added.
+Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+---
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  include/dt-bindings/clock/spacemit,k1-syscon.h | 3 +++
->  1 file changed, 3 insertions(+)
->=20
-> diff --git a/include/dt-bindings/clock/spacemit,k1-syscon.h b/include/dt-=
-bindings/clock/spacemit,k1-syscon.h
-> index 2714c3fe66cd5b49e12c8b20689f5b01da36b774..524268246fedd3f1238320f35=
-244baf32354fbd2 100644
-> --- a/include/dt-bindings/clock/spacemit,k1-syscon.h
-> +++ b/include/dt-bindings/clock/spacemit,k1-syscon.h
-> @@ -77,6 +77,9 @@
->  #define CLK_I2S_BCLK		30
->  #define CLK_APB			31
->  #define CLK_WDT_BUS		32
-> +#define CLK_I2S_153P6		33
-> +#define CLK_I2S_153P6_BASE	34
-> +#define CLK_I2S_SYSCLK_SRC	35
-> =20
->  /* MPMU resets */
->  #define RESET_WDT		0
->=20
-> --=20
-> 2.50.1
->=20
->=20
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index abde8bb07c95..7a5196a98085 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -667,6 +667,8 @@ uart0: serial@d4017000 {
+ 				clocks = <&syscon_apbc CLK_UART0>,
+ 					 <&syscon_apbc CLK_UART0_BUS>;
+ 				clock-names = "core", "bus";
++				current-speed = <115200>;
++				resets = <&syscon_apbc RESET_UART0>;
+ 				interrupts = <42>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -680,6 +682,7 @@ uart2: serial@d4017100 {
+ 				clocks = <&syscon_apbc CLK_UART2>,
+ 					 <&syscon_apbc CLK_UART2_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART2>;
+ 				interrupts = <44>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -693,6 +696,7 @@ uart3: serial@d4017200 {
+ 				clocks = <&syscon_apbc CLK_UART3>,
+ 					 <&syscon_apbc CLK_UART3_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART3>;
+ 				interrupts = <45>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -706,6 +710,7 @@ uart4: serial@d4017300 {
+ 				clocks = <&syscon_apbc CLK_UART4>,
+ 					 <&syscon_apbc CLK_UART4_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART4>;
+ 				interrupts = <46>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -719,6 +724,7 @@ uart5: serial@d4017400 {
+ 				clocks = <&syscon_apbc CLK_UART5>,
+ 					 <&syscon_apbc CLK_UART5_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART5>;
+ 				interrupts = <47>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -732,6 +738,7 @@ uart6: serial@d4017500 {
+ 				clocks = <&syscon_apbc CLK_UART6>,
+ 					 <&syscon_apbc CLK_UART6_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART6>;
+ 				interrupts = <48>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -745,6 +752,7 @@ uart7: serial@d4017600 {
+ 				clocks = <&syscon_apbc CLK_UART7>,
+ 					 <&syscon_apbc CLK_UART7_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART7>;
+ 				interrupts = <49>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -758,6 +766,7 @@ uart8: serial@d4017700 {
+ 				clocks = <&syscon_apbc CLK_UART8>,
+ 					 <&syscon_apbc CLK_UART8_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART8>;
+ 				interrupts = <50>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -771,6 +780,7 @@ uart9: serial@d4017800 {
+ 				clocks = <&syscon_apbc CLK_UART9>,
+ 					 <&syscon_apbc CLK_UART9_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART9>;
+ 				interrupts = <51>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+-- 
+2.43.0
 
---MGb6O0jv4+1CWhb1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaJTSJwAKCRB4tDGHoIJi
-0lrAAPwLeTxg0DmEWOZuiKramMswKD+FBk48f8HQ5cra59xk+wEA+uDoxchmMLyD
-O74kiFlXHVfpag4BaRKO/wVQczwXmAQ=
-=y1/8
------END PGP SIGNATURE-----
-
---MGb6O0jv4+1CWhb1--
