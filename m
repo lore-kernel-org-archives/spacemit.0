@@ -1,118 +1,213 @@
-Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.67.179])
+Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503F9537F8
-	for <spacemit@lists.linux.dev>; Thu,  7 Aug 2025 01:32:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.67.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C5B3BB44
+	for <spacemit@lists.linux.dev>; Thu,  7 Aug 2025 03:02:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754530353; cv=none; b=fXnZQzivNpLa+RtItoI49a5OVRxiCBFYkWRgY0KFkP5L40AcvdNcabujvN84O9oZxe8lPEadLOmA3amqhC0RzKwiWaPhOpPwHABJJyxBxv4JstjUip7m4WnemEpfSuTckXLN1nxP2hvntsTYjHum6RnFswE5lQBHhK8lIwzKvXc=
+	t=1754535741; cv=none; b=csv6HFP6UqyMEdivoCH0Sw4j38Fm3FfoGl3vV59c/o238QW/aj12tAfGXIxL8IsZ7ic6H7ylBqGNyuhrtGjwjCqfgPstr71FmKTzw+QXpRFnDfW2MCKyvibfg93UNXXtKoJZY/sVjjxvOs3TF7vWDsU8xkRg4iWjUBNomed2SAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754530353; c=relaxed/simple;
-	bh=sxGnfSSFz+QDwg50EXWstYMedLLmqKm28v9mT9MsQQQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kuAJ2mNH8BQRbkzJsgYUFWhfDsGiIxBwNyAzQPiaw2s6ktiZVgAIo9gXFILtisPNRArKKel7QFmwX/AzcmS2AT7kiYMHty6EBxmq9VZ8GwAmTKzLOoJsO8RYfjFLwqNuwOEMTR2jGviEZtJtFi4xQIMQc2ts7LBfuiuxahVVTvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ospKx1Jv; arc=none smtp.client-ip=114.132.67.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1754535741; c=relaxed/simple;
+	bh=OlG6Mjad+haShvjgVxRjEO8qyOkeqUokqCYlSq/LmOk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nb+sWeyGE5+98YWwAle6jbU2a6dH+vgQR95Mll2VAj1C3OhtMededX4YMYArwnIqyVJWSDP9ycN9MKlEAvEpclVEbL68gbH6gBMLVFN2rf4i0ssQgvh27/cEZcFWY3F79PKDaXClIsv9n1QY6BuiuV6qQauoqS3phKeZLkCnZII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=TXTN/5mf; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=jdQbIJFM; arc=none smtp.client-ip=155.254.16.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ospKx1Jv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1754530218;
-	bh=iu88a8ay7VG2RXEtKM0gyJ25kHT+aTDCXwwaMilECgs=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=ospKx1JvFchuu1v0OOBB5cntvdj44pPeeEFayP8p5UNWqe/9f7JiSgBJg4cNYgMam
-	 Mo6rntEXtT3tAmLrMNU1xWodHkVvd4sbL+OjYSLxBGa+ht9STACG3SYJKB1Eo+0z+P
-	 usMeCPBgDtM5aZYNhK8OB8/zUyDbLYHTPZFLE6jo=
-X-QQ-mid: esmtpsz19t1754530216t1fe22e97
-X-QQ-Originating-IP: XufVyFBFlZPw5gqLYgT9DkQ/sMxsFpvomT926UJMoXo=
-Received: from = ( [61.145.255.150])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 07 Aug 2025 09:30:13 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11800184382334055400
-EX-QQ-RecipientCnt: 16
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Thu, 07 Aug 2025 09:30:10 +0800
-Subject: [PATCH 1/2] dt-bindings: clock: spacemit: introduce i2s pre-clock
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="TXTN/5mf";
+	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="jdQbIJFM"
+Received: from localhost (bayard.4d2.org [127.0.0.1])
+	by bayard.4d2.org (Postfix) with ESMTP id 0651212FB437;
+	Wed, 06 Aug 2025 20:02:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1754535732; bh=OlG6Mjad+haShvjgVxRjEO8qyOkeqUokqCYlSq/LmOk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TXTN/5mfzl3clvuzeNNCQqhgS3ri7dhlpu+I0HZ8hCExsjLgQZza5mRYngJnFOCdt
+	 QMMHl5PeQUnYrYfRdZqF42XnbQ8I/InFsaqP2Ga5ukt1tGP7sDkN65jOBI0th2zjbm
+	 yZQDO3vtBhsLMGn2ATB3fAtWx2HnTwoeovg1fRoh87KZ+zSDrerKPfitBL0AlxL0el
+	 KoTDIrCPbFDH7T5fMAWIjhiSLNqUemLUQQh7W97JORnHnP/jjCtR0z2zMPlnoB/YcB
+	 ZON1baYiSywej3CmQdkF4CfP29vHh4Tg4BMEIrNgOvfwBMc7SO1VNa1R4y5RzxfExI
+	 fvZZZXxUu72Xw==
+X-Virus-Scanned: amavis at 4d2.org
+Received: from bayard.4d2.org ([127.0.0.1])
+ by localhost (bayard.4d2.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id gl8dWHxY44b0; Wed,  6 Aug 2025 20:02:08 -0700 (PDT)
+Received: from ketchup (unknown [117.171.64.140])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: heylenay@4d2.org)
+	by bayard.4d2.org (Postfix) with ESMTPSA id DFB9F12FB405;
+	Wed, 06 Aug 2025 20:02:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
+	t=1754535728; bh=OlG6Mjad+haShvjgVxRjEO8qyOkeqUokqCYlSq/LmOk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jdQbIJFMt8WAoxsnjXZFVNWrtk5ZoKmMLJKLhs+Sty3jfPVUykp/dEx5g5p8GM1vE
+	 tz0BI+Q8zz4xuY1mi/aheQnq8s3erhUaSWzITIJhoWX0m0SZgPQ0OyIO35fbV3FXeX
+	 P3Lu1RbtHCwfmW6TPt4wzDep3irr9FB57xSeUhWhO007dfJ3h3WVI3pAQxONgFglSQ
+	 51+k7EWCuf0/i2BRrKwwdRS2Sc5YlR2QaPc95GDu8gkWjqDSioIY1dVCu3+ol79apX
+	 6rT5aAUKX8NAEby3Q4qljx8zXn2Nh+TlCoENJOcKh9/ZOTXNYv90jfhJvEkBPGFPiB
+	 iS0r5elCNRvSw==
+Date: Thu, 7 Aug 2025 03:02:00 +0000
+From: Haylen Chu <heylenay@4d2.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Alex Elder <elder@riscstar.com>,
+	Inochi Amaoto <inochiama@outlook.com>
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Jinmei Wei <weijinmei@linux.spacemit.com>
+Subject: Re: [PATCH 2/2] clk: spacemit: introduce i2s pre-clock and fix i2s
+ clock
+Message-ID: <aJQXKN_ccpWVJ5oZ@ketchup>
+References: <20250807-k1-clk-i2s-generation-v1-0-7dc25eb4e4d3@linux.spacemit.com>
+ <20250807-k1-clk-i2s-generation-v1-2-7dc25eb4e4d3@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250807-k1-clk-i2s-generation-v1-1-7dc25eb4e4d3@linux.spacemit.com>
-References: <20250807-k1-clk-i2s-generation-v1-0-7dc25eb4e4d3@linux.spacemit.com>
-In-Reply-To: <20250807-k1-clk-i2s-generation-v1-0-7dc25eb4e4d3@linux.spacemit.com>
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>, 
- Inochi Amaoto <inochiama@outlook.com>
-Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Jinmei Wei <weijinmei@linux.spacemit.com>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754530210; l=1005;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=sxGnfSSFz+QDwg50EXWstYMedLLmqKm28v9mT9MsQQQ=;
- b=c1WOPEprEFuqX1JuniBPzz1BLPQLK7s+QSaEugX2PSJ5Y4cTmYrzwo7Ci+k3rDHuMf1xlYrpe
- Jwb3/qeiY+tCfgtzx7K2OAYGp3FBvXZJ4RuOEsXF/dzUQIWTBF3SpqF
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: ODGSgaNxEhursINb8gBa3m54Ps1YsjiTn9QPXrittBTgduNzYOSHdtOY
-	WNJGxeG7llgC0ZDegxgxHiD4cXIozkilwSNEU01WBKs+VNY8mvmDU+tCtNXxuekjCfsTFdA
-	K00cTLcnyN6Ie5/IEx/JTLcZPEfIF3tIHfwXsrU96/1IXR3cwqbNqrQhIZcie4Wkm5c0Yz0
-	Zij2J4tymwqWSmPwU3YhEXcn7OnFGUHCWJbR+1j8TiMTzimvdF3OraZkacILT/6fh0uPeph
-	CSy5lESc5Jrpzh9GWJ4g8u4WKsNxpBy+KtbAYgfaa/p0Gp6egcMXAYLUJBxPVQiDbPE5jxd
-	TkU61wYutqa/q7ajBJ2Ek7wJG7pq1wGx/NlnioF/8mmyQSRyDxE0SteBMeYoSwkJ4oGGZVP
-	kB+iNVSttFB8mOHwxmfBejOS9N+ag/aq4mQzAuMMEaByo870eF05FCjRrrx7+y91geXsXwF
-	U4XJzvVvvYyODpgpUzCNVfzBfZQcc/INQS+/T7Napvu7aEUbRcYEznfAzkrtcpwalNvYq5P
-	hPc8KgvlAL6mizYSp6tU+Dcs/GpCy/WUHo1l876nZ4COBJEh3HZUiMtACYnyHX0rHc87X4z
-	MPqfFAMDsXlKhjM9OclqdUkQH5nie0CK3I28s13m8mOqO0TXepeiDbVsKgZ30pGOjXq7mkI
-	I3pESCwJAXaY/kuKEDIIdryilNM0koLvhUFrpraMHDvA+JPVgHI+WtzxGDMh879GoMJcXl4
-	Anp8hNfCjZf+uF1HL9Q/SMzx12xPx+6IY41EoLHVXD6yTwqXsCp0NxdKhV7Ax50gu2KkrLE
-	OnCC4ceptuV8z0UXGqmZhqWgf42tAtvvV8n+0n7SM1YNp0u01db4yUnH4BhEPChyDeGGzlk
-	KsjGBx0ZjV7XBBYAJsJLKLuAVJ04SXMg2VQc567jc+l+H54MbsXGctSqUjcAI7ANgXudDz8
-	/jFygzMDTy3yMbXxC+6iJ+Oc4WESw3qg9v2tUfxqMjhB6iPD9PV+oLgBABUZXbZvzM+Ckkq
-	XSm7Z50KkMhDIWwdulv/xBHWXg0FDwks6LgEqJIif0Nh9/3W3VPJFh5jDXPZ/mooh4E/Okh
-	Yhq9dso5MHjx5alD9TtTZ+0WwrBql5+OK54hEwerKLcmy4USnPAMR4=
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250807-k1-clk-i2s-generation-v1-2-7dc25eb4e4d3@linux.spacemit.com>
 
-Previously, the K1 clock driver did not include the parent clocks of
-the I2S sysclk.
+On Thu, Aug 07, 2025 at 09:30:11AM +0800, Troy Mitchell wrote:
+> Defining i2s_bclk and i2s_sysclk as fixed-rate clocks is insufficient
+> for real I2S use cases.
 
-This patch adds their definitions to allow proper registration
-in the driver and usage in the device tree.
+This is a little misleading: they're modeled as gates with fixed-factor
+for now whose rate is calculated from their parents instead of defined
+statically. You could avoid possible confusion by replacing "fixed-rate"
+with "fixed-factor".
 
-Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
- include/dt-bindings/clock/spacemit,k1-syscon.h | 3 +++
- 1 file changed, 3 insertions(+)
+> Moreover, the current I2S clock configuration does not work as expected
+> due to missing parent clocks.
+> 
+> This patch adds the missing parent clocks, defines i2s_sysclk as
+> a DDN clock, and i2s_bclk as a DIV clock.
+> 
+> The i2s_sysclk behaves as an M/N fractional divider in hardware,
+> with an additional gate control.
+> 
+> To properly model this, CCU_DDN_GATE_DEFINE is introduced.
 
-diff --git a/include/dt-bindings/clock/spacemit,k1-syscon.h b/include/dt-bindings/clock/spacemit,k1-syscon.h
-index 2714c3fe66cd5b49e12c8b20689f5b01da36b774..524268246fedd3f1238320f35244baf32354fbd2 100644
---- a/include/dt-bindings/clock/spacemit,k1-syscon.h
-+++ b/include/dt-bindings/clock/spacemit,k1-syscon.h
-@@ -77,6 +77,9 @@
- #define CLK_I2S_BCLK		30
- #define CLK_APB			31
- #define CLK_WDT_BUS		32
-+#define CLK_I2S_153P6		33
-+#define CLK_I2S_153P6_BASE	34
-+#define CLK_I2S_SYSCLK_SRC	35
- 
- /* MPMU resets */
- #define RESET_WDT		0
+Could it be represented as a DDN clock taking a gate as parent? Just
+like what is described in the published clock diagram. Generally I'd
+like to avoid introducing more clock types, there're already a lot.
 
--- 
-2.50.1
+> The original DDN operations applied an implicit divide-by-2, which should
+> not be a default behavior.
+> 
+> This patch removes that assumption, letting each clock define its
+> actual behavior explicitly.
+> 
+> The i2s_bclk is a non-linear, discrete divider clock.
+> The previous macro only supported linear dividers,
+> so CCU_DIV_TABLE_GATE_DEFINE is introduced to support
+> the hardware accurately.
 
+The divider IS linear, from the perspective of functionality, it just
+implies a 1/2 factor. Could it be represented as an usual divider and a
+1/2 fixed factor?
+
+> The I2S-related clock registers can be found here [1].
+
+So this patch actually does four separate things,
+
+- Introduce a gate-capable variant of DDN clocks
+- Make the pre-divider of DDN clocks flexible
+- Support looking up mappings between register values and divisors
+  through a table when calculating rates of dividers
+- Fix the definition of i2s_bclk and i2s_sysclk
+
+IMHO it's better to split them into separate patches for clearness.
+
+> Link:
+> https://developer.spacemit.com/documentation?token=LCrKwWDasiJuROkVNusc2pWTnEb
+> [1]
+> 
+> Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+> Co-developer: Jinmei Wei <weijinmei@linux.spacemit.com>
+> Signed-off-by: Jinmei Wei <weijinmei@linux.spacemit.com>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> ---
+>  drivers/clk/spacemit/ccu-k1.c     | 34 ++++++++++++++++++++++++----
+>  drivers/clk/spacemit/ccu_common.h | 13 +++++++++++
+>  drivers/clk/spacemit/ccu_ddn.c    | 47 ++++++++++++++++++++++++++++++++++-----
+>  drivers/clk/spacemit/ccu_ddn.h    | 25 +++++++++++++++++++--
+>  drivers/clk/spacemit/ccu_mix.c    | 47 +++++++++++++++++++++++++++++----------
+>  drivers/clk/spacemit/ccu_mix.h    | 26 +++++++++++++---------
+>  include/soc/spacemit/k1-syscon.h  |  7 +++---
+>  7 files changed, 161 insertions(+), 38 deletions(-)
+> 
+> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+> index 65e6de030717afa60eefab7bda88f9a13b857650..a6773d4c2ff32d270e1f09b0d93cfff727ea98fa 100644
+> --- a/drivers/clk/spacemit/ccu-k1.c
+> +++ b/drivers/clk/spacemit/ccu-k1.c
+> @@ -136,13 +136,36 @@ CCU_GATE_DEFINE(pll1_d3_819p2, CCU_PARENT_HW(pll1_d3), MPMU_ACGR, BIT(14), 0);
+
+...
+
+> +static const struct clk_div_table i2s_bclk_div_table[] = {
+> +	{ .val = 0, .div = 2 },
+> +	{ .val = 1, .div = 4 },
+> +	{ .val = 2, .div = 6 },
+> +	{ .val = 3, .div = 8 },
+> +	{ /* sentinel */ },
+> +};
+
+This is just a normal 0-based divider if you divide the divisor by 2.
+
+> +CCU_DIV_TABLE_GATE_DEFINE(i2s_bclk, CCU_PARENT_HW(i2s_sysclk), MPMU_ISCCR,
+> +			  27, 2, i2s_bclk_div_table, BIT(29), 0);
+>  
+>  static const struct clk_parent_data apb_parents[] = {
+>  	CCU_PARENT_HW(pll1_d96_25p6),
+> @@ -756,6 +779,9 @@ static struct clk_hw *k1_ccu_mpmu_hws[] = {
+>  	[CLK_I2S_BCLK]		= &i2s_bclk.common.hw,
+>  	[CLK_APB]		= &apb_clk.common.hw,
+>  	[CLK_WDT_BUS]		= &wdt_bus_clk.common.hw,
+> +	[CLK_I2S_153P6]		= &i2s_153p6.common.hw,
+> +	[CLK_I2S_153P6_BASE]	= &i2s_153p6_base.common.hw,
+> +	[CLK_I2S_SYSCLK_SRC]	= &i2s_sysclk_src.common.hw,
+>  };
+>  
+>  static const struct spacemit_ccu_data k1_ccu_mpmu_data = {
+
+...
+
+> diff --git a/include/soc/spacemit/k1-syscon.h b/include/soc/spacemit/k1-syscon.h
+> index c59bd7a38e5b4219121341b9c0d9ffda13a9c3e2..253db8a602fe43a1109e2ba248af11109c7baa22 100644
+> --- a/include/soc/spacemit/k1-syscon.h
+> +++ b/include/soc/spacemit/k1-syscon.h
+> @@ -29,10 +29,11 @@ to_spacemit_ccu_adev(struct auxiliary_device *adev)
+>  #define APBS_PLL3_SWCR3			0x12c
+>  
+>  /* MPMU register offset */
+> +#define MPMU_FCCR			0x0008
+>  #define MPMU_POSR			0x0010
+> -#define  POSR_PLL1_LOCK			BIT(27)
+> -#define  POSR_PLL2_LOCK			BIT(28)
+> -#define  POSR_PLL3_LOCK			BIT(29)
+> +#define POSR_PLL1_LOCK			BIT(27)
+> +#define POSR_PLL2_LOCK			BIT(28)
+> +#define POSR_PLL3_LOCK			BIT(29)
+
+This reformatting doesn't seem related to the patch.
+
+>  #define MPMU_SUCCR			0x0014
+>  #define MPMU_ISCCR			0x0044
+>  #define MPMU_WDTPCR			0x0200
+> 
+> -- 
+> 2.50.1
+> 
+
+Best regards,
+Haylen Chu
