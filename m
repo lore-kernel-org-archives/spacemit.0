@@ -1,256 +1,117 @@
-Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
+Received: from Atcsqr.andestech.com (60-248-80-70.hinet-ip.hinet.net [60.248.80.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62AB25DB07
-	for <spacemit@lists.linux.dev>; Fri,  8 Aug 2025 08:39:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF7F2E3716
+	for <spacemit@lists.linux.dev>; Mon, 11 Aug 2025 12:17:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=60.248.80.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754642376; cv=none; b=JAbKuruqmXqmbQoP2R96ZXkT0fjqe8q7GULysXHMLHrX8m/nS5/v7I8smsn+4VOPDEI24xj0wlGl5v6z/EkKEg22JN4IS7XPdl+ab2Zh7HI7FzCu9//QkbZM4LIr0qBHW0tAu3vtCCc2jrKOG/omMbKoEB2KA9riwcCsrZJHSNM=
+	t=1754914641; cv=none; b=hYBgo15viCE+XNd/FOYmyQRsebjgu6n0GnAltgrOrVCH2QDV9BDy6Kk4u8Jouj7k8cmRK67+R+/ijczI+waOtbkEjcYvBRpZIyffGKUNvhbGCDQkXIV/pP+7klU3FLlV8Qb8s5qxaW/tvsaPXcPYuXjNclsq3Y7mFDmODTA1mow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754642376; c=relaxed/simple;
-	bh=C5oQDH2C4AYPc13lRN5KYUvuF+nlKWXe35dAwNKKKQk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FXiBmIYSN3WmlZZzXaRd2pz7DXhpRGh6QVENT+T64JMmmvXNoEMn9eJem0JhtIYU+eTOtpktTKusst3rj+rie118Z+GaQDX1GVetlNz1Pmf7o/mkUU6oHJNxdUgTyZidSkJAQK/6DSueYnp1QBQfPwaZRNcovH3ZWTGQynCqNug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=N2LjNYcL; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=r1PoWh6/; arc=none smtp.client-ip=155.254.16.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="N2LjNYcL";
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="r1PoWh6/"
-Received: from localhost (bayard.4d2.org [127.0.0.1])
-	by bayard.4d2.org (Postfix) with ESMTP id C63E912FB458;
-	Fri, 08 Aug 2025 01:39:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1754642373; bh=C5oQDH2C4AYPc13lRN5KYUvuF+nlKWXe35dAwNKKKQk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N2LjNYcL9eqKmruQHc21P2hU8hg2IOYCBvjctagJ2Az1XMnr6X1nETA8xEf6cn68q
-	 MgPY5cR99L0oGpWxt4Pv4fXeSjjtE1YVzExFRvkVIIdZ61lBxWpOtrnMl0/rCyasdT
-	 c+Ai+3jh+PASw0+utr1RVGMpTt8trDLutpwblovCkG0yHDTKBekvbs69ibIJ2IcEz2
-	 BLaxkxk2vkzB+efa1tj1e5zWTjfUgqRgjdgNKBOOOQQ87q/vetYpegQKuTuzt5fuZP
-	 CB4UbqLXJq6pzNRckiHoilscaf51nNRl/SXVCgmqLED2JGLVE+b47ND7SAO/pHarW8
-	 3hf3Ae2OwHRzQ==
-X-Virus-Scanned: amavis at 4d2.org
-Received: from bayard.4d2.org ([127.0.0.1])
- by localhost (bayard.4d2.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id eWhw2vAtAcjx; Fri,  8 Aug 2025 01:39:29 -0700 (PDT)
-Received: from ketchup (unknown [117.171.65.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: heylenay@4d2.org)
-	by bayard.4d2.org (Postfix) with ESMTPSA id 3CC5E12FB405;
-	Fri, 08 Aug 2025 01:39:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1754642369; bh=C5oQDH2C4AYPc13lRN5KYUvuF+nlKWXe35dAwNKKKQk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=r1PoWh6/voAcLo+G3AldL51Mrxwo3fgOzUJ231BYpZMALndqcZt3QlOBSfemJA19H
-	 kwwY2YvN0/GRdNkrZ8jDY+l7vGohCA9EXKtKPKxiqmAUR14LPEekyJcdGlFjSHIxA0
-	 SJMag4t3qxCnJ4iSOBLPoDTHMIHASCtek+9JGfIm6ceErU1zou5T/WXm0/SEN3HkdV
-	 pOzk04iJZC62qCiRkrj1owif8d/dmrNPYYL526bNgqGAIgE3M+g7yn+z68mclJi09s
-	 A6oiDTG5kllPNHkVts88BQMzzCA9LRBnzRda8JMAtBkWi3SKYAf08H/ZnXJpAfJHFq
-	 m50KPmH+j6keA==
-Date: Fri, 8 Aug 2025 08:39:22 +0000
-From: Haylen Chu <heylenay@4d2.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Inochi Amaoto <inochiama@outlook.com>, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Jinmei Wei <weijinmei@linux.spacemit.com>
-Subject: Re: [PATCH 2/2] clk: spacemit: introduce i2s pre-clock and fix i2s
- clock
-Message-ID: <aJW3uvqI--Bwrld3@ketchup>
-References: <20250807-k1-clk-i2s-generation-v1-0-7dc25eb4e4d3@linux.spacemit.com>
- <20250807-k1-clk-i2s-generation-v1-2-7dc25eb4e4d3@linux.spacemit.com>
- <aJQXKN_ccpWVJ5oZ@ketchup>
- <C7EA7A1D0F9884EB+aJVcqFqix0GF_RnX@LT-Guozexi>
- <aJV2EIC_0E1FQX7L@ketchup>
- <78351F50C5DA0C45+aJWaWKEyO_f2a6Kp@LT-Guozexi>
+	s=arc-20240116; t=1754914641; c=relaxed/simple;
+	bh=HEAZHFL2C+Cyd28LoJJKuBXif+PFRZHVXWb1Vheykjs=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p5B+IHVwqlGXf7FzWFVxRdDfqvyYHms0HBu9O7nkJ/8sFhzYfPm8X23uqPi6nURj0hqfK5gCc1tB7QrLiD7z789X1DpdzVUfdEHIYiPyBMDZA6QyT9aC8KQd+iZwxRQA7Khuz46LBBv6PE2KURxmGDaX5wdajCGGH7Mt8wGMDK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com; spf=pass smtp.mailfrom=andestech.com; arc=none smtp.client-ip=60.248.80.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=andestech.com
+Received: from Atcsqr.andestech.com (localhost [127.0.0.2] (may be forged))
+	by Atcsqr.andestech.com with ESMTP id 57BBmAJi099964
+	for <spacemit@lists.linux.dev>; Mon, 11 Aug 2025 19:48:10 +0800 (+08)
+	(envelope-from ycliang@andestech.com)
+Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
+	by Atcsqr.andestech.com with ESMTPS id 57BBlI3X099746
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+	Mon, 11 Aug 2025 19:47:18 +0800 (+08)
+	(envelope-from ycliang@andestech.com)
+Received: from swlinux02 (10.0.15.183) by ATCPCS34.andestech.com (10.0.1.134)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 11 Aug
+ 2025 19:47:18 +0800
+Date: Mon, 11 Aug 2025 19:47:15 +0800
+From: Leo Liang <ycliang@andestech.com>
+To: Yixun Lan <dlan@gentoo.org>
+CC: Niu Zhihong <zhihong@nzhnb.com>, <u-boot@lists.denx.de>,
+        <spacemit@lists.linux.dev>
+Subject: Re: [PATCH] board: spacemit: Add SpacemiT MUSE Pi Pro
+Message-ID: <aJnYQyfeWBaln8ff@swlinux02>
+References: <20250728082547.454505-1-zhihong@nzhnb.com>
+ <20250728100607-GYA777015@gentoo>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <78351F50C5DA0C45+aJWaWKEyO_f2a6Kp@LT-Guozexi>
+In-Reply-To: <20250728100607-GYA777015@gentoo>
+User-Agent: Mutt/2.2.10 (e0e92c31) (2023-03-25)
+X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
+ ATCPCS34.andestech.com (10.0.1.134)
+X-DKIM-Results: atcpcs34.andestech.com; dkim=none;
+X-DNSRBL: 
+X-SPAM-SOURCE-CHECK: pass
+X-MAIL:Atcsqr.andestech.com 57BBmAJi099964
 
-On Fri, Aug 08, 2025 at 02:34:00PM +0800, Troy Mitchell wrote:
-> On Fri, Aug 08, 2025 at 03:59:12AM +0000, Haylen Chu wrote:
-> > On Fri, Aug 08, 2025 at 10:10:48AM +0800, Troy Mitchell wrote:
-> > > Hi, Haylen!
-> > > 
-> > > On Thu, Aug 07, 2025 at 03:02:00AM +0000, Haylen Chu wrote:
-> > > > On Thu, Aug 07, 2025 at 09:30:11AM +0800, Troy Mitchell wrote:
-> > > > > Defining i2s_bclk and i2s_sysclk as fixed-rate clocks is insufficient
-> > > > > for real I2S use cases.
-> > > > 
-> > > > This is a little misleading: they're modeled as gates with fixed-factor
-> > > > for now whose rate is calculated from their parents instead of defined
-> > > > statically. You could avoid possible confusion by replacing "fixed-rate"
-> > > > with "fixed-factor".
-> > > >
-> > > I'll change it in next version.
-> > > 
-> > > > 
-> > > > > Moreover, the current I2S clock configuration does not work as expected
-> > > > > due to missing parent clocks.
-> > > > > 
-> > > > > This patch adds the missing parent clocks, defines i2s_sysclk as
-> > > > > a DDN clock, and i2s_bclk as a DIV clock.
-> > > > > 
-> > > > > The i2s_sysclk behaves as an M/N fractional divider in hardware,
-> > > > > with an additional gate control.
-> > > > > 
-> > > > > To properly model this, CCU_DDN_GATE_DEFINE is introduced.
-> > > > 
-> > > > Could it be represented as a DDN clock taking a gate as parent? Just
-> > > > like what is described in the published clock diagram. Generally I'd
-> > > > like to avoid introducing more clock types, there're already a lot.
-> > > Uh, our new chip(K3) may uses this macro that I introduced..
-> > > so I don't wanna take a gate as parent everywhere..
-> > > how about we leave it? ;)
-> > 
-> > I wasn't proposing a workaround. What will go wrong if a gate is taken
-> > as parent of DDN everywhere? 
-> I think this a bit troublesome...
-
-I don't agree. It just costs one extra line and one extra macro.
-
-> > Not to mention this DDN variant actually
-> > duplicates the code in ccu_mix.c.
-> >
-> So I’ve ultimately decided not to introduce DDN_GATE.
-> I’ll change the macro for i2s_sysclk_src from
-> CCU_MUX_DEFINE to CCU_MUX_GATE_DEFINE.
+On Mon, Jul 28, 2025 at 06:06:07PM +0800, Yixun Lan wrote:
+> [EXTERNAL MAIL]
 > 
-> What do you think? From the clock tree perspective, this should be fine.
-
-Thanks for the change, it's fine for me, too.
-
-> > 
-> > > > 
-> > > > > The original DDN operations applied an implicit divide-by-2, which should
-> > > > > not be a default behavior.
-> > > > > 
-> > > > > This patch removes that assumption, letting each clock define its
-> > > > > actual behavior explicitly.
-> > > > > 
-> > > > > The i2s_bclk is a non-linear, discrete divider clock.
-> > > > > The previous macro only supported linear dividers,
-> > > > > so CCU_DIV_TABLE_GATE_DEFINE is introduced to support
-> > > > > the hardware accurately.
-> > > > 
-> > > > The divider IS linear, from the perspective of functionality, it just
-> > > > implies a 1/2 factor. Could it be represented as an usual divider and a
-> > > > 1/2 fixed factor?
-> > > ditto.
-> > > 
-> > > I know you don't wanna introduce new macro..
-> > 
-> > It's not about new macros. It's about new clock types. And the solution
-> > I proposed for the divider with a factor isn't meant to be a workaround.
-> > 
-> > For the divider's case, I think combining a fixed-factor and a normal
-> > divider looks more clean than introducing a new LUT. It solves the
-> > problem for K1, right?
-> yes, It solves.
+> Hi Niu,
 > 
-> > 
-> > > But K3 requires this, so whether it is introduced now or future,
-> > > the final result is the same.
-> > 
-> > Could you please confirm whether K3's dividers requiring this patch are
-> > really non-linear or just imply a fixed-factor?
-> I will confirm this point.
+>   You need to split the patch, and prepare a cover letter..
 > 
-> If I send v2 without removing the CCU_DIV_TABLE_GATE_DEFINE macro,
-> that would mean K3 really needs it.
-
-Thanks, this will help.
-
-> > 
-> > > Please leave it..
-> > > > 
-> > > > > The I2S-related clock registers can be found here [1].
-> > > > 
-> > > > So this patch actually does four separate things,
-> > > > 
-> > > > - Introduce a gate-capable variant of DDN clocks
-> > > > - Make the pre-divider of DDN clocks flexible
-> > > > - Support looking up mappings between register values and divisors
-> > > >   through a table when calculating rates of dividers
-> > > > - Fix the definition of i2s_bclk and i2s_sysclk
-> > > > 
-> > > > IMHO it's better to split them into separate patches for clearness.
-> > > Ok, I will split them into separate patches.
-> > 
-> > Thanks, that'll be easier to review.
-> > 
-> > > ...
-> > > > 
-> > > > ...
-> > > > 
-> > > > > diff --git a/include/soc/spacemit/k1-syscon.h b/include/soc/spacemit/k1-syscon.h
-> > > > > index c59bd7a38e5b4219121341b9c0d9ffda13a9c3e2..253db8a602fe43a1109e2ba248af11109c7baa22 100644
-> > > > > --- a/include/soc/spacemit/k1-syscon.h
-> > > > > +++ b/include/soc/spacemit/k1-syscon.h
-> > > > > @@ -29,10 +29,11 @@ to_spacemit_ccu_adev(struct auxiliary_device *adev)
-> > > > >  #define APBS_PLL3_SWCR3			0x12c
-> > > > >  
-> > > > >  /* MPMU register offset */
-> > > > > +#define MPMU_FCCR			0x0008
-> > > > >  #define MPMU_POSR			0x0010
-> > > > > -#define  POSR_PLL1_LOCK			BIT(27)
-> > > > > -#define  POSR_PLL2_LOCK			BIT(28)
-> > > > > -#define  POSR_PLL3_LOCK			BIT(29)
-> > > > > +#define POSR_PLL1_LOCK			BIT(27)
-> > > > > +#define POSR_PLL2_LOCK			BIT(28)
-> > > > > +#define POSR_PLL3_LOCK			BIT(29)
-> > > > 
-> > > > This reformatting doesn't seem related to the patch.
-> > > It's worth that create a new commit to reformatting it?
-> > 
-> > IIRC, the indentation is intended to show the relationship between
-> > register bits and offsets, which seems easier to read for me. 
-> Sry I ignore this..
+>   Have to say, generally, this patch isn't really different comparing
+> with current in tree bananapi-f3, so neither it is useful..
 > 
-> But isn’t the POSR prefix already sufficient to indicate the relationship?
+>   I personally would expect to see more drivers support for K1 SoC,
+> then figure out how to have more boards enabled..
+>   (I'd propose to not merge this patch, but if maintainer is ok with
+>   this, then I'd have no objection)
 
-I think the original form is easier to read, isn't it? Even if you don't
-think so, this change obviously exceeds scope of this patch and please
-separate a series for discussion.
+Hi Niu and Yixun,
 
-> Have a nice day!
-> 
->                 - Troy
+I am OK merging the patch for new board,
+but as Yixun and Yao's suggestion,
+there are some modifications need to be made.
+Please follow the advice and re-spin a patchset, thanks!
 
 Best regards,
-Haylen Chu
+Leo
 
-> > Do you
-> > have a good reason to change it?
-> > 
-> > >                 - Troy
-> > > > 
-> > > > >  #define MPMU_SUCCR			0x0014
-> > > > >  #define MPMU_ISCCR			0x0044
-> > > > >  #define MPMU_WDTPCR			0x0200
-> > > > > 
-> > > > > -- 
-> > > > > 2.50.1
-> > > > > 
-> > > > 
-> > > > Best regards,
-> > > > Haylen Chu
-> > > > 
-> > 
-> > Best regards,
-> > Haylen Chu
-> > 
+> 
+>   CC spacemit mailing list for more wide comments
+> 
+> On 16:25 Mon 28 Jul     , Niu Zhihong wrote:
+> > MUSE Pi Pro uses spacemit K1,
+> > a new generation of octa-core 64-bit RISC-V processor,
+> > which includes octa-core X60.
+> >
+> > Features tested on a MUSE Pi Pro 16GB:
+> > - SD-card boot
+> > - eMMC boot
+> this brings some confusions, as currently there is no SD/eMMC driver support
+> for K1, only means it's able to boot from SD/eMMC (with brom support)
+> 
+> >
+> > Signed-off-by: Niu Zhihong <zhihong@nzhnb.com>
+> > ---
+> >  arch/riscv/Kconfig                     |  4 ++
+> >  arch/riscv/dts/Makefile                |  1 +
+> >  arch/riscv/dts/k1-muse-pi-pro.dts      | 27 ++++++++
+> >  board/spacemit/muse-pi-pro/Kconfig     | 37 +++++++++++
+> >  board/spacemit/muse-pi-pro/MAINTAINERS |  6 ++
+> >  board/spacemit/muse-pi-pro/Makefile    |  3 +
+> >  board/spacemit/muse-pi-pro/board.c     |  8 +++
+> >  configs/muse-pi-pro_defconfig          |  6 ++
+> >  doc/board/spacemit/index.rst           |  1 +
+> >  doc/board/spacemit/muse-pi-pro.rst     | 85 ++++++++++++++++++++++++++
+> >  include/configs/muse-pi-pro.h          | 11 ++++
+> >  11 files changed, 189 insertions(+)
+> >  create mode 100644 arch/riscv/dts/k1-muse-pi-pro.dts
+> >  create mode 100644 board/spacemit/muse-pi-pro/Kconfig
+> >  create mode 100644 board/spacemit/muse-pi-pro/MAINTAINERS
+> >  create mode 100644 board/spacemit/muse-pi-pro/Makefile
+> >  create mode 100644 board/spacemit/muse-pi-pro/board.c
+> >  create mode 100644 configs/muse-pi-pro_defconfig
+> >  create mode 100644 doc/board/spacemit/muse-pi-pro.rst
+> >  create mode 100644 include/configs/muse-pi-pro.h
