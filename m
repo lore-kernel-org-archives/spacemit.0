@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57712F49ED;
-	Mon, 11 Aug 2025 15:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD4D2F530F;
+	Mon, 11 Aug 2025 15:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754925518; cv=none; b=LOAsXUKnU4GAX9Iyo1VEaBoVrW/a/v97fujYX3+0X8EFHPJjfO1J8QQ+X+snpB8MIBkUdlET2MaVODNxgr14oS3f0KWdbekFfmrdnp9eR5LDTkIXsdllAWKbiOjtZQyb/ogwvlPQ0yQX7WVv9l47Occrol+uPTa71cWwbOPX4pU=
+	t=1754925519; cv=none; b=AXt3JOmKY5lKWn/L/MgzZRcxBH2jSwamR3MwC1uSNYmN1jqR8zsLUYrVkX+GCIIa1q2D11VpYlmoPz2pEpioy+ERlcUYVF9hN0I0rmReQjmnM6UD6agx1iDmYnlxeXSfJQIqMJ5CfEOMPw2sZy0lN1j6FI/eZsEIaSPzDiuDjz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754925518; c=relaxed/simple;
-	bh=95nJNVyHARzLkGa9z0lh7B2BLhwNxZAqYCnshJkN1zA=;
+	s=arc-20240116; t=1754925519; c=relaxed/simple;
+	bh=MfX0dJdqVp91Przb2KWY73HLxTwwSplnQD5T1ALPpA4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XmmKo70NJpWno0zrzeAp+F8AMJsnCNo1/OAO5Ib5eEhcPk9PE9YEOosEg+aXrIkiw9vO2AM9db4T/cFXFFzxNtYWIs1T5sz7gvS8q2E+hihY/jg5V00MEI6SvuOzckQiDEDfgNf4Xu3MuJdon/OtBqV0+sTqe/u1heHwf5Z5ULs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=noLQ+tAl; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=sXHcPH0YM/9Ln44J21bylZ1rwqkjyQUek4ytjax5YvQo3x5PdvZYJ3r5Toa1E06HrRDxMaLvfpdQA/r8OxOZasD/Np823+5RTMGUIvjEVmDYkF15wGvo+rmzzS/wVXJ71K0h9NyblRC99p5iemvhXtGy4UxX6Tlv2SIyw+n+K1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qwH6ZzOD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="noLQ+tAl"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E5EB4C4FF54;
-	Mon, 11 Aug 2025 15:18:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qwH6ZzOD"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B9AF3C4CEFD;
+	Mon, 11 Aug 2025 15:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1754925516;
-	bh=95nJNVyHARzLkGa9z0lh7B2BLhwNxZAqYCnshJkN1zA=;
+	bh=MfX0dJdqVp91Przb2KWY73HLxTwwSplnQD5T1ALPpA4=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=noLQ+tAllsdJsRyJZi892ugQQOb+/v2nRGmSsAtKhAkmiNMuCczG28eAP6hfKGK0B
-	 2v061h5JPTTKlgs9YUfSVpLesXlYJ7egzMrj7QHXxh2/ZquBrRm82taDO54cJzd90y
-	 NIcV6GV3PT7Uao7bjL4O1V5AtiTb6N9hQ+NG8r7O0a0GobijwhlfA2/9cjelXAWr+G
-	 +G+hXmkdSclWxzaJNub7GxfonHW/4Bgm95D14zf1LeIyVOgUeW/xo2BD2y9/h6Q1x6
-	 f0xR9+Ymk8Y22Vj50yxFjg8tI+dS/TwH/icIARGFri/E392L1zJJC7xWkq0+VIaVCj
-	 H2sOrkNOh8x5Q==
+	b=qwH6ZzODBDVVd6Rik/Mx0jY+igjWMVLe5HtZit1FoiOb3he+1ohFCiMurtYbCbkqC
+	 PyaS0yzViC5/bkOuQw8pGSMvE7K72DJQXU0/SkQEJX3gDUu/ZfAeEKYUX8OO/bPv/w
+	 WntgyyXCRwM/dJiREOarffetQPHLC0FS8tbm0QZYsysnzs5hP6Q6AtYKNgM2g9r0sl
+	 QNoQtWFhbrdkMaUA4VtGmbpsn+lPuSMXg5l6Q2mRXg3oduMbGYhWZpbN2ZfKIdEpzP
+	 ktyTuaywgOBdArhuhmkwN4FzUQJtnnTM6+M+EXiRUV5BkqbLrJHS2d+3b/2aZesHn7
+	 /IVqW52wcCL/Q==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B28B2CA0ED1;
-	Mon, 11 Aug 2025 15:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9274ECA0ED9;
+	Mon, 11 Aug 2025 15:18:36 +0000 (UTC)
 From: Brian Masney via B4 Relay <devnull+bmasney.redhat.com@kernel.org>
-Date: Mon, 11 Aug 2025 11:19:37 -0400
-Subject: [PATCH 105/114] clk: ux500: prcmu: convert from round_rate() to
- determine_rate()
+Date: Mon, 11 Aug 2025 11:19:45 -0400
+Subject: [PATCH 113/114] clk: sophgo: sg2042-pll: remove round_rate() in
+ favor of determine_rate()
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -41,7 +41,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250811-clk-for-stephen-round-rate-v1-105-b3bf97b038dc@redhat.com>
+Message-Id: <20250811-clk-for-stephen-round-rate-v1-113-b3bf97b038dc@redhat.com>
 References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
 In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
 To: Michael Turquette <mturquette@baylibre.com>, 
@@ -107,11 +107,11 @@ Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev, 
  Brian Masney <bmasney@redhat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1754925498; l=2161;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1754925498; l=2810;
  i=bmasney@redhat.com; s=20250528; h=from:subject:message-id;
- bh=Iri56Jk5inQfMBQxAgO8VkEUwGzLeEItJq1ve9UYodA=;
- b=DsD44CqhHZt7aqK04qeiU6Ui+tTj7Lyld//Cp+zJ9xJgJTaAKY6yIDLLPqTRsL+cXpcocyy+k
- Hdl2EQH1B1kDq9SF4a2SNeCj0tmgb2D4I3LgqSWcj/91T4w7R8vzOOG
+ bh=SAaxalPFij/Aa8yutppYc0iHEe9K1j91UJmXhC4ocwg=;
+ b=QC7RaXdyPuWFyBHkdqOh3yCRjAr7To61SiqojrOogCGecuzntDJByhjInsSBSdrskm2rWz/Gi
+ xtTti+RH+WtB0sMPzo0hWq+Y6P57rPXUHsqkrxMIS+xUGu4t0K40+Uw
 X-Developer-Key: i=bmasney@redhat.com; a=ed25519;
  pk=x20f2BQYftANnik+wvlm4HqLqAlNs/npfVcbhHPOK2U=
 X-Endpoint-Received: by B4 Relay for bmasney@redhat.com/20250528 with
@@ -121,63 +121,86 @@ Reply-To: bmasney@redhat.com
 
 From: Brian Masney <bmasney@redhat.com>
 
-The round_rate() clk ops is deprecated, so migrate this driver from
-round_rate() to determine_rate() using the Coccinelle semantic patch
-on the cover letter of this series.
+This driver implements both the determine_rate() and round_rate() clk
+ops, and the round_rate() clk ops is deprecated. When both are defined,
+clk_core_determine_round_nolock() from the clk core will only use the
+determine_rate() clk ops, so let's remove the round_rate() clk ops since
+it's unused.
+
+The implementation of sg2042_clk_pll_determine_rate() calls
+sg2042_clk_pll_round_rate(), so this folds the two into a single
+function.
 
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 ---
- drivers/clk/ux500/clk-prcmu.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/clk/sophgo/clk-sg2042-pll.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/clk/ux500/clk-prcmu.c b/drivers/clk/ux500/clk-prcmu.c
-index 5cbf24c94606081b0ec18c8aaa201ef89b54edf0..f775e18acd468d91cc2d6cf7a289bb722d614141 100644
---- a/drivers/clk/ux500/clk-prcmu.c
-+++ b/drivers/clk/ux500/clk-prcmu.c
-@@ -53,11 +53,13 @@ static unsigned long clk_prcmu_recalc_rate(struct clk_hw *hw,
- 	return prcmu_clock_rate(clk->cg_sel);
+diff --git a/drivers/clk/sophgo/clk-sg2042-pll.c b/drivers/clk/sophgo/clk-sg2042-pll.c
+index e5fb0bb7ac4f97616f3b472fcab45e5729eb653e..b2cbd50ac73c7538b1acbca517f4259cba885fcc 100644
+--- a/drivers/clk/sophgo/clk-sg2042-pll.c
++++ b/drivers/clk/sophgo/clk-sg2042-pll.c
+@@ -346,37 +346,30 @@ static unsigned long sg2042_clk_pll_recalc_rate(struct clk_hw *hw,
+ 	return rate;
  }
  
--static long clk_prcmu_round_rate(struct clk_hw *hw, unsigned long rate,
--				 unsigned long *parent_rate)
-+static int clk_prcmu_determine_rate(struct clk_hw *hw,
-+				    struct clk_rate_request *req)
+-static long sg2042_clk_pll_round_rate(struct clk_hw *hw,
+-				      unsigned long req_rate,
+-				      unsigned long *prate)
++static int sg2042_clk_pll_determine_rate(struct clk_hw *hw,
++					 struct clk_rate_request *req)
  {
- 	struct clk_prcmu *clk = to_clk_prcmu(hw);
--	return prcmu_round_clock_rate(clk->cg_sel, rate);
-+	req->rate = prcmu_round_clock_rate(clk->cg_sel, req->rate);
-+
-+	return 0;
+ 	struct sg2042_pll_ctrl pctrl_table;
+ 	unsigned int value;
+ 	long proper_rate;
+ 	int ret;
+ 
+-	ret = sg2042_get_pll_ctl_setting(&pctrl_table, req_rate, *prate);
++	ret = sg2042_get_pll_ctl_setting(&pctrl_table,
++					 min(req->rate, req->max_rate),
++					 req->best_parent_rate);
+ 	if (ret) {
+ 		proper_rate = 0;
+ 		goto out;
+ 	}
+ 
+ 	value = sg2042_pll_ctrl_encode(&pctrl_table);
+-	proper_rate = (long)sg2042_pll_recalc_rate(value, *prate);
++	proper_rate = (long)sg2042_pll_recalc_rate(value, req->best_parent_rate);
+ 
+ out:
+ 	pr_debug("--> %s: pll_round_rate: val = %ld\n",
+ 		 clk_hw_get_name(hw), proper_rate);
+-	return proper_rate;
+-}
++	req->rate = proper_rate;
+ 
+-static int sg2042_clk_pll_determine_rate(struct clk_hw *hw,
+-					 struct clk_rate_request *req)
+-{
+-	req->rate = sg2042_clk_pll_round_rate(hw, min(req->rate, req->max_rate),
+-					      &req->best_parent_rate);
+-	pr_debug("--> %s: pll_determine_rate: val = %ld\n",
+-		 clk_hw_get_name(hw), req->rate);
+ 	return 0;
  }
  
- static int clk_prcmu_set_rate(struct clk_hw *hw, unsigned long rate,
-@@ -157,7 +159,7 @@ static const struct clk_ops clk_prcmu_scalable_ops = {
- 	.prepare = clk_prcmu_prepare,
- 	.unprepare = clk_prcmu_unprepare,
- 	.recalc_rate = clk_prcmu_recalc_rate,
--	.round_rate = clk_prcmu_round_rate,
-+	.determine_rate = clk_prcmu_determine_rate,
- 	.set_rate = clk_prcmu_set_rate,
+@@ -417,14 +410,13 @@ static int sg2042_clk_pll_set_rate(struct clk_hw *hw,
+ 
+ static const struct clk_ops sg2042_clk_pll_ops = {
+ 	.recalc_rate = sg2042_clk_pll_recalc_rate,
+-	.round_rate = sg2042_clk_pll_round_rate,
+ 	.determine_rate = sg2042_clk_pll_determine_rate,
+ 	.set_rate = sg2042_clk_pll_set_rate,
  };
  
-@@ -169,7 +171,7 @@ static const struct clk_ops clk_prcmu_gate_ops = {
- 
- static const struct clk_ops clk_prcmu_scalable_rate_ops = {
- 	.recalc_rate = clk_prcmu_recalc_rate,
--	.round_rate = clk_prcmu_round_rate,
-+	.determine_rate = clk_prcmu_determine_rate,
- 	.set_rate = clk_prcmu_set_rate,
+ static const struct clk_ops sg2042_clk_pll_ro_ops = {
+ 	.recalc_rate = sg2042_clk_pll_recalc_rate,
+-	.round_rate = sg2042_clk_pll_round_rate,
++	.determine_rate = sg2042_clk_pll_determine_rate,
  };
  
-@@ -187,7 +189,7 @@ static const struct clk_ops clk_prcmu_opp_volt_scalable_ops = {
- 	.prepare = clk_prcmu_opp_volt_prepare,
- 	.unprepare = clk_prcmu_opp_volt_unprepare,
- 	.recalc_rate = clk_prcmu_recalc_rate,
--	.round_rate = clk_prcmu_round_rate,
-+	.determine_rate = clk_prcmu_determine_rate,
- 	.set_rate = clk_prcmu_set_rate,
- };
- 
+ /*
 
 -- 
 2.50.1
