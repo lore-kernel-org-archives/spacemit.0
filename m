@@ -1,204 +1,139 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A43311C0E;
-	Mon, 11 Aug 2025 16:02:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF235A95C
+	for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 02:03:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754928161; cv=none; b=RqO4mj5f0cw52EGseR9koThzZLtI/0iqzKFy/tEExs3N7LxwmlVBJY6ARWaRo5lVcZSd6xQxFQfP/WdCcCmgsyfPaqqnvEjk9Bu0OS0Ac4PAIhchQMpXcEnJnPtHQWKGLuvN6GwiSPjmlJstD1e/xal3i+zqPhPGFSUcHT58dYc=
+	t=1754964201; cv=none; b=tMsH+AV+HY0yT1ZJM9fyhwur70vYYdoF8vG8rqwpY5MJBAZScyMrQaV1ck9ZzXyXstuJTJzgKeJZcAMXRn9d7bXLrc30YY4MaaiXqitMbHQXb6V7ALPsKS4NWaG8iKH+mgEkKxnL1Pd4+OdH/FigYorWj1VRFsJgOyONekm9OEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754928161; c=relaxed/simple;
-	bh=M33qPuWnVVgzCedegGUFoIha4X57RIz2xTh8sZTNpAA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ijY0ZualkxFFbD5VHbPBO//P889jQNhS32nwJUAnebKijshnGjEcPP2Dc3gGPeq74bmIqT7DundrnKAluzsbUBceClYTXTgUUVS5zhhlds5SdXyKlLkAzlMmiHbi5LFzmd49gWErm4ugSo+5qBpb6twCQQMjvSMVo2XVLQb4Y9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e1pCFoNH; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e1pCFoNH"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-af98b77d2f0so842556566b.3;
-        Mon, 11 Aug 2025 09:02:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754928158; x=1755532958; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=qaouqb4fO7JIvY1JD8PEt300KWG5mGmc4W0R7yQs6hc=;
-        b=e1pCFoNHR5vsfr1dciZ+Oe8TAZc9btceS8Im6lswYXTwgOeiMdrAvE42+4JLKQNVzq
-         +Hm3L5PO15KLMd1F89TDotzhqVIOlW13YXdsY0usTJFVd+MRlnfZjLui/1PHQCnPCJwm
-         PNkA1xn1zJOpR18QdsylBOl/w86pdYFAl89hr8tJmulrn7sJ7vFCV1nsM577ACFLtAY6
-         hBWStqHiplY7bpRAw3Oi85xjKCBF6qG939O2AT9WOxNqs8ghtoRIlH3VVhFdmN82Ey0h
-         HmpRAS9IjGgihdyQgRVtB2gutL8E06B9ym4ExCwK/KS8EDKAf5BGDRj5SjSxCAwbnQqy
-         EoZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754928158; x=1755532958;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qaouqb4fO7JIvY1JD8PEt300KWG5mGmc4W0R7yQs6hc=;
-        b=cluXZjklD/XEXVgEsi8BxeuXhljFUwViWwPRSgZPfUvSMzOo9LkN6l+WlWocQfgGgJ
-         SC6k8MIzPmDMAC4mpvLbCQIf3j+SoNvVYI3p/SH79jO/dEUgYrBJUEfSKp9p8NHZdi2X
-         x5j66cM3dDOr7PZ7ODE+TWE4JcAJYjIsoFdw89sTwmscEfPy6UZD5g3yne4zO4pyQSoY
-         /qGXLxQsgLPY67InbxIvbUf5dpq/4Uyp1GPooho6AhY12tAQuQYgRKS9pDv7OjLbnJl6
-         ETd/tqzEKstK40Mho6Tw2xw28NS1aw45TquhQRx+KHOkLZciP+xURaSgtCxaNKPSgRD3
-         8y8A==
-X-Forwarded-Encrypted: i=1; AJvYcCVMEn90Kx3+yj5NVVcrEbTUqbNVY4IS5nKulzG1nVl2KvKMq5eViUjOjoweXCz9yD3sbQIXLQ==@lists.linux.dev, AJvYcCVQp/1Cyqt+10FU37j3U6az05abdr9xeMUiwkQtaSsXYfcb4NB69idk3UlDPEtHb6KORALI@lists.linux.dev, AJvYcCVRjiZ2nt6lA0hjDUVaxA3vZ1L+cmyvSZ957FUlNI4wRPjZ9Q4BqG0LRkhE3dXzlzIaOB6lka0C@lists.linux.dev, AJvYcCW2p/VC0jD72/yQDSgeqe7tXEJsUScCa4RHtatZfcSoFHadGtzs1eeYR6oLVkcDwcuLpWbFXHY8/Mw=@lists.linux.dev, AJvYcCWZXBwOiAiHaMKSNv/Si3tcqn10zPJIuiw690ohUrPBQgwnE6LPqVmcX/dkukj2o107BI5Z@lists.linux.dev
-X-Gm-Message-State: AOJu0YxtwUdCuyHtWDayGdRaonhRyuqhhI/0ZubaIjGd+SHZq4FNPWgn
-	S02KmN+oshKCLKZsg2Xp4hrgKyLjRHMcQ19MelXod5I0hlv5nHuNTeHp
-X-Gm-Gg: ASbGncsJytQjQQjC63iTs6PZhueoChjEUEg4/TxdGO7WyjOZ0MXdworkVHOCsSeWI6g
-	eRWEE2u0rsaFwCPL7vXLNqSB+k7IJoSMUmOiMHav97MUZFaXYp4wAXarBp0ua/y2rvPtylObVid
-	j4TY4wDGpp75jpPpN9lIaRrHodSEtZYWmNEgKb+1c5gf9S05lqcH7CeMQxsn2gyVqQ4uDnVoLhK
-	pZ0GLNUJUC7qtqGwMdewvcpj8l7MKdO1S0YV0g/x4bktnX5ICuHGmHIM3hA+/SVUEpRfADwxH/Z
-	hhuSmEB1bsCukqZCwtwse4v7u3BqxbTe1HmaAPipEVpfDGImmTmCje6IFDCNlOGwUPq2+bXJCvz
-	dUtozOWGk6EPPE7EB+Ki4m3SrCI6e3Z6MhJA1EPw=
-X-Google-Smtp-Source: AGHT+IFlPGC8RqUZcNmE1sb0v/JytUS2YpnMYnX0fy/68mQiQooD3eH6nJnAu7hadMRuF3cZL/qgqg==
-X-Received: by 2002:a17:907:7f1a:b0:ae0:d78a:2366 with SMTP id a640c23a62f3a-af9c63b0a5bmr1282562266b.4.1754928157418;
-        Mon, 11 Aug 2025 09:02:37 -0700 (PDT)
-Received: from giga-mm.home ([2a02:1210:8642:2b00:82ee:73ff:feb8:99e3])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a1e6cecsm2050387666b.70.2025.08.11.09.02.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Aug 2025 09:02:36 -0700 (PDT)
-Message-ID: <dfca56ede9bdd6295f79403bf01fb9913ba95d6c.camel@gmail.com>
-Subject: Re: [PATCH 111/114] clk: divider: remove round_rate() in favor of
- determine_rate()
-From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-To: bmasney@redhat.com, Michael Turquette <mturquette@baylibre.com>, Stephen
- Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, Cristian
- Marussi	 <cristian.marussi@arm.com>, Chen Wang <unicorn_wang@outlook.com>,
- Inochi Amaoto	 <inochiama@gmail.com>, Nicolas Ferre
- <nicolas.ferre@microchip.com>,  Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Paul Cercueil	 <paul@crapouillou.net>, Keguang Zhang
- <keguang.zhang@gmail.com>, Taichi Sugaya	 <sugaya.taichi@socionext.com>,
- Takao Orito <orito.takao@socionext.com>,  Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team	
- <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Jacky Huang	
- <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, Vladimir
- Zapolskiy	 <vz@mleia.com>, Piotr Wojtaszczyk
- <piotr.wojtaszczyk@timesys.com>, Paul Walmsley <paul.walmsley@sifive.com>,
- Samuel Holland <samuel.holland@sifive.com>, Yixun Lan	 <dlan@gentoo.org>,
- Steen Hegelund <Steen.Hegelund@microchip.com>, Daniel Machon	
- <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, Orson Zhai	
- <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
- Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue	 <alexandre.torgue@foss.st.com>, Michal Simek
- <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>, Andreas
- =?ISO-8859-1?Q?F=E4rber?= <afaerber@suse.de>,  Manivannan Sadhasivam	
- <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau
- <j@jannau.net>,  Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa
- <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,  Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Broadcom
- internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max
- Filippov <jcmvbkbc@gmail.com>, Matthias Brugger	 <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno	 <angelogioacchino.delregno@collabora.com>,
- Daniel Palmer <daniel@thingy.jp>,  Romain Perier <romain.perier@gmail.com>,
- Andrew Lunn <andrew@lunn.ch>, Gregory Clement	
- <gregory.clement@bootlin.com>, Sebastian Hesselbarth	
- <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner
- <heiko@sntech.de>, Andrea della Porta <andrea.porta@suse.com>,  Krzysztof
- Kozlowski	 <krzk@kernel.org>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Chanwoo Choi	 <cw00.choi@samsung.com>, Alim Akhtar
- <alim.akhtar@samsung.com>, Qin Jian	 <qinjian@cqplus1.com>, Viresh Kumar
- <vireshk@kernel.org>, Ulf Hansson	 <ulf.hansson@linaro.org>, Luca Ceresoli
- <luca.ceresoli@bootlin.com>, Alex Helms	 <alexander.helms.jy@renesas.com>,
- Linus Walleij <linus.walleij@linaro.org>,  Liviu Dudau
- <liviu.dudau@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, Nobuhiro
- Iwamatsu	 <nobuhiro1.iwamatsu@toshiba.co.jp>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
-	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Date: Mon, 11 Aug 2025 18:02:33 +0200
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-111-b3bf97b038dc@redhat.com>
-References: 
-	<20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
-	 <20250811-clk-for-stephen-round-rate-v1-111-b3bf97b038dc@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.1 
+	s=arc-20240116; t=1754964201; c=relaxed/simple;
+	bh=49DBKkptDFzzA2ZrfYvNanOnxBOu5JYgjj8zU6d4Jvg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=CEbDB/nAe63/xuHqDCYCLQpIwQ6dMtOQAQ0jj3djNGt+mCvz6SUu66Avzsg4pNM9mEgTnYRCSfBxPO1HBmxT2sRNPpBBau4DWbaKe3fRwsWyc1M9TyLS+qGmBLlcwYE+I+/B/6kq7CCR9VuA0WyUBXK8V4Q/5hvlSCxu/Zrh/gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [114.241.87.235])
+	by APP-03 (Coremail) with SMTP id rQCowAB3DH7LoJpoRIQaCw--.31870S7;
+	Tue, 12 Aug 2025 10:02:54 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Tue, 12 Aug 2025 10:02:21 +0800
+Subject: [PATCH net-next v5 5/5] riscv: dts: spacemit: Add Ethernet support
+ for Jupiter
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250812-net-k1-emac-v5-5-dd17c4905f49@iscas.ac.cn>
+References: <20250812-net-k1-emac-v5-0-dd17c4905f49@iscas.ac.cn>
+In-Reply-To: <20250812-net-k1-emac-v5-0-dd17c4905f49@iscas.ac.cn>
+To: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Vivian Wang <wangruikang@iscas.ac.cn>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Vivian Wang <uwu@dram.page>, 
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>, 
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-CM-TRANSID:rQCowAB3DH7LoJpoRIQaCw--.31870S7
+X-Coremail-Antispam: 1UD129KBjvJXoW7Kw43Gw1ftrWfAF43Cr45Jrb_yoW8WrW7pa
+	y3CFsaqFZrCr1fKw43Zr9F9r13Ga95GrWkC3y3uF1rJ3yIvFZ0vw1rtw17tr1DGrW5X34Y
+	vr10yFyxurnFkw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUmq14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
+	kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
+	z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
+	4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE
+	3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2I
+	x0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8
+	JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2
+	ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Y
+	z7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
+	AF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1l
+	IxAIcVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+	1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIY
+	CTnIWIevJa73UjIFyTuYvjTRNdb1DUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Mon, 2025-08-11 at 11:19 -0400, Brian Masney via B4 Relay wrote:
-> From: Brian Masney <bmasney@redhat.com>
->=20
-> This driver implements both the determine_rate() and round_rate() clk
-> ops, and the round_rate() clk ops is deprecated. When both are defined,
-> clk_core_determine_round_nolock() from the clk core will only use the
-> determine_rate() clk ops. Also all clk drivers that directly calls
-> divider's round_rate() have been migrated over to determine_rate(). So
-> let's remove the round_rate() clk ops.
->=20
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+Milk-V Jupiter uses an RGMII PHY for each port and uses GPIO for PHY
+reset.
 
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 46 +++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-> ---
-> =C2=A0drivers/clk/clk-divider.c | 23 -----------------------
-> =C2=A01 file changed, 23 deletions(-)
->=20
-> diff --git a/drivers/clk/clk-divider.c b/drivers/clk/clk-divider.c
-> index c1f426b8a5043cb5a1de08e1da385928ec54a2ed..2601b6155afb7391c6a0ffb91=
-c58fa66cde98197 100644
-> --- a/drivers/clk/clk-divider.c
-> +++ b/drivers/clk/clk-divider.c
-> @@ -431,27 +431,6 @@ long divider_ro_round_rate_parent(struct clk_hw *hw,=
- struct clk_hw *parent,
-> =C2=A0}
-> =C2=A0EXPORT_SYMBOL_GPL(divider_ro_round_rate_parent);
-> =C2=A0
-> -static long clk_divider_round_rate(struct clk_hw *hw, unsigned long rate=
-,
-> -				unsigned long *prate)
-> -{
-> -	struct clk_divider *divider =3D to_clk_divider(hw);
-> -
-> -	/* if read only, just return current value */
-> -	if (divider->flags & CLK_DIVIDER_READ_ONLY) {
-> -		u32 val;
-> -
-> -		val =3D clk_div_readl(divider) >> divider->shift;
-> -		val &=3D clk_div_mask(divider->width);
-> -
-> -		return divider_ro_round_rate(hw, rate, prate, divider->table,
-> -					=C2=A0=C2=A0=C2=A0=C2=A0 divider->width, divider->flags,
-> -					=C2=A0=C2=A0=C2=A0=C2=A0 val);
-> -	}
-> -
-> -	return divider_round_rate(hw, rate, prate, divider->table,
-> -				=C2=A0 divider->width, divider->flags);
-> -}
-> -
-> =C2=A0static int clk_divider_determine_rate(struct clk_hw *hw,
-> =C2=A0				=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct clk_rate_request *req)
-> =C2=A0{
-> @@ -527,7 +506,6 @@ static int clk_divider_set_rate(struct clk_hw *hw, un=
-signed long rate,
-> =C2=A0
-> =C2=A0const struct clk_ops clk_divider_ops =3D {
-> =C2=A0	.recalc_rate =3D clk_divider_recalc_rate,
-> -	.round_rate =3D clk_divider_round_rate,
-> =C2=A0	.determine_rate =3D clk_divider_determine_rate,
-> =C2=A0	.set_rate =3D clk_divider_set_rate,
-> =C2=A0};
-> @@ -535,7 +513,6 @@ EXPORT_SYMBOL_GPL(clk_divider_ops);
-> =C2=A0
-> =C2=A0const struct clk_ops clk_divider_ro_ops =3D {
-> =C2=A0	.recalc_rate =3D clk_divider_recalc_rate,
-> -	.round_rate =3D clk_divider_round_rate,
-> =C2=A0	.determine_rate =3D clk_divider_determine_rate,
-> =C2=A0};
-> =C2=A0EXPORT_SYMBOL_GPL(clk_divider_ro_ops);
+diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+index 4483192141049caa201c093fb206b6134a064f42..c5933555c06b66f40e61fe2b9c159ba0770c2fa1 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+@@ -20,6 +20,52 @@ chosen {
+ 	};
+ };
+ 
++&eth0 {
++	phy-handle = <&rgmii0>;
++	phy-mode = "rgmii-id";
++	pinctrl-names = "default";
++	pinctrl-0 = <&gmac0_cfg>;
++	rx-internal-delay-ps = <0>;
++	tx-internal-delay-ps = <0>;
++	status = "okay";
++
++	mdio-bus {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
++		reset-delay-us = <10000>;
++		reset-post-delay-us = <100000>;
++
++		rgmii0: phy@1 {
++			reg = <0x1>;
++		};
++	};
++};
++
++&eth1 {
++	phy-handle = <&rgmii1>;
++	phy-mode = "rgmii-id";
++	pinctrl-names = "default";
++	pinctrl-0 = <&gmac1_cfg>;
++	rx-internal-delay-ps = <0>;
++	tx-internal-delay-ps = <250>;
++	status = "okay";
++
++	mdio-bus {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
++		reset-delay-us = <10000>;
++		reset-post-delay-us = <100000>;
++
++		rgmii1: phy@1 {
++			reg = <0x1>;
++		};
++	};
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_2_cfg>;
 
---=20
-Alexander Sverdlin.
+-- 
+2.50.1
+
