@@ -1,194 +1,121 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34FC2EBBAE
-	for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 10:39:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61E22ECD0C
+	for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 10:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754995194; cv=none; b=VnyZzAHxw58hUJkdxESIhHVq28cJHS24PdXA7DIu5tLZ3sy27Yx1EZJ1aHYQQ6REZ4VGmBJC6xChMAnm2n0lOR2k1juas7ArJZyjjDQqgIWwO1vta7ChSSqXzR8beRZq/p+S3u/FBDEKqRcebmRjiSLPfEYp5mvYATtPr+FydP8=
+	t=1754996302; cv=none; b=l9eOBGZfPAVujMnFSWX6awcXLauJK6z5TgXsOFUBpB0CDZE29PiE6N1P8s22ufAiNxsJHRsWUDpgATSp6LjFXzlwFDUL81Mr7VNZ+O9UhIkdPDJX9dpxew4dGTOgjCiMYgVIuVzkGTf3XZ9YX+dsZdOKJl9t0EtnhBLwbPa3ojI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754995194; c=relaxed/simple;
-	bh=aKQ469kMuJqyRpyBBj4VAGrI2TpqLDn80ts4I+YLbE4=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=p2NXUiz/UMhtn+oXcs04OLhsoLf7FSzkcgBqBYt/AQ4jWnM1ia3ZsdhZNQ0BAasuPG+1/ovMLcJN7tCH4G8Ck1lJ2hdfqyDRwHLF4EFJhNSk6N/+D/CXUGlMm+S7UKGBl2ty5aRyME3EUR6sDUPxB19EpKlPY+W1F6NhQejR170=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=S/w4E4vh; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="S/w4E4vh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1754995191;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZNmGluZMVEODqqLey7tscfNEcE8jZgnd0oIotEJMQE8=;
-	b=S/w4E4vhnIv9g5/m9EpOWKn80bn4jOLxEYmhjX2Zk5jVtdrmkheWJ3H5FTJz+lA4GV7cpg
-	0HdTqXuvrzYOKAK1KSgY9ClDl19f1K7v1Dh2PBKtF4pjpzlLSn3qdkp0A7yJsCCYKnMm92
-	1h0YWugJgjLnJlwBhuZZdczNBgjsnjM=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-602-I9NSZ5l-NxKR16mlcTDS2w-1; Tue, 12 Aug 2025 06:39:50 -0400
-X-MC-Unique: I9NSZ5l-NxKR16mlcTDS2w-1
-X-Mimecast-MFC-AGG-ID: I9NSZ5l-NxKR16mlcTDS2w_1754995190
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7e65340b626so1274939185a.2
-        for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 03:39:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754995190; x=1755599990;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZNmGluZMVEODqqLey7tscfNEcE8jZgnd0oIotEJMQE8=;
-        b=gkxqeJmBAB8jzgpiMosln46m7OnkV0q6fE2zwuzkT8j4diLdoQU5aDMMATqxQs5J8T
-         XBdapI0BxPsx6kLdB2Broj4KtffM8ghCXCbB8uSC7MFTUNhEcIQGilRbrzyndZMIA8dK
-         NwkM+Fz+jXznNsDxVhD/9ypJgbjIYi9dBBFyDxxDtcCBBKRenhMeCpPJNiISZ3oggrHn
-         TnF8djZtzPcLaQb1v7meM49tf66D5nb198AUgVeECxuNdtqYHBwjVuE2nbBcO+CU1zl8
-         MVZ3DnDik7W1HpV95ievZkyD3o9qTb5p4SU5LKpdByKLGQLTLMXfgD26B34NLnbYNR28
-         aWrg==
-X-Forwarded-Encrypted: i=1; AJvYcCXFFKjbxavVUMoN/IqzAR7S8UrNw1U1aKKYAVHOv9RtNtZKXYqgkr9EvgagBKTQT5mbZApGsd2O3A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxNI1xiX6cgRu4ghoqfGk3mhmoa4gcLERetvG13ZzNzK1+hzPBH
-	3FLa60MiLMopP6pmsP52T+vn6nJXzn+OuvHWkcSRa/rRovQHwmcOgjawvpmSW403NVSGijZVXR1
-	4+ev4X6T4Z9eLgtOP5CZYy4bKrj4Z5CFyxUIC0KStiWBiZUCclMssqeJmi/oi
-X-Gm-Gg: ASbGnct+3ggARICBwmt4urlJb4dr/9DHb4YEssZ/aTvQGkGPGaitdqXe2EdZujSoDRE
-	OM1o0Q56sEMnX1Um7UaWBKx63BwGrsBuoSZmThsa83Kv3HbxevEShRxhXrGv/VXpCbiztkp21FI
-	1BhUlbeA3JAZgCD15E3oFwnJVg7VmpXcVvMNFCVoHN4tHXdlYPqkQYntggXCnL3HwDGqs+h+dt7
-	yORaTksaDUt9DDQaDtuyiNRKhvdrSiFwAv/Fjjuj3fF34JoOj8afzsQq4hga7tEpOfVv8wK2Evg
-	gq1c2r3kly9hU+ymRM7CDL/ilAbqAdz4AfqtAaNGOphgPyT9GtpEtYbhnCr0UR0=
-X-Received: by 2002:a05:620a:126c:b0:7e8:15ce:bf9f with SMTP id af79cd13be357-7e8588b064emr355640685a.33.1754995189809;
-        Tue, 12 Aug 2025 03:39:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnBK/VwO9xaDEZqPIr5Ki0EDBjQlgku4qoR/ofUy7muXwNiOHVcU/4sdcTQibJSWhG5zm1ew==
-X-Received: by 2002:a05:620a:126c:b0:7e8:15ce:bf9f with SMTP id af79cd13be357-7e8588b064emr355631785a.33.1754995188996;
-        Tue, 12 Aug 2025 03:39:48 -0700 (PDT)
-Received: from x1 (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e67f73101asm1727614485a.68.2025.08.12.03.39.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 03:39:47 -0700 (PDT)
-Date: Tue, 12 Aug 2025 06:39:41 -0400
-From: Brian Masney <bmasney@redhat.com>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Neal Gompa <neal@gompa.dev>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Palmer <daniel@thingy.jp>,
-	Romain Perier <romain.perier@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Alex Helms <alexander.helms.jy@renesas.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
-	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
-	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
-	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated
- round_rate() to determine_rate()
-Message-ID: <aJsZ7bs0OMXcrStU@x1>
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+	s=arc-20240116; t=1754996302; c=relaxed/simple;
+	bh=kRgbW2F922teXyx2IY6WyMvEq9qFXLQDjnwHV9zkJxY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hEbmvNt4w50vWvh5kBeuPnC6SODz541C1KXvt0jNAWrU2VgftHXY5IO1tywf58iV2i1w7pRCL54l8WUGsMb3qPVghk1qkQ0F3A3WuZVBFANxRkq1nSf+Ekwp3srIDsH7wwFoCEGmb3Xwto8jv9UsEu5M+rLaxxsu+9/PQfqrZ1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.104] (unknown [114.241.87.235])
+	by APP-05 (Coremail) with SMTP id zQCowAAXrFwmHpto6U4ZCw--.2240S2;
+	Tue, 12 Aug 2025 18:57:42 +0800 (CST)
+Message-ID: <0c894603-08dc-4dcd-a866-0a1d121cdb89@iscas.ac.cn>
+Date: Tue, 12 Aug 2025 18:57:42 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: lS6FteCnF6BIPTjTi2swhGIMaNbg_in9sC_Wyxz9WXE_1754995190
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v5 2/5] net: spacemit: Add K1 Ethernet MAC
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Vivian Wang <uwu@dram.page>,
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>,
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20250812-net-k1-emac-v5-0-dd17c4905f49@iscas.ac.cn>
+ <20250812-net-k1-emac-v5-2-dd17c4905f49@iscas.ac.cn>
+ <ac9cce0b-d29e-499b-8a86-28979cd12fb5@lunn.ch>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <ac9cce0b-d29e-499b-8a86-28979cd12fb5@lunn.ch>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:zQCowAAXrFwmHpto6U4ZCw--.2240S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7WrW8ZFWfWFy7tFyxWw4xXrb_yoW8Gry7pF
+	yUJaykGrWjqF1kXFn8XrWUAFyIqwn3Kw17uF1YyayagF9FyryfC34rWFWUCwnrCrWDCr1a
+	kw1jkFn7Gay2grDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_KF4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
+	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
+	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
+	1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
+	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
+	wI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
+	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
+	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73Uj
+	IFyTuYvjxU3wIDUUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Mon, Aug 11, 2025 at 11:17:52AM -0400, Brian Masney via B4 Relay wrote:
-> Once all of my conversion patches across the various trees in the kernel
-> have been merged, I will post a small series that removes the
-> round_rate() op from the clk core and the documentation. Here's the
-> other patch series that are currently in flight that need to be merged
-> before we can remove round_rate() from the core.
-> 
-> - arm32 (3): https://lore.kernel.org/linux-clk/20250710-arm32-clk-round-rate-v1-0-a9146b77aca9@redhat.com/T/
-> - clk/tegra (6): https://lore.kernel.org/linux-clk/20250710-clk-tegra-round-rate-v1-0-e48ac3df4279@redhat.com/T/
-> - clk/ti (7): https://lore.kernel.org/linux-clk/20250811-b4-clk-ti-round-rate-v1-0-cc0840594a49@redhat.com/T/
-> - clocksource (1): https://lore.kernel.org/linux-clk/20250810-clocksource-round-rate-v1-1-486ef53e45eb@redhat.com/T/
-> - drm (9): https://lore.kernel.org/linux-clk/20250811-drm-clk-round-rate-v2-0-4a91ccf239cf@redhat.com/T/
-> - drm/msm (7): https://lore.kernel.org/linux-clk/20250810-drm-msm-phy-clk-round-rate-v2-0-0fd1f7979c83@redhat.com/T/
-> - i2c (1): https://lore.kernel.org/linux-clk/20250810-i2c-round-rate-v1-1-9488b57153e7@redhat.com/T/
-> - media (4): https://lore.kernel.org/linux-clk/20250710-media-clk-round-rate-v1-0-a9617b061741@redhat.com/T/
-> - mips (1): https://lore.kernel.org/linux-clk/20250810-mips-round-rate-v1-1-54e424c520dd@redhat.com/T/
-> - net (1): https://lore.kernel.org/linux-clk/20250810-net-round-rate-v1-1-dbb237c9fe5c@redhat.com/T/
-> - peci (1): https://lore.kernel.org/linux-clk/20250810-peci-round-rate-v1-1-ec96d216a455@redhat.com/T/
-> - phy (9): https://lore.kernel.org/linux-phy/20250810-phy-clk-round-rate-v2-0-9162470bb9f2@redhat.com/T/
-> - pmdomain (1): https://lore.kernel.org/linux-clk/20250810-pmdomain-round-rate-v1-1-1a90dbacdeb6@redhat.com/T/
-> - tty (1): https://lore.kernel.org/linux-clk/20250810-tty-round-rate-v1-1-849009f3bdfd@redhat.com/T/
+On 8/12/25 11:45, Andrew Lunn wrote:
 
-Konrad noticed on patch 90 the space after the cast. I thought I fixed
-all of those by hand, but apparently not. I looked through this series
-(and the others above) with `grep "u64) "` and `grep "long) "`, and found
-4 other cases.
+>> +static void emac_get_pause_stats(struct net_device *dev,
+>> +				 struct ethtool_pause_stats *pause_stats)
+>> +{
+>> +	struct emac_priv *priv = netdev_priv(dev);
+>> +	struct emac_hw_tx_stats *tx_stats;
+>> +	struct emac_hw_rx_stats *rx_stats;
+>> +
+>> +	tx_stats = &priv->tx_stats;
+>> +	rx_stats = &priv->rx_stats;
+>> +
+>> +	scoped_guard(spinlock_irqsave, &priv->stats_lock) {
+>> +		emac_stats_update(priv);
+>> +
+>> +		pause_stats->tx_pause_frames = tx_stats->tx_pause_pkts;
+>> +		pause_stats->rx_pause_frames = rx_stats->rx_pause_pkts;
+>> +	}
+>> +}
+> You have pause statistics, but not actual configuration of pause.
+>
+>> +static void emac_adjust_link(struct net_device *dev)
+>> +{
+>> +	struct emac_priv *priv = netdev_priv(dev);
+>> +	struct phy_device *phydev = dev->phydev;
+>> +	u32 ctrl;
+> Normally the adjust_link callback you configure the hardware with the
+> result of pause negotiation.
 
-Patch 38: clk: nxp: lpc32xx: convert from round_rate() to determine_rate()
-Patch 64: clk: x86: cgu: convert from round_rate() to determine_rate()
-Patch 68: clk: zynqmp: divider: convert from round_rate() to determine_rate()
-Patch 95: clk: rockchip: half-divider: convert from round_rate() to determine_rate()
+Thanks for the tip, I will fix emac_adjust_link next version.
 
-Brian
+>> +/* Called when net interface is brought up. */
+>> +static int emac_open(struct net_device *ndev)
+>> +{
+>> +	struct emac_priv *priv = netdev_priv(ndev);
+>> +	struct device *dev = &priv->pdev->dev;
+>> +
+>> +	int ret;
+> Extra blank line.
+
+Oops. I will fix next version.
+
+Thanks,
+Vivian "dramforever" Wang
+
+>
+>     Andrew
+>
+> ---
+> pw-bot: cr
 
