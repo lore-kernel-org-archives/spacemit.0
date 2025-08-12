@@ -1,95 +1,108 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBA8311C17
-	for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 03:11:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4232D9EDD;
+	Tue, 12 Aug 2025 03:46:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754968299; cv=none; b=YvQuFmnJ1P72RzGc9HWF/KX2sgms9MGFIrOmR6R+m5gcWAyZugh3j0KnPmAF03dNf7ksZHeNMHNTQyM61nfN7dVBm3UsHT/4voQFEDdevKD+Fv/I1aeCjtpqlneYbIu74XFWKPtBEDwOYhTQEZzbuIri87/fNac9Im1Xn9eOJ6Y=
+	t=1754970371; cv=none; b=B1VrKQXdIYIThtOnm77gmhVvsgB/13hF0OBa0GG1okbedZag5Lp2h6mqAonFyWbppluP1TnzRI5YA9zRNt6/dR0AM4I4xmW/bpmHuiKY2PC3st9eL7CwivGSekM85AH5tMwLjzhB5z65E/4qmRDjHFskNie4aVAhhi8jBfhLR+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754968299; c=relaxed/simple;
-	bh=J+5V0xx3lI2r04i1in4bjdw1bkLd9VZSX0KX29JPZI0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CyG+RZr4fongy3Ep7lYuGy1faUC4poRueG7BpF8I8h45kr4K/vvqj7sbZ+LPymRVzhWHxHQqyZfenMrxHj1x9WrtZEMZS10j9lm7MRogK60iVuM+NLBtRiGz8tYgMjsHv2ceoZ6xO2Ms6YBsrrIMQFE4rU2eFVJcCfMrU5pYq/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.111] (unknown [114.241.87.235])
-	by APP-05 (Coremail) with SMTP id zQCowADnPl+_sJpoQFIJCw--.51801S2;
-	Tue, 12 Aug 2025 11:10:56 +0800 (CST)
-Message-ID: <86b99a5f-02a0-43cc-9f7b-4ed3a260b4df@iscas.ac.cn>
-Date: Tue, 12 Aug 2025 11:10:55 +0800
+	s=arc-20240116; t=1754970371; c=relaxed/simple;
+	bh=QKrhEizsg0N1zg4M61hvf6ECAUH4usaiehJgLk+LSYA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DgqciquRsZ7KpGmJZx+GH2WSBvWqp0LxxLd83fOHaow7Uez3nCwAKHcy7L7Mf6EmDVp2OIc2JYCUQkM25PhqvESkC7oCqt6U0w7p4AsggnkRcLSbiAlcnm/hJMtYP8Lr5Ah/hMByuiSb8MpK/hAz1YQnNPxn2HyysslYheMo2LE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=NbYqq15F; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="NbYqq15F"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=NIC/wkT8xDaIY7MD6UsDmD8NMUh6b3J8xBtXrNsXYKo=; b=NbYqq15F+k0PaYhFy5Hc5uGO1C
+	F7j6cSoP/whS4817YNAeQ66fdIUeTNQC5RhDl3Pn2Jkb/dJBC2qkppaK48DJ9uxXASz28fYUHgXWy
+	gKaqh24ZdeiIwvrmcSyoigBz47PTJ39VEZOCcGj6Fe050vKSBFjjU3uGdFI1pW5XiSuY=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1ulfxA-004PNl-P9; Tue, 12 Aug 2025 05:45:36 +0200
+Date: Tue, 12 Aug 2025 05:45:36 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Vivian Wang <uwu@dram.page>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Simon Horman <horms@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v5 2/5] net: spacemit: Add K1 Ethernet MAC
+Message-ID: <ac9cce0b-d29e-499b-8a86-28979cd12fb5@lunn.ch>
+References: <20250812-net-k1-emac-v5-0-dd17c4905f49@iscas.ac.cn>
+ <20250812-net-k1-emac-v5-2-dd17c4905f49@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v5 2/5] net: spacemit: Add K1 Ethernet MAC
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Vivian Wang <uwu@dram.page>,
- Vadim Fedorenko <vadim.fedorenko@linux.dev>,
- Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>,
- Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20250812-net-k1-emac-v5-0-dd17c4905f49@iscas.ac.cn>
- <20250812-net-k1-emac-v5-2-dd17c4905f49@iscas.ac.cn>
- <5c32fde3-0478-4029-9b71-e46a60edf06b@lunn.ch>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <5c32fde3-0478-4029-9b71-e46a60edf06b@lunn.ch>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:zQCowADnPl+_sJpoQFIJCw--.51801S2
-X-Coremail-Antispam: 1UD129KBjvdXoW5Kry3GFyDKrWxXFy7JF1rCrg_yoWxWwc_Gw
-	1Fk3yFkFs0yrs0y34Sgw15Ar1fKa95XF9xZw1v9r4xCF9xtFW29ryDuFnIq3WxWrZxGr95
-	trnI9w4UWrn7AjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbV8YjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I
-	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0
-	cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwV
-	C2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
-	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr
-	1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7
-	MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r
-	4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF
-	67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2I
-	x0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
-	z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvj
-	DU0xZFpf9x07jDsqXUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250812-net-k1-emac-v5-2-dd17c4905f49@iscas.ac.cn>
 
-Hi Andrew,
+> +static void emac_get_pause_stats(struct net_device *dev,
+> +				 struct ethtool_pause_stats *pause_stats)
+> +{
+> +	struct emac_priv *priv = netdev_priv(dev);
+> +	struct emac_hw_tx_stats *tx_stats;
+> +	struct emac_hw_rx_stats *rx_stats;
+> +
+> +	tx_stats = &priv->tx_stats;
+> +	rx_stats = &priv->rx_stats;
+> +
+> +	scoped_guard(spinlock_irqsave, &priv->stats_lock) {
+> +		emac_stats_update(priv);
+> +
+> +		pause_stats->tx_pause_frames = tx_stats->tx_pause_pkts;
+> +		pause_stats->rx_pause_frames = rx_stats->rx_pause_pkts;
+> +	}
+> +}
 
-On 8/12/25 10:17, Andrew Lunn wrote:
->> +/* Caller must hold stats_lock */
->> +static void emac_stats_update(struct emac_priv *priv)
->> +{
->> +	u64 *tx_stats_off = (u64 *)&priv->tx_stats_off;
->> +	u64 *rx_stats_off = (u64 *)&priv->rx_stats_off;
->> +	u64 *tx_stats = (u64 *)&priv->tx_stats;
->> +	u64 *rx_stats = (u64 *)&priv->rx_stats;
->> +	u32 i, res;
-> Rather than the comment, you could do:
->
-> 	assert_spin_locked(priv->stats_lock);
+You have pause statistics, but not actual configuration of pause.
 
-Thanks, I'll use assert_spin_locked.
+> +static void emac_adjust_link(struct net_device *dev)
+> +{
+> +	struct emac_priv *priv = netdev_priv(dev);
+> +	struct phy_device *phydev = dev->phydev;
+> +	u32 ctrl;
 
-I don't think there's anything else that needs a similar assertion, but
-I'll check for sure and update next version.
+Normally the adjust_link callback you configure the hardware with the
+result of pause negotiation.
 
-Vivian "dramforever" Wang
+> +/* Called when net interface is brought up. */
+> +static int emac_open(struct net_device *ndev)
+> +{
+> +	struct emac_priv *priv = netdev_priv(ndev);
+> +	struct device *dev = &priv->pdev->dev;
+> +
+> +	int ret;
+
+Extra blank line.
 
 
-> 	Andrew
+    Andrew
 
+---
+pw-bot: cr
