@@ -1,26 +1,26 @@
 Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF235A95C
-	for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 02:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1452818DB1C
+	for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 02:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754964201; cv=none; b=tMsH+AV+HY0yT1ZJM9fyhwur70vYYdoF8vG8rqwpY5MJBAZScyMrQaV1ck9ZzXyXstuJTJzgKeJZcAMXRn9d7bXLrc30YY4MaaiXqitMbHQXb6V7ALPsKS4NWaG8iKH+mgEkKxnL1Pd4+OdH/FigYorWj1VRFsJgOyONekm9OEw=
+	t=1754964202; cv=none; b=hJwye4peoKnVw8BeS1/lKi6Sxl+Jn759eX5SYMPLkncKJHyoA3PnhSiXFx7OQ3hnO525qJDQVVrcBJ/9y6T7FdbS/Yt9hQYhZRagHjK3vX5dANTg4nRjvVgxmUPO/vomMFIKyhyxatnDOiKKl9KHVaqxMihWjywvfiRdj5Ga6tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754964201; c=relaxed/simple;
-	bh=49DBKkptDFzzA2ZrfYvNanOnxBOu5JYgjj8zU6d4Jvg=;
+	s=arc-20240116; t=1754964202; c=relaxed/simple;
+	bh=gbJQUDfhYNuzMyg9V7Xnry9ekowiqrwEd21V4K3FBtw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CEbDB/nAe63/xuHqDCYCLQpIwQ6dMtOQAQ0jj3djNGt+mCvz6SUu66Avzsg4pNM9mEgTnYRCSfBxPO1HBmxT2sRNPpBBau4DWbaKe3fRwsWyc1M9TyLS+qGmBLlcwYE+I+/B/6kq7CCR9VuA0WyUBXK8V4Q/5hvlSCxu/Zrh/gc=
+	 In-Reply-To:To:Cc; b=eN/jzXzGBMmY2YCi6ie6p4+fCGyW1SIXlIfOZLfy2d0A7ttpf8XaDe79Hj9KAbTfqf4ta6ZRNai7hSGlRSENL5vr+xinqpWyPAiCbJVBYpmI/llPMLgL/Dpt5tumhlbURKp/al1yysHcZlCoxdx/miTz7NTLMHBIlugPIV0yD4U=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from [127.0.0.2] (unknown [114.241.87.235])
-	by APP-03 (Coremail) with SMTP id rQCowAB3DH7LoJpoRIQaCw--.31870S7;
-	Tue, 12 Aug 2025 10:02:54 +0800 (CST)
+	by APP-03 (Coremail) with SMTP id rQCowAB3DH7LoJpoRIQaCw--.31870S6;
+	Tue, 12 Aug 2025 10:02:53 +0800 (CST)
 From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Tue, 12 Aug 2025 10:02:21 +0800
-Subject: [PATCH net-next v5 5/5] riscv: dts: spacemit: Add Ethernet support
- for Jupiter
+Date: Tue, 12 Aug 2025 10:02:20 +0800
+Subject: [PATCH net-next v5 4/5] riscv: dts: spacemit: Add Ethernet support
+ for BPI-F3
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -29,7 +29,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250812-net-k1-emac-v5-5-dd17c4905f49@iscas.ac.cn>
+Message-Id: <20250812-net-k1-emac-v5-4-dd17c4905f49@iscas.ac.cn>
 References: <20250812-net-k1-emac-v5-0-dd17c4905f49@iscas.ac.cn>
 In-Reply-To: <20250812-net-k1-emac-v5-0-dd17c4905f49@iscas.ac.cn>
 To: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, 
@@ -48,10 +48,10 @@ Cc: Vivian Wang <uwu@dram.page>,
  devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-CM-TRANSID:rQCowAB3DH7LoJpoRIQaCw--.31870S7
-X-Coremail-Antispam: 1UD129KBjvJXoW7Kw43Gw1ftrWfAF43Cr45Jrb_yoW8WrW7pa
-	y3CFsaqFZrCr1fKw43Zr9F9r13Ga95GrWkC3y3uF1rJ3yIvFZ0vw1rtw17tr1DGrW5X34Y
-	vr10yFyxurnFkw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID:rQCowAB3DH7LoJpoRIQaCw--.31870S6
+X-Coremail-Antispam: 1UD129KBjvJXoW7Ary5JF45JFW8Xr1kAw4fZrb_yoW8WrWDp3
+	yakFs3urWDGr4Skw43Zr9F9r4fGa95XrWkC343uF1rJrWvvF90vw15Kwn7tr1DWrW5X345
+	Xr4xtFWj9r1qkw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
 	9KBjDU0xBIdaVrnRJUUUmq14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
 	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
 	kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
@@ -62,26 +62,26 @@ X-Coremail-Antispam: 1UD129KBjvJXoW7Kw43Gw1ftrWfAF43Cr45Jrb_yoW8WrW7pa
 	JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2
 	ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Y
 	z7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
-	AF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1l
+	AF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4l
 	IxAIcVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
 	1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIY
 	CTnIWIevJa73UjIFyTuYvjTRNdb1DUUUU
 X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Milk-V Jupiter uses an RGMII PHY for each port and uses GPIO for PHY
+Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
 reset.
 
 Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
 ---
- arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 46 +++++++++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 46 +++++++++++++++++++++++++
  1 file changed, 46 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-index 4483192141049caa201c093fb206b6134a064f42..c5933555c06b66f40e61fe2b9c159ba0770c2fa1 100644
---- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-@@ -20,6 +20,52 @@ chosen {
- 	};
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index fe22c747c5012fe56d42ac8a7efdbbdb694f31b6..15fa4a5ebd043f3fbb115d37e5a980c9b773a228 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -40,6 +40,52 @@ &emmc {
+ 	status = "okay";
  };
  
 +&eth0 {
