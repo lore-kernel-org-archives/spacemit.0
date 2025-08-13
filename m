@@ -1,91 +1,83 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9504321638A
-	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 02:45:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DEBBE65
+	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 03:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755053129; cv=none; b=KeJuHARccDz5JWEVP9ChW6gz/lxVinHSAhLisdDJroxpY/K+yNfOMOxzXrLlVxya+HLC7EudUi6L3wicXn652Kumr7GZodoNjLTGyKZnZpM/awb+9FQBLOn5aSglqUmcl5CETumeY+8VVqFXgFA83yYiLdrV3wooa4/AT3Ry/Qk=
+	t=1755054824; cv=none; b=q9w0cHXXsH2r5ChJ5uEAtRH4RfODnfdcmPshJZeUpc5ChO1pyjruZsaBvyC9SgyhDthWX8yljNz9Dg01kSZGE1y3e3te5IMuNnFgTE3P+BI6Fdxxp8XlZe2KqU7T56Y7LtDE2CBj3uOl34YF/6i8rkDXeiXD2bS3zbVGm+P7G5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755053129; c=relaxed/simple;
-	bh=D00Agu9o5lMwHglRF8JEmN9Mz2SwGM8gIpQ2brQAJHQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYy6ts6pKMku0Uusvsb9Dwws+K+UyiuVbW3r+2eUI3pWgvEHYx/yZGUKbhjN/HRFP/7mkCxpCLxEKvbbHIGNX8Tn8EEDJrunBeaMuk7aaYoJUdjp/U2L+xFIjD64J4KgpQ7JYT6RTAgZuGTj2iM3f1RYgJoAhSoVAXRpIMG45GY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=gHHB53g4; arc=none smtp.client-ip=209.85.166.177
+	s=arc-20240116; t=1755054824; c=relaxed/simple;
+	bh=4e3XC4i6uPEnWMRcXdvMk1P32JDvw0n2PeDK+VlwzBU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uxkfg6u4MQoMMqVq7lDtHjohcgHYgxCQY7XtCO0oWEtrssSiU6pSvmYuhzY1NG8BmXYFR7lf4UIG5hdN4t9XhLR3mzeU1sld6zOrhsyXMtBXIedR5xgkivBrQ6L94Ru1INHVZjJE8svpMxn4UeBkcy7+sUFvQPEt4v6/3vueTLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=Do3Rg/JS; arc=none smtp.client-ip=209.85.166.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="gHHB53g4"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3da73df6b6bso25688385ab.3
-        for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 19:45:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="Do3Rg/JS"
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3e55b170787so2614765ab.1
+        for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 20:13:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755053127; x=1755657927; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RmHcfUIrXFFWAxyqlPf+YQqXo4C+Q0QbA66Hg5xFlzs=;
-        b=gHHB53g4sSF2Ebqkhs7/I+eb8FBEGRachxuxu2xP4g7au4zAHTWsiVDh31HVL0XIXe
-         QrrNlGmr73C73Q/dE8vrAaOf86zadA1flF6OXBE5qn1/Sv3uem84neKmPC5WF85oo6v6
-         wSMhws0rpX77KSZuSLfSJMMpq6zamkUfN+szLjObD9sLnhe9rUWfNdxFchTSZ9TW7B++
-         LD1+NsTehx4Q6zBs/Uy8jA2u9D3Wy6WoUnWlUO4B71ov9HCBeiVVhP8I+t6HiUFM3YqB
-         SdU5Jb8YCZykE6wpT00QoAGQsZCJMCc74GW97LuoiMjtSu50R+K1Dnx1dgn+lVB1Hj/S
-         o/5A==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755054821; x=1755659621; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8PhVQGmNNzCiMu9pw3hx+9YH1Eu7sHoNmFIOK1HnGfI=;
+        b=Do3Rg/JSR936mwXMkywmd6wN1bRMdPTdmFBlStaKwL9w0yoAuvHbwplCqfQJMIybKe
+         mUR5btNhzN2fSfI46ubzaD9ORTK0rGFKPPIKa1rEgyOHQO4N3uo/Vs9198F3MOlkd/5a
+         zgV61BKiuWC8cTcj+/48fGCQd9uWcrwuIWUdugTjADocqplzlo9ew5kVzxHFDMdT92Br
+         DdInpKDU6aR8/aS8cnmNf5MqHqf3rKE8HY+05SHLH0sEfqkz+6+MiJ1jkTcCaCHBsgQ+
+         CWUIiZPZ5YLFOO6Z73HOIYtxj0H5siPxPdkyFzcf1J3m0+xGg23N6thzR3+25TjN8IJy
+         XM3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755053127; x=1755657927;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RmHcfUIrXFFWAxyqlPf+YQqXo4C+Q0QbA66Hg5xFlzs=;
-        b=M3Ftb74la+97gD36GQqzSLYs8jwCRWbHoSc9wJVnzLVgqPVcSjYn4TSIEWgZEZvdO4
-         8ckG23qTjQ/w9j9ADVZ8e61d/4arD0MHYuAsaj6c21SrM7Q1IU3cURd+Pz9q0Hk836k3
-         0W2av8SRmEYDjPN8ko5bxpwgniEFeFQNZvoz/24l0KMBHwgn6clV4jMGXcqceJoyg8f0
-         ox3V3+9yXVNg6GgEnuWTGYQV8PYErIh/GkN7QANAX6+k5Nii091izOnSdHVrnEKY8XrB
-         IiSl2gWvzoTczYdTFZbY9CRzVs31bx0ap+EShNP/7OiHjDpL3aKRR+g47pRgX/GcQCvd
-         0Kzw==
-X-Forwarded-Encrypted: i=1; AJvYcCWez8y4KlPtWE54DmjEEA9cHYIw+DzUAOF3selwG686aOcYyxzJDAUJqzxN24xUElwmLFzM2R1fww==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyeeqcoqO4vr9mH0JBfyVGjafV55YPlT0ELutIFgMgAKqJFvx8N
-	orNwLT0XSSF95zdU4bL4i9CTJ0NckOEveAdz7d1kYCWe1k8AizbrvIYOuptwZTZBRCM=
-X-Gm-Gg: ASbGncsLsBDSF83oqnqeV/c+ajgewVSk3jq1eHPSnBGi5/Y+NHWwTML4olOJrFNab/6
-	9TQ2f7JUSMvf1bstqKAq24KxgM0caeUYKd0V04P49YOMHGDSLDyVb0Wqa2u9QIMOhThkcY16p8Q
-	Fd4n9mVTlggnfU7Id4sdzoghYz8MaI+4mUBqnwL5svAB0VgkNSrnPcPIy5u5XFY1gkVXzDAjGFf
-	NA5H8DQ7+wMgBO22vHh2S4+K/1+MEtwOQ5GNQlkHXCMRSb1fwBhQrp+nPDz+y0fWQ6Jn/pZGRwk
-	h1ughKLxxXBlmKKqyXDPuZrkppkhS+tV/kq+aOfoGGotch5DAiDN1+ghl6irCxLMDJiNkmpEc3t
-	mxFm6qenL5R4y7fpzmFOgR7saYA4TyfOZrEf8/sjTdikNtXaRcxkovY3dzjyyrmNwwQ==
-X-Google-Smtp-Source: AGHT+IFoJ7UdDYgWZatV5u4GKDu3Y3U3FYyZUg9TQH+UAQsNUabAIk5nOGAMecrX5f7XD0yGFSpmTg==
-X-Received: by 2002:a05:6e02:170b:b0:3e5:504b:420c with SMTP id e9e14a558f8ab-3e5674a2d6amr25649635ab.18.1755053126723;
-        Tue, 12 Aug 2025 19:45:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755054821; x=1755659621;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8PhVQGmNNzCiMu9pw3hx+9YH1Eu7sHoNmFIOK1HnGfI=;
+        b=AcF5Or3yYBO0AbA6LC4yZxrTDKOLSIEz/9SgvhPV/QdJIZzeLzLGB5ZpGV83uFrxrz
+         5GZznMN5mNRbbJcg87gmV3ygrCgvQrxhQUBK+v4NBBFza3442/r3mkNGFHwGKpVwm4Bz
+         HF3oGxRz2xJoe5arx2g/U22ukL6b4vP5ul5WgKQeAP2E0i4U/oy4rURtx2nAEo6Oqao9
+         OZPbKJpKcxBSTglHgfrw/tpP7zzMpL5skykb3Eq9pboXWpoXck5dRABhoUPweexONB5f
+         AtBvMcHgHtceS8TlZjOE/Kja4zosdED108AhaW0qwxkpkKkY0OJb05En7/0kwV4tWbV/
+         AlqA==
+X-Forwarded-Encrypted: i=1; AJvYcCXdrdarhgYHd1PSOJsxwiawHG7A8/xIGXZUMC9BlAP+gVZFxoViK0P+a88p4Pj5fBjMsbCV4IrHkg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw3WFMrLb5mUNBMhJ7oyPY94T5dkc/C38szLISA/0EMpK7M6qDr
+	iqVIPgOgxU3NMtBZaMgXMf/Q4TSHQmnOqnUhdMooAGXFSux0ZpxmfxE6oSS7mm4YWL0=
+X-Gm-Gg: ASbGncupaFB1ViMsb0nKge9fTGeEL/7r9PuMCxdqg8Hy6RLzUYvf9mJJMQ2CUzU40hg
+	cCPdormg+Gh4l5pBOsu0ptNZyL3lEQ+ZoZRpzjzpZNmSrXeM82/B0u9XzF0pHgtKd9CGc2n+CYC
+	6yko2eyJ8scqjSLJmAc+IiS1ymtNSO9SP4wmnCrU1d6W08dq0WKCp56k1R2589nRVvAhhC1W2lF
+	LEVbcB6f3nm9kEv21A2v4UCgnPpVfDTJnTjySFdzQ4CXb4+GvCBGHFMekUXqf70UOqiqp4u7bD1
+	6pV5Hh1FJ732nBdmRmTTrSZkGU6bZKfrzjv2OJSv7H8j1uen8KnzB+3i1an7AOqORTyttURnpEL
+	ikcPKG9BKZdk8z92unH7XMYQgoXn79+tGcY7a2Q/pFAD4lWXL0DHBR9jgFsW3PWU2gQ==
+X-Google-Smtp-Source: AGHT+IHJ3cV6K51nVGXbggkk4n0mggTrNvjqK58YjsUKI/uGamOMw1V+7ccv0fj3Is/jMTtEld3VjA==
+X-Received: by 2002:a92:ca07:0:b0:3e5:55b7:1eb5 with SMTP id e9e14a558f8ab-3e5685ab4f6mr13673995ab.11.1755054821496;
+        Tue, 12 Aug 2025 20:13:41 -0700 (PDT)
 Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae9bcfbf6sm3430829173.54.2025.08.12.19.45.24
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae9bcfecbsm3616330173.62.2025.08.12.20.13.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 19:45:26 -0700 (PDT)
+        Tue, 12 Aug 2025 20:13:41 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
-To: lee@kernel.org,
-	lgirdwood@gmail.com,
-	broonie@kernel.org,
-	alexandre.belloni@bootlin.com,
-	robh@kernel.org,
+To: robh@kernel.org,
 	krzk+dt@kernel.org,
-	conor+dt@kernel.org
-Cc: mat.jonczyk@o2.pl,
-	dlan@gentoo.org,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	linux.amoon@gmail.com,
-	troymitchell988@gmail.com,
-	guodong@riscstar.com,
-	linux-rtc@vger.kernel.org,
+	conor+dt@kernel.org,
+	gregkh@linuxfoundation.org,
+	jirislaby@kernel.org
+Cc: dlan@gentoo.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	lkundrak@v3.sk,
 	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+	linux-serial@vger.kernel.org,
 	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v12 7/7] riscv: dts: spacemit: define regulator constraints
-Date: Tue, 12 Aug 2025 21:45:08 -0500
-Message-ID: <20250813024509.2325988-8-elder@riscstar.com>
+	linux-mediatek@lists.infradead.org,
+	linux-riscv@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH v2] dt-bindings: serial: 8250: allow "main" and "uart" as clock names
+Date: Tue, 12 Aug 2025 22:13:35 -0500
+Message-ID: <20250813031338.2328392-1-elder@riscstar.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250813024509.2325988-1-elder@riscstar.com>
-References: <20250813024509.2325988-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -94,129 +86,68 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Define basic constraints for the regulators in the SpacemiT P1 PMIC,
-as implemented in the Banana Pi BPI-F3.
+There are two compatible strings defined in "8250.yaml" that require
+two clocks to be specified, along with their names:
+  - "spacemit,k1-uart", used in "spacemit/k1.dtsi"
+  - "nxp,lpc1850-uart", used in "lpc/lpc18xx.dtsi"
 
+When only one clock is used, the name is not required.  However there
+are two places that do specify a name:
+  - In "mediatek/mt7623.dtsi", the clock for the "mediatek,mtk-btif"
+    compatible serial device is named "main"
+  - In "qca/ar9132.dtsi", the clock for the "ns8250" compatible
+    serial device is named "uart"
+
+In commit d2db0d7815444 ("dt-bindings: serial: 8250: allow clock
+'uartclk' and 'reg' for nxp,lpc1850-uart"), Frank Li added the
+restriction that two named clocks be used for the NXP platform
+mentioned above.
+
+Change that logic, so that an additional condition for (only) the
+SpacemiT platform similarly restricts the two clocks to have the
+names "core" and "bus".
+
+Finally, add "main" and "uart" as allowed names when a single clock is
+specified.
+
+Fixes: 2c0594f9f0629 ("dt-bindings: serial: 8250: support an optional second clock")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202507160314.wrC51lXX-lkp@intel.com/
 Signed-off-by: Alex Elder <elder@riscstar.com>
 ---
- .../boot/dts/spacemit/k1-bananapi-f3.dts      | 104 ++++++++++++++++++
- 1 file changed, 104 insertions(+)
+ Documentation/devicetree/bindings/serial/8250.yaml | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index a11a60b9f369b..a9a2596a94e89 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -68,6 +68,110 @@ pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
- 		interrupts = <64>;
-+		vin-supply = <&reg_vcc_4v>;
-+
-+		regulators {
-+			buck1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3300000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			aldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			aldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			dldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo7 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+		};
- 	};
- };
- 
+diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
+index e46bee8d25bf0..0a05a1647b5cc 100644
+--- a/Documentation/devicetree/bindings/serial/8250.yaml
++++ b/Documentation/devicetree/bindings/serial/8250.yaml
+@@ -60,7 +60,12 @@ allOf:
+           items:
+             - const: uartclk
+             - const: reg
+-    else:
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: spacemit,k1-uart
++    then:
+       properties:
+         clock-names:
+           items:
+@@ -162,6 +167,9 @@ properties:
+     minItems: 1
+     maxItems: 2
+     oneOf:
++      - enum:
++          - main
++          - uart
+       - items:
+           - const: core
+           - const: bus
+
+base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
 -- 
 2.48.1
 
