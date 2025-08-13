@@ -1,62 +1,63 @@
-Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979FB1DCB09
-	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 02:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6099327472
+	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 02:45:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755053116; cv=none; b=K3epAci5PJGLadFgwAYbt0Yj8dQwlI9Q5bZvDfgaKe0ydKqDJWBDG0w8RAzAyMGUJ8R36y0ff+TM0OY46rnG9hNBsjrT81OxtG+k6PnmgDVPfodbhAmyuKch0VAPO3awISHTyGlqubz3mVjLjNQTIGVrVK7lqYrTluDkL5TR4TU=
+	t=1755053118; cv=none; b=WTuOZLDdIUSvMSED2AlgRKKN/tQvxhcdbKNeu8/QQH6TTK+s7byILTy3q5xk4X12nzcMduvYjObEw45H/YXQuLT6ji3oPWqv/BX0ktQ2C1TaiT38tcXHJ0b6kx2WuigWmbcTT6lav32EWQ5n03JBx8iBjO1+2hGdGbxHgvAmwYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755053116; c=relaxed/simple;
-	bh=qigzO2DTvwyXcMLvudEMT153tkZ+VKdFAQ3TY4DaMas=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Xt6elQyk8wV75aQ6ehntiaCrKoKSZE2N/c9w6oa7rXHdt1iRvcStuT2R0Xvpl+s5oZ5Gf5G5EBqpBxYF8NoSFT65HTzHYBFLB4zkdKH2HkYtWoDoZK84VfCaogYO/zvPIqvfVux/VtmYp2G+VL6daqb1Ubw6HdciT96E+ZsehQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=NOL8A/XW; arc=none smtp.client-ip=209.85.166.170
+	s=arc-20240116; t=1755053118; c=relaxed/simple;
+	bh=f3e7VDZ5RpctNbfj+dyIcOXKfTplNtROBxfFMgGp3q0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dpA+w9G7OFXCY9ymWSiv2Jmy8cHBfqZV27cN0ga1XTma8qcSI0cbBd1sA/oAVOs5Xr/bch1j4Rf9ejTbChSCSFUfTfGn2ZMwaUN5WMM7uEjrdFcB2O0FUq0XA4F9f6TkQcfHYPv+alSgnnpvrJ71XnGws6rvdrsRDno3qme12ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=usoUXOUF; arc=none smtp.client-ip=209.85.166.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="NOL8A/XW"
-Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-3e5664c0271so1619105ab.1
-        for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 19:45:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="usoUXOUF"
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3da73df6b6bso25687895ab.3
+        for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 19:45:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755053114; x=1755657914; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=niKBP2EZ19X+wqMs4ZG9wJKfN7oQpwL1MM9OL7zTge0=;
-        b=NOL8A/XWUBYc9dGVuAFNMcKNib/HigOgoE7I+76UdU4ObPd/hMo19RjHbouW1EXWpf
-         foiJ+zCTmZ08ijrKs9Lrf47wkmB49CzZ6HEwols2X4BXJGVwVS+WtMz8Ylmd1S9+4rUq
-         9ooQjgtJeNzkj0huuqSKMCdeAao7rB/qvQWpoEVWg75nJtlgZTQqZBNTMPLJTT9ymRIZ
-         dKdC+7AHV1K8j3J7fALVe1BAnl8MChvfgX5kEDjYYju7NP+1J6E1zvNW2Zf21Jnjg2hc
-         8JmREHicEa6hqc3BSePTXh4b4qC2qo03XUZiz3jWb4PiTfgSSYss6R7eQtlJ1NnCkyzF
-         qldQ==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755053115; x=1755657915; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ek2s2DUqL/jgDZvOvv6Rjx1Dp3m/erc1mrYIyBeINSk=;
+        b=usoUXOUFBrm3LMkYTGADpCcpEtzupQ6+QVqZUY5mym4BMAA5EUHj4eBQ11LYaMldYA
+         n0HcIztesPiMZ2x086DVhaCWNpGm0E3POb6ayH4FU894xEZ556JFGQLG5Z/9jpoCL7F0
+         2DwcjDAMqsOLP1IbhVbMu92IfKRuYJX/41TwXLVZCsNp6snqo1PJZUqy14S5IOAwKgXx
+         px+mLQJ0rphNH43X4egtUUyCFQa0meBdhaugWDe5Wx3KelCsYNS6PvYgIiM6Rjr/zVAn
+         LsuQW76KK5U7K0Id03bb+i4uoBoajaFMdXKE/V33RQu2VelP8bSYvojlXGC3EgLRFULX
+         /CQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755053114; x=1755657914;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=niKBP2EZ19X+wqMs4ZG9wJKfN7oQpwL1MM9OL7zTge0=;
-        b=u+GAvfRd3rmDUKQLMgpc8FWKSHE2qsh/2U0SBEIqRjPqo5hZ06nTUqR1iBYeNGlysG
-         yV5VkpELKPYLs94hFU1uFK18w4Cmj86wdBxrmFcGFjMloRWAxCOddltPWRm9kpnnhbGN
-         FNG8iuLZvSh4suPmtBChFmdkXfV9X33B94fR7s4NKyDhWUfxqEP56DgEedUxqnnrUaFh
-         gv0tbbR0T7GeOFuYyg/PwFWElpLP8bb+23kNsvaZKyKLvEABk3ey9ajcJmsCxsNHisTB
-         BtVYNDgWPpumGNfeBNnObbDkj3TGPeq8J9PfosxLP/YXdsOBKZq0E88oiFza3kx20e+N
-         vzGg==
-X-Forwarded-Encrypted: i=1; AJvYcCV8/sGBPKX2TxiEscQ4XP5tTu0vbtM9SJSsb9+StnS0ff1Ieh2eB91OvqQS+mY1U6W+VdJfdnM7Ng==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyIjHkDe0DPtBm8DDaBpMsOCsnuOXaA74PO1ejcwLgeK5tKJ/iM
-	56XqrdVjpCssPFZRibdT5v4cPCgnwYzuEz3jcwKHyNOJndLmCIcBtw3iUJc6TG4pVW0=
-X-Gm-Gg: ASbGncsGd0aNSHA7oLZ022QKJSxqRfZ7nbmhyHj4CXNU67KzWymHohPNHbr89DZtq8F
-	ZgwL+RZVDZwdDPFC3Z4aZzRBGmuaPNNzoJgE1hJUg/YhyzlF8+fV2phmE/go016feWw2L9wYkuK
-	N6MShLPx9f5v+5vq7iVphiM3kn55O8PS1bv+jySzZ11dtGmZDo7RjZPNvVnx/7l3qore7pqP/fL
-	AGP3sv/qQ0tpA01r3uekjr9NWe/oJdOIFQN20k3TmurF8MWHhT4g9nTfpBY2K9lmEvI2C1i6QEY
-	5HZ54vFF08B3X6n/rcIA0PbcxUQgWUKavhlYfBAe+og+2HahfWvHKbcKMS23YMIi0Tamm/uLgd6
-	vtjVIOReyA3vW8sFN8nTHgv2R3SE245QxH6NvZ4C6YwRCDKXN27l/GKde0y/4clmJWtDD8aSEM1
-	GA
-X-Google-Smtp-Source: AGHT+IEBZwyeOzbbOcVhNNK5J1cGS+53cBPTwwwfowqlesyNWISPovkwp31RGRTV3tyrIRkYbuJPkg==
-X-Received: by 2002:a05:6e02:19cd:b0:3e3:b3d0:26cf with SMTP id e9e14a558f8ab-3e5685aa5bcmr15459295ab.10.1755053113531;
-        Tue, 12 Aug 2025 19:45:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755053115; x=1755657915;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ek2s2DUqL/jgDZvOvv6Rjx1Dp3m/erc1mrYIyBeINSk=;
+        b=xR6b99T913ngRjQ6+IbI/pzzOi9fEPcw/ukLBPUEQz/B1XiWpOCwvZzG627Oa3DoxX
+         9No+1yO6k3KgW2IUZVtV3Pm6902iO2eJRRfYHzzo2MZvuvCYDx5jKGA+ykDJIlu+FCoN
+         aCe9rObsDUxQhQSqc0VpQtlukKg/ClvdTaoFy0dSm6a5PcVcrrmXtFflNu1JsMEW692v
+         pHB9lwltzRjdoEBVfsnBBZ2l1s8peLEMUf8ATM/eZ/I+8dWWG4TfyXLqa51hSn07O4B0
+         4BASS0HIRbUDozOxdKiXWofo//2hk8KBVjfaiMnWnxRSwA2xwCUKTbruBnwqKOdqUOR3
+         LLsA==
+X-Forwarded-Encrypted: i=1; AJvYcCUfw37D38fOXfFuv2qssubpLNapa+/d0CO/SH+9ATBfCgbNQmASZyr65f8s8Pju8ejNdkmFbVIjgw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy4L6KpTN/hDTjwaqzCmWgPfwoOG1+jZFSZm0iHqOnn0oQZX9ZX
+	+KffRIrCeH5ADfEKIV2gvnaoJYZGiLyDP+VUyyTRplmkbHLJSFdkC4RDjLW60ntJRxs=
+X-Gm-Gg: ASbGncvOHIesIEfzmjf3fN04Zcvltdqm8Od2Wrg8cb3KD/+bqIRXy+TusVArSlsMq0Q
+	XLKrusYpk1QFuIKTCLo5/wI8Svd+KFmAr4Ma+o9zb21M+Loxb0KnZftbS98ZlUTtZLkd32x2sjB
+	W/wThXAeM2FFnusB8ClLpyBpHRsp7LpXrwXwy1IFrE2nXpxp7jXvXFTBBAn8rruRI2CZgP+hwiw
+	Vt6QO+M1AcTypJmRym8tUZrNkjqFDngTy3A004hKPGx4dj6vAADjaj7I4n4mWJNxF6/kE4Ffi/s
+	fHH4av+XZy3vOpcWIc57Cpl5+slBFgiqaD1ioIczIzLVa0XjdazMkb54rhhxkJt9gESvPuTCni3
+	Eu1x6XBvnseP22WFrta3ERBvD1yXochTKJXim9UuPxeq2/8jAViOZTMK6BppwPr31Ag==
+X-Google-Smtp-Source: AGHT+IEIj1vS5MVYprDokhwZ6AIsmFX7Hyk7OB0z1ohQkNDbaDoool+pCm1v0mkiT6rf8e612agvcw==
+X-Received: by 2002:a92:cd86:0:b0:3e5:40e5:bade with SMTP id e9e14a558f8ab-3e567367d43mr30922625ab.3.1755053115415;
+        Tue, 12 Aug 2025 19:45:15 -0700 (PDT)
 Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae9bcfbf6sm3430829173.54.2025.08.12.19.45.11
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae9bcfbf6sm3430829173.54.2025.08.12.19.45.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 19:45:13 -0700 (PDT)
+        Tue, 12 Aug 2025 19:45:14 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
 To: lee@kernel.org,
 	lgirdwood@gmail.com,
@@ -79,10 +80,12 @@ Cc: mat.jonczyk@o2.pl,
 	linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v12 0/7] spacemit: introduce P1 PMIC support
-Date: Tue, 12 Aug 2025 21:45:01 -0500
-Message-ID: <20250813024509.2325988-1-elder@riscstar.com>
+Subject: [PATCH v12 1/7] dt-bindings: mfd: add support the SpacemiT P1 PMIC
+Date: Tue, 12 Aug 2025 21:45:02 -0500
+Message-ID: <20250813024509.2325988-2-elder@riscstar.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250813024509.2325988-1-elder@riscstar.com>
+References: <20250813024509.2325988-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -91,89 +94,108 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The SpacemiT P1 is an I2C-controlled PMIC that implements 6 buck
-converters and 12 LDOs.  It contains a load switch, ADC channels,
-GPIOs, a real-time clock, and a watchdog timer.
+Enable the SpacemiT P1, which is an I2C-controlled PMIC.  Initially
+only the RTC and regulators will be supported.
 
-This series introduces a multifunction driver for the P1 PMIC as
-well as drivers for its regulators and RTC.
-
-The content of this version is identical to the previous one.
-It has simply been rebased onto Linux v6.17-rc1.
-
-					-Alex
-
-This series is available here:
-  https://github.com/riscstar/linux/tree/outgoing/pmic-v12
-
-Between version 11 and version 12:
-  - Simple rebase
-
-Here is version 11 of this series:
-  https://lore.kernel.org/lkml/20250803025812.373029-1-elder@riscstar.com/
-
-Between version 10 and version 11:
-  - Abandon trying to implement a simple_mfd_data->max_register field
-  - Fix a missing dependency pointed out by the kernel test robot
-
-Here is version 10 of this series:
-  https://lore.kernel.org/lkml/20250726131003.3137282-1-elder@riscstar.com/
-
-Between version 9 and version 10:
-  - The #address-cells and #size-cells for the i2c8 DTS node
-    were moved into its primary definition in "k1.dtsi".
-  - The interrupts property for the i2c8 DTS node was moved
-    below its clock-related properties.
-  - The status property in the pmic@41 DTS node was dropped.
-  - The function that provides the regmap_config structure
-    to use was reworked a bit.
-  - A new function was added to free the regmap_config
-    structure after it's no longer needed.
-
-Here is version 9 of this series:
-  https://lore.kernel.org/lkml/20250724202511.499288-1-elder@riscstar.com/
-
-Between version 8 and version 9:
-  - The max_config value is always used if it is provided with the
-    simple_mfd_data structure.
-  - The regmap_config structure used is allocated dynamically if
-    necessary; otherwise regmap_config_8r_8v is used.
-  - A small duplicated comment is removed
-
-Here is version 8 of this series:
-  https://lore.kernel.org/lkml/20250710175107.1280221-1-elder@riscstar.com/
-
-More complete history is available at that link.
-
-
-Alex Elder (7):
-  dt-bindings: mfd: add support the SpacemiT P1 PMIC
-  mfd: simple-mfd-i2c: add SpacemiT P1 support
-  regulator: spacemit: support SpacemiT P1 regulators
-  rtc: spacemit: support the SpacemiT P1 RTC
-  riscv: dts: spacemit: enable the i2c8 adapter
-  riscv: dts: spacemit: define fixed regulators
-  riscv: dts: spacemit: define regulator constraints
-
- .../devicetree/bindings/mfd/spacemit,p1.yaml  |  86 +++++++++
- .../boot/dts/spacemit/k1-bananapi-f3.dts      | 135 ++++++++++++++
- arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |   7 +
- arch/riscv/boot/dts/spacemit/k1.dtsi          |  13 ++
- drivers/mfd/Kconfig                           |  11 ++
- drivers/mfd/simple-mfd-i2c.c                  |  18 ++
- drivers/regulator/Kconfig                     |  13 ++
- drivers/regulator/Makefile                    |   1 +
- drivers/regulator/spacemit-p1.c               | 157 ++++++++++++++++
- drivers/rtc/Kconfig                           |  10 ++
- drivers/rtc/Makefile                          |   1 +
- drivers/rtc/rtc-spacemit-p1.c                 | 167 ++++++++++++++++++
- 12 files changed, 619 insertions(+)
+Signed-off-by: Alex Elder <elder@riscstar.com>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+---
+ .../devicetree/bindings/mfd/spacemit,p1.yaml  | 86 +++++++++++++++++++
+ 1 file changed, 86 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
- create mode 100644 drivers/regulator/spacemit-p1.c
- create mode 100644 drivers/rtc/rtc-spacemit-p1.c
 
-
-base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+diff --git a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+new file mode 100644
+index 0000000000000..5cc34d4934b54
+--- /dev/null
++++ b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+@@ -0,0 +1,86 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/mfd/spacemit,p1.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: SpacemiT P1 Power Management Integrated Circuit
++
++maintainers:
++  - Troy Mitchell <troymitchell988@gmail.com>
++
++description:
++  P1 is an I2C-controlled PMIC produced by SpacemiT.  It implements six
++  constant-on-time buck converters and twelve low-dropout regulators.
++  It also contains a load switch, watchdog timer, real-time clock, eight
++  12-bit ADC channels, and six GPIOs.  Additional details are available
++  in the "Power Stone/P1" section at the following link.
++    https://developer.spacemit.com/documentation
++
++properties:
++  compatible:
++    const: spacemit,p1
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  vin-supply:
++    description: Input supply phandle.
++
++  regulators:
++    type: object
++
++    patternProperties:
++      "^(buck[1-6]|aldo[1-4]|dldo[1-7])$":
++        type: object
++        $ref: /schemas/regulator/regulator.yaml#
++        unevaluatedProperties: false
++
++    unevaluatedProperties: false
++
++required:
++  - compatible
++  - reg
++  - interrupts
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    i2c {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        pmic@41 {
++            compatible = "spacemit,p1";
++            reg = <0x41>;
++            interrupts = <64>;
++
++            regulators {
++                buck1 {
++                    regulator-name = "buck1";
++                    regulator-min-microvolt = <500000>;
++                    regulator-max-microvolt = <3450000>;
++                    regulator-ramp-delay = <5000>;
++                    regulator-always-on;
++                };
++
++                aldo1 {
++                    regulator-name = "aldo1";
++                    regulator-min-microvolt = <500000>;
++                    regulator-max-microvolt = <3400000>;
++                    regulator-boot-on;
++                };
++
++                dldo1 {
++                    regulator-name = "dldo1";
++                    regulator-min-microvolt = <500000>;
++                    regulator-max-microvolt = <3400000>;
++                    regulator-boot-on;
++                };
++            };
++        };
++    };
 -- 
 2.48.1
 
