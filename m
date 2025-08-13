@@ -1,65 +1,66 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953BE2253F3
-	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 12:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0882E613D
+	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 13:34:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755088624; cv=none; b=ITvH8I83Hzn8684YS8g7ADSLwEqI+SR3jeg9UKtC1zsbXE3uZo7KplIKjtQtaqdP2HEYaE6y9dhLq3bHRjZnjxlrQodakPWLWCDieyUlzmzB8n9qRGaR1M3df/93KP11ve2Ul8Oq2mdLLG1delIz1ifLeHfgmrEgRFYrL5eODfI=
+	t=1755092061; cv=none; b=AGXfu3Aebh6mpTaWpm4FIndmCqVTdtD145JmXNqBIY6Jrv9JOCTvn8RR6cVUhfkEvkxS5wm6uzRvmKUUYDpM0936/Iz7EcRwsmX6kSFnch+a7FxZlp0aPEgjQyZqTxuEbdRJcRs/nGD8CDJs3JO1/dWwd2UQOLUxpaIE8GmL7yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755088624; c=relaxed/simple;
-	bh=Dio7h+uqlbgU4biS+L4BkekXjii6MxHsEIflkjyhoZ4=;
+	s=arc-20240116; t=1755092061; c=relaxed/simple;
+	bh=fNSC8w8HU0S89hQRnFJWFWREK6fXZjS72GfrRn4HArw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uC+mqOsrVTJzcLAe1QSRwHp8TUiwHpQpKtQFJBbVldSkFyhh3opSh9HQBp0i8S+5/vefCOQQQIrG0W4Vtm3LiPVGILaRSnIv5B4Mlr0hL91fhBdM8BFCouO/l0l4cs6os7naWqMSMAwsC7cVgvrqN/8pidzXks07v+iiF3Vfo/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=eHNxe29g; arc=none smtp.client-ip=209.85.166.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	 In-Reply-To:Content-Type; b=bRwNNKcTVT0PmwwvrEvuMdCts+GwcxPaamIbl/wCChEc07KIEn8LtoFsG1CJn4pgncIlnve5ahh82VWHymzBqnxFCqfL7tNmJeIoblCdcNV7ttZ/xHAd8tw67rT4bMnYBI38DKf8tlfs919XgXr53/5MAKgiIObgxyGZe5iqb9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=UUIpmZp3; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="eHNxe29g"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-87999c368e9so555064339f.0
-        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 05:37:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="UUIpmZp3"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3b792b0b829so6607158f8f.3
+        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 06:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755088622; x=1755693422; darn=lists.linux.dev;
+        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1755092056; x=1755696856; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QJSNE7TDIwDdVBJivdzquzFfOdkEAZ/NqbU/Si8oVJo=;
-        b=eHNxe29gE4I8QTg5/kKoP0z+PzYw4AhwcE0hXGCpCtIos0RhEwGqKuLzEFhsXShMLo
-         lSXDezpgTWn5HBLI3AxatBTy4HTWaaDkEuZjffH05s0G+uoMY7UrQn+s/ONs7rg/JzRB
-         3CMs/1TLkos0G0ZE9a0Z3eVR7Jmqq5JxWhrETdlDtc8v45gtUTW9+ASf7kFQc8M7/amJ
-         gPYMC9CIWNahS012xLz+LPInL2CtN4ESj8eRcXTiPZYAYnJ6/wyTWVyoF3GegRCqarY3
-         3SCAgQBcaeYZR5KsAHRd+8Qu/EJCt0QHAAPZHNhYgTtppSPt6GUFdoS4r597Kf47kOXB
-         ueXQ==
+        bh=fNSC8w8HU0S89hQRnFJWFWREK6fXZjS72GfrRn4HArw=;
+        b=UUIpmZp3LC8MqkkNH9fX2GTGofFsPqzzs9oKJTKO2OpSxSE05omY6CR9IL6XtGEPo+
+         qfUz/d0KLrhHv/DGglurL8Ryvu/QSXEsPW77jDkXzZUvvEXEhD7Cxb4bIi8SsXVTb63n
+         Egs6w4s8f7qPQD262sVU9drKHzJbaebboIa5udDoohwbjSUDObPOB6ostiAseifw86Fk
+         B5pQqDNs+lK06sNcdCAKHzZnxlU7O5N4R6dfmE+//wkAYYEu5z/seqfpEY0Ib55nyRBu
+         yhhE2/6g3LK5mNQ69XM/1HpjzUW6vl6gBKslrYx1ZW2K7riwpJks+JofIMKQV6X0MCjD
+         sxCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755088622; x=1755693422;
+        d=1e100.net; s=20230601; t=1755092056; x=1755696856;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QJSNE7TDIwDdVBJivdzquzFfOdkEAZ/NqbU/Si8oVJo=;
-        b=UX0sPZ8Ngo9mhFbMLVT4ZWFU3Rsv4SYihRV481WgwSw34H7qh0LsHPihCqG9U9agdt
-         P1MgaQvWLMiKt2PAOS5L38kSvgdmO3DnJCVtxHspcDbYhdaVwyz2ZEnySbQlrQmMa7pz
-         A/h5goui7Gm3IMf9C18okY0Wpel8/6+trzNxJcb24ni2Zot1eblDFRQWCJEs2Scck4yx
-         T+BEMf8ClhGq2wk6Ud5nfRu1iDyjVe+9Ic/dZAJujALVtoYtxXUHm7KkGCaqvTiEoktF
-         P1G+uaBpTN2yB1WCTmu/UwIuoBhs0lmfrm6axkT1hSfbajBWlbF332W2i+QixmG+60Qo
-         tYgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXC39kXnLf5w/GtDfq+2Uf9e26h/na3ntKT4iyI7s92Vfd3PkJY9Ia2RWfUPiRFlR8wHoZiqzOoiA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyFRLPoxWwUzx0hPFFvwPJ+iMiSVDAJ8QkwV6rpkrkVdUigl7EZ
-	7KoiidW/LqmTRKCFzEXzOibAETdBp34WjdsFQG3dCuCcanyiso28/a0yN3w2PY92VYg=
-X-Gm-Gg: ASbGncssg9B1Nnga3eKcvYQl3QCDNxOj8u2DvY3WPSDuvcdXHhtt3yh4q8f72/RQmDJ
-	BfSJGiqNyhU4tX2F2rewkUI628kknBvx3+K42D3fXUGq9ciyukrezFDlWO1n5UdIsWtNat9W4jc
-	21d706WDMCjPrNQZjJrYqOa4U69tSHwvq60w3wMEP1qARAry64R0LItWv+83zHEqWPsj6iwALvk
-	/Cwa4hORX5DsSrolfS+vDEpi1kJVT3f0DH1l3QXzyIl0VmCloT5e1YyCB61kHDKctLm4JPHj0Gt
-	6fC9WxyLk4kfqxkq7sp3sFROIIc9hriJbbsxRvjXjDiiPCUtyt8xhV+3SZANl9+GY02YWxzWqYB
-	g61Izn301/fHbH0WqgXv90D+60Cof9Bn7WynIdXiKJ8JtqneIeMQpFN4aWop19L/FyQTqbrE9
-X-Google-Smtp-Source: AGHT+IFnwEFQtUPVw9g9mmFiyfGLoS5nlr8HAUmqQnFfYA2GdWoqbZqkoS/L9fICYJiWR+VCb+vYyQ==
-X-Received: by 2002:a05:6602:14d4:b0:881:7837:6058 with SMTP id ca18e2360f4ac-88429514720mr521566239f.0.1755088621539;
-        Wed, 13 Aug 2025 05:37:01 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-883f19c1475sm445898339f.29.2025.08.13.05.36.59
+        bh=fNSC8w8HU0S89hQRnFJWFWREK6fXZjS72GfrRn4HArw=;
+        b=p70GtWO6rLSC1g0TdLHR0nW4gvHSgLEWIKH/hmTNNtaME9F7fArlYrloTdT4oBcmWU
+         h3J9x5iXI3x5SXdgZtYVmDeR738laEzhot2vrxJtJrwCzgTIa/xtf5Qyxz+W9wP+PbGm
+         Rh0AVg/SAt6ED/ytqNkYRE4CcLvTy4iAV6cjlVbx98CEdHUQF8djVwMLezQiRQbvF6t/
+         HNXdGmiVO3f2A5WYsexFlEZz+fG0iJ57LxcStIlZVlvHjtq0ur8EsO3s207ufh4/cdJ0
+         kjN2ZlrizciIXU01qrOGW9PLnFw48esJCj67x9kl9muOMaVFqow30i78t7qZKcTBd62a
+         sfiw==
+X-Forwarded-Encrypted: i=1; AJvYcCVee7yx0AiAjNAV9uJ7Oze13+cE3cVxkvlf8mzVCyfiiKPgqsMMeMjR0LplQjMekaxXG1nebmFdBw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw4DmhFTrtgMLbmIxDL0HGRCwUP7YskAxsMIXqilxsFiOB0+0LH
+	6B13ol2AS5GUM+cxP7PxIZwgskqITvzAiGDNF26gH0Y/p4XDfMyqNgN7xbwb+UrSFTQ=
+X-Gm-Gg: ASbGnct4of2tbDYG5zRzxzpoS/+J7oLmDKzrODWyWA48lpxYxdya+xqKJUT3uHHNiaI
+	B5lFD/F3MZTzScFLJqgHad6bREdwi8QDZGIa7oxPWfhtSVJqQ2QBRIKy1JQi0Ja0OUD+FxD3SCq
+	zaIMiY4YuAxjf1Sl1SYM3gAudmLtVPuaEwhBH/8iB/QdN4WXiNn3bM33AQOnvJf8hlem71afMdj
+	N17/VeBJWdafGQFgTL2BJjWWtW/Z7zeRH2Df/xL0dUckWkKh8XliZp1GRP22iEks1DYP0cOSFIS
+	CJDWFzb9O5/7mkxLHp6LVg1ykO9jsSahNuYgIWhoEoKNmVs0qLdV1dwZseMuJZxaXdsyVJxhLk5
+	Uc6qS/dHU22YWjMFQ/Ge5jpEL+aAFv9pTWyECAxwi7+UIMJLayDRFci4sTfILt3b3nINVVsUlMC
+	ssQmRX9EAYufO6N+LV+BBd
+X-Google-Smtp-Source: AGHT+IGyWBRLcYyjmPdaFJ7RJMvGFJChrNnUkFexYqA+15BorH+hR4bUKBZZRC1EER2gmnrpcLdyVA==
+X-Received: by 2002:a05:6000:26c9:b0:3b8:ff3b:6437 with SMTP id ffacd0b85a97d-3b917c85890mr2243633f8f.0.1755092055765;
+        Wed, 13 Aug 2025 06:34:15 -0700 (PDT)
+Received: from ?IPV6:2a02:1807:2a00:3400:388a:2f48:ed4:7e0e? ([2a02:1807:2a00:3400:388a:2f48:ed4:7e0e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b8e0846777sm37944948f8f.48.2025.08.13.06.34.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Aug 2025 05:37:01 -0700 (PDT)
-Message-ID: <fd7ac07d-030c-41d6-94dd-da53b593f5ab@riscstar.com>
-Date: Wed, 13 Aug 2025 07:36:58 -0500
+        Wed, 13 Aug 2025 06:34:15 -0700 (PDT)
+Message-ID: <463dcfa3-152e-4a48-9821-debdc29c89b2@hammernet.be>
+Date: Wed, 13 Aug 2025 15:34:13 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -67,32 +68,43 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 1/7] dt-bindings: mfd: add support the SpacemiT P1
- PMIC
-To: Troy Mitchell <troymitchell988@gmail.com>
-Cc: lee@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
- alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, mat.jonczyk@o2.pl, dlan@gentoo.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, linux.amoon@gmail.com, guodong@riscstar.com,
- linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20250813024509.2325988-1-elder@riscstar.com>
- <20250813024509.2325988-2-elder@riscstar.com>
- <aJyC5q0X8mj1xbSB@troy-wujie14pro-arch>
+Subject: Re: [PATCH net-next v5 4/5] riscv: dts: spacemit: Add Ethernet
+ support for BPI-F3
+To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>,
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20250812-net-k1-emac-v5-0-dd17c4905f49@iscas.ac.cn>
+ <20250812-net-k1-emac-v5-4-dd17c4905f49@iscas.ac.cn>
 Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <aJyC5q0X8mj1xbSB@troy-wujie14pro-arch>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+In-Reply-To: <20250812-net-k1-emac-v5-4-dd17c4905f49@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 8/13/25 7:19 AM, Troy Mitchell wrote:
-> You can change it from this to my company email:
-> troy.mitchell@linux.spacemit.com
-> 
-> Acked-by: Troy Mitchell<troymitchell988@gmail.com>
-> 
->                  - Troy
 
-I will make this change before I do a final version.	-Alex
+
+On 8/12/25 04:02, Vivian Wang wrote:
+> Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
+> reset.
+>
+> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+>
+Tested on Banana Pi BPI-F3 and Orange Pi RV2. Verified SSH shell over eth0
+and eth1 interfaces, and basic UDP connectivity using iperf3. Thank you!
+
+Tested-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+
+Kind regards,
+Hendrik
