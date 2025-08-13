@@ -1,64 +1,64 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94302C0307
-	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 18:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F512D0C6E
+	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 18:47:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755110834; cv=none; b=sG2X8ttKgxZegSe+l7K6v/VDbK9Fub6nEU6r4WIHfywwOl73NF5z8xGb5ndLGOb4rSuSiiMF+et6b04qrhYVYc6pdHsvp1aXiYHrNsKMWKridNz4C7urfgh9+Ru9Vyh+QV8t5A3p4tky3OGULdhk/ehEb1frgyVZESWG7lwvUCs=
+	t=1755110835; cv=none; b=npDBrVeUHxRJpr9h93rVqUTSJriitRLnturFvFjc4Xx4hH0G8qEssfDElP5D8SOFHuNml4B3W56Mf5la4gFsQd/xroHlZNi258GgsTuvZpTSrMUDGRge6PW9KD+Up7nwCOqWeRofDspJr9GLZFT0dSXAaAfhxzuQJKEL7NACQas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755110834; c=relaxed/simple;
-	bh=ObVTQfTP6WmVdXDTlQq2ihRv1LL2FrZFdRYiGHsi+L4=;
+	s=arc-20240116; t=1755110835; c=relaxed/simple;
+	bh=I1Fbq3sRTWmHpHKq8gzA3D8g39oa/c4++9vGTDrE6ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ThbTXY+NW4hweBUzLPL+e+LzAaYhg0DgCQvaKzdI/m8rIaNmeamp69pwmVc0Mzz0dN7JQGCmsecLQec/oxSYR3O4I1kF1F8aby1wLi16Bu6HiDsA6eRbBBm+128taYPxVCrAe5R1IrQc+w0dWGf6r+tyF64Jr1zw4ahusvVh7Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ZPrqq3FC; arc=none smtp.client-ip=209.85.166.179
+	 MIME-Version; b=KmpE+/S9Up3O4fropwC/wAhBeIhN1xhbggoMGstM8GXCypnBSM8BMl/y8jtW0NhnNIz4yrimVJN8nwGjwwixu+297pibgfaJaRa0RXkkm4APruSPHfSFiPwNzGI2TZwwcMI76RMafyaUs1/JeEhM/MG0oUdikqkfBk8sr41o7fE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=j/msS0Pn; arc=none smtp.client-ip=209.85.167.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ZPrqq3FC"
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3e56ffcec58so1084075ab.1
-        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 11:47:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="j/msS0Pn"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-435de7dd94aso138448b6e.2
+        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 11:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755110831; x=1755715631; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755110833; x=1755715633; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3anfg9B6GDnUStv+H7P2Qqm8t3EB0LsOUKal4iU9hMY=;
-        b=ZPrqq3FCbjWwcQdeEAbebS0lfofW9T4O9hEpQqZC4OOkSBpKwBOd/ds7HLIxArF19J
-         DW9IlTxl4UZYI6aPzv6ydH2DWMp5ieP1xYh9rc6k5hVoyUm6r8hn0iTU1XW8XuaZrqIP
-         DyXN2jMh1yInllnadT+MhTMdrgp7538JysY7n0PNSiBRlyIoWCfhEvYxtVERi/Iwhpy7
-         GPxmyY+cSHD/2BjuDFbp1rxxdVuzIjmCl3uF0acoq/u3ue2Jl9E3yHrQsWj1ng8Ct2gk
-         Ot9pdJtzhjiZILT30ORcHBMQ780PhmVDRRXJu53O9QehaZ4VeS+doDzRPC4TZyCiuo7u
-         pOhw==
+        bh=g/fqC4nALQVMBj7bFUL2jEw1OtiREN8C4zl+rZu4SV8=;
+        b=j/msS0PnqG+8OkJ2GFIhECJvZotBjFYsWkBzUK1PiuZy+SOsITKsg3bd+jk5mcBJuS
+         hHElCXLgKDufgN4pzT8kqXxAxnUJioReG1HvIk0tkT2GigC+F5aH5MHLhDPfI6ZdYzT5
+         ZOXVkBfCILuXtnSgRj0oZU4dnI9aKPZa2wcwCD+zOP+/r1yx91ITyyXQTBWimPTsY5MX
+         W6H1G9blQFzHXBNJ8pqTnco/1UaZVa31wd0heqtKfLq5g8Ba/NRKy+hg0beVH+j8Z0K4
+         DPq6fd7RhCH1J+ZtsFc2V2JAuUavDF9xrrGA4YdZvCryRDCU+hJcl6Ait0o1QdZMurN6
+         LBqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755110831; x=1755715631;
+        d=1e100.net; s=20230601; t=1755110833; x=1755715633;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3anfg9B6GDnUStv+H7P2Qqm8t3EB0LsOUKal4iU9hMY=;
-        b=i7KQLOvFpF/RLtic8n9S9Rjtkup7BCYGci31Y1HUXz0At8dg/KuzM6zGH/5TAqIlBp
-         XTUWoEf2py/7sZ3dpnsBfqndoAJpXIeCKaCjCi5oYk/feUvoLHym1R3qJegv8nCvoIB/
-         9pD+t/A/hXaPMa+7Gm84Fm4XQBkZtoYGq8ycI5ungpjyzSS759whxKoeu6BJy3x1BJe0
-         uaV74bry4zaCNjlDzQCpWv+iZScGE5EeLzoJqApt1p0NSI4LBsUQo2+msVSeTCCtBhqp
-         JwP2UgWEFV5RLQQp1kYUniM4FqPM+D2iaXX8yT1NSzIh6BOnHs8wkCxiqOQ7DfNNFLdc
-         rAzA==
-X-Forwarded-Encrypted: i=1; AJvYcCWd+m89q1RWh0nowyn3jpHPbjwnU2lIsAL2/Sz2/6h1ruoqcpG4A7IzIrsYp9hJprwOvyQXhMTIrg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YykeBxqzQtrnIR0HDWNU0fMxG2RTthImRT26Gjl5xJYQBfHNJ6h
-	hP+IH7NJtDQMrgxDdJxjuS43ZeD+xVhkVJxagJD5r9VBIiH6dmYhqOkdASFfUP++tVw=
-X-Gm-Gg: ASbGncuPkioK7R/GdnJ52okvix9quh4GYofRWYjE7XwIqPdkJMx3qniPqjXeeRvDbWW
-	ZdSYhF8mE72uDTGOqKFiaih23jFDgHe/2WX3UbwhK/6NWnyaP/qsK7UbOYBmdNnVA4lu6tAoT5N
-	In03QgP9rcOs82tb2V31o37d2YiBwrvGK9eKWEcrVxNfkkFdxSfvQaiGqnl41JOS9tlG5vRJmRb
-	PYmM4e3dL8LVEOWIUR/jed1RQ6umzLCUdqHsJlEwYvD2vVq26YE1+VgwBpUC/iEBb0D6ruLiryx
-	lNV55uplbdVgSwctSUxYsKTelYs7J8EXr/xKKxSj+n/TJ/npE7WrPD1+AqVGw8oO/rlQyntO7Iw
-	na1Y06LhWnVf10NhjUBg8/9Wtk+TxTdK4/y1Ms7qKVANdELKt9N61of1mlPbLGKJt4g4eyp8hjr
-	qg
-X-Google-Smtp-Source: AGHT+IHqcfmnRrUjdAlNWmje55A9T53WMKx9lEOXpWePQCsQDSmAhiGvxZUCa4A2bLPkAxx42qtLRg==
-X-Received: by 2002:a92:c24e:0:b0:3e5:4a4c:2ed0 with SMTP id e9e14a558f8ab-3e570964fa7mr4127025ab.24.1755110830847;
-        Wed, 13 Aug 2025 11:47:10 -0700 (PDT)
+        bh=g/fqC4nALQVMBj7bFUL2jEw1OtiREN8C4zl+rZu4SV8=;
+        b=YCHT3ccPL6h4Ux6FOszTlMlg/oRO6a6fCsBMI8CfLAVy8Ev4Is41lJ9WKtXoBhaWZ5
+         s3MOexnf8aOTPklSlpF8tzEJ8ZBHch4vTtVY2rdL4hVsDdbliHnx21dVUxTtpqCuyuzM
+         swdP/enieIdr+TTPj5AtfMeL16Asw2+Gnc07V9o4CYb5+8xEXrxejuL5KJbp7uag/sfY
+         D9Yres+OlmqFnhonJq4CIIK3vO+f4Ph8FJ50qeTv7Aex9Gly5x/44hkRR51Ft77cJMg6
+         bqzxARG3gG/GphkU8LbsRMTH5O8uFsZD45k/hOU4sfE0JI+3Edio9eRtGKtDQhQk63mh
+         E+QQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUzYCm0QtwOqOICekx92kH/rwqiMKs3ZvbETElY6Br9wWzDthhXgfpkNTQoKNab0uw7+X1rY1qz2w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxIH5n7qVYar4MTYJc+OHpMT7oIpFj6nd1b7xRRU+8WuDsn6KPy
+	svQizikEnHT2OfSPlmxBht0sTXXR+4CKdPZNpAStqydEgnYjUVx++jrCd/HKmsaSpkc=
+X-Gm-Gg: ASbGncuxeVJdu5VIFWf6WmnVpOOB4uMPhTv65+qJ1Q9WYoENQGO/5ff4XESaqzPZsji
+	viLSDObNENeys9KXG2CttrEH0FVmzkASLi/mhqup9PecbwgaEhY0ld4kwO4ks5Rk42l4VdJRXnl
+	6j3OePS1nk8G1n0Nh/MNEYrSXVrLmocuxnnpQQ9ONM/ceO2JVNRMTlv3px1iJicy296RfrgQAPH
+	YhR/2VS1GlwfKRTAP3makVOpTR2OONwQZXDNEHZxvZb1j34CGl8m/S+B4ruHSf6F+PdXsY+1/HT
+	xmTqD4gky1Pa6eFG4EZz8RtuT6kwowr13gCzzB7AR6QJSdWkVUo1O2mGyrG5SiT+kdZiZMtQDLr
+	hj2z6376EbIJ1dAGFO4loqww8Ue8ULHAgB7ud3N4/PV+c8qRRiWQwgRrjJqJlb535zIQmw8zoaT
+	Ob
+X-Google-Smtp-Source: AGHT+IHF1n+ZhqP61SwoH204sSXJGnu+o0AKgjp6BGFXm/PCtUV8R3O/mmBermEKt/vAX0VIMTfJcg==
+X-Received: by 2002:a05:6808:7004:b0:435:6c1a:f3b with SMTP id 5614622812f47-435df6f2ce2mr177943b6e.14.1755110832896;
+        Wed, 13 Aug 2025 11:47:12 -0700 (PDT)
 Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae9bd89d7sm3933104173.59.2025.08.13.11.47.09
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae9bd89d7sm3933104173.59.2025.08.13.11.47.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Aug 2025 11:47:10 -0700 (PDT)
+        Wed, 13 Aug 2025 11:47:12 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
 To: robh@kernel.org,
 	krzk+dt@kernel.org,
@@ -90,9 +90,9 @@ Cc: dlan@gentoo.org,
 	spacemit@lists.linux.dev,
 	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/6] dt-bindings: phy: spacemit: introduce PCIe PHY
-Date: Wed, 13 Aug 2025 13:46:56 -0500
-Message-ID: <20250813184701.2444372-3-elder@riscstar.com>
+Subject: [PATCH 3/6] dt-bindings: phy: spacemit: introduce PCIe root complex
+Date: Wed, 13 Aug 2025 13:46:57 -0500
+Message-ID: <20250813184701.2444372-4-elder@riscstar.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250813184701.2444372-1-elder@riscstar.com>
 References: <20250813184701.2444372-1-elder@riscstar.com>
@@ -104,70 +104,163 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the Device Tree binding for two PCIe PHYs present on the SpacemiT
-K1 SoC.  These PHYs are dependent on a separate combo PHY, which
-determines at probe time the calibration values used by the PCIe-only
-PHYs.
+Add the Device Tree binding for the PCIe root complex found on the
+SpacemiT K1 SoC.  This device is derived from the Synopsys Designware
+PCIe IP.  It supports up to three PCIe ports operating at PCIe gen 2
+link speeds (5 GT/sec).  One of the ports uses a combo PHY, which is
+typically used to support a USB 3 port.
 
 Signed-off-by: Alex Elder <elder@riscstar.com>
 ---
- .../bindings/phy/spacemit,k1-pcie-phy.yaml    | 49 +++++++++++++++++++
- 1 file changed, 49 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-pcie-phy.yaml
+ .../bindings/pci/spacemit,k1-pcie-rc.yaml     | 141 ++++++++++++++++++
+ 1 file changed, 141 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml
 
-diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-pcie-phy.yaml
+diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml
 new file mode 100644
-index 0000000000000..b0cbd231d9378
+index 0000000000000..6bcca2f91a6fd
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/spacemit,k1-pcie-phy.yaml
-@@ -0,0 +1,49 @@
++++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml
+@@ -0,0 +1,141 @@
 +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/phy/spacemit,k1-pcie-phy.yaml#
++$id: http://devicetree.org/schemas/pci/spacemit,k1-pcie-rc.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: SpacemiT K1 PCIe PHY
++title: SpacemiT K1 PCI Express Root Complex
 +
 +maintainers:
 +  - Alex Elder <elder@riscstar.com>
 +
 +description:
-+  There are two PHYs on the SpacemiT K1 SoC used for PCIe (only).
-+  These PHYs must be configured using calibration values that are
-+  determined by a third "combo PHY".  The combo PHY determines
-+  these calibration values during probe so they can be used for
-+  the two PCIe-only PHYs.
-+
-+  During normal operation, the PCIe port driver is responsible for
-+  ensuring all clocks needed by a PHY are enabled, and all resets
-+  affecting the PHY are deasserted.
++  The SpacemiT K1 SoC PCIe root complex controller is based on the
++  Synopsys DesignWare PCIe IP.
 +
 +properties:
 +  compatible:
-+    const: spacemit,k1-pcie-phy
++    const: spacemit,k1-pcie-rc.yaml
 +
 +  reg:
 +    items:
-+      - description: PHY control registers
++      - description: DesignWare PCIe registers
++      - description: ATU address space
++      - description: PCIe configuration space
++      - description: Link control registers
 +
-+  "#phy-cells":
-+    const: 0
++  reg-names:
++    items:
++      - const: dbi
++      - const: atu
++      - const: config
++      - const: link
++
++  clocks:
++    items:
++      - description: DWC PCIe Data Bus Interface (DBI) clock
++      - description: DWC PCIe application AXI-bus Master interface clock
++      - description: DWC PCIe application AXI-bus Slave interface clock.
++
++  clock-names:
++    items:
++      - const: dbi
++      - const: mstr
++      - const: slv
++
++  resets:
++    items:
++      - description: DWC PCIe Data Bus Interface (DBI) reset
++      - description: DWC PCIe application AXI-bus Master interface reset
++      - description: DWC PCIe application AXI-bus Slave interface reset.
++      - description: Global reset; must be deasserted for PHY to function
++
++  reset-names:
++    items:
++      - const: dbi
++      - const: mstr
++      - const: slv
++      - const: global
++
++  interrupts-extended:
++    maxItems: 1
++
++  spacemit,syscon-pmu:
++    description:
++      PHandle that refers to the APMU system controller, whose
++      regmap is used in managing resets and link state.
++    $ref: /schemas/types.yaml#/definitions/phandle
++
++  device_type:
++    const: pci
++
++  max-link-speed:
++    const: 2
++
++  num-viewport:
++    const: 8
 +
 +required:
 +  - compatible
 +  - reg
-+  - "#phy-cells"
++  - clocks
++  - clock-names
++  - resets
++  - reset-names
++  - spacemit,syscon-pmu
++  - "#address-cells"
++  - "#size-cells"
++  - device_type
++  - max-link-speed
++  - bus-range
++  - num-viewport
 +
 +additionalProperties: false
 +
 +examples:
 +  - |
 +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
-+    pcie1_phy: phy@c0c10000 {
-+        compatible = "spacemit,k1-pcie-phy";
-+        reg = <0xc0c10000 0x1000>;
-+        #phy-cells = <0>;
++    pcie0: pcie@ca000000 {
++        compatible = "spacemit,k1-pcie-rc";
++        reg = <0x0 0xca000000 0x0 0x00001000>,
++              <0x0 0xca300000 0x0 0x0001ff24>,
++              <0x0 0x8f000000 0x0 0x00002000>,
++              <0x0 0xc0b20000 0x0 0x00001000>;
++        reg-names = "dbi",
++                    "atu",
++                    "config",
++                    "link";
++
++        ranges = <0x01000000 0x8f002000 0x0 0x8f002000 0x0 0x100000>,
++                 <0x02000000 0x80000000 0x0 0x80000000 0x0 0x0f000000>;
++
++        clocks = <&syscon_apmu CLK_PCIE0_DBI>,
++                 <&syscon_apmu CLK_PCIE0_MASTER>,
++                 <&syscon_apmu CLK_PCIE0_SLAVE>;
++        clock-names = "dbi",
++                      "mstr",
++                      "slv";
++
++        resets = <&syscon_apmu RESET_PCIE0_DBI>,
++                 <&syscon_apmu RESET_PCIE0_MASTER>,
++                 <&syscon_apmu RESET_PCIE0_SLAVE>,
++                 <&syscon_apmu RESET_PCIE0_GLOBAL>;
++        reset-names = "dbi",
++                      "mstr",
++                      "slv",
++                      "global";
++
++        interrupts-extended = <&plic 141>;
++
++        spacemit,syscon-pmu = <&syscon_apmu 0x03cc>;
++
++        #address-cells = <3>;
++        #size-cells = <2>;
++
++        device_type = "pci";
++        max-link-speed = <2>;
++        bus-range = <0x00 0xff>;
++        num-viewport = <8>;
++
 +        status = "disabled";
 +    };
 -- 
