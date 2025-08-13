@@ -1,175 +1,197 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-pj1-f68.google.com (mail-pj1-f68.google.com [209.85.216.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521862F1FDC
-	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 09:23:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4848D1BF58
+	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 12:19:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755077020; cv=none; b=Po5TNEvnhh1xE2qJj+rFfZNQ+NJg8ajGB7ZYrmfIiDQqQ23NERik7oGMMACaQGj242LOMdPgmAcK7yLUoenS7xfGcExpNosrd0iGWmcJHllD+9V9qi9Dn+nn86ycJk7spifayjZhXPU/+IEy0NsWiq6fYgOH4G6MB81z2hjOX88=
+	t=1755087599; cv=none; b=l/Nrc9siuUTmdwXmQyoFD3A2SbTv1OpGZRGMddI+P4vkLjh5mxwdTNt3T0IXhyHO2CDaaocgxT581HFqAHJgNxxjfD6A4CWrzl7CpdeOHnDoTdt0zNwObkKz5QOAbXmZJLaS4GwqJg5kOW8QqEbOwrfzkNu8f3xrLk8Ym28r+O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755077020; c=relaxed/simple;
-	bh=YgCbgenFVOzNh67wJb83oSCGyPXaTZ71l6QIJbUP6yE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WOxWJ0QwjQvxK7dJbvh1OkHVcyrdMUTvlhuFBMD4lCaS9yDA0GedUGhQ+/9Rx+MJFCd5qF1vgt4fp4jFSWsaxM5hUzi3PbfA3L/4Ow5xOVU31jaKLgtn5pEq8G9Gxs0895dTqkeGX9OMEpvKNmduuec6ZVAyPB7StyrV2Lqt8Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=T4sJmNqX; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
+	s=arc-20240116; t=1755087599; c=relaxed/simple;
+	bh=kWwKf+d7Rq93hRlGUo/OEpdJd14FbNbQPT8V99d72Y4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gbo1dGkks+VeHSrImWJ4VxkCnfIQjK9qfX7k+rpBgyi/taBz39MoYaNypxKut4nY3/81SGPZntK34gaMnWPvKPJBTsEAgvtW5korMmoVyyfTq9VXRr/15bIOHFrSIpbLjGOYbZZ65zGGqauEBhxWWJp8G5ItwotRHtvcALDnzK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RIY1rgnY; arc=none smtp.client-ip=209.85.216.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="T4sJmNqX"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3b9141866dcso910162f8f.2
-        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 02:23:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RIY1rgnY"
+Received: by mail-pj1-f68.google.com with SMTP id 98e67ed59e1d1-32117db952aso5375506a91.0
+        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 05:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1755077017; x=1755681817; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S1TU+Xl0n1RhqfO3nfZOueztwfTTkM2m62EBReINxsY=;
-        b=T4sJmNqXEhfbaLCFA/rT9RbesCbbsTxoLk43tePr6QHUfp02MLlNqw36wI1NT3O/Kn
-         aGgt8aZYZD6yBhKx3HuZkOB1yxeMAmAynGYWaUbTls2ImJ7Zc4ITzCscnHYXFQfnPy9G
-         igGVHmuh0+He9pJRvLG4c29MXQno3P2LcQBH5CpYfO9EE5Isd0ssyzz46zWCrzX7g8IV
-         rEwKKvw3z4JxzO64IPjChdzW6ByivJLusO/WOKMqhUuWwlw6O2nP68YIiqXL7tMEhD4M
-         Vf4fthBYHj8YKZ2fINf/3LPjhDDA627N/6ZQCfbJIkONvT8dnINCT/45s8gPNWE10lo4
-         fRpw==
+        d=gmail.com; s=20230601; t=1755087597; x=1755692397; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wXIuy8E0rJ9utYVbR4lh364PTlYdCZUkNdbi7L0pG7A=;
+        b=RIY1rgnYm2si/aDsz0skrXeTTMGPZQHU9nalGQeZ/e39KDMrlSx1M2bSib8QqS1SIE
+         ZFp51kJkP9Ist5MCccQlPV4sZwJHHiT7ZkJL1zrM9kBIaOb4yNKXGVgPyYGlT9AkSP2T
+         zlbfWX+PT5rOLLH3SpD9d8nTxd6+E8VM4N/VrNE5DvvNDP2oPtxZgrIMOik6lsb6rqXd
+         TZClMaT9KmeaKLl59bUq/0xy0MSX52/uk55B5HO4hpJN4URiCEuuV0nYA6KTkbP38W8q
+         Phf3FIwMNY5aVZUyMG/zxSoEFsU3+qzRmWnPsv/9bcUFZuzSln0VzILJEbn5nFJ/vETo
+         9elg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755077017; x=1755681817;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S1TU+Xl0n1RhqfO3nfZOueztwfTTkM2m62EBReINxsY=;
-        b=G55SeE9trlRVLGmy0JUJ1XZh+Y9i0085m2KbGHqu/oUx7YrixmiRQQxoFPz1Fgq4wP
-         OFthhk5YzDBKZt+hGuSKQLf/ZCROF7E8Ybs9Gsidwu51J+V5QQzLMHtts0ylqZ6BF/Ic
-         RyjAmqJZKMtjJOWgabl4929IeaC7Egn6UjeDfncba9t383aFSz5+ILNNfWw8O+z0tkon
-         S5w93vicprL2h+VIEzgJMe4OrNm/84A/PPhkUsCGvFZS8TQXegAZHflnFePsypT/xlQD
-         urFsl2xBilengTSElPTbuRDgX/aDFhv4l3nTSU0LW/X3JrdPrezW249Ck5b2m27fklyV
-         4+Nw==
-X-Forwarded-Encrypted: i=1; AJvYcCU8Vvk49X81oGI277bALDP6GcjPqNKAeuE9Lxh9kLz4DlxTKsis1luPlarf7Iv0gYf1yC8Tz7SX1A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzHe4U3j6B19J3bGkpE7QRHEOgR268yUhPAZtehFt3zsWiv358I
-	hjdJblAgefh4mbC1A1rkWQIqFyFsDrqWA3hjDIS3ow8eeIgOx5mwM8sOi8Hjw3QMy0E=
-X-Gm-Gg: ASbGncvo/Ium6mYHq8gF/2pS4exIuB4BVpunuFyB9oeSgoTIClOkYtyGgg9DWoZHuGx
-	OJqqp0ULKH6efoAYRjnIYJaT42SP97m5QPEXUnW6s+VBBuNInO2ffBvxVlyTpYdYymuEzJHEWyd
-	F5Hx/ZLVIykYbpHt7ooDbp8Z8WHHlY0r+fS4pXGc+gUoT+PB8Bi2WTNWXCVRU7xW/+PxsYHgE3E
-	PKuTByMgDYg99FMFpyKYOLZruK9LfeZswJqTAUwT6ir03OzFYOXOM9l97igpLPPn5ed0QrZwe80
-	egkT+5OaeFhvbCCNpDNDr5pSnrdztvxtAaGrcDvEgEKuhpScTIyZPKvDWQlv0QymHtBOvr4ppNX
-	kyR8VHKZPGlnKFz8RkJLhip+iAHo2qRMOCC7Jd7peS6bHILh75g==
-X-Google-Smtp-Source: AGHT+IE3vtz1ELNgTuw1NVDgwEF012pagU0/e5TxjB4oj/3WIMChqDWH9mXGzW1B/LaUDhfksyi79w==
-X-Received: by 2002:a05:6000:2087:b0:3b7:905e:2a32 with SMTP id ffacd0b85a97d-3b917d2a92dmr1794493f8f.12.1755077016260;
-        Wed, 13 Aug 2025 02:23:36 -0700 (PDT)
-Received: from pop-os.telenet.be ([2a02:1807:2a00:3400:d33c:e682:2af6:3c3d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3ac158sm47966077f8f.4.2025.08.13.02.23.35
+        d=1e100.net; s=20230601; t=1755087597; x=1755692397;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wXIuy8E0rJ9utYVbR4lh364PTlYdCZUkNdbi7L0pG7A=;
+        b=UBkZB5M0CeAnWESXeFX7apayspprSyXTM81zHflgkXjLwapIr2cF+4F23aBIToS02b
+         +PsUoSV+HKdkVlt4IvFgoIEEwpmDl3Y3I0qg/CSQNS77UVkdIAt7p2CkZIe6S2UdQR9h
+         3/hWJ7TImMB2u+/pvTg2affeIYdIBQzfP3DsX78Izz+ylBj0UsK8xOhBnuwGTCs5N97Q
+         ZINWsQjW7ykrCkjQNhMkDBFUH1wgikbRKN1BHCUk9C0DlMpj5PsxhSuEpxv77Ttub8iH
+         RKzgH+Qhpljd1ERH1NoyCkBAmqrDCmNp2Ww/+qzCnvu3bO1LQuirNVfv4U2cVqpKm8UY
+         Zz6g==
+X-Forwarded-Encrypted: i=1; AJvYcCWLWo5aSNHBdYmX0Jm/jNqIgAIa+bEGiXE/Qbcr5rHuHqk/vmgIMBMb4cDlB4o/ZTdD1VYyYApDWw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yza8OSorC4H+JnjXYDB4CLxfPoow47p+bjLTRpd6EiB8SAru2C6
+	vOmeUmkQ3h87lu3ssrQZxmDm4Bvo54kR/PZhQgKCooMPYxAyjq/aNrPv
+X-Gm-Gg: ASbGncuBiHKq6R15nj9JJ3JCajvBj8sBNg9WfW8ZgLNQlNQSWXXz104TpQ6sPKbAacP
+	Xk21bcfYHBfjZeYZ1kkgO1kCojPlW7fpOL+z11NWlS7a5p79o8UfQsisQ0zT52DbRECmis+C9TR
+	9X698u49UQZ2PTwXxBo5Ophp7L6zNXkViEw0D9NVM7L94MC2WietWADnqONQIQTbvb0gqZ6fyce
+	WWYugYDZM6kGOoLOK7OB8UNwBrQT7d9JW+AhpOiC8dEk2Ir6gqq5VQoVpaTwoPI2erYvqmTJHjb
+	ES6iqs3S2EQGpiy35dZbasLxOodPhA0b2uhL4mu6+xoQGdE+ClZI+bichx5vRMvUtw5wYYsJavm
+	TysvcQRsjnR35HgxejqkyRZ071p0alJc=
+X-Google-Smtp-Source: AGHT+IEFlXvKJVszOuCgY2L3pa333NYha1FOY/G7JfVFhsfManM3a/rZhg0qEyDVkRt5u2BFBdgGqQ==
+X-Received: by 2002:a17:90b:1a8a:b0:321:1df6:97d3 with SMTP id 98e67ed59e1d1-321d0d42332mr3886934a91.4.1755087597351;
+        Wed, 13 Aug 2025 05:19:57 -0700 (PDT)
+Received: from localhost ([2408:8256:2289:c8ae:c016:1fd0:d59b:62c6])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-3232580316dsm23954a91.16.2025.08.13.05.19.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Aug 2025 02:23:35 -0700 (PDT)
-From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-To: dlan@gentoo.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	paul.walmsley@sifive.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	palmer@dabbelt.com
-Cc: skhan@linuxfoundation.org,
-	linux-kernel-mentees@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Subject: [PATCH v3 2/2] riscv: dts: spacemit: Add OrangePi RV2 board device tree
-Date: Wed, 13 Aug 2025 11:22:40 +0200
-Message-ID: <20250813092240.180333-3-hendrik.hamerlinck@hammernet.be>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250813092240.180333-1-hendrik.hamerlinck@hammernet.be>
-References: <20250813092240.180333-1-hendrik.hamerlinck@hammernet.be>
+        Wed, 13 Aug 2025 05:19:56 -0700 (PDT)
+Date: Wed, 13 Aug 2025 20:19:50 +0800
+From: Troy Mitchell <troymitchell988@gmail.com>
+To: Alex Elder <elder@riscstar.com>
+Cc: lee@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+	alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, mat.jonczyk@o2.pl, dlan@gentoo.org,
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	alex@ghiti.fr, linux.amoon@gmail.com, troymitchell988@gmail.com,
+	guodong@riscstar.com, linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v12 1/7] dt-bindings: mfd: add support the SpacemiT P1
+ PMIC
+Message-ID: <aJyC5q0X8mj1xbSB@troy-wujie14pro-arch>
+References: <20250813024509.2325988-1-elder@riscstar.com>
+ <20250813024509.2325988-2-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250813024509.2325988-2-elder@riscstar.com>
 
-Add initial device tree support for the OrangePi RV2 board [1]. The board
-is described as using the Ky X1 SoC, which, based on available downstream
-sources and testing, appears to be identical or very closely related to
-the SpacemiT K1 SoC [2].
+On Tue, Aug 12, 2025 at 09:45:02PM -0500, Alex Elder wrote:
+> Enable the SpacemiT P1, which is an I2C-controlled PMIC.  Initially
+> only the RTC and regulators will be supported.
+> 
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+>  .../devicetree/bindings/mfd/spacemit,p1.yaml  | 86 +++++++++++++++++++
+>  1 file changed, 86 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+> new file mode 100644
+> index 0000000000000..5cc34d4934b54
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+> @@ -0,0 +1,86 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/spacemit,p1.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: SpacemiT P1 Power Management Integrated Circuit
+> +
+> +maintainers:
+> +  - Troy Mitchell <troymitchell988@gmail.com>
+You can change it from this to my company email:
+troy.mitchell@linux.spacemit.com
 
-The device tree is adapted from the OrangePi vendor tree [3], and similar
-integration can be found in the Banana Pi kernel tree [4], confirming SoC
-compatibility. The main difference with the current Banana Pi BPI-F3 tree
-is that status led is using GPIO_ACTIVE_LOW.
+Acked-by: Troy Mitchell <troymitchell988@gmail.com>
 
-This minimal device tree enables booting into a serial console with UART
-output and a blinking LED.
-
-Link: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-RV2.html [1]
-Link: https://www.spacemit.com/en/key-stone-k1 [2]
-Link: https://github.com/BPI-SINOVOIP/pi-linux/blob/linux-6.6.63-k1/arch/riscv/boot/dts/spacemit/k1-x_orangepi-rv2.dts [3]
-Link: https://github.com/orangepi-xunlong/linux-orangepi/tree/orange-pi-6.6-ky [4]
-Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
----
-Changes since v2: improved changelog
----
- arch/riscv/boot/dts/spacemit/Makefile         |  1 +
- .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 40 +++++++++++++++++++
- 2 files changed, 41 insertions(+)
- create mode 100644 arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-
-diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-index 92e13ce1c16d..152832644870 100644
---- a/arch/riscv/boot/dts/spacemit/Makefile
-+++ b/arch/riscv/boot/dts/spacemit/Makefile
-@@ -1,3 +1,4 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
-+dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-new file mode 100644
-index 000000000000..337240ebb7b7
---- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-@@ -0,0 +1,40 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/*
-+ * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
-+ * Copyright (C) 2025 Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-+ */
-+
-+/dts-v1/;
-+
-+#include "k1.dtsi"
-+#include "k1-pinctrl.dtsi"
-+
-+/ {
-+	model = "OrangePi RV2";
-+	compatible = "xunlong,orangepi-rv2", "spacemit,k1";
-+
-+	aliases {
-+		serial0 = &uart0;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		led1 {
-+			label = "sys-led";
-+			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_LOW>;
-+			linux,default-trigger = "heartbeat";
-+			default-state = "on";
-+		};
-+	};
-+};
-+
-+&uart0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart0_2_cfg>;
-+	status = "okay";
-+};
--- 
-2.43.0
-
+                - Troy
+> +
+> +description:
+> +  P1 is an I2C-controlled PMIC produced by SpacemiT.  It implements six
+> +  constant-on-time buck converters and twelve low-dropout regulators.
+> +  It also contains a load switch, watchdog timer, real-time clock, eight
+> +  12-bit ADC channels, and six GPIOs.  Additional details are available
+> +  in the "Power Stone/P1" section at the following link.
+> +    https://developer.spacemit.com/documentation
+> +
+> +properties:
+> +  compatible:
+> +    const: spacemit,p1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  vin-supply:
+> +    description: Input supply phandle.
+> +
+> +  regulators:
+> +    type: object
+> +
+> +    patternProperties:
+> +      "^(buck[1-6]|aldo[1-4]|dldo[1-7])$":
+> +        type: object
+> +        $ref: /schemas/regulator/regulator.yaml#
+> +        unevaluatedProperties: false
+> +
+> +    unevaluatedProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        pmic@41 {
+> +            compatible = "spacemit,p1";
+> +            reg = <0x41>;
+> +            interrupts = <64>;
+> +
+> +            regulators {
+> +                buck1 {
+> +                    regulator-name = "buck1";
+> +                    regulator-min-microvolt = <500000>;
+> +                    regulator-max-microvolt = <3450000>;
+> +                    regulator-ramp-delay = <5000>;
+> +                    regulator-always-on;
+> +                };
+> +
+> +                aldo1 {
+> +                    regulator-name = "aldo1";
+> +                    regulator-min-microvolt = <500000>;
+> +                    regulator-max-microvolt = <3400000>;
+> +                    regulator-boot-on;
+> +                };
+> +
+> +                dldo1 {
+> +                    regulator-name = "dldo1";
+> +                    regulator-min-microvolt = <500000>;
+> +                    regulator-max-microvolt = <3400000>;
+> +                    regulator-boot-on;
+> +                };
+> +            };
+> +        };
+> +    };
+> -- 
+> 2.48.1
+> 
