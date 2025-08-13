@@ -1,126 +1,141 @@
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908DD20EB;
-	Wed, 13 Aug 2025 09:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AB72F0C59
+	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 09:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755076090; cv=none; b=gj7b4UfEZvmuM2SS6OWvxQHeofUbW+A4LWWQQEqmx3QlOkKj8JvIDmAFibmggyFCD1zBkKlCjjl/taqpge7HtfuReZsbm6kLV0Fm2fiGL7OcVafrejRoKmvgPLCIOCdU04u5XOoJhuT93yyW69AFUwtUx+e8X30cD3Mu1CAUtNM=
+	t=1755077017; cv=none; b=Rc5TTxczHdKlOD8aFDX4YPYUOBfcRb/EDJ3f+LZjgduHdohnXWFlcDmJJW0KVhX/V99obyqOjAxSXJIKUEcxWX+3v4jkOecKMBtWriQpeG4WyoOO6MC2vv3hCWLPhEPlGmkH0fpMAMsLEKlMiWmoy/K6Rl8vGJRNzjQMweyABro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755076090; c=relaxed/simple;
-	bh=/SPdHAwhvXyCqoH/t4/l4FNys/9/FT+CFV8bKu69lmc=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M0thsKe1DPjb3uZu28jwYtAvAkHZbsrx5dbEgNbMIupuJL1rv6iF95DSfBKFZgf8xZ7R6SRyf+t10pxLyZfov7hwgyl883EtN/Ded38rsAErr2VZ0xg5Ei8g10y3KvT7b3jVZVUX75SJFsxvSMUhYzs41lT3IOibM0Y6+WSZElU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=RBcxly02; arc=none smtp.client-ip=217.70.183.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1755077017; c=relaxed/simple;
+	bh=nSnlQzS3Oijb3uuQVtZaTkeoC2ip6X+Cu8XPFNiTPn8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qXpoOzOn1H0jK6Lps0XpDlpq3iwKyv8hjCwV9RIPLe/FiaklvQGjUmlHtz2Y9JdV75hKygACaht6SKROsh6AAWc/WqidZAPDigWo/bNb+IDq1kRV7Akf8ebeCHe0YkkCTFTLjcdIvqo1xqZkmQT3mC9frZcsnVKoXKvMcT4QxLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=W5sBoc+M; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="RBcxly02"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 9806843283;
-	Wed, 13 Aug 2025 09:07:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1755076079;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zeW3w+muABU56lk8AynPRRMO7XtEP4qDrJkq+5Lwhw0=;
-	b=RBcxly02YqHg6yIG6IVGb6L0wWxwyXgbzexV7fz5MW/s00R1yXLzqz8R0Q4Hp6XCzFEgKy
-	aJQuxXVY2VuM3LcR+HuKLiDTJxPk7hPeIic299sk4PSxG2ekcA+2ZeJQZ9DJMqGpdiEK55
-	dlmn2pZocXR5RTpeMH7mXYpDsa1p5LBc6yeLbl5BB9RJI44aKGy2UdQyipWgEiGweTT6Zs
-	yKZjMHYwq/2e6TLrhQ1n/5tSh0xMWWU8ZMi+8EvpkTaKYRbcurnOinRJ6WojpOPIpt9hGK
-	EGL3JqryRCMP/IrQCvVCa6eDAFIGmMSS2+OxScw07Z8iZPtIZg8PP1xYwoncfg==
-Date: Wed, 13 Aug 2025 11:07:45 +0200
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-To: Brian Masney via B4 Relay <devnull+bmasney.redhat.com@kernel.org>
-Cc: bmasney@redhat.com, Michael Turquette <mturquette@baylibre.com>, Stephen
- Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, Cristian
- Marussi <cristian.marussi@arm.com>, Chen Wang <unicorn_wang@outlook.com>,
- Inochi Amaoto <inochiama@gmail.com>, Nicolas Ferre
- <nicolas.ferre@microchip.com>, Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Paul Cercueil <paul@crapouillou.net>, Keguang Zhang
- <keguang.zhang@gmail.com>, Taichi Sugaya <sugaya.taichi@socionext.com>,
- Takao Orito <orito.takao@socionext.com>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team
- <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Jacky Huang
- <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, Vladimir
- Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk
- <piotr.wojtaszczyk@timesys.com>, Paul Walmsley <paul.walmsley@sifive.com>,
- Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>,
- Steen Hegelund <Steen.Hegelund@microchip.com>, Daniel Machon
- <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, Orson Zhai
- <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
- Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>, Michal Simek
- <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>, Andreas
- =?UTF-8?B?RsOkcmJlcg==?= <afaerber@suse.de>, Manivannan Sadhasivam
- <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau
- <j@jannau.net>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa
- <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Broadcom
- internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max
- Filippov <jcmvbkbc@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Daniel Palmer <daniel@thingy.jp>, Romain Perier <romain.perier@gmail.com>,
- Andrew Lunn <andrew@lunn.ch>, Gregory Clement
- <gregory.clement@bootlin.com>, Sebastian Hesselbarth
- <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner
- <heiko@sntech.de>, Andrea della Porta <andrea.porta@suse.com>, Krzysztof
- Kozlowski <krzk@kernel.org>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar
- <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>, Viresh Kumar
- <vireshk@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, Alex Helms
- <alexander.helms.jy@renesas.com>, Linus Walleij <linus.walleij@linaro.org>,
- Liviu Dudau <liviu.dudau@arm.com>, Lorenzo Pieralisi
- <lpieralisi@kernel.org>, Nobuhiro Iwamatsu
- <nobuhiro1.iwamatsu@toshiba.co.jp>, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev,
- linux-mips@vger.kernel.org, imx@lists.linux.dev,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com,
- linux-actions@lists.infradead.org, asahi@lists.linux.dev,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Subject: Re: [PATCH 106/114] clk: versaclock5: convert from round_rate() to
- determine_rate()
-Message-ID: <20250813110745.63523645@booty>
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-106-b3bf97b038dc@redhat.com>
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
-	<20250811-clk-for-stephen-round-rate-v1-106-b3bf97b038dc@redhat.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="W5sBoc+M"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3b78d13bf10so6474108f8f.1
+        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 02:23:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1755077014; x=1755681814; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TEyolKpesJRN4enzfkBag9GEI6SkLDls4Ifg+2q31hc=;
+        b=W5sBoc+MPTpPL6mKQr8ywhSZyn7NdEqijCPXVXMHYse5cAEAU/uwI8ex6GJyT/AsUi
+         xxtBJnNJa/divpCOlVXAS8tzLW334ELgSerkd3h+fCfwd0O/b4KQdwrgst8i6FJwWnQ9
+         LTL2w7an79QWJfXIuVwlIYWaE2wsFTKPExT7MtUz4/6UYXI8fp+V5dqhddRRAe9oPSNb
+         ClpXywWP4T/QbEos4qyeIM/jiQkLVMmEvAW6VOOsMiwx2ZXs5BcnnBG8J7gSqs4BPZsg
+         zuQv05FFBttp+IVhTnPSsEajrxkSsEBNbxfMyxzxvulT4to+Dw51PfOtjTkm3DLJ6TWU
+         iKhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755077014; x=1755681814;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TEyolKpesJRN4enzfkBag9GEI6SkLDls4Ifg+2q31hc=;
+        b=YtgHoh+hCGgPVWycM87mA9MdUMSsc7iY+XeR02B6WOn3JZMWux7kyfouec2uBAimlj
+         fTUwH6iXMaDTPQgPIFBipWcvqNkbpAnCdkidIoENht12gbuDWUciK5Zu3NPdaI/vdgpx
+         enUthlqFBpMLChVDPjat+68lA25rVPMZ9IGHmMHmWPQ0lDahZWmJnXOTyeUuWgaXtfET
+         7RB6bbxJB+bvOMz6MtCqj8WkWuzAWl2Ve4CZbTyaXBVJfAyY/LVYT14Rn4ck01hUlIvm
+         HfmMEBqC554fGe/lPrJ6DLxiO63WAgil0UBIWtPTon/vx3U2Shec3NAg2C1T5anMLmmH
+         J9/w==
+X-Forwarded-Encrypted: i=1; AJvYcCXOjYtzUXkrZFuRBROZDMkab7VAf8VfmbnyaoMeneXclhLTAvVNVMrTE/2BucwH9x3KqyyY1Jsy1g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyXBnclBt5Sf0yimOZIk/jff1MJXtx94xh59fOEC9UViCnwZt28
+	5qe+uPGwfvDouwkp5VFaVnG3oE9TEdevLNBxiCwpfCY0xQZJy/NKxdtVLoP0F579KLY=
+X-Gm-Gg: ASbGncuf+c3+OaXkcQZiqj+Yv3MoowZW7L1cjvNfUSBvYNhxqGofEGdl4b4QzG5QWxF
+	e+wZhKd9iRIQckMwfvhlo8RXnZ4S9+QAMrEnhC/ZmaRp2dchwLB8phDjRIPJ89BC+s7woVf7QEv
+	NpLrWU4LG+7/9+lZQUuFOR96bhut8IUjF7m+DDDP0UM1OTWwqqYIkPbu8aQeTlrkQNX34nvs7d0
+	QZH9Xy7lYxNw/Rw9f+w82P0etHb1nyFkan7y57x1pIPSu/Cut6GHVs+2aVLNAHcJzStWO1rgH67
+	9MWVHvf8v57WCWF+K50KZ+0y9drK/wv2O4LtO5uWEkOaRC1goauik2YwQbfGk2KCONFSkRw1I0A
+	EoVOiXI/LFJ21yWWMAbIxfr8rJtsWZE/CV4ESUqiaB8umw3WkTw==
+X-Google-Smtp-Source: AGHT+IFxawn2hn81XiBMFzlp9R7LXDt7IQlnw4bYwjrbGUdm+VKiMtSVAcwLlkK3/1f3t/cZPUZtdA==
+X-Received: by 2002:a05:6000:40cb:b0:3b7:9b58:5b53 with SMTP id ffacd0b85a97d-3b917ec345cmr1916488f8f.45.1755077013860;
+        Wed, 13 Aug 2025 02:23:33 -0700 (PDT)
+Received: from pop-os.telenet.be ([2a02:1807:2a00:3400:d33c:e682:2af6:3c3d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3ac158sm47966077f8f.4.2025.08.13.02.23.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Aug 2025 02:23:33 -0700 (PDT)
+From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+To: dlan@gentoo.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	paul.walmsley@sifive.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	palmer@dabbelt.com
+Cc: skhan@linuxfoundation.org,
+	linux-kernel-mentees@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Subject: [PATCH v3 0/2] riscv: dts: spacemit: Add initial support for OrangePi RV2
+Date: Wed, 13 Aug 2025 11:22:38 +0200
+Message-ID: <20250813092240.180333-1-hendrik.hamerlinck@hammernet.be>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeejkedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeeftdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeehffejffekudfhkeeklefgjeeuheekffelheejgfeijeehieelkedttdfhjedtnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepkeelpdhrtghpthhtohepuggvvhhnuhhllhdosghmrghsnhgvhidrrhgvughhrghtrdgtohhmsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegsmhgrshhnvgihsehrvgguhhgrthdrtghomhdprhgtphhtthhopehmthhurhhqu
- hgvthhtvgessggrhihlihgsrhgvrdgtohhmpdhrtghpthhtohepshgsohihugeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhuuggvvghprdhhohhllhgrsegrrhhmrdgtohhmpdhrtghpthhtoheptghrihhsthhirghnrdhmrghruhhsshhisegrrhhmrdgtohhmpdhrtghpthhtohepuhhnihgtohhrnhgpfigrnhhgsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohepihhnohgthhhirghmrgesghhmrghilhdrtghomh
-X-GND-Sasl: luca.ceresoli@bootlin.com
+Content-Transfer-Encoding: 8bit
 
-On Mon, 11 Aug 2025 11:19:38 -0400
-Brian Masney via B4 Relay <devnull+bmasney.redhat.com@kernel.org> wrote:
+This patchset adds initial device tree support for the OrangePi RV2 board.
 
-> From: Brian Masney <bmasney@redhat.com>
-> 
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
-> 
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+The OrangePi RV2 [1] is described as using the Ky X1 SoC. Based on research
+and testing, it appears to be identical or very closely related to the
+SpacemiT K1 SoC [2], as suggested by the following:
 
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+- Similar integration in the Banana Pi kernel tree [3], which uses the 
+  OrangePi RV2 and identifies it as the SpacemiT K1.
+- Comparison of the device tree code showing a match to the OrangePi RV2 
+  Linux tree [4].
+- Locally tested the OrangePi RV2 with the SpacemiT K1 device tree, 
+  confirming it boots and operates correctly.
+
+Patch #1 documents the compatible string for the OrangePi RV2, and 
+patch #2 adds its minimal device tree. This enables booting to a serial
+console with UART output and blinking a LED, similar to other K1-based 
+boards such as the Banana Pi BPI-F3 or the Milk-V Jupiter.
+
+Link: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-RV2.html [1]
+Link: https://www.spacemit.com/en/key-stone-k1 [2]
+Link: https://github.com/BPI-SINOVOIP/pi-linux/blob/linux-6.6.63-k1/arch/riscv/boot/dts/spacemit/k1-x_orangepi-rv2.dts [3]
+Link: https://github.com/orangepi-xunlong/linux-orangepi/tree/orange-pi-6.6-ky [4]
+
+Changes in v3:
+Improved changelog: Reworded relation to SpacemiT K1 as presumed identical,
+based on downstream sources and testing.
+Applied Yixun Lan's Reviewed-by tag.
+
+Changes in v2:
+Patch 1: no changes.
+Patch 2:
+- Added aliases section to the device tree.
+- Removed the memory section, as it is populated by the bootloader.
+- Updated copyright header.
+Link: https://lore.kernel.org/spacemit/20250718084339.471449-3-hendrik.hamerlinck@hammernet.be/
+
+Here is version 1 of this series:
+  https://lore.kernel.org/spacemit/20250711183245.256683-1-hendrik.hamerlinck@hammernet.be/
+
+This is the follow-up mentioned in the previous version, sent now that
+v6.17-rc1 was released yesterday.
+
+Hendrik Hamerlinck (2):
+  dt-bindings: riscv: spacemit: Add OrangePi RV2 board
+  riscv: dts: spacemit: Add OrangePi RV2 board device tree
+
+ .../devicetree/bindings/riscv/spacemit.yaml   |  1 +
+ arch/riscv/boot/dts/spacemit/Makefile         |  1 +
+ .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 40 +++++++++++++++++++
+ 3 files changed, 42 insertions(+)
+ create mode 100644 arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
 
 -- 
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+2.43.0
+
