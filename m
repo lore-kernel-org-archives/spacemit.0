@@ -1,173 +1,182 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A221271450
-	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 03:21:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD99B2EFD89
+	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 08:27:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755055318; cv=none; b=BoJzxb/4D3kbqha7D5NjzG7DXMdQ8fP1jGHKD902M0qrQit+VR7j+9Hgbg559Zp5D2IT1tLpf/hididXlhtc5u0GbsPmipCFYx9UxlUILVCfPXXc7LrFVKuIZ78y6bMZhV7wed5buS0my3N//BKFtoJLTDPqThFxe1yHgROHj6w=
+	t=1755073668; cv=none; b=Zqi6Uzmfxh9R4IzRXTRkzS4Y9nFV5pvrwELKWBP/RZCOc3wBfFxggYDQpBSpmiua7kljd14CE40zk9SskD2iaOlfILCMzQ3BFjLISswwq7wz05SraGaEj5T68GYqzWb1gGkOMc0R8AlDbcNKmK5LcZyiVk0NxUZ577d9W2WB1uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755055318; c=relaxed/simple;
-	bh=QXvZG2q1wYALZ9ywXDBmZP2Lg7TZImln+AWgStp7op4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ov2hs6Fi7KEc0jZTtNKLO4JUwfiw/F+z+kbJoGJCS5tRlNLWKZzYPm7ZcSVwRxEVNi9THtnOCfaoEgoQJp+JAWOx7k6UOZltS7oNEMY0kEf6syvn3IiyJxHtJp9Rec6zfUyDnDCH7w7r+RAE9w4DEBrERgYwVKaT4nd0eXNPKnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ujH1aM+t; arc=none smtp.client-ip=209.85.166.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1755073668; c=relaxed/simple;
+	bh=8grarISrrran4HsmVRztqDZfJzOAy0nLtF3rxQKJvkw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QIEop8uvx4x3A0q5kEW7F3IEb4l7DA8JhmzUH0gAecav0WhEve9rI16S8BRkEAM9ptYr/oZkjUQXuaGhE5gZb5RoP3+iFDRtLU6V2QrEBZ3vrdwOB9w+qyz4qxnMTHzg1TyNCyofU2edTinndcx/6tYpvE1w2IVo80LOGR+SbMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=avm+WqjA; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ujH1aM+t"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3e3f449fa6fso57677675ab.3
-        for <spacemit@lists.linux.dev>; Tue, 12 Aug 2025 20:21:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755055314; x=1755660114; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PZh5F0QX3EknECzCmYMfb9xtWVRUzlviyKurejiq7Q4=;
-        b=ujH1aM+txjfygQbufcLSShj5gReGB0DiBd5rfK4XpPZKYZr4JYzFXKz4Tz6lkKj6z1
-         7nhHskK1tTt9nuNVPcyrICsQ/EYdVIIvbKPvM4jZG4GATx2j5ET3LJp9/pBXxIXyenUK
-         +N6FBxIzRnHKiLYNKVfYNQKiP0aC+WjDrwwST6JBfk1cxtV6on65khXFU9pe2dIqDfXw
-         3Y3dl4v3JTA46DBQE+gCce4S3DKgKsPoR2Rn+rNjjF491NRHX2gHSdKMTem5S4up/Zmb
-         0j6iJQNmXkt4VQRe7Es9nNDYwEvBhWJr/1GlZ8y82UQGm47YE96atjKSVequ9Nfvy1iq
-         7QZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755055314; x=1755660114;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PZh5F0QX3EknECzCmYMfb9xtWVRUzlviyKurejiq7Q4=;
-        b=ZqypiADeHkx8jXNsD9A52pCrVXFKv2Fq/Fu0ax/MDrRew0RooKznHcMDpaTusBBDDE
-         jpzbQGECNQBxmj47/s1e0p4QYYCScNWgwur7nExgXiAr1FUewLIh5624qh9UqY2/KMna
-         o1TAcZbZRpmxYmjkOeTmKh0wyXEo4ANCUiycxyrd5Do01ThnF/WwpHW9ypcnNtKakf1Y
-         ftr6D2otanGeauFPze4O/Alk+/4Ae+CQThhFISr2sTbgGZvGv5pjX6v6XLfaEiOMyfCQ
-         s2c3AIWf85gV6vyBBrW/2SZ1Ql1sT/EuV1dpDtSUzzuZRcjXEDqy9/e3VjKCj8QJpeBL
-         IOOg==
-X-Forwarded-Encrypted: i=1; AJvYcCUaBsvq0CZ5Ft7I2DC1UkQgjhiivGn8upZEpb88xrormqg/OIHDgOnZBWnX+ARF8dQJgHzlH7bAAQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxw89F9DX9xAc6pPvWeop+GKvwpyvSglFDwP+U3KwdoG8CmGCwc
-	rDqOr2yWAtPuBt+6nx4dgqHyZ9eotYfM9CsvzIeZ11hi/GswRS+CRIKyU010TJFV6i0=
-X-Gm-Gg: ASbGncsl3PMlIggwiAWGbCN1pqe98qZAYKMtVH1e5ulnVxPaYtVAmUKSiVqtTHpMUag
-	Rwab+XB9yVix9GOnOBwBhJW4U2W+s8EDSb4JWgS04g0Z8Tt/IBcuylZErXdW5aRQsr4Irk7PPXn
-	HWXwS1Voepe93/qmeKGG5X/z/KonyKRk8l5bdOFSvngStaAs0nVN3UmSOlXT/+jMk/b8JJe914D
-	Yjdoty1Rbb17G7pKddDeSlMrneMd4zIHahueIyX0eylzu0RyS8+K71KBVNEZRsFyk8E8vgsUHFM
-	Na0o7bW5eQIF36s/EIHZGR5Ez6mWWo2V6ZEOkJ0cfmz56iVKwZ35nKwd+Hm0J+hXbfK2No87U5a
-	YRgSqOZFkODVZDu+MIs9Y1NUiwkPWLJINrpnr9ncnxDNjuHafY+RGAH0HnekvcSLasg==
-X-Google-Smtp-Source: AGHT+IEGjkB4ovYyLSKxeQ7O4Oh8jWvGVbE2gJKsffKwKHW4yl0n/kstE9uKuxUw+5W4Y4U9OyRJLQ==
-X-Received: by 2002:a05:6e02:17ca:b0:3e5:4c7d:b799 with SMTP id e9e14a558f8ab-3e5674713f6mr23473385ab.13.1755055314466;
-        Tue, 12 Aug 2025 20:21:54 -0700 (PDT)
-Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae9cee258sm3453085173.99.2025.08.12.20.21.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 20:21:54 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	gregkh@linuxfoundation.org,
-	jirislaby@kernel.org
-Cc: dlan@gentoo.org,
-	lkundrak@v3.sk,
-	devicetree@vger.kernel.org,
-	linux-serial@vger.kernel.org,
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="avm+WqjA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1755073570;
+	bh=zJ0hZ2py5pjtVoXQv0PDAz0XznKZrLsvelnbnYWAbCk=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=avm+WqjAeOe8vX+Nx9VA9fzl0v8H7vQ6jFdEe4/zHJXv+FDa1x0/CssHz2ffYplFX
+	 WWMGwZFTIeZgEmjWhLaFs7/SmEn3bnaKiw2XFQRo93J8wBYiTIjCNzTCBUkza4FXLI
+	 i3nEPFOmhWmBkMsYmWR4/jRGFahA4H/gjX95oMPY=
+X-QQ-mid: zesmtpsz6t1755073566t0d2cf4d6
+X-QQ-Originating-IP: ehoTC6TvF9jhdhuMPH9TGp/slVsmOkyosadz0faF+GE=
+Received: from = ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 13 Aug 2025 16:26:04 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 8202150046870958779
+EX-QQ-RecipientCnt: 20
+Date: Wed, 13 Aug 2025 16:26:04 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Guodong Xu <guodong@riscstar.com>, Vinod Koul <vkoul@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Duje =?utf-8?Q?Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: Alex Elder <elder@riscstar.com>, Vivian Wang <wangruikang@iscas.ac.cn>,
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Conor Dooley <conor@kernel.org>
-Subject: [PATCH] dt-bindings: serial: 8250: move a constraint
-Date: Tue, 12 Aug 2025 22:21:50 -0500
-Message-ID: <20250813032151.2330616-1-elder@riscstar.com>
-X-Mailer: git-send-email 2.48.1
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [PATCH v3 0/8] dmaengine: mmp_pdma: Add SpacemiT K1 SoC support
+ with 64-bit addressing
+Message-ID: <268633D49B18C3E7+aJxMHPhItPq9ioto@LT-Guozexi>
+References: <20250714-working_dma_0701_v2-v3-0-8b0f5cd71595@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250714-working_dma_0701_v2-v3-0-8b0f5cd71595@riscstar.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: ND42uzdxTIzrasBiYskI7YFsfAFqaS6bMzVEAUdaGis6CKaY6PR2S6Cv
+	9zoQ6VD3TN5bNZbUG0k+Ae96q5gg9gRK6lvQRnEQ6XlhZBU7HWa7Hw8mvi6QKNJUJ/ZK+/Y
+	VXJN4pBvg+2qXQAFqD00wTCKZX9HpoqE/iNF08laTqkFwiTRJuxiSUFbb/LTGABVKN5k5il
+	Q0JCurAvs/R8dsxVRVQg4WhLLwtjEpoxtET218BS/LQrRazWu79BDnzOsQz6kSda84awsGh
+	DLzb9IgEmWPkw24wgAhjf7XUVm5nkC0IacV36MVGgzvUpap6hVftviksq/VySJ61Zdudbu4
+	28NPYUFcG9kJW3aaLvIe9AlzhyZA3ERJelcamEIzE8fXWFNofofg5Ix0XFLlxfhLv9aT5by
+	gcnw8ovTUUOPcsoXA8rGX24kC9w5M9YOuo6ZaxYqaO+DgFUHQ/R3WSiu6VkdzoWQmestTGH
+	BmFThxxLfRUbjctR4z6g9PtxsTD9pWLFQRlkDw/aVDKNpvFnhgtitAEuSDiUrB4Q651RYMn
+	L9hGLjjJZ58maYOocxMKHXj+vOiqAQnBctzNCHK7G2tmblW+4hHs4JXJYKaraU2x2FvFo8M
+	RFOr/hYcQodYfd08V4yZ6Ee5oXLKRGhHLSinvsmZx3G5wWvmuV9qi4R1Wg3aiLX3UjL8JOa
+	xYtTXCYLmlxJnSBZtER/OXUfLxs2yjVRNvDxR8Q2XWJ70pfO7BSD4tnVFOvLlyMrsmZuCwS
+	hsQRGrlHtj33jq7cwo89MbFoLhrp2YBWcsoPldWo79TQyvRe3D3TgE+pwvCEabAko7KwAFB
+	rsFh9OkNT4aQsv7d3K2I9loecpLDN7kCLwlTEbL4ip2L1fQstvb5O0ZhmkGnW0WWvmD3cWo
+	qw7PQ7XKK0yquqTAdBDOofOQgYgKtwT6284eslAYIduyteXrsQMviPN9uVAGu1ErMav8MRN
+	EpFnlSoFmQLNy4SJbvqov0NCXWxBNeQkSNYPoqyodK/ixLfKzlGa+NO3j++JEwJ3XIbV1QE
+	975GbqXYugICPBdjRsZvIwHLlo2BtAklMwOJIioYhfb5OLpCcl9tyaZd0VA5TWoQuKtHg0/
+	w==
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-RECHKSPAM: 0
 
-A block that required a "spacemit,k1-uart" compatible node to
-specify two clocks was placed in the wrong spot in the binding.
-Conor Dooley pointed out it belongs earlier in the file, as part
-of the initial "allOf".
+Hi Guodong, thanks for your patches!
 
-Fixes: 2c0594f9f0629 ("dt-bindings: serial: 8250: support an optional second clock")
-Reported-by: Conor Dooley <conor@kernel.org>
-Closes: https://lore.kernel.org/lkml/20250729-reshuffle-contented-e6def76b540b@spud/
-Signed-off-by: Alex Elder <elder@riscstar.com>
----
- .../devicetree/bindings/serial/8250.yaml      | 46 +++++++++----------
- 1 file changed, 22 insertions(+), 24 deletions(-)
+I have tested it using i2s and dma-tetst.
 
-diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
-index e46bee8d25bf0..f59c0b37e8ebb 100644
---- a/Documentation/devicetree/bindings/serial/8250.yaml
-+++ b/Documentation/devicetree/bindings/serial/8250.yaml
-@@ -48,7 +48,6 @@ allOf:
-       oneOf:
-         - required: [ clock-frequency ]
-         - required: [ clocks ]
--
-   - if:
-       properties:
-         compatible:
-@@ -66,6 +65,28 @@ allOf:
-           items:
-             - const: core
-             - const: bus
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - spacemit,k1-uart
-+              - nxp,lpc1850-uart
-+    then:
-+      required:
-+        - clocks
-+        - clock-names
-+      properties:
-+        clocks:
-+          minItems: 2
-+        clock-names:
-+          minItems: 2
-+    else:
-+      properties:
-+        clocks:
-+          maxItems: 1
-+        clock-names:
-+          maxItems: 1
- 
- properties:
-   compatible:
-@@ -264,29 +285,6 @@ required:
-   - reg
-   - interrupts
- 
--if:
--  properties:
--    compatible:
--      contains:
--        enum:
--          - spacemit,k1-uart
--          - nxp,lpc1850-uart
--then:
--  required:
--    - clocks
--    - clock-names
--  properties:
--    clocks:
--      minItems: 2
--    clock-names:
--      minItems: 2
--else:
--  properties:
--    clocks:
--      maxItems: 1
--    clock-names:
--      maxItems: 1
--
- unevaluatedProperties: false
- 
- examples:
+Tested-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
--- 
-2.48.1
+                - Troy
 
+On Mon, Jul 14, 2025 at 05:39:27PM +0800, Guodong Xu wrote:
+> This patchset adds support for SpacemiT K1 PDMA controller to the existing
+> mmp_pdma driver. The K1 PDMA controller is compatible with Marvell MMP PDMA
+> but extends it with 64-bit addressing capabilities through LPAE (Long
+> Physical Address Extension) bit and higher 32-bit address registers (DDADRH,
+> DSADRH and DTADRH).
+> 
+> In v3, the major change is creating a separate yaml binding schema for
+> SpacemiT K1 PDMA, per Krzysztof's suggestion. By doing this, the binding
+> schema got simplified a lot. Deprecated property (ie. #dma-channels) and
+> unused values for backward compatibility (#dma-cells const 2) can be
+> removed.
+> 
+> Other changes involve placing pdma0 node in k1.dtsi and in board specific
+> dts files with proper ordering.
+> 
+> The patchset has been tested on BananaPi F3 board.
+> 
+> This patchset is based on SpacemiT linux (for-next) [1] with Patch 8
+> depending on:
+> - riscv: defconfig: run savedefconfig to reorder it
+>     It has been merged into riscv/linux.git (for-next)
+>     Link: https://git.kernel.org/riscv/c/d958097bdf88
+> 
+> [1] https://github.com/spacemit-com/linux.git (for-next)
+> 
+> All of these patches are available here:
+> https://github.com/docularxu/linux/tree/working_dma_0714_v3
+> 
+> Changes in v3:
+> - Created separated yaml binding for Spacemit K1 PDMA controller
+> - Updated pdma0 node properties according to the new yaml binding
+> - Put pdma0 node in k1.dtsi according to its device address
+> - Put pdma0 node in board dts files according to alphabetic order
+> 
+> Link to v2:
+> https://lore.kernel.org/r/20250701-working_dma_0701_v2-v2-0-ab6ee9171d26@riscstar.com
+> 
+> Changes in v2:
+> - Tag the series as "damengine".
+> - Used more specific compatible string "spacemit,k1-pdma"
+> - Enhanced DT bindings with conditional constraints:
+>    - clocks/resets properties only required for SpacemiT K1
+>    - #dma-cells set to 2 for marvell,pdma-1.0 and spacemit,k1-pdma
+>    - #dma-cells set to 1 for other variants
+> - Split mmp_pdma driver changes per maintainer feedback:
+>    - First patch (4/8) adds ops abstraction layer and 32-bit support
+>    - Second patch (5/8) adds K1-specific 64-bit support
+> - Merged Kconfig changes into the dmaengine: mmp_pdma driver patch (5/8)
+> - Enabled pdma0 on both BPI-F3 and Milk-V Jupiter
+> 
+> Link to v1:
+> https://lore.kernel.org/all/20250611125723.181711-1-guodong@riscstar.com/
+> 
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> ---
+> Guodong Xu (8):
+>       dt-bindings: dma: Add SpacemiT K1 PDMA controller
+>       dmaengine: mmp_pdma: Add optional clock support
+>       dmaengine: mmp_pdma: Add optional reset controller support
+>       dmaengine: mmp_pdma: Add operations structure for controller abstraction
+>       dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support with 64-bit addressing
+>       riscv: dts: spacemit: Add PDMA0 node for K1 SoC
+>       riscv: dts: spacemit: Enable PDMA0 on Banana Pi F3 and Milkv Jupiter
+>       riscv: defconfig: Enable MMP_PDMA support for SpacemiT K1 SoC
+> 
+>  .../devicetree/bindings/dma/spacemit,k1-pdma.yaml  |  68 +++++
+>  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    |   4 +
+>  arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts  |   4 +
+>  arch/riscv/boot/dts/spacemit/k1.dtsi               |  11 +
+>  arch/riscv/configs/defconfig                       |   1 +
+>  drivers/dma/Kconfig                                |   2 +-
+>  drivers/dma/mmp_pdma.c                             | 281 ++++++++++++++++++---
+>  7 files changed, 339 insertions(+), 32 deletions(-)
+> ---
+> base-commit: 6be7a5a768aafcb07d177bd2ae36ab84e4e0acde
+> change-id: 20250701-working_dma_0701_v2-7d2cf506aad7
+> prerequisite-change-id: 20250611-01-riscv-defconfig-7f90f73d283d:v1
+> prerequisite-patch-id: 53bda77e089023a09152a7d5403e1a738355c5d3
+> 
+> Best regards,
+> -- 
+> Guodong Xu <guodong@riscstar.com>
+> 
+> 
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
