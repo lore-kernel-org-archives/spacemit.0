@@ -1,183 +1,430 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B975F2C324A
-	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 21:27:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023549475
+	for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 23:43:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755120448; cv=none; b=qs5QA9P6tD5yKC11nWaeOAgzJNZv/qFor+GSCsFIkb9KaNEk6n+VI9jN+Ajre0KSkxLRYL/ForS7uoh0vGj+IyhJT1s/6q15ZiHl1vOoL3nnWOZ/6xYkLFu+yDC/ywPx+yKykcUDhYD6BSRjH7YY/fEkEdUN6ISXPhUSWUSF63s=
+	t=1755128622; cv=none; b=Fylio0Yby3DNR1ApGKz/a7Hxf/HasoXfeZ9alC08QpHE0HgdWRImkPvkNFGw31KYIyr9XEAtUBPPzGUMhRVwyd+40jI8hrHnyfWeHExlFxr6tNjva4laKhi+PYE/uY88J5EOaYw+G2i2GQWosORRP6bwtuA6lm53PaJta3gsPCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755120448; c=relaxed/simple;
-	bh=Id+QsQELyg+pEjz6bWvXIyl5zJr/tcJ4oL7E4R2FyZc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I73Khbx11/L1K9df7R9B6yefSEpGlaaaMKEoHuE6wGP1RHaUToRZd06RFJ4I0z5Hsgpnj4EZE/IHlHLlgePO3xaYYfMYnyjR/+Pq8uDKRM+SHRHagfDW2mGmVnDq/CfbMPyqEuAFH38/slZ6HBmS3s4OFKk4av6+Xe0tOsdwCSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=yqwnuNl2; arc=none smtp.client-ip=209.85.166.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1755128622; c=relaxed/simple;
+	bh=WUD+5LHRgd0cb5qv3B4qv6yYvMfh5Md8/8sWpd8KB2w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FtB+Wex0mLTRcir2CG5VvBqU0sglXP92yqAdaq4ElCDuCauoOv72vd0GwAo6GeBlFq3liQ2otQxVv7E+M49xmzrrPUSP8GOZvwqg/vUNMgCvR8KGjAaRivfSmsJqfyffaZvQXN+3wV179WybKcR3SVff+A3aUats53IY4ulIqTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S+DY0Rv9; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="yqwnuNl2"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3e56ffceab3so2758495ab.1
-        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 14:27:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S+DY0Rv9"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-76e2e6038cfso755570b3a.0
+        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 16:43:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755120445; x=1755725245; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HrFzekosij5RO32ErAHxgIo8Kdw6RXeQrtvQE1dGiUY=;
-        b=yqwnuNl2fSE+61PTiVgRQVcAvxChzKejQDRgXNp5RxOiax2T/k0QxtHwbkVEdkTmiA
-         9oG8+WONgq5WhbiJCwlPBXrDymAWgYi6wHHBpXKn3GYjklGq9ZuiHfuC7K7ayhPiX0e8
-         FqWAR3+zTrpF7im9P/YUH5QbtK/mZ9arjgiXYCApBMskhtkb/ERN6WTPdKtMIDDzMHkw
-         lszLlgNcyM5oSLshKd1Cl9qaJeJukkm7nbdHH2oKMI79yEIBkzM+ylLYVE+dg7ENnhNp
-         yis9N1poZzU6aswaFUl3qQHy760riDcuvF1+8Mts+0dayxJun2kAbvsKpH8acmqlP3Gf
-         XshA==
+        d=gmail.com; s=20230601; t=1755128620; x=1755733420; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IK1UDAHqrS6Wwx5cnSreU+fQQkZ3UY1M1lvt1651jyo=;
+        b=S+DY0Rv9Grxn1BkLkseUk8ImZ5Y+C41SOCJ64Wt5wJnvtAhfycO+SJvORU/K0WLY+f
+         OkQnh4BQtQ8RDwGVNMUpJW71TqhMlgk2a8KTDIScHIv11RHKR4bQgBGfon0iIMJTodnh
+         xO5b4Rqv9SYFByFyvM3l1/cW9e3gt+4iM+i37NK4kUw8wTKXem6zU45ZSXh+8Rv79V5U
+         cwTWgXKbZ5hf+EUNjhdxt9vq/7S+GFCMBsRWlq+V6fNY2FIHNdgvVdABStiB/wPNQ3Ff
+         YNVZ8CNJoFXmR9Hycgp1hL29BhumZqlqMXY2YBTkc1Xibyqe71qPLw6Z9dVQ57+TUnaA
+         nV7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755120445; x=1755725245;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HrFzekosij5RO32ErAHxgIo8Kdw6RXeQrtvQE1dGiUY=;
-        b=NuAtzvxowrYCRDNfCnqmYV1SS1jWd/higGnR57JZ3O4FPkQ7uiQr2b1UJKVs+gJGDd
-         PU8/ciTelY7U7r1jAsgQqitIuS9ZZuSKotZ6h++vH30132yHwYwRX4NgcOFQlNFmFRDx
-         VJOFpj7HjzMu4+zKorg5c6hupgjOMua2677hF2lCElFpA/YY3mhgCneuqUJ7fFGEGghj
-         jftTcB9xY87OBo8/xx241o5Jmg/Zz8fvm7mHOdJ/+xccgnAMTnX2dv0m188Nr7epeCsX
-         q0YeRTpq4QPFoVvhRxg2y8KC6mF9Ro68b1ehmywWfxgBJXOnNBrRmwe+5X144MxQ/j0e
-         zrZg==
-X-Forwarded-Encrypted: i=1; AJvYcCWBG9faAWhKIDxbd7oJoOQMG6yKDSwwNbLRTA3Wk58WxgsLGla3N1r1AKIRjyft08NtNImibt5Nrw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx3U8Rz+4gMpyqPpm6YoeyM6R27UhPg4r0aBd0+KMKpVmBjUk3F
-	0xWIVCESyl2Sn5M+Z19ONTwSBxTUQFqHkE3H0Etc8+M4Hxk5VWHRe27UqUvVsCx/Iyw=
-X-Gm-Gg: ASbGncu8nrdoiqhC1BMIBkEBS5JDFtELr9lewJQ0RC49qfsxltdhro7r/3TQiW8XOVI
-	STjbv/c9mQa927kGDb5D41zHShHVETFuc7h90BrEAoQzxTxgp4+GHUoNMU/kvW3Z4Gl3kV11waA
-	x5uDa5ezE2eoWlfDeBooZW3n4xQrc6TZ+JzWU2/06zRZrYXQFCCYfWMZVLLY0yzGmw+rIP8N10I
-	IZb3cvLALIUbVB6PcZ8ytsq6UixMNjCB+NVEsOBs1tgufcK5sV+l6gFW7ALpiNwyB5++Yiq+ohg
-	VdM9TV+eyNImHhp+UpYwDU9Mkpruzpbekr2JsYGH0NMXAPrT3w+AkB5bY4Qt4fWVh+BgrCMciax
-	CBVP0RAYm9R6BNA4Fd78zo0TG904RWu6g5QUpdLIcZP6jdTaYCPPcIPYHjEA29O/eg4biKNNf
-X-Google-Smtp-Source: AGHT+IHhxOnH0kTjTpaPF32KB8bFgpsjlYZNdzvmJrAc6sUo4I9UVSc/FXuQewT8WYi7PJE6uX0raQ==
-X-Received: by 2002:a05:6e02:b27:b0:3e5:4869:fdd3 with SMTP id e9e14a558f8ab-3e570810a71mr11947605ab.7.1755120445360;
-        Wed, 13 Aug 2025 14:27:25 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3e56ddf9ad0sm4921475ab.34.2025.08.13.14.27.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Aug 2025 14:27:25 -0700 (PDT)
-Message-ID: <5d5eacff-4c32-4df4-8da0-3b55974b74aa@riscstar.com>
-Date: Wed, 13 Aug 2025 16:27:22 -0500
+        d=1e100.net; s=20230601; t=1755128620; x=1755733420;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IK1UDAHqrS6Wwx5cnSreU+fQQkZ3UY1M1lvt1651jyo=;
+        b=MKokbfSfaxMIquXBDoAnDmA47SjVHPef7NvGkwtf4xL0ScrZxMKLGDFXozzw1TH4aP
+         ekPIOcakzb2PNEI52jHqrNBlqxPCatOle2YD2q6q2OkJPsi0W9NxB67LuZR42KBvRPJ2
+         q4TPd8y4vO9YfMFK1qNUbXlN4M8GPerhh4G22CwXm0fzw3W5o+TRBj4QQS+aqeHU4bCP
+         34oWLRE5/9cS/TcViwBvmr1e+VNfkY9LQzOw5u47XjuULn0alAS/UtU6jVyxGL+Ayqso
+         zcPKxBEvJgir/yzwGAsyop8SL9JY5iUAiNWTbWES+d1AIe15IYiFnKLP/E5IFy9bo6Fw
+         gK9w==
+X-Forwarded-Encrypted: i=1; AJvYcCVP1Asc9kN8G1cIj6DuCVpy3F/YGbqoyV3ZIxZyd3Qz2YN2fiyCZGtkpi+5/dMdRll/ncsa+mJgtQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyEcqFh3Ck9ZxaxceUnjFXa9KrhKs6WIxHBLc7lQFxNucY0wYJz
+	t7WHjoLclmjqIuK2IG7uF08a5hUZPBj5EkQTWDPS6s+Mf0O8WDrv1DPb
+X-Gm-Gg: ASbGncvsEJzlIn4dBIvz6ZWpLAGJXZFrQBABHpsRLK4dLUXVwJHeZQ6XR6UvVJFJE35
+	s/GsrNFvqsS2NOQoUsUJaqwlb+/cDtFr03zSQwlYKFXTv//AR+Y5Q8nOVrre7EKGcKrpWFR2kq3
+	PeHHGGVdcjmcIHlC8yaOv8zfuR8vU8YlOeTPKDFgjXA6Zv59bwxYASmYU2OmC+nZBBfIdxoDZB5
+	EgCBNBRUYsKDwhDaWD5WKT6gvdoFjTEwRs/dNUDH/3E5yVtfbkPku+LiAz3V+aPq99NvJOE9jeY
+	ezz4hBYKDv4FCD77UyYaXtygngXP9jTLfEM/OvasDlgGElygOpVtTIX0tWWHoUFS6ya8BZ9e+KQ
+	SPvzitnPT5+NN1u7JrZekCQ==
+X-Google-Smtp-Source: AGHT+IFHE6Y9GCZJmlkIBg9XHe8uvOA+KyOLQ6/iXAbyBbilyGyOB9TjvMRcZT/9gWJGKiyaE/2RvQ==
+X-Received: by 2002:a05:6a00:1995:b0:76b:e144:1d91 with SMTP id d2e1a72fcca58-76e2fd72ca2mr1422050b3a.16.1755128619716;
+        Wed, 13 Aug 2025 16:43:39 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-76bccfbce4bsm32612704b3a.77.2025.08.13.16.43.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Aug 2025 16:43:38 -0700 (PDT)
+Date: Thu, 14 Aug 2025 07:42:48 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Alex Elder <elder@riscstar.com>, lpieralisi@kernel.org, 
+	kwilczynski@kernel.org, mani@kernel.org, robh@kernel.org, bhelgaas@google.com, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org
+Cc: dlan@gentoo.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de, tglx@linutronix.de, 
+	johan+linaro@kernel.org, thippeswamy.havalige@amd.com, namcao@linutronix.de, 
+	mayank.rana@oss.qualcomm.com, shradha.t@samsung.com, inochiama@gmail.com, 
+	quic_schintav@quicinc.com, fan.ni@samsung.com, devicetree@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-pci@vger.kernel.org, spacemit@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	Junzhong Pan <panjunzhong@linux.spacemit.com>
+Subject: Re: [PATCH 4/6] phy: spacemit: introduce PCIe/combo PHY
+Message-ID: <valmrbddij2dn4fjxefr46zud2u6eco2isyaa62sd66d27foyl@4hrhafqftgb5>
+References: <20250813184701.2444372-1-elder@riscstar.com>
+ <20250813184701.2444372-5-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] PCI: spacemit: introduce SpacemiT PCIe host driver
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
- robh@kernel.org, bhelgaas@google.com, krzk+dt@kernel.org,
- conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, p.zabel@pengutronix.de, tglx@linutronix.de,
- johan+linaro@kernel.org, thippeswamy.havalige@amd.com, namcao@linutronix.de,
- mayank.rana@oss.qualcomm.com, shradha.t@samsung.com, inochiama@gmail.com,
- quic_schintav@quicinc.com, fan.ni@samsung.com, devicetree@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-pci@vger.kernel.org,
- spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20250813212219.GA294849@bhelgaas>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20250813212219.GA294849@bhelgaas>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250813184701.2444372-5-elder@riscstar.com>
 
-On 8/13/25 4:22 PM, Bjorn Helgaas wrote:
-> On Wed, Aug 13, 2025 at 01:46:59PM -0500, Alex Elder wrote:
->> Introduce a driver for the PCIe root complex found in the SpacemiT
->> K1 SoC.  The hardware is derived from the Synopsys DesignWare PCIe IP.
->> The driver supports three PCIe ports that operate at PCIe v2 transfer
->> rates (5 GT/sec).  The first port uses a combo PHY, which may be
->> configured for use for USB 3 instead.
+On Wed, Aug 13, 2025 at 01:46:58PM -0500, Alex Elder wrote:
+> Introduce a driver that supports three PHYs found on the SpacemiT
+> K1 SoC.  The first PHY is a combo PHY that can be configured for
+> use for either USB 3 or PCIe.  The other two PHYs support PCIe
+> only.
 > 
-> I assume "PCIe v2" means what most people call "PCIe gen2", but the
-> spec encourages avoidance "genX" because it's ambiguous.
-
-Yes, that's what I meant, but I did try to clarify with the
-transfer rate.
-
->> +config PCIE_K1
->> +	bool "SpacemiT K1 host mode PCIe controller"
+> All three PHYs must be programmed with an 8 bit receiver termination
+> value, which must be determined dynamically; only the combo PHY is
+> able to determine this value.  The combo PHY performs a special
+> calibration step at probe time to discover this, and that value is
+> used to program each PHY that operates in PCIe mode.  The combo
+> PHY must therefore be probed--first--if either of the PCIe-only
+> PHYs will be used.
 > 
-> Style of nearby entries is:
+> During normal operation, the USB or PCIe driver using the PHY must
+> ensure clocks and resets are set up properly.  However clocks are
+> enabled and resets are de-asserted temporarily by this driver to
+> perform the calibration step on the combo PHY.
 > 
->    "SpacemiT K1 PCIe controller (host mode)"
-
-OK I'll fix that.
-
-> Please alphabetize by the company name ("SpacemiT") in the menu entry.
-
-OK.
-
->> +#define K1_PCIE_VENDOR_ID	0x201f
->> +#define K1_PCIE_DEVICE_ID	0x0001
+> Tested-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+>  drivers/phy/Kconfig                |  11 +
+>  drivers/phy/Makefile               |   1 +
+>  drivers/phy/phy-spacemit-k1-pcie.c | 639 +++++++++++++++++++++++++++++
+>  3 files changed, 651 insertions(+)
+>  create mode 100644 drivers/phy/phy-spacemit-k1-pcie.c
 > 
-> I assume this (0x201f) has been reserved by the PCI-SIG?  I don't see
-> it at:
-> 
->    https://pcisig.com/membership/member-companies?combine=0x201f
+> diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
+> index 58c911e1b2d20..0fa343203f289 100644
+> --- a/drivers/phy/Kconfig
+> +++ b/drivers/phy/Kconfig
+> @@ -101,6 +101,17 @@ config PHY_NXP_PTN3222
+>  	  schemes. It supports all three USB 2.0 data rates: Low Speed, Full
+>  	  Speed and High Speed.
+>  
+> +config PHY_SPACEMIT_K1_PCIE
+> +	tristate "PCIe and combo PHY driver for the SpacemiT K1 SoC"
+> +	depends on ARCH_SPACEMIT || COMPILE_TEST
+> +	depends on HAS_IOMEM
+> +	depends on OF
+> +	select GENERIC_PHY
+> +	default ARCH_SPACEMIT
+> +	help
+> +	  Enable support for the PCIe and USB 3 combo PHY and two
+> +	  PCIe-only PHYs used in the SpacemiT K1 SoC.
+> +
+>  source "drivers/phy/allwinner/Kconfig"
+>  source "drivers/phy/amlogic/Kconfig"
+>  source "drivers/phy/broadcom/Kconfig"
+> diff --git a/drivers/phy/Makefile b/drivers/phy/Makefile
+> index c670a8dac4680..20f0078e543c7 100644
+> --- a/drivers/phy/Makefile
+> +++ b/drivers/phy/Makefile
+> @@ -13,6 +13,7 @@ obj-$(CONFIG_PHY_SNPS_EUSB2)		+= phy-snps-eusb2.o
+>  obj-$(CONFIG_USB_LGM_PHY)		+= phy-lgm-usb.o
+>  obj-$(CONFIG_PHY_AIROHA_PCIE)		+= phy-airoha-pcie.o
+>  obj-$(CONFIG_PHY_NXP_PTN3222)		+= phy-nxp-ptn3222.o
+> +obj-$(CONFIG_PHY_SPACEMIT_K1_PCIE)	+= phy-spacemit-k1-pcie.o
+>  obj-y					+= allwinner/	\
+>  					   amlogic/	\
+>  					   broadcom/	\
+> diff --git a/drivers/phy/phy-spacemit-k1-pcie.c b/drivers/phy/phy-spacemit-k1-pcie.c
+> new file mode 100644
+> index 0000000000000..32dce53170fbb
+> --- /dev/null
+> +++ b/drivers/phy/phy-spacemit-k1-pcie.c
+> @@ -0,0 +1,639 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * SpacemiT K1 PCIe and PCIe/USB 3 combo PHY driver
+> + *
+> + * Copyright (C) 2025 by RISCstar Solutions Corporation.  All rights reserved.
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/clk.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/kernel.h>
+> +#include <linux/mfd/syscon.h>
+> +#include <linux/module.h>
+> +#include <linux/phy/phy.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regmap.h>
+> +#include <linux/reset.h>
+> +
+> +#include <dt-bindings/phy/phy.h>
+> +
+> +/*
+> + * Three PCIe ports are supported in the SpacemiT K1 SoC, and this driver
+> + * supports their PHYs.
+> + *
+> + * The PHY for PCIe port A is different from the PHYs for ports B and C:
+> + * - It has one lane, while ports B and C have two
+> + * - It is a combo PHY can be used for PCIe or USB 3
+> + * - It can automatically calibrate PCIe TX and RX termination settings
+> + *
+> + * The PHY functionality for PCIe ports B and C is identical:
+> + * - They have two PCIe lanes (but can be restricted to 1 via Device Tree)
+> + * - They are used for PCIe only
+> + * - They are configured using TX and RX values computed for port A
+> + *
+> + * A given board is designed to use the combo PHY for either PCIe or USB 3.
+> + * Whether the combo PHY is configured for PCIe or USB 3 is specified in
+> + * Device Tree using a phandle plus an argument.  The argument indicates
+> + * the type (either PHY_TYPE_PCIE or PHY_TYPE_USB3).
+> + *
+> + * Each PHY depends on clocks and resets provided by the controller
+> + * hardware (PCIe or USB) it is associated with.  The controller drivers
+> + * are required to enable any clocks and de-assert any resets that affect
+> + * PHY operation.
+> + *
+> + * PCIe PHYs must be programmed with RX and TX calibration values.  The
+> + * combo PHY is the only one that can determine these values.  They are
+> + * determined by temporarily enabling the combo PHY in PCIe mode at probe
+> + * time (if necessary).  This calibration only needs to be done once, and
+> + * when it has completed the TX and RX values are saved.
+> + *
+> + * To allow the combo PHY to be enabled for calibration, the resets and
+> + * clocks it uses in PCIe mode must be supplied.
+> + */
+> +
+> +struct k1_pcie_phy {
+> +	struct device *dev;		/* PHY provider device */
+> +	struct phy *phy;
+> +	void __iomem *regs;
+> +	u32 pcie_lanes;			/* Max unless limited by DT */
+> +	/* The remaining fields are only used for the combo PHY */
+> +	u32 type;			/* PHY_TYPE_PCIE or PHY_TYPE_USB3 */
+> +	struct regmap *pmu;
+> +};
+> +
+> +#define CALIBRATION_TIMEOUT		500000	/* microseconds */
+> +#define PLL_TIMEOUT			500000	/* microseconds */
+> +#define POLL_DELAY			500	/* microseconds */
+> +
+> +/* Selecting the combo PHY operating mode requires PMU regmap access */
+> +#define SYSCON_PMU			"spacemit,syscon-pmu"
+> +
+> +/* PMU space, for selecting between PCIe and USB3 mode on the combo PHY */
+> +
+> +#define PMUA_USB_PHY_CTRL0			0x0110
+> +#define COMBO_PHY_SEL			BIT(3)	/* 0: PCIe; 1: USB3 */
+> +
+> +#define PCIE_CLK_RES_CTRL			0x03cc
+> +#define PCIE_APP_HOLD_PHY_RST		BIT(30)
+> +
+> +/* PHY register space */
+> +
+> +/* Offset between lane 0 and lane 1 registers when there are two */
+> +#define PHY_LANE_OFFSET				0x0400
+> +
+> +#define PCIE_PU_ADDR_CLK_CFG			0x0008
+> +#define PLL_READY			BIT(0)		/* read-only */
+> +#define CFG_RXCLK_EN			BIT(3)
+> +#define CFG_TXCLK_EN			BIT(4)
+> +#define CFG_PCLK_EN			BIT(5)
+> +#define CFG_PIPE_PCLK_EN		BIT(6)
+> +#define CFG_INTERNAL_TIMER_ADJ		GENMASK(10, 7)
+> +#define TIMER_ADJ_USB		0x2
+> +#define TIMER_ADJ_PCIE		0x6
+> +#define CFG_SW_PHY_INIT_DONE		BIT(11)	/* We set after PLL config */
+> +
+> +#define PCIE_RC_DONE_STATUS			0x0018
+> +#define CFG_FORCE_RCV_RETRY		BIT(10)
+> +
+> +#define PCIE_RC_CAL_REG2			0x0020
+> +#define RC_CAL_TOGGLE			BIT(22)
+> +#define CLKSEL				GENMASK(31, 29)
+> +#define CLKSEL_24M		0x3
+> +
+> +#define PCIE_PU_PLL_1				0x0048
+> +#define REF_100_WSSC			BIT(12)	/* 1: input is 100MHz, SSC */
+> +#define FREF_SEL			GENMASK(15, 13)
+> +#define FREF_24M		0x1
+> +#define SSC_DEP_SEL			GENMASK(19, 16)
+> +#define SSC_DEP_NONE		0x0
+> +#define SSC_DEP_5000PPM		0xa
+> +#define SSC_MODE			GENMASK(21, 20)
+> +#define SSC_MODE_DOWN_SPREAD	0x3
+> +#define SSC_OFFSET			GENMASK(23, 22)
+> +#define SSC_OFFSET_0_PPM	0x0
+> +
+> +#define PCIE_PU_PLL_2				0x004c
+> +#define GEN_REF100			BIT(4)	/* 1: generate 100MHz clk */
+> +
+> +#define PCIE_RX_REG1				0x0050
+> +#define EN_RTERM			BIT(3)
+> +#define AFE_RTERM_REG			GENMASK(11, 8)
+> +
+> +#define PCIE_RX_REG2				0x0054
+> +#define RX_RTERM_SEL			BIT(5)	/* 0: use AFE_RTERM_REG value */
+> +
+> +#define PCIE_LTSSM_DIS_ENTRY			0x005c
+> +#define CFG_REFCLK_MODE			GENMASK(9, 8)
+> +#define RFCLK_MODE_DRIVER	0x1
+> +#define OVRD_REFCLK_MODE		BIT(10)	/* 1: use CFG_RFCLK_MODE */
+> +
+> +#define PCIE_TX_REG1				0x0064
+> +#define TX_RTERM_REG			GENMASK(15, 12)
+> +#define TX_RTERM_SEL			BIT(25)	/* 1: use TX_RTERM_REG */
+> +
+> +#define USB3_TEST_CTRL				0x0068
+> +
+> +#define PCIE_RCAL_RESULT			0x0084	/* Port A PHY only */
+> +#define RTERM_VALUE_RX			GENMASK(3, 0)
+> +#define RTERM_VALUE_TX			GENMASK(7, 4)
+> +#define R_TUNE_DONE			BIT(10)
+> +
+> +static u32 k1_phy_rterm = ~0;     /* Invalid initial value */
+> +
+> +/* Save the RX and TX receiver termination values */
+> +static void k1_phy_rterm_set(u32 val)
+> +{
+> +	k1_phy_rterm = val & (RTERM_VALUE_RX | RTERM_VALUE_TX);
+> +}
+> +
+> +static bool k1_phy_rterm_valid(void)
+> +{
+> +	/* Valid if no bits outside those we care about are set */
+> +	return !(k1_phy_rterm & ~(RTERM_VALUE_RX | RTERM_VALUE_TX));
+> +}
+> +
+> +static u32 k1_phy_rterm_rx(void)
+> +{
+> +	return FIELD_GET(RTERM_VALUE_RX, k1_phy_rterm);
+> +}
+> +
+> +static u32 k1_phy_rterm_tx(void)
+> +{
+> +	return FIELD_GET(RTERM_VALUE_TX, k1_phy_rterm);
+> +}
+> +
+> +/* Only the combo PHY has a PMU pointer defined */
+> +static bool k1_phy_port_a(struct k1_pcie_phy *k1_phy)
+> +{
+> +	return !!k1_phy->pmu;
+> +}
+> +
+> +/*
+> + * Select PCIe or USB 3 mode for the combo PHY.  Return 1 if the bit
+> + * was changed, 0 if it was not, or a negative error value otherwise.
+> + */
+> +static int k1_combo_phy_sel(struct k1_pcie_phy *k1_phy, bool usb3)
+> +{
+> +	int ret;
+> +
+> +	ret = regmap_test_bits(k1_phy->pmu, PMUA_USB_PHY_CTRL0, COMBO_PHY_SEL);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	/* If it's already in the desired state, we're done */
+> +	if (!!ret == usb3)
+> +		return 0;
+> +
+> +	/* Change the bit */
+> +	ret = regmap_assign_bits(k1_phy->pmu, PMUA_USB_PHY_CTRL0,
+> +				 COMBO_PHY_SEL, usb3);
+> +
+> +	return ret < 0 ? ret : 1;
+> +}
+> +
 
-I hadn't even thought to check that.  I will follow up.  Thanks
-for pointing this out.
+> +static void k1_pcie_phy_init_pll(struct k1_pcie_phy *k1_phy,
+> +				 void __iomem *regs, bool pcie)
+> +{
+> +	void __iomem *virt;
+> +	u32 timer_adj;
+> +	u32 ssc_dep;
+> +	u32 val;
+> +
+> +	if (pcie) {
+> +		timer_adj = TIMER_ADJ_PCIE;
+> +		ssc_dep = SSC_DEP_NONE;
+> +	} else {
+> +		timer_adj = TIMER_ADJ_USB;
+> +		ssc_dep = SSC_DEP_5000PPM;
+> +	}
+> +
+> +	/*
+> +	 * Disable 100 MHz input reference with spread-spectrum
+> +	 * clocking and select the 24 MHz clock input frequency
+> +	 */
+> +	virt = k1_phy->regs + PCIE_PU_PLL_1;
+> +	val = readl(virt);
+> +	val &= ~REF_100_WSSC;
+> +
+> +	val &= ~FREF_SEL;
+> +	val |= FIELD_PREP(FREF_SEL, FREF_24M);
+> +
+> +	val &= ~SSC_DEP_SEL;
+> +	val |= FIELD_PREP(SSC_DEP_SEL, ssc_dep);
+> +
+> +	val &= ~SSC_MODE;
+> +	val |= FIELD_PREP(SSC_MODE, SSC_MODE_DOWN_SPREAD);
+> +
+> +	val &= ~SSC_OFFSET;
+> +	val |= FIELD_PREP(SSC_OFFSET, SSC_OFFSET_0_PPM);
+> +	writel(val, virt);
+> +
+> +	if (pcie) {
+> +		virt = regs + PCIE_PU_PLL_2;
+> +		val = readl(virt);
+> +		val |= GEN_REF100;	/* Enable 100 MHz PLL output clock */
+> +		writel(val, virt);
+> +	}
+> +
+> +	/* Enable clocks and mark PLL initialization done */
+> +	virt = regs + PCIE_PU_ADDR_CLK_CFG;
+> +	val = readl(virt);
+> +	val |= CFG_RXCLK_EN;
+> +	val |= CFG_TXCLK_EN;
+> +	val |= CFG_PCLK_EN;
+> +	val |= CFG_PIPE_PCLK_EN;
+> +
+> +	val &= ~CFG_INTERNAL_TIMER_ADJ;
+> +	val |= FIELD_PREP(CFG_INTERNAL_TIMER_ADJ, timer_adj);
+> +
+> +	val |= CFG_SW_PHY_INIT_DONE;
+> +	writel(val, virt);
+> +}
+> +
+> +static int k1_pcie_pll_lock(struct k1_pcie_phy *k1_phy, bool pcie)
+> +{
+> +	u32 val = pcie ? CFG_FORCE_RCV_RETRY : 0;
+> +	void __iomem *virt;
+> +
+> +	writel(val, k1_phy->regs + PCIE_RC_DONE_STATUS);
+> +
+> +	/*
+> +	 * Wait for indication the PHY PLL is locked.  Lanes for ports
+> +	 * B and C share a PLL, so it's enough to sample just lane 0.
+> +	 */
+> +	virt = k1_phy->regs + PCIE_PU_ADDR_CLK_CFG;	/* Lane 0 */
+> +
+> +	return readl_poll_timeout(virt, val, val & PLL_READY,
+> +				  POLL_DELAY, PLL_TIMEOUT);
+> +}
+> +
 
-> Possibly rename this to PCI_VENDOR_ID_K1 (or maybe
-> PCI_VENDOR_ID_SPACEMIT?) to match the usual format in
-> include/linux/pci_ids.h, since it seems likely to end up there
-> eventually.
+Can we use standard clk_ops and clk_mux to normalize this process?
 
-OK.
-
->> +#define PCIE_RC_PERST			BIT(12)	/* 0: PERST# high; 1: low */
-> 
-> Maybe avoid confusion by describing as "1: assert PERST#" or similar?
-
-OK.  I struggled with how to express this to avoid confusion.
-But I do think "assert PERST#" is better.
-
->> +	/* Wait the PCIe-mandated 100 msec before deasserting PERST# */
->> +	mdelay(100);
-> 
-> I think this is PCIE_T_PVPERL_MS.  Comment is superfluous then.
-
-Excellent, thank you, I'll use that.
-
->> +static int k1_pcie_probe(struct platform_device *pdev)
->> +{
->> +	struct device *dev = &pdev->dev;
->> +	struct dw_pcie_rp *pp;
->> +	struct dw_pcie *pci;
->> +	struct k1_pcie *k1;
->> +	int ret;
->> +
->> +	k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
->> +	if (!k1)
->> +		return -ENOMEM;
->> +	dev_set_drvdata(dev, k1);
-> 
-> Most neighboring drivers use platform_set_drvdata().  Personally, I
-> would set drvdata after initializing k1 because I don't like to
-> advertise pointers to uninitialized things.
-
-OK, I understand that and will do it the way you suggest.
-
->> +static void k1_pcie_remove(struct platform_device *pdev)
->> +{
->> +	struct k1_pcie *k1 = dev_get_drvdata(&pdev->dev);
-> 
-> Neighbors use platform_get_drvdata().
-
-Yes, that goes with platform_set_drvdata().
-
->> +	struct dw_pcie_rp *pp = &k1->pci.pp;
->> +
->> +	dw_pcie_host_deinit(pp);
->> +}
-
-Thank you very much for your review.
-
-					-Alex
+Regards,
+Inochi
