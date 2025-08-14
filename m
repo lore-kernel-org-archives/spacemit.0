@@ -1,134 +1,187 @@
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20DE15530C
-	for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 02:52:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60EE1D416C
+	for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 04:35:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755139952; cv=none; b=eKhYR6II3fmWX68h+VJT/FS+b3rsPRgZb/pqs6YEFR8bmysKl/LmJrr47GQLnGF1170xKCw/ikHhIKeeq0TFEHAJmmjbzWLXCGCiNwmMh9IPrftnzvgMWfl02OCD+BjoeM+ghU1nNQuA9SlbRrQsEGqTSitrHULq/hgeiTy+82s=
+	t=1755146152; cv=none; b=SQK9MmhbnFB3b+PTBUTut5g6uYjxggq5mhB0anJQ5W9ZOwIKT9U4d+mRsslL4/rQaokrJWNaTyv1N8n8NSREU4FebJqhZkgveNqrQ4CsXOt5R4Oq9XF+pwl24WdDy0wl0WlerAZ3UJ8qg4il+IDLELt002RxKO5zrI+M65wqFw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755139952; c=relaxed/simple;
-	bh=HTBR17vhoYZ8Fi2t2D3VIezhF9RyLF5ybAAkSkRGq8Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fuJ36Oef1Zmxr8Wr8yOx3RwVqMnERjHa1VS9o9HyUaR98dJ8AGXgCBXWmcRSbR3Kbbw0A/pvLD8DPWJctqBNarRBlJAUP7zu6ox6hfgNsH0GTU9u5sm/Ns/zmF62v3r4/ohbjwr9GnuRnk3lJIZsBoDNAH1jEhYDxkftqBKVPaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=IP0lyHCv; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+	s=arc-20240116; t=1755146152; c=relaxed/simple;
+	bh=QGb/WSxQrkoalS0PQR6chjMqXIC8l1e9Dtd3KAUUo7U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BQcPfmvrLxtWka4jxabHX6tpq1TTFLpYdumO9Nl+fS18ChKU2Lkdw6nSlI34Z6JYONCxosLfdqwPYaFoVWd4fpz9r0IRzVYX+APNIa8M+/3pqUm5tOJgAu97ARvlD9v7+O3krxMa7mMMtH2ZwNHRRE+8HpnT0IHY+PTl0qBEkis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thingy.jp; spf=pass smtp.mailfrom=0x0f.com; dkim=pass (1024-bit key) header.d=thingy.jp header.i=@thingy.jp header.b=ER0DAD3v; arc=none smtp.client-ip=209.85.215.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thingy.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=0x0f.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="IP0lyHCv"
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id 7B03E2524A;
-	Thu, 14 Aug 2025 04:52:27 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id cu1DZ5Gm8wiw; Thu, 14 Aug 2025 04:52:26 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1755139946; bh=HTBR17vhoYZ8Fi2t2D3VIezhF9RyLF5ybAAkSkRGq8Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=IP0lyHCvPv+3+laZDJpARS5vDAKdwVsdhv8aZpJ5IvVRrvQM1z27khXbxpnj+zrMB
-	 5HcafG2t4IiYPOLHc+fFm3/m3okPNtlifM+Dybdo6Tbb6qDXcejrXy+B9S/rtORe87
-	 CFwCebY00Xoo9MC7aAAX7+Q6gKCFG5K5B5W8f+dnGNnkPPDpz2PT7s/gvNMf9CrcdA
-	 Juphco4xYgVhAf4Uk/RQCMspBrS/y1vDm7KtATFNruZtsj1GjTrzhjobOW4G5mrFHy
-	 erPVFeKHdD2DosHAtc+A7v8eDaX/bTg5ucv1Z4toHLO04pnCYWESuA/1XsVdBkaVQP
-	 m1Zirohbl2zOA==
-Date: Thu, 14 Aug 2025 02:52:03 +0000
-From: Yao Zi <ziyao@disroot.org>
-To: Alex Elder <elder@riscstar.com>, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
-	mani@kernel.org, bhelgaas@google.com, vkoul@kernel.org,
-	kishon@kernel.org
-Cc: dlan@gentoo.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
-	tglx@linutronix.de, johan+linaro@kernel.org,
-	thippeswamy.havalige@amd.com, namcao@linutronix.de,
-	mayank.rana@oss.qualcomm.com, shradha.t@samsung.com,
-	inochiama@gmail.com, quic_schintav@quicinc.com, fan.ni@samsung.com,
-	devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/6] dt-bindings: phy: spacemit: add SpacemiT PCIe/combo
- PHY
-Message-ID: <aJ1PJBax-Pj983OZ@pie>
-References: <20250813184701.2444372-1-elder@riscstar.com>
- <20250813184701.2444372-2-elder@riscstar.com>
+	dkim=pass (1024-bit key) header.d=thingy.jp header.i=@thingy.jp header.b="ER0DAD3v"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b47174b3429so283462a12.2
+        for <spacemit@lists.linux.dev>; Wed, 13 Aug 2025 21:35:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=thingy.jp; s=google; t=1755146148; x=1755750948; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=W68wJmIpwZKYrhZj9rQMZlkUfiQu51PmIXBdt9PMw2k=;
+        b=ER0DAD3vlV0+A5sT1jqWhiuGH4w+tHGERv2otSVgzwPkDkBDRusvHWSGUUkq8btmPb
+         FRA53J8QupTO1CfCKayHcKaamSKY1n/NqErah5k2BHfOVf/siaSm+A/FlsJdFWbTpJ1o
+         cK/XI4MuccxuiKjaWo6uuvkdPN3aiQBS7/9Us=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755146148; x=1755750948;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W68wJmIpwZKYrhZj9rQMZlkUfiQu51PmIXBdt9PMw2k=;
+        b=hQeiSE/wkQNQwpZpRpMavOaBWJy7Bg+vw+uF+r5TakOTSEllHiv/SxlOxWjRZ8+fDq
+         ugMlEe+LQnRlkW5G03zwUR5yvZ2CqlfjwHnG7DWJ7h8R8yJ3dzAosyrMjtDiM571bhUE
+         9AbNKVG34qeMho1+7gKEc7vaPMHhY6N+xfTTh/hdEKam+zuBKA4wJWXNi1FZc2huLSQ9
+         L5rekylQBySXlzfOWAmgrKF0bio2nVfboy080BbQe+lfnpKd4lAa4PcAOe9RpW63oOcY
+         lOephA/nhtRgPz2WZQiLNABB0rpSOolTfc6c8qtsg4rLNpzlOv1dv4eoArCvOU8MB9Ph
+         9isQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUAGagHjCYy+KTH15zmBiG9RPrmG/z2OjNcVM/Bms45FSVYXfxrBDK1WYaGyaqnPoTbL1R3MKqUQQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YweCN+GkZN98dyF/jOEaTpUTPQrO4sBirSTRP7g46rpYCtPDiud
+	NTFJu58arVjW7eg7E+Dnbmtyc/0GliTqKcS4+lKY+geFvD6OCzFyqFc7NWKzlS2wPq+Jx+FCEMh
+	UMqnDaT27m9Rw+j+NqaztWhjHD8B+6t50sbYoMJr7+g==
+X-Gm-Gg: ASbGncumvxuHYTgLRLteswILYRrd+zEifHTfN3xfKNhXKqKGWHhLzITYYbeNFMjE9FU
+	PWWE2ri5iNqJzcSt8mtR6kD0JTAYjSdB/1+Pxpwj1fIF1O9m8SCPY9AAwqvHkJQ6Svbnpw/zXje
+	GxiguYXVl3hMRoPcsG8UbwO3EvfWvLU5nchxAOS6nqG+Xio84gutcEGU+1qFpr5UmuX4yjTthlL
+	NFkmBeTJbeg
+X-Google-Smtp-Source: AGHT+IFjwIWeQGe9GR6r4b2M90JJvm8sY4wwHgdbP9dAwNnEibxW+RtNYUEdWU1EXNpbiBYlhjSbLxcOxiikHu61EP4=
+X-Received: by 2002:a17:90b:58e7:b0:31f:6682:bd28 with SMTP id
+ 98e67ed59e1d1-32327a52880mr2616043a91.16.1755146147789; Wed, 13 Aug 2025
+ 21:35:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250813184701.2444372-2-elder@riscstar.com>
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com> <20250811-clk-for-stephen-round-rate-v1-84-b3bf97b038dc@redhat.com>
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-84-b3bf97b038dc@redhat.com>
+From: Daniel Palmer <daniel@thingy.jp>
+Date: Thu, 14 Aug 2025 13:35:36 +0900
+X-Gm-Features: Ac12FXxr3rvVXpJVntmlzZatJLppeB52b6KjThcDVumW6l6FaIvxvyr3Ex-UBYM
+Message-ID: <CAFr9PXn=jJPKzMcTa-TJSNuNQknauEttNZg=jV3sBwkTYqxLcw@mail.gmail.com>
+Subject: Re: [PATCH 084/114] clk: mstar: msc313-cpupll: convert from
+ round_rate() to determine_rate()
+To: bmasney@redhat.com
+Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Cristian Marussi <cristian.marussi@arm.com>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+	Paul Cercueil <paul@crapouillou.net>, Keguang Zhang <keguang.zhang@gmail.com>, 
+	Taichi Sugaya <sugaya.taichi@socionext.com>, Takao Orito <orito.takao@socionext.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, 
+	Vladimir Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Samuel Holland <samuel.holland@sifive.com>, 
+	Yixun Lan <dlan@gentoo.org>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
+	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
+	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Chunyan Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Michal Simek <michal.simek@amd.com>, 
+	Maxime Ripard <mripard@kernel.org>, =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa <neal@gompa.dev>, 
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Romain Perier <romain.perier@gmail.com>, Andrew Lunn <andrew@lunn.ch>, 
+	Gregory Clement <gregory.clement@bootlin.com>, 
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
+	Andrea della Porta <andrea.porta@suse.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Sylwester Nawrocki <s.nawrocki@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>, 
+	Viresh Kumar <vireshk@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Luca Ceresoli <luca.ceresoli@bootlin.com>, Alex Helms <alexander.helms.jy@renesas.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Liviu Dudau <liviu.dudau@arm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev, 
+	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
+	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Aug 13, 2025 at 01:46:55PM -0500, Alex Elder wrote:
-> Add the Device Tree binding for the PCIe/USB 3.0 combo PHY found in
-> the SpacemiT K1 SoC.  This is one of three PCIe PHYs, and is unusual
-> in that only the combo PHY can perform a calibration step needed to
-> determine settings used by the other two PCIe PHYs.
-> 
-> Calibration must be done with the combo PHY in PCIe mode, and to allow
-> this to occur independent of the eventual use for the PHY (PCIe or USB)
-> some PCIe-related properties must be supplied: clocks; resets; and a
-> syscon phandle.
-> 
-> Signed-off-by: Alex Elder <elder@riscstar.com>
+Hi Brian,
+
+On Tue, 12 Aug 2025 at 00:18, Brian Masney via B4 Relay
+<devnull+bmasney.redhat.com@kernel.org> wrote:
+>
+> From: Brian Masney <bmasney@redhat.com>
+>
+> The round_rate() clk ops is deprecated, so migrate this driver from
+> round_rate() to determine_rate() using the Coccinelle semantic patch
+> on the cover letter of this series.
+>
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
 > ---
->  .../bindings/phy/spacemit,k1-combo-phy.yaml   | 110 ++++++++++++++++++
->  1 file changed, 110 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
-> new file mode 100644
-> index 0000000000000..ed78083a53231
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
-
-...
-
-> +  spacemit,syscon-pmu:
-> +    description:
-> +      PHandle that refers to the APMU system controller, whose
-> +      regmap is used in setting the mode
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-
-Clock controllers and ethernet controllers all use spacemit,apmu to
-refer the APMU system controller. Do you think it's better to keep them
-aligned?
-
-...
-
+>  drivers/clk/mstar/clk-msc313-cpupll.c | 18 ++++++++++--------
+>  1 file changed, 10 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/clk/mstar/clk-msc313-cpupll.c b/drivers/clk/mstar/clk-msc313-cpupll.c
+> index a93e2dba09d3523199263494efd2bf6987bb4156..3e643be02fe2a79c043c1b79a5e95c869b757ba1 100644
+> --- a/drivers/clk/mstar/clk-msc313-cpupll.c
+> +++ b/drivers/clk/mstar/clk-msc313-cpupll.c
+> @@ -140,20 +140,22 @@ static unsigned long msc313_cpupll_recalc_rate(struct clk_hw *hw, unsigned long
+>                                              parent_rate);
+>  }
+>
+> -static long msc313_cpupll_round_rate(struct clk_hw *hw, unsigned long rate,
+> -                                    unsigned long *parent_rate)
+> +static int msc313_cpupll_determine_rate(struct clk_hw *hw,
+> +                                       struct clk_rate_request *req)
+>  {
+> -       u32 reg = msc313_cpupll_regforfrequecy(rate, *parent_rate);
+> -       long rounded = msc313_cpupll_frequencyforreg(reg, *parent_rate);
+> +       u32 reg = msc313_cpupll_regforfrequecy(req->rate, req->best_parent_rate);
+> +       long rounded = msc313_cpupll_frequencyforreg(reg, req->best_parent_rate);
+>
+>         /*
+>          * This is my poor attempt at making sure the resulting
+>          * rate doesn't overshoot the requested rate.
+>          */
+> -       for (; rounded >= rate && reg > 0; reg--)
+> -               rounded = msc313_cpupll_frequencyforreg(reg, *parent_rate);
+> +       for (; rounded >= req->rate && reg > 0; reg--)
+> +               rounded = msc313_cpupll_frequencyforreg(reg, req->best_parent_rate);
+>
+> -       return rounded;
+> +       req->rate = rounded;
 > +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
-> +    combo_phy: phy@c0b10000 {
+> +       return 0;
+>  }
+>
+>  static int msc313_cpupll_set_rate(struct clk_hw *hw, unsigned long rate, unsigned long parent_rate)
+> @@ -168,7 +170,7 @@ static int msc313_cpupll_set_rate(struct clk_hw *hw, unsigned long rate, unsigne
+>
+>  static const struct clk_ops msc313_cpupll_ops = {
+>         .recalc_rate    = msc313_cpupll_recalc_rate,
+> -       .round_rate     = msc313_cpupll_round_rate,
+> +       .determine_rate = msc313_cpupll_determine_rate,
+>         .set_rate       = msc313_cpupll_set_rate,
+>  };
+>
+>
+> --
+> 2.50.1
+>
+>
 
-This label is unnecessary.
+Only visually inspected but seems correct.
 
-> +        compatible = "spacemit,k1-combo-phy";
-> +        reg = <0xc0b10000 0x1000>;
-> +        clocks = <&syscon_apmu CLK_PCIE0_DBI>,
-> +                 <&syscon_apmu CLK_PCIE0_MASTER>,
-> +                 <&syscon_apmu CLK_PCIE0_SLAVE>;
-> +        clock-names = "dbi",
-> +                      "mstr",
-> +                      "slv";
-> +        resets = <&syscon_apmu RESET_PCIE0_DBI>,
-> +                 <&syscon_apmu RESET_PCIE0_MASTER>,
-> +                 <&syscon_apmu RESET_PCIE0_SLAVE>,
-> +                 <&syscon_apmu RESET_PCIE0_GLOBAL>;
-> +        reset-names = "dbi",
-> +                      "mstr",
-> +                      "slv",
-> +                      "global";
-> +        spacemit,syscon-pmu = <&syscon_apmu>;
-> +        #phy-cells = <1>;
-> +        status = "disabled";
-> +    };
+Reviewed-by: Daniel Palmer <daniel@thingy.jp>
 
-Best regards,
-Yao Zi
+Thanks,
+
+Daniel
