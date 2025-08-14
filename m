@@ -1,69 +1,57 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C6C2FF642;
-	Thu, 14 Aug 2025 01:05:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20DE15530C
+	for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 02:52:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755133559; cv=none; b=Wrk5OLuXWVIPME1lxe/nXzR2xCS52KizN8l3H2drJhZFSqI/O4mOFhKGQKjaDKvV2PMq/u3AxCcozjr0/e4IrVg8yLCpbusn2T3g92/sFmNp+Td67bpIeDbv/wYynDHg2hFHhJkgAEZz61WqKfkT3vaeK3q1oC1bZy43usSbWTA=
+	t=1755139952; cv=none; b=eKhYR6II3fmWX68h+VJT/FS+b3rsPRgZb/pqs6YEFR8bmysKl/LmJrr47GQLnGF1170xKCw/ikHhIKeeq0TFEHAJmmjbzWLXCGCiNwmMh9IPrftnzvgMWfl02OCD+BjoeM+ghU1nNQuA9SlbRrQsEGqTSitrHULq/hgeiTy+82s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755133559; c=relaxed/simple;
-	bh=GHq+UdFILVZZcTmyOuJYpLnjJl4RNHxMErvsBexshnY=;
+	s=arc-20240116; t=1755139952; c=relaxed/simple;
+	bh=HTBR17vhoYZ8Fi2t2D3VIezhF9RyLF5ybAAkSkRGq8Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G4zW1JZ/wojDSpzDnvmZ6P7RZSj3cCjI5NmsKXlzlNZ5Jvl1QguoEgWjufGfZfHp+FiB4k3Obza2StXyGi1tSjKWWUYOKyv8GVWsyZOCOIBhMNAlRgHh+3FPlkQwPeWC3mc7nVVyHWlVtFOFFhwWg7iXK2EVpIQHHJTpmYCco18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aElfw9Pu; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=fuJ36Oef1Zmxr8Wr8yOx3RwVqMnERjHa1VS9o9HyUaR98dJ8AGXgCBXWmcRSbR3Kbbw0A/pvLD8DPWJctqBNarRBlJAUP7zu6ox6hfgNsH0GTU9u5sm/Ns/zmF62v3r4/ohbjwr9GnuRnk3lJIZsBoDNAH1jEhYDxkftqBKVPaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=IP0lyHCv; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aElfw9Pu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1755133558; x=1786669558;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=GHq+UdFILVZZcTmyOuJYpLnjJl4RNHxMErvsBexshnY=;
-  b=aElfw9PugSRRSNtTahKi3+HvFQUMRuTnoJ9rTUczDl+o149MGaoxahHK
-   I61UwOph4raZFaLrQNcvRr+ZE6SHTE6lZFladu8vFggtLBmVJ9/rnF3wF
-   3aWap22ACwbQNGydUPVx11izsAO5SP9kVZOcZki9KcjLh15eBNzpp/Wug
-   ATRMmO9RbjW6IB6BKZ1BH/4Kuns60d/Vf+IOxFjFrnBHC0/jVtRBWGkyN
-   ZMb1WO5q5OBAZ7l1xivZnGO/UAcWL32CGyz84bbnF5vFX4OVeCY7ejcuR
-   /qaQVcRswX9cr7m2UcMGont3wNNV+ZqAo+ZVSDdcoe0ZXmfq6yp7lDNCr
-   w==;
-X-CSE-ConnectionGUID: gUrSehdEQwaXS8PFUTZhaA==
-X-CSE-MsgGUID: dD2PWRP3TQSN+foDDoWx7w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11520"; a="68522879"
-X-IronPort-AV: E=Sophos;i="6.17,287,1747724400"; 
-   d="scan'208";a="68522879"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2025 18:05:57 -0700
-X-CSE-ConnectionGUID: GyU04fsaR2OYGBt93Y2/8w==
-X-CSE-MsgGUID: ewk1E047T+a1xTM9ypDf9Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,287,1747724400"; 
-   d="scan'208";a="166997295"
-Received: from lkp-server02.sh.intel.com (HELO 4ea60e6ab079) ([10.239.97.151])
-  by fmviesa008.fm.intel.com with ESMTP; 13 Aug 2025 18:05:53 -0700
-Received: from kbuild by 4ea60e6ab079 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1umMPc-000ATw-07;
-	Thu, 14 Aug 2025 01:05:48 +0000
-Date: Thu, 14 Aug 2025 09:05:35 +0800
-From: kernel test robot <lkp@intel.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
-	Inochi Amaoto <inochiama@outlook.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Jinmei Wei <weijinmei@linux.spacemit.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH v2 4/4] clk: spacemit: fix i2s clock
-Message-ID: <202508140828.p7rvt41N-lkp@intel.com>
-References: <20250811-k1-clk-i2s-generation-v2-4-e4d3ec268b7a@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="IP0lyHCv"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id 7B03E2524A;
+	Thu, 14 Aug 2025 04:52:27 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id cu1DZ5Gm8wiw; Thu, 14 Aug 2025 04:52:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1755139946; bh=HTBR17vhoYZ8Fi2t2D3VIezhF9RyLF5ybAAkSkRGq8Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=IP0lyHCvPv+3+laZDJpARS5vDAKdwVsdhv8aZpJ5IvVRrvQM1z27khXbxpnj+zrMB
+	 5HcafG2t4IiYPOLHc+fFm3/m3okPNtlifM+Dybdo6Tbb6qDXcejrXy+B9S/rtORe87
+	 CFwCebY00Xoo9MC7aAAX7+Q6gKCFG5K5B5W8f+dnGNnkPPDpz2PT7s/gvNMf9CrcdA
+	 Juphco4xYgVhAf4Uk/RQCMspBrS/y1vDm7KtATFNruZtsj1GjTrzhjobOW4G5mrFHy
+	 erPVFeKHdD2DosHAtc+A7v8eDaX/bTg5ucv1Z4toHLO04pnCYWESuA/1XsVdBkaVQP
+	 m1Zirohbl2zOA==
+Date: Thu, 14 Aug 2025 02:52:03 +0000
+From: Yao Zi <ziyao@disroot.org>
+To: Alex Elder <elder@riscstar.com>, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+	mani@kernel.org, bhelgaas@google.com, vkoul@kernel.org,
+	kishon@kernel.org
+Cc: dlan@gentoo.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+	tglx@linutronix.de, johan+linaro@kernel.org,
+	thippeswamy.havalige@amd.com, namcao@linutronix.de,
+	mayank.rana@oss.qualcomm.com, shradha.t@samsung.com,
+	inochiama@gmail.com, quic_schintav@quicinc.com, fan.ni@samsung.com,
+	devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/6] dt-bindings: phy: spacemit: add SpacemiT PCIe/combo
+ PHY
+Message-ID: <aJ1PJBax-Pj983OZ@pie>
+References: <20250813184701.2444372-1-elder@riscstar.com>
+ <20250813184701.2444372-2-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -72,39 +60,75 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250811-k1-clk-i2s-generation-v2-4-e4d3ec268b7a@linux.spacemit.com>
+In-Reply-To: <20250813184701.2444372-2-elder@riscstar.com>
 
-Hi Troy,
+On Wed, Aug 13, 2025 at 01:46:55PM -0500, Alex Elder wrote:
+> Add the Device Tree binding for the PCIe/USB 3.0 combo PHY found in
+> the SpacemiT K1 SoC.  This is one of three PCIe PHYs, and is unusual
+> in that only the combo PHY can perform a calibration step needed to
+> determine settings used by the other two PCIe PHYs.
+> 
+> Calibration must be done with the combo PHY in PCIe mode, and to allow
+> this to occur independent of the eventual use for the PHY (PCIe or USB)
+> some PCIe-related properties must be supplied: clocks; resets; and a
+> syscon phandle.
+> 
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+>  .../bindings/phy/spacemit,k1-combo-phy.yaml   | 110 ++++++++++++++++++
+>  1 file changed, 110 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+> new file mode 100644
+> index 0000000000000..ed78083a53231
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
 
-kernel test robot noticed the following build warnings:
+...
 
-[auto build test WARNING on 8f5ae30d69d7543eee0d70083daf4de8fe15d585]
+> +  spacemit,syscon-pmu:
+> +    description:
+> +      PHandle that refers to the APMU system controller, whose
+> +      regmap is used in setting the mode
+> +    $ref: /schemas/types.yaml#/definitions/phandle
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Troy-Mitchell/dt-bindings-clock-spacemit-introduce-i2s-pre-clock-to-fix-i2s-clock/20250811-221114
-base:   8f5ae30d69d7543eee0d70083daf4de8fe15d585
-patch link:    https://lore.kernel.org/r/20250811-k1-clk-i2s-generation-v2-4-e4d3ec268b7a%40linux.spacemit.com
-patch subject: [PATCH v2 4/4] clk: spacemit: fix i2s clock
-config: riscv-randconfig-r112-20250813 (https://download.01.org/0day-ci/archive/20250814/202508140828.p7rvt41N-lkp@intel.com/config)
-compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
-reproduce: (https://download.01.org/0day-ci/archive/20250814/202508140828.p7rvt41N-lkp@intel.com/reproduce)
+Clock controllers and ethernet controllers all use spacemit,apmu to
+refer the APMU system controller. Do you think it's better to keep them
+aligned?
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202508140828.p7rvt41N-lkp@intel.com/
+...
 
-sparse warnings: (new ones prefixed by >>)
->> drivers/clk/spacemit/ccu-k1.c:160:1: sparse: sparse: Initializer entry defined twice
-   drivers/clk/spacemit/ccu-k1.c:160:1: sparse:   also defined here
-   drivers/clk/spacemit/ccu-k1.c:656:1: sparse: sparse: Initializer entry defined twice
-   drivers/clk/spacemit/ccu-k1.c:656:1: sparse:   also defined here
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
+> +    combo_phy: phy@c0b10000 {
 
-vim +160 drivers/clk/spacemit/ccu-k1.c
+This label is unnecessary.
 
-   159	
- > 160	CCU_DIV_GATE_DEFINE(i2s_bclk, CCU_PARENT_HW(i2s_sysclk), MPMU_ISCCR, 27, 2, BIT(29), 2, 0);
-   161	
+> +        compatible = "spacemit,k1-combo-phy";
+> +        reg = <0xc0b10000 0x1000>;
+> +        clocks = <&syscon_apmu CLK_PCIE0_DBI>,
+> +                 <&syscon_apmu CLK_PCIE0_MASTER>,
+> +                 <&syscon_apmu CLK_PCIE0_SLAVE>;
+> +        clock-names = "dbi",
+> +                      "mstr",
+> +                      "slv";
+> +        resets = <&syscon_apmu RESET_PCIE0_DBI>,
+> +                 <&syscon_apmu RESET_PCIE0_MASTER>,
+> +                 <&syscon_apmu RESET_PCIE0_SLAVE>,
+> +                 <&syscon_apmu RESET_PCIE0_GLOBAL>;
+> +        reset-names = "dbi",
+> +                      "mstr",
+> +                      "slv",
+> +                      "global";
+> +        spacemit,syscon-pmu = <&syscon_apmu>;
+> +        #phy-cells = <1>;
+> +        status = "disabled";
+> +    };
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best regards,
+Yao Zi
