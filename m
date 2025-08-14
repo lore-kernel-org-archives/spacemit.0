@@ -1,308 +1,172 @@
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF796279DCC
-	for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 21:48:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2663B21ABA3
+	for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 22:50:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755208134; cv=none; b=oobryMs59M0gmDHNi3tmLLJSle03TxroGUVEKkf+YikLTV7vVzfBmN3rXkoFYFRTJOu8xxkd0mVfWFrbg7BpOblq0ufKQFdSbFK0/I0ae17OkmMMavRXQH50sXTq8K/nKKys+eQ/DRvDx3nltOwuhIhs8QOcMFheY7SOqG+8VZY=
+	t=1755211852; cv=none; b=QLpCizHXRE2mHIW/9P1UOtX7/XlcZu1OJrcmpQ5t3aAC6S3j9V7pvojRvsAg00ON4n7d3UwT3p0Mpuvgy3Gsrpmx7k/L/m34VEw/qfb7YhPFqMGpcZAXcXto7biuPdXxHmLI1V3AQCNdtsoRlml68X2Myp3tTz0yCBAZjlcQB/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755208134; c=relaxed/simple;
-	bh=aeCT1ChAfnxrV4QBH+I+d7ZQyWZZMGksEWhBzA5kDbg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=opPPXd45RUdxKztIy3iepMbvzK7nKXmGSKL0Do1P/ZKQ2w5fTZc35DI61xa63Jl20FE466DaKJhwAXUd0ewWlgthTWOPE4tJBchwLztbpmspcdetfUotfmGWUKReGqonjSNhyL2q7biksQvmLuEJEKIwexcCDCvb7bJtqYVVvVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=fHEjzEzk; arc=none smtp.client-ip=209.85.166.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1755211852; c=relaxed/simple;
+	bh=k3g3av1ExpxSpGPQvhDqy0PXWfc84KcrITee0dOTqgw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eAOISnJXHSK6O6fPQVhkH+YU23V0jWHvrWAmVfjg7mw/cJQCv8JF3vmYHib/53A8zTnQUzqWoFaplbAIT23vYys32s4uI4TtWlve9Whq/Z45jIm2Aq4sAX3Cj1wyMTgu3Mq1Q+A8tbfVhUnVZeLiuU4BBsiSktifvOBkLLoV/5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K9+FFUc2; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="fHEjzEzk"
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3e57376f661so4538615ab.1
-        for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 14:48:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K9+FFUc2"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-32326e8005bso1609201a91.3
+        for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 15:50:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755208132; x=1755812932; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XCt+/c8MTw4m0fkTKSEjZUjQW40svl96k4sq8RtcJzA=;
-        b=fHEjzEzk0An6G7hLBHR+zRIUpvpsD423ZCp4gkpplgyYM/TrEqbpxoye6cZP0pSO5a
-         elfGMLtrlaiB2h1wUWOrOdk2K2kRG4hXajs1cQQHrvfLUHgtyUARzgFTVkUMzsjcp6Bm
-         KM1gSHBRNeQVehMMs3qnNIwvVcNlG1y6PrbWshoOkr4oQ4vkYmbkQfj77FXIo2+mVdFG
-         Hfj4ECCuAlywZ/xsoTBj/kIMwoPVXmWYNsFKSyE8MYqPk6d/qNebNS/2O0iB2G3c/oP1
-         S1IJdHvff2XiXrkCoTipcISoXuG64YEjaHNjJfjFCL/COD7VP/9Hwy5l+FkgnOyAaETc
-         rGbQ==
+        d=gmail.com; s=20230601; t=1755211850; x=1755816650; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WVawUElbuEdpT/L0IVDdSj9wdhwbVEtke7BFQtXU6aA=;
+        b=K9+FFUc2WceRQ8d+B4mGJpChRSWQfW/0hq/EaK+4DiGXLDaCNIGg+HG1HWkfRrmJqB
+         W/mWET/bnKScC6fcIHUuoMRMkHgoQAxMzn2fByrDGCChBeR+Ntp+LFGCfGuA2PcT41Uk
+         zDBhmZ7ZvzaR7Qf+Wkm1vzdYkWtkok8aFqpExCJ2mucSozsbjYlGVGEner5+TA/CAggM
+         wb95R9HSEHAYokgEtHhAEKiMuvWJf7h6DkYu0lmQjBDBmHPxzSbb4L3Zh5rU2rrUMHVQ
+         15MZ8UGFCdvUrRpojf5pUqhw3tUwyjoLNUntVGyc8wZvrviXTmSJm6WtyxkdWfilIwMj
+         nsYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755208132; x=1755812932;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XCt+/c8MTw4m0fkTKSEjZUjQW40svl96k4sq8RtcJzA=;
-        b=DdYFycDyNSG0VFkmTiU9WbYCYLyFTACtm87I0/8dtEKGsulZDPwa07kkSFBbbBfscR
-         /WDszvt2LDJ3pFy94TXf/f6b6UzGWh1G2fa6KPHdVCjzNLggr5JWTGK3Qwp+ZSlPellX
-         qdEN31xMKyCxQKec2s1weYMfUmh/P1AXZx44zcJXOr5qn4y1LmlgyaKNNCrO5/O/NK/Z
-         /4ZQ8gYqli8udfaU9EegR/fs8gJv1W3k4QRNfDqxF/dU/5hegp3tqcz/eAEI9vn0y5EZ
-         BFUWcdbj0ZwIKDutmmLjMQOvRGxSYbZNGpF2I7gyHtmhl5IRgjwPWkH7xPbybBiDv5NO
-         PrGA==
-X-Forwarded-Encrypted: i=1; AJvYcCXEbAZG4x9F11Cn6bmYv5TJ809j/aTMrWIUkR6Mfhd2tcL0bncCQuYp2ENjIF38B0ll2Dspy6iK2A==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz38AHuXHV/Fq8Q3RZdIzurpJ9E2vhOtNadvxYpV9g8fPQY89Kg
-	Y3g5hN3sX+KIJ81Cd1ArGll5EzJBdi94yzQPyAAqNn4tmatrIE9fRvSBidaI5D81BfE=
-X-Gm-Gg: ASbGncvwTOM5tOChWrpsOYTYkR5ioCR1eHjm+9etEmUA7NGTwJgaYW5AtEaBh8ZL4mj
-	mkFgB9Ffh/7B6wBoU+pUFoNRH2t1rQLffNoM3Al3itbFTIXKeBjW0PFAB3oCXrZxoFow71hSzxM
-	/3bmvZ3OxcXbqUbyLr3hCzKf/nqVAKWhEFOPtA4r7MQvgi3hTpI/WZGjjJCeGMigYOCvR10RIxG
-	2tV2QssIgr0g6tlMCmQSPvRuH4I+BUpkbfNe9RX5sRr1dYZp1S+zdk0tPDG6MpGKo4B+wkGRTBk
-	Bid1FIW8u3Jy5tIo2VwuKwnn4PU6nfnRWcrnQud60GtyBxUjhByQTEnGKxq0VIXFA+ZmmqBLktz
-	vLnHWuYC+8EG8J35nBpxofdMWm3+hQ8V42An+Fa7EkBQ72H/5lS6RxsLWiXWzbw==
-X-Google-Smtp-Source: AGHT+IFztpZaPjE0ea4cNoutzDsxWfnWI0H8yYAAWojxd3NMEw8UDJycdrDTch6nLLHh52NEA2N7Sw==
-X-Received: by 2002:a92:cd8c:0:b0:3e5:4eb2:73e3 with SMTP id e9e14a558f8ab-3e57ba5c53emr13235285ab.16.1755208131603;
-        Thu, 14 Aug 2025 14:48:51 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae9bd3291sm4605468173.63.2025.08.14.14.48.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Aug 2025 14:48:51 -0700 (PDT)
-Message-ID: <bc6975bd-cc1a-41ff-887c-0509bc8f03c3@riscstar.com>
-Date: Thu, 14 Aug 2025 16:48:48 -0500
+        d=1e100.net; s=20230601; t=1755211850; x=1755816650;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WVawUElbuEdpT/L0IVDdSj9wdhwbVEtke7BFQtXU6aA=;
+        b=vS5RIeKuxxh+wzbuuH1Nr/6Xe9c8wwvUKxmh1qgnV24BjhIgrorkdyYZARqvdFRPHO
+         kkvT8CoCL56TxzVoBp6hg+0FSVpOGForoMRs1UAtw6OMTSipIAyDeCP7ltBaDDr8IP99
+         QpQa8+C5sxQbOPEcKMRm8/4qK+BTjMe9Q59dv5rb41ieLl2WTzKY+9j1pvczkoKDMRol
+         VnFwy9JbK7axdPfcEfrPsCN8UNKUxzVxOgefCU3azxl2mcrikQxI4NvPDXntYv9WA1jj
+         z2DNFjY8RhO9C500G2GKufORk0I0dXv8ChED3CysgA3Jl1+koDcl3WkvRyr8AeK5QRou
+         ZXwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUcdj0GnJiwdvUzKYoekmW1SgXYXu5YYlFtqdAbvC9TRvgPFw6m8hbN/4eSjeLZkdfYTclaAVzKfA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwVt/08aG+1g2FfqwOBHNut2k+fqtrTOwzYqEPnm1I3Cp+Mtwsf
+	n0A6ZLB9djxHXNLcS/WPLnpuxQaiDV+w+c1BQVeDMVbBoNvTlR6R/EfM
+X-Gm-Gg: ASbGncsWfcEGKTY95dGOB7vES9k+w4O1j49qZtKVMh3OEIOYYs7Rp/tljQUW2Bxnkfi
+	VT5jBsRFA3KQFaEr24k2ycPAYLPpbZWghkHRKYprPtIAtJT6PMTuKTFVrtjzKgbIBrdetK8jBhA
+	NOAhkxgWYyUPuXJsYfm4xwhyaLgCfI/O6DGEDKwMif58qJMyuKcJnggjzMMt5lAw4R1vycyI0mb
+	DYRBrwu9klblXYS8bBuOBu15qVpEvz3epg/iU3+KhmVVsqPVfKm6yxORM7JqrI683oaVj1nLfL1
+	wVDSSReXOB+9gdNgh0CI4TsRTZ+NYlBa+Is1DwbJzFT0XE/jw2a9xWioFxAA+seiOxkLNaMstm+
+	2w69XeZeFuZr5KR6cFaMjYD7aM11puup3
+X-Google-Smtp-Source: AGHT+IEJqNeT1yM7BjiHaonVA76lx9wIv7oauipmGKTTR2d3Fa2Yg6FGWlZUCw2T0pv6BwK2DA17bw==
+X-Received: by 2002:a17:90b:1810:b0:31a:9004:899d with SMTP id 98e67ed59e1d1-32327a4f242mr8445796a91.18.1755211850284;
+        Thu, 14 Aug 2025 15:50:50 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b471519d8bcsm2721398a12.61.2025.08.14.15.50.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Aug 2025 15:50:50 -0700 (PDT)
+Date: Fri, 15 Aug 2025 06:49:58 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Alex Elder <elder@riscstar.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org, robh@kernel.org, 
+	bhelgaas@google.com, krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, 
+	kishon@kernel.org
+Cc: dlan@gentoo.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de, tglx@linutronix.de, 
+	johan+linaro@kernel.org, thippeswamy.havalige@amd.com, namcao@linutronix.de, 
+	mayank.rana@oss.qualcomm.com, shradha.t@samsung.com, quic_schintav@quicinc.com, 
+	fan.ni@samsung.com, devicetree@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-pci@vger.kernel.org, spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, Junzhong Pan <panjunzhong@linux.spacemit.com>
+Subject: Re: [PATCH 4/6] phy: spacemit: introduce PCIe/combo PHY
+Message-ID: <mj5e6afmbqo2tpt3zjuebcfif3flvgqq663erv3xuvbg72nd6g@bapy44nobzyw>
+References: <20250813184701.2444372-1-elder@riscstar.com>
+ <20250813184701.2444372-5-elder@riscstar.com>
+ <valmrbddij2dn4fjxefr46zud2u6eco2isyaa62sd66d27foyl@4hrhafqftgb5>
+ <4eaa30bc-9a25-4fe0-b685-1d0d8fa503c2@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] dt-bindings: phy: spacemit: add SpacemiT PCIe/combo
- PHY
-To: Rob Herring <robh@kernel.org>
-Cc: krzk+dt@kernel.org, conor+dt@kernel.org, lpieralisi@kernel.org,
- kwilczynski@kernel.org, mani@kernel.org, bhelgaas@google.com,
- vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, p.zabel@pengutronix.de, tglx@linutronix.de,
- johan+linaro@kernel.org, thippeswamy.havalige@amd.com, namcao@linutronix.de,
- mayank.rana@oss.qualcomm.com, shradha.t@samsung.com, inochiama@gmail.com,
- quic_schintav@quicinc.com, fan.ni@samsung.com, devicetree@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-pci@vger.kernel.org,
- spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20250813184701.2444372-1-elder@riscstar.com>
- <20250813184701.2444372-2-elder@riscstar.com>
- <20250814205128.GA3873683-robh@kernel.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20250814205128.GA3873683-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4eaa30bc-9a25-4fe0-b685-1d0d8fa503c2@riscstar.com>
 
-On 8/14/25 3:51 PM, Rob Herring wrote:
-> On Wed, Aug 13, 2025 at 01:46:55PM -0500, Alex Elder wrote:
->> Add the Device Tree binding for the PCIe/USB 3.0 combo PHY found in
->> the SpacemiT K1 SoC.  This is one of three PCIe PHYs, and is unusual
->> in that only the combo PHY can perform a calibration step needed to
->> determine settings used by the other two PCIe PHYs.
->>
->> Calibration must be done with the combo PHY in PCIe mode, and to allow
->> this to occur independent of the eventual use for the PHY (PCIe or USB)
->> some PCIe-related properties must be supplied: clocks; resets; and a
->> syscon phandle.
->>
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> ---
->>   .../bindings/phy/spacemit,k1-combo-phy.yaml   | 110 ++++++++++++++++++
->>   1 file changed, 110 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
->> new file mode 100644
->> index 0000000000000..ed78083a53231
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
->> @@ -0,0 +1,110 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/phy/spacemit,k1-combo-phy.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: SpacemiT K1 PCIe/USB3 Combo PHY
->> +
->> +maintainers:
->> +  - Alex Elder <elder@riscstar.com>
->> +
->> +description:
+On Thu, Aug 14, 2025 at 07:15:43AM -0500, Alex Elder wrote:
+> On 8/13/25 6:42 PM, Inochi Amaoto wrote:
+> > On Wed, Aug 13, 2025 at 01:46:58PM -0500, Alex Elder wrote:
+> > > Introduce a driver that supports three PHYs found on the SpacemiT
+> > > K1 SoC.  The first PHY is a combo PHY that can be configured for
+> > > use for either USB 3 or PCIe.  The other two PHYs support PCIe
+> > > only.
+> > > 
+> > > All three PHYs must be programmed with an 8 bit receiver termination
+> > > value, which must be determined dynamically; only the combo PHY is
+> > > able to determine this value.  The combo PHY performs a special
+> > > calibration step at probe time to discover this, and that value is
+> > > used to program each PHY that operates in PCIe mode.  The combo
+> > > PHY must therefore be probed--first--if either of the PCIe-only
+> > > PHYs will be used.
+> > > 
+> > > During normal operation, the USB or PCIe driver using the PHY must
+> > > ensure clocks and resets are set up properly.  However clocks are
+> > > enabled and resets are de-asserted temporarily by this driver to
+> > > perform the calibration step on the combo PHY.
+> > > 
+> > > Tested-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+> > > Signed-off-by: Alex Elder <elder@riscstar.com>
+> > > ---
+> > >   drivers/phy/Kconfig                |  11 +
+> > >   drivers/phy/Makefile               |   1 +
+> > >   drivers/phy/phy-spacemit-k1-pcie.c | 639 +++++++++++++++++++++++++++++
+> > >   3 files changed, 651 insertions(+)
+> > >   create mode 100644 drivers/phy/phy-spacemit-k1-pcie.c
 > 
-> You need a '>' or the paragraphs formatting will not be maintained
-> (should we ever render docs from this).
-
-OK.
-
->> +  Of the three PHYs on the SpacemiT K1 SoC capable of being used for
->> +  PCIe, one is a combo PHY that can also be configured for use by a
->> +  USB 3 controller.  Using PCIe or USB 3 is a board design decision.
->> +
->> +  The combo PHY is also the only PCIe PHY that is able to determine
->> +  PCIe calibration values to use, and this must be determined before
->> +  the other two PCIe PHYs can be used.  This calibration must be
->> +  performed with the combo PHY in PCIe mode, and is this is done
->> +  when the combo PHY is probed.
->> +
->> +  During normal operation, the PCIe or USB port driver is responsible
->> +  for ensuring all clocks needed by a PHY are enabled, and all resets
->> +  affecting the PHY are deasserted.  However, for the combo PHY to
->> +  perform calibration independent of whether it's later used for
->> +  PCIe or USB, all PCIe mode clocks and resets must be defined.
->> +
->> +properties:
->> +  compatible:
->> +    const: spacemit,k1-combo-phy
->> +
->> +  reg:
->> +    items:
->> +      - description: PHY control registers
->> +
->> +  clocks:
->> +    items:
->> +      - description: DWC PCIe Data Bus Interface (DBI) clock
->> +      - description: DWC PCIe application AXI-bus Master interface clock
->> +      - description: DWC PCIe application AXI-bus Slave interface clock.
+> . . .
 > 
-> End with a period or don't. Just be consistent.
-
-OK.
-
-> You need DWC PCIe clocks for your PHY? A ref clock would make sense, but
-> these? I've never seen a PHY with a AXI master interface.
-
-*This* is what I was waiting for.  I explained it briefly in
-the patch headers and elsewhere but I expected questions.
-
-This is needed to support USB mode, while also supporting the other
-PCIe interfaces.
-
-The SpacemiT IP requires its PCIe interfaces to have 4-bit RX and TX
-receiver termination values be configured during initialization.  The
-values to use must be determined dynamically by doing a calibration
-step, then reading a (PCIe) register that contains the values to use.
-
-Only the combo PHY is able to perform this calibration. and the
-configuration values it determines must then be used to configure
-the other two PCIe (only) PHYs.
-
-This means that to calibrate, the combo PHY must be started (clocks
-enabled, resets de-asserted) in PCIe mode.
-
-If the combo PHY were going to be used for PCIe, this could be done
-when it is initialized, because the PCIe driver would ensure the
-clocks and resets were set up properly.
-
-But if the combo PHY is going to be used for USB, the PCIe
-calibration step would (otherwise) never be done, and that
-means the other two PCIe interfaces could not be used.
-
-So my solution is to move this calibration step into the PHY.
-The combo PHY performs the calibration step when it is probed,
-and to do that the driver needs to use its PCIe clocks and resets.
-Once the calibration values are known, the clocks and resets
-are essentially forgotten, and the PHY is available for use (by
-either PCIe or USB 3).
-
-The other two PCIe interfaces cannot probe (-EPROBE_DEFER) until
-the calibration values are known, which means they might have to
-wait until after the combo PHY has probed successfully.
-
-I asked SpacemiT about this a lot, but their answer is that the
-combo PHY is the only one that can determine these values, and
-they must be determined each time the hardware is powered up.
-
-I think this approach is less ugly than some alternatives.
-
-Is this clear?  Can you think of a different way of handling it?
-
->> +
->> +  clock-names:
->> +    items:
->> +      - const: dbi
->> +      - const: mstr
->> +      - const: slv
->> +
->> +  resets:
->> +    items:
->> +      - description: DWC PCIe Data Bus Interface (DBI) reset
->> +      - description: DWC PCIe application AXI-bus Master interface reset
->> +      - description: DWC PCIe application AXI-bus Slave interface reset.
+> > > diff --git a/drivers/phy/Makefile b/drivers/phy/Makefile
+> > > index c670a8dac4680..20f0078e543c7 100644
+> > > --- a/drivers/phy/Makefile
+> > > +++ b/drivers/phy/Makefile
 > 
-> Same here (on both points).
-
-I will remove the period on the third one.
-
+> . . .
 > 
->> +      - description: Global reset; must be deasserted for PHY to function
->> +
->> +  reset-names:
->> +    items:
->> +      - const: dbi
->> +      - const: mstr
->> +      - const: slv
->> +      - const: global
->> +
->> +  spacemit,syscon-pmu:
->> +    description:
->> +      PHandle that refers to the APMU system controller, whose
->> +      regmap is used in setting the mode
->> +    $ref: /schemas/types.yaml#/definitions/phandle
->> +
->> +  "#phy-cells":
->> +    const: 1
->> +    description:
->> +      The argument value (PHY_TYPE_PCIE or PHY_TYPE_USB3) determines
->> +      whether the PHY operates in PCIe or USB3 mode.
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - clocks
->> +  - clock-names
->> +  - resets
->> +  - reset-names
->> +  - spacemit,syscon-pmu
->> +  - "#phy-cells"
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
->> +    combo_phy: phy@c0b10000 {
+> > > +static int k1_pcie_pll_lock(struct k1_pcie_phy *k1_phy, bool pcie)
+> > > +{
+> > > +	u32 val = pcie ? CFG_FORCE_RCV_RETRY : 0;
+> > > +	void __iomem *virt;
+> > > +
+> > > +	writel(val, k1_phy->regs + PCIE_RC_DONE_STATUS);
+> > > +
+> > > +	/*
+> > > +	 * Wait for indication the PHY PLL is locked.  Lanes for ports
+> > > +	 * B and C share a PLL, so it's enough to sample just lane 0.
+> > > +	 */
+> > > +	virt = k1_phy->regs + PCIE_PU_ADDR_CLK_CFG;	/* Lane 0 */
+> > > +
+> > > +	return readl_poll_timeout(virt, val, val & PLL_READY,
+> > > +				  POLL_DELAY, PLL_TIMEOUT);
+> > > +}
+> > > +
+> > 
+> > Can we use standard clk_ops and clk_mux to normalize this process?
 > 
-> Drop unused labels.
+> I understand you're suggesting that we represent this as a clock.
+> 
+> Can you be more specific about how you suggest I do that?
+> 
+> For example, are you suggesting I create a separate clock driver
+> for this one PLL (in each PCIe register space)?
+> 
+> Or do you mean use clock structures and callbacks within this
+> driver to represent this?
+> 
 
-OK.
+I think using clock structures and registering them is just fine, 
+there are many phy drivers already do this.
 
->> +        compatible = "spacemit,k1-combo-phy";
->> +        reg = <0xc0b10000 0x1000>;
->> +        clocks = <&syscon_apmu CLK_PCIE0_DBI>,
->> +                 <&syscon_apmu CLK_PCIE0_MASTER>,
->> +                 <&syscon_apmu CLK_PCIE0_SLAVE>;
->> +        clock-names = "dbi",
->> +                      "mstr",
->> +                      "slv";
->> +        resets = <&syscon_apmu RESET_PCIE0_DBI>,
->> +                 <&syscon_apmu RESET_PCIE0_MASTER>,
->> +                 <&syscon_apmu RESET_PCIE0_SLAVE>,
->> +                 <&syscon_apmu RESET_PCIE0_GLOBAL>;
->> +        reset-names = "dbi",
->> +                      "mstr",
->> +                      "slv",
->> +                      "global";
->> +        spacemit,syscon-pmu = <&syscon_apmu>;
->> +        #phy-cells = <1>;
->> +        status = "disabled";
+> I'm just not sure what you have in mind, and the two options I
+> mention seem a lot more complicated than this one function.
+> 
 
-Krzysztof also pointed out that I can't disable it so I'll drop
-the above line as well.
+Yes, it is more complex than just adding one function, but it 
+make the code clean and easy to understand as the clock looks
+complex. Also, register this clock allow us to know the state
+of internal clock by looking clk_summary.
 
-Thanks for the review.
-
-					-Alex
-
->> +    };
->> -- 
->> 2.48.1
->>
-
+Regards,
+Inochi
