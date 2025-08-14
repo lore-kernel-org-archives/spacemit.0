@@ -1,184 +1,183 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9072405F8
-	for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 12:30:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91621A23A4
+	for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 12:57:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755174659; cv=none; b=eFxoMhNzTBfOBWtXMX2SWWqftTMRIKtgLZKPEbpDMkPrh1IcxiqmjHaeHsUrNTfA5zqpRh7JqemN7HfAlr5kXedXW6jFLqmOkpDW3QOEWXHiF3OJ77y9tS1+GQ3p7p6v1/oi1gihBEvt6t0XIxYnTqyVKgnu7gQY8/mkkqzT7Mo=
+	t=1755176255; cv=none; b=O/zJI2XgcnohofuRr+shaQn5gaAiH9I586qH1HJS2RLByzVDb9J0Z6vyHfPW8LhxrwWfDhfGx9Qgj2hp24kz9SkJIimLucvuTCf8dDNOySz4gxBSHCGxNgcPjl6nXVP3LeF+PWPc2iu1parEgQIwBBGJ40/0KIb0yWiAwo8G0/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755174659; c=relaxed/simple;
-	bh=ehYxh88qbynkJXrnR7yfu3EhZJI6SZZ9KH93azTco3k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y8ECIKCnaV0IMX8zCn4FBm/YqnxlP/U9OGKs6RaX00lXP/SgsnRiq4lRffx0eA9Cuiw/sfA5F5gxIPkIPC6NTkmfQlHcJEQjBonqODKeQd/ehW3oJTPtkfWZoOQFN+TTo9Fn6jJFVmLY/luu67MwWZoZMLzAcy7v42Z/ZL09UIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=c6vxVcMo; arc=none smtp.client-ip=209.85.210.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1755176255; c=relaxed/simple;
+	bh=bvLIns6kAaFW/coEFPU1VptQ/yhBs2dZmHbbXI7EHg0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WebK0rlQzMDg98KxFIw5KiX7zhrEFMVapUCDO/T9zFSDNIib5DPWXxw0CP9x75FjIJ8N9NUkFGbLYsdNuIcVCe/r85Xet8xK0wzGWu89b8uTPfggNuuTgLjYGDZyQfmZadIpMT5jflpOTLwuk4toLOzOTJSvm9mx+DzEC1b9W5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=LxaiRH0/; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="c6vxVcMo"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-74382027898so481473a34.3
-        for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 05:30:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755174655; x=1755779455; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ywvq4778+XMT9D9uuqrnqBrIL1jeEJwzcsXhXKprWOg=;
-        b=c6vxVcMoRQQHG3UJxDIrjNW52bmNgbhjUkbg/IFb1Z45IQGKUlQ6AmB3KGt/50whBf
-         0IMyhFSrOan2iz4mJGUAXaFJXL3mIZyb+sCFmryxan+OvJraksmiiCg7VxJI0JjyhVum
-         FhWQJIljVxRfIn10ApTKIS1itKES3vat1EmblXJJGPiLtKs5wz2pLXPGuj9LfA3HU9J3
-         KfwB+vKN6EylyBi7MaNWAmX59mJ4xODr2r/ISZR+HeUUbqgYmaixhdK5fkMPh7vcI3N5
-         bHwLtPb8g4SfWB87rp2z7+Ipch9r6L1CUNd4/teFvGbOt9t77LKVrWyfTj+JcrIMx5KP
-         KkZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755174655; x=1755779455;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ywvq4778+XMT9D9uuqrnqBrIL1jeEJwzcsXhXKprWOg=;
-        b=hB9+pgi7gEJXc/gxZluiD1az+I3OxCKf8qlZoNBNEuBSBMJ+nVHT8wskDySImMj2WL
-         XMt0t7H0GZdmY0Rl4j3uxZjHP98eU0JDmTYj2i0ePVQ3Q9hBusaqWr8MGlZtZ5s5bUom
-         8cjR5l68IsR6Z3VADoge7JCFkH5zrdwwF6laLjfBnr9gzsLPjho/w4FFvplB8+AOFw9u
-         5pRvsVJAxbYh+6WK0dr4146TCw3kmNV+7iUvHF+wrDxHUs/O75ouFK25ed6arGAbfk9B
-         HCoC3wxlEVxY78OQoS3tyQbrlcx6ZMnlLZKOPLkkZ2TL7k3X2mEf9PDq22LpVV56zS0o
-         ak3A==
-X-Forwarded-Encrypted: i=1; AJvYcCXUPw376000enntxt1GJik//ATTm5XORjlRDWJxCjVbba9tgYfejK7+KZg05WIfLI6SqeXOtmWU2g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwmYNgKVNqsJu97u2bsm/FhZyb2lHY67XqBFDbOXIwU9qE43vUn
-	5WFi7cD+yaz3u35WZPJewFjyaX2rhTVUf+L15mEp2wfVPPd21jhYkl4t56QStyoH6cw=
-X-Gm-Gg: ASbGncvgj0ErMIVYdFaWDqGy1cyIXP22ijUwdqBLwpdKX0vD0TCgSOcGAXbob6uV3IP
-	H8MHMzixxPSIbKkUvuVqvQVjkSW14qmtsSfngyAAiVP8ixcLOHcmUijI9j4ZzCSqi+jXZqyGYCc
-	FYTk/NAlDX18LIeFzmUB/pzbxjpqEUNARyut2vI6JiVPFvF3xssbJSmxwUDHv/udOL4Zp6Gisx0
-	3iA91jYoENUZ9mb2qY3hJWM8WB/qDS2jqoLC0l+mKWcWjtx/oSgKwqvALITe+qDsEkyeluBGuNu
-	CLOIM5TuP9ShD+38vuhGYaHhCubR+FHfCI6W5oQFppLipFFyn/dDQbvJiNHR6W4KnKklhIxydvq
-	HF12TKMWH3EoSjR9cznLwDZLf1rUmSJYsqKfdiSPHfuEQUHcChsyviNgnXGZj6g==
-X-Google-Smtp-Source: AGHT+IHBzdCRrljPnkfDW8jmr3rpPTUxAN1tCDdoZAzws2zd3haB25jvZwxqllCVG7gPmDZID86wtg==
-X-Received: by 2002:a05:6830:3497:b0:727:3439:5bdf with SMTP id 46e09a7af769-74382bc3f86mr1632907a34.13.1755174655075;
-        Thu, 14 Aug 2025 05:30:55 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae997ea9fsm4538196173.17.2025.08.14.05.30.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Aug 2025 05:30:54 -0700 (PDT)
-Message-ID: <8f7bac84-623b-47dc-bc58-dc0013a85877@riscstar.com>
-Date: Thu, 14 Aug 2025 07:30:52 -0500
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="LxaiRH0/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1755176171;
+	bh=CjtoWhdgfdevioOzjHH4EUUUH9uWoD93N4KhylunA44=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=LxaiRH0/CS6IxsCoNmRVWAolfmtZhdicV6g3XZUNGo376fLk1ONqLqo5BFAlTDf/2
+	 OrSfldVwWrg7JvCXBWDQPDRC8uN8m7oLBLada2NsEYLaQVqJaqjeFT5qtOOy+Nzoqb
+	 3zcjnUoucjGIyEoJ5BKAVDGllACKuDM6AbTOG0F8=
+X-QQ-mid: zesmtpip4t1755176162t001a8636
+X-QQ-Originating-IP: ft3DEdIShiaa2Pbj2KfMxFeuKw9DKtlEl9tdgLJOFt0=
+Received: from = ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 14 Aug 2025 20:56:00 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 15176067644090953445
+EX-QQ-RecipientCnt: 16
+Date: Thu, 14 Aug 2025 20:55:58 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Philipp Zabel <p.zabel@pengutronix.de>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Jinmei Wei <weijinmei@linux.spacemit.com>
+Subject: Re: [PATCH 2/2] ASoC: spacemit: i2s: add support for K1 SoC
+Message-ID: <7352191F0DCAFF7E+aJ3c3tGKdcM3G-Uc@troy-wujie14pro-arch>
+References: <20250814-k1-i2s-v1-0-c31149b29041@linux.spacemit.com>
+ <20250814-k1-i2s-v1-2-c31149b29041@linux.spacemit.com>
+ <851f1c3d96988920a28412a26d5cd951b684c020.camel@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] dt-bindings: phy: spacemit: add SpacemiT PCIe/combo
- PHY
-To: Yao Zi <ziyao@disroot.org>, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
- mani@kernel.org, bhelgaas@google.com, vkoul@kernel.org, kishon@kernel.org
-Cc: dlan@gentoo.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
- tglx@linutronix.de, johan+linaro@kernel.org, thippeswamy.havalige@amd.com,
- namcao@linutronix.de, mayank.rana@oss.qualcomm.com, shradha.t@samsung.com,
- inochiama@gmail.com, quic_schintav@quicinc.com, fan.ni@samsung.com,
- devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20250813184701.2444372-1-elder@riscstar.com>
- <20250813184701.2444372-2-elder@riscstar.com> <aJ1PJBax-Pj983OZ@pie>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <aJ1PJBax-Pj983OZ@pie>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <851f1c3d96988920a28412a26d5cd951b684c020.camel@pengutronix.de>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: NOIkHYnr7VzdxN9VkEVqrvtprMEJI//PVPmx+ylqq4NxdOqdx2qzgriS
+	8WkPhVt9eBWkG1ItSZaqK3dsf5O/VN8z7sY7/nRc1GscouNXDHsr5HkdCSeCfgZhgBK5LkH
+	vfpy7CmUxNDwlK1sVOq1NiroFLcMzCkJ3MjiCrgB5+eni6izbLN8avov+c2kXr9EdBaahu2
+	QMQui3dFdRckVVevoGszhwrl5ktSAKpwdt49Y99dzcEAp+whqW1c98lskdwWmXtq6hghCQO
+	97teMwQMtttcEH4DBM5YG+BKxWEuI6ffKKsT2DlE0KfoGJss3Zo1jhKqGPN1v6+JfP/4TR/
+	J8uQFmq8jf9yqYNY4e5Wn+/BHM+8QCD1P1NlUvnzV3KSdf9oDFXdpCGqxA80FdDxhWtWx1Y
+	N0Ug3omBVa7kSh3/W0EmrDvBFQ5T8OLKNgL2FpN68LrGl2YVVgZiBN18IHy/eP8oK93TGi4
+	Y4Tqo1tMXTMD3n3SjR1G8D0bwK3p5q8gS/bakxq9RWXg/qmNy8OpWZ7rmuo0BWVAjN2jMtg
+	lnCLpP6XW2m1CLOk3wUn8QWshufLoZ4oAm8PLQE/5+rm0cMBUoM06KtS05n0COKxxfTfmD8
+	yvK5TZbnuhIoPNO72IfOnl1Hm0+HBPohgnAAoUf5K4Zyz78Jzn907ljL7c+WYcUZmrTJ/lF
+	2rjPNUib9RPSiKeE8NOrTzAaR7Kwr18NkMLRnqfDDo4Dq7dCQxqORElQFDfiVKdUsonyV+D
+	5tKEVZY1QjfgtrR+4tHAq6ub5KsohjvcyHjqIX4rw5yUx+65IOuNLMKmhcYRmoxy8qqSk54
+	eFYHX/efQfKVLMr4iEXTX8FzUTH0INcTEP9lQ4P7b/jowlFz/yxV5TxjIWo6eF2KCjWnmcd
+	+zBtqJT8bLbtkcSeUXGT5CdcRIMAdh75/1DqDudhj1xcvLG5CNNt6yEe5wIaFaBtlZXpKKM
+	Ws1OmFwfG0CbR/VrW3IZZKzpPRo/w5Re7Xkzs/I8Y3hZVatEqOZgLIfihwMyZvIYlDieH3h
+	cdJvDmDhifrFmerd3AEAA1wmilCYjF548LMcLqOD5C0zziAKU9
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-RECHKSPAM: 0
 
-On 8/13/25 9:52 PM, Yao Zi wrote:
-> On Wed, Aug 13, 2025 at 01:46:55PM -0500, Alex Elder wrote:
->> Add the Device Tree binding for the PCIe/USB 3.0 combo PHY found in
->> the SpacemiT K1 SoC.  This is one of three PCIe PHYs, and is unusual
->> in that only the combo PHY can perform a calibration step needed to
->> determine settings used by the other two PCIe PHYs.
->>
->> Calibration must be done with the combo PHY in PCIe mode, and to allow
->> this to occur independent of the eventual use for the PHY (PCIe or USB)
->> some PCIe-related properties must be supplied: clocks; resets; and a
->> syscon phandle.
->>
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> ---
->>   .../bindings/phy/spacemit,k1-combo-phy.yaml   | 110 ++++++++++++++++++
->>   1 file changed, 110 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
->> new file mode 100644
->> index 0000000000000..ed78083a53231
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+On Thu, Aug 14, 2025 at 12:36:45PM +0200, Philipp Zabel wrote:
+> On Do, 2025-08-14 at 16:54 +0800, Troy Mitchell wrote:
+> > Add ASoC platform driver for the SpacemiT K1 SoC full-duplex I2S
+> > controller.
+> > 
+> > Co-developer: Jinmei Wei <weijinmei@linux.spacemit.com>
+> > Signed-off-by: Jinmei Wei <weijinmei@linux.spacemit.com>
+> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > ---
+> >  sound/soc/Kconfig           |   1 +
+> >  sound/soc/Makefile          |   1 +
+> >  sound/soc/spacemit/Kconfig  |  14 ++
+> >  sound/soc/spacemit/Makefile |   5 +
+> >  sound/soc/spacemit/k1_i2s.c | 444 ++++++++++++++++++++++++++++++++++++++++++++
+> >  5 files changed, 465 insertions(+)
+> > 
+> [...]
+> > diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..9e41525afbf3f08ab9a26b562772861d86f39cd7
+> > --- /dev/null
+> > +++ b/sound/soc/spacemit/k1_i2s.c
+> > @@ -0,0 +1,444 @@
+> [...]
 > 
-> ...
+> > +static int spacemit_i2s_probe(struct platform_device *pdev)
+> > +{
+> > +	struct snd_soc_dai_driver *dai;
+> > +	struct spacemit_i2s_dev *i2s;
+> > +	struct resource *res;
+> > +	struct clk *clk;
+> > +	int ret;
+> > +
+> > +	i2s = devm_kzalloc(&pdev->dev, sizeof(*i2s), GFP_KERNEL);
+> > +	if (!i2s)
+> > +		return -ENOMEM;
+> > +
+> > +	i2s->dev = &pdev->dev;
+> > +
+> > +	i2s->sysclk = devm_clk_get_enabled(i2s->dev, "sysclk");
+> > +	if (IS_ERR(i2s->sysclk))
+> > +		return dev_err_probe(i2s->dev, PTR_ERR(i2s->sysclk),
+> > +				     "failed to enable sysbase clock\n");
+> > +
+> > +	i2s->bclk = devm_clk_get_enabled(i2s->dev, "bclk");
+> > +	if (IS_ERR(i2s->bclk))
+> > +		return dev_err_probe(i2s->dev, PTR_ERR(i2s->bclk), "failed to enable bit clock\n");
+> > +
+> > +	clk = devm_clk_get_enabled(i2s->dev, "sspa_bus");
+> > +	if (IS_ERR(clk))
+> > +		return dev_err_probe(i2s->dev, PTR_ERR(clk), "failed to enable sspa_bus clock\n");
+> > +
+> > +	i2s->sspa_clk = devm_clk_get_enabled(i2s->dev, "sspa");
+> > +	if (IS_ERR(clk))
+> > +		return dev_err_probe(i2s->dev, PTR_ERR(clk), "failed to enable sspa clock\n");
+> > +
+> > +	i2s->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+> > +	if (IS_ERR(i2s->base))
+> > +		return dev_err_probe(i2s->dev, PTR_ERR(i2s->base), "failed to map registers\n");
+> > +
+> > +	i2s->reset =  devm_reset_control_get(&pdev->dev, NULL);
 > 
->> +  spacemit,syscon-pmu:
->> +    description:
->> +      PHandle that refers to the APMU system controller, whose
->> +      regmap is used in setting the mode
->> +    $ref: /schemas/types.yaml#/definitions/phandle
+> Please use devm_reset_control_get_exclusive() directly.
+Tnx. I will use in the next version.
+
 > 
-> Clock controllers and ethernet controllers all use spacemit,apmu to
-> refer the APMU system controller. Do you think it's better to keep them
-> aligned?
-
-I do think it's better to keep them aligned.
-
-And I appreciate your noticing this.  I don't see anything
-that's accepted upstream that defines properties like this,
-but I now see this:
-  
-https://lore.kernel.org/lkml/20250812-net-k1-emac-v5-2-dd17c4905f49@iscas.ac.cn/
-
-I did a quick scan for what others do when a property's
-value is a phandle, and other than just "syscon" it seems
-that word is omitted.
-
-So unless someone else suggests otherwise, I'll use
-"spacemit,apmu" for this property in my next version.
-
-> ...
+> > +	if (IS_ERR(i2s->reset))
+> > +		return dev_err_probe(i2s->dev, PTR_ERR(i2s->reset),
+> > +				     "failed to get reset control");
+> > +
+> > +	dev_set_drvdata(i2s->dev, i2s);
+> > +
+> > +	spacemit_i2s_init_dai(i2s, &dai, res->start + SSDATR);
+> > +
+> > +	ret = devm_snd_soc_register_component(i2s->dev,
+> > +					      &spacemit_i2s_component,
+> > +					      dai, 1);
+> > +	if (ret)
+> > +		return dev_err_probe(i2s->dev, ret, "failed to register component");
+> > +
+> > +	return devm_snd_dmaengine_pcm_register(&pdev->dev, &spacemit_dmaengine_pcm_config, 0);
+> > +}
+> > +
+> > +static void spacemit_i2s_remove(struct platform_device *pdev)
+> > +{
+> > +	struct spacemit_i2s_dev *i2s = dev_get_drvdata(&pdev->dev);
+> > +
+> > +	reset_control_assert(i2s->reset);
 > 
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
->> +    combo_phy: phy@c0b10000 {
+> I'd move the reset_control_assert() be moved to snd_soc_dai_ops::remove
+> for symmetry.
+>
+It makes sense.
+
+deassert in ops::probe and assert in ops::remove.
+
+                - Troy
 > 
-> This label is unnecessary.
-
-OK.  I used it when testing USB but we can add the label
-back when that driver gets reviewed.
-
->> +        compatible = "spacemit,k1-combo-phy";
->> +        reg = <0xc0b10000 0x1000>;
->> +        clocks = <&syscon_apmu CLK_PCIE0_DBI>,
->> +                 <&syscon_apmu CLK_PCIE0_MASTER>,
->> +                 <&syscon_apmu CLK_PCIE0_SLAVE>;
->> +        clock-names = "dbi",
->> +                      "mstr",
->> +                      "slv";
->> +        resets = <&syscon_apmu RESET_PCIE0_DBI>,
->> +                 <&syscon_apmu RESET_PCIE0_MASTER>,
->> +                 <&syscon_apmu RESET_PCIE0_SLAVE>,
->> +                 <&syscon_apmu RESET_PCIE0_GLOBAL>;
->> +        reset-names = "dbi",
->> +                      "mstr",
->> +                      "slv",
->> +                      "global";
->> +        spacemit,syscon-pmu = <&syscon_apmu>;
->> +        #phy-cells = <1>;
->> +        status = "disabled";
->> +    };
+> regards
+> Philipp
 > 
-> Best regards,
-> Yao Zi
-
-Thanks a lot.
-
-					-Alex
-
