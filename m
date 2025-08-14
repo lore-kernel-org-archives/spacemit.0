@@ -1,158 +1,116 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E4C2F2906
-	for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 10:37:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980AA2FB97C
+	for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 11:59:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755167824; cv=none; b=MTVGZDcvC4St6JmhuSciglva+giU5LZWvItmgMsLLXNJl/dKjELksQapUCp4HPGy9zxmiFuht8fmvPyJGLKJB+BlZLoGZwy2+R2ws+6xMY2UKkr91O1g/Wwy9C1+c3prtIY6B49h6U6+JEMKB3QpuhPAPRN8tQZIzSms7Hsj1Ak=
+	t=1755172798; cv=none; b=Cb7hZflYnR28Ya02pFT9oo8EptaCWVtPd961r7jtS41gi8wktRcEyMitzkeGHOKE7LyNI0eHVbFtN/m3hvJGUBziXWPGZReXnfF9C4mvJ2VV7n5n8jV+m4KPSO7pQLstG0aYhcecmXLoJYoVMF/uZ3/fwM/equyt2VOqj6dxW/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755167824; c=relaxed/simple;
-	bh=mtixfoi6sLuILNyQgWNCBpAeEhBntAaVb96j6pq/4d8=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=fEZ1FiCGpfhXGgFubdrEpIILyKugiA+iwPuhJi/Ni3PUmPdoyiBxakyIf7ZYNU/6RiDbt6zdtuWAB/ZUf2bk/78T2HGbzEIDrkGB1VteVZnuy8MTAIxF0jM6Z/Yy6R7ybG1TBXjTuTQtNxn2bn4i6WATMjPrsAERrA7gYiiSJ5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1umVKB-0007cz-7f; Thu, 14 Aug 2025 12:36:47 +0200
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1umVK9-000Evw-1z;
-	Thu, 14 Aug 2025 12:36:45 +0200
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1umVK9-000Gbg-1f;
-	Thu, 14 Aug 2025 12:36:45 +0200
-Message-ID: <851f1c3d96988920a28412a26d5cd951b684c020.camel@pengutronix.de>
-Subject: Re: [PATCH 2/2] ASoC: spacemit: i2s: add support for K1 SoC
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, Liam Girdwood
-	 <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring
-	 <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
-	 <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, Jaroslav Kysela
-	 <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, Jinmei Wei <weijinmei@linux.spacemit.com>
-Date: Thu, 14 Aug 2025 12:36:45 +0200
-In-Reply-To: <20250814-k1-i2s-v1-2-c31149b29041@linux.spacemit.com>
-References: <20250814-k1-i2s-v1-0-c31149b29041@linux.spacemit.com>
-	 <20250814-k1-i2s-v1-2-c31149b29041@linux.spacemit.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1755172798; c=relaxed/simple;
+	bh=HFX/Qwld+Sh0z4QKTMLIPR1Ye4VR7lyGLk0gc7fQ85w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KnrHOLtD9txW4/E7DVS7+7TZDyKUc79ag13TVokuO8L56LgNyOJ3ESdsb9i46MKQQipa4uXSFDZNFZdv3BajtbBULcJ4cJ4l2DvJ1rj1Hx+wDSOT7sqnlDd76q58JuhJxPIfw+HN4Th7SPH37xS1G1szI18j9NP2AvP1uMB3pA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=SMQErkM/; arc=none smtp.client-ip=209.85.166.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="SMQErkM/"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3e57010bc95so8093355ab.3
+        for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 04:59:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755172796; x=1755777596; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VkZ6MdXAK8oUuFYjzHuswEeWUTNOi4hs6qI/H9CSMKA=;
+        b=SMQErkM/Fdl3wZ9JuW6bvDgD3buo3Ru1lt+VHx3PuL2Uu6KeEuQBH1M229n/FXQmzF
+         xFcHDOoOOLH+/8bbkdavm5Y9kEOJTaepZVIy3W5zQp8eYSfqm2ADxcwVUPE3P6+IYDDn
+         n3/ytwlC8qJVbXBJJ9EoysTyT341Ki8EPwLpuD/Vo4+z4cymdmOOEz3qAOy3NcYgauvk
+         W+/EENmVjxm1s2uuNqFSRHzDSAepw34hf4MampBPYrLWGRQqs4V+gU9lrStmgKZsRTg5
+         v3yD/R6Y8i33vf+ZnxF2su3ogm+6GwWp6sNhIdThTByi2jxJlNyqoB4eiyWfTqKBjihQ
+         vOzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755172796; x=1755777596;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VkZ6MdXAK8oUuFYjzHuswEeWUTNOi4hs6qI/H9CSMKA=;
+        b=grBSHr4dPVpJwYRz8+8/iHIfYR6U5o7DvNI4Iai8sfnyumRrMjzpXpFFZ7i84z17NQ
+         eK3DOIfivoZdJOajlZzAxsQ8WQWPa9LN0tEjH6JGOXGTRSXXsLTbZFuA28QH/q+LJJq4
+         PzUssbJtsPr+0lslZTsvG4UhzEepMeu9f4ubxeiujL8mJbZh+w+GNeZyjr5XauinWTuk
+         ceyORPz8cHIMQKrnXNDCMpw2/rg61FMIlaERtamFblvapHrespqtYq57UT9ykNluQDyW
+         NrwOQRg5NBA7Buj9KJzuAtGamdnHzO4+yUMHYANKgIeI+lIshALH3ZzsWYveSNAPOVMw
+         WiIA==
+X-Forwarded-Encrypted: i=1; AJvYcCWe/K75cBYWeAfnYOkiS9ZreyurehyKk4MWUEeku5gEUhJJcANEAfZ9Y1dPLY8fU68q5PD1yiz46A==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzd0a1Tz2ga+b6vtxgw1kMz0SZF2C3A3A0bdrTxxQZP04abCnVA
+	JDwDMv4k+1qVQGIt0Wp0825zXEdEA3wXpScEzKznZpdBX/UVyAW8TziJQ/v4UQbln0I=
+X-Gm-Gg: ASbGncvIxVgnxac49124NingD76Sfbz5FbO7sYLs7Jl8nK40xSntQm9n9/mnzQgzSTy
+	JaehFbQWWRWTv7q5j+7eEZZfJbrkyI2/IVoL/faK/rRj6B7afDnWvfIJ8CDzBGjCt9jK3NRjdp0
+	GaR+xvPJ9XSNIgm2HJDcHaXGa6lzyhAC9T0TyRumDSNJGaU58ni8lAtIV6tTIahrh+OOs01Ipe6
+	vn+u77co9hGGuWhcZenjdLTAwogRTcJNWC7Gxwcat3hnVrXo+01dZ9kxEB4kwqvQUklSgItPd/i
+	6moe69aFFggsUn58JqoEAbawnw+Wt/aRPdxJmizSk6gGeX2Ux6DdOn3xuQn5e4jzA/pc4yo5zlC
+	uw6u6f4fiUhGe8OT5qLa0P4K+zgh97rhALR/evsjEVc1lUBAkymoPjYYeS8KZNA==
+X-Google-Smtp-Source: AGHT+IE3y11zxXdSZ7xsXLUpghewNnJCpWK8G2mFkAzcKjVS5vSn5G3dmjKvLqQoKez3LPNe1hHEcQ==
+X-Received: by 2002:a05:6e02:184c:b0:3e5:6daf:ddfe with SMTP id e9e14a558f8ab-3e57084ff05mr51337105ab.10.1755172795698;
+        Thu, 14 Aug 2025 04:59:55 -0700 (PDT)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50ae9cbb659sm4480210173.93.2025.08.14.04.59.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Aug 2025 04:59:55 -0700 (PDT)
+Message-ID: <86174012-fd87-41d7-9568-f9c0b544c1c4@riscstar.com>
+Date: Thu, 14 Aug 2025 06:59:53 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: spacemit@lists.linux.dev
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] dt-bindings: phy: spacemit: add SpacemiT PCIe/combo
+ PHY
+To: Krzysztof Kozlowski <krzk@kernel.org>, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, lpieralisi@kernel.org,
+ kwilczynski@kernel.org, mani@kernel.org, bhelgaas@google.com,
+ vkoul@kernel.org, kishon@kernel.org
+Cc: dlan@gentoo.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+ tglx@linutronix.de, johan+linaro@kernel.org, thippeswamy.havalige@amd.com,
+ namcao@linutronix.de, mayank.rana@oss.qualcomm.com, shradha.t@samsung.com,
+ inochiama@gmail.com, quic_schintav@quicinc.com, fan.ni@samsung.com,
+ devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20250813184701.2444372-1-elder@riscstar.com>
+ <20250813184701.2444372-2-elder@riscstar.com>
+ <22bd5b5b-ca06-4499-b21f-22c2ff202167@kernel.org>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <22bd5b5b-ca06-4499-b21f-22c2ff202167@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Do, 2025-08-14 at 16:54 +0800, Troy Mitchell wrote:
-> Add ASoC platform driver for the SpacemiT K1 SoC full-duplex I2S
-> controller.
->=20
-> Co-developer: Jinmei Wei <weijinmei@linux.spacemit.com>
-> Signed-off-by: Jinmei Wei <weijinmei@linux.spacemit.com>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  sound/soc/Kconfig           |   1 +
->  sound/soc/Makefile          |   1 +
->  sound/soc/spacemit/Kconfig  |  14 ++
->  sound/soc/spacemit/Makefile |   5 +
->  sound/soc/spacemit/k1_i2s.c | 444 ++++++++++++++++++++++++++++++++++++++=
-++++++
->  5 files changed, 465 insertions(+)
->=20
-[...]
-> diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..9e41525afbf3f08ab9a26b562=
-772861d86f39cd7
-> --- /dev/null
-> +++ b/sound/soc/spacemit/k1_i2s.c
-> @@ -0,0 +1,444 @@
-[...]
+On 8/14/25 1:11 AM, Krzysztof Kozlowski wrote:
+> On 13/08/2025 20:46, Alex Elder wrote:
+>> +                      "mstr",
+>> +                      "slv",
+>> +                      "global";
+>> +        spacemit,syscon-pmu = <&syscon_apmu>;
+>> +        #phy-cells = <1>;
+>> +        status = "disabled";
+> 
+> You cannot have disabled examples. This also means it could not be
+> checked/tested.
+> 
+>> +    };
+> 
+> 
+> Best regards,
+> Krzysztof
 
-> +static int spacemit_i2s_probe(struct platform_device *pdev)
-> +{
-> +	struct snd_soc_dai_driver *dai;
-> +	struct spacemit_i2s_dev *i2s;
-> +	struct resource *res;
-> +	struct clk *clk;
-> +	int ret;
-> +
-> +	i2s =3D devm_kzalloc(&pdev->dev, sizeof(*i2s), GFP_KERNEL);
-> +	if (!i2s)
-> +		return -ENOMEM;
-> +
-> +	i2s->dev =3D &pdev->dev;
-> +
-> +	i2s->sysclk =3D devm_clk_get_enabled(i2s->dev, "sysclk");
-> +	if (IS_ERR(i2s->sysclk))
-> +		return dev_err_probe(i2s->dev, PTR_ERR(i2s->sysclk),
-> +				     "failed to enable sysbase clock\n");
-> +
-> +	i2s->bclk =3D devm_clk_get_enabled(i2s->dev, "bclk");
-> +	if (IS_ERR(i2s->bclk))
-> +		return dev_err_probe(i2s->dev, PTR_ERR(i2s->bclk), "failed to enable b=
-it clock\n");
-> +
-> +	clk =3D devm_clk_get_enabled(i2s->dev, "sspa_bus");
-> +	if (IS_ERR(clk))
-> +		return dev_err_probe(i2s->dev, PTR_ERR(clk), "failed to enable sspa_bu=
-s clock\n");
-> +
-> +	i2s->sspa_clk =3D devm_clk_get_enabled(i2s->dev, "sspa");
-> +	if (IS_ERR(clk))
-> +		return dev_err_probe(i2s->dev, PTR_ERR(clk), "failed to enable sspa cl=
-ock\n");
-> +
-> +	i2s->base =3D devm_platform_get_and_ioremap_resource(pdev, 0, &res);
-> +	if (IS_ERR(i2s->base))
-> +		return dev_err_probe(i2s->dev, PTR_ERR(i2s->base), "failed to map regi=
-sters\n");
-> +
-> +	i2s->reset =3D  devm_reset_control_get(&pdev->dev, NULL);
+OK I'll fix that in both places.  I think I just copied in the
+actual DTS content, but I now understand the problem.
 
-Please use devm_reset_control_get_exclusive() directly.
+Thanks.
 
-> +	if (IS_ERR(i2s->reset))
-> +		return dev_err_probe(i2s->dev, PTR_ERR(i2s->reset),
-> +				     "failed to get reset control");
-> +
-> +	dev_set_drvdata(i2s->dev, i2s);
-> +
-> +	spacemit_i2s_init_dai(i2s, &dai, res->start + SSDATR);
-> +
-> +	ret =3D devm_snd_soc_register_component(i2s->dev,
-> +					      &spacemit_i2s_component,
-> +					      dai, 1);
-> +	if (ret)
-> +		return dev_err_probe(i2s->dev, ret, "failed to register component");
-> +
-> +	return devm_snd_dmaengine_pcm_register(&pdev->dev, &spacemit_dmaengine_=
-pcm_config, 0);
-> +}
-> +
-> +static void spacemit_i2s_remove(struct platform_device *pdev)
-> +{
-> +	struct spacemit_i2s_dev *i2s =3D dev_get_drvdata(&pdev->dev);
-> +
-> +	reset_control_assert(i2s->reset);
-
-I'd move the reset_control_assert() be moved to snd_soc_dai_ops::remove
-for symmetry.
-
-regards
-Philipp
+					-Alex
