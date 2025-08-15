@@ -1,66 +1,67 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727A2256C81
-	for <spacemit@lists.linux.dev>; Fri, 15 Aug 2025 05:18:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4756329614F
+	for <spacemit@lists.linux.dev>; Fri, 15 Aug 2025 05:18:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755235098; cv=none; b=coGWMFFAPFapI7J57qc0qQAL5TnkX2edurmS8TG9qvtteU6nT4raLvzAEHM6ugCcAcz1AIYwsocNYWjH7AvxZ6IjSQ6ET16E1Jt+Rs6DvWlPpZry5qBqYxopzA1TNVUpetZcXLq9MjXwAoQPJSYmcMVyyVdmqzDDf5C12Au52ds=
+	t=1755235104; cv=none; b=hZvNxGEbJldWvw2U352Q47KRzpo3Ec0DwcNj3OREWjvNrrZ+Uckh9SVFCQrqklyWWzBrRZknkgRYBbW3Cs1nrgsKXZxhKthorfGngeM6LjlmosrmvIYivIQ+v17by2rNs05fT+3jt5WQX2xs3vRwkXYNW4O+fBJmOOn7kWw9hbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755235098; c=relaxed/simple;
-	bh=Ytsw7gXr39m4vVol3vpl+U2W3LDg/WGc3tz6dNyrjT8=;
+	s=arc-20240116; t=1755235104; c=relaxed/simple;
+	bh=wAbS4Hm5Ej3gB5y17PgS7507wIkyUc+hhTmlBTFT2ck=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pz7iwSihCEi2m2cGv68SDSMs5/r5DnpmGoA2XIo12bERYOyHRQSxxS2zUxGuay1pWU3FldRclq2t3w48PMDxfDgHOjdjJAOXgMvlb3GldHP0fTZvQa/Ggr9TinZfdv+wDxT3SF90G6L7ZS2oAA0+qIp7h04qGwD2PzQGiEil5fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=xdkpWIDK; arc=none smtp.client-ip=209.85.214.181
+	 In-Reply-To:To:Cc; b=sxe+INJEqppz8zmNeGyFOE6MxrloDjEEVP1Hxayu6Dx5XLdhV/v2FwjShkFlsYn31MF8fH0PtNEuwlO0ALM2wKB39paNjnAzIp3u17TjR+tb8x0JnCe2WZk0IORB+Hh38AJjPvgY/fl72zVoRsWjcMTVW+J4Vu4MwxsTNiBy6AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=xiSqAPqk; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="xdkpWIDK"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-244581d9866so14620445ad.2
-        for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 22:18:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="xiSqAPqk"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-321cf75482fso2621406a91.0
+        for <spacemit@lists.linux.dev>; Thu, 14 Aug 2025 22:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755235096; x=1755839896; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755235102; x=1755839902; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=my5gFgxgwwpLbVFYwIJaqegTw7Bp5Dofm55CB0gOBhw=;
-        b=xdkpWIDKq+F3QCyEdqSWfriM5/QloPx5TSJ5OAQuFGG6M/+zYYTEFEYmHr8pazrsRq
-         OD4x75eCwNC35G3ZqEss8tjFSb86ceE7dMfAXS+Y3DekLKt+h/WiLJU0D72+y+hvA+kZ
-         UfcpHc5vPYL9TEkWX+17v1QXNSdHhQT3rjhWXbQXJOvUoGBF1Fd4XRrjwIhULTvd8xqb
-         Vk5yu1TdqG3X10vl9xVXl6ibuv/VNP+8Wsn1FAzONSDf0NgvpUOYP4sXTryJrXveAdzZ
-         Y3ybg7W9+dz2FRaB8trvzVF3jHbER2ykYIc6WqD5avW8i+hVBoTrKH+XfiuQA74eTaW5
-         FO6A==
+        bh=+tu3VbVvBVdJX8NKXRo9aN8ru1kGERA/t9NfAcjD1b4=;
+        b=xiSqAPqkp6cJtJBwGDJh2aueBTy4iuL7vYB5PeR9XKFDk37OSj9wDYitd4xZMhs15h
+         eOKswprSrnz0oSnyT9g4Vqws1+u7llKNn/DZPx5CC9Wm0e4Yr1cl+2aCiPdUA1rNYN9o
+         1bEtCA7u0F0Hptc31c4h5Mz0sRE5SjgnTokmuxp9hOIc1J88kUFxVNNeyXi9EMTJZiIN
+         72vG9A3fyNH0CRyanZus8G2ibq0ohiTdywDPHTIZJ4O0me401Mo4e1LrwldPBkqKxHZG
+         IUveA/IYNrPI73rYOqL2iwq7IyX+1lfgr4BgAR5S3S1PQJOGnDoNUvqK4UO4FS7FKtn9
+         vayQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755235096; x=1755839896;
+        d=1e100.net; s=20230601; t=1755235102; x=1755839902;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=my5gFgxgwwpLbVFYwIJaqegTw7Bp5Dofm55CB0gOBhw=;
-        b=Rg+pT82FrJBDTwfh9kdEgiJRsdtc1zpzZWWqo+Y6uXjdMUb+cvoGxFlehitZ8BiZuM
-         YF6XbtndDGGdMyaE7Jfeo1HTvkzEsMsWKMhi1bXwKEiiV60H5po48OfHkb4Vjoucnxqh
-         ov8ahUD4PKXuL/LYlXA83bciQ2KLT82XsrviYCOmXFZmRitMp53F0rZOyPl73q378oEm
-         bd5tsf3fkvdNggYEyFJHDju2S0pPcYa4yBnB4PCAo7LVdxnTO0GTvLZiXv+AeRJZTnLU
-         zLvo0Fq/9ru4vLEW+L3KneYiqp4Z9m2pxLbWMQ3uN9Kuq0es20qJ/C8u8e/1D9tkpwIf
-         31uA==
-X-Forwarded-Encrypted: i=1; AJvYcCWx1pzzRV1pF0Kp8QvtoVmhtTZI1ZxKbJwobKIVdLWwIS2DmX2OITzzFMP4uM4Jo3QeFnqnWe43qQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxMkU9opscBksn2DF+ctTZtuvQAmgppvwbRbxdJ6yoIoqwBbz23
-	1SuSu8XuowqSHOz5Jg5CBIenLIOwsHwKSD7fBhFkf+dxhUX2kGQfnAAeHh2qYSVZsyQ=
-X-Gm-Gg: ASbGncsCR0DVsU/ip7M7i6u4JA9TrNIFlEgOdQhRhLY1vuhH7V/pDbltwCGxcV6df2V
-	hOiJphfpJEl1dVJ+bOgOdz6h3Lqf6pmIOT9Nrx5RUREdfI3RT546WW/LpX+igmEmFnWrGgE9eml
-	kDv0RW1qVjZ0fWmO5bge2QRk9QU1AM5eI+tBexbsJF/4Cida1ERNt7b8IqRaaemXaDBntjnKY6I
-	VmkZQdFWmskrP8Xh9QILlZ0g7ToqS3WtnBgms8Yk+hYNdPCqPbj3Ik4DQrx/6EQbwuKb7dRRUlg
-	PFLyfK5BrupyQG3WTEFhz4wlHdSIVdC4qYzm6zgW+GnjjBX0Q5iesV9BaO5QiWO7Uqw1BDTjK3M
-	RQ0YrtEpU+jvkUqy1EgWmIQ==
-X-Google-Smtp-Source: AGHT+IFr6XYQRBc9U9ia+TIZTQZJnsxXRoou7idyWaoZ8cv3ZQWmSXl1GoKqBAafVqDyDzPpUkQUKA==
-X-Received: by 2002:a17:903:1acc:b0:243:47:f61b with SMTP id d9443c01a7336-2446d8ec74bmr13143265ad.45.1755235095854;
-        Thu, 14 Aug 2025 22:18:15 -0700 (PDT)
+        bh=+tu3VbVvBVdJX8NKXRo9aN8ru1kGERA/t9NfAcjD1b4=;
+        b=QvwZ9BP70N/l+YybpPbyHorNAMKmwCm+W2WRjSw2lF78hRO1FQok3N9qtlUD29fJPb
+         HSVnDt8FRX/fOGogXsV5bd20mNedbj7POSptRkccYYYMWgJRdeVYQMhG/D1q8+I/9PJN
+         phE3pE5pWHUVLtbhSBF91MIWPf7GxpMhqBBsYb//F77iq0YVBWZuDLXhB8SFW7RY2Y5o
+         O1eHPwetit8t7HJeqNXxIM7/0lOtJK34OChcfBoFrYE/VgbrDVrkarAtEzEmF9Uik3kn
+         ptoo0X85xvpjzE5RKvmCtcLPmTq/in5s1DdvYToxNHZH7CzVaBRx8f8iN42ZIxt68Tv5
+         sTmA==
+X-Forwarded-Encrypted: i=1; AJvYcCXzcA1IYpNwBqPtpqsn5qzn25owU1lnJThgZiyxG3IGaURZ9vO0FYx4wVTyCgSzAnwx6/Edxl9b/w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyxlXKRrCWrGIISBRA9iMPhL84uyLJH0+dVzYCui03Y7ST/glOj
+	2Lb5Dc2Bbz2VwdUpJIrpWFihcQBOHkOWPKpVaax1BMSZOGZ83NJmJD1iFGc2NetR/TU=
+X-Gm-Gg: ASbGnctp1qONCZ8DsSekiKTw/0qvQAc9clkMT7ucMqNzDiYE3F7ygiibuGxLl83i6KG
+	akZ11gm530HWDka9p79khC/sdGaMClC4KXtam4JN3gml4tKZfDo/ax6K6qhnwkP9P40+st/v3IN
+	JxZ6kT1iil214QXhCItoPq2GgqfCChhqRyf5I056rcxMsy2hSKqINg92bAZurB3DoICPzxU7TDV
+	x4Q94MMhqdZZyrQ9HAZk/2JiDTQWD/KDprV7ubgZDNAo1st0qqKVnuaeDAkPxL7ulUAFSePo+sZ
+	A5jQD3ToZJTiqKPDC8b4zKsAJXP6sGMVQKpPZRIO2JEcy/taRHx3aYXQGLsp3s1riNIKV1dIIj/
+	2q9obmmQY0toX0PsWxDIm6w==
+X-Google-Smtp-Source: AGHT+IFDtHgfFvQxxm6fxEwWXi9awBBZD5Ua19+tFUlmmEm3vFbmRHegYSTVwFsXKmUcUeczaz7/jA==
+X-Received: by 2002:a17:90a:c10e:b0:321:2b89:958b with SMTP id 98e67ed59e1d1-3233f0c1a4bmr1740600a91.0.1755235102576;
+        Thu, 14 Aug 2025 22:18:22 -0700 (PDT)
 Received: from [127.0.1.1] ([103.88.46.155])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-323439978a4sm373212a91.10.2025.08.14.22.18.08
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-323439978a4sm373212a91.10.2025.08.14.22.18.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Aug 2025 22:18:15 -0700 (PDT)
+        Thu, 14 Aug 2025 22:18:22 -0700 (PDT)
 From: Guodong Xu <guodong@riscstar.com>
-Date: Fri, 15 Aug 2025 13:16:28 +0800
-Subject: [PATCH v4 6/8] riscv: dts: spacemit: Add PDMA node for K1 SoC
+Date: Fri, 15 Aug 2025 13:16:29 +0800
+Subject: [PATCH v4 7/8] riscv: dts: spacemit: Enable PDMA on Banana Pi F3
+ and Milkv Jupiter
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -69,7 +70,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250815-working_dma_0701_v2-v4-6-62145ab6ea30@riscstar.com>
+Message-Id: <20250815-working_dma_0701_v2-v4-7-62145ab6ea30@riscstar.com>
 References: <20250815-working_dma_0701_v2-v4-0-62145ab6ea30@riscstar.com>
 In-Reply-To: <20250815-working_dma_0701_v2-v4-0-62145ab6ea30@riscstar.com>
 To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -86,50 +87,49 @@ Cc: Alex Elder <elder@riscstar.com>, Vivian Wang <wangruikang@iscas.ac.cn>,
  Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.14.2
 
-Add PDMA dma-controller node under dma_bus for SpacemiT K1 SoC.
-
-The PDMA node is marked as disabled by default, allowing board-specific
-device trees to enable it as needed.
+Enable the PDMA on the SpacemiT K1-based Banana Pi F3 and Milkv Jupiter
+boards by setting its status to "okay".
 
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 ---
-v4:
-- rename the node from pdma0 to pdma
-- for consistnecy, put the "interrupts" after "clocks" and "resets"
-v3:
-- adjust pdma0 position, ordering by device address
-- update properties according to the newly created schema binding
-v2:
-- Updated the compatible string.
-- Rebased. Part of the changes in v1 is now in this patchset:
-   - "riscv: dts: spacemit: Add DMA translation buses for K1"
-   - Link: https://lore.kernel.org/all/20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn/
+v4: rename the node from pdma0 to pdma
+v3: adjust pdma0 position, ordering by name alphabetic
+v2: added pdma0 enablement on Milkv Jupiter
 ---
- arch/riscv/boot/dts/spacemit/k1.dtsi | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   | 4 ++++
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index abde8bb07c95c5a745736a2dd6f0c0e0d7c696e4..861f0fe18083fa158da51bd3be2808609f6233f4 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -660,6 +660,17 @@ dma-bus {
- 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
- 				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index fe22c747c5012fe56d42ac8a7efdbbdb694f31b6..6013be25854283a95e630098c1fde55e33e08018 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -40,6 +40,10 @@ &emmc {
+ 	status = "okay";
+ };
  
-+			pdma: dma-controller@d4000000 {
-+				compatible = "spacemit,k1-pdma";
-+				reg = <0x0 0xd4000000 0x0 0x4000>;
-+				clocks = <&syscon_apmu CLK_DMA>;
-+				resets = <&syscon_apmu RESET_DMA>;
-+				interrupts = <72>;
-+				dma-channels = <16>;
-+				#dma-cells= <1>;
-+				status = "disabled";
-+			};
++&pdma {
++	status = "okay";
++};
 +
- 			uart0: serial@d4017000 {
- 				compatible = "spacemit,k1-uart",
- 					     "intel,xscale-uart";
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_2_cfg>;
+diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+index 4483192141049caa201c093fb206b6134a064f42..c615fcadbd333adc749b758f7f814126783f87fb 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+@@ -20,6 +20,10 @@ chosen {
+ 	};
+ };
+ 
++&pdma {
++	status = "okay";
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_2_cfg>;
 
 -- 
 2.43.0
