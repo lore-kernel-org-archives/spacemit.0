@@ -1,57 +1,53 @@
-Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.65.219])
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D1A252912
-	for <spacemit@lists.linux.dev>; Fri, 15 Aug 2025 06:04:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.65.219
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432B923FC54
+	for <spacemit@lists.linux.dev>; Sat, 16 Aug 2025 09:15:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755237856; cv=none; b=vDB/XJevhrxtYtd787BCx/knwdxp3yEAN5ycFeZzpjr/1s6JA3FU2QN4Y1gFPEioYAymwmuUZZS1Ha9Wfm6C6x0wYCfRlloBf0GaKPm1Uvsk6apzvfI5PHUcQA6uM0V/mIicwVWDil527Asbw91/gAdozhOm4M2IZ2gaWgPW8sE=
+	t=1755335721; cv=none; b=cgbgRi7bpzybAfPs7kFERRlNOL/OO2DrQoZVAbFzYP4jkdqX1ZtJoT0KQ2CuHUzzaGHM6KsFiu9f/u5vtrsUKXTwcSO/qRE3NAShQi7DEe806LQCzRrkJAm67alMuzPC+gM4fPzyx0cq0lHtEg2Jzwsoen1iU5UbuMjRW9C0gaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755237856; c=relaxed/simple;
-	bh=sEAPkLK/x86g1f+WwcdgXDEqeVxbXUsDWRXIIu529Dw=;
+	s=arc-20240116; t=1755335721; c=relaxed/simple;
+	bh=ZdKnQYRuR3HrfaBPrfJ2dVRybAc1Vk+EPmW79NieZ/U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sXUPs1c2PH+/h4Q64fdWV5jndTIj1TZZ6DMPK6yxWhgwHqa9rNve37nhtDpyBMEnzIAM+Z4J0mmjKo98UC7xte3YTwdBJScPrgpLeCedkELpOEQiu46yHzXVkEDrwEQ0kHPJ77Z4ZC4MKE7Uh0rpQczbz632IeiXdQxWq8i3yGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=AN4l+0qC; arc=none smtp.client-ip=114.132.65.219
+	 Content-Type:Content-Disposition:In-Reply-To; b=pQt+XAPr54f+p19mOovuC3faOVEZE6dQ3pIfpSWNA5lVCI7gFTIyx/g2jkF5NBcV8il1fOOqjbmhb4+u3cWrfC8LQoYpUP9MM5vJ3SqjWyVZBn4FrSLrT+4YIlFJIh3m9+mK1FKcil3GB93n0drJ+oBf/rjelXAVApDvJFwg0+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=RjmnY+qK; arc=none smtp.client-ip=18.194.254.142
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="AN4l+0qC"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="RjmnY+qK"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1755237722;
-	bh=x1N3D6/VxKcATBuZmB7CNiYmp7p5XE6OMaGosmRFbxU=;
+	s=mxsw2412; t=1755335633;
+	bh=hbXtoR3uWxiKczQIaq//GQkhVV7HPaIDh8JT8/clkDc=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=AN4l+0qCzp1RzPoeXXfPENTHMbSIMEj0BshDNEzAf6oQRM/94Sge18g2i+icH3Vu+
-	 I3fiIfLZw02VXhL1b+qzNq+Y+sSZjZ2nDyaIwNLl8gHkKzr9SczmfFXZlIBIVdC722
-	 ywAEC6pZzwdnYrAkQsctFaAtv5LhxHTYaUUuJbl0=
-X-QQ-mid: zesmtpgz1t1755237720taae2885a
-X-QQ-Originating-IP: Awd2VcLVbmDqB933ZLJHIsPxY4Y//B/JRsothqN1eyI=
-Received: from = ( [61.145.255.150])
+	b=RjmnY+qKhskPZWZ5Zsut6+u4UJaKdbiGEguukpdKyqdGgk0lCSBi1Z2PVeqVZCLsY
+	 kp/rmwD+2Ct+3r7hTi7d6gqLC2fUhqBdkSD/81cEkNAqFoun31u28gw8AafHMx+Kpd
+	 Er3ma36QXXyC6PpNl863OcM1qzxHB6srVJiStI1M=
+X-QQ-mid: zesmtpip3t1755335624tdfc22a4d
+X-QQ-Originating-IP: q1QVFsw6Qn/8GxGPXxJhBWdr66tYEr9pdlAVtNoZFY4=
+Received: from = ( [localhost])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 15 Aug 2025 14:01:58 +0800 (CST)
+	id ; Sat, 16 Aug 2025 17:13:43 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 2894032038564909273
-EX-QQ-RecipientCnt: 20
-Date: Fri, 15 Aug 2025 14:01:57 +0800
+X-BIZMAIL-ID: 8634151311153834424
+EX-QQ-RecipientCnt: 15
+Date: Sat, 16 Aug 2025 17:13:42 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Guodong Xu <guodong@riscstar.com>, Vinod Koul <vkoul@kernel.org>,
+To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	duje@dujemihanovic.xyz
-Cc: Alex Elder <elder@riscstar.com>, Vivian Wang <wangruikang@iscas.ac.cn>,
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH v4 6/8] riscv: dts: spacemit: Add PDMA node for K1 SoC
-Message-ID: <34485B93B03EAD10+aJ7NVbe8aqjWBFd-@LT-Guozexi>
-References: <20250815-working_dma_0701_v2-v4-0-62145ab6ea30@riscstar.com>
- <20250815-working_dma_0701_v2-v4-6-62145ab6ea30@riscstar.com>
+Subject: Re: [PATCH 1/2] dt-bindings: i2s: spacemit: add support for K1 SoC
+Message-ID: <67A5AD581BFFAEE1+aKBLxuQLDlf3JFVN@troy-wujie14pro-arch>
+References: <20250814-k1-i2s-v1-0-c31149b29041@linux.spacemit.com>
+ <20250814-k1-i2s-v1-1-c31149b29041@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,81 +56,133 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250815-working_dma_0701_v2-v4-6-62145ab6ea30@riscstar.com>
+In-Reply-To: <20250814-k1-i2s-v1-1-c31149b29041@linux.spacemit.com>
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: MsXD3WsHXmxXiGeeLocpRz3B53KmNsAf5gcMA8ombNJDntx/8yfeD8tY
-	AwPiwgJDg9Tx0stKB8oIL4gyH8aPI5B6xAp2tBggtU43exhAUiOwYhox/+reWl28BlnOGCA
-	B2wX+lSrTERodhn7X9OdPVnH39WZ+JS+bEZSf85TaHEhAtSNPagKE0vPDwnl+28BGUD8Dfy
-	nR4ZMWcHE+5SLji3DK+7n0a/AlVeHp4CSwEFfZsvt15t4WS1zfDagZxiSDOoJILvLQqIO29
-	01vYky6jFsFlM5Gn1AO733+l4nkC9G1awYecFBhe2j+hsWZSWKWAySLd835LPYPObMHAQg8
-	gd2+JHNqKF2fu5QCDYPC4K0gUsR2phUvKszjl5K+XmD1Teq4bjwVC5Bm/MH1ZJSc7idiRBG
-	IoBhL/nFHVjg0ZN7zhgnd7kpjZlSx8QvWwhBV5Tb4rXXgj5Ow14UkMi0bL9CqbBhSvhM1pB
-	Odqs9Tpw7FqDrz96HJ2ZXHpM5skmnyKXMIBlRjxmgo0+Vka+pgnDiYDkta0lHdtCidSNweJ
-	T6EjtCm4vKJoDOxkIELHCy9/PJXQjpWMz+q9tY08rP7FYFiJSgNsTeM3YXmxMspTn9vSuSc
-	SLJp+L7nIfnnEz3UWQHPgG1Zt4eSV0SLv3uT7KCyWzoZZ2uAcwpQVqC+bIbkF4teNhJ1x6U
-	m8jblalvB4EECF2bIA5WOHt0O1eptyjq+l1XRLUQZ7BiA6pmOR3qYL/zHHnRRTtE4AWu0Py
-	iMWExMVDCZWUvR1rBC+UrYUyAnxa8/KqsX1vVQRIrMSN6FD1DdvCgFA5CoGBsZT1v6pMR6X
-	SsRMlC3sa6IowX4VWqh5Y3ZW/CZEB7/73focYwCRpZJlpUCOBAQN6ye1a13Q7ql2m1OysEp
-	XRrht7cjdDC0ulo0ZVD0DQs6jtKUKcD3PPlxcZo6fg6DkTlfAgpv5kC5izQ+D1QAfQfOSiz
-	V164n//JOjbyWQrzUPmpovAqrHZxB8pnfr4rI/JqsoCihAglGDdn+QUZgkjTZk14ZXMRuUd
-	eyEkuaypuzkVQyvTAK4toTKtnHtZ+MlvrMzuF7WkR+Kub2y6GrL9SkElthtsbkq36VsDXlg
-	CWbO39OpOp9/JAVrdTbHVVXHBpVZahC1G+seIqpp9rvtR6UX5tvSXWFuBGyRJsa5V9qjPcC
-	wxt5
-X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
+Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: N2K7JO7TcIoEo4bQxstuthcJ3EFVDSMsD2PXtUIgj+oyG/rf2T7WhXG2
+	+JbrkAp4th8UQjTe+VgZBAo2d3Gq01j5ZRXRmITGIzF3eHeI5x7OFQRei+VOW+TCS2cJuZE
+	N3wkpZ4lulCzowpjAkqKqHfIlfXaGr9ZFV2QvXVsiVQ921yokON1HNKEDIPu60f3OkoNV/Z
+	kTA9Z3B3S/d7Es7vbg8BNpUxpdTxQkrYJ3G3CEfx4tzNsB2JgLE0QO6lRQ9Iusw9sKihdVH
+	cSzRSyPEpdx3RpvNhG4X7bN/IN6g2+dU5L7QLaXRU4PIGXILD8OBuMKJEONDw5c/LRE7efq
+	iSHvLIg2Uy/QUkjqawGYN1gXfariCcKDWyHHh0G1h3y/wdIAL9tLu2tBTQMp1YvOkjOcRrs
+	oXnN4TZK77QUIrpk4LQ0szidPbKnjKyhKtVs2INYqIx56EKoNy8CgfOB1+/xYbPDAAXb+oX
+	K+yHOhqPdFUOYOfaDKQGfVvxHUi60QYBscqBn92JVcqbl8H7lxlCQF5TRTAUAeqhcENHII4
+	n0l19gZTgZcCNcfuO9sN0IvNN4GgUp5lWD8QfR7jiEOZ935Z92hY+eXFLUOmnudNHqaJZJw
+	hHQOO2Pt32CQAgQf2nTPnz1uuBiuJtuNfkMGF8rL+sI1LrDoSv48MpzQ9Cp3Avjbwjd7YRE
+	tGe6XG/alL89kViLJElu/2SbLN54gm/otd49TkSz35a5L6LFr8JJovgWOYOoHq6cF0kGAvE
+	p8Cji8rgoKpSoY6cR9bJC+XAHflcuqUVzoxl7SROzMnzgQeZEVZ0QY8YhfRZZXlSuyw/pxZ
+	pgu5EoLnnDbjzMr89QafKWuh4r1B8kFvXw2c7C3hOVwWS/KF85llfNRzZo2hyPA6C0Nl3PE
+	LINHePKaWk1obi3pyD/mOWLEsiVwS0IHqWrsR1usDDm+4hE/obnzUXOhWXBaiUu/qkGq6f4
+	j0Nl5+oXFUbbcjYJtJ8C9J52DoUqsnMhyiJPJ9G4qhozyk6QICA8kGhHDy+u9k2hr/s79mI
+	Z4LgDVB/2Q0WFc32lqeny0GiRCpCTgKlll33Oz8ETr3qKO6AizNfZkMFOPOtM=
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
 X-QQ-RECHKSPAM: 0
 
-Thanks.
-
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-
-On Fri, Aug 15, 2025 at 01:16:28PM +0800, Guodong Xu wrote:
-> Add PDMA dma-controller node under dma_bus for SpacemiT K1 SoC.
+On Thu, Aug 14, 2025 at 04:54:19PM +0800, Troy Mitchell wrote:
+> Add dt-binding for the i2s driver of SpacemiT's K1 SoC.
 > 
-> The PDMA node is marked as disabled by default, allowing board-specific
-> device trees to enable it as needed.
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 > ---
-> v4:
-> - rename the node from pdma0 to pdma
-> - for consistnecy, put the "interrupts" after "clocks" and "resets"
-> v3:
-> - adjust pdma0 position, ordering by device address
-> - update properties according to the newly created schema binding
-> v2:
-> - Updated the compatible string.
-> - Rebased. Part of the changes in v1 is now in this patchset:
->    - "riscv: dts: spacemit: Add DMA translation buses for K1"
->    - Link: https://lore.kernel.org/all/20250623-k1-dma-buses-rfc-wip-v1-0-c0144082061f@iscas.ac.cn/
-> ---
->  arch/riscv/boot/dts/spacemit/k1.dtsi | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+>  .../devicetree/bindings/sound/spacemit,k1-i2s.yaml | 88 ++++++++++++++++++++++
+>  1 file changed, 88 insertions(+)
 > 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> index abde8bb07c95c5a745736a2dd6f0c0e0d7c696e4..861f0fe18083fa158da51bd3be2808609f6233f4 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> @@ -660,6 +660,17 @@ dma-bus {
->  			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
->  				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
->  
-> +			pdma: dma-controller@d4000000 {
-> +				compatible = "spacemit,k1-pdma";
-> +				reg = <0x0 0xd4000000 0x0 0x4000>;
-> +				clocks = <&syscon_apmu CLK_DMA>;
-> +				resets = <&syscon_apmu RESET_DMA>;
-> +				interrupts = <72>;
-> +				dma-channels = <16>;
-> +				#dma-cells= <1>;
-> +				status = "disabled";
-> +			};
+> diff --git a/Documentation/devicetree/bindings/sound/spacemit,k1-i2s.yaml b/Documentation/devicetree/bindings/sound/spacemit,k1-i2s.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..7d9110638d71792db6e5bb72559f6abaf4cb59bb
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/sound/spacemit,k1-i2s.yaml
+> @@ -0,0 +1,88 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/sound/spacemit,k1-i2s.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
->  			uart0: serial@d4017000 {
->  				compatible = "spacemit,k1-uart",
->  					     "intel,xscale-uart";
+> +title: K1 I2S controller
+> +
+> +description:
+> +  The I2S bus (Inter-IC sound bus) is a serial link for digital
+> +  audio data transfer between devices in the system.
+> +
+> +maintainers:
+> +  - Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> +
+> +allOf:
+> +  - $ref: dai-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: spacemit,k1-i2s
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: clock for I2S sysclk
+> +      - description: clock for I2S bclk
+> +      - description: clock for I2S bus
+> +      - description: clock for I2S controller
+> +
+> +  clock-names:
+> +    items:
+> +      - const: sysclk
+> +      - const: bclk
+> +      - const: bus
+> +      - const: func
+> +
+> +  dmas:
+> +    minItems: 1
+> +    maxItems: 2
+> +
+> +  dma-names:
+> +    oneOf:
+> +      - const: rx
+> +      - items:
+> +          - const: tx
+> +          - const: rx
+> +
+> +  resets:
+> +    maxItems: 1
+> +
+> +  port:
+> +    $ref: audio-graph-port.yaml#
+> +    unevaluatedProperties: false
+> +
+> +  "#sound-dai-cells":
+> +    const: 0
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - dmas
+> +  - dma-names
+> +  - resets
+> +  - "#sound-dai-cells"
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
+> +    i2s@d4026000 {
+> +      compatible = "spacemit,k1-i2s";
+> +      reg = <0xd4026000 0x30>;
+> +      clocks = <&syscon_mpmu CLK_I2S_SYSCLK>,
+> +               <&syscon_mpmu CLK_I2S_BCLK>,
+> +               <&syscon_apbc CLK_SSPA0_BUS>,
+> +               <&syscon_apbc CLK_SSPA0>;
+> +      clock-names = "sysclk", "bclk", "bus", "func";
+> +      dmas = <&pdma0 21 1>, <&pdma0 22 1>;
+I'll keep to 1 cell in the next version.
+
+> +      dma-names = "tx", "rx";
+> +      resets = <&syscon_apbc RESET_SSPA0>;
+> +      #sound-dai-cells = <0>;
+> +    };
 > 
 > -- 
-> 2.43.0
-> 
+> 2.50.1
 > 
