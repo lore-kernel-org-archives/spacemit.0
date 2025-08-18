@@ -1,83 +1,56 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CB5271445
-	for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 07:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2241D2741C3
+	for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 07:34:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755501461; cv=none; b=BiRKc4w0QHTscfk/IyNWMDfal4YLdrScF2bpz+Evql2rv3HNfnCaEBzzY1ErqVg1V3x/9M5tgpayLhkAzHTu8IZN/2jEA1XH/LfaTMc4pN+gkDZoKhB/2KizLwTfWaiAEf05K2GAjrKUvkFb7RjX4Gg/uL4oHDFgqAZO484LTxo=
+	t=1755502454; cv=none; b=DyHTib67rYASd0PV3n4sKaBHkCTsTUUbmoA5BqgYum8GIS3WcgI4Ls0X8HA082AYF2dNtX2RfweXBtFDv++W/K6VzZoqzUspijbT6QsGOmWZsZjvq/oi9TYxxrqoKZUXO0HZ6v6TE/qU9M28/wXcLESFvp293Je1zJj97zV29Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755501461; c=relaxed/simple;
-	bh=GRtOJJ4TU25SLYLaBruGe/0cKnzINtKI69UBlywJ0HU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=cEx8j9qZphYyBUsa4f6cabqstVD97n43d0lRY2um21KTASMmBeavsEXplpLLoFD9YLDrdIeN2wDRKBvo0/qhIMBWDMWpzmYYD+fESCyyGZ3HZPeSJk7rxUg6H7BW25LfZthWFei+ZkPlHiFGUAlNrLwlRGVjMfX2eSgQXLff2aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YXtVAONB; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1755502454; c=relaxed/simple;
+	bh=EPzh3NzHyqmYZ/c/XBA93Cdzlt0nsRYofywQe6RuU2U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kvRgr5topq8gXv2a07g7X9+wSoUXC0IZvZT9C+B57IIMI17VSrr5YoToSLDJuM7wxDXkTMuVmOFpZGgqhywZESb6x+8cmXaA6yh0i+NDVayAvELHDLoFaLkYcbY29C3YRv5fd/olLVyqHuzIy8+dVv11xxZ/mTieLANgUuvZoyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=xp6GF8gl; arc=none smtp.client-ip=18.194.254.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YXtVAONB"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b9e415a68fso3607856f8f.2
-        for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 00:17:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755501455; x=1756106255; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=00HmFiTKWlOUviqLOmDiviucp/G1KSLyabeRXjoLhH4=;
-        b=YXtVAONBqoKUsIb04tj2uhRnCd+1qPwoGBHsxefnRYzgoQKGJpW1ptUvJFiEMyzDwF
-         kWuU53RLHHwyIT1zfkZpAyqAqwLvFI4DU3eADO7/jaXxUjlEHKAelMoA60eO4v6LvT8I
-         UlFl0FT4MXwXlTV5w/6u61yQjNAl1g5lW3GRLevMqmIBY7VwFMy5vZkkTWD7m0vc7Em/
-         bsimejr+66cVNoOMUB6+xAepHr44yhNln2Iuq+63qfpU6ntUd+Ojs1XrB4M/goTpYqtW
-         2t8u/rWwAK3IW5jm3XOecATu28Jb6NDUbOTI2RQmtu66XE2cnCvjL9HKCNhwlTFCmpGA
-         CM5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755501455; x=1756106255;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=00HmFiTKWlOUviqLOmDiviucp/G1KSLyabeRXjoLhH4=;
-        b=SUQrzehW/tn4r6glfJsbHIQ6J7kUPy6QgpSjoSOi1kfTHPT0m4XPI6FhnSQlctaiMs
-         Nzz8N0EWGK0A6ruxMz/5OzvkSUBp82Z3bI1BQj6pHW9iHST6e/H1VwPkqVDCO5iEwUuF
-         tFY6srp1hJnf6lh53AMUkqqGNPmL+BiqzUuDhns1GF+up0knF6Aa3SxKPJ9EaLlFsvHR
-         hOeu+sxPqb9OVk2lvNz9nG9pEV8HcMtmKVtxW2WfKwONiN5czHDbzcKuCDAnSOowlHKy
-         HLJgc1I7bIiyVT9CubuUf61SVdS7sw2WMG74ANlY10oAyo5CGzKrdRaMl7jjvclHLJ6z
-         Ud1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVVMMJsk+CJv5FmDqSNB9ep14rA3/iKylylpQsFB0zhZXakGjDrBnbC2gotsU+Yl4E9hf5gCiXnMg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzokNhOQcFU80CTsyH2X3CCgjMlyks/9K55yjDPgCVEp0fqw2Dk
-	i8EcqpHVkzuoPImSoy09wACwzL2jOyv6ERPN6MS7CoGuzrMhlyW7xMI6Fh1Ho26OHTo=
-X-Gm-Gg: ASbGnctTjCiQCTF8tAwt1kL6YqkJskUjBFpnImEr8HvseGGU3w9eRhA7Q4ZNPCXlHAP
-	ZsrPYxSMdzzmUz6VHOdylyJlG87Eil23NwK50owdegJ1e5UPLwP8ymgL6fEbUVNf/ScGQRO78UY
-	YYwOcfS8cjZEbRpX5Lmj5+rNuB2/ntSW6SyKrYc17uW/oIdKDkDRmFTQ722KXrQgqpQADteVbei
-	PI3ZfD188hsK1jQGaiVCYMmX3CZ/p8cCu5Is9pRcXSgl6XF7MXezJNzmP0RsDHz0MjuOGRvKdYr
-	jUFe0K9+43ao+rfSEWTZd6eQo87V7UbgoMsupqSeYp9C3h96EWQx9jxDQ8xR3dGeIP3kQ38Vf5O
-	/hDGe6rw+CoHDP/mLyOMPzELlD7LtzIKYzm3HcZNgHq8=
-X-Google-Smtp-Source: AGHT+IHyrx5So2JkHy8B3V9n10eIVkllRTMcnOfbIYL9Fak+QjG/0EyC3RMUePQ7ZAM0RE6YfPigZA==
-X-Received: by 2002:a05:6000:250c:b0:3b7:8473:31c3 with SMTP id ffacd0b85a97d-3bb6646e10amr7831271f8f.9.1755501455230;
-        Mon, 18 Aug 2025 00:17:35 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3bb67c902dbsm11683675f8f.47.2025.08.18.00.17.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Aug 2025 00:17:34 -0700 (PDT)
-Date: Mon, 18 Aug 2025 10:17:31 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: oe-kbuild@lists.linux.dev, Guodong Xu <guodong@riscstar.com>,
-	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="xp6GF8gl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1755502368;
+	bh=hGJ5K9s0Yp8aThcYwUIFCFOisXwtrtzSiCz6334Suws=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=xp6GF8gl+MUMZ04JitlW/eTq7Fvx+VNb9uvqbTuYXkdbWLliQI6AGkxZHlrr4+1xX
+	 sF6DAv89tGdii/3oyDuzQL3kSZXrj7/Zkqj6XQJ5QkVXwhjeMEjUt94e8rb5zU3fFA
+	 jB8ruvsMgoikdXQUXrutQdMjezuW55VbQR1D1kSc=
+X-QQ-mid: esmtpgz11t1755502366t70d98cfb
+X-QQ-Originating-IP: 9nT85dNpey8gNJPRsy567TDQcjCRP7XKv8Zl8iCkjPs=
+Received: from = ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 18 Aug 2025 15:32:44 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7156475783990062859
+EX-QQ-RecipientCnt: 16
+Date: Mon, 18 Aug 2025 15:32:44 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Haylen Chu <heylenay@4d2.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	duje@dujemihanovic.xyz
-Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev,
 	Alex Elder <elder@riscstar.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Inochi Amaoto <inochiama@outlook.com>
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	Guodong Xu <guodong@riscstar.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH v4 4/8] dmaengine: mmp_pdma: Add operations structure for
- controller abstraction
-Message-ID: <202508181040.az8RxLrG-lkp@intel.com>
+	linux-kernel@vger.kernel.org,
+	Jinmei Wei <weijinmei@linux.spacemit.com>
+Subject: Re: [PATCH v2 2/4] clk: spacemit: introduce pre-div for ddn clock
+Message-ID: <20058E075D69E4A3+aKLXHNNdwT-SP25i@LT-Guozexi>
+References: <20250811-k1-clk-i2s-generation-v2-0-e4d3ec268b7a@linux.spacemit.com>
+ <20250811-k1-clk-i2s-generation-v2-2-e4d3ec268b7a@linux.spacemit.com>
+ <aKKKNynq-w89YeAx@ketchup>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -86,81 +59,93 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250815-working_dma_0701_v2-v4-4-62145ab6ea30@riscstar.com>
+In-Reply-To: <aKKKNynq-w89YeAx@ketchup>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: MCk7GSmjSGXyi/V+t/RdOkrnnRidTf36jgGgsvFIyuy58ivSBOHi3Gn3
+	rlK8UYi5EyaQnFMlUrMG07Y8NH7NbooKU+k/OKrW0sUBkTTtQV3y7lWzZzm9vPWC6jedsE6
+	hWYIJdSfpSQCTgPt17BK6TuGU3nrsJFtxDnTyMhJSTM9njX8rKLjSvXYiGakZj2OaVWNVhg
+	MIQcuUU5qpkrokgyU3MKPZnjqoZITLV3VucZFVyGqHP4d26hWmsp1MDZ6TYd/4A4iTmrxJa
+	hrK3cLYMJW2Lg8b/EdgiUWr5tw4r9LpZmHWnWzFYxsYrp/Ws/CwiqkOD5UBV9fIeAmG2nqD
+	0dE8tu9eNu11UGQNKUZxFj6ela1QvSRVJoUylc0lVm/mcUxgWUlJG+hlzNoUGMmMByNtcG3
+	/rGq8O/2Weky/WetUvHUskI7S5ZdebB/JSLyVf2qrVDKrFh9FK49TBk5o3/iKi/f/6780HR
+	b/Q3g3kRfGS/l/grdmKKpTakx4aTfZE5th9fK/k53JH1w/2JcyrYxcThSFc19UNfajpeNSa
+	xeo05IxnClznQzk/CpkTPKf8INUwTHJmvuUtOMbyAnWNT4Rfo/U+ml906TtHF4TerMn62ui
+	htDWEG0W6rpPuRcOmvhNBWIvuzJAsHAZb8FUs2JPhj/hqgFbMeC7GYY8aPuShO28XKlPKwR
+	8EKO83sfl9z5DUnqXDUtox5wtY23N/04H34L0DyaM8MhlON0yLAOBXscFbPj50/BJhTPgKn
+	Hw9snUzZVMJ/blW4bXVqz7akipYFu8LWQpoAeGZHI2x6B1yp7IZHt0USts2fWXkIWRuXATJ
+	VGVZ/Z3ooU/FrS2AREPJiWSB0KKOqoQjfqxA+CU9DId8pqWTpcSH9r8/54MbtbWa2I357Gj
+	L8CNm3O/xEZPjuEjbbvXg3E9ttuFZ7FSPAP95ryB+3AQPpGTZQ1PTvOdkReWpA5d5Nz4RSb
+	sOWgyJDHi1Vogu0QIY2MUQ4jEQzreCc7q7DANcGAC+xfJXvHn3VE8H5dMEXnDoJJaFwbvYe
+	kUWfqZtBoZC7Q+o6/CII8ik4/CR/6hvE+nZUucreCCrfNjriGE/m1pIG1336CHRIPd/0CI/
+	bRcJhZpE9o8KglGcmGFGoDIFf6X4MYlF67aIhY4oywUMN0V4oMGFdY=
+X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
+X-QQ-RECHKSPAM: 0
 
-Hi Guodong,
+On Mon, Aug 18, 2025 at 02:04:39AM +0000, Haylen Chu wrote:
+> On Mon, Aug 11, 2025 at 10:04:28PM +0800, Troy Mitchell wrote:
+> > The original DDN operations applied an implicit divide-by-2, which should
+> > not be a default behavior.
+> > 
+> > This patch removes that assumption, letting each clock define its
+> > actual behavior explicitly.
+> > 
+> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > ---
+> >  drivers/clk/spacemit/ccu_ddn.c | 12 ++++++------
+> >  drivers/clk/spacemit/ccu_ddn.h |  6 ++++--
+> >  2 files changed, 10 insertions(+), 8 deletions(-)
+Hi Haylen,
+Thanks for ur review.
 
-kernel test robot noticed the following build warnings:
+> 
+> The code change looks good to me, but
+> 
+> > diff --git a/drivers/clk/spacemit/ccu_ddn.h b/drivers/clk/spacemit/ccu_ddn.h
+> > index a52fabe77d62eba16426867a9c13481e72f025c0..4838414a8e8dc04af49d3b8d39280efedbd75616 100644
+> > --- a/drivers/clk/spacemit/ccu_ddn.h
+> > +++ b/drivers/clk/spacemit/ccu_ddn.h
+> > @@ -18,13 +18,14 @@ struct ccu_ddn {
+> >  	unsigned int num_shift;
+> >  	unsigned int den_mask;
+> >  	unsigned int den_shift;
+> > +	unsigned int pre_div;
+> >  };
+> >  
+> >  #define CCU_DDN_INIT(_name, _parent, _flags) \
+> >  	CLK_HW_INIT_HW(#_name, &_parent.common.hw, &spacemit_ccu_ddn_ops, _flags)
+> >  
+> >  #define CCU_DDN_DEFINE(_name, _parent, _reg_ctrl, _num_shift, _num_width,	\
+> > -		       _den_shift, _den_width, _flags)				\
+> > +		       _den_shift, _den_width, _pre_div, _flags)		\
+> 
+> You changed the definition of CCU_DDN_DEFINE without adjusting consumers
+> of this macro. If I'm correct, this creates a build failure.
+So I need to adjust consumers in same patch?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Guodong-Xu/dt-bindings-dma-Add-SpacemiT-K1-PDMA-controller/20250815-132049
-base:   062b3e4a1f880f104a8d4b90b767788786aa7b78
-patch link:    https://lore.kernel.org/r/20250815-working_dma_0701_v2-v4-4-62145ab6ea30%40riscstar.com
-patch subject: [PATCH v4 4/8] dmaengine: mmp_pdma: Add operations structure for controller abstraction
-config: parisc-randconfig-r072-20250818 (https://download.01.org/0day-ci/archive/20250818/202508181040.az8RxLrG-lkp@intel.com/config)
-compiler: hppa-linux-gcc (GCC) 8.5.0
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-| Closes: https://lore.kernel.org/r/202508181040.az8RxLrG-lkp@intel.com/
-
-smatch warnings:
-drivers/dma/mmp_pdma.c:546 mmp_pdma_prep_memcpy() warn: variable dereferenced before check 'dchan' (see line 542)
-drivers/dma/mmp_pdma.c:712 mmp_pdma_prep_dma_cyclic() warn: variable dereferenced before check 'dchan' (see line 708)
-
-vim +/dchan +546 drivers/dma/mmp_pdma.c
-
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  536  static struct dma_async_tx_descriptor *
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  537  mmp_pdma_prep_memcpy(struct dma_chan *dchan,
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  538  		     dma_addr_t dma_dst, dma_addr_t dma_src,
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  539  		     size_t len, unsigned long flags)
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  540  {
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  541  	struct mmp_pdma_chan *chan;
-918da7ee50b22b Guodong Xu       2025-08-15 @542  	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(dchan->device);
-                                                                                                       ^^^^^^^^^^^^^
-The patch adds a new dereference
-
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  543  	struct mmp_pdma_desc_sw *first = NULL, *prev = NULL, *new;
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  544  	size_t copy = 0;
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  545  
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03 @546  	if (!dchan)
-                                                            ^^^^^^
-But the old existing code assumed dchan could be NULL
-
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  547  		return NULL;
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  548  
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  549  	if (!len)
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  550  		return NULL;
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  551  
-c8acd6aa6bed3c Zhangfei Gao     2012-09-03  552  	chan = to_mmp_pdma_chan(dchan);
-
-[ snip ]
-
-2b7f65b11d87f9 Joe Perches      2013-11-17  701  static struct dma_async_tx_descriptor *
-2b7f65b11d87f9 Joe Perches      2013-11-17  702  mmp_pdma_prep_dma_cyclic(struct dma_chan *dchan,
-2b7f65b11d87f9 Joe Perches      2013-11-17  703  			 dma_addr_t buf_addr, size_t len, size_t period_len,
-2b7f65b11d87f9 Joe Perches      2013-11-17  704  			 enum dma_transfer_direction direction,
-31c1e5a1350ae8 Laurent Pinchart 2014-08-01  705  			 unsigned long flags)
-50440d74aae318 Daniel Mack      2013-08-21  706  {
-50440d74aae318 Daniel Mack      2013-08-21  707  	struct mmp_pdma_chan *chan;
-918da7ee50b22b Guodong Xu       2025-08-15 @708  	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(dchan->device);
-                                                                                                       ^^^^^^^^^^^^^
-
-
-50440d74aae318 Daniel Mack      2013-08-21  709  	struct mmp_pdma_desc_sw *first = NULL, *prev = NULL, *new;
-50440d74aae318 Daniel Mack      2013-08-21  710  	dma_addr_t dma_src, dma_dst;
-50440d74aae318 Daniel Mack      2013-08-21  711  
-50440d74aae318 Daniel Mack      2013-08-21 @712  	if (!dchan || !len || !period_len)
-                                                            ^^^^^^
-Same.
-
-
-50440d74aae318 Daniel Mack      2013-08-21  713  		return NULL;
-50440d74aae318 Daniel Mack      2013-08-21  714  
-50440d74aae318 Daniel Mack      2013-08-21  715  	/* the buffer length must be a multiple of period_len */
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
-
+> 
+> >  static struct ccu_ddn _name = {							\
+> >  	.common = {								\
+> >  		.reg_ctrl	= _reg_ctrl,					\
+> > @@ -33,7 +34,8 @@ static struct ccu_ddn _name = {							\
+> >  	.num_mask	= GENMASK(_num_shift + _num_width - 1, _num_shift),	\
+> >  	.num_shift	= _num_shift,						\
+> >  	.den_mask	= GENMASK(_den_shift + _den_width - 1, _den_shift),	\
+> > -	.den_shift	= _den_shift,					\
+> > +	.den_shift	= _den_shift,						\
+> > +	.pre_div	= _pre_div,						\
+> >  }
+> >  
+> >  static inline struct ccu_ddn *hw_to_ccu_ddn(struct clk_hw *hw)
+> > 
+> > -- 
+> > 2.50.1
+> > 
+> 
+> Best regards,
+> Haylen Chu
+> 
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
