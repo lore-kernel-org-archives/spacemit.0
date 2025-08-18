@@ -1,183 +1,107 @@
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C358731E105
-	for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 13:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D13233140
+	for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 15:18:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755522557; cv=none; b=DTaNPKwTAAA2u79EzY25S/ETlNJ079kjx4cg2c+xUxEpEPJbylgLFCWYjj6qeFod6g/17VpWnGqa2Tq7c74U4aoHbeY/eT3WFIka4MG4yF4OAji0ulIJN5XUX09ozxPe/I3/8rAXIKj26GHwYsPFQV9DOpZASpsUM0C1XhRgBAs=
+	t=1755530284; cv=none; b=UhlkC3nNwR23ORiSBQrr7mU/hqRD8XkOlEwl0Ig7HUDRmPbVQEIc/QUp/Yrk32DNYLCxEA7DO/iS1cKxj9De+7GWXDZNh90xOqhjCzlUTL3owvqDBfN5Xs/UqRLt/ZR4IgiGZiFCRmhr+fDEe6TkyFBWqCmdXzody2IEgWRtvo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755522557; c=relaxed/simple;
-	bh=ZWlzv9zQPgG3T4Qdt+COdLbnVTsm7kZtfnXMkGnLfdg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E6VvVU6JwCPXssW+tqlbQSn3EMSnYepPU8hNKPR0qQRKKbipxSACySHPyyjErnudxhnbiGustXHbrekbPYsGfdgy7VRutNmnAvUS2V6Me//surRl/GJHkVzRc6O5uxff7Xr2tePGWECD+Qwt9lE+fQ9LkUb1y8EItWEVRCr6WGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=KTF0ZmbZ; arc=none smtp.client-ip=54.254.200.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1755530284; c=relaxed/simple;
+	bh=ZMr9xoaIvvzsvVDKBkZPG6cWCCooP8ZucmJRQKxCeD0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nVL71MOSuB+9UU4mDZ9BKUy+DYKN3F7zTaY7WL8fPfn9QD6CjNfOriA5lV4nH9P1iJCfBgnjALE6xU9bbAuVuEZrrltDpnYtxDBvo+n5yg2p5/U2sh02C1Cp8Y2giigUU7SSQF3RWqddnMoX9f0F5/eT3tITATeUvQoTo2VekWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MBI/vLMm; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="KTF0ZmbZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1755522486;
-	bh=s8YclNR8beo4nWkkZUjnovn1goim6RIxNT6d2tnjL/s=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=KTF0ZmbZZcLnmrdiokOxKonJKRDPuK3ldJN39AXjBl05dQGjorzbBYxT+Z7AUjeiu
-	 CDdXKglwU0ci+Qz02k2fkW+u8nVBCITCqICJFT91NNNQuc/YFuqLUY9jMfmpT00yYE
-	 NYQVrCfiuHCbPgHK6LEeL4z7ts+9I92lCXKM/x3c=
-X-QQ-mid: zesmtpip2t1755522484tf2d46652
-X-QQ-Originating-IP: /v1dWevNYr4qGYbGv6tjmtqkcrChCHifqsQeMmx0+5s=
-Received: from = ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 18 Aug 2025 21:08:01 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14735046647836716306
-EX-QQ-RecipientCnt: 16
-Date: Mon, 18 Aug 2025 21:08:00 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Haylen Chu <heylenay@4d2.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Inochi Amaoto <inochiama@outlook.com>
-Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Jinmei Wei <weijinmei@linux.spacemit.com>
-Subject: Re: [PATCH v3 3/3] clk: spacemit: fix i2s clock
-Message-ID: <2CB30FE47E82A003+aKMlsDlLnLqh2fC0@troy-wujie14pro-arch>
-References: <20250818-k1-clk-i2s-generation-v3-0-8139b22ae709@linux.spacemit.com>
- <20250818-k1-clk-i2s-generation-v3-3-8139b22ae709@linux.spacemit.com>
- <aKL6ormE1N72fwVG@ketchup>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MBI/vLMm"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-333f92b4072so32055231fa.3
+        for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 08:18:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755530279; x=1756135079; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZMr9xoaIvvzsvVDKBkZPG6cWCCooP8ZucmJRQKxCeD0=;
+        b=MBI/vLMmoy2AEAybIxGwKpVNmbFB4ehkwlZG7Yj/sLkpnADiYgsnSdCV9mTPTFJ1GE
+         8g4tAQ6GNs9SAz8T+BE69THiN4h+YTL2ht5eht054HxDjxNHkdGr0G6sEfHJkZw0bOZS
+         LXgSmMhHOw3HRdTAbwsKr3puwRrRf2Tqr/ue367I35bEjnMZPRy8xflE7jTl0qSMoHZz
+         my0j/raowRaueNZSQw/wkwX0kQSWdoweTysMJuZoLgCLz44TjvI8TUSng7lIK53O9ny6
+         JDGdzzOWFpO/Z9bPNSf0APASoVJ46ObB77dvGVJl8K4yKCgTGGwJ9WV4ZB1AWEDbrXFg
+         Tonw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755530279; x=1756135079;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZMr9xoaIvvzsvVDKBkZPG6cWCCooP8ZucmJRQKxCeD0=;
+        b=lQeAToV1rH/DiL1uh/NF7xc59n0wCRrIU5OwNUpzTPJNti3ot1ff+Kuonf0SPNSPRY
+         F6Zq+7apzWtmp9bF0e76XGWYdTbGYkMrfB9Ri1ZzHYZ/x3EC2g8ZxS14XXiYdWm+DFgh
+         CuhWTilEGcoFw4/IPy2ftkmoa91SrhmIP1ZeXUE5XSB4nRPOowVSW3NBZ/TFRgpZn3IR
+         MTiWR47wXJltiNxt6r5lTMhJFezYDi7wqxAbuA5EycOsCEAlA/rrjMbnxVviyHwUCHlJ
+         q/iYUJogiy0QIlg6OShjvnnG2rA/2gcGi/EskdxMj8j9aX9UoluJTHGUHEApeV1kbTzn
+         Bswg==
+X-Forwarded-Encrypted: i=1; AJvYcCXtIoLL3gDxYB6lCwmJLL0F1fMYVvboG0qZ+0GJtycFZdPfqzoa2NyHzdY4YdDqt6LQsAnmtMkSpA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwYL6u9srydZUeu9Ocx7P4gODIzq5iMOcKt6dwq3Rr2I8s0kDky
+	NquATrSLw/pWM5l7uEiXXSUMrA9lRfOTIYlqtGtPEjBxgR5oRPMAhXWnPqXgLZHVlE7/qF9+qbT
+	Jn3ByvaBVU8kpcihYQnkyeEL7Vdhg4OV4UEX3PVgQhA==
+X-Gm-Gg: ASbGnct4hukdk38q1o6Lb36MO0d3NPTihbfRUkIb08ZBOZNWZN6g1JhebdNQLq4wyGl
+	JMCqKylJY7GhJdbwNSO0eAMxe4389RugZtmzcG4Wgsnx5s9cSoEr1ECFBuV+6dLoSKxLPEnZJLT
+	Kp3KdfvoGrjiQDOn+KyyAiKzlUx3Yf1FddbfE5KigZl58n+JUKmZB6tBjJafqNM0uVVoDb+ufb7
+	WzRQC8=
+X-Google-Smtp-Source: AGHT+IHpEkQH4zE8nZNumut6IyOKwzxXwXZPLXikec1wNlOm0bT1vQJ2AuF2DGHtOC/up+K5+uVQHVhxHrEqbksxztM=
+X-Received: by 2002:a2e:be83:0:b0:333:7e57:67f0 with SMTP id
+ 38308e7fff4ca-3340996a3d6mr37277621fa.28.1755530279380; Mon, 18 Aug 2025
+ 08:17:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aKL6ormE1N72fwVG@ketchup>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: N2bAIxLK0eln80JCKSJv13qkBZf4ZOHw9t6e3977sV8zdayvYp8Z3QQv
-	rM2Aj17hri94+TrhvtdYQWNDE7irGpCDMlF2nhO5DfqpyvpQ4Y76QpDr3hHXH7RV+piyU9D
-	PdDPMWUHqfdPNt9inkUivBKkSzJcDG2PdDZuj6JV40DafR0Dz4KBobm3wL5wYgTTdAq6Kkv
-	714qePlH4J15u9zolEDFCvAVKCA222A6s8lpTOUKBJnZPgBz7xmllNjiPwcGCwrP8hnLFdM
-	RIKSIbaSpBQyXprUGKXnOQKanOTDlV1wJrvfJOGnUgKWvHN/GGt7ReeX+5VZRrr4DwN73/4
-	lT98bivxcvE048Ofm8SjPzRCULtku19bOjrWo4QVAzESvhOpM56PkGKos1rirvkGPnrnxgh
-	koPY4z/Qr3CvzW+iQWVSs3+LHb1pak6MV8x4iONfpMVej0nelei2xe/Px5Pl7jnT6BbTpiP
-	6kFiFNm446y/ap37JXPaEl52NzXKYsf6LON5zmRXc/aih09muUNUCdMkJQMogWtAgKJNhb3
-	xH1sjfZELHnPmo+l8rtDNkGj6MBOHSMmiMPyD886pb4kaRNc1IB96gEvarlRurxMD3eIS7s
-	occyzG3kOeVoBDXurftGwSHMh9+yPLNZekXLUa86CY7GUdBIKMDIQ01qvEAgGaj+Fg3bZxy
-	WdbyLuzM4N4K5akGwlrree76qNA290eNd50mMU0wJ8R45qIoRurdBNkRDVtfW4y4wETCigu
-	fN8fbDpUIvtcLGWP12OLztxprXYTMBLqjwkX2ChJ7tJCPeCSn1KtSinFx0j/6bYznZ30Bbp
-	g5X3CeEilEygDSVhfscq30nA14ZXLScGWtaXHsOh6NaUxoFSLQys/vFjnipeYzMdt47PcSi
-	gbxGIM27Lra8FiiFzv895WE1c0dzExxp5yBi+GaflwLkaV1w7//1vbMbFr7/GFadsPNfBp1
-	HH6UvI/Fs2rvak2u8wiJmZe4esMRpKfTBcuSgxqhGtmLKkcYqsTBjcH9VVTWAjSYPf8Sn2h
-	6hG1PC2aD60DDCT/dlsCflASjFcazmIkOD7dUd0koC0/5gSeVoNuD69kHEiIC1Ewk/yvFzD
-	p2q53UjnbS/
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-X-QQ-RECHKSPAM: 0
+References: <20250805150701.129113-1-hendrik.hamerlinck@hammernet.be>
+In-Reply-To: <20250805150701.129113-1-hendrik.hamerlinck@hammernet.be>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Mon, 18 Aug 2025 17:17:47 +0200
+X-Gm-Features: Ac12FXwu4f8Ac5IEmqGAiQiNmOLkl0amKoCINQhS7HVe6tsTOs7Qh5vl8eGuhWc
+Message-ID: <CACRpkdYK5-Ga+TpwKSroZN_Tku7R7gwA6LrV52W8ydYOqmLk+w@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: spacemit: remove extra line in debug output
+To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Cc: dlan@gentoo.org, skhan@linuxfoundation.org, 
+	linux-kernel-mentees@lists.linux.dev, linux-gpio@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Haylen,
+On Tue, Aug 5, 2025 at 5:08=E2=80=AFPM Hendrik Hamerlinck
+<hendrik.hamerlinck@hammernet.be> wrote:
 
-I accept all ur suggestions and I'll send v4 ASAP.
-
-Thanks for ur review!
-
-                - Troy
-
-On Mon, Aug 18, 2025 at 10:04:18AM +0000, Haylen Chu wrote:
-> On Mon, Aug 18, 2025 at 05:28:22PM +0800, Troy Mitchell wrote:
-> > Defining i2s_bclk and i2s_sysclk as fixed-rate clocks is insufficient
-> > for real I2S use cases.
-> > 
-> > Moreover, the current I2S clock configuration does not work as expected
-> > due to missing parent clocks.
-> > 
-> > This patch adds the missing parent clocks, defines i2s_sysclk as
-> > a DDN clock, and i2s_bclk as a DIV clock.
-> > 
-> > A special note for i2s_bclk:
-> > 
-> > From the definition of register, The i2s_bclk is a non-linear,
-> > discrete divider clock.
-> 
-> No, it IS linear. It just comes with a 1/2 factor according to your code
-> (I'm assuming there's a typo in the table below).
-> 
-> > In calculus and related areas, a linear function is a function whose
-> > graph is a straight line, that is, a polynomial function of degree
-> > zero or one. (From Wikipedia)
-> 
-> > The following table shows the correspondence between index
-> > and frequency division coefficients:
-> > 
-> > | index |  div  |
-> > |-------|-------|
-> > |   0   |   2   |
-> > |   1   |   4   |
-> > |   2   |   6   |
-> > |   2   |   8   |
-> 
-> Index = 2 appears twice in the table. Is this a typo?
-> 
-> > From a software perspective, introducing i2s_bclk_factor as the
-> > parent of i2s_bclk is sufficient to address the issue.
-> > 
-> > The I2S-related clock registers can be found here [1].
-> > 
-> > Link:
-> > https://developer.spacemit.com/documentation?token=LCrKwWDasiJuROkVNusc2pWTnEb
-> > [1]
-> > 
-> > Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-> > Co-developer: Jinmei Wei <weijinmei@linux.spacemit.com>
-> > Suggested-by: Haylen Chu <heylenay@4d2.org>
-> > Signed-off-by: Jinmei Wei <weijinmei@linux.spacemit.com>
-> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > ---
-> >  drivers/clk/spacemit/ccu-k1.c    | 29 +++++++++++++++++++++++++++--
-> >  drivers/clk/spacemit/ccu_mix.h   |  2 +-
-> >  include/soc/spacemit/k1-syscon.h |  1 +
-> >  3 files changed, 29 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-> > index 7155824673fb450971439873b6b6163faf48c7e5..b2c426b629a37a9901bbced26fc55c5f1b34eba5 100644
-> > --- a/drivers/clk/spacemit/ccu-k1.c
-> > +++ b/drivers/clk/spacemit/ccu-k1.c
-> 
+> The debug output for spacemit_pinconf_dbg_show() prints an extra newline
+> at the end. This is redundant as pinconf_pins_show() in pinconf.c already
+> adds a newline in its for loop.
+>
+> Remove the newline to avoid the extra line in the output.
+>
+> Example current output:
+> $ cat /sys/kernel/debug/pinctrl/d401e000.pinctrl/pinconf-pins
+> Pin config settings per pin
+> Format: pin (name): configs
+> pin 0 (GPIO_00): , bias pull disabled, io type (Fixed/1V8), drive strengt=
+h (32 mA), register (0x1041)
+>
+> pin 1 (GPIO_01): slew rate (0x0), bias pull disabled, io type (Fixed/1V8)=
+, drive strength (32 mA), register (0x1041)
+>
+> pin 2 (GPIO_02): slew rate (0x0), bias pull disabled, io type (Fixed/1V8)=
+, drive strength (32 mA), register (0x1041)
+>
 > ...
-> 
-> > + * i2s_bclk is a non-linear discrete divider clock.
-> > + * Using i2s_bclk_factor as its parent simplifies software handling
-> > + * and avoids dealing with the non-linear division directly.
-> > + */
-> 
-> And thus this comment is wrong and misleading. Suggest something like,
-> 
-> 	Divider of i2s_bclk always implies a 1/2 factor, which is
-> 	described by i2s_bclk_factor.
-> 
-> > +CCU_DIV_GATE_DEFINE(i2s_bclk, CCU_PARENT_HW(i2s_bclk_factor), MPMU_ISCCR, 27, 2, BIT(29), 0);
-> 
-> >  static const struct clk_parent_data apb_parents[] = {
-> >  	CCU_PARENT_HW(pll1_d96_25p6),
-> > @@ -756,6 +777,10 @@ static struct clk_hw *k1_ccu_mpmu_hws[] = {
-> >  	[CLK_I2S_BCLK]		= &i2s_bclk.common.hw,
-> >  	[CLK_APB]		= &apb_clk.common.hw,
-> >  	[CLK_WDT_BUS]		= &wdt_bus_clk.common.hw,
-> > +	[CLK_I2S_153P6]		= &i2s_153p6.common.hw,
-> > +	[CLK_I2S_153P6_BASE]	= &i2s_153p6_base.common.hw,
-> > +	[CLK_I2S_SYSCLK_SRC]	= &i2s_sysclk_src.common.hw,
-> > +	[CLK_I2S_BCLK_FACTOR]	= &i2s_bclk_factor.common.hw,
-> >  };
-> >  
-> >  static const struct spacemit_ccu_data k1_ccu_mpmu_data = {
-> 
-> Best regards,
-> Haylen Chu
-> 
+>
+> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+
+Patch applied!
+
+Yours,
+Linus Walleij
