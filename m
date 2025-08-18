@@ -1,71 +1,83 @@
-Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBE525394A
-	for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 02:24:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CB5271445
+	for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 07:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755483879; cv=none; b=CzfgtJpNcv71Vrrv0bUnPanJHG1zN6aO1vik9e42+Y0jO5NASXaAydxDb32hGvIa+7ytfxeXt7bjq3Uw6Mji7uybnfdK8ahDzvapPo127euZy6BuXVY7z5k8dcUSHpBWSxBWFC6YJhxp0HTHvpoOSpz2mOvp4PD1xv98s+cP6ao=
+	t=1755501461; cv=none; b=BiRKc4w0QHTscfk/IyNWMDfal4YLdrScF2bpz+Evql2rv3HNfnCaEBzzY1ErqVg1V3x/9M5tgpayLhkAzHTu8IZN/2jEA1XH/LfaTMc4pN+gkDZoKhB/2KizLwTfWaiAEf05K2GAjrKUvkFb7RjX4Gg/uL4oHDFgqAZO484LTxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755483879; c=relaxed/simple;
-	bh=vmgf6Iy8E5Y06hvRZJiCIQpCML8yq75/Wn8/BgaN/5s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j+jxF0XhvSRdhVY3VPsMIvIcSFw4WsJ4oXlaAXlLoxMp8Sdx9+VsyvpaKYzIaUWK4Ur8cz0eiCAh3FiSBCciy4lf9B5PL5CLu92exrwePsWNqvCgAbC37hPdb7ZqdIsQcDBOVw9oO9/o4YR9FF7U/zXsegfUTFwnfa8KOrhjdEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=ZoO947AB; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=NgVT2PLT; arc=none smtp.client-ip=155.254.16.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
+	s=arc-20240116; t=1755501461; c=relaxed/simple;
+	bh=GRtOJJ4TU25SLYLaBruGe/0cKnzINtKI69UBlywJ0HU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=cEx8j9qZphYyBUsa4f6cabqstVD97n43d0lRY2um21KTASMmBeavsEXplpLLoFD9YLDrdIeN2wDRKBvo0/qhIMBWDMWpzmYYD+fESCyyGZ3HZPeSJk7rxUg6H7BW25LfZthWFei+ZkPlHiFGUAlNrLwlRGVjMfX2eSgQXLff2aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YXtVAONB; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="ZoO947AB";
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="NgVT2PLT"
-Received: from localhost (bayard.4d2.org [127.0.0.1])
-	by bayard.4d2.org (Postfix) with ESMTP id 6FF9A12FB458;
-	Sun, 17 Aug 2025 19:04:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1755482689; bh=vmgf6Iy8E5Y06hvRZJiCIQpCML8yq75/Wn8/BgaN/5s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZoO947ABqI1/DEJPMNYnCSQHsTMbnmfI1Dw3WxPN60lOd+AfnT95cNlkpGN+hWtpa
-	 9FK8YEcEHT/Cu6ofmanL7cwc7FjzGyIAMcAz0+p5uOLAG5kn4KKSofCeSph9hzh52l
-	 1qMPUi6k+WeW/DIxRPaF1cYMLvW+32NXSSYflvoFMtsmUPiU2+s9X4GB5xR2vGHBmd
-	 CbsPTQiorEseJrrqF5cOBEc7N3D1ahjiG3d/PtBOPn9FQvjTfgQHUA5BZzDetVnSan
-	 dMmZdWWCE9PrKwBX4vIR/hwa1K8BGunLCQR+f1ctE+vzMulPIOqtvFP1Aoew3LzTQA
-	 xFYiQUUZaVy3g==
-X-Virus-Scanned: amavis at 4d2.org
-Received: from bayard.4d2.org ([127.0.0.1])
- by localhost (bayard.4d2.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id 4LgxnyKFoWQD; Sun, 17 Aug 2025 19:04:47 -0700 (PDT)
-Received: from ketchup (unknown [117.171.67.207])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: heylenay@4d2.org)
-	by bayard.4d2.org (Postfix) with ESMTPSA id 4DB0F12FB42D;
-	Sun, 17 Aug 2025 19:04:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1755482687; bh=vmgf6Iy8E5Y06hvRZJiCIQpCML8yq75/Wn8/BgaN/5s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NgVT2PLTL4OMlp9rouNeBHxswTSWdep5o/b02lF0rD+/ILW7rlhHbHW/SogckXhdO
-	 D+l4QKgmzWKYVNiMw7q8fAAhjEWMMNyq5RUJKy7NEBk4hh7A0tOD4Hz3j0VBt83NNh
-	 wyy24ZW1W13qmwRg8kptJ5+n2+KLnK5P46JCCk1nvz8BoQCYMkjLLyU0VJYLKresRe
-	 t2jur8XtTJ2Gee5ziFU5CVtHXX3pBRcqbRWXD7nY6ygMhRawzrbdO0h3aRVj+q+tPI
-	 VHvaJmRjtz+yCnB7MC/mVbefU6ZkqFOwMkPk0JzhQpvT7IyXCWp6JhBcruTCyJpNv8
-	 C5RI6TTj8dGiA==
-Date: Mon, 18 Aug 2025 02:04:39 +0000
-From: Haylen Chu <heylenay@4d2.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YXtVAONB"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b9e415a68fso3607856f8f.2
+        for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 00:17:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755501455; x=1756106255; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=00HmFiTKWlOUviqLOmDiviucp/G1KSLyabeRXjoLhH4=;
+        b=YXtVAONBqoKUsIb04tj2uhRnCd+1qPwoGBHsxefnRYzgoQKGJpW1ptUvJFiEMyzDwF
+         kWuU53RLHHwyIT1zfkZpAyqAqwLvFI4DU3eADO7/jaXxUjlEHKAelMoA60eO4v6LvT8I
+         UlFl0FT4MXwXlTV5w/6u61yQjNAl1g5lW3GRLevMqmIBY7VwFMy5vZkkTWD7m0vc7Em/
+         bsimejr+66cVNoOMUB6+xAepHr44yhNln2Iuq+63qfpU6ntUd+Ojs1XrB4M/goTpYqtW
+         2t8u/rWwAK3IW5jm3XOecATu28Jb6NDUbOTI2RQmtu66XE2cnCvjL9HKCNhwlTFCmpGA
+         CM5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755501455; x=1756106255;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=00HmFiTKWlOUviqLOmDiviucp/G1KSLyabeRXjoLhH4=;
+        b=SUQrzehW/tn4r6glfJsbHIQ6J7kUPy6QgpSjoSOi1kfTHPT0m4XPI6FhnSQlctaiMs
+         Nzz8N0EWGK0A6ruxMz/5OzvkSUBp82Z3bI1BQj6pHW9iHST6e/H1VwPkqVDCO5iEwUuF
+         tFY6srp1hJnf6lh53AMUkqqGNPmL+BiqzUuDhns1GF+up0knF6Aa3SxKPJ9EaLlFsvHR
+         hOeu+sxPqb9OVk2lvNz9nG9pEV8HcMtmKVtxW2WfKwONiN5czHDbzcKuCDAnSOowlHKy
+         HLJgc1I7bIiyVT9CubuUf61SVdS7sw2WMG74ANlY10oAyo5CGzKrdRaMl7jjvclHLJ6z
+         Ud1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVVMMJsk+CJv5FmDqSNB9ep14rA3/iKylylpQsFB0zhZXakGjDrBnbC2gotsU+Yl4E9hf5gCiXnMg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzokNhOQcFU80CTsyH2X3CCgjMlyks/9K55yjDPgCVEp0fqw2Dk
+	i8EcqpHVkzuoPImSoy09wACwzL2jOyv6ERPN6MS7CoGuzrMhlyW7xMI6Fh1Ho26OHTo=
+X-Gm-Gg: ASbGnctTjCiQCTF8tAwt1kL6YqkJskUjBFpnImEr8HvseGGU3w9eRhA7Q4ZNPCXlHAP
+	ZsrPYxSMdzzmUz6VHOdylyJlG87Eil23NwK50owdegJ1e5UPLwP8ymgL6fEbUVNf/ScGQRO78UY
+	YYwOcfS8cjZEbRpX5Lmj5+rNuB2/ntSW6SyKrYc17uW/oIdKDkDRmFTQ722KXrQgqpQADteVbei
+	PI3ZfD188hsK1jQGaiVCYMmX3CZ/p8cCu5Is9pRcXSgl6XF7MXezJNzmP0RsDHz0MjuOGRvKdYr
+	jUFe0K9+43ao+rfSEWTZd6eQo87V7UbgoMsupqSeYp9C3h96EWQx9jxDQ8xR3dGeIP3kQ38Vf5O
+	/hDGe6rw+CoHDP/mLyOMPzELlD7LtzIKYzm3HcZNgHq8=
+X-Google-Smtp-Source: AGHT+IHyrx5So2JkHy8B3V9n10eIVkllRTMcnOfbIYL9Fak+QjG/0EyC3RMUePQ7ZAM0RE6YfPigZA==
+X-Received: by 2002:a05:6000:250c:b0:3b7:8473:31c3 with SMTP id ffacd0b85a97d-3bb6646e10amr7831271f8f.9.1755501455230;
+        Mon, 18 Aug 2025 00:17:35 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3bb67c902dbsm11683675f8f.47.2025.08.18.00.17.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Aug 2025 00:17:34 -0700 (PDT)
+Date: Mon, 18 Aug 2025 10:17:31 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: oe-kbuild@lists.linux.dev, Guodong Xu <guodong@riscstar.com>,
+	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	duje@dujemihanovic.xyz
+Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev,
 	Alex Elder <elder@riscstar.com>,
-	Inochi Amaoto <inochiama@outlook.com>
-Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+	Vivian Wang <wangruikang@iscas.ac.cn>, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Jinmei Wei <weijinmei@linux.spacemit.com>
-Subject: Re: [PATCH v2 2/4] clk: spacemit: introduce pre-div for ddn clock
-Message-ID: <aKKKNynq-w89YeAx@ketchup>
-References: <20250811-k1-clk-i2s-generation-v2-0-e4d3ec268b7a@linux.spacemit.com>
- <20250811-k1-clk-i2s-generation-v2-2-e4d3ec268b7a@linux.spacemit.com>
+	Guodong Xu <guodong@riscstar.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [PATCH v4 4/8] dmaengine: mmp_pdma: Add operations structure for
+ controller abstraction
+Message-ID: <202508181040.az8RxLrG-lkp@intel.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -74,61 +86,81 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250811-k1-clk-i2s-generation-v2-2-e4d3ec268b7a@linux.spacemit.com>
+In-Reply-To: <20250815-working_dma_0701_v2-v4-4-62145ab6ea30@riscstar.com>
 
-On Mon, Aug 11, 2025 at 10:04:28PM +0800, Troy Mitchell wrote:
-> The original DDN operations applied an implicit divide-by-2, which should
-> not be a default behavior.
-> 
-> This patch removes that assumption, letting each clock define its
-> actual behavior explicitly.
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  drivers/clk/spacemit/ccu_ddn.c | 12 ++++++------
->  drivers/clk/spacemit/ccu_ddn.h |  6 ++++--
->  2 files changed, 10 insertions(+), 8 deletions(-)
+Hi Guodong,
 
-The code change looks good to me, but
+kernel test robot noticed the following build warnings:
 
-> diff --git a/drivers/clk/spacemit/ccu_ddn.h b/drivers/clk/spacemit/ccu_ddn.h
-> index a52fabe77d62eba16426867a9c13481e72f025c0..4838414a8e8dc04af49d3b8d39280efedbd75616 100644
-> --- a/drivers/clk/spacemit/ccu_ddn.h
-> +++ b/drivers/clk/spacemit/ccu_ddn.h
-> @@ -18,13 +18,14 @@ struct ccu_ddn {
->  	unsigned int num_shift;
->  	unsigned int den_mask;
->  	unsigned int den_shift;
-> +	unsigned int pre_div;
->  };
->  
->  #define CCU_DDN_INIT(_name, _parent, _flags) \
->  	CLK_HW_INIT_HW(#_name, &_parent.common.hw, &spacemit_ccu_ddn_ops, _flags)
->  
->  #define CCU_DDN_DEFINE(_name, _parent, _reg_ctrl, _num_shift, _num_width,	\
-> -		       _den_shift, _den_width, _flags)				\
-> +		       _den_shift, _den_width, _pre_div, _flags)		\
+url:    https://github.com/intel-lab-lkp/linux/commits/Guodong-Xu/dt-bindings-dma-Add-SpacemiT-K1-PDMA-controller/20250815-132049
+base:   062b3e4a1f880f104a8d4b90b767788786aa7b78
+patch link:    https://lore.kernel.org/r/20250815-working_dma_0701_v2-v4-4-62145ab6ea30%40riscstar.com
+patch subject: [PATCH v4 4/8] dmaengine: mmp_pdma: Add operations structure for controller abstraction
+config: parisc-randconfig-r072-20250818 (https://download.01.org/0day-ci/archive/20250818/202508181040.az8RxLrG-lkp@intel.com/config)
+compiler: hppa-linux-gcc (GCC) 8.5.0
 
-You changed the definition of CCU_DDN_DEFINE without adjusting consumers
-of this macro. If I'm correct, this creates a build failure.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+| Closes: https://lore.kernel.org/r/202508181040.az8RxLrG-lkp@intel.com/
 
->  static struct ccu_ddn _name = {							\
->  	.common = {								\
->  		.reg_ctrl	= _reg_ctrl,					\
-> @@ -33,7 +34,8 @@ static struct ccu_ddn _name = {							\
->  	.num_mask	= GENMASK(_num_shift + _num_width - 1, _num_shift),	\
->  	.num_shift	= _num_shift,						\
->  	.den_mask	= GENMASK(_den_shift + _den_width - 1, _den_shift),	\
-> -	.den_shift	= _den_shift,					\
-> +	.den_shift	= _den_shift,						\
-> +	.pre_div	= _pre_div,						\
->  }
->  
->  static inline struct ccu_ddn *hw_to_ccu_ddn(struct clk_hw *hw)
-> 
-> -- 
-> 2.50.1
-> 
+smatch warnings:
+drivers/dma/mmp_pdma.c:546 mmp_pdma_prep_memcpy() warn: variable dereferenced before check 'dchan' (see line 542)
+drivers/dma/mmp_pdma.c:712 mmp_pdma_prep_dma_cyclic() warn: variable dereferenced before check 'dchan' (see line 708)
 
-Best regards,
-Haylen Chu
+vim +/dchan +546 drivers/dma/mmp_pdma.c
+
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  536  static struct dma_async_tx_descriptor *
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  537  mmp_pdma_prep_memcpy(struct dma_chan *dchan,
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  538  		     dma_addr_t dma_dst, dma_addr_t dma_src,
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  539  		     size_t len, unsigned long flags)
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  540  {
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  541  	struct mmp_pdma_chan *chan;
+918da7ee50b22b Guodong Xu       2025-08-15 @542  	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(dchan->device);
+                                                                                                       ^^^^^^^^^^^^^
+The patch adds a new dereference
+
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  543  	struct mmp_pdma_desc_sw *first = NULL, *prev = NULL, *new;
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  544  	size_t copy = 0;
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  545  
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03 @546  	if (!dchan)
+                                                            ^^^^^^
+But the old existing code assumed dchan could be NULL
+
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  547  		return NULL;
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  548  
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  549  	if (!len)
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  550  		return NULL;
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  551  
+c8acd6aa6bed3c Zhangfei Gao     2012-09-03  552  	chan = to_mmp_pdma_chan(dchan);
+
+[ snip ]
+
+2b7f65b11d87f9 Joe Perches      2013-11-17  701  static struct dma_async_tx_descriptor *
+2b7f65b11d87f9 Joe Perches      2013-11-17  702  mmp_pdma_prep_dma_cyclic(struct dma_chan *dchan,
+2b7f65b11d87f9 Joe Perches      2013-11-17  703  			 dma_addr_t buf_addr, size_t len, size_t period_len,
+2b7f65b11d87f9 Joe Perches      2013-11-17  704  			 enum dma_transfer_direction direction,
+31c1e5a1350ae8 Laurent Pinchart 2014-08-01  705  			 unsigned long flags)
+50440d74aae318 Daniel Mack      2013-08-21  706  {
+50440d74aae318 Daniel Mack      2013-08-21  707  	struct mmp_pdma_chan *chan;
+918da7ee50b22b Guodong Xu       2025-08-15 @708  	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(dchan->device);
+                                                                                                       ^^^^^^^^^^^^^
+
+
+50440d74aae318 Daniel Mack      2013-08-21  709  	struct mmp_pdma_desc_sw *first = NULL, *prev = NULL, *new;
+50440d74aae318 Daniel Mack      2013-08-21  710  	dma_addr_t dma_src, dma_dst;
+50440d74aae318 Daniel Mack      2013-08-21  711  
+50440d74aae318 Daniel Mack      2013-08-21 @712  	if (!dchan || !len || !period_len)
+                                                            ^^^^^^
+Same.
+
+
+50440d74aae318 Daniel Mack      2013-08-21  713  		return NULL;
+50440d74aae318 Daniel Mack      2013-08-21  714  
+50440d74aae318 Daniel Mack      2013-08-21  715  	/* the buffer length must be a multiple of period_len */
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
+
