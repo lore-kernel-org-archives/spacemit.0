@@ -1,167 +1,243 @@
-Received: from bayard.4d2.org (bayard.4d2.org [155.254.16.17])
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719B5183CA6
-	for <spacemit@lists.linux.dev>; Mon, 18 Aug 2025 10:04:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.254.16.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E3A326D76;
+	Mon, 18 Aug 2025 12:14:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.207.212.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755511471; cv=none; b=Wr3sLc0ywxZNpK9EPv+nElZ0VxENoBJaSFuCG3docBllP+XsmWt7kRawKwefPtGB5fusiufMnnv+6zvK/r7+syWXOZ7X0ioqkaF2A8KVMtokzM3BHHMMIS9pJ+QSsPLqp+vWG/tVKt2PYyxEyuH3VX7VRqS+NPlsTTvyc/+1Ftc=
+	t=1755519280; cv=none; b=R0mJYkgbiWPQTD5OvGE/1gnIICJh70W8Z//ORQgkmfZl9PJt8ZWKlD64IqzEOTkGxSGHz46Ml95yO4Pi3IAAXY1IPXTSdMHEnMg9DuLaPC+4lIiJBGPMRSDnlL7AAPUdSo1MiHGX8o6NP7f1OfltK+nUKKDIvlhAmKcpFsIK3bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755511471; c=relaxed/simple;
-	bh=UWt7N+4RQyhLxa/8B24DwDg6beeMRBqY7R8dGE6WUXs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D41Z7Jx47d2IHgMlCKzo//H/NGmO2vHsgIUluSjxQ8SaHhsKkA/8TEFpFgcl20iFNX26J+B+mjL0LJCpWfYp5U5AC+kxGHwJp1fLt8RWG4gmh9Xjsnf/it4T9FaEYaF6qS1AGg/jTXPbGLiR391xjDTz5/Dtqi9JJh1cPzlrK44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org; spf=pass smtp.mailfrom=4d2.org; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=bUTJerPi; dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b=wr2h2Ieo; arc=none smtp.client-ip=155.254.16.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=4d2.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=4d2.org
+	s=arc-20240116; t=1755519280; c=relaxed/simple;
+	bh=rp49452Teg70crejMOwAEBmVAEoVcBUXfqqRBjXnNik=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SwY7OeDUOo5lxYKAeZ7euU6PTVAvhmGWI51kVD5b+ectaDFMglMLVJSaBuQ2XX3TlxvaBkvii5P7EQnQ587bfdB2inQuRLjzwtjZ2jaB6YRgsFWUjYEaBYYtu+T8QxOQQuHSKg2w0O9xg/ET1z5UI6vSvuOYigFkzK3NdEWt8zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=PSxNhDdZ; arc=none smtp.client-ip=91.207.212.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="bUTJerPi";
-	dkim=pass (2048-bit key) header.d=4d2.org header.i=@4d2.org header.b="wr2h2Ieo"
-Received: from localhost (bayard.4d2.org [127.0.0.1])
-	by bayard.4d2.org (Postfix) with ESMTP id 9FA0C12FB458;
-	Mon, 18 Aug 2025 03:04:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1755511467; bh=UWt7N+4RQyhLxa/8B24DwDg6beeMRBqY7R8dGE6WUXs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bUTJerPioqaY8k+zBGOi2XjjY4kTawdPV5Bv/XgJa+nWn6mffS5FoqUW61pE+PsOo
-	 f5ns+ddo9qlJORHSWUgEywbDF4OlpcNj616oGObQP3bCtUM5YXnbWzR8gLwLxVucS1
-	 Ccn38RVVYpV4BAJ014Fs973eFm/xMx/M/GlRCMtHDgY4nQIB+cKsT0fWEwAzQZ0oVh
-	 xxdqkswi+RO4Yz4w9/07BWO05Bs/2cCPnCyNZ4rZA1wuJqZbezZ/iuexuFPBBs+pG8
-	 4TXoCC0KNM9sosZqgB9lfLh31cGkIoY6z5EPG92TAst1dzlUlhXnePadW3j7SO3Z6V
-	 2DikY37PAMIHg==
-X-Virus-Scanned: amavis at 4d2.org
-Received: from bayard.4d2.org ([127.0.0.1])
- by localhost (bayard.4d2.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id JJRSaq7kXkgL; Mon, 18 Aug 2025 03:04:24 -0700 (PDT)
-Received: from ketchup (unknown [117.171.67.207])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: heylenay@4d2.org)
-	by bayard.4d2.org (Postfix) with ESMTPSA id 6A54512FB42D;
-	Mon, 18 Aug 2025 03:04:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=4d2.org; s=mail;
-	t=1755511464; bh=UWt7N+4RQyhLxa/8B24DwDg6beeMRBqY7R8dGE6WUXs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wr2h2IeoUDA798Uf9bZU+Gg3cx2Bm4QG0bT76RLbm4eOlL65g48kcYKssKY99S+NJ
-	 /DwILeS4fCJXt5CbbH1hUrHKGrE+LI/TJ4FtBWZNaZpQB60+VB6wopQge7CuLK+Wqj
-	 h8FKi/csxSXf0cLoBceC56t6Muo0QzUJaQ76jB3WRa7gprf30GfB73q2+qlceYdy9N
-	 ZMnBqGqidE5dHnaqGv7bY5oL4Nv6aGZh4xapAqk1v30/PXd7qxXArFrBfKLge2SRCh
-	 ylCd5ZgTTCA7zCYFrv1L641Qg4VaTea/0YokiTG2NG69y9HXwogsSxDFJi5AIufGyk
-	 6Defpki1+nmjw==
-Date: Mon, 18 Aug 2025 10:04:18 +0000
-From: Haylen Chu <heylenay@4d2.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Inochi Amaoto <inochiama@outlook.com>
-Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Jinmei Wei <weijinmei@linux.spacemit.com>
-Subject: Re: [PATCH v3 3/3] clk: spacemit: fix i2s clock
-Message-ID: <aKL6ormE1N72fwVG@ketchup>
-References: <20250818-k1-clk-i2s-generation-v3-0-8139b22ae709@linux.spacemit.com>
- <20250818-k1-clk-i2s-generation-v3-3-8139b22ae709@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="PSxNhDdZ"
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57IBp2wx008182;
+	Mon, 18 Aug 2025 14:13:21 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=selector1; bh=
+	vF8oVy6/ZMtowVhAnxsrKfpp6JXqFRBEiZTXs8imWKc=; b=PSxNhDdZaYr8EoNw
+	8aZMzG+HAc5zZ/G6iGzm7FWO+i9981Jvk6JfEpE+hG0VOKlKZPoIa46QiLFU4DYx
+	sUznRsmqgIiHeCSbPJoiisAuzQzZ6hgkO4CmmJIHG7kce+fJ4nFBIscnYKnoIKbX
+	3aYq4auNUAVqWfPNpND0uGOiy/LN0NcMei0rDbyUEd+d+AzIAj5hnYsC2UnS0xR7
+	owFelE/4Cju4Q5ND97wzWltji6xPXOGJ9DX+MuHSSWyyGgT9iyzcWsaxj1P2gIhN
+	ZoZAmieb/bp+Dh/tSZAo0g1gI8TJ7Cp2gxhDUWfG1cXNsAamFT96b+DTHpo8oG9Y
+	4YsXyw==
+Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 48jgvewyyw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 Aug 2025 14:13:21 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 0A47540053;
+	Mon, 18 Aug 2025 14:10:12 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node1.st.com [10.75.129.69])
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id CD98B6D4186;
+	Mon, 18 Aug 2025 14:08:47 +0200 (CEST)
+Received: from [10.48.87.121] (10.48.87.121) by SHFDAG1NODE1.st.com
+ (10.75.129.69) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 18 Aug
+ 2025 14:08:43 +0200
+Message-ID: <20437dbf-9d45-4a51-815f-ad1d1d15346e@foss.st.com>
+Date: Mon, 18 Aug 2025 14:08:25 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250818-k1-clk-i2s-generation-v3-3-8139b22ae709@linux.spacemit.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 058/114] clk: stm32: stm32-core: convert from round_rate()
+ to determine_rate()
+To: <bmasney@redhat.com>, Michael Turquette <mturquette@baylibre.com>,
+        "Stephen Boyd" <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+        "Cristian Marussi" <cristian.marussi@arm.com>,
+        Chen Wang
+	<unicorn_wang@outlook.com>,
+        Inochi Amaoto <inochiama@gmail.com>,
+        Nicolas
+ Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni
+	<alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Keguang Zhang
+	<keguang.zhang@gmail.com>,
+        Taichi Sugaya <sugaya.taichi@socionext.com>,
+        "Takao Orito" <orito.takao@socionext.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        "Sascha Hauer" <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team
+	<kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Jacky Huang
+	<ychuang3@nuvoton.com>,
+        Shan-Chun Hung <schung@nuvoton.com>,
+        "Vladimir
+ Zapolskiy" <vz@mleia.com>,
+        Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Samuel Holland
+	<samuel.holland@sifive.com>,
+        Yixun Lan <dlan@gentoo.org>,
+        Steen Hegelund
+	<Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        <UNGLinuxDriver@microchip.com>, Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang
+	<baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        "Maxime Coquelin" <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue
+	<alexandre.torgue@foss.st.com>,
+        Michal Simek <michal.simek@amd.com>,
+        "Maxime
+ Ripard" <mripard@kernel.org>,
+        =?UTF-8?Q?Andreas_F=C3=A4rber?=
+	<afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>, Sven Peter
+	<sven@kernel.org>,
+        Janne Grunau <j@jannau.net>, Alyssa Rosenzweig
+	<alyssa@rosenzweig.io>,
+        Neal Gompa <neal@gompa.dev>,
+        Eugeniy Paltsev
+	<Eugeniy.Paltsev@synopsys.com>,
+        Ray Jui <rjui@broadcom.com>, Scott Branden
+	<sbranden@broadcom.com>,
+        Broadcom internal kernel review list
+	<bcm-kernel-feedback-list@broadcom.com>,
+        Max Filippov <jcmvbkbc@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>,
+        Daniel Palmer <daniel@thingy.jp>,
+        Romain Perier <romain.perier@gmail.com>, Andrew Lunn <andrew@lunn.ch>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth
+	<sebastian.hesselbarth@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Heiko Stuebner
+	<heiko@sntech.de>,
+        Andrea della Porta <andrea.porta@suse.com>,
+        "Krzysztof
+ Kozlowski" <krzk@kernel.org>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Chanwoo Choi <cw00.choi@samsung.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        "Ulf
+ Hansson" <ulf.hansson@linaro.org>,
+        Luca Ceresoli <luca.ceresoli@bootlin.com>,
+        Alex Helms <alexander.helms.jy@renesas.com>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        "Lorenzo
+ Pieralisi" <lpieralisi@kernel.org>,
+        Nobuhiro Iwamatsu
+	<nobuhiro1.iwamatsu@toshiba.co.jp>
+CC: <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <arm-scmi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <sophgo@lists.linux.dev>, <linux-mips@vger.kernel.org>,
+        <imx@lists.linux.dev>, <linux-riscv@lists.infradead.org>,
+        <spacemit@lists.linux.dev>, <linux-stm32@st-md-mailman.stormreply.com>,
+        <patches@opensource.cirrus.com>, <linux-actions@lists.infradead.org>,
+        <asahi@lists.linux.dev>, <linux-mediatek@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
+        <linux-rockchip@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <soc@lists.linux.dev>
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+ <20250811-clk-for-stephen-round-rate-v1-58-b3bf97b038dc@redhat.com>
+Content-Language: en-US
+From: Gabriel FERNANDEZ <gabriel.fernandez@foss.st.com>
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-58-b3bf97b038dc@redhat.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: EQNCAS1NODE3.st.com (10.75.129.80) To SHFDAG1NODE1.st.com
+ (10.75.129.69)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-18_05,2025-08-14_01,2025-03-28_01
 
-On Mon, Aug 18, 2025 at 05:28:22PM +0800, Troy Mitchell wrote:
-> Defining i2s_bclk and i2s_sysclk as fixed-rate clocks is insufficient
-> for real I2S use cases.
-> 
-> Moreover, the current I2S clock configuration does not work as expected
-> due to missing parent clocks.
-> 
-> This patch adds the missing parent clocks, defines i2s_sysclk as
-> a DDN clock, and i2s_bclk as a DIV clock.
-> 
-> A special note for i2s_bclk:
-> 
-> From the definition of register, The i2s_bclk is a non-linear,
-> discrete divider clock.
 
-No, it IS linear. It just comes with a 1/2 factor according to your code
-(I'm assuming there's a typo in the table below).
+On 8/11/25 17:18, Brian Masney via B4 Relay wrote:
+> From: Brian Masney <bmasney@redhat.com>
+>
+> The round_rate() clk ops is deprecated, so migrate this driver from
+> round_rate() to determine_rate() using the Coccinelle semantic patch
+> on the cover letter of this series.
+>
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Gabriel Fernandez <gabriel.fernandez@foss.st.com>
 
-> In calculus and related areas, a linear function is a function whose
-> graph is a straight line, that is, a polynomial function of degree
-> zero or one. (From Wikipedia)
-
-> The following table shows the correspondence between index
-> and frequency division coefficients:
-> 
-> | index |  div  |
-> |-------|-------|
-> |   0   |   2   |
-> |   1   |   4   |
-> |   2   |   6   |
-> |   2   |   8   |
-
-Index = 2 appears twice in the table. Is this a typo?
-
-> From a software perspective, introducing i2s_bclk_factor as the
-> parent of i2s_bclk is sufficient to address the issue.
-> 
-> The I2S-related clock registers can be found here [1].
-> 
-> Link:
-> https://developer.spacemit.com/documentation?token=LCrKwWDasiJuROkVNusc2pWTnEb
-> [1]
-> 
-> Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-> Co-developer: Jinmei Wei <weijinmei@linux.spacemit.com>
-> Suggested-by: Haylen Chu <heylenay@4d2.org>
-> Signed-off-by: Jinmei Wei <weijinmei@linux.spacemit.com>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 > ---
->  drivers/clk/spacemit/ccu-k1.c    | 29 +++++++++++++++++++++++++++--
->  drivers/clk/spacemit/ccu_mix.h   |  2 +-
->  include/soc/spacemit/k1-syscon.h |  1 +
->  3 files changed, 29 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-> index 7155824673fb450971439873b6b6163faf48c7e5..b2c426b629a37a9901bbced26fc55c5f1b34eba5 100644
-> --- a/drivers/clk/spacemit/ccu-k1.c
-> +++ b/drivers/clk/spacemit/ccu-k1.c
-
-...
-
-> + * i2s_bclk is a non-linear discrete divider clock.
-> + * Using i2s_bclk_factor as its parent simplifies software handling
-> + * and avoids dealing with the non-linear division directly.
-> + */
-
-And thus this comment is wrong and misleading. Suggest something like,
-
-	Divider of i2s_bclk always implies a 1/2 factor, which is
-	described by i2s_bclk_factor.
-
-> +CCU_DIV_GATE_DEFINE(i2s_bclk, CCU_PARENT_HW(i2s_bclk_factor), MPMU_ISCCR, 27, 2, BIT(29), 0);
-
->  static const struct clk_parent_data apb_parents[] = {
->  	CCU_PARENT_HW(pll1_d96_25p6),
-> @@ -756,6 +777,10 @@ static struct clk_hw *k1_ccu_mpmu_hws[] = {
->  	[CLK_I2S_BCLK]		= &i2s_bclk.common.hw,
->  	[CLK_APB]		= &apb_clk.common.hw,
->  	[CLK_WDT_BUS]		= &wdt_bus_clk.common.hw,
-> +	[CLK_I2S_153P6]		= &i2s_153p6.common.hw,
-> +	[CLK_I2S_153P6_BASE]	= &i2s_153p6_base.common.hw,
-> +	[CLK_I2S_SYSCLK_SRC]	= &i2s_sysclk_src.common.hw,
-> +	[CLK_I2S_BCLK_FACTOR]	= &i2s_bclk_factor.common.hw,
->  };
->  
->  static const struct spacemit_ccu_data k1_ccu_mpmu_data = {
-
-Best regards,
-Haylen Chu
+>   drivers/clk/stm32/clk-stm32-core.c | 28 ++++++++++++++++++----------
+>   1 file changed, 18 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/clk/stm32/clk-stm32-core.c b/drivers/clk/stm32/clk-stm32-core.c
+> index 933e3cde0795386c3e5e6902aa0989cf3dffc01e..72825b9c36a4d3b8ba3f7615b9026c09ffaf88d1 100644
+> --- a/drivers/clk/stm32/clk-stm32-core.c
+> +++ b/drivers/clk/stm32/clk-stm32-core.c
+> @@ -351,14 +351,14 @@ static int clk_stm32_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+>   	return ret;
+>   }
+>   
+> -static long clk_stm32_divider_round_rate(struct clk_hw *hw, unsigned long rate,
+> -					 unsigned long *prate)
+> +static int clk_stm32_divider_determine_rate(struct clk_hw *hw,
+> +					    struct clk_rate_request *req)
+>   {
+>   	struct clk_stm32_div *div = to_clk_stm32_divider(hw);
+>   	const struct stm32_div_cfg *divider;
+>   
+>   	if (div->div_id == NO_STM32_DIV)
+> -		return rate;
+> +		return 0;
+>   
+>   	divider = &div->clock_data->dividers[div->div_id];
+>   
+> @@ -369,14 +369,22 @@ static long clk_stm32_divider_round_rate(struct clk_hw *hw, unsigned long rate,
+>   		val =  readl(div->base + divider->offset) >> divider->shift;
+>   		val &= clk_div_mask(divider->width);
+>   
+> -		return divider_ro_round_rate(hw, rate, prate, divider->table,
+> -				divider->width, divider->flags,
+> -				val);
+> +		req->rate = divider_ro_round_rate(hw, req->rate,
+> +						  &req->best_parent_rate,
+> +						  divider->table,
+> +						  divider->width,
+> +						  divider->flags, val);
+> +
+> +		return 0;
+>   	}
+>   
+> -	return divider_round_rate_parent(hw, clk_hw_get_parent(hw),
+> -					 rate, prate, divider->table,
+> -					 divider->width, divider->flags);
+> +	req->rate = divider_round_rate_parent(hw, clk_hw_get_parent(hw),
+> +					      req->rate,
+> +					      &req->best_parent_rate,
+> +					      divider->table,
+> +					      divider->width, divider->flags);
+> +
+> +	return 0;
+>   }
+>   
+>   static unsigned long clk_stm32_divider_recalc_rate(struct clk_hw *hw,
+> @@ -392,7 +400,7 @@ static unsigned long clk_stm32_divider_recalc_rate(struct clk_hw *hw,
+>   
+>   const struct clk_ops clk_stm32_divider_ops = {
+>   	.recalc_rate	= clk_stm32_divider_recalc_rate,
+> -	.round_rate	= clk_stm32_divider_round_rate,
+> +	.determine_rate = clk_stm32_divider_determine_rate,
+>   	.set_rate	= clk_stm32_divider_set_rate,
+>   };
+>   
+>
