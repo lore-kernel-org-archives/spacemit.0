@@ -1,75 +1,87 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BF91F3BB5;
-	Wed, 20 Aug 2025 08:03:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C6A2E8889
+	for <spacemit@lists.linux.dev>; Wed, 20 Aug 2025 11:35:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755677025; cv=none; b=IQ0iEhlYNUFCNaypGaWz2pWMXpE2ikVM/viMXZ2+mNaVuTceyZmYTMiCAfd7jOfvXs5FTEnywW2LgXGqrI+E7tsSdPIYHKxxEP2Cu+8sCSe5xIApf0rAn3tRIA7zq55nRtAPjSGwYVAzle3pQxv46tJAY0Zy9KtqwHhSSPqFvsc=
+	t=1755689708; cv=none; b=s1ut5DQaiElCAMQr0+if5BtqchxxupmksZcDzYxe4kqr4O3axE9jQUL+Qy4A1dsyIg02iomlPJ1zSBB/0o76+MjybnLVBbKf2wtrb7CfIVLqu6peo2HxJ3qLS9ZhAbg8vxntPl2KfVBhpetANaLxaeK+eoxZVReBbMk3uDj1oXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755677025; c=relaxed/simple;
-	bh=BISR+gtNp9+FdWJxwDQ/PC3a0OAeumHoulzrrl8qHsU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ghobTA8YZlENhDcBt1MRIR2U5U4T0OCuDb57QcAU9xOcgCVNqgXJlAfCDT57R3VOJ1HnPx++WInfj6xbGDkQwNCSXEoZ5hM8nJTFJMnZaZpr6ebLm6pTiYAyFfMnLhzL5z2zvbgsaGvToyEY4xn8qp1tWVlWrIUfwCDa66g0DlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fxaVP6CX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755689708; c=relaxed/simple;
+	bh=QOHtLk5QqbgZtnm43GlNAZR0h56vCGCpRCGU58YU9R8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Grj4PlxTXBcxnJRJPYltYu5TEhNbOdYOuMKulMljgHLLttVozQDqYcBQw2G1Jk2mxpnvir5ZPbfwQOvAjR6LLHzydntxFL0tcJQ79siP+sNmtgk61RrM82EC7wgRfQNWIEphW487uq8BfN1MEFN49nApY2jmhmp1CGh5dNsa1j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Lsu1LkDT; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fxaVP6CX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E997C4CEEB;
-	Wed, 20 Aug 2025 08:03:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755677024;
-	bh=BISR+gtNp9+FdWJxwDQ/PC3a0OAeumHoulzrrl8qHsU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fxaVP6CXICRipgpUoN8KbSwb0dfHkpQ8cbufSh7204gD4i3ENOWJXQcaTmScUS7RY
-	 SpxxhJvgttV3xsT+BB2/x9hFgk4nUOzZL59k4Uias7uxMRKARhEoXebyzKz3xfa4e5
-	 ockFdmutkcecsT52edwqViL7/Ax7X74GbKsvbxHxoHXxHVvlbsu3mGfmbRhV9VlzoL
-	 qn3/LCz3E4Izs1s0hhhbvpuxf4BF/CVMSOV0jlYiNYCD9wDV/D5Lx3kkYbCyUU6PRg
-	 kNWYsFeZdiLSKeT0tcoJah5uhxuJxrAWIxj/oYAbBkFGv5A2ZjRhc5bDfglXJwf8n8
-	 hSxDTqOXFeFuw==
-Date: Wed, 20 Aug 2025 10:03:41 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, Jaroslav Kysela <perex@perex.cz>, 
-	Takashi Iwai <tiwai@suse.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	linux-sound@vger.kernel.org, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: i2s: spacemit: add support for K1 SoC
-Message-ID: <20250820-gecko-of-absolute-will-b06337@kuoka>
-References: <20250814-k1-i2s-v1-0-c31149b29041@linux.spacemit.com>
- <20250814-k1-i2s-v1-1-c31149b29041@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Lsu1LkDT"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 8EA974E40C47;
+	Wed, 20 Aug 2025 11:35:03 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 58B9D606A0;
+	Wed, 20 Aug 2025 11:35:03 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 658B71C22D8F8;
+	Wed, 20 Aug 2025 13:34:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1755689701; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=QOHtLk5QqbgZtnm43GlNAZR0h56vCGCpRCGU58YU9R8=;
+	b=Lsu1LkDTMPB1LU5muwhWVRn23FMJLNqKfUMsR9IDJHWjE45qmCxx5AP6d9b55ZECZsgZpb
+	q9hc/A+lIm20Lru3taO2asF6l6H/8VyMy+Jum/cCxT2ReEVhkFLPRayceA0Qdix1PO4W5m
+	gr5lQUmpUdJOlRtGpmwloQSI0I9fO65qPP7lXklBAtQVw0p08f1bi1F++WujW+Rs5+xTGV
+	NqypZSpQHsuLa2kCClB4Ihvb2bTrT0sGGeYb881pGLbvQofXGZUT24IIxf2eLwmT/h0yRD
+	4XXsx7oq8udgN9HrcROhny4ywakOpELNa1sr97A5W7qm6hufK1fy9+/QcwrSnA==
+Message-ID: <3c8d191c-efd6-4756-9c71-109236d4c54c@bootlin.com>
+Date: Wed, 20 Aug 2025 13:34:04 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250814-k1-i2s-v1-1-c31149b29041@linux.spacemit.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v6 2/5] net: spacemit: Add K1 Ethernet MAC
+To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20250820-net-k1-emac-v6-0-c1e28f2b8be5@iscas.ac.cn>
+ <20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Content-Language: en-US
+In-Reply-To: <20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Thu, Aug 14, 2025 at 04:54:19PM +0800, Troy Mitchell wrote:
-> Add dt-binding for the i2s driver of SpacemiT's K1 SoC.
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  .../devicetree/bindings/sound/spacemit,k1-i2s.yaml | 88 ++++++++++++++++++++++
->  1 file changed, 88 insertions(+)
+Hi Vivian,
 
-Please run scripts/checkpatch.pl on the patches and fix reported
-warnings. After that, run also 'scripts/checkpatch.pl --strict' on the
-patches and (probably) fix more warnings. Some warnings can be ignored,
-especially from --strict run, but the code here looks like it needs a
-fix. Feel free to get in touch if the warning is not clear.
+On 20/08/2025 08:47, Vivian Wang wrote:
+> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
+> that only superficially resembles some other embedded MACs. SpacemiT
+> refers to them as "EMAC", so let's just call the driver "k1_emac".
+>
+> Supports RGMII and RMII interfaces. Includes support for MAC hardware
+> statistics counters. PTP support is not implemented.
+>
+> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
+> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
 
-Please use subject prefixes matching the subsystem. You can get them for
-example with 'git log --oneline -- DIRECTORY_OR_FILE' on the directory
-your patch is touching. For bindings, the preferred subjects are
-explained here:
-https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
+I've read through the driver and it's looking good to me
 
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-Best regards,
-Krzysztof
+Maxime
 
