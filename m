@@ -1,24 +1,66 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5061926D4FB
-	for <spacemit@lists.linux.dev>; Wed, 20 Aug 2025 17:56:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243A72773DC
+	for <spacemit@lists.linux.dev>; Wed, 20 Aug 2025 18:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755712580; cv=none; b=WyhJRtr+cw8zh9z7AtQug17czXPO8obf5qfDXvnrWhFrDfSiPHmPtn6m0zmqqy3ob8vQ8wpdZcgriFB/kh0s0En59ReQ0GSK6QGpJqjUBdIEQ2ulFb8nt6xxxOMdTa1TWtGag4p6xerxVGrOWGoOMSBgRbShSFS/1ObyydgPEjY=
+	t=1755714479; cv=none; b=d3Yk38i3kfk9gRzlqZuEtIPwg7G5trHIb80gDQeMYayI8NfeaEidA13rkQHmDJBdM6WZpdcdgFiUKdVETLJBlcG967DbmEGcab/lP5wz4g0D76TP55/0/MMtI+99aDltt635nya5edskEgsY36GtNdvtJ4Uyafpr72uUXgr996s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755712580; c=relaxed/simple;
-	bh=PAk45Dqw/IAb5hhcZzBL27LdnwY8NSIC8b5E9cb1V/4=;
+	s=arc-20240116; t=1755714479; c=relaxed/simple;
+	bh=epICB6jVv4l91QaSUZCtYLQ+aCm+xHSlUTQPeCzhx+8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MgUVre5oM4AtFZ/2dNaj/wFJ65nsJ2mtjbtjSA1TUBsuilsU79c6hnC8S4oq/QO5KyhjIBJsKzbMh2C31ClAZXJruXwNF1+jCeGU2KrexGMZHhnWShq5bujVUkX+9XoZwNyZEBGi2Zx7hh7YKaKbatEoBQnZIP2E4r9WI+GfEys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.110] (unknown [114.241.87.235])
-	by APP-01 (Coremail) with SMTP id qwCowAB3Z6sLDKZou3TODQ--.64161S2;
-	Thu, 21 Aug 2025 01:55:23 +0800 (CST)
-Message-ID: <2601e3bd-b3d4-4eb1-bcb5-e4fbd9fe9c96@iscas.ac.cn>
-Date: Thu, 21 Aug 2025 01:55:23 +0800
+	 In-Reply-To:Content-Type; b=IUiyN0zZ7ZwPHSKBN9D40uh47NW92lnMVoW8fLeLBLk59hHVWP+Es6EGHQ+Rk26gLXfNGQm+/YsiMxmBRZ+3ZxwIqD2U0q090mIov/K0B9n3ttEIKghaMKtzhNguYkuqO0ztmD9oreDwsL2Unm8L+v9G1edZBLx64hlb5QWHHAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=LFpuNqvM; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="LFpuNqvM"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45a1b0bde14so970715e9.2
+        for <spacemit@lists.linux.dev>; Wed, 20 Aug 2025 11:27:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1755714475; x=1756319275; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8NPVQBMSrrf3jhmLLcgVMSadSNRoC9cJI1+fcHorCmY=;
+        b=LFpuNqvMen2Z5LRxGFJhk0eMb4L8oADsIZqFb+2m3FHtBrbda96CU5QmdbSdKNAaOU
+         HnQWIxK88ftO3PpjBacOxDLXvosy/zLmzsAuQYo4jJZYULAROhLmc5StewhLbYx8LnXp
+         7Jn3fBMioL3FVc8wP7MqtgeybUbX6S0XMp4U2LZMy82hQCZFJwbAVSF+40zgPgSHYXmn
+         Rr3eNDZMsm898/gMM4jU19lXmOA33ccbdc+hEZdhA0EdW3zq6f/5Ve4Ioq3Kk5InR8xI
+         Gx4YOCyAK5qjUku6lvw2vgLCt2MMWp39qaXISQZDXjH9OwpZ91O+PXXhNFbamehAWgT2
+         71Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755714475; x=1756319275;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8NPVQBMSrrf3jhmLLcgVMSadSNRoC9cJI1+fcHorCmY=;
+        b=XPj1uqfHrKKtSiMX5dopdAvIvO9NbwbXw/NfcOEo8UzhH2Y07nhljKu44Y2HIdkZn7
+         XDM1k5llwEHilVGrFqcq9H8OE09m6h4IMQ4BtOQFBfQhPmU0PCLNUDjgQvsVTG2Mahg4
+         udZzqjGXFFLjuj8Zud/DmVQhbdgZyXJu1bXICU0lnTKMqoUdbOKWRVkwPwR2wM3fY1Ck
+         pCKrpSfdaFB8A1CFNMztWWvvv5kdf+H4R1pFxHdx16vtITkvthieUpI7fcBVf/ulFS3s
+         FKRWwyo26KRSbUPWj/vEFxDeoh3fYAkR4RZm4r4e4n12vsPdYiqa0aMxEUu7Qwfwgavw
+         w4aw==
+X-Forwarded-Encrypted: i=1; AJvYcCVzzNeq3oGwwk5dt9eRA6Eu3LTFyiBo4cqgkHvkUARMWPeCJhzneOXUMcvIqEkYoCrw6YJPPwXjzA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwYk77jpowXo6rGahlUAce/NkLIeUKKyOjPGobuq70zq+ETkrin
+	bs8QdtPc7rvuDrjVN4nHV7NuYLK5R6chjjFsYveHdZ/W/2H6wxpVV1Ms4W4EyCRYSps=
+X-Gm-Gg: ASbGncvMy9j0+YYr47K/1HyXbVy62K62BBxlBQvlazRN/4mRby/bAPZTRMhAKwxyy/Z
+	3yndgYTXSb1yQe3wcxwMDAO2hFUKxBw/t3QyNOUH0TFCHdBruyOrz+S3T8DG+xqanENUQ1xHYU1
+	ieYCFwPZDB7Zxnb6/UcuN8dTu/9z5GenC6wJXX85TswBkwPrYVwf9ccSdaCtNL44pwbseSNt4VC
+	RgLwaE2F8a+amxC7RdXpTUb9EmvIi6R/AfkCQ/4WrZHK5TX+bvXbfl/S9+rjhfzr7GU4CQDzpQV
+	ootqTmTTsybe788zXvad4tjyK9zLBZuecWmuJCpPeabB/zL9o/yLwX5azsMFSfcGqVWLPbBExTF
+	G+3D03Y1MPbaYGUPnU+v6OzIhq0q0ks9q1GAob+w3tgZ2mSRyxtPPwYY9BvsTkqL1BZFni3+xze
+	P6g6K5cI8ka76iDjx3Xr6k004=
+X-Google-Smtp-Source: AGHT+IGQKS3XqM+4Wd++Np9yalKPfzEFkK54upvYWtNTNYRTddwvhBFV5n3bYbpZpN+GCnzAAC724g==
+X-Received: by 2002:a05:600c:4a06:b0:43d:42b:e186 with SMTP id 5b1f17b1804b1-45b47ab2420mr21491235e9.8.1755714475079;
+        Wed, 20 Aug 2025 11:27:55 -0700 (PDT)
+Received: from ?IPV6:2a02:1807:2a00:3400:7e73:cf38:ddee:2b1d? ([2a02:1807:2a00:3400:7e73:cf38:ddee:2b1d])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b47c310efsm46093025e9.7.2025.08.20.11.27.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Aug 2025 11:27:54 -0700 (PDT)
+Message-ID: <1a4a25d2-25a1-4d06-bba6-50f51cfbb619@hammernet.be>
+Date: Wed, 20 Aug 2025 20:27:53 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -26,73 +68,53 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v5 4/5] riscv: dts: spacemit: Add Ethernet
- support for BPI-F3
-To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko <vadim.fedorenko@linux.dev>,
- Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>,
- Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
+Subject: Re: [PATCH] riscv: dts: spacemit: add UART resets for Soc K1
+To: dlan@gentoo.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, alex@ghiti.fr
+Cc: skhan@linuxfoundation.org, linux-kernel-mentees@lists.linux.dev,
  devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20250812-net-k1-emac-v5-0-dd17c4905f49@iscas.ac.cn>
- <20250812-net-k1-emac-v5-4-dd17c4905f49@iscas.ac.cn>
- <463dcfa3-152e-4a48-9821-debdc29c89b2@hammernet.be>
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, elder@riscstar.com
+References: <20250807191817.157494-1-hendrik.hamerlinck@hammernet.be>
 Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <463dcfa3-152e-4a48-9821-debdc29c89b2@hammernet.be>
+From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+In-Reply-To: <20250807191817.157494-1-hendrik.hamerlinck@hammernet.be>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowAB3Z6sLDKZou3TODQ--.64161S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrurWrJr43Kw45AFy8Gr45Wrg_yoWfArbE9F
-	WSqFnxu34ku3W0gr1UtanxAr1FqrZxWryaqas8twn5J34Ivw4UGw1rJas5JwnxGFy2qrnr
-	ZFyagF4jyr12vjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbVxYjsxI4VWkKwAYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I
-	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0
-	cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwV
-	C2z280aVCY1x0267AKxVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVAC
-	Y4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJV
-	W8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkI
-	wI1lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr
-	0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY
-	17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcV
-	C0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY
-	6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa
-	73UjIFyTuYvjxUkX_TUUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
+Hello,
 
-On 8/13/25 21:34, Hendrik Hamerlinck wrote:
+On 8/7/25 21:18, Hendrik Hamerlinck wrote:
+> Add reset control entries for all UARTs in the SpaceMIT K1 SoC Device Tree.
+> UART0 was functional as it did not need a reset. But the other UARTs were
+> unable to access their registers without the reset being applied.
 >
-> On 8/12/25 04:02, Vivian Wang wrote:
->> Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
->> reset.
->>
->> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
->>
-> Tested on Banana Pi BPI-F3 and Orange Pi RV2. Verified SSH shell over eth0
-> and eth1 interfaces, and basic UDP connectivity using iperf3. Thank you!
+> Although perhaps not needed I did add the reset for UART0 as well,
+> to ensure consistency across all UARTs. With the current-speed set to
+> 112500 baud rate, it matches the factory U-Boot settings.
+> This should not give issues with early console usage. But perhaps it could
+> be a good idea to let somebody else confirm this as well.
+I have tested this version for a while and no longer see the need for
+additional confirmation.
+
 >
-> Tested-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+> Tested this locally on both Orange Pi RV2 and Banana Pi BPI-F3 boards. 
+> I enabled the UART9 and was able to use it successfully.
+>
+Just a gentle reminder about this patch.
 
-Thank you for the testing! I've already put this trailer on v6, but
-forgot to reply here.
+All UARTs are listed in the K1 device tree and probed by the 8250_of driver,
+but without reset lines most of them are non-functional. Adding the resets
+makes them usable when mapped to devices.
 
-I haven't included the DTS patch for Orange Pi RV2 in v6, because the
-board DTS is not in v6.17-rc1. However, it is in Yixun's spacemit tree,
-AFAICT, so if we get the driver in for v6.18 I'll send the DTS
-separately to spacemit mailing list. If we don't, I'll include it
-alongside the driver when rebasing to v6.18-rc1.
+This patch is limited to DTS reset handling, so UARTs are usable in the
+current state. I’m aware Alex Elder is assigned to the UART peripheral on
+the wiki and will likely handle the broader driver improvements (DMA,
+clock updates, full baud-rate support), so this should not interfere with
+that work.
 
-Vivian "dramforever" Wang
+Thanks for taking a look!
 
+Kind regards,
+Hendrik
 
