@@ -1,40 +1,24 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C6A2E8889
-	for <spacemit@lists.linux.dev>; Wed, 20 Aug 2025 11:35:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA5B25A352
+	for <spacemit@lists.linux.dev>; Wed, 20 Aug 2025 17:48:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755689708; cv=none; b=s1ut5DQaiElCAMQr0+if5BtqchxxupmksZcDzYxe4kqr4O3axE9jQUL+Qy4A1dsyIg02iomlPJ1zSBB/0o76+MjybnLVBbKf2wtrb7CfIVLqu6peo2HxJ3qLS9ZhAbg8vxntPl2KfVBhpetANaLxaeK+eoxZVReBbMk3uDj1oXY=
+	t=1755712127; cv=none; b=AfsjPefZ1dEhoKMdkIdZv4rxGpOOXms0NZQRFohX7UEq59xqMDgikabrE0X66gjYYZq6yfC7ZDQyWULekgaLjkgxSKh7vKaXHTeMDrHHxswphgg7QAwafwkgdM5MFDm1gOiN77OA1YhONWwyVuTxhVsnkI73nhnr8f8F80Onb1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755689708; c=relaxed/simple;
-	bh=QOHtLk5QqbgZtnm43GlNAZR0h56vCGCpRCGU58YU9R8=;
+	s=arc-20240116; t=1755712127; c=relaxed/simple;
+	bh=wFEaUXSKxGKGDrafji9rNYNmODBy+B6j/W4l+Y+SZpg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Grj4PlxTXBcxnJRJPYltYu5TEhNbOdYOuMKulMljgHLLttVozQDqYcBQw2G1Jk2mxpnvir5ZPbfwQOvAjR6LLHzydntxFL0tcJQ79siP+sNmtgk61RrM82EC7wgRfQNWIEphW487uq8BfN1MEFN49nApY2jmhmp1CGh5dNsa1j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Lsu1LkDT; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Lsu1LkDT"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 8EA974E40C47;
-	Wed, 20 Aug 2025 11:35:03 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 58B9D606A0;
-	Wed, 20 Aug 2025 11:35:03 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 658B71C22D8F8;
-	Wed, 20 Aug 2025 13:34:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1755689701; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=QOHtLk5QqbgZtnm43GlNAZR0h56vCGCpRCGU58YU9R8=;
-	b=Lsu1LkDTMPB1LU5muwhWVRn23FMJLNqKfUMsR9IDJHWjE45qmCxx5AP6d9b55ZECZsgZpb
-	q9hc/A+lIm20Lru3taO2asF6l6H/8VyMy+Jum/cCxT2ReEVhkFLPRayceA0Qdix1PO4W5m
-	gr5lQUmpUdJOlRtGpmwloQSI0I9fO65qPP7lXklBAtQVw0p08f1bi1F++WujW+Rs5+xTGV
-	NqypZSpQHsuLa2kCClB4Ihvb2bTrT0sGGeYb881pGLbvQofXGZUT24IIxf2eLwmT/h0yRD
-	4XXsx7oq8udgN9HrcROhny4ywakOpELNa1sr97A5W7qm6hufK1fy9+/QcwrSnA==
-Message-ID: <3c8d191c-efd6-4756-9c71-109236d4c54c@bootlin.com>
-Date: Wed, 20 Aug 2025 13:34:04 +0200
+	 In-Reply-To:Content-Type; b=ZUDCf6B20IyZ5GHbwbpK2yXt1EEst4Wn1p94nh0t7EvOO+HlkjWGvbetfPz/4fLMqz2rp13qQuOHfSdpqQMN5H7kwxOG3iVnLmwBlsHGlRyaZMPwJRW8whs1JH+HAPkuo7qmWUu1xmBqOdFofQk18ADQxAVWi8/FNrJALAkygOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.110] (unknown [114.241.87.235])
+	by APP-01 (Coremail) with SMTP id qwCowADXA6hiCqZoxxbODQ--.27375S2;
+	Thu, 21 Aug 2025 01:48:18 +0800 (CST)
+Message-ID: <ca3404c1-7773-4b47-8a95-b61e5cd9be96@iscas.ac.cn>
+Date: Thu, 21 Aug 2025 01:48:18 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,8 +27,8 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH net-next v6 2/5] net: spacemit: Add K1 Ethernet MAC
-To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
- <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
  "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
@@ -59,29 +43,52 @@ Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko <vadim.fedorenko@linux.dev>,
  linux-kernel@vger.kernel.org
 References: <20250820-net-k1-emac-v6-0-c1e28f2b8be5@iscas.ac.cn>
  <20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+ <3c8d191c-efd6-4756-9c71-109236d4c54c@bootlin.com>
 Content-Language: en-US
-In-Reply-To: <20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <3c8d191c-efd6-4756-9c71-109236d4c54c@bootlin.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qwCowADXA6hiCqZoxxbODQ--.27375S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrKFWfKr45KrW5tF15Gr18uFg_yoW3CrcE9F
+	1vvwn7Zw1UK3WUGw4fKanFvws8Kr1kXr1xWr9rtws3t342yFyDWFnrK34Sgr43XrWvqrnr
+	Gw10vFWIkw17ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbV8YjsxI4VW3JwAYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I
+	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0
+	cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I
+	8E87Iv6xkF7I0E14v26r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xv
+	F2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r
+	4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xK
+	xwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJV
+	W8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF
+	1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6x
+	IIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvE
+	x4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvj
+	DU0xZFpf9x07jgPEfUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Hi Vivian,
+Hi Maxime,
 
-On 20/08/2025 08:47, Vivian Wang wrote:
-> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
-> that only superficially resembles some other embedded MACs. SpacemiT
-> refers to them as "EMAC", so let's just call the driver "k1_emac".
+On 8/20/25 19:34, Maxime Chevallier wrote:
+> Hi Vivian,
 >
-> Supports RGMII and RMII interfaces. Includes support for MAC hardware
-> statistics counters. PTP support is not implemented.
+> On 20/08/2025 08:47, Vivian Wang wrote:
+>> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
+>> that only superficially resembles some other embedded MACs. SpacemiT
+>> refers to them as "EMAC", so let's just call the driver "k1_emac".
+>>
+>> Supports RGMII and RMII interfaces. Includes support for MAC hardware
+>> statistics counters. PTP support is not implemented.
+>>
+>> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
+>> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
 >
-> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+> I've read through the driver and it's looking good to me
+>
+> Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com> 
+>
+Thank you for the review. I appreciate it.
 
-I've read through the driver and it's looking good to me
-
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-
-Maxime
+Vivian "dramforever" Wang
 
