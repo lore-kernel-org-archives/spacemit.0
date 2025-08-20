@@ -1,134 +1,139 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9071531E0ED
-	for <spacemit@lists.linux.dev>; Tue, 19 Aug 2025 09:49:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BB321B9FD
+	for <spacemit@lists.linux.dev>; Wed, 20 Aug 2025 06:48:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755596994; cv=none; b=nSypN1QJCC3XqEkLPk/VPtf1Me6ZOtKDHFt4M5AKpzU4LmdBCF068JIVB9pvszKR8M7NHpnfe4wewMmeVGpLFi7gT9nd5q/rA6cqAHNcu7ey+wYAkAYn/m6sy1lkTtbZK7VdihkimiVRHx/mmqu8PEg+OT5BP3EqpxPBC1aGi+Y=
+	t=1755672514; cv=none; b=AbhqyBvZXSzyZ3/3CTRL7V68YnDlDU8QSJtdLDA+g0GXT3SKcxFhDhk06qKfr3hVp/Sq3eRMzqZlKpI2qDUN9zpbqd9fRuzz5/MqBl0fR84/7DdM/kGqBQogJjioN4V1pGkKNDJCGA+umgfYEF3A4U030DUTJmMh0hQpdu8tDdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755596994; c=relaxed/simple;
-	bh=tV6Flkuo2P/+55L7Kh0T7daOZ9uv2yK47XAxZBt9LOQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EmYbCaEqw5JXwIkPZKJwRaPcgmGoNOrj/oYtxYO0qzcKGkNTFWHh0C8AGXYPcFM8DGO1uQbdmN7lBd81+WOTsHj5Kz/g1YxfNMLoKGOH6hA+dBu4OAtnW+1AvfplgIXxJ0rXKT+GfMGOp5a9cANyC0lG4sg7yMhiqt+wNiC5AfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E6nirs/M; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E6nirs/M"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-55ce526627dso5171312e87.3
-        for <spacemit@lists.linux.dev>; Tue, 19 Aug 2025 02:49:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755596990; x=1756201790; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tV6Flkuo2P/+55L7Kh0T7daOZ9uv2yK47XAxZBt9LOQ=;
-        b=E6nirs/MtzlWYvtWnhT7OFhxYxoTiNgtZAFtP3PfVlJvA8N+EDp4Gp5ZGEj/TBn5XT
-         v9HgnBzetGo8P/3ecfIcu451INUltPDST2Ag5VeVkGr8eWulXkY9V3nxa1FdGSfhtma8
-         Mj2Na2p+l/h0Ce4WRFCOMd0r3BcaPRO9sVDnz2NQv1+pbnyCcJVlUYgW0zt0sn/JhceT
-         UhVxSgpuj4aldbnV/k+8SUPmGq3HHKVpUSNMpu5jGAAj62CYGtWk+xJz3oIHGkklcM6V
-         oGztqacdk5CBjdJMRLe0LEoLMh83GUWsd7GxEwzMyXqj8w5nowlP1wuDqk7YytcapywS
-         ftqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755596990; x=1756201790;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tV6Flkuo2P/+55L7Kh0T7daOZ9uv2yK47XAxZBt9LOQ=;
-        b=Jd59PsGUcrqXYMCHy5PYmGO/V2NBtG0QsRzinQ42N84MmrMdZhgT/7mNHKUxw17qLP
-         NB/enC+ShgR2gezfNDRfGuxn1sJgQ8e2+oC3ANpuuZibX5FIUPmdHxs650McBmamUjyp
-         VldBx0V+4EGsEWU1yksjTcP7h3S8B3ApzuGe5dneAbEA6PLxp3QhChbLdOSyYhlSxovI
-         2Pedk1vOgDwl7y3G4ebetVt9/dEX4uy9lm3Y8UOe8y/6ssMCtqi7Pj0QSJRGZDiie7Uh
-         zUPw9fZ3ebm6enmCgjMmwRLOSHJdlE4HHUyVxn+OAYRUj3pgkRbpAAjftBHcaLO/slpk
-         b4Yw==
-X-Forwarded-Encrypted: i=1; AJvYcCWtBvXjY97xfrI+Jl+YC0RCWq4+WOmWkA3wm4ThyqXU9u/EwMqZF6ECFUSI4Q1MduQY69UkVeijAg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzQncZUr8le1mkV1KFM2ovYif7QFCvNNwJwrHyeU2aKzXjcQS4E
-	dx4qhyNpnBY+vl6NoOe2GRBdIFDRRdg7RDFMQAppkMr+8buFZU5xXGhGUVycN1OTdtV/BmXbDVr
-	mLGDuCSyhznX4Dtjixgulc/HNVIUGkJ4ZH2uTU/hkIA==
-X-Gm-Gg: ASbGnct8lf/+M0sUFiSGfKNyeFipk4zE3Frzea/YMPYQKm6Chpc//zV9u5requ5Qgk4
-	wksv1iORTwkhx2/fajWjllr3z8gwtUbRNij4Sbw40h6ZMQRXsTvVDMtvVJhmyqNvoTEAGRnWSWT
-	tClElfGBWO5iSd7+GUEopPRIeBM9gN1rDVurZF24EfPcbAziAjmnjcblaAGDoZl5lffLJkuHIv1
-	EMSjz1sWh2x
-X-Google-Smtp-Source: AGHT+IEt8RlqWWvwC2uqrmb7EU75OBtpQ0q0kJ1zr3PFW1jsKW7QqgA/pBKXOLyxKfth/q0XXJuPhRlLhC58Y7ZaIjE=
-X-Received: by 2002:a05:6512:ac9:b0:553:51a2:4405 with SMTP id
- 2adb3069b0e04-55e00850835mr590681e87.45.1755596989499; Tue, 19 Aug 2025
- 02:49:49 -0700 (PDT)
+	s=arc-20240116; t=1755672514; c=relaxed/simple;
+	bh=49DBKkptDFzzA2ZrfYvNanOnxBOu5JYgjj8zU6d4Jvg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=iGoYTn7kSCRWnde2HxB0mSLW6yJFpLevL2lAJ0/lYwQlL+Hq5zCVOTLA4eVWmzklHlo8tnnvtVLzQ3QLjOdRlpFSyHxOrP5fUSjN1XdUyJogzu4m/t3n1QwbSLt1qvfU74QZcUCkxpByFGAZ7FGSua0Nv34LJOhvenvpfa8AFw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [114.241.87.235])
+	by APP-03 (Coremail) with SMTP id rQCowABHoYKbb6Vozu+wDQ--.65205S7;
+	Wed, 20 Aug 2025 14:47:58 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Wed, 20 Aug 2025 14:47:54 +0800
+Subject: [PATCH net-next v6 5/5] riscv: dts: spacemit: Add Ethernet support
+ for Jupiter
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com> <20250811-clk-for-stephen-round-rate-v1-109-b3bf97b038dc@redhat.com>
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-109-b3bf97b038dc@redhat.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 19 Aug 2025 11:49:38 +0200
-X-Gm-Features: Ac12FXyEOw7KCbkbFT2OqCP4TngpQPKLbvy9M6n90z-zmlM7tVP9PQNq8vVGJnI
-Message-ID: <CACRpkdaW=f7xm+rsD8XUUx-qhuh8sk1mCU-erve-_9S4uUpHbA@mail.gmail.com>
-Subject: Re: [PATCH 109/114] clk: versatile: vexpress-osc: convert from
- round_rate() to determine_rate()
-To: bmasney@redhat.com
-Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Cristian Marussi <cristian.marussi@arm.com>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Nicolas Ferre <nicolas.ferre@microchip.com>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
-	Paul Cercueil <paul@crapouillou.net>, Keguang Zhang <keguang.zhang@gmail.com>, 
-	Taichi Sugaya <sugaya.taichi@socionext.com>, Takao Orito <orito.takao@socionext.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, 
-	Vladimir Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Samuel Holland <samuel.holland@sifive.com>, 
-	Yixun Lan <dlan@gentoo.org>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
-	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
-	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Chunyan Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Michal Simek <michal.simek@amd.com>, 
-	Maxime Ripard <mripard@kernel.org>, =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, 
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa <neal@gompa.dev>, 
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max Filippov <jcmvbkbc@gmail.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Daniel Palmer <daniel@thingy.jp>, 
-	Romain Perier <romain.perier@gmail.com>, Andrew Lunn <andrew@lunn.ch>, 
-	Gregory Clement <gregory.clement@bootlin.com>, 
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
-	Andrea della Porta <andrea.porta@suse.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Sylwester Nawrocki <s.nawrocki@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>, 
-	Viresh Kumar <vireshk@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
-	Luca Ceresoli <luca.ceresoli@bootlin.com>, Alex Helms <alexander.helms.jy@renesas.com>, 
-	Liviu Dudau <liviu.dudau@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev, 
-	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
-	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250820-net-k1-emac-v6-5-c1e28f2b8be5@iscas.ac.cn>
+References: <20250820-net-k1-emac-v6-0-c1e28f2b8be5@iscas.ac.cn>
+In-Reply-To: <20250820-net-k1-emac-v6-0-c1e28f2b8be5@iscas.ac.cn>
+To: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Vivian Wang <wangruikang@iscas.ac.cn>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Vivian Wang <uwu@dram.page>, 
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>, 
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-CM-TRANSID:rQCowABHoYKbb6Vozu+wDQ--.65205S7
+X-Coremail-Antispam: 1UD129KBjvJXoW7Kw43Gw1ftrWfAF43Cr45Jrb_yoW8WrW7pa
+	y3CFsaqFZrCr1fKw43Zr9F9r13Ga95GrWkC3y3uF1rJ3yIvFZ0vw1rtw17tr1DGrW5X34Y
+	vr10yFyxurnFkw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUmS14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
+	kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
+	z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
+	4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
+	3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7
+	IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4U
+	M4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2
+	kIc2xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
+	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+	AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI
+	42IY6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
+	4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBI
+	daVFxhVjvjDU0xZFpf9x0pRQJ5wUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Mon, Aug 11, 2025 at 5:21=E2=80=AFPM Brian Masney via B4 Relay
-<devnull+bmasney.redhat.com@kernel.org> wrote:
+Milk-V Jupiter uses an RGMII PHY for each port and uses GPIO for PHY
+reset.
 
-> From: Brian Masney <bmasney@redhat.com>
->
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
->
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 46 +++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+index 4483192141049caa201c093fb206b6134a064f42..c5933555c06b66f40e61fe2b9c159ba0770c2fa1 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+@@ -20,6 +20,52 @@ chosen {
+ 	};
+ };
+ 
++&eth0 {
++	phy-handle = <&rgmii0>;
++	phy-mode = "rgmii-id";
++	pinctrl-names = "default";
++	pinctrl-0 = <&gmac0_cfg>;
++	rx-internal-delay-ps = <0>;
++	tx-internal-delay-ps = <0>;
++	status = "okay";
++
++	mdio-bus {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
++		reset-delay-us = <10000>;
++		reset-post-delay-us = <100000>;
++
++		rgmii0: phy@1 {
++			reg = <0x1>;
++		};
++	};
++};
++
++&eth1 {
++	phy-handle = <&rgmii1>;
++	phy-mode = "rgmii-id";
++	pinctrl-names = "default";
++	pinctrl-0 = <&gmac1_cfg>;
++	rx-internal-delay-ps = <0>;
++	tx-internal-delay-ps = <250>;
++	status = "okay";
++
++	mdio-bus {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
++		reset-delay-us = <10000>;
++		reset-post-delay-us = <100000>;
++
++		rgmii1: phy@1 {
++			reg = <0x1>;
++		};
++	};
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_2_cfg>;
 
-Yours,
-Linus Walleij
+-- 
+2.50.1
+
