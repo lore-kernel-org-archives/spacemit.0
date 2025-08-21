@@ -1,149 +1,237 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CDC2EA165;
-	Thu, 21 Aug 2025 22:04:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3236F286D50;
+	Thu, 21 Aug 2025 23:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755813877; cv=none; b=CDfsXXS6314n9FBY+/0lWmwvR7XFyVs8KHkzoDJoRlssJMCBsAlAnETpOy6YHWViNMzh0oe13/QmM9V+P4PaRlzbn32nqou4kFXwYl8Aq5gwWlwPg+afAhwThKJIHYDmA3E4cAQ+i4CE1UD2hE2jBySGCBnuV5ZMTupZXuDH8zM=
+	t=1755818063; cv=none; b=GDJwxfcNwoYhz8lagLXrRuVaJqYvcO2yo66UQx3sAIqWboKEVv4WiZKIkekjS8rLN+G4qdbsFP1uwzn18KuwvO8Uaze44wbIfiudKh9+YRfWlJPovfGywRNLrXlNDdFk1lxyYQUjyI6j2SoSsz4qpMn0C7nA0wa2zM5FHsbv4iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755813877; c=relaxed/simple;
-	bh=hxkcY5eXcU0/SP9gOE+pjfJcCyy7BDyDchffTZglGEk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ly2IsZPH/S9Ij1ICyJCjAUvHwUHY/ALIwklP++UB5K/rtB4QmFXNmASv6q5FgSLcGhkTiYDG8f53gyeV0mpNI136gR9qo0Yq0eqthBMQkd6FThNasONYQeyMXS8loDBrQem9Ry93zJ+11WEZ3GlTP3wCoxNPwS2QtwdOk4ehNq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [180.158.240.122])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id AD411340441;
-	Thu, 21 Aug 2025 22:04:34 +0000 (UTC)
-Date: Fri, 22 Aug 2025 06:04:30 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, skhan@linuxfoundation.org,
-	linux-kernel-mentees@lists.linux.dev, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] riscv: dts: spacemit: add UART resets for Soc K1
-Message-ID: <20250821220430-GYA1070455@gentoo>
-References: <20250821152619.597051-1-hendrik.hamerlinck@hammernet.be>
+	s=arc-20240116; t=1755818063; c=relaxed/simple;
+	bh=zkvshjcFzWG50O/pScvDURQ9fCVL6bGdtUAFxbZxmO0=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=STtt97YgxxdVLoel2rBlY7mEPsHxKfYlvTH9q54Df1mNyKpdj+2cxYU+LEaDl6JeAfO4U7qPefn80vpN3JqCzw3i2IRGs98SslNVFSp9qPlGkee8Ccx9IJ5s7ZRhPBYLG25Ox5MqkCf/qZgpGLmXgqK87cvVJvoDQTDTMKKWz0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rZpOV3X7; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rZpOV3X7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8524C4CEEB;
+	Thu, 21 Aug 2025 23:14:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755818062;
+	bh=zkvshjcFzWG50O/pScvDURQ9fCVL6bGdtUAFxbZxmO0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=rZpOV3X7vM/+xZhBzFZx9X4PJUC7Lr4N8ayg2H5IRAnzb9rBcCe33yEmcE8UQbyNR
+	 yK3CrjDjZA8YSwDMRNS+VM9MmFqoUQ+zb36GYNwHGV3El/BnPxvTQQTAgFnJh0xrQd
+	 AFTOzvJcQV5HENN6MBxREzPkYmIGdo2f3EhgqNh+gYgPh6xRDC6xl57jcnv/uhspwQ
+	 kDXaZJCY/3kQesywbz2PefI9iyzCPD+qEcrDCUkcqL5lSv09FrENYoXvM1NWsk99CR
+	 1RzS12EYK0IajEC0spl1xGT4isw8GPlI57gwytl1Uov/fcRK34IiUOOlPtABl++lfV
+	 eDw1xuNuLXy9Q==
+Date: Thu, 21 Aug 2025 16:14:20 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou
+ <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Vivian Wang
+ <uwu@dram.page>, Vadim Fedorenko <vadim.fedorenko@linux.dev>, Junhui Liu
+ <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>, Maxime
+ Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v6 2/5] net: spacemit: Add K1 Ethernet MAC
+Message-ID: <20250821161420.7c9804f7@kernel.org>
+In-Reply-To: <20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
+References: <20250820-net-k1-emac-v6-0-c1e28f2b8be5@iscas.ac.cn>
+	<20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250821152619.597051-1-hendrik.hamerlinck@hammernet.be>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On 17:26 Thu 21 Aug     , Hendrik Hamerlinck wrote:
-> The UARTs in the SpacemiT K1 device tree are probed by the 8250_of driver,
-> but without reset lines they remain non-functional.
-> 
-> Add reset control entries so that the UARTs can operate when mapped to
-> devices. UART0 is already de-asserted by the bootloader, but include its
-> reset as well to avoid relying on bootloader state.
-> 
-> Tested on Orange Pi RV2 and Banana Pi BPI-F3 boards, with UART9 enabled
-> and verified functional.
-> 
-> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+On Wed, 20 Aug 2025 14:47:51 +0800 Vivian Wang wrote:
+> +static void emac_tx_mem_map(struct emac_priv *priv, struct sk_buff *skb)
+> +{
+> +	struct emac_desc_ring *tx_ring = &priv->tx_ring;
+> +	struct emac_desc tx_desc, *tx_desc_addr;
+> +	struct device *dev = &priv->pdev->dev;
+> +	struct emac_tx_desc_buffer *tx_buf;
+> +	u32 head, old_head, frag_num, f;
+> +	bool buf_idx;
+> +
+> +	frag_num = skb_shinfo(skb)->nr_frags;
+> +	head = tx_ring->head;
+> +	old_head = head;
+> +
+> +	for (f = 0; f < frag_num + 1; f++) {
+> +		buf_idx = f % 2;
+> +
+> +		/*
+> +		 * If using buffer 1, initialize a new desc. Otherwise, use
+> +		 * buffer 2 of previous fragment's desc.
+> +		 */
+> +		if (!buf_idx) {
+> +			tx_buf = &tx_ring->tx_desc_buf[head];
+> +			tx_desc_addr =
+> +				&((struct emac_desc *)tx_ring->desc_addr)[head];
+> +			memset(&tx_desc, 0, sizeof(tx_desc));
+> +
+> +			/*
+> +			 * Give ownership for all but first desc initially. For
+> +			 * first desc, give at the end so DMA cannot start
+> +			 * reading uninitialized descs.
+> +			 */
+> +			if (head != old_head)
+> +				tx_desc.desc0 |= TX_DESC_0_OWN;
+> +
+> +			if (++head == tx_ring->total_cnt) {
+> +				/* Just used last desc in ring */
+> +				tx_desc.desc1 |= TX_DESC_1_END_RING;
+> +				head = 0;
+> +			}
+> +		}
+> +
+> +		if (emac_tx_map_frag(dev, &tx_desc, tx_buf, skb, f)) {
+> +			netdev_err(priv->ndev, "Map TX frag %d failed", f);
+> +			goto dma_map_err;
+> +		}
+> +
+> +		if (f == 0)
+> +			tx_desc.desc1 |= TX_DESC_1_FIRST_SEGMENT;
+> +
+> +		if (f == frag_num) {
+> +			tx_desc.desc1 |= TX_DESC_1_LAST_SEGMENT;
+> +			tx_buf->skb = skb;
+> +			if (emac_tx_should_interrupt(priv, frag_num + 1))
+> +				tx_desc.desc1 |=
+> +					TX_DESC_1_INTERRUPT_ON_COMPLETION;
+> +		}
+> +
+> +		*tx_desc_addr = tx_desc;
+> +	}
+> +
+> +	/* All descriptors are ready, give ownership for first desc */
+> +	tx_desc_addr = &((struct emac_desc *)tx_ring->desc_addr)[old_head];
+> +	dma_wmb();
+> +	WRITE_ONCE(tx_desc_addr->desc0, tx_desc_addr->desc0 | TX_DESC_0_OWN);
+> +
+> +	emac_dma_start_transmit(priv);
+> +
+> +	tx_ring->head = head;
+> +
+> +	return;
+> +
+> +dma_map_err:
+> +	dev_kfree_skb_any(skb);
 
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
-> ---
-> Changes in v2:
-> - Improved changelog
-> - Omitted current-speed property for UART0
-> ---
->  arch/riscv/boot/dts/spacemit/k1.dtsi | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> index abde8bb07c95..6c68b2e54675 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> @@ -667,6 +667,7 @@ uart0: serial@d4017000 {
->  				clocks = <&syscon_apbc CLK_UART0>,
->  					 <&syscon_apbc CLK_UART0_BUS>;
->  				clock-names = "core", "bus";
-> +				resets = <&syscon_apbc RESET_UART0>;
->  				interrupts = <42>;
->  				reg-shift = <2>;
->  				reg-io-width = <4>;
-> @@ -680,6 +681,7 @@ uart2: serial@d4017100 {
->  				clocks = <&syscon_apbc CLK_UART2>,
->  					 <&syscon_apbc CLK_UART2_BUS>;
->  				clock-names = "core", "bus";
-> +				resets = <&syscon_apbc RESET_UART2>;
->  				interrupts = <44>;
->  				reg-shift = <2>;
->  				reg-io-width = <4>;
-> @@ -693,6 +695,7 @@ uart3: serial@d4017200 {
->  				clocks = <&syscon_apbc CLK_UART3>,
->  					 <&syscon_apbc CLK_UART3_BUS>;
->  				clock-names = "core", "bus";
-> +				resets = <&syscon_apbc RESET_UART3>;
->  				interrupts = <45>;
->  				reg-shift = <2>;
->  				reg-io-width = <4>;
-> @@ -706,6 +709,7 @@ uart4: serial@d4017300 {
->  				clocks = <&syscon_apbc CLK_UART4>,
->  					 <&syscon_apbc CLK_UART4_BUS>;
->  				clock-names = "core", "bus";
-> +				resets = <&syscon_apbc RESET_UART4>;
->  				interrupts = <46>;
->  				reg-shift = <2>;
->  				reg-io-width = <4>;
-> @@ -719,6 +723,7 @@ uart5: serial@d4017400 {
->  				clocks = <&syscon_apbc CLK_UART5>,
->  					 <&syscon_apbc CLK_UART5_BUS>;
->  				clock-names = "core", "bus";
-> +				resets = <&syscon_apbc RESET_UART5>;
->  				interrupts = <47>;
->  				reg-shift = <2>;
->  				reg-io-width = <4>;
-> @@ -732,6 +737,7 @@ uart6: serial@d4017500 {
->  				clocks = <&syscon_apbc CLK_UART6>,
->  					 <&syscon_apbc CLK_UART6_BUS>;
->  				clock-names = "core", "bus";
-> +				resets = <&syscon_apbc RESET_UART6>;
->  				interrupts = <48>;
->  				reg-shift = <2>;
->  				reg-io-width = <4>;
-> @@ -745,6 +751,7 @@ uart7: serial@d4017600 {
->  				clocks = <&syscon_apbc CLK_UART7>,
->  					 <&syscon_apbc CLK_UART7_BUS>;
->  				clock-names = "core", "bus";
-> +				resets = <&syscon_apbc RESET_UART7>;
->  				interrupts = <49>;
->  				reg-shift = <2>;
->  				reg-io-width = <4>;
-> @@ -758,6 +765,7 @@ uart8: serial@d4017700 {
->  				clocks = <&syscon_apbc CLK_UART8>,
->  					 <&syscon_apbc CLK_UART8_BUS>;
->  				clock-names = "core", "bus";
-> +				resets = <&syscon_apbc RESET_UART8>;
->  				interrupts = <50>;
->  				reg-shift = <2>;
->  				reg-io-width = <4>;
-> @@ -771,6 +779,7 @@ uart9: serial@d4017800 {
->  				clocks = <&syscon_apbc CLK_UART9>,
->  					 <&syscon_apbc CLK_UART9_BUS>;
->  				clock-names = "core", "bus";
-> +				resets = <&syscon_apbc RESET_UART9>;
->  				interrupts = <51>;
->  				reg-shift = <2>;
->  				reg-io-width = <4>;
-> -- 
-> 2.43.0
-> 
+You free the skb here.. 
 
--- 
-Yixun Lan (dlan)
+> +	priv->ndev->stats.tx_dropped++;
+> +}
+> +
+> +static netdev_tx_t emac_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+> +{
+> +	struct emac_priv *priv = netdev_priv(ndev);
+> +	int nfrags = skb_shinfo(skb)->nr_frags;
+> +	struct device *dev = &priv->pdev->dev;
+> +
+> +	if (unlikely(emac_tx_avail(priv) < nfrags + 1)) {
+> +		if (!netif_queue_stopped(ndev)) {
+> +			netif_stop_queue(ndev);
+> +			dev_err_ratelimited(dev, "TX ring full, stop TX queue\n");
+> +		}
+> +		return NETDEV_TX_BUSY;
+> +	}
+> +
+> +	emac_tx_mem_map(priv, skb);
+> +
+> +	ndev->stats.tx_packets++;
+> +	ndev->stats.tx_bytes += skb->len;
+
+.. and then you use skb here.
+
+> +	/* Make sure there is space in the ring for the next TX. */
+> +	if (unlikely(emac_tx_avail(priv) <= MAX_SKB_FRAGS + 2))
+> +		netif_stop_queue(ndev);
+> +
+> +	return NETDEV_TX_OK;
+> +}
+
+> +static void emac_get_ethtool_stats(struct net_device *dev,
+> +				   struct ethtool_stats *stats, u64 *data)
+> +{
+> +	struct emac_priv *priv = netdev_priv(dev);
+> +	u64 *rx_stats = (u64 *)&priv->rx_stats;
+> +	int i;
+> +
+> +	scoped_guard(spinlock_irqsave, &priv->stats_lock) {
+
+Why is this spin lock taken in irqsave mode?
+Please convert the code not to use scoped_guard()
+There's not a single flow control (return) in any of them.
+It's just hiding the information that you're unnecessarily masking irqs.
+See
+https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#using-device-managed-and-cleanup-h-constructs
+
+> +		emac_stats_update(priv);
+> +
+> +		for (i = 0; i < ARRAY_SIZE(emac_ethtool_rx_stats); i++)
+> +			data[i] = rx_stats[emac_ethtool_rx_stats[i].offset];
+> +	}
+
+> +static void emac_tx_timeout_task(struct work_struct *work)
+> +{
+> +	struct net_device *ndev;
+> +	struct emac_priv *priv;
+> +
+> +	priv = container_of(work, struct emac_priv, tx_timeout_task);
+> +	ndev = priv->ndev;
+
+I don't see this work ever being canceled.
+What prevents ndev from being freed before it gets to run?
+
+> +/* Called when net interface is brought up. */
+> +static int emac_open(struct net_device *ndev)
+> +{
+> +	struct emac_priv *priv = netdev_priv(ndev);
+> +	struct device *dev = &priv->pdev->dev;
+> +	int ret;
+> +
+> +	ret = emac_alloc_tx_resources(priv);
+> +	if (ret) {
+> +		dev_err(dev, "Error when setting up the Tx resources\n");
+> +		goto emac_alloc_tx_resource_fail;
+> +	}
+> +
+> +	ret = emac_alloc_rx_resources(priv);
+> +	if (ret) {
+> +		dev_err(dev, "Error when setting up the Rx resources\n");
+> +		goto emac_alloc_rx_resource_fail;
+> +	}
+> +
+> +	ret = emac_up(priv);
+> +	if (ret) {
+> +		dev_err(dev, "Error when bringing interface up\n");
+> +		goto emac_up_fail;
+> +	}
+> +	return 0;
+> +
+> +emac_up_fail:
+
+please name the jump labels after the destination not the source.
+Please fix everywhere in the driver.
+This is covered in the kernel coding style docs.
+
+> +	emac_free_rx_resources(priv);
+> +emac_alloc_rx_resource_fail:
+> +	emac_free_tx_resources(priv);
+> +emac_alloc_tx_resource_fail:
+> +	return ret;
+> +}
+
