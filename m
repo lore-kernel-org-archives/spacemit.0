@@ -1,91 +1,184 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5B32DF6F7
-	for <spacemit@lists.linux.dev>; Thu, 21 Aug 2025 13:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B4531DDBB
+	for <spacemit@lists.linux.dev>; Thu, 21 Aug 2025 15:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755783543; cv=none; b=M7iV4+tW7dUHePiYEh2jq9VhfLg/0xsILwqRqKQcF5SbcVOFUVPC8nUIw0V88QJK1ubWrBMGedqqU+iDxTsLjOrx9Talj/FJApTuLEkyG8KeXAdkAn+aA/6WgWiAsAoKrUalXww0IS+kgrtALzlIxtCfXsaPwiZzIsn1wgniCV4=
+	t=1755790027; cv=none; b=Knx5P8b82NJyHGe/ZnLgPrP15oPUMCnPQhpZG2VGGf2OXIcexi7lmJe5qbOd0GGzLC50IqAcxTgfEh9X2yQaG+GBbEXcZEOPQd+zz/j7zvIor2XrpiYYwLcBDQPh1I9nz77IEmIZvXrTnolNCGEhit93jC7/Q0U7NclmxoFh3T0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755783543; c=relaxed/simple;
-	bh=nB2t3WQDGZmyqwOWHUe4oKJKmrBX6EMje7BAzEJRWNg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RvG43+rUemF4oWYyWfA5enbAgKjPWgbt2kQc11o8XfqoBlgG2wl/UfTM7MJob4ru9d2gl2aLuKnzsG6HPtE0T60g1mGlvQ85a4aRN+plh2yw3Yl91rgctFAN5Xy7qv8SQwngCkkK3nLQRGMzUSjdGwpK6CkdHWlMZ0azxkBcXs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.106] (unknown [114.241.87.235])
-	by APP-01 (Coremail) with SMTP id qwCowABXR6tfIadoNV0QDg--.59898S2;
-	Thu, 21 Aug 2025 21:38:40 +0800 (CST)
-Message-ID: <e0d4e114-9523-4b12-bf32-22d13c7f914f@iscas.ac.cn>
-Date: Thu, 21 Aug 2025 21:38:39 +0800
+	s=arc-20240116; t=1755790027; c=relaxed/simple;
+	bh=pTn8q9gyy4U3k5WPUfs8ClUunMArOq9kWVVYSQNm6jA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sZM/9+/M7rdqwf6iYjTywH2GpqTUPZi5OjPdItQflWAGYd1CLOrDtALud1qQZyPSsxqt/AAyt1fcI4Ll6bfQvOwKwEK/o5z9aD/1gFcEeLbraP8TwYSIm25nrFy0Ie62YSfAHSIMCp7lkq9x4MLC9zGyQ19npQI9PVC6NfPacgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=j4GkwgME; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="j4GkwgME"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-45a1b05a59fso8529205e9.1
+        for <spacemit@lists.linux.dev>; Thu, 21 Aug 2025 08:27:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1755790022; x=1756394822; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2sjxBGydTfjruOh7OE8E/RbRzU+dSv4jaJNJXDHUfdU=;
+        b=j4GkwgMEPiVrgI/xv8bYdhT7Sow7rscMoYFFi/eOG83HroiOSja7DyqXb4fsx9QbKu
+         JN/udpL0xjtjyf814a9dNq6fDbAjtbAcH2pGjEimnYnuT9WoiSHgIgXwWr4AIhldS0gR
+         axONhNZxsILzkQotMQ1EQL7jPPPBnI4+HQTDBGM37fL5m4zXHezjKQgix57kSZH8oMWb
+         viOn7mFCcnM4kmuPCIjjJD0WEeljg1y62L5DeoMd3WhktPI8LuiJBoTkHgun+N0U/CPc
+         bTKX4W5cbGkritwMB4Lh9x0n1WOgcEMc3tkaSZTeJJOrPKwMzvsb9ThKRU6BUmhrlyH9
+         TE1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755790022; x=1756394822;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2sjxBGydTfjruOh7OE8E/RbRzU+dSv4jaJNJXDHUfdU=;
+        b=cPfp6IYmB+Ur1VqddPk9mZdRIKZgV/HIC72eWe1HjpbBduMi8z4XZ/NiYiEfjMOamR
+         Z74wH7hH85ZE8Hp4aZgWwBmqbwruI+YallGigC9LDcoNapJAEbf8hh3rJVNzIUb7yD4W
+         FbfSKYJ7crvhQJihiOGQ5cRa1/+9YT3DraF53Tl1k6fLasw6S09XeNnJO21eKO5H1qwI
+         vKT1D7tPb/ckeMvpQns9+K6ugh1/5l0pP3MzVMC6vAKj+Ikol+9p+Xyt7hpCdttTModS
+         K0ZASYt1e7sWqm4D5lyVDmMkqNFi84GlkGPfUAOH642VmiSzd83+zfv3SUeS/IajRR0f
+         DLIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUGqGYFXmYQTwz2sn0OX/hGhqu1gv9u+rQ7lc1Ha9A8nlIgm+6PsK97EIa68o+PSq4H0+uYcNDMZw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyEOJKVpUb873vArISWw0WDqbvZzazNksYrFSReT8jbysJma/9B
+	w7xUfiCF9jQfOA9ebJhUbqdWPoXo4H+G1R54RfUDAac888ZIi96UIWczem4CS6uf0cY=
+X-Gm-Gg: ASbGncvAZb1XByjuiDWgrNdzpa1eQ0w8Ah5yw9mZSEy4WRSE7WCZwzPB6FDj70bmtQJ
+	4vvJK47e1C8DxWYWxRzOQgxNyRNuQ78pMhOxQtxIpBhQlHPC5D7K1+p72iEEgzVq4npFWyqL09n
+	gKKxE1GzTFwTRIrVoGe/HZNdix888VTqknAkDiPuV4NZG/t/9+la2UXRGpDAstHXFvcztkr/ovy
+	b9udMC/TPZSrI/MggeUC5OoonblHP61VaPWOY5PHw1VdCzRD3+DXye/H+Ic207RB1fXK9IDbCn/
+	jOZpBlgyM4uT7bUiXZTBGJMnIqLF+Caek1OAlghXlvGqi2SMG5zIHiQeRaMINf06rMSFoF6yIZZ
+	b/I/wQ34Yy6dTCr3EB7PK1oNEZ5JqKoi4ntGo6kk+AB/oJmTlZg==
+X-Google-Smtp-Source: AGHT+IE+4ute/Nv5CZt5NNaDUwvVYtWu4YiNVI45PLItPoW2P50dq71Gb9k2LF4AVVqf2Lr512IxQQ==
+X-Received: by 2002:a05:600c:1c90:b0:45b:4282:7b60 with SMTP id 5b1f17b1804b1-45b4fcc3244mr15901095e9.34.1755790022155;
+        Thu, 21 Aug 2025 08:27:02 -0700 (PDT)
+Received: from pop-os.telenet.be ([2a02:1807:2a00:3400:f5e3:b428:f4bc:eb5f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b50dc00b6sm1538345e9.2.2025.08.21.08.27.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 08:27:01 -0700 (PDT)
+From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+To: dlan@gentoo.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr
+Cc: skhan@linuxfoundation.org,
+	linux-kernel-mentees@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Subject: [PATCH v2] riscv: dts: spacemit: add UART resets for Soc K1
+Date: Thu, 21 Aug 2025 17:26:19 +0200
+Message-ID: <20250821152619.597051-1-hendrik.hamerlinck@hammernet.be>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v6 2/5] net: spacemit: Add K1 Ethernet MAC
-To: Vadim Fedorenko <vadim.fedorenko@linux.dev>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Vivian Wang <uwu@dram.page>, Junhui Liu <junhui.liu@pigmoral.tech>,
- Simon Horman <horms@kernel.org>,
- Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20250820-net-k1-emac-v6-0-c1e28f2b8be5@iscas.ac.cn>
- <20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
- <cf0431cf-523e-488e-87ec-6b5a68699809@linux.dev>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <cf0431cf-523e-488e-87ec-6b5a68699809@linux.dev>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowABXR6tfIadoNV0QDg--.59898S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7GryfZFWfAr48ZFy8AFWUurg_yoWxtrXEkF
-	W0vwnF9w1DGw10g3WfG3ZF9w4DKr1kXr1xWrZrZws5Jw17AF98XF17Kwnaqr43WFZ2qrn7
-	Gr1jyrWYv343ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbsxYjsxI4VW3JwAYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I
-	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0
-	cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z2
-	80aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAK
-	zVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx
-	8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7MxkF
-	7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI
-	8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AK
-	xVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI
-	8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280
-	aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0x
-	ZFpf9x07jgPEfUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Hi Vadim,
+The UARTs in the SpacemiT K1 device tree are probed by the 8250_of driver,
+but without reset lines they remain non-functional.
 
-On 8/21/25 20:59, Vadim Fedorenko wrote:
+Add reset control entries so that the UARTs can operate when mapped to
+devices. UART0 is already de-asserted by the bootloader, but include its
+reset as well to avoid relying on bootloader state.
 
-> On 20/08/2025 07:47, Vivian Wang wrote:
->> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
->> that only superficially resembles some other embedded MACs. SpacemiT
->> refers to them as "EMAC", so let's just call the driver "k1_emac".
->>
->> Supports RGMII and RMII interfaces. Includes support for MAC hardware
->> statistics counters. PTP support is not implemented.
->>
->> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
->> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
->
-> Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev> 
+Tested on Orange Pi RV2 and Banana Pi BPI-F3 boards, with UART9 enabled
+and verified functional.
 
-Thank you for your review. I appreciate it.
+Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+---
+Changes in v2:
+- Improved changelog
+- Omitted current-speed property for UART0
+---
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Vivian "dramforever" Wang
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index abde8bb07c95..6c68b2e54675 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -667,6 +667,7 @@ uart0: serial@d4017000 {
+ 				clocks = <&syscon_apbc CLK_UART0>,
+ 					 <&syscon_apbc CLK_UART0_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART0>;
+ 				interrupts = <42>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -680,6 +681,7 @@ uart2: serial@d4017100 {
+ 				clocks = <&syscon_apbc CLK_UART2>,
+ 					 <&syscon_apbc CLK_UART2_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART2>;
+ 				interrupts = <44>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -693,6 +695,7 @@ uart3: serial@d4017200 {
+ 				clocks = <&syscon_apbc CLK_UART3>,
+ 					 <&syscon_apbc CLK_UART3_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART3>;
+ 				interrupts = <45>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -706,6 +709,7 @@ uart4: serial@d4017300 {
+ 				clocks = <&syscon_apbc CLK_UART4>,
+ 					 <&syscon_apbc CLK_UART4_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART4>;
+ 				interrupts = <46>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -719,6 +723,7 @@ uart5: serial@d4017400 {
+ 				clocks = <&syscon_apbc CLK_UART5>,
+ 					 <&syscon_apbc CLK_UART5_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART5>;
+ 				interrupts = <47>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -732,6 +737,7 @@ uart6: serial@d4017500 {
+ 				clocks = <&syscon_apbc CLK_UART6>,
+ 					 <&syscon_apbc CLK_UART6_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART6>;
+ 				interrupts = <48>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -745,6 +751,7 @@ uart7: serial@d4017600 {
+ 				clocks = <&syscon_apbc CLK_UART7>,
+ 					 <&syscon_apbc CLK_UART7_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART7>;
+ 				interrupts = <49>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -758,6 +765,7 @@ uart8: serial@d4017700 {
+ 				clocks = <&syscon_apbc CLK_UART8>,
+ 					 <&syscon_apbc CLK_UART8_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART8>;
+ 				interrupts = <50>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -771,6 +779,7 @@ uart9: serial@d4017800 {
+ 				clocks = <&syscon_apbc CLK_UART9>,
+ 					 <&syscon_apbc CLK_UART9_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART9>;
+ 				interrupts = <51>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+-- 
+2.43.0
 
