@@ -1,42 +1,34 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5EC31A049
-	for <spacemit@lists.linux.dev>; Thu, 21 Aug 2025 12:59:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5B32DF6F7
+	for <spacemit@lists.linux.dev>; Thu, 21 Aug 2025 13:38:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755781163; cv=none; b=jO9Bwvr+YhCpuO793SEGvo6bCDzq2N8TXvHxG2ZF7bcQPqp1gLgFD2rr1bWcDWhXK613WXy38FUHE/UZci8HTovGMCN5iCon/ftj42MNdV/48d/SWC34gpjX5C4W79IgSx32cwQE6Mr3x8jQBwL8b6sKr5xStcicccKbdTvPpfk=
+	t=1755783543; cv=none; b=M7iV4+tW7dUHePiYEh2jq9VhfLg/0xsILwqRqKQcF5SbcVOFUVPC8nUIw0V88QJK1ubWrBMGedqqU+iDxTsLjOrx9Talj/FJApTuLEkyG8KeXAdkAn+aA/6WgWiAsAoKrUalXww0IS+kgrtALzlIxtCfXsaPwiZzIsn1wgniCV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755781163; c=relaxed/simple;
-	bh=qAsjTMCZ1kp6AOBELi9Kr1jkEk28hqiatZ8QyEATZk0=;
+	s=arc-20240116; t=1755783543; c=relaxed/simple;
+	bh=nB2t3WQDGZmyqwOWHUe4oKJKmrBX6EMje7BAzEJRWNg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OrTkV29l4nDr4iDnLvDGTBy2CI9MeiNsLDpeagwuHDGdYX31RbfAUtuc4lX169vFjj1emwilIZ8Hwjx1nzu2+WPEWs5h03JyCS+aI1XtYJ8qffIT4+Ej2h1/1up1EsDUGgbHjmtwqxCXeZjaI0724i8Z7GFqXzTt8+qhtX9XR3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=UhBVjfOS; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="UhBVjfOS"
-Message-ID: <cf0431cf-523e-488e-87ec-6b5a68699809@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1755781159;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UKY3ZunKdmrFc+hk+bdF4fWlCufayc9bcqnihY9pYEs=;
-	b=UhBVjfOSjGEZhu5XwvoqYgcnKVUKoBO9XREULFXXHJkEVM/LfAlYZ1ZhON3dQhgM9cUGOu
-	gs1avn7firPJmUyZafo/NdaKEc3PlULRSom+x8hKFHXfG8cy4yekmt5aCm74tOY+zQmEmF
-	E5nLy3oRberZCxIlEoCSoEc0q377SSg=
-Date: Thu, 21 Aug 2025 13:59:12 +0100
+	 In-Reply-To:Content-Type; b=RvG43+rUemF4oWYyWfA5enbAgKjPWgbt2kQc11o8XfqoBlgG2wl/UfTM7MJob4ru9d2gl2aLuKnzsG6HPtE0T60g1mGlvQ85a4aRN+plh2yw3Yl91rgctFAN5Xy7qv8SQwngCkkK3nLQRGMzUSjdGwpK6CkdHWlMZ0azxkBcXs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.106] (unknown [114.241.87.235])
+	by APP-01 (Coremail) with SMTP id qwCowABXR6tfIadoNV0QDg--.59898S2;
+	Thu, 21 Aug 2025 21:38:40 +0800 (CST)
+Message-ID: <e0d4e114-9523-4b12-bf32-22d13c7f914f@iscas.ac.cn>
+Date: Thu, 21 Aug 2025 21:38:39 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH net-next v6 2/5] net: spacemit: Add K1 Ethernet MAC
-To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
- <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+To: Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
  "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
@@ -51,23 +43,49 @@ Cc: Vivian Wang <uwu@dram.page>, Junhui Liu <junhui.liu@pigmoral.tech>,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
 References: <20250820-net-k1-emac-v6-0-c1e28f2b8be5@iscas.ac.cn>
  <20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
+ <cf0431cf-523e-488e-87ec-6b5a68699809@linux.dev>
 Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-In-Reply-To: <20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <cf0431cf-523e-488e-87ec-6b5a68699809@linux.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qwCowABXR6tfIadoNV0QDg--.59898S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7GryfZFWfAr48ZFy8AFWUurg_yoWxtrXEkF
+	W0vwnF9w1DGw10g3WfG3ZF9w4DKr1kXr1xWrZrZws5Jw17AF98XF17Kwnaqr43WFZ2qrn7
+	Gr1jyrWYv343ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbsxYjsxI4VW3JwAYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I
+	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0
+	cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z2
+	80aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAK
+	zVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx
+	8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7MxkF
+	7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI
+	8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AK
+	xVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI
+	8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280
+	aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0x
+	ZFpf9x07jgPEfUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On 20/08/2025 07:47, Vivian Wang wrote:
-> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
-> that only superficially resembles some other embedded MACs. SpacemiT
-> refers to them as "EMAC", so let's just call the driver "k1_emac".
-> 
-> Supports RGMII and RMII interfaces. Includes support for MAC hardware
-> statistics counters. PTP support is not implemented.
-> 
-> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Hi Vadim,
 
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+On 8/21/25 20:59, Vadim Fedorenko wrote:
+
+> On 20/08/2025 07:47, Vivian Wang wrote:
+>> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
+>> that only superficially resembles some other embedded MACs. SpacemiT
+>> refers to them as "EMAC", so let's just call the driver "k1_emac".
+>>
+>> Supports RGMII and RMII interfaces. Includes support for MAC hardware
+>> statistics counters. PTP support is not implemented.
+>>
+>> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
+>> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+>
+> Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev> 
+
+Thank you for your review. I appreciate it.
+
+Vivian "dramforever" Wang
+
