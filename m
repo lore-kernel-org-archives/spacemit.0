@@ -1,66 +1,66 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026AB2749E9
-	for <spacemit@lists.linux.dev>; Fri, 22 Aug 2025 03:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8EC27780C
+	for <spacemit@lists.linux.dev>; Fri, 22 Aug 2025 03:06:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755832007; cv=none; b=ZE1HpbGgWErF1Pcwh39/9zKCR7Q+q10SZZfwBqq/0DF4R3hYkGy2c9PjjvUss2INREvzYw8TWZRslpvdYSdmjuGhr1Wk3uDOuIOOl5xhV9AvOFafdd67vuC5H7cHNhi41c/J5BErahm34g7NokSigDGj2wD/CJLmxi9v0+CVt5k=
+	t=1755832012; cv=none; b=EjjG1vichGolmvY5DN5degnZtlN5movwTVXciYV5ktGJjxC4kj7u1PYMUDeNm23n46kOrV+RMqIw4Y8mkmWK+IyIgGexpJaB7GnSSOUNitz1Qp7+f554YrYjVHVCSUeMltnjZRXJ0NxgN6wc1ZxwhmtP2cVT+N5RpdFesPyLC7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755832007; c=relaxed/simple;
-	bh=6B1EWWWNBC0BcU5DjOwniaBZ2haD4jvXMC5b4w6KDZs=;
+	s=arc-20240116; t=1755832012; c=relaxed/simple;
+	bh=ET9r67SBgRJAysqntixUlTo+ibcE6/lAnyl7Y1qAqb4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TnyyjcgZC/z6vYea49HjGZ7ClBODlEsR3eNddKTJoxPKvm10kIxbukdn35p70yIUzrNjIWradTz/96/MsNCfaK/61DKEH2+/bX2jDdOJDUsK+X1ZHtbzdYotl62qxg4EJ40k9jSY+D/XDR3FMhQ87OsVdGY/iSjUtksHnRoqhXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=SuU0FnWg; arc=none smtp.client-ip=209.85.216.49
+	 In-Reply-To:To:Cc; b=nMPMg5xfpQ3jHyZ9suF3cd+xftScAS1WlvIa9/QT144YMtWMbHuloR8x1WktbK8LO+jft8nWJSqPgd82rinjp4XP0Payjpeat6gCE6YEd/rA95TH34NfDuMDeZf0vcCTTCy1BHOKzbe/pbcKIS8QmU2FgimKbFhotj88OUPqv2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=k3wiMH7K; arc=none smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="SuU0FnWg"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-32326e202e0so1583984a91.2
-        for <spacemit@lists.linux.dev>; Thu, 21 Aug 2025 20:06:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="k3wiMH7K"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b471740e488so1341185a12.1
+        for <spacemit@lists.linux.dev>; Thu, 21 Aug 2025 20:06:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755832005; x=1756436805; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1755832010; x=1756436810; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZNSJ2mPLuZ8B3CyF3qAdwHZOD3xnp4hT+na7SYM4Trs=;
-        b=SuU0FnWgLiZK3+yiA8sR7fRJdSeJndijV1FQ9uYdsAyiubdyU2uz0WPB0xM4Vs3dtb
-         KbreufikWX+qqjTulnMLCL9A64j5ooBiiD/xn/JCN8NYWkcUBke8xPiVUmmrl9Ikfqoh
-         ETKGDf174i0fnAWqGRZ/tzEpuSloGqmpYMe98GeSsFc45sssmgPGbz95vPOyXrXsOQdv
-         vHdoFQIvkBzAEDdRdSOrkgja44gF2cSDRJ4jaSDeHKDgiE9ryClcY93lPIW5JULG3js7
-         06gDYVQLwYPjhKUoj8VMc431oodDYC1UTXtbqPld3UT6PDlymwFSWRJzMxa5Fr48MlMA
-         MqEg==
+        bh=dC7kl9A7D2BWwkfx5jwlJiGlSj0s6ZSSxNG7ocAEL44=;
+        b=k3wiMH7KoqjAUT+aTCFbM8ZuNi8psMQKzoz6g+nNS2HXPytSqnlE/Ai4N8wRP4oSrD
+         YxgsR/28pcVrjJZdQqZ2mhrd2xU9CHhSybVCvEi27PYskQvEYPrtJ4OIJ/766aQlezZu
+         GjmSR8mJTjoUw/wHU/Ai75whDvyGX8zJ5omGSf/iBq+npFynYMgxe9B+GktI9/mh7ffv
+         YI5WaaEmBmJyn+adTd6+PDUn07uxUbo68tcyeGCBEk54OmUPofABGhRzFcMys2bzrnmF
+         mEV4vfcEl3ldgB26Aqp56n4FyOJEiZT7eA2YXh74Ev4yeUolCL6T0Do1h0qboSaSt0Al
+         3/ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755832005; x=1756436805;
+        d=1e100.net; s=20230601; t=1755832010; x=1756436810;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZNSJ2mPLuZ8B3CyF3qAdwHZOD3xnp4hT+na7SYM4Trs=;
-        b=oHTi5yqQSK7GGhDntboJ9ZRcTreZezBd/tUwDBeNq697CH6eOxEvFcDdXhens24+w8
-         KFwIHszbg6yfVHPyvcWketxipatbPyVU6ET0HCqXU9guMGMHqOu9282VnP1MLd41QAH1
-         WZm4Qtd5VYoeaWQad5GFwvy2gAWdyGThl2TzZH3vNIr6Wi7X6ta+/9kcsQuTSIB3XNe0
-         WnRD37ifuZHBOlmdS1dnptdVUTvXOVGYoKwcrmUIpr96eYjCHHDWUOfyjG77ghLF8P2w
-         b3pZeuoZDIF5My5m0HrpdtjCRoL46ax37HMIEMnUxSonebNiW/52GqWXuqeKqNfJ9GCE
-         NHVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWbUbZm2cEKJSXI4z4gOr/J9N7iONKYbR5ZHwinXSbV6iqKwyNAfZYewJwFHBArMQVME+9jTzxqEg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx4C/9lbbzKxe3AA+24kgXEYN4Oy4tra2suSlMgSd+t6skYDBMX
-	/j7XJkjrLUyv42yPrWT996+3ZLiwiUj4pUeZd4JCQb8h5uaw9AxsODusaND5mogwGGE=
-X-Gm-Gg: ASbGncsoQD8PSHLl8lEwbyIa5YSeSUhVJJG2XsigwO4zHKITrQQqtHDRexkYw/ZpKKQ
-	PnPb8K0ddHb+SJ332WMgiJVhtqMOInrUNCN+fQLB6WV25qXFdtf2ueQCLPvIlbGOY4jnPm6I2Xl
-	YLtLMZfdUjKrkFTAJzc6tJfDsW5ipy+iMSAC5QtcCn33yYZTk9P0MZRs6ztPcM5ekoAd0ByK1JB
-	pmQIpeK4/foLBlzbvkhq/lHRFCk7gBHuWlx15SO8xJJrngBNbIFpv7tuqXGEFqDz/CYu5PNPeny
-	K4DyjikXkSdv4NspyR6rMxa/O4J1fKRUoazRL86tE1U0w+e3XplNtnQbDuwvUAzzWnlzxFC7Mm+
-	qwBm818be+xpcsVNyd+z23BpztO6rHzHslA==
-X-Google-Smtp-Source: AGHT+IFm4R14mG8VZTD2qtlcugXo9bV6lRrUZXdMxf/jLK5A59pmBdn675N88wWnNFsP+MW07XoLbQ==
-X-Received: by 2002:a17:90a:e703:b0:31f:6d95:8f76 with SMTP id 98e67ed59e1d1-325177456famr2245633a91.29.1755832005018;
-        Thu, 21 Aug 2025 20:06:45 -0700 (PDT)
+        bh=dC7kl9A7D2BWwkfx5jwlJiGlSj0s6ZSSxNG7ocAEL44=;
+        b=ChPLdqAi0WYkO3PHeXYyYyzV7pSRuM3Bv2DZEU/5A8tVmRObaki/uU79+Nr83YBnki
+         2Bi+xC/Oef+XEMfEux9Tpixp2978fTHur7rBwDaBfo4dSy1Pv6SaEGGcLYjMy68EDOm8
+         POckJR6Uep4cmgdECDBIyLdVYzj1yN+3rS3ATGVDw8Q7zYPP5pIFt+2H6GYH3JxzH46m
+         zZ9ZaU+/TnzFmmT3Mc7JcRVyGJJQGSST2UnRSBczfm+2jcwQ5a8utyWrcFS1soTMCew0
+         4k9gWfAl6vwhFIF4DWcWJ2GN/gM+glyVAnGz8SKJ4ytHdk5KwscPx9Euk7CtRFGRk5LI
+         sXMA==
+X-Forwarded-Encrypted: i=1; AJvYcCWnXSYzyTNOScTdqsPMia2ZRMblAFnl/ZOEqFZHzmIJ+yW0oQJLvYQ5wpPYbF2UrCHmq5kN5q5K/A==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy4YnBMvY+3uO50Du8Lbf57HLe5DezKjk6SVMtPHb6N57Zxu8n0
+	IGxRNifFNiw0bEWSxetFf7plhTM+Lr29XrZghcPg56X+qvEvdKsVXNIkNFsIAxcOWDU=
+X-Gm-Gg: ASbGncv6++U9hENfmE2T3+lS2b4Z68Hr+HjbPHcjqoNdw/MfIN+dhQcVdzWSX2bgBSJ
+	1YyM5rJAWp9FMzY8Hyh3zey9vhMtIKIK9YmK2TUcsMV3OjBXLZY58m0Ur3PoIu9GwHxpCefXBQP
+	0hx71Zl7x1cRbyuKahtons1MW80lSdsWCy8rzgdD96vu3msV2Y/FxKM1YO7xf08ikGGoZs6GqA9
+	iLdhQ1SNmCf5jjfbe8M1814QHftZ5lWpOOmH3ecoJ6wNe/rxPkP1h+nFNUA8xKK+nPeFFRA7MwI
+	8H7OE+IGXNpz8zwwguLuRhbVHZi/D6035qbG0KZI2yc3dYJQ+KiBMAVuDRkDNuWXwCBwzOlePvV
+	AyOvW6i+6/jWnXOsNxSxQHWHl5DoOmfacXA==
+X-Google-Smtp-Source: AGHT+IEAIhdT3Tfgdb8iNC0j7z0iqiuqLPLYGzXSr+7++MUa1eCRn81F36zR4QAh/yOgPvq9YcRdkQ==
+X-Received: by 2002:a05:6a21:339c:b0:220:aea6:2154 with SMTP id adf61e73a8af0-24340b016bamr2141981637.17.1755832009592;
+        Thu, 21 Aug 2025 20:06:49 -0700 (PDT)
 Received: from [127.0.1.1] ([222.71.237.178])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b47769afc1bsm2756777a12.19.2025.08.21.20.06.40
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b47769afc1bsm2756777a12.19.2025.08.21.20.06.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Aug 2025 20:06:44 -0700 (PDT)
+        Thu, 21 Aug 2025 20:06:49 -0700 (PDT)
 From: Guodong Xu <guodong@riscstar.com>
-Date: Fri, 22 Aug 2025 11:06:28 +0800
-Subject: [PATCH v5 2/8] dmaengine: mmp_pdma: Add clock support
+Date: Fri, 22 Aug 2025 11:06:29 +0800
+Subject: [PATCH v5 3/8] dmaengine: mmp_pdma: Add reset controller support
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -69,7 +69,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250822-working_dma_0701_v2-v5-2-f5c0eda734cc@riscstar.com>
+Message-Id: <20250822-working_dma_0701_v2-v5-3-f5c0eda734cc@riscstar.com>
 References: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
 In-Reply-To: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
 To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -86,49 +86,50 @@ Cc: Alex Elder <elder@riscstar.com>, Vivian Wang <wangruikang@iscas.ac.cn>,
  Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.14.2
 
-Add support for retrieving and enabling an optional clock during
-mmp_pdma_probe(). It is optional because in Marvell devices
-such as "marvell,pdma-1.0" the clocks property is not a required
+Add support to acquire and deassert an optional hardware reset controller
+during mmp_pdma_probe(). It is optional because in Marvell devices
+such as "marvell,pdma-1.0" the resets property is not a required
 property. But in SpacemiT K1 PDMA, "spacemit,k1-pdma" as the dt
-binding schema file stated, clocks is required.
+binding schema file stated, resets is required.
 
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 ---
 v5: No change.
-v4: Update the commit message, no source code change.
+v4: Updated the commit message, no source code change.
 v3: No change.
 v2: No change.
 ---
- drivers/dma/mmp_pdma.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/dma/mmp_pdma.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index a95d31103d3063a1d11177a1a37b89ac2fd213e9..4a6dbf55823722d26cc69379d22aaa88fbe19313 100644
+index 4a6dbf55823722d26cc69379d22aaa88fbe19313..fe627efeaff07436647f86ab5ec5333144a3c92d 100644
 --- a/drivers/dma/mmp_pdma.c
 +++ b/drivers/dma/mmp_pdma.c
-@@ -15,6 +15,7 @@
- #include <linux/device.h>
+@@ -16,6 +16,7 @@
  #include <linux/platform_data/mmp_dma.h>
  #include <linux/dmapool.h>
-+#include <linux/clk.h>
+ #include <linux/clk.h>
++#include <linux/reset.h>
  #include <linux/of_dma.h>
  #include <linux/of.h>
  
-@@ -1019,6 +1020,7 @@ static int mmp_pdma_probe(struct platform_device *op)
- {
+@@ -1021,6 +1022,7 @@ static int mmp_pdma_probe(struct platform_device *op)
  	struct mmp_pdma_device *pdev;
  	struct mmp_dma_platdata *pdata = dev_get_platdata(&op->dev);
-+	struct clk *clk;
+ 	struct clk *clk;
++	struct reset_control *rst;
  	int i, ret, irq = 0;
  	int dma_channels = 0, irq_num = 0;
  	const enum dma_slave_buswidth widths =
-@@ -1037,6 +1039,10 @@ static int mmp_pdma_probe(struct platform_device *op)
- 	if (IS_ERR(pdev->base))
- 		return PTR_ERR(pdev->base);
+@@ -1043,6 +1045,11 @@ static int mmp_pdma_probe(struct platform_device *op)
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
  
-+	clk = devm_clk_get_optional_enabled(pdev->dev, NULL);
-+	if (IS_ERR(clk))
-+		return PTR_ERR(clk);
++	rst = devm_reset_control_get_optional_exclusive_deasserted(pdev->dev,
++								   NULL);
++	if (IS_ERR(rst))
++		return PTR_ERR(rst);
 +
  	if (pdev->dev->of_node) {
  		/* Parse new and deprecated dma-channels properties */
