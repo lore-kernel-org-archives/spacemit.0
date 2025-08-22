@@ -1,205 +1,252 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8919C2FDC35
-	for <spacemit@lists.linux.dev>; Fri, 22 Aug 2025 13:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C28D2FE597
+	for <spacemit@lists.linux.dev>; Fri, 22 Aug 2025 13:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755868163; cv=none; b=i2SqSlHNOMy45EwzAOIYm1xY4/ciY6AyB84nvXXmJ0Wm3iQOp+51EZCapk+kMWe6/w9G1GStY5Z9ThXhzETPRyQq7ZL9s5bTYvdTtexzEbbDmjca+Ne2C9rtRDz/o2UcqG6YNTj4FDi7lOvCtH5madsqYlUSeh8F5heH0HRYdeY=
+	t=1755869254; cv=none; b=f4z+om5oQEtUmMRTUYWBxTiOnAAR9DM+v3hfY5+c4MfQEJWJkIkJaRNaZ44KrVW1Y7pJiW8WhWm51aWPYRPN23/OOcrh63dNKhxCuRHUVPUShds1WjYQks8Z4K47H/UyeWIiP0v+7i5f+SXXccU/kJWTiVqzojWUl3tYBUqIUbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755868163; c=relaxed/simple;
-	bh=O0asdK8SeOVtorPLNtX9IHFVw5PwpWz+Y/IXMS4KmCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=bopPcUvUe8Z3HQ+vQLY2rdkiyjh96RFpoPduBfjeMMmXoHSClAH0rwU4MkkoSrEX139qzJou3pKEXyxpYUPuTv8Srb2Yj/+rLOQzziVT+2Kr/Nt0ddnwyuBsVO6p4yAGOefv4c+2V997Qy7uLRyDDNOMIWN1xCzR3JER9uHmUH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=O2XOgrm8; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="O2XOgrm8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1755868160;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=a26YwWriI/cAZNSFk7MZK1EJDFmLtTh5uMUvUQRBu1c=;
-	b=O2XOgrm8cUhbjKBAjb+XSahGNMIWKJwM8IUEvTnAqwszBPk+D3irzDEPsRKEk2GsSVvjn0
-	8BVRU1mxTu5gdtNUN1aX876SqQq2Sc9KiiDPbwa37X+iNyxTB6ETsRRFLis0XXnSZSjwQB
-	ryky0b/w2FTIIx/Qa3Y/nROxq73nZbE=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-BypYS0cONgW_WnjEPUuemg-1; Fri, 22 Aug 2025 09:09:14 -0400
-X-MC-Unique: BypYS0cONgW_WnjEPUuemg-1
-X-Mimecast-MFC-AGG-ID: BypYS0cONgW_WnjEPUuemg_1755868153
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7e870623cdaso488435485a.2
-        for <spacemit@lists.linux.dev>; Fri, 22 Aug 2025 06:09:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755868153; x=1756472953;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a26YwWriI/cAZNSFk7MZK1EJDFmLtTh5uMUvUQRBu1c=;
-        b=ClUIwh9qFAHZbPkLURFZek1562tnvOoB2nFUZA8XpwiL2J5+2skmd0JmD0ga5KpueO
-         pi6NCsIj6ccD3C7Ttjvyk8NuOib41LDwjorVP6rvh6S2iMsOUk/aT31xvXYRVPIebrU5
-         ISYLwkE+BbaNveJG5BO3GWoZpIzqlQsFTELZvYm9cZdo0883LVSYxF41eN6r+KtgvMLo
-         9uqIPsl5rLSv8qPCcQK9DBFFGHAaw000wPd9xbzvF0Sut6sfc+6I8in/QCz4aUpb0iMv
-         /d046lWWTPCRedPy8xqQ2Rv7pVg679AVx7VqLGknr5fb2qTiPW2Q2KIJpG9lDyRC9tRz
-         2F2A==
-X-Forwarded-Encrypted: i=1; AJvYcCWqN2rZnQV4xH8QJ/Tq7HeaITKucbOZjZ811qRb6uo2Z1P2FjJ8hPFU1pnvx0i0gySEzwBU3qgGJQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyB31KUQTlCNwsnS518LeRGsZ3Cg6UkpMJMaKo2nrgZ69NZUbIw
-	xSNMp0K9qD4nP2GkllvP1vgBr0oIsCdNQUXfOyDvZ6vkQdpBzFzsSBGvStguamGX10lc7OEZH5q
-	dSZirstaBx0IvGZ/ur0OYfBGFbF6+qj2aDEQOcLw4eW3+m0RRd207awaITga7
-X-Gm-Gg: ASbGncuqn8bO8LHwIBBLYH+VhIDW3tn2O+dwTHf5y1zYx9ExQBsvKP4jHGwdLyCCZ8J
-	sCFbOrhcMhwXCfKIMZIbvfYWAY5MARp852hYk4J+rbgB+elvlv9UINULgeGbmRgDIkIdViSfVIB
-	PHbfB0hEY+Vn89XCKWA81is7VNpKQKXIbFudUt4CfdoJ+vTgLcOzr7TpflcRwTr+GL/giaiTaz1
-	sDn3VUAtaMmDA4npOumHzUm9C08o3kZrq8ivgYz8a8KUWePl3OKA/iJG7bfhSjz417YSDZun6u1
-	F/UxAinqf5vHon+ebyAncPlxboM6Tz1W19eXY/uJ1RElj9pnL95xXDlh3nwdVEayjalY8j0VhYH
-	3Gfr3UEtvqMZ0kiPhkNg=
-X-Received: by 2002:a05:620a:6cc2:b0:7e3:6a01:e6ba with SMTP id af79cd13be357-7ea10f538ddmr299217085a.8.1755868152084;
-        Fri, 22 Aug 2025 06:09:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEW1uvjDvOlgb0eZoGZSzJHV+ZTat1aB9dEJTqNDB/h4VuJNJ3Q109+V4G1CkIe7Ilb4zQPqA==
-X-Received: by 2002:a05:620a:6cc2:b0:7e3:6a01:e6ba with SMTP id af79cd13be357-7ea10f538ddmr299210885a.8.1755868151398;
-        Fri, 22 Aug 2025 06:09:11 -0700 (PDT)
-Received: from x1 (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e87e1c9b9dsm1332247685a.70.2025.08.22.06.09.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 06:09:10 -0700 (PDT)
-Date: Fri, 22 Aug 2025 09:09:04 -0400
-From: Brian Masney <bmasney@redhat.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Neal Gompa <neal@gompa.dev>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Palmer <daniel@thingy.jp>,
-	Romain Perier <romain.perier@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Alex Helms <alexander.helms.jy@renesas.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
-	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
-	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
-	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated
- round_rate() to determine_rate()
-Message-ID: <aKhr8NYhei59At0s@x1>
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
- <1907e1c7-2b15-4729-8497-a7e6f0526366@kernel.org>
- <aKhVVJPEPxCoKKjI@x1>
- <4d31df9e-62c9-4988-9301-2911ff7de229@kernel.org>
+	s=arc-20240116; t=1755869254; c=relaxed/simple;
+	bh=CvQW0D4khBGNDHhog9aZU9HwDtvPDlg7O4IlJEZ4bfk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a3E9PEeUacnwgw8SwnDOz80gUh5FriWe8nZvCbaha3Ol31ONXpSry6IW4yZbC/0Mcj+hUw55SZhjY5BOA+wLckzBENmcytj0Hn615n8DOwg4SRJ5sNR6lj2K+lwK+LeGAOAz05ZjBizgpDx16iRcsTTTPOU6PMMLF/jjyWHkPio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.105] (unknown [114.241.87.235])
+	by APP-03 (Coremail) with SMTP id rQCowADnQIIncKhoqZtfDg--.14333S2;
+	Fri, 22 Aug 2025 21:27:04 +0800 (CST)
+Message-ID: <50926ebd-f8c0-485b-87cd-f7552df4bcd4@iscas.ac.cn>
+Date: Fri, 22 Aug 2025 21:27:03 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <4d31df9e-62c9-4988-9301-2911ff7de229@kernel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: QtMDsJfRUSHzTzr2pk38QFp5fYLt7GQ2Hm8wJkiEO98_1755868153
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v6 2/5] net: spacemit: Add K1 Ethernet MAC
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Vadim Fedorenko
+ <vadim.fedorenko@linux.dev>, Junhui Liu <junhui.liu@pigmoral.tech>,
+ Simon Horman <horms@kernel.org>,
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Vivian Wang <uwu@dram.page>
+References: <20250820-net-k1-emac-v6-0-c1e28f2b8be5@iscas.ac.cn>
+ <20250820-net-k1-emac-v6-2-c1e28f2b8be5@iscas.ac.cn>
+ <20250821161420.7c9804f7@kernel.org>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20250821161420.7c9804f7@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:rQCowADnQIIncKhoqZtfDg--.14333S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3JFy3XFyxKFyDAr15urW3ZFb_yoW7ArW8pF
+	W8Wa1DAF48Xrn7Cr47Xr4UAFnFvr1xXw15u3WYyaya9F9IkrySgryrKrWak34rCr909r1F
+	vr4jv343WFn5KrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvqb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
+	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
+	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
+	1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
+	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
+	wI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
+	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
+	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
+	ZFpf9x07bIBTOUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Fri, Aug 22, 2025 at 02:23:50PM +0200, Krzysztof Kozlowski wrote:
-> On 22/08/2025 13:32, Brian Masney wrote:
-> > 7 of the 114 patches in this series needs a v2 with a minor fix. I see
-> > several paths forward to merging this. It's ultimately up to Stephen how
-> > he wants to proceed.
-> > 
-> > - I send Stephen a PULL request with all of these patches with the minor
-> >   cleanups to the 7 patches. Depending on the timing, Stephen can merge
-> >   the other work first, and I deal with cleaning up the merge conflicts.
-> >   Or he can if he prefers to instead.
-> > 
-> > - Stephen applies everyone else's work first to his tree, and then the
-> >   good 107 patches in this series. He skips anything that doesn't apply
-> >   due to other people's work and I follow up with a smaller series.
-> 
-> Both cause cross tree merge conflicts. Anyway, please document clearly
-> the dependencies between patches.
+Hi Jakub,
 
-This series only touches drivers/clk, so it shouldn't cause any issues
-with other subsystems, unless there's a topic branch somewhere, or I'm
-missing something?
+Thank you for the comments.
 
-There are some drivers under drivers/clk/ where there is an entry in the
-MAINTAINERS file that's not Stephen, although it wasn't clear to me if
-all of those people will send PULL requests to Stephen. I described on
-the cover how how the series was broken up.
+On 8/22/25 07:14, Jakub Kicinski wrote:
+> On Wed, 20 Aug 2025 14:47:51 +0800 Vivian Wang wrote:
+>> +static void emac_tx_mem_map(struct emac_priv *priv, struct sk_buff *skb)
+>> +{
+>> +	struct emac_desc_ring *tx_ring = &priv->tx_ring;
+>> +	struct emac_desc tx_desc, *tx_desc_addr;
+>> +	struct device *dev = &priv->pdev->dev;
+>> +	struct emac_tx_desc_buffer *tx_buf;
+>> +	u32 head, old_head, frag_num, f;
+>> +	bool buf_idx;
+>> +
+>> +	frag_num = skb_shinfo(skb)->nr_frags;
+>> +	head = tx_ring->head;
+>> +	old_head = head;
+>> +
+>> +	for (f = 0; f < frag_num + 1; f++) {
+>> +		buf_idx = f % 2;
+>> +
+>> +		/*
+>> +		 * If using buffer 1, initialize a new desc. Otherwise, use
+>> +		 * buffer 2 of previous fragment's desc.
+>> +		 */
+>> +		if (!buf_idx) {
+>> +			tx_buf = &tx_ring->tx_desc_buf[head];
+>> +			tx_desc_addr =
+>> +				&((struct emac_desc *)tx_ring->desc_addr)[head];
+>> +			memset(&tx_desc, 0, sizeof(tx_desc));
+>> +
+>> +			/*
+>> +			 * Give ownership for all but first desc initially. For
+>> +			 * first desc, give at the end so DMA cannot start
+>> +			 * reading uninitialized descs.
+>> +			 */
+>> +			if (head != old_head)
+>> +				tx_desc.desc0 |= TX_DESC_0_OWN;
+>> +
+>> +			if (++head == tx_ring->total_cnt) {
+>> +				/* Just used last desc in ring */
+>> +				tx_desc.desc1 |= TX_DESC_1_END_RING;
+>> +				head = 0;
+>> +			}
+>> +		}
+>> +
+>> +		if (emac_tx_map_frag(dev, &tx_desc, tx_buf, skb, f)) {
+>> +			netdev_err(priv->ndev, "Map TX frag %d failed", f);
+>> +			goto dma_map_err;
+>> +		}
+>> +
+>> +		if (f == 0)
+>> +			tx_desc.desc1 |= TX_DESC_1_FIRST_SEGMENT;
+>> +
+>> +		if (f == frag_num) {
+>> +			tx_desc.desc1 |= TX_DESC_1_LAST_SEGMENT;
+>> +			tx_buf->skb = skb;
+>> +			if (emac_tx_should_interrupt(priv, frag_num + 1))
+>> +				tx_desc.desc1 |=
+>> +					TX_DESC_1_INTERRUPT_ON_COMPLETION;
+>> +		}
+>> +
+>> +		*tx_desc_addr = tx_desc;
+>> +	}
+>> +
+>> +	/* All descriptors are ready, give ownership for first desc */
+>> +	tx_desc_addr = &((struct emac_desc *)tx_ring->desc_addr)[old_head];
+>> +	dma_wmb();
+>> +	WRITE_ONCE(tx_desc_addr->desc0, tx_desc_addr->desc0 | TX_DESC_0_OWN);
+>> +
+>> +	emac_dma_start_transmit(priv);
+>> +
+>> +	tx_ring->head = head;
+>> +
+>> +	return;
+>> +
+>> +dma_map_err:
+>> +	dev_kfree_skb_any(skb);
+> You free the skb here.. 
+>
+>> +	priv->ndev->stats.tx_dropped++;
+>> +}
+>> +
+>> +static netdev_tx_t emac_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+>> +{
+>> +	struct emac_priv *priv = netdev_priv(ndev);
+>> +	int nfrags = skb_shinfo(skb)->nr_frags;
+>> +	struct device *dev = &priv->pdev->dev;
+>> +
+>> +	if (unlikely(emac_tx_avail(priv) < nfrags + 1)) {
+>> +		if (!netif_queue_stopped(ndev)) {
+>> +			netif_stop_queue(ndev);
+>> +			dev_err_ratelimited(dev, "TX ring full, stop TX queue\n");
+>> +		}
+>> +		return NETDEV_TX_BUSY;
+>> +	}
+>> +
+>> +	emac_tx_mem_map(priv, skb);
+>> +
+>> +	ndev->stats.tx_packets++;
+>> +	ndev->stats.tx_bytes += skb->len;
+> .. and then you use skb here.
+>
+>> +	/* Make sure there is space in the ring for the next TX. */
+>> +	if (unlikely(emac_tx_avail(priv) <= MAX_SKB_FRAGS + 2))
+>> +		netif_stop_queue(ndev);
+>> +
+>> +	return NETDEV_TX_OK;
+>> +}
 
-  - Patches 4-70 are for drivers where there is no clk submaintainer
-  - Patches 71-110 are for drivers where this is an entry in MAINTAINERS
-    (for drivers/clk)
+Thanks for the catch. I'll fix the error handling here in the next version.
 
-For the clk subdirectories that had say more than 3 patches, I sent
-those off as separate patch series. The ones in this series have an
-entry in MAINTAINERS only have a few patches for each maintainer.
+>> +static void emac_get_ethtool_stats(struct net_device *dev,
+>> +				   struct ethtool_stats *stats, u64 *data)
+>> +{
+>> +	struct emac_priv *priv = netdev_priv(dev);
+>> +	u64 *rx_stats = (u64 *)&priv->rx_stats;
+>> +	int i;
+>> +
+>> +	scoped_guard(spinlock_irqsave, &priv->stats_lock) {
+> Why is this spin lock taken in irqsave mode?
+> Please convert the code not to use scoped_guard()
+> There's not a single flow control (return) in any of them.
+> It's just hiding the information that you're unnecessarily masking irqs.
+> See
+> https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#using-device-managed-and-cleanup-h-constructs
 
-As for patch dependencies, patches 111 (clk/divider) and
-114 (clk/fixed-factor) should go in last. It doesn't matter the order
-everything else goes in.
+I'll fix these in the next version.
 
-Brian
+>> +		emac_stats_update(priv);
+>> +
+>> +		for (i = 0; i < ARRAY_SIZE(emac_ethtool_rx_stats); i++)
+>> +			data[i] = rx_stats[emac_ethtool_rx_stats[i].offset];
+>> +	}
+>> +static void emac_tx_timeout_task(struct work_struct *work)
+>> +{
+>> +	struct net_device *ndev;
+>> +	struct emac_priv *priv;
+>> +
+>> +	priv = container_of(work, struct emac_priv, tx_timeout_task);
+>> +	ndev = priv->ndev;
+> I don't see this work ever being canceled.
+> What prevents ndev from being freed before it gets to run?
+Oops. I'll fix the handling of this timer in the next version.
+>> +/* Called when net interface is brought up. */
+>> +static int emac_open(struct net_device *ndev)
+>> +{
+>> +	struct emac_priv *priv = netdev_priv(ndev);
+>> +	struct device *dev = &priv->pdev->dev;
+>> +	int ret;
+>> +
+>> +	ret = emac_alloc_tx_resources(priv);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error when setting up the Tx resources\n");
+>> +		goto emac_alloc_tx_resource_fail;
+>> +	}
+>> +
+>> +	ret = emac_alloc_rx_resources(priv);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error when setting up the Rx resources\n");
+>> +		goto emac_alloc_rx_resource_fail;
+>> +	}
+>> +
+>> +	ret = emac_up(priv);
+>> +	if (ret) {
+>> +		dev_err(dev, "Error when bringing interface up\n");
+>> +		goto emac_up_fail;
+>> +	}
+>> +	return 0;
+>> +
+>> +emac_up_fail:
+> please name the jump labels after the destination not the source.
+> Please fix everywhere in the driver.
+> This is covered in the kernel coding style docs.
+>
+I'll fix in next version.
+
+Thanks,
+Vivian "dramforever" Wang
 
