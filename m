@@ -1,48 +1,41 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A7324061F;
-	Sun, 24 Aug 2025 07:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD8925B1D8
+	for <spacemit@lists.linux.dev>; Sun, 24 Aug 2025 08:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756021024; cv=none; b=FSkVYChlBuDgwd02T0pdiNxMWTG2m/r0YDtgT3elOi0rSvW3v+QJh1IHos7dmnwI0iifKK2OiyGNXKvr6ZYYFKXt4Iv5uXwdIb7W5UUFEB2WRBfUiR+tp51/M7fceu7POCxGvTSK/IkGGUykmLYqXpFeoVa+OGqQ4+FNjmbgtf0=
+	t=1756024934; cv=none; b=KMFuZs7Sgb2rWYUOUFGOFKXmk2OsJIlPeWNl981CLZeGY6aDAVECPbjliTLY2jOnYmAPB5u86+9prTme9MFfTD8Jd7uceVTfgV0uOx4o4jU46XxWj0kOd5dIQ92gniuRVky2VcEHsVAHK93Cr0Fi60UqBk9czfAyDlReAphPuQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756021024; c=relaxed/simple;
-	bh=nbh1fZpe36WdEto5iFgq2/Un1zMvq/DRH0ahJK8sLFU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iEjV5K3DhMldksdriX//x/wozwhPyJxrjqA5wgNQi1R4FD1cYaTnWprR9+OgcRvbHQX2AYNeOzHIuWWVL3souIAfLxLTosdnlFC71cNx1JIocFCNoZGWdOTBlZp+f/YJi0PVPM8sfteKkG0Bg5+6DHGIX7ndDHiP7G18pl9oE6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from ofsar (unknown [180.158.240.122])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id E1311340DAF;
-	Sun, 24 Aug 2025 07:36:57 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Cc: Yixun Lan <dlan@gentoo.org>,
-	skhan@linuxfoundation.org,
-	linux-kernel-mentees@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] riscv: dts: spacemit: add UART resets for Soc K1
-Date: Sun, 24 Aug 2025 15:36:42 +0800
-Message-ID: <175602095097.196581.656734670747058634.b4-ty@gentoo.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250821152619.597051-1-hendrik.hamerlinck@hammernet.be>
-References: <20250821152619.597051-1-hendrik.hamerlinck@hammernet.be>
+	s=arc-20240116; t=1756024934; c=relaxed/simple;
+	bh=v/t1aI3aNag38Iw54UrTz56l99+UEE1QCM7Cs9uZPv4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=IQuAuRppQKMseTYfZ4LTYd/yG75hOuZS7DBekQmYD74hVn0WI/KLEbvOQoL+84dVI+2Eja+FFODGY8w9YbcsBVaj2ZHzTRVLysg/Pi+n5HAbtxx1PQGzprBx3yR2Sk72EctdNvQiyHk7oglP1XzS5UUDr8c/TrWpJJaU7UbH0Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=GKbwYKEp; arc=none smtp.client-ip=54.243.244.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="GKbwYKEp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1756024831;
+	bh=uIeFRp7srlfzTl3qg/h25R18H1T9HniV32V3H37+zLo=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=GKbwYKEpik6QLJbcHuSWJhkX1LzKHnBobBPBQFIfpjiwLqMjUfFbcqMR/454lbGj5
+	 j3SCkajM4TPrpi91c97NsquZxLSjorr2/MA3LljLTt9DfTQ+LS7Hk1eC5oqHUPmYIE
+	 q0iPc3HRl7Tdsnt/++RAIE+VWVvAtYNq02nr2fOI=
+X-QQ-mid: zesmtpip4t1756024829ta2e03abb
+X-QQ-Originating-IP: R+FEK3RJ0uU9/B5/5AD3L4JnXkWhDGlpkAywfX6XE6s=
+Received: from = ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sun, 24 Aug 2025 16:40:25 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 17996591963032369533
+EX-QQ-RecipientCnt: 15
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Sun, 24 Aug 2025 16:40:00 +0800
+Subject: [PATCH RESEND v5 1/2] dt-bindings: clock: spacemit:
+ CLK_SSPA_I2S_BCLK for SSPA
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -50,25 +43,74 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250824-k1-clk-i2s-v5-1-217b6b7cea06@linux.spacemit.com>
+References: <20250824-k1-clk-i2s-v5-0-217b6b7cea06@linux.spacemit.com>
+In-Reply-To: <20250824-k1-clk-i2s-v5-0-217b6b7cea06@linux.spacemit.com>
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>, 
+ Inochi Amaoto <inochiama@outlook.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1756024814; l=987;
+ i=troy.mitchell@linux.spacemit.com; s=20250712; h=from:subject:message-id;
+ bh=v/t1aI3aNag38Iw54UrTz56l99+UEE1QCM7Cs9uZPv4=;
+ b=iONwEIHlXVoixiSORjJxTfn/gRA3ySjVcx44485CZagW2P+78goqG1fL/Z+oleVAPbN/wYGb2
+ RQryHUz9mJjBnXwhtDnWU94+xGj896RrrhljBPr/wCbDoUstkk/2IWX
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=zhRP1xE0bftrurqSWI+SzcSdJGIZ0BTTY9Id0ESzqlI=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: MWzGDmnScki3k3C5VIVHaDBd8z4Roju4+0neCTSnYOxzh9F3UIJVkRW7
+	vbNS57Rn+P6EcKYl1wMCksANQzKMZtZ7Ogsjr3wfaS2Wp/UH+9xJtc51Y7O/g5Kt5r7bNpf
+	kG04qQiJdNBRzvXTLTndAIXxALEb7mcO1/2eL0M79UCuQu0rDRUbbkLm8EA1Z1WzSKFSwlf
+	j9TDqZViB3pEerwDDIVNRUhgtKl6UpSe8X0cbI0c7Xb1oQgBeEql5XxJzVf8UXg0jkShZMO
+	Cq+bnC4BeCfwxux/FehkKkC9etkHyrt9Ay4QjhdYQ0JhriCK060bbzGb2E0GjOnFeo1fYFy
+	069xZ82vns/DfyroYIZv2wtVFIktA9lxvLXJgWbTODwJkfdv6SqqVOIAq0bPVY7M8Ej0btQ
+	mhLz7A7xVwfOH+ldGk7cxiIeuLs5ppefKzYT+IFbc4sl4kcUJnZ9NPa8zRLhgFmxAwQqObH
+	jgwTUy7b+2moPpLhM3RhAmyj/lUtt9YyHOwnIKE+tlOhp6Xh2uX83VfyNBtpvRE4VUU+WL0
+	W2rm/USXdStM32e5pu5poXVNmVfqIwfK2hdffPTaoJB8e/Q5fRw1xQmQIhLnbkyFt3JkDO8
+	qivqhVKgunAj5FG8I/FuzoSs9fUz8HTmVjlZM2IhNjv0w/rT7cIyM4U/njgeAP0DIk6iWce
+	IMr/5sz79vfm5AiHh2nZdRpeJklGRxULJyWwIBQC1t3iZzlmyt8JCLBAQDOISHsOtjsiB4D
+	3jdTvmA63mLbDDyHyZPhCpSzs7scFWCxEcBKPkv8EtJFc9VZtdhvyNwQeQ3offQCnEFdYAp
+	sivDEIHgmgYXc+qE0y5TBQXL4tR7tQhX+dNN97bFvVPVRgekpnxrW3UKA2ps4MQKonXg8YN
+	A2WfOm6k2XZUsH7F8lllU2QoI5C9uXkhV3uemraTVX8msZsYADSjSWT4uDunA6RDFMSCvnX
+	XHZxiwV5EfxAcTopjhp3eG3t82WSU+UVzQEChY6Y+LJ6RngOf29PINzhIm+dGdPSm1qYWYL
+	zLVmpD6qNzJmxPygSy+C2HREFiQ4nXTPP9tGI8MlJxmSIepxMetqJUcFIh3/wGuj594zYsW
+	o8DP69ICqdhPrg5TgIHPAU=
+X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
+X-QQ-RECHKSPAM: 0
 
+In order to use the virtual clock SSPAx_I2S_BCLK in the device tree and
+register it in the driver, this patch introduces the macro definition.
 
-On Thu, 21 Aug 2025 17:26:19 +0200, Hendrik Hamerlinck wrote:
-> The UARTs in the SpacemiT K1 device tree are probed by the 8250_of driver,
-> but without reset lines they remain non-functional.
-> 
-> Add reset control entries so that the UARTs can operate when mapped to
-> devices. UART0 is already de-asserted by the bootloader, but include its
-> reset as well to avoid relying on bootloader state.
-> 
-> [...]
+Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+ include/dt-bindings/clock/spacemit,k1-syscon.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Applied, thanks!
+diff --git a/include/dt-bindings/clock/spacemit,k1-syscon.h b/include/dt-bindings/clock/spacemit,k1-syscon.h
+index 2714c3fe66cd5b49e12c8b20689f5b01da36b774..505205453d7f19ad478b3b741d83f4498fcb8c0d 100644
+--- a/include/dt-bindings/clock/spacemit,k1-syscon.h
++++ b/include/dt-bindings/clock/spacemit,k1-syscon.h
+@@ -182,6 +182,8 @@
+ #define CLK_SSPA1_BUS		97
+ #define CLK_TSEN_BUS		98
+ #define CLK_IPC_AP2AUD_BUS	99
++#define CLK_SSPA0_I2S_BCLK	100
++#define CLK_SSPA1_I2S_BCLK	101
+ 
+ /* APBC resets */
+ #define RESET_UART0		0
 
-[1/1] riscv: dts: spacemit: add UART resets for Soc K1
-      https://github.com/spacemit-com/linux/commit/eba84c94f9597a82f143997bfacc75e5b27a37de
-
-Best regards,
 -- 
-Yixun Lan
+2.50.1
 
