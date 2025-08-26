@@ -1,183 +1,108 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDAC1BC3F
-	for <spacemit@lists.linux.dev>; Tue, 26 Aug 2025 08:55:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5938B350841
+	for <spacemit@lists.linux.dev>; Tue, 26 Aug 2025 13:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756198510; cv=none; b=vCmVLvwWqXynkyH4PaS+j4zCl6zh/rYxdihZx/iML9V9dy/0S3TjeSvA1FimYoiiZNQzfFbYVZrvgr6yLgCyBifpzejErdvgGWuI5WX9WL3x9jW/JnpipyIuDvSD8TEBjOKqCzxFJKXJk3El8D3djyWjlkfYglMIV1FpxVl/whY=
+	t=1756216012; cv=none; b=mHWnaW8tDzOVZChLLq13eSwMLRos0OVT5vdr8H9J4LTQdZvRazHem3SR7D/YYDhg9c59r4YbDSQttfnK7jGsG9Lln+6Y7fRptQk4m46QTQkeryVf8or0cFRaJBjJ8NoYXsi/iwvdPXBWbfUqi91v4NM4gt6bRZLvsT9a3EuckzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756198510; c=relaxed/simple;
-	bh=d+h2PRJM2l08TaXnGzcsmwZ3+8ua03+lAD5/yxQMu+4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dyBxuHnjrMwoOgE4wG2i9NOpeGxM6k9dGjABZxWBeHAmczwIJpFTdqSICE7jfAZpzIUdMOZRQcPA6dqaPELoon8SNRontB5f0jPl5jrPN0ez+boXs9GfbTNLh8eJXyKoj4WNzAWTB1VVwwPavvr9ZBMP5sSJvyCq8aaTPan07E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1uqpRq-0003j9-Qa; Tue, 26 Aug 2025 10:54:34 +0200
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1uqpRn-002Cb2-1w;
-	Tue, 26 Aug 2025 10:54:31 +0200
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1uqpRn-0005k0-1e;
-	Tue, 26 Aug 2025 10:54:31 +0200
-Message-ID: <eb127fd167cfbd885099a7c4c962eb1135a5a8a0.camel@pengutronix.de>
-Subject: Re: [PATCH net-next v7 2/5] net: spacemit: Add K1 Ethernet MAC
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
- <andrew+netdev@lunn.ch>,  Jakub Kicinski <kuba@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Paul Walmsley <paul.walmsley@sifive.com>, Palmer
- Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Alexandre
- Ghiti <alex@ghiti.fr>
-Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko
- <vadim.fedorenko@linux.dev>,  Junhui Liu <junhui.liu@pigmoral.tech>, Simon
- Horman <horms@kernel.org>, Maxime Chevallier
- <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Date: Tue, 26 Aug 2025 10:54:31 +0200
-In-Reply-To: <20250826-net-k1-emac-v7-2-5bc158d086ae@iscas.ac.cn>
-References: <20250826-net-k1-emac-v7-0-5bc158d086ae@iscas.ac.cn>
-	 <20250826-net-k1-emac-v7-2-5bc158d086ae@iscas.ac.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	s=arc-20240116; t=1756216012; c=relaxed/simple;
+	bh=jJUBEbotMJc4/7tNagC7dFAxP/nGnFXGjRAa45Uyr30=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PX+Tw3icoh0Fe3PJbgLZneynuWc9S7B/Yl0SQPimzlgedXXp+NsggcsMmAF8axlfQ3kix0ry8NrZnb0OMLl5VHJiw5YrOGwS0rNptq3q5a6tpsXEd+dAyZ84NV0JRPJdeGEobcPGmI7FUE2m05CR0u3vdwAa4Mu9jPnks7GyfxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=wobADlOt; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="wobADlOt"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45a1b00797dso45766915e9.0
+        for <spacemit@lists.linux.dev>; Tue, 26 Aug 2025 06:46:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1756216009; x=1756820809; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0bgIZihST00M2CtyLVGqxcGCSa4PCOhuFDLrOFCRzds=;
+        b=wobADlOtNH/rUayyvpq0RMs+xnd5qa4xLdapD6irqENesNm4Gj1QTAnPHO/qkaiEBr
+         5q+MxWgj1aptQOTzKej+SKtUl/dopuMyAU1PLxtS+i+zOlQ8bUohgATyaRsBQyvq/YqU
+         jLj5pMn2rtCzKsCTztjsbmFJekGAweL4kL0UbWAHBRIqVi+LDFemuCBUiEVpf57p8WX+
+         6u1u/7AGHcwqDeuWM8XxBauxtlpYMeFN0RPDdLafAceojo8Ddm505icEQkK8qbNeCb/M
+         e5WrOLRuBlZJXjRk+66hL65Ct3mgp/0TheRF/OhDuvw6cm/vSOLYvqkKeqzeC3nfGTeL
+         Br+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756216009; x=1756820809;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0bgIZihST00M2CtyLVGqxcGCSa4PCOhuFDLrOFCRzds=;
+        b=SFxoh3p/6nA4+9yVf16Ao39EDwXt6prIi8/BxEocs7xzTvENeJFT8/tV3ukdnvL6MD
+         onRMaRnkZoKcEip1fBH3Zqp9cQIs5FFAYKB4oCoSX3QsDS8OY+dCORPUHlD7ywAYgOaE
+         xTzdHTAoPrX6ES9uELJ5FEuNoybOQAsaWOUl88FgyTOmCexkLbZAg+4sMDIkVtQIaoUt
+         a0y2o04X4U8DdfnHIphnYVDXrlY9O+kNi0X8Q1iIS4CnHekvrmeBxLVUUpXyBumVqOQs
+         BAW+zpcNh51i/Yz//w9+bfB8/pggTcFVg0mFzT++eZC08W+hwp7mYPRCzOPLu7/3jsT5
+         wnQA==
+X-Forwarded-Encrypted: i=1; AJvYcCURyTzyOaDOC1JON9ZOz5nF95UZf+Q5r/OxBjQeSeCg0QGPBqgK8HsgyV/zje6MoLYK3/qydl8B1g==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy0XnVXgBaRQzyBNv/16vrjdVZjuRnW+mydtASbpuJaNbmdUz4O
+	XF6AE4XOOtKPch3fNpI5yD3T83ncAtKJUMySG16friG1ojQT7mCqGZxhlv5yrlZ+hET68WwoRm8
+	WzZGR
+X-Gm-Gg: ASbGncur+vXAbwDo1TtTeXnWZrpbZXiQKOXJ49C795roHiNTK/tRxsCBtc02jdJdwrI
+	YVtTTlmOpS2n3nJdRHqR2NGWzF7sdtM2ikrK5EYsXqP15sNgCtW5uSoe62EWgCez/h4dfgnWtyL
+	g2sFvCvRDoAWH0FnAngt7yJG57rncNGhm5CelE7jYnMl9V259vQKLwdK5jOpIKnYXVdeVaxH5f6
+	8XqjfDzsx/QEI1UJMhJOlZefrWV1WN11PnBAEt92ytxo9kZZyaZzGUkbwpOHxqOF1Vv/QUAGyeT
+	XrEwmb//fccSgZ8l7QJ+7oGjDzDFXs4vnfHW3nSJCtIxtdCikE2XxFbACSjuRxVthtFLPCbVBQ/
+	1Seg/mZiDrYREdUTzgiwnoYgh
+X-Google-Smtp-Source: AGHT+IH/vtben+jS8p+rxXWOqr702i8ga9ZchZdA6ANpXGCersQKl3QS+kocMs00UNNWRezs+Fzb3w==
+X-Received: by 2002:a05:600c:190e:b0:459:e3f8:9308 with SMTP id 5b1f17b1804b1-45b517ad4bbmr141075015e9.11.1756216008734;
+        Tue, 26 Aug 2025 06:46:48 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:fed4:79fc:9440:6629])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c7117d5b10sm16231162f8f.47.2025.08.26.06.46.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Aug 2025 06:46:48 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	linux-gpio@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH] dt-bindings: gpio: Minor whitespace cleanup in example
+Date: Tue, 26 Aug 2025 15:46:46 +0200
+Message-ID: <175621600512.33327.13991412012918423626.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250821083213.46642-2-krzysztof.kozlowski@linaro.org>
+References: <20250821083213.46642-2-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: spacemit@lists.linux.dev
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Di, 2025-08-26 at 14:23 +0800, Vivian Wang wrote:
-> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
-> that only superficially resembles some other embedded MACs. SpacemiT
-> refers to them as "EMAC", so let's just call the driver "k1_emac".
->=20
-> Supports RGMII and RMII interfaces. Includes support for MAC hardware
-> statistics counters. PTP support is not implemented.
->=20
-> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-> Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-> Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-> ---
->  drivers/net/ethernet/Kconfig            |    1 +
->  drivers/net/ethernet/Makefile           |    1 +
->  drivers/net/ethernet/spacemit/Kconfig   |   29 +
->  drivers/net/ethernet/spacemit/Makefile  |    6 +
->  drivers/net/ethernet/spacemit/k1_emac.c | 2193 +++++++++++++++++++++++++=
-++++++
->  drivers/net/ethernet/spacemit/k1_emac.h |  426 ++++++
->  6 files changed, 2656 insertions(+)
->=20
-[...]
-> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethern=
-et/spacemit/k1_emac.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..9e558d5893cfbbda0baa7ad21=
-a7209dadda9487e
-> --- /dev/null
-> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
-> @@ -0,0 +1,2193 @@
-[...]
-> +static int emac_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev =3D &pdev->dev;
-> +	struct reset_control *reset;
-> +	struct net_device *ndev;
-> +	struct emac_priv *priv;
-> +	int ret;
-> +
-> +	ndev =3D devm_alloc_etherdev(dev, sizeof(struct emac_priv));
-> +	if (!ndev)
-> +		return -ENOMEM;
-> +
-> +	ndev->hw_features =3D NETIF_F_SG;
-> +	ndev->features |=3D ndev->hw_features;
-> +
-> +	ndev->max_mtu =3D EMAC_RX_BUF_4K - (ETH_HLEN + ETH_FCS_LEN);
-> +
-> +	priv =3D netdev_priv(ndev);
-> +	priv->ndev =3D ndev;
-> +	priv->pdev =3D pdev;
-> +	platform_set_drvdata(pdev, priv);
-> +
-> +	ret =3D emac_config_dt(pdev, priv);
-> +	if (ret < 0) {
-> +		dev_err_probe(dev, ret, "Configuration failed\n");
-> +		goto err;
-
-I'd just
-		return dev_err_probe(...);
-here.
-
-> +	}
-> +
-> +	ndev->watchdog_timeo =3D 5 * HZ;
-> +	ndev->base_addr =3D (unsigned long)priv->iobase;
-> +	ndev->irq =3D priv->irq;
-> +
-> +	ndev->ethtool_ops =3D &emac_ethtool_ops;
-> +	ndev->netdev_ops =3D &emac_netdev_ops;
-> +
-> +	devm_pm_runtime_enable(&pdev->dev);
-> +
-> +	priv->bus_clk =3D devm_clk_get_enabled(&pdev->dev, NULL);
-> +	if (IS_ERR(priv->bus_clk)) {
-> +		ret =3D dev_err_probe(dev, PTR_ERR(priv->bus_clk),
-> +				    "Failed to get clock\n");
-> +		goto err;
-
-Same here.
-
-> +	}
-> +
-> +	reset =3D devm_reset_control_get_optional_exclusive_deasserted(&pdev->d=
-ev,
-> +								     NULL);
-> +	if (IS_ERR(reset)) {
-> +		ret =3D dev_err_probe(dev, PTR_ERR(reset),
-> +				    "Failed to get reset\n");
-> +		goto err;
-
-And here.
-
-> +	}
-> +
-> +	emac_sw_init(priv);
-> +
-> +	if (of_phy_is_fixed_link(dev->of_node)) {
-> +		ret =3D of_phy_register_fixed_link(dev->of_node);
-> +		if (ret) {
-> +			dev_err_probe(dev, ret,
-> +				      "Failed to register fixed-link");
-> +			goto err_timer_delete;
-
-If you can move this section before emac_sw_init(), this could also
-just return.
-
-> +		}
-
-Then here a function calling of_phy_deregister_fixed_link() could be
-registered with devm_add_action_or_reset(), to avoid duplicated cleanup
-in the error path and in emac_remove().
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
 
-regards
-Philipp
+On Thu, 21 Aug 2025 10:32:14 +0200, Krzysztof Kozlowski wrote:
+> The DTS code coding style expects exactly one space around '='
+> character.
+> 
+> 
+
+Applied, thanks!
+
+[1/1] dt-bindings: gpio: Minor whitespace cleanup in example
+      https://git.kernel.org/brgl/linux/c/604642fc148b5d98fbe5f55e4c2688f9ee0b5868
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
