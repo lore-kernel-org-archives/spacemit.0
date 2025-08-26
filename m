@@ -1,142 +1,183 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91DF28CF77
-	for <spacemit@lists.linux.dev>; Tue, 26 Aug 2025 06:24:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDAC1BC3F
+	for <spacemit@lists.linux.dev>; Tue, 26 Aug 2025 08:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756189493; cv=none; b=rJMIPqAx4ys4RGGb0PnGVKr1rUcpPtka8yUG8OKvZPlI01Yemwfoe8WjP+4FANEW5SwP5IFJ5BZbAfP+ss61cCri1W943ptDY5OgKMyV+ktSJINKC+XOdkp5rXFacbSOWwX7ouzmwy+V1grqzQYEwioEHMdS0DQmjJ7n+olgKWw=
+	t=1756198510; cv=none; b=vCmVLvwWqXynkyH4PaS+j4zCl6zh/rYxdihZx/iML9V9dy/0S3TjeSvA1FimYoiiZNQzfFbYVZrvgr6yLgCyBifpzejErdvgGWuI5WX9WL3x9jW/JnpipyIuDvSD8TEBjOKqCzxFJKXJk3El8D3djyWjlkfYglMIV1FpxVl/whY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756189493; c=relaxed/simple;
-	bh=Qkmj3/jPBhieoaSBMeXMM5nRP7Nczqi+TXkMq1kBi4g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ffZ1ewH6l2JujZWlTFNzIGGF4MDkJ8f9RDyBQSVGfPg4UqvKfYzSNAqoW8ieJXwsiN64JQyvRWSeC2QxvRNfvp9enK6a/6N+exGcLtiI3GiJ5EZqPtb3jUAxFtFuleA9hcUCqOKDiPWDNTbm/GfKG+ACgqG/TwBEDBTL3KHmzmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [114.241.87.235])
-	by APP-03 (Coremail) with SMTP id rQCowAAnu3z2Uq1oqXNPDw--.2143S6;
-	Tue, 26 Aug 2025 14:23:54 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Tue, 26 Aug 2025 14:23:49 +0800
-Subject: [PATCH net-next v7 4/5] riscv: dts: spacemit: Add Ethernet support
- for BPI-F3
+	s=arc-20240116; t=1756198510; c=relaxed/simple;
+	bh=d+h2PRJM2l08TaXnGzcsmwZ3+8ua03+lAD5/yxQMu+4=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=dyBxuHnjrMwoOgE4wG2i9NOpeGxM6k9dGjABZxWBeHAmczwIJpFTdqSICE7jfAZpzIUdMOZRQcPA6dqaPELoon8SNRontB5f0jPl5jrPN0ez+boXs9GfbTNLh8eJXyKoj4WNzAWTB1VVwwPavvr9ZBMP5sSJvyCq8aaTPan07E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uqpRq-0003j9-Qa; Tue, 26 Aug 2025 10:54:34 +0200
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uqpRn-002Cb2-1w;
+	Tue, 26 Aug 2025 10:54:31 +0200
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1uqpRn-0005k0-1e;
+	Tue, 26 Aug 2025 10:54:31 +0200
+Message-ID: <eb127fd167cfbd885099a7c4c962eb1135a5a8a0.camel@pengutronix.de>
+Subject: Re: [PATCH net-next v7 2/5] net: spacemit: Add K1 Ethernet MAC
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
+ <andrew+netdev@lunn.ch>,  Jakub Kicinski <kuba@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Paul Walmsley <paul.walmsley@sifive.com>, Palmer
+ Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Alexandre
+ Ghiti <alex@ghiti.fr>
+Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko
+ <vadim.fedorenko@linux.dev>,  Junhui Liu <junhui.liu@pigmoral.tech>, Simon
+ Horman <horms@kernel.org>, Maxime Chevallier
+ <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Date: Tue, 26 Aug 2025 10:54:31 +0200
+In-Reply-To: <20250826-net-k1-emac-v7-2-5bc158d086ae@iscas.ac.cn>
+References: <20250826-net-k1-emac-v7-0-5bc158d086ae@iscas.ac.cn>
+	 <20250826-net-k1-emac-v7-2-5bc158d086ae@iscas.ac.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250826-net-k1-emac-v7-4-5bc158d086ae@iscas.ac.cn>
-References: <20250826-net-k1-emac-v7-0-5bc158d086ae@iscas.ac.cn>
-In-Reply-To: <20250826-net-k1-emac-v7-0-5bc158d086ae@iscas.ac.cn>
-To: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Vivian Wang <wangruikang@iscas.ac.cn>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Vivian Wang <uwu@dram.page>, 
- Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
- Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>, 
- Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-X-Mailer: b4 0.14.2
-X-CM-TRANSID:rQCowAAnu3z2Uq1oqXNPDw--.2143S6
-X-Coremail-Antispam: 1UD129KBjvJXoW7uF13JF4rXF1kZF15Gw18Grg_yoW8ArWxp3
-	yakFs3uFWDKr4Skw43ur9F9r1fGa95XrykG3ya9F1rGr4qvr90vw15Kwn7tr1DWrW5Xa45
-	Xr4xtFyj9r1qkw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUmS14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
-	kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
-	z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
-	4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
-	3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7
-	IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4U
-	M4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2
-	kIc2xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
-	4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBI
-	daVFxhVjvjDU0xZFpf9x0pRQJ5wUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: spacemit@lists.linux.dev
 
-Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
-reset.
+On Di, 2025-08-26 at 14:23 +0800, Vivian Wang wrote:
+> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
+> that only superficially resembles some other embedded MACs. SpacemiT
+> refers to them as "EMAC", so let's just call the driver "k1_emac".
+>=20
+> Supports RGMII and RMII interfaces. Includes support for MAC hardware
+> statistics counters. PTP support is not implemented.
+>=20
+> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
+> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+> Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+> Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+> ---
+>  drivers/net/ethernet/Kconfig            |    1 +
+>  drivers/net/ethernet/Makefile           |    1 +
+>  drivers/net/ethernet/spacemit/Kconfig   |   29 +
+>  drivers/net/ethernet/spacemit/Makefile  |    6 +
+>  drivers/net/ethernet/spacemit/k1_emac.c | 2193 +++++++++++++++++++++++++=
+++++++
+>  drivers/net/ethernet/spacemit/k1_emac.h |  426 ++++++
+>  6 files changed, 2656 insertions(+)
+>=20
+[...]
+> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethern=
+et/spacemit/k1_emac.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..9e558d5893cfbbda0baa7ad21=
+a7209dadda9487e
+> --- /dev/null
+> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
+> @@ -0,0 +1,2193 @@
+[...]
+> +static int emac_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev =3D &pdev->dev;
+> +	struct reset_control *reset;
+> +	struct net_device *ndev;
+> +	struct emac_priv *priv;
+> +	int ret;
+> +
+> +	ndev =3D devm_alloc_etherdev(dev, sizeof(struct emac_priv));
+> +	if (!ndev)
+> +		return -ENOMEM;
+> +
+> +	ndev->hw_features =3D NETIF_F_SG;
+> +	ndev->features |=3D ndev->hw_features;
+> +
+> +	ndev->max_mtu =3D EMAC_RX_BUF_4K - (ETH_HLEN + ETH_FCS_LEN);
+> +
+> +	priv =3D netdev_priv(ndev);
+> +	priv->ndev =3D ndev;
+> +	priv->pdev =3D pdev;
+> +	platform_set_drvdata(pdev, priv);
+> +
+> +	ret =3D emac_config_dt(pdev, priv);
+> +	if (ret < 0) {
+> +		dev_err_probe(dev, ret, "Configuration failed\n");
+> +		goto err;
 
-Tested-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 46 +++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+I'd just
+		return dev_err_probe(...);
+here.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index fe22c747c5012fe56d42ac8a7efdbbdb694f31b6..15fa4a5ebd043f3fbb115d37e5a980c9b773a228 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -40,6 +40,52 @@ &emmc {
- 	status = "okay";
- };
- 
-+&eth0 {
-+	phy-handle = <&rgmii0>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac0_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <0>;
-+	status = "okay";
-+
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
-+
-+		rgmii0: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
-+
-+&eth1 {
-+	phy-handle = <&rgmii1>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac1_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <250>;
-+	status = "okay";
-+
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
-+
-+		rgmii1: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
-+
- &uart0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&uart0_2_cfg>;
+> +	}
+> +
+> +	ndev->watchdog_timeo =3D 5 * HZ;
+> +	ndev->base_addr =3D (unsigned long)priv->iobase;
+> +	ndev->irq =3D priv->irq;
+> +
+> +	ndev->ethtool_ops =3D &emac_ethtool_ops;
+> +	ndev->netdev_ops =3D &emac_netdev_ops;
+> +
+> +	devm_pm_runtime_enable(&pdev->dev);
+> +
+> +	priv->bus_clk =3D devm_clk_get_enabled(&pdev->dev, NULL);
+> +	if (IS_ERR(priv->bus_clk)) {
+> +		ret =3D dev_err_probe(dev, PTR_ERR(priv->bus_clk),
+> +				    "Failed to get clock\n");
+> +		goto err;
 
--- 
-2.50.1
+Same here.
 
+> +	}
+> +
+> +	reset =3D devm_reset_control_get_optional_exclusive_deasserted(&pdev->d=
+ev,
+> +								     NULL);
+> +	if (IS_ERR(reset)) {
+> +		ret =3D dev_err_probe(dev, PTR_ERR(reset),
+> +				    "Failed to get reset\n");
+> +		goto err;
+
+And here.
+
+> +	}
+> +
+> +	emac_sw_init(priv);
+> +
+> +	if (of_phy_is_fixed_link(dev->of_node)) {
+> +		ret =3D of_phy_register_fixed_link(dev->of_node);
+> +		if (ret) {
+> +			dev_err_probe(dev, ret,
+> +				      "Failed to register fixed-link");
+> +			goto err_timer_delete;
+
+If you can move this section before emac_sw_init(), this could also
+just return.
+
+> +		}
+
+Then here a function calling of_phy_deregister_fixed_link() could be
+registered with devm_add_action_or_reset(), to avoid duplicated cleanup
+in the error path and in emac_remove().
+
+
+regards
+Philipp
