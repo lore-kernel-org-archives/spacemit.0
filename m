@@ -1,201 +1,171 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B30EEB3
-	for <spacemit@lists.linux.dev>; Tue, 26 Aug 2025 01:05:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6E72D77E2
+	for <spacemit@lists.linux.dev>; Tue, 26 Aug 2025 06:24:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756170314; cv=none; b=pI9hzjTnFnFkyokkBIEnj5iLpkAy58kPfvSicVGpO6UVRtROG7G0oXD3HkHCfrSDF7IRZZSIOQGumyPxSaKN1NSS+LpxWcRm+MYWiid+WaadOWeYsCCG8cYUu5VCkTa37CkHJjK08Sk0W5W/ObJwb2jDdaqzH05gr5wOtEu0rV0=
+	t=1756189488; cv=none; b=L8vmtn82NFqIWWLAuV7xmV7vz83a9hda0PY5gq+75yRooiD1esNIuJ2GFJliNtERoliWzwYku7pHUHUBGt2ccl9PTvqwpgjWUzWe2C9Rg04cUoXcBYTehzlc1sEHJK3ERz95lQnFLJWqHLvAfouIvXU3YkrOo4NAOsueWL9yGeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756170314; c=relaxed/simple;
-	bh=tB6fppnw+UcRDBN5lEThQWkSnIFpbnjuO084/tD3bU8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MRMZjZgY8iNsM0MAxx3Zb2Fp36sTsy3aEfjXvkSs9pwX783DL5va83Y/r3iM6Mu95/aHYA0mLrR6pFGL93MZ7DkMtoXb95/tYarMy5nxwo76ntj1sE9zmL4sjz0LFRLKqp2m2BCDRsWYNwG1hksGwe7kcddjIH3uGmmK82uWNuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=NJIULm2I; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="NJIULm2I"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1756170260;
-	bh=YFNm4O+HT++w/XhGn19PpWttVXNF4FCXA5kWvgTYm9Y=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=NJIULm2ITw00OlVySf0zjkJbhgXaJ7GfGuEYcZmo4LgA80CpXz+50mmE34KHqy6rp
-	 fBf7RQH6ANXyy2zZIULBEkJ3aAIVHiJQ4ZN1TBDJ6K8wVgPVlroNtlGKXj1Is0+gGx
-	 T3Pp0orsc1ZgJADzSx8nYsZLCmOvuvLjpUhOopks=
-X-QQ-mid: zesmtpsz5t1756170257t506bec28
-X-QQ-Originating-IP: Z9Hix52xyLw0E0FxPAVbErXQgqX6aadOjoYB/9fqoi4=
-Received: from = ( [14.123.253.26])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 26 Aug 2025 09:04:15 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 6597786748243803849
-EX-QQ-RecipientCnt: 23
-Date: Tue, 26 Aug 2025 09:04:15 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, lee@kernel.org,
-	lgirdwood@gmail.com, broonie@kernel.org,
-	alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org
-Cc: mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	linux.amoon@gmail.com, troymitchell988@gmail.com,
-	guodong@riscstar.com, linux-rtc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v12 2/7] mfd: simple-mfd-i2c: add SpacemiT P1 support
-Message-ID: <A90BFF97E4869C5B+aK0ID3oyoCtco3m5@LT-Guozexi>
-References: <20250813024509.2325988-1-elder@riscstar.com>
- <20250813024509.2325988-3-elder@riscstar.com>
- <089D29348F246F2C+aJ6bPgJsp5GjhDs5@LT-Guozexi>
- <b387ebdd-ae5d-4711-9e10-c61cb06f4b5b@riscstar.com>
+	s=arc-20240116; t=1756189488; c=relaxed/simple;
+	bh=EQWXbhs2+NcTFLOJAcUu2US3mXQ51f5l0WdRHPHMMbA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=eODedtE3QjkOe4P8Kdsu5MXeXLK89gfOvC6UPEZvkfnOZZJ0WMYL9TQd5CY0GL91qFpgDhCBMcbKTISs86+ntRWOyNeoSN0ebiSykClVIUBupmJ386YX/irb4hdyvIWkh9q9YzGCrbJ4azKbbolFmJBMwk/Z8jtqKTCve6MwUZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [114.241.87.235])
+	by APP-03 (Coremail) with SMTP id rQCowAAnu3z2Uq1oqXNPDw--.2143S3;
+	Tue, 26 Aug 2025 14:23:52 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Tue, 26 Aug 2025 14:23:46 +0800
+Subject: [PATCH net-next v7 1/5] dt-bindings: net: Add support for SpacemiT
+ K1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b387ebdd-ae5d-4711-9e10-c61cb06f4b5b@riscstar.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: M9Bxf819/8YCxgr5E0eCTLJr0bZlmzJWwDmRH2FZekU0xn6PD6v6rNoe
-	dP3FI+l5Y2TabLIuZ+pXMq7AqSls/Kb0pqyd/2lP12ecRF5IFegdolFYmdAFGAL5cC7pYtm
-	unYTaEl3D9lb0pvw/2e0yoIvivn8EtqMJivGWgMLbERMQMWAPOX2tJF3FnvzI+dOuhGGVSe
-	FFIKrApyUSVtGNuW+vfBx4GbdryHB4xbh3zbfAskp0+bI/r6lfhzvip9ax1wIPO3EHYa5An
-	cQ/TN3v+wTVK82+Ue5a8wus6wWEXd9y3LU3YmvvCbclID3qa/shf0oF2qd/CeUNez7Tc0cR
-	2bgE55pXaKoFFdcQnMbFURCCoQl4nnNIyF4whrRjnrtjzo14ht2sXoS0MEyn3AfJD8IvZ7T
-	7/GYrSzY75y3IileD8IexRT1UhWqgZs8/7Sb/PLw2K1NZIrMXSrj7+wlXZs//ghHZn8hE5J
-	JU0xiLzXvku3iXb3cOoK06ZYOLhXDl8uNoN45UiJicDXx2a/zMI5HKkRVnqE0yz+VxOb04H
-	nZtAUuTb7Z0lExVKjUPbbvRfZwwc0W3NUDWo1pUvikqZM95ska4ny2w9Qry2/kzt+GBAL23
-	EwSvxYdDp2dZr0E8WopDPOQxqoDu/bQoXpdk5V5PX22VELzEnhDYuY+fM2EQdFOPKDaoA08
-	xQcyiBEfWBpcVJy23BguuauVJNUmUfIbTW2wd0CTtM9RCQKzN/HUPSdv0dSJGDcXkJH0v+D
-	ENtaTttTz/h1RsNYoKQo+PsO/dtZs4wmCFtpfMAgveBSUCdyOq1TGMHKJTmCcHUKR7Ju2f+
-	2Y8C6JHoIerlxI+IH4p8X2VAh4oroH7PHkCDSB4rmDv+b5RMRUtBzH0CIen2DVZZHq7pAes
-	Dhed/+pMY+otrlh/bmSynVv3qpNbqGW6ZI/x8TOvQ/VEDReJUmayesfytyAStECNklmSQd/
-	nF6Z3hNBmH1MZkDjw7PEBAfbsnBybB0e7MwrljOLvmZA4HiGBbbPU+sMzPxLJcGxfr70HYU
-	RwHxLeTDqapmWrajBZ9Xx7JvLV/R7idTrBGlKoY40C8Xw8nsMDvXIpCpV2byc4ZUkKR5roI
-	fObJKo2BPe7i0xC8CsWnmRKvBOLbqqE+g==
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250826-net-k1-emac-v7-1-5bc158d086ae@iscas.ac.cn>
+References: <20250826-net-k1-emac-v7-0-5bc158d086ae@iscas.ac.cn>
+In-Reply-To: <20250826-net-k1-emac-v7-0-5bc158d086ae@iscas.ac.cn>
+To: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Vivian Wang <wangruikang@iscas.ac.cn>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Vivian Wang <uwu@dram.page>, 
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>, 
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Conor Dooley <conor.dooley@microchip.com>
+X-Mailer: b4 0.14.2
+X-CM-TRANSID:rQCowAAnu3z2Uq1oqXNPDw--.2143S3
+X-Coremail-Antispam: 1UD129KBjvJXoW7Cry3WF45trW5KrW5Zr4rGrg_yoW5Jr1xpF
+	4fCrn3GF48KF13Jw4fXFykuF1fGw4kAF1DJrZFvw13tas5KF90qr4akryfXa4UurW8Ja43
+	XF1DAryDKr1DAaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUm014x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
+	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
+	8EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AI
+	xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
+	vE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xv
+	r2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04
+	v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j
+	6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7
+	AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE
+	2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0x
+	vEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVj
+	vjDU0xZFpf9x0pRlJPiUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Mon, Aug 25, 2025 at 11:08:45AM -0500, Alex Elder wrote:
-> On 8/14/25 9:28 PM, Troy Mitchell wrote:
-> > Hi, Alex,
-> > 
-> > I did not find any accesses to the P1 shutdown or reboot registers here.
-> > Does this mean that the current series does not support reboot or shutdown?
-> 
-> Yes, that is correct.
-> 
-> > If so, do you have any plans to support this functionality?
-> 
-> At this time I personally don't have any plans to add this, but
-> it could be added later (by anyone).
-> 
-> I actually attempted to do this initially, but gave up.  The PMIC
-> is accessed via I2C, and I needed to implement a non-blocking
-> version of the I2C register write operation.  I tried that,
-You tried that? so that means you have implemented a non-blocking version
-of the I2C?
-If so, can you give me a source tree to test it?
-> but
-> then found that the shutdown or reboot still did not work reliably.
-ditto.
+The Ethernet MACs on SpacemiT K1 appears to be a custom design. SpacemiT
+refers to them as "EMAC", so let's just call them "spacemit,k1-emac".
 
-                - Troy
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+---
+ .../devicetree/bindings/net/spacemit,k1-emac.yaml  | 81 ++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
-> As it was, this was more than I originally planned to do, so I just
-> implemented the simple RTC operations instead.
-> 
-> 					-Alex
-> 
-> > If I have misunderstood, please correct me.
-> > 
-> > Best regards,
-> > Troy
-> > 
-> > 
-> > On Tue, Aug 12, 2025 at 09:45:03PM -0500, Alex Elder wrote:
-> > > Enable support for the RTC and regulators found in the SpacemiT P1
-> > > PMIC.  Support is implemented by the simple I2C MFD driver.
-> > > 
-> > > The P1 PMIC is normally implemented with the SpacemiT K1 SoC.  This
-> > > PMIC provides 6 buck converters and 12 LDO regulators.  It also
-> > > implements a switch, watchdog timer, real-time clock, and more.
-> > > Initially its RTC and regulators are supported.
-> > > 
-> > > Signed-off-by: Alex Elder <elder@riscstar.com>
-> > > ---
-> > >   drivers/mfd/Kconfig          | 11 +++++++++++
-> > >   drivers/mfd/simple-mfd-i2c.c | 18 ++++++++++++++++++
-> > >   2 files changed, 29 insertions(+)
-> > > 
-> > > diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-> > > index 425c5fba6cb1e..4d6a5a3a27220 100644
-> > > --- a/drivers/mfd/Kconfig
-> > > +++ b/drivers/mfd/Kconfig
-> > > @@ -1238,6 +1238,17 @@ config MFD_QCOM_RPM
-> > >   	  Say M here if you want to include support for the Qualcomm RPM as a
-> > >   	  module. This will build a module called "qcom_rpm".
-> > > +config MFD_SPACEMIT_P1
-> > > +	tristate "SpacemiT P1 PMIC"
-> > > +	depends on I2C
-> > > +	select MFD_SIMPLE_MFD_I2C
-> > > +	help
-> > > +	  This option supports the I2C-based SpacemiT P1 PMIC, which
-> > > +	  contains regulators, a power switch, GPIOs, an RTC, and more.
-> > > +	  This option is selected when any of the supported sub-devices
-> > > +	  is configured.  The basic functionality is implemented by the
-> > > +	  simple MFD I2C driver.
-> > > +
-> > >   config MFD_SPMI_PMIC
-> > >   	tristate "Qualcomm SPMI PMICs"
-> > >   	depends on ARCH_QCOM || COMPILE_TEST
-> > > diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
-> > > index 22159913bea03..47ffaac035cae 100644
-> > > --- a/drivers/mfd/simple-mfd-i2c.c
-> > > +++ b/drivers/mfd/simple-mfd-i2c.c
-> > > @@ -93,12 +93,30 @@ static const struct simple_mfd_data maxim_mon_max77705 = {
-> > >   	.mfd_cell_size = ARRAY_SIZE(max77705_sensor_cells),
-> > >   };
-> > > +
-> > > +static const struct regmap_config spacemit_p1_regmap_config = {
-> > > +	.reg_bits = 8,
-> > > +	.val_bits = 8,
-> > > +};
-> > > +
-> > > +static const struct mfd_cell spacemit_p1_cells[] = {
-> > > +	{ .name = "spacemit-p1-regulator", },
-> > > +	{ .name = "spacemit-p1-rtc", },
-> > > +};
-> > > +
-> > > +static const struct simple_mfd_data spacemit_p1 = {
-> > > +	.regmap_config = &spacemit_p1_regmap_config,
-> > > +	.mfd_cell = spacemit_p1_cells,
-> > > +	.mfd_cell_size = ARRAY_SIZE(spacemit_p1_cells),
-> > > +};
-> > > +
-> > >   static const struct of_device_id simple_mfd_i2c_of_match[] = {
-> > >   	{ .compatible = "kontron,sl28cpld" },
-> > >   	{ .compatible = "silergy,sy7636a", .data = &silergy_sy7636a},
-> > >   	{ .compatible = "maxim,max5970", .data = &maxim_max5970},
-> > >   	{ .compatible = "maxim,max5978", .data = &maxim_max5970},
-> > >   	{ .compatible = "maxim,max77705-battery", .data = &maxim_mon_max77705},
-> > > +	{ .compatible = "spacemit,p1", .data = &spacemit_p1, },
-> > >   	{}
-> > >   };
-> > >   MODULE_DEVICE_TABLE(of, simple_mfd_i2c_of_match);
-> > > -- 
-> > > 2.48.1
-> > > 
-> > > 
-> > > _______________________________________________
-> > > linux-riscv mailing list
-> > > linux-riscv@lists.infradead.org
-> > > http://lists.infradead.org/mailman/listinfo/linux-riscv
-> 
-> 
+diff --git a/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml b/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..500a3e1daa230ea3a1fad30d8ea56a7822fccb3d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/spacemit,k1-emac.yaml
+@@ -0,0 +1,81 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/spacemit,k1-emac.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: SpacemiT K1 Ethernet MAC
++
++allOf:
++  - $ref: ethernet-controller.yaml#
++
++maintainers:
++  - Vivian Wang <wangruikang@iscas.ac.cn>
++
++properties:
++  compatible:
++    const: spacemit,k1-emac
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  mdio-bus:
++    $ref: mdio.yaml#
++    unevaluatedProperties: false
++
++  resets:
++    maxItems: 1
++
++  spacemit,apmu:
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    items:
++      - items:
++          - description: phandle to syscon that controls this MAC
++          - description: offset of control registers
++    description:
++      A phandle to syscon with byte offset to control registers for this MAC
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - interrupts
++  - resets
++  - spacemit,apmu
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/spacemit,k1-syscon.h>
++
++    ethernet@cac80000 {
++        compatible = "spacemit,k1-emac";
++        reg = <0xcac80000 0x00000420>;
++        clocks = <&syscon_apmu CLK_EMAC0_BUS>;
++        interrupts = <131>;
++        mac-address = [ 00 00 00 00 00 00 ];
++        phy-handle = <&rgmii0>;
++        phy-mode = "rgmii-id";
++        pinctrl-names = "default";
++        pinctrl-0 = <&gmac0_cfg>;
++        resets = <&syscon_apmu RESET_EMAC0>;
++        rx-internal-delay-ps = <0>;
++        tx-internal-delay-ps = <0>;
++        spacemit,apmu = <&syscon_apmu 0x3e4>;
++
++        mdio-bus {
++            #address-cells = <0x1>;
++            #size-cells = <0x0>;
++
++            rgmii0: phy@1 {
++                reg = <0x1>;
++            };
++        };
++    };
+
+-- 
+2.50.1
+
