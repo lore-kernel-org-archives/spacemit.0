@@ -1,363 +1,200 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F75431A065
-	for <spacemit@lists.linux.dev>; Wed, 27 Aug 2025 07:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA763375C7
+	for <spacemit@lists.linux.dev>; Wed, 27 Aug 2025 09:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756280442; cv=none; b=WXPKWf9J1ZLoyzXRwZ0p4jZMb+Ck3puf5h/7f4r6rY132b6DcBH5nFJIRD6g4YRkDeAlAHFTqTlc5PHTeq8WLvv2XP/Jt2WubgxQr5qRMpGobcGHl4uLs2hyRTEV7HFqkp3rsaIS/bUtYfVruUoKF7Tojh9l/ezrp3R+j9x++ag=
+	t=1756287260; cv=none; b=KK1Pg1t65jYWBqtlUK+fQtke5EZHqMttWGFgqyXLWezA49jzQ5cIiwlsqctK1/59Dsp3dl+Qh5D4G/TveVM5Iw61Tk62KCYzGhBDgrPJtXzYHhhf5UoCZMxs/Tqxr3O6yS+OS04CI5iqehp/Bgez1La0Hz+aKiGpSL9l8B6sOqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756280442; c=relaxed/simple;
-	bh=SOwxrwMY5q6SLeifggiTWiBT3jVxztapPvG1+sfX4ZI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qeyfmV1yi2XDGds59IdpbYaO54oxPS+erS3+mqX/tvZ1bIFQXOnp2/JRN0cqOiISSvjE0BxPQ3vBLLv4hJQuTni6tv6J5SdzX15BhgyJbezoZvtQ1b0gF3ZHaV8PfGE5RNsQg0Aro41fEmmzwot405U85VO3pJKngEZa0I4rnNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=YFgkrUvk; arc=none smtp.client-ip=54.204.34.130
+	s=arc-20240116; t=1756287260; c=relaxed/simple;
+	bh=MQvBfl4kkV2fXT2490Fr950aKJNNuYgYUNBa7ER+5W8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Sh4/ivxbu9+NM0TL8WJk+j+KSt4vwYQNLuRB0RXp8rJWQYgBDLkA32hdi59zh46eye3k1cYz/Dq8Jx0UyPiHzzDeuEjsIk0sOBBEJPHepBLqqlemr4RDmlpLzYRCcr/MDCfM+LHdCpYYKUEK/XB4/XBRnW8IetADgNBoLC04SYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Mgecbmb3; arc=none smtp.client-ip=18.132.163.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="YFgkrUvk"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Mgecbmb3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1756280383;
-	bh=gk0AuPbE2e1go6AHp83tTfSoDlCJp9KcBO9I8dQc2/w=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=YFgkrUvkBPJDF8SKkTcZ/LEwFpmJNLKvwQOPRRIkFKyxNCf+3rBy5eG8dhAud86BX
-	 MPmfcuInq9e6Z0wqpW0/Z1GOCUD9CCvE9EygDs1z4A7p28oi0V1153dAAhBoWVUt7G
-	 LsjJwNd3oTN8EgGeRN2wUgkcNR2jGGJigc2kp1BY=
-X-QQ-mid: esmtpsz18t1756280376t60a65922
-X-QQ-Originating-IP: t+rbXBFCAiMUmuHnikv4NQQjcUFmojpqdPPAsHLpmyQ=
+	s=mxsw2412; t=1756287215;
+	bh=3fghkl2yk9rz5bIVyEjDjhowSDJcsJYAqStEl1qbPDU=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=Mgecbmb3p/PsLbTn+l8oN+uzB7JDNHXI7nd6eH2ypvN+YcsPElYL20phBK57H5wn2
+	 Cz45+X9B71J4Jh6YVMe6tkvaIB5n10rjV76pVgEMi/GZKSki6XhQrmBjfBHPXFwltm
+	 yIfAaW9yD/M4lQrM0cPuJtbQuQ3lmaiGI2AOXX5E=
+X-QQ-mid: zesmtpgz8t1756287213t979e8db4
+X-QQ-Originating-IP: +p5Udl5pLkD5rldse5I0GLOWxX+xPdjNmzEYXYfq1hY=
 Received: from = ( [61.145.255.150])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 27 Aug 2025 15:39:34 +0800 (CST)
+	id ; Wed, 27 Aug 2025 17:33:31 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13364597237366048741
-EX-QQ-RecipientCnt: 9
+X-BIZMAIL-ID: 295757120406263004
+EX-QQ-RecipientCnt: 23
+Date: Wed, 27 Aug 2025 17:33:31 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Wed, 27 Aug 2025 15:39:13 +0800
-Subject: [PATCH 6/6] i2c: spacemit: introduce pio for k1
+To: Alex Elder <elder@riscstar.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>, lee@kernel.org,
+	lgirdwood@gmail.com, broonie@kernel.org,
+	alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	linux.amoon@gmail.com, troymitchell988@gmail.com,
+	guodong@riscstar.com, linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v12 2/7] mfd: simple-mfd-i2c: add SpacemiT P1 support
+Message-ID: <1D7078ABFE5E7BF8+aK7Q60w5Vhy1Wreg@LT-Guozexi>
+References: <20250813024509.2325988-1-elder@riscstar.com>
+ <20250813024509.2325988-3-elder@riscstar.com>
+ <089D29348F246F2C+aJ6bPgJsp5GjhDs5@LT-Guozexi>
+ <b387ebdd-ae5d-4711-9e10-c61cb06f4b5b@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250827-k1-i2c-atomic-v1-6-e59bea02d680@linux.spacemit.com>
-References: <20250827-k1-i2c-atomic-v1-0-e59bea02d680@linux.spacemit.com>
-In-Reply-To: <20250827-k1-i2c-atomic-v1-0-e59bea02d680@linux.spacemit.com>
-To: Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Alex Elder <elder@riscstar.com>, Troy Mitchell <troymitchell988@gmail.com>
-Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756280357; l=8587;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=SOwxrwMY5q6SLeifggiTWiBT3jVxztapPvG1+sfX4ZI=;
- b=IUbNhkXO6wLZ0DN2n/Z79Z/ehMLvBpWeVOlBAcc8pVB1OTfUf665KFDKRU2qq6cNGgbUChruG
- fNRe5T1CM4GDqhUTksaumB3W1PtQCDWGXUJ6H8rYkobVOrKxFyCQjng
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b387ebdd-ae5d-4711-9e10-c61cb06f4b5b@riscstar.com>
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: N32BSuq9GV7o+MV9TnBdRTukzhIXEXxy9DSgus6bc6vzM+Jjeb4zCZ3M
-	Ur+0RtAzA4PETQtqi5zyOqmQunMnjqXvdEJgFJwEOHJwNj0PZibN5YLVw9z7VMEW74RS0+l
-	AwR595G9JvlSFEbhhteK/8zOdE2D0hncbdgPmPxoDB16UzwJXDlQ/CSoA/YVF5SkFCxJS7O
-	ntGkjpW76cRX3ELopXJQXXWOQDH1pQKLTA2V6OT+loGDtaGjwId6O6qmSFcK76XjeSeDk/n
-	NFl9N3cvnmzi8C79t9MsS9GqUs9nT1TeXJSOqiorX2WkeHBm3ypBWU58jTOQeowQaQHOPSM
-	L2A3jkPSW8wTEgDDQZ2+N+erSNMxJNLc2cAoffSX5mmoAEdqec/KYMucutjramisfKiaD4W
-	xUH+z8zXuT79jjLhD7XoYbEkx++L74fHv+H5Lcxkm7emTz00bqyFgz5lLjcxQLW5ZSl56NA
-	C6boyK34TzQVj4MvGT8cUEfCZoX28VE9OHDlnBNtQ22PS9/JJTYV9ldk3PqzMXCy8h/rNTT
-	j3aghQTb9sEpS5aiV/rnM0iln0c+6B2n2OJsGS8OEz7yo00SWK/TxTCgqTChiLFED4eTDoR
-	gZzrMRKq/5oTFEbSY9N1I09vbVgCabK2JN3L6OiFoTXy0CmxXBUXWE83P6WwMyfovErIySI
-	x2M7AUwoZtqoOdeFeLXLZDCj1ul57+XUt0Q6TctQxZbevpcfcrUIJKMY0he8/0FfdCwZrlH
-	OjOR5N2i0lhprqFnlydDcNwbeQXjAJNTUTfiMt40Z24Bpt0Um6vkqCtPKpFhP6v1gr28xAW
-	EfdgoWLw+vKrocQjeiM+GJEBKRLx1ppRokHd2tCUSYvl1Ee5O55vCGWEOYmHqJK8KzKFZTr
-	b4alwh2qnyZJY1/oKbTg9LmddDsYe6RoUDar1zIF8Ejzm7YaxYJK2SU2w7UyL08RKVKoC+X
-	RRzEg9I3htVOHgZK2ewUHdJHChtxYFyU7UeyRLVqMNG7XXFpuTmm3FSdY5O3ltq09pFvmUE
-	eca0XJk4uLXuvAGgw1BnalKzprSsdHVoVbYpTdOQD64mKQU6hVmYedwTsDCdBkn3hFi/GXR
-	lQu6K0IpGlKyrozczi30QZ2/FQsf+68PgxRlnTfKfK1XgihZoumuCm3iT4JM+t4ug==
-X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: Nnd5cAEgLcFhoWAD0Vlb8+NYa6DFeqnWj/tGOR0GIV8AJHK4EuhRKvVH
+	gMHgyGSvwmPDdGjeiI4cBLA9X1WjvSVHxXN9UKhJ+Pbcj7x+QkfssV089eA1OfObBJQweZF
+	85fhpuGWlBUM2Mx/HX3obo0TNtXtr8h2PLxvNvjO5F8f4Z53XMclyxflU7GETUxr2+Siyoc
+	nYYSr+ZNr255gOga6eqowez4VpF6oLSJpM9JsY/WqQhioj1S4TVDKYYjTdLnTNnbWwB1tdk
+	g06LJ+G7P1wcVv4iWIClVuvMLW+0UC/yapanHs3EzZize0wWHbpvKZBv7qlsSkFYUTxfCgu
+	fzLYpCdpcZpGRLEbJb6H/syDdsYEIsSWQlhsp+gV4Rjdy1+U+gyI6GGyLPDBfemWhLLOWvf
+	rD9mzLkGUxx3J7HwOtb2jDdziqjz2KQIE98qiPZNpPSAtWBtBZbHM0h/QkdQKTnVoIKHdRG
+	CxoOuYPRqVF/A1awvaR3BglMOMjmvh4woX4B/q/uMZ+V4f8m984XCPzsSIRH23OMdVTDtBf
+	4puv+J3Nawjr8vcKVyDmjGxRiDA6ju+Ybk0lle6pt3KF/9joVNXssOspuhxhuwsOwbA/hvR
+	E4X/hPDxkNMU+79ikGdBKhFDnRgHr7WGo+BexBEwi3VNPWlwRZeaMcjNIESRbmgG8XmgVdU
+	dJrA7wvfppgDtv2JbNfLfYl75/Hu41cIwYeW72yE4TSgeozjpUI6Q3bFUUnqDKhHZ9bdcgf
+	sYPY1ihQkYcQpV5747ExvDFArYlRAaWW1mHZGRItFG95cRw/gbRtIDLNVOLtusY4mduW7nf
+	5ehwXblmebB0Vo1hNfbgWKnIrWoOyPCD9e6ZWV7ja40+FstVLsoJFQNDBLkj0cu8di6yIHv
+	+ZvmSdjbK0CTASKmEr1KNVIH37Y3qJot6Jm4+y7oWplUfI9fX/HDiCdjVkQybHNBOWL19Fn
+	tFlz2A4/zZVgd/OKc1yI61H7byr3Umihle75evUJnU3wM3f11u10sO77AGHORcf7bu0RPSx
+	Zp/UkqpqPyScDTD9z5UC9dRKbGhd/KcPuPTuGMzRkEsT8FG/thC45RaeUVpHbfQUOag4z98
+	vasK5rLzsgV
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
 X-QQ-RECHKSPAM: 0
 
-This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
-enabling the use of I2C with interrupts disabled.
+On Mon, Aug 25, 2025 at 11:08:45AM -0500, Alex Elder wrote:
+> On 8/14/25 9:28 PM, Troy Mitchell wrote:
+> > Hi, Alex,
+> > 
+> > I did not find any accesses to the P1 shutdown or reboot registers here.
+> > Does this mean that the current series does not support reboot or shutdown?
+> 
+> Yes, that is correct.
+> 
+> > If so, do you have any plans to support this functionality?
+> 
+> At this time I personally don't have any plans to add this, but
+> it could be added later (by anyone).
+> 
+> I actually attempted to do this initially, but gave up.  The PMIC
+> is accessed via I2C, and I needed to implement a non-blocking
+> version of the I2C register write operation.  I tried that, but
+I have implemented a non-blocking version of the I2C driver [1]
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
- drivers/i2c/busses/i2c-k1.c | 139 ++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 120 insertions(+), 19 deletions(-)
+Link: 
+https://lore.kernel.org/all/20250827-k1-i2c-atomic-v1-0-e59bea02d680@linux.spacemit.com/
+[1]
 
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-index d2c0d20d19ba73baa8b2e9a6acb02b2cc3b7243f..e558fe4cbd5a78b5b53b0c02cbbca818b6495d4a 100644
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -124,6 +124,7 @@ struct spacemit_i2c_dev {
- 
- 	enum spacemit_i2c_state state;
- 	bool read;
-+	bool is_pio;
- 	struct completion complete;
- 	u32 status;
- };
-@@ -228,7 +229,7 @@ static void spacemit_i2c_check_bus_release(struct spacemit_i2c_dev *i2c)
- 
- static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
- {
--	u32 val;
-+	u32 val = 0;
- 
- 	/*
- 	 * Unmask interrupt bits for all xfer mode:
-@@ -236,7 +237,8 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
- 	 * For transaction complete signal, we use master stop
- 	 * interrupt, so we don't need to unmask SPACEMIT_CR_TXDONEIE.
- 	 */
--	val = SPACEMIT_CR_BEIE | SPACEMIT_CR_ALDIE;
-+	if (!i2c->is_pio)
-+		val = SPACEMIT_CR_BEIE | SPACEMIT_CR_ALDIE;
- 
- 	/*
- 	 * Unmask interrupt bits for interrupt xfer mode:
-@@ -246,7 +248,8 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
- 	 * i2c_start function.
- 	 * Otherwise, it will cause an erroneous empty interrupt before i2c_start.
- 	 */
--	val |= SPACEMIT_CR_DRFIE;
-+	if (!i2c->is_pio)
-+		val |= SPACEMIT_CR_DRFIE;
- 
- 	if (i2c->clock_freq == SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
- 		val |= SPACEMIT_CR_MODE_FAST;
-@@ -258,7 +261,10 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
- 	val |= SPACEMIT_CR_SCLE;
- 
- 	/* enable master stop detected */
--	val |= SPACEMIT_CR_MSDE | SPACEMIT_CR_MSDIE;
-+	val |= SPACEMIT_CR_MSDE;
-+
-+	if (!i2c->is_pio)
-+		val |= SPACEMIT_CR_MSDIE;
- 
- 	writel(val, i2c->base + SPACEMIT_ICR);
- 
-@@ -295,10 +301,54 @@ static void spacemit_i2c_start(struct spacemit_i2c_dev *i2c)
- 	/* send start pulse */
- 	val = readl(i2c->base + SPACEMIT_ICR);
- 	val &= ~SPACEMIT_CR_STOP;
--	val |= SPACEMIT_CR_START | SPACEMIT_CR_TB | SPACEMIT_CR_DTEIE;
-+	val |= SPACEMIT_CR_START | SPACEMIT_CR_TB;
-+
-+	if (!i2c->is_pio)
-+		val |= SPACEMIT_CR_DTEIE;
-+
- 	writel(val, i2c->base + SPACEMIT_ICR);
- }
- 
-+static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid);
-+static int spacemit_i2c_wait_pio_xfer(struct spacemit_i2c_dev *i2c)
-+{
-+	u32 msec = jiffies_to_msecs(i2c->adapt.timeout);
-+	ktime_t timeout = ktime_add_ms(ktime_get(), msec);
-+	int ret;
-+
-+	while (i2c->unprocessed && ktime_compare(ktime_get(), timeout) < 0) {
-+		udelay(10);
-+		i2c->status = readl(i2c->base + SPACEMIT_ISR);
-+
-+		spacemit_i2c_clear_int_status(i2c, i2c->status);
-+
-+		if (!(i2c->status & SPACEMIT_SR_IRF) && !(i2c->status & SPACEMIT_SR_ITE))
-+			continue;
-+
-+		spacemit_i2c_irq_handler(0, i2c);
-+
-+		i2c->status = readl(i2c->base + SPACEMIT_ISR);
-+
-+		/*
-+		 * This is the last byte to write of the current message.
-+		 * If we do not wait here, control will proceed directly to start(),
-+		 * which would overwrite the current data.
-+		 */
-+		if (!i2c->read && !i2c->unprocessed) {
-+			ret = readl_poll_timeout(i2c->base + SPACEMIT_ISR,
-+						i2c->status, i2c->status & SPACEMIT_SR_ITE,
-+						30, 1000);
-+			if (ret)
-+				return 0;
-+		}
-+	}
-+
-+	if (i2c->unprocessed)
-+		return 0;
-+
-+	return 1;
-+}
-+
- static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
- {
- 	unsigned long time_left;
-@@ -312,10 +362,27 @@ static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
- 
- 		reinit_completion(&i2c->complete);
- 
--		spacemit_i2c_start(i2c);
-+		if (i2c->is_pio) {
-+			disable_irq(i2c->irq);
-+
-+			/*
-+			 * The K1 I2C controller has a quirk:
-+			 * when doing PIO transfers, the status register must be cleared
-+			 * of all other bits before issuing a START.
-+			 * Failing to do so will prevent the transfer from working properly.
-+			 */
-+			spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
-+
-+			spacemit_i2c_start(i2c);
-+			time_left = spacemit_i2c_wait_pio_xfer(i2c);
-+
-+			enable_irq(i2c->irq);
-+		} else {
-+			spacemit_i2c_start(i2c);
-+			time_left = wait_for_completion_timeout(&i2c->complete,
-+								i2c->adapt.timeout);
-+		}
- 
--		time_left = wait_for_completion_timeout(&i2c->complete,
--							i2c->adapt.timeout);
- 		if (!time_left) {
- 			dev_err(i2c->dev, "msg completion timeout\n");
- 			spacemit_i2c_conditionally_reset_bus(i2c);
-@@ -343,6 +410,9 @@ static bool spacemit_i2c_is_last_msg(struct spacemit_i2c_dev *i2c)
- 
- static void spacemit_i2c_handle_write(struct spacemit_i2c_dev *i2c)
- {
-+	if (!(i2c->status & SPACEMIT_SR_ITE))
-+		return;
-+
- 	/* if transfer completes, SPACEMIT_ISR will handle it */
- 	if (i2c->status & SPACEMIT_SR_MSD)
- 		return;
-@@ -355,14 +425,20 @@ static void spacemit_i2c_handle_write(struct spacemit_i2c_dev *i2c)
- 
- 	/* SPACEMIT_STATE_IDLE avoids trigger next byte */
- 	i2c->state = SPACEMIT_STATE_IDLE;
--	complete(&i2c->complete);
-+
-+	if (!i2c->is_pio)
-+		complete(&i2c->complete);
- }
- 
- static void spacemit_i2c_handle_read(struct spacemit_i2c_dev *i2c)
- {
-+	if (!(i2c->status & SPACEMIT_SR_IRF))
-+		return;
-+
- 	if (i2c->unprocessed) {
- 		*i2c->msg_buf++ = readl(i2c->base + SPACEMIT_IDBR);
- 		i2c->unprocessed--;
-+		return;
- 	}
- 
- 	/* if transfer completes, SPACEMIT_ISR will handle it */
-@@ -375,7 +451,9 @@ static void spacemit_i2c_handle_read(struct spacemit_i2c_dev *i2c)
- 
- 	/* SPACEMIT_STATE_IDLE avoids trigger next byte */
- 	i2c->state = SPACEMIT_STATE_IDLE;
--	complete(&i2c->complete);
-+
-+	if (!i2c->is_pio)
-+		complete(&i2c->complete);
- }
- 
- static void spacemit_i2c_handle_start(struct spacemit_i2c_dev *i2c)
-@@ -410,7 +488,9 @@ static void spacemit_i2c_err_check(struct spacemit_i2c_dev *i2c)
- 	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
- 
- 	i2c->state = SPACEMIT_STATE_IDLE;
--	complete(&i2c->complete);
-+
-+	if (!i2c->is_pio)
-+		complete(&i2c->complete);
- }
- 
- static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
-@@ -418,13 +498,20 @@ static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
- 	struct spacemit_i2c_dev *i2c = devid;
- 	u32 status, val;
- 
--	status = readl(i2c->base + SPACEMIT_ISR);
--	if (!status)
--		return IRQ_HANDLED;
-+	/*
-+	 * In PIO mode, do not read status again.
-+	 * It has already been read in wait_pio_xfer(),
-+	 * and reading it clears some bits.
-+	 */
-+	if (!i2c->is_pio) {
-+		status = readl(i2c->base + SPACEMIT_ISR);
-+		if (!status)
-+			return IRQ_HANDLED;
- 
--	i2c->status = status;
-+		i2c->status = status;
- 
--	spacemit_i2c_clear_int_status(i2c, status);
-+		spacemit_i2c_clear_int_status(i2c, status);
-+	}
- 
- 	if (i2c->status & SPACEMIT_SR_ERR)
- 		goto err_out;
-@@ -483,11 +570,14 @@ static void spacemit_i2c_calc_timeout(struct spacemit_i2c_dev *i2c)
- 	i2c->adapt.timeout = usecs_to_jiffies(timeout + USEC_PER_SEC / 10) / i2c->msg_num;
- }
- 
--static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-+static inline int
-+spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num, bool is_pio)
- {
- 	struct spacemit_i2c_dev *i2c = i2c_get_adapdata(adapt);
- 	int ret;
- 
-+	i2c->is_pio = is_pio;
-+
- 	i2c->msgs = msgs;
- 	i2c->msg_num = num;
- 
-@@ -510,18 +600,29 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
- 
- 	if (ret == -ETIMEDOUT || ret == -EAGAIN)
- 		dev_err(i2c->dev, "i2c transfer failed, ret %d err 0x%lx\n",
--			  ret, i2c->status & SPACEMIT_SR_ERR);
-+			ret, i2c->status & SPACEMIT_SR_ERR);
- 
- 	return ret < 0 ? ret : num;
- }
- 
-+static int spacemit_i2c_int_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-+{
-+	return spacemit_i2c_xfer(adapt, msgs, num, false);
-+}
-+
-+static int spacemit_i2c_pio_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-+{
-+	return spacemit_i2c_xfer(adapt, msgs, num, true);
-+}
-+
- static u32 spacemit_i2c_func(struct i2c_adapter *adap)
- {
- 	return I2C_FUNC_I2C | (I2C_FUNC_SMBUS_EMUL & ~I2C_FUNC_SMBUS_QUICK);
- }
- 
- static const struct i2c_algorithm spacemit_i2c_algo = {
--	.xfer = spacemit_i2c_xfer,
-+	.xfer = spacemit_i2c_int_xfer,
-+	.xfer_atomic = spacemit_i2c_pio_xfer,
- 	.functionality = spacemit_i2c_func,
- };
- 
-
--- 
-2.50.1
-
+                - Troy
+> then found that the shutdown or reboot still did not work reliably.
+> As it was, this was more than I originally planned to do, so I just
+> implemented the simple RTC operations instead.
+> 
+> 					-Alex
+> 
+> > If I have misunderstood, please correct me.
+> > 
+> > Best regards,
+> > Troy
+> > 
+> > 
+> > On Tue, Aug 12, 2025 at 09:45:03PM -0500, Alex Elder wrote:
+> > > Enable support for the RTC and regulators found in the SpacemiT P1
+> > > PMIC.  Support is implemented by the simple I2C MFD driver.
+> > > 
+> > > The P1 PMIC is normally implemented with the SpacemiT K1 SoC.  This
+> > > PMIC provides 6 buck converters and 12 LDO regulators.  It also
+> > > implements a switch, watchdog timer, real-time clock, and more.
+> > > Initially its RTC and regulators are supported.
+> > > 
+> > > Signed-off-by: Alex Elder <elder@riscstar.com>
+> > > ---
+> > >   drivers/mfd/Kconfig          | 11 +++++++++++
+> > >   drivers/mfd/simple-mfd-i2c.c | 18 ++++++++++++++++++
+> > >   2 files changed, 29 insertions(+)
+> > > 
+> > > diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+> > > index 425c5fba6cb1e..4d6a5a3a27220 100644
+> > > --- a/drivers/mfd/Kconfig
+> > > +++ b/drivers/mfd/Kconfig
+> > > @@ -1238,6 +1238,17 @@ config MFD_QCOM_RPM
+> > >   	  Say M here if you want to include support for the Qualcomm RPM as a
+> > >   	  module. This will build a module called "qcom_rpm".
+> > > +config MFD_SPACEMIT_P1
+> > > +	tristate "SpacemiT P1 PMIC"
+> > > +	depends on I2C
+> > > +	select MFD_SIMPLE_MFD_I2C
+> > > +	help
+> > > +	  This option supports the I2C-based SpacemiT P1 PMIC, which
+> > > +	  contains regulators, a power switch, GPIOs, an RTC, and more.
+> > > +	  This option is selected when any of the supported sub-devices
+> > > +	  is configured.  The basic functionality is implemented by the
+> > > +	  simple MFD I2C driver.
+> > > +
+> > >   config MFD_SPMI_PMIC
+> > >   	tristate "Qualcomm SPMI PMICs"
+> > >   	depends on ARCH_QCOM || COMPILE_TEST
+> > > diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+> > > index 22159913bea03..47ffaac035cae 100644
+> > > --- a/drivers/mfd/simple-mfd-i2c.c
+> > > +++ b/drivers/mfd/simple-mfd-i2c.c
+> > > @@ -93,12 +93,30 @@ static const struct simple_mfd_data maxim_mon_max77705 = {
+> > >   	.mfd_cell_size = ARRAY_SIZE(max77705_sensor_cells),
+> > >   };
+> > > +
+> > > +static const struct regmap_config spacemit_p1_regmap_config = {
+> > > +	.reg_bits = 8,
+> > > +	.val_bits = 8,
+> > > +};
+> > > +
+> > > +static const struct mfd_cell spacemit_p1_cells[] = {
+> > > +	{ .name = "spacemit-p1-regulator", },
+> > > +	{ .name = "spacemit-p1-rtc", },
+> > > +};
+> > > +
+> > > +static const struct simple_mfd_data spacemit_p1 = {
+> > > +	.regmap_config = &spacemit_p1_regmap_config,
+> > > +	.mfd_cell = spacemit_p1_cells,
+> > > +	.mfd_cell_size = ARRAY_SIZE(spacemit_p1_cells),
+> > > +};
+> > > +
+> > >   static const struct of_device_id simple_mfd_i2c_of_match[] = {
+> > >   	{ .compatible = "kontron,sl28cpld" },
+> > >   	{ .compatible = "silergy,sy7636a", .data = &silergy_sy7636a},
+> > >   	{ .compatible = "maxim,max5970", .data = &maxim_max5970},
+> > >   	{ .compatible = "maxim,max5978", .data = &maxim_max5970},
+> > >   	{ .compatible = "maxim,max77705-battery", .data = &maxim_mon_max77705},
+> > > +	{ .compatible = "spacemit,p1", .data = &spacemit_p1, },
+> > >   	{}
+> > >   };
+> > >   MODULE_DEVICE_TABLE(of, simple_mfd_i2c_of_match);
+> > > -- 
+> > > 2.48.1
+> > > 
+> > > 
+> > > _______________________________________________
+> > > linux-riscv mailing list
+> > > linux-riscv@lists.infradead.org
+> > > http://lists.infradead.org/mailman/listinfo/linux-riscv
+> 
+> 
