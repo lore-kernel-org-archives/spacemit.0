@@ -1,150 +1,227 @@
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C083164CE
-	for <spacemit@lists.linux.dev>; Wed, 27 Aug 2025 09:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75296212D83
+	for <spacemit@lists.linux.dev>; Wed, 27 Aug 2025 13:13:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756287261; cv=none; b=fM0aUtSun9IHnvDXxo//vl2GBDmHcITnQCauISdlq4Cm8z3o+ZCebtighCZO7TltazlE/Y7evdIPZGlTgIPfjkG+xtPRYFdT5Ndic4QJ22MfY/ZGZRTFtV/zFqv3bcaUMmeqHVLx5tu3pFi9vrLP2zz703nEcZrTtJ98Y+xawO8=
+	t=1756300419; cv=none; b=OpdvUScWEhk+rgT8iQwoSZPpV6JBiMQSK0LK1cpg18kA21LZhgvOMbHidtLejN82kbOiXEPcQ3LeuCv1qZaP9Nsg62p/sgewSqcFKvNahJULPcUnMTkFZpInTQA5vskzA2mv2ye7C1uC6fcdtJPtnjL3U9CtKyRuRUKesCwj260=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756287261; c=relaxed/simple;
-	bh=j1EBngqqvJ1zJhvz8o6ntw0CQbu9SAuvFckH3ww39WI=;
+	s=arc-20240116; t=1756300419; c=relaxed/simple;
+	bh=eRhLjVe67iKErrxJ74pmlvZqDh8RQqKX7+TmAocxpuc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TOlo7TqEydObkRvqRuXSs0YrMHa7R49wPdbcTkPf2JE9Y7ElfHjy/Dj8T6jgpIbRPCsP/jGjs8AalD+tk1hrdj8bcOcPC8zdtZPOToMeV6O9jxrICCSD9cGtyuVON71zF23nTCXzGJ4xh/KY8X37qfXOiwh2rPksDTceFCcpUh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=HtLJXVpG; arc=none smtp.client-ip=54.254.200.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	 In-Reply-To:Content-Type:Content-Disposition; b=FzvEHDIjJdpW34rCwwsFLfD3U1fmo0A01ZFKfHW/M3FrYvcM6shl2fiGddsu9b7iqcstlCHL6xdesJM3tOACe9gH1JDbS7ceoRdUMrsL2D9kmrlW1seNg3ZdkQIRZoitjkIkNezSZ6N3GJpPCj+1AfKU1cwEXG5BTfnVk8Whc2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=b6sfeUg1; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="HtLJXVpG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1756287130;
-	bh=6eeMVxwkfOT98px7m/TPeZ9Mrao8kB0xahBdzHlt5JQ=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=HtLJXVpG4TrcZO9ggBhvYTCVTvCxJ6AjCNqaUTFN+wSBSI358rUSfVNxdEtzaKTyW
-	 e2tOQ3Thfxx+VaonXUS9TlihICGwhVPosJ12HaYsj+qa6gKx6XJv13NjH5iOzAiKB+
-	 AWjLHc57wTlLeq0vZFeyF2wSAVReSBJ49oAORpGI=
-X-QQ-mid: esmtpgz11t1756287123te9b25669
-X-QQ-Originating-IP: YulJEb3+/X1m8HZW1gm5HQdoovwYx9pwQ5ltU3NREuQ=
-Received: from = ( [61.145.255.150])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 27 Aug 2025 17:32:02 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 4606825760503529289
-EX-QQ-RecipientCnt: 9
-Date: Wed, 27 Aug 2025 17:32:02 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troymitchell988@gmail.com>
-Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH 3/6] i2c: spacemit: disable SDA glitch fix to avoid
- restart delay
-Message-ID: <DCC64908985C6746+aK7QkmNHa_QMRfgh@LT-Guozexi>
-References: <20250827-k1-i2c-atomic-v1-0-e59bea02d680@linux.spacemit.com>
- <20250827-k1-i2c-atomic-v1-3-e59bea02d680@linux.spacemit.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="b6sfeUg1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1756300416;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=13LJOrVZbt5/bZNb1010AyPGLHEYUJgw1i+wJLdf1Rs=;
+	b=b6sfeUg1k3h/K+rZmCBUqdC1FVC3pux6Pf71g5GAHVPKij43CoMeWsKftGJGlQ2rVh/VIU
+	GNhyysNGbqz463uou7EP4x7eermxMXYMWOpw1FeWeae0EoMlEWddLDqD5f62BMOvA8VYnW
+	1qLigQxwP30H/zuiYKHCE2PNHwA7ggc=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-689-b_HVZ0rBPxaXKBZgtdFAaw-1; Wed, 27 Aug 2025 09:13:35 -0400
+X-MC-Unique: b_HVZ0rBPxaXKBZgtdFAaw-1
+X-Mimecast-MFC-AGG-ID: b_HVZ0rBPxaXKBZgtdFAaw_1756300415
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7e86499748cso248863185a.1
+        for <spacemit@lists.linux.dev>; Wed, 27 Aug 2025 06:13:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756300405; x=1756905205;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=13LJOrVZbt5/bZNb1010AyPGLHEYUJgw1i+wJLdf1Rs=;
+        b=LEx/2rtVeyntTbTBcJxYtZfaxVXWxTE0AdJqKuNRO/5Ii6cVlfC9puMBVY1gM/iNzJ
+         610RtcywkuPCWszmS7A/fBSZHBzdZ11iRitb5whVuJIIkfM9vGJr+CcgQ1JZ8jcGUtkt
+         LntDpC14kZZ8TGatwzxaoohtV4VZYmofZ4i+b3sGgdaFzUZMsw93R7hXIhduW+HHKrY5
+         b2iHcnaEolKBRbjj9U+Deq1KxWoLdswpNP3frjQ7Sa+0gC9Aai0D2UHytvtFDXVYEQcs
+         Vvl8zgVm3mcXuYTxTptbHZq1vvdK5/gFwR6IOZnBymgKzYEHB+LDvsjqo73aX+6KgoN3
+         pSzg==
+X-Forwarded-Encrypted: i=1; AJvYcCWP9vwOLO1D8RGqz+AqRoP3xmxY8AY7XezANYtgDxsoofmkpy+/0GS2l1Nv3aoGb1oUp+eUwONy4Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwXVlhmsWSXfLqkD2cvl2ooCoc0c+d3fvC5OqknxEAN0g+kVKQW
+	V1hhvhIQHOYkdGXbNsyTXUNChjCsYONnSG6uKAIFFLVdgKIq2mDKHCm3QnjXDJY/CRWwmZN514p
+	OBO23wRNe+zQASYwfIAQXptSKPgzOv5Mccuf1/EAlQthVr3x5husputCzSnD2
+X-Gm-Gg: ASbGncsr6mv5aOyTHG8rOUAbCWOHAlAISEz4FXQkQfGRGziJ2LbVf9xcWT6fL9uBvpI
+	5/SAJzIspSh9i2dIMb0i4IM3TGWclZDftGW1aR9V2bOfDWXqRaeG23+caoX8r9uovow0uwL45jj
+	jr97Y1aapoqZ/sbsZJTIxk7RBdNphKQrjywSbdiLThexDaXyyERd+/8bBGazE1g7o7LGdyDFpSl
+	Vp0EUC/FFoDWXoybl9eScTRyT2AJx5/YkMEyLPkGZ/Banj6wJTz5Bn8ZnyK1x8UVTjFdkW+Gl84
+	sVmV2143IehMYJMFHxAi9zF62Yv2MbuGUKpC0Zc8Z3sTOKuiFgocxROFVECO2WA79o1QrxZDxJW
+	LpVlSNycDB+AnF7iK3Rw=
+X-Received: by 2002:a05:620a:7101:b0:7ed:92c8:7d16 with SMTP id af79cd13be357-7f58d941f59mr592256585a.31.1756300405068;
+        Wed, 27 Aug 2025 06:13:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG//kDH7SoWg5eCSBiMLHP3nCnmfnmaReGS2V45T15TfIErjBPeekutHDc1uHZhw0fUtcQytQ==
+X-Received: by 2002:a05:620a:7101:b0:7ed:92c8:7d16 with SMTP id af79cd13be357-7f58d941f59mr592238785a.31.1756300403878;
+        Wed, 27 Aug 2025 06:13:23 -0700 (PDT)
+Received: from x1 (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7ebeca23e10sm885475785a.6.2025.08.27.06.13.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Aug 2025 06:13:22 -0700 (PDT)
+Date: Wed, 27 Aug 2025 09:13:17 -0400
+From: Brian Masney <bmasney@redhat.com>
+To: Peng Fan <peng.fan@oss.nxp.com>
+Cc: Sudeep Holla <sudeep.holla@arm.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Neal Gompa <neal@gompa.dev>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Palmer <daniel@thingy.jp>,
+	Romain Perier <romain.perier@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Alex Helms <alexander.helms.jy@renesas.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
+	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
+	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Subject: Re: [PATCH 112/114] clk: scmi: remove round_rate() in favor of
+ determine_rate()
+Message-ID: <aK8EbcEHz3Yzpa1W@x1>
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+ <20250811-clk-for-stephen-round-rate-v1-112-b3bf97b038dc@redhat.com>
+ <20250827070933.GB18994@nxa18884-linux.ap.freescale.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+In-Reply-To: <20250827070933.GB18994@nxa18884-linux.ap.freescale.net>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: xJHPgqQ6JOs2nhucQakJbtKnQzGvFR8KVnXgphBtOfA_1756300415
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250827-k1-i2c-atomic-v1-3-e59bea02d680@linux.spacemit.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: OSUW9vQLVhiZfERrVpjaLNcVCB83QdYWKIeN0TNgaFnjhSMj2TXYNb+x
-	rWZRWnVpQfJaQLaOJXtIvkRbyLto8AaOX6NeRh4NaVxe5wI6Ff87s+oWMgGjUOBZDMD+x4u
-	QpUhtqYzpSs4jVDse4ubDru+9seIlXoY2rSYoxHvo/MNeZVZ8GPiQEkzZBLKu7wdsXShx+d
-	rJroyuQ5jJ6nv5tBflFAvSLAGuZ9nAp9c/gHAe+3lUtEu3suCBbD3MEc1HfYdm4uGKvrlfi
-	IBh+U9B7cVhD20rlNlx9MuNHv6ZUEhE19Fzm5GwPsWoT3HyQop6x3eh2ct/nMr+mLoNoJpW
-	2nhGCFmlyV7IjEEzCzUgVIIdh8SqQlzpx/OawT+flYX+5TLMHi0j6dY/MFGdlbckXQaXqIN
-	8xeGow/PzLC/OW1NlYP5FA7vsvF52QDCaEuYePwgXGM/tzhJwRz0ILYeooFW9F4NvLHyTa4
-	wZLQRW2l0ja8tmUt2ymXSGLBsDCadp7EZB0uIFV5jDZWW1Y09BvJDdW+f2+KN+7VpudNDDy
-	8a43vdK89tq0HH3QvXXZnyFaxA1drfYbvNfuGO/Hn8l4aG6fGtPFWaa3gGmuIEkWyxNHkGF
-	o/uwO+vm5UspXY13MWSZm+ndk2Vu4OSEs2TMfr2g7yGEadQ/IAg4GY6pR9o+o8AZyh5+IOH
-	VG5dYxoRpg6f83HxD1vbOkUAUtVVFOY+308V9QWtdro5JPNkhGQlfjSRoIdYm6Er0+OUwMg
-	s4yg5OzNJfJZKc04FLkpbvbbYvDl0v42STC/x7RDwv7LUUWsfI6B5czaPW6tJVuLD0k1rkv
-	tAxZ7gki6NwS8V3GYMSEmyPbPwpuVsMVwCWf4HQTpx9hRZ5eUr3oJzVTvayTVbUcYGUE4m2
-	KVYtWWPqszjTE9UYzj/wGHHRJZnE/iNYtLhv4HmWWl8krUq6mBehs23VQ3o4eDOFqKHPiAT
-	zZ71pk4OqABtijsROLYdeyVIuT/ShYYvCul70TS7VIoQXYZX5MrIzsGTE8wvoidY0BOSWqs
-	wasneLhp9ZhTMDkwOkTx6Dy1Np+Xoq/W2W9VHdjAyKxV4LBldT5b6PrKQ0Ae5tEe7tPuOuX
-	A==
-X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
-X-QQ-RECHKSPAM: 0
 
-On Wed, Aug 27, 2025 at 03:39:10PM +0800, Troy Mitchell wrote:
-> The K1 I2C controller has an SDA glitch fix that introduces a small
-> delay on restart signals. While this feature can suppress glitches
-> on SDA when SCL = 0, it also delays the restart signal, which may
-> cause unexpected behavior in some transfers.
+On Wed, Aug 27, 2025 at 03:09:33PM +0800, Peng Fan wrote:
+> Hi Brian, Sudeep, Cristian
 > 
-> The glitch itself does not affect normal I2C operation, because
-> the I2C specification allows SDA to change while SCL is low.
+> On Mon, Aug 11, 2025 at 11:19:44AM -0400, Brian Masney via B4 Relay wrote:
+> >From: Brian Masney <bmasney@redhat.com>
+> >
+> >This driver implements both the determine_rate() and round_rate() clk
+> >ops, and the round_rate() clk ops is deprecated. When both are defined,
+> >clk_core_determine_round_nolock() from the clk core will only use the
+> >determine_rate() clk ops, so let's remove the round_rate() clk ops since
+> >it's unused.
+> >
+> >Signed-off-by: Brian Masney <bmasney@redhat.com>
+> >---
+> > drivers/clk/clk-scmi.c | 30 ------------------------------
+> > 1 file changed, 30 deletions(-)
+> >
+> >diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
+> >index d2408403283fc72f0cf902e65f4c08bcbc7b4b0b..6c6ddb92e7cf6a0cfac2c7e19c0f15f777bb8c51 100644
+> >--- a/drivers/clk/clk-scmi.c
+> >+++ b/drivers/clk/clk-scmi.c
+> >@@ -54,35 +54,6 @@ static unsigned long scmi_clk_recalc_rate(struct clk_hw *hw,
+> > 	return rate;
+> > }
+> > 
+> >-static long scmi_clk_round_rate(struct clk_hw *hw, unsigned long rate,
+> >-				unsigned long *parent_rate)
+> >-{
 > 
-> To ensure correct transmission for every message, we disable the
-> SDA glitch fix by setting the RCR.SDA_GLITCH_NOFIX bit during
-> initialization.
+> I see the point of round_rate is not used if determine_rate is there.
+> But reading the code of round_rate, It might be better to rename
+> scmi_clk_round_rate to scmi_clk_determine_rate.
 > 
-> This guarantees that restarts are issued promptly without
-> unintended delays.
-These are the restart waveforms before [1] and after [2] disabling the fix.
+> Anyway, need Sudeep and Cristian to comment.
 
-Link:
-https://psce.pw/839rzq [1]
-https://psce.pw/839s4q [2]
+In this case, yes the round_rate implementation is filled out, whereas
+the determine_rate lets the firmware handle it, and
+scmi_clk_recalc_rate() will later populate the rate the clock is running
+at.
 
----
-And I'll put above information into the commit message in the next version.
+I can convert round_rate over to determine_rate in this case, however it
+would be a change to what's there now, and risks a regression. Here's
+the relevant code from drivers/clk/clk.c where the determine_rate and
+round_rate ops are called:
 
-                 - Troy
-> 
-> Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  drivers/i2c/busses/i2c-k1.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-> index d342752030d077953adf84a2886211de96e843c4..c1656b78f1681729ccc2ebca6e290259d14889d9 100644
-> --- a/drivers/i2c/busses/i2c-k1.c
-> +++ b/drivers/i2c/busses/i2c-k1.c
-> @@ -14,6 +14,7 @@
->  #define SPACEMIT_ICR		 0x0		/* Control register */
->  #define SPACEMIT_ISR		 0x4		/* Status register */
->  #define SPACEMIT_IDBR		 0xc		/* Data buffer register */
-> +#define SPACEMIT_IRCR		 0x18		/* Reset cycle counter */
->  #define SPACEMIT_IBMR		 0x1c		/* Bus monitor register */
->  
->  /* SPACEMIT_ICR register fields */
-> @@ -76,6 +77,8 @@
->  					SPACEMIT_SR_GCAD | SPACEMIT_SR_IRF | SPACEMIT_SR_ITE | \
->  					SPACEMIT_SR_ALD)
->  
-> +#define SPACEMIT_RCR_SDA_GLITCH_NOFIX		BIT(7)		/* bypass the SDA glitch fix */
-> +
->  /* SPACEMIT_IBMR register fields */
->  #define SPACEMIT_BMR_SDA         BIT(0)		/* SDA line level */
->  #define SPACEMIT_BMR_SCL         BIT(1)		/* SCL line level */
-> @@ -237,6 +240,14 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
->  	val |= SPACEMIT_CR_MSDE | SPACEMIT_CR_MSDIE;
->  
->  	writel(val, i2c->base + SPACEMIT_ICR);
-> +
-> +	/*
-> +	 * The glitch fix in the K1 I2C controller introduces a delay
-> +	 * on restart signals, so we disable the fix here.
-> +	 */
-> +	val = readl(i2c->base + SPACEMIT_IRCR);
-> +	val |= SPACEMIT_RCR_SDA_GLITCH_NOFIX;
-> +	writel(val, i2c->base + SPACEMIT_IRCR);
->  }
->  
->  static inline void
-> 
-> -- 
-> 2.50.1
-> 
+    static int clk_core_determine_round_nolock(struct clk_core *core,
+                                               struct clk_rate_request *req)
+    {
+    	...
+            if (clk_core_rate_is_protected(core)) {
+                    req->rate = core->rate;
+            } else if (core->ops->determine_rate) {
+                    return core->ops->determine_rate(core->hw, req);
+            } else if (core->ops->round_rate) {
+                    rate = core->ops->round_rate(core->hw, req->rate,
+                                                 &req->best_parent_rate);
+    	...
+
+If Sudeep / Cristian want the round rate converted to determine rate in
+this driver, then I can do that in a v2.
+
+Brian
+
