@@ -1,189 +1,189 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B729478
-	for <spacemit@lists.linux.dev>; Wed, 27 Aug 2025 13:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C676F35691D
+	for <spacemit@lists.linux.dev>; Wed, 27 Aug 2025 13:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756300680; cv=none; b=Lzzh+Pc5sr5qy4020HMCJlWbQhNg4qZWJhTiWTIb0ShqwIlbKYyKufQeRlq4vyOG9oMVg6DMrJV1YVyZxZ5kvPcViqyfWzwzJjaH4EPN/X1Abxtmb6J3Mr+S1tKbEOka2ImhqvRbVYoBNTcoTy4naMiyXBfRcxVCenakOca8OdM=
+	t=1756302631; cv=none; b=bc9h+gGGyZ/ohefJtj25jaExmeN0UpW35lBCbimGbcRsGY9EQSZr0b5n+WQOlj4wihDQzWTxt7aAZYmNnrWYQFLJBgETU/Jspn+hASSp+pugOR9tNjcwBpYIbKNlj17472tC1uN5qd2WSWI1dXptI9fLM5dVhAKq2yXj8ByGPBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756300680; c=relaxed/simple;
-	bh=cheHazgTGDhKXw7vq6atCi2XUFv5oxx6gGI7RH7+KeA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OoPr2Pra/Av8tacOstkP17k1tADYa7mIfk7L2ECGZzRlHrTvI7+lFIpJXz1qatW+XicYX93nkRq96jVlGn0ZSVn8GfwX31e3ksEOWfZyR4WmB9r5lNHQH3chORog85Bg5WTfZp8TIke6p5mEUWGgJLSI9+XEFDJOCBHWgxCTpKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.102] (unknown [114.241.87.235])
-	by APP-05 (Coremail) with SMTP id zQCowAC3SFljBa9oUlCJDw--.28806S2;
-	Wed, 27 Aug 2025 21:17:24 +0800 (CST)
-Message-ID: <9b83e78a-0456-4b43-9380-0e2b83933246@iscas.ac.cn>
-Date: Wed, 27 Aug 2025 21:17:23 +0800
+	s=arc-20240116; t=1756302631; c=relaxed/simple;
+	bh=sjDy2yPaMyRUWRHA7zNCNkrYIPM6l4g0nDQeVISxPDs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VvLjF50lMH9BSuMKY/T0ifYiu9BvZ9cOl5k7gZaEOMdlVu7hNVjMY+LLOvtvLKbsV9m/MjIAwQ7d9WPFuzzMuXPGB5Z73mcC/HTaQFguerZhp7GLSzOEsM5jbgU9U0O7aaj1x4c+U7gEezTN1/gqIlOd69QCOx2KAlSMkcOe0IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com; spf=none smtp.mailfrom=foss.arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=foss.arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D1ECC1688;
+	Wed, 27 Aug 2025 06:50:20 -0700 (PDT)
+Received: from bogus (unknown [10.57.57.52])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A11B23F694;
+	Wed, 27 Aug 2025 06:50:11 -0700 (PDT)
+Date: Wed, 27 Aug 2025 14:49:48 +0100
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Brian Masney <bmasney@redhat.com>
+Cc: Peng Fan <peng.fan@oss.nxp.com>, Sudeep Holla <sudeep.holla@arm.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Neal Gompa <neal@gompa.dev>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Palmer <daniel@thingy.jp>,
+	Romain Perier <romain.perier@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Alex Helms <alexander.helms.jy@renesas.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
+	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
+	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Subject: Re: [PATCH 112/114] clk: scmi: remove round_rate() in favor of
+ determine_rate()
+Message-ID: <20250827-abstract-maize-tanuki-d1bdcb@sudeepholla>
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+ <20250811-clk-for-stephen-round-rate-v1-112-b3bf97b038dc@redhat.com>
+ <20250827070933.GB18994@nxa18884-linux.ap.freescale.net>
+ <aK8EbcEHz3Yzpa1W@x1>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v7 2/5] net: spacemit: Add K1 Ethernet MAC
-To: Philipp Zabel <p.zabel@pengutronix.de>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Paul Walmsley <paul.walmsley@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko <vadim.fedorenko@linux.dev>,
- Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>,
- Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20250826-net-k1-emac-v7-0-5bc158d086ae@iscas.ac.cn>
- <20250826-net-k1-emac-v7-2-5bc158d086ae@iscas.ac.cn>
- <eb127fd167cfbd885099a7c4c962eb1135a5a8a0.camel@pengutronix.de>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <eb127fd167cfbd885099a7c4c962eb1135a5a8a0.camel@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-CM-TRANSID:zQCowAC3SFljBa9oUlCJDw--.28806S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxXrWUZF43Jw1kKr4rArWrZrb_yoWrJFy8pa
-	ykJF9IkF4xAr17Kws3Xr4UAF93Xw4IyFyUCrySyw4rXwnFyr1fGry8KrWYkw1vyrZ8CryY
-	va1UZa4I9Fs8u3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvqb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
-	1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
-	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
-	wI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
-	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
-	ZFpf9x07bIBTOUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aK8EbcEHz3Yzpa1W@x1>
 
-Hi=C2=A0Philipp,
+On Wed, Aug 27, 2025 at 09:13:17AM -0400, Brian Masney wrote:
+> On Wed, Aug 27, 2025 at 03:09:33PM +0800, Peng Fan wrote:
+> > Hi Brian, Sudeep, Cristian
+> > 
+> > On Mon, Aug 11, 2025 at 11:19:44AM -0400, Brian Masney via B4 Relay wrote:
+> > >From: Brian Masney <bmasney@redhat.com>
+> > >
+> > >This driver implements both the determine_rate() and round_rate() clk
+> > >ops, and the round_rate() clk ops is deprecated. When both are defined,
+> > >clk_core_determine_round_nolock() from the clk core will only use the
+> > >determine_rate() clk ops, so let's remove the round_rate() clk ops since
+> > >it's unused.
+> > >
+> > >Signed-off-by: Brian Masney <bmasney@redhat.com>
+> > >---
+> > > drivers/clk/clk-scmi.c | 30 ------------------------------
+> > > 1 file changed, 30 deletions(-)
+> > >
+> > >diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
+> > >index d2408403283fc72f0cf902e65f4c08bcbc7b4b0b..6c6ddb92e7cf6a0cfac2c7e19c0f15f777bb8c51 100644
+> > >--- a/drivers/clk/clk-scmi.c
+> > >+++ b/drivers/clk/clk-scmi.c
+> > >@@ -54,35 +54,6 @@ static unsigned long scmi_clk_recalc_rate(struct clk_hw *hw,
+> > > 	return rate;
+> > > }
+> > > 
+> > >-static long scmi_clk_round_rate(struct clk_hw *hw, unsigned long rate,
+> > >-				unsigned long *parent_rate)
+> > >-{
+> > 
+> > I see the point of round_rate is not used if determine_rate is there.
+> > But reading the code of round_rate, It might be better to rename
+> > scmi_clk_round_rate to scmi_clk_determine_rate.
+> > 
+> > Anyway, need Sudeep and Cristian to comment.
+> 
+> In this case, yes the round_rate implementation is filled out, whereas
+> the determine_rate lets the firmware handle it, and
+> scmi_clk_recalc_rate() will later populate the rate the clock is running
+> at.
+> 
+> I can convert round_rate over to determine_rate in this case, however it
+> would be a change to what's there now, and risks a regression. Here's
+> the relevant code from drivers/clk/clk.c where the determine_rate and
+> round_rate ops are called:
 
-Thanks for your review.
+I am inclined towards this. Determine rate was added recently when the
+clock parent support was added IIUC, so I don't think it should regress
+anything.
 
-On 8/26/25 16:54, Philipp Zabel wrote:
-> On Di, 2025-08-26 at 14:23 +0800, Vivian Wang wrote:
->> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
->> that only superficially resembles some other embedded MACs. SpacemiT
->> refers to them as "EMAC", so let's just call the driver "k1_emac".
->>
->> Supports RGMII and RMII interfaces. Includes support for MAC hardware
->> statistics counters. PTP support is not implemented.
->>
->> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
->> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
->> Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
->> Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
->> ---
->>  drivers/net/ethernet/Kconfig            |    1 +
->>  drivers/net/ethernet/Makefile           |    1 +
->>  drivers/net/ethernet/spacemit/Kconfig   |   29 +
->>  drivers/net/ethernet/spacemit/Makefile  |    6 +
->>  drivers/net/ethernet/spacemit/k1_emac.c | 2193 ++++++++++++++++++++++=
-+++++++++
->>  drivers/net/ethernet/spacemit/k1_emac.h |  426 ++++++
->>  6 files changed, 2656 insertions(+)
->>
-> [...]
->> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/eth=
-ernet/spacemit/k1_emac.c
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..9e558d5893cfbbda0baa7a=
-d21a7209dadda9487e
->> --- /dev/null
->> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
->> @@ -0,0 +1,2193 @@
-> [...]
->> +static int emac_probe(struct platform_device *pdev)
->> +{
->> +	struct device *dev =3D &pdev->dev;
->> +	struct reset_control *reset;
->> +	struct net_device *ndev;
->> +	struct emac_priv *priv;
->> +	int ret;
->> +
->> +	ndev =3D devm_alloc_etherdev(dev, sizeof(struct emac_priv));
->> +	if (!ndev)
->> +		return -ENOMEM;
->> +
->> +	ndev->hw_features =3D NETIF_F_SG;
->> +	ndev->features |=3D ndev->hw_features;
->> +
->> +	ndev->max_mtu =3D EMAC_RX_BUF_4K - (ETH_HLEN + ETH_FCS_LEN);
->> +
->> +	priv =3D netdev_priv(ndev);
->> +	priv->ndev =3D ndev;
->> +	priv->pdev =3D pdev;
->> +	platform_set_drvdata(pdev, priv);
->> +
->> +	ret =3D emac_config_dt(pdev, priv);
->> +	if (ret < 0) {
->> +		dev_err_probe(dev, ret, "Configuration failed\n");
->> +		goto err;
-> I'd just
-> 		return dev_err_probe(...);
-> here.
->
->> +	}
->> +
->> +	ndev->watchdog_timeo =3D 5 * HZ;
->> +	ndev->base_addr =3D (unsigned long)priv->iobase;
->> +	ndev->irq =3D priv->irq;
->> +
->> +	ndev->ethtool_ops =3D &emac_ethtool_ops;
->> +	ndev->netdev_ops =3D &emac_netdev_ops;
->> +
->> +	devm_pm_runtime_enable(&pdev->dev);
->> +
->> +	priv->bus_clk =3D devm_clk_get_enabled(&pdev->dev, NULL);
->> +	if (IS_ERR(priv->bus_clk)) {
->> +		ret =3D dev_err_probe(dev, PTR_ERR(priv->bus_clk),
->> +				    "Failed to get clock\n");
->> +		goto err;
-> Same here.
->
->> +	}
->> +
->> +	reset =3D devm_reset_control_get_optional_exclusive_deasserted(&pdev=
-->dev,
->> +								     NULL);
->> +	if (IS_ERR(reset)) {
->> +		ret =3D dev_err_probe(dev, PTR_ERR(reset),
->> +				    "Failed to get reset\n");
->> +		goto err;
-> And here.
->
->> +	}
->> +
->> +	emac_sw_init(priv);
->> +
->> +	if (of_phy_is_fixed_link(dev->of_node)) {
->> +		ret =3D of_phy_register_fixed_link(dev->of_node);
->> +		if (ret) {
->> +			dev_err_probe(dev, ret,
->> +				      "Failed to register fixed-link");
->> +			goto err_timer_delete;
-> If you can move this section before emac_sw_init(), this could also
-> just return.
-I'll take a look on these and clean up in next version, thanks.
->> +		}
-> Then here a function calling of_phy_deregister_fixed_link() could be
-> registered with devm_add_action_or_reset(), to avoid duplicated cleanup=
+> 
+>     static int clk_core_determine_round_nolock(struct clk_core *core,
+>                                                struct clk_rate_request *req)
+>     {
+>     	...
+>             if (clk_core_rate_is_protected(core)) {
+>                     req->rate = core->rate;
+>             } else if (core->ops->determine_rate) {
+>                     return core->ops->determine_rate(core->hw, req);
+>             } else if (core->ops->round_rate) {
+>                     rate = core->ops->round_rate(core->hw, req->rate,
+>                                                  &req->best_parent_rate);
+>     	...
+> 
+> If Sudeep / Cristian want the round rate converted to determine rate in
+> this driver, then I can do that in a v2.
+> 
 
-> in the error path and in emac_remove().
+Yes please. Also please post it independent if it doesn't have to be in
+the series. To many in cc and lots of patches to respin all.
 
-I'll deal with this. This should be fine, as it's probe-time only.
-
-Thanks,
-Vivian "dramforever" Wang
-
+-- 
+Regards,
+Sudeep
