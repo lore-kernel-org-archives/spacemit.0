@@ -1,96 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85DE3FC7;
-	Thu, 28 Aug 2025 09:04:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AD71B0F1E;
+	Thu, 28 Aug 2025 12:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756371866; cv=none; b=Q01zEm8X7oEAJc/7nKjdFjGodk93ESjXCWM6yRprTaex2LjK0iy2VTO8UQ+XGYOiUR2F1H7ag9dP/dhiThtX2ot1ttuK4L7o4sgS1Bb5SezEzq6QVXpqGvhjdSNt2ptZoMli2eZPoA0msuqpwJ1TdyyZdDHwwZ68W4+VJLNrOi8=
+	t=1756384220; cv=none; b=NNBExxx3kIlqh69zInZyDVuDqocd+hGOmel0IqgYUbzuaXBpYy2uiAxKksYdNxYacurZd5eB9asVdKsOFwfQKc8MXijQMAdUfQBfWI8L5p87vyG8oC8Hb4c5H9sZs8hO9ZEOhB1CsRQ6Aeaj70QR5dgNJbmFWdoq8pZPx79MdxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756371866; c=relaxed/simple;
-	bh=TPlwEAqUUfxSYMur9BAnbzqR8t4bI14b85yX+aPJjns=;
+	s=arc-20240116; t=1756384220; c=relaxed/simple;
+	bh=uaVJpAMdPWrV9NtuD8VA/dcwu9Kie80TwIuBdrhSujE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HblnwaM11vJg2kU69Sv5Xc9aw9BjRrRXd65cadAAvwwhQrZsTMDrGbi2dHXuB0Kb2SgXN9eRVkI4ugtreOc1QiXSjNOjP8mz3F6122MNzCgyS4NDBa+G5YzAJZywMZheW/YOZH/WvUlCET44fwQrq6cLfhw4IBTeulYqqdlilOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SsmQzwib; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=DktvSIqlxi+KQJaFu4/KtrHdty3rbsGZ/hC3o006KGAnKsHs/+CyjeMjwBlds7ObCRqV7R7BCCb1FBpQg6okPloIo+vOUjMl9VmIyTxm+bj5AdJlx6PLfJ92YPyBlMu65YruxdF/ZsFr9IlG0mhxcH/q3PXyler/MQqO6MpAnxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=mY8/R/zy; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SsmQzwib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE05BC4CEEB;
-	Thu, 28 Aug 2025 09:04:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756371865;
-	bh=TPlwEAqUUfxSYMur9BAnbzqR8t4bI14b85yX+aPJjns=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SsmQzwibKQi9UDmQWzJ8eBbp2x0AJfyN+C2oWEp5wiHDYVhExt0dTHMLhdATQAAzu
-	 juWMJc6wqmWUZYFzR274O8Cz9y3q8kr4+X8FpRhuOIZ9hnVzlSSyBMjgAjKNwHHxdp
-	 5XDH9DHXJgj5bGUvf8LJUh+ksw4U4edtUfvnMkpuAr9k1yFvhsXm0P1L8BRRSruFKA
-	 gIhUX8nCSEpRjpMCs22Pa//3v+Ez03Sv9tyGoGKHeJpqkBirTMQir2DNOEiZihl8W/
-	 WUAhsV8d0365iS8oRZGTDJolo1quix0mQtRc8OU87aa7Me4CSQqZhZrXjIdhQ6H87x
-	 Vmt/6d2YY1GLA==
-Date: Thu, 28 Aug 2025 11:04:19 +0200
-From: Mark Brown <broonie@kernel.org>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="mY8/R/zy"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=gKv9reSnTFal7lXW3j+/yEjJ6IbCvDAdZ9nuha3XXs0=; b=mY8/R/zy6i0Kh4sWhO7Di3jfhe
+	O1fXCoavC+3xOR1GDmIBwvtHBmXI6uVfOS3xgp3smq4SaVR5AqwjFaeGah/392dLciS56KV4Gd2Nn
+	PlnfiS5M3FZfnoHd71YVXyepEf4+dQv4LBgbqlxmzAHIIOflkl7Jd6d+jZW8tY/TcUIs=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1urbl7-006LUg-DP; Thu, 28 Aug 2025 14:29:41 +0200
+Date: Thu, 28 Aug 2025 14:29:41 +0200
+From: Andrew Lunn <andrew@lunn.ch>
 To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
+Cc: Vivian Wang <wangruikang@iscas.ac.cn>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Jinmei Wei <weijinmei@linux.spacemit.com>
-Subject: Re: [PATCH v2 2/2] ASoC: spacemit: add i2s support for K1 SoC
-Message-ID: <aLAbk_0emidBCJBn@finisterre.sirena.org.uk>
-References: <20250828-k1-i2s-v2-0-09e7b40f002c@linux.spacemit.com>
- <20250828-k1-i2s-v2-2-09e7b40f002c@linux.spacemit.com>
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Vivian Wang <uwu@dram.page>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Simon Horman <horms@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v7 2/5] net: spacemit: Add K1 Ethernet MAC
+Message-ID: <ecd74582-6d65-42eb-999d-05dbfc898370@lunn.ch>
+References: <20250826-net-k1-emac-v7-0-5bc158d086ae@iscas.ac.cn>
+ <20250826-net-k1-emac-v7-2-5bc158d086ae@iscas.ac.cn>
+ <193454B6B44560D1+aK-x9J2EIB5aA9yr@LT-Guozexi>
+ <6c221dcf-4310-4e31-b3e8-a8a3b68c3734@iscas.ac.cn>
+ <D1B3E8CA05947AC1+aLAT40m4VCtlL2Yk@LT-Guozexi>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IrVDbH9LoaPONBFP"
-Content-Disposition: inline
-In-Reply-To: <20250828-k1-i2s-v2-2-09e7b40f002c@linux.spacemit.com>
-X-Cookie: Filmed before a live audience.
-
-
---IrVDbH9LoaPONBFP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <D1B3E8CA05947AC1+aLAT40m4VCtlL2Yk@LT-Guozexi>
 
-On Thu, Aug 28, 2025 at 11:37:33AM +0800, Troy Mitchell wrote:
+> > You tricked me! There's one more review comment below :P
+> Haha, You are so cute, Vivian.
+> I'm surprised you were able to find it, because I went back to check after
+> writing the last comment. So I wasn't able to find the final one myself.
+> 
+>                 - Troy
+> 
+> (This really is the final one this time.)
 
-> +	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
-> +	case SND_SOC_DAIFMT_DSP_A:
-> +	case SND_SOC_DAIFMT_DSP_B:
-> +		cpu_dai->driver->playback.channels_min = 1;
-> +		cpu_dai->driver->playback.channels_max = 1;
+A nice illustration of why trimming replies to just the needed context
+is a good idea.
 
-> +	if ((fmt & SND_SOC_DAIFMT_FORMAT_MASK) == SND_SOC_DAIFMT_DSP_A)
-> +		sspsp_val |= SSPSP_FSRT;
+Andrew
 
-It's weird and confusing that this isn't part of the above switch case.
-
-> +static void spacemit_i2s_remove(struct platform_device *pdev)
-> +{
-> +	/* resources auto-freed by devm_ */
-> +}
-
-If this can be empty remove it.
-
---IrVDbH9LoaPONBFP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmiwG5IACgkQJNaLcl1U
-h9DEBwf8CjgP9iYOM59KBwLN1PBvfkTbqxuShgQ2esRqY3g9E+E0u4gOerkNFSIf
-iplSbs8EnqnWhR0vLEu5R21t7bGFDO+kduLEd0RUAMteul7WigeidWdcYDUw7nw1
-CsTv7yQi2IohE/ZX+ONm4Ym7X/78WJ1VsOQH6w6VHQjLKkSBHsrEgOPsjbIjfXUM
-tDicL8Jqpi+fhWKxLtcUxnY3XTlcBqKVFXp/aJ4knGZfziOm8Lsw4vx3sayqy+Zf
-qW6eGt67WEmVwjubXse+QXmS+qLJva9q4ryigYX6FG3g1F/H15oprXtRvBkSA+SZ
-4Zp2HphxLUx8ofFWI1+JaROSETbkUw==
-=UqWf
------END PGP SIGNATURE-----
-
---IrVDbH9LoaPONBFP--
+---
+pw-bot: cr
