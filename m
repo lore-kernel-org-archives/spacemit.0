@@ -1,167 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A37201033;
-	Fri, 29 Aug 2025 17:16:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787E515C0
+	for <spacemit@lists.linux.dev>; Mon,  1 Sep 2025 00:16:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756487786; cv=none; b=MKd48sNbZEjMyIuS9RwP/uTE6oL+OLwaVJlHkjMm4SMISR/qxVBD13CHstGO5rpxJwThS/QCAtYkP414CdwP2zoWjM1eoIEGhDLDw4Bs6Gw5afBKC0PpZddjTWP2Q5hrDGG769rUQgTxXgN51CjQ5JKU3FSnn3CkGRBu3KsY7ik=
+	t=1756685791; cv=none; b=hVcbCGolmU0gFSY4bZLG9l55DtjhsQIYZa0S4iXE5gadxA16wbIjtIDIxmtzfawTufEyOim2A7uFQWldAs6b3iYddcZBlzS14VIyYau2BlQom0zqlEZmFvPHpncrhxI3FMYtvJK3vWjg6wOteBYr7E/SiFI0acX9lxjqMyXtHvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756487786; c=relaxed/simple;
-	bh=NkhK1p1B1g1OXGW0TTzXh6oyW/wktWgGjhNbONvL0ck=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EtV85PcXD841ZOAkIAUB/FWThzMIOcGCCysRiyvde1nbEDa/rJzdau17xPfZmW3yMmViBnXN4ITe5KEGS28+TGRCoHOJ5/01d0BIvdS6vj4b9baAvGa+60N5LXZ4ZUHnluqjtW1KO3CZqKluZq2reI8Rda4gBplPyzAUbNuCb8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=twPkUgMz; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="twPkUgMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A922CC4CEF0;
-	Fri, 29 Aug 2025 17:16:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756487785;
-	bh=NkhK1p1B1g1OXGW0TTzXh6oyW/wktWgGjhNbONvL0ck=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=twPkUgMzYYFnifeH0CQK/tHCLW6lk1U1XRUws/fir+jyChH6lqXpyktSXxOv9sxn8
-	 CjYB6J6MZH3EsmaYoFoVW9htpqd19gu+ASZf5z50X5ijZmZRSTAdRhIVlx7RIp8tmN
-	 o1ne/W8BHqaIt0iRW/N2SjxWN4cZWxG551XhcMEovc9Tq5uuSt4ffW1/Q2GJUutbdy
-	 kmY/lSfnboTVWwYEPKKaW6mPhjEfdDcGSjpaqAGAubhdREneQAd7QE089bLIDEsT58
-	 nQoA3lQrla9HclE+k2HS91G3KgnVnsNzB4IE6aMxuQUVKkk/YXJ+t5f9D2GT4iV0wB
-	 zueFmj8PqFRNg==
-Date: Fri, 29 Aug 2025 12:16:24 -0500
-From: Rob Herring <robh@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] ASoC: dt-bindings: Add bindings for SpacemiT K1
-Message-ID: <20250829171624.GA1027608-robh@kernel.org>
-References: <20250828-k1-i2s-v2-0-09e7b40f002c@linux.spacemit.com>
- <20250828-k1-i2s-v2-1-09e7b40f002c@linux.spacemit.com>
+	s=arc-20240116; t=1756685791; c=relaxed/simple;
+	bh=A8CJH8d6GSvOgPhvYUIcGgITw4AVgLYOx6HdbUNV1IY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tKTsuhinr18bS5xKA0kbUBJXW4Gi4h3FCJtbT80R0bbOPnu4+bGgnRLpmpr2XOsfafECuDsDBVkN4ZARo5238xN2egqqTETXo3NHoYytBhTAY+QrAl0u4j05G313MYzGjRlmwGC4czMaLrOknf6ooNoZuRSlIhdvHaNbo5de8zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.102] (unknown [114.241.87.235])
+	by APP-05 (Coremail) with SMTP id zQCowAAnulqt5bRozJxqEA--.28114S2;
+	Mon, 01 Sep 2025 08:15:42 +0800 (CST)
+Message-ID: <ce7508df-f154-4fd7-a621-abe371c1cb4a@iscas.ac.cn>
+Date: Mon, 1 Sep 2025 08:15:41 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250828-k1-i2s-v2-1-09e7b40f002c@linux.spacemit.com>
-
-On Thu, Aug 28, 2025 at 11:37:32AM +0800, Troy Mitchell wrote:
-> Add dt-binding for the i2s driver of SpacemiT's K1 SoC.
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  .../devicetree/bindings/sound/spacemit,k1-i2s.yaml | 88 ++++++++++++++++++++++
->  1 file changed, 88 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/sound/spacemit,k1-i2s.yaml b/Documentation/devicetree/bindings/sound/spacemit,k1-i2s.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..042001c38ed8d434889183831e44289ea9c5aef2
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/spacemit,k1-i2s.yaml
-> @@ -0,0 +1,88 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/spacemit,k1-i2s.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: K1 I2S controller
-> +
-> +description:
-> +  The I2S bus (Inter-IC sound bus) is a serial link for digital
-> +  audio data transfer between devices in the system.
-> +
-> +maintainers:
-> +  - Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> +
-> +allOf:
-> +  - $ref: dai-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: spacemit,k1-i2s
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: clock for I2S sysclk
-> +      - description: clock for I2S bclk
-> +      - description: clock for I2S bus
-> +      - description: clock for I2S controller
-> +
-> +  clock-names:
-> +    items:
-> +      - const: sysclk
-> +      - const: bclk
-> +      - const: bus
-> +      - const: func
-> +
-> +  dmas:
-> +    minItems: 1
-> +    maxItems: 2
-> +
-> +  dma-names:
-> +    oneOf:
-> +      - const: rx
-> +      - items:
-> +          - const: tx
-> +          - const: rx
-
-If tx is optional, wouldn't this be simpler:
-
-minItems: 1
-items:
-  - const: rx
-  - const: tx
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v8 2/5] net: spacemit: Add K1 Ethernet MAC
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>,
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20250828-net-k1-emac-v8-0-e9075dd2ca90@iscas.ac.cn>
+ <20250828-net-k1-emac-v8-2-e9075dd2ca90@iscas.ac.cn>
+ <58E42B0649434EDA+aLEHlp1jfLVxVZWR@LT-Guozexi>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <58E42B0649434EDA+aLEHlp1jfLVxVZWR@LT-Guozexi>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:zQCowAAnulqt5bRozJxqEA--.28114S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Kw48tw48tF15KFW3ur48Zwb_yoW8ArW7pa
+	13Ga4q9rZ2yr47Gr9xZ3WDAa9Yvw4jkFyjyFW5tr1rWF1qy34aqrnrtw45u348ur48G3yY
+	vr4jva4Iqas8A3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvGb7Iv0xC_KF4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwV
+	C2z280aVCY1x0267AKxVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVAC
+	Y4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJV
+	W8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkI
+	wI1lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr
+	0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY
+	17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcV
+	C0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY
+	6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa
+	73UjIFyTuYvjxU3wIDUUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
 
-> +
-> +  resets:
-> +    maxItems: 1
-> +
-> +  port:
-> +    $ref: audio-graph-port.yaml#
-> +    unevaluatedProperties: false
-> +
-> +  "#sound-dai-cells":
-> +    const: 0
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - dmas
-> +  - dma-names
-> +  - resets
-> +  - "#sound-dai-cells"
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
-> +    i2s@d4026000 {
-> +      compatible = "spacemit,k1-i2s";
-> +      reg = <0xd4026000 0x30>;
-> +      clocks = <&syscon_mpmu CLK_I2S_SYSCLK>,
-> +               <&syscon_mpmu CLK_I2S_BCLK>,
-> +               <&syscon_apbc CLK_SSPA0_BUS>,
-> +               <&syscon_apbc CLK_SSPA0>;
-> +      clock-names = "sysclk", "bclk", "bus", "func";
-> +      dmas = <&pdma0 21>, <&pdma0 22>;
-> +      dma-names = "tx", "rx";
-> +      resets = <&syscon_apbc RESET_SSPA0>;
-> +      #sound-dai-cells = <0>;
-> +    };
-> 
-> -- 
-> 2.50.1
-> 
+On 8/29/25 09:51, Troy Mitchell wrote:
+> On Thu, Aug 28, 2025 at 04:47:50PM +0800, Vivian Wang wrote:
+>> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
+>> that only superficially resembles some other embedded MACs. SpacemiT
+>> refers to them as "EMAC", so let's just call the driver "k1_emac".
+>>
+>> Supports RGMII and RMII interfaces. Includes support for MAC hardware
+>> statistics counters. PTP support is not implemented.
+>>
+>> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+>> Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+>> Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+>> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
+>> Tested-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>> ---
+> [...]
+>> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..49afe9312a742c27dd35a015d75a1de7ec5c7d15
+>> --- /dev/null
+> [...]
+>> +
+>> +static int emac_phy_interface_config(struct emac_priv *priv)
+>> +{
+>> +	u32 val = 0, mask = PHY_INTF_RGMII;
+>> +
+>> +	switch (priv->phy_interface) {
+>> +	case PHY_INTERFACE_MODE_RMII:
+>> +		mask |= REF_CLK_SEL;
+> How about we move `val = 0` to here? 
+> This makes it clearer that val should be 0 when PHY_INTERFACE_MODE_RMII,
+> instead of being hidden in the initialization.
+
+I'll probably just use phy_interface_mode_is_rgmii or something for val.
+
+I will clean this up, but I'll wait for a few more changes to batch up
+before sending the next version.
+
+> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
+Thank you!
+
+Vivian "dramforever" Wang
+
