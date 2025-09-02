@@ -1,107 +1,88 @@
-Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF41226AF3
-	for <spacemit@lists.linux.dev>; Tue,  2 Sep 2025 01:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EBB2EAB81;
+	Tue,  2 Sep 2025 09:50:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756777241; cv=none; b=QqB+U252zMs1isonYdRqEnFdK5hykk5q4cFpULzQbmUdzMBgi+eP0VR/JKpnYG/k76neq65nnKASZolqVQLRY+sp4Y8yMAS5M7I9TXhN/P9zeVf6sStphW6L8pNhLQdvGxI6nn2MzoEcQDSiaN2hCeb/C+i1NTQVP6Rh1WrQoCs=
+	t=1756806608; cv=none; b=pbrbj+OJaUUymDC4nf6dSUcub9xK8s6f240p7Why5sUkkxKh+XvCTVN0QMtBx3YnVEkudSCLSKpxxMjmuNT8qD8zR1y6cxDLIVO09ipVBsufqreeY2iuVEpbvct6fhe6/X/IAfTcWKZ6+Ob7M1UWVRF5xV8FiAIjEPXZwk8WaD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756777241; c=relaxed/simple;
-	bh=7+ZmVvbuSWjNsHKt4aH0z0j5m0PLR7z1c10b2M+RKhA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gRA5m7Um9XnA0RtQAXvYz3vjirsrnUX8cYi3GCCYUWjGJ9Se1Q1MRloYcOI7ZWYqZiLFGW2S4MDowC9H/3Af7NIVfNNiILE5+UIHWoDj7A9LvX2M/qmbVXMy26Dw7jqDO9QDcwsUTr6+w+FoI6FjP0YV0K7yJo+lCDT5z4T08SU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=wyS7bbF/; arc=none smtp.client-ip=18.169.211.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1756806608; c=relaxed/simple;
+	bh=qbKcoCnyI7prTmn2e4S8kHQTAUMV3OUtBdKQxOT3nYs=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=i1vflsYQQ1IQHJCRTkOVBATlbfCmmgnhiE/u/VoJ69dYhKh4w5wL56SJurCy+ozKiBYts/ber62cMYJ2yW7VYnBtyHZ/eFMnBRtkC3fwAnqo8PzdCWvSRBd0w5kXPIN1Wx1/u0fjZT7Wygn1nmA7JFxeXPvXQO/2zh+wThrhUO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k8ruingw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="wyS7bbF/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1756777189;
-	bh=Wx6uFFrlOYm1QT1WpGuIUZOo6tC3AIX9NR1xVvEN+A0=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=wyS7bbF/5ngMZJsCNh6GJqibAtoDnt+jULiUPL5JUSqh87OfSYXTraJBe6L5Id7uk
-	 6xDa/UDwM47trUZizPuSHMI25v0/TexfJanWZfk0Oi1tGzRX6eaRh394Yb8KV/GqYx
-	 SXOiPD8cVJLeDC+rwzauYlF0vCAlKtis5ydVqo/c=
-X-QQ-mid: zesmtpgz1t1756777182t6b1f51f6
-X-QQ-Originating-IP: hnb0EBq5kdR38t0NCC6tWx42nt3/po6TjNAAMjiMEw4=
-Received: from = ( [14.123.255.17])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 02 Sep 2025 09:39:40 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7662810495034026138
-EX-QQ-RecipientCnt: 16
-Date: Tue, 2 Sep 2025 09:39:40 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Mark Brown <broonie@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Jinmei Wei <weijinmei@linux.spacemit.com>
-Subject: Re: [PATCH v2 2/2] ASoC: spacemit: add i2s support for K1 SoC
-Message-ID: <C855339EB347C5D6+aLZK3D678QUDB8hA@LT-Guozexi>
-References: <20250828-k1-i2s-v2-0-09e7b40f002c@linux.spacemit.com>
- <20250828-k1-i2s-v2-2-09e7b40f002c@linux.spacemit.com>
- <aLAbk_0emidBCJBn@finisterre.sirena.org.uk>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k8ruingw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BF3C4CEED;
+	Tue,  2 Sep 2025 09:50:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756806607;
+	bh=qbKcoCnyI7prTmn2e4S8kHQTAUMV3OUtBdKQxOT3nYs=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=k8ruingwTTYBUbt3by1J5OOjSTZhVyaU4tHBF1Gae/gFogtsNgm7byLyGgEC0Cf3+
+	 YFEk2g1u5b1Dq8k9IDTnIqxFfK5CCIjI/VrzYo1fecM1TBbIzymPyFhXA0SEU89zLm
+	 /8GUNmG4+Nb49r54jESMtZOVpEd51ohtY7QOymGGw8lCV1cg7gvV9msFEWIewr5v1A
+	 B6tuadsViNb8LilGhWGieHQZxpGQbmXCeBwsCoZCu0xrI6GuQdNPMABZwguJ9FpJlT
+	 J5Gq+NoaS0ySwrx7Gz7VIyBrwhPtbY1pjEhGl8TsAXw3zKRHcBgKKVNCiJ4stXYU9L
+	 Itdw4kkU2+hIA==
+From: Vinod Koul <vkoul@kernel.org>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, duje@dujemihanovic.xyz, 
+ Guodong Xu <guodong@riscstar.com>
+Cc: Alex Elder <elder@riscstar.com>, Vivian Wang <wangruikang@iscas.ac.cn>, 
+ dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Dan Carpenter <dan.carpenter@linaro.org>
+In-Reply-To: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
+References: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
+Subject: Re: (subset) [PATCH v5 0/8] dmaengine: mmp_pdma: Add SpacemiT K1
+ SoC support with 64-bit addressing
+Message-Id: <175680660058.246694.5045747556533020350.b4-ty@kernel.org>
+Date: Tue, 02 Sep 2025 15:20:00 +0530
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aLAbk_0emidBCJBn@finisterre.sirena.org.uk>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: OSUW9vQLVhiZ7WW+uZZjtQFz++ZsfmwhSi2kQzzCdtf93NABFspHbAHe
-	Ft+CDeMgys9wMIP1zjKbh/1wu+UQ1azcgeJmIRGwZBZEV+yF3XZTM9eeruaO3jR0yN8HFUw
-	RCY28ql0AfzX8Rl9XFD6YtoUuTZQPS5XBEV6nw/wPewmYIrKsUk5Zh5uD4nKQdFFHhnywi5
-	Pnsi/S3d7+wNt1qdoJr1vvR2H5GcMfIWKlvlagECO97Pk3w4Y6Hu0jJ3RgTZ2AS7zUlkX2O
-	MXpgddJoAl+F7FoI5r+yPLSLNk2xUoPuVaNfGTATkCHeje+2LsQu+KTgZq7q0pDoZdE4BnF
-	z3fdBpJdLFtC0WfCXEF367vZs9tbjTH1g5gcPU9gAhPQesH+OqOBf9VB65OtZb1y4H9qQ6v
-	PIEAKc0/9j+Mv6yk2amVYgkRmptIjcEuNE9KBeZb98MACzvRPRTC9Lgkk5Za7W9DKuGnTo8
-	zCLIfQ3ysSfhN1hfm/1SCnoOWnJSLz1ShDDD1DzwlU0A7HtaLdWtmr9+1a3y9qLEXJ6/LoT
-	MF/13eJIbqCqXjyrgW4F1naaORUTD2mPj24exJEBMXEhSuCCuDrW87T/ToKY6OsXugDVezq
-	XXMGwRLZanPC/jOwtWzWPvxE1SdPfPo8NHgLRMIisXN/fJnRr6lqcWWwU4jiMcJwmLBuFte
-	SmlGqErdzW/GlzTeXTKNyvgmKqsZpq3J9QHgBajeu7RxrRr+lFTGtbi+DfDAXaKpWSB27xm
-	8+EZRN9jcgmLj+RDXJfln8fnMzpgTqMoTgreo2LERRMFmCBa0VAYZO6jDFqVyc9WsCVN5lI
-	QC6z7kWF79Z111atkP5p9ZlGp5ETDy6pcJZXWWkm6/AcZVOgNbBIGDC5IvHMjN3k6pFLjGs
-	sYdpRdZxtJwew8wD4iTxP8lBUZQbfPWVktXrUZW0ZF+g81t81mb8814lGD9gIIaTF3v2OiN
-	qViL83Qd6pm8TP9KmwF8br/d0au7s61xY2PzfHUshQJUXH4Yc5F0VALKYJXcBdiizUkBSvs
-	s9jEx3BXpnsG8pbD2A011hBLlWcJ3IxlKAjNOXeSJMEvrEj5I4
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On Thu, Aug 28, 2025 at 11:04:19AM +0200, Mark Brown wrote:
-> On Thu, Aug 28, 2025 at 11:37:33AM +0800, Troy Mitchell wrote:
+
+On Fri, 22 Aug 2025 11:06:26 +0800, Guodong Xu wrote:
+> This patchset adds support for SpacemiT K1 PDMA controller to the existing
+> mmp_pdma driver. The K1 PDMA controller is compatible with Marvell MMP PDMA
+> but extends it with 64-bit addressing capabilities through LPAE (Long
+> Physical Address Extension) bit and higher 32-bit address registers (DDADRH,
+> DSADRH and DTADRH).
 > 
-> > +	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
-> > +	case SND_SOC_DAIFMT_DSP_A:
-> > +	case SND_SOC_DAIFMT_DSP_B:
-> > +		cpu_dai->driver->playback.channels_min = 1;
-> > +		cpu_dai->driver->playback.channels_max = 1;
+> In v5, two smatch warnings reported by kernel test bot and Dan Carpenter were
+> fixed.
 > 
-> > +	if ((fmt & SND_SOC_DAIFMT_FORMAT_MASK) == SND_SOC_DAIFMT_DSP_A)
-> > +		sspsp_val |= SSPSP_FSRT;
-> 
-> It's weird and confusing that this isn't part of the above switch case.
-Thanks! I'll change it.
-> 
-> > +static void spacemit_i2s_remove(struct platform_device *pdev)
-> > +{
-> > +	/* resources auto-freed by devm_ */
-> > +}
-> 
-> If this can be empty remove it.
-Yes, I will remove it in the next version.
+> [...]
+
+Applied, thanks!
+
+[1/8] dt-bindings: dma: Add SpacemiT K1 PDMA controller
+      commit: 39ce725e621b256188550492b4b53fb02bfc872e
+[2/8] dmaengine: mmp_pdma: Add clock support
+      commit: e73a9a13c99c5a55abfdb8c273651509be1eb5bb
+[3/8] dmaengine: mmp_pdma: Add reset controller support
+      commit: fc72462bc6107b8babda05cad5bf8f7daf8bec20
+[4/8] dmaengine: mmp_pdma: Add operations structure for controller abstraction
+      commit: 35e40bf761fcb24b1355d6a8d48b5b10683fe1a3
+[5/8] dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support with 64-bit addressing
+      commit: 5cfe585d8624f7482505183dd0e4c534b061e822
 
 Best regards,
-Troy
+-- 
+~Vinod
+
 
