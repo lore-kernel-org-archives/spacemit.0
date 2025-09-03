@@ -1,103 +1,105 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A49A2D4818
-	for <spacemit@lists.linux.dev>; Tue,  2 Sep 2025 13:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B313217F2E
+	for <spacemit@lists.linux.dev>; Wed,  3 Sep 2025 10:01:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820663; cv=none; b=g6dgx5OSmult+6OzOG2FvOv4rkqxEnJjYmzdtH10biMaZ7R9W//8UtRaI+wNEmU53T4uo4uL4KyBN/Mo56OOEVUETEnrJFrhFvZVRZemZ/E2a68btPM/tgpAtKTpbvZRPL6F9atdjxOqVZqq1L3MabGc3enwetEElVrhM3lKlJA=
+	t=1756893717; cv=none; b=KeB6ltUvGLu3a7xtSBlzuSY+zfAyzulZxOZ82mm3BkRm0BUbD3kO2TZk+Qop8yowVOIQw32Li5y+tbNkr2oODm/YnOf6AqBVNAXLRhLMt/5LPqoHbRvGwFpsi5DfVRd7aZOzazEaxrAUO5cL0aa3vevAFdFbVrmdS1b1AIjj4HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820663; c=relaxed/simple;
-	bh=TUhn9SxfyKi/nflbAhcd4p8M9mm2MuZ2K4YLtGozXm0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A0OsVEDbFBlQkmnx7lNSkJr/qefDiAjMkSwVj4rFhiW8Jy68zEEzvu6a6JxSydIGhiApWwcWf1mRcGP4+7IglxJkrYYeHqIl1/btDKYQtpVwNoU1eRBcTybc4r6VgMuNXNWjIyCueQrN0KmUirkSoM+VRdhLhidx3kPbQUB90SU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.168])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 6D527335DC0;
-	Tue, 02 Sep 2025 13:44:21 +0000 (UTC)
-Date: Tue, 2 Sep 2025 21:44:17 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Alex Elder <elder@riscstar.com>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] riscv: dts: spacemit: uart: remove sec_uart1 device
- node
-Message-ID: <20250902134417-GYA1155728@gentoo.org>
-References: <20250902-02-k1-uart-clock-v2-1-f146918d44f6@gentoo.org>
- <680534b4-27e7-4506-885a-1c3dc9d12b8b@iscas.ac.cn>
+	s=arc-20240116; t=1756893717; c=relaxed/simple;
+	bh=kHulDodA6XjjDXaF8f3RTdeG+b7HsT9DN9fR8XCqMLU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ppHKlPwv+oTpVxvbrLeZ5eKinZzTK7APy/gOwUh3PSs1qIG8vJlGBmUPvec5P3A0xzRBuJ4xqmrXvrX3QAz/OHql/y5fntlmAcf8hgIEolK02EvO2HM8CtZp7c3qbjf5dz8rx1j7pkMZbyNjbdrRkUNVp/3mNPEterd4XNAM+dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=lJwrQUt+; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="lJwrQUt+"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45b87bc67a4so25752765e9.3
+        for <spacemit@lists.linux.dev>; Wed, 03 Sep 2025 03:01:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1756893712; x=1757498512; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LJ9qYB7I/+26Ck84iyosBQZh4d5xKjRCMcgtP0AqugE=;
+        b=lJwrQUt+Js3sbt0HhgljnBRowA/cBzBJ2Kd+YYQHhektSYuLkm8t/8rurfF1zx7Vn0
+         eVvq3+ywfW3YqvlJZlNoXSJPo62rps9872LL5QC4OF0EohRCEBFALvhzbMMOw0yxNeF2
+         cHxMUBTE1XEEamV6Iu3V4MPoBsJImUS/0TaXHGu54pUNW6+dKLzfVAGYHCw0zTvVq57s
+         M6EeBJfuMSE4kJj2WhGBJ1dAU5CBJOHJ7B2drttcY3bNNBD/gF1Wc1UrmFJNPBBZxvwb
+         abTaBy0GtWiAqVahFkDVRrn6Li4Q3xhoaWAWhZKsMc+JAGoS+4M7rWkgvLXHVTCq0NaU
+         GIsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756893712; x=1757498512;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LJ9qYB7I/+26Ck84iyosBQZh4d5xKjRCMcgtP0AqugE=;
+        b=OID4phsr3uvuWOaEZxt/ewpXMqUvDr9VQOOl3mRtRZ/yMp0eCnBlOIW2qIZdGwtofR
+         G76C8wIM5TxDCYoiV5hjOZuIjGHlpupzsbH9KgzMImXWdjeC6faLYHSauAw1zl+pXja0
+         AFumVztjbjr6LAjWDoU9u3E0X8DHdoXiDxBRWAR2H97qFYLVHZG+vqU+WPjKSa9Yaky6
+         WD0FKe/cd3c3Vv4/YXVTSk21IbSWJrMIfc9B62QgvZ88nobLWyNnxaEeEUu3kNJF+Z/0
+         0+aXeGqrRjBD80YKoaKTgKvHDK5XDVjYGdWHK0XMoVaXLgmxSLA7bbDyiTEbysnjJCvS
+         6CiA==
+X-Forwarded-Encrypted: i=1; AJvYcCWve6VAgrHxJm/DKP+L+qfGwoVxapg1TJs6Sat1ZslmdvoOdeCqo7w8laM/yDD6bV92LxJLELKvPA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwNKiOIsgxdd66v6PVWsstgQFzXx2/Y87vSQBbN3IG0M8Zg2CkE
+	x7ccuRxvQsy3j/m/npYuYAvOWGs4xIBz8H1AHMvKzJDvIkRQnA+IABtjHWoX0xOkQ30=
+X-Gm-Gg: ASbGncsBmTWmLYF7do/rToj+iGpjT5pe/9RTp2W4YV97js5M/C0Fx1c5dnzZLo3e0Rz
+	1005GqVtLyFv7p4A4ee4vW9WMgUVF+oh5y2/1VMtVUNM8c04jRHgTAN2q2eQ4fP65zd4jXDHVdM
+	FusAE6prawDygX1+O66e3sIfKzhBb3d9npkJn1Bn3y6SdDKtddUhCECxg4l8IBSQYxOMoYdX4NA
+	zWvNVGiRSIm2jjnhqyB4dgkL4B9mQFl6nH8Y1NO/oyX28FDqjmCBSgLSigeUn0GpDEl07W+cI6x
+	3CeQjxI5UMWZnEdlsrocCbIzJZLCsM/pIe8uuGYnEEHWRpzt0Z+8+BKwjnQ32EGYGXOj1VBsofm
+	O29kfKJixaR3IV0St8JknCr4jQOlBj3Ifq9kl47HfxEymmTU5
+X-Google-Smtp-Source: AGHT+IFlZq5oArcxA6dWnPr6LijEjpa+jLN9n3zA6K+uDuCGQ1hNKxqSyhK3P1G01ko5LeH0BDMpxg==
+X-Received: by 2002:a05:6000:26c5:b0:3c8:29eb:732e with SMTP id ffacd0b85a97d-3d1df539ea3mr11440863f8f.59.1756893712086;
+        Wed, 03 Sep 2025 03:01:52 -0700 (PDT)
+Received: from pop-os.telenet.be ([2a02:1807:2a00:3400:7e45:593:64fd:6612])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d729a96912sm10945323f8f.8.2025.09.03.03.01.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Sep 2025 03:01:51 -0700 (PDT)
+From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+To: linus.walleij@linaro.org,
+	dlan@gentoo.org
+Cc: skhan@linuxfoundation.org,
+	linux-kernel-mentees@lists.linux.dev,
+	linux-gpio@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Subject: [PATCH] pinctrl: spacemit: fix typo in PRI_TDI pin name
+Date: Wed,  3 Sep 2025 12:01:04 +0200
+Message-ID: <20250903100104.360637-1-hendrik.hamerlinck@hammernet.be>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <680534b4-27e7-4506-885a-1c3dc9d12b8b@iscas.ac.cn>
+Content-Transfer-Encoding: 8bit
 
-Hi Vivian,
+The datasheet lists this signal as PRI_TDI, not PRI_DTI.
+Fix the pin name to match the documentation and JTAG naming
+convention (TDI = Test Data In).
 
-On 20:55 Tue 02 Sep     , Vivian Wang wrote:
-> 
-> On 9/2/25 20:26, Yixun Lan wrote:
-> > [...]
-> >
-> > diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> > index abde8bb07c95c5a745736a2dd6f0c0e0d7c696e4..3094f75ed13badfc3db333be2b3195c61f57fddf 100644
-> > --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> > +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> > @@ -777,16 +777,7 @@ uart9: serial@d4017800 {
-> >  				status = "disabled";
-> >  			};
-> >  
-> > -			sec_uart1: serial@f0612000 {
-> > -				compatible = "spacemit,k1-uart",
-> > -					     "intel,xscale-uart";
-> > -				reg = <0x0 0xf0612000 0x0 0x100>;
-> > -				interrupts = <43>;
-> > -				clock-frequency = <14857000>;
-> > -				reg-shift = <2>;
-> > -				reg-io-width = <4>;
-> > -				status = "reserved"; /* for TEE usage */
-> > -			};
-> > +			/* sec_uart1: 0xf0612000, not available from Linux */
-> 
-> I know this is going back and forth a lot but I don't think that's a
-> good description of what's going on.
-> 
-> My preference is that we just drop this node altogether, just forgetting
-> that this thing even exists. But if you do think we want to keep the
-yes, removing the comment and completely dropping it is an option..
+Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+---
+ drivers/pinctrl/spacemit/pinctrl-k1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> information we can drop the clock-frequency property too and change its
-> status to something like:
-> 
->   status = "disabled"; /* No clock defined */
-> 
-> Which also silences the warning - disabled nodes are allowed to be
-> incomplete.
-no, set to 'disabled' is simply wrong, it doesn't reflect the meaning of
-"unavaiable", I remembered we've rejected this before introducing the
-'sec_uart1' node in the first place
-
-> 
-> My personal opinion is that I think sec_uart1 and TEE support feels too
-> theoretical to be worth caring about.
-> 
-> Vivian "dramforever" Wang
-> 
-
+diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
+index 9996b1c4a07e..a3f433b611f7 100644
+--- a/drivers/pinctrl/spacemit/pinctrl-k1.c
++++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
+@@ -847,7 +847,7 @@ static const struct pinctrl_pin_desc k1_pin_desc[] = {
+ 	PINCTRL_PIN(67, "GPIO_67"),
+ 	PINCTRL_PIN(68, "GPIO_68"),
+ 	PINCTRL_PIN(69, "GPIO_69"),
+-	PINCTRL_PIN(70, "GPIO_70/PRI_DTI"),
++	PINCTRL_PIN(70, "GPIO_70/PRI_TDI"),
+ 	PINCTRL_PIN(71, "GPIO_71/PRI_TMS"),
+ 	PINCTRL_PIN(72, "GPIO_72/PRI_TCK"),
+ 	PINCTRL_PIN(73, "GPIO_73/PRI_TDO"),
 -- 
-Yixun Lan (dlan)
+2.43.0
+
