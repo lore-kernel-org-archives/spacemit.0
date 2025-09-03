@@ -1,75 +1,73 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A862827056A;
-	Wed,  3 Sep 2025 10:18:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C2D2EA48F;
+	Wed,  3 Sep 2025 12:20:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756894721; cv=none; b=Fg4eobBAFlZz6OVs0CtVbm53VclUFmNCGVf16NE0zj6mP/TFQGi/CGNBncjb9et19qdzQ7DpeHJdCjOoYS1tugm120bJoMcmCICsNudJQg8t/zbGYcT+P1SvKAQO93TX2mv0iwL6zT5tQnsKzijQHLPdM7QqUAqlGp1VCc22dW0=
+	t=1756902004; cv=none; b=kHCa1Qvtoz/ERqRf8fJegEDp7KiNQ2uavfNcNLGwe7CI2642UuEY/RgbtD2k4IVwfCFoWpLeMDid2DPRpLh/BG8zbDtKYqauI84tytZh1qeVhzyTgmKD6wdqIEErbeEqs3bendmKoBqScS9TrVWp2S+ueOR6MxBPdN5G5ZTIDrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756894721; c=relaxed/simple;
-	bh=3BDmuX/acgIvSNyMvwX54stjuKITG4fBqBmjib2m/E8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hyMvoky0CK3uz5PLQQiAlGMg946DXjfqPhnvxhGkX9wyyHZ3RSCca/YDvbwTKC9jE4mubd2Nzx7OB4+FrqwBtxIw8e2KUxIAkWa11LZAlqYPPCW74ppyadVjfiyYuh2wPLS+7KVRCUI846tnYzpa+cIYPGEjyA3IS3twLHC0Ql4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.168])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 8860B340DCC;
-	Wed, 03 Sep 2025 10:18:37 +0000 (UTC)
-Date: Wed, 3 Sep 2025 18:18:33 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Cc: linus.walleij@linaro.org, skhan@linuxfoundation.org,
-	linux-kernel-mentees@lists.linux.dev, linux-gpio@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] pinctrl: spacemit: fix typo in PRI_TDI pin name
-Message-ID: <20250903101833-GYB1155728@gentoo.org>
-References: <20250903100104.360637-1-hendrik.hamerlinck@hammernet.be>
+	s=arc-20240116; t=1756902004; c=relaxed/simple;
+	bh=9URczS0VB9EctpFDAS3hOzqSsUg9Ay9Qy/aJrO0mPYo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=IX5wxh9S8P5F3wlMwCC8fMQGJMQVriv+Kw0bkuFluwt+DXi3P8QLZd1IE8SthD1pyjS7ihOlSTZyywG8A3rvUR9pYKjyL9bLwbnEkW+yWC71iUbmazmiqAcN+nPstjbyem08E1H+03hqOon25fT96G8mcWkmim2NVkO29J4hxuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HTkiMoiN; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HTkiMoiN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B4EC4CEF0;
+	Wed,  3 Sep 2025 12:19:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756902004;
+	bh=9URczS0VB9EctpFDAS3hOzqSsUg9Ay9Qy/aJrO0mPYo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=HTkiMoiN1rQZ4wOADiWn87Zuy4gLl1coCPzfJHA+8djXjpUPYvHduqErQgjNZH2ay
+	 hJEZTTq4V9WJfS0Bfs0shTkUSV+xwrktlesKwvV2JeF/97YzyIuIFrHPKMvCmiYq7y
+	 eJvqF4KKq+TSgmH9m/E3Hf7uPG6Pfzsu12NiIg1Akqn9OKeuhVAXunRhyzL9OxZI61
+	 hjOaSy62p3yjoUadBNHgQewbvz6AwzkUkyH/5c76+AghzLQcgTcY33UprXzkijC2sY
+	 0Q8Lm63wP+d3ohyCDhHNiTVjACXY/LYUAc+/HORDXy3gRGuW7cYXNd/Jfay8uDTi4b
+	 h4sXzod/zJiFA==
+From: Lee Jones <lee@kernel.org>
+To: lee@kernel.org, lgirdwood@gmail.com, broonie@kernel.org, 
+ alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org, 
+ conor+dt@kernel.org, Alex Elder <elder@riscstar.com>
+Cc: mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com, 
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+ linux.amoon@gmail.com, troymitchell988@gmail.com, guodong@riscstar.com, 
+ linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20250825172057.163883-1-elder@riscstar.com>
+References: <20250825172057.163883-1-elder@riscstar.com>
+Subject: Re: (subset) [PATCH v13 0/7] spacemit: introduce P1 PMIC support
+Message-Id: <175690199980.2656286.5459018179105557107.b4-ty@kernel.org>
+Date: Wed, 03 Sep 2025 13:19:59 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250903100104.360637-1-hendrik.hamerlinck@hammernet.be>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev-c81fc
 
-Hi Hendrik,
-On 12:01 Wed 03 Sep     , Hendrik Hamerlinck wrote:
-> The datasheet lists this signal as PRI_TDI, not PRI_DTI.
-> Fix the pin name to match the documentation and JTAG naming
-> convention (TDI = Test Data In).
+On Mon, 25 Aug 2025 12:20:49 -0500, Alex Elder wrote:
+> The SpacemiT P1 is an I2C-controlled PMIC that implements 6 buck
+> converters and 12 LDOs.  It contains a load switch, ADC channels,
+> GPIOs, a real-time clock, and a watchdog timer.
 > 
-> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+> This series introduces a multifunction driver for the P1 PMIC as
+> well as drivers for its regulators and RTC.
+> 
+> [...]
 
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
-> ---
->  drivers/pinctrl/spacemit/pinctrl-k1.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
-> index 9996b1c4a07e..a3f433b611f7 100644
-> --- a/drivers/pinctrl/spacemit/pinctrl-k1.c
-> +++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
-> @@ -847,7 +847,7 @@ static const struct pinctrl_pin_desc k1_pin_desc[] = {
->  	PINCTRL_PIN(67, "GPIO_67"),
->  	PINCTRL_PIN(68, "GPIO_68"),
->  	PINCTRL_PIN(69, "GPIO_69"),
-> -	PINCTRL_PIN(70, "GPIO_70/PRI_DTI"),
-> +	PINCTRL_PIN(70, "GPIO_70/PRI_TDI"),
->  	PINCTRL_PIN(71, "GPIO_71/PRI_TMS"),
->  	PINCTRL_PIN(72, "GPIO_72/PRI_TCK"),
->  	PINCTRL_PIN(73, "GPIO_73/PRI_TDO"),
-> -- 
-> 2.43.0
-> 
+Applied, thanks!
 
--- 
-Yixun Lan (dlan)
+[1/7] dt-bindings: mfd: add support the SpacemiT P1 PMIC
+      commit: baac6755d3e8ddf47eee2be3ca72fe14ebae2143
+[2/7] mfd: simple-mfd-i2c: add SpacemiT P1 support
+      commit: 49833495c85f26d070e70148fd9607c6fbf927fd
+
+--
+Lee Jones [李琼斯]
+
