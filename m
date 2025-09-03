@@ -1,447 +1,173 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from aposti.net (aposti.net [185.119.170.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9633B31A06A
-	for <spacemit@lists.linux.dev>; Wed,  3 Sep 2025 14:54:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6103B2D374A;
+	Wed,  3 Sep 2025 19:18:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.119.170.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756911260; cv=none; b=X8xoIGuqoDs/DMKXDQjgA3X5hC20sw0TMLNrENAILIC+lQk82GG88djpAANNpFVxhYrjEZiGWfaS5wesmluLLS43CEi1LI85YEmrj+Ha60CF+yQhvT20/kQOiTx4E85JB4rxTcRCYqrYqv3/gxYJcOkrhmsMw+rGwwmtv5uYN/w=
+	t=1756927099; cv=none; b=IqHyQiV/pJjlKUvIuBcNiRcu3jJYlkilGiue0r7a8rU381yxi13qrwXzFYSjraPAJXBuUk1hwfWcEhcpHgaXhUc8Pd4+8RdYaWQgeduIj3I/l1UhJ1qblQVM7iFnXDtojfbbnGmjoiDlmBSijGELUf3iOkn3lo77jRNeaGF2tVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756911260; c=relaxed/simple;
-	bh=KpHOj0mNA4+e9kUqlWS2RJgWfZkd6/Eg0O9escihThQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cm4OEm/kClZh4C7xjmlUOcL5PNVnHtynDcIMkhB4HUeiX5cvcbiiI/zLWiPOqYwkvN/mjUedDhYkankRdjhTXweU2LtHkbDGlz6552+Pa84VMoPw1Akk/fofBa++hGOjHXT9vbHbYZLfX3cYJb2wZaEzLYLkTio08zMPpwRMWPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=YQ5/YeIj; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
+	s=arc-20240116; t=1756927099; c=relaxed/simple;
+	bh=83cV/7EoxlRdQz7wlI4WnGn5t/IKXeIv5jWCwnuB+14=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=aocHHxX/hMc1Zj01hIw721pZ6iQCwG3iNVFSsI/nbKCW2kxz4+vpyzRUHgSCnf48l+py0dMJ+HmjlNmoqPCaIcoB3ySVRoB9m/Lqo67YwA+FeUXQSuPF0uipeiR63zgK8Qc5X7nP6Y++bm6JsjNER//MNyvn3Mf1bouzD577BBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net; spf=pass smtp.mailfrom=crapouillou.net; dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b=M013U4Ma; arc=none smtp.client-ip=185.119.170.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crapouillou.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="YQ5/YeIj"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3d19699240dso716598f8f.1
-        for <spacemit@lists.linux.dev>; Wed, 03 Sep 2025 07:54:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1756911254; x=1757516054; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KfRoqQl7bTrgAdolwwez1LaewcASB4l+oYGwiyVhGj4=;
-        b=YQ5/YeIjJ0zvbpIJ+4O/2yIAHJM/q6crGZH8Mtj4WP222/huwOK761O1yIpxUFyt0w
-         lTT0muGMN1+EFZ63wT2qDkMqquQ8Q8NCrbriGalYUGPBh4IeIjXCehiEdxGiN/9oMQ5x
-         t5sw9UrPkGqhO2a/RTO39a3tGyu0WBDW32u4vLeiZ0l22s0F6HORCb7YMV0O5Gl5p6LL
-         mwx1417GQ/FoUNoYbdZ53pcVtm6M1yw8EUJza83V+tfJqG1s5h8WFUO9uCbQJ3ap4DZH
-         LlW8mRU2EQtZeUK6cO6cvJO0s6Kgf+MP2Q42MD9UcXhUK3m9QUMkSqmj6AHFgZoKLoZR
-         b7gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756911254; x=1757516054;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KfRoqQl7bTrgAdolwwez1LaewcASB4l+oYGwiyVhGj4=;
-        b=JRxwkNItp0HGv3Jh3sMGzOthFFOyZp2NzV7+hX/LkJ03tUZSwmMxZgkEu1lVooHZyx
-         Jtprxyc3cMPJQZcMK9FhlNCBqYPV02Z9CL6TiCEZ0GGpYgDdMeAWwHzZs1P+Ol7+2ybf
-         T2PPIrMp51pMgb8rBMHUF6JFcdhvBfHW7gjBwa8ocvUUVLnfh1E+sz77x326sVy8Y/HH
-         lyYzQLktJReJfvCETvNX0H3+ZKQWpbqyAph8A7LmbTY9chMjIIV8dQPkfJDPl4wzNIfO
-         iuBlT/ndxZPONgq6qmh7VAX0MAoUcb9LMTiPddAv6Kxgx5tzV8b/ruapFczvuJ9Xpljo
-         z6lw==
-X-Forwarded-Encrypted: i=1; AJvYcCWqPzX7+csvz6MoXhRMb77QhyezYLLw6dPYRPRQhbUysZzeYH80bhauN7UVE40BnjNCsz/ZIq48QA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwcajfciIViyaOhakv1nnf71IqfQrjE/fgPbH5nJxEGzUSQw4jr
-	AgPFmf/SLeMhA1PsTN3gJezzLV4K0t63SPiQTCnmS9dOTI4oz0o9Q5mUbGEJ5CEvQGc=
-X-Gm-Gg: ASbGncurXg8ZENDLz6mnHF8Z6tsmJstziPX2kUKq9uCbd03+IzovfWVtbLPnBZsagcB
-	g6fk/rkh8PxFs/C15WNP77gE5iMe1jjQ3U/FO3gIIiRZpp5zsDK7uwclWkg2sDmw6g+s6gxarWH
-	eLA+fiGBHh3c53aF6S6USqg/K5xODoHmzjh4R7as4gZSJ7Zz3oCeNDdPhAneosuVimtjesiXM62
-	cho7zIqDjjL6yV8U9CPYYR9Tdug5zcnOP7gOniwwkdPuuO6ciW4kpOJDxHi/wdu1j6H58QyXyWB
-	M5Y/4JGQg+IIYlaXLTVMxUTx2AUxAnOBPMapYlegx1Ki75PFO4GWz+iLZAw9drAw2XMcid0qZtc
-	c9YbZQi+DCPjZJGCwrvt8IpjeVd8j3zty7+Tw8OvOvWg4d6REm9mjsex7zNvdY/IFN5URkA==
-X-Google-Smtp-Source: AGHT+IFKlUEKzOojQldM0O3QUhp1WqFQrJMW4YyIwO+SE1fmwBD/U9KH7gat3RRaNFqT/jHFuMp31A==
-X-Received: by 2002:a05:6000:1ac8:b0:3c7:244:a4be with SMTP id ffacd0b85a97d-3d1dd04e24bmr13949477f8f.10.1756911254206;
-        Wed, 03 Sep 2025 07:54:14 -0700 (PDT)
-Received: from pop-os.telenet.be ([2a02:1807:2a00:3400:7e45:593:64fd:6612])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3dc1cd4a7d2sm4087175f8f.33.2025.09.03.07.54.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Sep 2025 07:54:13 -0700 (PDT)
-From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-To: dlan@gentoo.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr
-Cc: skhan@linuxfoundation.org,
-	linux-kernel-mentees@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Subject: [PATCH] riscv: dts: spacemit: add UART pinctrl combinations
-Date: Wed,  3 Sep 2025 16:53:34 +0200
-Message-ID: <20250903145334.425633-1-hendrik.hamerlinck@hammernet.be>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="M013U4Ma"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
+	s=mail; t=1756927095;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=zUd3hbPutfTlDAjUwHIkED1FOMMH63fasP77ATNMKWI=;
+	b=M013U4MaToItOZxUrRJlNgf3goruACFm3i1msJg9jS7+HrTxirIsbgBywDk0B5jKoJZNHe
+	5GoEutO36JaVJOooUiUSeVBruDzW1fnbZkbLEJf2t0JycvE4miuhDdGhJAyVfZ57ChqOga
+	N/tyTnB51UGdvYdyVgUUSZcxz127gLI=
+Message-ID: <9387ed0a6d4e4c77ffd0f7aee55eaa1ff6ecd22e.camel@crapouillou.net>
+Subject: Re: [PATCH 022/114] clk: ingenic: cgu: convert from round_rate() to
+ determine_rate()
+From: Paul Cercueil <paul@crapouillou.net>
+To: bmasney@redhat.com, Michael Turquette <mturquette@baylibre.com>, Stephen
+ Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, Cristian
+ Marussi	 <cristian.marussi@arm.com>, Chen Wang <unicorn_wang@outlook.com>,
+ Inochi Amaoto	 <inochiama@gmail.com>, Nicolas Ferre
+ <nicolas.ferre@microchip.com>,  Alexandre Belloni
+ <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Keguang Zhang	 <keguang.zhang@gmail.com>, Taichi Sugaya
+ <sugaya.taichi@socionext.com>,  Takao Orito <orito.takao@socionext.com>,
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer	 <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,  Fabio Estevam
+ <festevam@gmail.com>, Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung
+ <schung@nuvoton.com>,  Vladimir Zapolskiy	 <vz@mleia.com>, Piotr
+ Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Samuel Holland <samuel.holland@sifive.com>,
+ Yixun Lan	 <dlan@gentoo.org>, Steen Hegelund
+ <Steen.Hegelund@microchip.com>, Daniel Machon	
+ <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, Orson Zhai	
+ <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
+ Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue	 <alexandre.torgue@foss.st.com>, Michal Simek
+ <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>, Andreas
+ =?ISO-8859-1?Q?F=E4rber?= <afaerber@suse.de>,  Manivannan Sadhasivam	
+ <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau
+ <j@jannau.net>,  Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa
+ <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,  Ray Jui
+ <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Broadcom
+ internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max
+ Filippov <jcmvbkbc@gmail.com>, Matthias Brugger	 <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno	 <angelogioacchino.delregno@collabora.com>,
+ Daniel Palmer <daniel@thingy.jp>,  Romain Perier <romain.perier@gmail.com>,
+ Andrew Lunn <andrew@lunn.ch>, Gregory Clement	
+ <gregory.clement@bootlin.com>, Sebastian Hesselbarth	
+ <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner
+ <heiko@sntech.de>, Andrea della Porta <andrea.porta@suse.com>,  Krzysztof
+ Kozlowski	 <krzk@kernel.org>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Chanwoo Choi	 <cw00.choi@samsung.com>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Qin Jian	 <qinjian@cqplus1.com>, Viresh Kumar
+ <vireshk@kernel.org>, Ulf Hansson	 <ulf.hansson@linaro.org>, Luca Ceresoli
+ <luca.ceresoli@bootlin.com>, Alex Helms	 <alexander.helms.jy@renesas.com>,
+ Linus Walleij <linus.walleij@linaro.org>,  Liviu Dudau
+ <liviu.dudau@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, Nobuhiro
+ Iwamatsu	 <nobuhiro1.iwamatsu@toshiba.co.jp>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	sophgo@lists.linux.dev, linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
+	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Date: Wed, 03 Sep 2025 21:18:09 +0200
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-22-b3bf97b038dc@redhat.com>
+References: 
+	<20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+	 <20250811-clk-for-stephen-round-rate-v1-22-b3bf97b038dc@redhat.com>
+Autocrypt: addr=paul@crapouillou.net; prefer-encrypt=mutual;
+ keydata=mQENBF0KhcEBCADkfmrzdTOp/gFOMQX0QwKE2WgeCJiHPWkpEuPH81/HB2dpjPZNW03ZM
+ LQfECbbaEkdbN4YnPfXgcc1uBe5mwOAPV1MBlaZcEt4M67iYQwSNrP7maPS3IaQJ18ES8JJ5Uf5Uz
+ FZaUawgH+oipYGW+v31cX6L3k+dGsPRM0Pyo0sQt52fsopNPZ9iag0iY7dGNuKenaEqkYNjwEgTtN
+ z8dt6s3hMpHIKZFL3OhAGi88wF/21isv0zkF4J0wlf9gYUTEEY3Eulx80PTVqGIcHZzfavlWIdzhe
+ +rxHTDGVwseR2Y1WjgFGQ2F+vXetAB8NEeygXee+i9nY5qt9c07m8mzjABEBAAG0JFBhdWwgQ2VyY
+ 3VlaWwgPHBhdWxAY3JhcG91aWxsb3UubmV0PokBTgQTAQoAOBYhBNdHYd8OeCBwpMuVxnPua9InSr
+ 1BBQJdCoXBAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEHPua9InSr1BgvIH/0kLyrI3V0f
+ 33a6D3BJwc1grbygPVYGuC5l5eMnAI+rDmLR19E2yvibRpgUc87NmPEQPpbbtAZt8On/2WZoE5OIP
+ dlId/AHNpdgAtGXo0ZX4LGeVPjxjdkbrKVHxbcdcnY+zzaFglpbVSvp76pxqgVg8PgxkAAeeJV+ET
+ 4t0823Gz2HzCL/6JZhvKAEtHVulOWoBh368SYdolp1TSfORWmHzvQiCCCA+j0cMkYVGzIQzEQhX7U
+ rf9N/nhU5/SGLFEi9DcBfXoGzhyQyLXflhJtKm3XGB1K/pPulbKaPcKAl6rIDWPuFpHkSbmZ9r4KF
+ lBwgAhlGy6nqP7O3u7q23hRU=
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-This adds UART pinctrl configurations based on the SoC datasheet and the
-downstream Bianbu Linux tree. The drive strength values were taken from
-the downstream implementation, which uses medium drive strength.
+Hi Brian,
 
-For convenience, the board DTS files have been updated to include all
-UART instances with their possible pinmux options in a disabled state.
+Le lundi 11 ao=C3=BBt 2025 =C3=A0 11:18 -0400, Brian Masney via B4 Relay a
+=C3=A9crit=C2=A0:
+> From: Brian Masney <bmasney@redhat.com>
+>=20
+> The round_rate() clk ops is deprecated, so migrate this driver from
+> round_rate() to determine_rate() using the Coccinelle semantic patch
+> on the cover letter of this series.
+>=20
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
 
-Tested this locally on both Orange Pi RV2 and Banana Pi BPI-F3 boards. 
+Reviewed-by: Paul Cercueil <paul@crapouillou.net>
 
-Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
----
- .../boot/dts/spacemit/k1-bananapi-f3.dts      |  18 ++
- .../boot/dts/spacemit/k1-orangepi-rv2.dts     |  18 ++
- arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 276 +++++++++++++++++-
- 3 files changed, 309 insertions(+), 3 deletions(-)
+Cheers,
+-Paul
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 6013be258542..661d47d1ce9e 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -49,3 +49,21 @@ &uart0 {
- 	pinctrl-0 = <&uart0_2_cfg>;
- 	status = "okay";
- };
-+
-+&uart5 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart5_3_cfg>;
-+	status = "disabled";
-+};
-+
-+&uart8 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart8_2_cfg>;
-+	status = "disabled";
-+};
-+
-+&uart9 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart9_2_cfg>;
-+	status = "disabled";
-+};
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-index 337240ebb7b7..dc45b75b1ad4 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-@@ -38,3 +38,21 @@ &uart0 {
- 	pinctrl-0 = <&uart0_2_cfg>;
- 	status = "okay";
- };
-+
-+&uart5 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart5_3_cfg>;
-+	status = "disabled";
-+};
-+
-+&uart8 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart8_2_cfg>;
-+	status = "disabled";
-+};
-+
-+&uart9 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart9_2_cfg>;
-+	status = "disabled";
-+};
-diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-index 381055737422..43425530b5bf 100644
---- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-@@ -11,12 +11,282 @@
- #define K1_GPIO(x)	(x / 32) (x % 32)
- 
- &pinctrl {
-+	uart0_0_cfg: uart0-0-cfg {
-+		uart0-0-pins {
-+			pinmux = <K1_PADCONF(104, 3)>,	/* uart0_txd */
-+				 <K1_PADCONF(105, 3)>;	/* uart0_rxd */
-+			power-source = <3300>;
-+			bias-pull-up;
-+			drive-strength = <19>;
-+		};
-+	};
-+
-+	uart0_1_cfg: uart0-1-cfg {
-+		uart0-1-pins {
-+			pinmux = <K1_PADCONF(108, 1)>,	/* uart0_txd */
-+				 <K1_PADCONF(80, 3)>;	/* uart0_rxd */
-+			power-source = <3300>;
-+			bias-pull-up;
-+			drive-strength = <19>;
-+		};
-+	};
-+
- 	uart0_2_cfg: uart0-2-cfg {
- 		uart0-2-pins {
--			pinmux = <K1_PADCONF(68, 2)>,
--				 <K1_PADCONF(69, 2)>;
-+			pinmux = <K1_PADCONF(68, 2)>,	/* uart0_txd */
-+				 <K1_PADCONF(69, 2)>;	/* uart0_rxd */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
- 
--			bias-pull-up = <0>;
-+	uart2_0_cfg: uart2-0-cfg {
-+		uart2-0-pins {
-+			pinmux = <K1_PADCONF(21, 1)>,	/* uart2_txd */
-+				 <K1_PADCONF(22, 1)>,	/* uart2_rxd */
-+				 <K1_PADCONF(23, 1)>,	/* uart2_cts */
-+				 <K1_PADCONF(24, 1)>;	/* uart2_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart3_0_cfg: uart3-0-cfg {
-+		uart3-0-pins {
-+			pinmux = <K1_PADCONF(81, 2)>,	/* uart3_txd */
-+				 <K1_PADCONF(82, 2)>,	/* uart3_rxd */
-+				 <K1_PADCONF(83, 2)>,	/* uart3_cts */
-+				 <K1_PADCONF(84, 2)>;	/* uart3_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart3_1_cfg: uart3-1-cfg {
-+		uart3-1-pins {
-+			pinmux = <K1_PADCONF(18, 2)>,	/* uart3_txd */
-+				 <K1_PADCONF(19, 2)>,	/* uart3_rxd */
-+				 <K1_PADCONF(20, 2)>,	/* uart3_cts */
-+				 <K1_PADCONF(21, 2)>;	/* uart3_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart3_2_cfg: uart3-2-cfg {
-+		uart3-2-pins {
-+			pinmux = <K1_PADCONF(53, 4)>,	/* uart3_txd */
-+				 <K1_PADCONF(54, 4)>,	/* uart3_rxd */
-+				 <K1_PADCONF(55, 4)>,	/* uart3_cts */
-+				 <K1_PADCONF(56, 4)>;	/* uart3_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart4_0_cfg: uart4-0-cfg {
-+		uart4-0-pins {
-+			pinmux = <K1_PADCONF(100, 4)>,	/* uart4_txd */
-+				 <K1_PADCONF(101, 4)>;	/* uart4_rxd */
-+			power-source = <3300>;
-+			bias-pull-up;
-+			drive-strength = <19>;
-+		};
-+	};
-+
-+	uart4_1_cfg: uart4-1-cfg {
-+		uart4-1-pins {
-+			pinmux = <K1_PADCONF(81, 3)>,	/* uart4_cts */
-+				 <K1_PADCONF(82, 3)>,	/* uart4_rts */
-+				 <K1_PADCONF(83, 3)>,	/* uart4_txd */
-+				 <K1_PADCONF(84, 3)>;	/* uart4_rxd */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart4_2_cfg: uart4-2-cfg {
-+		uart4-2-pins {
-+			pinmux = <K1_PADCONF(23, 2)>,	/* uart4_txd */
-+				 <K1_PADCONF(24, 2)>;	/* uart4_rxd */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart4_3_cfg: uart4-3-cfg {
-+		uart4-3-pins {
-+			pinmux = <K1_PADCONF(33, 2)>,	/* uart4_txd */
-+				 <K1_PADCONF(34, 2)>,	/* uart4_rxd */
-+				 <K1_PADCONF(35, 2)>,	/* uart4_cts */
-+				 <K1_PADCONF(36, 2)>;	/* uart4_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart4_4_cfg: uart4-4-cfg {
-+		uart4-4-pins {
-+			pinmux = <K1_PADCONF(111, 4)>,	/* uart4_txd */
-+				 <K1_PADCONF(112, 4)>,	/* uart4_rxd */
-+				 <K1_PADCONF(113, 4)>,	/* uart4_cts */
-+				 <K1_PADCONF(114, 4)>;	/* uart4_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart5_0_cfg: uart5-0-cfg {
-+		uart5-0-pins {
-+			pinmux = <K1_PADCONF(102, 3)>,	/* uart5_txd */
-+				 <K1_PADCONF(103, 3)>;	/* uart5_rxd */
-+			power-source = <3300>;
-+			bias-pull-up;
-+			drive-strength = <19>;
-+		};
-+	};
-+
-+	uart5_1_cfg: uart5-1-cfg {
-+		uart5-1-pins {
-+			pinmux = <K1_PADCONF(25, 2)>,	/* uart5_txd */
-+				 <K1_PADCONF(26, 2)>,	/* uart5_rxd */
-+				 <K1_PADCONF(27, 2)>,	/* uart5_cts */
-+				 <K1_PADCONF(28, 2)>;	/* uart5_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart5_2_cfg: uart5-2-cfg {
-+		uart5-2-pins {
-+			pinmux = <K1_PADCONF(42, 2)>,	/* uart5_txd */
-+				 <K1_PADCONF(43, 2)>,	/* uart5_rxd */
-+				 <K1_PADCONF(44, 2)>,	/* uart5_cts */
-+				 <K1_PADCONF(45, 2)>;	/* uart5_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart5_3_cfg: uart5-3-cfg {
-+		uart5-3-pins {
-+			pinmux = <K1_PADCONF(70, 4)>,	/* uart5_txd */
-+				 <K1_PADCONF(71, 4)>,	/* uart5_rxd */
-+				 <K1_PADCONF(72, 4)>,	/* uart5_cts */
-+				 <K1_PADCONF(73, 4)>;	/* uart5_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart6_0_cfg: uart6-0-cfg {
-+		uart6-0-pins {
-+			pinmux = <K1_PADCONF(85, 2)>,	/* uart6_cts */
-+				 <K1_PADCONF(86, 2)>,	/* uart6_txd */
-+				 <K1_PADCONF(87, 2)>,	/* uart6_rxd */
-+				 <K1_PADCONF(90, 2)>;	/* uart6_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart6_1_cfg: uart6-1-cfg {
-+		uart6-1-pins {
-+			pinmux = <K1_PADCONF(0, 2)>,	/* uart6_txd */
-+				 <K1_PADCONF(1, 2)>,	/* uart6_rxd */
-+				 <K1_PADCONF(2, 2)>,	/* uart6_cts */
-+				 <K1_PADCONF(3, 2)>;	/* uart6_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart6_2_cfg: uart6-2-cfg {
-+		uart6-2-pins {
-+			pinmux = <K1_PADCONF(56, 2)>,	/* uart6_txd */
-+				 <K1_PADCONF(57, 2)>;	/* uart6_rxd */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart7_0_cfg: uart7-0-cfg {
-+		uart7-0-pins {
-+			pinmux = <K1_PADCONF(88, 2)>,	/* uart7_txd */
-+				 <K1_PADCONF(89, 2)>;	/* uart7_rxd */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart7_1_cfg: uart7-1-cfg {
-+		uart7-1-pins {
-+			pinmux = <K1_PADCONF(4, 2)>,	/* uart7_txd */
-+				 <K1_PADCONF(5, 2)>,	/* uart7_rxd */
-+				 <K1_PADCONF(6, 2)>,	/* uart7_cts */
-+				 <K1_PADCONF(7, 2)>;	/* uart7_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart8_0_cfg: uart8-0-cfg {
-+		uart8-0-pins {
-+			pinmux = <K1_PADCONF(82, 4)>,	/* uart8_txd */
-+				 <K1_PADCONF(83, 4)>;	/* uart8_rxd */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart8_1_cfg: uart8-1-cfg {
-+		uart8-1-pins {
-+			pinmux = <K1_PADCONF(8, 2)>,	/* uart8_txd */
-+				 <K1_PADCONF(9, 2)>,	/* uart8_rxd */
-+				 <K1_PADCONF(10, 2)>,	/* uart8_cts */
-+				 <K1_PADCONF(11, 2)>;	/* uart8_rts */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart8_2_cfg: uart8-2-cfg {
-+		uart8-2-pins {
-+			pinmux = <K1_PADCONF(75, 4)>,	/* uart8_txd */
-+				 <K1_PADCONF(76, 4)>,	/* uart8_rxd */
-+				 <K1_PADCONF(77, 4)>,	/* uart8_cts */
-+				 <K1_PADCONF(78, 4)>;	/* uart8_rts */
-+			power-source = <3300>;
-+			bias-pull-up;
-+			drive-strength = <19>;
-+		};
-+	};
-+
-+	uart9_0_cfg: uart9-0-cfg {
-+		uart9-0-pins {
-+			pinmux = <K1_PADCONF(12, 2)>,	/* uart9_txd */
-+				 <K1_PADCONF(13, 2)>;	/* uart9_rxd */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart9_1_cfg: uart9-1-cfg {
-+		uart9-1-pins {
-+			pinmux = <K1_PADCONF(110, 3)>,	/* uart9_cts */
-+				 <K1_PADCONF(115, 3)>,	/* uart9_rts */
-+				 <K1_PADCONF(116, 3)>,	/* uart9_txd */
-+				 <K1_PADCONF(117, 3)>;	/* uart9_rxd */
-+			bias-pull-up;
-+			drive-strength = <32>;
-+		};
-+	};
-+
-+	uart9_2_cfg: uart9-2-cfg {
-+		uart9-2-pins {
-+			pinmux = <K1_PADCONF(72, 2)>,	/* uart9_txd */
-+				 <K1_PADCONF(73, 2)>;	/* uart9_rxd */
-+			bias-pull-up;
- 			drive-strength = <32>;
- 		};
- 	};
--- 
-2.43.0
-
+> ---
+> =C2=A0drivers/clk/ingenic/cgu.c | 12 +++++++-----
+> =C2=A01 file changed, 7 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/drivers/clk/ingenic/cgu.c b/drivers/clk/ingenic/cgu.c
+> index
+> 0c9c8344ad1103b13337a26e14b0d5d5c340d705..91e7ac0cc3342e3552acb9d2ec0
+> 0865a5234ad4f 100644
+> --- a/drivers/clk/ingenic/cgu.c
+> +++ b/drivers/clk/ingenic/cgu.c
+> @@ -174,14 +174,16 @@ ingenic_pll_calc(const struct
+> ingenic_cgu_clk_info *clk_info,
+> =C2=A0		n * od);
+> =C2=A0}
+> =C2=A0
+> -static long
+> -ingenic_pll_round_rate(struct clk_hw *hw, unsigned long req_rate,
+> -		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsigned long *prate)
+> +static int ingenic_pll_determine_rate(struct clk_hw *hw,
+> +				=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct clk_rate_request *req)
+> =C2=A0{
+> =C2=A0	struct ingenic_clk *ingenic_clk =3D to_ingenic_clk(hw);
+> =C2=A0	const struct ingenic_cgu_clk_info *clk_info =3D
+> to_clk_info(ingenic_clk);
+> =C2=A0
+> -	return ingenic_pll_calc(clk_info, req_rate, *prate, NULL,
+> NULL, NULL);
+> +	req->rate =3D ingenic_pll_calc(clk_info, req->rate, req-
+> >best_parent_rate,
+> +				=C2=A0=C2=A0=C2=A0=C2=A0 NULL, NULL, NULL);
+> +
+> +	return 0;
+> =C2=A0}
+> =C2=A0
+> =C2=A0static inline int ingenic_pll_check_stable(struct ingenic_cgu *cgu,
+> @@ -317,7 +319,7 @@ static int ingenic_pll_is_enabled(struct clk_hw
+> *hw)
+> =C2=A0
+> =C2=A0static const struct clk_ops ingenic_pll_ops =3D {
+> =C2=A0	.recalc_rate =3D ingenic_pll_recalc_rate,
+> -	.round_rate =3D ingenic_pll_round_rate,
+> +	.determine_rate =3D ingenic_pll_determine_rate,
+> =C2=A0	.set_rate =3D ingenic_pll_set_rate,
+> =C2=A0
+> =C2=A0	.enable =3D ingenic_pll_enable,
