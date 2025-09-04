@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EF13594F
-	for <spacemit@lists.linux.dev>; Thu,  4 Sep 2025 00:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AB314A9B
+	for <spacemit@lists.linux.dev>; Thu,  4 Sep 2025 00:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756946949; cv=none; b=j7AlEnLsaPfH3cIvNQrCWh0Ry0TX/3iq+utr6nuIO3fUnl/YDjlByj4zOwqn42AWGAggkgZ40IUPE9822/XB85G0KOtCefbFzKTI9npFKO213MI50eQFHHafwlvb41WHMzMmmd5BfILLGGMfFktJAgK7PJNPlx4txiC3nxi6YhQ=
+	t=1756947159; cv=none; b=U0Bj3j0gkQv3ttMeWz/zc0Yy1OlK4CxgAE6BLclYt5EXf+KcmbneDBnJJnfz/pscpXZVc/dfYf+trZeixRzikK50CGzAJiE5+2SDG/7cNcHJST+/whADnqJm63D/4//jb4liChoAyuyfRXVwLixmzBS+dNFGfnxHpgr7D9UINEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756946949; c=relaxed/simple;
-	bh=28y1zIQyJiGZzQIxWbG5Hf7wSqA8bRW9Snz8MewVNoA=;
+	s=arc-20240116; t=1756947159; c=relaxed/simple;
+	bh=QxzIo4Tv1rzxYmVE+lgXC8J6apeiQ9bSA0S3rZGUGlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VAIYoC3qcS9brMUbvayl8N0E1mu9T/ty5WDqvLLDPDvlgYv1eNKrvkmpgANA/3j4TkH1dklL7nzx4aI/Uj+Bp55zPDW0+qjhm3hEjmzVgNe7c3a/PWW4OWazab7HYwHcdkZcIV0UXT74cIK485o6gd6pFYaQPro59X7ys0YnP/k=
+	 MIME-Version:Content-Type; b=pUrQruw2qyu/8ybW/vagxGu67Qcj+doeWnSfncm/dc/3+D/MTH5YeNMxa2u/qfFDqmKYh1Eh9LUkzzbWUJnDwhAPSeJKOkwoN9o3szbhTK5eea0KleIrHd3FngZU0Snv0QW7vJPPjZONKHF7KwVDNqZ0mhHQJsnXpdhRGPfv9Pc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,36 +19,28 @@ Received: from ofsar (unknown [116.232.18.168])
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 62C68340D9E;
-	Thu, 04 Sep 2025 00:49:01 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 2567C335D31;
+	Thu, 04 Sep 2025 00:52:32 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Vinod Koul <vkoul@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	duje@dujemihanovic.xyz,
-	Guodong Xu <guodong@riscstar.com>
-Cc: Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	dmaengine@vger.kernel.org,
+	Yixun Lan <dlan@gentoo.org>
+Cc: Alex Elder <elder@riscstar.com>,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: Re: (subset) [PATCH v5 0/8] dmaengine: mmp_pdma: Add SpacemiT K1 SoC support with 64-bit addressing
-Date: Thu,  4 Sep 2025 08:48:45 +0800
-Message-ID: <175681694608.479569.7465779228756094615.b4-ty@gentoo.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] riscv: dts: spacemit: uart: remove sec_uart1 device node
+Date: Thu,  4 Sep 2025 08:52:24 +0800
+Message-ID: <175694709379.32917.16100695238119707451.b4-ty@gentoo.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
-References: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
+In-Reply-To: <20250902-02-k1-uart-clock-v2-1-f146918d44f6@gentoo.org>
+References: <20250902-02-k1-uart-clock-v2-1-f146918d44f6@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -59,24 +51,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 22 Aug 2025 11:06:26 +0800, Guodong Xu wrote:
-> This patchset adds support for SpacemiT K1 PDMA controller to the existing
-> mmp_pdma driver. The K1 PDMA controller is compatible with Marvell MMP PDMA
-> but extends it with 64-bit addressing capabilities through LPAE (Long
-> Physical Address Extension) bit and higher 32-bit address registers (DDADRH,
-> DSADRH and DTADRH).
+On Tue, 02 Sep 2025 20:26:58 +0800, Yixun Lan wrote:
+> sec_uart1 is not available from Linux, and no clock is implemented in
+> CCF framework, thus 'make dtbs_check' will pop up this warning message:
 > 
-> In v5, two smatch warnings reported by kernel test bot and Dan Carpenter were
-> fixed.
+>   serial@f0612000: 'clock-names' is a required property
+> 
+> Removing the node from device tree to silence the DT check warning.
 > 
 > [...]
 
 Applied, thanks!
 
-[6/8] riscv: dts: spacemit: Add PDMA node for K1 SoC
-      https://github.com/spacemit-com/linux/commit/81d79ad0ddcaeaf6136abe870b2386bde31b7ed4
-[7/8] riscv: dts: spacemit: Enable PDMA on Banana Pi F3 and Milkv Jupiter
-      https://github.com/spacemit-com/linux/commit/0e28eab0ca51282e3d14f3e2dba9fc92e3fddbe6
+[1/1] riscv: dts: spacemit: uart: remove sec_uart1 device node
+      https://github.com/spacemit-com/linux/commit/0f084b221e2c5ba16eca85b3d2497f9486bd0329
 
 Best regards,
 -- 
