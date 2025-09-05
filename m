@@ -1,90 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCC631D74A;
-	Fri,  5 Sep 2025 16:02:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903591E04AD
+	for <spacemit@lists.linux.dev>; Fri,  5 Sep 2025 16:36:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757088126; cv=none; b=MYE3DViQhik0yK9EegvPFJfAMSVE1vBEYNgd2QhbbvLgo1S08AcL16fab7i/NZYNNaEq/7o9dgWdRSK/SI6WeEDAriCIvXUBFf0VArFa6tFjw75bXayjVulECq7PuE+qU1xYeaBvAPKFUMldDo6i5oMtM+kWO4tu5m58hpvSfk0=
+	t=1757090206; cv=none; b=rBAyy8uDms/A9xc/+nHpDMADISYMSiA6AvCJezgY8Futa6ZLQw2n/RZOlD9ZVfq1gLuEMwmncUlKkqElEnBSnTtYbcSKgnoE6DQXXmrUdxfwVZ6OSw8MayH54T7AbbU2Z94JKLWkuGGOA9FJp+OuhmWZgplq37r4hl4gWCI+Wrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757088126; c=relaxed/simple;
-	bh=XtZf11jbbBoilXsBT63MRb4g16CbjYXTUzh33VUyndQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=edUTDMyFRyaN1DsTkFkeEBpfxD4L41xgRF9xhwNNya9sG0eHqt7PZVT6jKAVrf+raN64Kb814Ziz36in91JnyblJM26kEE4bYEQ9hQf2qswSLHcrJaOhedt0s/zN0d4K9fgIrd7Prp+HJmiMD/c4shqW5QePjZxo0Si2RM1pciU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qf19mXo8; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qf19mXo8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13389C4CEF1;
-	Fri,  5 Sep 2025 16:02:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757088126;
-	bh=XtZf11jbbBoilXsBT63MRb4g16CbjYXTUzh33VUyndQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Qf19mXo8p1IPKQFY0/UahTIRblVXtBICsSc3ebDDzITfYScFms3XLSzR4XT/AfBD1
-	 OySqhbWgBYAoQIPBm7WPAl1n8ItJ4IVZ7w32lKiBEOSAKlYAoJci+pSJYpRmfsSi+S
-	 2A3XDv2mWJhfeWexq7r+XRNFXiseFSMS/0Xjn9E1F1GwunHAuVWuE1YEbPUGOaSOgV
-	 BS4HYB46R7qujD8hm3bOvz3ki4e8bD4ZNWtYmnU6ro2b4OO6OBOCHVLvphT4el6TtF
-	 MnX+9ukJdOrtuZtElMAFMhCDHRVV/2HCvjYFYPuDpwfXB7OBg+cvAziKtB1RO6aPZc
-	 wMTMMngXUOpIw==
-Date: Fri, 5 Sep 2025 17:01:58 +0100
-From: Simon Horman <horms@kernel.org>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Vivian Wang <uwu@dram.page>
-Subject: Re: [PATCH net-next v9 2/5] net: spacemit: Add K1 Ethernet MAC
-Message-ID: <20250905160158.GI553991@horms.kernel.org>
-References: <20250905-net-k1-emac-v9-0-f1649b98a19c@iscas.ac.cn>
- <20250905-net-k1-emac-v9-2-f1649b98a19c@iscas.ac.cn>
- <20250905153500.GH553991@horms.kernel.org>
- <0605f176-5cdb-4f5b-9a6b-afa139c96732@iscas.ac.cn>
+	s=arc-20240116; t=1757090206; c=relaxed/simple;
+	bh=WMWV/zs7VqRch5M/3X1/0RlFh3MfGA58RBWGgbiM7Cw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U5W5QZboHmsv5+WKQECghzdBMXVCA33uL4OPEx+Ervy4xHVjgxm4l3wiR2ZmdkO0o1tXx2xbV1ZH7IH3atbrM35kfXvOILc162+gjGDXqIW1uDAL9KMRfHRVB9VrL7o+IBUQrgyZzdZWQe/S76NMi4FkXEYUmo7qYThfGqAJSs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.106] (unknown [114.241.87.235])
+	by APP-05 (Coremail) with SMTP id zQCowAAHqRJZEbtoxoHZAA--.36388S2;
+	Sat, 06 Sep 2025 00:35:37 +0800 (CST)
+Message-ID: <45053235-3b01-42d8-98aa-042681104d11@iscas.ac.cn>
+Date: Sat, 6 Sep 2025 00:35:37 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0605f176-5cdb-4f5b-9a6b-afa139c96732@iscas.ac.cn>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v9 2/5] net: spacemit: Add K1 Ethernet MAC
+To: Simon Horman <horms@kernel.org>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Vadim Fedorenko
+ <vadim.fedorenko@linux.dev>, Junhui Liu <junhui.liu@pigmoral.tech>,
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, Vivian Wang <uwu@dram.page>
+References: <20250905-net-k1-emac-v9-0-f1649b98a19c@iscas.ac.cn>
+ <20250905-net-k1-emac-v9-2-f1649b98a19c@iscas.ac.cn>
+ <20250905153500.GH553991@horms.kernel.org>
+ <0605f176-5cdb-4f5b-9a6b-afa139c96732@iscas.ac.cn>
+ <20250905160158.GI553991@horms.kernel.org>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20250905160158.GI553991@horms.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:zQCowAAHqRJZEbtoxoHZAA--.36388S2
+X-Coremail-Antispam: 1UD129KBjvJXoWruFW5Ary5JFW7Wr13trW8WFg_yoW8Jr4fpa
+	y8Ka1qyF4Ut347JrWDX397Ar92yFn3JrW3Xrn3WayYgas0yr13t34xtrWjkw1DCrWF9w40
+	va1jqr9FgFW5WFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
+	c7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
+	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
+	14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
+	IFyTuYvjxUvaZXDUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Fri, Sep 05, 2025 at 11:45:29PM +0800, Vivian Wang wrote:
+On 9/6/25 00:01, Simon Horman wrote:
 
-...
+> On Fri, Sep 05, 2025 at 11:45:29PM +0800, Vivian Wang wrote:
+>
+> ...
+>
+> Hi Vivian,
+>
+>>>> +		status = emac_rx_frame_status(priv, rx_desc);
+>>>> +		if (unlikely(status == RX_FRAME_DISCARD)) {
+>>>> +			ndev->stats.rx_dropped++;
+>>> As per the comment in struct net-device,
+>>> ndev->stats should not be used in modern drivers.
+>>>
+>>> Probably you want to implement NETDEV_PCPU_STAT_TSTATS.
+>>>
+>>> Sorry for not mentioning this in an earlier review of
+>>> stats in this driver.
+>>>
+>> On a closer look, these counters in ndev->stats seems to be redundant
+>> with the hardware-tracked statistics, so maybe I should just not bother
+>> with updating ndev->stats. Does that make sense?
+> For rx/tx packets/bytes I think that makes sense.
+> But what about rx/tx drops?
 
-Hi Vivian,
+Right... but tstats doesn't have *_dropped. It seems that tx_dropped and
+rx_dropped are considered "slow path" for real devices. It makes sense
+to me that those should be very rare.
 
-> >> +		status = emac_rx_frame_status(priv, rx_desc);
-> >> +		if (unlikely(status == RX_FRAME_DISCARD)) {
-> >> +			ndev->stats.rx_dropped++;
-> > As per the comment in struct net-device,
-> > ndev->stats should not be used in modern drivers.
-> >
-> > Probably you want to implement NETDEV_PCPU_STAT_TSTATS.
-> >
-> > Sorry for not mentioning this in an earlier review of
-> > stats in this driver.
-> >
-> On a closer look, these counters in ndev->stats seems to be redundant
-> with the hardware-tracked statistics, so maybe I should just not bother
-> with updating ndev->stats. Does that make sense?
+So it seems that what I should do is to just track tx_dropped and
+rx_dropped myself in a member in emac_priv and report in the
+ndo_get_stats64 callback, and use the hardware stuff for the rest, as
+implemented now.
 
-For rx/tx packets/bytes I think that makes sense.
-But what about rx/tx drops?
+Vivian "dramforever" Wang
 
-...
