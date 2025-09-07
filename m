@@ -1,24 +1,24 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91BF27456
-	for <spacemit@lists.linux.dev>; Sat,  6 Sep 2025 01:46:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517951E1DE7
+	for <spacemit@lists.linux.dev>; Sun,  7 Sep 2025 08:23:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757123216; cv=none; b=JLO8Ok6JtHRe6tXTlWFfnAwr1zlmD2qN53bPjQ+Kk9vSO8EGbZlNzQzGqExJGPSeS4TOrEWnEvQydTnsOnahJ+DT0dgVzBb6GWhNmn7KyspqSn5gR72eNitXPeHEoAnSmIiRJ+UjQQwwBd1c8kxLh99flusK4rls3D0hXrFMU2c=
+	t=1757233407; cv=none; b=gy6Ow7TVlu1fPXZpdh8KYAxohO/Cz/t5d6waz5ZOSu+h+Yw8Rr7biSL2jYySGjdpHcR+xqWGOcL080MwyP1DwfAYDjLCQoPAyRAnppsemBLeqJyyNIIlfnFCHm85nNXfrSqUmBrIzLBIiCd7W1FwC75fa7E3+8Peaq+gkLCLtAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757123216; c=relaxed/simple;
-	bh=jqOyWvf19hwcssGfnEv2R3bI3eGkV4DbfS3igJePDmI=;
+	s=arc-20240116; t=1757233407; c=relaxed/simple;
+	bh=r0eJTebCt3MS2Xw6g6hfJ21wZgUkK/hVYw3MMLUbnxQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gIE4WL8TY7a7ay08cOw9PWJPSAc+H3eb0G0lOlfhRxL3TtjLmlePzdmSPnFaMRkVFWuCRjF5tx0bJY74iS7rwfBdtoQ1/1oTFdEcSM7j+IsRUKR9LFlvU9COfvd/kwpCXAJZ25+dLAc9NTOvvJBmRwioxB3ntCjh39C2pQ9E328=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+	 In-Reply-To:Content-Type; b=B1arGLtguyHq+NKoXpjnMgN5Xakqu4oi+BMqT6iomCS+pXxrnEOuDG4M7xp8OgxnnRP60oJU062UstK40M+reBa6Lph3KfkWwwpMd3NqZpK9G+ENcCJqgvAu1eiERnFizTJ3gEl9Qk01u2g5w4s40f1SpaPLx8od+coJipVsg3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.105] (unknown [114.241.87.235])
-	by APP-03 (Coremail) with SMTP id rQCowAC3B4J2krtoUhLyAA--.63050S2;
-	Sat, 06 Sep 2025 09:46:31 +0800 (CST)
-Message-ID: <19279021-e89e-458a-8bf1-62ad2f76a0ba@iscas.ac.cn>
-Date: Sat, 6 Sep 2025 09:46:31 +0800
+Received: from [192.168.0.109] (unknown [114.241.87.235])
+	by APP-05 (Coremail) with SMTP id zQCowABX+hPUQL1oMWdTAQ--.2947S2;
+	Sun, 07 Sep 2025 16:22:44 +0800 (CST)
+Message-ID: <fbcc1ec3-7ff6-4891-97e3-9763355326f7@iscas.ac.cn>
+Date: Sun, 7 Sep 2025 16:22:44 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -52,15 +52,15 @@ Content-Language: en-US
 From: Vivian Wang <wangruikang@iscas.ac.cn>
 In-Reply-To: <20250905165908.69548ce0@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowAC3B4J2krtoUhLyAA--.63050S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7JFyDKF1DKr48Kr1UJF17trb_yoW3WFXEgr
-	Wq9Fs2krs8WF1qga13Ja1Ygr4DAa42gFyUXryS9w1qv3sxXFyFgF4DWr4qvw18W3yagrnI
-	qr4rZrn7u34jgjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbsAYjsxI4VWkCwAYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I
-	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0
-	cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I
+Content-Transfer-Encoding: quoted-printable
+X-CM-TRANSID:zQCowABX+hPUQL1oMWdTAQ--.2947S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7tw47JryDGw4rtry5Kw4rKrg_yoW8Gr4rpF
+	WrKFs2kFWvqw4xt3yvv3ykX343t3ZxZ3y5Gryqga47ta45Zryfu3yxKrWIyasrGrWkZ3y0
+	vry5JFyjkFZ8JrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvmb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
 	8E87Iv6xkF7I0E14v26F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
 	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr
 	1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7
@@ -69,23 +69,43 @@ X-Coremail-Antispam: 1UD129KBjvdXoW7JFyDKF1DKr48Kr1UJF17trb_yoW3WFXEgr
 	67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2I
 	x0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
 	z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnU
-	UI43ZEXa7IUn1v3UUUUUU==
+	UI43ZEXa7IUYsSdPUUUUU==
 X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-
 On 9/6/25 07:59, Jakub Kicinski wrote:
+
 > On Sat, 6 Sep 2025 00:35:37 +0800 Vivian Wang wrote:
->>>> On a closer look, these counters in ndev->stats seems to be redundant
->>>> with the hardware-tracked statistics, so maybe I should just not bother
->>>> with updating ndev->stats. Does that make sense?  
+>>>> On a closer look, these counters in ndev->stats seems to be redundan=
+t
+>>>> with the hardware-tracked statistics, so maybe I should just not bot=
+her
+>>>> with updating ndev->stats. Does that make sense? =20
 >>> For rx/tx packets/bytes I think that makes sense.
->>> But what about rx/tx drops?  
->> Right... but tstats doesn't have *_dropped. It seems that tx_dropped and
->> rx_dropped are considered "slow path" for real devices. It makes sense
+>>> But what about rx/tx drops? =20
+>> Right... but tstats doesn't have *_dropped. It seems that tx_dropped a=
+nd
+>> rx_dropped are considered "slow path" for real devices. It makes sense=
+
 >> to me that those should be very rare.
 > Pretty sure Simon meant the per-cpu netdev stats in general.
 > There are three types of them, if you need drops I think you
 > probably want dstats. Take a look.
 
-Thank you, I will look into this.
+According to this comment in net/core/dev.c dev_get_stats():
+
+=C2=A0 =C2=A0 /*
+=C2=A0 =C2=A0 =C2=A0* IPv{4,6} and udp tunnels share common stat helpers =
+and use
+=C2=A0 =C2=A0 =C2=A0* different stat type (NETDEV_PCPU_STAT_TSTATS vs
+=C2=A0 =C2=A0 =C2=A0* NETDEV_PCPU_STAT_DSTATS). Ensure the accounting is =
+consistent.
+=C2=A0 =C2=A0 =C2=A0*/
+
+"dstats" is meant for tunnels. This doesn't look like the right thing to
+use, and no other pcpu_stat_type gives me tx_dropped. Do you think I
+should use dstats anyway?
+
+(And yes the only software-tracked one should be tx_dropped. Since we
+pre-allocate the RX buffers, there is no opportunity to drop on RX in
+software.)
 
