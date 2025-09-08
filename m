@@ -1,142 +1,90 @@
 Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218BC36124
-	for <spacemit@lists.linux.dev>; Mon,  8 Sep 2025 12:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF3B30CD80
+	for <spacemit@lists.linux.dev>; Mon,  8 Sep 2025 15:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757334986; cv=none; b=jT4Jj0UVOESna41dtS9I7hvCMLzV/aDCAqynGqPnamsutMm0ERma0FdhGUDU/dvAupb0UJmfAu6mNfShq4tEvJj7GXz28ArMfcFlTfljGVZOz2mOEvhT8bjNKtz7c0sp4krgIpT8O0y8S2t7/jKyhLAA2eyHjdnBgqJg0/dGI3E=
+	t=1757345208; cv=none; b=SlQqWJOHpjGjVDAxZosZoYq6SbRrQRFbEYf4Oz250nNAAVxTPiNfz0WlQpjmEJ6Vngrj0ZsI/JXPQZxyshODNGA83MVduHdg5293nVlCNpTx3NPmfu/7ESjN22NEO0dp5ec/pWKKMPiYEMnnhPwV7nwMOqdsYqy6GGFdPfjHZSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757334986; c=relaxed/simple;
-	bh=Qkmj3/jPBhieoaSBMeXMM5nRP7Nczqi+TXkMq1kBi4g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=U9tWS57XIk9bplw9mcFYynYIHYn+xrmq+ZxijaENEgS1VMKqkl9XZJud/NHjwhOrBZTSF4dhLCqoA7f9d+muvjSVz+FLB3TEVZycMDCn14ndANteJK1H9ywwnZK1Y0FI5IBFsTixMTUiKAY+RelLKiml0wwMEUzRY5GYPG5UfdA=
+	s=arc-20240116; t=1757345208; c=relaxed/simple;
+	bh=8kW7PT8xnCVYcw+Emi+X4DUHGAf+z383H0CvjEbitiU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Bdnu3RN+gRt5gNo2/LvW+LKWA36Vu14YIxFeI+8XTMU5IKgxYrjGTaeQvTQbuTkeAAysMjBPpl47b0bU/GJIuvM7pk0fm/JO/+cvcUO7aYacoPldc70oiD+hpGWyGkTndXd14l3WS9Ik4WzX1PRm3WayCT606H20mSYzB4mVSTs=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [114.241.87.235])
-	by APP-01 (Coremail) with SMTP id qwCowAAXbqCAzb5oCP2nAQ--.48996S6;
-	Mon, 08 Sep 2025 20:35:14 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Mon, 08 Sep 2025 20:34:28 +0800
-Subject: [PATCH net-next v10 4/5] riscv: dts: spacemit: Add Ethernet
- support for BPI-F3
+Received: from [192.168.0.106] (unknown [114.241.87.235])
+	by APP-01 (Coremail) with SMTP id qwCowAC3DaCB9b5o9d+wAQ--.57957S2;
+	Mon, 08 Sep 2025 23:25:54 +0800 (CST)
+Message-ID: <b6dbb901-e904-47bf-b295-47f610ce3230@iscas.ac.cn>
+Date: Mon, 8 Sep 2025 23:25:53 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250908-net-k1-emac-v10-4-90d807ccd469@iscas.ac.cn>
-References: <20250908-net-k1-emac-v10-0-90d807ccd469@iscas.ac.cn>
-In-Reply-To: <20250908-net-k1-emac-v10-0-90d807ccd469@iscas.ac.cn>
-To: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Vivian Wang <wangruikang@iscas.ac.cn>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v10 2/5] net: spacemit: Add K1 Ethernet MAC
+To: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
  Alexandre Ghiti <alex@ghiti.fr>
-Cc: Vivian Wang <uwu@dram.page>, 
- Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
- Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>, 
- Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-X-Mailer: b4 0.14.2
-X-CM-TRANSID:qwCowAAXbqCAzb5oCP2nAQ--.48996S6
-X-Coremail-Antispam: 1UD129KBjvJXoW7uF13JF4rXF1kZF15Gw18Grg_yoW8ArWxp3
-	yakFs3uFWDKr4Skw43ur9F9r1fGa95XrykG3ya9F1rGr4qvr90vw15Kwn7tr1DWrW5Xa45
-	Xr4xtFyj9r1qkw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUmS14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
-	kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
-	z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
-	4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
-	3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7
-	IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4U
-	M4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2
-	kIc2xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
-	4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBI
-	daVFxhVjvjDU0xZFpf9x0pRQJ5wUUUUU=
+Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>,
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+References: <20250908-net-k1-emac-v10-0-90d807ccd469@iscas.ac.cn>
+ <20250908-net-k1-emac-v10-2-90d807ccd469@iscas.ac.cn>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20250908-net-k1-emac-v10-2-90d807ccd469@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qwCowAC3DaCB9b5o9d+wAQ--.57957S2
+X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUY67k0a2IF6FyUM7kC6x804xWl14x267AK
+	xVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGw
+	A2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r1j
+	6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Gc
+	CE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxI
+	r21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87
+	Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7Cj
+	xVA2Y2ka0xkIwI1l42xK82IYc2Ij64vIr41l4c8EcI0Ec7CjxVAaw2AFwI0_GFv_Wryl4I
+	8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AK
+	xVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcV
+	AFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8I
+	cIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r
+	4UJVWxJrUvcSsGvfC2KfnxnUUI43ZEXa7IU8D3ktUUUUU==
 X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
-reset.
+On 9/8/25 20:34, Vivian Wang wrote:
 
-Tested-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 46 +++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+> [...]
+> +static u64 emac_get_stat_tx_dropped(struct emac_priv *priv)
+> +{
+> +	u64 result;
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index fe22c747c5012fe56d42ac8a7efdbbdb694f31b6..15fa4a5ebd043f3fbb115d37e5a980c9b773a228 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -40,6 +40,52 @@ &emmc {
- 	status = "okay";
- };
- 
-+&eth0 {
-+	phy-handle = <&rgmii0>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac0_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <0>;
-+	status = "okay";
-+
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
-+
-+		rgmii0: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
-+
-+&eth1 {
-+	phy-handle = <&rgmii1>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac1_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <250>;
-+	status = "okay";
-+
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
-+
-+		rgmii1: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
-+
- &uart0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&uart0_2_cfg>;
+Well, this should be result = 0. That was careless on my part. Will fix
+in v11.
 
--- 
-2.50.1
+I need to start using this clang thing...
+
+Vivian "dramforever" Wang
+
+> +	int cpu;
+> +
+> +	for_each_possible_cpu(cpu) {
+> +		result += READ_ONCE(per_cpu(*priv->stat_tx_dropped, cpu));
+> +	}
+> +
+> +	return result;
+> +}
 
