@@ -1,70 +1,134 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95D81F12E0;
-	Tue,  9 Sep 2025 00:34:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563D3264608;
+	Tue,  9 Sep 2025 04:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757378047; cv=none; b=gmf0kJJrwI03r74vpjvxcQSyexVIGosLIPmFDGe1iWYZAMzNjxeMgIwV2ErhXhSF33rS8L5pIPCbWrroymO4xHIW9BO4D4JkX5yj7DEtQP+L8EiIx80mWfN9tUOr12Vv71Zdsdv0huz9EwgQvANIrVDX/zhrhuDwd8eURpr6eWE=
+	t=1757391710; cv=none; b=bz35fV4z6VSqwPUh6cujPcVlUgDgS1K+jnyJ1MXQt3p4wVYSdTky2B+rLZPfMs91lGiBgfGLEjX4H1aQSlr8FsYsXhqe0Sogd4Ju2UaqE4r+vHQNkKnRRCoBr3RPmtIW/+K0qqaiJmbiW29McCodyFMBZwH2bbbATZxrJjh7Pp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757378047; c=relaxed/simple;
-	bh=kIlv7QbzYjMgSwCBteRli8sNX4QzCCtBptBcgT5oOPY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bo3SzonhBQdLmRcWlgrFK2hpSHYF9SYeqWGMdeyRI3hqWbqAIyXvowLY1XwqBAZdA5vAAbWnszr7JeuDkHn18OTqLLdMfwe080ANADVdYMkiyQzlaW95N+/1LTEIcXGyOoYSQTBv7UQXXcUB3OSdNPlO7ELkqwhWshxBiHSZcBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OhlXHeuQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757391710; c=relaxed/simple;
+	bh=u2eWVDfOjZ/eUZU18XVmgcF0dNk+tPxSOkUryUdg0+k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k10lJe5QpIXsmiH9xMjcl5HDRVdyIQDfJi86g86bggrZB34UZbW5DC440xAzsZ0js+28uCOnnJcxQOp4Yylweo/er/NsAdt8ql8xnd/EaCfrypiJQ6aL2wZrYFeXnDI6wMHgFMR0z0N6CeAkSgmME1c7dcU8eo12hH68TRhDfqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FpqBSn5h; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OhlXHeuQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D48C4CEF1;
-	Tue,  9 Sep 2025 00:34:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757378047;
-	bh=kIlv7QbzYjMgSwCBteRli8sNX4QzCCtBptBcgT5oOPY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=OhlXHeuQg/FbLmSazvb/q+WT5wZq0bM/SbOFD0i9lLCn5AjwlpMg4hSG57YM1QTpE
-	 EDNivgEg9GxQNuAae4aNPp/l2oI5inaOXK3c7ktYmAeYQaweAvTxtPcHNnGWi/BtWL
-	 4a68szBvMjRlKjemWt4JONgSNgSf62Z8SQvrl/YTKourv7S3ryguvWISptRNrfLq6U
-	 YW0ZUYif/g+X2Ltxx4F8RxgjBSwujkjhwIemWoLxh8lLPvE3upk5ylgc3IBzk1nLqm
-	 4fMFRh2STmgQZppQOhCcI4EMvvDXrufDso0gKJ4IuNtoKZTFhZlO8+t/NmUObEsi8s
-	 2gIuU7LYZlV5A==
-Date: Mon, 8 Sep 2025 17:34:05 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Simon Horman <horms@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, "David S.
- Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo
- Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>, Paul
- Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Vadim
- Fedorenko <vadim.fedorenko@linux.dev>, Junhui Liu
- <junhui.liu@pigmoral.tech>, Maxime Chevallier
- <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, Troy Mitchell
- <troy.mitchell@linux.spacemit.com>, Vivian Wang <uwu@dram.page>
-Subject: Re: [PATCH net-next v9 2/5] net: spacemit: Add K1 Ethernet MAC
-Message-ID: <20250908173405.08aec56d@kernel.org>
-In-Reply-To: <fbcc1ec3-7ff6-4891-97e3-9763355326f7@iscas.ac.cn>
-References: <20250905-net-k1-emac-v9-0-f1649b98a19c@iscas.ac.cn>
-	<20250905-net-k1-emac-v9-2-f1649b98a19c@iscas.ac.cn>
-	<20250905153500.GH553991@horms.kernel.org>
-	<0605f176-5cdb-4f5b-9a6b-afa139c96732@iscas.ac.cn>
-	<20250905160158.GI553991@horms.kernel.org>
-	<45053235-3b01-42d8-98aa-042681104d11@iscas.ac.cn>
-	<20250905165908.69548ce0@kernel.org>
-	<fbcc1ec3-7ff6-4891-97e3-9763355326f7@iscas.ac.cn>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FpqBSn5h"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1757391709; x=1788927709;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=u2eWVDfOjZ/eUZU18XVmgcF0dNk+tPxSOkUryUdg0+k=;
+  b=FpqBSn5hwkPZVYmI5XKFDCmp73o8rH4ztJbkJocgi5N6BxV8HxmoeK5s
+   fzYqFTppRp9i2EZNGEWkFXFHWkLVKqsK0TA2Raja8YkTWDVBfNwMrl8+Q
+   YiLyYRwhXjb4db1Y7LHG7XkhkjFHy6k+XuMlowbX0SCA7W00W4dEY9A+9
+   LZwdc+cdH10ljKjAKjeiqdFH5vCqe1bcjhotQ/TsBHlR2sLVbZ3Gnc/HX
+   zPIWciPZRUWr4KN71k0zC47RALvpPTngls6mZxuHQNlj1fLFa3EYXQ/7B
+   La4Y5XA5rq1fw88XbEuQYJOXn7YDnUuX3DKOUqvNVWmEaXTiyQ2VdjE61
+   Q==;
+X-CSE-ConnectionGUID: vjqBl4IxTnKSunwxScIbJg==
+X-CSE-MsgGUID: 8VEmooJbTYuRkXB/zwZokQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11547"; a="69920327"
+X-IronPort-AV: E=Sophos;i="6.18,250,1751266800"; 
+   d="scan'208";a="69920327"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2025 21:21:48 -0700
+X-CSE-ConnectionGUID: rCcz4ynoSY2VL8BqXW/FiQ==
+X-CSE-MsgGUID: 2PP/FEzCTmSJGEBnXH18aw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,250,1751266800"; 
+   d="scan'208";a="196622451"
+Received: from lkp-server01.sh.intel.com (HELO 114d98da2b6c) ([10.239.97.150])
+  by fmviesa002.fm.intel.com with ESMTP; 08 Sep 2025 21:21:44 -0700
+Received: from kbuild by 114d98da2b6c with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uvprR-0004Qf-1j;
+	Tue, 09 Sep 2025 04:21:41 +0000
+Date: Tue, 9 Sep 2025 12:20:46 +0800
+From: kernel test robot <lkp@intel.com>
+To: Vivian Wang <wangruikang@iscas.ac.cn>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: oe-kbuild-all@lists.linux.dev, netdev@vger.kernel.org,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Simon Horman <horms@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [PATCH net-next v10 2/5] net: spacemit: Add K1 Ethernet MAC
+Message-ID: <202509091137.JnioPegN-lkp@intel.com>
+References: <20250908-net-k1-emac-v10-2-90d807ccd469@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250908-net-k1-emac-v10-2-90d807ccd469@iscas.ac.cn>
 
-On Sun, 7 Sep 2025 16:22:44 +0800 Vivian Wang wrote:
-> "dstats" is meant for tunnels. This doesn't look like the right thing to
-> use, and no other pcpu_stat_type gives me tx_dropped. Do you think I
-> should use dstats anyway?
+Hi Vivian,
 
-You can use dstats
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on 062b3e4a1f880f104a8d4b90b767788786aa7b78]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Vivian-Wang/dt-bindings-net-Add-support-for-SpacemiT-K1/20250908-203917
+base:   062b3e4a1f880f104a8d4b90b767788786aa7b78
+patch link:    https://lore.kernel.org/r/20250908-net-k1-emac-v10-2-90d807ccd469%40iscas.ac.cn
+patch subject: [PATCH net-next v10 2/5] net: spacemit: Add K1 Ethernet MAC
+config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20250909/202509091137.JnioPegN-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 15.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250909/202509091137.JnioPegN-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202509091137.JnioPegN-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   In function 'emac_get_stat_tx_dropped',
+       inlined from 'emac_get_stats64' at drivers/net/ethernet/spacemit/k1_emac.c:1234:24:
+>> drivers/net/ethernet/spacemit/k1_emac.c:1218:24: warning: 'result' is used uninitialized [-Wuninitialized]
+    1218 |                 result += READ_ONCE(per_cpu(*priv->stat_tx_dropped, cpu));
+         |                        ^~
+   drivers/net/ethernet/spacemit/k1_emac.c: In function 'emac_get_stats64':
+   drivers/net/ethernet/spacemit/k1_emac.c:1214:13: note: 'result' was declared here
+    1214 |         u64 result;
+         |             ^~~~~~
+
+
+vim +/result +1218 drivers/net/ethernet/spacemit/k1_emac.c
+
+  1211	
+  1212	static u64 emac_get_stat_tx_dropped(struct emac_priv *priv)
+  1213	{
+  1214		u64 result;
+  1215		int cpu;
+  1216	
+  1217		for_each_possible_cpu(cpu) {
+> 1218			result += READ_ONCE(per_cpu(*priv->stat_tx_dropped, cpu));
+  1219		}
+  1220	
+  1221		return result;
+  1222	}
+  1223	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
