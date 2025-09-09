@@ -1,67 +1,66 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2205D30B511
-	for <spacemit@lists.linux.dev>; Tue,  9 Sep 2025 09:16:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD2130C34C
+	for <spacemit@lists.linux.dev>; Tue,  9 Sep 2025 09:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757409364; cv=none; b=WaZ8qYNBapZMFr0ZKyDA/x9WGeUpPFgqKGLKkDYai4XI6/s7vJUKERCia0wb4vnApmqZs9aiMnL3335O+OluDnGXh2mspoGUQ/UcEggSEKco0Vf8vzjmZ7ClatKqYEtN0UZ3+dLqN+gI1clCTC2ffS1ZW6V0wDXqHro5tPSlt7s=
+	t=1757409366; cv=none; b=fK9nY7cMTm3ccxkKkbRKa7PZiKS6vFXvj7dRL/cxe34LaHnwK1Yhuj2BXerU5gTgI/MyXDrgk6GOn5ORo2JhRNBdduob8EPLbALzppp4GbrjGMzJEEpnCIdAWSJ254ransNcVh8x4Fnf627jAJADp8ufJxpRs53dTqgdZZC3I1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757409364; c=relaxed/simple;
-	bh=mT4HHJlQwDtBRNGtv0Vlu1Vz/E9b0L/SsnLUi3FcPmQ=;
+	s=arc-20240116; t=1757409366; c=relaxed/simple;
+	bh=jG8CMLb4inMj87fVDZoRGePD2w1MG5h8a/maIqRELGQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VaAxnse9MkwFHKNrnvhxVd8VBAd2YG9MS/W7tBB0yve4aZLror7x2YDSPNb/xlnq9cd6kpm9Pq3oNS52lYXEuilUzHP8S37VsXNw4Z8lTCowQWncTCZGtBSEN7RnCfGfzm1APayg8dafJNbx2ymfWWHgp1RU1XGC8o+KsMyVZcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Y5NuWX0u; arc=none smtp.client-ip=209.85.221.46
+	 In-Reply-To:To:Cc; b=Qvi6D9CFITWGMxTTS6IqHkLRe/uTqEHctDGbiZ0G+AR494IrZw5VaP4oEPVWlVWIns/BsQ6FIj1aO4NWy/BpKGtv3FzIu6UWmyHEL5YGb6Q4U8AgIewKAX4X5pUVAbl3ELnSb2OIwKaOfKtvYdifP1OSfp6IoDj035WQvRmjhlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=aW/Kz8pt; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Y5NuWX0u"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3e3aafe06a7so2522782f8f.0
-        for <spacemit@lists.linux.dev>; Tue, 09 Sep 2025 02:16:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="aW/Kz8pt"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3e7512c8669so414183f8f.0
+        for <spacemit@lists.linux.dev>; Tue, 09 Sep 2025 02:16:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757409360; x=1758014160; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757409362; x=1758014162; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KL9vzdB3rn5rw8BZuNP7vkkI7cxEgPULxm91j0nzvgM=;
-        b=Y5NuWX0uBqvr66cA0i6sM/kR7X6OATxpcNcgMMOq/AKeKPyaw6oceYEXwPwd1ZaXON
-         oHD1+8u3OM/Yx53JlrfyzNXBGQjlleNTthFuaR9ynF21KDWYQuemb5Yyg71RexCSGN/W
-         OUjXehV7uFxF+XTZeGgxsl5xQjmcb4Oe30TlGjAaQQ5HopdJXF3l9kQ1SFzFoBzV2SZs
-         j0GggBwe70pgfqBvMBjO4WpplGkaI2Jbr7thTCiDbp57rndfc0saa5fFCWu6LhReZMUx
-         iaDnBKo0uFZNpdMrA/tRvc1E9ZDeaHrF9w9IPLnBXPBBgw3mFou7RPHQEBkgWmfAEwuF
-         U3/g==
+        bh=bzDGMJfmWh4iChkJ6qtmNZIGp6yJhGT0+TEuoPl0ljI=;
+        b=aW/Kz8ptNHvsDCXmYL4HcD6ttE0fgdEl/PZwMkOuu4FfZzujb81qBN2uD0fVALZjFl
+         HdBcPJcM0L0idSgVu9qi8q3jXJXnJ15pwxlt1OD6KffHElNBpLBI1UE52WojHf5fWOeV
+         fFLrg0FOehxr0fZqf1OgPxFjtsEr0ykugwRNqXx6yDoLWbcDp3PXiuAO9ifMbO/GfsQe
+         0mAILhce/7lSfXXrKvJy32YLxkcc9TUKhu8Hb32MSki1VB9eUbiwox2/BAEBxfnIY1Vx
+         eZFkbBvBBIOMrMACprqULxYjt7GWBYChTt09RzPhNCI1B8eobQJmO+ryWUjx+D/O3hou
+         MtYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757409360; x=1758014160;
+        d=1e100.net; s=20230601; t=1757409362; x=1758014162;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KL9vzdB3rn5rw8BZuNP7vkkI7cxEgPULxm91j0nzvgM=;
-        b=m6ZkWYtZKQecOFT2y3wJL2WZqa4HjvUZTn79hmYcX2iHRWCocllvjJADAgyydJrW06
-         sXPzl9yy+52tguJw8asb4OnxBaqw67QFoLY12oMtvguUhtQyXOsu5irxzbXp0opjHiWJ
-         ejOZyYGKRtxlh9i4j/4ucsVV0FDklDEqMvp6syn2+QSig8t3+btdPBSTr+Nr5wpTJn5F
-         f0QKh60yi4v18e2ieO5cRUWDwiVFaL5mVsDWeZPs7ogz6b5o0owYsm8UPNDQEoN7Qn18
-         IAgrXm79xeaNlCxxJdjgFCe/iw17P2AeLcmPClQfot0369DeG6TRK/qPXwViQl3EE3l0
-         cLZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWJlnxpemWj922/J0wEgysQAiOxMBEU/9uQlagGi/SDJSgDImafalEjpKhjoWlbh2yA/tDkblu8cA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzDMaZQroQMCVmWmiUTnLJdhCbrqmI2oOErCdafFdeJ91BLrhgm
-	z5/LXN5e4qwqH856uKuwyJnURohDJrscSsGg7+ruiuYSxz/YynyIaBxwrh67sJt23Qw=
-X-Gm-Gg: ASbGncs65PWcvFiWAFe6A4UOl/4XQ8Z8i9USwDgkFChi+h03YzU4aec2ppjWjVxGI6Y
-	TUdw5EAQU8tFjn59aaHJYn2f+t5zJiTsx5dbCYNEMFLRXUg8Pw8Vc0jS4xDhv4A7KWZatFAHpjC
-	AGb6HWaw4TYLNSHaXHrA6VG9gCu4jtUfzXBIm/4uh/XNV04vizX7v/WjjPC2Cdf/CVT77SlWUF0
-	ZWqDRw/73m5lYZunuPtooCP4bJ2GyZV9EVwmj/01g7BmnA00C4GyKxTbPeeA3xo/vMaWoc0QeXY
-	hCGShgz8EW1cefg64n6eAgGIUxm88Dp3V+0GArM4Z3kpUa7xnvDWQcbBlWvAuphE+gKN3Igrk6n
-	Pp+e6ud4KdWzdydBUlGpawGQiDaAj
-X-Google-Smtp-Source: AGHT+IElprL5INRLVNJ+11qN0fy1HYZVdF9Hf2dkjaJyGXUISCK8Dqmmny10BUou6nIZqG3u9n4RWw==
-X-Received: by 2002:a5d:5d82:0:b0:3e0:152a:87be with SMTP id ffacd0b85a97d-3e637465896mr7665428f8f.7.1757409360205;
-        Tue, 09 Sep 2025 02:16:00 -0700 (PDT)
+        bh=bzDGMJfmWh4iChkJ6qtmNZIGp6yJhGT0+TEuoPl0ljI=;
+        b=wlrCGdZgFYEnKVqaTKjrH8LJpTQRaX8PHf32vDN2yiEK9tbZ8TNQ2sSDUwxgLaZm8I
+         W9v89h4IZa7CzIUBsCJbGCd30rNJ5RMVNBgdoICmeb2K8+RMIvq2WtE4E3EDZW2zx+HU
+         I+BqTJvJyLtnRc3A1dSDjWlsSjIG2pbubhYdaabrdupELqudqDThZuInNN9MDo7DpyHd
+         QPBXB0fD7B444gbHvo2YDDMXw/iIQkzIEFvCEcIY8L4zqx/r5PU4o99quat6T3+ZVr/k
+         CZ2+J7DtOPWfWs4poZC8M3LPT86zqbh8qCQUL6VRYf/4eCy2nuozHeRxc/PDCYqATwuX
+         ltWw==
+X-Forwarded-Encrypted: i=1; AJvYcCUCI3Z40crvlZE1dMPkWoWrQnlx4BjnJx56t+tCYjI3ZcOS2QGQc35ehAI1Iue95WKMngP+iTRwaA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzRczsAc0eZ95PeL/Vo4myhlnKqKUIgYDA60wHodKh4He2+RN+p
+	hD9x6924G9FHu2F7S37Vl1PgIxOipdmekB5UZdWsAgOD0GpYcpjlkErdIY+MWluNuXE=
+X-Gm-Gg: ASbGncvhkxLxTMynRF9H62xLeQK4CcD6SqyLVusg+mofdCXF/fw3e9JhDmhYFUiXEVE
+	uG9VTtVuolWVAQdNFaBKga3RixAYRD5G0CSi5mewakzlAWS0WDFMi8ApDAt2bQOGdty4CmbzpuR
+	J9Ruq3jL4n3uwJzfuSmgrVClqHJVKYXIUvCZtuhOr3luhQfoIK8Twwot/uWX1verGQwSMZzIYPo
+	skkJZ/7IXQXRG9bL/MSP0542+QPcY7NtLtxcHA0NlmRsx0ywg7+sgefh36uxLJ9v9wdRmZSy2Ik
+	N0P1hnlutkyKk5q5v9flP5vgjc64dy9CNsX8t/4OnHh/MO92Jj7hxecuzJRGTwNHmP0gkDs0VxC
+	vn8PP5EoiBBA4FVd3Xc5ED22mzpdZ
+X-Google-Smtp-Source: AGHT+IEXdV8NISTEczU1VIRow+5p3wj26/zBGlI6Z3gmRyg6ivq5S1t8D83LU8LnUsvQNLDOuZ4iCg==
+X-Received: by 2002:a05:6000:1ac6:b0:3e2:da00:44af with SMTP id ffacd0b85a97d-3e64317f1b0mr9908320f8f.36.1757409362157;
+        Tue, 09 Sep 2025 02:16:02 -0700 (PDT)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:c1ee:7be9:3ebb:6cc0])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7521c9caasm1900039f8f.19.2025.09.09.02.15.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7521c9caasm1900039f8f.19.2025.09.09.02.16.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Sep 2025 02:15:59 -0700 (PDT)
+        Tue, 09 Sep 2025 02:16:00 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 09 Sep 2025 11:15:36 +0200
-Subject: [PATCH 09/15] gpio: mt7621: use the generic GPIO chip lock for IRQ
- handling
+Date: Tue, 09 Sep 2025 11:15:37 +0200
+Subject: [PATCH 10/15] gpio: menz127: use new generic GPIO chip API
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,7 +69,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250909-gpio-mmio-gpio-conv-part4-v1-9-9f723dc3524a@linaro.org>
+Message-Id: <20250909-gpio-mmio-gpio-conv-part4-v1-10-9f723dc3524a@linaro.org>
 References: <20250909-gpio-mmio-gpio-conv-part4-v1-0-9f723dc3524a@linaro.org>
 In-Reply-To: <20250909-gpio-mmio-gpio-conv-part4-v1-0-9f723dc3524a@linaro.org>
 To: Linus Walleij <linus.walleij@linaro.org>, 
@@ -90,118 +89,129 @@ Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
  spacemit@lists.linux.dev, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3466;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3332;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=Oz11Eo/choziEy0hLlcQbOcdTEl544VmwNckDeQn6Nk=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBov/A56zsdMufj8Pobta094n4YAfVek1kM5dHRc
- 3RuFMo6rwSJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaL/wOQAKCRARpy6gFHHX
- ck/ZD/9kOmHM3sCPOzZ+PtF9D6Vwe/xJuMOGBuy7kR2ISYdA+n+r8GKYNFFP4nYxlpgWmS5AZ4C
- 1x73FaP/rL03yvk6FmCRR59qwYYDoXzEvbeFkTQSNWh8LcZqRbR+l+/X5WEU9iRD3ascVlVF2+T
- D/Av/HOzNB0FQAHl8VB+63yHTVFDb2Izvfzk5Pc0f3uqSi6V6pLBst+R3HYv0s2yTQGqFelWKYp
- 7raUH5xD0PLH2jiT9I80GASVctUKzPa2att4UUNaUl8t7veUxmRpdS/ZW9G1HwZS2OGvWHgdO8G
- zVARPtwdMr3nnIJL5da+yR38xhYniIU1tzKoYEkiFgZTyPUU/zIERxM9qHxq6oR+diGqaafx0Ma
- GF14s5chu1Di4MmgXJqoMcgeqNr5jWoswrVJLNron55YH+qCfah7n4ggD7plduSdtTvLnqHisYK
- +JXSAFqMchoqJajC2TS/z8xeJQ+2AfOsqKOqWawCCU/YLFPLotCX8UxcpnHeMAvjEaYBIn6Ilyv
- muINEZGvCBa/g8CGMcQzNwC1/x+79zqzAnQuahwXnKcHGzYPYT+8YfySJ6gs44DLHnLg3PXlp4M
- NfNd/bHJRWZIIjENkPi+B2+g6hvot/8XR+7fDQmoM/JaklpmUa2L9WV/IDYk1iWPO9aQ4RwTxUj
- scKngBko4gL2BHA==
+ bh=Lx7WAwqP3xPk38b+MFE7x8Xw00e0BMog5eP3WfeiT9s=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBov/A533XVMdjGZ1Cis8dHGgNwfAnmr6Mx6nPBe
+ og/XTnFC0uJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaL/wOQAKCRARpy6gFHHX
+ cvK3D/90zMG5N+5srxcF6cRvLhIl8gvluNWyjhGAirS1cpIR4x4XFqa1JRSvlICISA4EibUfKNJ
+ PCqqwF+Ps0Sb0gxGvXIdzYawaenP1Ay9crGgWCG8dqA5Oh9GGEe1sAJ3fj+b7hBDr0bKiquZZZT
+ qm8UPST9YGHy0qZh+xOow62KdkczRxAojMDQLZh5bNe/oCV04FO+Fi2fM8DdLa/t5tIjf7F2LgB
+ x6h9uqy3ExyQRUSRz+yuRRbcf8RmRlNHgEWPxdT/3e82BmiIc1xpTXsQbELVgTrsgj3e7BS7LbL
+ u1JuLGpx8VAQiDvKnl89BJUWTfjk1O22JRpUP1mWMrVgOcg7mB2OSrtIK/ddsW5l0rrC59Gmjk1
+ qaeMlSXWkhqF29/nX3L9M9rKbGqUuZHBaVvBOvLRP4Xd9268YY19a70HNS76Wwt4rm2E0zsrkOH
+ Cbic63a0LkP3gvP4WK+77qLsClCFZZwuKZGK4SYbDmK707BXh3JfQmdYoBi9czJtf53Man5JhgA
+ niTsF3TUxsHuWNE13i0oWRxrsXAxGUlQk9nCxmJM7Edlm/ds70XygZ/W9iWscyAP2fou3Kx8RAc
+ k0YZYHnRPLejEZmL7Zkig/YHgd750jS6if4fIrKfPjQVHCq8sRJM1mQwOksrvpikMmw2E9pyu3U
+ 8yS9x2NzZmFxfng==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-This driver uses its own spinlock in interrupt routines while the
-generic GPIO chip callbacks use a separate one. This is, of course, racy
-so use the fact that the lock in generic GPIO chip is also a spinlock and
-convert the interrupt handling functions in this module to using the
-provided generic GPIO chip locking API.
+Convert the driver to using the new generic GPIO chip interfaces from
+linux/gpio/generic.h.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/gpio/gpio-mt7621.c | 29 ++++++++++++-----------------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ drivers/gpio/gpio-menz127.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpio/gpio-mt7621.c b/drivers/gpio/gpio-mt7621.c
-index ed444cc8bc7c2b921be6588ce850027a2e3088b4..31736f12ca100ef615d4aa4b2c968db6b58ef4e1 100644
---- a/drivers/gpio/gpio-mt7621.c
-+++ b/drivers/gpio/gpio-mt7621.c
-@@ -11,7 +11,6 @@
- #include <linux/io.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
--#include <linux/spinlock.h>
+diff --git a/drivers/gpio/gpio-menz127.c b/drivers/gpio/gpio-menz127.c
+index ebe5da4933bce730c70f83c1c0f86fc4a4cc9906..27cdbc36a5fd468dfcf9e0029651c8d22e176f56 100644
+--- a/drivers/gpio/gpio-menz127.c
++++ b/drivers/gpio/gpio-menz127.c
+@@ -12,6 +12,7 @@
+ #include <linux/mcb.h>
+ #include <linux/bitops.h>
+ #include <linux/gpio/driver.h>
++#include <linux/gpio/generic.h>
  
- #define MTK_BANK_CNT	3
- #define MTK_BANK_WIDTH	32
-@@ -32,7 +31,6 @@
- struct mtk_gc {
- 	struct irq_chip irq_chip;
- 	struct gpio_generic_chip chip;
--	spinlock_t lock;
- 	int bank;
- 	u32 rising;
- 	u32 falling;
-@@ -111,12 +109,12 @@ mediatek_gpio_irq_unmask(struct irq_data *d)
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct mtk_gc *rg = to_mediatek_gpio(gc);
- 	int pin = d->hwirq;
--	unsigned long flags;
- 	u32 rise, fall, high, low;
+ #define MEN_Z127_CTRL	0x00
+ #define MEN_Z127_PSR	0x04
+@@ -30,7 +31,7 @@
+ 					 (db <= MEN_Z127_DB_MAX_US))
  
- 	gpiochip_enable_irq(gc, d->hwirq);
+ struct men_z127_gpio {
+-	struct gpio_chip gc;
++	struct gpio_generic_chip chip;
+ 	void __iomem *reg_base;
+ 	struct resource *mem;
+ };
+@@ -64,7 +65,7 @@ static int men_z127_debounce(struct gpio_chip *gc, unsigned gpio,
+ 		debounce /= 50;
+ 	}
  
--	spin_lock_irqsave(&rg->lock, flags);
-+	guard(gpio_generic_lock_irqsave)(&rg->chip);
+-	raw_spin_lock(&gc->bgpio_lock);
++	guard(gpio_generic_lock)(&priv->chip);
+ 
+ 	db_en = readl(priv->reg_base + MEN_Z127_DBER);
+ 
+@@ -79,8 +80,6 @@ static int men_z127_debounce(struct gpio_chip *gc, unsigned gpio,
+ 	writel(db_en, priv->reg_base + MEN_Z127_DBER);
+ 	writel(db_cnt, priv->reg_base + GPIO_TO_DBCNT_REG(gpio));
+ 
+-	raw_spin_unlock(&gc->bgpio_lock);
+-
+ 	return 0;
+ }
+ 
+@@ -91,7 +90,8 @@ static int men_z127_set_single_ended(struct gpio_chip *gc,
+ 	struct men_z127_gpio *priv = gpiochip_get_data(gc);
+ 	u32 od_en;
+ 
+-	raw_spin_lock(&gc->bgpio_lock);
++	guard(gpio_generic_lock)(&priv->chip);
 +
- 	rise = mtk_gpio_r32(rg, GPIO_REG_REDGE);
- 	fall = mtk_gpio_r32(rg, GPIO_REG_FEDGE);
- 	high = mtk_gpio_r32(rg, GPIO_REG_HLVL);
-@@ -125,7 +123,6 @@ mediatek_gpio_irq_unmask(struct irq_data *d)
- 	mtk_gpio_w32(rg, GPIO_REG_FEDGE, fall | (BIT(pin) & rg->falling));
- 	mtk_gpio_w32(rg, GPIO_REG_HLVL, high | (BIT(pin) & rg->hlevel));
- 	mtk_gpio_w32(rg, GPIO_REG_LLVL, low | (BIT(pin) & rg->llevel));
--	spin_unlock_irqrestore(&rg->lock, flags);
+ 	od_en = readl(priv->reg_base + MEN_Z127_ODER);
+ 
+ 	if (param == PIN_CONFIG_DRIVE_OPEN_DRAIN)
+@@ -101,7 +101,6 @@ static int men_z127_set_single_ended(struct gpio_chip *gc,
+ 		od_en &= ~BIT(offset);
+ 
+ 	writel(od_en, priv->reg_base + MEN_Z127_ODER);
+-	raw_spin_unlock(&gc->bgpio_lock);
+ 
+ 	return 0;
  }
+@@ -137,6 +136,7 @@ static void men_z127_release_mem(void *data)
+ static int men_z127_probe(struct mcb_device *mdev,
+ 			  const struct mcb_device_id *id)
+ {
++	struct gpio_generic_chip_config config;
+ 	struct men_z127_gpio *men_z127_gpio;
+ 	struct device *dev = &mdev->dev;
+ 	int ret;
+@@ -163,18 +163,21 @@ static int men_z127_probe(struct mcb_device *mdev,
  
- static void
-@@ -134,19 +131,18 @@ mediatek_gpio_irq_mask(struct irq_data *d)
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct mtk_gc *rg = to_mediatek_gpio(gc);
- 	int pin = d->hwirq;
--	unsigned long flags;
- 	u32 rise, fall, high, low;
+ 	mcb_set_drvdata(mdev, men_z127_gpio);
  
--	spin_lock_irqsave(&rg->lock, flags);
--	rise = mtk_gpio_r32(rg, GPIO_REG_REDGE);
--	fall = mtk_gpio_r32(rg, GPIO_REG_FEDGE);
--	high = mtk_gpio_r32(rg, GPIO_REG_HLVL);
--	low = mtk_gpio_r32(rg, GPIO_REG_LLVL);
--	mtk_gpio_w32(rg, GPIO_REG_FEDGE, fall & ~BIT(pin));
--	mtk_gpio_w32(rg, GPIO_REG_REDGE, rise & ~BIT(pin));
--	mtk_gpio_w32(rg, GPIO_REG_HLVL, high & ~BIT(pin));
--	mtk_gpio_w32(rg, GPIO_REG_LLVL, low & ~BIT(pin));
--	spin_unlock_irqrestore(&rg->lock, flags);
-+	scoped_guard(gpio_generic_lock_irqsave, &rg->chip) {
-+		rise = mtk_gpio_r32(rg, GPIO_REG_REDGE);
-+		fall = mtk_gpio_r32(rg, GPIO_REG_FEDGE);
-+		high = mtk_gpio_r32(rg, GPIO_REG_HLVL);
-+		low = mtk_gpio_r32(rg, GPIO_REG_LLVL);
-+		mtk_gpio_w32(rg, GPIO_REG_FEDGE, fall & ~BIT(pin));
-+		mtk_gpio_w32(rg, GPIO_REG_REDGE, rise & ~BIT(pin));
-+		mtk_gpio_w32(rg, GPIO_REG_HLVL, high & ~BIT(pin));
-+		mtk_gpio_w32(rg, GPIO_REG_LLVL, low & ~BIT(pin));
-+	}
+-	ret = bgpio_init(&men_z127_gpio->gc, &mdev->dev, 4,
+-			 men_z127_gpio->reg_base + MEN_Z127_PSR,
+-			 men_z127_gpio->reg_base + MEN_Z127_CTRL,
+-			 NULL,
+-			 men_z127_gpio->reg_base + MEN_Z127_GPIODR,
+-			 NULL, 0);
++	config = (typeof(config)){
++		.dev = &mdev->dev,
++		.sz = 4,
++		.dat = men_z127_gpio->reg_base + MEN_Z127_PSR,
++		.set = men_z127_gpio->reg_base + MEN_Z127_CTRL,
++		.dirout = men_z127_gpio->reg_base + MEN_Z127_GPIODR,
++	};
++
++	ret = gpio_generic_chip_init(&men_z127_gpio->chip, &config);
+ 	if (ret)
+ 		return ret;
  
- 	gpiochip_disable_irq(gc, d->hwirq);
- }
-@@ -232,7 +228,6 @@ mediatek_gpio_bank_probe(struct device *dev, int bank)
- 	rg = &mtk->gc_map[bank];
- 	memset(rg, 0, sizeof(*rg));
+-	men_z127_gpio->gc.set_config = men_z127_set_config;
++	men_z127_gpio->chip.gc.set_config = men_z127_set_config;
  
--	spin_lock_init(&rg->lock);
- 	rg->bank = bank;
- 
- 	dat = mtk->base + GPIO_REG_DATA + (rg->bank * GPIO_BANK_STRIDE);
+-	ret = devm_gpiochip_add_data(dev, &men_z127_gpio->gc, men_z127_gpio);
++	ret = devm_gpiochip_add_data(dev, &men_z127_gpio->chip.gc, men_z127_gpio);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret,
+ 			"failed to register MEN 16Z127 GPIO controller");
 
 -- 
 2.48.1
