@@ -1,67 +1,66 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C9D30C371
-	for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 07:13:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77ED33093D3
+	for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 07:13:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757488387; cv=none; b=pLs2/RvW5WpDHZJnJrOFRonYX+g7/QezBs2gO3+oHlPZou40QW3YLtZHF2lXUVj0V1SzQvGPdtLtkt2ZDJBRCDZTVxV9yXoNRjmaXsglmSOddeRR49GH+JYW6uIZ7/KWCH7AS2Bpy/33m+iOiC38aFNuaOGJVAHmXRbBnTQMWdg=
+	t=1757488390; cv=none; b=Ap7+6/ZHBwsjApdNQEaCxb9Ndsln/nbJJFlhq7oPnQhTFQpmDQdl8mCphWTVVs/pQscPp1kodFT3CR9THzSJPz3ouH1ytAXH+hojWrithHcI7O0gh1n9ictwtPU7gZGDVpCEQveUhPtw3F5A2OUy2M4ZHHvXgEeiZBQX2O5AKUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757488387; c=relaxed/simple;
-	bh=yVgPPOcE+ewclBktjz5E2v2YtjZnxTx9c2rSBG/L3iY=;
+	s=arc-20240116; t=1757488390; c=relaxed/simple;
+	bh=ERVB6nOEPyu3706pZWvj5UtLfWLs/S8iO3GbcuIyUto=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mkitdJcTDUh08X11XwSdTf+do6DK77+e2OWJcIuJe/y2+WQ1AQwYi58Auo5inQCF53s+lQEDLaFYYXMfiVLSqoeHWRCDOpzD6NsUo0OCU5aLw5kOuyuaF4xJJSctgt1cwivH9OoU4s9vJ0cDYZzLQeUfzWRdYLaf3hs9e0w2o88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=uiZbVonb; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:To:Cc; b=uCDLmkDU72iFREWR1fjgj65qlexwxicMupJEzc1Zzg6rSn+/AF4U4SbhkqbwTugxMuUTdt2/iLFfsR5iHAnFgkSAh8Y0y8olpmIHcMQJ/nnkUUxv0ojq5VceT/GoJiB/myVDBgNfsd0Zw4xryHrdsgc1SRVB8IrEXrzB7wevBHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=zvMRyluf; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="uiZbVonb"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-45df7ca2955so1443585e9.3
-        for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 00:13:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="zvMRyluf"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45de60d39b7so20816805e9.0
+        for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 00:13:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757488384; x=1758093184; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757488386; x=1758093186; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xHR8kEAINHQx8cEJdNb56gXGfX3p65LuAbViPfkkq1g=;
-        b=uiZbVonbrLwX8xCM8bzZZmYyivzwB5BHXXjMWMTgWC1Di/bguOV4PiYZXChjqLok8I
-         c7+n3mpxrtqkozrP6WV3g5rHkopf7VjcbIK3voR37/pmQHU8hnpu0VisX5FZdRJg9R2v
-         ZIPo/tUboC4bIkSMjy7xYMCL/+Y6wjdcEPn4iNAf9HcrhM2RdS2JrqWZYyASYYqcLRFM
-         WJzmrk8WOn+BejI9NvcUymowkShPBqFArJZcAGAa0xPjzVgTQNBvV3GADFyC+Dc518Wz
-         3bqqa2wlHDrXNikuJnlpAJJMbrgo4oSRO6y9vzm3vHayMhRo2iZKouRzCNTtHKylOR4o
-         xZ7A==
+        bh=2k4JCnwaSt+iTFW+qywHJOCeAgFyoADFfw6FtQJV+UY=;
+        b=zvMRylufQStmg1AHxWtjspOBxpq38SWi5+IfHbVXz66+sk7URGX31jRvn3Ev0jaPn5
+         GQSq42mbiUatixRIP+63dgAeqZ65n/3B88UBpcKz82aMOgLmHxeu1puepTR81DT2SSnA
+         Epg0nlr9uqmoP/6oEvuwe4h/lWzqNmEtSCgr01/b50+kE/iN1tB/A/1e9YhVScnpp0VI
+         Zk6hWWZICc3Ohs/Q8qU6x9gm4GP9Hr93MBXFk5belhHo/PXM0IDqQLMMEFy+EBfpnZyB
+         XiTcIX6GT7CIt1fFHMMrLVTbar2RNdtFiuYtAJbqEGjx5KLKNEapLgQd2ZfPLHo/Kxkp
+         3TYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757488384; x=1758093184;
+        d=1e100.net; s=20230601; t=1757488386; x=1758093186;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xHR8kEAINHQx8cEJdNb56gXGfX3p65LuAbViPfkkq1g=;
-        b=qmGWEXqPg9k2fwLr+87NGk+eW8gVA58eqvkGY/FmWggjvGqaU43AESrOhcDmXhc9l5
-         c7aGNgz80ktt4pdsagiZmUAzVbasU9owVAFpUMdEoGCliApbxELhZRtVs31asiG170St
-         EZNHIC/rq09LECN/2R/gaP5cDZdBpnobBOR5ZV9RX9JMs805HHHHSjieNQtSkkhmAyS/
-         CxOUZIMikk/1692IzLf6khkgbF0WBYGsJDnV+jg2GP1lJQ+o6eQDaHQRsvMBOPBM79+v
-         vyDOtHkjGwgihwPO/6uJQSp+LQ0Cg1ZSXbhQz1Yr2CTESoQMIechTgaASC1UeFfB82aq
-         ddIA==
-X-Forwarded-Encrypted: i=1; AJvYcCXzDNbNUh4L0cNZS/gppinBwohv9SHf8UsPDTZeIQVBJj/z7UhPjgORdhDZj9x8ipxeghiSuR1ZMA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzv0iGhX1oxO65je5GnmGxN78qSKJSYVQ6Na91zoXYkVbkH60ox
-	35cUBjGX16umATKaiv5mqViIqtO/Cra9afIQLvQnT+7HOMvmYrhfG23rngmvPBS5vG0=
-X-Gm-Gg: ASbGncuZpgb2+vNmomv0B4+enpXOa76M+TpFaIVb8Y/0MOU0BeR+7TlJTff40Qlz2AN
-	M/vjxz7LGPNTTVSGNE1O1H+5AgsZevtykUp+2Trrfrj3amntMyaY4pwhik4QGOMjQ6I2TdavsrO
-	SSSBE+D8lKfJQWPWEO7vtYhNzvV+T95Eh4iAs7vaaVvMlCw6eVccfsmTCSqdkUJAE4daJWlBbIP
-	Fwb67/TMyxaKEfp9JxiDGYqT9RnhXySWGXEGRj9d0nYZZEY5uh71fC7PAG9kCvg8DvSa2EUgaE3
-	h9AgO2a2hhnSLjkvEubXfXaJqS76RdM6SPugKzADhV2WaOPpRUzfaHiuDDoHW8Rtrwna63Aim2j
-	JlO4o3DMwKdA6ewdRLUYSyC37U7c=
-X-Google-Smtp-Source: AGHT+IFSdci3CHq8VqUJcbVpnmzo+2lQEmXOuKmC8RRv+wtgm3NDfrNeLIsCyZlc4vVFVDxHItzjfQ==
-X-Received: by 2002:a05:600c:c4ab:b0:45d:d505:a1c3 with SMTP id 5b1f17b1804b1-45dddef8c61mr118822845e9.37.1757488383998;
-        Wed, 10 Sep 2025 00:13:03 -0700 (PDT)
+        bh=2k4JCnwaSt+iTFW+qywHJOCeAgFyoADFfw6FtQJV+UY=;
+        b=cxNcSGfcLTA5dsO1CwNMtGS4C7fcilrXQnV+yPkgr2k2O5UqOPvuyTbqjZd+vfrSA1
+         nwmeYlcNisI2UdpjoeRlW6hYP/LpdL1bmg0ZWoaJ5z5LvE3ZOuA0PRlR5dEarzflpxHi
+         HDmL9t4A7PtXCuto38GPUNqlVl+BukUOyriLIi53WRO1gi9UgK4zjnnEPnTJnMC1nKC5
+         DBy8QVicVLhykysw5BLTcE8q70V+dOK6QzmXCHtyrroYA8JzoTJnadQISX6nbfLAFibX
+         xPR1agViaW62zUDFCeq1ecHzFkxDeNBXQISTnsmv0BX5Dg0Ha3GnHbIXQct2+cHCOn4C
+         46ow==
+X-Forwarded-Encrypted: i=1; AJvYcCWYfNnSiX02Xu2f7YhFgqYgEv8poTwemY+zDbe1LhzkJ/WOHhJdoE3gPEzwAr8vnO7KSOIKtnmUvQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzm7JI6tRyc5hI7wO66TNtYrdT0qkX6wDdfY/1RwkFC5CmlsfMJ
+	HjfUFFYQQGawvntCTUTWDdurB5QdUCCnKKs3LzDpC1jXuXcm8uuxJAW6EUTIiH50g7I=
+X-Gm-Gg: ASbGncs7CJlkA70WEPrn9n18CaSoijxSGEGrZJ2emEBVn+BGMm6GltmyfB05ewIDB+c
+	lNCejKoMczIayzaOhCYKfz/a2vGEo0+jFVUdcUbdOSi96U447h7rMUGQJ4He8MKt+aURejyulGu
+	hMt46tFcLeQ1gsIz8aYVA1+kCXEhSGHj7xuoRATxB5aW+O+P/oDtiGEkUbkqxuO5vLZEshci5mt
+	yA8cYpbLRyotGAo4s6cKke9oRIqitve8kNv3xOBFtSW5NYPRjzTfcLcx3knGyrLVy2F70RYZIfS
+	XtzrF2Kfmeow2wz1DguA5WAV42M0ChHWhyJ4xNoTpmWRDQ5RBF9ohnSEwiszrZyAt7IVdu4f48y
+	eaquMgcRJ886U5hPQ
+X-Google-Smtp-Source: AGHT+IGl4lKRYX0Wd5XK1TG333TWQmyNWvAAzHgwmFGQ1EEDkxDqoyf0OF3YeDn/9FyiSKnGVp71RA==
+X-Received: by 2002:a05:600c:3b1d:b0:45d:dc85:c009 with SMTP id 5b1f17b1804b1-45ddde92816mr136016115e9.10.1757488385770;
+        Wed, 10 Sep 2025 00:13:05 -0700 (PDT)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:3936:709a:82c4:3e38])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df81d20d2sm16357035e9.8.2025.09.10.00.13.01
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df81d20d2sm16357035e9.8.2025.09.10.00.13.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Sep 2025 00:13:02 -0700 (PDT)
+        Wed, 10 Sep 2025 00:13:04 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 10 Sep 2025 09:12:42 +0200
-Subject: [PATCH v2 06/15] gpio: xgene-sb: use generic GPIO chip register
- read and write APIs
+Date: Wed, 10 Sep 2025 09:12:43 +0200
+Subject: [PATCH v2 07/15] gpio: brcmstb: use new generic GPIO chip API
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,7 +69,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250910-gpio-mmio-gpio-conv-part4-v2-6-f3d1a4c57124@linaro.org>
+Message-Id: <20250910-gpio-mmio-gpio-conv-part4-v2-7-f3d1a4c57124@linaro.org>
 References: <20250910-gpio-mmio-gpio-conv-part4-v2-0-f3d1a4c57124@linaro.org>
 In-Reply-To: <20250910-gpio-mmio-gpio-conv-part4-v2-0-f3d1a4c57124@linaro.org>
 To: Linus Walleij <linus.walleij@linaro.org>, 
@@ -90,58 +89,324 @@ Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
  spacemit@lists.linux.dev, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1238;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10428;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=We0X7xb7ACmLY+lbQa1fcNw6pP25NDN5z92R8VM93TU=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBowSTtTDj4oNGwDRR7+qL+H0qpz1nceYdGpGDPH
- ia1yPhYhmCJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaMEk7QAKCRARpy6gFHHX
- cltID/9Ctub5VaMhx1Y9F7RnCwKevVF+bxKd+hpiZxi/K5bnOELNFhQC9MrYe3Jo/xgNtSOubP+
- e6d48QqOuSuIV5d++/Pwni9yyHDsRzqCfGPA2sfV/Bab6KBoWxhzDFn7s3lGqcOecV05i8onc8w
- wFCuxdoJ2i+LvKp0salt7xPfvkjgcIgKGzQmTopLYLKahtb4dC4nWif9HBKqL3RiNU2dkpEQiAI
- ippQcDB6/0i6YRrnVZAEtqpMgKaPwyRaKiOa0VdiVA+ZmDw7GrC1p+27jgEkErOCxYboKXTW5Ae
- gKTqLhDKSVO7c8IKGCdbIQxYiJEsGZCrYFuLA0pAogyydqwf/ZrcVP6UgJSOttmdPXlWCEfaWHy
- cLBcQnSi7cTCuPVS9mvSF6h4umNbP3tpRfb6pOfp7l0RY4i9BJsC6WTDRDQ/vHekGy86Kwi6Esq
- IzhKLr3OO4wfaano0EJJ5Gs84UnV4nMnYW9Nts1TM7oIybmuoDUgWV2QyuT4HcBQmTL6/b7FDyw
- 82BVH/fdSFI2eKKOB3z+/AkHtl9+TcngTVS3xIAQWvL6HdAmpBuy2zbPJ7GMd0eV+meic7kYxxF
- 1/MoGJeiOoVwFVOK5uGV2GtBCFo8xz97rQ3SKuV2hyxM9CExMXw9JCmDOBulmxf8+Vd8Afmotk7
- 5UhY14It5j5GHJw==
+ bh=FdYd9hZ9gf9p26w3kBwfi4mBvHieKCqby9vg2TDUnIg=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBowSTtChYRJJaE+0voQCXzymF+Nl4src/pRSXg5
+ CUOS9YjvISJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaMEk7QAKCRARpy6gFHHX
+ cu7HD/9mxnIICFvpG6MMF9u5qDOaXah2rrhErtU7I+cJbwks+18HoGdUHcuA/ylVyf2s8of2d8u
+ 3GAg8aZQtC59kQBRhDRffTor5B2gqBV9QpUgi4a4DobDxnV3IPXrkVam28g5a1B810F57td70Ou
+ 42P3W7O2YPF6NhORFEE1WQ63RgPhtMj6HFXzlpe41szS2jlT8PchOEAKSWeBJBDo6a7M+imekrl
+ an85GLRF6FF2UyCLMc/79JirR08LQhAMekykBx6mpcheSmGdQVQI/Nc0P1eMxIm/Vb7T+3Sop9L
+ 0Q1rJlK32WZP1vxGdGk1CqgWsloftyaRkgOE6bu9JyrhYnVdM0lQWUAo3EPTWiP39RXiTvtc8Tc
+ F1dgQY+2dmdypsYu58HGsHtkdEnrjHaPXvJxWG0ohCWIJ7T7uHCBkZvO8xdySF5Zd6zn2X3xj31
+ Ro5xSAIoOrgU4aYm42lkIhq0/3vyOPUy27H0bZ0K/Dd1+zg8Gj6dr0kbzlRZuNy8+rHCeXHLDHF
+ nbGSLQJtZmmz6FwA8ngVUFZ7V2T+J8qZMMS8n0OY4DO1Fr/lH1c5c/HjsG8mhmRD9eIlH7Igu69
+ EZqD17OkYrsoIKlYtxJG0LTvcsAPxZbKtfoAL/tuUx8+RqQN7aSlIBgzcT2fx2BYu1FM5DBz4hC
+ mcO/5mOwAW0TmLg==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-The conversion to using the modernized generic GPIO chip API was
-incomplete without also converting the direct calls to write/read_reg()
-callbacks. Use the provided wrappers from linux/gpio/generic.h.
+Convert the driver to using the new generic GPIO chip interfaces from
+linux/gpio/generic.h.
 
-Fixes: 38d98a822c14 ("gpio: xgene-sb: use new generic GPIO chip API")
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/gpio/gpio-xgene-sb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-brcmstb.c | 112 ++++++++++++++++++++++++--------------------
+ 1 file changed, 60 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/gpio/gpio-xgene-sb.c b/drivers/gpio/gpio-xgene-sb.c
-index c559a89aadf7a77bd9cce7e5a7d4a2b241307812..62545e358b6c4b1cab25e1135cb24ccc3e955078 100644
---- a/drivers/gpio/gpio-xgene-sb.c
-+++ b/drivers/gpio/gpio-xgene-sb.c
-@@ -63,14 +63,15 @@ struct xgene_gpio_sb {
- static void xgene_gpio_set_bit(struct gpio_chip *gc,
- 				void __iomem *reg, u32 gpio, int val)
- {
-+	struct gpio_generic_chip *chip = to_gpio_generic_chip(gc);
- 	u32 data;
+diff --git a/drivers/gpio/gpio-brcmstb.c b/drivers/gpio/gpio-brcmstb.c
+index e29a9589b3ccbd17d10f6671088dca3e76537927..be3ff916e134a674d3e1d334a7d431b7ad767a33 100644
+--- a/drivers/gpio/gpio-brcmstb.c
++++ b/drivers/gpio/gpio-brcmstb.c
+@@ -3,6 +3,7 @@
  
--	data = gc->read_reg(reg);
-+	data = gpio_generic_read_reg(chip, reg);
- 	if (val)
- 		data |= GPIO_MASK(gpio);
- 	else
- 		data &= ~GPIO_MASK(gpio);
--	gc->write_reg(reg, data);
-+	gpio_generic_write_reg(chip, reg, data);
+ #include <linux/bitops.h>
+ #include <linux/gpio/driver.h>
++#include <linux/gpio/generic.h>
+ #include <linux/of.h>
+ #include <linux/module.h>
+ #include <linux/irqdomain.h>
+@@ -37,7 +38,7 @@ enum gio_reg_index {
+ struct brcmstb_gpio_bank {
+ 	struct list_head node;
+ 	int id;
+-	struct gpio_chip gc;
++	struct gpio_generic_chip chip;
+ 	struct brcmstb_gpio_priv *parent_priv;
+ 	u32 width;
+ 	u32 wake_active;
+@@ -72,19 +73,18 @@ __brcmstb_gpio_get_active_irqs(struct brcmstb_gpio_bank *bank)
+ {
+ 	void __iomem *reg_base = bank->parent_priv->reg_base;
+ 
+-	return bank->gc.read_reg(reg_base + GIO_STAT(bank->id)) &
+-	       bank->gc.read_reg(reg_base + GIO_MASK(bank->id));
++	return gpio_generic_read_reg(&bank->chip, reg_base + GIO_STAT(bank->id)) &
++	       gpio_generic_read_reg(&bank->chip, reg_base + GIO_MASK(bank->id));
  }
  
- static int xgene_gpio_sb_irq_set_type(struct irq_data *d, unsigned int type)
+ static unsigned long
+ brcmstb_gpio_get_active_irqs(struct brcmstb_gpio_bank *bank)
+ {
+ 	unsigned long status;
+-	unsigned long flags;
+ 
+-	raw_spin_lock_irqsave(&bank->gc.bgpio_lock, flags);
++	guard(gpio_generic_lock_irqsave)(&bank->chip);
++
+ 	status = __brcmstb_gpio_get_active_irqs(bank);
+-	raw_spin_unlock_irqrestore(&bank->gc.bgpio_lock, flags);
+ 
+ 	return status;
+ }
+@@ -92,26 +92,26 @@ brcmstb_gpio_get_active_irqs(struct brcmstb_gpio_bank *bank)
+ static int brcmstb_gpio_hwirq_to_offset(irq_hw_number_t hwirq,
+ 					struct brcmstb_gpio_bank *bank)
+ {
+-	return hwirq - bank->gc.offset;
++	return hwirq - bank->chip.gc.offset;
+ }
+ 
+ static void brcmstb_gpio_set_imask(struct brcmstb_gpio_bank *bank,
+ 		unsigned int hwirq, bool enable)
+ {
+-	struct gpio_chip *gc = &bank->gc;
+ 	struct brcmstb_gpio_priv *priv = bank->parent_priv;
+ 	u32 mask = BIT(brcmstb_gpio_hwirq_to_offset(hwirq, bank));
+ 	u32 imask;
+-	unsigned long flags;
+ 
+-	raw_spin_lock_irqsave(&gc->bgpio_lock, flags);
+-	imask = gc->read_reg(priv->reg_base + GIO_MASK(bank->id));
++	guard(gpio_generic_lock_irqsave)(&bank->chip);
++
++	imask = gpio_generic_read_reg(&bank->chip,
++				      priv->reg_base + GIO_MASK(bank->id));
+ 	if (enable)
+ 		imask |= mask;
+ 	else
+ 		imask &= ~mask;
+-	gc->write_reg(priv->reg_base + GIO_MASK(bank->id), imask);
+-	raw_spin_unlock_irqrestore(&gc->bgpio_lock, flags);
++	gpio_generic_write_reg(&bank->chip,
++			       priv->reg_base + GIO_MASK(bank->id), imask);
+ }
+ 
+ static int brcmstb_gpio_to_irq(struct gpio_chip *gc, unsigned offset)
+@@ -150,7 +150,8 @@ static void brcmstb_gpio_irq_ack(struct irq_data *d)
+ 	struct brcmstb_gpio_priv *priv = bank->parent_priv;
+ 	u32 mask = BIT(brcmstb_gpio_hwirq_to_offset(d->hwirq, bank));
+ 
+-	gc->write_reg(priv->reg_base + GIO_STAT(bank->id), mask);
++	gpio_generic_write_reg(&bank->chip,
++			       priv->reg_base + GIO_STAT(bank->id), mask);
+ }
+ 
+ static int brcmstb_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+@@ -162,7 +163,6 @@ static int brcmstb_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 	u32 edge_insensitive, iedge_insensitive;
+ 	u32 edge_config, iedge_config;
+ 	u32 level, ilevel;
+-	unsigned long flags;
+ 
+ 	switch (type) {
+ 	case IRQ_TYPE_LEVEL_LOW:
+@@ -194,23 +194,25 @@ static int brcmstb_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ 		return -EINVAL;
+ 	}
+ 
+-	raw_spin_lock_irqsave(&bank->gc.bgpio_lock, flags);
++	guard(gpio_generic_lock_irqsave)(&bank->chip);
+ 
+-	iedge_config = bank->gc.read_reg(priv->reg_base +
+-			GIO_EC(bank->id)) & ~mask;
+-	iedge_insensitive = bank->gc.read_reg(priv->reg_base +
+-			GIO_EI(bank->id)) & ~mask;
+-	ilevel = bank->gc.read_reg(priv->reg_base +
+-			GIO_LEVEL(bank->id)) & ~mask;
++	iedge_config = gpio_generic_read_reg(&bank->chip,
++				priv->reg_base + GIO_EC(bank->id)) & ~mask;
++	iedge_insensitive = gpio_generic_read_reg(&bank->chip,
++				priv->reg_base + GIO_EI(bank->id)) & ~mask;
++	ilevel = gpio_generic_read_reg(&bank->chip,
++				priv->reg_base + GIO_LEVEL(bank->id)) & ~mask;
+ 
+-	bank->gc.write_reg(priv->reg_base + GIO_EC(bank->id),
+-			iedge_config | edge_config);
+-	bank->gc.write_reg(priv->reg_base + GIO_EI(bank->id),
+-			iedge_insensitive | edge_insensitive);
+-	bank->gc.write_reg(priv->reg_base + GIO_LEVEL(bank->id),
+-			ilevel | level);
++	gpio_generic_write_reg(&bank->chip,
++			       priv->reg_base + GIO_EC(bank->id),
++			       iedge_config | edge_config);
++	gpio_generic_write_reg(&bank->chip,
++			       priv->reg_base + GIO_EI(bank->id),
++			       iedge_insensitive | edge_insensitive);
++	gpio_generic_write_reg(&bank->chip,
++			       priv->reg_base + GIO_LEVEL(bank->id),
++			       ilevel | level);
+ 
+-	raw_spin_unlock_irqrestore(&bank->gc.bgpio_lock, flags);
+ 	return 0;
+ }
+ 
+@@ -263,7 +265,7 @@ static void brcmstb_gpio_irq_bank_handler(struct brcmstb_gpio_bank *bank)
+ {
+ 	struct brcmstb_gpio_priv *priv = bank->parent_priv;
+ 	struct irq_domain *domain = priv->irq_domain;
+-	int hwbase = bank->gc.offset;
++	int hwbase = bank->chip.gc.offset;
+ 	unsigned long status;
+ 
+ 	while ((status = brcmstb_gpio_get_active_irqs(bank))) {
+@@ -303,7 +305,7 @@ static struct brcmstb_gpio_bank *brcmstb_gpio_hwirq_to_bank(
+ 
+ 	/* banks are in descending order */
+ 	list_for_each_entry_reverse(bank, &priv->bank_list, node) {
+-		i += bank->gc.ngpio;
++		i += bank->chip.gc.ngpio;
+ 		if (hwirq < i)
+ 			return bank;
+ 	}
+@@ -332,7 +334,7 @@ static int brcmstb_gpio_irq_map(struct irq_domain *d, unsigned int irq,
+ 
+ 	dev_dbg(&pdev->dev, "Mapping irq %d for gpio line %d (bank %d)\n",
+ 		irq, (int)hwirq, bank->id);
+-	ret = irq_set_chip_data(irq, &bank->gc);
++	ret = irq_set_chip_data(irq, &bank->chip.gc);
+ 	if (ret < 0)
+ 		return ret;
+ 	irq_set_lockdep_class(irq, &brcmstb_gpio_irq_lock_class,
+@@ -394,7 +396,7 @@ static void brcmstb_gpio_remove(struct platform_device *pdev)
+ 	 * more important to actually perform all of the steps.
+ 	 */
+ 	list_for_each_entry(bank, &priv->bank_list, node)
+-		gpiochip_remove(&bank->gc);
++		gpiochip_remove(&bank->chip.gc);
+ }
+ 
+ static int brcmstb_gpio_of_xlate(struct gpio_chip *gc,
+@@ -412,7 +414,7 @@ static int brcmstb_gpio_of_xlate(struct gpio_chip *gc,
+ 	if (WARN_ON(gpiospec->args_count < gc->of_gpio_n_cells))
+ 		return -EINVAL;
+ 
+-	offset = gpiospec->args[0] - bank->gc.offset;
++	offset = gpiospec->args[0] - bank->chip.gc.offset;
+ 	if (offset >= gc->ngpio || offset < 0)
+ 		return -EINVAL;
+ 
+@@ -493,19 +495,17 @@ static int brcmstb_gpio_irq_setup(struct platform_device *pdev,
+ static void brcmstb_gpio_bank_save(struct brcmstb_gpio_priv *priv,
+ 				   struct brcmstb_gpio_bank *bank)
+ {
+-	struct gpio_chip *gc = &bank->gc;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < GIO_REG_STAT; i++)
+-		bank->saved_regs[i] = gc->read_reg(priv->reg_base +
+-						   GIO_BANK_OFF(bank->id, i));
++		bank->saved_regs[i] = gpio_generic_read_reg(&bank->chip,
++					priv->reg_base + GIO_BANK_OFF(bank->id, i));
+ }
+ 
+ static void brcmstb_gpio_quiesce(struct device *dev, bool save)
+ {
+ 	struct brcmstb_gpio_priv *priv = dev_get_drvdata(dev);
+ 	struct brcmstb_gpio_bank *bank;
+-	struct gpio_chip *gc;
+ 	u32 imask;
+ 
+ 	/* disable non-wake interrupt */
+@@ -513,8 +513,6 @@ static void brcmstb_gpio_quiesce(struct device *dev, bool save)
+ 		disable_irq(priv->parent_irq);
+ 
+ 	list_for_each_entry(bank, &priv->bank_list, node) {
+-		gc = &bank->gc;
+-
+ 		if (save)
+ 			brcmstb_gpio_bank_save(priv, bank);
+ 
+@@ -523,8 +521,9 @@ static void brcmstb_gpio_quiesce(struct device *dev, bool save)
+ 			imask = bank->wake_active;
+ 		else
+ 			imask = 0;
+-		gc->write_reg(priv->reg_base + GIO_MASK(bank->id),
+-			       imask);
++		gpio_generic_write_reg(&bank->chip,
++				       priv->reg_base + GIO_MASK(bank->id),
++				       imask);
+ 	}
+ }
+ 
+@@ -538,12 +537,12 @@ static void brcmstb_gpio_shutdown(struct platform_device *pdev)
+ static void brcmstb_gpio_bank_restore(struct brcmstb_gpio_priv *priv,
+ 				      struct brcmstb_gpio_bank *bank)
+ {
+-	struct gpio_chip *gc = &bank->gc;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < GIO_REG_STAT; i++)
+-		gc->write_reg(priv->reg_base + GIO_BANK_OFF(bank->id, i),
+-			      bank->saved_regs[i]);
++		gpio_generic_write_reg(&bank->chip,
++				       priv->reg_base + GIO_BANK_OFF(bank->id, i),
++				       bank->saved_regs[i]);
+ }
+ 
+ static int brcmstb_gpio_suspend(struct device *dev)
+@@ -585,6 +584,7 @@ static const struct dev_pm_ops brcmstb_gpio_pm_ops = {
+ 
+ static int brcmstb_gpio_probe(struct platform_device *pdev)
+ {
++	struct gpio_generic_chip_config config;
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
+ 	void __iomem *reg_base;
+@@ -665,17 +665,24 @@ static int brcmstb_gpio_probe(struct platform_device *pdev)
+ 			bank->width = bank_width;
+ 		}
+ 
++		gc = &bank->chip.gc;
++
+ 		/*
+ 		 * Regs are 4 bytes wide, have data reg, no set/clear regs,
+ 		 * and direction bits have 0 = output and 1 = input
+ 		 */
+-		gc = &bank->gc;
+-		err = bgpio_init(gc, dev, 4,
+-				reg_base + GIO_DATA(bank->id),
+-				NULL, NULL, NULL,
+-				reg_base + GIO_IODIR(bank->id), flags);
++
++		config = (struct gpio_generic_chip_config) {
++			.dev = dev,
++			.sz = 4,
++			.dat = reg_base + GIO_DATA(bank->id),
++			.dirin = reg_base + GIO_IODIR(bank->id),
++			.flags = flags,
++		};
++
++		err = gpio_generic_chip_init(&bank->chip, &config);
+ 		if (err) {
+-			dev_err(dev, "bgpio_init() failed\n");
++			dev_err(dev, "failed to initialize generic GPIO chip\n");
+ 			goto fail;
+ 		}
+ 
+@@ -700,7 +707,8 @@ static int brcmstb_gpio_probe(struct platform_device *pdev)
+ 		 * be retained from S5 cold boot
+ 		 */
+ 		need_wakeup_event |= !!__brcmstb_gpio_get_active_irqs(bank);
+-		gc->write_reg(reg_base + GIO_MASK(bank->id), 0);
++		gpio_generic_write_reg(&bank->chip,
++				       reg_base + GIO_MASK(bank->id), 0);
+ 
+ 		err = gpiochip_add_data(gc, bank);
+ 		if (err) {
 
 -- 
 2.48.1
