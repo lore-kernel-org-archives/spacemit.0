@@ -1,59 +1,59 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF5030B50C
-	for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 07:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD2631076A
+	for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 21:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757489358; cv=none; b=uvv3VMl5EIILdpRLl+9yIOx42fLaCm2gvnNjSX7HrrK3mpViJE9HGkrpDpTbb38QdaoQ3GXL916dkHsGibKCE3dCQo6rJDwbjV94sLgESdHH9psEb3hW5vbcNuDxUJNyYiLCxLucHOzBtMd/wGLIiumcoDUrt+H7JqcYTqH9GRM=
+	t=1757539962; cv=none; b=cEmB010ZTK0pzq6XETG+jBX2SOXDoBYzLz90/RaEt3YGCcP/rG0iRt7EXQNXsWyfm5S4MXoyDeEdlCUIcWBEKNCFsdaGLRAM6cTyxNL/HatHTjQJYtG+Te+IvbMGjbPZfZ09jdebxlfuxxWsgoLxcQhwAATGz7fSA70QGZzd1vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757489358; c=relaxed/simple;
-	bh=dPns3UYk3HTy9Cu967vV+y/kprcH9SmJknyIiH6KUPg=;
+	s=arc-20240116; t=1757539962; c=relaxed/simple;
+	bh=tDgFFo1KURd80WOddqneN0YLx5E89K1CqsHmGyLdaRg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QDcXFoJSHxL3gY4e7YHHGH2iXKif5kNtwYE+YnQD5wgE2jSID/kTHpROMHtUwiumqmk8qEE5A5rwHzuoixkt5Pc0wxwC/RmbdR+oaT8NICXoGCwc5NcfrpDmfKnOi0ZYxVh1eDVpDmpdVRXlhoNWcSRj6Rd2SYwc3DiCVNhEN20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=XtRtkGx6; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+	 To:Cc:Content-Type; b=fs9TNikNxEnJd7s6vTO9NTX0vTQQTp4+VAmK9rXQ5Vw7HCpih/XMXL9wFvvlDMueVUrLZzH+XIgM6eRtipyX5SLhb9MmsgTGS776qf9eDtILXQG4UhDJztZ8x+0O8n8dywLor2uI1tR0cj9UKD48QtSNwxZ1hY2CEoiLgdY5T7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Imz2TxLH; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="XtRtkGx6"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-55f98e7782bso483186e87.0
-        for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 00:29:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Imz2TxLH"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-55f69cf4b77so7524567e87.2
+        for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 14:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757489352; x=1758094152; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1757539957; x=1758144757; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dPns3UYk3HTy9Cu967vV+y/kprcH9SmJknyIiH6KUPg=;
-        b=XtRtkGx6Jj9sJaIf4gLFtZ4F9W9Oc+5CLMbOsBuU0IBL0LcEkqr+WIeM76WqgZAQoA
-         CESZDRgx2kAxwZoJ1uede2jlw5CnYU1AhyxIwpR4bXeeCoHYod4V+CIytJRBEiMJSG8L
-         OWZTOHHj56D5KqlXNqJ2tpposqJOsz3j4hOsxgzYDT3Or0ccG/j9TiK6KmFQ/6oUVVJd
-         YYgl8lUBSHWz1YotFp19xBgXC3Z8Q1pxM2tItoEFcGK3BKvdutDnDj+a6QfPwY86ujOk
-         M4uhVnkcoQ5rIuX8dtsne7XILGCwrjc3s6vgX1glKiOkDRqW6mznMB3N6govqlX9VL+p
-         yRkg==
+        bh=tDgFFo1KURd80WOddqneN0YLx5E89K1CqsHmGyLdaRg=;
+        b=Imz2TxLHsPda1L6pVTX3HgZZBN+yq0c7tzkBPi544ERfifozYivuNuDPnOaXEF+WH/
+         5mDP05yDMochM3jyVMG4xsRnOeuPEVAO0q3tARbXK6IZEV2nFp8k9jmXr8a9L7fLar1x
+         GlfOisuo9unHuncDkca9AemYlh/XSE9c80gjIlk+MjMLdRq8mhovIX4yfY9ZjIE3qslL
+         Xw+bhURei7qlKO5dKH3e/FDQzQhotlDsE3DKPpAIVLsxed8gY5XpV4vQ875QFDP/G7Ik
+         0pHT+xJ6Qpyy5FgrlKtnznnGD1ie2ZqDYArh+woIBfeZo9NMhGXcP2deBnzAnj6CSXUi
+         FLVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757489352; x=1758094152;
+        d=1e100.net; s=20230601; t=1757539957; x=1758144757;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dPns3UYk3HTy9Cu967vV+y/kprcH9SmJknyIiH6KUPg=;
-        b=VPAQKptMVWY7bJIPJhQeFwE4uSXeh4s0sUPqV4UnsgNijL9pN/KuSs2qB06+TWUexf
-         kF52Jog2Ka9ymL62Gd/+bm4UiN2OsEBtuClZa0vncWBXvkUiT+jmb1AmfDQvVlRxwR2T
-         AdLeh1p9d8flU2JGqXRnm4DohVJoltKOrxTs0DsnrRDmd34PF9aeVneAJtpvqUhWBJBh
-         grmJmf61vkBZ1HNDGzTJGqd5EkQc2YIO9oMVyAW59r+xEguwYUfXNJmzS84fST6hy8ui
-         3swYQfv6hpbUwJ+O5Rd5rVFQ80mQKYPOOGSUGMCjr6uRBrQ1lykYxxq5QzpS9yhh4i1Z
-         tk3A==
-X-Forwarded-Encrypted: i=1; AJvYcCXr3BGWMEWExKwdyCcJIy3+xNMwAQeBuz77zkI96MHP3626bvDloMAh0zLadPFMS/fxuxcjOQkpdg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx0azwS7N1o9/8yUntN9SapbfBaMPrhh7hIPtmx9Oe4RR96wBQI
-	3i4QB90p2phbSp8HSrQGovAY+49NMiXnFUfp1TcupF59Uk5eJfhEmCgvdx+qzTqQvEaxRpbOhGe
-	3/8bPH2h/p7gNCz3lSOCkKLF85U6xDehLAlVl9Ww7jQ==
-X-Gm-Gg: ASbGnctcBdr/8VSYmnSzurLy9aCFvTeIAM9LAVlp6lKJw1/wX+NXSSIWSSzzWTh21To
-	ZnrGPh+qft541kQGVI5WgZ79g0GXSGUwppuOyqLgM2+ScKmy5w7hg8jKFQI6GOL4g/9FYnGx2Jn
-	kN+c7hkrp3NtPRm2LKZiGvNVk38DHqOAhoLlbrLeBb/BsEomBWKiNTcvMLllxXfs4gzcF0MMKs8
-	+Cb+yKhS219zNTp1h9p0QfzI2g9BRGibF26Phs=
-X-Google-Smtp-Source: AGHT+IEqPJ9kigcz2GLj3mP+JOGINamypRE0PiCaaHlUwxbs7HlrGNQFZsWt9jHWryRE9N3BOTU+Nqgodo1ymFIXUx4=
-X-Received: by 2002:a05:6512:3c93:b0:55f:552c:f731 with SMTP id
- 2adb3069b0e04-56099453ef8mr6704484e87.7.1757489351780; Wed, 10 Sep 2025
- 00:29:11 -0700 (PDT)
+        bh=tDgFFo1KURd80WOddqneN0YLx5E89K1CqsHmGyLdaRg=;
+        b=Ew5yfnzwjR2OwUWAm1Sx9/91etur19d3rhwWplnpe7NErQ9faKF+hQ4HVjzQQ0txho
+         bUbPBlq1bpOqt4fqIEjl+crjgw4/Lixoamx7eDEpHPoi5AKDE0zB87909o7wNtj+KauH
+         hMW/SA7DT/XkfGrme5rWpqSQc5wXU/y7z43fq020S+x68Fj7ZGkVX2seOImcsUsDLJCS
+         fImg+/7GDPtuZ/hTPU0/8ofuwKlNlXrOhZ8zt4US7gpxZI7YdNUTyYek+AOmVFWIQU+u
+         cH/CT4bbe5vcOk5GfaRJzQjkg41qFXVzKBKFWFHh+YY+aM+ZhZigBzYzYyVU0XEpdwBK
+         NqhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWOEoC5rA5xHnHkzc8m5iGepMj7T7LuXYgOILdFSTGvV0OVoqdPNkGKnl3PtIYL5wLKQVViHl2zhA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzez8pIy5Ns75yh916lyyXfvT5n6v5G5fgu9AIRGBjNNd7xCj3W
+	NjNd/oTBVKC6AUE9NIA/sRfnC56biPUmdUUkYY02oEmHb2eer/WwHLkU6hb4u5YRN/hMxbmuChN
+	HeLGjwxi7TrkO0U40L6Lg0rpTyz9bhoZZebTSfiMIzA==
+X-Gm-Gg: ASbGncvnt9t6itMmifSODgQwuFAB9IAXDNsP6ErKZm0ka/c6peNAF+BKPCNr4eRayie
+	NoP3lyWaGjU9XpeMPG+nUS6e1SAqHI7b1wXwL30jDNQzJNo6EYE8yzZT45VaJgwYY4O+37P2E7t
+	tpT9inWmA1FestjCjuYVGFCkSK6JtR3Bx2nBLrnzS0z6Umu413Er603zqSGR+/ImfAkJrOP0UKG
+	AleL2xDfWuV2j9nTQ==
+X-Google-Smtp-Source: AGHT+IEDFgI45XU5cTVW9FtG8gM2JjDzoZENa8d1uC1g5vQQ+iix+RIzuYFh88VfTx91WSF4c7ZJi4duHEmeM7k85Mw=
+X-Received: by 2002:a05:6512:6404:b0:55f:595f:9a31 with SMTP id
+ 2adb3069b0e04-56262f11dd2mr5910272e87.51.1757539957420; Wed, 10 Sep 2025
+ 14:32:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -61,17 +61,16 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20250910-gpio-mmio-gpio-conv-part4-v2-0-f3d1a4c57124@linaro.org>
- <20250910-gpio-mmio-gpio-conv-part4-v2-13-f3d1a4c57124@linaro.org> <CAHp75VcczAm_=XXAjwLFqNTCF72-UJfdisPvavadDEXJR2G19A@mail.gmail.com>
-In-Reply-To: <CAHp75VcczAm_=XXAjwLFqNTCF72-UJfdisPvavadDEXJR2G19A@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 10 Sep 2025 09:28:59 +0200
-X-Gm-Features: Ac12FXylJ9GUUlvsjAHDZW0ZjH7_XucWxGNpk3CSzJ659744jxYcf8C0LoVlvQM
-Message-ID: <CAMRc=Md1kLjELc48-fvjsgpZH+t+kE00v0uMDztubooM_AJ2oQ@mail.gmail.com>
-Subject: Re: [PATCH v2 13/15] gpio: sodaville: use new generic GPIO chip API
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Keguang Zhang <keguang.zhang@gmail.com>, 
-	Alban Bedel <albeu@free.fr>, Doug Berger <opendmb@gmail.com>, 
-	Florian Fainelli <florian.fainelli@broadcom.com>, 
+In-Reply-To: <20250910-gpio-mmio-gpio-conv-part4-v2-0-f3d1a4c57124@linaro.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 10 Sep 2025 23:32:26 +0200
+X-Gm-Features: Ac12FXzHQO4QoWSTSppUbrZutew2n-HjqWu5POboMsRGiUcu6mJnWXdH0E38Eq0
+Message-ID: <CACRpkdb=J+hiC5cu+g0Z-gqzpG8PgX01CXc4P98FfSSAf7PZEA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/15] gpio: replace legacy bgpio_init() with its
+ modernized alternative - part 4
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Keguang Zhang <keguang.zhang@gmail.com>, Alban Bedel <albeu@free.fr>, 
+	Doug Berger <opendmb@gmail.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
 	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
 	Matthias Brugger <matthias.bgg@gmail.com>, 
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
@@ -84,21 +83,40 @@ Cc: Linus Walleij <linus.walleij@linaro.org>, Keguang Zhang <keguang.zhang@gmail
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 10, 2025 at 9:19=E2=80=AFAM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
->
-> On Wed, Sep 10, 2025 at 10:13=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.=
-pl> wrote:
-> >
-> > Convert the driver to using the new generic GPIO chip interfaces from
-> > linux/gpio/generic.h.
->
-> In case you want to take it
-> Reviewed-by: Andy Shevchenko <andy@kernel.org>
-> Otherwise I can take it via my tree and then PR to you.
->
+On Wed, Sep 10, 2025 at 9:12=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
 
-I would prefer to apply the whole series directly, this way the
-conversion will be done in one go.
+> Here's the final part of the generic GPIO chip conversions. Once all the
+> existing users are switched to the new API, the final patch in the
+> series removes bgpio_init(), moves the gpio-mmio fields out of struct
+> gpio_chip and into struct gpio_generic_chip and adjusts gpio-mmio.c to
+> the new situation.
+>
+> Down the line we could probably improve gpio-mmio.c by using lock guards
+> and replacing the - now obsolete - "bgpio" prefix with "gpio_generic" or
+> something similar but this series is already big as is so I'm leaving
+> that for the future.
+>
+> Tested in qemu on vexpress-a9.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Bart
+The patch set is a beauty, hands down.
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+
+I especially like where you caught local spinlocks being
+(ab)used instead of the generic irqchip ones.
+
+I don't know about merging patch 15/15 into just the GPIO
+tree, that can make things fail in other subsystems depending
+on merge order into Torvalds tree or linux-next if your tree is
+merged first.
+
+I would merge the first 14 and keep the last for the later part
+of the merge window when all other trees with conversions
+are merged.
+
+(You probably already thought of this.)
+
+Yours,
+Linus Walleij
