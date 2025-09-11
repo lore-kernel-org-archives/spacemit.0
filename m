@@ -1,41 +1,40 @@
-Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.67.179])
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003E623645D
-	for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 03:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.67.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7B42367A8
+	for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 03:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757561731; cv=none; b=MZA7NBMzJzyfB0arkBpIeS+ygQsSCjlyco0/q86uzzSyWGWJTV9GHLn00uMW4Ax8gyqGA6YR0KcgR1GK1uzmgX9iuLcF34H9i4/IIqqnR4irjDZOVgwWQkEd7LO6owuSH3zunEOpxaMUl+i8fEF1Kv02L3b2Kc8vwlrgrFvCj+k=
+	t=1757561736; cv=none; b=D2cV7OareTwh8abbYUtnTRvuspN8btuCERnoQKvwGDpI8h+8Ub+IzofkPiLM0APiWbiHSKHycqPk2Bpr5brehLmQ3vUZ4pk3Ny7JQtLpHfc4FF/jL3VGY8veemkPBufB3Ds0yJJ61H7CtW1JsrNtHkhrQSw/cAtaQoCwqFZoZ2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757561731; c=relaxed/simple;
-	bh=um/BmDrcrL0kuow4Mg9YUsckGkNepV1kSLVg1UlzI78=;
+	s=arc-20240116; t=1757561736; c=relaxed/simple;
+	bh=8vF7EJspH6w1AlvO0Jhpe6nfMvzzMDDLu+qMOL0JjTg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TUa7b79txW+/2kcSCty7jpxREoDEKM8CjKqrl69pyzozX3wViWRre18Bq41SoDhUlk3xdu8mvuNq6WQ6ILdcspfe3W0kDsEEkildzPuDvIexk0tUnc1Z7oc20kZc9zd5DVwJN+qC1PrTY/gwFpM59KOF5O2s8lGEiCcSJFCTzZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=SGJu44LT; arc=none smtp.client-ip=114.132.67.179
+	 In-Reply-To:To:Cc; b=egEXElr5sfN95LyFdfgBl2M+Q1e402DuYVOp8mMPviBF6j9wA9AF3jItGAns8sBnm2YlnNHNu1ZKF0UpUPpA8E+8k7EY+GWuxGdMaFOONm6f6oO3q9nAbROCzXvVY6/VlNCNTv2WbS6mxjhzXr9h5y8j78c7ctrqNPmQJohDEwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=dlf5cqnW; arc=none smtp.client-ip=54.243.244.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="SGJu44LT"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="dlf5cqnW"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1757561658;
-	bh=6dv7CsMYSMIwRgfQgFkuw6XwJ6YSMwlWfwNLaJZz9VU=;
+	s=mxsw2412; t=1757561662;
+	bh=6cIpFHh8JqmTbERos517ybZUEXPDKNh75tATmTM7P3k=;
 	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=SGJu44LTkeobZJOHSxoXXJZqzgBl1pbm3qzi4KPNbOvM2M6mO4NFA9B5YbuX7yBn7
-	 DGCT90m7TROWvcyd68hs11PofwpXxu7i8gOB54aFZgfL2WjxEP/mAfqLngOZZIH1vv
-	 x0OhCGsvGAJRpzODoJdS6SiB+RsM86Q9PkIwt3gU=
-X-QQ-mid: zesmtpsz8t1757561656t73c75677
-X-QQ-Originating-IP: atI6jdhOTO99dK0qo4mLzd5Ax7YIXq4ZclxUwACk0GM=
+	b=dlf5cqnW39q0U9OqXPs36q4aQhBrW23ouhilOI+KEdhcwwa66IxTdzfpb2u2Sfeg6
+	 rI9q3taDedWIKQDi+eFJpEp/ln777/9OAR9fHNJLz6K7oHvChAPZBbvN3EglGxjcrv
+	 T8C8uha+tCi7IVUi9x/pUJ9jyvRFoLK23Adf2Fdk=
+X-QQ-mid: esmtpsz21t1757561660t871e2e00
+X-QQ-Originating-IP: QJTV/3qbzO7kVHvyxsNO+eqgGoYbsBX3FUfXfw0F3+M=
 Received: from = ( [61.145.255.150])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 11 Sep 2025 11:34:13 +0800 (CST)
+	id ; Thu, 11 Sep 2025 11:34:17 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11099552558053467934
+X-BIZMAIL-ID: 12270443823912362904
 EX-QQ-RecipientCnt: 16
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Thu, 11 Sep 2025 11:34:04 +0800
-Subject: [PATCH RESEND v4 2/3] clk: spacemit: introduce pre-div for ddn
- clock
+Date: Thu, 11 Sep 2025 11:34:05 +0800
+Subject: [PATCH RESEND v4 3/3] clk: spacemit: fix i2s clock
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,7 +43,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250911-k1-clk-i2s-generation-v4-2-cba204a50d48@linux.spacemit.com>
+Message-Id: <20250911-k1-clk-i2s-generation-v4-3-cba204a50d48@linux.spacemit.com>
 References: <20250911-k1-clk-i2s-generation-v4-0-cba204a50d48@linux.spacemit.com>
 In-Reply-To: <20250911-k1-clk-i2s-generation-v4-0-cba204a50d48@linux.spacemit.com>
 To: Michael Turquette <mturquette@baylibre.com>, 
@@ -58,134 +57,136 @@ Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Jinmei Wei <weijinmei@linux.spacemit.com>, 
  Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757561644; l=4272;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757561644; l=4010;
  i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=um/BmDrcrL0kuow4Mg9YUsckGkNepV1kSLVg1UlzI78=;
- b=z1OFKwF+QDZ8bs6TETX7P1vRlSxis+A8oFuHuR8uWEkspKrqdM5HtNAflp/q3Caesb+NZ4VCC
- 2mRA2Y3Z890DxgfO37pcYRwxZBERKDeqLbN/s0p/Im+sPeHcAL8fo2d
+ bh=8vF7EJspH6w1AlvO0Jhpe6nfMvzzMDDLu+qMOL0JjTg=;
+ b=10oG8zpdU52YluNw4UoXjusApo3IbWbq+z6jZ7QTwnEIDsRNVpJLfhG28nn0Ci6E5yfMrH5i6
+ yry+XbgPjh6CthSUdzQKpJi69cltQvTJGIcNCdA8DVdUH8THeYmeWFf
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
  pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: OV5xRVowR16SUzOxg8PoyXr5U4uV9Dvc/ZWlK1rk7t8j2A+qw6TciN//
-	6422Cjs0AIAyjHrBscqVe1euazkajxRWOUUSA4MGfUlMboll9d3Q3aIhQjawoPxzDxG1AeN
-	MPboGlCj+cxQ8IzO997JaiNs3naU+LSCevJFs6k+qaXSlJpaWvyko4ClLR8Vf1QXXyuyF4m
-	Jtkcjpctdm9Kh78Vosfx1x+14pZUKuIrDNFuDix9d+z9kHcuHvdX1oJGHFbBIkfhPUska88
-	OvcTd23rtN7MOgrOF+wHWR0U7iz0Tbh2S0klNRbTBAZ13tmyf5En81K07ziQdIql0tYb5ZL
-	v6bMPglGHatlD2vtpXG+HivlpLXm+5nBez2SXF3j0OiPJriP04Z9Q34IvGvi/Nh2y1I5UdS
-	oQZthgGcDaLED7zXT58TT7B+zLt5zkrGZ/r7zNLK2IcnWUcvOUi4xUrqHOh/ciPzenhzj5q
-	GmKjF91dxtgHnXDm/DGjqwiJZSjjI9y0Cezxy0kVRAkH3gLcl55VKZxR4Bp8w0xKmfT768o
-	hNwMwrCCWUS0W/P1+YP0rEp4VW6LqbCR50Uu+/jRQDDvsV3xXIkqRTygqMxtN64+YdqoATM
-	ZMW34VhMbw0/bt4bfXsy5Do5enn4/zOxl+Qyd2tro3razv/NAoD65+SE8gosmQ7O5HEiJtu
-	l4Azqch7/v4XLIiBztnn+FQSSAEScPKswrKggo4yCGp4aZqDjyZVZtF9CfRHYeFVu9YSSNx
-	sBWI+E5RAmnOINqpnAODW6G3udFJEucuXp3A1ZcOjd/Y/m2DsEJ5XuxjW2SwDX+Buv1ebEq
-	elfr6vMz3hAhRlnhPcXBrbtrXa9da7iKJfl9qvxuMphvd8r/gPDFH4sjDH880i5+ColnXBC
-	iZfdxyAxMGEaqTMHCt3W9rWJdBwG92TppJo8XpmsImjMlHkKwB5MaBnpxWa05RUoRf5X4Rx
-	W5qPCcaAcOcnh/6fdCOmRdW3mk/jtbAvEHQB0ny2rI/4ZapPQ0atkFHrMNrX9E1ltndlJLG
-	OkvzZUXDcpa8TS3XgPSZ72O4+JFVRtUyD/6UyZkoRTAKSgYmRMOGBU6CcIKmsRG/QxbZxDy
-	FFDYuwR+iF1385gYXtL/4D2rDYJnRCP2JHn5nSWloxe
-X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: N2J0ax+MgH9H54sWauMbioDcCC7deST/B5nGOUl0kNR/nv9E2eLgW2q4
+	Is5zN7iBpZoiUd17HuXsRpvpgvo3x4IjvnZfBV/NFXuxqWXSFLCDOLXN47lKuYLr7MHEdEW
+	qIuAgnuS750RFA5jPv6YWFVghZXSqpvwlO4qC0HYu5UAA4qAxhzZtdUF2BFdamdonZDwWXh
+	5IXvuCRJLddPQVOrdHLJSbz7EmBinqXeIpk84MhCI9gJza1LSdI2B+3GmeuzBCCu+g4Wfxj
+	UB5+fQVot3dnxbd+iYcnXC7PjuEWN4gvES2nyD5InnyAprAX+ZSwUL87PHN4JpFcPykcj6M
+	cxD5wcrEyenYMtcOzXAKCJeLPubg0WP6VJja4vehPkGXSDWJcN9namF3Ozbex37LiHu8iA7
+	s7iFiQXDQaGjFUuWYQbtNAuLoM3RXorZg8Sqn+mm+fTXRgD7MVZ1FUVBMK6wS5tUYzANFxW
+	6Qr/ZSvtIW2OoarbC2jRsSrAswimNQhw4mAODp+gp77dUord0Vg5tXcM8NCRfBi/3z7dG+R
+	IGcFDklGw8HPOevxShc2tv8cR/0ZdGkRz4h1De9+OB4XyiGFSsTsqvedbuexrRwmYI49rHP
+	Z57paOMEDhbhvlQeqdcdjaq0u91b2xa1EVBN/d8rwCaLyDZaIWQsOPQFOWg5nuXHe2PzSfs
+	K8vMPQYX6a9zrc25RZwW64Rvrwhj0FiV4avQg7DzIp10AF3hU8SzO90WqvGJJtADcN/oATR
+	QcR3gaIJw767kbiAqtYBM9Vni02pfSuALJqef8F/ah8yBcU1trPL9xJPISRi5l/NVe12V5O
+	AkMbht/89J7NPib2p8AmGzKaXxwVbmtrlm+fFrQM0DlHohWsume0BOw910mbGkKwD17pFNK
+	AjxCEHkx0uWHeikXnawzDlk02wqX/B67NT/g8vF3HR1nOvniMHC7bHhZpKut8vsutc5ugsp
+	cLTHQidSmlSP85OfHNhaiJ0ph3MjHPzs/3twuLpEHVFHI9vShVd1TqOuKb0F2X3bHcnJeY3
+	3DeCbdN+pbv3EC828/fyRBJTa+Q+VKxuBb9WFaInPmk8qnlEhKSdijcWEHMkBUe8eCLKfQD
+	JzO8Cf9yP52+4HeWsIGBlA=
+X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
 X-QQ-RECHKSPAM: 0
 
-The original DDN operations applied an implicit divide-by-2, which should
-not be a default behavior.
+Defining i2s_bclk and i2s_sysclk as fixed-rate clocks is insufficient
+for real I2S use cases.
 
-This patch removes that assumption, letting each clock define its
-actual behavior explicitly.
+Moreover, the current I2S clock configuration does not work as expected
+due to missing parent clocks.
 
-Reviewed-by: Haylen Chu <heylenay@4d2.org>
+This patch adds the missing parent clocks, defines i2s_sysclk as
+a DDN clock, and i2s_bclk as a DIV clock.
+
+A special note for i2s_bclk:
+
+From the register definition, the i2s_bclk divider always implies
+an additional 1/2 factor.
+
+The following table shows the correspondence between index
+and frequency division coefficients:
+
+| index |  div  |
+|-------|-------|
+|   0   |   2   |
+|   1   |   4   |
+|   2   |   6   |
+|   3   |   8   |
+
+From a software perspective, introducing i2s_bclk_factor as the
+parent of i2s_bclk is sufficient to address the issue.
+
+The I2S-related clock registers can be found here [1].
+
+Link:
+https://developer.spacemit.com/documentation?token=LCrKwWDasiJuROkVNusc2pWTnEb
+[1]
+
+Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+Co-developer: Jinmei Wei <weijinmei@linux.spacemit.com>
+Suggested-by: Haylen Chu <heylenay@4d2.org>
+Signed-off-by: Jinmei Wei <weijinmei@linux.spacemit.com>
 Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
- drivers/clk/spacemit/ccu-k1.c  |  4 ++--
- drivers/clk/spacemit/ccu_ddn.c | 12 ++++++------
- drivers/clk/spacemit/ccu_ddn.h |  6 ++++--
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ drivers/clk/spacemit/ccu-k1.c    | 28 ++++++++++++++++++++++++++--
+ include/soc/spacemit/k1-syscon.h |  1 +
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-index 65e6de030717afa60eefab7bda88f9a13b857650..7155824673fb450971439873b6b6163faf48c7e5 100644
+index 7155824673fb450971439873b6b6163faf48c7e5..50b472a2721121414f33e9fac6370f544e6b8229 100644
 --- a/drivers/clk/spacemit/ccu-k1.c
 +++ b/drivers/clk/spacemit/ccu-k1.c
-@@ -136,8 +136,8 @@ CCU_GATE_DEFINE(pll1_d3_819p2, CCU_PARENT_HW(pll1_d3), MPMU_ACGR, BIT(14), 0);
- CCU_GATE_DEFINE(pll1_d2_1228p8, CCU_PARENT_HW(pll1_d2), MPMU_ACGR, BIT(16), 0);
- 
- CCU_GATE_DEFINE(slow_uart, CCU_PARENT_NAME(osc), MPMU_ACGR, BIT(1), CLK_IGNORE_UNUSED);
--CCU_DDN_DEFINE(slow_uart1_14p74, pll1_d16_153p6, MPMU_SUCCR, 16, 13, 0, 13, 0);
--CCU_DDN_DEFINE(slow_uart2_48, pll1_d4_614p4, MPMU_SUCCR_1, 16, 13, 0, 13, 0);
-+CCU_DDN_DEFINE(slow_uart1_14p74, pll1_d16_153p6, MPMU_SUCCR, 16, 13, 0, 13, 2, 0);
-+CCU_DDN_DEFINE(slow_uart2_48, pll1_d4_614p4, MPMU_SUCCR_1, 16, 13, 0, 13, 2, 0);
+@@ -141,8 +141,28 @@ CCU_DDN_DEFINE(slow_uart2_48, pll1_d4_614p4, MPMU_SUCCR_1, 16, 13, 0, 13, 2, 0);
  
  CCU_GATE_DEFINE(wdt_clk, CCU_PARENT_HW(pll1_d96_25p6), MPMU_WDTPCR, BIT(1), 0);
  
-diff --git a/drivers/clk/spacemit/ccu_ddn.c b/drivers/clk/spacemit/ccu_ddn.c
-index be311b045698e95a688a35858a8ac1bcfbffd2c7..06d86748182bd1959cdab5c18d0a882ee25dcade 100644
---- a/drivers/clk/spacemit/ccu_ddn.c
-+++ b/drivers/clk/spacemit/ccu_ddn.c
-@@ -22,21 +22,21 @@
+-CCU_FACTOR_GATE_DEFINE(i2s_sysclk, CCU_PARENT_HW(pll1_d16_153p6), MPMU_ISCCR, BIT(31), 50, 1);
+-CCU_FACTOR_GATE_DEFINE(i2s_bclk, CCU_PARENT_HW(i2s_sysclk), MPMU_ISCCR, BIT(29), 1, 1);
++CCU_FACTOR_DEFINE(i2s_153p6, CCU_PARENT_HW(pll1_d8_307p2), 2, 1);
++
++static const struct clk_parent_data i2s_153p6_base_parents[] = {
++	CCU_PARENT_HW(i2s_153p6),
++	CCU_PARENT_HW(pll1_d8_307p2),
++};
++CCU_MUX_DEFINE(i2s_153p6_base, i2s_153p6_base_parents, MPMU_FCCR, 29, 1, 0);
++
++static const struct clk_parent_data i2s_sysclk_src_parents[] = {
++	CCU_PARENT_HW(pll1_d96_25p6),
++	CCU_PARENT_HW(i2s_153p6_base)
++};
++CCU_MUX_GATE_DEFINE(i2s_sysclk_src, i2s_sysclk_src_parents, MPMU_ISCCR, 30, 1, BIT(31), 0);
++
++CCU_DDN_DEFINE(i2s_sysclk, i2s_sysclk_src, MPMU_ISCCR, 0, 15, 15, 12, 1, 0);
++
++CCU_FACTOR_DEFINE(i2s_bclk_factor, CCU_PARENT_HW(i2s_sysclk), 2, 1);
++/*
++ * Divider of i2s_bclk always implies a 1/2 factor, which is
++ * described by i2s_bclk_factor.
++ */
++CCU_DIV_GATE_DEFINE(i2s_bclk, CCU_PARENT_HW(i2s_bclk_factor), MPMU_ISCCR, 27, 2, BIT(29), 0);
  
- #include "ccu_ddn.h"
- 
--static unsigned long ccu_ddn_calc_rate(unsigned long prate,
--				       unsigned long num, unsigned long den)
-+static unsigned long ccu_ddn_calc_rate(unsigned long prate, unsigned long num,
-+				       unsigned long den, unsigned int pre_div)
- {
--	return prate * den / 2 / num;
-+	return prate * den / pre_div / num;
- }
- 
- static unsigned long ccu_ddn_calc_best_rate(struct ccu_ddn *ddn,
- 					    unsigned long rate, unsigned long prate,
- 					    unsigned long *num, unsigned long *den)
- {
--	rational_best_approximation(rate, prate / 2,
-+	rational_best_approximation(rate, prate / ddn->pre_div,
- 				    ddn->den_mask >> ddn->den_shift,
- 				    ddn->num_mask >> ddn->num_shift,
- 				    den, num);
--	return ccu_ddn_calc_rate(prate, *num, *den);
-+	return ccu_ddn_calc_rate(prate, *num, *den, ddn->pre_div);
- }
- 
- static long ccu_ddn_round_rate(struct clk_hw *hw, unsigned long rate,
-@@ -58,7 +58,7 @@ static unsigned long ccu_ddn_recalc_rate(struct clk_hw *hw, unsigned long prate)
- 	num = (val & ddn->num_mask) >> ddn->num_shift;
- 	den = (val & ddn->den_mask) >> ddn->den_shift;
- 
--	return ccu_ddn_calc_rate(prate, num, den);
-+	return ccu_ddn_calc_rate(prate, num, den, ddn->pre_div);
- }
- 
- static int ccu_ddn_set_rate(struct clk_hw *hw, unsigned long rate,
-diff --git a/drivers/clk/spacemit/ccu_ddn.h b/drivers/clk/spacemit/ccu_ddn.h
-index a52fabe77d62eba16426867a9c13481e72f025c0..4838414a8e8dc04af49d3b8d39280efedbd75616 100644
---- a/drivers/clk/spacemit/ccu_ddn.h
-+++ b/drivers/clk/spacemit/ccu_ddn.h
-@@ -18,13 +18,14 @@ struct ccu_ddn {
- 	unsigned int num_shift;
- 	unsigned int den_mask;
- 	unsigned int den_shift;
-+	unsigned int pre_div;
+ static const struct clk_parent_data apb_parents[] = {
+ 	CCU_PARENT_HW(pll1_d96_25p6),
+@@ -756,6 +776,10 @@ static struct clk_hw *k1_ccu_mpmu_hws[] = {
+ 	[CLK_I2S_BCLK]		= &i2s_bclk.common.hw,
+ 	[CLK_APB]		= &apb_clk.common.hw,
+ 	[CLK_WDT_BUS]		= &wdt_bus_clk.common.hw,
++	[CLK_I2S_153P6]		= &i2s_153p6.common.hw,
++	[CLK_I2S_153P6_BASE]	= &i2s_153p6_base.common.hw,
++	[CLK_I2S_SYSCLK_SRC]	= &i2s_sysclk_src.common.hw,
++	[CLK_I2S_BCLK_FACTOR]	= &i2s_bclk_factor.common.hw,
  };
  
- #define CCU_DDN_INIT(_name, _parent, _flags) \
- 	CLK_HW_INIT_HW(#_name, &_parent.common.hw, &spacemit_ccu_ddn_ops, _flags)
+ static const struct spacemit_ccu_data k1_ccu_mpmu_data = {
+diff --git a/include/soc/spacemit/k1-syscon.h b/include/soc/spacemit/k1-syscon.h
+index c59bd7a38e5b4219121341b9c0d9ffda13a9c3e2..354751562c55523ef8a22be931ddd8aca9651084 100644
+--- a/include/soc/spacemit/k1-syscon.h
++++ b/include/soc/spacemit/k1-syscon.h
+@@ -30,6 +30,7 @@ to_spacemit_ccu_adev(struct auxiliary_device *adev)
  
- #define CCU_DDN_DEFINE(_name, _parent, _reg_ctrl, _num_shift, _num_width,	\
--		       _den_shift, _den_width, _flags)				\
-+		       _den_shift, _den_width, _pre_div, _flags)		\
- static struct ccu_ddn _name = {							\
- 	.common = {								\
- 		.reg_ctrl	= _reg_ctrl,					\
-@@ -33,7 +34,8 @@ static struct ccu_ddn _name = {							\
- 	.num_mask	= GENMASK(_num_shift + _num_width - 1, _num_shift),	\
- 	.num_shift	= _num_shift,						\
- 	.den_mask	= GENMASK(_den_shift + _den_width - 1, _den_shift),	\
--	.den_shift	= _den_shift,					\
-+	.den_shift	= _den_shift,						\
-+	.pre_div	= _pre_div,						\
- }
- 
- static inline struct ccu_ddn *hw_to_ccu_ddn(struct clk_hw *hw)
+ /* MPMU register offset */
+ #define MPMU_POSR			0x0010
++#define MPMU_FCCR			0x0008
+ #define  POSR_PLL1_LOCK			BIT(27)
+ #define  POSR_PLL2_LOCK			BIT(28)
+ #define  POSR_PLL3_LOCK			BIT(29)
 
 -- 
 2.51.0
