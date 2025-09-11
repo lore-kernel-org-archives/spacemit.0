@@ -1,76 +1,76 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848562741C9
-	for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 07:38:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F132C1583
+	for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 07:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757576309; cv=none; b=LmqaxF72zKkQJbl9AO9M/ZHWt4v28x8M+ixnUk1N/9m1y0uoFssg5AtmXFoi+PQVA119cjr+dklPElZpFn9NWTf1x8FmL/keHd6WvuJvxmH+IsN7C77WhERBZvQL6Y4MstxAXDCa4qbTv4k4QvOcOZz5Cjnm3rPwYURzc51d/Ss=
+	t=1757577404; cv=none; b=Ou9F+DBGvEwry7uADrJ+sNg0WMmFAKXHQiaXzTNFTJAJ1xCj8nhVjeilTN9Nro+Scv4KzOsrH7b3o+n6TOLDxLM9lrr9zsa95nwlsDyxvdGykH42XdG/zqk1QKfo41OZsZ/JsZf/0my014UMWTy5I/VbSabR8ceCQyZMxEq0ZyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757576309; c=relaxed/simple;
-	bh=jUK8rXo2J6tdIuNkdbMKBrXU6Rird8FTI89p+KzSTdU=;
+	s=arc-20240116; t=1757577404; c=relaxed/simple;
+	bh=9XrvhsWNNRvcRClDoeF6Jt3/A7wdBGZCuSPlcTCRTrc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r3Kf/5Cf84bnJ/+A8XSWx5K8I8QEzY4PbVSW7cLLzRZuE8bAROz0TAT5eWjZI1XzaRsJlaO+g43oT1Ag1cwdRuCQdue4q2Lecti8G5FjrKuW4ZU2qSOebJiYaZuytNgDkKos639kze3a1a0mBpAaPR9p6DPLEk2i+jFLx5p2rlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=HF24wbfx; arc=none smtp.client-ip=209.85.167.48
+	 To:Cc:Content-Type; b=nB2X86ngzcS7uAOvLi4MFP8X1ldpm5a1O2/FLNOJv58bl4Ug0vSzCKcefqagXc63nBvbPUeA4iu6l2ub7BF0FL5Ef94EMx25ISy8sjpYrCclzXE2nZoN+S3ZMHhTfHFe8C2l4mRN6Ihm4eUlN/0lzYbavOJ01L0i28hicMr24G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=CnIhPZs9; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="HF24wbfx"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-560880bb751so381862e87.3
-        for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 00:38:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="CnIhPZs9"
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-56088927dcbso463953e87.3
+        for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 00:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757576305; x=1758181105; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757577401; x=1758182201; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jUK8rXo2J6tdIuNkdbMKBrXU6Rird8FTI89p+KzSTdU=;
-        b=HF24wbfxEq8N6j0r73O+mDt+pyIBzqtRBKzjALf3H8HMz+c0zPjBt4mVHMz8JPi8MK
-         NJnKPLXAch1WudAfEZCfgrPra2KzWXzJhYyMDvtiq4+US7jH56xQKgXV11XRTmTzbeHF
-         LSTp2T7R6jSa4WgkKJBst88hh8QhjIPlIbwwMeVYL1Uzu8gJDNm3+Z8U0ew6dCQuIKFW
-         X0Y1uojtQQVxCCV6AkeSii58UIOYViJJbL8WNJUsvgGZcF6RwVFNLIWUbFWXfvS2DJPZ
-         JQ5+pA/XcMqq4hSJtE7+6us9hMMZe/fT3YohtFGcP5h1/FdyWrF/kHi6aGojHBkgUMmo
-         5e4g==
+        bh=Bep7Xid77Fho0BbSmSLtdgFH7ZgtGYRYV4JpO6GqPMo=;
+        b=CnIhPZs9DC4qJuFzKNFKRY9ycJ3k1bpBbaFWcRlJ4sxdixvriPZmab3We082dpWTU1
+         vZ+XNHujjdH4zxkyC2MejtNyMFilwZhCi7nJsfhhL5WDKEq29U5EyTFTqfHwshoD+kZO
+         jbZzHc6KmE+z0wjTW7EVpCmIwFP7t99ec52I76061UxKzIB/Gr15LKioxba0/hohyoOZ
+         Q2kfaWPWLEgI7MyR7aVXBvq0Kx2UmT4SXQm71MxIoaKzxDaFbYOAexI+A7v5WRb69vGN
+         VIt3faIZx9McbMp00MFsuAsyfQWlEzuw/bKvQpbSHH3hU1H4zk73ZxooTpoSVr8M6Lwl
+         CYBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757576305; x=1758181105;
+        d=1e100.net; s=20230601; t=1757577401; x=1758182201;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jUK8rXo2J6tdIuNkdbMKBrXU6Rird8FTI89p+KzSTdU=;
-        b=ezzyhvegu4Yj90nzgGZC3rRhRrOkGXLLsoTXkU78O+AK3AUMmAtpcFqPI0LVJ52PQw
-         tv51QLfS1pVzTnCTnipgxMN4IaQ0Wks1RxCWthj3M83+IhEaPdNV6t6QJ32sJkb9fPkP
-         7uafqP/8uziD/6N7gue+jBs61YZ6q3k+9OBDx0DFnpqFCJbSydXg9yhCNDCdVpmloMdc
-         idxM9sCV2r359c5NjXe/csJfrJGPwuVWkLrPWv2acJ+wMUqWep7WBZ5GgDK5zpRncX/J
-         QuRgxmBpDew+IV6tU1oAneSNLF3SAWiu25fHMvA3Iyh0d0Rxg78gqFW7AP00S82YCEl+
-         wRmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWjlpGKuBhZgFkV1PQtyvRNokzUdXW3X1n/jJIU1+dq6BsIrXCjArfIyFAlymokd0/Yq3xV8hqVbQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw9f7dPHzQpjw6DhKiFSyZLZDVDYPzoHxG4NUEPAhRO3a/K7kQ/
-	bk8o8h5wCwPeButlIwYLPKNm/IMImpd4i7K/gsJkJLm0zJDMPvqgb4uAVOQ2qTS+ayNxGjMEzWW
-	wtUayVKP5uWZAvDmwiKcpVwruc0WTLbWXgdSQqDSQng==
-X-Gm-Gg: ASbGncttcyzBxBRyRwrOeAVrOkEn+L2nklv6XL0kzdpYo/6bSbv0b9pSSHihL7sVZK8
-	LKREMPMEITEORUuy3n/SSZJi+1VkIz5X+nVe7S5Hzf3GXgu5HN9t6ASDvaAVP4xE+yPuuXvwJj8
-	U3xvspNXhdu7fpfF8WPCbDmrU6Fhg7UXITMpuYCBhsnKw9UNLMdYadaFJIM/l9dfixZLUhI+Mgg
-	qP4TjOvJPdKbQTe2me9QSOYLrHJP3McvkhPtXo=
-X-Google-Smtp-Source: AGHT+IGFKCUUrJkt+A6v+xuc1LQXhwUm4KpMBhnA0hSfXgMQG+z+UHy3svEwymKETUJXd9ilc9E5haoHU8vK2eJzapg=
-X-Received: by 2002:a05:6512:b17:b0:55f:498f:f08e with SMTP id
- 2adb3069b0e04-562614ff71emr7447870e87.24.1757576305171; Thu, 11 Sep 2025
- 00:38:25 -0700 (PDT)
+        bh=Bep7Xid77Fho0BbSmSLtdgFH7ZgtGYRYV4JpO6GqPMo=;
+        b=bkhYvARprsNlge/jdK7YgAs1yQUfNbPQ311VMkjYVSSas74WVVI6KFy8+FZWNBi3Ze
+         NhHKx3Esl9Gfugm9Hm/+p24LsfmiSu1Cbenc9dVwhl8CqDN6SKK/UQd70/PiIAED4FHh
+         2i4T7YS0eeq62PD1Q1qVkHu9rdLDoOeQZ6bH90SFmgw7/Lqn/jrrvarDIVAU7+8CuY4T
+         LtNCt/UFp3GP859JjkImFdSv16p642p4A4E/3+bvi/eGlMOdI0YNtEgHV4vk9MT+Locv
+         JTGyKHETxZ2EPmvf62IYD2seVtAAkfqT1m5y2UmLo6W6QnhTsq47KavUQ36x8Qq2j8jQ
+         2QXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX30+bp6XBcy58CbuBlASpQfFKX1h9dWxYXKvbdDjBGfLmmFoNiYzX6Hg/PRH9KNQ42a5u8xKk3sw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy0hSRqbZBerCMHfI3gGKpguI8MR62mSEA17y7PU9ORCUaj6U5h
+	MKAEO6dkVO0vrotXLyU1wVyUqYs9WweZihgRnQdqq0DR7hbC/micyH592VgmCt+adymWf1H/uNn
+	dqHPyZV6yN1CqZfruPDhAAgbdmbbIdJ3B5oayFEvcoA==
+X-Gm-Gg: ASbGncsCN4alVsyJqtwSQnquN94f0fDsOXjZRdmcVJM56SAnlZj1SXA41Nbm/QEyYvL
+	qEx0oDl2nDMHIy0KOa45RvZNt7srD34TTEOtnrGcffzkCKnTy1d+eA+FdM66ROGRVbbjphilHZV
+	bfhLGeMiQjGeFWF80i+g2Z5FylDKIC/xFZT0A8/A1jMp9AfoY2seWt9TuFw+YspOzPvZrFZ9yiH
+	MBjUoh2SDe3LQafWBvaVSDjSjSDmM0O+p1dGTU=
+X-Google-Smtp-Source: AGHT+IFSDgCLPJndg4TOxS4/+K2sQKL3XaKKbJwpYxrHeNncRVK3PIq5fLt3S1TrCjsBx8V+oC1pdTue83tyCk/M6OM=
+X-Received: by 2002:a05:6512:3e23:b0:568:25d0:f843 with SMTP id
+ 2adb3069b0e04-56825d1df24mr3328322e87.4.1757577400507; Thu, 11 Sep 2025
+ 00:56:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250910-gpio-mmio-gpio-conv-part4-v2-0-f3d1a4c57124@linaro.org> <CACRpkdb=J+hiC5cu+g0Z-gqzpG8PgX01CXc4P98FfSSAf7PZEA@mail.gmail.com>
-In-Reply-To: <CACRpkdb=J+hiC5cu+g0Z-gqzpG8PgX01CXc4P98FfSSAf7PZEA@mail.gmail.com>
+References: <20250910-gpio-mmio-gpio-conv-part4-v2-0-f3d1a4c57124@linaro.org>
+ <20250910-gpio-mmio-gpio-conv-part4-v2-7-f3d1a4c57124@linaro.org> <e0941449-7a62-4bbb-8790-616f393f2cc8@gmail.com>
+In-Reply-To: <e0941449-7a62-4bbb-8790-616f393f2cc8@gmail.com>
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 11 Sep 2025 09:38:12 +0200
-X-Gm-Features: Ac12FXwiBbcmTD8LlFccmOHZdwwoOfYFi61pHLgjut8Pxa8sFHcycGYwle9xiUk
-Message-ID: <CAMRc=McbadZx1yK1jGeyUnXAFZgfA8YpLwacmqC0eMonS-c-9A@mail.gmail.com>
-Subject: Re: [PATCH v2 00/15] gpio: replace legacy bgpio_init() with its
- modernized alternative - part 4
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Keguang Zhang <keguang.zhang@gmail.com>, Alban Bedel <albeu@free.fr>, 
-	Doug Berger <opendmb@gmail.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+Date: Thu, 11 Sep 2025 09:56:28 +0200
+X-Gm-Features: Ac12FXzR1a5xkbJIh_yEzUr3Ha0h6_elTIUATVbDxWcMjvS8AEDuwvbJ1IToPQE
+Message-ID: <CAMRc=MfZ5ss8Gd_TTPV8EYSv04ENp_C26b3=wukO+UTy_boXUA@mail.gmail.com>
+Subject: Re: [PATCH v2 07/15] gpio: brcmstb: use new generic GPIO chip API
+To: Doug Berger <opendmb@gmail.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Keguang Zhang <keguang.zhang@gmail.com>, 
+	Alban Bedel <albeu@free.fr>, Florian Fainelli <florian.fainelli@broadcom.com>, 
 	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
 	Matthias Brugger <matthias.bgg@gmail.com>, 
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
@@ -83,52 +83,31 @@ Cc: Keguang Zhang <keguang.zhang@gmail.com>, Alban Bedel <albeu@free.fr>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 10, 2025 at 11:32=E2=80=AFPM Linus Walleij <linus.walleij@linar=
-o.org> wrote:
+On Thu, Sep 11, 2025 at 2:11=E2=80=AFAM Doug Berger <opendmb@gmail.com> wro=
+te:
 >
-> On Wed, Sep 10, 2025 at 9:12=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.p=
-l> wrote:
->
-> > Here's the final part of the generic GPIO chip conversions. Once all th=
-e
-> > existing users are switched to the new API, the final patch in the
-> > series removes bgpio_init(), moves the gpio-mmio fields out of struct
-> > gpio_chip and into struct gpio_generic_chip and adjusts gpio-mmio.c to
-> > the new situation.
 > >
-> > Down the line we could probably improve gpio-mmio.c by using lock guard=
-s
-> > and replacing the - now obsolete - "bgpio" prefix with "gpio_generic" o=
-r
-> > something similar but this series is already big as is so I'm leaving
-> > that for the future.
+> > @@ -700,7 +707,8 @@ static int brcmstb_gpio_probe(struct platform_devic=
+e *pdev)
+> >                * be retained from S5 cold boot
+> >                */
+> >               need_wakeup_event |=3D !!__brcmstb_gpio_get_active_irqs(b=
+ank);
+> > -             gc->write_reg(reg_base + GIO_MASK(bank->id), 0);
+> > +             gpio_generic_write_reg(&bank->chip,
+> > +                                    reg_base + GIO_MASK(bank->id), 0);
 > >
-> > Tested in qemu on vexpress-a9.
+> >               err =3D gpiochip_add_data(gc, bank);
+> >               if (err) {
 > >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> The patch set is a beauty, hands down.
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
->
-> I especially like where you caught local spinlocks being
-> (ab)used instead of the generic irqchip ones.
->
-> I don't know about merging patch 15/15 into just the GPIO
-> tree, that can make things fail in other subsystems depending
-> on merge order into Torvalds tree or linux-next if your tree is
-> merged first.
->
-> I would merge the first 14 and keep the last for the later part
-> of the merge window when all other trees with conversions
-> are merged.
->
-> (You probably already thought of this.)
->
-> Yours,
-> Linus Walleij
+> I suppose I'm OK with all of this, but I'm just curious about the longer
+> term plans for the member accesses. Is there an intent to have helpers
+> for things like?:
+> chip.gc.offset
+> chip.gc.ngpio
 
-I already have both pinctrl and mfd changes in my tree from Lee's and
-your immutable branches. I pushed this into gpio/devel and it built
-just fine.
+I don't think so. It would require an enormous effort and these fields
+in struct gpio_chip are pretty stable so there's no real reason for
+it.
 
 Bart
