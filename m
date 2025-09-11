@@ -1,87 +1,127 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10349241663;
-	Thu, 11 Sep 2025 18:57:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCA8261B71
+	for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 19:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757617046; cv=none; b=actdmVmvO4NnE9e75r839D54G2PWJyGKyKCsZw7maLjpplCPs7ZTSoppMoZDRypkq5XjtvSJuuz3vbfeEqoY7SDmgdMQ3nqa5mj9XG8DaJF51uJgD+/4HG2WeXEQc6yeuj12ZXIKP5RWMGTf+iTyydyYQYu3+uwyGNBy8MBvBzI=
+	t=1757620246; cv=none; b=GR8Rpk3WE2+GaewnpKxq3pCHZ+QXGldkTdZcxJUtSpKOztYWYeVrhzQcKyNt+Tp9Tsv3JEoAfOx/L41pqNsZL+RVwoHZwLbLFbWeByR2MBSDorPMREncC4CX8b9Aks4EEOIBuLMg0pWDyZO2eHa0UeFoUOwWEKKyTcbYGimRrn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757617046; c=relaxed/simple;
-	bh=KCkueulLNti5rMZqCXMGdCyFB/dsr9EyeiTawIyR368=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q5GdaL+kbS6FdTe7SXwe2SYx4oGlNpgEwkq6T8lj5HQxgG4cQnbjhJLrO+rBwsZdAQjNV5TxgUR5D4hM/B4o9lzrhLB4JAsqfK8ExEp/1rCavDfoopvY6sv07Tpf2Urkt3RjYBS4OTCD3wEURm5s7MOD2TSes1qX4fLWXL3OEXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hPXe2a0d; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757620246; c=relaxed/simple;
+	bh=kjGxb0dqWe7yMsPMZAV2sViKlRrgFATmcxKdL62xjMc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZgPnYUrNIK6JzGYgOIP7RquRC3PONxAvzwxsIOg193+hR+m8p9HPLWIjPmlciIpbG8cXmKp509twa1uw8gVLyZjCRiELkp4S4vf+m1g94SUZvlIJ86ywYPQ8H9ma2/UdL386byL1vCfraAJNY/bKJH7SgL1hkDAmvBZTPFniREg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SeHPxZDA; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hPXe2a0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20F6C4CEF0;
-	Thu, 11 Sep 2025 18:57:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757617045;
-	bh=KCkueulLNti5rMZqCXMGdCyFB/dsr9EyeiTawIyR368=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hPXe2a0dGVS5459STIEhC4WAQbQAl+LplIH20+wlU2UYWvUDO0EblzkRyRechR4mS
-	 WdXrsqBRlRj+l+d2Q5dFenY4suqR7RiuMRXdql/ZZ1ogtq+ZjyMxRogPGmc287RywJ
-	 jhHXN4aU6miVRnmJ7bPF8uW0oFtp7FL8bHwOpWkOx6SZKAXp48DDII12uv/kF9RRRS
-	 DQZ0zE7cslJpdPOEgMeGLPhJrIE/cACzpr3I9DNUKVbN+14tOy211IvgRiZXtgYF/g
-	 KUSFrIEH71s5ufhQXmpEWJmobiYtYpo2+nj/hbg+A9+wH16xFGyAp0aO5wRwm0ft3b
-	 PG22aPHf2Sopw==
-Date: Thu, 11 Sep 2025 19:57:18 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: Lee Jones <lee@kernel.org>, lgirdwood@gmail.com,
-	alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, mat.jonczyk@o2.pl, dlan@gentoo.org,
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, linux.amoon@gmail.com, troymitchell988@gmail.com,
-	guodong@riscstar.com, linux-rtc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v13 0/7] spacemit: introduce P1 PMIC support
-Message-ID: <7aba368e-709b-49b0-b62c-f2f8250c8628@sirena.org.uk>
-References: <20250825172057.163883-1-elder@riscstar.com>
- <175690199980.2656286.5459018179105557107.b4-ty@kernel.org>
- <ec882a78-9604-45b1-9405-8f2f958f307c@riscstar.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SeHPxZDA"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-25221fa3c9bso17574595ad.0
+        for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 12:50:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757620244; x=1758225044; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TJeew9YIVoP09p3LirTxwS5JzCuSaF7BlgkulwqqjZw=;
+        b=SeHPxZDAsJC/GOxvs1dVYipioq1S1/8piguFhQdigWE7SzJIM9saRMSWhlsqr/XcyY
+         BmWdw2coXsgPCd7JLou+VgiPQrstKdkWLbjsKca72jIc6K+u3xECNojSTy03uNJzd/9R
+         FJRVOXvrHOD9QLT1BQFu4WXKfrTmqi9o5VTHx+HWyLVGKvm7655RgzYQlVeim+GiWj+f
+         uo+dilCK+yHmwSEkXqUA67h68zBby8RqSnI5mLZDzokAGvTILkoVpHjLvJ7c3BEKwODk
+         SfQA1qMMw4UqgjFu3i5CsBwoL1gxHy0sy0OYORCzwpjbQCdkRBz6aY/i1PIwHsvBEWbM
+         IDYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757620244; x=1758225044;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TJeew9YIVoP09p3LirTxwS5JzCuSaF7BlgkulwqqjZw=;
+        b=JOe4gKvK3cZvXiEcSG+FmyEPjnWfMGsVhBeKqdfRavcMjcoa9KPftGMfDiBWN/C0Ni
+         xTfy8IR87NEG+5Al/ehK/DvyhWaDGpe7h/Ifd/0kr20SLYLdKzocZzZgSloWyN4PsDag
+         q4Wr/V63aRcynHQMWaooH/Zqp5hSzQhTTV+7C5nXvzY9tsmlphq6ihN1Z+MjcuOmfo+8
+         qfjMTtE0W9UJkEgegLhdjONp0eAgoMRcAi5s4ftRjjzCxjPt6c0EvZ0Fupw9p9+yvue/
+         qDWnG7Vd5pG8DMYCPNZ4IaV79kmf8heD0iv6NfvwXkd3KcAsCbOv338zFFlemM09IGEG
+         enXg==
+X-Forwarded-Encrypted: i=1; AJvYcCU/wJboGsIwQPlhDvOLGFHkVlwUs2+nqcfzw3L66blkbCaSedzblNdxOcTmR4gkkaG0ClXP7d/IEQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy5UhwECJVtQu0clG2TxUjRXhFnQBbdiSVJETgVyCfGWxg7hMZ2
+	ErTROT0daAm1Ih3+D/4193o2UopDqWZ4cLhd86pkUl7umnM8adsglecm
+X-Gm-Gg: ASbGncspF19V4HyHYdh0g4Zi5sEcQug9KpRQ9faozMbvneIwS4qnBh5ZumMjtx/fOS9
+	ye6TGsFjzOwj7Xny/ATL8OFfCnJhhg4lFwdx5UdEmz1uNYOdlB+NFxXQQiyOb8LWqFkHJUqiuz8
+	ICJU3gS/p1p16RNjm3IdLJpr62mE6gOJC1Nb39IIirDjccISot+NYn2K2LnBUL524wOTQ73UTyI
+	5qgyBd9uVYjTnrjKg/LkdceZ0AoDc8ZbILA2v2bhNyRlG8R9TF2yHePu0jiMMtNdCwTeS35kGBH
+	nKZ11/QXx3Dj3GX15OhJgH4i38eXlfCJwuhfLO1OqqwAZJWKf7mRSkNQlDiZifjxq19i1HSD9jc
+	D+bcWLjddUjzwNS9y7r/8i2JqC5T1NvgZ5+UXBbo11aCTujZh
+X-Google-Smtp-Source: AGHT+IGM3HY9cYe0k8sf5GxMMVgG9l2ykvqk4n7ayiGGr2GhLio6Ij8ygJsJDwHZ88T4ZvBeMdpxjA==
+X-Received: by 2002:a17:902:d506:b0:25c:9084:4172 with SMTP id d9443c01a7336-25c908466d3mr25755745ad.14.1757620243626;
+        Thu, 11 Sep 2025 12:50:43 -0700 (PDT)
+Received: from [10.69.47.143] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25c36cc53bcsm26957775ad.28.2025.09.11.12.50.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Sep 2025 12:50:43 -0700 (PDT)
+Message-ID: <cfe7bc19-763f-4e92-b1ae-355c661bcc19@gmail.com>
+Date: Thu, 11 Sep 2025 12:50:47 -0700
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="66pqKUP3ZIOBeGN0"
-Content-Disposition: inline
-In-Reply-To: <ec882a78-9604-45b1-9405-8f2f958f307c@riscstar.com>
-X-Cookie: Your domestic life may be harmonious.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/15] gpio: brcmstb: use new generic GPIO chip API
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+ Keguang Zhang <keguang.zhang@gmail.com>, Alban Bedel <albeu@free.fr>,
+ Florian Fainelli <florian.fainelli@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>,
+ Andy Shevchenko <andy@kernel.org>, linux-gpio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20250910-gpio-mmio-gpio-conv-part4-v2-0-f3d1a4c57124@linaro.org>
+ <20250910-gpio-mmio-gpio-conv-part4-v2-7-f3d1a4c57124@linaro.org>
+ <e0941449-7a62-4bbb-8790-616f393f2cc8@gmail.com>
+ <CAMRc=MfZ5ss8Gd_TTPV8EYSv04ENp_C26b3=wukO+UTy_boXUA@mail.gmail.com>
+Content-Language: en-US
+From: Doug Berger <opendmb@gmail.com>
+In-Reply-To: <CAMRc=MfZ5ss8Gd_TTPV8EYSv04ENp_C26b3=wukO+UTy_boXUA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+On 9/11/2025 12:56 AM, Bartosz Golaszewski wrote:
+> On Thu, Sep 11, 2025 at 2:11 AM Doug Berger <opendmb@gmail.com> wrote:
+>>
+>>>
+>>> @@ -700,7 +707,8 @@ static int brcmstb_gpio_probe(struct platform_device *pdev)
+>>>                 * be retained from S5 cold boot
+>>>                 */
+>>>                need_wakeup_event |= !!__brcmstb_gpio_get_active_irqs(bank);
+>>> -             gc->write_reg(reg_base + GIO_MASK(bank->id), 0);
+>>> +             gpio_generic_write_reg(&bank->chip,
+>>> +                                    reg_base + GIO_MASK(bank->id), 0);
+>>>
+>>>                err = gpiochip_add_data(gc, bank);
+>>>                if (err) {
+>>>
+>> I suppose I'm OK with all of this, but I'm just curious about the longer
+>> term plans for the member accesses. Is there an intent to have helpers
+>> for things like?:
+>> chip.gc.offset
+>> chip.gc.ngpio
+> 
+> I don't think so. It would require an enormous effort and these fields
+> in struct gpio_chip are pretty stable so there's no real reason for
+> it.
+> 
+> Bart
+Ok, so assuming struct gpio_chip is sticking around long term that makes 
+sense to me.
 
---66pqKUP3ZIOBeGN0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Thanks!
 
-On Thu, Sep 11, 2025 at 11:36:41AM -0500, Alex Elder wrote:
-
-> That leaves patch 3, which enables regulator support, and patch
-> 4, which adds RTC support.
-
-> How should these two patches be merged?  Mark has reviewed the
-> regulator patch 3 and Alexandre has acked the RTC patch 4.
-
-We'd both have been expecting them to go via MFD.
-
---66pqKUP3ZIOBeGN0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjDG40ACgkQJNaLcl1U
-h9AXdQf+IdRJpWhqD0mkQabeBSF65aLfa+7LECsPIv5ruSPrNRMsy61871+68Cyf
-XSkwNm0j+n9bp3BKgf2siTNQJP7avTj7SEn3DAwkK8o9ADoOezTymr27J++8fQBu
-TejL9xAOdrFLn1hx2wthV5GtW63+q3xaM2FECQUfabMy5q7FsBXi9iKNQzfrE2td
-+1BpNUyYqqBf2HZekcEGmsD585KvZ3boJo21s4RPl9IIS4cjKpcDC+rCHuf5bg4H
-SXousx1d16uFhqMQ56sHRrtX2cc34nPL2baF3bun4otN0OH+y0R+Xj5U8tlXS7y9
-rjXUS6wQJWZ1XE3BbYVgWPfdIvxPhg==
-=I2Nw
------END PGP SIGNATURE-----
-
---66pqKUP3ZIOBeGN0--
+Acked-by: Doug Berger <opendmb@gmail.com>
