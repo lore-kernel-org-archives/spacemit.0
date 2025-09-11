@@ -1,127 +1,95 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCA8261B71
-	for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 19:50:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90E4246BD8
+	for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 19:55:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757620246; cv=none; b=GR8Rpk3WE2+GaewnpKxq3pCHZ+QXGldkTdZcxJUtSpKOztYWYeVrhzQcKyNt+Tp9Tsv3JEoAfOx/L41pqNsZL+RVwoHZwLbLFbWeByR2MBSDorPMREncC4CX8b9Aks4EEOIBuLMg0pWDyZO2eHa0UeFoUOwWEKKyTcbYGimRrn8=
+	t=1757620515; cv=none; b=AVgUxObabaUdCQTdAsIch1Gw2jD+M04igGyTXH4oGzYqiRsIJRBb384oWonZS66xMnB+nVEp+AiHNvHzTcicYesRjzoASFPHglaXdw4tfLee56F3CVXrzaHKfW9LQkOh15QL1WCgGzVt7aY7bSZtwD+MoPDFapL0sncrNItsUpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757620246; c=relaxed/simple;
-	bh=kjGxb0dqWe7yMsPMZAV2sViKlRrgFATmcxKdL62xjMc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZgPnYUrNIK6JzGYgOIP7RquRC3PONxAvzwxsIOg193+hR+m8p9HPLWIjPmlciIpbG8cXmKp509twa1uw8gVLyZjCRiELkp4S4vf+m1g94SUZvlIJ86ywYPQ8H9ma2/UdL386byL1vCfraAJNY/bKJH7SgL1hkDAmvBZTPFniREg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SeHPxZDA; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SeHPxZDA"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-25221fa3c9bso17574595ad.0
-        for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 12:50:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757620244; x=1758225044; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TJeew9YIVoP09p3LirTxwS5JzCuSaF7BlgkulwqqjZw=;
-        b=SeHPxZDAsJC/GOxvs1dVYipioq1S1/8piguFhQdigWE7SzJIM9saRMSWhlsqr/XcyY
-         BmWdw2coXsgPCd7JLou+VgiPQrstKdkWLbjsKca72jIc6K+u3xECNojSTy03uNJzd/9R
-         FJRVOXvrHOD9QLT1BQFu4WXKfrTmqi9o5VTHx+HWyLVGKvm7655RgzYQlVeim+GiWj+f
-         uo+dilCK+yHmwSEkXqUA67h68zBby8RqSnI5mLZDzokAGvTILkoVpHjLvJ7c3BEKwODk
-         SfQA1qMMw4UqgjFu3i5CsBwoL1gxHy0sy0OYORCzwpjbQCdkRBz6aY/i1PIwHsvBEWbM
-         IDYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757620244; x=1758225044;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TJeew9YIVoP09p3LirTxwS5JzCuSaF7BlgkulwqqjZw=;
-        b=JOe4gKvK3cZvXiEcSG+FmyEPjnWfMGsVhBeKqdfRavcMjcoa9KPftGMfDiBWN/C0Ni
-         xTfy8IR87NEG+5Al/ehK/DvyhWaDGpe7h/Ifd/0kr20SLYLdKzocZzZgSloWyN4PsDag
-         q4Wr/V63aRcynHQMWaooH/Zqp5hSzQhTTV+7C5nXvzY9tsmlphq6ihN1Z+MjcuOmfo+8
-         qfjMTtE0W9UJkEgegLhdjONp0eAgoMRcAi5s4ftRjjzCxjPt6c0EvZ0Fupw9p9+yvue/
-         qDWnG7Vd5pG8DMYCPNZ4IaV79kmf8heD0iv6NfvwXkd3KcAsCbOv338zFFlemM09IGEG
-         enXg==
-X-Forwarded-Encrypted: i=1; AJvYcCU/wJboGsIwQPlhDvOLGFHkVlwUs2+nqcfzw3L66blkbCaSedzblNdxOcTmR4gkkaG0ClXP7d/IEQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy5UhwECJVtQu0clG2TxUjRXhFnQBbdiSVJETgVyCfGWxg7hMZ2
-	ErTROT0daAm1Ih3+D/4193o2UopDqWZ4cLhd86pkUl7umnM8adsglecm
-X-Gm-Gg: ASbGncspF19V4HyHYdh0g4Zi5sEcQug9KpRQ9faozMbvneIwS4qnBh5ZumMjtx/fOS9
-	ye6TGsFjzOwj7Xny/ATL8OFfCnJhhg4lFwdx5UdEmz1uNYOdlB+NFxXQQiyOb8LWqFkHJUqiuz8
-	ICJU3gS/p1p16RNjm3IdLJpr62mE6gOJC1Nb39IIirDjccISot+NYn2K2LnBUL524wOTQ73UTyI
-	5qgyBd9uVYjTnrjKg/LkdceZ0AoDc8ZbILA2v2bhNyRlG8R9TF2yHePu0jiMMtNdCwTeS35kGBH
-	nKZ11/QXx3Dj3GX15OhJgH4i38eXlfCJwuhfLO1OqqwAZJWKf7mRSkNQlDiZifjxq19i1HSD9jc
-	D+bcWLjddUjzwNS9y7r/8i2JqC5T1NvgZ5+UXBbo11aCTujZh
-X-Google-Smtp-Source: AGHT+IGM3HY9cYe0k8sf5GxMMVgG9l2ykvqk4n7ayiGGr2GhLio6Ij8ygJsJDwHZ88T4ZvBeMdpxjA==
-X-Received: by 2002:a17:902:d506:b0:25c:9084:4172 with SMTP id d9443c01a7336-25c908466d3mr25755745ad.14.1757620243626;
-        Thu, 11 Sep 2025 12:50:43 -0700 (PDT)
-Received: from [10.69.47.143] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25c36cc53bcsm26957775ad.28.2025.09.11.12.50.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Sep 2025 12:50:43 -0700 (PDT)
-Message-ID: <cfe7bc19-763f-4e92-b1ae-355c661bcc19@gmail.com>
-Date: Thu, 11 Sep 2025 12:50:47 -0700
+	s=arc-20240116; t=1757620515; c=relaxed/simple;
+	bh=Xobcx+JBTN1wOClC166lyLtzG+jp5ZjUpFZ7pPrajjY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=epeeXu/TtfI+UoUpDYS0KPbGmFJTDzzynWtFOc1NLtbEkn8hhHxAhKArGGogegznVYHFwgCZyyPjHZnEMt5WEfTS+mdx0ANHmfgIlfUBaFLdimonkfcsGyD9ANUxdBYV1nl4hit2lMa724JGFM3dQIePWpVUchmnUWHWlPnK854=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.168])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 05E0C335DB4;
+	Thu, 11 Sep 2025 19:55:10 +0000 (UTC)
+Date: Fri, 12 Sep 2025 03:55:02 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: Lee Jones <lee@kernel.org>, lgirdwood@gmail.com, broonie@kernel.org,
+	alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, mat.jonczyk@o2.pl, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	linux.amoon@gmail.com, troymitchell988@gmail.com,
+	guodong@riscstar.com, linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v13 0/7] spacemit: introduce P1 PMIC support
+Message-ID: <20250911195502-GYA1223946@gentoo.org>
+References: <20250825172057.163883-1-elder@riscstar.com>
+ <175690199980.2656286.5459018179105557107.b4-ty@kernel.org>
+ <ec882a78-9604-45b1-9405-8f2f958f307c@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/15] gpio: brcmstb: use new generic GPIO chip API
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
- Keguang Zhang <keguang.zhang@gmail.com>, Alban Bedel <albeu@free.fr>,
- Florian Fainelli <florian.fainelli@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>,
- Andy Shevchenko <andy@kernel.org>, linux-gpio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20250910-gpio-mmio-gpio-conv-part4-v2-0-f3d1a4c57124@linaro.org>
- <20250910-gpio-mmio-gpio-conv-part4-v2-7-f3d1a4c57124@linaro.org>
- <e0941449-7a62-4bbb-8790-616f393f2cc8@gmail.com>
- <CAMRc=MfZ5ss8Gd_TTPV8EYSv04ENp_C26b3=wukO+UTy_boXUA@mail.gmail.com>
-Content-Language: en-US
-From: Doug Berger <opendmb@gmail.com>
-In-Reply-To: <CAMRc=MfZ5ss8Gd_TTPV8EYSv04ENp_C26b3=wukO+UTy_boXUA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <ec882a78-9604-45b1-9405-8f2f958f307c@riscstar.com>
 
-On 9/11/2025 12:56 AM, Bartosz Golaszewski wrote:
-> On Thu, Sep 11, 2025 at 2:11 AM Doug Berger <opendmb@gmail.com> wrote:
->>
->>>
->>> @@ -700,7 +707,8 @@ static int brcmstb_gpio_probe(struct platform_device *pdev)
->>>                 * be retained from S5 cold boot
->>>                 */
->>>                need_wakeup_event |= !!__brcmstb_gpio_get_active_irqs(bank);
->>> -             gc->write_reg(reg_base + GIO_MASK(bank->id), 0);
->>> +             gpio_generic_write_reg(&bank->chip,
->>> +                                    reg_base + GIO_MASK(bank->id), 0);
->>>
->>>                err = gpiochip_add_data(gc, bank);
->>>                if (err) {
->>>
->> I suppose I'm OK with all of this, but I'm just curious about the longer
->> term plans for the member accesses. Is there an intent to have helpers
->> for things like?:
->> chip.gc.offset
->> chip.gc.ngpio
+Hi Alex,
+
+On 11:36 Thu 11 Sep     , Alex Elder wrote:
+> On 9/3/25 7:19 AM, Lee Jones wrote:
+> > On Mon, 25 Aug 2025 12:20:49 -0500, Alex Elder wrote:
+> >> The SpacemiT P1 is an I2C-controlled PMIC that implements 6 buck
+> >> converters and 12 LDOs.  It contains a load switch, ADC channels,
+> >> GPIOs, a real-time clock, and a watchdog timer.
+> >>
+> >> This series introduces a multifunction driver for the P1 PMIC as
+> >> well as drivers for its regulators and RTC.
+> >>
+> >> [...]
+> > 
+> > Applied, thanks!
+> > 
+> > [1/7] dt-bindings: mfd: add support the SpacemiT P1 PMIC
+> >        commit: baac6755d3e8ddf47eee2be3ca72fe14ebae2143
+> > [2/7] mfd: simple-mfd-i2c: add SpacemiT P1 support
+> >        commit: 49833495c85f26d070e70148fd9607c6fbf927fd
+> > 
+> > --
+> > Lee Jones [李琼斯]
+> > 
 > 
-> I don't think so. It would require an enormous effort and these fields
-> in struct gpio_chip are pretty stable so there's no real reason for
-> it.
+> Yixun Lan plans to merge patches 5-7 of this series.
 > 
-> Bart
-Ok, so assuming struct gpio_chip is sticking around long term that makes 
-sense to me.
+DT patches usually go as the last one, in this case, they effectively
+depened on patch 3 which adds the regulator support
 
-Thanks!
+As Mark suggest it go via MFD, that leaves Jones to handle,
+It's close to the release of rc6, I'd hope it isn't too late..
 
-Acked-by: Doug Berger <opendmb@gmail.com>
+> That leaves patch 3, which enables regulator support, and patch
+> 4, which adds RTC support.
+> 
+> How should these two patches be merged?  Mark has reviewed the
+> regulator patch 3 and Alexandre has acked the RTC patch 4.
+> 
+> Thank you.
+> 
+> 					-Alex
+
+-- 
+Yixun Lan (dlan)
