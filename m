@@ -1,304 +1,404 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010010.outbound.protection.outlook.com [52.101.84.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541AC7261D
-	for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 22:18:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.10
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757542737; cv=fail; b=fec+KoB+Wac3yNPrm0at8VzHuZn30Vh14WAh0hzrJlxt6mWtRQvNwtMhS41dzE3qoYLktaDDqQl8mO5Xa/EdHM/lTJbO4uufCEiVjaW8EkIRLUTyyz6LnZsGLDfAqPpbZ5Hu9m+kC4BKiJ8owmfI5lr7iLLRW1tn64OMSJAi3xk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757542737; c=relaxed/simple;
-	bh=r7qC55z1cRTJlEVo5rHnqTqPE8XzJ/GOxCQhxllVhV4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=p2V+svvQ8AIVnD9/kA1y3E350bilrbk41zkbI6l8OVlSdqF8m5Aw4s+1POBNQN0q2QSY2OhMdHA2e2WjUdoU1Q+eiYVfYCGPuxqol9iDkIIC8/8c1v8Tg6pFc8WuEyIcFkde2YP5Male9GPD4jzLqbBGscLBwSWtPXjEYuy6iaI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=nVEWy6fs; arc=fail smtp.client-ip=52.101.84.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC0229A1
+	for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 00:11:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757549491; cv=none; b=XmDVU27TwpXmS8EXXYcAaOBJP/z3/NToCCWOycjFgV5a6PujSdoeCeYOmRVS4nI8/HriTEzrwbu0NhocdGMBPsb50Fx/FM5YrHm/KRHOAzCu+oN8l4TfeHa4OXdJ3jtXZSXY9VmU1bMGBED2GI1Mpu58OSK0fUl1xhpARw6DBFc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757549491; c=relaxed/simple;
+	bh=7IZsjcVMn98TUCGCmrzXEkg78zYlAtjziIZcrjFxEPk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=f0bVauABpCOZJgJjNo752GXzPeiOG3R1SNF5tNUpTOcF7dGvROKOFNpfN5Q29sCJXi+z/80au7x+RSnXEa6WNOzuZ3Qu4AaoBQCYaCLfkXmQr+u5dselTgih2uRQ+CIYkaabt6edRMKw6Yf183rPrm1J70FEHS+ZJBpy3slEieY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XGxfA55S; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="nVEWy6fs"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YiICgEMRChb9Z2InRvPxHEp5mtacBdfEb4+SkncoqveXhylzYNbR6fhYfrrhl10pIJqvWo7eUtcM+Em3WM6bwTJvL28/HBzLj4+x6XhWvky6rO78mxmQb42uuobdsGrIEYbsn31nqpszX9JOWEXKP+e2K13R0CFp5VKtc0nWZWjdrU+1hlB9i/R7y0m6At5xITaH7ifHWWR14COIOwNs4qsOhYmdMrUkcaTo9kNbQtvxy0ay5l659HdUL8y4UN1Htq5y5K3V9FFjS3CoWfGcL2nO2KreqDjLtbhKKdekklrATdP097nBm5pFafLa8UeH8FvTHFYimJW79PPGuw9dBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uzuw1pVGwNa75m/uRnFC3/33r0by5Xr685mD6O7T6gg=;
- b=M565mYgqFScR4R+OdpA8e16akG5SwO0DT0Gd9DQzccVW2m6RDTNRjPHfB5927brnVsz7K2QImarHxoeBOoT7ZGLGYZQ4ilyiRZKcRj3h1pjQHcrY7uj77smOqaFD+nae3+6JpBD/iG9bCTdFeuC8ZC8wG3lznFCRwfNov+Jhet5mi4DYNtxhRPIUKaJsaQCoKIuWYbSy7K+BPgdrLJiogYbm5W903oNG6s+ltdBJW5JEXPlr+6hJsO7rfofcSQRQKmEC4kTm7JsEZgK054BrMAgXR7TrCMpTw3Z3ogeIChqIQkcB4+8+tZAYOwkZJr7Ae/cawnE0cEUm/caLBS6Y8w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uzuw1pVGwNa75m/uRnFC3/33r0by5Xr685mD6O7T6gg=;
- b=nVEWy6fs2lCCC3mCqBH1WLHm2Nb9i9XuBQAbMhql/9VkrYxG7ONhK4BIAmiYqD5KaTD25OgFlYfklJWx+qO+HiuhkAy/ROQvSs2efvvv4+UHT9bV5+JPP44q2ucA7cur0r8KCwhUFaAODqNTUZLCBut460+cS/sNl3yYy7NteDDFWdhmDmSmgy+TR0BxIFM1+WrU+3H0nP/OLM41EMjYfHz+Kz6tuHr2fBdudrRSh8u3IShoJiq2XrCel3sY9euWC4ZuYv7QcHeoI9H7zLiqoTmQEtocG6OKqFs/5YKCnEQ9+LrWKTzI5PNLe8eOwNAIkGHvQ+AiJKSSR1OFLmTJCQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from AS4PR04MB9621.eurprd04.prod.outlook.com (2603:10a6:20b:4ff::22)
- by PA1PR04MB10939.eurprd04.prod.outlook.com (2603:10a6:102:489::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.15; Wed, 10 Sep
- 2025 22:18:51 +0000
-Received: from AS4PR04MB9621.eurprd04.prod.outlook.com
- ([fe80::a84d:82bf:a9ff:171e]) by AS4PR04MB9621.eurprd04.prod.outlook.com
- ([fe80::a84d:82bf:a9ff:171e%4]) with mapi id 15.20.9115.010; Wed, 10 Sep 2025
- 22:18:51 +0000
-Date: Wed, 10 Sep 2025 18:18:39 -0400
-From: Frank Li <Frank.li@nxp.com>
-To: Ze Huang <huang.ze@linux.dev>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v7 1/2] dt-bindings: usb: dwc3: add support for SpacemiT
- K1
-Message-ID: <aMH5P3Xae0MCt6wu@lizhi-Precision-Tower-5810>
-References: <20250729-dwc3_generic-v7-0-5c791bba826f@linux.dev>
- <20250729-dwc3_generic-v7-1-5c791bba826f@linux.dev>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250729-dwc3_generic-v7-1-5c791bba826f@linux.dev>
-X-ClientProxiedBy: PH7P221CA0007.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:32a::10) To AS4PR04MB9621.eurprd04.prod.outlook.com
- (2603:10a6:20b:4ff::22)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XGxfA55S"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-32b8919e7c7so117144a91.2
+        for <spacemit@lists.linux.dev>; Wed, 10 Sep 2025 17:11:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757549488; x=1758154288; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/DprGrl9e7Kz/gK4ZQarAvFpOQC1FXR4i36X1x0X3X4=;
+        b=XGxfA55Sd+a7ole1k/7XvxyAadZzWNcR/03pdE6IERrkvGDw7n477WW1AFtaoNeiNc
+         0uNAcjdMIMYomoil91s/2qlx73HDoDoY0hxBN6pJZog8cbcHsPCcqk9t+Kj47fc3Y/1t
+         XYiWtjx4CQNmNJ09vaxVNKSi1YY5wEEDVv4RmP0gvC3CbcKWhuGgjS6s6dampXzrkC8l
+         Aui5p6Jf6vwkxPur+bK7dbOTauj9TJZ6ibpTpzlkDXENX9ZUKDkh9oKiYL8Z6xxaAuON
+         dXAh2f3da1qBuqrSk79mx6SMXh8khL4eO1pe+2m/F946hJqUT5PXA9l+3CYGYxgxyJVu
+         +q/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757549488; x=1758154288;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/DprGrl9e7Kz/gK4ZQarAvFpOQC1FXR4i36X1x0X3X4=;
+        b=osizUBHYjXn+y8xRvWnI4kEu9nzD66DIHtG5Nuq5o3xUg5bqAU+1HIH0vhvjakL6si
+         5KaSianx2ZQLuNzgZEXhmXZJCTu80YrczVicPaHDbQuJQSREdcY91bgMrqKggASyHTVR
+         HJsuM7kgljO+ZzxZT4KD8lZ+EVTavdz2oMcu9juWVWqudc5ajN4U0WtrWtbA4pUJmVhO
+         i6pq2JYJHtoWFc35gNVYahqSFPOZuATbbxXVibo1LN5BBUISvUFWDzwgGuOzfwdnvAh6
+         LwgAeDVyx8JeWWIZFMppASqH6PSe+KEZUQ2d2qyZR32dPZPuryiAPDvia//ipIHrxVHz
+         JP2w==
+X-Forwarded-Encrypted: i=1; AJvYcCWly7rQdU5iTTJH3TahqhdNXILhPR8REpa1kLyjH+5ndoHwYDDYRtn4mehUbFcDEsLOeQlecPDKyQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyxeP0rUqbyaYMOsg7fh/VE/dmm12T9BrFW/gip1z2+6uLqxx4G
+	JMVcgIRBPflKlACSV3H/S1+C5zFTNDF58yHte7k6dAB42PB9z+cHDL3X
+X-Gm-Gg: ASbGncvTIG9eJgmf7OIf/F/TFt8LpB/qZlhamT3DLW8PSko/Ig5bqNc3JEEMyDTMklu
+	lGyA+C1CexnBDYgWKdJ/sxtOrSWyA92aQhSqzafUOgZ5m9McGcmhTqyEiW/0WpgGKzPwTYm/qEf
+	8z4S6BkT+iW8NWgxD4iiGncqClERx05aB+c8mcOCynLVrUcfOXke7vOMQ7MM72wW+05a9/6hgkL
+	1vPb3CxKk+utPAT1dNEaA8CBcHDAjVzmfM4TarcK+NFre5/HTFSPi15n3JKxAmFrn7uhbBNAg5O
+	DdKtaqVMya1MmnmbjAD7MlkNSVuaZSRKmGlYQKwg4xxo4r+vAJjAlTAHNfSA1bDvXa3FHx+DxKa
+	ex5u6Sp7ewovqhsJPjY0HOIC/6jPIt+ob4KkV1LPZCLQ1e19U/g==
+X-Google-Smtp-Source: AGHT+IGh6jj8tUAVO4xZEgg1cYXyd1dv7OFPe+9zkElp63vXFZLpgGfDXrx3xfdSlohQ5ds3u2EMGg==
+X-Received: by 2002:a17:90b:52c4:b0:32b:b26e:156f with SMTP id 98e67ed59e1d1-32d440d9ce7mr23339735a91.33.1757549487838;
+        Wed, 10 Sep 2025 17:11:27 -0700 (PDT)
+Received: from [10.229.36.175] ([192.19.161.250])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32dd632692bsm437067a91.25.2025.09.10.17.11.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Sep 2025 17:11:27 -0700 (PDT)
+Message-ID: <e0941449-7a62-4bbb-8790-616f393f2cc8@gmail.com>
+Date: Wed, 10 Sep 2025 17:11:26 -0700
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS4PR04MB9621:EE_|PA1PR04MB10939:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3554f022-3735-472b-8c75-08ddf0b8033e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|19092799006|52116014|7416014|376014|1800799024|38350700014|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?EaaekCyVIlsYMUiLxDiQYQnPVamdbBtvpP6K2r8Dok8eyssTiRGEh36F8+rK?=
- =?us-ascii?Q?EEQ3e9RxyloQWjkupCqS19c2XExo3tjsF9JuJDyeEalobbZYkCnDq/nypF/o?=
- =?us-ascii?Q?lPJwUb173I6/0sVAZ77FWd1ggHnQ7dtF7nRGJgBQWEIPzVhU4P6b7cN7J4uv?=
- =?us-ascii?Q?Dpt8goAAnjLdIl723MOfo/UXL5c+vYxVz3qgBpPa2qZoEku39CP75Ipc9bC8?=
- =?us-ascii?Q?f6ImzpQ1VS0YECQF3wp3vZDeHpcy84DHhLojyhs0kxKsjphZBh2EIuFPKnBR?=
- =?us-ascii?Q?ga6/TeJZX2SpKbvNPuS+NF+zIjdXQpWxjBE8gRKuzdDDcbnuDrPeH8Cs5999?=
- =?us-ascii?Q?p8sPJoXmAja5leZEoTR6reatTFwzWq4BMs0WoZ3Mwjxazpyv9/1wk2CwR6m6?=
- =?us-ascii?Q?qFmJqpxIP39M5AwBJaH70nQ02unuW8PGU3tBnAcsPXXB8jI/coJxe0fdvo4S?=
- =?us-ascii?Q?uZpDWg851F8mJOYnFoQhHgvoUGWdLSvF/COkvdEEFFCL7vpP84+Hts8LDKwj?=
- =?us-ascii?Q?lgk5jNrgNCDFn5Eh8PKeFHVEjUohHJKi042DOeDChzpO/8rkLv2JjkK3f+tO?=
- =?us-ascii?Q?oMWOArpiF5FaTah30c0QqteZAp/Sd+hBWR1K+BvaJzIZ5FjKiD7yikzITVeZ?=
- =?us-ascii?Q?W902uRrSKdvR5evT0zHP4GilyLCKsfg+ZieSSRWtbdWxWX4XnsgKhAWvimOL?=
- =?us-ascii?Q?5SF3/WioP3aGmic5wuF8BS58a4p1n9WWqxVMpIzQH9LzJSJPGjl3MpFEk1d7?=
- =?us-ascii?Q?+kEtHjIoxrfyr926X6gYgwyzWcEcrByhJ7jmL3KrB4yV9r08Jqi9LtKl1KiK?=
- =?us-ascii?Q?NQevznqxfOguihaKybwD2xuR7/d8z9nTff42K1J5qa/41/JzGEJKxq1JteX5?=
- =?us-ascii?Q?X3SDXOvS1FmW9BmnKghoyiai95jJeU6Kx7PDc2vg4GGldPTIivRl4QlGr0+u?=
- =?us-ascii?Q?cQfp+PbU5xBXlHoTPovA3AqawFH+BJ5A4mjD7lCIQg+Z1bHiQyMPcX5MZcfb?=
- =?us-ascii?Q?9YzCAEi6sIBF/HYkL/ekO1v22Hpi1W91+vDYj3//lUBCe3y9gWpmv6HehuBc?=
- =?us-ascii?Q?5BdaHzH67tqduLotd0yQ7XXe98t8kqkONmLwBhOMjLohig/m9rCHMSOqB4P6?=
- =?us-ascii?Q?z0k/KOV6VBX4oRv6WrwLmbS/OBPcNLO0o4Q/Hi99gtWM3mt5YN2Xb04SPhq3?=
- =?us-ascii?Q?E7JwuknZyakJfrullBQP20jwU7x/BZ/tZgQWa0d2mPQeHc95e/+qhZc84RRv?=
- =?us-ascii?Q?pGodCUPN5GuAKXB1GIMkJzw6NNWDtSgjFZZ9+6mFq3DhNB/Z8Ja9Vuc2aEjd?=
- =?us-ascii?Q?a0gehC0cUb8zW0DBqXpT23a+GrXWGoEEPBtRseYsz+jTvFQhFMEnmxpVS2wC?=
- =?us-ascii?Q?zccQRo9duPfDKBCEL16DkUFXZePVI0OSnwAa0Jl0PCnH6Co18fJLV9oVjs3h?=
- =?us-ascii?Q?ftxfR1Cc+P6s6b0F1IMQerC9fjVIsZB+?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS4PR04MB9621.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(52116014)(7416014)(376014)(1800799024)(38350700014)(7053199007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?5nnBuWo+dsSb1vsMkOySSkblRquXnoTABLN7YUyFueMyH43jxLxHY3uFxldj?=
- =?us-ascii?Q?71jlWPDNWxvhYmBuj3eBd5h2CloQ35zLvVBc6vl4HgjuHS/HJLqRlvehk+Sx?=
- =?us-ascii?Q?mtjiHNPGKjEprSXVKxK2NnbeCWHFWmMlwgsnxM+s/J1NixCu/RfbtmiIXWFW?=
- =?us-ascii?Q?KNvXPVljaRFjSxGkVYhc/e1fOHIp8RKzvcpSRFzmvpD4eoGqRXgOQGl5NF74?=
- =?us-ascii?Q?L/W21NZDfwX1Pt2x4AykLCwfCh08bdzU0G1Ehyt8/4DLpw/zKj71BaaQ5MpA?=
- =?us-ascii?Q?UsZropH9h0FrzlmdstHdVY2sN8Asq9gwPWwoMNS3iMzCx/8E7HxIYLxy7zgg?=
- =?us-ascii?Q?Xln7qWFGSdj3/6JF/oo42dd0BmLpeoeviPCo+tgBTpEnJK1J8uJAb/saBl/M?=
- =?us-ascii?Q?EQOjpOb5elFHzd8Vdohn8hzl7mbcWId6MmywT5v/qUA3CCPe/SDT/eEQLr/x?=
- =?us-ascii?Q?fVkGPm8j77YGRebihHD7CLvA3Kk42i8qQtNZvFGDyLMZcG5siZunXvUwKwES?=
- =?us-ascii?Q?1vo8z1FaWGOs2Cj/wT/XL+p0MLsTYawjXFKpGhvAh2L8LAy24GRXew11EgOy?=
- =?us-ascii?Q?3BCdrnmOIc87gQVhZ8R0thdERHatrK1eyDc4WZQ2kJxK2ElOGL1Ivf70zpbv?=
- =?us-ascii?Q?4yVTdmVH/+083HjFPNQWuW54zL3/uAelRdiyoAJcOJNXFKCGw/nivcwDuwIw?=
- =?us-ascii?Q?IHdRyElRpGAauihutsfz7e7yt4Jr01kGUnayQ7dEIGQw+S+6HWNMWB7qsAEH?=
- =?us-ascii?Q?FW711f2yTEvB1bDFVvuyYzJxMzNeGr3DVf0tCZSRqu6EuoeLt6H2BuPrSEwN?=
- =?us-ascii?Q?Yhj3HPa/IuUhK6CDbgHyaRwSIIlih8r3l/gElY0RXRYrb3z6ynT1+1SPbK7k?=
- =?us-ascii?Q?+SEvPNitaivz/n/DAS43I3dmZ2MimPavm9B8TydKTK48sEmWhLI7vq9qvQwU?=
- =?us-ascii?Q?x1sVKGZqLUeidiJws0jVF+r+Etx5glA/mgmaaDmXb5ibMcXxDAumEUiqQozn?=
- =?us-ascii?Q?xB3bqHoBntVT6EDZO7M8S0OY9MYOw9mQ+84ai8dKmNLsyOEhTm04vBji5kjf?=
- =?us-ascii?Q?ehN/PejTQkOwSZQylVBJX/ULrkr3nZvVe7AWyjSaHb97UCf0nTLeAXC5fkSX?=
- =?us-ascii?Q?6ZTL3SBdWZ3ORwClHGa80bUzmrUPPP+bBnTxJ0AGa8CneW9F8M2oyzPhdBay?=
- =?us-ascii?Q?Dw0c0UoWltgtTewGnRqG8B9M/b+nPZAofayXb77JkxzH/mVgZRmWiz+GVg5N?=
- =?us-ascii?Q?1WPzBEls4mPOwjiZgG0b2VC8oBYveB5pD3kZEs4KbJZ0Bzi2P/QS3P0WilCw?=
- =?us-ascii?Q?hSrCFbRdMjc9I27Ppc5OI8Fu2id0CkNCMQQaeHVx1W2hwRrohXp63GaSBACX?=
- =?us-ascii?Q?X/v/rtVOIwWClbtiyeN3dxoWcZ2MB4i+HkypTUmG53iQ7MTz3PCQ0mleaiUE?=
- =?us-ascii?Q?ChgyhER/MXSBr7ubTbyVRFNFGdnp5/uO5riH4eJ1QnKGPqz33AB9wIjOLD/c?=
- =?us-ascii?Q?7IEu8DGF+wQbk/vqZbeqyILaz1iStQWgSEOpiB0qCAJqNtrnSi5edH8gpKop?=
- =?us-ascii?Q?9e0gbP5kZ26EarYW3C/UxtG1ziWO7yxwdF7cgjUh?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3554f022-3735-472b-8c75-08ddf0b8033e
-X-MS-Exchange-CrossTenant-AuthSource: AS4PR04MB9621.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 22:18:51.1354
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VHUr9a+TeqAjX4NciirvV1Mjt81t6lGUNkeVX/Kwkh7kxxTfn2O77K7Za6U7308Gp/24/z+ftaj4hy1an+zcsQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10939
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/15] gpio: brcmstb: use new generic GPIO chip API
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Keguang Zhang <keguang.zhang@gmail.com>, Alban Bedel <albeu@free.fr>,
+ Florian Fainelli <florian.fainelli@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>,
+ Andy Shevchenko <andy@kernel.org>
+Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20250910-gpio-mmio-gpio-conv-part4-v2-0-f3d1a4c57124@linaro.org>
+ <20250910-gpio-mmio-gpio-conv-part4-v2-7-f3d1a4c57124@linaro.org>
+Content-Language: en-US
+From: Doug Berger <opendmb@gmail.com>
+In-Reply-To: <20250910-gpio-mmio-gpio-conv-part4-v2-7-f3d1a4c57124@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jul 29, 2025 at 12:33:55AM +0800, Ze Huang wrote:
-> Add support for the USB 3.0 Dual-Role Device (DRD) controller embedded
-> in the SpacemiT K1 SoC. The controller is based on the Synopsys
-> DesignWare Core USB 3 (DWC3) IP, supporting USB3.0 host mode and USB 2.0
-> DRD mode.
->
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Ze Huang <huang.ze@linux.dev>
+On 9/10/2025 12:12 AM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Convert the driver to using the new generic GPIO chip interfaces from
+> linux/gpio/generic.h.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
+>   drivers/gpio/gpio-brcmstb.c | 112 ++++++++++++++++++++++++--------------------
+>   1 file changed, 60 insertions(+), 52 deletions(-)
+> 
+> diff --git a/drivers/gpio/gpio-brcmstb.c b/drivers/gpio/gpio-brcmstb.c
+> index e29a9589b3ccbd17d10f6671088dca3e76537927..be3ff916e134a674d3e1d334a7d431b7ad767a33 100644
+> --- a/drivers/gpio/gpio-brcmstb.c
+> +++ b/drivers/gpio/gpio-brcmstb.c
+> @@ -3,6 +3,7 @@
+>   
+>   #include <linux/bitops.h>
+>   #include <linux/gpio/driver.h>
+> +#include <linux/gpio/generic.h>
+>   #include <linux/of.h>
+>   #include <linux/module.h>
+>   #include <linux/irqdomain.h>
+> @@ -37,7 +38,7 @@ enum gio_reg_index {
+>   struct brcmstb_gpio_bank {
+>   	struct list_head node;
+>   	int id;
+> -	struct gpio_chip gc;
+> +	struct gpio_generic_chip chip;
+>   	struct brcmstb_gpio_priv *parent_priv;
+>   	u32 width;
+>   	u32 wake_active;
+> @@ -72,19 +73,18 @@ __brcmstb_gpio_get_active_irqs(struct brcmstb_gpio_bank *bank)
+>   {
+>   	void __iomem *reg_base = bank->parent_priv->reg_base;
+>   
+> -	return bank->gc.read_reg(reg_base + GIO_STAT(bank->id)) &
+> -	       bank->gc.read_reg(reg_base + GIO_MASK(bank->id));
+> +	return gpio_generic_read_reg(&bank->chip, reg_base + GIO_STAT(bank->id)) &
+> +	       gpio_generic_read_reg(&bank->chip, reg_base + GIO_MASK(bank->id));
+>   }
+>   
+>   static unsigned long
+>   brcmstb_gpio_get_active_irqs(struct brcmstb_gpio_bank *bank)
+>   {
+>   	unsigned long status;
+> -	unsigned long flags;
+>   
+> -	raw_spin_lock_irqsave(&bank->gc.bgpio_lock, flags);
+> +	guard(gpio_generic_lock_irqsave)(&bank->chip);
+> +
+>   	status = __brcmstb_gpio_get_active_irqs(bank);
+> -	raw_spin_unlock_irqrestore(&bank->gc.bgpio_lock, flags);
+>   
+>   	return status;
+>   }
+> @@ -92,26 +92,26 @@ brcmstb_gpio_get_active_irqs(struct brcmstb_gpio_bank *bank)
+>   static int brcmstb_gpio_hwirq_to_offset(irq_hw_number_t hwirq,
+>   					struct brcmstb_gpio_bank *bank)
+>   {
+> -	return hwirq - bank->gc.offset;
+> +	return hwirq - bank->chip.gc.offset;
+>   }
+>   
+>   static void brcmstb_gpio_set_imask(struct brcmstb_gpio_bank *bank,
+>   		unsigned int hwirq, bool enable)
+>   {
+> -	struct gpio_chip *gc = &bank->gc;
+>   	struct brcmstb_gpio_priv *priv = bank->parent_priv;
+>   	u32 mask = BIT(brcmstb_gpio_hwirq_to_offset(hwirq, bank));
+>   	u32 imask;
+> -	unsigned long flags;
+>   
+> -	raw_spin_lock_irqsave(&gc->bgpio_lock, flags);
+> -	imask = gc->read_reg(priv->reg_base + GIO_MASK(bank->id));
+> +	guard(gpio_generic_lock_irqsave)(&bank->chip);
+> +
+> +	imask = gpio_generic_read_reg(&bank->chip,
+> +				      priv->reg_base + GIO_MASK(bank->id));
+>   	if (enable)
+>   		imask |= mask;
+>   	else
+>   		imask &= ~mask;
+> -	gc->write_reg(priv->reg_base + GIO_MASK(bank->id), imask);
+> -	raw_spin_unlock_irqrestore(&gc->bgpio_lock, flags);
+> +	gpio_generic_write_reg(&bank->chip,
+> +			       priv->reg_base + GIO_MASK(bank->id), imask);
+>   }
+>   
+>   static int brcmstb_gpio_to_irq(struct gpio_chip *gc, unsigned offset)
+> @@ -150,7 +150,8 @@ static void brcmstb_gpio_irq_ack(struct irq_data *d)
+>   	struct brcmstb_gpio_priv *priv = bank->parent_priv;
+>   	u32 mask = BIT(brcmstb_gpio_hwirq_to_offset(d->hwirq, bank));
+>   
+> -	gc->write_reg(priv->reg_base + GIO_STAT(bank->id), mask);
+> +	gpio_generic_write_reg(&bank->chip,
+> +			       priv->reg_base + GIO_STAT(bank->id), mask);
+>   }
+>   
+>   static int brcmstb_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+> @@ -162,7 +163,6 @@ static int brcmstb_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>   	u32 edge_insensitive, iedge_insensitive;
+>   	u32 edge_config, iedge_config;
+>   	u32 level, ilevel;
+> -	unsigned long flags;
+>   
+>   	switch (type) {
+>   	case IRQ_TYPE_LEVEL_LOW:
+> @@ -194,23 +194,25 @@ static int brcmstb_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+>   		return -EINVAL;
+>   	}
+>   
+> -	raw_spin_lock_irqsave(&bank->gc.bgpio_lock, flags);
+> +	guard(gpio_generic_lock_irqsave)(&bank->chip);
+>   
+> -	iedge_config = bank->gc.read_reg(priv->reg_base +
+> -			GIO_EC(bank->id)) & ~mask;
+> -	iedge_insensitive = bank->gc.read_reg(priv->reg_base +
+> -			GIO_EI(bank->id)) & ~mask;
+> -	ilevel = bank->gc.read_reg(priv->reg_base +
+> -			GIO_LEVEL(bank->id)) & ~mask;
+> +	iedge_config = gpio_generic_read_reg(&bank->chip,
+> +				priv->reg_base + GIO_EC(bank->id)) & ~mask;
+> +	iedge_insensitive = gpio_generic_read_reg(&bank->chip,
+> +				priv->reg_base + GIO_EI(bank->id)) & ~mask;
+> +	ilevel = gpio_generic_read_reg(&bank->chip,
+> +				priv->reg_base + GIO_LEVEL(bank->id)) & ~mask;
+>   
+> -	bank->gc.write_reg(priv->reg_base + GIO_EC(bank->id),
+> -			iedge_config | edge_config);
+> -	bank->gc.write_reg(priv->reg_base + GIO_EI(bank->id),
+> -			iedge_insensitive | edge_insensitive);
+> -	bank->gc.write_reg(priv->reg_base + GIO_LEVEL(bank->id),
+> -			ilevel | level);
+> +	gpio_generic_write_reg(&bank->chip,
+> +			       priv->reg_base + GIO_EC(bank->id),
+> +			       iedge_config | edge_config);
+> +	gpio_generic_write_reg(&bank->chip,
+> +			       priv->reg_base + GIO_EI(bank->id),
+> +			       iedge_insensitive | edge_insensitive);
+> +	gpio_generic_write_reg(&bank->chip,
+> +			       priv->reg_base + GIO_LEVEL(bank->id),
+> +			       ilevel | level);
+>   
+> -	raw_spin_unlock_irqrestore(&bank->gc.bgpio_lock, flags);
+>   	return 0;
+>   }
+>   
+> @@ -263,7 +265,7 @@ static void brcmstb_gpio_irq_bank_handler(struct brcmstb_gpio_bank *bank)
+>   {
+>   	struct brcmstb_gpio_priv *priv = bank->parent_priv;
+>   	struct irq_domain *domain = priv->irq_domain;
+> -	int hwbase = bank->gc.offset;
+> +	int hwbase = bank->chip.gc.offset;
+>   	unsigned long status;
+>   
+>   	while ((status = brcmstb_gpio_get_active_irqs(bank))) {
+> @@ -303,7 +305,7 @@ static struct brcmstb_gpio_bank *brcmstb_gpio_hwirq_to_bank(
+>   
+>   	/* banks are in descending order */
+>   	list_for_each_entry_reverse(bank, &priv->bank_list, node) {
+> -		i += bank->gc.ngpio;
+> +		i += bank->chip.gc.ngpio;
+>   		if (hwirq < i)
+>   			return bank;
+>   	}
+> @@ -332,7 +334,7 @@ static int brcmstb_gpio_irq_map(struct irq_domain *d, unsigned int irq,
+>   
+>   	dev_dbg(&pdev->dev, "Mapping irq %d for gpio line %d (bank %d)\n",
+>   		irq, (int)hwirq, bank->id);
+> -	ret = irq_set_chip_data(irq, &bank->gc);
+> +	ret = irq_set_chip_data(irq, &bank->chip.gc);
+>   	if (ret < 0)
+>   		return ret;
+>   	irq_set_lockdep_class(irq, &brcmstb_gpio_irq_lock_class,
+> @@ -394,7 +396,7 @@ static void brcmstb_gpio_remove(struct platform_device *pdev)
+>   	 * more important to actually perform all of the steps.
+>   	 */
+>   	list_for_each_entry(bank, &priv->bank_list, node)
+> -		gpiochip_remove(&bank->gc);
+> +		gpiochip_remove(&bank->chip.gc);
+>   }
+>   
+>   static int brcmstb_gpio_of_xlate(struct gpio_chip *gc,
+> @@ -412,7 +414,7 @@ static int brcmstb_gpio_of_xlate(struct gpio_chip *gc,
+>   	if (WARN_ON(gpiospec->args_count < gc->of_gpio_n_cells))
+>   		return -EINVAL;
+>   
+> -	offset = gpiospec->args[0] - bank->gc.offset;
+> +	offset = gpiospec->args[0] - bank->chip.gc.offset;
+>   	if (offset >= gc->ngpio || offset < 0)
+>   		return -EINVAL;
+>   
+> @@ -493,19 +495,17 @@ static int brcmstb_gpio_irq_setup(struct platform_device *pdev,
+>   static void brcmstb_gpio_bank_save(struct brcmstb_gpio_priv *priv,
+>   				   struct brcmstb_gpio_bank *bank)
+>   {
+> -	struct gpio_chip *gc = &bank->gc;
+>   	unsigned int i;
+>   
+>   	for (i = 0; i < GIO_REG_STAT; i++)
+> -		bank->saved_regs[i] = gc->read_reg(priv->reg_base +
+> -						   GIO_BANK_OFF(bank->id, i));
+> +		bank->saved_regs[i] = gpio_generic_read_reg(&bank->chip,
+> +					priv->reg_base + GIO_BANK_OFF(bank->id, i));
+>   }
+>   
+>   static void brcmstb_gpio_quiesce(struct device *dev, bool save)
+>   {
+>   	struct brcmstb_gpio_priv *priv = dev_get_drvdata(dev);
+>   	struct brcmstb_gpio_bank *bank;
+> -	struct gpio_chip *gc;
+>   	u32 imask;
+>   
+>   	/* disable non-wake interrupt */
+> @@ -513,8 +513,6 @@ static void brcmstb_gpio_quiesce(struct device *dev, bool save)
+>   		disable_irq(priv->parent_irq);
+>   
+>   	list_for_each_entry(bank, &priv->bank_list, node) {
+> -		gc = &bank->gc;
+> -
+>   		if (save)
+>   			brcmstb_gpio_bank_save(priv, bank);
+>   
+> @@ -523,8 +521,9 @@ static void brcmstb_gpio_quiesce(struct device *dev, bool save)
+>   			imask = bank->wake_active;
+>   		else
+>   			imask = 0;
+> -		gc->write_reg(priv->reg_base + GIO_MASK(bank->id),
+> -			       imask);
+> +		gpio_generic_write_reg(&bank->chip,
+> +				       priv->reg_base + GIO_MASK(bank->id),
+> +				       imask);
+>   	}
+>   }
+>   
+> @@ -538,12 +537,12 @@ static void brcmstb_gpio_shutdown(struct platform_device *pdev)
+>   static void brcmstb_gpio_bank_restore(struct brcmstb_gpio_priv *priv,
+>   				      struct brcmstb_gpio_bank *bank)
+>   {
+> -	struct gpio_chip *gc = &bank->gc;
+>   	unsigned int i;
+>   
+>   	for (i = 0; i < GIO_REG_STAT; i++)
+> -		gc->write_reg(priv->reg_base + GIO_BANK_OFF(bank->id, i),
+> -			      bank->saved_regs[i]);
+> +		gpio_generic_write_reg(&bank->chip,
+> +				       priv->reg_base + GIO_BANK_OFF(bank->id, i),
+> +				       bank->saved_regs[i]);
+>   }
+>   
+>   static int brcmstb_gpio_suspend(struct device *dev)
+> @@ -585,6 +584,7 @@ static const struct dev_pm_ops brcmstb_gpio_pm_ops = {
+>   
+>   static int brcmstb_gpio_probe(struct platform_device *pdev)
+>   {
+> +	struct gpio_generic_chip_config config;
+>   	struct device *dev = &pdev->dev;
+>   	struct device_node *np = dev->of_node;
+>   	void __iomem *reg_base;
+> @@ -665,17 +665,24 @@ static int brcmstb_gpio_probe(struct platform_device *pdev)
+>   			bank->width = bank_width;
+>   		}
+>   
+> +		gc = &bank->chip.gc;
+> +
+>   		/*
+>   		 * Regs are 4 bytes wide, have data reg, no set/clear regs,
+>   		 * and direction bits have 0 = output and 1 = input
+>   		 */
+> -		gc = &bank->gc;
+> -		err = bgpio_init(gc, dev, 4,
+> -				reg_base + GIO_DATA(bank->id),
+> -				NULL, NULL, NULL,
+> -				reg_base + GIO_IODIR(bank->id), flags);
+> +
+> +		config = (struct gpio_generic_chip_config) {
+> +			.dev = dev,
+> +			.sz = 4,
+> +			.dat = reg_base + GIO_DATA(bank->id),
+> +			.dirin = reg_base + GIO_IODIR(bank->id),
+> +			.flags = flags,
+> +		};
+> +
+> +		err = gpio_generic_chip_init(&bank->chip, &config);
+>   		if (err) {
+> -			dev_err(dev, "bgpio_init() failed\n");
+> +			dev_err(dev, "failed to initialize generic GPIO chip\n");
+>   			goto fail;
+>   		}
+>   
+> @@ -700,7 +707,8 @@ static int brcmstb_gpio_probe(struct platform_device *pdev)
+>   		 * be retained from S5 cold boot
+>   		 */
+>   		need_wakeup_event |= !!__brcmstb_gpio_get_active_irqs(bank);
+> -		gc->write_reg(reg_base + GIO_MASK(bank->id), 0);
+> +		gpio_generic_write_reg(&bank->chip,
+> +				       reg_base + GIO_MASK(bank->id), 0);
+>   
+>   		err = gpiochip_add_data(gc, bank);
+>   		if (err) {
+> 
+I suppose I'm OK with all of this, but I'm just curious about the longer 
+term plans for the member accesses. Is there an intent to have helpers 
+for things like?:
+chip.gc.offset
+chip.gc.ngpio
 
-Ze Huang:
-
-   I seen Krzysztof and Thinh Nguyen already acked this patches. Do you
-wait for greg pick it up or need respin?
-
-   My one layerscape usb patch depend on this one!
-
-Frank
-
->  .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 124 +++++++++++++++++++++
->  1 file changed, 124 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..7007e2bd42016ae0e50c4007e75d26bada34d983
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
-> @@ -0,0 +1,124 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/usb/spacemit,k1-dwc3.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: SpacemiT K1 SuperSpeed DWC3 USB SoC Controller
-> +
-> +maintainers:
-> +  - Ze Huang <huang.ze@linux.dev>
-> +
-> +description: |
-> +  The SpacemiT K1 embeds a DWC3 USB IP Core which supports Host functions
-> +  for USB 3.0 and DRD for USB 2.0.
-> +
-> +  Key features:
-> +  - USB3.0 SuperSpeed and USB2.0 High/Full/Low-Speed support
-> +  - Supports low-power modes (USB2.0 suspend, USB3.0 U1/U2/U3)
-> +  - Internal DMA controller and flexible endpoint FIFO sizing
-> +
-> +  Communication Interface:
-> +  - Use of PIPE3 (125MHz) interface for USB3.0 PHY
-> +  - Use of UTMI+ (30/60MHz) interface for USB2.0 PHY
-> +
-> +allOf:
-> +  - $ref: snps,dwc3-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: spacemit,k1-dwc3
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    const: usbdrd30
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  phys:
-> +    items:
-> +      - description: phandle to USB2/HS PHY
-> +      - description: phandle to USB3/SS PHY
-> +
-> +  phy-names:
-> +    items:
-> +      - const: usb2-phy
-> +      - const: usb3-phy
-> +
-> +  resets:
-> +    items:
-> +      - description: USB3.0 AHB reset
-> +      - description: USB3.0 VCC reset
-> +      - description: USB3.0 PHY reset
-> +      - description: PCIE0 global reset (for combo phy)
-> +
-> +  reset-names:
-> +    items:
-> +      - const: ahb
-> +      - const: vcc
-> +      - const: phy
-> +      - const: pcie0
-> +
-> +  reset-delay:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    default: 2
-> +    description: delay after reset sequence [us]
-> +
-> +  vbus-supply:
-> +    description: A phandle to the regulator supplying the VBUS voltage.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - phys
-> +  - phy-names
-> +  - resets
-> +  - reset-names
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    usb@c0a00000 {
-> +        compatible = "spacemit,k1-dwc3";
-> +        reg = <0xc0a00000 0x10000>;
-> +        clocks = <&syscon_apmu 16>;
-> +        clock-names = "usbdrd30";
-> +        interrupts = <125>;
-> +        phys = <&usb2phy>, <&usb3phy>;
-> +        phy-names = "usb2-phy", "usb3-phy";
-> +        resets = <&syscon_apmu 8>,
-> +                 <&syscon_apmu 9>,
-> +                 <&syscon_apmu 10>,
-> +                 <&syscon_apmu 26>;
-> +        reset-names = "ahb", "vcc", "phy", "pcie0";
-> +        reset-delay = <2>;
-> +        vbus-supply = <&usb3_vbus>;
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        hub_2_0: hub@1 {
-> +            compatible = "usb2109,2817";
-> +            reg = <1>;
-> +            vdd-supply = <&usb3_vhub>;
-> +            peer-hub = <&hub_3_0>;
-> +            reset-gpios = <&gpio 3 28 1>;
-> +        };
-> +
-> +        hub_3_0: hub@2 {
-> +            compatible = "usb2109,817";
-> +            reg = <2>;
-> +            vdd-supply = <&usb3_vhub>;
-> +            peer-hub = <&hub_2_0>;
-> +            reset-gpios = <&gpio 3 28 1>;
-> +        };
-> +    };
->
-> --
-> 2.50.1
->
+Thanks,
+     Doug
