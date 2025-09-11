@@ -1,364 +1,449 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE6B31079B
-	for <spacemit@lists.linux.dev>; Thu, 11 Sep 2025 10:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0A331195A;
+	Thu, 11 Sep 2025 11:23:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757586252; cv=none; b=u2FScDYiUkTlMCgzpUUI0LWsadNfl1dVUhcE2JQyqRAanvXt3hWDKBR4PZv68kCsrO9VbIfl6AHcM8LD2ZHLxmDdf7iKC2OWuaIvI7OUk3H+4GE43kUjMl98oHmtStjt4JOrytx5UvjccqIV8R6d3pp3mdpfkVpejkBxbJid71w=
+	t=1757589816; cv=none; b=X2wCCGvOojYd/1VtFCXqVlMZNyGu4oTw7udvYiVPPWpG0/S5gwQyraXibUzTvOYlgpxk+ziiH/B17ZUPTJopnb7+IvfcI0div2KDk7Jd/Ij8N83mX61Bsivxp+MXPBf7tCpZf3xvyiOtiVF0AG6jcLRTVBap8VBLSSu4WIhS0nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757586252; c=relaxed/simple;
-	bh=uMraBvcxnOW3qr8ZpGaYaLUWx50wDsuxhEvd7ZJe6Fk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IVOlI7xLS8d9X3BIsVrQFaSDM2AtLnVOk2kx3ChcSUSH6EoSWMI01D5wkV/OaoHvUoyr796m6AY1DBff3GQDzNrFys6AJZSP96OQYw4QCGoXY5KZxEif6M3weI9xzQD3gHP6kVHyosDQ7WRfCUBlSj5iwmiSWMgb2knpt9K6VRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.105] (unknown [114.241.87.235])
-	by APP-05 (Coremail) with SMTP id zQCowAD3mBIQo8Joe2xDAg--.40639S2;
-	Thu, 11 Sep 2025 18:23:12 +0800 (CST)
-Message-ID: <7895b23a-2b50-4f3e-bdef-f9b7397beef2@iscas.ac.cn>
-Date: Thu, 11 Sep 2025 18:23:12 +0800
+	s=arc-20240116; t=1757589816; c=relaxed/simple;
+	bh=4/vJtGmxP8+dE0mnBLXp4BIkBrJoDZG56AJC60ogXtM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YeW4VivT4HQLKecYujTyHUV5fmTn7MgKkx5GVRA3tsCAsAkFo64yuQhywx6wUg/8jcj6v/p0H4gB0IvPykLf7UwlBSt3PJ0oZfpuangWkGxbKmHdNRc+SWnQZdvx3yDFFDSr2dtA6iyxomUSImiX5KOBUh26X1l9MlGfZKKFQWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.168])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id A94333410A2;
+	Thu, 11 Sep 2025 11:23:09 +0000 (UTC)
+Date: Thu, 11 Sep 2025 19:22:51 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	alex@ghiti.fr, skhan@linuxfoundation.org,
+	linux-kernel-mentees@lists.linux.dev, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] riscv: dts: spacemit: add UART pinctrl combinations
+Message-ID: <20250911112251-GYA1216475@gentoo.org>
+References: <20250903145334.425633-1-hendrik.hamerlinck@hammernet.be>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v10 2/5] net: spacemit: Add K1 Ethernet MAC
-To: Simon Horman <horms@kernel.org>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Vadim Fedorenko
- <vadim.fedorenko@linux.dev>, Junhui Liu <junhui.liu@pigmoral.tech>,
- Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, Vivian Wang <uwu@dram.page>
-References: <20250908-net-k1-emac-v10-0-90d807ccd469@iscas.ac.cn>
- <20250908-net-k1-emac-v10-2-90d807ccd469@iscas.ac.cn>
- <20250911094404.GE30363@horms.kernel.org>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20250911094404.GE30363@horms.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:zQCowAD3mBIQo8Joe2xDAg--.40639S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxKr4UGF43WF4fWF17ZFyxZrb_yoWfGw4UpF
-	WUKa1DAFW0vF1xtrsFqayDJrnIv34ftr1j9FyYy3yI9FnIy3WSyas5KrWY934kuryq9r1F
-	vw4jv3srGa90vrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvqb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
-	1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
-	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
-	wI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
-	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
-	ZFpf9x07bIBTOUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250903145334.425633-1-hendrik.hamerlinck@hammernet.be>
 
-Hi Simon,
+Hi Hendrik,
 
-On 9/11/25 17:44, Simon Horman wrote:
-> On Mon, Sep 08, 2025 at 08:34:26PM +0800, Vivian Wang wrote:
->> The Ethernet MACs found on SpacemiT K1 appears to be a custom design
->> that only superficially resembles some other embedded MACs. SpacemiT
->> refers to them as "EMAC", so let's just call the driver "k1_emac".
->>
->> Supports RGMII and RMII interfaces. Includes support for MAC hardware
->> statistics counters. PTP support is not implemented.
->>
->> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
->> Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
->> Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
->> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
->> Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
->> Tested-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
->> ---
->>  drivers/net/ethernet/Kconfig            |    1 +
->>  drivers/net/ethernet/Makefile           |    1 +
->>  drivers/net/ethernet/spacemit/Kconfig   |   29 +
->>  drivers/net/ethernet/spacemit/Makefile  |    6 +
->>  drivers/net/ethernet/spacemit/k1_emac.c | 2156 +++++++++++++++++++++++++++++++
-> This is a large patch, so I'm sure I've missed some things.
-> But, overall, I think this is coming together.
-> Thanks for your recent updates.
->
-> As the Kernel Patch Robot noticed a problem,
-> I've provided some minor feedback for your consideration.
+On 16:53 Wed 03 Sep     , Hendrik Hamerlinck wrote:
+> This adds UART pinctrl configurations based on the SoC datasheet and the
+> downstream Bianbu Linux tree. The drive strength values were taken from
+> the downstream implementation, which uses medium drive strength.
+> 
+> For convenience, the board DTS files have been updated to include all
+> UART instances with their possible pinmux options in a disabled state.
+> 
+> Tested this locally on both Orange Pi RV2 and Banana Pi BPI-F3 boards. 
+> 
+> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+> ---
+>  .../boot/dts/spacemit/k1-bananapi-f3.dts      |  18 ++
+>  .../boot/dts/spacemit/k1-orangepi-rv2.dts     |  18 ++
+>  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 276 +++++++++++++++++-
+>  3 files changed, 309 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> index 6013be258542..661d47d1ce9e 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> @@ -49,3 +49,21 @@ &uart0 {
+>  	pinctrl-0 = <&uart0_2_cfg>;
+>  	status = "okay";
+>  };
+> +
+> +&uart5 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart5_3_cfg>;
+> +	status = "disabled";
+> +};
+> +
+> +&uart8 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart8_2_cfg>;
+> +	status = "disabled";
+> +};
+> +
+> +&uart9 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart9_2_cfg>;
+> +	status = "disabled";
+> +};
 
-(That's the function at the end)
+all of uart5, 8, 9 come from 26-pins port, the functionaly is
+very likely depending on the final use case.. and I get your idea
+of adding those nodes but with "disabled" status..
 
-> ...
->
->> +static void emac_wr(struct emac_priv *priv, u32 reg, u32 val)
->> +{
->> +	writel(val, priv->iobase + reg);
->> +}
->> +
->> +static int emac_rd(struct emac_priv *priv, u32 reg)
-> nit: maybe u32 would be a more suitable return type.
->
-Ah, right, will change to u32 in the next version.
+my suggestion is to not add them, or leave to users to add separated
+dtbo (Device tree overlays) files in the future
 
->> +{
->> +	return readl(priv->iobase + reg);
->> +}
-> ...
->
->> +static int emac_alloc_tx_resources(struct emac_priv *priv)
->> +{
->> +	struct emac_desc_ring *tx_ring = &priv->tx_ring;
->> +	struct platform_device *pdev = priv->pdev;
->> +	u32 size;
->> +
->> +	size = sizeof(struct emac_tx_desc_buffer) * tx_ring->total_cnt;
->> +
->> +	tx_ring->tx_desc_buf = kzalloc(size, GFP_KERNEL);
-> nit: I think you can use kcalloc() here.
->
->> +	if (!tx_ring->tx_desc_buf)
->> +		return -ENOMEM;
->> +
->> +	tx_ring->total_size = tx_ring->total_cnt * sizeof(struct emac_desc);
->> +	tx_ring->total_size = ALIGN(tx_ring->total_size, PAGE_SIZE);
->> +
->> +	tx_ring->desc_addr = dma_alloc_coherent(&pdev->dev, tx_ring->total_size,
->> +						&tx_ring->desc_dma_addr,
->> +						GFP_KERNEL);
->> +	if (!tx_ring->desc_addr) {
->> +		kfree(tx_ring->tx_desc_buf);
->> +		return -ENOMEM;
->> +	}
->> +
->> +	tx_ring->head = 0;
->> +	tx_ring->tail = 0;
->> +
->> +	return 0;
->> +}
-> ...
->
->> +static int emac_alloc_rx_resources(struct emac_priv *priv)
->> +{
->> +	struct emac_desc_ring *rx_ring = &priv->rx_ring;
->> +	struct platform_device *pdev = priv->pdev;
->> +	u32 buf_len;
->> +
->> +	buf_len = sizeof(struct emac_rx_desc_buffer) * rx_ring->total_cnt;
->> +
->> +	rx_ring->rx_desc_buf = kzalloc(buf_len, GFP_KERNEL);
-> Ditto.
+but I'm ok to complete uart pinctrl info in the dtsi file
 
-Will change these uses of kcalloc for these array allocations in next
-version.
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> index 337240ebb7b7..dc45b75b1ad4 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> @@ -38,3 +38,21 @@ &uart0 {
+>  	pinctrl-0 = <&uart0_2_cfg>;
+>  	status = "okay";
+>  };
+> +
+> +&uart5 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart5_3_cfg>;
+> +	status = "disabled";
+> +};
+> +
+> +&uart8 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart8_2_cfg>;
+> +	status = "disabled";
+> +};
+> +
+> +&uart9 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart9_2_cfg>;
+> +	status = "disabled";
+> +};
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> index 381055737422..43425530b5bf 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> @@ -11,12 +11,282 @@
+>  #define K1_GPIO(x)	(x / 32) (x % 32)
+>  
+>  &pinctrl {
+> +	uart0_0_cfg: uart0-0-cfg {
+> +		uart0-0-pins {
+> +			pinmux = <K1_PADCONF(104, 3)>,	/* uart0_txd */
+> +				 <K1_PADCONF(105, 3)>;	/* uart0_rxd */
+> +			power-source = <3300>;
+> +			bias-pull-up;
+> +			drive-strength = <19>;
+> +		};
+> +	};
+> +
+> +	uart0_1_cfg: uart0-1-cfg {
+> +		uart0-1-pins {
+> +			pinmux = <K1_PADCONF(108, 1)>,	/* uart0_txd */
+> +				 <K1_PADCONF(80, 3)>;	/* uart0_rxd */
+> +			power-source = <3300>;
+> +			bias-pull-up;
+> +			drive-strength = <19>;
+> +		};
+> +	};
+> +
+>  	uart0_2_cfg: uart0-2-cfg {
+>  		uart0-2-pins {
+> -			pinmux = <K1_PADCONF(68, 2)>,
+> -				 <K1_PADCONF(69, 2)>;
+> +			pinmux = <K1_PADCONF(68, 2)>,	/* uart0_txd */
+> +				 <K1_PADCONF(69, 2)>;	/* uart0_rxd */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+>  
+> -			bias-pull-up = <0>;
+> +	uart2_0_cfg: uart2-0-cfg {
+> +		uart2-0-pins {
+> +			pinmux = <K1_PADCONF(21, 1)>,	/* uart2_txd */
+> +				 <K1_PADCONF(22, 1)>,	/* uart2_rxd */
+> +				 <K1_PADCONF(23, 1)>,	/* uart2_cts */
+> +				 <K1_PADCONF(24, 1)>;	/* uart2_rts */
 
->> +	if (!rx_ring->rx_desc_buf)
->> +		return -ENOMEM;
->> +
->> +	rx_ring->total_size = rx_ring->total_cnt * sizeof(struct emac_desc);
->> +
->> +	rx_ring->total_size = ALIGN(rx_ring->total_size, PAGE_SIZE);
->> +
->> +	rx_ring->desc_addr = dma_alloc_coherent(&pdev->dev, rx_ring->total_size,
->> +						&rx_ring->desc_dma_addr,
->> +						GFP_KERNEL);
->> +	if (!rx_ring->desc_addr) {
->> +		kfree(rx_ring->rx_desc_buf);
->> +		return -ENOMEM;
->> +	}
->> +
->> +	rx_ring->head = 0;
->> +	rx_ring->tail = 0;
->> +
->> +	return 0;
->> +}
-> ...
->
->> +static int emac_mii_read(struct mii_bus *bus, int phy_addr, int regnum)
->> +{
->> +	struct emac_priv *priv = bus->priv;
->> +	u32 cmd = 0, val;
->> +	int ret;
->> +
->> +	cmd |= phy_addr & 0x1F;
->> +	cmd |= (regnum & 0x1F) << 5;
-> nit: I think this could benefit from using FIELD_PREP
->      Likewise for similar patterns in this patch.
->
-Right... I'll take a look, thanks.
+I think for group has cts, rts pins, it's more practical to
+have two separated cfgs, so the final application can choose to 
+request two pins (tx, rx), or four pins (tx, tx, cts, rts)..
+(I believe the hardware should support this)
 
->> +	cmd |= MREGBIT_START_MDIO_TRANS | MREGBIT_MDIO_READ_WRITE;
->> +
->> +	emac_wr(priv, MAC_MDIO_DATA, 0x0);
->> +	emac_wr(priv, MAC_MDIO_CONTROL, cmd);
->> +
->> +	ret = readl_poll_timeout(priv->iobase + MAC_MDIO_CONTROL, val,
->> +				 !((val >> 15) & 0x1), 100, 10000);
->> +
->> +	if (ret)
->> +		return ret;
->> +
->> +	val = emac_rd(priv, MAC_MDIO_DATA);
->> +	return val;
->> +}
-> ...
->
->> +/*
->> + * Even though this MAC supports gigabit operation, it only provides 32-bit
->> + * statistics counters. The most overflow-prone counters are the "bytes" ones,
->> + * which at gigabit overflow about twice a minute.
->> + *
->> + * Therefore, we maintain the high 32 bits of counters ourselves, incrementing
->> + * every time statistics seem to go backwards. Also, update periodically to
->> + * catch overflows when we are not otherwise checking the statistics often
->> + * enough.
->> + */
->> +
->> +#define EMAC_STATS_TIMER_PERIOD		20
->> +
->> +static int emac_read_stat_cnt(struct emac_priv *priv, u8 cnt, u32 *res,
->> +			      u32 control_reg, u32 high_reg, u32 low_reg)
->> +{
->> +	u32 val;
->> +	int ret;
->> +
->> +	/* The "read" bit is the same for TX and RX */
->> +
->> +	val = MREGBIT_START_TX_COUNTER_READ | cnt;
->> +	emac_wr(priv, control_reg, val);
->> +	val = emac_rd(priv, control_reg);
->> +
->> +	ret = readl_poll_timeout_atomic(priv->iobase + control_reg, val,
->> +					!(val & MREGBIT_START_TX_COUNTER_READ),
->> +					100, 10000);
->> +
->> +	if (ret) {
->> +		netdev_err(priv->ndev, "Read stat timeout\n");
->> +		return ret;
->> +	}
->> +
->> +	*res = emac_rd(priv, high_reg) << 16;
->> +	*res |= (u16)emac_rd(priv, low_reg);
-> nit: I think lower_16_bits() and lower_16_bits() would be appropriate here.
+something like this:
 
-This one is building up a 32-bit value instead of splitting a 32-bit
-value in two, and we don't have those macros in linux/wordpart.h. So I
-think I'll make a local helper:
+uart2_0_cfg: uart2-0-cfg {
+	uart2-0-pins {
+		pinmux = <K1_PADCONF(21, 1)>,	/* uart2_txd */
+			 <K1_PADCONF(22, 1)>,	/* uart2_rxd */
+	};
+};
 
-static u32 emac_make_stat(u16 high, u16 low)
+uart2_0_cts_rts_cfg: uart2-0-cts-rts-cfg {
+	uart2-0-pins {
+		pinmux = <K1_PADCONF(23, 1)>,	/* uart2_cts */
+			 <K1_PADCONF(24, 1)>,	/* uart2_rts */
+	};
+};
 
->> +
->> +	return 0;
->> +}
-> ...
->
->> +static void emac_update_counter(u64 *counter, u32 new_low)
->> +{
->> +	u32 old_low = (u32)*counter;
->> +	u64 high = *counter >> 32;
-> Similarly, lower_32_bits() and upper_32_bits here.
->
-Thanks, this one I'll change to {lower,upper}_32_bits.
+&uart2 { 
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart2_0_cfg>, <&uart2_0_cts_rts_cfg>;
+};
 
->> +
->> +	if (old_low > new_low) {
->> +		/* Overflowed, increment high 32 bits */
->> +		high++;
->> +	}
->> +
->> +	*counter = (high << 32) | new_low;
->> +}
->> +
->> +static void emac_stats_update(struct emac_priv *priv)
->> +{
->> +	u64 *tx_stats_off = (u64 *)&priv->tx_stats_off;
->> +	u64 *rx_stats_off = (u64 *)&priv->rx_stats_off;
->> +	u64 *tx_stats = (u64 *)&priv->tx_stats;
->> +	u64 *rx_stats = (u64 *)&priv->rx_stats;
-> nit: I think it would be interesting to use a union containing
->      1. the existing tx/rx stats struct and 2. an array of u64.
->      This may allow avoiding this cast. Which seems nice to me.
->      But YMMV.
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart3_0_cfg: uart3-0-cfg {
+> +		uart3-0-pins {
+> +			pinmux = <K1_PADCONF(81, 2)>,	/* uart3_txd */
+> +				 <K1_PADCONF(82, 2)>,	/* uart3_rxd */
+> +				 <K1_PADCONF(83, 2)>,	/* uart3_cts */
+> +				 <K1_PADCONF(84, 2)>;	/* uart3_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart3_1_cfg: uart3-1-cfg {
+> +		uart3-1-pins {
+> +			pinmux = <K1_PADCONF(18, 2)>,	/* uart3_txd */
+> +				 <K1_PADCONF(19, 2)>,	/* uart3_rxd */
+> +				 <K1_PADCONF(20, 2)>,	/* uart3_cts */
+> +				 <K1_PADCONF(21, 2)>;	/* uart3_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart3_2_cfg: uart3-2-cfg {
+> +		uart3-2-pins {
+> +			pinmux = <K1_PADCONF(53, 4)>,	/* uart3_txd */
+> +				 <K1_PADCONF(54, 4)>,	/* uart3_rxd */
+> +				 <K1_PADCONF(55, 4)>,	/* uart3_cts */
+> +				 <K1_PADCONF(56, 4)>;	/* uart3_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart4_0_cfg: uart4-0-cfg {
+> +		uart4-0-pins {
+> +			pinmux = <K1_PADCONF(100, 4)>,	/* uart4_txd */
+> +				 <K1_PADCONF(101, 4)>;	/* uart4_rxd */
+> +			power-source = <3300>;
+> +			bias-pull-up;
+> +			drive-strength = <19>;
+> +		};
+> +	};
+> +
+> +	uart4_1_cfg: uart4-1-cfg {
+> +		uart4-1-pins {
+> +			pinmux = <K1_PADCONF(81, 3)>,	/* uart4_cts */
+> +				 <K1_PADCONF(82, 3)>,	/* uart4_rts */
+> +				 <K1_PADCONF(83, 3)>,	/* uart4_txd */
+> +				 <K1_PADCONF(84, 3)>;	/* uart4_rxd */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart4_2_cfg: uart4-2-cfg {
+> +		uart4-2-pins {
+> +			pinmux = <K1_PADCONF(23, 2)>,	/* uart4_txd */
+> +				 <K1_PADCONF(24, 2)>;	/* uart4_rxd */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart4_3_cfg: uart4-3-cfg {
+> +		uart4-3-pins {
+> +			pinmux = <K1_PADCONF(33, 2)>,	/* uart4_txd */
+> +				 <K1_PADCONF(34, 2)>,	/* uart4_rxd */
+> +				 <K1_PADCONF(35, 2)>,	/* uart4_cts */
+> +				 <K1_PADCONF(36, 2)>;	/* uart4_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart4_4_cfg: uart4-4-cfg {
+> +		uart4-4-pins {
+> +			pinmux = <K1_PADCONF(111, 4)>,	/* uart4_txd */
+> +				 <K1_PADCONF(112, 4)>,	/* uart4_rxd */
+> +				 <K1_PADCONF(113, 4)>,	/* uart4_cts */
+> +				 <K1_PADCONF(114, 4)>;	/* uart4_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart5_0_cfg: uart5-0-cfg {
+> +		uart5-0-pins {
+> +			pinmux = <K1_PADCONF(102, 3)>,	/* uart5_txd */
+> +				 <K1_PADCONF(103, 3)>;	/* uart5_rxd */
+> +			power-source = <3300>;
+> +			bias-pull-up;
+> +			drive-strength = <19>;
+> +		};
+> +	};
+> +
+> +	uart5_1_cfg: uart5-1-cfg {
+> +		uart5-1-pins {
+> +			pinmux = <K1_PADCONF(25, 2)>,	/* uart5_txd */
+> +				 <K1_PADCONF(26, 2)>,	/* uart5_rxd */
+> +				 <K1_PADCONF(27, 2)>,	/* uart5_cts */
+> +				 <K1_PADCONF(28, 2)>;	/* uart5_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart5_2_cfg: uart5-2-cfg {
+> +		uart5-2-pins {
+> +			pinmux = <K1_PADCONF(42, 2)>,	/* uart5_txd */
+> +				 <K1_PADCONF(43, 2)>,	/* uart5_rxd */
+> +				 <K1_PADCONF(44, 2)>,	/* uart5_cts */
+> +				 <K1_PADCONF(45, 2)>;	/* uart5_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart5_3_cfg: uart5-3-cfg {
+> +		uart5-3-pins {
+> +			pinmux = <K1_PADCONF(70, 4)>,	/* uart5_txd */
+> +				 <K1_PADCONF(71, 4)>,	/* uart5_rxd */
+> +				 <K1_PADCONF(72, 4)>,	/* uart5_cts */
+> +				 <K1_PADCONF(73, 4)>;	/* uart5_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart6_0_cfg: uart6-0-cfg {
+> +		uart6-0-pins {
+> +			pinmux = <K1_PADCONF(85, 2)>,	/* uart6_cts */
+> +				 <K1_PADCONF(86, 2)>,	/* uart6_txd */
+> +				 <K1_PADCONF(87, 2)>,	/* uart6_rxd */
+> +				 <K1_PADCONF(90, 2)>;	/* uart6_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart6_1_cfg: uart6-1-cfg {
+> +		uart6-1-pins {
+> +			pinmux = <K1_PADCONF(0, 2)>,	/* uart6_txd */
+> +				 <K1_PADCONF(1, 2)>,	/* uart6_rxd */
+> +				 <K1_PADCONF(2, 2)>,	/* uart6_cts */
+> +				 <K1_PADCONF(3, 2)>;	/* uart6_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart6_2_cfg: uart6-2-cfg {
+> +		uart6-2-pins {
+> +			pinmux = <K1_PADCONF(56, 2)>,	/* uart6_txd */
+> +				 <K1_PADCONF(57, 2)>;	/* uart6_rxd */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart7_0_cfg: uart7-0-cfg {
+> +		uart7-0-pins {
+> +			pinmux = <K1_PADCONF(88, 2)>,	/* uart7_txd */
+> +				 <K1_PADCONF(89, 2)>;	/* uart7_rxd */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart7_1_cfg: uart7-1-cfg {
+> +		uart7-1-pins {
+> +			pinmux = <K1_PADCONF(4, 2)>,	/* uart7_txd */
+> +				 <K1_PADCONF(5, 2)>,	/* uart7_rxd */
+> +				 <K1_PADCONF(6, 2)>,	/* uart7_cts */
+> +				 <K1_PADCONF(7, 2)>;	/* uart7_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart8_0_cfg: uart8-0-cfg {
+> +		uart8-0-pins {
+> +			pinmux = <K1_PADCONF(82, 4)>,	/* uart8_txd */
+> +				 <K1_PADCONF(83, 4)>;	/* uart8_rxd */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart8_1_cfg: uart8-1-cfg {
+> +		uart8-1-pins {
+> +			pinmux = <K1_PADCONF(8, 2)>,	/* uart8_txd */
+> +				 <K1_PADCONF(9, 2)>,	/* uart8_rxd */
+> +				 <K1_PADCONF(10, 2)>,	/* uart8_cts */
+> +				 <K1_PADCONF(11, 2)>;	/* uart8_rts */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart8_2_cfg: uart8-2-cfg {
+> +		uart8-2-pins {
+> +			pinmux = <K1_PADCONF(75, 4)>,	/* uart8_txd */
+> +				 <K1_PADCONF(76, 4)>,	/* uart8_rxd */
+> +				 <K1_PADCONF(77, 4)>,	/* uart8_cts */
+> +				 <K1_PADCONF(78, 4)>;	/* uart8_rts */
+> +			power-source = <3300>;
+> +			bias-pull-up;
+> +			drive-strength = <19>;
+> +		};
+> +	};
+> +
+> +	uart9_0_cfg: uart9-0-cfg {
+> +		uart9-0-pins {
+> +			pinmux = <K1_PADCONF(12, 2)>,	/* uart9_txd */
+> +				 <K1_PADCONF(13, 2)>;	/* uart9_rxd */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart9_1_cfg: uart9-1-cfg {
+> +		uart9-1-pins {
+> +			pinmux = <K1_PADCONF(110, 3)>,	/* uart9_cts */
+> +				 <K1_PADCONF(115, 3)>,	/* uart9_rts */
+> +				 <K1_PADCONF(116, 3)>,	/* uart9_txd */
+> +				 <K1_PADCONF(117, 3)>;	/* uart9_rxd */
+> +			bias-pull-up;
+> +			drive-strength = <32>;
+> +		};
+> +	};
+> +
+> +	uart9_2_cfg: uart9-2-cfg {
+> +		uart9-2-pins {
+> +			pinmux = <K1_PADCONF(72, 2)>,	/* uart9_txd */
+> +				 <K1_PADCONF(73, 2)>;	/* uart9_rxd */
+> +			bias-pull-up;
+>  			drive-strength = <32>;
+>  		};
+>  	};
+> -- 
+> 2.43.0
+> 
 
-Looks like I can use a union with a DECLARE_FLEX_ARRAY for this. I'll
-change it in the next version.
-
->> +	u32 i, res;
->> +
->> +	assert_spin_locked(&priv->stats_lock);
->> +
->> +	if (!netif_running(priv->ndev) || !netif_device_present(priv->ndev)) {
->> +		/* Not up, don't try to update */
->> +		return;
->> +	}
->> +
->> +	for (i = 0; i < sizeof(priv->tx_stats) / sizeof(*tx_stats); i++) {
->> +		/*
->> +		 * If reading stats times out, everything is broken and there's
->> +		 * nothing we can do. Reading statistics also can't return an
->> +		 * error, so just return without updating and without
->> +		 * rescheduling.
->> +		 */
->> +		if (emac_tx_read_stat_cnt(priv, i, &res))
->> +			return;
->> +
->> +		/*
->> +		 * Re-initializing while bringing interface up resets counters
->> +		 * to zero, so to provide continuity, we add the values saved
->> +		 * last time we did emac_down() to the new hardware-provided
->> +		 * value.
->> +		 */
->> +		emac_update_counter(&tx_stats[i], res + (u32)tx_stats_off[i]);
-> nit: maybe lower_32_bits(tx_stats_off[i]) ?
->
->> +	}
->> +
->> +	/* Similar remarks as TX stats */
->> +	for (i = 0; i < sizeof(priv->rx_stats) / sizeof(*rx_stats); i++) {
->> +		if (emac_rx_read_stat_cnt(priv, i, &res))
->> +			return;
->> +		emac_update_counter(&rx_stats[i], res + (u32)rx_stats_off[i]);
-> Likewise, here for rx_stats_off[i].
->
-Thanks, these I will use lower_32_bits in these two places in the next
-version.
-
->> +	}
->> +
->> +	mod_timer(&priv->stats_timer, jiffies + EMAC_STATS_TIMER_PERIOD * HZ);
->> +}
-> ...
->
->> +static u64 emac_get_stat_tx_dropped(struct emac_priv *priv)
->> +{
->> +	u64 result;
->> +	int cpu;
->> +
->> +	for_each_possible_cpu(cpu) {
->> +		result += READ_ONCE(per_cpu(*priv->stat_tx_dropped, cpu));
->> +	}
-> nit: no need for {} here ?
-
-Thanks for the catch, but with regards to this entire function, I'm
-moving tx_dropped to dstats, so this would be moot.
-
->> +
->> +	return result;
->> +}
-> ...
-
-Thanks for your review.
-
-Vivian "dramforever" Wang
-
+-- 
+Yixun Lan (dlan)
