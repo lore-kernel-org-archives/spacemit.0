@@ -1,502 +1,160 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-174.mta0.migadu.com (out-174.mta0.migadu.com [91.218.175.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF6519D8A3
-	for <spacemit@lists.linux.dev>; Fri, 12 Sep 2025 13:57:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DAA30E83D
+	for <spacemit@lists.linux.dev>; Fri, 12 Sep 2025 16:54:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757685447; cv=none; b=JnN/aHv/w/5Xyx/LmtVzBQ5OAyQtBQJrJLYP/u9uz6v9VE6iAgcwQK5TppRdJOHIZNht1RKDTgbbs59lJbpE1vNM8lqCbs6zdryy3X8cGbydZvrmOyWw/H8Ijt9qm/SoWZfUfknI5/sm17D/R1Vmt1pVH4Yalhn62mLX42yxeh4=
+	t=1757696050; cv=none; b=iO2UkR2BnJi/Wy16RiKVA8+S2hJ3QR5Ramd+EQJvvrCR47SaOux0x3q75YJbKb8ooeNJQtOAIdRxnLBOoAcRy/nnKzqYKv+poqozxyAZxQkeiP7Vszm7Z7ffg0Bhv/MuXQsELxNi76AbAbPHXZnl7OdHseV7ayVTWREmkJEjoBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757685447; c=relaxed/simple;
-	bh=q/Hh5I34yDz0WmFVV9xJhfzUeOjH6rU9DLeUEolDe70=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TkkfLPwAzdeEzYIUXfsBhzgRWkmQ32b6KP8xdqzB/YICarXUx/qUeT+s1MQsj7I+G9kVu/VGhoAM8Ly1zLyiGPt8SIC/9TVcqYVi7rgSZKQwcGRCYnD1/d6mf52Z18Ri+uiBZxPsxwb+czDw8hG2NpUHJVh//kotzAn1Z/0RU9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be; spf=fail smtp.mailfrom=hammernet.be; dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b=rOBwl4qY; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hammernet.be
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hammernet.be
+	s=arc-20240116; t=1757696050; c=relaxed/simple;
+	bh=bXIVsKAF399XK4av2bzVOpUyU8+8nZD1CF+E2epBbbw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sEhJrXU8brSp2hc/e/PJE/0DE6sqs2BfM1as+j9uxFYNdpMuOgNXZLMv9EsN6VULM8Q0Eu5g7rDiyBsNDzXudZxQBqH8iLk0ZapYKLoAtg8m7B+je+vqos3n5N5qpoL5AGGvvt1xJSr3//yEzmkLS9c86a87XhNnScSg8V5C5Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=aHkQJStw; arc=none smtp.client-ip=91.218.175.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hammernet-be.20230601.gappssmtp.com header.i=@hammernet-be.20230601.gappssmtp.com header.b="rOBwl4qY"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45b9c35bc0aso16699215e9.2
-        for <spacemit@lists.linux.dev>; Fri, 12 Sep 2025 06:57:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hammernet-be.20230601.gappssmtp.com; s=20230601; t=1757685442; x=1758290242; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6frLUwraP/dsJ5viKqpYQ3We+ljVfFWPy93r/pMgbKo=;
-        b=rOBwl4qYmNTnH9DgjWsYyBeuAZSRdjDCQyrbNjk7f3YiJr7uEWFd2uNDVvLKjiiUL8
-         o746BRRKT7rSdWW85jAGBwlDpIlvLe0G5dtVH9hquI2/oQPpACNRG1VDvwuEDS0NMykk
-         n1lrsq7g3HBUPm/hvCo5vqkBJ3n8bmtYQK9Hsi4ZtL0IdTmxCmBMpcSDSuxiUuSxDIEm
-         96GZCbzvouMqqfhLOwSerWG9lVAffHnNy3YqowTCBWPc7jo8h6MeDx5AJOxzzjzqjazE
-         gb/CUaaxHUuZogDYTKp4dJzpoSe3+n0Eq5CnrOPF2VvEo3awaVksvjqdx3tOHGKbu6yY
-         YfLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757685442; x=1758290242;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6frLUwraP/dsJ5viKqpYQ3We+ljVfFWPy93r/pMgbKo=;
-        b=T32WqUyLDnTh9lrm01VOXPC98anMWnPQAsBQQaXBU1/lL8CXNLR7+zuovQHvIiJXFR
-         gEndZY4PD7i434PAWo525faqddlJ1gPc5n+M+JQmwgKtp0o+PentF9wBXOObrNDhtSbF
-         WfsgJPF9rfviXrED/VY44y+t97lEzq8thXiSNBWdRYPBATd30OVj5uRJXWMMnGI6DSZF
-         vy6IajFDN5qSn8f3FmKbvguIE8RIcloHSa6+ldb/xtHk0iion90CTsd7lEehZmoqFzXO
-         H0K8GH9nLh+nNrwMmV8hV9gYDASQBwvzsTiiOAeJztsIUHS++1vvz78a1qADVzRoca7t
-         sz7w==
-X-Forwarded-Encrypted: i=1; AJvYcCWVAf5Dy9AMfEdWXSzdiaenbtyRFwKMHt7GKq7vTaXpWnOOhF6HLYN2g4q5dblUzrdnM0upWNXUsA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz+wFQz2t167pvj3w/eednlxpVTOh8omoP4nZkcdfFAz5oOSeG/
-	PhEAD9MDfR5hHTSm19+q1jKvHbMaWQ4fM50Qv08uMR/6ywgQAP9Fv/+lwRUMdr2JaZQ=
-X-Gm-Gg: ASbGncuO+4oKYZwdVnzJjbf5cPCkEFX/gAAsmFPpA3wI0wgTap7iVgE0O2mD+Jy+PN5
-	sfzAj+HblYkZ0R3kNd1MWcMar2naED9pscX+WdEGwtWcCpcJk5IhDCu/Fj+kT7PBLUdrhJLheYY
-	6zdg3SOiDg2qexSbsIysmzFii8c7mLVdgxxw1B6qabfMUKg7zDsL4O5uuDr1KJ/nMRLKqx8EW5i
-	nSUuqXab+4nAc0SS0LlajJYBx8/MicjrDRGswh9gZEqh0oC1+zVWH/DxCMLtGuUPCb9Beefo5Jn
-	I7UQUmRxCqNylSd9qOAioSqmdW+af7E51qbAcc1xhO7wBJBWWQIEZzdjwuDuipd9whzA8PnQ2YU
-	FS0rHfntc802AXhR6ISS+CJxxokiLqW/kvqXpqR4+5NyjjmmNbdZbYZDSI7FKfHEFYOdNukgkc3
-	Wbt+So2WnFt2cXqwUqOB1u9KVC
-X-Google-Smtp-Source: AGHT+IGwYgVR37o40FWeiEm9lb5JrhGu7uBGN03bqHvT0DSdhc73p0i/jh3+eMbjHpm8cv1vUG631A==
-X-Received: by 2002:a05:600c:604c:b0:45c:b6b1:29a7 with SMTP id 5b1f17b1804b1-45f211d67bdmr27463865e9.16.1757685441583;
-        Fri, 12 Sep 2025 06:57:21 -0700 (PDT)
-Received: from ?IPV6:2a02:1807:2a00:3400:957d:e90c:a9e2:929a? ([2a02:1807:2a00:3400:957d:e90c:a9e2:929a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e0156d206sm68268585e9.5.2025.09.12.06.57.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Sep 2025 06:57:21 -0700 (PDT)
-Message-ID: <b0c227b4-9233-4743-9c4e-0d775d4047bc@hammernet.be>
-Date: Fri, 12 Sep 2025 15:57:20 +0200
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="aHkQJStw"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1757696044;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=XB+kXwXNKwlFMZlruLnoK7GtoQ6rz9ZNuPsx179Ax3g=;
+	b=aHkQJStwok7tY0hD5yJCQSPb0JwMJeXd40YhaFlpeB64BuaVa2zFYOaaI6ok6bKb/QCr85
+	obNCTawPApDE6WUNM48gq0PrlqESlxWd99ZTI8de8Gp9iqv5PtetKtWYfOfr1Lcf9uldRX
+	kzXBJfWk5AFlDYJz4lxsQpUPEIVHfGc=
+From: Ze Huang <huang.ze@linux.dev>
+Subject: [PATCH v8 0/2] Add SpacemiT K1 USB3.0 host controller support
+Date: Sat, 13 Sep 2025 00:53:46 +0800
+Message-Id: <20250913-dwc3_generic-v8-0-b50f81f05f95@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] riscv: dts: spacemit: add UART pinctrl combinations
-To: Yixun Lan <dlan@gentoo.org>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, skhan@linuxfoundation.org,
- linux-kernel-mentees@lists.linux.dev, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20250903145334.425633-1-hendrik.hamerlinck@hammernet.be>
- <20250911112251-GYA1216475@gentoo.org>
-Content-Language: en-US
-From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-In-Reply-To: <20250911112251-GYA1216475@gentoo.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABpQxGgC/23OwW7DIAwG4FeJOI+KGIGhp73HNFWJcVukNekgp
+ Z2qvPtYeomiHX/L328/ReYUOYt98xSJS8xxHGpwb42gczecWMZQswAFRqEyMtxJH048VEbSBQX
+ OeAQgLSq5Jj7Gx1L38fnKib9vtXV6DUXfZZY0Xi5x2jfF7lqUiVrxt3yOeRrTz/JKMcv2/1eLk
+ Ur60JPR3Bkd4P0rDrfHLnBZiopd4RY22FZM5BA1EnlttxhXGPwGY8WG0Ld93zmwxzWe5/kXhYm
+ HME8BAAA=
+X-Change-ID: 20250705-dwc3_generic-8d02859722c3
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Ze Huang <huang.ze@linux.dev>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757696039; l=4082;
+ i=huang.ze@linux.dev; s=20250705; h=from:subject:message-id;
+ bh=bXIVsKAF399XK4av2bzVOpUyU8+8nZD1CF+E2epBbbw=;
+ b=4ASiPOoAk1nxtG2FXhpO+v7ra+o63UgD0fIQqlcQc2MrzhWqlSZITs7JmT9w4DL6O6vuyRNpM
+ /SfbqKQqK0IDudFrStgMROcmugm7VVUVnYfxVmVuhmOCEm1D5E0aFxC
+X-Developer-Key: i=huang.ze@linux.dev; a=ed25519;
+ pk=Kzc4PMu5PTo8eZZQ5xmTNL9jeXcQ9Wml0cs+vlQpBkg=
+X-Migadu-Flow: FLOW_OUT
 
-Hello Yixun,
+The USB 3.0 controller found in the SpacemiT K1 SoC[1] supports both USB3.0
+Host and USB2.0 Dual-Role Device (DRD). 
 
-Thank you for reviewing.
+This controller is compatible with DesignWare Core USB 3 (DWC3) driver.
+However, constraints in the `snps,dwc3` bindings limit the ability to describe
+hardware-specific features in a clean and maintainable way. While
+`dwc3-of-simple` still serves as a glue layer for many platforms, it requires a
+split device tree node structure, which is less desirable in newer platforms.
 
-On 9/11/25 13:22, Yixun Lan wrote:
-> Hi Hendrik,
->
-> On 16:53 Wed 03 Sep     , Hendrik Hamerlinck wrote:
->> This adds UART pinctrl configurations based on the SoC datasheet and the
->> downstream Bianbu Linux tree. The drive strength values were taken from
->> the downstream implementation, which uses medium drive strength.
->>
->> For convenience, the board DTS files have been updated to include all
->> UART instances with their possible pinmux options in a disabled state.
->>
->> Tested this locally on both Orange Pi RV2 and Banana Pi BPI-F3 boards. 
->>
->> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
->> ---
->>  .../boot/dts/spacemit/k1-bananapi-f3.dts      |  18 ++
->>  .../boot/dts/spacemit/k1-orangepi-rv2.dts     |  18 ++
->>  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 276 +++++++++++++++++-
->>  3 files changed, 309 insertions(+), 3 deletions(-)
->>
->> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
->> index 6013be258542..661d47d1ce9e 100644
->> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
->> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
->> @@ -49,3 +49,21 @@ &uart0 {
->>  	pinctrl-0 = <&uart0_2_cfg>;
->>  	status = "okay";
->>  };
->> +
->> +&uart5 {
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&uart5_3_cfg>;
->> +	status = "disabled";
->> +};
->> +
->> +&uart8 {
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&uart8_2_cfg>;
->> +	status = "disabled";
->> +};
->> +
->> +&uart9 {
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&uart9_2_cfg>;
->> +	status = "disabled";
->> +};
-> all of uart5, 8, 9 come from 26-pins port, the functionaly is
-> very likely depending on the final use case.. and I get your idea
-> of adding those nodes but with "disabled" status..
->
-> my suggestion is to not add them, or leave to users to add separated
-> dtbo (Device tree overlays) files in the future
+To promote a transition toward a flattened `dwc` node structure, this series
+introduces `dwc3-generic-plat`, building upon prior efforts that exposed the
+DWC3 core driver [2].
 
-Fair enough, I was already doubting adding them. Most other .dts files
-don't include them either. I’ll remove them in the next version.
+The device tree support for SpacemiT K1 will be submitted separately when the
+associated PHY driver is ready.
 
->
-> but I'm ok to complete uart pinctrl info in the dtsi file
->
->> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
->> index 337240ebb7b7..dc45b75b1ad4 100644
->> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
->> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
->> @@ -38,3 +38,21 @@ &uart0 {
->>  	pinctrl-0 = <&uart0_2_cfg>;
->>  	status = "okay";
->>  };
->> +
->> +&uart5 {
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&uart5_3_cfg>;
->> +	status = "disabled";
->> +};
->> +
->> +&uart8 {
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&uart8_2_cfg>;
->> +	status = "disabled";
->> +};
->> +
->> +&uart9 {
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&uart9_2_cfg>;
->> +	status = "disabled";
->> +};
->> diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
->> index 381055737422..43425530b5bf 100644
->> --- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
->> +++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
->> @@ -11,12 +11,282 @@
->>  #define K1_GPIO(x)	(x / 32) (x % 32)
->>  
->>  &pinctrl {
->> +	uart0_0_cfg: uart0-0-cfg {
->> +		uart0-0-pins {
->> +			pinmux = <K1_PADCONF(104, 3)>,	/* uart0_txd */
->> +				 <K1_PADCONF(105, 3)>;	/* uart0_rxd */
->> +			power-source = <3300>;
->> +			bias-pull-up;
->> +			drive-strength = <19>;
->> +		};
->> +	};
->> +
->> +	uart0_1_cfg: uart0-1-cfg {
->> +		uart0-1-pins {
->> +			pinmux = <K1_PADCONF(108, 1)>,	/* uart0_txd */
->> +				 <K1_PADCONF(80, 3)>;	/* uart0_rxd */
->> +			power-source = <3300>;
->> +			bias-pull-up;
->> +			drive-strength = <19>;
->> +		};
->> +	};
->> +
->>  	uart0_2_cfg: uart0-2-cfg {
->>  		uart0-2-pins {
->> -			pinmux = <K1_PADCONF(68, 2)>,
->> -				 <K1_PADCONF(69, 2)>;
->> +			pinmux = <K1_PADCONF(68, 2)>,	/* uart0_txd */
->> +				 <K1_PADCONF(69, 2)>;	/* uart0_rxd */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->>  
->> -			bias-pull-up = <0>;
->> +	uart2_0_cfg: uart2-0-cfg {
->> +		uart2-0-pins {
->> +			pinmux = <K1_PADCONF(21, 1)>,	/* uart2_txd */
->> +				 <K1_PADCONF(22, 1)>,	/* uart2_rxd */
->> +				 <K1_PADCONF(23, 1)>,	/* uart2_cts */
->> +				 <K1_PADCONF(24, 1)>;	/* uart2_rts */
-> I think for group has cts, rts pins, it's more practical to
-> have two separated cfgs, so the final application can choose to 
-> request two pins (tx, rx), or four pins (tx, tx, cts, rts)..
-> (I believe the hardware should support this)
->
-> something like this:
->
-> uart2_0_cfg: uart2-0-cfg {
-> 	uart2-0-pins {
-> 		pinmux = <K1_PADCONF(21, 1)>,	/* uart2_txd */
-> 			 <K1_PADCONF(22, 1)>,	/* uart2_rxd */
-> 	};
-> };
->
-> uart2_0_cts_rts_cfg: uart2-0-cts-rts-cfg {
-> 	uart2-0-pins {
-> 		pinmux = <K1_PADCONF(23, 1)>,	/* uart2_cts */
-> 			 <K1_PADCONF(24, 1)>,	/* uart2_rts */
-> 	};
-> };
->
-> &uart2 { 
-> 	pinctrl-names = "default";
-> 	pinctrl-0 = <&uart2_0_cfg>, <&uart2_0_cts_rts_cfg>;
-> };
-This sounds like good idea. There were some weird pin sequences, listing
-them that way would result in a better structure (f.e. uart9_1_cfg).
-The hardware seems to deal with it just fine.
-I will update it this way in the next version.
+This series is based on 6.17-rc1 and has been tested on BananaPi development
+boards.
 
->
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart3_0_cfg: uart3-0-cfg {
->> +		uart3-0-pins {
->> +			pinmux = <K1_PADCONF(81, 2)>,	/* uart3_txd */
->> +				 <K1_PADCONF(82, 2)>,	/* uart3_rxd */
->> +				 <K1_PADCONF(83, 2)>,	/* uart3_cts */
->> +				 <K1_PADCONF(84, 2)>;	/* uart3_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart3_1_cfg: uart3-1-cfg {
->> +		uart3-1-pins {
->> +			pinmux = <K1_PADCONF(18, 2)>,	/* uart3_txd */
->> +				 <K1_PADCONF(19, 2)>,	/* uart3_rxd */
->> +				 <K1_PADCONF(20, 2)>,	/* uart3_cts */
->> +				 <K1_PADCONF(21, 2)>;	/* uart3_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart3_2_cfg: uart3-2-cfg {
->> +		uart3-2-pins {
->> +			pinmux = <K1_PADCONF(53, 4)>,	/* uart3_txd */
->> +				 <K1_PADCONF(54, 4)>,	/* uart3_rxd */
->> +				 <K1_PADCONF(55, 4)>,	/* uart3_cts */
->> +				 <K1_PADCONF(56, 4)>;	/* uart3_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart4_0_cfg: uart4-0-cfg {
->> +		uart4-0-pins {
->> +			pinmux = <K1_PADCONF(100, 4)>,	/* uart4_txd */
->> +				 <K1_PADCONF(101, 4)>;	/* uart4_rxd */
->> +			power-source = <3300>;
->> +			bias-pull-up;
->> +			drive-strength = <19>;
->> +		};
->> +	};
->> +
->> +	uart4_1_cfg: uart4-1-cfg {
->> +		uart4-1-pins {
->> +			pinmux = <K1_PADCONF(81, 3)>,	/* uart4_cts */
->> +				 <K1_PADCONF(82, 3)>,	/* uart4_rts */
->> +				 <K1_PADCONF(83, 3)>,	/* uart4_txd */
->> +				 <K1_PADCONF(84, 3)>;	/* uart4_rxd */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart4_2_cfg: uart4-2-cfg {
->> +		uart4-2-pins {
->> +			pinmux = <K1_PADCONF(23, 2)>,	/* uart4_txd */
->> +				 <K1_PADCONF(24, 2)>;	/* uart4_rxd */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart4_3_cfg: uart4-3-cfg {
->> +		uart4-3-pins {
->> +			pinmux = <K1_PADCONF(33, 2)>,	/* uart4_txd */
->> +				 <K1_PADCONF(34, 2)>,	/* uart4_rxd */
->> +				 <K1_PADCONF(35, 2)>,	/* uart4_cts */
->> +				 <K1_PADCONF(36, 2)>;	/* uart4_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart4_4_cfg: uart4-4-cfg {
->> +		uart4-4-pins {
->> +			pinmux = <K1_PADCONF(111, 4)>,	/* uart4_txd */
->> +				 <K1_PADCONF(112, 4)>,	/* uart4_rxd */
->> +				 <K1_PADCONF(113, 4)>,	/* uart4_cts */
->> +				 <K1_PADCONF(114, 4)>;	/* uart4_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart5_0_cfg: uart5-0-cfg {
->> +		uart5-0-pins {
->> +			pinmux = <K1_PADCONF(102, 3)>,	/* uart5_txd */
->> +				 <K1_PADCONF(103, 3)>;	/* uart5_rxd */
->> +			power-source = <3300>;
->> +			bias-pull-up;
->> +			drive-strength = <19>;
->> +		};
->> +	};
->> +
->> +	uart5_1_cfg: uart5-1-cfg {
->> +		uart5-1-pins {
->> +			pinmux = <K1_PADCONF(25, 2)>,	/* uart5_txd */
->> +				 <K1_PADCONF(26, 2)>,	/* uart5_rxd */
->> +				 <K1_PADCONF(27, 2)>,	/* uart5_cts */
->> +				 <K1_PADCONF(28, 2)>;	/* uart5_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart5_2_cfg: uart5-2-cfg {
->> +		uart5-2-pins {
->> +			pinmux = <K1_PADCONF(42, 2)>,	/* uart5_txd */
->> +				 <K1_PADCONF(43, 2)>,	/* uart5_rxd */
->> +				 <K1_PADCONF(44, 2)>,	/* uart5_cts */
->> +				 <K1_PADCONF(45, 2)>;	/* uart5_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart5_3_cfg: uart5-3-cfg {
->> +		uart5-3-pins {
->> +			pinmux = <K1_PADCONF(70, 4)>,	/* uart5_txd */
->> +				 <K1_PADCONF(71, 4)>,	/* uart5_rxd */
->> +				 <K1_PADCONF(72, 4)>,	/* uart5_cts */
->> +				 <K1_PADCONF(73, 4)>;	/* uart5_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart6_0_cfg: uart6-0-cfg {
->> +		uart6-0-pins {
->> +			pinmux = <K1_PADCONF(85, 2)>,	/* uart6_cts */
->> +				 <K1_PADCONF(86, 2)>,	/* uart6_txd */
->> +				 <K1_PADCONF(87, 2)>,	/* uart6_rxd */
->> +				 <K1_PADCONF(90, 2)>;	/* uart6_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart6_1_cfg: uart6-1-cfg {
->> +		uart6-1-pins {
->> +			pinmux = <K1_PADCONF(0, 2)>,	/* uart6_txd */
->> +				 <K1_PADCONF(1, 2)>,	/* uart6_rxd */
->> +				 <K1_PADCONF(2, 2)>,	/* uart6_cts */
->> +				 <K1_PADCONF(3, 2)>;	/* uart6_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart6_2_cfg: uart6-2-cfg {
->> +		uart6-2-pins {
->> +			pinmux = <K1_PADCONF(56, 2)>,	/* uart6_txd */
->> +				 <K1_PADCONF(57, 2)>;	/* uart6_rxd */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart7_0_cfg: uart7-0-cfg {
->> +		uart7-0-pins {
->> +			pinmux = <K1_PADCONF(88, 2)>,	/* uart7_txd */
->> +				 <K1_PADCONF(89, 2)>;	/* uart7_rxd */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart7_1_cfg: uart7-1-cfg {
->> +		uart7-1-pins {
->> +			pinmux = <K1_PADCONF(4, 2)>,	/* uart7_txd */
->> +				 <K1_PADCONF(5, 2)>,	/* uart7_rxd */
->> +				 <K1_PADCONF(6, 2)>,	/* uart7_cts */
->> +				 <K1_PADCONF(7, 2)>;	/* uart7_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart8_0_cfg: uart8-0-cfg {
->> +		uart8-0-pins {
->> +			pinmux = <K1_PADCONF(82, 4)>,	/* uart8_txd */
->> +				 <K1_PADCONF(83, 4)>;	/* uart8_rxd */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart8_1_cfg: uart8-1-cfg {
->> +		uart8-1-pins {
->> +			pinmux = <K1_PADCONF(8, 2)>,	/* uart8_txd */
->> +				 <K1_PADCONF(9, 2)>,	/* uart8_rxd */
->> +				 <K1_PADCONF(10, 2)>,	/* uart8_cts */
->> +				 <K1_PADCONF(11, 2)>;	/* uart8_rts */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart8_2_cfg: uart8-2-cfg {
->> +		uart8-2-pins {
->> +			pinmux = <K1_PADCONF(75, 4)>,	/* uart8_txd */
->> +				 <K1_PADCONF(76, 4)>,	/* uart8_rxd */
->> +				 <K1_PADCONF(77, 4)>,	/* uart8_cts */
->> +				 <K1_PADCONF(78, 4)>;	/* uart8_rts */
->> +			power-source = <3300>;
->> +			bias-pull-up;
->> +			drive-strength = <19>;
->> +		};
->> +	};
->> +
->> +	uart9_0_cfg: uart9-0-cfg {
->> +		uart9-0-pins {
->> +			pinmux = <K1_PADCONF(12, 2)>,	/* uart9_txd */
->> +				 <K1_PADCONF(13, 2)>;	/* uart9_rxd */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart9_1_cfg: uart9-1-cfg {
->> +		uart9-1-pins {
->> +			pinmux = <K1_PADCONF(110, 3)>,	/* uart9_cts */
->> +				 <K1_PADCONF(115, 3)>,	/* uart9_rts */
->> +				 <K1_PADCONF(116, 3)>,	/* uart9_txd */
->> +				 <K1_PADCONF(117, 3)>;	/* uart9_rxd */
->> +			bias-pull-up;
->> +			drive-strength = <32>;
->> +		};
->> +	};
->> +
->> +	uart9_2_cfg: uart9-2-cfg {
->> +		uart9-2-pins {
->> +			pinmux = <K1_PADCONF(72, 2)>,	/* uart9_txd */
->> +				 <K1_PADCONF(73, 2)>;	/* uart9_rxd */
->> +			bias-pull-up;
->>  			drive-strength = <32>;
->>  		};
->>  	};
->> -- 
->> 2.43.0
->>
-Kind regards,
-Hendrik
+Link: https://developer.spacemit.com/documentation?token=AjHDwrW78igAAEkiHracBI9HnTb [1]
+Link: https://lore.kernel.org/all/20250414-dwc3-refactor-v7-3-f015b358722d@oss.qualcomm.com [2]
+
+Signed-off-by: Ze Huang <huang.ze@linux.dev>
+---
+Changes in v8:
+- dt-bindings: remove the PCIe reset which will be managed by combo PHY driver.
+- driver: fix incorrect `dev_get_drvdata()` usage in PM ops, as `dwc3_core_probe()`
+  overwrites the device's private data.
+- Link to v7: https://lore.kernel.org/r/20250729-dwc3_generic-v7-0-5c791bba826f@linux.dev
+
+Changes in v7:
+- dt-bindings:
+  - add reset-names and reset-delay properties
+  - add pcie0 entry in resets for combphy init
+- dwc3 generic plat driver:
+  - drop clock cleanup and handle with devm_clk_bulk_get_all_enabled()
+  - move devm reset action after successful de-assert
+- Link to v6: https://lore.kernel.org/r/20250712-dwc3_generic-v6-0-cc87737cc936@linux.dev
+
+Changes in v6:
+- replace SET_RUNTIME_PM_OPS/SET_SYSTEM_SLEEP_PM_OPS with RUNTIME_PM_OPS/SYSTEM_SLEEP_PM_OPS
+- Link to v5: https://lore.kernel.org/r/20250705-dwc3_generic-v5-0-9dbc53ea53d2@linux.dev
+
+Changes in v5:
+- drop DTS patch (will submit when PHY driver is ready)
+- drop interconnects and update resets property in dt-bindings
+- remove unnecessary __maybe_unused attribute and PM guards
+- switch to devres APIs for reset and clock management
+- Link to v4: https://lore.kernel.org/all/20250526-b4-k1-dwc3-v3-v4-0-63e4e525e5cb@whut.edu.cn/
+
+Changes in v4:
+- dt-bindings spacemit,k1-dwc:
+  - reorder properties
+  - add properties of phys & phy-names
+  - add usb hub nodes in example dt
+- add support for spacemit,k1-mbus
+- dwc3 generic plat driver:
+  - rename dwc3-common.c to dwc3-generic-plat.c
+  - use SYSTEM_SLEEP_PM_OPS macros and drop PM guards
+- dts:
+  - reorder dts properties of usb dwc3 node
+  - move "dr_mode" of dwc3 from dtsi to dts
+- Link to v3: https://lore.kernel.org/r/20250518-b4-k1-dwc3-v3-v3-0-7609c8baa2a6@whut.edu.cn
+
+Changes in v3:
+- introduce dwc3-common for generic dwc3 hardware
+- fix warnings in usb host dt-bindings
+- fix errors in dts
+- Link to v2: https://lore.kernel.org/r/20250428-b4-k1-dwc3-v2-v1-0-7cb061abd619@whut.edu.cn
+
+Changes in v2:
+- dt-bindings:
+  - add missing 'maxItems'
+  - remove 'status' property in exmaple
+  - fold dwc3 node into parent
+- drop dwc3 glue driver and use snps,dwc3 driver directly
+- rename dts nodes and reorder properties to fit coding style
+- Link to v1: https://lore.kernel.org/all/20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn
+
+---
+Ze Huang (2):
+      dt-bindings: usb: dwc3: add support for SpacemiT K1
+      usb: dwc3: add generic driver to support flattened
+
+ .../devicetree/bindings/usb/spacemit,k1-dwc3.yaml  | 121 +++++++++++++++
+ drivers/usb/dwc3/Kconfig                           |  11 ++
+ drivers/usb/dwc3/Makefile                          |   1 +
+ drivers/usb/dwc3/dwc3-generic-plat.c               | 166 +++++++++++++++++++++
+ 4 files changed, 299 insertions(+)
+---
+base-commit: 062b3e4a1f880f104a8d4b90b767788786aa7b78
+change-id: 20250705-dwc3_generic-8d02859722c3
+
+Best regards,
+-- 
+Ze Huang <huang.ze@linux.dev>
 
