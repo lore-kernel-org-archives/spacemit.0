@@ -1,75 +1,70 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58A632ED36;
-	Fri, 12 Sep 2025 21:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329F42BD012;
+	Sat, 13 Sep 2025 22:05:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757711565; cv=none; b=rSlTsTGpCpckJGWr+joKr43y1HB7mmh9t+kTFe4AuW/UQcWN2WpYOzCcMwldBY+pucOgFAi+8PWD0zPqRfZ18PHSH5vEjfUQcm9ohmyWtxbizYB00bZHHpteS4zIJjEGS6ULDkk1mhu7McdLoaBpM0bnwimzpRrw6pdO7tXYRqk=
+	t=1757801158; cv=none; b=Lfws99LjO3gxdlZ2Cg70E3WTj0Sz62brMbx009/9uGUFHYk1QhzAmp5/9zbsDAyQyE+97tPU+CPGecZBFH8xuwE8tO0FQPOYXR83TOVi91XxIirle8HhdyW9Hf0x3lrJ3EaQyA6sDd/l0dM5Vl1pl86J31LVVRGAVMbpLahZWAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757711565; c=relaxed/simple;
-	bh=8jxxb85qmWzvjkyhjWnrJ+p44hlAdepIl+j8nK1q8kU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ks02m0SaFhSZwkNUZrS3X9GQNmXOyiDsV+xXHmFukW7ox5xkEtNHbG/OdSPiLwA/79Oc4oCRx7oZuv6s9N2lpl3f/KemWGquH/gaZiTinkLKO7d1BSnKYi8yfIhQbs8bGA0YqUS4xhB1qd1mHVGessALsidq6a2bd7BFZUzOusw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=6VHkYe/G; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1757801158; c=relaxed/simple;
+	bh=fuRN9sDs6dXkvQ77eK0VxpVXR3WpUFozkEd78OmmtIQ=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=JFY8NsnP4UjnrCaVd23ON2KvXcz7hyjP84nvnRcwHakgllHcsRvNUemqNZvkDGHeSpbI9koQFJlqG4wIp5+MpiR8d6X56I6EiWzisx29gJpBJecig74DLZZ9F6JWH/AGUlJFFdVx28u6JxOv2X2rsMYN5Grtcevja2me2byAvY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=We1IPP37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="6VHkYe/G"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=TfJdEgDmeeUA7mwuQnthygkn+bVIL1msXKFYrsESfP8=; b=6VHkYe/GCoc7e7EUIDpfMvO/7Z
-	9sOIlLmXo0w9xUU4qPsIgcS+ZKdA7KvUn4YcVFP0B623GFQIVCpNC+doiq4PwPCrfpolT0ZwKhosJ
-	Vy3Wm5f+8aC/p87emgEe8mQLfP3Z4m5bUHlxsn5d49S+m4QN7OTr0g0FRyma3DCuKHS8=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1uxB4I-008G3r-H9; Fri, 12 Sep 2025 23:12:30 +0200
-Date: Fri, 12 Sep 2025 23:12:30 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Vivian Wang <uwu@dram.page>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Simon Horman <horms@kernel.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v11 5/5] riscv: dts: spacemit: Add Ethernet
- support for Jupiter
-Message-ID: <12583aec-4499-4cc1-a487-9c7b8d8efb01@lunn.ch>
-References: <20250912-net-k1-emac-v11-0-aa3e84f8043b@iscas.ac.cn>
- <20250912-net-k1-emac-v11-5-aa3e84f8043b@iscas.ac.cn>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="We1IPP37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5BFC4CEEB;
+	Sat, 13 Sep 2025 22:05:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757801157;
+	bh=fuRN9sDs6dXkvQ77eK0VxpVXR3WpUFozkEd78OmmtIQ=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=We1IPP37ACpr4Dzx9imqWs8RBtMbfJ0aPIIGonYxVnzzE0YoY9L0wvLxb3n15N/x0
+	 1XcXEBJsUxH5WKPJy01d7yms75Ra2pMC5Dr6uP4TfknhyeHUE5CS7P7bw54Gg3RSWu
+	 Ss76ZOnuaIDAWi6mYM4BU4XV2AyCKbr5MWIb1Y9fRknSfGNTX13kuz5Gki9BSrbEZe
+	 /VUBhc/Vrh9KMlEIzk02idGYtkf9BEisHOF//lRdLCZcR2G9K15h7ZpYMVXiKbwb3b
+	 PZTduFEp88X7F7W41WWYyigrL8i1JVg5esTBm0m+F9nKhCeHuC7iCY/JoQVAsaJXYR
+	 cufAiI7N0YKtQ==
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250912-net-k1-emac-v11-5-aa3e84f8043b@iscas.ac.cn>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20250909171321-GYC7803064@gentoo.org>
+References: <20250909171321-GYC7803064@gentoo.org>
+Subject: Re: [GIT PULL] clk: spacemit: Updates for v6.18
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Yixun Lan <dlan@gentoo.org>, Michael Turquette <mturquette@baylibre.com>, Brian Masney <bmasney@redhat.com>, Alex Elder <elder@riscstar.com>, linux-clk@vger.kernel.org, spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+To: Yixun Lan <dlan@gentoo.org>
+Date: Sat, 13 Sep 2025 15:05:56 -0700
+Message-ID: <175780115692.4354.14857999848718953911@lazor>
+User-Agent: alot/0.11
 
-On Fri, Sep 12, 2025 at 02:13:57AM +0800, Vivian Wang wrote:
-> Milk-V Jupiter uses an RGMII PHY for each port and uses GPIO for PHY
-> reset.
-> 
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-> Reviewed-by: Yixun Lan <dlan@gentoo.org>
+Quoting Yixun Lan (2025-09-09 02:15:03)
+> Hi Stephen,
+>=20
+>    Please pull SpacemiT's clock changes for v6.18
+>=20
+> Yixun Lan
+>=20
+> The following changes since commit 8f5ae30d69d7543eee0d70083daf4de8fe15d5=
+85:
+>=20
+>   Linux 6.17-rc1 (2025-08-10 19:41:16 +0300)
+>=20
+> are available in the Git repository at:
+>=20
+>   https://github.com/spacemit-com/linux tags/spacemit-clk-for-6.18-1
+>=20
+> for you to fetch changes up to d02c71cba7bba453d233a49497412ddbf2d44871:
+>=20
+>   clk: spacemit: ccu_pll: convert from round_rate() to determine_rate() (=
+2025-08-26 06:07:45 +0800)
+>=20
+> ----------------------------------------------------------------
 
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-
-    Andrew
+Thanks. Pulled into to clk-next
