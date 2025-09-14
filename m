@@ -1,101 +1,90 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4781E47B3;
-	Sun, 14 Sep 2025 14:27:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46C819DF8D;
+	Sun, 14 Sep 2025 15:38:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757860036; cv=none; b=g614fhLQ2Rs8X6hxrwgTVZ7Vu5SzfkyUIByN9/VLUN/7jvzO7aNGOdByp2eLP5uFjnjSkPnVxQ98OzU0m8EJqhRGIHPe3kfJNXzXqdsCc8Dao5D9BQX7rSVf/Z4M6JBueEXn/aYgpBqMIFB/jtUSH6j8zO1x6qSSw6Qz7oasMuw=
+	t=1757864317; cv=none; b=nYGAkomMr6EHoVHA9Qs4FBJB68d+ggNAV/OPqoXmytJB6O5/yEx7/yv5X0SueU2d0JE136luv0ThxeoRcK2LKj3zwJG+LHO9Xt618Mv7GQ85/q2lXl85D+vNdoG6Lggx/sWoxS7wR1xTbmZhOAAEWeqK1bTdBt2toZG44DiYUUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757860036; c=relaxed/simple;
-	bh=l9i1JOoE9xct7TAw7yGRuCGe7oON0LrN12HBv4aua6k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bEQCO5Ubwk07KNR+liJNpfyrz32A7DsQCTshmisihKzZtf+S6E7FuXrDpE9UEVOhcKoItggadTXLX0eIDkNYlXPioxdkXUr6POMgrov0/AGhFf3W+S0RlIei+ZqBAk/bnHz7aQcNXCmpUWzleb4KfE0U+gJllZQOY0WX3lyfChc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=fF/26pSt; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1757864317; c=relaxed/simple;
+	bh=ihW47HHuEW0kivT0LtQDfndFpj4gQlPyOZ8ChekheGs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dcnklD3PtabUIE05b8UDdmZINdY3xrjsPI+kLq/7n4SNU7/Hkhvn33rOCUs0odoJ9kB9iCgOcHlwWO3JKCSMMtrTyolSrV+l4xoPZLM52dAqKArDrFTxsYTky+Bv2bcEVUGebNdUIMLnRQdPqoEG5IP8MvU1fxQf4vQIBuVD+8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UGrCk1KX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="fF/26pSt"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=an9Yth3zuqwupnWSHxyQHPNMhHnRBJyE4Xw/D6M144A=; b=fF/26pStELSIaGPcAH6ff7U6dr
-	L1qbzoep8I4H4LOyTOr4NFtZCf8zQqVMHii8T2GKxQrmrARzobsesSnyZT2BaTOAxq3Vsde3knI2A
-	GLNjO6WhwwG+Xskn5DhtUht1TEQg+mY0+EfUOGsAb3mBr/0hrlmsMK0rtE7sE7nuCzew=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1uxngk-008LrZ-1F; Sun, 14 Sep 2025 16:26:46 +0200
-Date: Sun, 14 Sep 2025 16:26:46 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Vivian Wang <uwu@dram.page>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Simon Horman <horms@kernel.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh@kernel.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UGrCk1KX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D7FC4CEF0;
+	Sun, 14 Sep 2025 15:38:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757864317;
+	bh=ihW47HHuEW0kivT0LtQDfndFpj4gQlPyOZ8ChekheGs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UGrCk1KXR+kac/5OvXpvMS9DC7fpHqSkremvp3fzsvyb6prDigqDylpNSPElqidS8
+	 2otZXTknq+IJzTf5PFAMGbUSxGzxhWpaKhkmOQrn+AgAeY7zJtG5GJBBx5b2ZgfLA4
+	 KHWVBm/EMps/giN+yPji/JWLF5ESMN0zLZgjtT8uX25haYBS7eQRy2q0QTZeuR1AgC
+	 U0QhhxpiJ0NovZt8fUsZNnErPb477tzXnicb3fCOaGxLE/DO7Y4OBBMQ82TvQyR7yW
+	 /xsM67WgIOTtNXCzlJNRFq7IXj7X4QlJmgiq7XSOq4oXJtHlf94QGVuz1QHRwydKOM
+	 D0pF/zMF4y4QQ==
+From: Conor Dooley <conor@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>,
 	Philipp Zabel <p.zabel@pengutronix.de>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Subject: Re: [PATCH net-next v12 4/5] riscv: dts: spacemit: Add Ethernet
- support for BPI-F3
-Message-ID: <6ace8fca-21db-40f1-b44d-28e4a1d3d2da@lunn.ch>
-References: <20250914-net-k1-emac-v12-0-65b31b398f44@iscas.ac.cn>
- <20250914-net-k1-emac-v12-4-65b31b398f44@iscas.ac.cn>
- <007c08ab-b432-463f-abd8-215371e117c4@iscas.ac.cn>
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	duje@dujemihanovic.xyz,
+	Guodong Xu <guodong@riscstar.com>
+Cc: conor@kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Alex Elder <elder@riscstar.com>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: Re: (subset) [PATCH v5 0/8] dmaengine: mmp_pdma: Add SpacemiT K1 SoC support with 64-bit addressing
+Date: Sun, 14 Sep 2025 16:38:27 +0100
+Message-ID: <20250914-crushed-blinker-9827464897d2@spud>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
+References: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <007c08ab-b432-463f-abd8-215371e117c4@iscas.ac.cn>
+Content-Type: text/plain; charset="utf-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=682; i=conor.dooley@microchip.com; h=from:subject:message-id; bh=W90YfP75Cf8fElnrlN+vBYi5av5KHOKCWFABavcr0+U=; b=owGbwMvMwCVWscWwfUFT0iXG02pJDBnHHpaICZuwn2a+79lfyGly/JXfDkGVa9m7o3VK/p+2c DvWUc/WUcrCIMbFICumyJJ4u69Fav0flx3OPW9h5rAygQxh4OIUgIlMtWT4Z5bI8PIWX4pvgvcz yYkPbJi33Tc82/TjbO4tBf0I34nNcxkZXvoc+cP8oOHAIyPPU222uyv9jMTe6ik9fPelq8PqQ7E ECwA=
+X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
+Content-Transfer-Encoding: 8bit
 
-On Sun, Sep 14, 2025 at 12:31:04PM +0800, Vivian Wang wrote:
-> On 9/14/25 12:23, Vivian Wang wrote:
-> > Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
-> > reset.
-> >
-> > Tested-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-> > Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-> > Reviewed-by: Yixun Lan <dlan@gentoo.org>
-> > Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-> > ---
-> >  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 48 +++++++++++++++++++++++++
-> >  1 file changed, 48 insertions(+)
-> >
-> > diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> > index fe22c747c5012fe56d42ac8a7efdbbdb694f31b6..33e223cefd4bd3a12fae176ac6cddd8276cb53dc 100644
-> > --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> > +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> > @@ -11,6 +11,8 @@ / {
-> >  	compatible = "bananapi,bpi-f3", "spacemit,k1";
-> >  
-> >  	aliases {
-> > +		ethernet0 = &eth0;
-> > +		ethernet1 = &eth1;
-> 
-> Hi Andrew,
-> 
-> I added these two aliases in v12, but kept your Reviewed-by for v11
-> because this is fairly trivial. Same for patch 5.
-> 
-> Is this okay?
+From: Conor Dooley <conor.dooley@microchip.com>
 
-Yes, this is fine.
+On Fri, 22 Aug 2025 11:06:26 +0800, Guodong Xu wrote:
+> This patchset adds support for SpacemiT K1 PDMA controller to the existing
+> mmp_pdma driver. The K1 PDMA controller is compatible with Marvell MMP PDMA
+> but extends it with 64-bit addressing capabilities through LPAE (Long
+> Physical Address Extension) bit and higher 32-bit address registers (DDADRH,
+> DSADRH and DTADRH).
+> 
+> In v5, two smatch warnings reported by kernel test bot and Dan Carpenter were
+> fixed.
+> 
+> [...]
 
-	Andrew
+Applied to riscv-config-for-next, thanks!
+
+[8/8] riscv: defconfig: Enable MMP_PDMA support for SpacemiT K1 SoC
+      https://git.kernel.org/conor/c/3df7ce0e43ad
+
+Thanks,
+Conor.
