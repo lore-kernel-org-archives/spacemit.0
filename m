@@ -1,104 +1,89 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E298179BD
-	for <spacemit@lists.linux.dev>; Sun, 14 Sep 2025 04:31:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEBD322A
+	for <spacemit@lists.linux.dev>; Sun, 14 Sep 2025 10:31:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757824297; cv=none; b=Vw45d8rA7JjZWT9yGs0AaJdVcT7udv8NXvH/CIu+Bkfp+ZcTWZ5qScMDkF0f383ir/HSvW4jJT3rWWpA0L9iTKfrI5PqzF7Znm47faye6fkN0m5hTjv8PrklJlw4kVSiT8PZg0VPDrYY0KL9mRsvM0a6DQbIVNpFqDwMuZCof7E=
+	t=1757845861; cv=none; b=nMPn+OE2za/+PeaV1faFupfnj9e93RSBEK16zU+7X2iYEWMxfWeLM4h6pIbJzvAfD955KfSywzWGQMqpuhbSAh+YG8JUeqLKnsRKMn2MNT4PaEAhqUcZlRnG9QRWIiNNH/i+X1Iyl05cE3LjLwqhA8dzOA4ReVcoNezepGnu8EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757824297; c=relaxed/simple;
-	bh=lzkC6hsqY0cN0BnhaYYUseeH+o3sfSLh9lERclKfni4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IMUiV6RbYw6sIdanhtNLhVPl+2FJEHc8/n0Td0jCBdyqZColncTGnuqJXowCkB4sHuZM/Pfrz0Pf3087RHg+szuc7lnVlRhaAqtYI/zuZv8SO6+jELWddCjFHYHHuFdUvGOmGF6XAgbYuhNMeqzWHbmhffSKVxlnR8hGm+3HlAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.109] (unknown [114.241.87.235])
-	by APP-03 (Coremail) with SMTP id rQCowABXqIIIRcZoMBfCAg--.61041S2;
-	Sun, 14 Sep 2025 12:31:04 +0800 (CST)
-Message-ID: <007c08ab-b432-463f-abd8-215371e117c4@iscas.ac.cn>
-Date: Sun, 14 Sep 2025 12:31:04 +0800
+	s=arc-20240116; t=1757845861; c=relaxed/simple;
+	bh=YFMVFVKRndRZpMY+xLg+MtDUEnvjTsFhtHdbGuHbBTQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yz4peapzkV8qMsta0nZEgf2M+vdr2UugqeWYilwHn04reb5gqPS7MKmmjoDV6Io/LjbWXRkNQ6oQVWUa9d9Jd+wNthu6T81tb8GFGgrIt5B9ktTheYc14Ucvl3Q8GJGYp5sBVqwRsbHjbIqKhGdPbFWvApR9djFhnd8yiyCBlDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [180.158.240.90])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E745F340EE4;
+	Sun, 14 Sep 2025 10:30:58 +0000 (UTC)
+Date: Sun, 14 Sep 2025 18:30:49 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Vivian Wang <uwu@dram.page>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Simon Horman <horms@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
+	Andrew Lunn <andrew@lunn.ch>
+Subject: Re: [PATCH net-next v12 0/5] Add Ethernet MAC support for SpacemiT K1
+Message-ID: <20250914103049-GYA1238190@gentoo.org>
+References: <20250914-net-k1-emac-v12-0-65b31b398f44@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v12 4/5] riscv: dts: spacemit: Add Ethernet
- support for BPI-F3
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Vivian Wang <uwu@dram.page>, Vadim Fedorenko <vadim.fedorenko@linux.dev>,
- Junhui Liu <junhui.liu@pigmoral.tech>, Simon Horman <horms@kernel.org>,
- Maxime Chevallier <maxime.chevallier@bootlin.com>, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-References: <20250914-net-k1-emac-v12-0-65b31b398f44@iscas.ac.cn>
- <20250914-net-k1-emac-v12-4-65b31b398f44@iscas.ac.cn>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20250914-net-k1-emac-v12-4-65b31b398f44@iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowABXqIIIRcZoMBfCAg--.61041S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7XF4kJF48GF13JF1DuFyUWrg_yoWkCFc_Wa
-	n7ua4I9FWkGFWxGF9ag3WfGayxuws5Ar1jv3Z8JryUGwn8XrZrJFyUta1ktry5G34avr95
-	GrWxJr4fCr1DtjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb38YjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I
-	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0
-	cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4
-	vEx4A2jsIEc7CjxVAFwI0_Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVAC
-	Y4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJV
-	W8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkI
-	wI1lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr
-	0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY
-	17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcV
-	C0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF
-	0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWI
-	evJa73UjIFyTuYvjxUsuWlDUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250914-net-k1-emac-v12-0-65b31b398f44@iscas.ac.cn>
 
-On 9/14/25 12:23, Vivian Wang wrote:
-> Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
-> reset.
->
-> Tested-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-> Reviewed-by: Yixun Lan <dlan@gentoo.org>
-> Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-> ---
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 48 +++++++++++++++++++++++++
->  1 file changed, 48 insertions(+)
->
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index fe22c747c5012fe56d42ac8a7efdbbdb694f31b6..33e223cefd4bd3a12fae176ac6cddd8276cb53dc 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -11,6 +11,8 @@ / {
->  	compatible = "bananapi,bpi-f3", "spacemit,k1";
->  
->  	aliases {
-> +		ethernet0 = &eth0;
-> +		ethernet1 = &eth1;
+Hi Andrew, Jakub
 
-Hi Andrew,
+On 12:23 Sun 14 Sep     , Vivian Wang wrote:
+> SpacemiT K1 has two gigabit Ethernet MACs with RGMII and RMII support.
+> Add devicetree bindings, driver, and DTS for it.
+> 
+> Tested primarily on BananaPi BPI-F3. Basic TX/RX functionality also
+> tested on Milk-V Jupiter.
+> 
+> I would like to note that even though some bit field names superficially
+> resemble that of DesignWare MAC, all other differences point to it in
+> fact being a custom design.
+> 
+> Based on SpacemiT drivers [1]. These patches are also available at:
+> 
 
-I added these two aliases in v12, but kept your Reviewed-by for v11
-because this is fairly trivial. Same for patch 5.
+I know this series has been iterated several versions, and Vivian is working
+hard on this.. but since it's quite close to rc6, I'd like to query if
+there is any chance to take it in for v6.18? don't want to be pushy, so I'm
+totally fine if it's too late and have to postpone to next merge window..
 
-Is this okay?
+P.S. I'd just want to see emac/ethernet accepted since it's last bit for
+a minimal headless system..
 
-Thanks,
-Vivian "dramforever" Wang
+Thanks
 
+-- 
+Yixun Lan (dlan)
