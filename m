@@ -1,90 +1,121 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46C819DF8D;
-	Sun, 14 Sep 2025 15:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0085E2D12F1;
+	Sun, 14 Sep 2025 15:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757864317; cv=none; b=nYGAkomMr6EHoVHA9Qs4FBJB68d+ggNAV/OPqoXmytJB6O5/yEx7/yv5X0SueU2d0JE136luv0ThxeoRcK2LKj3zwJG+LHO9Xt618Mv7GQ85/q2lXl85D+vNdoG6Lggx/sWoxS7wR1xTbmZhOAAEWeqK1bTdBt2toZG44DiYUUo=
+	t=1757864666; cv=none; b=mLCxsD6N9ijJKGkpqb7KyVPA4Uc0rJMDCkoT5eKEPrawoZaEoaPLNKXQAfZ8/0eaijNlJG8dnSqxtY2UQ0DTWAuJ+i8nM11OtzhsaErotaFN3KPX+EDbSxJmAx5Fep4OHMk9vKLR9zxmJuzgWDxekNiL5SKJoPs7W0i0inFbXWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757864317; c=relaxed/simple;
-	bh=ihW47HHuEW0kivT0LtQDfndFpj4gQlPyOZ8ChekheGs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dcnklD3PtabUIE05b8UDdmZINdY3xrjsPI+kLq/7n4SNU7/Hkhvn33rOCUs0odoJ9kB9iCgOcHlwWO3JKCSMMtrTyolSrV+l4xoPZLM52dAqKArDrFTxsYTky+Bv2bcEVUGebNdUIMLnRQdPqoEG5IP8MvU1fxQf4vQIBuVD+8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UGrCk1KX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757864666; c=relaxed/simple;
+	bh=go4fbgG+AD8O+A1V17pC3IWuPz61hjCCsjI7QEuyln4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xj0NcBcALreyNpvQJ4BZrMqbOo+KnU/Q+4gc52YpFpMMK+dZe1SbBIsC8WBQEHcRcIcGxnp6RaW/kwklaVdGV1Q3aCqLww1b7m56EmsB195yCJV/KKOkiClEpvM2vrSmlXaCL9TcYFIOkxAtQCzhqtBCWRbTfaPQVAl5LsEnCjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P3QdzTyS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UGrCk1KX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D7FC4CEF0;
-	Sun, 14 Sep 2025 15:38:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P3QdzTyS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD65C4CEF0;
+	Sun, 14 Sep 2025 15:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757864317;
-	bh=ihW47HHuEW0kivT0LtQDfndFpj4gQlPyOZ8ChekheGs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGrCk1KXR+kac/5OvXpvMS9DC7fpHqSkremvp3fzsvyb6prDigqDylpNSPElqidS8
-	 2otZXTknq+IJzTf5PFAMGbUSxGzxhWpaKhkmOQrn+AgAeY7zJtG5GJBBx5b2ZgfLA4
-	 KHWVBm/EMps/giN+yPji/JWLF5ESMN0zLZgjtT8uX25haYBS7eQRy2q0QTZeuR1AgC
-	 U0QhhxpiJ0NovZt8fUsZNnErPb477tzXnicb3fCOaGxLE/DO7Y4OBBMQ82TvQyR7yW
-	 /xsM67WgIOTtNXCzlJNRFq7IXj7X4QlJmgiq7XSOq4oXJtHlf94QGVuz1QHRwydKOM
-	 D0pF/zMF4y4QQ==
+	s=k20201202; t=1757864665;
+	bh=go4fbgG+AD8O+A1V17pC3IWuPz61hjCCsjI7QEuyln4=;
+	h=Date:From:List-Id:To:Cc:Subject:References:In-Reply-To:From;
+	b=P3QdzTyScG1lAhJeL+vFnLF5trdO/dfD/V8wu3ABJe8RIkt5zs9Y6mT8asP3B6hqL
+	 zyEOPGBtd2TUkRRzLjjGr/jHqQvVIcVdBrXnQtZZ0C4N6d9sV9cpbtPOG+jyQYdr8g
+	 3nX0NDo0zcGLt0Frg8yp6jpB7vAroKpMzf4XmgshC1rcYhouChYjRX3zOyLVfMwzVg
+	 q6BldCdEdW9XkMfb5kRt2pMNIxqZn7UbNiGPpBxioHDaWBYj8k0lH4AJnyzrXrL4th
+	 1ZlrssRfDHu/MiiFNcnvzI9pPKf5/jHp1k++z/GvrPkv6HXOULDxasu2/yH31qMmav
+	 G4cMfE9L3bEAA==
+Date: Sun, 14 Sep 2025 16:44:21 +0100
 From: Conor Dooley <conor@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	duje@dujemihanovic.xyz,
-	Guodong Xu <guodong@riscstar.com>
-Cc: conor@kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Alex Elder <elder@riscstar.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: Re: (subset) [PATCH v5 0/8] dmaengine: mmp_pdma: Add SpacemiT K1 SoC support with 64-bit addressing
-Date: Sun, 14 Sep 2025 16:38:27 +0100
-Message-ID: <20250914-crushed-blinker-9827464897d2@spud>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
-References: <20250822-working_dma_0701_v2-v5-0-f5c0eda734cc@riscstar.com>
+To: patchwork-bot+linux-riscv@kernel.org
+Cc: Yixun Lan <dlan@gentoo.org>, linux-riscv@lists.infradead.org,
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	alex@ghiti.fr, guodong@riscstar.com, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH] riscv: defconfig: run savedefconfig to reorder it
+Message-ID: <20250914-rendering-afar-dd97b3a2505f@spud>
+References: <20250611-01-riscv-defconfig-v1-1-b48fc3517498@gentoo.org>
+ <174976442875.118664.14858626447477465303.git-patchwork-notify@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Developer-Signature: v=1; a=openpgp-sha256; l=682; i=conor.dooley@microchip.com; h=from:subject:message-id; bh=W90YfP75Cf8fElnrlN+vBYi5av5KHOKCWFABavcr0+U=; b=owGbwMvMwCVWscWwfUFT0iXG02pJDBnHHpaICZuwn2a+79lfyGly/JXfDkGVa9m7o3VK/p+2c DvWUc/WUcrCIMbFICumyJJ4u69Fav0flx3OPW9h5rAygQxh4OIUgIlMtWT4Z5bI8PIWX4pvgvcz yYkPbJi33Tc82/TjbO4tBf0I34nNcxkZXvoc+cP8oOHAIyPPU222uyv9jMTe6ik9fPelq8PqQ7E ECwA=
-X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="piIculNeLXDMcyrI"
+Content-Disposition: inline
+In-Reply-To: <174976442875.118664.14858626447477465303.git-patchwork-notify@kernel.org>
 
-From: Conor Dooley <conor.dooley@microchip.com>
 
-On Fri, 22 Aug 2025 11:06:26 +0800, Guodong Xu wrote:
-> This patchset adds support for SpacemiT K1 PDMA controller to the existing
-> mmp_pdma driver. The K1 PDMA controller is compatible with Marvell MMP PDMA
-> but extends it with 64-bit addressing capabilities through LPAE (Long
-> Physical Address Extension) bit and higher 32-bit address registers (DDADRH,
-> DSADRH and DTADRH).
-> 
-> In v5, two smatch warnings reported by kernel test bot and Dan Carpenter were
-> fixed.
-> 
-> [...]
+--piIculNeLXDMcyrI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Applied to riscv-config-for-next, thanks!
+Paul,
 
-[8/8] riscv: defconfig: Enable MMP_PDMA support for SpacemiT K1 SoC
-      https://git.kernel.org/conor/c/3df7ce0e43ad
+On Thu, Jun 12, 2025 at 09:40:28PM +0000, patchwork-bot+linux-riscv@kernel.=
+org wrote:
+> Hello:
+>=20
+> This patch was applied to riscv/linux.git (for-next)
+> by Palmer Dabbelt <palmer@dabbelt.com>:
+>=20
+> On Wed, 11 Jun 2025 22:56:04 +0800 you wrote:
+> > Changes to defconfig should be always updated via 'make
+> > savedefconfig', run this command to make it aligned again.
+> >=20
+> > This will ease the effort of reviewing changes of defconfig
+> > in the future.
+> >=20
+> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> >=20
+> > [...]
+>=20
+> Here is the summary with links:
+>   - riscv: defconfig: run savedefconfig to reorder it
+>     https://git.kernel.org/riscv/c/d958097bdf88
 
-Thanks,
-Conor.
+This got lost in the 6.17 "incident". I applied it to my branch that I
+collect defconfig stuff for SoCs on as it is a prereq for some spacemit
+stuff that I was grabbing. It's up on my korg repo as a tag if you need
+or want to pull it in:
+
+The following changes since commit 8f5ae30d69d7543eee0d70083daf4de8fe15d585:
+
+  Linux 6.17-rc1 (2025-08-10 19:41:16 +0300)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/conor/linux.git/ tags/ris=
+cv-savedefconfig-6.18
+
+for you to fetch changes up to 125c62df09a3fa4143298658340f093d2bd364a6:
+
+  riscv: defconfig: run savedefconfig to reorder it (2025-09-14 16:34:42 +0=
+100)
+
+----------------------------------------------------------------
+riscv-savedefconfig-6.18
+
+----------------------------------------------------------------
+Yixun Lan (1):
+      riscv: defconfig: run savedefconfig to reorder it
+
+ arch/riscv/configs/defconfig | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+--piIculNeLXDMcyrI
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaMbi1QAKCRB4tDGHoIJi
+0vquAP0U+9G5MAqk077lLuT4dfODkjR97SP5TFmveINFUmnT7AEAm8Wp/y80V3xq
+l/2Bq/TK5plRQs+u3MwLDoB1EMqvHg4=
+=QwpP
+-----END PGP SIGNATURE-----
+
+--piIculNeLXDMcyrI--
