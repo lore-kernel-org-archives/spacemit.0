@@ -1,40 +1,36 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEBD322A
-	for <spacemit@lists.linux.dev>; Sun, 14 Sep 2025 10:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4781E47B3;
+	Sun, 14 Sep 2025 14:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757845861; cv=none; b=nMPn+OE2za/+PeaV1faFupfnj9e93RSBEK16zU+7X2iYEWMxfWeLM4h6pIbJzvAfD955KfSywzWGQMqpuhbSAh+YG8JUeqLKnsRKMn2MNT4PaEAhqUcZlRnG9QRWIiNNH/i+X1Iyl05cE3LjLwqhA8dzOA4ReVcoNezepGnu8EA=
+	t=1757860036; cv=none; b=g614fhLQ2Rs8X6hxrwgTVZ7Vu5SzfkyUIByN9/VLUN/7jvzO7aNGOdByp2eLP5uFjnjSkPnVxQ98OzU0m8EJqhRGIHPe3kfJNXzXqdsCc8Dao5D9BQX7rSVf/Z4M6JBueEXn/aYgpBqMIFB/jtUSH6j8zO1x6qSSw6Qz7oasMuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757845861; c=relaxed/simple;
-	bh=YFMVFVKRndRZpMY+xLg+MtDUEnvjTsFhtHdbGuHbBTQ=;
+	s=arc-20240116; t=1757860036; c=relaxed/simple;
+	bh=l9i1JOoE9xct7TAw7yGRuCGe7oON0LrN12HBv4aua6k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yz4peapzkV8qMsta0nZEgf2M+vdr2UugqeWYilwHn04reb5gqPS7MKmmjoDV6Io/LjbWXRkNQ6oQVWUa9d9Jd+wNthu6T81tb8GFGgrIt5B9ktTheYc14Ucvl3Q8GJGYp5sBVqwRsbHjbIqKhGdPbFWvApR9djFhnd8yiyCBlDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [180.158.240.90])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id E745F340EE4;
-	Sun, 14 Sep 2025 10:30:58 +0000 (UTC)
-Date: Sun, 14 Sep 2025 18:30:49 +0800
-From: Yixun Lan <dlan@gentoo.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=bEQCO5Ubwk07KNR+liJNpfyrz32A7DsQCTshmisihKzZtf+S6E7FuXrDpE9UEVOhcKoItggadTXLX0eIDkNYlXPioxdkXUr6POMgrov0/AGhFf3W+S0RlIei+ZqBAk/bnHz7aQcNXCmpUWzleb4KfE0U+gJllZQOY0WX3lyfChc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=fF/26pSt; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="fF/26pSt"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=an9Yth3zuqwupnWSHxyQHPNMhHnRBJyE4Xw/D6M144A=; b=fF/26pStELSIaGPcAH6ff7U6dr
+	L1qbzoep8I4H4LOyTOr4NFtZCf8zQqVMHii8T2GKxQrmrARzobsesSnyZT2BaTOAxq3Vsde3knI2A
+	GLNjO6WhwwG+Xskn5DhtUht1TEQg+mY0+EfUOGsAb3mBr/0hrlmsMK0rtE7sE7nuCzew=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1uxngk-008LrZ-1F; Sun, 14 Sep 2025 16:26:46 +0200
+Date: Sun, 14 Sep 2025 16:26:46 +0200
+From: Andrew Lunn <andrew@lunn.ch>
 To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Vivian Wang <uwu@dram.page>,
+Cc: Vivian Wang <uwu@dram.page>,
 	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Junhui Liu <junhui.liu@pigmoral.tech>,
 	Simon Horman <horms@kernel.org>,
@@ -42,13 +38,23 @@ Cc: Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
 	netdev@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
 	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
-	Andrew Lunn <andrew@lunn.ch>
-Subject: Re: [PATCH net-next v12 0/5] Add Ethernet MAC support for SpacemiT K1
-Message-ID: <20250914103049-GYA1238190@gentoo.org>
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Subject: Re: [PATCH net-next v12 4/5] riscv: dts: spacemit: Add Ethernet
+ support for BPI-F3
+Message-ID: <6ace8fca-21db-40f1-b44d-28e4a1d3d2da@lunn.ch>
 References: <20250914-net-k1-emac-v12-0-65b31b398f44@iscas.ac.cn>
+ <20250914-net-k1-emac-v12-4-65b31b398f44@iscas.ac.cn>
+ <007c08ab-b432-463f-abd8-215371e117c4@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -57,33 +63,39 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250914-net-k1-emac-v12-0-65b31b398f44@iscas.ac.cn>
+In-Reply-To: <007c08ab-b432-463f-abd8-215371e117c4@iscas.ac.cn>
 
-Hi Andrew, Jakub
-
-On 12:23 Sun 14 Sep     , Vivian Wang wrote:
-> SpacemiT K1 has two gigabit Ethernet MACs with RGMII and RMII support.
-> Add devicetree bindings, driver, and DTS for it.
+On Sun, Sep 14, 2025 at 12:31:04PM +0800, Vivian Wang wrote:
+> On 9/14/25 12:23, Vivian Wang wrote:
+> > Banana Pi BPI-F3 uses an RGMII PHY for each port and uses GPIO for PHY
+> > reset.
+> >
+> > Tested-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+> > Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+> > Reviewed-by: Yixun Lan <dlan@gentoo.org>
+> > Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+> > ---
+> >  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 48 +++++++++++++++++++++++++
+> >  1 file changed, 48 insertions(+)
+> >
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > index fe22c747c5012fe56d42ac8a7efdbbdb694f31b6..33e223cefd4bd3a12fae176ac6cddd8276cb53dc 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > @@ -11,6 +11,8 @@ / {
+> >  	compatible = "bananapi,bpi-f3", "spacemit,k1";
+> >  
+> >  	aliases {
+> > +		ethernet0 = &eth0;
+> > +		ethernet1 = &eth1;
 > 
-> Tested primarily on BananaPi BPI-F3. Basic TX/RX functionality also
-> tested on Milk-V Jupiter.
+> Hi Andrew,
 > 
-> I would like to note that even though some bit field names superficially
-> resemble that of DesignWare MAC, all other differences point to it in
-> fact being a custom design.
+> I added these two aliases in v12, but kept your Reviewed-by for v11
+> because this is fairly trivial. Same for patch 5.
 > 
-> Based on SpacemiT drivers [1]. These patches are also available at:
-> 
+> Is this okay?
 
-I know this series has been iterated several versions, and Vivian is working
-hard on this.. but since it's quite close to rc6, I'd like to query if
-there is any chance to take it in for v6.18? don't want to be pushy, so I'm
-totally fine if it's too late and have to postpone to next merge window..
+Yes, this is fine.
 
-P.S. I'd just want to see emac/ethernet accepted since it's last bit for
-a minimal headless system..
-
-Thanks
-
--- 
-Yixun Lan (dlan)
+	Andrew
