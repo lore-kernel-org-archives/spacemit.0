@@ -1,68 +1,95 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA57280A56;
-	Tue, 16 Sep 2025 08:57:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346782C158F;
+	Tue, 16 Sep 2025 11:20:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758013053; cv=none; b=sAF3BlXIcT8MmTuy6ieynSPZ6Rl7mRVdNtFQpehvwK2uGVJ05T8CCtjGsm1HWQ6RhJ2OnPB9ER8zZIu8CRmKbAF17J+ATeMAO+qIkMncDT3MRo9z60HI5kjrjHNltsyu0epeTtNImAp8t+UU+ikBh2pMYunW3LK++jL/QOLOIBk=
+	t=1758021612; cv=none; b=j/DZEwBGqvkDTkpKdvzWViu5gYBmcPeGyDnpwKPS+cOPQrUeXuHqwhQYwZR3TB/2VMoyuGyApzOOmNZu2XGzipOH+fJjGNOzVwI0zZySzFkDZxo+PIASwMEH6z+aKUPiq23ZkoRA0mS/IZj/LGOZbKtE40XTLe2gNOkXBaMHriU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758013053; c=relaxed/simple;
-	bh=af7rjeVyq1V01VmfV+h18NMd8JU8MkjjJFZfdDYHg2Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RWatRUcwxyNO+hJR2llXqXERB9iZtc7Fqsi57JBOC+pXOg4G0LZn87eAldcVsn7dv9Xv6n4/IVdoVuD5++TgU/kqOc1FIlUh7DODYAUtou/lo6q/CtMmvpGl+Y1nhzbthUsH5K8siRDszAWVyAAR998WjlwZdhQbixPYt+T2IyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [180.158.240.90])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id D2D98340EAF;
-	Tue, 16 Sep 2025 08:57:29 +0000 (UTC)
-Date: Tue, 16 Sep 2025 16:57:25 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, skhan@linuxfoundation.org,
-	linux-kernel-mentees@lists.linux.dev, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] riscv: dts: spacemit: add UART pinctrl combinations
-Message-ID: <20250916085725-GYA1255161@gentoo.org>
-References: <20250916064739.196695-1-hendrik.hamerlinck@hammernet.be>
+	s=arc-20240116; t=1758021612; c=relaxed/simple;
+	bh=14sOQQinc11cHCKnIiI6Ab/MANDaVgA92SJ8bByuOrA=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=GPrV5j2caYUn7rB44rGKla0S29Yxbnh/INgdV2tSHP7KKkhVcXg5ic2OrVE1mxa8T9lRBfj+MdTjd9fAcGy2XaNZ0ERoGtOwiomvRYzw80A6+ZZNMFjPQBYDWKTW5zWE0Gz2s7WRcKn5hV7dPEKIvvEl0haLaJlvmJTYyaxPP7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GwM8jv5b; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GwM8jv5b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2E0C4CEEB;
+	Tue, 16 Sep 2025 11:20:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758021612;
+	bh=14sOQQinc11cHCKnIiI6Ab/MANDaVgA92SJ8bByuOrA=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=GwM8jv5bXdsHfLGp25eYIs+KXZkrnrk1BTxTI8uOnCDcLnnOfpO7jCDV8/zfKyVYw
+	 R3XtBe05hWce2cnVkQsWvnmAS6GM/kKDsOzCofqrfT18T0y2niThi4CnnpYHDDO88d
+	 nKBfo9i2rs1o6ZeMPVkdOYV7Yc4y1BZHEendlGMtaF4ft9LzwJr+XO6VMgnGhInk9w
+	 cYGz8RF2NITu2t9He49tjMR/MEWemu0HRVIwouU54Z5YviVndwjmPqAdu4k4dPSsjo
+	 MV8FMOL0+kY0vKZLLpvC2AXRvXS9C9JG/eOr5N9aJmw309/U4K7I1wXe7n3l3QnSex
+	 +Qo1j+I6FVvfQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70F4F39D0C1A;
+	Tue, 16 Sep 2025 11:20:14 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250916064739.196695-1-hendrik.hamerlinck@hammernet.be>
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v12 0/5] Add Ethernet MAC support for SpacemiT K1
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <175802161326.713595.16381910315366172301.git-patchwork-notify@kernel.org>
+Date: Tue, 16 Sep 2025 11:20:13 +0000
+References: <20250914-net-k1-emac-v12-0-65b31b398f44@iscas.ac.cn>
+In-Reply-To: <20250914-net-k1-emac-v12-0-65b31b398f44@iscas.ac.cn>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: andrew+netdev@lunn.ch, kuba@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, dlan@gentoo.org,
+ davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+ p.zabel@pengutronix.de, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, alex@ghiti.fr, uwu@dram.page,
+ vadim.fedorenko@linux.dev, junhui.liu@pigmoral.tech, horms@kernel.org,
+ maxime.chevallier@bootlin.com, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ conor.dooley@microchip.com, troy.mitchell@linux.spacemit.com,
+ hendrik.hamerlinck@hammernet.be, andrew@lunn.ch
 
-Hi Hendrik,
+Hello:
 
-On 08:47 Tue 16 Sep     , Hendrik Hamerlinck wrote:
-> Add UART pinctrl configurations based on the SoC datasheet and the
-> downstream Bianbu Linux tree. The drive strength values were taken from
-> the downstream implementation, which uses medium drive strength.
-> CTS/RTS are moved to separate *-cts-rts-cfg states so boards can enable
-> hardware flow control conditionally.
+This series was applied to netdev/net-next.git (main)
+by Paolo Abeni <pabeni@redhat.com>:
+
+On Sun, 14 Sep 2025 12:23:11 +0800 you wrote:
+> SpacemiT K1 has two gigabit Ethernet MACs with RGMII and RMII support.
+> Add devicetree bindings, driver, and DTS for it.
 > 
-> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
-
-> ---
-> Changes in v3:
-> - Added /omit-if-no-ref/ to pinctrl states to reduce DT size
+> Tested primarily on BananaPi BPI-F3. Basic TX/RX functionality also
+> tested on Milk-V Jupiter.
 > 
-> Changes in v2:
-> - Split cts/rts into separate pinctrl configs as suggested
-> - Removed options from board DTS files to keep them cleaner
-> ---
+> I would like to note that even though some bit field names superficially
+> resemble that of DesignWare MAC, all other differences point to it in
+> fact being a custom design.
+> 
+> [...]
 
+Here is the summary with links:
+  - [net-next,v12,1/5] dt-bindings: net: Add support for SpacemiT K1
+    https://git.kernel.org/netdev/net-next/c/62a12a221769
+  - [net-next,v12,2/5] net: spacemit: Add K1 Ethernet MAC
+    https://git.kernel.org/netdev/net-next/c/bfec6d7f2001
+  - [net-next,v12,3/5] riscv: dts: spacemit: Add Ethernet support for K1
+    https://git.kernel.org/netdev/net-next/c/60775f28cfb7
+  - [net-next,v12,4/5] riscv: dts: spacemit: Add Ethernet support for BPI-F3
+    https://git.kernel.org/netdev/net-next/c/3c247a6366d5
+  - [net-next,v12,5/5] riscv: dts: spacemit: Add Ethernet support for Jupiter
+    https://git.kernel.org/netdev/net-next/c/e32dc7a936b1
+
+You are awesome, thank you!
 -- 
-Yixun Lan (dlan)
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
