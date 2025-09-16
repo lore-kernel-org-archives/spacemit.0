@@ -1,97 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B945823FC49;
-	Tue, 16 Sep 2025 11:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BA32D8393
+	for <spacemit@lists.linux.dev>; Tue, 16 Sep 2025 12:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758023463; cv=none; b=GpVe51IMkJWwXhDi3oJiyBZoRILYho7UAed4I8Ev4HaAvLh3lujg5e17n2vH86+yASbHAv3Yk614puAW0DY1laItTaGyMKe1Tm4Pqa+pkOfyRt7LfJxfC3aR+sYpRx3Ik7JpEqqjzI4an+XGCz1pQoa0uYAiKkE5m1UVd4PzEIg=
+	t=1758025241; cv=none; b=TrYACxNjYh+ZLDGqqSB46AERbsLpMUKAq0JgeapjMUm0eHJBYyv8QysnMOm4thwRa2FWy6xFlR/eZGsNYfqgWF/EqfHs7mf0woDgJs5cFF9AupjegfvNVGd5wtKPbb+UozvXXofE0l9jYYC8x05H5ChhOmu5M7iXZaPEcxyorBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758023463; c=relaxed/simple;
-	bh=O9kG38pgi0D/E0EHSpH0PQiWWgf3wcmCdMWQGXzMU7g=;
+	s=arc-20240116; t=1758025241; c=relaxed/simple;
+	bh=Ea9+rkswREodz+LF4GSRMjtdY2KBM5WSAG3M5nIxo/o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uNY9tN5Vkr8uIxIUHJFAE+6WNleZfvJBbfuvkiNlNE2L2Kvvl6w3puki2ynyLCZ6q8O75b2DL8Yu9GOZA7AM09/fj8eo1bPJNOGPHUtG2pQduk26tcXKVJPmSdk7y4y3+xLRhB1WXLKPlWwzz2LqTUuGxvMcaut6V/K1DqM9qE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kNad3RKY; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kNad3RKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F20C4CEEB;
-	Tue, 16 Sep 2025 11:50:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758023463;
-	bh=O9kG38pgi0D/E0EHSpH0PQiWWgf3wcmCdMWQGXzMU7g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kNad3RKYUNxDWVNVggn8mkMBbzsSSHdr8HOOSsGLVY58B3KHr5YS3dLj8I0vphP+a
-	 rgqq1ZjQLWRFd46s7QHqK5IimfxD9xVsev36qnb6c/tA8hQmQwWWrgk1FLavTJpEaB
-	 PTa9OU9P3icuBmAJ+RzL1nDBxkCEXKv2becKF5A90bUMX1oo9i2m/nI1uW32VPOywC
-	 fKELvj+jwfexhjZLjkMkraO7Tp+Ql3wz1/a1zR7ZKf4geHkIhbPmixJ5Z77sp0GOGW
-	 WxW6pHCSF9Ahvjc68x7wqvTBbxVE/mVFUB4bKWrzkRi0KUMGshGdwC5FWhqox5p7gc
-	 cCFZWkDN4KzYg==
-Date: Tue, 16 Sep 2025 12:50:56 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Lee Jones <lee@kernel.org>
-Cc: Alex Elder <elder@riscstar.com>, lgirdwood@gmail.com,
-	alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, mat.jonczyk@o2.pl, dlan@gentoo.org,
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, linux.amoon@gmail.com, troymitchell988@gmail.com,
-	guodong@riscstar.com, linux-rtc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v13 0/7] spacemit: introduce P1 PMIC support
-Message-ID: <c8bcfff9-9d2a-426d-9df8-100efd2af64f@sirena.org.uk>
-References: <20250825172057.163883-1-elder@riscstar.com>
- <175690199980.2656286.5459018179105557107.b4-ty@kernel.org>
- <ec882a78-9604-45b1-9405-8f2f958f307c@riscstar.com>
- <7aba368e-709b-49b0-b62c-f2f8250c8628@sirena.org.uk>
- <20250916084229.GG1637058@google.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=CbUm4E37pD/N6r5YTY83tgdu8tsopzbm/sY7g8aaZ8eGTC3qFaZQWdy2KNqEQcGik1OJGgREKb+kUU9PIqp4Cbs3eoejTxsflvAEzSgJmaJoB/VyRA7G3zAvpXDo9hRjpvhIsUVRJpJUPz8/BtUVaUE4j0CVUG8lOxJ6StnL4/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [180.158.240.90])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id B1D73340DBF;
+	Tue, 16 Sep 2025 12:20:36 +0000 (UTC)
+Date: Tue, 16 Sep 2025 20:20:26 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: pabeni@redhat.com
+Cc: Vivian Wang <wangruikang@iscas.ac.cn>, andrew+netdev@lunn.ch,
+	kuba@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, davem@davemloft.net, edumazet@google.com,
+	pabeni@redhat.com, p.zabel@pengutronix.de, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	uwu@dram.page, vadim.fedorenko@linux.dev, junhui.liu@pigmoral.tech,
+	horms@kernel.org, maxime.chevallier@bootlin.com,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, conor.dooley@microchip.com,
+	troy.mitchell@linux.spacemit.com, hendrik.hamerlinck@hammernet.be,
+	andrew@lunn.ch
+Subject: Re: [PATCH net-next v12 0/5] Add Ethernet MAC support for SpacemiT K1
+Message-ID: <20250916122026-GYB1255161@gentoo.org>
+References: <20250914-net-k1-emac-v12-0-65b31b398f44@iscas.ac.cn>
+ <175802161326.713595.16381910315366172301.git-patchwork-notify@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CsiSrB0XCw5iECYx"
-Content-Disposition: inline
-In-Reply-To: <20250916084229.GG1637058@google.com>
-X-Cookie: The people rule.
-
-
---CsiSrB0XCw5iECYx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <175802161326.713595.16381910315366172301.git-patchwork-notify@kernel.org>
 
-On Tue, Sep 16, 2025 at 09:42:29AM +0100, Lee Jones wrote:
-> On Thu, 11 Sep 2025, Mark Brown wrote:
-> > On Thu, Sep 11, 2025 at 11:36:41AM -0500, Alex Elder wrote:
+Hi Paolo Abeni,
 
-> > > How should these two patches be merged?  Mark has reviewed the
-> > > regulator patch 3 and Alexandre has acked the RTC patch 4.
+Thanks for taking this series, but I have one comment (see below)
 
-> > We'd both have been expecting them to go via MFD.
+On 11:20 Tue 16 Sep     , patchwork-bot+netdevbpf@kernel.org wrote:
+> Hello:
+> 
+> This series was applied to netdev/net-next.git (main)
+> by Paolo Abeni <pabeni@redhat.com>:
+> 
+> On Sun, 14 Sep 2025 12:23:11 +0800 you wrote:
+> > SpacemiT K1 has two gigabit Ethernet MACs with RGMII and RMII support.
+> > Add devicetree bindings, driver, and DTS for it.
+> > 
+> > Tested primarily on BananaPi BPI-F3. Basic TX/RX functionality also
+> > tested on Milk-V Jupiter.
+> > 
+> > I would like to note that even though some bit field names superficially
+> > resemble that of DesignWare MAC, all other differences point to it in
+> > fact being a custom design.
+> > 
+> > [...]
+> 
+> Here is the summary with links:
+>   - [net-next,v12,1/5] dt-bindings: net: Add support for SpacemiT K1
+>     https://git.kernel.org/netdev/net-next/c/62a12a221769
+>   - [net-next,v12,2/5] net: spacemit: Add K1 Ethernet MAC
+>     https://git.kernel.org/netdev/net-next/c/bfec6d7f2001
+..
+>   - [net-next,v12,3/5] riscv: dts: spacemit: Add Ethernet support for K1
+>     https://git.kernel.org/netdev/net-next/c/60775f28cfb7
+>   - [net-next,v12,4/5] riscv: dts: spacemit: Add Ethernet support for BPI-F3
+>     https://git.kernel.org/netdev/net-next/c/3c247a6366d5
+>   - [net-next,v12,5/5] riscv: dts: spacemit: Add Ethernet support for Jupiter
+>     https://git.kernel.org/netdev/net-next/c/e32dc7a936b1
+> 
 
-> Why?  I don't see any dependencies between them (usually a shared MFD
-> header-file).  If there are no deps, it should be taken through its own
-> repo, no?
+Generally, I'd expect the DT part patch (3-5) to go via SpacemiT's SoC tree[1],
+so, this will avoid potential conflicts..
 
-I used to just apply things but at some point Linus complained about
-cases where the MFD ended up not getting merged (missing the merge
-window or whatever) so I've been treating them like they had an actual
-dependency.
+Can you drop patch 3-5? then I will take care of them, plus there is one more
+patch in my queue..
 
---CsiSrB0XCw5iECYx
-Content-Type: application/pgp-signature; name="signature.asc"
+Link: https://github.com/spacemit-com/linux/tree/k1/dt-for-next [1]
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjJTx8ACgkQJNaLcl1U
-h9BVtAf/Vdh8eegOI/zDdzbexE8BWvzGsLLj34YbPnkG9avqAWDdyOGlUm7qZ7dD
-gB+EXJIgXSb/6TaCBjLAgBNzsLI1B4V90Se36dcaypQXvhfZaVE6a/ASWlkIMsse
-sJN80MRTL3ycen6usUT19d43eP0GSoXOolHECjE6iZ7lGoijBNvNJf4RTIRzAEKY
-tl5AsUWUcGeNXhMvANijktnE4+kZOq/bqe6CY/qrBuSi4Ftv6gSzFwoZ0RP+GhnZ
-nDh9KEbF1AR00hzX+JnjeDDRyQupVDgf+XbJl/9hFIG4glOsERztZ6LmB77twMIF
-rIInm45SJIFTn6x7WaD9kMxf4Gkhww==
-=B/MB
------END PGP SIGNATURE-----
-
---CsiSrB0XCw5iECYx--
+-- 
+Yixun Lan (dlan)
