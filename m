@@ -1,82 +1,91 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69CA3375CF
-	for <spacemit@lists.linux.dev>; Tue, 16 Sep 2025 14:58:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BCF31FECA;
+	Tue, 16 Sep 2025 21:54:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758034688; cv=none; b=VlO1+6IsOgRySV1yG1UuedZgJWAcBeuCOrqCmHMzUv07aHTcnwdO+9UDX77y+CwjgtUC7AGEbmiX9ajpJ7Z48jch9PlfXg6xgLX1+/g1eNBwHi97Sc8tdRpmDmwqCM1uXZLuNh8N4/iDnm0eCtYzsg/bNTo/grCJ1NTLXvg20YQ=
+	t=1758059656; cv=none; b=hxcJ9AVHAVgFILMRKMIaV8fA7WGkyKrY3KowrnxRT2xRk7iwE3DOyxW34q8P+V85wPGn36cPHHIU2/KmY3dEve2Im5P8GGKxh9+qOnmyDpKYkoe6Bq9SLwVi5WdiJ6vVNUC+nGRi8RYWmyslRkejdUbfx9tospuCZ9Af2ZLfXWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758034688; c=relaxed/simple;
-	bh=45aAFCCLP5+JpH8+fy7Pi266rTzdrVa3fEsLjKr4y4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l6cAQcYDN4ZcTI96nou92oG9NfQJ+Zy4cuCAFqo5Kspl0ywysTj+oCGMz1Lkhc2bsDKHGzl7B+SWVv2qIsvNKHV8Otd1TmH7LM3c0DiDQVylZhGaOo1+SfWUMgQGGlf8As3mYtCITK2WB6vsMSIny6PAP9L8GhfKP8XAsJhFReY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=B7aOeUXj; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1758059656; c=relaxed/simple;
+	bh=uD2qX1Uel1p/YrCYZ0w2oIREUJEihLSaGL7baU3SX04=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=SAwbJ9zL8ae+HMMU9tG/DNxyJyRtJ6fJt9h3b963tNJ1Gcq5Q6mYC1VorVRgy/mAxuzu5htO4V+TUbNWyk+BYVbxVYW/345xnZwFwrCWYup+A0j38i6+kuEaDwetnKmdd3yeDcsKeM4s/4mUCeMyS7yFY3il/PnZq/lGoCHALo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p1auR8Pt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="B7aOeUXj"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 328651A0D5A;
-	Tue, 16 Sep 2025 14:58:03 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id F1BA16061E;
-	Tue, 16 Sep 2025 14:58:02 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 449F8102F179E;
-	Tue, 16 Sep 2025 16:57:48 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1758034682; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=bG7jqwDvwnMc7LKOXfefsfuPcEBkoTgIfTnNQ5xb3R0=;
-	b=B7aOeUXjfCsW+Dlii7CJAjRoXF0N21Pde2jHkNplWhvSErBR/Il15KgX8NlYo4+wUlwu9D
-	Pc4PlN7ZXRRZzxQQ+vho3mpz0TSvleSyoSnbSsTcYjWFbDo1ulhxIcOza9vBZaMzrUiZAG
-	6r/+gV4y8GUOLMrltPg6hASqSECE133GI0FBxDJ+69bPLEElb0ZSt/mIVJpWwoD31Ggdl1
-	gN2pOO8PjrtsP/n0XLe8q6X++2crVhZAeD7jdBo8CGOVHBwnWfxOJxm8gbbzbmYxv2yq5q
-	wsuT7Om98eOUTGy/v6uWC5DH4GzLluuKDB4cwJI4daWKeIsTNt+rMNr3mTe7JQ==
-Date: Tue, 16 Sep 2025 16:57:48 +0200
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: lee@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	Alex Elder <elder@riscstar.com>
-Cc: mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	linux.amoon@gmail.com, troymitchell988@gmail.com,
-	guodong@riscstar.com, linux-rtc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v13 4/7] rtc: spacemit: support the SpacemiT P1
- RTC
-Message-ID: <175803465665.231523.13284487487341532209.b4-ty@bootlin.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p1auR8Pt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61614C4CEF9;
+	Tue, 16 Sep 2025 21:54:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758059656;
+	bh=uD2qX1Uel1p/YrCYZ0w2oIREUJEihLSaGL7baU3SX04=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=p1auR8Pt42Tym0qXlywjGsGpI7yOQUKBihw+ZbyLwgwqRAcacfgBwNuNLc4IpdXkB
+	 j//1lYuA63R42y7IpOA3LzEJhiOVRxeijucpj8mpDLBqBRmEflGhUZQwrQ+hamHwzO
+	 LBPqBYA2gNOACgVcGrhRZ20m32MvlhFAIis83zXBz6nzuaqglL/TUD3q5lea0tY3AQ
+	 OUEPZs4Gazbn5xpjYCQm7oVQyrkPNE/ZdbxeZYwSjJu+SnFJUduaSRhfoFtDusmlmt
+	 zLUszYZeaxYao3yCC/7bl1Wa7I2TVFXYI6mvpPuFFM86yyUNRhcnKzrahsoAD9MejF
+	 J2vy1PjVIKDqA==
+From: Mark Brown <broonie@kernel.org>
+To: lee@kernel.org, lgirdwood@gmail.com, alexandre.belloni@bootlin.com, 
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+ Alex Elder <elder@riscstar.com>
+Cc: mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com, 
+ palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+ linux.amoon@gmail.com, troymitchell988@gmail.com, guodong@riscstar.com, 
+ linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20250825172057.163883-1-elder@riscstar.com>
 References: <20250825172057.163883-1-elder@riscstar.com>
- <20250825172057.163883-5-elder@riscstar.com>
+Subject: Re: (subset) [PATCH v13 0/7] spacemit: introduce P1 PMIC support
+Message-Id: <175805965212.251163.14858159964329617503.b4-ty@kernel.org>
+Date: Tue, 16 Sep 2025 22:54:12 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250825172057.163883-5-elder@riscstar.com>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-56183
 
-On Mon, 25 Aug 2025 12:20:53 -0500, Alex Elder wrote:
-> Add support for the RTC found in the SpacemiT P1 PMIC.  Initially
-> only setting and reading the time are supported.
+On Mon, 25 Aug 2025 12:20:49 -0500, Alex Elder wrote:
+> The SpacemiT P1 is an I2C-controlled PMIC that implements 6 buck
+> converters and 12 LDOs.  It contains a load switch, ADC channels,
+> GPIOs, a real-time clock, and a watchdog timer.
 > 
-> The PMIC is implemented as a multi-function device.  This RTC is
-> probed based on this driver being named in a MFD cell in the simple
-> MFD I2C driver.
+> This series introduces a multifunction driver for the P1 PMIC as
+> well as drivers for its regulators and RTC.
 > 
 > [...]
 
-Applied, thanks!
+Applied to
 
-[4/7] rtc: spacemit: support the SpacemiT P1 RTC
-      https://git.kernel.org/abelloni/c/c96433f4806f
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Best regards,
+Thanks!
 
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+[3/7] regulator: spacemit: support SpacemiT P1 regulators
+      commit: 8b84d712ad849172f6bbcad57534b284d942b0b5
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
