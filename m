@@ -1,74 +1,68 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B89199939;
-	Tue, 16 Sep 2025 08:42:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA57280A56;
+	Tue, 16 Sep 2025 08:57:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758012157; cv=none; b=ae2TVyGl1uWkLgxBK9nZ+rXOF5yllX8TVVIpktqcZ/lx0vXpB1x+5Ih925YXU59WHeuYuBNHXruRB0cJgnNwX8hFXQVS5UiA0a0vSmid0YYXDueADas2z86+rE9ml2yRypuhpItieaM75TRmJYm53EILbm1r7u4RhYuJR42Qgo0=
+	t=1758013053; cv=none; b=sAF3BlXIcT8MmTuy6ieynSPZ6Rl7mRVdNtFQpehvwK2uGVJ05T8CCtjGsm1HWQ6RhJ2OnPB9ER8zZIu8CRmKbAF17J+ATeMAO+qIkMncDT3MRo9z60HI5kjrjHNltsyu0epeTtNImAp8t+UU+ikBh2pMYunW3LK++jL/QOLOIBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758012157; c=relaxed/simple;
-	bh=Bl1MY5OuaiV9uMoemCCpSfrqbhrtez3QSsqsaiBhMUA=;
+	s=arc-20240116; t=1758013053; c=relaxed/simple;
+	bh=af7rjeVyq1V01VmfV+h18NMd8JU8MkjjJFZfdDYHg2Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y3Hr/DiPTYmaqnnzqRWhoMXpGvWUoGmo/C16OLoBzLvfu3CqTNUEe/xLgut2ps9FQDHe9kB+BtX6LxVSqtE6UXEpsschEZVkgQiv2xYNkODBJfoe/FAySkGOz8v/vf8PgPsPusLIZ4x8EDq3anRGzvlq28mEwBhvs9pCvIDr2a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tlFRX2Vc; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tlFRX2Vc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA44EC4CEEB;
-	Tue, 16 Sep 2025 08:42:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758012157;
-	bh=Bl1MY5OuaiV9uMoemCCpSfrqbhrtez3QSsqsaiBhMUA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tlFRX2Vcd+embOSWbj6PKxqD12prWgZVl+2xsFYl8+8r/SOni53REHSYvx6E0/6DF
-	 PazYsZ3pMD9SsNDQJOfCYutZjDFvXuSYbomW/zvvLbRw1dJZI4sKBBrQbE4GA+0ouW
-	 qMzvJA/h68R6upEgiC7h5SsXzAL+EPZR4wkyc8vvzkIudNi2e1ueV40E+WXKGTmqwW
-	 etr0gMdFsgmCNrWlBfVPHM4fFZvHoDFA5a7Wu3h0ysxbq9+xTm/NnHpTLqwctkgHSF
-	 IdLuyQFWGbcEI2K/+0ZMv71W5Xh5qOb1sTzyMgzoFp8NxtA6OTG2yqXE2WkrlJfKw+
-	 5uzpWJ+jWnplg==
-Date: Tue, 16 Sep 2025 09:42:29 +0100
-From: Lee Jones <lee@kernel.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: Alex Elder <elder@riscstar.com>, lgirdwood@gmail.com,
-	alexandre.belloni@bootlin.com, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, mat.jonczyk@o2.pl, dlan@gentoo.org,
+	 Content-Type:Content-Disposition:In-Reply-To; b=RWatRUcwxyNO+hJR2llXqXERB9iZtc7Fqsi57JBOC+pXOg4G0LZn87eAldcVsn7dv9Xv6n4/IVdoVuD5++TgU/kqOc1FIlUh7DODYAUtou/lo6q/CtMmvpGl+Y1nhzbthUsH5K8siRDszAWVyAAR998WjlwZdhQbixPYt+T2IyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [180.158.240.90])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id D2D98340EAF;
+	Tue, 16 Sep 2025 08:57:29 +0000 (UTC)
+Date: Tue, 16 Sep 2025 16:57:25 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
 	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, linux.amoon@gmail.com, troymitchell988@gmail.com,
-	guodong@riscstar.com, linux-rtc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v13 0/7] spacemit: introduce P1 PMIC support
-Message-ID: <20250916084229.GG1637058@google.com>
-References: <20250825172057.163883-1-elder@riscstar.com>
- <175690199980.2656286.5459018179105557107.b4-ty@kernel.org>
- <ec882a78-9604-45b1-9405-8f2f958f307c@riscstar.com>
- <7aba368e-709b-49b0-b62c-f2f8250c8628@sirena.org.uk>
+	alex@ghiti.fr, skhan@linuxfoundation.org,
+	linux-kernel-mentees@lists.linux.dev, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] riscv: dts: spacemit: add UART pinctrl combinations
+Message-ID: <20250916085725-GYA1255161@gentoo.org>
+References: <20250916064739.196695-1-hendrik.hamerlinck@hammernet.be>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7aba368e-709b-49b0-b62c-f2f8250c8628@sirena.org.uk>
+In-Reply-To: <20250916064739.196695-1-hendrik.hamerlinck@hammernet.be>
 
-On Thu, 11 Sep 2025, Mark Brown wrote:
+Hi Hendrik,
 
-> On Thu, Sep 11, 2025 at 11:36:41AM -0500, Alex Elder wrote:
+On 08:47 Tue 16 Sep     , Hendrik Hamerlinck wrote:
+> Add UART pinctrl configurations based on the SoC datasheet and the
+> downstream Bianbu Linux tree. The drive strength values were taken from
+> the downstream implementation, which uses medium drive strength.
+> CTS/RTS are moved to separate *-cts-rts-cfg states so boards can enable
+> hardware flow control conditionally.
 > 
-> > That leaves patch 3, which enables regulator support, and patch
-> > 4, which adds RTC support.
-> 
-> > How should these two patches be merged?  Mark has reviewed the
-> > regulator patch 3 and Alexandre has acked the RTC patch 4.
-> 
-> We'd both have been expecting them to go via MFD.
+> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
 
-Why?  I don't see any dependencies between them (usually a shared MFD
-header-file).  If there are no deps, it should be taken through its own
-repo, no?
+> ---
+> Changes in v3:
+> - Added /omit-if-no-ref/ to pinctrl states to reduce DT size
+> 
+> Changes in v2:
+> - Split cts/rts into separate pinctrl configs as suggested
+> - Removed options from board DTS files to keep them cleaner
+> ---
 
 -- 
-Lee Jones [李琼斯]
+Yixun Lan (dlan)
