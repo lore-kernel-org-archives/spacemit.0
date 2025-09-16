@@ -1,46 +1,53 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F771D7E41
-	for <spacemit@lists.linux.dev>; Tue, 16 Sep 2025 13:05:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69CA3375CF
+	for <spacemit@lists.linux.dev>; Tue, 16 Sep 2025 14:58:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758027960; cv=none; b=pSeFOa5Ts601meHeAI4JltVTPDhKF/k4+QW6N4eNZrF6kOKWjqqRaD7aMkytwWMngmE3hsT5wtY0I5Pi9Mf8vqQJIMkYnC9u+U38O0gbkQl7Z7dYkiUGICklMRdOOyraOJldDSykWUagb6RUOf6hgDyXqG9sXRzo8dttr89xAmM=
+	t=1758034688; cv=none; b=VlO1+6IsOgRySV1yG1UuedZgJWAcBeuCOrqCmHMzUv07aHTcnwdO+9UDX77y+CwjgtUC7AGEbmiX9ajpJ7Z48jch9PlfXg6xgLX1+/g1eNBwHi97Sc8tdRpmDmwqCM1uXZLuNh8N4/iDnm0eCtYzsg/bNTo/grCJ1NTLXvg20YQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758027960; c=relaxed/simple;
-	bh=7PFeQhGub4pc5GdZaWttUgFBwNnytLn3zDlqurXe9Zw=;
+	s=arc-20240116; t=1758034688; c=relaxed/simple;
+	bh=45aAFCCLP5+JpH8+fy7Pi266rTzdrVa3fEsLjKr4y4w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q1zDHrH0/MuMzhJnVnvsAPQs4RJQXrRYGJ6J/djLquOya0ZG7C9r61VBvZc1I9duTwBVK7jAiQhwfJmf4EHAyC13bywOElUjN+407X6rMATi25eVs/mk8lp53DLKEoQNZC52LM6fCbcZ0JtugrXJTNyAWCTx/1FtUHrkcdgej3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [180.158.240.90])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 6061A340E10;
-	Tue, 16 Sep 2025 13:05:58 +0000 (UTC)
-Date: Tue, 16 Sep 2025 21:05:53 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Lee Jones <lee@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>, Alex Elder <elder@riscstar.com>,
-	lgirdwood@gmail.com, alexandre.belloni@bootlin.com, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, mat.jonczyk@o2.pl,
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, linux.amoon@gmail.com, troymitchell988@gmail.com,
+	 Content-Type:Content-Disposition:In-Reply-To; b=l6cAQcYDN4ZcTI96nou92oG9NfQJ+Zy4cuCAFqo5Kspl0ywysTj+oCGMz1Lkhc2bsDKHGzl7B+SWVv2qIsvNKHV8Otd1TmH7LM3c0DiDQVylZhGaOo1+SfWUMgQGGlf8As3mYtCITK2WB6vsMSIny6PAP9L8GhfKP8XAsJhFReY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=B7aOeUXj; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="B7aOeUXj"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 328651A0D5A;
+	Tue, 16 Sep 2025 14:58:03 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id F1BA16061E;
+	Tue, 16 Sep 2025 14:58:02 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 449F8102F179E;
+	Tue, 16 Sep 2025 16:57:48 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1758034682; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=bG7jqwDvwnMc7LKOXfefsfuPcEBkoTgIfTnNQ5xb3R0=;
+	b=B7aOeUXjfCsW+Dlii7CJAjRoXF0N21Pde2jHkNplWhvSErBR/Il15KgX8NlYo4+wUlwu9D
+	Pc4PlN7ZXRRZzxQQ+vho3mpz0TSvleSyoSnbSsTcYjWFbDo1ulhxIcOza9vBZaMzrUiZAG
+	6r/+gV4y8GUOLMrltPg6hASqSECE133GI0FBxDJ+69bPLEElb0ZSt/mIVJpWwoD31Ggdl1
+	gN2pOO8PjrtsP/n0XLe8q6X++2crVhZAeD7jdBo8CGOVHBwnWfxOJxm8gbbzbmYxv2yq5q
+	wsuT7Om98eOUTGy/v6uWC5DH4GzLluuKDB4cwJI4daWKeIsTNt+rMNr3mTe7JQ==
+Date: Tue, 16 Sep 2025 16:57:48 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: lee@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	Alex Elder <elder@riscstar.com>
+Cc: mat.jonczyk@o2.pl, dlan@gentoo.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	linux.amoon@gmail.com, troymitchell988@gmail.com,
 	guodong@riscstar.com, linux-rtc@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v13 0/7] spacemit: introduce P1 PMIC support
-Message-ID: <20250916130553-GYC1255161@gentoo.org>
+Subject: Re: (subset) [PATCH v13 4/7] rtc: spacemit: support the SpacemiT P1
+ RTC
+Message-ID: <175803465665.231523.13284487487341532209.b4-ty@bootlin.com>
 References: <20250825172057.163883-1-elder@riscstar.com>
- <175690199980.2656286.5459018179105557107.b4-ty@kernel.org>
- <ec882a78-9604-45b1-9405-8f2f958f307c@riscstar.com>
- <7aba368e-709b-49b0-b62c-f2f8250c8628@sirena.org.uk>
- <20250916084229.GG1637058@google.com>
- <c8bcfff9-9d2a-426d-9df8-100efd2af64f@sirena.org.uk>
- <20250916122724.GB3585920@google.com>
+ <20250825172057.163883-5-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -49,45 +56,27 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250916122724.GB3585920@google.com>
+In-Reply-To: <20250825172057.163883-5-elder@riscstar.com>
+X-Last-TLS-Session-Version: TLSv1.3
 
-Hi Mark, Jones,
-
-On 13:27 Tue 16 Sep     , Lee Jones wrote:
-> On Tue, 16 Sep 2025, Mark Brown wrote:
+On Mon, 25 Aug 2025 12:20:53 -0500, Alex Elder wrote:
+> Add support for the RTC found in the SpacemiT P1 PMIC.  Initially
+> only setting and reading the time are supported.
 > 
-> > On Tue, Sep 16, 2025 at 09:42:29AM +0100, Lee Jones wrote:
-> > > On Thu, 11 Sep 2025, Mark Brown wrote:
-> > > > On Thu, Sep 11, 2025 at 11:36:41AM -0500, Alex Elder wrote:
-> > 
-> > > > > How should these two patches be merged?  Mark has reviewed the
-> > > > > regulator patch 3 and Alexandre has acked the RTC patch 4.
-> > 
-> > > > We'd both have been expecting them to go via MFD.
-> > 
-> > > Why?  I don't see any dependencies between them (usually a shared MFD
-> > > header-file).  If there are no deps, it should be taken through its own
-> > > repo, no?
-> > 
-> > I used to just apply things but at some point Linus complained about
-> > cases where the MFD ended up not getting merged (missing the merge
-> > window or whatever) so I've been treating them like they had an actual
-> > dependency.
+> The PMIC is implemented as a multi-function device.  This RTC is
+> probed based on this driver being named in a MFD cell in the simple
+> MFD I2C driver.
 > 
-> Not sure I've seen any of that from Linus, but I don't doubt you.  The
-> MFD part has been merged now, so it's save to go ahead and apply the
-> Regulator part.
-> 
+> [...]
 
-Forgive me to chim in..
+Applied, thanks!
 
-To be honest, I don't really mind which tree the patch to go through.. 
+[4/7] rtc: spacemit: support the SpacemiT P1 RTC
+      https://git.kernel.org/abelloni/c/c96433f4806f
 
-But since the patch 3 has no build time dependency on previous two,
-so it should be fair to take via pmu/regulator tree, I've done a check
-locally which imply this..
-
-What do you think, Mark?
+Best regards,
 
 -- 
-Yixun Lan (dlan)
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
