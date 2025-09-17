@@ -1,127 +1,103 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820C821B918;
-	Wed, 17 Sep 2025 01:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B2E2FB0BA
+	for <spacemit@lists.linux.dev>; Wed, 17 Sep 2025 03:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758072588; cv=none; b=usR5U7fJ277DC5AhMLStqtiuUpt/lGdSd9MQMU5isHaIJ2cKlrEc7s1skFWK5l77WWbm/WcuCXa3Qts8B8rOVLUngjdJSMRCqUUlpa2SFmwSugBeFC6rm6sWyV2E1aX8fPwsDIIROU3ZfbrHEN6/7PeQfYGb9V8koDQcJZPfKgg=
+	t=1758080329; cv=none; b=m/Fun2vAQcpK2BQzlCdSf5R5wEmhMqmXBWrjlbdiT6hypATN8Fza6dxFqWGdYQ6s02WSqb5CJxJic9lYhcbszQIZlFRhMIoKX2+7m+vaNmNBz73xhAvJytYkvkG2MXlO0nh8e9M6PlZkYgBPCYv4gdGKtsmAxJO4aQI3deYa2rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758072588; c=relaxed/simple;
-	bh=hhZVsw3zt3A/oYqZ99Gjxd13hAnEOnscKFd/+BWn5Qc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SGsxPH/1pwf41HSLIhJeP8MWEFPYrbP5gMg3O07pwTnSoF5K0WADYVHZx73s5toLVekhCRA9iOKfnrSvxWIwGwFEJbeUTnQVBYLC5UiSFI9m0CELnw19DfOJcDPypjxta2Ev5aVcduKg4vhfQdqkOaqZPLUbsac2yPyKGAanhIU=
+	s=arc-20240116; t=1758080329; c=relaxed/simple;
+	bh=kCJWp3JQo7Ul2VLXlTTjnxcurS4jfdZsVWUeoxEaPHo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Lm9BQ39WLh9fzEvDZUVURFm3hNaTCGL2sN3soS4r1cNEBy9POJ7nd7HDvQ0ShMgLwCaq0bc2TCcPKWSMik9x13nti0i1otQvHVU0xCADL2TQ2bq0cQKP5Tdk0Sn4374vwgzVPoHDwP7OE58VJ7h6xvCKl3fqzNmyQtDNTOLCcrA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [180.158.240.90])
+Received: from [127.0.0.1] (unknown [180.158.240.90])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 71C89340EF8;
-	Wed, 17 Sep 2025 01:29:45 +0000 (UTC)
-Date: Wed, 17 Sep 2025 09:29:41 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id A319A341455;
+	Wed, 17 Sep 2025 03:38:42 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, skhan@linuxfoundation.org,
-	linux-kernel-mentees@lists.linux.dev, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] riscv: dts: spacemit: add UART pinctrl combinations
-Message-ID: <20250917012941-GYA1263349@gentoo.org>
-References: <20250916064739.196695-1-hendrik.hamerlinck@hammernet.be>
+Date: Wed, 17 Sep 2025 11:38:13 +0800
+Subject: [PATCH] dt-bindings: i2c: spacemit: extend and validate all
+ properties
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250916064739.196695-1-hendrik.hamerlinck@hammernet.be>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250917-01-k1-i2c-schema-v1-1-bd276b366d9c@gentoo.org>
+X-B4-Tracking: v=1; b=H4sIACQtymgC/x3MTQqAIBBA4avErBtwhNK6SrQwHWuIflCIILp70
+ vJbvPdA5iScoa8eSHxJlmMvoLoCv7h9ZpRQDFrpRnVkUBGuhKI9Zr/w5jC62BpqgpmshZKdiaP
+ c/3IY3/cD7ZfnZ2IAAAA=
+X-Change-ID: 20250917-01-k1-i2c-schema-faf6715d7b88
+To: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Troy Mitchell <troymitchell988@gmail.com>, 
+ Alex Elder <elder@riscstar.com>
+Cc: linux-i2c@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1307; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=kCJWp3JQo7Ul2VLXlTTjnxcurS4jfdZsVWUeoxEaPHo=;
+ b=kA0DAAoBMarqR1lNu+0ByyZiAGjKLT+jcVbQ9mbdO+pc6V7MsBoyymoCp7WSndSvDE1LSGBct
+ okCkwQAAQoAfRYhBLW6uMnDG3EVZwIj3DGq6kdZTbvtBQJoyi0/XxSAAAAAAC4AKGlzc3Vlci1m
+ cHJAbm90YXRpb25zLm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRCNUJBQjhDOUMzMUI3MTE1Njc
+ wMjIzREMzMUFBRUE0NzU5NERCQkVEAAoJEDGq6kdZTbvtWmkP/1G7yZg775d2eLm6/NDSng5Lfk
+ dnzQ0QplcxlL0ZOCEBOLadQmfSeEupPkxzV9BqFcDNbKtCedUGNAQLUB/KeqmPDo7uny4adSBhL
+ 66sudGMt7WjVxUXh2sC4h9p6skCD91iuOhEz4TS4eYJhWXF2R7pWieIf0I7qBfEAoMr755V7o3k
+ e5DnNPoGlOQ53Fg0bPgA+teKfHQCn1bGiowidkboXFO5YLDJv7geWRoUEkj9hdSqE9Ry6A+ivVA
+ q1fTN4GNogKmGRSIhlBVxZWg+MPMxW3SiSwYZh+ThMWefgMSowE6HLA5qP+EVkpOtul2Oj2vkHZ
+ S2iIrbmC7/HHX2ty4WZNNSeoAC2YzZ951QsgAKsa3baME+gVYdKmHZClSfCbb/nxU6ttaM/TXHo
+ EkffZcfv57vGmfIwT6Clj9zaW8EN1+8aWlO5M9e9khTfof4esde1wBBUkG6bvR46OS20AmSUGzT
+ 7i02riLBSwUy6eo8HCQ3qUg5FtTTnoSv288YUuYdyjkanc7mfN+SMpHYLUGtob5RG1ovSVH5wMl
+ BNnlgGb7GsFCWmj8oPL2x8CBAdHn/7BXQw5fcoigfggX0AP/wPd+kpOCNpXK8jtnjJeHBHCCpBb
+ 1wKI0XYQz/je1IlIQndhnU2GiEScRHe77dkNqSpfPXfR6hLVT0t6z32sOM
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Hendrik,
+Extend the K1 I2C properties by including generic i2c-controller schema.
+and this will enable it to do the DT validation check later.
 
-On 08:47 Tue 16 Sep     , Hendrik Hamerlinck wrote:
-> Add UART pinctrl configurations based on the SoC datasheet and the
-> downstream Bianbu Linux tree. The drive strength values were taken from
-> the downstream implementation, which uses medium drive strength.
-> CTS/RTS are moved to separate *-cts-rts-cfg states so boards can enable
-> hardware flow control conditionally.
-> 
-> Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
-> ---
-> Changes in v3:
-> - Added /omit-if-no-ref/ to pinctrl states to reduce DT size
-> 
-> Changes in v2:
-> - Split cts/rts into separate pinctrl configs as suggested
-> - Removed options from board DTS files to keep them cleaner
-> ---
->  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi | 432 ++++++++++++++++++-
->  1 file changed, 429 insertions(+), 3 deletions(-)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-> index 381055737422..7811fb485bd4 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-> @@ -11,12 +11,438 @@
->  #define K1_GPIO(x)	(x / 32) (x % 32)
->  
->  &pinctrl {
-> +	/omit-if-no-ref/
-> +	uart0_0_cfg: uart0-0-cfg {
-> +		uart0-0-pins {
-> +			pinmux = <K1_PADCONF(104, 3)>,	/* uart0_txd */
-> +				 <K1_PADCONF(105, 3)>;	/* uart0_rxd */
-> +			power-source = <3300>;
-> +			bias-pull-up;
-> +			drive-strength = <19>;
-> +		};
-> +	};
-> +
-> +	/omit-if-no-ref/
-> +	uart0_1_cfg: uart0-1-cfg {
-> +		uart0-1-pins {
-> +			pinmux = <K1_PADCONF(108, 1)>,	/* uart0_txd */
-> +				 <K1_PADCONF(80, 3)>;	/* uart0_rxd */
-> +			power-source = <3300>;
-..
-> +			bias-pull-up;
-here, see comment below
-> +			drive-strength = <19>;
-> +		};
-> +	};
-> +
-> +	/omit-if-no-ref/
->  	uart0_2_cfg: uart0-2-cfg {
->  		uart0-2-pins {
-> -			pinmux = <K1_PADCONF(68, 2)>,
-> -				 <K1_PADCONF(69, 2)>;
-> +			pinmux = <K1_PADCONF(68, 2)>,	/* uart0_txd */
-> +				 <K1_PADCONF(69, 2)>;	/* uart0_rxd */
-> +			bias-pull-up;
-> +			drive-strength = <32>;
-> +		};
-> +	};
->  
-> -			bias-pull-up = <0>;
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dtb: i2c@d401d800: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'pmic@41' were unexpected)
 
-Sorry, I've overlooked this, the bias-pull-up need to explicitly set to
-a vale of 0, 1 - normal pull up, or strong pull up.. for uart, the normal
-pull up should be ok
+Link: https://lore.kernel.org/all/20250825172057.163883-6-elder@riscstar.com/ [1]
+---
+ Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-please refer Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
+diff --git a/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml b/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
+index 3d6aefb0d0f185ba64e414ac7f5b96cd18659fd3..226c600deae142413277117e25baae09f0918381 100644
+--- a/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
++++ b/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
+@@ -9,6 +9,9 @@ title: I2C controller embedded in SpacemiT's K1 SoC
+ maintainers:
+   - Troy Mitchell <troymitchell988@gmail.com>
+ 
++allOf:
++  - $ref: /schemas/i2c/i2c-controller.yaml#
++
+ properties:
+   compatible:
+     const: spacemit,k1-i2c
 
-Since the rc6 is already tagged, I'm about to prepare a PR, so If you able 
-to respin a new version quickly, I'd be happy to take, otherwise let's wait
-for next merge window (which shouldn't be a big problem)
+---
+base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+change-id: 20250917-01-k1-i2c-schema-faf6715d7b88
 
-btw, please always do a DT check: 
-  make ARCH=riscv dtbs_check W=1
-
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan
+
