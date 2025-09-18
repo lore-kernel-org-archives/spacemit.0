@@ -1,128 +1,140 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B401531065D
-	for <spacemit@lists.linux.dev>; Thu, 18 Sep 2025 15:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79AB3112DD;
+	Thu, 18 Sep 2025 16:20:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758211123; cv=none; b=XntJYFzw14689sjt7y1VunUCC+xAOBRZXdxpZMp2KIBHwFTgBqJEJ1nWnxBOKpfePIWcCUVZS8wS7XZ5sjr3XKBSKXdDxhwwDPXFCWqGrMA/JlfTsV+Xr+ve+iQLKPPoEuWVveLiiTMlWy78S0is+/wBLdMUnGSK/tLB3EWNTzQ=
+	t=1758212431; cv=none; b=qp+4RK0kl5BufXATJ00AxUkDeNDZdrLwDF6UDXyotPBAXLygJXw+i5GZQjq4gn7Ow3NDHI84TW6aUuWvfvs/98ccRwO46HETJ2U4ydDw5p8LU8tncBwHro01Dfs6kRbP3w2hs6mQ13N/Ge1dEKTF/LcgVv9oM6b7iA5UPr7Fk4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758211123; c=relaxed/simple;
-	bh=mBOMOV2UEaBJS1bN98PWLw1Tk1D7AqCi+UV4js6u0C4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NsNQu0GQLTvS8KD92YJF0+Hed2APoTr0tMP3a9IUmZcVI69zvCuMKv76R89NhIKv6Tvgv1M2HFBD2gdQuoo2UODfkWJ0BV8w61GdgTw1/iRiZpnJXS0oBsFNZz+iY4rj1KWq+5/jsN9qzDCq7lGYxpXcSuVPQ0Q2f9s8kNhjNX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=Npeq+Hug; arc=none smtp.client-ip=209.85.166.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1758212431; c=relaxed/simple;
+	bh=+QFOanT/mQexritkRfOqq2/uPgHue7oVT+RQTYO0HDk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=pMCcOvQ44UqrulPnsNZ/DR7H0GnOBrKk8Kj6cZAVlTPMApMW0VANyRTQKx/956817ZI5rUdo1zvWWTaB980sz8vDQOCYcvzG0RDqqR98gSaT5BYPNrXHjwiJogqzMuEoONgcv4T0Yfec+//eOrqzFL71tuS7Do/Pou/JBveACu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=FV+l2ayH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gxIg8TDw; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="Npeq+Hug"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-892db7eb552so147899439f.1
-        for <spacemit@lists.linux.dev>; Thu, 18 Sep 2025 08:58:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758211121; x=1758815921; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RWwPXk3+CMDIY3Ii9TMDH0aQbdb6ssOVOtszqmINL5E=;
-        b=Npeq+Hugg9bON2Gfl8/qO72J1yG8rWEcewXH9pg1J7zHqbkVzdNZJEY7fD722pqLM2
-         6IFIdxBrYF/j7A7w/JBSktI2KJhRn3myYLN5hwBx2e5PtKxv0QKZtL+IEPI6gDEqK3p7
-         RN7i3jhiUDIOg8CmqHjyv+vqzgOGRF+xJU6FDZ0G10sr6GA6jfFpKRY31TzJEZt9W0R1
-         YD1PrRWzYu1ARFW5tEJlmyew9QugBmOLvWUe0NZ2WQlAMal5Nc05/Amnai+lYVREXdZe
-         1sD7mZWY/JweVz9Aon08oCPqYobQ1BAHXyi4t+cPDYiLa3O0oqNhYTQyFS6/5X6otEE8
-         q26A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758211121; x=1758815921;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RWwPXk3+CMDIY3Ii9TMDH0aQbdb6ssOVOtszqmINL5E=;
-        b=usP+zFNuNku0EW643b1QbKkKm4tC8gM6cG+CsNWGZPke44mKhvwFsX0EsmknoD5yMi
-         jgpKj07ykMnDoxYWpoBzak72yRBlhAbZgccR0MERSx45a9d6z/givcBlrwhRboRY8U7F
-         926hG5HQ+E/jqcSXSM0/u8lrHI0sEpp4TQJ6UGZgxVlU87BoeD6uDTiWDZYhQTgpM2pp
-         r1MsqnbrRk+Fs49MqpNkVP2MvD26ReaTLzYEC3vHNEmG1UuEjVkhAAGIgWXVnRA8f+Oa
-         tp+YAzVPEalWxu//HEhSA0WDtte0pTA30bpbu2BmQVSLdPL1+YmAs8iQMKxi+3Qdeay0
-         ikGg==
-X-Forwarded-Encrypted: i=1; AJvYcCVjn4UMIbe8o6pjheGZiF+k4Js2P/Rn6rp82l0P4314SCJz7/9vVgKGiR4bt2KwjmJ20qoS74/LUg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx0cR0FV8sEWZ8I+w2+vbm4ChpAPYk/S70hzh3+Fz2Dtjqd6DS/
-	RoVZOxgm+pXChCH8PHvFQzaQjyo8yFFLIQaVyzjnb2gkgzpyZ7dB7APm9cdylcQeYL4=
-X-Gm-Gg: ASbGncum685tm19YwfwrjlvNqy26Gp5xSGturOQqogi5xUZ+01QjubJEpTdoOcGIZaD
-	DgsIxpxRAwLJRKgEOEtd4Hi5paIlDbYyQDIdc7lUN0uoRpwotcGJKgrCD501OW8xPL7vSH9fo/z
-	1+s2QIswNQGw7Az2Wava/J5nV9dXtmjxHm1Nt5Gdo794KemNyouC6j+gnBVRwrZLXzzon830OUE
-	W4nUNUJbVN4koJIeAQHDMQa1LhncRnhoNMTica8M6xVpotBAETrcnIqWy7b2SEVjD9D4AtobkNP
-	AodKkM1mcrVu+TG0vWdwbwsO99lEdTvfVSa63dQqo/vTiDBCCXtrBWTL5UNxEV/wMBPNsjzVl8+
-	OS0NysfPxwtYA+/R2hDINS0/b5j+QnYILKHO8deQfPh+DpYMmqpW/NNGACokNFvly4IC2uUHNVC
-	bMomIoBRbJHBVcRO+p
-X-Google-Smtp-Source: AGHT+IF7L6Nzhpq00zRjUOtUlsvmOyj8YvPWYBfqvWW1/q2pHZGHXZWCIyaJ4bn8yb0d408EYIgLfQ==
-X-Received: by 2002:a05:6e02:b48:b0:41f:8265:4100 with SMTP id e9e14a558f8ab-4248199c677mr962075ab.18.1758211113083;
-        Thu, 18 Sep 2025 08:58:33 -0700 (PDT)
-Received: from [172.22.22.234] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d3a591637sm1058871173.15.2025.09.18.08.58.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Sep 2025 08:58:32 -0700 (PDT)
-Message-ID: <000a41ee-a099-4944-8ef5-eed768f905cb@riscstar.com>
-Date: Thu, 18 Sep 2025 10:58:30 -0500
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="FV+l2ayH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gxIg8TDw"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1F35DEC02F1;
+	Thu, 18 Sep 2025 12:20:29 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-05.internal (MEProxy); Thu, 18 Sep 2025 12:20:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1758212429;
+	 x=1758298829; bh=tmGWVjr/plBDzfvbAKhx6iARmpyl4UPvOj4rfEO7kFM=; b=
+	FV+l2ayH/eDb0mQLXR69ETsvV1qwsAmKxzDJgbyGHaqHvcbnmgMlVcLbFTDMofpw
+	ON0sGpEUQqJAHVzhmTVaPn2yuU0xkFrCyvg4RRZP7vVFkytGO0EDPKli3Mz/9M7h
+	madQpnZ1cA3vlmu3NCA2QPYawD+8voKPb49ORqItcyJEdHMVztgyv41fqe21BKqO
+	hgAIifuWgDM1hVgC66Cjiap766hU/oXcPuxxwFTXJ3LRR42eEUYSKfWwv9lqx3kt
+	lQAYbvLZ+Rmo9mIBv/NfnASAa56gk0GgzB64SCIMHp7V3RpsU0Ya2/K0VPbEc2ed
+	ioS46Q/Poj6u2i1jZbiABA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758212429; x=
+	1758298829; bh=tmGWVjr/plBDzfvbAKhx6iARmpyl4UPvOj4rfEO7kFM=; b=g
+	xIg8TDw+wGDwdhNseeH8YQdZA4S5R0gePYw95PhCD4jHuWNjQLsNWc44HnbQJtIn
+	ErzSTc0jFUHzLSktqtB638BiFwdBONE2xAYeh4YE98XLJZHNHdJULWv4ryUpjabi
+	l2HawHRz8lsVPHJcDmgNnlZauAlI5ZR1pOZBwVuL5RZaVQxUbCGE1fNEmwLaKLiA
+	OY4+Li0ZUCih62P01D/wDLOgCMui+W7RFVzgTxKuzKyd5UC31QX0zKLy4n2EkPnZ
+	uGpaxFii3FIsOT7gV8Y9H48vAhv8BXaebUjFc5eUVa7htJAtmaXPJHXIBqFqU54r
+	hvY6/lxTYll8J5otMd0CA==
+X-ME-Sender: <xms:TDHMaHjr4m47XfRFLnooPRe2UNPSJT0r0GNmMrr792IfZtvVnzDVUQ>
+    <xme:TDHMaEAuwoBhuaFP-JQrg89S7UxFTnblwjJBrztLYKz6C208oByCmcXs4HKoFRBuH
+    Fe3PxP7tYusQng0YoU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegieejlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdetrhhnugcu
+    uegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtthgvrh
+    hnpeefhfehteffuddvgfeigefhjeetvdekteekjeefkeekleffjeetvedvgefhhfeihfen
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvgdpnhgspghrtghp
+    thhtohepudegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegulhgrnhesghgvnh
+    htohhordhorhhgpdhrtghpthhtohepnhhitghkrdguvghsrghulhhnihgvrhhsodhlkhhm
+    lhesghhmrghilhdrtghomhdprhgtphhtthhopehjuhhsthhinhhsthhithhtsehgohhogh
+    hlvgdrtghomhdprhgtphhtthhopehmohhrsghosehgohhoghhlvgdrtghomhdprhgtphht
+    thhopehnrghthhgrnheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvhhkohhulheskh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgrrhgvshhhrdhkrghmsghojhhusehlihhn
+    rghrohdrohhrghdprhgtphhtthhopehlihhnuhigqdhrihhstghvsehlihhsthhsrdhinh
+    hfrhgruggvrggurdhorhhgpdhrtghpthhtoheplhhlvhhmsehlihhsthhsrdhlihhnuhig
+    rdguvghv
+X-ME-Proxy: <xmx:TDHMaJWhxE6rxyr5cSefV7mqkE0OKdEr0JChXXgYodtadvEo9XX01A>
+    <xmx:TDHMaIiva_JDjIyYc5ZQ80tB9qU93rVsR2cHpQHIOJaspdWO1QzhFg>
+    <xmx:TDHMaBdgmOziAfLicgsbA5M09jayoi0oO8IoAV4XMDf7mPHSdh5QcA>
+    <xmx:TDHMaP0DTYui7ukg6cwCVV80GEsHNvj9WkdzmT8QXhvkDxI3S7_Bew>
+    <xmx:TTHMaH7h5PkJyNVx-Xufz5qS5lyu8aPC2CeRkZ9vIKMesZ5ZAgZnvlCY>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id CE9F370006B; Thu, 18 Sep 2025 12:20:28 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] spi: spacemit: introduce SpacemiT K1 SPI controller
- driver
-To: Yixun Lan <dlan@gentoo.org>
-Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, p.zabel@pengutronix.de, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20250917220724.288127-1-elder@riscstar.com>
- <20250917220724.288127-3-elder@riscstar.com>
- <20250918124120-GYA1273705@gentoo.org>
- <034cecd3-c168-4c8d-9ad5-10cc1853894b@riscstar.com>
- <20250918143928-GYB1274501@gentoo.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20250918143928-GYB1274501@gentoo.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: ADSp2o6y9pwF
+Date: Thu, 18 Sep 2025 18:20:07 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Guodong Xu" <guodong@riscstar.com>, "Vinod Koul" <vkoul@kernel.org>,
+ "Nathan Chancellor" <nathan@kernel.org>,
+ "Nick Desaulniers" <nick.desaulniers+lkml@gmail.com>,
+ "Bill Wendling" <morbo@google.com>, "Justin Stitt" <justinstitt@google.com>,
+ "Yixun Lan" <dlan@gentoo.org>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ llvm@lists.linux.dev, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, elder@riscstar.com,
+ "Naresh Kamboju" <naresh.kamboju@linaro.org>
+Message-Id: <d2a99673-cc0e-4024-bc66-76d395ea4313@app.fastmail.com>
+In-Reply-To: 
+ <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
+References: 
+ <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
+Subject: Re: [PATCH] dmaengine: mmp_pdma: fix DMA mask handling
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-On 9/18/25 9:39 AM, Yixun Lan wrote:
->>>> +	virt = drv_data->ioaddr + SSP_TOP_CTRL;
->>>> +	val = readl(virt);
->>>> +	val |= TOP_TRAIL;	/* Trailing bytes handled by DMA */
->>>> +	writel(val, virt);
->>> I'd prefer to do like this, it's more easy for people to grep..
->>> 	val = readl(drv_data->ioaddr + SSP_TOP_CTRL) | TOP_TRAIL;
->>> 	writel(val, drv_data->ioaddr + SSP_TOP_CTRL);
->> This is an idiom I use to make it very clear that:
->> - The address being read is exactly the same as what's being
->>     written
->> - The value read is being updated with bits/values
->>
->> I find that putting the "| TOP_TRAIL" on the same line as the
->> readl() call obscures things a bit.  Like my eye doesn't notice
->> it as readiliy somehow...
-> fair, let's put it into another line
-> 
->> Yours is a pure coding style comment.  There are two pieces, and
->> I'd like you to tell me how strongly you feel about them:
->> - Using virt to grab the address being written and read (versus
->>     just using drv_data->ioaddr + SSP_TOP_CTRL twice)
->> - Put the "| TOP_TRAIL" on the same line as the readl() (versus
->>     having that be assigned on a separate line).
->> To me, the second one is more important than the first.
->>
->> Let me know how strongly you feel about these and I'll update
->> my convention througout.
->>
-> I'd strongly prefer not to introduce 'virt', so be something like this:
->   	val = readl(drv_data->ioaddr + SSP_TOP_CTRL);
->   	val |= TOP_TRAIL;
->   	writel(val, drv_data->ioaddr + SSP_TOP_CTRL);
-> 
+On Thu, Sep 18, 2025, at 16:27, Guodong Xu wrote:
+> The driver's existing logic for setting the DMA mask for "marvell,pdma-1.0"
+> was flawed. It incorrectly relied on pdev->dev->coherent_dma_mask instead
+> of declaring the hardware's fixed addressing capability. A cleaner and
+> more correct approach is to define the mask directly based on the hardware
+> limitations.
+>
+> The MMP/PXA PDMA controller is a 32-bit DMA engine. This is supported by
+> datasheets and various dtsi files for PXA25x, PXA27x, PXA3xx, and MMP2,
+> all of which are 32-bit systems.
+>
+> This patch simplifies the driver's logic by replacing the 'u64 dma_mask'
+> field with a simpler 'u32 dma_width' to store the addressing capability
+> in bits. The complex if/else block in probe() is then replaced with a
+> single, clear call to dma_set_mask_and_coherent(). This sets a fixed
+> 32-bit DMA mask for "marvell,pdma-1.0" and a 64-bit mask for
+> "spacemit,k1-pdma," matching each device's hardware capabilities.
+>
+> Finally, this change also works around a specific build error encountered
+> with clang-20 on x86_64 allyesconfig. The shift-count-overflow error is
+> caused by a known clang compiler issue where the DMA_BIT_MASK(n) macro's
+> ternary operator is not correctly evaluated in static initializers. By
+> moving the macro's evaluation into the probe() function, the driver avoids
+> this compiler bug.
+>
+> Fixes: 5cfe585d8624 ("dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support 
+> with 64-bit addressing")
+> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+> Closes: 
+> https://lore.kernel.org/lkml/CA+G9fYsPcMfW-e_0_TRqu4cnwqOqYF3aJOeKUYk6Z4qRStdFvg@mail.gmail.com
+> Suggested-by: Arnd Bergmann <arnd@arndb.de>
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
 
-OK.  I'll do it this way throughout the driver in the
-next version.
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
 
-					-Alex
+Thanks for fixing this!
