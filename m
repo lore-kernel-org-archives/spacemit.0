@@ -1,140 +1,153 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79AB3112DD;
-	Thu, 18 Sep 2025 16:20:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FF631CA4E
+	for <spacemit@lists.linux.dev>; Thu, 18 Sep 2025 16:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758212431; cv=none; b=qp+4RK0kl5BufXATJ00AxUkDeNDZdrLwDF6UDXyotPBAXLygJXw+i5GZQjq4gn7Ow3NDHI84TW6aUuWvfvs/98ccRwO46HETJ2U4ydDw5p8LU8tncBwHro01Dfs6kRbP3w2hs6mQ13N/Ge1dEKTF/LcgVv9oM6b7iA5UPr7Fk4o=
+	t=1758212543; cv=none; b=cbR/SkX6yF2dufjejkTSjBcdSuO+1QbJVZogvw8lkg8RxkQ26XuSDxHCzf2JjOzj+1aYx/jqNSrGc9JzhyebAfvEE8sMUaGfJjEgn92FqdW/YNi5rhT85GVx1JS6LgphLezK7hmpuVqd9IZR1Ur4YC/1yF3CUi2oKCeVpGXU4RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758212431; c=relaxed/simple;
-	bh=+QFOanT/mQexritkRfOqq2/uPgHue7oVT+RQTYO0HDk=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=pMCcOvQ44UqrulPnsNZ/DR7H0GnOBrKk8Kj6cZAVlTPMApMW0VANyRTQKx/956817ZI5rUdo1zvWWTaB980sz8vDQOCYcvzG0RDqqR98gSaT5BYPNrXHjwiJogqzMuEoONgcv4T0Yfec+//eOrqzFL71tuS7Do/Pou/JBveACu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=FV+l2ayH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gxIg8TDw; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1758212543; c=relaxed/simple;
+	bh=+crtDq0mXabYH2Lz3fi9Mlu1oIxDcHVi/vLFzRBDDfU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PPeKIRimAPXiqZ2KzLfAdW8+osu1IB92xJbc0qbCH3SLevSWiN1ZZY/jGOiJM2d7Ab8Vw0CQcctAYlvpci6FaD99BNuoezhjA16zL8D5MYC+aJLjZPWt2bgk2EA26AG+V/A/0X+T6bjtl2cT784qWVgbl7QWHsa+mpeL8jGtpmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=mw0wrNBX; arc=none smtp.client-ip=209.85.166.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="FV+l2ayH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gxIg8TDw"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1F35DEC02F1;
-	Thu, 18 Sep 2025 12:20:29 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-05.internal (MEProxy); Thu, 18 Sep 2025 12:20:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1758212429;
-	 x=1758298829; bh=tmGWVjr/plBDzfvbAKhx6iARmpyl4UPvOj4rfEO7kFM=; b=
-	FV+l2ayH/eDb0mQLXR69ETsvV1qwsAmKxzDJgbyGHaqHvcbnmgMlVcLbFTDMofpw
-	ON0sGpEUQqJAHVzhmTVaPn2yuU0xkFrCyvg4RRZP7vVFkytGO0EDPKli3Mz/9M7h
-	madQpnZ1cA3vlmu3NCA2QPYawD+8voKPb49ORqItcyJEdHMVztgyv41fqe21BKqO
-	hgAIifuWgDM1hVgC66Cjiap766hU/oXcPuxxwFTXJ3LRR42eEUYSKfWwv9lqx3kt
-	lQAYbvLZ+Rmo9mIBv/NfnASAa56gk0GgzB64SCIMHp7V3RpsU0Ya2/K0VPbEc2ed
-	ioS46Q/Poj6u2i1jZbiABA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758212429; x=
-	1758298829; bh=tmGWVjr/plBDzfvbAKhx6iARmpyl4UPvOj4rfEO7kFM=; b=g
-	xIg8TDw+wGDwdhNseeH8YQdZA4S5R0gePYw95PhCD4jHuWNjQLsNWc44HnbQJtIn
-	ErzSTc0jFUHzLSktqtB638BiFwdBONE2xAYeh4YE98XLJZHNHdJULWv4ryUpjabi
-	l2HawHRz8lsVPHJcDmgNnlZauAlI5ZR1pOZBwVuL5RZaVQxUbCGE1fNEmwLaKLiA
-	OY4+Li0ZUCih62P01D/wDLOgCMui+W7RFVzgTxKuzKyd5UC31QX0zKLy4n2EkPnZ
-	uGpaxFii3FIsOT7gV8Y9H48vAhv8BXaebUjFc5eUVa7htJAtmaXPJHXIBqFqU54r
-	hvY6/lxTYll8J5otMd0CA==
-X-ME-Sender: <xms:TDHMaHjr4m47XfRFLnooPRe2UNPSJT0r0GNmMrr792IfZtvVnzDVUQ>
-    <xme:TDHMaEAuwoBhuaFP-JQrg89S7UxFTnblwjJBrztLYKz6C208oByCmcXs4HKoFRBuH
-    Fe3PxP7tYusQng0YoU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegieejlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdetrhhnugcu
-    uegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtthgvrh
-    hnpeefhfehteffuddvgfeigefhjeetvdekteekjeefkeekleffjeetvedvgefhhfeihfen
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvgdpnhgspghrtghp
-    thhtohepudegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegulhgrnhesghgvnh
-    htohhordhorhhgpdhrtghpthhtohepnhhitghkrdguvghsrghulhhnihgvrhhsodhlkhhm
-    lhesghhmrghilhdrtghomhdprhgtphhtthhopehjuhhsthhinhhsthhithhtsehgohhogh
-    hlvgdrtghomhdprhgtphhtthhopehmohhrsghosehgohhoghhlvgdrtghomhdprhgtphht
-    thhopehnrghthhgrnheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvhhkohhulheskh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgrrhgvshhhrdhkrghmsghojhhusehlihhn
-    rghrohdrohhrghdprhgtphhtthhopehlihhnuhigqdhrihhstghvsehlihhsthhsrdhinh
-    hfrhgruggvrggurdhorhhgpdhrtghpthhtoheplhhlvhhmsehlihhsthhsrdhlihhnuhig
-    rdguvghv
-X-ME-Proxy: <xmx:TDHMaJWhxE6rxyr5cSefV7mqkE0OKdEr0JChXXgYodtadvEo9XX01A>
-    <xmx:TDHMaIiva_JDjIyYc5ZQ80tB9qU93rVsR2cHpQHIOJaspdWO1QzhFg>
-    <xmx:TDHMaBdgmOziAfLicgsbA5M09jayoi0oO8IoAV4XMDf7mPHSdh5QcA>
-    <xmx:TDHMaP0DTYui7ukg6cwCVV80GEsHNvj9WkdzmT8QXhvkDxI3S7_Bew>
-    <xmx:TTHMaH7h5PkJyNVx-Xufz5qS5lyu8aPC2CeRkZ9vIKMesZ5ZAgZnvlCY>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id CE9F370006B; Thu, 18 Sep 2025 12:20:28 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="mw0wrNBX"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-4242bb22132so9951835ab.3
+        for <spacemit@lists.linux.dev>; Thu, 18 Sep 2025 09:22:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758212541; x=1758817341; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AU2OV7gY++1HQBPAJUTGEHGKnym698Yje6WiyRPMWQ8=;
+        b=mw0wrNBXQMP2hZo3Hy3d6yll3rVMrduIY8TfhY4aLhhX/kyD8m6ipIVMagTD7SsqVX
+         Uv3jolq0rzmzUSJpQFJu8iHWHEY1oPgxVPwWDC9GzTYrp6+xOtgmFq1oDDghaf0j1JQb
+         oWMAvWpx52AgxI0Q4nqozldumZSShJ65hQv4OC8AyoRKTEjmT4JuTfvEmvJPuXWBWAiW
+         cyWsk1zFgXybCAyXQI2SSYa6Slk5cmd4gjL+uqReoowDUPqjFuPTeoNQImCl4rSlcOsn
+         9KU94FmaKJaTgSbpYUbw1XOp9HyXiGlLp37tKgn2VxOywGDq/ZmrdU0DqRz0xRUAunrW
+         DUVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758212541; x=1758817341;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AU2OV7gY++1HQBPAJUTGEHGKnym698Yje6WiyRPMWQ8=;
+        b=UFMIeR4lfa/m111wNwU0vwoufH46ZZEuyd2H7toRBn4a/NIReIVaoGignMDPc3cZvD
+         ciNAy7ifOOAW/izi/iHoJDlKc8GiFw0NPE2Ec7S3NLFhBouX3rSURzXOp3VXxYgIOgEy
+         LrtC1KeeaTf9PF+P7C4jFZt1FlrphDP+434iX5KazdMrPLmGu8N2Ut96ODinQX0Dyfqe
+         ZGr+dVaHweWpxeAVzoMP5OVA8Az2qThHTJkssFR7adG1Q19n2aj+d18M92mhhFpFB/yV
+         TfjicQ4KcOCCwCDcvOz1x82laDS3elJk8m62Hie10IOrJdy5vd9XdI+cRp3Ejkmfh09K
+         pKqA==
+X-Forwarded-Encrypted: i=1; AJvYcCUoDDkSMaVceOKR/AgWFDfY315d2ycAxxN7ducR8cfUoLTOw/iWuhSWO9iGZF+13N0RA46ap2KLWw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzL0DENNniYd7VNmBJO9+uutWw+A2pnLENrpVNisagzVtQyh0E/
+	1JM2VIoiVV5VXI2cGOStW33LtVOaIAqsh4My/bHzebOvQ3nw6xqMN3/Js/6ae/yyxkI=
+X-Gm-Gg: ASbGncumYADHOol7FmQH/6feqrzNB8Jo8kFoqMoD/YPmxM13QXj8DUoF5qZ0lUnDkn6
+	CPLy4BhFFqTJWnnWMDUiZrqRH+vvslPkCjafjkeUdURx9ia6JhPhygp78EG1FJPtaO3hVpFokp/
+	UI3XpkIuiJO1ChDTkFh6YGqDpYMrR+xJ+xODNJGJcl0u054wLBZ8XfTaSl8VIZnSR7g0KEiBSqD
+	EM14ne2CjcV9CfammfIRNi6rBe0mJ1dCNbCtyVoKGYRQDwGyO6RPThntRPhY0TuQr6Xo9jxWIil
+	xMZOXPJZ7SAinx8wtOzztUXwVcWOvRdiHU+Gx5Q+l8K0CU1hzO3vc5hMm7R+Ywz/s1in4dFlCT8
+	DXyV0faPZrtXXWV2TO3a/mbc6wT8Vq94ZgQPQPsKQHBq4Q+Ezfzq3KTfBu9KzcqQbTjIs+doGRb
+	bgDW5u6g==
+X-Google-Smtp-Source: AGHT+IEJA379jBFlrQdMuZZ7GAQYUyd69Hmjw5o+yqSb0aHO7CoUDX+AkO4upDsCoz0J8wxrQujxtw==
+X-Received: by 2002:a05:6e02:1b05:b0:418:aefa:bb83 with SMTP id e9e14a558f8ab-4248190b442mr2732905ab.5.1758212541014;
+        Thu, 18 Sep 2025 09:22:21 -0700 (PDT)
+Received: from [172.22.22.234] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d3e3373f6sm1110059173.29.2025.09.18.09.22.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Sep 2025 09:22:20 -0700 (PDT)
+Message-ID: <5a8364e4-3160-4459-9db4-c9d877ba8c6e@riscstar.com>
+Date: Thu, 18 Sep 2025 11:22:19 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: ADSp2o6y9pwF
-Date: Thu, 18 Sep 2025 18:20:07 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Guodong Xu" <guodong@riscstar.com>, "Vinod Koul" <vkoul@kernel.org>,
- "Nathan Chancellor" <nathan@kernel.org>,
- "Nick Desaulniers" <nick.desaulniers+lkml@gmail.com>,
- "Bill Wendling" <morbo@google.com>, "Justin Stitt" <justinstitt@google.com>,
- "Yixun Lan" <dlan@gentoo.org>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
- llvm@lists.linux.dev, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, elder@riscstar.com,
- "Naresh Kamboju" <naresh.kamboju@linaro.org>
-Message-Id: <d2a99673-cc0e-4024-bc66-76d395ea4313@app.fastmail.com>
-In-Reply-To: 
- <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
-References: 
- <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
-Subject: Re: [PATCH] dmaengine: mmp_pdma: fix DMA mask handling
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] spi: spacemit: introduce SpacemiT K1 SPI controller
+ driver
+To: Yixun Lan <dlan@gentoo.org>
+Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+ paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr, p.zabel@pengutronix.de, spacemit@lists.linux.dev,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20250917220724.288127-1-elder@riscstar.com>
+ <20250917220724.288127-3-elder@riscstar.com>
+ <20250918124120-GYA1273705@gentoo.org>
+ <034cecd3-c168-4c8d-9ad5-10cc1853894b@riscstar.com>
+ <20250918143928-GYB1274501@gentoo.org>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20250918143928-GYB1274501@gentoo.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Thu, Sep 18, 2025, at 16:27, Guodong Xu wrote:
-> The driver's existing logic for setting the DMA mask for "marvell,pdma-1.0"
-> was flawed. It incorrectly relied on pdev->dev->coherent_dma_mask instead
-> of declaring the hardware's fixed addressing capability. A cleaner and
-> more correct approach is to define the mask directly based on the hardware
-> limitations.
->
-> The MMP/PXA PDMA controller is a 32-bit DMA engine. This is supported by
-> datasheets and various dtsi files for PXA25x, PXA27x, PXA3xx, and MMP2,
-> all of which are 32-bit systems.
->
-> This patch simplifies the driver's logic by replacing the 'u64 dma_mask'
-> field with a simpler 'u32 dma_width' to store the addressing capability
-> in bits. The complex if/else block in probe() is then replaced with a
-> single, clear call to dma_set_mask_and_coherent(). This sets a fixed
-> 32-bit DMA mask for "marvell,pdma-1.0" and a 64-bit mask for
-> "spacemit,k1-pdma," matching each device's hardware capabilities.
->
-> Finally, this change also works around a specific build error encountered
-> with clang-20 on x86_64 allyesconfig. The shift-count-overflow error is
-> caused by a known clang compiler issue where the DMA_BIT_MASK(n) macro's
-> ternary operator is not correctly evaluated in static initializers. By
-> moving the macro's evaluation into the probe() function, the driver avoids
-> this compiler bug.
->
-> Fixes: 5cfe585d8624 ("dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support 
-> with 64-bit addressing")
-> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-> Closes: 
-> https://lore.kernel.org/lkml/CA+G9fYsPcMfW-e_0_TRqu4cnwqOqYF3aJOeKUYk6Z4qRStdFvg@mail.gmail.com
-> Suggested-by: Arnd Bergmann <arnd@arndb.de>
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+On 9/18/25 9:39 AM, Yixun Lan wrote:
+>>>> +	ret = of_property_read_u32(np, "spi-max-frequency", &host->max_speed_hz);
+>>>> +	if (ret < 0) {
+>>>> +		if (ret != -EINVAL)
+>>>> +			dev_warn(dev, "bad spi-max-frequency, using %u\n",
+>>>> +				 K1_SPI_MAX_SPEED_HZ);
+>>> the err msg does't really usefull..
+>> You mean there should be no error message, or that it
+>> should say something else?
+>>
+>>>> +		host->max_speed_hz = K1_SPI_MAX_SPEED_HZ;
+>>>> +	}
+>>> so in any case, there will be an assignment, I'd rather simplify it as
+>>>
+>>> 	if (of_property_read_u32(np, "spi-max-frequency", &host->max_speed_hz);
+>>> 		host->max_speed_hz = K1_SPI_MAX_SPEED_HZ;
+>> I add the warning so it's clear we're using something different
+>> than is specified in the DT.
+>>
+> I personally do not really care about the msg as long as there is a known good value,
+> but you could weigh this..
+> 
+> further I feel the warning message isn't accurate, if spi-max-frequency is
+> "bad", why not let user fix it? does "bad" means invalid or overflow?
 
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+The reality is that this is a property in the DTB, so it can't
+be "fixed" by the user.  It defines the *maximum* frequency
+that this particular controller (on this board, or possibly
+limited by what the SoC is capable of) will implement.
 
-Thanks for fixing this!
+Stating that it's "bad" seems enough, given it normally can't
+be changed--and we will use a sane default instead.
+
+It might helpful to indicate what the bad value is, but that
+complicates the code ("bad" could mean the property was
+specified without a value too).
+
+> I don't want to have bikeshedding on this, feel free to pick my suggestion
+> or keep yours, there is no much real difference
+
+I plan to keep the code as-is.
+
+I don't actually know whether the limitation is on the SoC
+or the board (or even whether it truly is the upper bound).
+I'll ask SpacemiT about that.
+
+The default value is expected to work on all platforms.  If
+If it's specified at all, it should be done in the board
+file (so it won't be in "k1.dtsi").
+
+If I don't learn of specific constraints, I'll omit it in
+the DTS file (it's currently unused).
+
+However I *will* add some new code that verifies that the
+value (if specified) is within the SoC-supported range,
+which is 6.25 Kbps-51.2Mbps.
+
+> thanks for your efforts to work on this
+
+And thank you for your review feedback.
+
+					-Alex>
+> -- Yixun Lan (dlan)
+
