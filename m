@@ -1,66 +1,66 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589ED303C9F
-	for <spacemit@lists.linux.dev>; Thu, 18 Sep 2025 12:00:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C497308F2A
+	for <spacemit@lists.linux.dev>; Thu, 18 Sep 2025 12:00:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758196807; cv=none; b=plAGg+Fpa3nazqD3bCw5B2Yf66dbR+FziOwiqEsDZdeVLHGV6I1edAmBDef0LEIis4XbsLJGkLPWTFpVCkvWYUFsJL65xAkmWQJ0zhjU3Q62mrpo5GERbahaYUsUqIeWmfdrCQ+BAnKOKPkCiGPfPyPt3jJwJh3Z8iaHurV6S1I=
+	t=1758196809; cv=none; b=r2PGP/tEmqqQS+xXlX5OJ6vb99b2bYHMnkOLZh4EGM2Ap52Pz3Ol1rC/kD2iRZ+pUANFdGO3Zmw55DRrgHDdUck6kYWldRKqpQrd3Pi3JGfpyzyC7Wcz+cEJIESSVgGgULWRjwWUZjI4Aha62t9XcLwDQXU9vmCl6EAlv212Wvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758196807; c=relaxed/simple;
-	bh=BiCnS6nvRQt9QJIQu21OOgBTBUSKKpEDfAYCnnRz0ZY=;
+	s=arc-20240116; t=1758196809; c=relaxed/simple;
+	bh=GMflzAzfPG6U1zOzWU4RjcrfYSa7kAlw9sH+pBQ+zkw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nEJY/6c4u4GqMi8G0eu5qgiP2Ai66SMh7jPQR6Ng2WZywG31MW3/Bl2pZVVVMJLCdanNHaC9VxyuLjZlbXnfbUm/UZaC7S5VJM2PIzpE4E/egUbjXNRpAfkRRTBa9vU2vvV8KTplYbgJFj+2F2SO/Zpu6HYturbgJkstQPbqPaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=rgcZBYXw; arc=none smtp.client-ip=209.85.166.177
+	 In-Reply-To:Content-Type; b=ArBE8raHlah3mexwi+JqtClOkOoYnHQtIVE4RXV/XkP8xv3cK7jxWDBde1gI+Jjvc0qV/bSv9zgZRzM6ZF0c1kjNpyuFiCNy4VDfoldWEPiWtbLtNFFrkLUE220LYtDzrSFlfrn+kRVvPnjrG4EQISyGiDPmIh+TX7Ql2+vFZkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=JkxNu/a0; arc=none smtp.client-ip=209.85.166.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="rgcZBYXw"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-42480cb4127so152905ab.1
-        for <spacemit@lists.linux.dev>; Thu, 18 Sep 2025 05:00:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="JkxNu/a0"
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-424144fb09cso4464965ab.1
+        for <spacemit@lists.linux.dev>; Thu, 18 Sep 2025 05:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758196804; x=1758801604; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758196807; x=1758801607; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=24dAp6S0Mw7uy79hEDvqIYLysQ8ECFwST6qu+5oIS60=;
-        b=rgcZBYXwZ8I80rpinw7KVZP4FRgaGz65mfV+9v4JpWEAA/4etq/NsOihb0BNa1OJ3d
-         pe2AepTnFIjaE6InLCEImI6YWHN/eQ/HNlX585K3mzZbgMSXbkFmhMTAGiXqYGwcw7H7
-         HSbPHJofNR+qN8xOf++bD6S02SiXaAkoY9GXmhySBjyazQgDLRlITNINrGhDsn6+JwOO
-         ualzz15rizG+92zj2mD4ruIwEubgoWQnprS811tQ5hLSfpVJQnvIQdPVfpLVc4dgSl4u
-         +DmKCzj6mpbZU+ACs0lB9YtXYsa91Or//h5SCPrnF0J9vaGQA2zKMUENGb1ETFYAPuAp
-         bLPA==
+        bh=8qhRL1lPN/JJ3TtUo+Jx4GT/xOTZw7lSfANOvM3eSdY=;
+        b=JkxNu/a0oJKo0jvrJisPsNIf4B5KiuE00bNsEDPu9QUM3uM1/8h3PQZEPoqxLiucaG
+         WvUo9BqX4vjzN/+AtCxR503dzx+B0YUFT48MqUs5pyyNXDk5/TsR8wssP0SnYFsYWgWn
+         opctfCJ2AiBHEMuUGyh9UvzKU2JXn6bMzM0Btcv0xy0ag5RetZWh0hLPFY69z5bxlNE1
+         jqMsvIWvAeTpqJppwPaMvXTlWpJ6MVIzBwlv8bPOCTmQK0ZZu/r4gsW/AhPY0J0Ycwbu
+         vIuBGSHBXO4C+71SBQJr5+J5F/daraSTkWFr+YL2Y//LK0zz7dVPbiTVH2Et+ST8GqCa
+         Kwcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758196804; x=1758801604;
+        d=1e100.net; s=20230601; t=1758196807; x=1758801607;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=24dAp6S0Mw7uy79hEDvqIYLysQ8ECFwST6qu+5oIS60=;
-        b=FRg5ffV5TgBWyC8CoqGJDmde+Cy2/DSZlzwfIuoXLlRXYe3tY3VpIgM++l2PR/rOOG
-         GhKpIdXOq4/LzB86R8lOSE/PI743s5CKVcQEMoCay++RH7l0iKQvVbqeK4YxPGfgj+Hc
-         5i3b5jMtMpwHmLWzx2ApIe6F1Yjm1tuSQnBE3BluCtUaF7EPMW8OUK9/2NLS6VG+c8Qv
-         ENr8AyLnkYRMxi5fVkxaqbtJ8whpg0HA2hcan6QJyxwjn00cVXXVjHPu+vpCUWrGNUyW
-         w86kQEQcxGCoFOejh92+tZLTATVrMvwLlt+ZbnoOCxRroGyRhkUcOHpAt9J+11FcJTpR
-         mKZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWWtFHjF58yb0dnwj8ocYUEhSFvQpuBzRrEz1YmC/ScljvxjdncEb4A3i5cxgzWIlTahFaRRB8MkQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxj/xVBOfsPgrZW2I4GChDW7a+9rZfz95uuCct0RXz0jnon3Tk3
-	uhTxNik4kR67H/i0yfd0CrBnvVX/Meluc9d5sj8yylYL+WjOS+gYd4jxoFTBc/cvYys=
-X-Gm-Gg: ASbGnctIpzPr0QkIAAXCnBn4qHDG9h2tGA1ceiqoHigoqu5ZsgKkoGzjNPma2gUsATY
-	sgRiOuWwPs7PRCPWBQt4/qaRQn8xCZChdbz/+F3yXQK21Ovf2uuQDx2FpFEz6ry0qJEt3igKg/W
-	Hhq7KmNVWoZVzG0ptyP8H7kR+0sSO0PPIILi4YSJN4+ubDwPfOJKf+v1C77OxSNpeXIhYPWQdEe
-	J1TjIPpe97ZrFMyHn1HlHSHrNzptFWpuq36JGiIqklVOuVqEfTXUkMRq0kDm3rZvn4AgFLHz1nu
-	3m1ubhpSqLbxl6fYsdt50OAW2bO4bKhcQCoGNe7qO82wfPZVdj15bVwubS9vL/JO0jUvGtV2bOp
-	ThF4agsM0oP3009O1RNUO4hNCE1f24nPfKvV6FQAEaiy7DmClWbQwbrJGQOUOFpeXc1muRYe5vk
-	ae8u0zQQ==
-X-Google-Smtp-Source: AGHT+IFijlR8XeEU0nDd9FqF6SZxYszafUFzoDoP3bqBLd4TIHjKMZRHmvYVFqpT9XVP5Gq1Y4eDhw==
-X-Received: by 2002:a05:6e02:1707:b0:424:485:1f03 with SMTP id e9e14a558f8ab-4241a4d26ecmr81727265ab.13.1758196804240;
-        Thu, 18 Sep 2025 05:00:04 -0700 (PDT)
+        bh=8qhRL1lPN/JJ3TtUo+Jx4GT/xOTZw7lSfANOvM3eSdY=;
+        b=pmfMwJlKaeuevQBH+AonZ174F8akVibdaL0OqFv4SCuhNu8QtTxWO9LafUPQvhYycc
+         mblcxQ1/MWlpj7jkgZ6IEUDuiNvpCN7VOi8y6KWt1SoUNo6ZZ7+TaXr53e1h7EaC1Pvd
+         20yOyUfwR9yf+9dFGsYUjVWk6HZuQXBCI/MIZxPgrFEGFQIK58piuZkDrlEeDBc5dQVF
+         2lsEvrNYNHZlHFXYhQj0QB4q54FPeKofkFiGizWzi9HRjUmyWVfDhZlRwFVucvKQ11UX
+         Jznq5OtihEPHm5K63s9QyTsowCaESGJzkRM+tC3Cb4o8NbgRM8cgzsmHXIsMrpDhTmw0
+         iT1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUtvBwkGs1p52fsfT3XoswjgAOWd60gqCZZCGb2u1gMLWeoqiI/MwGRa71lX3BTejYUD1SArD7BBw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzrf76yrrqRChnM27xnrWGM4Wvxv07Mm9YrCODzCQUstWPdl/dz
+	LtyijYQ7A42cvCa9EodRDAiWFMoDDzrqifg68LI7Gwo9aWiYOrwujraYrGmTvrT+fI0=
+X-Gm-Gg: ASbGncuM2WpC8eA9KSrnqFJc2t+8Q9ZpdWvpkYWlHZ8fdax2vyVVn0flr2EB8tWY7Zn
+	NFGDFboahuf0UtU9zsbDlnI4qHmoRbE9IR7x6kSn+GSgRuF0O/1LHFhc49eqBPd/qNN1dUvvHCv
+	Syqr1kdP+KcOfmEyVIYA8ERvFmhPJwm889j3iSJydZp6a0UPvSUrxsGwE0pRhT7xYC1efFDlBKN
+	YYIsPo5YGJaGuyYgjveLLJCYEI2mxZ5q3nK+fC045bWrZS1R0xu+lFO2GCZbjE4LCH5oyEaBhz7
+	kUlIw/nYzkyQ/DwOeh++B+SvPDP8L7SWucONH+75pkA2U+VOrIjkYDu7RrID2UqlSCD3039S8Vx
+	i+uLshh/nRS0euR0BAz38+HHdMGEIN7IUQJDBOmpDerxXK/Qld1ViR3cusEASQzYASNMlNjVhrL
+	qgV+0PHA==
+X-Google-Smtp-Source: AGHT+IFQAoOoSgU3pp/rBPSgXlJVaHY1FXv4zqmRznbRq1wJRwagCo1+JA2yZnbtsBf93bWGJ+FcbA==
+X-Received: by 2002:a92:c265:0:b0:424:bec:49f5 with SMTP id e9e14a558f8ab-4241a52891amr66059875ab.15.1758196807090;
+        Thu, 18 Sep 2025 05:00:07 -0700 (PDT)
 Received: from [172.22.22.234] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d50aa5dc6sm876180173.47.2025.09.18.05.00.02
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d50aa5dc6sm876180173.47.2025.09.18.05.00.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Sep 2025 05:00:03 -0700 (PDT)
-Message-ID: <88833bd7-dad5-4613-b29e-2db05d60f3f0@riscstar.com>
-Date: Thu, 18 Sep 2025 07:00:02 -0500
+        Thu, 18 Sep 2025 05:00:06 -0700 (PDT)
+Message-ID: <95d9b310-7edc-47b1-ba9c-81390e9a8532@riscstar.com>
+Date: Thu, 18 Sep 2025 07:00:05 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,42 +68,75 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: spi: add SpacemiT K1 SPI support
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Yixun Lan <dlan@gentoo.org>
-Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+Subject: Re: [PATCH 2/3] spi: spacemit: introduce SpacemiT K1 SPI controller
+ driver
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, broonie@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-spi@vger.kernel.org, devicetree@vger.kernel.org, dlan@gentoo.org,
  paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
  alex@ghiti.fr, p.zabel@pengutronix.de, spacemit@lists.linux.dev,
  linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
 References: <20250917220724.288127-1-elder@riscstar.com>
- <20250917220724.288127-2-elder@riscstar.com>
- <20250917231520-GYA1269891@gentoo.org>
- <3b815302-21f2-4ee2-bf83-c1dba77ce3d1@riscstar.com>
- <20250918001632-GYA1270371@gentoo.org>
- <f7e12797-ea17-4e92-bd25-cc562c66d2a7@riscstar.com>
- <D2A109C6A8BDED08+aMu4H4xap2GSP50w@LT-Guozexi>
+ <20250917220724.288127-3-elder@riscstar.com>
+ <4C1E339412373423+aMu5I4jmngaN0rOy@LT-Guozexi>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <D2A109C6A8BDED08+aMu4H4xap2GSP50w@LT-Guozexi>
+In-Reply-To: <4C1E339412373423+aMu5I4jmngaN0rOy@LT-Guozexi>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/18/25 2:43 AM, Troy Mitchell wrote:
->>> while looking at the code, it seems you can use alias to map specific id
->>> to the spi controller, it even can do non-linear map, something like
->>> 	spi0 = &spi3;
->> I've never used this before, but yes, it looks like it's exactly
->> what I want.  I'll just get rid of the "spacemit,k1-ssp-id" DT
->> property entirely.  Easy.
+On 9/18/25 2:47 AM, Troy Mitchell wrote:
+> On Wed, Sep 17, 2025 at 05:07:22PM -0500, Alex Elder wrote:
+>> This patch introduces the driver for the SPI controller found in the
+>> SpacemiT K1 SoC.  Currently the driver supports master mode only.
+>> The SPI hardware implements RX and TX FIFOs, 32 entries each, and
+>> supports both PIO and DMA mode transfers.
 >>
->>> plese check of_alias_get_id()
->>>
->>> note, I haven't actually verified on board, just look through the code
-> This is the right API that Alex what to use.
-> I have verified it in i2c driver.
+>> Signed-off-by: Alex Elder <elder@riscstar.com>
+>> ---
+>>   drivers/spi/Kconfig           |   8 +
+>>   drivers/spi/Makefile          |   1 +
+>>   drivers/spi/spi-spacemit-k1.c | 985 ++++++++++++++++++++++++++++++++++
+>>   3 files changed, 994 insertions(+)
+>>   create mode 100644 drivers/spi/spi-spacemit-k1.c
+>>
+>> +static void k1_spi_remove(struct platform_device *pdev)
+>> +{
+>> +	struct k1_spi_driver_data *drv_data = platform_get_drvdata(pdev);
+>> +
+>> +	k1_spi_register_reset(drv_data, false);
+>> +}
+>> +
+>> +static struct platform_driver k1_spi_driver = {
+>> +	.driver = {
+>> +		.name	= "k1x-spi",
 
-Yes, thank you for confirming.  I've already made the change
-and verified it works as desired.
+Oh wow I missed that one!  Yes it will be "k1-spi".
+
+Thanks.
 
 					-Alex
+
+> k1x? iis it from vendor driver? please keep k1-spi
+> 
+>                  - Troy
+> 
+>> +		.of_match_table = k1_spi_dt_ids,
+>> +	},
+>> +	.probe = k1_spi_probe,
+>> +	.remove = k1_spi_remove,
+>> +};
+>> +
+>> +module_platform_driver(k1_spi_driver);
+>> +
+>> +MODULE_DESCRIPTION("SpacemiT K1 SPI controller driver");
+>> +MODULE_LICENSE("GPL");
+>> -- 
+>> 2.48.1
+>>
+>>
+>> _______________________________________________
+>> linux-riscv mailing list
+>> linux-riscv@lists.infradead.org
+>> http://lists.infradead.org/mailman/listinfo/linux-riscv
+
