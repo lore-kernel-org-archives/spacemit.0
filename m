@@ -1,65 +1,65 @@
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D0522A4CC
-	for <spacemit@lists.linux.dev>; Fri, 19 Sep 2025 18:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE9E2874FF
+	for <spacemit@lists.linux.dev>; Fri, 19 Sep 2025 20:14:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758305180; cv=none; b=GiXgjvln/LQ7UquwvRH4kpbF7N9EWnL3Iqp/Oc4i6jSq+pN1jPD7V79Kk8NclGwmYa3Fuuzr9gtgV3dS5uv6sOtT8eAl1uldi1Bq6jQ+9ZP8bHXZoUtFzhSGAqOxpwEUBvrJPay5oeVvL/zAY3HCu2TTtebH6qB6XFIQTPWdykM=
+	t=1758312851; cv=none; b=UXcIdg3ctanH7OXENra48gErDD5EFJh90Vrwq/IWQXX0VCpFwo7wPwWoOlW/KZGcMnD+23TX4l8vzt1vj43uSInhQG5o/3E3Zg/VrP9T22fuw5L49O2iZrDap1HrOpa1oCWDyT+9XuKzHfYBokxLuS8mFEMVcSBRHDySnMAEFig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758305180; c=relaxed/simple;
-	bh=hSswRjdQ+04+nrR+tOkaECVX6apGop8z+9eTH/YRAUk=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=d2eEW20CiCF6mRl0rMbWIe/2FY5HV0UCHXROC2bMKfHE3vewsb5tkzQNgHEfC2/K8ssEjTlLMi8GgiJOOeoYlYgEJMPmwJ0CdaCosl2KF61+qdWVP48mRalnQWmF0nz6iIxfQuIyRMbbcfz2mrfCIulh1zgOpFrHuSxvUc/ucSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=GNUzAmDZ; arc=none smtp.client-ip=209.85.166.44
+	s=arc-20240116; t=1758312851; c=relaxed/simple;
+	bh=VRK+pmEe7PbC45zTMGIrHgpzmAUjzNw9/dwoa9Zpgsw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jcBYZdvuqLlr0Zw3qF2HpzhSlUw1fBCUfWZyaTNJs0diXn2CV3NrBJroUOEWb4P3twht8in9Pbz8obEnBAi0I8Xo8eQZFLz7ddl4fEWjWnZWKcG9m2ahvLzAe3rBvwFyhoVmoAO02yZp3xoO9vJsg2OszxKh9WbluARGaW6uXms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=n2S4tNyx; arc=none smtp.client-ip=209.85.166.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="GNUzAmDZ"
-Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-8936326129eso91489039f.2
-        for <spacemit@lists.linux.dev>; Fri, 19 Sep 2025 11:06:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="n2S4tNyx"
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-42401f30515so14128515ab.0
+        for <spacemit@lists.linux.dev>; Fri, 19 Sep 2025 13:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758305178; x=1758909978; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=PyDhfnNhpXNHSy1fs/Ww3WtAuz4kktx1C3rWmJRS220=;
-        b=GNUzAmDZOHJ6FpqNYOwxKUcrmhmiyxT6XEmV4Sd2Sr5Pk3ngwZ03SS83L5AKVXLSDv
-         +3hsMwxyCQ321Cs6QFDgRd8U0dko08P1lF3gREos3io0wy43lENcSWngfWrzgiS3y2Md
-         zzU9uXmts33FwYPhsiGU9YmYxchKAdp6n7+qhCCetGGPiHe8fTOj2jg6K6/a95D1ikNP
-         M0keuuRHsGWtttH3NXZX3vIjy1VZUPiC3UcF5poQD3nnP/livJEEO0TnQiliU6qywoZG
-         5DLkdhxcV5rxafzwy9GjYD58eCcgsR+d+M2szpnmA/gx/36r4Zm/Mp862BvtQM6RIFRN
-         yhfw==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758312848; x=1758917648; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=laoMcSCfK07azaBjCslDo0m3+R/kL+S83GK1yKfDxF8=;
+        b=n2S4tNyxEmh29USX0PC7pQCfeosCaQPZG9I6MSfU56hjQ0+F1eOBUZAQS5i6lu9qVn
+         AwdyyD0eJ1cZBVIxB6m3oA5ewIMaaYsUzkPoy4n4gPJMCYaZBC+Ge5EU6Tdrbgv97JSz
+         TkJsfBZmlYNfHd4YTptJzZoSq/aEXdFJR5v6SuqSBLmw30Oe/JmMPGlOgaz0Usev+1Cw
+         3zOLyC+utA242uf4bOb8OLSneD47esBzPFZrTGE2zSbSKzjA2deV6U967gpvX2kS7zOq
+         KallgYjnNF2CEQeZfhAkWlQCLSgDxwrLVqy4t2VSiJV3rM7v2X4J74/EK0anJm06H/YB
+         DOkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758305178; x=1758909978;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1758312848; x=1758917648;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PyDhfnNhpXNHSy1fs/Ww3WtAuz4kktx1C3rWmJRS220=;
-        b=ZBwc8xYWJQM7uPYMJFLZjWs/iQjCzNGP+iWMhNQrXJgcBPRoBjjL7B2vEsX9iu5yRD
-         1SwKcT53lvvjLv3cxgx/ClqR/T/1iPlyQtOEvuEMhUEKS8o6/98Mk7ixi0YJHDKJdN6j
-         VlJUkEvTZIBR2caOzIVbNYN/xj18WaWx9oOMhMGllonvB2M4/3D67whTRn02kK48kKQa
-         NSqgZeUU3eB3NJM/7HYtWaDuYI4vznJ4Ulx+WfVgAJBFuubwz6hNku6/Z/6vzn9tB5gC
-         b1SutFXYdNTDlTwklLpE7CL5fA0/wRnH+G/9LjCEZW6JI2LsT6Y+/XuuxWNFl6xFfMST
-         uuBg==
-X-Forwarded-Encrypted: i=1; AJvYcCVHy6iMyya8eKRvuKb//T4u8jYL5FCgsJDSUYJ7JcbMxXiZZFVDFkwMpE+eN4ooHZ1iEd9Q6GIatg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwO04oO8ELtg0YYWxSy41cCuU+hLAaNmrXKAi6o3NXsIrKb8jzQ
-	UODKwTn8aFWKLXUZ3+eDgyVCgMvCE5cZwIIDQhAUW/Wi5fuhdauwUtubhxlmK2cZ8Tg=
-X-Gm-Gg: ASbGncspHeYFaUj123kswzrPA88aJ9kRAowq8+dB/4aVhvUctF7/skASNqvhvvaB1Ym
-	WCBCn5PeSy/jN1Vxp7AyRqsqUIbVbHjwV92QtKb2OfzE/Y6UMVojXAPqbQCMoOvcMwUuetyh7mR
-	6ffj858ybwdjaJnuIPUIs+Vj7TZiVLY7tMVstAwfUs0qA5D36nRL/6wNQCfsJjXVKGK1GOXEJYF
-	Qb/PvdYdf4EG4JEtldti4+0WtCHPkPLab+t0N5SfnQYyxecH+P/F0CEzXvSaZT95h3bYhcDZ35O
-	Y9wA/EqrTVIQ8I+vH4nPob2e9QFB5w910ypmU3jpir3/yRq1Z1YJgxiEpO3RWF9AvMw3zGyLku0
-	xrh4DiOrE5+L92n3REsASS33DbBOErWT3tFegtqgsfTqtd3QkE+Ju/FDx/nhqVw==
-X-Google-Smtp-Source: AGHT+IHsassX7VCPU49903k7FzEDerinifFoBfyC5zAcBlOttmj7mzgkmLRJ6A7BaHGoGe18lpW13w==
-X-Received: by 2002:a05:6e02:148b:b0:424:1c30:a3a7 with SMTP id e9e14a558f8ab-4248197c46emr68662845ab.25.1758305177594;
-        Fri, 19 Sep 2025 11:06:17 -0700 (PDT)
+        bh=laoMcSCfK07azaBjCslDo0m3+R/kL+S83GK1yKfDxF8=;
+        b=ZFQgEp+/c11fa0z1bgxSlPrj7TOS1GS2VQNDg+jUIbpnNy2lrVzoUf7BERLrT0zJ3l
+         bApq5BtKJX37DoYOu8KB3vliip4P9fAEpvAMjL2R/it+RGwcXn0+Y4jhKSh9a8J6klFb
+         itMyCFUoLtQlhG09V7T5TAJT3fqaIvJdaVRcWpgW1fELv0HaJ9YS9aO9r9E+zqR4GUOV
+         l91n1C/EBx4ifSx3XvbM8TiUKEnbYHuc2BOKFgEG7uwOywopVaZfwBk41a3h5JDfiYhU
+         7woKgXteQodLbzBMAnkjYiBATax33xCO112T9Zz45rduI6NseoAidFi3JriK2XM0rvKX
+         8CkA==
+X-Forwarded-Encrypted: i=1; AJvYcCXJVBh80USnSBWaC+fgmdmI1vDLR6L7wwMyHmkahOluvoJahbG7X17Pbj6qjYUpyBLNtYKskeKaYw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwSWSEHjVVswbXr4D+kws1AmGZuxT12mHbzWS8Q1es55sLkFx6v
+	l/gm4YLOuGHjYhIrMLq9CgsVd9TdRNjTVkqqNl+TvScdAQG4DPwo1aTiQBdHZ/Z2dzQ=
+X-Gm-Gg: ASbGnctQX7r6gHsKKR09q+EfNuLLhjyJEsotpDaX5RRolUseYNUaX1i16lN/mDegrL8
+	crEyK1J6kRcHHE+abbe5JC9AqOu6AmpKSSFFWRRl09LTpOqoisqiJTMYpCfb6h/tGEN75f9wGN6
+	l6SKg2H3DRSLps182QENBhIThGsTWdCFrZIkefduYIVfEeEJ1LWKVLL4q9tbSuvdzOAdl0zsV+E
+	AjHcGheHnincJgGBzB810Ypc322ZU8GGQDC9h/DWDyFyEN179P4nklD5M5vaX60Oq8ykeMFJ+9V
+	GA4LBnegceyUUiphqGOCSrH94NvCv1QvA5IMOLTWZ80P9VlHHAS8n7aeH45Pkq8ltf0QzuAgdqD
+	8u22RYFf5vfBuQsClh6gfxabU5i5biP+sV6yl50WJYe1Nvo7h5cKz/jro5hlgkA==
+X-Google-Smtp-Source: AGHT+IF/1Bf6FjG2s85ZEcZvlS57Mzf5kDdUZySVUGALWKCNyJGWzPVLZfqNWOxGh/9d2jvI0LV4rw==
+X-Received: by 2002:a05:6e02:2163:b0:424:2c9:26b5 with SMTP id e9e14a558f8ab-42441af5e02mr127967325ab.9.1758312847889;
+        Fri, 19 Sep 2025 13:14:07 -0700 (PDT)
 Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d3a59103csm2326715173.6.2025.09.19.11.06.15
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d5399014dsm2475887173.59.2025.09.19.13.14.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Sep 2025 11:06:17 -0700 (PDT)
-Message-ID: <5463beb7-9909-4cb0-bb39-9f2d1aa4d2fd@riscstar.com>
-Date: Fri, 19 Sep 2025 13:06:14 -0500
+        Fri, 19 Sep 2025 13:14:07 -0700 (PDT)
+Message-ID: <804ea57f-699f-41cc-a27c-844f107e627f@riscstar.com>
+Date: Fri, 19 Sep 2025 15:14:05 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -67,12 +67,12 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] PCI: spacemit: introduce SpacemiT PCIe host driver
-From: Alex Elder <elder@riscstar.com>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
- robh@kernel.org, bhelgaas@google.com, krzk+dt@kernel.org,
- conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
+Subject: Re: [PATCH 3/6] dt-bindings: phy: spacemit: introduce PCIe root
+ complex
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
+ vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
  paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
  alex@ghiti.fr, p.zabel@pengutronix.de, tglx@linutronix.de,
  johan+linaro@kernel.org, thippeswamy.havalige@amd.com, namcao@linutronix.de,
@@ -81,129 +81,192 @@ Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
  linux-phy@lists.infradead.org, linux-pci@vger.kernel.org,
  spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
  linux-kernel@vger.kernel.org
-References: <20250813212219.GA294849@bhelgaas>
- <5d5eacff-4c32-4df4-8da0-3b55974b74aa@riscstar.com>
+References: <20250813184701.2444372-1-elder@riscstar.com>
+ <20250813184701.2444372-4-elder@riscstar.com>
+ <tmdq6iut5z2bzemduovvyarya6ho2lwlxvvqqhazw6dnnyjpq3@72xrd2pij42h>
 Content-Language: en-US
-In-Reply-To: <5d5eacff-4c32-4df4-8da0-3b55974b74aa@riscstar.com>
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <tmdq6iut5z2bzemduovvyarya6ho2lwlxvvqqhazw6dnnyjpq3@72xrd2pij42h>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 8/13/25 4:27 PM, Alex Elder wrote:
-> On 8/13/25 4:22 PM, Bjorn Helgaas wrote:
->> On Wed, Aug 13, 2025 at 01:46:59PM -0500, Alex Elder wrote:
->>> Introduce a driver for the PCIe root complex found in the SpacemiT
->>> K1 SoC.  The hardware is derived from the Synopsys DesignWare PCIe IP.
->>> The driver supports three PCIe ports that operate at PCIe v2 transfer
->>> rates (5 GT/sec).  The first port uses a combo PHY, which may be
->>> configured for use for USB 3 instead.
-
-I'm following up on a few things I said last month.
-
->> I assume "PCIe v2" means what most people call "PCIe gen2", but the
->> spec encourages avoidance "genX" because it's ambiguous.
+On 9/15/25 3:14 AM, Manivannan Sadhasivam wrote:
+> On Wed, Aug 13, 2025 at 01:46:57PM GMT, Alex Elder wrote:
 > 
-> Yes, that's what I meant, but I did try to clarify with the
-> transfer rate.
-> 
->>> +config PCIE_K1
->>> +    bool "SpacemiT K1 host mode PCIe controller"
+> Subject should have 'pci' prefix, not 'phy'.
+
+OK I'll update that in the next version.
+
+>> Add the Device Tree binding for the PCIe root complex found on the
+>> SpacemiT K1 SoC.  This device is derived from the Synopsys Designware
+>> PCIe IP.  It supports up to three PCIe ports operating at PCIe gen 2
+>> link speeds (5 GT/sec).  One of the ports uses a combo PHY, which is
+>> typically used to support a USB 3 port.
 >>
->> Style of nearby entries is:
+>> Signed-off-by: Alex Elder <elder@riscstar.com>
+>> ---
+>>   .../bindings/pci/spacemit,k1-pcie-rc.yaml     | 141 ++++++++++++++++++
+>>   1 file changed, 141 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml
 >>
->>    "SpacemiT K1 PCIe controller (host mode)"
+>> diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml
+>> new file mode 100644
+>> index 0000000000000..6bcca2f91a6fd
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml
+>> @@ -0,0 +1,141 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/pci/spacemit,k1-pcie-rc.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: SpacemiT K1 PCI Express Root Complex
+>> +
+>> +maintainers:
+>> +  - Alex Elder <elder@riscstar.com>
+>> +
+>> +description:
+>> +  The SpacemiT K1 SoC PCIe root complex controller is based on the
+>> +  Synopsys DesignWare PCIe IP.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: spacemit,k1-pcie-rc.yaml
+>> +
+>> +  reg:
+>> +    items:
+>> +      - description: DesignWare PCIe registers
+>> +      - description: ATU address space
+>> +      - description: PCIe configuration space
+>> +      - description: Link control registers
+>> +
+>> +  reg-names:
+>> +    items:
+>> +      - const: dbi
+>> +      - const: atu
+>> +      - const: config
+>> +      - const: link
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: DWC PCIe Data Bus Interface (DBI) clock
+>> +      - description: DWC PCIe application AXI-bus Master interface clock
+>> +      - description: DWC PCIe application AXI-bus Slave interface clock.
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: dbi
+>> +      - const: mstr
+>> +      - const: slv
+>> +
+>> +  resets:
+>> +    items:
+>> +      - description: DWC PCIe Data Bus Interface (DBI) reset
+>> +      - description: DWC PCIe application AXI-bus Master interface reset
+>> +      - description: DWC PCIe application AXI-bus Slave interface reset.
+>> +      - description: Global reset; must be deasserted for PHY to function
+>> +
+>> +  reset-names:
+>> +    items:
+>> +      - const: dbi
+>> +      - const: mstr
+>> +      - const: slv
+>> +      - const: global
+>> +
+>> +  interrupts-extended:
+>> +    maxItems: 1
 > 
-> OK I'll fix that.
-> 
->> Please alphabetize by the company name ("SpacemiT") in the menu entry.
-> 
-> OK.
+> What is the purpose of this property? Is it for MSI or INTx?
 
-I will be renaming the Kconfig option to be PCIE_SPACEMIT_K1
-(instead of just PCIE_K1).  I'm renaming the source file to
-be "pcie-spacemit-k1.c" instead of "pcie-k1.c" as well.
+It is for MSIs, which are translated into this interrupt.
+I'll add a short description indicating this.
 
->>> +#define K1_PCIE_VENDOR_ID    0x201f
->>> +#define K1_PCIE_DEVICE_ID    0x0001
->>
->> I assume this (0x201f) has been reserved by the PCI-SIG?  I don't see
->> it at:
->>
->>    https://pcisig.com/membership/member-companies?combine=0x201f
-> 
-> I hadn't even thought to check that.  I will follow up.  Thanks
-> for pointing this out.
+Is there a better way to represent this?
 
-I inquired yesterday about this, and was told that this
-will be finalized next week.  I told them that the driver
-would not be accepted upstream unless the vendor ID had
-been properly reserved by PCI-SIG.
+>> +
+>> +  spacemit,syscon-pmu:
+>> +    description:
+>> +      PHandle that refers to the APMU system controller, whose
+>> +      regmap is used in managing resets and link state.
+>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>> +
+>> +  device_type:
+>> +    const: pci
+>> +
+>> +  max-link-speed:
+>> +    const: 2
+> 
+> Why do you need to limit it to 5 GT/s always?
 
->> Possibly rename this to PCI_VENDOR_ID_K1 (or maybe
->> PCI_VENDOR_ID_SPACEMIT?) to match the usual format in
->> include/linux/pci_ids.h, since it seems likely to end up there
->> eventually.
-> 
-> OK.
+It's what the hardware overview says is the speed
+of the ports.
+     PCIE PortA Gen2x1
+     PCIE PortB Gen2x2
+     PCIE PortC Gen2x2
 
-I will use PCI_VENDOR_ID_SPACEMIT and PCI_DEVICE_ID_SPACEMIT_K1.
+But I think what you're asking might be "why do you
+need to specify in DT that the link speed is limited".
+And in that case, I realize now that it is not needed.
+I will specify dw_pcie->max_link_speed to 2 before
+calling dw_pcie_host_init().
 
->>> +#define PCIE_RC_PERST            BIT(12)    /* 0: PERST# high; 1: 
->>> low */
->>
->> Maybe avoid confusion by describing as "1: assert PERST#" or similar?
-> 
-> OK.  I struggled with how to express this to avoid confusion.
-> But I do think "assert PERST#" is better.
-> 
->>> +    /* Wait the PCIe-mandated 100 msec before deasserting PERST# */
->>> +    mdelay(100);
->>
->> I think this is PCIE_T_PVPERL_MS.  Comment is superfluous then.
-> 
-> Excellent, thank you, I'll use that.
-> 
->>> +static int k1_pcie_probe(struct platform_device *pdev)
->>> +{
->>> +    struct device *dev = &pdev->dev;
->>> +    struct dw_pcie_rp *pp;
->>> +    struct dw_pcie *pci;
->>> +    struct k1_pcie *k1;
->>> +    int ret;
->>> +
->>> +    k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
->>> +    if (!k1)
->>> +        return -ENOMEM;
->>> +    dev_set_drvdata(dev, k1);
->>
->> Most neighboring drivers use platform_set_drvdata().  Personally, I
->> would set drvdata after initializing k1 because I don't like to
->> advertise pointers to uninitialized things.
-> 
-> OK, I understand that and will do it the way you suggest.
-> 
->>> +static void k1_pcie_remove(struct platform_device *pdev)
->>> +{
->>> +    struct k1_pcie *k1 = dev_get_drvdata(&pdev->dev);
->>
->> Neighbors use platform_get_drvdata().
-> 
-> Yes, that goes with platform_set_drvdata().
-Actually, many of them use dev_get_drvdata().  And I think
-that's why I used dev_set_drvdata() in the first place, to
-match dev_get_drvdata().
+If that's not what you meant, please let me know.
 
-But in any case, I'll switch to setting and getting platform
-driver data.
+>> +  num-viewport:
+>> +    const: 8
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - clocks
+>> +  - clock-names
+>> +  - resets
+>> +  - reset-names
+>> +  - spacemit,syscon-pmu
+>> +  - "#address-cells"
+>> +  - "#size-cells"
+>> +  - device_type
+>> +  - max-link-speed
+> 
+> Same comment as above.
+> 
+>> +  - bus-range
+>> +  - num-viewport
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
+>> +    pcie0: pcie@ca000000 {
+>> +        compatible = "spacemit,k1-pcie-rc";
+>> +        reg = <0x0 0xca000000 0x0 0x00001000>,
+>> +              <0x0 0xca300000 0x0 0x0001ff24>,
+>> +              <0x0 0x8f000000 0x0 0x00002000>,
+>> +              <0x0 0xc0b20000 0x0 0x00001000>;
+>> +        reg-names = "dbi",
+>> +                    "atu",
+>> +                    "config",
+>> +                    "link";
+>> +
+>> +        ranges = <0x01000000 0x8f002000 0x0 0x8f002000 0x0 0x100000>,
+> 
+> I/O port CPU address starts from 0.
+
+First, I'm not sure what this comment means.
+
+But second, this ranges value (which I'm sure I just copied from
+the working DTS file) somehow got munged.
+
+I know there were other errors in this YAML file that I have
+to fix, and I'll fix this too.
+
+Thank you Mani.
 
 					-Alex
 
 > 
->>> +    struct dw_pcie_rp *pp = &k1->pci.pp;
->>> +
->>> +    dw_pcie_host_deinit(pp);
->>> +}
+> - Mani
 > 
-> Thank you very much for your review.
-> 
->                      -Alex
 
