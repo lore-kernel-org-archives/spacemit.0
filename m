@@ -1,246 +1,121 @@
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C93230C105
-	for <spacemit@lists.linux.dev>; Fri, 19 Sep 2025 12:25:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155373191AF
+	for <spacemit@lists.linux.dev>; Fri, 19 Sep 2025 15:25:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758284753; cv=none; b=l9kt0FIW8foLNIjypSyNiQp3OdCRSNSXqp1FCn/Np3eFsBG5hWA5WXV2bBka5mYDcPZuJQfLUVEErOjaCAmXP3R25eyhjaINbZ/aqTZ2Ib5saF+RkQBBcKkeCqp2kqno/E9J8cwBXIBn7aNfqdHCSeeIL2SmQE/qiNDB8QAlu0s=
+	t=1758295530; cv=none; b=I5LNhDFBJoHjXW96Pjy7Yie0SMmCY+6vWPAjpfX4gijA/30Jny6nVKNOH2A9lqN3cC3zomz7nJNHNZ/yN3JpfY24F57/d6Gt4Iq0+UCzJfPoEtUomBw7uB/vEJbq4C2P0t2y+rfR5tKomU+X+txrqMqDIxP2dwR3IbVbkHpv4+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758284753; c=relaxed/simple;
-	bh=vYAp2B9j9qt6EzipuEAQ4I8GMhjImCOP7cCNEmb6aqM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=FHiIyTm8u1elMpd7/O/sqsvqKI+cxy16iQCcMce+gMQjBAS5dYxbmxdxdLsEkVvB4wxWteZ3MN6zzBrCfKtYO0+oO1JHCTj3Kwev7MoJJBHgf+jsBsm/fb6RC20eApX9vvB23T9eUIYk9SOH5RSRtWGZNNges1JfcUw0LHhuOiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=F+Xk3glO; arc=none smtp.client-ip=210.118.77.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	s=arc-20240116; t=1758295530; c=relaxed/simple;
+	bh=BwF+XCw+2VY3IKbrShmTxOU5RWN0jZOIGyiJpln3Txs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=afU6URmIKCN1Cxp2LjYOnQs+URslpBB3Hu9u5ISCsdOytVpnIEKQKWe4CnFcNUFkl6ZXhxb6ekPM8mlJlP7Zry/UWEWF1p2CgokCywnumV3+QbaPerRouONjvJ9/3DL4P8t3lqG8wZS5luCS2TSflfvAJhwYHTFRjXRyqaPabJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=BB8HfH1M; arc=none smtp.client-ip=209.85.166.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="F+Xk3glO"
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20250919122548euoutp02a61322988b7c611ddc09a66605654f17~mrqm64RnN0447704477euoutp02D
-	for <spacemit@lists.linux.dev>; Fri, 19 Sep 2025 12:25:48 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20250919122548euoutp02a61322988b7c611ddc09a66605654f17~mrqm64RnN0447704477euoutp02D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1758284748;
-	bh=xSKIjPyrA9OEriZopMFlNAyxpcs3It57Viautl04tXI=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=F+Xk3glO2cgewx7e1iKp9JX1qLwGgul+qkbyUSnqJFUujLqQCD+JHqtjvA6C3plYu
-	 tb6XPaK8AiHnvh314NhvSLRtAY4447tqqdUgXWoNLeXPOAmqkxv+8RUKDUaNPnreiy
-	 X7XwGpQUJq2P149JjEd996iP8UKxN6e0DQeU8y+U=
-Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-	20250919122548eucas1p1ef58c5c747bee71acd5f9d6476e7c29c~mrqmcuafh2548325483eucas1p1m;
-	Fri, 19 Sep 2025 12:25:48 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20250919122546eusmtip2896ff33c135295219ae1f797110c7a94~mrqk2ipmP1691216912eusmtip2-;
-	Fri, 19 Sep 2025 12:25:46 +0000 (GMT)
-Message-ID: <7605453a-ac62-497b-b77a-76d73e9a6741@samsung.com>
-Date: Fri, 19 Sep 2025 14:25:45 +0200
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="BB8HfH1M"
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-887745ee814so77350039f.3
+        for <spacemit@lists.linux.dev>; Fri, 19 Sep 2025 08:25:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758295528; x=1758900328; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+umzzpBSRQEc1V/CcodsQfdMrH/eWztzCvjBjz+cu5I=;
+        b=BB8HfH1MT0yMjed6k6iUVYpkxY+rJWGulsnBLP9xIh7s9cNn6E5olW6Y2T5+BMHRxO
+         DopkPD3FnRtuItvPNXhDCnplVYDoeFko3sa8AzpejQAXetKKrTwQ75cdWfhMSPaPq+nq
+         rCoXY1Ht2o/oxMh3MBSheSuB1SOmx1thpsR7YOSe1xUwyEkObDk+zrMkt/UE/Rxv0/N+
+         BMpfouoQEgvt0SsQLVGwgWjn0AkC2KB5LSaAJdI4kscInquS+2CM0ybtoD0NIMRmjuz4
+         9xsOWIbvXfHzc5brU8TMMGyt97gbhKRjOzXANxKSM227cbaWbwFVHvui+lIgMnj96NCH
+         tgrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758295528; x=1758900328;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+umzzpBSRQEc1V/CcodsQfdMrH/eWztzCvjBjz+cu5I=;
+        b=kTSD8nU7nquzdY5VEVfVvjVnHmhHOzd8Ynfl6iEtOo7pUYj5jdlihAhaxInYz0j8tM
+         yzMZoCKtf1B2E25S1WX+kHjyzEKaBRt7Gm0AY70pt67fujdDZYQCu/i3Bq8GS0PoSEzB
+         3/RvIE8UWbm63unHTQ7jeOBnmk1PhePbqjJ0ZA5bKZECUsXRmUyPbZeaCSw+yb+0fbpF
+         /obBSVBhQwqJ2o7xpDgfRTbt/nBmV6e3a6gOtzT7lRBOHTz/dP82tkHY81oGO7rk/kio
+         kln41lMEOq6iUBBBn3jYfXZoPZaVUQEVA4CZh4VmLPPc+ybhIlwmwRf1n8TotmpoU7Eg
+         hkWg==
+X-Forwarded-Encrypted: i=1; AJvYcCWZpt4zkVZXlSKUGF582HoweS/XW9D6s+3XvjFqoerWp36eeFAi9SodSPuucAmyrDhhosd2lM83Vg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzskzkeJFsHraUbmppjolrQsznzOXii8GAz69mdBFqKJtuNnbWt
+	GCnAWXaeE65Xzt8lo531ChP9abtj1VDA3FsbS1SSdldW31qa2ee7ZwwBHHZqybOEP08=
+X-Gm-Gg: ASbGncus5+qo9GZ+qVNwGyFI6+ZOvUGGVXt3Fp4u4a0unX9f1LlJa7Qk2dxZE/jfaBo
+	/we0Cg1l1H8O/DIQUQnPZ9//vUZCYy+wBQ0hGWEMIhG46RK/25DRcs4Dw7qj+N5+TrZx5IM63pl
+	ulGIQJBjjMBmaqztBYrLb6Beb8J+++D/wW07LL5bjyBErQg5rFATVLItTKnoe/AuB/08RlSIgQT
+	ddfxFMraibKaZjyAZha/+xvDVta4EGHWtqJFnjE5ska0yd44zmiaQUQfsdcA3Nhg1sdZE37iye1
+	r2L+z1tbBVNJxBPqUYrCxH1HxwR/hBtgKtkmTewRjykgsOpay/zSKx5aPKhovI3WHdYJXYluYST
+	dEJH9bb60tj0T6glAOe1BytMgmzgulPzMfA10WkwhFC63RpWJtdULrN7ORRJLjg==
+X-Google-Smtp-Source: AGHT+IEQ0mHzthbytAS8eyolftKz1JqkUaR4qV6jomifOWCNp485ZfecaLw2j1twDeq58dbQEdVFTw==
+X-Received: by 2002:a05:6e02:1a08:b0:424:7e36:f863 with SMTP id e9e14a558f8ab-424819ab873mr53155285ab.30.1758295527989;
+        Fri, 19 Sep 2025 08:25:27 -0700 (PDT)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-42482ad64d1sm10124555ab.41.2025.09.19.08.25.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Sep 2025 08:25:27 -0700 (PDT)
+Message-ID: <ca775631-4e45-4a58-8f30-133cfbba854e@riscstar.com>
+Date: Fri, 19 Sep 2025 10:25:25 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH net-next] net: spacemit: Make stats_lock softirq-safe
-To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
-	<andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, Eric
-	Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni
-	<pabeni@redhat.com>, Yixun Lan <dlan@gentoo.org>, Maxime Chevallier
-	<maxime.chevallier@bootlin.com>, Troy Mitchell
-	<troy.mitchell@linux.spacemit.com>, Vadim Fedorenko
-	<vadim.fedorenko@linux.dev>
-Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, Vivian Wang
-	<uwu@dram.page>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] riscv: dts: spacemit: define a SPI controller node
+From: Alex Elder <elder@riscstar.com>
+To: Yao Zi <ziyao@disroot.org>, Yixun Lan <dlan@gentoo.org>
+Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+ paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr, p.zabel@pengutronix.de, spacemit@lists.linux.dev,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20250917220724.288127-1-elder@riscstar.com>
+ <20250917220724.288127-4-elder@riscstar.com>
+ <20250918133209-GYB1273705@gentoo.org> <aMwYRGjTdbQCJf3S@pie>
+ <c32cc8da-6703-496f-b30f-4961aa811869@riscstar.com>
 Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <20250919-k1-ethernet-fix-lock-v1-1-c8b700aa4954@iscas.ac.cn>
-Content-Transfer-Encoding: 7bit
-X-CMS-MailID: 20250919122548eucas1p1ef58c5c747bee71acd5f9d6476e7c29c
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20250919120522eucas1p224c42d0cc2a59903d85e6c80dfdfa727
-X-EPHeader: CA
-X-CMS-RootMailID: 20250919120522eucas1p224c42d0cc2a59903d85e6c80dfdfa727
-References: <CGME20250919120522eucas1p224c42d0cc2a59903d85e6c80dfdfa727@eucas1p2.samsung.com>
-	<20250919-k1-ethernet-fix-lock-v1-1-c8b700aa4954@iscas.ac.cn>
+In-Reply-To: <c32cc8da-6703-496f-b30f-4961aa811869@riscstar.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 19.09.2025 14:04, Vivian Wang wrote:
-> While most of the statistics functions (emac_get_stats64() and such) are
-> called with softirqs enabled, emac_stats_timer() is, as its name
-> suggests, also called from a timer, i.e. called in softirq context.
->
-> All of these take stats_lock. Therefore, make stats_lock softirq-safe by
-> changing spin_lock() into spin_lock_bh() for the functions that get
-> statistics.
->
-> Also, instead of directly calling emac_stats_timer() in emac_up() and
-> emac_resume(), set the timer to trigger instead, so that
-> emac_stats_timer() is only called from the timer. It will keep using
-> spin_lock().
->
-> This fixes a lockdep warning, and potential deadlock when stats_timer is
-> triggered in the middle of getting statistics.
->
-> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-> Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> Closes: https://lore.kernel.org/all/a52c0cf5-0444-41aa-b061-a0a1d72b02fe@samsung.com/
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
-> Thanks a lot for catching this, Marek!
-> ---
->   drivers/net/ethernet/spacemit/k1_emac.c | 30 +++++++++++++++---------------
->   1 file changed, 15 insertions(+), 15 deletions(-)
->
-> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-> index 928fea02198c3754f63a7b33fc25c5dd8c2b59f9..e1c5faff3b71c7d4ceba2ea194d9c888f0e71b70 100644
-> --- a/drivers/net/ethernet/spacemit/k1_emac.c
-> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
-> @@ -135,7 +135,7 @@ struct emac_priv {
->   	bool flow_control_autoneg;
->   	u8 flow_control;
->   
-> -	/* Hold while touching hardware statistics */
-> +	/* Softirq-safe, hold while touching hardware statistics */
->   	spinlock_t stats_lock;
->   };
->   
-> @@ -1239,7 +1239,7 @@ static void emac_get_stats64(struct net_device *dev,
->   	/* This is the only software counter */
->   	storage->tx_dropped = emac_get_stat_tx_drops(priv);
->   
-> -	spin_lock(&priv->stats_lock);
-> +	spin_lock_bh(&priv->stats_lock);
->   
->   	emac_stats_update(priv);
->   
-> @@ -1261,7 +1261,7 @@ static void emac_get_stats64(struct net_device *dev,
->   	storage->rx_missed_errors = rx_stats->stats.rx_drp_fifo_full_pkts;
->   	storage->rx_missed_errors += rx_stats->stats.rx_truncate_fifo_full_pkts;
->   
-> -	spin_unlock(&priv->stats_lock);
-> +	spin_unlock_bh(&priv->stats_lock);
->   }
->   
->   static void emac_get_rmon_stats(struct net_device *dev,
-> @@ -1275,7 +1275,7 @@ static void emac_get_rmon_stats(struct net_device *dev,
->   
->   	*ranges = emac_rmon_hist_ranges;
->   
-> -	spin_lock(&priv->stats_lock);
-> +	spin_lock_bh(&priv->stats_lock);
->   
->   	emac_stats_update(priv);
->   
-> @@ -1294,7 +1294,7 @@ static void emac_get_rmon_stats(struct net_device *dev,
->   	rmon_stats->hist[5] = rx_stats->stats.rx_1024_1518_pkts;
->   	rmon_stats->hist[6] = rx_stats->stats.rx_1519_plus_pkts;
->   
-> -	spin_unlock(&priv->stats_lock);
-> +	spin_unlock_bh(&priv->stats_lock);
->   }
->   
->   static void emac_get_eth_mac_stats(struct net_device *dev,
-> @@ -1307,7 +1307,7 @@ static void emac_get_eth_mac_stats(struct net_device *dev,
->   	tx_stats = &priv->tx_stats;
->   	rx_stats = &priv->rx_stats;
->   
-> -	spin_lock(&priv->stats_lock);
-> +	spin_lock_bh(&priv->stats_lock);
->   
->   	emac_stats_update(priv);
->   
-> @@ -1325,7 +1325,7 @@ static void emac_get_eth_mac_stats(struct net_device *dev,
->   	mac_stats->FramesAbortedDueToXSColls =
->   		tx_stats->stats.tx_excessclsn_pkts;
->   
-> -	spin_unlock(&priv->stats_lock);
-> +	spin_unlock_bh(&priv->stats_lock);
->   }
->   
->   static void emac_get_pause_stats(struct net_device *dev,
-> @@ -1338,14 +1338,14 @@ static void emac_get_pause_stats(struct net_device *dev,
->   	tx_stats = &priv->tx_stats;
->   	rx_stats = &priv->rx_stats;
->   
-> -	spin_lock(&priv->stats_lock);
-> +	spin_lock_bh(&priv->stats_lock);
->   
->   	emac_stats_update(priv);
->   
->   	pause_stats->tx_pause_frames = tx_stats->stats.tx_pause_pkts;
->   	pause_stats->rx_pause_frames = rx_stats->stats.rx_pause_pkts;
->   
-> -	spin_unlock(&priv->stats_lock);
-> +	spin_unlock_bh(&priv->stats_lock);
->   }
->   
->   /* Other statistics that are not derivable from standard statistics */
-> @@ -1393,14 +1393,14 @@ static void emac_get_ethtool_stats(struct net_device *dev,
->   	u64 *rx_stats = (u64 *)&priv->rx_stats;
->   	int i;
->   
-> -	spin_lock(&priv->stats_lock);
-> +	spin_lock_bh(&priv->stats_lock);
->   
->   	emac_stats_update(priv);
->   
->   	for (i = 0; i < ARRAY_SIZE(emac_ethtool_rx_stats); i++)
->   		data[i] = rx_stats[emac_ethtool_rx_stats[i].offset];
->   
-> -	spin_unlock(&priv->stats_lock);
-> +	spin_unlock_bh(&priv->stats_lock);
->   }
->   
->   static int emac_ethtool_get_regs_len(struct net_device *dev)
-> @@ -1769,7 +1769,7 @@ static int emac_up(struct emac_priv *priv)
->   
->   	netif_start_queue(ndev);
->   
-> -	emac_stats_timer(&priv->stats_timer);
-> +	mod_timer(&priv->stats_timer, jiffies);
->   
->   	return 0;
->   
-> @@ -1807,14 +1807,14 @@ static int emac_down(struct emac_priv *priv)
->   
->   	/* Update and save current stats, see emac_stats_update() for usage */
->   
-> -	spin_lock(&priv->stats_lock);
-> +	spin_lock_bh(&priv->stats_lock);
->   
->   	emac_stats_update(priv);
->   
->   	priv->tx_stats_off = priv->tx_stats;
->   	priv->rx_stats_off = priv->rx_stats;
->   
-> -	spin_unlock(&priv->stats_lock);
-> +	spin_unlock_bh(&priv->stats_lock);
->   
->   	pm_runtime_put_sync(&pdev->dev);
->   	return 0;
-> @@ -2111,7 +2111,7 @@ static int emac_resume(struct device *dev)
->   
->   	netif_device_attach(ndev);
->   
-> -	emac_stats_timer(&priv->stats_timer);
-> +	mod_timer(&priv->stats_timer, jiffies);
->   
->   	return 0;
->   }
->
-> ---
-> base-commit: 315f423be0d1ebe720d8fd4fa6bed68586b13d34
-> change-id: 20250919-k1-ethernet-fix-lock-c99681a9aa5d
->
-> Best regards,
+On 9/18/25 11:22 AM, Alex Elder wrote:
+> On 9/18/25 9:33 AM, Yao Zi wrote:
+>>> .. em, so the SPI will use pdma, then probably you should also adjust 
+>>> Kconfig to
+>>> select PDMA driver?
+>> The driver seems to depend on the generic DMA engine API only, IOW,
+>> theoretically it should work with other DMA controller as well. And it's
+>> even capable to operate without DMA (see k1_spi_dma_setup()).
+>>
+>> Dependency to PDMA really doesn't seem something should be enforced in
+>> Kconfig: it doesn't exist in code level, and the driver is actually more
+>> flexible.
+> 
+> You're right on both points.  The code doesn't *require* PDMA to
+> operate correctly (to my knowledge).
+> 
+> Yixun, what do you think?
+> 
+>                      -Alex
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+I did some experiments.  Currently, if I build a kernel with
+SPI_SPACEMIT_K1 enabled (module or built-in) but MMP_PDMA
+not set, the K1 SPI driver probe doesn't complete.  The reason
+is that dma_request_chan() returns -EPROBE_DEFER, not "knowing"
+that the needed driver will never show up.
 
+For now I have added a call to IS_ENABLED(CONFIG_MMP_PDMA) in
+devm_k1_spi_dma_setup(), and if it's not enabled it will
+return 0 (to indicate "all is well, but we won't use DMA").
+
+That doesn't allow for a different DMA option, but it does
+allow the driver to work without an explicit dependency
+on the MMP_PDMA (via Kconfig).
+
+					-Alex
