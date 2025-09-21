@@ -1,463 +1,158 @@
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
+Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72FE1C8616
-	for <spacemit@lists.linux.dev>; Sun, 21 Sep 2025 03:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECFB2AF1D
+	for <spacemit@lists.linux.dev>; Sun, 21 Sep 2025 08:53:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758424572; cv=none; b=jy6E+kEaOXOyq0zS0ySia0OUppHQ1rSsGsjfgjKawtIsgLVUdGkMEg8cEyyiwc7tBsCsEwyHWOTp+DjFPD3bWScib/soBAZKvnPRt50Zo23oSiLzShfiFTBBQAgRMVUve1c3KLtYo/1SJU2oK9HU2jFJBHKshIiI/SEpVfTdxdQ=
+	t=1758444824; cv=none; b=BptTtRwGsomoOvaxqGT/kbVX5Y0fTpFmQOyE2BQqQUDyl0AOfYdsFOmnoSGm1YOcy1g4VENqTm+AGcy4uNjHriFxUzj4fogIuTWGW1UTKWTzqqEQA/vonfCJ778EaufZTywEOleNNEV+PNYRiCAalnmb8WoyIP/ECXBb3omVFLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758424572; c=relaxed/simple;
-	bh=M8m1y6hcK38+N0fApn09ZRDb7HrQEYpk84P06jYwGy0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QLHA2VVjSRsZLLpbDA3OKr/pE06APhTNQ0X/vGlFqAD3PG52Rk+qxCpqaE89nM7K1qubaC94tGN5oyV1VuEF6YZGNQJ0xAVJfYcqEeuD5zdBrpWVzRjnHy03jkhhX2RIuxZq31ueNgZbcyg/AWHHBuiqgnu4u2eIY7xK2AD+PKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lw5kXzXj; arc=none smtp.client-ip=95.215.58.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1758444824; c=relaxed/simple;
+	bh=DmFeZAuzjiDDiooLpLk2yv2O/58zSRwZXt1vw0u+/pg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=o1z4qOaOUe21I6UPNS3+SVTcqeBNqV/hXQJPHY+5NINMCqagZ7E0MIDuDHboNk2+TTM4RSHh54HHURqPmr3A92tKSLQE7XZ/V7sk31+qXXGPdj4ChPATzxMn4c7ab2qNBBsSo4cdnzyV/fLy1A0oq/Rja8ssdMgMEvVaOHAz4Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=D1vDftd8; arc=none smtp.client-ip=54.204.34.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lw5kXzXj"
-Date: Sun, 21 Sep 2025 11:15:57 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1758424566;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R537tprBZ1xn1R8NGg+wDfjRCqd0XP7UoN6FXrMrzaU=;
-	b=lw5kXzXjN8/iOkZRdakz6MlJnj1zoxg0kF/NeVLi5Hy0ZWdIwzrx4sl36sJ3ee8iA0FmR0
-	aWaFh1yEwQcMYxEPuZGluDB7ID5csQl7ZP9K6txHx/YCpDettJTqc9il7xjk/Kn2RRJYRS
-	HhHTPsljxxl1/wXdZfyQRYS9l4/SGkg=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Troy Mitchell <troy.mitchell@linux.dev>
-To: Alex Elder <elder@riscstar.com>, broonie@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: dlan@gentoo.org, ziyao@disroot.org, linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Troy Mitchell <troy.mitchell@linux.dev>
-Subject: Re: [PATCH v2 2/3] spi: spacemit: introduce SpacemiT K1 SPI
- controller driver
-Message-ID: <aM9t7fO_DyIG92Rx@troy-wujie14pro-arch>
-References: <20250919155914.935608-1-elder@riscstar.com>
- <20250919155914.935608-3-elder@riscstar.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="D1vDftd8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1758444750;
+	bh=XBIBLj73RGnSSKnxJ4ZehyTUKEtXkKIYYh2qsFiM7rU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=D1vDftd81rLqBYt3/beq0zPgq9PvgMq54jVRPj3eboajIlvn1C+7y5s+8gvzkSkCX
+	 NN8PqU6qoVdbQqQ9GmQgO7J6ctA0KwOiQiXbibAUYnFhKe3aRRi+CI2m6SlYVzxEQX
+	 bILAtwDfyoCsXDiPDWBcztkbGhIEhRdON9OGs9QA=
+X-QQ-mid: zesmtpip2t1758444741t6bb70130
+X-QQ-Originating-IP: fa4G0Z96TcIuLQMDYJVyH1WNdBxvsi2TGK6A1010glI=
+Received: from = ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sun, 21 Sep 2025 16:52:19 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 14739136981806942369
+EX-QQ-RecipientCnt: 17
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: [PATCH v4 0/2] ASoC: spacemit: add i2s support to K1 SoC
+Date: Sun, 21 Sep 2025 16:52:15 +0800
+Message-Id: <20250921-k1-i2s-v4-0-4f819f50e468@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250919155914.935608-3-elder@riscstar.com>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAL+8z2gC/3XNTQ7CIBCG4asY1mKYgdriynsYFy0OOlFbhdrUN
+ L27qPFnoctvwvMyiEiBKYrFZBCBOo7c1GmY6US4XVlvSfImbYEKM1WAlnuQjFECZJWfZ1SWrhD
+ p8SmQ5/4RWq2fO9D5knrt57jj2Dbh+visg/v11TWvbgdSSacBjK3QKgPLA9eXfhZPpaMjtzPXH
+ MW91eGXx+LtMXllKa+M8kqh++v1x1uAt9fJZ7mHXOcavf3tx3G8ASf0So46AQAA
+X-Change-ID: 20250813-k1-i2s-115bf65eaac8
+To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Jinmei Wei <weijinmei@linux.spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758444738; l=2372;
+ i=troy.mitchell@linux.spacemit.com; s=20250712; h=from:subject:message-id;
+ bh=DmFeZAuzjiDDiooLpLk2yv2O/58zSRwZXt1vw0u+/pg=;
+ b=RaWOlpC5FWPJwn3c47TkAmC+iLUD31NCfLHyxz/qOMkN5rnFVMjNAZFAmO+/oPh65efNMEq9+
+ +MzyQEXLjgWBk4MPN/I0whyQLjfzh/m/rKrrS2hOzHfxR3PrCA29Iqb
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=zhRP1xE0bftrurqSWI+SzcSdJGIZ0BTTY9Id0ESzqlI=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: ObGqnu1uf9U4ZQR0cTmgRC0j6x7hCztaQc6EPaB1xD9YlJP5X34xMpOc
+	1vmLgDrdpsjBYNULRpvvXAQhxl4YeOWQ6B0idY/RiUXwq6E9uVfsnizKuMdobDTA56nwTbJ
+	/k/AwuhxC2+nl0qmNnnzRJpcxBzCkxaAxZgEwEIZTpyM10s0k03Z9k1WpSfVT6762S/8l/j
+	KChkfEge9zr8VQzOGglz5RxfYQNPyVVq7KLhgSvRHlcWnFTbnXCs/Q6g+rpVVB2x1LGQ8Vb
+	ZFvdXqaeGn6bXclO/hZ7uECUIkInE+ksCzTh5XDlgDJpSem3r94AEUCMFddx6kf5PJMQnk/
+	7SM4HSU94EWMSwZwkKr4GY9kL6bLMJn08pVP47nJDTMDy5AX2Iv5kJvl2Ahr159ppvPgOxW
+	TY6gxuP5OuvqcXWd9zQhZ8arxzuKyWp+KooSXfxDokkx+C2fmN70udjhMium5bpOGSJC9TU
+	kz3rX6pP/0jG+hQl5Jr++/AOHM1a7Z3pvqtr6XbDGknS6D+nm1HMFCOlJiFAxpwpesZJ3aS
+	Yo1erADBRTY9hXsAhmM/crRFZfFhaV+n8kym9IvnJEBvorngzMxBf/VC1HGQak7LjCquF9/
+	L3LKx+0zTkxQQHUQk6/wXUWVdAechaZ2qIBJ+DaA1KvHdf/lJ68L62hiYF3FZ7ULW69JFXJ
+	qWMCflsMWbzvTdySmGm98Tp2/HzwZtStoC3WqUq97TPMCHo35oVDlobAHH8lmfzREGNHkHK
+	HuF4hyAKAcz1jGjI32n09FNn0XdDAQLAA4EifgiOAN2DJK1+5pr+msTIDomxVUQ+HmKhx2F
+	tDaBtxJaCz6tH3QkWUAX8EP8/rv7tmxgjapS6h5ZXJrb7J/1s5y82/t+7u4tvNkDHgF5TBe
+	9ns+lZbiAn98EslDQSN72ygKqzGC3yeHypxjNeNak8OJHrt7Vt9u/QrWVp90KAKm1XhEZbe
+	6bd1PMjZm8kUqhoDFw+jseRAAt42QagnwFh56UQw+/P+VMca2MfHcLCVwm2VegineI292go
+	hAsTOLcQQ5u9YCZg/snTLGYk/jrsQI4fq92SJjpROSdqXOvjMND2MvTdDSJ0ZZx4VdwPpsC
+	uQh6nLQpl6He8S7VUjwUtNlWIipQMY0RZplaaNaJ7li8sgvbb7Xxcb2XXaRf5VsjY+UcwRw
+	UO2PCs3MjoxC2KIR+XpIYkRzZw==
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+X-QQ-RECHKSPAM: 0
 
-On Fri, Sep 19, 2025 at 10:59:12AM -0500, Alex Elder wrote:
-> This patch introduces the driver for the SPI controller found in the
-> SpacemiT K1 SoC.  Currently the driver supports master mode only.
-> The SPI hardware implements RX and TX FIFOs, 32 entries each, and
-> supports both PIO and DMA mode transfers.
-> 
-> Signed-off-by: Alex Elder <elder@riscstar.com>
-> ---
-> v2: - The SPI_SPACEMIT_K1 config option is added in sorted order
->     - The spi-spacemit-k1.o make target is now added in sorted order
->     - Read/modify/writes of registers no longer use an additional
->       "virt" variable to hold the address accessed
->     - The k1_spi_driver_data->ioaddr field has been renamed base
->     - The DMA address for the base address is maintained, rather than
->       saving the DMA address of the data register
->     - CONFIG_MMP_PDMA is checked at runtime, and if it is not enabled,
->       DMA will not be used
->     - The spi-max-frequency property value is now bounds checked
->     - A local variable is now initialized to 0 in k1_spi_write_word()
->     - The driver name is now "k1-spi"
-> 
->  drivers/spi/Kconfig           |   8 +
->  drivers/spi/Makefile          |   1 +
->  drivers/spi/spi-spacemit-k1.c | 968 ++++++++++++++++++++++++++++++++++
->  3 files changed, 977 insertions(+)
->  create mode 100644 drivers/spi/spi-spacemit-k1.c
-> 
-> diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
-> index 82fa5eb3b8684..4f6c446c6bc16 100644
-> --- a/drivers/spi/Kconfig
-> +++ b/drivers/spi/Kconfig
-> @@ -1071,6 +1071,14 @@ config SPI_SG2044_NOR
->  	  also supporting 3Byte address devices and 4Byte address
->  	  devices.
->  
-> +config SPI_SPACEMIT_K1
-> +	tristate "K1 SPI Controller"
-> +	depends on ARCH_SPACEMIT || COMPILE_TEST
-> +	depends on OF
-> +	default ARCH_SPACEMIT
-> +	help
-> +	  Enable support for the SpacemiT K1 SPI controller.
-> +
->  config SPI_SPRD
->  	tristate "Spreadtrum SPI controller"
->  	depends on ARCH_SPRD || COMPILE_TEST
-> diff --git a/drivers/spi/Makefile b/drivers/spi/Makefile
-> index eefaeca097456..637d750ead996 100644
-> --- a/drivers/spi/Makefile
-> +++ b/drivers/spi/Makefile
-> @@ -140,6 +140,7 @@ obj-$(CONFIG_SPI_SIFIVE)		+= spi-sifive.o
->  obj-$(CONFIG_SPI_SLAVE_MT27XX)          += spi-slave-mt27xx.o
->  obj-$(CONFIG_SPI_SN_F_OSPI)		+= spi-sn-f-ospi.o
->  obj-$(CONFIG_SPI_SG2044_NOR)	+= spi-sg2044-nor.o
-> +obj-$(CONFIG_SPI_SPACEMIT_K1)		+= spi-spacemit-k1.o
->  obj-$(CONFIG_SPI_SPRD)			+= spi-sprd.o
->  obj-$(CONFIG_SPI_SPRD_ADI)		+= spi-sprd-adi.o
->  obj-$(CONFIG_SPI_STM32) 		+= spi-stm32.o
-> diff --git a/drivers/spi/spi-spacemit-k1.c b/drivers/spi/spi-spacemit-k1.c
-> new file mode 100644
-> index 0000000000000..8d564fe6c4303
-> --- /dev/null
-> +++ b/drivers/spi/spi-spacemit-k1.c
-> @@ -0,0 +1,968 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Support for SpacemiT K1 SPI controller
-> + *
-> + * Copyright (C) 2025 by RISCstar Solutions Corporation.  All rights reserved.
-> + * Copyright (c) 2023, spacemit Corporation.
-SpacemiT?
+On the K1 SoC, there is a full-duplex I2S controller.
 
-> + */
-> +
-[...]
-> +static void k1_spi_read_word(struct k1_spi_driver_data *drv_data)
-> +{
-> +	struct k1_spi_io *rx = &drv_data->rx;
-> +	u32 bytes = drv_data->bytes;
-> +	u32 val;
-> +
-> +	val = readl(drv_data->base + SSP_DATAR);
-> +	rx->resid -= bytes;
-> +
-> +	if (!rx->buf)
-> +		return;	/* Null reader: discard the data */
-> +
-> +	if (bytes == 1)
-> +		*(u8 *)rx->buf = val;
-> +	else if (bytes == 1)
-typo?
+The I2S is programmable, with the sample width configurable
+to 8, 16, 18, or 32 bits.
 
-> +		*(u16 *)rx->buf = val;
-> +	else
-> +		*(u32 *)rx->buf = val;
-> +
-> +	rx->buf += bytes;
-> +}
-> +
-[...]
-> +static bool k1_spi_write(struct k1_spi_driver_data *drv_data)
-> +{
-> +	struct k1_spi_io *tx = &drv_data->tx;
-> +	unsigned int count;
-> +	u32 val;
-> +
-> +	if (!tx->resid)
-> +		return true;	/* Nothing more to send */
-> +
-> +	/* See how many slots in the TX FIFO are available */
-> +	val = readl(drv_data->base + SSP_STATUS);
-> +	count = FIELD_GET(SSP_STATUS_TFL, val);
-> +
-> +	/* A zero count means the FIFO is either full or empty */
-> +	if (!count) {
-> +		if (val & SSP_STATUS_TNF)
-> +			count = K1_SPI_FIFO_SIZE;
-> +		else
-> +			return false;	/* No room in the FIFO */
-please early return:
+A dedicated FIFO is provided for transmit (TXFIFO) and another
+for receive (RXFIFO). In non-packed mode, both FIFOs are 32
+entries deep and 32 bits wide, giving a total of 32 samples each.
 
-if (!(val & SSP_STATUS_TNF))
-  return false;
-count = K1_SPI_FIFO_SIZE;
-> +	}
-> +
-> +	/*
-> +	 * Limit how much we try to send at a time, to reduce the
-> +	 * chance the other side can overrun our RX FIFO.
-> +	 */
-> +	count = min3(count, K1_SPI_THRESH, tx->resid);
-> +	while (count--)
-> +		k1_spi_write_word(drv_data);
-> +
-> +	return !tx->resid;
-> +}
-> +
-[...]
-> +
-> +static int k1_spi_transfer_one_message(struct spi_controller *host,
-> +					   struct spi_message *message)
-> +{
-> +	struct k1_spi_driver_data *drv_data = spi_controller_get_devdata(host);
-> +	struct completion *completion = &drv_data->completion;
-> +	struct spi_transfer *transfer;
-> +	u32 val;
-> +
-> +	drv_data->message = message;
-> +
-> +	/* Message status starts out successful; set to -EIO on error */
-> +	message->status = 0;
-> +
-> +	/* Hold frame low to avoid losing transferred data */
-> +	val = readl(drv_data->base + SSP_TOP_CTRL);
-> +	val |= TOP_HOLD_FRAME_LOW;
-> +	writel(val, drv_data->base + SSP_TOP_CTRL);
-> +
-> +	list_for_each_entry(transfer, &message->transfers, transfer_list) {
-> +		reinit_completion(completion);
-> +
-> +		/* Issue the next transfer */
-> +		if (!k1_spi_transfer_start(drv_data, transfer)) {
-> +			message->status = -EIO;
-> +			break;
-we don't need return a error code?
+The register definitions can be found here[1]
 
-> +		}
-> +
-> +		k1_spi_transfer_wait(drv_data);
-> +
-> +		k1_spi_transfer_end(drv_data, transfer);
-> +
-> +		/* If an error has occurred, we're done */
-> +		if (message->status)
-> +			break;
-ditto.
+Link:
+https://developer.spacemit.com/documentation?token=Rn9Kw3iFHirAMgkIpTAcV2Arnkf#18.2-spi%2Fi2s [1]
 
-[...]
-> +}
-> +
-> +static void k1_spi_dma_cleanup(struct device *dev, void *res)
-> +{
-> +	struct k1_spi_driver_data *drv_data = res;
-> +
-> +	if (k1_spi_dma_enabled(drv_data)) {
-if (!k1_spi_dma_enabled(drv_data))
-  return;
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+Changes in v4:
+- Patch 1/2:
+  - nothing
+- Patch 2/2:
+  - add some comments
+  - adjust supported PCM rates and formats.
+  - change macros from SSCR_DW_(8|16|18|32)BYTE to SSCR_DW_(8|16|18|32)BIT
+  - use constraints API in hw_params
+- Link to v3: https://lore.kernel.org/r/20250911-k1-i2s-v3-0-57f173732f9c@linux.spacemit.com
 
-                  - Troy
+Changes in v3:
+- Patch 1/2:
+  - simplify dma-names definition
+- Patch 2/2 
+  - remove empty spacemit_i2s_remove()
+  - move FSRT setup for DSP_A into switch-case in spacemit_i2s_set_fmt()
+- Link to v2: https://lore.kernel.org/r/20250828-k1-i2s-v2-0-09e7b40f002c@linux.spacemit.com
 
-> +		k1_spi_dma_cleanup_io(drv_data, false);
-> +		k1_spi_dma_cleanup_io(drv_data, true);
-> +	}
-> +}
-> +
-> +
-> +static const struct of_device_id k1_spi_dt_ids[] = {
-> +	{ .compatible = "spacemit,k1-spi", },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, k1_spi_dt_ids);
-> +
-> +static void k1_spi_host_init(struct k1_spi_driver_data *drv_data)
-> +{
-> +	struct device_node *np = dev_of_node(drv_data->dev);
-> +	struct spi_controller *host = drv_data->controller;
-> +	struct device *dev = drv_data->dev;
-> +	u32 max_speed_hz;
-> +	int ret;
-> +
-> +	host->dev.of_node = np;
-> +	host->dev.parent = drv_data->dev;
-> +	host->mode_bits = SPI_CPOL | SPI_CPHA | SPI_LOOP;
-> +	host->bits_per_word_mask = SPI_BPW_RANGE_MASK(4, 32);
-> +	host->num_chipselect = 1;
-> +
-> +	if (k1_spi_dma_enabled(drv_data))
-> +		host->dma_alignment = K1_SPI_DMA_ALIGNMENT;
-> +	host->cleanup = k1_spi_cleanup;
-> +	host->setup = k1_spi_setup;
-> +	host->transfer_one_message = k1_spi_transfer_one_message;
-> +
-> +	ret = of_property_read_u32(np, "spi-max-frequency", &max_speed_hz);
-> +	if (!ret) {
-> +		host->max_speed_hz = clamp(max_speed_hz, K1_SPI_MIN_SPEED_HZ,
-> +					   K1_SPI_MAX_SPEED_HZ);
-> +		if (host->max_speed_hz != max_speed_hz)
-> +			dev_warn(dev, "spi-max-frequency %u out of range, using %u\n",
-> +				max_speed_hz, host->max_speed_hz);
-> +	} else {
-> +		if (ret != -EINVAL)
-> +			dev_warn(dev, "bad spi-max-frequency, using %u\n",
-> +				 K1_SPI_DEFAULT_MAX_SPEED_HZ);
-> +		host->max_speed_hz = K1_SPI_DEFAULT_MAX_SPEED_HZ;
-> +	}
-> +}
-> +
-> +/* Set our registers to a known initial state */
-> +static void
-> +k1_spi_register_reset(struct k1_spi_driver_data *drv_data, bool initial)
-> +{
-> +	u32 val = 0;
-> +
-> +	writel(0, drv_data->base + SSP_TOP_CTRL);
-> +
-> +	if (initial) {
-> +		/*
-> +		 * The TX and RX FIFO thresholds are the same no matter
-> +		 * what the speed or bits per word, so we can just set
-> +		 * them once.  The thresholds are one more than the values
-> +		 * in the register.
-> +		 */
-> +		val = FIELD_PREP(FIFO_RFT_MASK, K1_SPI_THRESH - 1);
-> +		val |= FIELD_PREP(FIFO_TFT_MASK, K1_SPI_THRESH - 1);
-> +	}
-> +	writel(val, drv_data->base + SSP_FIFO_CTRL);
-> +
-> +	writel(0, drv_data->base + SSP_INT_EN);
-> +	writel(0, drv_data->base + SSP_TIMEOUT);
-> +
-> +	/* Clear any pending interrupt conditions */
-> +	val = readl(drv_data->base + SSP_STATUS);
-> +	writel(val, drv_data->base + SSP_STATUS);
-> +}
-> +
-> +static irqreturn_t k1_spi_ssp_isr(int irq, void *dev_id)
-> +{
-> +	struct k1_spi_driver_data *drv_data = dev_id;
-> +	bool rx_done;
-> +	bool tx_done;
-> +	u32 val;
-> +
-> +	/* Get status and clear pending interrupts */
-> +	val = readl(drv_data->base + SSP_STATUS);
-> +	writel(val, drv_data->base + SSP_STATUS);
-> +
-> +	if (!drv_data->message)
-> +		return IRQ_NONE;
-> +
-> +	/* Check for a TX underrun or RX underrun first */
-> +	if (val & (SSP_STATUS_TUR | SSP_STATUS_ROR)) {
-> +		/* Disable all interrupts on error */
-> +		writel(0, drv_data->base + SSP_INT_EN);
-> +
-> +		drv_data->message->status = -EIO;
-> +		complete(&drv_data->completion);
-> +
-> +		return IRQ_HANDLED;
-> +	}
-> +
-> +	/* Drain the RX FIFO first, then transmit what we can */
-> +	rx_done = k1_spi_read(drv_data);
-> +	tx_done = k1_spi_write(drv_data);
-> +
-> +	/* Disable interrupts if we're done transferring either direction */
-> +	if (rx_done || tx_done) {
-> +		/* If both are done, disable all interrupts */
-> +		if (rx_done && tx_done) {
-> +			val = 0;
-> +		} else {
-> +			val = readl(drv_data->base + SSP_INT_EN);
-> +			if (rx_done)
-> +				val &= ~(SSP_INT_EN_TINTE | SSP_INT_EN_RIE);
-> +			if (tx_done)
-> +				val &= ~SSP_INT_EN_TIE;
-> +		}
-> +		writel(val, drv_data->base + SSP_INT_EN);
-> +	}
-> +
-> +	if (rx_done && tx_done)
-> +		complete(&drv_data->completion);
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static int k1_spi_probe(struct platform_device *pdev)
-> +{
-> +	struct k1_spi_driver_data *drv_data;
-> +	struct device *dev = &pdev->dev;
-> +	struct reset_control *reset;
-> +	struct spi_controller *host;
-> +	struct resource *iores;
-> +	struct clk *clk_bus;
-> +	int ret;
-> +
-> +	host = devm_spi_alloc_host(dev, sizeof(*drv_data));
-> +	if (!host)
-> +		return -ENOMEM;
-> +	drv_data = spi_controller_get_devdata(host);
-> +	drv_data->controller = host;
-> +	platform_set_drvdata(pdev, drv_data);
-> +	drv_data->dev = dev;
-> +	init_completion(&drv_data->completion);
-> +
-> +	drv_data->base = devm_platform_get_and_ioremap_resource(pdev, 0,
-> +								&iores);
-> +	if (IS_ERR(drv_data->base))
-> +		return dev_err_probe(dev, PTR_ERR(drv_data->base),
-> +				     "error mapping memory\n");
-> +	drv_data->base_addr = iores->start;
-> +
-> +	ret = devm_k1_spi_dma_setup(drv_data);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "error setting up DMA\n");
-> +
-> +	k1_spi_host_init(drv_data);
-> +
-> +	clk_bus = devm_clk_get_enabled(dev, "bus");
-> +	if (IS_ERR(clk_bus))
-> +		return dev_err_probe(dev, PTR_ERR(clk_bus),
-> +				     "error getting/enabling bus clock\n");
-> +	drv_data->bus_rate = clk_get_rate(clk_bus);
-> +
-> +	drv_data->clk = devm_clk_get_enabled(dev, "core");
-> +	if (IS_ERR(drv_data->clk))
-> +		return dev_err_probe(dev, PTR_ERR(drv_data->clk),
-> +				     "error getting/enabling core clock\n");
-> +
-> +	reset = devm_reset_control_get_exclusive_deasserted(dev, NULL);
-> +	if (IS_ERR(reset))
-> +		return dev_err_probe(dev, PTR_ERR(reset),
-> +				     "error getting/deasserting reset\n");
-> +
-> +	k1_spi_register_reset(drv_data, true);
-> +
-> +	drv_data->irq = platform_get_irq(pdev, 0);
-> +	if (drv_data->irq < 0)
-> +		return dev_err_probe(dev, drv_data->irq, "error getting IRQ\n");
-> +
-> +	ret = devm_request_irq(dev, drv_data->irq, k1_spi_ssp_isr,
-> +			       IRQF_SHARED, dev_name(dev), drv_data);
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, ret, "error requesting IRQ\n");
-> +
-> +	ret = devm_spi_register_controller(dev, host);
-> +	if (ret)
-> +		dev_err(dev, "error registering controller\n");
-> +
-> +	return ret;
-> +}
-> +
-> +static void k1_spi_remove(struct platform_device *pdev)
-> +{
-> +	struct k1_spi_driver_data *drv_data = platform_get_drvdata(pdev);
-> +
-> +	k1_spi_register_reset(drv_data, false);
-> +}
-> +
-> +static struct platform_driver k1_spi_driver = {
-> +	.driver = {
-> +		.name		= "k1-spi",
-> +		.of_match_table	= k1_spi_dt_ids,
-> +	},
-> +	.probe			= k1_spi_probe,
-> +	.remove			= k1_spi_remove,
-> +};
-> +
-> +module_platform_driver(k1_spi_driver);
-> +
-> +MODULE_DESCRIPTION("SpacemiT K1 SPI controller driver");
-> +MODULE_LICENSE("GPL");
-> -- 
-> 2.48.1
-> 
-> 
-> _______________________________________________
-> linux-riscv mailing list
-> linux-riscv@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-riscv
+Changes in v2:
+- Patch 1/2:
+  - modify commit message
+  - remove unused third cell from pdma dmas property
+  - update SPDX license in spacemit,k1-i2s.yaml to (GPL-2.0-only OR BSD-2-Clause)
+- Patch 2/2:
+  - modify commit message
+  - reset_assert in dai_ops::remove
+  - select CMA and DMA_CMA in Kconfig
+  - use devm_reset_control_get_exclusive
+- Link to v1: https://lore.kernel.org/r/20250814-k1-i2s-v1-0-c31149b29041@linux.spacemit.com
+
+---
+Troy Mitchell (2):
+      ASoC: dt-bindings: Add bindings for SpacemiT K1
+      ASoC: spacemit: add i2s support for K1 SoC
+
+ .../devicetree/bindings/sound/spacemit,k1-i2s.yaml |  87 ++++
+ sound/soc/Kconfig                                  |   1 +
+ sound/soc/Makefile                                 |   1 +
+ sound/soc/spacemit/Kconfig                         |  16 +
+ sound/soc/spacemit/Makefile                        |   5 +
+ sound/soc/spacemit/k1_i2s.c                        | 463 +++++++++++++++++++++
+ 6 files changed, 573 insertions(+)
+---
+base-commit: 4f010aced22532eea2ef0d9a2f5db7c64a196fec
+change-id: 20250813-k1-i2s-115bf65eaac8
+
+Best regards,
+-- 
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
