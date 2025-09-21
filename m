@@ -1,37 +1,36 @@
 Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004752D63F7;
-	Sun, 21 Sep 2025 21:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAA92D8790;
+	Sun, 21 Sep 2025 21:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758491152; cv=none; b=LhkYaPAQT9Mkz/7u0v5a4YrUS/h4mkfX+9PCOmSJHpP5jGem0lBFVNfxtKvadCQhYqZSWgDqEMs3NF15RmibDieF/lNerJ3MNt6biuTez6PZuh+ZGeGmekJeOuRIrdvrYugnpV25EJzjp/qzNqQ1/2r1kVwz4rffyIzGmz33Pkk=
+	t=1758491157; cv=none; b=U0f/uIfaSL0VnqvaY+M40AHHI/313hakXDmKA1Ik5UfKsQ4CoU3W0Cgo6RpjWwW66cHEgFBjZ4gjuZ8bR1dOwH8DNk/wrxYBzRTsHAiK/pP/V2BeiSH/Ht4jlKdNUsznHF8Nff/m/5T/UbRclgSAxrPaIYW3fT0aMRrsk/qiZV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758491152; c=relaxed/simple;
-	bh=o7eB8nx62ruqkZ1cisxZnkESzSSW5nwWcjDXVrj0fTo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXXLE77LRprS94vIhK61nHyoRN7N5/rhXaxsmiI3WRZD6/jy+2lutohnx2ork5It2CcTJFBnuqvNI9SFLUA4DpW+1Z/H9BU3oztFy8N9X/y3XRlWTet+/4VH981S2fNfYVdhDBkgpVdh7SUL6gRI2WAUMrZzb+y/xJIM1oqSIdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=ahA6ZYhy; arc=none smtp.client-ip=195.154.113.88
+	s=arc-20240116; t=1758491157; c=relaxed/simple;
+	bh=h4qJR2pDdTQqvNkvOtZShgDkPta1n+vG/zTi9XLKvcw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=N437pxMINh0LBYZBVnh8tVAegLGCGqSeuyKdamEX4aeRojv9kOuGQAF9yevJzQRlrF0uc1TjjrpZ+JwSqD4jhaQ52+nt8C1lsHhamHftm+o3izppxb1cl7HpAoE+7PQetJ8wVNBrPs3ZD4vBiK4BSrnDaghRzwa9o84KId8qbss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=VMJrVDCU; arc=none smtp.client-ip=195.154.113.88
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="ahA6ZYhy"
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="VMJrVDCU"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:References:
-	In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Content-Type:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=J6mm7ThCUa+BZCqJW1oZ8znjpYf3rY1SySZcweF1uO0=; b=ahA6ZYhyoOv7CDJB2kGvlQgCoY
-	ifBRiDbpnK4t32Lx3+hn4chHV6m2q9ebDtstjuJabtvzeD6Q2vDZ6FT3fGvQtVIQKCSD31G7nW/m/
-	VbipN5TMw0eYmwTo1/qIQ1AWI4JCP3KbN5esjArjqO3ZAkWqUcdqCjv9XrROLHQnMs+Jv096CnitS
-	nh1egHEpqtb4rJig94Nqsm7AhOx9RXmZ+KHz0YoHkhglFTPGGSWUTQqX5ErPaQZpd9Ii3N3HWbtFH
-	+Ecwyqka6P27poKzrxVFPlco/QRmjgiirsk9chRmJnz6cTj2X5fu6dk4LC0Xr7d1Rpm/WGz6Y8KRX
-	GR450Yyg==;
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
+	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+	bh=cutiYl0wANGDLRaXIM0wgr5qojCK4TIzTyPKOVMBJ20=; b=VMJrVDCUvBS7dnOXzDFDjf+EVg
+	cwXqXoaWOgrh/iBe7rJD9MyyqNS26Aypw1zVdQMyAaeMKwxGEdRsUtgriV4X56b4fxsNkLaM3Vwnh
+	wv7SgID8k3mvY8Umo++fyHWNbsm0ucad0I3OLnJSGNN197RktI5kOVEajbfy7IVLMzyNgex+iKsr1
+	wQ+LGr2Jip+TwgSuLlmDCe+DM68q1Jn6NoUl0mlGFzr6Ewhs6PX4Xz9EbVgu5jKO8Ti41jeg8rD9w
+	yqzXNFdSZpWF60ka7sEBzMwqB83+aADyuUtT88tHyAFkOduUSCUmQpaC5MaoTOl+qco3FoHLOkEIV
+	sgHXmQqQ==;
 Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
 	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <aurelien@aurel32.net>)
-	id 1v0RCr-009Lbu-1A;
-	Sun, 21 Sep 2025 23:02:49 +0200
+	id 1v0RCm-009LbD-2a;
+	Sun, 21 Sep 2025 23:02:44 +0200
 From: Aurelien Jarno <aurelien@aurel32.net>
 To: linux-kernel@vger.kernel.org,
 	Rob Herring <robh@kernel.org>,
@@ -46,12 +45,10 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>,
 	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
 	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE),
 	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support)
-Subject: [PATCH 3/3] riscv: dts: spacemit: add i2c aliases on BPI-F3
-Date: Sun, 21 Sep 2025 23:01:43 +0200
-Message-ID: <20250921210237.943370-4-aurelien@aurel32.net>
+Subject: [PATCH 0/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
+Date: Sun, 21 Sep 2025 23:01:40 +0200
+Message-ID: <20250921210237.943370-1-aurelien@aurel32.net>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250921210237.943370-1-aurelien@aurel32.net>
-References: <20250921210237.943370-1-aurelien@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,27 +57,19 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add i2c aliases for i2c2 and i2c8 on BPI-F3. This is useful to keep a
-stable number for the /dev entries after loading the i2c-dev module.
+The BPI-F3 board has a 24c02 eeprom connected to the i2c bus #2. It
+holds board data. This patchset adds support for it. 
 
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 2 ++
- 1 file changed, 2 insertions(+)
+Aurelien Jarno (3):
+  riscv: dts: spacemit: enable the i2c2 adapter on BPI-F3
+  riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
+  riscv: dts: spacemit: add i2c aliases on BPI-F3
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 574d10fdf9b82..a71eaf1c65deb 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -14,6 +14,8 @@ aliases {
- 		ethernet0 = &eth0;
- 		ethernet1 = &eth1;
- 		serial0 = &uart0;
-+		i2c2 = &i2c2;
-+		i2c8 = &i2c8;
- 	};
- 
- 	chosen {
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      | 19 ++++++++++++++++++-
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |  7 +++++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi          | 13 +++++++++++++
+ 3 files changed, 38 insertions(+), 1 deletion(-)
+
 -- 
 2.47.2
 
