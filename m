@@ -1,453 +1,181 @@
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9712EB84F
-	for <spacemit@lists.linux.dev>; Mon, 22 Sep 2025 15:42:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300613115B0
+	for <spacemit@lists.linux.dev>; Mon, 22 Sep 2025 16:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758555744; cv=none; b=OSaFSQnNCJjw6KPtfPnGYX5rLX0I8Q5ctyleTyWws9HG2OtlVZxQuyxHWMrlC1Az2qKsCWP5AcgK2r2oHPDv+imVVgWy/f9x3QH//IDwt5xPOOAHYc8mi9iD7338gw6mwG6KCNOWkY4OVlbnocW6vttNwUOFSqJEbpBgACJWspc=
+	t=1758557845; cv=none; b=IkCR6UmVE5it/9w1Pgnp0gO+MVprTmna8Zem5LVdLvYZVOxbDfUWaWQR93HcG++r2YnEv91MqHhHC8kNsxZDPMeh9sezw23XMf5DIa+l4K8/Ij8/4MYbNbmpdev2KjXXVO7QbYoM8vbd+nZrG6ikLZ49vSQhSNN7SMf0yqMzs3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758555744; c=relaxed/simple;
-	bh=F5KlDyMG8eYzUZvgjPjToLpz2jT4u/0qNKcqnIzbvQ8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ceqfzlSRkkyfY6C/WHpFED+Ia5MobpeCrmHJogSYals7c4HX7Rt3HEgTla+TsY8MK+GijS4t4D+cONROrUhbCc6vpG/vbsIh4hDX3ppJ7HG+uyjWdB+lpJ7opBqtMvdWwp1Zdyhb4nRwOX+U6MtRVS9wdaEo+pcLcHfydMZ9sp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=h4j/P5qD; arc=none smtp.client-ip=209.85.166.169
+	s=arc-20240116; t=1758557845; c=relaxed/simple;
+	bh=7vVewiqA0e2iwP/eAxuh7WA4OQg2jToWd9kLbbhtNC4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Artqcw6LCC8RgIL2uq4T0UGQPOiSo0RkwEhWytfs2lnD1Fo2F8zt3VwXUaZqVGEk1v6wYmOuPh7YaJo09ZIgQskcX4D4FPpfL01IHAwJqFoPorIZ+s2kCpbSEqcUccmcGNZqwBcLMM9Hsfxb9tzDt54tTCbzKCpNlaih35NvSBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=XcMlOoQX; arc=none smtp.client-ip=209.85.166.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="h4j/P5qD"
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3fe48646d40so25181515ab.0
-        for <spacemit@lists.linux.dev>; Mon, 22 Sep 2025 08:42:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="XcMlOoQX"
+Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-4248a13fbe9so16593445ab.1
+        for <spacemit@lists.linux.dev>; Mon, 22 Sep 2025 09:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758555740; x=1759160540; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=TTk4A76Ms2H4wOn644Gvv84BCkr8Ty2d+iDX4Wsm1vg=;
-        b=h4j/P5qDhAte+rH8qt5cBqQbNVCQ+H7hW60DM2ynNy1KW6nAFhbPpghybpYrXEtzRN
-         d1mvtverpeWNpHSmC3SQ+TujZYwGCVuUj4yfMMWeFGTo9Vl+Xo/uIUULHQGMvPeeb3dP
-         23PsAc8YNujVGUt/Hr1asHZJqAT+YXar0m8tzGO6ciBs7n88uoNO7NpzKX0s585tJmUx
-         08neIzSk4EHTbRkc5jErzGE2nk0PZfC5n11E66Remdh7pxdGJtOxzZWDLu8cv9k/WR4m
-         kuj64l0wlwPPtpSGHDVZNSnmIJUxvVZ8nM+tYTZxdlY1/gWSQS37Hxq9xsza+rfq4iOJ
-         bNnQ==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758557842; x=1759162642; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VY+UeuZTbe4DuOfkxt1V9gHqp7+wtqNRHgcn1ay/Mt0=;
+        b=XcMlOoQXzkdpJTwBxwyuPrSrLW7Y+T4x9GXKk3vMu3m52zzGrzBSnywZuxPsvS2lCM
+         Jn5DCDY7irgcHL/JDWVPSBirvhrm8nrwGTsUmXZ9iqnQlsVbTVukaqv2fsu3j/FmHDkQ
+         PgS/MBlj2nvunDwDHHJ5MbVEmTqG2LbkkSqSsRspluALEjRlIYIF1jU96L+EESgLgrMu
+         ryBPleUX+ywQPFwhGAVbRZRpwaQAosQAqWWxWvOCLD6hTCwfIrE+9Ql8q9rjwDj3buVu
+         PzRnQGWCSjr/7pL2lqvKr3AGXFqWmHgMyNmJ97LdKgFRdXGgtgfZX6JFalfw89nbaoOt
+         elQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758555740; x=1759160540;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TTk4A76Ms2H4wOn644Gvv84BCkr8Ty2d+iDX4Wsm1vg=;
-        b=Cq8xFpqmtDxREB5FqBgAN10BluH7hAYXQO31NVziTwtfjqKiB2SWnzr5JgYb39jRog
-         NM6j/NPtqqz1ynNfRW4rWYN7YJidHVHJXt+NSxNSviXUVc4wf74wUNtsMPNt8ENZXUXU
-         /U4/pOWarEhOSLxmplwT7cFBB8MEva4iqjo21CW9SNhHTkMuOIsMgxYcU598h3YakTfb
-         mMHWEuJ6+JGK/vGe/ocRd8Ps8f9WorsH0rxCHsyPV1spbYvaDl+iWTNXONQp9voCWsBb
-         wmJCFPYv/+Vh10Q74GVWfuIgkJoM7+IDpgz6AsCciWUT2o4+o3DKrOnewKwJjho3a5Kb
-         PQKA==
-X-Forwarded-Encrypted: i=1; AJvYcCUW5oZA17BiXcZa0KX/6hiXFeRFKzW1NGdRrd0nWDjl53Ajpqpzq+C0CgHWO7MDWd/lPforNK0Ayg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyLS5OHb3rlUhWoj1qq7noWWFFyNNy6uvvPzRmiwFSy+WOK6ExS
-	38I4mFG7thHIeadSDWnVHCBTZQAe8xQcaW6f3k3SgpqeZZC1fxEENZBrz1urXX99oNE=
-X-Gm-Gg: ASbGncsysTfQSCVz1J9UR+8T7bsc/rr3DUDadPF313mQP7Ux5rj7Z/GIDJ0UmEOkPAb
-	/q40ffivOIxCliVC/k5312Xii8ijUHilFETZZYGYYQEE9VKHIKms/wi3ghdgYHql5J9Vzg/gfpR
-	666wZifRlsVcHO5dVAl3yqVAzfKju79cPYIWGtmtQqqTin+XeCXnEV/EsEVgp6EgynheliAeq/t
-	muTfNj6YQT/bcQ6jSe7Ra9iJV2+etcAuscV2R5Iqost2vBtqNDSAFtpHUkNQqgSe1uaBUCvlmCQ
-	Rpk7AkZNOhHQpYPi9a7szTbhxby7KDe0CDmY/hYmvSi75RifBi0rXK+Ksevl91fp6CRe8GZ76ag
-	dPmjkRFKWJZHicXa8B6DY5euIuMP9+tCuBgCLCutKw3iA+3VgNQgYuAU3M09tRg==
-X-Google-Smtp-Source: AGHT+IEA0zyT2ExHJFMPxt+f+L+M18kdHNHo5quB4MFBWM+Ut2sDE1jLhw5lHfQhZdm8YIzfggn8GA==
-X-Received: by 2002:a05:6e02:3048:b0:425:6f30:8fff with SMTP id e9e14a558f8ab-4256f309198mr103820915ab.11.1758555740170;
-        Mon, 22 Sep 2025 08:42:20 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-4244afab539sm59790485ab.27.2025.09.22.08.42.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Sep 2025 08:42:19 -0700 (PDT)
-Message-ID: <a183121f-3ab7-4acf-98b7-9d5367943072@riscstar.com>
-Date: Mon, 22 Sep 2025 10:42:18 -0500
+        d=1e100.net; s=20230601; t=1758557842; x=1759162642;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VY+UeuZTbe4DuOfkxt1V9gHqp7+wtqNRHgcn1ay/Mt0=;
+        b=c4VQ8CoglWXqGF0ZiC03t9HlDuIWVtvDkk9ujez08XmBC2xGFeHujb+pHvoUSnjHqS
+         ORxTxNZswvFDsy/Ce2m0h5iB0EcPnJCXpNRrvkRVWZQmMwtc0uMYhBAh4GY1fJ/wT+Rz
+         dTQiTlcf2HYrB4dGyuEzwwP2ZXUpsUZsIdO/lH2smWSIQfWDZypCndvVKpjaEQyTI3Ii
+         k5nb8/TJg2wxlmIYaVO3P1+WWX4xWbHzGVRNky115xNaPcsuLvdv5UwgB1PnezyThUi9
+         hAFawX+aBDcbkSO0ajxBNeHNjki6aDDzpLqxgayUTSO61qFprVKvFNAsu8xpKBFpuLMJ
+         aFpg==
+X-Forwarded-Encrypted: i=1; AJvYcCV+4ZCgph2hsHS4t76WiQOU48BH8BHuXVEJfj5Lm3jtU9JYMS3Te7qTN+f3F94ONnPyy73XwdySTQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw9mz4BQY3+VAg0Gq52Tk2AolA2+6gCnI9bVCJaqtid+ObQs4bZ
+	AX5eEzoWnrs4Z84GavZhrKZZCKByyfxZ0mUxsozetntQrS5hMO+clV8Jj0lRfqQ3CX4=
+X-Gm-Gg: ASbGncseitfvreyG6efh3HtssoSyTZqioR8RCcRyf2GmlLrgmP2a7T5H2qxWJPC3feQ
+	qEMWfZ/MvRnPNzC5iXM90rk36WKxa43bXX61Bw5OQzkCmaao55dw5BoTic+0obHS/j9n9AsJbNG
+	/JyoNn8eD1mqsseyBsr1L1mn0vvOEE0hUpCqpLogzDkBUmxvqoVAQ2yTscpgtffXxPwnNC3p7WC
+	6IkaqSsINt0oWrHP4zoQy96dmhlVnUshVKLG+o2aYsXgLudMmlZSQ4iHaojuQFmChRN9Z+pLxpj
+	q6si2laEO3T6/ZIF6XuCFdx6XXPnOJ+yI1wwNZQ16P+LaOMCR6NlJQH7n2M4107yYGxmX3AeLaj
+	Mh4GGyLaeqYnqTg0kvqcyKWOgGkmdmcEFRKN+mAJfZBAWey/oJacPTXQbLsAfWzE11A==
+X-Google-Smtp-Source: AGHT+IGacLGMErLcsONCaQ7tVN/QLr7qDvYuMf/IioCcbyv5ZtFG8CwlnJVAkhCLzpWTG1DzdwCTxg==
+X-Received: by 2002:a05:6e02:1a8d:b0:3f2:a7ef:bd88 with SMTP id e9e14a558f8ab-42481911aadmr188245465ab.5.1758557842154;
+        Mon, 22 Sep 2025 09:17:22 -0700 (PDT)
+Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-425711d9aa0sm25207185ab.48.2025.09.22.09.17.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Sep 2025 09:17:21 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: broonie@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: dlan@gentoo.org,
+	ziyao@disroot.org,
+	linux-spi@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	p.zabel@pengutronix.de,
+	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/3] spi: support the SpacemiT K1 SPI controller
+Date: Mon, 22 Sep 2025 11:17:13 -0500
+Message-ID: <20250922161717.1590690-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] spi: spacemit: introduce SpacemiT K1 SPI
- controller driver
-From: Alex Elder <elder@riscstar.com>
-To: Vivian Wang <wangruikang@iscas.ac.cn>, broonie@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: dlan@gentoo.org, ziyao@disroot.org, linux-spi@vger.kernel.org,
- devicetree@vger.kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
- spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20250919155914.935608-1-elder@riscstar.com>
- <20250919155914.935608-3-elder@riscstar.com>
- <a7070f3f-8857-4834-9e9e-02068637075c@iscas.ac.cn>
- <3c9aaa62-f685-47f7-a21c-00f51550f185@riscstar.com>
-Content-Language: en-US
-In-Reply-To: <3c9aaa62-f685-47f7-a21c-00f51550f185@riscstar.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 9/20/25 10:59 AM, Alex Elder wrote:
-> On 9/19/25 10:52 PM, Vivian Wang wrote:
->> Hi Alex,
->>
->> On 9/19/25 23:59, Alex Elder wrote:
->>> [...]
->>>
->>> diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
->>> index 82fa5eb3b8684..4f6c446c6bc16 100644
->>> --- a/drivers/spi/Kconfig
->>> +++ b/drivers/spi/Kconfig
->>> @@ -1071,6 +1071,14 @@ config SPI_SG2044_NOR
->>>         also supporting 3Byte address devices and 4Byte address
->>>         devices.
->>> +config SPI_SPACEMIT_K1
->>> +    tristate "K1 SPI Controller"
->>> +    depends on ARCH_SPACEMIT || COMPILE_TEST
->>> +    depends on OF
->>> +    default ARCH_SPACEMIT
->>> +    help
->>> +      Enable support for the SpacemiT K1 SPI controller.
->>> +
->>
->> We could still add:
->>
->>     imply MMP_PDMA if ARCH_SPACEMIT
-> 
-> I have never used "imply", I guess it's new (as of 2016)...
-> 
-> This sounds like a good suggestion.  This would mean MMP_PDMA
-> would by default take the same value as SPI_SPACEMIT_K1 (if
-> the former's dependencies were met), while allowing it to be
-> deselected for the configuration.
->   > To add a "recommended" dependency. This way, enabling SPI_SPACEMIT_K1
->> automatically enables MMP_PDMA, but if the user is willing to fiddle
->> around, they can explicitly disable it. What do you think?
-> 
-> I like it.
-> 
->>>   config SPI_SPRD
->>>       tristate "Spreadtrum SPI controller"
->>>       depends on ARCH_SPRD || COMPILE_TEST
->>>
->>> [...]
->>>
->>> diff --git a/drivers/spi/spi-spacemit-k1.c b/drivers/spi/spi- 
->>> spacemit-k1.c
->>> new file mode 100644
->>> index 0000000000000..8d564fe6c4303
->>> --- /dev/null
->>> +++ b/drivers/spi/spi-spacemit-k1.c
->>> @@ -0,0 +1,968 @@
->>>
->>> [...]
->>>
->>> +static void k1_spi_read_word(struct k1_spi_driver_data *drv_data)
->>> +{
->>> +    struct k1_spi_io *rx = &drv_data->rx;
->>> +    u32 bytes = drv_data->bytes;
->>> +    u32 val;
->>> +
->>> +    val = readl(drv_data->base + SSP_DATAR);
->>> +    rx->resid -= bytes;
->>> +
->>> +    if (!rx->buf)
->>> +        return;    /* Null reader: discard the data */
->>> +
->>> +    if (bytes == 1)
->>> +        *(u8 *)rx->buf = val;
->>> +    else if (bytes == 1)
->>
->> Typo? else if (bytes == 2)
-> 
-> Wow.  Yes that is an error that I'll correct.
-> 
->>> +        *(u16 *)rx->buf = val;
->>> +    else
->>> +        *(u32 *)rx->buf = val;
->>
->> Maybe
->>
->>     else if (bytes == 4)
->>         *(u32 *)rx->buf = val;
->>     else
->>         WARN_ON_ONCE(1);
-> 
-> The value of bytes will be 1, 2, or 4, which we can tell
-> by inspection.  At one time I had a switch statement with
-> a default, but I decided to leave out the default, which
-> won't happen.
-> 
->> Just to make the pattern consistent? Same for k1_spi_write_word.
-> 
-> Consistent with what?
+This series adds support for the SPI controller found in the SpacemiT
+K1 SoC.  The driver currently supports only master mode.  The controller
+has two 32-entry FIFOs and supports PIO and DMA for transfers.
 
-FYI in updating my code I now realize that k1_spi_write()
-and k1_spi_read() were done differently, and that's what
-you were talking about.  (I assumed they both used the same
-pattern, not checking in the case bytes == 4.)
-
-That was the basis of my "consistent with what?" question
-and I'm sorry I didn't realize I was mistaken about how
-this was written.
-
-They're both going to look roughly like this now:
-
-         if (bytes == 1)
-                 *(u8 *)rx->buf = val;
-         else if (bytes == 2)
-                 *(u16 *)rx->buf = val;
-         else    /* bytes == 4 */
-                 *(u32 *)rx->buf = val;
-
->>> +    rx->buf += bytes;
->>> +}
->>>
->>> [...]
->>>
->>> +static int k1_spi_dma_setup(struct k1_spi_driver_data *drv_data)
->>> +{
->>> +    struct device *dev = drv_data->dev;
->>> +    int rx_ret;
->>> +    int tx_ret;
->>> +
->>> +    /* We must get both DMA channels, or neither of them */
->>> +    rx_ret = k1_spi_dma_setup_io(drv_data, true);
->>> +    if (rx_ret == -EPROBE_DEFER)
->>> +        return -EPROBE_DEFER;
->>> +
->>> +    tx_ret = k1_spi_dma_setup_io(drv_data, false);
->>> +
->>> +    /* If neither is specified, we don't use DMA */
->>> +    if (rx_ret == -ENODEV && tx_ret == -ENODEV)
->>> +        return 0;
->>> +
->>> +    if (rx_ret || tx_ret)
->>> +        goto err_cleanup;
->>
->> This seems a bit convoluted. I'm wondering if all this explicit handling
->> really is necessary - if we get an error at probe time, can we just
->> return that error and let devres handle the rest? With the special case
->> that if we get both -ENODEV then disable DMA.
-> 
-> I agree it seems it should be less complex.
-
-Your suggestion is to simplify this code by falling
-back on the devres mechanism to take care of cleaning
-things up when an error is returned.
-
-But that won't work, because this function is called
-by the devm_k1_spi_dma_setup() devres wrapper function.
-
-If this function returns an error, that function assumes
-failure, so it never sets up the resource, and never
-calls the cleanup function.  This function must restore
-everything to the previous state if it returns an error.
-
-> I'm trying to ensure that both channels are set up, or
-> that neither channel is set up, or that we try again if
-> we get -EPROBE_DEFER.  And if there's something wrong
-> with the configuration (only one of TX and RX is set up
-> successfully), an error occurs.
-> 
-> RX        TX        Result
-> --        --        ------
-> 0        0        0    (DMA)
-> -ENODEV        -ENODEV        0    (PIO)
-> -EPROBE_DEFER    (anything)    -EPROBE_DEFER (try again)
-> (anything)    -EPROBE_DEFER    -EPROBE_DEFER (try again)
-> 0        -ENODEV        -ENODEV    (error, abort probe)
-> -ENODEV        0        -ENODEV    (error, abort probe)
-> error        (anything)    error    (error, abort probe)
-> (anything)    error        error    (error, abort probe)
-> 
-> Finally, if the buffer allocation fails:
-> 0        0        0    (PIO; clean up TX and RX)
-> 
-> Let me think about this.  I'll see if I can find a simpler way
-> to achieve the above result, relying on devres to clean things
-> up.  I'd have to change k1_spi_dma_cleanup(), but you might be
-> right that it could be done more simply.
-
-Version 3 of this series will keep this code similar to v2.
-
-> 
->> k1_spi_dma_cleanup_io seems to handle unmapping and termination of DMA,
->> which we... don't need, right?
-
-You're right.  Those cleanup activities are not necessary,
-because they're meant to clean up stuff that happens *after*
-setup completes--once we perform at least one DMA.
-
-HOWEVER, because devm_k1_spi_dma_setup() assumes this
-function returns everything to its previous state, the
-channels need to be freed explicitly on error (which
-did not occur in the v2 code).
-
-And because devm_k1_spi_dma_setup() is already arranging
-for resource-managed cleanup, I'm just going to request
-the channel "directly" in k1_spi_dma_setup_io() rather
-than layering another devm_*() call there.  Then I'll
-explicitly release the channel in k1_spi_dma_cleanup_io().
-
-So k1_spi_dma_setup() will basically stay the same.
-
-The same logic applies to allocating the dummy buffer;
-it will be done with kzalloc(), and will be freed in
-k1_spi_dma_cleanup().
-
-This ended up needing to be fixed, even though it wasn't
-exactly what you were looking for.  So either way, I'm
-glad you asked about this.
-
-Thanks.
+Version 3 incorporates changes suggested during review of v2.
 
 					-Alex
 
->>> +    drv_data->dummy = devm_kzalloc(dev, SZ_2K, GFP_KERNEL);
->>> +    if (drv_data->dummy)
->>> +        return 0;        /* Success! */
->>> +
->>> +    dev_warn(dev, "error allocating DMA dummy buffer; DMA disabled\n");
->>
->> Just return -ENOMEM. If we can't even allocate 2K of buffer, we're
->> doomed anyway.
-> 
-> You're generally right, but I don't want my code to assume that.
-> 
->>> +err_cleanup:
->>> +    if (tx_ret) {
->>> +        if (tx_ret != -EPROBE_DEFER)
->>> +            dev_err(dev, "error requesting DMA TX DMA channel\n");
->>> +    } else {
->>> +        k1_spi_dma_cleanup_io(drv_data, false);
->>> +    }
->>> +
->>> +    if (rx_ret)
->>> +        dev_err(dev, "error requesting DMA RX DMA channel\n");
->>> +    else
->>> +        k1_spi_dma_cleanup_io(drv_data, true);
->>> +
->>> +    if (tx_ret == -EPROBE_DEFER)
->>> +        return -EPROBE_DEFER;
->>> +
->>> +    /* Return success if we don't get the dummy buffer; PIO will be 
->>> used */
->>> +
->>> +    return rx_ret ? : tx_ret ? : 0;
->>> +}
->>>
->>> [...]
->>>
->>> +static int devm_k1_spi_dma_setup(struct k1_spi_driver_data *drv_data)
->>> +{
->>> +    struct k1_spi_driver_data **ptr;
->>> +    int ret;
->>> +
->>> +    if (!IS_ENABLED(CONFIG_MMP_PDMA)) {
->>> +        dev_warn(drv_data->dev, "DMA not available; using PIO\n");
->>> +        return 0;
->>> +    }
->>> +
->>
->> Shouldn't be necessary if we do the "imply" thing in Kconfig.
-> 
-> The messages I provide are based on an assumption that using
-> DMA is desirable and it will normally be used by this driver.
-> So if it won't be used, I'd like to provide that information.
-> 
-> On the other hand, I don't issue a warning if neither of
-> the channels is configured in the DTB.
-> 
-> I'm not going to commit either way on keeping/removing this.
-> If someone else weighs in I'm open to changing it.
-> 
->>> [...]
->>>
->>> +static void k1_spi_host_init(struct k1_spi_driver_data *drv_data)
->>> +{
->>>
->>> [...]
->>>
->>> +
->>> +    ret = of_property_read_u32(np, "spi-max-frequency", &max_speed_hz);
->>> +    if (!ret) {
->>> +        host->max_speed_hz = clamp(max_speed_hz, K1_SPI_MIN_SPEED_HZ,
->>> +                       K1_SPI_MAX_SPEED_HZ);
->>> +        if (host->max_speed_hz != max_speed_hz)
->>> +            dev_warn(dev, "spi-max-frequency %u out of range, using 
->>> %u\n",
->>> +                max_speed_hz, host->max_speed_hz);
->>> +    } else {
->>> +        if (ret != -EINVAL)
->>> +            dev_warn(dev, "bad spi-max-frequency, using %u\n",
->>> +                 K1_SPI_DEFAULT_MAX_SPEED_HZ);
->>> +        host->max_speed_hz = K1_SPI_DEFAULT_MAX_SPEED_HZ;
->>> +    }
->>
->> I think it makes sense to have spi-max-frequency default to
->> K1_SPI_DEFAULT_MAX_SPEED_HZ, but if the value is out of range just print
->> a message and return an error, to get whoever wrote the bad value to 
->> fix it.
-> 
-> These errors just shouldn't happen.  But the way I handle this,
-> it allows the SPI controller to still be used, even if the
-> administrator can't really update the DTB.
-> 
->> This range seems to be fixed by hardware, so, it should also be
->> specified in the bindings.
-> 
-> I define the hardware limits here, and enforce
-> them, in case the bindings specify an out-of-range
-> value.  Again, this is an error that just shouldn't
-> occur in practice, but the code is defensive.
-> 
-> Most of your comments really made me think about how
-> errors are handled.  I appreciate it.
-> 
->                      -Alex
-> 
->>
->>> +}
->>> +
->>>
->>> [...]
->>>
->>> +
->>> +static int k1_spi_probe(struct platform_device *pdev)
->>> +{
->>> +    struct k1_spi_driver_data *drv_data;
->>> +    struct device *dev = &pdev->dev;
->>> +    struct reset_control *reset;
->>> +    struct spi_controller *host;
->>> +    struct resource *iores;
->>> +    struct clk *clk_bus;
->>> +    int ret;
->>> +
->>> +    host = devm_spi_alloc_host(dev, sizeof(*drv_data));
->>> +    if (!host)
->>> +        return -ENOMEM;
->>> +    drv_data = spi_controller_get_devdata(host);
->>> +    drv_data->controller = host;
->>> +    platform_set_drvdata(pdev, drv_data);
->>> +    drv_data->dev = dev;
->>> +    init_completion(&drv_data->completion);
->>> +
->>> +    drv_data->base = devm_platform_get_and_ioremap_resource(pdev, 0,
->>> +                                &iores);
->>
->> Maybe
->>
->>      devm_platform_ioremap_resource(pdev, 0);
->>
->>> [...]
->>>
->>> +
->>> +MODULE_DESCRIPTION("SpacemiT K1 SPI controller driver");
->>> +MODULE_LICENSE("GPL");
->>
->> Maybe MODULE_AUTHOR()?
->>
->> Vivian "dramforever" Wang
->>
-> 
+This series is available here:
+  https://github.com/riscstar/linux/tree/outgoing/spi-v3
+
+Between version 2 and version 3:
+  - Add Conor's Acked-by to patch 1
+  - Add Rob's Reviewed-by to patch 1
+  - Added imply_PDMA to the SPI_SPACEMIT_K1 Kconfig option
+  - Fixed a bug pointed out by Vivian (and Troy) in word-sized reads
+  - Added a comment stating we use 1, 2, or 4 bytes per word
+  - Cleaned up DMA channels properly in case of failure setting up
+  - No longer use devm_*() for allocating DMA channels or buffer
+  - Moved the SPI controller into the dma-bus memory region
+
+Here is version 2 of this series:
+  https://lore.kernel.org/lkml/20250919155914.935608-1-elder@riscstar.com/
+
+Between version 1 and version 2:
+  - Use enum rather than const for the binding compatible string
+  - Omit the label and status property in the binding example
+  - The spi-spacemit-k1.o make target is now added in sorted order
+  - The SPI_SPACEMIT_K1 config option is added in sorted order
+  - The SPI_SPACEMIT_K1 config does *not* depend on MMP_PDMA,
+    however MMP_PDMA is checked at runtime, and if not enabled,
+    DMA will not be used
+  - Read/modify/writes of registers no longer use an additional
+    "virt" variable to hold the address accessed
+  - The k1_spi_driver_data->ioaddr field has been renamed base
+  - The DMA address for the base address is maintained, rather than
+    saving the DMA address of the data register
+  - The spi-max-frequency property value is now bounds checked
+  - A local variable is now initialized to 0 in k1_spi_write_word()
+  - The driver name is now "k1-spi"
+  - DT aliases are used rather than spacemit,k1-ssp-id for bus number
+  - The order of two pin control properties was changed as requested
+  - Clock names and DMA names are now on one line in the "k1.dtsi"
+  - The interrupts property is used rather than interrupts-extended
+  - The order of two pin control properties was changed as requested
+  - Clock names and DMA names are now on one line in the "k1.dtsi"
+  - The interrupts property is used rather than interrupts-extended
+
+Here is version 1 of this series:
+  https://lore.kernel.org/lkml/20250917220724.288127-1-elder@riscstar.com/
+
+Alex Elder (3):
+  dt-bindings: spi: add SpacemiT K1 SPI support
+  spi: spacemit: introduce SpacemiT K1 SPI controller driver
+  riscv: dts: spacemit: define a SPI controller node
+
+ .../bindings/spi/spacemit,k1-spi.yaml         |  87 ++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      |   7 +
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |  20 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          |  16 +
+ drivers/spi/Kconfig                           |   8 +
+ drivers/spi/Makefile                          |   1 +
+ drivers/spi/spi-spacemit-k1.c                 | 968 ++++++++++++++++++
+ 7 files changed, 1107 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/spi/spacemit,k1-spi.yaml
+ create mode 100644 drivers/spi/spi-spacemit-k1.c
+
+
+base-commit: 846bd2225ec3cfa8be046655e02b9457ed41973e
+-- 
+2.48.1
+
+
+Alex Elder (3):
+  dt-bindings: spi: add SpacemiT K1 SPI support
+  spi: spacemit: introduce SpacemiT K1 SPI controller driver
+  riscv: dts: spacemit: define a SPI controller node
+
+ .../bindings/spi/spacemit,k1-spi.yaml         |  87 ++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      |   7 +
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |  20 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          |  16 +
+ drivers/spi/Kconfig                           |   9 +
+ drivers/spi/Makefile                          |   1 +
+ drivers/spi/spi-spacemit-k1.c                 | 965 ++++++++++++++++++
+ 7 files changed, 1105 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/spi/spacemit,k1-spi.yaml
+ create mode 100644 drivers/spi/spi-spacemit-k1.c
+
+
+base-commit: bf2602a3cb2381fb1a04bf1c39a290518d2538d1
+-- 
+2.48.1
 
