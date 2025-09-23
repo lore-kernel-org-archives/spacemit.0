@@ -1,91 +1,293 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F62331A546;
-	Tue, 23 Sep 2025 08:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A7E79CF
+	for <spacemit@lists.linux.dev>; Tue, 23 Sep 2025 12:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758616071; cv=none; b=gR5YeCcupRlngNqBE13DmSof+f1nbznOWwtT1EgaXcJJMrvYy+5IFlAOxb4TfNfkC1f92odF3PjTZMuj83pBuEptTB/nFhG/IvfLxzDjrMgYIxHorTMSAztKnV8kPPb9TStBCZqaDz/2BHf/9wK9dtsa81XLlgJb8mzzB0i4qis=
+	t=1758631769; cv=none; b=YkVuMmZEvQQDcidiRL1GaSVUT1KXlJttcxBDymzUjqmij7PtPYsvKKrPVvRvreWqhHBpo3FWnf0DQZ8xIS9kYURTvXa9MsarcCGtdzF2QuDeWkUGpd9eJeP5zPTKkl43E1k9nYJhWuzMgo9L5uCORmi3m1tsI5Pyv2AuNaZNqtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758616071; c=relaxed/simple;
-	bh=DpOw3esgxv6fryqqMWiEbCIzH82geJydVvITLMOkr54=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q3mHwTi2BHZNsJhcSE1rvJaA/B/M+n+YZT8IWKCHVhzuW+RLUYSEn1TbvnXCjj3mnJlhvc8QHiyQM9OAghJyZks2L+eTAcPY7e0K9HCIlHwION1cGH/lDHVcB2yjqRd/HU472kaMAdfBIs/znml1KnCA9ONdbDgK7Ct9oBVJX6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R7EdvDgV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1758631769; c=relaxed/simple;
+	bh=viMHlMgc2DeVPr1JzbzU5Lkyrq+sYbfd7FhWBYhy4fY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GhhY9Z70fmHYMrkdymkWOJ4/2djeFje/2uMw6FKSRuKqmE7BWABgtQT4ORT2SUgZWanozYb/5LcfOiDGueQvL5naZ6rsVD6fyY11VnFHgIg/51FNFz3UhiHXZJ+9FTNfugerFjYjfvf6WQLbIm25sm/Wmf2wnYxTYkRv6nKSxn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=mqDGq5Ej; arc=none smtp.client-ip=209.85.166.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R7EdvDgV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2770DC4CEF7;
-	Tue, 23 Sep 2025 08:27:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758616070;
-	bh=DpOw3esgxv6fryqqMWiEbCIzH82geJydVvITLMOkr54=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R7EdvDgVwmk0J7sjYuIr5k+k1hAX1ayYzxWUkv9BJ2K+XHyLuvkeBcPHlOHWtSY7j
-	 GU1uxKJwDKI2vmRC0ZQkEPEJg9ChqJeTTE6DojnEJWRXbaTkymc525jUGu/9EqjpWG
-	 19jftow50k0Slyg09ReA5iifXwDu71SRTnOrAw50BWhY9Jnv8U2e83ZSdLx2eb/fOO
-	 M/Cz+13FQjZNlE+GqPskVnNKOmUVqRcKztDDdoBDLParnFPZWD8c29gt2Ij4+oJtpS
-	 Ab8HfCaQd4rURk33a0wctqwdYQ5O6nF71AFKY5AKuhP47cUi+GUGgCjHCfcjVF/QCR
-	 5qds8jkpkA4DQ==
-Date: Tue, 23 Sep 2025 10:27:45 +0200
-From: Mark Brown <broonie@kernel.org>
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Alex Elder <elder@riscstar.com>, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, ziyao@disroot.org, linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] spi: spacemit: introduce SpacemiT K1 SPI
- controller driver
-Message-ID: <aNJaAQXdoDlytTDy@finisterre.sirena.org.uk>
-References: <20250922161717.1590690-1-elder@riscstar.com>
- <20250922161717.1590690-3-elder@riscstar.com>
- <20250922230639-GYA1303776@gentoo.org>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="mqDGq5Ej"
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-424d3c1256fso20822515ab.1
+        for <spacemit@lists.linux.dev>; Tue, 23 Sep 2025 05:49:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1758631765; x=1759236565; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9ZU9aQ8bM7T2Ftc+EDUk8mZlFRUJvemFzpUBxk0Wb8I=;
+        b=mqDGq5EjVltXuJ0r2eQ/BvoMdEo35aPLFnDN83nnwKn1npx2pdXy5qoE0dPLWHc+nu
+         QZxQuxyfdhEnHG2NgImuRTLP+QKgfx1FyFckqdZeRdEhA99q2Aa+tCHKK7NlgIz+24N3
+         AgxtKhbP7W/vTCBe49a9WrSQohxBYF6ov7IBdL3DMmZey2AZm6XNVDtQTfrbhptMuSU7
+         TERDUnyovwTbrr635cW4sjHJWwC3sHOeb+k7DG9zp913v/z6vGz9jrmCXZ3+5BN8TVcN
+         Q+8GIaoTWxw1RJeSIjdRmkHwW0l6+o6btRUMiZufaHg0Q7c69VVNwoTfoNc3mHAcj6HP
+         FPXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758631765; x=1759236565;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9ZU9aQ8bM7T2Ftc+EDUk8mZlFRUJvemFzpUBxk0Wb8I=;
+        b=ui9UoAXsaDatyvaJPEqrRZEc31oPp2sHZWxlXC/RMcMAGnJwYxqPg917wGjEicwUpg
+         clOg5kXQwhjJlUIRg7GFN2jiv0K61EaL7FOYCQwhYnGMEUK/rSChRlZ3SJamrd6xc9qj
+         cA7VNblwx7onGg2QJlDzubyw2P2E1kV2M33UUSihU4m0bxiGSrYFOLTspCm7rVBPJ1n3
+         OZajjqDveZFl7Cg4UCMteAv80zzxSOK6fHw8mG2RoG3MqhQD0QtW9/CD4CVewqy171D2
+         19/hErSED6aXS8lbRPjqrcwc0m8HBsXWypoLE1xpzAXhKA7Yqeqo0Btd/hHL4fyJKPgM
+         WlzA==
+X-Forwarded-Encrypted: i=1; AJvYcCXzIExTa1YWGvy49X1FoGwmAPwdGO/OuDfXFRANDcQXLgE7md1L/TQD1g5eo3k6sQLTUlBia6TXXA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxt7esUBtWcO/FKdqr8I4wiHr5tTryGTDQ6BQlp7wJ7zw6sMACz
+	TErHLSe+Zr0WmlcQ6ui7DAtAjp4InRj8FUxTM19amURp8oVDRJ8CMSVbN/JE6mzgt18=
+X-Gm-Gg: ASbGnctFBwqVEf1sIahiPs9iBD8X7gg4GFOtvuOTJHWRdXcBMNFcT5yIxIO2eBv8vVi
+	c3wvPwsUL8hSjbF08ft3mULlWzI2v3SqdlKUlN+fOuJ+wBdlZwl8tkEV74QmUkXINn/bNGw4Qo0
+	1oAJ0VTE+uXkEsFRoNx3IHxSklAjE4ZLgE9mPuCZN9TIYXIisf4FygKYCxigMr/vcNnQZmHIFwY
+	/cEL1Z+4yzaaYT3KGh+MdwdCqqvTnxitPLHXJZCWJg7lSaSlQy21qaVAmDj1B+5NHnquX2okeSb
+	qIja28S+6gIi5xfuxitPZ3FJG6P9JMz8cehHrMcRP0cR1vw8xYHYURH1gidc8m2Py8bzfAiIPv1
+	reBVKpFBvsN4DS9U5ghYv8u3FMZfoPqeCUptabjBhSW7d43pjGEl2Ki6WoV/3/w==
+X-Google-Smtp-Source: AGHT+IFj1XQAMzFpu45XELaWdmBGc77d+Kzj8EzJZoLjGXq7RU8vmmffnX+IA/9d84nt85uqzgtH9A==
+X-Received: by 2002:a92:c24b:0:b0:424:2c9:26b5 with SMTP id e9e14a558f8ab-425823254efmr34685275ab.9.1758631764817;
+        Tue, 23 Sep 2025 05:49:24 -0700 (PDT)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-556f74174cfsm3556602173.57.2025.09.23.05.49.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Sep 2025 05:49:24 -0700 (PDT)
+Message-ID: <786f4a5e-f62e-4cd0-a017-7b61408f34aa@riscstar.com>
+Date: Tue, 23 Sep 2025 07:49:22 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6HpbpinsD42eNuLJ"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] spi: spacemit: introduce SpacemiT K1 SPI
+ controller driver
+To: Yixun Lan <dlan@gentoo.org>
+Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, ziyao@disroot.org, linux-spi@vger.kernel.org,
+ devicetree@vger.kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+ spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+References: <20250922161717.1590690-1-elder@riscstar.com>
+ <20250922161717.1590690-3-elder@riscstar.com>
+ <20250922230639-GYA1303776@gentoo.org>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
 In-Reply-To: <20250922230639-GYA1303776@gentoo.org>
-X-Cookie: Filmed before a live audience.
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
---6HpbpinsD42eNuLJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Sep 23, 2025 at 07:06:39AM +0800, Yixun Lan wrote:
+On 9/22/25 6:06 PM, Yixun Lan wrote:
 > Hi Alex,
->=20
+> 
 > On 11:17 Mon 22 Sep     , Alex Elder wrote:
-> > This patch introduces the driver for the SPI controller found in the
-> > SpacemiT K1 SoC.  Currently the driver supports master mode only.
-> > The SPI hardware implements RX and TX FIFOs, 32 entries each, and
-> > supports both PIO and DMA mode transfers.
+>> This patch introduces the driver for the SPI controller found in the
+>> SpacemiT K1 SoC.  Currently the driver supports master mode only.
+>> The SPI hardware implements RX and TX FIFOs, 32 entries each, and
+>> supports both PIO and DMA mode transfers.
+>>
+>> Signed-off-by: Alex Elder <elder@riscstar.com>
+>> ---
+>> v3: - Added imply_PDMA to the SPI_SPACEMIT_K1 Kconfig option
+>>      - Fixed a bug pointed out by Vivian (and Troy) in word-sized reads
+>>      - Added a comment stating we use 1, 2, or 4 bytes per word
+>>      - Cleaned up DMA channels properly in case of failure setting up
+>>      - No longer use devm_*() for allocating DMA channels or buffer
+>>
+>>   drivers/spi/Kconfig           |   9 +
+>>   drivers/spi/Makefile          |   1 +
+>>   drivers/spi/spi-spacemit-k1.c | 965 ++++++++++++++++++++++++++++++++++
+>>   3 files changed, 975 insertions(+)
+>>   create mode 100644 drivers/spi/spi-spacemit-k1.c
 
-Please delete unneeded context from mails when replying.  Doing this
-makes it much easier to find your reply in the message, helping ensure
-it won't be missed by people scrolling through the irrelevant quoted
-material.
+. . .
 
---6HpbpinsD42eNuLJ
-Content-Type: application/pgp-signature; name="signature.asc"
+>> diff --git a/drivers/spi/spi-spacemit-k1.c b/drivers/spi/spi-spacemit-k1.c
+>> new file mode 100644
+>> index 0000000000000..2b932d80cc510
+>> --- /dev/null
+>> +++ b/drivers/spi/spi-spacemit-k1.c
+>> @@ -0,0 +1,965 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Support for SpacemiT K1 SPI controller
+>> + *
+>> + * Copyright (C) 2025 by RISCstar Solutions Corporation.  All rights reserved.
+>> + * Copyright (c) 2023, spacemit Corporation.
+>> + */
 
------BEGIN PGP SIGNATURE-----
+. . .
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjSWgAACgkQJNaLcl1U
-h9Ag9Qf/agE9cLG7wxZYtQSASbZ9xoCAx98tPfyf7p5VPkN7z7QMkc8/+v5EAuZ4
-YpdaixFWN/I5CPMJG9ERW+ly0OleInqkzNX6DXwLwITABENCMHtC7zIRoSQGSl7b
-iMAhL0728G9SMt3GQYj8XYiPA7/4e6meb62W17h/W0aabrxuPi614O86fGS/puJt
-47uLgJlJuTTHKRt70Z5PeY1sy2oQZpmGTmbstGNS9P5/n2Xs3GL5C1lLyVfac/S+
-VIB7+AHD9FJORL4oiBtEHyjZ3L8OS7xk5Pds0PYKVCtvFdBXd73QXlTbCfsGtG4l
-HU6g8m1YlQpcZ+62tVSSBAdQ4PJtMQ==
-=Wogy
------END PGP SIGNATURE-----
+>> +static irqreturn_t k1_spi_ssp_isr(int irq, void *dev_id)
+>> +{
+>> +	struct k1_spi_driver_data *drv_data = dev_id;
+>> +	bool rx_done;
+>> +	bool tx_done;
+>> +	u32 val;
+>> +
+>> +	/* Get status and clear pending interrupts */
+>> +	val = readl(drv_data->base + SSP_STATUS);
+>> +	writel(val, drv_data->base + SSP_STATUS);
+>> +
+>> +	if (!drv_data->message)
+>> +		return IRQ_NONE;
+>> +
+>> +	/* Check for a TX underrun or RX underrun first */
+> s/RX underrun/RX overrun/
 
---6HpbpinsD42eNuLJ--
+OK.
+
+>> +	if (val & (SSP_STATUS_TUR | SSP_STATUS_ROR)) {
+>> +		/* Disable all interrupts on error */
+>> +		writel(0, drv_data->base + SSP_INT_EN);
+> should clear status of SSP_STATUS instead of disabling ISR, see commet below
+
+The status is cleared immediately after reading, above.  We hold
+the status value so we can act on the current state of the FIFOs.
+
+>> +
+>> +		drv_data->message->status = -EIO;
+>> +		complete(&drv_data->completion);
+>> +
+>> +		return IRQ_HANDLED;
+>> +	}
+>> +
+>> +	/* Drain the RX FIFO first, then transmit what we can */
+>> +	rx_done = k1_spi_read(drv_data);
+>> +	tx_done = k1_spi_write(drv_data);
+>> +
+>> +	/* Disable interrupts if we're done transferring either direction */
+>> +	if (rx_done || tx_done) {
+>> +		/* If both are done, disable all interrupts */
+>> +		if (rx_done && tx_done) {
+>> +			val = 0;
+>> +		} else {
+>> +			val = readl(drv_data->base + SSP_INT_EN);
+>> +			if (rx_done)
+>> +				val &= ~(SSP_INT_EN_TINTE | SSP_INT_EN_RIE);
+>> +			if (tx_done)
+>> +				val &= ~SSP_INT_EN_TIE;
+>> +		}
+>> +		writel(val, drv_data->base + SSP_INT_EN);
+>> +	}
+> It occur to me, enabling/disabling interrupt in trasfer_start()/ISR is
+> unnecessary, which bring extra overhead, why not enable them once
+> and only handle status clear bit? I mean bits has "R/W1C" in SSP_STATUS
+
+Disabling the TX interrupt when we are done sending means we
+won't get a pointless "more room in the FIFO" interrupt.
+
+Disabling the RX interrupt when we have received what we want
+means we won't get interrupted again, even if (for some reason)
+there is more in the FIFO to consume.
+
+I think this is OK.
+
+					-Alex
+
+>> +
+>> +	if (rx_done && tx_done)
+>> +		complete(&drv_data->completion);
+>> +
+>> +	return IRQ_HANDLED;
+>> +}
+>> +
+>> +static int k1_spi_probe(struct platform_device *pdev)
+>> +{
+>> +	struct k1_spi_driver_data *drv_data;
+>> +	struct device *dev = &pdev->dev;
+>> +	struct reset_control *reset;
+>> +	struct spi_controller *host;
+>> +	struct resource *iores;
+>> +	struct clk *clk_bus;
+>> +	int ret;
+>> +
+>> +	host = devm_spi_alloc_host(dev, sizeof(*drv_data));
+>> +	if (!host)
+>> +		return -ENOMEM;
+>> +	drv_data = spi_controller_get_devdata(host);
+>> +	drv_data->controller = host;
+>> +	platform_set_drvdata(pdev, drv_data);
+>> +	drv_data->dev = dev;
+>> +	init_completion(&drv_data->completion);
+>> +
+>> +	drv_data->base = devm_platform_get_and_ioremap_resource(pdev, 0,
+>> +								&iores);
+>> +	if (IS_ERR(drv_data->base))
+>> +		return dev_err_probe(dev, PTR_ERR(drv_data->base),
+>> +				     "error mapping memory\n");
+>> +	drv_data->base_addr = iores->start;
+>> +
+>> +	ret = devm_k1_spi_dma_setup(drv_data);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret, "error setting up DMA\n");
+>> +
+>> +	k1_spi_host_init(drv_data);
+>> +
+>> +	clk_bus = devm_clk_get_enabled(dev, "bus");
+>> +	if (IS_ERR(clk_bus))
+>> +		return dev_err_probe(dev, PTR_ERR(clk_bus),
+>> +				     "error getting/enabling bus clock\n");
+>> +	drv_data->bus_rate = clk_get_rate(clk_bus);
+>> +
+>> +	drv_data->clk = devm_clk_get_enabled(dev, "core");
+>> +	if (IS_ERR(drv_data->clk))
+>> +		return dev_err_probe(dev, PTR_ERR(drv_data->clk),
+>> +				     "error getting/enabling core clock\n");
+>> +
+>> +	reset = devm_reset_control_get_exclusive_deasserted(dev, NULL);
+>> +	if (IS_ERR(reset))
+>> +		return dev_err_probe(dev, PTR_ERR(reset),
+>> +				     "error getting/deasserting reset\n");
+>> +
+>> +	k1_spi_register_reset(drv_data, true);
+>> +
+>> +	drv_data->irq = platform_get_irq(pdev, 0);
+>> +	if (drv_data->irq < 0)
+>> +		return dev_err_probe(dev, drv_data->irq, "error getting IRQ\n");
+>> +
+>> +	ret = devm_request_irq(dev, drv_data->irq, k1_spi_ssp_isr,
+>> +			       IRQF_SHARED, dev_name(dev), drv_data);
+>> +	if (ret < 0)
+>> +		return dev_err_probe(dev, ret, "error requesting IRQ\n");
+>> +
+>> +	ret = devm_spi_register_controller(dev, host);
+>> +	if (ret)
+>> +		dev_err(dev, "error registering controller\n");
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static void k1_spi_remove(struct platform_device *pdev)
+>> +{
+>> +	struct k1_spi_driver_data *drv_data = platform_get_drvdata(pdev);
+>> +
+>> +	k1_spi_register_reset(drv_data, false);
+>> +}
+>> +
+>> +static struct platform_driver k1_spi_driver = {
+>> +	.driver = {
+>> +		.name		= "k1-spi",
+>> +		.of_match_table	= k1_spi_dt_ids,
+>> +	},
+>> +	.probe			= k1_spi_probe,
+>> +	.remove			= k1_spi_remove,
+>> +};
+>> +
+>> +module_platform_driver(k1_spi_driver);
+>> +
+>> +MODULE_DESCRIPTION("SpacemiT K1 SPI controller driver");
+>> +MODULE_LICENSE("GPL");
+>> -- 
+>> 2.48.1
+>>
+> 
+
