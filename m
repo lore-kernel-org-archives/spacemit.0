@@ -1,43 +1,24 @@
-Received: from sender4-op-o16.zoho.com (sender4-op-o16.zoho.com [136.143.188.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BE222DA08
-	for <spacemit@lists.linux.dev>; Tue, 23 Sep 2025 06:32:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.16
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758609151; cv=pass; b=u5I52l3bsNEHtcm92cKJZ4Gg8W6ccyV5yHPadUeyWPZmUHs9cQ2NpvWvgaX/kH53i1dernvrGVu2fy62+ogC/s80JqHfmiGvcBWmc0ccMBzH+jetNcZCEUPiryfJDvpHMiKaDCBOI/pG1HJJdUN3Kc76d/mYlpqvFC2GTO5qzEA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758609151; c=relaxed/simple;
-	bh=aei6C0VWiguh1PBF0Du2KdAXrweEg8INkXyjAyDsHaY=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72641DC198
+	for <spacemit@lists.linux.dev>; Tue, 23 Sep 2025 06:32:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758609183; cv=none; b=EaFPiL05pHN7i7RNC3IPtvXJkY1m1mlcai/C/tCZbBPxwDCx61lGcjAx9rmIIERv46/263Aq86vNjDz/4TVgA+J87FsPYa8H052ECuwlEE8PhYetXfJ1UMV0fRR6Ei1kGVncN33t3vPqmZ6kgRFJxcOE326jz3iSo5Emu31bMkI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758609183; c=relaxed/simple;
+	bh=w3b4zSTXCS0lYSgsxj/hTrhvi+qKcLscSoeWJ2+i5B8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t6tHoW6w+2w1Q72SoYq6Ebij8H//PDNrBPbc1MZ7HC6UhsSE9N7Oy7VseIBL5vuRqjzAFnN6TXk5w1XiHewbE/BIFtdDeqOoUuR2K+KL83vzpvncOFlcAzgEaI/UOJUo/i87ommZR2jgcMMxP/qvUL2TBP0ahPud5+aF07i7huI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=lhVitvDP; arc=pass smtp.client-ip=136.143.188.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="lhVitvDP"
-ARC-Seal: i=1; a=rsa-sha256; t=1758609104; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=jyyQ4VyqYABbZiCkF/HdPD7D7w0rxpDQ/JZZEjz43JXuBVVcE5qdzpMfnLdJ4nhOsaU0+kMSh1yCVILeO48DHntz5RpE+1DGTUclfc1CulRH8tRBDFTDuDH2Yx5AsD64bCv+O9d3FdRSvp13bkSO7STumxN2gpAhK9KuS0KuuNE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1758609104; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=kX0WMRIAiTlqH4/0kQPSeJfGukw8qs11oITboMapl7U=; 
-	b=QolxLydcbootGKpejpHChM+hYoa2wrP5p2XzreJ85OhZ1nh3YgwMb00D/1wOjQCq9jAy1diZ0GeQkeGqskVaOhlxb0+o3pNXLghs9uKzr8XSbReDn72FT2rwBmF1kjqOpFY38+erNiM5T0WMu+ebStYFIso0TZslX19Hp6l+VM8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758609104;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=kX0WMRIAiTlqH4/0kQPSeJfGukw8qs11oITboMapl7U=;
-	b=lhVitvDPy9iTCKcGQL10bEW7RbrPWMPzwZm42zlvmidkeRnG8otydOlsA3bGf+1/
-	R3lBHauN/Dk+BRPBLU93bFcXWuEPBzY8PZO+4SKnFWKvf1n7L9c7OgYAeL5OJVZzlYJ
-	nhwOXTwaKDNJo6g3l8hW2s3+pumo9CSMJJSlTkoc=
-Received: by mx.zohomail.com with SMTPS id 1758609101123227.34763562314959;
-	Mon, 22 Sep 2025 23:31:41 -0700 (PDT)
-Message-ID: <a9054501-03ce-4db2-a753-81741c6237b6@pigmoral.tech>
-Date: Tue, 23 Sep 2025 14:31:31 +0800
+	 In-Reply-To:Content-Type; b=bhc1IBvHEx9lPoJXb2l0IEMeUs5hnDfCdcjGiaXgDssGbPZHcN9ISz6prZtYmxwKihD6aVyrBW07ycy6mo1ezHaoI2dlcB1ulhl+ZxZSRITGvpB52mVnKcO8GneE/jl+gMNhBpQ5NxXiLg/i2mxhY+9zJgue3fbDsLjuo7mMGNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.102] (unknown [114.241.87.235])
+	by APP-05 (Coremail) with SMTP id zQCowADHaBILP9Jo2ZlyBA--.58809S2;
+	Tue, 23 Sep 2025 14:32:44 +0800 (CST)
+Message-ID: <54a959f7-a2e6-4622-97fa-18408afa0998@iscas.ac.cn>
+Date: Tue, 23 Sep 2025 14:32:43 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,120 +26,100 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] riscv: dts: spacemit: define a SPI controller node
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>
-Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, ziyao@disroot.org, linux-spi@vger.kernel.org,
- devicetree@vger.kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
- spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20250922161717.1590690-1-elder@riscstar.com>
- <20250922161717.1590690-4-elder@riscstar.com>
- <20250923001930-GYB1303776@gentoo.org>
- <ED4C67FD136DEB19+aNINJJVYbNnT87va@LT-Guozexi>
-From: Junhui Liu <junhui.liu@pigmoral.tech>
-In-Reply-To: <ED4C67FD136DEB19+aNINJJVYbNnT87va@LT-Guozexi>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 2/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
+To: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Yixun Lan <dlan@gentoo.org>
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>,
+ "open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
+ "open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+References: <20250921210237.943370-1-aurelien@aurel32.net>
+ <20250921210237.943370-3-aurelien@aurel32.net>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20250921210237.943370-3-aurelien@aurel32.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+X-CM-TRANSID:zQCowADHaBILP9Jo2ZlyBA--.58809S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Zw4xCw4DuFWUAFW7Kw45ZFb_yoW8CFWkpF
+	WvkFs5G3yxKr13CrsFvF15WryrJFnYg3W5CrnxCr1UArn8uFy2kr4fK3WDtrZ8Xrs3Zw17
+	Jr4ktrWDKFy3taDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
+	c7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
+	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
+	14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
+	IFyTuYvjxUqiFxDUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Hi Troy,
+Hi Aurelien,
 
-On 9/23/25 10:59 AM, Troy Mitchell wrote:
-> On Tue, Sep 23, 2025 at 08:19:30AM +0800, Yixun Lan wrote:
->> Hi Alex,
->>
->> On 11:17 Mon 22 Sep     , Alex Elder wrote:
->>> Define a node for the fourth SoC SPI controller (number 3) on
->>> the SpacemiT K1 SoC.
->>>
->>> Enable it on the Banana Pi BPI-F3 board, which exposes this feature
->>> via its GPIO block:
->>>    GPIO PIN 19:  MOSI
->>>    GPIO PIN 21:  MISO
->>>    GPIO PIN 23:  SCLK
->>>    GPIO PIN 24:  SS (inverted)
->>>
->>> Define pincontrol configurations for the pins as used on that board.
->>>
->>> (This was tested using a GigaDevice GD25Q64E SPI NOR chip.)
->>>
->>> Signed-off-by: Alex Elder <elder@riscstar.com>
->>> ---
->>> v3: - Moved the SPI controller into the dma-bus memory region
->>>
->>>   .../boot/dts/spacemit/k1-bananapi-f3.dts      |  7 +++++++
->>>   arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 20 +++++++++++++++++++
->>>   arch/riscv/boot/dts/spacemit/k1.dtsi          | 16 +++++++++++++++
->>>   3 files changed, 43 insertions(+)
->>>
->>> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
->>> index 2aaaff77831e1..d9d865fbe320e 100644
->>> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
->>> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
->>> @@ -14,6 +14,7 @@ aliases {
->>>   		ethernet0 = &eth0;
->>>   		ethernet1 = &eth1;
->>>   		serial0 = &uart0;
->>> +		spi3 = &spi3;
->>>   	};
->>>   
->>>   	chosen {
->>> @@ -92,6 +93,12 @@ &pdma {
->>>   	status = "okay";
->>>   };
->>>   
->>> +&spi3 {
->>> +	pinctrl-0 = <&ssp3_0_cfg>;
->>> +	pinctrl-names = "default";
->>> +	status = "okay";
->>> +};
->>> +
->>>   &uart0 {
->>>   	pinctrl-names = "default";
->>>   	pinctrl-0 = <&uart0_2_cfg>;
->>> diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
->>> index aff19c86d5ff3..205c201a3005c 100644
->>> --- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
->>> +++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
->>> @@ -76,4 +76,24 @@ pwm14-1-pins {
->>>   			drive-strength = <32>;
->>>   		};
->>>   	};
->>> +
->>> +	ssp3_0_cfg: ssp3-0-cfg {
->> ..
->>> +		ssp3-0-no-pull-pins {
->> I'd prefer not to enforce "pull" info inside the name, you can't embed
->> all property info, besides, what's if you want to change/override later?
->>
->> how about just name it as ssp3-0-defaul-pins or simply ssp3-0-pins?
-> uart: uart0_2_cfg and function is 2.
-> pwm: pwm14_1_cfg and function is 4
-> spi: ssp3_0_cfg and function is 2
+On 9/22/25 05:01, Aurelien Jarno wrote:
+> The BPI-F3 contains a 24c02 eeprom, that contains among other things the
+> MAC addresses of the two network interfaces. For this reason, mark it as
+> read-only.
 >
-> I’m a bit confused about the meaning of the second number here.
-> Is it intended to be an index, or the function number?
+> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+> ---
+>  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
 >
-> If it’s an index, should it start from 0 or 1?
-> The starting point seems inconsistent across pwm/spi/uart.
-> If it’s supposed to be the function number,
-> then the spi and pwm parts look incorrect.
->
-> Could you clarify this? Yixun.
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> index 3b6e4f52e9aad..574d10fdf9b82 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> @@ -115,6 +115,15 @@ &i2c2 {
+>  	pinctrl-0 = <&i2c2_0_cfg>;
+>  	pinctrl-names = "default";
+>  	status = "okay";
+> +
+> +	eeprom@50 {
+> +		compatible = "atmel,24c02";
+> +		reg = <0x50>;
+> +		vcc-supply = <&vcc1v8_sys>;
+> +		pagesize = <16>;
+> +		read-only;
+> +		size = <256>;
+> +	};
+>  };
+>  
 
-I think the second number represents the index of the pin group available
-for this device.
+I wonder if it would possibly make sense to specify a nvmem-layout here.
+The BPI-F3 I have here has this in the 24c02:
 
-Take pwm14 as an example: according to the manual, the first pin group
-(index 0) available for pwm14 is GPIO6 with function 3, while the second
-group (index 1) is GPIO44 with function 4.
+00000000  54 6c 76 49 6e 66 6f 00  01 00 20 24 06 fe fe fe  |TlvInfo... $....|
+00000010  XX XX XX 2a 02 00 02 23  0c XX XX XX XX XX XX XX  |...*...#.XXXXXXX|
+00000020  XX XX XX XX XX fe 04 XX  XX XX XX ff ff ff ff ff  |XXXXX..XXXX.....|
+00000030  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+00000100
 
->                  - Troy
+(... with variable parts replaced with X)
 
--- 
-Best regards,
-Junhui Liu
+And, AFAICT, this is a "onie,tlv-layout" with fields:
+
+0x24 mac-adddress
+0x2a num-macs
+0x23 serial-number
+0xfe crc32
+
+As you can see the mac-address assignment looks bogus with fe:fe:fe (it
+is used by vendor code though, so at least it seems to be intended). It
+does appear at least to have useful information.
+
+Can you confirm on your hardware? What do you think about this: should
+we add it now or add it when we have users?
+
+Vivian "dramforever" Wang
 
