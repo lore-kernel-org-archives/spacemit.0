@@ -1,125 +1,91 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72641DC198
-	for <spacemit@lists.linux.dev>; Tue, 23 Sep 2025 06:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F62331A546;
+	Tue, 23 Sep 2025 08:27:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758609183; cv=none; b=EaFPiL05pHN7i7RNC3IPtvXJkY1m1mlcai/C/tCZbBPxwDCx61lGcjAx9rmIIERv46/263Aq86vNjDz/4TVgA+J87FsPYa8H052ECuwlEE8PhYetXfJ1UMV0fRR6Ei1kGVncN33t3vPqmZ6kgRFJxcOE326jz3iSo5Emu31bMkI=
+	t=1758616071; cv=none; b=gR5YeCcupRlngNqBE13DmSof+f1nbznOWwtT1EgaXcJJMrvYy+5IFlAOxb4TfNfkC1f92odF3PjTZMuj83pBuEptTB/nFhG/IvfLxzDjrMgYIxHorTMSAztKnV8kPPb9TStBCZqaDz/2BHf/9wK9dtsa81XLlgJb8mzzB0i4qis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758609183; c=relaxed/simple;
-	bh=w3b4zSTXCS0lYSgsxj/hTrhvi+qKcLscSoeWJ2+i5B8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bhc1IBvHEx9lPoJXb2l0IEMeUs5hnDfCdcjGiaXgDssGbPZHcN9ISz6prZtYmxwKihD6aVyrBW07ycy6mo1ezHaoI2dlcB1ulhl+ZxZSRITGvpB52mVnKcO8GneE/jl+gMNhBpQ5NxXiLg/i2mxhY+9zJgue3fbDsLjuo7mMGNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.102] (unknown [114.241.87.235])
-	by APP-05 (Coremail) with SMTP id zQCowADHaBILP9Jo2ZlyBA--.58809S2;
-	Tue, 23 Sep 2025 14:32:44 +0800 (CST)
-Message-ID: <54a959f7-a2e6-4622-97fa-18408afa0998@iscas.ac.cn>
-Date: Tue, 23 Sep 2025 14:32:43 +0800
+	s=arc-20240116; t=1758616071; c=relaxed/simple;
+	bh=DpOw3esgxv6fryqqMWiEbCIzH82geJydVvITLMOkr54=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q3mHwTi2BHZNsJhcSE1rvJaA/B/M+n+YZT8IWKCHVhzuW+RLUYSEn1TbvnXCjj3mnJlhvc8QHiyQM9OAghJyZks2L+eTAcPY7e0K9HCIlHwION1cGH/lDHVcB2yjqRd/HU472kaMAdfBIs/znml1KnCA9ONdbDgK7Ct9oBVJX6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R7EdvDgV; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R7EdvDgV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2770DC4CEF7;
+	Tue, 23 Sep 2025 08:27:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758616070;
+	bh=DpOw3esgxv6fryqqMWiEbCIzH82geJydVvITLMOkr54=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=R7EdvDgVwmk0J7sjYuIr5k+k1hAX1ayYzxWUkv9BJ2K+XHyLuvkeBcPHlOHWtSY7j
+	 GU1uxKJwDKI2vmRC0ZQkEPEJg9ChqJeTTE6DojnEJWRXbaTkymc525jUGu/9EqjpWG
+	 19jftow50k0Slyg09ReA5iifXwDu71SRTnOrAw50BWhY9Jnv8U2e83ZSdLx2eb/fOO
+	 M/Cz+13FQjZNlE+GqPskVnNKOmUVqRcKztDDdoBDLParnFPZWD8c29gt2Ij4+oJtpS
+	 Ab8HfCaQd4rURk33a0wctqwdYQ5O6nF71AFKY5AKuhP47cUi+GUGgCjHCfcjVF/QCR
+	 5qds8jkpkA4DQ==
+Date: Tue, 23 Sep 2025 10:27:45 +0200
+From: Mark Brown <broonie@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Alex Elder <elder@riscstar.com>, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, ziyao@disroot.org, linux-spi@vger.kernel.org,
+	devicetree@vger.kernel.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] spi: spacemit: introduce SpacemiT K1 SPI
+ controller driver
+Message-ID: <aNJaAQXdoDlytTDy@finisterre.sirena.org.uk>
+References: <20250922161717.1590690-1-elder@riscstar.com>
+ <20250922161717.1590690-3-elder@riscstar.com>
+ <20250922230639-GYA1303776@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
-To: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley
- <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Yixun Lan <dlan@gentoo.org>
-Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>,
- "open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
- "open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-References: <20250921210237.943370-1-aurelien@aurel32.net>
- <20250921210237.943370-3-aurelien@aurel32.net>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20250921210237.943370-3-aurelien@aurel32.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowADHaBILP9Jo2ZlyBA--.58809S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Zw4xCw4DuFWUAFW7Kw45ZFb_yoW8CFWkpF
-	WvkFs5G3yxKr13CrsFvF15WryrJFnYg3W5CrnxCr1UArn8uFy2kr4fK3WDtrZ8Xrs3Zw17
-	Jr4ktrWDKFy3taDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
-	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
-	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
-	c7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
-	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
-	14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
-	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
-	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
-	IFyTuYvjxUqiFxDUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6HpbpinsD42eNuLJ"
+Content-Disposition: inline
+In-Reply-To: <20250922230639-GYA1303776@gentoo.org>
+X-Cookie: Filmed before a live audience.
 
-Hi Aurelien,
 
-On 9/22/25 05:01, Aurelien Jarno wrote:
-> The BPI-F3 contains a 24c02 eeprom, that contains among other things the
-> MAC addresses of the two network interfaces. For this reason, mark it as
-> read-only.
->
-> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> ---
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
->
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index 3b6e4f52e9aad..574d10fdf9b82 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -115,6 +115,15 @@ &i2c2 {
->  	pinctrl-0 = <&i2c2_0_cfg>;
->  	pinctrl-names = "default";
->  	status = "okay";
-> +
-> +	eeprom@50 {
-> +		compatible = "atmel,24c02";
-> +		reg = <0x50>;
-> +		vcc-supply = <&vcc1v8_sys>;
-> +		pagesize = <16>;
-> +		read-only;
-> +		size = <256>;
-> +	};
->  };
->  
+--6HpbpinsD42eNuLJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I wonder if it would possibly make sense to specify a nvmem-layout here.
-The BPI-F3 I have here has this in the 24c02:
+On Tue, Sep 23, 2025 at 07:06:39AM +0800, Yixun Lan wrote:
+> Hi Alex,
+>=20
+> On 11:17 Mon 22 Sep     , Alex Elder wrote:
+> > This patch introduces the driver for the SPI controller found in the
+> > SpacemiT K1 SoC.  Currently the driver supports master mode only.
+> > The SPI hardware implements RX and TX FIFOs, 32 entries each, and
+> > supports both PIO and DMA mode transfers.
 
-00000000  54 6c 76 49 6e 66 6f 00  01 00 20 24 06 fe fe fe  |TlvInfo... $....|
-00000010  XX XX XX 2a 02 00 02 23  0c XX XX XX XX XX XX XX  |...*...#.XXXXXXX|
-00000020  XX XX XX XX XX fe 04 XX  XX XX XX ff ff ff ff ff  |XXXXX..XXXX.....|
-00000030  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
-*
-00000100
+Please delete unneeded context from mails when replying.  Doing this
+makes it much easier to find your reply in the message, helping ensure
+it won't be missed by people scrolling through the irrelevant quoted
+material.
 
-(... with variable parts replaced with X)
+--6HpbpinsD42eNuLJ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-And, AFAICT, this is a "onie,tlv-layout" with fields:
+-----BEGIN PGP SIGNATURE-----
 
-0x24 mac-adddress
-0x2a num-macs
-0x23 serial-number
-0xfe crc32
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjSWgAACgkQJNaLcl1U
+h9Ag9Qf/agE9cLG7wxZYtQSASbZ9xoCAx98tPfyf7p5VPkN7z7QMkc8/+v5EAuZ4
+YpdaixFWN/I5CPMJG9ERW+ly0OleInqkzNX6DXwLwITABENCMHtC7zIRoSQGSl7b
+iMAhL0728G9SMt3GQYj8XYiPA7/4e6meb62W17h/W0aabrxuPi614O86fGS/puJt
+47uLgJlJuTTHKRt70Z5PeY1sy2oQZpmGTmbstGNS9P5/n2Xs3GL5C1lLyVfac/S+
+VIB7+AHD9FJORL4oiBtEHyjZ3L8OS7xk5Pds0PYKVCtvFdBXd73QXlTbCfsGtG4l
+HU6g8m1YlQpcZ+62tVSSBAdQ4PJtMQ==
+=Wogy
+-----END PGP SIGNATURE-----
 
-As you can see the mac-address assignment looks bogus with fe:fe:fe (it
-is used by vendor code though, so at least it seems to be intended). It
-does appear at least to have useful information.
-
-Can you confirm on your hardware? What do you think about this: should
-we add it now or add it when we have users?
-
-Vivian "dramforever" Wang
-
+--6HpbpinsD42eNuLJ--
