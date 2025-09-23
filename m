@@ -1,132 +1,228 @@
 Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E7D19DFA2
-	for <spacemit@lists.linux.dev>; Tue, 23 Sep 2025 02:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED10F275B19
+	for <spacemit@lists.linux.dev>; Tue, 23 Sep 2025 02:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758592939; cv=none; b=fRPfEhXaErM67Mflut0RWW21h7c94dG/4rQY3x70m6GwUAmNYTJdH9NnnRFx+wtimbbr5dbEVdzCzAdv1GMeJLnNjrlrEthsqyyEUHBM6crh2VWrXa7npJua3FBTrom2gTyE6bfZg+T8ZILYy67CcouW6nsdtqiH3rB1txTnRCU=
+	t=1758596401; cv=none; b=iscwrRXRk2/crRQtG6umw2YvXCFHGsJGJNi1zS9dtm1w3aHd5cuQVmx+Hkiev5OLyze7h7sMjDA3JPeIXz2pWo3KEwEhIBPVcJkpjw9vO/O17gXNrGa3lUCJG+VbEEE/EN+hK6rpOAcgHCigf9t5bT5SzpHoR004IJdoMX3XGyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758592939; c=relaxed/simple;
-	bh=xi/tAHjSbJBoYA4aGt5jM49ClyVBHuelxMuqQ+nqf+0=;
+	s=arc-20240116; t=1758596401; c=relaxed/simple;
+	bh=P5Fc8DgI1Pt521PuZpDDub2ijC4+mnpM9ZtHdfk/cFM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PpJJV0zE9aWaT6v1BNOSZTc30UMvewDkb5LovQQ6ttureNadcmldMNaF0rUeOXhJ8SqjUQAJoTcdhYXoA3RWjfMCcVhGgytTD/ky0mkRJuuHLF2GzoKwANYDGNAKs4T/qtg/5i9sugEt7vtrZTrg5gPgj/4KvOGXNwJUoATqq8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ivn9tQyd; arc=none smtp.client-ip=54.206.34.216
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZpzomDkrygumPV8alK9LuleC6HP3OsGzguA1eLdpla2ShJPdwB86zJqQ/ID6cceV9akNmZw5ntGwWU8YcHuABL3mbGMDuqnJSy9P7QQtAhvDU3ui9RaMZFbXhqKCyjMvAdE6fhNNpE3xPr7Mct6a9DlYD2xsIaFZJpxaG2CJcRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=iQcMIXuy; arc=none smtp.client-ip=54.206.34.216
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ivn9tQyd"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="iQcMIXuy"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1758592841;
-	bh=MEAuKrwM6KdwR90xbDZhYiFbRD7stRJVqn5Ua3qlyBs=;
+	s=mxsw2412; t=1758596392;
+	bh=j3ZjDbLr3bk9oP8VaNnloWAFAE6ZFmd5SxI38WMzUrs=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=ivn9tQydLf/OpeMt8xGn3J6lK0YLp+iCelSjUPO0ApHZDndGNAV1JFapZyjCUKnoh
-	 8H/o8PWE11M/y5W+SHKW7+s17ZufXuIYBH+nv4oC2eLvm6adVL+fwWkYG/+P6mvRk2
-	 sVV5LRpBgO+RSlKwwLL0KaJxkKQFrZdIaaHXtT8A=
-X-QQ-mid: zesmtpgz8t1758592839t273fee33
-X-QQ-Originating-IP: GzXckMxXGTPsUWDBYYMmo0syLdSfJ5174o/VNKjj6ck=
-Received: from = ( [14.123.255.53])
+	b=iQcMIXuyCWh3j23wDllpkXO1WdPURPKa8wlkc/ff9xRSZ49tJuu8nTfsuqoHDOSBX
+	 h+OIMH6ebnjlTqPDPitJ2r6bkRh/xek7zNRCkl3Q4ThGylgbAF6RYogCO02WWdd3uT
+	 KpGo3vgFQp/b0BAgpzkmC5VFuILIiwDjCWusXmxE=
+X-QQ-mid: zesmtpsz7t1758596391t52fea924
+X-QQ-Originating-IP: nzpaKUhmb4SdUS4Gu0DvPdsaKPvAhj/hmH2eNiRVi4k=
+Received: from = ( [61.145.255.150])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 23 Sep 2025 10:00:38 +0800 (CST)
+	id ; Tue, 23 Sep 2025 10:59:49 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 12168466649984093045
-EX-QQ-RecipientCnt: 14
-Date: Tue, 23 Sep 2025 10:00:38 +0800
+X-BIZMAIL-ID: 10623942537580946484
+EX-QQ-RecipientCnt: 18
+Date: Tue, 23 Sep 2025 10:59:48 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@gentoo.org>
-Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
+To: Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>
+Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, ziyao@disroot.org, linux-spi@vger.kernel.org,
+	devicetree@vger.kernel.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
 	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH 2/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
-Message-ID: <6CF6078CFA2EB2F4+aNH_RmNkM_hnsAYu@LT-Guozexi>
-References: <20250921210237.943370-1-aurelien@aurel32.net>
- <20250921210237.943370-3-aurelien@aurel32.net>
+Subject: Re: [PATCH v3 3/3] riscv: dts: spacemit: define a SPI controller node
+Message-ID: <ED4C67FD136DEB19+aNINJJVYbNnT87va@LT-Guozexi>
+References: <20250922161717.1590690-1-elder@riscstar.com>
+ <20250922161717.1590690-4-elder@riscstar.com>
+ <20250923001930-GYB1303776@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250921210237.943370-3-aurelien@aurel32.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250923001930-GYB1303776@gentoo.org>
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: OVFdYp27KdlJW5P1i9N85qCgmbbqSwGFn2kOiYlbrRc6HfxrE39J2U2j
-	qp9TBzVCz7B988NSl83HMVD84Cmp+ZA8PT60tNyyMsRp6aACMN8Gdd58JlsvWLNccaAJ4MI
-	WVbZB3oJ6NrpkeyqvLWu/CnWYPlJl75hSx99FlCRlkySqxLUzkRUuYq20qVGbj9pCz4vTa6
-	v9NmAlmko30L9GGGHVzvtIrXNlBUgODm0NpS9w1E5G4aN0rg5QQ+Cj3ra891gSjziot6ed9
-	uBzHxRXOz4sH6l09R9dnBsOXJ+JwLrDpAexYBDgTX1GlAUeX6pqLqPimjwiiVdH7f8eGhNF
-	YU9AxZtbhsGPgJbqppW0NjrKYt6vW5CtZnyflJgd4x3PTOzftV94JQlel2deAeOYRbv1mQe
-	6heyQaypxHXIsIm/vMg+rAAolPFDlHvo58NpYR4Q6RAtQKEPCqrKxCz7ngyh+XhiWviW8zr
-	YRSZRU84VOnrd9T9HbDt7lQSNiSCOjUTp2Nqts4Ts1lvXxBn6gPwMiCetSZF4Agx3BVOu89
-	yEEQ3kVNwMl6OS21ePconhJdiJKZEXFh+e5dpD2LV7ftZOQ76dpmqUbEr1h8Ll7bpBPVTuC
-	p/C6JEroS2SUI1VyNyDvi16cUNxpQiNhwvXjyHC8nYAxmJgCvgS2k37N+rB8cfpzJ0gvyKo
-	FhVknGxMyF9YHtbUgH4u4tvGEVeA1RtzZRpAdhAEGA+/a2JYOwtGzh+6h9MhR/X4s7TNn3R
-	RlO4qwss0xROymYv+T5t16rqKATs9SFRsgugR3WvONK2oa8dqdiVPpxQ/DcCe15LworseRq
-	5scYmYEw4aZZlzcBvXzxVaRnV+o6qb9OvgE9jUsFxTIfiFUmkqqTuZL2Dp6SC1+OMSvVFCA
-	V21ed7r/xcZh46EP9L7N3VFkgM9ZZpOutGTHicfSIL0iAwjGBAwTM1Oj5r+APDg1XOT2Npq
-	1M9BeLP1LNEhm/uqT2l2hCq6+DCxnb2pIkRrf+JMXQtj1RC9s6lZr4/LBQg+jA/ima2xJ3M
-	05cpzFAE5n/mi6h3I6npcc9HYiBsQ2MWuhUE6+MhbXQVDbCLcFAIIXqY66je/8O1MEtJbFN
-	eRJQKidzvTDzNaaGtd8rLJsiJbIg+Ag3mGk9P32n7eTiLoCrfvLudk=
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: Mga0zcyr3Ge/7qN2aRXFeioRXNoQXS9X/4yc21FiIFy2K5/x3PwrimJY
+	h6HnRZaFI61SLeZo9oAT91NhekwjnVce7n+yw593yTW3xCvsXridYWV6YgdhPqDpZJIfJbK
+	1BOmNWV9lRFdr3elyidlaO6Ag31NlYmeHSInapyRGVB3jaPB+7UFPIlpd+yfoJ/eUwIBRRY
+	alpbb0ApuQGEqwVVbj9MMkOt+ZZP0yVWEweWw6vqhrTXCiX00YWJQgQFWQM/aS76VrhW1GK
+	eG7yWl1Emmb0ZzkurvwOyUO0+VxjjvOm38b9tYLvYMBnrlyzbW1nWmQJaZlJO1zTBmbBTTp
+	K6S6fof2RblDXu1wunWHBLT+f8pYLMvTzw9HQZBSSpI1bp8D+Zv1wEiNXyEbYai+UZYbdF0
+	RGMOKgYRk1w5cNYDWeeoO7RbQZ8fZEa9gWUI2OKnUUH8sbb7VIrAAIdarMywoWWEDBWj81+
+	+RzCnVDX02qSPhmwVvfFxzsTcQM6GOjPwk7909Qi4gjBGEIFe6p2cRgbrKjrUqNUk7mmGP/
+	1BvkJ/i+RRa0q8klIAIRvgxBsBczxqKCtOFcH1w6IZqERUbEysE6wO39S/CdocgLTK+3zbL
+	s2+JdGg1bm262eBxfFem6dpxh+vS7Ht8keKmY3nBQMV6jkkyDLeDyounJPdiLwWTXUp3yfm
+	joDZoYFgy0Zp8gD6Q+Nbzk9kwGbU8qsnkP1u/EMrwbDFzEbjVuYMMTMLxFouZkDFZUMQJmH
+	PIyGP1A6YgS2C7hjX2G7cMAOgPtEKW92SkROryDP3PKAT+Fyg+f7/2kmiEeJNw0Y2iHBCv/
+	oCqFizmLTiBQFBzcs23mBCQ0J5QMuK+hEJlcPxpwIJrevGTo5b6kc1N9/EgWXy5t+67KNr1
+	ntxJwITxhqvAlE/o0FRitWmeiz8MYz7KBtJ3x8yuzpCOIJ/rIcpsF9SD0bcXXzoV79kMdiW
+	C8Ls0eddJJ2AomIOtGc5N+cpgHdWg2EXUK6AEl2lkOFTk8q0yIS4dbWG99CunvpLuNk7Nmi
+	t66UvppI8QMryU8XzGUwah8f7I6XeCryWmQ7nIKBYkwcH2cD+ZopSj782qrhJIXI8XPyBj4
+	U2VWfVHH/heAvU821LwQFQicNohXFtW3pl90Qn5DDutSptNgD97qaHcAiI3CREjlQ==
+X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
 X-QQ-RECHKSPAM: 0
 
-On Sun, Sep 21, 2025 at 11:01:42PM +0200, Aurelien Jarno wrote:
-> The BPI-F3 contains a 24c02 eeprom, that contains among other things the
-> MAC addresses of the two network interfaces. For this reason, mark it as
-> read-only.
+On Tue, Sep 23, 2025 at 08:19:30AM +0800, Yixun Lan wrote:
+> Hi Alex,
 > 
-> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> ---
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+> On 11:17 Mon 22 Sep     , Alex Elder wrote:
+> > Define a node for the fourth SoC SPI controller (number 3) on
+> > the SpacemiT K1 SoC.
+> > 
+> > Enable it on the Banana Pi BPI-F3 board, which exposes this feature
+> > via its GPIO block:
+> >   GPIO PIN 19:  MOSI
+> >   GPIO PIN 21:  MISO
+> >   GPIO PIN 23:  SCLK
+> >   GPIO PIN 24:  SS (inverted)
+> > 
+> > Define pincontrol configurations for the pins as used on that board.
+> > 
+> > (This was tested using a GigaDevice GD25Q64E SPI NOR chip.)
+> > 
+> > Signed-off-by: Alex Elder <elder@riscstar.com>
+> > ---
+> > v3: - Moved the SPI controller into the dma-bus memory region
+> > 
+> >  .../boot/dts/spacemit/k1-bananapi-f3.dts      |  7 +++++++
+> >  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 20 +++++++++++++++++++
+> >  arch/riscv/boot/dts/spacemit/k1.dtsi          | 16 +++++++++++++++
+> >  3 files changed, 43 insertions(+)
+> > 
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > index 2aaaff77831e1..d9d865fbe320e 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > @@ -14,6 +14,7 @@ aliases {
+> >  		ethernet0 = &eth0;
+> >  		ethernet1 = &eth1;
+> >  		serial0 = &uart0;
+> > +		spi3 = &spi3;
+> >  	};
+> >  
+> >  	chosen {
+> > @@ -92,6 +93,12 @@ &pdma {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&spi3 {
+> > +	pinctrl-0 = <&ssp3_0_cfg>;
+> > +	pinctrl-names = "default";
+> > +	status = "okay";
+> > +};
+> > +
+> >  &uart0 {
+> >  	pinctrl-names = "default";
+> >  	pinctrl-0 = <&uart0_2_cfg>;
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> > index aff19c86d5ff3..205c201a3005c 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> > +++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+> > @@ -76,4 +76,24 @@ pwm14-1-pins {
+> >  			drive-strength = <32>;
+> >  		};
+> >  	};
+> > +
+> > +	ssp3_0_cfg: ssp3-0-cfg {
+> ..
+> > +		ssp3-0-no-pull-pins {
+> I'd prefer not to enforce "pull" info inside the name, you can't embed
+> all property info, besides, what's if you want to change/override later?
 > 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index 3b6e4f52e9aad..574d10fdf9b82 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -115,6 +115,15 @@ &i2c2 {
->  	pinctrl-0 = <&i2c2_0_cfg>;
->  	pinctrl-names = "default";
->  	status = "okay";
-> +
-> +	eeprom@50 {
-> +		compatible = "atmel,24c02";
-> +		reg = <0x50>;
-> +		vcc-supply = <&vcc1v8_sys>;
-> +		pagesize = <16>;
-I'm not sure this is 16..
-Could you double check it?
+> how about just name it as ssp3-0-defaul-pins or simply ssp3-0-pins?
+uart: uart0_2_cfg and function is 2.
+pwm: pwm14_1_cfg and function is 4
+spi: ssp3_0_cfg and function is 2
+
+I’m a bit confused about the meaning of the second number here.
+Is it intended to be an index, or the function number?
+
+If it’s an index, should it start from 0 or 1?
+The starting point seems inconsistent across pwm/spi/uart.
+If it’s supposed to be the function number,
+then the spi and pwm parts look incorrect.
+
+Could you clarify this? Yixun.
 
                 - Troy
-> +		read-only;
-> +		size = <256>;
-> +	};
->  };
->  
->  &i2c8 {
-> @@ -143,7 +152,7 @@ buck2 {
->  				regulator-always-on;
->  			};
->  
-> -			buck3 {
-> +			vcc1v8_sys: buck3 {
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1800000>;
->  				regulator-ramp-delay = <5000>;
-> -- 
-> 2.47.2
 > 
+> > +			pinmux = <K1_PADCONF(75, 2)>,	/* SCLK */
+> > +				 <K1_PADCONF(77, 2)>,	/* MOSI  */
+> > +				 <K1_PADCONF(78, 2)>;	/* MISO */
+> > +
+> > +			bias-disable;
+> > +			drive-strength = <19>;
+> > +			power-source = <3300>;
+> > +		};
+> > +
+> > +		ssp3-0-frm-pins {
+> > +			pinmux = <K1_PADCONF(76, 2)>;	/* FRM (frame) */
+> > +
+> > +			bias-pull-up = <0>;
+> > +			drive-strength = <19>;
+> > +			power-source = <3300>;
+> > +		};
+> > +	};
+> >  };
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> > index 6cdcd80a7c83b..eb8a14dd72ea4 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
+> > +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> > @@ -797,6 +797,22 @@ uart9: serial@d4017800 {
+> >  				status = "disabled";
+> >  			};
+> >  
+> > +			spi3: spi@d401c000 {
+> > +				compatible = "spacemit,k1-spi";
+> > +				reg = <0x0 0xd401c000 0x0 0x30>;
+> > +				#address-cells = <1>;
+> > +				#size-cells = <0>;
+> > +				clocks = <&syscon_apbc CLK_SSP3>,
+> > +					 <&syscon_apbc CLK_SSP3_BUS>;
+> > +				clock-names = "core", "bus";
+> > +				resets = <&syscon_apbc RESET_SSP3>;
+> > +				interrupts = <55>;
+> ..
+> > +				dmas = <&pdma 20>,
+> > +				       <&pdma 19>;
+> can we also squash the dmas into one line? but, do split if there are too many..
+> 
+> yes, it's simply a style change that I'd like to keep them consistent at DT level,
+> besides you might also want to adjust dt-binding examples to align with them here..
+> 
+> thanks
+> 
+> > +				dma-names = "rx", "tx";
+> > +				status = "disabled";
+> > +			};
+> > +
+> >  			/* sec_uart1: 0xf0612000, not available from Linux */
+> >  		};
+> >  
+> > -- 
+> > 2.48.1
+> > 
+> > 
+> 
+> -- 
+> Yixun Lan (dlan)
 > 
 > _______________________________________________
 > linux-riscv mailing list
