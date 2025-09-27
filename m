@@ -1,79 +1,81 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33472D2483
-	for <spacemit@lists.linux.dev>; Sat, 27 Sep 2025 11:52:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450171DE3DC;
+	Sat, 27 Sep 2025 22:08:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758973975; cv=none; b=kWU+8CfQalgGHukhqvenfgzyTWfC1lFBWb1N09QqF4d6g64nOdh6tnr+050sfAsGfTDGhriGDgajnSxOGT5pkyBQzuNcsvS8fwpGE+SLTwN417nCPc2EEw3zq+Afvkne7LBZIKOZlIn7+kR0SJEz1O9v/W8Shq2CmopggyEHhns=
+	t=1759010932; cv=none; b=oULTvzTBZw6dLDGVo6yZzeELRSC1KJrpZ28veEh2Q6JmG2wDpVKffGEgpoHypKm2Py1Lsvzpf5zvwjPh4gnPRus22q3dwU/MMJK4E48/XoruHn0Vof9f/j1X0xzRDxIaztA3UTJRxuHNzq2+EyEP5g7MMb8RDNCdNdZqAwtTZIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758973975; c=relaxed/simple;
-	bh=HX4bs8ie2dYdwL/KASZQ2qgRxEz3TPGsTAt2Z9HrWkE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G8kkkEZdV1GZoidtjd7mobZN8zitzr7HUXQvTCtsuxbf0EWXeDePgd27TnryXHZgqDsjZC999NjFBuqkBjPEzNP2MyM97e4BcKmQZtDlVhEFTADVk2coyufbbl1SkxsdaXRw1NlRw+ryjdXIili0m01+qJuQ5v5QrPUnhPyysO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.102] (unknown [114.241.87.235])
-	by APP-03 (Coremail) with SMTP id rQCowAAXZoD7z9doKB1YBw--.16820S2;
-	Sat, 27 Sep 2025 19:52:28 +0800 (CST)
-Message-ID: <20a5af8e-ba3d-4cca-8fad-2343455aa0aa@iscas.ac.cn>
-Date: Sat, 27 Sep 2025 19:52:27 +0800
+	s=arc-20240116; t=1759010932; c=relaxed/simple;
+	bh=3VPIamEQ7+dCMLsSCg6E3HEi41Jad/I+T3BQleJVmEo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lIIn3We7Bypj2kB5MDMU2wcFL+mk3fEsGtQHI6l1sNNyEMfylX7CONRl3O+7GSbrol/XdFQPOdN6HhnKTNggbYhTR2X7Q1WTcDYEwFVb9zjfAY8hFP75idtAmLv0QZTz123tIkSPI1Tv9j1Lu36Zu8FbIslb1cMTGM7Hf55D2bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=FYreAEkb; arc=none smtp.client-ip=195.154.113.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="FYreAEkb"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
+	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+	bh=84aM7CktnZL1OAlY+LiDjqwMzwvEjNLoxkt5Qla/7JE=; b=FYreAEkbXqbsAmdNRnjvQGLSnS
+	kXMXYbCntqdV3Gf8qpiTxeNL5GgE6CJkZ97Pq7ZUq4QXW8Qs3xcAJ2aVARr2qAaKNsO40S0aRGoNX
+	2K1agCVcSpRo+fIzsnFBL4XtdsbRIbAJKh4MnxqBseYRh2YIn+usWK0SYddXRdmb7eEsT6RNDYEuV
+	Zu8IakpicCJDVqx3qTq13MN2QKM9suP8EbRTW29tJMvIsYrXPyjpD3Zb4TD/tLtb7gJLSwACzRtta
+	CgMuF79Bbsyb826QHZUQVdOyXqOB4Rvqsjoav7wUtY6IJudyo+sq1jH5PdC3TpLjRxDl+Dp0Lbsaw
+	h3mSt4zg==;
+Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
+	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1v2d5n-000QX4-2k;
+	Sun, 28 Sep 2025 00:08:35 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: linux-kernel@vger.kernel.org,
+	Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	linux-pm@vger.kernel.org (open list:SYSTEM RESET/SHUTDOWN DRIVERS),
+	linux-riscv@lists.infradead.org (open list:RISC-V SPACEMIT SoC Support),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support)
+Subject: driver: reset: spacemit-p1: add driver for poweroff/reboot
+Date: Sun, 28 Sep 2025 00:07:39 +0200
+Message-ID: <20250927220824.1267318-1-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.47.2
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
-To: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley
- <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Yixun Lan <dlan@gentoo.org>
-Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>,
- "open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
- "open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-References: <20250926175833.3048516-1-aurelien@aurel32.net>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20250926175833.3048516-1-aurelien@aurel32.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowAAXZoD7z9doKB1YBw--.16820S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYD7k0a2IF6w4xM7kC6x804xWl14x267AK
-	xVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGw
-	A2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r1I
-	6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Cr
-	1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAa
-	Y2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4
-	A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY
-	1x02628vn2kIc2xKxwCF04k20xvY0x0EwIxGrwCF54CYxVCY1x0262kKe7AKxVWUtVW8Zw
-	CFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE
-	14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2
-	IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxK
-	x2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI
-	0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j04E_UUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Transfer-Encoding: 8bit
 
-On 9/27/25 01:54, Aurelien Jarno wrote:
+This adds poweroff/reboot support for the SpacemiT P1 PMIC chip, which is
+commonly paired with the SpacemiT K1 SoC.
 
-> The BPI-F3 board has a 24c02 eeprom connected to the i2c bus #2. It
-> holds board data. This patchset adds support for it.
+Note: For reliable operation, this driver depends on a separate patch series
+that adds atomic transfer support to the SpacemiT I2C controller driver:
+https://lore.kernel.org/spacemit/48B175EBF0F1A347+aNXwqlO1mD-7BGtE@kernel.org/T/#t
+The two fixes mentioned there are also required:
+https://lore.kernel.org/spacemit/aNbDkn9AC4FFx-Zc@aurel32.net/
 
-Reviewed-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Aurelien Jarno (2):
+  driver: reset: spacemit-p1: add driver for poweroff/reboot
+  mfd: simple-mfd-i2c: add a reboot cell for the SpacemiT P1 chip
 
-I guess now it's up to me to figure out how to wire the MAC address
-nodes to the two ethernet nodes, after we get 6.18-rc1 of course.
+ drivers/mfd/simple-mfd-i2c.c             |  1 +
+ drivers/power/reset/Kconfig              |  9 +++
+ drivers/power/reset/Makefile             |  1 +
+ drivers/power/reset/spacemit-p1-reboot.c | 88 ++++++++++++++++++++++++
+ 4 files changed, 99 insertions(+)
+ create mode 100644 drivers/power/reset/spacemit-p1-reboot.c
 
-Theoretically it might not matter for Linux since a bootloader can set
-mac-address, but I think it would be a nice to have for less
-full-fledged boot situations.
-
-Thanks,
-Vivian "dramforever" Wang
+-- 
+2.47.2
 
