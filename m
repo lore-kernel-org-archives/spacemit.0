@@ -1,138 +1,110 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56BB1F91D6
-	for <spacemit@lists.linux.dev>; Sat, 27 Sep 2025 10:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBA719AD48
+	for <spacemit@lists.linux.dev>; Sat, 27 Sep 2025 10:56:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758968724; cv=none; b=dajOR5w0tPBPVWr+IdEs1VwhHgFwb2+nbvfZcxTWvugcCYVq8E+yoppumJ51EQk0qAEXlOnDxFwKovKyGRs86Fi8huYhb9+ikd6nAMyrh9V1dYuJkl8xAw1B3jUWCHHyqZHYtoeeAV2nQTi1LxOgAwbgbPqU9GzLiWn84Hhkkoo=
+	t=1758970585; cv=none; b=SD4Nh6t3LGm569WRquf8v8iXDWDfV1i1tPJh7uLLMGdEOvXL8zNrvYGMLq+LR2hL+sv+iV03bOIhM7vpiU1GAtkyeUtymBBRKk225Xo/vujDBnkRf9HtBGQ3o8igSm3PGO7LeixbPwbiOYVQbt7lvkdsMVfWepDqKF7PWa53kqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758968724; c=relaxed/simple;
-	bh=CNoMXfWgLcGJvfa77hW6zkuKjvN+uN7hAOsHWEF2+1E=;
+	s=arc-20240116; t=1758970585; c=relaxed/simple;
+	bh=I+ZlfiEFt+StkHEgrb6i6Dck7KEiUvRPWgotHmfoqsM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fC1wZJKCAD3UtWRKcrQn8G59kiHYk6UNqIQh+J0vFjo5N/u1oRxHpcz0C8wlA0dWTAUntju8e0z8BEa4Yn4FuiNidNJLeOtw2pBQRZ/eRAAkGQRdNgGY9CCFOD3uQ3ZkRa5Bpwt7FM3Db8R8vsnEDi3K8zxpkVBSD+zrSIeHqkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=hZIbkHm1; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="hZIbkHm1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1758968654;
-	bh=8gQ1btfcS9lR4xyhO4eNmmxoMM9MV//3rCHOmLGPOus=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=hZIbkHm10wA9hp7X5Q3PdaFA7mnSA2gAlv2sQC9GwILeCZYty5KPZuqkiuXOSkruv
-	 mJFu1L+VnSV2uMkA6rLp2vOIuRIj11P7pzf3pYLpuICFM6CmFCjSNrP7SRJlp775oN
-	 t3TvaIiNiWY9OkE+24tcPtYSwdep/sPfx+tzsgUA=
-X-QQ-mid: zesmtpip2t1758968646t6adf6663
-X-QQ-Originating-IP: /kIp1FpEbrRs/kHZGWmafReKwU4afgvz1uRmtyEjXAs=
-Received: from = ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sat, 27 Sep 2025 18:24:05 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11619624960712165615
-EX-QQ-RecipientCnt: 9
-Date: Sat, 27 Sep 2025 18:24:05 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Yixun Lan <dlan@gentoo.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=pTLupytruswxamk9+Ik4a2FGT/Is/Wx64hjPAVOBvxc6iCnR9etsxJ9kr2ahu6j4MKIM+j+wcanSbvIFTmAXZvHS+ZBM+AxWnN+XoqQ2O/FjepMYnZCm6T7WbR1EXuF3DXkxc6Y7bo8XJl1FgUN2wu4Ulq1bqG113mtjN4Vblhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [180.158.240.90])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 12DB133BEAD;
+	Sat, 27 Sep 2025 10:56:21 +0000 (UTC)
+Date: Sat, 27 Sep 2025 18:56:16 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Cc: Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>,
 	Troy Mitchell <troymitchell988@gmail.com>,
 	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
 Subject: Re: [PATCH v2 6/6] i2c: spacemit: introduce pio for k1
-Message-ID: <64AD69A1C43D8A13+aNe7RUmS73q-jSBk@troy-wujie14pro-arch>
+Message-ID: <20250927105616-GYB1338789@gentoo.org>
 References: <20250925-k1-i2c-atomic-v2-0-46dc13311cda@linux.spacemit.com>
  <20250925-k1-i2c-atomic-v2-6-46dc13311cda@linux.spacemit.com>
- <20250927014547-GYA1336612@gentoo.org>
- <7F98284B9618900A+aNdiTKvvbg4G-LwM@troy-wujie14pro-arch>
- <20250927101648-GYA1338789@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250927101648-GYA1338789@gentoo.org>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: NojR6Ao/DkEDWzK408R5Uhp1H+tIhTv87PPDP6mL828IdsNJnBLVf/I1
-	zz4yTnVuKMmB1sWnG2yqMNIDSXhtAkdPlmzt5fJcLc6VlRoMFI61Hi66RDl4KJq9e1Cp+NL
-	dm/ATz/KkYq+r74Kvvf0d2zgaxswyBiOlQvRKNTMlK9TQFqPp/LbjcNMxrTb4UpNfrYEGiB
-	evPqt+SrBBKk2ih69WQoefWMAHfVorp/X8on7/FjcCQyI3QZk1FUO0/E93TfyGnB94au0gy
-	q7itSI3RsvmsbRQp26C6kJmXLfp2/0MlVklYdohZbKv+WmnSZrqQU5dIL8APY4WsKkufxzS
-	eY6g7+jOgjLmw3+laHqFBudppVKId08482oADUPF8udZx+wmUPTMHhhjpvCs64dV+jmdfAC
-	4rC47Wp/Ne+JDYZSVLXnuvPnkcwm14KrTsSJOaKXNdkSD8Xg52CS5ipIwvhzBmvaFEbW8ar
-	SPIF/w30f78e34wgeMnFAKzg2GMlhLQLZyqZD+s7cjnhhEKTUCiKbsd6pxkO6mSf+L9ab+M
-	A4zQ8WXkVdEJCY2T918HFmhtqkTfknIE4ldUG3qMfaMHcA6S95PxEm0BPzzo6iGad4WHa33
-	ruG6h27g85NOsN7Rupni7kxHw3nDAEMXbN11djy5JtNIaFoTQc7doeSD63unhlUEzcXlT18
-	SSy9vH2zB19P07DBg09qprxCAnfxPdd5U2354f3TOfgnBRN4yz3iWZJCDJiJzAF0VgbMDeG
-	jcYYSbZmISudzZEWGBXdnyDMRaz+pqN2dWgKEQ1/OD4rqRfLTzYT9AoKG/spY+EFThTgXfg
-	lXjo1DDt8q9f5Qe9qcorEVLKYj+QtXMV/gAnSjRx6ISvuYGRMcNeOwtZ6s+WewqJhNLuylf
-	jAdTuxgMdJ0pRyfIWOkg2YrWon/U5r6oFhq2QcWFzXIYaBMlixELHM3QjdqTHwC0k+PP3/g
-	0igcT3lY8xw/mmokt3YybYz1IUvEKqtEFXlFDDh87l0LvBeSebFxwkjxr3LXjsjYxftGnHy
-	jav+asMQAA+FYFZVpcQQw5ebjKzD7JX4DCi8caYBhENsbv7TcQ7rqwguD/EErx1XJ6JANiG
-	g==
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
-X-QQ-RECHKSPAM: 0
+In-Reply-To: <20250925-k1-i2c-atomic-v2-6-46dc13311cda@linux.spacemit.com>
 
-On Sat, Sep 27, 2025 at 06:16:48PM +0800, Yixun Lan wrote:
-> Hi Troy,
+On 10:02 Thu 25 Sep     , Troy Mitchell wrote:
+> This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
+> enabling the use of I2C with interrupts disabled.
 > 
-> On 12:04 Sat 27 Sep     , Troy Mitchell wrote:
-> > On Sat, Sep 27, 2025 at 09:45:47AM +0800, Yixun Lan wrote:
-> > > Hi Troy,
-> > > 
-> > > On 10:02 Thu 25 Sep     , Troy Mitchell wrote:
-> > > > This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
-> > > > enabling the use of I2C with interrupts disabled.
-> > > I feel it's more proper to say
-> > > s/with interrupts disabled/in atomic context/
-> > Good point.
-> > 
-> > > 
-> > > I've noticed that K1 I2C controller support three different transmission mode:
-> > >  non-fifo, fifo mode, dma mode
-> > > 
-> > > while you are trying to implement pio support, I'd suggest to think one
-> > > further step in the long run - support more fifo/dma + normal/atomic features,
-> > I understand your concern, but I have reviewed the code structure,
-> > and adding FIFO support would not significantly affect the current PIO implementation.
-> we will see..
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> ---
+>  drivers/i2c/busses/i2c-k1.c | 164 +++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 140 insertions(+), 24 deletions(-)
 > 
-> > 
-> > > 
-> > > Personally, I'd like to see fifo mode implemented before adding pio
-> > > support, as it will bring quite significant code changes, require heavy
-> > > code review effort. And yes, this will put more demanding work on your side
-> > > and may slow things a bit..
-> > That said, we don’t have any plans to support FIFO at this point,
-> > and PIO functionality is something we need urgently.
-> > So I will continue to push this patch (tomorrow).
-> please do not flush the mailing list and give people some time, I haven't seen 
-> enough reviews coming, please wait for ~one week before sending next version,
-> or make sure you've accumulated enough changes..
-Okay.. I will wait for more review
+> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+> index 6b918770e612e098b8ad17418f420d87c94df166..e403eb7d6f329f4fe5c5242f94cc21094dff105c 100644
+> --- a/drivers/i2c/busses/i2c-k1.c
+> +++ b/drivers/i2c/busses/i2c-k1.c
+> @@ -97,6 +97,9 @@
+>  
+..
+>  static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
+>  {
+>  	unsigned long time_left;
+> @@ -310,10 +368,28 @@ static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
+>  
+>  		reinit_completion(&i2c->complete);
+>  
+> -		spacemit_i2c_start(i2c);
+> +		if (i2c->is_pio) {
+> +			/* We disable the interrupt to avoid unintended spurious triggers. */
+the comment is suspicious, and seems wrong..
+> +			disable_irq(i2c->irq);
+> +
+I guess this doesn't disable interrupt in the hardware layer, it will still
+fire interrupt once enabled, so instead of calling disable_irq(), why not
+dealing with ISR setting of the controller? I mean those "IE bits"(interrupt
+enableing) of ICR REGISTER, disabling them should prevent the interrupt
+triggered?
 
-> 
-> > Thanks for your understanding. For details on the code changes, please see above.
-> > 
-> > In addition, if anyone is interested in adding FIFO support, I’d be happy to help.
-> > 
-> do you want to push the work (support fifo mode) to community?
-Personally, I want.
-Since K3 is going to reuse the upstream driver,
-PIO support has high priority (needed as P1, e.g. for shutdown and reboot).
-FIFO support, is not considered a high priority at this point.
+> +			/*
+> +			 * The K1 I2C controller has a quirk:
+> +			 * when doing PIO transfers, the status register must be cleared
+> +			 * of all other bits before issuing a START.
+> +			 * Failing to do so will prevent the transfer from working properly.
+> +			 */
+> +			spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
+this also doesn't seem correct to me, the irq status bit should be cleared once
+interrupt occur, not dealing it here before sending msg, this seems a
+wrong procedure
 
-That's why I want to push PIO ASAP
-Does this make sense?
+> +
+> +			spacemit_i2c_start(i2c);
+> +			time_left = spacemit_i2c_wait_pio_xfer(i2c);
+> +
+> +			enable_irq(i2c->irq);
+> +		} else {
+> +			spacemit_i2c_start(i2c);
+> +			time_left = wait_for_completion_timeout(&i2c->complete,
+> +								i2c->adapt.timeout);
+> +		}
+>  
+> -		time_left = wait_for_completion_timeout(&i2c->complete,
+> -							i2c->adapt.timeout);
+>  		if (!time_left) {
+>  			dev_err(i2c->dev, "msg completion timeout\n");
+>  			spacemit_i2c_conditionally_reset_bus(i2c);
+> @@ -341,6 +417,9 @@ static bool spacemit_i2c_is_last_msg(struct spacemit_i2c_dev *i2c)
 
-                - Troy
-> 
-> -- 
-> Yixun Lan (dlan)
-> 
+-- 
+Yixun Lan (dlan)
