@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B945C1A23AC
-	for <spacemit@lists.linux.dev>; Sat, 27 Sep 2025 01:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D5113635E
+	for <spacemit@lists.linux.dev>; Sat, 27 Sep 2025 01:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758934865; cv=none; b=oE3VyJENNxMYuWJ5CKx/4JTlZUZw5/FPa1CD1Xt4w3EMf6UaprO5TMPCjZDxa5h/3QQ5vRIuMmK/cZO4Oz5fFza6SS+QjqZVEHIXFWOUx8d+84/2aqfrRGGTm0noChHucTO+DOi6dhvww3mOsA8VvJFlcsM/jwr4vIYbz2A4Ldg=
+	t=1758936276; cv=none; b=mDjDqNB6dZ+g/qecANvcx5BZcZt5BeaUeS1b/T5PWEfkid4+8ntU7DUnO9xbEdFeofdaFVHtbmUQa+0xfGNjFxGNLgHxRCQXKnkYOdh+BcXhLy6NLajzfgdGVgMLhueLsru5RX3RvcAemIFpgB3z60p3zHJSpGAQVvaPNPxMYZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758934865; c=relaxed/simple;
-	bh=gO0JK18GeDaHKYiq8dk890mcYRBTIaqtoMUc0OLd9zE=;
+	s=arc-20240116; t=1758936276; c=relaxed/simple;
+	bh=bUNKqHaD1iuHkc+tCOCnIlukWdMGz5DnxxFyK7q2skM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QWW8yt81cAaMeMPTtP9tx3d3TslZE6jiT9yF5KFFH/afYVO3FoTWyEPLFNqkFddbJliZMm0N5REBrdKxA4DX+BKiJli7rdEe37iAWeffqCNLrwJaujwQwEIBl8O3azYzlXScS2XiLqXOP8ES4Y8SeD+FTOxe6vtvYZCKpKLBnYw=
+	 Content-Type:Content-Disposition:In-Reply-To; b=rhpwJXp8ExiyAuPz22qBnuRr2Vx2G9lC2JWSO5m0DrQg+MBna9bQjoxigQjzCJfyupW091Nm2Agd6QrwSAd+rR8UOa3d/bnqZ02cUTFonDupNBqhQa5giD5rgyloWVZfpkcWVBo3LpGhgNs1o0ETnl7OEM4+vH+5nCefg5n0UL0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,43 +19,45 @@ Received: from localhost (unknown [180.158.240.90])
 	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 9EE62340D40;
-	Sat, 27 Sep 2025 01:01:02 +0000 (UTC)
-Date: Sat, 27 Sep 2025 09:00:58 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id AC438340D3C;
+	Sat, 27 Sep 2025 01:24:34 +0000 (UTC)
+Date: Sat, 27 Sep 2025 09:24:29 +0800
 From: Yixun Lan <dlan@gentoo.org>
-To: Aurelien Jarno <aurelien@aurel32.net>
-Cc: linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v3 0/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
-Message-ID: <20250927010058-GYA1333274@gentoo.org>
-References: <20250926175833.3048516-1-aurelien@aurel32.net>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>,
+	Troy Mitchell <troymitchell988@gmail.com>,
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 6/6] i2c: spacemit: introduce pio for k1
+Message-ID: <20250927012429-GYA1330052@gentoo.org>
+References: <20250925-k1-i2c-atomic-v2-0-46dc13311cda@linux.spacemit.com>
+ <20250925-k1-i2c-atomic-v2-6-46dc13311cda@linux.spacemit.com>
+ <20250926111055-GYB1324993@gentoo.org>
+ <E4EE696368DDDB1E+aNaRl8upyNeld9zX@troy-wujie14pro-arch>
+ <aNajJ0RZ4Ku0eDXr@shikoro>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250926175833.3048516-1-aurelien@aurel32.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aNajJ0RZ4Ku0eDXr@shikoro>
 
-Hi Aurelien,
+Hi Troy,
 
-On 19:54 Fri 26 Sep     , Aurelien Jarno wrote:
-> The BPI-F3 board has a 24c02 eeprom connected to the i2c bus #2. It
-> holds board data. This patchset adds support for it.
+On 16:28 Fri 26 Sep     , Wolfram Sang wrote:
 > 
-looks good to me, but will wait for others to give reviews,
-btw, generally, I will proceed after v6.18-rc1 is tagged..
-
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
+> > Since patches 1–5 have already been merged,
+> > should I keep the current version number and just send this single patch ?
+> 
+> Yes, please.
+> 
+I agree, please do increase the patch version, have a formal cover letter,
+document the changes, and add old patch URL link..
 
 -- 
 Yixun Lan (dlan)
