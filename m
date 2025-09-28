@@ -1,42 +1,62 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1162032D
-	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 12:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459D2635;
+	Sun, 28 Sep 2025 18:01:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759062990; cv=none; b=avXGb2BL5QOprhJxe0/D3AQyMirmqTTijnDcAD43rrK2i87F4t3l0xPJz4yxZDk0YODhVTiLHhzNtxlX4L4T0BLOiWCfCfUWd47eO7RR2/Nf3Ct/7tXq56v0WzLRffIcRYnL0bGNy/DclHOD6cjbr4UZm8WqW0CIda12UDY+sTc=
+	t=1759082478; cv=none; b=c2/94UM1yoVlYr9pYHemYxNOefcv8OkyUxSpYV8YMF6CkXFcLjWcQyy0S9kNOdu9LKyVOhIDhdWdzwwCktcFCiMTlJc2/qJ0NMLt0Q7v91T0K7CvZgW7C6LrCm4HrouhoVcsLoX+xr0TpPSrx+S0vyyrwhTfRCHZwUWGlbDcICo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759062990; c=relaxed/simple;
-	bh=l9Q144PMpYoyc7MJ9uG80U7HLDSOpM3aAqyn15dVI/4=;
+	s=arc-20240116; t=1759082478; c=relaxed/simple;
+	bh=ETGlfgCHn7iTomo7gbPyeKU7/4yXFLWwgSsvm/N4bJc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u8LqbX+DVpVdaApSWnLhi2gAgHcHlf6k2IN9ush9f/3Y9iZ3Btrd6dLmMFWag0LHiFbhVs71Y5vJQWdkuF1Kg6koTUyskcKkzMzgcU77D7/ahCLtk2NR2ggqstKsAYa6Ri9oTtQL2RcGqdrsdjyRNpMtLx9mi0K9nQv2LCgEPXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [180.158.240.90])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id BCC58340D91;
-	Sun, 28 Sep 2025 12:36:27 +0000 (UTC)
-Date: Sun, 28 Sep 2025 20:36:22 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, ziyao@disroot.org, linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] spi: spacemit: introduce SpacemiT K1 SPI
- controller driver
-Message-ID: <20250928123622-GYA1347020@gentoo.org>
-References: <20250922161717.1590690-1-elder@riscstar.com>
- <20250922161717.1590690-3-elder@riscstar.com>
- <20250922230639-GYA1303776@gentoo.org>
- <786f4a5e-f62e-4cd0-a017-7b61408f34aa@riscstar.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=HdWQo8Ys/xjCiL2vU8kruSSMT63QPySkG5e+PhN7QYkoAkSp+aqy9smGuTk5FcBQU0a1ZVVaCKv8Z9fccGi0vBXK4RffT3xz/y7L3TuJqjeoZNo9mnP6lSMn5ZVSPGan4WJ4BoqF/foZJpJ3YI2teiVYyq2sDvwkrRVY6gfQ0dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=txCqod+7; arc=none smtp.client-ip=195.154.113.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="txCqod+7"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=p3zwPG2lHdfGT54vRdWzMiWo1GIY+4oyV83lYkTPCSg=; b=txCqod+7lxWDuX9hd4gJshx+rB
+	jLCDSApN3cGlTlr2qpYvhamL3LoECi5F4cqyj44c0gAV+ltxFnBfm0iBvhqi5/cdl5uJ0m9sc995z
+	GwWM8UZJRcGEQjAKV9dRXFf+ZHJWRIx9utw47og7Y0P1a5ZjlasCEtL1/RXjkOUPRaElOwzNSTKVJ
+	XBs6/TeBl3YOETm0A/qiP94hRqi3vLR+NcWeMBdzddiGk5T8/e1cSJrshXG8eoiv/sjFGHtaK6VR8
+	mLE8Ki8VcsL+syGhf3f2lX7mikw5EsBY1OS3NdMTLpbf2Cp02CQL8iSYRsOeGmlv4h4gv5ZEClUOI
+	YINvYD3Q==;
+Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
+	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1v2vhm-001XtX-0B;
+	Sun, 28 Sep 2025 20:01:02 +0200
+Date: Sun, 28 Sep 2025 20:01:01 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+Subject: Re: [PATCH 1/2] driver: reset: spacemit-p1: add driver for
+ poweroff/reboot
+Message-ID: <aNl33eHpr7gd8HJz@aurel32.net>
+Mail-Followup-To: Yixun Lan <dlan@gentoo.org>, linux-kernel@vger.kernel.org,
+	Lee Jones <lee@kernel.org>, Sebastian Reichel <sre@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+References: <20250927220824.1267318-1-aurelien@aurel32.net>
+ <20250927220824.1267318-2-aurelien@aurel32.net>
+ <20250928000255-GYA1342640@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,76 +65,65 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <786f4a5e-f62e-4cd0-a017-7b61408f34aa@riscstar.com>
+In-Reply-To: <20250928000255-GYA1342640@gentoo.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Hi Alex,
+Hi Yixun,
 
-On 07:49 Tue 23 Sep     , Alex Elder wrote:
-> On 9/22/25 6:06 PM, Yixun Lan wrote:
-> > Hi Alex,
+On 2025-09-28 08:02, Yixun Lan wrote:
+> Hi Aurelien, 
+> 
+> On 00:07 Sun 28 Sep     , Aurelien Jarno wrote:
+> > This driver implements poweroff/reboot support for the SpacemiT P1 PMIC
+> > chip, which is commonly paired with the SpacemiT K1 SoC.
 > > 
-> > On 11:17 Mon 22 Sep     , Alex Elder wrote:
-> >> This patch introduces the driver for the SPI controller found in the
-> >> SpacemiT K1 SoC.  Currently the driver supports master mode only.
-> >> The SPI hardware implements RX and TX FIFOs, 32 entries each, and
-> >> supports both PIO and DMA mode transfers.
-> >>
-> >> Signed-off-by: Alex Elder <elder@riscstar.com>
-> >> ---
-..
-> 
-> >> diff --git a/drivers/spi/spi-spacemit-k1.c b/drivers/spi/spi-spacemit-k1.c
-> >> new file mode 100644
-> >> index 0000000000000..2b932d80cc510
-> >> --- /dev/null
-> >> +++ b/drivers/spi/spi-spacemit-k1.c
-> >> @@ -0,0 +1,965 @@
-> >> +// SPDX-License-Identifier: GPL-2.0
-> >> +/*
-> >> + * Support for SpacemiT K1 SPI controller
-> >> + *
-> >> + * Copyright (C) 2025 by RISCstar Solutions Corporation.  All rights reserved.
-> >> + * Copyright (c) 2023, spacemit Corporation.
-> >> + */
-> 
-> . . .
-> 
-> >> +static irqreturn_t k1_spi_ssp_isr(int irq, void *dev_id)
-> >> +{
-> >> +	struct k1_spi_driver_data *drv_data = dev_id;
-> >> +	bool rx_done;
-> >> +	bool tx_done;
-> >> +	u32 val;
-> >> +
-> >> +	/* Get status and clear pending interrupts */
-> >> +	val = readl(drv_data->base + SSP_STATUS);
-> >> +	writel(val, drv_data->base + SSP_STATUS);
-> >> +
-> >> +	if (!drv_data->message)
-> >> +		return IRQ_NONE;
-> >> +
-> >> +	/* Check for a TX underrun or RX underrun first */
-> > s/RX underrun/RX overrun/
-> 
-> OK.
-> 
-> >> +	if (val & (SSP_STATUS_TUR | SSP_STATUS_ROR)) {
-> >> +		/* Disable all interrupts on error */
-> >> +		writel(0, drv_data->base + SSP_INT_EN);
-> > should clear status of SSP_STATUS instead of disabling ISR, see commet below
-> 
-> The status is cleared immediately after reading, above.  We hold
-> the status value so we can act on the current state of the FIFOs.
-> 
-I'm surprised by this, do you mean the status will be cleared by reading?
-can you double checck and prove it? by reading twice and compare?
+> > The SpacemiT P1 support is implemented as a MFD driver, so the access is
+> > done directly through the regmap interface. Reboot or poweroff is
+> > triggered by setting a specific bit in a control register, which is
+> > automatically cleared by the hardware afterwards.
+> > 
+> > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+> > ---
+> >  drivers/power/reset/Kconfig              |  9 +++
+> >  drivers/power/reset/Makefile             |  1 +
+> >  drivers/power/reset/spacemit-p1-reboot.c | 88 ++++++++++++++++++++++++
+> >  3 files changed, 98 insertions(+)
+> >  create mode 100644 drivers/power/reset/spacemit-p1-reboot.c
+> > 
+> > diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
+> > index 77ea3129c7080..5afef049760d6 100644
+> > --- a/drivers/power/reset/Kconfig
+> > +++ b/drivers/power/reset/Kconfig
+> [snip]..
+> > +
+> > +static int spacemit_p1_reboot_probe(struct platform_device *pdev)
+> > +{
+> > +	struct device *dev = &pdev->dev;
+> > +	struct regmap *regmap;
+> > +	int ret;
+> > +
+> > +	regmap = dev_get_regmap(dev->parent, NULL);
+> > +	if (!regmap)
+> > +		return -ENODEV;
+> > +
+> > +	ret = devm_register_power_off_handler(dev, &spacemit_p1_pwroff_handler, regmap);
+> > +	if (ret) {
+> > +		dev_err(dev, "Failed to register power off handler: %d\n", ret);
+> > +		return ret;
+> suggest to simplify with dev_err_probe(), which will save few lines
+> > +	}
+> > +
+> > +	ret = devm_register_restart_handler(dev, spacemit_p1_restart_handler, regmap);
+> > +	if (ret) {
+> > +		dev_err(dev, "Failed to register restart handler: %d\n", ret);
+> > +		return ret;
+> ditto
 
-while according to the docs - 18.2.4.6 SSSR REGISTERS, the status bits has
-two types: 
-  R - Read only
-  R/W1C - Read only, write 1 to clear
+Thanks for the hint, that'll be in the next version.
 
-if you're right, then the docs should be fixed.
+Regards
+Aurelien
 
 -- 
-Yixun Lan (dlan)
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
