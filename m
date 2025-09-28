@@ -1,97 +1,78 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127DB70809
-	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 02:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20DFCA52
+	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 03:46:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759028047; cv=none; b=redaq+G62JJ1Qew9Qk7AGe8bcf26kCZcBXHcm25E5h+Muke/sKB4e2AX7igebSZx5YK65IW70iTEjteOQBd8DxQdbtH/JgUDbq6kz5bEKaaViWDdodR5iV7qh/9CVK88EUSt6a0bBD2ZrV07SjnlRaqBawLDtLTeve0Ax9k7M/Q=
+	t=1759031188; cv=none; b=Hc7mjDseD94nEB6kw847B+snIAK5lGGWhQ18egEq81rWk2EdSgVPvFYEPEfZie/5Sq8F6q/8haWcqgSXvx8EpA7LSS40/Di8VjcEcn+zlH92+Zszd3vdJTSRCq39vgG3Tg9y954Xtg2eufy4Ypp8Hrczhkx2hK4fqZTPlruzbec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759028047; c=relaxed/simple;
-	bh=tNuhvw/dBLQVPe8NgroFNiR3wp2cMxgJpy3KYZhZq/Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cCs5cBg/hjADyeNF2x+4ChvLGt9wT4jrpjoIGMdORgJBblpboppcDTBXc8gQyYYyEsNs/Xc7u2xcBfYNrRAjtuyXsfABjSd6oHXD6sU3Kn/ucsAGojbAaplP8w17WFqqNrOgWMMlm9cS4A5aAhHdX6CasEC4+VIV3Iymu4PYkjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [180.158.240.90])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 19F74340E37;
-	Sun, 28 Sep 2025 02:54:04 +0000 (UTC)
-Date: Sun, 28 Sep 2025 10:54:00 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 6/6] i2c: spacemit: introduce pio for k1
-Message-ID: <20250928025400-GYB1330052@gentoo.org>
-References: <20250925-k1-i2c-atomic-v2-0-46dc13311cda@linux.spacemit.com>
- <20250925-k1-i2c-atomic-v2-6-46dc13311cda@linux.spacemit.com>
- <20250927105616-GYB1338789@gentoo.org>
- <F076AA5B04CF3445+aNiMlrTNTdI7H4PI@kernel.org>
+	s=arc-20240116; t=1759031188; c=relaxed/simple;
+	bh=leAHyipuOrrNM/GHdGoDUYGJ6EFVBQ6TUO5UvR4dHaM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=S0ciNSNrv9wTYR7CH5CVYWaxyrEmaxOBvLtGZJJD5jj7nT2T8cJuI5ZRiiJltrt/FESi53rDICSY4LHJd8Uozt6DJjHDLBABdW7Ub7tPfkZEXYN/B9W66OF4Okv2AD0/2EmxkTqjSgKS8mFtgtqal6UpUqxJw7/eiZl0Bazmxp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=pass smtp.mailfrom=linux.dev; arc=none smtp.client-ip=91.218.175.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: [PATCH 0/2] riscv: dts: spacemit: Add initial support for MusePi
+ Pro
+Date: Sun, 28 Sep 2025 11:46:14 +0800
+Message-Id: <20250928-k1-musepi-pro-dts-v1-0-64d0659dfdbc@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <F076AA5B04CF3445+aNiMlrTNTdI7H4PI@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIav2GgC/x3MwQpAQBCA4VfRnE2taQmvIgfsYBK2HaTk3W2O3
+ +H/H1AOwgp18kDgS1T2LSJLExjmbpsYxUUDGcpNRSUuGa6nshf0YUd3KOa2cGQGa6nrIXY+8Cj
+ 3/2za9/0APJ4m42MAAAA=
+X-Change-ID: 20250928-k1-musepi-pro-dts-546d20c442ab
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Yangyu Chen <cyy@cyyself.name>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1759031178; l=997;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=leAHyipuOrrNM/GHdGoDUYGJ6EFVBQ6TUO5UvR4dHaM=;
+ b=KyplklxWO12GVPU+bp0gZ7RAp9WhOAzlXhFOisv8yAJsjTObE2dUqJ6fdZAbisASFR/pKWyjm
+ aH/L3CB9hIKBWAuh4KSRBKXJRrNG8EHIcAP/1kCZ3Ix/O6pdpBAZfHD
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+X-Migadu-Flow: FLOW_OUT
 
-Hi Troy,
+This patchset adds initial device tree support for the MusePi Pro board.
 
-On 09:17 Sun 28 Sep     , Troy Mitchell wrote:
-> On Sat, Sep 27, 2025 at 06:56:16PM +0800, Yixun Lan wrote:
-> > On 10:02 Thu 25 Sep     , Troy Mitchell wrote:
-> > > This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
-> > > enabling the use of I2C with interrupts disabled.
-> > > 
-> > > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > > ---
-> > >  drivers/i2c/busses/i2c-k1.c | 164 +++++++++++++++++++++++++++++++++++++-------
-> > >  1 file changed, 140 insertions(+), 24 deletions(-)
-> > > 
-> > > diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-> > > index 6b918770e612e098b8ad17418f420d87c94df166..e403eb7d6f329f4fe5c5242f94cc21094dff105c 100644
-> > > --- a/drivers/i2c/busses/i2c-k1.c
-> > > +++ b/drivers/i2c/busses/i2c-k1.c
-> > > @@ -97,6 +97,9 @@
-> > >  
-> > ..
-> > >  static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
-> > >  {
-> > >  	unsigned long time_left;
-> > > @@ -310,10 +368,28 @@ static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
-> > >  
-> > >  		reinit_completion(&i2c->complete);
-> > >  
-> > > -		spacemit_i2c_start(i2c);
-> > > +		if (i2c->is_pio) {
-> > > +			/* We disable the interrupt to avoid unintended spurious triggers. */
-> > the comment is suspicious, and seems wrong..
-> > > +			disable_irq(i2c->irq);
-> > > +
-> > I guess this doesn't disable interrupt in the hardware layer, it will still
-> > fire interrupt once enabled, so instead of calling disable_irq(), why not
-> > dealing with ISR setting of the controller? I mean those "IE bits"(interrupt
-> > enableing) of ICR REGISTER, disabling them should prevent the interrupt
-> > triggered?
-> For example, take MSD (master stop detect).
-> If we disable this interrupt, even the interrupt status bit will never be triggered.
-No, this is not something I understand..
-> Then how are we supposed to know when the transfer has completed?
-> That’s why we disable the global interrupt here, but still keep the pending bit.
-checking 18.1.4.1 ICR REGISTER, there is Master Stop Deteced Enable - MSDE (Bit[26]) and
-Master Stop Deteced Interrupt Enable - MSDIE (BIT[25])
-you can disable MSDIE but still enable MSDE, and check status of MSD (BIT[26]) of ISR REGISTER?
-it should still work with interrupt disabled, otherwise I'd consider the hardware is broken.
+Muse Pi Pro [1] is a single-board computer integrating a high-performance
+RISC-V 8-core processor, storage, I/O and expansion capabilities into
+a credit card-sized 1.8-inch board.
 
+Link:
+https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf
+[1]
+
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+Troy Mitchell (2):
+      dt-bindings: riscv: spacemit: Add MusePi Pro board
+      riscv: dts: spacemit: Add MusePi Pro board device tree
+
+ .../devicetree/bindings/riscv/spacemit.yaml        |  1 +
+ arch/riscv/boot/dts/spacemit/Makefile              |  1 +
+ arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts     | 40 ++++++++++++++++++++++
+ 3 files changed, 42 insertions(+)
+---
+base-commit: 0f084b221e2c5ba16eca85b3d2497f9486bd0329
+change-id: 20250928-k1-musepi-pro-dts-546d20c442ab
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
