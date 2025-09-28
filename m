@@ -1,140 +1,87 @@
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F179A2868A7
-	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 04:17:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E2E2857C7
+	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 04:28:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759033074; cv=none; b=GaU2B8he0XNf4CSgYLP23yGw0+L0RjDzGMtbv4QBvQfZ8RMPCisvOCrhXaXtLJBVeWF5hsLnKRmM/CNFK64OlMTgnGxLwacUoREX4HY56llFK/lmDN3p0wOdRVoJy/qCcxb1WCsdyTIJozaulEXmOf205n5AZ7VFBplwVIw1XCM=
+	t=1759033694; cv=none; b=hk81rWkhRUxRW66FLtcmmfjhCXjcA4qKRrFpffLBMqQjMZ7joxC0ONgXnmvu//uA7rgiPWs6e/Pl55NPvSexawWfkYB7BZKVWNajkjxxe5S2faMSqmstIaihlrEhpZvFN+WLNj5aHB2DvjU1/CJXnHDKg0v7ej6fLcXsJ64YfOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759033074; c=relaxed/simple;
-	bh=Q88g6NgIDPzr29e3PY11KRgsjucACUTC2bTeL6Iy79A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j5cq49OtNGLhLgW3Zqz9pI9qcst2l8SC2WY1d41IR5K7gMZjAXNHRrYx1IVxj2JT7HqXACzn45JlucGWwqh8OiohuJCuH2XovOzyNeBtvu6F9Jw+q58BqYGtZ00Mp3/A2rbUtjZ4HkvePpVZV3MqA5xPpVNjEjm2t8yQeJLwAyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wTWKn+YC; arc=none smtp.client-ip=91.218.175.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1759033694; c=relaxed/simple;
+	bh=rLTkZRi3rnk+A3ETcZqBlNg11IGKyfUPUP4yA3M8kcc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SmmNWHHU54MPZupK4VrUS/kYhWNS/aPp4NI2hiDDPk1xfeOhlpnNE+7lSeRaWnDC5Lq3MUMoGKnEENeHhOpaeI+eGb94df2o+Vyd0AnNyJo+TMi30SVu72fHYFVpzk5y7icathjQIA3Gz4z1heILO4x2MMKHcGkdcVNiISdslHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=cgPbMU41; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wTWKn+YC"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1759033069;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=LHLyA/D7GeMbQihTSXEVxyGR+0Gp9mPa3CC/P6nTicQ=;
-	b=wTWKn+YCTQKb9EI6/yOHvrede5gSBo+sHtErPVquFrPmPUzctwyTkHsfg0xCG/EkzS735q
-	0yjcy0cgi6JnKCo2pT8yQk3jMOrrv2d7Wqdjv4gWsVO61O8aFcgyLw7l6GzU8R58cye/YR
-	52dFhqhRQK3F2HZFmL2sch9xEgTpb/A=
-From: Troy Mitchell <troy.mitchell@linux.dev>
-To: Rob Herring <robh@kernel.org>,
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="cgPbMU41"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1759033583;
+	bh=lRXKPu9rVdBrwq+A6fNuFBqeLF0wYvpKYrnWz46wPHc=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=cgPbMU41hTLA3px7baAVox+J/6l/ceEdMMcYEQxmCKtQ/5rjxjDpTLgtYEGL9GtIb
+	 p1JgkTR30DJgs0C/bZ6wZzngB+RNUGa1ncTUMl+uybWLU1yIU4MRomyck/hnCMfd3l
+	 qQe/WD4QxsHgWng9v7hCdVeUfLMjLo82PGqxNrQw=
+X-QQ-mid: zesmtpgz6t1759033580tdb211f7f
+X-QQ-Originating-IP: cTWBXFkZ8w5X/RkyEMnZiFBP1OpMPA6Kf2dcxAHh1mA=
+Received: from = ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sun, 28 Sep 2025 12:26:19 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 914358563765765743
+EX-QQ-RecipientCnt: 15
+Date: Sun, 28 Sep 2025 12:26:19 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Troy Mitchell <troy.mitchell@linux.dev>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
 	Yangyu Chen <cyy@cyyself.name>
 Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] riscv: dts: spacemit: Add MusePi Pro board device tree
-Date: Sun, 28 Sep 2025 12:16:49 +0800
-Message-ID: <20250928-k1-musepi-pro-dts-v1-2-5efcca0ce3ae@linux.spacemit.com>
-In-Reply-To: <20250928-k1-musepi-pro-dts-v1-0-64d0659dfdbc@linux.spacemit.com>
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: riscv: spacemit: Add MusePi Pro board
+Message-ID: <C16FB37F0982124F+aNi46yQc_e-gCIvL@kernel.org>
 References: <20250928-k1-musepi-pro-dts-v1-0-64d0659dfdbc@linux.spacemit.com>
+ <20250928-k1-musepi-pro-dts-v1-1-5efcca0ce3ae@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1759032880; l=2324; i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id; bh=HhpEYQs9PHex0vdyfiwrT7aa5/e9NC5xTLrmbF8jh0k=; b=3S8d319lcZtW/kO06oIRVAaAlRpq1+Xmn+f9O2CHr+7DCN1+qlFH9bZYDzOzkj78xFzbXTJkx NZ+aKireMEXBWWl12r1LKaHPf0MJlSUQ6/twuBoPQmrADZIXVtLZgvi
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519; pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250928-k1-musepi-pro-dts-v1-1-5efcca0ce3ae@linux.spacemit.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: MSjOaOtrDtXuk1xHFtM6YLERmB6iSGyxoboZ33IG3agdkWXVoIQ8Lz2I
+	UysFx2ZHOWaYAbB7yqydJfVE/Ctw0aITSl8bbAhjCPbFZURQcvBMJJACzybwRnz1YnJcGEg
+	p0J+cyvl8ATbxSqT02z20p+aiifi2lj1z5rjg6rluSX0ZjMAvDDqgICDlBUnca3meI0q84Z
+	QSosrvuuIjgEqqy8PeqT5lLpEg+OVrEBByN/mnh/gDbzqmY8e02Z01tWvRvdN5g2o+QMJz8
+	N8b1uX+2MgTCskZ9qIOk/hXOlXpv30fdzp+N9XMZ9Ayv2dq220zI+jnIgQycIMj9923Y2Mz
+	ZQBQddQ/mGVoMk2NaPcQkOKZ6MTEE7QRrbpQrCpYmIyW/FI3v5m3kh9Hp4NkVFrB7Y7tzIz
+	ipcxdAwl4eyB9cYvQ9pnXzk2NinHV1JGQImZTa9YhmQ51aCJjJEvl72p/KZbyb4IUksVSgA
+	YLaTNzXHnKzMl2B0T26SChexpyjHSzYjR8Fr22qa2Ba4ep5G8f2PSw9wgm5qh3kLxGVIHt6
+	XCog9DmNx3tZSLe0cA8AcEQPW6aq2rwnoWzNCfSXf6PKTeG93Dr0imx1HAIDPOsyZlDeNMC
+	Pe3oEx3Bqy/piD0I7cv94wQDZA2nDfFnPfgiat7K4750k5Pt0M3CXW6TX//2A/78mPh4nAZ
+	loh0l5O/zyC80EdvG3I6d0WFjLuqXzEwDWHlKL4JQkX/rD6aR/0y4I1SeGdA1JgXaOkyyHr
+	MSvczhMqqEMRN+E6VuWa5N9Fz9Dew0l1qVDmC5Jnd16EBWtfpxlloIYE3qnTr3/LtHDkEGQ
+	p1hXFesO4Nceps0FP6niRNO/ZOpgjciWbcswa9ye7ycyQzYQ53qRsudKUdCgxl8Gr6w14gU
+	xut+gm3q4l65KFCFFcFNE7d3Rvdyr2TEKybhO682sSmRU4xi+YUZQ6fDUlZsi53tcieEjtV
+	CnYt3i1bOmme/4rkGS+BUDACLchS7l/F+0QwmxlaQUgzYE0cI0fEyKnBafdxb4QrQ6HMB19
+	UDk9vKDdBLuHPKm2M6BhGZZCC8yuPcOIg7po9El/wnRCdB+GhZaAbmBx6JJmc=
+X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
+X-QQ-RECHKSPAM: 0
 
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+On Sun, Sep 28, 2025 at 12:16:48PM +0800, Troy Mitchell wrote:
+> From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>
+My SMTP client messed up,
+and both 1/2 and 2/2 were sent from the wrong email address.
 
-Add initial device tree support for the MusePi Pro board [1].
-The board is using the SpacemiT K1/M1 SoC.
-
-The device tree is adapted from the SpacemiT vendor tree [2].
-
-This minimal device tree enables booting into a serial console with UART
-output and a blinking LED.
-
-Link:
-https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf [1]
-https://gitee.com/bianbu-linux/linux-6.6/blob/k1-bl-v2.2.y/arch/riscv/boot/dts/spacemit/k1-x_MUSE-Pi-Pro.dts [2]
-
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
- arch/riscv/boot/dts/spacemit/Makefile          |  1 +
- arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts | 40 ++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
-
-diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-index 152832644870624d8fd77684ef33addb42b0baf3..76b98096e2a46c3192651d6d66af7742f740c635 100644
---- a/arch/riscv/boot/dts/spacemit/Makefile
-+++ b/arch/riscv/boot/dts/spacemit/Makefile
-@@ -2,3 +2,4 @@
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
-+dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
-diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..3791186ce47b88887eab4321dcd7035668e7f02d
---- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-@@ -0,0 +1,40 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/*
-+ * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
-+ * Copyright (C) 2025 Troy Mitchell <troy.mitchell@linux.spacemit.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include "k1.dtsi"
-+#include "k1-pinctrl.dtsi"
-+
-+/ {
-+	model = "MusePi Pro";
-+	compatible = "spacemit,musepi-pro", "spacemit,k1";
-+
-+	aliases {
-+		serial0 = &uart0;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		led1 {
-+			label = "sys-led";
-+			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "heartbeat";
-+			default-state = "on";
-+		};
-+	};
-+};
-+
-+&uart0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart0_2_cfg>;
-+	status = "okay";
-+};
-
--- 
-2.51.0
-
+                                         - Troy
