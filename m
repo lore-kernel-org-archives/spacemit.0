@@ -1,134 +1,176 @@
-Received: from freeshell.de (freeshell.de [116.202.128.144])
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083281A314F
-	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 05:06:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367BF2571D8
+	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 05:10:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759035964; cv=none; b=m0vjraXr18h3dGb29sR+fW7KF0WCUipX55zhDt43VqlhCzU2298Ruahv62M6ZjT74wcDX4xilS5C17WnMZIiPVgDTSqsf8CVIALH88DuRInZ9D8VbqS4kfERuORZOGdSmPTYQmHEeDJ1V9wTlOBZXapEipUyL1EAN75wKfJ/UvM=
+	t=1759036229; cv=none; b=Ae7RJLnBdSPLsXwWpXomNQ5Jak8oQM6miwfripPbcIJiUDG1D7QU0pHmk1dSC07TX6Z8sPXb8pkSiABtX1gcmNdJuEJ6Ryi7/+7ALQ3/ob80cMnlAQ6uztx/c2J3NUm2uuTRbC6vJgWZNWsAS5u4EcEqEB6JGTRQ3fgKU/48v6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759035964; c=relaxed/simple;
-	bh=l/e9KvT7z/Px8NoEhYsOcdJTTCJ+9kM1JQKZeBfvuxk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=exR25VQCtYBlqKXdjW6YQx3PhZpQrfOIBSviOufJ2H1ZC0DH8bNwvCCEtKIvgPBUngLvDOZtIHxEJ2fhrPWne5UZE6tzmiUOAr6IEv9P/OeEi4e/Hrhq77ZNov4weisq6qbsFMteFi/Jm5TfFbJrS+IRooz7iKjOhGDjN2vOtGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; arc=none smtp.client-ip=116.202.128.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freeshell.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
-Received: from [192.168.2.54] (unknown [98.97.27.29])
-	(Authenticated sender: e)
-	by freeshell.de (Postfix) with ESMTPSA id 2BEE9B22019D;
-	Sun, 28 Sep 2025 07:05:56 +0200 (CEST)
-Message-ID: <beacb546-e4c4-43db-8f4c-97ea3cb55b43@freeshell.de>
-Date: Sat, 27 Sep 2025 22:05:54 -0700
+	s=arc-20240116; t=1759036229; c=relaxed/simple;
+	bh=JVeyduZ9B0WvEndHfkob3D74kgS6vh9oCa6tNKbarFw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iwpsbYR3yGnM7PSsI7Ms17An/FSEzGNesw4iMzapLKSQ5S+xOyTDLA2+PC17dkLnw7MqwYTyr/jChxHJatY8L7gzc7nvEWUxaeLHMTKoqMmfxRvJGl5P/VvPNE2XSGajFHDzXLT3lSM/gIITKp7hqaY47QRCK49R9bnedW/Dl8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=b0jlPIsM; arc=none smtp.client-ip=18.169.211.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="b0jlPIsM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1759036213;
+	bh=UA1qJURCZwLdvL82SG3SQoBTLla6vgH9fxecp6XUcf0=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=b0jlPIsMInmWrOZbVnRVc10Kdp7Mk+6ex3DI0EJ1191bB0LNsZ6FFjFQOthlYaw2f
+	 1DlZPRsvCY1xElqW3rd5p2za2AuYznnx86+OGay3hgSMNJ4DZGWjiTAl2JBFBmWLCT
+	 W5m/twYoSC4jqzEKGylvhFDq5LCebh4IqCcvTMbM=
+X-QQ-mid: esmtpgz16t1759036211te633a7cc
+X-QQ-Originating-IP: 5UrDWMN67WjQ6+g3kaNEmQsia4NxmONpMnxQZJnktgo=
+Received: from = ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sun, 28 Sep 2025 13:10:10 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 15722752708494261181
+EX-QQ-RecipientCnt: 16
+Date: Sun, 28 Sep 2025 13:10:10 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: E Shattow <e@freeshell.de>, Troy Mitchell <troy.mitchell@linux.dev>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yangyu Chen <cyy@cyyself.name>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add MusePi Pro board device
+ tree
+Message-ID: <D0091C3AA4E189AD+aNjDMpVOUJ6SZcAJ@kernel.org>
+References: <20250928-k1-musepi-pro-dts-v1-0-64d0659dfdbc@linux.spacemit.com>
+ <20250928-k1-musepi-pro-dts-v1-2-5efcca0ce3ae@linux.spacemit.com>
+ <beacb546-e4c4-43db-8f4c-97ea3cb55b43@freeshell.de>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add MusePi Pro board device
- tree
-To: Troy Mitchell <troy.mitchell@linux.dev>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yangyu Chen <cyy@cyyself.name>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20250928-k1-musepi-pro-dts-v1-0-64d0659dfdbc@linux.spacemit.com>
- <20250928-k1-musepi-pro-dts-v1-2-5efcca0ce3ae@linux.spacemit.com>
-Content-Language: en-US
-From: E Shattow <e@freeshell.de>
-In-Reply-To: <20250928-k1-musepi-pro-dts-v1-2-5efcca0ce3ae@linux.spacemit.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <beacb546-e4c4-43db-8f4c-97ea3cb55b43@freeshell.de>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: OE2SNMSfMbmObQuBdKOadN+RE08t5Th4Fv7LetsXZiNKJB4tQkLP7N2S
+	gu3zQ0IE0cLy/Okp80cpybdx+JHWD0JN7AVJNEunH3neIFR7Skrpn/Lmhr4nv9bFz9QzW4r
+	pwnnvBo8sPajwAK6S++/2KsnW/redxOVgTSqUTvGDSJIbC48OA6vvyxzT6xJZZGdX8fnKvP
+	DbsOxqdCiQgyMfTdAc4yMFYr6VlPc+2Froz2bbwGxoo7CoOLTlCmwWcCQNwUHSKCQJ6atIV
+	bKcTBIlCby/3DtxHfV17aAl3pvdNbi6ja4qssfD/2HSrlG+pplCyxFlol7OPzqklDZ4wE26
+	ZGDTOMifNHhaah3Sk2iUlkItb7qga7B/0wUeCbOJjX8PFwaX0zvuEzd5bGzi5kyeA1ztWpd
+	hUT0AFqw5fxMi/kBSoWvG6GJ8EGW05eAl9Yec3aqDwrKZ5mDcTErlSd0Xa1RFI1wrGw+T+s
+	mjNYXneIF3pp6s5W4IQmFVI/wdTV/9NxN35fmik+YwlQoLHhk9DjccaQCne857Qljj9WWRt
+	N7W7SIZAvEhIfr9lS+4sG5vFsXzSfdLC1X6MThOsehymaFDJw37j8CDFLJKcRDRcUpGPtfF
+	eclMuK2MUIswtR0vtAL6LdP7lUGoBju8tZUKdO2/ebmBe27GyB+TwcTHuK45/sBE+sC4NvF
+	60f6q863yjlVaNiAE0P34eyxf0n5qw66fKMS00drp+cF9gB3X6D4ZcNt5t5Lcl7Q+ufZdEj
+	fBZd03U9FZiSGndarCkxmubzAYWW8mye1O+BSU8FCmgzB4Ex3JaGUhU8lbgKNQi0UJRf2Eo
+	3ZTYjDMALb7SEuOFgnkXaUUcno38qXGHDsdDDbb59Q4v54LmaxYiNawOa+e9+qpG0VsoNuZ
+	Cc5TFLjvbW2i/Mf0fWJ6LF7mSX2wOcTszV+akRVEd/AYiEhZmP/Rgp2rSJiPtM91jUWHUU/
+	j3ehDK85IuzQ0IR24282TzzBYFfPEJL0YP4MGpBo73i3iSM7AAw9bOwbl4oYBBkd3EhtuHl
+	5oKxI6aK0fSO2PUbzMa0PrQFEcUO6tjM75z0bKYO7+b15YGfvYCuH4P+NaEbD63jM0QJOP4
+	lrGGe3ISsbktcEAvPc7tKY=
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-RECHKSPAM: 0
 
-On 9/27/25 21:16, Troy Mitchell wrote:
-> From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+On Sat, Sep 27, 2025 at 10:05:54PM -0700, E Shattow wrote:
+> On 9/27/25 21:16, Troy Mitchell wrote:
+> > From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > 
+> > Add initial device tree support for the MusePi Pro board [1].
+> > The board is using the SpacemiT K1/M1 SoC.
+> > 
+> > The device tree is adapted from the SpacemiT vendor tree [2].
+> > 
+> > This minimal device tree enables booting into a serial console with UART
+> > output and a blinking LED.
+> > 
+> > Link:
+> > https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf [1]
+> > https://gitee.com/bianbu-linux/linux-6.6/blob/k1-bl-v2.2.y/arch/riscv/boot/dts/spacemit/k1-x_MUSE-Pi-Pro.dts [2]
+> > 
+> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > ---
+> >  arch/riscv/boot/dts/spacemit/Makefile          |  1 +
+> >  arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts | 40 ++++++++++++++++++++++++++
+> >  2 files changed, 41 insertions(+)
+> > 
+> > diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
+> > index 152832644870624d8fd77684ef33addb42b0baf3..76b98096e2a46c3192651d6d66af7742f740c635 100644
+> > --- a/arch/riscv/boot/dts/spacemit/Makefile
+> > +++ b/arch/riscv/boot/dts/spacemit/Makefile
+> > @@ -2,3 +2,4 @@
+> >  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
+> >  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
+> >  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
+> > +dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..3791186ce47b88887eab4321dcd7035668e7f02d
+> > --- /dev/null
+> > +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+> > @@ -0,0 +1,40 @@
+> > +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+> > +/*
+> > + * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
+> > + * Copyright (C) 2025 Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "k1.dtsi"
+> > +#include "k1-pinctrl.dtsi"
+> > +
+> > +/ {
+> > +	model = "MusePi Pro";
+> > +	compatible = "spacemit,musepi-pro", "spacemit,k1";
+> > +
+> > +	aliases {
+> > +		serial0 = &uart0;
+> > +	};
+> > +
+> > +	chosen {
+> > +		stdout-path = "serial0";
+> > +	};
+> > +
+> > +	leds {
+> > +		compatible = "gpio-leds";
+> > +
 > 
-> Add initial device tree support for the MusePi Pro board [1].
-> The board is using the SpacemiT K1/M1 SoC.
+> > +		led1 {
+> > +			label = "sys-led";
+> > +			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_HIGH>;
+> > +			linux,default-trigger = "heartbeat";
+> > +			default-state = "on";
 > 
-> The device tree is adapted from the SpacemiT vendor tree [2].
-> 
-> This minimal device tree enables booting into a serial console with UART
-> output and a blinking LED.
-> 
-> Link:
-> https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf [1]
-> https://gitee.com/bianbu-linux/linux-6.6/blob/k1-bl-v2.2.y/arch/riscv/boot/dts/spacemit/k1-x_MUSE-Pi-Pro.dts [2]
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  arch/riscv/boot/dts/spacemit/Makefile          |  1 +
->  arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts | 40 ++++++++++++++++++++++++++
->  2 files changed, 41 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-> index 152832644870624d8fd77684ef33addb42b0baf3..76b98096e2a46c3192651d6d66af7742f740c635 100644
-> --- a/arch/riscv/boot/dts/spacemit/Makefile
-> +++ b/arch/riscv/boot/dts/spacemit/Makefile
-> @@ -2,3 +2,4 @@
->  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
->  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
->  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
-> +dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..3791186ce47b88887eab4321dcd7035668e7f02d
-> --- /dev/null
-> +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-> @@ -0,0 +1,40 @@
-> +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-> +/*
-> + * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
-> + * Copyright (C) 2025 Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "k1.dtsi"
-> +#include "k1-pinctrl.dtsi"
-> +
-> +/ {
-> +	model = "MusePi Pro";
-> +	compatible = "spacemit,musepi-pro", "spacemit,k1";
-> +
-> +	aliases {
-> +		serial0 = &uart0;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +
+> Can you explain how you decided to sort this?  I think the documentation
+> examples needs updating but it is unclear to me.
+This snippet comes from the BPI-F3 DTS.
+I only verified the pins and polarity against the schematic.
 
-> +		led1 {
-> +			label = "sys-led";
-> +			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_HIGH>;
-> +			linux,default-trigger = "heartbeat";
-> +			default-state = "on";
-
-Can you explain how you decided to sort this?  I think the documentation
-examples needs updating but it is unclear to me.
-
-> +		};
-> +	};
-> +};
-> +
-> +&uart0 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&uart0_2_cfg>;
-> +	status = "okay";
-> +};
+                           - Troy
 > 
-
-Best regards,
-
--E Shattow
+> > +		};
+> > +	};
+> > +};
+> > +
+> > +&uart0 {
+> > +	pinctrl-names = "default";
+> > +	pinctrl-0 = <&uart0_2_cfg>;
+> > +	status = "okay";
+> > +};
+> > 
+> 
+> Best regards,
+> 
+> -E Shattow
+> 
