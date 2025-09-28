@@ -1,57 +1,50 @@
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CD7298CC4
-	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 05:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414F71F0995
+	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 06:08:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759036250; cv=none; b=dNiOKtn2ao78s69bvONQbmFBHNm34viQbX5XPnpx8prN33/bITj4fGjYwsQHaWD/vBmtJ4ob+AzbZWEvfDrOwOp3ZpJeppn6wBpYOB2r4PEdCrNRzvPH+icKRz7rp5y0nJKiVPQUzICIUlBl3g/DymEvfzoStZ5ZJpf3FbD7hJA=
+	t=1759039687; cv=none; b=qAVxAtR34LHN3WwdlQ6/F5LSOOQjzLHEDxCp47ge0FKagldIJ0fhAJWILbxa6iTtI3+D3vK6LrtFyORSVb5LX88O3RbAFZRr8Yb/SV4WujzM5w4YJHuFN8hOOX7EKCrMahEml4dPxbuuzdKmI7Mz82Ln8+b5SOf/n4H6dxXBYA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759036250; c=relaxed/simple;
-	bh=dgrMc/Uo/13qWrdXrWXTuCexU2xaoZefC8ODGpwJdXw=;
+	s=arc-20240116; t=1759039687; c=relaxed/simple;
+	bh=tgKidxJ/DOpm7K+vrUr6kYg0xXA6YbjOr6EMZ34+sUY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BjkQ/GzSzKi70UR6SGyPawcDkUGkqdPRFPG6raHgWbliy81FgRyb7GZSe6sMOq63bGG4WTQhGTHs3jcenoLfUdEYGvbTrAOK8fck8awrNMn3Gzf61nhpAYzVWCghFCmxqFYc6Y8BU1p2OglORa7+rjrLEBjnwOw3u55RI9nPpGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=YHyCSYQh; arc=none smtp.client-ip=18.194.254.142
+	 Content-Type:Content-Disposition:In-Reply-To; b=h07yOWax1w+HgNIeZ7ZtRkXrS4HK11diKBEhXtTujhTsn2zOANrZzmWpudbED/xSWwX21DsSqtjTtshIo2ZyhErHppGQt9MhQFOlD2CLLpB3A1obIZBDMNrA2LtI2soJJdSgDHVvDHNgBMLsD5Ny6TF9ObYv0tmGb7fP77XEXFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=gOz/3bge; arc=none smtp.client-ip=18.169.211.239
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="YHyCSYQh"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="gOz/3bge"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1759036243;
-	bh=EyKXkmVhd4Wq/fftgbLmz5/5UTp8yXrHyMxbT9ejo7U=;
+	s=mxsw2412; t=1759039625;
+	bh=cc31dHKQ97poTSVYFyMonuGh7mgdDdLkybwefE2Gb0Q=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=YHyCSYQhalD7uOoETswqj63acdVa3znz41drzdSPgRp7pAZfii+cE3zXQn8c0NUsE
-	 oC/hileZx8y/rBxc0sInEBW7TLAqojKGdaEv/84Gv0x3gnpxKg155W+esWkUd2b+aQ
-	 JrVSdh99Xiz5OinzldLxjr0FzmoSZupviW/jvcKI=
-X-QQ-mid: zesmtpgz7t1759036242t9f60582b
-X-QQ-Originating-IP: vZrW/0ceR/bex1xwbBd/Y09KBS2r8jnRxCvwYU5DFsk=
-Received: from = ( [61.145.255.150])
+	b=gOz/3bgeXJkZNV7fvkGEhCNKhRJhy3LPfbW8IgJ2vbz0LRa9mvUCBrGU0ifW/0oCg
+	 8nSYo3vWmu7xHa/8cCyr4/nATHteH1Ttm36RpN/Zlojbv6zwOeDmZKWR5IDBg4Zs4b
+	 5yZKRGBdhy6zsacreYlUb30NQ2umOBGoA/SV6feQ=
+X-QQ-mid: esmtpsz21t1759039617taf35aede
+X-QQ-Originating-IP: 6dN3nUS+saf+Q2aWdR6Kclb8uT4I3Xw3siwEG0sA9V8=
+Received: from = ( [14.123.252.124])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sun, 28 Sep 2025 13:10:40 +0800 (CST)
+	id ; Sun, 28 Sep 2025 14:06:56 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14443702317554781717
-EX-QQ-RecipientCnt: 16
-Date: Sun, 28 Sep 2025 13:10:40 +0800
+X-BIZMAIL-ID: 7651757460385003930
+EX-QQ-RecipientCnt: 9
+Date: Sun, 28 Sep 2025 14:06:55 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: E Shattow <e@freeshell.de>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Troy Mitchell <troy.mitchell@linux.dev>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yangyu Chen <cyy@cyyself.name>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: riscv: spacemit: Add MusePi Pro board
-Message-ID: <E3B55605FD767D42+aNjDUGk1LNF2MKwE@kernel.org>
-References: <20250928-k1-musepi-pro-dts-v1-0-64d0659dfdbc@linux.spacemit.com>
- <20250928-k1-musepi-pro-dts-v1-1-5efcca0ce3ae@linux.spacemit.com>
- <C16FB37F0982124F+aNi46yQc_e-gCIvL@kernel.org>
- <83fc0f4d-1e7c-41e0-87b3-bfcb84a0450c@freeshell.de>
+To: Yixun Lan <dlan@gentoo.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>,
+	Troy Mitchell <troymitchell988@gmail.com>,
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 6/6] i2c: spacemit: introduce pio for k1
+Message-ID: <4AE256D88658986A+aNjQf1whw2K1t6JC@kernel.org>
+References: <20250925-k1-i2c-atomic-v2-0-46dc13311cda@linux.spacemit.com>
+ <20250925-k1-i2c-atomic-v2-6-46dc13311cda@linux.spacemit.com>
+ <20250926111055-GYB1324993@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,48 +53,69 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <83fc0f4d-1e7c-41e0-87b3-bfcb84a0450c@freeshell.de>
+In-Reply-To: <20250926111055-GYB1324993@gentoo.org>
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: Nv8rTAnDNEem+Hczdb9GDY+ux7F5xAdtctXcw4um3qUHc8EQBj8ViVMX
-	sBbZP60l5Ut7avNI7QjAYlLqRVJ9pbqyX17augeVT7QX+KBUvXDUXZIzgc1PoCA0lKQyreU
-	dGWuvZW4RcE/eaqOl5vyDu4vx55Lax9tJAw+YPhWy69EDkxjAqieIX9KtOVmWYyzs4dBv0A
-	SiP/kIjAdv9AixncoPCujeB4BAGHLGJaDEovC2HYYhZ7qjot9x39WCDxtxsO8849WY90vpT
-	VXnX7/FU4W8qI629iA7VV1ix+EcRmrV9dDVOAkGn1uQ3DUz/exHMVdRw1sMYt3mt2I4nggc
-	itrynf2SuY5sJ3pNNmpJWJgcBqDMNnuj7XM4ISVKXwDyWNpCJvlIxKWfabDD2QXWfij+4br
-	bI+Td9izOwobO89DsYDmnmcB2ioBaPJLtggYNAfJVlm9rFFQztjO6A4fnAbhHW3NyFQXMNA
-	JSO85DqTdSbN0LWSLY7vOPTYxUS6l5pQL1AQ5MG9EYFmN6oPpwVwmZRwGuavlX4pa1bPaZK
-	yRIetxvsIegVYTLvT2bkQlE/7IkJTFk6VGo/0bwm4cfgYamJqqqH4bv03NMeKQT2nFNL0iw
-	weL/m918zIqwxsheMpUMPIsRS0m5SWx8HYaDpZfkDLVjhfL6eiraSQQPs6NshQ6860IfNH+
-	URifwG41H5wzuT7jIvo+fSrOMiTMRUfoAjkr8wYWIROeWFOp53k6wkXm7pcfJboEND4bCrK
-	Sj9dzYJIXF76GaiYToXMGwGOp7GEh6g6+qYgSkCDi9fk3UwIQc+uV1uUY9X8SzblV2Q8gsd
-	aAyo6p9Mt2jf/8JT5SclwwjJBfIz/AnNbNbxi7B2cr05Em+EyGDeuPDyvFMz98C9ZIqD1If
-	z3w4xmgXKnZPkNV+0YC37zEDht8Z3XPZ6G66533e+5psDWMxvDju/jEksns4qqTGYcKbL5w
-	8Q7rZsu7bY96Zl5HmAY5Bj2c1kxlb3Pjm5ErrMky4GgxIGza/oBWgkkR2StuMysF0Xlpjpr
-	whfUL+MDeC5PWCxEmX4pcITmMNaAuKJ+ka2T85h/81SF9+N7zYR/4NG0G4vwEwy3AGH9mW4
-	nVDCzr9DxGtd1PNGKEaRdSMsxgS9j1zwXOGKOdU8L4zgGZolTFhZ8000C2c4rxoKaCOSDqt
-	WofH
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: N+/GyfuFbcLiD9fTcUZPzBRZFFZUEfDHSUu0PCFgb69GACTJ6gtri+Ea
+	IMN1JYDDkvZnBIvz0ii4qgr1o8DoWmjluu/2faiKAeBecIpPG3fvGR23JqU62vN9Zr1zVah
+	eLLv+8x16OWwQFFm9SW+s6nJMIQNZGQTP6RVqqUtj3i0bzOvBN8+bXe+CNChPttioF+/oOm
+	jCbf+sBtfKzeeAeBflYPfc2/14AAqCcQMqJJn9ahueFKcIONJhh8k3iRKvwZH2kiNEjV5p7
+	RN53yyJblJShdyxtn0JjOZ4SGvmmF7JxsNQpPNAERhaRMhCeo0Aiyujvlf0bMti2hgmcgCI
+	9rcND0c0hE4A0UYIuXm5tb9kU2pesaKOCNXIq8lqLYFLtJw9P+rZ5ECwEvtkfZR6iw/NFRJ
+	komCwKBYC0AQqLvu5XtVlvnkhg1I3+DofRKR/2e00H57UujLzX157OeyF0WThDuLC5Xrvs4
+	JkFcu2orbZJh1qc9n8jFmlk+/JVqK55Gzb64zBBO21EEPKQTE+8gc/N4MI6U6A6z39LfOZa
+	7YhLHOndzLh8Sb4dM7+Zc7ETc5iHkgdhBPsmiu732KRq5i3dXrOWHNx5FHbSBua5f4H8sXq
+	BMOZhT8TtPn2PgBhu56ekv3Ghyk/MfqL9QKIzp5wgbjn/UM22zOqOWTUsWGDlu4lL5SgBsV
+	ENz+Xluv2O5kKQCFvORWNnzKYvCCgw+Y64jAGG9BMJasutcfiEoRmNVCoFKaleP+kLx2kkK
+	2Kd7Fp6KjIaTnixksxsVJcF78cMhEiJerDqm4li21QQu9i5uVTiWQ9mNwlyGfNS8iclmwKR
+	wcuswnS5CGKCqJNMyDPpGS2f62Ug1Dgek24EhnVZd7RM6a61caPeHr8aRetcvLJdp7qayqY
+	SX247/cBuO8dKp4l6VgH4A9jh9wRnF3YLrjwiZiCgtyyYeLg8anaPsHH6m6MCg+iUvE+/cX
+	zQTw7qtUDGwigMB5FfGrE7p9lEMPea3jYbr0FWxigH7tdbOA3HcNqswu0331OrcwblQzxRr
+	Ii6EFZY/wXEzIwXoMSIubcTgsXVpW37lJOj8cYj5ly9Mjfuj+m16aShG0V+XI=
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
 X-QQ-RECHKSPAM: 0
 
-On Sat, Sep 27, 2025 at 09:56:39PM -0700, E Shattow wrote:
-> On 9/27/25 21:26, Troy Mitchell wrote:
-> > On Sun, Sep 28, 2025 at 12:16:48PM +0800, Troy Mitchell wrote:
-> >> From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> >>
-> > My SMTP client messed up,
-> > and both 1/2 and 2/2 were sent from the wrong email address.
-> > 
-> >                                          - Troy
-> > 
-> > _______________________________________________
-> > linux-riscv mailing list
-> > linux-riscv@lists.infradead.org
-> > http://lists.infradead.org/mailman/listinfo/linux-riscv
+On Fri, Sep 26, 2025 at 07:10:55PM +0800, Yixun Lan wrote:
+> Hi Troy,
 > 
-> Confirming it is showing up now. Thanks -E Shattow
-Thanks for confirming :)
-
-           - Troy
+> On 10:02 Thu 25 Sep     , Troy Mitchell wrote:
+> > This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
+> > enabling the use of I2C with interrupts disabled.
+> > 
+> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > ---
+> >  drivers/i2c/busses/i2c-k1.c | 164 +++++++++++++++++++++++++++++++++++++-------
+> >  1 file changed, 140 insertions(+), 24 deletions(-)
+> > 
+> > diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+> > index 6b918770e612e098b8ad17418f420d87c94df166..e403eb7d6f329f4fe5c5242f94cc21094dff105c 100644
+> > --- a/drivers/i2c/busses/i2c-k1.c
+> > +++ b/drivers/i2c/busses/i2c-k1.c
+> > @@ -97,6 +97,9 @@
+> >  
+> >  #define SPACEMIT_BUS_RESET_CLK_CNT_MAX		9
+> >  
+> > +/* Constants */
+> > +#define SPACEMIT_WAIT_TIMEOUT      1000 /* ms */
+> > +
+> >  enum spacemit_i2c_state {
+> >  	SPACEMIT_STATE_IDLE,
+> >  	SPACEMIT_STATE_START,
+> > @@ -125,6 +128,7 @@ struct spacemit_i2c_dev {
+> >  
+> >  	enum spacemit_i2c_state state;
+> >  	bool read;
+> > +	bool is_pio;
+> using_pio_mode or simply use_pio, but have to say..
 > 
+> I feel it's improper to have this flag here, since it's not a controller
+> level feature, I understand it was introduced to support aotmic operation
+> 
+> Personally, I'd suggest to pass the flag in xfer(), then propagate down to
+> whatever needed, so it limit to single transmission which more flexible
+I no longer agree with moving the flag into xfer.
+Keeping it as a global variable is better,
+otherwise it would affect several functions:
+wait_bus_idle(), start(), init(), handle_write(), handle_read(), etc.
 
+                - Troy
