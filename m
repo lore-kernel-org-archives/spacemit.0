@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EECB29E115
-	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 11:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1162032D
+	for <spacemit@lists.linux.dev>; Sun, 28 Sep 2025 12:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759058547; cv=none; b=aeTY+LeQ1rhSZjcr8fAlLfWLNtPoignt6CBziECV6WGJs0K8GzqAbvjP9dMF62oLFwy3O9B/paxcnnNGS3K+fahWztRLtL1HPCh6YrlWeblRI1kdmmjeJfYxErenwxWzjp0ZynVt/R4sscpfi8pSvk12efFOqM/LQ4kCRfaVNp4=
+	t=1759062990; cv=none; b=avXGb2BL5QOprhJxe0/D3AQyMirmqTTijnDcAD43rrK2i87F4t3l0xPJz4yxZDk0YODhVTiLHhzNtxlX4L4T0BLOiWCfCfUWd47eO7RR2/Nf3Ct/7tXq56v0WzLRffIcRYnL0bGNy/DclHOD6cjbr4UZm8WqW0CIda12UDY+sTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759058547; c=relaxed/simple;
-	bh=Ga7JoScWWQ5hSyoU6g5frSzXdDVHXzOAdi/wiib2Y6w=;
+	s=arc-20240116; t=1759062990; c=relaxed/simple;
+	bh=l9Q144PMpYoyc7MJ9uG80U7HLDSOpM3aAqyn15dVI/4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OO2hv9aI7qCtCwgdNmehF3W21s/H8vjXlJfjvbyrksx04L1m5Dtd7rEhC0NnLPa0R4EGaqS50qSd5moDFKyk4jSCVcY0SFtfmmNF42RM/E8jVw1TQJXFp54ZXmckOAt+dEBlv3f/S2o6S5mk6fB/zcuZUiI4NNUooS+N2oHlpDM=
+	 Content-Type:Content-Disposition:In-Reply-To; b=u8LqbX+DVpVdaApSWnLhi2gAgHcHlf6k2IN9ush9f/3Y9iZ3Btrd6dLmMFWag0LHiFbhVs71Y5vJQWdkuF1Kg6koTUyskcKkzMzgcU77D7/ahCLtk2NR2ggqstKsAYa6Ri9oTtQL2RcGqdrsdjyRNpMtLx9mi0K9nQv2LCgEPXI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,23 +19,24 @@ Received: from localhost (unknown [180.158.240.90])
 	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 0147D3408A2;
-	Sun, 28 Sep 2025 11:22:24 +0000 (UTC)
-Date: Sun, 28 Sep 2025 19:22:20 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id BCC58340D91;
+	Sun, 28 Sep 2025 12:36:27 +0000 (UTC)
+Date: Sun, 28 Sep 2025 20:36:22 +0800
 From: Yixun Lan <dlan@gentoo.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 6/6] i2c: spacemit: introduce pio for k1
-Message-ID: <20250928112220-GYC1346428@gentoo.org>
-References: <20250925-k1-i2c-atomic-v2-0-46dc13311cda@linux.spacemit.com>
- <20250925-k1-i2c-atomic-v2-6-46dc13311cda@linux.spacemit.com>
- <20250927105616-GYB1338789@gentoo.org>
- <F076AA5B04CF3445+aNiMlrTNTdI7H4PI@kernel.org>
- <20250928025400-GYB1330052@gentoo.org>
- <11BACC490411452F+aNjtSOiG31hX_hrl@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, ziyao@disroot.org, linux-spi@vger.kernel.org,
+	devicetree@vger.kernel.org, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] spi: spacemit: introduce SpacemiT K1 SPI
+ controller driver
+Message-ID: <20250928123622-GYA1347020@gentoo.org>
+References: <20250922161717.1590690-1-elder@riscstar.com>
+ <20250922161717.1590690-3-elder@riscstar.com>
+ <20250922230639-GYA1303776@gentoo.org>
+ <786f4a5e-f62e-4cd0-a017-7b61408f34aa@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,29 +45,76 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <11BACC490411452F+aNjtSOiG31hX_hrl@kernel.org>
+In-Reply-To: <786f4a5e-f62e-4cd0-a017-7b61408f34aa@riscstar.com>
 
-Hi Troy,
+Hi Alex,
 
-On 16:09 Sun 28 Sep     , Troy Mitchell wrote:
-> 
-..[snip]
-> Okay..maybe I misunderstood before.
-> I'll remove disable/enable the controller IRQ around PIO transfers.
-> 
-> BTW, the K1 I2C patch [1] for ILCR as the SCL clock hasn't gotten
-> any replies in ages. Could you take a look?
-stop complain, you have to understand people are voluntary to review the code..
-and maintainers are busy, unfortunately..
-
-btw, you've ignored v2's review, no response, not addressed in v3
-https://lore.kernel.org/all/20250718-k1-i2c-ilcr-v2-1-b4c68f13dcb1@linux.spacemit.com/
-
-
-> 
-> Link:
-> https://lore.kernel.org/all/20250814-k1-i2c-ilcr-v3-1-317723e74bcd@linux.spacemit.com/ [1]
+On 07:49 Tue 23 Sep     , Alex Elder wrote:
+> On 9/22/25 6:06 PM, Yixun Lan wrote:
+> > Hi Alex,
 > > 
+> > On 11:17 Mon 22 Sep     , Alex Elder wrote:
+> >> This patch introduces the driver for the SPI controller found in the
+> >> SpacemiT K1 SoC.  Currently the driver supports master mode only.
+> >> The SPI hardware implements RX and TX FIFOs, 32 entries each, and
+> >> supports both PIO and DMA mode transfers.
+> >>
+> >> Signed-off-by: Alex Elder <elder@riscstar.com>
+> >> ---
+..
+> 
+> >> diff --git a/drivers/spi/spi-spacemit-k1.c b/drivers/spi/spi-spacemit-k1.c
+> >> new file mode 100644
+> >> index 0000000000000..2b932d80cc510
+> >> --- /dev/null
+> >> +++ b/drivers/spi/spi-spacemit-k1.c
+> >> @@ -0,0 +1,965 @@
+> >> +// SPDX-License-Identifier: GPL-2.0
+> >> +/*
+> >> + * Support for SpacemiT K1 SPI controller
+> >> + *
+> >> + * Copyright (C) 2025 by RISCstar Solutions Corporation.  All rights reserved.
+> >> + * Copyright (c) 2023, spacemit Corporation.
+> >> + */
+> 
+> . . .
+> 
+> >> +static irqreturn_t k1_spi_ssp_isr(int irq, void *dev_id)
+> >> +{
+> >> +	struct k1_spi_driver_data *drv_data = dev_id;
+> >> +	bool rx_done;
+> >> +	bool tx_done;
+> >> +	u32 val;
+> >> +
+> >> +	/* Get status and clear pending interrupts */
+> >> +	val = readl(drv_data->base + SSP_STATUS);
+> >> +	writel(val, drv_data->base + SSP_STATUS);
+> >> +
+> >> +	if (!drv_data->message)
+> >> +		return IRQ_NONE;
+> >> +
+> >> +	/* Check for a TX underrun or RX underrun first */
+> > s/RX underrun/RX overrun/
+> 
+> OK.
+> 
+> >> +	if (val & (SSP_STATUS_TUR | SSP_STATUS_ROR)) {
+> >> +		/* Disable all interrupts on error */
+> >> +		writel(0, drv_data->base + SSP_INT_EN);
+> > should clear status of SSP_STATUS instead of disabling ISR, see commet below
+> 
+> The status is cleared immediately after reading, above.  We hold
+> the status value so we can act on the current state of the FIFOs.
+> 
+I'm surprised by this, do you mean the status will be cleared by reading?
+can you double checck and prove it? by reading twice and compare?
+
+while according to the docs - 18.2.4.6 SSSR REGISTERS, the status bits has
+two types: 
+  R - Read only
+  R/W1C - Read only, write 1 to clear
+
+if you're right, then the docs should be fixed.
 
 -- 
 Yixun Lan (dlan)
