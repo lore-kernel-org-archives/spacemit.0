@@ -1,136 +1,134 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A08734BA41
-	for <spacemit@lists.linux.dev>; Mon, 29 Sep 2025 09:17:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED7D33EC;
+	Mon, 29 Sep 2025 17:48:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759137429; cv=none; b=ALR9wGk95tm2J6nnLPbBF0TYlq7RK6Pewb8syBI7XOkt+Q4L6aD+Mq/SYL2KIq/Et6kpwDGv09SsI1WS2bV7TG7Uu798JASr/5+Y/pzsE1KYrwyTO9xRbnRpRSQ00fSfAOd2bJtPwwoHgPmH8q5yXP3axuhvnkXlXTRFKbzIVis=
+	t=1759168108; cv=none; b=Yy2Svq7VJcEheFZQvxuhzcFihSYInCwxaUd1hXlg+S9WEA2OsaHVXrIuN1sT1RcVO8nhQfm9hH38Wm0XN+cvVP5zZmDFgex8KmKMJKYRXRL46U809tgP6DkOdJWzSTkwuwTatbVZ72XlznAKXTYf++Xq43o2XLIhosPojJXukUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759137429; c=relaxed/simple;
-	bh=/2HVAoebRXSG/qyzO7c2YZJBhO9WQpiEPtLzVRoAaKc=;
+	s=arc-20240116; t=1759168108; c=relaxed/simple;
+	bh=QYNJjNkcAi8f1hxQxRPpHKeysPae/MLqNM8ctOgO/eA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EC/xBY0uBKg/ISubI0y8sLtx9ZawpoxDhudKMF/bvZbJWWT8Rmw4yi+R9gWaanH4XOBXVQCaVMULz9Rwt2tAiYb5wzZedMZ8rkvhJB6EvyuFRFTPHDPOw1L97u2r1ZtE7oBpA/xL5Gdbu5OHrwG69F4iSDdvTVxxjKv3+4m07t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=KLhSDn6I; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=FqVCDRLHjMukfw6MY5wYgml7r+L9ES86SzAlZvhKPMsPphnVJlkFQOqE+Y8QJ6wPD/bgkatIHyp5jNTzdYD/abAACM9eOMuN1vVWYm81BEKCF6zI8Wsa2EJUjqsbalGL7vLvBmQQkJUSQ+roO4LF2Hrkav+tyJjVuR38ohJTUBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lnk+Fs6k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="KLhSDn6I"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1759137359;
-	bh=KeVkegvpdMgh47tnqmI3xOua1lgqp1cz8RZNtr7UffM=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=KLhSDn6IBsZmWQtzF/f/Zsyev6LZxPqwUzOAXeDRh09r1/PnwZa7soxBpCGCAaK7h
-	 DkM99ViR460i1OdO9ax2FYT2Xs0p5l7ZhmSk/+5aoGwYHbLrU6iKj9glFg+jQgQ8WD
-	 ashLz5+bJNFNlfEQIIzdv+xo0/Z6Lht4PQyROGOs=
-X-QQ-mid: zesmtpsz4t1759137350t17f23be7
-X-QQ-Originating-IP: FVLep5dVBtmVD5DCpCmR0xTVH0ACm5Z5iCCpFlyvgyw=
-Received: from = ( [14.123.252.176])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 29 Sep 2025 17:15:49 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 981246392991954728
-EX-QQ-RecipientCnt: 9
-Date: Mon, 29 Sep 2025 17:15:49 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troymitchell988@gmail.com>
-Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH v3] i2c: spacemit: introduce pio for k1
-Message-ID: <A6E9D3643EC66124+aNpORZx6yq8VOfd8@kernel.org>
-References: <20250929-k1-i2c-atomic-v3-1-f7e660c138b6@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lnk+Fs6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1160C113D0;
+	Mon, 29 Sep 2025 17:48:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759168107;
+	bh=QYNJjNkcAi8f1hxQxRPpHKeysPae/MLqNM8ctOgO/eA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Lnk+Fs6k9EebnHXbPkvyWtVU1BONOuKH3ce7BMs3Y0U/Z0cB17CrCv9odBtFdJ5w4
+	 l74lyv0bm5fELHyt3Zy8iG2ZlfDpGdYZ9ZjDWjtWOrNWjMzg73gsQOgrBRfcKVWlWS
+	 1ofJVXY7HhUg9IC1rUnxb+UWvGWevioLdtuQlPVIqli29hAn4HQyIPIsZ57Jjz8dxs
+	 q8meddvm47unHiBchMMv53FkEyREEI/xyR3s9qD/ei2KHYR1g4zfIaq/l/c0OhlETO
+	 T+B2Gmv4ahhs1WeS2x/hJI7vpF+dkUVsFYvkyA3uOyIZrIKCb2Y3piOMuFcPoOpGjq
+	 9BkJ22xbJq/1g==
+Date: Mon, 29 Sep 2025 18:48:22 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Troy Mitchell <troy.mitchell@linux.dev>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: riscv: spacemit: Add MusePi Pro board
+Message-ID: <20250929-challenge-molecular-947bb1f5962b@spud>
+References: <20250928-k1-musepi-pro-dts-v1-0-64d0659dfdbc@linux.spacemit.com>
+ <20250928-k1-musepi-pro-dts-v1-1-5efcca0ce3ae@linux.spacemit.com>
+ <20250928074914-GYA1344940@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="cvUen0NxRlUjr0cE"
+Content-Disposition: inline
+In-Reply-To: <20250928074914-GYA1344940@gentoo.org>
+
+
+--cvUen0NxRlUjr0cE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250929-k1-i2c-atomic-v3-1-f7e660c138b6@linux.spacemit.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: NJcWJJyfcVSIE+dZGnLUCuQBwYiiXz1dGQt5VB3R/aE04qlDSLZIAkQt
-	YNnF67pY4NqjBJS7S1U58lSJ9l+OTKlyCzfmceYSbTL+mR4oq+3+rV/n8Kdu6TeQAeoB6jT
-	A0/qviKULd3LHkGnIzkTm8WylPHCGbkvpP/R52bgQDCJSEhO1qqYWUgb13WGwWSTmUGlG5a
-	SyL5XytTF6r+UBPzliJrvcW8Q9Ujn+kHQfa5xo1VgkhsBs/PBDgBmmehLKGxThxQxXqMeRj
-	F7uPtBSykgJRqqnwMF8RqZu3CkAMHFFpyW2iCx2bTPoC+WIkTc19BXHH3ArRPkA4Chsh10d
-	5kZbr9H/muJTLSbolyFwCxhQ2H7Izx+0Yc/ZizzXhhuUaDBiaKNb5KRS8wfYHAG61gJdfR4
-	9hK1qrPNyd4PtKkktB5cRlLGUSbR2WerX4+OXZJr65JG78DgUWtHELkYnV/tlfw3PSPmpi6
-	VEvU9a6RhpvJAYAmyXBEjiz11wyqJDpcktNw2HyQj0jkFetEhdGhsRJDJ95/c16V9xFKC8g
-	TqjiMcGD11K4jprS1psn/oG3r/mtdFJj71zZqhXQnQEe8kAOyXCNJi15ly+vu8V20HRejNl
-	ZPgpdJu/AVx9ca/7Cbmfe5Pm34CbWvdTrn3YE1SdQYDro5wrc6pT+rRYWiw6GXl1eZUSHRX
-	oO+NcFa2gq3itmRV/8Zo2NiWy5mNdBLYPzHZt2+bLfwE9fOMz3zDWVPsI9Cxd00k9VXM2Y6
-	Wa0qBx765KLSUI26Nmj7WZUlBPKVVmWuEyGQg7E6/ss6c/Qxp4irbhnRYY9rdvyVHbfOWWH
-	GTkKjPchdiLJBHx86y5a/Z4AkMzp6BAGDWlHfFXUR9wQbfIBIgOZOQLK8ooeRlnuQztHnw7
-	FR4YBn9CE+pRJu9Qm9QBxkriRvg4x/vwDjFKaBguBm5mGE4ZPeQ4ZGkzrlgi+zyQwnyHzyW
-	kyeapqnKFWEoyPkpZDDHpRtImxtVatSrtZTKKrhDaLK4Zwfm4pLCbSD+U6IaYdMnRFvksRi
-	ZOVN2IMhsrXb0RPwq9KkjlOFnLSAH2rGjyrPxMolXL7x5xbegKW9sioQPuaHYrUfRwHS3f/
-	Aiib/X+kum9LJUmaM+8QoE=
-X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
-X-QQ-RECHKSPAM: 0
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 29, 2025 at 02:07:49PM +0800, Troy Mitchell wrote:
-> This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
-> enabling the use of I2C in atomic context.
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
-> Changes in v3:
-> - drop 1-5 patches (have been merged)
-> - modify commit message
-> - use readl_poll_timeout_atomic() in wait_pio_xfer()
-> - use msecs_to_jiffies() when get PIO mode timeout value
-> - factor out transfer state handling into spacemit_i2c_handle_state().
-> - do not disable/enable the controller IRQ around PIO transfers.
-> - consolidate spacemit_i2c_init() interrupt setup
-> - rename is_pio -> use_pio
-> - rename spacemit_i2c_xfer() -> spacemit_i2c_xfer_common()
-> - rename spacemit_i2c_int_xfer() -> spacemit_i2c_xfer()
-> - rename spacemit_i2c_pio_xfer() -> spacemit_i2c_pio_xfer_atomic()
-> - call spacemit_i2c_err_check() in wait_pio_xfer() when write last byte
-> - Link to v2: https://lore.kernel.org/r/20250925-k1-i2c-atomic-v2-0-46dc13311cda@linux.spacemit.com
-> 
-> Changes in v2:
-> - Patch 1/6:
->   Patch 3/6:
->   Patch 4/6:
->     - nothing
-> - Patch 2/6:
->   - remove is_pio judgement in irq_handler()
-> - Patch 5/6:
->   - fix wrong comment
->   - In spacemit_i2c_conditionally_reset_bus(), once the condition is met inside the loop, it should
->     return directly instead of using break.
-> - Patch 6/6:
->   - add is_pio judgement in irq_handler()
->   - use a fixed timeout value when PIO
->   - use readl_poll_timeout() in  spacemit_i2c_wait_bus_idle() when PIO
-> 
-> - Link to v1: https://lore.kernel.org/r/20250827-k1-i2c-atomic-v1-0-e59bea02d680@linux.spacemit.com
-> ---
->  drivers/i2c/busses/i2c-k1.c | 206 ++++++++++++++++++++++++++++++++++----------
->  1 file changed, 161 insertions(+), 45 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
->  static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
->  {
->  	unsigned long time_left;
-> @@ -310,10 +376,16 @@ static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
->  
->  		reinit_completion(&i2c->complete);
->  
-> -		spacemit_i2c_start(i2c);
-> +		if (i2c->use_pio) {
-> +			spacemit_i2c_start(i2c);
-> +
-> +			time_left = spacemit_i2c_wait_pio_xfer(i2c);
-> +		} else {
-> +			spacemit_i2c_start(i2c);
-I will put i2c_start() out in the next version.
+On Sun, Sep 28, 2025 at 03:49:14PM +0800, Yixun Lan wrote:
+> Hi Troy,
+>=20
+> On 12:16 Sun 28 Sep     , Troy Mitchell wrote:
+> > From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> >=20
+> > Document the compatible string for the MusePi Pro [1].
+> > It is a 1.8-inch single board computer based on the
+> > SpacemiT K1/M1 RISC-V SoC [2].
+> you could wrap at slightly more characters, I remember 72 chars
+> (haven't spent time to find a formal document link..)
+>=20
+> >=20
+> > Link:
+> > https://developer.spacemit.com/documentation?token=3DYJtdwnvvViPVcmkoPD=
+pcvwfVnrh&type=3Dpdf
+> I'd suggest to list core features of this board, while using this link as=
+ a complement,
+> base on previous experience, vendor may change the link address, thus the=
+ link vanish
 
-                        - Troy
+The link doesn't even work for me. Is this board actually made by
+spacemit as a developer platform?
+
+>=20
+> > [1]
+> > https://www.spacemit.com/en/key-stone-k1 [2]
+> >=20
+> pleae keep them in one line, no break, and no blank line between SoB,
+> something as below
+> Link: https://.. [1]
+>=20
+> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > ---
+> >  Documentation/devicetree/bindings/riscv/spacemit.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/Do=
+cumentation/devicetree/bindings/riscv/spacemit.yaml
+> > index c56b62a6299ac24d3cdef7edcdfc407dc62a1846..52fe39296031f21d1c28c4f=
+1ea5ca9fe28caf45a 100644
+> > --- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> > +++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> > @@ -22,6 +22,7 @@ properties:
+> >            - enum:
+> >                - bananapi,bpi-f3
+> >                - milkv,jupiter
+> > +              - spacemit,musepi-pro
+> >                - xunlong,orangepi-rv2
+> >            - const: spacemit,k1
+> > =20
+> >=20
+> > --=20
+> > 2.51.0
+> >=20
+>=20
+> --=20
+> Yixun Lan (dlan)
+
+--cvUen0NxRlUjr0cE
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaNrGZgAKCRB4tDGHoIJi
+0nnyAQC2RbyZY4DxV9VTcddgsLFj7tNKJ8OGxuJMGloqBaPbzQEA+MImol8+wEvz
+kopy4+f2gaph1xiXjMrIP82j4HmnMwc=
+=wddC
+-----END PGP SIGNATURE-----
+
+--cvUen0NxRlUjr0cE--
