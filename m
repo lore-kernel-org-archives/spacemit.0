@@ -1,292 +1,488 @@
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716DA1A316C
-	for <spacemit@lists.linux.dev>; Mon, 29 Sep 2025 01:46:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E748323AE93
+	for <spacemit@lists.linux.dev>; Mon, 29 Sep 2025 06:09:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759110393; cv=none; b=qkPaWdXPfg9OYGhX8PCri70cXjwGs0kkDljeL47V2E4DA4DLLFWRjVsYE2SZ88nHRshmUXnYrrmORkKr2Kj70e/jjhMtuVzmM+PXbvly538GHYBkaJPxEPg6062Kxb6Pwb/xXSff36GB35BZAXiq8yFKkoz0CF0wLJRnppo6rWw=
+	t=1759126162; cv=none; b=ctxNXENjrxlt9il775ZXViMgf2fiQ62Owo8uVOJ4xg+NOTL+SpxHUhtd0T/YtKE3vzQFStXZXd8KDqabhb7v145hMPobgQ+upCDd/xIF5yeekEGUNPuUM91gltKtSfRhB2fkCTHZQAiRj0dCvZEkCJXe3AMFY5wnwX1XPOeQ2zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759110393; c=relaxed/simple;
-	bh=LJfAbHZ16BWvcqB3naBNNXqrUib0wXTv1KnCSdKXh4s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HmDm9YoQYY/Qj0gDuPgKYV4n5SX8bIoGq3njYiFGOypObrfLfrq9dmqHHn0NWHyDRWhWvM4d2OwdB6GPSq2noFqjPPhaBi3ggCsvGtawoscrXAju8MgzoK3ctBWTXxv1h5rb+G5XgZLTyaGS5zWCuLIybnOr9/t4nulEmrj/wIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=rkN5HEus; arc=none smtp.client-ip=15.184.224.54
+	s=arc-20240116; t=1759126162; c=relaxed/simple;
+	bh=LRedx2Mi+lGLXKgAbBNj3ULKaNqUfQrWQ/nciTRLONo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qrJL882PG4AtaZp3GL2TzSzLlBF+LqAXWmLefuuJ268FnXgCBAum17CPm7cSOp4kMIHfPiwqpISGkcHf2+FOA2/ERBJUDLCDbzWSIp++W6qDbvHK+bnnVm0MAf81up5Jepl3/YkiZk/84XQvNJ2P1tIkfZ60Jh8NscABp3dK50U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=VAfAkAkh; arc=none smtp.client-ip=54.207.19.206
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="rkN5HEus"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="VAfAkAkh"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1759110345;
-	bh=wcAdC64IoDvuOrQvlgtX3SSK7I/0Gqzr371QiaJ0eJ8=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=rkN5HEusaX7RsK4hwfEuyyEI0TPGsrNZE/odfh/Pot3u0A3i40TWTzU7GTbYd8Y5U
-	 llNow34QmLN1Jgdu2Bz/FJNAbRkizQjlbi3zDtN5ofq10qEXF6FVnvTqCZ7X3Mkeqw
-	 CqgtiOqYmKUlpRHk/4rFIgY6jq8mB3KyyfX9nzpY=
-X-QQ-mid: zesmtpsz9t1759110335td8ec3eee
-X-QQ-Originating-IP: ZTEZqM8iQJKnO0ZTHvsvnhsW6346pK427L64pLl8GU8=
+	s=mxsw2412; t=1759126080;
+	bh=rz29Ci/Ly5RO3EAXRxIrJ2NBDRGuPtphfU64i+yD/qU=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=VAfAkAkhzhD5VOKDKKM7L+z99pzlAij0MhcqKv/JDWca0romr6s9HfEtQ1gCvb18u
+	 iKcdTERX81PGMt9cpHFnolgHVmiPUXf0vbBnLvUMC7lw1YBzF0H743/jwuG86yLtsK
+	 CAhX44UY9mLitEtsPt0Tx2fKJvjbo68CFfvcdJTM=
+X-QQ-mid: zesmtpgz7t1759126072t7d6aa2ab
+X-QQ-Originating-IP: QXQilT8k6Ocs6DZFQA8y5Veg/gNV0t06hT35lAM6Qmo=
 Received: from = ( [61.145.255.150])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 29 Sep 2025 09:45:33 +0800 (CST)
+	id ; Mon, 29 Sep 2025 14:07:50 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11380537982907392339
-EX-QQ-RecipientCnt: 7
-Date: Mon, 29 Sep 2025 09:45:33 +0800
+X-BIZMAIL-ID: 16574500814613397744
+EX-QQ-RecipientCnt: 9
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Yixun Lan <dlan@gentoo.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>, linux-i2c@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v3] i2c: spacemit: configure ILCR for accurate SCL
- frequency
-Message-ID: <F5859CB0056D50CB+aNnkveYgP3BM7XNp@kernel.org>
-References: <20250814-k1-i2c-ilcr-v3-1-317723e74bcd@linux.spacemit.com>
- <20250928110327-GYA1346428@gentoo.org>
+Date: Mon, 29 Sep 2025 14:07:49 +0800
+Subject: [PATCH v3] i2c: spacemit: introduce pio for k1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250928110327-GYA1346428@gentoo.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250929-k1-i2c-atomic-v3-1-f7e660c138b6@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIADQi2mgC/23M0QqCMBiG4VuRHTfZv03TjrqP6GBtM39KJ5sNQ
+ 7z3pgSBdPh+8D0zCdajDeSUzcTbiAFdn0IcMqJb1d8tRZOacMYLVoGkD6DINVWj61DTBlTNtBF
+ SlJKkz+Btg9PmXa6pWwyj8++Nj7CuX4kfd1IEyqgt6ptVjJuyYucn9q8pD4PStsMx164jKxn5j
+ 6l5sWd4YmRpNAgBoI36yyzL8gGmUzd8+gAAAA==
+X-Change-ID: 20250814-k1-i2c-atomic-f1a90cd34364
+To: Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Alex Elder <elder@riscstar.com>, Troy Mitchell <troymitchell988@gmail.com>
+Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1759126070; l=12789;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=LRedx2Mi+lGLXKgAbBNj3ULKaNqUfQrWQ/nciTRLONo=;
+ b=JNFpJO47vprkxqoiH0qSSwoDLjLB6L24h0zbrmLT+rVNxEU9pqw/6ICl+i5r2o/O7kiaphUrl
+ 9onb3mJXVH8CfIOuFjQxqXeiuM1wSjSxIItPtuuZF0LK17pSYo/hWkZ
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: NXtWG+81RC1NyLNNPH2mjPkqIQFVWFkfKfENO7/0n9XlAJEM863MRHlH
-	iqKStHFdjSckbyOIahXCcxMcYbIh8SQk8c3lzawG/MRWwrEJ7vOzf00M4VTouj9gZ1DNOoe
-	7nvtXGvCprUFm4geQe1Srsu/9PEfj/vVTkh3+X50kqg/CWjoCCEWJP8QCmEtQRYNz23St8w
-	eJwAbI++RbWZvKP2REyFW6RtqHBkobN0mmC+sqZXLU2A+dr09G8cxWmgtz+IugZm9QgJWoN
-	DL3scOGO5Wpg9mk15ob0Vgzr5UARAbneWWVcjz2iRcgZQt2OqRq7gbdv2M8zAjNBh5rniRP
-	WyN4zsDvPoUeVkGiq6FFwSekW98gkMFeun0UXNlU2vWs/D3/wclWekvmRWcxgD/IE7RwLby
-	lri988y8ZYiTJ0O0wqfqOLDm/7XLbDdM+kQHXUuq5jMYXFmhDQ6KaINkH7PsR4u+YwtZmDR
-	JK0gmgNUsYj7HltsJKh2KFHcN9rnmTKkq6U9fLA+bjKyiM54OeBMqJO8oPeYcrWEW59ajrx
-	GvRGwqBZgWS1pF8+OrLfP5sre/M/QthLbkUpTZEvQqDyoYuiOgUSSIGGu+aV9AgvhKRnKzE
-	rgpc9pqbLWi+iujEQ4uHOSYo2icKHPjr39EahEhDo2OA6VZNhw4Ys1eIFS9333voyco3ss6
-	41svTKLmtyrGOq3VFMNq+tif5LAxI21wxutc+fsNzdBjBYeu+BZmwVT3wckwi9z9cgDZh2U
-	JIsspJpLzyKKRI0jM1KJnl+RummpNfAtijO4qX3/k1WiZ9TpGA5JvNXwhIDuXmER5EgPq9j
-	X3wz9/0O/pNcaS6gintM3AqTdIO0kH1amdxJ8MYAxJBMsgQE2+KmANbqp5pz2FQTzvsNJjI
-	s32jSmwWXZaf/DvG1AxGF5ROLvA66qMaQv7AMtD0VGq7c8pvVMakTcI9Epj3RApAh3CaA95
-	z5pyLhy1QFqY/lKP5tEEUE2CK6W1q9veoDIoo2PHF4AoUrOIlf5ZSI5KXMhiBhQEbr+7XcI
-	LSoUPumSG9Zlwyoto1BmmdQzrpe/+Z//OzEFmWTUZJTzU65ZRFBq3hfyxdw8otue/VPeKxq
-	mb9RggATqNWv9cAQtlgw4vLWh9jelTZrOp5KQMNVIgU
-X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: M/MM1vToFLXTDWFtv406SrEyLbtwOqKs6VgsENFPJ5P4ip5XtHOjuNJ9
+	vDttPyKxkQEewx2PNA18d0FlyEEWsfX/cK4n0xhsdaDZBGkhWunieULQQF9TlahHj62/oVv
+	RbV8E30qk2Ru6NAAvZfuj6mFHiB1Ao/lzd48l8m9srb26uo1ZaPp3+YSlIDzXSQUcaRRAbH
+	CJEsd3yadB+jYLZCnBGeBcl1shn2+5aB1MTLtNT2Nk6PB108Iw3KBO0xiiORokF2XmQpfiE
+	MLXURm6J3KqcX2HhbPnDK5NG/PM4wD2wBV9JuMMyetY4CK6sUABiFM0RUXW3YCD3/kCvJq7
+	lkAv+zfI0/1Vmfenhdzj9Sudea7BlJnUImfXvCZ0uvTQ5s3C9iYKNU1ei4guhhxf8BhrSa7
+	yUZJcXLiGegLUVFsCzIeMudEZOcQoYVg+IQQ3oqmlGgg+Wn/iUlk8kxdkLjuTgTIt+ShXkK
+	rHlvhhdv/4oW+fQRAWrUO6M7kFxF2YnSZBHg5QfjTyrOmEmZ1VSB/I8InpP868Glo5eSxmP
+	6hSNhGksBsSctBq3hj+AriZ6Z+8t3jly2KddSsTU0kDTPh6itwtJcelXR217T01RF+yiWvn
+	RW5hI7q6Y8+6sF/QJ938lE5CT8Rk0up4DLiYANqtH/kEf3dSiyygT2BuiNaPM30ucJCpWJu
+	jlBf6KSiIwEzJklH7X8YUqXKUrWe6rznHldBNlN/dFNPiXJ0zi9FwQH2vZLPnCXSy+TKYpo
+	Vfxxa4Gang1fL0ygKkSsWOqL+teZSFC1JtQO7MzhjVq1XDQBBhwZ0rI2caqVR5yPjI4YgmU
+	OmO2aArCFACuQKogEDRhY0XX1n09T2p81cQ8RmFEpVDpP5Sd5lNGTf0t+q2tJNZHwEt5hRm
+	iwJBRo64+PnoTro7JHGtL3f7etAPFS+Bwkh0c5PaD5Gm+7etlcA6zXB4T0M1SSP3y/zBJLH
+	jc04uZj4nLm87Y7Xo/O1S0+80tDyz99YSz9r1WEC8PmgbmpG7y03fnqeNjLilB8Glp4O3ob
+	6Ddhjr9ZQ47s23nAnScQFkM2/B1Tt0QDkv9iT8wTgyhUHEZ7fQGW9kkF2f2jmcYu704uq2Y
+	dI9JQzl7U3rdOdUXkK02X2OtyEJpF+UPD/Qk6wFv0W9rGaRXzYBGMx0vYw5M0ixonx43xZV
+	uYXG
+X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
 X-QQ-RECHKSPAM: 0
 
-Hi Yixun, Thanks for your review!
+This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
+enabling the use of I2C in atomic context.
 
-On Sun, Sep 28, 2025 at 07:03:27PM +0800, Yixun Lan wrote:
-> Hi Troy,
-> 
-> On 17:06 Thu 14 Aug     , Troy Mitchell wrote:
-> > The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
-> > master mode operations is determined by the ILCR (I2C Load Count Register).
-> > Previously, the driver relied on the hardware's reset default
-> > values for this register.
-> > 
-> > The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
-> > frequencies lower than intended. For example, with the default
-> > 31.5 MHz input clock, these default settings result in an SCL
-> > frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
-> > and approximately 338 kHz (fast mode) when targeting 400 kHz.
-> > These frequencies are below the 100 kHz/400 kHz nominal speeds.
-> > 
-> > This patch integrates the SCL frequency management into
-> > the Common Clock Framework (CCF). Specifically, the ILCR register,
-> > which acts as a frequency divider for the SCL clock, is now registered
-> > as a managed clock (scl_clk) within the CCF.
-> > 
-> > This patch also cleans up unnecessary whitespace
-> > in the included header files.
-> > 
-> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > ---
-> > Changelog in v3:
-> > - use MASK macro in `recalc_rate` function
-> > - rename clock name
-> > - Link to v2: https://lore.kernel.org/r/20250718-k1-i2c-ilcr-v2-1-b4c68f13dcb1@linux.spacemit.com
-> > 
-> > Changelog in v2:
-> > - Align line breaks.
-> > - Check `lv` in `clk_set_rate` function.
-> > - Force fast mode when SCL frequency is illegal or unavailable.
-> > - Change "linux/bits.h" to <linux/bits.h>
-> > - Kconfig: Add dependency on CCF.
-> > - Link to v1: https://lore.kernel.org/all/20250710-k1-i2c-ilcr-v1-1-188d1f460c7d@linux.spacemit.com/
-> > ---
-> >  drivers/i2c/busses/Kconfig  |   2 +-
-> >  drivers/i2c/busses/i2c-k1.c | 180 ++++++++++++++++++++++++++++++++++++++++----
-> >  2 files changed, 167 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-> > index c8d115b58e449b59a38339b439190dcb0e332965..1382b6c257fa4ba4cf5098d684c1bbd5e2636fd4 100644
-> > --- a/drivers/i2c/busses/Kconfig
-> > +++ b/drivers/i2c/busses/Kconfig
-> > @@ -797,7 +797,7 @@ config I2C_JZ4780
-> >  config I2C_K1
-> >  	tristate "SpacemiT K1 I2C adapter"
-> >  	depends on ARCH_SPACEMIT || COMPILE_TEST
-> > -	depends on OF
-> > +	depends on OF && COMMON_CLK
-> >  	help
-> >  	  This option enables support for the I2C interface on the SpacemiT K1
-> >  	  platform.
-> > diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-> > index b68a21fff0b56b59fe2032ccb7ca6953423aad32..34b22969cf6789e99de58dd93dda6f0951069f85 100644
-> > --- a/drivers/i2c/busses/i2c-k1.c
-> > +++ b/drivers/i2c/busses/i2c-k1.c
-> > @@ -3,17 +3,20 @@
-> >   * Copyright (C) 2024-2025 Troy Mitchell <troymitchell988@gmail.com>
-> >   */
-> >  
-> > - #include <linux/clk.h>
-> > - #include <linux/i2c.h>
-> > - #include <linux/iopoll.h>
-> > - #include <linux/module.h>
-> > - #include <linux/of_address.h>
-> > - #include <linux/platform_device.h>
-> > +#include <linux/bits.h>
-> > +#include <linux/clk.h>
-> > +#include <linux/clk-provider.h>
-> > +#include <linux/i2c.h>
-> > +#include <linux/iopoll.h>
-> > +#include <linux/module.h>
-> > +#include <linux/of_address.h>
-> > +#include <linux/platform_device.h>
-> >  
-> >  /* spacemit i2c registers */
-> >  #define SPACEMIT_ICR		 0x0		/* Control register */
-> >  #define SPACEMIT_ISR		 0x4		/* Status register */
-> >  #define SPACEMIT_IDBR		 0xc		/* Data buffer register */
-> > +#define SPACEMIT_ILCR		 0x10		/* Load Count Register */
-> >  #define SPACEMIT_IBMR		 0x1c		/* Bus monitor register */
-> >  
-> >  /* SPACEMIT_ICR register fields */
-> > @@ -80,6 +83,19 @@
-> >  #define SPACEMIT_BMR_SDA         BIT(0)		/* SDA line level */
-> >  #define SPACEMIT_BMR_SCL         BIT(1)		/* SCL line level */
-> >  
-> > +#define SPACEMIT_LCR_LV_STANDARD_SHIFT		0
-> > +#define SPACEMIT_LCR_LV_FAST_SHIFT		9
-> > +#define SPACEMIT_LCR_LV_STANDARD_WIDTH		9
-> > +#define SPACEMIT_LCR_LV_FAST_WIDTH		9
-> ..
-> > +#define SPACEMIT_LCR_LV_STANDARD_MAX_VALUE	GENMASK(SPACEMIT_LCR_LV_STANDARD_WIDTH - 1, 0)
-> > +#define SPACEMIT_LCR_LV_FAST_MAX_VALUE		GENMASK(SPACEMIT_LCR_LV_FAST_WIDTH - 1, 0)
-> using GENMASK() makes people even confusing since it's not a mask, I would
-> suggest simply put value directly here, which is 0x1ff
-> 
-> > +#define SPACEMIT_LCR_LV_STANDARD_MASK		GENMASK(SPACEMIT_LCR_LV_STANDARD_SHIFT +\
-> > +						SPACEMIT_LCR_LV_STANDARD_WIDTH - 1,\
-> > +						SPACEMIT_LCR_LV_STANDARD_SHIFT)
-> same reason here, suggest simplify as
-> #define SPACEMIT_LCR_LV_STANDARD_MASK		GENMASK(8, 0)
-> which is more readable and maintenace friendly
-Thanks, I will.
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+Changes in v3:
+- drop 1-5 patches (have been merged)
+- modify commit message
+- use readl_poll_timeout_atomic() in wait_pio_xfer()
+- use msecs_to_jiffies() when get PIO mode timeout value
+- factor out transfer state handling into spacemit_i2c_handle_state().
+- do not disable/enable the controller IRQ around PIO transfers.
+- consolidate spacemit_i2c_init() interrupt setup
+- rename is_pio -> use_pio
+- rename spacemit_i2c_xfer() -> spacemit_i2c_xfer_common()
+- rename spacemit_i2c_int_xfer() -> spacemit_i2c_xfer()
+- rename spacemit_i2c_pio_xfer() -> spacemit_i2c_pio_xfer_atomic()
+- call spacemit_i2c_err_check() in wait_pio_xfer() when write last byte
+- Link to v2: https://lore.kernel.org/r/20250925-k1-i2c-atomic-v2-0-46dc13311cda@linux.spacemit.com
 
-> 
-> > +#define SPACEMIT_LCR_LV_FAST_MASK		GENMASK(SPACEMIT_LCR_LV_FAST_SHIFT +\
-> > +						SPACEMIT_LCR_LV_FAST_WIDTH - 1,\
-> > +						SPACEMIT_LCR_LV_FAST_SHIFT)
-> > +
-> ..[snip]
-> > +static struct clk *spacemit_i2c_register_scl_clk(struct spacemit_i2c_dev *i2c,
-> > +						 struct clk *parent)
-> > +{
-> > +	struct clk_init_data init;
-> > +	char name[32];
-> > +
-> > +	snprintf(name, sizeof(name), "%s_scl_clk", dev_name(i2c->dev));
-> > +
-> > +	init.name = name;
-> > +	init.ops = &spacemit_i2c_clk_ops;
-> > +	init.parent_data = (struct clk_parent_data[]) {
-> > +		{ .fw_name = "func" },
-> > +	};
-> > +	init.num_parents = 1;
-> ..
-> > +	init.flags = 0;
-> I think you can drop this line, by simply init it at declaration
-> 	struct clk_init_data init = {};
-Sounds good to me.
+Changes in v2:
+- Patch 1/6:
+  Patch 3/6:
+  Patch 4/6:
+    - nothing
+- Patch 2/6:
+  - remove is_pio judgement in irq_handler()
+- Patch 5/6:
+  - fix wrong comment
+  - In spacemit_i2c_conditionally_reset_bus(), once the condition is met inside the loop, it should
+    return directly instead of using break.
+- Patch 6/6:
+  - add is_pio judgement in irq_handler()
+  - use a fixed timeout value when PIO
+  - use readl_poll_timeout() in  spacemit_i2c_wait_bus_idle() when PIO
 
-> ..
-> > +
-> > +	i2c->scl_clk_hw.init = &init;
-> > +
-> > +	return devm_clk_register(i2c->dev, &i2c->scl_clk_hw);
-> > +}
-> > +
-> >  static void spacemit_i2c_reset(struct spacemit_i2c_dev *i2c)
-> >  {
-> >  	writel(SPACEMIT_CR_UR, i2c->base + SPACEMIT_ICR);
-> > @@ -224,7 +352,7 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
-> >  	 */
-> >  	val |= SPACEMIT_CR_DRFIE;
-> >  
-> > -	if (i2c->clock_freq == SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
-> > +	if (i2c->mode == SPACEMIT_MODE_FAST)
-> >  		val |= SPACEMIT_CR_MODE_FAST;
-> >  
-> >  	/* disable response to general call */
-> > @@ -519,14 +647,15 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
-> >  		dev_warn(dev, "failed to read clock-frequency property: %d\n", ret);
-> >  
-> >  	/* For now, this driver doesn't support high-speed. */
-> > -	if (!i2c->clock_freq || i2c->clock_freq > SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
-> > -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
-> > -			 i2c->clock_freq, SPACEMIT_I2C_MAX_FAST_MODE_FREQ);
-> > +	if (i2c->clock_freq > SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ &&
-> > +	    i2c->clock_freq <= SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
-> > +		i2c->mode = SPACEMIT_MODE_FAST;
-> > +	} else if (i2c->clock_freq && i2c->clock_freq <= SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
-> > +		i2c->mode = SPACEMIT_MODE_STANDARD;
-> > +	} else {
-> > +		dev_warn(i2c->dev, "invalid clock-frequency, using fast mode");
-> s/using../fallback to fast mode/
-Thanks.
+- Link to v1: https://lore.kernel.org/r/20250827-k1-i2c-atomic-v1-0-e59bea02d680@linux.spacemit.com
+---
+ drivers/i2c/busses/i2c-k1.c | 206 ++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 161 insertions(+), 45 deletions(-)
 
-> 
-> > +		i2c->mode = SPACEMIT_MODE_FAST;
-> >  		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
-> > -	} else if (i2c->clock_freq < SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
-> > -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
-> > -			 i2c->clock_freq,  SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ);
-> > -		i2c->clock_freq = SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ;
-> >  	}
-> >  
-> >  	i2c->dev = &pdev->dev;
-> > @@ -548,10 +677,33 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
-> >  	if (IS_ERR(clk))
-> >  		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable func clock");
-> >  
-> > +	i2c->scl_clk = spacemit_i2c_register_scl_clk(i2c, clk);
-> > +	if (IS_ERR(i2c->scl_clk))
-> > +		return dev_err_probe(&pdev->dev, PTR_ERR(i2c->scl_clk),
-> > +				     "failed to register scl clock\n");
-> > +
-> >  	clk = devm_clk_get_enabled(dev, "bus");
-> >  	if (IS_ERR(clk))
-> >  		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable bus clock");
-> you can use dev_err_ptr_probe()
-Oh nice API, I will use it.
-> 
-> >  
-> > +	ret = clk_set_rate_exclusive(i2c->scl_clk, i2c->clock_freq);
-> why use _exclusive_ API? is there multi consumers? can you explain?
-No multi consumers. I will use clk_set_rate() in the next version.
-Thanks for you pointing it out. Nice catch!
+diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+index 6b918770e612e098b8ad17418f420d87c94df166..21c5dd56e71f5e59434767329fb84d50d5c04178 100644
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -97,6 +97,9 @@
+ 
+ #define SPACEMIT_BUS_RESET_CLK_CNT_MAX		9
+ 
++/* Constants */
++#define SPACEMIT_WAIT_TIMEOUT      1000 /* ms */
++
+ enum spacemit_i2c_state {
+ 	SPACEMIT_STATE_IDLE,
+ 	SPACEMIT_STATE_START,
+@@ -125,6 +128,7 @@ struct spacemit_i2c_dev {
+ 
+ 	enum spacemit_i2c_state state;
+ 	bool read;
++	bool use_pio;
+ 	struct completion complete;
+ 	u32 status;
+ };
+@@ -206,9 +210,14 @@ static int spacemit_i2c_wait_bus_idle(struct spacemit_i2c_dev *i2c)
+ 	if (!(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)))
+ 		return 0;
+ 
+-	ret = readl_poll_timeout(i2c->base + SPACEMIT_ISR,
+-				 val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
+-				 1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
++	if (!i2c->use_pio)
++		ret = readl_poll_timeout(i2c->base + SPACEMIT_ISR,
++					 val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
++					 1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
++	else
++		ret = readl_poll_timeout_atomic(i2c->base + SPACEMIT_ISR,
++						val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
++						1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
+ 	if (ret)
+ 		spacemit_i2c_reset(i2c);
+ 
+@@ -226,25 +235,30 @@ static void spacemit_i2c_check_bus_release(struct spacemit_i2c_dev *i2c)
+ 
+ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
+ {
+-	u32 val;
+-
+-	/*
+-	 * Unmask interrupt bits for all xfer mode:
+-	 * bus error, arbitration loss detected.
+-	 * For transaction complete signal, we use master stop
+-	 * interrupt, so we don't need to unmask SPACEMIT_CR_TXDONEIE.
+-	 */
+-	val = SPACEMIT_CR_BEIE | SPACEMIT_CR_ALDIE;
+-
+-	/*
+-	 * Unmask interrupt bits for interrupt xfer mode:
+-	 * When IDBR receives a byte, an interrupt is triggered.
+-	 *
+-	 * For the tx empty interrupt, it will be enabled in the
+-	 * i2c_start function.
+-	 * Otherwise, it will cause an erroneous empty interrupt before i2c_start.
+-	 */
+-	val |= SPACEMIT_CR_DRFIE;
++	u32 val = 0;
++
++	if (!i2c->use_pio) {
++		/*
++		 * Unmask interrupt bits for all xfer mode:
++		 * bus error, arbitration loss detected.
++		 * For transaction complete signal, we use master stop
++		 * interrupt, so we don't need to unmask SPACEMIT_CR_TXDONEIE.
++		 */
++		val |= SPACEMIT_CR_BEIE | SPACEMIT_CR_ALDIE;
++
++		/*
++		 * Unmask interrupt bits for interrupt xfer mode:
++		 * When IDBR receives a byte, an interrupt is triggered.
++		 *
++		 * For the tx empty interrupt, it will be enabled in the
++		 * i2c_start function.
++		 * Otherwise, it will cause an erroneous empty interrupt before i2c_start.
++		 */
++		val |= SPACEMIT_CR_DRFIE;
++
++		/* unmask master stop interrupt bit */
++		val |= SPACEMIT_CR_MSDIE;
++	}
+ 
+ 	if (i2c->clock_freq == SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
+ 		val |= SPACEMIT_CR_MODE_FAST;
+@@ -256,7 +270,7 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
+ 	val |= SPACEMIT_CR_SCLE;
+ 
+ 	/* enable master stop detected */
+-	val |= SPACEMIT_CR_MSDE | SPACEMIT_CR_MSDIE;
++	val |= SPACEMIT_CR_MSDE;
+ 
+ 	writel(val, i2c->base + SPACEMIT_ICR);
+ 
+@@ -293,10 +307,62 @@ static void spacemit_i2c_start(struct spacemit_i2c_dev *i2c)
+ 	/* send start pulse */
+ 	val = readl(i2c->base + SPACEMIT_ICR);
+ 	val &= ~SPACEMIT_CR_STOP;
+-	val |= SPACEMIT_CR_START | SPACEMIT_CR_TB | SPACEMIT_CR_DTEIE;
++	val |= SPACEMIT_CR_START | SPACEMIT_CR_TB;
++
++	if (!i2c->use_pio)
++		val |= SPACEMIT_CR_DTEIE;
++
+ 	writel(val, i2c->base + SPACEMIT_ICR);
+ }
+ 
++static void spacemit_i2c_handle_state(struct spacemit_i2c_dev *i2c);
++static void spacemit_i2c_err_check(struct spacemit_i2c_dev *i2c);
++static int spacemit_i2c_wait_pio_xfer(struct spacemit_i2c_dev *i2c)
++{
++	u32 msec = jiffies_to_msecs(i2c->adapt.timeout);
++	ktime_t timeout = ktime_add_ms(ktime_get(), msec);
++	int ret;
++
++	while (i2c->unprocessed && ktime_compare(ktime_get(), timeout) < 0) {
++		udelay(10);
++		i2c->status = readl(i2c->base + SPACEMIT_ISR);
++
++		spacemit_i2c_clear_int_status(i2c, i2c->status);
++
++		if (!(i2c->status & SPACEMIT_SR_IRF) && !(i2c->status & SPACEMIT_SR_ITE))
++			continue;
++
++		spacemit_i2c_handle_state(i2c);
++
++		/*
++		 * This is the last byte to write of the current message.
++		 * If we do not wait here, control will proceed directly to start(),
++		 * which would overwrite the current data.
++		 */
++		if (!i2c->read && !i2c->unprocessed) {
++			ret = readl_poll_timeout_atomic(i2c->base + SPACEMIT_ISR,
++							i2c->status, i2c->status & SPACEMIT_SR_ITE,
++							30, 1000);
++			if (ret)
++				return 0;
++			/*
++			 * In read mode, err_check() in handle_state properly handles what happens
++			 * after the MSD bit is set. For writes it is different: in interrupt mode,
++			 * an ITE (write-empty) interrupt is triggered after the last byte, and the
++			 * MSD-related handling takes place there. In PIO mode, however, we need to
++			 * explicitly call err_check() to emulate this step, otherwise the next
++			 * transfer will fail.
++			 */
++			spacemit_i2c_err_check(i2c);
++		}
++	}
++
++	if (i2c->unprocessed)
++		return 0;
++
++	return 1;
++}
++
+ static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
+ {
+ 	unsigned long time_left;
+@@ -310,10 +376,16 @@ static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
+ 
+ 		reinit_completion(&i2c->complete);
+ 
+-		spacemit_i2c_start(i2c);
++		if (i2c->use_pio) {
++			spacemit_i2c_start(i2c);
++
++			time_left = spacemit_i2c_wait_pio_xfer(i2c);
++		} else {
++			spacemit_i2c_start(i2c);
++			time_left = wait_for_completion_timeout(&i2c->complete,
++								i2c->adapt.timeout);
++		}
+ 
+-		time_left = wait_for_completion_timeout(&i2c->complete,
+-							i2c->adapt.timeout);
+ 		if (!time_left) {
+ 			dev_err(i2c->dev, "msg completion timeout\n");
+ 			spacemit_i2c_conditionally_reset_bus(i2c);
+@@ -341,6 +413,9 @@ static bool spacemit_i2c_is_last_msg(struct spacemit_i2c_dev *i2c)
+ 
+ static void spacemit_i2c_handle_write(struct spacemit_i2c_dev *i2c)
+ {
++	if (!(i2c->status & SPACEMIT_SR_ITE))
++		return;
++
+ 	/* if transfer completes, SPACEMIT_ISR will handle it */
+ 	if (i2c->status & SPACEMIT_SR_MSD)
+ 		return;
+@@ -353,14 +428,20 @@ static void spacemit_i2c_handle_write(struct spacemit_i2c_dev *i2c)
+ 
+ 	/* SPACEMIT_STATE_IDLE avoids trigger next byte */
+ 	i2c->state = SPACEMIT_STATE_IDLE;
+-	complete(&i2c->complete);
++
++	if (!i2c->use_pio)
++		complete(&i2c->complete);
+ }
+ 
+ static void spacemit_i2c_handle_read(struct spacemit_i2c_dev *i2c)
+ {
++	if (!(i2c->status & SPACEMIT_SR_IRF))
++		return;
++
+ 	if (i2c->unprocessed) {
+ 		*i2c->msg_buf++ = readl(i2c->base + SPACEMIT_IDBR);
+ 		i2c->unprocessed--;
++		return;
+ 	}
+ 
+ 	/* if transfer completes, SPACEMIT_ISR will handle it */
+@@ -373,7 +454,9 @@ static void spacemit_i2c_handle_read(struct spacemit_i2c_dev *i2c)
+ 
+ 	/* SPACEMIT_STATE_IDLE avoids trigger next byte */
+ 	i2c->state = SPACEMIT_STATE_IDLE;
+-	complete(&i2c->complete);
++
++	if (!i2c->use_pio)
++		complete(&i2c->complete);
+ }
+ 
+ static void spacemit_i2c_handle_start(struct spacemit_i2c_dev *i2c)
+@@ -408,21 +491,14 @@ static void spacemit_i2c_err_check(struct spacemit_i2c_dev *i2c)
+ 	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
+ 
+ 	i2c->state = SPACEMIT_STATE_IDLE;
+-	complete(&i2c->complete);
++
++	if (!i2c->use_pio)
++		complete(&i2c->complete);
+ }
+ 
+-static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
++static void spacemit_i2c_handle_state(struct spacemit_i2c_dev *i2c)
+ {
+-	struct spacemit_i2c_dev *i2c = devid;
+-	u32 status, val;
+-
+-	status = readl(i2c->base + SPACEMIT_ISR);
+-	if (!status)
+-		return IRQ_HANDLED;
+-
+-	i2c->status = status;
+-
+-	spacemit_i2c_clear_int_status(i2c, status);
++	u32 val;
+ 
+ 	if (i2c->status & SPACEMIT_SR_ERR)
+ 		goto err_out;
+@@ -445,7 +521,10 @@ static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
+ 	}
+ 
+ 	if (i2c->state != SPACEMIT_STATE_IDLE) {
+-		val |= SPACEMIT_CR_TB | SPACEMIT_CR_ALDIE;
++		val |= SPACEMIT_CR_TB;
++		if (i2c->use_pio)
++			val |= SPACEMIT_CR_ALDIE;
++
+ 
+ 		if (spacemit_i2c_is_last_msg(i2c)) {
+ 			/* trigger next byte with stop */
+@@ -459,6 +538,23 @@ static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
+ 
+ err_out:
+ 	spacemit_i2c_err_check(i2c);
++}
++
++static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
++{
++	struct spacemit_i2c_dev *i2c = devid;
++	u32 status;
++
++	status = readl(i2c->base + SPACEMIT_ISR);
++	if (!status)
++		return IRQ_HANDLED;
++
++	i2c->status = status;
++
++	spacemit_i2c_clear_int_status(i2c, status);
++
++	spacemit_i2c_handle_state(i2c);
++
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -479,20 +575,29 @@ static void spacemit_i2c_calc_timeout(struct spacemit_i2c_dev *i2c)
+ 	i2c->adapt.timeout = usecs_to_jiffies(timeout + USEC_PER_SEC / 10) / i2c->msg_num;
+ }
+ 
+-static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
++static inline int
++spacemit_i2c_xfer_common(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num, bool use_pio)
+ {
+ 	struct spacemit_i2c_dev *i2c = i2c_get_adapdata(adapt);
+ 	int ret;
+ 
++	i2c->use_pio = use_pio;
++
+ 	i2c->msgs = msgs;
+ 	i2c->msg_num = num;
+ 
+-	spacemit_i2c_calc_timeout(i2c);
++	if (!i2c->use_pio)
++		spacemit_i2c_calc_timeout(i2c);
++	else
++		i2c->adapt.timeout = msecs_to_jiffies(SPACEMIT_WAIT_TIMEOUT);
+ 
+ 	spacemit_i2c_init(i2c);
+ 
+ 	spacemit_i2c_enable(i2c);
+ 
++	/* To avoid being affected by the state of the previous transfer */
++	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
++
+ 	ret = spacemit_i2c_wait_bus_idle(i2c);
+ 	if (!ret) {
+ 		ret = spacemit_i2c_xfer_msg(i2c);
+@@ -506,11 +611,21 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
+ 
+ 	if (ret == -ETIMEDOUT || ret == -EAGAIN)
+ 		dev_err(i2c->dev, "i2c transfer failed, ret %d err 0x%lx\n",
+-			  ret, i2c->status & SPACEMIT_SR_ERR);
++			ret, i2c->status & SPACEMIT_SR_ERR);
+ 
+ 	return ret < 0 ? ret : num;
+ }
+ 
++static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
++{
++	return spacemit_i2c_xfer_common(adapt, msgs, num, false);
++}
++
++static int spacemit_i2c_pio_xfer_atomic(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
++{
++	return spacemit_i2c_xfer_common(adapt, msgs, num, true);
++}
++
+ static u32 spacemit_i2c_func(struct i2c_adapter *adap)
+ {
+ 	return I2C_FUNC_I2C | (I2C_FUNC_SMBUS_EMUL & ~I2C_FUNC_SMBUS_QUICK);
+@@ -518,6 +633,7 @@ static u32 spacemit_i2c_func(struct i2c_adapter *adap)
+ 
+ static const struct i2c_algorithm spacemit_i2c_algo = {
+ 	.xfer = spacemit_i2c_xfer,
++	.xfer_atomic = spacemit_i2c_pio_xfer_atomic,
+ 	.functionality = spacemit_i2c_func,
+ };
+ 
 
-                        - Troy
-> 
-> > +	if (ret)
-> > +		return dev_err_probe(&pdev->dev, ret, "failed to set exclusive rate for SCL clock");
-> > +
->  
-> 
-> -- 
-> Yixun Lan (dlan)
-> 
-> 
+---
+base-commit: bc574b64121525b24d52e9bab747184181c808dc
+change-id: 20250814-k1-i2c-atomic-f1a90cd34364
+
+Best regards,
+-- 
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
