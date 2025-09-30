@@ -1,36 +1,45 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E9E10785
-	for <spacemit@lists.linux.dev>; Tue, 30 Sep 2025 01:27:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CB619C540;
+	Tue, 30 Sep 2025 22:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759195637; cv=none; b=AYstp5RgcnmhwIyOeeRzFNeVKMWONxKk5V2p++ssKzQiQepWkLJG3QfDtmDkdMQmqiuveZeShmFUEvEYsy+RRIFmpWoRoQrWR3CEjP2WRCD+umu8aCBBCV0Dw/8NJVOghofnRsztRqVh1sN9+Lf8OvktdMtlTL+f5QllcYcwFOo=
+	t=1759270208; cv=none; b=KURdkUqdMMXfrzH9WRBghTiYDzwtL2uByEMnqFHh4mPlmWV2iCjW/2vlaeIc+XQ7gdL1PuihqM5u7RpWVviQohYP9XWr6JNpY4qQGZmFiX+aEN6gQK29/ofQZezeMXw9MP1m6apcYki3mUzbI/chApHrjzQ/TYMGFEiU6tL/hys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759195637; c=relaxed/simple;
-	bh=G0GNzcMhBv/RPf9aKaMvT3lTc3x2TfjwXWlFkcKA4YQ=;
+	s=arc-20240116; t=1759270208; c=relaxed/simple;
+	bh=hMd/AM3ewIb0jj5ghCyFKoP7KwuS14FKJyK/ph0ODyM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J3e1oDbBNOu5AIIuMenoaBerAQuRBF3PV8PHYVoIKpRRGrDCTVYsus7LjTAj7po8jXYIlPCXv3HGofdRKV8eHTTYWDTcgwAL1GFR7pmC/VGSf+f4y34GwmQqQ0q7APt48K8svc2hE+wmR/lNIuXi7xuAPpFjPBmzglmFpPVYbe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.147.32])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 78C0F335D92;
-	Tue, 30 Sep 2025 01:27:13 +0000 (UTC)
-Date: Tue, 30 Sep 2025 09:27:02 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v3] i2c: spacemit: introduce pio for k1
-Message-ID: <20250930012702-GYA1357001@gentoo.org>
-References: <20250929-k1-i2c-atomic-v3-1-f7e660c138b6@linux.spacemit.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=R76PwpEvwWzpp2VLsNTLJ+XlGoDg2FYzLCHC2IxSKQ+zvZsQJd+lgmPCRTKC2z8GnT6ndm7kBubewDwzsUlm+DE436STZbR0xISszSDEkQTH1MSX+l1uc2sdTQBskdjOxe/8LhCWgskbRUpN1Pv+jaaGHBqA2mMS2lUOPblK+ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TPNh/vzO; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TPNh/vzO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6719BC4CEF7;
+	Tue, 30 Sep 2025 22:10:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759270207;
+	bh=hMd/AM3ewIb0jj5ghCyFKoP7KwuS14FKJyK/ph0ODyM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TPNh/vzOa3u/0div8i87Dy9LaaSnw20oVgnYVKRcud+Zud4VcP9sdUT86mvKLNaSX
+	 4hAApTJERCXEwxyMUHksxymNDRP4jpQlEa1yLP9f1nLujyT+hadzblmndZVvy4p/rN
+	 kOvmUxDy/rtBUz2UkbWzN91Jesm1MVMAi+AKlbwZDWllnPORuKW0YFM6lCesag4T+R
+	 ktUTXq0voYdslGUv0vH5HEgr967cRvQ7H6pJ+xvbq+nzn+hE5n4JxEQ6kyutWDpaKH
+	 yYySGG4kJxBv0Sgb1y64k4KJ/MGp+Ijc6HtSg8ejVMd3/U/YpesfI3fgqa4fwUEJCP
+	 TEoo88EOFh0mw==
+Date: Tue, 30 Sep 2025 15:10:01 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>, Vinod Koul <vkoul@kernel.org>
+Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>, Yixun Lan <dlan@gentoo.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, elder@riscstar.com,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH] dmaengine: mmp_pdma: fix DMA mask handling
+Message-ID: <20250930221001.GA66006@ax162>
+References: <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -39,233 +48,112 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250929-k1-i2c-atomic-v3-1-f7e660c138b6@linux.spacemit.com>
+In-Reply-To: <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
 
-Hi Troy and I2C maintainer,
-
-one thing I'd raise and seek I2C maintainer's suggestion, should this
-driver introduce lock to protect multi context - non-atomic vs atomic vs
-interrupt context, more than one i2c clients contend single controller?
-
-On 14:07 Mon 29 Sep     , Troy Mitchell wrote:
-> This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
-> enabling the use of I2C in atomic context.
+On Thu, Sep 18, 2025 at 10:27:27PM +0800, Guodong Xu wrote:
+> The driver's existing logic for setting the DMA mask for "marvell,pdma-1.0"
+> was flawed. It incorrectly relied on pdev->dev->coherent_dma_mask instead
+> of declaring the hardware's fixed addressing capability. A cleaner and
+> more correct approach is to define the mask directly based on the hardware
+> limitations.
 > 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> The MMP/PXA PDMA controller is a 32-bit DMA engine. This is supported by
+> datasheets and various dtsi files for PXA25x, PXA27x, PXA3xx, and MMP2,
+> all of which are 32-bit systems.
+> 
+> This patch simplifies the driver's logic by replacing the 'u64 dma_mask'
+> field with a simpler 'u32 dma_width' to store the addressing capability
+> in bits. The complex if/else block in probe() is then replaced with a
+> single, clear call to dma_set_mask_and_coherent(). This sets a fixed
+> 32-bit DMA mask for "marvell,pdma-1.0" and a 64-bit mask for
+> "spacemit,k1-pdma," matching each device's hardware capabilities.
+> 
+> Finally, this change also works around a specific build error encountered
+> with clang-20 on x86_64 allyesconfig. The shift-count-overflow error is
+> caused by a known clang compiler issue where the DMA_BIT_MASK(n) macro's
+> ternary operator is not correctly evaluated in static initializers. By
+> moving the macro's evaluation into the probe() function, the driver avoids
+> this compiler bug.
+> 
+> Fixes: 5cfe585d8624 ("dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support with 64-bit addressing")
+> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+> Closes: https://lore.kernel.org/lkml/CA+G9fYsPcMfW-e_0_TRqu4cnwqOqYF3aJOeKUYk6Z4qRStdFvg@mail.gmail.com
+> Suggested-by: Arnd Bergmann <arnd@arndb.de>
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+
+Tested-by: Nathan Chancellor <nathan@kernel.org> # build
+
+It would be great if this could be picked up before the 6.18 DMA pull
+request so that I do not have to patch our CI to avoid this issue.
+
+>  drivers/dma/mmp_pdma.c | 20 ++++++++------------
+>  1 file changed, 8 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+> index d07229a748868b8115892c63c54c16130d88e326..86661eb3cde1ff6d6d8f02b6f0d4142878b5a890 100644
+> --- a/drivers/dma/mmp_pdma.c
+> +++ b/drivers/dma/mmp_pdma.c
+> @@ -152,8 +152,8 @@ struct mmp_pdma_phy {
+>   *
+>   * Controller Configuration:
+>   * @run_bits:   Control bits in DCSR register for channel start/stop
+> - * @dma_mask:   DMA addressing capability of controller. 0 to use OF/platform
+> - *              settings, or explicit mask like DMA_BIT_MASK(32/64)
+> + * @dma_width:  DMA addressing width in bits (32 or 64). Determines the
+> + *              DMA mask capability of the controller hardware.
+>   */
+>  struct mmp_pdma_ops {
+>  	/* Hardware Register Operations */
+> @@ -173,7 +173,7 @@ struct mmp_pdma_ops {
+>  
+>  	/* Controller Configuration */
+>  	u32 run_bits;
+> -	u64 dma_mask;
+> +	u32 dma_width;
+>  };
+>  
+>  struct mmp_pdma_device {
+> @@ -1172,7 +1172,7 @@ static const struct mmp_pdma_ops marvell_pdma_v1_ops = {
+>  	.get_desc_src_addr = get_desc_src_addr_32,
+>  	.get_desc_dst_addr = get_desc_dst_addr_32,
+>  	.run_bits = (DCSR_RUN),
+> -	.dma_mask = 0,			/* let OF/platform set DMA mask */
+> +	.dma_width = 32,
+>  };
+>  
+>  static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
+> @@ -1185,7 +1185,7 @@ static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
+>  	.get_desc_src_addr = get_desc_src_addr_64,
+>  	.get_desc_dst_addr = get_desc_dst_addr_64,
+>  	.run_bits = (DCSR_RUN | DCSR_LPAEEN),
+> -	.dma_mask = DMA_BIT_MASK(64),	/* force 64-bit DMA addr capability */
+> +	.dma_width = 64,
+>  };
+>  
+>  static const struct of_device_id mmp_pdma_dt_ids[] = {
+> @@ -1314,13 +1314,9 @@ static int mmp_pdma_probe(struct platform_device *op)
+>  	pdev->device.directions = BIT(DMA_MEM_TO_DEV) | BIT(DMA_DEV_TO_MEM);
+>  	pdev->device.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
+>  
+> -	/* Set DMA mask based on ops->dma_mask, or OF/platform */
+> -	if (pdev->ops->dma_mask)
+> -		dma_set_mask(pdev->dev, pdev->ops->dma_mask);
+> -	else if (pdev->dev->coherent_dma_mask)
+> -		dma_set_mask(pdev->dev, pdev->dev->coherent_dma_mask);
+> -	else
+> -		dma_set_mask(pdev->dev, DMA_BIT_MASK(64));
+> +	/* Set DMA mask based on controller hardware capabilities */
+> +	dma_set_mask_and_coherent(pdev->dev,
+> +				  DMA_BIT_MASK(pdev->ops->dma_width));
+>  
+>  	ret = dma_async_device_register(&pdev->device);
+>  	if (ret) {
+> 
 > ---
-> Changes in v3:
-> - drop 1-5 patches (have been merged)
-> - modify commit message
-> - use readl_poll_timeout_atomic() in wait_pio_xfer()
-> - use msecs_to_jiffies() when get PIO mode timeout value
-> - factor out transfer state handling into spacemit_i2c_handle_state().
-> - do not disable/enable the controller IRQ around PIO transfers.
-> - consolidate spacemit_i2c_init() interrupt setup
-> - rename is_pio -> use_pio
-> - rename spacemit_i2c_xfer() -> spacemit_i2c_xfer_common()
-> - rename spacemit_i2c_int_xfer() -> spacemit_i2c_xfer()
-> - rename spacemit_i2c_pio_xfer() -> spacemit_i2c_pio_xfer_atomic()
-> - call spacemit_i2c_err_check() in wait_pio_xfer() when write last byte
-> - Link to v2: https://lore.kernel.org/r/20250925-k1-i2c-atomic-v2-0-46dc13311cda@linux.spacemit.com
+> base-commit: cc0bacac6de7763a038550cf43cb94634d8be9cd
+> change-id: 20250904-mmp-pdma-simplify-dma-addressing-f6aef03e07c3
 > 
-> Changes in v2:
-> - Patch 1/6:
->   Patch 3/6:
->   Patch 4/6:
->     - nothing
-> - Patch 2/6:
->   - remove is_pio judgement in irq_handler()
-> - Patch 5/6:
->   - fix wrong comment
->   - In spacemit_i2c_conditionally_reset_bus(), once the condition is met inside the loop, it should
->     return directly instead of using break.
-> - Patch 6/6:
->   - add is_pio judgement in irq_handler()
->   - use a fixed timeout value when PIO
->   - use readl_poll_timeout() in  spacemit_i2c_wait_bus_idle() when PIO
+> Best regards,
+> -- 
+> Guodong Xu <guodong@riscstar.com>
 > 
-> - Link to v1: https://lore.kernel.org/r/20250827-k1-i2c-atomic-v1-0-e59bea02d680@linux.spacemit.com
-> ---
->  drivers/i2c/busses/i2c-k1.c | 206 ++++++++++++++++++++++++++++++++++----------
->  1 file changed, 161 insertions(+), 45 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-> index 6b918770e612e098b8ad17418f420d87c94df166..21c5dd56e71f5e59434767329fb84d50d5c04178 100644
-> --- a/drivers/i2c/busses/i2c-k1.c
-> +++ b/drivers/i2c/busses/i2c-k1.c
-> @@ -97,6 +97,9 @@
->  
->  #define SPACEMIT_BUS_RESET_CLK_CNT_MAX		9
->  
-[snip]..
-
-> +static void spacemit_i2c_handle_state(struct spacemit_i2c_dev *i2c);
-> +static void spacemit_i2c_err_check(struct spacemit_i2c_dev *i2c);
-please sort to avoid this kind declaration, if it's inevitable, 
-you can move to top, before the function, after macro 
-
-> +static int spacemit_i2c_wait_pio_xfer(struct spacemit_i2c_dev *i2c)
-> +{
-> +	u32 msec = jiffies_to_msecs(i2c->adapt.timeout);
-> +	ktime_t timeout = ktime_add_ms(ktime_get(), msec);
-> +	int ret;
-> +
-> +	while (i2c->unprocessed && ktime_compare(ktime_get(), timeout) < 0) {
-> +		udelay(10);
-> +		i2c->status = readl(i2c->base + SPACEMIT_ISR);
-> +
-> +		spacemit_i2c_clear_int_status(i2c, i2c->status);
-> +
-> +		if (!(i2c->status & SPACEMIT_SR_IRF) && !(i2c->status & SPACEMIT_SR_ITE))
-this is hard to read
-		mask = SPACEMIT_SR_IRF | SPACEMIT_SR_ITE;
-		if ((i2c->status & mask) == 0)
-		..
-> +			continue;
-> +
-> +		spacemit_i2c_handle_state(i2c);
-> +
-> +		/*
-> +		 * This is the last byte to write of the current message.
-> +		 * If we do not wait here, control will proceed directly to start(),
-> +		 * which would overwrite the current data.
-> +		 */
-> +		if (!i2c->read && !i2c->unprocessed) {
-> +			ret = readl_poll_timeout_atomic(i2c->base + SPACEMIT_ISR,
-> +							i2c->status, i2c->status & SPACEMIT_SR_ITE,
-> +							30, 1000);
-> +			if (ret)
-> +				return 0;
-> +			/*
-> +			 * In read mode, err_check() in handle_state properly handles what happens
-> +			 * after the MSD bit is set. For writes it is different: in interrupt mode,
-> +			 * an ITE (write-empty) interrupt is triggered after the last byte, and the
-> +			 * MSD-related handling takes place there. In PIO mode, however, we need to
-> +			 * explicitly call err_check() to emulate this step, otherwise the next
-> +			 * transfer will fail.
-> +			 */
-> +			spacemit_i2c_err_check(i2c);
-> +		}
-> +	}
-> +
-> +	if (i2c->unprocessed)
-> +		return 0;
-> +
-> +	return 1;
-> +}
-> +
->  static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
->  {
->  	unsigned long time_left;
-> @@ -310,10 +376,16 @@ static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
->  
->  		reinit_completion(&i2c->complete);
->  
-> -		spacemit_i2c_start(i2c);
-..
-> +		if (i2c->use_pio) {
-> +			spacemit_i2c_start(i2c);
-> +
-> +			time_left = spacemit_i2c_wait_pio_xfer(i2c);
-> +		} else {
-> +			spacemit_i2c_start(i2c);
-> +			time_left = wait_for_completion_timeout(&i2c->complete,
-> +								i2c->adapt.timeout);
-> +		}
-suggest to distill a common function spacemit_i2c_wait_xfer_complete()
-and converge above if/elselogic inside, which is more readable
-
->  
-> -		time_left = wait_for_completion_timeout(&i2c->complete,
-> -							i2c->adapt.timeout);
->  		if (!time_left) {
->  			dev_err(i2c->dev, "msg completion timeout\n");
-..
->  			spacemit_i2c_conditionally_reset_bus(i2c);
-btw, not introduced in this patch, spacemit_i2c_reset() followed unconditionally after
-spacemit_i2c_conditionally_reset_bus() which is very confusing
-
-please double check the logic
-
-
-> @@ -341,6 +413,9 @@ static bool spacemit_i2c_is_last_msg(struct spacemit_i2c_dev *i2c)
->  
->  static void spacemit_i2c_handle_write(struct spacemit_i2c_dev *i2c)
->  {
-> +	if (!(i2c->status & SPACEMIT_SR_ITE))
-> +		return;
-> +
->  	/* if transfer completes, SPACEMIT_ISR will handle it */
->  	if (i2c->status & SPACEMIT_SR_MSD)
->  		return;
-[snip]..
->  
-> -static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-> +static inline int
-> +spacemit_i2c_xfer_common(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num, bool use_pio)
->  {
->  	struct spacemit_i2c_dev *i2c = i2c_get_adapdata(adapt);
->  	int ret;
->  
-> +	i2c->use_pio = use_pio;
-> +
->  	i2c->msgs = msgs;
->  	i2c->msg_num = num;
->  
-..
-> -	spacemit_i2c_calc_timeout(i2c);
-> +	if (!i2c->use_pio)
-> +		spacemit_i2c_calc_timeout(i2c);
-> +	else
-> +		i2c->adapt.timeout = msecs_to_jiffies(SPACEMIT_WAIT_TIMEOUT);
-suggest merge "if else" into spacemit_i2c_calc_timeout(), same as previous suggestion
->  
->  	spacemit_i2c_init(i2c);
->  
->  	spacemit_i2c_enable(i2c);
->  
-> +	/* To avoid being affected by the state of the previous transfer */
-> +	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
-> +
-I've not see my previous comment has been addressed!
-
->  	ret = spacemit_i2c_wait_bus_idle(i2c);
->  	if (!ret) {
->  		ret = spacemit_i2c_xfer_msg(i2c);
-> @@ -506,11 +611,21 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
->  
->  	if (ret == -ETIMEDOUT || ret == -EAGAIN)
->  		dev_err(i2c->dev, "i2c transfer failed, ret %d err 0x%lx\n",
-> -			  ret, i2c->status & SPACEMIT_SR_ERR);
-> +			ret, i2c->status & SPACEMIT_SR_ERR);
->  
-have to say, I personally don't like those unrelated changes, which
-makes people review the patch even difficult
->  	return ret < 0 ? ret : num;
->  }
->  
-> +static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-> +{
-> +	return spacemit_i2c_xfer_common(adapt, msgs, num, false);
-> +}
-> +
-> +static int spacemit_i2c_pio_xfer_atomic(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-> +{
-> +	return spacemit_i2c_xfer_common(adapt, msgs, num, true);
-> +}
-> +
-
-atomic API should not call sleepable function, please check this
-spacemit_i2c_pio_xfer_atomic() -> 
-  spacemit_i2c_xfer_common() -> 
-    spacemit_i2c_xfer_msg() -> 
-      spacemit_i2c_conditionally_reset_bus() -> 
-        usleep_range()
-    spacemit_i2c_check_bus_release() -> 
-      usleep_range()
-
-they are in err handle path, but still need to take care with caution
-
-
--- 
-Yixun Lan (dlan)
