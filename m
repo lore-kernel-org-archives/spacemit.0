@@ -1,159 +1,259 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CB619C540;
-	Tue, 30 Sep 2025 22:10:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B953E27602A
+	for <spacemit@lists.linux.dev>; Wed,  1 Oct 2025 02:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759270208; cv=none; b=KURdkUqdMMXfrzH9WRBghTiYDzwtL2uByEMnqFHh4mPlmWV2iCjW/2vlaeIc+XQ7gdL1PuihqM5u7RpWVviQohYP9XWr6JNpY4qQGZmFiX+aEN6gQK29/ofQZezeMXw9MP1m6apcYki3mUzbI/chApHrjzQ/TYMGFEiU6tL/hys=
+	t=1759286420; cv=none; b=aJdhgCFxJS/fCK0edUzVnePVch2ZyCdY47oDqPHu9U1YUSk66N6U8TqvUPMP4nViPz/GGVw4Uyhb1PkAnaBUtw8tb9btZDA8fMfzUUbZp9+KLEE0PkHSrCbcaNuXCL3i6nGyMtUHMifpA9DWWSXnbznwr8lK4yuTztdf6lLKoNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759270208; c=relaxed/simple;
-	bh=hMd/AM3ewIb0jj5ghCyFKoP7KwuS14FKJyK/ph0ODyM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R76PwpEvwWzpp2VLsNTLJ+XlGoDg2FYzLCHC2IxSKQ+zvZsQJd+lgmPCRTKC2z8GnT6ndm7kBubewDwzsUlm+DE436STZbR0xISszSDEkQTH1MSX+l1uc2sdTQBskdjOxe/8LhCWgskbRUpN1Pv+jaaGHBqA2mMS2lUOPblK+ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TPNh/vzO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1759286420; c=relaxed/simple;
+	bh=jDbkyBlcNbK/IRWIsqyyXB+3OTJLzUTI8ugMTZvEqWs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cwDlSTYFQyZX2tMa6viK38YQZ59WPyqdzfHdz3qxXHA4YBEVJpahJVeanHEs7Sk7Q4ObxXhV8M5QXY6sApYJB/v5rOXzQQWOYtvgWw/97X16GsUJEbd9sYDQJj++T1OJaj0ZJohMKw947BAbFvuKGc9Sa4FE9IO5lH51SLndk20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=pnQAjKsw; arc=none smtp.client-ip=209.85.166.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TPNh/vzO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6719BC4CEF7;
-	Tue, 30 Sep 2025 22:10:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759270207;
-	bh=hMd/AM3ewIb0jj5ghCyFKoP7KwuS14FKJyK/ph0ODyM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TPNh/vzOa3u/0div8i87Dy9LaaSnw20oVgnYVKRcud+Zud4VcP9sdUT86mvKLNaSX
-	 4hAApTJERCXEwxyMUHksxymNDRP4jpQlEa1yLP9f1nLujyT+hadzblmndZVvy4p/rN
-	 kOvmUxDy/rtBUz2UkbWzN91Jesm1MVMAi+AKlbwZDWllnPORuKW0YFM6lCesag4T+R
-	 ktUTXq0voYdslGUv0vH5HEgr967cRvQ7H6pJ+xvbq+nzn+hE5n4JxEQ6kyutWDpaKH
-	 yYySGG4kJxBv0Sgb1y64k4KJ/MGp+Ijc6HtSg8ejVMd3/U/YpesfI3fgqa4fwUEJCP
-	 TEoo88EOFh0mw==
-Date: Tue, 30 Sep 2025 15:10:01 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>, Vinod Koul <vkoul@kernel.org>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>, Yixun Lan <dlan@gentoo.org>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, elder@riscstar.com,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH] dmaengine: mmp_pdma: fix DMA mask handling
-Message-ID: <20250930221001.GA66006@ax162>
-References: <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="pnQAjKsw"
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-91c93719deaso348485539f.3
+        for <spacemit@lists.linux.dev>; Tue, 30 Sep 2025 19:40:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1759286416; x=1759891216; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zxQ2zgdrHb7uD7qDfrNlnD3XXSfWmfO7hzlzDTfXqcQ=;
+        b=pnQAjKswvPrEUy+R4a5bZGbD6RaaVLnlFqsr5RdRW8xxTAtHN5iRPWy77rDD0vyI0m
+         cK+Dqk9PUP2zuEf6Rg4weRHgqJP2c213/yPW/as+CVLay+vzaiGkUHuwxL51FrtVYKz/
+         CjbaLKGNuxGnblblOeyAukyJcD8m2unBwinxwXcPjqslSI+w7SZgMafZ5IkDYLWsg0Hj
+         UxZOYxwaNapsIpfPcfu3XX++sxKxZQ5hqw+pud45Z/e/pIdKGJc7lPSVnknO0PAZqhDa
+         wGDivkwZei3OBV0bAQdXyc2STJSOsDMSxP2At0vCNNtd291yOiMq0O2h5vrBse/j8orL
+         6LvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759286416; x=1759891216;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zxQ2zgdrHb7uD7qDfrNlnD3XXSfWmfO7hzlzDTfXqcQ=;
+        b=jqzk5jckmWcozSmuInPLml7ziShsBWZNxpnxYbU94RBMq1T1Lm22kYfguTejc7hoyj
+         O0PJkVLZqEm7I0eEIDXYfvqinXfpF3O7TxuvvITMrnoJ1XBBQSjnKaEpjdrvy8SKul/y
+         LVWV2qUNWutjqrejem+o/zw5D9WIqicUD0ssy++MNiIFfResElrJAsoRbh0SeHsESYzv
+         aUaui923vmGL3ReM/udNCD7nA8hLFE73IL8M3aVlH8S9fooA0UojpSwcfglQsm4OUrDc
+         5B5k7n1zx/TOFub2gjjSa2aDMfUZ7TYfdaqS7Fxy+KO4+hhvIoFeSWOZJkvFtGroSwo0
+         8tRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUEnF6189WV0DuEX71csjP+wsEmHRBYomMYnJnqo03MQauWxmx04j5ErKSYGA5BnuuefYJ1DnZLUw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwnTjThv0mhvvAHgQeukfSyrfR4s7Gd8ywypYCi30ZMXWtuVQHp
+	PWZFBKbkl2gaB82t300Fd+kLZxlXq5Oeg4wVSZLMs6wwD7BNu9kW/CIu7U56tANIArw=
+X-Gm-Gg: ASbGncvAVCVBHbcWGxVvGiUdoETzZLtH0JAd5dENI7cy34jsELSMQdZn6qKykGlWW5X
+	U6PCTlaNX3tjSBmQ9ObJ9VZqer0IcMZzN/+HDfyjeFmRhFkOAUeyBXF9kcYL2/vBLcvyrnE1Cz2
+	/ohOaw1EYmlLg2UDd+X9RP5+9eniPlqMCCFTUx+2kM92Og1b7zDeQLDm+LxeSIax83b/uJOTovo
+	uAOwywnAR/NjJ6EAMbYBP06UqymPOCGGhRUgGuupMjUzFoXZoDSqnpuQvgW6ddR4WqmvaWcH6GK
+	pXejvimveudmNt7Lv/YQ8KRVS1WSIeisoxRghVgzBmPxj+5jUG1srA52bNvuLxow+kJclIOlwbT
+	w75yzPB9hWXZiNIhqipvzdL6azZ2Q1hvQMhwMuadePIZ2dzfA/pwGFCF4sBV3uYJFroNMSNKcAk
+	c5x4VUjgfwDPnhexG6BS8P
+X-Google-Smtp-Source: AGHT+IFQFvztbn8UfbzR8C12GJuYMM6yN5QwMW7n9lxY6XdpjQ/LdhbflFmYGAY5ytHhPYAVoI2Qfg==
+X-Received: by 2002:a05:6602:2c08:b0:935:90f6:892e with SMTP id ca18e2360f4ac-937aebad412mr291037439f.17.1759286415752;
+        Tue, 30 Sep 2025 19:40:15 -0700 (PDT)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-92d06cc3b9esm184392139f.12.2025.09.30.19.40.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Sep 2025 19:40:15 -0700 (PDT)
+Message-ID: <365ade7c-bb2c-42ff-a2e7-9a291b1faab7@riscstar.com>
+Date: Tue, 30 Sep 2025 21:40:12 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] dt-bindings: phy: spacemit: introduce PCIe root
+ complex
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
+ vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
+ paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr, p.zabel@pengutronix.de, tglx@linutronix.de,
+ johan+linaro@kernel.org, thippeswamy.havalige@amd.com, namcao@linutronix.de,
+ mayank.rana@oss.qualcomm.com, shradha.t@samsung.com, inochiama@gmail.com,
+ quic_schintav@quicinc.com, fan.ni@samsung.com, devicetree@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-pci@vger.kernel.org,
+ spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+References: <20250813184701.2444372-1-elder@riscstar.com>
+ <20250813184701.2444372-4-elder@riscstar.com>
+ <tmdq6iut5z2bzemduovvyarya6ho2lwlxvvqqhazw6dnnyjpq3@72xrd2pij42h>
+ <804ea57f-699f-41cc-a27c-844f107e627f@riscstar.com>
+ <kam6fgc7ykxwnksu562etrib2z4w3sucvr27ojxq62iwyrdai3@i76ygp2anscy>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <kam6fgc7ykxwnksu562etrib2z4w3sucvr27ojxq62iwyrdai3@i76ygp2anscy>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Sep 18, 2025 at 10:27:27PM +0800, Guodong Xu wrote:
-> The driver's existing logic for setting the DMA mask for "marvell,pdma-1.0"
-> was flawed. It incorrectly relied on pdev->dev->coherent_dma_mask instead
-> of declaring the hardware's fixed addressing capability. A cleaner and
-> more correct approach is to define the mask directly based on the hardware
-> limitations.
-> 
-> The MMP/PXA PDMA controller is a 32-bit DMA engine. This is supported by
-> datasheets and various dtsi files for PXA25x, PXA27x, PXA3xx, and MMP2,
-> all of which are 32-bit systems.
-> 
-> This patch simplifies the driver's logic by replacing the 'u64 dma_mask'
-> field with a simpler 'u32 dma_width' to store the addressing capability
-> in bits. The complex if/else block in probe() is then replaced with a
-> single, clear call to dma_set_mask_and_coherent(). This sets a fixed
-> 32-bit DMA mask for "marvell,pdma-1.0" and a 64-bit mask for
-> "spacemit,k1-pdma," matching each device's hardware capabilities.
-> 
-> Finally, this change also works around a specific build error encountered
-> with clang-20 on x86_64 allyesconfig. The shift-count-overflow error is
-> caused by a known clang compiler issue where the DMA_BIT_MASK(n) macro's
-> ternary operator is not correctly evaluated in static initializers. By
-> moving the macro's evaluation into the probe() function, the driver avoids
-> this compiler bug.
-> 
-> Fixes: 5cfe585d8624 ("dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support with 64-bit addressing")
-> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-> Closes: https://lore.kernel.org/lkml/CA+G9fYsPcMfW-e_0_TRqu4cnwqOqYF3aJOeKUYk6Z4qRStdFvg@mail.gmail.com
-> Suggested-by: Arnd Bergmann <arnd@arndb.de>
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+On 9/20/25 12:55 AM, Manivannan Sadhasivam wrote:
+> On Fri, Sep 19, 2025 at 03:14:05PM -0500, Alex Elder wrote:
+>> On 9/15/25 3:14 AM, Manivannan Sadhasivam wrote:
+>>> On Wed, Aug 13, 2025 at 01:46:57PM GMT, Alex Elder wrote:
+>>>
+>>> Subject should have 'pci' prefix, not 'phy'.
+>>
+>> OK I'll update that in the next version.
 
-Tested-by: Nathan Chancellor <nathan@kernel.org> # build
+I have a new version of this code ready, but I'll delay sending
+it until the end of the merge window.
 
-It would be great if this could be picked up before the 6.18 DMA pull
-request so that I do not have to patch our CI to avoid this issue.
+>>>> Add the Device Tree binding for the PCIe root complex found on the
+>>>> SpacemiT K1 SoC.  This device is derived from the Synopsys Designware
+>>>> PCIe IP.  It supports up to three PCIe ports operating at PCIe gen 2
+>>>> link speeds (5 GT/sec).  One of the ports uses a combo PHY, which is
+>>>> typically used to support a USB 3 port.
+>>>>
+>>>> Signed-off-by: Alex Elder <elder@riscstar.com>
+>>>> ---
+>>>>    .../bindings/pci/spacemit,k1-pcie-rc.yaml     | 141 ++++++++++++++++++
+>>>>    1 file changed, 141 insertions(+)
+>>>>    create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml
+>>>> new file mode 100644
+>>>> index 0000000000000..6bcca2f91a6fd
+>>>> --- /dev/null
+>>>> +++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-rc.yaml
+>>>> @@ -0,0 +1,141 @@
 
->  drivers/dma/mmp_pdma.c | 20 ++++++++------------
->  1 file changed, 8 insertions(+), 12 deletions(-)
+. . .
+
+>>>> +  interrupts-extended:
+>>>> +    maxItems: 1
+>>>
+>>> What is the purpose of this property? Is it for MSI or INTx?
+>>
+>> It is for MSIs, which are translated into this interrupt.
+>> I'll add a short description indicating this.
+>>
+>> Is there a better way to represent this?
+>>
 > 
-> diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-> index d07229a748868b8115892c63c54c16130d88e326..86661eb3cde1ff6d6d8f02b6f0d4142878b5a890 100644
-> --- a/drivers/dma/mmp_pdma.c
-> +++ b/drivers/dma/mmp_pdma.c
-> @@ -152,8 +152,8 @@ struct mmp_pdma_phy {
->   *
->   * Controller Configuration:
->   * @run_bits:   Control bits in DCSR register for channel start/stop
-> - * @dma_mask:   DMA addressing capability of controller. 0 to use OF/platform
-> - *              settings, or explicit mask like DMA_BIT_MASK(32/64)
-> + * @dma_width:  DMA addressing width in bits (32 or 64). Determines the
-> + *              DMA mask capability of the controller hardware.
->   */
->  struct mmp_pdma_ops {
->  	/* Hardware Register Operations */
-> @@ -173,7 +173,7 @@ struct mmp_pdma_ops {
->  
->  	/* Controller Configuration */
->  	u32 run_bits;
-> -	u64 dma_mask;
-> +	u32 dma_width;
->  };
->  
->  struct mmp_pdma_device {
-> @@ -1172,7 +1172,7 @@ static const struct mmp_pdma_ops marvell_pdma_v1_ops = {
->  	.get_desc_src_addr = get_desc_src_addr_32,
->  	.get_desc_dst_addr = get_desc_dst_addr_32,
->  	.run_bits = (DCSR_RUN),
-> -	.dma_mask = 0,			/* let OF/platform set DMA mask */
-> +	.dma_width = 32,
->  };
->  
->  static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
-> @@ -1185,7 +1185,7 @@ static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
->  	.get_desc_src_addr = get_desc_src_addr_64,
->  	.get_desc_dst_addr = get_desc_dst_addr_64,
->  	.run_bits = (DCSR_RUN | DCSR_LPAEEN),
-> -	.dma_mask = DMA_BIT_MASK(64),	/* force 64-bit DMA addr capability */
-> +	.dma_width = 64,
->  };
->  
->  static const struct of_device_id mmp_pdma_dt_ids[] = {
-> @@ -1314,13 +1314,9 @@ static int mmp_pdma_probe(struct platform_device *op)
->  	pdev->device.directions = BIT(DMA_MEM_TO_DEV) | BIT(DMA_DEV_TO_MEM);
->  	pdev->device.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
->  
-> -	/* Set DMA mask based on ops->dma_mask, or OF/platform */
-> -	if (pdev->ops->dma_mask)
-> -		dma_set_mask(pdev->dev, pdev->ops->dma_mask);
-> -	else if (pdev->dev->coherent_dma_mask)
-> -		dma_set_mask(pdev->dev, pdev->dev->coherent_dma_mask);
-> -	else
-> -		dma_set_mask(pdev->dev, DMA_BIT_MASK(64));
-> +	/* Set DMA mask based on controller hardware capabilities */
-> +	dma_set_mask_and_coherent(pdev->dev,
-> +				  DMA_BIT_MASK(pdev->ops->dma_width));
->  
->  	ret = dma_async_device_register(&pdev->device);
->  	if (ret) {
+> For external MSI controllers, it is recommended to use 'msi-map' property as the
+> client often need to pass RID, RID length and other sideband data to the MSI
+> controller.
+
+This implementation is using the DWC built-in MSI controller, not an
+external controller.  It implements 256 MSIs, and they're handled by
+dw_handle_msi_irq().  The interrupt will be given name "msi" in the
+next version and I hope that at least helps clarify things.
+
 > 
-> ---
-> base-commit: cc0bacac6de7763a038550cf43cb94634d8be9cd
-> change-id: 20250904-mmp-pdma-simplify-dma-addressing-f6aef03e07c3
+>>>> +
+>>>> +  spacemit,syscon-pmu:
+>>>> +    description:
+>>>> +      PHandle that refers to the APMU system controller, whose
+>>>> +      regmap is used in managing resets and link state.
+>>>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>>>> +
+>>>> +  device_type:
+>>>> +    const: pci
+>>>> +
+>>>> +  max-link-speed:
+>>>> +    const: 2
+>>>
+>>> Why do you need to limit it to 5 GT/s always?
+>>
+>> It's what the hardware overview says is the speed
+>> of the ports.
+>>      PCIE PortA Gen2x1
+>>      PCIE PortB Gen2x2
+>>      PCIE PortC Gen2x2
+>>
+>> But I think what you're asking might be "why do you
+>> need to specify in DT that the link speed is limited".
+>> And in that case, I realize now that it is not needed.
+>> I will specify dw_pcie->max_link_speed to 2 before
+>> calling dw_pcie_host_init().
+>>
 > 
-> Best regards,
-> -- 
-> Guodong Xu <guodong@riscstar.com>
+> You only need to specify this property if you want to limit the link speed to a
+> certain data rate by the controller driver than what is supported by the
+> hardware.
+
+Yes, this makes sense.
+
+> Looks like your hardware supports 5 GT/s by default for all ports. So you can
+> omit this property and also no need to set 'dw_pcie->max_link_speed'. In the
+> absence of this property, 'dw_pcie->max_link_speed' will be populated with the
+> hardware default value, which will be 2 in your case.
+
+You are correct, and I verified this.  I won't specify the link
+speed "manually," and the hardware default (which is 2) will be
+used.
+
+>> If that's not what you meant, please let me know.
+>>
+>>>> +  num-viewport:
+>>>> +    const: 8
+>>>> +
+>>>> +required:
+>>>> +  - compatible
+>>>> +  - reg
+>>>> +  - clocks
+>>>> +  - clock-names
+>>>> +  - resets
+>>>> +  - reset-names
+>>>> +  - spacemit,syscon-pmu
+>>>> +  - "#address-cells"
+>>>> +  - "#size-cells"
+>>>> +  - device_type
+>>>> +  - max-link-speed
+>>>
+>>> Same comment as above.
+>>>
+>>>> +  - bus-range
+>>>> +  - num-viewport
+>>>> +
+>>>> +additionalProperties: false
+>>>> +
+>>>> +examples:
+>>>> +  - |
+>>>> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
+>>>> +    pcie0: pcie@ca000000 {
+>>>> +        compatible = "spacemit,k1-pcie-rc";
+>>>> +        reg = <0x0 0xca000000 0x0 0x00001000>,
+>>>> +              <0x0 0xca300000 0x0 0x0001ff24>,
+>>>> +              <0x0 0x8f000000 0x0 0x00002000>,
+>>>> +              <0x0 0xc0b20000 0x0 0x00001000>;
+>>>> +        reg-names = "dbi",
+>>>> +                    "atu",
+>>>> +                    "config",
+>>>> +                    "link";
+>>>> +
+>>>> +        ranges = <0x01000000 0x8f002000 0x0 0x8f002000 0x0 0x100000>,
+>>>
+>>> I/O port CPU address starts from 0.
+>>
+>> First, I'm not sure what this comment means.
+>>
 > 
+> Sorry, I meant to say 'PCI address' not 'CPU address'. The second element in
+> your 'ranges' example corresponds to the PCI start address of the I/O port and
+> it should always start from 0. Also, the encoding for both tuples are wrong. It
+> should be:
+> 
+> 	ranges = <0x01000000 0x0 0x00000000 0x8f002000 0x0 0x100000>,
+> 		 <0x02000000 0x0 0x80000000 0x80000000 0x0 0x0f000000>;
+
+Simply switching to what you show works just fine.  PCI
+addresses show up being zero-based, as they should be.
+What I don't fully understand is why it worked before.
+Maybe because this is simply defining bounds in the
+mapping?
+
+In any case, I am using ranges properties like what you show.
+
+Thanks Mani.
+
+					-Alex
+
+> - Mani
