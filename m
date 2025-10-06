@@ -1,66 +1,33 @@
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470B027602A
-	for <spacemit@lists.linux.dev>; Wed,  1 Oct 2025 02:40:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74F44A06;
+	Mon,  6 Oct 2025 08:10:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759286422; cv=none; b=lK50Q7W1DGxExFGIhQc6cre6FmvmqAe2QF0qmcJvrnp/EdO8Zb31fJBwY7Iz841F2TXucw60Fq5y2kf/H2uA3AkX2r4e/ru837gEy3z+rjzt+MFlS8sUmfhqbhSAao0d07tW67WC7++P4fCIQmegAwTWkwN84dCR2+dHbNwZQ7k=
+	t=1759738253; cv=none; b=AaUGmDbMIuPO8dctUlGH/eVe4rd4TlQcVW5F3zoZUxkQuW9i8ZiJ23VqaVUVLQqLqWZtZEpUMeKc+8kIo4Vnz/5y7XXkSToDafU3ieAnzJ3zyGMAJKdfuf36YXxqJx+7tYYcOkhhxM8czoZ5IFWNXHTOzkT7A3Hotj6tnb4rtN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759286422; c=relaxed/simple;
-	bh=95ml47WxKM7OsxOqgZUIEYLPG88WDEDiHa7cU33WvXI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=OVooLzNFgOzlPjqeYVPwqPcJBZgWkAfE9KD8d08xtPS4ZgU95twiXOhe6l3y4cmehG94p6QbLOlBNm/WFifcoOcfZuZSfG6ffbZ08zUlPlgdO5M03iJbri8R9OiRFTCITXAdBoQI4+KzWND6HQfaYJonvVzAtmVSWMWLsJRzkdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=lUI46d6W; arc=none smtp.client-ip=209.85.166.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1759738253; c=relaxed/simple;
+	bh=oTIhDkCwIM+9ZK5Yt+oN2PlT5Rae3WkdT7logVkhR1Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BpMqbBrVBhzALLbfM08hc9O0cuS5HuYbRl5Ur0KOe8feUnLOtE1+7W7FBMVpFa0o5EV74GiTqjvQuMFfUMwqaQncfpjy8jDSAUMPSROKk0HL2X0k+CrzQ3/I8tzJJJhl+X0Vo6o3BTYcwn1JNViVnxsEEUosxeBmkMiNxgZHJaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oKGWMH0K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="lUI46d6W"
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-93607aec358so23205839f.0
-        for <spacemit@lists.linux.dev>; Tue, 30 Sep 2025 19:40:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1759286419; x=1759891219; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BSiL8LGa2xahx7enK5ghNLiWs+z0ni4QqOBXClR3tWI=;
-        b=lUI46d6W5Rlh7R36Viru5edFeEk7XCumxmlwGR6cab4zhFVk0dMOn4cuOhTaxGnO8B
-         MMnLql00e3ZXIfa6QXYmTKsjW5ZjJ+SvITlrUS2L1tSfv/LiCUlUyOkAH2VUgMKr0gO0
-         THNmAEJpG+6O/46TQNxQ/pnSC/6CU5Wu9ydz8fIGGySsSyzjdwlZHVjgnRkoarCB5a0c
-         5ZEzQrhMkhLnKGaO1iiY9W5uMF0LzYhkG51m9lLmG+dxbt/r2dXuVWfTqEZNa8uhWPoL
-         sXhsCz/XaXmhHEOG38CZO+0oICZB7SUEKEZ+N3fgQY1FzqLe3zNcaZ57iRk0wVJvHUId
-         hsOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759286419; x=1759891219;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BSiL8LGa2xahx7enK5ghNLiWs+z0ni4QqOBXClR3tWI=;
-        b=MmXGDzqyByiw3kuIIW+5vlDh2MR6hoWCnXNs9/e6OVGiqGlabEKPL1stuCrqe9CbWG
-         Q2AHZcVvWzIk01w/CxaP5bIdREFW//sbdVwRHWgD7uG9pBTJz2E9ityJ7gdNbA0EM99b
-         IBuWDaBbzMCwY90Vl/YLF81TfbqHHR3FwaAgi9QGC7cU6HRu+5CSxEVeFTraQd+0V0f/
-         C6fDIW8zwmV3GDrfELy6cXzgDe8iyZzffVBq+Fw/XBvHGaDvqbxq9FCxgWLBHHFcnfYL
-         h/aITto7JMY5QucB9v+XWZVgwGJQ/BcqoEANtUDPqTaEwukmmXfD7lY/D5R7b13jmDJ3
-         FapQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXfHzpe66a6AOLI+XzbpJv2Q7eBjyz+JHZP/PYLfrgx8GqUHAIbVjpgKKC/Lr73OXQ+bt2PScmERA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwrOPQIRfR+ccYje2koIlRiR2YIbx/9RpWqdoS1tpewR9lCWimB
-	0PlxdYIO8d8k8OvgNk1BRrw5jRmhNHtYsBLDLcFzTHBbuXDHZTavBJHthsB0/HW/myE=
-X-Gm-Gg: ASbGnctl/j5IDjfG/vmhhCMpIA1qdqRZ2qZ3cRDBsqJ+eRF+Ebe/ZuTxrZSlulSEfiU
-	RCdpe0BOWQ0gXF7p50x82NJbHPcWpDi7bFanA9EZ7QcggV1ngYeG4bBdyLVB4iwnpPdzaoPeto7
-	bmZjqTZIUzMQ/snPy6GcThIzDnRU9CcMhklbIGmIxZoRHbpKiImYDPu3IFJWguSNDMf5TwEzGVf
-	2rKBRZCHGQpKiX5Q5g8qw063TirLCS5+W/xkL3LAloQpHUHunu2aqSpmtN3pw0wxja9BI0cDwrO
-	581l81LNkz4Nr2w0R746nw3KF+uRfkXXLq4gmFkJj2gtVpYYjirADr/zv+gZtAf5rgItX2QLTUi
-	G1nJPK5BimjgEEOLOW9f3eOwrqXSJuHBs/R0ZgTCVyvbK0w7QbeaL1UBe1GxvewNHViArifkeZW
-	YLpDZC4RVcvRUprG5yIKxn
-X-Google-Smtp-Source: AGHT+IFnQ4AKi2u/W+a6GpDqwlkdiwJEehpu9YBKfYz9D/hyyMA4l6KRgEzrqCbvLsuK4qiSaJzeAQ==
-X-Received: by 2002:a05:6602:6287:b0:922:6c20:45ef with SMTP id ca18e2360f4ac-937a9ff849bmr348732439f.7.1759286419402;
-        Tue, 30 Sep 2025 19:40:19 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-92d06cc3b9esm184392139f.12.2025.09.30.19.40.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Sep 2025 19:40:18 -0700 (PDT)
-Message-ID: <4ead7693-4174-4494-b997-c0e4159809af@riscstar.com>
-Date: Tue, 30 Sep 2025 21:40:17 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oKGWMH0K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DA1C4CEF5;
+	Mon,  6 Oct 2025 08:10:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759738252;
+	bh=oTIhDkCwIM+9ZK5Yt+oN2PlT5Rae3WkdT7logVkhR1Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=oKGWMH0KZJtsbAcJei006XfuUXtKczdbm3Xl5oqE8EjsnrK9Zx04ugriW9i2opzIr
+	 SIz2ZLRFkp1Iir6b6+LP+rFzrHBreyWfWSNbNc0lUyslslR7T/fdSKFV6d3SRnY4yI
+	 DfLg35YeN6WAm56dJxcazYtsQKg1KF5BfeHup2Myz5xNOpjkoeSM1as++n9EmpopnX
+	 grKAccYk38/uoI1S8jqAdBzHvKWcNW4d1j7d5TqX8UihstZe+A+xsKy1W1xa1bQYC7
+	 xWYggN/Et/9innfB9p5EEFEBgXQmT5zh8fFi+/d1tTJJIXFlLPmVsNslG1I9ya/cL2
+	 s+VXGXPk4f3Yg==
+Message-ID: <17eb5593-5057-4843-ac9e-42645605c320@kernel.org>
+Date: Mon, 6 Oct 2025 17:10:47 +0900
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,73 +35,84 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] PCI: spacemit: introduce SpacemiT PCIe host driver
-From: Alex Elder <elder@riscstar.com>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, robh@kernel.org,
- bhelgaas@google.com, krzk+dt@kernel.org, conor+dt@kernel.org,
- vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
+Subject: Re: [PATCH 1/3] dt-bindings: spi: add SpacemiT K1 SPI support
+To: Alex Elder <elder@riscstar.com>, broonie@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-spi@vger.kernel.org, devicetree@vger.kernel.org, dlan@gentoo.org,
  paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, p.zabel@pengutronix.de, tglx@linutronix.de,
- johan+linaro@kernel.org, thippeswamy.havalige@amd.com, namcao@linutronix.de,
- mayank.rana@oss.qualcomm.com, shradha.t@samsung.com, inochiama@gmail.com,
- quic_schintav@quicinc.com, fan.ni@samsung.com, devicetree@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-pci@vger.kernel.org,
- spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20250813184701.2444372-1-elder@riscstar.com>
- <20250813184701.2444372-6-elder@riscstar.com>
- <sptrmspkmqrwsh2iv4rmha45vsoz5ks7vhcdp3dytsxyabn6qn@mmk7z6tf5wcv>
- <21ad322f-5abe-4a97-9373-d027b846ee8c@riscstar.com>
+ alex@ghiti.fr, p.zabel@pengutronix.de, spacemit@lists.linux.dev,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20250917220724.288127-1-elder@riscstar.com>
+ <20250917220724.288127-2-elder@riscstar.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-In-Reply-To: <21ad322f-5abe-4a97-9373-d027b846ee8c@riscstar.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250917220724.288127-2-elder@riscstar.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 9/19/25 5:10 PM, Alex Elder wrote:
->>> +static int k1_pcie_init(struct dw_pcie_rp *pp)
->>> +{
->>> +    struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
->>> +    struct k1_pcie *k1 = to_k1_pcie(pci);
->>> +    u32 offset;
->>> +    u32 mask;
->>> +    int ret;
->>> +
->>> +    ret = k1_pcie_toggle_soft_reset(k1);
->>> +    if (ret)
->>> +        goto err_app_disable;
->>> +
->>> +    ret = k1_pcie_app_enable(k1);
->>> +    if (ret)
->>> +        return ret;
->>> +
->>> +    ret = phy_init(k1->phy);
->>> +    if (ret)
->>> +        goto err_app_disable;
->>> +
->>> +    /* Set the PCI vendor and device ID */
->>> +    dw_pcie_dbi_ro_wr_en(pci);
->>> +    dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, K1_PCIE_VENDOR_ID);
->>> +    dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, K1_PCIE_DEVICE_ID);
->>> +    dw_pcie_dbi_ro_wr_dis(pci);
->>> +
->>> +    /*
->>> +     * Put the port in root complex mode, record that Vaux is present.
->>
->> There is no 3.3Vaux supply present in the binding. So the supply is 
->> guaranteed
->> to be present and enabled always by the platform?
-> 
-> Actually, I don't know, I'll ask.  Thank you for pointing this out.
+On 18/09/2025 07:07, Alex Elder wrote:
+> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
+> +    spi3: spi@d401c000 {
+> +        compatible = "spacemit,k1-spi";
+> +        reg = <0xd401c000 0x30>;
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +        clocks = <&syscon_apbc CLK_SSP3>,
+> +                 <&syscon_apbc CLK_SSP3_BUS>;
+> +        clock-names = "core",
+> +                      "bus";
+> +        resets = <&syscon_apbc RESET_SSP3>;
+> +        interrupts-extended = <&plic 55>;
+> +        spacemit,k1-ssp-id = <3>;
+> +        dmas = <&pdma 20>,
+> +               <&pdma 19>;
+> +        dma-names = "rx",
+> +                    "tx";
+> +        status = "disabled";
+Please drop, status is not valid in the example.
 
-On the Banana Pi BPI-F3 platform, this supply is always on.
-
-There do exist other (SpacemiT K1-based) platforms that enable
-this supply using a GPIO.  I am not able to test that now.
-
-However I will add a property in the DT binding to indicate the
-3.3v supply.  I see "vpcie3v3-supply" used as a property name
-and unless someone suggests doing something else, that's what
-I'll use.
-
-					-Alex
+Best regards,
+Krzysztof
