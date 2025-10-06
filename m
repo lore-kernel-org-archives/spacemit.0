@@ -1,118 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74F44A06;
-	Mon,  6 Oct 2025 08:10:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF5D215767
+	for <spacemit@lists.linux.dev>; Mon,  6 Oct 2025 12:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759738253; cv=none; b=AaUGmDbMIuPO8dctUlGH/eVe4rd4TlQcVW5F3zoZUxkQuW9i8ZiJ23VqaVUVLQqLqWZtZEpUMeKc+8kIo4Vnz/5y7XXkSToDafU3ieAnzJ3zyGMAJKdfuf36YXxqJx+7tYYcOkhhxM8czoZ5IFWNXHTOzkT7A3Hotj6tnb4rtN8=
+	t=1759754473; cv=none; b=nTfm+xeDmAxVN+M2c807yyxYtVIGaqd/eNyC2MbIrtYyGYVaDRLJCGE2CDNtNlN7pVm0RS4oWU8C4xmmbWwD/P9/R99D4f///YSNmXqpNwBZr4PJZXp9rfEzfxgeRNOoextsCweGylw7HRiuLIWaxU84YfAEcwCoL6zACgeG1UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759738253; c=relaxed/simple;
-	bh=oTIhDkCwIM+9ZK5Yt+oN2PlT5Rae3WkdT7logVkhR1Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BpMqbBrVBhzALLbfM08hc9O0cuS5HuYbRl5Ur0KOe8feUnLOtE1+7W7FBMVpFa0o5EV74GiTqjvQuMFfUMwqaQncfpjy8jDSAUMPSROKk0HL2X0k+CrzQ3/I8tzJJJhl+X0Vo6o3BTYcwn1JNViVnxsEEUosxeBmkMiNxgZHJaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oKGWMH0K; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1759754473; c=relaxed/simple;
+	bh=1q+VIFZwiIkYLeXafY/FJdneXiBfYWG4ku3gvwDgztM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Fh5mNU9YguzjHuD02HhBpHP5x4w2YXaw6FOWipBf77WRUde6AB6+h7whFFdzMIVWIvKve8OhOMlGNEOkUKhKtyX4garLlIcsoCygdeYlY3osNzx1CNNFNkTpvgrxQ92/wgPTYzVcloAtYdGKw3Lop0Jp+OILEuD7IgrU6wHoCQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VSCp/2Z9; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oKGWMH0K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DA1C4CEF5;
-	Mon,  6 Oct 2025 08:10:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759738252;
-	bh=oTIhDkCwIM+9ZK5Yt+oN2PlT5Rae3WkdT7logVkhR1Y=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=oKGWMH0KZJtsbAcJei006XfuUXtKczdbm3Xl5oqE8EjsnrK9Zx04ugriW9i2opzIr
-	 SIz2ZLRFkp1Iir6b6+LP+rFzrHBreyWfWSNbNc0lUyslslR7T/fdSKFV6d3SRnY4yI
-	 DfLg35YeN6WAm56dJxcazYtsQKg1KF5BfeHup2Myz5xNOpjkoeSM1as++n9EmpopnX
-	 grKAccYk38/uoI1S8jqAdBzHvKWcNW4d1j7d5TqX8UihstZe+A+xsKy1W1xa1bQYC7
-	 xWYggN/Et/9innfB9p5EEFEBgXQmT5zh8fFi+/d1tTJJIXFlLPmVsNslG1I9ya/cL2
-	 s+VXGXPk4f3Yg==
-Message-ID: <17eb5593-5057-4843-ac9e-42645605c320@kernel.org>
-Date: Mon, 6 Oct 2025 17:10:47 +0900
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VSCp/2Z9"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-28e7cd6dbc0so56094165ad.0
+        for <spacemit@lists.linux.dev>; Mon, 06 Oct 2025 05:41:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1759754471; x=1760359271; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=1q+VIFZwiIkYLeXafY/FJdneXiBfYWG4ku3gvwDgztM=;
+        b=VSCp/2Z9J8g1+qUYbiH0ZiJHezUemsy3PFzY0BzGQFsA02bGgCXF0f1xgyBKWO0Uvv
+         UtAA42YSufvMdMVTLOfsrtlKALnkknSA92hhEYNFY6IvCz7V+3HxNt/Nn3U/KpNcjdqV
+         0RDkcweb+RnIQNj+J57h62j09ecEqMLA37ixJXuMA2uJgl6xEfXqCuoCFscndHxtr2T3
+         n9ar8aZjLzLCs3iBO2qtfPTfhCKyv1m1gYCR7om7Qg1HZoGsppBwe/wmTQ393hZwjMty
+         taj7V45+XT9JJS06BbF30nQNFxNdJlkJEvrWNudg2/4PK04aMiF7LBG8nVAvEC9fcNr0
+         4vdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759754471; x=1760359271;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1q+VIFZwiIkYLeXafY/FJdneXiBfYWG4ku3gvwDgztM=;
+        b=YwaLfLTnWrPfoxZMWafs3SUPRRLSGE0UjWJa+AyJRbV+RklgRszezWsvZiNLKqT4y9
+         QiR/vE0ddnacNiFQmb6GxCDiMmW6W+HdoNObr7NXouZpHX2uNYYV++RO7kcPddPUtiV7
+         13Ncsl7794NKyD0dKmeL1EC4G+C3yjpbZD5yQtNFHrE4L2FBi02xtOZjfmgGBexjU4ek
+         6rLZFqLq1wSpE47IxAIRpRBWXyosPRvpFYR2aPPgM7tddVuL4s14z8AedX3sUk04kAiD
+         Ml4qcPirGSzNwkxNiQzTYr1w3+g8b4zs0dsP07sMPkXJHp+BovmsK9TDTxq7iXKV5xkq
+         oA6A==
+X-Forwarded-Encrypted: i=1; AJvYcCX0PFzZDgYIwIj3mPYFmfN6mdbzG6IyygP9bJlmAX6EbemsGyt13K2mTNyKxXEWXXkirK1vaNy3fQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YymzOlmCz2F/dAmnDZFofgkbCmI+eqyih68HrizeOC6CseNdpPT
+	wVBitwvlpguxvWyrvFYqbq49VPaacG1Z0h/O4WZND0FQnmY2vtHYZvN5eGTHbypPIk3AsRzdFKv
+	k1QLfVqmEMn7c3uRpDy2uZcmELx7EeW5gaEPjoFGAcv/369KhP3Qtuqbcgg==
+X-Gm-Gg: ASbGncvJbDnvgf9x2aTBw5dtrddQqVxdHk6ZPL9wtFS+STO+JIXKvXN/uy7QIiAbI+J
+	tmR1c1kLCM5MssFFtOo/jK8+8sGywP5d7vEBYia4rYiV7s5qTdBSQG4xYLGmMuww5j8Y86NWnU0
+	bOA2eqajOOm65Dm9mN5YawyXWXELGsEd4Sw09MogUXZq7xcDyjYp2xx601oFNUa9XageaoLJPvR
+	BDat1jYZLwA66OVWXaHzq1iEXhWL2P0BW3xLtcR3cbT23NhrrsEFimdMtKlSwww0avaXMU9qiMs
+	3FF6ssSoqZevqv9YBTzmPAZF
+X-Google-Smtp-Source: AGHT+IGsLKBTasVAqEZ4v4KXBEfDfTM9A9ENdzksSzZ7BVLlJItKpXfKx4hZJPWcb6hfrOA5/IrXwYs5mVLZOS99Jts=
+X-Received: by 2002:a17:903:238a:b0:28e:873d:91 with SMTP id
+ d9443c01a7336-28e9a6563f0mr137927955ad.29.1759754471396; Mon, 06 Oct 2025
+ 05:41:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: spi: add SpacemiT K1 SPI support
-To: Alex Elder <elder@riscstar.com>, broonie@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-spi@vger.kernel.org, devicetree@vger.kernel.org, dlan@gentoo.org,
- paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, p.zabel@pengutronix.de, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20250917220724.288127-1-elder@riscstar.com>
- <20250917220724.288127-2-elder@riscstar.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250917220724.288127-2-elder@riscstar.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
+In-Reply-To: <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Mon, 6 Oct 2025 18:11:00 +0530
+X-Gm-Features: AS18NWASLNw80j6ptJPPHIfrc8HYOqH-1LzEniT9J7aBBeWXoMD5tLZ1N6aS2Wg
+Message-ID: <CA+G9fYsTz6WTetGeWn=NX0fyX_j6qRR9XA_ETmJiYWDfCwyHWg@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: mmp_pdma: fix DMA mask handling
+To: Guodong Xu <guodong@riscstar.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, Bill Wendling <morbo@google.com>, 
+	Justin Stitt <justinstitt@google.com>, Yixun Lan <dlan@gentoo.org>, dmaengine@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, elder@riscstar.com, 
+	Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 
-On 18/09/2025 07:07, Alex Elder wrote:
-> +    #include <dt-bindings/clock/spacemit,k1-syscon.h>
-> +    spi3: spi@d401c000 {
-> +        compatible = "spacemit,k1-spi";
-> +        reg = <0xd401c000 0x30>;
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +        clocks = <&syscon_apbc CLK_SSP3>,
-> +                 <&syscon_apbc CLK_SSP3_BUS>;
-> +        clock-names = "core",
-> +                      "bus";
-> +        resets = <&syscon_apbc RESET_SSP3>;
-> +        interrupts-extended = <&plic 55>;
-> +        spacemit,k1-ssp-id = <3>;
-> +        dmas = <&pdma 20>,
-> +               <&pdma 19>;
-> +        dma-names = "rx",
-> +                    "tx";
-> +        status = "disabled";
-Please drop, status is not valid in the example.
+On Thu, 18 Sept 2025 at 19:57, Guodong Xu <guodong@riscstar.com> wrote:
+>
+> The driver's existing logic for setting the DMA mask for "marvell,pdma-1.0"
+> was flawed. It incorrectly relied on pdev->dev->coherent_dma_mask instead
+> of declaring the hardware's fixed addressing capability. A cleaner and
+> more correct approach is to define the mask directly based on the hardware
+> limitations.
+>
+> The MMP/PXA PDMA controller is a 32-bit DMA engine. This is supported by
+> datasheets and various dtsi files for PXA25x, PXA27x, PXA3xx, and MMP2,
+> all of which are 32-bit systems.
+>
+> This patch simplifies the driver's logic by replacing the 'u64 dma_mask'
+> field with a simpler 'u32 dma_width' to store the addressing capability
+> in bits. The complex if/else block in probe() is then replaced with a
+> single, clear call to dma_set_mask_and_coherent(). This sets a fixed
+> 32-bit DMA mask for "marvell,pdma-1.0" and a 64-bit mask for
+> "spacemit,k1-pdma," matching each device's hardware capabilities.
+>
+> Finally, this change also works around a specific build error encountered
+> with clang-20 on x86_64 allyesconfig. The shift-count-overflow error is
+> caused by a known clang compiler issue where the DMA_BIT_MASK(n) macro's
+> ternary operator is not correctly evaluated in static initializers. By
+> moving the macro's evaluation into the probe() function, the driver avoids
+> this compiler bug.
+>
+> Fixes: 5cfe585d8624 ("dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support with 64-bit addressing")
+> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+> Closes: https://lore.kernel.org/lkml/CA+G9fYsPcMfW-e_0_TRqu4cnwqOqYF3aJOeKUYk6Z4qRStdFvg@mail.gmail.com
+> Suggested-by: Arnd Bergmann <arnd@arndb.de>
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
 
-Best regards,
-Krzysztof
+Patch applied on top of Linux next-20251003 tag and build test pass.
+
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+
+- Naresh
