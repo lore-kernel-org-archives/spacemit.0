@@ -1,50 +1,56 @@
-Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.65.219])
+Received: from bg5.exmail.qq.com (bg5.exmail.qq.com [43.155.80.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE58239E88
-	for <spacemit@lists.linux.dev>; Thu,  9 Oct 2025 03:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.65.219
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BC71B4F1F
+	for <spacemit@lists.linux.dev>; Thu,  9 Oct 2025 08:07:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.155.80.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759981142; cv=none; b=PlN04w689qKcxc7uvXZz9aW4aiA7zXnR85PBkKbXd1nP1B+THc/U+9YhqMPrP1qBYcBKb+uRt72O84d6J9aLSYPexBxIcabAgj51d/gOsPcCYak94yoziN+RGM3hzItpjcXzNYvx6Rmye5BBO8RM3dOj2S+4TfB2f0zBABo4s8U=
+	t=1759997257; cv=none; b=LNBFoR/acwtjBxTZU98VWgVuo2hgVWqqI8U7pCyG6plRb5Nt6MFngM9O1IztNDjFnoyBUFkpF7KCLPnMPts1eb50sjNCO9tkriCzhAomu6DPkKlQyZuB3h2GZH3oYSjkzSwOcxCz/8ri98SVXfsPrejNGNyLq7K5nZbW/G4Afz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759981142; c=relaxed/simple;
-	bh=MWRKebex4pXJKTpbvnjqGtV1RpwhmuiP8laC1Omwa2Q=;
+	s=arc-20240116; t=1759997257; c=relaxed/simple;
+	bh=DKsNxhZuvjGgb7iyN4foc8ZS/xGsFnmU8aui+Jb/OlE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dBO+++GhzwVMhsEJ0sXCtS1F6SwqVy2Y+ud3XeFPOF6sN94ZYkIzXoXtolYK7YxlPeJaQLeeVDzgQbE4RT+Po9kwCmwNPJdOdeXfDDfKyIwLKS0dx/0eBVxE7Bng71Cv9Zd4EnCSgQvj/PmdF8iVDaiSH53kFsDsSiKmif35p9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Wo7Y9eJb; arc=none smtp.client-ip=114.132.65.219
+	 Content-Type:Content-Disposition:In-Reply-To; b=sov3RjzJVY8V0X1FFF+djC0AK0FHCqyYR1/WsdvSQ6tpZRDjnFLmo8WIgK0RTq4NM5kPkxja+ddwh2Jm4pi8+GsavMF89h7x4Prxka6MnVDyFHCyEpdIusu4SerAIUnauahyN89vsJfj3QSKnP2kXp69urFfkgdMmgT3KMxphKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=WiaOkJNj; arc=none smtp.client-ip=43.155.80.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Wo7Y9eJb"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="WiaOkJNj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1759981068;
-	bh=NYV08VwWK+VCWK8zEMUDzI03igsAPzvucgAerlP6T2Q=;
+	s=mxsw2412; t=1759997231;
+	bh=QomI1gNvaUojwqQoknXFY7m4GYm6zxoKTgnI/BnC6LY=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=Wo7Y9eJbYhAJRGSu/0iQXdk6tNTruo06GcROScR1vKqiaZ7V1BGvtrs9/Pps7MeGv
-	 YKhvAtgGEOaI/hmLQH8VbxfxVD1ujjXAPG7BDo9SeKsB3LQOVHFtFStx8tHwuRl8Oj
-	 7T8okYReD5OCoZ5jf7WowXtZpM8oqxsnan/zvNcg=
-X-QQ-mid: esmtpgz13t1759981061t0d23b669
-X-QQ-Originating-IP: X3ZKTjlO2Y/CL0fdpyofBlTObtZxrr4RfV1kqTHy5ZQ=
+	b=WiaOkJNjAfaOxrrDPIS7pnBdL6f1nW9gDe0qY/RG0qlJd/MbAJ27jdS+34kgOUmRl
+	 gLVV9BZ4jBbW5badASFhVDHnU+USXqRKFu6uWqYBeENV2WNIY+urgKjT5maAFk8SS4
+	 iRy9cmlmZ+J6TV6nHE6bjlgrhoE/uTu+lpJ8a6U4=
+X-QQ-mid: zesmtpsz8t1759997228t014935b9
+X-QQ-Originating-IP: 3K5W0OLDLhEJGiGik9gi2j2qEwUpKM2FSNoCg+xeMgg=
 Received: from = ( [61.145.255.150])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 09 Oct 2025 11:37:39 +0800 (CST)
+	id ; Thu, 09 Oct 2025 16:07:06 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11439905582249369742
-EX-QQ-RecipientCnt: 9
-Date: Thu, 9 Oct 2025 11:37:39 +0800
+X-BIZMAIL-ID: 2621622551196741310
+EX-QQ-RecipientCnt: 16
+Date: Thu, 9 Oct 2025 16:07:06 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Yixun Lan <dlan@gentoo.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v3] i2c: spacemit: introduce pio for k1
-Message-ID: <B45BBF07F015D568+aOcuA7CwpD-u393R@kernel.org>
-References: <20250929-k1-i2c-atomic-v3-1-f7e660c138b6@linux.spacemit.com>
- <20250930012702-GYA1357001@gentoo.org>
- <F7785DF1AA531CA1+aOcQwrTLmAvlQ3ik@kernel.org>
+To: Conor Dooley <conor@kernel.org>, Yixun Lan <dlan@gentoo.org>
+Cc: Troy Mitchell <troy.mitchell@linux.dev>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: riscv: spacemit: Add MusePi Pro board
+Message-ID: <A5845378AE731404+aOdtKmFPaYfc2n7n@kernel.org>
+References: <20250928-k1-musepi-pro-dts-v1-0-64d0659dfdbc@linux.spacemit.com>
+ <20250928-k1-musepi-pro-dts-v1-1-5efcca0ce3ae@linux.spacemit.com>
+ <20250928074914-GYA1344940@gentoo.org>
+ <20250929-challenge-molecular-947bb1f5962b@spud>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -53,36 +59,52 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <F7785DF1AA531CA1+aOcQwrTLmAvlQ3ik@kernel.org>
+In-Reply-To: <20250929-challenge-molecular-947bb1f5962b@spud>
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
-X-QQ-XMAILINFO: M4lPCacZ9YleJLbPPknz8TcclJO70fmCUi6Z9jynNVdb57jDmRQIqLX8
-	YmlVRyKxllxo9ot0IyXDWXtFOn4bkguU7xAucdBwN/UJy0tIo58AgGZqPx6A5NYRpw74TPI
-	xKNqcx3mIgWmHVr0pdRc0VQZr+FAD1gV2QPKMGETizJ77diC51+POyA0crfw5LMWl/Q3GEm
-	cx3MWgKk16yUdTHOPeYO3kFpg4aPG4Xtdn1vSrJwkIwwpv5WTVdf+PZlMtR4HsmGOTGWkyJ
-	HqJ/rcC+ugGZFBUeDtQpjnRoiine7UohUMgH2fXy+j/KCN0CiAnVB+iQAvr71FAHfH0Me0Z
-	iGWSgNutVShb8vjiFuf0E+a7wQfS35eNo/t6G9AL6+WOrXjRURERxX3ZJhDsFZxJiT7tttQ
-	9luDhDW2X47V5ZuGjWiViBWfjPdTGvwIj98wZVT/YQMQj9UwaJnvC5szZZL50OL1YSmkw/7
-	24T260W+ECnq4aoMDfbF4QRuSL3/HEUteeCoojCNgDlX7Eq5dpjNhhHnCyE9d/hMnFhqDVP
-	xS9GZN0n1R4uA3ZC3AisM3k0um18RwnLp7tB1SG7de0PAo6qlEcyUjo0vvap4WlFyFzEilJ
-	J9xRdIPdAA4cyka0hgnzarDyhjBZtaGs/5Rs5n0HH47f59Sgm+1dN1QoUuXp19CyxN1D3I0
-	bvNo8ab1n+7IuzC3MDCNljpSPqe7x54sdb9KXlzIY02gp0DUE/KjW5UCQBOiXjyk7mKHRau
-	v/mzGF659lIWTIA0k2LNDI8c785SiiXqn5b1yOaPo55vvVFkAeKQxc7443yN+0ec0n3zWcW
-	MYDHkf3OIy9+4dj+R3QWDT0kxHvl7/NybXypB7lm7jWW+VOMyRmeHxS3uVoQzDK6RNexso0
-	PdGx2Re+7k7VppLBIFkqu3gEfOjY9N1UaQsnfCPz4T4eFWhf6yO6L5QFvt9JhhnrwmzcLAs
-	ZTXn40BSkTZuY003w4Otvf4PqC6FMfdR8XyM/IT0sukidubgnuBFmQX+9QVUnoIzuqJvBaK
-	QPj5DXpRqyt2L430dBsAs0W1tzVt2Jv0GVdKFKc+hKyyjzZ1edVDoJshVuWz8=
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: Mp6z4bZjgTSTBwMUNg8zA9wVxazGdIn93I9Zu21FdJDVa3RXuD+vQjXh
+	HHdxaylN9cjOmrQ/WgbLFNFtWLqcn08nuxMpo9RxJR3NopPzZUNsZdRr/08pXyUJ6GMpky9
+	IfLW2D13rw7HxB9e1LGPf987k/TreNIwYE6R7en00JWSp1rnbXxeUYfGiKV9gUJz38tjZAK
+	kVCx8+/y3vXwr5EsoI+L5M1qqyHVsUAehlvLVThtrWFem6sXUgwFTgWoJOS8yEwcRrRm2Eu
+	5xnNR+EMSuhVE1/IqJmEEGv4JPi34oniOGdlInUE4dDUEQCzdin0EBpmNFZyFJ+2pcoMDlr
+	ztDKM87TqqndgJzwD6zP7ZKNH46XcumRbtTdSm8AlV45iuUgL48zPpn0mARgzhacWDrRZLs
+	WcmSolLIF95e7Y02al/G6q0S9RClEdsnTOG1UhYvkCLECMNWWhYNLq543+Zd1jmz6Ygu1nB
+	2w7hZrJiaDUVsahIr6ufnvr4xLZEYwsDLDEFblCHCLxXloVHLQaHib3ZaLY9khPiHZ+zVux
+	VGchYJ3bpMPzBEXafYNgnGcipSA55Y8qrSGaMp2s0EJjoJSG8TEPWnDi3FWUcGII63HViBm
+	RaURwpJHmXGDZIxfqUwU/Yoeq2QYpSoBGXt1sE/a2rfltAY3uUYLJFXznjdHQOY67PtdM64
+	tJY2dzS7czbY12eZIOeXaN6HUBXkwoVHX4NELTic2Qqmln3vReQECz1qydVkfRQolZMeNOR
+	j3CsR/RUVbDxYQ3zhjEY8dhhh7coqluyK7qO0O4WL0vXznJuq8PCMFctXHKSOwVUhD+1g6V
+	YPo55Mz7KO5VtZuomMD7cGFsuSqTeApa+C91VJfkFaXpDzVAM5oL4qGOvuhCuWB8beKvZFs
+	qpd0dWanYd0adsyTgO17UvE0/1KZNcf7cPyA9jIEu1l4wtvKT4L76Al6Jbsx7jYeAvKfQ7M
+	Adf7CFBMRBTvACRg6C8nqJUI+UZWpncN7H1SpEVkV8U6md+q7tlv1zfs7tiSX68Wv4eXiWl
+	ngPxh/xy4WfGQd19YCwznKLnCAdZo1KP37zgtBPmUZ1iB1GXuz7v245KXLKSEts0gVK5x3J
+	6N4GfVqoVZvcjNrGeRi7iY=
 X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
 X-QQ-RECHKSPAM: 0
 
-On Thu, Oct 09, 2025 at 09:32:50AM +0800, Troy Mitchell wrote:
-> On Tue, Sep 30, 2025 at 09:27:02AM +0800, Yixun Lan wrote:
-> > > +	/* To avoid being affected by the state of the previous transfer */
-> > > +	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
-> > > +
-> > I've not see my previous comment has been addressed!
-> Oops.. I forgot to delete it.
-> I'll remote it in the next version.
-       ^^^^^^ remove
+On Mon, Sep 29, 2025 at 06:48:22PM +0100, Conor Dooley wrote:
+> On Sun, Sep 28, 2025 at 03:49:14PM +0800, Yixun Lan wrote:
+> > Hi Troy,
+> > 
+> > On 12:16 Sun 28 Sep     , Troy Mitchell wrote:
+> > > From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > > 
+> > > Document the compatible string for the MusePi Pro [1].
+> > > It is a 1.8-inch single board computer based on the
+> > > SpacemiT K1/M1 RISC-V SoC [2].
+> > you could wrap at slightly more characters, I remember 72 chars
+> > (haven't spent time to find a formal document link..)
+> > 
+> > > 
+> > > Link:
+> > > https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf
+> > I'd suggest to list core features of this board, while using this link as a complement,
+> > base on previous experience, vendor may change the link address, thus the link vanish
+> 
+> The link doesn't even work for me.
+Could you double check if it really doesn't work now?
 
-              - Troy
+> Is this board actually made by spacemit as a developer platform?
+Yes.
+
+                    - Troy
