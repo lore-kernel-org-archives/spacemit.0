@@ -1,46 +1,54 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12222586E8
-	for <spacemit@lists.linux.dev>; Fri, 10 Oct 2025 22:38:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708B234BA4D
+	for <spacemit@lists.linux.dev>; Mon, 13 Oct 2025 09:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760135904; cv=none; b=nzeYQWTCSo44B5Gj0o+RxDdeuyeVQ+5rx6ddyS0zPqclFN/dbq5r8wQneQ5/BFZ0jsevdk296YQMYAHSyNAW70gBPEoyP6BU36pCgur+RgJIqA+Z9q8kLxedFT6vtbV4yT5rk1Yi+2eyA3Vwf93IwVaiFOdFxZNwtGYk/eehfoo=
+	t=1760348474; cv=none; b=PMhPwmxY3ApTAKmm91HZsaSwq3bSjQCcztKn4nEHpr0zZTphpg4ZHyYCLXN56zX9Y2UbwIaOoTs9NsswF8xEPzHAZud+o+ubMZNSaP5zKYzmmBoSid0a+r+juDYn2Ce8DDhKSD7mGj5qAdhOpKhX321ha6Z79hcVtILlCtxyz/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760135904; c=relaxed/simple;
-	bh=374wr/b4fL2bo/wwRgCbEqmUug+MPj4XalHAMWo2I98=;
+	s=arc-20240116; t=1760348474; c=relaxed/simple;
+	bh=TiXbg72QqgA4BnTEEMu0KGbCUDFtZ0Q5AlBXuwEH44o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bQ79kwZPipAkmKN4oyMGJN3lQ3A+e12fbRhkhKpKKmxAgVHT819pW2TUoUyn5JLK9iAMrWYj09HlvdmK5HvZfgOXJ72dI+cVezYTlxJ2G0vVzQccf9m00SgQGBBhHbR9Q/z8JpGcqfeieQQ8FzFTl3BTcxYufJDFyi5pi1KQGkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.147.32])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id EAABC340DCC;
-	Fri, 10 Oct 2025 22:38:21 +0000 (UTC)
-Date: Sat, 11 Oct 2025 06:38:16 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Vivian Wang <wangruikang@iscas.ac.cn>, Rob Herring <robh@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=fBipUG66ekjkILgMlv9vyfWFRBVu7ndJtBt+k3vSOLBNxj/wgeD9Py1NfI0zxXdFj5tJUhiocFakKfYj7sZMlAtc1BoIwIR9lvB8QMKJ49OD6pK8679KYg/cRIVRadV09+mjDmq7BCCIk31OsEKKsQxl/6TdVW4yvBQzpP3qPWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=pHT615/F; arc=none smtp.client-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="pHT615/F"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1760348296;
+	bh=FKV5rcOU3NiQueOAKmsQZIMEQoY0gM/PgsfKPak6dIU=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=pHT615/FCXAiftIPxTuitBhsyFRiGq6/a06RBpRXDFfTx2/mh4VpDZjk33XNZPxEe
+	 dEY7vgmJrtW4jj1KvsgeHRUbtmz6WciYQrnq1nkjo4W7G1xXxx1F+E/jrDhmklex5I
+	 PnAW7/R7+KEKM18kvO6M427lACUQzercKVYxY1fA=
+X-QQ-mid: zesmtpgz6t1760348287t76bc683d
+X-QQ-Originating-IP: 0yrPrwLnm0gGgvkYYE+D/xX95XiUkzU9yKkuKrbC1Gw=
+Received: from = ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 13 Oct 2025 17:38:05 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6530773640354334042
+EX-QQ-RecipientCnt: 15
+Date: Mon, 13 Oct 2025 17:38:05 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Ze Huang <huang.ze@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yangyu Chen <cyy@cyyself.name>, devicetree@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] riscv: dts: spacemit: add Ethernet support for
- MusePi Pro
-Message-ID: <20251010223816-GYA1444158@gentoo.org>
-References: <20251010-k1-musepi-pro-dts-v2-0-6e1b491f6f3e@linux.spacemit.com>
- <20251010-k1-musepi-pro-dts-v2-5-6e1b491f6f3e@linux.spacemit.com>
- <a02aec9a-976a-4b63-86cb-126b8ae71185@iscas.ac.cn>
- <59657BBB86F7B678+aOilnA5Z-QL7xF9O@kernel.org>
- <20251010064310-GYA1439398@gentoo.org>
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [PATCH v8 0/2] Add SpacemiT K1 USB3.0 host controller support
+Message-ID: <AB4F40590DDC4024+aOzIfRgZZpZc3HeH@kernel.org>
+References: <20250913-dwc3_generic-v8-0-b50f81f05f95@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -49,31 +57,55 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251010064310-GYA1439398@gentoo.org>
+In-Reply-To: <20250913-dwc3_generic-v8-0-b50f81f05f95@linux.dev>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: N7k3iE00JiuZQ0owHi8QC5hPWrgUyhMhyc9vWZSN46d/Wk8QgKwyWWv+
+	fLyOfQgz1hkPnrnhD6GPcwRrnKykginJe33jt8ltaCTBNvanXkDndaLmDH+fpOkPNn9GmcW
+	h3EJhi2j8aMbUenzLPZCwU4J71hCplsmygi/3XrezBnmwTpVbBM1N61X2X2emsa9dR8K2Yh
+	5BRr4iHCktIJZ+RVQh0HvMyHW7JwpO7Cxh1pKwmBNNaghzEcE/DjpqAkRXgXxKt3cEDwX0R
+	61qizcToXOw0cayeML4UtDaVmv5pXaylUTKo3S2wJ0J+Tb5/7kSN+nezG9FZsXNIH+8nzX6
+	yeWvfU7AOyOqdAKuiDlkg2pGEciy1WZz6XXbq1y8PlTa8c9Xzui5Ci7+wxYiy9v6xz1FgxK
+	E3wMwJenwwjz6HNhpGAomvro5YVH0cPQ6KF5drhftMx2Eo5Nx/RLNq+MdibYFdoIBEXeIDM
+	sMyOI1tm4Oo0ZlQ34GTgCq1CdvS4f8J1B6ud0R6q5lRQJMQG0u9BY3PY8G/rwHoUgY1T79k
+	4AZRNS2W5CUA+S4pO/6YfEGWr479NU+TXRk/+DaMu0VLG5uuMP2359lBwH6ifaTXsRNfrs/
+	SiThF+fEKoPAc3iGVxsyKZfunfFnd55Yz12TcusDnq+ptd2Q2RaBkK5m3cJhuL7wFvDhG+0
+	HWAC/CWVjwQKc6iZaVegiASHvY7IWgNdeVdwDsQIwYnarviOMf7Gdi1lrC9LoJkCpbswH/V
+	eTtVm3HzLlKlb9dJnSt+4l66DL6kQLgGLzJzC2yMDLE5SDHd2kWiCjzjUvK+3mmRtjXloQO
+	EsZTC2RassfxdXToTWQGtcUbXAw7fym9kEIgRcRFD1RRguGW06XPhciKuWGzsDiWe3JWlSk
+	2FkK9n0OLVsX/TCIg24sVIAaZILjpv4nxvnfLNH63TDPllz/5T4KUVHcYiDnEC8A25VGd7X
+	z0Mmb2OvA8Y9E233nsSNLdqe61YzEILPEVbmvfV4eODFaUJUQEncg9s/8sl8r5xP8kLo2a3
+	8imEh+OHFFffZ4YxSEq/zWZ0SvvyPC6OZd1oO//VtedBAxWHv2N712Au8AULmhwsdzce+We
+	hCEliAaocIc
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
+X-QQ-RECHKSPAM: 0
 
-Hi Troy,
-
-On 14:43 Fri 10 Oct     , Yixun Lan wrote:
-> Hi Troy, Vivian:
+On Sat, Sep 13, 2025 at 12:53:46AM +0800, Ze Huang wrote:
+> The USB 3.0 controller found in the SpacemiT K1 SoC[1] supports both USB3.0
+> Host and USB2.0 Dual-Role Device (DRD). 
 > 
-> On 14:20 Fri 10 Oct     , Troy Mitchell wrote:
-> > On Fri, Oct 10, 2025 at 02:13:31PM +0800, Vivian Wang wrote:
-> > > 
-> [snip]..
-> > > 
-> > > Maybe Yixun can chime in about this as well.
-> > We have talked here [1]
-> > 
-> > Personally, I think splitting them makes the commit history clearer.
-> > I'm happy to merge them if others also think it's more appropriate.
-> > 
-> I do not have strong preference, either way is fine for me
-> If you plan to split the DT into fine patches, then go ahead
-please squash the patches, see Conor's suggestion here:
-https://lore.kernel.org/all/20251010-confider-raven-0ad7a810e5de@spud/
+> This controller is compatible with DesignWare Core USB 3 (DWC3) driver.
+> However, constraints in the `snps,dwc3` bindings limit the ability to describe
+> hardware-specific features in a clean and maintainable way. While
+> `dwc3-of-simple` still serves as a glue layer for many platforms, it requires a
+> split device tree node structure, which is less desirable in newer platforms.
+> 
+> To promote a transition toward a flattened `dwc` node structure, this series
+> introduces `dwc3-generic-plat`, building upon prior efforts that exposed the
+> DWC3 core driver [2].
+> 
+> The device tree support for SpacemiT K1 will be submitted separately when the
+> associated PHY driver is ready.
+> 
+> This series is based on 6.17-rc1 and has been tested on BananaPi development
+> boards.
+> 
+> Link: https://developer.spacemit.com/documentation?token=AjHDwrW78igAAEkiHracBI9HnTb [1]
+> Link: https://lore.kernel.org/all/20250414-dwc3-refactor-v7-3-f015b358722d@oss.qualcomm.com [2]
+> 
+> Signed-off-by: Ze Huang <huang.ze@linux.dev>
+> ---
+Tested-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-Also, I'd plan to collect patches once v6.18-rc1 tagged, you can wait
-and do it after that..
-
--- 
-Yixun Lan (dlan)
+Thanks,
+Troy
