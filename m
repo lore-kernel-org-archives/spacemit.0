@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DA31DFCB
-	for <spacemit@lists.linux.dev>; Tue, 14 Oct 2025 00:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635842C324F
+	for <spacemit@lists.linux.dev>; Tue, 14 Oct 2025 00:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760400118; cv=none; b=TSXJ5OGCGbxv6mB1Tb1u5OCl21aOPnzoVSHmMOf7azgw6MHfGRY+s6GdzFdxygF6AKG+BEm09kYKq6KlHPy59IHoQWWLS1A7BUq2Sgm/UYfnVJ7n+nNcmni3djv5VaSMf5jChaHqHDGiWsxj23VL3ch9ptovznMsbq3A549+fOE=
+	t=1760401092; cv=none; b=qsGvPc2SgNehVRsFZ01QIFC7OMxc+LrfEdieYclgrZAbnvXxaEgrL3SweRILjNkZbaBIy6m+T5fnkBtn1tNltyDBtM3POTVx/kS9JRPSTgqRrZboy0pM4D2GDhLlxmpbKiT/dgXQw57q7+fJ7lm3OdNRh9GKFDEF3MS7+mCyMO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760400118; c=relaxed/simple;
-	bh=+vUFipcYIXgXpqA9AhKG0GuuSmvhuP8nc/YpFn8bR3A=;
+	s=arc-20240116; t=1760401092; c=relaxed/simple;
+	bh=dMe29rV2C8DIvpYQosZ4uZQ/K559pFQf7acE7cY6i80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xz1OPDXjFhiNsVEk0RJeK8H1Qdzx5yJDdP62jHEoZfHBNuQepITIrU7podG2Oo7C8aFasNg8VIhmvGujjPYgXLfxVhwGMqeO9c3glZ8ejUJdNec0mXb+YeszY0I87rHGmRACmXZFqxuOzmfeBJhQIcBe77LO5FNtP4ULEykPgf0=
+	 MIME-Version:Content-Type; b=U7xFqwP8qqXoUrfOjJf9IfrDKnU1nZsA1BtdJQBYmNfham9se2D2DCfYnbgZ6vnw53DSedUHQ/U4E1kJzkauv2QcRRDBafZmnPWhVoboi08WGRAyMyAQDxmx0K3B9vpU3JbmF+0BgNC51cVgQYX4kBAFsBNhuvlCqYMBGNnkdE4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,37 +19,28 @@ Received: from ofsar (unknown [116.232.147.32])
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 10150340E58;
-	Tue, 14 Oct 2025 00:01:50 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 1837A340E9A;
+	Tue, 14 Oct 2025 00:18:06 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: lee@kernel.org,
-	lgirdwood@gmail.com,
-	broonie@kernel.org,
-	alexandre.belloni@bootlin.com,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	Alex Elder <elder@riscstar.com>
+To: linux-kernel@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Aurelien Jarno <aurelien@aurel32.net>
 Cc: Yixun Lan <dlan@gentoo.org>,
-	mat.jonczyk@o2.pl,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	linux.amoon@gmail.com,
-	troymitchell988@gmail.com,
-	guodong@riscstar.com,
-	linux-rtc@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v13 0/7] spacemit: introduce P1 PMIC support
-Date: Tue, 14 Oct 2025 08:01:45 +0800
-Message-ID: <176040002491.864314.9564488018549093381.b4-ty@gentoo.org>
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+Subject: Re: [PATCH v3 0/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
+Date: Tue, 14 Oct 2025 08:18:00 +0800
+Message-ID: <176040093505.976672.8840719266527899813.b4-ty@gentoo.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250825172057.163883-1-elder@riscstar.com>
-References: <20250825172057.163883-1-elder@riscstar.com>
+In-Reply-To: <20250926175833.3048516-1-aurelien@aurel32.net>
+References: <20250926175833.3048516-1-aurelien@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,24 +51,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 25 Aug 2025 12:20:49 -0500, Alex Elder wrote:
-> The SpacemiT P1 is an I2C-controlled PMIC that implements 6 buck
-> converters and 12 LDOs.  It contains a load switch, ADC channels,
-> GPIOs, a real-time clock, and a watchdog timer.
+On Fri, 26 Sep 2025 19:54:36 +0200, Aurelien Jarno wrote:
+> The BPI-F3 board has a 24c02 eeprom connected to the i2c bus #2. It
+> holds board data. This patchset adds support for it.
 > 
-> This series introduces a multifunction driver for the P1 PMIC as
-> well as drivers for its regulators and RTC.
+> Changes between version 2 and version 3:
+> 
+> - Revert the name change for i2c2-0-cfg and i2c2-0-pins, the second cell
+>   is not a function number, but an index.
 > 
 > [...]
 
 Applied, thanks!
 
-[5/7] riscv: dts: spacemit: enable the i2c8 adapter
-      https://github.com/spacemit-com/linux/commit/3e8d7309e6260b1d066e733bf3e2e1b6a0d3f82b
-[6/7] riscv: dts: spacemit: define fixed regulators
-      https://github.com/spacemit-com/linux/commit/1df07a40453fd652132051419140950d47941fe9
-[7/7] riscv: dts: spacemit: define regulator constraints
-      https://github.com/spacemit-com/linux/commit/09a412d397484e76588707d85ccc37f71e491091
+[1/3] riscv: dts: spacemit: enable the i2c2 adapter on BPI-F3
+      https://github.com/spacemit-com/linux/commit/dcca2287773b69201b756723e8d45b6b8ad81b34
+[2/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
+      https://github.com/spacemit-com/linux/commit/bfce75e2345fa1ecbf046e696994132f56d6db1c
+[3/3] riscv: dts: spacemit: add i2c aliases on BPI-F3
+      https://github.com/spacemit-com/linux/commit/859ce3828f0b462e991c24224390def4c8fea673
 
 Best regards,
 -- 
