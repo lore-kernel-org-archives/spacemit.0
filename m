@@ -1,77 +1,104 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635842C324F
-	for <spacemit@lists.linux.dev>; Tue, 14 Oct 2025 00:18:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683BF28F50F
+	for <spacemit@lists.linux.dev>; Tue, 14 Oct 2025 01:16:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760401092; cv=none; b=qsGvPc2SgNehVRsFZ01QIFC7OMxc+LrfEdieYclgrZAbnvXxaEgrL3SweRILjNkZbaBIy6m+T5fnkBtn1tNltyDBtM3POTVx/kS9JRPSTgqRrZboy0pM4D2GDhLlxmpbKiT/dgXQw57q7+fJ7lm3OdNRh9GKFDEF3MS7+mCyMO8=
+	t=1760404588; cv=none; b=DFjyTmVSGzZYCK/3QybTTadd1jqOKKzIY5PGlx+zSLXaAv5ILT8R6BMB/2ZOJgvt5FrLDJZWcLXU5uR974qfHEKoeDS2ll4N94bOi4eoTm/RBVKakMzvmL51kAyNMFXZng0Ir1kGXOJCgjJaa+oi4hKdpHPxJO+FZevXompIuQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760401092; c=relaxed/simple;
-	bh=dMe29rV2C8DIvpYQosZ4uZQ/K559pFQf7acE7cY6i80=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U7xFqwP8qqXoUrfOjJf9IfrDKnU1nZsA1BtdJQBYmNfham9se2D2DCfYnbgZ6vnw53DSedUHQ/U4E1kJzkauv2QcRRDBafZmnPWhVoboi08WGRAyMyAQDxmx0K3B9vpU3JbmF+0BgNC51cVgQYX4kBAFsBNhuvlCqYMBGNnkdE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from ofsar (unknown [116.232.147.32])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 1837A340E9A;
-	Tue, 14 Oct 2025 00:18:06 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-To: linux-kernel@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
+	s=arc-20240116; t=1760404588; c=relaxed/simple;
+	bh=ly90muq8Cu7cNAfo5LyDFAKK8zB6SZmBgl/e3Gqtgzs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oGmDoeRZiWxGhUYXj3u2blY7pD8w1DFoU+Mv4Wh87yREddFho0G+KVdqby0Sau/q1/Dc+Tb+uXpiNFknmAWcoQG6ebw/oOWlgz8k3hdyqOz2okoih2SrnHwQvVDcs+yxD/tVeGgW74rSoG3MJA6j7LIyP+bszCasDtLJMNT7jX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=gIQahV4n; arc=none smtp.client-ip=54.243.244.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="gIQahV4n"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1760404508;
+	bh=yPaqLTFJBou/8d1hMyxh74PBxgkDsYMEzO+87OROHB0=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=gIQahV4nYcfZPXN831GaW2evLz/LB7hnbHbG35YusVe/IIjQKN+6jldM+xEJ9HjNU
+	 WrJ3WUxFP99enmzNu6uVKrHoI2o5m/dn6mw5Z3Jy0M+azu1kmtIjNbhBU85+cJojJo
+	 mqAkyobyz/G5tJLewoGfZtyvMVzl+1SkNl5UtoGI=
+X-QQ-mid: esmtpgz13t1760404499t2e911499
+X-QQ-Originating-IP: o0PzaMQ5hTsLiEQfnYn0/i0z9Av6u2RRMSRj69aXyEU=
+Received: from = ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 14 Oct 2025 09:14:57 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 1259685802699772283
+EX-QQ-RecipientCnt: 16
+Date: Tue, 14 Oct 2025 09:14:57 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Mark Brown <broonie@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Aurelien Jarno <aurelien@aurel32.net>
-Cc: Yixun Lan <dlan@gentoo.org>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v3 0/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
-Date: Tue, 14 Oct 2025 08:18:00 +0800
-Message-ID: <176040093505.976672.8840719266527899813.b4-ty@gentoo.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250926175833.3048516-1-aurelien@aurel32.net>
-References: <20250926175833.3048516-1-aurelien@aurel32.net>
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-sound@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Jinmei Wei <weijinmei@linux.spacemit.com>
+Subject: Re: [PATCH v4 2/2] ASoC: spacemit: add i2s support for K1 SoC
+Message-ID: <775044E19528DA5A+aO2kEerOWeY8ad0h@kernel.org>
+References: <20250921-k1-i2s-v4-0-4f819f50e468@linux.spacemit.com>
+ <20250921-k1-i2s-v4-2-4f819f50e468@linux.spacemit.com>
+ <d1d965c4-f0f4-4b09-b5c3-5925d5f7ce1b@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <d1d965c4-f0f4-4b09-b5c3-5925d5f7ce1b@sirena.org.uk>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3a-0
+X-QQ-XMAILINFO: OFWsfmE1GYcucjtZg+KEjRlCsj0y/80SVScxcqo55Hl6k5plK2uYiE0e
+	UmmSczndIIISYCroAAZfA1qLkfBtwrgwxq9OJv5L7tXsZRdPi6XKVQcVD9EghKXXfUTVYkO
+	WybVF9Hv1dX+kGiJex2PyHnyew6kKxHh5IKGUuse8CvbwOkjJWe8H3Eazezl9tZvTn6urp+
+	0V3TiCPDh6iX76ZcI2mtgY1+f1VHdJ2hPsurji0OUB2/XeHVIlx+pF9huFPmSwO2ybR3KnV
+	8nhf03Qa6SZvf/GLZYRo96hXRfvYBFWB6u0hIYNJlX9Gcw2qNmgNY491iEjHJV5MeKJ/qsl
+	v/UwM6AXjHHEU0PFWLYaQPpFA/luOoUoZ7ij4cmQCFfSdpKNMqkwIPqJOvnAogPK68tUOTd
+	thtmZlqpurHYUrfP6VqOhYdKR7TH3akptlludkELnKi56Xljl59ixwnw3Vbso3iux5l0z/A
+	G7Tsa/O/GjQtPwa0d4lAK+SDEhrWEKsNWzyjtT3wx5whuL+UGejBfwEN/0tImC1RDovHBJk
+	kLydjegjIXVU42sH+gf7VNiLaQg82KAr50JdokvTE4c4Jm1uG5kKqJAbQYybjzkSq8E75aH
+	ToZAuaGP9onKFZ89UVkmCQu3UXi+ojDa0Aq1py7Xcm7urC3RapGsNnkL/ko4kxfs+8MoVhG
+	Ec19cuPeHskjfMwrd/s68TyBZe8+RupJe+nqM11bX36qVKtzxThgEkZtRitlAS5pxdEQK2D
+	DqZkVdvFjWxBgYGc2UJRCnMchydHHPo32/62kOq+knDZF9bWofFZ5kGYwPYYXSy09S96+jj
+	sWnszEejE8l7TI9Z+G+HRQf3MKOKnVCxvE7PKjqAK52/FzRIQAPxms7aevGWT7LzxJCcoSC
+	/StrcXgL3elcPh3dlbysTxCYkPSCNer7zxQT+k/TgYjXIddabgHs7N4vnUJcIgz5zEAG2qP
+	s8dWyRbAJvvaVhXEVPaO3UzoW54sIqyx3uSD2aLnBIYSmMKnNpIDYEfiy7Iu+8oRkv0926w
+	gsBrX5ctnGNRPAlpQz4KIYYKgANhBPxNiwqAohFdVqjGKfmJMuEcjRiFmfrclspdKC0vbTs
+	w==
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+X-QQ-RECHKSPAM: 0
 
-
-On Fri, 26 Sep 2025 19:54:36 +0200, Aurelien Jarno wrote:
-> The BPI-F3 board has a 24c02 eeprom connected to the i2c bus #2. It
-> holds board data. This patchset adds support for it.
+On Mon, Oct 13, 2025 at 01:05:58PM +0100, Mark Brown wrote:
+> On Sun, Sep 21, 2025 at 04:52:17PM +0800, Troy Mitchell wrote:
 > 
-> Changes between version 2 and version 3:
+> > +	case SND_SOC_DAIFMT_DSP_A:
+> > +	case SND_SOC_DAIFMT_DSP_B:
+> > +		snd_pcm_hw_constraint_minmax(substream->runtime,
+> > +					     SNDRV_PCM_HW_PARAM_CHANNELS,
+> > +					     1, 1);
+> > +		snd_pcm_hw_constraint_mask64(substream->runtime,
+> > +					     SNDRV_PCM_HW_PARAM_FORMAT,
+> > +					     SNDRV_PCM_FMTBIT_S32_LE);
+> > +		break;
 > 
-> - Revert the name change for i2c2-0-cfg and i2c2-0-pins, the second cell
->   is not a function number, but an index.
-> 
-> [...]
+> The handling for one of these is buggy, DSP A and B are distinct modes
+> but throughout the driver they're handled identically AFAICT.
+Thanks! Indeed, this bug was introduced in this version.
+I’ll fix it and send v5 ASAP.
 
-Applied, thanks!
+                            - Troy
 
-[1/3] riscv: dts: spacemit: enable the i2c2 adapter on BPI-F3
-      https://github.com/spacemit-com/linux/commit/dcca2287773b69201b756723e8d45b6b8ad81b34
-[2/3] riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
-      https://github.com/spacemit-com/linux/commit/bfce75e2345fa1ecbf046e696994132f56d6db1c
-[3/3] riscv: dts: spacemit: add i2c aliases on BPI-F3
-      https://github.com/spacemit-com/linux/commit/859ce3828f0b462e991c24224390def4c8fea673
-
-Best regards,
--- 
-Yixun Lan
 
