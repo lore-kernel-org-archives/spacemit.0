@@ -1,51 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32832D239A;
-	Wed, 15 Oct 2025 14:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95AF299AAF;
+	Wed, 15 Oct 2025 16:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760539939; cv=none; b=ZcG/DeiGBXDpKnx3Qvhpz2db4CB0yHGvjDofSOCJDw66G0S0e0XtrsQZc1NYzzqCxYpDa0rmf7QmZdszO1HWsuN1SVCzKIZj6E6Yp1cMhdeZk7ijd4dIYTbAUlMtSzjlSxoUYtZgFqzxHnn9DVWggE1w9l+634gj0LHCfBhZrBw=
+	t=1760546517; cv=none; b=cFC9Rq2Iag1mBaZ/+ey+pYszxQu/vD/7HLULCz2r2KZFEvqzQJivHacUQUBf5fvcYV/5zazJNyss45+079KRFlUOriaRrLHpWeObP85p4GCTrGRGd0tl8m3UCNoGut6D/SXBjtNC229rUs6YWSGvFnVnNRl4gbVMzciZigERCTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760539939; c=relaxed/simple;
-	bh=ADw0XbUINFXw+99thMlJyEEKMXz1G33Y6Fyz/udOs7A=;
+	s=arc-20240116; t=1760546517; c=relaxed/simple;
+	bh=9K61xwRqqf8ENXqYLk5+Ql/HCKvMYhIsjWS3UR1LAJo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bLXBmkdJXF9iOrPDJMs2OMQGpnUMRdhLEL00+chcw/Us7xg22t2Q+B8KR8AUtRV9B7RdzKXO1kwIOk3x/DXxo4N8Exavw8I9pPRL6vZf8CVPMZtYL6VN3FLS9emcdCCgb/9VSe56+b45O69WEkey6rf2TvW1eJzK8XGOWzPfE3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=riF91sar; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=cdZC4Rjmt9D9WZUwt5GYMrKTGXKStRKf595d8mqCz4+eJrZNFutaMLNfpE01C3t4scwgZ+Ufuhtxgue7LSmYp/0p0YZTHJTzMfkB8kZgs9ONXp4yLmM8XnjnMdvZJfsEUTFUoT6QsffHg9Yo9Ax7egeFWcnNYikoO+rlP9r34nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AjBFrI6F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="riF91sar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F48AC4CEF8;
-	Wed, 15 Oct 2025 14:52:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AjBFrI6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139FDC4CEF8;
+	Wed, 15 Oct 2025 16:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760539939;
-	bh=ADw0XbUINFXw+99thMlJyEEKMXz1G33Y6Fyz/udOs7A=;
+	s=k20201202; t=1760546517;
+	bh=9K61xwRqqf8ENXqYLk5+Ql/HCKvMYhIsjWS3UR1LAJo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=riF91sarHuoK7t4am2+p5dxxUbrgULuYBx2SVwAhxTpeD1NYtB46wNTalCGGwGWtq
-	 iHehp0VZnF2Ufr7jLAGIAUtAvlIFvJJa/4tuGo91bGJW4oYsm3B2uy8XWD+244DvCH
-	 k0ST8OCUPYfPGyFRe5boeRN1qFELPWzIXSWbsA+dRgf5o3t/9hB635UTAwt2RbPioF
-	 yZXJqHqdBaB4x2KSdwbzTH21133KVuVRbeGdsKpqMDdF4RO+5OJZgSzFl2+CZthuXX
-	 Caal7DGqDslWIEWXwJSuXV+kntKZi8z5IYayeXfNHvp6JjWA/6kA9jvXUqY7qVvzsN
-	 iFttDi/Vu7gGA==
-Date: Wed, 15 Oct 2025 09:52:17 -0500
-From: Rob Herring <robh@kernel.org>
+	b=AjBFrI6F5Vkk+AEmnLeRu9FXSyTmTlJ4lmgOUVAziqVPGaJn60saM3QaDV8VSGgJb
+	 DUcJIYdpCj+RAEQgV/qsyUWH/HmwHpBfeYlrZW5fJ0ZfrpIu/SG1rcxxeN9Q8+yS+g
+	 ygfrzqS5lt4XPm4jlXExzO2pQ6VIKlym6Gmd+RoViEevqE43vQuqyJ5tt8vjhZYhoe
+	 nKZoxUeiB4y0BKn2AJLqWsLi5vGv/b2LTog/BbKVYFi2yhP+/2QNXOnfZ+fGBis4Zl
+	 fl2QZMvo/3kwhBxHhlfhcqPqbSTeJi3CJrc3cDd14ZcKFs6HotuiW3PNfL3cQTlMmX
+	 frC4tr4OJrw9g==
+Date: Wed, 15 Oct 2025 11:41:55 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Alex Elder <elder@riscstar.com>
-Cc: krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
-	guodong@riscstar.com, pjw@kernel.org, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
-	christian.bruel@foss.st.com, shradha.t@samsung.com,
-	krishna.chundru@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
-	namcao@linutronix.de, thippeswamy.havalige@amd.com,
-	inochiama@gmail.com, devicetree@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/7] dt-bindings: phy: spacemit: add SpacemiT
- PCIe/combo PHY
-Message-ID: <20251015145217.GA3554740-robh@kernel.org>
+Cc: guodong@riscstar.com, bhelgaas@google.com, christian.bruel@foss.st.com,
+	krzk+dt@kernel.org, namcao@linutronix.de, aou@eecs.berkeley.edu,
+	shradha.t@samsung.com, vkoul@kernel.org, linux-pci@vger.kernel.org,
+	dlan@gentoo.org, pjw@kernel.org, linux-phy@lists.infradead.org,
+	qiang.yu@oss.qualcomm.com, p.zabel@pengutronix.de,
+	linux-riscv@lists.infradead.org, mani@kernel.org,
+	palmer@dabbelt.com, kishon@kernel.org, kwilczynski@kernel.org,
+	linux-kernel@vger.kernel.org, inochiama@gmail.com,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev, alex@ghiti.fr,
+	krishna.chundru@oss.qualcomm.com, lpieralisi@kernel.org,
+	conor+dt@kernel.org, thippeswamy.havalige@amd.com
+Subject: Re: [PATCH v2 2/7] dt-bindings: phy: spacemit: introduce PCIe PHY
+Message-ID: <176054651498.4032617.11231316454316691309.robh@kernel.org>
 References: <20251013153526.2276556-1-elder@riscstar.com>
- <20251013153526.2276556-2-elder@riscstar.com>
+ <20251013153526.2276556-3-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -54,103 +52,25 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251013153526.2276556-2-elder@riscstar.com>
+In-Reply-To: <20251013153526.2276556-3-elder@riscstar.com>
 
-On Mon, Oct 13, 2025 at 10:35:18AM -0500, Alex Elder wrote:
-> Add the Device Tree binding for the PCIe/USB 3.0 combo PHY found in
-> the SpacemiT K1 SoC.  This is one of three PCIe PHYs, and is unusual
-> in that only the combo PHY can perform a calibration step needed to
-> determine settings used by the other two PCIe PHYs.
-> 
-> Calibration must be done with the combo PHY in PCIe mode, and to allow
-> this to occur independent of the eventual use for the PHY (PCIe or USB)
-> some PCIe-related properties must be supplied: clocks; resets; and a
-> syscon phandle.
+
+On Mon, 13 Oct 2025 10:35:19 -0500, Alex Elder wrote:
+> Add the Device Tree binding for two PCIe PHYs present on the SpacemiT
+> K1 SoC.  These PHYs are dependent on a separate combo PHY, which
+> determines at probe time the calibration values used by the PCIe-only
+> PHYs.
 > 
 > Signed-off-by: Alex Elder <elder@riscstar.com>
 > ---
 > v2: - Added '>' to the description, and reworded it a bit
->     - Added an external oscillator clock, "refclk"
->     - Renamed the "global" reset to be "phy"
->     - Renamed a phandle property to be "spacemit,apmu"
+>     - Added clocks and clock-names properties
 >     - Dropped the label and status property from the example
 > 
->  .../bindings/phy/spacemit,k1-combo-phy.yaml   | 114 ++++++++++++++++++
->  1 file changed, 114 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+>  .../bindings/phy/spacemit,k1-pcie-phy.yaml    | 59 +++++++++++++++++++
+>  1 file changed, 59 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-pcie-phy.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
-> new file mode 100644
-> index 0000000000000..6e2f401b0ac27
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
-> @@ -0,0 +1,114 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/phy/spacemit,k1-combo-phy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: SpacemiT K1 PCIe/USB3 Combo PHY
-> +
-> +maintainers:
-> +  - Alex Elder <elder@riscstar.com>
-> +
-> +description: >
-> +  Of the three PHYs on the SpacemiT K1 SoC capable of being used for
-> +  PCIe, one is a combo PHY that can also be configured for use by a
-> +  USB 3 controller.  Using PCIe or USB 3 is a board design decision.
-> +
-> +  The combo PHY is also the only PCIe PHY that is able to determine
-> +  PCIe calibration values to use, and this must be determined before
-> +  the other two PCIe PHYs can be used.  This calibration must be
-> +  performed with the combo PHY in PCIe mode, and is this is done
-> +  when the combo PHY is probed.
-> +
-> +  The combo PHY uses an external oscillator as a reference clock.
-> +  During normal operation, the PCIe or USB port driver is responsible
-> +  for ensuring all other clocks needed by a PHY are enabled, and all
-> +  resets affecting the PHY are deasserted.  However, for the combo
-> +  PHY to perform calibration independent of whether it's later used
-> +  for PCIe or USB, all PCIe mode clocks and resets must be defined.
-> +
-> +properties:
-> +  compatible:
-> +    const: spacemit,k1-combo-phy
-> +
-> +  reg:
-> +    items:
-> +      - description: PHY control registers
-> +
-> +  clocks:
-> +    items:
-> +      - description: External oscillator used by the PHY PLL
-> +      - description: DWC PCIe Data Bus Interface (DBI) clock
-> +      - description: DWC PCIe application AXI-bus Master interface clock
-> +      - description: DWC PCIe application AXI-bus slave interface clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: refclk
-> +      - const: dbi
-> +      - const: mstr
-> +      - const: slv
-> +
-> +  resets:
-> +    items:
-> +      - description: DWC PCIe Data Bus Interface (DBI) reset
-> +      - description: DWC PCIe application AXI-bus Master interface reset
-> +      - description: DWC PCIe application AXI-bus slave interface reset
-> +      - description: PHY reset; must be deasserted for PHY to function
-> +
-> +  reset-names:
-> +    items:
-> +      - const: dbi
-> +      - const: mstr
-> +      - const: slv
-> +      - const: phy
-
-I think phy should be first as that's the main one to the phy and the 
-others are somewhat questionable. Otherwise,
 
 Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+
