@@ -1,165 +1,156 @@
-Received: from mail-io1-f68.google.com (mail-io1-f68.google.com [209.85.166.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF3826560A
-	for <spacemit@lists.linux.dev>; Tue, 14 Oct 2025 01:57:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32832D239A;
+	Wed, 15 Oct 2025 14:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760407040; cv=none; b=O9zlWNWPRsW8st8vmnl7zOI9TBdM5N2ru2/FO93fra3HCojqt9HbZSfq+AxQ6ULPu/JJRMNEeUr3/t9t2RtGCzMTDDUY/R0CU+M5MyAqZzW/WmqPkjcxi+iu0SZusZ5lRdmGYFlG7mqi7fXBuWMDPs8g5wEWngzKH3ZBnEOq3Wk=
+	t=1760539939; cv=none; b=ZcG/DeiGBXDpKnx3Qvhpz2db4CB0yHGvjDofSOCJDw66G0S0e0XtrsQZc1NYzzqCxYpDa0rmf7QmZdszO1HWsuN1SVCzKIZj6E6Yp1cMhdeZk7ijd4dIYTbAUlMtSzjlSxoUYtZgFqzxHnn9DVWggE1w9l+634gj0LHCfBhZrBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760407040; c=relaxed/simple;
-	bh=i3JH/UyTwdORR76plBkkx4i80jRqEPvGe7n87tMkr6s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cCiP0I20J4mH/b2hnlHa4091R4dxbnJ4MqmCgiGfV+i2wBCGljrJQ6YpePrr1UMQjNl525BRS9ONa+sbMXgw6vQK3v3sZ/LdaNlPh5B3cmMouMWMO1/+5PxgAUPIIRVspfQqSqc8T7s67jrNiEJgpVLIaKBOLPFbZA5I8Y8BpzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=HYRaONvS; arc=none smtp.client-ip=209.85.166.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1760539939; c=relaxed/simple;
+	bh=ADw0XbUINFXw+99thMlJyEEKMXz1G33Y6Fyz/udOs7A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bLXBmkdJXF9iOrPDJMs2OMQGpnUMRdhLEL00+chcw/Us7xg22t2Q+B8KR8AUtRV9B7RdzKXO1kwIOk3x/DXxo4N8Exavw8I9pPRL6vZf8CVPMZtYL6VN3FLS9emcdCCgb/9VSe56+b45O69WEkey6rf2TvW1eJzK8XGOWzPfE3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=riF91sar; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="HYRaONvS"
-Received: by mail-io1-f68.google.com with SMTP id ca18e2360f4ac-93bd394fab0so120472939f.0
-        for <spacemit@lists.linux.dev>; Mon, 13 Oct 2025 18:57:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760407037; x=1761011837; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DRqpVkhMILdGgOXoNXOKPLRF82QFKKsH1zKrfan+k9o=;
-        b=HYRaONvS41gzdqgW1CdBN8Yx68fIoYZs633rtLwnfzTSDGHTvQ+hZMblBS7PBzZ1rL
-         qy3YnNyW0rpBSfr2eRDHTKOMP6o1EH8dJo7iRudTXCFeVQGm2V1k2XxWCw3phNVA8d2f
-         +W+eZcmWjMFb7AKAWj86cYI3jci875rBSwZpkHULm+tEmL1hda/uFY0aGD7ml5KhWR4s
-         krBYqy/b3iQ+NPok34MWGJgRXeJM3B9LwwrogQQK0n4U3fK8Gmeux767B9OMjBd9wBTy
-         8a9HOg3HhY5HTfVw/jHZlLwx5MXNnnxrF/tePzIlkYGCO0qGArnjB9lBa+d3sSuxZNM0
-         ix6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760407037; x=1761011837;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DRqpVkhMILdGgOXoNXOKPLRF82QFKKsH1zKrfan+k9o=;
-        b=CONzJdXcfWWwlx/2EiESwfldMl3CllbkVosX4qKYYTAEI+JocPdqd0KpbyBd9BrV3T
-         +Z/GT5uZuOldTDVCE7hk0vmXV6werbC6TDR62RWRB80Ekv+sAQoHrhDpDZcxiErx0/Te
-         uUhCnOAylWFo0ArRBks08h4YW3PgDVz8oSuLThpf93ENihkYlURkAwm3t0iCwJVaAt1U
-         Vtm6vopfcv32eNTUYF2p6eaDfPkNioETgPeWNNQsSRBaRNt9k0ZUCp9UGNYOgoHYf3Q6
-         M0pKw6b9LJHKMKLjI0W89kUHZ2Ugu2gQjRrCdavcbxUO4GirYoN6ZuuCQ8pFLRHmGAep
-         tOig==
-X-Forwarded-Encrypted: i=1; AJvYcCVBFVR/6JaqCVU1DvD0/3PeBKP61DsiX51BeA4MrocAM9Onlf+Cabzsyp16KIRkzQ72hzEN5Fwhew==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyngz3GUThsuhaZpxpV/p/aL2QIibz6k+fs23Poq8Vhg9bqLfEU
-	eAvRafSegX6opNe5eEZHJ0hrSSoRa63cnx/g07/MB8Y81YCqASu4ZwqWk8Afzu3uHNw=
-X-Gm-Gg: ASbGncvQzHOieX8FJvCQso74HXAtq1tBdiOM0NqCcJeokIl+vRJx/hVPIyzZ4jfOb/I
-	QlW216reK395ibBweQp1zl0ErHPizFBQ2/0JidLQNH4JMghmBaDnsYaQ3QKlJ8dlHBdMfA8d5ND
-	Uq1QU/Ccc3pAjkpkky9WxU7e4MrOw2wkO81wHtSyrdi5LCZXaF5fyS622FoPQS8otS06SWw8SWu
-	8CL/XRze1l+VwSIBbzoPknIwVCWfDo3ahBT5bM4d7fYP8CacoDYtIDMK57YmZV72GpKItKMEJRt
-	gRGyb0Q529xLFdaZ/14/cdCM5W5MVGVBYg33hl2ETLDFOhNiGhBkUkUNNWXz8UZYwVSH4tQNekp
-	AjYSNqOjaRPfZ1kc89DLdvA6VIGhyb1Ww3ZUI+LttnadctxtF/tjZx9z7wkyobSLprM8M3rEStt
-	mVMSPaDXud91XIeg==
-X-Google-Smtp-Source: AGHT+IFz+6u4FT7mXO0HjOe5eXpI34wWI1ZFKrY/cjEseejOQH/7Ctss1Fp2rB13acyyKvsMsu5OOA==
-X-Received: by 2002:a05:6602:811:b0:87c:2a76:4cf9 with SMTP id ca18e2360f4ac-93bc4074509mr2599466339f.1.1760407037052;
-        Mon, 13 Oct 2025 18:57:17 -0700 (PDT)
-Received: from [10.211.55.5] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-93e25a659a0sm455091539f.17.2025.10.13.18.57.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Oct 2025 18:57:16 -0700 (PDT)
-Message-ID: <860df9d7-9791-40de-903d-0f62d34533e7@riscstar.com>
-Date: Mon, 13 Oct 2025 20:57:14 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="riF91sar"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F48AC4CEF8;
+	Wed, 15 Oct 2025 14:52:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760539939;
+	bh=ADw0XbUINFXw+99thMlJyEEKMXz1G33Y6Fyz/udOs7A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=riF91sarHuoK7t4am2+p5dxxUbrgULuYBx2SVwAhxTpeD1NYtB46wNTalCGGwGWtq
+	 iHehp0VZnF2Ufr7jLAGIAUtAvlIFvJJa/4tuGo91bGJW4oYsm3B2uy8XWD+244DvCH
+	 k0ST8OCUPYfPGyFRe5boeRN1qFELPWzIXSWbsA+dRgf5o3t/9hB635UTAwt2RbPioF
+	 yZXJqHqdBaB4x2KSdwbzTH21133KVuVRbeGdsKpqMDdF4RO+5OJZgSzFl2+CZthuXX
+	 Caal7DGqDslWIEWXwJSuXV+kntKZi8z5IYayeXfNHvp6JjWA/6kA9jvXUqY7qVvzsN
+	 iFttDi/Vu7gGA==
+Date: Wed, 15 Oct 2025 09:52:17 -0500
+From: Rob Herring <robh@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
+	vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
+	guodong@riscstar.com, pjw@kernel.org, palmer@dabbelt.com,
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+	christian.bruel@foss.st.com, shradha.t@samsung.com,
+	krishna.chundru@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
+	namcao@linutronix.de, thippeswamy.havalige@amd.com,
+	inochiama@gmail.com, devicetree@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/7] dt-bindings: phy: spacemit: add SpacemiT
+ PCIe/combo PHY
+Message-ID: <20251015145217.GA3554740-robh@kernel.org>
+References: <20251013153526.2276556-1-elder@riscstar.com>
+ <20251013153526.2276556-2-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] dt-bindings: pci: spacemit: introduce PCIe host
- controller
-To: Yao Zi <ziyao@disroot.org>, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, bhelgaas@google.com, lpieralisi@kernel.org,
- kwilczynski@kernel.org, mani@kernel.org, vkoul@kernel.org, kishon@kernel.org
-Cc: dlan@gentoo.org, guodong@riscstar.com, pjw@kernel.org,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
- p.zabel@pengutronix.de, christian.bruel@foss.st.com, shradha.t@samsung.com,
- krishna.chundru@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
- namcao@linutronix.de, thippeswamy.havalige@amd.com, inochiama@gmail.com,
- devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20251013153526.2276556-1-elder@riscstar.com>
- <20251013153526.2276556-4-elder@riscstar.com> <aO2tkGSUTYssSaVf@pie>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <aO2tkGSUTYssSaVf@pie>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251013153526.2276556-2-elder@riscstar.com>
 
-On 10/13/25 8:55 PM, Yao Zi wrote:
-> On Mon, Oct 13, 2025 at 10:35:20AM -0500, Alex Elder wrote:
->> Add the Device Tree binding for the PCIe root complex found on the
->> SpacemiT K1 SoC.  This device is derived from the Synopsys Designware
->> PCIe IP.  It supports up to three PCIe ports operating at PCIe gen 2
->> link speeds (5 GT/sec).  One of the ports uses a combo PHY, which is
->> typically used to support a USB 3 port.
->>
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> ---
->> v2: - Renamed the binding, using "host controller"
->>      - Added '>' to the description, and reworded it a bit
->>      - Added reference to /schemas/pci/snps,dw-pcie.yaml
->>      - Fixed and renamed the compatible string
->>      - Renamed the PMU property, and fixed its description
->>      - Consistently omit the period at the end of descriptions
->>      - Renamed the "global" clock to be "phy"
->>      - Use interrupts rather than interrupts-extended, and name the
->>        one interrupt "msi" to make clear its purpose
->>      - Added a vpcie3v3-supply property
->>      - Dropped the max-link-speed property
->>      - Changed additionalProperties to unevaluatedProperties
->>      - Dropped the label and status property from the example
->>
->>   .../bindings/pci/spacemit,k1-pcie-host.yaml   | 156 ++++++++++++++++++
->>   1 file changed, 156 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
->> new file mode 100644
->> index 0000000000000..87745d49c53a1
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
->> @@ -0,0 +1,156 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/pci/spacemit,k1-pcie-host.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: SpacemiT K1 PCI Express Host Controller
->> +
->> +maintainers:
->> +  - Alex Elder <elder@riscstar.com>
->> +
->> +description: >
->> +  The SpacemiT K1 SoC PCIe host controller is based on the Synopsys
->> +  DesignWare PCIe IP.  The controller uses the DesignWare built-in
->> +  MSI interrupt controller, and supports 256 MSIs.
->> +
->> +allOf:
->> +  - $ref: /schemas/pci/snps,dw-pcie.yaml#
->> +
->> +properties:
+On Mon, Oct 13, 2025 at 10:35:18AM -0500, Alex Elder wrote:
+> Add the Device Tree binding for the PCIe/USB 3.0 combo PHY found in
+> the SpacemiT K1 SoC.  This is one of three PCIe PHYs, and is unusual
+> in that only the combo PHY can perform a calibration step needed to
+> determine settings used by the other two PCIe PHYs.
 > 
-> ...
+> Calibration must be done with the combo PHY in PCIe mode, and to allow
+> this to occur independent of the eventual use for the PHY (PCIe or USB)
+> some PCIe-related properties must be supplied: clocks; resets; and a
+> syscon phandle.
 > 
->> +  num-viewport:
->> +    const: 8
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+> v2: - Added '>' to the description, and reworded it a bit
+>     - Added an external oscillator clock, "refclk"
+>     - Renamed the "global" reset to be "phy"
+>     - Renamed a phandle property to be "spacemit,apmu"
+>     - Dropped the label and status property from the example
 > 
-> This property has been deprecated for a long time, and the driver now
-> detects viewports at runtime since commit 281f1f99cf3a (PCI: dwc: Detect
-> number of iATU windows, 2020-11-05), IOW, it makes no effect with the
-> current mainline DWC PCIe driver. Is it really necessary?
+>  .../bindings/phy/spacemit,k1-combo-phy.yaml   | 114 ++++++++++++++++++
+>  1 file changed, 114 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+> new file mode 100644
+> index 0000000000000..6e2f401b0ac27
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+> @@ -0,0 +1,114 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/spacemit,k1-combo-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: SpacemiT K1 PCIe/USB3 Combo PHY
+> +
+> +maintainers:
+> +  - Alex Elder <elder@riscstar.com>
+> +
+> +description: >
+> +  Of the three PHYs on the SpacemiT K1 SoC capable of being used for
+> +  PCIe, one is a combo PHY that can also be configured for use by a
+> +  USB 3 controller.  Using PCIe or USB 3 is a board design decision.
+> +
+> +  The combo PHY is also the only PCIe PHY that is able to determine
+> +  PCIe calibration values to use, and this must be determined before
+> +  the other two PCIe PHYs can be used.  This calibration must be
+> +  performed with the combo PHY in PCIe mode, and is this is done
+> +  when the combo PHY is probed.
+> +
+> +  The combo PHY uses an external oscillator as a reference clock.
+> +  During normal operation, the PCIe or USB port driver is responsible
+> +  for ensuring all other clocks needed by a PHY are enabled, and all
+> +  resets affecting the PHY are deasserted.  However, for the combo
+> +  PHY to perform calibration independent of whether it's later used
+> +  for PCIe or USB, all PCIe mode clocks and resets must be defined.
+> +
+> +properties:
+> +  compatible:
+> +    const: spacemit,k1-combo-phy
+> +
+> +  reg:
+> +    items:
+> +      - description: PHY control registers
+> +
+> +  clocks:
+> +    items:
+> +      - description: External oscillator used by the PHY PLL
+> +      - description: DWC PCIe Data Bus Interface (DBI) clock
+> +      - description: DWC PCIe application AXI-bus Master interface clock
+> +      - description: DWC PCIe application AXI-bus slave interface clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: refclk
+> +      - const: dbi
+> +      - const: mstr
+> +      - const: slv
+> +
+> +  resets:
+> +    items:
+> +      - description: DWC PCIe Data Bus Interface (DBI) reset
+> +      - description: DWC PCIe application AXI-bus Master interface reset
+> +      - description: DWC PCIe application AXI-bus slave interface reset
+> +      - description: PHY reset; must be deasserted for PHY to function
+> +
+> +  reset-names:
+> +    items:
+> +      - const: dbi
+> +      - const: mstr
+> +      - const: slv
+> +      - const: phy
 
-Based on what you say, the answer is "no" and I'll gladly remove it.
+I think phy should be first as that's the main one to the phy and the 
+others are somewhat questionable. Otherwise,
 
-Thanks.
-
-					-Alex
-
-> Best regards,
-> Yao Zi
-
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
