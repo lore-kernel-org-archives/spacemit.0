@@ -1,76 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C92334389;
-	Thu, 16 Oct 2025 12:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82152334364;
+	Thu, 16 Oct 2025 16:48:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760619358; cv=none; b=UnylPzybLH3SJJQ2Kek7es1813xi8l+EjoZc6WC4drA90l0w4kJGGAOjODHWY0ObGfkSMd10gp6XR38kpti7fZ6UJ9PO2BD1EIMksihZHNm5sr9HYB1E4tfpdY0O+VHR0CGLJDhfu3gs+MVmsUgCD5Gov9gBEo+wvHU8AxXtiqQ=
+	t=1760633306; cv=none; b=RnBKYcCsjdawM28fUorS9M2MNZkWudDXHS2A7b+Aj4Gc1oUq8gJhW7NXyW/+PQ35KY8cPbZmrdJ0jMIMxGsEmL/VpoE8bP7DsK7yIaw/calFAhXbtAaNwgl6RLvEsyt2qWxVUQ8XwpGX9LZ/jjHFcZvsta1+2caVZ/QFYVxTrsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760619358; c=relaxed/simple;
-	bh=7Dmfv3gTVej609EwgF8zmpF2F/JwFF1MDizpIwAwxW8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=hHJ2o+1OBZhLA/wMItLUJ4EBoY+Vwe6s9gfwefqeFyLeSErMOHFwjzcIxoDvI59UcHuVNv6UgpWjcnK3mz6kVnOrD1Lyo/f00T2FmBhDQTcJ0bgSY5Eib5D+FSz40wbDghNTGzwhyCzYPPYYB0CtralT8JP9p+tkfjj5cVwtwHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wm5DNpWK; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760633306; c=relaxed/simple;
+	bh=LRlOTTisb6TkUzL0G01flnluo4y/x/+wjiCDhWMWloE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=goAIhbQ/T0nbbqaFWu0hjtiksu+ulxn5QVcF/y9NbpvlTaemHx87m0w/JERYAY3gMA3OVd3Ga1KraML4DbMijIcFcBeRTU3xlugpBssYNxBQZzdv3Y1KlbV+LvEwip7aLUU5kEQsdBseSOUDF9MiOYRGCD7Tafv5tC0ZFpUNlvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=uKWAdTtm; arc=none smtp.client-ip=195.154.113.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wm5DNpWK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EA3C4CEF1;
-	Thu, 16 Oct 2025 12:55:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760619358;
-	bh=7Dmfv3gTVej609EwgF8zmpF2F/JwFF1MDizpIwAwxW8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Wm5DNpWKiyXCmb8pBnZf09ttGff7hmyRFqlylVnDywj8b2nARKejbvCd5ylHUsxKR
-	 nAvMhrBFytg9mTttj0x7whpEupq1fonhaorr5bhTHdN7EQIWfcRmTQoAa2cMKXxZSd
-	 i+X2iKjm+KOXSQUZONEepsMxwfHn6xJpAVd9nxc80LgMHX3r3GUfkL2vR7sDvvmUIS
-	 xHuUxDyAOYsSj8Rf2i5+qEsBf/+Z7w79wzZGPE9DZQNee9lZyk3A1riGVms95OCExN
-	 r9AKyHaBctfEulf1Fn4XQnWvZ8qQ7E5n8tHeDSe3BfujNn5Dx+PqQhnhk1haZkEDHd
-	 y4mTn+p4ybWqw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>, 
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
- Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
- Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- llvm@lists.linux.dev, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, elder@riscstar.com, 
- Naresh Kamboju <naresh.kamboju@linaro.org>, Arnd Bergmann <arnd@arndb.de>
-In-Reply-To: <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
-References: <20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com>
-Subject: Re: [PATCH] dmaengine: mmp_pdma: fix DMA mask handling
-Message-Id: <176061935426.510550.684278188506408313.b4-ty@kernel.org>
-Date: Thu, 16 Oct 2025 18:25:54 +0530
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="uKWAdTtm"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=9gkcy8583TeLV+YV4+SJjwY1l2WxECBbWEM4z0wYrI4=; b=uKWAdTtm22MCASRx16KB/LNFAI
+	y9lpVvkGpyXHDK1VhdEMRj0gfNoBJ4SNB6t0Gm+tuBq1gJUba/367H91NN0eHs9zW9goPY5pfxTTE
+	d3hAMWFzXA60K6GKe1hoFlgwewXfReNTkCr9/m4hC7x/zV8+govNCNdzkrMMilDhQYjIzc8or2AgU
+	AR05K4SNxWhpQy2BhetpTnmHDD94HWownXfaH3SYXkhnQEmoRxzCURvoMsudoAS0dCEpLo4QbHiVj
+	My+V5THMgMACXr/HcPNS8MI3Mh2xRRQHvORUdYxOwbQwKBr8ta4FnOQcqLJv39m2cLuYYk3vseIg7
+	IyEqeKNw==;
+Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
+	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1v9R8v-0098Vp-05;
+	Thu, 16 Oct 2025 18:47:57 +0200
+Date: Thu, 16 Oct 2025 18:47:56 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Alex Elder <elder@riscstar.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
+	mani@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+	dlan@gentoo.org, guodong@riscstar.com, pjw@kernel.org,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, christian.bruel@foss.st.com,
+	shradha.t@samsung.com, krishna.chundru@oss.qualcomm.com,
+	qiang.yu@oss.qualcomm.com, namcao@linutronix.de,
+	thippeswamy.havalige@amd.com, inochiama@gmail.com,
+	devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/7] Introduce SpacemiT K1 PCIe phy and host controller
+Message-ID: <aPEhvFD8TzVtqE2n@aurel32.net>
+Mail-Followup-To: Alex Elder <elder@riscstar.com>, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
+	vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
+	guodong@riscstar.com, pjw@kernel.org, palmer@dabbelt.com,
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+	christian.bruel@foss.st.com, shradha.t@samsung.com,
+	krishna.chundru@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
+	namcao@linutronix.de, thippeswamy.havalige@amd.com,
+	inochiama@gmail.com, devicetree@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+References: <20251013153526.2276556-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251013153526.2276556-1-elder@riscstar.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
+Hi Alex,
 
-On Thu, 18 Sep 2025 22:27:27 +0800, Guodong Xu wrote:
-> The driver's existing logic for setting the DMA mask for "marvell,pdma-1.0"
-> was flawed. It incorrectly relied on pdev->dev->coherent_dma_mask instead
-> of declaring the hardware's fixed addressing capability. A cleaner and
-> more correct approach is to define the mask directly based on the hardware
-> limitations.
+On 2025-10-13 10:35, Alex Elder wrote:
+> This series introduces a PHY driver and a PCIe driver to support PCIe
+> on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
+> Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
+> PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
+> one PCIe lane, and the other two ports each have two lanes.  All PCIe
+> ports operate at 5 GT/second.
 > 
-> The MMP/PXA PDMA controller is a 32-bit DMA engine. This is supported by
-> datasheets and various dtsi files for PXA25x, PXA27x, PXA3xx, and MMP2,
-> all of which are 32-bit systems.
+> The PCIe PHYs must be configured using a value that can only be
+> determined using the combo PHY, operating in PCIe mode.  To allow
+> that PHY to be used for USB, the calibration step is performed by
+> the PHY driver automatically at probe time.  Once this step is done,
+> the PHY can be used for either PCIe or USB.
 > 
-> [...]
+> Version 2 of this series incorporates suggestions made during the
+> review of version 1.  Specific highlights are detailed below.
 
-Applied, thanks!
+With the issues mentioned in patch 4 fixed, this patchset works fine for 
+me. That said I had to disable ASPM by passing pcie_aspm=off on the 
+command line, as it is now enabled by default since 6.18-rc1 [1]. At 
+this stage, I am not sure if it is an issue with my NVME drive or an 
+issue with the controller.
 
-[1/1] dmaengine: mmp_pdma: fix DMA mask handling
-      commit: 88ebb29d3244e515a92c2331434bb73fef7efdc6
+Regards
+Aurelien
 
-Best regards,
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f3ac2ff14834a0aa056ee3ae0e4b8c641c579961
+
 -- 
-~Vinod
-
-
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
