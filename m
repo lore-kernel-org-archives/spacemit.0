@@ -1,66 +1,66 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-io1-f65.google.com (mail-io1-f65.google.com [209.85.166.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D372D879A
-	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 16:21:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C127F2E36E1
+	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 16:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760718066; cv=none; b=sjbaP6MkGccmBkYifmvjUWHzoI5qDX0L05z56g5ZU3JKHLH3jGNOPkJbMd31EHulR6hm9CXJvRB+FRtC2Lm/HItEVtvfkAtuaJWA9/Q5mdYjiSs8fPLNSND6xgh48P2ZnfoiO/qu1RrmKgJDqbesoWyvMy6vOb9Jd2lt2IMGQ/4=
+	t=1760718074; cv=none; b=RFv9DGfgz2lbzAM5kBoibI2ww8QonJeR9W1JbN3CkWPhGTjNchnfzVznR5lZVOyVqRiPr9jAD7SNMubDngWfTxpIepe99seJOMSGYQeHh8dQENYYQ4FsxMpfmFb0/Itt781dkZIxPIfN2tHjnpBenSeZE0Kglnf8/MLzS9VrHos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760718066; c=relaxed/simple;
-	bh=WOWolnrzbdizQeGOJ1i+bdGxPazlr+nDCOPbAZB6pnM=;
+	s=arc-20240116; t=1760718074; c=relaxed/simple;
+	bh=a1NVbX4HwLDN8rNhr+HKeFlbDVEvCUamvM/dlLKhGKU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=JMaWMWYUVwK+7Jpz/vOEzSe+XaxGnCxbcL5fCzYiCK1t+sLHQKvLV42LKXvzbrWJ+gdSbls7coTUY8U8FrtBFy0A1MylmXrLocD9/j+aUyxxeo1K6GX3BZKyDQozBo1/lEY3GnkOvC/JZYC5lDPB4FPD092jpe5GD6fLZw0D+OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=UszMyArY; arc=none smtp.client-ip=209.85.166.180
+	 In-Reply-To:Content-Type; b=USBVfdzUDoPFWUU0QDcIbKzj6Aon1Ekxb7XmGG3f1kAZvDP2G4JICI8OHuxCqZ/keIaTxSKg+NudGLcxjVdj/Mrhurl+ahGDF1zQvmemY++oRyuQ0joSJ3NlwuFdlUXwW/LF4mdyj+0v1O/sWpnKlSd2r2oBHr1UFiDpMxb8VgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=RNT0Uqjy; arc=none smtp.client-ip=209.85.166.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="UszMyArY"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-430cadec5deso5743925ab.1
-        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 09:21:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="RNT0Uqjy"
+Received: by mail-io1-f65.google.com with SMTP id ca18e2360f4ac-93e7ece3025so29835839f.1
+        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 09:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760718063; x=1761322863; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760718071; x=1761322871; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=V5OPF9MQYXuFed4Nr/kXKcbfQ5kgh8+dek3Kx0+shzI=;
-        b=UszMyArYNRDQENaQdgCpTB+ed9asxyMq2ufzc/Aq8JPMEz4sQTj+EeMP0zqUZuy6dq
-         +Zl1jC3pFECFgFL88pVmgL1+HgttRmUCVIXmHWRNkUFXgnQKhIhLuPBS1+0SR1VTlzQT
-         B/iZASthJTQjGu4ga76ptAxl96CJ4coeuwfB+U7hsm0NnXkd5lomG9PHDPtWAsCpwlEN
-         2LNSOd6zE5U7GBmjQ1az48hn0ou2aXX2eHGzDLe+3BgNLvzs2kKi9K9GBKrEpuYiYU3K
-         jpPEypv4lzR2IHxVDmsYy+z/VL8+IfkHNwuAWf6apFBjNaxot3mb3VP/Q4FxEx9oqgGX
-         l0NA==
+        bh=a7+Wio6b8w1yNg9Tem9uVrRYlYIL3Mf5C/3BZyCBdIc=;
+        b=RNT0UqjyGnNHBB0q6OiBnnW5D1/SvhjIEmEZkizz9VLgeyBJPKfWJouw5KJftpcphG
+         3rMWWDHIAsD9mBjaX+WyvFcsX6cofcBrybO8AWT0O+i02ATyGg29ky0DgqNRPJaSx4L5
+         vS+oleANrP2dF9znHti2ku9/oyrQaGxx7xwpVuUgnHkkzuFgi6WfzsVlcA15/8VpM6Qo
+         SwBKNQ9sDRQw0t6XUIgRzVxoA3/FfySt52Z/fx/l6QWv+jlQ99Xy1inKUTCS572fJPfq
+         pIGwZhykol/jaS0efP7ey0oQ+SG7+OM6s5+ECnv3JNsvoiM0h1h6kWjK6GWIqWZmfZTO
+         zQrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760718063; x=1761322863;
+        d=1e100.net; s=20230601; t=1760718071; x=1761322871;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V5OPF9MQYXuFed4Nr/kXKcbfQ5kgh8+dek3Kx0+shzI=;
-        b=PyuZ6qFajuO8tqSqLsBUXx11tjpGAJU4EVo5owA9eOE7kEJC5vZ6YIHG95nasFlffw
-         f6tdkbY6gpqH9PMFgTrPSfRyTOFaSrnzGE/za+Md5w2EpaZabS4k9Xz7F5cNSORv51ZJ
-         +tXWpRURDw9Glh8zvs/6Flc7PGxwXvaCw4ECKbmOhrjS2ycraW5X1fIUsoxoQLqSls3q
-         Ee2cXdqYcBDiyA1/gdnw5vjWVVJ2swqSMfcUO/D2TU1wHy7EBsePsl+soilzMjQsRCnY
-         fAwOaa+/hQKldPIIyHMFbX/iuekfhkbjxQB2Q2Qvi3Pi9qNYCwk/LpAU3JcGRX5OSmX8
-         JTNg==
-X-Forwarded-Encrypted: i=1; AJvYcCUT5yzEfpthCaWzVgd52EqDwree7d1T2gDq2OB2+zpU6rO+pu9VC6BRZKqHRseQvOXAIDPxD2X7mA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxVJqNAo7DkT/nUV99ViFl49KQXoDl1NKTAK8RuJ7vBqSIhA2kd
-	ZAWUH3jNymXVx063/i4boRqxYG55HC1RNdChl4INcj9F9aawou73vxSqgf3QAbblvCo=
-X-Gm-Gg: ASbGnctnNDzCaBtcSJppPECJunYtDWdjHPoUCmjHyx9uLT+mLVwtY3pN0kmNCAbcI1g
-	78BismCnXS5R9ubiSYZTHWAjPDcd6X8mLUBleVOH56wCfkpoPkZos9DMainOGU8Vhw7oFZ8ayp1
-	P5kE5CxgyEipmGu7e/Hu58j4wavwxSfyuJA+m1sH9TXsUHlnGxRz4xFYi1O+jYy+0GVu8dvpP9s
-	X6RHLYfgAkMK/nkPNopFNwbAFDVneZL7roX4fgMl0IV1w8VuxqDL/gmhAqrFzLRVMcjg4a4Ik5M
-	CLtTUviWdbVk5PugD2wVohEDentnCKj6nI8gYR6/ufPV/8az0LC8QqL15fqw8ec3iiN/8J6weam
-	KUIOW7xOgsIvgRSdXvj5zzFv5u69d/RrNl17ot3MDUsiHUO00WeUQth0BBpcKMUgN6puAILKjYn
-	vGRxZad7Sx50onOHqXQ5drTGYyl3LbqIkFYt9iYLEtv/bSuM1//A==
-X-Google-Smtp-Source: AGHT+IG3DZtIVoWgPN5tvCgGkBUTeqvd5qyoLhI1JrzlxbkjqqPI7UAzBrwCEOdwr214b+XxIHv5wA==
-X-Received: by 2002:a05:6e02:1a82:b0:430:cf19:e682 with SMTP id e9e14a558f8ab-430cf19e837mr15167475ab.13.1760718062603;
-        Fri, 17 Oct 2025 09:21:02 -0700 (PDT)
+        bh=a7+Wio6b8w1yNg9Tem9uVrRYlYIL3Mf5C/3BZyCBdIc=;
+        b=llqFALb/q0wkztf+xFBo87Oz34W2Eg6L3pGW9p7mDqwJLC+0vvnqq2fpsqSI3Is7XL
+         lyCKkfT6zYPiBS8QITHIjE2kIpCQ84btR+XYwlfPPFUWUFvpyBy/LzLcbyZDg8gtMjYW
+         URtfNHWoVMqdOAn6u6BK4OKC5ekpGBsLDd3eiFv8AU60lhMqUmb46txO4J9B76F3Lv5v
+         7BZsxVB4jrwuDgtlmCZBLI3pTk7pvhsOQeu0b/G+TY5d51Tghux5CuKc8dl6GSBzsXIf
+         0BrenfhNcxQqRdb9B+PkzLRZ/QYK/w2KFO0IrksjfOo18/nou4k8mCQNQGiFx9xCUlE4
+         /5CA==
+X-Forwarded-Encrypted: i=1; AJvYcCVcu6OUpgBF74j9tHHzSQcEQEBvVSTA4+bcBY32xs2vcx5VMGs37MX7w4XC31WeuXUkFNWJghu52A==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz1w9lE/HKg8x1ApjKPVou/OxzhGKDdVnMRgVq+w38s/+r3dwj/
+	3Kvmpwc999NpQn1bV3ssv6hIdCiRu0Kdrrcpul98meFBuA8t+FKPViasrhaB9SgyajY=
+X-Gm-Gg: ASbGncse1dlFD61cZH4vGz5jOTGIeJ6QU6XppMsFzUoR+gFHhgvADgC8oRN4aG68qPo
+	IhHWyr18JM/Zo9u6DCms92yH/w480aMOppodRQBZZaq0zQFTAD//+Bjc5j4atDd+2uvVZ6aPz1o
+	LEKQ8VIfAEj58kcUTEN16dvSRphc0GQ2NbXcFRI6RN1iSQwLuXtkRGO5OR8nWraBly/FehJk+1c
+	SrCeFJrDqa6HL6/VW54i6kH1OIAnr3e2LBwR01NDPxMnhj+IBrU/ngYaI06YDKxoi2yoRdHVZBs
+	AjxcK5OPGcO5yiH37vDc1tzmAuV4PaEFhWfiGpy2jpq7JKAhjZ7dPE6h+SYrxFi9QCJr5NL8BgP
+	46H8D/uELHdmz/2+2tLW2+fOJlVGWr2/oJ8o7VWZDU442CXLlLqNIKEkx6tXHIOjNou4uDR7584
+	/NaVctAAednQNrIkqPZvsfAyDazV+tPSStqWfcbcg=
+X-Google-Smtp-Source: AGHT+IEIgP2oHx8F177Q7uZqnuNLPeZz2b0M8yBXR1aqrI1laVD3XEel+UPyfoDNXtqbVVX4QNo+pg==
+X-Received: by 2002:a05:6e02:440b:10b0:430:bf84:e94c with SMTP id e9e14a558f8ab-430bf84e9e5mr60046655ab.13.1760718070850;
+        Fri, 17 Oct 2025 09:21:10 -0700 (PDT)
 Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a962f04fsm22836173.21.2025.10.17.09.21.00
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a97b92b1sm10677173.68.2025.10.17.09.21.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Oct 2025 09:21:02 -0700 (PDT)
-Message-ID: <cff71664-6f61-4cfc-9542-20781a559ef4@riscstar.com>
-Date: Fri, 17 Oct 2025 11:21:00 -0500
+        Fri, 17 Oct 2025 09:21:10 -0700 (PDT)
+Message-ID: <92ee253f-bf6a-481a-acc2-daf26d268395@riscstar.com>
+Date: Fri, 17 Oct 2025 11:21:08 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,7 +68,7 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/7] phy: spacemit: introduce PCIe/combo PHY
+Subject: Re: [PATCH v2 0/7] Introduce SpacemiT K1 PCIe phy and host controller
 To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
  mani@kernel.org, vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
@@ -79,225 +79,77 @@ To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  namcao@linutronix.de, thippeswamy.havalige@amd.com, inochiama@gmail.com,
  devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
  linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- Junzhong Pan <panjunzhong@linux.spacemit.com>
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
 References: <20251013153526.2276556-1-elder@riscstar.com>
- <20251013153526.2276556-5-elder@riscstar.com> <aPAXRiGA8aTZCNTm@aurel32.net>
+ <aPEhvFD8TzVtqE2n@aurel32.net>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <aPAXRiGA8aTZCNTm@aurel32.net>
+In-Reply-To: <aPEhvFD8TzVtqE2n@aurel32.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/15/25 4:51 PM, Aurelien Jarno wrote:
-> Hi,
+On 10/16/25 11:47 AM, Aurelien Jarno wrote:
+> Hi Alex,
 > 
 > On 2025-10-13 10:35, Alex Elder wrote:
->> Introduce a driver that supports three PHYs found on the SpacemiT
->> K1 SoC.  The first PHY is a combo PHY that can be configured for
->> use for either USB 3 or PCIe.  The other two PHYs support PCIe
->> only.
+>> This series introduces a PHY driver and a PCIe driver to support PCIe
+>> on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
+>> Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
+>> PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
+>> one PCIe lane, and the other two ports each have two lanes.  All PCIe
+>> ports operate at 5 GT/second.
 >>
->> All three PHYs must be programmed with an 8 bit receiver termination
->> value, which must be determined dynamically.  Only the combo PHY is
->> able to determine this value.  The combo PHY performs a special
->> calibration step at probe time to discover this, and that value is
->> used to program each PHY that operates in PCIe mode.  The combo
->> PHY must therefore be probed before either of the PCIe-only PHYs
->> will be used.
+>> The PCIe PHYs must be configured using a value that can only be
+>> determined using the combo PHY, operating in PCIe mode.  To allow
+>> that PHY to be used for USB, the calibration step is performed by
+>> the PHY driver automatically at probe time.  Once this step is done,
+>> the PHY can be used for either PCIe or USB.
 >>
->> Each PHY has an internal PLL driven from an external oscillator.
->> This PLL started when the PHY is first initialized, and stays
->> on thereafter.
->>
->> During normal operation, the USB or PCIe driver using the PHY must
->> ensure (other) clocks and resets are set up properly.
->>
->> However PCIe mode clocks are enabled and resets are de-asserted
->> temporarily by this driver to perform the calibration step on the
->> combo PHY.
->>
->> Tested-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
->> Signed-off-by: Alex Elder <elder@riscstar.com>
+>> Version 2 of this series incorporates suggestions made during the
+>> review of version 1.  Specific highlights are detailed below.
 > 
-> Thanks for this new version. I have tried it on top of v6.18-rc1 +
-> spacemit DTS commits from next on a BPI-F3, and it fails calibrating the
-> PHY with:
+> With the issues mentioned in patch 4 fixed, this patchset works fine for
+> me. That said I had to disable ASPM by passing pcie_aspm=off on the
+> command line, as it is now enabled by default since 6.18-rc1 [1]. At
+> this stage, I am not sure if it is an issue with my NVME drive or an
+> issue with the controller.
 
-I don't see this on my BPI-F3, but I now understand why.
+Can you describe what symptoms you had that required you to pass
+"pcie_aspm=off" on the kernel command line?
 
-> [    2.748405] spacemit-k1-pcie-phy c0b10000.phy: error -ENOENT: calibration failed
-> [    2.755300] spacemit-k1-pcie-phy c0b10000.phy: error -ENOENT: error probing combo phy
-> [    2.763088] spacemit-k1-pcie-phy c0b10000.phy: probe with driver spacemit-k1-pcie-phy failed with error -2
-> [   14.309031] platform c0d10000.phy: deferred probe pending: (reason unknown)
-> [   14.313426] platform c0c10000.phy: deferred probe pending: (reason unknown)
-> [   14.320347] platform ca400000.pcie: deferred probe pending: platform: supplier c0c10000.phy not ready
-> [   14.329542] platform ca800000.pcie: deferred probe pending: platform: supplier c0d10000.phy not ready
-> 
-> Note that version 1 was working fine on the same board.
-> 
-> [ snip ]
-> 
->> diff --git a/drivers/phy/phy-spacemit-k1-pcie.c b/drivers/phy/phy-spacemit-k1-pcie.c
->> new file mode 100644
->> index 0000000000000..81bc05823d080
->> --- /dev/null
->> +++ b/drivers/phy/phy-spacemit-k1-pcie.c
-> 
-> [ snip ]
-> 
->> +static int k1_pcie_combo_phy_calibrate(struct k1_pcie_phy *k1_phy)
->> +{
->> +	struct reset_control_bulk_data resets[] = {
->> +		{ .id = "dbi", },
->> +		{ .id = "mstr", },
->> +		{ .id = "slv", },
->> +	};
->> +	struct clk_bulk_data clocks[] = {
->> +		{ .id = "dbi", },
->> +		{ .id = "mstr", },
->> +		{ .id = "slv", },
->> +	};
->> +	struct device *dev = k1_phy->dev;
->> +	struct reset_control *phy_reset;
->> +	int ret = 0;
->> +	int val;
->> +
->> +	/* Nothing to do if we already set the receiver termination value */
->> +	if (k1_phy_rterm_valid())
->> +		return 0;
->> +
->> +	/* De-assert the PHY (global) reset and leave it that way for USB */
->> +	phy_reset = devm_reset_control_get_exclusive_deasserted(dev, "phy");
->> +	if (IS_ERR(phy_reset))
->> +		return PTR_ERR(phy_reset);
->> +
->> +	/*
->> +	 * We also guarantee the APP_HOLD_PHY_RESET bit is clear.  We can
->> +	 * leave this bit clear even if an error happens below.
->> +	 */
->> +	regmap_assign_bits(k1_phy->pmu, PCIE_CLK_RES_CTRL,
->> +			   PCIE_APP_HOLD_PHY_RST, false);
->> +
->> +	/* If the calibration already completed (e.g. by U-Boot), we're done */
->> +	val = readl(k1_phy->regs + PCIE_RCAL_RESULT);
->> +	if (val & R_TUNE_DONE)
->> +		goto out_tune_done;
-I refer to the above three lines, below.
+I see these lines in my boot log related to ASPM (and added by
+the commit you link to), for both pcie1 and pcie2:
 
->> +	/* Put the PHY into PCIe mode */
->> +	k1_combo_phy_sel(k1_phy, false);
->> +
->> +	/* Get and enable the PCIe app clocks */
->> +	ret = clk_bulk_get(dev, ARRAY_SIZE(clocks), clocks);
->> +	if (ret <= 0) {
->> +		if (!ret)
->> +			ret = -ENOENT;
->> +		goto out_tune_done;
->> +	}
-> 
-> This part doesn't look correct. The documentation says this function
-> "returns 0 if all clocks specified in clk_bulk_data table are obtained
-> successfully, or valid IS_ERR() condition containing errno."
-> 
-> To me, it seems the code should only be:
-> 
-> 	ret = clk_bulk_get(dev, ARRAY_SIZE(clocks), clocks);
-> 	if (ret)
-> 		goto out_tune_done;
+   pci 0000:01:00.0: ASPM: DT platform, enabling L0s-up L0s-dw L1 AS
+PM-L1.1 ASPM-L1.2 PCI-PM-L1.1 PCI-PM-L1.2
+   pci 0000:01:00.0: ASPM: DT platform, enabling ClockPM
 
-OK I understand the problem here.
+   . . .
 
-On v1 of the series, this used clk_bulk_get_all(), and I changed
-that to clk_bulk_get().  There is now an additional reference
-clock defined, used by the PLL clock.  So here we only want to
-get three clocks, not that new one.
+   nvme nvme0: pci function 0000:01:00.0
+   nvme 0000:01:00.0: enabling device (0000 -> 0002)
+   nvme nvme0: allocated 64 MiB host memory buffer (16 segments).
+   nvme nvme0: 8/0/0 default/read/poll queues
+    nvme0n1: p1
 
-The return value from clk_bulk_get_all() is the number of clocks,
-and 0 means "not found".  So I guess I neglected to change the
-handling of the return value here when I changed the function.
+My NVMe drive on pcie1 works correctly.
+   https://www.crucial.com/ssd/p3/CT1000P3SSD8
 
-The reason I didn't see this is that calibration only ever has
-to happen once (per boot).  In the lines I noted earlier, the
-PCIE_RCAL_RESULT register is read, and if the R_TUNE_DONE bit
-is already set, calibration is complete (probably done by the
-boot loader).
+   root@bananapif3:~# df /a
+   Filesystem     1K-blocks     Used Available Use% Mounted on
+   /dev/nvme0n1p1 960302804 32063304 879385040   4% /a
+   root@bananapif3:~#
 
-In my case, calibration was already done, so I never had to get
-the clock or resets, etc.  In your case, this driver had to do
-the calibration, so you (successfully) got the clocks, and
-that (erroneously) resulted in an error.
+I basically want to know if there's something I should do with this
+driver to address this.  (Mani, can you explain?)
 
-I reproduced the problem(s) you observed by forcing the
-calibration on my machine.
-
-Thank you very much for reporting this.  Your fix is correct,
-and I will include it in v3 of the series.
-
-> [snip]
-> 
->> +out_put_clocks:
->> +	clk_bulk_put_all(ARRAY_SIZE(clocks), clocks);
-> 
-> When fixing the above bug, this then crashes with:
-> 
-> [    2.776109] Unable to handle kernel paging request at virtual address ffffffc41a0110c8
-> [    2.783958] Current kworker/u36:0 pgtable: 4K pagesize, 39-bit VAs, pgdp=0x00000000022a7000
-> [    2.792302] [ffffffc41a0110c8] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
-> [    2.800980] Oops [#1]
-> [    2.803217] Modules linked in:
-> [    2.806261] CPU: 3 UID: 0 PID: 58 Comm: kworker/u36:0 Not tainted 6.18.0-rc1+ #4 PREEMPTLAZY
-> [    2.814763] Hardware name: Banana Pi BPI-F3 (DT)
-> [    2.819366] Workqueue: events_unbound deferred_probe_work_func
-> [    2.825180] epc : virt_to_folio+0x5e/0xb8
-> [    2.829172]  ra : kfree+0x3a/0x528
-> [    2.832558] epc : ffffffff8034e12e ra : ffffffff8035557a sp : ffffffc600243980
-> [    2.839762]  gp : ffffffff82074258 tp : ffffffd700994d80 t0 : ffffffff80021540
-> [    2.846967]  t1 : 0000000000000018 t2 : 2d74696d65636170 s0 : ffffffc600243990
-> [    2.854172]  s1 : ffffffc600243ab8 a0 : 03ffffc41a0110c0 a1 : ffffffff82123bd0
-> [    2.861377]  a2 : 7c137c69131cec36 a3 : ffffffff816606d8 a4 : 0000000000000000
-> [    2.868583]  a5 : ffffffc500000000 a6 : 0000000000000004 a7 : 0000000000000004
-> [    2.875787]  s2 : ffffffd700b98410 s3 : ffffffc600243ab8 s4 : 0000000000000000
-> [    2.882991]  s5 : ffffffff80828f1c s6 : 0000000000008437 s7 : ffffffd700b98410
-> [    2.890197]  s8 : ffffffd700b98410 s9 : ffffffd700900240 s10: ffffffff81fc4100
-> [    2.897401]  s11: ffffffd700987400 t3 : 0000000000000004 t4 : 0000000000000001
-> [    2.904607]  t5 : 000000000000001f t6 : 0000000000000003
-> [    2.909902] status: 0000000200000120 badaddr: ffffffc41a0110c8 cause: 000000000000000d
-> [    2.917802] [<ffffffff8034e12e>] virt_to_folio+0x5e/0xb8
-> [    2.923097] [<ffffffff8035557a>] kfree+0x3a/0x528
-> [    2.927784] [<ffffffff80828f1c>] clk_bulk_put_all+0x64/0x78
-> [    2.933340] [<ffffffff807249d6>] k1_pcie_phy_probe+0x4ee/0x618
-> [    2.939155] [<ffffffff808e35e6>] platform_probe+0x56/0x98
-> [    2.944538] [<ffffffff808e0328>] really_probe+0xa0/0x348
-> [    2.949832] [<ffffffff808e064c>] __driver_probe_device+0x7c/0x140
-> [    2.955909] [<ffffffff808e07f8>] driver_probe_device+0x38/0xd0
-> [    2.961724] [<ffffffff808e0912>] __device_attach_driver+0x82/0xf0
-> [    2.967801] [<ffffffff808dde6a>] bus_for_each_drv+0x72/0xd0
-> [    2.973356] [<ffffffff808e0cac>] __device_attach+0x94/0x198
-> [    2.978912] [<ffffffff808e0fca>] device_initial_probe+0x1a/0x30
-> [    2.984815] [<ffffffff808defee>] bus_probe_device+0x96/0xa0
-> [    2.990370] [<ffffffff808dff0e>] deferred_probe_work_func+0xa6/0x110
-> [    2.996707] [<ffffffff8005cb66>] process_one_work+0x15e/0x340
-> [    3.002436] [<ffffffff8005d58c>] worker_thread+0x22c/0x348
-> [    3.007905] [<ffffffff80066b7c>] kthread+0x10c/0x208
-> [    3.012853] [<ffffffff80014de0>] ret_from_fork_kernel+0x18/0x1c0
-> [    3.018843] [<ffffffff80c917d6>] ret_from_fork_kernel_asm+0x16/0x18
-> [    3.025098] Code: 7a98 8d19 2717 0131 3703 5fa7 8131 8d19 051a 953e (651c) f713
-> [    3.032497] ---[ end trace 0000000000000000 ]---
-> 
-> It seems that we want clk_bulk_put() and not clk_bulk_put_all(). The
-> latter free the clocks, while they have been allocated on the stack.
-
-Yes, you are correct.  This too is an artifact of me doing a bad job
-switching to the clk_bulk_get() interface.
-
-Thanks again for your message.  Reviews are awesome, but someone
-actually testing it is a good way to find problems like this.
+Thank you.
 
 					-Alex
 
-> 
-> Regards,
+> Regards
 > Aurelien
+> 
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f3ac2ff14834a0aa056ee3ae0e4b8c641c579961
 > 
 
