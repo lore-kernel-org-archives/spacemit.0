@@ -1,66 +1,66 @@
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF51C2C0289
-	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 16:20:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2A32C11D7
+	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 16:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760718042; cv=none; b=uE7d2S35OOuScj5C7FZ3gIqZT4ENZJc+DAgvdLdVQIH/fXWZHpfjewYS3fNxrAXKTft3EmpOlcWlSjaCPjEfxlBk9+ProsJS3Vzv5fVEoe4yFxmRRFbrmYmmAmagtxMXJILUg9YQaFCWRUZAEQqF6Q1fgV0sy0QBN46jh0ByX6M=
+	t=1760718048; cv=none; b=osREyz5J/GZ+J4Fe0K91oVSWKULj/WBBbG4+gdvtbaP301kUT4Ba/6hKPKKJH3leT/F5J68glQQoAkaEhrTp7wE5hRVmtC1Hg6Zma/NZ6zFgvq+TToMC8v/8QdQKXQcIHGKSMmW5YS8k6o+aRYCGKnhCIb3L4R9I34O42BRl+h8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760718042; c=relaxed/simple;
-	bh=gxKOH8Xdwc40yMCcxjDPNybQvl0viUGO00L2ILr5yMg=;
+	s=arc-20240116; t=1760718048; c=relaxed/simple;
+	bh=V5+G6D9gYoHyycj/8QJCp/qEQ29MEhUI3xvN2kUgks8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WzvosBsqiL3dhJb6kuKL5kq+aaDxsWkLPKjsLSV81uNX8WfYZUXA0FjWObZ67ky9enqXJYlcVh/EvP0fbGsq8SL7rgZfonq+bes6Zdf6SyzFWGD475OU8dOgIN+F0v45M6qkzLVTjKilNWP32jhmKSSOZJRPN4FBo/2H48MFbBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ji1jXT/5; arc=none smtp.client-ip=209.85.166.169
+	 In-Reply-To:Content-Type; b=U+1Gm/pBLc24xi/IG301kPoCpCQhlsMWS5CToG8fwsUL8zST9fHAI04E9NPDg71F3g9sT4KAUhnT3ZGNGxrqTUA6d1Gj4hX0tPQIEE70swLIGg4OqzAIqA8E8aZW32vpZEiFrX5wh6FFZSztb49eV0PX918mk1QQgSu4I5HrroE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=o8BALkRv; arc=none smtp.client-ip=209.85.166.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ji1jXT/5"
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-430ccd45f19so4191315ab.1
-        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 09:20:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="o8BALkRv"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-9298eba27c2so122845839f.3
+        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 09:20:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760718040; x=1761322840; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760718045; x=1761322845; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CVQ6phuTO84kFBkRt8EnO28DbxtrTEoiT+THIp/h4p4=;
-        b=ji1jXT/5TRUrWt8gxT0b/4xRJqtM+JpyEJu4LviiLg2c5bwcxDxCREYbM2jX90quLP
-         tiisKX7Ay64G+7a8+UBCASL2J+az1O76dN7dZaA6I1nl0gKziuu8HXfaOznjASXO4C8H
-         zw9dA9Yi50k+L4SuTC19fXERKbnwW+9SKHbDnLCFn2GC/57qo/d9SfcapGP7st7dTktq
-         6N6ZGZbwN8uRmpW02rnLB4AIuN0sMtJL7yuogyrThZ2Kbt4W6IvKO9+5uPrcYDHNQwkR
-         txR6fdjoegjJMqmetim8AnfHs0YZJCu4ZVBcr7XhE3XkHUIMOG/bc4PBbIoiqRbOa61i
-         ZsbQ==
+        bh=lrl9ZQZl0dfsXGeKo4b0s0yUNEi86+tLTNDIOrpaa44=;
+        b=o8BALkRvh+AB44m+iTHiD7PMP8+0jn+vtlqzMJ2+V8zgYZc6cL+HGHOC3f/xQcyw27
+         0NOLaLeq1lR+BluzH3Tjp/O2WJ3QIDLjLbIPDazBxrFaZprQk7rT6FXulpJjTgX8kNXn
+         hk5F5jf3UaWwDvqZ7u4VeA3lUuwgqMFMSTi0fZkg6IG1yoAlaN5ARQ9/dPXT/kRQ0WFx
+         f9RbkThHpz4Nwz/V+ckRlBF2iQshw8/lx07Yi6KYVbeoRNPo9PCgW6lVGt6XxoauKVdD
+         HwxOrEGMb44Gi1hX1T1m/7d3RDmOKAQuTFhAh4SiunVyO4aDtrh1NIMNjhfSx3C0wScp
+         InVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760718040; x=1761322840;
+        d=1e100.net; s=20230601; t=1760718045; x=1761322845;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CVQ6phuTO84kFBkRt8EnO28DbxtrTEoiT+THIp/h4p4=;
-        b=KGO5wO4pwTThBOS3BJNdyUiUy7mE3qGTW/O9dofq5PYvmXk2l9O9HGPsCHhu80HnNQ
-         Ih5wFDEAWCIaN4o+yp6ke0DyUbTltQRqE0Z6Pue2zT+kB8wyWBo3I435PCcaE2mKZreQ
-         9J5Zu+ksB0UcRCXV4tqhJGMak0XcvTOlGn7mD1vF9ra3wthE2fFn33mVBCq3lXqLx2Ug
-         Ca7xSnJ5AlTP6llvp+JgSs2PaEobmx9+2zdGMcfJddZBKdkqTO9T8OngPUt5N0bBjlLy
-         HIHy95cmfS1aMzvI2HY6u0btkKwqo1iI0ILegmDp/9TmHRBGBFVYAcMP5ggPHAcnGBfP
-         SbIA==
-X-Forwarded-Encrypted: i=1; AJvYcCVvO4nEo/2R+JHhi9fXrAnpLKQ8+li4g2g5nPu2LoxI/Icmcz2121T5DVP/uEMywjbSNdlYExQzeA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx/tw7MluBDfgAMs6LMtitVeufnExGkngUcSbPtzmI6LlTqA93b
-	tDqn5pXYyxWxPVkV8sGKGuoOAAInJMG3CD6JV6ZVyie3naogkbyQmRzEfBygFXg9g7Y=
-X-Gm-Gg: ASbGncs3DyZDwgYekbSEQBh2jKcKIZlj6m0LY9i618W3GCmbc0JZ6Gk8EvsMqe6yfUs
-	bi9qVRQjKUxbCr354enRBxV5a9oEDB65c85bAqNSnsqPFUB7a0ePv6ojZuouHJg5nyaAoCOZCZn
-	iuxoNPJNBKLxidc597g6289B7mGemlClTizRFDYxVh1pA408K43hiwxqcrpjO6VUvYaL+2ssjXu
-	sbaiSyXHJfvVpsxw9ZLvU9ioesGwPTzA+liBbt53fM4N+8HNZtXGRAc48H+qtmde9fMm/UVZdAe
-	ADim2T50xrcHyTFFpANrvF2T49qOgRMrv38mCgYPTXVriifuzagtLtOFZ2tbSDA+xX1DH6AzYMR
-	c38UubVKxvwPfy7yUekX5/WLrC5mzCAWeF3pUTLUF1aBmWo8l2j/C9QBP6O/PY3Dh3yzoyceVcJ
-	n2RR0ULP6JwJAn0/fsYZs4dnilozcz8Y72ed1u4Rs=
-X-Google-Smtp-Source: AGHT+IHkLguz0srIwb9Y0kZ8Jj/SerEa4TnF03jUDSOPF34f5dBqn26UDMGx8TBiPYMDv2ZC0jD7cw==
-X-Received: by 2002:a05:6e02:1d9d:b0:430:a65c:a833 with SMTP id e9e14a558f8ab-430c52ccf5fmr57021215ab.31.1760718039725;
-        Fri, 17 Oct 2025 09:20:39 -0700 (PDT)
+        bh=lrl9ZQZl0dfsXGeKo4b0s0yUNEi86+tLTNDIOrpaa44=;
+        b=v5qyX+XegVuUCfeEx9n+/A7fonx5Xl9YEsQZliv3wHF6dqZKE9niOjplz1pcnTiYtw
+         rCVqdruC2sTdlv399F8SKHpOCK6PA1xOAhRntt+aUGJbKKUPQffnxIy6Em9gkM4fkf9m
+         cU5qwEMgRTSFpmzV1dTU1Oj5GtX3KO9JAOS34XDw2T82bMfd0PuS6/UTCTP00RS+gye5
+         B4EdZZY6foVqLFuf7G3BCRbQBEh0E98KTMRgzW5ffPkB7UiBF0yUDQlRdIhZ37ilhsdW
+         pXE+uH1LSUll1vbckrTjJAccbnXjZ2xlju1TdCgRlOm30yeIinW84iUqxKwr63qrGNn/
+         XkBA==
+X-Forwarded-Encrypted: i=1; AJvYcCV7GTPZL/lYL/RRoEr5/EiML/dIuqWvQJXMc/bzQ4kwF5SWdMcrZUXr1CGeEbY6qtrP7Ir/xXozcA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwVMcPr6xFtsH69aXp8zCKbUm1teV9gmM7kc1WvxETHPK/Lc91u
+	GHWbQxAJUIeqq3PGDSPk3/4AGuvFH4k6mtF+nE8jmmLVlabUb+Rv4Pt3oSY4e97ObyY=
+X-Gm-Gg: ASbGncsBnplwO5QuRbEgsEs4Tumue8uDCpAHx/cBX+2koXKooRIwyXCN2tP76VGMxM+
+	GeHf9Ud3gOaqngM2a2WfZ3cPV+n0T/8vrzPbBmTIG0BiiADAjllTg6iRuhfkNwS9IRlS+xflPQ7
+	ssLiBpoNv1ZC6a894ydV787hsyCySjHkN+SF/KsO4mvkpwoLRygg2e8EydeVDPLehBJVAAFqiIn
+	aho02eSgQQiThHHs7bWUuvjnNtIrJ89O13AdGJlvV+om6xpvhMv+uIXhkM7nFbf2pg+EyNr0zZx
+	gWcppaLZ7D2voLL7NCy6aVp7Qf1gOdzdWz+Lv0HBKuJvAMr0HRhiZMiBZ2GdB7nTWX/ama7iFoz
+	wpbTVHffH/GOwNQ3qABfASRdXt34M3KfFEJwgzULjg/q+fonRXdO7Tp14IIYXzGCG6mBtr/QnN4
+	I3p4XHJnYq4FAGlIX8cdNyFSaUBN7lHGHBTEm6x2Y=
+X-Google-Smtp-Source: AGHT+IF6pUvJ0SrEEfDoT+rWcs5Ssj/49Pi6P7PUBjepw0T+yRtjC6wHKw2821+rzZKRbVJoL68B5Q==
+X-Received: by 2002:a05:6e02:19ce:b0:430:bee3:34a with SMTP id e9e14a558f8ab-430c52b5b09mr52484505ab.20.1760718045271;
+        Fri, 17 Oct 2025 09:20:45 -0700 (PDT)
 Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a97689basm12877173.49.2025.10.17.09.20.37
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a97689basm12877173.49.2025.10.17.09.20.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Oct 2025 09:20:39 -0700 (PDT)
-Message-ID: <3ccf196c-aa57-4977-9dea-a54172e427fa@riscstar.com>
-Date: Fri, 17 Oct 2025 11:20:37 -0500
+        Fri, 17 Oct 2025 09:20:44 -0700 (PDT)
+Message-ID: <e7bbbc92-871e-4155-a1b4-96929199a1dd@riscstar.com>
+Date: Fri, 17 Oct 2025 11:20:43 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,45 +68,46 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/7] dt-bindings: phy: spacemit: add SpacemiT
- PCIe/combo PHY
-To: Rob Herring <robh@kernel.org>
-Cc: krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
- lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
- vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org, guodong@riscstar.com,
- pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
- p.zabel@pengutronix.de, christian.bruel@foss.st.com, shradha.t@samsung.com,
- krishna.chundru@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
- namcao@linutronix.de, thippeswamy.havalige@amd.com, inochiama@gmail.com,
- devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/7] dt-bindings: phy: spacemit: introduce PCIe PHY
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: guodong@riscstar.com, bhelgaas@google.com, christian.bruel@foss.st.com,
+ krzk+dt@kernel.org, namcao@linutronix.de, aou@eecs.berkeley.edu,
+ shradha.t@samsung.com, vkoul@kernel.org, linux-pci@vger.kernel.org,
+ dlan@gentoo.org, pjw@kernel.org, linux-phy@lists.infradead.org,
+ qiang.yu@oss.qualcomm.com, p.zabel@pengutronix.de,
+ linux-riscv@lists.infradead.org, mani@kernel.org, palmer@dabbelt.com,
+ kishon@kernel.org, kwilczynski@kernel.org, linux-kernel@vger.kernel.org,
+ inochiama@gmail.com, devicetree@vger.kernel.org, spacemit@lists.linux.dev,
+ alex@ghiti.fr, krishna.chundru@oss.qualcomm.com, lpieralisi@kernel.org,
+ conor+dt@kernel.org, thippeswamy.havalige@amd.com
 References: <20251013153526.2276556-1-elder@riscstar.com>
- <20251013153526.2276556-2-elder@riscstar.com>
- <20251015145217.GA3554740-robh@kernel.org>
+ <20251013153526.2276556-3-elder@riscstar.com>
+ <176054651498.4032617.11231316454316691309.robh@kernel.org>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20251015145217.GA3554740-robh@kernel.org>
+In-Reply-To: <176054651498.4032617.11231316454316691309.robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/15/25 9:52 AM, Rob Herring wrote:
->> +  resets:
->> +    items:
->> +      - description: DWC PCIe Data Bus Interface (DBI) reset
->> +      - description: DWC PCIe application AXI-bus Master interface reset
->> +      - description: DWC PCIe application AXI-bus slave interface reset
->> +      - description: PHY reset; must be deasserted for PHY to function
->> +
->> +  reset-names:
->> +    items:
->> +      - const: dbi
->> +      - const: mstr
->> +      - const: slv
->> +      - const: phy
-> I think phy should be first as that's the main one to the phy and the
-> others are somewhat questionable. Otherwise,
+On 10/15/25 11:41 AM, Rob Herring (Arm) wrote:
 > 
-> Reviewed-by: Rob Herring (Arm)<robh@kernel.org>
+> On Mon, 13 Oct 2025 10:35:19 -0500, Alex Elder wrote:
+>> Add the Device Tree binding for two PCIe PHYs present on the SpacemiT
+>> K1 SoC.  These PHYs are dependent on a separate combo PHY, which
+>> determines at probe time the calibration values used by the PCIe-only
+>> PHYs.
+>>
+>> Signed-off-by: Alex Elder <elder@riscstar.com>
+>> ---
+>> v2: - Added '>' to the description, and reworded it a bit
+>>      - Added clocks and clock-names properties
+>>      - Dropped the label and status property from the example
+>>
+>>   .../bindings/phy/spacemit,k1-pcie-phy.yaml    | 59 +++++++++++++++++++
+>>   1 file changed, 59 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-pcie-phy.yaml
+>>
+> 
+> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
-OK I'll arrange them that way in v3.  Thank you.	-Alex
+Thanks.	-Alex
