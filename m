@@ -1,138 +1,173 @@
-Received: from skyblue.cherry.relay.mailchannels.net (skyblue.cherry.relay.mailchannels.net [23.83.223.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f195.google.com (mail-il1-f195.google.com [209.85.166.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790E428DF2D
-	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 16:32:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.167
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760718777; cv=pass; b=lJ2q7JPA+g3SeC0EvxThEwVNLcxmva5u0K2V697E5Len26O+ba5PbiXmu2YUyBuGd2yChx4ymP+CdclQYiRdqV4gqyBvxfqS786hYuYKbxMcP/SbcuLG3eq7r6p8Ev8inxPJg8oEU5BGJhSo5vTWPVopqcIJPKFN/z/7SvpnMio=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760718777; c=relaxed/simple;
-	bh=1fP5zpgcHZFicOOflVjB2iFN8P1HFOo4SPs3CO19kQQ=;
-	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
-	 Content-Type:Date; b=cW3NCX/GexhYhyBjAuZTxfpOIiBHiyASd0RuPeNx/kYPY6EFAmVxCR8XScQcAtetRj2Cqb7mYhbfutfXRY0v1GXEaLhKMWWLr5B4jXdf/zZxJrZsKZ4RlxNr6HJFNEj2iYyvy/5F2GUUkZHCaHPwCwAGcf4KJ3jJqz9R7y6/Ftk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=M02/l1LY; arc=pass smtp.client-ip=23.83.223.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF64233F8A8
+	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 19:07:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.195
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760728068; cv=none; b=GAN1r73fLqX3cuIbuPVDIrWaLwA3va6mKN+Vvqyeznefh8Zk9KbnlcQvuRs4CJ1gD7RkDeDRzWmJSAPCWL7UKO+WfnQ43fK8LyTjNlGOoXj5crhUoqMi3oCKdMhREtsl7SCX+0JDGu0atAzAHAsWegogwujNayVf1ciegoDStTE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760728068; c=relaxed/simple;
+	bh=LqFmCYRDrPtkcUDZw5zwYA2weRZUj13NHO7zeAuhORY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tobQkAP5Cx5PMscWeluVTpdfvoXsmRDW+fY1x+gq43mQngGxhZ6J1zthYETqaU9Spi1u91hmCUUjJaTfDoQuXFHHiPVbSsf3p4NvxZ5YrCZImJBQvYVwcZqKNclPzc8zJ+ipbbnxmQmaD9qEWtH/mGHzNAilsVHhIh4dxBjoDtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=XucNp0FO; arc=none smtp.client-ip=209.85.166.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="M02/l1LY"
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id CFFCB701A01;
-	Fri, 17 Oct 2025 15:54:07 +0000 (UTC)
-Received: from fr-int-smtpout25.hostinger.io (100-117-132-18.trex-nlb.outbound.svc.cluster.local [100.117.132.18])
-	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 602B2701AEE;
-	Fri, 17 Oct 2025 15:54:01 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1760716443; a=rsa-sha256;
-	cv=none;
-	b=qsbdjJATkXL3pVbVt/nMJLo5Bik+gXYtmu8SG5torvU5Tu6ofvZlAEbLTQVm/ZAPJihpg/
-	Kh1MAJNzfUVOr9EF8kPOutx7SZhy6lYppkxmnTtZrIiV4+bYK4/8CTVsxSnLPnrZmn85Kg
-	fc06Cs2ZWSzBQ3/tKfcTp/EhtaVa1o+3w6dk8vS+OvninEBCmu7GaQ5/pFpDSpyLpYR9id
-	gwJ8fu4L7sz2zvx4WI/VDi3E/qOZ1YBMTURVorMV/vYgjZUx9Dj78YB5ItXVyIlHMP2JmL
-	9HYQEjlirZIpGb+wIqnZ2er0gNW002stlHtcritUDc3nRV48a/qQan6AVmd0ew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1760716443;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=F1FFVJG2rkiUWHHF25ZM11yfG5to6mYY/Am7bSXow1w=;
-	b=g4gw5xwKjwzE6nyJqxtt98VD+XSdfMX7m/AsaUhBACTkHpYj8rO73kL7pTTlLm/sIMAfUu
-	haDL87tDSS4JdTaHg8W0DL8uNQaIqhCAw+KsE0gA+N659ADCbK/5MBHu03lZR7QK13XjGG
-	Imj+q82dRNCureS635wjDw3XaL5/vzM/zO+QTBk7jK/NkJqfJee/7RCMrZFHafwOtIl+Yv
-	I9NxOU+wJcV6Y0iEWW6EE1GcCgG67qX3z4qLRgee1qoxGK0ACL49RO2JMxW9mYknvZNKTl
-	/fMcPq9zTeu8YXfhS4tV6LxV6AGfC5XU4fg71EPAcyYDKXoSDGzJ1W7mj/tkKQ==
-ARC-Authentication-Results: i=1;
-	rspamd-fbfbcbd77-nmt89;
-	auth=pass smtp.auth=hostingeremail
- smtp.mailfrom=michael.opdenacker@rootcommit.com
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId:
- hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MailChannels-Auth-Id: hostingeremail
-X-Interest-Invention: 3d5ae642033bbe25_1760716447513_1362389868
-X-MC-Loop-Signature: 1760716447513:724433826
-X-MC-Ingress-Time: 1760716447513
-Received: from fr-int-smtpout25.hostinger.io (fr-int-smtpout25.hostinger.io
- [148.222.54.38])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.117.132.18 (trex/7.1.3);
-	Fri, 17 Oct 2025 15:54:07 +0000
-Received: from [IPV6:2a04:cec0:1210:4d12:deca:bae:eaaa:c8e1] (unknown [IPv6:2a04:cec0:1210:4d12:deca:bae:eaaa:c8e1])
-	(Authenticated sender: michael.opdenacker@rootcommit.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4cp8WD3ntHz1y05;
-	Fri, 17 Oct 2025 15:53:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
-	s=hostingermail-a; t=1760716436;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=F1FFVJG2rkiUWHHF25ZM11yfG5to6mYY/Am7bSXow1w=;
-	b=M02/l1LY/12rIEeTpPcENXTumRGFuqsL03PFKuftuURXv6DClseDI47zTy3+8tKFYpqX76
-	0VQ+9rEgw9PJ80bZ6PXcrTECo7oheathXmj/GV5FNt1UdrXei+fwZyOGqP7trZEtz5UtPg
-	+MEvXjkixRqTRa8juNpu1Uj1/6ZTgGToTH6xRG3B+nEyor5laOstctdf9zuGndOFyWZ9zI
-	nBv/jGpMxCHcw/A0nw0cwpSVSJeklLbd+XGM4tvdOGrnWBvO7aVjuprKWyvdZ3QXicsfqZ
-	1cDKdlfl8i77exoN6n3JgzRQQynSb0za7ZTrTpe99LVXbTRZ08WIq1I3M2WDHA==
-Message-ID: <63b2056f-3d5a-4fca-8600-526619c33647@rootcommit.com>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="XucNp0FO"
+Received: by mail-il1-f195.google.com with SMTP id e9e14a558f8ab-430cadec5deso7111175ab.1
+        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 12:07:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760728065; x=1761332865; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6AlkAll+OG6DFncv4Mizto8zaWsmmVbaRHf+nrpHgq8=;
+        b=XucNp0FOI8E9N9GoiAiy9I7/CzfgNTC97X/lyfhLpWm/pa6UYCDw8SuoAOtRf7Ddee
+         UDs6sktFp8PlBVqHnuvM3X0TpUUb+u7QDtMAltG/GmWYcdOjAP3m8+16e9QfxxbenRDG
+         pYErg7k4tRLIvcLDQmxWa2ZG2kzkMQv7QWWnoBiB2YzUsCkj2dGmiY4R9YMCgUVW7g1q
+         E6a6iCrgbWQywqLKR5VmV4yqHCB/5sEiEsQWyxFY0vstjBDkyE3a4HZGnRlUuC8nfHb3
+         GvCObQCIXWzzIiaGSxu9lt0pMdNnkDD5dq7wvdzAGDnH0QQWjHzqNq0s4E3/uI6xhsKp
+         xvkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760728065; x=1761332865;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6AlkAll+OG6DFncv4Mizto8zaWsmmVbaRHf+nrpHgq8=;
+        b=eLm0DalSg6wCxa7BnmyrFh6f76F1HG2xRn5PDUzNlixC1Tx07L9bfnjt8wz6LL1ssU
+         yhkQZfFqOI6bLEW22rNKUeh8ixrNb3euHQkB7Skar+4bgDnZZP5YezcednYtorOGDZIG
+         iRgii9xdygUvtt3MG5sSCPgJIFwsVeFnfVHjDLrSOsFvODv+eLDttE09OaEGsEBKHea6
+         26BZi3eVRB0vzlADYv/4AClmsYUtALRaUuzt+vxG9xrha1yDalPruBR8qGog+LiDnP3r
+         3/ll/DRj6BSrDaJWDF+d7lT5f5vCiL49yfdddijHhfdWF2Gti8JAdn8NnRwNCp3oZsvH
+         Favw==
+X-Forwarded-Encrypted: i=1; AJvYcCU2h7403WEpGpvIUmAcKUh7SmrfQge63BpCm/Wy9rQp7VvpED5/fABQ6AhZRRyK8nz60cjqkACh9g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwjW2QK33prmXJszkn2EIc7uLboxku1GDX3a35x3xJPdtgVkvMJ
+	z90WcW/dNNmZqh2VPMin/mskOxSr4NY/UkwOLTNxiCzdEVC7INSmpH/1rwYXbepQ+gc=
+X-Gm-Gg: ASbGncsgnANT6+XPghdV7def8mSFqrdpkWAaHbcfTxVPWkwnfZVL2m5brEInAmTtYAn
+	9UQDgR6GkpGTAS7hNwQCCFUL6EQ495/1BMwiFVWwBtNG2UWTovXNcM810hdMIhcgdWrUZPz6uDU
+	cK362Kswo9GXNvfYvsqbH68qZc4BeyT0CImBQPq/nfjFiyu+fkLrCQy0he3brkMNViWOlM5E/WY
+	7ujBfTww2K+YcJ+SIybk5GAevIOvDPEElydsjqdFvx+Fn6tX2pMvUvm4jN2L6naTz6YBByWAmUD
+	eiBCdpf+d+2uLnv43cTquXZsxLxzn+r1yTONEasDcIBwQ/j+QVpjNvvKOp1he6bMz9vU+1q7Ro1
+	PdXNanZrDEtWDO7ajXMqNJmOGNvKgmyajsWWF9xeCmY3kYIPTB9rtN7rrVBTdCtQns7MuqzGBA3
+	RZpVZpyA/4x76wvoa0frL0eaT9+DkS6MJbTN+v1WSGUxKspyyTMxjVKA==
+X-Google-Smtp-Source: AGHT+IFcpf2h7+KbWg4DjQlVTU7Ya1aj204MdKeqW83UKVIYqzbU0vSTSCHA4r5eCSfPwXiiSMaLeQ==
+X-Received: by 2002:a05:6e02:4510:b0:430:c77c:cc35 with SMTP id e9e14a558f8ab-430c77ccd47mr56314875ab.29.1760728064783;
+        Fri, 17 Oct 2025 12:07:44 -0700 (PDT)
+Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a9768b98sm153462173.46.2025.10.17.12.07.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Oct 2025 12:07:44 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: dlan@gentoo.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	vkoul@kernel.org,
+	kishon@kernel.org,
+	bhelgaas@google.com,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	mani@kernel.org
+Cc: ziyao@disroot.org,
+	aurelien@aurel32.net,
+	mayank.rana@oss.qualcomm.com,
+	qiang.yu@oss.qualcomm.com,
+	shradha.t@samsung.com,
+	inochiama@gmail.com,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	p.zabel@pengutronix.de,
+	christian.bruel@foss.st.com,
+	thippeswamy.havalige@amd.com,
+	krishna.chundru@oss.qualcomm.com,
+	guodong@riscstar.com,
+	devicetree@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/7] Introduce SpacemiT K1 PCIe phy and host controller
+Date: Fri, 17 Oct 2025 14:07:32 -0500
+Message-ID: <20251017190740.306780-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: michael.opdenacker@rootcommit.com, Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Yixun Lan <dlan@gentoo.org>, netdev@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] net: spacemit: compile k1_emac driver as built-in by
- default
-To: Emil Renner Berthing <emil.renner.berthing@gmail.com>
-References: <20251017100106.3180482-1-michael.opdenacker@rootcommit.com>
- <20251017100106.3180482-3-michael.opdenacker@rootcommit.com>
- <CANBLGcykz77U_V4CqE7PHvtgmeXiKFo0FXy-sHHiAoZ11HnCjw@mail.gmail.com>
-Content-Language: en-US
-From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-Organization: Root Commit
-In-Reply-To: <CANBLGcykz77U_V4CqE7PHvtgmeXiKFo0FXy-sHHiAoZ11HnCjw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Fri, 17 Oct 2025 15:53:44 +0000 (UTC)
-X-CM-Envelope: MS4xfJ9c+Oq6a3xe99yK0EZhAMCEV7n/+Vax87LhLieg7XqJbgnwD5VAarvVM6KCvSMEmHfg5nOc41whlY3NxSYXoCQkRdIalh/pIn9x4gRAnk2Vd/w3J8BV 8+BlmotPVSRFAlCM3amjVpsZDKN8a23XE54m+J0PIowDjfBLXfR3OqPUGpYZ22o82HoMUyBKYEHM7VrcD71CbfiI6NOfPwSjECGCMKOJuX9clYXphkEndH1Z eoGXu3YZ3bxT2XtWKFqBEs98FkRZJ06rdzLtGRjr4gm+JGc5RiDmXaoXlB3MEz8YGpHITKjDURU2tmd0ItVXr6X8MUmf+5nE79861gwIB+T3EiJaqZOUudJK seV2l5MgJbNyPQct/KpUFvoXH1Sl8E9QNpvv5FONjRUe2eRU5UwVlyVCs4FvEWhLkDRpt+qeFz/7h+EkakPaY+VXyOaw88ZKQrvsYPJqGLK8YAtfqTbVC1Ib vjwDhNt1oy05D7dSd6ATeNJq+J4ZkjhuTQ/X39dTk/RBULT9vp2Sd1LLEqUq5s9HgNe9m9V3f6HoKCbLjjTnKIbYMIvNl2x/zlo0Lx9bh6LfBIM1Xr6YBcbl sHL3rf5OblNYUUzdBgPjA00wJPod2kKc1EtqH75mcsrGHnxOLsN5rVnyqi8XlABvjXynwRIjg3GatUnAFHqF8TPyi6U6lAuZBhG12SDE6I/zdjECvGr3ONjI KEdcxt7c/TM=
-X-CM-Analysis: v=2.4 cv=GbNFnhXL c=1 sm=1 tr=0 ts=68f26694 a=HZifvgWxdiUQ9LBJ2kG+mw==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=d70CFdQeAAAA:8 a=6my-HHL3l342PdgWGDoA:9 a=QEXdDO2ut3YA:10 a=NcxpMcIZDGm-g932nG_k:22
-X-AuthUser: michael.opdenacker@rootcommit.com
+Content-Transfer-Encoding: 8bit
 
-Hi Emil
+This series introduces a PHY driver and a PCIe driver to support PCIe
+on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
+Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
+PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
+one PCIe lane, and the other two ports each have two lanes.  All PCIe
+ports operate at 5 GT/second.
 
-Thanks for the review!
+The PCIe PHYs must be configured using a value that can only be
+determined using the combo PHY, operating in PCIe mode.  To allow
+that PHY to be used for USB, the calibration step is performed by
+the PHY driver automatically at probe time.  Once this step is done,
+the PHY can be used for either PCIe or USB.
 
-On 10/17/25 17:33, Emil Renner Berthing wrote:
-> On Fri, 17 Oct 2025 at 12:03, <michael.opdenacker@rootcommit.com> wrote:
->> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
->>
->> Supports booting boards on NFS filesystems, without going
->> through an initramfs.
-> Please don't do this. If we build in every ethernet driver that might
-> be used to boot from NFS we'll end up with almost every driver
-> built-in and huge kernels. If you need this there is nothing
-> preventing you from building the driver in, but please don't bloat
-> defconfig kernels for everyone else.
+Version 3 of this series incorporates suggestions made during the
+review of version 2.  Specific highlights are detailed below.
 
-Understood. You have a point. It's not really a problem to customize 
-kernel configuration for each board as you said.
-So, please forget this particular patch :)
-Cheers
-Michael.
+					-Alex
 
+This series is available here:
+  https://github.com/riscstar/linux/tree/outgoing/pcie-v3
+
+Between version 2 and version 3:
+  - Reviewed-by from Rob added to the first two patches
+  - The "num-viewport" property has been removed
+  - The "phy" reset is listed first in the combo PHY binding
+  - The PHY now requires a resets property to specify the "phy" reset
+  - The PCIe driver no longer requires a "phy" reset
+  - The PHY driver now gets and deasserts the reset for all PHYs
+  - Error handling and "put" of clocks in the PHY driver has been
+    corrected (for clk_bulk_get() rather than clk_bulk_get_all())
+
+Here is version 2 of this series:
+  https://lore.kernel.org/lkml/20251013153526.2276556-1-elder@riscstar.com/
+
+Full details of changes made for version 2 are available there.
+
+
+Alex Elder (7):
+  dt-bindings: phy: spacemit: add SpacemiT PCIe/combo PHY
+  dt-bindings: phy: spacemit: introduce PCIe PHY
+  dt-bindings: pci: spacemit: introduce PCIe host controller
+  phy: spacemit: introduce PCIe/combo PHY
+  PCI: spacemit: introduce SpacemiT PCIe host driver
+  riscv: dts: spacemit: add a PCIe regulator
+  riscv: dts: spacemit: PCIe and PHY-related updates
+
+ .../bindings/pci/spacemit,k1-pcie-host.yaml   | 147 ++++
+ .../bindings/phy/spacemit,k1-combo-phy.yaml   | 114 +++
+ .../bindings/phy/spacemit,k1-pcie-phy.yaml    |  71 ++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      |  38 +
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |  33 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          | 146 ++++
+ drivers/pci/controller/dwc/Kconfig            |  10 +
+ drivers/pci/controller/dwc/Makefile           |   1 +
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 311 ++++++++
+ drivers/phy/Kconfig                           |  11 +
+ drivers/phy/Makefile                          |   1 +
+ drivers/phy/phy-spacemit-k1-pcie.c            | 670 ++++++++++++++++++
+ 12 files changed, 1553 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-pcie-phy.yaml
+ create mode 100644 drivers/pci/controller/dwc/pcie-spacemit-k1.c
+ create mode 100644 drivers/phy/phy-spacemit-k1-pcie.c
+
+
+base-commit: 98ac9cc4b4452ed7e714eddc8c90ac4ae5da1a09
 -- 
-Michael Opdenacker
-Root Commit
-Embedded Linux Training and Consulting
-https://rootcommit.com
+2.48.1
 
