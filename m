@@ -1,66 +1,66 @@
-Received: from mail-il1-f195.google.com (mail-il1-f195.google.com [209.85.166.195])
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E372D9795
-	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 16:20:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D372D879A
+	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 16:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760718058; cv=none; b=t+2bF5KIAhCTr+BgbqCqcgtcT3wqfa3IFHkpLNEaLIT3CAj7xIOwPpurx/iQUwUF4aGccna5GpnL3VCs5JiML/zSPoTN88/Oos5/DDEn6CFby+gjMIhZDV6Vb3qtEugtP06nniuTcxNSFY7FwWiLQ6DwnQ8+HW1Jp+C8+SKitRM=
+	t=1760718066; cv=none; b=sjbaP6MkGccmBkYifmvjUWHzoI5qDX0L05z56g5ZU3JKHLH3jGNOPkJbMd31EHulR6hm9CXJvRB+FRtC2Lm/HItEVtvfkAtuaJWA9/Q5mdYjiSs8fPLNSND6xgh48P2ZnfoiO/qu1RrmKgJDqbesoWyvMy6vOb9Jd2lt2IMGQ/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760718058; c=relaxed/simple;
-	bh=1MZ2AU1WSg264AVMPFKY6li+ENJlJqRj4V8LnjhTA9Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eA18ES+NvCe0jRWXayILi3juNuli+QHjLYvQkHfM6rhWxmXDxcvJtkESkU47nJD8MG9cFb6IMdR6ecqDVbHFHqK/BAZsHnYq1o7kGoycRUPH2E1HOa6+u03xAy3ECYO6OEd8UbTO8eclv7A1QZ0ywDK5nanKnX+7IsDN5yOwfRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=KwhNjVd2; arc=none smtp.client-ip=209.85.166.195
+	s=arc-20240116; t=1760718066; c=relaxed/simple;
+	bh=WOWolnrzbdizQeGOJ1i+bdGxPazlr+nDCOPbAZB6pnM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=JMaWMWYUVwK+7Jpz/vOEzSe+XaxGnCxbcL5fCzYiCK1t+sLHQKvLV42LKXvzbrWJ+gdSbls7coTUY8U8FrtBFy0A1MylmXrLocD9/j+aUyxxeo1K6GX3BZKyDQozBo1/lEY3GnkOvC/JZYC5lDPB4FPD092jpe5GD6fLZw0D+OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=UszMyArY; arc=none smtp.client-ip=209.85.166.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="KwhNjVd2"
-Received: by mail-il1-f195.google.com with SMTP id e9e14a558f8ab-430c180d829so7647595ab.3
-        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 09:20:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="UszMyArY"
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-430cadec5deso5743925ab.1
+        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 09:21:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760718056; x=1761322856; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760718063; x=1761322863; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kq4xC/ePley+c3+EpvbCqMrUnY6wr0uXkN8/DbkCipg=;
-        b=KwhNjVd2trXen727scaRwH8ldXOOF2zTWpaU0RC60nt+bg+wVolS1dNmmHSVRTgxiX
-         QNvRtEB2sQUoIr82gCBa6cu60wM4vIvzOI141mkoPdQLKvFb+ZPdKMbb0mO0synwHWhl
-         ZzfvJ9JUj4Ve3OonX6WDu2cmYykhsLJmE2t54XP5DrKpqK8XgkYxPS3IxCVwJun7Gs0E
-         VjqBH9E40jNChzx1K4+t1t89Zdvg7aJZWZsNQZcRZIrS9DZlzZpR2EmgeZgKs7c7aXIp
-         u/L8dy1yZ5isvk7XXt4KD3lfhlppXc6nX4JYZZoqprgv39XiDyRKRnJlPmgBHpVhGd+x
-         3W/g==
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=V5OPF9MQYXuFed4Nr/kXKcbfQ5kgh8+dek3Kx0+shzI=;
+        b=UszMyArYNRDQENaQdgCpTB+ed9asxyMq2ufzc/Aq8JPMEz4sQTj+EeMP0zqUZuy6dq
+         +Zl1jC3pFECFgFL88pVmgL1+HgttRmUCVIXmHWRNkUFXgnQKhIhLuPBS1+0SR1VTlzQT
+         B/iZASthJTQjGu4ga76ptAxl96CJ4coeuwfB+U7hsm0NnXkd5lomG9PHDPtWAsCpwlEN
+         2LNSOd6zE5U7GBmjQ1az48hn0ou2aXX2eHGzDLe+3BgNLvzs2kKi9K9GBKrEpuYiYU3K
+         jpPEypv4lzR2IHxVDmsYy+z/VL8+IfkHNwuAWf6apFBjNaxot3mb3VP/Q4FxEx9oqgGX
+         l0NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760718056; x=1761322856;
+        d=1e100.net; s=20230601; t=1760718063; x=1761322863;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kq4xC/ePley+c3+EpvbCqMrUnY6wr0uXkN8/DbkCipg=;
-        b=HnI2a1NhZUyel033A8fG/6cCfRernIXfomNgZPxvH9JYC9bjcnuWBrLwjqxK0+Heyn
-         rorjqJkxOIZCAeH77YMdJvSg/E4sWahbkvQyLCQEit34Kf+k6MYSn5IMddUiUbVNyx5E
-         6Yhd0SenDiOUoOSckwyFFZZamL3PHn6o5Bexj8T8BqVPvXjv60IPsNPJOt9MZCSrdkpo
-         2gTnMlowzHgHumgblWWroArnSdpeU4RQw6fI+kCKP6D5JLWnzKbdkhH+p2iELwTFE2wc
-         wkDXed+PBQCoOb0sCuhL7gdVx6CflxMIuynSXNkrSeEbh5UDR3dq+ie1mSyuMdIkWfx7
-         oyVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU+jiUrY8anNkk/U012iiq3CUU/e2k4xVSebkTqHUA5Q2leyeWoi0oqG0bsACdzx189Q5BrcmOMkA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz6jaRXhKyeA/zxaopZgUanoE5PMsIZZiShkHe+vH9Ye3owkf+w
-	jF6+y9RXM5GGgVAVcpGQUudyLt6zTHJzVdzucHKdafS/pW5zqXsUyiYW0N08vKFCDf0=
-X-Gm-Gg: ASbGncsdhMvavN4RglFwuvq3hzB6GTyGxAace2IGYkiCer3UNjWDaymHliDFIJZrHJA
-	ebZVUIJJ1m1yl7os+NWCkm65C27QD10AuWRVdO9zsGUZXKcrrASZ2uJkEw68P8bzYNTnnrIt+N8
-	+Yo2dH5KOr2NRZzq+6APTXMZ2aVZSbdB3DOA/NzmzZdRdOThyiRWDtn4ZpYoMzEPVxZwOYoCvHh
-	du9LmXgTrfRmPG/RwibegIPrrkuB28Wa03JsKKh8KZs6lfakeNvl5qf4GWeCePkYCSRkEkCq9n3
-	k2uNZi0Jen3BIsRczePHWT6S72oy8T4WL1TSiia/etxDqszCVNjeCAYEOjBrpTeGmtwGhz34SNm
-	vMLn5RjAdH24Q6FnMjwcob6am2T2x5OCjE4Z2HZKq/YVyjg2c2iuUhH0q9Ppc2ffaXww8SSbtM7
-	j3aGE298N+849NrgykueKpG4B5TDJsdjOIWIUzIDGd/deaEn9rXA==
-X-Google-Smtp-Source: AGHT+IFTra9R68sarPEZ7JGiGUxqA+JBh5gKP1pY4jtUAbRv4g02dpfpSvuUEN/4DBcwJsgAfUmRPw==
-X-Received: by 2002:a05:6e02:2307:b0:42f:a60a:8538 with SMTP id e9e14a558f8ab-430c52b5afemr49210015ab.16.1760718055789;
-        Fri, 17 Oct 2025 09:20:55 -0700 (PDT)
+        bh=V5OPF9MQYXuFed4Nr/kXKcbfQ5kgh8+dek3Kx0+shzI=;
+        b=PyuZ6qFajuO8tqSqLsBUXx11tjpGAJU4EVo5owA9eOE7kEJC5vZ6YIHG95nasFlffw
+         f6tdkbY6gpqH9PMFgTrPSfRyTOFaSrnzGE/za+Md5w2EpaZabS4k9Xz7F5cNSORv51ZJ
+         +tXWpRURDw9Glh8zvs/6Flc7PGxwXvaCw4ECKbmOhrjS2ycraW5X1fIUsoxoQLqSls3q
+         Ee2cXdqYcBDiyA1/gdnw5vjWVVJ2swqSMfcUO/D2TU1wHy7EBsePsl+soilzMjQsRCnY
+         fAwOaa+/hQKldPIIyHMFbX/iuekfhkbjxQB2Q2Qvi3Pi9qNYCwk/LpAU3JcGRX5OSmX8
+         JTNg==
+X-Forwarded-Encrypted: i=1; AJvYcCUT5yzEfpthCaWzVgd52EqDwree7d1T2gDq2OB2+zpU6rO+pu9VC6BRZKqHRseQvOXAIDPxD2X7mA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxVJqNAo7DkT/nUV99ViFl49KQXoDl1NKTAK8RuJ7vBqSIhA2kd
+	ZAWUH3jNymXVx063/i4boRqxYG55HC1RNdChl4INcj9F9aawou73vxSqgf3QAbblvCo=
+X-Gm-Gg: ASbGnctnNDzCaBtcSJppPECJunYtDWdjHPoUCmjHyx9uLT+mLVwtY3pN0kmNCAbcI1g
+	78BismCnXS5R9ubiSYZTHWAjPDcd6X8mLUBleVOH56wCfkpoPkZos9DMainOGU8Vhw7oFZ8ayp1
+	P5kE5CxgyEipmGu7e/Hu58j4wavwxSfyuJA+m1sH9TXsUHlnGxRz4xFYi1O+jYy+0GVu8dvpP9s
+	X6RHLYfgAkMK/nkPNopFNwbAFDVneZL7roX4fgMl0IV1w8VuxqDL/gmhAqrFzLRVMcjg4a4Ik5M
+	CLtTUviWdbVk5PugD2wVohEDentnCKj6nI8gYR6/ufPV/8az0LC8QqL15fqw8ec3iiN/8J6weam
+	KUIOW7xOgsIvgRSdXvj5zzFv5u69d/RrNl17ot3MDUsiHUO00WeUQth0BBpcKMUgN6puAILKjYn
+	vGRxZad7Sx50onOHqXQ5drTGYyl3LbqIkFYt9iYLEtv/bSuM1//A==
+X-Google-Smtp-Source: AGHT+IG3DZtIVoWgPN5tvCgGkBUTeqvd5qyoLhI1JrzlxbkjqqPI7UAzBrwCEOdwr214b+XxIHv5wA==
+X-Received: by 2002:a05:6e02:1a82:b0:430:cf19:e682 with SMTP id e9e14a558f8ab-430cf19e837mr15167475ab.13.1760718062603;
+        Fri, 17 Oct 2025 09:21:02 -0700 (PDT)
 Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a962f04fsm22836173.21.2025.10.17.09.20.53
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a962f04fsm22836173.21.2025.10.17.09.21.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Oct 2025 09:20:55 -0700 (PDT)
-Message-ID: <72e30269-a7e1-4f34-81ad-9026ef95ddd4@riscstar.com>
-Date: Fri, 17 Oct 2025 11:20:53 -0500
+        Fri, 17 Oct 2025 09:21:02 -0700 (PDT)
+Message-ID: <cff71664-6f61-4cfc-9542-20781a559ef4@riscstar.com>
+Date: Fri, 17 Oct 2025 11:21:00 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,160 +68,236 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] dt-bindings: pci: spacemit: introduce PCIe host
- controller
-To: Rob Herring <robh@kernel.org>
-Cc: krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
- lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
- vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org, guodong@riscstar.com,
- pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
- p.zabel@pengutronix.de, christian.bruel@foss.st.com, shradha.t@samsung.com,
+Subject: Re: [PATCH v2 4/7] phy: spacemit: introduce PCIe/combo PHY
+To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
+ mani@kernel.org, vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
+ guodong@riscstar.com, pjw@kernel.org, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+ christian.bruel@foss.st.com, shradha.t@samsung.com,
  krishna.chundru@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
  namcao@linutronix.de, thippeswamy.havalige@amd.com, inochiama@gmail.com,
  devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
  linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+ Junzhong Pan <panjunzhong@linux.spacemit.com>
 References: <20251013153526.2276556-1-elder@riscstar.com>
- <20251013153526.2276556-4-elder@riscstar.com>
- <20251015164730.GA4032812-robh@kernel.org>
+ <20251013153526.2276556-5-elder@riscstar.com> <aPAXRiGA8aTZCNTm@aurel32.net>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20251015164730.GA4032812-robh@kernel.org>
+In-Reply-To: <aPAXRiGA8aTZCNTm@aurel32.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/15/25 11:47 AM, Rob Herring wrote:
-> On Mon, Oct 13, 2025 at 10:35:20AM -0500, Alex Elder wrote:
->> Add the Device Tree binding for the PCIe root complex found on the
->> SpacemiT K1 SoC.  This device is derived from the Synopsys Designware
->> PCIe IP.  It supports up to three PCIe ports operating at PCIe gen 2
->> link speeds (5 GT/sec).  One of the ports uses a combo PHY, which is
->> typically used to support a USB 3 port.
->>
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> ---
->> v2: - Renamed the binding, using "host controller"
->>      - Added '>' to the description, and reworded it a bit
->>      - Added reference to /schemas/pci/snps,dw-pcie.yaml
->>      - Fixed and renamed the compatible string
->>      - Renamed the PMU property, and fixed its description
->>      - Consistently omit the period at the end of descriptions
->>      - Renamed the "global" clock to be "phy"
->>      - Use interrupts rather than interrupts-extended, and name the
->>        one interrupt "msi" to make clear its purpose
->>      - Added a vpcie3v3-supply property
->>      - Dropped the max-link-speed property
->>      - Changed additionalProperties to unevaluatedProperties
->>      - Dropped the label and status property from the example
->>
->>   .../bindings/pci/spacemit,k1-pcie-host.yaml   | 156 ++++++++++++++++++
->>   1 file changed, 156 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
->> new file mode 100644
->> index 0000000000000..87745d49c53a1
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
->> @@ -0,0 +1,156 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/pci/spacemit,k1-pcie-host.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: SpacemiT K1 PCI Express Host Controller
->> +
->> +maintainers:
->> +  - Alex Elder <elder@riscstar.com>
->> +
->> +description: >
->> +  The SpacemiT K1 SoC PCIe host controller is based on the Synopsys
->> +  DesignWare PCIe IP.  The controller uses the DesignWare built-in
->> +  MSI interrupt controller, and supports 256 MSIs.
->> +
->> +allOf:
->> +  - $ref: /schemas/pci/snps,dw-pcie.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    const: spacemit,k1-pcie
->> +
->> +  reg:
->> +    items:
->> +      - description: DesignWare PCIe registers
->> +      - description: ATU address space
->> +      - description: PCIe configuration space
->> +      - description: Link control registers
->> +
->> +  reg-names:
->> +    items:
->> +      - const: dbi
->> +      - const: atu
->> +      - const: config
->> +      - const: link
->> +
->> +  spacemit,apmu:
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->> +    description:
->> +      A phandle that refers to the APMU system controller, whose
->> +      regmap is used in managing resets and link state, along with
->> +      and offset of its reset control register.
->> +    items:
->> +      - items:
->> +          - description: phandle to APMU system controller
->> +          - description: register offset
->> +
->> +  clocks:
->> +    items:
->> +      - description: DWC PCIe Data Bus Interface (DBI) clock
->> +      - description: DWC PCIe application AXI-bus master interface clock
->> +      - description: DWC PCIe application AXI-bus slave interface clock
->> +
->> +  clock-names:
->> +    items:
->> +      - const: dbi
->> +      - const: mstr
->> +      - const: slv
->> +
->> +  resets:
->> +    items:
->> +      - description: DWC PCIe Data Bus Interface (DBI) reset
->> +      - description: DWC PCIe application AXI-bus master interface reset
->> +      - description: DWC PCIe application AXI-bus slave interface reset
->> +      - description: Global reset; must be deasserted for PHY to function
->> +
->> +  reset-names:
->> +    items:
->> +      - const: dbi
->> +      - const: mstr
->> +      - const: slv
->> +      - const: phy
+On 10/15/25 4:51 PM, Aurelien Jarno wrote:
+> Hi,
 > 
-> You expect/need the phy driver and PCIe driver to both reset the PHY?
-> You should do that indirectly with the PHY API when you reset the
-> controller.
-This was previously called the "global" reset, and I renamed it
-to align with one of the existing DWC "app" resets.
+> On 2025-10-13 10:35, Alex Elder wrote:
+>> Introduce a driver that supports three PHYs found on the SpacemiT
+>> K1 SoC.  The first PHY is a combo PHY that can be configured for
+>> use for either USB 3 or PCIe.  The other two PHYs support PCIe
+>> only.
+>>
+>> All three PHYs must be programmed with an 8 bit receiver termination
+>> value, which must be determined dynamically.  Only the combo PHY is
+>> able to determine this value.  The combo PHY performs a special
+>> calibration step at probe time to discover this, and that value is
+>> used to program each PHY that operates in PCIe mode.  The combo
+>> PHY must therefore be probed before either of the PCIe-only PHYs
+>> will be used.
+>>
+>> Each PHY has an internal PLL driven from an external oscillator.
+>> This PLL started when the PHY is first initialized, and stays
+>> on thereafter.
+>>
+>> During normal operation, the USB or PCIe driver using the PHY must
+>> ensure (other) clocks and resets are set up properly.
+>>
+>> However PCIe mode clocks are enabled and resets are de-asserted
+>> temporarily by this driver to perform the calibration step on the
+>> combo PHY.
+>>
+>> Tested-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+>> Signed-off-by: Alex Elder <elder@riscstar.com>
+> 
+> Thanks for this new version. I have tried it on top of v6.18-rc1 +
+> spacemit DTS commits from next on a BPI-F3, and it fails calibrating the
+> PHY with:
 
-I put it here because I had the impression that it was required
-to be deasserted for both PCIe and the PHY to function.  Currently
-only the combo PHY gets and deasserts the PHY reset (for the
-benefit of USB).
+I don't see this on my BPI-F3, but I now understand why.
 
-Instead, I'll require this global/phy reset for both the combo
-PHY and the PCIe PHYs.  I will get it (deasserted) during probe
-for all of them.  Then I'll remove it from the list of resets
-required/managed for PCIe ports.
+> [    2.748405] spacemit-k1-pcie-phy c0b10000.phy: error -ENOENT: calibration failed
+> [    2.755300] spacemit-k1-pcie-phy c0b10000.phy: error -ENOENT: error probing combo phy
+> [    2.763088] spacemit-k1-pcie-phy c0b10000.phy: probe with driver spacemit-k1-pcie-phy failed with error -2
+> [   14.309031] platform c0d10000.phy: deferred probe pending: (reason unknown)
+> [   14.313426] platform c0c10000.phy: deferred probe pending: (reason unknown)
+> [   14.320347] platform ca400000.pcie: deferred probe pending: platform: supplier c0c10000.phy not ready
+> [   14.329542] platform ca800000.pcie: deferred probe pending: platform: supplier c0d10000.phy not ready
+> 
+> Note that version 1 was working fine on the same board.
+> 
+> [ snip ]
+> 
+>> diff --git a/drivers/phy/phy-spacemit-k1-pcie.c b/drivers/phy/phy-spacemit-k1-pcie.c
+>> new file mode 100644
+>> index 0000000000000..81bc05823d080
+>> --- /dev/null
+>> +++ b/drivers/phy/phy-spacemit-k1-pcie.c
+> 
+> [ snip ]
+> 
+>> +static int k1_pcie_combo_phy_calibrate(struct k1_pcie_phy *k1_phy)
+>> +{
+>> +	struct reset_control_bulk_data resets[] = {
+>> +		{ .id = "dbi", },
+>> +		{ .id = "mstr", },
+>> +		{ .id = "slv", },
+>> +	};
+>> +	struct clk_bulk_data clocks[] = {
+>> +		{ .id = "dbi", },
+>> +		{ .id = "mstr", },
+>> +		{ .id = "slv", },
+>> +	};
+>> +	struct device *dev = k1_phy->dev;
+>> +	struct reset_control *phy_reset;
+>> +	int ret = 0;
+>> +	int val;
+>> +
+>> +	/* Nothing to do if we already set the receiver termination value */
+>> +	if (k1_phy_rterm_valid())
+>> +		return 0;
+>> +
+>> +	/* De-assert the PHY (global) reset and leave it that way for USB */
+>> +	phy_reset = devm_reset_control_get_exclusive_deasserted(dev, "phy");
+>> +	if (IS_ERR(phy_reset))
+>> +		return PTR_ERR(phy_reset);
+>> +
+>> +	/*
+>> +	 * We also guarantee the APP_HOLD_PHY_RESET bit is clear.  We can
+>> +	 * leave this bit clear even if an error happens below.
+>> +	 */
+>> +	regmap_assign_bits(k1_phy->pmu, PCIE_CLK_RES_CTRL,
+>> +			   PCIE_APP_HOLD_PHY_RST, false);
+>> +
+>> +	/* If the calibration already completed (e.g. by U-Boot), we're done */
+>> +	val = readl(k1_phy->regs + PCIE_RCAL_RESULT);
+>> +	if (val & R_TUNE_DONE)
+>> +		goto out_tune_done;
+I refer to the above three lines, below.
 
-I'm going to keep your Reviewed-by on patch 2, even though I'll
-be adding "reset" and "reset-names" as required properties.
+>> +	/* Put the PHY into PCIe mode */
+>> +	k1_combo_phy_sel(k1_phy, false);
+>> +
+>> +	/* Get and enable the PCIe app clocks */
+>> +	ret = clk_bulk_get(dev, ARRAY_SIZE(clocks), clocks);
+>> +	if (ret <= 0) {
+>> +		if (!ret)
+>> +			ret = -ENOENT;
+>> +		goto out_tune_done;
+>> +	}
+> 
+> This part doesn't look correct. The documentation says this function
+> "returns 0 if all clocks specified in clk_bulk_data table are obtained
+> successfully, or valid IS_ERR() condition containing errno."
+> 
+> To me, it seems the code should only be:
+> 
+> 	ret = clk_bulk_get(dev, ARRAY_SIZE(clocks), clocks);
+> 	if (ret)
+> 		goto out_tune_done;
 
-Please tell me if you'd like me not to do that.
+OK I understand the problem here.
 
-Thanks for the review.
+On v1 of the series, this used clk_bulk_get_all(), and I changed
+that to clk_bulk_get().  There is now an additional reference
+clock defined, used by the PLL clock.  So here we only want to
+get three clocks, not that new one.
+
+The return value from clk_bulk_get_all() is the number of clocks,
+and 0 means "not found".  So I guess I neglected to change the
+handling of the return value here when I changed the function.
+
+The reason I didn't see this is that calibration only ever has
+to happen once (per boot).  In the lines I noted earlier, the
+PCIE_RCAL_RESULT register is read, and if the R_TUNE_DONE bit
+is already set, calibration is complete (probably done by the
+boot loader).
+
+In my case, calibration was already done, so I never had to get
+the clock or resets, etc.  In your case, this driver had to do
+the calibration, so you (successfully) got the clocks, and
+that (erroneously) resulted in an error.
+
+I reproduced the problem(s) you observed by forcing the
+calibration on my machine.
+
+Thank you very much for reporting this.  Your fix is correct,
+and I will include it in v3 of the series.
+
+> [snip]
+> 
+>> +out_put_clocks:
+>> +	clk_bulk_put_all(ARRAY_SIZE(clocks), clocks);
+> 
+> When fixing the above bug, this then crashes with:
+> 
+> [    2.776109] Unable to handle kernel paging request at virtual address ffffffc41a0110c8
+> [    2.783958] Current kworker/u36:0 pgtable: 4K pagesize, 39-bit VAs, pgdp=0x00000000022a7000
+> [    2.792302] [ffffffc41a0110c8] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
+> [    2.800980] Oops [#1]
+> [    2.803217] Modules linked in:
+> [    2.806261] CPU: 3 UID: 0 PID: 58 Comm: kworker/u36:0 Not tainted 6.18.0-rc1+ #4 PREEMPTLAZY
+> [    2.814763] Hardware name: Banana Pi BPI-F3 (DT)
+> [    2.819366] Workqueue: events_unbound deferred_probe_work_func
+> [    2.825180] epc : virt_to_folio+0x5e/0xb8
+> [    2.829172]  ra : kfree+0x3a/0x528
+> [    2.832558] epc : ffffffff8034e12e ra : ffffffff8035557a sp : ffffffc600243980
+> [    2.839762]  gp : ffffffff82074258 tp : ffffffd700994d80 t0 : ffffffff80021540
+> [    2.846967]  t1 : 0000000000000018 t2 : 2d74696d65636170 s0 : ffffffc600243990
+> [    2.854172]  s1 : ffffffc600243ab8 a0 : 03ffffc41a0110c0 a1 : ffffffff82123bd0
+> [    2.861377]  a2 : 7c137c69131cec36 a3 : ffffffff816606d8 a4 : 0000000000000000
+> [    2.868583]  a5 : ffffffc500000000 a6 : 0000000000000004 a7 : 0000000000000004
+> [    2.875787]  s2 : ffffffd700b98410 s3 : ffffffc600243ab8 s4 : 0000000000000000
+> [    2.882991]  s5 : ffffffff80828f1c s6 : 0000000000008437 s7 : ffffffd700b98410
+> [    2.890197]  s8 : ffffffd700b98410 s9 : ffffffd700900240 s10: ffffffff81fc4100
+> [    2.897401]  s11: ffffffd700987400 t3 : 0000000000000004 t4 : 0000000000000001
+> [    2.904607]  t5 : 000000000000001f t6 : 0000000000000003
+> [    2.909902] status: 0000000200000120 badaddr: ffffffc41a0110c8 cause: 000000000000000d
+> [    2.917802] [<ffffffff8034e12e>] virt_to_folio+0x5e/0xb8
+> [    2.923097] [<ffffffff8035557a>] kfree+0x3a/0x528
+> [    2.927784] [<ffffffff80828f1c>] clk_bulk_put_all+0x64/0x78
+> [    2.933340] [<ffffffff807249d6>] k1_pcie_phy_probe+0x4ee/0x618
+> [    2.939155] [<ffffffff808e35e6>] platform_probe+0x56/0x98
+> [    2.944538] [<ffffffff808e0328>] really_probe+0xa0/0x348
+> [    2.949832] [<ffffffff808e064c>] __driver_probe_device+0x7c/0x140
+> [    2.955909] [<ffffffff808e07f8>] driver_probe_device+0x38/0xd0
+> [    2.961724] [<ffffffff808e0912>] __device_attach_driver+0x82/0xf0
+> [    2.967801] [<ffffffff808dde6a>] bus_for_each_drv+0x72/0xd0
+> [    2.973356] [<ffffffff808e0cac>] __device_attach+0x94/0x198
+> [    2.978912] [<ffffffff808e0fca>] device_initial_probe+0x1a/0x30
+> [    2.984815] [<ffffffff808defee>] bus_probe_device+0x96/0xa0
+> [    2.990370] [<ffffffff808dff0e>] deferred_probe_work_func+0xa6/0x110
+> [    2.996707] [<ffffffff8005cb66>] process_one_work+0x15e/0x340
+> [    3.002436] [<ffffffff8005d58c>] worker_thread+0x22c/0x348
+> [    3.007905] [<ffffffff80066b7c>] kthread+0x10c/0x208
+> [    3.012853] [<ffffffff80014de0>] ret_from_fork_kernel+0x18/0x1c0
+> [    3.018843] [<ffffffff80c917d6>] ret_from_fork_kernel_asm+0x16/0x18
+> [    3.025098] Code: 7a98 8d19 2717 0131 3703 5fa7 8131 8d19 051a 953e (651c) f713
+> [    3.032497] ---[ end trace 0000000000000000 ]---
+> 
+> It seems that we want clk_bulk_put() and not clk_bulk_put_all(). The
+> latter free the clocks, while they have been allocated on the stack.
+
+Yes, you are correct.  This too is an artifact of me doing a bad job
+switching to the clk_bulk_get() interface.
+
+Thanks again for your message.  Reviews are awesome, but someone
+actually testing it is a good way to find problems like this.
 
 					-Alex
 
-> Rob
+> 
+> Regards,
+> Aurelien
+> 
 
