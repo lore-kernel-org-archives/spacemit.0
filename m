@@ -1,87 +1,80 @@
-Received: from mail-io1-f68.google.com (mail-io1-f68.google.com [209.85.166.68])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6080433291A
-	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 19:07:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DE232E13B
+	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 19:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760728076; cv=none; b=ldtPH+wdjbPMSmX4B1bd7s7VLD2tKLxsYS5r9A0aDDk/nJw9uh/gcu3v57kOxYXs/ZqgWPovMBdIudjpgEuquvkVbmN7kzWaRN8K8Ao38DQptIHLrBV1VTppScK7Y7LFzJxj4MgKVQbRlWxzQXezWVV4K9GqnX5lNY7fXovljRM=
+	t=1760728077; cv=none; b=NkpGR9US6kPxdpbpROpbjUCFY89R0ja5ls+km8Et3VQkBX2cBnM6BpWbnHVTe6sj4PzmsJnuwAM6n6/2voY/fl+Q3jTcShqMxUaqt1iSD+NV2vcZ3Ju1Hkuo84l3gwbaJZjUsGywyPOQMtDkN5W7Ti8uR1algonXPe8tOEDg+Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760728076; c=relaxed/simple;
-	bh=3mV6Y1WOOnfPKpyXTGqoq5GDygMnEHONP6TWtDKbvhA=;
+	s=arc-20240116; t=1760728077; c=relaxed/simple;
+	bh=ENUIv7Y5invqW9/JGzvHqg+snh4IuRykpfxDvM9mXnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hApKnU8l41rzzxLsGFVtNWwFSfrQB34gFHLDLq7Ri5tO1c2T3Z0HNMZmi8Iqk8rXZmk9HBdu6bRcZ2B2Qd7vQbKlHb+qNKiNPNfWGlryFY6X8CM+D15XUtx0bj9W1+7ZbRBUwFX9A4VrjQCMty0v82Axba2XoqlHoIHzacsnofc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=WzSzygjf; arc=none smtp.client-ip=209.85.166.68
+	 MIME-Version; b=OsYu64kUdbcVDhg/4hWUM/YagS1gnGfkqcyfuq1D8kLkcUvCzgXhKWHSMDuW4ipyQqGCHw715xK4f2w4wbet5JGDnOQDzUXzRzkyijb8ljIJcbBm9/CY7MQNyGJKkE5zChueluLga3qDkLB7LEhvfI5qMCopCm+cTDoh2F3pogw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=RydULnRN; arc=none smtp.client-ip=209.85.166.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="WzSzygjf"
-Received: by mail-io1-f68.google.com with SMTP id ca18e2360f4ac-93e7468e84bso88914539f.2
-        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 12:07:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="RydULnRN"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-42d8b15548eso12134235ab.2
+        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 12:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760728071; x=1761332871; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760728074; x=1761332874; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mBS3fVW3ZRZzI3XYsea9198twRBcVje3YAE1Y91+/ig=;
-        b=WzSzygjfnbdoAFRnQ2MGZd9pIo6uJ7wM5H3vnA9gMBbFi/j5gzKNfql14z/j8/tLX7
-         jQVOaJIBK60hxHcS3bca96n8vc2kG7LVqFQUHP/nGVPEu8MWtT3+aWvwvPmGGjADxgbh
-         Fj/w06/JALbjCpYQqELvuHEW3gAxdtWDRCfOH4eitqH3JK2l2oIb5Vw+rgQ4A206zH24
-         xGtbUu3L4XmQDjKHXs8SuUByPEHTTTBlyP6dJOzz0nF/UGF7uSttSiFrbJvHb84yMbI5
-         +vhZGCbdgv2srEfC3yo//3GY9bhOuhc1W0U67GZj4PmMNVDgSkGFZwyuRcK1yq1BHcKm
-         6l5Q==
+        bh=sfI/HxKZ5aLnk6gHq9CwlPfs/i+7HssnS2IuZUrc0Ms=;
+        b=RydULnRNYD5iruo0679ZX9lEsfP6QyJU6eQGhn+IH8hw9WDjBivcdE8kLb08hZmXIp
+         2mKoJTbxpJA2slMFIDFJaeBlvrc4k/mTnbGnf5uFv+idO0nV6NrxzDc1LCJQOs5jwoUy
+         8Fy4BFzlZ9YavA3pqLUnc8IEy7zQ58sehw13ytoDw8QS1soTwzNW+eqegPbpn/hhx7rz
+         AKpUPLnVH9qpTLEKQzk2IO9cEq6Qd5016+kCm87fouWay1QN/2htIt7XXtx3pVj/vx1W
+         etBki3xB2sVGg3Ro4vazqBANdIyMO13Ho+mom8WX83Fh9vY998PBmyz71qKua93XSOSN
+         d92Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760728071; x=1761332871;
+        d=1e100.net; s=20230601; t=1760728074; x=1761332874;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mBS3fVW3ZRZzI3XYsea9198twRBcVje3YAE1Y91+/ig=;
-        b=TNUVWYO7z+Tn7GmMynS595BWlpv1A6U+wkTmWKZWjrAioAFW96LIbBKhztZ/XEXKHd
-         EjPmmdCSP1vpOx2vPaDeb+umPfxmtk3b8UNpeHu5HLvV4YB3NYEpwscvGX2YtP3nnf1X
-         hH17vhHOeedVVGr4Q72cx8S2w8iTnzXLhfZH7SUH3sqEr17dpLLL1qcTgnjieqAsteNr
-         Jh72HFgDdga5DM3dkVDbQ2520E4GxqG1tHWdHdBogOXPNrFao3B9QWDVmJDOdjvzhc6Q
-         VUuBvbm8ma62QYljgEvGewiOLxWhuK8df53QW5P1c6WSu1YkpxT5lhoaU77HG553OzFg
-         /OWw==
-X-Forwarded-Encrypted: i=1; AJvYcCVcsAZOdx00/sKCtzBTMcSuLal38nU+N9V+n86IqhuYrtmfgae/affwjhiA+Xs37zTOrtQqDJkv9Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwiURT+4wfQ3DH7lpSmqICOPRIbewLbILgEAV3oZ0d+wIam7wFJ
-	HX7JQN0tG0EeE6gfWBfkxz2L2vmFjKu9W6AMKq68HvMcUn+QJhLjhAIh0xV9D6+b5YA=
-X-Gm-Gg: ASbGncuBluFnEPx+LgeyPUIl92qPrrk/pergdweunCwtak6JNeoRwhJKGIsvPV8oIps
-	N9M8AB6exgeUmuvXBoUP0DTn6gAPPRf+M64qd+0RwjLqdkQ2hDm6t6B7k/qXRd/FUMZnd2331Eo
-	HiGZ7DHU2G/G5tAn6g+vPzuuF9bzTj7d9fzDtrVrTZ01+Uqw42nKLg0bP+K4C6qu2ai+ScZhW3c
-	ga5eaeRpMG2T/NOuB0WBy99rlcUltCEz8228uwePd1tKR1shhc1Ivz/TJ2X1Mb/lYOc/bkTZfAs
-	ZLQBw0nDhZzniNr7iOcL530CHg6lStpanOMxJkUdnMNhabXb/oF7byQBP4mK+vCiSr/mrdnVIJX
-	luGpksTwvsTCXx5afnvhTsslsC4cpFmENpeHk+UQve100Zjx9BNooej/yHfwGX0pP3h7usgITt5
-	M+Sg+QU4c+RvCgNwWx+NUYe5HI7W3ajyGxGLV5pik8Bww=
-X-Google-Smtp-Source: AGHT+IFSD3ud0FH/nM9iJN+g9sMr1JqpEpGEFCYkT3M5Aw2WpbvXFn8tHrpdxelIlXuQ7y/UBoZgiQ==
-X-Received: by 2002:a92:cd82:0:b0:426:39a:90f1 with SMTP id e9e14a558f8ab-430c527dc54mr68263485ab.18.1760728071278;
-        Fri, 17 Oct 2025 12:07:51 -0700 (PDT)
+        bh=sfI/HxKZ5aLnk6gHq9CwlPfs/i+7HssnS2IuZUrc0Ms=;
+        b=Xc+SteDdEtwnqmoLoqQlPAXWL8PRdROK3v13xcViZYWse1CZ59i/NUsR2MIKZZmPog
+         zkDxmKwrGvczNy/ySExsK7gGXxEBj99prc9rQRy934NVTSMkYjG/1aEpn6oFWGNKRXDT
+         yaUIBmWrMJ7pQ2xh27CiM0zNwBylZNKMO3h8OJHnUAiO341MIbxU8yWMYluatj75yegy
+         uUcLQtNBlrhLRB+a2l+n+8S7HuQP0XIC+Wyfx9i0AZkcHdSqWKQROCnnYp1T0mid56mb
+         hGxmt3NfVXFiHSzRyl4aRRN+zhF246x3y3jlidOVWaY4dv+Ubsut6Iux4luxguuRw7Db
+         kd7w==
+X-Forwarded-Encrypted: i=1; AJvYcCWEoozqrnJg7FVKW39DFm27EiOhkshxQPD4Wb+/FYUFAnF+nkv3DE2iIGgfvlmoe+BpAQQ++Xnh0A==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz+7hDqaJnRjmhJM1oUoUyM/SR+dbYvXwrA2kQVMaUB+P6xBg4i
+	mQpzAJJkuh87gSzj05XuA5xbyiZuI8iCiOmhVXWzE5LXV0gdhRw8WNYfaSIlTmQQqGw=
+X-Gm-Gg: ASbGncu5YsY8BKr2UtEoRwcv8eLA4PE1Yh6PDzAWuhWb/FlHx+3azkmiNKAWeM8gss1
+	EIxD1xSXWCehsG1QcoSIqV8jg82oHNUsFWOzPjzTk5Untd1JaDmjkpfmG8AVmqJfKaBgpsavfYP
+	yqaNQAw3NZMQwPceVZ3fy49AlrZzGhh6yS3xb8OyYwmKzVpCEiZ7RQBg7F+MADcPcaaxPl5yO8y
+	8nDhgnOXCjv5OwwuyE2IOtvZdvNpQVd7s2FHNGgngNIt8eg+vs2dPxqewWsIzi3JpblZNMJlMQX
+	cAqQW8IFvKJ3CAtDnGKMrlXDSV9DFtO5I3jQpoqY/xX/qHwcgpFnVyUzHOPeEnenJ9hgpnCKHhU
+	/vj905y8HnT3Hnsv0h6xZqUMqUWgsGtWczwj9XQlQ5ypZn3TTEbqHUm8ok+jO2EaTjWWFqkbby8
+	NHStsZ5Hf9lU1E/DvLQ6LAYT0soEeOkW//7xBJPALKbrRTwN8QrU6glA==
+X-Google-Smtp-Source: AGHT+IGgZuyks8/SPpqGraEYOHD64JLctbaQzahczxp3t8Isq+v66Q/LNb1tqq+q1CnCV61aP2fWQA==
+X-Received: by 2002:a05:6e02:1a42:b0:430:b338:e55 with SMTP id e9e14a558f8ab-430c53068c3mr81229225ab.29.1760728072707;
+        Fri, 17 Oct 2025 12:07:52 -0700 (PDT)
 Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a9768b98sm153462173.46.2025.10.17.12.07.49
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a9768b98sm153462173.46.2025.10.17.12.07.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Oct 2025 12:07:50 -0700 (PDT)
+        Fri, 17 Oct 2025 12:07:52 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
-To: lpieralisi@kernel.org,
-	kwilczynski@kernel.org,
-	mani@kernel.org,
+To: dlan@gentoo.org,
 	robh@kernel.org,
-	bhelgaas@google.com
-Cc: dlan@gentoo.org,
-	p.zabel@pengutronix.de,
-	christian.bruel@foss.st.com,
-	thippeswamy.havalige@amd.com,
-	krishna.chundru@oss.qualcomm.com,
-	mayank.rana@oss.qualcomm.com,
-	qiang.yu@oss.qualcomm.com,
-	shradha.t@samsung.com,
-	inochiama@gmail.com,
-	guodong@riscstar.com,
-	linux-pci@vger.kernel.org,
-	spacemit@lists.linux.dev,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 5/7] PCI: spacemit: introduce SpacemiT PCIe host driver
-Date: Fri, 17 Oct 2025 14:07:37 -0500
-Message-ID: <20251017190740.306780-6-elder@riscstar.com>
+Subject: [PATCH v3 6/7] riscv: dts: spacemit: add a PCIe regulator
+Date: Fri, 17 Oct 2025 14:07:38 -0500
+Message-ID: <20251017190740.306780-7-elder@riscstar.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251017190740.306780-1-elder@riscstar.com>
 References: <20251017190740.306780-1-elder@riscstar.com>
@@ -93,370 +86,33 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduce a driver for the PCIe host controller found in the SpacemiT
-K1 SoC.  The hardware is derived from the Synopsys DesignWare PCIe IP.
-The driver supports three PCIe ports that operate at PCIe gen2 transfer
-rates (5 GT/sec).  The first port uses a combo PHY, which may be
-configured for use for USB 3 instead.
+Define a 3.3v fixed voltage regulator to be used by PCIe on the
+Banana Pi BPI-F3.  On this platform, this regulator is always on.
 
 Signed-off-by: Alex Elder <elder@riscstar.com>
 ---
- drivers/pci/controller/dwc/Kconfig            |  10 +
- drivers/pci/controller/dwc/Makefile           |   1 +
- drivers/pci/controller/dwc/pcie-spacemit-k1.c | 311 ++++++++++++++++++
- 3 files changed, 322 insertions(+)
- create mode 100644 drivers/pci/controller/dwc/pcie-spacemit-k1.c
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-index 349d4657393c9..ede59b34c99ba 100644
---- a/drivers/pci/controller/dwc/Kconfig
-+++ b/drivers/pci/controller/dwc/Kconfig
-@@ -509,6 +509,16 @@ config PCI_KEYSTONE_EP
- 	  on DesignWare hardware and therefore the driver re-uses the
- 	  DesignWare core functions to implement the driver.
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index 2aaaff77831e1..046ad441b7b4e 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -30,6 +30,14 @@ led1 {
+ 			default-state = "on";
+ 		};
+ 	};
++
++	pcie_vcc_3v3: pcie-vcc3v3 {
++		compatible = "regulator-fixed";
++		regulator-name = "PCIE_VCC3V3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-always-on;
++	};
+ };
  
-+config PCIE_SPACEMIT_K1
-+	tristate "SpacemiT K1 PCIe controller (host mode)"
-+	depends on ARCH_SPACEMIT || COMPILE_TEST
-+	depends on PCI && OF && HAS_IOMEM
-+	select PCIE_DW_HOST
-+	default ARCH_SPACEMIT
-+	help
-+	  Enables support for the PCIe controller in the K1 SoC operating
-+	  in host mode.
-+
- config PCIE_VISCONTI_HOST
- 	bool "Toshiba Visconti PCIe controller"
- 	depends on ARCH_VISCONTI || COMPILE_TEST
-diff --git a/drivers/pci/controller/dwc/Makefile b/drivers/pci/controller/dwc/Makefile
-index 7ae28f3b0fb39..662b0a219ddc4 100644
---- a/drivers/pci/controller/dwc/Makefile
-+++ b/drivers/pci/controller/dwc/Makefile
-@@ -31,6 +31,7 @@ obj-$(CONFIG_PCIE_UNIPHIER) += pcie-uniphier.o
- obj-$(CONFIG_PCIE_UNIPHIER_EP) += pcie-uniphier-ep.o
- obj-$(CONFIG_PCIE_VISCONTI_HOST) += pcie-visconti.o
- obj-$(CONFIG_PCIE_RCAR_GEN4) += pcie-rcar-gen4.o
-+obj-$(CONFIG_PCIE_SPACEMIT_K1) += pcie-spacemit-k1.o
- obj-$(CONFIG_PCIE_STM32_HOST) += pcie-stm32.o
- obj-$(CONFIG_PCIE_STM32_EP) += pcie-stm32-ep.o
- 
-diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-new file mode 100644
-index 0000000000000..e3264e37f4fc2
---- /dev/null
-+++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-@@ -0,0 +1,311 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * SpacemiT K1 PCIe host driver
-+ *
-+ * Copyright (C) 2025 by RISCstar Solutions Corporation.  All rights reserved.
-+ * Copyright (c) 2023, spacemit Corporation.
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/delay.h>
-+#include <linux/device.h>
-+#include <linux/err.h>
-+#include <linux/gfp.h>
-+#include <linux/mfd/syscon.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/phy/phy.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+#include <linux/reset.h>
-+#include <linux/types.h>
-+
-+#include "pcie-designware.h"
-+
-+#define PCI_VENDOR_ID_SPACEMIT		0x201f
-+#define PCI_DEVICE_ID_SPACEMIT_K1	0x0001
-+
-+/* Offsets and field definitions for link management registers */
-+
-+#define K1_PHY_AHB_IRQ_EN			0x0000
-+#define PCIE_INTERRUPT_EN		BIT(0)
-+
-+#define K1_PHY_AHB_LINK_STS			0x0004
-+#define SMLH_LINK_UP			BIT(1)
-+#define RDLH_LINK_UP			BIT(12)
-+
-+#define INTR_ENABLE				0x0014
-+#define MSI_CTRL_INT			BIT(11)
-+
-+/* Some controls require APMU regmap access */
-+#define SYSCON_APMU			"spacemit,apmu"
-+
-+/* Offsets and field definitions for APMU registers */
-+
-+#define PCIE_CLK_RESET_CONTROL			0x0000
-+#define LTSSM_EN			BIT(6)
-+#define PCIE_AUX_PWR_DET		BIT(9)
-+#define PCIE_RC_PERST			BIT(12)	/* 1: assert PERST# */
-+#define APP_HOLD_PHY_RST		BIT(30)
-+#define DEVICE_TYPE_RC			BIT(31)	/* 0: endpoint; 1: RC */
-+
-+#define PCIE_CONTROL_LOGIC			0x0004
-+#define PCIE_SOFT_RESET			BIT(0)
-+
-+struct k1_pcie {
-+	struct dw_pcie pci;
-+	struct phy *phy;
-+	void __iomem *link;
-+	struct regmap *pmu;	/* Errors ignored; MMIO-backed regmap */
-+	u32 pmu_off;
-+};
-+
-+#define to_k1_pcie(dw_pcie) \
-+		platform_get_drvdata(to_platform_device((dw_pcie)->dev))
-+
-+static void k1_pcie_toggle_soft_reset(struct k1_pcie *k1)
-+{
-+	u32 offset;
-+	u32 val;
-+
-+	/*
-+	 * Write, then read back to guarantee it has reached the device
-+	 * before we start the delay.
-+	 */
-+	offset = k1->pmu_off + PCIE_CONTROL_LOGIC;
-+	regmap_set_bits(k1->pmu, offset, PCIE_SOFT_RESET);
-+	regmap_read(k1->pmu, offset, &val);
-+
-+	mdelay(2);
-+
-+	regmap_clear_bits(k1->pmu, offset, PCIE_SOFT_RESET);
-+}
-+
-+/* Enable app clocks, deassert resets */
-+static int k1_pcie_activate(struct k1_pcie *k1)
-+{
-+	struct dw_pcie *pci = &k1->pci;
-+	int ret;
-+
-+	ret = clk_bulk_prepare_enable(ARRAY_SIZE(pci->app_clks), pci->app_clks);
-+	if (ret)
-+		return ret;
-+
-+	ret = reset_control_bulk_deassert(ARRAY_SIZE(pci->app_rsts),
-+					  pci->app_rsts);
-+	if (ret)
-+		goto err_disable_clks;
-+
-+	return 0;
-+
-+err_disable_clks:
-+	clk_bulk_disable_unprepare(ARRAY_SIZE(pci->app_clks), pci->app_clks);
-+
-+	return ret;
-+}
-+
-+/* Assert resets, disable app clocks */
-+static void k1_pcie_deactivate(struct k1_pcie *k1)
-+{
-+	struct dw_pcie *pci = &k1->pci;
-+
-+	reset_control_bulk_assert(ARRAY_SIZE(pci->app_rsts), pci->app_rsts);
-+	clk_bulk_disable_unprepare(ARRAY_SIZE(pci->app_clks), pci->app_clks);
-+}
-+
-+static int k1_pcie_init(struct dw_pcie_rp *pp)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct k1_pcie *k1 = to_k1_pcie(pci);
-+	u32 offset;
-+	u32 mask;
-+	u32 val;
-+	int ret;
-+
-+	k1_pcie_toggle_soft_reset(k1);
-+
-+	ret = k1_pcie_activate(k1);
-+	if (ret)
-+		return ret;
-+
-+	ret = phy_init(k1->phy);
-+	if (ret) {
-+		k1_pcie_deactivate(k1);
-+
-+		return ret;
-+	}
-+
-+	/* Set the PCI vendor and device ID */
-+	dw_pcie_dbi_ro_wr_en(pci);
-+	dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, PCI_VENDOR_ID_SPACEMIT);
-+	dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, PCI_DEVICE_ID_SPACEMIT_K1);
-+	dw_pcie_dbi_ro_wr_dis(pci);
-+
-+	/*
-+	 * Assert fundamental reset (drive PERST# low).  Put the port in
-+	 * root complex mode, and indicate that Vaux (3.3v) is present.
-+	 */
-+	mask = PCIE_RC_PERST;
-+	mask |= DEVICE_TYPE_RC | PCIE_AUX_PWR_DET;
-+
-+	/*
-+	 * Write, then read back to guarantee it has reached the device
-+	 * before we start the delay.
-+	 */
-+	offset = k1->pmu_off + PCIE_CLK_RESET_CONTROL;
-+	regmap_set_bits(k1->pmu, offset, mask);
-+	regmap_read(k1->pmu, offset, &val);
-+
-+	mdelay(PCIE_T_PVPERL_MS);
-+
-+	/* Deassert fundamental reset (drive PERST# high) */
-+	regmap_clear_bits(k1->pmu, offset, PCIE_RC_PERST);
-+
-+	return 0;
-+}
-+
-+static void k1_pcie_deinit(struct dw_pcie_rp *pp)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct k1_pcie *k1 = to_k1_pcie(pci);
-+
-+	/* Assert fundamental reset (drive PERST# low) */
-+	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
-+			PCIE_RC_PERST);
-+
-+	phy_exit(k1->phy);
-+
-+	k1_pcie_deactivate(k1);
-+}
-+
-+static const struct dw_pcie_host_ops k1_pcie_host_ops = {
-+	.init		= k1_pcie_init,
-+	.deinit		= k1_pcie_deinit,
-+};
-+
-+static bool k1_pcie_link_up(struct dw_pcie *pci)
-+{
-+	struct k1_pcie *k1 = to_k1_pcie(pci);
-+	u32 val;
-+
-+	val = readl_relaxed(k1->link + K1_PHY_AHB_LINK_STS);
-+
-+	return (val & RDLH_LINK_UP) && (val & SMLH_LINK_UP);
-+}
-+
-+static int k1_pcie_start_link(struct dw_pcie *pci)
-+{
-+	struct k1_pcie *k1 = to_k1_pcie(pci);
-+	u32 val;
-+
-+	/* Stop holding the PHY in reset, and enable link training */
-+	regmap_update_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
-+			   APP_HOLD_PHY_RST | LTSSM_EN, LTSSM_EN);
-+
-+	/* Enable the MSI interrupt */
-+	writel_relaxed(MSI_CTRL_INT, k1->link + INTR_ENABLE);
-+
-+	/* Top-level interrupt enable */
-+	val = readl_relaxed(k1->link + K1_PHY_AHB_IRQ_EN);
-+	val |= PCIE_INTERRUPT_EN;
-+	writel_relaxed(val, k1->link + K1_PHY_AHB_IRQ_EN);
-+
-+	return 0;
-+}
-+
-+static void k1_pcie_stop_link(struct dw_pcie *pci)
-+{
-+	struct k1_pcie *k1 = to_k1_pcie(pci);
-+	u32 val;
-+
-+	/* Disable interrupts */
-+	val = readl_relaxed(k1->link + K1_PHY_AHB_IRQ_EN);
-+	val &= ~PCIE_INTERRUPT_EN;
-+	writel_relaxed(val, k1->link + K1_PHY_AHB_IRQ_EN);
-+
-+	writel_relaxed(0, k1->link + INTR_ENABLE);
-+
-+	/* Disable the link and hold the PHY in reset */
-+	regmap_update_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
-+			   APP_HOLD_PHY_RST | LTSSM_EN, APP_HOLD_PHY_RST);
-+}
-+
-+static const struct dw_pcie_ops k1_pcie_ops = {
-+	.link_up	= k1_pcie_link_up,
-+	.start_link	= k1_pcie_start_link,
-+	.stop_link	= k1_pcie_stop_link,
-+};
-+
-+static int k1_pcie_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct k1_pcie *k1;
-+	int ret;
-+
-+	k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
-+	if (!k1)
-+		return -ENOMEM;
-+
-+	k1->pmu = syscon_regmap_lookup_by_phandle_args(dev_of_node(dev),
-+						       SYSCON_APMU, 1,
-+						       &k1->pmu_off);
-+	if (IS_ERR(k1->pmu))
-+		return dev_err_probe(dev, PTR_ERR(k1->pmu),
-+				     "failed to lookup PMU registers\n");
-+
-+	k1->link = devm_platform_ioremap_resource_byname(pdev, "link");
-+	if (!k1->link)
-+		return dev_err_probe(dev, -ENOMEM,
-+				     "failed to map \"link\" registers\n");
-+
-+	ret = devm_regulator_get_enable(dev, "vpcie3v3");
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "failed to get \"vpcie3v3\" supply\n");
-+
-+	/* Hold the PHY in reset until we start the link */
-+	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
-+			APP_HOLD_PHY_RST);
-+
-+	k1->phy = devm_phy_get(dev, NULL);
-+	if (IS_ERR(k1->phy))
-+		return dev_err_probe(dev, PTR_ERR(k1->phy),
-+				     "failed to get PHY\n");
-+
-+	k1->pci.dev = dev;
-+	k1->pci.ops = &k1_pcie_ops;
-+	dw_pcie_cap_set(&k1->pci, REQ_RES);
-+
-+	k1->pci.pp.ops = &k1_pcie_host_ops;
-+	k1->pci.pp.num_vectors = MAX_MSI_IRQS;
-+
-+	platform_set_drvdata(pdev, k1);
-+
-+	ret = dw_pcie_host_init(&k1->pci.pp);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to initialize host\n");
-+
-+	return 0;
-+}
-+
-+static void k1_pcie_remove(struct platform_device *pdev)
-+{
-+	struct k1_pcie *k1 = platform_get_drvdata(pdev);
-+
-+	dw_pcie_host_deinit(&k1->pci.pp);
-+}
-+
-+static const struct of_device_id k1_pcie_of_match_table[] = {
-+	{ .compatible = "spacemit,k1-pcie", },
-+	{ },
-+};
-+
-+static struct platform_driver k1_pcie_driver = {
-+	.probe	= k1_pcie_probe,
-+	.remove	= k1_pcie_remove,
-+	.driver = {
-+		.name			= "spacemit-k1-pcie",
-+		.of_match_table		= k1_pcie_of_match_table,
-+		.probe_type		= PROBE_PREFER_ASYNCHRONOUS,
-+	},
-+};
-+module_platform_driver(k1_pcie_driver);
+ &emmc {
 -- 
 2.48.1
 
