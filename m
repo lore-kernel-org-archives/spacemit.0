@@ -1,113 +1,147 @@
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032B62BDC19
-	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 03:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4824400
+	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 05:54:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760672303; cv=none; b=igueLB851QskhJoVSRN0uQf98gg/TD0j3gxF27QRV26g0Q4kNYFOesjpFgP5c0wKtes7UgoNwiUbeExXX5DbKnP9cHNjj5t29ixfzV62jfs3ncgg2RgNecpdhi69+3gmQBvYLgs/GVjls8e2CwFY/ojZm1J+2eV5AfbzrfF1KeE=
+	t=1760680464; cv=none; b=D3w1su0TIXPaDlpS/d/QKkJJbkeGiTw1EbzNmtbGVLppH5ll7EzXj2pCX2QcVh6bDWkBjLpb62mMbSsaXxSe31Q/vobLRlaN8v5FAHP5HCMuNV9esAwCA9TKqR6mQpMOJOQnWLGeIOBjqSVui4W4J1zfQDJEqHBoDk3dozu2qRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760672303; c=relaxed/simple;
-	bh=6sKxFmD7xtbhw/U6fWw/5xDqmGg+lEMB/j657bkCRcw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TTLZ1KpKSHQuxU+VPZCTmWRKmeCKgonW2YOBrk4AxAGB1wrzT5YwihtWdyc5Mk44C2d8U+N/UuKdV4GqwWNLU4NFSz0x1/qJRdVq+LOzuKNmLQyIc/zqkUPcCQKu3UWgFDAjFcdE1G7qJaqpB63IyS9ZblrsojS5Y5UZobQJrwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=NrA2hetM; arc=none smtp.client-ip=54.254.200.92
+	s=arc-20240116; t=1760680464; c=relaxed/simple;
+	bh=ggfldOZp6UqSPiWVLfdG2BN5nof3l2DKdbnArSTVoxw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=cp3BJTWNQiOkRLzK0NbBt0wKi4BQBpd1bkSRiVCAIS3BAneWS+tsWeDqYsHaCcSvyVcxqUOdCRNauT8GonneMA32cToqJoEVwSOs1aPDD3aYuJJ2iZiVCV+k2rZE5Y5QdjsUrmpZtPIN3Gy+atDcIId6qSzyuEbDslxZxtguuhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=OvMH3xFK; arc=none smtp.client-ip=54.206.34.216
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="NrA2hetM"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="OvMH3xFK"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1760672216;
-	bh=oBjWx1I4AnKMBoTG5upDqtcSRJpj6kwgVgcH9gHhiWk=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=NrA2hetMPmqFFX5VpPiNznP6QG+gEN5FQ0Npwqqr/HbKLiz6wkybhayL4h1d/eiR5
-	 m8O8yCQN9xVCfoKwSSZrfsf5fQpCXpKqC94gyHeplIGhf3QqXXfvcS5hRkhfolud+U
-	 KVqnqKGvtPqwKVUzAt3UMoz4JDzcPUQZEOTsLuR0=
-X-QQ-mid: esmtpgz14t1760672214t0abf1794
-X-QQ-Originating-IP: TlDX3I/w/Ks7UHXpGBXnho4hAw+exomsa25mQwPtHzQ=
-Received: from = ( [61.145.255.150])
+	s=mxsw2412; t=1760680397;
+	bh=XsTLhqCdKDoQzfpCqi+OYz0Cka5ZsvI3BAFjhZzu0Ys=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=OvMH3xFKGWJZPiukGVPBFGevGjxpMBLeHnPeiTtLA6vH6BSQ2WFxvAT3GmSjQnBjZ
+	 /GUGuFaO46pKxYautnqoDP5186VpSiBFu8d2fGqZRw7NBQqbrA5Y0T0et5FoS8rqFL
+	 T7F85WDR69a0LiSUBzU73aBF2kaTKAomemnbaYys=
+X-QQ-mid: zesmtpgz7t1760680395t7c42356c
+X-QQ-Originating-IP: i/pMjErODknrB2ZwyCDEP9eFiO76Pcsvza8xazFbIfg=
+Received: from = ( [14.123.253.52])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 17 Oct 2025 11:36:52 +0800 (CST)
+	id ; Fri, 17 Oct 2025 13:53:12 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14831178928690405288
-EX-QQ-RecipientCnt: 17
-Date: Fri, 17 Oct 2025 11:36:51 +0800
+X-BIZMAIL-ID: 6053374135582174828
+EX-QQ-RecipientCnt: 15
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jinmei Wei <weijinmei@linux.spacemit.com>
-Subject: Re: [PATCH v5 0/2] ASoC: spacemit: add i2s support to K1 SoC
-Message-ID: <A22605E3906E8F62+aPG50wdFlFzSMORA@kernel.org>
-References: <20251017-k1-i2s-v5-0-401ae3775fcd@linux.spacemit.com>
+Date: Fri, 17 Oct 2025 13:52:25 +0800
+Subject: [PATCH v3 1/2] dt-bindings: riscv: spacemit: add MusePi Pro board
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251017-k1-i2s-v5-0-401ae3775fcd@linux.spacemit.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251017-k1-musepi-pro-dts-v3-1-40b05491699f@linux.spacemit.com>
+References: <20251017-k1-musepi-pro-dts-v3-0-40b05491699f@linux.spacemit.com>
+In-Reply-To: <20251017-k1-musepi-pro-dts-v3-0-40b05491699f@linux.spacemit.com>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Yangyu Chen <cyy@cyyself.name>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Conor Dooley <conor.dooley@microchip.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1760680388; l=2753;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=ggfldOZp6UqSPiWVLfdG2BN5nof3l2DKdbnArSTVoxw=;
+ b=U91dtEZUz4Wvsoh2IA6c9a85w7dKye38+YtHxSDPuOKC8QvVm9TXO2U0mCS71DhTLBIt1isSJ
+ jsL0vTMT/zvBq5td0hDVIFsVQkfiuJrU6oJx6kR/3mDJzpZxd6+wgxY
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MWLCkAjnYYm52MwQO1Mzuin8y7IH2RZBNw5spbGSdMGtEzS0Cd1600uo
-	8QcEuNobWxqstEWcSZbQRZXRtNL/CTd3QVormvDi5lVb1uZ7tT8jqGwbGMxtzYseXNz9kjS
-	7nej1vnLa06nhAjIsFo/5QUGZJJFscnfRRvdZ7qMOx/VCU/xj9j7fxuQzKjzPaVAgJNolm8
-	3y0GIqePyAaLVmeXmrb/3jCSgH1xkQ+yXoNjT1VvI1ZWjDX6VEGe5tvDo9tjuvGVUq46o2p
-	Gsc8DTcd8P8wl4j86lD92zye3lUXTARibnfmKb6gtElr0uBfISLiXJi6/XnZRsLVjXXkypC
-	fUN1WqvYF+O9w3bOp+mXHrEGp45jOxKqCVU0VIndKboqG3Q8tHZE4yfJOvZECbBEXi1Ds9L
-	LoxEo1BNKRf506fWqFwwmm0zFx9iG/HePZrfUnJvD3d8xZcepHE37V/P9sFjVevcFQliQH9
-	zTy7rCIMY3A0zAU4K/a2gnCeFSrO+JsG+k8h4e2tB9X26xV0YRtRQhO0W5KyPC5Z7cXMGSt
-	vJu2hUiY9XwXS7cX9umuELLzw+OESvcYA8Kq6kb2lYzqOtjxkm95MaZJcYB9GA9z3bnQgHu
-	dK5OJxs1AJlUebFcq8+u7id7GShtnnp249KWuTtb/2MSIhtRjtfQ1vC3igGtn69KnL2axNl
-	dAYVxTvpR65+JkOrFKXmDX3TQSq+2JgQ89ImGLdXRCS0JCaNiIuTtthyaln042fcw6UjH1J
-	ZjVvbzvagGiZt3STeSjQUu299wr0BihyDQAra4yCMDAtcZXLai7b7lP039gItWCZz/ZEVZb
-	w2drd2EFg9qd4ScO9qEidkATlbeus9NAQvS9e/98rDMkhDODxC9jZWqGxHtPbsaX1z25BDl
-	SbJP9a7KrbZWAlfzzO16D/mihPfr3go6fqbAcDtmoJ0I4UqizHwi7wOcMLrC+PAalQssbVl
-	qQbRn77y7a6CbYk9uu+IQHz+WjY9y78kMWfV+sTdjNrxxe/xwjehF+pTrKs2yKe2WCvP8U4
-	vg8E1C3cRV/woQH7QT3BEG687zh3DbDEFUrrx1eFwv27iDrSbAIRJUAmNT1NdJxjZrZIsRL
-	jXh6VukxN+sUTMNWMpg394=
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NSCZCmIek7U1Bc3VkrgR4EhOwCyxErPV94II61O7tZB4XWpfdp0Ec6R4
+	I2vrs4rppgp7SWEhG+GQwAJRx6+QzLGcoC86gXCAR2MB+7XhfrgBxZnk5+QyIXjkrgElFFE
+	kRatMkTPTMCN0OppfLZYO4IOXmVi8Z8UKFQnR63CUmBTqt2lfbKSYPKF+G7g9tQX7118qMj
+	3jwzJBIFnnbYRIWzcap3JWFpjacUVVambUYPujI1PJfor2EksYlU1RO1cTCQrcPEFA+V7xl
+	I4tWqk4pBpXN4mlRRRweXHS4nwHBwhIn9FP3CSHSiiSE//5wGIxxvZ5r6stcPbkAzSkGdTJ
+	QuAlRVfckhSZsVIYWpPPY7Gar4pDFQhJrpSqiKY7jeJkTuGyuKLEuHlzXxTWYVpwTN/iClB
+	TPhYbElC1vqRLkfRvYkbZuPirXlmX8bmBxyidr3KdGZp+WW5kuMDYqMNCLgT8izTyIyaTR3
+	+ShvnSmM/IwhLbGKx/25puTa/xJxcQhjwGCyQECCe9cAjrbpE3d9lOt8ZCWfNuOu+eehjkd
+	DONqp1996XV2G/uVvUiGA1Qs+Zoyq1wxGJg87mUdDMBRA0pXR6i69HiolFGGVB4dv0gGZWW
+	vdOViPhVQfeeHCsD6ZPguDN5wxzFzdcKElUWVwWwQ7hU0FRNhrw+geNHVwYZ5OiNCczYBZi
+	WGiz5g+pWYh0qXgARuEZ6TuKR9Nq19PSJSyV+MrIv5enUycTqgfvmnsBLTT3HunXji5cDWh
+	eRkgR+UbxfzKgih8s2uUt4HtG7KrhFm6oJU9WujmbUwZ1cLEYWTKHZnY8nQzA6K8jFUPoeE
+	zcyDNtRkrKwNsvl8/lpq/D8xwBdyD1xhhtbH/1gLjhXbZpi52vQ0fgX9YVxXRB6LO5Y8csS
+	+QDJ0w0nSx5NrewBO4t0bkL/w3FRDhpL4Gtlp+j2RHEZAK9PsS7pClFPhKj4QWlZy/TWssg
+	S6nMWP/IJdaScQ0GAoUmpaf0D9vrEhgVkc68UABO+A0al5g6lYXD/KHjZJHQFpx0yuOvgYM
+	qMNEGKndANSH/7jCFo06fSoJhkptFD0tiICHJ5CNV6c0SOCFo9sN15Z18G4LQ8UixdhIOcW
+	NU7ixOYreT5aI3fow6V4zlNVsEXIpLt572Kyvo1FFxV57OMgwAY+Fifo0i6QYMk3OgtKD5u
+	eI4ZapgPOhN6zoe3zBGYbgkueYkXvTF4IC7w
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
 X-QQ-RECHKSPAM: 0
 
-On Fri, Oct 17, 2025 at 11:16:16AM +0800, Troy Mitchell wrote:
-> On the K1 SoC, there is a full-duplex I2S controller.
-> 
-> The I2S is programmable, with the sample width configurable
-> to 8, 16, 18, or 32 bits.
-> 
-> A dedicated FIFO is provided for transmit (TXFIFO) and another
-> for receive (RXFIFO). In non-packed mode, both FIFOs are 32
-> entries deep and 32 bits wide, giving a total of 32 samples each.
-> 
-> The register definitions can be found here[1]
-> 
-> Link:
-> https://developer.spacemit.com/documentation?token=Rn9Kw3iFHirAMgkIpTAcV2Arnkf#18.2-spi%2Fi2s [1]
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
-> Changes in v5:
-> - Patch 1/2:
->   - nothing
-> - Patch 2/2:
->   - dont't read sspsp value in spacemit_i2s_init()
->   - set SSPSP_FSRT bit for DSP_A mode (was missing in previous version)
-The changelog here is wrong..
-Correct version:
-    - do not set SSPSP_FSRT for DSP_B
+Document the compatible string for the MusePi Pro [1]. It is a 1.8-inch
+single board computer based on the SpacemiT K1/M1 RISC-V SoC [2].
 
-Best regards,
-Troy
-> - Link to v4: https://lore.kernel.org/all/20250921-k1-i2s-v4-0-4f819f50e468@linux.spacemit.com/
-> 
+Here's a refined list of its core features for consideration:
+  - SoC: SpacemiT M1/K1, 8-core 64-bit RISC-V with 2.0 TOPS AI power.
+         This suggests potential for light AI/ML workloads on-device.
+  - Memory: LPDDR4X @ 2400MT/s, available in 8GB & 16GB options.
+            Sufficient for various workloads.
+  - Storage: Onboard eMMC 5.1 (64GB/128GB options). M.2 M-Key for NVMe
+             SSD (2230 size), and a microSD slot (UHS-II) for expansion.
+             Good variety for boot and data.
+  - Display: HDMI 1.4 (1080P@60Hz) and 2-lane MIPI DSI FPC (1080P@60Hz).
+             Standard display options.
+  - Connectivity: Onboard Wi-Fi 6 & Bluetooth 5.2. A single Gigabit
+                  Ethernet port (RJ45). Given the stated markets,
+                  this should cover basic networking.
+  - USB: 4x USB 3.0 Type-A (host) and 1x USB 2.0 Type-C (device/OTG).
+         Decent host capabilities.
+  - Expansion: Full-size miniPCIe slot for assorted modules
+               (4G/5G, wireless etc.). A second M.2 M-Key (2230) for more
+               general PCIe devices (SSD, PCIe-to-SATA, comm boards).
+  - GPIO: Standard 40-pin GPIO interface, as expected for an SBC.
+  - MIPI: Includes 1x 4-lane MIPI CSI FPC and 2x MIPI DSI FPC interfaces
+          for cameras and displays.
+  - Clock: Onboard RTC with battery support.
+
+Link: https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf [1]
+Link: https://www.spacemit.com/en/key-stone-k1 [2]
+
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+Changelog in v3:
+- nothing
+- Link to v2: https://lore.kernel.org/all/20251010-k1-musepi-pro-dts-v2-1-6e1b491f6f3e@linux.spacemit.com/
+
+Changelog in v2:
+- modify commit message
+- Link to v1: https://lore.kernel.org/all/20250928-k1-musepi-pro-dts-v1-1-5efcca0ce3ae@linux.spacemit.com/
+---
+ Documentation/devicetree/bindings/riscv/spacemit.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+index c56b62a6299ac24d3cdef7edcdfc407dc62a1846..52fe39296031f21d1c28c4f1ea5ca9fe28caf45a 100644
+--- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
++++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+@@ -22,6 +22,7 @@ properties:
+           - enum:
+               - bananapi,bpi-f3
+               - milkv,jupiter
++              - spacemit,musepi-pro
+               - xunlong,orangepi-rv2
+           - const: spacemit,k1
+ 
+
+-- 
+2.51.0
+
