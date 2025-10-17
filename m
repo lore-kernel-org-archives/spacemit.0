@@ -1,66 +1,83 @@
-Received: from mail-io1-f65.google.com (mail-io1-f65.google.com [209.85.166.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from skyblue.cherry.relay.mailchannels.net (skyblue.cherry.relay.mailchannels.net [23.83.223.167])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C127F2E36E1
-	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 16:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.65
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760718074; cv=none; b=RFv9DGfgz2lbzAM5kBoibI2ww8QonJeR9W1JbN3CkWPhGTjNchnfzVznR5lZVOyVqRiPr9jAD7SNMubDngWfTxpIepe99seJOMSGYQeHh8dQENYYQ4FsxMpfmFb0/Itt781dkZIxPIfN2tHjnpBenSeZE0Kglnf8/MLzS9VrHos=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760718074; c=relaxed/simple;
-	bh=a1NVbX4HwLDN8rNhr+HKeFlbDVEvCUamvM/dlLKhGKU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=USBVfdzUDoPFWUU0QDcIbKzj6Aon1Ekxb7XmGG3f1kAZvDP2G4JICI8OHuxCqZ/keIaTxSKg+NudGLcxjVdj/Mrhurl+ahGDF1zQvmemY++oRyuQ0joSJ3NlwuFdlUXwW/LF4mdyj+0v1O/sWpnKlSd2r2oBHr1UFiDpMxb8VgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=RNT0Uqjy; arc=none smtp.client-ip=209.85.166.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790E428DF2D
+	for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 16:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.167
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760718777; cv=pass; b=lJ2q7JPA+g3SeC0EvxThEwVNLcxmva5u0K2V697E5Len26O+ba5PbiXmu2YUyBuGd2yChx4ymP+CdclQYiRdqV4gqyBvxfqS786hYuYKbxMcP/SbcuLG3eq7r6p8Ev8inxPJg8oEU5BGJhSo5vTWPVopqcIJPKFN/z/7SvpnMio=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760718777; c=relaxed/simple;
+	bh=1fP5zpgcHZFicOOflVjB2iFN8P1HFOo4SPs3CO19kQQ=;
+	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
+	 Content-Type:Date; b=cW3NCX/GexhYhyBjAuZTxfpOIiBHiyASd0RuPeNx/kYPY6EFAmVxCR8XScQcAtetRj2Cqb7mYhbfutfXRY0v1GXEaLhKMWWLr5B4jXdf/zZxJrZsKZ4RlxNr6HJFNEj2iYyvy/5F2GUUkZHCaHPwCwAGcf4KJ3jJqz9R7y6/Ftk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=M02/l1LY; arc=pass smtp.client-ip=23.83.223.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="RNT0Uqjy"
-Received: by mail-io1-f65.google.com with SMTP id ca18e2360f4ac-93e7ece3025so29835839f.1
-        for <spacemit@lists.linux.dev>; Fri, 17 Oct 2025 09:21:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760718071; x=1761322871; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=a7+Wio6b8w1yNg9Tem9uVrRYlYIL3Mf5C/3BZyCBdIc=;
-        b=RNT0UqjyGnNHBB0q6OiBnnW5D1/SvhjIEmEZkizz9VLgeyBJPKfWJouw5KJftpcphG
-         3rMWWDHIAsD9mBjaX+WyvFcsX6cofcBrybO8AWT0O+i02ATyGg29ky0DgqNRPJaSx4L5
-         vS+oleANrP2dF9znHti2ku9/oyrQaGxx7xwpVuUgnHkkzuFgi6WfzsVlcA15/8VpM6Qo
-         SwBKNQ9sDRQw0t6XUIgRzVxoA3/FfySt52Z/fx/l6QWv+jlQ99Xy1inKUTCS572fJPfq
-         pIGwZhykol/jaS0efP7ey0oQ+SG7+OM6s5+ECnv3JNsvoiM0h1h6kWjK6GWIqWZmfZTO
-         zQrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760718071; x=1761322871;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a7+Wio6b8w1yNg9Tem9uVrRYlYIL3Mf5C/3BZyCBdIc=;
-        b=llqFALb/q0wkztf+xFBo87Oz34W2Eg6L3pGW9p7mDqwJLC+0vvnqq2fpsqSI3Is7XL
-         lyCKkfT6zYPiBS8QITHIjE2kIpCQ84btR+XYwlfPPFUWUFvpyBy/LzLcbyZDg8gtMjYW
-         URtfNHWoVMqdOAn6u6BK4OKC5ekpGBsLDd3eiFv8AU60lhMqUmb46txO4J9B76F3Lv5v
-         7BZsxVB4jrwuDgtlmCZBLI3pTk7pvhsOQeu0b/G+TY5d51Tghux5CuKc8dl6GSBzsXIf
-         0BrenfhNcxQqRdb9B+PkzLRZ/QYK/w2KFO0IrksjfOo18/nou4k8mCQNQGiFx9xCUlE4
-         /5CA==
-X-Forwarded-Encrypted: i=1; AJvYcCVcu6OUpgBF74j9tHHzSQcEQEBvVSTA4+bcBY32xs2vcx5VMGs37MX7w4XC31WeuXUkFNWJghu52A==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz1w9lE/HKg8x1ApjKPVou/OxzhGKDdVnMRgVq+w38s/+r3dwj/
-	3Kvmpwc999NpQn1bV3ssv6hIdCiRu0Kdrrcpul98meFBuA8t+FKPViasrhaB9SgyajY=
-X-Gm-Gg: ASbGncse1dlFD61cZH4vGz5jOTGIeJ6QU6XppMsFzUoR+gFHhgvADgC8oRN4aG68qPo
-	IhHWyr18JM/Zo9u6DCms92yH/w480aMOppodRQBZZaq0zQFTAD//+Bjc5j4atDd+2uvVZ6aPz1o
-	LEKQ8VIfAEj58kcUTEN16dvSRphc0GQ2NbXcFRI6RN1iSQwLuXtkRGO5OR8nWraBly/FehJk+1c
-	SrCeFJrDqa6HL6/VW54i6kH1OIAnr3e2LBwR01NDPxMnhj+IBrU/ngYaI06YDKxoi2yoRdHVZBs
-	AjxcK5OPGcO5yiH37vDc1tzmAuV4PaEFhWfiGpy2jpq7JKAhjZ7dPE6h+SYrxFi9QCJr5NL8BgP
-	46H8D/uELHdmz/2+2tLW2+fOJlVGWr2/oJ8o7VWZDU442CXLlLqNIKEkx6tXHIOjNou4uDR7584
-	/NaVctAAednQNrIkqPZvsfAyDazV+tPSStqWfcbcg=
-X-Google-Smtp-Source: AGHT+IEIgP2oHx8F177Q7uZqnuNLPeZz2b0M8yBXR1aqrI1laVD3XEel+UPyfoDNXtqbVVX4QNo+pg==
-X-Received: by 2002:a05:6e02:440b:10b0:430:bf84:e94c with SMTP id e9e14a558f8ab-430bf84e9e5mr60046655ab.13.1760718070850;
-        Fri, 17 Oct 2025 09:21:10 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a97b92b1sm10677173.68.2025.10.17.09.21.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Oct 2025 09:21:10 -0700 (PDT)
-Message-ID: <92ee253f-bf6a-481a-acc2-daf26d268395@riscstar.com>
-Date: Fri, 17 Oct 2025 11:21:08 -0500
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="M02/l1LY"
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id CFFCB701A01;
+	Fri, 17 Oct 2025 15:54:07 +0000 (UTC)
+Received: from fr-int-smtpout25.hostinger.io (100-117-132-18.trex-nlb.outbound.svc.cluster.local [100.117.132.18])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 602B2701AEE;
+	Fri, 17 Oct 2025 15:54:01 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1760716443; a=rsa-sha256;
+	cv=none;
+	b=qsbdjJATkXL3pVbVt/nMJLo5Bik+gXYtmu8SG5torvU5Tu6ofvZlAEbLTQVm/ZAPJihpg/
+	Kh1MAJNzfUVOr9EF8kPOutx7SZhy6lYppkxmnTtZrIiV4+bYK4/8CTVsxSnLPnrZmn85Kg
+	fc06Cs2ZWSzBQ3/tKfcTp/EhtaVa1o+3w6dk8vS+OvninEBCmu7GaQ5/pFpDSpyLpYR9id
+	gwJ8fu4L7sz2zvx4WI/VDi3E/qOZ1YBMTURVorMV/vYgjZUx9Dj78YB5ItXVyIlHMP2JmL
+	9HYQEjlirZIpGb+wIqnZ2er0gNW002stlHtcritUDc3nRV48a/qQan6AVmd0ew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1760716443;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=F1FFVJG2rkiUWHHF25ZM11yfG5to6mYY/Am7bSXow1w=;
+	b=g4gw5xwKjwzE6nyJqxtt98VD+XSdfMX7m/AsaUhBACTkHpYj8rO73kL7pTTlLm/sIMAfUu
+	haDL87tDSS4JdTaHg8W0DL8uNQaIqhCAw+KsE0gA+N659ADCbK/5MBHu03lZR7QK13XjGG
+	Imj+q82dRNCureS635wjDw3XaL5/vzM/zO+QTBk7jK/NkJqfJee/7RCMrZFHafwOtIl+Yv
+	I9NxOU+wJcV6Y0iEWW6EE1GcCgG67qX3z4qLRgee1qoxGK0ACL49RO2JMxW9mYknvZNKTl
+	/fMcPq9zTeu8YXfhS4tV6LxV6AGfC5XU4fg71EPAcyYDKXoSDGzJ1W7mj/tkKQ==
+ARC-Authentication-Results: i=1;
+	rspamd-fbfbcbd77-nmt89;
+	auth=pass smtp.auth=hostingeremail
+ smtp.mailfrom=michael.opdenacker@rootcommit.com
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId:
+ hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Interest-Invention: 3d5ae642033bbe25_1760716447513_1362389868
+X-MC-Loop-Signature: 1760716447513:724433826
+X-MC-Ingress-Time: 1760716447513
+Received: from fr-int-smtpout25.hostinger.io (fr-int-smtpout25.hostinger.io
+ [148.222.54.38])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.117.132.18 (trex/7.1.3);
+	Fri, 17 Oct 2025 15:54:07 +0000
+Received: from [IPV6:2a04:cec0:1210:4d12:deca:bae:eaaa:c8e1] (unknown [IPv6:2a04:cec0:1210:4d12:deca:bae:eaaa:c8e1])
+	(Authenticated sender: michael.opdenacker@rootcommit.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4cp8WD3ntHz1y05;
+	Fri, 17 Oct 2025 15:53:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
+	s=hostingermail-a; t=1760716436;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=F1FFVJG2rkiUWHHF25ZM11yfG5to6mYY/Am7bSXow1w=;
+	b=M02/l1LY/12rIEeTpPcENXTumRGFuqsL03PFKuftuURXv6DClseDI47zTy3+8tKFYpqX76
+	0VQ+9rEgw9PJ80bZ6PXcrTECo7oheathXmj/GV5FNt1UdrXei+fwZyOGqP7trZEtz5UtPg
+	+MEvXjkixRqTRa8juNpu1Uj1/6ZTgGToTH6xRG3B+nEyor5laOstctdf9zuGndOFyWZ9zI
+	nBv/jGpMxCHcw/A0nw0cwpSVSJeklLbd+XGM4tvdOGrnWBvO7aVjuprKWyvdZ3QXicsfqZ
+	1cDKdlfl8i77exoN6n3JgzRQQynSb0za7ZTrTpe99LVXbTRZ08WIq1I3M2WDHA==
+Message-ID: <63b2056f-3d5a-4fca-8600-526619c33647@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,88 +85,54 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] Introduce SpacemiT K1 PCIe phy and host controller
-To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
- mani@kernel.org, vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
- guodong@riscstar.com, pjw@kernel.org, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
- christian.bruel@foss.st.com, shradha.t@samsung.com,
- krishna.chundru@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
- namcao@linutronix.de, thippeswamy.havalige@amd.com, inochiama@gmail.com,
- devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20251013153526.2276556-1-elder@riscstar.com>
- <aPEhvFD8TzVtqE2n@aurel32.net>
+Cc: michael.opdenacker@rootcommit.com, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Yixun Lan <dlan@gentoo.org>, netdev@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] net: spacemit: compile k1_emac driver as built-in by
+ default
+To: Emil Renner Berthing <emil.renner.berthing@gmail.com>
+References: <20251017100106.3180482-1-michael.opdenacker@rootcommit.com>
+ <20251017100106.3180482-3-michael.opdenacker@rootcommit.com>
+ <CANBLGcykz77U_V4CqE7PHvtgmeXiKFo0FXy-sHHiAoZ11HnCjw@mail.gmail.com>
 Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <aPEhvFD8TzVtqE2n@aurel32.net>
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Organization: Root Commit
+In-Reply-To: <CANBLGcykz77U_V4CqE7PHvtgmeXiKFo0FXy-sHHiAoZ11HnCjw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Date: Fri, 17 Oct 2025 15:53:44 +0000 (UTC)
+X-CM-Envelope: MS4xfJ9c+Oq6a3xe99yK0EZhAMCEV7n/+Vax87LhLieg7XqJbgnwD5VAarvVM6KCvSMEmHfg5nOc41whlY3NxSYXoCQkRdIalh/pIn9x4gRAnk2Vd/w3J8BV 8+BlmotPVSRFAlCM3amjVpsZDKN8a23XE54m+J0PIowDjfBLXfR3OqPUGpYZ22o82HoMUyBKYEHM7VrcD71CbfiI6NOfPwSjECGCMKOJuX9clYXphkEndH1Z eoGXu3YZ3bxT2XtWKFqBEs98FkRZJ06rdzLtGRjr4gm+JGc5RiDmXaoXlB3MEz8YGpHITKjDURU2tmd0ItVXr6X8MUmf+5nE79861gwIB+T3EiJaqZOUudJK seV2l5MgJbNyPQct/KpUFvoXH1Sl8E9QNpvv5FONjRUe2eRU5UwVlyVCs4FvEWhLkDRpt+qeFz/7h+EkakPaY+VXyOaw88ZKQrvsYPJqGLK8YAtfqTbVC1Ib vjwDhNt1oy05D7dSd6ATeNJq+J4ZkjhuTQ/X39dTk/RBULT9vp2Sd1LLEqUq5s9HgNe9m9V3f6HoKCbLjjTnKIbYMIvNl2x/zlo0Lx9bh6LfBIM1Xr6YBcbl sHL3rf5OblNYUUzdBgPjA00wJPod2kKc1EtqH75mcsrGHnxOLsN5rVnyqi8XlABvjXynwRIjg3GatUnAFHqF8TPyi6U6lAuZBhG12SDE6I/zdjECvGr3ONjI KEdcxt7c/TM=
+X-CM-Analysis: v=2.4 cv=GbNFnhXL c=1 sm=1 tr=0 ts=68f26694 a=HZifvgWxdiUQ9LBJ2kG+mw==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=d70CFdQeAAAA:8 a=6my-HHL3l342PdgWGDoA:9 a=QEXdDO2ut3YA:10 a=NcxpMcIZDGm-g932nG_k:22
+X-AuthUser: michael.opdenacker@rootcommit.com
 
-On 10/16/25 11:47 AM, Aurelien Jarno wrote:
-> Hi Alex,
-> 
-> On 2025-10-13 10:35, Alex Elder wrote:
->> This series introduces a PHY driver and a PCIe driver to support PCIe
->> on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
->> Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
->> PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
->> one PCIe lane, and the other two ports each have two lanes.  All PCIe
->> ports operate at 5 GT/second.
+Hi Emil
+
+Thanks for the review!
+
+On 10/17/25 17:33, Emil Renner Berthing wrote:
+> On Fri, 17 Oct 2025 at 12:03, <michael.opdenacker@rootcommit.com> wrote:
+>> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 >>
->> The PCIe PHYs must be configured using a value that can only be
->> determined using the combo PHY, operating in PCIe mode.  To allow
->> that PHY to be used for USB, the calibration step is performed by
->> the PHY driver automatically at probe time.  Once this step is done,
->> the PHY can be used for either PCIe or USB.
->>
->> Version 2 of this series incorporates suggestions made during the
->> review of version 1.  Specific highlights are detailed below.
-> 
-> With the issues mentioned in patch 4 fixed, this patchset works fine for
-> me. That said I had to disable ASPM by passing pcie_aspm=off on the
-> command line, as it is now enabled by default since 6.18-rc1 [1]. At
-> this stage, I am not sure if it is an issue with my NVME drive or an
-> issue with the controller.
+>> Supports booting boards on NFS filesystems, without going
+>> through an initramfs.
+> Please don't do this. If we build in every ethernet driver that might
+> be used to boot from NFS we'll end up with almost every driver
+> built-in and huge kernels. If you need this there is nothing
+> preventing you from building the driver in, but please don't bloat
+> defconfig kernels for everyone else.
 
-Can you describe what symptoms you had that required you to pass
-"pcie_aspm=off" on the kernel command line?
+Understood. You have a point. It's not really a problem to customize 
+kernel configuration for each board as you said.
+So, please forget this particular patch :)
+Cheers
+Michael.
 
-I see these lines in my boot log related to ASPM (and added by
-the commit you link to), for both pcie1 and pcie2:
-
-   pci 0000:01:00.0: ASPM: DT platform, enabling L0s-up L0s-dw L1 AS
-PM-L1.1 ASPM-L1.2 PCI-PM-L1.1 PCI-PM-L1.2
-   pci 0000:01:00.0: ASPM: DT platform, enabling ClockPM
-
-   . . .
-
-   nvme nvme0: pci function 0000:01:00.0
-   nvme 0000:01:00.0: enabling device (0000 -> 0002)
-   nvme nvme0: allocated 64 MiB host memory buffer (16 segments).
-   nvme nvme0: 8/0/0 default/read/poll queues
-    nvme0n1: p1
-
-My NVMe drive on pcie1 works correctly.
-   https://www.crucial.com/ssd/p3/CT1000P3SSD8
-
-   root@bananapif3:~# df /a
-   Filesystem     1K-blocks     Used Available Use% Mounted on
-   /dev/nvme0n1p1 960302804 32063304 879385040   4% /a
-   root@bananapif3:~#
-
-I basically want to know if there's something I should do with this
-driver to address this.  (Mani, can you explain?)
-
-Thank you.
-
-					-Alex
-
-> Regards
-> Aurelien
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f3ac2ff14834a0aa056ee3ae0e4b8c641c579961
-> 
+-- 
+Michael Opdenacker
+Root Commit
+Embedded Linux Training and Consulting
+https://rootcommit.com
 
