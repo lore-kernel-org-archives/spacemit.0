@@ -1,126 +1,76 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D245134AB
-	for <spacemit@lists.linux.dev>; Sun, 19 Oct 2025 20:53:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D955D255F2D;
+	Sun, 19 Oct 2025 22:32:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760907228; cv=none; b=rrP8hcaz960vjJLfa4DISwGW0d9eGaPv6rv/J9aY8YomHC8UfnICZHaHZSD1cVtarrR0wVsMllHw6Ktcs3Deonu0go7nWR5jYaJaN1rA/klRrKg3kZpXpwN6//Gp0OQXX8iTrtxDXKoLe5NndbrLHIp5MY7Du1Y+cknVyd7Cs6k=
+	t=1760913166; cv=none; b=SgMT1f3ldZlrAkA9Kpa7byllpsZ9P0Xsyt0BmVCcwsFpCy2Iulnhl4KTCPiUTpAnHgESQdVbAj8qhOYIJ7NDNuX9q/cTefIi57aIbaV1APrnpb+KlEkfP6CjlcEC/z8GP4xtx3QZ2djV2U9Kta9KpwbpJUUhZvM8J2tPP7xhGF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760907228; c=relaxed/simple;
-	bh=O2zfE4vf4ah1dibiRpvsd3NnhgM9Vr10uy3t41JeKRI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ht3YDROBRRV769ONjv28acA8+JlJzxmpK2uq5sVNlLFSz8F6iJ7JAsUsJuda91DUtkqdVrLvo6chFR2qR8ZEXjvbDyNdz4+dVT0si98MiOAFk9KIfdHC8+gxbkTz2b+0Up5jp++odyNgatFQgbCRGyYKR/B7SFAaShJYBqQVHFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EURviJdm; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1760913166; c=relaxed/simple;
+	bh=BQvePnqZSh98d/7LmjdaVdS2t1hzyGD0Ie/pACHXIZs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=grTVqIsJb5buHobLkq2r1iddHfk+4CxFF+wBLkCtzjYlqFXXMwMtp4319zjAP8e2tYJgp1+/+NOhQ+BWHnvGWnYUn35y9fgyXOnCkysGM7LQhvmZ58DSnkDEw6Kh8drsu6PsGOy2+mYUtid2LDdQo3bYsL2YWLBNDrCjukvWCVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TeTfX/QV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EURviJdm"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-784826b775aso13768007b3.2
-        for <spacemit@lists.linux.dev>; Sun, 19 Oct 2025 13:53:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760907225; x=1761512025; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bLIclD2aF84lUbWy0CIM8XnSXp6AC1BEWNN7dbQyLN4=;
-        b=EURviJdmyGloGE0W5leccyjIJzzV26k7WmgJ86jdoTQZV+MKjZk8MZDVYp6CPaC2jD
-         Jm28anUeggg0L6lRgU5iT0rYbhGUf1nHZnEzfbobzV8weD9Wd6yl1K1aKq9Us0DMQ+A6
-         LRPs0CC8XXp7X1WLyUe3QS7mOil/x6TG1wOnyMqJ8oyBq4u8R2RMZBKGoAfYNlo/ljRY
-         UUno/EEscWzFq85TX2OjMRQG757yHhesAgGMmwcyfCAKM5yv3bXoR6SyGiGhxLtwsOu2
-         KEGmC/cZW7SPvC/4DGBolAIq7JtI0pKJTKoQHyP/+zkTK+uFY2Rd/JFcx51U52jWtfUv
-         j1tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760907225; x=1761512025;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bLIclD2aF84lUbWy0CIM8XnSXp6AC1BEWNN7dbQyLN4=;
-        b=UFbCMLVbNIQMcw/HxMeM/1UT26JrGvkYUj9+VOzAzYKu1fowSQ9udHwV0DmrvOKUiV
-         14HRCDFuaS2DmTEY4+sKRE3F9F6u4U+RXKXQz1A2Pj7x6OitzANLJg0XT0wmjRRj6nED
-         FUisSPRs1SGCVsPXX3QHXQhRa7sQXtM6RlnTIonJjZ5nVeoibAwynAk66Wjfwne5nJvK
-         qvcwVq74L8KqSWImwaisif12caGB6yMT1KlRVk9twQqgyB4apCcczW0r6uUtgh1fCogW
-         aI+2Qj9UAGiX2DNgGDvCPHN/K8/L4w0weACiNuogUbTjIHDaom9h8q0fWlZB7Uq1EHr7
-         x+Zw==
-X-Forwarded-Encrypted: i=1; AJvYcCWoJDKnxr26jK/xDf1blQZ2kUFXSSkLogNMK3REB0RUEQtTIG4ZFWsMp6PXNzCQsDLQpWrjRnvzfQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyRYCP1pStnwMrnCUJgVhlmp1+ePpZbJQ2QLLDodeZYEI1FtjkR
-	F5jZgMlQALMEb42iw+rcuuy1fzZhG/bPUGmsia32Q9XmmEQ6gtvbOO2Vxfo4mN4cdkoB/xafSdL
-	Jm0g79fzDOfD7zDZcHqO3Z2KZDNd5lak=
-X-Gm-Gg: ASbGncuOdXqXxtJdzEW0bVOrZzF4vcRg1wRH+2yQIrzq28HkRkfhTMeosMIVvCweaNu
-	KyIJYjxffEMND6ftd57FrFDjTVh/F8vOqSSQZfZOxmoU/I3tUPMKvGVOs+TAbP1X3nSndnNT/I4
-	b2HjbvbtmpxaZRKuZUISe3fr7o3v7J6ZDTKfVKmRwFHU/eAUbqCMgTu+u1PSvm7WfFvzYmljiWk
-	xvkUnJPFOC+BbrfCV36XfJnBNSG+Jdd1V9Uuy19/uQTeXFRtan/aLORGzuMce9ZVPlstqP4l5NS
-	ftIa
-X-Google-Smtp-Source: AGHT+IG+VnVg4eeqtni24th+c8XSTz9bZ4o+eo5ggxBTkXyndw/uiD4XSbKqdvbqo7rPEXjxfr8g73d/jXS/Qyg3a7c=
-X-Received: by 2002:a05:690e:4091:b0:63e:3c2a:c33a with SMTP id
- 956f58d0204a3-63e3c2ad83fmr192995d50.12.1760907225531; Sun, 19 Oct 2025
- 13:53:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TeTfX/QV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA576C4CEE7;
+	Sun, 19 Oct 2025 22:32:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760913165;
+	bh=BQvePnqZSh98d/7LmjdaVdS2t1hzyGD0Ie/pACHXIZs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TeTfX/QVp4813TURkaORgH0w0Mt/jxYnmKmat7JPgTP9D/p5gL//oBlTOLx2SN1tS
+	 88kkgMd+2IEBeTxOlv7vqurFge7z7XFp58eu6DWXsUZ4HZrzPkeEgy7zEe4XooWsJL
+	 GGiHxKDLnE/a3n12ITkcR7slrQiM7wvKk8C4xAbmwaclm0lgsdyaLx1dTfMSVfdIc6
+	 ITIarAniHwSEKlxBq3wAQnbN10L6loHSP4nLDk7x4B9riGMhLq07JTR/JBM7R7TGBk
+	 Bf3GGWuhQecxTFqeOixOHB97mAOwZfb3kAcqijc2njhwgyfksERI9vGVSFGj2+ovTn
+	 2kMKrWhYhJe9A==
+Date: Mon, 20 Oct 2025 00:32:40 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v4] i2c: spacemit: configure ILCR for accurate SCL
+ frequency
+Message-ID: <b6lafouoz6f6al5ki4oh7jj6gfpejwyh62sdrh7lia37sadd4u@rle3aw6grsiw>
+References: <20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251019191519.3898095-1-aurelien@aurel32.net> <20251019191519.3898095-2-aurelien@aurel32.net>
-In-Reply-To: <20251019191519.3898095-2-aurelien@aurel32.net>
-From: Emil Renner Berthing <emil.renner.berthing@gmail.com>
-Date: Sun, 19 Oct 2025 22:53:34 +0200
-X-Gm-Features: AS18NWC8mas1vOpzBcYTdN6WQn4JlQUKb553pLiF9PjWnggz16K-ukTapFmx2g8
-Message-ID: <CANBLGczi3GeaC4aWECV8NS-zqSHgRa-5onynz9fGsZeN8qgysg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] driver: reset: spacemit-p1: add driver for poweroff/reboot
-To: Aurelien Jarno <aurelien@aurel32.net>
-Cc: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>, 
-	Sebastian Reichel <sre@kernel.org>, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
-	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>, 
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>, 
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com>
 
-On Sun, 19 Oct 2025 at 22:34, Aurelien Jarno <aurelien@aurel32.net> wrote:
->
-> This driver implements poweroff/reboot support for the SpacemiT P1 PMIC
-> chip, which is commonly paired with the SpacemiT K1 SoC.
->
-> The SpacemiT P1 support is implemented as a MFD driver, so the access is
-> done directly through the regmap interface. Reboot or poweroff is
-> triggered by setting a specific bit in a control register, which is
-> automatically cleared by the hardware afterwards.
->
-> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> Acked-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> Tested-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
-> v2:
->  - Rebase onto v6.18-rc1
->  - Use dev_err_probe() to simplify the code
->  - Fix indentation of patch 1
->  - Collect Acked-by and Tested-by
->
->  drivers/power/reset/Kconfig              |  9 +++
->  drivers/power/reset/Makefile             |  1 +
->  drivers/power/reset/spacemit-p1-reboot.c | 88 ++++++++++++++++++++++++
->  3 files changed, 98 insertions(+)
->  create mode 100644 drivers/power/reset/spacemit-p1-reboot.c
->
-> diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
-> index 8248895ca9038..063202923d95d 100644
-> --- a/drivers/power/reset/Kconfig
-> +++ b/drivers/power/reset/Kconfig
-> @@ -283,6 +283,15 @@ config POWER_RESET_KEYSTONE
->         help
->           Reboot support for the KEYSTONE SoCs.
->
-> +config POWER_RESET_SPACEMIT_P1
-> +       bool "SpacemiT P1 poweroff and reset driver"
+Hi,
 
-The driver code looks to be written to work as a module, but here it
-says "bool" not "tristate".
+On Fri, Oct 17, 2025 at 03:27:39PM +0800, Troy Mitchell wrote:
+> The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
+> master mode operations is determined by the ILCR (I2C Load Count Register).
+> Previously, the driver relied on the hardware's reset default
+> values for this register.
+> 
+> The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
+> frequencies lower than intended. For example, with the default
+> 31.5 MHz input clock, these default settings result in an SCL
+> frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
+> and approximately 338 kHz (fast mode) when targeting 400 kHz.
+> These frequencies are below the 100 kHz/400 kHz nominal speeds.
+> 
+> This patch integrates the SCL frequency management into
+> the Common Clock Framework (CCF). Specifically, the ILCR register,
+> which acts as a frequency divider for the SCL clock, is now registered
+> as a managed clock (scl_clk) within the CCF.
+> 
+> This patch also cleans up unnecessary whitespace
+> in the included header files.
+> 
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-> +       depends on ARCH_SPACEMIT || COMPILE_TEST
-> +       select MFD_SPACEMIT_P1
-> +       default ARCH_SPACEMIT
+looks OK to me. Yixun, any comment here? Do you mind giving it an
+ack?
 
-If it does work as a module I'd prefer "default m" here.
-
-/Emil
+Andi
