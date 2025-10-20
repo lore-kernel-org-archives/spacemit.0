@@ -1,29 +1,41 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEFE79DA
-	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 01:52:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EFF1ACED7
+	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 01:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760925131; cv=none; b=oRv7TdmkrJQUcm/HQdZaqn4iQgrrRP0A54RJBGo/99rmYS44U9rpVbDLUFqjugiiCUzF2cc9r+tTvL3HhLEiaOs8iC6FJ5uXTKySZUN3ZGwXBTRn9tWI3WrB/atDUtqGUi7M7QxeoXc/zz3PS6CBt5bu3Elq1fYP651X5Bu0/kY=
+	t=1760925357; cv=none; b=LughqPnNsWhztB8vArnshuWOrzeJ7c1da/s9sk1H0DpHfnMB3ORGyOGvH3gqHVQqJkh/UMl7gfsnkavtMCmrYzpRpeuZ2+dMmNwmzCetw6qTjGcKAW0IquoemTdfjVpUhwENs8yaHXnHXpo3bigEVQQyCA4YsnGJHwWWBGSPj4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760925131; c=relaxed/simple;
-	bh=+BqNPlnJZucWLPsYuw/9JaOVHs4p5MfWP+ez/XuG3O8=;
+	s=arc-20240116; t=1760925357; c=relaxed/simple;
+	bh=E5CFjS+FLJA9VAM8OWnJP7UELXzDJdDIiwbZOT3J7Wc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YLcpGArr3BOpUHmS3yJfsMj4gQQ8P/KDcHq2KbLVhNFlgiadYwyCTvxGemu+SadjY2j88AqhS+hLCvOXXvx00oY3QHzSDIeRBiJTFwEA/xp/FqvpqWT6Fu7M4mmD4IHROc7DUgYOuX7Jczpo/y1vD75Q/LIVG6flxd37qrmqMz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.147.23])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id F010A341F00;
-	Mon, 20 Oct 2025 01:52:08 +0000 (UTC)
-Date: Mon, 20 Oct 2025 09:52:04 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=QxWEuoUHisH3nwH6bRP4G31A+oUbAjufGfPMWrJ8pFdttIsHeLHs0MfKrSngFDacznrwawxHPM6CGgx313QpOpn+eHfvnRBcBSjdZEFvmhzknwRZiJCQOfMmRWBl5ynkrO6c2VWGiUzI6OePPkByGf1U0MLMXZL1FZuplbHs6sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=aJ4AS9pw; arc=none smtp.client-ip=15.184.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="aJ4AS9pw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1760925265;
+	bh=PHQXMd97MnTG8yBwsciGWWANd35WJk6gSCdTScCji0w=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=aJ4AS9pwBuiXB537LkuEvoXvY0bGJWhpkRWqJRLE9dyK0ElxNcNrHJNIg/sF/HdXY
+	 S3Sz3xMze+jAixt1IqefTAmBngl0r1aeFgwtRiaC2XcAf/Rw8ve0tJyKRV3W02vRe1
+	 19vzMAK4Cn7JBIbTdHIL4JKix/6TjBprrPOfMyKI=
+X-QQ-mid: esmtpgz15t1760925263t112ed490
+X-QQ-Originating-IP: ZuqEQVrvPyjcqO5ccy9yBkk58y5T6FF/58EnwbXksTs=
+Received: from = ( [14.123.254.135])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 20 Oct 2025 09:54:21 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 8184163125021412626
+EX-QQ-RecipientCnt: 15
+Date: Mon, 20 Oct 2025 09:54:21 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Yixun Lan <dlan@gentoo.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
@@ -31,185 +43,88 @@ Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
 	Yangyu Chen <cyy@cyyself.name>, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] riscv: dts: spacemit: add MusePi Pro board device
- tree
-Message-ID: <20251020015204-GYF1506524@gentoo.org>
+	linux-kernel@vger.kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: riscv: spacemit: add MusePi Pro board
+Message-ID: <D20EEBFFFF06649D+aPWWTSN4LByos8Qb@kernel.org>
 References: <20251017-k1-musepi-pro-dts-v3-0-40b05491699f@linux.spacemit.com>
- <20251017-k1-musepi-pro-dts-v3-2-40b05491699f@linux.spacemit.com>
+ <20251017-k1-musepi-pro-dts-v3-1-40b05491699f@linux.spacemit.com>
+ <20251020014132-GYE1506524@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251017-k1-musepi-pro-dts-v3-2-40b05491699f@linux.spacemit.com>
+In-Reply-To: <20251020014132-GYE1506524@gentoo.org>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NdOiMXD9pMVqCEhq2LH3/PewXrAaKXxAULAMoDu/2B3ljHKGwZqfdHGq
+	nH/J+TIZBb8DG6sUQtoovS29nTeYY9IScsH/3gr4EjnVoE3UziLOuXmUYFQ7k+xthAVxBI7
+	YkWMELQaCOgwxiuOgh9QPqXIskZmmL98kuxce9gJwlAioNxlESYQc5NvDs55RofU26dh1CK
+	fTne64e5Q3igyeijaRStOVxzuMj9IOUa9oVQcn5t7LCAhpZn8r0n9m/e9DtLDbV2k8/1d17
+	Eh6em43GApoYDvA92tYefwKgrz3hGxx0iOnSL/FuKRZuYFqfLWrTk5dT3reHTJSDhN/ZU4C
+	erQTo82Be7ra4ZIhCOK1jBKrC7KQfJCyZ5WMMUMI8EznbVvez4jcHk0OOClRzztsatuNmbN
+	dv3VEdHnv4SR8t+Y2+hul9Yu2VHi6eZMRgcwVt8uRQ8UIpaPizpWXR5mvm3UFgU/dKo9mpi
+	/7HkMq2mdi1C5TNOMOGvPhHl1j+O+TzFlqO/uvItwR/TfVS0PakH9dY+QJwB2OZZ5zMvYhW
+	l2mgbpRF5oKkp0cS+bmVLcR43OsekDF+jYPzhjZ99X0ZD+vTq1tjy09PNAh0yc6T4fZ7OXs
+	Wv9jAAIfDo2qDGYMtY9xRGHsMLNvR6N4Zfut6ccAf0utkLylxcQrLNMWAEyiSPKF5/bin5D
+	ID5V2lSTthiBD1xdeaqXChuOA4CNeJlNROsld0wxb9Irwzr4yiA+hrVB6/X/7AB5gAEKtoO
+	inxbd2YP8yWyRntttE6e31i9grZeLYZIaoDD6cUCZcc15m5EcBXrPfKALRNp8QI7a9lDStP
+	/UFgmP1qBQ11hVPbvI3XynCxwLQWGBSFRhS/5LB/1GoaoOtRM3u82VnwTERXJ1bk26bRKef
+	hLHLppzO5Poej70q7ArA74ahdvYbIkKzhGdGL6cNrXi1Kuit7Pf5hQBDONkBFTabWLr5vLn
+	BKc0QR2MhzrwG1PFIM+VbxEnfn2LpKz/U4lcFy2FKuj2F+YHTEPdtsoodsgaSw0BJ5rRbqZ
+	fC8Jyp57BhHX4qlzg42M/Q6BhobdmuTlPAQkIED5O4eCWFZirY
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
+X-QQ-RECHKSPAM: 0
 
-Hi Troy,
+On Mon, Oct 20, 2025 at 09:41:32AM +0800, Yixun Lan wrote:
+> Hi Troy,
+> 
+> On 13:52 Fri 17 Oct     , Troy Mitchell wrote:
+> > Document the compatible string for the MusePi Pro [1]. It is a 1.8-inch
+> > single board computer based on the SpacemiT K1/M1 RISC-V SoC [2].
+> > 
+> > Here's a refined list of its core features for consideration:
+> >   - SoC: SpacemiT M1/K1, 8-core 64-bit RISC-V with 2.0 TOPS AI power.
+> ..
+> >          This suggests potential for light AI/ML workloads on-device.
+> drop these additional marketing info, just give neutral technical description
+> >   - Memory: LPDDR4X @ 2400MT/s, available in 8GB & 16GB options.
+> 
+> ..
+> >             Sufficient for various workloads.
+> ditto
+> >   - Storage: Onboard eMMC 5.1 (64GB/128GB options). M.2 M-Key for NVMe
+> >              SSD (2230 size), and a microSD slot (UHS-II) for expansion.
+> ..
+> >              Good variety for boot and data.
+> ditto
+> >   - Display: HDMI 1.4 (1080P@60Hz) and 2-lane MIPI DSI FPC (1080P@60Hz).
+> ..
+> >              Standard display options.
+> ditto, please check more bellow yourself..
+> 
+> >   - Connectivity: Onboard Wi-Fi 6 & Bluetooth 5.2. A single Gigabit
+> >                   Ethernet port (RJ45). Given the stated markets,
+> >                   this should cover basic networking.
+> >   - USB: 4x USB 3.0 Type-A (host) and 1x USB 2.0 Type-C (device/OTG).
+> >          Decent host capabilities.
+> >   - Expansion: Full-size miniPCIe slot for assorted modules
+> >                (4G/5G, wireless etc.). A second M.2 M-Key (2230) for more
+> >                general PCIe devices (SSD, PCIe-to-SATA, comm boards).
+> >   - GPIO: Standard 40-pin GPIO interface, as expected for an SBC.
+> >   - MIPI: Includes 1x 4-lane MIPI CSI FPC and 2x MIPI DSI FPC interfaces
+> >           for cameras and displays.
+> >   - Clock: Onboard RTC with battery support.
+> > 
+> > Link: https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf [1]
+> > Link: https://www.spacemit.com/en/key-stone-k1 [2]
+> > 
+> no blank line here
 
-On 13:52 Fri 17 Oct     , Troy Mitchell wrote:
-> Add initial device tree support for the MusePi Pro board [1].
-> The board is using the SpacemiT K1/M1 SoC.
-> 
-> The device tree is adapted from the SpacemiT vendor tree [2].
-> 
-> Here's a refined list of its core features for consideration:
->   - SoC: SpacemiT M1/K1, 8-core 64-bit RISC-V with 2.0 TOPS AI power.
->          This suggests potential for light AI/ML workloads on-device.
->   - Memory: LPDDR4X @ 2400MT/s, available in 8GB & 16GB options.
->             Sufficient for various workloads.
->   - Storage: Onboard eMMC 5.1 (64GB/128GB options). M.2 M-Key for NVMe
->              SSD (2230 size), and a microSD slot (UHS-II) for expansion.
->              Good variety for boot and data.
->   - Display: HDMI 1.4 (1080P@60Hz) and 2-lane MIPI DSI FPC (1080P@60Hz).
->              Standard display options.
->   - Connectivity: Onboard Wi-Fi 6 & Bluetooth 5.2. A single Gigabit
->                   Ethernet port (RJ45). Given the stated markets,
->                   this should cover basic networking.
->   - USB: 4x USB 3.0 Type-A (host) and 1x USB 2.0 Type-C (device/OTG).
->          Decent host capabilities.
->   - Expansion: Full-size miniPCIe slot for assorted modules
->                (4G/5G, wireless etc.). A second M.2 M-Key (2230) for more
->                general PCIe devices (SSD, PCIe-to-SATA, comm boards).
->   - GPIO: Standard 40-pin GPIO interface, as expected for an SBC.
->   - MIPI: Includes 1x 4-lane MIPI CSI FPC and 2x MIPI DSI FPC interfaces
->           for cameras and displays.
->   - Clock: Onboard RTC with battery support.
-I think you've already gave an overall description for MusePi board in
-patch [1/2] which is sufficient, in this patch you could better focus on
-what it actually done here? enabling mmc, ethernet, led, pdma, uart..
+Thanks, I'll fix them in the next version.
 
-> 
-> This minimal device tree enables booting into a serial console with UART
-> output and a blinking LED.
-> 
-> Link: https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf [1]
-> Link: https://gitee.com/bianbu-linux/linux-6.6/blob/k1-bl-v2.2.y/arch/riscv/boot/dts/spacemit/k1-x_MUSE-Pi-Pro.dts [2]
-> 
-ditto
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
-> Changelog in v3:
-> - sort dts node
-> - add ethernet alias
-> - add emmc, pdma, and eth0 node (a squash of patches 3–5 from v2)
-> - Link to v2: https://lore.kernel.org/all/20251010-k1-musepi-pro-dts-v2-2-6e1b491f6f3e@linux.spacemit.com/
-> 
-> Changelog in v2:
-> - modify commit message
-> - swap pinctrl-names and pinctrl-0 properties in uart0 node
-> - rename model: "MusePi Pro" -> "SpacemiT MusePi Pro"
-> - keep the dtb-$(CONFIG_ARCH_SPACEMIT) entries in alphabetical order
-> - Link to v1: https://lore.kernel.org/all/20250928-k1-musepi-pro-dts-v1-2-5efcca0ce3ae@linux.spacemit.com/
-> ---
->  arch/riscv/boot/dts/spacemit/Makefile          |  1 +
->  arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts | 78 ++++++++++++++++++++++++++
->  2 files changed, 79 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-> index 152832644870624d8fd77684ef33addb42b0baf3..942ecb38bea034ef5fbf2cef74e682ee0b6ad8f4 100644
-> --- a/arch/riscv/boot/dts/spacemit/Makefile
-> +++ b/arch/riscv/boot/dts/spacemit/Makefile
-> @@ -1,4 +1,5 @@
->  # SPDX-License-Identifier: GPL-2.0
->  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
->  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
-> +dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
->  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..590c9bdbdfda4d6ddd97a96e10fcaef0a75f3390
-> --- /dev/null
-> +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-> @@ -0,0 +1,78 @@
-> +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-> +/*
-> + * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
-..
-> + * Copyright (C) 2025 Troy Mitchell <troy.mitchell@linux.spacemit.com>
-this isn't a big problem, but I think it would be better to use SpacemiT
-Corp's Copyright, to reflect you're not doing as individual contributor..
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "k1.dtsi"
-> +#include "k1-pinctrl.dtsi"
-> +
-> +/ {
-> +	model = "SpacemiT MusePi Pro";
-> +	compatible = "spacemit,musepi-pro", "spacemit,k1";
-> +
-> +	aliases {
-> +		ethernet0 = &eth0;
-> +		serial0 = &uart0;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +
-> +		led1 {
-> +			label = "sys-led";
-> +			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_HIGH>;
-> +			linux,default-trigger = "heartbeat";
-> +			default-state = "on";
-> +		};
-> +	};
-> +};
-> +
-> +&emmc {
-> +	bus-width = <8>;
-> +	mmc-hs400-1_8v;
-> +	mmc-hs400-enhanced-strobe;
-> +	non-removable;
-> +	no-sd;
-> +	no-sdio;
-> +	status = "okay";
-> +};
-> +
-> +&eth0 {
-> +	phy-handle = <&rgmii0>;
-> +	phy-mode = "rgmii-id";
-> +	pinctrl-0 = <&gmac0_cfg>;
-> +	pinctrl-names = "default";
-> +	rx-internal-delay-ps = <0>;
-> +	tx-internal-delay-ps = <0>;
-> +	status = "okay";
-> +
-> +	mdio-bus {
-> +		#address-cells = <0x1>;
-> +		#size-cells = <0x0>;
-> +
-> +		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
-> +		reset-delay-us = <10000>;
-> +		reset-post-delay-us = <100000>;
-> +
-> +		rgmii0: phy@1 {
-> +			reg = <0x1>;
-> +		};
-> +	};
-> +};
-> +
-> +&pdma {
-> +	status = "okay";
-> +};
-> +
-> +&uart0 {
-> +	pinctrl-0 = <&uart0_2_cfg>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +};
-> 
-> -- 
-> 2.51.0
-> 
-
--- 
-Yixun Lan (dlan)
+                        - Troy
