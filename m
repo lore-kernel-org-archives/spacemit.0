@@ -1,66 +1,66 @@
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D481211CBA
-	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 18:06:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E442D0267
+	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 18:06:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760983612; cv=none; b=MJCCwvkWFduyWsSHAH0HC1jn9E+0AKj8Ms4FM3Z3GHjV/0mW8tYhfIFcjhiotDyMJgvJtYIFiJVnU8Sh1ZpAp2NkwVmgb7RxFpH1bGa6bHA10k3IIkzIPoyvnUZeji4IVi5rjaP5iu4uN6/7Hap8XGdg4TGdbQkIOyadebAI/3g=
+	t=1760983616; cv=none; b=WCmk/wUx/ECqOIAAbuWeSeBGIh3YD9rIjcfjoA8fkFEpA5yvVVZzYCxuVm5nWxUgLec5G2UCjp/w7RjyTcuUjoQSfwMEp8hv6VlaobJZEwb4f/WCZbndjf7Z8WFCXudgSiGfr98VbqKZrzpMtng5PGGQKL2UiEOTVrtzPWq/eBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760983612; c=relaxed/simple;
-	bh=SZsJevmbz8OxFMZ0VUQMEIMaBdwy5skEPKFMyP6eStw=;
+	s=arc-20240116; t=1760983616; c=relaxed/simple;
+	bh=QTpmX6jrERRcIBu+6XueQEVtWkDEmNTcFOC27A5EpZk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qESDj7SSJfEiq1ugdnm7QFdNHPeSLvL1Vi+QwTLhq25n04kDi0sSRyzTAd63pIrwKjMAx+r1hoqlSlFT/XBWaxciIhiuhpeAvYEVbp2K/XcgJnXan8eelniEVi0p8SpLzB+YZEcAses8yX435EK5TAYUhTdN5XE2Kb2mcAcXOzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ADmUkLrT; arc=none smtp.client-ip=209.85.166.175
+	 In-Reply-To:Content-Type; b=LCeE+/xmJhyD+t3hVtbClbE+8rTwpJ8AbA3ENbOWt4Et/NOhO++Fo9ACSuDcztJtDGXt2rS2M2NUydt57Md2TUtCfKDS3Ms1UOd2+0mvF/U6ywUBoSWXbu23V2GeGL46M8ayhwSjZsW6uVj1SK0nnHuulSfZqD56MUQJTG/JfC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=lLrd/i9Z; arc=none smtp.client-ip=209.85.166.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ADmUkLrT"
-Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-430da72d67bso8646735ab.1
-        for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 11:06:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="lLrd/i9Z"
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-430d4cf258fso8476535ab.0
+        for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 11:06:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760983610; x=1761588410; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760983612; x=1761588412; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1Cb9G+JdDcieHiAzL0OEVFR37yQ/b0GUUu4YH0d0n0A=;
-        b=ADmUkLrT6i0Rd1rf2iCjaYY3d9r2WIGjtPBTpVSvZhG2sg309+njVgEf0mBSH4CPXA
-         JlMebfm6RX6ls4OLpMMwxxDlQT2dmW05+m4Nv06WGCJRTpe8EJsT1ky2vCkJ8OncNCGk
-         pafLRxQ0mi0M8ZJpCL7Gl/0SKturzx1qywWBv2Z8XbgWc7oQZtuKVxPVSdLE41MTIZ5r
-         AYvJ/bj0nF7SpV1FtXv+DiA+DVSTS1JUlVDPx2cB+uVLV3MiGTtM/i2vAx4kHn9ES2a6
-         0mECZbO9p59gpQQ6KXRLRKQl3sYZk/hwZNvlM88Lbel6kfSdomQjFRuXhCYWYUy0xbr1
-         hFjQ==
+        bh=oXBtLkkB0DB8TY2tig01PgEU/TWly7nbkJIcjJq9f9I=;
+        b=lLrd/i9ZmON4Fi/mTU+B74l02JVNHP+Uca6TkXmgDDsL1KYNmpMnRa0SWmxFsJguo+
+         YWWxpC6hS0VABulhXesc8VKuFZ5aPzsuSkuRBJs20RaOGJibrkDW4inii2wH/d2ttfq2
+         igucvSL1uhWOineeigBJvVAvf564ZZAyiFVwTVOfXKgZE/ARu96OLUp/r4rhpFdlZrV+
+         l/Cdd/FLP9K47I7MncSD/gxUBoOWTU9ceH6o8nUV1FQmBRa62uXgGaGMZQKDWSc+0EAb
+         2KJ/6ta4476lLxNK0ZZiq2M5KhALZoyqnFtuwtTc2x3yr9r1Yd76LeDZ/g2ghQ8rGbLV
+         UPmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760983610; x=1761588410;
+        d=1e100.net; s=20230601; t=1760983612; x=1761588412;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Cb9G+JdDcieHiAzL0OEVFR37yQ/b0GUUu4YH0d0n0A=;
-        b=pk0NC37misHKB3tOVM3+dlT0TAJSEfej9XHDM/MAoI6cjC1VbmBpVAtUIEA5SNlvk/
-         5BNeDB74LBCcGCx+v4wGtDaNsguS2HYthhpy4nKhYfy9YIX8Q/pxDqWHuHZ/T4R0nrgg
-         kEzCHNmamSkkJQj9JW71gTDvQBEFd8Ot1wHAXsnsvLBXuoDCL+D1i5P2VHjhFdQD58Zq
-         SGqLvbsfkTd+FsD+nCrELdBNSHu75moH/vWnnRDtD92UlHYoAzY1FJ6b8jTY8S7wKfLT
-         KynzYujYCYS9wqAbVh4qYJaSvJ8GKcw9sdvyvHWoLLHlPt6VVHf63llhxEXNaQZm6jhw
-         q8yg==
-X-Forwarded-Encrypted: i=1; AJvYcCUkGkb7Xr7LZgoPke/w/2x3wrULW/GBngB6pRroB+QbPqISNikm/tQWnv9KlGqY63PUeVtF3FfNBw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxdbg1DNz4oO3Glzf8vGj2Bctl77NGfxLztvK0SiHHcICLcL6qk
-	DuGwS3uK/kNgoAmiAxi+uYSABjgunzmKD4FbJuf5T/8rlseVIaFH6KSQgeteI2mPvmA=
-X-Gm-Gg: ASbGncvz/kVs400yXtk61jLp1wYu31OnEn8jZEFvnTteNSJh5R2ch9+vApR2At3tJLo
-	VeeTiw8UNn+cQm1C2LIBXaKBvGgR+MeKEi4hIQSChK1iZarM3nCGslRsnsTValhZR0ZGFAC+ObT
-	gGYroUmllQu8YrolmaI4K5HfV/HzBgp0LEbcXXwMd0VLuAPlooFmFGiucW/txeIeUiVoqOwabGW
-	CN26/TZKoK1TF27vu4MSD5s1HWDjQ9lQYYhT2Ntw0UvvCbZ2RITGpHI90pIMRs0JXRUss3MsTHj
-	XuHZzz6WNTkYXDhEQ+30Rh85S93tgHWT1xdK/pnmSSubQOjfFMlXCJmZ70dT9as/Vos3TMnNCOb
-	0FfN91uwCv/QFPBpvU+yAWbAGMu+pvX17gz6af29qDbc2W9c7ubcQMzEAZ6njjCyibdFEY7H7tM
-	MOXYNNiF5EhP05Jv+lgkeCH24d5luK06dEmqsAXjtmhhUsRe1Qyg==
-X-Google-Smtp-Source: AGHT+IFDdymJB2Qui1FemWWgGTvX6CFYwAWlPQ4NJbUO3JNIaIrN8E7GPCA9FCFosUo4bQy4mXpGxw==
-X-Received: by 2002:a05:6e02:1563:b0:42f:a72e:e179 with SMTP id e9e14a558f8ab-430b43675e3mr253211025ab.11.1760983609985;
-        Mon, 20 Oct 2025 11:06:49 -0700 (PDT)
+        bh=oXBtLkkB0DB8TY2tig01PgEU/TWly7nbkJIcjJq9f9I=;
+        b=CMe9Ki/ka3xBopDtJrgA0fS/7Vnmq3me29BO/6I5hMlTE9h98SM/6xmkNikLbakCQr
+         cut4HJwYmrwBldtqOnrqTcOQMiaXpAJ85ioPDigpjRARcX2S3SVvbVVjidoFhYUVF55w
+         WD7OjJ9ILq+oS5r+sUJtDgj39g32gXpb4MViVTWOpXV3aqugbnKP0F5FiVrq66Jm9+RW
+         CcvpusybCh6ZQHAeB0PA7Sz7SKWkjcNKAnbxLtnIFaMMwrpxgibraTe7cgRgncNlVJ2H
+         6Fs2pYUrZS94A/y0CEn4TSC8HiZYkpWHx1sjUPGZCluyImQrS/wuLYIzr32hrfuv3BwW
+         S2wA==
+X-Forwarded-Encrypted: i=1; AJvYcCUfNGJHZ2RUSuEb8PpryN2/83q40tt7/n2DafyMfGjgkFH8wr8VXRD/8lEv8EEjyMH+Iw54FcpsSw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YytMFCJnVYPhde/BzTKaQMQnI0S89FllOIql71PCPtJzKScJZUE
+	mrFK3gY1ZwTPzEGuwAG6eyJAFUwsZPIU1IU6vtwe9rGEvvLAa0hZRVCyAFea16Iy1Ys=
+X-Gm-Gg: ASbGnctF1LtbOeX586l2pBOagrSp6QaG16uxisFQC7qArjGcVJZ9vA+c6O8y4/LQaeF
+	4ot4NcQdHl3PyJN8u1GZf0JONbaxrsGgTMqr6FROrbSs1eS0357cBiuGFUOOH5E0e8CaROVA2ov
+	vFhsitb3C59GfD5NZMs5SxhAX1jv7Iv6MUBYfn/XotOPBccKtxlgIpCH01WnNWmFDOQnDNVDl+K
+	BdrxXdzks3gxZq5fY3YY0Ss3+F3CKp7TZ9SV9nGYIZzsfuhlPULLZfHRDQROWjkSgkJxkQo2v7q
+	egaYpvZVJXf4rqhXVF5ZaYLnGkoKeQ528yOrXuwJOd1z04RSN5JvNwksG3ejKdgqaj0SyUT7n4l
+	QwFRIkrrpHQyW96xGJiHSjmnUqhOnP6O7JkBlHBkfrUCa3kF91dgNfYYIGbxx+X7KdUNq4EWXf0
+	RumsTVnSQ7ElRSAntR3OalJwSr/E+aCzkU0EvwK7wqd8nSOngO2Q==
+X-Google-Smtp-Source: AGHT+IGevb4egGjj6KWxQP35Nq0zUYSUBGNvYU6Luo+078jNAKiHY5b+2d/guD5dVmi2NJ4AhRB7Qg==
+X-Received: by 2002:a05:6e02:190c:b0:430:bf84:e941 with SMTP id e9e14a558f8ab-430c51ecf81mr209120355ab.3.1760983612156;
+        Mon, 20 Oct 2025 11:06:52 -0700 (PDT)
 Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a961e88csm3172542173.15.2025.10.20.11.06.48
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a961e88csm3172542173.15.2025.10.20.11.06.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Oct 2025 11:06:49 -0700 (PDT)
-Message-ID: <09484591-e1e4-45a8-8451-afa8feeaf5a7@riscstar.com>
-Date: Mon, 20 Oct 2025 13:06:48 -0500
+        Mon, 20 Oct 2025 11:06:51 -0700 (PDT)
+Message-ID: <08d99fcd-4d0c-4d81-a314-7e1a8bfaa64c@riscstar.com>
+Date: Mon, 20 Oct 2025 13:06:50 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,65 +68,57 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] dt-bindings: spi: fsl-qspi: add optional resets
+Subject: Re: [PATCH 2/8] dt-bindings: spi: fsl-qspi: support SpacemiT K1
 To: Conor Dooley <conor@kernel.org>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, han.xu@nxp.com,
- broonie@kernel.org, dlan@gentoo.org, guodong@riscstar.com,
+Cc: han.xu@nxp.com, broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, dlan@gentoo.org, guodong@riscstar.com,
  devicetree@vger.kernel.org, linux-spi@vger.kernel.org, imx@lists.linux.dev,
  spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
  linux-kernel@vger.kernel.org
 References: <20251020165152.666221-1-elder@riscstar.com>
- <20251020165152.666221-2-elder@riscstar.com>
- <20251020-henna-headache-fae4440ec7a8@spud>
+ <20251020165152.666221-3-elder@riscstar.com>
+ <20251020-utility-remedial-4b4dfc716409@spud>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20251020-henna-headache-fae4440ec7a8@spud>
+In-Reply-To: <20251020-utility-remedial-4b4dfc716409@spud>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/20/25 12:44 PM, Conor Dooley wrote:
-> On Mon, Oct 20, 2025 at 11:51:44AM -0500, Alex Elder wrote:
->> Allow two resets to be optionally included for the Freescale QSPI driver.
+On 10/20/25 12:41 PM, Conor Dooley wrote:
+> On Mon, Oct 20, 2025 at 11:51:45AM -0500, Alex Elder wrote:
+>> Add the SpacemiT K1 SoC QSPI IP to the list of supported hardware.
 > 
-> This is a binding, please don't mention the driver here.
+> Also, you should really explain why this spacemit device is the first
+> one to be in what's been an fsl-specific binding for now in the commit
+> message.
 
-OK, I will reword it in v2.
-
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> ---
->>   Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml b/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml
->> index f2dd20370dbb3..0315a13fe319a 100644
->> --- a/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml
->> +++ b/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml
->> @@ -54,6 +54,11 @@ properties:
->>         - const: qspi_en
->>         - const: qspi
->>   
->> +  resets:
->> +    items:
->> +      - description: SoC QSPI reset
->> +      - description: SoC QSPI bus reset
-> 
-> If none of the fsl devices have resets, this should be added alongside
-> the new spacemit compatible and not permitted for the other compatibles.
-
-I thought that, being optional, this kind of constraint wasn't
-strictly necessary.
-
-Anyway, I'll find out first whether the resets are even required,
-and if they are I'll rework this the way you suggest.
-
-Thank you for your very quick review.
+I'm not sure how much of an explanation you're looking for, but
+yes, I agree with you, it stands out that it's the first one, so
+I at least should have acknowledged that.  I'll add something
+here in the next version.
 
 					-Alex
 
->> +
->>   required:
->>     - compatible
->>     - reg
+> pw-bot: changes-requested
+> 
+>>
+>> Signed-off-by: Alex Elder <elder@riscstar.com>
+>> ---
+>>   Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml b/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml
+>> index 0315a13fe319a..5bbda4bc33350 100644
+>> --- a/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml
+>> +++ b/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml
+>> @@ -22,6 +22,7 @@ properties:
+>>             - fsl,imx6ul-qspi
+>>             - fsl,ls1021a-qspi
+>>             - fsl,ls2080a-qspi
+>> +          - spacemit,k1-qspi
+>>         - items:
+>>             - enum:
+>>                 - fsl,ls1043a-qspi
 >> -- 
 >> 2.48.1
 >>
