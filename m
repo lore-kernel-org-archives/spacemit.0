@@ -1,81 +1,78 @@
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1ED32ED5C
-	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 16:52:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02483330310
+	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 16:52:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760979122; cv=none; b=M+TciGfPbYVJijX4j/lgpW7NW8bGGwAbXP2QK8WcDIKXBDa3+XhFqX26DvNqJVQxmSrOwjL3b7svg1Szt/vPiZkj8EJW9ktjH4zX8kGBAJ93Hvh3bLiVlnSvrTuch5dccZxnggzZ72ZmLxPERoQModcmufTvTJ83lectY+Ll5Cc=
+	t=1760979123; cv=none; b=nJP+tTbobTuM/rty6JAxwrGJzzBW1b53nsX6ReAGlPurRz3hpSLo+5L88Ts25NB910Fz/FxDkMc+D6fliRUZ5mYcxAO/mwTFpRnyFKNo1itvc5qeluWt94YVsSbK0umNVoct9cJBvR9mE9iTwKQDnzn8XxRCWr7zg526MEAPDds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760979122; c=relaxed/simple;
-	bh=gzZET6mP2OucMjDQ4thYViOeZ8/OsV2OQsQvxJj19l4=;
+	s=arc-20240116; t=1760979123; c=relaxed/simple;
+	bh=NVCZabHEL1WTH8+GxShWLpaijc+G+GBkOY3veIVd+BY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7uOvOfzWuGpLe4Xlb+E5BDeJ+68zhU5Yl8U+wrv/7z9tq5569EbNR5whYo0JJH4Q6cD6eU5Mt1hSY1B2qbTcZNGoflPPHDQw5I31K6MwVR4x47hGogPcuB26BE1az6nfzIYMVylOgGKE5lIlIWS1Z3tbCdHCEZOXBaSna2YLGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=EznRoHsj; arc=none smtp.client-ip=209.85.166.181
+	 MIME-Version; b=R7hIAhs6gcpTOo01zIjOTqbTyJpF1f6RYqnVq8ZHJu8zxfRATx/Yw7QZ6V1dwSj0vJ3TiFG4FFcxo8hPJlVd0vKFStzfBmLKbuEImM8ioPvnS966uunNXjup9+TD5NSBBpZMwcShkqI2jB9FJu/sqgS2B4zYxg7hfmbrlwe4G+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=0+eqNWxU; arc=none smtp.client-ip=209.85.166.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="EznRoHsj"
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-430e6ac6bccso3500985ab.0
-        for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 09:52:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="0+eqNWxU"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-430e6ac6bccso3501245ab.0
+        for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 09:52:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760979120; x=1761583920; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1760979121; x=1761583921; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GAFHx5Fe28+JucgqjXAxBLPfwtGRK1k39/wAp21/umo=;
-        b=EznRoHsjkNVx6ju53WlqeR2fwma3bYPpYjKGaaDZPR0ZMEVuR0eH7wCv02RTqMlSXC
-         ktba9Ro0m/XWDHxNLhVoRwvtCsGmUijhf+X/VQ6fFVTeNz25SWFDmrr62A3Fi4bhZPze
-         4TNlxSXSugsPL49VrKKp0q0mR1U6MUEmZ7COppPFEQ2pAkKWZ2rep3UPj9plRWVW++xA
-         IJB9is0CvRF0/uQTIU24oJKB0GDqoxbYsqUTeF9AN6VlK4oqa6ikS8XTkld2B+nwdVt8
-         eTSf2PDaC359zCM7KSEh/Rc6XHyiKxt3Fu7sWyotVTBmhUqgjxuA0Z7QKVLp9pcQxO6i
-         sc0w==
+        bh=2AztIAt2eykX0RjbkZdmQk0KjjmCuZftCSORZ8HPCkE=;
+        b=0+eqNWxUEQbiHGbgGy5ZuKOxmRtYc7qI6yRjSzaHmDXU+XdXGQuVXXBi+WWazpeGfY
+         P4zIoLfKJJ3yhCy4lm8Dxre6NIKQGH7FHyu7TTrH3sd6rJBTTm+9oRzcM2mwIttxloY3
+         RRmrr3I9XlvPEaCp5T86lHAEV4zfmQmdEcKiW20RZmj3KfDtX/ImQvF6Fai/K66CAw25
+         lwNCDNI3hHPhG8LdHo+vpfqV/4h9iN+JieYdBcFictAalsej48HZxGtgOyN1uDXJ70Va
+         0SCa2cnFYIZOxO071zBt5eNkdvDrp/g16N4HRvwlrqlom0ACZzpjaQtg+UV0n7twyf8s
+         GDhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760979120; x=1761583920;
+        d=1e100.net; s=20230601; t=1760979121; x=1761583921;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GAFHx5Fe28+JucgqjXAxBLPfwtGRK1k39/wAp21/umo=;
-        b=HTJy88vEFE/AdJEY4d5K/kSsQrJcCz1h/JD9INp5BSOmLgZlWTrly/LBh5T44aXf6H
-         Vo/zxEK6CnaXZ16H3YyNsX7qd6WtkUqt1gTkdEwg8UlyXbbQe3wseWKGnRnJ7fED6Sbb
-         PztdcFdkUwan42vC8dOkz+/BWr2lVUsDkfbvvPUgNxe8FRT8ucOp4yyx6jf/6v+4y3wk
-         gq5kdJ1eIFlbxldmmw+AKxwHiFU+ujpUQzmJK+b+DehZmhlvu+a0xg++sVaNhbwYMEV0
-         5/UaAORNRxhe8+BRWiaZkP5yB7CGufsnqo1Mm8TFRZG65qlndccRtRk4Jhn4sOXkOyRA
-         HbTA==
-X-Forwarded-Encrypted: i=1; AJvYcCXAtQ5E3vgUmhBr0yI5GceheU2KqcU35QC6PBQ3gOfcIWRW+nA5mXpD09MgJD2CCTu2eUzkQ5Jhxg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzC7pZyOznATZsoEhlIMjbyrSeRl0+8Ujbs3eD6ZgLcvFDeztVv
-	2XNcEIXG3XWk0cbR3IFK6QWVX3vq46HgRw1z1jZcfV7FFniD9FGIMCPwIPEpq6TAEfU=
-X-Gm-Gg: ASbGncu8xzbLT3Gl/UqxhAUGnssYP0krS5SnD1AB5vppYC9ADZRI/CiQZab48alpBss
-	TrvrmI9jaaQcQjCvGsCvlbD7n3MRZxJYbJ41CFKyG5O+18z/gBhY2GhNTX6sua8U8JYKRUlVLf3
-	pq8QSdSNBa5Jwa+RuyCLFNumq1MbLyZVYLmt6eLxZNKbZ/R76okMKsopR1dp7TeiEGYGaSP27Na
-	A+RmO4Z0Ge1reJtZNj73D/r7nFAGUvRkU7misEE0LE1YR0iWvveQ5XQh2AMTk80Qcj+CLfku0+N
-	tadcCMcGmLsMrbsBMglLPKEN3tMSI+Ci25nDVMJG6xX5jbx0JfUvxVs57QRe2LuFPAqe6MByUfi
-	enxDFVHvHB0eafEP+yNXiHVSxpg1D56fLM5uZIHv6L0CQNUQhPOspptJKStzUZphWG4oqQm58rz
-	N8UG6jlaQcra/ONDIO3UTfKhs+QbzWjDxArbNoLkrewNIEJt3BmSF8Lg==
-X-Google-Smtp-Source: AGHT+IGrysi/n+6wy3sDQX5W8PX80X7sxp0qMRXdkSjXbUhQItP2k8/GDMxk0YCbp0Wy5FwbdhktFw==
-X-Received: by 2002:a05:6e02:3e8e:b0:430:ce63:4180 with SMTP id e9e14a558f8ab-430ce6342cfmr168487305ab.8.1760979119873;
-        Mon, 20 Oct 2025 09:51:59 -0700 (PDT)
+        bh=2AztIAt2eykX0RjbkZdmQk0KjjmCuZftCSORZ8HPCkE=;
+        b=hMv6tBs8zzsmCKatvSyZLNRpevmJcZhMUOJ1Y40LbpEJubXJRr8EwCVrNCBiUR+ajS
+         SbeOqQCkybXUswb9RY9k6lNYO3du1N8OkZjhhFLBkKol/PVD0hRcuUBDvXpCuD9jYnQ/
+         P2paWe5SOf8e2yOaa/f9UDHde3X+FUMNE59Q++VyqmLIYlYogGQGzXyxtNj9aE/u3Vza
+         IXbpUV9QI4866MIkQBAJs7fZO5UMT/5TxKDckW6UBhGRLirZqCTYOpagiyWt7Zh7gFrt
+         bpe6qQcDQw6/Fra8qeKe6nQn3nVpgk8u0dQbfGBBNm8+WZ5ljNwL+1/P9KRkj8IcwFYV
+         OrmA==
+X-Forwarded-Encrypted: i=1; AJvYcCVzzgN/B+g1vSiifznYkGEcDPKNl/h4B9x0XG0jXYkQF3OnHJxY9duz7XEnsxxfSXrMNW0zH3OIng==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxa66UKzI6RHLUpjJ6YK2l6y2g8ReKS3LgOmRQghwcqD21mhA8t
+	hA1thqjY1qdq7hk0aIRNrYtNaAlMNU4fkTkF4W3bqlCqANiS9fJDLiW8gtHd/foZVEw=
+X-Gm-Gg: ASbGncv/NXLADU7lLaH6ACW6z+idt7BdHPOU4UXFf4rBFrS7ZNKyluP3k2V7pwcqOoi
+	f4yXt0J38NgqjSMlIK+++KQvC33kHOOA1dRDS5vLYBuViSWpp1qaR0XGXcrBGlcyjMmA8s4DOLm
+	ST+wv5wRoQlFKkDGPRwMJBaZbz4M6zfADLLct6ULNL47kFf1xy/G0hLZtcGSvmIRE4HkEm/uGal
+	b9mbv1mZf4DdfS6wQYd32j4x5TD+M2ZKAIUGyDl/9pc/+gfRLNcjFdzaDL8ceDVde+mpcQRsCXA
+	yVZ9wXJp/gbw9LQTs6BpSfn7FYpedpLqbfmBjf2zZRhAuly7nIRpY/6UmmonOPDHu4u3DeQWMeG
+	EX0gE+kGl6TqqZeDc/NlfF3j9GQ9k091o6oNDDvaLhv57HdiTtT6EOBH5HPbsmUMFdo4X8hsTzv
+	0DMx0l/hK9WVtaP9MnzUGwTkVvIt2mAlkAWBmizJeFdUIslaAYo6n6LA==
+X-Google-Smtp-Source: AGHT+IFtVH7UjM/87oCHJ6DUbsAetp8PBWDPda8ZOgIZ6EU4bkSIEhABKs7/sgWo14aF9mEKEUu9sg==
+X-Received: by 2002:a05:6e02:1745:b0:430:e5a4:6f26 with SMTP id e9e14a558f8ab-430e5a4724emr31688155ab.6.1760979121057;
+        Mon, 20 Oct 2025 09:52:01 -0700 (PDT)
 Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a9799428sm3116783173.63.2025.10.20.09.51.58
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5a8a9799428sm3116783173.63.2025.10.20.09.52.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Oct 2025 09:51:59 -0700 (PDT)
+        Mon, 20 Oct 2025 09:52:00 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
 To: han.xu@nxp.com,
 	broonie@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org
+	p.zabel@pengutronix.de
 Cc: dlan@gentoo.org,
 	guodong@riscstar.com,
-	devicetree@vger.kernel.org,
 	linux-spi@vger.kernel.org,
 	imx@lists.linux.dev,
 	spacemit@lists.linux.dev,
 	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/8] dt-bindings: spi: fsl-qspi: support SpacemiT K1
-Date: Mon, 20 Oct 2025 11:51:45 -0500
-Message-ID: <20251020165152.666221-3-elder@riscstar.com>
+Subject: [PATCH 3/8] spi: fsl-qspi: add optional reset support
+Date: Mon, 20 Oct 2025 11:51:46 -0500
+Message-ID: <20251020165152.666221-4-elder@riscstar.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251020165152.666221-1-elder@riscstar.com>
 References: <20251020165152.666221-1-elder@riscstar.com>
@@ -87,25 +84,66 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the SpacemiT K1 SoC QSPI IP to the list of supported hardware.
+Add support for one or more optional exclusive resets.  These
+simply need to be deasserted at probe time, and can remain that
+way for the life of the device.
 
 Signed-off-by: Alex Elder <elder@riscstar.com>
 ---
- Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-fsl-qspi.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml b/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml
-index 0315a13fe319a..5bbda4bc33350 100644
---- a/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml
-+++ b/Documentation/devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml
-@@ -22,6 +22,7 @@ properties:
-           - fsl,imx6ul-qspi
-           - fsl,ls1021a-qspi
-           - fsl,ls2080a-qspi
-+          - spacemit,k1-qspi
-       - items:
-           - enum:
-               - fsl,ls1043a-qspi
+diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
+index c887abb028d77..1e27647dd2a09 100644
+--- a/drivers/spi/spi-fsl-qspi.c
++++ b/drivers/spi/spi-fsl-qspi.c
+@@ -36,6 +36,7 @@
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_qos.h>
++#include <linux/reset.h>
+ #include <linux/sizes.h>
+ 
+ #include <linux/spi/spi.h>
+@@ -267,6 +268,7 @@ struct fsl_qspi {
+ 	const struct fsl_qspi_devtype_data *devtype_data;
+ 	struct mutex lock;
+ 	struct completion c;
++	struct reset_control *resets;
+ 	struct clk *clk, *clk_en;
+ 	struct pm_qos_request pm_qos_req;
+ 	struct device *dev;
+@@ -857,6 +859,8 @@ static void fsl_qspi_cleanup(void *data)
+ {
+ 	struct fsl_qspi *q = data;
+ 
++	reset_control_assert(q->resets);
++
+ 	fsl_qspi_clk_disable_unprep(q);
+ 
+ 	mutex_destroy(&q->lock);
+@@ -902,6 +906,10 @@ static int fsl_qspi_probe(struct platform_device *pdev)
+ 	if (!q->ahb_addr)
+ 		return -ENOMEM;
+ 
++	q->resets = devm_reset_control_array_get_optional_exclusive(dev);
++	if (IS_ERR(q->resets))
++		return PTR_ERR(q->resets);
++
+ 	/* find the clocks */
+ 	q->clk_en = devm_clk_get(dev, "qspi_en");
+ 	if (IS_ERR(q->clk_en))
+@@ -923,6 +931,10 @@ static int fsl_qspi_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = reset_control_deassert(q->resets);
++	if (ret)
++		return ret;
++
+ 	/* find the irq */
+ 	ret = platform_get_irq(pdev, 0);
+ 	if (ret < 0)
 -- 
 2.48.1
 
