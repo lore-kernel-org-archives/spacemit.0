@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D522609FC
-	for <spacemit@lists.linux.dev>; Sun, 19 Oct 2025 23:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A5F28E5
+	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 00:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760916303; cv=none; b=h8JtH55sFE0r81Bu5dsSNUo8liqy6xl21B1fjJvfoNjM83dVGfH+4pGZLElK6YatDT8Z/v6HYo5t9CVkk6z8HwxjyDta8CEdaGmDM+Ynl9upr5pF1MCj4Uy9SGRQPNPsjcRMuBeuBsPz+kVWTuum9RriuM7TksDhF+K/eGsY4hw=
+	t=1760918744; cv=none; b=nC+FDJbSGha+89GMz9tPM9eyL83LWbZVE2fXAlPge2IEYgTAnld1H6/bci64syIkNv0AXYGcO3h/NjuJfz1Y1Rh31HxTSPgnUrMc341VI4FKDxx6X4PpSh5J98p/ajlP03e7q2X0Stv+XcyK7ou39Jg85qjrWnT5ZrXzgGCXvKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760916303; c=relaxed/simple;
-	bh=rWArz2V+sfCHvKSAH6dynpU+HhMzcg6tfC8kCr+jbwo=;
+	s=arc-20240116; t=1760918744; c=relaxed/simple;
+	bh=hJLTcllLmRKGjPAn9fdLk6a7sjgVkoZ3O9xsU1vvFno=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X+vOwGsFpm3qJBDcVWJS5qAFp/3aP/TIHJyKSHAEovOdq0se7jZsTbf/AWSvQUWQlwryUzsuX8kgoCdcZIBuP1ePq4ACq4KHYiskANAWXgA+ct3DdjJLu0euUVaQOA4XkLEzUOm8tdQI3ck9ez8NQeKcnKotWu75OcGp7yXyk/A=
+	 Content-Type:Content-Disposition:In-Reply-To; b=MVJIQTrBKzHY/SlbIuYUVjlD++Vz8peMg/pAIchJhPO+pb/QryrYLKevDpNy/AkMcVHEtYNCbwLSpOrH8M6b91Ah+A2hIMe3dzVsTEs4ztCrnZZpdxJK0/asIfCfyWX40LUzrOWr/xicghD6T+aX1XN2VwagHUvsA1TzTlOxtqU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,19 +19,25 @@ Received: from localhost (unknown [116.232.147.23])
 	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 1F1DC341F9A;
-	Sun, 19 Oct 2025 23:24:59 +0000 (UTC)
-Date: Mon, 20 Oct 2025 07:24:55 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id B60C6340F21;
+	Mon, 20 Oct 2025 00:05:41 +0000 (UTC)
+Date: Mon, 20 Oct 2025 08:05:37 +0800
 From: Yixun Lan <dlan@gentoo.org>
-To: Andi Shyti <andi.shyti@kernel.org>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v4] i2c: spacemit: configure ILCR for accurate SCL
- frequency
-Message-ID: <20251019232455-GYB1506524@gentoo.org>
-References: <20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com>
- <b6lafouoz6f6al5ki4oh7jj6gfpejwyh62sdrh7lia37sadd4u@rle3aw6grsiw>
+To: Emil Renner Berthing <emil.renner.berthing@gmail.com>
+Cc: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org,
+	Lee Jones <lee@kernel.org>, Sebastian Reichel <sre@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] driver: reset: spacemit-p1: add driver for
+ poweroff/reboot
+Message-ID: <20251020000537-GYC1506524@gentoo.org>
+References: <20251019191519.3898095-1-aurelien@aurel32.net>
+ <20251019191519.3898095-2-aurelien@aurel32.net>
+ <CANBLGczi3GeaC4aWECV8NS-zqSHgRa-5onynz9fGsZeN8qgysg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -40,40 +46,60 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b6lafouoz6f6al5ki4oh7jj6gfpejwyh62sdrh7lia37sadd4u@rle3aw6grsiw>
+In-Reply-To: <CANBLGczi3GeaC4aWECV8NS-zqSHgRa-5onynz9fGsZeN8qgysg@mail.gmail.com>
 
-Hi Andi,
+Hi Aurelien, 
 
-On 00:32 Mon 20 Oct     , Andi Shyti wrote:
-> Hi,
+On 22:53 Sun 19 Oct     , Emil Renner Berthing wrote:
+> On Sun, 19 Oct 2025 at 22:34, Aurelien Jarno <aurelien@aurel32.net> wrote:
+> >
+> > This driver implements poweroff/reboot support for the SpacemiT P1 PMIC
+> > chip, which is commonly paired with the SpacemiT K1 SoC.
+> >
+> > The SpacemiT P1 support is implemented as a MFD driver, so the access is
+> > done directly through the regmap interface. Reboot or poweroff is
+> > triggered by setting a specific bit in a control register, which is
+> > automatically cleared by the hardware afterwards.
+> >
+> > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+> > Acked-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > Tested-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > ---
+> > v2:
+> >  - Rebase onto v6.18-rc1
+> >  - Use dev_err_probe() to simplify the code
+> >  - Fix indentation of patch 1
+> >  - Collect Acked-by and Tested-by
+> >
+> >  drivers/power/reset/Kconfig              |  9 +++
+> >  drivers/power/reset/Makefile             |  1 +
+> >  drivers/power/reset/spacemit-p1-reboot.c | 88 ++++++++++++++++++++++++
+> >  3 files changed, 98 insertions(+)
+> >  create mode 100644 drivers/power/reset/spacemit-p1-reboot.c
+> >
+> > diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
+> > index 8248895ca9038..063202923d95d 100644
+> > --- a/drivers/power/reset/Kconfig
+> > +++ b/drivers/power/reset/Kconfig
+> > @@ -283,6 +283,15 @@ config POWER_RESET_KEYSTONE
+> >         help
+> >           Reboot support for the KEYSTONE SoCs.
+> >
+> > +config POWER_RESET_SPACEMIT_P1
+> > +       bool "SpacemiT P1 poweroff and reset driver"
 > 
-> On Fri, Oct 17, 2025 at 03:27:39PM +0800, Troy Mitchell wrote:
-> > The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
-> > master mode operations is determined by the ILCR (I2C Load Count Register).
-> > Previously, the driver relied on the hardware's reset default
-> > values for this register.
-> > 
-> > The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
-> > frequencies lower than intended. For example, with the default
-> > 31.5 MHz input clock, these default settings result in an SCL
-> > frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
-> > and approximately 338 kHz (fast mode) when targeting 400 kHz.
-> > These frequencies are below the 100 kHz/400 kHz nominal speeds.
-> > 
-> > This patch integrates the SCL frequency management into
-> > the Common Clock Framework (CCF). Specifically, the ILCR register,
-> > which acts as a frequency divider for the SCL clock, is now registered
-> > as a managed clock (scl_clk) within the CCF.
-> > 
-> > This patch also cleans up unnecessary whitespace
-> > in the included header files.
-> > 
-> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> The driver code looks to be written to work as a module, but here it
+> says "bool" not "tristate".
 > 
-> looks OK to me. Yixun, any comment here? Do you mind giving it an
-> ack?
+> > +       depends on ARCH_SPACEMIT || COMPILE_TEST
+> > +       select MFD_SPACEMIT_P1
+> > +       default ARCH_SPACEMIT
 > 
-Please go ahead, I gave a Reviewed-by, thanks
+> If it does work as a module I'd prefer "default m" here.
+> 
+I second this, you can add my RoB if with it fixed
+
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
 
 -- 
 Yixun Lan (dlan)
