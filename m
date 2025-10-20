@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A5F28E5
-	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 00:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396DF2A1B2
+	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 01:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760918744; cv=none; b=nC+FDJbSGha+89GMz9tPM9eyL83LWbZVE2fXAlPge2IEYgTAnld1H6/bci64syIkNv0AXYGcO3h/NjuJfz1Y1Rh31HxTSPgnUrMc341VI4FKDxx6X4PpSh5J98p/ajlP03e7q2X0Stv+XcyK7ou39Jg85qjrWnT5ZrXzgGCXvKs=
+	t=1760922056; cv=none; b=FXHF41nibh0mjjdOiydG54Brkd/ZdsdNldzGC9dHroKPNr8hdUH5gnDjzc3S1xT2ZFoNxWXB7Ua74iSsynO+NBKbLboI1sG5SLC0oaxpbH7BmEi9qp+Oq4V+OirbHYH0UrcZ91PGq45Vj3D4EiZGxgYHWOiwtTaa157IlXFGtdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760918744; c=relaxed/simple;
-	bh=hJLTcllLmRKGjPAn9fdLk6a7sjgVkoZ3O9xsU1vvFno=;
+	s=arc-20240116; t=1760922056; c=relaxed/simple;
+	bh=9P02REmymp2Kk/aoe2vYdmNmxMB7VtHTASIN4rji1oQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MVJIQTrBKzHY/SlbIuYUVjlD++Vz8peMg/pAIchJhPO+pb/QryrYLKevDpNy/AkMcVHEtYNCbwLSpOrH8M6b91Ah+A2hIMe3dzVsTEs4ztCrnZZpdxJK0/asIfCfyWX40LUzrOWr/xicghD6T+aX1XN2VwagHUvsA1TzTlOxtqU=
+	 Content-Type:Content-Disposition:In-Reply-To; b=hTzIsdjaVA3yr7Vmc/Iu2l6bnYgR0NxaUn6F81ILzJA8EWS447656j6QRZ9gyc3g5lKsGHCmE19llnuXW6YltMW8uz4VIDqbnJ/O7tFtd+nyGwIXpeKde13/AVB9BvR9yZXS1WzRZqSUh8yHMv5xhA/zVZdThoUy60RKYRWYm/I=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,25 +19,22 @@ Received: from localhost (unknown [116.232.147.23])
 	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id B60C6340F21;
-	Mon, 20 Oct 2025 00:05:41 +0000 (UTC)
-Date: Mon, 20 Oct 2025 08:05:37 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 39512340D7F;
+	Mon, 20 Oct 2025 01:00:53 +0000 (UTC)
+Date: Mon, 20 Oct 2025 09:00:50 +0800
 From: Yixun Lan <dlan@gentoo.org>
-To: Emil Renner Berthing <emil.renner.berthing@gmail.com>
-Cc: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org,
-	Lee Jones <lee@kernel.org>, Sebastian Reichel <sre@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+To: michael.opdenacker@rootcommit.com
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v2 1/2] driver: reset: spacemit-p1: add driver for
- poweroff/reboot
-Message-ID: <20251020000537-GYC1506524@gentoo.org>
-References: <20251019191519.3898095-1-aurelien@aurel32.net>
- <20251019191519.3898095-2-aurelien@aurel32.net>
- <CANBLGczi3GeaC4aWECV8NS-zqSHgRa-5onynz9fGsZeN8qgysg@mail.gmail.com>
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] riscv: dts: spacemit: add Ethernet and PDMA to
+ OrangePi RV2
+Message-ID: <20251020010050-GYD1506524@gentoo.org>
+References: <20251017100106.3180482-1-michael.opdenacker@rootcommit.com>
+ <20251017100106.3180482-2-michael.opdenacker@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -46,60 +43,28 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CANBLGczi3GeaC4aWECV8NS-zqSHgRa-5onynz9fGsZeN8qgysg@mail.gmail.com>
+In-Reply-To: <20251017100106.3180482-2-michael.opdenacker@rootcommit.com>
 
-Hi Aurelien, 
+Hi Michael,
 
-On 22:53 Sun 19 Oct     , Emil Renner Berthing wrote:
-> On Sun, 19 Oct 2025 at 22:34, Aurelien Jarno <aurelien@aurel32.net> wrote:
-> >
-> > This driver implements poweroff/reboot support for the SpacemiT P1 PMIC
-> > chip, which is commonly paired with the SpacemiT K1 SoC.
-> >
-> > The SpacemiT P1 support is implemented as a MFD driver, so the access is
-> > done directly through the regmap interface. Reboot or poweroff is
-> > triggered by setting a specific bit in a control register, which is
-> > automatically cleared by the hardware afterwards.
-> >
-> > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> > Acked-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > Tested-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > ---
-> > v2:
-> >  - Rebase onto v6.18-rc1
-> >  - Use dev_err_probe() to simplify the code
-> >  - Fix indentation of patch 1
-> >  - Collect Acked-by and Tested-by
-> >
-> >  drivers/power/reset/Kconfig              |  9 +++
-> >  drivers/power/reset/Makefile             |  1 +
-> >  drivers/power/reset/spacemit-p1-reboot.c | 88 ++++++++++++++++++++++++
-> >  3 files changed, 98 insertions(+)
-> >  create mode 100644 drivers/power/reset/spacemit-p1-reboot.c
-> >
-> > diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
-> > index 8248895ca9038..063202923d95d 100644
-> > --- a/drivers/power/reset/Kconfig
-> > +++ b/drivers/power/reset/Kconfig
-> > @@ -283,6 +283,15 @@ config POWER_RESET_KEYSTONE
-> >         help
-> >           Reboot support for the KEYSTONE SoCs.
-> >
-> > +config POWER_RESET_SPACEMIT_P1
-> > +       bool "SpacemiT P1 poweroff and reset driver"
+On 10:02 Fri 17 Oct     , michael.opdenacker@rootcommit.com wrote:
+> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 > 
-> The driver code looks to be written to work as a module, but here it
-> says "bool" not "tristate".
+> Aligning with k1-bananapi-f3.dts
 > 
-> > +       depends on ARCH_SPACEMIT || COMPILE_TEST
-> > +       select MFD_SPACEMIT_P1
-> > +       default ARCH_SPACEMIT
-> 
-> If it does work as a module I'd prefer "default m" here.
-> 
-I second this, you can add my RoB if with it fixed
+The DTS change looks good, but the commit message is kind of obscure
+and unclear, I'd like to have an explict brief description for what
+have done in the patch, without people looking at the actual DT code,
+although in this case the title already says about it, but we could
+still give slightly more info/context:
 
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
+The OrangePi RV2 board ships two RGMII ethernet ports with each
+has an external Motorcomm YT8531C PHY attached, the PHY use gpio
+for the reset pin control.
+
+Enable PDMA for OrangePi RV2 board which provided by SpacemiT K1-based SoC.
+
+> Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 
 -- 
 Yixun Lan (dlan)
