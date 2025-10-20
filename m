@@ -1,109 +1,77 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEB12ECEA3
-	for <spacemit@lists.linux.dev>; Mon, 20 Oct 2025 09:13:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D618D2F5499;
+	Mon, 20 Oct 2025 09:28:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760951614; cv=none; b=eS8c2dICdIRL7D+b/gBD0Ik2pbXxL4Inidq3+kIwPBdhfkD1/xJjgDZqYjvzIhY/rbmZ93FD3PurDQfZDpvtuH+0KVlVT6ZlbITJ8J4VigUmYz6exBrU9PGsJj4ex1vZzHLrFMTMO8Pv/3+/Xw//CwH9+IAuSOvrQQyWp8pqC4M=
+	t=1760952529; cv=none; b=nWsZhW0WjD/xDurRscb3CyQPx4J8e7prDcGuTaFMnZ+dzubJXagCVcmXXQiGtw6Q9bfTx5Pom4sMgSGm75u5SIF6MiPl++dlyB7sx2eGZaxX74ffoCYKbLad7UxlPLqSCETyKiFRkZo1qyOb6eQWjW0ZGKB/DnvOUGzj6r6pMIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760951614; c=relaxed/simple;
-	bh=6EwU2dVYKxyTFOF2o3dUU14lADkQPAc2CAa7NanmeRM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TJp5zMXoAYHutBp1hpF8NJPQVqUhg7WyZl5TScjfoqtf7N/x1KyPwfDdLXPknMlDVOJQTEtc3rEv4+QNxkMZlLagSrmHODt+d0wX3vy/XjdKIXckEFCtCBfA7qkkXo8nxxy1Kv4JhpaJHSs7zqk2+/E2BS/5Qtxax0DTMQteG+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.107] (unknown [114.241.85.109])
-	by APP-03 (Coremail) with SMTP id rQCowABHknzW+_VoMALlEQ--.23805S2;
-	Mon, 20 Oct 2025 17:07:35 +0800 (CST)
-Message-ID: <002e0b15-57b6-4433-a9fe-8b7ce4b8dcd9@iscas.ac.cn>
-Date: Mon, 20 Oct 2025 17:07:34 +0800
+	s=arc-20240116; t=1760952529; c=relaxed/simple;
+	bh=zUL6wY6nUkFC7RGRQqooEtBqgzEkwxUZ3UEDi7LPXlk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IBjWV2bMapVRxwXKqy9IoTW1GLkiFd9/INGFBY14Qruno5FE8y4cBlbaGm+XmTPsChsQMzQOlpotmsgDVvNVhsLSV2rMgtPxRlVfNxRUMUJL0ukR/GnXarc7Y3A6pKUudf9e7e4SbUQsl+OJRdtyrJ+/RDntN6CdtTsEX3YD2t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HRhRdzVc; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HRhRdzVc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F17C4CEF9;
+	Mon, 20 Oct 2025 09:28:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760952528;
+	bh=zUL6wY6nUkFC7RGRQqooEtBqgzEkwxUZ3UEDi7LPXlk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HRhRdzVcMB61IB7i+p7RSXbRZlUCKKayYcJwSONs+XbN4XoXG/ee4IREKqIoxdShg
+	 eLEgFxXzkCoOcTA6DT+0ugxnjH45NcB+U8AP+ouCyjqJqZZD4jrTGEhnt5jyqi2OIy
+	 lKmOwMNQwNSx5o9FmVIGJZ02lJfEMBln6Mk32N+Pu6LP3LgcmI2V1Ltcb6g4Pke+8Y
+	 dd9v0HkBiblXFkoSJox3HGDrdP8I/r915gxMOmFg63dIIHmfNV0mRW0RPeQqgwEhtq
+	 iJ2Cr3nwYFY/zxgFhPYfsFFxuR9o3kgDJyf26j0jPBPSJ/28pWyN33VqkctenYdaTB
+	 +1NazHpe3VGKg==
+Date: Mon, 20 Oct 2025 11:28:45 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v4] i2c: spacemit: configure ILCR for accurate SCL
+ frequency
+Message-ID: <t26pyjnmzj62oczwuje2bbscowj22pdge2ef3tcktwmhzpsq47@7odo2ccvc52a>
+References: <20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] riscv: dts: spacemit: add Ethernet and PDMA to
- OrangePi RV2
-To: michael.opdenacker@rootcommit.com
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>
-References: <20251017100106.3180482-1-michael.opdenacker@rootcommit.com>
- <20251017100106.3180482-2-michael.opdenacker@rootcommit.com>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20251017100106.3180482-2-michael.opdenacker@rootcommit.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowABHknzW+_VoMALlEQ--.23805S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Cw4ftryrKw15JF45KryUWrg_yoW8Wr45pF
-	W7uFsxJ3y7Jr4Iqw43Xw1Dua95WFs5Jr45W34a93s8tw1YvryF9r1xKwsxGF1UKryrXayU
-	uF40g34Skw1qyaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvmb7Iv0xC_KF4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwV
-	C2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
-	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr
-	1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7
-	MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r
-	4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF
-	67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2I
-	x0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
-	z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnU
-	UI43ZEXa7IU8IJPtUUUUU==
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com>
 
-Hi Michael,
+Hi Troy,
 
-Thank you. I had meant to do this after v6.18-rc1 (which is now), but I
-didn't have this hardware to test.
+On Fri, Oct 17, 2025 at 03:27:39PM +0800, Troy Mitchell wrote:
+> The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
+> master mode operations is determined by the ILCR (I2C Load Count Register).
+> Previously, the driver relied on the hardware's reset default
+> values for this register.
+> 
+> The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
+> frequencies lower than intended. For example, with the default
+> 31.5 MHz input clock, these default settings result in an SCL
+> frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
+> and approximately 338 kHz (fast mode) when targeting 400 kHz.
+> These frequencies are below the 100 kHz/400 kHz nominal speeds.
+> 
+> This patch integrates the SCL frequency management into
+> the Common Clock Framework (CCF). Specifically, the ILCR register,
+> which acts as a frequency divider for the SCL clock, is now registered
+> as a managed clock (scl_clk) within the CCF.
+> 
+> This patch also cleans up unnecessary whitespace
+> in the included header files.
+> 
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-On 10/17/25 18:02, michael.opdenacker@rootcommit.com wrote:
-> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
->
-> Aligning with k1-bananapi-f3.dts
->
-> Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-> ---
->  .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 50 +++++++++++++++++++
->  1 file changed, 50 insertions(+)
->
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> index 337240ebb7b7..2a75ca93b499 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> @@ -33,6 +33,56 @@ led1 {
->  	};
->  };
->  
-> +&eth0 {
+merged to i2c/i2c-host.
 
-Please add eth0 and eth1 to /aliases so that U-Boot, udev, ... can
-recognize them. This is used by U-Boot to set the mac-address to the
-same value used in booting, and by (systemd) udev to set the interface name.
+Thanks Yixun for your reviews here.
 
-> +	phy-handle = <&rgmii0>;
-> +	phy-mode = "rgmii-id";
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&gmac0_cfg>;
-> +	rx-internal-delay-ps = <0>;
-> +	tx-internal-delay-ps = <0>;
-
-The hardware design of OPI-RV2 is not the same as BPI-F3, so the
-parameters here deserves some scruitiny. Same for eth1 below.
-
-I would appreciate at least iperf TCP tests in both directions on both
-ethernet ports. The expected speed should be at least 940 Mbit/sec - if
-it's much lower than that something is wrong.
-
-Thanks,
-Vivian "dramforever" Wang
-
+Andi
