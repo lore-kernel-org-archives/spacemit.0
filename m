@@ -1,102 +1,107 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702F4246BD5
-	for <spacemit@lists.linux.dev>; Tue, 21 Oct 2025 05:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2129833CEAA;
+	Tue, 21 Oct 2025 11:54:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761025185; cv=none; b=qDIz4NqB6faRLiwAWtp9IJuOu8hK4HiJgqAu6CO44zUDn8XqgkXkmjEQHA/QwmOids5ji1XHPzvBwDu0sfoqHu4NR1lI8gbORs+MGe+8+uQz6DvWbq15fuTeFLqf2F5GPei+06z+fcsrpJqFQCCa2MFTYV0ohkzs7rbQb1Xo954=
+	t=1761047657; cv=none; b=QF+jx0OyJAlcnL+nKXve6oOQvumj1FZa3RacD83mHf7Ba0wa+PLaBs4am5PzbGLchEDtgKT6rm0zCsSom60T6e6HXoMUFBmEMPnrbjSXpFp6hte5c4K11utXQql7RfrBG/w15VB/jpxpQWDft6TSnHj/IwjdHQbI2H+rDxFzNvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761025185; c=relaxed/simple;
-	bh=BSruS+e+1mMM0hqPQrzFkBHtZC+eDjaFGPxLazb4w+w=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=cPzwEj2t/Hnwi9il0RJ/JZZUefjajY2+5ee/1TgjTRGLKUpqNUIsU/kN/y7l4BJvxK3O9a1QaxFTRItQpzGsQy4oyJgS6/2QS1O8D2+IDRWF4JWdIN6oVbNPyq+xGz0nICfDVpcIqAnKj+2tb1C+JRnQXfWasnlLn1DzFB7pb6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.105] (unknown [114.241.85.109])
-	by APP-05 (Coremail) with SMTP id zQCowAD3lhB9HPdoosmmEg--.36897S2;
-	Tue, 21 Oct 2025 13:39:10 +0800 (CST)
-Message-ID: <52693a5b-e564-41f1-b430-b87784e0559b@iscas.ac.cn>
-Date: Tue, 21 Oct 2025 13:39:10 +0800
+	s=arc-20240116; t=1761047657; c=relaxed/simple;
+	bh=uPZbpRtuUAGL7PXaUrKempyAjExOsq+OSZosdwkFDXc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=F1lZsJXssdcrGOZiJY3/MxoGab4ls0+pfCyqdzj44WizkOMihnNs2ggC8XLBKYgRsdy5hhHYRjy0o9N1skKpYCR4C5fFhhKZnElbGqrlDvNfcZ9B5oKsnL4VKooiPgQbN4HKfbzBmUGR4osb5hpvnRcXbd12R10ROXCzBb6d3lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fN7l/pOj; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fN7l/pOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C460C4CEF1;
+	Tue, 21 Oct 2025 11:54:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761047657;
+	bh=uPZbpRtuUAGL7PXaUrKempyAjExOsq+OSZosdwkFDXc=;
+	h=Date:From:To:Cc:Subject:From;
+	b=fN7l/pOj403MC/dOkqseufxCFbACPUg2lwxHFfFY5q4H9hqfuUlOPralnu4qGlMMP
+	 Yf8Y6gbDYv9gPMQoRJ+k9QtKGb8F1Zdy1ulks5cy7QOoLoCxpNKNSByBzSeWkrjs9s
+	 nTo5xpLi2DVSdgNtHyuhWGX5dVw8ZIfxUBLhicyM40KnkflGnvoaF22dt91B67OW94
+	 /PAeI2BPwTb971P1Xtu3W6F1BNiRBRMAnsyHk5Bt5ZWXBSLJguxpjl8giNlKonIKyw
+	 JvlHTZIGU3TX0MZs4EwizUxBkS1y5D2s+fJdv91HHCuriJ9KAep61/OM30zoj4kEYf
+	 vMOmklZ5sV+PA==
+Date: Tue, 21 Oct 2025 12:54:10 +0100
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+To: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Yixun Lan <dlan@gentoo.org>
+Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	linux-hardening@vger.kernel.org
+Subject: [PATCH][next] net: spacemit: Avoid -Wflex-array-member-not-at-end
+ warnings
+Message-ID: <aPd0YjO-oP60Lgvj@kspp>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] riscv: dts: spacemit: add Ethernet and PDMA to
- OrangePi RV2
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-To: michael.opdenacker@rootcommit.com
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>
-References: <20251017100106.3180482-1-michael.opdenacker@rootcommit.com>
- <20251017100106.3180482-2-michael.opdenacker@rootcommit.com>
- <002e0b15-57b6-4433-a9fe-8b7ce4b8dcd9@iscas.ac.cn>
-Content-Language: en-US
-In-Reply-To: <002e0b15-57b6-4433-a9fe-8b7ce4b8dcd9@iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowAD3lhB9HPdoosmmEg--.36897S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7KFy8CFyrGF1DtF17Xw4xZwb_yoW8Ar47pF
-	W3XrnxJr9FkrW2vrnIvw4kuF1fuan5tF43Gw1Fva48AFs8tr9agr18tr45JFy3XrZ8XF4Y
-	9FW0gas7uFyqyrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvlb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwV
-	C2z280aVCY1x0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xv
-	F2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r
-	4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xK
-	xwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJV
-	W8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF
-	1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6x
-	IIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvE
-	x4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvj
-	DU0xZFpf9x07betCcUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 10/20/25 17:07, Vivian Wang wrote:
+-Wflex-array-member-not-at-end was introduced in GCC-14, and we are
+getting ready to enable it, globally.
 
-> [...]
->> +	phy-handle = <&rgmii0>;
->> +	phy-mode = "rgmii-id";
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&gmac0_cfg>;
->> +	rx-internal-delay-ps = <0>;
->> +	tx-internal-delay-ps = <0>;
-> The hardware design of OPI-RV2 is not the same as BPI-F3, so the
-> parameters here deserves some scruitiny. Same for eth1 below.
-(Apparently my spelling deserves scrutiny as well. Oh well.)
-> I would appreciate at least iperf TCP tests in both directions on both
-> ethernet ports. The expected speed should be at least 940 Mbit/sec - if
-> it's much lower than that something is wrong.
+Use regular arrays instead of flexible-array members (they're not
+really needed in this case) in a couple of unions, and fix the
+following warnings:
 
-Okay so this is not *necessarily* a problem, but just for context...
+      1 drivers/net/ethernet/spacemit/k1_emac.c:122:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+      1 drivers/net/ethernet/spacemit/k1_emac.c:122:32: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+      1 drivers/net/ethernet/spacemit/k1_emac.c:121:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+      1 drivers/net/ethernet/spacemit/k1_emac.c:121:32: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
 
-If you look at the DTS files provided by SpacemiT [1] you'd think the
-OPI-RV2 also uses RTL8211F Ethernet PHYs. It does not. The schematics
-(linked on the board main page [2]) says it uses Motorcomm YT8531C.
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+---
+ drivers/net/ethernet/spacemit/k1_emac.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-This doesn't mean that your DTS is wrong (because we don't write the id
-here when the PHY-sent one is correct), but I hope you understand that
-what I'm worried is that the electrical characteristics have been
-changed since they have changed the board design. This is why I think
-actually taking the time to check the delay parameters would be a good idea.
-
-And yes, it would not be surprising if the parameters for BPI-F3 also
-works completely reliably for OPI-RV2. The delay tuning has quite a bit
-of margin for wiggle room. 
-
-Thanks,
-Vivian "dramforever" Wang
-
-[1]: https://github.com/spacemit-com/linux-k1x/blob/k1/arch/riscv/boot/dts/spacemit/k1-x_orangepi-rv2.dts
-[2]: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-RV2.html
+diff --git a/drivers/net/ethernet/spacemit/k1_emac.h b/drivers/net/ethernet/spacemit/k1_emac.h
+index 5a09e946a276..577efe66573e 100644
+--- a/drivers/net/ethernet/spacemit/k1_emac.h
++++ b/drivers/net/ethernet/spacemit/k1_emac.h
+@@ -363,7 +363,7 @@ struct emac_desc {
+ /* Keep stats in this order, index used for accessing hardware */
+ 
+ union emac_hw_tx_stats {
+-	struct {
++	struct individual_tx_stats {
+ 		u64 tx_ok_pkts;
+ 		u64 tx_total_pkts;
+ 		u64 tx_ok_bytes;
+@@ -378,11 +378,11 @@ union emac_hw_tx_stats {
+ 		u64 tx_pause_pkts;
+ 	} stats;
+ 
+-	DECLARE_FLEX_ARRAY(u64, array);
++	u64 array[sizeof(struct individual_tx_stats) / sizeof(u64)];
+ };
+ 
+ union emac_hw_rx_stats {
+-	struct {
++	struct individual_rx_stats {
+ 		u64 rx_ok_pkts;
+ 		u64 rx_total_pkts;
+ 		u64 rx_crc_err_pkts;
+@@ -410,7 +410,7 @@ union emac_hw_rx_stats {
+ 		u64 rx_truncate_fifo_full_pkts;
+ 	} stats;
+ 
+-	DECLARE_FLEX_ARRAY(u64, array);
++	u64 array[sizeof(struct individual_rx_stats) / sizeof(u64)];
+ };
+ 
+ #endif /* _K1_EMAC_H_ */
+-- 
+2.43.0
 
