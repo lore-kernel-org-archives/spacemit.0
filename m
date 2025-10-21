@@ -1,97 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AEB34D904;
-	Tue, 21 Oct 2025 18:52:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7516366;
+	Tue, 21 Oct 2025 20:15:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761072730; cv=none; b=JSdZ09VK1NMewP21UzpyeHR9BKqNJiaspMXExhw/y6Lhg7eA3r8eZmEZIOYVSG6pVAUd7On18UL6VSQd4R5Mqg9pbPNZv6+CftcO2frCW1A3eg09YbnOxCI/po2NaXNnic22B01erWW6KPXurV6BVFnWuzO0dfFHP6Kp67wwlK0=
+	t=1761077732; cv=none; b=MWGPMvSNtk497lEKUX/aee29LNjCU1mGXYOMH/faB0dT80VUAPc0UwTbASLW8qbnK8bFO+JBigzbGNmUze9e1s+49upgoFqtvp29dcWU39iCIOE+g3iI/9F0m07CR2L5h+noZ5oUiFCjNZJ73ffNMGHMcEbibLplzEMjAo2hrqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761072730; c=relaxed/simple;
-	bh=ZB/5wKX4GVjMeMhEKGtvplG5a7Ce/5sBVRDkGuxOt3M=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=XA6sQzfFq5ilRQ1JNpZvU4KVSrukL6/GKtEsbxGeVQGMki4NmFf8uTZpLkA/4Fp5mZEaCHzLdsd+EX7BwUPlRFLm7mmed4teMIo8xUxoGXWkoSBC5e33y3pM5ZS7G8LFidolqWepNY+rDJl1NQPaAQI/JUyiFG11NwI/IDW2bt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A2Gt+gY8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761077732; c=relaxed/simple;
+	bh=uiQE3F6PNrH2qUqlwFl2M0IAS6OtWbqRebDnn5BkzHs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KR1kxZjPMeWrpU+wQtf1z9gw5jsdnntu/4EiEOdd+TWA8BskTRXwsM4/FnRnn7ODvhg8lEFUOAJD2nh56vLlc8dZxJlLO3xDTnE84xi2d2kf45v7vSzensIqwAWZsE0Ltz4zvC3maRuZ4sMEs35TXzJOi+M0SNiXmSATyj0/hiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=Fb4KkOv2; arc=none smtp.client-ip=195.154.113.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A2Gt+gY8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF73FC4CEF5;
-	Tue, 21 Oct 2025 18:52:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761072729;
-	bh=ZB/5wKX4GVjMeMhEKGtvplG5a7Ce/5sBVRDkGuxOt3M=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=A2Gt+gY86NYJ/LAdB+LpKwMh85+yFVerVokAhh3p0IkNdwU7w6s2VqoXIY/5I1DIH
-	 pKlY7YgXK6qu080HdHW1QJAti7ZaK5Rz5yelMpcMHi5lyMc7Qe/9KanV/X6dwyeXDr
-	 CoJ+iFOutyybefoNFGV+y2AXt3D7lHbh/wIxaylU2HuxrebyZGoJhGvQJOTimZoZzR
-	 EEmLzSjjC/YVcryETcytDbImk9aSIFgPCSYV04vJFWE4wX3ezUk/eqfW9+adSEtp43
-	 A3UaQYxavho4EsrhPiV0PtRKrTiDMGm+5liHVfpT48cNdptaLf4mIn0W88caG212oB
-	 y/Q6jNMWqD78Q==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Jinmei Wei <weijinmei@linux.spacemit.com>
-In-Reply-To: <20251017-k1-i2s-v5-0-401ae3775fcd@linux.spacemit.com>
-References: <20251017-k1-i2s-v5-0-401ae3775fcd@linux.spacemit.com>
-Subject: Re: [PATCH v5 0/2] ASoC: spacemit: add i2s support to K1 SoC
-Message-Id: <176107272657.196841.17126892413935160644.b4-ty@kernel.org>
-Date: Tue, 21 Oct 2025 19:52:06 +0100
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="Fb4KkOv2"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:References:
+	In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Content-Type:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=af2q0eyIVeKU9fcGvNX/nR6ZwHN1BAkM9i1dSmiJRBQ=; b=Fb4KkOv27NT9ibbJKtuIYmC2cu
+	FvDx2pHnmouhKkw8XWoxexNGk2OIjYLkK0oIFE4IqiXeLQHiGkQvkOGgzJGX1Af7gN8hbWrQE7r1h
+	LuN8hqhHmCg04MVvm4lHMJ4w2GSiiGLt19kz/3IUNpjeHqdCpxoPODq1EhmdVtriNNcj3D9x9LgKo
+	EWoO7/uVqnq/qVR0I2hbwX9LPxeCfLrv65Ez/Pjpkdper+LhKb8MIvfEqMr6tpyYwbdI0qJC2p5vj
+	rnQi+VIq7Csw4XkcDFDjSaiREiZM+mPPbgDV3orDTPDsr+KHAYDdLMNoh5a3ovYnPe+Tczssl4+Of
+	WI7Lwk0A==;
+Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
+	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1vBIl8-00GWoD-0i;
+	Tue, 21 Oct 2025 22:15:06 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: linux-kernel@vger.kernel.org,
+	Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE:Keyword:riscv),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit)
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	linux-pm@vger.kernel.org (open list:SYSTEM RESET/SHUTDOWN DRIVERS),
+	linux-riscv@lists.infradead.org (open list:RISC-V SPACEMIT SoC Support),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support)
+Subject: [PATCH v3 2/2] mfd: simple-mfd-i2c: add a reboot cell for the SpacemiT P1 chip
+Date: Tue, 21 Oct 2025 22:12:00 +0200
+Message-ID: <20251021201451.1013640-3-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20251021201451.1013640-1-aurelien@aurel32.net>
+References: <20251021201451.1013640-1-aurelien@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-2a268
+Content-Transfer-Encoding: 8bit
 
-On Fri, 17 Oct 2025 11:16:16 +0800, Troy Mitchell wrote:
-> On the K1 SoC, there is a full-duplex I2S controller.
-> 
-> The I2S is programmable, with the sample width configurable
-> to 8, 16, 18, or 32 bits.
-> 
-> A dedicated FIFO is provided for transmit (TXFIFO) and another
-> for receive (RXFIFO). In non-packed mode, both FIFOs are 32
-> entries deep and 32 bits wide, giving a total of 32 samples each.
-> 
-> [...]
+Add a "spacemit-p1-reboot" cell for the SpacemiT P1 chip.
 
-Applied to
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+---
+v3: no changes
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+ drivers/mfd/simple-mfd-i2c.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks!
-
-[1/2] ASoC: dt-bindings: Add bindings for SpacemiT K1
-      commit: 73978d274eba0d9081bc9b5aedebb0bc6abb832c
-[2/2] ASoC: spacemit: add i2s support for K1 SoC
-      commit: fce217449075d59b29052b8cdac567f0f3e22641
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+index 0a607a1e3ca1d..542d378cdcd1f 100644
+--- a/drivers/mfd/simple-mfd-i2c.c
++++ b/drivers/mfd/simple-mfd-i2c.c
+@@ -99,6 +99,7 @@ static const struct regmap_config spacemit_p1_regmap_config = {
+ };
+ 
+ static const struct mfd_cell spacemit_p1_cells[] = {
++	{ .name = "spacemit-p1-reboot", },
+ 	{ .name = "spacemit-p1-regulator", },
+ 	{ .name = "spacemit-p1-rtc", },
+ };
+-- 
+2.47.2
 
