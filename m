@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4281C3306;
-	Tue, 21 Oct 2025 15:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4718B341AC1;
+	Tue, 21 Oct 2025 16:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761061970; cv=none; b=T4dzBquzLb5riUKRCPexxwIOF0zNCrLmHb38UxkEGK4X+hhnTsJjWdvZyXsM5ZIV5TpzbwLn3ueZWx0EvD9PzICW6SpkyDCbNDujPlYfyEiE9DZiDugt7OvXDnbf8cb81SxSIzZPYy7tD6NZqVFDK+aSRQZRb451NG3RP/oqE0g=
+	t=1761062618; cv=none; b=NQnrScfFWUi3hFblTOpVgECIhR95eZ079cobU+SQ7AqqBN41/pOVxtEsSoMpgJhOJKGxyAT4P4m4KKNzt03xwG4Z8IkMtfdrHXGuVjLT3gSjaa/f0RhjGJxisIYDCnoiRk4F4r5lIvQwTzIhrLtkBCsUznuNlNUE1cwb3VBztkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761061970; c=relaxed/simple;
-	bh=9P/Lr1X/j2n5O/qlIBo0JOjK9tJma3uiZrl+5Xsi0rU=;
+	s=arc-20240116; t=1761062618; c=relaxed/simple;
+	bh=zoulm8EJmHkp5upUtaKeojnxWqc+0aK6cJfLOtxU50w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RPXUvz3qV2L+z8hCp7PQnenHe/S1r4uAQM6rWEsjq5YkL/oZbTGFDm1sIDPN802dNSUCW/J6WVZBdBD/1VXlYxHS3hDXArSHlZKxY1ZkTu7EQPeChDW4U6vZWORntD1OvP99QeX+ijFfPpR//egj0fjvct7zMScOCSdvHwjt8E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=upolYJBS; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=PhkfQ1CcpDNH5iRsRg/MN6DRHtmGEr42geda/gugLc3ZIhNVRG8V+XHU5gesGPcvWi6QlCiEHHd1uqCWLcppPRw8U8Uo4cwuKKspBe5UpSRl/NPoTKGlGt6akAxUfPJ4crD5GxVO/kQnQwesJy+rOFPEaZe7ESjF1dpRuoY/yj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CJ7ImcdN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="upolYJBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2FCC4CEF1;
-	Tue, 21 Oct 2025 15:52:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CJ7ImcdN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27765C4CEF1;
+	Tue, 21 Oct 2025 16:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761061969;
-	bh=9P/Lr1X/j2n5O/qlIBo0JOjK9tJma3uiZrl+5Xsi0rU=;
+	s=k20201202; t=1761062617;
+	bh=zoulm8EJmHkp5upUtaKeojnxWqc+0aK6cJfLOtxU50w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=upolYJBSCVJF+eeYRQIYKE+kpNWegk+mfxlJoVJh7A8sVpoL8S/tOLipzjgM4mrTv
-	 CjzKe9FpqbmSInniXQu0/MbsOEUBvpysE+hTSjQWDLTivvqIUCgnkKUgODJpByYQ7a
-	 BrlRt6p2HWgRwc3c9ndd6aqLHlAJwvR8UfLai/TbQNIeuTtcRypRJwjsX4bosumTZ0
-	 ydGix5IsMZ2INTcHC9f8AD9084OP1U0U3b6fQrHD6o9/1F4w4Av40TWSWT7FwtqxWw
-	 i6y8c9Rmi+bK1CFR26tL+KOOfqFNrmAlfJvUTdwq9WTqc/dQ6qqhaIeVF2OMEgNKOp
-	 qpKnQ/A4bKJaA==
-Date: Tue, 21 Oct 2025 16:52:45 +0100
-From: Simon Horman <horms@kernel.org>
-To: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Yixun Lan <dlan@gentoo.org>, netdev@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH][next] net: spacemit: Avoid
- -Wflex-array-member-not-at-end warnings
-Message-ID: <aPesTcpvIS22R8YT@horms.kernel.org>
-References: <aPd0YjO-oP60Lgvj@kspp>
+	b=CJ7ImcdNqkvgbz/NjNhcAVJX3kDtbZQM9JuSFDwKztdNqFiQIWb5iLKwmjzbrQW9Q
+	 xKtpRev8etsG/CLdiNGOMNcyVTDxNPoE91iYm83cw5ynjO1Ey3rPRYnYOzqgmvSlWd
+	 iPEARZLqjbyCAObZTGNtIT/fXkvfACdMk8F/zhf10Zm8kfoOZmmZUU36Gy4gnJI7ax
+	 K7Br4HxvlX7GAOml1zyFc72yqYaOG3fwHk1UyF7Sj+nTBmuDeuuKeX+vTkLMneclwN
+	 aXN5P2pXQRKRTQHf8gHq9VT7Dld5EY9tFCz0gahJeXjKRIYgZNtssG/SmLlyzqdbMg
+	 UvlubZmRdNhgw==
+Date: Tue, 21 Oct 2025 18:03:34 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v4] i2c: spacemit: configure ILCR for accurate SCL
+ frequency
+Message-ID: <sdhkjmi5l2m4ua4zqkwkecbihul5bc2dbmitudwfd57y66mdht@6ipjfyz7dtmx>
+References: <20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com>
+ <t26pyjnmzj62oczwuje2bbscowj22pdge2ef3tcktwmhzpsq47@7odo2ccvc52a>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -48,26 +44,46 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aPd0YjO-oP60Lgvj@kspp>
+In-Reply-To: <t26pyjnmzj62oczwuje2bbscowj22pdge2ef3tcktwmhzpsq47@7odo2ccvc52a>
 
-On Tue, Oct 21, 2025 at 12:54:10PM +0100, Gustavo A. R. Silva wrote:
-> -Wflex-array-member-not-at-end was introduced in GCC-14, and we are
-> getting ready to enable it, globally.
+Hi Troy,
+
+On Mon, Oct 20, 2025 at 11:28:45AM +0200, Andi Shyti wrote:
+> On Fri, Oct 17, 2025 at 03:27:39PM +0800, Troy Mitchell wrote:
+> > The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
+> > master mode operations is determined by the ILCR (I2C Load Count Register).
+> > Previously, the driver relied on the hardware's reset default
+> > values for this register.
+> > 
+> > The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
+> > frequencies lower than intended. For example, with the default
+> > 31.5 MHz input clock, these default settings result in an SCL
+> > frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
+> > and approximately 338 kHz (fast mode) when targeting 400 kHz.
+> > These frequencies are below the 100 kHz/400 kHz nominal speeds.
+> > 
+> > This patch integrates the SCL frequency management into
+> > the Common Clock Framework (CCF). Specifically, the ILCR register,
+> > which acts as a frequency divider for the SCL clock, is now registered
+> > as a managed clock (scl_clk) within the CCF.
+> > 
+> > This patch also cleans up unnecessary whitespace
+> > in the included header files.
+> > 
+> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 > 
-> Use regular arrays instead of flexible-array members (they're not
-> really needed in this case) in a couple of unions, and fix the
-> following warnings:
-> 
->       1 drivers/net/ethernet/spacemit/k1_emac.c:122:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
->       1 drivers/net/ethernet/spacemit/k1_emac.c:122:32: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
->       1 drivers/net/ethernet/spacemit/k1_emac.c:121:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
->       1 drivers/net/ethernet/spacemit/k1_emac.c:121:32: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-> 
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> merged to i2c/i2c-host.
+
+I'm sorry, because of the report from LKP(*) I reverted your
+patch. I2C_K1 is selected by MFD_SPACEMIT_P1, so that we get the
+following warning:
+
+  WARNING: unmet direct dependencies detected for I2C_K1
+
+and compile I2C_K1 without COMMON_CLK. Please, fix it and
+resubmit the patch.
 
 Thanks,
+Andi
 
-I was able to reproduce the above build warnings.
-And agree that this patch addresses them.
-
-Reviewed-by: Simon Horman <horms@kernel.org>
+(*) https://lore.kernel.org/oe-kbuild-all/202510202150.2qXd8e7Y-lkp@intel.com/
