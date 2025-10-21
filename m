@@ -1,195 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E2F2EB87F;
-	Mon, 20 Oct 2025 21:00:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702F4246BD5
+	for <spacemit@lists.linux.dev>; Tue, 21 Oct 2025 05:39:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760994004; cv=none; b=TPyZfoTZLVD0bPIDGVIPbs80UvaeE9oL4QgQgAywpJ+RxrLISYMaQqzz7DKzU3uTZ7X8wAUHlourgqr7sXo1lLi9PCZD7fMPRMhzGfQDOnTPrz80Qt+wlGcvA9ogq8PwyiovHRyqO+JU3PX+y/w+DzxkATGONoaVYu1a+WgpRqY=
+	t=1761025185; cv=none; b=qDIz4NqB6faRLiwAWtp9IJuOu8hK4HiJgqAu6CO44zUDn8XqgkXkmjEQHA/QwmOids5ji1XHPzvBwDu0sfoqHu4NR1lI8gbORs+MGe+8+uQz6DvWbq15fuTeFLqf2F5GPei+06z+fcsrpJqFQCCa2MFTYV0ohkzs7rbQb1Xo954=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760994004; c=relaxed/simple;
-	bh=/LZcJJRPVP3eFE1ecANAOSgixAXIk4StHRr4bpii2GY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gX5KGp5CHDpQaR57eEwYFjiZ4QlhsOWLyQ19TFALg7q/FUxHulE3F9BjmWsn1OS4bSpX+I+80zsE8z20/wCFu1XkqkH6q8uFn7M97PKPZ4HRo8TEXe/KZL4+yXL06tXP/eaVlDj4pErbIglDhZbEz3oyDz+104ytGJVbndcPM3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nXaAfJlA; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nXaAfJlA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100C0C113D0;
-	Mon, 20 Oct 2025 21:00:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760994003;
-	bh=/LZcJJRPVP3eFE1ecANAOSgixAXIk4StHRr4bpii2GY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nXaAfJlAW5OJIVavpJS9PVvzhr/gsU/4BsqEO61ogsn+/mc83QgqVMI/PaqdNlsw7
-	 uHAtBWRkXlzkPR8c0GBH5jLr+FBRdZD4SO5wXAniJuV+fA8MHutaoRV5TxIcREvC+Q
-	 GeWd80jSwayMO9L6qWN/XMNz5mrK3uhJLo9IB0e6JcWqnqSrMnTsxFzzEfYbO6fXnj
-	 zkXPLBRdKqm4G5yhgLEFZ3X5eerk7KrxspQoH6BbalRvy6m6YELQgjMJc3cP97sP+A
-	 zS77KUb/mPR+8JlGv5E8O5pIl2e2WFBXksZv3bPqj5LGRT75JJ/UU2AcFHOO2PU2Qh
-	 euBeoY0R7wHXg==
-Date: Mon, 20 Oct 2025 16:00:01 -0500
-From: Rob Herring <robh@kernel.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	dlan@gentoo.org, guodong@riscstar.com, devicetree@vger.kernel.org,
-	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 3/7] dt-bindings: pci: spacemit: introduce PCIe host
- controller
-Message-ID: <20251020210001.GA1764520-robh@kernel.org>
-References: <20251017190740.306780-1-elder@riscstar.com>
- <20251017190740.306780-4-elder@riscstar.com>
+	s=arc-20240116; t=1761025185; c=relaxed/simple;
+	bh=BSruS+e+1mMM0hqPQrzFkBHtZC+eDjaFGPxLazb4w+w=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=cPzwEj2t/Hnwi9il0RJ/JZZUefjajY2+5ee/1TgjTRGLKUpqNUIsU/kN/y7l4BJvxK3O9a1QaxFTRItQpzGsQy4oyJgS6/2QS1O8D2+IDRWF4JWdIN6oVbNPyq+xGz0nICfDVpcIqAnKj+2tb1C+JRnQXfWasnlLn1DzFB7pb6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.105] (unknown [114.241.85.109])
+	by APP-05 (Coremail) with SMTP id zQCowAD3lhB9HPdoosmmEg--.36897S2;
+	Tue, 21 Oct 2025 13:39:10 +0800 (CST)
+Message-ID: <52693a5b-e564-41f1-b430-b87784e0559b@iscas.ac.cn>
+Date: Tue, 21 Oct 2025 13:39:10 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251017190740.306780-4-elder@riscstar.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] riscv: dts: spacemit: add Ethernet and PDMA to
+ OrangePi RV2
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+To: michael.opdenacker@rootcommit.com
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>
+References: <20251017100106.3180482-1-michael.opdenacker@rootcommit.com>
+ <20251017100106.3180482-2-michael.opdenacker@rootcommit.com>
+ <002e0b15-57b6-4433-a9fe-8b7ce4b8dcd9@iscas.ac.cn>
+Content-Language: en-US
+In-Reply-To: <002e0b15-57b6-4433-a9fe-8b7ce4b8dcd9@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:zQCowAD3lhB9HPdoosmmEg--.36897S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7KFy8CFyrGF1DtF17Xw4xZwb_yoW8Ar47pF
+	W3XrnxJr9FkrW2vrnIvw4kuF1fuan5tF43Gw1Fva48AFs8tr9agr18tr45JFy3XrZ8XF4Y
+	9FW0gas7uFyqyrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvlb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwV
+	C2z280aVCY1x0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xv
+	F2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r
+	4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xK
+	xwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJV
+	W8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF
+	1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6x
+	IIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvE
+	x4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvj
+	DU0xZFpf9x07betCcUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Fri, Oct 17, 2025 at 02:07:35PM -0500, Alex Elder wrote:
-> Add the Device Tree binding for the PCIe root complex found on the
-> SpacemiT K1 SoC.  This device is derived from the Synopsys Designware
-> PCIe IP.  It supports up to three PCIe ports operating at PCIe gen 2
-> link speeds (5 GT/sec).  One of the ports uses a combo PHY, which is
-> typically used to support a USB 3 port.
-> 
-> Signed-off-by: Alex Elder <elder@riscstar.com>
-> ---
-> v3: - Remove the "num-viewport" property
->     - A "phy" reset is no longer required
-> 
->  .../bindings/pci/spacemit,k1-pcie-host.yaml   | 147 ++++++++++++++++++
->  1 file changed, 147 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
-> new file mode 100644
-> index 0000000000000..89f8b6b579c6e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
-> @@ -0,0 +1,147 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pci/spacemit,k1-pcie-host.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: SpacemiT K1 PCI Express Host Controller
-> +
-> +maintainers:
-> +  - Alex Elder <elder@riscstar.com>
-> +
-> +description: >
-> +  The SpacemiT K1 SoC PCIe host controller is based on the Synopsys
-> +  DesignWare PCIe IP.  The controller uses the DesignWare built-in
-> +  MSI interrupt controller, and supports 256 MSIs.
-> +
-> +allOf:
-> +  - $ref: /schemas/pci/snps,dw-pcie.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: spacemit,k1-pcie
-> +
-> +  reg:
-> +    items:
-> +      - description: DesignWare PCIe registers
-> +      - description: ATU address space
-> +      - description: PCIe configuration space
-> +      - description: Link control registers
-> +
-> +  reg-names:
-> +    items:
-> +      - const: dbi
-> +      - const: atu
-> +      - const: config
-> +      - const: link
-> +
-> +  spacemit,apmu:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    description:
-> +      A phandle that refers to the APMU system controller, whose
-> +      regmap is used in managing resets and link state, along with
-> +      and offset of its reset control register.
-> +    items:
-> +      - items:
-> +          - description: phandle to APMU system controller
-> +          - description: register offset
-> +
-> +  clocks:
-> +    items:
-> +      - description: DWC PCIe Data Bus Interface (DBI) clock
-> +      - description: DWC PCIe application AXI-bus master interface clock
-> +      - description: DWC PCIe application AXI-bus slave interface clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: dbi
-> +      - const: mstr
-> +      - const: slv
-> +
-> +  resets:
-> +    items:
-> +      - description: DWC PCIe Data Bus Interface (DBI) reset
-> +      - description: DWC PCIe application AXI-bus master interface reset
-> +      - description: DWC PCIe application AXI-bus slave interface reset
-> +
-> +  reset-names:
-> +    items:
-> +      - const: dbi
-> +      - const: mstr
-> +      - const: slv
-> +
-> +  interrupts:
-> +    items:
-> +      - description: Interrupt used for MSIs
-> +
-> +  interrupt-names:
-> +    const: msi
-> +
-> +  phys:
-> +    maxItems: 1
-> +
+On 10/20/25 17:07, Vivian Wang wrote:
 
-> +  vpcie3v3-supply:
-> +    description:
-> +      A phandle for 3.3v regulator to use for PCIe
-> +
-> +  device_type:
-> +    const: pci
+> [...]
+>> +	phy-handle = <&rgmii0>;
+>> +	phy-mode = "rgmii-id";
+>> +	pinctrl-names = "default";
+>> +	pinctrl-0 = <&gmac0_cfg>;
+>> +	rx-internal-delay-ps = <0>;
+>> +	tx-internal-delay-ps = <0>;
+> The hardware design of OPI-RV2 is not the same as BPI-F3, so the
+> parameters here deserves some scruitiny. Same for eth1 below.
+(Apparently my spelling deserves scrutiny as well. Oh well.)
+> I would appreciate at least iperf TCP tests in both directions on both
+> ethernet ports. The expected speed should be at least 940 Mbit/sec - if
+> it's much lower than that something is wrong.
 
-Both of these are part of pci-bus-common.yaml and can be dropped from 
-here.
+Okay so this is not *necessarily* a problem, but just for context...
 
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - spacemit,apmu
+If you look at the DTS files provided by SpacemiT [1] you'd think the
+OPI-RV2 also uses RTL8211F Ethernet PHYs. It does not. The schematics
+(linked on the board main page [2]) says it uses Motorcomm YT8531C.
 
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +  - ranges
+This doesn't mean that your DTS is wrong (because we don't write the id
+here when the PHY-sent one is correct), but I hope you understand that
+what I'm worried is that the electrical characteristics have been
+changed since they have changed the board design. This is why I think
+actually taking the time to check the delay parameters would be a good idea.
 
-Always required by pci-bus-common.yaml. Drop.
+And yes, it would not be surprising if the parameters for BPI-F3 also
+works completely reliably for OPI-RV2. The delay tuning has quite a bit
+of margin for wiggle room. 
 
-> +  - clocks
-> +  - clock-names
-> +  - resets
-> +  - reset-names
-> +  - interrupts
-> +  - interrupt-names
-> +  - phys
-> +  - vpcie3v3-supply
+Thanks,
+Vivian "dramforever" Wang
 
-> +  - device_type
+[1]: https://github.com/spacemit-com/linux-k1x/blob/k1/arch/riscv/boot/dts/spacemit/k1-x_orangepi-rv2.dts
+[2]: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-RV2.html
 
-Always required by pci-bus-common.yaml. Drop.
-
-With that,
-
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
