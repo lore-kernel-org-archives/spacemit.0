@@ -1,127 +1,120 @@
-Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9D21A0712
-	for <spacemit@lists.linux.dev>; Wed, 22 Oct 2025 01:49:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A9520F067
+	for <spacemit@lists.linux.dev>; Wed, 22 Oct 2025 02:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761097763; cv=none; b=X1T9YDrOedaVxMds/n1XesdWiASxcK0uUefOv3W5xMm7bLvoQ7i32CBXU8a7bzxpUbeAJlsWMR53jAf4Q2IBJI7yCjRQ3PXE/nG+bIXfxAU4CQ+/104+hDfq87KaCZm8nZk9lIeTMKAS1n+68V9BBnfvB4fycaT22B/eHc3JrzI=
+	t=1761098409; cv=none; b=sxdlExKrKtQBpPkehRnerrOeNQR52/aPrH++RAAUmn/Qab4Z9+1mPuR84QONSVIJlvgyDjcur/fTEH9qH4vu8QQy5K8nePOadNeZ3rgv1UIqP3clUUa7ajQPWuDo351B+zsjZXuXrrjsjssjEtK43NakWCPK0B6YwZfYFJtbv0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761097763; c=relaxed/simple;
-	bh=yI5/QQViHBfIHu2GLKaOLG3HaftNfSEfF0z4vSZaQNw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RgFmKT1+wJZCdkQg4eASiZBrqCv8Su7B20TaIy6LDkgIa4UApIp5CjzKo6W4k2d2r/ESxyEv48/IE6uNK4LzOL4hmYMdlmRjFVfH/+tegklj/Qdin4+9Diw7z8k7taZlEpzVgKZmLzTLQFqdZiFlybpb5MKLSwFWkdTHevc5JkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=V0JH4R/4; arc=none smtp.client-ip=54.206.16.166
+	s=arc-20240116; t=1761098409; c=relaxed/simple;
+	bh=PD7yEkPGAklmSGlrlki1NY4UYflEx5rWR/HZANJ3w60=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=UwIiz5wGo7B50XiWkLqtJis2NJFG96iov8LAoxem++i4x1uevTLJqul4jGyGMALWwXGifidHqRKLa1djhVd+hcA5I8WE6cN6XDUAg8FbV03VXb8k9MWE104MUVwvCXxwsnUB1L7VHMTbdZqBL+rY/S9+fErXHAyCHRbBL1V2ylc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=m9mNLPVB; arc=none smtp.client-ip=54.92.39.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="V0JH4R/4"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="m9mNLPVB"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1761097692;
-	bh=X7vhDG495g1PdZKo8SLtLFS6XGZDbpBLt2YVQRk/xzU=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=V0JH4R/40gAcKh+inDPGZmYd64cPK9KggsL9RFO83woRgMyGLnX4Yb6W8qsj9Byco
-	 mKRtA3Vg9+lu/95xHmjzEzGCnxyaA/75eFJO9daK33W2PA3PP0/Bs7lrsPmuwrEtVu
-	 kl65k5yOZ+0xMf5U0fmphiiT7m8hCIQnLCzAM3eE=
-X-QQ-mid: esmtpsz11t1761097685t6631861a
-X-QQ-Originating-IP: XeCO6qz22dmz9Hct7O9nhli4miv2nRud+MoWQJbKTto=
+	s=mxsw2412; t=1761098349;
+	bh=SyGZyMLIKrMdERbfgHg3j+Nq1VVp/eWFMTGPVyHMtnI=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=m9mNLPVBxMWfwR6QO/PNzMFTXYg0wN/YTYlT77nFNgLTahSmajbpe5v7VMMP3J8rV
+	 GPI1DKIsVPPd866oxR4odm9Tn4uaI/RRt5Zj+3HASBjQUDgnbOl4Q6bZ6MXVGrk3MD
+	 mmjXgPNZK+qtEbVaH4bYrRNI5kz7E0UCQuA56Fm4=
+X-QQ-mid: zesmtpgz6t1761098342tc3490975
+X-QQ-Originating-IP: Cklzy8kHGAwOqZzVLHHNpblhtpwHCYPjxH0LvhM3KPU=
 Received: from = ( [14.123.255.147])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 22 Oct 2025 09:48:04 +0800 (CST)
+	id ; Wed, 22 Oct 2025 09:59:00 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 87910848643870731
-EX-QQ-RecipientCnt: 7
-Date: Wed, 22 Oct 2025 09:48:04 +0800
+X-BIZMAIL-ID: 2133142105877688065
+EX-QQ-RecipientCnt: 8
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Andi Shyti <andi.shyti@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Yixun Lan <dlan@gentoo.org>, linux-i2c@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v4] i2c: spacemit: configure ILCR for accurate SCL
- frequency
-Message-ID: <748544ABF6A72D31+aPg31PBvHDkBALoa@kernel.org>
-References: <20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com>
- <t26pyjnmzj62oczwuje2bbscowj22pdge2ef3tcktwmhzpsq47@7odo2ccvc52a>
- <sdhkjmi5l2m4ua4zqkwkecbihul5bc2dbmitudwfd57y66mdht@6ipjfyz7dtmx>
+Date: Wed, 22 Oct 2025 09:58:48 +0800
+Subject: [PATCH] mfd: simple-mfd-i2c: remove select I2C_K1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sdhkjmi5l2m4ua4zqkwkecbihul5bc2dbmitudwfd57y66mdht@6ipjfyz7dtmx>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251022-p1-kconfig-fix-v1-1-c142d51e1b08@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAFc6+GgC/x2MQQqAIBAAvxJ7bkENo/pKdMhcbQlUFCII/550n
+ IGZFwplpgJL90KmmwvH0ED2HRznHjwh28aghNJSKIlJ4nXE4Nij4wdHq4yerRjM5KBFKVPT/3D
+ dav0AKUNnfmAAAAA=
+X-Change-ID: 20251021-p1-kconfig-fix-6d2b59d03b8f
+To: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Alex Elder <elder@riscstar.com>
+Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, kernel test robot <lkp@intel.com>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761098340; l=1223;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=PD7yEkPGAklmSGlrlki1NY4UYflEx5rWR/HZANJ3w60=;
+ b=/S4nZiaQVv3tCCnurnMx+ofSPeEI092LxcLb8iHHVQboONJc8uDDhh9xmCr+Ju4ww/GeWoozh
+ M4aKR5KHvyeDt17CPAGH4LTszCmSvZb/g/uMRrqvSnptFr7KJrtJWZr
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NDtUtlvFer7ve2K//w09cAR88dsVH4wGZELugfbnvP/F/FT2vXAdwHKf
-	Rr5Z8b4KfgRc9OHxuHdwnZwfKVfU/uGmbdfac+DQhysUbqMWj3/e0dkCtvUJdCbIitBszoV
-	dVQar2Qniz5Dbo3ckPTZSumd3+/Dr+rJEueQBXTMgkD2Q2mKdKevG5C8UEvUQhjKwFRzoTy
-	gqzJ+BDAkFcmCp+1Y3KJoKKZ6XafpCdcKmvvN9Decj5WhxD6BmnreKn+/I9+/TDzGXji4dM
-	/tLvcSvv/oBmB6uhdCEjMQhahabXSWnaHJold3SMU9TXbirVR6b1r1xUgriUIQjIcVqi11o
-	vKT0RTF7kkE3bBuykyw0TKSSk/+P0aOcztZth6UgjOpC36VC/uqXR3zshSWbdsL1HM2nHpO
-	rlb5T+40gegKMISEs6rw5gjGs6gUTIx+RRc10ztgXALYFCjxGlGt8k7a+aiISYDSwQITrs/
-	lvvPNH/qP89VsGSiZnT+/RCIW+0qM++UgN+0+bs+hXNT73fY8dYCXOueB6jaIod7Ln9z2LO
-	fbofD1zt938vSvu8vvUEGK1iioWGco83rhR7e+GWisgcXhod+p1UtjHYXcw/hExzzWnJhy+
-	/fIV/JsEak9s4mN31zn3snE6sVonv79B2VAtevz1/qrIBgfxxhBvrO4h49oCXBgZl2cCScc
-	RO96nn/Poujn2hT6Uro1wcjNl6OW6nseguJ7/QnVfeXGmYZGI4aeybayFsLXLb2aoCrlvxO
-	BmIZ3PvXAEhRe9iesn93SQZD8qm/aMBAFQ7FxybsAIxJ7ufhaax3aRioQjEOLOYdHu/7oXp
-	KinojmAuy7kfZcMtWzSGc72AJSb29J06hkR3UnV1xFc/mcEJmUDK0vr4b7hnka2ZtQHdsqS
-	YqX7bbTgcIb2MHD18fELke9G9rOccqSF1laE/l1KFlD7uZ65vyPCsvrKdwIZpKqiBwyJXNU
-	c6Q3bCNCv66Vn1ZkUlgQtQQQfS9E77qY61+dIYJ1lyD9UUF6/7fCQ35h+Y2ft33/4FImR5i
-	NH5852JbblGtvMUhInuJoV1giZRETcyKv4HJXf+ZdAPnw/rAmQ
-X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NI7LLrmLuCc6+kq67em8YHiGCNlEpXDBMoBEcvykqIuyaCxECQIVwXZA
+	iQ8g5JysowP1lvff4mHxqCvWBIOWH2oYkqc0GQa12+yR4rm2o/d5k/YIk7p0o2/o/5IjQm9
+	W0uGUtjL12RdD0fD9y5/KuNBy+7+tT68vvSPqHOWGGgKSVnbjgNAUHsB9GScdkBoNTJfgiG
+	99ONpm+vcMHleE02ynhiTcw9ItYpB7rjSwBwXNPogk5b6bY48tUXm9phvtVXwz8BoeTPVbR
+	m1iF6m/GfNT04ybMkFmgGqDlEsubBBVAs1COlojBZ7+CFfapltBL2Mxn1CyBXW/sKvjvGah
+	7ggmdwi8x44e25YDzDx+SCQyhfJ50+hYGatJzdhCCY+3A9mi+W107H/PRGbW7YkNZrtodg/
+	Ps1AkeNB8pgWErxQdTBYFZDe9DUNXlVsDCwZsIAQdDtwbUHpTwA3oEqVEFWgU53ioO2YF8Y
+	Bx4SI6slysuzSVHvd4yWiXdv6PevC1tmqRY5J4BygVaWGvMe17aq4duvVw2xp6xe9hH4a9S
+	V9XdUsdI1Ri083OJZAYKitbjN6gcGo5ZxGO/NeMmoekNyYslm1n/G6laHCk3nMED9nCpCpc
+	/Cer9KNm/Qcl2WcBb0puYlM8MFuuB0c/qMRSK5O+p4pwPLNhY5H4M7qz9siYpOp34EecuEi
+	RVRgHe5mccwcXRBFWK79yE3tBaN8/CGsyBmJ7RL0OSMFqRV7WnLGW/0TElqXp6Owgy4PRoh
+	HYzvCQRzIHExxiN1ZuO/cTYmybVlBgPt5tvRmHqxqllyG8u4xp7EaQfeNLakkmSLWAafu+H
+	nEhlMH5ySIS/3VQifYWHHcA+JJcuNiAE646S+meoPJoBRvRQ8XGlWBoTMZtMFwpDzQ+M2Cp
+	KfuXrQt7+nYF9NuzMp44YQddClTqC7QmtE62l/pOZTTxsLEidOjrjomXPu9svjcHQCB+sI4
+	nJ8PrE4t1xmqYqCF7bQf4bKcNxERD6II5oxXcDjEcnAqqZsc4aOkkZqsicJ3bDkIPsTZRdd
+	AghgUTNHs6/f3vLSlOD1DTIaShyIRvPC6Xiack3zZqHJaMNnjfLcLdfI9Klm800VcDRzDym
+	HRE72+xNXn1wDiMW5MW6nwthcCY4pk/5knzTyQcfzycodrBlojvsfLT/7j3qSare5oDPCZM
+	RZMb
+X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
 X-QQ-RECHKSPAM: 0
 
-Hi Andi,
-On Tue, Oct 21, 2025 at 06:03:34PM +0200, Andi Shyti wrote:
-> Hi Troy,
-> 
-> On Mon, Oct 20, 2025 at 11:28:45AM +0200, Andi Shyti wrote:
-> > On Fri, Oct 17, 2025 at 03:27:39PM +0800, Troy Mitchell wrote:
-> > > The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
-> > > master mode operations is determined by the ILCR (I2C Load Count Register).
-> > > Previously, the driver relied on the hardware's reset default
-> > > values for this register.
-> > > 
-> > > The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
-> > > frequencies lower than intended. For example, with the default
-> > > 31.5 MHz input clock, these default settings result in an SCL
-> > > frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
-> > > and approximately 338 kHz (fast mode) when targeting 400 kHz.
-> > > These frequencies are below the 100 kHz/400 kHz nominal speeds.
-> > > 
-> > > This patch integrates the SCL frequency management into
-> > > the Common Clock Framework (CCF). Specifically, the ILCR register,
-> > > which acts as a frequency divider for the SCL clock, is now registered
-> > > as a managed clock (scl_clk) within the CCF.
-> > > 
-> > > This patch also cleans up unnecessary whitespace
-> > > in the included header files.
-> > > 
-> > > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > 
-> > merged to i2c/i2c-host.
-> 
-> I'm sorry, because of the report from LKP(*) I reverted your
-> patch. I2C_K1 is selected by MFD_SPACEMIT_P1, so that we get the
-> following warning:
-> 
->   WARNING: unmet direct dependencies detected for I2C_K1
-> 
-> and compile I2C_K1 without COMMON_CLK. Please, fix it and
-> resubmit the patch.
-Yes, I noticed that too. The issue is introduced by PMIC driver(P1)
-instead of I2C.
-Should I resubmit this patch right after sending the fix,
-or wait until the fix gets merged first?
+select will force a symbol to a specific value without considering
+its dependencies. As a result, the i2c-k1 driver will fail to build
+when OF or COMMON_CLK are disabled.
 
-                                - Troy
-> 
-> Thanks,
-> Andi
-> 
-> (*) https://lore.kernel.org/oe-kbuild-all/202510202150.2qXd8e7Y-lkp@intel.com/
-> 
+The reason for removing I2C_K1 instead of adding a depends on condition
+is to keep the possibility for other SoCs to use this PMIC.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202510211523.sSEVqPUQ-lkp@intel.com/
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+ drivers/mfd/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+index 6cec1858947bf7ab5ee78beb730c95dabcb43a98..ea367c7e97f116d7585411fff5ba6bcd36882524 100644
+--- a/drivers/mfd/Kconfig
++++ b/drivers/mfd/Kconfig
+@@ -1258,7 +1258,6 @@ config MFD_SPACEMIT_P1
+ 	tristate "SpacemiT P1 PMIC"
+ 	depends on ARCH_SPACEMIT || COMPILE_TEST
+ 	depends on I2C
+-	select I2C_K1
+ 	select MFD_SIMPLE_MFD_I2C
+ 	help
+ 	  This option supports the I2C-based SpacemiT P1 PMIC, which
+
+---
+base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+change-id: 20251021-p1-kconfig-fix-6d2b59d03b8f
+
+Best regards,
+-- 
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
