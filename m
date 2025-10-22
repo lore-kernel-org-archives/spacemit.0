@@ -1,49 +1,62 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAF12D7801
-	for <spacemit@lists.linux.dev>; Wed, 22 Oct 2025 04:41:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709BC21348;
+	Wed, 22 Oct 2025 05:37:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761108092; cv=none; b=ZElzafxh0W4AVVc8bvNZqZERlH5z/WGJ965DGnxNV85o1KBk6vg/BmAhfV3X5UBH2VzaJpaLo1sPFTwTAik7sEgPtQvMq0f5pZc+lPtBfFMEu27yR3m2K2GF6hPjpWNlgl8WSrQCLRL++crBI3MpavD6yqSWK2k07b151IrX0NQ=
+	t=1761111437; cv=none; b=tDNiwXS/ksjkGJdixphHaWJtc22pr4fkesM/6FB4Dn0jnvfBHdOUVaf8fO8cwAGKJo8w8vmoxyYbdCZoX45tn/CSZscg0pxLRJXIqGS6dNoaHLzN0viKzKXt5UEQRf3aYyOlarxfTJSPkuDeja+uEHkkw27VyZkOWgaANOiAMm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761108092; c=relaxed/simple;
-	bh=Yyh30BqXzoeYf2IPMMqMZWfKBKh76tv5r0WPuHXjxIo=;
+	s=arc-20240116; t=1761111437; c=relaxed/simple;
+	bh=Tbwss0nXMa5BTDRSqT/ghsm1C3O/dSOWFT7FaxGnv98=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kwZhqesGq0UPfJj8f+UudTuCLATOpSI0A7wbrJ5Ri6jfEjyCaMYvuXt3K3PjYYVqkSNNFsH1pssoC4DoIi7f8RLo5k4uDpxLVWCBd/33WT2dl4c3kTJvh8U0kFgbYF1OgGllaJRV+EhD6E9f6thzBepCYezWIAGo8Xg9NtMEozM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=YX77/iKk; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=FXaqH8y7IDdCJU7e22hdWrKVfblvtlbByJHRVvfnpG3jB6bc/ZQDsNTpImodoyeEXP6wjnFWVbrUeVEFwqVAcg9q3CrWBOZUXL9mMdyyMZm+/0lWxtzUQ3Qr7ZKxvR0qttOf8w7DFa8SFRbWHlLRNIf+g/IBPODH7UIAjCZXp6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=0Up3RLUx; arc=none smtp.client-ip=195.154.113.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="YX77/iKk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1761108031;
-	bh=JQDFvf5I1dyCH/Y7blrGy1YqVRXPt8LzOkgRdqckuY4=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=YX77/iKkMUbuT1N7NzTa6XHHxtoWSTkoTHeAztc/I26FJ7uqhOcSy5zxVUqOi3Irq
-	 NMecrlL4UHm8g/NNl99tngs/LnvA/QmZEiT6wf9qRInIFHQ/9noA3fxYuDsBnzcX+Q
-	 UbjH+73FoU+kG8b1EO6lUHJfD9Cp24bzGuhcFV1w=
-X-QQ-mid: zesmtpgz6t1761108025tcd8e51e8
-X-QQ-Originating-IP: K+sLGzXws9S2GyOVegV1iBZp/fosgcrzaZzr8htxs/o=
-Received: from = ( [14.123.255.147])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 22 Oct 2025 12:40:23 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 2474559367131974335
-EX-QQ-RecipientCnt: 8
-Date: Wed, 22 Oct 2025 12:40:23 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Alex Elder <elder@riscstar.com>,
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="0Up3RLUx"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=55BpwGusbE0Q6zvfMgJToUDCvwjVEr4QNsPjBG6PryY=; b=0Up3RLUxevg5HmyNmj6t+iLeeh
+	h9sk+cN5AbTz9BrLD/uDPr/dJ6yMTn4STQXIxdDeme1rpDqCwsKSqwtjgDSfuN0WhEqSGTgs9sICn
+	KnndmNcMxh5kNqok6inV4Dp64af+lZ0O3tIsTW5rttpQEwqMuDua7tJl35tz6k6CZo77Zy6IXv1/c
+	VpNDDm7WFADtWKZrKUI87mBA0q1axdv/MErhBQ51WFshpSAiZj84uANBFqG64Yx8a3jFIKMkXkQKL
+	EpyNNauoeWcqTN6ex1m3UZviSnSQ9FW1FYLbRthOB0iYpcMFYvwxelah14H1fjC/wJ5CUg/ohlUXQ
+	PKS92Ryg==;
+Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
+	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1vBRWp-00H5T8-33;
+	Wed, 22 Oct 2025 07:36:55 +0200
+Date: Wed, 22 Oct 2025 07:36:55 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
 	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] mfd: simple-mfd-i2c: remove select I2C_K1
-Message-ID: <579629FC3E61E9E6+aPhgN9kIRsEhuGE1@kernel.org>
-References: <20251022-p1-kconfig-fix-v1-1-c142d51e1b08@linux.spacemit.com>
- <965a6f1f-37de-4029-ba16-cfd2de7895ed@riscstar.com>
- <6DB8C5F20B3FAC2E+aPhfoRXlJtJymlB5@kernel.org>
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v3 1/2] driver: reset: spacemit-p1: add driver for
+ poweroff/reboot
+Message-ID: <aPhtd0j6iBpqiGUQ@aurel32.net>
+Mail-Followup-To: Yixun Lan <dlan@gentoo.org>, linux-kernel@vger.kernel.org,
+	Lee Jones <lee@kernel.org>, Sebastian Reichel <sre@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
+References: <20251021201451.1013640-1-aurelien@aurel32.net>
+ <20251021201451.1013640-2-aurelien@aurel32.net>
+ <20251022004830-GYB1522542@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -52,44 +65,72 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6DB8C5F20B3FAC2E+aPhfoRXlJtJymlB5@kernel.org>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NWLpwLZrMWrIXaUnIu+eOoYfTeDIdQXogb9/0HskmIISGz7pfvwOwke3
-	GZeLpIMcg2dgA4iKudrnkAbqsnShkI9MyTbiVDgYvY7GcWf+Py9ibsw/KhRsNQbWm99Blh/
-	oriize2GCjs4X+UcbRv3Sjxly8fGGssNzFyODC27h5XWOUNy09WVVAaEnTcRpJdnLASenMo
-	I//XFmfwDtI431rh7fSsyPCKQULevD6RWJpnK3kJR/DHADf/LvqpLZZIVXTRcqK76iCTzSs
-	+nffx8pBThWhaJDnIiuMjx3OfYZD8OeuC2LwdsA6S9yVUenXx/LI2tf9nrigYGywgWg6Gft
-	2vd5QFvib6Jnf7/68s18+L20QfW77q7lwX/oanWMHa3GV94K9EcKG4loENINQwwwaer2WLG
-	0yq+oO9m4FJAwJRP7eTTDUUZgcPAtIqI29uhQ1O9uvF3PmeCprsI5dkc2NcNbH6X2W7Zuww
-	fN3QbbFHUe0dTLquFdieDbDCBoclxm+8yk+TfloT8eqZZD649ZW2bqwRvPnY4uK9vRKiy8Z
-	jrq010ewSlyjyw+/VVQ4No76X3Y93dQZWA8SRtSe8v3QpgJYDACi8nZZpKg8TkwWaalLyqA
-	1eJdlpS8kQEL/v8ICm2hDRmqmooF2RIzg2IZKHPhT8U3z0CRS7R+Q1bOhVvNcvRjr6N1h9I
-	3izQkjgVAikFCeXIXDsMLX8MlOqjkF2YknXCzZzQp2DoMGQHjFTnHtx7VCJEU1mYmeJKxX5
-	4ABpBNJ9KWhW0n0km+Pn0owrrd1++3CkLVfZkKyxcKcCdqFJeZEC56SHSFKYE5l+ld4XUam
-	WJlOk1stZDa/hX9mTV3BiUHe12LOHhsCFfdmsCGfSoAseWzY3SFbdLh4Qhz3xVAORZgIyFf
-	kllAaSECQUgTAApLkPkd5IBXKkUgILf+3zywybWAg8iHZv8MVfR9rChJx+wflaAZxRTuDJ6
-	JcYFRpve0ZDF4sXOIL4lSIeLErPUE8bnmfCdRLwwRwLKlrc0xp7rhUbjhp+iCZi+xIp8yIK
-	BpaFw84cMPovy4liD/L7E9u28DNFmg3ODw66XSdFUkoNx68XkGu/29kDfIlNu5vADCSIh6g
-	w/3YIAXEtASirT+7+R167A=
-X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
-X-QQ-RECHKSPAM: 0
+In-Reply-To: <20251022004830-GYB1522542@gentoo.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Wed, Oct 22, 2025 at 12:37:53PM +0800, Troy Mitchell wrote:
-> On Tue, Oct 21, 2025 at 11:30:37PM -0500, Alex Elder wrote:
-> > On 10/21/25 8:58 PM, Troy Mitchell wrote:
-> > > select will force a symbol to a specific value without considering
-> > > its dependencies. As a result, the i2c-k1 driver will fail to build
-> > > when OF or COMMON_CLK are disabled.
-> > 
-> > Should config I2C_K1 depend on COMMON_CLK then?
-> Yes, this patch [1] registers the ILCR as a clock.
+On 2025-10-22 08:48, Yixun Lan wrote:
+> Hi Aurelien,
 > 
+> On 22:11 Tue 21 Oct     , Aurelien Jarno wrote:
+> > This driver implements poweroff/reboot support for the SpacemiT P1 PMIC
+> > chip, which is commonly paired with the SpacemiT K1 SoC.
 > > 
-> > But you're right, the selecting config should ensure the
-> > dependencies of the selected one are satisfied.
-> And the config REGULATOR_SPACEMIT_P1 select MFD_SPACEMIT_P1(RTC same).
-> Should we change it to depends on?
-Yixun has suggessted here[1] and I think too.
+> > The SpacemiT P1 support is implemented as a MFD driver, so the access is
+> > done directly through the regmap interface. Reboot or poweroff is
+> > triggered by setting a specific bit in a control register, which is
+> > automatically cleared by the hardware afterwards.
+> > 
+> > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+> > Reviewed-by: Yixun Lan <dlan@gentoo.org>
+> > ---
+> > v3:
+> >  - Allow building as a module
+> >  - Remove outdated Acked-by and Tested-by
+> >  - Collect Reviewed-by
+> > 
+> >  drivers/power/reset/Kconfig              |  9 +++
+> >  drivers/power/reset/Makefile             |  1 +
+> >  drivers/power/reset/spacemit-p1-reboot.c | 88 ++++++++++++++++++++++++
+> >  3 files changed, 98 insertions(+)
+> >  create mode 100644 drivers/power/reset/spacemit-p1-reboot.c
+> > 
+> > diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
+> > index 8248895ca9038..6577d73edbda4 100644
+> > --- a/drivers/power/reset/Kconfig
+> > +++ b/drivers/power/reset/Kconfig
+> > @@ -283,6 +283,15 @@ config POWER_RESET_KEYSTONE
+> >  	help
+> >  	  Reboot support for the KEYSTONE SoCs.
+> >  
+> > +config POWER_RESET_SPACEMIT_P1
+> > +	tristate "SpacemiT P1 poweroff and reset driver"
+> > +	depends on ARCH_SPACEMIT || COMPILE_TEST
+> ..
+> > +	select MFD_SPACEMIT_P1
+> I'd suggest to use "depends on" instead of "select", the reason is that
+> using "select" will sometimes ignore the dependency, considering
+> the reset driver here is tightly coupled with P1, so I think it's 
+> reasonable to switch to use "depends on", also refer below link
+> 
+> https://lxr.linux.no/#linux+v6.7.1/Documentation/kbuild/kconfig-language.rst#L144
+> 
+>         select should be used with care. select will force
+>         a symbol to a value without visiting the dependencies.
+>         By abusing select you are able to select a symbol FOO even
+>         if FOO depends on BAR that is not set.
+>         In general use select only for non-visible symbols
+>         (no prompts anywhere) and for symbols with no dependencies.
+>         That will limit the usefulness but on the other hand avoid
+>         the illegal configurations all over.
 
-Link: https://lore.kernel.org/all/20251022004830-GYB1522542@gentoo.org/ [1]
+Thanks for the pointer, I'll fix that in the next version. I used 
+REGULATOR_SPACEMIT_P1 and RTC_DRV_SPACEMIT_P1 as examples, they'll also 
+need to be fixed.
+
+Note also that without the select, a default value has to be added to 
+MFD_SPACEMIT_P1, otherwise this makes the default values on the 
+regulator, rtc and reboot drivers useless.
+
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
