@@ -1,66 +1,67 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6132D780A
-	for <spacemit@lists.linux.dev>; Wed, 22 Oct 2025 04:34:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE2D2D5A0C
+	for <spacemit@lists.linux.dev>; Wed, 22 Oct 2025 04:34:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761107664; cv=none; b=faA3RcqPgGHg6o7P8lCjPvVUPhET1AdcqCCa0K1As8sliOLnuH3rGvTmMa+8gnaCHwE23CyBILlWo8S7CareLuV8v1AUflhZHrlnSxxe3YevqWQBJQTA0VQLAD5TdjZKkaAQZYQ8WprWj3sigtztmUoDwsXN7ywZIzcTF0ZVicg=
+	t=1761107667; cv=none; b=pdYfLP5A0Zyj97zbwJgYCyL8A1nzMJ4UtanBU2/RnH9y8UeGg88f76vS5FkqTITSeeGBK96CBTuNj/HAiRUflTGHBnADLiQ5ojUMW+ZwU1hmHhPNrck1/aJkm9KN/MrHE9C6bLwMe8DMlJO8K8o6W2nKzGZQpNbi9O8gTytfrYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761107664; c=relaxed/simple;
-	bh=szq/rOHUN+3GufB7hVfQTfjTIKoq4aYdgJfWA0SfWRI=;
+	s=arc-20240116; t=1761107667; c=relaxed/simple;
+	bh=M0//wu4eodGM73UzE+/RSQN3dfA7ycS4x9S8XdOl3lg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LAbtKCBZS5diAvPMI3YzQPxBJFjF7qlRSxaX9b6pR1OSp/OnFOLkuCNOZUdrRFAEMMwJ5x3TAJFNywmOyTEq6GzzANsTyzNaigqU9OWCxNAM6ntDZN5hohgGf2bs2QWxhRV6jaX/5QhOKe3BCQMC0T38cZVqUfrEJVMFom6ebXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=EwZv1Fps; arc=none smtp.client-ip=209.85.215.178
+	 In-Reply-To:Content-Type; b=ONwyJMaCCLqA6JvnZ1IIo54NmnPAOGpu9+bkivGbhZiOcfpJQsoiaKKo1IAEt3E3u1LAsi1kezRYn6Lsdyhv/JL22kG8T0HBF9GhwRTvk3X44+0fgVBBYat0SQLTZ5aXDok0RHJwaie4lNKkbGwV6uScpLyPyynPzi/44P9kQrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=DzUoAiEi; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="EwZv1Fps"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b67684e2904so4556329a12.2
-        for <spacemit@lists.linux.dev>; Tue, 21 Oct 2025 21:34:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="DzUoAiEi"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b4755f37c3eso5318359a12.3
+        for <spacemit@lists.linux.dev>; Tue, 21 Oct 2025 21:34:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1761107662; x=1761712462; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1761107664; x=1761712464; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FXV9nPTtzRS7GB0GpGCBfWyozkzIjx5wpujc/niwppI=;
-        b=EwZv1FpsJTTl2m1QWwLOIrSERmnejkJNz3DSGsE8BhljFhPnGTUwdkwrxg7HnCfcXx
-         FtcNq67dnyInvD681Y27EklRbDbq8IYk1bmb3hDogybqf9M4VwQvxOYZRF5y5Airis6H
-         LZ4KkLb7ZrTm0vvySDxzuJ43R6ImvbdniG6OhzhbD0E4fTAgdrKF7XIjIWdrzsdRWohK
-         Wb6Y7Sqi8ClGqKYMLa/DjX7JOtEWeetKIY8YigOaFK7vSMt8JaFg+hDFbShA2wOSGIQj
-         GcVCtlMTMxJK0qzdUQEd/gR+Lu5lr02kZcPA/Q/FoMIDsM4MVmsk/v9kGhWyj28DtY6+
-         pxdg==
+        bh=EssM+PiDmpcGAGhJSWtJ6fJ+4b18HXlZ45HuXkPg0+A=;
+        b=DzUoAiEiHYoKS4jqqRdJKdxHnAyY0hVZH0PNRYfaFaHOAz3Xa/BQBEe5s6UYDaipJO
+         DV63sMyC0ZERNCSGIAVqQ5jmAlIPIvyb0l1JB57d2BXlQJYZkEfWsYOjVo52YgoMaWmN
+         IVsxF0I/FafeQ3lXij/5Omxxi5kNZK03U+RBa1h6utnX3i7wJWIzGt3Y9Cr2Z1Zjs2X7
+         fu/uYAi8EuNu3D25CufyBUKA543NEB89hbQI7n7mMhFwAFBNOvEM7uYC8un51JYyTJTZ
+         9B1CqXEO5EJFUK8lQLjxAbv8XfqAcX4ZATNSXRwa/ihdCcQ6THqjD3Sd5dcHLk8r1D8V
+         qZzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761107662; x=1761712462;
+        d=1e100.net; s=20230601; t=1761107664; x=1761712464;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FXV9nPTtzRS7GB0GpGCBfWyozkzIjx5wpujc/niwppI=;
-        b=se/rtGU+3y9rZzVH3paD0MwsKgf+fASaNqxD4sScv7gOj8XE7WUb/1+doQN8wxh0KB
-         PHHxG7+bzYzdqImYU0VtWo91QtuZUrhJaA2iBQZ9ayeNKSA4gNnokfa8XGAg/Yzl8/EG
-         Ir/trzfSeaOmOqO0dPA8aX5HnMRq7lYGqr3OMB+9mDyU1s1pEXsm9AAhtUOeiyDXso8o
-         CznJzy2XKzEB+S/ltAJslnm4VSSbPlwa62J2JMavliGGEZuu1ZmhJslO0pUFLxSZn0kM
-         Ijh2H6TojVmZrVJwv0ktbtsuEkH2lIhhgYmHrP6l3lTaudBv7B2FAzccNtYotZpfz/Fa
-         yxkg==
-X-Forwarded-Encrypted: i=1; AJvYcCUhTaEK8M3FTkLT931SkiGEsppDWQ+rl2UVMLNjxdRHQKp2ZJhEraMD91e+VTv/ZPpnWPoZn4Jc+g==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw/w4MzdtgSbOrvg69+XUV/CAvBXau+ogouqD/d3sPz7hVDrYNv
-	CTdbR2N1+aw+VLHukSNpOXU0/CegIHjhGAMKSQ+Al14MoeV3pav+5EyiT/sQD/e7l7A=
-X-Gm-Gg: ASbGnctLJgnLYXDoBeMT8IHh1JTuraLbMZO3oT7x1Uuuic+pZ5RULdNY5OMFZOrQ8JK
-	WBkFCdmPjFdqwBYRk0eneXdW1+WEKo4LMB/xr7Z7gmOMmRYclv/F/44dnZfipjrNf8hobTrCB01
-	2VYXvCCDRbrfYOZVVrIyOQQyhUus3JQoLmtie+PYeiRlCDW8eALMy5R8vDTx061LeG73GS4Kddh
-	gL/0U9eJt/HRkqobDjpqTDe5/jLcd3T0DXBnayu+/dzYCFh19YqQehZAcmsxVL7r1muj/uL/k94
-	5HQ1zOQEpFoxZvYwZCA0el0FdSS7C3rv5kYsZZHSMDB5ECr7olOgvZcQAZggtZ4j24IOxHVQv16
-	TO9Q9h6IMijRswWuwsYcBIMbqg3Am4ClsSHwVDYb6Ho4R91MUqvbW4sju5TQpqtZHYlH1YBNqlh
-	EYhsvHx4QH9cQ6
-X-Google-Smtp-Source: AGHT+IGMxMq8ODA384WIjA22NE56jXOrifm3A5Z150bOKY/fGOgxvMMpMNK8BhQcEf3SEUsHJhYpWg==
-X-Received: by 2002:a17:903:298d:b0:267:87be:505e with SMTP id d9443c01a7336-290c9cbc185mr219746635ad.23.1761107661774;
-        Tue, 21 Oct 2025 21:34:21 -0700 (PDT)
+        bh=EssM+PiDmpcGAGhJSWtJ6fJ+4b18HXlZ45HuXkPg0+A=;
+        b=mxj+aueaI1GRXkH0uZ+Lgd6iYQtCdZltiAAS/OWxqFGo2jfNGpDPTJ2VPMSxs6AmRx
+         hBiLkOZbj+NwvvCnMYbupd8QtY8iyBQja+8n0yPXTMFSd6AvJZeTndL5B/fHrOGC6PGO
+         32uIoy1r2C0TJ62JuuWEDFljMVlSV2gmDMKXVLooqmHoQPAAlxhaZ520cqAxG+BRC5nw
+         YatFc3b1PYT8n10GvbWT8EVP5n8fk0Vp3rQr11f6pYkv/YPmzusAblBGJesi2JqZpjFk
+         meJl0mi0rabM/M0oswYIXu9io2WWrQvqy6uAGHgoTcfOO4WWWw4++53n4bIjs9Q18AJv
+         XQHA==
+X-Forwarded-Encrypted: i=1; AJvYcCUY60FDCWrxrT9sPsQuNKzIUmbpIW2GuvH50TUDkmXnpB6lQ60ICH0tckjN0L+7LgrVKl+w7oduPg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzu5+OEAJHolNPeRtZ6pYEZ8zd2vKCYaHj75YeE7uGZpL0knrWd
+	ZZM+SyOqvnTjdU4WW2a28QAWcqXYI6o6fcspu9AtYLmXtmuaumRMdamvmg1QNZYV1f804deDE0V
+	JOeCT
+X-Gm-Gg: ASbGnctaSIDRZ/6CdUDf8zdwU/Ec96ZNeqvEUlBeL4yO967dJbhKrl0y+9i9B0QIZLz
+	f6NbPv2KQrg6cP8ibfIlpECfIwcsran3ITNttGy3oJabAkDD3NDZ6nn1gCuQ0Y8m0MAK37R7qUY
+	9VT0xpC491qL7yIwzLHuYKqmaVEOZK4Df9CiS2V0K73WWJ6+qcrRD0Mw0cAN7b2mB+xoklnLpKL
+	lqBlqIUcXtPCLRDzJz3MrdFa/njOjfZ0w34SAg70D+tSP7hr3VE4shKz8ENgrqiIpbJDloz3shu
+	PcOeaxgxrQjESt/Wj5tSenuOLeMqBCFdqyA7y1OJEqEIZ9/4sPtzr3qPxuwgZ4Cyp1cWOfamiRn
+	+j13NL1Il6LcoQQwhw7j3o9ZH7SWEWbvM6GtyTzwVSitpqe8vHoK0ttOtakAFP6UDdVlAIVNFuJ
+	TQcfS0JEOkTg5g
+X-Google-Smtp-Source: AGHT+IF+2IOi2vlkb7frAQI7xnO/+5ggSuzSXcXZ4DCJ3RIWA9BMWmGP9exglnUcXrvVgUWfIgCoyg==
+X-Received: by 2002:a17:903:228f:b0:24c:ea17:e322 with SMTP id d9443c01a7336-290c9c89cbemr234187615ad.3.1761107664444;
+        Tue, 21 Oct 2025 21:34:24 -0700 (PDT)
 Received: from [10.211.55.5] ([4.28.11.157])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-292471fe4cdsm126257025ad.97.2025.10.21.21.34.20
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-292471fe4cdsm126257025ad.97.2025.10.21.21.34.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Oct 2025 21:34:21 -0700 (PDT)
-Message-ID: <c93c1319-2f1f-4303-bb4b-751979f58149@riscstar.com>
-Date: Tue, 21 Oct 2025 23:34:20 -0500
+        Tue, 21 Oct 2025 21:34:24 -0700 (PDT)
+Message-ID: <d13590f1-937d-4ef6-8d2f-d0647557b695@riscstar.com>
+Date: Tue, 21 Oct 2025 23:34:23 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,95 +69,113 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] spi: fsl-qspi: add optional reset support
+Subject: Re: [PATCH 4/8] spi: fsl-qspi: add a clock disable quirk
 To: Frank Li <Frank.li@nxp.com>
-Cc: han.xu@nxp.com, broonie@kernel.org, p.zabel@pengutronix.de,
- dlan@gentoo.org, guodong@riscstar.com, linux-spi@vger.kernel.org,
- imx@lists.linux.dev, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: han.xu@nxp.com, broonie@kernel.org, dlan@gentoo.org,
+ guodong@riscstar.com, linux-spi@vger.kernel.org, imx@lists.linux.dev,
+ spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+ linux-kernel@vger.kernel.org
 References: <20251020165152.666221-1-elder@riscstar.com>
- <20251020165152.666221-4-elder@riscstar.com>
- <aPaIezCu/gXxJC01@lizhi-Precision-Tower-5810>
+ <20251020165152.666221-5-elder@riscstar.com>
+ <aPaJ479zH/90fJ2d@lizhi-Precision-Tower-5810>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <aPaIezCu/gXxJC01@lizhi-Precision-Tower-5810>
+In-Reply-To: <aPaJ479zH/90fJ2d@lizhi-Precision-Tower-5810>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/20/25 2:07 PM, Frank Li wrote:
-> On Mon, Oct 20, 2025 at 11:51:46AM -0500, Alex Elder wrote:
->> Add support for one or more optional exclusive resets.  These
->> simply need to be deasserted at probe time, and can remain that
->> way for the life of the device.
-> 
-> Nit: please wrap at 75 chars
-
-You're saying wrap at *longer* lengths, right?  If not, please
-clarify.  I'll update in v2.
-
-Thanks for the  review.
-
-					-Alex
-
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> 
+On 10/20/25 2:13 PM, Frank Li wrote:
+> On Mon, Oct 20, 2025 at 11:51:47AM -0500, Alex Elder wrote:
+>> The SpacemiT K1 SoC QSPI implementation needs to avoid shutting
+>> off the clock when changing its rate.  Add a new quirk to indicate
+>> the clock should not be disabled/enabled when changing its rate
+>> for operations.
 >>
 >> Signed-off-by: Alex Elder <elder@riscstar.com>
 >> ---
->>   drivers/spi/spi-fsl-qspi.c | 12 ++++++++++++
->>   1 file changed, 12 insertions(+)
+>>   drivers/spi/spi-fsl-qspi.c | 21 +++++++++++++++++----
+>>   1 file changed, 17 insertions(+), 4 deletions(-)
 >>
 >> diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
->> index c887abb028d77..1e27647dd2a09 100644
+>> index 1e27647dd2a09..703a7df394c00 100644
 >> --- a/drivers/spi/spi-fsl-qspi.c
 >> +++ b/drivers/spi/spi-fsl-qspi.c
->> @@ -36,6 +36,7 @@
->>   #include <linux/of.h>
->>   #include <linux/platform_device.h>
->>   #include <linux/pm_qos.h>
->> +#include <linux/reset.h>
->>   #include <linux/sizes.h>
+>> @@ -197,6 +197,11 @@
+>>    */
+>>   #define QUADSPI_QUIRK_USE_TDH_SETTING	BIT(5)
 >>
->>   #include <linux/spi/spi.h>
->> @@ -267,6 +268,7 @@ struct fsl_qspi {
->>   	const struct fsl_qspi_devtype_data *devtype_data;
->>   	struct mutex lock;
->>   	struct completion c;
->> +	struct reset_control *resets;
->>   	struct clk *clk, *clk_en;
->>   	struct pm_qos_request pm_qos_req;
->>   	struct device *dev;
->> @@ -857,6 +859,8 @@ static void fsl_qspi_cleanup(void *data)
->>   {
->>   	struct fsl_qspi *q = data;
->>
->> +	reset_control_assert(q->resets);
+>> +/*
+>> + * Do not disable the "qspi" clock when changing its rate.
+>> + */
+>> +#define QUADSPI_QUIRK_NO_CLK_DISABLE	BIT(6)
+> 
+> NO_CLK_DISALBE look likes not clk disable capability. Maybe
+> 
+> QUADSPI_QUIRK_SKIP_CLK_DISABLE
+
+OK, that's better.
+
+> 
 >> +
->>   	fsl_qspi_clk_disable_unprep(q);
+>>   struct fsl_qspi_devtype_data {
+>>   	unsigned int rxfifo;
+>>   	unsigned int txfifo;
+>> @@ -306,6 +311,11 @@ static inline int needs_tdh_setting(struct fsl_qspi *q)
+>>   	return q->devtype_data->quirks & QUADSPI_QUIRK_USE_TDH_SETTING;
+>>   }
 >>
->>   	mutex_destroy(&q->lock);
->> @@ -902,6 +906,10 @@ static int fsl_qspi_probe(struct platform_device *pdev)
->>   	if (!q->ahb_addr)
->>   		return -ENOMEM;
->>
->> +	q->resets = devm_reset_control_array_get_optional_exclusive(dev);
->> +	if (IS_ERR(q->resets))
->> +		return PTR_ERR(q->resets);
+>> +static inline int needs_clk_disable(struct fsl_qspi *q)
+> 
+> bool type?
+
+Yes I agree with this suggestion.  However all of the other
+needs_*() functions return int and are marked inline (neither
+of which I would normally do).
+
+You want me to add a patch to update the others too?  If I
+do that it will look more like this:
+
+static bool needs_swap_endian(struct fsl_qspi *q)
+{
+         return !!(q->devtype_data->quirks & QUADSPI_QUIRK_SWAP_ENDIAN);
+}
+
+
+					-Alex
+
+> 
+> Frank
+> 
+>> +{
+>> +	return !(q->devtype_data->quirks & QUADSPI_QUIRK_NO_CLK_DISABLE);
+>> +}
 >> +
->>   	/* find the clocks */
->>   	q->clk_en = devm_clk_get(dev, "qspi_en");
->>   	if (IS_ERR(q->clk_en))
->> @@ -923,6 +931,10 @@ static int fsl_qspi_probe(struct platform_device *pdev)
+>>   /*
+>>    * An IC bug makes it necessary to rearrange the 32-bit data.
+>>    * Later chips, such as IMX6SLX, have fixed this bug.
+>> @@ -536,15 +546,18 @@ static void fsl_qspi_select_mem(struct fsl_qspi *q, struct spi_device *spi,
+>>   	if (needs_4x_clock(q))
+>>   		rate *= 4;
+>>
+>> -	fsl_qspi_clk_disable_unprep(q);
+>> +	if (needs_clk_disable(q))
+>> +		fsl_qspi_clk_disable_unprep(q);
+>>
+>>   	ret = clk_set_rate(q->clk, rate);
 >>   	if (ret)
->>   		return ret;
+>>   		return;
 >>
->> +	ret = reset_control_deassert(q->resets);
->> +	if (ret)
->> +		return ret;
->> +
->>   	/* find the irq */
->>   	ret = platform_get_irq(pdev, 0);
->>   	if (ret < 0)
+>> -	ret = fsl_qspi_clk_prep_enable(q);
+>> -	if (ret)
+>> -		return;
+>> +	if (needs_clk_disable(q)) {
+>> +		ret = fsl_qspi_clk_prep_enable(q);
+>> +		if (ret)
+>> +			return;
+>> +	}
+>>
+>>   	q->selected = spi_get_chipselect(spi, 0);
+>>
 >> --
 >> 2.48.1
 >>
