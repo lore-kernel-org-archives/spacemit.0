@@ -1,49 +1,49 @@
-Received: from tiger.tulip.relay.mailchannels.net (tiger.tulip.relay.mailchannels.net [23.83.218.248])
+Received: from caracal.ash.relay.mailchannels.net (caracal.ash.relay.mailchannels.net [23.83.222.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F6422A7E9
-	for <spacemit@lists.linux.dev>; Wed, 22 Oct 2025 20:34:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.248
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C75E2FF15F
+	for <spacemit@lists.linux.dev>; Wed, 22 Oct 2025 21:18:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.222.30
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761165261; cv=pass; b=mLV2ET2yQpqXN5Kw2Nt2U2NG4LK6jvgIyBgrB9ixYzf7B3s1WKxOxvlDHloeVH0l0zf7lD8gEj/Ce6asxzKtHoCYU88liO+jQDgPAz04mBElVSUlY/y1BuzYk31ldmv3FXx2YjHy1QSnJWm+yHQuqVyzMI+nc+fKTDCXiVfQv70=
+	t=1761167897; cv=pass; b=T+tyS2M8lFwluM6gjpN6w6RwJbOkuvlglNopXXMsjGazDLDQBWqsi9z8USYx48LNhlO5+s2Cm945RRk6QdSQAzAM1dCN5bs2P+xUpu3goecfm8C2pIfJEcMDjIMJ8PLggGamYLdYlKW9lSXY253hNd+dYBbfRzdCZgHhc2GeJXM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761165261; c=relaxed/simple;
-	bh=Ca/HvlnX/gZo5VVOMRxwoouA4WP1TNOv0ZBvSyO09Qk=;
-	h=From:To:Cc:Subject:Message-ID:In-Reply-To:References:MIME-Version:
-	 Date; b=WWWFm+KxPZIOaDTETZfCiAJdJF2DtPbmdR/GzqQJG8wLHaOkio+WdVIMjAySGlnfzKRiarBV8qHxmtISHy0+YP+PFgsH4EjMlc4i+/mAhTftBx0u4tNsKdwYAP2Qb+radCDnAFE4LaY0xcgySAFkEYGmWd5xSRH2jRDW4KaWXXY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=Kf8y/zWb; arc=pass smtp.client-ip=23.83.218.248
+	s=arc-20240116; t=1761167897; c=relaxed/simple;
+	bh=2ulWJaEoWvjLywnhaUSzWTPoHkh3JId5s2DEyjFVJI8=;
+	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
+	 Content-Type:Date; b=bTspz6gyw1rQgd5Kbil3efaO462MGReJaOhLK25LHR540gDH7fPGuKR70BMkm/t69k24NhlMpT8ig7mUAHXq4dQ75Pq1Ey3smNo1+V06qXGd4K9YWhdi6FPQp7oTNgrYZhKz8mLimQS9z3t9KLm4SDEX+pR/OKHrZo4y/nFbOpk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=ARd1dIo6; arc=pass smtp.client-ip=23.83.222.30
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="Kf8y/zWb"
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="ARd1dIo6"
 X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 1DE54504741;
-	Wed, 22 Oct 2025 20:18:44 +0000 (UTC)
-Received: from de-fra-smtpout8.hostinger.io (trex-green-8.trex.outbound.svc.cluster.local [100.119.46.77])
+	by relay.mailchannels.net (Postfix) with ESMTP id 22C32103691;
+	Wed, 22 Oct 2025 18:54:24 +0000 (UTC)
+Received: from fr-int-smtpout29.hostinger.io (trex-green-1.trex.outbound.svc.cluster.local [100.121.87.108])
 	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 3128D504387;
-	Wed, 22 Oct 2025 20:18:40 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1761164322; a=rsa-sha256;
+	by relay.mailchannels.net (Postfix) with ESMTPA id 3BB36103494;
+	Wed, 22 Oct 2025 18:54:17 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1761159259; a=rsa-sha256;
 	cv=none;
-	b=fZRTbeimbofalQJevaIU6n7DSoH/UDeTEDkhUOdYfuK8SIv59HBf5y5aS/WfYK0I25gbGU
-	kkP3pWrxSdx+gn9pQO6/dAI+9blO8oLpZPsjV5132YhCZIrSzf6w+KqR+2KaZpoqilWxQR
-	ilYSnbnnVXo56x3KM4rdmzZ+qL+PfkbABTEJ+0I3h2WJX2wOXJIXj4VWyx6hUqexpbe6YN
-	ms0aJLsuy9efsu1GIShTTAFSB0FjREuXKlBEiWWemN6RJWPxv8JAHKFSSYhO7fj0waZg/Q
-	hhEkMt+eKwj2DpvME65UfVc6Nxjz5HSiqDipyFaJiIu+qW8qGRpGb8PbpJNBCA==
+	b=GzFl2yaxjy9MxWzicd19ci4u+1NnGnrWZ5bdTBkLc7P1t8GbI8p2zvZGVitccDrJqBFywv
+	Mw3Is2+VlbgAteAFLkbr5H9vkZSKgrNpZl1ucfPyXtadjmswlGeNBQPBQXA05w/OSA3LXW
+	4veF0E4IJuEBZIobQ+3Y792nGV0ibAo/elt3+OZp/1IAnVx2xaDswkOjxNrXiKEGVHliZl
+	VEYOYVxbj86JluPF8EWU3Evt9ftlnZYdKTlvvhUuEdK1QIQVPdyklXoF+QbTsdCk2tF9rQ
+	hMuYKCRWhsy9roofZZXwRoQP6CekXjk1cStuf0RTmBLc9ooggfOFFp5RdkscmQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mailchannels.net;
-	s=arc-2022; t=1761164322;
+	s=arc-2022; t=1761159259;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=IayKEbkgWGAXICgQmVJqimgGp6s7RC6SqFcIxOt/Cow=;
-	b=FnHvNLOMIlql2R11ue51TSmmidHa5h0ThuOZc/nywYolO9YNTZshsJ98M5hBnz8eacr7ZV
-	hOIhg1h9uMsmIRI6emyNgy2dn6xHF1noDTrjc3vCbRvN/pIi/bqPZEm5hztWs8RJKOb5lS
-	bdQKoyfhjJXHPKA7aaHZo+A32wvF7BzXty9TL+V3QE5+ATZ4AOeQM7H2b56weCE6ykYdM3
-	Si9YnRNXfnZ6bRsjHsMIHhH44angePUbrRwrJYHCVLKET08B5VxE5+ARVSiCA/lG6W8mIJ
-	syEONKthqkosSzxwb6FfwlPP6zmFH/S6QVWd+/mG5TbDKr0AkdVJqz5fTsLgLg==
+	bh=run8585B0ZdBJhpgD2/vSbhEQ6c1X3Id7wa2MwUm3kE=;
+	b=b1+7zaYu3wDmoDQaR7MHCUnlyAjMxt03TAP/OvHlbQU/JjSApRkHuppArRAECjbzdgkusQ
+	yRoTkoZhBHBaPs5Pn8z4UfVy+6pk1LMquK/OOfQypHWEb9sEcJ146lcmnnQMgp1U6vpk6g
+	Y7+V/ZKQ3RiFBuPywHQWp7SBnYVddz1d8tm5Ce8SaYDurMJhSq1/r1gAIn+Y9BMJpvnO1h
+	4e//afvga0p7sWECtgG66H6xDPBKhJORTfdml5utjx/QyuMSF3hwV/Hb7bpgpnmr6DU2TY
+	x7IUzMHgfgjsJrA3MaRauhTOKMikW9+78H9iPUKLMJVBrfbQ/Lejza06DJC3xA==
 ARC-Authentication-Results: i=1;
 	rspamd-5b5956c7c7-6m7zr;
 	auth=pass smtp.auth=hostingeremail
@@ -53,146 +53,120 @@ X-MC-Relay: Neutral
 X-MailChannels-SenderId:
  hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
 X-MailChannels-Auth-Id: hostingeremail
-X-Stupid-Glossy: 3697a34139ab00ff_1761164322787_986877117
-X-MC-Loop-Signature: 1761164322787:3907238689
-X-MC-Ingress-Time: 1761164322786
-Received: from de-fra-smtpout8.hostinger.io (de-fra-smtpout8.hostinger.io
- [148.222.55.13])
+X-Abortive-Stretch: 28872bb229118efc_1761159263913_3055418994
+X-MC-Loop-Signature: 1761159263913:2795527620
+X-MC-Ingress-Time: 1761159263913
+Received: from fr-int-smtpout29.hostinger.io (fr-int-smtpout29.hostinger.io
+ [148.222.54.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.119.46.77 (trex/7.1.3);
-	Wed, 22 Oct 2025 20:18:42 +0000
-Received: from localhost.localdomain (unknown [IPv6:2001:861:4450:d360:df8b:aa61:9538:1b7a])
+	by 100.121.87.108 (trex/7.1.3);
+	Wed, 22 Oct 2025 18:54:23 +0000
+Received: from [IPV6:2001:861:4450:d360:df8b:aa61:9538:1b7a] (unknown [IPv6:2001:861:4450:d360:df8b:aa61:9538:1b7a])
 	(Authenticated sender: michael.opdenacker@rootcommit.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4csL8Z0V1Rz3wnP;
-	Wed, 22 Oct 2025 20:18:38 +0000 (UTC)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4csJHB226tz2xwK;
+	Wed, 22 Oct 2025 18:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
-	s=hostingermail-a; t=1761164318;
+	s=hostingermail-a; t=1761159255;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=IayKEbkgWGAXICgQmVJqimgGp6s7RC6SqFcIxOt/Cow=;
-	b=Kf8y/zWb70UHVm7PhYkkqtKGBci4td1IQyy8rLRFk34n+tQQyzD1Y8Nk6O7aiU74+O5F8J
-	jtI6jQb3H+IrnbcCvVZVm3eEuiggpIx+TVo1aIzc5VJRGPpGvfSXrW2T88eUs3Q7vLouQk
-	ceh1/o5OWAksDOsyXKV3Z1vMAmmAdjZ7jPoz+l8EWFem92WLV53CvZqSU5WeCDy/UrLAKd
-	wAvRVPF3sqTUx6xIssHMKT3N1ptmi8chCckceRPbHwCppca2sF5fZyKr/7n3lAQLeJcolF
-	KYsepLzn/5F4zuxQtlYRnjLTr1qc2ipWFFefuy1wp+eECA0oFJasrMH4NiKZhQ==
-From: michael.opdenacker@rootcommit.com
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>
-Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Emil Renner Berthing <emil.renner.berthing@gmail.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/1] riscv: dts: spacemit: add Ethernet and PDMA to OrangePi RV2
-Message-ID: <20251022201807.1474789-2-michael.opdenacker@rootcommit.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251022201807.1474789-1-michael.opdenacker@rootcommit.com>
-References: <20251022201807.1474789-1-michael.opdenacker@rootcommit.com>
+	bh=run8585B0ZdBJhpgD2/vSbhEQ6c1X3Id7wa2MwUm3kE=;
+	b=ARd1dIo662Hv62WYZUQuQersJEZeHBprRD1cAC8gfCOTHyjys/frF6pyzhxVUC4DshZNdt
+	ByAAPEtJ8dR0mg0WxlWIFnMb2e1yn38NdVz1xou+LIQVnT0FF3K26t41bX4nMtKJEA756R
+	XauhiSpr/cB3Xk7YAvCDhWaHNCD0i+Z0V9fVkvtVsKdYbRJ+XSbqr0JPfaKo4HNmT3vnG9
+	aPDwu845z3N9tWgIvkvAhxocQZs4gWHmcxfM2dErDrpWzqcWU3WkGe79Q0kablI3N4QqgU
+	W0K8aAciPuCv8M0jKzqzawBhgy+n/EuVFzzErBI7TgFWJuDu1JNaK1huopPwAw==
+Message-ID: <da4748ed-01f9-48a6-9939-320e83aa9eb0@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: michael.opdenacker@rootcommit.com, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>
+Subject: Re: [PATCH 1/2] riscv: dts: spacemit: add Ethernet and PDMA to
+ OrangePi RV2
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+References: <20251017100106.3180482-1-michael.opdenacker@rootcommit.com>
+ <20251017100106.3180482-2-michael.opdenacker@rootcommit.com>
+ <002e0b15-57b6-4433-a9fe-8b7ce4b8dcd9@iscas.ac.cn>
+Content-Language: en-US, fr
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Organization: Root Commit
+In-Reply-To: <002e0b15-57b6-4433-a9fe-8b7ce4b8dcd9@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Date: Wed, 22 Oct 2025 20:18:38 +0000 (UTC)
-X-CM-Analysis: v=2.4 cv=ALriHGRn c=1 sm=1 tr=0 ts=68f93c1e a=XzW6OEp4kASjoDH3AA+DzQ==:617 a=xqWC_Br6kY4A:10 a=d70CFdQeAAAA:8 a=pGLkceISAAAA:8 a=7mOBRU54AAAA:8 a=1xgkj7NNNoY4BsVt7o0A:9 a=NcxpMcIZDGm-g932nG_k:22 a=wa9RWnbW_A1YIeRBVszw:22
-X-CM-Envelope: MS4xfGgxslif6O+Km/CHVW7/ZxUgv9CSVGJfZLtGrXoovb8+BntLcTRR5LVAzRa44v9R1NEGR77x0lGcuIfonmZQtsNkKFw9pZ07aoQRDYYQ267P353g2Z3s essj0wyMJJAZWdkRt3XEPjzznD1CrjOjXd9xkbsPTDnlPIUJrp7qeQE2OuYbp+s0PAmkgXMus06bNhMTEI4rYrTtT1UD+gfDG4GLNsA/9HB+xAumA+zlBGnj 0pFfln1wo/xRRyOIxL4APgjx8bRWTzRubCp6TK10Nhe+IlANWXxnixY/1IGlopuOLz4iJIoIweJjY3l9cMjr/8b8O+3CnpP2ZQQHm4b6MugxCf2FzydNLk8y jiDJ2QpFYFctrrTIPU2DAHQgoQ19Di7viOHWWrOctnjhXOlvsS5QPAVG4CM9d6u3S+J13+V3aJwnk5KKXHWICKSnB2ORQ5oDEhwSH1OOYeisX19fEaMilM7O DeyNtv6D6cbBOFb4GDm0sdv3zsQM0FVFypLFCvH/5+pJaOupY1/LxkfzaTbyAEU/IheCqi6Nb9q98fcTHn9JJVw6Zm2be2fEkWvHdA4ElZaYuENFB2xEGzZu /APf52Ent9eSp58QX2Lbp7GaaOy0lh/WlGeEAOme7Y5shq0aXYed0o9FyvXXBAlUk0x/H8fRuug0A4zAy2lpw9pgE45mRaH1YDnTY0+/OuQMd/fw88jPTuAB taSEjj9l6xkYsJ8cO3fzl5PEu01W/8WoNsoyL2AAoVYoMbXtk9ocd4cejrq5Fgy+9sVfxvt1l3U=
+Date: Wed, 22 Oct 2025 18:54:13 +0000 (UTC)
+X-CM-Analysis: v=2.4 cv=fpGOZ04f c=1 sm=1 tr=0 ts=68f92857 a=XzW6OEp4kASjoDH3AA+DzQ==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=d70CFdQeAAAA:8 a=lNCKr4LvwL6Du062nSQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Hc5yV98H2ep6aNAGOANv:22 a=NcxpMcIZDGm-g932nG_k:22
+X-CM-Envelope: MS4xfLWRuLxrpFpBnj8c4GNDeyMskPRz/xu/oVbY1JLfaK1xSywhsC8umc/oLYGQMH0J+8A/28MVYcgsBx3vvfK64zxyuWWPQMZvWFQg1jBIeGmUuRWhIwS+ EC6qYBi4HlrcQZOzqxL0odTvXwHDxkRy2BPl6GIOiTcrpuvurek6t93KjadTmvwELinbNBCOAShyHN2q7q8EdB1DdeetuUbNu/F9A+wOn8W+Yr2e/z5pKhGx KkPioBBD5zas8PjSXAs+14V0UZqMmUJN52dAUWxHVj0AT3o4ZzEs3n5GF6QZO7jzP313qoDRw809dzAacZr9ZC0loJa5a9guirpAr4PSMWX1pvXLGTuZ5DdO +93ZnVrXnQUxNLALBoi/4ga/nUhq3MOnTL+uoULvYIqd5pbhDyrSibZWlDTMwhohmWgWxZLxtEJR8ROy96afT5r0st1K8fMGlpzT6RgCXtpUm1yKXzF/71sA 2f0rvvWZRRIns3SUdZIeEGredTS2j7J9yQ4pPJzfI0+G8zrtGV6WpjWax5UN+UsUc5XH6wDtMjhhpQ8fajLsI0NdIV/4CBTIAYQAE3iJ34r9J7IJGIvnvgVI aKFqAtNpS9Z2+XkxnOrg14PMQ/p9+BRRkr2bQ/tGOgvX6pIGUOaFw7GxHJ7QgtoRu4PlwV4FGvqAaX+odw5GhT5dVRbHYAy8hY3QV+fewRuPOvmv7BYR96xG /vmYjyY5wdy1/Ce7fuwBO+zO5+uFEVwlCHcZUvFjcmEs6RYCNs2fxw==
 X-AuthUser: michael.opdenacker@rootcommit.com
 
-From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Hi Vivian
 
-The OrangePi RV2 board ships two RGMII ethernet ports.
-Each has an external Motorcomm YT8531C PHY attached, the PHY uses GPIO
-for reset pin control.
+Thanks for the guidance and help!
 
-Enable PDMA for the SpacemiT K1-based SoC in the OrangePi RV2 board.
+On 10/20/25 11:07, Vivian Wang wrote:
+> Hi Michael,
+>
+> Thank you. I had meant to do this after v6.18-rc1 (which is now), but I
+> didn't have this hardware to test.
+Happy to help testing, if you have code to share :)
+>
+> On 10/17/25 18:02, michael.opdenacker@rootcommit.com wrote:
+>> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+>>
+>> Aligning with k1-bananapi-f3.dts
+>>
+>> Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+>> ---
+>>   .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 50 +++++++++++++++++++
+>>   1 file changed, 50 insertions(+)
+>>
+>> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+>> index 337240ebb7b7..2a75ca93b499 100644
+>> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+>> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+>> @@ -33,6 +33,56 @@ led1 {
+>>   	};
+>>   };
+>>   
+>> +&eth0 {
+> Please add eth0 and eth1 to /aliases so that U-Boot, udev, ... can
+> recognize them. This is used by U-Boot to set the mac-address to the
+> same value used in booting, and by (systemd) udev to set the interface name.
+Done. I'll submit a V2 soon.
+>
+>> +	phy-handle = <&rgmii0>;
+>> +	phy-mode = "rgmii-id";
+>> +	pinctrl-names = "default";
+>> +	pinctrl-0 = <&gmac0_cfg>;
+>> +	rx-internal-delay-ps = <0>;
+>> +	tx-internal-delay-ps = <0>;
+> The hardware design of OPI-RV2 is not the same as BPI-F3, so the
+> parameters here deserves some scruitiny. Same for eth1 below.
+>
+> I would appreciate at least iperf TCP tests in both directions on both
+> ethernet ports. The expected speed should be at least 940 Mbit/sec - if
+> it's much lower than that something is wrong.
 
-Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-CC: Emil Renner Berthing <emil.renner.berthing@gmail.com>
-CC: Yixun Lan <dlan@gentoo.org>
-CC: Vivian Wang <wangruikang@iscas.ac.cn>
----
- .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 52 +++++++++++++++++++
- 1 file changed, 52 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-index 337240ebb7b7..41dc8e35e6eb 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-@@ -15,6 +15,8 @@ / {
- 
- 	aliases {
- 		serial0 = &uart0;
-+		ethernet0 = &eth0;
-+		ethernet1 = &eth1;
- 	};
- 
- 	chosen {
-@@ -33,6 +35,56 @@ led1 {
- 	};
- };
- 
-+&eth0 {
-+	phy-handle = <&rgmii0>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac0_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <0>;
-+	status = "okay";
-+
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
-+
-+		rgmii0: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
-+
-+&eth1 {
-+	phy-handle = <&rgmii1>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac1_cfg>;
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <250>;
-+	status = "okay";
-+
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
-+
-+		rgmii1: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
-+
-+&pdma {
-+	status = "okay";
-+};
-+
- &uart0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&uart0_2_cfg>;
+Fortunately, the results are good. They are even better than the ones 
+from the vendor kernel in OrangePi OS 😂.
+I'll share the results in my V2 cover letter.
+Thanks again
+Michael.
+
+-- 
+Michael Opdenacker
+Root Commit
+Yocto Project and OpenEmbedded Training course - Learn by doing:
+https://rootcommit.com/training/yocto/
+
