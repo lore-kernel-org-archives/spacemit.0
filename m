@@ -1,133 +1,111 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467C32EA14D
-	for <spacemit@lists.linux.dev>; Wed, 22 Oct 2025 05:43:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA99302158
+	for <spacemit@lists.linux.dev>; Wed, 22 Oct 2025 08:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761111797; cv=none; b=n4KzXixvncyspRALs9ui3IO6VhuizFTT2UiAEFAPqtF6tMt8gVYFsSZ997UXS/2M4yhQHmJhycubEmtcxrC4mUaNkk8z9WAefIOSuGQh8RgLbDrW4cLxmLKiz1vi+TD8/smZkvORxKr7tLBzTH7C6QhfELTRNg06TxxUXYl82iI=
+	t=1761121242; cv=none; b=H3X1r3VE3eQ/HZJhaNK5NDkasPtV+GLiruf0wWm0uNiW+HY0KMJ+Rze1QcLLSDIui+0uwyIXEQQ46g1cW918xHHN6xSUEWdHyF6r9TXKUg4kwnOnXVAiXHIMar1EoxLKupJeP9hXGRtAZzyMgJbuNtvdJiXrV7vM51wkz8RqPic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761111797; c=relaxed/simple;
-	bh=Ip7I2oKx+cUmVaYf0SMRJxuVfNJW+zHyD80hJta800c=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CT7fyzjax83BoB7fEhcL3dH6ukZAGJm5+vroBReaEnyRkjYZAfleJIl5JQ1Qcxs7RWhD1Ny8JfBxNPrynMfKfHXrrDcoFwjigI/4N2TjN5pcH/iqlaKx14l+yamtQVq7upKT9cjb93gW+JIsk0bWtji0ttKL/gpVOf22eadflF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=SegtPXpW; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="SegtPXpW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1761111727;
-	bh=2SLeXGDW3QlALU6I3vpBIG1DJuO1fm4ZApuKV65CGdI=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=SegtPXpW51/lDFjLkmbFTKcp8WOg+Kx7zRr4jK74xY2ZuUyMI2ny29fqFCuXaZEY4
-	 WG3VS0RsIJRtwqGwGlAzfJwFS+4hZY/i956gnHfKLolNcgXznjHv944yzDf+HKNoGV
-	 KsS7gZ1UhJMiBpNiQYT2JDMB+vjh44WMIXOLusUE=
-X-QQ-mid: esmtpgz15t1761111725t9381ce62
-X-QQ-Originating-IP: 731FWEj5minQ81tpITCfvoBW2wAz+Y/YGXcnH39jcE8=
-Received: from = ( [14.123.255.147])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 22 Oct 2025 13:42:04 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5196498867470666752
-EX-QQ-RecipientCnt: 12
-Date: Wed, 22 Oct 2025 13:42:04 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Yixun Lan <dlan@gentoo.org>, linux-kernel@vger.kernel.org,
-	Lee Jones <lee@kernel.org>, Sebastian Reichel <sre@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v3 1/2] driver: reset: spacemit-p1: add driver for
- poweroff/reboot
-Message-ID: <52468F28CD7B50FD+aPhurJD4HTXqIGDT@kernel.org>
-References: <20251021201451.1013640-1-aurelien@aurel32.net>
- <20251021201451.1013640-2-aurelien@aurel32.net>
- <20251022004830-GYB1522542@gentoo.org>
- <aPhtd0j6iBpqiGUQ@aurel32.net>
+	s=arc-20240116; t=1761121242; c=relaxed/simple;
+	bh=stqOx4m9vFLsGbyVhAdnxZb+Jc7vK7BpKLYzESDs1xI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NT/URwQN7UBbmFQlsWwmB++1zaxaQddgU52KyTvasm2Rmuw2xhr2tOI21N90CPHw3k8ePKYFI2a2oLaxlk97YYtS0biO9sJ17yVfseSv7otr1994jt7IG3wvERQsxrMMmNe6yepL+5VpPlffrWme2A3XgG6zkv6JQDeUppW2LHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.105] (unknown [114.241.85.109])
+	by APP-01 (Coremail) with SMTP id qwCowABHoaNlkfhoW8rMEw--.47485S2;
+	Wed, 22 Oct 2025 16:10:14 +0800 (CST)
+Message-ID: <d66db3f6-4c6f-4dc3-ae4f-3502d9b81c79@iscas.ac.cn>
+Date: Wed, 22 Oct 2025 16:10:13 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aPhtd0j6iBpqiGUQ@aurel32.net>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MMnP0fEUKo/hJbSJp49IW3C5NyplfbAqiIfyC7CwQgmxbq2O4Zdbxf/U
-	35jckEMWxdq+Qiz9BOvquakSb//D2yPPPE9JwWGn7YvhkUtk9iLjXzdoPz/NBEYrqlx33e/
-	w0/5ruOSxUuAPLOIklzRwnKWYxN1tettcRFquTglE4qgNeSuc3iC/lgJOtSht9qw3WD1ICc
-	yrCjzDmg0vdT3ZAl6j8AfMHIKNS1wURvUez3cRT2DUmEkBAnu86c1jhuka5Aaz4Kg1h8hOy
-	50aTG4mM44NfbDzem4idFVqbYw/+XqJtx2Pl3Z4o80XBBeQ/u5fIaWu7PCguzxab1TCVnhp
-	C7RNlDbcnZ3cjq3vNBBrZ/GEo9X4Zppj+J3sNs6SXfmPxUXPn5j6xB8YA5ei48kDaIuDqQI
-	FgZxUcrKYlHQj43L3CoKoYOaBMmy8NIkCCEsOI5srzPn8/jGREhiuTH1vP3oorzDB6Jzm0S
-	KufbcytajThyqgIAz+Irv8x2sUe46bMsmoCuQ3oS4jdwQFwL9xeOkzZsypvBnDEObZcp4Z+
-	eS2XnQM5Gs979XWlPNgwbtISpvjiXNz8aAzgvBhE1yQCJoWLaHwo936zUmrDcYOjYPLXObB
-	SQ0R1EZgBWsoj6IL6gaMG3/uVOY4yuzd5EzyJNIdyFDQ3K2SO/QlEXs8aWdLa4T6tYa9p3c
-	X6JAcJEwNnzuOdzBIv53EdevNOYSwDkHTdrc+vYBCmi2aLetiEi/0B6xdM7dvuZl7ZoegUx
-	RtAR0QrcfFKztZMAhrGwyNwrz8B26ZzJpkS3/Q1tKpVMJQlgcyx16L4d2ncBiwRmrbEQcXH
-	L2ogU4TLDNkAZ5aUppJC1bfpNem7p4hK6DFBXn8EdXwia8gcEZPoLP+Shz144onMXEHxH0c
-	TtXhZso9Vr8Qm6DytyPI/knOx0Ahl8pUMjZsznDsRNa8i2yuIFqZLBK6+cLQPhFKRVgt80Y
-	xdDxM0Ru2duJGUWN71kFVBdSYIM8+Mj6QZpbWzI87L7pDRlpL0hi7Ql2zN0OY7hzohsKzeL
-	HKCbbTtf2E67Eam/1YEt0/xk7il8x/WL+ybRb3EC229+91CJPDNCZBWdwtBwfDfNHtQbXnk
-	sBTQA4UBfIxTcbPGObwBoA=
-X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
-X-QQ-RECHKSPAM: 0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH][next] net: spacemit: Avoid -Wflex-array-member-not-at-end
+ warnings
+To: "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Yixun Lan <dlan@gentoo.org>
+Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org
+References: <aPd0YjO-oP60Lgvj@kspp>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <aPd0YjO-oP60Lgvj@kspp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qwCowABHoaNlkfhoW8rMEw--.47485S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7tw17trW3ArWkur1xJr4Dtwb_yoW8tr1kpa
+	y8J3s7Ar4kJrWxW3ZrAayxZay5K3y8tFZ8GryFyan5ZFnFyF45CF1FkF4rCryqk3yxGryS
+	vrs0yw1UA3Wvq37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
+	c7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
+	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
+	14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
+	IFyTuYvjxUqiFxDUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-> > > diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
-> > > index 8248895ca9038..6577d73edbda4 100644
-> > > --- a/drivers/power/reset/Kconfig
-> > > +++ b/drivers/power/reset/Kconfig
-> > > @@ -283,6 +283,15 @@ config POWER_RESET_KEYSTONE
-> > >  	help
-> > >  	  Reboot support for the KEYSTONE SoCs.
-> > >  
-> > > +config POWER_RESET_SPACEMIT_P1
-> > > +	tristate "SpacemiT P1 poweroff and reset driver"
-> > > +	depends on ARCH_SPACEMIT || COMPILE_TEST
-> > ..
-> > > +	select MFD_SPACEMIT_P1
-> > I'd suggest to use "depends on" instead of "select", the reason is that
-> > using "select" will sometimes ignore the dependency, considering
-> > the reset driver here is tightly coupled with P1, so I think it's 
-> > reasonable to switch to use "depends on", also refer below link
-> > 
-> > https://lxr.linux.no/#linux+v6.7.1/Documentation/kbuild/kconfig-language.rst#L144
-> > 
-> >         select should be used with care. select will force
-> >         a symbol to a value without visiting the dependencies.
-> >         By abusing select you are able to select a symbol FOO even
-> >         if FOO depends on BAR that is not set.
-> >         In general use select only for non-visible symbols
-> >         (no prompts anywhere) and for symbols with no dependencies.
-> >         That will limit the usefulness but on the other hand avoid
-> >         the illegal configurations all over.
-> 
-> Thanks for the pointer, I'll fix that in the next version. I used 
-> REGULATOR_SPACEMIT_P1 and RTC_DRV_SPACEMIT_P1 as examples, they'll also 
-> need to be fixed.
-Yes, I have said here[1].
-Do you want to fix that? If you don't have time, I can do it.
+Hi Gustavo,
 
-> 
-> Note also that without the select, a default value has to be added to 
-> MFD_SPACEMIT_P1. 
-Yes, I will add it in my patch. Thanks.
+Thanks for the patch.
 
-                  - Troy
+On 10/21/25 19:54, Gustavo A. R. Silva wrote:
 
-Link: https://lore.kernel.org/all/6DB8C5F20B3FAC2E+aPhfoRXlJtJymlB5@kernel.org/ [1]
+> -Wflex-array-member-not-at-end was introduced in GCC-14, and we are
+> getting ready to enable it, globally.
+>
+> Use regular arrays instead of flexible-array members (they're not
+> really needed in this case) in a couple of unions, and fix the
+> following warnings:
+>
+>       1 drivers/net/ethernet/spacemit/k1_emac.c:122:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+>       1 drivers/net/ethernet/spacemit/k1_emac.c:122:32: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+>       1 drivers/net/ethernet/spacemit/k1_emac.c:121:42: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+>       1 drivers/net/ethernet/spacemit/k1_emac.c:121:32: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+>
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> ---
+>  drivers/net/ethernet/spacemit/k1_emac.h | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/net/ethernet/spacemit/k1_emac.h b/drivers/net/ethernet/spacemit/k1_emac.h
+> index 5a09e946a276..577efe66573e 100644
+> --- a/drivers/net/ethernet/spacemit/k1_emac.h
+> +++ b/drivers/net/ethernet/spacemit/k1_emac.h
+> @@ -363,7 +363,7 @@ struct emac_desc {
+>  /* Keep stats in this order, index used for accessing hardware */
+>  
+>  union emac_hw_tx_stats {
+> -	struct {
+> +	struct individual_tx_stats {
+>  		u64 tx_ok_pkts;
+>  		u64 tx_total_pkts;
+>  		u64 tx_ok_bytes;
+> @@ -378,11 +378,11 @@ union emac_hw_tx_stats {
+>  		u64 tx_pause_pkts;
+>  	} stats;
+>  
+> -	DECLARE_FLEX_ARRAY(u64, array);
+> +	u64 array[sizeof(struct individual_tx_stats) / sizeof(u64)];
 
-> otherwise this makes the default values on the 
-> regulator, rtc and reboot drivers useless.
-> 
-> -- 
-> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-> aurelien@aurel32.net                     http://aurel32.net
-> 
+I originally wrote it as DECLARE_FLEX_ARRAY to avoid having to do the
+sizeof dance, but I guess that's no good now? Oh well, I guess...
+
+Acked-by: Vivian Wang <wangruikang@iscas.ac.cn>
+
