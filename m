@@ -1,78 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00A423717F;
-	Thu, 23 Oct 2025 03:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB60023E25B
+	for <spacemit@lists.linux.dev>; Thu, 23 Oct 2025 05:59:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761191194; cv=none; b=XEBH0j9lRVhByn7nJcALMIuHl2nVRD4CaHhlPfWAig0M0pQ03OWQD8iiEiaZfF4jmA64fY+KlKrlLdkA45INsPSiWnl7TzMMdSUhNNdQVBV5FaaY+Qcl3gHyihVStS0zT0FdkPNj0yDgEScrAOq/i1+FFjq3g+GYynPzzJSpJEc=
+	t=1761199148; cv=none; b=KjYw/0lYspwGCl0h8o69e8YIWsqFXOjKJ/w1+IDvIdSQnIO6jhLDtA6RwKdEWI75k3DsszDdGNa9FvLiBtncr26vkcOCfc+RZxVIYRNwvMRwWCVO7Xbcsh9e6VuJDbdHtrOhSWUfnQ+gd9FrD5eyi9asSsyQxNKjjklMUTEIgcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761191194; c=relaxed/simple;
-	bh=R6+qGnRv0D3b1rTURFdmpfihKe/n286445pssQyi9dk=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=bb2uJiNYPp3tBgt60HwsICwGlkIS4ZpfkkoLgIlqvUIwAP5CBHbDeQpcrS4f/6jNZsEzqNuKoOaWx/asNt4DFvmc4ATA+EXoeMvtLJG+MSI2gtI4TDMVjBdCNHztKMNgAyh+wXek1kHtJsAYgI67IoAwqTztN0Qe6via8KNX9mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M2+LWGJD; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M2+LWGJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D987C4CEE7;
-	Thu, 23 Oct 2025 03:46:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761191193;
-	bh=R6+qGnRv0D3b1rTURFdmpfihKe/n286445pssQyi9dk=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=M2+LWGJDAQKDoiCkT+PJ1a+IEtri8Ae8qctAsQ+HJyt7QfFpCRLqVxDyr7JuTL3I+
-	 l7bdCxfuZ27baZiUqoSNGpBpQsQLKpCDkGsUNMVZwmuZY8ixhwvRDKd3tGSJVv7+Bz
-	 Xcl3yUsoQLzDeroBVifD6oTCtC6y61bsqDmoJdC6y0GFNGBnEv4igbJLkQHDPjo8uL
-	 wqi7pVcNWWHRtP05TZVu8rCdSKv563dKmOi23kNRaoP11Ub9nKdN5/bTkU6/bh7v9s
-	 xVyP5ncxnlwfnrPpqxjF5/B+0z8opd7AXy+DITE3OV1DYcgd0BUJ/NefY/qPmlW6hQ
-	 2DQ2NTW39cqyg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 33D1B3809A04;
-	Thu, 23 Oct 2025 03:46:15 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1761199148; c=relaxed/simple;
+	bh=9/L8LEUc6VUV0Tkz9CaaJqqFbpSu6Z2TmhoSS7imJLw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NcIaXLY3M6OoGZbb0R+i09Fg2lu74z8fi6lnv2kesEMIOZXK5ImOgJUwdV6LsGLE1KsmsEsdByJexGqQWG94IOJMnYZDGk2v/A7YyrKQti0bW+ENIzZCa4QnvfeEH7BgRUwQx1sMt6Nc8J2CLdq906cnYi8ngBrmVJsVYK3HbGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.105] (unknown [114.241.85.109])
+	by APP-03 (Coremail) with SMTP id rQCowABXqIL9w_lo3ZHFFA--.967S2;
+	Thu, 23 Oct 2025 13:58:22 +0800 (CST)
+Message-ID: <f8a55f89-2612-49e3-88c6-acb523ac74d3@iscas.ac.cn>
+Date: Thu, 23 Oct 2025 13:58:22 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] riscv: dts: spacemit: add Ethernet and PDMA to
+ OrangePi RV2
+To: michael.opdenacker@rootcommit.com, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: Emil Renner Berthing <emil.renner.berthing@gmail.com>,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20251022201807.1474789-1-michael.opdenacker@rootcommit.com>
+ <20251022201807.1474789-2-michael.opdenacker@rootcommit.com>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20251022201807.1474789-2-michael.opdenacker@rootcommit.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH][next] net: spacemit: Avoid -Wflex-array-member-not-at-end
- warnings
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <176119117374.2145463.16472197208570713304.git-patchwork-notify@kernel.org>
-Date: Thu, 23 Oct 2025 03:46:13 +0000
-References: <aPd0YjO-oP60Lgvj@kspp>
-In-Reply-To: <aPd0YjO-oP60Lgvj@kspp>
-To: Gustavo A. R. Silva <gustavoars@kernel.org>
-Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, dlan@gentoo.org, netdev@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+X-CM-TRANSID:rQCowABXqIL9w_lo3ZHFFA--.967S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7tFyDAryrWFWrGr13Aw4rAFb_yoW8Jw4DpF
+	4xWr1Yyrs8Cr48tw4xXw429a4rWw4kJ3yDA3Z0grZ8C3Z8XFyFqrs2qwnxuFW5K34fGayj
+	vFW7ua4FqF1UAaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvlb7Iv0xC_Zr1lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwV
+	C2z280aVCY1x0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xv
+	F2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r
+	4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xK
+	xwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJV
+	W8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF
+	1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6x
+	IIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvE
+	x4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvj
+	DU0xZFpf9x07jeoGQUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Hello:
+Thank you so much for the patch and testing results. Only some nitpicks
+follow.
 
-This patch was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
+On 10/23/25 04:18, michael.opdenacker@rootcommit.com wrote:
+> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+>
+> The OrangePi RV2 board ships two RGMII ethernet ports.
+> Each has an external Motorcomm YT8531C PHY attached, the PHY uses GPIO
+> for reset pin control.
+>
+> Enable PDMA for the SpacemiT K1-based SoC in the OrangePi RV2 board.
+>
+> Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+> CC: Emil Renner Berthing <emil.renner.berthing@gmail.com>
+> CC: Yixun Lan <dlan@gentoo.org>
+> CC: Vivian Wang <wangruikang@iscas.ac.cn>
 
-On Tue, 21 Oct 2025 12:54:10 +0100 you wrote:
-> -Wflex-array-member-not-at-end was introduced in GCC-14, and we are
-> getting ready to enable it, globally.
-> 
-> Use regular arrays instead of flexible-array members (they're not
-> really needed in this case) in a couple of unions, and fix the
-> following warnings:
-> 
-> [...]
+Firstly, it is usually spelt "Cc:", with one upper-case C and one
+lower-case c.
 
-Here is the summary with links:
-  - [next] net: spacemit: Avoid -Wflex-array-member-not-at-end warnings
-    https://git.kernel.org/netdev/net-next/c/10e0378f05d2
+Secondly, "Cc:" should not be necessary in the patch/commit message.
+From Documentation/process/submitting-patches.rst:
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+    If a person has had the opportunity to comment on a patch, but has not
+    provided such comments, you may optionally add a ``Cc:`` tag to the patch.
+    This tag documents that potentially interested parties have been included in
+    the discussion.
 
+If you look through the git logs of Linux, Cc tags are really not a
+regular occurrence except those marking patches as suitable for
+backporting to stable.
+
+Thanks,
+Vivian "dramforever"
 
