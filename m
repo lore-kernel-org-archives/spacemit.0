@@ -1,221 +1,99 @@
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6341C2D061F
-	for <spacemit@lists.linux.dev>; Thu, 23 Oct 2025 07:30:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAF82DE6ED;
+	Thu, 23 Oct 2025 10:34:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761204605; cv=none; b=trOQ3RsSWky7/j7nP3Fo4QiSNYD8TsAeUXv0l6S86tRSefpP6clpOvpeK4aEGD2IEWUf5QDT0xoFzBjsfQGyrzEoWVcGc7Vn4yj4z6kycqL8BHCbVkUQ2vYJKu6mZbFV1s3UUl8lTn6SLc1jhSB7qbKdz3h6sX8CiH4dLexBAt4=
+	t=1761215667; cv=none; b=bMFLbm9+4AiH7yOG0LrRt9HbZRCIp8ytZa9vMXvKQnVSPynhse+S2e4J0pVpiQluQrq/CBaWfT2CF6ScRbg9YN7lJveo3hlG9YR/OwkkeJ1VihGGx5Qby2q8TFjQgq2P7qvGYZgijBXB6Bzl2C9yKN5zWQDik8yrxBmAzk8bifk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761204605; c=relaxed/simple;
-	bh=Ng7sJU6uriYTf5rZYSyCQyjKItQMSXxOIfj5WN50fKw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=scVzUxWarFnJc+UE03kfzf4qVoGtmnHTQ9ihQvXFhl5OkH1PU52wSkh2EWkL2uHEBUxqNT/e1YzuMS8wb5od+zbrFlQZ88qLRFU/brOhwwSw+mCee9sELlNBeBXsPMJKpvzCIx/0oUMzAGDeNldhohWs+pOp18tYJ1/HHeSAeu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=TwwNRbEU; arc=none smtp.client-ip=54.204.34.129
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1761215667; c=relaxed/simple;
+	bh=EvgrZI+rymOOfZUCPqItc1VU/vONGS0OSWFKI/tUzDs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=owAedEmziGoZfPx0MBhy6pW9FOFa5pAnc3ltALGs85Qr/sp2WzRwY2AvyhFYPCjBaQU2qvEEteYYvKD/eF1xRwzAKRwoWB3EYivD7C3qXUwSRU5YdveOCAxU5uV8hKrUTBuADpXCLWw3r9ygBG5bA+OzQrmrTT61V7ENbaUvFOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uRI5o5CE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="TwwNRbEU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1761204530;
-	bh=joD46nXQLvIHo+j0HgWSZvew9QJQpcw/TMa5i9hHU8o=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=TwwNRbEUx9U2/KkYLCLbtCZW9vXMCHi5OtFYhceAcGkFauLnHymPUGCs80zFL4DaI
-	 RQUv3M9P5GJyBK6Rj0YwYVoBW66ao3an028bhUdIDg1WQaCkOYwlnRFLT7ZH5/zDgc
-	 q4a1vDrbh2LdBn8RJeoxPt0WIJIG/qcd5ptC41Wc=
-X-QQ-mid: esmtpgz11t1761204522tff170d3e
-X-QQ-Originating-IP: B/S5rV3PQQenjL7i6qoZ3M1T7tn3dtYmHjmxvlqnzvk=
-Received: from = ( [221.4.210.170])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 23 Oct 2025 15:28:39 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5281825611618668887
-EX-QQ-RecipientCnt: 15
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Thu, 23 Oct 2025 15:28:30 +0800
-Subject: [PATCH v4 2/2] riscv: dts: spacemit: add MusePi Pro board device
- tree
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uRI5o5CE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2D2C4CEE7;
+	Thu, 23 Oct 2025 10:34:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761215667;
+	bh=EvgrZI+rymOOfZUCPqItc1VU/vONGS0OSWFKI/tUzDs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uRI5o5CEuyLF8Dsw/NHSiQH641JTHFRjyjRHMeLd6Ltw3N/WUcoXgM9nnD5zSct3L
+	 +m1/CsyFgl0kAZeWmYT4WZVkOCsUe4OHX8G+c+f0GK+vmdra6BvwuoRmsTqaO4zK/7
+	 l5jZ/+Lj1gu4cxqy6wfpwkhByYY2ax6WflUUzg4ihhcJgiHmJ8rtTVCR8247axtNrI
+	 MC/AQ9p31JRcxevANJ5y0lskvzJW3DtGUdHntQ+tUhok2yvKWaHsv4RwfUnpUAbpFD
+	 4G76lppLtXr4SBngcinr0W1lMWdAfBk0WndUTVk26yzEAFMuAUeShMgJKsoOsA+w4S
+	 dW3FN/qYIMDtA==
+Date: Thu, 23 Oct 2025 12:34:23 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v4] i2c: spacemit: configure ILCR for accurate SCL
+ frequency
+Message-ID: <lr77avehdf3skwd5o2yur4hvbxhyx2spzve3wpo733l74ppjcx@mn34escjt542>
+References: <20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com>
+ <t26pyjnmzj62oczwuje2bbscowj22pdge2ef3tcktwmhzpsq47@7odo2ccvc52a>
+ <sdhkjmi5l2m4ua4zqkwkecbihul5bc2dbmitudwfd57y66mdht@6ipjfyz7dtmx>
+ <748544ABF6A72D31+aPg31PBvHDkBALoa@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251023-k1-musepi-pro-dts-v4-2-01836303e10f@linux.spacemit.com>
-References: <20251023-k1-musepi-pro-dts-v4-0-01836303e10f@linux.spacemit.com>
-In-Reply-To: <20251023-k1-musepi-pro-dts-v4-0-01836303e10f@linux.spacemit.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Yangyu Chen <cyy@cyyself.name>, 
- Paul Walmsley <pjw@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761204512; l=3829;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=Ng7sJU6uriYTf5rZYSyCQyjKItQMSXxOIfj5WN50fKw=;
- b=Aiw1SmBTfBNhi223fRNMnFvCpW5ccu42hxskoJ/AmhWNppC6CFtRZ8W+4PTH+uXzpai3WFagS
- F5w55z1lylfA5u6xmrZuAvQRQP5QrZugPyMHHVontQjsiZZHLPfx+KY
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OL8ICxn8D/E3Vsbvj1NepmAmZ6LCQ6GVfcqUr0XHJQ8vhNptYAt6Un0w
-	QyhJ0IAJLQO2EtpvrLM2ZBN5gitBN3Bo8oEwbVfImbfYtFsA6eCy9tCr+LzF81aCMcU47uP
-	CPKeOGdV0Q8yaDxScdX4cHR7O/tvXeLFrpz5P3XgR1nCBGw4ZXkoC6bLGUZq8/7YhIPh6MA
-	93TGsev9zODfnThr6sfmB0Mbv+P8zr3Csj1v6z3P83E6lFMW53SOptm5N0fX6yEUjbTnZ05
-	l0CH9iHvhYtoWGgqOEcVkGTKt7oVVkoyMRD/RCJVXx2sqB5p6HaFpazYu3VJXY8c0blu8wL
-	bjbASjdtbdN1IR0lkZxJMsguzgwcZ4GUaLuniq3mQwGKduBagu3jDE2ft0fe2jsr+j0nQpE
-	iCBdVdS6Q7ztwwzjZmlCB3NMxiKeUniwr/yJ75rNZ6q2taebVxLTlJSz4lNqeQC2Bvdte1N
-	rgZJyedEp7IKUwf0dHt9DcCYFYY3QAL7HW2eMp2URr2WFhdYlpnxdsEkIw2sSZYOdYZQg38
-	bZrcpbDOpzsMCwWdlvsmGrwnDz4KbIu1+hSW+Ly3BWs4ohwKnVqI76sDmmUF12jljqQDFie
-	10Dno3iq/EtUt1h72TZAl/AHpmN+DsrroO+3DqLeWolzWBchBxI74kXqLo2kE++hWjLy8on
-	JOxMvzL/AztQl6gmiTQSpKUx4ayoW/wXDA9teMUP6BNYPu7vVdKOunQQ+ieafoGeTxv9/AL
-	bymPS2ZiDVPl6RJdvrvG8bvZXKrOrQmrzERgszXw7ivs2ta8JrftRz+dloI34mLqzGIGCcu
-	F6t6P+1Qs+b8KgZRyMzs/LKs57jVYBIGOjRITRlkdIx++t4Kyr4GupuH4Dkk2KK7fA9suuE
-	wRkTQu5+bhT9lQhcE5YNMv8863ysT80yczqCYfHkhByV7HmjQZbjEPZLFlmZ67IYYhmrVdc
-	80aisqeCuAq2F3CBLjOQN51Xuqqh6w0E5x37Js98UXm997rxFMcdrYJx3O5Wi88ODjViCAe
-	2TppDJfphbtZgJTUkiD+sbjjYKCIqLK7U1hvRJ4CJ8IG9ljHnk7lspl0/o9FZ3aRrQIlafU
-	G/kPmaNtWZxagVTv8Rwbqy32SFU6qGUIrgJn004cGyu302kf4Zz17SDUK83xbeuZUFU7OPG
-	lGrotz0WuR7LlCw=
-X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <748544ABF6A72D31+aPg31PBvHDkBALoa@kernel.org>
 
-Add initial device tree support for the MusePi Pro board [1].
-The board is using the SpacemiT K1/M1 SoC.
+Hi Troy,
 
-This device tree is adapted from the SpacemiT vendor tree [2] and
-enables basic board functionality, including UART console, LED, eMMC,
-Ethernet, and PDMA.
+On Wed, Oct 22, 2025 at 09:48:04AM +0800, Troy Mitchell wrote:
+> On Tue, Oct 21, 2025 at 06:03:34PM +0200, Andi Shyti wrote:
+> > On Mon, Oct 20, 2025 at 11:28:45AM +0200, Andi Shyti wrote:
+> > > On Fri, Oct 17, 2025 at 03:27:39PM +0800, Troy Mitchell wrote:
+> > > > The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
+> > > > master mode operations is determined by the ILCR (I2C Load Count Register).
+> > > > Previously, the driver relied on the hardware's reset default
+> > > > values for this register.
+> > > > 
+> > > > The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
+> > > > frequencies lower than intended. For example, with the default
+> > > > 31.5 MHz input clock, these default settings result in an SCL
+> > > > frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
+> > > > and approximately 338 kHz (fast mode) when targeting 400 kHz.
+> > > > These frequencies are below the 100 kHz/400 kHz nominal speeds.
+> > > > 
+> > > > This patch integrates the SCL frequency management into
+> > > > the Common Clock Framework (CCF). Specifically, the ILCR register,
+> > > > which acts as a frequency divider for the SCL clock, is now registered
+> > > > as a managed clock (scl_clk) within the CCF.
+> > > > 
+> > > > This patch also cleans up unnecessary whitespace
+> > > > in the included header files.
+> > > > 
+> > > > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > > 
+> > > merged to i2c/i2c-host.
+> > 
+> > I'm sorry, because of the report from LKP(*) I reverted your
+> > patch. I2C_K1 is selected by MFD_SPACEMIT_P1, so that we get the
+> > following warning:
+> > 
+> >   WARNING: unmet direct dependencies detected for I2C_K1
+> > 
+> > and compile I2C_K1 without COMMON_CLK. Please, fix it and
+> > resubmit the patch.
+> Yes, I noticed that too. The issue is introduced by PMIC driver(P1)
+> instead of I2C.
+> Should I resubmit this patch right after sending the fix,
+> or wait until the fix gets merged first?
 
-Link: https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf [1]
-Link: https://gitee.com/bianbu-linux/linux-6.6/blob/k1-bl-v2.2.y/arch/riscv/boot/dts/spacemit/k1-x_MUSE-Pi-Pro.dts [2]
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
-Changelog in v4:
-- modify commit message
-- add SpacemiT copyright
-- Link to v3: https://lore.kernel.org/all/20251017-k1-musepi-pro-dts-v3-2-40b05491699f@linux.spacemit.com/
+I have reverted the patch. Please send them both in the same
+series, where the first patch is the "fix" (or preparation to
+this patch) and then this patch.
 
-Changelog in v3:
-- sort dts node
-- add ethernet alias
-- add emmc, pdma, and eth0 node (a squash of patches 3–5 from v2)
-- Link to v2: https://lore.kernel.org/all/20251010-k1-musepi-pro-dts-v2-2-6e1b491f6f3e@linux.spacemit.com/
-
-Changelog in v2:
-- modify commit message
-- swap pinctrl-names and pinctrl-0 properties in uart0 node
-- rename model: "MusePi Pro" -> "SpacemiT MusePi Pro"
-- keep the dtb-$(CONFIG_ARCH_SPACEMIT) entries in alphabetical order
-- Link to v1: https://lore.kernel.org/all/20250928-k1-musepi-pro-dts-v1-2-5efcca0ce3ae@linux.spacemit.com/
----
- arch/riscv/boot/dts/spacemit/Makefile          |  1 +
- arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts | 79 ++++++++++++++++++++++++++
- 2 files changed, 80 insertions(+)
-
-diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-index 152832644870624d8fd77684ef33addb42b0baf3..942ecb38bea034ef5fbf2cef74e682ee0b6ad8f4 100644
---- a/arch/riscv/boot/dts/spacemit/Makefile
-+++ b/arch/riscv/boot/dts/spacemit/Makefile
-@@ -1,4 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
-+dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
-diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..29e333b670cf0a5c4ed852668460db475b9c44cb
---- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-@@ -0,0 +1,79 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/*
-+ * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
-+ * Copyright (C) 2025 SpacemiT, Inc
-+ * Copyright (C) 2025 Troy Mitchell <troy.mitchell@linux.spacemit.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include "k1.dtsi"
-+#include "k1-pinctrl.dtsi"
-+
-+/ {
-+	model = "SpacemiT MusePi Pro";
-+	compatible = "spacemit,musepi-pro", "spacemit,k1";
-+
-+	aliases {
-+		ethernet0 = &eth0;
-+		serial0 = &uart0;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		led1 {
-+			label = "sys-led";
-+			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "heartbeat";
-+			default-state = "on";
-+		};
-+	};
-+};
-+
-+&emmc {
-+	bus-width = <8>;
-+	mmc-hs400-1_8v;
-+	mmc-hs400-enhanced-strobe;
-+	non-removable;
-+	no-sd;
-+	no-sdio;
-+	status = "okay";
-+};
-+
-+&eth0 {
-+	phy-handle = <&rgmii0>;
-+	phy-mode = "rgmii-id";
-+	pinctrl-0 = <&gmac0_cfg>;
-+	pinctrl-names = "default";
-+	rx-internal-delay-ps = <0>;
-+	tx-internal-delay-ps = <0>;
-+	status = "okay";
-+
-+	mdio-bus {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
-+		reset-delay-us = <10000>;
-+		reset-post-delay-us = <100000>;
-+
-+		rgmii0: phy@1 {
-+			reg = <0x1>;
-+		};
-+	};
-+};
-+
-+&pdma {
-+	status = "okay";
-+};
-+
-+&uart0 {
-+	pinctrl-0 = <&uart0_2_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-
--- 
-2.51.1
-
+Thanks,
+Andi
