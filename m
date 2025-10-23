@@ -1,187 +1,151 @@
-Received: from freeshell.de (freeshell.de [116.202.128.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3A830AD0D
-	for <spacemit@lists.linux.dev>; Thu, 23 Oct 2025 11:54:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6921034AAE5
+	for <spacemit@lists.linux.dev>; Thu, 23 Oct 2025 17:59:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761220450; cv=none; b=UkDMn8qpmd9nReB5T0e/DHXHKiJSz5Dl9qY8HwCH1Oa9goAdJz66oK6DQmssIbP3mfPlgHsyBV4ISrqLPoV9g5wQoV6sr4YrnykxsKZOyHQLuf520jvd5Uy0YwjLB9/CYY0C5RTtXoTnCa0nDOzDBlq4CTsd3ZBT1BVno2CQGKA=
+	t=1761242368; cv=none; b=hPLKlixFYBT9KR2Xn3/Nr/seWtIoVsSKCp1GYDrpbGN/gD/pdB8xswEaGg+/ppXvSvboitapAoNdMrj7FgEv5ySfa0ukYCX5o4E8GHQq2bxQcZQ76v63C6fUBnvXBgz3dLYnaeyCqHJNQiY2oKuioulVO1vmEitjvCEfke7rUVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761220450; c=relaxed/simple;
-	bh=S3Nr6LQGbZd2jvsFaTLQAqwk2Ri8H/TuFcRTEn5DogM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XdfKqpOkBGPSqF8hFe4Q3aKt2AFxS/RvSS8hXcTyZsVAnUB8Kj5AEH2JorZB7yEzs3ZWHD/08psUerE1QNjlkixMhSosnTBTZcxgCHTC16tYQ5ic9Pn7mQ74fbwlIr92/TRES3spPLMueqqMTM+GKg0BQSUIRuvzXP8tQCEmW8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; arc=none smtp.client-ip=116.202.128.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freeshell.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
-Received: from [192.168.2.54] (unknown [143.105.117.17])
-	(Authenticated sender: e)
-	by freeshell.de (Postfix) with ESMTPSA id 5C752B220A1E;
-	Thu, 23 Oct 2025 13:53:56 +0200 (CEST)
-Message-ID: <eaa5347b-af52-4de3-be58-f7b932c8fe01@freeshell.de>
-Date: Thu, 23 Oct 2025 04:53:53 -0700
+	s=arc-20240116; t=1761242368; c=relaxed/simple;
+	bh=cmoQL7/EOLRFUL/HDkJZjuFWcItHG3aLGx55fZGpJDc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NtmRhIGYOD/9XI1+KM5p6dR+vf7OLhYs7bYvZauXzNaDiziag+Mu4yFcTIfIsw8V8gQxCAXqME8u+1jheo0AKzw/BFnLjkAS+d2EmzOZM2Ld/Z2VOsfUW1AmlgT9t3NObv1snzIVl1VMSJPMEPP5rLSDIPqGMbOvyyyacnAKq+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=dfvhCOyl; arc=none smtp.client-ip=209.85.210.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="dfvhCOyl"
+Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-79ef9d1805fso1236433b3a.1
+        for <spacemit@lists.linux.dev>; Thu, 23 Oct 2025 10:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1761242365; x=1761847165; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zZKnZFdnM3oZwGqheXR0h641QYDnGOp0D351J3S+oms=;
+        b=dfvhCOylM2XrHsS3K5GgJrXzTl50fUuXkHvTPJm/0bqvy8p7CwWK/7cc83I+35IuSe
+         qGRaEO/YNbXCukdaBxJTQqSuCqjNuC09eXk1gE5Dr2a5qnuChl/RyeIUn4Tos4W4CC3h
+         cmoC+gfLDeEx+I79B+lzG6M/DMZUzxt9IyjJH2QY/mi0QM/pBah48FARG3WS4UIyXRtN
+         hB4sYW+hIgTjrMvqMdF9EYuZi6T7MLwmV4Kd4cGPtATxvznD8ulGuK6VGaMxB3CBg1H1
+         0+ocGnArjWLeeIYDtOxmdPW7WYhFFoCLo7UUmlnolVbgVvj+BARbxZ06kaKWljVZM+Dm
+         Lbeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761242365; x=1761847165;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zZKnZFdnM3oZwGqheXR0h641QYDnGOp0D351J3S+oms=;
+        b=SzLZoR0nY0U9NNq94nyn2vnJdFnAwVmIWC0NoaWj9CXyGUy1AqD6bOmGPs4v4JoIti
+         7U9mnghqFqgLj0zeXW1hkGjHS8X4KDTZrpOIuREt45eqsGvns96dci067k/heioIDkRn
+         T5voQecNtvXl8BhpaQuVwsvQzRFVxdVz3C51YGoBwXUcIxIhrLlSbNKsurZPuJKGMsuB
+         p4Lw5lOjMih6MCHE4b7cALG3HqeXW2x2uyOmrbI/M5sxZyB9Ixx0Y1REoUoyBQY7Zyp9
+         1FIEGzHIDtj8fD+fGDTMFZTrSHPdgtG/f0tjV4BnCkjvC3OO8ot8IAAXL73ZLBVKdpEF
+         s8FA==
+X-Forwarded-Encrypted: i=1; AJvYcCUInKS+7wisB4I0mKIb3Y9TxJTEkX+RiiCal6eGfU53RZUhh4EEzARSQvcV+qWX0+a4vGnkbhd/Iw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxDYGZO50y+SAaHPuqOs2y+4gJznWvngT04HF8TPcqpdViAum8F
+	Fd8V62sw3PTmxq7/GIjFNZSLsBiCQJLI8dZN7iCsLVqSVMBkHRkuhuIof8beQYEGGf4=
+X-Gm-Gg: ASbGncueXOiVN9qklnvIvaD6IJQ7yzM87sc+/bJrYi2Rz9t0yKo0gqmsRQ8So11LYMn
+	xPA+9E/7QLpMK2LaN9prw2GKHEbYuOdaled5zlRPLXoybCsyC+tyfnNbiJSKMh6gD1kIMYyPOng
+	SoSzXNvai6YTaIfPpm8ft4c8mN4O/Q+QNU3nU6cd9lniD/7Z41XpIOnHRh8b/hHdhC+o4p4LD/D
+	662hlIQJRCU3xRtrOTmQpvo6uiR5HbtKJNrFFgwX5S/E8YuXIhr26G7yyMvkdKCD9/CDoGwL5Oo
+	SCR1yI3Aov8u1cZlnfUWm0R9CfJ1+4Bv2jD1QI5gCW2gVtfHxfjvrXDZee0Eos+Getw9EbFNdPR
+	MTyaZlKgP/kI0jfISo/3DQ9xrQOIQijNMht9W4ZWcEhtuNkZuCdxd/AE/WwiGxUtUlgRJrMjMEU
+	yIG52OXYmvFzadwXsHRR+Zf5OwvmWHBKUzhw==
+X-Google-Smtp-Source: AGHT+IG8JoJ2ND1pyiQh1ApMIuQ8AB6jOUuqQ1+8XSa1Ou2nNF3k3D9kPXQ1PKRoMYU7/mYJQIadTQ==
+X-Received: by 2002:a17:902:cecb:b0:27e:ec72:f6d with SMTP id d9443c01a7336-2946de3d929mr41775405ad.11.1761242365381;
+        Thu, 23 Oct 2025 10:59:25 -0700 (PDT)
+Received: from zoltan.localdomain ([208.115.86.150])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33e223d1265sm6447431a91.3.2025.10.23.10.59.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Oct 2025 10:59:24 -0700 (PDT)
+From: Alex Elder <elder@riscstar.com>
+To: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	han.xu@nxp.com,
+	broonie@kernel.org,
+	dlan@gentoo.org,
+	pjw@kernel.org
+Cc: Frank.li@nxp.com,
+	p.zabel@pengutronix.de,
+	guodong@riscstar.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	apatel@ventanamicro.com,
+	joel@jms.id.au,
+	geert+renesas@glider.be,
+	cyy@cyyself.name,
+	heylenay@4d2.org,
+	conor.dooley@microchip.com,
+	fustini@kernel.org,
+	linux-spi@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	imx@lists.linux.dev,
+	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/9] spi: enable the SpacemiT K1 SoC QSPI
+Date: Thu, 23 Oct 2025 12:59:12 -0500
+Message-ID: <20251023175922.528868-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] riscv: dts: spacemit: add MusePi Pro board device
- tree
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yangyu Chen <cyy@cyyself.name>,
- Paul Walmsley <pjw@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20251023-k1-musepi-pro-dts-v4-0-01836303e10f@linux.spacemit.com>
- <20251023-k1-musepi-pro-dts-v4-2-01836303e10f@linux.spacemit.com>
-Content-Language: en-US
-From: E Shattow <e@freeshell.de>
-In-Reply-To: <20251023-k1-musepi-pro-dts-v4-2-01836303e10f@linux.spacemit.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 10/23/25 00:28, Troy Mitchell wrote:
-> Add initial device tree support for the MusePi Pro board [1].
-> The board is using the SpacemiT K1/M1 SoC.
-> 
-> This device tree is adapted from the SpacemiT vendor tree [2] and
-> enables basic board functionality, including UART console, LED, eMMC,
-> Ethernet, and PDMA.
-> 
-> Link: https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf [1]
-> Link: https://gitee.com/bianbu-linux/linux-6.6/blob/k1-bl-v2.2.y/arch/riscv/boot/dts/spacemit/k1-x_MUSE-Pi-Pro.dts [2]
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
-> Changelog in v4:
-> - modify commit message
-> - add SpacemiT copyright
-> - Link to v3: https://lore.kernel.org/all/20251017-k1-musepi-pro-dts-v3-2-40b05491699f@linux.spacemit.com/
-> 
-> Changelog in v3:
-> - sort dts node
-> - add ethernet alias
-> - add emmc, pdma, and eth0 node (a squash of patches 3–5 from v2)
-> - Link to v2: https://lore.kernel.org/all/20251010-k1-musepi-pro-dts-v2-2-6e1b491f6f3e@linux.spacemit.com/
-> 
-> Changelog in v2:
-> - modify commit message
-> - swap pinctrl-names and pinctrl-0 properties in uart0 node
-> - rename model: "MusePi Pro" -> "SpacemiT MusePi Pro"
-> - keep the dtb-$(CONFIG_ARCH_SPACEMIT) entries in alphabetical order
-> - Link to v1: https://lore.kernel.org/all/20250928-k1-musepi-pro-dts-v1-2-5efcca0ce3ae@linux.spacemit.com/
-> ---
->  arch/riscv/boot/dts/spacemit/Makefile          |  1 +
->  arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts | 79 ++++++++++++++++++++++++++
->  2 files changed, 80 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-> index 152832644870624d8fd77684ef33addb42b0baf3..942ecb38bea034ef5fbf2cef74e682ee0b6ad8f4 100644
-> --- a/arch/riscv/boot/dts/spacemit/Makefile
-> +++ b/arch/riscv/boot/dts/spacemit/Makefile
-> @@ -1,4 +1,5 @@
->  # SPDX-License-Identifier: GPL-2.0
->  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-bananapi-f3.dtb
->  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
-> +dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
->  dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..29e333b670cf0a5c4ed852668460db475b9c44cb
-> --- /dev/null
-> +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-> @@ -0,0 +1,79 @@
-> +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-> +/*
-> + * Copyright (C) 2024 Yangyu Chen <cyy@cyyself.name>
-> + * Copyright (C) 2025 SpacemiT, Inc
-> + * Copyright (C) 2025 Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "k1.dtsi"
-> +#include "k1-pinctrl.dtsi"
-> +
-> +/ {
-> +	model = "SpacemiT MusePi Pro";
-> +	compatible = "spacemit,musepi-pro", "spacemit,k1";
-> +
-> +	aliases {
-> +		ethernet0 = &eth0;
-> +		serial0 = &uart0;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +
-> +		led1 {
-> +			label = "sys-led";
-> +			gpios = <&gpio K1_GPIO(96) GPIO_ACTIVE_HIGH>;
-> +			linux,default-trigger = "heartbeat";
-> +			default-state = "on";
-> +		};
-> +	};
-> +};
-> +
-> +&emmc {
-> +	bus-width = <8>;
-> +	mmc-hs400-1_8v;
-> +	mmc-hs400-enhanced-strobe;
-> +	non-removable;
-> +	no-sd;
-> +	no-sdio;
+This series adds support for the SpacemiT K1 SoC QSPI.  This IP
+is generally compatible with the Freescale QSPI driver, requiring
+three minor changes to enable it to be supported.  The changes
+are:
+  - Adding support for optional resets
+  - Having the clock *not* be disabled when changing its rate
+  - Allowing the size of storage blocks written to flash chips
+    to be set to something different from the AHB buffer size
 
-I doubt very much that 'no-sd' or 'no-sdio' are appropriate here. These
-are not general properties, they are useful only for specific
-workarounds of hardware that reacts badly to commands. Is the hardware
-broken that it needs these properties?
+    					-Alex
 
--E
+This series is available here:
+  https://github.com/riscstar/linux/tree/outgoing/qspi-v2
+  
+Version 2 addresses comments recieved during review of v1:
+- The "reset" property now only applies to spacemit,k1-qspi compatible.
+- Patch 1 (previously patch 2) now points out that this is the first
+  non-Freescale device using the binding.
+- Added Frank Li's Reviewed-by on patch 3.
+- A quirk flag has been renamed to be QUADSPI_QUIRK_SKIP_CLK_DISABLE.
+- The predicate for that quirk now returns bool type.
+- All other similar predicates now return bool type; this is done in a new
+  patch (patch 4).
+- If non-zero, new field fsl_qspi_devtype_data->sfa_size defines the
+  size of the serial flash regions, rather than ahb_buf_size.
+- A continued line in the Kconfig is now aligned.
+- Patch descriptions are wrapped at 75 columns.
 
-> +	status = "okay";
-> +};
-> +
-> +&eth0 {
-> +	phy-handle = <&rgmii0>;
-> +	phy-mode = "rgmii-id";
-> +	pinctrl-0 = <&gmac0_cfg>;
-> +	pinctrl-names = "default";
-> +	rx-internal-delay-ps = <0>;
-> +	tx-internal-delay-ps = <0>;
-> +	status = "okay";
-> +
-> +	mdio-bus {
-> +		#address-cells = <0x1>;
-> +		#size-cells = <0x0>;
-> +
-> +		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
-> +		reset-delay-us = <10000>;
-> +		reset-post-delay-us = <100000>;
-> +
-> +		rgmii0: phy@1 {
-> +			reg = <0x1>;
-> +		};
-> +	};
-> +};
-> +
-> +&pdma {
-> +	status = "okay";
-> +};
-> +
-> +&uart0 {
-> +	pinctrl-0 = <&uart0_2_cfg>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +};
-> 
+Alex Elder (9):
+  dt-bindings: spi: fsl-qspi: support SpacemiT K1
+  dt-bindings: spi: fsl-qspi: add optional resets
+  spi: fsl-qspi: add optional reset support
+  spi: fsl-qspi: switch predicates to bool
+  spi: fsl-qspi: add a clock disable quirk
+  spi: fsl-qspi: allot 1KB per chip
+  spi: fsl-qspi: support the SpacemiT K1 SoC
+  riscv: dts: spacemit: enable K1 SoC QSPI on BPI-F3
+  riscv: defconfig: enable SPI_FSL_QUADSPI as a module
+
+ .../bindings/spi/fsl,spi-fsl-qspi.yaml        | 16 ++++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      |  6 ++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 21 +++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi          | 16 ++++
+ arch/riscv/configs/defconfig                  |  1 +
+ drivers/spi/Kconfig                           |  3 +-
+ drivers/spi/spi-fsl-qspi.c                    | 87 +++++++++++++------
+ 7 files changed, 124 insertions(+), 26 deletions(-)
+
+
+base-commit: efb26a23ed5f5dc3554886ab398f559dcb1de96b
+-- 
+2.43.0
 
