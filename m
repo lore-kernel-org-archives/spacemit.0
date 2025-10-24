@@ -1,103 +1,125 @@
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684A01F4621
-	for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 14:21:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F2530ACEE
+	for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 16:06:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761315669; cv=none; b=jrbdMF0S44HuBtY1Xbim0elHZ/rjGw2VN1yb24N2AhOM/3PwknpVEPxhp407uz+prUN4RtoEQPWa74FQ/1vrEa6OqWBaeAOKy/2XkLHhYWa6lEKATAP8n99ngzfR7SBy9u3nR3nSjM/k89RK2clIxkPFESnqNBoBYEdHzkGE1Sk=
+	t=1761321971; cv=none; b=dsNjgRXo93AGiZN7NVmwWXqFwTgE5R0/M5HJsQJFWlUjMSTG3OrKSfWySD7/7JWf7gU6GWB2vEUCfgB2JdKQdfVVr34ChEL43pberRSqM09RFMqd6G53pvc0rZWrNVGsRKV97SAXSXqJP4Ynb5x22IG9auBZok2cVXLsBasSbuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761315669; c=relaxed/simple;
-	bh=GTrP85gjNLGPzO42dWPJ55XCS4SRGJy0uSR7+gh8n6c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XHJQR75wDMhGvJBteuPbI3tV7R/1J3BkYrzQWYlKWAwQsk3YQE1xDSrMg3oFCOMq9rFxWwArBPrWLqZ59D1k0roYx9rHefllAdOmBuEBsgLavFF80MbGtRLGxdGdVqoBPXM8WQy9FQ2YAMCigmXRIz+u5di2fOxCS2LIqYln0/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=DCjiPUx5; arc=none smtp.client-ip=15.184.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1761321971; c=relaxed/simple;
+	bh=3c7bOwm7cR8w0+Jt/bY89sbewv1n9qT9ayt2xE6Ure4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZH/Rali+l1NjVIy3tvBBnLQHuV3vuuVpLRVHiytyy/ucRJpqaxXjOU8FasPl8Vyxj1ZIIBqaVHoOnYfVCyC3KpNUdoAN/ZcyA5vuprJ5EYEPEaUPNnFSfmXHFkWS3+EadUD+ZVbSb+Rx/nKwlM3nbSUuyZHCaRViBW3ULDkbx/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ieee.org; spf=pass smtp.mailfrom=ieee.org; dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b=ABx1ZvSE; arc=none smtp.client-ip=209.85.166.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ieee.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ieee.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="DCjiPUx5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1761315598;
-	bh=ylc6GQ1hJ0TbYatd4EtuuHeOUs0jEjk+TPTEgYS83so=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=DCjiPUx5wGt/K8UzRKTjKNF/PWL+nVF1aojEuBoFritg726dk5GpZuYyM76qo0niw
-	 VVui7FIGOhdHAuItmLgRPx6/ldGLuw3gZY4r8StFwzbIIpDjt/WqC10ZI2wWBNd8I6
-	 64Tnu6BwYF8S/UuqTqRMCOXqQJZEgsqD7JhTsj+c=
-X-QQ-mid: zesmtpip3t1761315596td6aca7a1
-X-QQ-Originating-IP: zR/JaMMb0y/zEHR3rB1xAYJP1BB3pKKuVq6gci5Q7OE=
-Received: from = ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 24 Oct 2025 22:19:54 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 8195043091810859412
-EX-QQ-RecipientCnt: 11
-Date: Fri, 24 Oct 2025 22:19:53 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Dan Carpenter <dan.carpenter@linaro.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Yixun Lan <dlan@gentoo.org>, linux-sound@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ASoC: spacemit: add failure check for
- spacemit_i2s_init_dai()
-Message-ID: <5446E6EB4FCF412B+aPuLCQcV8hMlBLjk@troy-wujie14pro-arch>
-References: <20251024-fix-k1-i2s-dai-mem-v1-1-15f5f1ec294a@linux.spacemit.com>
- <aPuJnJIeupM1PV09@stanley.mountain>
+	dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b="ABx1ZvSE"
+Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-940d9772e28so89035739f.2
+        for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 09:06:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ieee.org; s=google; t=1761321968; x=1761926768; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DqiQwabN7+SNaCM6YCpwJPboZ1StVYh2yuL/aC6ivg4=;
+        b=ABx1ZvSES7pQtIW5Xl1Z9K+oaWRjqVvBrXR1PllRohtDGM0SXituHvLlLQsNQnQ/k4
+         khAST7+Vo6TG475R/6EWvkOZRNX04ge+HKfLVQ9X2QPftqs5+PHGGMxHyIE3S9IWL4kl
+         q7IYR/ibSUDB/cMlDClkhUA5HlmiuFzmFs7JY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761321968; x=1761926768;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DqiQwabN7+SNaCM6YCpwJPboZ1StVYh2yuL/aC6ivg4=;
+        b=pZUS3Vq6dmgVpsV2ytiefb/cCvozRcTWUYBUU3ZXOAXerFJRZGj60uO/HkEksXQcgD
+         r4H7RmYkE66ySdBydJNxtGvqoDXlt+PBDDgpXYk55pzmW06utrH8Wf+aGxfd7pZOyUKR
+         0VWVE4qkbRJh/Iovq2sxFvAr/2Dfezm+aTaDeMW5PEfkl9MtcsbxKJauGPomAYrvyZ72
+         4M4HHBZkggbDKUtgxqPhZXHSYnjgfOrnD39lswpzKwZ5J1Qtx2WByPzPlUCrwJh5+CqV
+         IqZal1f3H3gjAgij2r3VkK0jQpkR3orwyO9p3GWBxd4oN57JLTEgheAr1V4L8Q0b9gnU
+         1L+w==
+X-Forwarded-Encrypted: i=1; AJvYcCXrAVBHlkdb4OrI+Ewub2q6f6+oVO/zpavAT66yejtoqR5BTOaI426eUGgMFISGsiwnMINDeEXadA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxgo8dNiLVm7/bFzAb2Ebgm7v6VmZCFfIDcaxroZE7xPoRYS46r
+	B90EnJQLlZRXMp9wBUAuKEwiDQc37haHyq2ScZrRFEabOSKH3xIl0VEqTASAYoEY7g==
+X-Gm-Gg: ASbGncvR1K1wIpWcWlvM9Nr1FvYiFZtxBo4HJKt4g5MWbLMm1GndVa2yC90JKsIO4+p
+	QpUajFPSG+q+058TZnKGKZdC9dveXlZ1BqQXvrcMrxykOisZU24zxmhit4d5r56TL4Oypq+Wqht
+	o8a4Ftn+uUHffIHatK8taPbOKvrsW7gbHkVvaa9gWEf5HsUACHmUGOIeKTwGBTWjyXsYveve44X
+	qI+56heTnigL0k+uZdg8cpb6TxkT9CLVC3/vPLRF71lx0zdIZHFrZk4bq4zTNGhSEjYjjEbFRH4
+	B9tgVKaMgdzIC6mn6Z9mo8bFgfxiUikzPvves/pj8MluwCI/uweivB7/8smxthflTrTqDOi6WdG
+	9i8wtWwcLcNLPLZWZruoUl/EbqGXClIr/Wt1bjWGiUKxllG7zEUbifi351nqfIc4qd5PQ7va0ge
+	A1e506YGzecTakSizzbeINKZjeHno1qIOKB/dh5u8birXNijRoRKSy+ddpay4=
+X-Google-Smtp-Source: AGHT+IFmAZGPxYIrzjo/bVeYrd6msMNtUtiLRt6F5A4V5iIvDEZmEFUheqr1kCxRWvtPHxZLRSm8ow==
+X-Received: by 2002:a05:6602:3426:b0:93e:8817:dac1 with SMTP id ca18e2360f4ac-93e8817de47mr3939194039f.8.1761321968049;
+        Fri, 24 Oct 2025 09:06:08 -0700 (PDT)
+Received: from [10.211.55.5] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.googlemail.com with ESMTPSA id ca18e2360f4ac-94102f86196sm191322139f.18.2025.10.24.09.06.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Oct 2025 09:06:06 -0700 (PDT)
+Message-ID: <eee35fa0-0a5f-4730-b6e4-a1b92dc5000f@ieee.org>
+Date: Fri, 24 Oct 2025 11:06:04 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aPuJnJIeupM1PV09@stanley.mountain>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NgaheRY97EnbcGSBrTOOlFa+KwSlGtxw10Jq71kMZuYIdRS6LNEqMaaf
-	EeljPIi+JR24Nqd5PDYIXRkGtm2j6ZFVM30Ul/ab9p6HHreA2OYXNMdpGtXxYBml6kU1Nc3
-	lwIw8LjisRod3PNYXD6O5ffC/cyqZ8uWbeJmVkLIwQyT+hGVZ37ZK4qubHuud3jbw3oa9c3
-	q58ooSBMdy9G/oPkBqJfBUuPQ1ObSf+/0vEg+GgYGiUNHH2d5AIKAlZbrpeMmXZz1t+imal
-	5vG5W1dUf1vO4g3pTJMFgaDrhTT2jILCOqF879g1p0/7yQlOAmfVwYMlMXN2++u9HCBx913
-	rS0swhCtdh7n+Ed1VPFjknIHYNWcGC63LiOgUu0R0sZ860h+chx2dLxomUGPmHv+katCdsY
-	yVgZbx8rtAubGNfox40E63+qUKDs1o3/UR7/31/Affl0JlAwnKe4NvM2J7gkAfhmrLjAA57
-	ByaQH9Ozcusks38hAMYCcy3xq6Prd0UzrpFvFh5Y8CjMZvX8XW616YyalJ/l9I0c85Nw8uJ
-	hvwOtF9KOli5kEVq8sd6YSLWiW453SmGanKkocBwRRl2faPE6mmsJD+8g2nPl00ExTleMYg
-	B7ShjIQ50Lw06e08Swr4Ci7fK5SezCZEuqeZrwtEacp0Z91lh774me9nZ5M6bTSejdxG3pl
-	Hgnys2xp+TKhM/rORb9sCxs5Yx0CPs1HnZvRQ/ipVPvObrk9nZrtYsYixA/HJQAA2RwlALD
-	tE5infnf0IIM/bFkdPF1vjaES8SzHMSGSzpCZvGV+aTwy35BrBJgbki1vuYUjzkEKpGG65P
-	0gc2f+qXxUb/PhRLE5+HitQhDXMiXIholbYxpd0RGyF5vO3249XGqPkNRbhaMGGJBxqpblk
-	bt18arbbYMzOt/K1tXJEIoyfic96HSAM4lrurRkmB5V80RVCa3RBdBA9naM4P6DnvuRlvD+
-	qIxmeXVP1Yqv92CBRXZCJVVjWVmBPEsHabFMmOiOcogi0TiIGVKzpq1zr8SRkicgoronKFz
-	q/gaawER/Bxjk4mWDTclqM6M/tV4/v0LB70aSa/AByjNhSNmpqdwLdIzwI7S9oPFCoDSGlC
-	BHM5GOdJ5KBT+7d1qGV/avJmB+9tslQ4g==
-X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
-X-QQ-RECHKSPAM: 0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [bug report] ASoC: spacemit: add i2s support for K1 SoC
+To: Dan Carpenter <dan.carpenter@linaro.org>,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: linux-sound@vger.kernel.org, spacemit@lists.linux.dev
+References: <aPtiNCZ_KBezL2Dr@stanley.mountain>
+ <E26A36F90026E89B+aPtkgbhoPoTzVnRN@troy-wujie14pro-arch>
+ <aPtmbe9uoHIPfZz7@stanley.mountain>
+Content-Language: en-US
+From: Alex Elder <elder@ieee.org>
+In-Reply-To: <aPtmbe9uoHIPfZz7@stanley.mountain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 24, 2025 at 05:13:48PM +0300, Dan Carpenter wrote:
-> On Fri, Oct 24, 2025 at 09:11:01PM +0800, Troy Mitchell wrote:
-> > Add error handling when memory allocation for dai fails in
-> > spacemit_i2s_init_dai() call.
-> > 
-> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-> > ---
-> > Dan reported here [1].
-> > 
-> > Link: https://lore.kernel.org/all/aPtiNCZ_KBezL2Dr@stanley.mountain/#t [1]
+On 10/24/25 6:43 AM, Dan Carpenter wrote:
+> On Fri, Oct 24, 2025 at 07:37:51PM +0800, Troy Mitchell wrote:
+>> On Fri, Oct 24, 2025 at 02:25:40PM +0300, Dan Carpenter wrote:
+>>>      424         i2s->reset = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+>>>      425         if (IS_ERR(i2s->reset))
+>>>      426                 return dev_err_probe(i2s->dev, PTR_ERR(i2s->reset),
+>>>      427                                      "failed to get reset control");
+>>>      428
+>>>      429         dev_set_drvdata(i2s->dev, i2s);
+>>>      430
+>>>      431         spacemit_i2s_init_dai(i2s, &dai, res->start + SSDATR);
+>>>                                             ^^^^
+>>> dai is not initialized on failure.  Generally in the kernel we always
+>>> check for allocation failures.  Even when they can't happen in real life.
+>>> I was hoping they were going to make a rule that allocations under 4k
+>>> wouldn't have to be checked but it hasn't happened yet.
+>> Should I send a fix patch now, or should I wait for the maintainer to
+>> revert it first, and then fix this error and send?
+>>
+>> Thanks for your report!
+>>
 > 
-> Thanks, Troy
+> You should send a follow on patch which just fixes the one issue.  If the
+> maintainer wants to squash them together that's very easy to do in git.
+
+Yes I agree, send a new patch, no point in reverting.  But I think
+a fix commit is better than squashing (for what that's worth).
+
+
+A very simple fix is assigning *dp to NULL in spacemit_i2s_init_dai().
+
+         if (dp)
+                 *dp = dai ? : NULL;
+
+Also:  Why aren't you checking for spacemit_i2s_init_dai() returning
+an error?  (Another--separate--suggested fix.)
+
+					-Alex
+
 > 
-> Normally we would say this needs a Fixes tag and the Link: should be a
-> Closes: tag.  It would be easy to make the argument that the
-> allocation won't fail in real life so a Fixes tag isn't appropriate.  But
-> actually it's simpler to add the tag...
-I see. Thanks!
+> regards,
+> dan carpenter
+> 
+> 
 
-Should I send v2 with Fixes tag now,
-or would it be better to wait a bit?
-
-                - Troy
