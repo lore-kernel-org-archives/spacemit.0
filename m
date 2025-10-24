@@ -1,66 +1,83 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cornsilk.maple.relay.mailchannels.net (cornsilk.maple.relay.mailchannels.net [23.83.214.40])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294011D47B4
-	for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 02:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761273124; cv=none; b=tV0Q/RIej+XUmqefcfu/Tclx9RziPAqDIUPKgSyr3YlNJ4wxm+d3vdb5Z1KLX6+enVOsbkrYtlGtuBR8X22UByD5DiW+WhUSKjOd79rdUrp7NCvwiXwjGwuD/fDVBipe7buQHk78aUthQbAdkumZiDQ2AhILmrWIn6hL5Svklks=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761273124; c=relaxed/simple;
-	bh=55IQUxzDMcQ4mCOoGJfMg/Ei4ih5BPWUSJBpAl+kkgM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MwY10auEf0mcQETytbII8UscJM0VgJzzjjnO1TXSEp73g2mVcFVzI9cbNcqnvxzKDIXzxacqxkaBNhIfBY2ZdzCXmuuhzVAFIdDuP/lUG/99UdqJoGu61cz48e3leeMD6zj2QffpwhQ2TeE46U96/NSxBlnJU3JU79wsh/25UII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=V78dIAOG; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCDA23FC5A
+	for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 05:53:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.214.40
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761285212; cv=pass; b=AyHgP9pkZm2EaEJZ3wse+3xFMSpf+9UPYhR6ZiJzFm1b71IeZEJwclY7SOGFuuWNxQPk8C/7n3Pbg7gDH2MHCxMOD1Zqsyd7twrslTKQTipNeFfbql8bC2sG2j9SHY/d7r9wy4DqO3q+o33wxJLsozjxVmG6lnOkkzWff5YAI9M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761285212; c=relaxed/simple;
+	bh=6q7jFBo+mpAQago+1ZKfiqs+nTvq7lT3w9JQdd/OtJY=;
+	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
+	 Content-Type:Date; b=SCSA/8sPJSUYjCPBSg7f8n3yNGUcQiJrYSi7ll5Eu+QSizV7laHC0CE3lHn7FI5D4vdmg7FTWA4hWHSQqFbZSWrhoMVC9JxyC1sNeaT88M0n8rSJ10xuvHoaKbKQE1qvqr1DTf35gBx9kawpt3snKB00Ldk6tyAZM27jqPircY4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=NJoC/nRd; arc=pass smtp.client-ip=23.83.214.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="V78dIAOG"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-27ee41e0798so20641345ad.1
-        for <spacemit@lists.linux.dev>; Thu, 23 Oct 2025 19:32:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1761273121; x=1761877921; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kzKUpWrMzxlp8IP1Hn+gGsM8P9oC4CEs0ABcpzIqxFU=;
-        b=V78dIAOGBgz/0pSd4oOyhzZ1Vorv+5REnkOfubNjkbap4B0p6etbWV4AgXeSBfFO/c
-         iCG25N0Hx6+npjwJoL33h8LANVhVqbriAbHBaj+3EPtGoXRWLEYSSuSLXMIAKK/7jpok
-         m5iHjimI5N5MG0Qzq+WwY9/aX8ifNNGd8UauZl8FFnq7+jNaySaIEIwX8hdcFhy03amu
-         nbK/Swoib2Fx2xrhBJrm46bIupq+2FNXXtUsAGXm1iRMzWHAlb7+Ggr2ig65vrgXfT7U
-         m81JPwCP/6n1/h5AYKsPSzPanctGzpxEOKX2vBJd1TsjvEUbPkEK29x+fsoEm3+SMP1L
-         WlJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761273121; x=1761877921;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kzKUpWrMzxlp8IP1Hn+gGsM8P9oC4CEs0ABcpzIqxFU=;
-        b=sazwSrqGOWygtOEVOkhQU5VWoXyCy4hekny3y1OuUeSsuWCmi91uLGCYDrIno8mMsk
-         /Xn/ExPIyRGIRB44RmVccxVT+5sVQ6dBSzVFvVyAMFqRh23YeooFBaaMZyE0CUKS2SS3
-         0RGrr8xhCWDhisFtyKlmQ3SknVGYnC+3rnKPLrdHSzeifIZhmVQQ4Bk5Spc3dbG83Ko7
-         TfSJFe8lWuYFZv/DW63o6RJN6AJZcz+1X5zB8ptNV6ql2j7H5sHGlIGjrVXV3tpQQrRR
-         TW18x5a5Uao/1rrScj5NZLOHDfk2vNF35rtFSLjvoRWwummL7UbOq2P3UMjSxTKzR52f
-         bIGw==
-X-Forwarded-Encrypted: i=1; AJvYcCUD3RL8Vok2qQUnRhr3I3VQV0/3IY266rQUMWpD8vLAK6+JMMtLjlOJFgvcbFdhqquZFcADrSwBGA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxPNVs4bnNL7F+mo3NhvD3FN386zQiFDUEX/PylRMc6D26r4/am
-	/D9SNByzhVWH/bY9Rj9xujYwv7V1+NGslQdEbLyztQAfxU/sMkVcHYipDCS3J/BHMDw=
-X-Gm-Gg: ASbGncsjsp1tCPVfDdYI3ZeHPA9o9YQCJNOhaliGKg3cnWkp2w99ChjidvKflQxEOgi
-	1bIW4xgiH0Ft1AyvQTX+HZ5lXUCu4RHY3BZDc+RgBKkvqUoWaZwCW1By2sX72TC5rxbw62XOQBc
-	rSnhgMgtFLWWSoJ7QkwANzZp5TKBjez9Fbb7drbXhqf+w3UdfkB8TUqh3MB3sTqw3zBlBT29ryh
-	icjFq4iz2omAkzsyuwe0tcujovbEHOZJ+6iLdVAR2+cUh/o6ReG8e8edZTquYNA3luOgBhOUj5C
-	H3VPaoPHQ4k5SoJ1aHAQL4V/CQGI+Se5CTLKyqeU8qqF499ou1aUvhG2sYnoTnSL+zrclrzv/wz
-	3/p+AgqthubzEe3iSpsgtI/c24KbjaXDcGQtH2zteh2w6vNLJA2A1GX4qOympu0YPzyjqMdHvFT
-	jlSMMMQ/hCmIaA/K0=
-X-Google-Smtp-Source: AGHT+IHA/K4QUyGTpQDn9ihnxw3kPWzudC8RYPggiHagQ4ZXS400Tm4j9rYxGD5oYzwHu+DSEJUE6A==
-X-Received: by 2002:a17:902:cec6:b0:290:ad27:c1fc with SMTP id d9443c01a7336-2948ba7ccdfmr7272505ad.55.1761273121331;
-        Thu, 23 Oct 2025 19:32:01 -0700 (PDT)
-Received: from [10.211.55.5] ([156.39.10.100])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2946e0ef2fbsm39193715ad.79.2025.10.23.19.32.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Oct 2025 19:32:01 -0700 (PDT)
-Message-ID: <ab1fae69-cf2f-4417-9f19-6383c648e4d7@riscstar.com>
-Date: Thu, 23 Oct 2025 21:31:59 -0500
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="NJoC/nRd"
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 9D5977011DA;
+	Fri, 24 Oct 2025 05:36:52 +0000 (UTC)
+Received: from fr-int-smtpout16.hostinger.io (100-120-36-240.trex-nlb.outbound.svc.cluster.local [100.120.36.240])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id B38B37013E2;
+	Fri, 24 Oct 2025 05:36:49 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1761284212; a=rsa-sha256;
+	cv=none;
+	b=b/WzV4gfay+Pe9swLXwg1BAeMIWgPdjKg/i/Z86jbeFKZ9ikGMiv2/A5F0I/RGoUSWbaUn
+	fmrh69M9kymfHXuL+gMJqyo4K1xPNZK1ktu9BNNM8mI348HX08ZcTzJZ5Sv7Y+1NBiI+2n
+	hgoSdL1y/GP90iDz26uRhvOk8oAg55TxQPCjVlcI0Q7c26N/zWZ1Sr2NqHNwWvdpCOG5C5
+	dmLGDvCk4cCc+FuFuJmQsbc8EvoFVs9R/YcgrPgG1OUf5Xgj17T/od04pXhAATGEIzjA+1
+	IT0TtskMwRUdPA9cVB/w2FhZvYOdsEdTGY3gPrgJqx5q2sOwWuu6UIcfGT/xTg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1761284212;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=m+jmNyQWZBcblKYPZ3ycDCnnIPIWB9tc/exRDbXcZRo=;
+	b=vDL2UXdDo9utHFjl85WxPe1uTCS19sNvdUZCH5a7ziNXa6jDiceN37dc/yCxu+ftaqKJW+
+	Bt1qmfFB0O8XhHiAiuR8F67sJK3lcnNaMDoLaiz5irTxOSYeIsAlXZVZBeA0JVfnEQBvMM
+	7mxaHaEFMbSJNVyLx5dziFnJO4+wj+tG08HiLu0Xy1zsGTnWBjDPJQ0GmY4bFleRplVwt/
+	r0QRtDpQc2iAkSg0uFiLftNEfLykukWYaeGqiW+1Aq9W35a2MtLSawNjYUkkUwZ6Mc06Ex
+	GHWcOLRWJaY5Q55HaGE3/Y/ETsuDLohO7wOr+YnYVYVw4rvuMOq3sV3vV/xAhA==
+ARC-Authentication-Results: i=1;
+	rspamd-9799b5d46-qbw44;
+	auth=pass smtp.auth=hostingeremail
+ smtp.mailfrom=michael.opdenacker@rootcommit.com
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId:
+ hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Wide-Eyed-Tangy: 4cde82cd0636ecea_1761284212448_955200319
+X-MC-Loop-Signature: 1761284212448:4195139562
+X-MC-Ingress-Time: 1761284212448
+Received: from fr-int-smtpout16.hostinger.io (fr-int-smtpout16.hostinger.io
+ [148.222.54.42])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.120.36.240 (trex/7.1.3);
+	Fri, 24 Oct 2025 05:36:52 +0000
+Received: from [IPV6:2001:861:4450:d360:d885:d256:90f4:37e9] (unknown [IPv6:2001:861:4450:d360:d885:d256:90f4:37e9])
+	(Authenticated sender: michael.opdenacker@rootcommit.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4ctBV70kGsz1xqt;
+	Fri, 24 Oct 2025 05:36:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
+	s=hostingermail-a; t=1761284208;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=m+jmNyQWZBcblKYPZ3ycDCnnIPIWB9tc/exRDbXcZRo=;
+	b=NJoC/nRdeOXSohiI2Wm/8SE37/h+g51k2R7uUj9rzyCdlDAmCMIChCgyzFmW7bj81vcYeB
+	xwSsjkXnF2rteunVYMoSpon+Nq1j/Q5Tl2m2Yvn856jfMr5SDZ06slPxF3E4uuDf04mhNK
+	aQCsTbaYq5Ul6+JKDMoyUn19UoViiFzJ1Je56U+BhLH1FEiEquxQw1iup6bmS1mrRSdVsA
+	zr6yE/QfPrsJCULqUMQGz1s22NUhUZKmvWVfKMiY7yZqVsRgJekkDRfX8c5Cfw2n6K4/vR
+	QlcMurkM2YoN3vXt5dJSo47tl1wFc07fmU7kGW7tWmtLpD0JtJpg2hTWtHAoSw==
+Message-ID: <5fbb09f4-22e6-4073-a4e5-95165d3dabbb@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,36 +85,83 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/9] spi: fsl-qspi: add a clock disable quirk
-To: Frank Li <Frank.li@nxp.com>
-Cc: han.xu@nxp.com, broonie@kernel.org, dlan@gentoo.org,
- guodong@riscstar.com, linux-spi@vger.kernel.org, imx@lists.linux.dev,
- spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20251023175922.528868-1-elder@riscstar.com>
- <20251023175922.528868-6-elder@riscstar.com>
- <aPq75FBuYvFQrbQE@lizhi-Precision-Tower-5810>
- <a43b6ddf-c552-4db8-89cc-49951015161d@riscstar.com>
- <aPrfSVEP5xasMEBr@lizhi-Precision-Tower-5810>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <aPrfSVEP5xasMEBr@lizhi-Precision-Tower-5810>
+Cc: michael.opdenacker@rootcommit.com, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Emil Renner Berthing <emil.renner.berthing@gmail.com>,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] riscv: dts: spacemit: add Ethernet and PDMA to
+ OrangePi RV2
+To: Conor Dooley <conor@kernel.org>, Vivian Wang <wangruikang@iscas.ac.cn>
+References: <20251022201807.1474789-1-michael.opdenacker@rootcommit.com>
+ <20251022201807.1474789-2-michael.opdenacker@rootcommit.com>
+ <f8a55f89-2612-49e3-88c6-acb523ac74d3@iscas.ac.cn>
+ <20251023-lizard-sharpie-70f2a000327f@spud>
+Content-Language: en-US, fr
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Organization: Root Commit
+In-Reply-To: <20251023-lizard-sharpie-70f2a000327f@spud>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Date: Fri, 24 Oct 2025 05:36:47 +0000 (UTC)
+X-CM-Analysis: v=2.4 cv=Lflu6Sfi c=1 sm=1 tr=0 ts=68fb1070 a=ionIEas4mvD8rQvtymOzTQ==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=d70CFdQeAAAA:8 a=pGLkceISAAAA:8 a=7mOBRU54AAAA:8 a=5cO6JjuxQmC9w7LMcdkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NcxpMcIZDGm-g932nG_k:22 a=wa9RWnbW_A1YIeRBVszw:22
+X-CM-Envelope: MS4xfNe+tets3r1BS4pYBmVh6c0twctKSh2zgiakf4nsiN6CqS9OYk6XR0kKjCma2OVyrySVoBx/PLD2Rr+z9wy9LG+U+Bm8+ETzOGcqvzAImfWJ+PyLqT7J QYMBtEEVxeN67cehomKRfQw9QODJGJp3D8FBM83Y58hmW5MhzN8wG2SgKSofzMhdBS19xEuWllYF2JtNOKAb/Wld1v4brM5nV3KQpPpwXKWz6xv3WlyGdjOY mK4SU/Ba+P7PLWvJ/r2UgGRiB2UIuJn9H10QqevjxXGHA7MtpcEVq1kzjNHIKWjZOQs6R3U9Gs856AVcmLjkcLiuhsy1JyTbsOBJ+Ks0fKZJ0TGtt+ra+/RQ iLEQlPc7mSeOKqPnx2kGx7E8fWnt2vNasRt1VcbY4GLURtXMLLNOZnf3XSWGBTegwCBRoldMJl94zsAW9FCz0gPcuPDMcQ352rPu9hGrtEq833sEzOdvf+Qo D6UtkG9fcFiXfMQ6/gEyMbbm9Ve4WQaKTRRJObQE1kieXtVtz5JUbP6kpBrSFGu0uNHpliotLQTwtJ9QI4Ew8Bnv+uNdSv853SSudd2vTsncMbh0BrkHwvqH W2YbH6Nd4cXwkp4M6Es3wKiZAb3DR+xyhZmCzwCO2Cp+pp6fep5xLQ6Ox0/cN37NEOp5skb8HtZxrkUEqnlKIK9XsD2DseUUuloB3xtme69mL6vvE19CIWGG k0iqYRHjCglexxSxaEFIby4Ze9IkZS8Uy4lRJ4xdhu8B1EgZFGFVg4rqX6hEyNC0LTmmjSzt7AGqfn7VQbZ+SMMW8BILNlgjKWYTfewMVQ0CCajSI7SnFw==
+X-AuthUser: michael.opdenacker@rootcommit.com
 
-On 10/23/25 9:07 PM, Frank Li wrote:
->>>> +static inline bool needs_clk_disable(struct fsl_qspi *q)
->>> needs_skip_clk_disable()
->> OK.  I was trying to avoid the double-negative:
+Hi Conor
+
+Thanks for the review!
+
+On 10/23/25 20:30, Conor Dooley wrote:
+> On Thu, Oct 23, 2025 at 01:58:22PM +0800, Vivian Wang wrote:
+>> Thank you so much for the patch and testing results. Only some nitpicks
+>> follow.
 >>
->>      if (!needs_skip_clk_disasble())
->> 	clk_disable...()
-> Oh, Make senso, needs_clk_disable() is fine
+>> On 10/23/25 04:18, michael.opdenacker@rootcommit.com wrote:
+>>> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+>>>
+>>> The OrangePi RV2 board ships two RGMII ethernet ports.
+>>> Each has an external Motorcomm YT8531C PHY attached, the PHY uses GPIO
+>>> for reset pin control.
+>>>
+>>> Enable PDMA for the SpacemiT K1-based SoC in the OrangePi RV2 board.
+>>>
+>>> Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+>>> CC: Emil Renner Berthing <emil.renner.berthing@gmail.com>
+>>> CC: Yixun Lan <dlan@gentoo.org>
+>>> CC: Vivian Wang <wangruikang@iscas.ac.cn>
+>> Firstly, it is usually spelt "Cc:", with one upper-case C and one
+>> lower-case c.
+> I don't think this matters at all, the git tooling at least doesn't
+> care.
+>
+>> Secondly, "Cc:" should not be necessary in the patch/commit message.
+>>  From Documentation/process/submitting-patches.rst:
+>>
+>>      If a person has had the opportunity to comment on a patch, but has not
+>>      provided such comments, you may optionally add a ``Cc:`` tag to the patch.
+>>      This tag documents that potentially interested parties have been included in
+>>      the discussion.
+>>
+>> If you look through the git logs of Linux, Cc tags are really not a
+>> regular occurrence except those marking patches as suitable for
+>> backporting to stable.
+> If people want to handle CC lists by putting it in the patches (it's
+> what I do when I have no cover letter) just put them after the --- line
+> and git send-email will still pick the CCs up but they won't end up in
+> the history.
 
-I will leave it as it was:  needs_clk_disable().  Thanks.	-Alex
+Oh yes, that was my mistake. The CCs were never intended to make it to 
+the final commits.
+Thanks!
+Michael.
 
-> Frank
-> 
->> But I'll do as you suggest.
-
+-- 
+Michael Opdenacker
+Root Commit
+Yocto Project and OpenEmbedded Training course - Learn by doing:
+https://rootcommit.com/training/yocto/
 
