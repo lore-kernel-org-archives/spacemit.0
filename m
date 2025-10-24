@@ -1,66 +1,41 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF73C31B132
-	for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 14:13:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684A01F4621
+	for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 14:21:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761315235; cv=none; b=q4Vo0v+b170KQTzdePUikMrVw950SQqeshMQiPYOlm6CH520JQwVry3md0ggkxJ1bj1VqQfl01IbAmhdkKuPgNzeWX2IysaCeFYktDW07dYKxQLHugbY2UBhfbA2sxePJddIbI0UC+HKTTJt3X6/lyy27yrpFLdUbk1xrx34LtE=
+	t=1761315669; cv=none; b=jrbdMF0S44HuBtY1Xbim0elHZ/rjGw2VN1yb24N2AhOM/3PwknpVEPxhp407uz+prUN4RtoEQPWa74FQ/1vrEa6OqWBaeAOKy/2XkLHhYWa6lEKATAP8n99ngzfR7SBy9u3nR3nSjM/k89RK2clIxkPFESnqNBoBYEdHzkGE1Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761315235; c=relaxed/simple;
-	bh=UMc4DAdZ3wELgwJc3P0/USAY01EMC3U9Jpr3hVyWTuc=;
+	s=arc-20240116; t=1761315669; c=relaxed/simple;
+	bh=GTrP85gjNLGPzO42dWPJ55XCS4SRGJy0uSR7+gh8n6c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TTCvL+X8KcIrWWv7YYZz2ro6VV8PBFwPaSGle4nu/zY3A6a2x2g7KwajaPC6qalm7krisAPQDKAc6Uc6ezlQZ1jgZ4Qb5maqfxAaHa389reD2fe4iw3FlmwqszU5gO5Mt97sw2NjuZdSe3xdT1Zu0Ik1e81Xql1Gmry/cnQVAzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gTp4bUtT; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=XHJQR75wDMhGvJBteuPbI3tV7R/1J3BkYrzQWYlKWAwQsk3YQE1xDSrMg3oFCOMq9rFxWwArBPrWLqZ59D1k0roYx9rHefllAdOmBuEBsgLavFF80MbGtRLGxdGdVqoBPXM8WQy9FQ2YAMCigmXRIz+u5di2fOxCS2LIqYln0/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=DCjiPUx5; arc=none smtp.client-ip=15.184.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gTp4bUtT"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-428564f8d16so1165884f8f.1
-        for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 07:13:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1761315232; x=1761920032; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DVsA5NUMk7Er151JpLhnqPMBBeiJc/C7dvaqVJvIrmc=;
-        b=gTp4bUtTxSvgyNNuOQRpsEF0zqx5NQzf5s+2jD26hXLKjKlrZQ24Lmky/e5d2lIf8d
-         HJu0GZhLN1WWaAjz7J9mRONjuqOM8cKT9bzyeaHzIjx9vm5O74DZ3M8Vetq6WjxXMAgx
-         w8RtpJEHhw2rB+rURWOX1b5CXV+wjUN9a3Eh4mzG2NG44qYAS5lMcUMeNLP/EDFVfYos
-         dbPv4Otcw2AS6/ym8+y0PH4TqTaiNfl8UOkaWYaSNDnZCB/ojXSQf2u91+UxPE9nGmO5
-         GDdo6QtmrOzW3n4NCzne7YyvsP5sf29TgfgUEKqEeFWrhura4h3haBPdBK8vsgwvLqPE
-         fg/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761315232; x=1761920032;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DVsA5NUMk7Er151JpLhnqPMBBeiJc/C7dvaqVJvIrmc=;
-        b=QFLcz8sr9PxhP0hJvAxCY4mC/2cLCzzDX7JJo1wJL0pHD05YY9GCAsxvi22jawRszi
-         c1gXh3c1LeLJrhx5gYxNyaotxYrPssOyl1EICuFp7XdmQ/Wj1DcA4WtFW95DYPzLpPn5
-         xDaRClMfXqQm3QMNiUyjNJ71n5W5W62JdaOKpg0NEfV1kfg0bUDD0/4VTiQ3WsECgOGX
-         0sbmUKAWTFASvJp+TZUOOsTyQSDWzBQxYJ4ck0/TxeZ+Y17zvQcJ2MePrLyTmn494KNr
-         oCHuMY9xl3z/qiCpaZFEWF6TiwrZlKltjO7S85W1j8/0RO2vAbhF6rIznSy9JUBAbSDF
-         6ddg==
-X-Forwarded-Encrypted: i=1; AJvYcCXGhCMOcTo62KPHa/Xu/F6In1k/0uuxFONLn6PDuil9u8VHckiRhgh7FLovpTRhJwZy5btry1kfkQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzMu6s4kqYnTVUSVtiU6YiduiARmpHdZR2gA6Y6wmM1pb+ruyRE
-	SWXJgllGZh7CPbTRqXDXHSVzID67/jt5oU0q5L/LmcyOHQzL6OWiTkifjMu7t+9Rt7Y=
-X-Gm-Gg: ASbGnctnr3aD3n+IFTz00JDahf+kW/tDJ6XQ3JmoHtHb1yfxR4oJxkvhBNqNzK4ii9d
-	GTnys8QN8SnxjNUfqDHTjRpr3iv4eik5ZRQZHtnnfeOSAtLfCECxcD3BmWn7MSnv5CYKjRgF3IY
-	z16FL0t65Tf6QqzaRPvrZAVZHI2Z/3qGK9qZUWKHINtyd26/LY4eaP4NrVhrF5BLUlG08Vfou0I
-	psP/RAab6o1q70V2sH1LKDLx+1HxVZkv3/QQ0XpzrIAjddHoTyNiRUNyZuioPyuKSfl0wgKRx97
-	bYYuf5Rt/s0f6lUzHM3VBlzIdGygugBLyarp4JBh3qSi0CQrOlSKh2onRVoqckoWEqPoVP8ujKO
-	8JbGnNfJPoAf/9EtI9EMjA+/C1OADADI4WKXJyBalwz+ydHHANm6+RRxUyEddIV4R5XW6yGwUXf
-	iVQeEis4GkhTir2FRc
-X-Google-Smtp-Source: AGHT+IGOwSSq4cPlqfVI2+cQc4DNxAbP8ipcdaug6FB/HIUIzgkN8w1ERIrzCxdii8Zp8hIOBEEMaQ==
-X-Received: by 2002:a05:6000:2912:b0:3e8:f67:894f with SMTP id ffacd0b85a97d-4298f582512mr2780216f8f.26.1761315231940;
-        Fri, 24 Oct 2025 07:13:51 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-4298b996aaasm7851320f8f.3.2025.10.24.07.13.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Oct 2025 07:13:51 -0700 (PDT)
-Date: Fri, 24 Oct 2025 17:13:48 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="DCjiPUx5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1761315598;
+	bh=ylc6GQ1hJ0TbYatd4EtuuHeOUs0jEjk+TPTEgYS83so=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=DCjiPUx5wGt/K8UzRKTjKNF/PWL+nVF1aojEuBoFritg726dk5GpZuYyM76qo0niw
+	 VVui7FIGOhdHAuItmLgRPx6/ldGLuw3gZY4r8StFwzbIIpDjt/WqC10ZI2wWBNd8I6
+	 64Tnu6BwYF8S/UuqTqRMCOXqQJZEgsqD7JhTsj+c=
+X-QQ-mid: zesmtpip3t1761315596td6aca7a1
+X-QQ-Originating-IP: zR/JaMMb0y/zEHR3rB1xAYJP1BB3pKKuVq6gci5Q7OE=
+Received: from = ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 24 Oct 2025 22:19:54 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 8195043091810859412
+EX-QQ-RecipientCnt: 11
+Date: Fri, 24 Oct 2025 22:19:53 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Dan Carpenter <dan.carpenter@linaro.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
 	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
 	Yixun Lan <dlan@gentoo.org>, linux-sound@vger.kernel.org,
@@ -68,8 +43,9 @@ Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] ASoC: spacemit: add failure check for
  spacemit_i2s_init_dai()
-Message-ID: <aPuJnJIeupM1PV09@stanley.mountain>
+Message-ID: <5446E6EB4FCF412B+aPuLCQcV8hMlBLjk@troy-wujie14pro-arch>
 References: <20251024-fix-k1-i2s-dai-mem-v1-1-15f5f1ec294a@linux.spacemit.com>
+ <aPuJnJIeupM1PV09@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -78,27 +54,50 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251024-fix-k1-i2s-dai-mem-v1-1-15f5f1ec294a@linux.spacemit.com>
+In-Reply-To: <aPuJnJIeupM1PV09@stanley.mountain>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NgaheRY97EnbcGSBrTOOlFa+KwSlGtxw10Jq71kMZuYIdRS6LNEqMaaf
+	EeljPIi+JR24Nqd5PDYIXRkGtm2j6ZFVM30Ul/ab9p6HHreA2OYXNMdpGtXxYBml6kU1Nc3
+	lwIw8LjisRod3PNYXD6O5ffC/cyqZ8uWbeJmVkLIwQyT+hGVZ37ZK4qubHuud3jbw3oa9c3
+	q58ooSBMdy9G/oPkBqJfBUuPQ1ObSf+/0vEg+GgYGiUNHH2d5AIKAlZbrpeMmXZz1t+imal
+	5vG5W1dUf1vO4g3pTJMFgaDrhTT2jILCOqF879g1p0/7yQlOAmfVwYMlMXN2++u9HCBx913
+	rS0swhCtdh7n+Ed1VPFjknIHYNWcGC63LiOgUu0R0sZ860h+chx2dLxomUGPmHv+katCdsY
+	yVgZbx8rtAubGNfox40E63+qUKDs1o3/UR7/31/Affl0JlAwnKe4NvM2J7gkAfhmrLjAA57
+	ByaQH9Ozcusks38hAMYCcy3xq6Prd0UzrpFvFh5Y8CjMZvX8XW616YyalJ/l9I0c85Nw8uJ
+	hvwOtF9KOli5kEVq8sd6YSLWiW453SmGanKkocBwRRl2faPE6mmsJD+8g2nPl00ExTleMYg
+	B7ShjIQ50Lw06e08Swr4Ci7fK5SezCZEuqeZrwtEacp0Z91lh774me9nZ5M6bTSejdxG3pl
+	Hgnys2xp+TKhM/rORb9sCxs5Yx0CPs1HnZvRQ/ipVPvObrk9nZrtYsYixA/HJQAA2RwlALD
+	tE5infnf0IIM/bFkdPF1vjaES8SzHMSGSzpCZvGV+aTwy35BrBJgbki1vuYUjzkEKpGG65P
+	0gc2f+qXxUb/PhRLE5+HitQhDXMiXIholbYxpd0RGyF5vO3249XGqPkNRbhaMGGJBxqpblk
+	bt18arbbYMzOt/K1tXJEIoyfic96HSAM4lrurRkmB5V80RVCa3RBdBA9naM4P6DnvuRlvD+
+	qIxmeXVP1Yqv92CBRXZCJVVjWVmBPEsHabFMmOiOcogi0TiIGVKzpq1zr8SRkicgoronKFz
+	q/gaawER/Bxjk4mWDTclqM6M/tV4/v0LB70aSa/AByjNhSNmpqdwLdIzwI7S9oPFCoDSGlC
+	BHM5GOdJ5KBT+7d1qGV/avJmB+9tslQ4g==
+X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+X-QQ-RECHKSPAM: 0
 
-On Fri, Oct 24, 2025 at 09:11:01PM +0800, Troy Mitchell wrote:
-> Add error handling when memory allocation for dai fails in
-> spacemit_i2s_init_dai() call.
+On Fri, Oct 24, 2025 at 05:13:48PM +0300, Dan Carpenter wrote:
+> On Fri, Oct 24, 2025 at 09:11:01PM +0800, Troy Mitchell wrote:
+> > Add error handling when memory allocation for dai fails in
+> > spacemit_i2s_init_dai() call.
+> > 
+> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+> > ---
+> > Dan reported here [1].
+> > 
+> > Link: https://lore.kernel.org/all/aPtiNCZ_KBezL2Dr@stanley.mountain/#t [1]
 > 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-> ---
-> Dan reported here [1].
+> Thanks, Troy
 > 
-> Link: https://lore.kernel.org/all/aPtiNCZ_KBezL2Dr@stanley.mountain/#t [1]
+> Normally we would say this needs a Fixes tag and the Link: should be a
+> Closes: tag.  It would be easy to make the argument that the
+> allocation won't fail in real life so a Fixes tag isn't appropriate.  But
+> actually it's simpler to add the tag...
+I see. Thanks!
 
-Thanks, Troy
+Should I send v2 with Fixes tag now,
+or would it be better to wait a bit?
 
-Normally we would say this needs a Fixes tag and the Link: should be a
-Closes: tag.  It would be easy to make the argument that the
-allocation won't fail in real life so a Fixes tag isn't appropriate.  But
-actually it's simpler to add the tag...
-
-regards,
-dan carpenter
-
-
+                - Troy
