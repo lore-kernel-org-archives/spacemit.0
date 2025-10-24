@@ -1,86 +1,134 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB1D26FD84
-	for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 06:22:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA98266B46
+	for <spacemit@lists.linux.dev>; Fri, 24 Oct 2025 10:50:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761286945; cv=none; b=rpwGSXJLR6dOpgz8PQh6DTzgO4PNlZjD6lnVcujywszpeTYvZEWAbaxzTD13IWkfx6dfSXjBY3WKl/U0H43J5avUZ8+tof6buwR6I2qKZ5nvIpUqT/q12QtwTQfctSbNoqJ2ScGbe8Sfo2FP2ZD37/aG2ys/AtkIYQWkxLG14w4=
+	t=1761303014; cv=none; b=lQF8xW6gbaD9xGcHvpnC0uVpG/ZNo/WW6PyD+qTM16OMzcJuC+kVNFLGg7CrqjMOpddqwqu5jGDv++hWD42NxhLj95xmNseOYJV29KgzTqdGHOYxYJnMiID3kkYUSgg650TVaFwTK/iS2JrXb5PVdmpqWQX6kg5FUjdfxMGiCcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761286945; c=relaxed/simple;
-	bh=Eow5Ov1CemkDdm2MemGZbXyCIXqPK2NntGjWajJ+ijc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=svewnlqi+VsdTj++NTbV60hHYrOYz9F7tG8XV8dcaQmYgTQOvx8oygV/MpwN52RZkAzIgxT93yfk+/yNiWWkty6ltNJgBFX6BNIPUo32wnnQTLS7qQLQL+xckeTpb1BxaGOyIj7DK5eUPaPtQHg8LcLZpK3GdRvT/+CJbM1zMHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from ofsar (unknown [116.232.147.23])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id E78B4340F69;
-	Fri, 24 Oct 2025 06:22:19 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-To: Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	michael.opdenacker@rootcommit.com
-Cc: Yixun Lan <dlan@gentoo.org>,
-	Emil Renner Berthing <emil.renner.berthing@gmail.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	linux-riscv@lists.infradead.org,
+	s=arc-20240116; t=1761303014; c=relaxed/simple;
+	bh=3fz3rpGAzHLdS+MmuclAdP6VsFQiZ67MGd8RVosRMwg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GLO2+57bS4vJKhmvJXe+czpY+N6Vop3HlSZv/Mfow4d8cblKFufUzAIACcN3VOIYieza8SCznNJGhQ59z9nkpBx+YNZT5dfhOm4b5cH70UMbGSonlcb7XCS0htGzGH/UkfE0tlXtnqXuGBtv5s6nJj9w9IkoAa8yjQsRctXLfdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=dLwD0pd4; arc=none smtp.client-ip=15.184.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="dLwD0pd4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1761302946;
+	bh=PvlLbAtr3XlzVLm6/DyAYUo7+1BEZwmOFQMdHFYJrCs=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=dLwD0pd4ywjbLoaWL5hNcfJ/kBbNMfHuUPeF4/+2VZ80fjWmgWFmKmBpzPRvfIyUI
+	 2b+iPLTMSzqi+ZF4CmaBuRgWAhm11OutYFvtCXf+wwRR7tV4OteN/zy1cwln5XZ/Dc
+	 4eVwTJO+I029cTLEf/Zd0/vJa5RCjyyeY2jAx8+c=
+X-QQ-mid: zesmtpip4t1761302939t485c17ea
+X-QQ-Originating-IP: lTQezpA5yN4MrVbzvzdIeTYUYXSeOApYxnJ36Znae8A=
+Received: from = ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 24 Oct 2025 18:48:57 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 8636402591889847719
+EX-QQ-RecipientCnt: 7
+Date: Fri, 24 Oct 2025 18:48:55 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Andi Shyti <andi.shyti@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>, linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 0/1] Add Ethernet and PDMA support to OrangePi RV2 board
-Date: Fri, 24 Oct 2025 14:22:11 +0800
-Message-ID: <176128683756.231420.15637681703914919807.b4-ty@gentoo.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251022201807.1474789-1-michael.opdenacker@rootcommit.com>
-References: <20251022201807.1474789-1-michael.opdenacker@rootcommit.com>
+Subject: Re: [PATCH v4] i2c: spacemit: configure ILCR for accurate SCL
+ frequency
+Message-ID: <D8C067EFD2F94D3A+aPtZl2S44JYNUijG@troy-wujie14pro-arch>
+References: <20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com>
+ <t26pyjnmzj62oczwuje2bbscowj22pdge2ef3tcktwmhzpsq47@7odo2ccvc52a>
+ <sdhkjmi5l2m4ua4zqkwkecbihul5bc2dbmitudwfd57y66mdht@6ipjfyz7dtmx>
+ <748544ABF6A72D31+aPg31PBvHDkBALoa@kernel.org>
+ <lr77avehdf3skwd5o2yur4hvbxhyx2spzve3wpo733l74ppjcx@mn34escjt542>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <lr77avehdf3skwd5o2yur4hvbxhyx2spzve3wpo733l74ppjcx@mn34escjt542>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MsGkKnz+xAbkOk5PEMsmxnIORBwDpcFCsS1Z1yQ4uBh6Ul5aGbhpEx2d
+	/1Mr3kaCWHZbatyP9KN/NDJ4lS1TIuGLSdf+yaaS5+uRUm36KhbEuyNkM45MXIlxdlctJRq
+	cmAr9yNOJcWqCSaQbBRRaYLHcy3s2yYt47/qKza11XxehzttN4THDGeNq1dO5yrPZjlxQzE
+	JjzRWA+1UniS6loMPYV4on7x354EGzaimRiTLU1TbZMK5gtn6ZPShr/aR/GxA+Ob6rxejkT
+	TcxF0tS8pORG5Y28PGhyHz5NsJeT5HSQk96lqtwC3ZUX3j9gTQKrHXfWldNrFIvvBR2usHP
+	XOdft7rJvEalGCJu2FOD2Y5hIPXBA2jxctBN7F0U71j79RISzcyzg2RoH6aRgwTMJ2P///u
+	Icl5vZP/T0BY2fGpnBpNMHi7qz4V6ITP4Kkqi4VyxxxQHXpzMLipSDDqc0kPrexvjSiHT21
+	KHSiIwOPC3Qgf+xiVZ+qyWRFFY4NGXuemsrb8WMr004FYguxqC1ry7h8S85WeqWzpYOy5Ay
+	KUXygCPSJw8a2Kv1lgqyIuD/fjl5ZUdEVbyHU4nmHZM5+6EN1UjQU9WruunqHZPjlfNPIYZ
+	UjYL7JXNTL47U37MZiUpLB2f391oqMFBIF3Gpg4zB1NI1jx00acOpzIaH15qy7icMfIRls1
+	TfqEHUvi6gd3qbOrADCO7dqovTqXYlLjg6UGd0MY40s/LdWOrDten81xUz8jTRxaoV7eE17
+	tXIh7NpkAVTWPWYfrD5Kf+e4lTMvHkuFoPbTpbqqTYStrLJGGnC1UapgPGFlNhfhss67ZP+
+	mGLkK6DQNxBjI/t4ABYV7AioybK4hVGSUmRQYnULF3BgxDSVTiTuKATnyqT7v6NUmJpIiuR
+	xs5fLVaS3mnxmPihjcAm8fk3mUDrtZ9QTtHOSfLQvpVsZ57idGIINQtR/c32rXMy5fXWqkN
+	IOZHmyyipL7OiJxPV14RRHFLJqfqrlkcDQJTAxiMtMAAp6kuDNW5PtH7ySVkle/DRN59sGk
+	EzkAjFOUAJpZCdzMPIw9NtrQlvVx8xgxd2EbsoqXA15ZzVbXce
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+X-QQ-RECHKSPAM: 0
 
-
-On Wed, 22 Oct 2025 20:18:30 +0000, michael.opdenacker@rootcommit.com wrote:
-> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+On Thu, Oct 23, 2025 at 12:34:23PM +0200, Andi Shyti wrote:
+> Hi Troy,
 > 
-> Reusing DTS code from the BananaPi F3 board.
+> On Wed, Oct 22, 2025 at 09:48:04AM +0800, Troy Mitchell wrote:
+> > On Tue, Oct 21, 2025 at 06:03:34PM +0200, Andi Shyti wrote:
+> > > On Mon, Oct 20, 2025 at 11:28:45AM +0200, Andi Shyti wrote:
+> > > > On Fri, Oct 17, 2025 at 03:27:39PM +0800, Troy Mitchell wrote:
+> > > > > The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
+> > > > > master mode operations is determined by the ILCR (I2C Load Count Register).
+> > > > > Previously, the driver relied on the hardware's reset default
+> > > > > values for this register.
+> > > > > 
+> > > > > The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
+> > > > > frequencies lower than intended. For example, with the default
+> > > > > 31.5 MHz input clock, these default settings result in an SCL
+> > > > > frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
+> > > > > and approximately 338 kHz (fast mode) when targeting 400 kHz.
+> > > > > These frequencies are below the 100 kHz/400 kHz nominal speeds.
+> > > > > 
+> > > > > This patch integrates the SCL frequency management into
+> > > > > the Common Clock Framework (CCF). Specifically, the ILCR register,
+> > > > > which acts as a frequency divider for the SCL clock, is now registered
+> > > > > as a managed clock (scl_clk) within the CCF.
+> > > > > 
+> > > > > This patch also cleans up unnecessary whitespace
+> > > > > in the included header files.
+> > > > > 
+> > > > > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > > > 
+> > > > merged to i2c/i2c-host.
+> > > 
+> > > I'm sorry, because of the report from LKP(*) I reverted your
+> > > patch. I2C_K1 is selected by MFD_SPACEMIT_P1, so that we get the
+> > > following warning:
+> > > 
+> > >   WARNING: unmet direct dependencies detected for I2C_K1
+> > > 
+> > > and compile I2C_K1 without COMMON_CLK. Please, fix it and
+> > > resubmit the patch.
+> > Yes, I noticed that too. The issue is introduced by PMIC driver(P1)
+> > instead of I2C.
+> > Should I resubmit this patch right after sending the fix,
+> > or wait until the fix gets merged first?
 > 
-> iperf3 tcp performance results:
+> I have reverted the patch. Please send them both in the same
+> series, where the first patch is the "fix" (or preparation to
+> this patch) and then this patch.
+Oh, I have sent a sigle patch that fix the error..
+I'll send v2 with this patch.
+
+                          - Troy
 > 
-> Eth1 client test (iperf3 -c <server-ip>)
-> [  5] local 172.24.0.2 port 41914 connected to 172.24.0.1 port 5201
-> [ ID] Interval           Transfer     Bitrate         Retr  Cwnd
-> [  5]   0.00-1.00   sec   113 MBytes   946 Mbits/sec    0    378 KBytes
-> [  5]   1.00-2.00   sec   112 MBytes   942 Mbits/sec    0    424 KBytes
-> [  5]   2.00-3.00   sec   113 MBytes   947 Mbits/sec    0    424 KBytes
-> [  5]   3.00-4.00   sec   112 MBytes   939 Mbits/sec    0    445 KBytes
-> [  5]   4.00-5.00   sec   112 MBytes   944 Mbits/sec    0    445 KBytes
-> [  5]   5.00-6.00   sec   112 MBytes   937 Mbits/sec    0    445 KBytes
-> [  5]   6.00-7.00   sec   113 MBytes   944 Mbits/sec    1    445 KBytes
-> [  5]   7.00-8.00   sec   112 MBytes   936 Mbits/sec    0    445 KBytes
-> [  5]   8.00-9.00   sec   112 MBytes   943 Mbits/sec    0    445 KBytes
-> [  5]   9.00-10.01  sec   114 MBytes   944 Mbits/sec    0    445 KBytes
-> - - - - - - - - - - - - - - - - - - - - - - - - -
-> [ ID] Interval           Transfer     Bitrate         Retr
-> [  5]   0.00-10.01  sec  1.10 GBytes   942 Mbits/sec    1            sender
-> [  5]   0.00-10.02  sec  1.10 GBytes   940 Mbits/sec                  receiver
+> Thanks,
+> Andi
 > 
-> [...]
-
-Applied, thanks!
-
-[1/1] riscv: dts: spacemit: add Ethernet and PDMA to OrangePi RV2
-      https://github.com/spacemit-com/linux/commit/9813395078352fed03c88742bd39b9c4a0e40c15
-
-Best regards,
--- 
-Yixun Lan
-
