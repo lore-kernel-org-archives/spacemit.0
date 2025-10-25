@@ -1,212 +1,136 @@
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011020.outbound.protection.outlook.com [52.101.65.20])
+Received: from seashell.cherry.relay.mailchannels.net (seashell.cherry.relay.mailchannels.net [23.83.223.162])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A036E2E2EE4;
-	Fri, 24 Oct 2025 21:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FBF219A79
+	for <spacemit@lists.linux.dev>; Sat, 25 Oct 2025 07:45:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.162
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761341134; cv=fail; b=kKdBMKANzlGEuYL+eca7I2OtccGqpdQAXasp7ZTFemN/1yR/Zf74/Qqtgak4DAVZBXK29xL/NY5AwUrg44+TWVd1uGZgsyivWxYyj+G9JHEhiD1/BlVIG/uSktTr1ahxT84jpZ5chnUuUTjCKDphjydXsUx1Y17LacSH8kHWzGw=
+	t=1761378330; cv=pass; b=RhjwLMt2F5cZzptr1yB/q6LQABPaQp5Bb6HmCYeCtEF/cloapZhPOpW0SEVGXKUjXRFQRSEEStRttAzARvyiazQgsJu0AygKhaENUjrq7X9dOgvknX9FftzoA6TSdMzBoIg7ypEBJtB+0EovVjPAawpxz7v1tGRNXDhLHt1CYPw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761341134; c=relaxed/simple;
-	bh=C7rfQwS3/MBZlN7Pm8RAkKOzI9ljIVfiwvvUXS00Ebo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=H7wH3aPquAB2VWotfJ3n4zcdUuOAbHmZKsKz1X5RFVOWBF/ShSGtQru6fNs3MwiZmZed9vS1iJTLmN5W4Y5UF/rxVicN8Pyc9xtBisyXLrXRIYtLzXBm0Ve4lj1b+XRswySeBAmA83k54XTejwc48j4Oet53bO9R7EzCMJIlHjg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=Rcy21b8o; arc=fail smtp.client-ip=52.101.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	s=arc-20240116; t=1761378330; c=relaxed/simple;
+	bh=E+S6VfdtpCi7czhvZ8BFjGUra6ANRutAuQNuObaYcl4=;
+	h=From:To:Cc:Subject:Message-ID:MIME-Version:Date; b=fWRKf1EcxWJzqE0QYkqSAJzanCfTbOEDWi8eCMKnBEI1ewgmCv91tjFprzt8whidfoGlzZCPQXaaQ0saeSi5bEN3yud1UQMQf3T0d3vqcSW/x71nQvEfogqlQu61PaZh5/TR+0+4X8I929YlBN99BVWzzOaSuEZvi5Xjgm9tAX4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=TpxG/ySx; arc=pass smtp.client-ip=23.83.223.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="Rcy21b8o"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mEIAV9g0rL4qs4E7FaQ5E49NAgIT1B2EkzhCbJzOvom7mRCWAso6PuVhLTTw62QnQga5QA1WSGIMH3qe3ykUXfgEcjRxojSoZD8SXqSn4/I9CSOlXqbcYOEK6Uh+/IUrSovCCABPDSqBTS7EKD7VnV5GpIQib4OWlyS/i5P0xcahkLjuxlbGUWGuQQRZhk8AfXb93YyXcZA01SbADiAFHsMEiU0IiNTNgj2B0S//v9chl4cw6ZIjQdZnyqIPqwFVwOYqajf7q3EzaWj+UTTZ8ErHH07i0FSTRF33pJ5cZpUDIgO5BOWjLVVudJsxLAYxMFtYqOTw+23hJZYCeKCgug==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=N1DsjFzZRmMvHHGGkx1iCftEGsLbC5MGTWXJsUgGTL8=;
- b=ISNKnPI7kewRAkvDOojdi4jchyGmMMA/+kDvVgWO2lmxbnvnzPZg3bFElaCeoHhcqIVyGaeVEa5hI/iKaTL9IfIhCuce5E+qAZzVerr3dgo1AUnEKq/NT+ygkTTh5ejp84XQkBjqUoai0gMXGTENHJ9CBjfCSm+fVmz6czMK61bkX2J3bnapznQW28ApGt12T2fUwm/2fTss9N/J+Hp6belxeq0CY53vXndtQC7xQTphlB1wJZQciQYgcNnWCKaM5Jglw7x1R/QK9LYlOmVX9YnK9X3vMEMeMhrsRJWDxAVQAllP+2OhledfuPwAh/iDZkUojfoZBtxp/IQf4Au7/g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=N1DsjFzZRmMvHHGGkx1iCftEGsLbC5MGTWXJsUgGTL8=;
- b=Rcy21b8o4D89r7IT/QBz8P3DuMsQPg4HKK7CGn6GNu0eLAFnDgA8a27LSVZFpqLfowQzOlGhLNfc8D2qw4fmc35Dj1k4yrPH+HH249RJhYtAUh+1fyDkWfEszepBcwnhQDKA3Jl6uVJE3MmTRj5GmA7syYPhkxYGWTPus4cT0fzupaRZnxfl/3bl2mC+JcSW4mEP+yMSuCHdZfMbUbOA4pYqtG0cZbaK8Jfd+DhUu0BWzSiAvQjeM9ROHUh9UqB8r9mJZpwT5GQ67QUb68tuVLfVPiE4jmbpsmCcsryVtdkyaWxI633WkiWSQbHkDb1X8HzPNE6qPSC1hg/X9GjtqA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from DB9PR04MB9626.eurprd04.prod.outlook.com (2603:10a6:10:309::18)
- by AS8PR04MB8465.eurprd04.prod.outlook.com (2603:10a6:20b:348::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.13; Fri, 24 Oct
- 2025 21:25:30 +0000
-Received: from DB9PR04MB9626.eurprd04.prod.outlook.com
- ([fe80::55ef:fa41:b021:b5dd]) by DB9PR04MB9626.eurprd04.prod.outlook.com
- ([fe80::55ef:fa41:b021:b5dd%4]) with mapi id 15.20.9253.011; Fri, 24 Oct 2025
- 21:25:30 +0000
-Date: Fri, 24 Oct 2025 17:25:23 -0400
-From: Frank Li <Frank.li@nxp.com>
-To: Alex Elder <elder@riscstar.com>
-Cc: han.xu@nxp.com, broonie@kernel.org, dlan@gentoo.org,
-	guodong@riscstar.com, linux-spi@vger.kernel.org,
-	imx@lists.linux.dev, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 5/9] spi: fsl-qspi: add a clock disable quirk
-Message-ID: <aPvuwxCaZ+9cz6qO@lizhi-Precision-Tower-5810>
-References: <20251024191550.194946-1-elder@riscstar.com>
- <20251024191550.194946-6-elder@riscstar.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251024191550.194946-6-elder@riscstar.com>
-X-ClientProxiedBy: SJ0PR05CA0191.namprd05.prod.outlook.com
- (2603:10b6:a03:330::16) To DB9PR04MB9626.eurprd04.prod.outlook.com
- (2603:10a6:10:309::18)
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="TpxG/ySx"
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id B1E967E09A4;
+	Sat, 25 Oct 2025 07:45:20 +0000 (UTC)
+Received: from fr-int-smtpout21.hostinger.io (trex-green-9.trex.outbound.svc.cluster.local [100.118.36.55])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id BC3D67E073B;
+	Sat, 25 Oct 2025 07:45:19 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1761378320; a=rsa-sha256;
+	cv=none;
+	b=k912f5h8HBWQPgEiHVq/YxkAG40rC1zrjviZ56TLF7uQm4EFJH9+6jyS81uCOsLhlly8qP
+	avu1PEk+5yllY9PpVIrdvVjJ409O03dKUrxOvj+UaurHXJ55sPQSBulm3Tba6nMg+922Q7
+	tRXhPcdbhkxZXmKXIKVbPf4y4Y+CbfrPd8SI2rJ2+jYzP2cdJxUsgYBJ7d5W32NgRP6lvs
+	atebZQ/cEBd5uoum4H66A4OreNQvoL1JVO2viuWxc75ro7D9xPuv/SH/s6kxUsgHcyVEfl
+	hrACOvefKgB4pcIpy1f675ZjZyqrJ0TPJ2JiKUg5sOChRvb+xWpTtu1ujKua+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1761378320;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
+	bh=yf/KU2rVejUQ3FVC7JwkdlH0KC0lI6UCRu28wq31Ljg=;
+	b=obcZVOjpZgMAZc3MBKVgbQ9egnt2Ekk5qjkeGEpGuC+nCvXwCX5P8Si9DgV3fxt825f0Pw
+	QZ7rQKszwe3SzgL8Vqbg0c8KS8DCyHY8aFDUGj1HxVCgTjrkbS1evMaa5TX+Pk8ehqb9If
+	1535ZP8GsOIwBysYYyX9WCuhrfUjEXyUfSINVDa3Tb16gkVEBnEV/9xQJTCN5jgbDomEhm
+	S8HGW9DMZk2H+vCPVt1FoO01taQR9mSMBg2geGb5W0K8co5oQ15rtutmH0FTJEJBlPbKuM
+	l4xvBIo0yTR+YI7X1/4b/BhnIa07ZRr06lITorT+mk6P9Ct+cpXhIJIFwodlag==
+ARC-Authentication-Results: i=1;
+	rspamd-9799b5d46-sdctf;
+	auth=pass smtp.auth=hostingeremail
+ smtp.mailfrom=michael.opdenacker@rootcommit.com
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId:
+ hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Unite-Arithmetic: 4c66191c27c7defd_1761378320453_1368303078
+X-MC-Loop-Signature: 1761378320452:3529311946
+X-MC-Ingress-Time: 1761378320452
+Received: from fr-int-smtpout21.hostinger.io (fr-int-smtpout21.hostinger.io
+ [148.222.54.33])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.118.36.55 (trex/7.1.3);
+	Sat, 25 Oct 2025 07:45:20 +0000
+Received: from localhost.localdomain (unknown [IPv6:2001:861:4450:d360:8260:6f14:f559:44de])
+	(Authenticated sender: michael.opdenacker@rootcommit.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4ctsHx6VPQz1xn7;
+	Sat, 25 Oct 2025 07:45:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
+	s=hostingermail-a; t=1761378318;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=yf/KU2rVejUQ3FVC7JwkdlH0KC0lI6UCRu28wq31Ljg=;
+	b=TpxG/ySxaiL9bXWcvbiakUBOdSFHiwLeERpYvp4yIUUZw/1J8MXSJT3qKykp9CdiYIxnvH
+	wnlecrm7rM52MkgNllJk3pK62X7Tp0oME6G1GHLvnMDCswmlDnx+lwtdYgx1qYeX+pup+8
+	/YTgUtqU2dbKrKFkE4YhAPio2FwxKfQy0q5QKeE1xh2r00ezWEuPUgElL2njWpmy5htex/
+	/BBvLZMXRa6wBWpBHth0PQ2UChlHriE7xRTykJ3t75UEPUYTL5eA7II8J1IXQapmL5j+Xh
+	GbR56GObPAdFgmqz9htlE0YiXrx7ousOV+MFCUJysLaQ913SYqnxzCP8G127Mg==
+From: michael.opdenacker@rootcommit.com
+To: linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Subject: [RFC PATCH] riscv: dts: spacemit: initial i2c support for OrangePi RV2
+Message-ID: <20251025074514.642357-1-michael.opdenacker@rootcommit.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DB9PR04MB9626:EE_|AS8PR04MB8465:EE_
-X-MS-Office365-Filtering-Correlation-Id: eb75990e-9000-4ae1-4b60-08de1343db90
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|52116014|376014|19092799006|38350700014|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?6RaAM+L2et4g+G3iRbcZfRPQD+YIsx27ZTPny3u+mtijnAyOAKRVBHM1KinN?=
- =?us-ascii?Q?qP6E0e7ht3b9dFaT7OPETQwEJGUIaCiGzfHXQvwDnhc8h59oQOxywFosPnB5?=
- =?us-ascii?Q?LAjB00RfAHqxjSMDCp3bgG6Fag3KH33o0xke2rHMKzuTL+kOlPqoRNsBc6re?=
- =?us-ascii?Q?ovY6uPF+Pb2AsZpKU51T27J33JZhQUcdcpAls4kOIIsp+16H3q4S4kCZUb0Y?=
- =?us-ascii?Q?Yw1ts3bUWk4Hw20VIgWLY4QsuXOPXC3iyxh66J1HN9oM/dQRwVWvTQDIkkH+?=
- =?us-ascii?Q?580t46lmQrT75LiGCo0w0ETxsaz5rAlZIy2Fx1+QdG384DQCPP+7VffkvH4P?=
- =?us-ascii?Q?Y2WolV53BuSWlBiZ95kMAJU9WhXrYaidZNTqnHg0kDUXkYcEsLo6HrA7qcfX?=
- =?us-ascii?Q?Wg7vV8s205Mgg7H4ewwjqPntgXmqTkiJhGpxcRbBevcnDFQAjL+lDtptLnK0?=
- =?us-ascii?Q?jvcFtim+iy56gBSAqcBSEwEN+1oJEQA1akdMNXOpokGOCIkVVz5RRhyXku4T?=
- =?us-ascii?Q?pxjZeu6Tt9r5c7OPnd5jql2/xDwmdDKYyCM+irs/WF3TzJWVEQB130U//UUK?=
- =?us-ascii?Q?YlGIP1sW8SMWrpvWALTuVIsD0H4pSleAGVESyQYcFKm7F6bZlOO3J1hLOFvR?=
- =?us-ascii?Q?7ODOhvbP4u62PTD4EU2/rFLcqUB8P+Ma8fUJZA5R/u93txBOtXSxNWyIuFyb?=
- =?us-ascii?Q?vY0Y9cXVy5QuBKjz0z4TTlK5il/DWJZOrwGtNpdHXUpZePJCpA7unhtfQl5b?=
- =?us-ascii?Q?d5CIH6qeQmHDzI/w5b+yPsl6W81x2iGxnc7PES3/1qbicH/1fxSxEfVLrosh?=
- =?us-ascii?Q?8LKIdGx7+P+IgqVdF4oE65BCUd5nXjc4pRxyi6UBUn7+rH+VJR5MOw9t7Gz7?=
- =?us-ascii?Q?aMiC4ANRHWAl4IToH+OY8nQLAzg56MuXeH7hrUbKPDmT0TrQ5epYqHBWFrXn?=
- =?us-ascii?Q?GUNQs62UUD1Y2gK7k5sBjeIyV2xSiKauzqSDyy7X91OZRNC/BjJD5O9UKCwC?=
- =?us-ascii?Q?Pgs0lAwPiPvlCXC7KTyV/QqcPuM7706jb54uXvgpUEIJpJxXEdwglYbp19HP?=
- =?us-ascii?Q?R8c3LBUc3x9XiPTHKVqcxFnToTsmFJO2tqZr8YBu2aXtN7FIPzKCKfYuRx4X?=
- =?us-ascii?Q?lWEowplavuS+z8AbRMhNhCQRsF9CKluENFpheAPrjxSYCX4HSqGOEpGzVchH?=
- =?us-ascii?Q?IN7CfQrscnPVMb1Tf1h5vKIA5ie92v/xeKvf+Zm7X2AS+kCwjonD7pszk06s?=
- =?us-ascii?Q?7u9ZMmwVA0zoM10QsEjgAqLatahvWGZn70VIvlOKGSqr20k07dWcvlU7CrFr?=
- =?us-ascii?Q?PMfKGDgfud1YVbjVPfygnp8ckq04NQUaH3DO8jR6MvXVPkecmVp0ltygFTgp?=
- =?us-ascii?Q?t3V4uYwxSMwTuTa9KVbtOX/s0zCp3goIaydBOMCwxAXpnUv5KFvh8ysFgMHd?=
- =?us-ascii?Q?BCzwVO1WJ5Vf08ZJJySuNpqqliY46a6y191di5QQWMlnT66/lIHVgqVVUhDg?=
- =?us-ascii?Q?Vl6sU/eU81yfBg1qZIQicPBQJ7twkLJSCvCC?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9PR04MB9626.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(52116014)(376014)(19092799006)(38350700014)(7053199007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?eGhuTSVV6qj6c9o+4x8xzq7501PeBQziqvuKSMza1JDIh8tjtYCe8vPRANsZ?=
- =?us-ascii?Q?YxyP0KZVD4sKFfan5oDRDRZvlqIhbvId/qdIepKtOrBg00eOoo493iUXHo6o?=
- =?us-ascii?Q?G+YMYl0et4R/PBneBvSB1X8hilJZFdkMaePx3uH1mj0liciWO6skYhALpJAE?=
- =?us-ascii?Q?0IwGRqJTuQ2NxEldnUhccUJcaY/GILzVp6a8tJ4RawGDJLMD34ijNgUnLZdP?=
- =?us-ascii?Q?qJvdy3yNdy3bIRdEynroafy2f1UuVRWYgD2ulr95HBNrYVYI1ZwwdWbrcGX/?=
- =?us-ascii?Q?MYuU3q7BqUIEl7s7BZK+za6KYhxEuTcd+dl070TW1buQxAJY1NakCwHDRJsu?=
- =?us-ascii?Q?QM1TeLvxn+rIZyuezK1ezVr2F49YskAJxLz6BnoKP+pA5HhNl889btsxO4qZ?=
- =?us-ascii?Q?OR/J6+dv/BYx5aZIknYYrrq6ajcDvg8WVm9KbaPw5EXcZAaiOw41L8AUQ5oI?=
- =?us-ascii?Q?YDB6Hq4Lwdp6kd3/gxhmj0e+1sdzg73bgOPnq/GvKxulgJvIsIS85VZDLwg0?=
- =?us-ascii?Q?BCbwgcCt91tsP2H7QLtqjpWsxCFKgkl65Oo5V5G+0bApk/kiGjjqx3Sk8hjq?=
- =?us-ascii?Q?DbycT9ltG1Hb9Mm7k7gqYp/CFRcoKIaZXChcV9iZQwBJ64g6dIOM+4j9YoKR?=
- =?us-ascii?Q?vDPolu7D5J8bNeUt4Qm5MCtlL6lLlERT0fEwCG+f9207M0515lDFMGzNT+2Q?=
- =?us-ascii?Q?XnemH2DtFaIWQgJBmICetSDnZLfzjiY5PQvgXvClrTyDMM9qd3nPffTN/NEX?=
- =?us-ascii?Q?ZE6hBPooOY18/L5w+JigCHQrfGDB3sWwYqBdQc70jkz1XXuPG5AqJnSbxegP?=
- =?us-ascii?Q?4Dl8Qi/ow9S1WtWKZS+rO42fIFewvB1pN7IWnSgAbjqMOdRfq/u6Nucg07iY?=
- =?us-ascii?Q?cdzkXfWC6hEBgEmKTzoWwbq2cPZbleVcRKPjWqBo8sEgOjPk0sCUh/kttcN8?=
- =?us-ascii?Q?kgchJ8TlY3ZEOMouot+a8Jc46Y7HvLrYKRNO1vx77O/nt2CbhB3pPPXT0zMs?=
- =?us-ascii?Q?Td3gEHMv+x6yZFFtFhUpcmMs7yGNMNriFf0V6vY9R/4n2PwdK+CJB/Sk5KtT?=
- =?us-ascii?Q?jR8q4moDTtAASVadxASG5jjJjrQ6FE+Be87nvW5unrgSaozhrh8wP1Untt5e?=
- =?us-ascii?Q?KoypF1zKn34+/93Y9LD9/ck6kFcZEAOjHyABHeLzizYTN33s4p/jPoGUhjpG?=
- =?us-ascii?Q?2GALtZFr3i6HITjOcNUSNYxeHb9hiCI6A6q1xCUkPCHzCAIKgMTX4fZkqcWO?=
- =?us-ascii?Q?Hdjq+tOlcih/7KGJSTBbKMn+NS/dkTqbbQbCbNY6ZYYyoSRPartPyXuzqCNf?=
- =?us-ascii?Q?8Xwd4eYTQvxpwxU12A0Fs2HfLHsM/Vq2lzd35dxr6w7A2DjT2lqWzeuzwtIc?=
- =?us-ascii?Q?n4ZM04IkwiuKmTzuuzZGEluZIUGSU+OBpGtJJeScp+85JgbcJXfMtpSGOfUs?=
- =?us-ascii?Q?mdBH5A8nKa0Gd5s0QybitZ4fYyHkJAmJeRapvv6KaRYMOaindn6M24bco90g?=
- =?us-ascii?Q?MSZ8iboecCi2lsHcmT8Y7O7cfyUdB5iCNDuYGG3ZlRqfxgwIyt9PxVyWkp6+?=
- =?us-ascii?Q?RVd2+OkF2/Q70mhnJX4=3D?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb75990e-9000-4ae1-4b60-08de1343db90
-X-MS-Exchange-CrossTenant-AuthSource: DB9PR04MB9626.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Oct 2025 21:25:30.2157
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1hxe7c4ijOWLlJXImI3CFkUF58D39b9/3byEXNkc72dO6vp0p22mGbqM3EMMLAKvF+dl+BKp4yh8SOaxt40rgA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8465
+Content-Transfer-Encoding: 8bit
+Date: Sat, 25 Oct 2025 07:45:17 +0000 (UTC)
+X-CM-Analysis: v=2.4 cv=GbNFnhXL c=1 sm=1 tr=0 ts=68fc800e a=rByZg85q4TxBe4aD0HbSyg==:617 a=xqWC_Br6kY4A:10 a=d70CFdQeAAAA:8 a=7kg-g6J3WR51fJ073mUA:9 a=J8eEqglTx5LDgDqmzts8:22 a=NcxpMcIZDGm-g932nG_k:22
+X-CM-Envelope: MS4xfODzyBdtS7KSUxaSmBV0yHybknaV6wf8DwaU0wxxyJby/Vwps5PPymE992Xz9yz8RZmvNQPm47zxkc937Xl8BANXw6hUt8BmD5/G9rwEh4mwykHhKCC0 BdXVSSJgr0aHnsKT5lsFIODovpV4kXg+HTfv3kO2LItXXLOcpkm0v/S1ofvRIU+3fphV/HeXC4fArC8KlEB41NVafMP8GwSYel234pe3YX4+uqKW/chrY7yw 50LtfHAD4lilDkLq1kQmxz3YwrzVhcTmJA2IqmCaj0B8FJd2MoZprox+0IvNLsIRIn5oEFYVzHj8Qo7KFxKPmgl2MJ7z6nJ6B2GcMRDDylM4grKDjcD0Lzgt V2ULaQNJIqc+Ds32L0x/36dkstGXHQ==
+X-AuthUser: michael.opdenacker@rootcommit.com
 
-On Fri, Oct 24, 2025 at 02:15:45PM -0500, Alex Elder wrote:
-> The SpacemiT K1 SoC QSPI implementation needs to avoid shutting off the
-> clock when changing its rate.  Add a new quirk to indicate that disabling
-> and enabling the clock should be skipped when changing its rate.
->
-> Signed-off-by: Alex Elder <elder@riscstar.com>
-> ---
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+The OrangePi RV2 board exposes i2c2 and i2c8 buses from the Spacemit K1 SoC.
 
-> v3: - needs_clk_disable() is no longer inline
->
->  drivers/spi/spi-fsl-qspi.c | 21 +++++++++++++++++----
->  1 file changed, 17 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
-> index 1944e63169d36..2c030dd6facc7 100644
-> --- a/drivers/spi/spi-fsl-qspi.c
-> +++ b/drivers/spi/spi-fsl-qspi.c
-> @@ -197,6 +197,11 @@
->   */
->  #define QUADSPI_QUIRK_USE_TDH_SETTING	BIT(5)
->
-> +/*
-> + * Do not disable the "qspi" clock when changing its rate.
-> + */
-> +#define QUADSPI_QUIRK_SKIP_CLK_DISABLE	BIT(6)
-> +
->  struct fsl_qspi_devtype_data {
->  	unsigned int rxfifo;
->  	unsigned int txfifo;
-> @@ -306,6 +311,11 @@ static bool needs_tdh_setting(struct fsl_qspi *q)
->  	return !!(q->devtype_data->quirks & QUADSPI_QUIRK_USE_TDH_SETTING);
->  }
->
-> +static bool needs_clk_disable(struct fsl_qspi *q)
-> +{
-> +	return !(q->devtype_data->quirks & QUADSPI_QUIRK_SKIP_CLK_DISABLE);
-> +}
-> +
->  /*
->   * An IC bug makes it necessary to rearrange the 32-bit data.
->   * Later chips, such as IMX6SLX, have fixed this bug.
-> @@ -536,15 +546,18 @@ static void fsl_qspi_select_mem(struct fsl_qspi *q, struct spi_device *spi,
->  	if (needs_4x_clock(q))
->  		rate *= 4;
->
-> -	fsl_qspi_clk_disable_unprep(q);
-> +	if (needs_clk_disable(q))
-> +		fsl_qspi_clk_disable_unprep(q);
->
->  	ret = clk_set_rate(q->clk, rate);
->  	if (ret)
->  		return;
->
-> -	ret = fsl_qspi_clk_prep_enable(q);
-> -	if (ret)
-> -		return;
-> +	if (needs_clk_disable(q)) {
-> +		ret = fsl_qspi_clk_prep_enable(q);
-> +		if (ret)
-> +			return;
-> +	}
->
->  	q->selected = spi_get_chipselect(spi, 0);
->
-> --
-> 2.48.1
->
+Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+---
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+index 41dc8e35e6eb..c4b25dd30f54 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+@@ -17,6 +17,8 @@ aliases {
+ 		serial0 = &uart0;
+ 		ethernet0 = &eth0;
+ 		ethernet1 = &eth1;
++                i2c2 = &i2c2;
++                i2c8 = &i2c8;
+ 	};
+ 
+ 	chosen {
+@@ -81,6 +83,18 @@ rgmii1: phy@1 {
+ 	};
+ };
+ 
++&i2c2 {
++	pinctrl-0 = <&i2c2_0_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&i2c8 {
++	pinctrl-0 = <&i2c8_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
+ &pdma {
+ 	status = "okay";
+ };
