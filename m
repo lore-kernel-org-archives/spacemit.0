@@ -1,70 +1,53 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F3E223DF6;
-	Mon, 27 Oct 2025 13:34:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA57C2874FB
+	for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 13:54:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761572093; cv=none; b=rNFDimJxHejcoxFu1c3b/UwpFuL/a3gOtKwixO88/rr4gj0LosyKuMZDcPzE3CiuayDpjvGZt7zGvdpTsZwyBkcWisLX9IciR97Ukl83h1I6GvtmCOOokzZdwl3uLIoVQYFqS4awWuzQMMvIVXXvkgSzsqzYL/X9C6Uvf5NIaWs=
+	t=1761573252; cv=none; b=CzDhlUxhNPdqKMUCXj3NCz+fMGC78KNS4e+W04fhV8G94t49LITP9f0HjBjulNuJjX08S6DlSFd7z3jWDDSVmtQZ6zM5XDrYXWzUZonh7Cy9VeWEjdUqt9ST5KIVfq23Zr2VuHZ+wOIzkTF+ojfaesdrxjRh7txTxn2VlmVzD8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761572093; c=relaxed/simple;
-	bh=9VsNKH48ReBO72Un3UkY8t0uUYfuoyWe+CVfv/ezo8E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gcQ/tPGpGMfpvBpnV1hW7A1HwObm0Zocg34CmyearfGQyBEWZFp8OjcvS2EKvdmdJliNgq4wzXQe5CLcuMZG6V0o7P5I38rC7QldLNT2imLpgD4qm5mMkdcHPUbaeuP1mx2OvD6tgtGCfWpnS3sQ+fyBa6wsHzyzfeY/NgKn8xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=doTz7BiH; arc=none smtp.client-ip=195.154.113.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1761573252; c=relaxed/simple;
+	bh=mKZXgmC0J5LBgztr81FWGG2KayDzmjGl5hVIlR61sKk=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gHdMIL4zLJLVx+6sEUz6b6jjMNErtuyAIMxbhQx/G+RsDQj9Jwcqz7mUXoa+4nVU1CqTmJ3BRNqyEOyZc49RN+ZXHWgLBjGXPPte1BHABAvZdMEMnbTYvBzgTZ+4bay2taIdQoM0vFesH3MhBxyXQa9Qfwzpb4FedTxs8IaOFj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=oSjrzR/Y; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="doTz7BiH"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=FCv+dqvI3maIG+5BMD6tWXqw54hjChMOqdKu2w6RxCQ=; b=doTz7BiHKAV68V9mLQoNkeTWn3
-	tZG46n6g8lMx0xIYE9pVPyqG3b4TtAD4mu0u1d8tS8q+ts7yszvyHUvRUXzV6VSHh1tTxrcyYc4SX
-	bqjWqvkQOExysQBvnsr5MhFJBjjpGoYNuZSsZ8ayNA0Gdo8OLmHT/7v19kTSvv6FsJP4wo37T0HUK
-	1tpKyvr9XVcbwbvuHnLadItl/LE6w9lnwAZZMdYD/xa4c6eviingRVp9O69BdNYzdwkve9VqRtwOG
-	yLoDE0iOvU8crVbzx1Rek6AJY0qEIcbgnvoXwc4021JdvocJMQ58kw3wCnfDP3Elq8zvXj9ko904S
-	qviSGMRg==;
-Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
-	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vDNMo-006zVe-1e;
-	Mon, 27 Oct 2025 14:34:34 +0100
-Date: Mon, 27 Oct 2025 14:34:33 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Andreas Schwab <schwab@suse.de>, Yao Zi <ziyao@disroot.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="oSjrzR/Y"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1761573157;
+	bh=3kzLSOuCsNwd3PzYAldLRKtwAf4LDDOP8IpojHoSDqA=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=oSjrzR/Y31GQ8Je2z2krqEdS/g/jxabnCZS1DXdHwX0JKlLy1K+Rn3eVlg24KZ0SL
+	 I4wBxxiuNl7YjUxf0/nqcpRKJnP+S8VwvSIV81q73gH8dYPpA+Qd5DcU+0DnT9lnz/
+	 3smiuUg4bTCGjmiHSfcEIPlGoobkOXgYK+HQ2sms=
+X-QQ-mid: zesmtpip4t1761573148td27e7fff
+X-QQ-Originating-IP: UrvBgtWjK2nHPKDaDc+5eztGAGq+puoGJrqONWDB7do=
+Received: from = ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 27 Oct 2025 21:52:26 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 3589194371110630699
+EX-QQ-RecipientCnt: 14
+Date: Mon, 27 Oct 2025 21:52:27 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-pm@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] driver: reset: spacemit-p1: add driver for
- poweroff/reboot
-Message-ID: <aP906fAZZfFXp-2D@aurel32.net>
-Mail-Followup-To: Yixun Lan <dlan@gentoo.org>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Andreas Schwab <schwab@suse.de>, Yao Zi <ziyao@disroot.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-pm@vger.kernel.org
-References: <20251026224424.1891541-1-aurelien@aurel32.net>
- <20251026224424.1891541-2-aurelien@aurel32.net>
- <A73D83A7055D782E+aP7lAdAk66slv6l7@kernel.org>
- <aP8QHwsYDlbQxQJo@pie>
- <mvmh5vk67in.fsf@suse.de>
- <aP86TltQ2uqeK6FY@pie>
- <CAJM55Z9w0pnFmVjJKJNMs1iqOxoL=YpkBu0L7NuUZ_0ipMtQAQ@mail.gmail.com>
- <20251027103147-GYA1541054@gentoo.org>
+	linux-i2c@vger.kernel.org, linux-rtc@vger.kernel.org,
+	kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v2 0/4] fix the SpacemiT P1 Kconfig and resend the K1 I2C
+ ILCR patch.
+Message-ID: <DE3BC758D99A2110+aP95G3ppc_mZaDpq@troy-wujie14pro-arch>
+References: <20251027-p1-kconfig-fix-v2-0-49688f30bae8@linux.spacemit.com>
+ <aP9IVckJT-k2_O4K@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -73,62 +56,58 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251027103147-GYA1541054@gentoo.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <aP9IVckJT-k2_O4K@aurel32.net>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Mh0xRtMdhgZRanLwuwAVcqmp1P5pal50KAfMbD3eUBhbrg5PthVOPmEf
+	sGCN4jmRdbbe5xpLy1i2t+h30110rqU3JDOIWeHHzRRD60R2HH+2BHxviT2E0WSmyEwlnId
+	CC0jO8m1mZ/IBWmmc5+6nERrwOOdw+eHvVboDE+E2Gm21uXExF9vHLiV+62SCxpZBFp6nKF
+	onSpJLykJBQnVJ0IglQ/pe+ngk1wkw2+8N76DVd7W0c7Ho3ak2oxLpgxRPowcq4+9CPj9/n
+	6DENo9CAn6S+3yrMXpnuQEZEGeY6BY8fo12HTF7vKHq4zkAqOnoNgj1igiwpVhxhz+zWtw5
+	1VApAhZD1W80QnYqz7ZOJOx+v/RT+RaA1SRjUbRJbmSUOBfq4TcIdp8DVGMLsErq79dlGeN
+	8Pu26+hhV1+YTtJpLOuGNRhsa7PFC3/y8l9+ueD3dPVxcFZ4YX0rP/jfK8m0Jk5TQsh2M4n
+	R/G9DGS3LvBzj3nzlcJfVvgOk+l+LZCiSsGOt/GHQg6ec2NjBL6Xuj3gviWnnmviyupOEVN
+	qzqUvYy/NAhgJ6HwNQ+Jqqwtb2P6Q0hp/DpFW+Ke+SNCnuZ+eNZlmLDcrymbM1KUHV9TxYf
+	RHxFbhLw4KD3V9xzNNz22a+HfDST0HzhMQZi+YCDdnkn1io1r3TybjQCCHUCiVE4+sIV69F
+	V9sO4pIRinHvLbIj3x9WLT6UWl/z6rLx9SgEgsIHYr1qoPbT1nMaB/VprXxq7wKKH2gjU0I
+	/8E6NLCir7Of0PZiWQ/rh7EeqD3/N2clFkDdmC8FWMcevvrWI41xAdUfZPpornXRyM0+sfD
+	bWptv9DdWT/yo8yi6o0Lbjreu5OT8XKxuwpdtsSDCO1A8/IU7yEUD7wtAj2lYe3bO8wwhxG
+	1QgNzitFphMUzcFKn1efkit0E4kFrfFKIsaVIOuJGgUduzkaZIZG0ovBhLx7ZDphrJunTNm
+	oe8aYjAEekfdG7ZLnjm1e9GGvqx2gqgZuEAmsyn76Twb71DMFzCIGFruu3YFM237WIsbk47
+	JheZa21s+p/n7/YhbEVzJavzd0pbtJdyKZGF/yrzAkgzn5jqpMBD7pemfRgH8ivUMbcbL9B
+	CQTufCOfcne/7aJsNllQ3asTFYIBG4Xjg==
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-RECHKSPAM: 0
 
-On 2025-10-27 18:31, Yixun Lan wrote:
-> Hi 
+On Mon, Oct 27, 2025 at 11:24:21AM +0100, Aurelien Jarno wrote:
+> Hi,
 > 
-> On 03:17 Mon 27 Oct     , Emil Renner Berthing wrote:
-> > Quoting Yao Zi (2025-10-27 10:24:30)
-> > > On Mon, Oct 27, 2025 at 10:03:44AM +0100, Andreas Schwab wrote:
-> > > > On Okt 27 2025, Yao Zi wrote:
-> > > > > On Mon, Oct 27, 2025 at 11:20:33AM +0800, Troy Mitchell wrote:
-> > > > >> On Sun, Oct 26, 2025 at 11:41:14PM +0100, Aurelien Jarno wrote:
-> > > > >> > diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
-> > > > >> > index 8248895ca9038..61c16f3d5abc7 100644
-> > > > >> > --- a/drivers/power/reset/Kconfig
-> > > > >> > +++ b/drivers/power/reset/Kconfig
-> > > > >> > @@ -283,6 +283,15 @@ config POWER_RESET_KEYSTONE
-> > > > >> >          help
-> > > > >> >            Reboot support for the KEYSTONE SoCs.
-> > > > >> >
-> > > > >> > +config POWER_RESET_SPACEMIT_P1
-> > > > >> > +        tristate "SpacemiT P1 poweroff and reset driver"
-> > > > >> > +        depends on ARCH_SPACEMIT || COMPILE_TEST
-> > > > >> > +        depends on MFD_SPACEMIT_P1
-> > > > >> > +        default m
-> > > > >> default m if ARCH_SPACEMIT? Or default ARCH_SPACEMIT?
-> > > > >> I believe that reboot and shutdown are actually essential functionalities,
-> > > > >> so it might make more sense: default ARCH_SPACEMIT?
-> > > > >
-> > > > > I don't think there's anything preventing it to be built as module by
-> > > > > default: even though it's "essential", it's unnecessary during kernel
-> > > > > and userspace startup, thus I see no reason to build it in the image.
-> > > >
-> > > > Wouldn't it be needed in a reboot-on-panic situation?
-> > >
-> > > Oops, yeah, I missed this stuff. Seems systemd automatic boot assessment
-> > > could switch to another boot option if one fails to boot. And if it's
-> > > caused by a (very early) kernel panic, then reboot support does play a
-> > > part here.
+> On 2025-10-27 13:48, Troy Mitchell wrote:
+> > Since P1 Kconfig directly selects K1_I2C, after the I2C ILCR patch was
+> > merged, the driver would fail [1] when COMMON_CLK was not selected.
 > > 
-> > But if systemd is running then you've at least got as far as the initramfs,
-> > and have the module available. So I don't see the problem.
+> > This series fixes the P1 Kconfig and resends the I2C ILCR patch(This
+> > patch has reverted by maintainer [2]). In addition, the Kconfig for
+> > P1's two subdevices, regulator and RTC, has been updated to use
+> > 'depends on MFD_SPACEMIT_P1' instead of 'select'.
 > > 
-> In rare case, if got kernel panic before load this module, then we
-> should really fix it instead.. Besides, there is no restriction to prevent
-> user to make this driver as built-in, right?
+> > Link: https://lore.kernel.org/oe-kbuild-all/202510202150.2qXd8e7Y-lkp@intel.com/ [1]
+> > Link: https://lore.kernel.org/all/sdhkjmi5l2m4ua4zqkwkecbihul5bc2dbmitudwfd57y66mdht@6ipjfyz7dtmx/ [2]
+> > 
+> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 > 
-> So I think this isn't really a big problem either
+> I think this series misses a patch to add a default value for 
+> MFD_SPACEMIT_P1. Otherwise it doesn't make sense to define a default 
+> value for the ones depending on it (RTC_DRV_SPACEMIT_P1, 
+> REGULATOR_SPACEMIT_P1).
+Yes, I forgot that. I'll add it in the next version. Thanks!
 
-A possible compromise here might be to use "default MFD_SPACEMIT_P1". 
-This would defer the decision to another level, but I think it makes 
-sense to have all parts of the MFD either built-in or as modules.
-
-Regards
-Aurelien
-
--- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+                                  - Troy
+> 
+> Regards
+> Aurelien
+> 
+> -- 
+> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+> aurelien@aurel32.net                     http://aurel32.net
+> 
