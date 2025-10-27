@@ -1,79 +1,80 @@
-Received: from mail-io1-f67.google.com (mail-io1-f67.google.com [209.85.166.67])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA65F25F994
-	for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 12:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A881A26AA94
+	for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 12:55:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761569714; cv=none; b=eq5BMsiPxtO/hBOd+Omax1gUUw+DwAcbwImuOAuayDd/w587Rm6TRcI3pogurksdnqxkhLWmCRUdmgsUpaWp5m6GvrJbRKiFYcFchcrETBJC0cylShEXnR4xjDThHE91vMUHbiVW6im/o9pJhopKA8MDynCm42UEEC9y0l5JxV8=
+	t=1761569716; cv=none; b=EeTUZuOiE0MwBWlHYiAFyO+pUOUy4eLUndlc6ikKPOX9ph8lb/GU8POGPpWrcwHIL0gFdKleVLVC9MjeprZVsUdTVu9sytEUmKgVUcsH05plNinaNyMuBzsHmjd9q5HNrxto5CzCrqnC2DuAI+6GVqnv0MfC5myAnVtfstOSOds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761569714; c=relaxed/simple;
-	bh=Kb8uM3f8qILwL0GDllY38o85KB9kJ69KatRC0T8EZTs=;
+	s=arc-20240116; t=1761569716; c=relaxed/simple;
+	bh=CnvW49qaumu8lY0eIQQxtLrTc9V9hHZfGU0p6GUmcLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rh4/gavD5iF8CNtQ/aHqcEJHzLb66ppMtS0+hHvZt4WkpLakTRQJRgszl1/bcVD/SMXYtxRBwovxu3QMKQ+R8+kSYMZUAeYvDUTW83uuK0ts6NEBarrLv3TUjBvsUAzf2bIN3g16VvYLE6W/FdnQmbO/W3pKFH0/FGhDP13gVz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=WpS1zBxd; arc=none smtp.client-ip=209.85.166.67
+	 MIME-Version; b=lLUKcZP/ItKjVtLklye7uZlOTitjIdLzVxZbLmYleweNOX07Cofa83RyI/fSH+38P8IKjqBTPXg6XFMJBlXqW+NLEFQuzW5Jv1zV9EX4x+5PuIbcRiT6NdLd2UsakS9rSp17vQT6BLANuqndW6qVJwhtC252xekOwzwha8vFkQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=vePscdSe; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="WpS1zBxd"
-Received: by mail-io1-f67.google.com with SMTP id ca18e2360f4ac-93e8834d80aso187484539f.1
-        for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 05:55:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="vePscdSe"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-940d2b701a3so492830339f.0
+        for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 05:55:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1761569711; x=1762174511; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1761569714; x=1762174514; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GhpKl/nn+BHTlTr14XOcXWGwJsMuOmqiPlR2ItDHNmo=;
-        b=WpS1zBxdOnOqZIXCJ6CY/+K1dhjDujJ4qTvAuBc+xdmUIamKqNaA3BdSQXoiNoKbxg
-         M6I4kBZYiU5Hywq4j8evRiwuo/oEJbv0XeqNTsz5PsinPiY6BdpPM/Ct1GAxyX+LxgKr
-         QdxO9KX7nIeJob9NkOb/IqreZ+CbvbP8Eo/AavkZOFwK8MmR3Qi5vlfi8HoVyTv9j/Vy
-         eIj8uhjELBCpsbFX9KHYe81fufCy2dVFqA+SKHubJINa/40iOkFVyAj6n1NLPGPP3Yuf
-         tMj1Dh/A0P+GBxCt3SnMKa0NCvpJwM9yMOMrtfYTtzz0qoC6pZBAJz8RirFyNptyB931
-         wwrg==
+        bh=WZm4qLXyHnGCSJjs14timCrgYr+hiVUmvuC1ejayZQY=;
+        b=vePscdSeW7s3dKF4EMi6WFhhaGKH17eb+2W2vMrmUzpwmwL/CleRJpd2YLhEvS391K
+         YGxVo6GJKQ70HfM2LAfECmu+ICeDCyQPPiAK/vXfRbpvEZhSYKT88uTMvYyn9jItAfku
+         UaC0fmvTyar+cRaOs3BifRIjtPkCzvHWS0rBSFfWU7V+kmXQVkPzNK2gLf+gnRiCPZ10
+         Qdr/5GAoGdCPk72WBoIJHMjes4wZrUMABJVQ3MCDXgCP1CvcXCYa/LbgGoz166YWFsxJ
+         fT1dKgUYYO34gkrBHPKJixdS6UoKCuRchd2EnnlaJy/9YMkHbTiUzNyWsTunsAXUXiml
+         7WLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761569711; x=1762174511;
+        d=1e100.net; s=20230601; t=1761569714; x=1762174514;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GhpKl/nn+BHTlTr14XOcXWGwJsMuOmqiPlR2ItDHNmo=;
-        b=YNzAb8qdF97sEPkhgct4LPc2HOAAioilIi2I12gYJcJXKspElPq7kjQFg1seTthpav
-         DC4T4cUVMWsM0lnRoFrLibV5BH6XL0UgvBWjfGDW4aKL2xXNNNhLGhUpeg5rCR965U1C
-         6dr2V9bBeuSbdvyoOH7CPAiNqmIcRLioil9K1L2rqonRbHvHeBwfX+AWn4SudDtJS3gd
-         pCCMtjc5x/Agbcl6pdddWH0eqePiDEYu8ThMMHNaXZ9kHZp4W76owPjD3yYXMTfeotNJ
-         khvX3kMsYrK1CuRYqtgV57ebecWhf5nKjMEfZ5P45MpJI98AlHXFPNEWRyFM6uj+FAe3
-         0HAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXy0cuL8CTMSC1iBBhaeeB/k8EIsmi2T++b3OqHfsQeSjBm8s12km8o+i88BAqzz1lZzSBQpkDYiw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy6zGqGjE+XBLg8RjDArC5Xu30HPsQno/lDLxQdZgbFBWj0OqlJ
-	GQZnta4h2mR8uTGCtrQL0ZWx8jD0YeITcFKRBxgwmlqaP7pLd8UVneV4IExQ8xtlD5I=
-X-Gm-Gg: ASbGnctSaBYTCKwI6QLiOSh06tgvWT9HRi2dQZgViVKjEIpPUmiC50v7FhxSNaYh9go
-	rNUNYSynvroeANN7YwmWAZRB5+nuAYsRou19CnUiAeSpcqIk5w32cVACv1uZYO7+/Pow+dMIzOs
-	9JHBN/HKiAYCCIG+NWva4+X++QdXHwwW+xHenE9vN+CEUzJqibsUefiSlEBLAXOvrq6MTBWnwoz
-	JQXPjhAKA7odVXDi8u+uUg/ZUTe86Dtcbk6hPtlGhLaJmMHXiZI2hKBR0akfAVbUctCRLlVGkV9
-	ngRG+o4I/2PvpircGYlDj7s1tyykn49um4meZX5ujLm1Kei7pK8RKotaNDTcOmprQKIGSAdZ4VY
-	v7mlF3Gr/CknSolfH4OzbjWCAuo2vq1pL670+5P7Vj028wSWSW9IKAqwf8Z6E+OsahHkO/uI0NT
-	0ylvPuVKoe5DaDKyEvObY9IcRn/6MnZg/hYfD7BAb7P8OLHcgl5RU35w==
-X-Google-Smtp-Source: AGHT+IEZEkJbHyJsLtQ9RwbUNNRM89do/GpofJnj3gjkHzKLnBs02AOz2LkYBC9YjYewuyvy3xtdnw==
-X-Received: by 2002:a05:6602:c85:b0:945:a198:7726 with SMTP id ca18e2360f4ac-945a1988c63mr751875839f.5.1761569710940;
-        Mon, 27 Oct 2025 05:55:10 -0700 (PDT)
+        bh=WZm4qLXyHnGCSJjs14timCrgYr+hiVUmvuC1ejayZQY=;
+        b=M1O6carFpJIaaQytxnkIiqfenkoOVCsUlTsYOSL+/LO2sgJsBLcYjRMsRLg01gvdXs
+         +SmjuJRxzeNKcEtjYmmEmIvTHG19Q7lBduIlwy4UmM4FCkKiukWc2cwMLAIBz30TbOC0
+         7fP4Ea79gT6fjX7AwVcuk5NppPHHKu2bPoKz0QU9ibdhegnFzhgOjaIEIiXuaq3GLNy+
+         k7+CjJvQhG2w+FaqdO7na8l/nJmvsyeO23iABUcl4pkCPBTJWe3yCMaR05lBV9zqEoJZ
+         E1hHaOtOAC2ccCpF8GHD+8a6YhixG4AY1tkq3LklQ9Whh3kjNyiNOmJ93nEmRDQVkBCF
+         jyOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVz+mskk+NWb0sSNxugL53hDwl3Bhjx98I+++JRbrt1m5rB9KSGHEmG2Lfd/gmCXryZ7bAfGGo1Jw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx4m/uqQzyjYTBwmf30W8ifP6y0pxBEgDH0ycnbWzm4PbkeStyJ
+	NMkbc+hXsvTvnvMdVL0jdkSAxiUqAuUgLBIzHF33gQIYF5Fz0kv4vVt4mXpXdJNMPSI=
+X-Gm-Gg: ASbGncu/nsSgDzv1TNefe0gGI36B33iiw8e1duAstbx0Oc1pIm4QuLVWrW7aRPeonxm
+	FsgfC4wXGVoNstokNtHSY/PWBTPV5nZ2ezA2vFKDXCDy+cU+Rza0jPB6H5tbXyWf5tbz+yC0Ayv
+	HvfbRrZFM09mi/jL7OG6a2s2rvIHZZmGaM89Y+lsnbwOVli+NC29sznCPwZs/LiYV389HNDxxkL
+	ATXQEnXDD0dpsIrchyMQgpU4JqABodKLnG4NU9tgs5JdUgOZhr2n3ssEkdJ1D8ggEJouM9oQGx2
+	++e61RQZm7LB507FD2S+0NFpOlyoH9FjKIz1MvDkUFlwKfnITm145qC+pkBYX5v3x5CCq/xFTmy
+	iPkfvSQiR7Pn6a26aNwDQbzziIwd8m/p+QGwsZrTJD+1TggQfr0tanVRdCgzeNS7/P6cejZeZvr
+	hpkWQoMeKnRF4qJwg8bpBxcHSFZQhNIiaRK9/TdB3nqhZIzoiw6c2Kxg==
+X-Google-Smtp-Source: AGHT+IFmmT522+C1SBtNjrGRDwvpDMmF/aXjZncAIPKX4af5yw9ZwOirXo4uSn/478nB9D2HnyXQgw==
+X-Received: by 2002:a05:6602:6b89:b0:945:aa9b:4165 with SMTP id ca18e2360f4ac-945aa9b43c4mr414941839f.1.1761569713842;
+        Mon, 27 Oct 2025 05:55:13 -0700 (PDT)
 Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-94359e742efsm249121639f.7.2025.10.27.05.55.09
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-94359e742efsm249121639f.7.2025.10.27.05.55.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Oct 2025 05:55:10 -0700 (PDT)
+        Mon, 27 Oct 2025 05:55:13 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
-To: broonie@kernel.org,
-	dlan@gentoo.org
+To: dlan@gentoo.org
 Cc: robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
 	devicetree@vger.kernel.org,
-	linux-spi@vger.kernel.org,
 	spacemit@lists.linux.dev,
 	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH v6 1/3] dt-bindings: spi: add SpacemiT K1 SPI support
-Date: Mon, 27 Oct 2025 07:55:01 -0500
-Message-ID: <20251027125504.297033-2-elder@riscstar.com>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v6 3/3] riscv: dts: spacemit: define a SPI controller node
+Date: Mon, 27 Oct 2025 07:55:03 -0500
+Message-ID: <20251027125504.297033-4-elder@riscstar.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251027125504.297033-1-elder@riscstar.com>
 References: <20251027125504.297033-1-elder@riscstar.com>
@@ -85,106 +86,108 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add support for the SPI controller implemented by the SpacemiT K1 SoC.
+Define a node for the fourth SoC SPI controller (number 3) on the
+SpacemiT K1 SoC.
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Enable it on the Banana Pi BPI-F3 board, which exposes this feature
+via its GPIO block:
+  GPIO PIN 19:  MOSI
+  GPIO PIN 21:  MISO
+  GPIO PIN 23:  SCLK
+  GPIO PIN 24:  SS (inverted)
+
+Define pincontrol configurations for the pins as used on that board.
+
+(This was tested using a GigaDevice GD25Q64E SPI NOR chip.)
+
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
 Signed-off-by: Alex Elder <elder@riscstar.com>
 ---
- .../bindings/spi/spacemit,k1-spi.yaml         | 84 +++++++++++++++++++
- 1 file changed, 84 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/spi/spacemit,k1-spi.yaml
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      |  7 +++++++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 20 +++++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi          | 15 ++++++++++++++
+ 3 files changed, 42 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/spi/spacemit,k1-spi.yaml b/Documentation/devicetree/bindings/spi/spacemit,k1-spi.yaml
-new file mode 100644
-index 0000000000000..e82c7f8d0b981
---- /dev/null
-+++ b/Documentation/devicetree/bindings/spi/spacemit,k1-spi.yaml
-@@ -0,0 +1,84 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/spi/spacemit,k1-spi.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index 33ca816bfd4b3..0b0478c6f273d 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -16,6 +16,7 @@ aliases {
+ 		serial0 = &uart0;
+ 		i2c2 = &i2c2;
+ 		i2c8 = &i2c8;
++		spi3 = &spi3;
+ 	};
+ 
+ 	chosen {
+@@ -258,6 +259,12 @@ dldo7 {
+ 	};
+ };
+ 
++&spi3 {
++	pinctrl-0 = <&ssp3_0_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
 +
-+title: SpacemiT K1 SoC Serial Peripheral Interface (SPI)
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_2_cfg>;
+diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+index 4eef81d583f3d..c4b9f6265a31a 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+@@ -516,4 +516,24 @@ pwm14-1-pins {
+ 			drive-strength = <32>;
+ 		};
+ 	};
 +
-+maintainers:
-+  - Alex Elder <elder@kernel.org>
++	ssp3_0_cfg: ssp3-0-cfg {
++		ssp3-0-pins {
++			pinmux = <K1_PADCONF(75, 2)>,	/* SCLK */
++				 <K1_PADCONF(77, 2)>,	/* MOSI  */
++				 <K1_PADCONF(78, 2)>;	/* MISO */
 +
-+description:
-+  The SpacemiT K1 SoC implements a SPI controller that has two 32-entry
-+  FIFOs, for transmit and receive.  Details are currently available in
-+  section 18.2.1 of the K1 User Manual, found in the SpacemiT Keystone
-+  K1 Documentation[1].  The controller transfers words using PIO.  DMA
-+  transfers are supported as well, if both TX and RX DMA channels are
-+  specified,
++			bias-disable;
++			drive-strength = <19>;
++			power-source = <3300>;
++		};
 +
-+  [1] https://developer.spacemit.com/documentation
++		ssp3-0-frm-pins {
++			pinmux = <K1_PADCONF(76, 2)>;	/* FRM (frame) */
 +
-+allOf:
-+  - $ref: /schemas/spi/spi-controller.yaml#
++			bias-pull-up = <0>;
++			drive-strength = <19>;
++			power-source = <3300>;
++		};
++	};
+ };
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index af35f9cd64351..990246a3b50ff 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -823,6 +823,21 @@ uart9: serial@d4017800 {
+ 				status = "disabled";
+ 			};
+ 
++			spi3: spi@d401c000 {
++				compatible = "spacemit,k1-spi";
++				reg = <0x0 0xd401c000 0x0 0x30>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++				clocks = <&syscon_apbc CLK_SSP3>,
++					 <&syscon_apbc CLK_SSP3_BUS>;
++				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_SSP3>;
++				interrupts = <55>;
++				dmas = <&pdma 20>, <&pdma 19>;
++				dma-names = "rx", "tx";
++				status = "disabled";
++			};
 +
-+properties:
-+  compatible:
-+    const: spacemit,k1-spi
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: Core clock
-+      - description: Bus clock
-+
-+  clock-names:
-+    items:
-+      - const: core
-+      - const: bus
-+
-+  resets:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  dmas:
-+    items:
-+      - description: RX DMA channel
-+      - description: TX DMA channel
-+
-+  dma-names:
-+    items:
-+      - const: rx
-+      - const: tx
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - resets
-+  - interrupts
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+
-+    #include <dt-bindings/clock/spacemit,k1-syscon.h>
-+    spi@d401c000 {
-+        compatible = "spacemit,k1-spi";
-+        reg = <0xd401c000 0x30>;
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+        clocks = <&syscon_apbc CLK_SSP3>,
-+                 <&syscon_apbc CLK_SSP3_BUS>;
-+        clock-names = "core", "bus";
-+        resets = <&syscon_apbc RESET_SSP3>;
-+        interrupts = <55>;
-+        dmas = <&pdma 20>, <&pdma 19>;
-+        dma-names = "rx", "tx";
-+    };
+ 			/* sec_uart1: 0xf0612000, not available from Linux */
+ 		};
+ 
 -- 
 2.48.1
 
