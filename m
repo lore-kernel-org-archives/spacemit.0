@@ -1,175 +1,134 @@
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574721E0DFE
-	for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 13:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F3E223DF6;
+	Mon, 27 Oct 2025 13:34:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761571831; cv=none; b=K8sF0Efjl/g4XH+iHG1dOepwv+x4vBokoGGzXmPbdpU/GANBGtsxZOGk0orqubryn3sYaSqrv7Qx4hvkdybAmpxBqDAW6io+KR8oOGP9uMEIylXS7x04OyX1QyxfNQzTx/EGBgi11SOcpZxm+GyrfIqS6FtFNAwkvMshZOYCWQM=
+	t=1761572093; cv=none; b=rNFDimJxHejcoxFu1c3b/UwpFuL/a3gOtKwixO88/rr4gj0LosyKuMZDcPzE3CiuayDpjvGZt7zGvdpTsZwyBkcWisLX9IciR97Ukl83h1I6GvtmCOOokzZdwl3uLIoVQYFqS4awWuzQMMvIVXXvkgSzsqzYL/X9C6Uvf5NIaWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761571831; c=relaxed/simple;
-	bh=BzKRuhxyonoQsuopPQdi/8jOGmwxXgdxHX/BXxXKdik=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u1e5+vLyDFrFPF/XEM/OHG1cwRxL52UsxiSoiKxrd728XIR9rYkY3/3H7Ef5A/hjQN9lFOaGtZ7R2n4a1kksn6nX/JeIF129gt/Og0dk6B4eZb78wjppHecqnX2dretKSSS9rGFugj3fIS6tO8cpWnRaiV8yXKAoTeTcj2Mh5j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=Ifrggozj; arc=none smtp.client-ip=209.85.166.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1761572093; c=relaxed/simple;
+	bh=9VsNKH48ReBO72Un3UkY8t0uUYfuoyWe+CVfv/ezo8E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gcQ/tPGpGMfpvBpnV1hW7A1HwObm0Zocg34CmyearfGQyBEWZFp8OjcvS2EKvdmdJliNgq4wzXQe5CLcuMZG6V0o7P5I38rC7QldLNT2imLpgD4qm5mMkdcHPUbaeuP1mx2OvD6tgtGCfWpnS3sQ+fyBa6wsHzyzfeY/NgKn8xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=doTz7BiH; arc=none smtp.client-ip=195.154.113.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="Ifrggozj"
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-93e8834d80aso189231539f.1
-        for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 06:30:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1761571828; x=1762176628; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CdMeTbCiZFImBLpdSseleACrRi7JJpgsujeJgyCXmeA=;
-        b=Ifrggozjz/d+iIHnis8abtrsjGMs3QXz6YscQpG0fefIcLjilETLkMj/kKp49icIN5
-         Nn1u4mpuUOf7GvKq7nzz0pWEECZ4EgSl0ojNUi7NvA575CMiPrlY6RZr8TjZQYnwJb26
-         cdwX7GvxBYVGZRGxOU+5Kl+F/imnTozi16gXajmC/azIE48f4QeGQFV04aI0zmGWmVLa
-         ymm3Gy747k1Fp8BjA+YX3LTkwZNGfzyDzzI9W27Q/IG9X5srMkccEe/9As81/h2jVlBr
-         k9IlrNXANpuMn25cns7upXFNJi3P+l+GLQcLQx1xMZ3yiVe5/n9l4I2AMELk6LS4xy7v
-         CypA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761571828; x=1762176628;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CdMeTbCiZFImBLpdSseleACrRi7JJpgsujeJgyCXmeA=;
-        b=WRRHXghrYKe6+9fZxpnvaj4nDcjAVTIes3tna61fj0S4LxD3Jlm9UE1tmw/mnldGfT
-         qIuW9faSRNn6XtcVKc974dsxNDzmlf1lKZnqH5PgU4MrXmKLOvmcxhfS7wngMD9ohr9G
-         B2LnvkscP/lr8OQc4JrQoEmakO0LEKzr7wibmwjDmjCyfo1ODnffqmkg8M375JXhNI/L
-         udvB50/nXqwVJeGXtpp/IJATOsbM8Kv85s5Czz5eoyIxjrj35ea9vDbIhV7cxA5OX/Wg
-         ods2anxaWcCghYpMBVRN5Wrc3UF6N85xP5SquAbU6+sRDo3wmI4JClfmK6aUU1RpyjHF
-         RLzw==
-X-Forwarded-Encrypted: i=1; AJvYcCU6iihmH66fQTNiAIbCUc9zEu54SErYSISQMUES5AHwVDjngbGBlT91rhDI19a9TYeJI/CITW8szw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwgPYXOrkgQuFCh+BQG0e0u34Zb3wBk3afRPqP6geI5U9nWDKHy
-	Tr75xWuraqBbAvL15hOEn3DlKX37pXIlQujBmF/6JuS6gwe9YDfNlU6VkmRoiNLTHbM=
-X-Gm-Gg: ASbGncu00igThU21Uq6PR1+12GOmSBpN68PhC0f0GH7KjL/qldQKfBH9PDlyRUiQcPQ
-	+5x4N5SmJ94MOZmpHPWxcW0cEBiP05znf0HlwefC9rL6wSYKgGUbZO05A2qLu/4WfWQNcPDw9Jd
-	IJ67IW/yrzimdewo3/DV8GkULuZKEtC96jGbaFLyvCyUigaDJBMLfkIFRDUl/hNNTXcdCIneLK0
-	yd1LCJk1dM6s+sWoBBVWacoMJm05OrX/ecmvhiMU0AWqtpcdUtLqq/hhLGyr0oXGTCPv8ZfUTIZ
-	viqbxjRB6+CoBft4r8FJE2AvgFgkYb76nrn9mlFOvYQW7tiNpV5aSbFaEd7eZ2weJfsJJKysjTG
-	QQpUUAXi95Dc4m+fNamJWhf2ZPx9T47fNEW2B8av5/NHpsd8f9I3If0g8T0dFSMT9XupJx4VAGm
-	01kV1/tSJw7vryJYRX3W8relXk7nVp9cGMVT4Xe6y0RVg=
-X-Google-Smtp-Source: AGHT+IEwi0+D29qzwfaIeFc/gnHZPerYoM3xz0awvDXq4gN/Y7hOOLjB+JgF5YW9xp73OHzxinZJ2g==
-X-Received: by 2002:a05:6e02:1848:b0:42f:9847:15bd with SMTP id e9e14a558f8ab-4320f860164mr590635ab.26.1761571828284;
-        Mon, 27 Oct 2025 06:30:28 -0700 (PDT)
-Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5aea78e2fd4sm3093057173.26.2025.10.27.06.30.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Oct 2025 06:30:27 -0700 (PDT)
-From: Alex Elder <elder@riscstar.com>
-To: dlan@gentoo.org,
-	broonie@kernel.org,
-	han.xu@nxp.com
-Cc: Frank.li@nxp.com,
-	guodong@riscstar.com,
-	linux-spi@vger.kernel.org,
-	imx@lists.linux.dev,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v4 8/9] riscv: dts: spacemit: enable K1 SoC QSPI on BPI-F3
-Date: Mon, 27 Oct 2025 08:30:06 -0500
-Message-ID: <20251027133008.360237-9-elder@riscstar.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251027133008.360237-1-elder@riscstar.com>
-References: <20251027133008.360237-1-elder@riscstar.com>
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="doTz7BiH"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=FCv+dqvI3maIG+5BMD6tWXqw54hjChMOqdKu2w6RxCQ=; b=doTz7BiHKAV68V9mLQoNkeTWn3
+	tZG46n6g8lMx0xIYE9pVPyqG3b4TtAD4mu0u1d8tS8q+ts7yszvyHUvRUXzV6VSHh1tTxrcyYc4SX
+	bqjWqvkQOExysQBvnsr5MhFJBjjpGoYNuZSsZ8ayNA0Gdo8OLmHT/7v19kTSvv6FsJP4wo37T0HUK
+	1tpKyvr9XVcbwbvuHnLadItl/LE6w9lnwAZZMdYD/xa4c6eviingRVp9O69BdNYzdwkve9VqRtwOG
+	yLoDE0iOvU8crVbzx1Rek6AJY0qEIcbgnvoXwc4021JdvocJMQ58kw3wCnfDP3Elq8zvXj9ko904S
+	qviSGMRg==;
+Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
+	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1vDNMo-006zVe-1e;
+	Mon, 27 Oct 2025 14:34:34 +0100
+Date: Mon, 27 Oct 2025 14:34:33 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Andreas Schwab <schwab@suse.de>, Yao Zi <ziyao@disroot.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-pm@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] driver: reset: spacemit-p1: add driver for
+ poweroff/reboot
+Message-ID: <aP906fAZZfFXp-2D@aurel32.net>
+Mail-Followup-To: Yixun Lan <dlan@gentoo.org>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Andreas Schwab <schwab@suse.de>, Yao Zi <ziyao@disroot.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-pm@vger.kernel.org
+References: <20251026224424.1891541-1-aurelien@aurel32.net>
+ <20251026224424.1891541-2-aurelien@aurel32.net>
+ <A73D83A7055D782E+aP7lAdAk66slv6l7@kernel.org>
+ <aP8QHwsYDlbQxQJo@pie>
+ <mvmh5vk67in.fsf@suse.de>
+ <aP86TltQ2uqeK6FY@pie>
+ <CAJM55Z9w0pnFmVjJKJNMs1iqOxoL=YpkBu0L7NuUZ_0ipMtQAQ@mail.gmail.com>
+ <20251027103147-GYA1541054@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251027103147-GYA1541054@gentoo.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Define DTS nodes to enable support for QSPI on the K1 SoC, including the
-pin control configuration used.  Enable QSPI on the Banana Pi BPI-F3 board.
+On 2025-10-27 18:31, Yixun Lan wrote:
+> Hi 
+> 
+> On 03:17 Mon 27 Oct     , Emil Renner Berthing wrote:
+> > Quoting Yao Zi (2025-10-27 10:24:30)
+> > > On Mon, Oct 27, 2025 at 10:03:44AM +0100, Andreas Schwab wrote:
+> > > > On Okt 27 2025, Yao Zi wrote:
+> > > > > On Mon, Oct 27, 2025 at 11:20:33AM +0800, Troy Mitchell wrote:
+> > > > >> On Sun, Oct 26, 2025 at 11:41:14PM +0100, Aurelien Jarno wrote:
+> > > > >> > diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
+> > > > >> > index 8248895ca9038..61c16f3d5abc7 100644
+> > > > >> > --- a/drivers/power/reset/Kconfig
+> > > > >> > +++ b/drivers/power/reset/Kconfig
+> > > > >> > @@ -283,6 +283,15 @@ config POWER_RESET_KEYSTONE
+> > > > >> >          help
+> > > > >> >            Reboot support for the KEYSTONE SoCs.
+> > > > >> >
+> > > > >> > +config POWER_RESET_SPACEMIT_P1
+> > > > >> > +        tristate "SpacemiT P1 poweroff and reset driver"
+> > > > >> > +        depends on ARCH_SPACEMIT || COMPILE_TEST
+> > > > >> > +        depends on MFD_SPACEMIT_P1
+> > > > >> > +        default m
+> > > > >> default m if ARCH_SPACEMIT? Or default ARCH_SPACEMIT?
+> > > > >> I believe that reboot and shutdown are actually essential functionalities,
+> > > > >> so it might make more sense: default ARCH_SPACEMIT?
+> > > > >
+> > > > > I don't think there's anything preventing it to be built as module by
+> > > > > default: even though it's "essential", it's unnecessary during kernel
+> > > > > and userspace startup, thus I see no reason to build it in the image.
+> > > >
+> > > > Wouldn't it be needed in a reboot-on-panic situation?
+> > >
+> > > Oops, yeah, I missed this stuff. Seems systemd automatic boot assessment
+> > > could switch to another boot option if one fails to boot. And if it's
+> > > caused by a (very early) kernel panic, then reboot support does play a
+> > > part here.
+> > 
+> > But if systemd is running then you've at least got as far as the initramfs,
+> > and have the module available. So I don't see the problem.
+> > 
+> In rare case, if got kernel panic before load this module, then we
+> should really fix it instead.. Besides, there is no restriction to prevent
+> user to make this driver as built-in, right?
+> 
+> So I think this isn't really a big problem either
 
-Signed-off-by: Alex Elder <elder@riscstar.com>
----
- .../boot/dts/spacemit/k1-bananapi-f3.dts      |  6 ++++++
- arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  | 21 +++++++++++++++++++
- arch/riscv/boot/dts/spacemit/k1.dtsi          | 16 ++++++++++++++
- 3 files changed, 43 insertions(+)
+A possible compromise here might be to use "default MFD_SPACEMIT_P1". 
+This would defer the decision to another level, but I think it makes 
+sense to have all parts of the MFD either built-in or as modules.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 33ca816bfd4b3..02f218a16318e 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -113,6 +113,12 @@ &pdma {
- 	status = "okay";
- };
- 
-+&qspi {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&qspi_cfg>;
-+	status = "okay";
-+};
-+
- &i2c2 {
- 	pinctrl-0 = <&i2c2_0_cfg>;
- 	pinctrl-names = "default";
-diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-index 4eef81d583f3d..e922e05ff856d 100644
---- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-@@ -73,6 +73,27 @@ i2c8-0-pins {
- 		};
- 	};
- 
-+	qspi_cfg: qspi-cfg {
-+		qspi-pins {
-+			pinmux = <K1_PADCONF(98, 0)>,    /* QSPI_DATA3 */
-+				 <K1_PADCONF(99, 0)>,    /* QSPI_DATA2 */
-+				 <K1_PADCONF(100, 0)>,   /* QSPI_DATA1 */
-+				 <K1_PADCONF(101, 0)>,   /* QSPI_DATA0 */
-+				 <K1_PADCONF(102, 0)>;   /* QSPI_CLK */
-+
-+			bias-disable;
-+			drive-strength = <19>;
-+			power-source = <3300>;
-+		};
-+
-+		qspi-cs1-pins {
-+			pinmux = <K1_PADCONF(103, 0)>;   /* QSPI_CS1 */
-+			bias-pull-up = <0>;
-+			drive-strength = <19>;
-+			power-source = <3300>;
-+		};
-+	};
-+
- 	/omit-if-no-ref/
- 	uart0_0_cfg: uart0-0-cfg {
- 		uart0-0-pins {
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index af35f9cd64351..47f97105bff0b 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -823,6 +823,22 @@ uart9: serial@d4017800 {
- 				status = "disabled";
- 			};
- 
-+			qspi: spi@d420c000 {
-+				compatible = "spacemit,k1-qspi";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				reg = <0x0 0xd420c000 0x0 0x1000>,
-+				      <0x0 0xb8000000 0x0 0xc00000>;
-+				reg-names = "QuadSPI", "QuadSPI-memory";
-+				clocks = <&syscon_apmu CLK_QSPI_BUS>,
-+					 <&syscon_apmu CLK_QSPI>;
-+				clock-names = "qspi_en", "qspi";
-+				resets = <&syscon_apmu RESET_QSPI>,
-+					 <&syscon_apmu RESET_QSPI_BUS>;
-+				interrupts = <117>;
-+				status = "disabled";
-+			};
-+
- 			/* sec_uart1: 0xf0612000, not available from Linux */
- 		};
- 
+Regards
+Aurelien
+
 -- 
-2.48.1
-
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
