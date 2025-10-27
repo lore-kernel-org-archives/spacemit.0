@@ -1,40 +1,40 @@
-Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3130B200BAE
-	for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 05:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974AD2D46CE
+	for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 05:49:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761544186; cv=none; b=eL5RCOyL3NkCAiZww/ntrSwn+xn7ppKt8iAxLssValFjoOHyJ3StSsJb2Ked/JYUsoBLE9IzP63s5+S6ZjrWEIye2LZxqqbJk9OCDfst7D/s2/Mky2E/JmloMdTJyUUzejr5f1Ddv8JJQ8fVqLjSuXrhlF0R4dZ0cfjrzfvz1wI=
+	t=1761544190; cv=none; b=YMNaKPVhABmASQ6IDNygvTnKqIXSmxWh4zfKzgJrI8XS0Kh6Yix/zSncwKops8I3ny7hk91phmvpInKBbqd5CK4jgVwFH0h1036CRDXFrAsVQZm+fheH7CXkpH32569KhzE36rvH3o18XO8RT/9wNaWewXPnBYmbX45xIsH8KsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761544186; c=relaxed/simple;
-	bh=haUTX3DAFG/sDExwxhYrFG+MpFnxNHgK9T898K4DEpw=;
+	s=arc-20240116; t=1761544190; c=relaxed/simple;
+	bh=MdOH9hjjxGZsKypHF4E37v9P1dlEBgH3N1GF9QnLQ1I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=M8NqmvMxkPp/LX412dPtX3TsZ+tJbxNPdIeJdHqpfa8H2WK2T3trgJR8Eu9qsJQRZZSLbwToPTz5oySKSvfX2lYjFZ+qyR+zjgmc3zKyKNyP6I4PPiYz2UA+HbCKBCeBgjOwb4Td0hQbY7T3HK7pdT3g9yxlu72xH+2dH6+vhXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=UkXBKQqP; arc=none smtp.client-ip=54.207.22.56
+	 In-Reply-To:To:Cc; b=RiEDj+FxJrsqCtct71crdwwoDBxcip975E+TKW4iRXCFAsrKi4UjNU9IYcptlVvKxlu6CtZrMkN5fkVeGAcaoMjlbOZ5uSulu8k91tosMR8CU44swactBJnlOG8JnStxmrCeZLUVwjeWndRjmVAOYuoyY0ppUrYaZEDPWyuGBLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=xo+n4mte; arc=none smtp.client-ip=54.207.19.206
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="UkXBKQqP"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="xo+n4mte"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1761544104;
-	bh=VUROzD2Px2X01kMjDouTVlJB/FxOGL4kiYbsA/z/bxo=;
+	s=mxsw2412; t=1761544110;
+	bh=eaKj1HRL8X/NaEJQudAmylwIeVJyeI2KOmMcJICZMgA=;
 	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=UkXBKQqPb+sRn2eOlZ/SaX6PLSCmarWbCuIHFBNaPK00drkVp7i55hxqcxRJTqfj2
-	 hBMGOXKSVYGyc35esXKH4FJ5z6BhWo9OKaNhu05XQxCw+3EZ48M/YpRpxd2rxyUUO8
-	 vfJ9IgZO7I0jItBV/lQTRw033ebOjA+hMfU65n0U=
-X-QQ-mid: zesmtpsz7t1761544095t7e2c79e6
-X-QQ-Originating-IP: 2YYRSz8nfBT+0rkbxFwdGXPE9OU+8C/eh6y1Zk5miKU=
+	b=xo+n4mteSZtp6EFjbWVUcBhlCVHEMupMDFKJi8c0JuQAIx5Y5MGkcfG/bxi3O9BJc
+	 Rsr1+umPLPyouVC/4prVb0Ob0DKU/WLU2N/SOf8CHihbXMccLPssP+M+d2N+GHsug6
+	 uv72sjuoZ8+C55stiZhfoVWz3KeSawZzJ/uRDccQ=
+X-QQ-mid: zesmtpsz5t1761544102t2fd12e65
+X-QQ-Originating-IP: 9D8j9F1R1n69BE9ErCI2rUt3ZW+zWcbpU/HCZSqgfqY=
 Received: from = ( [183.48.247.177])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 27 Oct 2025 13:48:13 +0800 (CST)
+	id ; Mon, 27 Oct 2025 13:48:20 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11408485327618603896
-EX-QQ-RecipientCnt: 14
+X-BIZMAIL-ID: 3398915015117501572
+EX-QQ-RecipientCnt: 13
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Mon, 27 Oct 2025 13:48:05 +0800
-Subject: [PATCH v2 1/4] mfd: simple-mfd-i2c: remove select I2C_K1
+Date: Mon, 27 Oct 2025 13:48:07 +0800
+Subject: [PATCH v2 3/4] rtc: spacemit: MFD_SPACEMIT_P1 as dependencies
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,7 +43,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251027-p1-kconfig-fix-v2-1-49688f30bae8@linux.spacemit.com>
+Message-Id: <20251027-p1-kconfig-fix-v2-3-49688f30bae8@linux.spacemit.com>
 References: <20251027-p1-kconfig-fix-v2-0-49688f30bae8@linux.spacemit.com>
 In-Reply-To: <20251027-p1-kconfig-fix-v2-0-49688f30bae8@linux.spacemit.com>
 To: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
@@ -52,70 +52,60 @@ To: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
  Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
 Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
  spacemit@lists.linux.dev, linux-i2c@vger.kernel.org, 
- linux-rtc@vger.kernel.org, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- kernel test robot <lkp@intel.com>
+ linux-rtc@vger.kernel.org, Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761544088; l=1235;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761544088; l=913;
  i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=haUTX3DAFG/sDExwxhYrFG+MpFnxNHgK9T898K4DEpw=;
- b=axT647NiGxsuB2r629BN37g+E++QCuCRTuuShun9jkeP1mUdrBRCaBuTuSlqcsYYlzjRaqazp
- X2VApOdw7riBC6daxcAt+BqIAk9j2LxxfeYInibW477iQkz438YsLYB
+ bh=MdOH9hjjxGZsKypHF4E37v9P1dlEBgH3N1GF9QnLQ1I=;
+ b=jzR4ZlQVr89vvMu1oyh/46l2oRBTv/PLt6B/jfaLsrCb260Lpqf76bKrPnMiKPjKCLa1IOGn7
+ 362mPKO4nFDBUSwhqCn9Eaj+9TsjrPxs1kwQhRvjgWgBJ6flf/Hf9TG
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
  pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OaUS/vBL36PcrxsqVFuqWfeo5c/moXnAmpVNEYaVqMP+nATRSDK9C1eF
-	t9mgzIPgoYSsudFivUk9JYdINuFVlNWwdoE5zivFlgr7ckbc3IhrIJJ0R7yb/T7XfQyvx2O
-	W4TdMLrhmFP56uKifi38U2JSA9fn4Qd31we1qRuHMy7i6QjmV5okwDI0DBRARRn4i0O4SOz
-	IGgDpVUVZacRHcC1SGaDL3XuaRBwY0ELshiLMsP6wuUvCsISMZmXafsdkrqluqW4FF4nhOw
-	BwbZqxEywhriVjeEXlllDblKbcK241fH/CR8yiE9m/V4XgK+dysyBK9dY+zuZivSGCnl8CG
-	oKk7Egde8Bijy08zABdV56hY5VG4T3yyd8yojbFnsbQ+vgsIKSjRP3VDpS2yx4c2m1vogfH
-	dgEXoTtWamBLkApo28f88iQGTjaWkAns8Wpm4wqEHDCUVBs1//WN8qsCDa9usuzniIpG6ee
-	n6Q9JpaBi061OsJ4SVTifGLy572JS76egp35drCe/8a6TszW0eWIYQv4IfMSlln/502gdjf
-	1Phfjprb4H2f8Eaaawpu5gDv9VhGxr/3smxYwuNTZlfZsw9PNkWO66KLHjEWh8x9lsfDK9l
-	nvtm3xB5clHJwg+NuSLzI3pOS8nSnrxA9CxS6bnLI4l1X/j0jdcoy3z1r8UXbX1N1YaOsDP
-	0VBoqw/zMsidralEQkBH6nClpz/DY9RZemKn0fBEjmmfKwGSdIz+gkcPs8HJLXi1NmluvOK
-	TIl0isT/CK3XnxTWOH5cE79df8Yzqo/7KSLvQjHGMqqzltJsoVh3M8Qzbiz5lvlXRZgGc+Y
-	IvRwU3KZyMuzkBfu9noKXvYwIZfmFVGLbtGJroU8FjGhb9hEljmhnFBekykk5QfO0e2mr83
-	DOd2UD/EZmo1bR0P7taBEeGMrnU9YKf9JjYQKjPf+P6LtHNtScQdEuaf5+KHWQwfOGA4PaK
-	nUw20FSo76inMixt0V/O+jHZIyjUxGrDssot9htLNkL6N7n9viza4KJE4hUqWZBhmlnFHoD
-	PuhA4uT17RYxbZGavZJ6Yo7cpq4ki+KPgFZ0Of/cSxHTT+ar22mSc0gacvKXrXoYFIy7Xga
-	yMJciNPuN1Ea+v3ag+PTHIEEnjnufRPYiVymTETermgc2S1W4XOwuAQLFe/ktJ7Dez7jcQC
-	CrEi
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-XMAILINFO: NuQRJUP0KJGkTdDKRC+DCvyBhMRNHm5VFXxJRZKTCEUAmNr+Abj6YsQ8
+	X7K/oRQYvztWqreGPBNjW6o5jKGI/5VvOxaA61P9ReMsns1uLc0mzfPzsslajlFl4PVqRe5
+	M3o+si19HrF0ce04lpN0Hnb4DsZmujCDlyG1vCA821Oz1BGmeBJnaQeNTD3fAeJSGNG+rPL
+	PdP4gJWopjbPrIL1D1KdZCJArsDxYTljIo8BRi/ayzNrzwYk+htHXalVnHkXGVQhZ9oeyJf
+	F9iQ8aDHqOi2XEWSH1S7qM7AadhccTejPabdYETCarZDZSKgZcV2LRoY2Jyh6QGHPE3Ae1+
+	Mzh4n5QAAh1+jL/QQZ0J/k1wy/GJ65M95BT+t2cfaBSt/ubqLnygEGuuQxiPAIQnRpqmvu3
+	G/1Z7LzNnwQjYrMd40N3X48heYDCoQjhR0Fr8eCC9Xzw5QonMYqOoHO6gEp7CSlSbM9sYmh
+	vfRnX5uNPL18l09zFzHwAeoBir9zIYO8bJQMGollhis6WjsxWYsQOy/a5HWv974xRDtsIpa
+	xEAel+7JjxUwJefAgm7v0I12kXvnNFvnz42DSJO9JKtpTmAkp79g+pzHk1gRmis4bdBrbu6
+	y9vf5s0zVnzIAas6yAqJvTStKLXfVmenAi0nIJt6gXjazyE7bCVq8bUu19BfjTYt4NZ3BZh
+	DAb03YI+VxHFSFfr3Yd5JiwBZMtj+Dq+LG5IdWwg+NV0TePOtcr3aA5M47HGM1e9LedFO4n
+	TaONR0cuT6lndAEO6cBEsIkX+HwW4dHXQxk3UhKPuhYBAQ3jd1U7iDlIuZMkGy25JDUZ82r
+	8YOjAUlcH2hSdFvZkAIGLBYMC7gL99eosAySPPYGjB+3OwKv0GKEkjJKdUbrPnSLjHthKOo
+	g+zD06obVT4UZmZoJZlVpmh60F+GCNXv+p2PvWMrAkLXlPLhsPTf0V00G3fxrnr1b/q4dXi
+	qGbtDwATC4pNiICLRlrbCWNOjVkBl7cLL01fEw5qToR6kNn/2NCKCs9vP+QH0bstryDyuv2
+	nxHM2BcWVUBcYKNhWk3MOSovNhkdsZ54t1A9Za80XwggEGiT7wwIo/OzcST7R9nEYZWhDws
+	UJwyGWjd1r4ZGqROKteVTMjuPAN5A153XyC9/ZAmRTB
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
 X-QQ-RECHKSPAM: 0
 
-select will force a symbol to a specific value without considering
-its dependencies. As a result, the i2c-k1 driver will fail to build
-when OF or COMMON_CLK are disabled.
+RTC_DRV_SPACEMIT_P1 is a subdevice of P1 and should depend on
+MFD_SPACEMIT_P1 rather than selecting it directly. Using 'select'
+does not always respect the parent's dependencies, so 'depends on'
+is the safer and more correct choice.
 
-The reason for removing I2C_K1 instead of adding a depends on condition
-is to keep the possibility for other SoCs to use this PMIC.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202510211523.sSEVqPUQ-lkp@intel.com/
-Acked-by: Alex Elder <elder@riscstar.com>
 Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
-Changelog in v2:
-- nothing
-Link to v1: https://lore.kernel.org/all/20251022-p1-kconfig-fix-v1-1-c142d51e1b08@linux.spacemit.com/
----
- drivers/mfd/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/rtc/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-index 6cec1858947bf7ab5ee78beb730c95dabcb43a98..ea367c7e97f116d7585411fff5ba6bcd36882524 100644
---- a/drivers/mfd/Kconfig
-+++ b/drivers/mfd/Kconfig
-@@ -1258,7 +1258,6 @@ config MFD_SPACEMIT_P1
- 	tristate "SpacemiT P1 PMIC"
+diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
+index 2933c41c77c88e60df721fe65b9c8afb995ae51e..1ea0123e386f2b140e1a63a182d1781f6a17e835 100644
+--- a/drivers/rtc/Kconfig
++++ b/drivers/rtc/Kconfig
+@@ -409,7 +409,7 @@ config RTC_DRV_MAX77686
+ config RTC_DRV_SPACEMIT_P1
+ 	tristate "SpacemiT P1 RTC"
  	depends on ARCH_SPACEMIT || COMPILE_TEST
- 	depends on I2C
--	select I2C_K1
- 	select MFD_SIMPLE_MFD_I2C
+-	select MFD_SPACEMIT_P1
++	depends on MFD_SPACEMIT_P1
+ 	default ARCH_SPACEMIT
  	help
- 	  This option supports the I2C-based SpacemiT P1 PMIC, which
+ 	  Enable support for the RTC function in the SpacemiT P1 PMIC.
 
 -- 
 2.51.1
