@@ -1,214 +1,139 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598D32E413;
-	Sun, 26 Oct 2025 22:44:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C5E1A9FB8
+	for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 01:19:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761518700; cv=none; b=gThMX0PF+LHjlBbUu6agrvZQaqZGXjFVkUhbkEj2cfS9WuZaAwhDI3nA25oy4k9N75QxV5xkyud/KP+sxVK20Tz2k9V8irKRuIt00D93UOxIiR/e7ZlztqosEBbn+5NH8twmhzsAelq61Ycf6cXzAcpVHTp9kL6ZNekLdGlD4rQ=
+	t=1761527981; cv=none; b=uWB1avoqkycToJK2PV+kLiikm0nAx8t5Y1nSjNHKjjQ96/vZxgwHSRyQf8VlmOqOem6Jiln2FHR3cZz0+xsS1tb3RFz85Q44XXOD4IiUxHHuPMvL/vgblHf+eBxVTxhikgwLxTeZlDT8vkRDNm46amUiHEgiPtnAonhn6u2TfiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761518700; c=relaxed/simple;
-	bh=rnKM3Mf4zNvlmpFAY+C6o35rhzmhrxjGH/xsMqAZTV0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLbIsWD0McTxQZokTTSO607MmvXJ/NHwZ9uZSymbHJORuXWq06bCdjXc9uXTAcpDarIf++nkHML1OggutBtaWn4sLo+dfa2GO/mLTiD/HZjrE8ajygL+7xc5BT/hKrM/zGNUMfSHaWCOtABbQHh/k9NB+E+o3GQqjp5z+2kkjoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=KpciAmJ2; arc=none smtp.client-ip=195.154.113.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1761527981; c=relaxed/simple;
+	bh=oEeKSjnSGvkAMwZ7ScxLWldwWxpHMvZKUm71u8WPyrw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lYugrEJ6fm9jxVAiuVEUh5JiEgBi7M5LCDPl1D75KBe1WUAGZZSF0BUbW4/5ntgIXenlny06eiE12xF0wWxaAIQadSvyMWrObHQPaC/esAOybbcAJ8VBMdYmqUiG+5QHYLAnJ/33t/jv/+ePRepbGP6MpjO/hsJp+VuJ8HZpiQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=yBxeUGDG; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="KpciAmJ2"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:References:
-	In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Content-Type:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=upuvDJ4uHcxGhtGccy6wLQYNYBh7CDWGSkmRMwmBkeQ=; b=KpciAmJ2X1ae/s3WQG+HnrqApw
-	obxX0S9zBigyEP8PYi/N5g/E3TwI6A8gpAs/pxmzD8ZdjJBs4n8Thuv9CAlKQpHo1vUYvNehhrV9D
-	el2HQXIWvp6vKZacsDc1W7rHVLDYnMkNhI6Yu3XFSXQgZKqHQxuuOzOAHufynpAbA5bUm+Yv1a7to
-	LMPxX4bGzqaCFK71f54eZ6yryniLLKY29hc3s3Gt9zy2Zv0Cc83Xl1V0N1UCLmOgQk1j8KwqEJk9H
-	PXrUONlzS669Q6IzRrFXq2ilzte7OvGXon9rlrQbYHiC4eOX8viDlSfrD4iCOUbrZtyclblKyOKsU
-	uZ5b5oWg==;
-Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
-	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vD9TV-0065U5-1b;
-	Sun, 26 Oct 2025 23:44:33 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: linux-kernel@vger.kernel.org,
-	Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE:Keyword:riscv),
-	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit),
-	linux-pm@vger.kernel.org (open list:SYSTEM RESET/SHUTDOWN DRIVERS)
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
-	linux-pm@vger.kernel.org (open list:SYSTEM RESET/SHUTDOWN DRIVERS),
-	linux-riscv@lists.infradead.org (open list:RISC-V SPACEMIT SoC Support),
-	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support)
-Subject: [PATCH v4 1/2] driver: reset: spacemit-p1: add driver for poweroff/reboot
-Date: Sun, 26 Oct 2025 23:41:14 +0100
-Message-ID: <20251026224424.1891541-2-aurelien@aurel32.net>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20251026224424.1891541-1-aurelien@aurel32.net>
-References: <20251026224424.1891541-1-aurelien@aurel32.net>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="yBxeUGDG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1761527937;
+	bh=FtNZ8zy+l54IpAnURTHO+1r1GOzAAhW69sizKWqnidw=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=yBxeUGDGCE2mtPOqUwC/4cbTKgm4hHnawaMB6a3CZ0jAQ0VzmUrqTrA06xrmjOP4e
+	 vPcwqWFEMKfJzKtWxrPqOuimjsCPOhK6dlsstt1/PI7YkREb8GzZ1qAFdwZA4yIEcM
+	 OHmNmxBm/SkmugjESQLo6UM/G4bHfcgGLDzg8054=
+X-QQ-mid: zesmtpsz7t1761527932t8c892f9c
+X-QQ-Originating-IP: X46h/Pqk7NaYdaGiCnjlkcYaOwRSoAVzeudXsZlyse8=
+Received: from = ( [183.48.247.177])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 27 Oct 2025 09:18:51 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 4802128976697344578
+EX-QQ-RecipientCnt: 4
+Date: Mon, 27 Oct 2025 09:18:50 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [RFC PATCH] riscv: dts: spacemit: initial i2c support for
+ OrangePi RV2
+Message-ID: <4544207DE7959B10+aP7Ieuaw16uArne_@kernel.org>
+References: <20251025074514.642357-1-michael.opdenacker@rootcommit.com>
+ <52bf454f-424a-4824-a3fe-339d411bd664@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <52bf454f-424a-4824-a3fe-339d411bd664@rootcommit.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NYlggeZuI0UG6WA1n9n/zQdNuazZ8e4RdsaS8q0dpYRLKx4kfoFQrXgi
+	4ZsCNkujYM6RZwihAcgbR1dsQ2ISg3DGeSOzv5wZMHG50doS1SP3OMb7YVZnnZkuMPIhfaI
+	QbYqTgO8RetUgZ11dpRqphRlH47QDS5nhWByhCuO/guT7uCWDWHBPoZshaXCrtIN9pqX45t
+	VAzncdmRYYo+yuclf4P9du/ch7KqIq3b/2h0yKZGL45D+9CVDVY9DjQbRFk5dXg5J5UUVmm
+	lJTQFQ9RwMes18GgX2ACd9hxetO/XDIqUrcd8XiE3VP0YrteIfg1oXUqKkUQahcj0zK3FmK
+	O4yaMeITJHFT8DwhaIt0TtQxSplcN4VZ20GyB2+AIxSyNBK5680FsqS0655mPLvnAsyOuW8
+	slEt+NnBVpw54L85ErkN1VU1xJbxLmF364z+eeQeGabRotk2t8NOrFf92wL+GJOfTMH1wlh
+	Bn/RfjzVt+uRgEL+VPgSlAE3bSywVkvN9x283pI+g3FOPptJ5gJXbrqaAyUGrJrT/Q/brZr
+	TMVmUftQ0J43Imb6PVWxKs/Q7iR/UrisYNJVFOOkQIvyQ/9kLwpDd+lV1xohgiwPKqoTXDA
+	wjQm9eLU4mPV8g4UTok3LD8G0lZJo3kP8dQcoEr15544V+gnftQkMlwZ0zP/nZ5loHLZYlF
+	r+7+/nX691PHu+B5mHkVPPzlICDYScfV/FumRo1UME1UxlJAAiGcaArvxKGs4UO6Y5c5Re6
+	Y9xv8Oq4yqDshq1a9OaUf4htVrQFzlMdhIm/um06s2m3ePdJUBnQaDdBTsnNwAgCKoWyltS
+	FyvUFa6neLZXxBu7Ju7q3R1b2d8uEacwWImLF86gxXoGtmSqQt0cKzFg7xdCX+RIYGXaAGZ
+	3B+b82BQKUiAY/b6H0n+uBfq2H6PwAf/mvW9aRH4XIs+dxNt4DyF7ByEUQDqVg2ysv0j8eH
+	oaSyFiK3qXfH358Aq1lhFzWkk7Z+CpdcddzL9mzvBKMnQ4GZfwX3xE9zDqVE/xNdDOIgV/v
+	jrDkW3WeHpAy4ByoAaWPQr4fuybveLbJlhxhg15jh5ofEE1S5O
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-RECHKSPAM: 0
 
-This driver implements poweroff/reboot support for the SpacemiT P1 PMIC
-chip, which is commonly paired with the SpacemiT K1 SoC.
+On Sat, Oct 25, 2025 at 07:48:45AM +0000, Michael Opdenacker wrote:
+> Greetings,
+> 
+> On 10/25/25 09:45, michael.opdenacker@rootcommit.com wrote:
+> > From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+[...]
+> > +&i2c2 {
+> > +	pinctrl-0 = <&i2c2_0_cfg>;
+> > +	pinctrl-names = "default";
+> > +	status = "okay";
+> > +};
+> > +
+> > +&i2c8 {
+> > +	pinctrl-0 = <&i2c8_cfg>;
+> > +	pinctrl-names = "default";
+> > +	status = "okay";
+> > +};
+> > +
+> >   &pdma {
+> >   	status = "okay";
+> >   };
+> 
+> 
+> Unfortunately, these changes are not functional yet on OrangePi RV2, testing
+> on https://github.com/spacemit-com/linux/commits/k1/dt-for-next
+> 
+> # i2cdetect -r 2
+> WARNING! This program can confuse your I2C bus, cause data loss and worse!
+> I will probe file /dev/i2c-2 using receive byte commands.
+> I will probe address range 0x08-0x77.
+> Continue? [Y/n]
+>      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+> 00:        [  124.675321] i2c-k1 d4012000.i2c: i2c transfer failed, ret -11
+> err 0x400000
+[...]
 
-The SpacemiT P1 support is implemented as a MFD driver, so the access is
-done directly through the regmap interface. Reboot or poweroff is
-triggered by setting a specific bit in a control register, which is
-automatically cleared by the hardware afterwards.
+>                  -- 09 [  124.686769] i2c-k1 d4012000.i2c: i2c transfer
+> I assume the i2c-k1 driver works on BananaPi F3.
+No, It doesn't work on BananaPi F3 actually.
+> Any clues why the same
+> buses don't work OrangePi RV2?
+This is a known issue.
+I didn’t fix it earlier since it doesn’t affect functionality,
+but now that it’s been reported, it’s time to fix it.
+I’ll send a patch shortly.
 
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
----
-v2:
- - Replace the "select" by a "depends on"
- - Remove outdated Reviewed-by
+Thanks for reporting this issue.
 
- drivers/power/reset/Kconfig              |  9 +++
- drivers/power/reset/Makefile             |  1 +
- drivers/power/reset/spacemit-p1-reboot.c | 88 ++++++++++++++++++++++++
- 3 files changed, 98 insertions(+)
- create mode 100644 drivers/power/reset/spacemit-p1-reboot.c
-
-diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
-index 8248895ca9038..61c16f3d5abc7 100644
---- a/drivers/power/reset/Kconfig
-+++ b/drivers/power/reset/Kconfig
-@@ -283,6 +283,15 @@ config POWER_RESET_KEYSTONE
- 	help
- 	  Reboot support for the KEYSTONE SoCs.
- 
-+config POWER_RESET_SPACEMIT_P1
-+	tristate "SpacemiT P1 poweroff and reset driver"
-+	depends on ARCH_SPACEMIT || COMPILE_TEST
-+	depends on MFD_SPACEMIT_P1
-+	default m
-+	help
-+	  This driver supports power-off and reset operations for the SpacemiT
-+	  P1 PMIC.
-+
- config POWER_RESET_SYSCON
- 	bool "Generic SYSCON regmap reset driver"
- 	depends on OF
-diff --git a/drivers/power/reset/Makefile b/drivers/power/reset/Makefile
-index 51da87e05ce76..0e4ae6f6b5c55 100644
---- a/drivers/power/reset/Makefile
-+++ b/drivers/power/reset/Makefile
-@@ -24,6 +24,7 @@ obj-$(CONFIG_POWER_RESET_LTC2952) += ltc2952-poweroff.o
- obj-$(CONFIG_POWER_RESET_QNAP) += qnap-poweroff.o
- obj-$(CONFIG_POWER_RESET_REGULATOR) += regulator-poweroff.o
- obj-$(CONFIG_POWER_RESET_RESTART) += restart-poweroff.o
-+obj-$(CONFIG_POWER_RESET_SPACEMIT_P1) += spacemit-p1-reboot.o
- obj-$(CONFIG_POWER_RESET_ST) += st-poweroff.o
- obj-$(CONFIG_POWER_RESET_TH1520_AON) += th1520-aon-reboot.o
- obj-$(CONFIG_POWER_RESET_TORADEX_EC) += tdx-ec-poweroff.o
-diff --git a/drivers/power/reset/spacemit-p1-reboot.c b/drivers/power/reset/spacemit-p1-reboot.c
-new file mode 100644
-index 0000000000000..9ec3d1fff8f3d
---- /dev/null
-+++ b/drivers/power/reset/spacemit-p1-reboot.c
-@@ -0,0 +1,88 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (C) 2025 by Aurelien Jarno
-+ */
-+
-+#include <linux/bits.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+#include <linux/reboot.h>
-+
-+/* Power Control Register 2 */
-+#define PWR_CTRL2		0x7e
-+#define PWR_CTRL2_SHUTDOWN	BIT(2)	/* Shutdown request */
-+#define PWR_CTRL2_RST		BIT(1)	/* Reset request */
-+
-+static int spacemit_p1_pwroff_handler(struct sys_off_data *data)
-+{
-+	struct regmap *regmap = data->cb_data;
-+	int ret;
-+
-+	/* Put the PMIC into shutdown state */
-+	ret = regmap_set_bits(regmap, PWR_CTRL2, PWR_CTRL2_SHUTDOWN);
-+	if (ret) {
-+		dev_err(data->dev, "shutdown failed: %d\n", ret);
-+		return notifier_from_errno(ret);
-+	}
-+
-+	return NOTIFY_DONE;
-+}
-+
-+static int spacemit_p1_restart_handler(struct sys_off_data *data)
-+{
-+	struct regmap *regmap = data->cb_data;
-+	int ret;
-+
-+	/* Put the PMIC into reset state */
-+	ret = regmap_set_bits(regmap, PWR_CTRL2, PWR_CTRL2_RST);
-+	if (ret) {
-+		dev_err(data->dev, "restart failed: %d\n", ret);
-+		return notifier_from_errno(ret);
-+	}
-+
-+	return NOTIFY_DONE;
-+}
-+
-+static int spacemit_p1_reboot_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct regmap *regmap;
-+	int ret;
-+
-+	regmap = dev_get_regmap(dev->parent, NULL);
-+	if (!regmap)
-+		return -ENODEV;
-+
-+	ret = devm_register_power_off_handler(dev, &spacemit_p1_pwroff_handler,
-+					      regmap);
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to register power off handler\n");
-+
-+	ret = devm_register_restart_handler(dev, spacemit_p1_restart_handler,
-+					    regmap);
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to register restart handler\n");
-+
-+	return 0;
-+}
-+
-+static const struct platform_device_id spacemit_p1_reboot_id_table[] = {
-+	{ "spacemit-p1-reboot", },
-+	{ /* sentinel */ },
-+};
-+MODULE_DEVICE_TABLE(platform, spacemit_p1_reboot_id_table);
-+
-+static struct platform_driver spacemit_p1_reboot_driver = {
-+	.driver = {
-+		.name = "spacemit-p1-reboot",
-+	},
-+	.probe = spacemit_p1_reboot_probe,
-+	.id_table = spacemit_p1_reboot_id_table,
-+};
-+module_platform_driver(spacemit_p1_reboot_driver);
-+
-+MODULE_DESCRIPTION("SpacemiT P1 reboot/poweroff driver");
-+MODULE_LICENSE("GPL");
--- 
-2.47.2
-
+                - Troy
+> Thanks in advance
+> Cheers
+> Michael.
+> 
+> -- 
+> Michael Opdenacker
+> Root Commit
+> Yocto Project and OpenEmbedded Training course - Learn by doing:
+> https://rootcommit.com/training/yocto/
+> 
+> 
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
