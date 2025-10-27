@@ -1,155 +1,91 @@
-Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BD1307481
-	for <spacemit@lists.linux.dev>; Mon, 27 Oct 2025 13:57:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9181F5820;
+	Mon, 27 Oct 2025 14:40:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761573434; cv=none; b=tJ935sog0Y1w8ardLoukAVV9y/qykgd/AnJlC4yRzQaT9wDAZvZNuH7DmFXJLNnOsvib/TzyTR7u7tSy2G7USmhqK5BPMUm4chJvr+27FCKiGL3r9cclhqNjS5QafYeClFAL/XLwgMee8YLtJS/UWfekNoaaxrFQvPhzsaq2EOI=
+	t=1761576049; cv=none; b=fEj5uS/FJhuwlBM07Gec6J1srN4q8fyvsAU4ZMr+SEyEy4d2ZCcRi2I9EhA/ScMPxFF+rZEfhEVrYblDyAShrAbeR2Kdc3kUplu+/iRhLoeb/k8JuMmncLdkKIZcJeJPkamvOFAN9jHTQa8+1XpBXCLmnR9anfl9LkB0tjwKT6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761573434; c=relaxed/simple;
-	bh=FMYpihiQvFiI/NsGZPv8NF/yKtgNXE0Gdue0oLn+0xQ=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gpLrN061ziNlzYaKIUT3IjL/ZV1WWUfOLLb7GzUGvPvf7H6oThO/Mk7n2aM0zere0Ocq4GuJDFmwMYeR2JU3TPeDl1SO7BSoVvXZ4ttIA4R3sRH2cuYFxKjQ9Ri4qPXT3VrHHtIdC6MaJ0s3FGY/NisVR7vNLA4U5uDlQIKEjNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=UxWmaxyU; arc=none smtp.client-ip=54.207.22.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1761576049; c=relaxed/simple;
+	bh=JvAfMBBkyVWcNMHDXRKVwxzm6paC2VoX7J/SV8+itDg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HuiBF+BDrefeTgH45kzV37FMN+AD3Gb7445/eXBTeWNByyd+RGO8zZPOqaXAPHuShQ29q1MiBx6trqx2Cpd2YPdOuFIAQhShoa2oh2bVKEde1zIq9n259YIfT6NYjYNLdMYeWM+iCGpQeQ0whke1p/g2S46Sco8MmCa4Fql90rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R8pM6eAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="UxWmaxyU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1761573425;
-	bh=GOXJjc2R6gLa1S92DIipgJyO9ajzHcGqwyH0ghoII7E=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=UxWmaxyUPyF5729L823AUNUkLnl/a5Fqg2XtdYzmb+Ba71DDr7PEOB5xCiLb7aeHC
-	 cuvEnVb/RhT8enXobX04x/lyvVD6vdXuY3QwVFfBleIGTdJBKI2WqOwUMrZFpxPU0k
-	 aOI7s3+Ir8Nh9Wk+g6YwwmnjZD6sdXzqJt6ZtyUM=
-X-QQ-mid: zesmtpip2t1761573420te99bac9d
-X-QQ-Originating-IP: x1+tmePdSRc0FAZX9Ga7DFEbiQ13Tyh9xloMBXd4/2o=
-Received: from = ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 27 Oct 2025 21:56:58 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14346178185621163239
-EX-QQ-RecipientCnt: 15
-Date: Mon, 27 Oct 2025 21:56:58 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Yixun Lan <dlan@gentoo.org>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Andreas Schwab <schwab@suse.de>, Yao Zi <ziyao@disroot.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-pm@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] driver: reset: spacemit-p1: add driver for
- poweroff/reboot
-Message-ID: <DAA41086C5EBCCFD+aP96KqT06FswX1uN@troy-wujie14pro-arch>
-References: <20251026224424.1891541-1-aurelien@aurel32.net>
- <20251026224424.1891541-2-aurelien@aurel32.net>
- <A73D83A7055D782E+aP7lAdAk66slv6l7@kernel.org>
- <aP8QHwsYDlbQxQJo@pie>
- <mvmh5vk67in.fsf@suse.de>
- <aP86TltQ2uqeK6FY@pie>
- <CAJM55Z9w0pnFmVjJKJNMs1iqOxoL=YpkBu0L7NuUZ_0ipMtQAQ@mail.gmail.com>
- <20251027103147-GYA1541054@gentoo.org>
- <aP906fAZZfFXp-2D@aurel32.net>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R8pM6eAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 566BEC4CEF1;
+	Mon, 27 Oct 2025 14:40:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761576048;
+	bh=JvAfMBBkyVWcNMHDXRKVwxzm6paC2VoX7J/SV8+itDg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=R8pM6eAdfQ7Affh+16V4Uo0SMsX1kkLfgxRRwwGy7USvUc5RCIyHAYNAw5gz/XBmd
+	 HPi+bL6eED+ACWkzb6qWaBjhdYk9bSlTByK/UunFkuyU3jYipBrGZZBsbMZanbkLBF
+	 Jx2z9Lsh2Rwo9m41wPErHLzV4Y9j3lx3P4VjECE75XBgGdrBVLy7JlEM+RCgL9jhiI
+	 gK1YqgzaVhZPe26Wjy5URc9b7Bp73QQ+1MDQAWIDJbH6XyIlJHsyPZVuICpwgWT4nW
+	 NN6J1DQpufra1soiEOk/NAdNW36yjod74pERM2JOn8vA5YZA6ubwpPf3wc5V41CuC/
+	 XGfSSlw8QZskA==
+Date: Mon, 27 Oct 2025 14:40:42 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: dlan@gentoo.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, pjw@kernel.org, palmer@dabbelt.com,
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+	devicetree@vger.kernel.org, linux-spi@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 0/3] spi: support the SpacemiT K1 SPI controller
+Message-ID: <e4dd3db6-d554-4fd3-a674-60f2ff6e5475@sirena.org.uk>
+References: <20251027125504.297033-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="CFGmoVkBdJi44PFO"
+Content-Disposition: inline
+In-Reply-To: <20251027125504.297033-1-elder@riscstar.com>
+X-Cookie: How do I get HOME?
+
+
+--CFGmoVkBdJi44PFO
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aP906fAZZfFXp-2D@aurel32.net>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: METBPFwEUDZ+Q4LaD7aOIDb5kTZzutCbw9FTL72zaXAtJYVZORmcRWZI
-	4OHS4TsPLT6B34qbZwbKfpPsj5+Q3tbmLePv9sDMRmDzKV+mx6uICkfwVDn5EEBO8yteEee
-	sQPvf4ghhd4cY7ysEdrvj+vb8xs760kzdo6pUs3c0GV3+vBLJVdXGXchHEJhZR2DI40C0Cu
-	Y2BkKOujlhsUDbYL9zjN7BbIFiO24/4Pmga6VTiJrWCZL1Vo57i3XnMBh7dFJo2d/604y4/
-	zb4ZdfMSGVNs22BfHPAxBsyJ5lRWF3qAqJh+LHwdtkXveRKSKPGLdfNSAzTMIPyyIp0lYbc
-	VZwZsac015VbtIC9FfmN/ZzHWyIc9Y5HVL3ra9lsBOfrlTD0uz8Xi6B7xSnhA8o33mai7Zw
-	lB5YD1RCQ3j5DTI6rKvVKtmYST8DgnvcISxSP6z25euzLkrHxMVFtr7juPreANU21i05+zh
-	2xc4+74mo+cIaePnzfxUvGkMe1coZgGZgVVGs/IWj/xQbXvU7ik6Wr84O7/LftKiDMf2Pbn
-	xmVkMYyPL9sXfofYEeAj955QvUqxPyi/Mqj7z+srBlUSgYFpgKS2PaRUvbDMKICfPzrTcFX
-	AuT8Pr30tQLwWcjZXJsVryf2P3hyEkaaKxrT4OZTVSkFrvyFu1s+9qMscMvnEXx8nMc+aCY
-	bHjtFCkPPYbvCa9R0mJf/Qfop9Whz9elrquZ058HnOJz7qE/4Zxi6BmYpQ/xl9GKzj9I02B
-	OYkDRmbzuzg10pGs5foWqBxcEIUotRdlNgGkHenak0CbaHVmRWKPhgzVYOSxrbMm7CELdO+
-	TRz0rFX1etXa2dPI4Eolosni7izMXMwZvXPGDySukwCo1ABtqjlUMOQIkOZtKSfEZ6YVoxd
-	P1FHrWFyqO2tExusZd/Q9nxPwHNJHedDoS5yn31+hlPRCtP5l0F5y/WqX3AqPppZxPkaeyM
-	NiKXQldTTcaM3/GBbXzOE0gmcmBatjR6rAZ3T0BuI0RMfcUIsi0GN1OuTooWU9wdnuFuctu
-	uljw+SW/1ZVF7dSxZ1keFCD0CmeWElPLKVaKuWQeas9S+Z1iB6rpm00ljVd0Z7cKT2U3PJ+
-	YfV+I356HRnSPZSFgoMhVjI6ZYmjPckQJj0uDes/GuB66IYMMQ0hSxx3cpdYq1EIlArlCUF
-	q+oZ6I1pXbU4fvb84th45j9eXhNPaspidPG6
-X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
-X-QQ-RECHKSPAM: 0
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 27, 2025 at 02:34:33PM +0100, Aurelien Jarno wrote:
-> On 2025-10-27 18:31, Yixun Lan wrote:
-> > Hi 
-> > 
-> > On 03:17 Mon 27 Oct     , Emil Renner Berthing wrote:
-> > > Quoting Yao Zi (2025-10-27 10:24:30)
-> > > > On Mon, Oct 27, 2025 at 10:03:44AM +0100, Andreas Schwab wrote:
-> > > > > On Okt 27 2025, Yao Zi wrote:
-> > > > > > On Mon, Oct 27, 2025 at 11:20:33AM +0800, Troy Mitchell wrote:
-> > > > > >> On Sun, Oct 26, 2025 at 11:41:14PM +0100, Aurelien Jarno wrote:
-> > > > > >> > diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
-> > > > > >> > index 8248895ca9038..61c16f3d5abc7 100644
-> > > > > >> > --- a/drivers/power/reset/Kconfig
-> > > > > >> > +++ b/drivers/power/reset/Kconfig
-> > > > > >> > @@ -283,6 +283,15 @@ config POWER_RESET_KEYSTONE
-> > > > > >> >          help
-> > > > > >> >            Reboot support for the KEYSTONE SoCs.
-> > > > > >> >
-> > > > > >> > +config POWER_RESET_SPACEMIT_P1
-> > > > > >> > +        tristate "SpacemiT P1 poweroff and reset driver"
-> > > > > >> > +        depends on ARCH_SPACEMIT || COMPILE_TEST
-> > > > > >> > +        depends on MFD_SPACEMIT_P1
-> > > > > >> > +        default m
-> > > > > >> default m if ARCH_SPACEMIT? Or default ARCH_SPACEMIT?
-> > > > > >> I believe that reboot and shutdown are actually essential functionalities,
-> > > > > >> so it might make more sense: default ARCH_SPACEMIT?
-> > > > > >
-> > > > > > I don't think there's anything preventing it to be built as module by
-> > > > > > default: even though it's "essential", it's unnecessary during kernel
-> > > > > > and userspace startup, thus I see no reason to build it in the image.
-> > > > >
-> > > > > Wouldn't it be needed in a reboot-on-panic situation?
-> > > >
-> > > > Oops, yeah, I missed this stuff. Seems systemd automatic boot assessment
-> > > > could switch to another boot option if one fails to boot. And if it's
-> > > > caused by a (very early) kernel panic, then reboot support does play a
-> > > > part here.
-> > > 
-> > > But if systemd is running then you've at least got as far as the initramfs,
-> > > and have the module available. So I don't see the problem.
-> > > 
-> > In rare case, if got kernel panic before load this module, then we
-> > should really fix it instead.. Besides, there is no restriction to prevent
-> > user to make this driver as built-in, right?
-> > 
-> > So I think this isn't really a big problem either
-> 
-> A possible compromise here might be to use "default MFD_SPACEMIT_P1". 
-> This would defer the decision to another level, but I think it makes 
-> sense to have all parts of the MFD either built-in or as modules.
-I think both the regulator and shutdown/reboot drivers should be
-`default MFD_SPACEMIT_P1`.
+On Mon, Oct 27, 2025 at 07:55:00AM -0500, Alex Elder wrote:
 
-Otherwise, enabling MFD_SPACEMIT_P1 alone doesn't make much sense,
-right?
+> Between version 5 and version 6:
+>   - Rebase only
+>=20
+> Here is version 5 of this series:
+>   https://lore.kernel.org/lkml/20251013123309.2252042-1-elder@riscstar.co=
+m/
+>=20
+> Between version 4 and version 5:
+>   - Added Yixun's Reviewed-by tag on patch 3
+>=20
 
-                              - Troy
-> 
-> Regards
-> Aurelien
-> 
-> -- 
-> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-> aurelien@aurel32.net                     http://aurel32.net
-> 
+Please stop doing all these resends, this is just making things noisy
+and pushing you further down the review queue.  You should not resend to
+collect tags, and you should leave a reasonable time for review.
+
+--CFGmoVkBdJi44PFO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmj/hGkACgkQJNaLcl1U
+h9AvUgf+IWfOtlEyWJeQvX09oJOdwtThlYWV06oiVLGS+QFAQAIUAvUnNHQ0sqTH
+pQMdxUhxO6HQRPwhyPD5f5D0jXiUS667iwaG7DBJ4OhxjxOkG1OY/xASk3cKuqgm
+TKb/+5KBAqA/xfFdtNI1VuXGygqBDiiV/i6sjgv84H49ANNpni4fDENl1bvJ2GWM
+ruZc0BoOgJ+ZLOW9nBQKBPbYArEc78hre6N+sOSFFFAIvZAd6plescE/JjwJCXZU
+oh4+GzqvMFeRFS90Gh81C93o8RjPzBVaEdGOkWn2j1l/570wI3XcuxD0zSO+gF9Q
+Gby20wQHnuD0zDNrRXcNtzN0oOrjOA==
+=VZJx
+-----END PGP SIGNATURE-----
+
+--CFGmoVkBdJi44PFO--
