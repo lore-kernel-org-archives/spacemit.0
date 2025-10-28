@@ -1,117 +1,206 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C279133CEB7
-	for <spacemit@lists.linux.dev>; Tue, 28 Oct 2025 16:07:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9202F25F1;
+	Tue, 28 Oct 2025 18:00:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761667633; cv=none; b=m5LsmSAlQKmatc+qFyvDdbNWEBvbffpeYb1R0P+cXBY5+sPLOb35cA9XMbvWAVYGtkseZSYuMVy2gvNtRiiAlZ2NwsJZVaDvooF8xsH8NmdJ35fJMYhyz5Iwf869qJqpVPdKuasguJI1lHOSixxy70X1Xtzb4lBDsh/mLsr2oyE=
+	t=1761674419; cv=none; b=nsT/QklGPmnHXuUBH60g2lsTsYjPGNpGky37PdRYYk0V7mHDKoDbAqQLdbu1d8m8wwso/2jQxO6vM/jNdTkHzfxDJk5L2AWeqqrd0VNsepHmG1gwSOT9gEc/7kkg+XJTW5QPirRy49pTCBfUo3I/BugL2SRrrYL9jBwB1hdZw/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761667633; c=relaxed/simple;
-	bh=MWE1wHQwpJUdg+s6GjvQ4xmCBSj0KgbizOmtjag6m8M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=gB7+MJsYDHpAhAcKNYfgQr+424pOl+bktH3v+7MJXoISI7CreSEeSUEnuSFpneOH1n4WFphu25dWkdo3SuBErV2Z7X8Caqb2lvXvZiPLlt8J+gB3EA2YY4NSjsEO3lXQ9x7Q0phrE60gzBo22zbiTbx1Okj0J9lr451Sv1fjVsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OQQpeUBe; arc=none smtp.client-ip=209.85.215.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761674419; c=relaxed/simple;
+	bh=VhuXtct2llGlUKtkPUEWUGkg5rp+EFF2CwePBKwQWAo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qm+nzxtt3drzMMPeEfRjHiODmW+PMk1dTAWGdNqrS5dOmwoKOj8vyJ3WVM/ITjyc2wu3sJdN+jfLW+947RFcN/Ulrs2wljsbtdltsAiccg7EYq9JiqHRExJswIFdV6/GZShUI8HtMwwvcB9U8O0GJ/m/hDz1zbPgW77FM/J8l+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=R8Ovmd8N; arc=none smtp.client-ip=195.154.113.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OQQpeUBe"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-b6cf07258e3so4441763a12.0
-        for <spacemit@lists.linux.dev>; Tue, 28 Oct 2025 09:07:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761667631; x=1762272431; darn=lists.linux.dev;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uN8oYIJ23vMsGy3r6Oa4DcNCIzaLKJCXZ02PFiN70n0=;
-        b=OQQpeUBeUfdhqEMpkoceFSVnI2WPEtILBH0/t0Evs4p6ckwYU8SEctODgwzquUIcKn
-         j9fgZd4tO9g0RcFUrQFr+b4BDzCU5FVB5ZRSNptJyQwGw3ZLBZXZbnraJcNHSZA40slq
-         2aZ0YjfsBkJKDJw7dXU9CpeKwQ6QisOYw7VeAtUY2jmNJgQwqFOh/qunICYFs+Var5FR
-         UKbD8EizeIGDUfh21qoC8/bCfolZvBECxYXqG3K5FsJwuPY1dGfEYidA9ylmgELnF4Wn
-         hfl3mTTOcNJqYVMQ6EuYE7Ybwgz7lw7eQSt7h9CXWvBmx/xGtNtO7bkZwVmAMZqKxrgS
-         M4CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761667631; x=1762272431;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uN8oYIJ23vMsGy3r6Oa4DcNCIzaLKJCXZ02PFiN70n0=;
-        b=QzGh5a+pqWN4jYFVgqz0fMklvuUNboduIzHGKD2xRWgYuwZNJ36RQa6dDyxZgo6Q5D
-         5njNYBoO9CUHjMZ4rDP0MT1C488Z6aPO/1F0lwlRTjQlkUuNjJJHWPAMmDfU8LLJ53UY
-         V2DWcKHMU/Jp5cM4luxTfMQ2L4G2a1mBAI1Cv6uAKI+E1bkwHR6Uw5XHrVSmMMb7g/Yu
-         jSm44kplwhAjtEZus8UdY6OC2A7P1UJKtfZqUeWMBppPDsiPhUwhG19K4BIUxGfbXXjK
-         NsdDaGHLh2fttNeXW/WLMJOfuiWr7EWtC9ixTBySwqmtcpZF92+G4NNjLIYhBVKMEDrl
-         E1Tw==
-X-Forwarded-Encrypted: i=1; AJvYcCX3da/i/e8Gt9Cd7h5JQxLMRRh0QQKzVDNS1sWpWXG0vUtT7RXabDlVqquB1djgpA5y+uURtsaJ3g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwkEVFRTPo92poVXq5TCTTXIRPO+URnHx1qEAep2cl5Q8w2oMyy
-	OXfoEaGp3a7veAeNmOU7kpFB1aNJorH7DokntXE1VOXLyQMcHfbhqE0qfY5DjQfnhSnmOw==
-X-Gm-Gg: ASbGncvqQxx1K1DKhgAZ9nyCOHzPMOHZxCb8EQaI5kBANYQfSGLDdhEZdrfVQzLMXMg
-	SzVuxW504aikbnWPMFFeBpPtm/HMp/UyoP8GJgIA07J7BUBsI7zhu5KZuuICCF3gg7KFV4S1WTt
-	k6UHXgDy+VIVLP8qllowqkj3TYrlDVZnZn9tYlgqJOJ9CwSYBbBdp0CbAY9rB9J+YRraF4i00Vm
-	ZAgYyj1wuX/ck9rAWKrIc6wtW5OGpNYptQKIokNjcwb4Y3wIVrQmxqyW1bmQQ/CNOGgpSHTmVEN
-	HBhd2Ga1vp/oBSYJ8mUePtjqUxqqcQxq8GEX9GCkBAqDTJM5lsVbyU8j7zMa0hYYUOHhwvgaQ1r
-	uR7kGj4rLxjyjHRYMOjPXPdH2bbOnu2NF7BnAm0v1jOeppQAAROTo0YYZ4HyCj2vAa/VglkPd
-X-Google-Smtp-Source: AGHT+IGyT3KwH4uNk2S8o5U+iIhprzitxR3BDiviNoBBo/Q2/S/fxc45ypOS/S3o4J1sE0jtlwrDTg==
-X-Received: by 2002:a17:902:ea05:b0:26d:58d6:3fb2 with SMTP id d9443c01a7336-294cb35e795mr49845185ad.12.1761667630674;
-        Tue, 28 Oct 2025 09:07:10 -0700 (PDT)
-Received: from localhost ([240e:440:d04:10f0:5748:527d:6b58:a56e])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498e41700sm121030795ad.95.2025.10.28.09.07.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Oct 2025 09:07:10 -0700 (PDT)
-From: Encrow Thorne <jyc0019@gmail.com>
-Date: Wed, 29 Oct 2025 00:05:39 +0800
-Subject: [PATCH] clk: spacemit: fix comment typo
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="R8Ovmd8N"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=Hg4yk8h2S9UFPnNuzCx8HQK8YMdf20o+Im/dr85/zXQ=; b=R8Ovmd8NBwXulNQtyTfLsMwMIN
+	QaO+L7OCqIGgkcse7iaihMcTfHlToyTu5bL/vSk1H1i70G9Dsd7TfFfH9+33HE1vEmN7rTZv5Ed8K
+	axV3kiRfH5LvXNPtmrDchc+LFcgS5UU2Pov1xpNZ43/a15QOHqa6omz2q+sPsFHtYxLUPI0gvdHR1
+	/ZRwZ+u66zpkOu9Fi8i1vzvyEfx8vrn1/JV+Iv1Enczfcz7L67mWJoN+pnsRK1QNciZyyLsgfCOnp
+	AckH7GcqIZNRoTHMsuMSzm/X7snvQftdDUwPafT1TdeSdKLxj22nogPSixHBQDL8NUZ3Ed20HEA3/
+	ILrcPEmA==;
+Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
+	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1vDnz5-00000008hSt-1qV2;
+	Tue, 28 Oct 2025 18:59:51 +0100
+Date: Tue, 28 Oct 2025 18:59:50 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Alex Elder <elder@riscstar.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
+	mani@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+	dlan@gentoo.org, guodong@riscstar.com, pjw@kernel.org,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, christian.bruel@foss.st.com,
+	shradha.t@samsung.com, krishna.chundru@oss.qualcomm.com,
+	qiang.yu@oss.qualcomm.com, namcao@linutronix.de,
+	thippeswamy.havalige@amd.com, inochiama@gmail.com,
+	devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/7] Introduce SpacemiT K1 PCIe phy and host controller
+Message-ID: <aQEElhSCRNqaPf8m@aurel32.net>
+Mail-Followup-To: Alex Elder <elder@riscstar.com>, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
+	vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org,
+	guodong@riscstar.com, pjw@kernel.org, palmer@dabbelt.com,
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de,
+	christian.bruel@foss.st.com, shradha.t@samsung.com,
+	krishna.chundru@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
+	namcao@linutronix.de, thippeswamy.havalige@amd.com,
+	inochiama@gmail.com, devicetree@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+References: <20251013153526.2276556-1-elder@riscstar.com>
+ <aPEhvFD8TzVtqE2n@aurel32.net>
+ <92ee253f-bf6a-481a-acc2-daf26d268395@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251029-b4-fix-ccu-mix-typo-v1-1-caddb3580e64@gmail.com>
-X-B4-Tracking: v=1; b=H4sIANLpAGkC/x2M2wpAUBBFf0XzbOpcKPyKPDAG8+DSOYjk302eV
- qvW3g9EDsIRquSBwKdEWRcVmyZAU7uMjNKrgzMut8YV2GU4yIVEB87K/d5WNL4gWw7sDWWgyy2
- wNv9r3bzvB5vukgFlAAAA
-X-Change-ID: 20251028-b4-fix-ccu-mix-typo-038c19fe30c4
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Encrow Thorne <jyc0019@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761667622; l=966;
- i=jyc0019@gmail.com; s=20251009; h=from:subject:message-id;
- bh=MWE1wHQwpJUdg+s6GjvQ4xmCBSj0KgbizOmtjag6m8M=;
- b=W/Nr03DugBRDanEde1X5Xv65lFXEPtYoAFcNg3Xwe4XJbUI2CxrjAH2YEeDNx85xNZJnWBfsm
- MjxogSDotZYDEXJJXvdlCNntvVzBXTXCZU3Vub/F3pyPxu1m33u9CXS
-X-Developer-Key: i=jyc0019@gmail.com; a=ed25519;
- pk=nnjLv04DUE0FXih6IcJUOjWFTEoo4xYQOu7m5RRHvZ4=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <92ee253f-bf6a-481a-acc2-daf26d268395@riscstar.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-ccumix.h was copied from ccudiv.h and the comment after #endif was not
-updated.
+Hi Alex,
 
-This patch fixes the incorrect comment to match the filename.
+On 2025-10-17 11:21, Alex Elder wrote:
+> On 10/16/25 11:47 AM, Aurelien Jarno wrote:
+> > Hi Alex,
+> > 
+> > On 2025-10-13 10:35, Alex Elder wrote:
+> > > This series introduces a PHY driver and a PCIe driver to support PCIe
+> > > on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
+> > > Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
+> > > PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
+> > > one PCIe lane, and the other two ports each have two lanes.  All PCIe
+> > > ports operate at 5 GT/second.
+> > > 
+> > > The PCIe PHYs must be configured using a value that can only be
+> > > determined using the combo PHY, operating in PCIe mode.  To allow
+> > > that PHY to be used for USB, the calibration step is performed by
+> > > the PHY driver automatically at probe time.  Once this step is done,
+> > > the PHY can be used for either PCIe or USB.
+> > > 
+> > > Version 2 of this series incorporates suggestions made during the
+> > > review of version 1.  Specific highlights are detailed below.
+> > 
+> > With the issues mentioned in patch 4 fixed, this patchset works fine for
+> > me. That said I had to disable ASPM by passing pcie_aspm=off on the
+> > command line, as it is now enabled by default since 6.18-rc1 [1]. At
+> > this stage, I am not sure if it is an issue with my NVME drive or an
+> > issue with the controller.
+> 
+> Can you describe what symptoms you had that required you to pass
+> "pcie_aspm=off" on the kernel command line?
+> 
+> I see these lines in my boot log related to ASPM (and added by
+> the commit you link to), for both pcie1 and pcie2:
+> 
+>   pci 0000:01:00.0: ASPM: DT platform, enabling L0s-up L0s-dw L1 AS
+> PM-L1.1 ASPM-L1.2 PCI-PM-L1.1 PCI-PM-L1.2
+>   pci 0000:01:00.0: ASPM: DT platform, enabling ClockPM
+> 
+>   . . .
+> 
+>   nvme nvme0: pci function 0000:01:00.0
+>   nvme 0000:01:00.0: enabling device (0000 -> 0002)
+>   nvme nvme0: allocated 64 MiB host memory buffer (16 segments).
+>   nvme nvme0: 8/0/0 default/read/poll queues
+>    nvme0n1: p1
+> 
+> My NVMe drive on pcie1 works correctly.
+>   https://www.crucial.com/ssd/p3/CT1000P3SSD8
+> 
+>   root@bananapif3:~# df /a
+>   Filesystem     1K-blocks     Used Available Use% Mounted on
+>   /dev/nvme0n1p1 960302804 32063304 879385040   4% /a
+>   root@bananapif3:~#
 
-Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
----
- drivers/clk/spacemit/ccu_mix.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Sorry for the delay, it took me time to test some more things and 
+different SSDs. First of all I still see the issue with your v3 on top 
+of v6.18-rc3, which includes some fixes for ASPM support [1].
 
-diff --git a/drivers/clk/spacemit/ccu_mix.h b/drivers/clk/spacemit/ccu_mix.h
-index 54d40cd39b27..c406508e3504 100644
---- a/drivers/clk/spacemit/ccu_mix.h
-+++ b/drivers/clk/spacemit/ccu_mix.h
-@@ -220,4 +220,4 @@ extern const struct clk_ops spacemit_ccu_div_gate_ops;
- extern const struct clk_ops spacemit_ccu_mux_gate_ops;
- extern const struct clk_ops spacemit_ccu_mux_div_ops;
- extern const struct clk_ops spacemit_ccu_mux_div_gate_ops;
--#endif /* _CCU_DIV_H_ */
-+#endif /* _CCU_MIX_H_ */
+I have tried 3 different SSDs, none of them are working, but the 
+symptoms are different, although all related with ASPM (pcie_aspm=off 
+workarounds the issue).
 
----
-base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
-change-id: 20251028-b4-fix-ccu-mix-typo-038c19fe30c4
+With a Fox Spirit PM18 SSD (Silicon Motion, Inc. SM2263EN/SM2263XT 
+controller), I do not have more than this:
+[    5.196723] nvme nvme0: pci function 0000:01:00.0
+[    5.198843] nvme 0000:01:00.0: enabling device (0000 -> 0002)
 
-Best regards,
+With a WD Blue SN570 SSD, I get this:
+[    5.199513] nvme nvme0: pci function 0000:01:00.0
+[    5.201653] nvme 0000:01:00.0: enabling device (0000 -> 0002)
+[    5.270334] nvme nvme0: allocated 32 MiB host memory buffer (8 segments).
+[    5.277624] nvme nvme0: 8/0/0 default/read/poll queues
+[   19.192350] nvme nvme0: using unchecked data buffer
+[   48.108400] nvme nvme0: controller is down; will reset: CSTS=0xffffffff, PCI_STATUS=0x10
+[   48.113885] nvme nvme0: Does your device have a faulty power saving mode enabled?
+[   48.121346] nvme nvme0: Try "nvme_core.default_ps_max_latency_us=0 pcie_aspm=off pcie_port_pm=off" and report a bug
+[   48.176878] nvme0n1: I/O Cmd(0x2) @ LBA 0, 8 blocks, I/O Error (sct 0x3 / sc 0x71) 
+[   48.181926] I/O error, dev nvme0n1, sector 0 op 0x0:(READ) flags 0x80700 phys_seg 1 prio class 2
+[   48.243670] nvme 0000:01:00.0: enabling device (0000 -> 0002)
+[   48.246914] nvme nvme0: Disabling device after reset failure: -19
+[   48.280495] Buffer I/O error on dev nvme0n1, logical block 0, async page read
+
+
+Finally with a PNY CS1030 SSD (Phison PS5015-E15 controller), I get this:
+[    5.215631] nvme nvme0: pci function 0000:01:00.0
+[    5.220435] nvme 0000:01:00.0: enabling device (0000 -> 0002)
+[    5.329565] nvme nvme0: allocated 64 MiB host memory buffer (16 segments).
+[   66.540485] nvme nvme0: I/O tag 28 (401c) QID 0 timeout, disable controller
+[   66.585245] nvme 0000:01:00.0: probe with driver nvme failed with error -4
+
+Note that I also tested this latest SSD on a VisionFive 2 board with exactly
+the same kernel (I just moved the SSD and booted), and it works fine with ASPM
+enabled (confirmed with lspci).
+
+> I basically want to know if there's something I should do with this
+> driver to address this.  (Mani, can you explain?)
+
+I am not sure on my side how to debug that. What I know is that it is 
+linked to ASPM L1, L0 works fine. In other words the SSDs work fine with 
+this patch:
+
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 79b9651584737..1a134ec68b591 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -801,8 +801,8 @@ static void pcie_aspm_override_default_link_state(struct pcie_link_state *link)
+ 	if (of_have_populated_dt()) {
+ 		if (link->aspm_support & PCIE_LINK_STATE_L0S)
+ 			link->aspm_default |= PCIE_LINK_STATE_L0S;
+-		if (link->aspm_support & PCIE_LINK_STATE_L1)
+-			link->aspm_default |= PCIE_LINK_STATE_L1;
++//		if (link->aspm_support & PCIE_LINK_STATE_L1)
++//			link->aspm_default |= PCIE_LINK_STATE_L1;
+ 		override = link->aspm_default & ~link->aspm_enabled;
+ 		if (override)
+ 			pci_info(pdev, "ASPM: default states%s%s\n",
+
+I can test more things if needed, but I don't know where to start.
+
+Regards
+Aurelien
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=df5192d9bb0e38bf831fb93e8026e346aa017ca8
+
 -- 
-Encrow Thorne <jyc0019@gmail.com>
-
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
