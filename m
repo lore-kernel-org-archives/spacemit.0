@@ -1,41 +1,40 @@
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB9F235061
-	for <spacemit@lists.linux.dev>; Tue, 28 Oct 2025 01:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0247A1E5018
+	for <spacemit@lists.linux.dev>; Tue, 28 Oct 2025 01:34:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761615230; cv=none; b=EY++axZ0LH8n5/58zhI8z8/1Gp0+XeMMgqG5juYAAPLR0vx3MDs04S0JYyu85P2XgkTtLSP2eZpiYnbJBwYUHiYuzoRDrXKQCQVB4RwV1sv1+V68q12a9GHXzzZB/x8KI3bAk7jM/ijl6trN69g29w6NKeMngAI1cqksGUp+vVw=
+	t=1761615253; cv=none; b=gTR+zan9lOdWVvmRWIRHygOv245OzNeBbjB7doqBBssPdHu3H4wZWaoZw2j8Z+lqH1BBlR3+Yy4olExxP0iYT0GAoF4Chy/c+KUgergelxGlEZC7imZTMNm3WfAnJibZu2FYddFBlSo/dJOL0UtztEATBUEw5d2LmSQtWF/xJRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761615230; c=relaxed/simple;
-	bh=+5msboKAog008UGEttz4U+fHm+ScOLfQAquNVMiSBfE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YKHYT1g+BL5m09Q2uaYE8OWI541iCcco9CVRh+hsjb66hvT6xQavDQSIpvM5go3jwjPN/zHELmY8c1AFDo0ivirosF50b/cwxizlk5XT+sVpoRWxcXMZ9keUjBGQtbLM6mYrU4Gvhps6OjS2sQA5XwGxvttgOvZqZbMJrBR+hFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=AorSc7KA; arc=none smtp.client-ip=54.207.19.206
+	s=arc-20240116; t=1761615253; c=relaxed/simple;
+	bh=qOmd380iXlJDWlWR9Xlc5Z0tovU3eJ4ZmmZbJEfhhLs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LgnGFiJuSZ4ChDXT4U2f3dXCYMiENB1z5BevRr6HmD2LnueqlhH5NR6rfDgU9q5jgKyGqbStAebAY07mT5RT/iZc729F42X/X5J+6y02e0UCJH7gx0qw/EO9yD2kLKC6UmDUlXI7khDKiv1KiWG0zaNMKbwTDv3wOBTZRpRNuK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=u6lymN6+; arc=none smtp.client-ip=54.243.244.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="AorSc7KA"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="u6lymN6+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1761615153;
-	bh=0dS9fYCR/0pXGPLknmEzfDFk6v1ODm4sLoh7xa32BBM=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=AorSc7KAwGJTI9AQOiEtDvv4jWO2lspPh2zlVh5xqo/qSpUrvA7XqglbSr2q/25oB
-	 MYkB2SSBHesQcMeANeOw65y7gqo0Etvi31vr8ulrn+pARCw7IbpZKkJIXZXV4ZzU5J
-	 +H5ZVWizn328mJ4abvACP4mDgqeZt9mNpJQ8ncR8=
-X-QQ-mid: zesmtpgz1t1761615152t951540ca
-X-QQ-Originating-IP: d92L4WkpQcs1b1VRFxPMab1MNZMS5wRJByGNSPovtC0=
+	s=mxsw2412; t=1761615150;
+	bh=JV2sw478GwgVmAvh9ZYNj7weQN2ACESG19aqgi3tUF0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=u6lymN6+F/hKZFtvGxt32zehYvSy1qFXPWG8ODZHkbpSVXvnlPkq/FRhWrtSJ5PCG
+	 0i3A5nRQCwWti2dw48ieREbXcyRuwo0UjzfEoJU2ks526aHvqV2Dkmk2f9miU8E3sb
+	 EtjZJvKj53dW5xKz5SdiVU+ftx6RMhYNAqL/zDQA=
+X-QQ-mid: esmtpgz12t1761615147ta74469fb
+X-QQ-Originating-IP: 8wCQ6xC5UakYb8SmmwWGhNtmwz8bc9zXXh/aSm36HwU=
 Received: from = ( [183.48.246.218])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 28 Oct 2025 09:32:29 +0800 (CST)
+	id ; Tue, 28 Oct 2025 09:32:25 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 9311238789596547588
-EX-QQ-RecipientCnt: 12
+X-BIZMAIL-ID: 9672489745579195001
+EX-QQ-RecipientCnt: 13
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Tue, 28 Oct 2025 09:32:09 +0800
-Subject: [PATCH v2 1/2] ASoC: spacemit: add failure check for
- spacemit_i2s_init_dai()
+Subject: [PATCH v2 0/2] ASoC: spacemit: fix build warning and error
+Date: Tue, 28 Oct 2025 09:32:08 +0800
+Message-Id: <20251028-fix-k1-i2s-v2-0-a547c15ed5c3@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,77 +43,73 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251028-fix-k1-i2s-v2-1-a547c15ed5c3@linux.spacemit.com>
-References: <20251028-fix-k1-i2s-v2-0-a547c15ed5c3@linux.spacemit.com>
-In-Reply-To: <20251028-fix-k1-i2s-v2-0-a547c15ed5c3@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIABgdAGkC/02MywqDMBBFf0Vm3REzGl+r/kfpIsRJHdqoJFYE8
+ d8bupK7OlzOOSByEI7QZwcE3iTKPCWgWwZ2NNOLUYbEQAVpVVCLTnZ8KxSKWJIuqald23Q1JGE
+ JnN5/7PFM7MLscR0Dm2uiuiYGI+jZ46YwTTvtFFvqKnP/yPTd87gYy17W3M4ezvMHD08po68AA
+ AA=
+X-Change-ID: 20251028-fix-k1-i2s-3253276f8796
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
  Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
  Yixun Lan <dlan@gentoo.org>, Jinmei Wei <weijinmei@linux.spacemit.com>
 Cc: linux-sound@vger.kernel.org, linux-riscv@lists.infradead.org, 
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Dan Carpenter <dan.carpenter@linaro.org>
+ Dan Carpenter <dan.carpenter@linaro.org>, 
+ Stephen Rothwell <sfr@canb.auug.org.au>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761615145; l=1211;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761615145; l=983;
  i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=+5msboKAog008UGEttz4U+fHm+ScOLfQAquNVMiSBfE=;
- b=nfq/IcYWbKCjNOvIfAQwqrVxnuhMrkpCdsxu7SXWLQJ6q7a0hGNm9xy3G6PhkKHhK8m5SDZ8m
- uTIqf8R3B+YBoXeq/puj1gs3u0WzuNAgEULk9G8eO5D4ifutkCj8TJM
+ bh=qOmd380iXlJDWlWR9Xlc5Z0tovU3eJ4ZmmZbJEfhhLs=;
+ b=9G3DYpc2xt8cUtQdYiNu+NtFBEk+OlPqTrDLNxrZ3ciGpOv7smxp+5koz2bO0eHJpkmLFgtHp
+ xHqPLE03bt1CT18jTzuBBLkaIamdcgfTR+wtiGPtwQentODahg8K++b
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
  pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: N8FRh7sKUkL6j2RanX7oNBTndt08vL18TnYlb5+mYDhOxQhGKf6Q/2Pq
-	OGXyKUh6gnpORhwxgTMEWSZN2vthg05WASmPl7S6UOQjATNozjKun2jWYWZMszuqcsbkKOc
-	HbmbyAgC7r6K2LQ+Hsl1EQm2r25G0ZT6ttk951OcCfq6rU7mY4JedE7ZXi8x0NKxS5PWD0e
-	tzJv/Mq3kIJls5eVVhBOxJj9/HJ76CMwSRI1sKwmpYbl9gsDxOuwr0n29c1yXbcYg+rGJQb
-	ImJbEc44idlL88wxeryWsFZN2vOxAJ1cA2lwXSwI2QbiyZqZucEuq4voJw3/OKSRcNU+j71
-	556vHTKw05+HD3Fy26SgyNN3TtCSqpFYqNQGtwS3xT1qpUQoNDH/Kr205KCqBmRWqUgvH6y
-	B5JN53SuwIvshwH90y0zOQKZDv0AOn5XXGCNIf9nebOXDVZ4dKEFQua6GWpFD4kDVU7hiK7
-	LesmV3ndQcEETWJYP7a3yZf2ZSh3xzVJdKRl7QxrpWNWNkph3D593lELElg1SRsGkUk1FcN
-	siNxlhdhc0wYJWHLXhswfw0q0pBn5JQpoQ54g5QyRq7TEJ8lAn0SV2vBlUWBetSux3VWi36
-	RpfvsnmvMxRaKstdjM9NXonG5FyOumyJtPnO5NdB6ne1GL+ilW1w/k1kElaxqP4XSeVIRq+
-	6K6y0tiXLulk4DX9ku2aChrozIj+FiwsU3VhNr6G1Akh7nmoyLjF4FS2Vr4nKgkOTcSAyOi
-	Yv/FgdPA4kmkc5vuR2yM0ufnXwKjpCxiG1F/ybLYUkpWI7B+Sv75BLvjOYAX3+yadG+R/G8
-	fhlYz10d35bH5gvx8TAgvd52JcxMXDyOhnrMb+LQGSyfu4khlVl8pSkgbsJswAGVOQzsQZO
-	kX/Ddv6LvCqvsylRnpw4CbNkseCIITmvGGhu/VrK7v0FSnGVg27DG6BUFW3ZnziqlCS3fW1
-	bf+g24e0GTvC6WXXY5kdPgvKMFo1ACODAz9+SvrPrbEialXiSxgMtIJVp9vpBDk1qW8VZdC
-	IP5R3PMAAzE3EzqzdEgHhpvu5fkvN/jglb7qJPacoJVp6apJ4X5tmAckBJbcv+6M1bql3GA
-	M5ioD2BGH+UHAlYzinpHK10nsLDCzTlZf/wWOanchJ/orEiA0kZ8dM=
-X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MkhAA4qIuU0pDwuVRwt2UX2pTGBhX5CbyfwuHSmTwStj1XomJlXwvD0H
+	HkHsWWXIWFLNatJEgwgj0q2xYVTCMZRXRvl/CqtbASLFpJYdnNubX2SmIpAZCG0mAIltLZ4
+	7CwBqOt5QRBsBkDSsecff9cuUcmxg6ezL8uyeMsUcAO1pFZChnc5IONkQeOIV9tkOWaTtYs
+	2Q8mzzS3SduS3m4dYmKWMXaZ1M/+MkhIA0eue15Tzpn/URNMNoVhq61gHD/gMCZRdmYoNTQ
+	kC2xAUod3NcIxL+3EDzSZSzS8Rp98OAH7FBY4NiyrwZGxvP0I+3i3WoF1v2KtZoztOkeFAq
+	X+AP8VWGCtL/5FgjOP526hAxk62qvAwWlos+hWbdAuHuSNkLIHrCQHG+132gR/Ay6B1GHJc
+	Rjf+MjSPRFpD4pRppU+j/Z8BlzBTwP8DacjynXoxbCy+QgismiRfeut0Y63QPtMCYgLnpsO
+	GVSY99UFs4r6AsvkDQYr6slKhfHkT3Bwso28gbqO0qwU4xQqlfYwwrSj3MHNCbwwWaSF9Dn
+	C8+XtetosBbk9w89p7KTIBQihmYj7OcEV/FmlhPHvsoBWUR2Vf1BKDMZNnxaM4lFQYcIF4a
+	r+1oDFSaqMY2TRVvvHhYM9VdpkYUseKC7QZ+39vjWtJFge/X7inpPq+iaHG1n2ysf3S4QcG
+	ANZ9ZfaKXYwG5soEjkfKyfCKpYklUwr0gU+WgUr6iQXoK0mZiPyM2xR2YDLc5M+D2Rxb08l
+	wZSWWJsOUxppTUQQ8Z5aglz4hMCEyIWdlb1Pkz7PmLW29bw1odo9QonIVoN7eJVtM1IKJi3
+	eAG8g4oD127JPkVM+T3i7q62SEd53nGq9a2vdv1Yrj3slYfAdZg25YmmZdmdYzVaWxk2SuQ
+	SilvdylIMGgqVcZ9TonnRQujTAj43XMBMCS4fSZgzzeITYThdaaPVg6Odih9bc5N/yx8iY7
+	yPipDMmifQd/6tnWfdyISnxwmE4s/XL2mc2hKChG8ErGMXup+9zlECK4CqWrmPiRu7ZxWEW
+	zR5zu44hey+dEqsc/AJlBTdRI6UEYQlAQtwlLQxD3fWbA7xRSFTxyt5CQyPo4+PtZdK0gf6
+	YuqhA8MMGt6NGEHfO6BwEQ+zMTufooqWxd1u1z5OxkDX9J2V67bqOumsDd1rTBtRQ==
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
 X-QQ-RECHKSPAM: 0
 
-Add error handling when memory allocation for dai fails in
-spacemit_i2s_init_dai() call.
+After the i2s patch for K1 was merged, two issues were identified:
+- Missing error handling for the init_dai() function [1],
+  which is required since the function allocates memory internally.
+- The Kconfig entry ignored the dependency chain of DMA_CMA [2].
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/aPtiNCZ_KBezL2Dr@stanley.mountain/#t
-Fixes: fce217449075 ("ASoC: spacemit: add i2s support for K1 SoC")
+This series fixes both issues.
+
+Link: https://lore.kernel.org/all/aPtiNCZ_KBezL2Dr@stanley.mountain/#t [1]
+Link: https://lore.kernel.org/all/20251022141705.714b19b5@canb.auug.org.au/ [2]
+
 Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
-Changelog in v2:
-- fix tag
-- Link to v1: https://lore.kernel.org/all/20251024-fix-k1-i2s-dai-mem-v1-1-15f5f1ec294a@linux.spacemit.com/
----
+Troy Mitchell (2):
+      ASoC: spacemit: add failure check for spacemit_i2s_init_dai()
+      ASoC: spacemit: use `depends on` instead of `select`
+
+ sound/soc/spacemit/Kconfig  | 3 +--
  sound/soc/spacemit/k1_i2s.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+---
+base-commit: 507d05188939fd47c9a11c3ab647f7db1bbef58c
+change-id: 20251028-fix-k1-i2s-3253276f8796
 
-diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
-index abc439b53e3d4358570df2e69e636bf54820d9ce..8af05e1604f518b63cbbbaa66b73cfee8262d87f 100644
---- a/sound/soc/spacemit/k1_i2s.c
-+++ b/sound/soc/spacemit/k1_i2s.c
-@@ -428,7 +428,9 @@ static int spacemit_i2s_probe(struct platform_device *pdev)
- 
- 	dev_set_drvdata(i2s->dev, i2s);
- 
--	spacemit_i2s_init_dai(i2s, &dai, res->start + SSDATR);
-+	ret = spacemit_i2s_init_dai(i2s, &dai, res->start + SSDATR);
-+	if (ret)
-+		return ret;
- 
- 	ret = devm_snd_soc_register_component(i2s->dev,
- 					      &spacemit_i2s_component,
-
+Best regards,
 -- 
-2.51.1
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
