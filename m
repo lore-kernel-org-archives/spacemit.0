@@ -1,47 +1,35 @@
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CDA23E35B
-	for <spacemit@lists.linux.dev>; Wed, 29 Oct 2025 01:04:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313AD5478D
+	for <spacemit@lists.linux.dev>; Wed, 29 Oct 2025 22:33:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761699901; cv=none; b=h7cBKfO431wm3S3JWOZkc56RbPUTC137qtz3gERg+gf0NnQp9Kc57S1+DHZSrcgzw7FwLDgH4m0qqAqvTUYDkBPGlUicuGByOtuzUZwgHi/k/90BEC4/Q+5TfbEokKreTGB9hXhn13/hat4rv16/ywiI+DCLn3WQeCQ/jari5K0=
+	t=1761777229; cv=none; b=ajWfUoTS+fgmxmNqs5lcpZt1EibJH6NKIpdtNYSIjlIGo/kNuGg0leUfGQlJQAF481MLCOOmJ2NNns0LFZNcO+5ylxcdlUBkHpW3iCBSK5+gzCf894IzQicPD3GE1nTxOZf7l5ErG+bGebUea55jjidxT/PxxfIVc9sXTpv8+Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761699901; c=relaxed/simple;
-	bh=NJjvyvfgKJfTUHiq8JgYMwcQRN5gc8bcfferGDUhiAs=;
+	s=arc-20240116; t=1761777229; c=relaxed/simple;
+	bh=2PljQxny0Ku9KPKpvWh3zcEiGaj/B9UoFx5o36flDNA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OAobGHpXBceRgSIyptg8UOxQrgfU2tEnoc2aQePlP5l6BmSLvBzIsXxGtNlZdndLvBG7VfWJWTuUfq3W1Ay1EmiIWHCzH8ZGu9TLAQ5KProtmZ6EiBL/6YgPIIPoDAvvnnKbc/L44+kzHug/MAbE0UiDSJcYYd6sJnRzlcvSirc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=fuf3whdF; arc=none smtp.client-ip=54.254.200.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="fuf3whdF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1761699826;
-	bh=WhJq3Ipi1fnHde+8mqcuR7GcMe5QQYJXmTD2tu08/bk=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=fuf3whdFbHh6qrUHjLsaIs5jmpVY42jdMsHK8hMiW51zk4xaHisUDNbGj92mM1TOj
-	 wLO94+iGZHGmpCblqSpKzzHAwIhq0jBE+ZmjPu1bw/rPKrDDGNu6XxNewU2Qfr2V8N
-	 kWgd0sMxx/sz3AmQj/TmLIEuxHQXmq7prORw7BQE=
-X-QQ-mid: esmtpgz14t1761699818t16bf4f72
-X-QQ-Originating-IP: 4PI68DuhWu4P70idAW3AQJNj1pCz19XsCYRw2ixuntQ=
-Received: from = ( [61.145.255.150])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 29 Oct 2025 09:03:37 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11185435277983628578
-EX-QQ-RecipientCnt: 9
-Date: Wed, 29 Oct 2025 09:03:37 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Encrow Thorne <jyc0019@gmail.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qgl1v3JUGCNPqhAvwS8T+ViHfpw8XDdhScSFHp5DmHtSjddBTsQcuaRUjU6vEvq64jStEE4UseYd5Vp6/XZqtWYArntH7lcd+B62hM7BYkPvS6A6RQj+p6wH+6I2JW7be8/avr/G+px3YcDsG/DrlmUJv4Xp7r2vvDIRfO7o0vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.147.23])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 42DF2340EFA;
+	Wed, 29 Oct 2025 22:33:47 +0000 (UTC)
+Date: Thu, 30 Oct 2025 06:33:37 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Encrow Thorne <jyc0019@gmail.com>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] clk: spacemit: fix comment typo
-Message-ID: <B07B2D0180A31C0F+aQFn6XlzuhgGRnWq@kernel.org>
+Message-ID: <20251029223337-GYA1549833@gentoo.org>
 References: <20251029-b4-fix-ccu-mix-typo-v1-1-caddb3580e64@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
@@ -52,32 +40,20 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20251029-b4-fix-ccu-mix-typo-v1-1-caddb3580e64@gmail.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: ODcDgdcDagQK0jLi0Idn8OOQ9rSlepOuej7hvMXc4bjdk5Yui8m8tUy+
-	cJOIZERoNVpe/jtWHzbVw00LpDJREvFZcEsSmzOVxwdvwj8mTE/wRNmnaLa2jTJQTukw1Hc
-	OVyPjYBPaeHZEyLTcCfBJuqtU5jXJwUXK5gGGixygfTD2EN9J38hiicIwMkDFyVc+lbFZCv
-	p21JZc95IZf1Uv0QZtw6HzM5DPwxDIAW+Ocfl3P/I6G6g4T1BNlYNRKzjsqmESr1nreYESd
-	f4d1FAeCvY4wRzduKULyuJ+i7ebefj6IPtQl4Aj0VT8iKXn1wlIxHF8CK/Tem3U31vxGuIJ
-	AoYO4Y1gEhNPpaLTvNowvo7btvEjtvML8K38uvCQ7nxsFejmiGffQ5nR3pmvctpb8tKeqkR
-	rIYAESlU/D3r3wwd6+sf4tZyWb9B4uwdzifHMyaMk5Ngg6pLTkGQbJNQByqAs8gUIxTjQ7j
-	BzPR1Bnb/c9Dp1SfsK0kt12lgy2/BlM2dcgD/jTQ5TS4+sBt/fEaLxXPZQ56O9rn/YIidxc
-	lv5oDiPBncbJZ74E4akd+oxr/2QziAM8WlZNq/5xKXU3fTN6QxB3KYpmM+70+GArn2i7ReG
-	7EODMVWRz0omCyVVeJvivhBisVGJ+87aUc0zo7Kz6PgDQ1RZtDg66hvYe4XtufUQSzPqej7
-	1Tdeu9bxwviEwvc0xqINLQGYgpc5MXeyOjSwyz44J5Ke7RVQIvv7E7E/eHP7ClfaGtF6VjS
-	yR181FenqW6naMwMCvf720DGPnnrnZvLLxA17Oqf4x3OQDzAET6M2EjzC4YpnO773ONgekv
-	bGTjWuzQ99itpwXuOvTao5+MHbub8+kN6fVtuIL1PlQtLEBP+BhygoWu+OXXIMx6+IM7eNh
-	j878rfnZqNxOMs0UfshFgx8x7jiLvZGm90Efn1x5wHfLPgU6nQSw7uB29JTAVm8M/VGhpYW
-	HCHLoxKp9ROyh29mdKscTqqHk9pdUNiji2/RtUWM8eQ29Pk4KtkHZZ5zAML/lVoJzSeAwlw
-	a3K3/jUSJjZVfm0judYBiqOySdpVo=
-X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
-X-QQ-RECHKSPAM: 0
 
-On Wed, Oct 29, 2025 at 12:05:39AM +0800, Encrow Thorne wrote:
+Hi Encrow,
+
+On 00:05 Wed 29 Oct     , Encrow Thorne wrote:
 > ccumix.h was copied from ccudiv.h and the comment after #endif was not
 > updated.
 > 
 > This patch fixes the incorrect comment to match the filename.
+
+Just describe in imperative mode, see
+(since this is trivial, I could amend it before apply the patch,
+so no need to resend)
+https://elixir.bootlin.com/linux/v6.16/source/Documentation/process/submitting-patches.rst#L94
+
 > 
 > Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
 > ---
@@ -94,7 +70,15 @@ On Wed, Oct 29, 2025 at 12:05:39AM +0800, Encrow Thorne wrote:
 >  extern const struct clk_ops spacemit_ccu_mux_div_gate_ops;
 > -#endif /* _CCU_DIV_H_ */
 > +#endif /* _CCU_MIX_H_ */
-There's no reason to discourage beginners from starting with comment fixes.
-Nice catch! Encrow.
+> 
+> ---
+> base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+> change-id: 20251028-b4-fix-ccu-mix-typo-038c19fe30c4
+> 
+> Best regards,
+> -- 
+> Encrow Thorne <jyc0019@gmail.com>
+> 
 
-Reviewd-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+-- 
+Yixun Lan (dlan)
