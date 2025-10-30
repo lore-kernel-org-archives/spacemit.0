@@ -1,66 +1,66 @@
-Received: from mail-il1-f193.google.com (mail-il1-f193.google.com [209.85.166.193])
+Received: from mail-io1-f65.google.com (mail-io1-f65.google.com [209.85.166.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8267C78F4F
-	for <spacemit@lists.linux.dev>; Thu, 30 Oct 2025 00:10:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C2C13DDAE
+	for <spacemit@lists.linux.dev>; Thu, 30 Oct 2025 00:10:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761783012; cv=none; b=u4ERSvC0mK3Aiq7AOk+DMFse2NLjcDl4GQu2qJe/Hnunz/F1oUvpjqyaWSg97XtjFg/XS7hWivwP7gmO70OhJJze7THfH4QgZJpAfWyRL2fYN+f5vjcFKCTUIe/4AFrQt1rkCCIIiWo1MU3UA5uLkus5p2UPQnVOCMtuLdp5GXA=
+	t=1761783017; cv=none; b=UR1cOHEEhTMgeUSCRFk8ceVzbP+WdcMBZ65UhQXXeX8TdfXwLGXgzUKWsTJBYzHpsMuiaU2TyI+r0fuIUqjb2GPvLBEoPZ0wOzfapGkpJF15BbV1Qp+2m9RgII8QZHOxvVEmCwktZEqWXH0B0M9Najz2QxEHB5eawUABYfT5D3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761783012; c=relaxed/simple;
-	bh=Af6a4lUTdazPKyx9U/7AMEnzKrT4Vry00gENco6p7w4=;
+	s=arc-20240116; t=1761783017; c=relaxed/simple;
+	bh=sZwlNZfu08U7BZ3HE2RfjK57TGErNMnFRRHI06ayZtA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k+tpf+qtJ0+rQM6wzDzrTPO40xsXQSVWdQ8Lgp2Q3x7GaYCgS+IWJIG1joJvFpTQMMUognKSi41uc4M4jvsCugHdJtmSgPZhNnx9auT4+dVilvLsLSvzVOis+yRAEMN5oFAlI4CGixSfDNYK8Nrw6X5c3NXBvqbnx/uZ0IGVtAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=NdShKkjG; arc=none smtp.client-ip=209.85.166.193
+	 In-Reply-To:Content-Type; b=jbMDoXBdMBaX/TE+sPVzloiK6wuOR0+kvvSB5EoAECWbfm4WKlgbcqX1QrJuHFHcnswnRik757+9KJAF7bp23M5suBIkazWKT5fsiPHXt7bGnA1hVoZ5QYY2Zg3pPeG8lwytlxwfOF4OKAj0DLdfsXf2x95yXUFMqZt4Nb0pNAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=NxCN7WwE; arc=none smtp.client-ip=209.85.166.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="NdShKkjG"
-Received: by mail-il1-f193.google.com with SMTP id e9e14a558f8ab-430b6a0eaeaso4094765ab.1
-        for <spacemit@lists.linux.dev>; Wed, 29 Oct 2025 17:10:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="NxCN7WwE"
+Received: by mail-io1-f65.google.com with SMTP id ca18e2360f4ac-945a42fd465so19534239f.3
+        for <spacemit@lists.linux.dev>; Wed, 29 Oct 2025 17:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1761783009; x=1762387809; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1761783014; x=1762387814; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OxyxNUOgrblEElGmyEA4sep5LlBoVO7BBRw8igevJ6s=;
-        b=NdShKkjGIxkq6M4LBeF6Q0nmpG1ZBe2MtSi6dJirr3j0+zZmpeQq0vk3jAEky8pEPm
-         SqPn+XCNGptnjmOx+ZeXzwCObqlkua4FrINsABKOud986WVJ3wEcK+r/rMFqa2hoTuul
-         WUofCZ3jaQ1magjC/1ZRrP6TPCu4Fsefms9aV4XsTijc3ODp5yd+nKMoNHeWKIR+ByBo
-         mibkKobLeCt81rkXxA6Z0MFHo9Plqq+hFJihJK5rgk7uifDRCZpypb/gHnlkxaqW7/9F
-         048btnakrvhZ6qe7k6Pv97/JP9WaaHcgx2AUA+R7kbLtQAZ4pJMYPinVVwn8lE9ZeL4m
-         m0fw==
+        bh=7VMgrL4eh2mYx+l5oZfmNXv7av2SRwaUbOAevR++3T8=;
+        b=NxCN7WwE6iqt+eh+QtYHiQPdGbOL27eYWKj4Hmf97XDB9zlnQuhfbzg+rjG2A6GWgJ
+         BwG+WIQyAV5HcPCbYOzkQD9qgqKBI36QJTBFtBk0qPUKYWqk4odWLnJiUj8BMhNrVImC
+         jVQ0ahRe047nCwm3VkISxTQklLG9p6DlcRogADopg6lAfRllWfwbfWL+YFfS3PnycmPS
+         ARtW0jZr9HlXkMJ88tIc9iV8T+5cVyOImaYrAsaxHlrYKsTEzGXyBzqorFqkB/smXogh
+         kQBoec44SR9mNJCJUQLfLqAZGjemrblPVPcks7LZbpOH65HZe6dno4r/LFRAV1Xd+5sS
+         eRnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761783009; x=1762387809;
+        d=1e100.net; s=20230601; t=1761783014; x=1762387814;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OxyxNUOgrblEElGmyEA4sep5LlBoVO7BBRw8igevJ6s=;
-        b=p7+A37Tzx39YXPPN+5u2uuw1QNINlAzPmv4xUcag12CvHKBytacWUZPzsfZsQVVS5h
-         +DnAyjbg3ZbImINXl2GRo+NtS9ysQRUZ9oPq6I4GuB/DfMphBZS/H9h6TqODy0GyYr0R
-         4igYbTEadVhCGV+oLIf3TejR8EDpKgIFOCFuK+l3A08iIT7KUaDuwYfPCr53XhIwqSwD
-         bBQhXWUx+o43jV7z9h72lHvGUlpU6NHhd7LUqfuNGi7sI2+zJScuIRcjyO9p2SlFwHls
-         tUg2HdDyz/dcYxJRutkhvPS/vbImzyAKz9iAJvoQV7DokbDFH47ZFfiXuBvv5xnDqU9V
-         HWSA==
-X-Forwarded-Encrypted: i=1; AJvYcCU+2H0PFIfCbyrHXU6xwpLtYz+BYsIooaX6GcAd8bNkD+EKYNrjCf1cHvxIO0qcCwX71/48AvU0LQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzY0oRGiZpg9aVNr+mPGSKdzOaNcauBMXDkmmJFAhnqWT+9y0Q/
-	sc4aRqNjfC6PsuH87Qh/ov6wZdBFogb/o5L6QlIIknzEVeblFdHX0ChH1pzXkDngXOw=
-X-Gm-Gg: ASbGncsehP1zK4BpyK77YPoMvGqhh0XgJi+MXPgkzl0X8C5PYhxR4Gj+1RgVL4ll8mZ
-	Cn0N3pqghlRHzMZFdrQMqMtVWCySYiUrmV3DJs3Z1oogLZbssrjgxpMUOcr7puC3oJcUT2zzxJv
-	1wE2ZbDfCkc6jfLbb08+pWNHMytFif5GQ36krUP4sLlgT68ikbt+lIxRVx5X9ftv2/YdSP9KKUl
-	gLzD6WQlviJj2oOaAamYCsKarJInYD26WzxayD/ZTfKBPMy7gNQCM3NUq58RonJy26g4oQ+0nTI
-	GZdqWzAhvW5NbpbtTOLm7/73te1800KmL0qQ1tPHNqSn7K5Ty3pw0iN8HaqKOww+2Fu6WnpW+TK
-	3mB7TxIowAyYLYcv3w0TJxxC1q5joA6EuzTzkQmI+vXmEXs6x7GxMMcBXat9PKBcPaHt649Wn/o
-	gCXwdlC9m1BnZqFHeR1BfGc0RSiN2Np588348H+ulK
-X-Google-Smtp-Source: AGHT+IGo5/UX7J0ClNKidKN2YOwDqgsyx0nxeraSSzCU9ZW8jr+AVU5FOLaQI0Rlsn9hweZUzGxIew==
-X-Received: by 2002:a05:6e02:2162:b0:431:d83a:9ba with SMTP id e9e14a558f8ab-432f9045398mr62043485ab.26.1761783009512;
-        Wed, 29 Oct 2025 17:10:09 -0700 (PDT)
+        bh=7VMgrL4eh2mYx+l5oZfmNXv7av2SRwaUbOAevR++3T8=;
+        b=jELvB2HZycVavwlHmyzRITM6YDe0VUIbk8Ju2zFs0fx5sgDB6+5y22MEyRpAJGAEjW
+         OuGQlqpmXngJmtn+IzpB583aLQ4V+avmC+JK/Zfnhqa3q7QaDhaaDbdAze37gVfFn8V2
+         X9MiD9ERolZ74fCl9rAmPv/36wzyOGGSKxMx87FKW77+EaR6vi100Uaut3Jg697CKo10
+         2q2LP3xyjHpRVYZdfkzoN2hAOLzX1erqBB8/XO6U7vntrAVRhBeYzdlBiJbInNwlUJQk
+         2iO/CtXM6mrz/gSipwSX8bEwkUs1AmpRPhqjnKbQEGdqiNufoS7HNirGVlLsXK+gqZ+g
+         fXBg==
+X-Forwarded-Encrypted: i=1; AJvYcCUuTS5T6IIcLsSgpafpzyV/kWgEbsT5bUscx5uttAJ4JidEHHDL3xbFlSldW1bnlx5rcphlxkjzmA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyak4zKb9QWMSXnGKWxDhcZSU5V3fDlved9Ty55FlzFLE74gqmV
+	4MDFq40GU03K4ReEFN4tBfGtg34ek07Fe0fSrFNlbUwnVOgf/GdxiwL2T3LpJON8JMw=
+X-Gm-Gg: ASbGncsYGBqAYERzRCx8DRM0PqLRIkvdbmsZ/O+R5Pzhwxmt0pyjUcTVV4LK73PI0+H
+	D/WgQYtAvYaXyx8VO8NobCMPUKuipxZrG75cdIn082D/K0lJhJJGvF85SyN8VHoeUiFa2QNUtpT
+	7swWgQEtkOQyqAPVbzTiCQSzhWyyd0uaz5LBwgZ/HWmoPaBhtGkNCKgVi32oIPLuL5VH1O4/yQ1
+	MhaL0/8rFMbVG+3yv127pj54U2wcpFqOpYUpX5CZ9tLhXELy2FWMeC6ORHBZXjh2/teER7VFhQ6
+	dNkKm0OV++kcJN8VHBPZXGSyCc9Hp2NrwP2ZG8W6XeAx64GWxLnR3/vj1o/gY+br9rknFO/RabX
+	0EEcFGo8p1qO+QTYEP+YlwK9kkeq69O/i1CiKvTvpyJ/R5pk/2RpeS6WMQzW14PiLs+rrvlIrXB
+	59MeuuvIclrT4qziV/H4jPnDAicZjiSfATDreyqn3l
+X-Google-Smtp-Source: AGHT+IGS7Sez1Zsjkc45MiOR9FLqorMzZtLxO54c8lUefypNW27H7J3DhzlOczc822LiC/qSjQNUVA==
+X-Received: by 2002:a05:6e02:1805:b0:42e:d74:7260 with SMTP id e9e14a558f8ab-432f9071e91mr71017075ab.29.1761783014250;
+        Wed, 29 Oct 2025 17:10:14 -0700 (PDT)
 Received: from [172.22.22.234] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5aea946de57sm5939330173.34.2025.10.29.17.10.07
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5aea946de57sm5939330173.34.2025.10.29.17.10.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Oct 2025 17:10:09 -0700 (PDT)
-Message-ID: <6a8e8e43-c86f-4c46-851b-858e5deec8ac@riscstar.com>
-Date: Wed, 29 Oct 2025 19:10:06 -0500
+        Wed, 29 Oct 2025 17:10:13 -0700 (PDT)
+Message-ID: <9bebde96-485f-4f30-b54c-be9e6c16f2d6@riscstar.com>
+Date: Wed, 29 Oct 2025 19:10:10 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,8 +68,7 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] dt-bindings: pci: spacemit: introduce PCIe host
- controller
+Subject: Re: [PATCH v2 5/7] PCI: spacemit: introduce SpacemiT PCIe host driver
 To: Manivannan Sadhasivam <mani@kernel.org>
 Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
@@ -82,124 +81,243 @@ Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
  linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
 References: <20251013153526.2276556-1-elder@riscstar.com>
- <20251013153526.2276556-4-elder@riscstar.com>
- <u53qfrubgrcamiz35ox6lcdpp5bbzfwcsic466z5r6yyx6xz3n@c64nw2pegtfe>
- <ae92d3f4-5131-46be-b9b1-e8ec437c9ae9@riscstar.com>
- <tjnc4wwpdwlziboonlmki6nm7t523k5atemygwyg7ck5knsde4@anjrtcf5gcq7>
+ <20251013153526.2276556-6-elder@riscstar.com>
+ <274772thveml3xq2yc7477b7lywzzwelbjtq3hiy4louc6cqom@o5zq66mqa27h>
+ <4027609d-6396-44c0-a514-11d7fe8a5b58@riscstar.com>
+ <paxtbwlvndtsmllhsdiovwqoes7aqwiltac6ah4ehrpkz554y6@uj5k3w5jxeln>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <tjnc4wwpdwlziboonlmki6nm7t523k5atemygwyg7ck5knsde4@anjrtcf5gcq7>
+In-Reply-To: <paxtbwlvndtsmllhsdiovwqoes7aqwiltac6ah4ehrpkz554y6@uj5k3w5jxeln>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/28/25 12:58 AM, Manivannan Sadhasivam wrote:
-> On Mon, Oct 27, 2025 at 05:24:33PM -0500, Alex Elder wrote:
->> On 10/26/25 11:38 AM, Manivannan Sadhasivam wrote:
->>> On Mon, Oct 13, 2025 at 10:35:20AM -0500, Alex Elder wrote:
->>>> Add the Device Tree binding for the PCIe root complex found on the
->>>> SpacemiT K1 SoC.  This device is derived from the Synopsys Designware
->>>> PCIe IP.  It supports up to three PCIe ports operating at PCIe gen 2
->>>> link speeds (5 GT/sec).  One of the ports uses a combo PHY, which is
->>>> typically used to support a USB 3 port.
+On 10/28/25 2:06 AM, Manivannan Sadhasivam wrote:
+> On Mon, Oct 27, 2025 at 05:24:38PM -0500, Alex Elder wrote:
+>> On 10/26/25 11:55 AM, Manivannan Sadhasivam wrote:
+>>> On Mon, Oct 13, 2025 at 10:35:22AM -0500, Alex Elder wrote:
+>>>> Introduce a driver for the PCIe host controller found in the SpacemiT
+>>>> K1 SoC.  The hardware is derived from the Synopsys DesignWare PCIe IP.
+>>>> The driver supports three PCIe ports that operate at PCIe gen2 transfer
+>>>> rates (5 GT/sec).  The first port uses a combo PHY, which may be
+>>>> configured for use for USB 3 instead.
 >>>>
 >>>> Signed-off-by: Alex Elder <elder@riscstar.com>
 >>>> ---
->>>> v2: - Renamed the binding, using "host controller"
->>>>       - Added '>' to the description, and reworded it a bit
->>>>       - Added reference to /schemas/pci/snps,dw-pcie.yaml
->>>>       - Fixed and renamed the compatible string
->>>>       - Renamed the PMU property, and fixed its description
->>>>       - Consistently omit the period at the end of descriptions
->>>>       - Renamed the "global" clock to be "phy"
->>>>       - Use interrupts rather than interrupts-extended, and name the
->>>>         one interrupt "msi" to make clear its purpose
->>>>       - Added a vpcie3v3-supply property
->>>>       - Dropped the max-link-speed property
->>>>       - Changed additionalProperties to unevaluatedProperties
->>>>       - Dropped the label and status property from the example
->>>>
->>>>    .../bindings/pci/spacemit,k1-pcie-host.yaml   | 156 ++++++++++++++++++
->>>>    1 file changed, 156 insertions(+)
->>>>    create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
->>>> new file mode 100644
->>>> index 0000000000000..87745d49c53a1
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
->>>> @@ -0,0 +1,156 @@
->>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/pci/spacemit,k1-pcie-host.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: SpacemiT K1 PCI Express Host Controller
 
 . . .
 
->>>> +  interrupt-names:
->>>> +    const: msi
->>>> +
->>>> +  phys:
->>>> +    maxItems: 1
->>>> +
->>>> +  vpcie3v3-supply:
->>>> +    description:
->>>> +      A phandle for 3.3v regulator to use for PCIe
+>>>> +	ret = devm_regulator_get_enable(dev, "vpcie3v3-supply");
+>>>> +	if (ret)
+>>>> +		return dev_err_probe(dev, ret,
+>>>> +				     "failed to get \"vpcie3v3\" supply\n");
 >>>
->>> Could you please move these Root Port specific properties (phy, vpcie3v3-supply)
->>> to the Root Port node?
+>>> As mentioned in the bindings patch, you should rely on the PWRCTRL_SLOT driver
+>>> to handle the power supplies. It is not yet handling the PERST#, but I have a
+>>> series floating for that:
+>>> https://lore.kernel.org/linux-pci/20250912-pci-pwrctrl-perst-v3-0-3c0ac62b032c@oss.qualcomm.com/
+>>
+>> I think that just means that I'll define a DT node compatible with
+>> "pciclass,0604", and in that node I'll specify the vpcie3v3-supply
+>> property.  That will cause that (pwrctrl) device to get and enable
+>> the supply before the "real" PCIe device probes.
+>>
+> 
+> Right.
+> 
+>> And once your PERST work gets merged into the PCI power control
+>> framework, a callback will allow that to assert PERST# as needed
+>> surrounding power transitions.  (But I won't worry about that
+>> for now.)
+>>
+> 
+> I'm still nervous to say that you should not worry about it (about not
+> deasserting PERST# at the right time) as it goes against the PCIe spec.
+> Current pwrctrl platforms supporting PERST# are working fine due to sheer luck.
+> 
+> So it would be better to leave the pwrctrl driver out of the equation now and
+> enable the supply in this driver itself. Later, once my pwrctrl rework gets
+> merged, I will try to switch this driver to use it.
+
+As I understand it, PERST# should be only be deasserted after
+all power rails are known to be stable.
+
+This driver enables the regulator during probe, shortly
+before calling dw_pcie_host_init().  That function calls
+back to k1_pcie_init(), which enables clocks, deasserts
+resets, and initializes the PHY before it changes the
+PERST# state.
+
+By "changing the PERST# state" I mean it is asserted
+(driven low), then deasserted after 100 milliseconds
+(PCIE_T_PVPERL_MS).
+
+I have two questions on this:
+- You say the PCI spec talks about the "right time" to
+   deassert PERST# (relative to power).  Is that at all
+   related to PCIE_T_PVPERL_MS?
+- I notice that PERST# is in a deasserted state at the
+   time I assert it in this sequence.  Do you see any
+   reason I should assert it early as an initialization
+   step, or is asserting it and holding it there for
+   100 msec sufficient?
+
+>> Is that right?
+>>
+>>>> +
+>>>> +	/* Hold the PHY in reset until we start the link */
+>>>> +	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
+>>>> +			APP_HOLD_PHY_RST);
+>>>> +
+>>>> +	k1->phy = devm_phy_get(dev, NULL);
+>>>> +	if (IS_ERR(k1->phy))
+>>>> +		return dev_err_probe(dev, PTR_ERR(k1->phy),
+>>>> +				     "failed to get PHY\n");
 >>>
->>> Reference: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/pci/st,stm32-pcie-host.yaml
+>>> Once you move these properties to Root Port binding, you need to have per-Root
+>>> Port parser. Again, you can refer the STM32 driver.
 >>
->> OK, I'll try to follow what that ST binding does (and the
->> matching driver).
->>
->>> For handling the 'vpcie3v3-supply', you can rely on PCI_PWRCTRL_SLOT driver.
->> I looked at the code under pci/pwrctrl.  But is there some other
->> documentation I should be looking at for this?
+>> I see getting the PHY in stm32_pcie_parse_port(), but nothing
+>> about the supply (which you mentioned in the other message).
 >>
 > 
-> Sorry, nothing available atm. But I will create one, once we fix some core
-> issues with pwrctrl so that it becomes useable for all (more in the driver
-> patch).
+> To conclude, you should move forward with defining the PHY and supply properties
+> in the Root Port node, but parse/handle them in this driver itself.
 
-Sounds good, I think it's necessary.  I might not get it completely
-right on the next try but I trust you'll help me understand what I
-need to do.
+Got it.
 
->> It looks like it involves creating a new node compatible with
->> "pciclass,0604".  And that the purpose of that driver was to
->> ensure certain resources are enabled before the "real" PCI
->> device gets probed.
+>>>> +
+>>>> +	k1->pci.dev = dev;
+>>>> +	k1->pci.ops = &k1_pcie_ops;
+>>>> +	dw_pcie_cap_set(&k1->pci, REQ_RES);
+>>>> +
+>>>> +	k1->pci.pp.ops = &k1_pcie_host_ops;
+>>>> +	k1->pci.pp.num_vectors = MAX_MSI_IRQS;
+>>>
+>>> This driver is just using a single 'msi' vector, which can only support 32 MSIs.
+>>> But MAX_MSI_IRQS is 256. So this looks wrong.
 >>
->> I see two arm64 DTS files using it:  x1e80100.dtsi and r8a779g0.dtsi.
->> Both define this node inside the main PCIe controller node.
->>
->> Will this model (with the parent pwrctrl node and child PCI
->> controller node) be used for all PCI controllers from here on?
->>
-> 
-> The PCI controller (host bridge) node is the parent and the Root Port node
-> (which gets bind to pwrctrl slot driver) will be the child.
-
-That makes sense to me.
-
->> Or are you saying this properly represents the relationship of
->> the supply with the PCIe port in this SpacemiT case?
+>> In dw_pcie_host_init(), if unspecified, MSI_DEF_NUM_VECTORS=32 is
+>> used for num_vectors.  If it is specified, only if the value
+>> exceeds MAX_MSI_IRQS=256 is an error returned.
 >>
 > 
-> We want to use this for all the new platforms and also try to convert the old
-> ones too gradually.
+> Yes, because the driver trusts the glue drivers to provide the num_vectors if
+> they support more than 32.
+> 
+>> In dw_handle_msi_irq(), "num_ctrls" is computed based on
+>> num_vectors / MAX_MSI_IRQS_PER_CTRL=32.  A loop then
+>> iterates over those "controllers"(?) to handle each bit
+>> set in their corresponding register.
+>>
+>> This seems OK.  Can you explain why you think it's wrong?
+>>
+> 
+> So both 'ctrl' and 'msi' IRQs are interrelated. Each 'ctrl' can have upto 32 MSI
+> vectors only. If your platform supports more than 32 MSI vectors, like 256, then
+> the platform DT should provide 8 'msi' IRQs.
 
-OK, understood.
+I have asked SpacemiT about this, specifically whether there
+are additional interrupts (I don't think there are), or if
+not that, additional registers to support MSI 32+ (see
+below).  In their downstream driver they handle interrupts
+differently.  I suspect num_vectors needs to be set to 32
+(or I'll leave it unset and take the default).
 
-Thank you.
+
+In the DesignWare driver, there are up to 8 "ctrls", and each
+ctrl has 32 bit positions representing 32 MSI vectors.  Each
+can have an msi_irq defined.  An msi_irq is always set up for
+ctrl 0.
+
+For any ctrl with an msi_irq assigned, dw_pcie_msi_host_init()
+sets its interrupt handler to dw_chained_msi_isr(), which just
+calls dw_handle_msi_irq().
+
+The way dw_handle_msi_irq() works, a single ctrl apparently can
+handle up to 256 MSI vectors, as long as the block of 3 registers
+that manage the ctrl (ENABLE, MASK, and STATUS presumably) are
+consecutive in I/O memory for consecutive ctrls.
+
+
+I looked for other examples.  I see that "pcie-fu740.c", which
+supports compatible "sifive,fu740-pcie", sets num_vectors to
+MAX_MSI_IRQS, but "fu740-c000.dtsi" defines just one "msi"
+interrupt.  And "pci-dra7xx.c" seems to do something similar,
+and maybe "pcie-rcar-gen4.c" too.
+
+> Currently the driver is not strict about this requirement. I will send a patch
+> to print an error message if this requirement is not satisfied.
+> 
+>>>> +
+>>>> +	platform_set_drvdata(pdev, k1);
+>>>> +
+>>>
+>>> For setting the correct runtime PM state of the controller, you should do:
+>>>
+>>> pm_runtime_set_active()
+>>> pm_runtime_no_callbacks()
+>>> devm_pm_runtime_enable()
+>>
+>> OK, that's easy enough.
+>>
+>>> This will fix the runtime PM hierarchy of PCIe chain (from host controller to
+>>> client drivers). Otherwise, it will be broken.
+>> Is this documented somewhere?  (It wouldn't surprise me if it
+>> is and I just missed it.)
+>>
+> 
+> Sorry no. It is on my todo list. But I'm getting motivation now.
+> 
+>> This driver has as its origins some vendor code, and I simply
+>> removed the runtime PM calls.  I didn't realize something would
+>> be broken without making pm_runtime*() calls.
+>>
+> 
+> It is the PM framework requirement to mark the device as 'active' to allow it to
+> participate in runtime PM. If you do not mark it as 'active' and 'enable' it,
+> the framework will not allow propagating the runtime PM changes before *this*
+> device. For instance, consider the generic PCI topology:
+> 
+> PCI controller (platform device)
+> 	|
+> PCI host bridge
+> 	|
+> PCI Root Port
+> 	|
+> PCI endpoint device
+> 
+> If the runtime PM is not enabled for the PCI Root Port, then if the PCI endpoint
+> device runtime suspends, it will not trigger runtime suspend for the Root Port
+> and also for the PCI controller. Also, since the runtime PM framework doesn't
+> have the visibility of the devices underneath the bus (like endpoint), it may
+> assume that no devices (children) are currently active and may trigger runtime
+> suspend of the Root Port (parent) even though the endpoint device could be
+> 'active'.
+
+So this basically marks this controller as a pass-through device that
+doesn't itself change state for runtime PM, but still communicates that
+somewhere at or below it there might be devices that do participate.
+  > For all these reasons, it is recommended to properly reflect the 
+runtime PM
+> status of the device even if the driver doesn't do anything special about it.
+> This is also the reason why I asked you to set pm_runtime_no_callbacks() since
+> this driver doesn't register any runtime PM ops.
+OK, I think understand now.
+
+> Since this controller driver is the top of the hierarchy, you may ask what could
+> happen if this driver runtime PM status is not reflected correctly. Well, most
+> controllers have some power domain associated with them controlled by the genpd
+> framework. If the runtime PM framework thinks that there are no devices
+> connected to the bus and the controller driver also doesn't have the state
+> enabled, it may disable the power domain associated with it. If that happens,
+> the PCI controller will not work and so the devices in the hierarchy.
+> 
+> Hope this clarifies.
+
+Yes, it helps a lot.  Thank you.
 
 					-Alex
 
-> 
 > - Mani
 > 
 
