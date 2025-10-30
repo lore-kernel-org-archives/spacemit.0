@@ -1,196 +1,115 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2585A272803
-	for <spacemit@lists.linux.dev>; Thu, 30 Oct 2025 14:32:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37F82DE1E0;
+	Thu, 30 Oct 2025 16:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761834755; cv=none; b=pRifgPnt1ROx36vBmhCGZV0AP3kLvP1fL+/bbn0oZkLHby1pRnnEU7q0ZTG2tNb4XqI5FoDZljKolLiQL0ypFq51Sonn3qsK54EtMOjv2G6kYz2ZFhastqmtSKGMI3a88uIpeuVvDe1q1IIoRP1pMtuNj+tUJGX/5DlXMAzNxts=
+	t=1761842484; cv=none; b=sKJWyP1goZ8K419qGaWpujAqngRnjsfL9m1fabaa5xZd2ICEFsZKGPf0JXCDplvhUV5SCSJor8/l4vyA7ZmnfRotu3xp/OwEF3BWKMhx/8THoBcXXmp+DICSdso+JhHVINquBfs53aKG/MZICANSQ4wW6epc/qigWnQ3hGkZCv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761834755; c=relaxed/simple;
-	bh=Vv8+Zc55MjFKW5EjvmWza6mHqxGSrdju6Wu7nRKTDb0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Lm0zutfDXUsM3lyPGjjrN91m8YFYX7zGjVVFpmbkeMvKv55n7oBalO0HeSpjFPepLDyy12VVUx5jO0rnVS1WBMwbbPbUCtAUFZMdtt9pqByJtb0YZqsylNWb3aiRv9coE+P1muVpDNL01FaekUXXtH1pYmnuvft76G5PzO1KdgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [114.241.85.109])
-	by APP-05 (Coremail) with SMTP id zQCowAAnlfPfdgNpTQZlAA--.3125S2;
-	Thu, 30 Oct 2025 22:32:01 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Thu, 30 Oct 2025 22:31:44 +0800
-Subject: [PATCH net] net: spacemit: Implement emac_set_pauseparam properly
+	s=arc-20240116; t=1761842484; c=relaxed/simple;
+	bh=aIoUwknKACszK3iv7HnkpaK0g2nYzhodMj6uyK4R4cI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rVnbuwrPva/HQJQ0JlIpWyhASuXiLTfCFI9oTZWi5nLzR6o6XG9L4lTSgoFA3VqFBTx6p1H1K2mykEola3u3PPiOi41DCFLhymS0TiSy47NU0ULVl91KcT+57qIbPGsmisgcpMEIMbNQJal/14xJiq8djGxckcZnzDgX9eVpblo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OFfTgDYU; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OFfTgDYU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17F5C4CEF1;
+	Thu, 30 Oct 2025 16:41:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761842483;
+	bh=aIoUwknKACszK3iv7HnkpaK0g2nYzhodMj6uyK4R4cI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OFfTgDYUwwtk9a3MXmhN+C5QZeQcKowOvQ7JtdxMp86xa7GEim8ms4eA76JdlZfHS
+	 eFhBevKSCYCx6yMiJ4R3yNh1fEKAOckpxYlBhI00S+GuEHbN3tDMHcHFjIQ1269XM1
+	 0162sMPeIP15mj38QzG6640TZdgvl0DyZO+zAfpQ7ma2P8O29xh8ZpHLOZ/sL32xe0
+	 iqWWZ9MUG/8ewMu0jydmDJAMYeZyKtiWVz81dJNlG9Bj+piDGu94CB0PcteyGg6uJe
+	 yPXStu00GL1l1YREbznHaQFRp4m3fyjHtsoP+kDTeTeOt9XtrZbecyLXwkT6Ds1J5w
+	 cFFbUk6PUfVZg==
+Date: Thu, 30 Oct 2025 22:11:12 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Johannes Erdfelt <johannes@erdfelt.com>, 
+	Aurelien Jarno <aurelien@aurel32.net>
+Cc: Alex Elder <elder@riscstar.com>, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, bhelgaas@google.com, lpieralisi@kernel.org, 
+	kwilczynski@kernel.org, vkoul@kernel.org, kishon@kernel.org, dlan@gentoo.org, 
+	guodong@riscstar.com, pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	alex@ghiti.fr, p.zabel@pengutronix.de, christian.bruel@foss.st.com, 
+	shradha.t@samsung.com, krishna.chundru@oss.qualcomm.com, qiang.yu@oss.qualcomm.com, 
+	namcao@linutronix.de, thippeswamy.havalige@amd.com, inochiama@gmail.com, 
+	devicetree@vger.kernel.org, linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/7] Introduce SpacemiT K1 PCIe phy and host controller
+Message-ID: <5kwbaj2eqr4imcaoh6otqo7huuraqhodxh4dbwc33vqpi5j5yq@ueufnqetrg2m>
+References: <20251013153526.2276556-1-elder@riscstar.com>
+ <aPEhvFD8TzVtqE2n@aurel32.net>
+ <92ee253f-bf6a-481a-acc2-daf26d268395@riscstar.com>
+ <aQEElhSCRNqaPf8m@aurel32.net>
+ <20251028184250.GM15521@sventech.com>
+ <82848c80-15e0-4c0e-a3f6-821a7f4778a5@riscstar.com>
+ <20251028204832.GN15521@sventech.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251030-k1-ethernet-fix-autoneg-v1-1-baa572607ccc@iscas.ac.cn>
-X-B4-Tracking: v=1; b=H4sIANB2A2kC/y2NSw6CMBCGr0Jm7Zi2RKNcxbBoywgTQ6vTQkwId
- 3eiLr//uUEhYSrQNRsIrVw4JwV7aCBOPo2EPCiDM+5kTWvwYZHqRJKo4p3f6JeaE43oyfmrC21
- 0QwBtP4XU/i7fQMPQ/0Sh16Iv9e8EXwhjnmeuXbOej/aCEi30+/4B8sktx5sAAAA=
-X-Change-ID: 20251030-k1-ethernet-fix-autoneg-ae2a92b3c2db
-To: Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Yixun Lan <dlan@gentoo.org>, 
- Maxime Chevallier <maxime.chevallier@bootlin.com>, 
- Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Vivian Wang <wangruikang@iscas.ac.cn>
-X-Mailer: b4 0.14.3
-X-CM-TRANSID:zQCowAAnlfPfdgNpTQZlAA--.3125S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuF47Gw4rArWktF1xWr17Wrg_yoWrXF4DpF
-	WUXa4Skr4UXFs3tFsxAF4UAFy3Ga4xtr17uFyfCwsYq3ZxAryxCFyvkay7GFykurW8Xry3
-	G3y5AF1xGFWDZrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9j14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
-	n2IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4
-	AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE
-	17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMI
-	IF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4l
-	IxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvf
-	C2KfnxnUUI43ZEXa7VUbGQ6JUUUUU==
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251028204832.GN15521@sventech.com>
 
-emac_set_pauseparam (the set_pauseparam callback) didn't properly update
-phydev->advertising. Fix it by changing it to call phy_set_asym_pause.
++ Aurelien
 
-Also simplify/reorganize related code around this.
+On Tue, Oct 28, 2025 at 01:48:32PM -0700, Johannes Erdfelt wrote:
+> On Tue, Oct 28, 2025, Alex Elder <elder@riscstar.com> wrote:
+> > On 10/28/25 1:42 PM, Johannes Erdfelt wrote:
+> > > I have been testing this patchset recently as well, but on an Orange Pi
+> > > RV2 board instead (and an extra RV2 specific patch to enable power to
+> > > the M.2 slot).
+> > > 
+> > > I ran into the same symptoms you had ("QID 0 timeout" after about 60
+> > > seconds). However, I'm using an Intel 600p. I can confirm my NVME drive
+> > > seems to work fine with the "pcie_aspm=off" workaround as well.
+> > 
+> > I don't see this problem, and haven't tried to reproduce it yet.
+> > 
+> > Mani told me I needed to add these lines to ensure the "runtime
+> > PM hierarchy of PCIe chain" won't be "broken":
+> > 
+> > 	pm_runtime_set_active()
+> > 	pm_runtime_no_callbacks()
+> > 	devm_pm_runtime_enable()
+> > 
+> > Just out of curiosity, could you try with those lines added
+> > just before these assignments in k1_pcie_probe()?
+> > 
+> > 	k1->pci.dev = dev;
+> > 	k1->pci.ops = &k1_pcie_ops;
+> > 	dw_pcie_cap_set(&k1->pci, REQ_RES);
+> > 
+> > I doubt it will fix what you're seeing, but at the moment I'm
+> > working on something else.
+> 
+> Unfortunately there is no difference with the runtime PM hierarchy
+> additions.
+> 
 
-Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
----
- drivers/net/ethernet/spacemit/k1_emac.c | 48 ++++++++++++++-------------------
- 1 file changed, 20 insertions(+), 28 deletions(-)
+These are not supposed to fix the issues you were facing. I discussed with Alex
+offline and figured out that L1 works fine on his BPI-F3 board with a NVMe SSD.
 
-diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-index e1c5faff3b71..61d62c0f028e 100644
---- a/drivers/net/ethernet/spacemit/k1_emac.c
-+++ b/drivers/net/ethernet/spacemit/k1_emac.c
-@@ -133,7 +133,6 @@ struct emac_priv {
- 	u32 rx_delay;
- 
- 	bool flow_control_autoneg;
--	u8 flow_control;
- 
- 	/* Softirq-safe, hold while touching hardware statistics */
- 	spinlock_t stats_lock;
-@@ -1039,14 +1038,7 @@ static void emac_set_rx_fc(struct emac_priv *priv, bool enable)
- 	emac_wr(priv, MAC_FC_CONTROL, val);
- }
- 
--static void emac_set_fc(struct emac_priv *priv, u8 fc)
--{
--	emac_set_tx_fc(priv, fc & FLOW_CTRL_TX);
--	emac_set_rx_fc(priv, fc & FLOW_CTRL_RX);
--	priv->flow_control = fc;
--}
--
--static void emac_set_fc_autoneg(struct emac_priv *priv)
-+static void emac_set_fc(struct emac_priv *priv)
- {
- 	struct phy_device *phydev = priv->ndev->phydev;
- 	u32 local_adv, remote_adv;
-@@ -1056,17 +1048,18 @@ static void emac_set_fc_autoneg(struct emac_priv *priv)
- 
- 	remote_adv = 0;
- 
--	if (phydev->pause)
-+	/* Force settings in advertising if autoneg disabled */
-+
-+	if (!priv->flow_control_autoneg || phydev->pause)
- 		remote_adv |= LPA_PAUSE_CAP;
- 
--	if (phydev->asym_pause)
-+	if (!priv->flow_control_autoneg || phydev->asym_pause)
- 		remote_adv |= LPA_PAUSE_ASYM;
- 
- 	fc = mii_resolve_flowctrl_fdx(local_adv, remote_adv);
- 
--	priv->flow_control_autoneg = true;
--
--	emac_set_fc(priv, fc);
-+	emac_set_tx_fc(priv, fc & FLOW_CTRL_TX);
-+	emac_set_rx_fc(priv, fc & FLOW_CTRL_RX);
- }
- 
- /*
-@@ -1429,31 +1422,28 @@ static void emac_get_pauseparam(struct net_device *dev,
- 				struct ethtool_pauseparam *pause)
- {
- 	struct emac_priv *priv = netdev_priv(dev);
-+	u32 val = emac_rd(priv, MAC_FC_CONTROL);
- 
- 	pause->autoneg = priv->flow_control_autoneg;
--	pause->tx_pause = !!(priv->flow_control & FLOW_CTRL_TX);
--	pause->rx_pause = !!(priv->flow_control & FLOW_CTRL_RX);
-+	pause->tx_pause = !!(val & MREGBIT_FC_GENERATION_ENABLE);
-+	pause->rx_pause = !!(val & MREGBIT_FC_DECODE_ENABLE);
- }
- 
- static int emac_set_pauseparam(struct net_device *dev,
- 			       struct ethtool_pauseparam *pause)
- {
- 	struct emac_priv *priv = netdev_priv(dev);
--	u8 fc = 0;
-+	struct phy_device *phydev = dev->phydev;
- 
--	priv->flow_control_autoneg = pause->autoneg;
-+	if (!phydev)
-+		return -ENODEV;
- 
--	if (pause->autoneg) {
--		emac_set_fc_autoneg(priv);
--	} else {
--		if (pause->tx_pause)
--			fc |= FLOW_CTRL_TX;
-+	if (!phy_validate_pause(phydev, pause))
-+		return -EINVAL;
- 
--		if (pause->rx_pause)
--			fc |= FLOW_CTRL_RX;
-+	priv->flow_control_autoneg = pause->autoneg;
- 
--		emac_set_fc(priv, fc);
--	}
-+	phy_set_asym_pause(dev->phydev, pause->rx_pause, pause->tx_pause);
- 
- 	return 0;
- }
-@@ -1632,7 +1622,7 @@ static void emac_adjust_link(struct net_device *dev)
- 
- 		emac_wr(priv, MAC_GLOBAL_CONTROL, ctrl);
- 
--		emac_set_fc_autoneg(priv);
-+		emac_set_fc(priv);
- 	}
- 
- 	phy_print_status(phydev);
-@@ -2010,6 +2000,8 @@ static int emac_probe(struct platform_device *pdev)
- 	priv->pdev = pdev;
- 	platform_set_drvdata(pdev, priv);
- 
-+	priv->flow_control_autoneg = true;
-+
- 	ret = emac_config_dt(pdev, priv);
- 	if (ret < 0)
- 		return dev_err_probe(dev, ret, "Configuration failed\n");
+And I believe, Aurelien is also using that same board, but with different
+SSDs. But what is puzzling me is, L1 is breaking Aurelien's setup with 3 SSDs
+from different vendors. It apparently works fine on Alex's setup. So it somehow
+confirms that Root Port supports and behaves correctly with L1. But at the same
+time, I cannot just say without evidence that L1 is broken on all these SSDs
+that you and Aurelien tested with.
 
----
-base-commit: cb6649f6217c0331b885cf787f1d175963e2a1d2
-change-id: 20251030-k1-ethernet-fix-autoneg-ae2a92b3c2db
+So until that is figured out, I've asked Alex to disable L1 CAP in the
+controller driver. So in the next version of this series, your SSDs should work
+out of the box.
 
-Best regards,
+- Mani
+
 -- 
-Vivian "dramforever" Wang
-
+மணிவண்ணன் சதாசிவம்
