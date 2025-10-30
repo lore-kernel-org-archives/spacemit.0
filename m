@@ -1,155 +1,183 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
+Received: from silver.cherry.relay.mailchannels.net (silver.cherry.relay.mailchannels.net [23.83.223.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C2A36CA6A;
-	Thu, 30 Oct 2025 17:50:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761846614; cv=none; b=CNDZ8hBz9XkUUoEYJXAqW2jWCFiC0T9mDrvsCOZdMpW95xsruUjNBVitncZv025pjnn3BJPbREmqJerGRTRLySPw2P4IlM9SQpeT+0cDPSBWdPzDtx9Dpwwi/Vf2Dob5VlbaMXk217S0K3/KzJ3JMqY2wuBXCD6iKXfoe64udr0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761846614; c=relaxed/simple;
-	bh=iyoMxK1enzWryQx2WcAmoYKpgr0zkQbPo+SYtQtPqcg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oyy8viKUfBEncYCeSczzn7RRoayna2SFp80ZgxAvGCXKDUZVeZ8/mUHV8bllgVj1fFwoTTcqEmTd6Q3XUJB+2aTmO1Z6zThwfmEOm4RBzc2uBjRmwxsb4zY3G9mkILpoc/MATmrlF1JtjqOwrBl5/WFyGh4xQP32k1hnV1+SJHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=se09qJUR; arc=none smtp.client-ip=195.154.113.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE83A20B22
+	for <spacemit@lists.linux.dev>; Thu, 30 Oct 2025 20:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.166
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761856260; cv=pass; b=M1GV3VX5RiqEqLdxdB672GOlhxEBjSqYuBbIbUWQQ+tcfKFyO8gwAAnGt3SzzMcFVmek52bnX4NQitvqW4U9GWd0/F82JL+U9MclwL46bWCASspmuUeflYBUHExRHd6oAQDjAtLW5ytJxkX3XrlDHkBh0F8DMEBXCqAJBu11EA8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761856260; c=relaxed/simple;
+	bh=aEyoDquK8jAwPsAQ35ZiPdK20ciUdFTGMEON6HpyF4U=;
+	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
+	 Content-Type:Date; b=P/6bhEgcgvr/0L0QSG+A3Iv/HHY5A1CT2AwpDwQXJZCPto20FJ6kwfdaZq4fMM2r9M5asmyr85bYOeiGs1P8I7FC0LEhP9nNBYxCGfw7qsiOE1HUDwWiB8LyexfH6kTCgibtcymzmEYlPdq+yr5OEjB9HfRHrLbzCQlT3WlAYic=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=KUb3umUm; arc=pass smtp.client-ip=23.83.223.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="se09qJUR"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=JSgLBP4N8SNl1gTOFG6TDDGGZeq/ZcICS9giX00KL1s=; b=se09qJUR+afv9LNen0zoku4b/N
-	sK1LMhglahuW/MrFGN+kga6O0ok8UDIwm1bX0WRn7t+GXuXg/TLvNS2gr1fKj6qsaGcaIQK/jdbA9
-	0QCH0cLX7eh7V1Hzx0M64sme0FCudCaCA+UE5/9Dqyfg/CXO99w4Nac3l70T0xzQTCIPHlWgDC2/n
-	rxGbQpS0ePc8qNiReX2L0XfHkEIvYKOQDYDd0dgCSmLHzTijJ8RxKrRIjzGw8GQB6CU4fcwwxkR6q
-	k5cgghZuOt3rvmV/Kl+TWKXkX7BzRHnQevSb+mII+Bi4FWnYTmmkIjHzXl1gdK6zAhq0HLUPOwgZw
-	EXG45G+A==;
-Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
-	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vEWmI-00000002ZzI-1jJy;
-	Thu, 30 Oct 2025 18:49:38 +0100
-Date: Thu, 30 Oct 2025 18:49:37 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Johannes Erdfelt <johannes@erdfelt.com>,
-	Alex Elder <elder@riscstar.com>, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, vkoul@kernel.org,
-	kishon@kernel.org, dlan@gentoo.org, guodong@riscstar.com,
-	pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, p.zabel@pengutronix.de, christian.bruel@foss.st.com,
-	shradha.t@samsung.com, krishna.chundru@oss.qualcomm.com,
-	qiang.yu@oss.qualcomm.com, namcao@linutronix.de,
-	thippeswamy.havalige@amd.com, inochiama@gmail.com,
-	devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/7] Introduce SpacemiT K1 PCIe phy and host controller
-Message-ID: <aQOlMcI9jTdd7QNb@aurel32.net>
-Mail-Followup-To: Manivannan Sadhasivam <mani@kernel.org>,
-	Johannes Erdfelt <johannes@erdfelt.com>,
-	Alex Elder <elder@riscstar.com>, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, vkoul@kernel.org,
-	kishon@kernel.org, dlan@gentoo.org, guodong@riscstar.com,
-	pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, p.zabel@pengutronix.de, christian.bruel@foss.st.com,
-	shradha.t@samsung.com, krishna.chundru@oss.qualcomm.com,
-	qiang.yu@oss.qualcomm.com, namcao@linutronix.de,
-	thippeswamy.havalige@amd.com, inochiama@gmail.com,
-	devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20251013153526.2276556-1-elder@riscstar.com>
- <aPEhvFD8TzVtqE2n@aurel32.net>
- <92ee253f-bf6a-481a-acc2-daf26d268395@riscstar.com>
- <aQEElhSCRNqaPf8m@aurel32.net>
- <20251028184250.GM15521@sventech.com>
- <82848c80-15e0-4c0e-a3f6-821a7f4778a5@riscstar.com>
- <20251028204832.GN15521@sventech.com>
- <5kwbaj2eqr4imcaoh6otqo7huuraqhodxh4dbwc33vqpi5j5yq@ueufnqetrg2m>
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="KUb3umUm"
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 2FD83122527;
+	Thu, 30 Oct 2025 20:30:51 +0000 (UTC)
+Received: from fr-int-smtpout24.hostinger.io (trex-green-5.trex.outbound.svc.cluster.local [100.121.213.161])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id D7509121E4F;
+	Thu, 30 Oct 2025 20:30:47 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1761856250; a=rsa-sha256;
+	cv=none;
+	b=W4sLALF+qWRi6YFhm9pKU0AhFcAeETFdMSMjeuNgQOOe30Svjb5143UUVJioNqozSV0J9m
+	NuBzhcujJx3fTIqg5ENq3I84VIy5IDJOvDb/youv2e3Y7+j7OEQxlXu7LkuOm05vejeglH
+	sf1W0o6qYupVeOHlLL7gBwoJIg6oCRh94JG9QgwhUtMmTjUArSjSLZxQJmL5v4fbcLoW2+
+	f3kCCOhw4XU2p9DeiKcB+MrJkC138i+ozw5mQbD02j5+Oc/JlrpJXkoLX6v65+xeFXYqpa
+	urNLiw9HSRIvQHFihW94tf5m64SXUoYvAvhYVhP2nJuUNm/3J7/qOnsEYnR5Mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1761856250;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=a/3w0tSYmbrdB8Bc4VelKk3WHGunz92aPVIP7o7nUFc=;
+	b=bNxOHqPHJFk4pM9jx7Fekg0BHSeXHBdSyjGJVawywlQhTDcYZxUCVMR04hvlq7tgFK9Z66
+	lqU+bsxS8CAyYaRvYjDYoqGj2uXohbt5/ntKBlzGzljYIB8FWLbqKUwsy0pM2aK8SDbUp3
+	RMiJizSUdyFnMDP+XxoLt27fDvYWqdNkt2d4hF0gOAWgO4F0qqd5Lb+bfRIV+zEuyYHJoD
+	zlcrGKUrw2tPDLxfVW+PskBJ2mh7U1LoVsFuiZLqllpqVPILPZ3c3+YXUNVDyRevPxFzK7
+	WzgSXd0HwUkU1mbPawObgvyXZOxJ+GDkcxOaVX8mB9V46MReFnBO6k8ndqtuQA==
+ARC-Authentication-Results: i=1;
+	rspamd-768b565cdb-w6swn;
+	auth=pass smtp.auth=hostingeremail
+ smtp.mailfrom=michael.opdenacker@rootcommit.com
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId:
+ hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Thoughtful-Abortive: 7dfbeef6333ef82d_1761856250704_2966912137
+X-MC-Loop-Signature: 1761856250703:941208266
+X-MC-Ingress-Time: 1761856250703
+Received: from fr-int-smtpout24.hostinger.io (fr-int-smtpout24.hostinger.io
+ [148.222.54.15])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.121.213.161 (trex/7.1.3);
+	Thu, 30 Oct 2025 20:30:50 +0000
+Received: from [IPV6:2001:861:4450:d360:c0a5:3392:2a75:70e6] (unknown [IPv6:2001:861:4450:d360:c0a5:3392:2a75:70e6])
+	(Authenticated sender: michael.opdenacker@rootcommit.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4cyG2q1f02z1xmj;
+	Thu, 30 Oct 2025 20:30:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
+	s=hostingermail-a; t=1761856246;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=a/3w0tSYmbrdB8Bc4VelKk3WHGunz92aPVIP7o7nUFc=;
+	b=KUb3umUme+l1IZqbe9VYEU0d+/Tfpt4Xuvf0mIDDtIk8O+OnQAIooo1HyJSHxZqyjWcZqn
+	cGHfiM9bVWL+WnYI9ArPL/DGnwDQ/s7J/VfTILVwUpdva5klS/XbnbpT0BDmm3v6m/72bF
+	7QFl8Mj8QC5g4yxhkznK8yPVWhyQr2lbsWffIJVQfKrVHAM6PZQ/K37EiU+COSbyYiuiF1
+	HRXfyl34zjYy4OAAmGG9U4kb3C2Hkal5BtqaVuODDxmVAfA0U3tbotkkKV9koXDewL/Y4f
+	avu5mRahhaTp0+H1XrAdEvR57RErj1vhld5vLOrBSzZyKd+Mb2137TUde7dz3g==
+Message-ID: <b0624cd1-c223-459b-81dd-ddfe05ea23bf@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5kwbaj2eqr4imcaoh6otqo7huuraqhodxh4dbwc33vqpi5j5yq@ueufnqetrg2m>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Cc: michael.opdenacker@rootcommit.com, netdev@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net] net: spacemit: Implement emac_set_pauseparam properly
+To: Vivian Wang <wangruikang@iscas.ac.cn>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Yixun Lan <dlan@gentoo.org>,
+ Maxime Chevallier <maxime.chevallier@bootlin.com>,
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+References: <20251030-k1-ethernet-fix-autoneg-v1-1-baa572607ccc@iscas.ac.cn>
+Content-Language: en-US, fr
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Organization: Root Commit
+In-Reply-To: <20251030-k1-ethernet-fix-autoneg-v1-1-baa572607ccc@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Date: Thu, 30 Oct 2025 20:30:42 +0000 (UTC)
+X-CM-Analysis: v=2.4 cv=Lflu6Sfi c=1 sm=1 tr=0 ts=6903caf6 a=oMt8lXEVxmMAvUTv2ASLGA==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=d70CFdQeAAAA:8 a=J2c-WwRuk2R10H0XxeMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NcxpMcIZDGm-g932nG_k:22
+X-CM-Envelope: MS4xfDFDEgdfardwUXzuBuR06atOkE6SSVOwQrmHHmrTNGXJHeYVxusT/9hE/NioNVKaOlepWagMqC+D5Q3T+2W962ludmIA2u9300rs8JLhqXRwlpqzwX4M MFf9UPIPfXHJfXSpraVAWY8YGDgne+pB6Y5OJB5/31YRJwyqp74hdJvfkhD6a4n2C62p4rdwS1YlgxDn8wrQ5A6qEtA++lEeEkkz2voj7dVCNaQB9JZpZn/n 713oZYTAyiLt10pcr3UunZS+Ev+jNOaVHzEQoX1ni/lvpd72LCBAhDjM2R3yeeRKYV/2fsesLhRDWzca9vPv+tHPlU93czUqLAbU41gCK5wXoeKMW0TiXAyM usj45M9xNUSqrdkVAh/Hc9ZlaqhO89H97nYT5Qm4DI5Kly6w6nN40dlkDAJ29s59eFgaxQbloaJXKfZ4m3AVXs+hz9/2m664ih8Ou/xV+1035TLnYiG4VqYs 0OHFRS6Ul1DiFJAfrEDxjLSF26kNxaDUQUAMcOqU4k4vg4Yplljoj8j5HP7nIXlIUXo6mxX1cMjWD7xMPgHqNsiNS5WeX/hBSgkVxHLIMrPW9iJCu2OLJqK3 bdcZokvTk9RTFkZwBJvMPI8spnmBdooBlYmWSuNgjy6ybm6PTnd7Vzv5PpTClndSPRGQE7CphIsPUsDGrqfBnWG/cLpfLjFHY3o35c7IGMoQRp9Xi9ASUStV iX7CBJQYXDg/Qxx4zRdXOVLJqsXdkCN+LPtLk4aocTmA0PhtGdy4EWfVB81hxdfOT0kZZrUazI//H1Hiqsm8sW+si5CIzBgJux7NrupIzSP0C1RTSk0VFIEY 9KkcrGnThmWQSvMeNrg=
+X-AuthUser: michael.opdenacker@rootcommit.com
 
-Hi Mani,
 
-On 2025-10-30 22:11, Manivannan Sadhasivam wrote:
-> + Aurelien
-> 
-> On Tue, Oct 28, 2025 at 01:48:32PM -0700, Johannes Erdfelt wrote:
-> > On Tue, Oct 28, 2025, Alex Elder <elder@riscstar.com> wrote:
-> > > On 10/28/25 1:42 PM, Johannes Erdfelt wrote:
-> > > > I have been testing this patchset recently as well, but on an Orange Pi
-> > > > RV2 board instead (and an extra RV2 specific patch to enable power to
-> > > > the M.2 slot).
-> > > > 
-> > > > I ran into the same symptoms you had ("QID 0 timeout" after about 60
-> > > > seconds). However, I'm using an Intel 600p. I can confirm my NVME drive
-> > > > seems to work fine with the "pcie_aspm=off" workaround as well.
-> > > 
-> > > I don't see this problem, and haven't tried to reproduce it yet.
-> > > 
-> > > Mani told me I needed to add these lines to ensure the "runtime
-> > > PM hierarchy of PCIe chain" won't be "broken":
-> > > 
-> > > 	pm_runtime_set_active()
-> > > 	pm_runtime_no_callbacks()
-> > > 	devm_pm_runtime_enable()
-> > > 
-> > > Just out of curiosity, could you try with those lines added
-> > > just before these assignments in k1_pcie_probe()?
-> > > 
-> > > 	k1->pci.dev = dev;
-> > > 	k1->pci.ops = &k1_pcie_ops;
-> > > 	dw_pcie_cap_set(&k1->pci, REQ_RES);
-> > > 
-> > > I doubt it will fix what you're seeing, but at the moment I'm
-> > > working on something else.
-> > 
-> > Unfortunately there is no difference with the runtime PM hierarchy
-> > additions.
-> > 
-> 
-> These are not supposed to fix the issues you were facing. I discussed with Alex
-> offline and figured out that L1 works fine on his BPI-F3 board with a NVMe SSD.
-> 
-> And I believe, Aurelien is also using that same board, but with different
-> SSDs. But what is puzzling me is, L1 is breaking Aurelien's setup with 3 SSDs
-> from different vendors. It apparently works fine on Alex's setup. So it somehow
-> confirms that Root Port supports and behaves correctly with L1. But at the same
-> time, I cannot just say without evidence that L1 is broken on all these SSDs
-> that you and Aurelien tested with.
+On 10/30/25 15:31, Vivian Wang wrote:
+> emac_set_pauseparam (the set_pauseparam callback) didn't properly update
+> phydev->advertising. Fix it by changing it to call phy_set_asym_pause.
+>
+> Also simplify/reorganize related code around this.
+>
+> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+> ---
+>   drivers/net/ethernet/spacemit/k1_emac.c | 48 ++++++++++++++-------------------
+>   1 file changed, 20 insertions(+), 28 deletions(-)
 
-It could be that we have different revision of the BPI-F3 board, it's 
-not impossible that I got an early-ish version. That said I just 
-visually checked the PCB against the schematics, and the devices on the 
-CLKREQN line appear to be installed.
 
-If someone has contacts to check what changes have been done between the 
-different board revision, that could help. Or same if there are 
-different revisions of the SpacemiT K1 chip.
+Tested on OrangePi RV2 through performance tests, on 
+https://github.com/spacemit-com/linux/commits/for-next. No regressions 
+found:
 
-> So until that is figured out, I've asked Alex to disable L1 CAP in the
-> controller driver. So in the next version of this series, your SSDs should work
-> out of the box.
+root@orangepi-rv2-mainline:~# iperf3 -c 172.24.0.1
+Connecting to host 172.24.0.1, port 5201
+[  5] local 172.24.0.2 port 49948 connected to 172.24.0.1 port 5201
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-1.00   sec   113 MBytes   946 Mbits/sec    0    339 KBytes
+[  5]   1.00-2.00   sec   112 MBytes   943 Mbits/sec    0    447 KBytes
+[  5]   2.00-3.00   sec   113 MBytes   948 Mbits/sec    0    447 KBytes
+[  5]   3.00-4.00   sec   112 MBytes   941 Mbits/sec    0    475 KBytes
+[  5]   4.00-5.00   sec   112 MBytes   940 Mbits/sec    0    505 KBytes
+[  5]   5.00-6.00   sec   112 MBytes   944 Mbits/sec    0    567 KBytes
+[  5]   6.00-7.00   sec   113 MBytes   949 Mbits/sec    0    600 KBytes
+[  5]   7.00-8.00   sec   112 MBytes   939 Mbits/sec    0    600 KBytes
+[  5]   8.00-9.00   sec   112 MBytes   936 Mbits/sec    0    600 KBytes
+[  5]   9.00-10.01  sec   113 MBytes   940 Mbits/sec    0    600 KBytes
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.01  sec  1.10 GBytes   943 Mbits/sec    0   sender
+[  5]   0.00-10.02  sec  1.10 GBytes   940 Mbits/sec     receiver
 
-Thanks, that sounds good.
+iperf Done.
+root@orangepi-rv2-mainline:~# iperf3 -s
+-----------------------------------------------------------
+Server listening on 5201 (test #1)
+-----------------------------------------------------------
+Accepted connection from 172.24.0.1, port 47834
+[  5] local 172.24.0.2 port 5201 connected to 172.24.0.1 port 47840
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec   112 MBytes   934 Mbits/sec
+[  5]   1.00-2.00   sec   112 MBytes   941 Mbits/sec
+[  5]   2.00-3.00   sec   112 MBytes   942 Mbits/sec
+[  5]   3.00-4.00   sec   112 MBytes   942 Mbits/sec
+[  5]   4.00-5.00   sec   112 MBytes   942 Mbits/sec
+[  5]   5.00-6.00   sec   112 MBytes   942 Mbits/sec
+[  5]   6.00-7.00   sec   112 MBytes   942 Mbits/sec
+[  5]   7.00-8.00   sec   112 MBytes   942 Mbits/sec
+[  5]   8.00-9.00   sec   112 MBytes   941 Mbits/sec
+[  5]   9.00-10.00  sec   112 MBytes   942 Mbits/sec
+[  5]  10.00-10.01  sec   640 KBytes  1.04 Gbits/sec
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.01  sec  1.10 GBytes   941 Mbits/sec     receiver
+-----------------------------------------------------------
+Server listening on 5201 (test #2)
+-----------------------------------------------------------
 
-Regards
-Aurelien
+Tested-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Thanks!
+Michael.
 
 -- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+Michael Opdenacker
+Root Commit
+Yocto Project and OpenEmbedded Training course - Learn by doing:
+https://rootcommit.com/training/yocto/
+
