@@ -1,60 +1,48 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98E6329E77;
-	Thu, 30 Oct 2025 20:46:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79F019309E;
+	Thu, 30 Oct 2025 21:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761857188; cv=none; b=VHGCDyWOy/SyDJrQ0uATPS9tEfXosaTRl1P03CExm4NJrwHBbLUeBS+LLzVS3ZYAmyr4IqwUi3BEzSSmYyIdyqvh7suni2+mTh8zq7vMN7Fbk+qvszFP/BhUK6ZppQO7PxAKmNzwFyCPc9ZI9iC1oSeb5zhXe699BYeX4qy9ad8=
+	t=1761859976; cv=none; b=VnskQeE9xoTbOPBLnbUdKEuajbNP7HJngZQtlF0fAQvSx+dza3csYFLVqQRF1xNTa5MJymC/+dsbBovuLqSPs/4wGcHlKuFnjcNEgE5vRDRBkdehtewoEmRyNAs9UPD2er3G9ao3gjc54TfcYnDeYIQqpiH0C7gQpUqslnvxAK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761857188; c=relaxed/simple;
-	bh=IzHEHcAJbzakFfy2ATpib9g8Ap3+ty+ERc7BngoXid4=;
+	s=arc-20240116; t=1761859976; c=relaxed/simple;
+	bh=6iFZg16Z00OIQdSxKMvbQN1oC0YEeu711Oa6UefUkcY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CA0lfXrZmYGJi+mpaB1DBAaf/ohUDGwgFGMyEfyQaLdDyeutFfHu8CrNJX4rqrQeltwSi9LSIGXe4215vCeDyuV6rNh0CEFvjYMOsH4pOc52Du6i2A4O6wk/ruNoq2NvflhD6+cFe86JeaoT2wYtBs13oJYHwJaZxIYcm261+H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GylLjDwr; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wbpvr+kSAR1omxkwBGuYzqzds6YK3nF1lUqQtG2e8qz5Y/hw+q3fi5xFYSzEM8Gl2dyU0S9+KW7wJm89JrDnTZGFwiPJnVEMQsalSABxU9VupWph4OC2DAH4N0iOnL/30IZ4mDB7lkJJXEhKjx8tFqWgrj6NOW+BUgrG2dwIlUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=FQ5exwrp; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GylLjDwr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1761857187; x=1793393187;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=IzHEHcAJbzakFfy2ATpib9g8Ap3+ty+ERc7BngoXid4=;
-  b=GylLjDwrCN59J1N5m+1QNhCsyElH8F1hTbm3VWdx6MMWaItn7EYCULsM
-   Go51+j029j//EXPsoB1GJaAb3ZMQDWgIgEtLAplqdLgLU9pSTamaH+4Pw
-   BfwwWjWK8CFQNVVt/sz4wdzgar8RqFDG2p969vMznmlCEz3H1UGDz8Fx8
-   TmmB7rXGW/wMlO5xZ6RWVedXTc3nUJBFg7NB/XTnGyVCAVQW3hPbvA1vA
-   cSBJNliVvCYJ5nPEDTK4OEdDL2EgCg1SoMQD5W1xibIz90N4Ct+WH32Xs
-   T9QK0j5zcOFRG2/FMfPdvk//8c1SWiDBaTLOv4hScQQgrdBLbOUhhVwVJ
-   A==;
-X-CSE-ConnectionGUID: QxgE/OJxQye5iLg9ibVdDg==
-X-CSE-MsgGUID: Tag2wnDCQxGc8cfYI+G9sA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11598"; a="64109372"
-X-IronPort-AV: E=Sophos;i="6.19,267,1754982000"; 
-   d="scan'208";a="64109372"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2025 13:46:26 -0700
-X-CSE-ConnectionGUID: ZOSCdisEQn6yO+A1JXJA3Q==
-X-CSE-MsgGUID: CcBCWZKSSniJ0nEvu4L6Yw==
-X-ExtLoop1: 1
-Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
-  by fmviesa003.fm.intel.com with ESMTP; 30 Oct 2025 13:46:24 -0700
-Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1vEZWs-000MVc-24;
-	Thu, 30 Oct 2025 20:46:03 +0000
-Date: Fri, 31 Oct 2025 04:45:22 +0800
-From: kernel test robot <lkp@intel.com>
-To: Alex Elder <elder@riscstar.com>, broonie@kernel.org, dlan@gentoo.org
-Cc: oe-kbuild-all@lists.linux.dev, p.zabel@pengutronix.de,
-	linux-spi@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 2/3] spi: spacemit: introduce SpacemiT K1 SPI
- controller driver
-Message-ID: <202510310407.ooVqGn3P-lkp@intel.com>
-References: <20251027125504.297033-3-elder@riscstar.com>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="FQ5exwrp"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=vbEdMMd/alv82EZhs0oPuJJdyvSbCwrjtSlWnhwOMUI=; b=FQ5exwrph/BeEvhhVCtUCO2pqe
+	iAck5hK/q3oIAN8VUYIHc1IpVEvI5rcN6QeW0NJyzn9xlrny4h8KQKJ3SRxHGKpwLqbjiK/9FIR9Y
+	1rPE9XUw8D+fbci2VhjaEMDJP2sVgazYxVN92Z6/zI+S69Wzc3qOd+GFcDFkqSy9tRSg=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vEaFs-00CY1x-9Y; Thu, 30 Oct 2025 22:32:24 +0100
+Date: Thu, 30 Oct 2025 22:32:24 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net] net: spacemit: Implement emac_set_pauseparam properly
+Message-ID: <2eb5f9fc-d173-4b9e-89a3-87ad17ddd163@lunn.ch>
+References: <20251030-k1-ethernet-fix-autoneg-v1-1-baa572607ccc@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -63,31 +51,59 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251027125504.297033-3-elder@riscstar.com>
+In-Reply-To: <20251030-k1-ethernet-fix-autoneg-v1-1-baa572607ccc@iscas.ac.cn>
 
-Hi Alex,
+On Thu, Oct 30, 2025 at 10:31:44PM +0800, Vivian Wang wrote:
+> emac_set_pauseparam (the set_pauseparam callback) didn't properly update
+> phydev->advertising. Fix it by changing it to call phy_set_asym_pause.
 
-kernel test robot noticed the following build errors:
+This patch is doing a lot more than that.
 
-[auto build test ERROR on 8fec172c82c2b5f6f8e47ab837c1dc91ee3d1b87]
+Please break this patch up into smaller parts.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Alex-Elder/dt-bindings-spi-add-SpacemiT-K1-SPI-support/20251027-211246
-base:   8fec172c82c2b5f6f8e47ab837c1dc91ee3d1b87
-patch link:    https://lore.kernel.org/r/20251027125504.297033-3-elder%40riscstar.com
-patch subject: [PATCH v6 2/3] spi: spacemit: introduce SpacemiT K1 SPI controller driver
-config: csky-allmodconfig (https://download.01.org/0day-ci/archive/20251031/202510310407.ooVqGn3P-lkp@intel.com/config)
-compiler: csky-linux-gcc (GCC) 15.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251031/202510310407.ooVqGn3P-lkp@intel.com/reproduce)
+One obvious part you can break out is emac_get_pauseparam() reading
+from hardware rather that state variables.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202510310407.ooVqGn3P-lkp@intel.com/
+>  static int emac_set_pauseparam(struct net_device *dev,
+>  			       struct ethtool_pauseparam *pause)
+>  {
+>  	struct emac_priv *priv = netdev_priv(dev);
+> -	u8 fc = 0;
+> +	struct phy_device *phydev = dev->phydev;
+>  
+> -	priv->flow_control_autoneg = pause->autoneg;
+> +	if (!phydev)
+> +		return -ENODEV;
 
-All errors (new ones prefixed by >>, old ones prefixed by <<):
+I'm not sure that is the correct condition. emac_up() will fail if it
+cannot find the PHY. What you need to be testing here is if the
+interface is admin down, and so is not connected to the PHY. If so,
+-ENETDOWN would be more appropriate.
 
->> ERROR: modpost: "__udivdi3" [drivers/spi/spi-spacemit-k1.ko] undefined!
+> -	if (pause->autoneg) {
+> -		emac_set_fc_autoneg(priv);
+> -	} else {
+> -		if (pause->tx_pause)
+> -			fc |= FLOW_CTRL_TX;
+> +	if (!phy_validate_pause(phydev, pause))
+> +		return -EINVAL;
+>  
+> -		if (pause->rx_pause)
+> -			fc |= FLOW_CTRL_RX;
+> +	priv->flow_control_autoneg = pause->autoneg;
+>  
+> -		emac_set_fc(priv, fc);
+> -	}
+> +	phy_set_asym_pause(dev->phydev, pause->rx_pause, pause->tx_pause);
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+It is hard to read what this patch is doing, but there are 3 use cases.
+
+1) general autoneg for link speed etc, and pause autoneg
+2) general autoneg for link speed etc, and forced pause
+3) forced link speed etc, and forced pause.
+
+I don't see all these being handled. It gets much easier to get this
+right if you make use of phylink, since phylink handles all the
+business logic for you.
+
+	Andrew
