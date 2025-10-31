@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C882F49E3;
-	Thu, 30 Oct 2025 23:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C5620298D;
+	Fri, 31 Oct 2025 00:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761865683; cv=none; b=heObQLy9FogZM7B+18JzNtonz+2o8HJmA6+9nxhE5Ymdfz0RNCG/pXF+rWgMgwAqK6ThbzCKiUuet4KssBbOBgD6YZkbywpXwZ/YJPZj9f8yldF97EPkzZVY30KIMiF7e2jYwCV0um/v+zrm2I4m0vzXnWnz0TLXTomXcizf7kI=
+	t=1761872330; cv=none; b=cBLSOLu+5SPMl8cRZhiVWiR6SwulwQaMcXEsepxW0plR2IMQjWJ+Gkrn/GPHKma72Wf6rJ09eUMNWdo4EgHj8eZ8yHk/7BCB0W1+tXRzOB6W+KXO3nTN2QNaUfTV8r4dhv3MLwmrx5J9YOJLKjHLEXJw1mhn6D/F3MFCnTpIr3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761865683; c=relaxed/simple;
-	bh=Hhw2jTxSrvIEy2c0QEBAcQT6LpKNYPq4ieFoWvYy+PM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=gejPvCQiyCpzWvPWnkdCUHBlCj6FrNmgtyk0m0dokchKj+AX8BvABK0lOFBsq4r1wSlXmZkyjVHJXOo6fyzy5CX+lEpGFgAZ18mavH20XJ43c/AR3dhzu+5xClP9dlvHfCFFD2WiJiO3UuVBbZoY+kuLOgOvfmG7cxrMpMOnn1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cu7+0WuW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761872330; c=relaxed/simple;
+	bh=dZXI+oZRfP0rR7K4/bP1MqGbDMPf4gEQFxOrKrsv6OM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XbLs7J8R3VGpC3LT36DuJYQLwwPh4U9SVkU00ugdSz7TrfNdaMF0mikFMCdQB4X83Mojo/a724oHLZoDkJyWIsE8I0M8J1SP9d9xlGK+LHs8aTfL3fIUH65X9JqMgdpEvL6ywJrIeASNKXu0P2PmnrnVT0LJoTz57smhJm4oLbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/HU3a2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cu7+0WuW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89F8C4CEF1;
-	Thu, 30 Oct 2025 23:08:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/HU3a2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9DD7C4CEF1;
+	Fri, 31 Oct 2025 00:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761865683;
-	bh=Hhw2jTxSrvIEy2c0QEBAcQT6LpKNYPq4ieFoWvYy+PM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=Cu7+0WuWK26SqRg2QXxQec4K85YUonv/QEL4nOlHAMH2Rfx2AEEyIsWIokySSoknL
-	 IMegYPEIo3S/ZfBia6pXO6gQ0fo0lEVN+wsWYekUE/TJ1nITUf/JTkxfSU6aZOp0em
-	 05+Xq8qrQONacUARBVl6CcglHO6YChgDoYk91nTNaFdax8IpzHs4uD1sN3r3LJBumD
-	 DH8lHrJdDDmsEoqKJ9zE64StIYEQIZnjARLqYSPu9+JCyKxTvFbhieE4vh2B3XgnQs
-	 ss08RhwhVBzaegeESDm8JN8Rbt0wv4OUSp7dl26Ax7EZKOSXmNJpMxxmDsDDgqQl8h
-	 IsuyOVHmtM0Mg==
-Date: Thu, 30 Oct 2025 18:08:01 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
+	s=k20201202; t=1761872330;
+	bh=dZXI+oZRfP0rR7K4/bP1MqGbDMPf4gEQFxOrKrsv6OM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=P/HU3a2mhbVziJUtzHmXZzdjh5QOrPCUZ7utnBrU2gidZ/OA1iOQMiJVlzmNYHDSx
+	 6v4tCSZk0ybeKwAEAIDvPv2kbZ+XcM6sGVdInqoi0Fklfj84aJQNivzQnpNBVS/OBf
+	 FbtsGjbcOYuZKY6TkHzhvCu0EdQ6Z5dzVvgXiIa/JwbCLYDrZXAn3zkQDdPXeLjEkf
+	 YWNjk3mDWKyWPJfXGfaX5dvUOegQa+vObESs73ndlyKliMeS0/2E2UmXz9pJlOPz02
+	 QtNxOaQUHGikyZ5EuTogPfInOiWsn7nVkjRtd9FXim7DagIlxnNEdGqTr5EHqn8zy2
+	 B8OwCq+hhLdNg==
+Date: Thu, 30 Oct 2025 19:58:46 -0500
+From: Rob Herring <robh@kernel.org>
 To: Alex Elder <elder@riscstar.com>
-Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	robh@kernel.org, bhelgaas@google.com, dlan@gentoo.org,
-	aurelien@aurel32.net, johannes@erdfelt.com, p.zabel@pengutronix.de,
-	christian.bruel@foss.st.com, thippeswamy.havalige@amd.com,
-	krishna.chundru@oss.qualcomm.com, mayank.rana@oss.qualcomm.com,
-	qiang.yu@oss.qualcomm.com, shradha.t@samsung.com,
-	inochiama@gmail.com, guodong@riscstar.com,
+Cc: krzk+dt@kernel.org, conor+dt@kernel.org, bhelgaas@google.com,
+	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
+	dlan@gentoo.org, guodong@riscstar.com, devicetree@vger.kernel.org,
 	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
 	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 5/7] PCI: spacemit: introduce SpacemiT PCIe host driver
-Message-ID: <20251030230801.GA1660222@bhelgaas>
+Subject: Re: [PATCH v4 3/7] dt-bindings: pci: spacemit: introduce PCIe host
+ controller
+Message-ID: <20251031005718.GA539812-robh@kernel.org>
+References: <20251030220259.1063792-1-elder@riscstar.com>
+ <20251030220259.1063792-4-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -48,41 +47,114 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251030220259.1063792-6-elder@riscstar.com>
+In-Reply-To: <20251030220259.1063792-4-elder@riscstar.com>
 
-In subject, capitalize "introduce" to match history.  Or you could
-just use "Add ...", which has the advantage of being shorter.
+On Thu, Oct 30, 2025 at 05:02:54PM -0500, Alex Elder wrote:
+> Add the Device Tree binding for the PCIe root complex found on the
+> SpacemiT K1 SoC.  This device is derived from the Synopsys Designware
+> PCIe IP.  It supports up to three PCIe ports operating at PCIe gen 2
+> link speeds (5 GT/sec).  One of the ports uses a combo PHY, which is
+> typically used to support a USB 3 port.
+> 
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+>  .../bindings/pci/spacemit,k1-pcie-host.yaml   | 157 ++++++++++++++++++
+>  1 file changed, 157 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+> new file mode 100644
+> index 0000000000000..58239a155ecc0
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+> @@ -0,0 +1,157 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pci/spacemit,k1-pcie-host.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: SpacemiT K1 PCI Express Host Controller
+> +
+> +maintainers:
+> +  - Alex Elder <elder@riscstar.com>
+> +
+> +description: >
+> +  The SpacemiT K1 SoC PCIe host controller is based on the Synopsys
+> +  DesignWare PCIe IP.  The controller uses the DesignWare built-in
+> +  MSI interrupt controller, and supports 256 MSIs.
 
-On Thu, Oct 30, 2025 at 05:02:56PM -0500, Alex Elder wrote:
-> Introduce a driver for the PCIe host controller found in the SpacemiT
-> K1 SoC.  The hardware is derived from the Synopsys DesignWare PCIe IP.
-> The driver supports three PCIe ports that operate at PCIe gen2 transfer
-> rates (5 GT/sec).  The first port uses a combo PHY, which may be
-> configured for use for USB 3 instead.
-> ...
+Wrap lines at 80.
 
-I guess this doesn't support INTx interrupts at all?
+> +
+> +allOf:
+> +  - $ref: /schemas/pci/snps,dw-pcie.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: spacemit,k1-pcie
+> +
+> +  reg:
+> +    items:
+> +      - description: DesignWare PCIe registers
+> +      - description: ATU address space
+> +      - description: PCIe configuration space
+> +      - description: Link control registers
+> +
+> +  reg-names:
+> +    items:
+> +      - const: dbi
+> +      - const: atu
+> +      - const: config
+> +      - const: link
+> +
+> +  clocks:
+> +    items:
+> +      - description: DWC PCIe Data Bus Interface (DBI) clock
+> +      - description: DWC PCIe application AXI-bus master interface clock
+> +      - description: DWC PCIe application AXI-bus slave interface clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: dbi
+> +      - const: mstr
+> +      - const: slv
+> +
+> +  resets:
+> +    items:
+> +      - description: DWC PCIe Data Bus Interface (DBI) reset
+> +      - description: DWC PCIe application AXI-bus master interface reset
+> +      - description: DWC PCIe application AXI-bus slave interface reset
+> +
+> +  reset-names:
+> +    items:
+> +      - const: dbi
+> +      - const: mstr
+> +      - const: slv
+> +
+> +  interrupts:
+> +    items:
+> +      - description: Interrupt used for MSIs
+> +
+> +  interrupt-names:
+> +    const: msi
+> +
+> +  spacemit,apmu:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description:
+> +      A phandle that refers to the APMU system controller, whose
+> +      regmap is used in managing resets and link state, along with
+> +      and offset of its reset control register.
+> +    items:
+> +      - items:
+> +          - description: phandle to APMU system controller
+> +          - description: register offset
+> +
+> +patternProperties:
+> +  '^pcie?@':
 
-> +++ b/drivers/pci/controller/dwc/Kconfig
-> @@ -509,6 +509,17 @@ config PCI_KEYSTONE_EP
->  	  on DesignWare hardware and therefore the driver re-uses the
->  	  DesignWare core functions to implement the driver.
->  
-> +config PCIE_SPACEMIT_K1
-> +	tristate "SpacemiT K1 PCIe controller (host mode)"
+It's always PCIe, so drop the '?'.
 
-Move this to keep the menu items alphabetized by vendor.
+With that,
 
-> +	depends on ARCH_SPACEMIT || COMPILE_TEST
-> +	depends on PCI && OF && HAS_IOMEM
-
-I don't think you need PCI or OF.
-
-> +	select PCIE_DW_HOST
-> +	select PCI_PWRCTRL_SLOT
-> +	default ARCH_SPACEMIT
-> +	help
-> +	  Enables support for the PCIe controller in the K1 SoC operating
-> +	  in host mode.
-
-Most help text includes both the vendor and the product line names.
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
