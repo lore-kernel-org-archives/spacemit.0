@@ -1,105 +1,118 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676C434A77F;
-	Fri, 31 Oct 2025 12:44:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A7534B189
+	for <spacemit@lists.linux.dev>; Fri, 31 Oct 2025 13:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761914651; cv=none; b=Z9pANp93mFWaM19v7vAXNM8l+l6Z6wfMYBp+jzf7dN6mWLg0dmGIe03soX91Ap9qjN5ZGof9aZ5iK8fTsgX7yCjHzZHc4wjWDQtdjajQ8guxiA4F0ZF+RGQGJn2dMBVRvZC5yq+6xn7zgnJ353BCwtdAG+6LQEqInWwyX1Z4zdQ=
+	t=1761917387; cv=none; b=S02x3wTNdLJiB3wbxfUd6zwZuxUehcJH6PO10/3Pp2FtjWDWHT3DTyE0Q9B+MPu4bA+rbK1bVGFoyKTCPx9B0T4eokAUddXIxSfDwu9OAzuZP4AFX3PDUIO/rRG2xlehDY93L4sxFwKmf04wfI+IS1dcoH8lP5lI8p/NtXgvyfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761914651; c=relaxed/simple;
-	bh=0lHrH2OeUdBNMRkuy48s9W6OB58NUesLG0pn4Ff3d2o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jveIqWrQjwhdEqXOEe7YcJCyuDsyiTEFP0mB6liqd8HDCaFJ26JMHtc7+TroEs9Y2Bue+3Vei6X/FJr6UphmK8wUzEYJMZnEC0zg7NgjYXurP5WD3VlqHn4Y5IeXkBOqFVZ3bbGVvMt5Nibdi8gaQhkFIDIXLWvlAotkOOHBJ8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=OQfzmTJf; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="OQfzmTJf"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=2DtW5Hfe73up2P6J00tK78FRvf/3zihm0Np1q799QV0=; b=OQfzmTJfQXNTh62MJNFYXla/eI
-	gRusMiaVCqvTM7nc8yVmQAEA6pbDkUqOLUgaXL1F3JQXgdtI+XYwtlFKrSlvf5EHlpWcf7bJlmfyu
-	rmt/sallaaZ5d6EhoOn/wj+M3ZPWbZ6TYRWuR13BGPu2QdJmNQ6w4McMHekppaLvT/QY=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vEoTo-00Cb8E-91; Fri, 31 Oct 2025 13:43:44 +0100
-Date: Fri, 31 Oct 2025 13:43:44 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net] net: spacemit: Implement emac_set_pauseparam properly
-Message-ID: <c180925d-68fe-4af1-aa4f-57fb2cd1e9ca@lunn.ch>
-References: <20251030-k1-ethernet-fix-autoneg-v1-1-baa572607ccc@iscas.ac.cn>
- <2eb5f9fc-d173-4b9e-89a3-87ad17ddd163@lunn.ch>
- <ee49cb12-2116-4f0d-8265-cd1c42b6037b@iscas.ac.cn>
+	s=arc-20240116; t=1761917387; c=relaxed/simple;
+	bh=2+PgWQ9PdjBLHdFl7BQ8/dlijtSQu9Lg/oJLV5+43iY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YvVlDAybqfKoOug9exPKgBJSEmfcsReDheI4SVHGM+G5DCFktz3Z6ivRryZvdWTS9C+I1sR+NSId/I8Qi1oT742yYEyF1e0xSA3veRLHtqwqfOMP7JiBza3CF0/0dZaJGNPEsGWxTe1Nsqk8SdYAi50ULd7krK/NszkmCKxuaig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.109] (unknown [114.241.85.109])
+	by APP-01 (Coremail) with SMTP id qwCowAAXfWe0uQRpJJbBAA--.7539S2;
+	Fri, 31 Oct 2025 21:29:24 +0800 (CST)
+Message-ID: <729fc508-0682-41b0-8582-b1388f31e08d@iscas.ac.cn>
+Date: Fri, 31 Oct 2025 21:29:23 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ee49cb12-2116-4f0d-8265-cd1c42b6037b@iscas.ac.cn>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net] net: spacemit: Implement emac_set_pauseparam properly
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Yixun Lan <dlan@gentoo.org>,
+ Maxime Chevallier <maxime.chevallier@bootlin.com>,
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, netdev@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20251030-k1-ethernet-fix-autoneg-v1-1-baa572607ccc@iscas.ac.cn>
+ <2eb5f9fc-d173-4b9e-89a3-87ad17ddd163@lunn.ch>
+ <ee49cb12-2116-4f0d-8265-cd1c42b6037b@iscas.ac.cn>
+ <c180925d-68fe-4af1-aa4f-57fb2cd1e9ca@lunn.ch>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <c180925d-68fe-4af1-aa4f-57fb2cd1e9ca@lunn.ch>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qwCowAAXfWe0uQRpJJbBAA--.7539S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7ZFW7Xr13Zw15KF43CFW5GFg_yoW8ur1rpa
+	yaga4vyF1jyr1vyFZ7Zr47Xa4j9395JrsxCFyrKw18Xrn8XFyrCr9rKF47C39xWw1kJr4Y
+	9ws5XF93ArsrAaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvmb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwV
+	C2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
+	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr
+	1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7
+	MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r
+	4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF
+	67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2I
+	x0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
+	z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnU
+	UI43ZEXa7IU56yI5UUUUU==
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Fri, Oct 31, 2025 at 03:22:56PM +0800, Vivian Wang wrote:
-> 
-> On 10/31/25 05:32, Andrew Lunn wrote:
-> >> [...]
-> >>
-> >> -		emac_set_fc(priv, fc);
-> >> -	}
-> >> +	phy_set_asym_pause(dev->phydev, pause->rx_pause, pause->tx_pause);
-> > It is hard to read what this patch is doing, but there are 3 use cases.
-> 
-> Yeah, I guess the patch doesn't look great. I'll reorganize it in the
-> next version to make it clearer what the new implementation is and also
-> fix it up per your other comments.
-> 
-> > 1) general autoneg for link speed etc, and pause autoneg
-> > 2) general autoneg for link speed etc, and forced pause
-> > 3) forced link speed etc, and forced pause.
-> 
-> Thanks for the tip on the different cases. However, there's one bit I
-> don't really understand: Isn't this set_pauseparam thing only for
-> setting pause autoneg / force?
+On 10/31/25 20:43, Andrew Lunn wrote:
+> On Fri, Oct 31, 2025 at 03:22:56PM +0800, Vivian Wang wrote:
+>> On 10/31/25 05:32, Andrew Lunn wrote:
+>>>> [...]
+>>>>
+>>>> -		emac_set_fc(priv, fc);
+>>>> -	}
+>>>> +	phy_set_asym_pause(dev->phydev, pause->rx_pause, pause->tx_pause);
+>>> It is hard to read what this patch is doing, but there are 3 use cases.
+>> Yeah, I guess the patch doesn't look great. I'll reorganize it in the
+>> next version to make it clearer what the new implementation is and also
+>> fix it up per your other comments.
+>>
+>>> 1) general autoneg for link speed etc, and pause autoneg
+>>> 2) general autoneg for link speed etc, and forced pause
+>>> 3) forced link speed etc, and forced pause.
+>> Thanks for the tip on the different cases. However, there's one bit I
+>> don't really understand: Isn't this set_pauseparam thing only for
+>> setting pause autoneg / force?
+> Nope. You need to think about how it interacts with generic autoneg.
+>
+>        ethtool -A|--pause devname [autoneg on|off] [rx on|off] [tx on|off]
+>
+>        ethtool -s devname [speed N] [lanes N] [duplex half|full]
+>               [port tp|aui|bnc|mii] [mdix auto|on|off] [autoneg on|off]
+>
+> These autoneg are different things. -s is about generic autoneg,
+> speed, duplex, etc. However pause can also be negotiated, or not,
+> using -A.
+>
+> You can only autoneg pause if you are doing generic autoneg. So there
+> are three combinations you need to handle.
 
-Nope. You need to think about how it interacts with generic autoneg.
+Oh, that is what I had missed. I hadn't understood this part before. Thanks.
 
-       ethtool -A|--pause devname [autoneg on|off] [rx on|off] [tx on|off]
+> With pause autoneg off, you can set registers in the MAC immediately,
+> but you need to be careful not to overwrite the values when generic
+> autoneg completes and the adjust_link callback is called.
+>
+> If you have pause autoneg on, you have to wait for the adjust_link
+> callback to be called with the results of the negotiation, including
+> pause.
+>
+> phylink hides all this logic. There is a link_up callback, which tells
+> you how to program the hardware. You just do it, no logic needed.
 
-       ethtool -s devname [speed N] [lanes N] [duplex half|full]
-              [port tp|aui|bnc|mii] [mdix auto|on|off] [autoneg on|off]
+This makes sense. I'll look into using phylink.
 
-These autoneg are different things. -s is about generic autoneg,
-speed, duplex, etc. However pause can also be negotiated, or not,
-using -A.
+Thanks,
+Vivian "dramforever" Wang
 
-You can only autoneg pause if you are doing generic autoneg. So there
-are three combinations you need to handle.
-
-With pause autoneg off, you can set registers in the MAC immediately,
-but you need to be careful not to overwrite the values when generic
-autoneg completes and the adjust_link callback is called.
-
-If you have pause autoneg on, you have to wait for the adjust_link
-callback to be called with the results of the negotiation, including
-pause.
-
-phylink hides all this logic. There is a link_up callback, which tells
-you how to program the hardware. You just do it, no logic needed.
-
-	Andrew
