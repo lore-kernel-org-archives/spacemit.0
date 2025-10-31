@@ -1,106 +1,66 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C20D34D386
-	for <spacemit@lists.linux.dev>; Fri, 31 Oct 2025 18:29:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F852F4A0E;
+	Fri, 31 Oct 2025 19:09:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761935375; cv=none; b=hi3ZV19WGbPJy/7752NkWURylSuMgnrUXIrZ7Lr6X57yhWcx1ccXHcJeevBWzuCwN0lMPUUm/SuJ0i6gl5zUh3AlWrjl1E1k6Gt7LpszifeQzHpDA7qxcWtWWpC30HGJgUDLWYvpTKdqxcjZvu3abvI+bmruKqzi1u5I/w3Dwh8=
+	t=1761937760; cv=none; b=XECkXuQ0iQpuBDHeeRoDxAdZkaHgwmX5hCfhzz3nYKJ2DnRtkBO4MzKybEPC/bIMHTp8cQHuha0a9bNGxt8ExfzyEi/vFlzdxOlJAERgJRcxm3HoZV+3vICuixh5ZdQBA4rmkqZxAf3EZMXX5/Wyq2rgFRIcEgTyUBxk4ziIDaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761935375; c=relaxed/simple;
-	bh=76TAbu9Zc1aJJiK4pWRwN4rAveXv9Al84+Dh7An/dJY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=F8eRuxaGWmCf8Cg2zpuZI4yrNN2NH/pQTDyjr6QWCCgLNy6aSwplUKogAty1hmLac/+Hpbm4LKueRNN3yeYBIzTRNjZ2uCks2bzAWKNH1sIQqhTOeqB1K/Ep/1c8IyvoVkSj5tF/55rL/IDmrr/1Xh/eVB+d6ts0OkLRbxjR9e4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [114.241.85.109])
-	by APP-05 (Coremail) with SMTP id zQCowADnU_Lg_wRp2u3JAA--.5659S2;
-	Sat, 01 Nov 2025 02:28:48 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Sat, 01 Nov 2025 02:28:04 +0800
-Subject: [PATCH net v2] net: spacemit: Check IFF_UP in
+	s=arc-20240116; t=1761937760; c=relaxed/simple;
+	bh=8qiCPwTgnNfDHjbq6rSc285bTMBEqC9dApMvKPkE0cE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rh8Bf0EfN5JyZ6Gdk/hUabWgXQiDQLgP06+E1cOAmMKNNgc2xlmYkNVqQZInEq2eudf7t3snkO0JEvlEfmwAFbwJ62s4YSAipolg6sCeO6/JGA8f2aCgUyuu3hG6xwcP4JKvN1UaFMdn8Ac3ra060qsMAHI79hZc2RR6OzCp1fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=Rh4RskUx; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Rh4RskUx"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=fZbwnF0IXrXAvskVUJyWEUURmd1EUkmYdeFz0aHKm0w=; b=Rh4RskUximfWawYaQMpIiNGE4b
+	sigRhS3iY6SvDjtSm8658JQepX0r+I62HFBmr8JRqqEjyGE/9k+3n1tNskalQwnkexpKLQstxm7f2
+	ecw66PEigqEOLQ8QXM67bDR3jyPQDi4VIJPGz66DetkJVV4OCEa7I0dpygDToOFxl1bk=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vEuUa-00Ccto-Al; Fri, 31 Oct 2025 20:08:56 +0100
+Date: Fri, 31 Oct 2025 20:08:56 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>, netdev@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net v2] net: spacemit: Check IFF_UP in
  emac_set_pauseparam()
+Message-ID: <f2303a61-184a-4a4b-adfe-228573dcb41c@lunn.ch>
+References: <20251101-k1-ethernet-remove-fc-v2-1-014ac3bc280e@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251101-k1-ethernet-remove-fc-v2-1-014ac3bc280e@iscas.ac.cn>
-X-B4-Tracking: v=1; b=H4sIALP/BGkC/4VOSw7CIBC9SjNrpyk0RezKe5iaIJ1aYloUkGga7
- i5B92ZWb953A0/OkIe+2sBRNN7YNQO+q0DPar0SmjFj4A3vWNMyvDGkMJNbKaCjxUbCSaPk0yj
- 2o5QHJSB7744m8yq5J8hSGL5PR49n7gg/5qI8obbLYkJfRVEziU6z85aKfjY+WPcu2yIrhj8zI
- sN8itqJjaJrpD4ar5Wvla71CkNK6QOcZYIg8QAAAA==
-X-Change-ID: 20251031-k1-ethernet-remove-fc-82fd67d889a6
-To: Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Yixun Lan <dlan@gentoo.org>, 
- Maxime Chevallier <maxime.chevallier@bootlin.com>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
- Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.3
-X-CM-TRANSID:zQCowADnU_Lg_wRp2u3JAA--.5659S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7ur1fArWkAryxAF4xtF18Xwb_yoW8Gw4rpF
-	WUZasruw47JF45KFs7Aa1xZFy5JayxtryUuF1ayw4rZasFyw4UAF9YkFW3Cr1UZFWrCrya
-	gw45Z3WfCF1DArDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9Y14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AKxVW8JV
-	W8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
-	2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
-	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2
-	Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x
-	0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2
-	zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF
-	4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWU
-	CwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCT
-	nIWIevJa73UjIFyTuYvjfUonmRUUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251101-k1-ethernet-remove-fc-v2-1-014ac3bc280e@iscas.ac.cn>
 
-Currently, emac_set_pauseparam() will oops if userspace calls it while
-the interface is not up, because phydev is NULL, but it is still
-accessed in emac_set_fc() and emac_set_fc_autoneg().
+> +	if (!(dev->flags & IFF_UP))
+> +		return -ENETDOWN;
+> +
 
-Check for IFF_UP in emac_set_pauseparam() before proceeding.
+This is a lot better, but please use netif_running().
 
-Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
----
-Changes in v2:
-- Reduced patch to only contain checking IFF_UP to avoid the oops. More
-  invasive changes will be sent to net-next in the future. (Andrew)
-- Link to v1: https://lore.kernel.org/r/20251031-k1-ethernet-remove-fc-v1-1-1ae3f1d6508c@iscas.ac.cn
----
- drivers/net/ethernet/spacemit/k1_emac.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-index e1c5faff3b71..a3fc17d2ca10 100644
---- a/drivers/net/ethernet/spacemit/k1_emac.c
-+++ b/drivers/net/ethernet/spacemit/k1_emac.c
-@@ -1441,6 +1441,9 @@ static int emac_set_pauseparam(struct net_device *dev,
- 	struct emac_priv *priv = netdev_priv(dev);
- 	u8 fc = 0;
- 
-+	if (!(dev->flags & IFF_UP))
-+		return -ENETDOWN;
-+
- 	priv->flow_control_autoneg = pause->autoneg;
- 
- 	if (pause->autoneg) {
+    Andrew
 
 ---
-base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
-change-id: 20251031-k1-ethernet-remove-fc-82fd67d889a6
-
-Best regards,
--- 
-Vivian "dramforever" Wang
-
+pw-bot: cr
