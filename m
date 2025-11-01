@@ -1,139 +1,107 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F85354763;
-	Fri, 31 Oct 2025 22:31:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32019299AAC
+	for <spacemit@lists.linux.dev>; Sat,  1 Nov 2025 09:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761949899; cv=none; b=O+BszwkMxwU+nurRWoEfO1ZHBha00VzX8hyqW+9idhV+btW8hAjYl/QyDARzkIDQPrIySXIVHK3GpgQJyc7UB7gixmq8hbbJB22oeW329/ShaIPkQLfc0z2Mwtni5v/xY0og1zJzmzT10v+Js/2X1ibPQo1XYM8Vjr1GiDp0lZ4=
+	t=1761987826; cv=none; b=KsenR6K1Q7A2B8VaLVDe/2uWwMpyjfrG+R7jBS2Hyh4PjRfg6NxbJrRbtpOQy7x6Mb/k2TWyS0eWeyv6GgLr0sMq665MNSnGf5OpdWnPaBjpvRD0C6Y2VCihG3MhgDe8X48KAHxUjmuT3x2FBCrx2cPXeDuW5ggLrjL78x3cuCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761949899; c=relaxed/simple;
-	bh=mcCYU2DZEgm22G7FtYX6PZDwrQtk7eir+wADAhNPInA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jjRdNQdidNZAtVeT7OMy0GZm5T/+FYtI16MWJIw+cxYVHsBaZSXNlL+zJ6z5kgzUzClkgMdbxzeA0VhlQU/gFdKjwsBaLeFeGpFwcuXDb9c/M/lazcoazzFidTbbtLoE2wHYor9QXIyNz3jCP8p73mln/9YzXTt3euI+JOV0v9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=M39vuJwq; arc=none smtp.client-ip=195.154.113.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1761987826; c=relaxed/simple;
+	bh=BNDOpTBqIHfhN5s3DzIpQb6oNVZm3V416PNj1AzPqUQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=daNyCQZzHHKu1ku23Zx9SkU85qsKeIgyDkYvQQgfc6t4kUqtJfwOv+IRJCQvHJUUT/OC46DPBSQbYMS1FUPTnfuZhKdu1iXHLcb9Q7WhUeQN1ylKqQT1lX+I5Tq8hNMJQf9TTLY9TIDk5W6wTqiXZoBrTdp9k6kQhlXNeJgS57M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=VOCQm3gZ; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="M39vuJwq"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=rD2JIdANTZru7tnoty78FxFPBqnheT+Ouf2ZxL1AylI=; b=M39vuJwqwXyMI1cEG79o39S3fV
-	pg3hdjeCchwqLht2MWcV2mPu9yi571rh04hAjJBtVHTRwz+ndwhBcvUwctdsVo+LVCWFV5CVcDxPA
-	+aMHDZutukWkSVr8VUGA5LLK2ikEdv8XVCzbdKuVT4edJCJAhAB3AXzCW4XkY4BvwNqljKfJPxas2
-	QX0c1OiOYgGKMgdc3u+KGc7JyepotbXrOh5W+G1rktQvwSPSkimoir7GpDpdVWBgnw9MCxegxQ25p
-	Bpz9faVEn4JuIHYjrX+H0GOarFyZj5aMQ90Emhjl7ThdwqKvI0Q8gghX3CPx1ioC+5IRtbvo/v+my
-	4DmCI6aw==;
-Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
-	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vExeJ-000000049Fl-0m2N;
-	Fri, 31 Oct 2025 23:31:11 +0100
-Date: Fri, 31 Oct 2025 23:31:08 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Alex Elder <elder@riscstar.com>
-Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	robh@kernel.org, bhelgaas@google.com, dlan@gentoo.org,
-	johannes@erdfelt.com, p.zabel@pengutronix.de,
-	christian.bruel@foss.st.com, thippeswamy.havalige@amd.com,
-	krishna.chundru@oss.qualcomm.com, mayank.rana@oss.qualcomm.com,
-	qiang.yu@oss.qualcomm.com, shradha.t@samsung.com,
-	inochiama@gmail.com, guodong@riscstar.com,
-	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 5/7] PCI: spacemit: introduce SpacemiT PCIe host driver
-Message-ID: <aQU4rGzrB1-Vu7C6@aurel32.net>
-Mail-Followup-To: Alex Elder <elder@riscstar.com>, lpieralisi@kernel.org,
-	kwilczynski@kernel.org, mani@kernel.org, robh@kernel.org,
-	bhelgaas@google.com, dlan@gentoo.org, johannes@erdfelt.com,
-	p.zabel@pengutronix.de, christian.bruel@foss.st.com,
-	thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com,
-	mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
-	shradha.t@samsung.com, inochiama@gmail.com, guodong@riscstar.com,
-	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20251030220259.1063792-1-elder@riscstar.com>
- <20251030220259.1063792-6-elder@riscstar.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="VOCQm3gZ"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1761987822;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=9g4umT06lYMRrIWBhnN/oX2rBXZTFT6Aq7ZWIZM3zcc=;
+	b=VOCQm3gZpSHROT2ogm8w86JEYICDHuulZ/v8UhYPtaF++QGfa2DSyFc37YeRojlZ4iqgaT
+	UP8HiPHge1xstoNWZkRwmXL9YNo9uoM8iGe6EtVLy/0/A+IzMgxu4lMHyMPTwgg2O8/RED
+	WKyohW/8Qa61+H2I6aCjfXWX0nH9Hj0=
+From: Ze Huang <huang.ze@linux.dev>
+Subject: [PATCH 0/3] riscv: dts: spacemit: Add USB 3.0 support for K1
+Date: Sat, 01 Nov 2025 17:03:24 +0800
+Message-Id: <20251101-k1-usb3dts-v1-0-dd2660e5740b@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251030220259.1063792-6-elder@riscstar.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANzMBWkC/yWNwQ6CMBAFf6XZsyUtVQrEGP/DcChlq40C2i3Eh
+ PDvVjjOS97MAoTBI0HNFgg4e/LjkEAeGNiHGe7IfZcYcpGfpFCCPyWfqFVdJO5KzF2rKlfqCtL
+ hHdD57ya7NTsH/EzJGfcRWkPI7dj3PtZsLjJZ8mDl/9sjkdlqNTvvMallJfRRZEoUuhRccnx1G
+ K7Bk6VoQpZEF2jW9QcQGBA1xQAAAA==
+X-Change-ID: 20251030-k1-usb3dts-f8e2fb39f879
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Ze Huang <huang.ze@linux.dev>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761987811; l=1820;
+ i=huang.ze@linux.dev; s=20250705; h=from:subject:message-id;
+ bh=BNDOpTBqIHfhN5s3DzIpQb6oNVZm3V416PNj1AzPqUQ=;
+ b=1byT/ixmKTzrTCZvS/cB4k0sP1v8oeqKfXPzsLpQlo6hJLNh8axUbETazb6yxaD+mnu+bJAvi
+ Q6qCzqKoMAaCg76bUIEgvtCNq0mqC/j7jSlk4wdYilujHQH2FlkgVO2
+X-Developer-Key: i=huang.ze@linux.dev; a=ed25519;
+ pk=Kzc4PMu5PTo8eZZQ5xmTNL9jeXcQ9Wml0cs+vlQpBkg=
+X-Migadu-Flow: FLOW_OUT
 
-Hi Alex,
+This patch series enables the DWC3 USB 3.0 host controller on the
+Spacemit K1 SoC, and enables it for the Banana Pi F3 board.
 
-On 2025-10-30 17:02, Alex Elder wrote:
-> +/* Disable ASPM L1 for now, until reported errors can be reproduced */
+To make USB 3.0 work on the K1, we need patches for the USB2 PHY [1],
+ComboPHY [2], and DWC3 [3] driver, also, ensure enabling the following
+configurations:
 
-Thanks for adding this function.
+CONFIG_PHY_SPACEMIT_K1_USB2=y
+CONFIG_PHY_SPACEMIT_K1_PCIE=y
+CONFIG_USB_DWC3=y
+CONFIG_USB_ONBOARD_DEV=y
 
-> +static void k1_pcie_post_init(struct dw_pcie_rp *pp)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	u8 offset;
-> +	u32 val;
-> +
-> +	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +
-> +	dw_pcie_dbi_ro_wr_en(pci);
-> +
-> +	/* Turn off ASPM L1 for the link */
-> +	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
+The series is based on v6.18-rc1.
 
-Why not using dw_pcie_readl_dbi() instead?
+Link: https://lore.kernel.org/all/20251017-k1-usb2phy-v6-0-7cf9ea2477a1@linux.dev/ [1]
+Link: https://lore.kernel.org/all/20251017190740.306780-1-elder@riscstar.com/ [2]
+Link: https://github.com/torvalds/linux/commit/e0b6dc00c701 [3]
 
-> +	val &= ~PCI_EXP_LNKCAP_ASPM_L1;
-> +	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
+Thanks,
+Ze Huang
 
-And here dw_pcie_writel_dbi()?
+Signed-off-by: Ze Huang <huang.ze@linux.dev>
+---
+Ze Huang (3):
+      riscv: dts: spacemit: Add USB2 PHY node for K1
+      riscv: dts: spacemit: Add DWC3 USB 3.0 controller node for K1
+      riscv: dts: spacemit: Enable USB3.0 on BananaPi-F3
 
-> +
-> +	dw_pcie_dbi_ro_wr_dis(pci);
-> +}
-> +
-> +static void k1_pcie_deinit(struct dw_pcie_rp *pp)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct k1_pcie *k1 = to_k1_pcie(pci);
-> +
-> +	/* Assert fundamental reset (drive PERST# low) */
-> +	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
-> +			PCIE_RC_PERST);
-> +
-> +	phy_exit(k1->phy);
-> +
-> +	k1_pcie_disable_resources(k1);
-> +}
-> +
-> +static const struct dw_pcie_host_ops k1_pcie_host_ops = {
-> +	.init		= k1_pcie_init,
-> +	.post_init	= k1_pcie_post_init,
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 47 +++++++++++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi            | 32 +++++++++++++++++
+ 2 files changed, 79 insertions(+)
+---
+base-commit: cb6649f6217c0331b885cf787f1d175963e2a1d2
+change-id: 20251030-k1-usb3dts-f8e2fb39f879
+prerequisite-message-id: <20251017190740.306780-1-elder@riscstar.com>
+prerequisite-patch-id: e6c36ae11fd6bb6238b3f256221856869db6958c
+prerequisite-patch-id: b7bf3a95a8baaea88d776db7d9e46ced879187a1
+prerequisite-patch-id: 893145648925a17c16a5de55bd6952f18e8b7d8e
+prerequisite-patch-id: cd96cd9ae2fb4a1f73d34046952dad346823f80d
+prerequisite-patch-id: 0baa531df5c47ffe9354ac3885e89bda9ae9b282
+prerequisite-patch-id: 3beea086bdfd0ce6ffd011a8906319b1ba253c9c
+prerequisite-patch-id: 755e4f791e363ab2f0ac0a4459d0cfd289123800
 
-Unfortunately, while I can see the effect of the change with for 
-instance lspci -vvv, this happens way too late in the device scan 
-process, i.e. after pcie_aspm_override_default_link_state() and causes 
-L1 to still be enabled.
-
-I have tried to move it earlier, in k1_pcie_init() after writing the 
-vendor and device IDs. This works as long as "nvme scan" is run in 
-U-Boot. But if I don't run this command, it seems that the change is 
-ignored or lost (i.e. I can still see L1 enabled with lspci -vvv).
-
-Moving it at the end of k1_pcie_init() works fine, like moving it at the 
-beginning of k1_pcie_start_link(). But my knowledge is too limited to 
-know where is the correct place.
-
-Regards
-Aurelien
-
+Best regards,
 -- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+Ze Huang <huang.ze@linux.dev>
+
