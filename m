@@ -1,137 +1,106 @@
-Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE120299AAC
-	for <spacemit@lists.linux.dev>; Sat,  1 Nov 2025 09:04:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A5322127A;
+	Sun,  2 Nov 2025 21:53:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761987856; cv=none; b=e5XTVDHSeMWGDbgB6V39b+zMZiPl03DGICj4L7SMzFRQqXtunWJtXA9lHoIQ6RPyRijODEFykdUZvAVHBz11dAWBHuOeADptIFha6s23Snt2ua4Dqavd0NWGvEQusYVgrAM+k5uc1xNHm45QUFBVQaVuHvLY5WNakrEuHFKue7w=
+	t=1762120419; cv=none; b=mDLFNSfarYbuAGqMTca84awRGi0xM2+kk+gHrQaXMzi+aRAsv8932UUyyw8M3v76NTm+gSSQaEr35ZR+8wqSGjYJNHRKxlJ4twHodoE73LosfY0big23yiKH8iKxU6G8/MiQwD/Nxw+xKlfryxnmz17UEj9MVqEnWjH9N2r8+8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761987856; c=relaxed/simple;
-	bh=d303GJdP3RFLY+pATJhr/H7FKmjHD6dDsiJZY3bUP94=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JW0kF6Fj4bOz8cbQwf/gjntiiKE6JbKtwdSIUzQBRf7nVFtlT3nt3Pi4O0yseuF5xIrzLNNf400I93KT9KRsvmlBGaEAOvLNxN+9JM0Ki6KXrMQ/hFgLH01Wd1bkJLtII8K7fuxySIpgwBpYOS+WOO3JGaKCa7TN4aM9e14r4vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lu9GOlqP; arc=none smtp.client-ip=95.215.58.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1762120419; c=relaxed/simple;
+	bh=wlc0UGWnu9Jt/GUB1LZ5Asy8Dq1Zq0j7h+47A1DCXgQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ojZvkZHJUuqJLSsPnHM2ElrQdTiYTNORLixwg4kFal2PPosX1qVOXDb3z73975qnEdT/3CBLPZm5+kJuxqHWD87k9i/2La1SgBKhoPlJtmhSSrqFA8ODUVERf7HlUjrPpLe/nNx1lpSabl2qaJ/kjtdodNNgrrZMsQhaHti3Q58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LetTXyQs; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lu9GOlqP"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1761987853;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tkHzUy7kWIFbe9fiN7GijSrGSeSfQnU7pR3fbcrTN3Q=;
-	b=lu9GOlqPBQzBWJbcG2tonlAj0AS/5leITLacAUTIfQn3dEqjBc8fyor8LNfJbr+3POOxk6
-	C48id8aJY/HCv6jtpxh1WJr9CPLfZCzfLoMiTtrOF78EhP4fcdXyHdadRiJJchW8VdWett
-	2mTNbKYKd1vGPwReqbvAbI3+lzBj3aE=
-From: Ze Huang <huang.ze@linux.dev>
-Date: Sat, 01 Nov 2025 17:03:27 +0800
-Subject: [PATCH 3/3] riscv: dts: spacemit: Enable USB3.0 on BananaPi-F3
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LetTXyQs"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1762120417; x=1793656417;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=wlc0UGWnu9Jt/GUB1LZ5Asy8Dq1Zq0j7h+47A1DCXgQ=;
+  b=LetTXyQsT5nUxjseC0KSNPY8LRmNxy23jTYqOgJiD1Lw1ltaVJZhbg7R
+   0DrY2UtNrIY3RSnTf6CjvWAsOEDN+M/09Y/WuNkagtfbGKa1jznd68FvK
+   pOEGOZPPQEHKurVGYUt73p8UG7tC8YX8U+wyfTTXqYQzN/IbfRJ5i+WKt
+   4e3nc6DE/THZ4EDabmlaFqBdiZWOoIsVaCx3H8pD90M+CnXQfiupPjN1c
+   mcfcn+ihjRkYytv19WOWcGqkMNqyiG/3pdQ3RSSnUMZOlqUeZ+etQ8B59
+   e95SVXQiEtZmyJpVW8BXsOSH6iEI7a6c5iJ9MdBp0vkhA4kh7kUtGsCbP
+   A==;
+X-CSE-ConnectionGUID: tanXNBQhQo+WnK5xD0sfdg==
+X-CSE-MsgGUID: 37WIqMJbR36ThWemS+j6Dg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11601"; a="64239320"
+X-IronPort-AV: E=Sophos;i="6.19,274,1754982000"; 
+   d="scan'208";a="64239320"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2025 13:53:36 -0800
+X-CSE-ConnectionGUID: 0tQ+/Z5IRwWinFoWz7n/aA==
+X-CSE-MsgGUID: zmwLQ7idRgKcJrmcIvrAkQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,274,1754982000"; 
+   d="scan'208";a="191040965"
+Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
+  by fmviesa005.fm.intel.com with ESMTP; 02 Nov 2025 13:53:33 -0800
+Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1vFg0w-000PbA-32;
+	Sun, 02 Nov 2025 21:53:30 +0000
+Date: Mon, 3 Nov 2025 05:52:58 +0800
+From: kernel test robot <lkp@intel.com>
+To: Alex Elder <elder@riscstar.com>, vkoul@kernel.org, kishon@kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, p.zabel@pengutronix.de, dlan@gentoo.org,
+	aurelien@aurel32.net, guodong@riscstar.com,
+	linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	Junzhong Pan <panjunzhong@linux.spacemit.com>
+Subject: Re: [PATCH v4 4/7] phy: spacemit: introduce PCIe/combo PHY
+Message-ID: <202511030553.8UVCnq06-lkp@intel.com>
+References: <20251030220259.1063792-5-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251101-k1-usb3dts-v1-3-dd2660e5740b@linux.dev>
-References: <20251101-k1-usb3dts-v1-0-dd2660e5740b@linux.dev>
-In-Reply-To: <20251101-k1-usb3dts-v1-0-dd2660e5740b@linux.dev>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Ze Huang <huang.ze@linux.dev>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761987811; l=2076;
- i=huang.ze@linux.dev; s=20250705; h=from:subject:message-id;
- bh=d303GJdP3RFLY+pATJhr/H7FKmjHD6dDsiJZY3bUP94=;
- b=VFRENH/Ogtq/hy2xA8HZYruIT7VtqjnWGTznxmuPT5OGizcVa1ougYQwSZ9u5+nMhgFTh9gG2
- xOBwKXcN1E8Cy6Q/wbEYK4GKaSNphpT/lpoOnoDUp/V2erfx+1KpoLB
-X-Developer-Key: i=huang.ze@linux.dev; a=ed25519;
- pk=Kzc4PMu5PTo8eZZQ5xmTNL9jeXcQ9Wml0cs+vlQpBkg=
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251030220259.1063792-5-elder@riscstar.com>
 
-Enable the DWC3 USB 3.0 controller and its associated usbphy2 on the
-Banana Pi F3 board.
+Hi Alex,
 
-The board utilizes a VLI VL817 hub, which requires two separate power
-supplies: one VBUS and one for hub itself. Add two GPIO-controlled
-fixed-regulators to manage this.
+kernel test robot noticed the following build errors:
 
-Signed-off-by: Ze Huang <huang.ze@linux.dev>
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 47 +++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+[auto build test ERROR on 131f3d9446a6075192cdd91f197989d98302faa6]
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 6d566780aed9..4b67f44c7863 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -38,6 +38,25 @@ pcie_vcc_3v3: pcie-vcc3v3 {
- 		regulator-max-microvolt = <3300000>;
- 		regulator-always-on;
- 	};
-+
-+	usb3_vbus: regulator-vbus-5v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB30_VBUS";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		regulator-always-on;
-+		gpio = <&gpio K1_GPIO(97) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
-+
-+	usb3_vhub: regulator-vhub-5v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB30_VHUB";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
- };
- 
- &combo_phy {
-@@ -135,3 +154,31 @@ &uart0 {
- 	pinctrl-0 = <&uart0_2_cfg>;
- 	status = "okay";
- };
-+
-+&usbphy2 {
-+	status = "okay";
-+};
-+
-+&usb_dwc3 {
-+	dr_mode = "host";
-+	vbus-supply = <&usb3_vbus>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	status = "okay";
-+
-+	hub_2_0: hub@1 {
-+		compatible = "usb2109,2817";
-+		reg = <0x1>;
-+		vdd-supply = <&usb3_vhub>;
-+		peer-hub = <&hub_3_0>;
-+		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
-+	};
-+
-+	hub_3_0: hub@2 {
-+		compatible = "usb2109,817";
-+		reg = <0x2>;
-+		vdd-supply = <&usb3_vhub>;
-+		peer-hub = <&hub_2_0>;
-+		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
-+	};
-+};
+url:    https://github.com/intel-lab-lkp/linux/commits/Alex-Elder/dt-bindings-phy-spacemit-add-SpacemiT-PCIe-combo-PHY/20251031-060541
+base:   131f3d9446a6075192cdd91f197989d98302faa6
+patch link:    https://lore.kernel.org/r/20251030220259.1063792-5-elder%40riscstar.com
+patch subject: [PATCH v4 4/7] phy: spacemit: introduce PCIe/combo PHY
+config: sh-allyesconfig (https://download.01.org/0day-ci/archive/20251103/202511030553.8UVCnq06-lkp@intel.com/config)
+compiler: sh4-linux-gcc (GCC) 15.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251103/202511030553.8UVCnq06-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511030553.8UVCnq06-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   sh4-linux-ld: drivers/phy/phy-spacemit-k1-pcie.o: in function `k1_pcie_phy_probe':
+>> phy-spacemit-k1-pcie.c:(.text+0x7e4): undefined reference to `devm_clk_hw_register'
+>> sh4-linux-ld: phy-spacemit-k1-pcie.c:(.text+0x7ec): undefined reference to `devm_clk_hw_get_clk'
+   sh4-linux-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_resume':
+   air_en8811h.c:(.text+0x948): undefined reference to `clk_restore_context'
+   sh4-linux-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_suspend':
+   air_en8811h.c:(.text+0x984): undefined reference to `clk_save_context'
+   sh4-linux-ld: drivers/media/i2c/tc358746.o: in function `tc358746_probe':
+   tc358746.c:(.text+0x1a68): undefined reference to `devm_clk_hw_register'
+   sh4-linux-ld: tc358746.c:(.text+0x1a74): undefined reference to `devm_of_clk_add_hw_provider'
+   sh4-linux-ld: tc358746.c:(.text+0x1a78): undefined reference to `of_clk_hw_simple_get'
 
 -- 
-2.51.2
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
