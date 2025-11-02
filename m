@@ -1,53 +1,53 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A5322127A;
-	Sun,  2 Nov 2025 21:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5CB21ADCB;
+	Sun,  2 Nov 2025 22:25:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762120419; cv=none; b=mDLFNSfarYbuAGqMTca84awRGi0xM2+kk+gHrQaXMzi+aRAsv8932UUyyw8M3v76NTm+gSSQaEr35ZR+8wqSGjYJNHRKxlJ4twHodoE73LosfY0big23yiKH8iKxU6G8/MiQwD/Nxw+xKlfryxnmz17UEj9MVqEnWjH9N2r8+8Y=
+	t=1762122333; cv=none; b=kQt6F2oeyws4OJMhGU3kG5mSw7VcUXIzH//CdA7uX4AihqoB+gT8HICpQQXy2WhYkgNcK2dMz0uNkcdMwOB4uO+Z02TrXVC5HyLhuP+bZuoin7fear1h3DT3cYd73xztFpNsUq6Y9GOwue4ROmJTNI/Uc/i42KwvwVnuQA49x/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762120419; c=relaxed/simple;
-	bh=wlc0UGWnu9Jt/GUB1LZ5Asy8Dq1Zq0j7h+47A1DCXgQ=;
+	s=arc-20240116; t=1762122333; c=relaxed/simple;
+	bh=xAaDVXcvzXMuT6b41jvj67zRq9dUreGowV9Fgs0NF0Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ojZvkZHJUuqJLSsPnHM2ElrQdTiYTNORLixwg4kFal2PPosX1qVOXDb3z73975qnEdT/3CBLPZm5+kJuxqHWD87k9i/2La1SgBKhoPlJtmhSSrqFA8ODUVERf7HlUjrPpLe/nNx1lpSabl2qaJ/kjtdodNNgrrZMsQhaHti3Q58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LetTXyQs; arc=none smtp.client-ip=198.175.65.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=WT9kW03oQR8qWivtzNvp0WZR/7ZuTNzQKsaumHMyAWXoZmWjcB1L2UBGUD/gCmw12QG+8Xl9GHd7DkjND5rxdC1tkLCn/h/psvG97L4KA7plW3WdwRDZPeshpg40nhPJGzeKJy+DhYhLFqe3DsKdl3iqv+lrpqgU4svnNFskKug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KN4y6alO; arc=none smtp.client-ip=192.198.163.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LetTXyQs"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KN4y6alO"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762120417; x=1793656417;
+  t=1762122332; x=1793658332;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=wlc0UGWnu9Jt/GUB1LZ5Asy8Dq1Zq0j7h+47A1DCXgQ=;
-  b=LetTXyQsT5nUxjseC0KSNPY8LRmNxy23jTYqOgJiD1Lw1ltaVJZhbg7R
-   0DrY2UtNrIY3RSnTf6CjvWAsOEDN+M/09Y/WuNkagtfbGKa1jznd68FvK
-   pOEGOZPPQEHKurVGYUt73p8UG7tC8YX8U+wyfTTXqYQzN/IbfRJ5i+WKt
-   4e3nc6DE/THZ4EDabmlaFqBdiZWOoIsVaCx3H8pD90M+CnXQfiupPjN1c
-   mcfcn+ihjRkYytv19WOWcGqkMNqyiG/3pdQ3RSSnUMZOlqUeZ+etQ8B59
-   e95SVXQiEtZmyJpVW8BXsOSH6iEI7a6c5iJ9MdBp0vkhA4kh7kUtGsCbP
+  bh=xAaDVXcvzXMuT6b41jvj67zRq9dUreGowV9Fgs0NF0Y=;
+  b=KN4y6alOBPr+QnnkpvT0Jfnwnf+i+gtVGxOxl03hEHueO6YsAuJ92/29
+   GXL+mUVDN4+hmcBMuRO/Kz2jguqBm7f7Dz31GTpBEJtJfudKL8OATFRVJ
+   fg1dkE5kC1YVOkuK1K/JtP/t+2r6pNywtmvUCTSv2TjfjWzSPFf6kxaf9
+   /y8KQhNT4XlwXsAI+QScVYmFKgNWPfezCTT5ylYiYHYgibRgkWYDZw7uj
+   785crRJWK1fiVok+Iq81hOod6D+hmibaefdM3n3tnnAj5Q6PEBQYyvvfh
+   Sdzl28VTrKsrZfJKOYd0A/AP7MUc86nU6nEHzXTLBJi+5E2NIPqTweOet
    A==;
-X-CSE-ConnectionGUID: tanXNBQhQo+WnK5xD0sfdg==
-X-CSE-MsgGUID: 37WIqMJbR36ThWemS+j6Dg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11601"; a="64239320"
+X-CSE-ConnectionGUID: BuDp7+X3Rl+qeHMKco+BSg==
+X-CSE-MsgGUID: mJ+ln8S1TSaPECZMVGYV8Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11601"; a="68062718"
 X-IronPort-AV: E=Sophos;i="6.19,274,1754982000"; 
-   d="scan'208";a="64239320"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2025 13:53:36 -0800
-X-CSE-ConnectionGUID: 0tQ+/Z5IRwWinFoWz7n/aA==
-X-CSE-MsgGUID: zmwLQ7idRgKcJrmcIvrAkQ==
+   d="scan'208";a="68062718"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2025 14:25:31 -0800
+X-CSE-ConnectionGUID: vXJAcFdIRR2J+3k8618sjw==
+X-CSE-MsgGUID: gfzfgI3ESyqPmcXpTmfFfg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,274,1754982000"; 
-   d="scan'208";a="191040965"
+   d="scan'208";a="186593785"
 Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
-  by fmviesa005.fm.intel.com with ESMTP; 02 Nov 2025 13:53:33 -0800
+  by fmviesa006.fm.intel.com with ESMTP; 02 Nov 2025 14:25:28 -0800
 Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1vFg0w-000PbA-32;
-	Sun, 02 Nov 2025 21:53:30 +0000
-Date: Mon, 3 Nov 2025 05:52:58 +0800
+	id 1vFgVq-000PcC-1p;
+	Sun, 02 Nov 2025 22:25:26 +0000
+Date: Mon, 3 Nov 2025 06:25:00 +0800
 From: kernel test robot <lkp@intel.com>
 To: Alex Elder <elder@riscstar.com>, vkoul@kernel.org, kishon@kernel.org
 Cc: oe-kbuild-all@lists.linux.dev, p.zabel@pengutronix.de, dlan@gentoo.org,
@@ -56,7 +56,7 @@ Cc: oe-kbuild-all@lists.linux.dev, p.zabel@pengutronix.de, dlan@gentoo.org,
 	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
 	Junzhong Pan <panjunzhong@linux.spacemit.com>
 Subject: Re: [PATCH v4 4/7] phy: spacemit: introduce PCIe/combo PHY
-Message-ID: <202511030553.8UVCnq06-lkp@intel.com>
+Message-ID: <202511030652.3CVPb2v3-lkp@intel.com>
 References: <20251030220259.1063792-5-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
@@ -78,28 +78,25 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Alex-Elder/dt-bindings-ph
 base:   131f3d9446a6075192cdd91f197989d98302faa6
 patch link:    https://lore.kernel.org/r/20251030220259.1063792-5-elder%40riscstar.com
 patch subject: [PATCH v4 4/7] phy: spacemit: introduce PCIe/combo PHY
-config: sh-allyesconfig (https://download.01.org/0day-ci/archive/20251103/202511030553.8UVCnq06-lkp@intel.com/config)
+config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20251103/202511030652.3CVPb2v3-lkp@intel.com/config)
 compiler: sh4-linux-gcc (GCC) 15.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251103/202511030553.8UVCnq06-lkp@intel.com/reproduce)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251103/202511030652.3CVPb2v3-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202511030553.8UVCnq06-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202511030652.3CVPb2v3-lkp@intel.com/
 
-All errors (new ones prefixed by >>):
+All errors (new ones prefixed by >>, old ones prefixed by <<):
 
-   sh4-linux-ld: drivers/phy/phy-spacemit-k1-pcie.o: in function `k1_pcie_phy_probe':
->> phy-spacemit-k1-pcie.c:(.text+0x7e4): undefined reference to `devm_clk_hw_register'
->> sh4-linux-ld: phy-spacemit-k1-pcie.c:(.text+0x7ec): undefined reference to `devm_clk_hw_get_clk'
-   sh4-linux-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_resume':
-   air_en8811h.c:(.text+0x948): undefined reference to `clk_restore_context'
-   sh4-linux-ld: drivers/net/phy/air_en8811h.o: in function `en8811h_suspend':
-   air_en8811h.c:(.text+0x984): undefined reference to `clk_save_context'
-   sh4-linux-ld: drivers/media/i2c/tc358746.o: in function `tc358746_probe':
-   tc358746.c:(.text+0x1a68): undefined reference to `devm_clk_hw_register'
-   sh4-linux-ld: tc358746.c:(.text+0x1a74): undefined reference to `devm_of_clk_add_hw_provider'
-   sh4-linux-ld: tc358746.c:(.text+0x1a78): undefined reference to `of_clk_hw_simple_get'
+>> ERROR: modpost: "devm_clk_hw_register" [drivers/phy/phy-spacemit-k1-pcie.ko] undefined!
+>> ERROR: modpost: "devm_clk_hw_get_clk" [drivers/phy/phy-spacemit-k1-pcie.ko] undefined!
+ERROR: modpost: "clk_save_context" [drivers/net/phy/air_en8811h.ko] undefined!
+ERROR: modpost: "clk_restore_context" [drivers/net/phy/air_en8811h.ko] undefined!
+ERROR: modpost: "__delay" [drivers/net/mdio/mdio-cavium.ko] undefined!
+ERROR: modpost: "devm_of_clk_add_hw_provider" [drivers/media/i2c/tc358746.ko] undefined!
+ERROR: modpost: "devm_clk_hw_register" [drivers/media/i2c/tc358746.ko] undefined!
+ERROR: modpost: "of_clk_hw_simple_get" [drivers/media/i2c/tc358746.ko] undefined!
 
 -- 
 0-DAY CI Kernel Test Service
