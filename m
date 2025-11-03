@@ -1,121 +1,100 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6F11A2C0B
-	for <spacemit@lists.linux.dev>; Mon,  3 Nov 2025 02:03:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA77C2820A9
+	for <spacemit@lists.linux.dev>; Mon,  3 Nov 2025 02:45:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762135405; cv=none; b=lwSHX6fHUuRO7Jt5/tluS64s5qc0YYF2dvzKIfI5S7taDON2PnwQFv0F6rTvseDe2AmDx+GEZmjY9BnlXmIcBygu4NDsuOlK+KDeKKdePqGN5CB7IZNrdJD0p/GJHipExSSQ993OGIUsR1o3tagVG59zuqqVU5y4YiQn+55mfyg=
+	t=1762137914; cv=none; b=bsHbf/WEse5ow4ajtpHIx8oMcQk+Z3fI7yDxaguQqEBQTzzC8/2ffL2V+aIMgiW05O308YegdTM6VOUKHb/wVy2TnjldpnDjWHi78NjWDVYSLZ2n6RQOlUNV/2AuQPSDdKmo3ExRENA1knrxDH83iqH1ZrT5my86prBKuvEgH1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762135405; c=relaxed/simple;
-	bh=WcHlvIwTwKQ+93ogLCGc3oVtV09Vvg+lFU9c0YzSRAk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=t6CaarUWJJJ8gojRjAkVAZim4OPj7UPJYw3D519CvuYegWlfCIHicum+sBmke4BZNI9LroQPc8oCsFmt3vLRI7Ip4BL96bxL/mqwYZlEsEv+bwJEGeCct88asuVfsy7IwEwpOyD/bhc0JULZE1d0WWhgQfUlsQ+xxfpjpobIh04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [114.241.85.109])
-	by APP-05 (Coremail) with SMTP id zQCowAD3oO9JDQhpJTImAQ--.23894S2;
-	Mon, 03 Nov 2025 10:02:50 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Mon, 03 Nov 2025 10:02:49 +0800
-Subject: [PATCH net v3] net: spacemit: Check netif_running() in
- emac_set_pauseparam()
+	s=arc-20240116; t=1762137914; c=relaxed/simple;
+	bh=hEYVR9JNeSamINJK7zjTeE1h6YBcMasRcYIT+ap+X1k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rGF5B4FXFI6oIvdUNMLrTb7LCZnCj/WuPQHmFjLZ2lC46YnGC35ozjBq4evtUYGo7l4EeW70Glo2AOQDVSaS9TX8L0GVQWTn2rz6JNFnBEgcALj9p3NCwktFBYVUG0Fh0/QAH8HYvJAzaoYbJQSKgszGUda8C4RyIMJCenhBM+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=q4JkamuK; arc=none smtp.client-ip=54.204.34.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="q4JkamuK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1762137874;
+	bh=EzhqW4LTolUoeFR6p40cCHk6rVnU+KQUnuF+gS36JjM=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=q4JkamuKKZTlgKGhfP9hJrv85LD7eIagA4Rl7OwJnkdKsDI7rR6oqEocYmpBq0s/l
+	 qgJcIrAlwGmEN3KEG+g/SI/EHjFwiMNrezTPWgse0+Tw+Zkl6k4vZs4zC1/mTQSksF
+	 oOKES8Jf12DBEOkxz//ZMVDwNXvvEQ6fx4t4UqP8=
+X-QQ-mid: esmtpgz15t1762137867ta3d9be05
+X-QQ-Originating-IP: ULHth8tWTgPrwdTvp7p10X6LZ87YT7f4b9dFm0/Sijg=
+Received: from = ( [183.48.244.243])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 03 Nov 2025 10:44:26 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7644360371679395444
+EX-QQ-RecipientCnt: 4
+Date: Mon, 3 Nov 2025 10:44:25 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [RFC PATCH] riscv: dts: spacemit: initial i2c support for
+ OrangePi RV2
+Message-ID: <D8EC2D64D80DFAFE+aQgXCTbGv9o9t9IS@kernel.org>
+References: <20251025074514.642357-1-michael.opdenacker@rootcommit.com>
+ <52bf454f-424a-4824-a3fe-339d411bd664@rootcommit.com>
+ <4544207DE7959B10+aP7Ieuaw16uArne_@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251103-k1-ethernet-remove-fc-v3-1-2083770cd282@iscas.ac.cn>
-X-B4-Tracking: v=1; b=H4sIAEgNCGkC/4WOwWrDMBBEf8Xo3DVaOVbVnPIfIQV5ta5FsZ1Ii
- mgw/vcKtVB6KGVPszvzdjYROXiO4thsInD20a9LEd1TI2iyyxuDd0ULJVWPskN4R+A0cVg4QeB
- 5zQwjgVGj08/OmBerRcleA4/+o3LPoljF5WsZ+HYvP9L3ZbCRgdZ59unYZN2igUD4uu3VP/mY1
- vCo3TLWwD81MkIZy92ITvfS0MlHsrG11NJSmVn9cFD+yVGFI/FgqRtIGcm/Ofu+fwIVhXGVOQE
- AAA==
-X-Change-ID: 20251031-k1-ethernet-remove-fc-82fd67d889a6
-To: Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Yixun Lan <dlan@gentoo.org>, 
- Maxime Chevallier <maxime.chevallier@bootlin.com>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
- Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.3
-X-CM-TRANSID:zQCowAD3oO9JDQhpJTImAQ--.23894S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7ur13Zr1rKw1DJFy5Ar15CFg_yoW8uw1fpF
-	WUZa93Ww17Jr4rKFs7tw4xZFy5Jayftr1Uua1akw4rZa4aya4UCFyFkFW3Cr18ZFW5CrWa
-	gw4jv3WfCF1DArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9214x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
-	6r4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26F
-	4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
-	7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
-	1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02
-	628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4
-	IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1r
-	MI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJV
-	WUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j
-	6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYx
-	BIdaVFxhVjvjDU0xZFpf9x0JUd-B_UUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4544207DE7959B10+aP7Ieuaw16uArne_@kernel.org>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
 
-Currently, emac_set_pauseparam() will oops if userspace calls it while
-the interface is not up, because phydev is NULL, but it is still
-accessed in emac_set_fc() and emac_set_fc_autoneg().
+On Mon, Oct 27, 2025 at 09:18:50AM +0800, Troy Mitchell wrote:
+> On Sat, Oct 25, 2025 at 07:48:45AM +0000, Michael Opdenacker wrote:
+> > Greetings,
+> > 
+> > On 10/25/25 09:45, michael.opdenacker@rootcommit.com wrote:
+> > > From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+> [...]
+> > > +&i2c2 {
+> > > +	pinctrl-0 = <&i2c2_0_cfg>;
+> > > +	pinctrl-names = "default";
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&i2c8 {
+> > > +	pinctrl-0 = <&i2c8_cfg>;
+> > > +	pinctrl-names = "default";
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > >   &pdma {
+> > >   	status = "okay";
+> > >   };
+> > 
+> > 
+> > Unfortunately, these changes are not functional yet on OrangePi RV2, testing
+> > on https://github.com/spacemit-com/linux/commits/k1/dt-for-next
+> > 
+> > # i2cdetect -r 2
+> > WARNING! This program can confuse your I2C bus, cause data loss and worse!
+> > I will probe file /dev/i2c-2 using receive byte commands.
+> > I will probe address range 0x08-0x77.
+> > Continue? [Y/n]
+> >      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+> > 00:        [  124.675321] i2c-k1 d4012000.i2c: i2c transfer failed, ret -11
+> > err 0x400000
+I recall that the PMIC sometimes reports I2C timeouts.
+Could you please confirm if you’re seeing this issue on your side?
+If so, does it still occur when using my branch?
 
-Check for netif_running(dev) in emac_set_pauseparam() before proceeding.
+Thanks!
 
-Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
----
-This more urgent problem was discovered while trying to fix
-emac_set_pauseparam() (v1 of that has already been sent to the mailing
-lists [1], but it was still bad), so I decided to send this patch for
-the net tree now so that this oops will not happen on 6.18. A future
-version of the proper flow control implementation will be sent to
-net-next.
-
-[1]: https://lore.kernel.org/spacemit/20251030-k1-ethernet-fix-autoneg-v1-1-baa572607ccc@iscas.ac.cn
----
-Changes in v3:
-- Check netif_running() instead (Andrew)
-- Add back blurb about the attempt to fix flow control for context
-- Link to v2: https://lore.kernel.org/r/20251101-k1-ethernet-remove-fc-v2-1-014ac3bc280e@iscas.ac.cn
-
-Changes in v2:
-- Reduced patch to only contain checking IFF_UP to avoid the oops. More
-  invasive changes will be sent to net-next in the future. (Andrew)
-- Link to v1: https://lore.kernel.org/r/20251031-k1-ethernet-remove-fc-v1-1-1ae3f1d6508c@iscas.ac.cn
----
- drivers/net/ethernet/spacemit/k1_emac.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-index e1c5faff3b71..220eb5ce7583 100644
---- a/drivers/net/ethernet/spacemit/k1_emac.c
-+++ b/drivers/net/ethernet/spacemit/k1_emac.c
-@@ -1441,6 +1441,9 @@ static int emac_set_pauseparam(struct net_device *dev,
- 	struct emac_priv *priv = netdev_priv(dev);
- 	u8 fc = 0;
- 
-+	if (!netif_running(dev))
-+		return -ENETDOWN;
-+
- 	priv->flow_control_autoneg = pause->autoneg;
- 
- 	if (pause->autoneg) {
-
----
-base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
-change-id: 20251031-k1-ethernet-remove-fc-82fd67d889a6
-
-Best regards,
--- 
-Vivian "dramforever" Wang
-
+                            - Troy
