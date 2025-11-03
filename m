@@ -1,37 +1,25 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9282253EF;
-	Mon,  3 Nov 2025 00:48:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6F11A2C0B
+	for <spacemit@lists.linux.dev>; Mon,  3 Nov 2025 02:03:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762130921; cv=none; b=Ke7Yllblyl5vm3iBq9fOddryfPMScjljqx1+HHWHS+o/r1FDBGCtphnvLqNCvEhwUxgZ5dPZsSriRjRc77TaXn/Ij3etIe/o/61bOrujoz8R1n/efhP4S+BTtQKNzcl5k16yE/Wzo1NDNgdIGYP0wkeqLZ5N0ZIwhB0NctF2WB8=
+	t=1762135405; cv=none; b=lwSHX6fHUuRO7Jt5/tluS64s5qc0YYF2dvzKIfI5S7taDON2PnwQFv0F6rTvseDe2AmDx+GEZmjY9BnlXmIcBygu4NDsuOlK+KDeKKdePqGN5CB7IZNrdJD0p/GJHipExSSQ993OGIUsR1o3tagVG59zuqqVU5y4YiQn+55mfyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762130921; c=relaxed/simple;
-	bh=LKDibR5PiwX9DKk8uCq2qfo8M+DSlz4ZgYHoGEMG7+w=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=lQPKE+ijHiGpJ9BI83PBl3YWlrgQIBQZ+TrlvNZ7u1X3zcGTTvl8sX46hfFFykaXh7Q9BW4HWckvRh7UGobw7O+UJvrxxj/yvFZDc78vweE+5hyOdpIiU33POsTZHtOc8aycyf2Zax3N9XAnz/G/O7CTg/C7olEPkye1fRZQww0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F55C2BCB0;
-	Mon,  3 Nov 2025 00:48:40 +0000 (UTC)
-Received: by venus (Postfix, from userid 1000)
-	id 76FAD1822DA; Mon, 03 Nov 2025 01:48:33 +0100 (CET)
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>, 
- Sebastian Reichel <sre@kernel.org>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, Aurelien Jarno <aurelien@aurel32.net>
-Cc: linux-pm@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev
-In-Reply-To: <20251102230352.914421-1-aurelien@aurel32.net>
-References: <20251102230352.914421-1-aurelien@aurel32.net>
-Subject: Re: (subset) [PATCH v5 0/2] driver: reset: spacemit-p1: add driver
- for poweroff/reboot
-Message-Id: <176213091347.301408.11587695003687450479.b4-ty@collabora.com>
-Date: Mon, 03 Nov 2025 01:48:33 +0100
+	s=arc-20240116; t=1762135405; c=relaxed/simple;
+	bh=WcHlvIwTwKQ+93ogLCGc3oVtV09Vvg+lFU9c0YzSRAk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=t6CaarUWJJJ8gojRjAkVAZim4OPj7UPJYw3D519CvuYegWlfCIHicum+sBmke4BZNI9LroQPc8oCsFmt3vLRI7Ip4BL96bxL/mqwYZlEsEv+bwJEGeCct88asuVfsy7IwEwpOyD/bhc0JULZE1d0WWhgQfUlsQ+xxfpjpobIh04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [114.241.85.109])
+	by APP-05 (Coremail) with SMTP id zQCowAD3oO9JDQhpJTImAQ--.23894S2;
+	Mon, 03 Nov 2025 10:02:50 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Mon, 03 Nov 2025 10:02:49 +0800
+Subject: [PATCH net v3] net: spacemit: Check netif_running() in
+ emac_set_pauseparam()
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -40,25 +28,94 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20251103-k1-ethernet-remove-fc-v3-1-2083770cd282@iscas.ac.cn>
+X-B4-Tracking: v=1; b=H4sIAEgNCGkC/4WOwWrDMBBEf8Xo3DVaOVbVnPIfIQV5ta5FsZ1Ii
+ mgw/vcKtVB6KGVPszvzdjYROXiO4thsInD20a9LEd1TI2iyyxuDd0ULJVWPskN4R+A0cVg4QeB
+ 5zQwjgVGj08/OmBerRcleA4/+o3LPoljF5WsZ+HYvP9L3ZbCRgdZ59unYZN2igUD4uu3VP/mY1
+ vCo3TLWwD81MkIZy92ITvfS0MlHsrG11NJSmVn9cFD+yVGFI/FgqRtIGcm/Ofu+fwIVhXGVOQE
+ AAA==
+X-Change-ID: 20251031-k1-ethernet-remove-fc-82fd67d889a6
+To: Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Yixun Lan <dlan@gentoo.org>, 
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
+ Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.3
+X-CM-TRANSID:zQCowAD3oO9JDQhpJTImAQ--.23894S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7ur13Zr1rKw1DJFy5Ar15CFg_yoW8uw1fpF
+	WUZa93Ww17Jr4rKFs7tw4xZFy5Jayftr1Uua1akw4rZa4aya4UCFyFkFW3Cr18ZFW5CrWa
+	gw4jv3WfCF1DArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9214x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+	6r4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26F
+	4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
+	7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
+	1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02
+	628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4
+	IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1r
+	MI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJV
+	WUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j
+	6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYx
+	BIdaVFxhVjvjDU0xZFpf9x0JUd-B_UUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
+Currently, emac_set_pauseparam() will oops if userspace calls it while
+the interface is not up, because phydev is NULL, but it is still
+accessed in emac_set_fc() and emac_set_fc_autoneg().
 
-On Mon, 03 Nov 2025 00:01:58 +0100, Aurelien Jarno wrote:
-> This adds poweroff/reboot support for the SpacemiT P1 PMIC chip, which is
-> commonly paired with the SpacemiT K1 SoC.
-> 
-> Note: For reliable operation, this driver depends on a this patch that adds
-> atomic transfer support to the SpacemiT I2C controller driver:
->   https://lore.kernel.org/spacemit/20251009-k1-i2c-atomic-v4-1-a89367870286@linux.spacemit.com/
-> 
-> [...]
+Check for netif_running(dev) in emac_set_pauseparam() before proceeding.
 
-Applied, thanks!
+Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+---
+This more urgent problem was discovered while trying to fix
+emac_set_pauseparam() (v1 of that has already been sent to the mailing
+lists [1], but it was still bad), so I decided to send this patch for
+the net tree now so that this oops will not happen on 6.18. A future
+version of the proper flow control implementation will be sent to
+net-next.
 
-[1/2] driver: reset: spacemit-p1: add driver for poweroff/reboot
-      commit: 28124cc0fb8c7dc01a6834d227351e25d9a92c58
+[1]: https://lore.kernel.org/spacemit/20251030-k1-ethernet-fix-autoneg-v1-1-baa572607ccc@iscas.ac.cn
+---
+Changes in v3:
+- Check netif_running() instead (Andrew)
+- Add back blurb about the attempt to fix flow control for context
+- Link to v2: https://lore.kernel.org/r/20251101-k1-ethernet-remove-fc-v2-1-014ac3bc280e@iscas.ac.cn
+
+Changes in v2:
+- Reduced patch to only contain checking IFF_UP to avoid the oops. More
+  invasive changes will be sent to net-next in the future. (Andrew)
+- Link to v1: https://lore.kernel.org/r/20251031-k1-ethernet-remove-fc-v1-1-1ae3f1d6508c@iscas.ac.cn
+---
+ drivers/net/ethernet/spacemit/k1_emac.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
+index e1c5faff3b71..220eb5ce7583 100644
+--- a/drivers/net/ethernet/spacemit/k1_emac.c
++++ b/drivers/net/ethernet/spacemit/k1_emac.c
+@@ -1441,6 +1441,9 @@ static int emac_set_pauseparam(struct net_device *dev,
+ 	struct emac_priv *priv = netdev_priv(dev);
+ 	u8 fc = 0;
+ 
++	if (!netif_running(dev))
++		return -ENETDOWN;
++
+ 	priv->flow_control_autoneg = pause->autoneg;
+ 
+ 	if (pause->autoneg) {
+
+---
+base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+change-id: 20251031-k1-ethernet-remove-fc-82fd67d889a6
 
 Best regards,
 -- 
-Sebastian Reichel <sebastian.reichel@collabora.com>
+Vivian "dramforever" Wang
 
