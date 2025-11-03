@@ -1,100 +1,147 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA77C2820A9
-	for <spacemit@lists.linux.dev>; Mon,  3 Nov 2025 02:45:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554628BEC
+	for <spacemit@lists.linux.dev>; Mon,  3 Nov 2025 07:07:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762137914; cv=none; b=bsHbf/WEse5ow4ajtpHIx8oMcQk+Z3fI7yDxaguQqEBQTzzC8/2ffL2V+aIMgiW05O308YegdTM6VOUKHb/wVy2TnjldpnDjWHi78NjWDVYSLZ2n6RQOlUNV/2AuQPSDdKmo3ExRENA1knrxDH83iqH1ZrT5my86prBKuvEgH1I=
+	t=1762153667; cv=none; b=s4ficz+ygT2FekhFsc8VboHVcS4ZlviM+2lifbyDPsJQBXY8YQ07NhnwdFmgbbVP9LxXnONI+f1YF04CnadmqACTEUYjoEm2n8fLZKp9X6nf5xRPu2Jx9Etjjq/3GJoEYsqrCQTxS5lczL0C7Mze7Yoa/PuVN5EiP0At6CnLtmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762137914; c=relaxed/simple;
-	bh=hEYVR9JNeSamINJK7zjTeE1h6YBcMasRcYIT+ap+X1k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rGF5B4FXFI6oIvdUNMLrTb7LCZnCj/WuPQHmFjLZ2lC46YnGC35ozjBq4evtUYGo7l4EeW70Glo2AOQDVSaS9TX8L0GVQWTn2rz6JNFnBEgcALj9p3NCwktFBYVUG0Fh0/QAH8HYvJAzaoYbJQSKgszGUda8C4RyIMJCenhBM+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=q4JkamuK; arc=none smtp.client-ip=54.204.34.130
+	s=arc-20240116; t=1762153667; c=relaxed/simple;
+	bh=2vc8dJMZd6FC7filclH3xokq3Yh9OgHdz+OEBsr598U=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bM8kVxKMUonG4bTJIEs4jThh/VYR34DXraJz9MSQcwXMiZgc3kH9HCNA5KyzQrjLcVrdQewol/ckmGCKUDsZLf4fTbppc0W4yOqrlBAHut4jYcSolUOx//tsxdrSuxcCvCuuG/kcrccHTfze5Rre175CFCvriAZegXI+bWOtzJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=d3LsbCOR; arc=none smtp.client-ip=15.184.224.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="q4JkamuK"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="d3LsbCOR"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1762137874;
-	bh=EzhqW4LTolUoeFR6p40cCHk6rVnU+KQUnuF+gS36JjM=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=q4JkamuKKZTlgKGhfP9hJrv85LD7eIagA4Rl7OwJnkdKsDI7rR6oqEocYmpBq0s/l
-	 qgJcIrAlwGmEN3KEG+g/SI/EHjFwiMNrezTPWgse0+Tw+Zkl6k4vZs4zC1/mTQSksF
-	 oOKES8Jf12DBEOkxz//ZMVDwNXvvEQ6fx4t4UqP8=
-X-QQ-mid: esmtpgz15t1762137867ta3d9be05
-X-QQ-Originating-IP: ULHth8tWTgPrwdTvp7p10X6LZ87YT7f4b9dFm0/Sijg=
-Received: from = ( [183.48.244.243])
+	s=mxsw2412; t=1762153590;
+	bh=twT6UKR7uxSLBMBv7PcVYWWyZztV/iDvMv6ENH9b6WA=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=d3LsbCOR76oDxMaFWjYox4PGdOc/XpVKtHm0y/bIUif435dA0ASEwTBZVR8ndedbc
+	 hojETTZbvbEMTHhdJn6ANbmhFkAwYLQRaHt5+g7kOZhVkk9q7quPQm9ECADO/266El
+	 c9gA6/w+8eycNLm8LIAAEItJx0Y3cXdINR3e08wQ=
+X-QQ-mid: zesmtpgz3t1762153588t9f1f8e62
+X-QQ-Originating-IP: R3B6rAZlOdUvAMM4kUW1Wx0B4GixrEUlUvZkXan5Hdo=
+Received: from = ( [61.145.255.150])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 03 Nov 2025 10:44:26 +0800 (CST)
+	id ; Mon, 03 Nov 2025 15:06:26 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7644360371679395444
-EX-QQ-RecipientCnt: 4
-Date: Mon, 3 Nov 2025 10:44:25 +0800
+X-BIZMAIL-ID: 16909040105550240895
+EX-QQ-RecipientCnt: 10
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [RFC PATCH] riscv: dts: spacemit: initial i2c support for
- OrangePi RV2
-Message-ID: <D8EC2D64D80DFAFE+aQgXCTbGv9o9t9IS@kernel.org>
-References: <20251025074514.642357-1-michael.opdenacker@rootcommit.com>
- <52bf454f-424a-4824-a3fe-339d411bd664@rootcommit.com>
- <4544207DE7959B10+aP7Ieuaw16uArne_@kernel.org>
+Date: Mon, 03 Nov 2025 15:06:24 +0800
+Subject: [PATCH] i2c: spacemit: fix detect issue
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <4544207DE7959B10+aP7Ieuaw16uArne_@kernel.org>
+Message-Id: <20251103-fix-k1-detect-failure-v1-1-bb07a8d7de7c@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAG9UCGkC/x2MWwqAIBAAryL73YKPQukq0UfZVkthoRVBdPekz
+ 4GZeSBRZEpQiwciXZx4CxlUIcDPXZgIecgMWupKKWlw5BsXhQMd5A8cO17PSCh7I5321lhXQm7
+ 3SFn8v037vh+V0IcRZwAAAA==
+X-Change-ID: 20251103-fix-k1-detect-failure-0b3082c73784
+To: Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Alex Elder <elder@riscstar.com>, 
+ Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Cc: Troy Mitchell <troymitchell988@gmail.com>, linux-i2c@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762153586; l=2372;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=2vc8dJMZd6FC7filclH3xokq3Yh9OgHdz+OEBsr598U=;
+ b=Hyn5Qog/ra3RKl96Owc8FFHtdNGYfk5j6NbnLXSzUgwqi6vdLL4hfMVZmP220fc8KIno7v+BK
+ paqheZ1hV68DflWL+R6bhBmNQDzJZ+X/9Tzwg+ShRAuBnNRTNa5ibQK
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: OW4JKxETGMY2QhaCakBTCB2YbsF7K2RIQJT/9qSLLx2hbcFan49fneMI
+	1/bIsB+wtDzQz71c086X6JKQiUNHIyvP7mxVs8D7hpCFS2KEuA5vEPWF9xqmILxOGVDIWse
+	j+cQ7jYD5Qz/t6pAuyTxxPzeGOgnI4iYn0bRrlVlsrk46WrVThMtHoDaJuDU1RV45nd68ZD
+	HBhpPJ/q7WJtGnbWf21x6XXtujDMJNnulHly8EMe8m63Ff9RbGr2Inve/gQVDxkGqgO+/W/
+	0o+4zwodSpLHyDCpx44b3fXLYt3CzzP6Ni61a7iigs5BUmVjtIrkZMke2TwTIxNkYV698Cb
+	KZCtrCd271Edb60GERNc6IOXPS9gcJDqje4LLGFpFWnPSbDdZDyU0X2CQjG7710gpNe/Tlj
+	BeQnLjxLGm7RqNNNtdvedt9gwnHg4ivP95GuETGx2qUerwFt5KQIO7ivVAvDyFPI9vKBNQg
+	UokJR7sx8dhtvidabrJDE+ML3XfGvr3eRQfW4KrSQO9+otJlmLVZ4osHUvEGsdbET1/2Vyo
+	K4j8M5z5n6sVMjbH/dBPneEnNGwB7XnNBJm6U7hh0gr4HrqWe1R1UNxFkt4O+2q1eSImeFV
+	abINM7BU6wuqEJVbB0OLaFt9hzq+VlZRbehwaUsv2Tdr4zPbdiZGywtnfyHPa28bGJRMoGD
+	fGJPiXkd7lER/VFowALipfvTvR6SauJXpCOevAY/OKIQ4BBNgaBoqMnS6yhmptYHyCpx0cs
+	gizfrhLSTw5m6oFtjt+2PE0AgbdNun6mXuyYdoQ9Ey4s6IIfaYjeJTOnhe3WMJNgskg1D+q
+	8fmbjaTzql06PdiViRkATVS09JaKiKZl4BdVhBl2D8B2w5hrtF1pB+pOgPE39yOwblAPTG8
+	ihiJKmeyzmzwMUO16ftngwoZ0pfLvHOgH3g7TfTybnei3t/NIE1m4Kh7aLPsbYznG6ztmZs
+	U7nxT+QpxdVV1SworCtJNUoSAsFDwgxAzy6SJz9QQLHgXz0vPuAAfIwvnW+Zq5zezs8Hptj
+	JL7YyaQ0JgPH8Laqb5KG/7vnC/vWsezrXBB0lkC+qVuRvkKwg1RwzE/BFPQDGU4IGKCFGU6
+	Km6kw4WUaM6XPSXAa898b4=
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-RECHKSPAM: 0
 
-On Mon, Oct 27, 2025 at 09:18:50AM +0800, Troy Mitchell wrote:
-> On Sat, Oct 25, 2025 at 07:48:45AM +0000, Michael Opdenacker wrote:
-> > Greetings,
-> > 
-> > On 10/25/25 09:45, michael.opdenacker@rootcommit.com wrote:
-> > > From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-> [...]
-> > > +&i2c2 {
-> > > +	pinctrl-0 = <&i2c2_0_cfg>;
-> > > +	pinctrl-names = "default";
-> > > +	status = "okay";
-> > > +};
-> > > +
-> > > +&i2c8 {
-> > > +	pinctrl-0 = <&i2c8_cfg>;
-> > > +	pinctrl-names = "default";
-> > > +	status = "okay";
-> > > +};
-> > > +
-> > >   &pdma {
-> > >   	status = "okay";
-> > >   };
-> > 
-> > 
-> > Unfortunately, these changes are not functional yet on OrangePi RV2, testing
-> > on https://github.com/spacemit-com/linux/commits/k1/dt-for-next
-> > 
-> > # i2cdetect -r 2
-> > WARNING! This program can confuse your I2C bus, cause data loss and worse!
-> > I will probe file /dev/i2c-2 using receive byte commands.
-> > I will probe address range 0x08-0x77.
-> > Continue? [Y/n]
-> >      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-> > 00:        [  124.675321] i2c-k1 d4012000.i2c: i2c transfer failed, ret -11
-> > err 0x400000
-I recall that the PMIC sometimes reports I2C timeouts.
-Could you please confirm if you’re seeing this issue on your side?
-If so, does it still occur when using my branch?
+This commit addresses two issues causing i2c detect to fail.
 
-Thanks!
+The identified issues are:
 
-                            - Troy
+1. Incorrect error handling for BED (Bus Error No ACK/NAK):
+   Before this commit, Both ALD (Arbitration Loss Detected) and
+   BED returned -EAGAIN.
+2. Missing interrupt status clear after initialization in xfer():
+   On the K1 SoC, simply fixing the first issue changed the error
+   from -EAGAIN to -ETIMEOUT. Through tracing, it was determined that
+   this is likely due to MSD (Master Stop Detected) latency issues.
+
+   That means the MSD bit in the ISR may still be set on the next transfer.
+   As a result, the controller won't work — we can see from the scope that
+   it doesn't issue any signal.
+   (This only occurs during rapid consecutive I2C transfers.
+   That explains why the issue only shows up with i2cdetect.)
+
+With these two fixes, i2c device detection now functions correctly on the K1 SoC.
+
+Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+I checked the vendor version driver and tried commenting out
+spacemit_i2c_clear_int_status() that runs before xfer starts.
+Surprisingly, i2cdetect stopped working as well.
+---
+ drivers/i2c/busses/i2c-k1.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+index 6b918770e612e098b8ad17418f420d87c94df166..37828323317770ae2f0522d213dca67342ae166f 100644
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -160,7 +160,8 @@ static int spacemit_i2c_handle_err(struct spacemit_i2c_dev *i2c)
+ 
+ 	if (i2c->status & (SPACEMIT_SR_BED | SPACEMIT_SR_ALD)) {
+ 		spacemit_i2c_reset(i2c);
+-		return -EAGAIN;
++		if (i2c->status & SPACEMIT_SR_ALD)
++			return -EAGAIN;
+ 	}
+ 
+ 	return i2c->status & SPACEMIT_SR_ACKNAK ? -ENXIO : -EIO;
+@@ -491,6 +492,8 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
+ 
+ 	spacemit_i2c_init(i2c);
+ 
++	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
++
+ 	spacemit_i2c_enable(i2c);
+ 
+ 	ret = spacemit_i2c_wait_bus_idle(i2c);
+
+---
+base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+change-id: 20251103-fix-k1-detect-failure-0b3082c73784
+
+Best regards,
+-- 
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
