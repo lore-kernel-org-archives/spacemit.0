@@ -1,147 +1,69 @@
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554628BEC
-	for <spacemit@lists.linux.dev>; Mon,  3 Nov 2025 07:07:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187DA1C5F1B;
+	Mon,  3 Nov 2025 15:13:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762153667; cv=none; b=s4ficz+ygT2FekhFsc8VboHVcS4ZlviM+2lifbyDPsJQBXY8YQ07NhnwdFmgbbVP9LxXnONI+f1YF04CnadmqACTEUYjoEm2n8fLZKp9X6nf5xRPu2Jx9Etjjq/3GJoEYsqrCQTxS5lczL0C7Mze7Yoa/PuVN5EiP0At6CnLtmM=
+	t=1762182802; cv=none; b=DL7vD1XEjHuPNxtBVfA90JEXPc3/Y/DJggOh8lSfxwwkcY6zHDHIArRdYie3/yjm+Wh1WAgZzqI88iuyMRBBReDtnvwv52UrHVK3gToIfQc/36rXMIBXbI1stACJkoq+7gkAxeNtQufbn7RM01bPDOsHSq5v/VJAL4XXKRfixLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762153667; c=relaxed/simple;
-	bh=2vc8dJMZd6FC7filclH3xokq3Yh9OgHdz+OEBsr598U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bM8kVxKMUonG4bTJIEs4jThh/VYR34DXraJz9MSQcwXMiZgc3kH9HCNA5KyzQrjLcVrdQewol/ckmGCKUDsZLf4fTbppc0W4yOqrlBAHut4jYcSolUOx//tsxdrSuxcCvCuuG/kcrccHTfze5Rre175CFCvriAZegXI+bWOtzJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=d3LsbCOR; arc=none smtp.client-ip=15.184.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1762182802; c=relaxed/simple;
+	bh=zWOWgDLpCZMz5NjTvSfnqsVWClJ1JmJ8xFAxWmZLOVM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NGifv4vKZ1bSseq4jboWlgsm1b5TKyCyXk0yiMGmCokjWSfT5drI6Y0cdtglpPq/7KzGMJswZaGFZR7bHxOlBcnrLfc7/PazKVz8nReZp/m5uXhMLGLVRUmedFhEGh7JXr96h5dahqgIyGWeV8xHYbasCUIpQo62hiiA8kyScbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=bm3C/hpN; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="d3LsbCOR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1762153590;
-	bh=twT6UKR7uxSLBMBv7PcVYWWyZztV/iDvMv6ENH9b6WA=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=d3LsbCOR76oDxMaFWjYox4PGdOc/XpVKtHm0y/bIUif435dA0ASEwTBZVR8ndedbc
-	 hojETTZbvbEMTHhdJn6ANbmhFkAwYLQRaHt5+g7kOZhVkk9q7quPQm9ECADO/266El
-	 c9gA6/w+8eycNLm8LIAAEItJx0Y3cXdINR3e08wQ=
-X-QQ-mid: zesmtpgz3t1762153588t9f1f8e62
-X-QQ-Originating-IP: R3B6rAZlOdUvAMM4kUW1Wx0B4GixrEUlUvZkXan5Hdo=
-Received: from = ( [61.145.255.150])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 03 Nov 2025 15:06:26 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 16909040105550240895
-EX-QQ-RecipientCnt: 10
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Mon, 03 Nov 2025 15:06:24 +0800
-Subject: [PATCH] i2c: spacemit: fix detect issue
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="bm3C/hpN"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=JSXdgW2kfRWFxjWTR3l7Kh9s8bfojqXtZjuMl+0bips=; b=bm3C/hpNZY8fqnVxP022GlshBm
+	31AP42vDSUyI6KbUn9Jo0Z3QzSUJGsL/da2JwIx5c1BgMoki0OLohgNb8TrgXd3IZT5VwLOhd/xBR
+	wigGmg+7naJpD14G2ZB0rR8MrEjDh0jzwDT4yn+c69Whpy+MvTSgCS0xMfry/CkPN05g=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vFwEo-00CnDn-Tg; Mon, 03 Nov 2025 16:12:54 +0100
+Date: Mon, 3 Nov 2025 16:12:54 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>, netdev@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net v3] net: spacemit: Check netif_running() in
+ emac_set_pauseparam()
+Message-ID: <bcebb4b4-69c3-4fa5-bbca-9558a9a7d526@lunn.ch>
+References: <20251103-k1-ethernet-remove-fc-v3-1-2083770cd282@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251103-fix-k1-detect-failure-v1-1-bb07a8d7de7c@linux.spacemit.com>
-X-B4-Tracking: v=1; b=H4sIAG9UCGkC/x2MWwqAIBAAryL73YKPQukq0UfZVkthoRVBdPekz
- 4GZeSBRZEpQiwciXZx4CxlUIcDPXZgIecgMWupKKWlw5BsXhQMd5A8cO17PSCh7I5321lhXQm7
- 3SFn8v037vh+V0IcRZwAAAA==
-X-Change-ID: 20251103-fix-k1-detect-failure-0b3082c73784
-To: Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Alex Elder <elder@riscstar.com>, 
- Michael Opdenacker <michael.opdenacker@rootcommit.com>
-Cc: Troy Mitchell <troymitchell988@gmail.com>, linux-i2c@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1762153586; l=2372;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=2vc8dJMZd6FC7filclH3xokq3Yh9OgHdz+OEBsr598U=;
- b=Hyn5Qog/ra3RKl96Owc8FFHtdNGYfk5j6NbnLXSzUgwqi6vdLL4hfMVZmP220fc8KIno7v+BK
- paqheZ1hV68DflWL+R6bhBmNQDzJZ+X/9Tzwg+ShRAuBnNRTNa5ibQK
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OW4JKxETGMY2QhaCakBTCB2YbsF7K2RIQJT/9qSLLx2hbcFan49fneMI
-	1/bIsB+wtDzQz71c086X6JKQiUNHIyvP7mxVs8D7hpCFS2KEuA5vEPWF9xqmILxOGVDIWse
-	j+cQ7jYD5Qz/t6pAuyTxxPzeGOgnI4iYn0bRrlVlsrk46WrVThMtHoDaJuDU1RV45nd68ZD
-	HBhpPJ/q7WJtGnbWf21x6XXtujDMJNnulHly8EMe8m63Ff9RbGr2Inve/gQVDxkGqgO+/W/
-	0o+4zwodSpLHyDCpx44b3fXLYt3CzzP6Ni61a7iigs5BUmVjtIrkZMke2TwTIxNkYV698Cb
-	KZCtrCd271Edb60GERNc6IOXPS9gcJDqje4LLGFpFWnPSbDdZDyU0X2CQjG7710gpNe/Tlj
-	BeQnLjxLGm7RqNNNtdvedt9gwnHg4ivP95GuETGx2qUerwFt5KQIO7ivVAvDyFPI9vKBNQg
-	UokJR7sx8dhtvidabrJDE+ML3XfGvr3eRQfW4KrSQO9+otJlmLVZ4osHUvEGsdbET1/2Vyo
-	K4j8M5z5n6sVMjbH/dBPneEnNGwB7XnNBJm6U7hh0gr4HrqWe1R1UNxFkt4O+2q1eSImeFV
-	abINM7BU6wuqEJVbB0OLaFt9hzq+VlZRbehwaUsv2Tdr4zPbdiZGywtnfyHPa28bGJRMoGD
-	fGJPiXkd7lER/VFowALipfvTvR6SauJXpCOevAY/OKIQ4BBNgaBoqMnS6yhmptYHyCpx0cs
-	gizfrhLSTw5m6oFtjt+2PE0AgbdNun6mXuyYdoQ9Ey4s6IIfaYjeJTOnhe3WMJNgskg1D+q
-	8fmbjaTzql06PdiViRkATVS09JaKiKZl4BdVhBl2D8B2w5hrtF1pB+pOgPE39yOwblAPTG8
-	ihiJKmeyzmzwMUO16ftngwoZ0pfLvHOgH3g7TfTybnei3t/NIE1m4Kh7aLPsbYznG6ztmZs
-	U7nxT+QpxdVV1SworCtJNUoSAsFDwgxAzy6SJz9QQLHgXz0vPuAAfIwvnW+Zq5zezs8Hptj
-	JL7YyaQ0JgPH8Laqb5KG/7vnC/vWsezrXBB0lkC+qVuRvkKwg1RwzE/BFPQDGU4IGKCFGU6
-	Km6kw4WUaM6XPSXAa898b4=
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251103-k1-ethernet-remove-fc-v3-1-2083770cd282@iscas.ac.cn>
 
-This commit addresses two issues causing i2c detect to fail.
+On Mon, Nov 03, 2025 at 10:02:49AM +0800, Vivian Wang wrote:
+> Currently, emac_set_pauseparam() will oops if userspace calls it while
+> the interface is not up, because phydev is NULL, but it is still
+> accessed in emac_set_fc() and emac_set_fc_autoneg().
+> 
+> Check for netif_running(dev) in emac_set_pauseparam() before proceeding.
+> 
+> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
 
-The identified issues are:
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
-1. Incorrect error handling for BED (Bus Error No ACK/NAK):
-   Before this commit, Both ALD (Arbitration Loss Detected) and
-   BED returned -EAGAIN.
-2. Missing interrupt status clear after initialization in xfer():
-   On the K1 SoC, simply fixing the first issue changed the error
-   from -EAGAIN to -ETIMEOUT. Through tracing, it was determined that
-   this is likely due to MSD (Master Stop Detected) latency issues.
-
-   That means the MSD bit in the ISR may still be set on the next transfer.
-   As a result, the controller won't work — we can see from the scope that
-   it doesn't issue any signal.
-   (This only occurs during rapid consecutive I2C transfers.
-   That explains why the issue only shows up with i2cdetect.)
-
-With these two fixes, i2c device detection now functions correctly on the K1 SoC.
-
-Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
-I checked the vendor version driver and tried commenting out
-spacemit_i2c_clear_int_status() that runs before xfer starts.
-Surprisingly, i2cdetect stopped working as well.
----
- drivers/i2c/busses/i2c-k1.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-index 6b918770e612e098b8ad17418f420d87c94df166..37828323317770ae2f0522d213dca67342ae166f 100644
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -160,7 +160,8 @@ static int spacemit_i2c_handle_err(struct spacemit_i2c_dev *i2c)
- 
- 	if (i2c->status & (SPACEMIT_SR_BED | SPACEMIT_SR_ALD)) {
- 		spacemit_i2c_reset(i2c);
--		return -EAGAIN;
-+		if (i2c->status & SPACEMIT_SR_ALD)
-+			return -EAGAIN;
- 	}
- 
- 	return i2c->status & SPACEMIT_SR_ACKNAK ? -ENXIO : -EIO;
-@@ -491,6 +492,8 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
- 
- 	spacemit_i2c_init(i2c);
- 
-+	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
-+
- 	spacemit_i2c_enable(i2c);
- 
- 	ret = spacemit_i2c_wait_bus_idle(i2c);
-
----
-base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
-change-id: 20251103-fix-k1-detect-failure-0b3082c73784
-
-Best regards,
--- 
-Troy Mitchell <troy.mitchell@linux.spacemit.com>
-
+    Andrew
