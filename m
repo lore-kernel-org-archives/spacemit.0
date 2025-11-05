@@ -1,82 +1,145 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE0122FE0A;
-	Tue,  4 Nov 2025 01:40:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EE62356C9
+	for <spacemit@lists.linux.dev>; Wed,  5 Nov 2025 03:38:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762220443; cv=none; b=Tly8AqpCb8+HQkRh+LXHUSnJrquENVFL8Qa+WZOJPgMr0HyZDzzKnYEGQtlSpVPn4vjaG6GQGN6Ha0HCfqjDhc2qzDvAqvZb81imboDICZYFQhEWw03q+meIWPsepdkVgwbd3pka3GPeQyNiOpTS44zCsuFtRJcC2w9YmLoqJFY=
+	t=1762313894; cv=none; b=XBnWzTjfl1nDReae0BrGCaTzlE0UK3hqA/t74qXYamImUBOb6oDMdETIQ47j3R7xFv3/HBnxeGFFOAmTVlY4N29+h1DVK43EsryfXXOg1I/Z1wQ4wjGrgj641Cdue6PKD0NbyaoWUNYbrGk/Bx1EdiifkD3e3OgVbPvpu5uk5TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762220443; c=relaxed/simple;
-	bh=hLOl+nIyoL9YpIF2ua5v7KC49yNxnmSmLEI5ZrCaKFc=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=pP4u/VVN/E1Xz2q7xzaxECuXz2AI3AgSfJNlJV9ZAE9bnyaZMCddCFSI96PB8shk0i/kS4UintmS5QXhXHPT5xFzx/hSnhwlogcEj8l9VvRRRUupiwg7QBvg4F9G1E2KP59eVfTWVjm8QW7yGodNrYT5rU1Nu6KIl8N6I4RzdM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ObB97N3H; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762313894; c=relaxed/simple;
+	bh=V8k0yxmQAnDcmXzZjyaiVPINJrE9h4Ksd4ST09u1EBk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=soQrD64Fl9E5nCdrngfzx9dfzTtrgz717U+3jsfbdWxO1m38QgKrxLnexsSRa+mnlp1YANioyfHyPe5N6cW9TxK55DI22Fk2BJ5se9bsCjz4b0L0M0zrIwMbwgs/nYEQ/CaWJ1YQaECAr8fdSgbzFMSq1cew2FWISPBnRP65mzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=khju7aYm; arc=none smtp.client-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ObB97N3H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F3DC4CEFD;
-	Tue,  4 Nov 2025 01:40:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762220443;
-	bh=hLOl+nIyoL9YpIF2ua5v7KC49yNxnmSmLEI5ZrCaKFc=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=ObB97N3HwireapfZhr8VJvNPleWkPGkmwUNnms1y1dHu2ThRp3qpqa5G2NF6ULO5w
-	 G53Lysn7IsIG/u2sDuZbevMK95L4wlHfvtrU5effNZSFgKUGl1rw3stn6sxpwARV44
-	 J4YIt23RHSrRw8ZnuSJP21Uf5nSXumCkqmqc6f1iGZCPE/WLMvMGfz7cY3eFuALsWJ
-	 creCiWq5x/be52kQNiYOPHpBpe8o2KmFF1lKFN+mMIuPj2yt/CspD+C3OdDetM4DNZ
-	 nt1fa6KUqQbIzLEqB0rjQFheMdpbjVET++CXi51/qAyBylBW05ochj/Me+Yc9koPwh
-	 hx0CvJSbhZnMA==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EADB83809A8A;
-	Tue,  4 Nov 2025 01:40:18 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="khju7aYm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1762313878;
+	bh=ZEQeZC5FbCZl5/PPz+0+QIoro14u9RfciKjSruDqBlU=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=khju7aYm/9XK3ib39LEAgHuNhY5fI5xYdDqIQtOpVU/n2dNBmKPAG/v3inWCYFsgd
+	 gGSXl511BKAoPFR7UryuWH2bir+vra0sgAIzqp6dQohixlybOIpEmmoC2H2smA+GdP
+	 /s6TC+l+MdTxGBQH0kQwazMV/80QEQe53xdgN6b8=
+X-QQ-mid: zesmtpsz2t1762313873td991a8ab
+X-QQ-Originating-IP: gdLyqkNyhnd0LHAyoMbqLbDBe5LUTi/ADZcDLkf1dZQ=
+Received: from = ( [183.48.244.102])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 05 Nov 2025 11:37:51 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 2526406523798933425
+EX-QQ-RecipientCnt: 14
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Wed, 05 Nov 2025 11:37:43 +0800
+Subject: [PATCH 1/2] riscv: dts: spacemit: reorder i2c2 node
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net v3] net: spacemit: Check netif_running() in
- emac_set_pauseparam()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <176222041749.2285814.8859925220463360389.git-patchwork-notify@kernel.org>
-Date: Tue, 04 Nov 2025 01:40:17 +0000
-References: <20251103-k1-ethernet-remove-fc-v3-1-2083770cd282@iscas.ac.cn>
-In-Reply-To: <20251103-k1-ethernet-remove-fc-v3-1-2083770cd282@iscas.ac.cn>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, dlan@gentoo.org,
- maxime.chevallier@bootlin.com, troy.mitchell@linux.spacemit.com,
- vadim.fedorenko@linux.dev, netdev@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251105-k1-add-i2c-node-v1-1-d18dae246137@linux.spacemit.com>
+References: <20251105-k1-add-i2c-node-v1-0-d18dae246137@linux.spacemit.com>
+In-Reply-To: <20251105-k1-add-i2c-node-v1-0-d18dae246137@linux.spacemit.com>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
+ Encrow Thorne <jyc0019@gmail.com>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762313866; l=1874;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=V8k0yxmQAnDcmXzZjyaiVPINJrE9h4Ksd4ST09u1EBk=;
+ b=mnCWk4Z1aIXLMbkESpWG4yvukgvwtTCO/09/fzS3TRRZ+6WeMuLb8Kv8wW07LbCPCQh/casEs
+ VYWm5wrUopwCXeRFv2SQGN8ht3qmC+e+amy49kfos1DN2LJo37OVsrw
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: OE3tIrIEWSq4oHRT14zzcvPwZbkIwE2KG+wCBDyQgWMy2o7kJakNo46G
+	gHLT0+79MFMiXnMUurPD052IA2oEnV5IVJcI2vo+4J0fKpa3p650niguVbi1KHXCAfLPRN+
+	4flRjZAk5MOzdB1R3coE6Et2mUVnwhY4y3K4P49H4l3iZAZY2OCSJfnWrw1rczaaBxkiPxu
+	fEt2h016RqnDUr5xcrtQGQ/j+gJSD74k46xQAipqJ48aDjIM5excWc50CexA+TMmCCQMnv0
+	Os24wyYRt2ldex0sV3u/w1Ba4JiDKy5XlwKFQCtIfRSpozrXVfyd11Yz5FR/3qw/110++gu
+	fHf2JkGHmfMHoq0U11HAZDbZCu7QMLEp4dzsLIyaijt5OUqQrl+kXw1F7hFex9Ub6b6Tyi7
+	gGME6TkqibXX369fDB29rwV6uA6ufJiM1PU0AtJRWIOEH7bgP+39ZmjE4ti6zri2Z6e3qEn
+	ppcLC6WoApxsnfnQjojyFJ8ZRsFipgP0X/m0u3V98P4rYIP2LANDFY/BBb3rqgHnjKcXbRc
+	kIV6yRtpqB5yW7yanQ0+rF2JlTYyl75m/ul6ozqO4hhHIS0yk7vAzkk160HTkD/l9LntTXM
+	5Cf5dSy79VoNdoIgWeqs2xh5WEp4TqEFP5Hnd8hIQksviKOcZBXgK2qCjdXf16paanSPWYI
+	VP3wL9aotIWn6OiENL0D+rx06RUSUwwHg2ZULEQSoJYvLdFENACDPEMerOPWTu+qmt966C8
+	4DRGYMtAe1pNVFLGKJGWRI8RG0y1NG3Kz2TudaL3BYE5n3VWBfV5R7cxdyJi/snj/ZXlXZf
+	xJMo5YPzp4nF2nhYJO5SIteZcGE+tNC+fOy5UFAYRNGNsvGUR9MlPex3hkIuf8JVnb59EfV
+	JHX6iAFEfDglnj1qKzX+JApMBVsXVFmavXIyISpPXmZjXEHhboRUnS6B6A5EZNjrtXEVc8O
+	WZIwXaesmjXR+C1pIPt08sn0Mwt2TNXqrNbyR9dmTRtF/Q+csc+hOooFHx28nZFDAIzvaau
+	0rV6etP3obCMcDA3VdgkCiJ5EHbp5mQMxHFgpmId74l+TIoI57uK/vorvb6/CmzQ7drCW8c
+	7Bt18zGMzSa7jmujk9e+gsGTn3VwBomow==
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
+X-QQ-RECHKSPAM: 0
 
-Hello:
+Reorder the i2c2 node to its correct position according to its
+register address.This improves the readability and maintainability
+of the device tree file by adhering to the established ordering convention.
 
-This patch was applied to netdev/net.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
+No functional change is introduced by this reordering.
 
-On Mon, 03 Nov 2025 10:02:49 +0800 you wrote:
-> Currently, emac_set_pauseparam() will oops if userspace calls it while
-> the interface is not up, because phydev is NULL, but it is still
-> accessed in emac_set_fc() and emac_set_fc_autoneg().
-> 
-> Check for netif_running(dev) in emac_set_pauseparam() before proceeding.
-> 
-> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-> 
-> [...]
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-Here is the summary with links:
-  - [net,v3] net: spacemit: Check netif_running() in emac_set_pauseparam()
-    https://git.kernel.org/netdev/net/c/5556f23478e6
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index af35f9cd643513a1c68a00ccfb3ead688a8b1929..5b46ce2edb059e22d878890b3b6192118dfdb2f4 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -358,6 +358,19 @@ syscon_rcpu2: system-controller@c0888000 {
+ 			#reset-cells = <1>;
+ 		};
+ 
++		i2c2: i2c@d4012000 {
++			compatible = "spacemit,k1-i2c";
++			reg = <0x0 0xd4012000 0x0 0x38>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&syscon_apbc CLK_TWSI2>,
++				 <&syscon_apbc CLK_TWSI2_BUS>;
++			clock-names = "func", "bus";
++			clock-frequency = <400000>;
++			interrupts = <38>;
++			status = "disabled";
++		};
++
+ 		syscon_apbc: system-controller@d4015000 {
+ 			compatible = "spacemit,k1-syscon-apbc";
+ 			reg = <0x0 0xd4015000 0x0 0x1000>;
+@@ -459,19 +472,6 @@ pwm7: pwm@d401bc00 {
+ 			status = "disabled";
+ 		};
+ 
+-		i2c2: i2c@d4012000 {
+-			compatible = "spacemit,k1-i2c";
+-			reg = <0x0 0xd4012000 0x0 0x38>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-			clocks = <&syscon_apbc CLK_TWSI2>,
+-				 <&syscon_apbc CLK_TWSI2_BUS>;
+-			clock-names = "func", "bus";
+-			clock-frequency = <400000>;
+-			interrupts = <38>;
+-			status = "disabled";
+-		};
+-
+ 		i2c8: i2c@d401d800 {
+ 			compatible = "spacemit,k1-i2c";
+ 			reg = <0x0 0xd401d800 0x0 0x38>;
 
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.51.1
 
