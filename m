@@ -1,38 +1,38 @@
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840315D8F0
-	for <spacemit@lists.linux.dev>; Wed,  5 Nov 2025 09:40:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252862FB09B
+	for <spacemit@lists.linux.dev>; Wed,  5 Nov 2025 09:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762335642; cv=none; b=ctxNjnIo0snd34btVTSLiy5ic4a43QYdnTQk00oLHnA1RHDV/ydzzKwchvCARvLfNzHrMAJu5gPDapYxllzAdlJ4oOAly5g102XfcctN3+Nda8ruvX/RPIRSso9MX/RCb/e25WRE21+m5EFSW5trXxUYxi5SC8EHEldGmERDJFE=
+	t=1762335795; cv=none; b=La4Ld0bh4qROW43reZCHYA4eMHoOSg1EvIe6e8gHP7WBedbhGsEy2n6STcIFFFU1XWCzwOpaj++GVgGI0u1VjPOKgjVCTs5oBkAtC3x4LuHzfarf9dPg9GvYFEb6O6OXtvn8JTaKopwR+Wy2kZWOLahQhCaaIP2Npbpf3Dj/Aqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762335642; c=relaxed/simple;
-	bh=YDG6GlX2MFv5Jl8zJ04Myi8+16OhyFZtXtJ9om+gJkU=;
+	s=arc-20240116; t=1762335795; c=relaxed/simple;
+	bh=2ay3gpe+DC39Q7/4WZfpjtRkiFON/Y2iewm350cuS1Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aSZ6j9W01vIQzoIwJ0lQtp5mqcVUupMjN/mpjiWKp0aVpL5K7NmtdAa0z8eaFJzQlrhoDl29kxR5VGiCLfIseyU8JThmExVYJi9ty9LOn7c1JdFDsnEOMFf1aH5iUE/9nhP8aQJmL2clRRZvtz2e2kMaBipk1ijb7TgSCyg5Vlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=IYVrljAR; arc=none smtp.client-ip=15.184.224.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=gV4IPfAwc2kzNVvgYEkfzfztUTqMVpedHZLzsZCoGQ2Q498D771B7AuLZVSaARVCJcG4j0XEM64OSeQyPmPHhuWYJ+lI3MHWyvQ6r0BEHZTWWFsRGYbLibpC13A1HL3oFwBt7jvGyh7fZDYvFGNVzxjT1ctLAgUwM3O0zzRWsTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=yHzR6oYW; arc=none smtp.client-ip=54.254.200.128
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="IYVrljAR"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="yHzR6oYW"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1762335632;
-	bh=K9p96Az0vCcI2Emov1fVQ5bmu6QW46dlAQR5fZt//iA=;
+	s=mxsw2412; t=1762335783;
+	bh=2kEQYPx9izy3tjn1vebxPX+DpgkknD8cSN82ocQpSH8=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=IYVrljAR8qNal8NFuc/xER3dc1nNOE3oMUf367rzpQX93lhOk2FF9yl72psSLv/we
-	 My3LzdD4NktO0pfvKLd4+Vzwbq1iNSbRUKqisKG14YWVgwf38QjOFzCWK36wznkJsL
-	 ct7IGkpKLJ2dQEPtdzUi7giCM9EmUstcMUXeP0gk=
-X-QQ-mid: zesmtpgz6t1762335631t1e862f50
-X-QQ-Originating-IP: T4f5BgaEKZsfrThhwXckLHTlcpww6njpPZICjjiO+ac=
-Received: from = ( [61.145.255.150])
+	b=yHzR6oYWpCgSinifOcI5aQQ90K2nzG4PxujeDUJ8WPf18Xt+YpAokXTFTrQlg5kxE
+	 WEo/d6hjSRspJvpEdVpZ7Dr0TJcCQum8Dv3aoRarDrHX/3L74OLU3NHZ7WdE07P32t
+	 j/TT725CHqjfcfIt++au3hcx57V+RoIKICHozC4Y=
+X-QQ-mid: esmtpsz21t1762335782t549cd986
+X-QQ-Originating-IP: COFdcai2DugJqSuJpc3w9T+h41iB4VKElqxx7YBkRS4=
+Received: from = ( [183.48.244.102])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 05 Nov 2025 17:40:29 +0800 (CST)
+	id ; Wed, 05 Nov 2025 17:43:00 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7969792345943648528
+X-BIZMAIL-ID: 8610270425027163017
 EX-QQ-RecipientCnt: 14
-Date: Wed, 5 Nov 2025 17:40:29 +0800
+Date: Wed, 5 Nov 2025 17:42:59 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 To: Lee Jones <lee@kernel.org>,
 	Troy Mitchell <troy.mitchell@linux.spacemit.com>
@@ -45,11 +45,11 @@ Cc: Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Aurelien Jarno <aurelien@aurel32.net>, linux-pm@vger.kernel.org
 Subject: Re: (subset) [PATCH v5 0/2] driver: reset: spacemit-p1: add driver
  for poweroff/reboot
-Message-ID: <315F0431BCF1D233+aQsbjbI6J9OAHTaI@kernel.org>
+Message-ID: <E205F88FB1EE06C5+aQscI0Uy7pgiMzEt@kernel.org>
 References: <20251102230352.914421-1-aurelien@aurel32.net>
  <176213091347.301408.11587695003687450479.b4-ty@collabora.com>
  <FA447DF1D2398A79+aQlVuEbrLMCiGMpc@kernel.org>
- <20251105093544.GE8064@google.com>
+ <20251105093347.GD8064@google.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -59,31 +59,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251105093544.GE8064@google.com>
+In-Reply-To: <20251105093347.GD8064@google.com>
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NVrD5uPzBHuhDfB5axg6cP4CBe+kLgxMNSCXMGcDIEZgwGrtWFgnL4Tj
-	tOziCmLnO5Ypw5Bs15iOODsaSmwCzOQYdIlh6PvvEt7P/T5Cn5nZnjvkhiKFOV5AddjlLgX
-	4oWxxRVA+zWgZg5cavocfK0POBg7AAK7Q68vtc2nQX8o3ysDdENG64DwQS4eHnSrUozmI8X
-	lLEOQf7hIXsR5HasV0sbpKZSN2eK4HNhCcJbW8Mwrxc3W9a/BcSR/Xhb5fDVeWjcSlO7dH1
-	nVaqd2YIG8Zn1Qe5OaVC79Omw0/1oEZd8rGrGAbK1Bmrm/yribfhUiw84ut1NaJozJTGKW1
-	WOvc1leXZE8e3ZA3zAfU+ejWGBu0OxCEzgBgHpQtKRBCYlhHYuTbl7rmtOdpO91109mvRCV
-	FwOmKDrssQTM5KR7Rzvhu4AwaglIswPemtAPlsx6Rup6DbVzkuKI+bsY3eNGVs63HjiFw4g
-	7j3yKDBbuDgxpKa8P7k6SgY6bTi3EVS+Br26TZVLzcX3euIb0nbzmftl4sViULargPhmSZb
-	1Lh0aGgreroHquysWkc1Bjmy867BHh9t2c5nQm+KZGs4KW2JEdt7G6n/TODSdNEe0HPKUWl
-	d/0RNcDlMc5G7Mh1JSdwsX/GDzCrcfyHMricq0zcWPV0S4yQYC3MhV/9Lad0Im8w1HYIiTE
-	2gWIBdsmZvKEY90K3toxddlMXGH6KcMpD/5ZtyDkkcaDKT12tblp59zLtGB7oIqod/5L3OZ
-	owpiXYrgYnmbxzajYnXZKdztTXWV1cdUhMsIbb5NWrSFpXoIi/jOuvpQ8D+auRJaj4pd3T+
-	pTVXIAvI1qs5C4+mnnD+jNZQ19YA3qeJG3zJoO0N87giZtZFzofNtM6V2ZgBPCrPdNaqz4m
-	+PpyqRaqq2Th0s77DkN22cHNLw2I8yISE5Bj9a1pHFujQtY3ubdpOl8iS2uSrdIHCyi6ebD
-	6O66JyBL1f8bTq+oW16KgMeawhvYqIXasmBpUMjON1iNuQr4xq4riIcpSsO7JEE+vC9w7sl
-	AHTgdJgmWOl1hdK7MFIbALXkIzGbaF59L7guZwQfxjc68pmEgl0Fm+gMAjIlMCQmHbYAcqU
-	ZEVicL4TEIUvDkEvKEfoE+tS+k32cgb6tjsc+IMCvucZ2a9SUowzu6GC6srOZ/EDfNnAjli
-	n0SEl3X5gArsfWPp3puOUC2arg==
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MIgGCCI///JUTZf9vMBL+cj1O4cG30/f5aB285poD6O0e0mo04lrE4Ci
+	hgTAGU/WyPJ7FaZbH5nzfF0UtBIDNjal22BLcnIizNln0OSFItwc4gbqZp5yw88XN/Oei7y
+	OAnuP/o8Bgw/sUgpiXmWE7jVuRFSNLoakt7EU+a/ywZ36TVfv5BC2/DMQEJrQIMNDGtQpQy
+	1UgpCamFqjaXBtmoaNGhjuQt63D5ME3p1ByzCOx+/Amox7mM2oFVlhGV/WnqD0P+tl05RE3
+	GjwPKI3GEpsgo9RszPYQJdMmeJ/H3H6AeXkM9ldXBYEvzqGcMGvoRRSV6g8BNJWxoEyqApm
+	8gde5RTWeyoz0pnw//nIPTaFL01Vabld6nYuK0T223g4OamH1IkSg7QF12z4nYCqDZnC2gZ
+	H5VAe4OLUDlYqXdJMBKeochN80ciKwPAMvvjLcdFYc8gJ5ggltZ+b4pKgAQ2ia0oRSA2yTr
+	ooMU/tVphi3xRRdWipFSrnEdEn5FWOhs6PKdIaIeGS0w7QKN+wsecZ4oYFeIIATx94Ddo+/
+	CgFQXXmfOt4YGraRi8iFzbS+ho50ZsSB298sZwWKvOdpDdsXFgNh8f1VO+K8vcV7OzQi8ix
+	plhaXUEwn+oly7hKU4yADvl7CWV9IuBv93XMJt0yHAulgt3SD0Ba12siasuAxYIaqaCxFZc
+	OHWjO9v2iV3tFl1LJAy706+ocopZwVSbwZ0ruehGfOgVd9O/nhKDfv/Kf49Z7CJ2VAW48lB
+	gSK5HiGPSJCOxJX0dNu35u0/5GFCyALp9AuMhxIfIUVKzKcIQbFtFSCmv6IiUfJU+wi+zs6
+	VFUyGY2cZjxi+h4Pux6O5KpLlJy78g3sVlRqiyH9UotIzpAzytPX+6gF8vPIdImBzu7Qjd6
+	UCpRLfBwSXaDRe7OWZHIdOs2qljNJ6IdmHpYeJK/n54SaNqDlll4GBXq2uK6Q+KGmXWPkPV
+	m54L6EZ7PMJ/J+PfbtDQZHHdmnxaGWNhafJ05zXoqAag1giBCHEiRbvW7Z2GwTgVDNrAO9f
+	5gssc6sTD+WnhFXk3KxB/QYNdfb5lufgz7Sc8bcVyldpPa1RrqLNCKNI4bGk+hc0nPKY2cU
+	ayLAY+JTeIF43vIDkmgB6IFmv7w3f2VQJFuFTzmYzg+6waF3amT8vKDDNJs7nIAzCNA71wr
+	EvPOSSPuTzZTbra4hEGQU/D8IQ==
 X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
 X-QQ-RECHKSPAM: 0
 
-On Wed, Nov 05, 2025 at 09:35:44AM +0000, Lee Jones wrote:
+On Wed, Nov 05, 2025 at 09:34:21AM +0000, Lee Jones wrote:
 > On Tue, 04 Nov 2025, Troy Mitchell wrote:
 > 
 > > On Mon, Nov 03, 2025 at 01:48:33AM +0100, Sebastian Reichel wrote:
@@ -95,6 +95,8 @@ On Wed, Nov 05, 2025 at 09:35:44AM +0000, Lee Jones wrote:
 > > > > Note: For reliable operation, this driver depends on a this patch that adds
 > > > > atomic transfer support to the SpacemiT I2C controller driver:
 > > > >   https://lore.kernel.org/spacemit/20251009-k1-i2c-atomic-v4-1-a89367870286@linux.spacemit.com/
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+dependency is here.
 > > > > 
 > > > > [...]
 > > > 
@@ -104,10 +106,11 @@ On Wed, Nov 05, 2025 at 09:35:44AM +0000, Lee Jones wrote:
 > > >       commit: 28124cc0fb8c7dc01a6834d227351e25d9a92c58
 > > Should we apply it now? The dependency patch hasn’t been merged yet...
 > 
-> And what is: ^[@kernel.org in your recipients list?
-Might have accidentally messed up my email...
+> What is the dependency?
+I point it out above.
+Without this patch, reboot and shutdown would end up calling the non-atomic i2c_transfer.
 
-                      - Troy
+                                  - Troy
 > 
 > -- 
 > Lee Jones [李琼斯]
