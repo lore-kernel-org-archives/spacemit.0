@@ -1,34 +1,41 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE3F2F28FB;
-	Wed,  5 Nov 2025 10:11:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB4B18A921
+	for <spacemit@lists.linux.dev>; Wed,  5 Nov 2025 13:10:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762337516; cv=none; b=HF7d5xXxgD50tpQ1+VeAwvyJychUkW/I/WJ+LY92vFvDZ29CFhIPKXB4p4BFevj3EqUsUn/UR3w5mzE/wAKhHw92WmGG2EoYhHeNeg+u0HQ12We+kN+ISz7M+KRhI+SGRX5WRkkg5VE566KmQsg0wlob7EK/8c41Dy7wCMs7cNc=
+	t=1762348241; cv=none; b=DyCi6ahAx+5mHVmkHh+faUu59ycJKpIHYZWM7yrQta88fKVTbWdAsGwtV7ySpr8PV1e0aC1KrzO0ia9zw7cj0JAhacxNrEla5ggFY2Njf4CRkPK1yvRnN5YMMdjd5bXiPahKqabW9d8cm64T79kw35/J2KYtJ0ZCvyBhNLkr55M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762337516; c=relaxed/simple;
-	bh=TYLyEsZW028QQNPW+jnT8umdzeFdblxH5eHQ+MnHmtU=;
+	s=arc-20240116; t=1762348241; c=relaxed/simple;
+	bh=fS1PX7K1CZLvuV1ceRkph26bsk4KDr6Q5RfhVe8jnwI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o9szaFbLjRlFos3Zbl6qEZVKZIpSegYr+TS+fgdak8EyxoV4BNWD7EivrKm+nFp8t0Cighq2xZWQzN7cMBlc9kyOqgFmUYSHj3US1etlAP9HD9hwnRwKDDiNAbxSQh2qX58ZLzA/TqF22tH8Jv5B5IFkTG7mT+YZmhurGxjYM7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qlRu5R3e; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=reuDUvHLUNHVwd3ejNyGcmfyfMvSJ3duUcRJWNrDOQy+ejuVm9Q1NBwBY+isthCVq8iyZ13U4Kv7+3tU5aC/TLsZAfN09sVOSuHZIjZU5XoIimEVhJnCpAx+yjpVaO4Up4s0aKvHWjQiA2IpjIiwT5VJtlYEb9ohYiETjBCH41s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=n+w05PML; arc=none smtp.client-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qlRu5R3e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35224C19421;
-	Wed,  5 Nov 2025 10:11:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762337515;
-	bh=TYLyEsZW028QQNPW+jnT8umdzeFdblxH5eHQ+MnHmtU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qlRu5R3eFg5W/9sRgaBelrjZ58wK+S17lFMe3FRCKtFMneFa4ArxEX/SYkEQxLb8v
-	 0S74KquyBevaWOsz9/rTsH7oE2zHALGDe8LQ4hfYRMehPC7TjOdLrLdI4u2Sk/4PgP
-	 gptFeYjqulFgnMhNR8W62eb+HEyhTi2fpbTGc2SAWO2dD5JlzCVJ3y18QiyFMp2BZ/
-	 MF6h5vKOTUAoQymbFRQZ6VD+/W99WNCLjte6oN3tAHKHomdZitLNMtykq3GZx80ayB
-	 B4FX5Dify1oqE2RH+R8cWPEVc3IrrfZMv6NphZfh/e5+uBHcHmpfaYEvOUwrc3Dyjz
-	 r5qA39nDUS54A==
-Date: Wed, 5 Nov 2025 10:11:49 +0000
-From: Lee Jones <lee@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="n+w05PML"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1762348226;
+	bh=jlIuWhx6mIXtzUHR6K7f1ncyau5kdA/cogsTajBCfP4=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=n+w05PML4BOLGAQa7dOeUA9NKe+BhiFe2KX360Fj1Z7z/VapX/eOSsIeW6TjFZ+O/
+	 h2k5PDxGngh1sx44R7a60HGWkT6XmYTV50Ot16FgIC/tVAej7SXEFxCS2578tJvu6e
+	 ZZwL7hH4NZtQpC3hRgSNlsaPl5t16DF1h4tOVILE=
+X-QQ-mid: esmtpsz16t1762348225td460a432
+X-QQ-Originating-IP: Ry4EBM360mmFG+DdStDU6CVzq5ZY1m2B2cjqx7WGWCY=
+Received: from = ( [58.254.68.190])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 05 Nov 2025 21:10:22 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 1919110398043033819
+EX-QQ-RecipientCnt: 14
+Date: Wed, 5 Nov 2025 21:10:21 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Lee Jones <lee@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Cc: Sebastian Reichel <sebastian.reichel@collabora.com>,
 	linux-kernel@vger.kernel.org, Sebastian Reichel <sre@kernel.org>,
 	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
@@ -38,13 +45,14 @@ Cc: Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Aurelien Jarno <aurelien@aurel32.net>, linux-pm@vger.kernel.org
 Subject: Re: (subset) [PATCH v5 0/2] driver: reset: spacemit-p1: add driver
  for poweroff/reboot
-Message-ID: <20251105101149.GH8064@google.com>
+Message-ID: <FA1DBD9E7CCB8027+aQtMvb5Br7MgMW4K@troy-wujie14pro-arch>
 References: <20251102230352.914421-1-aurelien@aurel32.net>
  <176213091347.301408.11587695003687450479.b4-ty@collabora.com>
  <FA447DF1D2398A79+aQlVuEbrLMCiGMpc@kernel.org>
  <20251105093347.GD8064@google.com>
  <E205F88FB1EE06C5+aQscI0Uy7pgiMzEt@kernel.org>
  <20251105100856.GG8064@google.com>
+ <20251105101149.GH8064@google.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -54,47 +62,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251105100856.GG8064@google.com>
+In-Reply-To: <20251105101149.GH8064@google.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MG1k13TElWXsLsB0v4fOfpWJvcE5O0FZpRz+gzjvu/DkjttggPynwxWM
+	BN5ZtsHKL/xkUg+gZOxE+oxdFBeGkClTTMV8WSEg1GTitdHitsDn9beH8gKzYed+Kc6q90o
+	eJen1tFIauMugByOEB84jUJF7YRRYah0sue35z+iPdEwTIqkb5TxFDUgmNQG2YYcYs20PTC
+	wMdrvzpzlyfOZ/gTTeu2b5aH4dKAScferfFGp+9cz2Mijg9ucWdKo88FZW3Ph0SKDVIvT7r
+	fM0SUWxTtkQSQRKWODe2UrqpouBFut8warATNSCOTYsVNoIfAusUB8i8vBcH4DkVeyFvwQi
+	4R+7qKCD9IKM21MLmnbmMTfRmY/bRXEkBFnYyMEi/6j2VGSt0MSwNmhqtOw9oo+iNGpX0Sm
+	bKwGsekuyFjkfSoa1KM0sWLhQPPht8DhDF/prO/iytG83ecvSlPU0L5ZwTSH0AzUnHawfQD
+	I0EeaIHASHC/oUIQkvB4XqZf7llYoTmbjxLTPUR+oPPboLDBm6Ti+K6b9fm9i+y9ocvkftT
+	iffK1+krARfCK8cOveImkygIzntwaZq4Ob/1dL5/NWWCZKqtJbEVfRVVmNgU8gaM9kJv4rl
+	isBpliiSJttZvx3e/uv5RT/9GbQTSnOIikxqSlFW3EoDbg4Q7CrAgiEd2vIj0zuVv6BFwM1
+	1vV1AJLKJeROUgDav9rUeYX6czcy3NFno/awyBFC9eVcEtoaHEoSECn6hvzfQpzAqFWUV/V
+	lpyJx86ka0xgcT7I3raduy9EgGf6erWadYh1RCtAsBDXN5/a0j2iDSVt+ZOorz6ug24hMU2
+	mC9wL8+LXJlXKvUjYRnWALbr5Cs8Iqfe40XeTRTm8YRzsbwwz93e5A/mStnb6JLPyDLKHlO
+	1RCwyKygcJH2Ct8nP5jJn+mNBCCCUKPVvkeq2+4ZBSDY3g8NuvUCZT/yUCnin+y6CNYIyzW
+	XQn5Hhl4dx9S6aSHP8HaDw9MdAanQJ0dP3Awom6rfw0Lh5C+qSh2jl+RiiR5JQlFRFmHGf6
+	zPvqKy75awj1eiB5uz5LcW4VbQRQvloKwV5j8zb/ERkJ2hGbTDfh29QdZ2USdzMNs1Xf8YA
+	CEonbJUxpVT
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
+X-QQ-RECHKSPAM: 0
 
-On Wed, 05 Nov 2025, Lee Jones wrote:
-
-> On Wed, 05 Nov 2025, Troy Mitchell wrote:
+On Wed, Nov 05, 2025 at 10:11:49AM +0000, Lee Jones wrote:
+> On Wed, 05 Nov 2025, Lee Jones wrote:
 > 
-> > On Wed, Nov 05, 2025 at 09:34:21AM +0000, Lee Jones wrote:
-> > > On Tue, 04 Nov 2025, Troy Mitchell wrote:
-> > > 
-> > > > On Mon, Nov 03, 2025 at 01:48:33AM +0100, Sebastian Reichel wrote:
-> > > > > 
-> > > > > On Mon, 03 Nov 2025 00:01:58 +0100, Aurelien Jarno wrote:
-> > > > > > This adds poweroff/reboot support for the SpacemiT P1 PMIC chip, which is
-> > > > > > commonly paired with the SpacemiT K1 SoC.
+> > On Wed, 05 Nov 2025, Troy Mitchell wrote:
+> > 
+> > > On Wed, Nov 05, 2025 at 09:34:21AM +0000, Lee Jones wrote:
+> > > > On Tue, 04 Nov 2025, Troy Mitchell wrote:
+> > > > 
+> > > > > On Mon, Nov 03, 2025 at 01:48:33AM +0100, Sebastian Reichel wrote:
 > > > > > > 
-> > > > > > Note: For reliable operation, this driver depends on a this patch that adds
-> > > > > > atomic transfer support to the SpacemiT I2C controller driver:
-> > > > > >   https://lore.kernel.org/spacemit/20251009-k1-i2c-atomic-v4-1-a89367870286@linux.spacemit.com/
-> > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > dependency is here.
+> > > > > > On Mon, 03 Nov 2025 00:01:58 +0100, Aurelien Jarno wrote:
+> > > > > > > This adds poweroff/reboot support for the SpacemiT P1 PMIC chip, which is
+> > > > > > > commonly paired with the SpacemiT K1 SoC.
+> > > > > > > 
+> > > > > > > Note: For reliable operation, this driver depends on a this patch that adds
+> > > > > > > atomic transfer support to the SpacemiT I2C controller driver:
+> > > > > > >   https://lore.kernel.org/spacemit/20251009-k1-i2c-atomic-v4-1-a89367870286@linux.spacemit.com/
+> > > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> > > dependency is here.
+> > > > > > > 
+> > > > > > > [...]
 > > > > > > 
-> > > > > > [...]
-> > > > > 
-> > > > > Applied, thanks!
-> > > > > 
-> > > > > [1/2] driver: reset: spacemit-p1: add driver for poweroff/reboot
-> > > > >       commit: 28124cc0fb8c7dc01a6834d227351e25d9a92c58
-> > > > Should we apply it now? The dependency patch hasn’t been merged yet...
-> > > 
-> > > What is the dependency?
-> > I point it out above.
-> > Without this patch, reboot and shutdown would end up calling the non-atomic i2c_transfer.
+> > > > > > Applied, thanks!
+> > > > > > 
+> > > > > > [1/2] driver: reset: spacemit-p1: add driver for poweroff/reboot
+> > > > > >       commit: 28124cc0fb8c7dc01a6834d227351e25d9a92c58
+> > > > > Should we apply it now? The dependency patch hasn’t been merged yet...
+> > > > 
+> > > > What is the dependency?
+> > > I point it out above.
+> > > Without this patch, reboot and shutdown would end up calling the non-atomic i2c_transfer.
+> > 
+> > Okay, thanks.  I was mostly checking that you weren't referring to the
+> > MFD patch, which doesn't represent a true dependency.
 > 
-> Okay, thanks.  I was mostly checking that you weren't referring to the
-> MFD patch, which doesn't represent a true dependency.
+> To save Sebastian some trouble, let's keep the reboot patch applied.
+> 
+> I'll hold off on the MFD one, which will ensure that reboot isn't probed.
+> 
+> Let me know when the dep is merged and I'll hoover up the rest of the set.
+Okay. I'll reply this thread when the dependency is merged.
 
-To save Sebastian some trouble, let's keep the reboot patch applied.
-
-I'll hold off on the MFD one, which will ensure that reboot isn't probed.
-
-Let me know when the dep is merged and I'll hoover up the rest of the set.
-
--- 
-Lee Jones [李琼斯]
+                            - Troy
+> 
+> -- 
+> Lee Jones [李琼斯]
+> 
