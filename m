@@ -1,56 +1,65 @@
 Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732832F069E;
-	Wed,  5 Nov 2025 22:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE372D2388;
+	Wed,  5 Nov 2025 22:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762382651; cv=none; b=S+zsQRFtH11h8EjQnhZqIAhoxKHidB5Lxh6+Vre2dRRiYZhMZxyUTAHu4ATshXWyvmeYjcwcRh4ZrVLD75nl7OIdaYZ6+sTVTw7y4luMfs1vwwFMw75knRImdqF4Kp0PEhsLl6eyFvXtu+LtXlpGtzrHaDLfpaGUhyrVTvTN9kw=
+	t=1762382986; cv=none; b=dwu+JAO51TLWKCIr386yXCmyGjcQMaOLnS4qehj0hVzSWadqFYvNggNETlpg7TansEWonMdzrNvFryY6Xd9y0qqUUylvSUHTxS0Zx7Lg6Xjvpc8S+PHx2VUsSU1XWaZn18TYerFVvIvDkNWLHNl4yIFA9AqnzH78flFsEP+xEOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762382651; c=relaxed/simple;
-	bh=HJJ+Z6Pcc4eCNf8/RJk1ipVnGmaqj1iMMsHBL1HQYms=;
+	s=arc-20240116; t=1762382986; c=relaxed/simple;
+	bh=9W+JZgh6zEumSbgA+u40BdlWRsUbWYl5s3WkNt9fkPo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lXSxgptsic8vLJy5slO7QthwwDIfFyl2VNKkRS08S6126Y7bXF+ycBH/DgrHVZJsmrPWg2IX5zSvC4mpTZgpfqpD3TPN9LKJ6cPy5PDgNvVHFiwsneT/JYA4MqWFIs4bpEys5YfWxNrZqM8/XLKkE1M/s/jEtiwbiNTzFmqp+/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=JcyOecms; arc=none smtp.client-ip=195.154.113.88
+	 Content-Type:Content-Disposition:In-Reply-To; b=PQ8iDy02U9OUkKfWloqoGf8xXCt6U8z7brzox9l++FfaYbaCQhEJrez/dlAqphAdGZkK2dxO/e/cp6jRVT6BLj/It1+aAbVOwsNr+6S/raTtx1ZUidV5Tg41TxWiwxakc5exvMNvhS7idS85dDXgE2jFCHFId0+0OasylzMEiL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=p9/HaLn8; arc=none smtp.client-ip=195.154.113.88
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="JcyOecms"
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="p9/HaLn8"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
 	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
 	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
 	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=Rcz9OHWqrkXIvtIUBV6foEU7yY/XR+LTCfFnMpPJAWE=; b=JcyOecmsyvuctmYcsfL2VURPJK
-	ARZA57NqLJM1Ls3zX/oV0/jnhV3xqV+9A9+AobFBMu59TamRLLipjY2jBF3lD6gmQbInegLZgpyqu
-	tlr9NXjnD35fCY3OLg1rNI/UQLcoWFVCJ45WI2DheKW8eVjmJFjvirLCoFoHEwf2MIqYqpkR5zQSH
-	QkParKIUeN3oBmYzXuuJE67Q3UJ3i2yPy9JqWQoLyeQCyFIs53aEmri0981o+Ggw3BmTq/E9JBsge
-	xi1GRtVCPhTbr/5sjrAtlCodfVSifq8FI3wJ25vkOkXK2VGJSb6PQ2/9MIL5bhdVpn4H0icoBpcI/
-	SRvJiNXQ==;
+	bh=7B7gYt+LYlqrQkECAw+Erqll5FdWOFdju69wPPGYGxM=; b=p9/HaLn80YendaEi5jpbR2NlAy
+	mmLPxWqqxHK9lg4A6MmefTNtD17WB2gX1XXiiEEMjMwutwfEnpYic/hupIJwGxc7yBsM9ntzxsQ4D
+	uC9d7qDgfARmpqYG+mB/lfWHr4w15x+D1OQuaW1GEqKY3vTaY+Ii+Fk/QSZxtpoF/mHIPi37dhJPW
+	KexrSMMUp6GVBIfZj1YXqoyTDmj3dIYudXM3XwglXE9HOCJTjQyjUP7kmOD6iW/fqSBfJZbw/xxmz
+	KHVCjFHztMyARI3qxDfDTkQGWhi6bh5+LKrd8JDv/osSeeHMMKyU9U++hj3iT1SHWCSrdiq2mgnsB
+	rtgInH2g==;
 Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
 	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <aurelien@aurel32.net>)
-	id 1vGmES-0000000AfjF-2E3C;
-	Wed, 05 Nov 2025 23:44:00 +0100
-Date: Wed, 5 Nov 2025 23:44:00 +0100
+	id 1vGmJt-0000000Ag2k-3AUR;
+	Wed, 05 Nov 2025 23:49:37 +0100
+Date: Wed, 5 Nov 2025 23:49:37 +0100
 From: Aurelien Jarno <aurelien@aurel32.net>
 To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH] i2c: spacemit: fix detect issue
-Message-ID: <aQvTMM0S16gOdiAN@aurel32.net>
+Cc: Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	linux-kernel@vger.kernel.org, Sebastian Reichel <sre@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-pm@vger.kernel.org
+Subject: Re: (subset) [PATCH v5 0/2] driver: reset: spacemit-p1: add driver
+ for poweroff/reboot
+Message-ID: <aQvUgQvM48LsSzei@aurel32.net>
 Mail-Followup-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-References: <20251103-fix-k1-detect-failure-v1-1-bb07a8d7de7c@linux.spacemit.com>
+	Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	linux-kernel@vger.kernel.org, Sebastian Reichel <sre@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-pm@vger.kernel.org
+References: <20251102230352.914421-1-aurelien@aurel32.net>
+ <176213091347.301408.11587695003687450479.b4-ty@collabora.com>
+ <FA447DF1D2398A79+aQlVuEbrLMCiGMpc@kernel.org>
+ <20251105093347.GD8064@google.com>
+ <E205F88FB1EE06C5+aQscI0Uy7pgiMzEt@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,99 +69,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20251103-fix-k1-detect-failure-v1-1-bb07a8d7de7c@linux.spacemit.com>
+In-Reply-To: <E205F88FB1EE06C5+aQscI0Uy7pgiMzEt@kernel.org>
 User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Hi,
+On 2025-11-05 17:42, Troy Mitchell wrote:
+> On Wed, Nov 05, 2025 at 09:34:21AM +0000, Lee Jones wrote:
+> > On Tue, 04 Nov 2025, Troy Mitchell wrote:
+> >=20
+> > > On Mon, Nov 03, 2025 at 01:48:33AM +0100, Sebastian Reichel wrote:
+> > > >=20
+> > > > On Mon, 03 Nov 2025 00:01:58 +0100, Aurelien Jarno wrote:
+> > > > > This adds poweroff/reboot support for the SpacemiT P1 PMIC chip, =
+which is
+> > > > > commonly paired with the SpacemiT K1 SoC.
+> > > > >=20
+> > > > > Note: For reliable operation, this driver depends on a this patch=
+ that adds
+> > > > > atomic transfer support to the SpacemiT I2C controller driver:
+> > > > >   https://lore.kernel.org/spacemit/20251009-k1-i2c-atomic-v4-1-a8=
+9367870286@linux.spacemit.com/
+> ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> dependency is here.
 
-On 2025-11-03 15:06, Troy Mitchell wrote:
-> This commit addresses two issues causing i2c detect to fail.
->=20
-> The identified issues are:
->=20
-> 1. Incorrect error handling for BED (Bus Error No ACK/NAK):
->    Before this commit, Both ALD (Arbitration Loss Detected) and
->    BED returned -EAGAIN.
-> 2. Missing interrupt status clear after initialization in xfer():
->    On the K1 SoC, simply fixing the first issue changed the error
->    from -EAGAIN to -ETIMEOUT. Through tracing, it was determined that
->    this is likely due to MSD (Master Stop Detected) latency issues.
->=20
->    That means the MSD bit in the ISR may still be set on the next transfe=
-r.
->    As a result, the controller won't work =E2=80=94 we can see from the s=
-cope that
->    it doesn't issue any signal.
->    (This only occurs during rapid consecutive I2C transfers.
->    That explains why the issue only shows up with i2cdetect.)
->=20
-> With these two fixes, i2c device detection now functions correctly on the=
- K1 SoC.
->=20
-> Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
-> I checked the vendor version driver and tried commenting out
-> spacemit_i2c_clear_int_status() that runs before xfer starts.
-> Surprisingly, i2cdetect stopped working as well.
-> ---
->  drivers/i2c/busses/i2c-k1.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-> index 6b918770e612e098b8ad17418f420d87c94df166..37828323317770ae2f0522d21=
-3dca67342ae166f 100644
-> --- a/drivers/i2c/busses/i2c-k1.c
-> +++ b/drivers/i2c/busses/i2c-k1.c
-> @@ -160,7 +160,8 @@ static int spacemit_i2c_handle_err(struct spacemit_i2=
-c_dev *i2c)
-> =20
->  	if (i2c->status & (SPACEMIT_SR_BED | SPACEMIT_SR_ALD)) {
->  		spacemit_i2c_reset(i2c);
-> -		return -EAGAIN;
-> +		if (i2c->status & SPACEMIT_SR_ALD)
-> +			return -EAGAIN;
->  	}
+Oh indeed, I have forgotten about this part.
 
-This makes the resulting code, while correct, complex to understand as=20
-it is now two really different errors, as you explained well in the=20
-commit message.
+> > > > >=20
+> > > > > [...]
+> > > >=20
+> > > > Applied, thanks!
+> > > >=20
+> > > > [1/2] driver: reset: spacemit-p1: add driver for poweroff/reboot
+> > > >       commit: 28124cc0fb8c7dc01a6834d227351e25d9a92c58
+> > > Should we apply it now? The dependency patch hasn=E2=80=99t been merg=
+ed yet...
+> >=20
+> > What is the dependency?
+> I point it out above.
+> Without this patch, reboot and shutdown would end up calling the non-atom=
+ic i2c_transfer.
 
-I therefore suggest to organize the code as:
-
-	/* Arbitration Loss Detected */
-	if (i2c->status & SPACEMIT_SR_ALD) {
-		spacemit_i2c_reset(i2c);
-		return -EAGAIN;
-	}
-
-	/* Bus Error No ACK/NAK */
-	if (i2c->status & SPACEMIT_SR_BED) {
-		spacemit_i2c_reset(i2c);
-	}
-
-
->  	return i2c->status & SPACEMIT_SR_ACKNAK ? -ENXIO : -EIO;
-> @@ -491,6 +492,8 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adap=
-t, struct i2c_msg *msgs, in
-> =20
->  	spacemit_i2c_init(i2c);
-> =20
-> +	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
-> +
-
-This sounds good to start the transfer with a clean interrupt state. I=20
-just wonder if it should be moved to spacemit_i2c_init(), ie where the=20
-corresponding interrupts are enabled.
-
->  	spacemit_i2c_enable(i2c);
-> =20
->  	ret =3D spacemit_i2c_wait_bus_idle(i2c);
-
-Anyway:
-
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-
+Note however this is not a strong dependency, it is needed to make the=20
+reset or power off reliable. Calling non-atomic i2c_transfer lead to a=20
+successful reset or power off a bit more than half of the time.
 
 Regards
 Aurelien
