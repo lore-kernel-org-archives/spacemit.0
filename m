@@ -1,120 +1,108 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE372D2388;
-	Wed,  5 Nov 2025 22:49:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E6E86334
+	for <spacemit@lists.linux.dev>; Thu,  6 Nov 2025 01:01:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762382986; cv=none; b=dwu+JAO51TLWKCIr386yXCmyGjcQMaOLnS4qehj0hVzSWadqFYvNggNETlpg7TansEWonMdzrNvFryY6Xd9y0qqUUylvSUHTxS0Zx7Lg6Xjvpc8S+PHx2VUsSU1XWaZn18TYerFVvIvDkNWLHNl4yIFA9AqnzH78flFsEP+xEOY=
+	t=1762390890; cv=none; b=oDXp+oH7WEhk04oHrFi0LSQgGPPmbXJ1O+MRGvvAbnSSiDmBBNpAhqNqzVGok9km1AbFOnWA0fmaJERNbGtWR7v1NMIVWcvlSJcNyLivTJQ5/wI70NlCQH5wwv4perBOJGn6gQvNUe9DSLEQWbsp9PO5Jsvupx6Q9mlzBKpNSq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762382986; c=relaxed/simple;
-	bh=9W+JZgh6zEumSbgA+u40BdlWRsUbWYl5s3WkNt9fkPo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PQ8iDy02U9OUkKfWloqoGf8xXCt6U8z7brzox9l++FfaYbaCQhEJrez/dlAqphAdGZkK2dxO/e/cp6jRVT6BLj/It1+aAbVOwsNr+6S/raTtx1ZUidV5Tg41TxWiwxakc5exvMNvhS7idS85dDXgE2jFCHFId0+0OasylzMEiL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=p9/HaLn8; arc=none smtp.client-ip=195.154.113.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1762390890; c=relaxed/simple;
+	bh=qalR+9DmlQsAs3IP1SwoablOTDBE9IfXJzETuc/4s0M=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=adtnVGxH0LU4p4yHZKuYddfEiV6nYHsgd4KdnjZH7x7oFEy1YYI4FiMkFmaYYFqBq7sdiHrN3Z7iMcbI0tYFWNKPP9WtadleIFXj+vEyWg9R5JIIATWKyIM4kBg6pnwT7D9xa9AOwXOa32J69GMeNax1Z+o/YL7tuQPCkVA4Xjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=N1RHxR5V; arc=none smtp.client-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="p9/HaLn8"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=7B7gYt+LYlqrQkECAw+Erqll5FdWOFdju69wPPGYGxM=; b=p9/HaLn80YendaEi5jpbR2NlAy
-	mmLPxWqqxHK9lg4A6MmefTNtD17WB2gX1XXiiEEMjMwutwfEnpYic/hupIJwGxc7yBsM9ntzxsQ4D
-	uC9d7qDgfARmpqYG+mB/lfWHr4w15x+D1OQuaW1GEqKY3vTaY+Ii+Fk/QSZxtpoF/mHIPi37dhJPW
-	KexrSMMUp6GVBIfZj1YXqoyTDmj3dIYudXM3XwglXE9HOCJTjQyjUP7kmOD6iW/fqSBfJZbw/xxmz
-	KHVCjFHztMyARI3qxDfDTkQGWhi6bh5+LKrd8JDv/osSeeHMMKyU9U++hj3iT1SHWCSrdiq2mgnsB
-	rtgInH2g==;
-Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
-	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vGmJt-0000000Ag2k-3AUR;
-	Wed, 05 Nov 2025 23:49:37 +0100
-Date: Wed, 5 Nov 2025 23:49:37 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	linux-kernel@vger.kernel.org, Sebastian Reichel <sre@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-pm@vger.kernel.org
-Subject: Re: (subset) [PATCH v5 0/2] driver: reset: spacemit-p1: add driver
- for poweroff/reboot
-Message-ID: <aQvUgQvM48LsSzei@aurel32.net>
-Mail-Followup-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	linux-kernel@vger.kernel.org, Sebastian Reichel <sre@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-pm@vger.kernel.org
-References: <20251102230352.914421-1-aurelien@aurel32.net>
- <176213091347.301408.11587695003687450479.b4-ty@collabora.com>
- <FA447DF1D2398A79+aQlVuEbrLMCiGMpc@kernel.org>
- <20251105093347.GD8064@google.com>
- <E205F88FB1EE06C5+aQscI0Uy7pgiMzEt@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="N1RHxR5V"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1762390822;
+	bh=3kT/wXXpOECHC7SoUGMt7kZX+LFSbhnovtqEAlsizPY=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=N1RHxR5VgrwIuATZpZeh0hUZQJPYuvxXvoCLicfLJhle2/ECrTHKJU0rjbJ3DqBcm
+	 suwKGnx/n1O/s0YTgSDpL1T5WBX6In7PkQxfMdXmKCrVLiThAu4pvFXdHE7fc+iRR4
+	 aexziE0V1pju3QYuLrqzoZLbid7rrbcm3mFbo3lo=
+X-QQ-mid: zesmtpsz4t1762390815t94e38ff7
+X-QQ-Originating-IP: jh7uI1plMvRhjrULDkiB/2I1zCGQl9LYTt+0qWnurlM=
+Received: from = ( [183.48.244.176])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 06 Nov 2025 09:00:13 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5046835240228934872
+EX-QQ-RecipientCnt: 9
+Date: Thu, 6 Nov 2025 09:00:13 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Alex Elder <elder@riscstar.com>,
+	Troy Mitchell <troymitchell988@gmail.com>,
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v4] i2c: spacemit: introduce pio for k1
+Message-ID: <723F1D1C8151FC6E+aQvzHbueB3FgfaU7@kernel.org>
+References: <20251009-k1-i2c-atomic-v4-1-a89367870286@linux.spacemit.com>
+ <aQvP4HVcpX-MDZBJ@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <E205F88FB1EE06C5+aQscI0Uy7pgiMzEt@kernel.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <aQvP4HVcpX-MDZBJ@aurel32.net>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NqDbsGEQdAdVWmRY0+uVZ1oy2a7MxfPjSr0Bqs2Ob3JkfXtg8+ca7AJZ
+	PiBCOvKObdKuIytqdC7OM0UWEFuT5Zst37ZDa2GHWR0dEutKgVBNWHkMZeFQkw/opEVyBRk
+	W4yXRJTr9dW7fNL5XSyylS/71ZyARQrzdELIYMXaVX9uJzUQRBexWzSeHrmV4wwEYBNXPLB
+	KMi9bEzd+zZiKEeGy0+XYEHruag9e2YNbWd0XTbtNQSLDJQpobezJAOWx9wj3ssLlBY2d6u
+	uK0FGpfCwcB5CKKfb9orvdWXHcG/qT9GqB2ILzpQqLKi/BJjzSysX4CC0NpvfiU7hhKlo3P
+	EUpbhjbuSh72UUicnuSM7QMHrpto155/nU5lDz59HkS+X36luCrVqbgDclLmvaTlNov2QIv
+	KzbE4NMe2joRDd+i5Skh8b2WQIp+tEmZBJqTd4B8fOPhROtXuJWYF5iNd6WXoIUmPInSWIi
+	ZSsu3UaGKzU+Q3rD5UoKHwaGcyfC4sJy9XJBo6T2rHAP/QJdhcfbqNUPTFWXAvP11WdowQW
+	xpBcluaSA7R5JNV6IwfGtOr/jeTrA3endI4QgR5MJFlXfjriuQCayHZjKXk/dVfwDpbxcNK
+	BDpF7oEQLmmwZaYjJy0fHegpTMppyHv3wCnM4cws5iZaZPTnUN9VLm7YIbxmaidQA1GpLD7
+	t8zJq0WJRRMmmIyWXqcegJgx/+HTV6az1X02EdWPRF69VyFqzqvuXgjgfFwSEjVpW/UuxSq
+	hH0WsWeCeKdd/OZX2jYHgM2nFjtDb9SY8UHqUk3/r6yf3IvfggqzJxI+UBm6Co6bLRmOeGE
+	nIG1qUF9uthzPFNtj0pgdGlLxS+EMGwq3yZxuwnX4K5mx1wy9M5vL+T8s0NBGcUePWWh0SI
+	xvJWi/1N3Qx05psgI9Iu0vU4kHblet5WGKvlon01nrHYx2j2XBgyZBNtee1fSlqS98YW8Rr
+	KCW6Jl9VASmVNF4T5GznHczR7aguCHu/JZ2B0Uah4pAWJkK5y0a8i4tUkn5ewyLtotIOQ4x
+	y+AVLoqdrLAGMRpQav3G9vlpoydBYnIqKhlbiUfwM8XUafnzKtt7ZDmhjcSODEVmGp2djLr
+	Upggly6TeL1
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+X-QQ-RECHKSPAM: 0
 
-On 2025-11-05 17:42, Troy Mitchell wrote:
-> On Wed, Nov 05, 2025 at 09:34:21AM +0000, Lee Jones wrote:
-> > On Tue, 04 Nov 2025, Troy Mitchell wrote:
-> >=20
-> > > On Mon, Nov 03, 2025 at 01:48:33AM +0100, Sebastian Reichel wrote:
-> > > >=20
-> > > > On Mon, 03 Nov 2025 00:01:58 +0100, Aurelien Jarno wrote:
-> > > > > This adds poweroff/reboot support for the SpacemiT P1 PMIC chip, =
-which is
-> > > > > commonly paired with the SpacemiT K1 SoC.
-> > > > >=20
-> > > > > Note: For reliable operation, this driver depends on a this patch=
- that adds
-> > > > > atomic transfer support to the SpacemiT I2C controller driver:
-> > > > >   https://lore.kernel.org/spacemit/20251009-k1-i2c-atomic-v4-1-a8=
-9367870286@linux.spacemit.com/
-> ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> dependency is here.
-
-Oh indeed, I have forgotten about this part.
-
-> > > > >=20
-> > > > > [...]
-> > > >=20
-> > > > Applied, thanks!
-> > > >=20
-> > > > [1/2] driver: reset: spacemit-p1: add driver for poweroff/reboot
-> > > >       commit: 28124cc0fb8c7dc01a6834d227351e25d9a92c58
-> > > Should we apply it now? The dependency patch hasn=E2=80=99t been merg=
-ed yet...
-> >=20
-> > What is the dependency?
-> I point it out above.
-> Without this patch, reboot and shutdown would end up calling the non-atom=
-ic i2c_transfer.
-
-Note however this is not a strong dependency, it is needed to make the=20
-reset or power off reliable. Calling non-atomic i2c_transfer lead to a=20
-successful reset or power off a bit more than half of the time.
-
-Regards
-Aurelien
-
---=20
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+On Wed, Nov 05, 2025 at 11:29:52PM +0100, Aurelien Jarno wrote:
+> Hi,
+> 
+> On 2025-10-09 17:59, Troy Mitchell wrote:
+> > This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
+> > enabling the use of I2C in atomic context.
+> > 
+> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+[...]
+> > +static void spacemit_i2c_err_check(struct spacemit_i2c_dev *i2c);
+> > +static void spacemit_i2c_handle_state(struct spacemit_i2c_dev *i2c);
+> > +
+> 
+> At least for spacemit_i2c_err_check, the forward declaration can be 
+> avoided by moving code, which is anyway probably better done in a 
+> separate patch.
+Maybe I'll handle it later.
+> 
+> Besides this nitpick, this sounds good, so:
+> 
+> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+> Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+Thanks!
+> 
+> Regards
+> Aurelien
+> 
+> -- 
+> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+> aurelien@aurel32.net                     http://aurel32.net
+> 
