@@ -1,162 +1,117 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00C12D3A77
-	for <spacemit@lists.linux.dev>; Fri,  7 Nov 2025 01:23:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732C520322
+	for <spacemit@lists.linux.dev>; Fri,  7 Nov 2025 01:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762478639; cv=none; b=hm1gL2I8vqVmA29axDHJT2yqzyzYE+MuKR6Ccz9Z9HUHxovdaOTfnU29Up/fqPnb78xhl8mjFlbD9HUmgaBcsl37S/AxBFZxt4o5H/SSkstNb2IolZZl0t3v7bRWwTcfqssunjOASlxNLzW+Exc3rMwi+6GStE+XokpsvkS0aGw=
+	t=1762479108; cv=none; b=T1aQmRjQHZu+Kgxt/RGkqTZHJ/+3As4YZQATnIBwfrV08+/q6rx2SPR71XwB+YcQTOh7RuLe+bT4oLaP17qqeYYx8o4X3khK/M2DB/4fdyDXS9QuClUuJwlnHZzmfJRkJBO2xEBhHfOImmfHct4U51zIUExzCxwYISUN3cxXY/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762478639; c=relaxed/simple;
-	bh=RiCZcqBXx0qoO2I1MVaNX2wlPuTAl6GxJCLOENck4q8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ASSqaJH47O/Ig+lvNxW0TVoxtth4YC7RYzYuLq+UrVcUeGK/KBztKfxcA4k37M5+j8AB29b5YYkLzaWMaTTq2p5ElEPmG8e+mprKwCm2+66tHWZvGnFO4+1TeQd9BOBUtoMFTpbljAxY5P1sjhYRA9ct8uM80ziAOWXX36kpid4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=CZ3ws+h3; arc=none smtp.client-ip=54.204.34.130
+	s=arc-20240116; t=1762479108; c=relaxed/simple;
+	bh=aogQJJfyjDXHY3kQzCAsj7IX0vVUjUq6HzwCBdUdhaU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pLGF01BSV6wztb/Wj6XqL17yQZRTy3HYLvODHJVA7/75neL6tjUmtAlJiuu9B5i31bQy7fBF3aYr5Oc+j/PFbLuEdnZLz/tn11Cjaj2GeW8DqrmrAzZR+7JcAjHDb1pyMb6NVAOaHVfbFlA7ejcarGmd365Z6lkJVTbChXhzS4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=PzJNXuF2; arc=none smtp.client-ip=18.169.211.239
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="CZ3ws+h3"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="PzJNXuF2"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1762478569;
-	bh=t7tRvyZ7ednKIkr3XeRZc9amYYNTVix6VkI2QvXO0V4=;
+	s=mxsw2412; t=1762479006;
+	bh=35L+rrx9K1LdyqVcy5E43gyFYLFh2mo/NaELv+Hva9Y=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=CZ3ws+h3j0d9TEdczQzd43r2NzM/WoFr3UPHJ30mryhpuiezKavMg0c3hMzMkrdaV
-	 xTxV+gqCxQG8ppTTvYunLvhtU6yhrKD6+hQOq3jwabr7VcMf+34UGJoR7Gih2EjqtT
-	 epJlf8aQWNdTwYBJwjs7cbH9zgO912LnRRpnbxOQ=
-X-QQ-mid: zesmtpsz3t1762478566tf97beed2
-X-QQ-Originating-IP: Jv1aKYQ/MjyLhPILSXPUmj2hn/opOWyMKd601+FeEek=
+	b=PzJNXuF2/g9WamuiFe2RPX2vTiFaipLMPXbNpof/2M6ddxauFk3RV3WD9l3jbJJ8R
+	 LBIq9NQ5qm+A5u7mJIU/SMjB1m6ObToPTdZd0l9fFWLQH4Sg0I7339TWii5Dyn+9jq
+	 rUnoWAPPOqTG1LfjEtM8D50l3WHIvcjIE+sYFuQM=
+X-QQ-mid: esmtpsz18t1762478998t36cfe8cb
+X-QQ-Originating-IP: XYy2puoEOwMWms+dhGae90A2kQraig8IBA6V6nniF3E=
 Received: from = ( [183.48.246.190])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 07 Nov 2025 09:22:44 +0800 (CST)
+	id ; Fri, 07 Nov 2025 09:29:56 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13905674889772998339
-EX-QQ-RecipientCnt: 10
-Date: Fri, 7 Nov 2025 09:22:44 +0800
+X-BIZMAIL-ID: 13916769930896062852
+EX-QQ-RecipientCnt: 14
+Date: Fri, 7 Nov 2025 09:29:56 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH] i2c: spacemit: fix detect issue
-Message-ID: <28675E3B65BB7C20+aQ1J5NTKx6i623ju@kernel.org>
-References: <20251103-fix-k1-detect-failure-v1-1-bb07a8d7de7c@linux.spacemit.com>
- <aQvTMM0S16gOdiAN@aurel32.net>
- <12878F9DA586AA19+aQv0bKwLTzw_kJOq@kernel.org>
- <aQwzYrmv5TAIuqTh@aurel32.net>
- <0E2B2679F0650AE1+aQw0VgKNbcFqDH33@kernel.org>
- <aQzmHB2FaPFS4qwj@aurel32.net>
+To: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-i2c@vger.kernel.org,
+	linux-rtc@vger.kernel.org, kernel test robot <lkp@intel.com>
+Subject: Re: (subset) [PATCH v2 1/4] mfd: simple-mfd-i2c: remove select I2C_K1
+Message-ID: <71DB25E553BE0B04+aQ1LlKzeR-FkZA83@kernel.org>
+References: <20251027-p1-kconfig-fix-v2-1-49688f30bae8@linux.spacemit.com>
+ <176244506110.1925720.10807118665958896958.b4-ty@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aQzmHB2FaPFS4qwj@aurel32.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <176244506110.1925720.10807118665958896958.b4-ty@kernel.org>
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NhdiEwnVOUqExbdtneD2Nu7ZvMKRJvSXJb3DC08ek4AVlnHiOQCf8xaL
-	2LVw1ILvRSjSVTkzdKOyYZPPKLAXX1YIMc5TCutKiqw0Hk58pir8CcQqSInwiTeBBsMSZt/
-	VDC4ZMk+OSC+T12JfVIpOovBi7reZjxUbzEMYK0ss9aSYvzD6frpF1XYJ+mQYZJUrV7GZak
-	IUt7L9dn2OQlYD4YloRLEmj79MuzKMVL90zaMM/BxMAjLJ4ukj1cc0mDn87/2INh+/LgbE7
-	Ru0Zp8gmwXH2lQvk6jxQa4GJ4oedcHZREEWCI6yMsZwz8lbd8b5m07TmyWqHIwGlhZCaQER
-	FncKk8HDoM6tjwgATCtAdhjmzH1P4MrKci3K/UBGGUVLSUp8lIGyJr5/gjUS0srbiE5gbyf
-	NocdKk1Lz38jCHGr990c1cG19xtqoUq3bA5h3LkPYdOqqOjpVSmyxi5N6Aj6UzA3ckVzHoq
-	xM4WF6SbPufYOIKChuH2wMktVwrJiD5mNmey7jYDZG2gKj4ifzxYwpvO/8GGEpNINHMHOxD
-	TViDTem+mKHIWuidtMjPzQ9zMxefUPAF4dNcxKz49VH5DhprVggE3SWsUbQwjT9UXmnpF9Y
-	0iW0MhUwjeN3+NfgiyRywO6HA3I+btzn/0RmVGUqvbsY32yBPFzmWaq/W9pYQ38li8xrjl1
-	H5CjXkOT3bLtp70ut9K3P6dcwVunZX2i/mhnRLmj/AerOX925ozTdufIwHnnVFJiMAnjlUs
-	mb6+H0k1rD+1MD2W3cuN5oes99VFj4zCzTWCyl2iI60PlIvBRX81jcwJ3pt5iLEyKIqvAl9
-	8d4KkJXyinc9Q+jNPWCWEFxvEPWKsOZ1YZwVjCZCEO5++vmDhubCpdFaehTBIS3oNskmzOh
-	2JkFgG2aQ2wYf0UEVEXwRqXgeFDTVBkkJIeQx0vbjaaBqvR9wpQEdAgqOuuboDcokixwzsG
-	q5pPbpYueZnmk1Kju+Lhg9MR4fBJc+yyb9aGsllhBFdJApUmeSJ/pOktS7a2oUuFlCqfUmi
-	Eb7XR+kptktCVVdWPQwbB3AJdYrqRWU45cW90i0qtgMhqyRdmkr7KayD76RvQ=
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Mf2c2cXG8XEi7srU0LhC/T1EZfWbKzg7cytxOLQp1ZqFcZ8HEx+JxizT
+	fqet0Wetv9T9LVlbSNxFnKSMnph+o2GQCszqIr3LJlartAHVmXzRd4DIkRNX2lQyVqrr4aH
+	V52Q/z3w3CypHNywH4yQ31KZYR/3rZt+HKB7Wr0N8Hp9KBfLHrBP49d61WaA4Bdc8BVfxJT
+	+uX4HDYE2AKMFeNTsTYWhZ1YijWFr0e0Lp4BSr2tMgIQaRAzsWuHrJyKOGsS8qfWLtRQueG
+	EkZbVjOqP2TSf6MT1NJ2VDhjX++0sIANHSn7Smp1bmWmXl5YI2OymQov7AnyJDspa0Lj/tc
+	1mkiFaVlxGGwM7KYy0DX3Ssc3YkGO+E6oH5utC/N9gIVfOh17+TwhDxy9gV/iDqfbIAEHJO
+	+AyGeOCpZyWRl9FgApm4UN90SV9CVwFjA1+Ahf25892cOOqQGTdpF3imMMWGmlhpPMla2c/
+	smu0Q1Tdg2VhiOhV86elLrawhU/RCwv/DC0PRZ2j2bf6GOuzsOaUxjf+ggK2AKJ7VFvJm16
+	CeSBkCdm4WMfRD3FMV3cWhBG3G8rOaVfjQcX5xjSSATkypBjOoXWWlzeZhZsITUnZcujcMN
+	LaWqC4wDZz6pv5N4+88fghlFadPa+X+hulSQvGKyuDDm+eX6PPuO1WVd5y7IeSAnwC5muHN
+	CIEWg5UxpN+wCjzVhGKcrAXlzcPubth0baM+757m2cfnjiDI5VgH8UTIoUK67wMfWJ7astb
+	95wdOgGBgXUu7CHzJfpjV4BQExP6OWJef4fnXTazama2qv8S5iDKAVpLH/Oz4Py2ws/Yx+w
+	WxhjxHLnwLh718aJmUbTY9DANs74eYRk4NTYxf+GwRjxCQr8BFbyPvnijqVDsGGJeQchXeX
+	+46UmU4SGmKxn90dhAMBqIPdegSTA0TqqZH7lH9Mw00JUqRbFQgjPQaP84lYRWmhfJdhf60
+	8CTbrRkPYvVQomf2x1MBDVcNTPdqyKcrjttfGlQFYWWzBXswJXQ+pNGpjBMwplE4wCEH92b
+	Nx2aBi/OvcQODfNR+tRguYfDA5MS6hzpY7M8nA+7mtLj/08uQUNgvAdCL4NTSUtmEI7S0sQ
+	9n4qBwreKwO
+X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
 X-QQ-RECHKSPAM: 0
 
-On Thu, Nov 06, 2025 at 07:17:00PM +0100, Aurelien Jarno wrote:
-> Hi,
+On Thu, Nov 06, 2025 at 04:04:21PM +0000, Lee Jones wrote:
+> On Mon, 27 Oct 2025 13:48:05 +0800, Troy Mitchell wrote:
+> > select will force a symbol to a specific value without considering
+> > its dependencies. As a result, the i2c-k1 driver will fail to build
+> > when OF or COMMON_CLK are disabled.
+> > 
+> > The reason for removing I2C_K1 instead of adding a depends on condition
+> > is to keep the possibility for other SoCs to use this PMIC.
+> > 
+> > [...]
 > 
-> On 2025-11-06 13:38, Troy Mitchell wrote:
-> > On Thu, Nov 06, 2025 at 06:34:26AM +0100, Aurelien Jarno wrote:
-> > > Hi,
-> > > 
-> > > On 2025-11-06 09:05, Troy Mitchell wrote:
-> > > > On Wed, Nov 05, 2025 at 11:44:00PM +0100, Aurelien Jarno wrote:
-> > > > > Hi,
-> > > > > 
-> > > > > On 2025-11-03 15:06, Troy Mitchell wrote:
-> > > > [...]
-> > > > > >  	if (i2c->status & (SPACEMIT_SR_BED | SPACEMIT_SR_ALD)) {
-> > > > > >  		spacemit_i2c_reset(i2c);
-> > > > > > -		return -EAGAIN;
-> > > > > > +		if (i2c->status & SPACEMIT_SR_ALD)
-> > > > > > +			return -EAGAIN;
-> > > > > >  	}
-> > > > > 
-> > > > > This makes the resulting code, while correct, complex to understand as 
-> > > > > it is now two really different errors, as you explained well in the 
-> > > > > commit message.
-> > > > > 
-> > > > > I therefore suggest to organize the code as:
-> > > > > 
-> > > > > 	/* Arbitration Loss Detected */
-> > > > > 	if (i2c->status & SPACEMIT_SR_ALD) {
-> > > > > 		spacemit_i2c_reset(i2c);
-> > > > > 		return -EAGAIN;
-> > > > > 	}
-> > > > > 
-> > > > > 	/* Bus Error No ACK/NAK */
-> > > > > 	if (i2c->status & SPACEMIT_SR_BED) {
-> > > > > 		spacemit_i2c_reset(i2c);
-> > > > > 	}
-> > > > Thanks. I'll fix it in the next version.
-> > > > > 
-> > > > > 
-> > > > > >  	return i2c->status & SPACEMIT_SR_ACKNAK ? -ENXIO : -EIO;
-> > > > > > @@ -491,6 +492,8 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
-> > > > > >  
-> > > > > >  	spacemit_i2c_init(i2c);
-> > > > > >  
-> > > > > > +	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
-> > > > > > +
-> > > > > 
-> > > > > This sounds good to start the transfer with a clean interrupt state. I 
-> > > > > just wonder if it should be moved to spacemit_i2c_init(), ie where the 
-> > > > > corresponding interrupts are enabled.
-> > > > Uh, We can move it actually. But is it essentail?
-> > > 
-> > > For me ensuring that the interrupt status is in a clean state after 
-> > > enabling the interrupt is part of the initialization.
-> > Yes, I agree that.
-> > > Furthermore if 
-> > > spacemit_i2c_init() has to be called from another place, it's very 
-> > > likely that it's also needed to get interrupt status in a clean state.
-> > Why we need to call init() in other place?
-> > Could you give me a cese?
+> Applied, thanks!
 > 
-> Currently there is no need to do that. However if the driver is extended 
-> (e.g. to add new features) and spacemit_i2c_init() needs to be called 
-> from another place, it is likely that a reset of the interrupt status 
-> should also be included. Therefore it's better to just include it 
-> directly in spacemit_i2c_init().
-I'll move it in init(). But it's not for reuse.
-It's not for reuse, but because the name init() should indeed ensure the
-hardware is in a clean state.
+> [1/4] mfd: simple-mfd-i2c: remove select I2C_K1
+>       commit: ecf6bc474ae97c404e2125b413eb0ef3627b03c5
+Hi Lee,
 
-Thanks!
+I think you didn't notice this reply [1]
+(Maybe because he was replying to the cover letter).
 
-                                      - Troy
+As Aurelien mentioned, the current shutdown/reboot (and possibly the regulator
+as well) intends to use the `default MFD_SPACEMIT_P1`.
+So if there’s no `default m if ARCH_SPACEMIT`,
+the default value in subdevices may not make much sense.
+
+But don’t worry — to make things easier for you, I’ll send an additional
+patch based on your branch (in this series).
+
+How does that sound?
+
+Link: https://lore.kernel.org/all/aP9IVckJT-k2_O4K@aurel32.net/ [1]
 > 
-> Regards
-> Aurelien
+> --
+> Lee Jones [李琼斯]
 > 
-> -- 
-> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-> aurelien@aurel32.net                     http://aurel32.net
 > 
