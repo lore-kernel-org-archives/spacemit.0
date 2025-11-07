@@ -1,649 +1,234 @@
-Received: from mail-il1-f196.google.com (mail-il1-f196.google.com [209.85.166.196])
+Received: from mail-io1-f65.google.com (mail-io1-f65.google.com [209.85.166.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D254A32E130
-	for <spacemit@lists.linux.dev>; Fri,  7 Nov 2025 15:50:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635E51F3BA4
+	for <spacemit@lists.linux.dev>; Fri,  7 Nov 2025 19:16:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762530631; cv=none; b=KtmdAPesFEpKDpCm4Cf+vCyFUGyy5NLGt5OoB97O6kutdHbelP4ad7AJJLYM1Xx5cn6uEoxMuhiSfvZWr0TyJ/p6hevpy7aUnh0hVdmRHh2BY5pLZpQ//cFF61aSH97t+v55jg2uwhJEIZ5lHm3Odtt4+yJGcSn84OGRQADg9oE=
+	t=1762542967; cv=none; b=GoDQFPq1z/5sieYeeMdoU+BsDRgpSW7EPP0TycyLcw3vFf65Wc0yKmSrpHluWHRwogPsKEiGWeubDukyfKe6Z+SbKotInj3TTra3Du8FWxfdpDvUSP6i09Ajl9laq6dqeaW1h4bMO5bBSLnftZA0eCurRJciaxlzSCJobBaSXYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762530631; c=relaxed/simple;
-	bh=EoawwwVoDMz0oKgsCvXm/6hQVMuQW6BNY3YvUamXDNI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=feVDjOrnGuEvf/wA3IeOSKXXUEq+ecAEmu11psb3jv/a3qvhIiLqqxGvItA/av7ydJyrIF90wDrn05EDB7tW8QVGZRX4Y1scWTau7b821W3P8ppewds6ndcypPEisOERj4LfyImGkAyyrsp7cHvilXWv0QMrDeGNaCrf3+xMEZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=yz0vEDCO; arc=none smtp.client-ip=209.85.166.196
+	s=arc-20240116; t=1762542967; c=relaxed/simple;
+	bh=q8z9+PmjzZ8xWRRUGOEKAikoRbeoaeKm1pXl4fitFcg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VJxC1u10uY8HJ27ZWAMLnxvxf0zSpRRowPJmtMDOvf65EQPQK1xxd3f33kZ5FHw/GmHoB4qT83d9iHyzbNGfAjH/VUDKThySPqOI8uLSrm06QRKWx/0bEpiKhk8Gnditl+YrSMRvIPtaxzpPAnKjHJgPQmvV7gdIAiiarF3y17Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=JUtYZKCT; arc=none smtp.client-ip=209.85.166.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="yz0vEDCO"
-Received: by mail-il1-f196.google.com with SMTP id e9e14a558f8ab-43320651e53so6690745ab.3
-        for <spacemit@lists.linux.dev>; Fri, 07 Nov 2025 07:50:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="JUtYZKCT"
+Received: by mail-io1-f65.google.com with SMTP id ca18e2360f4ac-94895f6b144so4960939f.0
+        for <spacemit@lists.linux.dev>; Fri, 07 Nov 2025 11:16:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1762530628; x=1763135428; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zXWSz4k79ncGQ5bvvpeFMonpkpyx08LBZ1NwuP3ep0g=;
-        b=yz0vEDCOr2j1I2u/dvtUaRJkZpSL2rHukJczRagVM+fincP4WHCQaBbiehEhADgTpl
-         PuUMXGTnyqETbM5JW8TjLp81yb/SCJC2bi6q0a6kxzcAB6bMgDq1tY2Tc2WJEG8ZTpof
-         f/ifaz3WwN2aEJmcjHWkogEFRFrGsjKgKBVQqtKlkZo34ph6VLR1uPs7i3oWvto1W/Kb
-         xspnK7QNdjMFW2lQ7/DA+Dn/NFKqi9cDd1Bx3M/lzPAcgteuk1OI2FugnL18LBzrcW9V
-         zccBIqLbFzM9a1lYv0V4Sn+tmb8tEocEuTFNl1zchj6q70nIRfP5fnSxf491UvIW4Als
-         YESw==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1762542963; x=1763147763; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6n9WzDNQaPD3sJObWy9/wpMh9WA3E6Erilh18wQKqfc=;
+        b=JUtYZKCTuc8eiNZd5lSjH7Q8IMpo/QBp4lh5yJpsHqaj/DBMvPwQxnaIZ09ZszbWai
+         4nt8p+apApaK1BB2Do9A9Cec87IEEHQSeC6NthWve3ei5aw/C5PULvmxW0tR0c/Wa9EE
+         Njl+MpyJd6b4fhnKH5HgoqgG8/LXyUyk3lsQaD5jtlp8fIzBwCJ2/nl4EX9G4pFg+Wmr
+         hUHAa/oMvnSeiS3winiCWnTXaBsFsRcPXeUzoO+9Y/+YHYyt9xkHFPpQ1fkxHCCM470V
+         eLc+66FqgPH+F2BJQSnAO9IjEq5h5/YDiHG0wek0ijyblg1ATS0hjPO02YG5fmrrawuM
+         NF0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762530628; x=1763135428;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zXWSz4k79ncGQ5bvvpeFMonpkpyx08LBZ1NwuP3ep0g=;
-        b=Nfjdzua9ujvc8C0RTyi2rLpViHR8eA0faywcBGNXv0VB2ZhuVCzfiAJGLqXOGc/Wwa
-         AX6x1ifkQL0Jcfb2QeAKstNQQ8T5GH3U/6wKle6NNxJ2vhQktzVizU+31iVHrThWPDt0
-         5OVPIt6fBkxRMjg53Y/KENk9uIQprQAGIfB8zCFXlo/0gWq88y/6ESgNiAYxxFkiq+u+
-         LVXRyz3F1heGoMAU6lrSsyAolV1SktGRJgUb1SrdAMyVl+8JUOSKttg0//7gjI2aQEHy
-         wsE3/TPSVBKdeEY08c0yYZoN2DeCG4yycbgyIrsvGcNIuOJ5y9li5630kU9V3ouX0z7P
-         2XyA==
-X-Forwarded-Encrypted: i=1; AJvYcCWDhNj3NSj9AngCk1bX+2WjDPpk6pAgEISgGLT0mhlJfkwId8/6i0qDNZiOyxySi4hHHpE5V76Ynw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywg/P3ERbpp2R2NMzckXN1CbstJJz9kG0AAUIJqhXP45VWzVFcU
-	PWEmu/W8Fnm+XrJ1de6fnBoJ/++fZCeXRXeCObf1uwIz42CKgTcQkN6oxX+fjpUhLPw=
-X-Gm-Gg: ASbGncs3f7F7GUUY6w+MTvSvDHtZxw1X4qCpMHQRsfZDyy7o66b7w9XJgtnq+ugrmD/
-	DRBXARHF+iFd7PD0YTSt8kFMXiAC1G5/124FaTxs1xQOvg2as3h1rN/7m4+gX7Q/Wadwl/A4jdA
-	up2opK1HxOcIfLjirSp9Jfe+Cszdqmozc+yiXuVTVadMlTlzp4XIPX1Y55CepwPfq7zDaH30SC6
-	l7hcinEn9krh7h8PzDBRSd+3lHGwLe6emKMAZlXEKLwkhfKhI7mFN257jv+XfRXQ63mr3iLZHph
-	Dwv4SAJTi+6MXaMx19NaBqlO6S2xvewa8sJTQYeoXdvAcnuFGR2s7kZRZse4c0BApWXlrIVU8JW
-	yGZele4+0ynpeHCaV7aTfmSVu9KX9qge7cKtbIc9eUdTH/89jZCpZXdVjr3nuuq1vSbM+O38PLN
-	X2xQxE+LOxH1rSP717VAdhn98dpD8jP1mPgdiegeY9DcSZ7SG8Uw==
-X-Google-Smtp-Source: AGHT+IERtPQ2HfyGXSRoRztnRCnWaZPM0gHZcPPreXFNAW24Pk7vrOzzxb+BaiSHpaPwei2lKcwbeQ==
-X-Received: by 2002:a05:6e02:7:b0:430:b1ff:74cd with SMTP id e9e14a558f8ab-4335f3f9722mr59114585ab.10.1762530627681;
-        Fri, 07 Nov 2025 07:50:27 -0800 (PST)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-4334f44e63csm23592535ab.10.2025.11.07.07.50.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Nov 2025 07:50:27 -0800 (PST)
-Message-ID: <613db920-6025-43cb-a733-d58f65363caa@riscstar.com>
-Date: Fri, 7 Nov 2025 09:50:26 -0600
+        d=1e100.net; s=20230601; t=1762542963; x=1763147763;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6n9WzDNQaPD3sJObWy9/wpMh9WA3E6Erilh18wQKqfc=;
+        b=VVR5a3jBxvs7K7qfwCR8qe2TtQk49WFx077jpsLwbkVJbGRI0L9gmUUo+OShel1n4A
+         wbXr9/LZY5GfACctoSXziM/PCX9QcaCEQUu+WVH5rJzdqecaqFQCAdSjdraB8zJ6qWEL
+         bJ5wqat78mN5H0ujAoalZuIH5Lo3vEUkad4Twt0mP+XPkni3kGtkND16VjJN2K0UZffB
+         fULujIJW1xZ+MjfrEr3ctM6COEjpC7coSFTmctb83xttspJPsrG534we2znNqNWI0Jrl
+         Hjs7DlOaF5S2PWBtGOLx0bNo3NkflkKwhNuULxnZTk91bEQwt7kyDtEs9zZw1sziu2Nl
+         xQHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWPJ5A4jaY9kqWhkfEnejsOVC13bgVHQyuhBNZkYQhdBZ8zUxkT80szYJ5gna/OghHvyHLtInV4TQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzRTt3ENFoIjxyoGV2t2DgocsaihecYqhg6WxDjH1diKvPcCWMj
+	3+PhU7twOIfiYKjUKSOTD701dJupi1Y00Q1UIIn/bQ7amB7qZZLG+hMtXdmXVnL15Wk=
+X-Gm-Gg: ASbGncskVaz8bCZW1LQnxedvl2T4Fw3C/wd0ns/6mEjEj/EkKj3yfbM+MHrdqaWaoL4
+	PJEYtw8xjmw/6vmbScdAhgf8JCRwCHvlN/UAVMqCpn19qBImcePAZn/l4kKlKVOI/tTzv6uiNEw
+	U8vaE9/kKzfpCsDF2IAHUZ0WAM2xYJX67I+K7lvlyWfE8V4EN+KiJoNUGIXxDV8HjoBW/422LEw
+	jbM5AvGxRhDA4P1Q4dLk3UL8gAN5HEWh+XfA30uw5hmCMhZeyQcHSvfmghiMmFanJ3JtY6PHAdR
+	km67qQnFqUKms58Gb5YXqsYT3cgdYLQF4NOF63XaVxE3WzEuwxRxaqL12BoghPgGKUwp9pyyhAP
+	xvUCF0cof8lvoKBAIzB7jGGSQ/ezmBtjrvs7EaJItdO7lhooMb0BEJ2g8wkwMli2MRLbw6b4Ons
+	8yBUCZ5tCVhyfuSB7gbHi2YRoCe5cKxmTzGGegLao3lg+DyPirR59TFQ==
+X-Google-Smtp-Source: AGHT+IHzW2i2JPY8Wetr24eEJmqYYe9Yl8l6cwzTHxWm6YorX15rRz+Oc0kP8V7OeF++pSW10dZrTw==
+X-Received: by 2002:a05:6602:3e81:b0:945:ac8e:fcb9 with SMTP id ca18e2360f4ac-9489602f282mr55483139f.17.1762542963188;
+        Fri, 07 Nov 2025 11:16:03 -0800 (PST)
+Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-94888c34c6asm118772939f.10.2025.11.07.11.16.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Nov 2025 11:16:02 -0800 (PST)
+From: Alex Elder <elder@riscstar.com>
+To: dlan@gentoo.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	vkoul@kernel.org,
+	kishon@kernel.org,
+	bhelgaas@google.com,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	mani@kernel.org
+Cc: ziyao@disroot.org,
+	aurelien@aurel32.net,
+	johannes@erdfelt.com,
+	mayank.rana@oss.qualcomm.com,
+	qiang.yu@oss.qualcomm.com,
+	shradha.t@samsung.com,
+	inochiama@gmail.com,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	p.zabel@pengutronix.de,
+	christian.bruel@foss.st.com,
+	thippeswamy.havalige@amd.com,
+	krishna.chundru@oss.qualcomm.com,
+	guodong@riscstar.com,
+	devicetree@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v5 0/7] Introduce SpacemiT K1 PCIe phy and host controller
+Date: Fri,  7 Nov 2025 13:15:49 -0600
+Message-ID: <20251107191557.1827677-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] i2c: spacemit: introduce pio for k1
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Troy Mitchell <troymitchell988@gmail.com>
-Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-References: <20251009-k1-i2c-atomic-v4-1-a89367870286@linux.spacemit.com>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20251009-k1-i2c-atomic-v4-1-a89367870286@linux.spacemit.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 10/9/25 4:59 AM, Troy Mitchell wrote:
-> This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
-> enabling the use of I2C in atomic context.
+This series introduces a PHY driver and a PCIe driver to support PCIe
+on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
+Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
+PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
+one PCIe lane, and the other two ports each have two lanes.  All PCIe
+ports operate at 5 GT/second.
 
-(Sorry I haven't commented on your earlier versions.  They
-included other changes to prepare for this; I'm looking at
-this patch in isolation and haven't reviewed the others.)
+The PCIe PHYs must be configured using a value that can only be
+determined using the combo PHY, operating in PCIe mode.  To allow
+that PHY to be used for USB, the needed calibration step is performed
+by the PHY driver automatically at probe time.  Once this step is done,
+the PHY can be used for either PCIe or USB.
 
-An aside:  I notice the #includes are indented an additional
-space in this source file;  perhaps you can get rid of those
-(in a separate patch) at some point.
+This initial version of the driver supports 32 MSIs, and does not
+support PCI INTx interrupts.  The hardware does not support MSI-X.
 
-You really need to provide more information about how this
-is implemented.  This patch makes non-trivial changes to
-the logic.
+Version 5 of this series incorporates suggestions made during the
+review of version 4.  Specific highlights are detailed below.
 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
-> Changes in v4:
-> - refactor for better readability: simplify condition check and moving if/else (timeout/
->    wait_xfer_complete) logic into a function
-> - remove irrelevant changes
-> - remove the status clear call in spacemit_i2c_xfer_common()
-> - sort functions to avoid forward declarations,
->    move unavoidable ones above function definitions
-> - use udelay() in atomic context to avoid sleeping
-> - wait for MSD on the last byte in wait_pio_xfer()
-> - Link to v3: https://lore.kernel.org/r/20250929-k1-i2c-atomic-v3-1-f7e660c138b6@linux.spacemit.com
-> 
-> Changes in v3:
-> - drop 1-5 patches (have been merged)
-> - modify commit message
-> - use readl_poll_timeout_atomic() in wait_pio_xfer()
-> - use msecs_to_jiffies() when get PIO mode timeout value
-> - factor out transfer state handling into spacemit_i2c_handle_state().
-> - do not disable/enable the controller IRQ around PIO transfers.
-> - consolidate spacemit_i2c_init() interrupt setup
-> - rename is_pio -> use_pio
-> - rename spacemit_i2c_xfer() -> spacemit_i2c_xfer_common()
-> - rename spacemit_i2c_int_xfer() -> spacemit_i2c_xfer()
-> - rename spacemit_i2c_pio_xfer() -> spacemit_i2c_pio_xfer_atomic()
-> - call spacemit_i2c_err_check() in wait_pio_xfer() when write last byte
-> - Link to v2: https://lore.kernel.org/r/20250925-k1-i2c-atomic-v2-0-46dc13311cda@linux.spacemit.com
-> 
-> Changes in v2:
-> - Patch 1/6:
->    Patch 3/6:
->    Patch 4/6:
->      - nothing
-> - Patch 2/6:
->    - remove is_pio judgement in irq_handler()
-> - Patch 5/6:
->    - fix wrong comment
->    - In spacemit_i2c_conditionally_reset_bus(), once the condition is met inside the loop, it should
->      return directly instead of using break.
-> - Patch 6/6:
->    - add is_pio judgement in irq_handler()
->    - use a fixed timeout value when PIO
->    - use readl_poll_timeout() in  spacemit_i2c_wait_bus_idle() when PIO
-> 
-> - Link to v1: https://lore.kernel.org/r/20250827-k1-i2c-atomic-v1-0-e59bea02d680@linux.spacemit.com
-> ---
->   drivers/i2c/busses/i2c-k1.c | 229 +++++++++++++++++++++++++++++++++++---------
->   1 file changed, 185 insertions(+), 44 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-> index 6b918770e612e098b8ad17418f420d87c94df166..a13284f840ee967466a01375e6603f7568a42f86 100644
-> --- a/drivers/i2c/busses/i2c-k1.c
-> +++ b/drivers/i2c/busses/i2c-k1.c
-> @@ -97,6 +97,8 @@
->   
->   #define SPACEMIT_BUS_RESET_CLK_CNT_MAX		9
->   
-> +#define SPACEMIT_WAIT_TIMEOUT      1000 /* ms */
-> +
->   enum spacemit_i2c_state {
->   	SPACEMIT_STATE_IDLE,
->   	SPACEMIT_STATE_START,
-> @@ -125,10 +127,14 @@ struct spacemit_i2c_dev {
->   
->   	enum spacemit_i2c_state state;
->   	bool read;
-> +	bool use_pio;
+Note:
+Aurelien Jarno and Johannes Erdfelt have reported seeing ASPM errors
+accessing NVMe drives when using earlier versions of this series.
+The Kconfig files they used were very different from the RISC-V
+default configuration.
 
-This is fine, but you could maybe call it atomic (to match
-the callback funtion name).
+Aurelien has since reported the errors do not occur when using
+defconfig.  Johannes has not reported back about this.
 
-Actually, almost all uses of this field are negated, i.e.:
-	if (!i2c->use_pio)
-
-Maybe you could use a name that doesn't require negation,
-like "can_block" for example.
-
->   	struct completion complete;
->   	u32 status;
->   };
->   
-> +static void spacemit_i2c_err_check(struct spacemit_i2c_dev *i2c);
-> +static void spacemit_i2c_handle_state(struct spacemit_i2c_dev *i2c);
-
-You should introduce a patch before this one that simply moves
-one or both of these functions earlier in the file, so these
-forward-declarations can be avoided.
-
->   static void spacemit_i2c_enable(struct spacemit_i2c_dev *i2c)
->   {
->   	u32 val;
-> @@ -177,7 +183,11 @@ static void spacemit_i2c_conditionally_reset_bus(struct spacemit_i2c_dev *i2c)
->   		return;
->   
->   	spacemit_i2c_reset(i2c);
-> -	usleep_range(10, 20);
-> +
-
-What determines whether use_pio is set?  The answer is that
-it's set when i2c_algorithm->xfer_atomic is used; it is false
-if i2c_algorithm->xfer is used.  (This would be something
-you'd explain in your patch header.)
-
-> +	if (!i2c->use_pio)
-> +		usleep_range(10, 20);
-> +	else
-> +		udelay(20);
-
-You could encapsulate the above four lines in a new function
-spacemit_i2c_delay(unsigned long usec), since they are repeated
-in two places.  It can also be used in spacemit_i2c_wait_pio_xfer()
-even though the check for PIO isn't needed there.
-
->   
->   	for (clk_cnt = 0; clk_cnt < SPACEMIT_BUS_RESET_CLK_CNT_MAX; clk_cnt++) {
->   		status = readl(i2c->base + SPACEMIT_IBMR);
-> @@ -206,9 +216,14 @@ static int spacemit_i2c_wait_bus_idle(struct spacemit_i2c_dev *i2c)
->   	if (!(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)))
->   		return 0;
->   
-> -	ret = readl_poll_timeout(i2c->base + SPACEMIT_ISR,
-> -				 val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
-> -				 1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
-> +	if (!i2c->use_pio)
-> +		ret = readl_poll_timeout(i2c->base + SPACEMIT_ISR,
-> +					 val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
-> +					 1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
-> +	else
-> +		ret = readl_poll_timeout_atomic(i2c->base + SPACEMIT_ISR,
-> +						val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
-> +						1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
-
-The above could also be encapsulated, to simplify this block of
-code and the one below that uses this structure.  And again, it
-could be used in spacemit_i2c_wait_pio_xfer() as well, despite
-the check for PIO not being needed there.
-
->   	if (ret)
->   		spacemit_i2c_reset(i2c);
->   
-> @@ -220,31 +235,39 @@ static void spacemit_i2c_check_bus_release(struct spacemit_i2c_dev *i2c)
->   	/* in case bus is not released after transfer completes */
->   	if (readl(i2c->base + SPACEMIT_ISR) & SPACEMIT_SR_EBB) {
->   		spacemit_i2c_conditionally_reset_bus(i2c);
-> -		usleep_range(90, 150);
-> +		if (!i2c->use_pio)
-> +			usleep_range(90, 150);
-> +		else
-> +			udelay(150);
->   	}
->   }
->   
->   static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
->   {
-> -	u32 val;
-> -
-> -	/*
-> -	 * Unmask interrupt bits for all xfer mode:
-> -	 * bus error, arbitration loss detected.
-> -	 * For transaction complete signal, we use master stop
-> -	 * interrupt, so we don't need to unmask SPACEMIT_CR_TXDONEIE.
-> -	 */
-> -	val = SPACEMIT_CR_BEIE | SPACEMIT_CR_ALDIE;
-> -
-> -	/*
-> -	 * Unmask interrupt bits for interrupt xfer mode:
-> -	 * When IDBR receives a byte, an interrupt is triggered.
-> -	 *
-> -	 * For the tx empty interrupt, it will be enabled in the
-> -	 * i2c_start function.
-> -	 * Otherwise, it will cause an erroneous empty interrupt before i2c_start.
-> -	 */
-> -	val |= SPACEMIT_CR_DRFIE;
-> +	u32 val = 0;
-> +
-> +	if (!i2c->use_pio) {
-
-Why does this block of initialization only need to be done
-when not using PIO?  What happens in the PIO case?  I think
-the answer is that you don't want any interrupts when using
-PIO.  But... what if these conditions occur in PIO mode?
-
-> +		/*
-> +		 * Unmask interrupt bits for all xfer mode:
-> +		 * bus error, arbitration loss detected.
-> +		 * For transaction complete signal, we use master stop
-> +		 * interrupt, so we don't need to unmask SPACEMIT_CR_TXDONEIE.
-> +		 */
-> +		val |= SPACEMIT_CR_BEIE | SPACEMIT_CR_ALDIE;
-> +
-> +		/*
-> +		 * Unmask interrupt bits for interrupt xfer mode:
-> +		 * When IDBR receives a byte, an interrupt is triggered.
-> +		 *
-> +		 * For the tx empty interrupt, it will be enabled in the
-> +		 * i2c_start function.
-> +		 * Otherwise, it will cause an erroneous empty interrupt before i2c_start.
-> +		 */
-> +		val |= SPACEMIT_CR_DRFIE;
-
-It's worth explaining (somewhere, possibly in the patch
-header) that this is different from what was done before.
-As a reviewer I didn't realize this at first; I thought
-you were simply making a block of code conditional on
-the value of use_pio.
-
-> +		/* unmask master stop interrupt bit */
-> +		val |= SPACEMIT_CR_MSDIE;
-> +	}
-
-I would find it easier to follow if you set up the
-common bit assignments to the SPACEMIT_ICR register
-first, and then do the non-PIO specific ones afterward.
-
->   	if (i2c->clock_freq == SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
->   		val |= SPACEMIT_CR_MODE_FAST;
-> @@ -256,7 +279,7 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
->   	val |= SPACEMIT_CR_SCLE;
->   
->   	/* enable master stop detected */
-> -	val |= SPACEMIT_CR_MSDE | SPACEMIT_CR_MSDIE;
-> +	val |= SPACEMIT_CR_MSDE;
->   
->   	writel(val, i2c->base + SPACEMIT_ICR);
->   
-> @@ -293,10 +316,85 @@ static void spacemit_i2c_start(struct spacemit_i2c_dev *i2c)
->   	/* send start pulse */
->   	val = readl(i2c->base + SPACEMIT_ICR);
->   	val &= ~SPACEMIT_CR_STOP;
-> -	val |= SPACEMIT_CR_START | SPACEMIT_CR_TB | SPACEMIT_CR_DTEIE;
-> +	val |= SPACEMIT_CR_START | SPACEMIT_CR_TB;
-> +
-> +	if (!i2c->use_pio)
-> +		val |= SPACEMIT_CR_DTEIE;
-> +
->   	writel(val, i2c->base + SPACEMIT_ICR);
->   }
->   
-
-You should add a comment here indicating this returns 0
-if there's a timeout/error, or non-zero (1) for success.
-
-> +static int spacemit_i2c_wait_pio_xfer(struct spacemit_i2c_dev *i2c)
-> +{
-> +	u32 mask, msec = jiffies_to_msecs(i2c->adapt.timeout);
-> +	ktime_t timeout = ktime_add_ms(ktime_get(), msec);
-> +	int ret;
-> +
-> +	mask = SPACEMIT_SR_IRF | SPACEMIT_SR_ITE;
-
-I think this can be a do..while block instead.  Both conditions
-will certainly be true initially.
-
-> +	while (i2c->unprocessed && ktime_compare(ktime_get(), timeout) < 0) {
-> +		udelay(10);
-
-Why do you delay *first*?  I think you should read the status
-and only if you're not done, insert the delay.
-
-> +		i2c->status = readl(i2c->base + SPACEMIT_ISR);
-> +
-> +		spacemit_i2c_clear_int_status(i2c, i2c->status);
-> +
-> +		if (!(i2c->status & mask))
-> +			continue;
-> +
-> +		spacemit_i2c_handle_state(i2c);
-> +
-> +		/*
-> +		 * This is the last byte to write of the current message.
-
-You mean *if* this is the last byte to write in the message, ...
-
-> +		 * If we do not wait here, control will proceed directly to start(),
-> +		 * which would overwrite the current data.
-> +		 */
-> +		if (!i2c->read && !i2c->unprocessed) {
-
-Instead, do this:
-
-		if (i2c->read || i2c->unprocessed)
-			continue;
-
-> +			ret = readl_poll_timeout_atomic(i2c->base + SPACEMIT_ISR,
-> +							i2c->status, i2c->status & SPACEMIT_SR_ITE,
-> +							30, 1000);
-> +			if (ret)
-> +				return 0;
-
-I'd rather see the above be done outside the loop. It would
-simplify things.  The call to spacemit_i2c_handle_state()
-would be the end of the loop.
-
-Then outside the loop:
-
-	if (unprocessed)
-		return 0;	/* timeout */
-
-	if (!i2c->read)
-		return 1;
-
-	/*
-	 * In read mode, err_check() ...
-	 * ...
-	 */
-
-I might have the logic wrong here, but you might find
-it's simpler if you try to handle it this way.
-
-> +			/*
-> +			 * In read mode, err_check() in handle_state properly handles what happens
-You can drop the sentence about what happens in read mode.
-It's a distraction.  Just explain what you have to do in write
-mode.
-
-> +			 * after the MSD bit is set. For writes it is different: in interrupt mode,
-> +			 * an ITE (write-empty) interrupt is triggered after the last byte, and the
-> +			 * MSD-related handling takes place there. In PIO mode, however, we need to
-> +			 * explicitly call err_check() to emulate this step, otherwise the next
-> +			 * transfer will fail.
-> +			 */
-> +			if (i2c->msg_idx == i2c->msg_num - 1) {
-> +				mask = SPACEMIT_SR_MSD | SPACEMIT_SR_ERR;
-> +				/*
-> +				 * In some cases, MSD may not arrive immediately;
-> +				 * wait here to handle that.
-> +				 */
-> +				ret = readl_poll_timeout_atomic(i2c->base + SPACEMIT_ISR,
-> +								i2c->status, i2c->status & mask,
-> +								30, 1000);
-> +				if (ret)
-> +					return 0;
-> +
-> +				spacemit_i2c_err_check(i2c);
-> +			}
-> +		}
-> +	}
-> +
-> +	if (i2c->unprocessed)
-> +		return 0;
-> +
-> +	return 1;
-> +}
-> +
-> +static int spacemit_i2c_wait_xfer_complete(struct spacemit_i2c_dev *i2c)
-> +{
-> +	if (i2c->use_pio)
-> +		return spacemit_i2c_wait_pio_xfer(i2c);
-> +	else
-No need for else here.
-
-> +		return wait_for_completion_timeout(&i2c->complete,
-> +						   i2c->adapt.timeout);
-> +}
-> +
->   static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
->   {
->   	unsigned long time_left;
-> @@ -312,8 +410,8 @@ static int spacemit_i2c_xfer_msg(struct spacemit_i2c_dev *i2c)
->   
->   		spacemit_i2c_start(i2c);
->   
-> -		time_left = wait_for_completion_timeout(&i2c->complete,
-> -							i2c->adapt.timeout);
-> +		time_left = spacemit_i2c_wait_xfer_complete(i2c);
-> +
->   		if (!time_left) {
->   			dev_err(i2c->dev, "msg completion timeout\n");
->   			spacemit_i2c_conditionally_reset_bus(i2c);
-> @@ -341,6 +439,9 @@ static bool spacemit_i2c_is_last_msg(struct spacemit_i2c_dev *i2c)
->   
->   static void spacemit_i2c_handle_write(struct spacemit_i2c_dev *i2c)
->   {
-> +	if (!(i2c->status & SPACEMIT_SR_ITE))
-> +		return;
-> +
->   	/* if transfer completes, SPACEMIT_ISR will handle it */
->   	if (i2c->status & SPACEMIT_SR_MSD)
->   		return;
-> @@ -353,14 +454,20 @@ static void spacemit_i2c_handle_write(struct spacemit_i2c_dev *i2c)
->   
->   	/* SPACEMIT_STATE_IDLE avoids trigger next byte */
->   	i2c->state = SPACEMIT_STATE_IDLE;
-> -	complete(&i2c->complete);
-> +
-> +	if (!i2c->use_pio)
-> +		complete(&i2c->complete);
-
-The above two lines could be wrapped in spacemit_i2c_complete(i2c),
-to avoid repeating them.
-
->   }
->   
->   static void spacemit_i2c_handle_read(struct spacemit_i2c_dev *i2c)
->   {
-> +	if (!(i2c->status & SPACEMIT_SR_IRF))
-> +		return;
-> +
->   	if (i2c->unprocessed) {
->   		*i2c->msg_buf++ = readl(i2c->base + SPACEMIT_IDBR);
->   		i2c->unprocessed--;
-> +		return;
->   	}
->   
->   	/* if transfer completes, SPACEMIT_ISR will handle it */
-> @@ -373,7 +480,9 @@ static void spacemit_i2c_handle_read(struct spacemit_i2c_dev *i2c)
->   
->   	/* SPACEMIT_STATE_IDLE avoids trigger next byte */
->   	i2c->state = SPACEMIT_STATE_IDLE;
-> -	complete(&i2c->complete);
-> +
-> +	if (!i2c->use_pio)
-> +		complete(&i2c->complete);
->   }
->   
->   static void spacemit_i2c_handle_start(struct spacemit_i2c_dev *i2c)
-> @@ -408,21 +517,14 @@ static void spacemit_i2c_err_check(struct spacemit_i2c_dev *i2c)
->   	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
->   
->   	i2c->state = SPACEMIT_STATE_IDLE;
-> -	complete(&i2c->complete);
-> +
-> +	if (!i2c->use_pio)
-> +		complete(&i2c->complete);
->   }
->   
-> -static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
-> +static void spacemit_i2c_handle_state(struct spacemit_i2c_dev *i2c)
->   {
-> -	struct spacemit_i2c_dev *i2c = devid;
-> -	u32 status, val;
-> -
-> -	status = readl(i2c->base + SPACEMIT_ISR);
-> -	if (!status)
-> -		return IRQ_HANDLED;
-> -
-> -	i2c->status = status;
-> -
-> -	spacemit_i2c_clear_int_status(i2c, status);
-> +	u32 val;
->   
->   	if (i2c->status & SPACEMIT_SR_ERR)
->   		goto err_out;
-> @@ -445,7 +547,10 @@ static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
->   	}
->   
->   	if (i2c->state != SPACEMIT_STATE_IDLE) {
-> -		val |= SPACEMIT_CR_TB | SPACEMIT_CR_ALDIE;
-> +		val |= SPACEMIT_CR_TB;
-> +		if (i2c->use_pio)
-> +			val |= SPACEMIT_CR_ALDIE;
-> +
->   
->   		if (spacemit_i2c_is_last_msg(i2c)) {
->   			/* trigger next byte with stop */
-> @@ -459,6 +564,23 @@ static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
->   
->   err_out:
->   	spacemit_i2c_err_check(i2c);
-> +}
-> +
-> +static irqreturn_t spacemit_i2c_irq_handler(int irq, void *devid)
-
-Introducing spacemit_i2c_handle_state() as a simple separate
-initial patch would simplify review.  (Not a big deal, but
-something to think about for future patch series.)
-
-> +{
-> +	struct spacemit_i2c_dev *i2c = devid;
-> +	u32 status;
-> +
-> +	status = readl(i2c->base + SPACEMIT_ISR);
-> +	if (!status)
-> +		return IRQ_HANDLED;
-> +
-> +	i2c->status = status;
-> +
-> +	spacemit_i2c_clear_int_status(i2c, status);
-> +
-> +	spacemit_i2c_handle_state(i2c);
-> +
->   	return IRQ_HANDLED;
->   }
->   
-> @@ -467,6 +589,11 @@ static void spacemit_i2c_calc_timeout(struct spacemit_i2c_dev *i2c)
->   	unsigned long timeout;
->   	int idx = 0, cnt = 0;
-
-Why is the timeout a fixed constant for PIO, but a fairly
-precise calculation based on message length otherwise?
+I do not claim these issues are resolved, however this version
+of the series does address all other feedback received to date.
 
 					-Alex
 
-> +	if (i2c->use_pio) {
-> +		i2c->adapt.timeout = msecs_to_jiffies(SPACEMIT_WAIT_TIMEOUT);
-> +		return;
-> +	}
-> +
->   	for (; idx < i2c->msg_num; idx++)
->   		cnt += (i2c->msgs + idx)->len + 1;
->   
-> @@ -479,11 +606,14 @@ static void spacemit_i2c_calc_timeout(struct spacemit_i2c_dev *i2c)
->   	i2c->adapt.timeout = usecs_to_jiffies(timeout + USEC_PER_SEC / 10) / i2c->msg_num;
->   }
->   
-> -static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-> +static inline int
-> +spacemit_i2c_xfer_common(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num, bool use_pio)
->   {
->   	struct spacemit_i2c_dev *i2c = i2c_get_adapdata(adapt);
->   	int ret;
->   
-> +	i2c->use_pio = use_pio;
-> +
->   	i2c->msgs = msgs;
->   	i2c->msg_num = num;
->   
-> @@ -511,6 +641,16 @@ static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, in
->   	return ret < 0 ? ret : num;
->   }
->   
-> +static int spacemit_i2c_xfer(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-> +{
-> +	return spacemit_i2c_xfer_common(adapt, msgs, num, false);
-> +}
-> +
-> +static int spacemit_i2c_pio_xfer_atomic(struct i2c_adapter *adapt, struct i2c_msg *msgs, int num)
-> +{
-> +	return spacemit_i2c_xfer_common(adapt, msgs, num, true);
-> +}
-> +
->   static u32 spacemit_i2c_func(struct i2c_adapter *adap)
->   {
->   	return I2C_FUNC_I2C | (I2C_FUNC_SMBUS_EMUL & ~I2C_FUNC_SMBUS_QUICK);
-> @@ -518,6 +658,7 @@ static u32 spacemit_i2c_func(struct i2c_adapter *adap)
->   
->   static const struct i2c_algorithm spacemit_i2c_algo = {
->   	.xfer = spacemit_i2c_xfer,
-> +	.xfer_atomic = spacemit_i2c_pio_xfer_atomic,
->   	.functionality = spacemit_i2c_func,
->   };
->   
-> 
-> ---
-> base-commit: bc574b64121525b24d52e9bab747184181c808dc
-> change-id: 20250814-k1-i2c-atomic-f1a90cd34364
-> 
-> Best regards,
+This series is available here:
+  https://github.com/riscstar/linux/tree/outgoing/pcie-v5
+
+Between version 3 and version 4:
+- Clarify that INTx interrupts are not currently supported
+- Add Rob Herring's Reviewed-by on patch 3
+- The name of the PCIe root port will always begin with "pcie"
+- Lines in the bindings are now wrapped at 80 columns
+- Subject lines are all captialized (after subsystem tags)
+- Place the PCIe Kconfig option in the proper location based on
+  vendor name (not Kconfig symbol); expand its description
+- Drop two PCIe controller Kconfig dependencies
+- Use dw_pcie_readl_dbi() and dw_pcie_writel_dbi() when turning
+  off ASPM L1
+- The dw_pcie_host_ops->init callback has been rearranged a bit:
+    - The vendor and device IDs are now set early
+    - PERST# is asserted separate from putting the controller in RC mode
+      and indicating power is detected
+    - phy_init() is now called later, just before deasserting PERST#
+- Because of timing issues involved in having the root port enable power,
+  getting and enabling the regulator is back to being done in the PCIe
+  controller probe function
+- The regulator definition is moved back to the PCIe controller DT node,
+  out of the root port sub-node (in "k1-bananapi-f3.dts")
+
+Here is version 4 of this series:
+  https://lore.kernel.org/lkml/20251030220259.1063792-1-elder@riscstar.com/
+
+Between version 3 and version 4:
+  - In the DT binding for the PCIe host controlloller, add a new
+    sub-node representing the root port
+  - Move the phys and supply properties out of the PCIe host controller
+    and into the root port node
+  - Define the spacemit,apmu property later in the binding and DTS files
+  - Define the device_type property first in the binding examples and
+    DTS files
+  - Add root port sub-nodes in the examples and the DTS files
+  - Select the PCI_PWRCTRL_SLOT config option when PCIE_SPACEMIT_K1 is
+    enabled
+  - Parse the root port node in the driver, and get the PHY
+  - Leverage the PCI pwrctrl slot driver to get and enable the regulator
+  - Don't set num_vectors to 256; just use the default (32)
+  - Cleaned up some comments, white space, and symbol names based on
+    feedback from Mani
+  - Add some runtime PM calls to ensure it works propertly
+  - Add a new post_init callback, which disables ASPM L1 for the link
+
+Here is version 3 of this series:
+  https://lore.kernel.org/lkml/20251017190740.306780-1-elder@riscstar.com/
+
+Between version 2 and version 3:
+  - Reviewed-by from Rob added to the first two patches
+  - The "num-viewport" property has been removed
+  - The "phy" reset is listed first in the combo PHY binding
+  - The PHY now requires a resets property to specify the "phy" reset
+  - The PCIe driver no longer requires a "phy" reset
+  - The PHY driver now gets and deasserts the reset for all PHYs
+  - Error handling and "put" of clocks in the PHY driver has been
+    corrected (for clk_bulk_get() rather than clk_bulk_get_all())
+
+Here is version 2 of this series:
+  https://lore.kernel.org/lkml/20251013153526.2276556-1-elder@riscstar.com/
+
+
+Alex Elder (7):
+  dt-bindings: phy: spacemit: Add SpacemiT PCIe/combo PHY
+  dt-bindings: phy: spacemit: Introduce PCIe PHY
+  dt-bindings: pci: spacemit: Introduce PCIe host controller
+  phy: spacemit: Introduce PCIe/combo PHY
+  PCI: spacemit: Add SpacemiT PCIe host driver
+  riscv: dts: spacemit: Add a PCIe regulator
+  riscv: dts: spacemit: PCIe and PHY-related updates
+
+ .../bindings/pci/spacemit,k1-pcie-host.yaml   | 157 ++++
+ .../bindings/phy/spacemit,k1-combo-phy.yaml   | 114 +++
+ .../bindings/phy/spacemit,k1-pcie-phy.yaml    |  71 ++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      |  44 ++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |  33 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          | 176 +++++
+ drivers/pci/controller/dwc/Kconfig            |  13 +
+ drivers/pci/controller/dwc/Makefile           |   1 +
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 353 +++++++++
+ drivers/phy/Kconfig                           |  11 +
+ drivers/phy/Makefile                          |   1 +
+ drivers/phy/phy-spacemit-k1-pcie.c            | 670 ++++++++++++++++++
+ 12 files changed, 1644 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-pcie-phy.yaml
+ create mode 100644 drivers/pci/controller/dwc/pcie-spacemit-k1.c
+ create mode 100644 drivers/phy/phy-spacemit-k1-pcie.c
+
+
+base-commit: 9c0826a5d9aa4d52206dd89976858457a2a8a7ed
+-- 
+2.48.1
 
