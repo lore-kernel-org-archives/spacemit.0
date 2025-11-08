@@ -1,200 +1,162 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.smtpout.orange.fr (smtp-24.smtpout.orange.fr [80.12.242.24])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78743002C2;
-	Sat,  8 Nov 2025 11:08:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAAC34D395
+	for <spacemit@lists.linux.dev>; Sat,  8 Nov 2025 13:01:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762600142; cv=none; b=LqMQ7BbMzFeaYudoOSSnbXsqfssPE6KiXWQG81vz0w3xwmnjlobQY/no+oviePI3w0TAEU6mJ9uf1ArFhqZ1vS8e9d4LAhGrgbbW4hyasuPpbZCcMwjJKU3NuWCzeDagpzaKJcp6hGQH62XpjVaEo7jadqAoMC6Kty+CDeBbC/4=
+	t=1762606907; cv=none; b=C35gQjpEN8lI01qT2OHchdi0Xxq+gRVHcYJfIyyQIwSzJebsQN87NvYeU70O2E/rxv2pXN+Dkh15n00bkj9CGjm5O+6y9a2eJhI6cSbJj3r2EG4rIGMCsOvG7qii59yEP/Yc0ks+4M+sNYUH/WM6tVGesQMtGvkkT6sIokpyR5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762600142; c=relaxed/simple;
-	bh=7haCvCWUOfsjYGqaHIzuphWqNU06gFWPaAWkAIWCbSM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VBk1WKIB0jMrkutsZFOsqEbcscnrhVxBSCmE3IN4s9rinsVKyI+RSSo9N9BHX9vcRaJKVWJxhOlS0Yb8BttZw8DikGS76DcY4aqw/FZsMS7aGJomddJSd25WtIc+/6ePH8rxUCEczynpuhQCs/BG/PDi3bVRM7OOsZoZ9UO27iA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=cDWq5EZN; arc=none smtp.client-ip=195.154.113.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1762606907; c=relaxed/simple;
+	bh=eDlMDq1XI0QJzQ19YXeN2G+kTl1DYm/+RWUFzDzitbg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=E3a/g84WrDfVqXj2qo8WFG0HXRXiuW03jmztKmXWt8ZCBoiM+tGbjWOZkUXuMl3zBuEoJyIO///uGY3fK+crlSI0sesmdX2l0+BGCqALW8TSeVq/GLbi4uD2JqV3zi7zaqfybvi3ycgO8xkLbInsyZSAbihQFpvsf2Ko69qSxpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=dV9AIGO5; arc=none smtp.client-ip=80.12.242.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="cDWq5EZN"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=to2ffKjQT3P3MwBgednnfOCK140+zX9tIALsoHeMAbU=; b=cDWq5EZN2304uIsRG15seKn7jc
-	8c4eO24JcZwAXyXW8HjrkgnDBqCvoME1flCK/uvSskYOXrEk9WEFizKXgzPI4ZxGLWnTSzkCFtVh+
-	ha6+874xT6F7dbERZeye47Yy70N4dvhaVxzgF2PZNJYDBIhVPIlwPnHMV0UZ7tJ81wQl40RcFPv1B
-	hJTknGJ/gAh9jFtRJsEhuGUUzoBbAQgVK94mtxGTqdbppsLSEC1E0a1lJmogvdKF+tlGy93qTAUuD
-	yiUGyNCul62N3ePUAKm3omphE9n1bC4HBS7Sjgyeq/p/VYCPmIecnDKelrKw/XDjXj/PzftruGgIM
-	DzZ0Os9g==;
-Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
-	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vHgnx-0000000DxOH-1KAZ;
-	Sat, 08 Nov 2025 12:08:25 +0100
-Date: Sat, 8 Nov 2025 12:08:24 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Alex Elder <elder@riscstar.com>
-Cc: dlan@gentoo.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-	bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
-	mani@kernel.org, ziyao@disroot.org, johannes@erdfelt.com,
-	mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
-	shradha.t@samsung.com, inochiama@gmail.com, pjw@kernel.org,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, christian.bruel@foss.st.com,
-	thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com,
-	guodong@riscstar.com, devicetree@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 0/7] Introduce SpacemiT K1 PCIe phy and host controller
-Message-ID: <aQ8kqIljwGZfkF8M@aurel32.net>
-Mail-Followup-To: Alex Elder <elder@riscstar.com>, dlan@gentoo.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	vkoul@kernel.org, kishon@kernel.org, bhelgaas@google.com,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	ziyao@disroot.org, johannes@erdfelt.com,
-	mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
-	shradha.t@samsung.com, inochiama@gmail.com, pjw@kernel.org,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, christian.bruel@foss.st.com,
-	thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com,
-	guodong@riscstar.com, devicetree@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-References: <20251107191557.1827677-1-elder@riscstar.com>
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="dV9AIGO5"
+Received: from [IPV6:2a01:cb10:785:b00:8347:f260:7456:7662]
+ ([IPv6:2a01:cb10:785:b00:8347:f260:7456:7662])
+	by smtp.orange.fr with ESMTPA
+	id HiYOvhfDuznX9HiYOvZaHP; Sat, 08 Nov 2025 14:00:33 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1762606833;
+	bh=aRGRFm8nQr5WAaRrinpk9KWjIa54yU+4iQS0RwjiVHw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=dV9AIGO5VvC+elQurmqsLtlcfKPFa9KJWs8T1UvJRBZI65JlxwrheFUYsvpgm+6ts
+	 1hHHejsRTLicDpc+yCdmFZ4BG0PM6zrEZT4MCL5zjANBryR2NUeCcGQ/v/zFbq2kTQ
+	 nSnB/51xKINEALpZ9sHEvOJatXQlMyqLoKMI/2TH63GNAW83WRTEA8sDY+JgTZGcEu
+	 uX14hXVl/IMt+Umpij8cvguLgma1IcTPbhUSU+K2m9/BdkGXzP8fP3lSjDd08ImQTQ
+	 Aoa3r8nYM23m/XdHeVqP3R05IsLFaV2dKJYIo0kQ0bxShUNL9CY5nBc03QDNgEJkuw
+	 wX6SPDTFC2dyQ==
+X-ME-Helo: [IPV6:2a01:cb10:785:b00:8347:f260:7456:7662]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sat, 08 Nov 2025 14:00:33 +0100
+X-ME-IP: 2a01:cb10:785:b00:8347:f260:7456:7662
+Message-ID: <120b2f62-25e6-4ea3-9907-230080c61f70@wanadoo.fr>
+Date: Sat, 8 Nov 2025 14:00:26 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251107191557.1827677-1-elder@riscstar.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/7] PCI: spacemit: Add SpacemiT PCIe host driver
+To: Alex Elder <elder@riscstar.com>, lpieralisi@kernel.org,
+ kwilczynski@kernel.org, mani@kernel.org, robh@kernel.org, bhelgaas@google.com
+Cc: dlan@gentoo.org, aurelien@aurel32.net, johannes@erdfelt.com,
+ p.zabel@pengutronix.de, christian.bruel@foss.st.com,
+ thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com,
+ mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
+ shradha.t@samsung.com, inochiama@gmail.com, guodong@riscstar.com,
+ linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20251107191557.1827677-1-elder@riscstar.com>
+ <20251107191557.1827677-6-elder@riscstar.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Content-Language: en-US, fr-FR
+In-Reply-To: <20251107191557.1827677-6-elder@riscstar.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Alex,
-
-Thanks for this new version.
-
-On 2025-11-07 13:15, Alex Elder wrote:
-> This series introduces a PHY driver and a PCIe driver to support PCIe
-> on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
-> Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
-> PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
-> one PCIe lane, and the other two ports each have two lanes.  All PCIe
-> ports operate at 5 GT/second.
+Le 07/11/2025 à 20:15, Alex Elder a écrit :
+> Introduce a driver for the PCIe host controller found in the SpacemiT
+> K1 SoC.  The hardware is derived from the Synopsys DesignWare PCIe IP.
+> The driver supports three PCIe ports that operate at PCIe gen2 transfer
+> rates (5 GT/sec).  The first port uses a combo PHY, which may be
+> configured for use for USB 3 instead.
 > 
-> The PCIe PHYs must be configured using a value that can only be
-> determined using the combo PHY, operating in PCIe mode.  To allow
-> that PHY to be used for USB, the needed calibration step is performed
-> by the PHY driver automatically at probe time.  Once this step is done,
-> the PHY can be used for either PCIe or USB.
-> 
-> This initial version of the driver supports 32 MSIs, and does not
-> support PCI INTx interrupts.  The hardware does not support MSI-X.
-> 
-> Version 5 of this series incorporates suggestions made during the
-> review of version 4.  Specific highlights are detailed below.
-> 
-> Note:
-> Aurelien Jarno and Johannes Erdfelt have reported seeing ASPM errors
-> accessing NVMe drives when using earlier versions of this series.
-> The Kconfig files they used were very different from the RISC-V
-> default configuration.
-> 
-> Aurelien has since reported the errors do not occur when using
-> defconfig.  Johannes has not reported back about this.
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
 
-Unfortunately, while it is true with v4, this is not the case with v5 
-anymore :(
+...
 
-Fundamentally in the generic designware driver, post_init (which is used 
-to disable L1 support on the controller side) is called after starting 
-the link. The comparison of the capabilities is done in 
-pcie_aspm_cap_init when the link is up, which happens a tiny bit after 
-starting it.
+> +static int k1_pcie_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct k1_pcie *k1;
+> +	int ret;
+> +
+> +	k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
+> +	if (!k1)
+> +		return -ENOMEM;
+> +
+> +	k1->pmu = syscon_regmap_lookup_by_phandle_args(dev_of_node(dev),
+> +						       SYSCON_APMU, 1,
+> +						       &k1->pmu_off);
+> +	if (IS_ERR(k1->pmu))
+> +		return dev_err_probe(dev, PTR_ERR(k1->pmu),
+> +				     "failed to lookup PMU registers\n");
+> +
+> +	k1->link = devm_platform_ioremap_resource_byname(pdev, "link");
+> +	if (!k1->link)
 
-In practice with v4, the link is started, ASPM L1 is disabled and the 
-link becomes up. With v5, the move of the code getting and enabling the 
-regulator changed the timing, and ASPM L1 is now disabled on the 
-controller 2-3 ms after the link is up, which is too late.
+if (IS_ERR(k1->link)) ?
 
-I have added a call to pci_info to display the moment where ASPM is 
-disabled. This is without the regulator change:
+> +		return dev_err_probe(dev, -ENOMEM,
+> +				     "failed to map \"link\" registers\n");
 
-[    0.386730] spacemit-k1-pcie ca400000.pcie: host bridge /soc/pcie-bus/pcie@ca400000 ranges:
-[    0.386970] spacemit-k1-pcie ca800000.pcie: host bridge /soc/pcie-bus/pcie@ca800000 ranges:
-[    0.387017] spacemit-k1-pcie ca800000.pcie:       IO 0x00b7002000..0x00b7101fff -> 0x0000000000
-[    0.387047] spacemit-k1-pcie ca800000.pcie:      MEM 0x00a0000000..0x00afffffff -> 0x00a0000000
-[    0.387062] spacemit-k1-pcie ca800000.pcie:      MEM 0x00b0000000..0x00b6ffffff -> 0x00b0000000
-[    0.400109] spacemit-k1-pcie ca400000.pcie:       IO 0x009f002000..0x009f101fff -> 0x0000000000
-[    0.490101] spacemit-k1-pcie ca800000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 4G
-[    0.494195] spacemit-k1-pcie ca400000.pcie:      MEM 0x0090000000..0x009effffff -> 0x0090000000
-[    0.850344] spacemit-k1-pcie ca400000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 4G
-[    0.950133] spacemit-k1-pcie ca400000.pcie: PCIe Gen.1 x2 link up
-[    1.129988] spacemit-k1-pcie ca400000.pcie: PCI host bridge to bus 0000:00
-[    1.335482] pci_bus 0000:00: root bus resource [bus 00-ff]
-[    1.340946] pci_bus 0000:00: root bus resource [io  0x100000-0x1fffff] (bus address [0x0000-0xfffff])
-[    1.350181] pci_bus 0000:00: root bus resource [mem 0x90000000-0x9effffff]
-[    1.358734] pci_bus 0000:00: resource 4 [io  0x100000-0x1fffff]
-[    1.362033] pci_bus 0000:00: resource 5 [mem 0x90000000-0x9effffff]
-[    1.368289] spacemit-k1-pcie ca400000.pcie: pcie_aspm_override_default_link_state
-[    1.375967] pci 0000:00:00.0: [1e5d:3003] type 01 class 0x060400 PCIe Root Port
-[    1.383043] pci 0000:00:00.0: BAR 0 [mem 0x00000000-0x000fffff]
-[    1.388927] pci 0000:00:00.0: BAR 1 [mem 0x00000000-0x000fffff]
-[    1.394826] pci 0000:00:00.0: PCI bridge to [bus 01-ff]
-[    1.400061] pci 0000:00:00.0:   bridge window [io  0x100000-0x100fff]
-[    1.406460] pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff]
-[    1.413245] pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff 64bit pref]
-[    1.421012] pci 0000:00:00.0: supports D1
-[    1.424948] pci 0000:00:00.0: PME# supported from D0 D1 D3hot D3cold
-[    1.432718] pci 0000:01:00.0: [1987:5015] type 00 class 0x010802 PCIe Endpoint
-[    1.438698] pci 0000:01:00.0: BAR 0 [mem 0x00000000-0x00003fff 64bit]
-[    1.445426] pci 0000:01:00.0: 4.000 Gb/s available PCIe bandwidth, limited by 2.5 GT/s PCIe x2 link at 0000:00:00.0 (capable of 31.504 Gb/s with 8.0 GT/s PCIe x4 link)
-[    1.464897] pci_bus 0000:01: busn_res: [bus 01-ff] end is updated to 01
+Message with -ENOMEM are ignored, so a direct return -ENOMEM is less 
+verbose and will bhave the same. See [1].
 
-And this is with the regulator change:
+But in this case, I think it should be PTR_ERR(k1->link).
 
-[    0.410796] spacemit-k1-pcie ca400000.pcie: host bridge /soc/pcie-bus/pcie@ca400000 ranges:
-[    0.410836] spacemit-k1-pcie ca800000.pcie: host bridge /soc/pcie-bus/pcie@ca800000 ranges:
-[    0.410889] spacemit-k1-pcie ca800000.pcie:       IO 0x00b7002000..0x00b7101fff -> 0x0000000000
-[    0.410917] spacemit-k1-pcie ca800000.pcie:      MEM 0x00a0000000..0x00afffffff -> 0x00a0000000
-[    0.410932] spacemit-k1-pcie ca800000.pcie:      MEM 0x00b0000000..0x00b6ffffff -> 0x00b0000000
-[    0.424651] spacemit-k1-pcie ca400000.pcie:       IO 0x009f002000..0x009f101fff -> 0x0000000000
-[    0.436446] spacemit-k1-pcie ca400000.pcie:      MEM 0x0090000000..0x009effffff -> 0x0090000000
-[    0.513897] spacemit-k1-pcie ca800000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 4G
-[    0.559595] spacemit-k1-pcie ca400000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 4G
-[    0.839412] spacemit-k1-pcie ca400000.pcie: PCIe Gen.1 x2 link up
-[    0.847078] spacemit-k1-pcie ca400000.pcie: PCI host bridge to bus 0000:00
-[    0.857600] pci_bus 0000:00: root bus resource [bus 00-ff]
-[    0.868702] pci_bus 0000:00: root bus resource [io  0x100000-0x1fffff] (bus address [0x0000-0xfffff])
-[    1.146409] pci_bus 0000:00: root bus resource [mem 0x90000000-0x9effffff]
-[    1.373742] pci 0000:00:00.0: [1e5d:3003] type 01 class 0x060400 PCIe Root Port
-[    1.380963] pci 0000:00:00.0: BAR 0 [mem 0x00000000-0x000fffff]
-[    1.386883] pci 0000:00:00.0: BAR 1 [mem 0x00000000-0x000fffff]
-[    1.392808] pci 0000:00:00.0: PCI bridge to [bus 01-ff]
-[    1.395394] pci 0000:00:00.0:   bridge window [io  0x100000-0x100fff]
-[    1.401811] pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff]
-[    1.408583] pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff 64bit pref]
-[    1.416354] pci 0000:00:00.0: supports D1
-[    1.420294] pci 0000:00:00.0: PME# supported from D0 D1 D3hot D3cold
-[    1.428220] pci 0000:01:00.0: [1987:5015] type 00 class 0x010802 PCIe Endpoint
-[    1.434034] pci 0000:01:00.0: BAR 0 [mem 0x00000000-0x00003fff 64bit]
-[    1.440772] pci 0000:01:00.0: 4.000 Gb/s available PCIe bandwidth, limited by 2.5 GT/s PCIe x2 link at 0000:00:00.0 (capable of 31.504 Gb/s with 8.0 GT/s PCIe x4 link)
-[    1.463390] pci 0000:01:00.0: pcie_aspm_override_default_link_state
-[    1.467000] pci 0000:01:00.0: ASPM: default states L1
-[    1.472093] pci_bus 0000:01: busn_res: [bus 01-ff] end is updated to 01
+[1]: 
+https://elixir.bootlin.com/linux/v6.18-rc2/source/drivers/base/core.c#L5015
 
-Note how the line pcie_aspm_override_default_link_state arrives too 
-late.
+> +
+> +	k1->pci.dev = dev;
+> +	k1->pci.ops = &k1_pcie_ops;
+> +	dw_pcie_cap_set(&k1->pci, REQ_RES);
+> +
+> +	k1->pci.pp.ops = &k1_pcie_host_ops;
+> +
+> +	/* Hold the PHY in reset until we start the link */
+> +	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
+> +			APP_HOLD_PHY_RST);
+> +
+> +	ret = devm_regulator_get_enable(dev, "vpcie3v3");
+> +	if (ret)
+> +		return dev_err_probe(dev, ret,
+> +				     "failed to get \"vpcie3v3\" supply\n");
+> +
+> +	pm_runtime_set_active(dev);
+> +	pm_runtime_no_callbacks(dev);
+> +	devm_pm_runtime_enable(dev);
+> +
+> +	platform_set_drvdata(pdev, k1);
+> +
+> +	ret = k1_pcie_parse_port(k1);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to parse root port\n");
+> +
+> +	ret = dw_pcie_host_init(&k1->pci.pp);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to initialize host\n");
+> +
+> +	return 0;
+> +}
 
-Regards
-Aurelien
+...
 
--- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+> +static const struct of_device_id k1_pcie_of_match_table[] = {
+> +	{ .compatible = "spacemit,k1-pcie", },
+> +	{ },
+
+Unneeded trainling comma after a terminator.
+
+> +};
+> +
+> +static struct platform_driver k1_pcie_driver = {
+> +	.probe	= k1_pcie_probe,
+> +	.remove	= k1_pcie_remove,
+> +	.driver = {
+> +		.name			= "spacemit-k1-pcie",
+> +		.of_match_table		= k1_pcie_of_match_table,
+> +		.probe_type		= PROBE_PREFER_ASYNCHRONOUS,
+> +	},
+> +};
+> +module_platform_driver(k1_pcie_driver);
+
