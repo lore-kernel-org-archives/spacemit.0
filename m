@@ -1,43 +1,49 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A54913C3F2;
-	Fri,  7 Nov 2025 22:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA13CF9D9
+	for <spacemit@lists.linux.dev>; Sat,  8 Nov 2025 01:30:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762555538; cv=none; b=V9PGZ3Wthxq1S0k9TsljeCBllkZMEkdTTgbsSduqp5xPvghkBm9vq4U3nayO1+lqtOIawgpdjQJwfO6OiZwV1tbofzUMH12fk6d79yAFItcfA+LxKmjWXUguKLBq8lw1Y2vf/HtetjFdxkFmbrgGjcKJ0U24tEi1YkXl4szj7+Y=
+	t=1762565433; cv=none; b=c4t46oIOlQpD/Cj0Oy/8TlB9Yqt+OY0v6AuhS1MPo5Kf8SMxbfBQGTrhSUrwFKkbIVuWTEe3Ng6LZBJABn8xsJY2gH8+1yKO1gok+6n7f/ePdiVqTU39hc29pSSVYgED33zkzawqVrCn3sU7FW3T3njKPHlIjiOYymEPRiXbNjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762555538; c=relaxed/simple;
-	bh=4NhVZb6Y4xV1OI1gCriwzDPSSVGfwl3eziXRpOpYORI=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=EboFVRBSvqibKyyYclYpWrOAFbQ47qrY9qicZsYqv7XiQUb8UcqKlzVZS7V7Ym+H89JSBP92gPMUKFjetHVce7jGR5IqUrc13FOdEsSML07IevFPEi7tjlhlHZ4wh5Lw1f0mJWO0g26Ljcl/nmxPBngMCE6+lU2JEmIgTJZlk+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RsG3/6Xc; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RsG3/6Xc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E40C4CEF7;
-	Fri,  7 Nov 2025 22:45:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762555537;
-	bh=4NhVZb6Y4xV1OI1gCriwzDPSSVGfwl3eziXRpOpYORI=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=RsG3/6Xcu/5NyljkojM4Jo3lZjmedJemXUOrIsmnt75yqLmg3Y3RpBmaN4tjH393B
-	 PSYkR3VUZbfDJrB6AKnc9/ZUVIO3PYrM9l8FNa1xid1azScfY9hkdP4GlG6vidV+vA
-	 HzSmiTJ+jT8zTJobnLwJmbAwhha1L01GMMsOX2CVqeQq+hXgF9LVRakDHCmwSKC/hh
-	 qxX/+2eE/sPlUQsL/GOVqdG3AtyukzLyiTE/FI2Sj0qOFJHPsxwixPbuc6JHZ8amcn
-	 z8Gu04JNUMowQeX513y/AE1FCL4bgJL5bQDJ3wBmZpaZMLkltPOpJid/jtERIuA69V
-	 AehlLdI9tfGCg==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Yixun Lan <dlan@gentoo.org>, 
- Goko Mell <goku.sonxin626@gmail.com>
-Cc: linux-sound@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-In-Reply-To: <20251106-spacemit-i2s-fix-v1-1-ee2cedcdda23@gmail.com>
-References: <20251106-spacemit-i2s-fix-v1-1-ee2cedcdda23@gmail.com>
-Subject: Re: [PATCH] ASoC: spacemit: fix incorrect error check for sspa
- clock
-Message-Id: <176255553448.22450.112199071517900868.b4-ty@kernel.org>
-Date: Fri, 07 Nov 2025 22:45:34 +0000
+	s=arc-20240116; t=1762565433; c=relaxed/simple;
+	bh=aKkUT4Q8mS/5aBgMAAFiY20Lm/MC5KBt5eQW0Zxv2Uc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GNcHwROQWBMK1pvbgruHOhFkEb3wQBC4sJcw2MkaHWhka+QUzneiLqjsRDP2xk+L4WS30z0L8K6WzkwMw7R5lJVgXcyb7wiuP2ePlYBaOfB/+2/RQg64WviMCjJMk1dKHjPfMxWvN3toUe4kjT6JPapV9T7KqQ8bmB8dMaptLvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from ofsar (unknown [116.232.48.119])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 38CCD340EBA;
+	Sat, 08 Nov 2025 01:29:58 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Paul Walmsley <pjw@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: Re: [PATCH v4 0/2] riscv: dts: spacemit: add initial support for MusePi Pro
+Date: Sat,  8 Nov 2025 09:29:45 +0800
+Message-ID: <176243100596.329363.7295947572215829421.b4-ty@gentoo.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251023-k1-musepi-pro-dts-v4-0-01836303e10f@linux.spacemit.com>
+References: <20251023-k1-musepi-pro-dts-v4-0-01836303e10f@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,40 +51,30 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-a6db3
+Content-Transfer-Encoding: 8bit
 
-On Thu, 06 Nov 2025 00:03:16 +0800, Goko Mell wrote:
-> Fix a wrong IS_ERR() check in spacemit_i2s_probe() where `clk` was used
-> instead of `i2s->sspa_clk`.
+
+On Thu, 23 Oct 2025 15:28:28 +0800, Troy Mitchell wrote:
+> This patchset adds initial device tree support for the MusePi Pro board.
 > 
+> Muse Pi Pro [1] is a single-board computer integrating a high-performance
+> RISC-V 8-core processor, storage, I/O and expansion capabilities into
+> a credit card-sized 1.8-inch board.
 > 
+> Link:
+> https://developer.spacemit.com/documentation?token=YJtdwnvvViPVcmkoPDpcvwfVnrh&type=pdf
+> [1]
+> 
+> [...]
 
-Applied to
+Applied, thanks!
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+[1/2] dt-bindings: riscv: spacemit: add MusePi Pro board
+      https://github.com/spacemit-com/linux/commit/2cc22890635ded33856e2761b780688f54a49393
+[2/2] riscv: dts: spacemit: add MusePi Pro board device tree
+      https://github.com/spacemit-com/linux/commit/0ee59934662dfb89b43a8392e64ac4880c2fca88
 
-Thanks!
-
-[1/1] ASoC: spacemit: fix incorrect error check for sspa clock
-      commit: e32c402533cc68abe20fcf3246b9ff53e1f96021
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+-- 
+Yixun Lan
 
