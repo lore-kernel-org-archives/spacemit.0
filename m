@@ -1,47 +1,49 @@
 Received: from tiger.tulip.relay.mailchannels.net (tiger.tulip.relay.mailchannels.net [23.83.218.248])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6EE526E161
-	for <spacemit@lists.linux.dev>; Sun,  9 Nov 2025 22:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1AC221540
+	for <spacemit@lists.linux.dev>; Sun,  9 Nov 2025 22:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.248
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762727401; cv=pass; b=UOXT35BTkAiAvFmfpzmlE9puE3n+6zpPuwVw9UDIUI1K4JyC7IdxGm61NfPKy+iXmS5htf4vVyrzHg2RKOKSc0hv5zc1lgOZFga59XljYX7XWbEjPUOQB1CZ5OAyYo4wqsin5CsNZoy0uHV+ajyrFmdgM1p9qdr0/h2O8xAVjHg=
+	t=1762727420; cv=pass; b=DiN9Lf/WA6OPfJXkSwb9qu9wLc8e4gICPJgKQkHp01cWEoeIX5GC2OaqywuUJOJILbKglEQsEB8yemfxUFBB37vutWeEwYlwbnM9ilPMZRwtDbl8j/sx13jmlbtgiK1+9zWW0eS8YJfNSGLA0BHWfSmxBmljOvuudT8oPc2CJZA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762727401; c=relaxed/simple;
-	bh=3fIQqNPpVhskP+4qQXQHPAaJSg6xZ42pJEExd0PVtlQ=;
-	h=From:To:Cc:Subject:Message-ID:MIME-Version:Date; b=cx6hy5/gdMu/LyZaRAoxH9uVDNS+l5+j51PtVHCFJqDB3oEBonBikTzsIb1zbl70WYkh39smxOYyj/syvhevIBVXkuer2lUXMw0sJyIoy0B/cigDgAm9s3pWQOOY1A12YQU3Y+u2Kl3RZ84EIo3mhKumoT8DpO26ig3S0vUt2zs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=L2yz3yRd; arc=pass smtp.client-ip=23.83.218.248
+	s=arc-20240116; t=1762727420; c=relaxed/simple;
+	bh=CPAIBprsq/IZeMcOp0Iqm+vQf75yS7rSnczSTarh0+Y=;
+	h=From:To:Cc:Subject:Message-ID:In-Reply-To:References:MIME-Version:
+	 Date; b=uTwYRsSha6JvPooxtM+jGKf2RXHJD2WRf9/Y/bXFQpJzImiHh1L+sNKrwpj3kVYVoF3hN5xJINCV9Ua906xodV5RzZJ6W0oWVWSwZrwYG2Ru9etmZZYNAYZKHtRewk9qsW7UQ0RliAzFz0d/ThANLHn+fsCXrdPtjrCeJKgkpkM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=Ka7aCoAK; arc=pass smtp.client-ip=23.83.218.248
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="L2yz3yRd"
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="Ka7aCoAK"
 X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 94238220ACA;
-	Sun, 09 Nov 2025 22:29:52 +0000 (UTC)
-Received: from fr-int-smtpout22.hostinger.io (100-124-9-98.trex-nlb.outbound.svc.cluster.local [100.124.9.98])
+	by relay.mailchannels.net (Postfix) with ESMTP id DC9AF440F43;
+	Sun, 09 Nov 2025 22:30:16 +0000 (UTC)
+Received: from fr-int-smtpout22.hostinger.io (100-125-88-217.trex-nlb.outbound.svc.cluster.local [100.125.88.217])
 	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id E430D220AEA;
-	Sun, 09 Nov 2025 22:29:50 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1762727392; a=rsa-sha256;
+	by relay.mailchannels.net (Postfix) with ESMTPA id 6998044138B;
+	Sun, 09 Nov 2025 22:30:14 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1762727416; a=rsa-sha256;
 	cv=none;
-	b=2BXi7ho1MadCofxJQhqm1rtjn3Bv3uq8JodsWvUrYp6C+XGaDaZ5QUIA2nA1J0KxnMT2x0
-	nt1I4fyl091TPCkL1FwL9OkPgwmlYwae/YBC9bh7EgPyJHLg89i8U1aAF7tJvskJXLbPkv
-	tsiff1zLAIrxVKl2sMTmy5nCX1W6XykkNFZWg27AfMQKho2SyqblN9guc2YQj0TnbeFbkd
-	ToezihZMHLmYoE/hFpdt3ood97lDdn932J/D8MSfe1cnnTngBZvEswR23hluskzdKx/Si8
-	CW75tZZnHVk8OCebx2DeDBCRTxObtWo8EhOg7KBdFs3y4Zjv0b/hzvV4G+7hbQ==
+	b=QxfFoUO9hAxGp2BxD+Ciop9r+2hDlUEmCCL8pyRNqi4SoLn66FMr4S4vr7iIQqACMLmSxM
+	y7bkyOKdrZ5L/z9Mv2velsoknedSpfDHlsseHGB1hP0qW8e1ZlJZyvDQKmb6JTLK4XBbmj
+	Lc2RpkMPWVGCXQmuEMSBOtedCQcSMF3QRV+dCjIwyTkMixjZDQjvRU1CnNCgUvYBndFEvp
+	4Lgk5kIRtkp4MSkznkRqJn4VCJKlfYM8Fn9P3cpAXO+00hnCB5DxBJ2sA48Xa+VqHboJ1P
+	VBpzAH5T+OG8H99npfYGxV/ScMJUneURK2BirNJUj1NDG045Hcgm+vlLX+Z+4A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mailchannels.net;
-	s=arc-2022; t=1762727392;
+	s=arc-2022; t=1762727416;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
-	bh=Ru34N4selYo9viAPMWabFFJS3gW6c5Y2PpEo3z7X0LY=;
-	b=mO31EXNyQYnC5FllGtx0tdFT/QMAZ/b26Scrv+2LuH3tnQEDhonKzCBjexwLLg0gvlRywE
-	G1dSN9knHrvmlRFzqlYbbyEP60QzhMmhF9W2wv8hFqz+QqvUvBJ2Ju62l0x7XXjdvXeidA
-	MiZitnV6Iq5sOQiyIKuZT2kPoL6w8NCKVygCmU5nWCPBYmnvuVWnGvMVqJr7GQF7lnudOa
-	KtgTiHagGqxtbuWbcXPl+UUvBq5RQ5HfZST/Zf7Skm2kuImmtqiJ3TbElgu2xT+Ji4sRzb
-	CauoeZFr950KZdDeImP6nKKqClTdxoxY/hK4U8BR4IqV3iuFjZPufh085ZAqyg==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=bYTguI9fwtbRna746WVvfaBIUA/5jCg9JsnkhV14j6g=;
+	b=p2AXvFzmESiLvXPU8SzX3c9Mt0j56vEG3iQKyI6GTKtFo8+eyz9nCpUpo9uV/pgdLlgmnl
+	21fubFsQOgY2Ucjh30Uk6U7TdFuu40OPHA32VC2nJOGWD/eCns7iJx0iJ4QYfQtjlWLqT6
+	WoB32M7OkKzBiePb8gAKwnCN7Ry84qOHJfQRKSSr1qXdwjOLMZ9+hSn1mVRK63bg7XlTdc
+	8wpMD9bWTkrS111iI4qJ9uYQdoji9a8csJoyQfiuMv7pC+f8tB5a5Ykqs/a0nPExI9soPu
+	8vkMzmdL0Bf4H67ifcr+VRkcw6fkSq5Ri/kGBtrwmmL8tN4E4nkt9ZZg5aChYg==
 ARC-Authentication-Results: i=1;
 	rspamd-768b565cdb-9nvpf;
 	auth=pass smtp.auth=hostingeremail
@@ -51,41 +53,49 @@ X-MC-Relay: Neutral
 X-MailChannels-SenderId:
  hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
 X-MailChannels-Auth-Id: hostingeremail
-X-Grain-Abiding: 0578b90f707261fd_1762727392441_4163200070
-X-MC-Loop-Signature: 1762727392441:1815207509
-X-MC-Ingress-Time: 1762727392441
+X-Whistle-Ski: 66dca66f3ecacaaa_1762727416803_1264572698
+X-MC-Loop-Signature: 1762727416803:844494980
+X-MC-Ingress-Time: 1762727416803
 Received: from fr-int-smtpout22.hostinger.io (fr-int-smtpout22.hostinger.io
  [148.222.54.26])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.124.9.98 (trex/7.1.3);
-	Sun, 09 Nov 2025 22:29:52 +0000
+	by 100.125.88.217 (trex/7.1.3);
+	Sun, 09 Nov 2025 22:30:16 +0000
 Received: from localhost.localdomain (unknown [IPv6:2001:861:4450:d360:6854:e5c6:92e9:8517])
 	(Authenticated sender: michael.opdenacker@rootcommit.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4d4SCc2rF0zySw;
-	Sun,  9 Nov 2025 22:29:48 +0000 (UTC)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4d4SD425VQzyTZ;
+	Sun,  9 Nov 2025 22:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
-	s=hostingermail-a; t=1762727389;
+	s=hostingermail-a; t=1762727412;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Ru34N4selYo9viAPMWabFFJS3gW6c5Y2PpEo3z7X0LY=;
-	b=L2yz3yRdutYdl747a48xErxuIDCzBxa6BVTHZSxf+11K7xDq4dVyKdGjdAg6CBrv+p3zR+
-	fp0kMWlfPdClQaXzT00gpV8Dydp5Rn+mrcLJS3eBlvEMVi8pOfTsAsUrtokgQ9zl9mkwsB
-	O1Mw9Nv10U8hbeLoNcammPTGXCyXVmj3YG6m/FNovBw1iCzKvd02svYQJUaHU5VUHEmhQR
-	cz1OYQ7exe+5q1kyVzVE/VA9L9+uRavv9cm+73lf5wn0wBD1/aaKUG0uJBK6ryGH6o4zRs
-	0QCyxrGG7IZnP4Un++2rCBW3d/geYlBB/B7b+M5wm6hGrdS8wZPYyq7V+aITrw==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bYTguI9fwtbRna746WVvfaBIUA/5jCg9JsnkhV14j6g=;
+	b=Ka7aCoAKLCbqaVlv34WEfU8W1w7yEhMXfrqq2W32KWeny2aiuKTfQvIwghioUGEGN1iG7I
+	bxcMjmP/Y7IqPKc2tCvds7+A50DoMo9JG/zcYWQ3PPLYAUt5805HU4NdkGlLji5aFdXHBY
+	vG6eLinLjcxRL6I8oxtJPujAs+dIKwE6dyF3YPwKEmOJj41s3zaYFQvmDa/VlD4eNIq4Vc
+	BsHBJoBucMZDV0l90YFzh1GdukiobC/tbcuPakKshtXNnKhbBX1e+EJWQA9dtN0ilqiv9D
+	vn9eBKusecSVIb+WrT3EW0tnJZ0FS/qK+dd4AgGAZsBkZc5/G6LkjZMRLYxExw==
 From: michael.opdenacker@rootcommit.com
-To: Paul Walmsley <pjw@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
 	Yixun Lan <dlan@gentoo.org>
 Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: [PATCH 0/4] riscv: spacemit: initial support for OrangePi R2S
-Message-ID: <20251109222858.3085488-1-michael.opdenacker@rootcommit.com>
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 4/4] riscv: dts: spacemit: add eMMC to OrangePi R2S
+Message-ID: <20251109222858.3085488-5-michael.opdenacker@rootcommit.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251109222858.3085488-1-michael.opdenacker@rootcommit.com>
+References: <20251109222858.3085488-1-michael.opdenacker@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -93,42 +103,60 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Date: Sun,  9 Nov 2025 22:29:48 +0000 (UTC)
-X-CM-Envelope: MS4xfMokmvdpkaf6V5fmCJDeJDSWB/QJ89cdTklaMvFxtMuqzJBVDzPwOTPHFkcHmn4iE3s6pd95IPyTYfLFRLbaGDfbRt/OUZ6BDd4PckdyRHpdKMyr3eFw KvgAdySSKLC9YGG9asZmO8dUx8m6G6ndm9+gODzx1AnLPfs919gJRwJGg4ML8FcoAhh2EHss1KG2jlyOXTFjcPpnIrL9cC1kpfYQ6isX1pr8T4AMXfplyIOH Slnm5/Ji/o3IKKD+XAbD6pMvScIW+9VdqBpalLfjU+cuhzMRgYH6QVI3W3BEuAZMgI3/rrnxsd8UEGrp8wcn5Bm4aUqT1r9QhVrWvWUSHJX5pHWVq4xCrhtw oE3Jve/sJ9+wA314s7Z+Vz/EfV1uVtbs6xC1HyJ947ox4eYM2dKjpx7YHuJ9f06nnQKoqNPP+9Y9N9xBgZoK3Rug44V99IDYbz2TU8r9kKdbn5NfNHTpBlDl ou4n00tmzghXNbxjivezZHzLkj/P1DCeR6514/apt2q5w7uvQgWIoE3YqmI=
-X-CM-Analysis: v=2.4 cv=NuiDcNdJ c=1 sm=1 tr=0 ts=691115dd a=9hvhlO9olek7/vweJUpOAg==:617 a=xqWC_Br6kY4A:10 a=5dAzR5NRAAAA:8 a=lv0vYI88AAAA:8 a=NEAV23lmAAAA:8 a=d70CFdQeAAAA:8 a=RGFltW2CodX66KyrsG0A:9 a=9STjDIb-X-UA:10 a=ZKAZAlVgJm32z6MX8p4a:22 a=9qqun4PRrEabIEPCFt1_:22 a=NcxpMcIZDGm-g932nG_k:22
+Date: Sun,  9 Nov 2025 22:30:12 +0000 (UTC)
+X-CM-Envelope: MS4xfD5Vag569iRn3Dn/qa/KjZSC9Jo7uCZs5mTseVkPlVTkngz3CQXvKqXlsYn5pjKCzZCwPJoExbN+YU7sMPia1EQEXoNVddWBTGip162qrvBGcKcvY8nb aeWBNcfwL6rr6WlyFJCI0w42ltN1BrWeFHPdtPPsBZWm0zRVcvgnQdjLQAPiN+CmnY59/MxuiagguNUgJ8Zon8qxlIsc30lifVfE6ipgVL3URwpp31CvwDPf BK3R+cqE9x/DEELKPxNn+H7Yyc8+Kq0lVm93jphferuQcAKDJMXNsEykyW9XF/xq9zg5cF3MQQfzxznk4p/jYM2pgJCn8c5e0T3368hwwLjtPx25ZFC4tCX4 j1BweXHSfhTK4CPthi6nAt8JvV0YhwnW7AwGDvZJJaCFt/IaP/C4amt4iTFo1ITrWcoEVYOkGvPWh9GwupJpo7zKmAsOMmsHWtXZqyRxYO1fxfWl4jcq/R8h RCt15ilAzQbbDSZFQBgX1fEGi/qxGZn4tbvqSapmBqCTllmJdtuZMTxCm9QFjz+zpV7+e0y5EemspkPzZHZU8KCV8AL09Wy/0QfQlnrZN+voVxTN+UPdbqj1 YppxSA6mIZccFErOUfN7savFpCoswc5J872XJOd4lIn447A7H1+019IyNewnAC+uksR6gNT6R+HHx0TJ9+4HcCCn0voJqdoKbH3nMcHlp53eQg==
+X-CM-Analysis: v=2.4 cv=Lflu6Sfi c=1 sm=1 tr=0 ts=691115f4 a=9hvhlO9olek7/vweJUpOAg==:617 a=xqWC_Br6kY4A:10 a=d70CFdQeAAAA:8 a=-18oh36_rWcDSRoscU8A:9 a=6GXZlH8O99NGPdPthH_S:22 a=NcxpMcIZDGm-g932nG_k:22
 X-AuthUser: michael.opdenacker@rootcommit.com
 
 From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 
-This adds initial support for the OrangePi R2S board [1], which
-is marketed as using the Ky X1 SoC but is in fact identical to
-the SpacemiT K1 SoC [2].
+The OrangePi R2S board includes a 8 GB eMMC chip for storage.
 
-What makes this board attractive is its 4 Ethernet ports
-(2 x Gigagit RGMII with an external Motorcomm YT8531C PHY,
-and 2 x 2.5 Gigabit Ethernet with RTL8125BG on an internal PCI Express bus),
-its small form factor and its attractive pricing like other OrangePi boards.
+It works fine with the same description as on the BananaPi F3 board DTS.
 
-What is supported:
-- Serial console on serial UART
-- 8 GB eMMC
-- 2x Gigabit RGMII Ethernet ports
+Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 
-This patch series is based on Spacemit's Linux tree, "linux-for-next" branch [3]
+---
 
-Link: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-R2S.html [1]
-Link: https://www.spacemit.com/en/key-stone-k1 [2]
-Link: https://github.com/spacemit-com/linux/commits/k1/dt-for-next [3]
+Read tests
+----------
 
-Michael Opdenacker (4):
-  dt-bindings: riscv: spacemit: Add OrangePi R2S board
-  riscv: dts: spacemit: Add OrangePi R2S board device tree
-  riscv: dts: spacemit: add Gigabit Ethernet and PDMA to OrangePi R2S
-  riscv: dts: spacemit: add eMMC to OrangePi R2S
+hdparm -t --direct /dev/mmcblk0
 
- .../devicetree/bindings/riscv/spacemit.yaml   |  1 +
- arch/riscv/boot/dts/spacemit/Makefile         |  1 +
- .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 90 +++++++++++++++++++
- 3 files changed, 92 insertions(+)
- create mode 100644 arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+/dev/mmcblk0:
+Timing O_DIRECT disk reads: 846 MB in 3.01 seconds = 281.52 MB/sec
 
+Write tests
+-----------
+
+dd if=/dev/zero of=/dev/mmcblk0p2 bs=4M oflag=direct status=progress
+7600078848 bytes (7.6 GB, 7.1 GiB) copied, 127 s, 59.8 MB/s
+dd: error writing '/dev/mmcblk0p2': No space left on device
+1825+0 records in
+1824+0 records out
+7650410496 bytes (7.7 GB, 7.1 GiB) copied, 127.866 s, 59.8 MB/s
+---
+ arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+index a4007a7a1656..58098c4a2aab 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+@@ -23,6 +23,16 @@ chosen {
+ 	};
+ };
+ 
++&emmc {
++	bus-width = <8>;
++	mmc-hs400-1_8v;
++	mmc-hs400-enhanced-strobe;
++	non-removable;
++	no-sd;
++	no-sdio;
++	status = "okay";
++};
++
+ &eth0 {
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
