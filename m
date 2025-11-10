@@ -1,144 +1,259 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from siberian.tulip.relay.mailchannels.net (siberian.tulip.relay.mailchannels.net [23.83.218.246])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A9D248F7C
-	for <spacemit@lists.linux.dev>; Mon, 10 Nov 2025 16:05:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762790739; cv=none; b=tiq4nJkvTHXvDDFlHG6bx9ptJHl89tcLHxhRXBzZmSJ4FEmVYeRjiORhGUJ1heuafo0LlYcDnnW4atlW2bPhQ4LCGjs+N8U5C9LgpDrFx7c5A40FZZV4hyvvJdFgNOFGfSz4lJ2aZtsH5ePVjGyTj3TmzvAy9pGNdFSuKwKePiQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762790739; c=relaxed/simple;
-	bh=onmwgzWvrykN1fzVZiejcYemdHDzwD/isE77f44YfsU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rZpP/duRWydAHLnkeZTaHQeRYevqs568rLhIutFbJ+MYvQxVjLq60zM60GO+CVUHOu8BuCBiSuwlpS+jfl8ybwtAtu8LUPLrB2gzTuCnz5Gj7hS33y+/UuWiEYr8TUmSRUshPL2elshNoFtS4x1rkPtLgKHPIXy3IpF0FmpEvK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=chxHZaVX; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FB32FD1CE
+	for <spacemit@lists.linux.dev>; Mon, 10 Nov 2025 22:06:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.246
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762812415; cv=pass; b=LNSWGDmbWyynN2blJAqDzvBvNdR69dVjTL1ouhw3fZoKDBMuf8ZpksFQn9Rspkl/s7eyhcczmzu9l36Kh1bbCVmuEhriWT0WZCI3B26nKa96uIMInRC0sfjgnqoK7ltmdO6s8aYkc5fkfgXuzO0QVdOYre14poEtjENw7FyF+i8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762812415; c=relaxed/simple;
+	bh=pPP5bsjDvtwhRWGVtl2pJUnAvUnCj9JPH7aLlQoOAFg=;
+	h=From:To:Cc:Subject:Message-ID:MIME-Version:Date; b=px6SkIniVJVWlWec2aPn8DIec3nMBCsypRLGbD4BaRCJAFL7pkKVVjK2DRrOfy4j3LU8wMt5CBH7Rlk0wPu5VFCf4qKLwjLj4ny8q3PbamBlu2GpBsAC/1AJpJNTO6JqQn0SQdZouzulMtsB2fdcJSMAXcasovtPunCbmPzh0WA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=rnFm6VOa; arc=pass smtp.client-ip=23.83.218.246
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="chxHZaVX"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7afc154e411so1861852b3a.1
-        for <spacemit@lists.linux.dev>; Mon, 10 Nov 2025 08:05:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762790737; x=1763395537; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=TgZgArONH6lr9XvODSMICWYyuVWCZCYNoJZs+MKJ66o=;
-        b=chxHZaVXpptWm+fXqRrFXyTt0B1KuIK2HL/rCasbGP6G78048OXqsltnKDg4AYRcca
-         ijps6GHz38JECNfXgqhR7FyYkvG/MzgARm/XIt7lPrtn6379vcTFIT9UY8dsVR73rseV
-         ynmJ8tNTetoE8j6Gjo+fStRCw9hrVKnjMDWGMyqpwSbu1UxY0dWuDA4sNKngarpSdAph
-         cdna5hNyGuR+tfjmy4X3kjHCxHrbVchLguhMOIj9jc0FpbdYZvE3O3IhMsaTc7uCEq9O
-         oyOJbK8d6SJHNkInwhocujdsnDQ4mKdcX+tUsNYwiGXUUNzUEdtuUrSsolFz3Ks8WyL1
-         XYIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762790737; x=1763395537;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TgZgArONH6lr9XvODSMICWYyuVWCZCYNoJZs+MKJ66o=;
-        b=GUdO2/hKqTN5iJYWiViePo0CyOzvwPsZTBhiK/9bVBss/Flq8ulgF80R4WkkkQrWuF
-         NCyDIR5/+L9CWpSXMvXkBc2kVIMRfHDQ/zpTjgqQVBFrnDXAhs02J36J3EYoHZI2ryRe
-         hbum3juP8bc4F0RHG+mzExPqdF4HJPJI2+TbtG8fzOi/t1R7EJerEpChsQYvobZa/vZO
-         TlCo8HdgTBm2DSFIscIIqIMzWmbIMR7VrTpbOYDx8EI8X/wlqcqYHn0M/ZcQV+MeZR4U
-         2BupS5+joskzy7oKxs6t7ZNsJ1K5JQd3F3ygP8omet36rkxw8SaJTuO2iBHYXtfV5y/4
-         fKAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWFpqk/5DWDq1pOQFn4BZ07NU9AkTWv8tkFdwdghLdc4lo/7VIONVTxf+rePbYoKEO/nl7sU6BthQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyKtHh6o2dmyOPC7Qh8LkjnI2ubT7oVfGjj/dPapMdoYVlG5ZuB
-	PzScmGmyGwuoQtnvj5srMqe08fVQCxXUpP3xhA2sT1GhIjtnFU4E4nIH
-X-Gm-Gg: ASbGnctfuspOInTHwzi+4VsWBTPzQNwMKjTUnqq7qWX3JdDFlZ2CzlQ5vD11J2BFKv8
-	1GSuXg7WnjJbizPN8MYz9XmfClr5j1kENjC36ohXzYXLWLDY1Jo3SZIhhM1gQ6qXvQx4NpEL5BN
-	uw7cEOMMVGy5b2k5ckg7iRDgigzXPauYMRfaEgwZSKR04YBk0QRPchXpxmnVBsyFGyu4bFC4U34
-	mfCzohA/+RuOUf1Sa7Y06tHZJIFHAAYMJ1MIi91hbLEaMi28LWVAI+mqORuYCHNleyJY/HlXuof
-	69ZpX31SY1+s7n+rFYjcYOGG0YtnZT5l9a1JNpDmJKJJyHo43c4zk0GCTRik80m32gQPQIGA+jc
-	b9L6BOYuCORHMdJISd/wlK66OEVg39LI5qs6eJlcKMGLlo8+HJdxU4zBRxGLpfDTyPsgUfklpFH
-	epI2Ef4SA=
-X-Google-Smtp-Source: AGHT+IF6WNNBzThjDgikYB/HqeiGseOlAPwbhWtHTRN1quM7bZZi7LqL9mv+idqwSvzAApOMFvrtbQ==
-X-Received: by 2002:a05:6a20:1584:b0:344:bf35:2bfa with SMTP id adf61e73a8af0-353a31550dfmr9952656637.33.1762790736506;
-        Mon, 10 Nov 2025 08:05:36 -0800 (PST)
-Received: from localhost ([2408:841b:d00:77aa:3e0a:b50e:a68d:6665])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ba902207227sm13072965a12.33.2025.11.10.08.05.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 08:05:36 -0800 (PST)
-Date: Tue, 11 Nov 2025 00:05:29 +0800
-From: Encrow Thorne <jyc0019@gmail.com>
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: spacemit: fix comment typo
-Message-ID: <20251110160529.GA18666@hailin-HP-Pavilion-Laptop-14-dv0xxx>
-References: <20251029-b4-fix-ccu-mix-typo-v1-1-caddb3580e64@gmail.com>
- <20251029223337-GYA1549833@gentoo.org>
- <20251110141251-GYD1651402@gentoo.org>
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="rnFm6VOa"
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 1AC54161228;
+	Mon, 10 Nov 2025 22:06:52 +0000 (UTC)
+Received: from fr-int-smtpout26.hostinger.io (100-123-217-50.trex-nlb.outbound.svc.cluster.local [100.123.217.50])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 38CFD16113D;
+	Mon, 10 Nov 2025 22:06:50 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1762812411; a=rsa-sha256;
+	cv=none;
+	b=nyD+Cg3dH5Bszer3V2vQOCVyNVtfQssf2W873A38k1p/yL+H6+kej/7kdi1oWhGlHEZwT0
+	AbzS4O85Ic1btlwyrdHoKIHB9+cy0hHCk2z+jSBA44IKmGMooT8T+5XkzEcB5QDi9Fvsji
+	Fu8lTJ/IFW5butqOglmZ+Zm2S0bDqbkj7U/eJo5pdM+Pg+h5gq+JAyC3u8HjQx+r4mkfmu
+	xB0zff0C39l8msyGehZZOlabDs8g57DLLJqcOSISig7IukIU0lNVhpOAqOT9uhHOf30lnq
+	JREF7NYFMPEKKoK1RA/d7PWjiiXqLWBok6WvYwiC2M1yfEv76C5VwWZ6hn+PWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1762812411;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
+	bh=eTcAQLcZiQP1xcx9P4ByeGRmE/Wsspkv4/4PLy5mXxo=;
+	b=uqqBAJgln5Ljr7dzUZLGf9x0sMmYYVbVLNXkxrMWo2/BuQVU29T8nH+V7/ka87XFBArTnw
+	OJ5k6z5PTNF7xQWrnHlCzltdgCWuQYypoLtcxoCnPb6dgqEC/V70P9pB0qJwrKMQl1K/to
+	z/mqTGaHcO1eRoF3fe7JBGiJ4bfPi+jZG3CAD/dEIylhVUBPk5OliJsQo+77Ls9RMYRaVM
+	nBpBe9M5/RqnoK6gJAlmDakYEjnazj7KfEUdMJTlRbrDbsEwNhLRc4YapMmouwzH06s3ap
+	NquC/1spHOo8gZ7kCRay6ZQJxZ5e6xgHU7Fg+d1cx2NdsOW1d4qQJkzZ1ZQL+Q==
+ARC-Authentication-Results: i=1;
+	rspamd-77bb85d8d5-7tv27;
+	auth=pass smtp.auth=hostingeremail
+ smtp.mailfrom=michael.opdenacker@rootcommit.com
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId:
+ hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Dime-Plucky: 401f8d997e60fa40_1762812411917_1570149200
+X-MC-Loop-Signature: 1762812411917:1048135672
+X-MC-Ingress-Time: 1762812411917
+Received: from fr-int-smtpout26.hostinger.io (fr-int-smtpout26.hostinger.io
+ [148.222.54.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.123.217.50 (trex/7.1.3);
+	Mon, 10 Nov 2025 22:06:51 +0000
+Received: from localhost.localdomain (unknown [IPv6:2001:861:4450:d360:31e9:b9de:fe42:7704])
+	(Authenticated sender: michael.opdenacker@rootcommit.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4d53fc0kQBz1yRM;
+	Mon, 10 Nov 2025 22:06:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
+	s=hostingermail-a; t=1762812408;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=eTcAQLcZiQP1xcx9P4ByeGRmE/Wsspkv4/4PLy5mXxo=;
+	b=rnFm6VOa6xT7DMnVfLq1ZoAmk29fvINsR0a3vrxtr8G2xIj1eS70pelXB/o92CUjsSOoQo
+	tVZjDXpBi+0yytyNDI7Z9q71JCZPJpu/wqmdYoefxHSUi/J2Nwing20WHYVmI9qWJkSys1
+	71gjDATlG6B+u88jQ/Osr7RN1Gd0f1DHpzsNSr5+w9YWPMf6q7R55uijqUB2Iu/2751ElQ
+	pPU3h+o0eVYAfPnIWtU0U/c5Cai/Iq606fOgwBq9voad5f6FxiQSl8A8JldCGMQftGFoCt
+	g8udNqlHwlZTIQuWndJSv9uQ2I4tTBNoxJxoMK9rZ7UBd6lnMl8oNbXCTj80oA==
+From: michael.opdenacker@rootcommit.com
+To: Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@gentoo.org>
+Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: [PATCH v3 0/2] riscv: spacemit: initial support for OrangePi R2S
+Message-ID: <20251110220641.1751392-1-michael.opdenacker@rootcommit.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251110141251-GYD1651402@gentoo.org>
+Date: Mon, 10 Nov 2025 22:06:48 +0000 (UTC)
+X-CM-Envelope: MS4xfNouNWzboh0Dy8Xzlg3+9m2BtVixDhf0uK7rLl4pRTUC0j3aKvTVvz4YjxSsH1ao0/koGbaDobctRD2LyD26aZsrQmJqpLBYd6B85YR2IP75tVXvGGi0 yvELYG6Trz/hD7xabWxkqhR+3JaSH0q5ifH3Tab0Qvsb9YQQCNa4Y+uRbP2FUP7SpsRYX2Itq/4TI1TrFOVPB/VBVwERMnFQ5+i69taf9tNxzuCELA4yawyT wNSE7lmXJ0dI/aj8L2My01yQyduCjzifpA3vG/uGJZDfrUXE6nABmHg5h8nV8TX6m4u2ZCWaPaZh7qzrUg2L/6ta+KSYZ3XzSYrKOaePLbbvNpPidLL8OjdP ffEqYbIY1MYbL8/9UcE/opiYk/YuT/jDgIlNV8HnK5E/iNXqJSsrpUxY1zbES5+p8w+PRTTCygl/a+tIgt6uEtKceP+csVWPH/FS+OJ+TvD53MLSxMYEktqU 4jxlaTsEzymbCfaXFdbF7K6B6GXGFPCUv9XWQJI1yn/gAuHly3gY39qt1QI=
+X-CM-Analysis: v=2.4 cv=GbNFnhXL c=1 sm=1 tr=0 ts=691261f8 a=6hOvbz5PeP13GDnUra1LTQ==:617 a=xqWC_Br6kY4A:10 a=5dAzR5NRAAAA:8 a=lv0vYI88AAAA:8 a=NEAV23lmAAAA:8 a=d70CFdQeAAAA:8 a=EcQK9hZlT_DBVffbIH0A:9 a=9STjDIb-X-UA:10 a=ZKAZAlVgJm32z6MX8p4a:22 a=9qqun4PRrEabIEPCFt1_:22 a=NcxpMcIZDGm-g932nG_k:22
+X-AuthUser: michael.opdenacker@rootcommit.com
 
-On Mon, Nov 10, 2025 at 10:12:51PM +0800, Yixun Lan wrote:
-> Hi Encrow,
-> 
-> On 06:33 Thu 30 Oct     , Yixun Lan wrote:
-> > Hi Encrow,
-> > 
-> > On 00:05 Wed 29 Oct     , Encrow Thorne wrote:
-> > > ccumix.h was copied from ccudiv.h and the comment after #endif was not
-> > > updated.
-> > > 
-> > > This patch fixes the incorrect comment to match the filename.
-> > 
-> > Just describe in imperative mode, see
-> > (since this is trivial, I could amend it before apply the patch,
-> > so no need to resend)
-> > https://elixir.bootlin.com/linux/v6.16/source/Documentation/process/submitting-patches.rst#L94
-> > 
-> I have no other clock patch queued this cycle, so how about you respin a v2
-> then let's ping Stephen directly for inclusion?
-> 
-> for commit message, I'd suggest simply as below (short/clean, also enough):
-> 
-> Fix incorrect comment to match the filename.
-> 
- Thanks for your feedback.
- I’ll send out v2 soon.
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 
- 		- Encrow
-> > > 
-> > > Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
-> > > ---
-> > >  drivers/clk/spacemit/ccu_mix.h | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/clk/spacemit/ccu_mix.h b/drivers/clk/spacemit/ccu_mix.h
-> > > index 54d40cd39b27..c406508e3504 100644
-> > > --- a/drivers/clk/spacemit/ccu_mix.h
-> > > +++ b/drivers/clk/spacemit/ccu_mix.h
-> > > @@ -220,4 +220,4 @@ extern const struct clk_ops spacemit_ccu_div_gate_ops;
-> > >  extern const struct clk_ops spacemit_ccu_mux_gate_ops;
-> > >  extern const struct clk_ops spacemit_ccu_mux_div_ops;
-> > >  extern const struct clk_ops spacemit_ccu_mux_div_gate_ops;
-> > > -#endif /* _CCU_DIV_H_ */
-> > > +#endif /* _CCU_MIX_H_ */
-> > > 
-> > > ---
-> > > base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
-> > > change-id: 20251028-b4-fix-ccu-mix-typo-038c19fe30c4
-> > > 
-> > > Best regards,
-> > > -- 
-> > > Encrow Thorne <jyc0019@gmail.com>
-> > > 
-> > 
-> > -- 
-> > Yixun Lan (dlan)
-> > 
-> 
-> -- 
-> Yixun Lan (dlan)
+This adds initial support for the OrangePi R2S board [1], which
+is marketed as using the Ky X1 SoC but is in fact identical to
+the SpacemiT K1 SoC [2].
+
+What makes this board attractive is its 4 Ethernet ports
+(2 x Gigagit RGMII with an external Motorcomm YT8531C PHY,
+and 2 x 2.5 Gigabit Ethernet with RTL8125BG on an internal
+PCI Express bus), its small form factor and its attractive
+pricing like other OrangePi boards.
+
+What is supported:
+- Serial console on serial UART
+- 8 GB eMMC
+- 2x Gigabit RGMII Ethernet ports
+
+This patch series is based on Spacemit's Linux tree,
+"linux-for-next" branch [3]
+
+Link: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-R2S.html [1]
+Link: https://www.spacemit.com/en/key-stone-k1 [2]
+Link: https://github.com/spacemit-com/linux/commits/k1/dt-for-next [3]
+
+Changes in V3
+- DT bindings: insert new compatible string in alphanumeric order
+  (feedback from Krzysztof Kozlowski)
+- OrangePi R2S: remove useless description text in commit message
+  (feedback from Yixun Lan)
+
+Changes in V2
+- Squash 3 commits for initial DTS, Ethernet & PDMA, and eMMC
+
+==========
+eMMC tests
+==========
+
+Read tests
+----------
+
+hdparm -t --direct /dev/mmcblk0
+
+/dev/mmcblk0:
+Timing O_DIRECT disk reads: 846 MB in 3.01 seconds = 281.52 MB/sec
+
+Write tests
+-----------
+
+dd if=/dev/zero of=/dev/mmcblk0p2 bs=4M oflag=direct status=progress
+7600078848 bytes (7.6 GB, 7.1 GiB) copied, 127 s, 59.8 MB/s
+dd: error writing '/dev/mmcblk0p2': No space left on device
+1825+0 records in
+1824+0 records out
+7650410496 bytes (7.7 GB, 7.1 GiB) copied, 127.866 s, 59.8 MB/s
+
+==============
+Ethernet tests
+==============
+
+Tests on eth0
+-------------
+
+root@orangepi-rv2-mainline:~# iperf3 -c 172.24.0.1
+Connecting to host 172.24.0.1, port 5201
+[ 5] local 172.24.0.2 port 51354 connected to 172.24.0.1 port 5201
+[ ID] Interval Transfer Bitrate Retr Cwnd
+[ 5] 0.00-1.00 sec 113 MBytes 947 Mbits/sec 0 395 KBytes
+[ 5] 1.00-2.00 sec 113 MBytes 945 Mbits/sec 0 395 KBytes
+[ 5] 2.00-3.00 sec 112 MBytes 936 Mbits/sec 0 395 KBytes
+[ 5] 3.00-4.00 sec 112 MBytes 942 Mbits/sec 0 395 KBytes
+[ 5] 4.00-5.00 sec 112 MBytes 941 Mbits/sec 0 395 KBytes
+[ 5] 5.00-6.00 sec 112 MBytes 940 Mbits/sec 0 409 KBytes
+[ 5] 6.00-7.00 sec 113 MBytes 948 Mbits/sec 0 409 KBytes
+[ 5] 7.00-8.00 sec 112 MBytes 940 Mbits/sec 0 409 KBytes
+[ 5] 8.00-9.00 sec 112 MBytes 941 Mbits/sec 0 414 KBytes
+[ 5] 9.00-10.03 sec 113 MBytes 919 Mbits/sec 0 414 KBytes
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval Transfer Bitrate Retr
+[ 5] 0.00-10.03 sec 1.10 GBytes 940 Mbits/sec 0 sender
+[ 5] 0.00-10.04 sec 1.10 GBytes 939 Mbits/sec receiver
+
+iperf Done.
+root@orangepi-rv2-mainline:~# iperf3 -s
+-----------------------------------------------------------
+Server listening on 5201 (test #1)
+-----------------------------------------------------------
+Accepted connection from 172.24.0.1, port 38326
+[ 5] local 172.24.0.2 port 5201 connected to 172.24.0.1 port 38332
+[ ID] Interval Transfer Bitrate
+[ 5] 0.00-1.00 sec 112 MBytes 935 Mbits/sec
+[ 5] 1.00-2.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 2.00-3.00 sec 112 MBytes 941 Mbits/sec
+[ 5] 3.00-4.00 sec 112 MBytes 941 Mbits/sec
+[ 5] 4.00-5.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 5.00-6.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 6.00-7.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 7.00-8.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 8.00-9.00 sec 112 MBytes 941 Mbits/sec
+[ 5] 9.00-10.00 sec 112 MBytes 943 Mbits/sec
+[ 5] 10.00-10.01 sec 384 KBytes 725 Mbits/sec
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval Transfer Bitrate
+[ 5] 0.00-10.01 sec 1.10 GBytes 941 Mbits/sec receiver
+
+Tests on eth1
+------------------
+
+root@orangepi-rv2-mainline:~# iperf3 -c 172.24.0.1
+Connecting to host 172.24.0.1, port 5201
+[ 5] local 172.24.0.2 port 60564 connected to 172.24.0.1 port 5201
+[ ID] Interval Transfer Bitrate Retr Cwnd
+[ 5] 0.00-1.00 sec 113 MBytes 947 Mbits/sec 0 423 KBytes
+[ 5] 1.00-2.00 sec 113 MBytes 945 Mbits/sec 0 423 KBytes
+[ 5] 2.00-3.00 sec 112 MBytes 943 Mbits/sec 0 423 KBytes
+[ 5] 3.00-4.00 sec 112 MBytes 938 Mbits/sec 0 423 KBytes
+[ 5] 4.00-5.00 sec 112 MBytes 944 Mbits/sec 0 423 KBytes
+[ 5] 5.00-6.00 sec 112 MBytes 936 Mbits/sec 0 423 KBytes
+[ 5] 6.00-7.00 sec 112 MBytes 943 Mbits/sec 0 423 KBytes
+[ 5] 7.00-8.00 sec 112 MBytes 940 Mbits/sec 0 423 KBytes
+[ 5] 8.00-9.00 sec 113 MBytes 951 Mbits/sec 0 639 KBytes
+[ 5] 9.00-10.01 sec 112 MBytes 934 Mbits/sec 0 639 KBytes
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval Transfer Bitrate Retr
+[ 5] 0.00-10.01 sec 1.10 GBytes 943 Mbits/sec 0 sender
+[ 5] 0.00-10.02 sec 1.10 GBytes 940 Mbits/sec receiver
+
+iperf Done.
+root@orangepi-rv2-mainline:~# iperf3 -s 172.24.0.1
+-----------------------------------------------------------
+Server listening on 5201 (test #1)
+-----------------------------------------------------------
+Accepted connection from 172.24.0.1, port 49628
+[ 5] local 172.24.0.2 port 5201 connected to 172.24.0.1 port 49640
+[ ID] Interval Transfer Bitrate
+[ 5] 0.00-1.00 sec 112 MBytes 934 Mbits/sec
+[ 5] 1.00-2.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 2.00-3.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 3.00-4.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 4.00-5.00 sec 112 MBytes 941 Mbits/sec
+[ 5] 5.00-6.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 6.00-7.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 7.00-8.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 8.00-9.00 sec 112 MBytes 942 Mbits/sec
+[ 5] 9.00-10.00 sec 112 MBytes 941 Mbits/sec
+[ 5] 10.00-10.01 sec 640 KBytes 1.14 Gbits/sec
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval Transfer Bitrate
+[ 5] 0.00-10.01 sec 1.10 GBytes 941 Mbits/sec receiver
+
+Michael Opdenacker (2):
+  dt-bindings: riscv: spacemit: Add OrangePi R2S board
+  riscv: dts: spacemit: Add OrangePi R2S board device tree
+
+ .../devicetree/bindings/riscv/spacemit.yaml   |  1 +
+ arch/riscv/boot/dts/spacemit/Makefile         |  1 +
+ .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 90 +++++++++++++++++++
+ 3 files changed, 92 insertions(+)
+ create mode 100644 arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+
