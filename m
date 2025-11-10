@@ -1,91 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6281B6CE9;
-	Mon, 10 Nov 2025 13:45:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8069A30FC18
+	for <spacemit@lists.linux.dev>; Mon, 10 Nov 2025 14:12:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762782357; cv=none; b=Kafi10boIiU5E75lXZoL4XsXeFiqbVlZz16grtfv8jd4iPO84aLtOvwPJG+q5vcTI3G6cMIJhr8Mnf+16TIjzBNFJXRS7F3V6kaItuUjvDOMK722PQGVmOmjbwEul062iSPiW4dSpbxBIVbW+AMUyDkyKi++EC6XgWMiKQ1lqKU=
+	t=1762783981; cv=none; b=ik9jDesxTCXwBYspeYM95fDA7mZ5fLlg4o/+gO1dFHvn8VkA5AFa8Cl/lLN8IBDH718H2T6Aoh1n+K4re7Aco/arWGsdu1qqriKJp7BeUPpTSUqM1Hpk7XbCqBhPriJ3ayX/riCWNMyucURYcSkc40f/+b5u3o3ntzxLOifqap0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762782357; c=relaxed/simple;
-	bh=BfZlbtmgRdgYv7hKoZSzpQyyse54YgiwBUgsuLLVOEo=;
+	s=arc-20240116; t=1762783981; c=relaxed/simple;
+	bh=mUxnKWfHnamB59du9JsNEMnLieM8UVFH9uYtuv4nAmE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b6Q7rCuklgl3ROg3awe6TIjURykYhyqDkPMXkU0R55VLifA0SSCyVR/lZW28RgjobjlZ2do3CeDUj6PT9M8ijL/YqkqSoL5DTbE7ZkKAEFP4K5jSFSVAQKz/DgrXSP5lNdyHl8LMawi4kImlVAlzupxLaE/KhzcCzj8au2LjzsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pGr1PmZR; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pGr1PmZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835D4C2BCAF;
-	Mon, 10 Nov 2025 13:45:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762782356;
-	bh=BfZlbtmgRdgYv7hKoZSzpQyyse54YgiwBUgsuLLVOEo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pGr1PmZRLwYBt/uM1R1jlsuy0hADBTEbyD6JFYM/9qUmH/OSBiahCYGGplFS1TzUF
-	 fzlRKv1LJnDjYZ9SoLa9wINK0OmUliXSttYyrAzFwGa1MlYTb4z8ik8fU4as9WOPdW
-	 Ozt/nUh+2gA0m/XJ3p5Ms1fbTcA9DkgYyfPdwnVAWGUHuMdVQa28g5QWxudt1OOjct
-	 Jzvlm8a9BwvM+gi1kTO+AiMKpvXjCc4FMQYFeyBF29yT77ji9HSTO9MkBjVjrO8lI/
-	 DzpyQh8F6WHUcnGAG7YOkh7LNk9iGs6JMyerz1X/pCSGtUKnS8wn9ZQivYcOHm4RGQ
-	 OH8bedllMvOGg==
-Date: Mon, 10 Nov 2025 13:45:50 +0000
-From: Lee Jones <lee@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+	 Content-Type:Content-Disposition:In-Reply-To; b=nAonbRqJU9r2jt+jqhoO+gzmaItIfXH27sqBcXpbNPWU1U19+/q9UqjNnuvyQlSBnEm1ivvPaZMpkAOSNz9wFsngoqc9qCVCArF/TzmRdb4JOLw/9+ahKys+1p8e/YhTxLQvRVJuRTHxZoXJ08vGvPpwDYIKGHEfeqmArJvWEU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.119])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 895DF340E1E;
+	Mon, 10 Nov 2025 14:12:58 +0000 (UTC)
+Date: Mon, 10 Nov 2025 22:12:51 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Encrow Thorne <jyc0019@gmail.com>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-i2c@vger.kernel.org, linux-rtc@vger.kernel.org,
-	kernel test robot <lkp@intel.com>
-Subject: Re: (subset) [PATCH v2 1/4] mfd: simple-mfd-i2c: remove select I2C_K1
-Message-ID: <20251110134550.GE1949330@google.com>
-References: <20251027-p1-kconfig-fix-v2-1-49688f30bae8@linux.spacemit.com>
- <176244506110.1925720.10807118665958896958.b4-ty@kernel.org>
- <71DB25E553BE0B04+aQ1LlKzeR-FkZA83@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: spacemit: fix comment typo
+Message-ID: <20251110141251-GYD1651402@gentoo.org>
+References: <20251029-b4-fix-ccu-mix-typo-v1-1-caddb3580e64@gmail.com>
+ <20251029223337-GYA1549833@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <71DB25E553BE0B04+aQ1LlKzeR-FkZA83@kernel.org>
+In-Reply-To: <20251029223337-GYA1549833@gentoo.org>
 
-On Fri, 07 Nov 2025, Troy Mitchell wrote:
+Hi Encrow,
 
-> On Thu, Nov 06, 2025 at 04:04:21PM +0000, Lee Jones wrote:
-> > On Mon, 27 Oct 2025 13:48:05 +0800, Troy Mitchell wrote:
-> > > select will force a symbol to a specific value without considering
-> > > its dependencies. As a result, the i2c-k1 driver will fail to build
-> > > when OF or COMMON_CLK are disabled.
-> > > 
-> > > The reason for removing I2C_K1 instead of adding a depends on condition
-> > > is to keep the possibility for other SoCs to use this PMIC.
-> > > 
-> > > [...]
+On 06:33 Thu 30 Oct     , Yixun Lan wrote:
+> Hi Encrow,
+> 
+> On 00:05 Wed 29 Oct     , Encrow Thorne wrote:
+> > ccumix.h was copied from ccudiv.h and the comment after #endif was not
+> > updated.
 > > 
-> > Applied, thanks!
-> > 
-> > [1/4] mfd: simple-mfd-i2c: remove select I2C_K1
-> >       commit: ecf6bc474ae97c404e2125b413eb0ef3627b03c5
-> Hi Lee,
+> > This patch fixes the incorrect comment to match the filename.
 > 
-> I think you didn't notice this reply [1]
-> (Maybe because he was replying to the cover letter).
+> Just describe in imperative mode, see
+> (since this is trivial, I could amend it before apply the patch,
+> so no need to resend)
+> https://elixir.bootlin.com/linux/v6.16/source/Documentation/process/submitting-patches.rst#L94
 > 
-> As Aurelien mentioned, the current shutdown/reboot (and possibly the regulator
-> as well) intends to use the `default MFD_SPACEMIT_P1`.
-> So if there’s no `default m if ARCH_SPACEMIT`,
-> the default value in subdevices may not make much sense.
-> 
-> But don’t worry — to make things easier for you, I’ll send an additional
-> patch based on your branch (in this series).
-> 
-> How does that sound?
+I have no other clock patch queued this cycle, so how about you respin a v2
+then let's ping Stephen directly for inclusion?
 
-Go for it.
+for commit message, I'd suggest simply as below (short/clean, also enough):
+
+Fix incorrect comment to match the filename.
+
+> > 
+> > Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
+> > ---
+> >  drivers/clk/spacemit/ccu_mix.h | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/clk/spacemit/ccu_mix.h b/drivers/clk/spacemit/ccu_mix.h
+> > index 54d40cd39b27..c406508e3504 100644
+> > --- a/drivers/clk/spacemit/ccu_mix.h
+> > +++ b/drivers/clk/spacemit/ccu_mix.h
+> > @@ -220,4 +220,4 @@ extern const struct clk_ops spacemit_ccu_div_gate_ops;
+> >  extern const struct clk_ops spacemit_ccu_mux_gate_ops;
+> >  extern const struct clk_ops spacemit_ccu_mux_div_ops;
+> >  extern const struct clk_ops spacemit_ccu_mux_div_gate_ops;
+> > -#endif /* _CCU_DIV_H_ */
+> > +#endif /* _CCU_MIX_H_ */
+> > 
+> > ---
+> > base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+> > change-id: 20251028-b4-fix-ccu-mix-typo-038c19fe30c4
+> > 
+> > Best regards,
+> > -- 
+> > Encrow Thorne <jyc0019@gmail.com>
+> > 
+> 
+> -- 
+> Yixun Lan (dlan)
+> 
 
 -- 
-Lee Jones [李琼斯]
+Yixun Lan (dlan)
