@@ -1,99 +1,206 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-ot1-f66.google.com (mail-ot1-f66.google.com [209.85.210.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8069A30FC18
-	for <spacemit@lists.linux.dev>; Mon, 10 Nov 2025 14:12:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD47C314B69
+	for <spacemit@lists.linux.dev>; Mon, 10 Nov 2025 15:05:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762783981; cv=none; b=ik9jDesxTCXwBYspeYM95fDA7mZ5fLlg4o/+gO1dFHvn8VkA5AFa8Cl/lLN8IBDH718H2T6Aoh1n+K4re7Aco/arWGsdu1qqriKJp7BeUPpTSUqM1Hpk7XbCqBhPriJ3ayX/riCWNMyucURYcSkc40f/+b5u3o3ntzxLOifqap0=
+	t=1762787141; cv=none; b=u50y6IKDZOTBf1GgOi+JHs9SONeSiztuPCy/uJa51lzFIMLeqvO+77vtPBR/a0UxfeKPz7rZAct1lzseTgqp0jzir8TdiFLOt9r8iaKEVD9Lo4/HjkIl8/Jn43BdYbX2A4gvUAIChiXrNvI7HpA2YF1gANRc4YuBroR1cDMLXnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762783981; c=relaxed/simple;
-	bh=mUxnKWfHnamB59du9JsNEMnLieM8UVFH9uYtuv4nAmE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nAonbRqJU9r2jt+jqhoO+gzmaItIfXH27sqBcXpbNPWU1U19+/q9UqjNnuvyQlSBnEm1ivvPaZMpkAOSNz9wFsngoqc9qCVCArF/TzmRdb4JOLw/9+ahKys+1p8e/YhTxLQvRVJuRTHxZoXJ08vGvPpwDYIKGHEfeqmArJvWEU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.48.119])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 895DF340E1E;
-	Mon, 10 Nov 2025 14:12:58 +0000 (UTC)
-Date: Mon, 10 Nov 2025 22:12:51 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Encrow Thorne <jyc0019@gmail.com>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: spacemit: fix comment typo
-Message-ID: <20251110141251-GYD1651402@gentoo.org>
-References: <20251029-b4-fix-ccu-mix-typo-v1-1-caddb3580e64@gmail.com>
- <20251029223337-GYA1549833@gentoo.org>
+	s=arc-20240116; t=1762787141; c=relaxed/simple;
+	bh=jqV0RYGag5Tnyu6MmFEVw70orsW2JaWWXU+MmaWcvrM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RNFS/6ELfTE2LEV0qdMsyH24LEc6pFS/4hHTznWwUHMLLsAppIWdDYtklli+KN9yZUXPaGj9sawImR4N2PqR8+ztYS0myuaz2OgHUZv603u8wX0NSaOJNElwo6m5merlVvmCy1vYB+1dXDZKryX/2zcC3VJPIQdyagF+DpIAEEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=TP8Gtm6g; arc=none smtp.client-ip=209.85.210.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="TP8Gtm6g"
+Received: by mail-ot1-f66.google.com with SMTP id 46e09a7af769-7c6dbdaced8so2182675a34.1
+        for <spacemit@lists.linux.dev>; Mon, 10 Nov 2025 07:05:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1762787138; x=1763391938; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gLIkqGwA5TFLsjPNFy0EVjpciOH8eLZgKkAfRn9EpW8=;
+        b=TP8Gtm6gcKyZ7HNjW76Drhm1cgW4PG1kKEPJR759PX52nr9+ZmEIm9G4H/cYDu0r3U
+         yehXchh8eaurzf40IgigbSMZITy6owjSOu65JB7gJ3kqFocsLa9IjIX2UDQlhXK2mMjm
+         l/K1dhMSSHQ/cFyqc7ujywO36V/aPSgOc6gpYdyl0N5g/fKM076jPjp0ugADr6KP8bxz
+         nqRfSv6FjU9QakqEpu/UTB4tM6rEsGIc17scb9LrVg7yCjC0M8fACZLVvJCbWA0lgomx
+         4WwOen/ddvQUtMxuDSe7V/Z4yD16E92xxwd2Qmuz/ROvQBYaXtzAUB8Owu7Vjoaar2Xm
+         keUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762787138; x=1763391938;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gLIkqGwA5TFLsjPNFy0EVjpciOH8eLZgKkAfRn9EpW8=;
+        b=V+1q5mObHbtcb/MxWTxy/HYCAe8/z0EwgPVV3jRvQ7lK6PnKIkTtbZmHKt75tbi0e2
+         iN1ocIO3G1EkJ9+kcpIUwcjwX0XqSrw4wJRCStukU39o/QMSo8YdzttLCK42IBi1Icit
+         1LdX41WJuN/FQMzyxDuLeLQR8k4jXPFb7zcmUV+quY17N0EvhclVhI6tv+X20wQD8Hvg
+         hu8/PW0QgUwDggDbodYXzjAujtu3JSNQ9DA7kf1/ziovLJKIgMzWOgfoYUPAX/eVtjyW
+         wjz5lhU1UUPYA7M0sgNb07dwmU2yFKMSJw7iwWQjU0Ta6EpmK0NjEZqO/pAbWr/4xUOw
+         qilQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXJNPO46OCyi5uvFeORuTSF9J40qQUfsZmE6nBVivKSRwgPcSE8rZKQH2/0mFtJ5/l6K6dLBDJ33g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzNsJsNGqIsojyjUh2XF/Hih6MHNW2Gv4GITkvWt9oZCtOy5/Ls
+	btoJcD//xD9lgcYpSMD6l7EJuK4y+1e8ejpn+Vms1lRvvqcYp0i8KFcd5RJAFE3LCB4=
+X-Gm-Gg: ASbGncuu8KMO+EiKtTKwpvrnNHzxdzn15+RUYy7TgaiiJ2G6BOU0Pg29olt7PcaVTvq
+	RrQpScN5zuos/Qcbsa8Q/DNx8Zr3NF3/qgpQYi284YKiH8yeeAXC440d7TUFRaU0CMVmtI8NRI5
+	6pMURWrnUTg7crlm5LStEpvgMVNDHraxAO0vXmL+Kys/sk6V+dA2YW+j2QYhsItrfS335sMtWbu
+	EVd9EUWUGHExfDkJ3VqIMALzo98lm/2Elc7GLqYWsK3Q8ZLp9H9XT5jvQmzCPus5BJJn0Evfsr9
+	MgsFhssZchjvgOXblfePnb9a9GAiEezOicmd/as1Feqhmzx/hVX53cCOLrm7NviX2gj8IJN6uVS
+	TjGy4kn3sjZc+77/bFvpPbbDBw/kXn6HkQ9eNeBoaXNw+K/D+hgANN3GeBR12n7f8F+zngTm9kp
+	fIOz1bSZfRoUQwu1r1I1gmXSAAVdT/4mrK6dhxMb4=
+X-Google-Smtp-Source: AGHT+IHgQiveeEt2TcyVpw/M9TZjIcS1T8WMm/l7R5G//yZo5AlEVPBUPldB2kYOGjXywx6gsdENHQ==
+X-Received: by 2002:a05:6808:c015:20b0:450:2e22:ed72 with SMTP id 5614622812f47-4502e230e41mr3451947b6e.5.1762787137562;
+        Mon, 10 Nov 2025 07:05:37 -0800 (PST)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5b74695bb6bsm4940807173.42.2025.11.10.07.05.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Nov 2025 07:05:37 -0800 (PST)
+Message-ID: <4a7d6e07-82f8-437f-bccb-cf294974a53e@riscstar.com>
+Date: Mon, 10 Nov 2025 09:05:35 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251029223337-GYA1549833@gentoo.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/7] PCI: spacemit: Add SpacemiT PCIe host driver
+To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+ lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
+ robh@kernel.org, bhelgaas@google.com
+Cc: dlan@gentoo.org, aurelien@aurel32.net, johannes@erdfelt.com,
+ p.zabel@pengutronix.de, christian.bruel@foss.st.com,
+ thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com,
+ mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
+ shradha.t@samsung.com, inochiama@gmail.com, guodong@riscstar.com,
+ linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20251107191557.1827677-1-elder@riscstar.com>
+ <20251107191557.1827677-6-elder@riscstar.com>
+ <120b2f62-25e6-4ea3-9907-230080c61f70@wanadoo.fr>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <120b2f62-25e6-4ea3-9907-230080c61f70@wanadoo.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Encrow,
-
-On 06:33 Thu 30 Oct     , Yixun Lan wrote:
-> Hi Encrow,
+On 11/8/25 7:00 AM, Christophe JAILLET wrote:
+> Le 07/11/2025 à 20:15, Alex Elder a écrit :
+>> Introduce a driver for the PCIe host controller found in the SpacemiT
+>> K1 SoC.  The hardware is derived from the Synopsys DesignWare PCIe IP.
+>> The driver supports three PCIe ports that operate at PCIe gen2 transfer
+>> rates (5 GT/sec).  The first port uses a combo PHY, which may be
+>> configured for use for USB 3 instead.
+>>
+>> Signed-off-by: Alex Elder <elder@riscstar.com>
+>> ---
 > 
-> On 00:05 Wed 29 Oct     , Encrow Thorne wrote:
-> > ccumix.h was copied from ccudiv.h and the comment after #endif was not
-> > updated.
-> > 
-> > This patch fixes the incorrect comment to match the filename.
+> ...
 > 
-> Just describe in imperative mode, see
-> (since this is trivial, I could amend it before apply the patch,
-> so no need to resend)
-> https://elixir.bootlin.com/linux/v6.16/source/Documentation/process/submitting-patches.rst#L94
+>> +static int k1_pcie_probe(struct platform_device *pdev)
+>> +{
+>> +    struct device *dev = &pdev->dev;
+>> +    struct k1_pcie *k1;
+>> +    int ret;
+>> +
+>> +    k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
+>> +    if (!k1)
+>> +        return -ENOMEM;
+>> +
+>> +    k1->pmu = syscon_regmap_lookup_by_phandle_args(dev_of_node(dev),
+>> +                               SYSCON_APMU, 1,
+>> +                               &k1->pmu_off);
+>> +    if (IS_ERR(k1->pmu))
+>> +        return dev_err_probe(dev, PTR_ERR(k1->pmu),
+>> +                     "failed to lookup PMU registers\n");
+>> +
+>> +    k1->link = devm_platform_ioremap_resource_byname(pdev, "link");
+>> +    if (!k1->link)
 > 
-I have no other clock patch queued this cycle, so how about you respin a v2
-then let's ping Stephen directly for inclusion?
+> if (IS_ERR(k1->link)) ?
 
-for commit message, I'd suggest simply as below (short/clean, also enough):
+Yes, you're right.  I'll fix this in the next version.
 
-Fix incorrect comment to match the filename.
 
-> > 
-> > Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
-> > ---
-> >  drivers/clk/spacemit/ccu_mix.h | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/clk/spacemit/ccu_mix.h b/drivers/clk/spacemit/ccu_mix.h
-> > index 54d40cd39b27..c406508e3504 100644
-> > --- a/drivers/clk/spacemit/ccu_mix.h
-> > +++ b/drivers/clk/spacemit/ccu_mix.h
-> > @@ -220,4 +220,4 @@ extern const struct clk_ops spacemit_ccu_div_gate_ops;
-> >  extern const struct clk_ops spacemit_ccu_mux_gate_ops;
-> >  extern const struct clk_ops spacemit_ccu_mux_div_ops;
-> >  extern const struct clk_ops spacemit_ccu_mux_div_gate_ops;
-> > -#endif /* _CCU_DIV_H_ */
-> > +#endif /* _CCU_MIX_H_ */
-> > 
-> > ---
-> > base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
-> > change-id: 20251028-b4-fix-ccu-mix-typo-038c19fe30c4
-> > 
-> > Best regards,
-> > -- 
-> > Encrow Thorne <jyc0019@gmail.com>
-> > 
 > 
-> -- 
-> Yixun Lan (dlan)
+>> +        return dev_err_probe(dev, -ENOMEM,
+>> +                     "failed to map \"link\" registers\n");
+> 
+> Message with -ENOMEM are ignored, so a direct return -ENOMEM is less 
+> verbose and will bhave the same. See [1].
+> 
+> But in this case, I think it should be PTR_ERR(k1->link).
+
+Yes, that's what it will be.
+
+> [1]: https://elixir.bootlin.com/linux/v6.18-rc2/source/drivers/base/ 
+> core.c#L5015
+> 
+>> +
+>> +    k1->pci.dev = dev;
+>> +    k1->pci.ops = &k1_pcie_ops;
+>> +    dw_pcie_cap_set(&k1->pci, REQ_RES);
+>> +
+>> +    k1->pci.pp.ops = &k1_pcie_host_ops;
+>> +
+>> +    /* Hold the PHY in reset until we start the link */
+>> +    regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
+>> +            APP_HOLD_PHY_RST);
+>> +
+>> +    ret = devm_regulator_get_enable(dev, "vpcie3v3");
+>> +    if (ret)
+>> +        return dev_err_probe(dev, ret,
+>> +                     "failed to get \"vpcie3v3\" supply\n");
+>> +
+>> +    pm_runtime_set_active(dev);
+>> +    pm_runtime_no_callbacks(dev);
+>> +    devm_pm_runtime_enable(dev);
+>> +
+>> +    platform_set_drvdata(pdev, k1);
+>> +
+>> +    ret = k1_pcie_parse_port(k1);
+>> +    if (ret)
+>> +        return dev_err_probe(dev, ret, "failed to parse root port\n");
+>> +
+>> +    ret = dw_pcie_host_init(&k1->pci.pp);
+>> +    if (ret)
+>> +        return dev_err_probe(dev, ret, "failed to initialize host\n");
+>> +
+>> +    return 0;
+>> +}
+> 
+> ...
+> 
+>> +static const struct of_device_id k1_pcie_of_match_table[] = {
+>> +    { .compatible = "spacemit,k1-pcie", },
+>> +    { },
+> 
+> Unneeded trainling comma after a terminator.
+
+Unneeded, but not erroneous.  In any case, I'll drop it based
+on your preference.
+
+Thank you for your review.
+
+					-Alex
+
+> 
+>> +};
+>> +
+>> +static struct platform_driver k1_pcie_driver = {
+>> +    .probe    = k1_pcie_probe,
+>> +    .remove    = k1_pcie_remove,
+>> +    .driver = {
+>> +        .name            = "spacemit-k1-pcie",
+>> +        .of_match_table        = k1_pcie_of_match_table,
+>> +        .probe_type        = PROBE_PREFER_ASYNCHRONOUS,
+>> +    },
+>> +};
+>> +module_platform_driver(k1_pcie_driver);
 > 
 
--- 
-Yixun Lan (dlan)
