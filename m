@@ -1,50 +1,49 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACA63559D8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EA827FB3C
 	for <spacemit@lists.linux.dev>; Tue, 11 Nov 2025 11:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762859976; cv=none; b=ruCDDItIsRmLSsc7DCAyITgphet9uO22rLmu4vLOYuyFmcaa5RoeZLDyJeX+IXovomi8SlETAQSJYEDPeu81tJ9aAz8U0KOcIm09i8wggX9PcgZWwU0+FKCqC8bNVMGr2gj4IxMN1LxKFzbFU91InmWKxIh6e7jp9VO2rgpcIYg=
+	t=1762859977; cv=none; b=SmlZP/5i2VlotvLIW/g/HvK+ZcEUoqJv1kCciFomuZdM4GJRHjqHh1uaDmrrW6SUaqnRwWILxPAIXMio+UZJD7Q4A/Bkx1XtmqjHOAhAk2FIQx6rdJgeGzkY9WVicm+duKY7PZgxSX0j3YRSEdB7wIaRjZIfhyRucBfvz+d4jv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762859976; c=relaxed/simple;
-	bh=iFxkT7B47RCS6uuoDSZiQSPOjd+qK9G8OyWkqKGNTlc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9xzdIn9cx9aj6U76gM4jvZTRpddV0gDzia/wDCsb1VuVlcBMYEcJGPiFompqgatRv9ebh1FQGnwDwI7KTKGshthqCoIK2oDjHcbqhP6Dedk0b6vsLl6rk0N1BgMf6El4fmnTBK/61Yu47ZpesI1A5tmI9m6ecDqmkbf+w+BQ6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZMmEhf4Z; arc=none smtp.client-ip=192.198.163.19
+	s=arc-20240116; t=1762859977; c=relaxed/simple;
+	bh=zy4IxmPtBkptPaMrQ2/mdRSxEEv1YrHvTsFXVxkdxq0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mfIB5g7bKLSJxz98s/2WEAXkV5VCNISFyD4Mvl0JN0SeHcc6hwqXl3wxncHZnA6MV/R4Q3YbQX6ybXsIrYC8kbH2ppqrfOgfs7FReeDanfU5gHq6uSN+XuA0QxRg4AYgTUIG2OrDrept58iM16fP9wVQgW0AyIW3Xhtt+jjyHzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=R9+6BQai; arc=none smtp.client-ip=198.175.65.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZMmEhf4Z"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R9+6BQai"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762859973; x=1794395973;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=iFxkT7B47RCS6uuoDSZiQSPOjd+qK9G8OyWkqKGNTlc=;
-  b=ZMmEhf4Z6akJ1gqdLingMccmjBXsJkjOtJS4WKw2JFvpS7CHE/e5jgWu
-   L5Ct8zMx/al+gVfWZ3AOaPRZuiEt8YE4DlG20X0r2nL/E+NJ73B/6p2lv
-   IVFA9NUqVVpFuVowm8LNjtcK7ZN64yZN6byA/luOTurb/SHPdMhAD4a5j
-   UDisEHSfedtAXCzSFjnDCBM6oNkxSDtwBGDd5ouuytyjhmEe2hEInR57M
-   tkEYARRrnLDmjFv7sl3D1r24OlTdBKf6CB/G3YzN1135HUyYpch1Z+tL4
-   5HhBCwLaGSTY9pqDhETQXzz3O/Hoj2M/hVtthS33JT86NjL4PQ5Rbd3Vp
-   Q==;
-X-CSE-ConnectionGUID: 0mX/Q2vKSISjSRZ1oQ18MQ==
-X-CSE-MsgGUID: bygZLTaeRdmbkHjN3m3lAQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11609"; a="63922920"
+  t=1762859974; x=1794395974;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=zy4IxmPtBkptPaMrQ2/mdRSxEEv1YrHvTsFXVxkdxq0=;
+  b=R9+6BQai98HI7uIN+81SHVFp0N5dzMAq//3aIJyBxmeSGb9YhXZRd7xp
+   LT7xMQXKv9PzSdyFYn/3rQvPuG2ICwSehKE9viF3ABtikLWZK6y5fiug+
+   o9o5a7TMXj0e4Qx0oIhU4jkgPoGgoTpterk1G1OZO0OKfkgpjmrpp/XKT
+   tcvFKnbUPVRdThRJ4vMfHIeXp8q9GrfgpdxPjNfgJpKxG7sH/vzehj5DN
+   0zUgI4sUOPPsFXnuwpCCzUUFi4UZx3l5/mE/WLbifcaRwa9fRzPQczODq
+   sx0k+WPPScIeFHKd73NPpsvCrAxINWUyqQcAJ2RXipaKWaTLgfIKnKCgG
+   w==;
+X-CSE-ConnectionGUID: pF5TIMfYQX2LtqVh+D86ew==
+X-CSE-MsgGUID: kGSkOZmUR8yKeMPaah2cxQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11609"; a="82317376"
 X-IronPort-AV: E=Sophos;i="6.19,296,1754982000"; 
-   d="scan'208";a="63922920"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2025 03:19:32 -0800
-X-CSE-ConnectionGUID: LM+Tx7byTUSiOs06Nl6lFQ==
-X-CSE-MsgGUID: c/kstrYRQOeX5wjS4aPC6g==
+   d="scan'208";a="82317376"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2025 03:19:34 -0800
+X-CSE-ConnectionGUID: BkraQmrLRc6DtboMi12Axw==
+X-CSE-MsgGUID: /913gT0+SZyyILECWidl0w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,296,1754982000"; 
-   d="scan'208";a="226200395"
+   d="scan'208";a="193053094"
 Received: from black.igk.intel.com ([10.91.253.5])
-  by orviesa001.jf.intel.com with ESMTP; 11 Nov 2025 03:19:33 -0800
+  by orviesa003.jf.intel.com with ESMTP; 11 Nov 2025 03:19:32 -0800
 Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 7B64397; Tue, 11 Nov 2025 12:19:31 +0100 (CET)
+	id 786BB96; Tue, 11 Nov 2025 12:19:31 +0100 (CET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Lee Jones <lee@kernel.org>,
 	linux-kernel@vger.kernel.org,
@@ -52,12 +51,10 @@ To: Lee Jones <lee@kernel.org>,
 	spacemit@lists.linux.dev
 Cc: Yixun Lan <dlan@gentoo.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH v1 1/2] mfd: simple-mfd-i2c: Make ID table style consistent
-Date: Tue, 11 Nov 2025 12:18:35 +0100
-Message-ID: <20251111111930.796837-2-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v1 0/2] mfd: simple-mfd-i2c: a couple of cleanups
+Date: Tue, 11 Nov 2025 12:18:34 +0100
+Message-ID: <20251111111930.796837-1-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251111111930.796837-1-andriy.shevchenko@linux.intel.com>
-References: <20251111111930.796837-1-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -66,35 +63,15 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The lines in the OF ID table are written in three different styles.
-Choose the most common in the kernel and update accordingly.
+Here is just a couple of ad-hoc cleanups. No behaviour changes.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/mfd/simple-mfd-i2c.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Andy Shevchenko (2):
+  mfd: simple-mfd-i2c: Make ID table style consistent
+  mfd: simple-mfd-i2c: don't use "proxy" headers
 
-diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
-index 0a607a1e3ca1..5fd0ef3fa44a 100644
---- a/drivers/mfd/simple-mfd-i2c.c
-+++ b/drivers/mfd/simple-mfd-i2c.c
-@@ -114,11 +114,11 @@ static const struct of_device_id simple_mfd_i2c_of_match[] = {
- 	{ .compatible = "fsl,lx2160aqds-fpga" },
- 	{ .compatible = "fsl,lx2160ardb-fpga" },
- 	{ .compatible = "kontron,sl28cpld" },
--	{ .compatible = "maxim,max5970", .data = &maxim_max5970},
--	{ .compatible = "maxim,max5978", .data = &maxim_max5970},
--	{ .compatible = "maxim,max77705-battery", .data = &maxim_mon_max77705},
--	{ .compatible = "silergy,sy7636a", .data = &silergy_sy7636a},
--	{ .compatible = "spacemit,p1", .data = &spacemit_p1, },
-+	{ .compatible = "maxim,max5970", .data = &maxim_max5970 },
-+	{ .compatible = "maxim,max5978", .data = &maxim_max5970 },
-+	{ .compatible = "maxim,max77705-battery", .data = &maxim_mon_max77705 },
-+	{ .compatible = "silergy,sy7636a", .data = &silergy_sy7636a },
-+	{ .compatible = "spacemit,p1", .data = &spacemit_p1 },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, simple_mfd_i2c_of_match);
+ drivers/mfd/simple-mfd-i2c.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
 -- 
 2.50.1
 
