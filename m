@@ -1,102 +1,107 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC823559DE
-	for <spacemit@lists.linux.dev>; Tue, 11 Nov 2025 11:19:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008032FF648
+	for <spacemit@lists.linux.dev>; Tue, 11 Nov 2025 11:41:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762859978; cv=none; b=hAzb8dNmR/fmTCixv3558gMEoJuT0QKtnQpD2S5JJ6U9+T6ke2lkW7yNeYW82ifbbBzC8yElKXkI0iL3M42O0sez85cQJnh9iJkI6cBCHFkyh3i8xhiko1QfBaxjClhchcXiIcM6FkNG5Q6CUnGsDtygagoMOO7G8tv1kw/rbu8=
+	t=1762861303; cv=none; b=tmZg0heZR57EsWTBHK4NLuwImvWXN0oRMMRmwfYwzlZx7V8jWAAhkeNtAfoJ+3IXWnuWNUiZRO4q8neP3/w+TR6e3bZcYXUc241IftDejEexsPhe2ceagNqiX1Akha2oj1vi0k7h+FGNiwTzs88uw5Rpy/1tlgrwE0M7Ii7bL38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762859978; c=relaxed/simple;
-	bh=9T0WYmDAOm7giXvF1mgj/3D0HBRvqmglFqNtm8BgpMI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIZ9YSJ/4J321sJC/+ofbKTtpJXK5BCbVBGjLHXKJnTnxSDOw3raHX75oLYhNeBopLEe52/ppzRa4Rc6uiGSkf5pp6nSXtnUM/jYg9DXpIKyQk61lelHltfwEuZdGPgb0rmOQ562wEzse33eGJ3bbWfSciJQIDrRrcODgpmdfZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Q+mNZCWV; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Q+mNZCWV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762859975; x=1794395975;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=9T0WYmDAOm7giXvF1mgj/3D0HBRvqmglFqNtm8BgpMI=;
-  b=Q+mNZCWVdiEGwTkRO3XD+AjGpBsRwosR5zkBC89jPhlkywD8LD8RIOWM
-   SMb9DnZmgz5bjnd6fQVDum97Eqv9h49uwKtq87S2AYoEV6UaYOYUgI8HR
-   uZXGbR92b9mwHUSGlpEHCwGaPiwln92HvjNR2bv3KYdYJt1/PyDiqHv5N
-   WQA3jKFShtVtegYw7FzuxePPjO767jg80fjEwojxDjNDrvTWau2KagttS
-   Nb/nvOz5A4mI3qnIMv4iQtqVH0wcDwUjEDaHK/2OoLeuTJMzFDKvnNkgx
-   DhrapivjKy/gDj4WvVm0K0ci60d1PjcNeqZkhC2bGSZKvDvte0txEvIfW
-   w==;
-X-CSE-ConnectionGUID: m66pmnBvQKO0DFy+ttjwaQ==
-X-CSE-MsgGUID: XkK9BJE6SbiSxCsqsg8/Ng==
-X-IronPort-AV: E=McAfee;i="6800,10657,11609"; a="63922912"
-X-IronPort-AV: E=Sophos;i="6.19,296,1754982000"; 
-   d="scan'208";a="63922912"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2025 03:19:32 -0800
-X-CSE-ConnectionGUID: 7KRySQPbRYeXDo4od8bOMg==
-X-CSE-MsgGUID: dkfo88vgSVqNB4eYiK/VeA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,296,1754982000"; 
-   d="scan'208";a="226200394"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by orviesa001.jf.intel.com with ESMTP; 11 Nov 2025 03:19:33 -0800
-Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 802FC98; Tue, 11 Nov 2025 12:19:31 +0100 (CET)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Lee Jones <lee@kernel.org>,
+	s=arc-20240116; t=1762861303; c=relaxed/simple;
+	bh=NsifAaH4IJiJWQHRSEMOi7t8dMMrh3UzrvwkyayXbpY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CoLeSjX12k/OiKJyoLYnOPWWq5jH9QUP6CAC9DrZ/fLH9gSNEhkWvOUUVy39UNGfsykad2OREDbkbqnPZU56qPqJfIHqYsWFM2ai4ovi5JgVACm3c8OJXTlgJBzn3yn8oqwoeil+sJvlhHgPfoofkAKo2Aazqsvjin4nN2mdMq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.119])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id EF2F1340F5F;
+	Tue, 11 Nov 2025 11:41:40 +0000 (UTC)
+Date: Tue, 11 Nov 2025 19:41:33 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yangyu Chen <cyy@cyyself.name>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Cc: Yixun Lan <dlan@gentoo.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH v1 2/2] mfd: simple-mfd-i2c: don't use "proxy" headers
-Date: Tue, 11 Nov 2025 12:18:36 +0100
-Message-ID: <20251111111930.796837-3-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251111111930.796837-1-andriy.shevchenko@linux.intel.com>
-References: <20251111111930.796837-1-andriy.shevchenko@linux.intel.com>
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: riscv: spacemit: Add OrangePi R2S
+ board
+Message-ID: <20251111114133-GYA1677599@gentoo.org>
+References: <20251110220641.1751392-1-michael.opdenacker@rootcommit.com>
+ <20251110220641.1751392-2-michael.opdenacker@rootcommit.com>
+ <20251111-inquisitive-ambrosial-chicken-861542@kuoka>
+ <20251111101149-GYE1651402@gentoo.org>
+ <af7bd4ab-38dd-4a5a-93e5-f457ae3460db@kernel.org>
+ <1d469324-84c8-4b5d-ae68-d77e3c822656@rootcommit.com>
+ <2eb5ea0b-d071-4e17-abc8-7db5c78919f2@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2eb5ea0b-d071-4e17-abc8-7db5c78919f2@kernel.org>
 
-Update header inclusions to follow IWYU (Include What You Use) principle.
+Hi All,
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/mfd/simple-mfd-i2c.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+On 11:34 Tue 11 Nov     , Krzysztof Kozlowski wrote:
+> On 11/11/2025 11:29, Michael Opdenacker wrote:
+> > Greetings
+> > 
+> > Thanks one more time for the reviews!
+> > 
+> > On 11/11/25 11:13, Krzysztof Kozlowski wrote:
+> >> On 11/11/2025 11:11, Yixun Lan wrote:
+> >>> Hi Krzysztof,
+> >>>
+> >>> On 08:43 Tue 11 Nov     , Krzysztof Kozlowski wrote:
+> >>>> On Mon, Nov 10, 2025 at 10:06:48PM +0000, michael.opdenacker@rootcommit.com wrote:
+> >>>>> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+> >>>>>
+> >>>>> Document the compatible string for the OrangePi R2S board [1], which
+> >>>>> is marketed as using the Ky X1 SoC but is in fact identical to
+> >>> Maybe, just say it "same" to clarify the ambiguity?
+> >> What is exactly "same"? Same die? Or same blocks/pieces? Whichever you
+> >> choose please make it very explicit.
+> > 
+> > Maybe Troy Mitchell from Spacemit can shed light on this question.
+> > 
+> > Anyway, I could use the same wording as in this commit introducing 
+> > "OrangePi RV2":
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/arch?id=bab8dea259100a99e047fd11a48940b229d30031
+> > 
+> > "The board is described as using the Ky X1 SoC, which, based on 
+> > available downstream sources and testing, appears to be identical or 
+> > very closely related to the SpacemiT K1 SoC".
+sorry for bringing confusion in previous series, we had no further discussion on this..
 
-diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
-index 5fd0ef3fa44a..8b751d8e3b5a 100644
---- a/drivers/mfd/simple-mfd-i2c.c
-+++ b/drivers/mfd/simple-mfd-i2c.c
-@@ -15,12 +15,18 @@
-  * will be subsequently registered.
-  */
- 
-+#include <linux/array_size.h>
-+#include <linux/dev_printk.h>
-+#include <linux/err.h>
- #include <linux/i2c.h>
--#include <linux/kernel.h>
- #include <linux/mfd/core.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/of_platform.h>
-+#include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
-+#include <linux/stddef.h>
- 
- #include "simple-mfd-i2c.h"
- 
+> > 
+> > What do you think?
+> 
+> This clearly suggests they are not identical thus you should have also
+> dedicated compatible. Let me then precise, I thought it is obvious, that
+> except writing it more detailed in commit msg, you also need proper
+> binding expressing this. If this is not the same die and they look
+> compatible, then usually it means you need a compatible.
+> 
+
+to be explicit, the Xy X1 has same die, same packaging as SpacemiT K1,
+so we should not introduce new compatible in the SoC level, but a new
+board compatible in patch [1/2] is ok to me
+
+I hope this clarify this issue..
+
 -- 
-2.50.1
-
+Yixun Lan (dlan)
