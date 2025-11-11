@@ -1,33 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from iguana.tulip.relay.mailchannels.net (iguana.tulip.relay.mailchannels.net [23.83.218.253])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D91338F26;
-	Tue, 11 Nov 2025 10:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762856023; cv=none; b=aubJEmreyEIQpF90jHXAQ0IvsP1cpXluSIo0F/h84qBE/q7j9xlqYRBZZV2LPmhzfEqX0vt66B4zY/9NMpfNM2wvJ04ivq8aPjCeNa9pjbidY4vFMmyJEOh0P7ZAHxv6hl/lGuMCaJua9il0voekIAQzNjVAe5rEJ4SesxUri9U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762856023; c=relaxed/simple;
-	bh=60IpFEk0TIcnK3O+lPpylMpuTYBhDgvBqs5hRpx6pwI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WJrx45B64bNCeLDH2EjT9EsvXWDv2xcjnRKdGmDAqd4Fieb2Qh1Id+a5h7e/ppi/N3Oe4HcGgPftT6aVs7n05d7LNq5G7axxuAhEzhsQhdkYv3e2g1SPWyrHzBp4N+l0JHllRmLIBe1nSwXXZ2riLxe8XXDGz330BDtjjtMmRjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xt1/s6i7; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51B632C328
+	for <spacemit@lists.linux.dev>; Tue, 11 Nov 2025 10:30:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.253
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762857009; cv=pass; b=kQ3T0QhpaQ/P1kNK0nY0xjRCftsx2+IT+InnSdMOIGsxbp5+HlGt1eG29LSu5YxE+ZyeQ3d9Hhpi1yQzacyCfvO1ZgTA6WSg3QMzfuDxwoSTycfKSgVBMwxVXmf8TgcwB1uTygMJU4uv5O5xCf630aFK5BJEAe1MUx1lXN95eS0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762857009; c=relaxed/simple;
+	bh=gryKLH1oBIJvs26Dicg2XpxMi5WNiOVrxPI0ZTiCAzo=;
+	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
+	 Content-Type:Date; b=n4XRl4Ed+ahascKWiOGIKJcRaUuArUretyGmwbC9GwwrT/4AjAnsLnqhn85yEUrVyE9kv/yhHI9SWzoJ4na8FT8QlHaWkLRX3pthR3SkXHHqMP6HJNZjAp3fu3b5NC1NFcWU0KMvqEkWHcKnmPCAh8KUOaO+Cmda0IIF9AC0cgc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=Y59Vz5Cy; arc=pass smtp.client-ip=23.83.218.253
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xt1/s6i7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3060C19425;
-	Tue, 11 Nov 2025 10:13:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762856023;
-	bh=60IpFEk0TIcnK3O+lPpylMpuTYBhDgvBqs5hRpx6pwI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Xt1/s6i71x9zIoJJO4JLJmlbrDgiXC29Znb2nqC53oiW/kwdlDNnC5dKRrX2fuC3S
-	 wgtunIubH2pAF6IjbBOo66P+hIsUg63XyD3sHsDzGMgGRuoxLVELrTb4XTOByJhN1T
-	 +XTdVgVVrgUVJDit/GwHF15PdMZi7REvYwnoCY3lABfDRQG4NOOh/v/h0A9jwsD5CF
-	 7UrLFH80QTg/3wmaeA6/EtK5+IHlqkeatsXrLMNU2jRNBWalgFJIZO8kHScDtPtYBT
-	 KALoNw/xMEBi2c36+8J747elCDJGgBu+dsbKNTJh2Co3QmxPZ3nyFFQzyAN2vQnRVK
-	 YMDvPqD20Xvyw==
-Message-ID: <af7bd4ab-38dd-4a5a-93e5-f457ae3460db@kernel.org>
-Date: Tue, 11 Nov 2025 11:13:38 +0100
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="Y59Vz5Cy"
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 6DEBA18323B;
+	Tue, 11 Nov 2025 10:30:01 +0000 (UTC)
+Received: from de-fra-smtpout9.hostinger.io (100-121-222-5.trex-nlb.outbound.svc.cluster.local [100.121.222.5])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 65521183268;
+	Tue, 11 Nov 2025 10:29:58 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1762857001; a=rsa-sha256;
+	cv=none;
+	b=d21LOJ4Dg3a1WngEf80JJHMlfd61Kf611U3K9GVRm67Uzznnm92ca+4dFf5FBEnx9/IMRM
+	ZB0pUFwYvpDr3qj39y6xYt+GRjkFTkW5MOuQNNh39494/I+/2flAbURe5xdGRaBUm+PsqG
+	rqSmpow2dYOKd88Vwndoe9+ZWeCoTDwL6RievltMMxS2Upm2RI/JLfmmr1W2p8P11obveC
+	hmL5+Fl1FsipO3CnMqM6rXEUC5nAXJoiQMthyRdB8ZqwVUwjta/hBG/qljHxD2DJrRbCnK
+	0JS68H2KS5LW6bfx2gIi3QjbR6O+MsE8FraUT/ze43kbvuV+enSrZZmYktKLGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1762857001;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=2Qfd38hEYraSzh4msAcAjnFoyuX5aFZrJHQNeV8binU=;
+	b=e/pGXJ05WFdNTJUP1DvF4KYv8//2ScRqlXuL6v37OzsHq6krX4Np/JZQyydWNShErrD8Xl
+	wJ0cnw1fkBDQZl3KFMKDKWPzzjNMwuTAg5ZtPeWfrWwFprqFEl6UVMUAiUS4CgrRbWPkYH
+	pox+fb+1AMpb6oVd9AXGgtnjTGcXnsHh11VQuUeArLyiI0iVU7EbRo0MV9kM8tTmGuqQ13
+	sYZlM+EgufRkEmpMppDb3BsUWj3PtiSAApjIBlTWqiTYgb4HuhemNMAUTn7OVO55LDXNFf
+	joVY9UgDn0viIcc4zXj5nnMTYMzEJbkohTt9nZHsHYkkbpeTyTGRgoKvJAjGHg==
+ARC-Authentication-Results: i=1;
+	rspamd-768b565cdb-8vj2s;
+	auth=pass smtp.auth=hostingeremail
+ smtp.mailfrom=michael.opdenacker@rootcommit.com
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId:
+ hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Desert-Troubled: 6e166cee6faafddb_1762857001217_3440765751
+X-MC-Loop-Signature: 1762857001217:4042955906
+X-MC-Ingress-Time: 1762857001216
+Received: from de-fra-smtpout9.hostinger.io (de-fra-smtpout9.hostinger.io
+ [148.222.55.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.121.222.5 (trex/7.1.3);
+	Tue, 11 Nov 2025 10:30:01 +0000
+Received: from [IPV6:2001:861:4450:d360:3bc5:3dcd:eed2:25ed] (unknown [IPv6:2001:861:4450:d360:3bc5:3dcd:eed2:25ed])
+	(Authenticated sender: michael.opdenacker@rootcommit.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4d5N832hrhz3xFP;
+	Tue, 11 Nov 2025 10:29:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
+	s=hostingermail-a; t=1762856996;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2Qfd38hEYraSzh4msAcAjnFoyuX5aFZrJHQNeV8binU=;
+	b=Y59Vz5Cy3h7ac5Q4a6xbqQW9AfpFBE0u1er116QmGuyswSnho5MmfyuUgpIXPj9pgYagrC
+	IWgn6V6ekxz0t2N6eWIqacQlLy6Ouj10vXWYxU9KJtGWDTLjqOLknF7exzLFUeFydMoSYf
+	0Cif2hJwkvmkXaiONmzTnBurJG7yNtq9GxiEmuohXfiK3kLQUErna5kdyTPZ6uAw7nneYf
+	4NnXAbKAhsUOvxxze9xRisDZUl29mmsBcOK5Aj0UmdwiOtGZGViUWlaeVuTgOVR4yZGIro
+	XUhcGoTUzpEYxOWK814cOmflyCdbUWSEt4IuGJb7ARy5ipVLAznAvRgfFDzgUQ==
+Message-ID: <1d469324-84c8-4b5d-ae68-d77e3c822656@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -35,82 +85,69 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: riscv: spacemit: Add OrangePi R2S
- board
-To: Yixun Lan <dlan@gentoo.org>
 Cc: michael.opdenacker@rootcommit.com, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
  Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
  Alexandre Ghiti <alex@ghiti.fr>, Yangyu Chen <cyy@cyyself.name>,
  devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: riscv: spacemit: Add OrangePi R2S
+ board
+To: Krzysztof Kozlowski <krzk@kernel.org>, Yixun Lan <dlan@gentoo.org>
 References: <20251110220641.1751392-1-michael.opdenacker@rootcommit.com>
  <20251110220641.1751392-2-michael.opdenacker@rootcommit.com>
  <20251111-inquisitive-ambrosial-chicken-861542@kuoka>
  <20251111101149-GYE1651402@gentoo.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251111101149-GYE1651402@gentoo.org>
-Content-Type: text/plain; charset=UTF-8
+ <af7bd4ab-38dd-4a5a-93e5-f457ae3460db@kernel.org>
+Content-Language: en-US, fr
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Organization: Root Commit
+In-Reply-To: <af7bd4ab-38dd-4a5a-93e5-f457ae3460db@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Date: Tue, 11 Nov 2025 10:29:55 +0000 (UTC)
+X-CM-Analysis: v=2.4 cv=Ceda56rl c=1 sm=1 tr=0 ts=69131024 a=sEYliDYKNDM94lrOIDkWOw==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=d70CFdQeAAAA:8 a=KNP2rDlw_ukOLo_CF_YA:9 a=QEXdDO2ut3YA:10 a=NcxpMcIZDGm-g932nG_k:22
+X-CM-Envelope: MS4xfN2h32KLALFXb4b0pLM6SFdBF3o6GUHuwWdxBQSw3ik18v2CL3U/G5YljWmpHqb7vlHlv9CPM3OSsJw5V234IDod/ssdQyL+oVsHpxv7dNF9eoqAD4jl qswtwaw5T9T8i3aemvyemMYfMfDLwmQt5Amp02KRqc7L893wVTC6O7ZoV5uh+ZyOPMSayeQkzli5foipfpM9GTNGwiXUH+qxIPns71egEssC5TVNz+En2OmK UX9aE9ZXMDYdxzPhjWoM5953n+fHfLTz0QmsNUzOFkxfU4H+/kyQqw+oVMpSBSgFDT/6AtFPcfbzvKoZOwJx7h/eGp7pPnRstSaqIgQg1hRSuWtWMgOhR4tT hnNcAwi+b5o4a/KE+ZKmQ/ruc6Ze/mwUBzAGaJqnZm1MnclQRCtRcpZsnw0ixiE8t39OAbA/axCKEroDJVVGIP2rOQX+7YrIcgwJewWLMdPKQDfDYzTUP49L PzzNWx4fd+e/XlfN+8UCyvUzyCBk6+WmGVBtkeUCqgYlU4tQBqR/o0qB0cut7nOA9DR3Exty4PqNz127hg9Cn9lasLMFBW2puLuSKLkWbX/O0llzpu0C9vWX 3B+4JU/1R2rFIyelwn2quSse97GglE2bkTW2QvGf+6ZQcXZuHFrLsZAbV+e2zLgNCdE9IDdnKn6AlJWQ5cBNQZGBR/caiAPummppcs6F2R7Vg62sIEUqqyu5 1ZUOC587/Vc9I3vSSJ8R3Kgw9Kmyq/3teBQhQbLMVXTiBznq9ScE/BLk/YuT7kDjuRvupj1Gbt6BDj4O/xOKHuu33IvWlDlh5EK84UMdBwcYHv5sM9N1rg==
+X-AuthUser: michael.opdenacker@rootcommit.com
 
-On 11/11/2025 11:11, Yixun Lan wrote:
-> Hi Krzysztof, 
-> 
-> On 08:43 Tue 11 Nov     , Krzysztof Kozlowski wrote:
->> On Mon, Nov 10, 2025 at 10:06:48PM +0000, michael.opdenacker@rootcommit.com wrote:
->>> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
->>>
->>> Document the compatible string for the OrangePi R2S board [1], which
->>> is marketed as using the Ky X1 SoC but is in fact identical to
-> Maybe, just say it "same" to clarify the ambiguity?
+Greetings
 
-What is exactly "same"? Same die? Or same blocks/pieces? Whichever you
-choose please make it very explicit.
+Thanks one more time for the reviews!
 
-Best regards,
-Krzysztof
+On 11/11/25 11:13, Krzysztof Kozlowski wrote:
+> On 11/11/2025 11:11, Yixun Lan wrote:
+>> Hi Krzysztof,
+>>
+>> On 08:43 Tue 11 Nov     , Krzysztof Kozlowski wrote:
+>>> On Mon, Nov 10, 2025 at 10:06:48PM +0000, michael.opdenacker@rootcommit.com wrote:
+>>>> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+>>>>
+>>>> Document the compatible string for the OrangePi R2S board [1], which
+>>>> is marketed as using the Ky X1 SoC but is in fact identical to
+>> Maybe, just say it "same" to clarify the ambiguity?
+> What is exactly "same"? Same die? Or same blocks/pieces? Whichever you
+> choose please make it very explicit.
+
+Maybe Troy Mitchell from Spacemit can shed light on this question.
+
+Anyway, I could use the same wording as in this commit introducing 
+"OrangePi RV2":
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/arch?id=bab8dea259100a99e047fd11a48940b229d30031
+
+"The board is described as using the Ky X1 SoC, which, based on 
+available downstream sources and testing, appears to be identical or 
+very closely related to the SpacemiT K1 SoC".
+
+What do you think?
+
+Cheers,
+Michael
+
+-- 
+Michael Opdenacker
+Root Commit
+Yocto Project and OpenEmbedded Training course - Learn by doing:
+https://rootcommit.com/training/yocto/
+
