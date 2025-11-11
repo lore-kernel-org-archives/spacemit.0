@@ -1,174 +1,128 @@
-Received: from rusty.tulip.relay.mailchannels.net (rusty.tulip.relay.mailchannels.net [23.83.218.252])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C85242D9B
-	for <spacemit@lists.linux.dev>; Tue, 11 Nov 2025 11:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.252
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762861546; cv=pass; b=PZuzFmdNz5NT0QbPABkiWxJM4QbmlHCdRAt6On10i0h34BBHI6ANjU5QVbc3udxvT/eNI8PvS9d95nxRkfXnci21BHxTGJjicwfFjMq93Oz27VE1ukyAbhr66J7BpbPqpzLNq89XRlJIpQdcDM2zP5nsUd9YmFP1tRO+79aaUME=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762861546; c=relaxed/simple;
-	bh=Iw4vgcU5pRFqc660/a2NMV44yFh4lrLdmh67uM7HCrI=;
-	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
-	 Content-Type:Date; b=DDMkFxfvLMtHffgzQh6hNoBvppxf+nnTUY5OdbdCnVyrSksW+yTwlEtOs/eRimmSv4igxToijMt13S7H2uqnNG6kErJoq93+u7ENOmVMfcp3mIyPlso+w7R0naL/gi8zgQAmwWlck2HVjFGPTEqL21C0StRNR18ec1TPo+G5vx8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=BQR6Zk90; arc=pass smtp.client-ip=23.83.218.252
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6146336A019
+	for <spacemit@lists.linux.dev>; Tue, 11 Nov 2025 15:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762876219; cv=none; b=tKG7klDZbH7WhxkAdLviK3exbixOi9ooLI0vFv7coQfayt4Grmr9Neo1h50r+GocNK0GaQFmW33G9CNkCM/Drl275++NZOb7BQc4sqTTpMC5FzwF0nKfXk7sYjbOD9SnEK3itffCv2D0PNB+KUGMws/UwyDR9TBkZdwYIvJWNXg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762876219; c=relaxed/simple;
+	bh=DHlxEl4Cm3VRdwsbOA/YSIyQycDreMiqXswBc5rWTMo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Zs+eFuahU+uir1NaeQaAjDvKMocil0j2dycVeu1HvoFVJvRupTvzpPZHT0VQia7syyiMKQagqSTel7Q3GU5EjbDYzRGbxW7jwPUSG/zNcNLltHujTJLr7oPxBDoPK9DczvQhtzJO+8HHFeJJKuMuc4FkNFq72xqc5VWLyO1cKRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PRisvdYW; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="BQR6Zk90"
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 3E4031821BF;
-	Tue, 11 Nov 2025 11:38:02 +0000 (UTC)
-Received: from fr-int-smtpout30.hostinger.io (trex-green-2.trex.outbound.svc.cluster.local [100.121.225.152])
-	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 217AD18033C;
-	Tue, 11 Nov 2025 11:37:58 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1762861081; a=rsa-sha256;
-	cv=none;
-	b=jJzObw4TU8KRSucN5sBufP8kHUy29AHDor3VA3LH3mWMtqk1ZpmdvrQVFMVjMefbkbc6ga
-	RbXwTN/4BE59BiPVT7KkkQLJQton2MifHCPkQtIohjcGAiteoTZ2h1yf8iDG6o60Wz2eR3
-	QACMt51ETURo5WhSgcsnzqlCumI4NPNBuvc67S2shVdp3yg6Q/DkwXMJlmlICCkmqZnMfL
-	6YuEKKIpA42E7sF+e7zwph015fOQrayUTIMPy5cYQNDbIXc8Z7yCKx7OXxr0/pRhG/eRc6
-	AB/Gp0rmdoqiEfTrDt2XXFlerJNVbu3nmHe0ViCMgBLCja0MK8ccU/PQVawE2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1762861081;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=Thxmb9T0BAdHQZHt3TV5jxQaTn4fq6YyiNYTq+kOTD8=;
-	b=JqcPZe11B+qR9NeWQk3ZgBJuZX/7pa7GShG4UzdyA0N1qCo4F62hD64DVz3K0fA1Fa4Qpi
-	8IVoNT3WCD939CBpuNvxRHuCUCSMBTIX3HTJg8oe2lpUFibwh/JLKtXJUdVwPecSImHZ02
-	fsXwCssjateM52j8jVjKQhSX9YK19NLeScdwyBjzWTY4y0kitMPlUUaVkYqgtVj9bQY4Nl
-	25S6koAL5KKmyWOqWYHivisxYQfKMtgRzvN1KMBMSd7/csbWq6v3ZMXTchF/k/JgYtIu0g
-	IbJ4g5J8sxM8omFPD5tJ+WiWslUiBz+l7/nCboFtkA7jVeGAep3bpZQNYT0NZQ==
-ARC-Authentication-Results: i=1;
-	rspamd-768b565cdb-8vj2s;
-	auth=pass smtp.auth=hostingeremail
- smtp.mailfrom=michael.opdenacker@rootcommit.com
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId:
- hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MailChannels-Auth-Id: hostingeremail
-X-Whispering-Robust: 30e8d534303519c3_1762861082040_956378664
-X-MC-Loop-Signature: 1762861082039:1160088958
-X-MC-Ingress-Time: 1762861082039
-Received: from fr-int-smtpout30.hostinger.io (fr-int-smtpout30.hostinger.io
- [148.222.54.7])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.121.225.152 (trex/7.1.3);
-	Tue, 11 Nov 2025 11:38:02 +0000
-Received: from [IPV6:2001:861:4450:d360:3bc5:3dcd:eed2:25ed] (unknown [IPv6:2001:861:4450:d360:3bc5:3dcd:eed2:25ed])
-	(Authenticated sender: michael.opdenacker@rootcommit.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4d5PfW3CN3z2xNs;
-	Tue, 11 Nov 2025 11:37:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
-	s=hostingermail-a; t=1762861077;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Thxmb9T0BAdHQZHt3TV5jxQaTn4fq6YyiNYTq+kOTD8=;
-	b=BQR6Zk90DmY1oZE0JrCbX/6/0SplX433JCgprXfWw41A7rgSfxDFwFrMNR3yMazSgs23W1
-	YTgKF+tiYqvofWBfbIoc/llXV4FUrd8h8JszIkaBTxZiO5tPBBZonT4H4VLdKB36b7bXAV
-	03+DL8X4Wr2+EFWuAciw16g31Ho1gM5RPaZsEchl5ThEEPRUziba3KIMZHbSfLh5AO9DVA
-	MY4fuwJBSQPTqwfJY8rtMS+Dl0m9e0LVKFG/+jk3kwf1xXjmI4AOeI+8FHDZnZR/tRzmWW
-	pI/E3ZJhK9Bb980kCwk9Wa2WCKRyLKf6pPesALJPIT/zbStAJesLapMdaufgNA==
-Message-ID: <7f69b746-afda-4d3c-b78d-f6d95a6a758d@rootcommit.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PRisvdYW"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-794e300e20dso698261b3a.1
+        for <spacemit@lists.linux.dev>; Tue, 11 Nov 2025 07:50:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762876218; x=1763481018; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kwxwWH0h/k86KA6Lqbt4Xcny5Xif9KRZerM8f0+lE/Q=;
+        b=PRisvdYW+GORTGzbXpm+ZLgB1bfhBtkTX9oIl9UDCGqBxSj+pr/wvAwtIYSoG0nxkB
+         EQyF9pvakitDKR9OBud1dSwg9zhmKg6rgcHDboh52CnA6FSrQlSJvuIp16qjxTXOowQF
+         DI/rCnBAdxJonOSwlO2SdFRQ0rdnzGfCrcweWBFQbMCM/wYgCSlRvHbbyyXwbdbRJ7G6
+         4xqcyKhJRWzjXIu7NrJalRDSKX8/svbc+NlisxO8qUTOp8Bim8sBjK+s1egM5Zg2RUVZ
+         td5ShsGBSPXFGHkw4j1mSqE1HqmxnuilU/Tsl6zYRnYUzv714VybT8z8AKhb6y+Z1ciE
+         1eMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762876218; x=1763481018;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kwxwWH0h/k86KA6Lqbt4Xcny5Xif9KRZerM8f0+lE/Q=;
+        b=nnMuqfOhNYNgKvxmrVq7qkikG7IA/L4vKAaOP/wn4VIiGUruzr8SwyUFEQoSusybpa
+         q5kyo+zXMWqc2cwfgFB4qc2EYgmC30x0pd5irMJJpy5rNXvHmyUIS5k10byZ7hF7GHU5
+         EXoS/MOlEwyf4Ebs3hc9xWiH4RLuJycFbe0yTgLZOHITrOHUvSIvxkdXJPSubI8D9s9m
+         WNITJR8zj3jxKqhsRLWq4vs51qydf3LCQphWW6D/3BhXLpn3cVeEXwl13xjs/1izsuUC
+         Z9w1y23XfGoZsjVEQU2DFxoky8w9bz5HqE15Jvv3viDoI9xmJeIc602WcrJ1r/SV6R/N
+         i5Rg==
+X-Forwarded-Encrypted: i=1; AJvYcCXhQzeyGB7TGIBX3FBc7CK8Ddj+hOwV8bn+cCiDCMyQKwZv+gquIgMWz/4snIgOkJIzPKo7Y4QanQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxXa0sdb5VWaP8EDIFH4xYC1FHIAIehNq+DtN7uFUxlkcTQA8AR
+	JlrTmS5/1ZmrWk0JliDuWs61EaTDFSRT0IYVMUHUU3gLoBkjCFLbUH9X
+X-Gm-Gg: ASbGncsSMopDnJFDXl+Pm4HgRsykoOfr4n9C2o8uo2X0CzE7S4zuP0oS08au3c6rFOT
+	Q2BpDrcpeGyIypTn1H3b3SSDJPdNliVj1YBQCO9UyDRSAVpt2j7QvvGhPOHQ1PNeH/Dyyh2X146
+	OXBxC3J7ChwJflzYn15rX6GFTsq/qUaPPgXNvzmlInS47t+8GCQOfpS62t0PPpA5zvkBJ2gli9m
+	5sqP1c/n0ORS2m34XtkOgDOErTQ7O/W6u/H46CfYlhtilUyDrAo1rN9BZjLuUfiRZCVzJEQhhvP
+	HcTGMLUx6bQAbCarYCY/xx7HmvsIjKfS5vm5FTbSg9lqkebjlb5DQe2uLT8W9P3gfVkQEirKC7d
+	Mb6wlH0OiXZl2FaWoCq3G/7OxepzZQdkM7XHz6sdfxjnjZkTfRxiq3ZgkxPn7S5T+0OL8AGbK47
+	j/4A==
+X-Google-Smtp-Source: AGHT+IFUeZ86WNREaY3JnN9DeD2rSCTPmqw3Crt4HqqKMYEinhAe5X1WLVaqt8s1Jagy5zo/mu0g8Q==
+X-Received: by 2002:a17:902:fc4f:b0:295:55f:8ebb with SMTP id d9443c01a7336-298408213e4mr48838695ad.21.1762876217391;
+        Tue, 11 Nov 2025 07:50:17 -0800 (PST)
+Received: from localhost ([111.55.24.13])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2984dbdb09fsm1087615ad.17.2025.11.11.07.50.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Nov 2025 07:50:17 -0800 (PST)
+From: Encrow Thorne <jyc0019@gmail.com>
+Date: Tue, 11 Nov 2025 23:50:09 +0800
+Subject: [PATCH v2] clk: spacemit: fix comment typo
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: michael.opdenacker@rootcommit.com, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yangyu Chen <cyy@cyyself.name>,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: riscv: spacemit: Add OrangePi R2S
- board
-To: Krzysztof Kozlowski <krzk@kernel.org>, Yixun Lan <dlan@gentoo.org>
-References: <20251110220641.1751392-1-michael.opdenacker@rootcommit.com>
- <20251110220641.1751392-2-michael.opdenacker@rootcommit.com>
- <20251111-inquisitive-ambrosial-chicken-861542@kuoka>
- <20251111101149-GYE1651402@gentoo.org>
- <af7bd4ab-38dd-4a5a-93e5-f457ae3460db@kernel.org>
- <1d469324-84c8-4b5d-ae68-d77e3c822656@rootcommit.com>
- <2eb5ea0b-d071-4e17-abc8-7db5c78919f2@kernel.org>
-Content-Language: en-US, fr
-From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-Organization: Root Commit
-In-Reply-To: <2eb5ea0b-d071-4e17-abc8-7db5c78919f2@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Date: Tue, 11 Nov 2025 11:37:55 +0000 (UTC)
-X-CM-Envelope: MS4xfD7nlJ4/BJGImMueYHopBfT+uNoFbis3yzux4sfWhB+oB3CTgBNBBxZmYUbNd3SdnezEXWhYzeDKxibakg1GdRUS4lRCTS9aizs1a35/jO67Azl/QCQA Kq+KY9+dbq+QVh+wqo4I+zBhOm7GgTtnrou7TKPq25ynM/N8eH6ntcpSBjuwP7GZbjS9iJHSedEz4tLYSKSwRDZghHFTSZW+DvxiaAuG6K4Rzpp+LvJdtf8s 5KLkMXq7SanUvR1sxzhXw9lrsFRlNTMguVzXb56dJr9kQzSzHbhafeoKdGLm9GLod982eLq7MD0Vx71zTwEw1k8J2xdIz1XmkAGjIFO17vIX5XrJHo3zcsDD oHBewFF2Bvaydspwcbz7JKjjPTyR9k0m4VFZqkT7SBvXk3UvKzNasAKoIIB/DmMhGOx8OMpyDv+zMs8We0xTYjLPVRpPBp5hHgwHr0ybS3KFj6iQrv++epkH zDpLk75KXqM7zYaBR/hKhXlETBDRyVm3CmPmjkiAubIZMaUCq5NtPXQl4q0iKAO0ajoDC2SzVanL9lK496Wd/A2ZPfwHIQUm9GSd4TielHhNwl75LIs+J4No 4CX5TnyWntWWRGrlqXutih8Av8yN/4RegleACgbgZyHoCq/hElyIbA5H1NYlu6v2ny1IOoOKpaRKIMI/liF84Gz/SwqF5RcVQHtRAA0bVQt0I92pwlvYDDYA pkz+PH4wJWI/utivg+xwos1LpRDNbV/eboMbthiFTdwxv8GvnA/tMi9UZvaDhac8+/oW6IcVwVZahttXYbiP2MUBQupayDZioojTKS2VVrWAerbeFibk/A==
-X-CM-Analysis: v=2.4 cv=DJTd4DNb c=1 sm=1 tr=0 ts=69132015 a=sEYliDYKNDM94lrOIDkWOw==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=d70CFdQeAAAA:8 a=jWY-LL_2j1N7cWvRbmcA:9 a=QEXdDO2ut3YA:10 a=NcxpMcIZDGm-g932nG_k:22
-X-AuthUser: michael.opdenacker@rootcommit.com
+Message-Id: <20251111-b4-fix-ccu-mix-typo-v2-1-d64b97b48d1f@gmail.com>
+X-B4-Tracking: v=1; b=H4sIADBbE2kC/22NQQqDMBBFryKz7pQkatGuvEdxoeOoA9VIYkNFv
+ HtTobuuhvf5/80Onp2wh3uyg+MgXuwcwVwSoLGZB0bpIoNRJtfKFNhm2MsbiV44xbtui0WVFqT
+ LnlNFGcTl4jh2TuujjjyKX63bzidBf9Ofr/zrCxo1UtN1bZoXim9ZNUyNPK9kJ6iP4/gAIVCcB
+ rYAAAA=
+X-Change-ID: 20251028-b4-fix-ccu-mix-typo-038c19fe30c4
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Encrow Thorne <jyc0019@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1762876212; l=1164;
+ i=jyc0019@gmail.com; s=20251009; h=from:subject:message-id;
+ bh=DHlxEl4Cm3VRdwsbOA/YSIyQycDreMiqXswBc5rWTMo=;
+ b=y7lORg16U5lsvcS9/DoSo7mwT5fo22eEVpj3gCoSuWbYgbLul4lhSwzA8UAzZmSxgvPPJorn1
+ KMkTZ/dZIi5AGLNsXQ9FoACulckMazmMA6jsBicgtNXnh6nT7N+o4BK
+X-Developer-Key: i=jyc0019@gmail.com; a=ed25519;
+ pk=nnjLv04DUE0FXih6IcJUOjWFTEoo4xYQOu7m5RRHvZ4=
 
-Hi Krzystof,
+Fix incorrect comment to match the filename.
 
-On 11/11/25 11:34, Krzysztof Kozlowski wrote:
-> On 11/11/2025 11:29, Michael Opdenacker wrote:
->> Greetings
->>
->> Thanks one more time for the reviews!
->>
->> On 11/11/25 11:13, Krzysztof Kozlowski wrote:
->>> On 11/11/2025 11:11, Yixun Lan wrote:
->>>> Hi Krzysztof,
->>>>
->>>> On 08:43 Tue 11 Nov     , Krzysztof Kozlowski wrote:
->>>>> On Mon, Nov 10, 2025 at 10:06:48PM +0000, michael.opdenacker@rootcommit.com wrote:
->>>>>> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
->>>>>>
->>>>>> Document the compatible string for the OrangePi R2S board [1], which
->>>>>> is marketed as using the Ky X1 SoC but is in fact identical to
->>>> Maybe, just say it "same" to clarify the ambiguity?
->>> What is exactly "same"? Same die? Or same blocks/pieces? Whichever you
->>> choose please make it very explicit.
->> Maybe Troy Mitchell from Spacemit can shed light on this question.
->>
->> Anyway, I could use the same wording as in this commit introducing
->> "OrangePi RV2":
->> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/arch?id=bab8dea259100a99e047fd11a48940b229d30031
->>
->> "The board is described as using the Ky X1 SoC, which, based on
->> available downstream sources and testing, appears to be identical or
->> very closely related to the SpacemiT K1 SoC".
->>
->> What do you think?
-> This clearly suggests they are not identical thus you should have also
-> dedicated compatible. Let me then precise, I thought it is obvious, that
-> except writing it more detailed in commit msg, you also need proper
-> binding expressing this. If this is not the same die and they look
-> compatible, then usually it means you need a compatible.
+Reviewd-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
+---
+Hi Stephen,
 
-Note quite, the sentence I reused says "identical *or* very closely 
-related".
+Could you please take a look at this patch for inclusion?
 
-Anyway, that's not up to me to decide, as what you suggest would mean to 
-fix the DTS for OrangePi RV2 too.
+Thanks!
+---
+Changes in v2:
+- Simplify commit message.
+- Link to v1: https://lore.kernel.org/r/20251029-b4-fix-ccu-mix-typo-v1-1-caddb3580e64@gmail.com
+---
+ drivers/clk/spacemit/ccu_mix.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I was just trying to share code for this board too in a very similar way 
-to what was shared for OrangePi RV2, so that people can use the mainline 
-kernel to collaborate and make support for this board better than the 
-custom code produced by the board vendor...
+diff --git a/drivers/clk/spacemit/ccu_mix.h b/drivers/clk/spacemit/ccu_mix.h
+index 54d40cd39b27..c406508e3504 100644
+--- a/drivers/clk/spacemit/ccu_mix.h
++++ b/drivers/clk/spacemit/ccu_mix.h
+@@ -220,4 +220,4 @@ extern const struct clk_ops spacemit_ccu_div_gate_ops;
+ extern const struct clk_ops spacemit_ccu_mux_gate_ops;
+ extern const struct clk_ops spacemit_ccu_mux_div_ops;
+ extern const struct clk_ops spacemit_ccu_mux_div_gate_ops;
+-#endif /* _CCU_DIV_H_ */
++#endif /* _CCU_MIX_H_ */
 
-Cheers
-Michael.
+---
+base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+change-id: 20251028-b4-fix-ccu-mix-typo-038c19fe30c4
 
+Best regards,
 -- 
-Michael Opdenacker
-Root Commit
-Yocto Project and OpenEmbedded Training course - Learn by doing:
-https://rootcommit.com/training/yocto/
+Encrow Thorne <jyc0019@gmail.com>
 
