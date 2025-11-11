@@ -1,67 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DCA32B99D;
-	Tue, 11 Nov 2025 07:43:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C087302774
+	for <spacemit@lists.linux.dev>; Tue, 11 Nov 2025 10:12:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762847032; cv=none; b=ugqSnSsr/IezvyUcn+Mdjf7w/Q9aKnwbaN2/OVHvcqHi06ZdicWUR1p7zTCDTRxH2GL+6gFL7vQJtDOh/QehswXedoLTemDMlR9/ZybiW8vvbV8VtLunW3yl2cZac6TyPcEJ2MCsy/6llDB9F7CQ9FSMrFw1BbPdOCzx2mU9hqo=
+	t=1762855921; cv=none; b=gjM9gyul3ppEm17UwQcvrkDN+wMVOkQ948KcroyX37l9Cci8WNOuQKqtJc4FSxpwxEV1E90gUy35JC5yKFLqwYWAPNS9djrEVp48hXJnOVQHhME3TksxSz0FsWHrG3lX/EdTKl7UPq/8XKWK+YoY1vY97ICA6oQrKaBHlh2jLGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762847032; c=relaxed/simple;
-	bh=XIv9q/YAhKheEKBaWPN6EMrhsiNlRb18dfmo/SehtNk=;
+	s=arc-20240116; t=1762855921; c=relaxed/simple;
+	bh=+gnXsHIuPue0wwQewdVdbndYYyc3aZpBEaD0suWVBTQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VOgsfoXWQ0qao3EGrTax2kfHeroG8KaZTfcR5MRxle7nOfsq/fSHmt6A7Ms/AG3qdJSmExJfmq0nOLGVRz9Ay6N7e8jRXRg97MssxQnWUrCpcrU+fmFa2gpTVWh+nfK0lLoP3+MSJdeIF3VfzN+bekArzgE/dFyGXmB6VGKYmDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gztyeICj; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gztyeICj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD707C19424;
-	Tue, 11 Nov 2025 07:43:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762847031;
-	bh=XIv9q/YAhKheEKBaWPN6EMrhsiNlRb18dfmo/SehtNk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gztyeICjwETc+OlGLVdWcmHw2w6UdifgGsZLo6PXsDC3frqxAWKLG2ui+0MXe9Jgp
-	 9gD4NgzAazwYh611kkaLMEZVQ0SdlJQCECDP+Nz4O5ZdN+QZT6Szm0vn/T5h1dwy+1
-	 2l1+35uXxTlSj/sEm1PGHOO48yZXiWjKwluQmfuv9Yq96uJioWWpI5putwtm69ClJJ
-	 xUVhNkZs8UKN4e4y0VifVmNOTpI0uKHcMSRTzC0kbB3+cGpoiQn+8jol58tC/b6CjR
-	 FWp+AvU7gNoUqebQghrhPqX51XTm/rHRcOu/3bZUujPzoymaySAzQP/2gPqqvr84uW
-	 v3/dUqMptxQKQ==
-Date: Tue, 11 Nov 2025 08:43:48 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: michael.opdenacker@rootcommit.com
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yangyu Chen <cyy@cyyself.name>, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oc2ISpyMvIrfVp7GyQh9xixKHJ4YJpH0QzKR5XVvN7xQKeVsUR5lulVJwBMqvKz1yp4BTXaN37lS5J9GgPcDufuMdItW65wGI5zPYq8X+MX+oItyIVwJIsJE0qEf5sGM/57nG9JsduhLELYOiLAqeOemGBXbAJGPC5KtCyOlfB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.119])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 3F108340DD9;
+	Tue, 11 Nov 2025 10:11:58 +0000 (UTC)
+Date: Tue, 11 Nov 2025 18:11:49 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: michael.opdenacker@rootcommit.com, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yangyu Chen <cyy@cyyself.name>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v3 1/2] dt-bindings: riscv: spacemit: Add OrangePi R2S
  board
-Message-ID: <20251111-inquisitive-ambrosial-chicken-861542@kuoka>
+Message-ID: <20251111101149-GYE1651402@gentoo.org>
 References: <20251110220641.1751392-1-michael.opdenacker@rootcommit.com>
  <20251110220641.1751392-2-michael.opdenacker@rootcommit.com>
+ <20251111-inquisitive-ambrosial-chicken-861542@kuoka>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251110220641.1751392-2-michael.opdenacker@rootcommit.com>
+In-Reply-To: <20251111-inquisitive-ambrosial-chicken-861542@kuoka>
 
-On Mon, Nov 10, 2025 at 10:06:48PM +0000, michael.opdenacker@rootcommit.com wrote:
-> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Hi Krzysztof, 
+
+On 08:43 Tue 11 Nov     , Krzysztof Kozlowski wrote:
+> On Mon, Nov 10, 2025 at 10:06:48PM +0000, michael.opdenacker@rootcommit.com wrote:
+> > From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+> > 
+> > Document the compatible string for the OrangePi R2S board [1], which
+> > is marketed as using the Ky X1 SoC but is in fact identical to
+Maybe, just say it "same" to clarify the ambiguity?
+
+> > the SpacemiT K1 SoC [2].
 > 
-> Document the compatible string for the OrangePi R2S board [1], which
-> is marketed as using the Ky X1 SoC but is in fact identical to
-> the SpacemiT K1 SoC [2].
+> Different SoC means different compatible. It is very, very unlikely that
+> different vendor made same die, which would warrant same compatible.
+> Identical does not mean the same die, so your explanation is not
+> complete.
+Unfortunately, it's true that Ky X1 is just a rebrand of SpacemiT K1 SoC.
 
-Different SoC means different compatible. It is very, very unlikely that
-different vendor made same die, which would warrant same compatible.
-Identical does not mean the same die, so your explanation is not
-complete.
+I guess it's a marketing strategy although personally I don't know
+what's the motivation behind and even wish it never happens..
 
-Best regards,
-Krzysztof
-
+-- 
+Yixun Lan (dlan)
