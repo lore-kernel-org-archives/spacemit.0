@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC72302CA7;
-	Wed, 12 Nov 2025 10:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225322F9D94
+	for <spacemit@lists.linux.dev>; Wed, 12 Nov 2025 10:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762943056; cv=none; b=jdX1LDdjJU85n8WtNXGZ2AluaJjOP7tkZoo1p3D6r2nzW9daM8tB7tlww2TIkMvhRA0fMmjfBmgOWc1v0BoEig4m5rtQqFguzY78VWhds2z+aQrRBUGqQjHxlZr2S1wKEd/Nt6R948rnxnhm7oPSUuLP+Lr6FixrtXAosi7GaL4=
+	t=1762943798; cv=none; b=vEswM+XYbe+GCXw+UX0r7p/ZUca5qAGrur8EU5GNOQJJ30gjIMk0ZB+9GaVh2bRTlFMYA1uGsNL17OEG/JX+9sbC5ajejE7827P/aFsp8IlPfJv8CDD14CiD5HxkktEDeLf6XhxUjVurtbswTR0PP47QBnPV0jRKY9MryvMCbck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762943056; c=relaxed/simple;
-	bh=PzG1QegahEtMKQ9whdA2IidWpHZlEfCT5NYKkvlcYr4=;
+	s=arc-20240116; t=1762943798; c=relaxed/simple;
+	bh=Da49LH9vc7PHEWJQa5X8y9W/+DOqC+/L8y0ZpZRCTew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tj7hKgvTedmN07A1zXZQmpMO1/G7sf1aXWOuh47bNAi82cOe6xbXYNzQtiql3Lfd5hq/3DM/bSs0IDTqT3n/k55iHSZi4V1jAayBeGtbEL3hUxOFjGJTodYXway4ETBQ++rGEGhOkmL6gmCb5gR4DDHXwY1T4HJixFbvp7ERlO4=
+	 MIME-Version:Content-Type; b=OAzAK+wumr0bgz9obpqSO8EBNsJU+3L1lZ4L5GBpKS8eOT/yLaKiSVKjPBQ9PJpmvFjEqXHk22WZjlArY4/D2COc5S5iSoRy+0Sb6VjfmNOz8wGDTwSbRlG6uOGH3M9hq7UiTQYkNCi3fYKuUDVeoJuyJXkGgiPHP3+sJ60P2U0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,42 +19,23 @@ Received: from ofsar (unknown [116.232.48.119])
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 7577934102D;
-	Wed, 12 Nov 2025 10:24:02 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id BBB72340BEF;
+	Wed, 12 Nov 2025 10:36:33 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	han.xu@nxp.com,
-	broonie@kernel.org,
-	pjw@kernel.org,
-	Alex Elder <elder@riscstar.com>
+To: Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	michael.opdenacker@rootcommit.com
 Cc: Yixun Lan <dlan@gentoo.org>,
-	Frank.li@nxp.com,
-	p.zabel@pengutronix.de,
-	guodong@riscstar.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	apatel@ventanamicro.com,
-	joel@jms.id.au,
-	geert+renesas@glider.be,
-	cyy@cyyself.name,
-	heylenay@4d2.org,
-	conor.dooley@microchip.com,
-	fustini@kernel.org,
-	linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	imx@lists.linux.dev,
-	spacemit@lists.linux.dev,
 	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v4 0/9] spi: enable the SpacemiT K1 SoC QSPI
-Date: Wed, 12 Nov 2025 18:23:49 +0800
-Message-ID: <176294293577.242112.11591899263367700984.b4-ty@gentoo.org>
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v4 0/2] riscv: spacemit: initial support for OrangePi R2S
+Date: Wed, 12 Nov 2025 18:36:25 +0800
+Message-ID: <176294344891.286285.2166158383229687355.b4-ty@gentoo.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251027133008.360237-1-elder@riscstar.com>
-References: <20251027133008.360237-1-elder@riscstar.com>
+In-Reply-To: <20251112044426.2351999-1-michael.opdenacker@rootcommit.com>
+References: <20251112044426.2351999-1-michael.opdenacker@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -65,21 +46,27 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 27 Oct 2025 08:29:58 -0500, Alex Elder wrote:
-> This series adds support for the SpacemiT K1 SoC QSPI.  This IP is
-> generally compatible with the Freescale QSPI driver, requiring three
-> minor changes to enable it to be supported.  The changes are:
->   - Adding support for optional resets
->   - Having the clock *not* be disabled when changing its rate
->   - Allowing the size of storage blocks written to flash chips
->     to be set to something different from the AHB buffer size
+On Wed, 12 Nov 2025 04:44:40 +0000, michael.opdenacker@rootcommit.com wrote:
+> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+> 
+> This adds initial support for the OrangePi R2S board [1], which
+> is marketed as using the Ky X1 SoC but is identical in die
+> and package to the SpacemiT K1 SoC [2].
+> 
+> What makes this board attractive is its 4 Ethernet ports
+> (2 x Gigagit RGMII with an external Motorcomm YT8531C PHY,
+> and 2 x 2.5 Gigabit Ethernet with RTL8125BG on an internal
+> PCI Express bus), its small form factor and its attractive
+> pricing like other OrangePi boards.
 > 
 > [...]
 
 Applied, thanks!
 
-[8/9] riscv: dts: spacemit: enable K1 SoC QSPI on BPI-F3
-      https://github.com/spacemit-com/linux/commit/41d34e0b5497f919229d32580fbe34386087458f
+[1/2] dt-bindings: riscv: spacemit: Add OrangePi R2S board
+      https://github.com/spacemit-com/linux/commit/323256d11e01d5ee2a0a2e7b682890498b90b212
+[2/2] riscv: dts: spacemit: Add OrangePi R2S board device tree
+      https://github.com/spacemit-com/linux/commit/63e572b11464a233f45ad469ba64b8b9e68a9cd1
 
 Best regards,
 -- 
