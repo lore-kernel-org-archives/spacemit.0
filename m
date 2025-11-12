@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5E22D97B5
-	for <spacemit@lists.linux.dev>; Wed, 12 Nov 2025 06:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41101990C7
+	for <spacemit@lists.linux.dev>; Wed, 12 Nov 2025 06:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762929437; cv=none; b=qsKEG3z469zcObknaL3291JdDRu5PG/x35K1UJrq8TY4Hxc9WP45IpI+vGsjgKzHGNYGu1p8xNDraWtkqZbU70+fHs1SQiia9oMj+oXsu3XLzgt8NmIaUOvKp97P+h1BwIoQz7GNVRnnowt/pct4TAiEBgg3cxozZkdz/x2M4NQ=
+	t=1762929575; cv=none; b=haOiy8m5CYKpHFkwQhHBQ0KpKBustR9SYYwMASo9nhHdfi3zDXj8hrN9xIRc/I4AKRp0bb+qyBL7F8P0/EcC7kFRxWzMWIfUFetaIV2uas9OK2VOX0AYDKxnk2go8r6+wqLVWQ3oKzH40aCLAZ6Y7DqNXy7HbpEcOhxlGB04gIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762929437; c=relaxed/simple;
-	bh=JnovqX2d8PjMw7/74aR9yABXeIKXajAr1ScoI7eKji8=;
+	s=arc-20240116; t=1762929575; c=relaxed/simple;
+	bh=DTNCKMyHHN/yT9JDBGo00ulVv1uA6WMKBP5RBPVu5bY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CS2eQ1LdD5IbCUbFn0zp93Iwt/USdUqLTPn0aAM4rl3IEVjSsuVYEK8TdgQyVoRuHbep6T7xlg0gap8VrEcOyZJtdduJ4s1Mpd1biBYhxB2cWiOPG9uQ5uyjQfloAaK/eyDz0j0pVDavPES+g6FAu8Xe43ZpwiEMtIpK+ArTTf8=
+	 Content-Type:Content-Disposition:In-Reply-To; b=n/d2tfedavxgnVfuJzgM0JQ1eHqSeJuPJ2nJkWpAvMxULr+Xqn0lPfpFRtVNGJxoJsDuEVhEMXgaetd76BYahJN2sTNM4FCDIgszuZ7lNPxbnDIJ1Lws2pOmTvK83EaHlh7hwofxSJL528lamKBafp1iAZNnxQavMilufCFOkx8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,23 +19,17 @@ Received: from localhost (unknown [116.232.48.119])
 	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 8D31B340F28;
-	Wed, 12 Nov 2025 06:37:14 +0000 (UTC)
-Date: Wed, 12 Nov 2025 14:37:10 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id D3A86340F28;
+	Wed, 12 Nov 2025 06:39:32 +0000 (UTC)
+Date: Wed, 12 Nov 2025 14:39:25 +0800
 From: Yixun Lan <dlan@gentoo.org>
 To: michael.opdenacker@rootcommit.com
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yangyu Chen <cyy@cyyself.name>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] dt-bindings: riscv: spacemit: Add OrangePi R2S
- board
-Message-ID: <20251112063710-GYD1677982@gentoo.org>
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v4 0/2] riscv: spacemit: initial support for OrangePi R2S
+Message-ID: <20251112063925-GYE1677982@gentoo.org>
 References: <20251112044426.2351999-1-michael.opdenacker@rootcommit.com>
- <20251112044426.2351999-2-michael.opdenacker@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,42 +38,38 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251112044426.2351999-2-michael.opdenacker@rootcommit.com>
+In-Reply-To: <20251112044426.2351999-1-michael.opdenacker@rootcommit.com>
 
 Hi Michael,
-  Thanks for the new iteration
-
-Hi Krzysztof,
-  Is this version addressed your concern? I would like to queue it for
-v6.19, but let me know in case you still have objection..
 
 On 04:44 Wed 12 Nov     , michael.opdenacker@rootcommit.com wrote:
 > From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 > 
-> Document the compatible string for the OrangePi R2S board [1], which
-> is marketed as using the Ky X1 SoC but is in fact identical in die
+> This adds initial support for the OrangePi R2S board [1], which
+> is marketed as using the Ky X1 SoC but is identical in die
 > and package to the SpacemiT K1 SoC [2].
+> 
+> What makes this board attractive is its 4 Ethernet ports
+> (2 x Gigagit RGMII with an external Motorcomm YT8531C PHY,
+> and 2 x 2.5 Gigabit Ethernet with RTL8125BG on an internal
+> PCI Express bus), its small form factor and its attractive
+> pricing like other OrangePi boards.
+> 
+> What is supported:
+> - Serial console on serial UART
+> - 8 GB eMMC
+> - 2x Gigabit RGMII Ethernet ports
+> 
+> This patch series is based on Spacemit's Linux tree,
+> "linux-for-next" branch [3]
 > 
 > Link: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-R2S.html [1]
 > Link: https://www.spacemit.com/en/key-stone-k1 [2]
-> Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-> ---
->  Documentation/devicetree/bindings/riscv/spacemit.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> Link: https://github.com/spacemit-com/linux/commits/k1/dt-for-next [3]
 > 
-> diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/Documentation/devicetree/bindings/riscv/spacemit.yaml
-> index 52fe39296031..9c49482002f7 100644
-> --- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
-> +++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
-> @@ -23,6 +23,7 @@ properties:
->                - bananapi,bpi-f3
->                - milkv,jupiter
->                - spacemit,musepi-pro
-> +              - xunlong,orangepi-r2s
->                - xunlong,orangepi-rv2
->            - const: spacemit,k1
->  
-> 
+for the series
+
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
 
 -- 
 Yixun Lan (dlan)
