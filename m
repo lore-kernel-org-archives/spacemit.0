@@ -1,53 +1,41 @@
-Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.62.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC1F4A35
-	for <spacemit@lists.linux.dev>; Wed, 12 Nov 2025 06:16:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.62.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5E22D97B5
+	for <spacemit@lists.linux.dev>; Wed, 12 Nov 2025 06:37:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762928178; cv=none; b=FtmuVU+vVHz9MTGQdhCivrT0Pkqivlr7ERjvK66sw9ziWVrqqtlmpB444HP2ynXwFUTzWGfi+0iRwnpo2wJssVEPSSc4raa2qyDz8qg4VZX/TMEcuXrcEzOP+sU22PYTIcLEKYLePoQBdPFkDAgG+6ZVo7kG4b7Ywz6dTyhp4T0=
+	t=1762929437; cv=none; b=qsKEG3z469zcObknaL3291JdDRu5PG/x35K1UJrq8TY4Hxc9WP45IpI+vGsjgKzHGNYGu1p8xNDraWtkqZbU70+fHs1SQiia9oMj+oXsu3XLzgt8NmIaUOvKp97P+h1BwIoQz7GNVRnnowt/pct4TAiEBgg3cxozZkdz/x2M4NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762928178; c=relaxed/simple;
-	bh=ZzwUCfCOYUTbEaBhH3v6UCAZXDLHw9mxwZkVmB9i0/A=;
+	s=arc-20240116; t=1762929437; c=relaxed/simple;
+	bh=JnovqX2d8PjMw7/74aR9yABXeIKXajAr1ScoI7eKji8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BMFQpZCDXCzkpFCLXqEq8OXhrRFWDWYtefprS6TZ0BTOo/41jqPXmZKl/SsK9UCNVCti6fYbnrHkuvvfb6glQlyJr6ftjBU7EKkmOurAbI5zpUE7y5fbwALLSbkWcBUt/jEK8AA17YuXvTFZhEfYrXygowYFIi734fN0mps+Fhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=BGpKj4G1; arc=none smtp.client-ip=114.132.62.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="BGpKj4G1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1762928090;
-	bh=T8n6eKWtt9uTv/6xGBgqlzn+awiCOgVLvVexDCR5CIA=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=BGpKj4G1/PmwCdBpSZ1rYyFYn2RdiO8QhKEatFTm1PNHG1wPQCaNeLRu5ds9tXwdg
-	 qy4793GvRyXmy/TSu0YOq6892woCBAYZLq+v/epbcojeyGIN1eIQh+QwyWd8H0PkOe
-	 vuIF7H/qofSqEMvgJw6N+Z9T5ymUERQjuk47bYM0=
-X-QQ-mid: esmtpsz10t1762928081t5c587094
-X-QQ-Originating-IP: kbEYhoF8GacQU0UCEfUev11PykziyM/ntLfoFyAF7Zo=
-Received: from = ( [120.239.196.22])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 12 Nov 2025 14:14:40 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 12126374271057103050
-EX-QQ-RecipientCnt: 13
-Date: Wed, 12 Nov 2025 14:14:38 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-i2c@vger.kernel.org,
-	linux-rtc@vger.kernel.org,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH v2 2/4] i2c: spacemit: configure ILCR for accurate SCL
- frequency
-Message-ID: <01C031AEFDAD4CE5+aRQlzq76t3huDaLg@kernel.org>
-References: <20251027-p1-kconfig-fix-v2-0-49688f30bae8@linux.spacemit.com>
- <20251027-p1-kconfig-fix-v2-2-49688f30bae8@linux.spacemit.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=CS2eQ1LdD5IbCUbFn0zp93Iwt/USdUqLTPn0aAM4rl3IEVjSsuVYEK8TdgQyVoRuHbep6T7xlg0gap8VrEcOyZJtdduJ4s1Mpd1biBYhxB2cWiOPG9uQ5uyjQfloAaK/eyDz0j0pVDavPES+g6FAu8Xe43ZpwiEMtIpK+ArTTf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.119])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 8D31B340F28;
+	Wed, 12 Nov 2025 06:37:14 +0000 (UTC)
+Date: Wed, 12 Nov 2025 14:37:10 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: michael.opdenacker@rootcommit.com
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yangyu Chen <cyy@cyyself.name>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: riscv: spacemit: Add OrangePi R2S
+ board
+Message-ID: <20251112063710-GYD1677982@gentoo.org>
+References: <20251112044426.2351999-1-michael.opdenacker@rootcommit.com>
+ <20251112044426.2351999-2-michael.opdenacker@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -56,62 +44,42 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251027-p1-kconfig-fix-v2-2-49688f30bae8@linux.spacemit.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MijavZDuOhz7bE/ElR+jNrA/dTIV1tVGbqbsNFgB2HmIBKErA6uKGCF2
-	tAoseYW/zJ1ETdp6nw3J292jqD7KBU1GJCCEJCPtq6Z6eHvMGzyy6BKsCCEL5uclkyS9ZFk
-	w9+IjcL0W/CQIxaNXcg01GKxsi7URvxUJzzdP+sq7UtrmOGF1iWqAZ3EONwAervWgLnFyEa
-	6nO9x/yuZ4joaqDclQJJzMMMxF5l9ETICsFAvqkxEnbFtHe4znmYlnEeNAt/KVgKcqjJsKX
-	RM5YRGso85Ck1kqOtd2nhrw5Oudj4bV0k1zLHnzuoDvagmELqjkzcnLEBG8koqtbep1g7Gl
-	ng0mHIcLsXLxYAwKOnjTR/1t3/dDf2Lk4jnRid/171TI3sHu24Ixj4uI8TBSdwh1SxIdqGd
-	pDzz2pZo6CVK1ZyhB4aJP1VdZIfvzWAlaY520OpHfRwA3YVhGSTgbZ+S6o6R9HCH7ib0a06
-	9ZK45C4lEWfU80pz12m5+rclkU3NVUjEEyeOqcDhDucKMRaJ8MASppweW7LdlbaTGWdp8gA
-	BFhyoxrxa5DC9MJNXXhflqz2DWBkZfzvN2RoXqmvjIghZxPJqO9FORLBz+j2ZTTKxnhM2TU
-	jbn0cFBVB/qRc3H6r8hV5uHXJXqxSH0zLN9Vv4L5NshIB9KRIllSk+yyKKTA1t1azWIGiUP
-	MuWkFcE6aDQXsPKVsgm8axLSzukQbUO11LCSbBp13DnNDdnstycT+2s3XBheGnF6HZOlNrE
-	ztX4K0ZLQvgpe/5VAQhXHauykmiFTGfkYKUXp5k5JqmWnpr8YITMqXGqYcQzXozq2DRW3Na
-	YolAdKafppd5NXeUfhwKbcyHuJLDPkuSWlABBdGoRqs4W6O2Gp62rSq1LKPxnbpbcGocY8j
-	6fPBhfKmGUQJE9wtA8xVU4CWPlCmyTsu0k4G9f/qg32w52nhs/SGPeonTubkXqF5KEZoSGZ
-	FD+XZwz4fqhnZvOvUDkoDN0BfTLCBLuen1gJQtW0mqbP3oWlLSzWvwmnk6QYK9D8XO7+ahQ
-	mklHfedVngMD5eK1YKcxzVO0OfOJVX0PSVmy4FkI6GKRGUjws6r3q0WKTi/xCFzSAQy71Dl
-	TKwiRpqC7k5Q6YPMcrlXU1ozxAYgeyUU3wnQaQxmTdx
-X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
-X-QQ-RECHKSPAM: 0
+In-Reply-To: <20251112044426.2351999-2-michael.opdenacker@rootcommit.com>
 
-On Mon, Oct 27, 2025 at 01:48:06PM +0800, Troy Mitchell wrote:
-> The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
-> master mode operations is determined by the ILCR (I2C Load Count Register).
-> Previously, the driver relied on the hardware's reset default
-> values for this register.
+Hi Michael,
+  Thanks for the new iteration
+
+Hi Krzysztof,
+  Is this version addressed your concern? I would like to queue it for
+v6.19, but let me know in case you still have objection..
+
+On 04:44 Wed 12 Nov     , michael.opdenacker@rootcommit.com wrote:
+> From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 > 
-> The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
-> frequencies lower than intended. For example, with the default
-> 31.5 MHz input clock, these default settings result in an SCL
-> frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
-> and approximately 338 kHz (fast mode) when targeting 400 kHz.
-> These frequencies are below the 100 kHz/400 kHz nominal speeds.
+> Document the compatible string for the OrangePi R2S board [1], which
+> is marketed as using the Ky X1 SoC but is in fact identical in die
+> and package to the SpacemiT K1 SoC [2].
 > 
-> This patch integrates the SCL frequency management into
-> the Common Clock Framework (CCF). Specifically, the ILCR register,
-> which acts as a frequency divider for the SCL clock, is now registered
-> as a managed clock (scl_clk) within the CCF.
-> 
-> This patch also cleans up unnecessary whitespace
-> in the included header files.
-> 
-> Reviewed-by: Yixun Lan <dlan@gentoo.org>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> Link: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-R2S.html [1]
+> Link: https://www.spacemit.com/en/key-stone-k1 [2]
+> Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 > ---
-> This patch was affected by the P1 Kconfig, which caused the maintainer
-> to revert it.
-> The current commit is a direct cherry-pick and reserves the original changelog.
-> This note is to clarify for anyone who sees the cover letter marked as v2
-> while the changelog entries reach v4.
-Hi Andi,
-Since the issue affecting the I2C patch has been fixed [1],
-I think it should be ready to be merged now. What do you think?
+>  Documentation/devicetree/bindings/riscv/spacemit.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> index 52fe39296031..9c49482002f7 100644
+> --- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> +++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> @@ -23,6 +23,7 @@ properties:
+>                - bananapi,bpi-f3
+>                - milkv,jupiter
+>                - spacemit,musepi-pro
+> +              - xunlong,orangepi-r2s
+>                - xunlong,orangepi-rv2
+>            - const: spacemit,k1
+>  
+> 
 
-Link: https://lore.kernel.org/all/176244506110.1925720.10807118665958896958.b4-ty@kernel.org/ [1]
-
-                                    - Troy
+-- 
+Yixun Lan (dlan)
