@@ -1,75 +1,68 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41101990C7
-	for <spacemit@lists.linux.dev>; Wed, 12 Nov 2025 06:39:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EF229A326;
+	Wed, 12 Nov 2025 10:11:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762929575; cv=none; b=haOiy8m5CYKpHFkwQhHBQ0KpKBustR9SYYwMASo9nhHdfi3zDXj8hrN9xIRc/I4AKRp0bb+qyBL7F8P0/EcC7kFRxWzMWIfUFetaIV2uas9OK2VOX0AYDKxnk2go8r6+wqLVWQ3oKzH40aCLAZ6Y7DqNXy7HbpEcOhxlGB04gIw=
+	t=1762942269; cv=none; b=FXjfH2ZIPgV/ZNqvqNgNYsdUrfExNtGKRIC4+xykiHcalLCadkVBhmYGjKMwoV3An/NKOdzuRrzwyuRazzE5f17+rb/ebQfuu7c3m3NJtZPDyKCv1VxE1r4sqfyMK9Auli9RRTInlVkgowHhhnTX7udTfVWLsR8BesO6Eb3ZbrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762929575; c=relaxed/simple;
-	bh=DTNCKMyHHN/yT9JDBGo00ulVv1uA6WMKBP5RBPVu5bY=;
+	s=arc-20240116; t=1762942269; c=relaxed/simple;
+	bh=67K+zUYP/aX07sPx28wY3sUmjVIxiApKZNs5WbP/U/E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n/d2tfedavxgnVfuJzgM0JQ1eHqSeJuPJ2nJkWpAvMxULr+Xqn0lPfpFRtVNGJxoJsDuEVhEMXgaetd76BYahJN2sTNM4FCDIgszuZ7lNPxbnDIJ1Lws2pOmTvK83EaHlh7hwofxSJL528lamKBafp1iAZNnxQavMilufCFOkx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.48.119])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id D3A86340F28;
-	Wed, 12 Nov 2025 06:39:32 +0000 (UTC)
-Date: Wed, 12 Nov 2025 14:39:25 +0800
-From: Yixun Lan <dlan@gentoo.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lf/yJQwgE+HXmUST41i5+GqO9FlAVWgXAdpo/Gx2+Err4Re40rO/DXEhTvab0FCUxAn778wxgjGq0itMr9ElsG+ELJbKMZZ2gBDw3hcD5EFm9vd6wmC5OQiBmV58QE9MbPuB4ASkafUYyO0DSmkUn7StaBmfr+iRO+5huOVv3As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dsFw02eZ; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dsFw02eZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24445C16AAE;
+	Wed, 12 Nov 2025 10:11:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762942268;
+	bh=67K+zUYP/aX07sPx28wY3sUmjVIxiApKZNs5WbP/U/E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dsFw02eZhsIPw+FfG11keYy8dCIECtSNGvyD+WPxdkQesFL6xRcwuaZ4wghA5HKT6
+	 LaSlvWi4cRWWWLMmgzqwOlqzVRzO7lZLLwofPFRej3C2JevpIiRqg3kPmc8UoX8vOJ
+	 XOJBPp4Bf42kezFpeQDGQYrGWjFnhAt/P9wReRuWGotHHidZASLq2m6ymwwAU2NaAW
+	 A8gzJ1aS5FNm+yMpaS1C95OCNLJkfrIdAetAvdGsv4rDTleZiOuZ4i2973aRiXPNTu
+	 WB0xggNCqMw+R6Y0P4VGJnUOwowBLdSGzCFJhUjQhr0npfC5qFTTR+8Aumke1zSV+s
+	 wZK3WwYSM2d9A==
+Date: Wed, 12 Nov 2025 11:11:06 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: michael.opdenacker@rootcommit.com
-Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v4 0/2] riscv: spacemit: initial support for OrangePi R2S
-Message-ID: <20251112063925-GYE1677982@gentoo.org>
+Cc: Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yangyu Chen <cyy@cyyself.name>, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: riscv: spacemit: Add OrangePi R2S
+ board
+Message-ID: <20251112-devious-devout-urchin-86634a@kuoka>
 References: <20251112044426.2351999-1-michael.opdenacker@rootcommit.com>
+ <20251112044426.2351999-2-michael.opdenacker@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251112044426.2351999-1-michael.opdenacker@rootcommit.com>
+In-Reply-To: <20251112044426.2351999-2-michael.opdenacker@rootcommit.com>
 
-Hi Michael,
-
-On 04:44 Wed 12 Nov     , michael.opdenacker@rootcommit.com wrote:
+On Wed, Nov 12, 2025 at 04:44:40AM +0000, michael.opdenacker@rootcommit.com wrote:
 > From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 > 
-> This adds initial support for the OrangePi R2S board [1], which
-> is marketed as using the Ky X1 SoC but is identical in die
+> Document the compatible string for the OrangePi R2S board [1], which
+> is marketed as using the Ky X1 SoC but is in fact identical in die
 > and package to the SpacemiT K1 SoC [2].
-> 
-> What makes this board attractive is its 4 Ethernet ports
-> (2 x Gigagit RGMII with an external Motorcomm YT8531C PHY,
-> and 2 x 2.5 Gigabit Ethernet with RTL8125BG on an internal
-> PCI Express bus), its small form factor and its attractive
-> pricing like other OrangePi boards.
-> 
-> What is supported:
-> - Serial console on serial UART
-> - 8 GB eMMC
-> - 2x Gigabit RGMII Ethernet ports
-> 
-> This patch series is based on Spacemit's Linux tree,
-> "linux-for-next" branch [3]
 > 
 > Link: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-R2S.html [1]
 > Link: https://www.spacemit.com/en/key-stone-k1 [2]
-> Link: https://github.com/spacemit-com/linux/commits/k1/dt-for-next [3]
-> 
-for the series
+> Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
 
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
--- 
-Yixun Lan (dlan)
+Best regards,
+Krzysztof
+
