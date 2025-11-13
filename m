@@ -1,38 +1,39 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13599314A86
-	for <spacemit@lists.linux.dev>; Thu, 13 Nov 2025 10:15:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A7533F8C5
+	for <spacemit@lists.linux.dev>; Thu, 13 Nov 2025 13:23:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763028916; cv=none; b=mviJm1rHJRAwwzy/IaENnfvi3E7F8SRRHA7k+OQYGHKkHA6xKDYuyJSk3pWZIqD8Y3Zjk1J6q/5xH/TNcZhXPA1t18aalwL7+mqwgu93fzv6jh+RNGZR6B3z3P0bVO1WWph0W9JOygU8jNAYg7bzut3uAMu9TxYAWKTlfFhd75Y=
+	t=1763040228; cv=none; b=Z6fP9wXhlRFXeajxMKIQmCjogVpSaRgiGPZVcW/etYwaEehdMZcsPdumFCG9nPc5Ts11BftpAtDHywlTaaKY8IMpJtBaWiGSzPpARCKz2rkol7Xjkc/xW0jse53VAoufZByc6/uOqGQoVGkPTeJXCQTLuXaVkLXmptLIGV/17YY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763028916; c=relaxed/simple;
-	bh=BAf4PChdrXsEECboXjuWhMhLZMG7PICo2eR6NUwLSpQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qUWUGlDcsQg3heuz3s+87ywOM+DlJTbhvQcQDZJN5PB3sFqwuq29CEDFn7JzSnTe9hJsA5M4lk3Q3dad7c9NkjnjxACv8rU/jdA2HXH9KN/TrOAj0qC2MZVMGWiFSWHa76OKbJYGlfnbksD/5EawLqOjmom+vkiSMNdoJ/zwUg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from ofsar (unknown [116.232.48.119])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 80DDB340861;
-	Thu, 13 Nov 2025 10:15:11 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-To: soc@kernel.org
-Cc: Yixun Lan <dlan@gentoo.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alex Elder <elder@riscstar.com>,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [GIT PULL] RISC-V SpacemiT Devicetrees for v6.19
-Date: Thu, 13 Nov 2025 18:14:50 +0800
-Message-ID: <20251113180732-GYC0846694@gentoo.org>
-X-Mailer: git-send-email 2.51.0
+	s=arc-20240116; t=1763040228; c=relaxed/simple;
+	bh=/a60LCG9PrF70ChplJbx/syVHIICzDVRIa3uNVVUQus=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dI7hGZWIZ8Nxhe5nLBuTwOZSQTagmKtzKR684SQYhrXsuTvg6mxB7YPtmMSnaOpVGbIWrZZGNlu4o/64MtV2VG4+bLYMprwbqMnjRnQ/yU64uBY3ziT7W0OeRXngyujlOx7+I7vjRPlwgHQtjHFtI2gPA25l3rxzpKu9KvMSdXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=VSLxr6KF; arc=none smtp.client-ip=18.169.211.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="VSLxr6KF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1763040129;
+	bh=iiQHeHD/K/spNsUBdxVuSJcnkwG9NvxKtgVBuXpJ5UA=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=VSLxr6KFFOhXnCD61Lo1g/KdAmhdIrkadD3MiXist87pOW2cvdUhqM4T97vvLYuz+
+	 bYtwPQOtHCFPQVE3mI+G3wfPTqEHHh8TN2s8u/6slkes/0nYUi5TdySO+IKXHKXXmk
+	 AgzEdzrVy0EZt6heri3VMFPd8IxDMRX5U60JxaW8=
+X-QQ-mid: zesmtpip3t1763040119tba5b044c
+X-QQ-Originating-IP: WSzQyCAMDRB+Hc9NMdMMaxfI+JAuDSF0OGMd4+PLci0=
+Received: from = ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 13 Nov 2025 21:21:58 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 8025135946155333244
+EX-QQ-RecipientCnt: 11
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Thu, 13 Nov 2025 21:21:50 +0800
+Subject: [PATCH v2] i2c: spacemit: fix detect issue
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -41,70 +42,138 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Message-Id: <20251113-fix-k1-detect-failure-v2-1-b02a9a74f65a@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAG3bFWkC/3XMywqDMBCF4VeRWXfE8U5XvkfpIiZjHapGkiiC+
+ O4NXXXT5Q/nfCd4dsIe7skJjnfxYpcY+S0BParlxSgmNuRZXhFRgYMc+CY0HFgHHJRMm2Osi7I
+ tuKyobnuI39VxHH7dxzP24OyMYXSsfrTsn7YTEvZ91qjWNIYb3U2ybEfqV6V5lpBqO8N1fQCli
+ VWMvQAAAA==
+X-Change-ID: 20251113-fix-k1-detect-failure-63483e45168b
+To: Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Alex Elder <elder@riscstar.com>, 
+ Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>
+Cc: Troy Mitchell <troymitchell988@gmail.com>, linux-i2c@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1763040115; l=3381;
+ i=troy.mitchell@linux.spacemit.com; s=20250712; h=from:subject:message-id;
+ bh=/a60LCG9PrF70ChplJbx/syVHIICzDVRIa3uNVVUQus=;
+ b=DM8fHhZFeWQXvqw7nbmlAsyJlUSjCgsIBu/safkH52iUImXXhZH5f3ebQmsasy+Mthz7ir5FA
+ tbmrLiWBoRhDZuGZCUJSXXktiIPpOq6lUSbKg5fd75d2sYjDV33dgft
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=zhRP1xE0bftrurqSWI+SzcSdJGIZ0BTTY9Id0ESzqlI=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NCMb4wasipbGbqoHIyEbzxZ4qZVClhsnRcSodWTTvyZc7Dj3SX8Mx9gL
+	Xj1tMAuJZtpwAFUJccUmc8TL8DstggYJn6TVgP5UWHHVQJNPDuMiYt5VCzzmdyky8CeHRXM
+	hcugu67WB8Ey5AAh2gwXStczaVh2C4QEclDpZZO0PufCpvxrJVY5DjPE//DJFAidjF5g0rG
+	8L/UGIaDJClytMoyfmq2whIHbfbugYOP/bfkaZrj3ktSHeHQ6Mj2W2NSt3Ub/xT1ksoNeqG
+	PX+5szexPebvyBnP5IOJLDFBoOg2TzCHPndCKqI6hETYb87laynjSt2dPIIYy762ilumhZr
+	YfVuuxfd5oE+upn4hBSaJXr4qd6wkuQJYAQxrKSZwI+4wot9ficKUotlZmvX6DFSkKYMHYq
+	C+b25c0RkW6ZDFh4et6sitgoMlQ3jPTfZeoKNbtEireoj9HhmZ8AXqC/zeJ0Hf6mnI9JE7V
+	7mHzZ95QHjbCIjjlK0k80EiuMEjT0QqKolFzLYgHoeAo9Sig/xER9OTz8hj3UnkLMdwUB+9
+	rE5Rbezb6HD7GqfXPTSY8pbNCTJU5dwAOZKF1aOjXQFwerBRqY6zjR+cu4zI53MCYV5rsa7
+	aH5dgQZFLq+OMXG+qKVXAdQrS5muB7eiPTJX6g8Efo2eigXXONi3NkbaOR6SQHxQ0apInzy
+	mhd3RD7OxYnGVqrT/HpnC2sdiXuSAnfyF4MC0mMUTVmvym0oai8Ky2xsxacigO9avD7qQZf
+	Fz8tUEc4PAL1HsQ92uqWFDKyUDlpTaGwFhxPN+QbbuWWIiEAF0EiHLPprgwhAobL2ZKMqZa
+	N2Mjw0fXWl9r1vSn0qE/KKJaAP3DCM7e55TRQLntsbOApBEk3Rtxr3SLR4etEH1nA/iOsvO
+	CQkpeE1p0jaOMZg77i9gft0jK0ZmwzHR9+d2CKrXUpJhRBJMGYGUdKum3CpEBqcJD0qBfX+
+	yUWkQfiiqkI14IXA7URh90YStSqWC9E4FIBaQ9pH3gVdlwA61Vb5ITcV9WFxOfvki/z5lnS
+	BlnMDORJWKCKL+iW+iuXeCIoU3GoiBk7XOchsEs7HvHaLL+Xvmp7Us0sjJ0QXE7DSwdIiif
+	LTfA6IzXiE0xulVo2LmSabasKKsBp2gaTShFVMRfqQIHcxV/3qBbvwbAaQy3naT2B60qZma
+	pjVPHyEMFvlgXDWXK+4YbnMWbBHs9bjCjuoJ
+X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
+X-QQ-RECHKSPAM: 0
 
-Hi Arnd,
+This commit addresses two issues causing i2c detect to fail.
 
-   Please pull SpacemiT's DeviceTree changes for v6.19
+The identified issues are:
 
-Yixun Lan
+1. Incorrect error handling for BED (Bus Error No ACK/NAK):
+   Before this commit, Both ALD (Arbitration Loss Detected) and
+   BED returned -EAGAIN.
+2. Missing interrupt status clear after initialization in xfer():
+   On the K1 SoC, simply fixing the first issue changed the error
+   from -EAGAIN to -ETIMEOUT. Through tracing, it was determined that
+   this is likely due to MSD (Master Stop Detected) latency issues.
 
-The following changes since commit 3a8660878839faadb4f1a6dd72c3179c1df56787:
+   That means the MSD bit in the ISR may still be set on the next transfer.
+   As a result, the controller won't work — we can see from the scope that
+   it doesn't issue any signal.
+   (This only occurs during rapid consecutive I2C transfers.
+   That explains why the issue only shows up with i2cdetect.)
 
-  Linux 6.18-rc1 (2025-10-12 13:42:36 -0700)
+With these two fixes, i2c device detection now functions correctly on the K1 SoC.
 
-are available in the Git repository at:
+Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+Changelog in v2:
+- handle ALD and BED errors separately in spacemit_i2c_handle_err()
+- move clear_int_status() above spacemit_i2c_init()
+- move clear_int_status() from xfer() into spacemit_i2c_init()
+- Link to v1: https://lore.kernel.org/all/20251103-fix-k1-detect-failure-v1-1-bb07a8d7de7c@linux.spacemit.com/
+---
+ drivers/i2c/busses/i2c-k1.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-  https://github.com/spacemit-com/linux tags/spacemit-dt-for-6.19-1
+diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+index 6b918770e612e098b8ad17418f420d87c94df166..d42c03ef5db5984ea8e06b3d7eb485b4f899e616 100644
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -158,11 +158,16 @@ static int spacemit_i2c_handle_err(struct spacemit_i2c_dev *i2c)
+ {
+ 	dev_dbg(i2c->dev, "i2c error status: 0x%08x\n", i2c->status);
+ 
+-	if (i2c->status & (SPACEMIT_SR_BED | SPACEMIT_SR_ALD)) {
++	/* Arbitration Loss Detected */
++	if (i2c->status & SPACEMIT_SR_ALD) {
+ 		spacemit_i2c_reset(i2c);
+ 		return -EAGAIN;
+ 	}
+ 
++	/* Bus Error No ACK/NAK */
++	if (i2c->status & SPACEMIT_SR_BED)
++		spacemit_i2c_reset(i2c);
++
+ 	return i2c->status & SPACEMIT_SR_ACKNAK ? -ENXIO : -EIO;
+ }
+ 
+@@ -224,6 +229,12 @@ static void spacemit_i2c_check_bus_release(struct spacemit_i2c_dev *i2c)
+ 	}
+ }
+ 
++static inline void
++spacemit_i2c_clear_int_status(struct spacemit_i2c_dev *i2c, u32 mask)
++{
++	writel(mask & SPACEMIT_I2C_INT_STATUS_MASK, i2c->base + SPACEMIT_ISR);
++}
++
+ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
+ {
+ 	u32 val;
+@@ -267,12 +278,8 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
+ 	val = readl(i2c->base + SPACEMIT_IRCR);
+ 	val |= SPACEMIT_RCR_SDA_GLITCH_NOFIX;
+ 	writel(val, i2c->base + SPACEMIT_IRCR);
+-}
+ 
+-static inline void
+-spacemit_i2c_clear_int_status(struct spacemit_i2c_dev *i2c, u32 mask)
+-{
+-	writel(mask & SPACEMIT_I2C_INT_STATUS_MASK, i2c->base + SPACEMIT_ISR);
++	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
+ }
+ 
+ static void spacemit_i2c_start(struct spacemit_i2c_dev *i2c)
 
-for you to fetch changes up to 5a97a38c22799a802f33001dcb022d2942fe4a41:
+---
+base-commit: 6fa9041b7177f6771817b95e83f6df17b147c8c6
+change-id: 20251113-fix-k1-detect-failure-63483e45168b
 
-  riscv: dts: spacemit: define all missing I2C controller nodes (2025-11-12 18:53:26 +0800)
+Best regards,
+-- 
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-----------------------------------------------------------------
-RISC-V SpacemiT DT changes for 6.19
-
-- Add Uart and I2C nodes
-- Add P1 PMIC nodes
-- Add MusePi Pro board support
-- Add OrangePi R2S board support
-- Enable eeprom for BPI-F3
-- Enable QSPI on BPI-F3
-- Enable Ethernet and PDMA on OrangePi RV2
-
-----------------------------------------------------------------
-Alex Elder (4):
-      riscv: dts: spacemit: enable the i2c8 adapter
-      riscv: dts: spacemit: define fixed regulators
-      riscv: dts: spacemit: define regulator constraints
-      riscv: dts: spacemit: enable K1 SoC QSPI on BPI-F3
-
-Aurelien Jarno (3):
-      riscv: dts: spacemit: enable the i2c2 adapter on BPI-F3
-      riscv: dts: spacemit: add 24c02 eeprom on BPI-F3
-      riscv: dts: spacemit: add i2c aliases on BPI-F3
-
-Hendrik Hamerlinck (1):
-      riscv: dts: spacemit: add UART pinctrl combinations
-
-Michael Opdenacker (3):
-      riscv: dts: spacemit: add Ethernet and PDMA to OrangePi RV2
-      dt-bindings: riscv: spacemit: Add OrangePi R2S board
-      riscv: dts: spacemit: Add OrangePi R2S board device tree
-
-Troy Mitchell (4):
-      dt-bindings: riscv: spacemit: add MusePi Pro board
-      riscv: dts: spacemit: add MusePi Pro board device tree
-      riscv: dts: spacemit: reorder i2c2 node
-      riscv: dts: spacemit: define all missing I2C controller nodes
-
- .../devicetree/bindings/riscv/spacemit.yaml        |   2 +
- arch/riscv/boot/dts/spacemit/Makefile              |   2 +
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    | 172 ++++++++
- arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts     |  79 ++++
- arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts   |  90 ++++
- arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   |  52 +++
- arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       | 465 ++++++++++++++++++++-
- arch/riscv/boot/dts/spacemit/k1.dtsi               | 122 ++++++
- 8 files changed, 982 insertions(+), 2 deletions(-)
- create mode 100644 arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
- create mode 100644 arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
