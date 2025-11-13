@@ -1,211 +1,210 @@
-Received: from cyan.pear.relay.mailchannels.net (cyan.pear.relay.mailchannels.net [23.83.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f193.google.com (mail-il1-f193.google.com [209.85.166.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F63F3128C6
-	for <spacemit@lists.linux.dev>; Thu, 13 Nov 2025 19:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.216.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763060672; cv=pass; b=mNpOkV08Nez7UJ1tvNI2YZyHPnT8rF5/KVrO2NaZ063Ck3VjWl8gsvv5P4tOEfYueRRxNuRFhX0XM8q72eY0dI+GHWqWTS372qi9hIPHmO/uc4qxcinOYdC5aBlRwTEAiv/VKjS/F6BYVCsfhbYVue7KmZ8/yfo7yL9v4F38BJA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763060672; c=relaxed/simple;
-	bh=0qwrqizuyTJDSMAjVUdzIob7Re4FFYGijGPGnc5fkVE=;
-	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
-	 Content-Type:Date; b=mo+018ByIjh9nqSUdvGD41iG/CVnG/T6CoESjy4QZmmfwVlV2x9ZJbMuGU76vwCMDAVS4QRxadw/s3QGQIoduGolkVLrCWfSDkUvwKbE15VnczzcsgUpSzWPoZjNfJxKzG5Aod/uK8wlxvk8EN6XQ9vxysugYNjUrtrGsBQ3Afk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=bqKXDbY1; arc=pass smtp.client-ip=23.83.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8141214286
+	for <spacemit@lists.linux.dev>; Thu, 13 Nov 2025 21:45:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.193
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763070348; cv=none; b=RAEdbPPSi9HNrCHl9tFSrqi/mQHUBfSskTYuXo43+Fd5DGVjoUK0895aAvn/5JcMseAZP/FtAz5sFlglvoYL6VF8MwbkvnrKYhc/lWfnFsc4CdnRdrutEabZhsyvOTPVJRf7LQBPjrz0UNsn34EIpHNi1MvRHV6z0a11eP3R0WQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763070348; c=relaxed/simple;
+	bh=9BK/aY1DJKiNGs1q0x6hPPgaG4Z4qLB/Bh+9MtSYO0Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bte4QZyoiX2tIzt/n9KTNhkaTS0aCbzOjTV2fydbgjzohT8WNrO6sD11YnnyAGTBR3AcFNeR1C54hnJefFXPNxnajtl7qyFyHMSR0CXC0/p+MmqrXzxnpVlRRU5+sRA8SLyf1/ioBTHiV/ZfpMwo7+PyL0ZzeewwiDm6Z7uwTDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=wzwaWH30; arc=none smtp.client-ip=209.85.166.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="bqKXDbY1"
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id D4863460E7B;
-	Thu, 13 Nov 2025 15:37:42 +0000 (UTC)
-Received: from de-fra-smtpout9.hostinger.io (trex-green-3.trex.outbound.svc.cluster.local [100.98.43.10])
-	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 74840462AAB;
-	Thu, 13 Nov 2025 15:37:40 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
-	t=1763048262;
-	b=WfN9pjWKCLWylrFj+CTL6zpWw5MbGns6LqA1inBPHVl0alyjR4M+0jZULuosCRooXJupq4
-	dyWFoEhXB8pT0rZs8sjqqYKgnhcyCkYIGk4OduogSRIj1tJHJBPMjbyU9lvQUcgEhmgvT5
-	ZxOn8MvW2m3OVKZljyG47M3k8TwF3gl1Xt9BYsNsE2E/52vxiBld7S7aa1W3rFQv6LtI5b
-	qxnmOIKRDYLS+WupN29UVjJIqXa8mWqrFlVTHGGDGyOYMbLiXid9mO7tHuDPu6MW7aiFlS
-	32S8X/jamUJmTI1Nm0VjXi1rQEG8N8pn+2ptIY9YXhHdQSo/Dd7b7bacen3UpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1763048262;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=RLzGjijAU/vFlwllSrp/plQWYmo7ZirLidDII9/zecY=;
-	b=bMJ6ZfEx8FlM4RNsTCCAXVeZqt6d3/mSK9044VkgE/d26CmSPIp5PrIr8Al5H4zj80bb66
-	gQmenIiYKGocU5xSY2838QYvRfOdPLIQqOQZSofOFRLiRSk0vpeorqbnQ+TCDuDQoyx4GF
-	NiNhbb2TahporgRvzdKJMj8i/nFCPvf8pokgWgP/t/G13RACUGqtkRCvrRRXj1uRKHUrhU
-	vfeS5JxysjqWNVRcQc20mw6A+S67ALL10MKxQW3A+6ZbjLZAsyZO4lgttTyBvMJKqdcmEQ
-	AlSx1ZCBDoCEvafojbAKRKGymmh6CMyAbpLM9KxF+OlKxm0pTIv/ydqokhyXsQ==
-ARC-Authentication-Results: i=1;
-	rspamd-dd986fb9b-fznqz;
-	auth=pass smtp.auth=hostingeremail
- smtp.mailfrom=michael.opdenacker@rootcommit.com
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MC-Relay: Good
-X-MailChannels-SenderId:
- hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MailChannels-Auth-Id: hostingeremail
-X-Lonely-Reign: 774cccee34596b8a_1763048262648_2896961944
-X-MC-Loop-Signature: 1763048262648:987442191
-X-MC-Ingress-Time: 1763048262648
-Received: from de-fra-smtpout9.hostinger.io (de-fra-smtpout9.hostinger.io
- [148.222.55.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.98.43.10 (trex/7.1.3);
-	Thu, 13 Nov 2025 15:37:42 +0000
-Received: from [IPV6:2001:861:4450:d360:cade:11b7:4e69:5c21] (unknown [IPv6:2001:861:4450:d360:cade:11b7:4e69:5c21])
-	(Authenticated sender: michael.opdenacker@rootcommit.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4d6kt50vCQz3xF7;
-	Thu, 13 Nov 2025 15:37:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
-	s=hostingermail-a; t=1763048258;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RLzGjijAU/vFlwllSrp/plQWYmo7ZirLidDII9/zecY=;
-	b=bqKXDbY1clyKL0zMRudEmMHQphlIbXIKPgJisbZjhly3m94Hv2FxMw63bIB8Kq60nJSmCH
-	Wdxe8Jb2ACuiU78/nk8sZ7r0HgzDC5hWU3AW+LSi1Z9RNhZ0n4QAHiLXew3qVoFj7hptZC
-	irbxbgG9WZmehyTeu0Bmmxx2TpH3bw5Pr6Z5QCRZsE2NsvYieOftcllyEA5ht6+C6urHwp
-	pfV+YAoXk64+GrAZlkdPvDMonew//YJkREZfBzy7vGZwNnMVf4bGvSZKMT/B1pEBxCU9Ue
-	pzef4i3gdSC9G8wIiYrA1VFfWgvDVkAU1inBQeK2lWJH7O3N0ibTtWSOeAAvbg==
-Message-ID: <5b1fd3ee-474f-48b7-8709-d07000a9a113@rootcommit.com>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="wzwaWH30"
+Received: by mail-il1-f193.google.com with SMTP id e9e14a558f8ab-433217b58d9so5902625ab.1
+        for <spacemit@lists.linux.dev>; Thu, 13 Nov 2025 13:45:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1763070346; x=1763675146; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=B379bUTcQAQWYz6DwkV1TzQYdhegW4cKAiyXnES8aOg=;
+        b=wzwaWH30nZEXwafqe0DDACMEO66FwzhtBkIgwZ3dZuYC+JsnnhwFdxUK+mwQB9gK54
+         Y2EFqTCHVAR2DU9r40dweqmabj5UajrzneWkSYx1M0EkVoL2ug79FkanVETDP11XQwSf
+         GuQJbJl1yHBAO7TQGmTmiGJI8XdCmHpaWBXYq/o56jRkchcem+PLhhfJ+hSWOXYDhawj
+         w+4H9hZQf1aiy5lYHd+w14okC0zw6E0X0Bni/5Hp7dUS3OLinWtUGPEdLP5nr2oME6Hm
+         77m0h/BIJdcEVFqWAPZ8SZ/FcIOVFH02kdWVCzXpzpdYLXW2dFYD82VGUL+xrYK1xMXr
+         Z8LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763070346; x=1763675146;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B379bUTcQAQWYz6DwkV1TzQYdhegW4cKAiyXnES8aOg=;
+        b=AEI75omHDaR0MiaUx8ubLY4HmYZPuyOLb3U7MuAC4OT5+3+4B9Kk2f69te+LkW3F3+
+         6XmdVaZgniqE/NO7LjeHTcPwQLB2tyTxnP8IozbgAtJQAancb+0SJ3tuOiVJMUgNjrUz
+         37YZ/7oI+TENpG1PgB8+G0ZKiCbtPghMgFEBOUkY9rwdy/w2AEqT7K2H9aUAPuGZXk3/
+         j2bGXqHyd+2XqozuBrrZZj/8bdD7F8KRK0u5K4kQlp4uDWVYOwmwyXQ8fznhwRyP5xIt
+         IUGvwkLm4DxlmRABS9K0ZjjZT2qo81F7T5yBpxG8J9LbGxd8Mhy4sJ21ShhnZ5Xp8Xrp
+         sYlw==
+X-Forwarded-Encrypted: i=1; AJvYcCWeDXLt2hObN31xLxoipD2Y08YhbZg36B33udFm/iT757Q+DJF6P0wwNYwI+3N5hYkuxKnMr+FxaA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxg2/0oSSIkn3+IIqgliiO283ueJ7ZvymtxJFum6JvmiNxpiTQs
+	/1PlLtOi3hc8Hfqht7ff2VpFLpdsrU4jgUFl+lNYgo+sBCzxvy+geUxE5cZJ35CiJ7I=
+X-Gm-Gg: ASbGncvwa5U7zl9M86/X2WzgubtWoOkQCWbmslI7DNeh4fFGu8R1NpoXLu3o9OwzgyL
+	mFVDTI1RvXdVe60qEwz3UdMW67AXJnzaon8uwaGqV64PFrBJNLSDM9RP0fnyIOUAriH9TaHdmhg
+	IC/wTE1qfEtWp1FVTKA+dXl3DoyyWmlkJh85pDtFQwH8RmacjpmUvs7gLVaUukOl8bBOUXU6oo+
+	c3/GnwlHizfu8UagKRRKDXBOAXsGk/XrukLGRUI+Kbq5Cn7tOTPycBKNSUHMJ5eNlSjE0AA1ta7
+	PdCxF2Dri3PzRiJLCfMN0tbxIA87Auh52THJIckyQck5TRc/EA4KUmlfEDze+0gM9EmFr52YiMz
+	x2LnexB7FBU8IPKMpK45VVmx9K1h4z6KA+7mQ5mKWLv37AoyoMGJjImIDpFq1/d/SGZZwNGYPB7
+	6ZMaj9FJF0S13rT6qxEhfPgNdd/f3TDrhCoTorlSF3kRgHoPviBxJDPg==
+X-Google-Smtp-Source: AGHT+IGJ0MUov99smegICrZ4kiST3drjyP8OcDyErpcAaWnTogYM2QvmzGI/vYXhzw3nIp4B4JWV4A==
+X-Received: by 2002:a05:6e02:3813:b0:433:3316:17db with SMTP id e9e14a558f8ab-4348c863a78mr17011835ab.4.1763070345478;
+        Thu, 13 Nov 2025 13:45:45 -0800 (PST)
+Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-434839a4ac7sm10877115ab.25.2025.11.13.13.45.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Nov 2025 13:45:44 -0800 (PST)
+From: Alex Elder <elder@riscstar.com>
+To: dlan@gentoo.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	vkoul@kernel.org,
+	kishon@kernel.org,
+	bhelgaas@google.com,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	mani@kernel.org
+Cc: ziyao@disroot.org,
+	aurelien@aurel32.net,
+	johannes@erdfelt.com,
+	mayank.rana@oss.qualcomm.com,
+	qiang.yu@oss.qualcomm.com,
+	shradha.t@samsung.com,
+	inochiama@gmail.com,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	p.zabel@pengutronix.de,
+	christian.bruel@foss.st.com,
+	thippeswamy.havalige@amd.com,
+	krishna.chundru@oss.qualcomm.com,
+	guodong@riscstar.com,
+	devicetree@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v6 0/7] Introduce SpacemiT K1 PCIe phy and host controller
+Date: Thu, 13 Nov 2025 15:45:32 -0600
+Message-ID: <20251113214540.2623070-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: michael.opdenacker@rootcommit.com,
- Troy Mitchell <troymitchell988@gmail.com>, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev
-Subject: Re: [PATCH v2] i2c: spacemit: fix detect issue
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Alex Elder <elder@riscstar.com>, Aurelien Jarno <aurelien@aurel32.net>
-References: <20251113-fix-k1-detect-failure-v2-1-b02a9a74f65a@linux.spacemit.com>
-Content-Language: en-US, fr
-From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-Organization: Root Commit
-In-Reply-To: <20251113-fix-k1-detect-failure-v2-1-b02a9a74f65a@linux.spacemit.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Date: Thu, 13 Nov 2025 15:37:32 +0000 (UTC)
-X-CM-Envelope: MS4xfHmhrsb8bA0VkPMAIGI8nk/pQZRBKxgooQgAy9xq5AQS+n2VYLvF9tS+o9QewDLs199PBagyXd+kzGLzsycivcn6G96O73hf6rzwtH8CvrD23ld4rEux 6WpN5zIiQZDWT/SaXXgHWBRQOvzvefNl68fWuCsPhgy5/9iTzGd/k/LzppksccW1wT1L9YYvzs1yORb2PIu1dbJHVnQGWQ7yziUDj74M8VjJkO5mdTlIVLLg 06iA2+CeDBLtFJyID4AjkMB2/jleSANjnNKuyQXtQDbcGPMPE5eKPkzvJXb86OW1g9/tJXlbpRW9cADuzMorZqLXpTtUvEoywcASBaBn+TIX1i4rAeGPWMRU /VBX2EXRD8DR1nmRWipNu3HTvSnSDASAQFNWg9mZRLD3d93+f0LrKfhzfIstiqh7XhVU1LKS1m25o/8aiZB8HhOUCA1eW97hMOV8OBhErL/3ryEdPKMdnz1R Vhp/1X5E3fUDf4MJrjkp4fEu1lYXLpC6caC/relwCnmSreApXcqj5OQE4gQQwgF2KT8TJtTj+Dg1gFEsUryxkWPCKGR0F/gMEeBR8xXCZAeAb+SP9bLjhBZr GVTqfehO4S4u1226xXnjF38cV2DH4BF3yddbcXgHaYPywY/gJ2fl+QZhXt7CLzO359OpRWXadJ5smXIs6Ae19IJ+DnQgNh7BPkWGJlAg9yMCrWnxLt/Mcu6R 4dquFGHti7Y=
-X-CM-Analysis: v=2.4 cv=Ceda56rl c=1 sm=1 tr=0 ts=6915fb42 a=SdTD4+BzWsD3271SwPFwqg==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=lv0vYI88AAAA:8 a=d70CFdQeAAAA:8 a=hXZgYZo4AAAA:8 a=hVukwZAqnudBvs4O1UQA:9 a=+jEqtf1s3R9VXZ0wqowq2kgwd+I=:19 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=9qqun4PRrEabIEPCFt1_:22 a=NcxpMcIZDGm-g932nG_k:22 a=37BJPeUnzxYkbV1yBC-1:22
-X-AuthUser: michael.opdenacker@rootcommit.com
 
-Hi Troy
+This series introduces a PHY driver and a PCIe driver to support PCIe
+on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
+Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
+PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
+one PCIe lane, and the other two ports each have two lanes.  All PCIe
+ports operate at 5 GT/second.
 
-Thanks for the fix!
+The PCIe PHYs must be configured using a value that can only be
+determined using the combo PHY, operating in PCIe mode.  To allow
+that PHY to be used for USB, the needed calibration step is performed
+by the PHY driver automatically at probe time.  Once this step is done,
+the PHY can be used for either PCIe or USB.
 
-On 11/13/25 14:21, Troy Mitchell wrote:
-> This commit addresses two issues causing i2c detect to fail.
->
-> The identified issues are:
->
-> 1. Incorrect error handling for BED (Bus Error No ACK/NAK):
->     Before this commit, Both ALD (Arbitration Loss Detected) and
->     BED returned -EAGAIN.
-> 2. Missing interrupt status clear after initialization in xfer():
->     On the K1 SoC, simply fixing the first issue changed the error
->     from -EAGAIN to -ETIMEOUT. Through tracing, it was determined that
->     this is likely due to MSD (Master Stop Detected) latency issues.
->
->     That means the MSD bit in the ISR may still be set on the next transfer.
->     As a result, the controller won't work — we can see from the scope that
->     it doesn't issue any signal.
->     (This only occurs during rapid consecutive I2C transfers.
->     That explains why the issue only shows up with i2cdetect.)
->
-> With these two fixes, i2c device detection now functions correctly on the K1 SoC.
->
-> Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
-> Changelog in v2:
-> - handle ALD and BED errors separately in spacemit_i2c_handle_err()
-> - move clear_int_status() above spacemit_i2c_init()
-> - move clear_int_status() from xfer() into spacemit_i2c_init()
-> - Link to v1: https://lore.kernel.org/all/20251103-fix-k1-detect-failure-v1-1-bb07a8d7de7c@linux.spacemit.com/
-> ---
->   drivers/i2c/busses/i2c-k1.c | 19 +++++++++++++------
->   1 file changed, 13 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-> index 6b918770e612e098b8ad17418f420d87c94df166..d42c03ef5db5984ea8e06b3d7eb485b4f899e616 100644
-> --- a/drivers/i2c/busses/i2c-k1.c
-> +++ b/drivers/i2c/busses/i2c-k1.c
-> @@ -158,11 +158,16 @@ static int spacemit_i2c_handle_err(struct spacemit_i2c_dev *i2c)
->   {
->   	dev_dbg(i2c->dev, "i2c error status: 0x%08x\n", i2c->status);
->   
-> -	if (i2c->status & (SPACEMIT_SR_BED | SPACEMIT_SR_ALD)) {
-> +	/* Arbitration Loss Detected */
-> +	if (i2c->status & SPACEMIT_SR_ALD) {
->   		spacemit_i2c_reset(i2c);
->   		return -EAGAIN;
->   	}
->   
-> +	/* Bus Error No ACK/NAK */
-> +	if (i2c->status & SPACEMIT_SR_BED)
-> +		spacemit_i2c_reset(i2c);
-> +
->   	return i2c->status & SPACEMIT_SR_ACKNAK ? -ENXIO : -EIO;
->   }
->   
-> @@ -224,6 +229,12 @@ static void spacemit_i2c_check_bus_release(struct spacemit_i2c_dev *i2c)
->   	}
->   }
->   
-> +static inline void
-> +spacemit_i2c_clear_int_status(struct spacemit_i2c_dev *i2c, u32 mask)
-> +{
-> +	writel(mask & SPACEMIT_I2C_INT_STATUS_MASK, i2c->base + SPACEMIT_ISR);
-> +}
-> +
->   static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
->   {
->   	u32 val;
-> @@ -267,12 +278,8 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
->   	val = readl(i2c->base + SPACEMIT_IRCR);
->   	val |= SPACEMIT_RCR_SDA_GLITCH_NOFIX;
->   	writel(val, i2c->base + SPACEMIT_IRCR);
-> -}
->   
-> -static inline void
-> -spacemit_i2c_clear_int_status(struct spacemit_i2c_dev *i2c, u32 mask)
-> -{
-> -	writel(mask & SPACEMIT_I2C_INT_STATUS_MASK, i2c->base + SPACEMIT_ISR);
-> +	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
->   }
->   
->   static void spacemit_i2c_start(struct spacemit_i2c_dev *i2c)
->
-> ---
-> base-commit: 6fa9041b7177f6771817b95e83f6df17b147c8c6
-> change-id: 20251113-fix-k1-detect-failure-63483e45168b
+The driver supports 256 MSIs, and initially does not support PCI INTx
+interrupts.  The hardware does not support MSI-X.
 
-Tested successfully on OrangePi RV2.
+Version 6 of this series addresses a few comments from Christophe
+Jaillet, and improves a workaround that disables ASPM L1.  The two
+people who had reported errors on earlier versions of this code have
+confirmed their NVMe devices now work when configured with the default
+RISC-V kernel configuration.
 
-Tested-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-Thanks again
-Michael.
+					-Alex
 
+This series is available here:
+  https://github.com/riscstar/linux/tree/outgoing/pcie-v6
+
+Between version 5 and version 6:
+  - Aurelien Jarno and Johannes Erdfelt tested this code and found
+    they no longer saw the errors they observed previously
+  - Disabling ASPM L1 is now done earlier, at the end of the
+    dw_pcie_host_ops->init callback rather than ->post_init
+  - The function that disables ASPM L1 has been moved and renamed
+  - The return value from devm_platform_ioremap_resource_byname()
+    is now checked with IS_ERR()
+  - The number of MSI vectors implemented is back to 256, after
+    confirming with SpacemiT that they are all in fact supported
+  - The sentinel entry in the OF match table no longer includes
+    a trailing comma
+  - MODULE_LICENSE() and MODULE_DESCRIPTION() macros are now
+    included
+
+Here is version 5 of this series:
+  https://lore.kernel.org/lkml/20251107191557.1827677-1-elder@riscstar.com/
+
+Between version 4 and version 5:
+- Clarify that INTx interrupts are not currently supported
+- Add Rob Herring's Reviewed-by on patch 3
+- The name of the PCIe root port will always begin with "pcie"
+- Lines in the bindings are now wrapped at 80 columns
+- Subject lines are all captialized (after subsystem tags)
+- Place the PCIe Kconfig option in the proper location based on
+  vendor name (not Kconfig symbol); expand its description
+- Drop two PCIe controller Kconfig dependencies
+- Use dw_pcie_readl_dbi() and dw_pcie_writel_dbi() when turning
+  off ASPM L1
+- The dw_pcie_host_ops->init callback has been rearranged a bit:
+    - The vendor and device IDs are now set early
+    - PERST# is asserted separate from putting the controller in RC mode
+      and indicating power is detected
+    - phy_init() is now called later, just before deasserting PERST#
+- Because of timing issues involved in having the root port enable power,
+  getting and enabling the regulator is back to being done in the PCIe
+  controller probe function
+- The regulator definition is moved back to the PCIe controller DT node,
+  out of the root port sub-node (in "k1-bananapi-f3.dts")
+
+Here is version 4 of this series:
+  https://lore.kernel.org/lkml/20251030220259.1063792-1-elder@riscstar.com/
+
+Additional history is available at that link.
+
+
+Alex Elder (7):
+  dt-bindings: phy: spacemit: Add SpacemiT PCIe/combo PHY
+  dt-bindings: phy: spacemit: Introduce PCIe PHY
+  dt-bindings: pci: spacemit: Introduce PCIe host controller
+  phy: spacemit: Introduce PCIe/combo PHY
+  PCI: spacemit: Add SpacemiT PCIe host driver
+  riscv: dts: spacemit: Add a PCIe regulator
+  riscv: dts: spacemit: PCIe and PHY-related updates
+
+ .../bindings/pci/spacemit,k1-pcie-host.yaml   | 157 ++++
+ .../bindings/phy/spacemit,k1-combo-phy.yaml   | 114 +++
+ .../bindings/phy/spacemit,k1-pcie-phy.yaml    |  71 ++
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      |  44 ++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |  33 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi          | 176 +++++
+ drivers/pci/controller/dwc/Kconfig            |  13 +
+ drivers/pci/controller/dwc/Makefile           |   1 +
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 358 ++++++++++
+ drivers/phy/Kconfig                           |  11 +
+ drivers/phy/Makefile                          |   1 +
+ drivers/phy/phy-spacemit-k1-pcie.c            | 670 ++++++++++++++++++
+ 12 files changed, 1649 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-combo-phy.yaml
+ create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k1-pcie-phy.yaml
+ create mode 100644 drivers/pci/controller/dwc/pcie-spacemit-k1.c
+ create mode 100644 drivers/phy/phy-spacemit-k1-pcie.c
+
+
+base-commit: 6d7e7251d03f98f26f2ee0dfd21bb0a0480a2178
 -- 
-Michael Opdenacker
-Root Commit
-Yocto Project and OpenEmbedded Training course - Learn by doing:
-https://rootcommit.com/training/yocto/
+2.48.1
 
