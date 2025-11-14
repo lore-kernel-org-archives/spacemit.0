@@ -1,44 +1,40 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+Received: from out.bound.email (out.bound.email [141.193.244.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A6D29DB6C;
-	Fri, 14 Nov 2025 05:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9012E2F1A
+	for <spacemit@lists.linux.dev>; Fri, 14 Nov 2025 06:13:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.193.244.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763098496; cv=none; b=d3ZH60srHt+J1fBrO4nuJaVZXPl5NfvImxGJPX2Qmk+OKz5D/FTkNVBcP+41reAjcZu/OG8BPk9FmAOVnBfCrWB1JSjonr88k2bwL3uiSU6GcicSSdBVnCv/a4YP0UQGqgzm+BFrg8D+wbcFy9+PYRrdwZHubmc7hz9Lhy7AGuA=
+	t=1763100802; cv=none; b=WsWk6K4r0qhzGa3wfrVJ9u/PfCnQE+w7/2m+HiiCpxqKXxbAAv8OF/iFDwhZEIEVfGAxpFWPkOWENfXPMt7DW/MPzIfyRA/0CjIacSy8fPecVVsf9pDnLyz034JloD5hOm6CfgboBOHlr8t/h/MgJlHc3OkDZmJMAs6l4VpLmCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763098496; c=relaxed/simple;
-	bh=8mimKyEX68od4d10NlzqRF1O4O4nn2d7AoWzVT2MAxw=;
+	s=arc-20240116; t=1763100802; c=relaxed/simple;
+	bh=vxgjB0dE+LltGUhpGtE0g2G6K8pcfjlEs5MgaLfwdRc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z7nxhrdiMfh5wH5cUkIkA1atBXnHH/IwtQZqMyImF3DGPsMgfQXK/vfE/2oLvlfDMol0r6D1zjinPqDP2odPOefLb1TNhnWuo3C+1tg6EaTFU3P4pOHpBIJ2h3X329wkjjOMBKTBRgHpj6c2ALTY7UIfr2yTPRhTAxABleLJnwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=lI0dcTUf; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=s0Z08kPh7+sCUbyCwoDqRya3LcYwJ7HXuIppZ3VlR1L9raKiDjzbuIa+1SstiTe9uhBL6DeViz07uutYoXMStTxo8sWQ9uenL2Kp9F2BYfNL22lHyr+6qT/kLyMh9xEHwLL+38PojZ3duYJrpFOlQWVSqZMmxrgxZpAvyU0zrhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=erdfelt.com; spf=pass smtp.mailfrom=erdfelt.com; dkim=pass (1024-bit key) header.d=erdfelt.com header.i=@erdfelt.com header.b=Er6siCs6; arc=none smtp.client-ip=141.193.244.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=erdfelt.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=erdfelt.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="lI0dcTUf"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=j4/5GhlPjkb3zB4cmvsOflk7TfcTfmyfgTcfGeeRs10=; b=lI0dcTUfaAd8Slc7QsDEWoAZ6g
-	Dlbl/u69jN6L0rlAQEnPt3zmA+rPZJ2Oj9wHFnprNkxA0/35otRGnCHgmFd8bwaXQd/iMX1tM0F4O
-	hY7u9kxZterFev5cVc4Kw1flPzGBaTW0rB8a8dFJPE5KxQ0IhlO/MOjuCJLC23b4ZE+19NQIMAWlN
-	CoS6FCWXjCV1enVK7lF0PK2ObdthRAX8Tyx65swkDZeRxzMy1wXHlFJ6S33tsuTH0VR53TScD4MQ0
-	y73EpBaooHgcCSginztVmBrpwUG+2pPUim9YBUXdVXGX2OB2OKNQZJ4rLwAkgtFUfy4aksVDZA6s7
-	tLR97Kkw==;
-Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
-	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vJmSA-00000003JgB-1aXy;
-	Fri, 14 Nov 2025 06:34:34 +0100
-Date: Fri, 14 Nov 2025 06:34:33 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
+	dkim=pass (1024-bit key) header.d=erdfelt.com header.i=@erdfelt.com header.b="Er6siCs6"
+Received: from mail.sventech.com (localhost [127.0.0.1])
+	by out.bound.email (Postfix) with ESMTP id 084388A3183;
+	Thu, 13 Nov 2025 22:05:06 -0800 (PST)
+Received: by mail.sventech.com (Postfix, from userid 1000)
+	id E36AA16002A7; Thu, 13 Nov 2025 22:05:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=erdfelt.com;
+	s=default; t=1763100305;
+	bh=FLPhWREcGas7h61JNtnMUud1rXfGhd1AOpj3u+wNcjI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Er6siCs663+JDJeYDjYQqeIxP4BezsNSAdtqW3SXX+XS+mYUu0M2tFcgoJt0rYJDc
+	 XJag0ix53jzhR/ca26+GsG/BAPOMmZVAitu576jDVQ8zQhgq6FJVlvTBQ5TqUQaA8F
+	 YbwEgKZBOI0p7eBXFFYNbgx2iyiaDwqpvJ6oLcx0=
+Date: Thu, 13 Nov 2025 22:05:05 -0800
+From: Johannes Erdfelt <johannes@erdfelt.com>
 To: Alex Elder <elder@riscstar.com>
 Cc: dlan@gentoo.org, robh@kernel.org, krzk+dt@kernel.org,
 	conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
 	bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
-	mani@kernel.org, ziyao@disroot.org, johannes@erdfelt.com,
+	mani@kernel.org, ziyao@disroot.org, aurelien@aurel32.net,
 	mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
 	shradha.t@samsung.com, inochiama@gmail.com, pjw@kernel.org,
 	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
@@ -49,21 +45,7 @@ Cc: dlan@gentoo.org, robh@kernel.org, krzk+dt@kernel.org,
 	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v6 0/7] Introduce SpacemiT K1 PCIe phy and host controller
-Message-ID: <aRa_aQB4d8-miKac@aurel32.net>
-Mail-Followup-To: Alex Elder <elder@riscstar.com>, dlan@gentoo.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	vkoul@kernel.org, kishon@kernel.org, bhelgaas@google.com,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	ziyao@disroot.org, johannes@erdfelt.com,
-	mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
-	shradha.t@samsung.com, inochiama@gmail.com, pjw@kernel.org,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, christian.bruel@foss.st.com,
-	thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com,
-	guodong@riscstar.com, devicetree@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
+Message-ID: <20251114060505.GA25077@sventech.com>
 References: <20251113214540.2623070-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
@@ -74,9 +56,9 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20251113214540.2623070-1-elder@riscstar.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mutt/1.11.4 (2019-03-13)
 
-On 2025-11-13 15:45, Alex Elder wrote:
+On Thu, Nov 13, 2025, Alex Elder <elder@riscstar.com> wrote:
 > This series introduces a PHY driver and a PCIe driver to support PCIe
 > on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
 > Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
@@ -99,12 +81,11 @@ On 2025-11-13 15:45, Alex Elder wrote:
 > confirmed their NVMe devices now work when configured with the default
 > RISC-V kernel configuration.
 
-Thanks for this new version. I confirm it works fine on the various NVME 
-devices for which I reported issues with the previous versions of this 
-patchset.
+I've tested this latest patchset on my Orange Pi RV2 board. This
+patchset now works with the Intel 600p NVME SSD I had previously had
+troublw with. Thanks!
 
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+Tested-by: Johannes Erdfelt <johannes@erdfelt.com>
 
--- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+JE
+
