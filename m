@@ -1,52 +1,50 @@
-Received: from out.bound.email (out.bound.email [141.193.244.10])
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9012E2F1A
-	for <spacemit@lists.linux.dev>; Fri, 14 Nov 2025 06:13:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.193.244.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CAB31812E
+	for <spacemit@lists.linux.dev>; Fri, 14 Nov 2025 13:32:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763100802; cv=none; b=WsWk6K4r0qhzGa3wfrVJ9u/PfCnQE+w7/2m+HiiCpxqKXxbAAv8OF/iFDwhZEIEVfGAxpFWPkOWENfXPMt7DW/MPzIfyRA/0CjIacSy8fPecVVsf9pDnLyz034JloD5hOm6CfgboBOHlr8t/h/MgJlHc3OkDZmJMAs6l4VpLmCE=
+	t=1763127168; cv=none; b=HPsm3TMkxbYKkD+qT044Zm+nE0ImGW5QqYGzA+1eNHbSf889O+xzleQZNImACqxOUtiJRLlFRh9+qDwwLIyJmd6MIY8Nvvxm+Ws1A0VRaz1EuCUItw+6PQcNnFFTxsCQh7ano8YFELjVbVrJ21nTh/IKe9Auy5RU4MnWzTgwTd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763100802; c=relaxed/simple;
-	bh=vxgjB0dE+LltGUhpGtE0g2G6K8pcfjlEs5MgaLfwdRc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s0Z08kPh7+sCUbyCwoDqRya3LcYwJ7HXuIppZ3VlR1L9raKiDjzbuIa+1SstiTe9uhBL6DeViz07uutYoXMStTxo8sWQ9uenL2Kp9F2BYfNL22lHyr+6qT/kLyMh9xEHwLL+38PojZ3duYJrpFOlQWVSqZMmxrgxZpAvyU0zrhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=erdfelt.com; spf=pass smtp.mailfrom=erdfelt.com; dkim=pass (1024-bit key) header.d=erdfelt.com header.i=@erdfelt.com header.b=Er6siCs6; arc=none smtp.client-ip=141.193.244.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=erdfelt.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=erdfelt.com
+	s=arc-20240116; t=1763127168; c=relaxed/simple;
+	bh=QvZg4kSAVsallHndZW9bIS1hMOJ0BT3WecGdtNUZFq8=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AYtTC/cZ+KQrhaBc8EStR58RLvUJRSJ0Jt5Owvtp1MYTXZiDD8hAcycTdRYU+0rjkj36xxgGErtpNZvkaZ4lDrjMqMM4ahtd87YXjg03ebRqn7JqQFK8fc3U4Uw9w6VOxGh9TbQV3i0iL+uc4iQfPIoA5ofnMRLenHBdBEoUWYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=boUcVQBy; arc=none smtp.client-ip=52.59.177.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=erdfelt.com header.i=@erdfelt.com header.b="Er6siCs6"
-Received: from mail.sventech.com (localhost [127.0.0.1])
-	by out.bound.email (Postfix) with ESMTP id 084388A3183;
-	Thu, 13 Nov 2025 22:05:06 -0800 (PST)
-Received: by mail.sventech.com (Postfix, from userid 1000)
-	id E36AA16002A7; Thu, 13 Nov 2025 22:05:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=erdfelt.com;
-	s=default; t=1763100305;
-	bh=FLPhWREcGas7h61JNtnMUud1rXfGhd1AOpj3u+wNcjI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Er6siCs663+JDJeYDjYQqeIxP4BezsNSAdtqW3SXX+XS+mYUu0M2tFcgoJt0rYJDc
-	 XJag0ix53jzhR/ca26+GsG/BAPOMmZVAitu576jDVQ8zQhgq6FJVlvTBQ5TqUQaA8F
-	 YbwEgKZBOI0p7eBXFFYNbgx2iyiaDwqpvJ6oLcx0=
-Date: Thu, 13 Nov 2025 22:05:05 -0800
-From: Johannes Erdfelt <johannes@erdfelt.com>
-To: Alex Elder <elder@riscstar.com>
-Cc: dlan@gentoo.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-	bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
-	mani@kernel.org, ziyao@disroot.org, aurelien@aurel32.net,
-	mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
-	shradha.t@samsung.com, inochiama@gmail.com, pjw@kernel.org,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, christian.bruel@foss.st.com,
-	thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com,
-	guodong@riscstar.com, devicetree@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 0/7] Introduce SpacemiT K1 PCIe phy and host controller
-Message-ID: <20251114060505.GA25077@sventech.com>
-References: <20251113214540.2623070-1-elder@riscstar.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="boUcVQBy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1763127077;
+	bh=6Vr7eNrXe06GaK06K8cFUqsyw9DPvxY9Y0LbTUQ8oEA=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=boUcVQByUEQB95sYx5zjQmu4wRgprMz+TrQFhlH6RnkdkoCHl7CX9PIiFWws+KoHh
+	 RUvkHXykFrdkNmCeNc8AWVRVXtfWCx0nAjEAWHNLWIVXykNRxBXSMX7ESWFWkSN4gP
+	 Mwm+sMvbi1qSe+cKCel3rOp2tJ0GwL1D7odru9Tc=
+X-QQ-mid: zesmtpgz4t1763127075tf42899c1
+X-QQ-Originating-IP: wIUc43NDT+vtn9rrX6Ymr6/Wn03jy8ZmRjONmIhfR3g=
+Received: from = ( [112.92.71.152])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 14 Nov 2025 21:31:14 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 10954986891886735329
+EX-QQ-RecipientCnt: 10
+Date: Fri, 14 Nov 2025 21:31:13 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Alex Elder <elder@riscstar.com>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Troy Mitchell <troymitchell988@gmail.com>,
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v2] i2c: spacemit: fix detect issue
+Message-ID: <7D3550E24A1FBD6C+aRcvIfIPOpJGFnJr@troy-wujie14pro-arch>
+References: <20251113-fix-k1-detect-failure-v2-1-b02a9a74f65a@linux.spacemit.com>
+ <aRZQfqFjDNds19by@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -55,37 +53,41 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251113214540.2623070-1-elder@riscstar.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <aRZQfqFjDNds19by@aurel32.net>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Mi8ofykAS9CFf0RIZF+WOZbXs1I6FTpc7WsDqG6mxgCaUBMBS7+Lo1C9
+	ir5Ysbq1JBIzxv4QgBTt6JeX8TjUFCtb9PcHNyHMCBlx3PoLowaKF2axBCe1peUHhz6FokC
+	e3OxPlCp1YbV8U1O726h2S92p9leKhpBR0nielchcXrQFRZu63pP4a+h4Cx+Kc/lYCb/oXO
+	4fpyI1n1i7G4jCmZfhI7o/vsD/lFR9oN9jebhEbhzhUfUyEhCI+k7hdwj/9RC/MAFiFPEo+
+	iHURtxygJleAnfUFAa+7y576ftvu+2CYbQLioOx6cqU2KClsRUOULZLL78UblMUOP3H624D
+	/1rw7NOwyXL6q9MFgli11hVc21nD0hhtFYaojj8hYqKNxnZvlKzbUIK7j70PAshAbQHZTLO
+	URJwGmmJBGZfSBhYLC0glBBd+ftPz1abKPrNrJ0g5eo++JqFGw/lVnn7OCtE795ciNaJ/TM
+	do90kGN5vqsyUbJP9KWgu8vSkfkJaHbkMBE7P24EaEjXstH83Oz5Agwcdwhfy7CKkL33TGQ
+	jBPkAGqJaCSUqiZn6kSb/+VLn3Vqtgg998KZZUlLfxVOVXrJhZPovlRdVxlwNXiveKatGqV
+	N2LBMRgkNz+GP98uWUbHIrtEHnOh1xSOMDRQ36tgYlHB+LKtJ6qTAoxRztRs+SVO6rM2l2c
+	UwfVph1GkMZoKVu/wlxWI8eR42iGTKlIL9qoIcWp5Tr9Mpwa972fxDIgei37zFjHeFm9iPK
+	t8ONgVx+m1fqhM8wcVZmi6osqKQ6MFUxXgGghjcJCn2vU/nKVUhxO4GG4VG4vG3saEIuBC8
+	hoUBpNG7wwmlIpLMZyU9LyduHHsMGfEF70H6sO6CmZO7QQPsHIZBobVs/exurV1vXBggjYC
+	kcKvv0MxjQshZjvVY16XTeFKtdOmvryqmLZHun7RlPbAYBGksBT8joNJFR4AVh6fPZz2JOS
+	UReb5qyS2RiRzYrG4Sgynupz7tR3M37mhL7y9nMHhOzI7M0reiiXWfESqGR22U7nEemuvAb
+	KLYAK9WZfcT6CWzD8y7g9/GsJl2rPvRMV3SAs9hQ2zJvly46d5agDkJVhhiPU=
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-RECHKSPAM: 0
 
-On Thu, Nov 13, 2025, Alex Elder <elder@riscstar.com> wrote:
-> This series introduces a PHY driver and a PCIe driver to support PCIe
-> on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
-> Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
-> PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
-> one PCIe lane, and the other two ports each have two lanes.  All PCIe
-> ports operate at 5 GT/second.
+Hi Aurelien,
+
+On Thu, Nov 13, 2025 at 10:41:18PM +0100, Aurelien Jarno wrote:
+> On 2025-11-13 21:21, Troy Mitchell wrote:
 > 
-> The PCIe PHYs must be configured using a value that can only be
-> determined using the combo PHY, operating in PCIe mode.  To allow
-> that PHY to be used for USB, the needed calibration step is performed
-> by the PHY driver automatically at probe time.  Once this step is done,
-> the PHY can be used for either PCIe or USB.
+> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+> Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+
+Thanks for your test and review!
+
+              - Troy
 > 
-> The driver supports 256 MSIs, and initially does not support PCI INTx
-> interrupts.  The hardware does not support MSI-X.
+> -- 
+> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+> aurelien@aurel32.net                     http://aurel32.net
 > 
-> Version 6 of this series addresses a few comments from Christophe
-> Jaillet, and improves a workaround that disables ASPM L1.  The two
-> people who had reported errors on earlier versions of this code have
-> confirmed their NVMe devices now work when configured with the default
-> RISC-V kernel configuration.
-
-I've tested this latest patchset on my Orange Pi RV2 board. This
-patchset now works with the Intel 600p NVME SSD I had previously had
-troublw with. Thanks!
-
-Tested-by: Johannes Erdfelt <johannes@erdfelt.com>
-
-JE
-
