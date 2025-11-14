@@ -1,50 +1,51 @@
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CAB31812E
-	for <spacemit@lists.linux.dev>; Fri, 14 Nov 2025 13:32:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CED31A041
+	for <spacemit@lists.linux.dev>; Fri, 14 Nov 2025 13:34:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763127168; cv=none; b=HPsm3TMkxbYKkD+qT044Zm+nE0ImGW5QqYGzA+1eNHbSf889O+xzleQZNImACqxOUtiJRLlFRh9+qDwwLIyJmd6MIY8Nvvxm+Ws1A0VRaz1EuCUItw+6PQcNnFFTxsCQh7ano8YFELjVbVrJ21nTh/IKe9Auy5RU4MnWzTgwTd4=
+	t=1763127257; cv=none; b=hOmQEkei2FgJMUkuyYiW3qcuPxFiscoRE7BlX2GbJnbABT2FdatLaz3xUs6po63FnyL0VwhFxOZAeRuQfsUq3CUcHjW0kHgJYJYfaGD4TQgCUVxMAfOpAI9OXJcD0NEh9SgjHtnbqd/xUG/y03d08unfZVgxc9ZkjHDfVbPepaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763127168; c=relaxed/simple;
-	bh=QvZg4kSAVsallHndZW9bIS1hMOJ0BT3WecGdtNUZFq8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AYtTC/cZ+KQrhaBc8EStR58RLvUJRSJ0Jt5Owvtp1MYTXZiDD8hAcycTdRYU+0rjkj36xxgGErtpNZvkaZ4lDrjMqMM4ahtd87YXjg03ebRqn7JqQFK8fc3U4Uw9w6VOxGh9TbQV3i0iL+uc4iQfPIoA5ofnMRLenHBdBEoUWYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=boUcVQBy; arc=none smtp.client-ip=52.59.177.22
+	s=arc-20240116; t=1763127257; c=relaxed/simple;
+	bh=u0vSP2aT4zROWHCspOlGTqU/6qNRdjRrooM1LlWGfPM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uMA5G925TIhuyAgIJdHPU+3Ntt8uDMkQdZtMDfrY9JNA8aD1EzPR7kHYPxkdVpoxr2HoYaY/YOPCjoCmE1NHUcIztJPYh4k90WEPhr520DFcz+DIyGLZgwT85qhghsRmChsXMqFRVCpTOa50EtqrwOGbUuX67eVSPWsbLIjqITI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ctJA5eKg; arc=none smtp.client-ip=54.204.34.130
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="boUcVQBy"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ctJA5eKg"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1763127077;
-	bh=6Vr7eNrXe06GaK06K8cFUqsyw9DPvxY9Y0LbTUQ8oEA=;
+	s=mxsw2412; t=1763127173;
+	bh=4vsQ9a4sfdto53Iz7h22ctWn2ltPYXiwp6/cuN4SgYs=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=boUcVQByUEQB95sYx5zjQmu4wRgprMz+TrQFhlH6RnkdkoCHl7CX9PIiFWws+KoHh
-	 RUvkHXykFrdkNmCeNc8AWVRVXtfWCx0nAjEAWHNLWIVXykNRxBXSMX7ESWFWkSN4gP
-	 Mwm+sMvbi1qSe+cKCel3rOp2tJ0GwL1D7odru9Tc=
-X-QQ-mid: zesmtpgz4t1763127075tf42899c1
-X-QQ-Originating-IP: wIUc43NDT+vtn9rrX6Ymr6/Wn03jy8ZmRjONmIhfR3g=
+	b=ctJA5eKg+sTiWKxF8cv0uNZVqXCV0xhHzwxpZV6V1hV1qXPCMgj2Hpx69Q+yqLsgt
+	 3u4LBqo9a+q6jYaSSZKqHGFj3Z0LT/N+LByoQ0mmrVGkC2B+6qSl6a+m5Z/FhLoDEH
+	 Rxcwz0U/CbDSDiBciCB7F3PoNeH2lvwVn6lJAIGs=
+X-QQ-mid: esmtpgz15t1763127165t49f36372
+X-QQ-Originating-IP: upTtG89dUR6BITyX4XCOKRP3GVJT7+Owo5qsvFsfV5k=
 Received: from = ( [112.92.71.152])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 14 Nov 2025 21:31:14 +0800 (CST)
+	id ; Fri, 14 Nov 2025 21:32:44 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 10954986891886735329
-EX-QQ-RecipientCnt: 10
-Date: Fri, 14 Nov 2025 21:31:13 +0800
+X-BIZMAIL-ID: 2566697099854471615
+EX-QQ-RecipientCnt: 11
+Date: Fri, 14 Nov 2025 21:32:44 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+To: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
 	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
 	Alex Elder <elder@riscstar.com>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+	Aurelien Jarno <aurelien@aurel32.net>
+Cc: Troy Mitchell <troymitchell988@gmail.com>, linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
 Subject: Re: [PATCH v2] i2c: spacemit: fix detect issue
-Message-ID: <7D3550E24A1FBD6C+aRcvIfIPOpJGFnJr@troy-wujie14pro-arch>
+Message-ID: <ABF94A5EDD24501D+aRcvfFgny7UqgLZ6@troy-wujie14pro-arch>
 References: <20251113-fix-k1-detect-failure-v2-1-b02a9a74f65a@linux.spacemit.com>
- <aRZQfqFjDNds19by@aurel32.net>
+ <5b1fd3ee-474f-48b7-8709-d07000a9a113@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -53,41 +54,45 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aRZQfqFjDNds19by@aurel32.net>
+In-Reply-To: <5b1fd3ee-474f-48b7-8709-d07000a9a113@rootcommit.com>
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Mi8ofykAS9CFf0RIZF+WOZbXs1I6FTpc7WsDqG6mxgCaUBMBS7+Lo1C9
-	ir5Ysbq1JBIzxv4QgBTt6JeX8TjUFCtb9PcHNyHMCBlx3PoLowaKF2axBCe1peUHhz6FokC
-	e3OxPlCp1YbV8U1O726h2S92p9leKhpBR0nielchcXrQFRZu63pP4a+h4Cx+Kc/lYCb/oXO
-	4fpyI1n1i7G4jCmZfhI7o/vsD/lFR9oN9jebhEbhzhUfUyEhCI+k7hdwj/9RC/MAFiFPEo+
-	iHURtxygJleAnfUFAa+7y576ftvu+2CYbQLioOx6cqU2KClsRUOULZLL78UblMUOP3H624D
-	/1rw7NOwyXL6q9MFgli11hVc21nD0hhtFYaojj8hYqKNxnZvlKzbUIK7j70PAshAbQHZTLO
-	URJwGmmJBGZfSBhYLC0glBBd+ftPz1abKPrNrJ0g5eo++JqFGw/lVnn7OCtE795ciNaJ/TM
-	do90kGN5vqsyUbJP9KWgu8vSkfkJaHbkMBE7P24EaEjXstH83Oz5Agwcdwhfy7CKkL33TGQ
-	jBPkAGqJaCSUqiZn6kSb/+VLn3Vqtgg998KZZUlLfxVOVXrJhZPovlRdVxlwNXiveKatGqV
-	N2LBMRgkNz+GP98uWUbHIrtEHnOh1xSOMDRQ36tgYlHB+LKtJ6qTAoxRztRs+SVO6rM2l2c
-	UwfVph1GkMZoKVu/wlxWI8eR42iGTKlIL9qoIcWp5Tr9Mpwa972fxDIgei37zFjHeFm9iPK
-	t8ONgVx+m1fqhM8wcVZmi6osqKQ6MFUxXgGghjcJCn2vU/nKVUhxO4GG4VG4vG3saEIuBC8
-	hoUBpNG7wwmlIpLMZyU9LyduHHsMGfEF70H6sO6CmZO7QQPsHIZBobVs/exurV1vXBggjYC
-	kcKvv0MxjQshZjvVY16XTeFKtdOmvryqmLZHun7RlPbAYBGksBT8joNJFR4AVh6fPZz2JOS
-	UReb5qyS2RiRzYrG4Sgynupz7tR3M37mhL7y9nMHhOzI7M0reiiXWfESqGR22U7nEemuvAb
-	KLYAK9WZfcT6CWzD8y7g9/GsJl2rPvRMV3SAs9hQ2zJvly46d5agDkJVhhiPU=
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Myi7noze6Y4xnUZa/0lS8FZRIQVlwhxbYlc0fZSgTrgDyFjAqHKqpKkg
+	ddiVENpt4JwzpqO4DF+nwYJq+MUWfOeDctBsnUHtTQu27QtYd0bbkjmVrZqxJ/zxyoEyTJT
+	ecRhs0L07JYsaYGGNuEd1zt+0AmPi6LZin7cs9WhmA4wzo0CtPbyc3iRLDKiLlLW+uhqZy0
+	THLIjGMOw1usVbqPXVNqMTBFn9dBgQf9MGfpllG+IVkjKKbbeJVURrbujuyszYafpkNdU5V
+	ktfRb29zcZZwxzoj/GaK6GRHZ9Vz1fHsWcY0F6pDbOKtPCErhzIiHIQY+/7ANu6M+GU2fRz
+	oer/cKbeZBxZIfz7X1OIsblMKpAWD+PO4ZZazP9lHJZdTHOwPkmXjxWtoBw2VO9PcK7p4+G
+	PWrIEce0QdeYcOKTxFRd0jvDQq7+MIVugIYWBOlmindL3S8SmRNDpPrjcJ8QLNQwrpuU4DM
+	V2riIqrGDxZsE7LSA3PeCW7cqKmaSozE+5rhHDGZDq6MqG0dioKYLf+RbLPqv+lOoEeMS5A
+	2dWBMwtzGEeQM/dSZApnAyJ56zUUsTxAB2nr6LqsvTvwderwx5wRofBkrROfA7Gx+0eb33T
+	YHmaX7QvtTj55fmeU9ioVV9KoJ2yOvARH4f65cqbzjvbEN+gIdCCZtdSJCRoZyMbFICEDwH
+	+heTer339Po86HhGJVB/pJqEc/8wsCh3dsZxlRLy86wOFMeI1YvQG6ZAhx63IvbtvzNy2/9
+	gIElw2zp0ZZMcRME9yFe8/giWbU8gYPs2HdmGVnmkNvQgB8O9ZYuHorJtRSw0wI5BOVNl/f
+	bH/p3a+zvUMruE5TZMCf2jWL9W+eilRDgV2A8tI176J3thNgsu4o7Cak28KEzEx3nL9GKfl
+	e2V5LzrvNa9wdbCrODSfqIUKBgpVxi+8LC9EsZhBXmUPluCENlzTnEdalqnaRadH+eGlzJx
+	Lpb7znl2+US2GNPyC6CYSnSdLkCqBhfKDiAuV+bd4l+hE8x163h1NDYEaS8XQXB1z9c2aiy
+	YHyBC1HNviFzxHshvMkjG7PvNDL4cvoKsry/gEJsPi4ErCkqzN4M51ro+4CQuUGEohgSh3K
+	ihC6c+ugHMlBo4Zy/ymtjwJIxz9BdPPUyxCVT8EAOvN
+X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
 X-QQ-RECHKSPAM: 0
 
-Hi Aurelien,
-
-On Thu, Nov 13, 2025 at 10:41:18PM +0100, Aurelien Jarno wrote:
-> On 2025-11-13 21:21, Troy Mitchell wrote:
-> 
-> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-> Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
-
-Thanks for your test and review!
+Hi Michael,
+On Thu, Nov 13, 2025 at 03:37:32PM +0000, Michael Opdenacker wrote:
+> Tested successfully on OrangePi RV2.
+Thanks for your test on RV2!
 
               - Troy
 > 
+> Tested-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+
+> Thanks again
+> Michael.
+> 
 > -- 
-> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-> aurelien@aurel32.net                     http://aurel32.net
+> Michael Opdenacker
+> Root Commit
+> Yocto Project and OpenEmbedded Training course - Learn by doing:
+> https://rootcommit.com/training/yocto/
+> 
 > 
