@@ -1,129 +1,127 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E67347BC6
-	for <spacemit@lists.linux.dev>; Fri, 14 Nov 2025 20:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6654C1AE844
+	for <spacemit@lists.linux.dev>; Sat, 15 Nov 2025 04:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763152634; cv=none; b=cV1pKv13OwukB9VXEyHLuIv5YPSfAgABScQpXko+nzzUK7E5M7YlShHex5D3dq2Ksa0gX23Gy3HOuep2LX1egr1wCHaOOiUMqrY8091eN3Ya1KdH9LQRmAjvq5FGjmCYMwGIzeH4NFhBB0QVObIiZJQYfGm6wkKl8+BBOkqaNU4=
+	t=1763180516; cv=none; b=KHpNjXJS2f/sivPTJalDz12IAX3xOKkaM4XDHouDQwQzpVVJoXCQ5YsgnMdq22q2lsJuQguIPGRST2MxGEorijs9obSL8EShOKLrSTtCa9tJbO7ZhHUq5rylPeyWsOS0aes+ode7CVN1DHC+Nc0R9f4myQWgFYtoMZ3KEn/yIzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763152634; c=relaxed/simple;
-	bh=GGyKMqTOrRRlYEJYyUkHW1qKj7v6NPI6LFAqWJU/hiA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F9Yf4Nwwu+3EMNojmefMrd3HZ89185wsuGIQnhi6JmZLaPWvChfuT0vbNuNsdQUoyFma7+zSspJMFpDchWzomI/Pq/O2hSYXY78fJFtv+QvKYjyIo78t6LmeRz99cJBf0WNJHpHKsl4EN4eHJSp/5mQ45vMdRRGA101NpwgT8iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=JjjAqoVh; arc=none smtp.client-ip=209.85.166.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1763180516; c=relaxed/simple;
+	bh=W7Q6wmI9qY9hFy3y3Yc0H0YKLHAJOByL64hTBS8BJ6I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lKVWjSXpzr4Hy37ZQmJfPAfApcw0hXC88qZlrwzusQWCLZdBSdNd5MFs7LNh8b+MSzeGcrMI8vkaAFjgZZ/kCLd70WtmySnviZo72nsv3K16yN69j0qvkbZNPVDJVe8sMqhW4DSdxSNo3Vrz8/YTHgb/F+L3rXzSeyvoxdxWNKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Ipw5tVdT; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="JjjAqoVh"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-43323851d03so9020505ab.0
-        for <spacemit@lists.linux.dev>; Fri, 14 Nov 2025 12:37:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1763152631; x=1763757431; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2N7A4sphnOSNn2VwNdf5jHhtrwzomqOxdOIMs+gXosY=;
-        b=JjjAqoVhZUDaHSOjWCu2+oSSMMmeE1H7A9OM/ivWa49Uzv8w3Q/GYpIUHO4fL0Ed0y
-         Hrp6aXCLb7WmrR5Fxdgc9GAIC9SKMu4ln7CtyRYuOvxKwKCSDGZYPR65dso3dsQAn9wF
-         73eqts5HYbsPJZQ/Cr0JVyXCk8FBGm5xMDmfZCnNvysgPNtuKB5I1MtcYYJCnVhgi58t
-         ONWW9/bstLWPlSVgf2bzKel3WTTvoNAOxETRKK3poZvIiAPa8ywJ5SPopTf0JZiyVzRH
-         DlXrquhOsmjzeBunCschhtN1Hx6eicFVfexspyF5xHqrHtHrN0ap/ZNPlxG9zV/zrruy
-         Ds5g==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Ipw5tVdT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1763180514;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=n/tk0v+4BBK6qP0Q9YzuiptrPfp0eR+Hy5aITCdFIu8=;
+	b=Ipw5tVdTexLVBE3gaaRrLbizjcEfV1YLPucMZvteERrkfqWv2fVM6FB41MuyKqyWlzVCLl
+	T/B2F9OlMubLeaCq+yoUfZp/CxGbhb/6AH3nHD0dJuxqqv5u1tGCbQ+43OO86cYe19n3PK
+	1NPu8PDMWkSycYtTZSuOn1vf0+SEm1E=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-616-gBo0xL9KMnWVWzDOe3un1w-1; Fri, 14 Nov 2025 23:21:51 -0500
+X-MC-Unique: gBo0xL9KMnWVWzDOe3un1w-1
+X-Mimecast-MFC-AGG-ID: gBo0xL9KMnWVWzDOe3un1w_1763180510
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-29555415c09so33707445ad.0
+        for <spacemit@lists.linux.dev>; Fri, 14 Nov 2025 20:21:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763152631; x=1763757431;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2N7A4sphnOSNn2VwNdf5jHhtrwzomqOxdOIMs+gXosY=;
-        b=ouEeewKoGX2h6rqDzkG67y5fM0fWkO0BLpNUHk1bJ2CpfP226xlE9/CmxKNOzar73a
-         G0isVakYCuP7v7ltrQE9dygr/CVeyVCITHJs71N0q1W48nduXXsJs63VukioGQFIhhdH
-         KcDTktj1n4SIyuvuPIfds0snZYIpbTA9J3XVZQOIX9KFHhQsysDT4cgJZ5spHdVaEvf9
-         a40uD9MHagNMAn42ia565kHlTPS6EWYjdmTR7A7ejagw3NMn51QtWJl2X9NAjNSgRuJI
-         BuXxFZgP4gvaakX0PRaxL0XI91xQKrypy3wGbV1qJu57PWvPhdL/vN5QiiafbxXO1XZq
-         w1Fw==
-X-Forwarded-Encrypted: i=1; AJvYcCWWu+dkYTN6owggDskVGuNzna02lg8YCdMz9vlurliUFCSJVCMFDbYpjllbTrVWgpfS2IpOKeK/zA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwfTVxjsnoP/lxkj3Ybnoa8eObGEfu+BlatIQNn9ffU8q6M3clv
-	8VIa67tCso0rsHlfumHfLaxFk6FUR76sC4WRsxZaU4BFEhJePxzaI7ze54Njt4nkGlE=
-X-Gm-Gg: ASbGnctWYhRBGvbcFkcDSUGGRPTKIDfh9Ykft4S6rL40kULA2OuaYX1X3XoLK8ILbpD
-	uSJq92SkPTyL+KzPb37HUuidCRqOwrcFq2W6MUkKaYnvlXWUnaMySylKw2hBQ768+519JIB3OQX
-	/ENOXw7YDOZnktk8Y86CxGND+ZAejvO3/HM2+4q5TPP8RwRE9Hmu6/Tb09tunVB9Vpr9rKKsUIz
-	lbnfa5sQ7pN2RYPvZdMuSxTAWcD56egWZ0MUK1OFktT1CVFfdBQW2PmFvwYhF9qpCSJLEGfy7/Z
-	mSzNjFuiAgM9WXSkRHO5BcbWHIA/o+2Y79N67ostfLh6TYUcrq7Ic/4DQDdsVj7L5ZuMcgV6GIC
-	H0TvifTntNKsM2DWL9uihDDv/azPYwMvzeK+3Bs6/sqyL8Vl8e1SiLRVIO6wmJlfut1ZyRbGm/A
-	zu+T1src+RpoNkmCngJR53UGt0us/GpVxWF2xlG66ko5id5+ocDRgpLP1I1TFI
-X-Google-Smtp-Source: AGHT+IEsFHp9+KTrH36IfqMNkMBqKDdgRHUJrYhyOx128Vw+1DZKY9oKj4WLZvRXlvy/+FFiqg/IEg==
-X-Received: by 2002:a05:6e02:3c88:b0:433:767e:8f47 with SMTP id e9e14a558f8ab-4348c954ba8mr72409145ab.29.1763152631499;
-        Fri, 14 Nov 2025 12:37:11 -0800 (PST)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-434833c5eeasm33471855ab.5.2025.11.14.12.37.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Nov 2025 12:37:11 -0800 (PST)
-Message-ID: <939d76d0-a535-4d7d-bc3b-9d92be9b782a@riscstar.com>
-Date: Fri, 14 Nov 2025 14:37:09 -0600
+        d=1e100.net; s=20230601; t=1763180510; x=1763785310;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=n/tk0v+4BBK6qP0Q9YzuiptrPfp0eR+Hy5aITCdFIu8=;
+        b=gjagFd9YKGX8yBoXTzRN0+51eY5ciwqbNOD2zWUG3vNeLqqpWcmnEplWhlktHaUgzb
+         mcYDazfdN368oXHlx/0Cvl3u46AjFSJx9BWfRx0NKaIX8qTlIqDxD+eNYaqMhKE6WyAt
+         xf2hIDygGBcEVbSG2nRRjI2oTKW/fZ62oQZ+lrKoJJg9BZYvZS3oCfxWxpmIQC1a+F8i
+         SbKOIX/3UbuPxkTbp1xNFYFVJJNU0WjGi44LfwMV2UkDfePjD0gbQcFK+uMYi4ucvmAl
+         ZJAAQjQnEjSkh7ae4wfFTXNVDLcUrSMPhG3t79JTIT3ZaSXQgdgCVJbCgaSJTNufaVC0
+         QH3w==
+X-Forwarded-Encrypted: i=1; AJvYcCXMw1IF3ma2nZ8SyVDvNGMKm4ml6XZ2bmhlzxzqHUJXgEkbYMTjKixmqawWDRE9lJKSm4AFAiYizg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyg4y0WC1U2X4MuztlMckvV3UgzTx1GMhOS/8y+Xxrh5DjXNCSD
+	Rh9/SHynFgCapR60tMbdXbvAvV66UjrTkERbTyidU1QEJ7/+ycd4Z/3UwUtfnfqjkW3xHZVyqeT
+	+T8ep8AEl1prF6G+tCJVZYdCkg2fhc7VYGDRdb+qcsTMBG0w6WVTh63oGUm+aCjKjZn8KhBaL4o
+	yCl+LFnhbXPsM/EuBOAoBc8yuDsQPaSKslYDw=
+X-Gm-Gg: ASbGnctLffyYcXpKGojiAMn9CK05Bwbe2piugBUIlGvoCkQcg1/w6va2VJ6Yhhpc6rs
+	aQ/IYbQLdpPGpnWLidk/nlBIP09ljN0KFPcippP3U0WyZgr71ZX1xs4BwkEM0eoPJtCGl64AT2n
+	/vTLrx3Z6MuNDF67B73SxN1uk5y2YFrG4EnuhdYrLLzstAAMkzfe240qEk
+X-Received: by 2002:a17:903:120b:b0:295:987d:f7ef with SMTP id d9443c01a7336-2986a6b5698mr58952835ad.10.1763180510154;
+        Fri, 14 Nov 2025 20:21:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGpWOiKe/yoXVPzbbB8ra3b08yL+JrFximT86RMx9yWBQlaBgFV6FIkea9RBX9X7EoOn4xsE8DGGa3NwoDYNSY=
+X-Received: by 2002:a17:903:120b:b0:295:987d:f7ef with SMTP id
+ d9443c01a7336-2986a6b5698mr58952445ad.10.1763180509717; Fri, 14 Nov 2025
+ 20:21:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/3] spi: spacemit: introduce SpacemiT K1 SPI
- controller driver
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, broonie@kernel.org,
- dlan@gentoo.org
-Cc: p.zabel@pengutronix.de, linux-spi@vger.kernel.org,
- spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20251027125504.297033-1-elder@riscstar.com>
- <20251027125504.297033-3-elder@riscstar.com>
- <FFC4D2691116C9D4+aQAgeeG28SpSI7YR@kernel.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <FFC4D2691116C9D4+aQAgeeG28SpSI7YR@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20251113214540.2623070-1-elder@riscstar.com>
+In-Reply-To: <20251113214540.2623070-1-elder@riscstar.com>
+From: Jason Montleon <jmontleo@redhat.com>
+Date: Fri, 14 Nov 2025 23:21:38 -0500
+X-Gm-Features: AWmQ_bm8Az7GW4XBfoBLWD-9SdtXqiB6zadKcTvspIsW8QHKFXbXxVXEFbaU15U
+Message-ID: <CAJD_bP+AjhNCB6kCeKdnXERjP9j8dhbCejnS1OVmFf_VShti5Q@mail.gmail.com>
+Subject: Re: [PATCH v6 0/7] Introduce SpacemiT K1 PCIe phy and host controller
+To: Alex Elder <elder@riscstar.com>
+Cc: dlan@gentoo.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	vkoul@kernel.org, kishon@kernel.org, bhelgaas@google.com, 
+	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org, 
+	ziyao@disroot.org, aurelien@aurel32.net, johannes@erdfelt.com, 
+	mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com, 
+	shradha.t@samsung.com, inochiama@gmail.com, pjw@kernel.org, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+	p.zabel@pengutronix.de, christian.bruel@foss.st.com, 
+	thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com, 
+	guodong@riscstar.com, devicetree@vger.kernel.org, linux-pci@vger.kernel.org, 
+	linux-phy@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: O2rNzxF5ZgV8uGz1C6p4_rEPITeaT1V7sgsGL5jt63U_1763180510
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/27/25 8:46 PM, Troy Mitchell wrote:
-> On Mon, Oct 27, 2025 at 07:55:02AM -0500, Alex Elder wrote:
->> This patch introduces the driver for the SPI controller found in the
->> SpacemiT K1 SoC.  Currently the driver supports master mode only.
->> The SPI hardware implements RX and TX FIFOs, 32 entries each, and
->> supports both PIO and DMA mode transfers.
->>
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> ---
->>   drivers/spi/Kconfig           |   9 +
->>   drivers/spi/Makefile          |   1 +
->>   drivers/spi/spi-spacemit-k1.c | 965 ++++++++++++++++++++++++++++++++++
->>   3 files changed, 975 insertions(+)
->>   create mode 100644 drivers/spi/spi-spacemit-k1.c
->>
->> diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
->> index 4d8f00c850c14..2e933edab1718 100644
->> --- a/drivers/spi/Kconfig
->> +++ b/drivers/spi/Kconfig
->> @@ -1071,6 +1071,15 @@ config SPI_SG2044_NOR
->>   	  also supporting 3Byte address devices and 4Byte address
->>   	  devices.
->>   
->> +config SPI_SPACEMIT_K1
->> +	tristate "K1 SPI Controller"
->> +	depends on ARCH_SPACEMIT || COMPILE_TEST
->> +	depends on OF
->> +	imply MMP_PDMA if ARCH_SPACEMIT
->> +	default ARCH_SPACEMIT
-> SPI needs to be a built-in feature?
-> if not, how about:
-> default m if ARCH_SPACEMIT
+On Thu, Nov 13, 2025 at 4:45=E2=80=AFPM Alex Elder <elder@riscstar.com> wro=
+te:
+>
+> This series introduces a PHY driver and a PCIe driver to support PCIe
+> on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
+> Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
+> PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
+> one PCIe lane, and the other two ports each have two lanes.  All PCIe
+> ports operate at 5 GT/second.
+>
+> The PCIe PHYs must be configured using a value that can only be
+> determined using the combo PHY, operating in PCIe mode.  To allow
+> that PHY to be used for USB, the needed calibration step is performed
+> by the PHY driver automatically at probe time.  Once this step is done,
+> the PHY can be used for either PCIe or USB.
+>
+> The driver supports 256 MSIs, and initially does not support PCI INTx
+> interrupts.  The hardware does not support MSI-X.
+>
+> Version 6 of this series addresses a few comments from Christophe
+> Jaillet, and improves a workaround that disables ASPM L1.  The two
+> people who had reported errors on earlier versions of this code have
+> confirmed their NVMe devices now work when configured with the default
+> RISC-V kernel configuration.
 
-I finally implemented this today and while testing I found a
-bug in the module removal code.  It's been more than two weeks
-since I got any feedback on this series, and although I've been
-holding back on posting I think it's time to send a new version.
+I successfully tested this patchset on a Banana Pi F3 and also a
+Milk-V M1 Jupiter by making the same additions to k1-milkv-jupiter.dts
+as were made to k1-bananapi-f3.dts.
+I no longer have problems with NVME devices like I did when I tried v3 and =
+v4.
 
-In addition to this suggestion, I have two bug fixes plus your
-Ack on patch 1, so I just posted v7.
+Tested-by: Jason Montleon <jmontleo@redhat.com>
 
-					-Alex
