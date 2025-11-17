@@ -1,131 +1,157 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE08930CD8B;
-	Mon, 17 Nov 2025 13:17:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD80B3375B9
+	for <spacemit@lists.linux.dev>; Mon, 17 Nov 2025 14:55:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763385438; cv=none; b=qJE0v06Jut7TZYpFX2+dzjl0X4qQ1oVcJqws648lTCL0RMn+fajn941PrNgxK7XC9XqjpkLVXbBCEFhs1xlYTSM2mS5qs2emUF/AJzd0UQs1dfjDT8hYs+eyoegWT3FfwNukjbRCZ2V7KZ6IOIS3lmmM1g3inmPKPBELEkutgyU=
+	t=1763391342; cv=none; b=bOsq3BWf66qr5XFZJXg4zAARXVUiKvw+okjMcHsYeSLzHCjHrGkT2JqJG5td2iCzjxXvhZKpvJnyp+3VgOojcMe2kMxA2CMmMZRMBJMrA/J3krbuDQLS4TGCUsh+Sbc7Op0q6Sqb9v754UVDJPVfegtRnDkxaPUnrDuD5s0Mgqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763385438; c=relaxed/simple;
-	bh=xxRVdtfTiOQTO2jyXwimxqWcnuxgrlQL288pVe0i6qw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iEoyfZ+oJ6NusewLR3veCPwBcYpdDbgFsyIJ36FgMEOn2HPL1KtNjUMIjlmxXfsRL8FLSYMAqz+X6kWxm6nW51fQ1nD5MXE7o7Zx2eqZ/pFxI3W7c8bZvH0TEdb9r2/qFT3YP/0l6N2hdLlvpmzcbz+PScD/QuKPfXc3RgMkbSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c550pCdk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763391342; c=relaxed/simple;
+	bh=ddKQbg+5aeA8Eos2HAPxgAnbpLqgnU3/bB5DYQTsIto=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=RV4rIyWZDv5ZWm1lfL4GOm1DFhCH3UyDRFTKdZX3udXu5nQHM2z++45C4qRltVoMEEZrQGby4ddYMhW1OJhc4QYSfwgMhvNLaonhxQT52BUeoex51jA6I0t5aJbAI6e2AOostTL7/2RPVfH7qwbuUJZUeLVj0IDWaf/0pjJQZPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lTOhfrUn; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DGmWodeu; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c550pCdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1280AC113D0;
-	Mon, 17 Nov 2025 13:17:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763385438;
-	bh=xxRVdtfTiOQTO2jyXwimxqWcnuxgrlQL288pVe0i6qw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c550pCdkJK+yNP+DqSVvgoIJBsW5teGVE/5W3xmfUaLaCBThmuk6hVhdtUlBiF7by
-	 9jlT5Jh/yvA9YhcGpMQ1u8uASYsLwvKT/uRST5Roi8Vnlnh7fVWaCNufPO1LAeHX+K
-	 n6EmpyuEPUAfZYq8ZnhIQIqr+8k42SYM12NdHdlzkmgi9KIuJj+NrXzcW2YzbvHR3D
-	 KmiQIlFhd8FdBdGNGaGf43d6sPx9z9hcSecSYDWUaJrXRm1FMTkgYxMi1SJZud2CXv
-	 mewJQAaui7JyPnt0PCiMXwbLgR+Sfucy+bp71fdeTcqLiMHSpEPXhb1fs3ggQMNVgT
-	 ABimt9Z0vvmuA==
-Date: Mon, 17 Nov 2025 18:47:00 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Vitor Soares <ivitro@gmail.com>
-Cc: Alex Elder <elder@riscstar.com>, lpieralisi@kernel.org, 
-	kwilczynski@kernel.org, robh@kernel.org, bhelgaas@google.com, dlan@gentoo.org, 
-	aurelien@aurel32.net, johannes@erdfelt.com, p.zabel@pengutronix.de, 
-	christian.bruel@foss.st.com, thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com, 
-	mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com, shradha.t@samsung.com, 
-	inochiama@gmail.com, guodong@riscstar.com, linux-pci@vger.kernel.org, 
-	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 5/7] PCI: spacemit: Add SpacemiT PCIe host driver
-Message-ID: <7f5r2lnlrsltowfninu76bivebgwkr5i3pdorj3hywg22mtmdz@m35cpser6opt>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lTOhfrUn";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DGmWodeu"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5AHB3a8v3517229
+	for <spacemit@lists.linux.dev>; Mon, 17 Nov 2025 14:55:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	awbwG/k9XyjzMvCh6NANh6uyBFKHQ/YUvVhYaVb6bNY=; b=lTOhfrUnVVdViObc
+	dVXIqvdmzxpeVtUkMLX1z9OnGv+edJ5XTbdvLAe2DcgV7rbnHw0BOsnuKQol2q01
+	QZcPHjtaQn8EzTqNSO2LQ6ek9A4xnbC604QgAjnOEctwy5r0OM2URZ8APcqr2VCC
+	fRhU+xXuIzWe/ux1tU7orrxc2HqY4KwWSHjTwo4raNX/OkNcIy/qs4RbphlZhnx6
+	g4xdwJbZ4AvaBrFyrauLgDFcMsL2VsWA0dNk2Ij9aWC4xxKa0aOTihkVCxA40Bb3
+	l5RVJEVFdvWmgkwFTqiCO0Jev0xG5WAlddEn2GCmXr8Ckg44ZJObXSO6OejjMeGg
+	nPO9gw==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ag2gg8myd-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Mon, 17 Nov 2025 14:55:40 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7b9321b9312so11274656b3a.1
+        for <spacemit@lists.linux.dev>; Mon, 17 Nov 2025 06:55:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1763391339; x=1763996139; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=awbwG/k9XyjzMvCh6NANh6uyBFKHQ/YUvVhYaVb6bNY=;
+        b=DGmWodeuPf5VnAYLPiflW8HAJcOOUdNfWz/fQ0eYhuCuDnd1OW1Yz4QDzDYYUhhauL
+         seUlu1cramJQidDmRn86vxoYP8eO1XxbFvcJW6zjjFY7QyI0uPu0xNqX6ZEs9hDkW0aF
+         RTYL1IBFRgnYo1o+bx7bRpN99TEkpAHDo9VFRkUa5LoHaVySic4mqwPezVntyiRSL0gR
+         3ScXEp4NMeY6NY+cRPmzMjuF+SRB00nJzSrB9HPzGkSIKmYAXY7HHi0RxU3RoHabvWZL
+         ELVFId0+V6SKAhrEWr5XmISK/Lib+86VsWHWsGomNmonFgzqduPXyxyRNw4PXCTVGEba
+         NhdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763391339; x=1763996139;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=awbwG/k9XyjzMvCh6NANh6uyBFKHQ/YUvVhYaVb6bNY=;
+        b=gJlWKOV3KItd3Iim/NoCIZ3KBbXbSsXymtet0NXqhiMzomxJXdJBeGzFuGe1q27Ik3
+         S/bdlHMMjjyRI8W+X57lHHWiekBLoD2OX4AuUpq9cCCmQGVsPgzpgCIi6vnDAj/Efzjr
+         evm5U2uUsb6eXPDcVWSti4Csoe91PxggvM4TvhbrhuftdPVGt6o7sPbZT/YNXxKVQHVD
+         BTiTjtlplrxu6o390pz30kHld53sqlfk4Uutq6kXIMxEnVcFdMQHyoa4fd5VzjO7A1DX
+         oC7k1qB+aw5tr4SEjfuBbk306eDLgM7jGm2rA1VqBpF/bN0/AxmlYiw3RPuyLO4M/XmY
+         +erg==
+X-Forwarded-Encrypted: i=1; AJvYcCXDnNO434/1WROg4/o9KWXBmZZvOQc6pWRM7Xkzw7RL2EHYsC8xeE0dwuGdZzSOAUj0PKQTKYo3AA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YylweGp/Dr1eU+aMF+iLlriwYNvXbsyqDJN+TB9tavP3YXHFERZ
+	NZk3YEFpVgStW7V2ctUxX89tqAc1FuFoGXkE8PoVdhpLTiTiDTZ6qp2jOUpSste41FiXgZlh5PY
+	yNI6onJ/v3sd8p10/YD/ar6TxRI4oz+CyIB/mJo7qJTHFYIZVll/bQQZOhCxBqg==
+X-Gm-Gg: ASbGncu/K/JTM1hXTu1dZnsGmhI+5ZrNTX2XQCmYZ2ecECx7VD36lKsjNnWPV0yz7DG
+	7UMwCtcPHP0KctDn5J2SOW13DATZpREnd1bL67c/2ei7hQSMj97yoMaSjJn5whwn9qv+xisWaIf
+	cqZ60BHYqjGuRXD+5bmnuf36s2k0Vj7IDoqIXdKyYWWr+jUzbTZZ0CR23gle1pm3CEqdJWVdakR
+	BUORT7cUvwSwAzSk3+HlbXdjCmZLVw12V0WXGeEnUrRlXoi7vXJatFoNVDoQoRaZKN3rNMq4Gsv
+	f0H9frhRFaEGAVX2UzOv+qkbBQL5IPEccsDTUoJI1287CZ71HJV0y6qnh8OWEKwP+BWqHNhf
+X-Received: by 2002:aa7:9069:0:b0:7b8:349:1b24 with SMTP id d2e1a72fcca58-7ba3bb8c363mr13353834b3a.22.1763391339438;
+        Mon, 17 Nov 2025 06:55:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFSL5vJ9zpN99/df4BrrN39IGWZXi59cv6hPKEmE1JVTmbqGnrZbM2VZhjhEvINN7S/y/pFWA==
+X-Received: by 2002:aa7:9069:0:b0:7b8:349:1b24 with SMTP id d2e1a72fcca58-7ba3bb8c363mr13353786b3a.22.1763391338914;
+        Mon, 17 Nov 2025 06:55:38 -0800 (PST)
+Received: from [192.168.1.102] ([120.60.57.34])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b924aee8afsm13627213b3a.8.2025.11.17.06.55.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Nov 2025 06:55:38 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+X-Google-Original-From: Manivannan Sadhasivam <mani@kernel.org>
+To: dlan@gentoo.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        vkoul@kernel.org, kishon@kernel.org, bhelgaas@google.com,
+        lpieralisi@kernel.org, kwilczynski@kernel.org,
+        Alex Elder <elder@riscstar.com>
+Cc: ziyao@disroot.org, aurelien@aurel32.net, johannes@erdfelt.com,
+        mayank.rana@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
+        shradha.t@samsung.com, inochiama@gmail.com, pjw@kernel.org,
+        palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+        p.zabel@pengutronix.de, christian.bruel@foss.st.com,
+        thippeswamy.havalige@amd.com, krishna.chundru@oss.qualcomm.com,
+        guodong@riscstar.com, devicetree@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+        spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20251113214540.2623070-1-elder@riscstar.com>
 References: <20251113214540.2623070-1-elder@riscstar.com>
- <20251113214540.2623070-6-elder@riscstar.com>
- <f55e2df3fcd025148b7262c3753e5136cc324b09.camel@gmail.com>
+Subject: Re: (subset) [PATCH v6 0/7] Introduce SpacemiT K1 PCIe phy and
+ host controller
+Message-Id: <176339133088.9268.13766811346004998135.b4-ty@kernel.org>
+Date: Mon, 17 Nov 2025 20:25:30 +0530
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f55e2df3fcd025148b7262c3753e5136cc324b09.camel@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.3
+X-Proofpoint-GUID: MjoCv3uvcn-63nimqYt3OkZlXhkEf31v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE3MDEyNyBTYWx0ZWRfX5BtLeajFfCDC
+ lPFNsb2mXunTKnY7vFYFdiY8D7n/9MVJpiJyiXAHmxgi8LVen27nJXAcHJHhL8zmfPJh7yvKuPC
+ CeU4bG7yr9ti05h+tvNc+HWZMYepaazPEtZlEZ/CK4mrUUXX2pFq8WC6zHd7ZJN633vH52AZBWa
+ XfiSzXx4xvhTHBfDSY6kZArURvEEryxulwp9bwax+eL/cCp4DMvTsYSFgPsVxByRzvk0CFGMwdI
+ F28KICazhc47QjUHXM4wTo1qqyiwArQyoUm0sDCE6QtkZ4GbXa+CYF+xE0tw2UJayHHW263wcYj
+ t/WSfmp0Yy8Y9F3v/VGj7vyYvgzUApNyW3Iwg782Hl6/HMiln20feGNAQGeI8NE1rrc11gTAOds
+ QCR8mDFqpYuHvPhSms6peC+WTnSU5g==
+X-Authority-Analysis: v=2.4 cv=Cryys34D c=1 sm=1 tr=0 ts=691b376c cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=SvArCPxluHhT4bP621h3eQ==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=TFzoyenawzPvhxzIwaMA:9
+ a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-ORIG-GUID: MjoCv3uvcn-63nimqYt3OkZlXhkEf31v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-17_03,2025-11-13_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 clxscore=1011 suspectscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0 phishscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511170127
 
-On Mon, Nov 17, 2025 at 01:01:04PM +0000, Vitor Soares wrote:
 
-[...]
+On Thu, 13 Nov 2025 15:45:32 -0600, Alex Elder wrote:
+> This series introduces a PHY driver and a PCIe driver to support PCIe
+> on the SpacemiT K1 SoC.  The PCIe implementation is derived from a
+> Synopsys DesignWare PCIe IP.  The PHY driver supports one combination
+> PCIe/USB PHY as well as two PCIe-only PHYs.  The combo PHY port uses
+> one PCIe lane, and the other two ports each have two lanes.  All PCIe
+> ports operate at 5 GT/second.
+> 
+> [...]
 
-> > +static int k1_pcie_probe(struct platform_device *pdev)
-> > +{
-> > +       struct device *dev = &pdev->dev;
-> > +       struct k1_pcie *k1;
-> > +       int ret;
-> > +
-> > +       k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
-> > +       if (!k1)
-> > +               return -ENOMEM;
-> > +
-> > +       k1->pmu = syscon_regmap_lookup_by_phandle_args(dev_of_node(dev),
-> > +                                                      SYSCON_APMU, 1,
-> > +                                                      &k1->pmu_off);
-> > +       if (IS_ERR(k1->pmu))
-> > +               return dev_err_probe(dev, PTR_ERR(k1->pmu),
-> > +                                    "failed to lookup PMU registers\n");
-> > +
-> > +       k1->link = devm_platform_ioremap_resource_byname(pdev, "link");
-> > +       if (IS_ERR(k1->link))
-> > +               return dev_err_probe(dev, PTR_ERR(k1->link),
-> > +                                    "failed to map \"link\" registers\n");
-> > +
-> > +       k1->pci.dev = dev;
-> > +       k1->pci.ops = &k1_pcie_ops;
-> > +       k1->pci.pp.num_vectors = MAX_MSI_IRQS;
-> > +       dw_pcie_cap_set(&k1->pci, REQ_RES);
-> > +
-> > +       k1->pci.pp.ops = &k1_pcie_host_ops;
-> > +
-> > +       /* Hold the PHY in reset until we start the link */
-> > +       regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
-> > +                       APP_HOLD_PHY_RST);
-> > +
-> > +       ret = devm_regulator_get_enable(dev, "vpcie3v3");
-> > +       if (ret)
-> > +               return dev_err_probe(dev, ret,
-> > +                                    "failed to get \"vpcie3v3\" supply\n");
-> > +
-> 
-> Hi,
-> 
-> While investigation a similar PCIe setup, I come across this patch series and
-> had a question regarding regulator handling.
-> 
-> In the patch, the host controller explicitly enables the vpcie3v3. However, the
-> pci-pwctrl-slot driver (compatible pciclass,0604) is also instantiated via
-> device tree and is supposed to manage the slot supply.
-> 
-> I'm wondering whether it's actually necessary to enable the regulator in the
-> host controller, since the slot driver should already take care of it. However,
-> in my tests, the endpoint is not discovered unless the host driver enables the
-> regulator early. It's not entirely clear whether this is due to the PHY and
-> reset sequence, or the timing of the vpcie3v3 regulator activation.
-> 
-> @Manivannan: In the patch, the host controller driver enables the vpcie3v3
-> regulator, even though the pci-pwrctrl-slot driver (pciclass,0604) is supposed
-> to manage it. Is this duplication intentional, or is there a preferred way to
-> ensure the supply is active before bus scanning? Any guidance would be
-> appreciated.
-> 
+Applied, thanks!
 
-Yes, the regulator handling is duplicated now. This is due to missing PERST#
-handling in the pwrctrl-slot driver. We are working on a series to be posted
-this week that will fix this issue, but until then, pwrctrl-slot driver is not
-reliable to power up the endpoint. So I've asked Alex to handle the regulator
-and PERST# in the controller driver for now. Once my rework series gets merged,
-this part can be dropped from the controller driver and there is no change
-required in the binding/dts.
+[3/7] dt-bindings: pci: spacemit: Introduce PCIe host controller
+      commit: a812b09a6b599ea80ec1065a9a635724a235843d
+[5/7] PCI: spacemit: Add SpacemiT PCIe host driver
+      commit: ff64e078e45faee50cc6ca7900a3520e8ff1c79e
 
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Manivannan Sadhasivam <mani@kernel.org>
+
