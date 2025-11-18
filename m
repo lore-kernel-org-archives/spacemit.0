@@ -1,123 +1,158 @@
 Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3202DC32E
-	for <spacemit@lists.linux.dev>; Tue, 18 Nov 2025 06:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E602DCC01
+	for <spacemit@lists.linux.dev>; Tue, 18 Nov 2025 06:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763446201; cv=none; b=l3nyRJo+l+gyaumrLhJrNNO+Pd5YGfDugvTBz9ybDynGUsqx+TdZE0E6CIGuk2kA32jCgGWjA0WrvE6xiyuPDXIMLhZU9zmZJ9I4HZtadCQc1xLCtQArSnrRNWZxPhxy6w5R2bJPzcG6LO1l89j8OCOIlTXW5sCipGcw52LTLe0=
+	t=1763446406; cv=none; b=Y2S5Z6q5N6gsx7HJF31xBxl41pAPa6PxqshaMKJewQDLJlIQ2CvY/bX92tRo23xoroUO8no0R+sfLOPeRzjfBannb5MEdpGuAS530oRG2vIFiCSHLd9n2srGrqzhylAmir6FE66ZmtDZxP0n7KHFM0RzNKcnBgQtIZNGtST1wtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763446201; c=relaxed/simple;
-	bh=O0ET+73GNcMNM8GQ0vp3eFlX8NnqDIXFIkI/j57BfWg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VX4z2oazBySeYHsjt8SjKjFA2O8zwGUW39tl0D80Roko92zGl99Ca6YxCIO+m6N5T8hO565AoopU3U7P9MMw1n77+VQid36O1+MOhLyN0RQ39BJizCqz//qStyJltBY994z+XboXPA1XMlYt+RZlanNDM/FI+FgD/3MqAUaEh2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=LRzi5te6; arc=none smtp.client-ip=18.194.254.142
+	s=arc-20240116; t=1763446406; c=relaxed/simple;
+	bh=O5o7AICh3o7Ww3407LSqZ3eeo6vXkoE83XVtMZ24sj0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SRed8I3pVMB3MW6JsQ1WH8Ij7tq3kz76RDKqrdc4iL0MjlnZmhSH+VAxlUAIPzg5pAzgB7G/ju+pgB1uyoWEeAL8T8LpOepRY12fzWAXF+wjXUTqJ1h4An1LBv2hacW/xOLpU5mHk6rbBI3zr4FJGhEvvGCj1hsmLBLlALzdwBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=CH8kzZ+O; arc=none smtp.client-ip=18.194.254.142
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="LRzi5te6"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="CH8kzZ+O"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1763446105;
-	bh=JJKnbCzCyE56DvqtMiAuAzvsyxWj4Xmfmgz9svZYVl4=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=LRzi5te6C02Gs+k77eRctMheekb4+/EoX3pFZR6n6/Y/PUGHdak2khCC99ikBA+S3
-	 93NHOriWsxYZgr6wVPvlpa35uyG5ckt+wWgUid7+A5jLVlsIIFKxxFwZfN2Ye7Gj7f
-	 /yyH8aMYgMi48swl3OSdy+FZrJPMhQpI3N5o+BUQ=
-X-QQ-mid: zesmtpsz7t1763446097tc170ed18
-X-QQ-Originating-IP: +LNcdJjd9qMKIjgg15SU0g3IP6WZkqv8aPItSsa9TDo=
+	s=mxsw2412; t=1763446324;
+	bh=PefOPp4VRN+tiPLuOqhHsJ3+bwsd1zdz/20vvYEKS0Y=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=CH8kzZ+OXTHPP0+rxn+tX7o0j0lWxSzPzcPf1YgXFRb10OgkoJlUTef3BMaxzxsHz
+	 Pjla6o5729p7WCCOAfVPaU0jDg0QpEYt+7ou/WhigIadoqPizP/dGooCSlnHVHZQGl
+	 a4PqtzAmToBe4I1bSLJeiyyRg+xSeVw2kDpiMVsI=
+X-QQ-mid: zesmtpsz1t1763446322t85fbca92
+X-QQ-Originating-IP: sxHPH0siHuAz7N4YRiuNuWYFwBSXTUAYWAJuNFM67cE=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 18 Nov 2025 14:08:14 +0800 (CST)
+	id ; Tue, 18 Nov 2025 14:12:00 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13402662488646973170
+X-BIZMAIL-ID: 3589277169008549396
 EX-QQ-RecipientCnt: 13
+Date: Tue, 18 Nov 2025 14:12:00 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Tue, 18 Nov 2025 14:08:06 +0800
-Subject: [PATCH v3 2/4] rtc: spacemit: MFD_SPACEMIT_P1 as dependencies
+To: Charles Mirabile <cmirabil@redhat.com>, linux-kernel@vger.kernel.org
+Cc: spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-clk@vger.kernel.org, mturquette@baylibre.com,
+	sboyd@kernel.org, dlan@gentoo.org, heylenay@4d2.org,
+	elder@riscstar.com, troy.mitchell@linux.spacemit.com,
+	inochiama@outlook.com, Yanko Kaneti <yaneti@declera.com>
+Subject: Re: [PATCH] clk: spacemit: fix UBSAN warning during probe
+Message-ID: <6C924033633588A2+aRwOMF9uafe2dl5H@kernel.org>
+References: <20251117190329.1337250-1-cmirabil@redhat.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251118-p1-kconfig-fix-v3-2-8839c5ac5db3@linux.spacemit.com>
-References: <20251118-p1-kconfig-fix-v3-0-8839c5ac5db3@linux.spacemit.com>
-In-Reply-To: <20251118-p1-kconfig-fix-v3-0-8839c5ac5db3@linux.spacemit.com>
-To: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-i2c@vger.kernel.org, 
- linux-rtc@vger.kernel.org, Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1763446086; l=1318;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=O0ET+73GNcMNM8GQ0vp3eFlX8NnqDIXFIkI/j57BfWg=;
- b=8TEiAdqEhKkZALZLUbMI/ZvkEHwHrPeyfyMYKZDiS5r2HzeKYowHaOrTl+gWievKRuNoS24WU
- enNBKW94GzLBQtnqIVyyDffebqQOWxnQgKLUPEoazPiHoQkJ6tuWtuP
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251117190329.1337250-1-cmirabil@redhat.com>
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: N5zs7xsto/jUP4dsboR6rAUIRdzYqwB2GNQpqqoFrwWjVjoaBtXlmbxF
-	Kz5nSDkZ3Y/yPQF/Ot1erOEYbxxtmgTGCglDPWPy+uEjJSTzc/nvY8Sv1Dzp5kiPz/etE2w
-	Tkrjw+CEou1WsVx+HjFWLKyjoGQxnlM29Rm624v0sjHq8hpX39t4H2O7hbA6XiEUuhWwCT9
-	WJCNTVhCLcH1pS3iSUUCQ704Vyfs09o2MJkhH/ulfYF3OcX84wAuGaN6lr7UaUfPoFVkxpq
-	x2voLnydnuaASHqJMewJN0CBoamWSk7SrAMdUKBvY3oZJtC8Jeo7kk3lYnj/A46rjYigy7G
-	0XX4moE1pCWknpNRefLOhC7xWLICKRocvvsAMIFCbUwqREJMGNlMz/TOw+hLp4PQ1bEuMj+
-	JlCfRTQ4Q6Gue6jxUqBxFY9WQuYSjNmkaxu3ngM7Eimp5Nx+XgqXC50s13l+SjoUSNbfQg9
-	RksVgLdsYMedYdi7IxLICTbxTgtVGeAymJl2NB2C5xB//v0Fe/D14iJEkXtaXoMNE9aEc4h
-	9ep/7vzn1N4BzCnopFccmAXCxvSO34OZeYK0jrJeGhHi5kHlSdyLfz1+f1cBg5YxGhOsbdJ
-	hXQJzYE6/FdysD7x9PE7SfQNfNZAqsczokjuWoVo3zELaqiU6SR3kzVBzws8IgG7gmbMybs
-	2Xjbu2Vbp6WhNEjKrrmKygLFAI/tBAzkP6/xFwk4Got/9BILYhu3tKMC3NyJ3jZNaccoWK4
-	k0kGhx2W5Rb53bfqU8m7U6bq+hytTsp56aP/FMCmRfYRcytJ64i8zsYwcvihH6I5brfMybM
-	dkLGMQ6KzdK5xBE+ODngl73hDNjpuJ7wGDju+2s77UxBBK4ItRaM3PU6K/Etdq/nKmvvrxp
-	tjBPuYJ33xCvjAyIvB6fN5iNKZbkWFeOwlF+RKdu/ykN6cCNY/q5yRrusIhCJWsAPsRwsUA
-	uf0et/7S1VBbM9q7/xtU3feg8SZdxW04rW+R67T/iVQ7uBeD+KAS/nD/L1TsNxYrEM5q50B
-	D+660c+Mg2J3TbViVWoY7z7C82getAfIbXF50Wph02JJYDEql9liteVqq6obXwPpCcAUAOj
-	qaYg3G7weydRXGMEUDg/LxOT44LXiL0BqdqLNfKOC5ThEZhLvDm0IXYksRSKNpOx1S1oP8m
-	5MgDKKT4t/u+AGI=
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
+X-QQ-XMAILINFO: MX+1SEN3H+wAJ1xIDWnUW563xdfIUlc2/aaOirnPLXDVWn5rFKKxSvMU
+	Hbuff5fNVcJdbyf8qRwfXyEGstTXa1QwjmaJEoRR+JUKWw7PEe/upy12Pv6bJt9X+F5oljd
+	j/OgOAlKPkB38cJfFPeKT7mcuSVllYhjV3bisY/D8ZMCIkrbNCMp2tYrzxxf5v5o7Sys+sf
+	CouXLCB6cPWcfaGUnj1AJtIQI/pVBRQ5T+LNuD8kkeHvpzcIJah61Rq8dqqWmQbmAF/OPQN
+	DU1UI5mScUiJ/Zv+vR6IH9+YHSYrw9Y2nGlGdIF0yE/bAKccQFH1WiuOy3XIf9EriK5v1O5
+	8eYgLUDAghkRFV4CrtTWM8ETz5k+l0mkhvAnk42DFuQYYisDJvhjtm27NGxG5r1iKrigwhS
+	Q1BqtUQ3q55SAPUJu7iQs2VIUQvOpgnvtFXOKCIttpRddul5rpdFnCaBKftCk7ivNJo7T8c
+	j6U6GmLFULp8uWSMpX35QAboBqEOX+sJpLrOgFY2J77QtVhJ6o6p0SbQiy02pCaq7ic+OoS
+	dVFe9j2QDovoFk60Sc3aQ9zt4IrL47oSgIlXdcHZEAFUOw2kkdovXbwza5GU6LhQjqFApDn
+	eoL85NP5FcW4gFFvR97esgPH/VuHqxpOzyJfQHu1Oyc9C1x+EvVNOH2BQ80Y04Of1U4EKX/
+	j2UuVN/ywQnsB9bBgT/QxGrXkkPMRjIUTsyLkWAJCislJDwuZLTj246OSycDYfEAVY5FxG6
+	e5/4uJbOntiw7PFuRBjom8vAtsDxavCh8YSfqRqCIakwbz8xYbpo14oly2b9icHi+LGvVal
+	i4j6CyAn41UUS4QfpntXO3jegdJBCyWwrmDaalb/YwN1fHgjvbCJ2yvv7a+3IwUEwUUwH/g
+	hVexeYu3fCBqZX/NRULimiZOFgVSehjkB4E1vUywmddGWHddfnaI4uxcnJuoLDGSjhfm8sy
+	Bh8nFR2re7f05WyYaocP1nLrHazvzF5Aa489U97e7Zvla2DJlmMpNdtviIH2xkeqgPEquUE
+	D+TE9GNPvYp1DwERss0xI62e4ZNZIMf5Gd3MK3RA==
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
 X-QQ-RECHKSPAM: 0
 
-RTC_DRV_SPACEMIT_P1 is a subdevice of P1 and should depend on
-MFD_SPACEMIT_P1 rather than selecting it directly. Using 'select'
-does not always respect the parent's dependencies, so 'depends on'
-is the safer and more correct choice.
+On Mon, Nov 17, 2025 at 02:03:29PM -0500, Charles Mirabile wrote:
+> When booting with KASAN enabled the following splat is encountered during
+> probe of the k1 clock driver:
+> 
+> UBSAN: array-index-out-of-bounds in drivers/clk/spacemit/ccu-k1.c:1044:16
+> index 0 is out of range for type 'clk_hw *[*]'
+> CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.0-rc5+ #1 PREEMPT(lazy)
+> Hardware name: Unknown Unknown Product/Unknown Product, BIOS 2022.10spacemit 10/01/2022
+> Call Trace:
+> [<ffffffff8002b628>] dump_backtrace+0x28/0x38
+> [<ffffffff800027d2>] show_stack+0x3a/0x50
+> [<ffffffff800220c2>] dump_stack_lvl+0x5a/0x80
+> [<ffffffff80022100>] dump_stack+0x18/0x20
+> [<ffffffff800164b8>] ubsan_epilogue+0x10/0x48
+> [<ffffffff8099034e>] __ubsan_handle_out_of_bounds+0xa6/0xa8
+> [<ffffffff80acbfa6>] k1_ccu_probe+0x37e/0x420
+> [<ffffffff80b79e6e>] platform_probe+0x56/0x98
+> [<ffffffff80b76a7e>] really_probe+0x9e/0x350
+> [<ffffffff80b76db0>] __driver_probe_device+0x80/0x138
+> [<ffffffff80b76f52>] driver_probe_device+0x3a/0xd0
+> [<ffffffff80b771c4>] __driver_attach+0xac/0x1b8
+> [<ffffffff80b742fc>] bus_for_each_dev+0x6c/0xc8
+> [<ffffffff80b76296>] driver_attach+0x26/0x38
+> [<ffffffff80b759ae>] bus_add_driver+0x13e/0x268
+> [<ffffffff80b7836a>] driver_register+0x52/0x100
+> [<ffffffff80b79a78>] __platform_driver_register+0x28/0x38
+> [<ffffffff814585da>] k1_ccu_driver_init+0x22/0x38
+> [<ffffffff80023a8a>] do_one_initcall+0x62/0x2a0
+> [<ffffffff81401c60>] do_initcalls+0x170/0x1a8
+> [<ffffffff81401e7a>] kernel_init_freeable+0x16a/0x1e0
+> [<ffffffff811f7534>] kernel_init+0x2c/0x180
+> [<ffffffff80025f56>] ret_from_fork_kernel+0x16/0x1d8
+> [<ffffffff81205336>] ret_from_fork_kernel_asm+0x16/0x18
+> ---[ end trace ]---
+> 
+> This is bogus and is simply a result of KASAN consulting the `.num` member
+> of the struct for bounds information (as it should due to `__counted_by`)
+> and finding 0 set by kzalloc because it has not been initialized before
+> the loop that fills in the array. The easy fix is to just move the line
+> that sets `num` to before the loop that fills the array so that KASAN has
+> the information it needs to accurately conclude that the access is valid.
+> 
+It sounds very reasonable. Thanks!
 
-Additionally, the default value depends on MFD_SPACEMIT_P1 rather
-than ARCH_SPACEMIT.
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
-Changelog in v3:
-- modify commit message
-- change default value from ARCH_SPACEMIT to MFD_SPACEMIT_P1
-- Link to v2: https://lore.kernel.org/all/20251027-p1-kconfig-fix-v2-3-49688f30bae8@linux.spacemit.com/
----
- drivers/rtc/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
-index 2933c41c77c88e60df721fe65b9c8afb995ae51e..b392e6d096ed077e841a2e68b70d8b80d9ad1cde 100644
---- a/drivers/rtc/Kconfig
-+++ b/drivers/rtc/Kconfig
-@@ -409,8 +409,8 @@ config RTC_DRV_MAX77686
- config RTC_DRV_SPACEMIT_P1
- 	tristate "SpacemiT P1 RTC"
- 	depends on ARCH_SPACEMIT || COMPILE_TEST
--	select MFD_SPACEMIT_P1
--	default ARCH_SPACEMIT
-+	depends on MFD_SPACEMIT_P1
-+	default MFD_SPACEMIT_P1
- 	help
- 	  Enable support for the RTC function in the SpacemiT P1 PMIC.
- 	  This driver can also be built as a module, which will be called
-
--- 
-2.51.2
-
+> 
+> Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+> Tested-by: Yanko Kaneti <yaneti@declera.com>
+> 
+> Signed-off-by: Charles Mirabile <cmirabil@redhat.com>
+> ---
+>  drivers/clk/spacemit/ccu-k1.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+> index f5a9fe6ba1859..4761bc1e3b6e6 100644
+> --- a/drivers/clk/spacemit/ccu-k1.c
+> +++ b/drivers/clk/spacemit/ccu-k1.c
+> @@ -1018,6 +1018,8 @@ static int spacemit_ccu_register(struct device *dev,
+>  	if (!clk_data)
+>  		return -ENOMEM;
+>  
+> +	clk_data->num = data->num;
+> +
+>  	for (i = 0; i < data->num; i++) {
+>  		struct clk_hw *hw = data->hws[i];
+>  		struct ccu_common *common;
+> @@ -1044,8 +1046,6 @@ static int spacemit_ccu_register(struct device *dev,
+>  		clk_data->hws[i] = hw;
+>  	}
+>  
+> -	clk_data->num = data->num;
+> -
+>  	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
+>  	if (ret)
+>  		dev_err(dev, "failed to add clock hardware provider (%d)\n", ret);
+> 
+> base-commit: 6a23ae0a96a600d1d12557add110e0bb6e32730c
+> -- 
+> 2.51.1
+> 
+> 
