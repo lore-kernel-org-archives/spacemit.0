@@ -1,377 +1,218 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7AD32FA0C;
-	Thu, 20 Nov 2025 12:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65EF7376BDD
+	for <spacemit@lists.linux.dev>; Thu, 20 Nov 2025 15:51:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763640531; cv=none; b=n8ctKPiCEtBKIJCH1IQSWvXgMpqEPs9wEQxN3J4D7Zd3cnU9foRSwiphbA/lHUsB1eqLb5X+65BBJKV3y2i8c1X6KtUV6d3WGx9OVl2vJ7tcDRwwmTwmQ4MIM2THWhNxOGSMSipLVGI7ddsgpoKXkXL+f3PlQGXDVlq0deLEQ0s=
+	t=1763653865; cv=none; b=GxMHhGucti9thRbfB1jA+pJFNcKOO/OdbQt4PIlzERfEVz4keDrOfbm/e3kQSgka61sM6VSI78CAEIxLD/wtNvNsqZGJ2f+7kq16DEYyP0sawobtbK6ePAmuFP1SdGmGEksVfNxsZUeMGbMVhCpEmtKHF2LPTYjklP7hsZxsnRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763640531; c=relaxed/simple;
-	bh=7TqCOo6aaggeDL+I/HiRe0KJDcYwDw3cqBHcpkm0pXM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CpKNFoRsg97x1EpRBMNac8vKp57pQhBkLL2+bt8mAAv0Gyk87caVFkBwIbJl3kNWwyMXBdNfYmjkxyM/XcJRUyfSRS21KcDde0VQ8MiwCYMgIIy1DjmD5PBHgHhBfu3f7U4X3P+BoYpsFMKHrISSkpFWZdCa7NVxuKLSqCq0qzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J6TKb9l+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763653865; c=relaxed/simple;
+	bh=kbGuukyo5NVuqdwX2FCzLSAFMv2gkrlyNzPgdYI6GCg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H7yqWWfQgzQWc57uTnrE2SCLNgMXzlVC3fMYqb3yiOO0C0hAqMAD7QG5m/9o0Abf+ftGi5HQeFDBXtKDggFo70fOKg6RapQL0vg0oa50yzG01pYbNBP4iW+cBq/CrfresaaqFiq1C6vEGtr3txRsxI7NoLeOx6tzzR8F9+2DySk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=GOl5vDzu; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J6TKb9l+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C152C116D0;
-	Thu, 20 Nov 2025 12:08:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763640531;
-	bh=7TqCOo6aaggeDL+I/HiRe0KJDcYwDw3cqBHcpkm0pXM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J6TKb9l+M+/+Y3M8sYJvJxwdB2J0bLv+j9Ttnp9TnQVrFx8Dl7Bd4GrwPNQ4xq1XY
-	 wgfQ4lxouJXmeyZnAOi9vg/i0Ek0hpbha4l1OhWlX1prX8JbaW1xXLXrHtglNAGjLf
-	 IsPqzhFTI4Pdj7Z1OYQCc5TtxJRbt+weS1Aub+Nr/M/23OiL9Q1mMwaPstRAPYhjL3
-	 w8DCv8tO6JhjEHa54Wpqc+Lr+UjBYXEl7diDaed1Dicv/IIUb8ZcC3uaYFkTChsa53
-	 fJ9b42HdstsJL1guK44WwWbxxjqjnh/1eRhfXaOzfO4Tffe1eAf2oKvbtVnr8Sx4PH
-	 o4Ln1R0GPSpEg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: James Clark <james.clark@linaro.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Sasha Levin <sashal@kernel.org>,
-	dlan@gentoo.org,
-	iommu@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.17-5.10] dma-mapping: Allow use of DMA_BIT_MASK(64) in global scope
-Date: Thu, 20 Nov 2025 07:08:16 -0500
-Message-ID: <20251120120838.1754634-7-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251120120838.1754634-1-sashal@kernel.org>
-References: <20251120120838.1754634-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="GOl5vDzu"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-43346da8817so5654905ab.0
+        for <spacemit@lists.linux.dev>; Thu, 20 Nov 2025 07:51:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1763653862; x=1764258662; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5jVULdmnGJZUzqfCeuMvq76ewKlBDnLfe0I6V5R7xpM=;
+        b=GOl5vDzumgg8Qfg5OrfLzAup1Ref2X+FsIJkLAyCwziWBYry4atmQsKEe0TaNkE4n+
+         oKTVTN90uQJgizJY8TOWSy/V9y77wCpvWdnHTOjwF90+QESme+hjNWEMbf2eTy6QQi7t
+         9v7YCdq/xZf8sgfvPL+Y+IKsvYZuRIruB8gnDLhFGChIagSMyI1NVI26Ge0zAwO4So8C
+         qTsdhhjQUgk8slzpkKzo5cpdxjxpK1jMqa/+20GyAFb0xCKKjiiCMwD3s+2FJgiUi9as
+         hDQJVnBFL8oNp5dOJg8xwAKd9s5+YYVa2/aM6oMkmAQd4HPKug+G9IQ7rhcMfKjCyJJG
+         OhWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763653862; x=1764258662;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5jVULdmnGJZUzqfCeuMvq76ewKlBDnLfe0I6V5R7xpM=;
+        b=DWas+7o2u08+W5nk+Dwy0RYd51RD6JFNpsNIia9WuQAZaCGz2e/QeO1PaDVaTUZwjf
+         jfvla+p4dVf0AdKMj33ikmjRSetQCZkNbY9ujQa4MtsigMXQ13ndOLb/lx1Rlsij2WHs
+         gVcIcedqRehr4cuGcV3cO4ZUPmRBhopzQEL+SkTUOIb95NksxXdn+ai5Fmn1GPOy6P46
+         mMsUvAQ0iqnxCxsY+JqFJUX/np5+ctKWJEe7JY45Mznmu02HtSBmIkAcJyxTA0ZBHZw8
+         pfJ4aZBQ9vdzLEJVW0dtIrNuNIigB00L2deoCzMO1kX+D5spxNfb6Rgp86kUnmIdEhwA
+         2RRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUbY67VAB6bN3Cl7BDafXmrh5FKVsLbvFtHuMwYNqAYcS9PRgmNV33HmSmVTakf6vBWGvjVkTk4zA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxqdecKiA7/wH04S12spLX51VXL2YodR85ZTFtuO4YDqIak/fn7
+	Mcu3d2z5ZErPSUgrZ5Dllm8iI0GDrBQiBZ+XkF53fTuK4Cbl0YVR4ovVMSzoc4l7fgI=
+X-Gm-Gg: ASbGncvUWXHMeeMmESmDHReL+KdCaMt2cjc2GTFWmTvwp5PJTCzsgvDuCwgDxWk+72R
+	dejh/D4DzYEVL7h/2HvR1u3zhEDQ8QRARmStY6qMi4Ua13yw9IuIlLpWV6ACK1to0y8a8if4FjD
+	/dEe4v/M/jlg4e4PtOhLyNkNNdt13D/Rwn5pGvkk5akb7P7iJq8bmw70vy0PVzmQvAC5XHgaM2u
+	DNe3UY6HYwhWgiPXRIhbZqadhImbSco0/+SDj0ng8rnQrDfRKDC8IyJEn82PXeXShEmWsHb7vuR
+	LyA5kV83j7sDkSONy8d9WZHVYL2h5RT6lUMT+2eKPScdOf4QVXpQVB509tnFWuF/aoU6u7WjROz
+	5pxTzVBGBmg3FZm/5ea+cdFKBZIkx19Bvwf/8xlUNiu++YMObmQfe4MfWbVPFhXNs9yzB2eQp5A
+	NftdJeuKiCHCb5Z993Wus05f6huNVdcWTi0fI3HYHDWwsVJwZXfg==
+X-Google-Smtp-Source: AGHT+IHY73/hmK2ihdGHJpO3Mip0NgdP4MWhJ3aese0GPaKfQ3SvazcDhmEwhbgkWjtEbqE30jfr9w==
+X-Received: by 2002:a05:6e02:b46:b0:434:96ea:ff45 with SMTP id e9e14a558f8ab-435aa8ee764mr24969925ab.19.1763653862415;
+        Thu, 20 Nov 2025 07:51:02 -0800 (PST)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-949386c3666sm99186439f.17.2025.11.20.07.51.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Nov 2025 07:51:02 -0800 (PST)
+Message-ID: <963990a3-d39c-4e72-8add-02d98f59770a@riscstar.com>
+Date: Thu, 20 Nov 2025 09:51:00 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.17.8
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-From: James Clark <james.clark@linaro.org>
-
-[ Upstream commit a50f7456f853ec3a6f07cbe1d16ad8a8b2501320 ]
-
-Clang doesn't like that (1ULL<<(64)) overflows when initializing a
-global scope variable, even if that part of the ternary isn't used when
-n = 64. The same initialization can be done without warnings in function
-scopes, and GCC doesn't mind either way.
-
-The build failure that highlighted this was already fixed in a different
-way [1], which also has detailed links to the Clang issues. However it's
-not going to be long before the same thing happens again, so it's better
-to fix the root cause.
-
-Fix it by using GENMASK_ULL() which does exactly the same thing, is much
-more readable anyway, and doesn't have a shift that overflows.
-
-[1]: https://lore.kernel.org/all/20250918-mmp-pdma-simplify-dma-addressing-v1-1-5c2be2b85696@riscstar.com/
-
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20251030-james-fix-dma_bit_mask-v1-1-ad1ce7cfab6e@linaro.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-## COMPREHENSIVE ANALYSIS: dma-mapping: Allow use of DMA_BIT_MASK(64) in
-global scope
-
-### 1. COMMIT MESSAGE ANALYSIS
-
-**Keywords and Signals:**
-- **"build failure"** - Strong indicator this is a BUILD FIX
-- **"Clang doesn't like"** - Compiler compatibility issue
-- **"fix the root cause"** - Preventive fix
-- **Reviewed-by: Nathan Chancellor** - Nathan is a Clang/LLVM expert for
-  the kernel
-- **No "Cc: stable@vger.kernel.org"** - Maintainer didn't explicitly
-  mark for stable
-- **No "Fixes:" tag** - Not pointing to a specific buggy commit
-
-**Problem Description:** Clang rejects `DMA_BIT_MASK(64)` when used in
-global scope initializations because the old macro definition contains
-`(1ULL<<64)` in the false branch of a ternary operator, which is
-undefined behavior (left shift overflow). Even though that branch isn't
-evaluated when n=64, Clang's static analysis correctly flags this as
-problematic code.
-
-### 2. DEEP CODE RESEARCH - THE TECHNICAL BUG
-
-**The Old Definition:**
-
-```71:73:include/linux/dma-mapping.h
-#define DMA_MAPPING_ERROR               (~(dma_addr_t)0)
-
-#define DMA_BIT_MASK(n) (((n) == 64) ? ~0ULL : ((1ULL<<(n))-1))
-```
-
-**The Problem:**
-When `n=64`, the macro should return `~0ULL` (all 64 bits set). The
-ternary operator selects the true branch, so it works correctly at
-runtime. However:
-- The expression `(1ULL<<64)` in the false branch is **undefined
-  behavior** according to C standards
-- Left-shifting a 64-bit value by 64 positions overflows
-- GCC accepts this in optimized builds because it can prove the branch
-  is never taken
-- Clang's semantic analysis evaluates both branches and correctly
-  rejects this code in global scope
-
-**The Trigger - Real Build Failure:**
-I traced the issue to commit `5cfe585d8624f` ("dmaengine: mmp_pdma: Add
-SpacemiT K1 PDMA support with 64-bit addressing") merged in v6.18-rc1,
-which added:
-
-```c
-static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
-    ...
-    .dma_mask = DMA_BIT_MASK(64),  /* force 64-bit DMA addr capability
-*/
-};
-```
-
-This global scope initialization with `DMA_BIT_MASK(64)` triggered Clang
-build failures. The commit message notes this was already "fixed in a
-different way" (likely by changing the driver code), but this commit
-fixes the root cause to prevent future occurrences.
-
-**The Fix:**
-
-```93:93:include/linux/dma-mapping.h
-#define DMA_BIT_MASK(n) GENMASK_ULL(n - 1, 0)
-```
-
-**Why This Works:**
-- `GENMASK_ULL(n-1, 0)` creates a contiguous bitmask from bit 0 to bit
-  (n-1)
-- For n=64: `GENMASK_ULL(63, 0)` sets all 64 bits = `0xFFFFFFFFFFFFFFFF`
-- For n=32: `GENMASK_ULL(31, 0)` sets bits 0-31 = `0xFFFFFFFF`
-- **Mathematically identical** to the old definition
-- Uses a different algorithm internally that doesn't involve shifting by
-  the full bit width
-- No undefined behavior, no overflow
-
-**GENMASK_ULL Implementation:**
-I verified that GENMASK_ULL is defined in `include/linux/bits.h`:
-
-```52:52:include/linux/bits.h
-#define GENMASK_ULL(h, l)       GENMASK_TYPE(unsigned long long, h, l)
-```
-
-It's been in the kernel since 2018 and is used **over 2,000 times**
-throughout the codebase - it's a mature, well-tested macro.
-
-### 3. SECURITY ASSESSMENT
-**No security implications.** This is purely a build/compilation issue.
-No CVE, no runtime vulnerability, no security impact.
-
-### 4. FEATURE VS BUG FIX CLASSIFICATION
-
-**This is a BUILD FIX** - an explicit EXCEPTION CATEGORY in stable
-kernel rules.
-
-According to Documentation/process/stable-kernel-rules.rst:
-- **BUILD FIXES ARE ALLOWED** - fixes for compilation errors or warnings
-- This prevents Clang from rejecting code that uses `DMA_BIT_MASK(64)`
-  in global scope
-- Does NOT add new functionality
-- Does NOT change runtime behavior
-- Only affects compile-time evaluation
-
-### 5. CODE CHANGE SCOPE ASSESSMENT
-
-**Extremely small and surgical:**
-- **1 line changed** in **1 file** (`include/linux/dma-mapping.h`)
-- No changes to function implementations
-- No changes to data structures
-- No behavioral changes
-
-**The change:**
-```diff
--#define DMA_BIT_MASK(n) (((n) == 64) ? ~0ULL : ((1ULL<<(n))-1))
-+#define DMA_BIT_MASK(n) GENMASK_ULL(n - 1, 0)
-```
-
-### 6. BUG TYPE AND SEVERITY
-
-**Bug Type:** Build failure / compilation error with Clang compiler
-
-**Severity:** **MEDIUM-HIGH for affected users**
-- Prevents kernel compilation with Clang when `DMA_BIT_MASK(64)` is used
-  in global scope
-- Affects driver developers using 64-bit DMA addressing
-- Currently worked around for the specific mmp_pdma case, but could
-  recur
-
-**User Impact:**
-- Anyone building with Clang who encounters `DMA_BIT_MASK(64)` in global
-  scope
-- Driver developers adding 64-bit DMA support
-- Distributors building with Clang for kernel hardening
-
-### 7. USER IMPACT EVALUATION
-
-**Currently Affected:** Limited - the specific trigger (mmp_pdma) was
-worked around differently
-
-**Future Benefit:** HIGH
-- Prevents future build failures when drivers use `DMA_BIT_MASK(64)` in
-  global scope
-- Improves Clang compatibility across the board
-- Makes the macro definition cleaner and more standards-compliant
-
-**Widespread Use:** `DMA_BIT_MASK` is used throughout the kernel in
-hundreds of drivers. Making it safe to use with n=64 in all contexts is
-valuable.
-
-### 8. REGRESSION RISK ANALYSIS
-
-**Risk Level: VERY LOW**
-
-**Why extremely low risk:**
-1. **Mathematically equivalent** - produces identical values at runtime
-2. **GENMASK_ULL is mature** - in kernel since 2018, used 2000+ times
-3. **No behavioral change** - only affects compile-time evaluation
-4. **Well-reviewed** - Nathan Chancellor (Clang expert) reviewed it
-5. **Simple change** - 1 line macro redefinition
-
-**Could this break anything?**
-- Theoretically, if some code relied on the specific *form* of the
-  expression (e.g., for preprocessor tricks), but this is extremely
-  unlikely
-- I checked and found no such dependencies
-
-### 9. MAINLINE STABILITY
-
-**Age:** Very recent - committed November 18, 2025 (yesterday)
-**Mainline status:** In linux-next, merged for v6.18
-**Testing:** Reviewed by Nathan Chancellor, who is the Clang/LLVM expert
-
-**Concern:** This commit is **brand new** - it has minimal mainline
-exposure. Normally we'd prefer more bake time.
-
-### 10. HISTORICAL COMMIT REVIEW
-
-I searched for similar build fixes in stable history - build fixes for
-Clang compatibility are regularly backported to stable trees because
-they're low-risk and improve toolchain support.
-
-### STABLE KERNEL CRITERIA ASSESSMENT
-
-Let me systematically evaluate against the official criteria:
-
-✅ **1. Obviously correct and tested**
-- The new definition is mathematically equivalent
-- Uses a well-established macro (GENMASK_ULL)
-- Reviewed by Clang expert
-- Simple enough to verify correctness
-
-✅ **2. Fixes a real bug that affects users**
-- Real build failures with Clang
-- Prevents future occurrences
-- Affects compiler compatibility
-
-✅ **3. Fixes an important issue**
-- Build failures always qualify as important
-- Compiler support is critical
-
-✅ **4. Small and contained**
-- 1 line in 1 file
-- No dependencies
-- No side effects
-
-✅ **5. Does NOT introduce new features**
-- No new functionality
-- No new APIs
-- Pure fix
-
-✅ **6. Will apply cleanly**
-- GENMASK_ULL has existed since 2018
-- Should apply to any stable kernel version
-
-✅ **7. Falls under BUILD FIX exception**
-- Build fixes are explicitly allowed
-- Improves compiler compatibility
-
-### DEPENDENCY CHECK
-
-**Required:** GENMASK_ULL macro must exist in the target stable tree
-- GENMASK_ULL was added in 2018 (kernel 4.x era)
-- All modern stable trees (6.6.y, 6.1.y, 5.15.y, etc.) have it
-- **No backport adjustments needed**
-
-### SUBSYSTEM CONTEXT
-
-**Subsystem:** DMA mapping infrastructure (core kernel)
-**Maturity:** Very mature and stable
-**Change location:** Header file macro definition
-**Impact:** Kernel-wide, but only at compile-time
-
-### FINAL RECOMMENDATION
-
-## SUMMARY
-
-This commit fixes a **build failure with Clang** when `DMA_BIT_MASK(64)`
-is used in global scope initializations. The old macro definition
-contained undefined behavior (`1ULL<<64` overflow) that Clang correctly
-rejects. The fix replaces it with `GENMASK_ULL(n-1, 0)`, which is
-mathematically equivalent but avoids the overflow.
-
-**Meets Stable Criteria:**
-- ✅ Build fix (explicit exception category)
-- ✅ Obviously correct (mathematically equivalent)
-- ✅ Very low risk (1 line, no behavioral change)
-- ✅ Small and contained
-- ✅ Uses mature, well-tested macro (GENMASK_ULL)
-- ✅ Improves compiler compatibility
-- ✅ No dependencies or backport issues
-
-**Considerations:**
-- **Very recent** (Nov 18, 2025) - minimal mainline exposure
-- No explicit stable tag from maintainer
-- The immediate trigger (mmp_pdma) was already worked around
-- Primarily preventive rather than fixing an active crisis
-
-**Risk vs. Benefit:**
-- **Risk:** Extremely low - mathematically equivalent, uses proven macro
-- **Benefit:** Prevents build failures, improves Clang support, cleaner
-  code
-
-This is a **textbook example** of a low-risk build fix that belongs in
-stable. The only hesitation is its very recent date. Ideally, we'd wait
-for the v6.18 release to ensure no issues surface, but the change is
-simple enough that earlier backporting is justified if there's demand
-from Clang users or distributors.
-
-**YES**
-
- include/linux/dma-mapping.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
-index 55c03e5fe8cb3..277daf71ec8c7 100644
---- a/include/linux/dma-mapping.h
-+++ b/include/linux/dma-mapping.h
-@@ -70,7 +70,7 @@
-  */
- #define DMA_MAPPING_ERROR		(~(dma_addr_t)0)
- 
--#define DMA_BIT_MASK(n)	(((n) == 64) ? ~0ULL : ((1ULL<<(n))-1))
-+#define DMA_BIT_MASK(n)	GENMASK_ULL(n - 1, 0)
- 
- struct dma_iova_state {
- 	dma_addr_t addr;
--- 
-2.51.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/3] spi: spacemit: introduce SpacemiT K1 SPI
+ controller driver
+To: Mark Brown <broonie@kernel.org>
+Cc: dlan@gentoo.org, p.zabel@pengutronix.de, linux-spi@vger.kernel.org,
+ spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+References: <20251114185745.2838358-1-elder@riscstar.com>
+ <20251114185745.2838358-3-elder@riscstar.com> <aRoVqVtYLJJAPCia@sirena.co.uk>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <aRoVqVtYLJJAPCia@sirena.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+On 11/16/25 12:19 PM, Mark Brown wrote:
+> On Fri, Nov 14, 2025 at 12:57:43PM -0600, Alex Elder wrote:
+> 
+>> This patch introduces the driver for the SPI controller found in the
+>> SpacemiT K1 SoC.  Currently the driver supports master mode only.
+>> The SPI hardware implements RX and TX FIFOs, 32 entries each, and
+>> supports both PIO and DMA mode transfers.
+
+Sorry for the delay responding to this.  You provided some really
+great feedback and I appreciate it.
+
+> This looks mostly good but there's a bit of open coding that looks like
+> the driver could make more use of the core.
+> 
+>> @@ -0,0 +1,966 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * SpacemiT K1 SPI controller driver
+>> + *
+>> + * Copyright (C) 2025 by RISCstar Solutions Corporation.  All rights reserved.
+>> + * Copyright (c) 2023, spacemit Corporation.
+>> + */
+> 
+> Please make the entire comment a C++ one so things look more
+> intentional.
+
+I do see in drivers/spi/ files that start just like above,
+and others that start with all "//" comments (more of the
+former than the latter).  I really don't prefer using "//"
+for anything but the SPDX ID, but... since you requested
+it I will make that change.
+
+>> +static bool k1_spi_map_dma_buffer(struct k1_spi_io *io, size_t len, void *dummy)
+>> +{
+>> +	struct device *dmadev = io->chan->device->dev;
+>> +	unsigned int nents = DIV_ROUND_UP(len, SZ_2K);
+>> +	struct sg_table *sgt = &io->sgt;
+>> +	void *bufp = io->buf ? : dummy;
+>> +	struct scatterlist *sg;
+>> +	unsigned int i;
+> 
+> The SPI core can do DMA mapping for you, the only thing this is doing
+> that's unusual is that it's imposing a fixed 2K limit on block sizes.
+
+OK.  I will use the DMA support provided by the core.
+
+> If this limit comes from the DMA controller (which looks to be the case
+> since we feed the entire table into the DMA controller at once?) the
+> core will already DTRT here, assuming the DMA controller correctly
+> advertises this restriction.
+
+I will verify this.
+
+>> +static bool k1_spi_map_dma_buffers(struct k1_spi_driver_data *drv_data)
+>> +{
+> 
+> ...
+> 
+>> +	/* Don't bother with DMA if we can't do even a single burst */
+>> +	if (drv_data->len < dma_burst_size)
+>> +		return false;
+>> +
+>> +	/* We won't use DMA if the transfer is too big, either */
+>> +	if (drv_data->len > K1_SPI_MAX_DMA_LEN)
+>> +		return false;
+> 
+> The core has a can_dma() callback for this.
+> 
+>> +static int k1_spi_transfer_one_message(struct spi_controller *host,
+>> +					   struct spi_message *message)
+>> +{
+> 
+> ...
+> 
+>> +	/* Hold frame low to avoid losing transferred data */
+>> +	val = readl(drv_data->base + SSP_TOP_CTRL);
+>> +	val |= TOP_HOLD_FRAME_LOW;
+>> +	writel(val, drv_data->base + SSP_TOP_CTRL);
+> 
+> This looks like it should be a set_cs() operation?
+
+I'll implement that, along with using spi_transfer_one_message().
+
+>> +	list_for_each_entry(transfer, &message->transfers, transfer_list) {
+>> +		reinit_completion(completion);
+>> +
+>> +		/* Issue the next transfer */
+>> +		if (!k1_spi_transfer_start(drv_data, transfer)) {
+>> +			message->status = -EIO;
+>> +			break;
+>> +		}
+>> +
+>> +		k1_spi_transfer_wait(drv_data);
+>> +
+>> +		k1_spi_transfer_end(drv_data, transfer);
+> 
+> Why not just implement the transfer_one() callback?  This just looks
+> like it's duplicating code.
+
+I'm working on this now, and it's the reason for the delay.
+Methodically switching things over to the generic interface
+has been taking some time, but I think I'm close now.
+
+>> +static irqreturn_t k1_spi_ssp_isr(int irq, void *dev_id)
+>> +{
+> 
+>> +	/* Get status and clear pending interrupts */
+>> +	val = readl(drv_data->base + SSP_STATUS);
+>> +	writel(val, drv_data->base + SSP_STATUS);
+> 
+> This unconditionally acknowledges all interrupts even if we didn't
+> handle anything...This is a good observation.
+
+There are only 6 interrupt conditions that get cleared.  Three
+are errors, and the other three are read/write FIFO "ready"
+interrupts.  The code that follows handles all of those, so
+doing this right away was a sort of shorthand.
+
+That said, there was a chance for an early return (if the
+message pointer was null), and that should be checked before
+we clear the status register.
+
+In any case, my work the last day or so has included a lot
+of tweaks to the handler.  I'll try to make it clear what's
+done makes sense.
+
+Thank you very much for the review.  I wish I had looked
+harder at just using spi_transfer_one_message() before.
+But I *love* suggestions that will make the code become
+smaller and simpler.
+
+					-Alex
 
