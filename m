@@ -1,274 +1,111 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F280B28850B
-	for <spacemit@lists.linux.dev>; Mon, 24 Nov 2025 05:29:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CED2F6578
+	for <spacemit@lists.linux.dev>; Mon, 24 Nov 2025 11:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763962152; cv=none; b=Z737o6qIjXJaRupdFFJ88kBP1bI0NXxfH1Q3cSkQwo4Rb/pBF+UWnzsDFjPP2kJjLMoX6DtBASFokrnf5UMXlsViIFI3K9psGEV94U2Y0/e10ntiRszFA8wNjNCld4UQsE5/H7IQ1F8LWwOZ4WHWMiMmQLPNOZt2Sc1N9loOA2E=
+	t=1763983823; cv=none; b=EuhwxdxlweILGYmMh//i5BO5iYKZM+A23VS7h2sKoE8/sQTJOeKG29J/fab0v0bDVcJuMj8zvDA6/K1sOgwG0HAj0LFvP0KuPAfTav0drppWzjDguDTzYIlRk6FhVDtoyBTQCIL5j5c6LisIG/tjTTYh78G7Aq3bQmOc48bzsmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763962152; c=relaxed/simple;
-	bh=4Ar0Ce/7CI/bXhZYfPTIVvbKKA37/EI2x/2Kuj07W4g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aUp4MJBuuPOgCOUX7EypnmznCuwTGqMx7OjsGc/r2VPP0DGJSPwbT70JSpXo7hhhsuB5nFyDb7oDww+16jZocIkUFeYeDAWYefONI2EQNjVlixCRcq77kF5InJlAFuzbVB1iKS3VE3g4NjB8O+EtppIuGSUy0MgD6+wpR9ahq1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [114.241.85.109])
-	by APP-05 (Coremail) with SMTP id zQCowACXnW4E7SNpt23VAQ--.20861S2;
-	Mon, 24 Nov 2025 13:28:38 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Mon, 24 Nov 2025 13:28:27 +0800
-Subject: [PATCH net-next v2] net: spacemit: Remove broken flow control
- support
+	s=arc-20240116; t=1763983823; c=relaxed/simple;
+	bh=XReSYFVRQc1R76schfZOU6PPOXo8Qr2up3qP9x+Ua70=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HIGgvDeI//d+n0Mz6lklmpfiZczus1v3Hv85klyHUenjJ9l2LpqwXockqorlicRFf6ddoAADlwcJsysVgOHmG5Hbe2O/XBL2fXcVkwuj42tPs0t7LpeEKTJWN2fv91UkTm8uwyn54VOKbi7r6M1J572x89MNoLIRr0mhqsp3Wh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=DjhJ/Pg5; arc=none smtp.client-ip=18.194.254.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="DjhJ/Pg5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1763983777;
+	bh=hAWwl45Wdpi6H1FkYhrQMC5Rki82zAkbyIyxhMkT/Jo=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=DjhJ/Pg5t7341/qh0wUJyAGeVYszSgVTGezVtW61hWnEdu8mXFqi4TQsSkvmVS+HW
+	 kQLLQ7oyP945CawpPJbeJZuKyLPBSUFCyVyIRSG3OZXlO/igJOpZDJaLMSGqsBpdCl
+	 DpE/6VIGMeGUuxi7EcfhGO4FjyjG11uC5Y4rGspw=
+X-QQ-mid: esmtpsz17t1763983772t94d24c3f
+X-QQ-Originating-IP: fZ0jTGd4WyWVTGFqd1o5pG99je12tx6wkLj0jgyqLMc=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 24 Nov 2025 19:29:30 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 11626773636746068601
+EX-QQ-RecipientCnt: 6
+Date: Mon, 24 Nov 2025 19:29:30 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Junhui Liu <junhui.liu@pigmoral.tech>, opensbi@lists.infradead.org
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Xianbin Zhu <xianbin.zhu@linux.spacemit.com>,
+	Anup Patel <anup@brainfault.org>, spacemit@lists.linux.dev
+Subject: Re: [PATCH] platform: generic: spacemit: add missing objects.mk
+Message-ID: <03A15D6686A3A9AE+aSRBmpkBhccbZlYJ@kernel.org>
+References: <20251124-k1-fix-v1-1-8d7e7a29379e@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251124-k1-ethernet-actually-remove-fc-v2-1-5e77ab69b791@iscas.ac.cn>
-X-B4-Tracking: v=1; b=H4sIAPrsI2kC/y2N2w6CMBAFf4Xss2toxYL8isGk1kUaoeC2NBjCv
- 1svj5PJObOCJ7bkoc5WYIrW29ElkLsMTKfdndDeEoPM5VEIWeBDIIWO2FFAbcKs+/6FTMMYCVu
- DZa6qgyjLvKhOkE4mptYu38AZPhtHS4DmZ5iecyqGv75qT2jGYbChzqLaiwrZqMu6QbNtbxBH/
- XGqAAAA
-X-Change-ID: 20251124-k1-ethernet-actually-remove-fc-706831770489
-To: Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Yixun Lan <dlan@gentoo.org>, Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Vivian Wang <wangruikang@iscas.ac.cn>
-X-Mailer: b4 0.14.3
-X-CM-TRANSID:zQCowACXnW4E7SNpt23VAQ--.20861S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3Wr4rKr48Zw48GFy7AFW7twb_yoWxGw4kpF
-	W5X3s2yF4UXFsYgFs3Jw4UAFy3Ga4xtrnruFyfCw4Fg3ZIyr97CFy0k3W7CFykurW8WryY
-	gw4jy3W8GF4DX37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9014x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
-	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
-	n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7x
-	kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
-	67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
-	CI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
-	MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIda
-	VFxhVjvjDU0xZFpf9x0JUd-B_UUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251124-k1-fix-v1-1-8d7e7a29379e@pigmoral.tech>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NXAazXCEWOjYMpjkewyUuza1e177MacYmeU9Zu9ewLIYCBAxJSWYyE5S
+	vPbQlTZnaFAs/74W7pDPzvseIU9+mkkMvvrrHvD0LmWxaYTDO5A4iJHbVzAij7UD6QC0WuB
+	0GmF8dNWagPB+SJ8BhQXrDbiXZ3V3c6YOCToU/EPsq7YGb/kGX00Tiqm9/9N/2O+i2sLeXv
+	LcDZPFBy/GyW5pDPKF4kAGdkc5/aQoOkkdz7Pg/VuLq4JxzzEU1BmsUbm7U6bajNVuEbJ+u
+	D+/w3PTdGN2uNw95A4XJQ2flcxE4nNWRMX1uhvkO/LRKJzP1auV4dUaU4/0wOhgYpIKuAuY
+	2YNXDjDz9kNyq33Ynh7v4shPnoAcRzqRrY/YxEOygbJesdwPO1QNbGdPf76Dv8AEVSZ25ol
+	LToegXXJFNjd7J746ZC4aULid21+13ZMkowH0e3CaGTlktr9p8SyJcHb5ILoTgAjyC/J1Ts
+	PmQluXSU6HORBsJ9dqYW8CWfIXVXrLMJfgk6dhMoe4eWus97k/E5TNhzogtG71sAACCrhHe
+	ZOo9xzltjfY5AfiXjk4rfvcnqN1FtTyvDGnHwc3fHLW/cIelsaNfB1RVzTi9oYGK/Vv0hbF
+	hJkHhvVNQLZZzX55nRBNajN6461tisx1DcIDudU1zL6IKOn0nuLmYezIPN5TcidCVcxmKkn
+	6zoIaiEGiSjbYNw+47XbXl+hXjhGcoZHMrKCXhUgNrl8UK2+xjo5KV2NaF2kLj/Ez8DLuU1
+	s+gXtv3QbFzQfxMwqEiFOdfrIx42kD0rtC4fzyjkq0FKmPe6B2Lg07mzJuC9ioMrG2Eu5Qy
+	LEWXHbngsfWVyzVJmlnExj4trruOF9fD3X6sU1yTl2LEplffvcfSAqaMuXIS44AnHtrptGY
+	IaWur6tI3jBFQwqhxDy5qRjgBEAgWKXhuMlnkfq82bKsX2E5kpLrYEnKbSYiFyKXRXC7BEl
+	RdfhrDptDqeS1c5kEEiXeJ/+lQOvykJFSd5KNeKfLJX1HmPuYG/plBmw4lDpj7UgCsy3eY0
+	FHQSW5z/qTj3ZGnL4AcLnQ1n0pkChlf4BvHvoqo9vdthiHTokcPSM4Bxp2JeORwUkSd8OxS
+	g==
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
+X-QQ-RECHKSPAM: 0
 
-The current flow control implementation doesn't handle autonegotiation
-and ethtool operations properly. Remove it for now so we don't claim
-support for something that doesn't really work. A better implementation
-will be sent in future patches.
+On Mon, Nov 24, 2025 at 07:16:32PM +0800, Junhui Liu wrote:
+> Add the missing objects.mk for the SpacemiT platform, required for the
+> K1 platform to be included in the build.
+> 
+> Fixes: 1f84ec2a ("platform: generic: spacemit: add K1")
+> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+> ---
+>  platform/generic/spacemit/objects.mk | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/platform/generic/spacemit/objects.mk b/platform/generic/spacemit/objects.mk
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..dcb37867aa661dfc559088f926cd1465bc0f7e8d
+> --- /dev/null
+> +++ b/platform/generic/spacemit/objects.mk
+> @@ -0,0 +1,6 @@
+> +#
+> +# SPDX-License-Identifier: BSD-2-Clause
+> +#
+> +
+> +carray-platform_override_modules-$(CONFIG_PLATFORM_SPACEMIT_K1) += spacemit_k1
+> +platform-objs-$(CONFIG_PLATFORM_SPACEMIT_K1) += spacemit/k1.o
+It might be that we forgot to clear temporary files during testing.
+Thanks for your fix!
+I'll give a TB tag after test it.
 
-Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
----
-Starting at v2 as this is the net-next successor of:
-
-  https://lore.kernel.org/spacemit/20251031-k1-ethernet-remove-fc-v1-1-1ae3f1d6508c@iscas.ac.cn/
----
- drivers/net/ethernet/spacemit/k1_emac.c | 110 --------------------------------
- 1 file changed, 110 deletions(-)
-
-diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-index 220eb5ce7583..c85dc742c404 100644
---- a/drivers/net/ethernet/spacemit/k1_emac.c
-+++ b/drivers/net/ethernet/spacemit/k1_emac.c
-@@ -46,8 +46,6 @@
- #define EMAC_RX_FRAMES			64
- #define EMAC_RX_COAL_TIMEOUT		(600 * 312)
- 
--#define DEFAULT_FC_PAUSE_TIME		0xffff
--#define DEFAULT_FC_FIFO_HIGH		1600
- #define DEFAULT_TX_ALMOST_FULL		0x1f8
- #define DEFAULT_TX_THRESHOLD		1518
- #define DEFAULT_RX_THRESHOLD		12
-@@ -132,9 +130,6 @@ struct emac_priv {
- 	u32 tx_delay;
- 	u32 rx_delay;
- 
--	bool flow_control_autoneg;
--	u8 flow_control;
--
- 	/* Softirq-safe, hold while touching hardware statistics */
- 	spinlock_t stats_lock;
- };
-@@ -179,9 +174,7 @@ static void emac_set_mac_addr_reg(struct emac_priv *priv,
- 
- static void emac_set_mac_addr(struct emac_priv *priv, const unsigned char *addr)
- {
--	/* We use only one address, so set the same for flow control as well */
- 	emac_set_mac_addr_reg(priv, addr, MAC_ADDRESS1_HIGH);
--	emac_set_mac_addr_reg(priv, addr, MAC_FC_SOURCE_ADDRESS_HIGH);
- }
- 
- static void emac_reset_hw(struct emac_priv *priv)
-@@ -200,9 +193,6 @@ static void emac_reset_hw(struct emac_priv *priv)
- 
- static void emac_init_hw(struct emac_priv *priv)
- {
--	/* Destination address for 802.3x Ethernet flow control */
--	u8 fc_dest_addr[ETH_ALEN] = { 0x01, 0x80, 0xc2, 0x00, 0x00, 0x01 };
--
- 	u32 rxirq = 0, dma = 0;
- 
- 	regmap_set_bits(priv->regmap_apmu,
-@@ -228,12 +218,6 @@ static void emac_init_hw(struct emac_priv *priv)
- 		DEFAULT_TX_THRESHOLD);
- 	emac_wr(priv, MAC_RECEIVE_PACKET_START_THRESHOLD, DEFAULT_RX_THRESHOLD);
- 
--	/* Configure flow control (enabled in emac_adjust_link() later) */
--	emac_set_mac_addr_reg(priv, fc_dest_addr, MAC_FC_SOURCE_ADDRESS_HIGH);
--	emac_wr(priv, MAC_FC_PAUSE_HIGH_THRESHOLD, DEFAULT_FC_FIFO_HIGH);
--	emac_wr(priv, MAC_FC_HIGH_PAUSE_TIME, DEFAULT_FC_PAUSE_TIME);
--	emac_wr(priv, MAC_FC_PAUSE_LOW_THRESHOLD, 0);
--
- 	/* RX IRQ mitigation */
- 	rxirq = FIELD_PREP(MREGBIT_RECEIVE_IRQ_FRAME_COUNTER_MASK,
- 			   EMAC_RX_FRAMES);
-@@ -1018,57 +1002,6 @@ static int emac_mdio_init(struct emac_priv *priv)
- 	return ret;
- }
- 
--static void emac_set_tx_fc(struct emac_priv *priv, bool enable)
--{
--	u32 val;
--
--	val = emac_rd(priv, MAC_FC_CONTROL);
--
--	FIELD_MODIFY(MREGBIT_FC_GENERATION_ENABLE, &val, enable);
--	FIELD_MODIFY(MREGBIT_AUTO_FC_GENERATION_ENABLE, &val, enable);
--
--	emac_wr(priv, MAC_FC_CONTROL, val);
--}
--
--static void emac_set_rx_fc(struct emac_priv *priv, bool enable)
--{
--	u32 val = emac_rd(priv, MAC_FC_CONTROL);
--
--	FIELD_MODIFY(MREGBIT_FC_DECODE_ENABLE, &val, enable);
--
--	emac_wr(priv, MAC_FC_CONTROL, val);
--}
--
--static void emac_set_fc(struct emac_priv *priv, u8 fc)
--{
--	emac_set_tx_fc(priv, fc & FLOW_CTRL_TX);
--	emac_set_rx_fc(priv, fc & FLOW_CTRL_RX);
--	priv->flow_control = fc;
--}
--
--static void emac_set_fc_autoneg(struct emac_priv *priv)
--{
--	struct phy_device *phydev = priv->ndev->phydev;
--	u32 local_adv, remote_adv;
--	u8 fc;
--
--	local_adv = linkmode_adv_to_lcl_adv_t(phydev->advertising);
--
--	remote_adv = 0;
--
--	if (phydev->pause)
--		remote_adv |= LPA_PAUSE_CAP;
--
--	if (phydev->asym_pause)
--		remote_adv |= LPA_PAUSE_ASYM;
--
--	fc = mii_resolve_flowctrl_fdx(local_adv, remote_adv);
--
--	priv->flow_control_autoneg = true;
--
--	emac_set_fc(priv, fc);
--}
--
- /*
-  * Even though this MAC supports gigabit operation, it only provides 32-bit
-  * statistics counters. The most overflow-prone counters are the "bytes" ones,
-@@ -1425,42 +1358,6 @@ static void emac_ethtool_get_regs(struct net_device *dev,
- 			emac_rd(priv, MAC_GLOBAL_CONTROL + i * 4);
- }
- 
--static void emac_get_pauseparam(struct net_device *dev,
--				struct ethtool_pauseparam *pause)
--{
--	struct emac_priv *priv = netdev_priv(dev);
--
--	pause->autoneg = priv->flow_control_autoneg;
--	pause->tx_pause = !!(priv->flow_control & FLOW_CTRL_TX);
--	pause->rx_pause = !!(priv->flow_control & FLOW_CTRL_RX);
--}
--
--static int emac_set_pauseparam(struct net_device *dev,
--			       struct ethtool_pauseparam *pause)
--{
--	struct emac_priv *priv = netdev_priv(dev);
--	u8 fc = 0;
--
--	if (!netif_running(dev))
--		return -ENETDOWN;
--
--	priv->flow_control_autoneg = pause->autoneg;
--
--	if (pause->autoneg) {
--		emac_set_fc_autoneg(priv);
--	} else {
--		if (pause->tx_pause)
--			fc |= FLOW_CTRL_TX;
--
--		if (pause->rx_pause)
--			fc |= FLOW_CTRL_RX;
--
--		emac_set_fc(priv, fc);
--	}
--
--	return 0;
--}
--
- static void emac_get_drvinfo(struct net_device *dev,
- 			     struct ethtool_drvinfo *info)
- {
-@@ -1634,8 +1531,6 @@ static void emac_adjust_link(struct net_device *dev)
- 		}
- 
- 		emac_wr(priv, MAC_GLOBAL_CONTROL, ctrl);
--
--		emac_set_fc_autoneg(priv);
- 	}
- 
- 	phy_print_status(phydev);
-@@ -1715,8 +1610,6 @@ static int emac_phy_connect(struct net_device *ndev)
- 		goto err_node_put;
- 	}
- 
--	phy_support_asym_pause(phydev);
--
- 	phydev->mac_managed_pm = true;
- 
- 	emac_update_delay_line(priv);
-@@ -1886,9 +1779,6 @@ static const struct ethtool_ops emac_ethtool_ops = {
- 	.get_sset_count		= emac_get_sset_count,
- 	.get_strings		= emac_get_strings,
- 	.get_ethtool_stats	= emac_get_ethtool_stats,
--
--	.get_pauseparam		= emac_get_pauseparam,
--	.set_pauseparam		= emac_set_pauseparam,
- };
- 
- static const struct net_device_ops emac_netdev_ops = {
-
----
-base-commit: 6a23ae0a96a600d1d12557add110e0bb6e32730c
-change-id: 20251124-k1-ethernet-actually-remove-fc-706831770489
-
-Best regards,
--- 
-Vivian "dramforever" Wang
-
+Acked-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> 
+> ---
+> base-commit: fade4399d2a47a3ff9c5ecd5dd4c3cba7a4eace7
+> change-id: 20251124-k1-fix-433af01a7aa9
+> 
+> Best regards,
+> -- 
+> Junhui Liu <junhui.liu@pigmoral.tech>
+> 
+> 
