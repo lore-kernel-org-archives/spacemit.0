@@ -1,73 +1,116 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD21C1531C1;
-	Tue, 25 Nov 2025 00:21:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87A7EED8
+	for <spacemit@lists.linux.dev>; Wed, 26 Nov 2025 11:56:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764030112; cv=none; b=QFMrShPbi5oldPcJhJu3ruMypE5JaeaG7trWd8DZFeszKG+qGBxNrkrouZzXZgANqJ/fCMMzScRAfKliDB6vny9Msqs2x4ol07nP1pdsEVZaJTwyG6x40ZlI73zG+GnSL1NJB+PO79mIjp1b5ZhuWlON9yqWLSdNAkd0Jx8j+Pg=
+	t=1764158198; cv=none; b=hyv+Phknw5ZT2w1fupq5yTBqSGNAHhrUgYAKciAWtyT69DCOnFuOPGCXVX6xluZK/6R8jF2kfAPF4FAR7XY6XOHMAwRO4VRYwGdpSz6ybMTsMT5E3YLgHNoMqITqaqPO5sf0KwOaiUD5EJUnIeMA+LptRfsTnxaMAPG6b8jJvak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764030112; c=relaxed/simple;
-	bh=8P9sXdGTcyHZs1owxJsoXGiwW5zZFjRw5GHTYrIdTKM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iQwAPRQGKbFgaCCTzix0uyTmKqZagOBSf+YpNbrMVwY6DWO4GsQGaTzp+CqPA05SHtj0kHulVQZWfZ4l9TmHRs9zkkIUsnLlCUoJo4MrKEMDdEt6vYKqHkBtNo8uSmWkgO9B8g2ey4SZeCFhuEXohKmYu5NOp59DjSZ89nukw8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=tIr5G9gl; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1764158198; c=relaxed/simple;
+	bh=6Bc8ctkWf0MlDErFTWLIrGe04KSla5uK/67iOY4E08w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WKnhwiQvDizHdl9VKN2AMkbX13R4wjMdK9K3CH8wrqxZniiOuE047snaiZI8usrjCPP1oBljrJvj7kbXlCJqNJgred4stHqIm0WDt/Fseeuo5lcPV0YRuqBbr12x4sWUrpN4e2qH5rZnT18hViSs7iWYfos5SRf5yUQD/X1VQcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=En1Pf8h/; arc=none smtp.client-ip=117.135.210.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="tIr5G9gl"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=J+TANZWcOgQJfDvygww+ASmyXzn+Rs4bLGiVbxMb90k=; b=tIr5G9glL6VbI7ZTorMTvbjU4o
-	JDpX5zVtTUXBKeOzKZjxTkHmD6kxO/hzfbsh2AqvZlypONdc4QmZmyqfvR2C7enOt/24ywYaskjoj
-	3Bm7mz+GQyT5RRjAUsl2ZPwKSz0v/tkkZB2S6bSdGPgSLbZ974xZrLL82Aw7RHTwlNbs=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vNgnn-00ExY1-Kx; Tue, 25 Nov 2025 01:21:03 +0100
-Date: Tue, 25 Nov 2025 01:21:03 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v2] net: spacemit: Remove broken flow control
- support
-Message-ID: <78328381-db8a-4bc9-b520-eb1c687b846f@lunn.ch>
-References: <20251124-k1-ethernet-actually-remove-fc-v2-1-5e77ab69b791@iscas.ac.cn>
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="En1Pf8h/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version:
+	Content-Type:To; bh=Ufeb2Y1qdBth3LcT17BVdapoAoJh2TGcN1TWOhiBKf0=;
+	b=En1Pf8h/dboQ57E/Xg0GvL4gWJTIP0wuL/u6Ci9gG9Qho59PJDIOomubQhmhWf
+	PD8kyMXDdmsWkDxkxWDZGSu+Z+coheekooSe9hCRIaGTw0/NVohNAGfw70A+AOlW
+	fR4+VgeS7DHPaMbXoB5w+m0Def6yMsr2euRr5wGoLpQG4=
+Received: from [192.168.10.1] (unknown [])
+	by gzsmtp3 (Coremail) with SMTP id PigvCgBnveN26iZpJOi_FQ--.56535S2;
+	Wed, 26 Nov 2025 19:54:32 +0800 (CST)
+From: Shuwei Wu <shuweiwoo@163.com>
+Subject: [PATCH 0/3] thermal: spacemit: Add support for SpacemiT K1 SoC
+ thermal sensor
+Date: Thu, 27 Nov 2025 02:44:06 +0800
+Message-Id: <20251127-b4-k1-thermal-v1-0-f32ce47b1aba@163.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251124-k1-ethernet-actually-remove-fc-v2-1-5e77ab69b791@iscas.ac.cn>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHZKJ2kC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1NDQyMT3SQT3WxD3ZKM1KLcxBzd1ORESwOzVLOUFPNEJaCegqLUtMwKsHn
+ RsbW1AH3F1YdfAAAA
+X-Change-ID: 20251124-b4-k1-thermal-eca906e6dd7a
+To: "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Shuwei Wu <shuweiwoo@163.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1764182662; l=1444;
+ i=shuweiwoo@163.com; s=20251125; h=from:subject:message-id;
+ bh=6Bc8ctkWf0MlDErFTWLIrGe04KSla5uK/67iOY4E08w=;
+ b=ewyJRJ6JRELmsRZPHaJEV8DBkEtk7N+18zJKoIBSbmPdtwi4m63YqOpjVgAIPRh4VI1SCd20c
+ qSkdZ2ZYXZFDhOZNrSanVi6kHXeT8TrSF8d8Cdcb6eq1OFiZ7rMGVXs
+X-Developer-Key: i=shuweiwoo@163.com; a=ed25519;
+ pk=qZs6i2UZnXkmjUrwO5HJxcfpCvgSNrR4dcU5cjtfTSk=
+X-CM-TRANSID:PigvCgBnveN26iZpJOi_FQ--.56535S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7uw43JF4rJF17GF47Ww1xKrg_yoW8Gr4xpa
+	1Uurn8Cw1DGFs3Jw13uF1DCFZ8tr4ftFy3Xrn3Kw15tr45GryfJrW5Kr15W348GrWvga1D
+	ArsrCr4rCr1DArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRBOJwUUUUU=
+X-CM-SenderInfo: 5vkx4vplzr0qqrwthudrp/xtbBzxUSjmkm5A563gAAsH
 
-On Mon, Nov 24, 2025 at 01:28:27PM +0800, Vivian Wang wrote:
-> The current flow control implementation doesn't handle autonegotiation
-> and ethtool operations properly. Remove it for now so we don't claim
-> support for something that doesn't really work. A better implementation
-> will be sent in future patches.
-> 
-> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-> ---
-> Starting at v2 as this is the net-next successor of:
+Introduce support for the on-die thermal sensor unit (TSU)
+found on the SpacemiT K1 SoC.
 
-If this is for net-next, and not for backporting to stable, you should
-not have a Fixes: tag.
+Include the device tree binding documentation in YAML format, the
+thermal sensor driver implementation, and the device tree changes to
+enable the sensor on K1 SoC.
 
-Otherwise it looks O.K.
+Test logs:
+Hardware: OrangePi-RV2 integrates SpacemiT K1 SoC
+Kernel: 6.18.0-rc4 mainline
 
-	Andrew
+Verified that all five thermal sensors are registered and reporting
+valid temperatures.
+
+$ cat /sys/class/thermal/thermal_zone*/type
+soc-thermal
+package-thermal
+gpu-thermal
+cluster0-thermal
+cluster1-thermal
+
+$ cat /sys/class/thermal/thermal_zone3/temp
+28000
+
+Dynamic threshold and interrupt tests passed via sysfs trip_point
+manipulation.
+
+---
+Shuwei Wu (3):
+      dt-bindings: thermal: Add SpacemiT K1 thermal sensor
+      thermal: K1: Add driver for K1 SoC thermal sensor
+      riscv: dts: spacemit: Add thermal sensor for K1 SoC
+
+ .../bindings/thermal/spacemit,k1-thermal.yaml      |  76 +++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi               | 101 +++++++
+ drivers/thermal/Kconfig                            |  14 +
+ drivers/thermal/Makefile                           |   1 +
+ drivers/thermal/k1_thermal.c                       | 307 +++++++++++++++++++++
+ 5 files changed, 499 insertions(+)
+---
+base-commit: f5f2e20b1cbc5f9ea20b372d15967b24921ede19
+change-id: 20251124-b4-k1-thermal-eca906e6dd7a
+
+Best regards,
+-- 
+Shuwei Wu <shuweiwoo@163.com>
+
