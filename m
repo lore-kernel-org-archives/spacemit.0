@@ -1,82 +1,89 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530F82EDD6C
-	for <spacemit@lists.linux.dev>; Mon,  8 Dec 2025 22:10:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6022C0270;
+	Tue,  9 Dec 2025 10:21:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765231815; cv=none; b=Le5KLBY4gbI3jI5z3W8fAckbFo51tHkLN+YFlaDahnJIblUifMFqdW9yyXLq3A1dFqv7Gyje0y7pFOxC93sFSK4UDsrCwh8uGVKHWwePPWCTFAaYTyN5WQe8kxXBTP8XI9LLHV4GB3ltNWg2xcaH/a7I7UleKAPv7KOKTLYsTUw=
+	t=1765275720; cv=none; b=Tsj/QmcaUDa8Y+29jrXxOVxQIWdidwOmEFkpwkAQ5uERugCR2Vec7Z9mIaHnuwE0SS8nvCOErfgLAuNdMAWrh2K0BUALEJGJBTkGSea9m4SM1vy2HDYwLXab5WZOaQMkRtummyExe31RfviVdeDT9YBIF28wBXp21UuLjMv1Nak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765231815; c=relaxed/simple;
-	bh=zFHEO13RL+zJ5zTB0G4JLuS740G9rywMqOvHfsbtQVU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D+ub4itv8KFJDFw8K59A7byeTFYp/FKuqugrL+qmPLcdTC6uplsw/rSOZH7eocHgu1q6zrh0mzBG2JY6oQNTBtBqRRya1+To/SY7r9hiMmBh4tXHN/ddbhkHSfzYXftjYqEDpCnwlHt5hvW0QzGWwxjClriMHjLiclL2dK5URVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Rt24g4my; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1765275720; c=relaxed/simple;
+	bh=JgYIw3ICBrpjk2agf17x1ioIPfJ402eUxH3SB5S+2xY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=hM09u5ykNwap63bbtxYolcBx1dBmFoBn3y0Q+dLkJEcX2xYTeibEGIksVnDj52VTD/YtSKfbT5c1B6fhq2zyG0vlcUwcwoIlFW6k3Ydo1w80I/S7z6bo8EwXe9GNo/G/uNQtIVT+FyAXFXI2TB7LoWC6AUApXDSp9fUQUvAJnmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WbGKERRN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Rt24g4my"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id B9DCF4E41AF2;
-	Mon,  8 Dec 2025 22:10:12 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 8EE9B606DD;
-	Mon,  8 Dec 2025 22:10:12 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1D1B3103C8D5C;
-	Mon,  8 Dec 2025 23:10:08 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1765231811; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=mWYWUqUd6OQt7ZTmYi9XvKs64pHlmAY9QPRYKKtCcFM=;
-	b=Rt24g4myiXVnNAovrP9jmwGnftV0vDJl4Pb6W9vWLh7F7cxwRKWvMSxvvJilWNvYoBFu3Z
-	EQ2LIYI3Zzn53izvjSbY3Bqm/c6y/2svxnL2eelGeqq6n+hovdbER0s10q12AtvO6texI2
-	1pnme6q7Krn5NRMlM5Lrl9wOQUONd25MzixAhudxvBzcPVgx6LOm4utGikX3ySF0avryUb
-	RKHvAfiBuyjK70bta4tdNw+wmokJzX8dS+NPm5DficVcGyhgOviL9vJ9NBsuBIYAweJIFq
-	iwslDl/nfwQhPUsC0l3rB1MPDauYaHnuVVXcn8GMDc33BzGSeJt9HaDVWurhjQ==
-Date: Mon, 8 Dec 2025 23:10:08 +0100
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-i2c@vger.kernel.org,
-	linux-rtc@vger.kernel.org
-Subject: Re: (subset) [PATCH v3 2/4] rtc: spacemit: MFD_SPACEMIT_P1 as
- dependencies
-Message-ID: <176523152359.342815.11295458688296790112.b4-ty@bootlin.com>
-References: <20251118-p1-kconfig-fix-v3-0-8839c5ac5db3@linux.spacemit.com>
- <20251118-p1-kconfig-fix-v3-2-8839c5ac5db3@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WbGKERRN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9C3C4CEF5;
+	Tue,  9 Dec 2025 10:21:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765275719;
+	bh=JgYIw3ICBrpjk2agf17x1ioIPfJ402eUxH3SB5S+2xY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=WbGKERRNRYy6gW6/W/bFlLsP98T+EQnkqyCCqYlyww81Nmak/e/s+N6QS69RW5Hsy
+	 /2RI3XCmMnRCfyL/LcFr8+Z3W85G2ZaOB5LBYcYuDRTQn/gCJNmFIiDpajoU+9O8c+
+	 vpYs76S0VU1Ldu5qfwQ2+LTK6eFmolkLLpFTfbBokamUWrcy2g1iap/OKqajHGmBex
+	 wQOfGG21Qr0b5qceYqFvuOLCMw5h5sAQrwkA6AZkbBqeGyrC8MmCZRPh3hD/5ElLFS
+	 vu0UuYBmhXy+MvmHACkmcOnglPb+Z8KorQlA5NY/YPuftsLoBjHh6vu8NYaIOzdult
+	 2UdOXsqsJUh1w==
+From: Mark Brown <broonie@kernel.org>
+To: linux-kernel@vger.kernel.org, 
+ Javier Martinez Canillas <javierm@redhat.com>
+Cc: Alex Elder <elder@riscstar.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Yixun Lan <dlan@gentoo.org>, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev
+In-Reply-To: <20251206133852.1739475-1-javierm@redhat.com>
+References: <20251206133852.1739475-1-javierm@redhat.com>
+Subject: Re: [PATCH] regulator: spacemit: Align input supply name with the
+ DT binding
+Message-Id: <176527571370.622933.17720204195171811423.b4-ty@kernel.org>
+Date: Tue, 09 Dec 2025 19:21:53 +0900
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251118-p1-kconfig-fix-v3-2-8839c5ac5db3@linux.spacemit.com>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-47773
 
-On Tue, 18 Nov 2025 14:08:06 +0800, Troy Mitchell wrote:
-> RTC_DRV_SPACEMIT_P1 is a subdevice of P1 and should depend on
-> MFD_SPACEMIT_P1 rather than selecting it directly. Using 'select'
-> does not always respect the parent's dependencies, so 'depends on'
-> is the safer and more correct choice.
+On Sat, 06 Dec 2025 14:38:48 +0100, Javier Martinez Canillas wrote:
+> The Device Tree binding schema for the SpacemiT P1 PMIC defines the main
+> input supply property as "vin-supply", but the driver defines the supply
+> name for BUCK and ALDO regulators as "vcc".
 > 
-> Additionally, the default value depends on MFD_SPACEMIT_P1 rather
-> than ARCH_SPACEMIT.
+> This causes the regulator core to lookup for a non-existent "vcc-supply".
+> Rename the supply from "vcc" to "vin", to match the DT binding and ensure
+> that the regulators input supplies are correctly resolved.
 > 
 > [...]
 
-Applied, thanks!
+Applied to
 
-[2/4] rtc: spacemit: MFD_SPACEMIT_P1 as dependencies
-      https://git.kernel.org/abelloni/c/16bd954c9336
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Best regards,
+Thanks!
 
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+[1/1] regulator: spacemit: Align input supply name with the DT binding
+      commit: 99f0c3a654c4a762aca4fadc8d9f8636b36d570a
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
