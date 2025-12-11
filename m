@@ -1,290 +1,162 @@
-Received: from mail3.out.flockmail.com (mail3.out.flockmail.com [18.215.190.59])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC5D1DE8B5
-	for <spacemit@lists.linux.dev>; Thu, 11 Dec 2025 03:38:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.215.190.59
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024781E5718
+	for <spacemit@lists.linux.dev>; Thu, 11 Dec 2025 07:35:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765424315; cv=none; b=mlbO5DDpLc9Ucgaf5SMD89tJx5W8FD6Zebj9/pkrZhT+nGFdfe3yilRad+DW/ICpBwA8j7v7yrrjWXGZ2GwSJnQlL9cxNwdCk3EQuYmm+vyvv4TbYqUXyHb/lOVnbvwAh71SmcIGhpMtZeX6Oc0NjStpSDyeShc6TILQ3lzTgqw=
+	t=1765438544; cv=none; b=mmbPMZqEE+JbhVebn8Vu9TjZ1URdIbaS4m3Cr3mzmvv3QJLxeWOviHM67hnrChi1ZIhXbIKYoKVV+wrKJJIu4U+JSKFEFbK2KtNeYeUD3F05LDGZ1anHCE3N5Vl7uBkfarnlVWs8qQKzkOXjGRDV8QQ8V4jQzn9SchtN7rSwF/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765424315; c=relaxed/simple;
-	bh=cPNQLUwa+P97Hxd8FElwN4GQt3ITSegw1GxWLMMjdLI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uH6dSBBXs1VR9vPukCNlHhX/sLBuOddhC7YZFVsf8k7OjEFl3geoftt5u993Ee/CNAUk5BcjR4fTOanh4cOzOXT/P8eZM5O2EZQYMa4q3mzJad5BHg9ZSqE7mkSZMkJmYivFJXIMjngT+D0GaUxAGvO9fW0glfY/N+vgK816xJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b=Sb3V7oy9; arc=none smtp.client-ip=18.215.190.59
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+	s=arc-20240116; t=1765438544; c=relaxed/simple;
+	bh=D9L3NlYN0YqGBEdLUPdxfdpbeolFXHZmFSSeiZG1E+Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=E7xYTgZGNtylrFzoPgTupWzwvcqM12mk65en1iyu6nkVRXdcKjCR25O5UFXwtduRT+XUPOri3l4vzsgNEpDQ3jUq07TZuxF65tr/PYav+h6MbllJxKYCA4KXTuifbVvACQF+udG0s+fEw9ayA6Dz8ExhntCKEJuNBqkuX7lnwh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=vaNqEjeG; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b="Sb3V7oy9"
-Received: from localhost (localhost [127.0.0.1])
-	by smtp-out.flockmail.com (Postfix) with ESMTP id 4dRdbX2hJHz9ry1;
-	Thu, 11 Dec 2025 03:38:32 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256; bh=d8kSlJlqIefSfeNRWxze+FrgjZpC7LfELXdE8F9Z6j8=;
-	c=relaxed/relaxed; d=ziyao.cc;
-	h=to:date:from:references:mime-version:cc:message-id:subject:in-reply-to:from:to:cc:subject:date:message-id:in-reply-to:references:reply-to;
-	q=dns/txt; s=titan1; t=1765424312; v=1;
-	b=Sb3V7oy9M6KtFk/EiXbU3x0sxy5ui/n0npN3DwZKF8ai6I1TaUdKUuz56G7e4T6xOBtat4td
-	U7jdvHVN/nzH2FqZ9JWqOjG2amaNDwxM9UwQmC4f4pRDfrlGty808TiGdu7Mok9omeVG6m7qtjc
-	HQAw30C5S8c3YI8FMn5ialmY=
-Received: from pie (unknown [117.171.66.90])
-	by smtp-out.flockmail.com (Postfix) with ESMTPA id 4dRdbS1wFqz9rwy;
-	Thu, 11 Dec 2025 03:38:27 +0000 (UTC)
-Date: Thu, 11 Dec 2025 03:38:24 +0000
-Feedback-ID: :me@ziyao.cc:ziyao.cc:flockmailId
-From: Yao Zi <me@ziyao.cc>
-To: Yixun Lan <dlan@gentoo.org>, Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: Haylen Chu <heylenay@4d2.org>, Inochi Amaoto <inochiama@gmail.com>,
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 4/4] clk: spacemit: k3: add the clock tree
-Message-ID: <aTo8sCPpVM1o9PKX@pie>
-References: <20251211-k3-clk-v1-0-8ee47c70c5bc@gentoo.org>
- <20251211-k3-clk-v1-4-8ee47c70c5bc@gentoo.org>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="vaNqEjeG"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-3436cbb723fso569060a91.2
+        for <spacemit@lists.linux.dev>; Wed, 10 Dec 2025 23:35:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1765438541; x=1766043341; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5cRIyUToWBqfDVg5RwgWa/mJtHaJ3ZD2Xr1P/TceRSA=;
+        b=vaNqEjeGWXE71ZsppwSjJW0Q1U3c1NB0qAjGzhXna8KGPE9a8Fc4runOUuHJp5bciD
+         lPmPfOcRX+TGZzudq8GXZd4QYlN+b3NOiQKTMJa6Kk7hHCqs1wzSkIY9hjg1b1UULhsW
+         4Ytk0nl8KS2D3b6yWM3QfhzDpYeg/Hl+tEJ37Z5i5SWhdoR3BTxJY0lN+Nqw4niQjYyy
+         5ROzWzCYWEg6sbJMD68UYvAv0MVD03l3Bg6ar6oIZEwVDMhhtmL5yLwY/VP6lkylhnoO
+         h2PkwDa6zF2XvB+HXIa7z12e7hdi1HLe5juoG8tKxC4f+2/JOZ2MaxAHFABoyrv93Edn
+         VWrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765438541; x=1766043341;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=5cRIyUToWBqfDVg5RwgWa/mJtHaJ3ZD2Xr1P/TceRSA=;
+        b=CybWCfENH/zcU4N2QRazYme2DiQsmWbP08WXhKsCRWNXFpkjRv7TuXDzSbvsquOxWd
+         6FJEfSDr7Ab5MCXHzaNOGDi0g6e/RSvHwatpikPrA2N1PUVqwprPHgp5fu2b55/YgVIa
+         8UeDxdpfIxd0+PLQj2p2i7tm+iYIJzNxQPV94q/thOfho1bTDXcLlJea+ySIHQMXPwOE
+         Rfm58C1FcJUknRmM1oYjLuJU+xSCMFVnX6subrcMriXIi8G0V9mVLme5UNmt2DkQerm4
+         HhJb4YqtCUGwGF4IdlyXZ32cuT1+e7JFhBYsW6gAiKTtxEaiaXGsqUpTYpxKsStiuZE/
+         CK+A==
+X-Forwarded-Encrypted: i=1; AJvYcCWGlekJsn+VrQtftGvXqUUkkqeQSxWjrTxxJeLc8aDF6YrLVKF6yWlR9lIXF1abyGUBAcsRugI6Xg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxdgvF7+goFSi3/sq/9DE4LYtF71QTAufzlkYobniL3BqDr3zk9
+	CNkwcMx4eY7KOyoyxy0nqRrXzcrauU1L9+acMcUxVGPrCnOV7ooBP2OwL4M77FfWQiA=
+X-Gm-Gg: AY/fxX5Ouwp5f7rTH7FH2cLQT9lSigP3n0l6rq70OfppLTtmw6katwbxDND1ZoeNPxK
+	0qE9YhIo9+ScZPtmDINN77ykGlIoSkxUg/J+Klde488UepAkIsBtZF9shCws78PdDhOyHkNHCQK
+	MVYMZ1hxavw6c32OrVDYWKhjflHx9eLcYcHY2rRvG8sbpaVmPo5aFWdyJsgcn05DKpPVTR3RBM7
+	3xCODwWtKowH+1A11JwVX7f2caP5VOIfjVp8xWkjf0Wf63uOZ1qXvNfG6wnDhUjUy7QYzhKAPBQ
+	zHm1OkfTQkHT8sWjHqQIirr1tZ4dTzCcyqgPPE/8Qc07GMF2+pddqamebwz2k9e1bUJB7lxq+cX
+	hbG7tgLu2BTFJMWqbLIUSKRFcquQbwadtnoApeDZ3o47s9wp4mBwpCiflZzGiNWPjeUGtdTxn96
+	lhge289qneUDs7rG3Tcv2N1fGY4twwltG9SFshhGoNhuXvhb4=
+X-Google-Smtp-Source: AGHT+IGoUuUHw4G8GEx6LIfCNmK4Wz0P7Vv4+W+//KXKrKQNRYKoJQHJnPyRAtlt73kARbQ3vU0CQQ==
+X-Received: by 2002:a05:6a21:3086:b0:366:58cc:b74b with SMTP id adf61e73a8af0-366e07dae21mr5212459637.21.1765438541298;
+        Wed, 10 Dec 2025 23:35:41 -0800 (PST)
+Received: from localhost.localdomain ([2a12:a304:100::202f])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34a9277e13dsm392594a91.5.2025.12.10.23.35.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Dec 2025 23:35:40 -0800 (PST)
+From: Guodong Xu <guodong@riscstar.com>
+To: jyc0019@gmail.com
+Cc: alex@ghiti.fr,
+	andi.shyti@kernel.org,
+	aou@eecs.berkeley.edu,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	dlan@gentoo.org,
+	krzk+dt@kernel.org,
+	linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	p.zabel@pengutronix.de,
+	palmer@dabbelt.com,
+	pjw@kernel.org,
+	robh@kernel.org,
+	spacemit@lists.linux.dev,
+	troy.mitchell@linux.spacemit.com,
+	troymitchell988@gmail.com
+Subject: Re: [PATCH 2/3] i2c: k1: add reset support
+Date: Thu, 11 Dec 2025 15:35:26 +0800
+Message-ID: <20251211073526.3164875-1-guodong@riscstar.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251119-i2c-k1_reset-support-v1-2-0e9e82bf9b65@gmail.com>
+References: <20251119-i2c-k1_reset-support-v1-2-0e9e82bf9b65@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251211-k3-clk-v1-4-8ee47c70c5bc@gentoo.org>
-X-F-Verdict: SPFVALID
-X-Titan-Src-Out: 1765424312200132238.21635.2368487487041513004@prod-use1-smtp-out1003.
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.4 cv=TPG/S0la c=1 sm=1 tr=0 ts=693a3cb8
-	a=rBp+3XZz9uO5KTvnfbZ58A==:117 a=rBp+3XZz9uO5KTvnfbZ58A==:17
-	a=kj9zAlcOel0A:10 a=MKtGQD3n3ToA:10 a=CEWIc4RMnpUA:10 a=7mOBRU54AAAA:8
-	a=prZasoeBdVvYPQNCfvoA:9 a=CjuIK1q_8ugA:10 a=wa9RWnbW_A1YIeRBVszw:22
-	a=3z85VNIBY5UIEeAh_hcH:22 a=NWVoK91CQySWRX1oVYDe:22
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 11, 2025 at 09:19:44AM +0800, Yixun Lan wrote:
-> Add clock support to SpacemiT K3 SoC, the clock tree consist of several
-> blocks which are APBC, APBS, APMU, DCIU, MPUM.
-> 
-> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+On Wed, Nov 19, 2025 at 07:46:44PM +0800, Encrow Thorne wrote:
+> Add reset control handling to the K1 I2C driver.
+>
+> Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
 > ---
->  drivers/clk/spacemit/Kconfig     |    6 +
->  drivers/clk/spacemit/Makefile    |   11 +-
->  drivers/clk/spacemit/ccu-k3.c    | 1641 ++++++++++++++++++++++++++++++++++++++
->  include/soc/spacemit/ccu.h       |   18 +
->  include/soc/spacemit/k1-syscon.h |   12 +-
->  include/soc/spacemit/k3-syscon.h |  273 +++++++
->  6 files changed, 1947 insertions(+), 14 deletions(-)
+>  drivers/i2c/busses/i2c-k1.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+>
+> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+> index 6b918770e612..64d817d8315d 100644
+> --- a/drivers/i2c/busses/i2c-k1.c
+> +++ b/drivers/i2c/busses/i2c-k1.c
+> @@ -10,6 +10,7 @@
+>   #include <linux/module.h>
+>   #include <linux/of_address.h>
+>   #include <linux/platform_device.h>
+> + #include <linux/reset.h>
+>
+>  /* spacemit i2c registers */
+>  #define SPACEMIT_ICR		 0x0		/* Control register */
+> @@ -113,6 +114,7 @@ struct spacemit_i2c_dev {
+>  	void __iomem *base;
+>  	int irq;
+>  	u32 clock_freq;
+> +	struct reset_control *resets;
 
-...
+Thanks for the patch! A few suggestions to simplify this:
 
-> diff --git a/drivers/clk/spacemit/ccu-k3.c b/drivers/clk/spacemit/ccu-k3.c
-> new file mode 100644
-> index 000000000000..948889e8ca8c
-> --- /dev/null
-> +++ b/drivers/clk/spacemit/ccu-k3.c
-> @@ -0,0 +1,1641 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2025 SpacemiT Technology Co. Ltd
-> + */
-> +
-> +#include <linux/array_size.h>
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/clk-provider.h>
-> +#include <linux/delay.h>
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/minmax.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <soc/spacemit/k3-syscon.h>
-> +
-> +#include "ccu_common.h"
-> +#include "ccu_pll.h"
-> +#include "ccu_mix.h"
-> +#include "ccu_ddn.h"
-> +
-> +#include <dt-bindings/clock/spacemit,k3-clocks.h>
-> +
-> +struct spacemit_ccu_data {
-> +	const char *reset_name;
-> +	struct clk_hw **hws;
-> +	size_t num;
-> +};
+The reset_control structure doesn't need to be stored in the device
+struct since the devm API automatically manages the resource lifecycle.
 
-...
+>
+>  	struct i2c_msg *msgs;
+>  	u32 msg_num;
+> @@ -571,6 +573,15 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
 
-> +static const struct spacemit_ccu_data k3_ccu_dciu_data = {
-> +	.reset_name	= "dciu-reset",
-> +	.hws		= k3_ccu_dciu_hws,
-> +	.num		= ARRAY_SIZE(k3_ccu_dciu_hws),
-> +};
-> +
-> +static int spacemit_ccu_register(struct device *dev,
-> +				 struct regmap *regmap,
-> +				 struct regmap *lock_regmap,
-> +				 const struct spacemit_ccu_data *data)
-> +{
-> +	struct clk_hw_onecell_data *clk_data;
-> +	int i, ret;
-> +
-> +	/* Nothing to do if the CCU does not implement any clocks */
-> +	if (!data->hws)
-> +		return 0;
-> +
-> +	clk_data = devm_kzalloc(dev, struct_size(clk_data, hws, data->num),
-> +				GFP_KERNEL);
-> +	if (!clk_data)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < data->num; i++) {
-> +		struct clk_hw *hw = data->hws[i];
-> +		struct ccu_common *common;
-> +		const char *name;
-> +
-> +		if (!hw) {
-> +			clk_data->hws[i] = ERR_PTR(-ENOENT);
-> +			continue;
-> +		}
-> +
-> +		name = hw->init->name;
-> +
-> +		common = hw_to_ccu_common(hw);
-> +		common->regmap		= regmap;
-> +		common->lock_regmap	= lock_regmap;
-> +
-> +		ret = devm_clk_hw_register(dev, hw);
-> +		if (ret) {
-> +			dev_err(dev, "Cannot register clock %d - %s\n",
-> +				i, name);
-> +			return ret;
-> +		}
-> +
-> +		clk_data->hws[i] = hw;
-> +	}
-> +
-> +	clk_data->num = data->num;
-> +
-> +	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
-> +	if (ret)
-> +		dev_err(dev, "failed to add clock hardware provider (%d)\n", ret);
-> +
-> +	return ret;
-> +}
-> +
-> +static void spacemit_cadev_release(struct device *dev)
-> +{
-> +	struct auxiliary_device *adev = to_auxiliary_dev(dev);
-> +
-> +	kfree(to_spacemit_ccu_adev(adev));
-> +}
-> +
-> +static void spacemit_adev_unregister(void *data)
-> +{
-> +	struct auxiliary_device *adev = data;
-> +
-> +	auxiliary_device_delete(adev);
-> +	auxiliary_device_uninit(adev);
-> +}
-> +
-> +static int spacemit_ccu_reset_register(struct device *dev,
-> +				       struct regmap *regmap,
-> +				       const char *reset_name)
-> +{
-> +	struct spacemit_ccu_adev *cadev;
-> +	struct auxiliary_device *adev;
-> +	static u32 next_id;
-> +	int ret;
-> +
-> +	/* Nothing to do if the CCU does not implement a reset controller */
-> +	if (!reset_name)
-> +		return 0;
-> +
-> +	cadev = devm_kzalloc(dev, sizeof(*cadev), GFP_KERNEL);
-> +	if (!cadev)
-> +		return -ENOMEM;
-> +	cadev->regmap = regmap;
-> +
-> +	adev = &cadev->adev;
-> +	adev->name = reset_name;
-> +	adev->dev.parent = dev;
-> +	adev->dev.release = spacemit_cadev_release;
-> +	adev->dev.of_node = dev->of_node;
-> +	adev->id = next_id++;
-> +
-> +	ret = auxiliary_device_init(adev);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = auxiliary_device_add(adev);
-> +	if (ret) {
-> +		auxiliary_device_uninit(adev);
-> +		return ret;
-> +	}
-> +
-> +	return devm_add_action_or_reset(dev, spacemit_adev_unregister, adev);
-> +}
+Please use a local variable in the probe function instead:
 
-This piece of code looks quiet similar to types/functions with the same
-names in ccu-k1.c. If I'm correct, could we separate the logic into a
-new file and avoid duplication?
+       struct reset_control *rst;
 
-> +static int k3_ccu_probe(struct platform_device *pdev)
-> +{
-> +	struct regmap *base_regmap, *lock_regmap = NULL;
-> +	const struct spacemit_ccu_data *data;
-> +	struct device *dev = &pdev->dev;
-> +	int ret;
-> +
-> +	base_regmap = device_node_to_regmap(dev->of_node);
-> +	if (IS_ERR(base_regmap))
-> +		return dev_err_probe(dev, PTR_ERR(base_regmap),
-> +				     "failed to get regmap\n");
-> +	/*
-> +	 * The lock status of PLLs locate in MPMU region, while PLLs themselves
-> +	 * are in APBS region. Reference to MPMU syscon is required to check PLL
-> +	 * status.
-> +	 */
-> +	if (of_device_is_compatible(dev->of_node, "spacemit,k3-pll")) {
-> +		struct device_node *mpmu = of_parse_phandle(dev->of_node, "spacemit,mpmu", 0);
-> +
-> +		if (!mpmu)
-> +			return dev_err_probe(dev, -ENODEV,
-> +					     "Cannot parse MPMU region\n");
-> +
-> +		lock_regmap = device_node_to_regmap(mpmu);
-> +		of_node_put(mpmu);
-> +
-> +		if (IS_ERR(lock_regmap))
-> +			return dev_err_probe(dev, PTR_ERR(lock_regmap),
-> +					     "failed to get lock regmap\n");
-> +	}
-> +
-> +	data = of_device_get_match_data(dev);
-> +
-> +	ret = spacemit_ccu_register(dev, base_regmap, lock_regmap, data);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "failed to register clocks\n");
-> +
-> +	ret = spacemit_ccu_reset_register(dev, base_regmap, data->reset_name);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "failed to register resets\n");
-> +
-> +	return 0;
-> +}
+>  	if (IS_ERR(clk))
+>  		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable bus clock");
+>
+> +	i2c->resets = devm_reset_control_get_optional(dev, NULL);
 
-k3_ccu_probe looks quote similar to k1_ccu_probe, too. The only
-difference is that k3_ccu_probe checks for spacemit,k3-pll instead of
-spacemit,k1-pll.
+There is a new API, I would suggest this:
+       rst = devm_reset_control_get_optional_exclusive_deasserted(dev, NULL);
 
-We could share most of the probe code by writing a SoC-independent probe
-function,
 
-	int spacemit_ccu_probe(struct platform_dev *pdev,
-			       const char *pll_compatible);
+> +	if (IS_ERR(i2c->resets))
+> +		return dev_err_probe(dev, PTR_ERR(i2c->resets),
+> +				    "failed to get reset\n");
+> +
+> +	reset_control_assert(i2c->resets);
+> +	udelay(2);
+> +	reset_control_deassert(i2c->resets);
+> +
 
-and calling it in ccu-k1.c and ccu-k3.c with different pll_compatible.
+Why you need to call assert() then deassert()?
+Wouldn't the single API fit?
 
-Regards,
-Yao Zi
+Best regards,
+Guodong
+
+>  	spacemit_i2c_reset(i2c);
+>
+>  	i2c_set_adapdata(&i2c->adapt, i2c);
+>
