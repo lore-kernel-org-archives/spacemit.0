@@ -1,203 +1,112 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806A02940B
-	for <spacemit@lists.linux.dev>; Sun, 14 Dec 2025 23:30:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AB1316193
+	for <spacemit@lists.linux.dev>; Mon, 15 Dec 2025 02:55:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765755043; cv=none; b=jJSACl4IZwNd8gdQaQRY+/PPPVabmo3dZzO7xXDgBOClsSt9NXM/sQezc2UWLD+khQKMf5mOxuqdv9wCkPMCj5YhIHQuJTUp6ZOJXks1oztlHXoizr6t79KbyJAVbAqIP7C2bIZJG8PaK6KGsUWL9bYkuKe0KiuTZzFefC/qhJM=
+	t=1765767304; cv=none; b=C3rIG6AQNa71DUN9XptuPYIPxQw8LtA8/lZ6Lrc/MCJ2DbBc/tJ9Mq2qLNsnwfqBmauYLka7o/+rIcqliWT9n/Yw2aXfT4S4yhilgta0SH4kZlZ3dQbgqcWYPChgRtukmm/EZq6J5QePZ+H2wopdBImksaqK0tGmozDI64Fg52E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765755043; c=relaxed/simple;
-	bh=T7SjwE3X4VHRa7EQmLRK+I4LKSkVDZeZ306BR6wQm0A=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EVDXmLuc8EBeWnI3TzgObD1mrd9Q7fam2a4ZtEr25DCfihfGK1oPLRgNz3Bsgv6Ww9wVrL48ksipzFx5Wi/xe5ZJ0D2f5iu3sjQ8kDyOnvWUhXfIjxhlTW4P4ZVbd7hd3DZxBk97Rm3lEs+pnO9eAJnp4i/Wfimn2Sj3+WxQSrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X7+8lpWT; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765767304; c=relaxed/simple;
+	bh=xTecg34zy/nnyTgChmdoL056fRer/+hnrfZuWnXbN0k=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O8spozg9P20yPfTwo0ovltv+5ctxzanYkf71i7fmqMf82iq73v8IMini7CJ9Y53lJIaKyDuF42d9Nla5g1G2u11xjl9hS5gGV6p55LsuQsx84TzjGIqsCpbF+0CBKoAJEpP7ZF7dH5pJUMW54ru149SKtmP9RImyjv8hwEhYy+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Cu11vrnw; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X7+8lpWT"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c026e074373so2552343a12.1
-        for <spacemit@lists.linux.dev>; Sun, 14 Dec 2025 15:30:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765755041; x=1766359841; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eYzoYAiPmzzivK8Ki6QV16iwe5G/a6yZeTp3lLRhlMY=;
-        b=X7+8lpWTEK7YqZb4hnJGwuAM8Lu+MnGJKa5WRoQ5xzdPtZOCI8etiwG7lpdD3Kr8+B
-         k8PABakRX+lZEPcEU8iQrQss0Jq+2X51JKNViRFgyvfD3cLZkIHgfopLO6K/P8tTxaGi
-         a7OHb0ma2+DmHgqQ2JA9MIjXziGep2bOWyaXUGEDWqnT5JYUL8WPyh5gDrB23FF/efKO
-         TCGQTUXOQV9o2Dd5i/V9Edm8tdzbCwnmoUuBbVorsPgC1viVSC+NLqd+Ist3Vto/gB+k
-         Uxbjb3Y6LnJzK4uifA7ritydu0hmnqDReEaM4NHo9111m2UDjBvvkPtT90OamjapjlII
-         QjXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765755041; x=1766359841;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eYzoYAiPmzzivK8Ki6QV16iwe5G/a6yZeTp3lLRhlMY=;
-        b=naFPVc/ok+KH5H6VQvvH+yjSqjh1XSYBBNyf0yWi3NnAURdUwGkycrwGbNXnPsMp0C
-         3HQ8ylYZhlO7O5OvdKaztpSsb46TVqwa2ulAUddZpzN/8gpeelI28zmvtthRpbSK7q39
-         yURyXMn+Ckxx3m0/Is1l2M9ybgJW707QoeWOZgb+NT7tfcC6UdNWVkBsJP0NGqUU26fu
-         Gg4wvT/DlkjJpBKriu88Lw08gO0NJZpCKLydmWh8UaswP0PTPE4i/WJDWjiGGqW3xsQ7
-         dtrhI16queymClgR+tX7/UC9bv53CORJ8Zeb13i3Z4RezpDqMX20yR5Hvmo5JQitB4PF
-         SE6A==
-X-Forwarded-Encrypted: i=1; AJvYcCXOlv5gNJsCEr66UXuEEM5lH3FwkCc34U1zgKyPypbTNa7wDX6utmCFD6UoalowZRZ1lKlLYiDx6g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyJBH178rjL4fTv/X32VXu207OWk0D1qn3sGdaXxR/uC8jd4wQQ
-	vBMsaB9m0AdIjUVXxhBt2ONLA56HwjGXzF+bKsZk5+rc5Eo0El+G8B09
-X-Gm-Gg: AY/fxX55ZWNP+QE4duHH0ChQj0eqzivne9hfi1L0TO/G+xj1o5xQ+8kzVZ5ZffT/O0T
-	0cz/2WwNQZz6AKu9af+IFxVGi344+X+RTauWzHTF6AHCFk/0qP3ps1nrJh9SLiS8bzt3njAY9MD
-	u361OVP5sFTX1kgHpx5J8ISTSDZ2pEV1U0YZ+GD3NbOnecjicnIIKp6QQG5/hwjFoUKBi5KibB2
-	VKkzpW0X7N92xyv0Tih9YYwXb/SBlzEIGpGpBgsjCNCmiCHefUUbChuWRXl0BPgO0ebOtj8I19j
-	6je6ioEqelLuz0zu2WrLVhCiXMy72feQbA9IE1r8Ze8p8BDw+jz4p/PkG2tHvXmZ1YPiLPM7DRT
-	erALyhwyD855QA51GV6cBYGzfD0R97JP8Oo4blAQOh7eN9LKpBpD5ODFJGdcpS9c0ZeZHsJJVMT
-	RbUaBW65t8yA==
-X-Google-Smtp-Source: AGHT+IGQk884QPSGZiuAKUTjJrQTSdk3vzJE7zDrugsr9qRUB8OVSda5q4I3tfPa/ntnYHcQi10gGw==
-X-Received: by 2002:a05:7301:e0cc:b0:2ac:21bf:e937 with SMTP id 5a478bee46e88-2ac2f29b7f6mr4392207eec.0.1765755040555;
-        Sun, 14 Dec 2025 15:30:40 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ac3c13d60bsm13553377eec.0.2025.12.14.15.30.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Dec 2025 15:30:40 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Cu11vrnw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1765767183;
+	bh=LiOFsrrj0KtqzqIbiahsWzPZsSJKwCxlNGMnrbqjcQ4=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=Cu11vrnwNr/eb++/XHQSyjkXNZMtfNEfU7a3ZX8ebT8q+E+nqsPIUqyhcWlbi4XyS
+	 sfbuZpqWNLr7H6+HsFPomN8jj1UuAS0JchK1NhpbsIXXSKG/KIMFiWCwUTTfswJOGE
+	 71bbJ4sDfd2sUpw8M1kVIZMYe4SOsVjsd8TtuK/E=
+X-QQ-mid: esmtpsz11t1765767175t5383ce71
+X-QQ-Originating-IP: XeUGLSypuNGU5v41rnfBMyEYp+WgNaRHp+98uR4Tggo=
+Received: from = ( [183.48.246.103])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 15 Dec 2025 10:52:54 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 8115786445991593814
+EX-QQ-RecipientCnt: 9
+Date: Mon, 15 Dec 2025 10:52:54 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>,
 	Yixun Lan <dlan@gentoo.org>,
-	Haylen Chu <heylenay@4d2.org>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Alex Elder <elder@riscstar.com>,
-	Akhilesh Patil <akhilesh@ee.iitb.ac.in>
-Cc: linux-clk@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH] clk: spacemit: Fix module build for spacemit common ccu driver
-Date: Mon, 15 Dec 2025 07:29:37 +0800
-Message-ID: <20251214232938.668293-1-inochiama@gmail.com>
-X-Mailer: git-send-email 2.52.0
+	Troy Mitchell <troymitchell988@gmail.com>,
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v4] i2c: spacemit: introduce pio for k1
+Message-ID: <7F2C864E2E9B876A+aT94BuAAOW_mzY3x@kernel.org>
+References: <20251009-k1-i2c-atomic-v4-1-a89367870286@linux.spacemit.com>
+ <613db920-6025-43cb-a733-d58f65363caa@riscstar.com>
+ <aTs3eNLCKTR5boro@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aTs3eNLCKTR5boro@aurel32.net>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MEbuyMJPIbYUrnFWuxHepkyOQxrEmHTrZknwel+/p4ifa7IGR4PPyMCk
+	ntomL9JUBTuo8k9VhnI1Zg/wlAVoE96DGpwRwVsW7TefULgMnoRFd9mqhTKdq6y3DcJlmvA
+	xDc4rp0kmAPIu8LD1O0HsldV0A/NNfqusFchmWTtVIuu7/G8jttxgfO2uUuh1MPeU5zzoVS
+	l+Aj+N1PxtTUCp2Q7H/mWHvYl6HZxdl4aGMxwhrdX78zRooTeYllwwD/n3hOGufV7e9qkwf
+	NCuxSFTQaoa93SZswOMx2VK2fA+maQt99NDFxNRZwTpqwDHR0hEFR6ey8AznZYIBN/nMVql
+	C3DFqJqA4N33TetGxO7emkoKMfF5+JUNv23Ue5Q0JX+TwOAD4uDzsxgUha7eOv3Z0YJdbDU
+	/w21/IviPrtFbOYM+TKB12ziBeYCxkGCXSUKVYiNKq4GwBli593+SnNMIyKM62lYhX0iAh7
+	LExrjgQSwyyfCFOxNxjlFW1Akhffe4LSymQbp13/4jqfqOJ0BxC3T9GmdmP+7ltgZ7iExJi
+	u3IbAuIClstZHjZg4IHlhDt7ddAaxJSSE3hGdhKJvrQpLkohkULeaMBVBe9yS5L4GtrCS8X
+	zHTZe8Vii7xSY8YclAgBEsErvP9CFeULmPlsWDhwKmwZB8JVZcUjtF8I8Er9/Gy34I/Uk3T
+	KrpGd8qH941SIZWskqUOxj23EsQoDmoNyQZ0x3lZKWxH1NQVBT2LmLYfea43tdRImjW8Plv
+	BfF13Pb1TQAZgU640eqrU6SQ1gaz241Ra20dt6DpQf0Hj+ksMnCcGsidl3vV37X0II6QoAy
+	ySrUXmZJ68linFfrMwC/wdRv1AiOknPSHwmOgY/Tdt6qPsRs3HeYocyHM8RGKgR8hNx5brx
+	M9Z+Gxiz/vSsa9RoPN6rmJkT/VtAyePj4OxsjGohkVymcUPUpcx3O8nN50cSy9zMLbtKncj
+	woVRLpRSOEhbwSbkL+WM9+lf+LNCyegh9N91+9XttBEiX+oypiEjfwkUkSZuGWSXt1M9C10
+	+FVxXTmAtHkdoP4Mh3Q1B8mOUSJ6kePTV3a0bb8bzPMBDRA/Ve/jvytstuoT7Jk2C8xSPqr
+	qO2Euo2NXoHKfVqaS4d+C93bSFECDD3P2nJ4waDaIei
+X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+X-QQ-RECHKSPAM: 0
 
-For build spacemit common clock driver as a module, the build
-process require MODULE_LICENSE()/MODULE_DESCRIPTION() globally
-and EXPORT_SYMBOL() for every exposed symbol. Otherwise, the
-build will fail.
+On Thu, Dec 11, 2025 at 10:28:24PM +0100, Aurelien Jarno wrote:
+> Hi Troy,
+> 
+> On 2025-11-07 09:50, Alex Elder wrote:
+> > On 10/9/25 4:59 AM, Troy Mitchell wrote:
+> > > This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
+> > > enabling the use of I2C in atomic context.
+> > 
+> > (Sorry I haven't commented on your earlier versions.  They
+> > included other changes to prepare for this; I'm looking at
+> > this patch in isolation and haven't reviewed the others.)
+> > 
+> > An aside:  I notice the #includes are indented an additional
+> > space in this source file;  perhaps you can get rid of those
+> > (in a separate patch) at some point.
+> > 
+> > You really need to provide more information about how this
+> > is implemented.  This patch makes non-trivial changes to
+> > the logic.
+> 
+> What is the status on implementing the changes asked by Alex? Do you 
+> need some help with that?
+I've been a bit busy recently, but I expect the next version can be
+posted later this week or next week.
 
-Add these missing hints, so the driver can be built as a module.
-
-Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
- drivers/clk/spacemit/ccu_ddn.c | 1 +
- drivers/clk/spacemit/ccu_mix.c | 9 +++++++++
- drivers/clk/spacemit/ccu_pll.c | 5 +++++
- 3 files changed, 15 insertions(+)
-
-diff --git a/drivers/clk/spacemit/ccu_ddn.c b/drivers/clk/spacemit/ccu_ddn.c
-index 5b16e273bee5..9b6dc6910284 100644
---- a/drivers/clk/spacemit/ccu_ddn.c
-+++ b/drivers/clk/spacemit/ccu_ddn.c
-@@ -84,3 +84,4 @@ const struct clk_ops spacemit_ccu_ddn_ops = {
- 	.determine_rate = ccu_ddn_determine_rate,
- 	.set_rate	= ccu_ddn_set_rate,
- };
-+EXPORT_SYMBOL(spacemit_ccu_ddn_ops);
-diff --git a/drivers/clk/spacemit/ccu_mix.c b/drivers/clk/spacemit/ccu_mix.c
-index 7b7990875372..09f377a6a4f5 100644
---- a/drivers/clk/spacemit/ccu_mix.c
-+++ b/drivers/clk/spacemit/ccu_mix.c
-@@ -198,24 +198,28 @@ const struct clk_ops spacemit_ccu_gate_ops = {
- 	.enable		= ccu_gate_enable,
- 	.is_enabled	= ccu_gate_is_enabled,
- };
-+EXPORT_SYMBOL(spacemit_ccu_gate_ops);
- 
- const struct clk_ops spacemit_ccu_factor_ops = {
- 	.determine_rate = ccu_factor_determine_rate,
- 	.recalc_rate	= ccu_factor_recalc_rate,
- 	.set_rate	= ccu_factor_set_rate,
- };
-+EXPORT_SYMBOL(spacemit_ccu_factor_ops);
- 
- const struct clk_ops spacemit_ccu_mux_ops = {
- 	.determine_rate = ccu_mix_determine_rate,
- 	.get_parent	= ccu_mux_get_parent,
- 	.set_parent	= ccu_mux_set_parent,
- };
-+EXPORT_SYMBOL(spacemit_ccu_mux_ops);
- 
- const struct clk_ops spacemit_ccu_div_ops = {
- 	.determine_rate = ccu_mix_determine_rate,
- 	.recalc_rate	= ccu_div_recalc_rate,
- 	.set_rate	= ccu_mix_set_rate,
- };
-+EXPORT_SYMBOL(spacemit_ccu_div_ops);
- 
- const struct clk_ops spacemit_ccu_factor_gate_ops = {
- 	.disable	= ccu_gate_disable,
-@@ -226,6 +230,7 @@ const struct clk_ops spacemit_ccu_factor_gate_ops = {
- 	.recalc_rate	= ccu_factor_recalc_rate,
- 	.set_rate	= ccu_factor_set_rate,
- };
-+EXPORT_SYMBOL(spacemit_ccu_factor_gate_ops);
- 
- const struct clk_ops spacemit_ccu_mux_gate_ops = {
- 	.disable	= ccu_gate_disable,
-@@ -236,6 +241,7 @@ const struct clk_ops spacemit_ccu_mux_gate_ops = {
- 	.get_parent	= ccu_mux_get_parent,
- 	.set_parent	= ccu_mux_set_parent,
- };
-+EXPORT_SYMBOL(spacemit_ccu_mux_gate_ops);
- 
- const struct clk_ops spacemit_ccu_div_gate_ops = {
- 	.disable	= ccu_gate_disable,
-@@ -246,6 +252,7 @@ const struct clk_ops spacemit_ccu_div_gate_ops = {
- 	.recalc_rate	= ccu_div_recalc_rate,
- 	.set_rate	= ccu_mix_set_rate,
- };
-+EXPORT_SYMBOL(spacemit_ccu_div_gate_ops);
- 
- const struct clk_ops spacemit_ccu_mux_div_gate_ops = {
- 	.disable	= ccu_gate_disable,
-@@ -259,6 +266,7 @@ const struct clk_ops spacemit_ccu_mux_div_gate_ops = {
- 	.recalc_rate	= ccu_div_recalc_rate,
- 	.set_rate	= ccu_mix_set_rate,
- };
-+EXPORT_SYMBOL(spacemit_ccu_mux_div_gate_ops);
- 
- const struct clk_ops spacemit_ccu_mux_div_ops = {
- 	.get_parent	= ccu_mux_get_parent,
-@@ -268,3 +276,4 @@ const struct clk_ops spacemit_ccu_mux_div_ops = {
- 	.recalc_rate	= ccu_div_recalc_rate,
- 	.set_rate	= ccu_mix_set_rate,
- };
-+EXPORT_SYMBOL(spacemit_ccu_mux_div_ops);
-diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
-index d92f0dae65a4..f8fc53887189 100644
---- a/drivers/clk/spacemit/ccu_pll.c
-+++ b/drivers/clk/spacemit/ccu_pll.c
-@@ -7,6 +7,7 @@
- #include <linux/clk-provider.h>
- #include <linux/math.h>
- #include <linux/regmap.h>
-+#include <linux/module.h>
- 
- #include "ccu_common.h"
- #include "ccu_pll.h"
-@@ -157,3 +158,7 @@ const struct clk_ops spacemit_ccu_pll_ops = {
- 	.determine_rate = ccu_pll_determine_rate,
- 	.is_enabled	= ccu_pll_is_enabled,
- };
-+EXPORT_SYMBOL(spacemit_ccu_pll_ops);
-+
-+MODULE_DESCRIPTION("SpacemiT CCU PLL/MIX/DDN common driver");
-+MODULE_LICENSE("GPL");
--- 
-2.52.0
-
+                              - Troy
+> 
+> Thanks
+> Aurelien
+> 
+> -- 
+> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+> aurelien@aurel32.net                     http://aurel32.net
+> 
