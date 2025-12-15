@@ -1,50 +1,53 @@
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AB1316193
-	for <spacemit@lists.linux.dev>; Mon, 15 Dec 2025 02:55:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3C11FC0ED
+	for <spacemit@lists.linux.dev>; Mon, 15 Dec 2025 02:56:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765767304; cv=none; b=C3rIG6AQNa71DUN9XptuPYIPxQw8LtA8/lZ6Lrc/MCJ2DbBc/tJ9Mq2qLNsnwfqBmauYLka7o/+rIcqliWT9n/Yw2aXfT4S4yhilgta0SH4kZlZ3dQbgqcWYPChgRtukmm/EZq6J5QePZ+H2wopdBImksaqK0tGmozDI64Fg52E=
+	t=1765767389; cv=none; b=rbtHbXN38mq6Cof03EybCZKMhZ2nPbOV8aDvWU9PYEwvp6pgJiBqNhyNsg+861QZLLh/FXupHZbQkYz535EesuqpdeYiSg+MIxHHxT+BPgkZf6Ffo+0ff8qxlYguEThSnhOIQZqjbHldVCoCggNNBccIe3wXmc4cpA0Bhla3vjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765767304; c=relaxed/simple;
-	bh=xTecg34zy/nnyTgChmdoL056fRer/+hnrfZuWnXbN0k=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O8spozg9P20yPfTwo0ovltv+5ctxzanYkf71i7fmqMf82iq73v8IMini7CJ9Y53lJIaKyDuF42d9Nla5g1G2u11xjl9hS5gGV6p55LsuQsx84TzjGIqsCpbF+0CBKoAJEpP7ZF7dH5pJUMW54ru149SKtmP9RImyjv8hwEhYy+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Cu11vrnw; arc=none smtp.client-ip=54.254.200.128
+	s=arc-20240116; t=1765767389; c=relaxed/simple;
+	bh=02le5Uu03CIFhEGQZ7SxFE873qcp7iGtRff7fvnppxw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WX1FkrvE5NeKV6jq3q5Gna6RVXvLDBFVpkO/WnmAY8NpCg+qwhoPL2jEqsv3uAT6xLcJUP7IOK+3kaoooRea+9BelwkZja1cBWCo2FMDnrxYrJDBBg0VnVxtIyNGv4+Q9Bg3MNUGRp/zCQQkU+eBTI3DAEu9gADEvsu6CS+Y15M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=wu7/HYl6; arc=none smtp.client-ip=54.204.34.129
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Cu11vrnw"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="wu7/HYl6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1765767183;
-	bh=LiOFsrrj0KtqzqIbiahsWzPZsSJKwCxlNGMnrbqjcQ4=;
+	s=mxsw2412; t=1765767288;
+	bh=ePccDOthFyLYtm90K2o9nMjYsKD7YRLlY05U0kQc0FE=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=Cu11vrnwNr/eb++/XHQSyjkXNZMtfNEfU7a3ZX8ebT8q+E+nqsPIUqyhcWlbi4XyS
-	 sfbuZpqWNLr7H6+HsFPomN8jj1UuAS0JchK1NhpbsIXXSKG/KIMFiWCwUTTfswJOGE
-	 71bbJ4sDfd2sUpw8M1kVIZMYe4SOsVjsd8TtuK/E=
-X-QQ-mid: esmtpsz11t1765767175t5383ce71
-X-QQ-Originating-IP: XeUGLSypuNGU5v41rnfBMyEYp+WgNaRHp+98uR4Tggo=
+	b=wu7/HYl6TDvK9IYrmfCs1XC9Y1HsgSad5JA2mQHBDs6+WCnldIx4IOfb4wuS7QAi/
+	 yDRQ/Op4UM7VbHumZISHA1uUbHVo9sQyXYveBbtNiIL3y6pdrUZram1q+N7aYaD+ND
+	 dRLOgOxTaVKCLo55FcxGIsLQGHMqSQ7xrCmi0dWA=
+X-QQ-mid: zesmtpsz6t1765767284t6cf729bf
+X-QQ-Originating-IP: 9pTzAVsmuC6mHETYV41cHodoDPvc/PLgk8GGdyTolFM=
 Received: from = ( [183.48.246.103])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 15 Dec 2025 10:52:54 +0800 (CST)
+	id ; Mon, 15 Dec 2025 10:54:43 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 8115786445991593814
-EX-QQ-RecipientCnt: 9
-Date: Mon, 15 Dec 2025 10:52:54 +0800
+X-BIZMAIL-ID: 2478898065667183843
+EX-QQ-RecipientCnt: 14
+Date: Mon, 15 Dec 2025 10:54:42 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>,
-	Troy Mitchell <troymitchell988@gmail.com>,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v4] i2c: spacemit: introduce pio for k1
-Message-ID: <7F2C864E2E9B876A+aT94BuAAOW_mzY3x@kernel.org>
-References: <20251009-k1-i2c-atomic-v4-1-a89367870286@linux.spacemit.com>
- <613db920-6025-43cb-a733-d58f65363caa@riscstar.com>
- <aTs3eNLCKTR5boro@aurel32.net>
+To: Inochi Amaoto <inochiama@gmail.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Haylen Chu <heylenay@4d2.org>, Brian Masney <bmasney@redhat.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Alex Elder <elder@riscstar.com>,
+	Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH] clk: spacemit: Fix module build for spacemit common ccu
+ driver
+Message-ID: <EE6920993009E270+aT94cmKTM0tHn8Ly@kernel.org>
+References: <20251214232938.668293-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -53,60 +56,39 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aTs3eNLCKTR5boro@aurel32.net>
+In-Reply-To: <20251214232938.668293-1-inochiama@gmail.com>
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MEbuyMJPIbYUrnFWuxHepkyOQxrEmHTrZknwel+/p4ifa7IGR4PPyMCk
-	ntomL9JUBTuo8k9VhnI1Zg/wlAVoE96DGpwRwVsW7TefULgMnoRFd9mqhTKdq6y3DcJlmvA
-	xDc4rp0kmAPIu8LD1O0HsldV0A/NNfqusFchmWTtVIuu7/G8jttxgfO2uUuh1MPeU5zzoVS
-	l+Aj+N1PxtTUCp2Q7H/mWHvYl6HZxdl4aGMxwhrdX78zRooTeYllwwD/n3hOGufV7e9qkwf
-	NCuxSFTQaoa93SZswOMx2VK2fA+maQt99NDFxNRZwTpqwDHR0hEFR6ey8AznZYIBN/nMVql
-	C3DFqJqA4N33TetGxO7emkoKMfF5+JUNv23Ue5Q0JX+TwOAD4uDzsxgUha7eOv3Z0YJdbDU
-	/w21/IviPrtFbOYM+TKB12ziBeYCxkGCXSUKVYiNKq4GwBli593+SnNMIyKM62lYhX0iAh7
-	LExrjgQSwyyfCFOxNxjlFW1Akhffe4LSymQbp13/4jqfqOJ0BxC3T9GmdmP+7ltgZ7iExJi
-	u3IbAuIClstZHjZg4IHlhDt7ddAaxJSSE3hGdhKJvrQpLkohkULeaMBVBe9yS5L4GtrCS8X
-	zHTZe8Vii7xSY8YclAgBEsErvP9CFeULmPlsWDhwKmwZB8JVZcUjtF8I8Er9/Gy34I/Uk3T
-	KrpGd8qH941SIZWskqUOxj23EsQoDmoNyQZ0x3lZKWxH1NQVBT2LmLYfea43tdRImjW8Plv
-	BfF13Pb1TQAZgU640eqrU6SQ1gaz241Ra20dt6DpQf0Hj+ksMnCcGsidl3vV37X0II6QoAy
-	ySrUXmZJ68linFfrMwC/wdRv1AiOknPSHwmOgY/Tdt6qPsRs3HeYocyHM8RGKgR8hNx5brx
-	M9Z+Gxiz/vSsa9RoPN6rmJkT/VtAyePj4OxsjGohkVymcUPUpcx3O8nN50cSy9zMLbtKncj
-	woVRLpRSOEhbwSbkL+WM9+lf+LNCyegh9N91+9XttBEiX+oypiEjfwkUkSZuGWSXt1M9C10
-	+FVxXTmAtHkdoP4Mh3Q1B8mOUSJ6kePTV3a0bb8bzPMBDRA/Ve/jvytstuoT7Jk2C8xSPqr
-	qO2Euo2NXoHKfVqaS4d+C93bSFECDD3P2nJ4waDaIei
-X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: N2msJaiA+ppMoK38P6mvOs1kBiDz8Jf2CIP293VWTRVbv++ahMObJ4vt
+	/bvmTHqoJhuUiA0fy1LLqv2cP87jWGXItZA2quUcC5CtxL7bMNH6tTADQzq7wxOPzRIH4AS
+	/4A5vNEE3tchovlvWJB1xe8g1iUYqN989t0iRKkw4PUFKXy7qpkVj3ho4xVtLDNEwAynpiU
+	BlTlZWAkxSJjANZ1avdJ/2SVPaC2b8+rv91Lt4MSJoP69++ohTk02hQnFC4AwK+LG3mP0No
+	StffNkG/cnHzpM+tpIWG8uivOsH+Wy4tLTEHznaOv1dNCHVMtQnm6+E3fkHg52ObywKrcu3
+	fjkORVJKYHKWxw4G64e1VjWRCkksimfTYQ+mlwovNcVYktHUIn2Lhc1PsBWpCQa4sBgKCN9
+	l60y/h17lTzZuXBoG6j3pBtd/gU5qTXNsKr5G0IMJgX8ENAoMx+Ro6ZhQoj6FTxqceClZUH
+	a2GdCompGjHeq7t0Q+gpbuthR9z8pTR2RucE6MxuYXCiuIp/3EuphqhqYFxx4kJcfZxl2dP
+	2COm/JAwVi58IV7E5IBxlo1WDt+PFJ8sgaEaY/4srRKyodGH9urvh6cCRtsjh/jhpXdsG2T
+	2ZNSq7DBBP1kBACoaVnfs9rZqYUxEdFSDod22VBypaEHgO+/KbhjIFakJYBxWLdimfjvhVE
+	8BEsu83mtYMqRZpYhy1aJ+3Lea9IyuLAcBTvRn2LurqR4RSYYFqM8/aRam+LbpXhIxRmCSt
+	g7+aIJ8zk0QKX1FnFCyAi0GnQTWFN/mV++3jWgIh04HbZUi6W6401UIlkdtrk19FMYY4z7C
+	sZvetOeyB3l1ISJ2AZGCTFX6SOsl8ahaP6iASbEV271sP0kgbx57i1mRBxw+S1maKa0dHTB
+	hViKXKMXpxCK7YmW7B3W9XVPFjHUxP0PGk/ckC3Yj/0fjnKIUh0DkqtwJAB7fH++I8SmqSG
+	GT6GlOOFdWBAhKJnh3iTS0HnpqDYlw2UormhO/VRkyy+nvMPlPUgFjpHBkZ8uQ8f7ptk/vv
+	Ks0JUIb2EPAQow3RwfpN2pozw0BR6etQvCoQq3uZTcEVwqRJkcRZ0WA63ITLkDaUuwPbODV
+	uZok5l9HLlAN+Q8Ay1ursU6G/9+OL/zJg==
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
 X-QQ-RECHKSPAM: 0
 
-On Thu, Dec 11, 2025 at 10:28:24PM +0100, Aurelien Jarno wrote:
-> Hi Troy,
+On Mon, Dec 15, 2025 at 07:29:37AM +0800, Inochi Amaoto wrote:
+> For build spacemit common clock driver as a module, the build
+> process require MODULE_LICENSE()/MODULE_DESCRIPTION() globally
+> and EXPORT_SYMBOL() for every exposed symbol. Otherwise, the
+> build will fail.
 > 
-> On 2025-11-07 09:50, Alex Elder wrote:
-> > On 10/9/25 4:59 AM, Troy Mitchell wrote:
-> > > This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
-> > > enabling the use of I2C in atomic context.
-> > 
-> > (Sorry I haven't commented on your earlier versions.  They
-> > included other changes to prepare for this; I'm looking at
-> > this patch in isolation and haven't reviewed the others.)
-> > 
-> > An aside:  I notice the #includes are indented an additional
-> > space in this source file;  perhaps you can get rid of those
-> > (in a separate patch) at some point.
-> > 
-> > You really need to provide more information about how this
-> > is implemented.  This patch makes non-trivial changes to
-> > the logic.
+> Add these missing hints, so the driver can be built as a module.
 > 
-> What is the status on implementing the changes asked by Alex? Do you 
-> need some help with that?
-I've been a bit busy recently, but I expect the next version can be
-posted later this week or next week.
+> Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Thanks.
 
-                              - Troy
-> 
-> Thanks
-> Aurelien
-> 
-> -- 
-> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-> aurelien@aurel32.net                     http://aurel32.net
-> 
+Acked-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
