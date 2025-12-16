@@ -1,203 +1,166 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+Received: from mail84.out.titan.email (mail84.out.titan.email [3.216.99.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A37256C83
-	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 02:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E06B2D97BE
+	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 04:27:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=3.216.99.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765850702; cv=none; b=UaIJq1eX2Yp3kmzgF10dvtMEPU8iDN8Xs8sf+vz+Hay/C401/O9ESap1StPou9nG0t9IBFXKaFdoqx2n9706rWBmyHjGxw44S1VR2caZsa41tMUEHamc+w6+AaFofy0W3yJR2r+aN5oYYP9GsPlB1UW8EkLsp70wzdJDYCLXrjw=
+	t=1765859229; cv=none; b=ha8aDYILsNu0ZWhQ03Gp8VUl37jIVDaiQOxbpGe+2HaJ3qfQl1fQKlx1TDVl++dFNkajjWWgX6vbWG6RsstRWYRbpElEbeE4HXpYX1LPU2XW6MsF3ZxaMXBUoMVwbs0EcYyZRY3nFhgAraSsX6oOZ3Uyjw81CaUACt6CX70LwB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765850702; c=relaxed/simple;
-	bh=y011YJ1uJ0ICDCPPxjeBTXP9an/sM0tsW9o564MeUTs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Q//UcFe+wrqL2r8PhM4TEIOXRca3lyaM/q/UsUG6fg7opCC3ZzlfxHJT6m26dycXAZAYguCpHc2z9wF9V/fK/XzZND5vHdRgPvKhVdhPj1xxXk9PofOayHdkwg5vA1Sbl7pDngyfC0QxmUyKM0tp88Rvukba8RPibHIXhfT8dHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=NK+0J1Jw; arc=none smtp.client-ip=220.197.31.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1765859229; c=relaxed/simple;
+	bh=sF1WnRmUgXjOianAvDDJl1ZA6eiSQcLIwJiWDwNReuc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j7QyhGnaHChNZfR0Ta8rIIYD5Ejo3yO/5kIypgHEYyMx/P8YTZSjA0IVzklfZlGrWE0Q1qjUYNwCfaqug2znPy9CMtCscSJzEADd2E+3daDs2CXdew4jTQ+naRtjRHhf08gv5LJ2PhKl+zGUTJt7rRoipUglI4ZlcIzpBOl/a0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b=C8ai/uUI; arc=none smtp.client-ip=3.216.99.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="NK+0J1Jw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:Date:Subject:MIME-Version:Content-Type:
-	Message-Id:To; bh=Rs+rfWtyrtk97kpSu5fndp0xU+3WjRNBLxGPmOQrzzo=;
-	b=NK+0J1Jw9/Rk8ursPJv1cCyc4VTt4GInpamkdvrups32oZGe6hzF4/CUgTd6Zk
-	WD/s53T5AKAvtiui2dpW18JiyW9D+e2vdCAetlY+bjEZO6g4+yitJB8mC0+TU4Ux
-	XsmG8JRgP0Vx997mhz752xT/fw5544098vxZOtrezD3cw=
-Received: from [192.168.10.1] (unknown [])
-	by gzga-smtp-mtada-g0-1 (Coremail) with SMTP id _____wDXUu97vUBpOmJ5Ag--.29S5;
-	Tue, 16 Dec 2025 10:01:39 +0800 (CST)
-From: Shuwei Wu <shuweiwoo@163.com>
-Date: Tue, 16 Dec 2025 10:00:37 +0800
-Subject: [PATCH v2 3/3] riscv: dts: spacemit: Add thermal sensor for K1 SoC
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b="C8ai/uUI"
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-out.flockmail.com (Postfix) with ESMTP id 4dVkCN0kqRz7t9J;
+	Tue, 16 Dec 2025 04:16:48 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256; bh=7n7qMq2z773A6crxSe2h52Ruo5UwRmT1FP0PMQ4p+ec=;
+	c=relaxed/relaxed; d=ziyao.cc;
+	h=to:message-id:in-reply-to:date:from:subject:cc:references:mime-version:from:to:cc:subject:date:message-id:in-reply-to:references:reply-to;
+	q=dns/txt; s=titan1; t=1765858608; v=1;
+	b=C8ai/uUIcIC2/r/nA4mW3Nq1ffkkSI+I3YlQXUq3FWa23HXh8a/tFdEMWU2roXuU9kbCsiYu
+	lZSGqUF/tkrawoRz5rj97BGdWFBLWoJ5ggk0HP1c6Rt9P1a8ylySQHB3BRYR1NKllYeTq9M89qc
+	pHolYxhgXdEU8CuzjKVQ9730=
+Received: from pie (unknown [117.171.66.90])
+	by smtp-out.flockmail.com (Postfix) with ESMTPA id 4dVkCF3YM3z7t7t;
+	Tue, 16 Dec 2025 04:16:41 +0000 (UTC)
+Date: Tue, 16 Dec 2025 04:16:27 +0000
+Feedback-ID: :me@ziyao.cc:ziyao.cc:flockmailId
+From: Yao Zi <me@ziyao.cc>
+To: Shuwei Wu <shuweiwoo@163.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] thermal: spacemit: k1: Add thermal sensor support
+Message-ID: <aUDc-o63KJpY8xLG@pie>
+References: <20251216-patchv2-k1-thermal-v1-0-d4b31fe9c904@163.com>
+ <20251216-patchv2-k1-thermal-v1-2-d4b31fe9c904@163.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251216-patchv2-k1-thermal-v1-3-d4b31fe9c904@163.com>
-References: <20251216-patchv2-k1-thermal-v1-0-d4b31fe9c904@163.com>
-In-Reply-To: <20251216-patchv2-k1-thermal-v1-0-d4b31fe9c904@163.com>
-To: "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Shuwei Wu <shuweiwoo@163.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1765850492; l=3136;
- i=shuweiwoo@163.com; s=20251125; h=from:subject:message-id;
- bh=y011YJ1uJ0ICDCPPxjeBTXP9an/sM0tsW9o564MeUTs=;
- b=uYTDOFVmm1ahH9cVHGgDpeVO1j+jLsXKk+qUN3obRjUh1fmGlF2ihXBM5/WY2ftbOs+M6QAdT
- 914Ea3Y39X4BZcGt+xX3xYv9RiZm0bxSb6bfwyKiCEdpOL6GzQDzA72
-X-Developer-Key: i=shuweiwoo@163.com; a=ed25519;
- pk=qZs6i2UZnXkmjUrwO5HJxcfpCvgSNrR4dcU5cjtfTSk=
-X-CM-TRANSID:_____wDXUu97vUBpOmJ5Ag--.29S5
-X-Coremail-Antispam: 1Uf129KBjvJXoWxZrW8Gw45ZFy3Xw4xJry5Jwb_yoW5Wr48pF
-	ySkws5GFZrJry3Xa13CryDK398Kan5ta48Xan29ryrArn0qFZIk3y0kwn8tF1kGr4rW34j
-	vr1Dt34DuF1Dt3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pNg4hQUUUUU=
-X-CM-SenderInfo: 5vkx4vplzr0qqrwthudrp/xtbC4wP5iGlAvYOdvwAA3k
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251216-patchv2-k1-thermal-v1-2-d4b31fe9c904@163.com>
+X-F-Verdict: SPFVALID
+X-Titan-Src-Out: 1765858607931248556.30087.3778824715309203318@prod-use1-smtp-out1002.
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.4 cv=TPG/S0la c=1 sm=1 tr=0 ts=6940dd2f
+	a=rBp+3XZz9uO5KTvnfbZ58A==:117 a=rBp+3XZz9uO5KTvnfbZ58A==:17
+	a=kj9zAlcOel0A:10 a=MKtGQD3n3ToA:10 a=CEWIc4RMnpUA:10 a=Byx-y9mGAAAA:8
+	a=K1kigjf773wChWhSffkA:9 a=CjuIK1q_8ugA:10 a=3z85VNIBY5UIEeAh_hcH:22
+	a=NWVoK91CQySWRX1oVYDe:22
 
-Include the Thermal Sensor node in the SpacemiT K1 dtsi
-with definitions for registers, clocks, and interrupts.
-Additionally, configure thermal zones for the soc, package, gpu, and
-clusters to enable temperature monitoring via the thermal framework.
+On Tue, Dec 16, 2025 at 10:00:36AM +0800, Shuwei Wu wrote:
+> The thermal sensor on K1 supports monitoring five temperature zones.
+> The driver registers these sensors with the thermal framework
+> and supports standard operations:
+> - Reading temperature (millidegree Celsius)
+> - Setting high/low thresholds for interrupts
+> 
+> Signed-off-by: Shuwei Wu <shuweiwoo@163.com>
+> ---
+> Changes in v2:
+> - Rename k1_thermal.c to k1_tsensor.c for better hardware alignment
+> - Move driver to drivers/thermal/spacemit/
+> - Add Kconfig/Makefile for spacemit and update top-level build files
+> - Refactor names, style, code alignment, and comments
+> - Simplify probe and error handling
+> ---
+>  drivers/thermal/Kconfig               |   2 +
+>  drivers/thermal/Makefile              |   1 +
+>  drivers/thermal/spacemit/Kconfig      |  19 +++
+>  drivers/thermal/spacemit/Makefile     |   3 +
+>  drivers/thermal/spacemit/k1_tsensor.c | 283 ++++++++++++++++++++++++++++++++++
+>  5 files changed, 308 insertions(+)
+> diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spacemit/k1_tsensor.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..f164754e807ddd311c8cf98bcc074fd580514aa2
+> --- /dev/null
+> +++ b/drivers/thermal/spacemit/k1_tsensor.c
 
-Signed-off-by: Shuwei Wu <shuweiwoo@163.com>
----
-Changes in v2:
-- Update compatible to "spacemit,k1-tsensor"
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 101 +++++++++++++++++++++++++++++++++++
- 1 file changed, 101 insertions(+)
+...
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 7818ca4979b6a7755722919a5958512aa11950ab..0fe7396ea6e47d10a73e3bcea4f5165e5c268da0 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -338,6 +338,96 @@ osc_32k: clock-32k {
- 		};
- 	};
- 
-+	thermal-zones {
-+		soc-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 0>;
-+
-+			trips {
-+				soc-crit {
-+					temperature = <115000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		package-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 1>;
-+
-+			trips {
-+				package-crit {
-+					temperature = <115000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		gpu-thermal {
-+			polling-delay-passive = <100>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 2>;
-+
-+			trips {
-+				gpu-alert {
-+					temperature = <85000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				gpu-crit {
-+					temperature = <115000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cluster0-thermal {
-+			polling-delay-passive = <100>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 3>;
-+
-+			trips {
-+				cluster0-alert {
-+					temperature = <85000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cluster0-crit {
-+					temperature = <115000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cluster1-thermal {
-+			polling-delay-passive = <100>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 4>;
-+
-+			trips {
-+				cluster1-alert {
-+					temperature = <85000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cluster1-crit {
-+					temperature = <115000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
-+
- 	soc {
- 		compatible = "simple-bus";
- 		interrupt-parent = <&plic>;
-@@ -434,6 +524,17 @@ syscon_apbc: system-controller@d4015000 {
- 			#reset-cells = <1>;
- 		};
- 
-+		thermal: thermal@d4018000 {
-+			compatible = "spacemit,k1-tsensor";
-+			reg = <0x0 0xd4018000 0x0 0x100>;
-+			clocks = <&syscon_apbc CLK_TSEN>,
-+				 <&syscon_apbc CLK_TSEN_BUS>;
-+			clock-names = "core", "bus";
-+			interrupts = <61>;
-+			resets = <&syscon_apbc RESET_TSEN>;
-+			#thermal-sensor-cells = <1>;
-+		};
-+
- 		i2c6: i2c@d4018800 {
- 			compatible = "spacemit,k1-i2c";
- 			reg = <0x0 0xd4018800 0x0 0x38>;
+> +static void k1_tsensor_init(struct k1_tsensor *ts)
+> +{
 
--- 
-2.52.0
+Configuration of K1_TSU_PCTRL2 (offset 0x04) is removed in this
+revision, but why? Isn't it necessary for the sensor to function?
 
+And you didn't ask my question raised in v1 about the source of 24MHz
+clock. I still suspect whether the binding is complete or not.
+
+> +	u32 val;
+> +
+> +	/* Disable all the interrupts */
+> +	writel(0xffffffff, ts->base + K1_TSENSOR_INT_EN_REG);
+> +
+> +	/* Configure ADC sampling time and filter period */
+> +	val = readl(ts->base + K1_TSENSOR_TIME_REG);
+> +	val &= ~K1_TSENSOR_TIME_MASK;
+> +	val |= K1_TSENSOR_TIME_FILTER_PERIOD |
+> +		K1_TSENSOR_TIME_ADC_CNT_RST |
+> +		K1_TSENSOR_TIME_WAIT_REF_CNT;
+
+It's more natural to align K1_TSENSOR_TIME_ADC_CNT_RST and other
+following constants with K1_TSENSOR_TIME_FILTER_PERIOD. This applies for
+other multiple-line assignments, too.
+
+...
+
+> +static int k1_tsensor_probe(struct platform_device *pdev)
+> +{
+
+...
+
+> +	for (i = 0; i < MAX_SENSOR_NUMBER; ++i) {
+> +		ts->ch[i].id = i;
+> +		ts->ch[i].ts = ts;
+> +		ts->ch[i].tzd = devm_thermal_of_zone_register(dev, i, ts->ch + i, &k1_tsensor_ops);
+> +		if (IS_ERR(ts->ch[i].tzd))
+> +			return PTR_ERR(ts->ch[i].tzd);
+
+Would emitting a error message with dev_err_probe() help here?
+
+> +
+> +		/* Attach sysfs hwmon attributes for userspace monitoring */
+> +		ret = devm_thermal_add_hwmon_sysfs(dev, ts->ch[i].tzd);
+> +		if (ret)
+> +			dev_warn(dev, "Failed to add hwmon sysfs attributes\n");
+> +
+> +		k1_tsensor_enable_irq(ts->ch + i);
+> +	}
+> +
+> +	irq = platform_get_irq(pdev, 0);
+> +	if (irq < 0)
+> +		return irq;
+
+Same as the above question.
+
+> +	ret = devm_request_threaded_irq(dev, irq, NULL,
+> +					k1_tsensor_irq_thread,
+> +					IRQF_ONESHOT, "k1_tsensor", ts);
+> +	if (ret < 0)
+> +		return ret;
+
+Same as above.
+
+Besides these questions, the driver itself looks pretty nice to me :)
+
+Best regards,
+Yao Zi
