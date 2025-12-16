@@ -1,34 +1,33 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B034F29AB02
-	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 02:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A37256C83
+	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 02:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765850568; cv=none; b=ma3KOLhRtVssU4lyz50sX0fJ60w8gmDPX+A+WmJa0HauU2CpM/dIRJQxkuOCdLMs28cLJeVG2yqxIK793AQsaF9Vos1cGScs756tcRzx6Xf9R/0xUAkgW9e3Orir1Iu0D6ga/7XBb31JDCjX1P+5RBh22qCYpsVYbqs6tagTFks=
+	t=1765850702; cv=none; b=UaIJq1eX2Yp3kmzgF10dvtMEPU8iDN8Xs8sf+vz+Hay/C401/O9ESap1StPou9nG0t9IBFXKaFdoqx2n9706rWBmyHjGxw44S1VR2caZsa41tMUEHamc+w6+AaFofy0W3yJR2r+aN5oYYP9GsPlB1UW8EkLsp70wzdJDYCLXrjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765850568; c=relaxed/simple;
-	bh=0uikCfen/M7ul2A9nGFiRto3pqY9jv/BdC6ugaZH33k=;
+	s=arc-20240116; t=1765850702; c=relaxed/simple;
+	bh=y011YJ1uJ0ICDCPPxjeBTXP9an/sM0tsW9o564MeUTs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HwwpihCmNHfE0wBDtAA3iMgTFGLfi7QqN1r9ky/duO8avRto5VCHJA20PC0ndtkUPS9Ax/HfHgw+jmZc5BbBcf01UylZK+c8s2t+abK3CCkjXQSqHT811QjorsEbnj2tK7CIHe9BCaIfp0KSvmfNlRqUHajGqrH7BPent+483+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=Li0WyGTi; arc=none smtp.client-ip=117.135.210.2
+	 In-Reply-To:To:Cc; b=Q//UcFe+wrqL2r8PhM4TEIOXRca3lyaM/q/UsUG6fg7opCC3ZzlfxHJT6m26dycXAZAYguCpHc2z9wF9V/fK/XzZND5vHdRgPvKhVdhPj1xxXk9PofOayHdkwg5vA1Sbl7pDngyfC0QxmUyKM0tp88Rvukba8RPibHIXhfT8dHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=NK+0J1Jw; arc=none smtp.client-ip=220.197.31.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="Li0WyGTi"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="NK+0J1Jw"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
 	s=s110527; h=From:Date:Subject:MIME-Version:Content-Type:
-	Message-Id:To; bh=EB3+lUrYjXdHLb6lVc83k/KDwbQO/1iZ6Sq6de5B41Y=;
-	b=Li0WyGTi2cbBBX1G6SOMtBibyLzKPQjZkjKiaBmjKWr766cczANSt+EGPrdVsu
-	dNiCHtItot1V28+h32ONX/RsCOfyn0HuTS3RVN8F6nLdPv0iciVcR2sIBnxLRDP7
-	Dzaz5a+FdH2M2wd+vnEbsJZw2nO68wSjgmSu7PuLVSpIA=
+	Message-Id:To; bh=Rs+rfWtyrtk97kpSu5fndp0xU+3WjRNBLxGPmOQrzzo=;
+	b=NK+0J1Jw9/Rk8ursPJv1cCyc4VTt4GInpamkdvrups32oZGe6hzF4/CUgTd6Zk
+	WD/s53T5AKAvtiui2dpW18JiyW9D+e2vdCAetlY+bjEZO6g4+yitJB8mC0+TU4Ux
+	XsmG8JRgP0Vx997mhz752xT/fw5544098vxZOtrezD3cw=
 Received: from [192.168.10.1] (unknown [])
-	by gzga-smtp-mtada-g0-1 (Coremail) with SMTP id _____wDXUu97vUBpOmJ5Ag--.29S3;
-	Tue, 16 Dec 2025 10:01:36 +0800 (CST)
+	by gzga-smtp-mtada-g0-1 (Coremail) with SMTP id _____wDXUu97vUBpOmJ5Ag--.29S5;
+	Tue, 16 Dec 2025 10:01:39 +0800 (CST)
 From: Shuwei Wu <shuweiwoo@163.com>
-Date: Tue, 16 Dec 2025 10:00:35 +0800
-Subject: [PATCH v2 1/3] dt-bindings: thermal: Add SpacemiT K1 thermal
- sensor
+Date: Tue, 16 Dec 2025 10:00:37 +0800
+Subject: [PATCH v2 3/3] riscv: dts: spacemit: Add thermal sensor for K1 SoC
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -37,7 +36,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251216-patchv2-k1-thermal-v1-1-d4b31fe9c904@163.com>
+Message-Id: <20251216-patchv2-k1-thermal-v1-3-d4b31fe9c904@163.com>
 References: <20251216-patchv2-k1-thermal-v1-0-d4b31fe9c904@163.com>
 In-Reply-To: <20251216-patchv2-k1-thermal-v1-0-d4b31fe9c904@163.com>
 To: "Rafael J. Wysocki" <rafael@kernel.org>, 
@@ -50,118 +49,154 @@ To: "Rafael J. Wysocki" <rafael@kernel.org>,
  Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
 Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+ linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1765850492; l=2596;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1765850492; l=3136;
  i=shuweiwoo@163.com; s=20251125; h=from:subject:message-id;
- bh=0uikCfen/M7ul2A9nGFiRto3pqY9jv/BdC6ugaZH33k=;
- b=dlAx+dseeSycqN1YujmmvjrGBobHVCrErX4V5EYL9bsUTWEK7Qx1eiR4Y7x79LUKpROIm2yW0
- O2+u/kpUMpJDsVw5DYEF/yhKKcc6OrUIJmzKQ2upx/EQBV4QFqzdIRl
+ bh=y011YJ1uJ0ICDCPPxjeBTXP9an/sM0tsW9o564MeUTs=;
+ b=uYTDOFVmm1ahH9cVHGgDpeVO1j+jLsXKk+qUN3obRjUh1fmGlF2ihXBM5/WY2ftbOs+M6QAdT
+ 914Ea3Y39X4BZcGt+xX3xYv9RiZm0bxSb6bfwyKiCEdpOL6GzQDzA72
 X-Developer-Key: i=shuweiwoo@163.com; a=ed25519;
  pk=qZs6i2UZnXkmjUrwO5HJxcfpCvgSNrR4dcU5cjtfTSk=
-X-CM-TRANSID:_____wDXUu97vUBpOmJ5Ag--.29S3
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Cw1UXF1rKFWrGw1UZr4DXFb_yoW5Jr4fpF
-	4fGr93Grs7uF17Xw4Sqr1kCa1Fgan5AF1UXrn2gw1Fyrn0gFyaqwnFkr1UZa48Cry7Zay5
-	ZF4Uury2k3WDA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pikwI9UUUUU=
-X-CM-SenderInfo: 5vkx4vplzr0qqrwthudrp/xtbC5AH5iGlAvYG0mwAA3u
+X-CM-TRANSID:_____wDXUu97vUBpOmJ5Ag--.29S5
+X-Coremail-Antispam: 1Uf129KBjvJXoWxZrW8Gw45ZFy3Xw4xJry5Jwb_yoW5Wr48pF
+	ySkws5GFZrJry3Xa13CryDK398Kan5ta48Xan29ryrArn0qFZIk3y0kwn8tF1kGr4rW34j
+	vr1Dt34DuF1Dt3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pNg4hQUUUUU=
+X-CM-SenderInfo: 5vkx4vplzr0qqrwthudrp/xtbC4wP5iGlAvYOdvwAA3k
 
-Document the SpacemiT K1 Thermal Sensor, which supports
-monitoring temperatures for five zones: soc, package, gpu, cluster0,
-and cluster1.
+Include the Thermal Sensor node in the SpacemiT K1 dtsi
+with definitions for registers, clocks, and interrupts.
+Additionally, configure thermal zones for the soc, package, gpu, and
+clusters to enable temperature monitoring via the thermal framework.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Shuwei Wu <shuweiwoo@163.com>
 ---
 Changes in v2:
-- Rename binding file to spacemit,k1-tsensor.yaml and update compatible
+- Update compatible to "spacemit,k1-tsensor"
 ---
- .../bindings/thermal/spacemit,k1-tsensor.yaml      | 76 ++++++++++++++++++++++
- 1 file changed, 76 insertions(+)
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 101 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 101 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/thermal/spacemit,k1-tsensor.yaml b/Documentation/devicetree/bindings/thermal/spacemit,k1-tsensor.yaml
-new file mode 100644
-index 0000000000000000000000000000000000000000..328101a7f08361424d77bb5ac68667a6e7d5d398
---- /dev/null
-+++ b/Documentation/devicetree/bindings/thermal/spacemit,k1-tsensor.yaml
-@@ -0,0 +1,76 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/thermal/spacemit,k1-tsensor.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index 7818ca4979b6a7755722919a5958512aa11950ab..0fe7396ea6e47d10a73e3bcea4f5165e5c268da0 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -338,6 +338,96 @@ osc_32k: clock-32k {
+ 		};
+ 	};
+ 
++	thermal-zones {
++		soc-thermal {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 0>;
 +
-+title: SpacemiT K1 Thermal Sensor
++			trips {
++				soc-crit {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
 +
-+description:
-+  The SpacemiT K1 Thermal Sensor monitors the temperature of the SoC
-+  using multiple internal sensors (e.g., soc, package, gpu, clusters).
++		package-thermal {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 1>;
 +
-+maintainers:
-+  - Shuwei Wu <shuweiwoo@163.com>
++			trips {
++				package-crit {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
 +
-+$ref: thermal-sensor.yaml#
++		gpu-thermal {
++			polling-delay-passive = <100>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 2>;
 +
-+properties:
-+  compatible:
-+    const: spacemit,k1-tsensor
++			trips {
++				gpu-alert {
++					temperature = <85000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
 +
-+  reg:
-+    maxItems: 1
++				gpu-crit {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
 +
-+  clocks:
-+    items:
-+      - description: Core clock for thermal sensor
-+      - description: Bus clock for thermal sensor
++		cluster0-thermal {
++			polling-delay-passive = <100>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 3>;
 +
-+  clock-names:
-+    items:
-+      - const: core
-+      - const: bus
++			trips {
++				cluster0-alert {
++					temperature = <85000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
 +
-+  interrupts:
-+    maxItems: 1
++				cluster0-crit {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
 +
-+  resets:
-+    items:
-+      - description: Reset for the thermal sensor
++		cluster1-thermal {
++			polling-delay-passive = <100>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 4>;
 +
-+  "#thermal-sensor-cells":
-+    const: 1
-+    description:
-+      The first cell indicates the sensor ID.
-+      0 = soc
-+      1 = package
-+      2 = gpu
-+      3 = cluster0
-+      4 = cluster1
++			trips {
++				cluster1-alert {
++					temperature = <85000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
 +
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - interrupts
-+  - resets
-+  - "#thermal-sensor-cells"
++				cluster1-crit {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++	};
 +
-+additionalProperties: false
+ 	soc {
+ 		compatible = "simple-bus";
+ 		interrupt-parent = <&plic>;
+@@ -434,6 +524,17 @@ syscon_apbc: system-controller@d4015000 {
+ 			#reset-cells = <1>;
+ 		};
+ 
++		thermal: thermal@d4018000 {
++			compatible = "spacemit,k1-tsensor";
++			reg = <0x0 0xd4018000 0x0 0x100>;
++			clocks = <&syscon_apbc CLK_TSEN>,
++				 <&syscon_apbc CLK_TSEN_BUS>;
++			clock-names = "core", "bus";
++			interrupts = <61>;
++			resets = <&syscon_apbc RESET_TSEN>;
++			#thermal-sensor-cells = <1>;
++		};
 +
-+examples:
-+  - |
-+    #include <dt-bindings/clock/spacemit,k1-syscon.h>
-+
-+    thermal@d4018000 {
-+        compatible = "spacemit,k1-tsensor";
-+        reg = <0xd4018000 0x100>;
-+        clocks = <&syscon_apbc CLK_TSEN>,
-+                 <&syscon_apbc CLK_TSEN_BUS>;
-+        clock-names = "core", "bus";
-+        interrupts = <61>;
-+        resets = <&syscon_apbc RESET_TSEN>;
-+        #thermal-sensor-cells = <1>;
-+    };
+ 		i2c6: i2c@d4018800 {
+ 			compatible = "spacemit,k1-i2c";
+ 			reg = <0x0 0xd4018800 0x0 0x38>;
 
 -- 
 2.52.0
