@@ -1,133 +1,197 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FF93370EC
-	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 08:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD3F3595D
+	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 09:33:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765875501; cv=none; b=TTfkxwQUS+38E2jpxTATtiEy+QpDOas4yjD735Te+rRu0KvyeZPnWlxcRcsEB4JE4Wo+8DgZLgV778lCvBI+CYYT4HLZxG1pBzNzE+/hhm/pG3A0Q2NbY/2Neh0sHhYT/jEQFL4w/pbkDZSN8TGHjJSrwBVsJ3Ngc2Q94vihVUE=
+	t=1765877598; cv=none; b=FuuhZKWzCOWKoyklwst+ZAgITJLErkexyp4CcokZHD95kptUEe59zaB1fCShKCMAOwNemNlpmtiIkrB84L1uFHUiBsOzIY2fv90xyOhDSWtUJYpmJr1qAF76wcXb0Ex+9OFOBOn6X8U5JVwMtMpzpC7GbwZzZ0s+0/b45amDZy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765875501; c=relaxed/simple;
-	bh=M7agqiAreer+Owk+KL+RN4Lyl/tUWL2W531EruT+D5s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N+spL8X/gXS4gJl6TW9iRpDm8LqUuwanEMYdTh3ZVbD3TO3oaM1Snl1IAPgOCI4FqLnGiXWVxLx8x+b2RCc2HX2CWq8YpxD8B/3q25l3wBGTkGmgvGDyhvr3o6aKVqmWfJ5Jv5oEXcwZubxkqSpYJdKuvPcK0InLqxHEJIfsvJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=KjvyscRN; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1765877598; c=relaxed/simple;
+	bh=rkFINolgTNozR3ltyRkSRikFFQCQRpgkYmJrCQ2BdOA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uVzFB2ugd/vkpbM7lwHLaf/oiazwACgEJY3r5ifZYGc63uQWMjASO0uZuwlaRNQchdWBp6vRQVGW73vw8Wz54kaWupC/OPyXHtYezQ2HKodgqnHz70dqe6WiHTH5T2YJ5+YRweCYhHn9q05AF48PJpy5aYbCD62prP4Dr9tR52k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=A17Gapps; arc=none smtp.client-ip=220.197.31.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="KjvyscRN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1765875499;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=smIh+5mEfwRp/VCJn7PI/sDG6WFCEcopmj3bu7mRfhk=;
-	b=KjvyscRNeQzftja3rDczyMX0rEVFdQvLusWoIYFB+bOwE+cEkEuj/o19mdR09EqDIt0y/0
-	4kXY2I+qD/WWY0U/Adu/zgQemNRLcLMFkIRxFOuMeSRw00xe+06pGsKyVBPg6VIltApdpt
-	uxN1bMwqrKGW2egUrz6g/QWdmpvLX3g=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-477-hBjG3rs9P22IEHfHH0UVzw-1; Tue, 16 Dec 2025 03:58:18 -0500
-X-MC-Unique: hBjG3rs9P22IEHfHH0UVzw-1
-X-Mimecast-MFC-AGG-ID: hBjG3rs9P22IEHfHH0UVzw_1765875497
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-47777158a85so50283355e9.3
-        for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 00:58:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765875496; x=1766480296;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=smIh+5mEfwRp/VCJn7PI/sDG6WFCEcopmj3bu7mRfhk=;
-        b=tgMI0W+hjJraP6pIbQmvPApaW6WI2s2HsNoDRzc9a4LV4xmX492dPkh5mY0sWHL8ku
-         tYV6tEYRaCtWKLl6ogSm7TwEjhyxA+MmHz4xLZ3Dws0Clf3ZALlDEL+inFeqHRZIW5c1
-         UK1zT3rZOMiRtiCkQKjf5bMhY/L9MDSr7nLEzyepWi2ipowJDrBoM3h2N0Kymyxy0HbX
-         60xTrI5WXgyX5Tj+oPRgK5Tqigr8QUeN+XTjEHtoJGkP5Zvh8yxj0VfQmrayC9Vjuv8r
-         JVAQ6n2cvIEUwZJ1hmwamuk2ypGBESQgNtX8utJ93yGdhlrpDaOR2deuaU25u2XrJFbh
-         tyYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXGuOfjRKASF57NWhlGe/nfrKs33wzA1RWuxkntQYGTMxS0GDmJyctirVZg2N7JZX5Ht+y5tO0ZKQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzkDR0iJOnI5Qelnh70sGMhsak/r1xy54Q8UjOqruP7Lsb64rlp
-	2wDW/bgVnn3QhmkklY1Ily5AzWJA0XNkq1zDKAFr/9OWXu2zW7qF2U9vOd41+L2GZMAIUJAIF9C
-	JHkCdT1n2a808Z1PZN5r1n1ecx1bjz/uoTS4Gl+MqGv0Ah1h0fao/Cl0bjFEC8QxdSuEhpDeReg
-	==
-X-Gm-Gg: AY/fxX7KyJLGfr26NXz2KPDwA2j2VbFYperhyD3R4RRsO7cSC5+ooEnSe3CFw7PDs4C
-	TkK/Ao8BXYEPBsGRlxQgJ9zDnOoC230J+jr12KhJltHsTGkSwBgm4wvnNT8qGRjgEx0Dqcp0JC3
-	hVtMcZQOBuLCdlo3i9iofeguCMm1E2ouESOTbImnbBpli+wWGGFjvordQzSMdS0Jd2e6rNL0FoH
-	+QJFFvG8lejhUiziZSMlnd9s2INV78ks0qx2/GnN2AITGdnuaGaZxo3/x11mCBAC7CWbWdPVy22
-	dc+7Ywvxp0HizwobAp8w7Sb2tYcWI3fCsGEDNGy9hzCj2BdcqtvKkgRw1Fz/ceuGEvx2TJwfS+/
-	tTGndTH58XQzp5kXb+ATk/dzdyVJtttt4czKrSE0N5ccEzt44UEYFB7M0LnfbXvsNrEro
-X-Received: by 2002:a05:600c:4e09:b0:477:9976:9e1a with SMTP id 5b1f17b1804b1-47a8f89bc6cmr149957665e9.6.1765875496506;
-        Tue, 16 Dec 2025 00:58:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHjWkmMYEf67W1YCZcgSloFqkbCuOswTF4JodEbbnfpJ+BFJ/SH99M+jkvcimr1IpbsGAY3/w==
-X-Received: by 2002:a05:600c:4e09:b0:477:9976:9e1a with SMTP id 5b1f17b1804b1-47a8f89bc6cmr149957445e9.6.1765875496061;
-        Tue, 16 Dec 2025 00:58:16 -0800 (PST)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43009dfe5b3sm22487329f8f.39.2025.12.16.00.58.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 00:58:15 -0800 (PST)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: Michael Opdenacker <michael.opdenacker@rootcommit.com>, Yixun Lan
- <dlan@gentoo.org>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>, Binbin Zhou
- <zhoubinbin@loongson.cn>, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, Michael Opdenacker
- <michael.opdenacker@rootcommit.com>
-Subject: Re: [PATCH 1/2] riscv: dts: spacemit: Add i2c buses on OrangePi RV2
-In-Reply-To: <20251215-k1-boards-add-mmc-v1-1-d68dc87d4aab@rootcommit.com>
-References: <20251215-k1-boards-add-mmc-v1-0-d68dc87d4aab@rootcommit.com>
- <20251215-k1-boards-add-mmc-v1-1-d68dc87d4aab@rootcommit.com>
-Date: Tue, 16 Dec 2025 09:58:14 +0100
-Message-ID: <87cy4els61.fsf@ocarina.mail-host-address-is-not-set>
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="A17Gapps"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
+	Content-Type; bh=TNA733PsBYBZkQ0bNttM0vjmR+VfrtvXtxcXQOSbpyE=;
+	b=A17GappssN9YGqiyjqwselfNscYPni0E1hIigxOXZTgR472KYsNmaqqAj6eQ3h
+	U+Xtn4gxvLlyCUNenJktWjGLXelEvenZnjt07IM8e6WQ48ZEkJV2P7VOOsctvxxd
+	maIje05HwtHBGXNQOBxk9rvrFwQWCXorsGq1jqokJNClo=
+Received: from [IPV6:240c:c983:3:5c03:81d3:caf5:2e64:be2] (unknown [])
+	by gzsmtp4 (Coremail) with SMTP id PygvCgD3NMTaJkFpXxmRHg--.264S2;
+	Tue, 16 Dec 2025 17:31:11 +0800 (CST)
+Message-ID: <68620b24-256f-4032-8bc0-911d94bfb616@163.com>
+Date: Tue, 16 Dec 2025 17:31:06 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: SCaykLMKyTFxU1VAd7SBmtTj5Pw0Y4SsVT4dtOoP9eo_1765875497
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] thermal: spacemit: k1: Add thermal sensor support
+To: Yao Zi <me@ziyao.cc>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20251216-patchv2-k1-thermal-v1-0-d4b31fe9c904@163.com>
+ <20251216-patchv2-k1-thermal-v1-2-d4b31fe9c904@163.com>
+ <aUDc-o63KJpY8xLG@pie>
+Content-Language: en-US
+From: wayne <shuweiwoo@163.com>
+In-Reply-To: <aUDc-o63KJpY8xLG@pie>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:PygvCgD3NMTaJkFpXxmRHg--.264S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxXr1xWry8uF1DKF4xArWUArb_yoWrurykpF
+	WUKFZ3CFWkGF1xJwsxZr4kAw1Fqr4IyFWjgrn29w1Yywn8CFy7GFyUK34Y9Fy8u3s5ur1F
+	vws0qr4Yka4DAaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07Ut3kNUUUUU=
+X-CM-SenderInfo: 5vkx4vplzr0qqrwthudrp/xtbDAABs+mlBJuCDsAAA3L
 
-Michael Opdenacker <michael.opdenacker@rootcommit.com> writes:
+|On 2025/12/16 12:16, |Yao Zi wrote:
 
-Hello Michael,
-
-> The OrangePi RV2 board exposes i2c2 and i2c8 buses
-> from the Spacemit K1 SoC.
+> On Tue, Dec 16, 2025 at 10:00:36AM +0800, Shuwei Wu wrote:
+>> The thermal sensor on K1 supports monitoring five temperature zones.
+>> The driver registers these sensors with the thermal framework
+>> and supports standard operations:
+>> - Reading temperature (millidegree Celsius)
+>> - Setting high/low thresholds for interrupts
+>>
+>> Signed-off-by: Shuwei Wu <shuweiwoo@163.com>
+>> ---
+>> Changes in v2:
+>> - Rename k1_thermal.c to k1_tsensor.c for better hardware alignment
+>> - Move driver to drivers/thermal/spacemit/
+>> - Add Kconfig/Makefile for spacemit and update top-level build files
+>> - Refactor names, style, code alignment, and comments
+>> - Simplify probe and error handling
+>> ---
+>>   drivers/thermal/Kconfig               |   2 +
+>>   drivers/thermal/Makefile              |   1 +
+>>   drivers/thermal/spacemit/Kconfig      |  19 +++
+>>   drivers/thermal/spacemit/Makefile     |   3 +
+>>   drivers/thermal/spacemit/k1_tsensor.c | 283 ++++++++++++++++++++++++++++++++++
+>>   5 files changed, 308 insertions(+)
+>> diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spacemit/k1_tsensor.c
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..f164754e807ddd311c8cf98bcc074fd580514aa2
+>> --- /dev/null
+>> +++ b/drivers/thermal/spacemit/k1_tsensor.c
+> ...
 >
-> This declares devices present on such buses, in particular
-> the at24 eeprom to store MAC addresses and the regulators
-> attached to the PMIC on i2c8.
+>> +static void k1_tsensor_init(struct k1_tsensor *ts)
+>> +{
+> Configuration of K1_TSU_PCTRL2 (offset 0x04) is removed in this
+> revision, but why? Isn't it necessary for the sensor to function?
 >
+> And you didn't ask my question raised in v1 about the source of 24MHz
+> clock. I still suspect whether the binding is complete or not.
 
-As Yao explained, there is still work needed to make the MMC work on K1
-based boards. I also tried the same on my Milk-V Jupiter and found issues.
+Thank you for pointing this out, and I apologize for not addressing your 
+question
 
-I believe though that this patch has merits on its own and could land
-regardless of the MMC support. That's why I also posted a similar change
-for the Milk-V Jupiter board:
+about the 24MHz clock earlier.
 
-https://lore.kernel.org/lkml/20251206134532.1741648-1-javierm@redhat.com/
+In v1, I referenced the vendor's implementation, though their device tree
 
-My changes are identical to the Banana Pi BPI-F3 and I see yours too, so
-it seems all these boards are based on a K1 SoC reference design.
+did not specify this clock for the thermal node.
 
-> Signed-off-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-> ---
->  arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 166 +++++++++++++++++++++++
->  1 file changed, 166 insertions(+)
+After your review, I revisited the SpacemiT K1 clock tree published by 
+the vendor,
+
+and found that TSENSOR relies only on the APBC clock, which in turn is 
+ultimately
+
+sourced from the 24MHz crystal via the PLL.
+
+Disabling the 24MHz clock for the syscon_apbc node in the device tree 
+had no impact
+
+on TSENSOR operation in my testing, so I did not include it in the binding.
+
+As for the PCTRL2 configuration, I confirmed that its default value 
+after reset is zero,
+
+and changing its configuration had no effect on the temperature sensor's 
+behavior.
+
+This led me to remove the PCTRL2 configuration code in v2.
+
+>> +	u32 val;
+>> +
+>> +	/* Disable all the interrupts */
+>> +	writel(0xffffffff, ts->base + K1_TSENSOR_INT_EN_REG);
+>> +
+>> +	/* Configure ADC sampling time and filter period */
+>> +	val = readl(ts->base + K1_TSENSOR_TIME_REG);
+>> +	val &= ~K1_TSENSOR_TIME_MASK;
+>> +	val |= K1_TSENSOR_TIME_FILTER_PERIOD |
+>> +		K1_TSENSOR_TIME_ADC_CNT_RST |
+>> +		K1_TSENSOR_TIME_WAIT_REF_CNT;
+> It's more natural to align K1_TSENSOR_TIME_ADC_CNT_RST and other
+> following constants with K1_TSENSOR_TIME_FILTER_PERIOD. This applies for
+> other multiple-line assignments, too.
 >
+> ...
+>
+>> +static int k1_tsensor_probe(struct platform_device *pdev)
+>> +{
+> ...
+>
+>> +	for (i = 0; i < MAX_SENSOR_NUMBER; ++i) {
+>> +		ts->ch[i].id = i;
+>> +		ts->ch[i].ts = ts;
+>> +		ts->ch[i].tzd = devm_thermal_of_zone_register(dev, i, ts->ch + i, &k1_tsensor_ops);
+>> +		if (IS_ERR(ts->ch[i].tzd))
+>> +			return PTR_ERR(ts->ch[i].tzd);
+> Would emitting a error message with dev_err_probe() help here?
 
-Personally, I would split the changes in separate patches as I did on my
-series. But I guess it is also OK to have it as a single patch as you did:
+In v1, the reviewer mentioned that it is no need to print extra error 
+message.
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+See:
 
--- 
-Best regards,
+https://lore.kernel.org/spacemit/20251127225848-GYA1797866@gentoo.org/T/#mc335bea36323d2d8b3afb09aa40c9c7160440d39 
 
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+>> +
+>> +		/* Attach sysfs hwmon attributes for userspace monitoring */
+>> +		ret = devm_thermal_add_hwmon_sysfs(dev, ts->ch[i].tzd);
+>> +		if (ret)
+>> +			dev_warn(dev, "Failed to add hwmon sysfs attributes\n");
+>> +
+>> +		k1_tsensor_enable_irq(ts->ch + i);
+>> +	}
+>> +
+>> +	irq = platform_get_irq(pdev, 0);
+>> +	if (irq < 0)
+>> +		return irq;
+> Same as the above question.
+Ditto.
+>> +	ret = devm_request_threaded_irq(dev, irq, NULL,
+>> +					k1_tsensor_irq_thread,
+>> +					IRQF_ONESHOT, "k1_tsensor", ts);
+>> +	if (ret < 0)
+>> +		return ret;
+> Same as above.
+Ditto.
+> Besides these questions, the driver itself looks pretty nice to me :)
+>
+> Best regards,
+> Yao Zi
+
+|Please let me know if you need further details or test results. Thank 
+you for reviewing my patch. Best regards, Shuwei Wu|
 
