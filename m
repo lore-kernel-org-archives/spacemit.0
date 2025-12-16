@@ -1,38 +1,38 @@
-Received: from mail55.out.titan.email (mail55.out.titan.email [34.227.236.38])
+Received: from mail102.out.titan.email (mail102.out.titan.email [52.45.239.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C057229B777
-	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 10:29:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.227.236.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3312F25E1
+	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 10:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.45.239.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765880980; cv=none; b=j3ax9aQpKHxgsziAh/6wNngMJK8u72w0lx9Kv9pZbXCtlXm3ams9xOAG/oRprv3HVnwgRU9jKj3Ns/HVpqtUOP2Qp9HNg0c7lGSOcW/c68NHSGwI1Uw3NyAWTDNlWjJiu8QmzMmZrUAk5VoqCDHwGvUEXArffIvCq0YPqlef844=
+	t=1765881070; cv=none; b=QVHQKJGNZlkmfnfYefBgmzrsUxvrdI3+O2gK6tARPAeAi6PaCOhBAgswIlm7CSRPADx4PSKKWjHyxyyBmKLRrpGFexDU0GFOTNad/h5D6f5pverFQ0bkS36mQrebi+IBoJZpxr7kSImfu61W3fc7DK8mPy82UhdlWVUcmANvLt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765880980; c=relaxed/simple;
-	bh=k2H2H60gXQXYrQI4akqnPX4Uiys9VATbOnhr/LIGLVc=;
+	s=arc-20240116; t=1765881070; c=relaxed/simple;
+	bh=cPeanqZJkqu/FnYcumzArXWQTq8YNvwlugJh19yoXsY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EXlKQniXns/dBavLOICEN5/eXUiYWG64wSabt5qokthu23LLI1a1wQspY/DHY0n2vNfJO3kc5voIT2c/3PxhIyOp6ctxmQ/ebTV1QmqjiErrMNXaQBnXgZeXTaA/3iRrXZxRmNbrQ4OTmeYwpYFlJQYt6sVbWIjyzMXYWwMPFVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b=Xx8Us6Go; arc=none smtp.client-ip=34.227.236.38
+	 Content-Type:Content-Disposition:In-Reply-To; b=k85w+qf+Ubz+JFaBh1GNkqiXbsV1WmQfnuXPmbipvP3oVNwLPpB5P2Odldq6hqjkbFA4kvb0VHNZ3F8mdxx64XOHfGjiiavrYNqRnnsIVemiiQrD36aqr5n9p4N7s0CxWXhuaKc4BNNc34UdpXi2G/0p1eWlk+9QhCehXEbLrbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b=WBalnqKO; arc=none smtp.client-ip=52.45.239.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b="Xx8Us6Go"
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b="WBalnqKO"
 Received: from localhost (localhost [127.0.0.1])
-	by smtp-out.flockmail.com (Postfix) with ESMTP id 4dVtTY6slyz2xBN;
-	Tue, 16 Dec 2025 10:29:37 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256; bh=Nqv+uCahWfvzScOVWccp0oO5/3kRbR83LIZ1y9zYAsA=;
+	by smtp-out.flockmail.com (Postfix) with ESMTP id 4dVt8c21w0z2xDS;
+	Tue, 16 Dec 2025 10:14:56 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256; bh=JRYE7dZuS1EyQE3Ha8bBcmdg8NdStYsYqAqgvc7/9LQ=;
 	c=relaxed/relaxed; d=ziyao.cc;
-	h=date:from:to:message-id:references:mime-version:in-reply-to:cc:subject:from:to:cc:subject:date:message-id:in-reply-to:references:reply-to;
-	q=dns/txt; s=titan1; t=1765880977; v=1;
-	b=Xx8Us6God1Rh84FQ679hDWdCa4KG+/mABWS6NOPSdrgbXSI66eCk5cBaAV+rC6H6lMd++v/Q
-	M2WRUTzQCtbqKQevsa1cFH08z6HKrg6//aBDVGUY/b4S/gD73Ed31LMdnkQ8ynu0isqrnn+9WeS
-	psRn+HD+Gh8MMCP4gf2Eu9tI=
+	h=to:subject:mime-version:date:from:cc:references:message-id:in-reply-to:from:to:cc:subject:date:message-id:in-reply-to:references:reply-to;
+	q=dns/txt; s=titan1; t=1765880096; v=1;
+	b=WBalnqKOAoW25sYUqwKYrlMbSyNNpXVqfN7EF7jhqOVe2E3s1L4qYp4hr7pvThV7RcIdx4ay
+	qtxtoxalS0/L8qkNry2nOh17pDBVHzE1GR4bkumqnoDBYEe6T0Bau7/Ccb4SMW/lEc2jvpG92US
+	+KYseHiJnFFN6d/cJtmibi1U=
 Received: from pie (unknown [117.171.66.90])
-	by smtp-out.flockmail.com (Postfix) with ESMTPA id 4dVtTR0rLtz2xCY;
-	Tue, 16 Dec 2025 10:29:30 +0000 (UTC)
-Date: Tue, 16 Dec 2025 10:29:27 +0000
+	by smtp-out.flockmail.com (Postfix) with ESMTPA id 4dVt8T6kbgz2xDl;
+	Tue, 16 Dec 2025 10:14:49 +0000 (UTC)
+Date: Tue, 16 Dec 2025 10:14:46 +0000
 Feedback-ID: :me@ziyao.cc:ziyao.cc:flockmailId
 From: Yao Zi <me@ziyao.cc>
-To: Shuwei Wu <shuweiwoo@163.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+To: wayne <shuweiwoo@163.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
 	Rob Herring <robh@kernel.org>,
@@ -45,9 +45,11 @@ Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v2 2/3] thermal: spacemit: k1: Add thermal sensor support
-Message-ID: <aUE0h5ORAjfuglqr@pie>
+Message-ID: <aUExFjJJh0rrRCdV@pie>
 References: <20251216-patchv2-k1-thermal-v1-0-d4b31fe9c904@163.com>
  <20251216-patchv2-k1-thermal-v1-2-d4b31fe9c904@163.com>
+ <aUDc-o63KJpY8xLG@pie>
+ <68620b24-256f-4032-8bc0-911d94bfb616@163.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -56,126 +58,158 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251216-patchv2-k1-thermal-v1-2-d4b31fe9c904@163.com>
+In-Reply-To: <68620b24-256f-4032-8bc0-911d94bfb616@163.com>
 X-F-Verdict: SPFVALID
-X-Titan-Src-Out: 1765880977805920150.27573.5656934272644109717@prod-use1-smtp-out1001.
+X-Titan-Src-Out: 1765880096091703187.27573.8248559529016179629@prod-use1-smtp-out1001.
 X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.4 cv=a8/K9VSF c=1 sm=1 tr=0 ts=69413491
+X-CMAE-Analysis: v=2.4 cv=TPG/S0la c=1 sm=1 tr=0 ts=69413120
 	a=rBp+3XZz9uO5KTvnfbZ58A==:117 a=rBp+3XZz9uO5KTvnfbZ58A==:17
-	a=kj9zAlcOel0A:10 a=MKtGQD3n3ToA:10 a=CEWIc4RMnpUA:10 a=Byx-y9mGAAAA:8
-	a=-5OSf9QB08thGc-nJjkA:9 a=CjuIK1q_8ugA:10 a=3z85VNIBY5UIEeAh_hcH:22
+	a=kj9zAlcOel0A:10 a=MKtGQD3n3ToA:10 a=CEWIc4RMnpUA:10 a=VwQbUJbxAAAA:8
+	a=7mOBRU54AAAA:8 a=Byx-y9mGAAAA:8 a=aEzJoT4k0w9bqF-TWZ8A:9
+	a=CjuIK1q_8ugA:10 a=wa9RWnbW_A1YIeRBVszw:22 a=3z85VNIBY5UIEeAh_hcH:22
 	a=NWVoK91CQySWRX1oVYDe:22
 
-On Tue, Dec 16, 2025 at 10:00:36AM +0800, Shuwei Wu wrote:
-> The thermal sensor on K1 supports monitoring five temperature zones.
-> The driver registers these sensors with the thermal framework
-> and supports standard operations:
-> - Reading temperature (millidegree Celsius)
-> - Setting high/low thresholds for interrupts
+On Tue, Dec 16, 2025 at 05:31:06PM +0800, wayne wrote:
+> |On 2025/12/16 12:16, |Yao Zi wrote:
 > 
-> Signed-off-by: Shuwei Wu <shuweiwoo@163.com>
-> ---
-> Changes in v2:
-> - Rename k1_thermal.c to k1_tsensor.c for better hardware alignment
-> - Move driver to drivers/thermal/spacemit/
-> - Add Kconfig/Makefile for spacemit and update top-level build files
-> - Refactor names, style, code alignment, and comments
-> - Simplify probe and error handling
-> ---
->  drivers/thermal/Kconfig               |   2 +
->  drivers/thermal/Makefile              |   1 +
->  drivers/thermal/spacemit/Kconfig      |  19 +++
->  drivers/thermal/spacemit/Makefile     |   3 +
->  drivers/thermal/spacemit/k1_tsensor.c | 283 ++++++++++++++++++++++++++++++++++
->  5 files changed, 308 insertions(+)
+> > On Tue, Dec 16, 2025 at 10:00:36AM +0800, Shuwei Wu wrote:
+> > > The thermal sensor on K1 supports monitoring five temperature zones.
+> > > The driver registers these sensors with the thermal framework
+> > > and supports standard operations:
+> > > - Reading temperature (millidegree Celsius)
+> > > - Setting high/low thresholds for interrupts
+> > > 
+> > > Signed-off-by: Shuwei Wu <shuweiwoo@163.com>
+> > > ---
+> > > Changes in v2:
+> > > - Rename k1_thermal.c to k1_tsensor.c for better hardware alignment
+> > > - Move driver to drivers/thermal/spacemit/
+> > > - Add Kconfig/Makefile for spacemit and update top-level build files
+> > > - Refactor names, style, code alignment, and comments
+> > > - Simplify probe and error handling
+> > > ---
+> > >   drivers/thermal/Kconfig               |   2 +
+> > >   drivers/thermal/Makefile              |   1 +
+> > >   drivers/thermal/spacemit/Kconfig      |  19 +++
+> > >   drivers/thermal/spacemit/Makefile     |   3 +
+> > >   drivers/thermal/spacemit/k1_tsensor.c | 283 ++++++++++++++++++++++++++++++++++
+> > >   5 files changed, 308 insertions(+)
+> > > diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spacemit/k1_tsensor.c
+> > > new file mode 100644
+> > > index 0000000000000000000000000000000000000000..f164754e807ddd311c8cf98bcc074fd580514aa2
+> > > --- /dev/null
+> > > +++ b/drivers/thermal/spacemit/k1_tsensor.c
+> > ...
+> > 
+> > > +static void k1_tsensor_init(struct k1_tsensor *ts)
+> > > +{
+> > Configuration of K1_TSU_PCTRL2 (offset 0x04) is removed in this
+> > revision, but why? Isn't it necessary for the sensor to function?
+> > 
+> > And you didn't ask my question raised in v1 about the source of 24MHz
+> > clock. I still suspect whether the binding is complete or not.
+> 
+> Thank you for pointing this out, and I apologize for not addressing your
+> question
+> 
+> about the 24MHz clock earlier.
+> 
+> In v1, I referenced the vendor's implementation, though their device tree
+> 
+> did not specify this clock for the thermal node.
+> 
+> After your review, I revisited the SpacemiT K1 clock tree published by the
+> vendor,
+> 
+> and found that TSENSOR relies only on the APBC clock, which in turn is
+> ultimately
+> 
+> sourced from the 24MHz crystal via the PLL.
+> 
+> Disabling the 24MHz clock for the syscon_apbc node in the device tree had no
+> impact
+> 
+> on TSENSOR operation in my testing, so I did not include it in the binding.
+> 
+> As for the PCTRL2 configuration, I confirmed that its default value after
+> reset is zero,
+> 
+> and changing its configuration had no effect on the temperature sensor's
+> behavior.
+> 
+> This led me to remove the PCTRL2 configuration code in v2.
 
-...
+Thanks, this is a reasonable answer to me.
 
-> diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spacemit/k1_tsensor.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..f164754e807ddd311c8cf98bcc074fd580514aa2
-> --- /dev/null
-> +++ b/drivers/thermal/spacemit/k1_tsensor.c
-> @@ -0,0 +1,283 @@
+> > > +	u32 val;
+> > > +
+> > > +	/* Disable all the interrupts */
+> > > +	writel(0xffffffff, ts->base + K1_TSENSOR_INT_EN_REG);
+> > > +
+> > > +	/* Configure ADC sampling time and filter period */
+> > > +	val = readl(ts->base + K1_TSENSOR_TIME_REG);
+> > > +	val &= ~K1_TSENSOR_TIME_MASK;
+> > > +	val |= K1_TSENSOR_TIME_FILTER_PERIOD |
+> > > +		K1_TSENSOR_TIME_ADC_CNT_RST |
+> > > +		K1_TSENSOR_TIME_WAIT_REF_CNT;
+> > It's more natural to align K1_TSENSOR_TIME_ADC_CNT_RST and other
+> > following constants with K1_TSENSOR_TIME_FILTER_PERIOD. This applies for
+> > other multiple-line assignments, too.
+> > 
+> > ...
+> > 
+> > > +static int k1_tsensor_probe(struct platform_device *pdev)
+> > > +{
+> > ...
+> > 
+> > > +	for (i = 0; i < MAX_SENSOR_NUMBER; ++i) {
+> > > +		ts->ch[i].id = i;
+> > > +		ts->ch[i].ts = ts;
+> > > +		ts->ch[i].tzd = devm_thermal_of_zone_register(dev, i, ts->ch + i, &k1_tsensor_ops);
+> > > +		if (IS_ERR(ts->ch[i].tzd))
+> > > +			return PTR_ERR(ts->ch[i].tzd);
+> > Would emitting a error message with dev_err_probe() help here?
+> 
+> In v1, the reviewer mentioned that it is no need to print extra error
+> message.
+> 
+> See:
+> 
+> https://lore.kernel.org/spacemit/20251127225848-GYA1797866@gentoo.org/T/#mc335bea36323d2d8b3afb09aa40c9c7160440d39
 
-...
+Oops, yeah, I definitely read this link before, but forgot it. So
+keeping it as-is is okay.
 
-> +/*
-> + * For each sensor, the hardware threshold register is 32 bits:
-> + * - Lower 16 bits [15:0] configure the low threshold temperature.
-> + * - Upper 16 bits [31:16] configure the high threshold temperature.
-> + */
-> +static int k1_tsensor_set_trips(struct thermal_zone_device *tz, int low, int high)
-> +{
-> +	struct k1_tsensor_channel *ch = thermal_zone_device_priv(tz);
-> +	struct k1_tsensor *ts = ch->ts;
-> +	int high_code = high;
-> +	int low_code = low;
-
-Since high_code and low_code are used to bit operations, please define
-them as unsigned types. u32 would be pretty fine here.
-
-Also, you could avoid the initialization of high_code and low_code
-here...
-
-> +	u32 val;
-> +
-> +	if (low >= high)
-> +		return -EINVAL;
-> +
-> +	if (low < 0)
-> +		low_code = 0;
-
-... if you change this if to
-
-	if (low < 0)
-		low = 0;
-
-...
-
-> +	high_code = high_code / 1000 + TEMPERATURE_OFFSET;
-> +	low_code = low_code / 1000 + TEMPERATURE_OFFSET;
-
-... and re-write the right side of the assignments to use high/low
-instead.
-
-> +	val = readl(ts->base + K1_TSENSOR_THRSH_REG(ch->id));
-> +	val &= ~K1_TSENSOR_THRSH_HIGH_MASK;
-> +	val |= FIELD_PREP(K1_TSENSOR_THRSH_HIGH_MASK, high_code);
-> +
-> +	val &= ~K1_TSENSOR_THRSH_LOW_MASK;
-> +	val |= FIELD_PREP(K1_TSENSOR_THRSH_LOW_MASK, low_code);
-> +	writel(val, ts->base + K1_TSENSOR_THRSH_REG(ch->id));
-> +
-> +	return 0;
-> +}
-
-...
-
-> +static int k1_tsensor_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct k1_tsensor *ts;
-> +	struct reset_control *reset;
-> +	struct clk *clk, *bus_clk;
-
-You could drop bus_clk here, and re-use clk to retrieve the return value
-of devm_clk_get_enabled(dev, "bus"), which also saves you some
-characters.
-
-...
-
-> +	clk = devm_clk_get_enabled(dev, "core");
-> +	if (IS_ERR(clk))
-> +		return dev_err_probe(dev, PTR_ERR(clk), "Failed to get core clock\n");
-
-clk isn't used anywhere later, so overriding its value is fine.
-
-> +	bus_clk = devm_clk_get_enabled(dev, "bus");
-> +	if (IS_ERR(bus_clk))
-> +		return dev_err_probe(dev, PTR_ERR(bus_clk), "Failed to get bus clock\n");
-> +
-> +			return PTR_ERR(ts->ch[i].tzd);
+> > > +
+> > > +		/* Attach sysfs hwmon attributes for userspace monitoring */
+> > > +		ret = devm_thermal_add_hwmon_sysfs(dev, ts->ch[i].tzd);
+> > > +		if (ret)
+> > > +			dev_warn(dev, "Failed to add hwmon sysfs attributes\n");
+> > > +
+> > > +		k1_tsensor_enable_irq(ts->ch + i);
+> > > +	}
+> > > +
+> > > +	irq = platform_get_irq(pdev, 0);
+> > > +	if (irq < 0)
+> > > +		return irq;
+> > Same as the above question.
+> Ditto.
+> > > +	ret = devm_request_threaded_irq(dev, irq, NULL,
+> > > +					k1_tsensor_irq_thread,
+> > > +					IRQF_ONESHOT, "k1_tsensor", ts);
+> > > +	if (ret < 0)
+> > > +		return ret;
+> > Same as above.
+> Ditto.
+> > Besides these questions, the driver itself looks pretty nice to me :)
+> > 
+> > Best regards,
+> > Yao Zi
+> 
+> |Please let me know if you need further details or test results. Thank you
+> for reviewing my patch. Best regards, Shuwei Wu|
+> 
+> 
 
 Regards,
 Yao Zi
