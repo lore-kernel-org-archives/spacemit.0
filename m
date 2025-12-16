@@ -1,86 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A4A2D3A77;
-	Tue, 16 Dec 2025 16:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C418C21FF26;
+	Tue, 16 Dec 2025 16:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765903290; cv=none; b=Uks6sqdTxyBAJUfg04lunOee6l4ZiTAzbFvbdxNF5tpijy9NuBe32Xgf2iGLoNGKppYmU3THfWLfT8OCvtvpQNCIVCaGsx/oq63R60W+e+8anx1uNEZzpy+zfPNPxRGNIQCR5kJVLHyRT5R1+IecvyaG29T8m7a6cz5iAtI0dyk=
+	t=1765904181; cv=none; b=s758Flhk8RSi5z6N6XAzpB+3F5vYvO7e0cvHJV83ptzRzMWIybMh1PjRAk4Lu789L4W5ienFlCQ//btP9wvcumy+N6ivnvCIfHx1fv0LhTrbQwvX19v5vzns8yXh737+6rmnP1ljCPoqVnxCOcMM4acxO0L+RKfvIzJjcF6OlR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765903290; c=relaxed/simple;
-	bh=Se/DK8m93a4S91149Yg8i4Gry3opMMWQfbXS3uw4q1Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nEZNeklE9481GR8nqvwTDx8vkAizyqiTilhgy5wmq7H5FItVTYvqdpYhXDTe1aWmq/m3gE5F/LgVLIB1fMk5ak8jAtqRJ9X8Lh2QtqdBi3cnK1f28/w8/nnwvfxz3ufOwBPQWT3SVc8CfaWrnAuHMFFztjKUh95297O/wBwqhs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H9dBlgt7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765904181; c=relaxed/simple;
+	bh=TARPN6Yt6Y6qE5PKNWdfNem27drZ6puaqfrsr4THSbo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=lU8LBscmWDksHGL8gnXlK9MW0er7AAsFK/MOGEyVL2E3HEAoPI/7d7QHUd8N1Xl6IvbMkVdo7Wx3s1Xv0Er/BBDMBSdLLQlfotLwizENmFo2PKpFF9x/CRnYbHgBqtZ/zfg0+hDpImLsJBfubOLJtXLSyqAubqulEXhok/q3AXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cakfrr4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H9dBlgt7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11611C4CEF1;
-	Tue, 16 Dec 2025 16:41:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cakfrr4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3838FC4CEF1;
+	Tue, 16 Dec 2025 16:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765903290;
-	bh=Se/DK8m93a4S91149Yg8i4Gry3opMMWQfbXS3uw4q1Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=H9dBlgt7+8r02618IAf+x+IefVeRB44+xlz3X0Pj9ZBBeZm6ENDYcfzDEIobH5YE2
-	 6kYh7UstB7R24S/U+uuNB4uYpKe2FjIbCt+4qpK4mkiir3yQDDc3lfc8FxmT0RX+Mx
-	 0guEUdH0Fp2eriqmAezfH+iS+Gn0SkR9oNVXyoJimVZjrRJzla3TljFoMdMHIDh8pB
-	 pVGZcsASXRkl9DilDaNItuQpKQ5zFSJth9ZkNqW3YMSV6RXmtAcbKIqHnW3IjjqMqE
-	 ayeKXb0LfAwqYvbjIlXZR7fBIEPGGmc9aAxY6sbHuvugKk4G5PULWHHilGAAeAHqD5
-	 dCzrJrV6NudkA==
-Date: Tue, 16 Dec 2025 16:41:23 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@gentoo.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Anup Patel <anup@brainfault.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
-	Yangyu Chen <cyy@cyyself.name>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@sifive.com>,
-	Heinrich Schuchardt <xypron.glpk@gmx.de>,
-	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-serial@vger.kernel.org
-Subject: Re: [PATCH 5/8] dt-bindings: serial: 8250: add SpacemiT K3 UART
- compatible
-Message-ID: <20251216-reforest-list-ceb775dc9dbd@spud>
-References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
- <20251216-k3-basic-dt-v1-5-a0d256c9dc92@riscstar.com>
+	s=k20201202; t=1765904181;
+	bh=TARPN6Yt6Y6qE5PKNWdfNem27drZ6puaqfrsr4THSbo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=cakfrr4xAHefjOXOFgjDWOJ2gW6mWvs0tWBBtjws7vUlwI6o0YZ/zRv43tKtzXUnT
+	 h/A3KBw+cNqzfIdGPcLsfTV7lkUUOkDDjrqlnd5DSpjsrXoDtxrInOKJDWsjp5sLcP
+	 eCuOS3CC9/Ni37YLAGvZn+s0RJo+n0MeSdc7oxt0AwwcbNybTU588V9eKw11yvyqQ7
+	 DGTon/wT3pLxeViHXQyT/A15u/p+RYDGtPUJZH6xRc+2DZDqn2Kn1MsVX5c6dlg7GS
+	 52aaf9qUpt6sRZqYvIdW1km6GvFAahtriQK0J8sE10RnjNzpEQ7ZAIrukOQx1W6mt1
+	 xyautJitcydMQ==
+From: Vinod Koul <vkoul@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>
+Cc: Alex Elder <elder@riscstar.com>, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Juan Li <lijuan@linux.spacemit.com>
+In-Reply-To: <20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com>
+References: <20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com>
+Subject: Re: [PATCH] dmaengine: mmp_pdma: Fix race condition in
+ mmp_pdma_residue()
+Message-Id: <176590417885.422798.17247803206459718657.b4-ty@kernel.org>
+Date: Tue, 16 Dec 2025 22:26:18 +0530
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DPFQEofot18lifdU"
-Content-Disposition: inline
-In-Reply-To: <20251216-k3-basic-dt-v1-5-a0d256c9dc92@riscstar.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
 
---DPFQEofot18lifdU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Tue, 16 Dec 2025 22:10:06 +0800, Guodong Xu wrote:
+> Add proper locking in mmp_pdma_residue() to prevent use-after-free when
+> accessing descriptor list and descriptor contents.
+> 
+> The race occurs when multiple threads call tx_status() while the tasklet
+> on another CPU is freeing completed descriptors:
+> 
+> CPU 0                              CPU 1
+> -----                              -----
+> mmp_pdma_tx_status()
+> mmp_pdma_residue()
+>   -> NO LOCK held
+>      list_for_each_entry(sw, ..)
+>                                    DMA interrupt
+>                                    dma_do_tasklet()
+>                                      -> spin_lock(&desc_lock)
+>                                         list_move(sw->node, ...)
+>                                         spin_unlock(&desc_lock)
+>   |                                     dma_pool_free(sw) <- FREED!
+>   -> access sw->desc <- UAF!
+> 
+> [...]
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-pw-bot: not-applicable
+Applied, thanks!
 
---DPFQEofot18lifdU
-Content-Type: application/pgp-signature; name="signature.asc"
+[1/1] dmaengine: mmp_pdma: Fix race condition in mmp_pdma_residue()
+      commit: a143545855bc2c6e1330f6f57ae375ac44af00a7
 
------BEGIN PGP SIGNATURE-----
+Best regards,
+-- 
+~Vinod
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaUGLswAKCRB4tDGHoIJi
-0g1NAQDL9fx7G+lJVeeNHoBHTDkYugqV7bhsvIgVM3pX/jBY+QEA+emY/EGgQGnT
-Y0ExzgcquFyQ1T6l5rM0hgNUaLylNgc=
-=y5Wj
------END PGP SIGNATURE-----
 
---DPFQEofot18lifdU--
