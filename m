@@ -1,155 +1,121 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8640534B194;
-	Tue, 16 Dec 2025 15:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5151A27CB02;
+	Tue, 16 Dec 2025 16:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765899329; cv=none; b=DVsDvpZ9iFAEwn2trd6zZJjCn5/WBgyPCuL5W8IbAT3fLJA1Lv8rokWmP6nnhbnAr4C9jvkyU2QRjJAl500SokNJTEJ2WbsRr0qsmSaRay1gY7VdT/CQvqA8AGBRJp0uXsIl51u9w26Jw/TV9swtYkH1Rmp77Z0AeE6W+zmcNGc=
+	t=1765902829; cv=none; b=j+sU5fyPCZYW3HvpJR7w2RQuEyKlTWqp9Ugrf8MyTYtVkg+PckdBiIhw+lnG5kBm9sunFzZzP+Q7Vt090A8p4fKuC2fGiHD4TV7yk5eQ8JbUvnn3U2wI3q/W6deFdXDwWEggZEwt4LDCaa9LbIHrQU3dPHJshPRYhtIkn7kwy18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765899329; c=relaxed/simple;
-	bh=ogz6DU6yHeTIS19hmTjn7eKrxbGw0a8WOL02t8Hhp1s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=soJgiqdQreEi53P/mn5iNaRY+Qz8SB2qy1DPBBcDL+u6lriSmod2MpdH6nk80RUjbitVXpeSF4kfgmYCpNA3+5gm2gVzWZnAWFI4+Z95mFy19tVhmtsRhNPNoJSQrvsgIofmD8CYENQIi6+kEGoPAXlDf+hxOZxigxJVE9DrsNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DTNTWkXp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765902829; c=relaxed/simple;
+	bh=YKJMtPFWa6ht+n9Bxx5M3M/3OHahvRpYpniNwtoIfcE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z4zZw6IUQLzssUBHFLYuA89hfHwq5yOtTw3p5+/tgd0u3RfKJtinTs0CPw5cTgBqoMzoX8+Xn7/yZf4BsNPTcXv316UAO74fRHqtIPtMEkYjYd6U6jpvlIM3bICzbz91qhX7Tel73Zt7aPcfJDlZxIZ6xhSDOzP6YvRa/Nx6uHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rD2pRTmX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DTNTWkXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9BBC4CEF1;
-	Tue, 16 Dec 2025 15:35:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rD2pRTmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB5CC4CEF1;
+	Tue, 16 Dec 2025 16:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765899329;
-	bh=ogz6DU6yHeTIS19hmTjn7eKrxbGw0a8WOL02t8Hhp1s=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DTNTWkXpW9maNa6neQuNcscwLT24F+1ne21G8qSOJBnJ9jiHzQng4U8ursF4w0JmN
-	 gtFcs6bWu3xiSAz2c9CGm8pvU5Ve8Yt563YhATSlf/FZ07Q0Q6VkNFy500YkLkPLU1
-	 eUHnCZ/8lyFQb6gvjWJ9sICbKaKxoQb8RO3WKDFCOIhEZsOAqBK5AYKLLQepwmlO42
-	 MV950LyOSEiQEpPDr4xMcvaYYFT61twr4OdrS08dNEhZvsO0iBru+iNA5cFa769OtV
-	 UUSVztPFqQJADhFxAK6PRWi9MfUqXp+rSmlYNquLUP7XTLie/zOt9c0KujvWjeWPkv
-	 V/cOBKvOhbdig==
-Message-ID: <b0857d3b-5b82-47c1-8415-ec9b2046e704@kernel.org>
-Date: Tue, 16 Dec 2025 16:35:22 +0100
+	s=k20201202; t=1765902828;
+	bh=YKJMtPFWa6ht+n9Bxx5M3M/3OHahvRpYpniNwtoIfcE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rD2pRTmX6g38MqEQaqw1UPO3Qn55ibZ/bbyJaoRGufwZLufeGkG88EHBSDXFUabaO
+	 640367wbsRRwXZs1Myg2eN36rgpbN1bA1N44fXG8hZgG8H0qEww3e+uxo0g0c7KIfi
+	 q2Qs5HMImmZiZjsM6uyoA/5+fN0ZHxYpeZ3pyLA4+tGqEv/HNvNRIj7szFMWYd0Z1j
+	 DaeiKBc/0y/WW4bz+TdnR77riKVcs30CTmrBn9WyEbKP+U6PU5YXESVvas52pHfBoV
+	 ouJiRXUxFT0t30dxtShiqzxEVijxlxrFRIOus6ondRUejmAstBAnkj26AfvNrfU4Kd
+	 E6LbXeRVnlnYA==
+Date: Tue, 16 Dec 2025 16:33:41 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Guodong Xu <guodong@riscstar.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Anup Patel <anup@brainfault.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@sifive.com>,
+	Heinrich Schuchardt <xypron.glpk@gmx.de>,
+	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
+	linux-serial@vger.kernel.org
+Subject: Re: [PATCH 6/8] dt-bindings: riscv: spacemit: add K3 and Pico-ITX
+ board bindings
+Message-ID: <20251216-wing-squander-2fed378d3035@spud>
+References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
+ <20251216-k3-basic-dt-v1-6-a0d256c9dc92@riscstar.com>
+ <20251216150530-GYD1903981@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] riscv: dts: spacemit: add initial device tree of
- SpacemiT K3 SoC
-To: Guodong Xu <guodong@riscstar.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Samuel Holland <samuel.holland@sifive.com>, Anup Patel
- <anup@brainfault.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
- Yangyu Chen <cyy@cyyself.name>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>,
- Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>,
- Heinrich Schuchardt <xypron.glpk@gmx.de>,
- Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
- linux-serial@vger.kernel.org
-References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
- <20251216-k3-basic-dt-v1-7-a0d256c9dc92@riscstar.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251216-k3-basic-dt-v1-7-a0d256c9dc92@riscstar.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="WOHLg4B2RTM9rCY3"
+Content-Disposition: inline
+In-Reply-To: <20251216150530-GYD1903981@gentoo.org>
 
-On 16/12/2025 14:32, Guodong Xu wrote:
-> SpacemiT K3 is equipped with 8 X100 cores, which are RVA23 compliant.
-> Add nodes of uarts, timer and interrupt-controllers.
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> ---
->  arch/riscv/boot/dts/spacemit/k3.dtsi | 529 +++++++++++++++++++++++++++++++++++
->  1 file changed, 529 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..cb27b790716fdd6dc2bc89c28dd2588a596a5af9
-> --- /dev/null
-> +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> @@ -0,0 +1,529 @@
-> +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-> +/*
-> + * Copyright (c) 2025 SpacemiT (Hangzhou) Technology Co. Ltd
-> + * Copyright (c) 2025 Guodong Xu <guodong@riscstar.com>
-> + */
-> +
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +/dts-v1/;
-> +
-> +/ {
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
-> +	model = "SpacemiT K3";
-> +	compatible = "spacemit,k3";
-> +
-> +	aliases {
-> +		serial0 = &uart0;
-> +		serial2 = &uart2;
-> +		serial3 = &uart3;
-> +		serial4 = &uart4;
-> +		serial5 = &uart5;
-> +		serial6 = &uart6;
-> +		serial7 = &uart7;
-> +		serial8 = &uart8;
-> +		serial9 = &uart9;
-> +		serial10 = &uart10;
 
-These are not properties of the soc, but the board DTS.
+--WOHLg4B2RTM9rCY3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Best regards,
-Krzysztof
+On Tue, Dec 16, 2025 at 11:05:30PM +0800, Yixun Lan wrote:
+> Hi Guodong,
+>=20
+> On 21:32 Tue 16 Dec     , Guodong Xu wrote:
+> > Add DT binding documentation for the SpacemiT K3 SoC and the board Pico=
+-ITX
+> > which is a 2.5-inch single-board computer.
+> >=20
+> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > ---
+> >  Documentation/devicetree/bindings/riscv/spacemit.yaml | 6 +++++-
+> >  1 file changed, 5 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/Do=
+cumentation/devicetree/bindings/riscv/spacemit.yaml
+> > index 9c49482002f768cd0cc59be6db02659a43fa31ce..003b0bc1539b621e39172a0=
+565dfea1274cbc8b8 100644
+> > --- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> > +++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> > @@ -8,7 +8,8 @@ title: SpacemiT SoC-based boards
+> > =20
+> >  maintainers:
+> >    - Yangyu Chen <cyy@cyyself.name>
+> > -  - Yixun Lan <dlan@gentoo.org>
+> > +  - Yixun Lan   <dlan@gentoo.org>
+> > +  - Guodong Xu  <guodong@riscstar.com>
+> please simply use "one blank space" here, it's more consistent,
+> trying to align them like this would result in even worse situation..
+> =20
+> - only email addresses got aligned while not user names (first, second
+>   name?)
+> - adding another maintainer in future may break the alignment (if long
+>   name)
+
+Yeah, these are never aligned. Just do one space gap.
+
+--WOHLg4B2RTM9rCY3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaUGJ4gAKCRB4tDGHoIJi
+0kA9AQCvdHdh3ZN6TPbUIs6IjVSdbLXEtx33bODh8014ZkTIPAD+O1FYIibih/H5
+/frJtNNEwi9BQrqT/KU1vwpLyBCJQwU=
+=4/Ek
+-----END PGP SIGNATURE-----
+
+--WOHLg4B2RTM9rCY3--
