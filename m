@@ -1,140 +1,162 @@
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C7D352F99
-	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 14:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB8E25FA10
+	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 14:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765894105; cv=none; b=e6XLela6jS06oVCu1tUSuWCGgt66ghX27NJZPDYcJ1J1tyREXlpNQ1BgwLVzNjGrWgYMh4ENSeNudUoNYu6Ybm5CHjPMuV4gKoSg+eljh0Ugr524cmkLIsgHLklNInpgvrTR104WI+g18St24jva8tv8TtbNGP4sERuAkgE275k=
+	t=1765894267; cv=none; b=O4HpHO0PZ3YEOGZvmIzpQXWBuzKFnqxLNa2Ww2ypLhkRtH93b07CvmrzElYKmtZz/77v2uT0vj8jdItgcy13DzcVtwQvBHZvQJWWdps4LRuR41S5NejJcAkNomGAzG50uH7+TmyUzGKszDNwIDn+hnh+619okEYm2PoiXJfh5k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765894105; c=relaxed/simple;
-	bh=/Wododm6Hj52N73BD32ughfd/z1UEFrBFZydemobFr0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BhJQ7QsMvLyuHajYcnoWtVd8wEbX9yL2n41aSw+2WZg8iznvjvpW40Xh7TB+5hpUVkbp2OCoppqUfVaM7+PU/QVaVVqfVnC9W45IuBhlYuYeCWHGDmCSjy4Gt6Jbv+if9ezL8c7URwTTf/LKXxDhsYRtw4+/0JGUKfPOJX00GaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b=GX0tA3x1; arc=none smtp.client-ip=185.125.188.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+	s=arc-20240116; t=1765894267; c=relaxed/simple;
+	bh=XYOEb0zf8jXCKwsHsvzzu3YtIHkS2WRUQr2IbZW/Umc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jKUHQMeqTpSaKb6h4oDcxdXtCjn0nIposKP+Yqew9Iu+9/27+sIpZOhEBNZgw8p2ldKRM4ee6r24Hy41/zOAOkmqxuSej1QewqttaFqVGMgpwYofvKufbMwobljsLsmBnojaG4CiTmCzv9fy3nqU15T0ZlFO1Um03iu3vcLfu0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=Ihl9jg/S; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b="GX0tA3x1"
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com [209.85.208.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id E32743FCA1
-	for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 14:08:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20251003; t=1765894095;
-	bh=s6OKug5US6pxBUrhttaNzk4ojcTJP4aLJKCdbICH8xs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type;
-	b=GX0tA3x1ep33bOiR4upSIIww/8eMCDLYDr/WzBpUx0W7aKkaHseBq2jMRih0C1pZ/
-	 v+BB5E6UkELBsUjkgYQDyxJW1ODlISrZficQg5BnPWElZwx6I9NnnDt0B3K9SAhaQG
-	 rFtczIGuDQ5rxYYxjLa8WlritMZY2dKIvcFwinzraeeZkXZfcTZMq2Q+iBH4dtj7W0
-	 4xN0m6ZjsIl/Fcf4pIjM/VdicPGpld3JzNjVPT0ur9YCvAW1JYFOEHwxRj+Y9lUhSJ
-	 Di9iQ8eLzwm7W39EdHAeXdxT0T1ORcY8cRz2wyWFWwnRbMbf1yNTODb70y/C8QhUyE
-	 nGHUhMmjTWwjI0id5ffPWbijUzEN1SBTVjQDWGhS3CXHVlEJRUiWVPHzvxBFA4oiDm
-	 vM9PTdxSXfBDwoOE3mDYqP+QK1o//HOn+tsEDkufD5ljPu9rqIxEsvtQU9EK3gE85D
-	 juq1XW+teYbsuwfLThdeSq/HT4uPAvn6oFluwVmBgvI1YHTZ29UWbRev+d/Ni19EYj
-	 mlaE4MBiD+KsZqtA5fyXN5xR4MsJVSpB5KMsvsMFd6qVPrgNMEVtYBbJU+vzOepnNL
-	 YwOmxw/z57VhF7uWatHRn5VXWE64CiL2C9W04+qG2lv5XLvrxG4q+g4RjMDN+AZgWg
-	 FPyQVSrQq6Y0bYh4eLHdxzUA=
-Received: by mail-ed1-f72.google.com with SMTP id 4fb4d7f45d1cf-649703f8012so6722870a12.1
-        for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 06:08:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="Ihl9jg/S"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7ade456b6abso3585930b3a.3
+        for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 06:11:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1765894263; x=1766499063; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=x0mQ2j55HYzsWAqKi9hLFK12hbv+niMldudmD970L/A=;
+        b=Ihl9jg/SFYk1kSbUgN7Yy0Bvr51ahKD29MgN21g4RoFbgWy6mCUqrdwx48WKprR8ol
+         bV82m14vSTlSVJQegv9xZMrYCwCR2cbqVJ5YeCSwLC3l5sx/w3arBwxfaDKDNyugQwe3
+         5zZs8lIyEnWtg7HZms2a5T1Hwxstzoo81mkb/B8DZdmKCZYNBzkOwzGLV2tBFc46O7Wv
+         Pz7QzhVwrCRk39/q6iNGP9DqB5ksKutVnhQv/MkYswaSHBmhNLTnUerPpWIJ94mhzBJU
+         SkW/JyGXgBwn69WESiHO623vbbyD7iky+d97Hj6L0h97v9aw2fd9Ss5tWiJCnKIGKqVS
+         u/WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765894085; x=1766498885;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s6OKug5US6pxBUrhttaNzk4ojcTJP4aLJKCdbICH8xs=;
-        b=B4Ke0NorAUtT2LklyGSU3XKIjHKQO0Zw6cde1uiqvme0jg+zvrDCIQo3IbAmPMQc2U
-         LV/6NffVaDke5A0kFz792oZ67GkkWpR0gv/pB4pJ2e5/Mbv9HEKJJ1gJPBgYskfFnAcN
-         KTIT/5Hl7WHXaMqfdCyiTOTqKQ8Mumi1rj3NxI4BcR2uOQS+YjZYPznilLIUMALVpeb1
-         QepYV/zA7hphoP1tvNBdL4P8npzq51qThIorRZT5Z5M1sx9p/PrshMMxE27+nRV1s0Lp
-         ZPYbUi6fw0UPaAo2rcaqcqe96sheS1TZQNpZzmESVB+IEqmQ11/gOKCMI3OtIxUdxd5l
-         GlpA==
-X-Forwarded-Encrypted: i=1; AJvYcCV9oBpBjYW0c/NVtZmbpwClwLZ4iHxY9LQRoBzys95ciG9QHKFJ2aW4ZqfgSpLbJoN928uCn4DrwA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxUcZb8lMfhAWyeufgQdOFMqCijguqaDGbL4SQi3UGBktPJnt4V
-	MSgrF4/iXzk1a1lP7jEmdtcPI8TxeZ/KF2tPCcOADn7XyFAJvTNxCVD1uCiVTKNaDyqhAKlNA1g
-	ie4beBT7pkeQ8aNUxcsKyOHSr93XoGfCGmPof+sXMBzupi92R8edr4lGqdJy1ZUpdVSDpXwmUXR
-	Ei
-X-Gm-Gg: AY/fxX4dL1cQhrLwW2uyi44tDn9yBkbqoE9sMJUnPmE+95cg7q+56uh/fKTwF4ZEeYb
-	Vym0lWPYWvhfcnUg1J0NMJSq1+rsFbxqGmzMwdxEJihKFrsTNeN/kP9X2SAzbXhvdP68lfcFIY5
-	bVw10r8GP43XlkZ4yO05xoDGWY1AUaF3H37RmgaZLNBRXsHBtTFHYiz2e2lZUOz1Q+kpsAyVacj
-	Psfkfc8Og1wJHmC9w7jEgB5UC2Lj3hfkR0NmSsLYisgvYC2PuMl4r6LxjgbkPbX+vlVoyBEmsPy
-	GUyvjwUcXrXyoJ6nujcTbwF/5WuBzQW/fO+G/cjBJG26AQ4h7h8gDIMYUQmjHZDE4bFJ8Y9xZX/
-	+WTm0b4oN4Zrg58JFBgFp1E40X+HRpH0yOOkeyVVULLQD8LgeOVWX62t0NfksSY5GkDeKMgou87
-	KFDo3fVFLnaBDJlg==
-X-Received: by 2002:a17:907:60cf:b0:b7c:f82e:30b with SMTP id a640c23a62f3a-b7d23b1c3ffmr1594363666b.52.1765894084881;
-        Tue, 16 Dec 2025 06:08:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEtqWjNEWPbxkffOmFNn2OFkrwSQdkzVjA6Bq6rV9Lw/Z0LSQ+mn+A/wq7Eqay9PrsgCg2JGw==
-X-Received: by 2002:a17:907:60cf:b0:b7c:f82e:30b with SMTP id a640c23a62f3a-b7d23b1c3ffmr1594361066b.52.1765894084492;
-        Tue, 16 Dec 2025 06:08:04 -0800 (PST)
-Received: from [192.168.103.125] (dynamic-046-114-006-010.46.114.pool.telefonica.de. [46.114.6.10])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7cfa51b859sm1698504466b.43.2025.12.16.06.08.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Dec 2025 06:08:03 -0800 (PST)
-Message-ID: <e1383a10-84ac-483c-aca4-7f2b39ccac16@canonical.com>
-Date: Tue, 16 Dec 2025 15:08:01 +0100
+        d=1e100.net; s=20230601; t=1765894263; x=1766499063;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=x0mQ2j55HYzsWAqKi9hLFK12hbv+niMldudmD970L/A=;
+        b=rFQ1UGWgzK3c6uTtmSLvyl3n9EdSC8mkEHANTlolL6nZw6ofJ6JodiN581QGvO6tns
+         ul65mwvaSAJtSXJ+fc1e+x4kFyt3bkwxz3Dh1gMmiEXjFpwsqbetmlFR3ubuXbSVCE2f
+         2MLgyI/NiL8d7qKY7b2J84WDxVyoOLwzwJ19KnTDEaxRjj7SFm5Da/+i2khx72lhVsGP
+         bFNUDUt7hMHrOnjvdqzXarGpQttMUj7r7qotb56mqe1qs/jm43moWmfzCM5cW8HECjWT
+         2KtCIKqs5v5biGPtXriWwJOtXF0pMAlQdVCFYFKVcrECcKPU1ZfwyN9vNCV36Izxn4LN
+         Jc5w==
+X-Forwarded-Encrypted: i=1; AJvYcCUlT26mu/mR4SOLpjQkGIZwv62n320fRH2JDCmIzzW+nv05+8VDumcel7A6QqcHONuRwPyOqPZoMg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx37oGtRYdEaO8Ac+I2d9TEmlekQy5W6RSrAB7gnEMq3bI8Zqhr
+	HUfZWsMzyG2uwcUZBHIXgveniVeF0VLQcPkY4xbEWtc/2i8/8y/mKjz2YQTg7SR8b/M=
+X-Gm-Gg: AY/fxX5v9SIy4rOa1gHXmc/bdRyX/d7bxC5y/ml4joe6evakW9kpiq7eIyi0pLKWfMe
+	n6R8vcYA0w9eCVyN37oCso6ycRLJ2W/uJZEzUwLagg67mWTax3elns/x8m158c/qVncBlLQ4sAt
+	sy/eeIuN5RSqmm9FT1yK/twaCE6U/Jy6q2R/MJowZklwlVeG/NOx2tDmhG36gZyByB1AmgNBjDB
+	f6TsyO89R5eyzzZqEEa9Do9BkYU1R5O4vuM0ZTEJTs5nAXWqcNSx9+2EcJ8vjvA02tcOB6tABch
+	Ao/Jm9s3n4tixF0b8ZWpMjReUKpFA6QD6H32jz3yKQ0H3Rdw5QtvEfgqO9i5XG3/Gchf/HaVQa0
+	197FMoItBm34btu7BoXqtf97MnJOUeE+VnCxtLtoDgqKb2EdOckRxsZjyhZTyI8Oy2wfN+YVGk2
+	Ks2tot/TsafKxQRIBTOB5e+I4t4ZzXRtQ=
+X-Google-Smtp-Source: AGHT+IFdznc94KTDkz6BoktpmFeuIds91RWVwGw8kUgSdrZJ6fQjtIW9/MuumcftUmESsfRMEb1Hmg==
+X-Received: by 2002:a05:6a20:e210:b0:35f:10a7:df67 with SMTP id adf61e73a8af0-369ad9d21c0mr14335397637.17.1765894263443;
+        Tue, 16 Dec 2025 06:11:03 -0800 (PST)
+Received: from [127.0.1.1] ([2a12:a305:4::4029])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34abe200077sm12055352a91.3.2025.12.16.06.10.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Dec 2025 06:11:03 -0800 (PST)
+From: Guodong Xu <guodong@riscstar.com>
+Date: Tue, 16 Dec 2025 22:10:06 +0800
+Subject: [PATCH] dmaengine: mmp_pdma: Fix race condition in
+ mmp_pdma_residue()
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] dt-bindings: riscv: add SpacemiT X100 CPU compatible
-To: Guodong Xu <guodong@riscstar.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Samuel Holland <samuel.holland@sifive.com>, Anup Patel
- <anup@brainfault.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
- Yangyu Chen <cyy@cyyself.name>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>,
- Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>,
- Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
- linux-serial@vger.kernel.org
-References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
- <20251216-k3-basic-dt-v1-1-a0d256c9dc92@riscstar.com>
-Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <20251216-k3-basic-dt-v1-1-a0d256c9dc92@riscstar.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com>
+X-B4-Tracking: v=1; b=H4sIAD1oQWkC/x3MTQqAIBBA4avErBvIof+rRAvTqWZhiUIE4t2Tl
+ t/ivQSRg3CEuUoQ+JEo91Wg6grMqa+DUWwxUEOdItWjcx69dRqDNox2GMzYkpo2MlAaH3iX9/8
+ ta84fhHNzfV8AAAA=
+X-Change-ID: 20251216-mmp-pdma-race-d77c84219b2c
+To: Vinod Koul <vkoul@kernel.org>, Yixun Lan <dlan@gentoo.org>
+Cc: Alex Elder <elder@riscstar.com>, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Juan Li <lijuan@linux.spacemit.com>, 
+ Guodong Xu <guodong@riscstar.com>
+X-Mailer: b4 0.14.2
 
-On 12/16/25 14:32, Guodong Xu wrote:
-> Add compatible string for the SpacemiT X100 (RVA23 compliant) core.
-> 
-> Link: https://www.spacemit.com/en/spacemit-x100-core/
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Add proper locking in mmp_pdma_residue() to prevent use-after-free when
+accessing descriptor list and descriptor contents.
 
-LGTM
+The race occurs when multiple threads call tx_status() while the tasklet
+on another CPU is freeing completed descriptors:
 
-Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+CPU 0                              CPU 1
+-----                              -----
+mmp_pdma_tx_status()
+mmp_pdma_residue()
+  -> NO LOCK held
+     list_for_each_entry(sw, ..)
+                                   DMA interrupt
+                                   dma_do_tasklet()
+                                     -> spin_lock(&desc_lock)
+                                        list_move(sw->node, ...)
+                                        spin_unlock(&desc_lock)
+  |                                     dma_pool_free(sw) <- FREED!
+  -> access sw->desc <- UAF!
 
-> ---
->   Documentation/devicetree/bindings/riscv/cpus.yaml | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/riscv/cpus.yaml b/Documentation/devicetree/bindings/riscv/cpus.yaml
-> index d733c0bd534fb63ed7c0eada97c42832431f1fc1..cce87092dc7749f49066154d9a256af6c7b6c19f 100644
-> --- a/Documentation/devicetree/bindings/riscv/cpus.yaml
-> +++ b/Documentation/devicetree/bindings/riscv/cpus.yaml
-> @@ -62,6 +62,7 @@ properties:
->                 - sifive,u74
->                 - sifive,u74-mc
->                 - spacemit,x60
-> +              - spacemit,x100
->                 - thead,c906
->                 - thead,c908
->                 - thead,c910
-> 
+This issue can be reproduced when running dmatest on the same channel with
+multiple threads (threads_per_chan > 1).
+
+Fix by protecting the chain_running list iteration and descriptor access
+with the chan->desc_lock spinlock.
+
+Signed-off-by: Juan Li <lijuan@linux.spacemit.com>
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+---
+ drivers/dma/mmp_pdma.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index d07229a748868b8115892c63c54c16130d88e326..481b58c414e470cc08812d5a9fe7283cc48e5827 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -928,6 +928,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ {
+ 	struct mmp_pdma_desc_sw *sw;
+ 	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(chan->chan.device);
++	unsigned long flags;
+ 	u64 curr;
+ 	u32 residue = 0;
+ 	bool passed = false;
+@@ -945,6 +946,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ 	else
+ 		curr = pdev->ops->read_src_addr(chan->phy);
+ 
++	spin_lock_irqsave(&chan->desc_lock, flags);
++
+ 	list_for_each_entry(sw, &chan->chain_running, node) {
+ 		u64 start, end;
+ 		u32 len;
+@@ -989,6 +992,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ 			continue;
+ 
+ 		if (sw->async_tx.cookie == cookie) {
++			spin_unlock_irqrestore(&chan->desc_lock, flags);
+ 			return residue;
+ 		} else {
+ 			residue = 0;
+@@ -996,6 +1000,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ 		}
+ 	}
+ 
++	spin_unlock_irqrestore(&chan->desc_lock, flags);
++
+ 	/* We should only get here in case of cyclic transactions */
+ 	return residue;
+ }
+
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20251216-mmp-pdma-race-d77c84219b2c
+
+Best regards,
+-- 
+Guodong Xu <guodong@riscstar.com>
 
