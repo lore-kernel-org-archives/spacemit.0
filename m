@@ -1,180 +1,131 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DC418CBE1
-	for <spacemit@lists.linux.dev>; Wed, 17 Dec 2025 00:35:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91CB1862A
+	for <spacemit@lists.linux.dev>; Wed, 17 Dec 2025 01:23:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765931703; cv=none; b=XfSlZ/1uzmtmZVNg1uiYf7EnZEzqgXJGVd36Uc51nf/0jdT+0qQkdHvwnE4skmemoZ/Z3iBERERdg0djAxKdIwh5H4iLHABDd5shJhOo4HJeVxZVatr7xRB5yzXGUANuv1URYK3FqUKskAVrymyk59+yLMT2QUNapIanrveT1Ao=
+	t=1765934599; cv=none; b=hlKAiG1cfSRNA0yjsiNbZ9P80d0hHaIIfoJzDag0vbiMhztm+zvYmG6VWPkaI7/KKS3eEvxNp1edJjhRe8YwvNTtR8hKs6OcSH1T5fe9ZRR5ZzMnA373g6YcozyLqxN6bXOuxrRb3zcii9sOdWozPJpsZnRlL2HoTryinhoQRuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765931703; c=relaxed/simple;
-	bh=H6JE+FW+WsCz+DgYOHrTa/gcRRdjdcnICYbIAK3fl2c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YjZoEPjrGQbrR59poRhUixQYQBunAbL/8H6mu93Bfcz1fGyqoZRALyvsOnlFCHhKwr6aq6ihZkdex8Ky8sAT2BfFqw51v4nU5x/wlNDoTKfxOTrm8IxXVy9s3w35CgdZ7ZDUI/6Qu/umxESQck/bMlGerxd3Khv+WiwlJARIgX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZRozCq2P; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765934599; c=relaxed/simple;
+	bh=yXSiB1Xb8XhlVaTSYdRfhglLs0Rb0EeSwWMMmodjhtQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MzGmylinWH3S2ikk+Za1B3KiSnAnQCnn2L5Zf6Rut9eIwqSdqy5fXKTscoD+cvrxBskJLrTAm+rnSpMdOVqGyf+5jn01UxVE3Oc5geP4NSh1yPVVFo22FghvGOEb8DMYw1reRE+n5bY+jeNgS/0eHDY4frD8/Yg2VQJGc3+87lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=HwuIpuNp; arc=none smtp.client-ip=74.125.224.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZRozCq2P"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-bd1ce1b35e7so3552575a12.0
-        for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 16:35:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="HwuIpuNp"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6420c0cf4abso5438524d50.1
+        for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 17:23:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765931701; x=1766536501; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=I16GnD6fZp55p7NM5OBmJZlxxa+Of8TIwfznHTqHcjM=;
-        b=ZRozCq2PrTB2AAAKZDROVW5hF4nQWCz5I6/Wkwv1DlocRNsQjqSGmUZDCGDVaxUqoL
-         DI5qny9cQXsZS7RT3dqcUtKYJZON8A5F48TXxkBFHyoQfcZI28BhyewS6crNw5SNbsr1
-         8a/Rnn5IIvGK3fi+ypOcBu/s8Ot5ssu1SeNx3AHV9ARmdE2RRPDxqhhMoAOA6QNP+9af
-         OiGEiljU5VBFs5hth523iCRK6TU6KoHPZ02hd0qvsDt9vZBBBLRWIvJOs6aq71EwSnkp
-         Hr0ro8p+eMzkA99qMo2gG3GKI/c45hLjzBTbmHQfZOnnaOuq+bVO8FAcmvA8Kv4/mnSu
-         5aFQ==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1765934596; x=1766539396; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=20u+Yo9zixTpysc9eprKHwVlPvXZQniYnu0FOsSjV+s=;
+        b=HwuIpuNpgCxB+5Aw7JCShkBW1rQM438hOA7sxOXeo24HcflqNBmVfFspKOiliaKpHS
+         Mx7zWU86bocRx6CxyHoe2blMdoZxRHRwhczQoVqXRY81FQmHGVvqWPfKZifW4n2ps8Wr
+         0Q6maKY81usQPGSrCDIKYHvkiekX6iUxwAibkoZcpT/mP8qBwJESrlqjgXLD0heYNW6y
+         UGhMmmzYdJ+lERo/d6mKfYkHI1zg+bTiSmqJeMoLYKjykZNM3yZDV+774PwuT6MvQuvu
+         0fUCgZI8Ipi3HNzgiMLW6MhlCN9/uCFGvo9ngd6x+4EfG5/CYz73aXA0cbpqSXwtKruL
+         9ZXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765931701; x=1766536501;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I16GnD6fZp55p7NM5OBmJZlxxa+Of8TIwfznHTqHcjM=;
-        b=eS58LB3c/5MPeD4ACu5oW6sRuLlEoysqV9MVv60RcHO87KpiqWTwkpSez3xP5OSvgD
-         mnABjWvrvrv2vHmkXdIHHGl3Yae1c+obVrYKjUpIXj/1+5X9SUYbtsoni8VTsZI0vF61
-         C+dtGHvNwrZoihFg631tqX+2fJ+iMNvqeUwa8O0ezlLDkk8KVi7xVS/F/iAEzoIs9dKd
-         SvMclIB70ouKAzLLZ80gdvrbL3UK6UDaFK3y75DYiq9Y1ekbPPU/qwT9pG3HMHZeeEB2
-         +8zBoQFgejt89pfkPSNEUa919Ew+AT7cMpmg6CZYBwiPjbTy887RzF5wRtRFY39Z+y3i
-         5waA==
-X-Forwarded-Encrypted: i=1; AJvYcCX0F+kI8jo+6jrnjB67+3HMzPyk1kVYZAMt6YKghkVWxBPp1qfmg+a0OewLtby2lvOLUlh90g5I0g==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxu6HxVy5EG/Xf7kdGrKH++5gQOtDXhakutt/l6YnE+mDOdM3+x
-	ZoEx7SdPprLrKsuh8nGBJK8Q/woHoj3xXlJY53cFaPWUzjmBvLFf3+JJ
-X-Gm-Gg: AY/fxX5nZgLH9RztNywfsK22bbsGEpPKeOMLua7GGhVvZfR2x6CUcBW4KMGpYasMHoH
-	K4PcwKwCmRmH5job9ECorpJZTEuhyCLjbcpVsZXu5R2RuDrH0y4LwjxuOAOmlDhxWeQbllR6jjv
-	DSzFg9u8suph5wpgTT1mltyW5Vn+UDyYENVUW5I1fDROevp7RniEC9g6aJW30lgYOzFJpsFTqiq
-	rQ0EzznGMuvHH/n6gnvs4tgZMD7JYbm1W7OsuexQhvaWPZcWwFVQdXzGvjq4srLSlmRwdvOXfjk
-	Wy/nRJidVd7UYy3o5321ShlWsGa/q189hTGcpjnKBB6MXRG/NghsAcMmgKSYqhu85iwxwbuMs3d
-	TkZfzZ5wJfRTqlwrq0XvutZGAU41UOP9HxAR5LGBs08RMOflyg3Sgmq9AU1qn5sNHUzapbHsZpm
-	/KFpSI2MiQ0Q==
-X-Google-Smtp-Source: AGHT+IForQc0D2tDs5AEskKGH8DsPL45V5wktJcbV9kRoh1ELjnGuofFRcuE+2hAQcJLnodC7x9ehw==
-X-Received: by 2002:a05:7300:cc9a:b0:2a4:3594:72d5 with SMTP id 5a478bee46e88-2ac2f86daabmr10134969eec.4.1765931700780;
-        Tue, 16 Dec 2025 16:35:00 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ae4f054619sm1918117eec.20.2025.12.16.16.34.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 16:35:00 -0800 (PST)
-Date: Wed, 17 Dec 2025 08:33:57 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Yixun Lan <dlan@gentoo.org>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Longbin Li <looong.bin@gmail.com>, linux-clk@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v2] clk: spacemit: Fix module build for spacemit common
- ccu driver
-Message-ID: <aUH46Rqb-bzsqUn_@inochi.infowork>
-References: <20251216233514.646263-1-inochiama@gmail.com>
- <20251217001833-GYE1903981@gentoo.org>
+        d=1e100.net; s=20230601; t=1765934596; x=1766539396;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=20u+Yo9zixTpysc9eprKHwVlPvXZQniYnu0FOsSjV+s=;
+        b=jKSx71K8iYVe6FrIt/6wOFnimyhz7yuctRDWNoXQioxek9RBcvDY9MM1HMyJ47y1vl
+         3DWptc2Nr3DDcfvys70PI0cLvwKdWueSoRcoQ/CqR2RpUIaE368767euYB9nqWk85PZA
+         K6yG/qtWqku+kGEDL4Y22ghP2U4gp6bQqJzHObADphNNic+iVs9qyLJJ0WmePIaitzQC
+         8m8DA5mRxCNbDvPMVFgO8+dszSdVBOYx9GXEj3r6lj/ZacQsRVuSTyY0gyTB7kMCTmne
+         OsOm91KLt9o195jKfDFR7oWR5Lb2KSTJ/Sa2GkS/qJHlwHeo9T16y5T0ccsumYIEuaq1
+         XUnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVNjLfVWjelmsw4SCsZ3OQJzWpj9ngUq6kvJ31bF9MbRQZTeBipsnW5vieVOYUHxEBYwsDMbInJqg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz8IfjHOgfqjafW9RGc9yI4VMr8+2C7doBc4CECBezzexs9eNUk
+	rO3RtglshjJlkyB0zTNMARaK00KT+OYfPfvqed3jRbMlADrWctEwT0gTqSjxXnCfpP/Ei92U42p
+	pcdFjXzNS2lhrzkAM4Y20qfyOitvO1vMw3oMSdaDqlQ==
+X-Gm-Gg: AY/fxX49bEbOSiaYEH/ZosmK8Nd1BPy5jYUwbJEL/GhTRNODansmo71PJQe6eKaaSHQ
+	lxRho7CMFVzs+9Qooxyj/25hVyiyIlJ3Yj0jFTd5tb7tkGZfNN9/JgW9BaWIyGQNDEhrZwcWkB5
+	kt8WkzKK45zkOWOrKMkc5Dlk/wGWM71TlEPuWFODsyxdVQ9ZKxRrNOeko6e2R/csWeNVJ0zNtfS
+	Yrxh/1TiLPIndXz1yQYgHPkNzwT4AVtxS4x1MOHv6/6MgUyagjgqWqRvqbsYrS6puDxiGF3aJoX
+	KILebhswORKe7FdlUa7kcio5vw/ATHvw65QQka/gtMgU
+X-Google-Smtp-Source: AGHT+IFO05qMq19SSBI4gVmifTjzTpnb7vNwVZXOZr/LC4PrjB13iviO83n7Ke+Aymi58gBSK3b0Bq+DG4yndiKAVvo=
+X-Received: by 2002:a05:690e:191d:b0:641:f5bc:6961 with SMTP id
+ 956f58d0204a3-64555664287mr10955876d50.77.1765934595707; Tue, 16 Dec 2025
+ 17:23:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251217001833-GYE1903981@gentoo.org>
+References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
+ <20251216-k3-basic-dt-v1-6-a0d256c9dc92@riscstar.com> <20251216150530-GYD1903981@gentoo.org>
+ <20251216-wing-squander-2fed378d3035@spud>
+In-Reply-To: <20251216-wing-squander-2fed378d3035@spud>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Wed, 17 Dec 2025 09:23:03 +0800
+X-Gm-Features: AQt7F2pscWPGj2PRq6RScSaqgPax4HcbFJUbL6PI8fgs-Pvj3uUzlMNApnCVER8
+Message-ID: <CAH1PCMb+Y6zUCpUNdMYfB3trKuEUsSKQ3kCn+wjoj2UA4o_CPw@mail.gmail.com>
+Subject: Re: [PATCH 6/8] dt-bindings: riscv: spacemit: add K3 and Pico-ITX
+ board bindings
+To: Conor Dooley <conor@kernel.org>
+Cc: Yixun Lan <dlan@gentoo.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
+	Thomas Gleixner <tglx@linutronix.de>, Samuel Holland <samuel.holland@sifive.com>, 
+	Anup Patel <anup@brainfault.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>, Yangyu Chen <cyy@cyyself.name>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@sifive.com>, 
+	Heinrich Schuchardt <xypron.glpk@gmx.de>, Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
+	linux-serial@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 17, 2025 at 08:18:33AM +0800, Yixun Lan wrote:
-> Hi Inochi, 
-> 
-> just noticed, you failed to CC to the mailing list
-> please increase patch version and send a v3 next time..
-> 
-> also please see my comments below
-> 
+On Wed, Dec 17, 2025 at 12:33=E2=80=AFAM Conor Dooley <conor@kernel.org> wr=
+ote:
+>
+> On Tue, Dec 16, 2025 at 11:05:30PM +0800, Yixun Lan wrote:
+> > Hi Guodong,
+> >
+> > On 21:32 Tue 16 Dec     , Guodong Xu wrote:
+> > > Add DT binding documentation for the SpacemiT K3 SoC and the board Pi=
+co-ITX
+> > > which is a 2.5-inch single-board computer.
+> > >
+> > > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > > ---
+> > >  Documentation/devicetree/bindings/riscv/spacemit.yaml | 6 +++++-
+> > >  1 file changed, 5 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/=
+Documentation/devicetree/bindings/riscv/spacemit.yaml
+> > > index 9c49482002f768cd0cc59be6db02659a43fa31ce..003b0bc1539b621e39172=
+a0565dfea1274cbc8b8 100644
+> > > --- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> > > +++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+> > > @@ -8,7 +8,8 @@ title: SpacemiT SoC-based boards
+> > >
+> > >  maintainers:
+> > >    - Yangyu Chen <cyy@cyyself.name>
+> > > -  - Yixun Lan <dlan@gentoo.org>
+> > > +  - Yixun Lan   <dlan@gentoo.org>
+> > > +  - Guodong Xu  <guodong@riscstar.com>
+> > please simply use "one blank space" here, it's more consistent,
+> > trying to align them like this would result in even worse situation..
+> >
+> > - only email addresses got aligned while not user names (first, second
+> >   name?)
+> > - adding another maintainer in future may break the alignment (if long
+> >   name)
+>
+> Yeah, these are never aligned. Just do one space gap.
 
-Yeah, It is my mistake. I failed to add cc/to with git send-mail.
+Thanks Yixun, Conor. I will fix that.
 
-> On 07:35 Wed 17 Dec     , Inochi Amaoto wrote:
-> > For build spacemit common clock driver as a module, the build
-> > process require MODULE_LICENSE()/MODULE_DESCRIPTION() globally
-> > and EXPORT_SYMBOL() for every exposed symbol. Otherwise, the
-> > build will fail.
-> > 
-> > Add these missing hints, so the driver can be built as a module.
-> > 
-> > Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > ---
-> > Change from v1:
-> > 1. Use EXPORT_SYMBOL_NS_GPL to export clock ops
-> > ---
-> >  drivers/clk/spacemit/ccu-k1.c  | 1 +
-> >  drivers/clk/spacemit/ccu_ddn.c | 1 +
-> >  drivers/clk/spacemit/ccu_mix.c | 9 +++++++++
-> >  drivers/clk/spacemit/ccu_pll.c | 5 +++++
-> >  4 files changed, 16 insertions(+)
-> > 
-> > diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-> > index 4761bc1e3b6e..1f42b8045bf3 100644
-> > --- a/drivers/clk/spacemit/ccu-k1.c
-> > +++ b/drivers/clk/spacemit/ccu-k1.c
-> > @@ -1204,6 +1204,7 @@ static struct platform_driver k1_ccu_driver = {
-> >  };
-> >  module_platform_driver(k1_ccu_driver);
-> > 
-> > +MODULE_IMPORT_NS("SPACEMIT_CCU");
-> the name should be ok as long as no collision and unique, but..
-> I personally would prefer "CLK_SPACEMIT" which follow "subsytem + vendor"
-> 
-
-I disagree with you, after doing a grep, I found it is more common to
-use "vendor + xxx" format.
-
-> >  MODULE_DESCRIPTION("SpacemiT K1 CCU driver");
-> >  MODULE_AUTHOR("Haylen Chu <heylenay@4d2.org>");
-> >  MODULE_LICENSE("GPL");
-> > diff --git a/drivers/clk/spacemit/ccu_pll.c b/drivers/clk/spacemit/ccu_pll.c
-> 
-> [snip]...
-> 
-> > index d92f0dae65a4..893af23c6b25 100644
-> > --- a/drivers/clk/spacemit/ccu_pll.c
-> > +++ b/drivers/clk/spacemit/ccu_pll.c
-> > @@ -7,6 +7,7 @@
-> >  #include <linux/clk-provider.h>
-> >  #include <linux/math.h>
-> >  #include <linux/regmap.h>
-> > +#include <linux/module.h>
-> > 
-> >  #include "ccu_common.h"
-> >  #include "ccu_pll.h"
-> > @@ -157,3 +158,7 @@ const struct clk_ops spacemit_ccu_pll_ops = {
-> >  	.determine_rate = ccu_pll_determine_rate,
-> >  	.is_enabled	= ccu_pll_is_enabled,
-> >  };
-> > +EXPORT_SYMBOL_NS_GPL(spacemit_ccu_pll_ops, "SPACEMIT_CCU");
-> > +
-> ..
-> > +MODULE_DESCRIPTION("SpacemiT CCU PLL/MIX/DDN common driver");
-> how about name it more generic? you don't know whether any other clock type
-> will be added in the future, so
->   "SpacemiT CCU common clock driver"
-> 
-
-This is fine for me.
-
-> > +MODULE_LICENSE("GPL");
-> I've got a comment [1] from Ziyao in the review of K3 clock driver
-> that suggest to distill the common probe function, which make sense.
-> So, I plan to have separated ccu_common.c file, with this change,
-> it would be more proper to put MODULE_DESCRIPTION/MODULE_LICENSE
-> into that file
-> 
-> It might takes some time to get there, as I now got a weird panic/hang
-> issue with that change..
-> 
-> Link: https://lore.kernel.org/all/aTo8sCPpVM1o9PKX@pie/ [1]
-> 
-
-I have seen the K3 driver, but I think it is still necessary to add
-this line to this file. As this is a fix and it may be ported to the
-other version if got merged. So it is better to just add these line
-in the  ccu_pll.c and then you can move them in the file you desired.
-
-Regards,
-Inochi
+-Guodong
