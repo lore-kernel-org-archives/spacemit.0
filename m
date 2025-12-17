@@ -1,60 +1,60 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91CB1862A
-	for <spacemit@lists.linux.dev>; Wed, 17 Dec 2025 01:23:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A2823C503
+	for <spacemit@lists.linux.dev>; Wed, 17 Dec 2025 01:54:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765934599; cv=none; b=hlKAiG1cfSRNA0yjsiNbZ9P80d0hHaIIfoJzDag0vbiMhztm+zvYmG6VWPkaI7/KKS3eEvxNp1edJjhRe8YwvNTtR8hKs6OcSH1T5fe9ZRR5ZzMnA373g6YcozyLqxN6bXOuxrRb3zcii9sOdWozPJpsZnRlL2HoTryinhoQRuE=
+	t=1765936492; cv=none; b=tq6vUHbiY9g6FTqfK3Pov8Qk3HbPnmlF2YD6hCOf4k1fSRmUAs394u+zJjrlT+7gJllo+Eet53Ak/mrpHTMqPvcAyi0koZOB5WmrlKrbDnGLpVgJR+bCLIQ6GHeMfK3xMazOQ/VN9EtP07mh7ZI6dpSZ3qOC+EkOD9qSWWBXpo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765934599; c=relaxed/simple;
-	bh=yXSiB1Xb8XhlVaTSYdRfhglLs0Rb0EeSwWMMmodjhtQ=;
+	s=arc-20240116; t=1765936492; c=relaxed/simple;
+	bh=gFvWaYCOh0lh6xwcjS7rbDHXUIghg5O7MRfn/Hq+iM4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MzGmylinWH3S2ikk+Za1B3KiSnAnQCnn2L5Zf6Rut9eIwqSdqy5fXKTscoD+cvrxBskJLrTAm+rnSpMdOVqGyf+5jn01UxVE3Oc5geP4NSh1yPVVFo22FghvGOEb8DMYw1reRE+n5bY+jeNgS/0eHDY4frD8/Yg2VQJGc3+87lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=HwuIpuNp; arc=none smtp.client-ip=74.125.224.46
+	 To:Cc:Content-Type; b=CY+UDu167s3NoMXjcnr66rcyD+kiXP39fJbAhxoFj6aRqR1eenrgUfR8Szhmm3sREx1DQXnjidqUfoHUnem6nbC9tT004aOX1/gyZsGl5IU/Ben+G6ab9BspvqsjNVVIzkJBMOjBakLfa7cs/EqQF7XWJsXCU5/Ur98+Fh04dSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=RC0pRaOt; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="HwuIpuNp"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6420c0cf4abso5438524d50.1
-        for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 17:23:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="RC0pRaOt"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-78c8d74bf4cso45974047b3.1
+        for <spacemit@lists.linux.dev>; Tue, 16 Dec 2025 17:54:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1765934596; x=1766539396; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1765936488; x=1766541288; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=20u+Yo9zixTpysc9eprKHwVlPvXZQniYnu0FOsSjV+s=;
-        b=HwuIpuNpgCxB+5Aw7JCShkBW1rQM438hOA7sxOXeo24HcflqNBmVfFspKOiliaKpHS
-         Mx7zWU86bocRx6CxyHoe2blMdoZxRHRwhczQoVqXRY81FQmHGVvqWPfKZifW4n2ps8Wr
-         0Q6maKY81usQPGSrCDIKYHvkiekX6iUxwAibkoZcpT/mP8qBwJESrlqjgXLD0heYNW6y
-         UGhMmmzYdJ+lERo/d6mKfYkHI1zg+bTiSmqJeMoLYKjykZNM3yZDV+774PwuT6MvQuvu
-         0fUCgZI8Ipi3HNzgiMLW6MhlCN9/uCFGvo9ngd6x+4EfG5/CYz73aXA0cbpqSXwtKruL
-         9ZXw==
+        bh=sd7QPHCVU5Iv6Zimvwat/hwwusR53tKu2g3puM08IT8=;
+        b=RC0pRaOtNnxQz7pbF8ZjCzESUqlyvEQLc4Nzso+wfY8qG0qKY58eoK6/kKXnd7SDWq
+         ynkjR5Csbld8p1+TJzqwndkH7X5jii3W/IztbgCq2EH9hPAXROIMMCk5yRxdOi0J/IW5
+         /ICj9z2PEUDstj3IMrIGgen8a4iHE6Iz2ymvpku5OXvjqqX/sBAseaOaH/LF6jfyTvC7
+         6fYKs8mpJHLC6zktyPr1lmngbXSjhp1AI+lehN7wVztzmclWmDE/oMhiFvVs9vJk2jL8
+         ObMO0J5NcVikU8RN3WI5h5hmyuOc5s1D/H0VxZvlAdKAFiWyt35qywlpHDNo3vh0e3Pm
+         /HVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765934596; x=1766539396;
+        d=1e100.net; s=20230601; t=1765936488; x=1766541288;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=20u+Yo9zixTpysc9eprKHwVlPvXZQniYnu0FOsSjV+s=;
-        b=jKSx71K8iYVe6FrIt/6wOFnimyhz7yuctRDWNoXQioxek9RBcvDY9MM1HMyJ47y1vl
-         3DWptc2Nr3DDcfvys70PI0cLvwKdWueSoRcoQ/CqR2RpUIaE368767euYB9nqWk85PZA
-         K6yG/qtWqku+kGEDL4Y22ghP2U4gp6bQqJzHObADphNNic+iVs9qyLJJ0WmePIaitzQC
-         8m8DA5mRxCNbDvPMVFgO8+dszSdVBOYx9GXEj3r6lj/ZacQsRVuSTyY0gyTB7kMCTmne
-         OsOm91KLt9o195jKfDFR7oWR5Lb2KSTJ/Sa2GkS/qJHlwHeo9T16y5T0ccsumYIEuaq1
-         XUnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVNjLfVWjelmsw4SCsZ3OQJzWpj9ngUq6kvJ31bF9MbRQZTeBipsnW5vieVOYUHxEBYwsDMbInJqg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz8IfjHOgfqjafW9RGc9yI4VMr8+2C7doBc4CECBezzexs9eNUk
-	rO3RtglshjJlkyB0zTNMARaK00KT+OYfPfvqed3jRbMlADrWctEwT0gTqSjxXnCfpP/Ei92U42p
-	pcdFjXzNS2lhrzkAM4Y20qfyOitvO1vMw3oMSdaDqlQ==
-X-Gm-Gg: AY/fxX49bEbOSiaYEH/ZosmK8Nd1BPy5jYUwbJEL/GhTRNODansmo71PJQe6eKaaSHQ
-	lxRho7CMFVzs+9Qooxyj/25hVyiyIlJ3Yj0jFTd5tb7tkGZfNN9/JgW9BaWIyGQNDEhrZwcWkB5
-	kt8WkzKK45zkOWOrKMkc5Dlk/wGWM71TlEPuWFODsyxdVQ9ZKxRrNOeko6e2R/csWeNVJ0zNtfS
-	Yrxh/1TiLPIndXz1yQYgHPkNzwT4AVtxS4x1MOHv6/6MgUyagjgqWqRvqbsYrS6puDxiGF3aJoX
-	KILebhswORKe7FdlUa7kcio5vw/ATHvw65QQka/gtMgU
-X-Google-Smtp-Source: AGHT+IFO05qMq19SSBI4gVmifTjzTpnb7vNwVZXOZr/LC4PrjB13iviO83n7Ke+Aymi58gBSK3b0Bq+DG4yndiKAVvo=
-X-Received: by 2002:a05:690e:191d:b0:641:f5bc:6961 with SMTP id
- 956f58d0204a3-64555664287mr10955876d50.77.1765934595707; Tue, 16 Dec 2025
- 17:23:15 -0800 (PST)
+        bh=sd7QPHCVU5Iv6Zimvwat/hwwusR53tKu2g3puM08IT8=;
+        b=OJKez9D2YbvQzpRt5F3uFuEiADIUsO6Tj+0NcbopiHXF7GRp43TiD7OK/zRJjQBru4
+         EWxts5c5Yd8DwZheNztkvl8fGDN3cjg3Lw9UmowvElX5ejMUx7N2A0eBmCFqaTuKBvko
+         9QlgeCUPe6qfs8FLCMj5zJ/ytmOujkjDOXZUEpPLnxMPjEw9lf2AlhfL19sVzCo7qlX5
+         HMlzGouhN/1dPg4/6qyLTXBeZ2MDTbwjCtx1/hw7Kuk3p2hd9qY4yrIqz8GgVtZ8vab5
+         xyXI/LqALYaMSDwIsalyrQeMhrcjoXnBg45CALW8BCldvkEerlkMowtrzeqN4dgRuMRs
+         gBcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUh2sUHcUJp/F6NeJ1U8FmOrQWvJI1eLuQh9n1RI7LqLUoKagrfVapbrqXJEeB0O7oBJIWLOAF2GA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz4o6ILPaaW0xTJ8I8ftSG9cKcSyv1Hr7roanbC56Sq+Y1AghCB
+	56fKd+XSWTgxoEGxnxaBS2YKflz5sBamLb0QTs4+B8Ji6mG5R5R1vKyDjZI25zoO9YwfH0osg7y
+	WZBIznQEFqXOAy/PF3QiELNXDotEZjF01EWKPubk42Q==
+X-Gm-Gg: AY/fxX7Hjrz1YneUAizBXqMQWK/R7Pk0DhS21cuCJJncZCnKGe/Q4eXEStg9H5XPGFI
+	qz+rXYxzq1GUPb/1Sl6txMhW7skvElexroD5dqPSPSXHKOysRzE3OzU15uKyr+0x/4LHL8bkAUD
+	3ZrENKeuORhIUniIf4m2lg6ooS9EEnzXEKj9WBtwxHjBd+CaOtr+4jwhXd62PbwY58yk2YqIFwV
+	gRAchFjeXWh/uenvIlT7XFsg8R6UnQkDfo4NZm+ojYjSwIf3qCmQW/14olomtSw3vrb8vfO24JU
+	NMHOUjZn19l+zH+zxeOngFREweodpkOqbY8SYaalr54q
+X-Google-Smtp-Source: AGHT+IG7RmyYUv9Cs29kj2dxdrYXc3URbz5VHNb0PZI6tD2ZWGH5YXEmhQNocOw3g5bSfsZIoCB4/P4XTUm2cXg3BYw=
+X-Received: by 2002:a05:690c:9a0e:b0:781:64f:2b63 with SMTP id
+ 00721157ae682-78e66ea4ad5mr150059267b3.63.1765936488525; Tue, 16 Dec 2025
+ 17:54:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -62,24 +62,23 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
- <20251216-k3-basic-dt-v1-6-a0d256c9dc92@riscstar.com> <20251216150530-GYD1903981@gentoo.org>
- <20251216-wing-squander-2fed378d3035@spud>
-In-Reply-To: <20251216-wing-squander-2fed378d3035@spud>
+ <20251216-k3-basic-dt-v1-1-a0d256c9dc92@riscstar.com> <e596f624-b4da-4c93-910c-b3c35917eb9c@kernel.org>
+In-Reply-To: <e596f624-b4da-4c93-910c-b3c35917eb9c@kernel.org>
 From: Guodong Xu <guodong@riscstar.com>
-Date: Wed, 17 Dec 2025 09:23:03 +0800
-X-Gm-Features: AQt7F2pscWPGj2PRq6RScSaqgPax4HcbFJUbL6PI8fgs-Pvj3uUzlMNApnCVER8
-Message-ID: <CAH1PCMb+Y6zUCpUNdMYfB3trKuEUsSKQ3kCn+wjoj2UA4o_CPw@mail.gmail.com>
-Subject: Re: [PATCH 6/8] dt-bindings: riscv: spacemit: add K3 and Pico-ITX
- board bindings
-To: Conor Dooley <conor@kernel.org>
-Cc: Yixun Lan <dlan@gentoo.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+Date: Wed, 17 Dec 2025 09:54:37 +0800
+X-Gm-Features: AQt7F2o5HH0qUzMTVYR3bdSsKGKqc250kEEJ9XB0OvFRDAn2rOZynYGpODwCBsI
+Message-ID: <CAH1PCMaKpeATkt-ygN00tYGc1_-DVzBgp2QdfRfmUJC4+RrhoA@mail.gmail.com>
+Subject: Re: [PATCH 1/8] dt-bindings: riscv: add SpacemiT X100 CPU compatible
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
 	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
-	Thomas Gleixner <tglx@linutronix.de>, Samuel Holland <samuel.holland@sifive.com>, 
-	Anup Patel <anup@brainfault.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>, Yangyu Chen <cyy@cyyself.name>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@sifive.com>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, 
+	Samuel Holland <samuel.holland@sifive.com>, Anup Patel <anup@brainfault.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Lubomir Rintel <lkundrak@v3.sk>, Yangyu Chen <cyy@cyyself.name>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Conor Dooley <conor@kernel.org>, 
 	Heinrich Schuchardt <xypron.glpk@gmx.de>, Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, 
 	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
 	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
@@ -87,45 +86,40 @@ Cc: Yixun Lan <dlan@gentoo.org>, Rob Herring <robh@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 17, 2025 at 12:33=E2=80=AFAM Conor Dooley <conor@kernel.org> wr=
-ote:
+On Tue, Dec 16, 2025 at 11:33=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.o=
+rg> wrote:
 >
-> On Tue, Dec 16, 2025 at 11:05:30PM +0800, Yixun Lan wrote:
-> > Hi Guodong,
+> On 16/12/2025 14:32, Guodong Xu wrote:
+> > Add compatible string for the SpacemiT X100 (RVA23 compliant) core.
 > >
-> > On 21:32 Tue 16 Dec     , Guodong Xu wrote:
-> > > Add DT binding documentation for the SpacemiT K3 SoC and the board Pi=
-co-ITX
-> > > which is a 2.5-inch single-board computer.
-> > >
-> > > Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> > > ---
-> > >  Documentation/devicetree/bindings/riscv/spacemit.yaml | 6 +++++-
-> > >  1 file changed, 5 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/=
-Documentation/devicetree/bindings/riscv/spacemit.yaml
-> > > index 9c49482002f768cd0cc59be6db02659a43fa31ce..003b0bc1539b621e39172=
-a0565dfea1274cbc8b8 100644
-> > > --- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
-> > > +++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
-> > > @@ -8,7 +8,8 @@ title: SpacemiT SoC-based boards
-> > >
-> > >  maintainers:
-> > >    - Yangyu Chen <cyy@cyyself.name>
-> > > -  - Yixun Lan <dlan@gentoo.org>
-> > > +  - Yixun Lan   <dlan@gentoo.org>
-> > > +  - Guodong Xu  <guodong@riscstar.com>
-> > please simply use "one blank space" here, it's more consistent,
-> > trying to align them like this would result in even worse situation..
+> > Link: https://www.spacemit.com/en/spacemit-x100-core/
 > >
-> > - only email addresses got aligned while not user names (first, second
-> >   name?)
-> > - adding another maintainer in future may break the alignment (if long
-> >   name)
+> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > ---
+> >  Documentation/devicetree/bindings/riscv/cpus.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/riscv/cpus.yaml b/Docume=
+ntation/devicetree/bindings/riscv/cpus.yaml
+> > index d733c0bd534fb63ed7c0eada97c42832431f1fc1..cce87092dc7749f49066154=
+d9a256af6c7b6c19f 100644
+> > --- a/Documentation/devicetree/bindings/riscv/cpus.yaml
+> > +++ b/Documentation/devicetree/bindings/riscv/cpus.yaml
+> > @@ -62,6 +62,7 @@ properties:
+> >                - sifive,u74
+> >                - sifive,u74-mc
+> >                - spacemit,x60
+> > +              - spacemit,x100
 >
-> Yeah, these are never aligned. Just do one space gap.
+>
+> Two reviews of this one-liner but no one pointed out that sorting is
+> broken... What is being exactly reviewed in this one-liner?
 
-Thanks Yixun, Conor. I will fix that.
+Thanks Krzysztof. I will fix that, put x100 before x60.
 
--Guodong
+BR,
+Guodong
+
+>
+> Best regards,
+> Krzysztof
