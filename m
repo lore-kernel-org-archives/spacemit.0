@@ -1,33 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEAE1B808;
-	Fri, 19 Dec 2025 08:03:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40EE2D0C60
+	for <spacemit@lists.linux.dev>; Fri, 19 Dec 2025 08:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766131439; cv=none; b=owoOSV6CLeYbr2rXyJASY6bEXBg7H76HnDzlKBoLUFQbAlbR9dC4CViAKOCsd8XV0+Ev2GUvugwWCLev4NkYzfRzhfGC0KrKQxzpbTp/AU1b8c/ERgb4QCudmqrqydf3u5WXcURUDJ0Rc1RlcEgFmEDvlRodNBy9g/8RsKy+Hlk=
+	t=1766131700; cv=none; b=ODEtmkvUz2LREQnA+/1K3ULDGsG8n0ADUoqSj0AoTidKvaxhCUQQtcB0n5iNqjRQ6jYbQZMBxrrng/h2palpsbeUKFyPFP/0rr8epagfm4gj9TJ1N9rJQIcEQVRqt4WBaJzYhknYVHeFdVOeP59HWNmMTtmHwp+5J0R+kmy9dqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766131439; c=relaxed/simple;
-	bh=zXOryCWFhEl8Ab+6mPQPjcBfG82cdijROqqxSWbfyec=;
+	s=arc-20240116; t=1766131700; c=relaxed/simple;
+	bh=8udCBDJHixWYZ9BHIHwvKAqzaP5NF/DkqRjG+1eXjBI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hBKJlP+O9fVI1HcvY/xySFapZfszdO0Bx0nlpo+qxB9qJxrxuO4OpQz6J7FWgSMUkNRRO5Vq98ja/5cufRJvE9jvJSkfgxahIIinOUfsRJ9nuCTtref/Lmh8Z4rmfijvW0D6JzYl/qW3KoSalERMAZ2oKtSFmgtxI0s0DDIwryA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ipfz3YZ2; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=i9Q93Q6dWdl8H6qjuc++JZAq8sRjBbyBQlwKJ3lr6YkRag4sd0hedlpdarxgjOT8Cmv/bqslvfYxN+Xya/Vo1/uHOs4pDPE4qLjJL0nFXB64xtfClGGIXVpzOjSkIO+oizL+KO96Z+ylQxKJ6DJql6qDZmd4RQx00X/J2LoqTSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b=lMO9chE9; arc=none smtp.client-ip=185.125.188.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ipfz3YZ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7818CC4CEF1;
-	Fri, 19 Dec 2025 08:03:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766131438;
-	bh=zXOryCWFhEl8Ab+6mPQPjcBfG82cdijROqqxSWbfyec=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Ipfz3YZ2+YzK4UsikTFRwneDagfOUFLtvH0ii9DRGUQEL6a+3SsB2014dva+XFbsC
-	 7IEZB9atRLokYDW1Lkad7jQkPN4hRHTH1nWcozkcCIfG3vxMVpU6mG7BblV5LKOSrX
-	 +pY8iDuCIQJ7wCYKWb7NkLv63Vov1qnQ2lrWYsusaPQdxaKfhWYWoLtXi148nc4nya
-	 htK+bpxuYUvXrolZNsQAaZo+rJj5cH6OY1hdRW9eWYdDzEnTcsUqUyrvRH/OCcJDJH
-	 WRJfQ5i16SbyTBQ7RE2MywrgU/wTsA9/acmLyJzqxaoUhIXldUHNlC4SKe5N19lRoA
-	 80usW1D5By+mw==
-Message-ID: <604e5781-5c59-422f-9c5a-ee4be6f8b329@kernel.org>
-Date: Fri, 19 Dec 2025 09:03:49 +0100
+	dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b="lMO9chE9"
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com [209.85.221.71])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 91D983F873
+	for <spacemit@lists.linux.dev>; Fri, 19 Dec 2025 08:08:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20251003; t=1766131690;
+	bh=EaxKPv8EzMQw4Q+d/tnNq9TX6lEJW/rr1OxXypt8e2A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type;
+	b=lMO9chE9CcnVozxEYLHoj4xFpT1kl3IskAJ3/7366fiBllXxh85PbwM5l0L21nAxi
+	 kveo6QHHrBaaNckQ9Bi8YvvjL8P9o+j793sFO3xmBJbT59h86Z+VDZq+ElTmgcJfuz
+	 68tR5M1xM5GiUqaXs277UbQkeWZfb1/qJCrkQJXSvGBFJLP7dSqQ/pHx6FJM0j8RP+
+	 /+WmTHSF844Wh7jvZxoUDTHq5E43NVLDyHYl/0epFZmfS9bcH+HvQxWPTIa/Bv1kEB
+	 ZmPudXl3Of8tNNpQ4DfmeygGGuidzoUl/Gk57i0o62qRxymPATEqaQ7Irgoe3oXziE
+	 8MCss7G3kAQ7B5FiinJt62iv+RWAOVmeedSFHfhifI/Vn9eLBgWuRRuaKx7P4v/xf7
+	 lveNktI8e0G8AyZJMbU+djvve4d6KXQmeIMEHEuYfDD6fAhqQB1O57JhAgb8h6jsWJ
+	 44ZVR2GxTTl0jWh1YakMkXlxgAQDw+iFL3vd0EvBmzNNSfNYD5SfD9o0jll/LgCIR+
+	 Ne4ZbQ++AsjXQ05i+ooBqv4i6ENQ9D7o9Ra8nmkCKeffO/IsXmSzKDCpoTXu9mKZhf
+	 Aeie9E8yHXg6uBmx69uN2jtnDu1PjhPicgX4OJfE5O5WSeMnkx1lNKtIAKVGMKLy/+
+	 sDa+8XYzY1uiRoa5xUabefr4=
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-430fd96b440so725018f8f.1
+        for <spacemit@lists.linux.dev>; Fri, 19 Dec 2025 00:08:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766131690; x=1766736490;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EaxKPv8EzMQw4Q+d/tnNq9TX6lEJW/rr1OxXypt8e2A=;
+        b=ve2eHphiay8Ajqq4+dgkJ/QePQ46TxowLxGidfSndxodamcgTAtxurR3CysiRKPaQB
+         GpVvmM3O934QuhGxaBtPwyh+VFErnoYPC04/X/i7oFqbWB9TzD2jQi0wEfKDsSgsy4IK
+         rV3ztfIONKM3yrhZZ1PWIPCx4Oyh1ZQi9FAEhs7gOW6L1lra1Yp+ueZG2544x6Q3q6R7
+         HUuRPVfh3jAYQVmT/xhzVZfw7KSyaYexJiosAKA5ar3ZfjY/ISmKKOwmnoM9/C4+Vrj0
+         /nuq4qmfZWw0vrEzRWardsiOnYqBQRkfrAbe4sEcrauNlxAAuhUjRtKN10+F2qT89VE2
+         hWqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUZh6IlySQS2BkpxUPGik42dBCOUCreZsFZWpaePMAfZWcgJQOdYz7UevXi8hbOQ+eD7PheaNlaRQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyVKmegbnyUtKUJJf+0oLBRbAG1NaLAHRCtyvA4t24g06ggZx9S
+	CkaC0KKR9P12AR8NXai3Qb1Mk8mev95QMQ0ZNne4su1IZsMt6EarQEwix+oWNVuLU6DEt44IyMi
+	n9tCed27E63U4XCaDfrqeOMxfPJaakCdZw7zO6w2sG24NHkfTdULTPozQFSzNh6iknmHCCpW0za
+	W2
+X-Gm-Gg: AY/fxX5J0UtiQLl2wHpwW1Rbg7caDN/vyfgcIdtgFHyE0w+V58WqaJTX2f2LJxSFS0e
+	ZP1Au9btyTvLaMh80idzwbIM8hDHIryOUUkX4H5jBMJibtJfs4KLY3u4C3j3L4WWU3gUIB5qvQ4
+	RrHHxSGE2Zqf1nIosKEJVc708ltMNXZJSZEbt41ZygYO7P0e/5Z3XCZBq1kGrhj+j11SGk628f5
+	PqfN1UqrA+YE2dLQuqBMJon4oAzQ+xrlyGvaXAiQttzT+L7T+XTfZAV6VVOrxjKhEbZvspXGLCj
+	KmQNOQNxellbOkcQPldwO/TcKFmuu8djZdSu245z7dTe+RmZXeNKWQE0xJKyKMimHcjBsbdS5Ed
+	CWIrLIq0jPFeXfineAez95qbv7y1mK8zIAXX/Dxerb5otDdHPq3v+09sT+9t+kt9N3N3+H1ZcLt
+	LITkLe/Zo=
+X-Received: by 2002:a05:6000:1a8d:b0:430:f6ad:1814 with SMTP id ffacd0b85a97d-4324e7045eemr2091908f8f.58.1766131689911;
+        Fri, 19 Dec 2025 00:08:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF+g+eItW+D6N0t8wn4CUhhQAlan/FWbDAzi/nwqnnLL5ClhWb3g9EwyncInKQ4MUzOoaMdTA==
+X-Received: by 2002:a05:6000:1a8d:b0:430:f6ad:1814 with SMTP id ffacd0b85a97d-4324e7045eemr2091855f8f.58.1766131689463;
+        Fri, 19 Dec 2025 00:08:09 -0800 (PST)
+Received: from [192.168.123.154] (ip-005-147-080-091.um06.pools.vodafone-ip.de. [5.147.80.91])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4324ea2267fsm3416457f8f.12.2025.12.19.00.08.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Dec 2025 00:08:08 -0800 (PST)
+Message-ID: <212e6371-245e-4f44-98a0-5e1db47222a1@canonical.com>
+Date: Fri, 19 Dec 2025 09:08:07 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -35,84 +83,99 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] i2c: spacemit: add reset support
-To: Encrow Thorne <jyc0019@gmail.com>,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Troy Mitchell <troymitchell988@gmail.com>,
- Guodong Xu <guodong@riscstar.com>, linux-i2c@vger.kernel.org,
+Subject: Re: [PATCH 7/8] riscv: dts: spacemit: add initial device tree of
+ SpacemiT K3 SoC
+To: Guodong Xu <guodong@riscstar.com>, Conor Dooley <conor@kernel.org>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>,
+ Palmer Dabbelt <palmer@sifive.com>,
+ Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
  devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20251219-i2c-reset-v2-0-ad201a602e74@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
+ linux-serial@vger.kernel.org, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Samuel Holland <samuel.holland@sifive.com>, Anup Patel
+ <anup@brainfault.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
+ Yangyu Chen <cyy@cyyself.name>
+References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
+ <20251216-k3-basic-dt-v1-7-a0d256c9dc92@riscstar.com>
+ <60948ca2-ed3d-485b-9b11-15df7ef8791d@canonical.com>
+ <CAH1PCMb=+TvB1w+G6a2ANDp05HUwC4r6CFBDHXFwSmoP3Mm8xw@mail.gmail.com>
+ <f9b6b5e2-ec9e-4208-8267-77020e0a9411@canonical.com>
+ <20251218-basil-quantum-225ce16e4699@spud>
+ <CAH1PCMZ3KM9-D3NJ1N2LUHTHFSDVKmGKT5fU8knAL7NnV9E-gw@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251219-i2c-reset-v2-0-ad201a602e74@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <CAH1PCMZ3KM9-D3NJ1N2LUHTHFSDVKmGKT5fU8knAL7NnV9E-gw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 19/12/2025 08:42, Encrow Thorne wrote:
-> Add reset support for the K1 I2C driver. A reset ensures that the
-> controller starts in a clean and known state.
+On 12/19/25 03:03, Guodong Xu wrote:
+> Hi, Conor and Heinrich
 > 
-> Reset ensures that the I2C hardware is in a clean state. We cannot assume
-> that no program used I2C before the kernel booted.
+> On Thu, Dec 18, 2025 at 8:56 AM Conor Dooley <conor@kernel.org> wrote:
+>>
+>> On Wed, Dec 17, 2025 at 09:07:14AM +0100, Heinrich Schuchardt wrote:
+>>> On 12/17/25 08:11, Guodong Xu wrote:
+>>
+>>>> Specifically, I must adhere to
+>>>> Documentation/devicetree/bindings/riscv/extensions.yaml (and cpus.yaml for
+>>>> properties like 'riscv,sv39' which stands for the extension Sv39). If I
+>>>> add extension strings that are not yet defined in these schemas, such as
+>>>> supm, running 'make dtbs_check W=3' fails with: 'supm' is not one of
+>>>> ['i', 'm', 'a', ...], followed by "Unevaluated properties are not allowed."
+>>>
+>>> If Documentation/devicetree/bindings/riscv/extensions.yaml is incomplete
+>>> with respect to ratified extensions, I guess the right approach is to amend
+>>> it and not to curtail the CPU description.
+>>
+>> Absolutely. If the cpu supports something that is not documented, then
+>> please document it rather than omit from the devicetree.
 > 
-> Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
-> ---
-> Changes in v2:
-> - Replace reset property in dt-bindings.
+> Thanks for the review. May I clarify one thing? Both of you mentioned
+> document them, given the amount of missing extensions, is it acceptable if
+> I submit a prerequisite patch that only documents these strings in
+> riscv/extensions.yaml plus the necessary hwprobe export? Leaving the actual
+> usage of these extensions (named features) to the future patches.
 
-Replace with what? I don't see anything else there - you still have
-reset property.
+Adding the missing extensions to
+Documentation/devicetree/bindings/riscv/extensions.yaml
+is what it takes to describe the K100 cores in the device-tree.
 
+Discovering the new extensions as CPU features and exposing them via 
+hwprobe is probably best handled in a separate patch series.
 
-Best regards,
-Krzysztof
+Best regards
+
+Heinrich
+
+> 
+> To provide some context on why I ask: I've investigated the commits & lkml
+> history of RISC-V extensions since v6.5, and I summarized the current status
+> regarding the RVA23 profile here:
+> [1] status in v6.18 (inc. v6.19-rc1):
+> https://docularxu.github.io/rva23/linux-kernel-coverage.html
+> [2] support evolution since v6.5:
+> https://docularxu.github.io/rva23/rva23-kernel-support-evolution.html
+> 
+> Strictly describing the SpacemiT X100/K3 (or any core) as RVA23-compliant
+> requires adding these extensions that are currently missing from
+> the kernel bindings:
+> RVA23U64: Ziccif, Ziccamoa, Zicclsm, Za64rs
+> RVA23S64: Ss1p13, Ssccptr, Sstvecd, Sstvala, Sscounterenw, Ssu64xl,
+>            Sha, Shcounterenw, Shvstvala, Shtvala, Shvstvecd, Shvsatpa, Shgatpa
+> Plus 'Supm', 'Zic64b', 'Ssstateen', 'B' where the kernel supports them but
+> they are not literally documented in yaml.
+> 
+> Is this approach acceptable to you? If so, I will proceed with submitting them.
+> 
+> Thank you very much.
+> 
+> Best regards,
+> Guodong Xu
+
