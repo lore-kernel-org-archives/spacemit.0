@@ -1,87 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2932F2FE056;
-	Fri, 19 Dec 2025 08:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E9E3A1E67
+	for <spacemit@lists.linux.dev>; Fri, 19 Dec 2025 09:53:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766132008; cv=none; b=QtlLpn410AEfOqmI7Hy/mzuo/V3hIcFN9x8C36goKG4Ol6qMtEc2wp5gnETxXKXGb177Qz4Ov1wYB8Phkni2HML+6AD3wvv5yMiqYgKZQC9TQSxp4eRJobanWkgIBye32N3Vvl13Ii52kX/DN7ME0EycCuNvti38t2PlMqTNx+w=
+	t=1766138012; cv=none; b=R7LRXLuqAcMaSQv+0mdeGbn14HJKLXgdlbwxFCYLe/2VnAbaZw+DTgdN+sFdAzK8x3ChOixdXbHW6h0LctddFO8/UZZWQ1ZjOf7peZIRCUX7VFZXVfU34lF7yrN+oIDBx46S5eMHf4i9keWUNEoSF0+8TBLq6PCzoG3gIDDTgvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766132008; c=relaxed/simple;
-	bh=VPA2RV+H3SHEDkHvAU2bPivwR8k4P2M2QGI+Sg01Br0=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=VftqzqFw/km8K3T1+Xvy1m6lCKgARMVP6EzE7KwKk9zvy+1qDO8cgdGKIMwx1yCaPsmJBkQ9rmEp6NxcxTk3EGou+HWyRM+iiq7sg3LF4iYHWYp+NGOsegNOcLvijCdCTLHvYJO28Gt/qj7jgDtUIqrvbXPbdo7U6JbvF6a4LWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZQh0Y67R; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZQh0Y67R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FFEC19421;
-	Fri, 19 Dec 2025 08:13:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766132007;
-	bh=VPA2RV+H3SHEDkHvAU2bPivwR8k4P2M2QGI+Sg01Br0=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=ZQh0Y67Rx2TED3sHcn2P5Mbjft7nV7jDjkmaBEuWlr8knlHX+Y3j/HdCVnCqWp+at
-	 xZbQPi8CV0R/dAGwdy5PmKqm55nu4iHoDGzHNoH/MpnBfQ+JHRVTLGL7k4cuqOpS+t
-	 sNPbGW+JtFUEXqPyAJjxO8DF/7YSw7/O4h/nFYHJirJVmQDDGaLAnN6576J30d7DGN
-	 pge69FDgc/+DShj4bTgTJhyZeAgD4L84auJ9zTmADkjih3FTHEINTRMjJnUqEYqptK
-	 768PsZxMwsRlzifc1CnyRynkXgGpkn1Fy9wXQcVoRd3DRgz6AlB62WHPfnUVQbs1mk
-	 EL0lvUwGgHAoQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id F2B14380AA50;
-	Fri, 19 Dec 2025 08:10:17 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1766138012; c=relaxed/simple;
+	bh=8+N8pVJDcIg79r/If67g6J87QMpo0At90GWAphJW2ZQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QSQ9FZrcih7KQULoHjOgLSHUp/o7mBygLncDhvlfW+H+ot5eBbAaU1MbvrdI7GYA4LglxL2nUrsmik5OjOMIlkBi2uYyHQ0E2HA/dkADJnmM2G8oKykPnY/MTIvUohmNm0j9bq8+nyXmb9qeGmfdBTfslzBsM2YoGv935sS7omo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 1D6B03420CA;
+	Fri, 19 Dec 2025 09:53:29 +0000 (UTC)
+Date: Fri, 19 Dec 2025 17:53:19 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Haylen Chu <heylenay@4d2.org>,
+	Alex Elder <elder@riscstar.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Charles Mirabile <cmirabil@redhat.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Akhilesh Patil <akhilesh@ee.iitb.ac.in>,
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v4 0/2] clk: spacemit: Fix module build for spacemit
+ common ccu driver
+Message-ID: <20251219095319-GYA1955339@gentoo.org>
+References: <20251219012819.440972-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/4] fix the SpacemiT P1 Kconfig and resend the K1 I2C
- ILCR patch.
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <176613181654.3684357.18070317581817603415.git-patchwork-notify@kernel.org>
-Date: Fri, 19 Dec 2025 08:10:16 +0000
-References: <20251118-p1-kconfig-fix-v3-0-8839c5ac5db3@linux.spacemit.com>
-In-Reply-To: <20251118-p1-kconfig-fix-v3-0-8839c5ac5db3@linux.spacemit.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-riscv@lists.infradead.org, lee@kernel.org, dlan@gentoo.org,
- elder@riscstar.com, andi.shyti@kernel.org, alexandre.belloni@bootlin.com,
- lgirdwood@gmail.com, broonie@kernel.org, linux-kernel@vger.kernel.org,
- spacemit@lists.linux.dev, linux-i2c@vger.kernel.org,
- linux-rtc@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251219012819.440972-1-inochiama@gmail.com>
 
-Hello:
+Hi Inochi, 
 
-This series was applied to riscv/linux.git (fixes)
-by Alexandre Belloni <alexandre.belloni@bootlin.com>:
-
-On Tue, 18 Nov 2025 14:08:04 +0800 you wrote:
-> Since P1 Kconfig directly selects K1_I2C, after the I2C ILCR patch was
-> merged, the driver would fail [1] when COMMON_CLK was not selected.
+On 09:28 Fri 19 Dec     , Inochi Amaoto wrote:
+> Currently, the SPACEMIT_CCU entry is only a switch for enabling entry
+> SPACEMIT_K1_CCU. It does not guide the build for common clock codes
+> even if it is a tristate entry. This makes this entry useless.
 > 
-> This series fixes the P1 Kconfig and resends the I2C ILCR patch(This
-> patch has reverted by maintainer [2]).
+> Change the Makefile to add a separate build for common clock logic,
+> so the SPACEMIT_CCU entry takes effect, also add necessary
+> MODULE_LICENSE()/MODULE_DESCRIPTION()/EXPORT_SYMBOL() for the module
+> build.
 > 
-> Now, P1 Kconfig patch has been merged[3], so I2C ILCR patch can be
-> merged as well.
+> This patch mostly fix the build problem, and it should serve as a
+> basic for the incoming K3 clock driver. See link.
 > 
-> [...]
+> Link: https://lore.kernel.org/all/20251217001833-GYE1903981@gentoo.org
+> 
+this series looks good to me, so
 
-Here is the summary with links:
-  - [v3,1/4] i2c: spacemit: configure ILCR for accurate SCL frequency
-    (no matching commit)
-  - [v3,2/4] rtc: spacemit: MFD_SPACEMIT_P1 as dependencies
-    https://git.kernel.org/riscv/c/16bd954c9336
-  - [v3,3/4] regulator: spacemit: MFD_SPACEMIT_P1 as dependencies
-    (no matching commit)
-  - [v3,4/4] mfd: simple-mfd-i2c: add default value
-    (no matching commit)
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
 
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Yixun Lan (dlan)
