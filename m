@@ -1,227 +1,128 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FC62F7ADE
-	for <spacemit@lists.linux.dev>; Thu, 18 Dec 2025 22:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFD7215055
+	for <spacemit@lists.linux.dev>; Fri, 19 Dec 2025 01:29:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766097847; cv=none; b=qh3LB3ZtgO59OuorToS8mCbTyAE+zVCyjMtIp7DR974qG3DUpAfVwXvmkomMzhPhcsB6VcBpSM5hQ9bh9cEzmHp1gewx9ajXSBOAK6xxzeZEUl3gwSbyEYHLJ5CZbCwTTFlyZTEq2DCSGBuDnVExPPqwl9YX+cAfBHmpffgO3CM=
+	t=1766107767; cv=none; b=KzSQRLE3zZZLynLVkYKGcZSJp2QBK4lbuhB/l5n8oV1TXeDVSjcIlPRIrCZwWAHPGi8qI/3MjT91IU7CpNiLV/W5ARbxHnFPobdT7k7TpeALkUBPTMtI7ht3piNd+Qrc6dsoct6Hu+GKHwLfET9jKuQ67X6mjFkA4wZaz981GvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766097847; c=relaxed/simple;
-	bh=GuDHRV7Wtw4/EUs3qYgLvnTsv99V+ei7MivBMLJNjv8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bHDceXvHTdR59f/WGPDBPTdwW3y6wUKV/vzRttt4UvQkAYovbERHfloPprZ7aqbRkRelsqL6BIdmmjWnwndXSjTndretk5P9zTE/67RPBz+DJNiwXY+Y75dLMDNkPJm/Cw3l78mM2T3fyJ3pr66V0wxOmU0LLZsP/y1ckPFk3fA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=s3fyEkF0; arc=none smtp.client-ip=74.125.224.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1766107767; c=relaxed/simple;
+	bh=JjuvhBN3d/bFg+0VkFskoXUj/P9+g0NC/i3Ipo9goDk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JRRssdGANqTFTWOtozGxQgfEjGKe754GnZVJI240wbi2uwfvvIqgB+A7Il6Lqs4qGYqctssyHPdIOF9bcMK0YhcdDIjyPQbLOlN/4aUx5DS+lIjAIjxDjqlElfGBGD1DKH2zHgwTqBnxvkp9zzNYhzXCp5/tx/5LVWgNHwIDXIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WLxJrHdO; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="s3fyEkF0"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-64472ea7d18so905531d50.2
-        for <spacemit@lists.linux.dev>; Thu, 18 Dec 2025 14:44:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WLxJrHdO"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-29f0f875bc5so17427505ad.3
+        for <spacemit@lists.linux.dev>; Thu, 18 Dec 2025 17:29:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766097844; x=1766702644; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tNtkMphr11RONSM4Q0l7F/V0bPE7UA2WWJNfv0nmNOE=;
-        b=s3fyEkF0ElKcl7XWqQDws/dWGixaqU1TlOe5GmdqWFXp8pobomDkOjGuDafpS3ce6F
-         lWFcW/yOPNCFwBqkgsXA1yLA47+wJLoXQg35gvXtQ2z57NjZo40afBRK7Nv93vyfTSgi
-         4WmuEfnyzhf0buRFdDBBMCnO6FfSwp2qxg5qdUghcmIbSvS1bSxHafnvy56YS8c0/qQ0
-         8gITdOR4evrQhuZrmrFyN5gk74pD9MV/cNsPJ0ACRR1CtSGyx4msLDgWULzg6U9ZZUBA
-         v8cK5fw2S24JThMq3vh63OjQUwf/YXlbqsZX/0rTtn7njCEF/VhRwKn0u4JkPpmOSlvp
-         VCBg==
+        d=gmail.com; s=20230601; t=1766107765; x=1766712565; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ImtK/f/sYZ0T/CDz6wNZi8kpvO1eTA7THBDv7eoYu1c=;
+        b=WLxJrHdOH4n8zA3za0pA1eYvpUxU+r5tnGkkgSih0QFMEyaugIt7FHqDdT/nDHITSL
+         kdgSTAN9PoZIGeOjLjpTDnk7Gf+aC89P9FNrT61sdxtvJWSBIrXJzQmXwXJJ3z1bQhcN
+         jAxoMOVP6pwJYFkk015qP1SUbdHbtitHmzzo4xr1BkT0SdPCJMyT3PMa0XGKx0p3TbO1
+         87NI/h05HX7goLhMiLqWhBQXDfCTYJexkuE1apxB7pwyurFBFac1fa5Q569jrEIo6JE0
+         LvU6l/GO891m2Fa8rd0/n4i05CsCYDwDrP8PbbutDSQglgrn33+wLcO4zul9vQbkhyBi
+         UfIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766097844; x=1766702644;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tNtkMphr11RONSM4Q0l7F/V0bPE7UA2WWJNfv0nmNOE=;
-        b=o3ZVlZ3cj+thhSWEGXUj6DYNfT9OZaN1ADzPrs7P3YEHNsDjlqccU/WkBplEJkBeK4
-         oz4V1hNTsN0/qvbkuuM5Y48GkL63c4AbywZb6yhRhznW70psYdOCais+J2G2reFgak1f
-         PnMegCNN+DXPaAfBJcNqQk/6BS6FNjPBbQ767k+UQAK4AWqX5tNaKtGBzVbGGwsVbdF8
-         +bNlzzeztGWyP8wjmscx5w76SFMGOiDk/BamTO0YFXevcmHGjhLaiRmxmogxxEHKkKi4
-         2Lw2Pq0nyYq+i2M7/sMSCbBEGTF8W4qq7WWC13V/+D4t0Ax3Jbk3h6NNBBmUslNyHPIr
-         vyLA==
-X-Forwarded-Encrypted: i=1; AJvYcCVFcFbN4BPOsLr+QnMpcIsLOvO4UfMjWXQr6/Zi68LwinmUwLEElDliKKml24OPPVor3GMkLKqcbQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyZydnJs25ESyQefQvDnHns1XO/GPwyOP1J0vWVBCl9vJDqRfAZ
-	uG2Gy1F8jbyiLOrEH2d+2X/hhlDc+UYqCv4ChO3yDy/kJLnUI3j25SyPY3j1oHL7B2RqG/57WPW
-	KhZ5vlFmOpeWdeI3qwQDXIHp8lXbiICOA/xyVskKKRA==
-X-Gm-Gg: AY/fxX5RrPAi0A/iYeiovJTwWfsXaf7W262KvvsXIsV+2ZO0DO/DjXXKWljxMwEAhhq
-	aL+9Yl3ygxTw40tgsWdWQTBATwxQSBG3b5SdoUS+W05kRFzb4ba6eQ7u5+tcg+Q7JHK0Owrwu2x
-	npJBx/7CgSBFb+nIMy9RIbhJ/UCtXUl4wnxRB2vK1ieH/PrhaWIJyRRZSXIQh+jG0xbY5LVrwKZ
-	M/9ix4YhtphU2OWBsES7z3e1Tki6MAK0ALYtLQ/G3qwBSmEqgFZVMsLoBayNtMWgPz/+vPf64jp
-	NqwIZah+Ci+N9ME7nGllLPJ1rkxmZShkZIImxfdlOjKV
-X-Google-Smtp-Source: AGHT+IHr9hpj9uqrYP2d59hszb1BUZgIk82NvUf6gFEhieUb4Vo2pOoa14pKSV9rG9cinvTKc1D+k5JkFPZo7lCJHqE=
-X-Received: by 2002:a05:690e:1a07:b0:63f:a103:5d57 with SMTP id
- 956f58d0204a3-6466a8398e7mr669772d50.5.1766097843665; Thu, 18 Dec 2025
- 14:44:03 -0800 (PST)
+        d=1e100.net; s=20230601; t=1766107765; x=1766712565;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ImtK/f/sYZ0T/CDz6wNZi8kpvO1eTA7THBDv7eoYu1c=;
+        b=Rvoy9kfYxyAvnoGs/WSBMVfRvDQYUAfPYof/aBqPpFsTOx7sieY2eL6SBEBiUwbHFX
+         M/MVzMhQrOE5CKp4tFiG3S0WJybKi1O25iCU+oes6nMhUal0nelnc/nh7nmKrpCMR7FT
+         Wap4ytqOJPjnF8Eb4+LyzKN/6e90OMdMdQrd4767Y58dRFWY50GF8+Nc6qZSp4DH80f/
+         9N9PAeonGDTNtbxLFHqPXseNGxDVpfA0K315NuOR3IOeEBixdp/62RXzCx/da4qSacii
+         QTplOD5pgSdLSwng0rf1rCqXTPXmvt0e/FiL9oJunjLu+Fn7ltB1IiedyCJ4IsmlG9Da
+         grlA==
+X-Forwarded-Encrypted: i=1; AJvYcCW+nnKShSm42y5h268Emjj6Qgr6/N9G6DX+fW6opr/z0phvQXwz1UluKBQ7qKrD3PtnPoPOEXFcSw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxfSlJ9CpjqGDfTdQZLaLnOle4zs8OEnJMURaiwgyAnhbj/XvEW
+	xaIg0JdXq3/SFeQ5PliFBJkCBQN/zkYZDma267YhrO7/ayNSQigroPw9
+X-Gm-Gg: AY/fxX7bhFudMXhKw8nJsiYHGKOAZBLz/kHGURbEcKJ/bRKB/obklzp/pn/xniCvLmS
+	G5Qah1fkj5EoEOtyQuI8Zp/5SVPcAKzAScsv/lNIMeU4WJ73B/PcGl/US/QoUxtvai02mXgl+ev
+	DsRLy0VKgE9fhJzOV70i+q/BioZZD4R9xjQSlhbMLOwe7tsJesKCXr6xKo8Pz2DqzBSd2PA10h/
+	WblQPBSNRBEUuYeZnXB0tOM1CE0J7OJgzMG2BgIjfbn+MeSaS6R9yX3H4gQMD9Z0+Z3QTlybfgZ
+	aCx+R8nASetqK5QP6EA5CZuhO+uHTBD/d8481Epwkd/qZiO6Ai91XqppEAjO3PIRGU0RM3UN+Ml
+	56DaDNRnKKF4QvH58TB4HHCN/NzTHE8EeFnp75QBAePH+3MPfVcHTmc6WKKC2m6Ft9T/WhgEkxc
+	HgCgFiOOHAlw==
+X-Google-Smtp-Source: AGHT+IHmCsJOTDpegNz1zbKi7qV4zqhXPVuzMhRGlv8/8xKRdA6N3Lz/R25WgxpM69DLVt3TUiIsaA==
+X-Received: by 2002:a05:7300:2315:b0:2ae:5a13:97d8 with SMTP id 5a478bee46e88-2b05ec030cdmr1436191eec.14.1766107765232;
+        Thu, 18 Dec 2025 17:29:25 -0800 (PST)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b05ffd5f86sm2058701eec.5.2025.12.18.17.29.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Dec 2025 17:29:24 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>,
+	Haylen Chu <heylenay@4d2.org>,
+	Alex Elder <elder@riscstar.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Charles Mirabile <cmirabil@redhat.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Akhilesh Patil <akhilesh@ee.iitb.ac.in>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH v4 0/2] clk: spacemit: Fix module build for spacemit common ccu driver
+Date: Fri, 19 Dec 2025 09:28:16 +0800
+Message-ID: <20251219012819.440972-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
- <20251216-k3-basic-dt-v1-8-a0d256c9dc92@riscstar.com> <3c38ce9c-4259-4149-bf2c-a54e74c00a34@canonical.com>
- <CAH1PCMbzv_uggyZ3JLPyWXSwbe2dJAh7jVT64xpM6SLG77VZqQ@mail.gmail.com> <e5d92ecd-6bc1-438d-87ec-96f60d1b8a24@gmail.com>
-In-Reply-To: <e5d92ecd-6bc1-438d-87ec-96f60d1b8a24@gmail.com>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Fri, 19 Dec 2025 06:43:52 +0800
-X-Gm-Features: AQt7F2oVki_LCRnJdnjikkWlgQNyCWYw-P2aQmvWCPvKClL0oukF3aD3rXDC9xw
-Message-ID: <CAH1PCMaRrw1zu41oKpBO+5DpDU2Ri69TQEQa+4tXkZJtEuQDHw@mail.gmail.com>
-Subject: Re: [PATCH 8/8] riscv: dts: spacemit: add SpacemiT K3 Pico-ITX board
- device tree
-To: Bo Gan <ganboing@gmail.com>
-Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Conor Dooley <conor@kernel.org>, 
-	Heinrich Schuchardt <xypron.glpk@gmx.de>, Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
-	linux-serial@vger.kernel.org, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, 
-	Samuel Holland <samuel.holland@sifive.com>, Anup Patel <anup@brainfault.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Lubomir Rintel <lkundrak@v3.sk>, Yangyu Chen <cyy@cyyself.name>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi, Bo
+Currently, the SPACEMIT_CCU entry is only a switch for enabling entry
+SPACEMIT_K1_CCU. It does not guide the build for common clock codes
+even if it is a tristate entry. This makes this entry useless.
 
-On Wed, Dec 17, 2025 at 5:06=E2=80=AFPM Bo Gan <ganboing@gmail.com> wrote:
->
-> Hi Guodong,
->
-> On 12/16/25 23:13, Guodong Xu wrote:
-> > On Tue, Dec 16, 2025 at 10:33=E2=80=AFPM Heinrich Schuchardt
-> > <heinrich.schuchardt@canonical.com> wrote:
-> >>
-> >> On 12/16/25 14:32, Guodong Xu wrote:
-> >>> K3 Pico-ITX is a 2.5-inch single-board computer equipted with a Space=
-miT
-> >>> K3 SoC.
-> >>>
-> >>> This minimal device tree enables booting into a serial console with U=
-ART
-> >>> output.
-> >>>
-> >>> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> >>> ---
-> >>>    arch/riscv/boot/dts/spacemit/Makefile        |  1 +
-> >>>    arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 25 ++++++++++++++++=
-+++++++++
-> >>>    2 files changed, 26 insertions(+)
-> >>>
-> >>> diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/=
-dts/spacemit/Makefile
-> >>> index 95889e7269d1bae679b28cd053e1b0a23ae6de68..7e2b877025718113a0e31=
-917eadf7562f488d825 100644
-> >>> --- a/arch/riscv/boot/dts/spacemit/Makefile
-> >>> +++ b/arch/riscv/boot/dts/spacemit/Makefile
-> >>> @@ -4,3 +4,4 @@ dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k1-milkv-jupiter.dtb
-> >>>    dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k1-musepi-pro.dtb
-> >>>    dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k1-orangepi-r2s.dtb
-> >>>    dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k1-orangepi-rv2.dtb
-> >>> +dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k3-pico-itx.dtb
-> >>> diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/risc=
-v/boot/dts/spacemit/k3-pico-itx.dts
-> >>> new file mode 100644
-> >>> index 0000000000000000000000000000000000000000..0f9d04dd352f5331e8259=
-9285113b86af5b09ebe
-> >>> --- /dev/null
-> >>> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> >>> @@ -0,0 +1,25 @@
-> >>> +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-> >>> +/*
-> >>> + * Copyright (c) 2025 SpacemiT (Hangzhou) Technology Co. Ltd
-> >>> + * Copyright (c) 2025 Guodong Xu <guodong@riscstar.com>
-> >>> + */
-> >>> +
-> >>> +#include "k3.dtsi"
-> >>> +
-> >>> +/ {
-> >>> +     model =3D "SpacemiT K3 Pico-ITX";
-> >>> +     compatible =3D "spacemit,k3-pico-itx", "spacemit,k3";
-> >>> +
-> >>> +     chosen {
-> >>> +             stdout-path =3D "serial0";
-> >>> +     };
-> >>> +
-> >>> +     memory@100200000 {
-> >>> +             device_type =3D "memory";
-> >>> +             reg =3D <0x1 0x00200000 0x3 0xffe00000>;
-> >>
-> >> Shouldn't the reserved memory be described as no-map /reserved-memory
-> >> nodes instead?
-> >
-> > Hi Heinrich,
-> >
-> > Yes, you are right. Using a reserved-memory node with the no-map proper=
-ty is
-> > the correct approach. I will update this in the next version to explici=
-tly
-> > reserve the first 2MB.
-> >
-> >>
-> >> I would assume that 0x1,0000,0000 is the location of OpenSBI.
-> >> What is at 0x3,ffe0,0000?
-> >
-> > Yes, confirmed, 0x100000000 is the start of OpenSBI. The size 0x3ffe000=
-00 in
-> > my original patch was the result of manually subtracting the 2MB OpenSB=
-I
-> > offset from the total 16GB memory.
-> >
-> > I will correct this in v2 to show the actual memory and put the first 2=
-MB in
-> > reserved-memory {} for opensbi.
->
-> I don't think this is the right approach. The Linux kernel shouldn't care
-> about the size of the underlying SBI implementation. The size of OpenSBI
-> also depends on the version and features enabled. Thus, you should just
+Change the Makefile to add a separate build for common clock logic,
+so the SPACEMIT_CCU entry takes effect, also add necessary
+MODULE_LICENSE()/MODULE_DESCRIPTION()/EXPORT_SYMBOL() for the module
+build.
 
-Thanks for the review. You are correct and I confirmed with the U-Boot
-which we are currently using on the K3 Pico board can handle this memory
-reservation situation. And it should, as you said. U-Boot
-has first-hand information about where and what it wants to reserve.
+This patch mostly fix the build problem, and it should serve as a
+basic for the incoming K3 clock driver. See link.
 
-> let the OpenSBI or whatever SBI fix up the device-tree for you. OpenSBI
-> already does that today. It inserts one or more reserved-memory node and
-> carves out the memory region of its own. If there's some bootloader in
-> between SBI <-> Linux, such as U-boot, then it's responsible for copying
-> over those reserved regions from OpenSBI into the device-tree Linux uses
-> (U-boot already does). Thus, there's no need to manually specify it.
+Link: https://lore.kernel.org/all/20251217001833-GYE1903981@gentoo.org
 
-Agree. Back to the K3 Pico DTS, next version, I will describe memory layout
-as what it is on the board.
-memory@100000000 # starts from 4G
+Change from v3:
+1. patch 1: change Makefile to trigger module build actually
+2. patch 2: new patch for remove internal Kconfig entry
 
-BR,
-Guodong Xu
+Change from v2:
+1. change namespace name to CLK_SPACEMIT
 
->
-> Bo
->
-> >
-> > Thanks for the review.
-> >
-> > BR,
-> > Guodong Xu
-> >
-> >
-> >>
-> >> Best regards
-> >>
-> >> Heinrich
-> >>
-> >>> +     };
-> >>> +};
-> >>> +
-> >>> +&uart0 {
-> >>> +     status =3D "okay";
-> >>> +};
-> >>>
-> >>
-> >
+Change from v1:
+1. Use EXPORT_SYMBOL_NS_GPL to export clock ops
+
+Inochi Amaoto (2):
+  clk: spacemit: Respect Kconfig setting when building modules
+  clk: spacemit: Hide common clock driver from user controller
+
+ drivers/clk/spacemit/Kconfig      | 14 ++++++--------
+ drivers/clk/spacemit/Makefile     |  9 +++++++--
+ drivers/clk/spacemit/ccu-k1.c     |  1 +
+ drivers/clk/spacemit/ccu_common.c |  6 ++++++
+ drivers/clk/spacemit/ccu_ddn.c    |  1 +
+ drivers/clk/spacemit/ccu_mix.c    |  9 +++++++++
+ drivers/clk/spacemit/ccu_pll.c    |  1 +
+ 7 files changed, 31 insertions(+), 10 deletions(-)
+ create mode 100644 drivers/clk/spacemit/ccu_common.c
+
+--
+2.52.0
+
