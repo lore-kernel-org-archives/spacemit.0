@@ -1,131 +1,69 @@
-Received: from mail83.out.titan.email (mail83.out.titan.email [3.216.99.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69341547E7
-	for <spacemit@lists.linux.dev>; Sat, 20 Dec 2025 02:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=3.216.99.61
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ABD231832
+	for <spacemit@lists.linux.dev>; Sat, 20 Dec 2025 02:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766198940; cv=none; b=L2UA+xl2hSNjSV8ZO893ZdaEaAKU5BVNUDfyJvqnkxd6XN5R77LgiPwveqfaNXWSGh0UwYKeDBh2Ft9ichqpuyc+hmq1OBV5G5kGS/nNjmYY5KyEZUR8UELPsM1L5+octT+0bVC/V1xZZdTrtjNqU1BC32vcDyfKFILgL5YvYQU=
+	t=1766199574; cv=none; b=ow20Dg6xREFDx3CqKYr7cl9cMZYOb930aVH0wyJuECXJ9xNQc0Iqrg5wfFGzKaAM0lru//b9ytMkkouXu1tfXr8iG3NZ8zTqaJZjPVDfI6l6NSy70Anj9Lm0v9oIrsmGk7rB3bolmJpbFmu4aQAs0eVCEZIG0npEtijcPIJFa1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766198940; c=relaxed/simple;
-	bh=m2Ah9/mD8Z6fhlkypXmz8p9HUX/8q/HEg/WIFvEGCzs=;
+	s=arc-20240116; t=1766199574; c=relaxed/simple;
+	bh=0EJ+zTtJqRf5xTnMW4/+hYTujivSmGucbg6QhbKMs+U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rHwA0xP0XNKRY65NZEOmPCYMsnf1dY07ReU6tqofbPr/EhaL2Mlo1QgO8LrcUwBwPvbgKQLl+RAEJXdpcL4jurCYduHcwX1O7A8r7CGI1eIRBfDNPYyXmhG60/uPkr3cf/fREpjPV887aEy4O7R4JHEg8+ID5CM42nCdeqd/N2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b=M/f85/qf; arc=none smtp.client-ip=3.216.99.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.b="M/f85/qf"
-Received: from localhost (localhost [127.0.0.1])
-	by smtp-out.flockmail.com (Postfix) with ESMTP id 4dY8440vgrz2xCv;
-	Sat, 20 Dec 2025 02:48:52 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256; bh=9hs/mZnXRigs3cVOr+/B8POWZbewDtqV2rmBsfTbDWM=;
-	c=relaxed/relaxed; d=ziyao.cc;
-	h=cc:subject:date:from:references:in-reply-to:to:message-id:mime-version:from:to:cc:subject:date:message-id:in-reply-to:references:reply-to;
-	q=dns/txt; s=titan1; t=1766198932; v=1;
-	b=M/f85/qfW08nQRYIBpNbEjp184VrhycoRo3YXYO38q7f3n7nA//0VcqX6P/J9dnUzGg7tnxO
-	OZbcKlq9JtraIdn5MVcsNpMbYnukrAmaF2FSHLFM3s3csWhorlZTS34g0fHsaT+aHTFFEeQlJ+3
-	Z+epGopsLFMpYwU6lW0HACvA=
-Received: from pie (unknown [117.171.66.90])
-	by smtp-out.flockmail.com (Postfix) with ESMTPA id 4dY83v45t9z2xB2;
-	Sat, 20 Dec 2025 02:48:43 +0000 (UTC)
-Date: Sat, 20 Dec 2025 02:48:34 +0000
-Feedback-ID: :me@ziyao.cc:ziyao.cc:flockmailId
-From: Yao Zi <me@ziyao.cc>
-To: Guodong Xu <guodong@riscstar.com>, Conor Dooley <conor@kernel.org>
-Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@sifive.com>,
-	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-serial@vger.kernel.org, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@gentoo.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Anup Patel <anup@brainfault.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
-	Yangyu Chen <cyy@cyyself.name>
-Subject: Re: [PATCH 7/8] riscv: dts: spacemit: add initial device tree of
- SpacemiT K3 SoC
-Message-ID: <aUYOgl8ffcJ0Xfwg@pie>
-References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
- <20251216-k3-basic-dt-v1-7-a0d256c9dc92@riscstar.com>
- <60948ca2-ed3d-485b-9b11-15df7ef8791d@canonical.com>
- <CAH1PCMb=+TvB1w+G6a2ANDp05HUwC4r6CFBDHXFwSmoP3Mm8xw@mail.gmail.com>
- <f9b6b5e2-ec9e-4208-8267-77020e0a9411@canonical.com>
- <20251218-basil-quantum-225ce16e4699@spud>
- <CAH1PCMZ3KM9-D3NJ1N2LUHTHFSDVKmGKT5fU8knAL7NnV9E-gw@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=snlOJUwxSkoROHl/LATPlCp75Ge3V6j3riZ1XYMUie9jDodMNVJjXxheUJldni2mPBqM+F5xQ7LSqekPDrQNIiJaqCs4f9XAFTKR55Mmox8Snm39eWoHQ7WVGl5D5haPaGit+QTlKDQI5MJgmsA9Mzkceyt1F4ydqqgpNUcEDgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 8FDBD341A5B;
+	Sat, 20 Dec 2025 02:59:32 +0000 (UTC)
+Date: Sat, 20 Dec 2025 10:59:26 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Yao Zi <me@ziyao.cc>
+Cc: Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Alex Elder <elder@riscstar.com>, Guodong Xu <guodong@riscstar.com>,
+	Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH 2/2] reset: spacemit: fix auxiliary device id
+Message-ID: <20251220025926-GYA1962618@gentoo.org>
+References: <20251220-06-k1-clk-common-v1-0-df28a0a91621@gentoo.org>
+ <20251220-06-k1-clk-common-v1-2-df28a0a91621@gentoo.org>
+ <aUYMjAi8YIqValwb@pie>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH1PCMZ3KM9-D3NJ1N2LUHTHFSDVKmGKT5fU8knAL7NnV9E-gw@mail.gmail.com>
-X-F-Verdict: SPFVALID
-X-Titan-Src-Out: 1766198931978633735.27573.7898649982977667917@prod-use1-smtp-out1001.
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.4 cv=a8/K9VSF c=1 sm=1 tr=0 ts=69460e93
-	a=rBp+3XZz9uO5KTvnfbZ58A==:117 a=rBp+3XZz9uO5KTvnfbZ58A==:17
-	a=IkcTkHD0fZMA:10 a=MKtGQD3n3ToA:10 a=CEWIc4RMnpUA:10 a=VwQbUJbxAAAA:8
-	a=jDTaAnbEAQuvd0Yd3F0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-	a=3z85VNIBY5UIEeAh_hcH:22 a=NWVoK91CQySWRX1oVYDe:22
+In-Reply-To: <aUYMjAi8YIqValwb@pie>
 
-On Fri, Dec 19, 2025 at 10:03:24AM +0800, Guodong Xu wrote:
-> Hi, Conor and Heinrich
-> 
-> On Thu, Dec 18, 2025 at 8:56 AM Conor Dooley <conor@kernel.org> wrote:
-> >
-> > On Wed, Dec 17, 2025 at 09:07:14AM +0100, Heinrich Schuchardt wrote:
-> > > On 12/17/25 08:11, Guodong Xu wrote:
-> >
-> > > > Specifically, I must adhere to
-> > > > Documentation/devicetree/bindings/riscv/extensions.yaml (and cpus.yaml for
-> > > > properties like 'riscv,sv39' which stands for the extension Sv39). If I
-> > > > add extension strings that are not yet defined in these schemas, such as
-> > > > supm, running 'make dtbs_check W=3' fails with: 'supm' is not one of
-> > > > ['i', 'm', 'a', ...], followed by "Unevaluated properties are not allowed."
-> > >
-> > > If Documentation/devicetree/bindings/riscv/extensions.yaml is incomplete
-> > > with respect to ratified extensions, I guess the right approach is to amend
-> > > it and not to curtail the CPU description.
-> >
-> > Absolutely. If the cpu supports something that is not documented, then
-> > please document it rather than omit from the devicetree.
-> 
+Hi Yao,
 
-...
-
-> Strictly describing the SpacemiT X100/K3 (or any core) as RVA23-compliant
-> requires adding these extensions that are currently missing from
-> the kernel bindings:
-> RVA23U64: Ziccif, Ziccamoa, Zicclsm, Za64rs
-> RVA23S64: Ss1p13, Ssccptr, Sstvecd, Sstvala, Sscounterenw, Ssu64xl,
->           Sha, Shcounterenw, Shvstvala, Shtvala, Shvstvecd, Shvsatpa, Shgatpa
-> Plus 'Supm', 'Zic64b', 'Ssstateen', 'B' where the kernel supports them but
-
-Please note B is just the abbreviation of "zba", "zbb", and "zbs", all
-of them have been documented in extensions.yaml.
-
-> they are not literally documented in yaml.
+On 02:40 Sat 20 Dec     , Yao Zi wrote:
+> On Sat, Dec 20, 2025 at 09:11:20AM +0800, Yixun Lan wrote:
+> > Due to the auxiliary register procedure moved to ccu common module,
+> > the auxiliary device id need to be adjusted, otherwise reset driver
+> > will fail to probe.
 > 
-> Is this approach acceptable to you? If so, I will proceed with submitting them.
-> 
-> Thank you very much.
-> 
-> Best regards,
-> Guodong Xu
-> 
+> Does it mean the reset driver fails to probe with only PATCH 1 in the
+> series applied? If so these two patches should probably be merged, or we
+> will get unfunctional commits.
+yes, it will fail with only patch 1
 
-Regards,
-Yao Zi
+and no, I do not want to combine them together as they belong to
+different subsystem. it shouldn't be a problem if they are accepted in
+same merge window, or if people too picky to worry bisectable breakage,
+then I would ask reset/clock maintainer an ack instead to make it go
+via clock tree in one combined PR
+
+-- 
+Yixun Lan (dlan)
