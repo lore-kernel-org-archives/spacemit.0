@@ -1,47 +1,29 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCD48287E
-	for <spacemit@lists.linux.dev>; Fri, 19 Dec 2025 21:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D82B202F9C
+	for <spacemit@lists.linux.dev>; Sat, 20 Dec 2025 01:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766180562; cv=none; b=KDHT1PVmnoAT5MfQpaw6IdepmNJibSvEtAid/Tj3ZNAWTZxB1FwwOC31HyzPa7s75Jg71j4z9Oszz65Euh9yL4mA5EMuyLCi+6srhiPHWQ6F6lngIA86J7dba1USB9gHkD9ytc/idAKQEk7mgf2GHVr/HgOXNE9R4ycYK9+S/xI=
+	t=1766193104; cv=none; b=AzkLsqS/9uh9FvA7wPA5I36U5p96TPrBswjbNPnObqWVhx1xGQbsNBCZMzklwn7/fjn4tAidMYqE2X6q4wWczRwvieEzA5RyYhI9Vso6M7k6ogxEdcx7+BWHASKHlYg9iEm7yZWBhCmHX+I8cGwsPFyiwq/dncFCJGqWFTQE57c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766180562; c=relaxed/simple;
-	bh=NO6cug/mT4Quay7r1JX0jvpgPANtems/0Zrt80SnQjY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gKctI1J6alttVfWE+BcFUfy7mA2gUKizeoOSaD7aYKXzKQ6bYvi7qYLHu0oHdg7jdjWVDjGhUNWcdkJpbmEFWCnjVYj2temBKUV/tbRTDYzIwK3tP2Uh4TG59e86EaKKzwPmdzCjwtx0bw1ZfhVeP514XbLmefTbacIp1/b3MJM=
+	s=arc-20240116; t=1766193104; c=relaxed/simple;
+	bh=LE5+CKwGJWaNVtCNdjn0NY23TOyRwRWlfF4GEP2w9qo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NWtei9Z78zYXgoT9gknZKrdg+MhtZUOyyW6kLP28KPGbGNLLQ95Fd3Diyf4s78uGLtLVWnAiOGmTmAOH0LtIYJN4hRx2Get8qXNwUw5uQk/dDNFA7P46qDg0ESUVWIi6LpNHqNZurPiUNbMtZywzPoBsgoN3clmN8k5E+7S0Do0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from ofsar (unknown [116.232.18.222])
+Received: from [127.0.0.1] (unknown [116.232.18.222])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 514BD341939;
-	Fri, 19 Dec 2025 21:42:36 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 588CD340E69;
+	Sat, 20 Dec 2025 01:11:38 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: linux-kernel@vger.kernel.org,
-	Javier Martinez Canillas <javierm@redhat.com>
-Cc: Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 0/3] riscv: dts: spacemit: Add PMIC and regulators constraints for Milk-V Jupiter
-Date: Sat, 20 Dec 2025 05:42:20 +0800
-Message-ID: <176618016976.76638.11221127377007758575.b4-ty@gentoo.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251206134532.1741648-1-javierm@redhat.com>
-References: <20251206134532.1741648-1-javierm@redhat.com>
+Subject: [PATCH 0/2] clk: spacemit: refactor common ccu driver
+Date: Sat, 20 Dec 2025 09:11:18 +0800
+Message-Id: <20251220-06-k1-clk-common-v1-0-df28a0a91621@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -49,30 +31,70 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALb3RWkC/y3NQQ6CMBCF4auQWTuk04ClrLyHYdGUChNoq60aE
+ 8PdbcDl/5L55gvZJXYZ+uoLyb05cwwl6FSBnU2YHPJYGqSQLUlSKM64ENp1QRu9jwG7kWyrtG5
+ Fo6Cc3ZO78Wcnr8PRyT1eRX4eI3iXs9nlvvq7WpDsSNdNI7SSSMgh2pmNN5fJG17r8gyGbfsBx
+ Lo8TrAAAAA=
+X-Change-ID: 20251217-06-k1-clk-common-8d1c57995047
+To: Stephen Boyd <sboyd@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Alex Elder <elder@riscstar.com>, Guodong Xu <guodong@riscstar.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, Yao Zi <me@ziyao.cc>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1503; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=LE5+CKwGJWaNVtCNdjn0NY23TOyRwRWlfF4GEP2w9qo=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpRffAcyYEULrDYZEm8BPhkKkxwSgkKVyx74t9q
+ n5TlkdSKsaJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaUX3wBsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+182w//dkCcQzR+idlS9IC2GC9rh1ArJiMPYgJSrPAUuDDrhtALE0tTfudbw
+ A/2ftD1sx48cPKGvrj+ni/Z2jJ5KmX5MNZ114yGbpGNPdrfPEE1gLr5bpW/gr1VH1yuq3dkOTXb
+ FtyX8kJQD9hfQ+k8DiRvIlXva744zCgUmjtN/fv5bc5XoiLekzj20l8G9hRJWAc1l7nAlzT8EwV
+ i3F/jPNk2J3w+IFqb0ASUnO2wjhFJvMgW/44yNYLGZ30oLblLXBsJgbmPjIHxjlLYIYmzr1HXxa
+ cdZwc46gGBwkmfcUfBwsFSY5Vy6IXQZ4ZOsZGRYZfaB3zsiWySF9BD+ibZ9H0of4w9SQAgr6nuR
+ spqJDs+dQAD3nKOvQj5otG6vHmbrAokbOkZTWlYmsPztUhxj0VFYCqLm3k4wtut8w8W/3Uv0Z2r
+ yPKP4s7s/e23mwU23k5octQFBC57fdSZQe7G6VLLMX/lo/AHkeN+6xQQxZwKoKK9e36IU930+sb
+ OGOz8b4xj8H0BP+yBQ9qsoOMxq29+7/xND0It9Pglek40GIdxs2MGnI8UpZQQbd+MDhblhpnOrz
+ XLkB551pRVLxj0bsF3vJXaDNCaju8D01taFEhGYu3S344RIrF74vewTM+xyRONDHJvVDdvB/SVc
+ wM3Q/QPQ5aDcOm1StHHBsu6m9A/7Bc=
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
+The goal here is to refactor the clock driver to extract common part, and
+reuse it, so in the future, we can maximize the source code usage once
+adding new clock driver (specifically, for the SpacemiT K3 SoC here)
 
-On Sat, 06 Dec 2025 14:44:52 +0100, Javier Martinez Canillas wrote:
-> This patch series enables the i2c8 adapter, the PMIC, and voltage regulators
-> for the Milk-V Jupiter board.
-> 
-> The power management hardware design on the Milk-V Jupiter is identical to the
-> Banana Pi BPI-F3, so the DT Nodes were copied from the k1-bananapi-f3.dts file.
-> 
-> I have verified the I2C address and regulator constraints against the vendor's
-> downstream DTS to ensure accuracy. I have also dumped the regulator_summary
-> debugfs entry to check that the regulators and constraints are registered:
-> 
-> [...]
+Since reset driver register via auxiliary bus which requires a adjustment
+of the auxiliary device id accordingly.
 
-Applied, thanks!
+This patch will depend on Kconfig fix for building modules [1], and the idea
+come from K3 clock's review[2]
 
-[1/3] riscv: dts: spacemit: Enable i2c8 adapter for Milk-V Jupiter
-      https://github.com/spacemit-com/linux/commit/f33ccc2316304f3a71e40e53f1568e75042b0a4b
-[2/3] riscv: dts: spacemit: Define fixed regulators for Milk-V Jupiter
-      https://github.com/spacemit-com/linux/commit/ae9d03f8aec76c1bff21083b67c211238d7c57b1
-[3/3] riscv: dts: spacemit: Define the P1 PMIC regulators for Milk-V Jupiter
-      https://github.com/spacemit-com/linux/commit/7d307daa12b15a97269f577d5dcf50518758b568
+Link: https://lore.kernel.org/all/20251219012819.440972-1-inochiama@gmail.com/ [1]
+Link: https://lore.kernel.org/all/aTo8sCPpVM1o9PKX@pie [2]
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Yixun Lan (2):
+      clk: spacemit: extract common ccu functions
+      reset: spacemit: fix auxiliary device id
+
+ drivers/clk/spacemit/ccu-k1.c     | 176 +-------------------------------------
+ drivers/clk/spacemit/ccu_common.c | 171 ++++++++++++++++++++++++++++++++++++
+ drivers/clk/spacemit/ccu_common.h |  10 +++
+ drivers/reset/reset-spacemit.c    |   2 +-
+ include/soc/spacemit/ccu.h        |  21 +++++
+ include/soc/spacemit/k1-syscon.h  |  12 +--
+ 6 files changed, 205 insertions(+), 187 deletions(-)
+---
+base-commit: fb964a99ad6848a9022c6909365aad23e177387c
+change-id: 20251217-06-k1-clk-common-8d1c57995047
+prerequisite-message-id: 20251219012819.440972-1-inochiama@gmail.com
+prerequisite-patch-id: df430730ed961011cee5c5d47b7ace84b3c5ebb7
+prerequisite-patch-id: 64003618c33be925602e46b7543f2c13d3f36474
 
 Best regards,
 -- 
