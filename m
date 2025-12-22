@@ -1,162 +1,128 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABE330E821
-	for <spacemit@lists.linux.dev>; Mon, 22 Dec 2025 09:27:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA9A1E9B37
+	for <spacemit@lists.linux.dev>; Mon, 22 Dec 2025 09:36:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766395639; cv=none; b=ZfQUiJiztUcOLylEqOxxJMkoFhpwf1geEWsT/WlvwYhPSEbP4tdjQU/gnQmb2TdrpbuSKLEUqtALi7Nu5KxgQ4ILOZ2bUTDreZOCq2Ig08IRh7S2LJoc9AgRaxR9gF2w1iGioK/wAglgsWiYaOJite/VdAC1TLNZgOxGFtJWjX8=
+	t=1766396172; cv=none; b=T3cZ9qw3br9MVlTUKHyIFTs7pGHcXy6CK4lqQ6Fs3AyBL8+NnRaRjRUl40adj/fP6YAVa2Y0r8EOahPRl6QKOgeTnjNyf1Twnp8FXgGgPvCwPM8HzPlosxkQv4jOnOGy6a/vZJF3S9y1z0Db7ReSa/xSGqvZxEMfXvR1vr09pso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766395639; c=relaxed/simple;
-	bh=f3aAd8TRGvgzszWxZ6Ud1mmv3jorF91PLX3uVFKYvuc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pI2zr1BBa6q19s+T/vswWwYpXeKoGka6IuL/KaoWYmk2auWVyknv3ydK+PDonmSmOL/HYKwoVzCLBYR8MUnCD/IqnlDiZ3YE4kAPC12vO03rCD/CIMxlhBjWB2JxgCXrwBPUuxWRxD99+nGYP5BdEe6gbctZ0e1vKwV8yO34cXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=hziEI3jH; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1766396172; c=relaxed/simple;
+	bh=HkhjCZrne7qQJahedWxiCLoh4aOir3xN7KC94v/fQ40=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jtutwqaMc4wfm4Wi3UgP+bkDgMz1HmoBE39fbkdBAd0QW+NRw/6tnqgfy+Lcvj4e6qfHnir/xXSSAnjqkIMhe8daIIBq+6pNaEyT4QdxFo/Wz140inTtdFmp6X1nMx+SfoZXOTCD/6i9fMiPFhrAWapMLjd184ROyvmBgvyzgJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=FeQN+0iv; arc=none smtp.client-ip=52.59.177.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="hziEI3jH"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-787eb2d8663so45682797b3.0
-        for <spacemit@lists.linux.dev>; Mon, 22 Dec 2025 01:27:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766395636; x=1767000436; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X9JR9FWj1NW5H0iyl0VHxuC1HgCMCwXIwoDdNUbZEwk=;
-        b=hziEI3jHCHrNUXXNWbo0PsOIr/edPwevtwB2U8/FoIUy7DuLxZsWi6arqbhu9wDBOo
-         P7ozVToqv/GvpRK7dmXuKVt9ZfSQNtGkT/vNAxlWrkAJ0vsQwulXWbK8M/umTNxMzTfp
-         LV1WQQKrG69Q2niubztq7yeYh7CvP8KmbJW/NzUx2xMROsOKl897gyOuNHFQrcJuFpuk
-         8h8WDIogI205kXbbR30G9Xx19/H/N2f0wVHGCERy70xN24S1TCc5MS2WS8htqr/vhZhI
-         ToLqhUOEZi3vBiwXUT9wkPlMjwjKZUVHR4beEH40RGyCNgAHFdqayKS5ZsEUj2IQD0s5
-         Pjlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766395636; x=1767000436;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=X9JR9FWj1NW5H0iyl0VHxuC1HgCMCwXIwoDdNUbZEwk=;
-        b=TM2K/UEmTyERX5z7XwdOUBEFUn/GRdL8jTKtKoGhCWQzKu1Yz0dU+aXUmmngxs4hV/
-         cqzNlu8ayxkSET8oK9ZvwSRoLe7LPwoIdDdIfBzLAa55a1fXH8fBezNEljzEr+bnMoL3
-         M+WVBYMSLtgO+/NHQFf1UcQKuRDY61c7JmYvxN/moaNkk36wBaw0fMCiuaAE0GQv6L1W
-         qnZsaGbDGSoCeVgKz/mOBSauat3cDk0q1kOr5dwUbTQNe1GGjGVfjIrnUuMfNcig+qX5
-         hzrri984JKITFVyHvPw8XkkUU9kJ3hgFjJgHq+S/abarBgijxpvSr0szGx2GmBhjyhwM
-         R5vw==
-X-Forwarded-Encrypted: i=1; AJvYcCUae8GqV/cWL8T/WbcPVRPD65D/+QEl4jcba/MhQBoGv/q6iYTbckoYXa6E3H68d+3ZafSrigrDdA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw82RQYA8yCGz1BAPAXux78dDqSJ/iwsJWg6A53sk+2aNQwf98m
-	ZuYJN4vh4FhWjJdqGg41nMNocZ5tx0mVRxS3cczrm0/9sqi7fMFwXnyqQtnPUCQ9xjMVXraJzQS
-	4kfWGjT9LeR9OzhYdKNPcsNWwXnfDpWywJ98+KHJm7A==
-X-Gm-Gg: AY/fxX6vjFcpjs2mppPF6gfP7mXDrtpDqaTRzkmozyukq+AtXaoL9yLVIKuPl3vwFLG
-	qKeAeRu//Xzhkihlmr6/SwFjI8E26Nk0pUfF8IvBieU9BzkIuCzn833/5JFs98Kk3YRy3Hp3LJe
-	Uk3QDjxXWLH9SxuHROWTBiebv0L7B9TiIJtyjqnRzsg4eAgmZKJj6JPPucBX0jTS/kgiqXYhZoq
-	/flf1S83VyHLGUH/IT1zMm8Ony6j5Apft2fusqAJ+0BKr4RTG87+pgO+buAN7GLTAW4F1MRxNxL
-	vtZzA9BFY25FKXnENZFSmxqfj4BNMGltnYRq8Q7mwPly
-X-Google-Smtp-Source: AGHT+IEopdaH4VEXup08bA/QV1AhBuiIpBK4mPcZpQfYrRFDnvPhOVpgLeIitUz/0ef9xzGYyIV1deEuXbqK8/M1Otw=
-X-Received: by 2002:a53:d056:0:10b0:645:527b:bc25 with SMTP id
- 956f58d0204a3-646632e04d3mr8907715d50.43.1766395636333; Mon, 22 Dec 2025
- 01:27:16 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="FeQN+0iv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1766396164;
+	bh=HsbEwL+a3ehQwaqo4UIyfPjDh/hFR3Gu+Q/uCtPiRcM=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=FeQN+0ivvzkZvaMy2YHQO7aBztQanzf01RZheYchbmsZ3KefH6IUtP+u6gBpaEIFD
+	 oEqpS771fF0mK+wNMPJbUjfEelNpJRcixXjD4gyIAuG1AH1TTVYBXTsF46AUDD01Xk
+	 n3pP33SbV6eUGWvtOtf8Qr9sINXowTPUZ/oiMKYc=
+X-QQ-mid: zesmtpsz4t1766396162te0c85235
+X-QQ-Originating-IP: rk4yZ8PstRgyj0RWzoU0G3baXYfMJuIshSlWznk2Z4g=
+Received: from = ( [120.239.196.19])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 22 Dec 2025 17:36:00 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 11526639101067456687
+EX-QQ-RecipientCnt: 16
+Date: Mon, 22 Dec 2025 17:36:00 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Lee Jones <lee@kernel.org>, patchwork-bot+linux-riscv@kernel.org,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	tools@kernel.org
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-riscv@lists.infradead.org, dlan@gentoo.org,
+	elder@riscstar.com, andi.shyti@kernel.org,
+	alexandre.belloni@bootlin.com, lgirdwood@gmail.com,
+	broonie@kernel.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-i2c@vger.kernel.org,
+	linux-rtc@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] fix the SpacemiT P1 Kconfig and resend the K1 I2C
+ ILCR patch.
+Message-ID: <5242B57B5E933BCD+aUkRAGxI5ABW-s3O@kernel.org>
+References: <20251118-p1-kconfig-fix-v3-0-8839c5ac5db3@linux.spacemit.com>
+ <176613181654.3684357.18070317581817603415.git-patchwork-notify@kernel.org>
+ <20251219112634.GJ9275@google.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
- <20251216-k3-basic-dt-v1-7-a0d256c9dc92@riscstar.com> <60948ca2-ed3d-485b-9b11-15df7ef8791d@canonical.com>
- <CAH1PCMb=+TvB1w+G6a2ANDp05HUwC4r6CFBDHXFwSmoP3Mm8xw@mail.gmail.com>
- <f9b6b5e2-ec9e-4208-8267-77020e0a9411@canonical.com> <20251218-basil-quantum-225ce16e4699@spud>
- <CAH1PCMZ3KM9-D3NJ1N2LUHTHFSDVKmGKT5fU8knAL7NnV9E-gw@mail.gmail.com> <aUYOgl8ffcJ0Xfwg@pie>
-In-Reply-To: <aUYOgl8ffcJ0Xfwg@pie>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Mon, 22 Dec 2025 17:27:04 +0800
-X-Gm-Features: AQt7F2rD9S1VFl45xvpftmdWgFdR_R_Ul403nTlRAGDTs5jIW1Osdpar_Os9kF0
-Message-ID: <CAH1PCMb7aUNt7VnYiZF=_V4nVziM-A0JpAqmU26ezwgk36=kKQ@mail.gmail.com>
-Subject: Re: [PATCH 7/8] riscv: dts: spacemit: add initial device tree of
- SpacemiT K3 SoC
-To: Yao Zi <me@ziyao.cc>
-Cc: Conor Dooley <conor@kernel.org>, 
-	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@sifive.com>, 
-	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	spacemit@lists.linux.dev, linux-serial@vger.kernel.org, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, 
-	Samuel Holland <samuel.holland@sifive.com>, Anup Patel <anup@brainfault.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Lubomir Rintel <lkundrak@v3.sk>, Yangyu Chen <cyy@cyyself.name>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251219112634.GJ9275@google.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Ni2ZB8mfJmbFvyCBzBMDPa3xCFaq8m8z5niqr8vjx3twsaaCO18Mq4WP
+	XiEeMRNFHxTdb/oa3Fn3QR27dZcs4VXdxVYQB9r+kQWF2Ir2QXY3t2qKt+x/eH+Cj5OFq4e
+	k2iwn4G2+9adPInhNAygcFdZQOMwR6kZaicOdueI83a+yIYD/+VoilPJgOnnYMd1mnBcAcv
+	lan64mvYE2QHa4EEWP/d0H6d1Vp2cP0OoM5edMjN1LrWCMDbSAWlMOOHbiMDL5g5kNsZanl
+	BZ7K0DN9PKb/6YIIfCeJJdbSLIYF6AMH86dZhs/oIZTwHMlXH5tb5/lAURDjRI5WefsbYfk
+	R3xtx3SiRWvrrd6AnAWckR1bOB679F5j/SRdBB5T8ym/Z1cSu6LayU110IV8JVepL4HZ51b
+	gKnaAN7IY229Sa+xvoOVNsUXSgJGd5UXUKPmbrzHGB3uFKjKQaQI+TwfF3LKjPhkzg7rKcx
+	YMp8tJWY/lf+Dhq7EPhtNwEDBAbrtze4KttJxBpetXuxiOkt1nyDhI9oprbhnqmnC/bviCH
+	QF6xOH3rlhjFH+HJSAiFB5iAca15p1/jbLCY0fO2qg3MKmUtLnhkn20LJTdH5CaWmk0G9oc
+	PU6PRt8n8vohhOxZ2iIskf2+kPDTu+uGY4Y4x5PaO0V9SCArNPdazwvq9KnkcLpmwSlgYTn
+	htkhp3zgQLW8FFy2o+IXUO5vxtda3IBZEVrbVVyBhOdBKM3dllIox9uuJ7eozjBlgXS3uzP
+	PdhK+7fzz3RmXi2B5WMV/2XIKPLNEKcEnAzVpgOmI3Oumm6AH3FIbzNPLAvfJk/OGplxuhF
+	iG5ZyvLcxahybtQrX1WOFI+Jiqps0PoAAHVness1f6qv5cHar2u+uNRHK3Tp+P95BBFys3h
+	QFH7wo59ARAdYZqdaqSkLzPsADzinVBqFvOnkAnlUi/ZYALURzlrX+PjgeGv3CvdKhxWjJj
+	Tby7gWczR+sy1KSJIg8DUTEukG4TJo+FdacWqg/qdJkYtw753sqOGOaw1opzeFUwgeox2sp
+	QKKGEp2ClmyZhxrIAjKLMjxYBPsxi5DbdRKBsyfefo6AqAXcn/lhe+0cDXLEz0ZCzJD0TV4
+	WcguwXD2aZ2xT3kZNTH5Mt4LvOGkJ1KenvJ7nH7HYG+
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
 
-On Sat, Dec 20, 2025 at 10:48=E2=80=AFAM Yao Zi <me@ziyao.cc> wrote:
->
-> On Fri, Dec 19, 2025 at 10:03:24AM +0800, Guodong Xu wrote:
-> > Hi, Conor and Heinrich
-> >
-> > On Thu, Dec 18, 2025 at 8:56=E2=80=AFAM Conor Dooley <conor@kernel.org>=
- wrote:
-> > >
-> > > On Wed, Dec 17, 2025 at 09:07:14AM +0100, Heinrich Schuchardt wrote:
-> > > > On 12/17/25 08:11, Guodong Xu wrote:
-> > >
-> > > > > Specifically, I must adhere to
-> > > > > Documentation/devicetree/bindings/riscv/extensions.yaml (and cpus=
-.yaml for
-> > > > > properties like 'riscv,sv39' which stands for the extension Sv39)=
-. If I
-> > > > > add extension strings that are not yet defined in these schemas, =
-such as
-> > > > > supm, running 'make dtbs_check W=3D3' fails with: 'supm' is not o=
-ne of
-> > > > > ['i', 'm', 'a', ...], followed by "Unevaluated properties are not=
- allowed."
-> > > >
-> > > > If Documentation/devicetree/bindings/riscv/extensions.yaml is incom=
-plete
-> > > > with respect to ratified extensions, I guess the right approach is =
-to amend
-> > > > it and not to curtail the CPU description.
-> > >
-> > > Absolutely. If the cpu supports something that is not documented, the=
-n
-> > > please document it rather than omit from the devicetree.
-> >
->
-> ...
->
-> > Strictly describing the SpacemiT X100/K3 (or any core) as RVA23-complia=
-nt
-> > requires adding these extensions that are currently missing from
-> > the kernel bindings:
-> > RVA23U64: Ziccif, Ziccamoa, Zicclsm, Za64rs
-> > RVA23S64: Ss1p13, Ssccptr, Sstvecd, Sstvala, Sscounterenw, Ssu64xl,
-> >           Sha, Shcounterenw, Shvstvala, Shtvala, Shvstvecd, Shvsatpa, S=
-hgatpa
-> > Plus 'Supm', 'Zic64b', 'Ssstateen', 'B' where the kernel supports them =
-but
->
-> Please note B is just the abbreviation of "zba", "zbb", and "zbs", all
-> of them have been documented in extensions.yaml.
->
+On Fri, Dec 19, 2025 at 11:26:34AM +0000, Lee Jones wrote:
+> Hi Konstantin,
+> 
+> > This series was applied to riscv/linux.git (fixes)
+> > by Alexandre Belloni <alexandre.belloni@bootlin.com>:
+> > 
+> > On Tue, 18 Nov 2025 14:08:04 +0800 you wrote:
+> > > Since P1 Kconfig directly selects K1_I2C, after the I2C ILCR patch was
+> > > merged, the driver would fail [1] when COMMON_CLK was not selected.
+> > > 
+> > > This series fixes the P1 Kconfig and resends the I2C ILCR patch(This
+> > > patch has reverted by maintainer [2]).
+> > > 
+> > > Now, P1 Kconfig patch has been merged[3], so I2C ILCR patch can be
+> > > merged as well.
+> > > 
+> > > [...]
+> > 
+> > Here is the summary with links:
+> >   - [v3,1/4] i2c: spacemit: configure ILCR for accurate SCL frequency
+> >     (no matching commit)
+> >   - [v3,2/4] rtc: spacemit: MFD_SPACEMIT_P1 as dependencies
+> >     https://git.kernel.org/riscv/c/16bd954c9336
+> >   - [v3,3/4] regulator: spacemit: MFD_SPACEMIT_P1 as dependencies
+> >     (no matching commit)
+> 
+> >   - [v3,4/4] mfd: simple-mfd-i2c: add default value
+> >     (no matching commit)
+> 
+> I was just about to send another snot-o-gram about people picking up
+> patches without the correct Acks, but I just realised this is the same
+> Patchwork issue we spoke about a couple of weeks ago.
+> 
+> This formatting is very confusing, since at first blush it looks as
+> though the whole patch-set was applied.
+> 
+> Please can we only list patches that were merged?
+I agree. At first glance, I also thought the entire series was applied.
 
-Yes, Yao Zi. I'll include 'B' in my next version, and add the schema check.
-Thanks.
-
-BR,
-Guodong Xu
-
-> > they are not literally documented in yaml.
-> >
-> > Is this approach acceptable to you? If so, I will proceed with submitti=
-ng them.
-> >
-> > Thank you very much.
-> >
-> > Best regards,
-> > Guodong Xu
-> >
->
-> Regards,
-> Yao Zi
+                          - Troy
+> 
+> -- 
+> Lee Jones [李琼斯]
+> 
