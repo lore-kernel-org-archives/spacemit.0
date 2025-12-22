@@ -1,169 +1,214 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8C32EC0A7
-	for <spacemit@lists.linux.dev>; Mon, 22 Dec 2025 13:08:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2AE1E1A3B;
+	Mon, 22 Dec 2025 20:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766408924; cv=none; b=CasUE9Vnc3B+mx4FPxg/Asp8cG7mwXUdOu/7r53fDxFTocsV4DZHqvJAl+wJhviYULw9Fg2/csohhjvkTuEZ2bndDonNmnp+jNkzLwr940B6j46E0zM0fSM7lJmlAChKzb70SQ5DJwVHDBUR2P4fpqUCTHde84n9ayD/n7NYs/8=
+	t=1766435799; cv=none; b=TZZ/41p4SzdnWSYlAcnfkmUH3MF9vh35ouO1eOq10FBgl9/bAAWHkFMhCuvH4THmOxJG39atpoNgnEELZL7DqIXE0q4VUJuu2N2wO4k9WNCGlVkzrn+vO0OOs1OPq4KPb5XqLceXLzpigLIXLSpel1YnaCwpJmkm9qfvxjK5p84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766408924; c=relaxed/simple;
-	bh=BDrE6CA1Qn9fgNQNXNAcSn19sHUGzVo0ZZdQlJwveko=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QkjuEkzB1qdx0nIp0xY0gtaDloVAviHnQNiMLcGwXFHJx70n6/i57M1GvY7Uy04Ub7sCaucoFHcpZCRRbEY+F+UPwrV/bJ/pldmiyqr1fHzb4/xL571zSA8KvcDr1MqYvHRDrjlxzg1gLhHzWQIsPZjomx9JprXeeDXBasKprYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ZGmmOAbV; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1766435799; c=relaxed/simple;
+	bh=OCb7Ri4ue/mb6gJDnZKrlyQpns/UtB1eogrgWP7fjbU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GjEWa4rQ+hz7OV0CJ/x+lhTKklhYWQ0i3rmtAZws2nj+PagBOC+naYuxcEcMmldJBEURoDrlY9hBy7Qo5BSoC3t/+p+HoTz7ftkDbVTnP7j73b+CRINbajU+ei3LfAIS7RtgwdPxnf2rauT++pUqrdnY8RXLCPktY9UWcFLgEno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aa/IV9M7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ZGmmOAbV"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-34ab8e0df53so3760994a91.3
-        for <spacemit@lists.linux.dev>; Mon, 22 Dec 2025 05:08:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766408922; x=1767013722; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y5UDvIvaVjkkZfBeEFqY4CPR1+ruUJV7ueKVcAIMjEo=;
-        b=ZGmmOAbVEIEzLMD4w2oTyLtEri5ljUsGK8kKlNSJGqGIq2Ox9/PTMgoFTeOmYrHIxo
-         wggOwqB5Lv1pG5n/POzqkBjiG9Zuo6t0et2V5DhJWDuy1B9deKjx6e1eO4b+nSHpiIdl
-         Ld2DaXjIWJG6PNHfREEYsAUBwJI8or/P9foM0SndGoMrQ12debCT1Gk54lRiCfoTcF15
-         HhI1LetdeI0uyi30d8YuxVS9I4Q1k3r90Nrea/S0ZBw5r6355FXq3pJp2tDbkEnqbppP
-         XmtijO3AjaZcOYNVxJzAiU0bidjF4C2523kEqtr8TqZdhE4CkL+wjq7UAAmPDAuMycq8
-         Yhow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766408922; x=1767013722;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Y5UDvIvaVjkkZfBeEFqY4CPR1+ruUJV7ueKVcAIMjEo=;
-        b=fzZl1ahRZPhz5S0oj3tzNwFck7miwn4zOLXEs4J/QX+Fv9vXiCv1pi3lfiUAK4wMTP
-         udqSeGAgAA/yVJVTO9HR6Oil9R+0pYwUEc3GsDRufh/ybOUosMH4790zk7xMLWkDi3yH
-         DXJJDIZRmYRc5lwx2CE6AUnvjy20hc6hQHYA+IhYbibBHeFqslGdSYfUOGtCl6SnY7c8
-         yap3wH0btsivOH8aO8kXaz6k875SpIUYhocSpGUkf2DJYgqLze4PJnLL5+eLWUujlZuj
-         mRowf5CP1jhslq27MZoNYQO4pUjcTH3I05AFo0FHKbSPnseLJZj1Q1cIsowvJFvj7hmX
-         aQZA==
-X-Forwarded-Encrypted: i=1; AJvYcCXsLggTR7YoKhK9RLAFGjjqiC5XtvbNzpyVITwYangiwZ33v+REr9AB52NDrNLaQCHjAEqNvYAEKw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwLY3nU1VPz/DTgFoo8JTs1GhhIQnc+LpTZhXGALtyuOI803KXh
-	K3AX9CNVgShj6iuvTyDGEF6KwYQ5lXDnwIZrztgjRv7qlGarJwfSGVUiFlFt8CK2HC4=
-X-Gm-Gg: AY/fxX4+3w5nCg/3GAnasDRvyWcFgxTAY1NfggWC4GTZFIz01OFTK2qhExAgS9H5K7e
-	Xc8V/NAW+5KQKq4SKMB0XknLzvwxMeiEP6mbnUB2uoi9+FBDAjnnpZ1Eo/OraCnKuG14c5Q37ST
-	WuxotfqcQUdadOEEiDOsZshokmtoFLE6WY7aMmWH000p2azKRV93rSWe8xn5fJF5mzYqLQcVmdf
-	p17N+vpiQtDg72p3s+A5lM6SvZBS4Oi6OZR5nxwHPuNeOD8WZDOaUYmRwiTUcKCGS4CGCKa2Bq/
-	8FmsifimgC0KEQa1uKI1L9UIm9/RPwhbcqwcnVexUVb1eZc8PAZE7tWjLlYT62RiJxLJVK5skKd
-	/YVU3pu8VRt2LEwoZFI0gWaoOItFRTXcAktdP1eZiSCEbX5eXIsh60yLnsTuCpieBJo4SwGnBPv
-	YJy2NQ8IQgt/OM7YTK7JCeWD3bznBORvI=
-X-Google-Smtp-Source: AGHT+IGmybiO9VXGvZFmDwf5i2jOPeKNvQUkXJaS7Qo1wDtRYA343Aqy0CAvztutucUMXstFcLQIPA==
-X-Received: by 2002:a17:90b:4988:b0:34c:2db6:57d6 with SMTP id 98e67ed59e1d1-34e921be64fmr9184464a91.19.1766408921894;
-        Mon, 22 Dec 2025 05:08:41 -0800 (PST)
-Received: from [127.0.1.1] ([2a12:a305:4::402f])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34e70c932casm12970405a91.0.2025.12.22.05.08.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Dec 2025 05:08:41 -0800 (PST)
-From: Guodong Xu <guodong@riscstar.com>
-Date: Mon, 22 Dec 2025 21:04:23 +0800
-Subject: [PATCH v2 13/13] riscv: dts: spacemit: add SpacemiT K3 Pico-ITX
- board device tree
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aa/IV9M7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FCBC4CEF1;
+	Mon, 22 Dec 2025 20:36:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766435798;
+	bh=OCb7Ri4ue/mb6gJDnZKrlyQpns/UtB1eogrgWP7fjbU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Aa/IV9M7BDWFqyXp55P/4K1Yq0lalz6HntPHGQCkSiR0mdrOVkVR0sRPJGED0gO94
+	 XCxP5+vn9aPA5o8wWrf9Qx3wm0e9E/kvAGrpcxKK8xZbP6P1WxgcOdXLwG5jwAEPvo
+	 yB4ceUWwxDUlf8AOiSLhgxwiFchWfAvQ46SUrHGUgbYTlnQd6GsF41pNRpH2+h9XMc
+	 h79ehRoHCpc4EAT4fblDojaDr+PNt0IOwKau7zNTUP7ubJWU5rmQ2+A1xoV1TGEbng
+	 zqQGwgYz3PDYqL1h4havXBcrm7U91TZmELKRRqfkAhrVtIgOlaf9wsavj4C/aUGctz
+	 V/pJSuJ5qt8wQ==
+Date: Mon, 22 Dec 2025 20:36:28 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Cc: Guodong Xu <guodong@riscstar.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@sifive.com>,
+	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
+	linux-serial@vger.kernel.org, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@gentoo.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Anup Patel <anup@brainfault.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
+	Yangyu Chen <cyy@cyyself.name>
+Subject: Re: [PATCH 7/8] riscv: dts: spacemit: add initial device tree of
+ SpacemiT K3 SoC
+Message-ID: <20251222-dimmer-wooing-db29fe925498@spud>
+References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
+ <20251216-k3-basic-dt-v1-7-a0d256c9dc92@riscstar.com>
+ <60948ca2-ed3d-485b-9b11-15df7ef8791d@canonical.com>
+ <CAH1PCMb=+TvB1w+G6a2ANDp05HUwC4r6CFBDHXFwSmoP3Mm8xw@mail.gmail.com>
+ <f9b6b5e2-ec9e-4208-8267-77020e0a9411@canonical.com>
+ <20251218-basil-quantum-225ce16e4699@spud>
+ <CAH1PCMZ3KM9-D3NJ1N2LUHTHFSDVKmGKT5fU8knAL7NnV9E-gw@mail.gmail.com>
+ <20251220-repacking-football-c79e660e788a@spud>
+ <4e4c9e7b-d95c-4157-94c3-b06002f94a48@canonical.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251222-k3-basic-dt-v2-13-3af3f3cd0f8a@riscstar.com>
-References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
-In-Reply-To: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, 
- Thomas Gleixner <tglx@linutronix.de>, 
- Samuel Holland <samuel.holland@sifive.com>, 
- Anup Patel <anup@brainfault.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>, 
- Yangyu Chen <cyy@cyyself.name>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>, 
- Conor Dooley <conor@kernel.org>, Heinrich Schuchardt <xypron.glpk@gmx.de>, 
- Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, 
- Anup Patel <anup@brainfault.org>, Andrew Jones <ajones@ventanamicro.com>, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
- linux-serial@vger.kernel.org, Guodong Xu <guodong@riscstar.com>
-X-Mailer: b4 0.14.2
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="988vl9+00At+flzi"
+Content-Disposition: inline
+In-Reply-To: <4e4c9e7b-d95c-4157-94c3-b06002f94a48@canonical.com>
 
-K3 Pico-ITX is a 2.5-inch single-board computer equipted with a SpacemiT
-K3 SoC.
 
-This minimal device tree enables booting into a serial console with UART
-output.
+--988vl9+00At+flzi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
----
-v2: Add aliases node in this board DT.
-    Update the memory node to reflect the hardware truth. Address
-     starts at 0x100000000 (4G) boundary.
----
- arch/riscv/boot/dts/spacemit/Makefile        |  1 +
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 38 ++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+Heinrich, Samuel,
 
-diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-index 95889e7269d1bae679b28cd053e1b0a23ae6de68..7e2b877025718113a0e31917eadf7562f488d825 100644
---- a/arch/riscv/boot/dts/spacemit/Makefile
-+++ b/arch/riscv/boot/dts/spacemit/Makefile
-@@ -4,3 +4,4 @@ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-r2s.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
-+dtb-$(CONFIG_ARCH_SPACEMIT) += k3-pico-itx.dtb
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..037ce757e5bcae0258a326ea6265185d761f2b52
---- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -0,0 +1,38 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/*
-+ * Copyright (c) 2025 SpacemiT (Hangzhou) Technology Co. Ltd
-+ * Copyright (c) 2025 Guodong Xu <guodong@riscstar.com>
-+ */
-+
-+#include "k3.dtsi"
-+
-+/ {
-+	model = "SpacemiT K3 Pico-ITX";
-+	compatible = "spacemit,k3-pico-itx", "spacemit,k3";
-+
-+	aliases {
-+		serial0 = &uart0;
-+		serial2 = &uart2;
-+		serial3 = &uart3;
-+		serial4 = &uart4;
-+		serial5 = &uart5;
-+		serial6 = &uart6;
-+		serial7 = &uart7;
-+		serial8 = &uart8;
-+		serial9 = &uart9;
-+		serial10 = &uart10;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	memory@100000000 {
-+		device_type = "memory";
-+		reg = <0x1 0x00000000 0x4 0x00000000>;
-+	};
-+};
-+
-+&uart0 {
-+	status = "okay";
-+};
+On Sun, Dec 21, 2025 at 01:10:15AM +0100, Heinrich Schuchardt wrote:
+> On 12/21/25 00:23, Conor Dooley wrote:
+> > On Fri, Dec 19, 2025 at 10:03:24AM +0800, Guodong Xu wrote:
+> > > Hi, Conor and Heinrich
+> > >=20
+> > > On Thu, Dec 18, 2025 at 8:56=E2=80=AFAM Conor Dooley <conor@kernel.or=
+g> wrote:
+> > > >=20
+> > > > On Wed, Dec 17, 2025 at 09:07:14AM +0100, Heinrich Schuchardt wrote:
+> > > > > On 12/17/25 08:11, Guodong Xu wrote:
+> > > >=20
+> > > > > > Specifically, I must adhere to
+> > > > > > Documentation/devicetree/bindings/riscv/extensions.yaml (and cp=
+us.yaml for
+> > > > > > properties like 'riscv,sv39' which stands for the extension Sv3=
+9). If I
+> > > > > > add extension strings that are not yet defined in these schemas=
+, such as
+> > > > > > supm, running 'make dtbs_check W=3D3' fails with: 'supm' is not=
+ one of
+> > > > > > ['i', 'm', 'a', ...], followed by "Unevaluated properties are n=
+ot allowed."
+> > > > >=20
+> > > > > If Documentation/devicetree/bindings/riscv/extensions.yaml is inc=
+omplete
+> > > > > with respect to ratified extensions, I guess the right approach i=
+s to amend
+> > > > > it and not to curtail the CPU description.
+> > > >=20
+> > > > Absolutely. If the cpu supports something that is not documented, t=
+hen
+> > > > please document it rather than omit from the devicetree.
+> > >=20
+> > > Thanks for the review. May I clarify one thing? Both of you mentioned
+> > > document them, given the amount of missing extensions, is it acceptab=
+le if
+> > > I submit a prerequisite patch that only documents these strings in
+> > > riscv/extensions.yaml plus the necessary hwprobe export? Leaving the =
+actual
+> > > usage of these extensions (named features) to the future patches.
+> > >=20
+> > > To provide some context on why I ask: I've investigated the commits &=
+ lkml
+> > > history of RISC-V extensions since v6.5, and I summarized the current=
+ status
+> > > regarding the RVA23 profile here:
+> > > [1] status in v6.18 (inc. v6.19-rc1):
+> > > https://docularxu.github.io/rva23/linux-kernel-coverage.html
+> > > [2] support evolution since v6.5:
+> > > https://docularxu.github.io/rva23/rva23-kernel-support-evolution.html
+> > >=20
+> > > Strictly describing the SpacemiT X100/K3 (or any core) as RVA23-compl=
+iant
+> > > requires adding these extensions that are currently missing from
+> > > the kernel bindings:
+> > > RVA23U64: Ziccif, Ziccamoa, Zicclsm, Za64rs
+> > > RVA23S64: Ss1p13, Ssccptr, Sstvecd, Sstvala, Sscounterenw, Ssu64xl,
+> > >            Sha, Shcounterenw, Shvstvala, Shtvala, Shvstvecd, Shvsatpa=
+, Shgatpa
+> >=20
+> >=20
+> > > Plus 'Supm', 'Zic64b', 'Ssstateen', 'B' where the kernel supports the=
+m but
+> > > they are not literally documented in yaml.
+> >=20
+> > I don't think Supm is suitable for devicetree, doesn't it describe
+> > what the kernel/userspace are capable of rather than hardware?
+> > Zic64b doesn't sound like hardware description (so not really suitable
+> > for devicetree either) but block size information is already represented
+> > by some existing properties (see riscv,cbo*-block-size in riscv/cpus.ya=
+ml)
+> > and duplicating that information is not really a great idea.
+> >=20
+> > I'll admit that I do not really understand Sxstateen and how they work,
+> > but my understanding was that knowing about Smstateen is sufficient and
+> > implied Sstateen, but having Ssstateen defined seems harmless and
+> > possible. I think kvm is the only user of this at the moment, so
+> > probably worth CCing Anup and maybe Drew Jones on the patch adding
+> > Ssstateen to make sure it makes sense.
+>=20
+> Supm is described in
+>=20
+> RISC-V Pointer Masking
+> Version 1.0, 10/2024: Ratified
+> https://raw.githubusercontent.com/riscv/riscv-j-extension/master/zjpm-spe=
+c.pdf
+>=20
+> The interpretation taken by QEMU has been:
+>=20
+> * Supm implies Ssnpm and Smnpm
+> * RVA23 capable machine models display it in the device-tree
+>=20
+> If Supm is not shown in the device-tree, software might assume that the
+> system does not support pointer masking in user mode and is not RVA23
+> compliant.
+>=20
+> Hence I would suggest:
+>=20
+> If the X100 cores have Ssnpm and Smnpm, add Supm to the device-tree.
+>=20
+> If the kernel does not support user space pointer masking, the kernel sho=
+uld
+> filter out Supm and not announce it, neither in /proc/cpuinfo nor via
+> hwprobe.
 
--- 
-2.43.0
+Samuel seems to have some specific thoughts on how this works, given he
+didn't blindly implement ssnpm and smnpm, but has made supm be mode
+dependent and not permitted in dt, hopefully he sees this.
 
+Personally I'm not convinced that putting supm in dt makes sense, but
+instead the kernel should imply it if the sxnpm extension matching the
+mode the kernel is operating in is present and RISCV_ISA_SUPM is set in
+Kconfig. That's effectively how it works at present, except it'd involve
+promoting RISCV_ISA_SUPM to a "real" extension instead of being a macro.
+A validate callback should easily be able to handle checking the
+mode and whether the Kconfig option is set.
+That way it would get exposed to userspace using the actual mechanisms,
+reading the devicetree itself from userspace is not a valid way of
+checking what extensions are usable after all.
+
+
+--988vl9+00At+flzi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaUmrxwAKCRB4tDGHoIJi
+0nD0AQCh7tCcD/VUpyn10ynw6g14Ck95MSUjtbHdKUKfiQ6VTQD+PltQ3Mrq+GoG
+ElDL9JRaanMKaQR08ZCQxkZeZxcEBgI=
+=6WEG
+-----END PGP SIGNATURE-----
+
+--988vl9+00At+flzi--
