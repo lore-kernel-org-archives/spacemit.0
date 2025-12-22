@@ -1,127 +1,162 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C95D30C62B;
-	Mon, 22 Dec 2025 08:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABE330E821
+	for <spacemit@lists.linux.dev>; Mon, 22 Dec 2025 09:27:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766391402; cv=none; b=RRLLneOUDX+DoytSvnUz1W6uxMMByNJqvv51C4xZGLWqa+xaAMsQNyBWqI5/QuDOAOCf5LACbShD9/HBlUOqOuXhfHLN0scctslYgGRtoiqpQystHBftlXcPhso+qJNyAHFgLETQbg9ganhxMbXdOALLTfbjLwmFfFpSaid+VZg=
+	t=1766395639; cv=none; b=ZfQUiJiztUcOLylEqOxxJMkoFhpwf1geEWsT/WlvwYhPSEbP4tdjQU/gnQmb2TdrpbuSKLEUqtALi7Nu5KxgQ4ILOZ2bUTDreZOCq2Ig08IRh7S2LJoc9AgRaxR9gF2w1iGioK/wAglgsWiYaOJite/VdAC1TLNZgOxGFtJWjX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766391402; c=relaxed/simple;
-	bh=HiyaFbB5H/5dXejQQpqIKA+SmWOS8uphrnAWg+OAS94=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d/O/D5czVsaROZFW8DqBZ933G1q2sbbof6JX7dk/8/raVJw4TXZ198RwQH8a6MuaPvT4hHkVfYCRpEuzKIUiG7Ci1q2Uj4Cm234e2wd9JKsym8bAkUZToGLsBWMV/GfylLpYMpKoViXMlI4oUu/scDKM8WBxq84hU85mJdkNr6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hnivuYdt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1766395639; c=relaxed/simple;
+	bh=f3aAd8TRGvgzszWxZ6Ud1mmv3jorF91PLX3uVFKYvuc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pI2zr1BBa6q19s+T/vswWwYpXeKoGka6IuL/KaoWYmk2auWVyknv3ydK+PDonmSmOL/HYKwoVzCLBYR8MUnCD/IqnlDiZ3YE4kAPC12vO03rCD/CIMxlhBjWB2JxgCXrwBPUuxWRxD99+nGYP5BdEe6gbctZ0e1vKwV8yO34cXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=hziEI3jH; arc=none smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hnivuYdt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206EEC116D0;
-	Mon, 22 Dec 2025 08:16:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766391401;
-	bh=HiyaFbB5H/5dXejQQpqIKA+SmWOS8uphrnAWg+OAS94=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=hnivuYdtFE4ssm78t9zKS5st0OoBoIFKUvpkY9KadzO/egKKYjMLHnfLsaat4OVZd
-	 sXuaJvjde2rrxlVCvKkunClFmvigXFOWzkW0nqZ6jPBIB+5BVdLUKFJItYSP67H3vt
-	 pDy2fixKOM5hgjKisnEgCmE3miZ3fq19/Hs9qqajWYHW0m/QBkKuIB8wbBXszHzHKg
-	 Ym7LVg8DZ+Lgh2NjG+SdbYynXuu6NPQXm8l2Ls4VQD4+eq+I4/97V7Ruugcw5nwDdh
-	 c5nwNeKZYIY/0fsBa/Rt2LnzTWfO+zoPUOrvA5mG0TUa0SZ89SgBCBGZo8LQIUUszj
-	 z7/M1O13DGhNw==
-Message-ID: <a4458673-b219-41c4-90f3-b089a8ef76ba@kernel.org>
-Date: Mon, 22 Dec 2025 09:16:31 +0100
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="hziEI3jH"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-787eb2d8663so45682797b3.0
+        for <spacemit@lists.linux.dev>; Mon, 22 Dec 2025 01:27:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766395636; x=1767000436; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=X9JR9FWj1NW5H0iyl0VHxuC1HgCMCwXIwoDdNUbZEwk=;
+        b=hziEI3jHCHrNUXXNWbo0PsOIr/edPwevtwB2U8/FoIUy7DuLxZsWi6arqbhu9wDBOo
+         P7ozVToqv/GvpRK7dmXuKVt9ZfSQNtGkT/vNAxlWrkAJ0vsQwulXWbK8M/umTNxMzTfp
+         LV1WQQKrG69Q2niubztq7yeYh7CvP8KmbJW/NzUx2xMROsOKl897gyOuNHFQrcJuFpuk
+         8h8WDIogI205kXbbR30G9Xx19/H/N2f0wVHGCERy70xN24S1TCc5MS2WS8htqr/vhZhI
+         ToLqhUOEZi3vBiwXUT9wkPlMjwjKZUVHR4beEH40RGyCNgAHFdqayKS5ZsEUj2IQD0s5
+         Pjlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766395636; x=1767000436;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=X9JR9FWj1NW5H0iyl0VHxuC1HgCMCwXIwoDdNUbZEwk=;
+        b=TM2K/UEmTyERX5z7XwdOUBEFUn/GRdL8jTKtKoGhCWQzKu1Yz0dU+aXUmmngxs4hV/
+         cqzNlu8ayxkSET8oK9ZvwSRoLe7LPwoIdDdIfBzLAa55a1fXH8fBezNEljzEr+bnMoL3
+         M+WVBYMSLtgO+/NHQFf1UcQKuRDY61c7JmYvxN/moaNkk36wBaw0fMCiuaAE0GQv6L1W
+         qnZsaGbDGSoCeVgKz/mOBSauat3cDk0q1kOr5dwUbTQNe1GGjGVfjIrnUuMfNcig+qX5
+         hzrri984JKITFVyHvPw8XkkUU9kJ3hgFjJgHq+S/abarBgijxpvSr0szGx2GmBhjyhwM
+         R5vw==
+X-Forwarded-Encrypted: i=1; AJvYcCUae8GqV/cWL8T/WbcPVRPD65D/+QEl4jcba/MhQBoGv/q6iYTbckoYXa6E3H68d+3ZafSrigrDdA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw82RQYA8yCGz1BAPAXux78dDqSJ/iwsJWg6A53sk+2aNQwf98m
+	ZuYJN4vh4FhWjJdqGg41nMNocZ5tx0mVRxS3cczrm0/9sqi7fMFwXnyqQtnPUCQ9xjMVXraJzQS
+	4kfWGjT9LeR9OzhYdKNPcsNWwXnfDpWywJ98+KHJm7A==
+X-Gm-Gg: AY/fxX6vjFcpjs2mppPF6gfP7mXDrtpDqaTRzkmozyukq+AtXaoL9yLVIKuPl3vwFLG
+	qKeAeRu//Xzhkihlmr6/SwFjI8E26Nk0pUfF8IvBieU9BzkIuCzn833/5JFs98Kk3YRy3Hp3LJe
+	Uk3QDjxXWLH9SxuHROWTBiebv0L7B9TiIJtyjqnRzsg4eAgmZKJj6JPPucBX0jTS/kgiqXYhZoq
+	/flf1S83VyHLGUH/IT1zMm8Ony6j5Apft2fusqAJ+0BKr4RTG87+pgO+buAN7GLTAW4F1MRxNxL
+	vtZzA9BFY25FKXnENZFSmxqfj4BNMGltnYRq8Q7mwPly
+X-Google-Smtp-Source: AGHT+IEopdaH4VEXup08bA/QV1AhBuiIpBK4mPcZpQfYrRFDnvPhOVpgLeIitUz/0ef9xzGYyIV1deEuXbqK8/M1Otw=
+X-Received: by 2002:a53:d056:0:10b0:645:527b:bc25 with SMTP id
+ 956f58d0204a3-646632e04d3mr8907715d50.43.1766395636333; Mon, 22 Dec 2025
+ 01:27:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: mmc: spacemit,sdhci: add reset support
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Iker Pedrosa <ikerpedrosam@gmail.com>,
- linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20251221-07-k1-sdhci-reset-v1-0-6780af7fa6e7@gentoo.org>
- <20251221-07-k1-sdhci-reset-v1-1-6780af7fa6e7@gentoo.org>
- <20251221-unnatural-resilient-trogon-7b20a7@quoll>
- <20251222021202-GYA1977180@gentoo.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251222021202-GYA1977180@gentoo.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
+ <20251216-k3-basic-dt-v1-7-a0d256c9dc92@riscstar.com> <60948ca2-ed3d-485b-9b11-15df7ef8791d@canonical.com>
+ <CAH1PCMb=+TvB1w+G6a2ANDp05HUwC4r6CFBDHXFwSmoP3Mm8xw@mail.gmail.com>
+ <f9b6b5e2-ec9e-4208-8267-77020e0a9411@canonical.com> <20251218-basil-quantum-225ce16e4699@spud>
+ <CAH1PCMZ3KM9-D3NJ1N2LUHTHFSDVKmGKT5fU8knAL7NnV9E-gw@mail.gmail.com> <aUYOgl8ffcJ0Xfwg@pie>
+In-Reply-To: <aUYOgl8ffcJ0Xfwg@pie>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Mon, 22 Dec 2025 17:27:04 +0800
+X-Gm-Features: AQt7F2rD9S1VFl45xvpftmdWgFdR_R_Ul403nTlRAGDTs5jIW1Osdpar_Os9kF0
+Message-ID: <CAH1PCMb7aUNt7VnYiZF=_V4nVziM-A0JpAqmU26ezwgk36=kKQ@mail.gmail.com>
+Subject: Re: [PATCH 7/8] riscv: dts: spacemit: add initial device tree of
+ SpacemiT K3 SoC
+To: Yao Zi <me@ziyao.cc>
+Cc: Conor Dooley <conor@kernel.org>, 
+	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@sifive.com>, 
+	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	spacemit@lists.linux.dev, linux-serial@vger.kernel.org, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, 
+	Samuel Holland <samuel.holland@sifive.com>, Anup Patel <anup@brainfault.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Lubomir Rintel <lkundrak@v3.sk>, Yangyu Chen <cyy@cyyself.name>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 22/12/2025 03:12, Yixun Lan wrote:
->>>  required:
->>>    - compatible
->>>    - reg
->>>    - interrupts
->>>    - clocks
->>>    - clock-names
->>> +  - resets
->>> +  - reset-names
->>
->> This is an ABI break without mentioning in commit msg and without any
->> justification.
->>
-> Indeed, this will introduce a breakage when combining new kernel + old dtb
-> 
-> Since in current case, the eMMC works fine without reset line operation,
-> I then would make this property optional (drop it from 'required' section)
-> and switch to use devm_reset_control_get_optional_xx() API in driver code
-> 
-> Does this looks good to you?
-> 
+On Sat, Dec 20, 2025 at 10:48=E2=80=AFAM Yao Zi <me@ziyao.cc> wrote:
+>
+> On Fri, Dec 19, 2025 at 10:03:24AM +0800, Guodong Xu wrote:
+> > Hi, Conor and Heinrich
+> >
+> > On Thu, Dec 18, 2025 at 8:56=E2=80=AFAM Conor Dooley <conor@kernel.org>=
+ wrote:
+> > >
+> > > On Wed, Dec 17, 2025 at 09:07:14AM +0100, Heinrich Schuchardt wrote:
+> > > > On 12/17/25 08:11, Guodong Xu wrote:
+> > >
+> > > > > Specifically, I must adhere to
+> > > > > Documentation/devicetree/bindings/riscv/extensions.yaml (and cpus=
+.yaml for
+> > > > > properties like 'riscv,sv39' which stands for the extension Sv39)=
+. If I
+> > > > > add extension strings that are not yet defined in these schemas, =
+such as
+> > > > > supm, running 'make dtbs_check W=3D3' fails with: 'supm' is not o=
+ne of
+> > > > > ['i', 'm', 'a', ...], followed by "Unevaluated properties are not=
+ allowed."
+> > > >
+> > > > If Documentation/devicetree/bindings/riscv/extensions.yaml is incom=
+plete
+> > > > with respect to ratified extensions, I guess the right approach is =
+to amend
+> > > > it and not to curtail the CPU description.
+> > >
+> > > Absolutely. If the cpu supports something that is not documented, the=
+n
+> > > please document it rather than omit from the devicetree.
+> >
+>
+> ...
+>
+> > Strictly describing the SpacemiT X100/K3 (or any core) as RVA23-complia=
+nt
+> > requires adding these extensions that are currently missing from
+> > the kernel bindings:
+> > RVA23U64: Ziccif, Ziccamoa, Zicclsm, Za64rs
+> > RVA23S64: Ss1p13, Ssccptr, Sstvecd, Sstvala, Sscounterenw, Ssu64xl,
+> >           Sha, Shcounterenw, Shvstvala, Shtvala, Shvstvecd, Shvsatpa, S=
+hgatpa
+> > Plus 'Supm', 'Zic64b', 'Ssstateen', 'B' where the kernel supports them =
+but
+>
+> Please note B is just the abbreviation of "zba", "zbb", and "zbs", all
+> of them have been documented in extensions.yaml.
+>
 
-Yes
+Yes, Yao Zi. I'll include 'B' in my next version, and add the schema check.
+Thanks.
 
-Best regards,
-Krzysztof
+BR,
+Guodong Xu
+
+> > they are not literally documented in yaml.
+> >
+> > Is this approach acceptable to you? If so, I will proceed with submitti=
+ng them.
+> >
+> > Thank you very much.
+> >
+> > Best regards,
+> > Guodong Xu
+> >
+>
+> Regards,
+> Yao Zi
