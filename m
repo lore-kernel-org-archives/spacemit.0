@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8856C21CC64
-	for <spacemit@lists.linux.dev>; Tue, 23 Dec 2025 02:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F1620458A
+	for <spacemit@lists.linux.dev>; Tue, 23 Dec 2025 02:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766456750; cv=none; b=B1Uji09tQSe8Ef0LIR696iFb36gY6/yrbi2AaGRn3loGkFSezjWkwykZNVHKBtzstHYCU4aO/PPsU+FElAnWwVTw0gH3p58zgcbtpH2A+WYfYWH2riBp9udwvexf6FnbNu5DBn67b+hEBxE4Yf21/Qe75fkYLwhgIQGa3mhAdlQ=
+	t=1766456769; cv=none; b=MqoyeU/abDcuX+e5wqwIAAeUnOskbSzQqbREkeEDMpaqLk0P/4aNwFaI/y/V2ICi2L7pvBukTtd+xWWbuu3zq1I2DCdK00GGonGb6PYU16qCU6Zf+zcLiJcul/DmtH7xtb39J7xcxJtCn222eFWbXYiMu8pLjIsqP2LfXmxy6B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766456750; c=relaxed/simple;
-	bh=Tv4IIxbajJGdC0Qo4tZIq/kiXMWsMML3XzBX/R1wVC8=;
+	s=arc-20240116; t=1766456769; c=relaxed/simple;
+	bh=ce4+Y523rDAIPKLiYiVpepgukJhlsG9n/nV8mNpv9ac=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lDTchOqjkz3sMmbillfhSQCGcz/EZphcrP56ikHJzYUnt5OFRdUTcV4L6sB/uTCO0HXRm9kOvc7PclzgFNgsFviCHmEb6deHxRGLDtfHuIjz/tAHfZhQXnpyWVeFD3X8Bib5WB4vU2ub3AJwU2CEkYluZyIXdeEUAOIlirv2FEY=
+	 In-Reply-To:To:Cc; b=BBDzQEsqFJsKsYntaL3DUfRcicXVR0vK+edaa+CsvZFYv19VnsnqwzTs0zfw1bUwrNNqXM7F2OP1uY9V0KJb/UWi8wCioXWnGiDBrLby3XlIOy4gUTiVaumG/QPZz/wBYYQdduEe/+3yWtJ3rtq+Y2xmOzNALSvDQnD6u87DnuI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,11 +19,11 @@ Received: from [127.0.0.1] (unknown [116.232.18.222])
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id E0DD93415D2;
-	Tue, 23 Dec 2025 02:25:38 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C4511340EA8;
+	Tue, 23 Dec 2025 02:25:49 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-Date: Tue, 23 Dec 2025 10:24:49 +0800
-Subject: [PATCH v2 1/3] dt-bindings: mmc: spacemit,sdhci: add reset support
+Date: Tue, 23 Dec 2025 10:24:50 +0800
+Subject: [PATCH v2 2/3] mmc: sdhci-of-k1: add reset support
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -32,7 +32,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251223-07-k1-sdhci-reset-v2-1-5b8248cfc522@gentoo.org>
+Message-Id: <20251223-07-k1-sdhci-reset-v2-2-5b8248cfc522@gentoo.org>
 References: <20251223-07-k1-sdhci-reset-v2-0-5b8248cfc522@gentoo.org>
 In-Reply-To: <20251223-07-k1-sdhci-reset-v2-0-5b8248cfc522@gentoo.org>
 To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
@@ -46,55 +46,80 @@ Cc: Iker Pedrosa <ikerpedrosam@gmail.com>, linux-mmc@vger.kernel.org,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Yixun Lan <dlan@gentoo.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1032; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=Tv4IIxbajJGdC0Qo4tZIq/kiXMWsMML3XzBX/R1wVC8=;
- b=kA0DAAoBMarqR1lNu+0ByyZiAGlJ/Y7I8qJX1p/wYpFnsoywTU9g9XUUIyW2CWKGIFxnlYYfi
- IkCrwQAAQoAmRYhBLW6uMnDG3EVZwIj3DGq6kdZTbvtBQJpSf2OGxSAAAAAAAQADm1hbnUyLDIu
- NSsxLjExLDIsMl8UgAAAAAAuAChpc3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9
- yc2VtYW4ubmV0QjVCQUI4QzlDMzFCNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqu
- pHWU277YFbD/9FnfELT45pvSQ81a+V+pOmcfKhnGgLnrQxUU/13qf9VwBCKGsfdS/w+jTj2sp8l
- LT5+DQYbQ1NSNyC27NQE96aJ5OAQVhaLu15LASyysu8DebeJeZKUiYT3LAP1tnm3rcNsVXQOU7i
- hHkat94/w1H5XR3UFPsaqj7T3bRm9cF8A0WFs3y49gPfdtN5GiRoAebWzD/m7PG2uFfiDvB5uSt
- +lUKD0BZcGJD6KfOj5hlCFt9mhgS9pc1Q1KpnYfwzLMaTjTPR9H9Ug5DXMTJY8OdF5ntWDT4cwK
- T6AY/8edOmApXZFvJkIX1RWRdJXDnVSuKXgeOFlDD494YjVvLbgoNzIiprmLPcorJQ+VKrm3C1y
- VvlJ0qzMqmKCyZqou6oqNhZs4b/qIuda2/dq0EE1Ry6lAUqbVKZLzdWL3o9iL+hPH6AhI3yumhw
- OjeApM5SUr4FjoCndony47Ps9U87dD5T+XZSbxAtEGH/6gkoYy6p3b/pcHWOM/ZnC/ECPUI49nu
- e72LVXx8lTaGtj4di0W58yV4HL+GmVDmILg6TVICkDGUmbkjBtQfA9rtdLQ8rRiABOuGce+HLdg
- nHy3/jd1bFdigNYg5umn1QhnbruAcHx8Mwu7IjwZW/N/cSIXN6x1AVS8y0OWJypNmQMdP3ulZc9
- 6QuKDMNbYIGlYgN0ALZAg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1648; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=ce4+Y523rDAIPKLiYiVpepgukJhlsG9n/nV8mNpv9ac=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpSf2RfD2WwXFPXDLAErvhZvwCQk/JdthhMjeBu
+ ZTBA+ana8iJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaUn9kRsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+1j7w//WGx4F5u5HzGEmjh06B8CmVMVWyJYbEA9sutT2S4yyhY9+sfDGp/CW
+ pShubJaaMJXUqQcBvOV1cugEmFLOQsYwEGhSuck5HScWZljcRkUyVf+QYjm8z0rJXlamzI7qu2x
+ Iu6DGdvvnjkT39Px5+UdVpbQfsI5ESh5KC7oVuqSJM1i1AjclD62J5vpJtiyzZGqw13IM22x6Ka
+ xXPVOzF1tuE9z0VpcRVsaQsdWn1jZSMr1I3Olwp6eJsZtwoKVgP/H4o7mIbTTMctiPnnlc20yAK
+ vBK8ZbVOBtmRdMAyJ+3VtJOQC3J9rCFFojZLj8DGvEOAn3zckuOXi9oXz/1dC3ex+Z+BF28ndDp
+ JFtZUKQs3/OD0v8Gyl16pYJ5USrZ2gLwLZNqVHFlZWDgb8Wlb93o2sIfoRI3V1Gor+hb56+blah
+ vKmVdI4SluGKxdyGa6Fb6ifnHgrFXpDZFjN3RAxLf7+N5+kzRHf5mxqY+bnBkFZCahk6MGQ/69p
+ Dp/n2xyccnexDvLaLucA5wZg/hdMugmvvZBf/u0AklAxM7P6ATct8/TMIS3JXz5eOz16m2DoBtC
+ sYpdO2Nx1aARwRHlP41enF51owypBFg462pknnqKZw3PP9fgcpXddonGMPfn/GpkZURYM3jX0VI
+ EoaFshwS6a0yuct3YjW5itkS83d+n0=
 X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-The SpacemiT SDHCI controller has two reset lines, one connect to AXI bus
-which shared by all controllers, while another one connect to individual
-controller separately.
+The SDHCI controller of SpacemiT K1 SoC requires two resets, add
+support to explicitly request the reset line and deassert during
+initialization phase. Still using devm_xx_get_optional() API to
+make the request optional.
 
 Signed-off-by: Yixun Lan <dlan@gentoo.org>
 ---
- Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mmc/host/sdhci-of-k1.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-index 13d9382058fb..de4e9efeb666 100644
---- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-+++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-@@ -32,6 +32,16 @@ properties:
-       - const: core
-       - const: io
+diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+index 0cc97e23a2f9..a160e1d5d9bd 100644
+--- a/drivers/mmc/host/sdhci-of-k1.c
++++ b/drivers/mmc/host/sdhci-of-k1.c
+@@ -15,6 +15,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_device.h>
++#include <linux/reset.h>
+ #include <linux/platform_device.h>
  
-+  resets:
-+    items:
-+      - description: axi reset, connect to AXI bus, shared by all controllers
-+      - description: sdh reset, connect to individual controller separately
+ #include "sdhci.h"
+@@ -223,6 +224,21 @@ static inline int spacemit_sdhci_get_clocks(struct device *dev,
+ 	return 0;
+ }
+ 
++static inline int spacemit_sdhci_get_resets(struct device *dev)
++{
++	struct reset_control *rst;
 +
-+  reset-names:
-+    items:
-+      - const: axi
-+      - const: sdh
++	rst = devm_reset_control_get_optional_shared_deasserted(dev, "axi");
++	if (IS_ERR(rst))
++		return PTR_ERR(rst);
 +
- required:
-   - compatible
-   - reg
++	rst = devm_reset_control_get_optional_exclusive_deasserted(dev, "sdh");
++	if (IS_ERR(rst))
++		return PTR_ERR(rst);
++
++	return 0;
++}
++
+ static const struct sdhci_ops spacemit_sdhci_ops = {
+ 	.get_max_clock		= spacemit_sdhci_clk_get_max_clock,
+ 	.reset			= spacemit_sdhci_reset,
+@@ -284,6 +300,10 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_pltfm;
+ 
++	ret = spacemit_sdhci_get_resets(dev);
++	if (ret)
++		goto err_pltfm;
++
+ 	ret = sdhci_add_host(host);
+ 	if (ret)
+ 		goto err_pltfm;
 
 -- 
 2.52.0
