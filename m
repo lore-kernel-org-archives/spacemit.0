@@ -1,54 +1,77 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D9B156F45
-	for <spacemit@lists.linux.dev>; Tue, 23 Dec 2025 09:42:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605C51A275
+	for <spacemit@lists.linux.dev>; Tue, 23 Dec 2025 09:43:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766482977; cv=none; b=RmRCY0E5mwIZ0A7CKEL4vOPIqxxN82lKGnUxbcSQ+h/ieAVCvR7xoxvz2A2VQZDzxKShGychGlvM0U2QCThtlabDlyJDpaj1ASogj5Jt2XBxDXlqGm0oWT7JC9Nmy6A17e09mJ8cnK75JE0AYnqoCCrZEBTGbgvt1zEEFEi+6Sg=
+	t=1766483020; cv=none; b=ce7Vz3cTHzrlu4+ELFS6UzQ6Etj6pMMdvcGSZ9Z+gqAcDhQ2ADMLcB6DUzC7lT4WfaM/fPsE+PbD2nIIyh2NUiJQT5uusT2ALPdtzHxlOSQvovkZRILMikfPpc5FMug3EZktcdFmnbwUj91im0h1VMhfzkvdk8pjKiuU3SJnZSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766482977; c=relaxed/simple;
-	bh=xPmgv9l9tzvHhbUtCs7Lzg9mTGY7Snv5sLpkYfFYves=;
+	s=arc-20240116; t=1766483020; c=relaxed/simple;
+	bh=l/xGg3lZcqpSBWluJfeIDeMimjyGoXBIIVY9RShRyGU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ILsg6j6WaFDSj3uWPE+kwXch8i9V8A6gqv2e4lqBfYzrFm8TdBu4eTxhEhYAPjlTB+6zuYZB8nJbKgf+RVRdMlm82Eip6P1hm5CWR32UoRVKUbEm/RRA61zW/B2BFKTV3Gzj6bxw5p+nDBLb8H6Ifq4Qa4NLQ6TIXMlvF/XHEnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=dEWZfT71; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=TnZfySFwQleZxF828Wz3o9dWq4y5iirsOAbDsHNlEeY7xmPmt1OoqbEpqM1hoUg43WLJDi7bzjlmq8iEa4t8uFxc6MZJ1nse3AV1Zt55gezasYKDguwAH1XPeedRvkk/DnMTE3H1Qj137SebdlXMElRML6QTabGTfKwNy0gz0o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cipmny/W; arc=none smtp.client-ip=74.125.82.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="dEWZfT71"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1766482962;
-	bh=DqqDZK3BOFl79wvOzXLQwpubF3qPPTt9v8EL8XFacZA=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=dEWZfT71mmrRWFesPgYGIEZkzwiMrACJ+ITBKYh7FfiKd88wOKkbG9a4MdXGb7iwi
-	 uBeb8vE2GeAKtjQc+4f2+HB0GWL4D7qCaArf194CQTC/iU1gjL5mBZ5kQ0p0AAk4U/
-	 tDclGEfHN+WZn8RySrEhda32LBcFI85YTbjLT2JA=
-X-QQ-mid: zesmtpgz1t1766482956t78cb9070
-X-QQ-Originating-IP: eCG2RGZVrV1DfjhD41RKfyJHVCITcq4ibzzDloWNSV0=
-Received: from = ( [183.48.247.204])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 23 Dec 2025 17:42:34 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 16986777472253226495
-EX-QQ-RecipientCnt: 15
-Date: Tue, 23 Dec 2025 17:42:33 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Yixun Lan <dlan@gentoo.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Linus Walleij <linusw@kernel.org>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cipmny/W"
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-2ae29ddaed9so5201921eec.0
+        for <spacemit@lists.linux.dev>; Tue, 23 Dec 2025 01:43:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766483017; x=1767087817; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SxJbYsS9Flodz6V0WJwrBiZXTghxJcKYTBqtlgaql2c=;
+        b=Cipmny/W3QAg2NGZx5PS8o3Gjj8lqX6GgUqB0uP2b/wJgosWm+6ReOjGIfFDJccBk0
+         4LGkIPO4Cad7HHO3qhReN1XG+M9HBz2faCEDmeUG2NmIsavGUtzKwavn5+WOoKIz048S
+         rhPcMMNS3KVPG6QP2P9CAY+LeJtiiQxrXWFs73ihB0KhpYAlNOGHzoqs/mireQ6QnspY
+         NM7EB2mqfBo5ET04OgAIWKSQhYUWmo5K/ME6ogQBLeeByTvvygBlPxGKirBZZTPkpUJR
+         /s5+T3LmecjWbOZ816AEUAMQGrgBbpqrzsDmt5kD0sinZze/7KqKw+zPi7IIjb1q6wIh
+         +COQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766483017; x=1767087817;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SxJbYsS9Flodz6V0WJwrBiZXTghxJcKYTBqtlgaql2c=;
+        b=MQf/qS7d1OJ8/vwRa/qcJDepVOmLfQXQt+q7q7jWSpR/kayDgTg0SKoZy3GM0Aj/tl
+         7icoLXndE0Rh7r1E4rl5/kJyJSkU5XCsYjWCAt/VJMR/5FQbP3h4/T56QhgxbU7IfUco
+         Iw5BBcRU4BOukjYT9YKXvZvw5H48jskQwTFPmzij10iG/bWnSlrmyITlnLU2kcN7QoJB
+         cfEYuiKzhpMiucUi4X3bJMNUThO1gw/AGUpXQJ6sQWBqdmU0AMiW/Jdl3K6kHDAA5mHU
+         BHe9N1rZ0IrrmHLGi2P87gj/GUzQjxnLqBaDCklR2qk9C0HzwFN7DyTpfLW2JIgfxHIr
+         N6cA==
+X-Forwarded-Encrypted: i=1; AJvYcCUxEyIm89eKXWqQJuOTBVbPPUFqPV/LXEvO/hUVslvGeZsUsy1Wv57H7rpGlbXsR+Hm4uylI+e2Cg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwF0MwlSIEsQBUxEShtQ/nkpdszVe+FZDuIbEQcUlGZEmGoop1f
+	MnHrrML+/F/GKcZXcVRYrjAGIjto8OG8lAHWQfO/NoXS6R5kmBOo3Rbz
+X-Gm-Gg: AY/fxX6tNYndYk6aCGrw1HgwJV5/LvPCqPUqx9WZq2sjRnx58PpQlCbHXYoKyjrwzxm
+	sOL6MMuKzjJWDYH1An50lSvZJR75/blm2NO7Zn5D6q3b14ujEqMvz9w1mDk31OoDCqMSDWL3rqL
+	tStpVvowF28JmJdvCqof61nc25Ensy+VyRJYeX8u520GenhTKAR6I63NLnEHr+J/1Tz6O/dvY/h
+	CPbDbFpw3lucsPzPdGuEGgsec44uBzQAEU9/rR3fmJkrzRW+++xDxriBENKEeAFQfqzPtu0XW1e
+	wrJ8BXFLf9ulF+JiCvLIFZqMqmvbp6VTieZVMSGFTNvuUF9Uc4osr7dQBGV+EEMZar3QrBMHfOY
+	wxX9LYbTrPpgHn/euBLvKs0SuXoRGTd6h2Z4Mml2v98tmkTAE5ezB3T9KZ/7YRkJOkb7n6MMFrZ
+	sZZfXULP67Ag==
+X-Google-Smtp-Source: AGHT+IEp+OSd9R0lrP291Dk7W1AafeaeXYagMJNjBu0iohEINVzAIJUCtwgGHA2QHs2m9CJoX6vTug==
+X-Received: by 2002:a05:7022:608a:b0:11b:a8e3:847b with SMTP id a92af1059eb24-12171a685cbmr13887306c88.5.1766483017187;
+        Tue, 23 Dec 2025 01:43:37 -0800 (PST)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121724cfc0esm56367570c88.2.2025.12.23.01.43.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Dec 2025 01:43:36 -0800 (PST)
+Date: Tue, 23 Dec 2025 17:42:26 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Linus Walleij <linusw@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
 Subject: Re: [PATCH 2/2] pinctrl: spacemit: support I/O power domain
  configuration
-Message-ID: <4D38DBB2D5EA96CC+aUpkCTp00KxEuU_Z@kernel.org>
+Message-ID: <aUpirQFWf3w-5PQ2@inochi.infowork>
 References: <20251223-kx-pinctrl-aib-io-pwr-domain-v1-0-5f1090a487c7@linux.spacemit.com>
  <20251223-kx-pinctrl-aib-io-pwr-domain-v1-2-5f1090a487c7@linux.spacemit.com>
- <20251223093228-GYA1986709@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -57,101 +80,56 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251223093228-GYA1986709@gentoo.org>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MJXRjF2gqSz5kbJX3NdAPN2/6CaTTJUmCupiFHjPyYDhgUtrCFwD2XN4
-	6Yr+2Tl6CqHl/DzDChXtL7mWc71iYXJ6+hiIwmz3TRSMlNnlT2CDLpcHSVUhJckGdCxnLXQ
-	z3RMTbF3or3TXwjrzuD407ZSZ3j3cdITlQP5/YHqudPPXGvr8Gtiazk9ZploUSn5+7nr1A3
-	kRHqPd+JU56/9rdUkZ/k2/YpyawwYgDP315Fbbx4bBEeEJbteAHbBMHoJ8yN3Q+PJJPUGqc
-	UNR0Y4LMKdWNYNOWH/LWJXr5jt637CbupC8HYely/L9+UB3Q9Yl1iwJ/wGBtUnNkJaInHCN
-	DwrNDjGhupkG3jrmmncxChpLyNA0nI8Nbj/4qA+cBD+1aFeiwVxq7wR7+YTeNnCMsJbVh9q
-	krZOmMeAUfu+d1NvulVhB3gdl0lIaBUbveJK9OwknaE5OmL4b5Sc/aezrPKC4Ump3SlANl3
-	6evIPE12TiKf58uoqfpwqPRGCrfKfFXVtm8zzJYiCH5/s96qdWMZ+B+DGJXQ7a7TFQwOwsd
-	TNRNAVKx/NvXcUl8aqiv0rcrqXZp430K2P4FwwclIm5LbJMfBzXFn3ffYM/nnQTm6cnEJwJ
-	KgroVQwUIjRHueS4XvC61ltb1gj3MN7YicSZl+iZyVI2EJ+AasFvuraoheGv9TxQGM7BvMZ
-	PzqPCW7PyFyrQpH9f5UUpP/uynPZY1JbFK5qdWrDRi98BwrV8kTXC0WapBM87eGx+/8zQjB
-	VIhMmutNcUCQxDWc3DHPbEyYWMU9uq18iRb8BZuN0TahiCx4ZKNUWySPv3uyBmugxUSKwnv
-	ue5UzDXusZktu6IsZ5eEeI6NGvmvSnkMlyayezONRxCAAfcFvpHT64ObWrgNg3bPQhixzYp
-	hNJpZEisCt+cc6RXkdGccdxRnj+jXKQ0kMbHqZX2mnGarSkaILPs/6Rpgk5+nO1cbSKCVtf
-	TNuv0bEiDIf7ZFKHs5GNUUG9CbW21cOTm+7fnWTyed/2HrgVBXA2ET7ZgDeta9kkA4C9+NU
-	LieSP5QXoK0ciQMr8i6FRgFX19V9RZdrcoWt9HtgdykUCaGrk/yuDF5Jfnw30vomjnLVgrh
-	65xSE6zd0ZN3SbGeiKTHvsfy+xfYp0BukzHCir8hzuHaGiV8HTM1iVDGu3Lo4BOrQ7iEsMt
-	nkIPtgrQgPQExEiy7M5jPFTiPyHBZg0cgfac
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
+In-Reply-To: <20251223-kx-pinctrl-aib-io-pwr-domain-v1-2-5f1090a487c7@linux.spacemit.com>
 
-On Tue, Dec 23, 2025 at 05:32:28PM +0800, Yixun Lan wrote:
-> Hi Troy,
+On Tue, Dec 23, 2025 at 05:11:12PM +0800, Troy Mitchell wrote:
+> IO domain power control registers are used to configure the operating
+> voltage of dual-voltage GPIO banks. By default, these registers are
+> configured for 3.3V operation. As a result, even when a GPIO bank is
+> externally supplied with 1.8V, the internal logic continues to
+> operate in the 3.3V domain, which may lead to functional failures.
 > 
-> On 17:11 Tue 23 Dec     , Troy Mitchell wrote:
-> > IO domain power control registers are used to configure the operating
-> > voltage of dual-voltage GPIO banks. By default, these registers are
-> > configured for 3.3V operation. As a result, even when a GPIO bank is
-> > externally supplied with 1.8V, the internal logic continues to
-> > operate in the 3.3V domain, which may lead to functional failures.
-> > 
-> > This patch adds support for programming the IO domain power control
-> > registers, allowing dual-voltage GPIO banks to be explicitly configured
-> > for 1.8V operation when required.
-> > 
-> > Care must be taken when configuring these registers. If a GPIO bank is
-> > externally supplied with 3.3V while the corresponding IO power domain
-> > is configured for 1.8V, external current injection (back-powering)
-> > may occur, potentially causing damage to the GPIO pin.
-> > 
-> > Due to these hardware constraints and safety considerations, the IO
-> > domain power control registers are implemented as secure registers.
-> > Access to these registers requires unlocking via the AIB Secure Access
-> > Register (ASAR) in the APBC block before a single read or write
-> > operation can be performed.
-> > 
-> > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > ---
-> >  arch/riscv/boot/dts/spacemit/k1.dtsi  |   4 +-
-> >  drivers/pinctrl/spacemit/pinctrl-k1.c | 131 +++++++++++++++++++++++++++++++++-
-> >  2 files changed, 131 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> > index 7818ca4979b6a7755722919a5958512aa11950ab..23ecb19624f227f3c39de35bf3078379f7a2490e 100644
-> > --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> > +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> dtsi should go as separated patch, then route to SoC tree
-OH I forgot that. Thanks.
+> This patch adds support for programming the IO domain power control
+> registers, allowing dual-voltage GPIO banks to be explicitly configured
+> for 1.8V operation when required.
 > 
-> > @@ -565,10 +565,12 @@ i2c8: i2c@d401d800 {
-> >  
-> >  		pinctrl: pinctrl@d401e000 {
-> >  			compatible = "spacemit,k1-pinctrl";
-> > -			reg = <0x0 0xd401e000 0x0 0x400>;
-> > +			reg = <0x0 0xd401e000 0x0 0x400>,
-> > +			      <0x0 0xd401e800 0x0 0x34>;
-> >  			clocks = <&syscon_apbc CLK_AIB>,
-> >  				 <&syscon_apbc CLK_AIB_BUS>;
-> >  			clock-names = "func", "bus";
-> > +			spacemit,apbc = <&syscon_apbc 0x50>;
-> >  		};
-> >  static int spacemit_pinctrl_probe(struct platform_device *pdev)
-> >  {
-> > +	struct device_node *np = pdev->dev.of_node;
-> >  	struct device *dev = &pdev->dev;
-> >  	struct spacemit_pinctrl *pctrl;
-> >  	struct clk *func_clk, *bus_clk;
-> > @@ -816,6 +927,18 @@ static int spacemit_pinctrl_probe(struct platform_device *pdev)
-> >  	if (IS_ERR(pctrl->regs))
-> >  		return PTR_ERR(pctrl->regs);
-> >  
-> > +	pctrl->io_pd_reg = devm_platform_ioremap_resource(pdev, 1);
-> > +	if (IS_ERR(pctrl->io_pd_reg))
-> > +		return PTR_ERR(pctrl->io_pd_reg);
-> > +
-> > +	pctrl->regmap_apbc =
-> > +		syscon_regmap_lookup_by_phandle_args(np, "spacemit,apbc", 1,
-> > +						     &pctrl->regmap_apbc_offset);
-> Can you simply use syscon_regmap_lookup_by_phandle(), then define 
-> #define APBC_ASFAR		0x50
-> #define APBC_ASSAR		0x54
-I think it just a minor issue. I will keep it.
-But if anyone else thinks the same way as Yixun, please let me know.
+> Care must be taken when configuring these registers. If a GPIO bank is
+> externally supplied with 3.3V while the corresponding IO power domain
+> is configured for 1.8V, external current injection (back-powering)
+> may occur, potentially causing damage to the GPIO pin.
+> 
+> Due to these hardware constraints and safety considerations, the IO
+> domain power control registers are implemented as secure registers.
+> Access to these registers requires unlocking via the AIB Secure Access
+> Register (ASAR) in the APBC block before a single read or write
+> operation can be performed.
+> 
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> ---
+>  arch/riscv/boot/dts/spacemit/k1.dtsi  |   4 +-
+>  drivers/pinctrl/spacemit/pinctrl-k1.c | 131 +++++++++++++++++++++++++++++++++-
+>  2 files changed, 131 insertions(+), 4 deletions(-)
+> 
 
-                      - Troy
+> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> index 7818ca4979b6a7755722919a5958512aa11950ab..23ecb19624f227f3c39de35bf3078379f7a2490e 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> @@ -565,10 +565,12 @@ i2c8: i2c@d401d800 {
+>  
+>  		pinctrl: pinctrl@d401e000 {
+>  			compatible = "spacemit,k1-pinctrl";
+> -			reg = <0x0 0xd401e000 0x0 0x400>;
+> +			reg = <0x0 0xd401e000 0x0 0x400>,
+> +			      <0x0 0xd401e800 0x0 0x34>;
+>  			clocks = <&syscon_apbc CLK_AIB>,
+>  				 <&syscon_apbc CLK_AIB_BUS>;
+>  			clock-names = "func", "bus";
+> +			spacemit,apbc = <&syscon_apbc 0x50>;
+>  		};
+
+This change breaks binding, can we use something like <0x0 0xd401e000 0x0 0x1000>?
+If you insist on a new reg field, you should change the binding as well.
+
+Regards,
+Inochi
