@@ -1,120 +1,99 @@
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9801F37D4
-	for <spacemit@lists.linux.dev>; Tue, 23 Dec 2025 01:06:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51AA21CC64
+	for <spacemit@lists.linux.dev>; Tue, 23 Dec 2025 02:25:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766451972; cv=none; b=nkZyZKlNKaYx1HizAk2b6i+B0P6K8C1DgiIBdSSrAcVBE8Js/x8OR8cIVAEN2XaUg4Fb7KTNsD5LRkJZ8tx7V0jrTyoxlHc9JbuDMsAE185VfxzajenOKgNUGuclErsNhAXNm95bEjgKoQ6El/HY4NIBI0PQBZU2h4jE7lP2FbY=
+	t=1766456740; cv=none; b=Sp3ZEb9KhwiXoPJVv2CyKUmeCRFX/tqrKe4xD8aN4cD7Y88WIYdGf9hvuNxs7FlyehfqSB+nLmcLAewN4EcZBHwH0D27vecqHHi3fAXfNxlbg2YsnLO3eN9bCuiBVoJ2P1zTsUyUEXiNFCfGtWRcYOqxLMzobeZCN7010n4NSvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766451972; c=relaxed/simple;
-	bh=vHUIN2MhSaYiq1ikZpzEh07Q9PjwN5ENuid+tFKOE7k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L1f8wa69fUHJINxbtJEmPNwsQwl7qwb2aeVQrwSTNLTsNbxWZ4RHYWJxbLxsPsqagrR3PsHXtrmWX+tDwaBqg0sUeucE8f+VUDXL9KMUoZvH2UbQVd0gSR4AgdWi5Wj6oZjCeWAuTqahLN97QGscr4MQO8rNwq3kA6BKwRZfPKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Z0H9hVyI; arc=none smtp.client-ip=54.204.34.129
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Z0H9hVyI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1766451897;
-	bh=tlnRc3+JeeFSrgov+0izuaI1AtYRIEdu/7YYdutYt6Q=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=Z0H9hVyIipLGwzgDLrOSuTukr3aUWOF4xKUFvsr0iSHWWB5qwuwryepA7s87z9Ni1
-	 aSiyE21xz9LEnM+4oySUduS/3xmzBSejk3gLf/WK3AKS8l6DnqJMwLLrd2uLv0uGvv
-	 9TKLpxlej4M/6Q3XdE8YPB0ajppfIx6iUqLeqDqI=
-X-QQ-mid: zesmtpgz4t1766451895te80ab387
-X-QQ-Originating-IP: JtifH4K1sur0WoynFNkDk59IJfvD6Lz1xNwTmdgCjE0=
-Received: from = ( [120.239.196.19])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 23 Dec 2025 09:04:54 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13030913243295314513
-EX-QQ-RecipientCnt: 11
-Date: Tue, 23 Dec 2025 09:04:54 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Yixun Lan <dlan@gentoo.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 2/3] pinctrl: spacemit: k3: add initial pin support
-Message-ID: <B34F6DA41EF01479+aUnqtjkWf1sVJbmD@kernel.org>
-References: <20251220-02-k3-pinctrl-v1-0-f6f4aea60abf@gentoo.org>
- <20251220-02-k3-pinctrl-v1-2-f6f4aea60abf@gentoo.org>
- <74FFF1F2D1BF3EFF+aUjsbTB607IkAY87@kernel.org>
- <20251222230338-GYA1980456@gentoo.org>
+	s=arc-20240116; t=1766456740; c=relaxed/simple;
+	bh=Mwz4mD+tkwx1nsWURsMNV1z+XbY+V1uxN9xNzwtuJAA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=aenATT9l9LnuBfWnGYvyURgAeeNjdqZTWnCb1DcPyv3Ytal8Oai1n5FaCLM5cJSKFj1ZlEXkpct0d+lvoLuiIZj3kXJlRLNrNm4HH/I8PIc+TF1Icp6/R7FPYzIre6msvuj48BMRioavHwqa/vHNFMfoCeRBZU4YqDfelEzPUWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [127.0.0.1] (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 08D4A340EA8;
+	Tue, 23 Dec 2025 02:25:27 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+Subject: [PATCH v2 0/3] mmc: sdhci-of-k1: add reset support
+Date: Tue, 23 Dec 2025 10:24:48 +0800
+Message-Id: <20251223-07-k1-sdhci-reset-v2-0-5b8248cfc522@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251222230338-GYA1980456@gentoo.org>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NXFhtRYX6L9xy/OA70OGzMuEvQKnX6EezlhFJARYH/N2fZj3wBg93+Sn
-	aYdm9J/xeTVr8KFf/+21hXt+C3+beB5ThxeVmB0IEmAs2CsDLe/KqGON4o2oBlH35qEnl79
-	mRGGwjFCslfw6GixtEulWyUOJRtL7YWegBGTgkKaMf8oq0WJV9aOyrBRuuiRYaVEkfr2J+8
-	wSVgIgL5f8R2XNeMxjDLo4YAtjUcCX5geXeCsW0ycbJkaExO8YPEK7oUfvGfu+jay25A+Bp
-	7jIw5mqfDUSpp4qXL+YI5/X1vVFvFhxK1UUuRH67bKQnPTW1qOEDcmk6ILD6UEkGMF0tQLz
-	jnWh8jyDuO1pfHEmCNN2YJ57gFFHtqr3qcKbQk+Pt+rY9BZQi3GAW/Qt5OVDzao4u8pwYqs
-	hiEijfdUNpvg55JpwVMEqGb03oMuk+9KfOxkRva3X7Mbs0AkTP3yI6Gbqq9Xq5LnxVXDIiJ
-	VwOuuE4GnTUQHTqUqHfzmE9NIZoujo7HQlwtJduq/4cohI79MOt5TWcnAKNS4gM3/8O8L6i
-	VA73MkO1DCwWKNAB5GFujwHGoG26rffk/iFSU+cE5J4kpxpZnVDd8lsBZ7ZFAIKVrUiiVwg
-	b7Px3GAP5X7bU09R1I0IIUl604y3dQxdJnt81FzoLci/afL6c4vGYYW/IcQc1HY/pn/+TGV
-	kQ2wxoV9s3UsPrxFiUvXOmy4pQuQwjUXmZpJXSi6jlTOlOEhy9Oz/kDbH5SspzaB7mBCB6+
-	7D6vtvAe+Teaz0o7qJPYwe/8yp4vpnHmdk661HusdIqBs7j5sAevBw7zCi+xqZGP3uVbcwO
-	Ccgcwrfd9YD97TXCOmNO4b4CN5bqW8z5ThRD9RADav9fXz5CaUv+OCMFnR8k18s9ZptaLKx
-	xz7JSpyE+/xViWWXKGU+ceO8ZoBnNT7IWn0xKIs08mBbbNgVOnJPj4dp/Zc9LsYYow3MTQX
-	xznUrGq1Pyh6bolzLujkHu4CTt5oUyNETCMtSSC8Quj7E4jdEYMtBxoEi5LT1G6xuxw0BEZ
-	M0c8EnsL/0pwdopUYFYKMqpHTS434snKtx3LsGlA==
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHD9SWkC/32NQQrCMBBFr1Jm7UgmamNdeQ/porSTdBAayZSgl
+ Nzd2AO4fA/++xsoJ2GFW7NB4iwqcalgDw2M87AERpkqgzX2QtYSGodPQp3mUTCx8orUdWYicuZ
+ 8clB3r8Re3nvz0VeeRdeYPvtFpp/9V8tVYuuuZvDODy27e+BljfEYU4C+lPIFBE0AXLMAAAA=
+X-Change-ID: 20251221-07-k1-sdhci-reset-1990d1170437
+To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Iker Pedrosa <ikerpedrosam@gmail.com>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1181; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=Mwz4mD+tkwx1nsWURsMNV1z+XbY+V1uxN9xNzwtuJAA=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpSf2Kf7VnoThBSQORz8vGkFmgA549SBpTrrWq0
+ nQufYgz/VGJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaUn9ihsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+0uiw//cM/o1Oen8fYzJ+hL1YTV6bg2t1KXr38twAHGcpmAoVVwngF2pTZ5C
+ pPLfW4GHft0m1x7hlfpXkIbVBZFc9wCsXByi6kqB7B4UMYCZNCecWlzxhAO7U7TxQJFRaCpSK63
+ 1qmX0s8Bmpo0MhXU1BOj4CS3zGbxkkw5QlI8tOHlrI0YyMPj6Jx4pF6C29aAQbr+zNdW+jf3nTb
+ 1fq4pAhnxbG27+CBaw73vPiXorLYu3i3OCLupIehZgQkzGL6HE53+olJwZ2vZ3DDehKD6w/I2NG
+ zUKrEYkiPns9Atd1nbMPCjmjGyjyB1G8Fqag9UshIerkFnthxt7OcnIQ922YHIxr1kH2fF6ha1B
+ 3B+uov6HAQQ76Qpx4cMMagNuE7CF+DHfE9q5u/jRGF8H4ZD0k+5WArmOGPzor4JfBJmhYnDXYfV
+ J1k5vZREFIRJahSDMD75A4Jx6y1SFZG+iaNZmd6R20bKJokXypCVK8mztAXvUhAsmTJVoKhy9TQ
+ Xxuy1lEyF6yLk3RizevghA3E8o5bGKCekTllz+8WD9LguRgW6ilggzqq92f/PE5YI6WwLUUW8Px
+ o+bf8HSvM69EHsWKCvu48QUGndGRL6trqUDLOwBhtlAxQ50ZrxF6C39gnVOUnimuz/KmQbptCuA
+ g8//1pFwJm7rbhjbIOOLs9LlhHbe3U=
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On Tue, Dec 23, 2025 at 07:03:38AM +0800, Yixun Lan wrote:
-> Hi Troy,
-> 
-> On 14:59 Mon 22 Dec     , Troy Mitchell wrote:
-> > On Sat, Dec 20, 2025 at 06:14:54PM +0800, Yixun Lan wrote:
-> > > For the pinctrl IP of SpacemiT's K3 SoC, it has different register offset
-> > > comparing with previous SoC generation, so introduce a function to do the
-> > > pin to offset mapping. Also add all the pinctrl data.
-> > > 
-> > > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> > > ---
-> > >  drivers/pinctrl/spacemit/Kconfig      |   4 +-
-> > >  drivers/pinctrl/spacemit/pinctrl-k1.c | 354 +++++++++++++++++++++++++++++++++-
-> > >  2 files changed, 352 insertions(+), 6 deletions(-)
-> > > 
-> > [...]
-> > > diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
-> > [...]
-> > > +static unsigned int spacemit_k3_pin_to_offset(unsigned int pin)
-> > > +{
-> > > +	unsigned int offset = pin > 130 ? (pin + 2) : pin;
-> > Is this necessary? I think it's hard to read. Why not:
-> > ```
-> > if (pin > 130)
-> >   pin += 2;
-> > 
-> > return pin << 2;
-> > ```
-> > This avoids the extra variable and makes the code clearer.
-> > > +
-> > > +	return offset << 2;
-> No, I do not want to change, it's pretty much a personal taste here,
-> I did similar as k1_pin_to_offset(), explicitly introduce a variable offset
-> to let reader know it convert from pin to offsett, which is more readable..
-This is a minor issue. both styles are acceptable to me.
+This series try to add reset support explicitly to SpacemiT SDHCI controller.
+Previous it works well for eMMC due to it's already initialized at brom or
+bootloader phase.
+  The controller has two reset lines, one connect to AXI bus which shared by
+all controllers, while another one connect to individual controller separately.
 
-                        - Troy
-> 
-> -- 
-> Yixun Lan (dlan)
-> 
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Changes in v2:
+- To not break DT ABI, make the reset line request optional
+- Use devm_reset_control_get_optional() api
+- Link to v1: https://lore.kernel.org/r/20251221-07-k1-sdhci-reset-v1-0-6780af7fa6e7@gentoo.org
+
+---
+Yixun Lan (3):
+      dt-bindings: mmc: spacemit,sdhci: add reset support
+      mmc: sdhci-of-k1: add reset support
+      riscv: dts: spacemit: sdhci: add reset support
+
+ .../devicetree/bindings/mmc/spacemit,sdhci.yaml      | 10 ++++++++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi                 |  3 +++
+ drivers/mmc/host/sdhci-of-k1.c                       | 20 ++++++++++++++++++++
+ 3 files changed, 33 insertions(+)
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20251221-07-k1-sdhci-reset-1990d1170437
+
+Best regards,
+-- 
+Yixun Lan
+
