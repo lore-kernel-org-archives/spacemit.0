@@ -1,44 +1,54 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B862D192B;
-	Tue, 23 Dec 2025 17:44:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C5928B4F0
+	for <spacemit@lists.linux.dev>; Wed, 24 Dec 2025 02:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766511890; cv=none; b=TuoNzcRqt0ExKFiFOs1BlgTHGsLtZIJm7xhWZkXWgjPCNUo5RTltb5fa3a1Q037IjjvyDvAekl5AWCRNLC3n5XVt+RP9QlxTItNTuK4GI2QDEUWHqKvoMC1rs3Hi/mUvgO/tky+0r41TrYhmzbxD8zCzy/ccOjHaZVVKLXgENX8=
+	t=1766544240; cv=none; b=S7qDovK0zsJ6dtBTNjFrXMq7qlG7UQpYsJBNT8PuSkpTXQdrHBP+Pg5V61CqkL5MIfflbgZyJXAZ3WF+czFpJdt5AJwwwtD7fxw8vrxzBgcoWIg1wWnlCWRGSmTYnRSBaipkXnkd6FrHJ+sqbLuXaBM2BKSfKsFfd9DxMDLd5s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766511890; c=relaxed/simple;
-	bh=u9s4C03Sf2XKogwbD7mhFLbiulZJk9l/PuE/DfgTUVI=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=ZkWMrG+KPHRZrlplqjbEpBH9s41ONQjzpSiorCBxxSU4mTPB6izRc2L3rGwQz99fSbwEnsJkBMiFIUOsTzEqgJEYUamNkVojqbXRpG6seS0qfouBEJDw75H3rreHwvGwbj+3KvU48+dcv6UFHq6dtbPOyknnqsVFPPPJFzrAdJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nqI2BwH0; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nqI2BwH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FFEC116D0;
-	Tue, 23 Dec 2025 17:44:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766511887;
-	bh=u9s4C03Sf2XKogwbD7mhFLbiulZJk9l/PuE/DfgTUVI=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=nqI2BwH0sU7SrGT8Feun1SdQnIrOMtoS82VK5TGHE+bHyxzvzGJevsNDBj6Iz//5T
-	 XjzpQ/FuDQchSCnvEX4XjhZQlJwr1xK3SXGKs3CIAN0KoRs0nIoALL9h4l7+xCDrAx
-	 VQzTZ4TeBPhAFGTbaOJ7UIehh/xbaPEVx3aJJ1bvUI6smkVzZ8uHK1tbE1/+zvx13+
-	 HPbQavT1kqbYXV6/A/T0Ot/Zw9XdulPBQuSOHlnDa6ASCDcZhagK0tEU9p5c5ehWyl
-	 xaJ1pSTo+2L9mYNGAEkkAzft9RjRwOXV/EIe23CTIwRf6fmC/JDKPgrw50RRxmcU27
-	 CDh3MO16zqAug==
-From: Vinod Koul <vkoul@kernel.org>
-To: dlan@gentoo.org, robh@kernel.org, krzk+dt@kernel.org, 
- conor+dt@kernel.org, kishon@kernel.org, Alex Elder <elder@riscstar.com>
-Cc: ziyao@disroot.org, aurelien@aurel32.net, johannes@erdfelt.com, 
- pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
- p.zabel@pengutronix.de, guodong@riscstar.com, devicetree@vger.kernel.org, 
- linux-phy@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+	s=arc-20240116; t=1766544240; c=relaxed/simple;
+	bh=jVUap1/xHO9Yf5dIfNeKOwUCxn2VYFQJLond9gonYJ0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=R5mJC302ckryxT6LGThHOKdQydK/nu/mIjxMp1Mz6gmo0BOMv6v4OiGRq+NBbT2EeMlYM5wDKSc56lnZ9VUj6eQNJVauE/zVd6N10J/AKdK6tSf+b9OKBDJXEa1ZEA6LSCUqM7r1NL2yu6bzF+JJ14oEhOUpx5w1ZczWUdUZQCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from ofsar (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C8855341EB0;
+	Wed, 24 Dec 2025 02:43:50 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+To: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	vkoul@kernel.org,
+	kishon@kernel.org,
+	Alex Elder <elder@riscstar.com>
+Cc: Yixun Lan <dlan@gentoo.org>,
+	ziyao@disroot.org,
+	aurelien@aurel32.net,
+	johannes@erdfelt.com,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	p.zabel@pengutronix.de,
+	guodong@riscstar.com,
+	devicetree@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v7 0/5] Introduce SpacemiT K1 PCIe phy support
+Date: Wed, 24 Dec 2025 10:43:34 +0800
+Message-ID: <176654417344.105270.15876939192797072148.b4-ty@gentoo.org>
+X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251218151235.454997-1-elder@riscstar.com>
 References: <20251218151235.454997-1-elder@riscstar.com>
-Subject: Re: (subset) [PATCH v7 0/5] Introduce SpacemiT K1 PCIe phy support
-Message-Id: <176651188218.759340.4259216266995514459.b4-ty@kernel.org>
-Date: Tue, 23 Dec 2025 23:14:42 +0530
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -46,8 +56,7 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Transfer-Encoding: 8bit
 
 
 On Thu, 18 Dec 2025 09:12:26 -0600, Alex Elder wrote:
@@ -62,15 +71,12 @@ On Thu, 18 Dec 2025 09:12:26 -0600, Alex Elder wrote:
 
 Applied, thanks!
 
-[1/5] dt-bindings: phy: spacemit: Add SpacemiT PCIe/combo PHY
-      commit: f6194de7df023ecfd5156caf8e2762487be07ef7
-[2/5] dt-bindings: phy: spacemit: Introduce PCIe PHY
-      commit: 326a278a3682d390269699f68e597b5ef5a57d26
-[3/5] phy: spacemit: Introduce PCIe/combo PHY
-      commit: 57e920b92724dd568526990c04e79ed54241c5fc
+[4/5] riscv: dts: spacemit: Add a PCIe regulator
+      https://github.com/spacemit-com/linux/commit/73a6c811fa0d07078c9e1eaecea76ce26fb5f10e
+[5/5] riscv: dts: spacemit: PCIe and PHY-related updates
+      https://github.com/spacemit-com/linux/commit/0be016a4b5d1b927de04e2e7a0a2bce51aacbfff
 
 Best regards,
 -- 
-~Vinod
-
+Yixun Lan
 
