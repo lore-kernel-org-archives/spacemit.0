@@ -1,77 +1,171 @@
-Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BA1748F
-	for <spacemit@lists.linux.dev>; Wed, 24 Dec 2025 15:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875C228682;
+	Wed, 24 Dec 2025 23:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766588424; cv=none; b=Y7Kd7d65u2Ek2FFCEZzhywDDxSevVI3GBS7MPytl9eBiTijLMsktWZslvfkXk/YxJ8i28YTJg0urmyOEtclv6ST2EuE8Sp127IWr91DZF96EDoeL7lBF19vNe64KGu2mXbrkBpA6yF+teDt3Qg6BcCO4RzXt+ckfMk0m/af4RuU=
+	t=1766620389; cv=none; b=qG4SdNZdB4n0bDAALNv0ZTMCM4ksIYUEyJwkxtaCAc91MNutzNrAT1RNeQXT7pkCzGVqaCobSXt4LZV+FJqr1hcXIG4fb6XszxZjkJX3zLTHyLYOoCHwILRGiL1o1g5bnHS9fdtzd0X+i05pffo3fGikaso3/6ic2wAo9ffULhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766588424; c=relaxed/simple;
-	bh=ag+Y0sBRrEuLBUiMmZ1pRl97Wh6bphgYBiUyPz7ZrCc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=FLxwCp5546APnQkKPLf9kxFBi1bjHuHYB1oa8rIz9jY4CxHYJJFVZIdFAOLFx2/PbEK6N2/F9Mb6tdzohnOC+yUSH+IOX5rzVKrV1U9NkySMX818PPqqoCusdlz1XSRlIb44tU97NOiQb13/ny2k/aos3BI//KSm6q/Ew8heC1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from localhost.localdomain (unknown [116.25.94.210])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 2e70ee70f;
-	Wed, 24 Dec 2025 23:00:14 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: michael.opdenacker@rootcommit.com
-Cc: dan.carpenter@linaro.org,
-	dlan@gentoo.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add MMC support on BPI-F3 and OrangePi RV2
-Date: Wed, 24 Dec 2025 23:00:03 +0800
-Message-Id: <20251224150003.1232791-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20251215-k1-boards-add-mmc-v1-2-d68dc87d4aab@rootcommit.com>
-References: <20251215-k1-boards-add-mmc-v1-2-d68dc87d4aab@rootcommit.com>
+	s=arc-20240116; t=1766620389; c=relaxed/simple;
+	bh=H0yqiO0IIh+bx2j+z5i/ox186xpZi3mE9KvZEbkJJuA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bzb9sGX45Swb9FUCRoJe/0IFEMDXrMenZoS+pfN+AoSMvWUD3JFD3wpAwI/GIz3IArA9oeKdfZh24v4BsJ3R0SizrPL+FgdyLAntXSMj/OHdCdi01Dxgb649wLUjY3jzm8vPr4gfYAp1XL+Viy4dmAcz2t0eylx3pKunVBbFUNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KlFxyKY2; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KlFxyKY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B57C4CEF7;
+	Wed, 24 Dec 2025 23:53:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766620389;
+	bh=H0yqiO0IIh+bx2j+z5i/ox186xpZi3mE9KvZEbkJJuA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KlFxyKY2+80CMGNz7Jd+5h8dEgmn04kJoRtkVRXSZ0yXW9UwMn9P5hmADYMXlHmAi
+	 ZochvG5h3JUryyw1cQahRqFJADt6oABUlPucQIPabU60fsYmwNiq4qiPpx8iuyNZst
+	 cHZ2w9QDLn5+xMHcrh6azjhkah2GmrMK+MVjdPgsLltrpM928JQzFsWxKu5hNyO0Zu
+	 QC+xyWPrhR/v9yoyBJ1Fuqe7u5UFtWq6QHflaAbGkB0Byy18UtNjYc1gKBHJofyUdU
+	 CvLu40TmvlWHHQM8+JMZh6VXvSzdo+cLlNB+4h81VpZig5/3273Mmvl/FL0XXu5nLz
+	 Cv3PAVooB/i7A==
+Date: Wed, 24 Dec 2025 23:53:02 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@gentoo.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Anup Patel <anup@brainfault.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Heinrich Schuchardt <xypron.glpk@gmx.de>,
+	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-serial@vger.kernel.org
+Subject: Re: [PATCH v2 07/13] dt-bindings: riscv: Add B ISA extension
+ description
+Message-ID: <20251224-charcoal-woozy-d2138984e37a@spud>
+References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
+ <20251222-k3-basic-dt-v2-7-3af3f3cd0f8a@riscstar.com>
+ <20251222-stitch-preachy-3fab87fd6f0f@spud>
+ <CAH1PCMZ7ywZ3unLy0yHYK+fFHk0y=q2cEtPnRi=qSpf=fc75rw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9b50dff8cc03a2kunme7f3b4a155e5
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCH04eVkweT0geQkpIGh9MHVYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk9VSUpLWVdZFhoPEhUdFFlBWUtVS1VLVUtZBg++
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="HifpPaV/N2udDB+0"
+Content-Disposition: inline
+In-Reply-To: <CAH1PCMZ7ywZ3unLy0yHYK+fFHk0y=q2cEtPnRi=qSpf=fc75rw@mail.gmail.com>
 
-Hi,
 
-> +&sdhci0 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&mmc1_cfg>;
+--HifpPaV/N2udDB+0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It would be better to arrange them in alphabetical order.
-(Place pinctrl below no-sdio)
+On Tue, Dec 23, 2025 at 02:51:17PM +0800, Guodong Xu wrote:
+> Hi, Conor
+>=20
+> On Tue, Dec 23, 2025 at 5:17=E2=80=AFAM Conor Dooley <conor@kernel.org> w=
+rote:
+> >
+> > On Mon, Dec 22, 2025 at 09:04:17PM +0800, Guodong Xu wrote:
+> > > Add description of the single-letter "B" extennsion for Bit Manipulat=
+ion.
+> > > B is mandatory for RVA23U64.
+> > >
+> > > The B extension is ratified in the 20240411 version of the unprivileg=
+ed
+> > > ISA specification. According to the ratified spec, "the B standard
+> > > extension comprises instructions provided by the Zba, Zbb, and Zbs
+> > > extensions.
+> > >
+> > > Hence add a schema check rule to enforce that B implies Zba, Zbb and =
+Zbs.
+> > >
+> > > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > > ---
+> > > v2: New patch.
+> > > ---
+> > >  .../devicetree/bindings/riscv/extensions.yaml         | 19 +++++++++=
+++++++++++
+> > >  1 file changed, 19 insertions(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml =
+b/Documentation/devicetree/bindings/riscv/extensions.yaml
+> > > index 565cb2cbb49b552959392810a9b731b43346a594..385e1deb23996d294e766=
+2693f1257f910a6e129 100644
+> > > --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
+> > > +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
+> > > @@ -109,6 +109,13 @@ properties:
+> > >              The standard C extension for compressed instructions, as=
+ ratified in
+> > >              the 20191213 version of the unprivileged ISA specificati=
+on.
+> > >
+> > > +        - const: b
+> > > +          description:
+> > > +            The standard B extension for bit manipulation instructio=
+ns, as
+> > > +            ratified in the 20240411 version of the unprivileged ISA
+> > > +            specification. The B standard extension comprises instru=
+ctions
+> > > +            provided by the Zba, Zbb, and Zbs extensions.
+> > > +
+> > >          - const: v
+> > >            description:
+> > >              The standard V extension for vector operations, as ratif=
+ied
+> > > @@ -735,6 +742,18 @@ properties:
+> > >          then:
+> > >            contains:
+> > >              const: f
+> > > +      # b comprises the following extensions
+> > > +      - if:
+> > > +          contains:
+> > > +            const: b
+> >
+> > What's the value in adding b, if it depends on having all 3 of the
+> > components defined individually too? Currently all "superset" types of
+> > extensions are permitted without their component parts also being defin=
+ed,
+> > this doesn't follow convention and therefore needs to be explained.
+> >
+> > You obviously need this construct because the kernel does not understand
+> > "b", and even if you added support for interpreting "b" to the kernel
+> > this is probably still needed to make sure the ABI is maintained for
+> > anything importing a devicetree from the kernel.
+>=20
+> Yes, exactly. Unlike other single-letter extensions, "b" was ratified
+> (Apr/2024) much later than its components zba/zbb/zbs (Jun/2021).
+> Existing software and the kernel already expect these explicit component
+> strings, so enforcing this dependency ensures cores declaring "b" will
+> also be correctly understood by older software that only looks for
+> zba/zbb/zbs.
+>=20
+> I will update the commit message in v3 to clearly explain this reasoning.
 
-> +	bus-width = <4>;
-> +	cd-gpios = <&gpio K1_GPIO(80) GPIO_ACTIVE_HIGH>;
+> Does it sound good to you?
 
-It seems that "cap-sd-highspeed" is missing?
+Ye, sounds good.
 
-> +	cd-inverted;
-> +	no-sdio;
-> +	status = "okay";
-> +};
+--HifpPaV/N2udDB+0
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> +			sdhci0: mmc@d4280000 {
+-----BEGIN PGP SIGNATURE-----
 
-An immature idea. Would naming nodes this way be better?
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaUx83gAKCRB4tDGHoIJi
+0ljjAP96xVKxRWfFsjBSIjF8h7xUeXl0VufSfLRn5F0vEPVYagD9FVwi2yti7kCT
+/cmOcUpIv5O0e1rm6HZBmL6W+TJv+ws=
+=eCFG
+-----END PGP SIGNATURE-----
 
-sdmmc: mmc@d4280000
- sdio: mmc@d4280800
- emmc: mmc@d4281000
-
-This seems to fit the description here better:
-https://bianbu-linux.spacemit.com/en/device/peripheral_driver/SDHC/#dts-configuration
-
-Thanks,
-Chukun
+--HifpPaV/N2udDB+0--
