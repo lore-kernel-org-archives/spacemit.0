@@ -1,57 +1,39 @@
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F761FB1
-	for <spacemit@lists.linux.dev>; Thu, 25 Dec 2025 07:08:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9700FE555
+	for <spacemit@lists.linux.dev>; Thu, 25 Dec 2025 07:47:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766646506; cv=none; b=GoB7aW7/7bslzSMpFkcHsd85/rHe7EZKDWyn+nVt3bKhg//uSH/QCiGNwkosabQqDiX088XwKMepYwMU0N840Rjy7zPnw6ixrANKLE5nIPzmbejs3A4yrO+ySdZ8rS4lsCjJrRpBuYX/L4GVCUtrYRhyKd3zRWk8yArYOWR77T4=
+	t=1766648881; cv=none; b=eCqLNbzdqh8gzTTT578Qg6o/h89o2zNEgN+RORrfliFYjoGz1caE7Fkdo0FxOsw5KD/UNxMfyBft6wcpJs4IZ4/18NGI9IYovSZ9ImqrOL5p3lGplSD0xAZc4Eh5IwujSDD5nplORUWwqsgSGSwIF+BsppqJlla4+4e0lhjZcgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766646506; c=relaxed/simple;
-	bh=rARb//J5MswjJxfIZ7FZMT+BzHZT91PlHJg2rGx6s9c=;
+	s=arc-20240116; t=1766648881; c=relaxed/simple;
+	bh=qkFtS0tU+hPAO86pGnO+Q9wZJVOF4wKvHVlwO7gN+LA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NLJlylDQdqwh52zZeb7Uh5w2BgDv1oZs0K7DNkrZKRkQwRmdnGcB2bA9MZ4qelPCIe174fy6dNGzhpC2kitmVvGxkDOcnUE0YBDx5HpjVkjgohQfiZPhxY5UtX1AKZ6vmdNWZaTEH9S013usEv77dCJzdX6d05v1J1JjNGfUqNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=W41aODLG; arc=none smtp.client-ip=54.204.34.129
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="W41aODLG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1766646462;
-	bh=WQahqT1T14f9AEri4m6AgEL6eE2ksV0PYPoD24EWkJY=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=W41aODLGr/RM1n97KVI7K6GKXS4XHjvFojO61kU/V0FKFcXDfZQUsZuak4G+mEpsg
-	 Ks/vuv81bGt2LYhfxmiJqAfFr7lE0mxa4t2OO2Xpu233c8wqcCtOddCMtDKuQhMjKB
-	 7IKVOLmVyJ7QqAEImCYMEqiGv5ermj/x8HR+ZBcw=
-X-QQ-mid: esmtpsz20t1766646456tda004313
-X-QQ-Originating-IP: 4hfJ50aJrTyB36UCUQrb27WLy3tNtjF32BK8e7hmUz8=
-Received: from = ( [120.239.196.19])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 25 Dec 2025 15:07:34 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 1149935882015170328
-EX-QQ-RecipientCnt: 17
-Date: Thu, 25 Dec 2025 15:07:33 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Yao Zi <me@ziyao.cc>, Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Linus Walleij <linusw@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH 2/2] pinctrl: spacemit: support I/O power domain
- configuration
-Message-ID: <47781E30EC71C60F+aUzitZG78aGBxHOG@kernel.org>
-References: <20251223-kx-pinctrl-aib-io-pwr-domain-v1-0-5f1090a487c7@linux.spacemit.com>
- <20251223-kx-pinctrl-aib-io-pwr-domain-v1-2-5f1090a487c7@linux.spacemit.com>
- <aUpirQFWf3w-5PQ2@inochi.infowork>
- <B479B24A35F8D731+aUpl0JdKOziIH14S@kernel.org>
- <aUqTH_fis1-g42SU@pie>
+	 Content-Type:Content-Disposition:In-Reply-To; b=dHpyzQowExLb1kUHfEjATWLXHQsXfO8262pXemrX6aiV/kRMk75tzqIenKMvgRtvEjo+febpOy/DbOa1WZWe44ufPrEqoDa5yDTQvzpxRI1kOXjtnnV/HHABBR8fJ+UaDOiILgzSsb/o4jVlO8fqY/5r0W9Gdo3E41mL5jZRSqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 8A9A3341093;
+	Thu, 25 Dec 2025 07:47:58 +0000 (UTC)
+Date: Thu, 25 Dec 2025 15:47:44 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Alex Elder <elder@riscstar.com>, Guodong Xu <guodong@riscstar.com>,
+	Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH 2/2] reset: spacemit: fix auxiliary device id
+Message-ID: <20251225074744-GYA2000703@gentoo.org>
+References: <20251220-06-k1-clk-common-v1-0-df28a0a91621@gentoo.org>
+ <20251220-06-k1-clk-common-v1-2-df28a0a91621@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,94 +42,32 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aUqTH_fis1-g42SU@pie>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NPR7uEA6bBhoIN2duqPMQGd/RUtsedVkMTFHhnewZ6ZeZkV+AVO3mvA6
-	us8SrD6simzAQvZb075yfrdTA8kwlMg891rOtJf6omJLT8RqAxU3NBvY2KIqH841McIFnsC
-	3UZMThkQrfwHuMgBO1CdtdyxxhkfRAra75Oyy4JFH6rYW24bh13VvA8ktAsw2GPCpcr2PjO
-	HBN+1eSvvTpD4MRgCNi/j2IBuWlOrv4D217qCZIhyeqa7+OSZSLgJwWj+8JweycsCeM1BY8
-	wA/lmtCbJnNgF88Fje06Ji1kpCCDNNc4E+Z5jinZHFkv6Z98V9Q9+E5CNJpdje+UBPFhH/J
-	eXwVGZoVoSjHYaZENkUcXH2WYtLMV8NPasBPUBlKvGviidrqNrqOE/XlrxV65qutpRvciUl
-	QnBZkbop0QrSVZYLkeIiNFZlJKzN3fpj8z91z7CY/bsejvoYOabkbMhgXWna3ju1FVq5WSj
-	TG2ofR2BEBpgpIGaY0Pm3Z2M+MWtX52zk4ZgoFnHdrk5U3fEkbzJEiamIbnx2ppWzLql6TJ
-	gcEA4AYwPpiM5ryhjBmNUsbKLCi6xHS6KmuCJ6KXGW6rocNNr4P8XQv6fgnM/JYC2+F1bPk
-	8KmSPlYUR1v9rUysoeTHqxEAq5PgNYRK2P1ShAa+qVhd6IzcGLECdMO/FFMcnwkngZx1wnw
-	rHXQHrTJbcOMDnGiktLftAv/5QczG+AdqvEKdjC1lloPR3NC1fukvqT/r6E3DSsXqlBx6mD
-	1GA7FjV1okKwAfGhXzIqBVCX7ukb2ulZCNkdROrT8DxMH6supwKdaIfXaWkANgD/+8X0OM0
-	RAPOy2siyYAbOZ82zHYMKL/iYkPERuuvaRaFr4Q648yNo7eWZuLPTak5zLR3qAHjgsu0+oz
-	BC2kFQDz0R1jUfoVL7hRzRzoEQ9hjvLHAv+vAWzkVhuIAqqfUcPiGEvYgBFmeMqcDH1OG/U
-	SOnjsalKIh8r05DHtdd2PavF/rcBOCNbYhcJkR7mrCfWKBuX8UvcSCy1X3zLWEduaybcK7a
-	jnKknNzUGf/W1uqwjZ4pXsG1SMUHsWlIFdtO2XNHyPsf+xGcCe
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+In-Reply-To: <20251220-06-k1-clk-common-v1-2-df28a0a91621@gentoo.org>
 
-On Tue, Dec 23, 2025 at 01:03:27PM +0000, Yao Zi wrote:
-> On Tue, Dec 23, 2025 at 05:50:08PM +0800, Troy Mitchell wrote:
-> > On Tue, Dec 23, 2025 at 05:42:26PM +0800, Inochi Amaoto wrote:
-> > > On Tue, Dec 23, 2025 at 05:11:12PM +0800, Troy Mitchell wrote:
-> > > > IO domain power control registers are used to configure the operating
-> > > > voltage of dual-voltage GPIO banks. By default, these registers are
-> > > > configured for 3.3V operation. As a result, even when a GPIO bank is
-> > > > externally supplied with 1.8V, the internal logic continues to
-> > > > operate in the 3.3V domain, which may lead to functional failures.
-> > > > 
-> > > > This patch adds support for programming the IO domain power control
-> > > > registers, allowing dual-voltage GPIO banks to be explicitly configured
-> > > > for 1.8V operation when required.
-> > > > 
-> > > > Care must be taken when configuring these registers. If a GPIO bank is
-> > > > externally supplied with 3.3V while the corresponding IO power domain
-> > > > is configured for 1.8V, external current injection (back-powering)
-> > > > may occur, potentially causing damage to the GPIO pin.
-> > > > 
-> > > > Due to these hardware constraints and safety considerations, the IO
-> > > > domain power control registers are implemented as secure registers.
-> > > > Access to these registers requires unlocking via the AIB Secure Access
-> > > > Register (ASAR) in the APBC block before a single read or write
-> > > > operation can be performed.
-> > > > 
-> > > > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > > > ---
-> > > >  arch/riscv/boot/dts/spacemit/k1.dtsi  |   4 +-
-> > > >  drivers/pinctrl/spacemit/pinctrl-k1.c | 131 +++++++++++++++++++++++++++++++++-
-> > > >  2 files changed, 131 insertions(+), 4 deletions(-)
-> > > > 
-> > > 
-> > > > diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> > > > index 7818ca4979b6a7755722919a5958512aa11950ab..23ecb19624f227f3c39de35bf3078379f7a2490e 100644
-> > > > --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> > > > +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> > > > @@ -565,10 +565,12 @@ i2c8: i2c@d401d800 {
-> > > >  
-> > > >  		pinctrl: pinctrl@d401e000 {
-> > > >  			compatible = "spacemit,k1-pinctrl";
-> > > > -			reg = <0x0 0xd401e000 0x0 0x400>;
-> > > > +			reg = <0x0 0xd401e000 0x0 0x400>,
-> > > > +			      <0x0 0xd401e800 0x0 0x34>;
-> > > >  			clocks = <&syscon_apbc CLK_AIB>,
-> > > >  				 <&syscon_apbc CLK_AIB_BUS>;
-> > > >  			clock-names = "func", "bus";
-> > > > +			spacemit,apbc = <&syscon_apbc 0x50>;
-> > > >  		};
-> > > 
-> > > If you insist on a new reg field, you should change the binding as well.
-> > Yes, I forgot to modify the binding.
-> 
-> This will also break ABI compatibility with older devicetrees, I
-> strongly suggest against a new item in reg property.
-> 
-> Furthermore, it's unreasonable to describe d401_e000 - d401_e400 and
-> d401_e800 - d401_e834 as separate memory regions. TRM claims the region
-> starting from 0xd401_e000 with length 0xc00 is "Pad Configuration". So I
-> think this separation neither simplifies anything nor matches the
-> hardware.
-> 
-> > > This change breaks binding, can we use something like <0x0 0xd401e000 0x0 0x1000>?
-> 
-> If the TRM is correct, we probably can and should.
-I have double checked. Inochi is correct.
-I'll fix it in the next version.
-Thanks!
+Hi All,
 
-                              - Troy
+On 09:11 Sat 20 Dec     , Yixun Lan wrote:
+> Due to the auxiliary register procedure moved to ccu common module,
+> the auxiliary device id need to be adjusted, otherwise reset driver
+> will fail to probe.
+> 
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> ---
+>  drivers/reset/reset-spacemit.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/reset/reset-spacemit.c b/drivers/reset/reset-spacemit.c
+> index e1272aff28f7..0bfd90567011 100644
+> --- a/drivers/reset/reset-spacemit.c
+> +++ b/drivers/reset/reset-spacemit.c
+> @@ -278,7 +278,7 @@ static int spacemit_reset_probe(struct auxiliary_device *adev,
+>  
+>  #define K1_AUX_DEV_ID(_unit) \
+>  	{ \
+> -		.name = "spacemit_ccu_k1." #_unit "-reset", \
+> +		.name = "spacemit_ccu." #_unit "-reset", \
+To distinguish support from K3 SoC, the k1 namespace still need to be
+kept, I will update this in next version
+
+-- 
+Yixun Lan (dlan)
