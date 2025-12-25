@@ -1,51 +1,46 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3275D1A9F97
-	for <spacemit@lists.linux.dev>; Thu, 25 Dec 2025 16:53:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7819C1CD15;
+	Thu, 25 Dec 2025 21:01:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766681626; cv=none; b=GUr47DI3tVqTemqKHuyrc3IfODFWxrogkZG9yxeTS5b3b1yFmaz5V8noRm7SI7ogXFrcgTkqDmwFb3SdS7Zua/VaVRZ6kpt+WooQJU9//JzzsbZ52rXrRHheRWeBAxshB5V48RdgP2QSvOngVgMtMqG/1Gjy82fe1pkgay4gR6Q=
+	t=1766696518; cv=none; b=D1YQtrIsXFFM29ApcHcdXMwz/YhAGbk0TKOPOOKwBCvwoFEFjkZYir4lal9jQSFvziPtUvdvYVmcp9x2GA5ZBKXdkeKPW4s0AULkOMsHqrwWQeOuoFQMe5ZjnfTtkjqwOW/RHJK1imPO6XH5cLOBsuQn3rZaN+7nwtVxiVD4ULM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766681626; c=relaxed/simple;
-	bh=Dyk5KusdMTkoFl1JN6tSgFzsvFGqborzl0/Qs7d6tno=;
+	s=arc-20240116; t=1766696518; c=relaxed/simple;
+	bh=ftZicz13u88tWLL9LuwPfwC6FxR0P2PCchUxPZqxkqs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z6jj/wmM8zyxKC9EWpkIupLWKWmwPnojhVk9WnhMZw+E1OSQd29iN25FphOFryTuRJblX9ggcF7hXJ1a264rqjZW7ElqGCtGslJW/tdyrsivnO8IfU0HvPDE2BAuUfgCNqwOfeHSTAi+oleEtdXD14ETIzezqjgPJH676qXtyV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=x7BL1eqg; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=uwX3QHO1hjqxWf9kVsIFRRll80+6RU30kw14N0GsGDNS92P7BglwVursvqi5RkYYojyq2bQfYOoPABNVLIRClcwj19+79W7dMAY4IrmWWwJwhz/FUQM6p3JF2HuUc3LRx5mQdXrbAeJ7LhDk4o1s+8ZCIfVVJHTMVNyqK6nRiKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cXeH++OB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="x7BL1eqg"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 95B661A2420;
-	Thu, 25 Dec 2025 16:53:42 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 5443E60742;
-	Thu, 25 Dec 2025 16:53:42 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 970C7103C8CAF;
-	Thu, 25 Dec 2025 17:53:37 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1766681621; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=afdzq0G7wsigzO6RVOGJk2hczbqsJTxZQZ9HcD5yI2M=;
-	b=x7BL1eqg+0xLhEmZMN3OS+aGPrn9OBS2gfRbN5PCEBw08tiIZnLhj29tFwQgLxdaL2i496
-	AAgEa5BCZXdkEWMDD0A9DzNC6LYehVAjShKwa+HCuqKpbslkANFusCvJK0viyVHLmvxzFw
-	jCp4NUnx10MWMoVuYz++hV7A74cgQBRLcQw1Bzp9QjWYzWwG7ccpANpG3Vse5PJc0WQHnT
-	/hrJwEepy7h+JoWFgKbib0KW1PYIn1ZQIwjU9gz+uzDYxqmxavGTq4iP2H6yzdQQJ4ixHo
-	V6bpKGhvfYHw8jXucie4hRQ596QJfvFTyGI3IWsN5YSQUEwFl4GjZDdkfQBwdg==
-Date: Thu, 25 Dec 2025 17:53:36 +0100
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-i2c@vger.kernel.org, linux-rtc@vger.kernel.org
-Subject: Re: [PATCH v4 3/3] rtc: spacemit: default module when
- MFD_SPACEMIT_P1 is enabled
-Message-ID: <202512251653368b33c7e7@mail.local>
-References: <20251225-p1-kconfig-fix-v4-0-44b6728117c1@linux.spacemit.com>
- <20251225-p1-kconfig-fix-v4-3-44b6728117c1@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cXeH++OB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D99C4CEF1;
+	Thu, 25 Dec 2025 21:01:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766696517;
+	bh=ftZicz13u88tWLL9LuwPfwC6FxR0P2PCchUxPZqxkqs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cXeH++OB+jScuTXBBpcC7BJAPf0uY6M/OqoroBQe3B+w5w/IbLmgClEjIDrZbtUzY
+	 b3b3wWN5bLYcS6/bTixBNcBauY2MSidgHRICSMX+g4YSvxDCq6Ulc5D+yFpTKiFyiR
+	 lJ+J3IDVN7IP7O0DJ/tH9eZzMi/uj1kLFRiJx1uZtfE8InV64zrBximRbumC6ixGs9
+	 pnvVxJAz0wH14QrDK9yaXoPiKSpD6t1ysT6CP0OUjjxQ38OU3ahVnI7lr92YH6Zkjg
+	 mhkLe89+l1hfnM5yB0ZCQqu8w6pKZhgsVCasFVCUuaUDKiv/w7QjEjyevkJNvSPWKe
+	 if6KzI8mzTznA==
+Date: Thu, 25 Dec 2025 22:01:36 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Encrow Thorne <jyc0019@gmail.com>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Troy Mitchell <troymitchell988@gmail.com>, 
+	Guodong Xu <guodong@riscstar.com>, linux-i2c@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] i2c: k1: add reset support
+Message-ID: <2dmrli7yzznpurg74wet4oidhljjf3csdjly2dwpyvyndhrec3@uc6ke7mep6fv>
+References: <20251219-i2c-reset-v2-0-ad201a602e74@gmail.com>
+ <20251219-i2c-reset-v2-2-ad201a602e74@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -54,45 +49,18 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251225-p1-kconfig-fix-v4-3-44b6728117c1@linux.spacemit.com>
-X-Last-TLS-Session-Version: TLSv1.3
+In-Reply-To: <20251219-i2c-reset-v2-2-ad201a602e74@gmail.com>
 
-On 25/12/2025 15:46:33+0800, Troy Mitchell wrote:
-> The RTC driver defaulted to the same value as MFD_SPACEMIT_P1, which
-> caused it to be built-in automatically whenever the PMIC support was
-> set to y.
-> 
-> This is not always desirable, as the RTC function is not required on
-> all platforms using the SpacemiT P1 PMIC.
+Hi Encrow,
 
-But then, can't people simply change the config? I don't feel like
-this is an improvement.
+...
 
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  drivers/rtc/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
-> index 50dc779f7f983074df7882200c90f0df21d142f2..53866493e9bbaf35ff0de85cbfe43e8343eadc1e 100644
-> --- a/drivers/rtc/Kconfig
-> +++ b/drivers/rtc/Kconfig
-> @@ -410,7 +410,7 @@ config RTC_DRV_SPACEMIT_P1
->  	tristate "SpacemiT P1 RTC"
->  	depends on ARCH_SPACEMIT || COMPILE_TEST
->  	depends on MFD_SPACEMIT_P1
-> -	default MFD_SPACEMIT_P1
-> +	default m if MFD_SPACEMIT_P1
->  	help
->  	  Enable support for the RTC function in the SpacemiT P1 PMIC.
->  	  This driver can also be built as a module, which will be called
-> 
-> -- 
-> 2.52.0
-> 
+> +	rst = devm_reset_control_get_optional_exclusive_deasserted(dev, NULL);
+> +	if (IS_ERR(rst))
+> +		return dev_err_probe(dev, PTR_ERR(rst),
+> +				     "failed to acquire deasserted reset\n");
 
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+If this is optional, why are we returning with error?
+
+Thanks,
+Andi
