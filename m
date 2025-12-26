@@ -1,40 +1,41 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249E71D5CC9
-	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 03:24:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41661A5B9E
+	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 03:26:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766719499; cv=none; b=jV4LRxFq5OFQ6tejvlzhyR3DNQTCFIDGDkWrPRTUInVISLlYqV2VWvn0xkNc5lMtimKH2rKMiEAJEN8TX4W3ia3Js8J/+r07oUF/O2WjB51vzKbFxE+phD5C25z5rU29Cb7aSCTVk99h8qzQcIxk7g6uOz58aLEB25H5EotNKdE=
+	t=1766719611; cv=none; b=hRnWQq4tmvcxGWlnz0fHSqJbU5tci3Fr3XftpY7FYaQ03JapUS7uVYRTL30nssNjv6NYJsH9pT509iEpjkh1ySFdNPghajne8iW2X0tRw9Geok3FssTGRczTfBUonsX2ZI77ujjSv40VjKVZtF5CoagEp6qvWSQG+xICDRHcnxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766719499; c=relaxed/simple;
-	bh=vT94Sebf/F24mJKX1jIMYapY8TGEBYIjmkFk/wVs42g=;
+	s=arc-20240116; t=1766719611; c=relaxed/simple;
+	bh=BgXzJDqwoyDsix3C/1tUhRxvBXkILq8KJJWurzQ8XnU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T6Yl+R5lxLrnjzmVtXSDojFZy/R0yBgbup+yD3XCB/5iqsSaU9pWbPzK//tKRihaQ3DXT7q6ScjcAbW7JnB748kBGdLm9gJv9w9OCrPlX1o9hl3nDSEAbePJusUdC6qll3tYddhVbJEm5qzVRUB+FTdPpuB0iJx8ogQxMzXixc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=sU/QDOqR; arc=none smtp.client-ip=54.243.244.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=UxpDcSj2qlkQgQlxrh535ctLWtOCAi6o0xXtemPL/OUCclpLaW2us6mWuY1Zt+3qxZ/1CXfkTRPoySR+dJ0YcCjrHFpIBCVXeUGJ/32i6o+i71+2mxhUe9nCLs7j+VtoopWL1/bcMcrnRBEhuV+qOiTcHhBeD/3V10SPDzBz+Uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=JANkgSTu; arc=none smtp.client-ip=18.132.163.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="sU/QDOqR"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="JANkgSTu"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1766719451;
-	bh=ZGYixiNr7TgV4tXYZjkDv48ADHaDqX/RgfMC9wzd8ZM=;
+	s=mxsw2412; t=1766719558;
+	bh=d4wAjrfZaiGw8WX4hHJd4M+lVGETHBvdtA4Tr1bun5g=;
 	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=sU/QDOqRCazu2lyhT2MEuClWm6+BErA5W7UFFI7KFf2cvYnN2UaMdAc3xZoy0snvc
-	 HKTNPzvzCDWhSRbKXCJ2aA47OxGrVJdnQzs8rVqgJDwWUKcgR4af6FK/BtMyBkEHWO
-	 NATVunk/JCCHsrUflFkxy8ekGCe9Bpc01V09k3Ow=
-X-QQ-mid: zesmtpgz3t1766719449t6da0dbd5
-X-QQ-Originating-IP: /spbIg54ayM0uf1VDTy00rI812ssEztteaeVpK8OAVs=
+	b=JANkgSTuVRx+6NDdzzzicfV1VHbc5JHd5Vz1D93L0UREW5Zu9GakNyt8QAGb/LZRo
+	 u6kgHasHHosZMxyqYyassWoF8mRCSFfQsKc/lMPrkxpX6cid4/ArN42UM5j+b/rBSE
+	 R06a043S+lDHiDfY358HJ9Mo4P6/cF8ajd/jC+RQ=
+X-QQ-mid: esmtpgz13t1766719550t82a12a29
+X-QQ-Originating-IP: PieMHnuodpUbtX3Z4xQgyrHPViUuOiKsiF0WOIWLd8k=
 Received: from = ( [183.48.244.228])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 26 Dec 2025 11:24:07 +0800 (CST)
+	id ; Fri, 26 Dec 2025 11:25:48 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 12943365269370993549
-EX-QQ-RecipientCnt: 19
-Date: Fri, 26 Dec 2025 11:24:07 +0800
+X-BIZMAIL-ID: 13964547808078100876
+EX-QQ-RecipientCnt: 20
+Date: Fri, 26 Dec 2025 11:25:48 +0800
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Encrow Thorne <jyc0019@gmail.com>,
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+	Encrow Thorne <jyc0019@gmail.com>,
 	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
 	Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -46,10 +47,11 @@ Cc: Troy Mitchell <troymitchell988@gmail.com>,
 	Guodong Xu <guodong@riscstar.com>, linux-i2c@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] i2c: k1: add reset support
-Message-ID: <7C70798E25DC7187+aU3_145f-0aK1tZi@kernel.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: i2c: spacemit: add optional resets
+Message-ID: <65A454B4ACFB1A38+aU4APFpyblOCKqJ4@kernel.org>
 References: <20251219-i2c-reset-v2-0-ad201a602e74@gmail.com>
- <20251219-i2c-reset-v2-2-ad201a602e74@gmail.com>
+ <20251219-i2c-reset-v2-1-ad201a602e74@gmail.com>
+ <04880c83-0b3a-4197-9043-d657db91f922@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -58,35 +60,65 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251219-i2c-reset-v2-2-ad201a602e74@gmail.com>
+In-Reply-To: <04880c83-0b3a-4197-9043-d657db91f922@kernel.org>
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MEBSZfMfsfaMnpGWFzHTYuIEh/0ifa+2tFCC7ECIDxOKurc9x4XdtmF7
-	C+bNMLikIxFT4XMakAHp+npOY0AGr+rvgi2GF+LjJrtiQqSJsGCa195JTY6rHgXG3LQo8wo
-	sT6iBtrxr5+lbZFhFPcVq6nhf9wTUwURjD2wwD2AR0ObVGqDJP5hzycSFWPIwBenknsXhZs
-	N0u4JfYxrQ+OVE+lkudDuh5ztB+8SUX8zAA+q4TufXHzdR/7LoAfqgV2/3IggSy9w2wtd81
-	gXj827JuN8bBCFeiY4fCGGnLvXd1SMr7GXAuQmZNb9W6zJaG4i2/ZwFbBoQRinBKQ7vYvtK
-	UHSJQrJQQTpLiIlfhMIR2XZTXYhe9Dk8d7+9ELxJQsQwc+Qkecel36pAdEL4buoE3gCQvlx
-	t1ShaiE5j/upp1gHTPEdMSjU8b9Vea5NLv6cc9MD/AEzu85pOqmK5vxSRR7g158EBny14UC
-	rpzMem3nX4UbCgMjbLacuxoTK0gl5VDq7GOIe/N27YVd5Vfy4Uw/7kLCyRlhEErG+D46OFT
-	hJb4ArMaZ+Jr0pKltgP4Rdbl4eya/+/JErnykcyjA+GPYYXy3fvDjuVScZD0K14HLA1jSzZ
-	wmGxKys5XUrPwSwSvS/xBmXJx+DulBmlaVsI0kOV5A7JcYkCN9guvaabZPBdWeJuEMrFuQQ
-	52qcLLINjQz5cai56xyToTX13Zu+NVm8fM+Bm/WvXXKoePuJhqiuwJnQywCrHSg0RKDQRCX
-	MdIkV5bpCfkLsaGZtNBr/lzS14CLFArYdVmJirabEsA8coeeP3imJqc4yD+du7roOmUgVSG
-	0vdZFd0P1zVd9jtuwsAwzIziLyN3ug6+yi6aCbfENdSmaYBYqgRgWWAKF9VnI9Bdc5Wqrru
-	2+fNlOJnFqW79+aIQ/VS5s82wvM1GiFshTNImANt4GCa7WudAcFI+VTLrBxLyNgMqBeF+96
-	9QW6MtIaCmIqzG36/15V5Q6weVTJ8+PzqXPeNP9P3YJX1zTQfA4ZJPA2NfDWtMPtBVS5dMY
-	dete6twKDitQLwSPVh0Cn3zKrZQq0FTe1LpLNWPLP0DKmN8IwAcvggGiCbJwDZ6Hb/YOUdQ
-	6gz1TWEZOF1mBaswcsLyKw=
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MIfPdqFTtU/fn7oLTGYkZ0c/4VuPNpisMQEjcz/egD5/ixeXzTpYrQTv
+	hjXsGTa4IeM0R0jPDjtAtLyJKJJDbZq7wnIHBc45S02KcJl4BCsspRFYdNynRUUyRVYGbCX
+	KubTsh2p2G+tIelw4NUpVyzFjSXY+mPawbjf1xW3zeH4yjPfmXIrJtXiUHuRJ+DpNoCQn0Z
+	EpeAPhU3x/ww7DsxWsuaZdP8mDd3UdvM0A6xy3BhKMUC47DXVSJ8elXNdU0BJMVvdm+uw3y
+	o8dakn4zjJpRwXiEfcD7AYVrg/vttmmpP5DEYVFqTSkn7/t5JP8oxPllktOEwdPhf0JHZAv
+	mUmF7mQiFB7lmaVWGmGMCntQs9nBcKXcMUPKEHWwJI9qEr3eGCaw/bq8/UiU4CbE2/QTNrx
+	FUbzq1c9VJQaKc3PqtR7raaF3qvb1v6d4ynz6e+beQan2FwLDCuYH3UUhVyFVKlHjHfj0WX
+	GhDq9c3sFleL4rQW21ejC8Iprpp2IWluBBW936nmoYxhpVmmnJZl56vvPraa/jbGL49fr1M
+	cB1ZT0SBJfs5YvMfq4cVR54obauBmq0K1RhQZD2b7MxTA16ZLBgyn7sz9xPVRmFfYAkk/vG
+	Mu4nukO6wXbzbv7XVHphj1hzzlxYSD0tfgfQ0Uj2SNKgQ8ojrygY1DM/89K6HetBK+l/nR9
+	tLdIQps17SptGpfy5LH2ifR7MzFw7PHFYNIVQXojyNi/dpzogfU0gj7iKh/s4yphZP2Qgk3
+	lBszomX49tO4dTi56OzZveb8GUoEqYfR86uSG+bhaUB+87UkXPPEXQGDJVf8poMwUGzOrA1
+	dXq8RuhpCylu6PpY0BH1GzjDXAhnhSeAdf7wOG1otKQZ+SmQePhMoBpnF8iWEGFaMuxFn+u
+	EiWY4iafjqaThCrBeAUGyvZhW75c1VbxKkP2EP4Tlcx2zp6ifPMuCjjtxjNcIRoxKbbqWrv
+	VoOpeH5X9cl0c58zhipE6tgepGhEIvR5OpoDm3mM/IMamg1zejOlOm8Zs1WbNbNW6UvrATi
+	MxVM/G6APAsukPmhZUFIOH9IO/HAbcUpVQnrq8g2+/O9f9oOzqGw03xz3idIVBEZ3Tt6kox
+	Q==
 X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 X-QQ-RECHKSPAM: 0
 
-On Fri, Dec 19, 2025 at 03:42:21PM +0800, Encrow Thorne wrote:
-> The K1 I2C controller provides a reset line that needs to be deasserted
-> before the controller can be accessed.
+On Fri, Dec 19, 2025 at 09:03:14AM +0100, Krzysztof Kozlowski wrote:
+> On 19/12/2025 08:42, Encrow Thorne wrote:
+> > The I2C controller requires a reset to ensure it starts from a clean state.
+> > 
+> > Add the 'resets' property to support this hardware requirement.
+> > 
+> > Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
+> > ---
+> >  Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml | 3 +++
+> >  1 file changed, 3 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml b/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
+> > index b7220fff2235..1290106e28e6 100644
+> > --- a/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
+> > +++ b/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
+> > @@ -32,6 +32,9 @@ properties:
+> >        - const: func
+> >        - const: bus
+> >  
+> > +  resets:
+> > +    maxItems: 1
+> > +
 > 
-> Add reset support to the driver to ensure the controller starts in the
-> required state.
-> 
-> Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
+> Still between other clock-related properties. You already got such
+> comment...
+Please replace it below clock-frequency.
+With this fix, you can add my tag:
+
 Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> 
+> >    clock-frequency:
+> >      description: |
+> >        K1 support three different modes which running different frequencies
+> > 
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
