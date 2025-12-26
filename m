@@ -1,382 +1,116 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96722321434
-	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 12:59:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888FC3A1E92
+	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 17:32:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766753949; cv=none; b=KgeXcrQ3/It8UwAeb1zGDkhkgiWof71vhK3l20GQs5kDYyJpPHMlIAZnDD3OizGZtkvrqXhOru2OfBG4lKDvTgjb364V8ILby0xFipYaVKkT/SolExYkFkIuppCkuGo+JEmnlnCltDfKgsZRvEDlvZX6dYUg46LTCe8KPd5/a7A=
+	t=1766770355; cv=none; b=RWsN7D6oQF1UvGrf12XOMacECMCUwwhxqjavQppylrwx9g+YYKGNayduSTIzDfPwHEoPG1uq9jQcXUnt3NhswgpyNVTDCwfjvChmgiG2sFgaysRJzrJlnjTt5BdjIhuqcw5KQX/J0E0Ot/iaDV4vDEiEf8YkjaMNEEwyyALbImk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766753949; c=relaxed/simple;
-	bh=NLUQ+bvVOCaNTkqoksoZUBzNK0bLwckRSG+XlsNzJ+E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jw2tJg1X7EY5tMGdiZblrP4qxk4wAUQ56QNk3NRDed/++7tfAcdtynD1q0SBXvZWltM5ZlLfpuOAqMsR1cck31uZAFZNKBi8EdGAkcPeGGpxfrYix20klIrJKGiOWx11k3xl9F1RpowHoS6UXmmedmbrR+lmVKAQB2+2vh4+UZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [127.0.0.1] (unknown [116.232.18.222])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id C10003415F1;
-	Fri, 26 Dec 2025 12:58:59 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-Date: Fri, 26 Dec 2025 20:58:26 +0800
-Subject: [PATCH v2 3/3] pinctrl: spacemit: k3: adjust drive strength and
- schmitter trigger
+	s=arc-20240116; t=1766770355; c=relaxed/simple;
+	bh=PsjgW1fnmOdGnNqFkZMAxC+rOmDEaH/d5UQFZOB7KSg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IRJy1GotMJeiQ5gwulTuUCR91reKxvdQX5TwAw4l7uPOfW0pUx7A8r5b9x2nFT5mqNTgDkKTRuCrh9PVgBHyjgaKyXhrT4/DFRoSo/ryGx05225OBZvd1qkXs5zFeKWBidpwy+hNIgAK4nVJpWmPQp1qvJillqWIN5kFdy6kbrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=KvRqDapI; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="KvRqDapI"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8ba4197fbd4so780785485a.2
+        for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 09:32:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766770352; x=1767375152; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ciwqItzOvTH80EkqRK45xqhfDMd2iUMF4JpBnkt+bcA=;
+        b=KvRqDapI95w22lHW1en+9ubWz7yLDOSIu/ZRY+bDKy50bXEGd5HFjz6d7mFijgfuxB
+         YPDVLOjJ9PQmG75vAxB3xad4LGfBdEH1MN8gPWmqYeTv9qpWMEigmc/kHcLGTzXuE/c3
+         MX39HjMFBLGRZz92nfMKPBv83mf9ATym7rZLtFlFWCPJEQ/GkCramCKVdCpPdsjC8kUk
+         3Z7cW6ND80TkdGsojv6tg12evli3Qgpkf8AqelGpOVB0x8mlkVLcg4rGoNp9DzEic22W
+         FUj9HlYz/bQ5Rit2Lrb8aiWkEgyyT/a9reNFf4y9RplXLF7n8Uiz3Alkt32pk82ZUmvf
+         raIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766770352; x=1767375152;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ciwqItzOvTH80EkqRK45xqhfDMd2iUMF4JpBnkt+bcA=;
+        b=GlZttJTm7pjfLvyGH+0gmSpxagJrz9EgiZu18tTLxyum+JELBl/y+8Jf1A2tNa10H/
+         CkVV9Kh2WSHdMceu2DASri4hZWbjXdUMtdgeC4WNzxM6estYp/cuW00AU/hY3grK/ZIp
+         /9ZXMxRsBbH8Yhp7bGS+JONnxcPSwmnnS765lvhRYlymy0u/BcICKgBxjktesRKvGH57
+         RMMURWDM29xJRwaZvekHd3blO0S/xQy9JJ8juSgjSzKbi7PJznkqIsIPAHQ2WqfAxj4W
+         VmawVNENJl507rIthkTONJ3+QzfEjTjPP1+8qSBuc9E8XyM4aCByxqUcLV+hmhTdgsrL
+         KTng==
+X-Forwarded-Encrypted: i=1; AJvYcCVBVD3GfpVFB9SL3T+TyY6CXfiBSx0UMgY4TJArTp4j8CJxWZq+ve/fKb1O/Zw+7AN6EdLt659org==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxbNgT8rwi+/WBIGCa34LIWYe8N2TL1DRA6M409kjNRnZhl4hj0
+	MyaJoO1E8EeeztoOtaxkKysxkRl5yXmv8fAGEaI5l2XiAzuHDIACjvHZYb7WIDc/5R8=
+X-Gm-Gg: AY/fxX6XN6x9+o5knB60ni3j83lttbG8ptXyhPgvFfrftPlqa2MWNanlPUh0jBGM16V
+	5QbjKYUfxwujyL2zluOc/1LIRzbAXbaA6SgXrFT0ZOI1Jr+bMH1PljZfpkPaLJCacKlQEEtQC8D
+	0iIDUtGgMaXrt0KXH2h1ySNKkGP71DBHqSffvggManD7zDf0SuyICORH+yqg4UbJwKg3EoC4uyW
+	DahVuWwbNJwlNHmMLQWVkJA3Pz/sKt/axSSdGJbHmwywlAydOXs5+l8jo4lGpEtXraZW1mTIbbW
+	aKnDT/fccXf3mIJaDLw4ehvZ1F5LCKte0dxPqZ/1jMyteI+24ab0BcvicvETIxntUZt00QoR+Ks
+	iBuqflmDapmYRsHWwWJZxeg3Xv3gxCkDT/7QzvrdBR6lFav20UNmLy3V6x8lFFfVf7GH9bhiRlj
+	PKOLy7tZbHFK+3v4H5qGS1xGvTfxTfVPy1e6QNHFl38r+KaP668UvUTA==
+X-Google-Smtp-Source: AGHT+IGBstnrzq5tGM78o3fmlA/RjQNKRMjqUXsz1wbOluahiwHWTwU9dUEJYN2xiG5mCT00aGrX4A==
+X-Received: by 2002:a05:620a:17a8:b0:88f:ee0a:3d66 with SMTP id af79cd13be357-8c08fbbc94emr3534421585a.80.1766770352281;
+        Fri, 26 Dec 2025 09:32:32 -0800 (PST)
+Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c0975ee7d5sm1751075385a.49.2025.12.26.09.32.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Dec 2025 09:32:31 -0800 (PST)
+From: Alex Elder <elder@riscstar.com>
+To: vkoul@kernel.org,
+	neil.armstrong@linaro.org
+Cc: dlan@gentoo.org,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	guodong@riscstar.com,
+	linux-phy@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH] phy: Kconfig: spacemit: add COMMON_CLK dependency
+Date: Fri, 26 Dec 2025 11:32:27 -0600
+Message-ID: <20251226173228.2020411-1-elder@riscstar.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251226-02-k3-pinctrl-v2-3-5172397e6831@gentoo.org>
-References: <20251226-02-k3-pinctrl-v2-0-5172397e6831@gentoo.org>
-In-Reply-To: <20251226-02-k3-pinctrl-v2-0-5172397e6831@gentoo.org>
-To: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10394; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=NLUQ+bvVOCaNTkqoksoZUBzNK0bLwckRSG+XlsNzJ+E=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpToZ/uvQmQeL0Rj5pKT3fAHffYpObjk7v3iyQa
- MJm+zCHreeJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaU6GfxsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+3jnA//Rtnm4n9FsTnaRzy5MjMupoNTtMRIevo4Gotcqes6+ge6N167M4vw8
- 0P61rPUj3W1DvkO15zihHciMDBtEPW5axDQ81B1rAEUau6KUCtUATYR7zRGgKVoehYTYAVonukm
- qgfAEehGO5sHXitAq82xdGBWZ7CsPF6XKB0vNsv+pLhLAfyP0SZsBHscngawlbcHHm+ZbOIgtaD
- lxgRinabKgrK7GatfebHwqSw/PevGECvefPMnZO9s729wVYAfCt/z9qyZpLVKT715e9iIpzpBSn
- CxvEDPhv53uDp0vg5HEyxPp8N0Xu4nA3Iy8YrFp5kqjnDzOcstn43MM/al3ZPCy2JPMPffQtduR
- NiUrjFKtZkRXRPCpKIAVARjzKKrUGe/LIrMS3cmncAekgkvMXXj+dYH9VdeY9YObhzIPjw6tKjP
- hAEob5AoL6Nd4Bg1Hru8sh94C08uivQ7sqRdbnZC+tQ0ubiEJhwjvlaZnhK319rGvIPCLEafXjK
- Y35Ug/epgPlSZdzm9i7088duapOUXw0DHEQZkzlqEDej2tP9eLB+8V0KtfajfocBxUGlF+rglbU
- nCGgwvxCFl2PpCgmVfZt51DOnwtYYcn3zzIKDR9KocSxvAKaFO6xKyY8e8jrmqrBFQqi6FTxdp9
- k8yIii+LiUDKL16GrKtHBWSyTiIxTk=
-X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Content-Transfer-Encoding: 8bit
 
-K3 SoC expand drive strength to 4 bits which support even larger
-settings table comparing to old SoC generation. Also schmitter trigger
-setting is changed to 1 bit.
+The SpacemiT PCIe PHY driver depends on the common clock framework.
+Not specifying that led to a failure when doing a COMPILE_TEST build
+for the SPARC architecture.
 
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202512251903.sTVZgg6c-lkp@intel.com/
+Signed-off-by: Alex Elder <elder@riscstar.com>
 ---
- drivers/pinctrl/spacemit/pinctrl-k1.c | 163 ++++++++++++++++++++++++----------
- 1 file changed, 116 insertions(+), 47 deletions(-)
+Note:  This is based on phy/next, which I find doesn't currently build
+       cleanly using "arch/riscv/configs/defconfig".
 
-diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
-index 441817f539e3..07267c5f0f44 100644
---- a/drivers/pinctrl/spacemit/pinctrl-k1.c
-+++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
-@@ -24,11 +24,12 @@
- #include "pinctrl-k1.h"
- 
- /*
-- * +---------+----------+-----------+--------+--------+----------+--------+
-- * |   pull  |   drive  | schmitter |  slew  |  edge  |  strong  |   mux  |
-- * | up/down | strength |  trigger  |  rate  | detect |   pull   |  mode  |
-- * +---------+----------+-----------+--------+--------+----------+--------+
-- *   3 bits     3 bits     2 bits     1 bit    3 bits     1 bit    3 bits
-+ *     |   pull  |   drive  | schmitter | slew  |  edge  | strong |   mux  |
-+ * SoC | up/down | strength |  trigger  | rate  | detect |  pull  |  mode  |
-+ *-----+---------+----------+-----------+-------+--------+--------+--------+
-+ * K1  | 3 bits  |  3 bits  |   2 bits  | 1 bit | 3 bits |  1 bit | 3 bits |
-+ *-----+---------+----------+-----------+-------+--------+--------+--------+
-+ * K3  | 3 bits  |  4 bits  |   1 bits  | 1 bit | 3 bits |  1 bit | 3 bits |
-  */
- 
- #define PAD_MUX			GENMASK(2, 0)
-@@ -38,12 +39,29 @@
- #define PAD_EDGE_CLEAR		BIT(6)
- #define PAD_SLEW_RATE		GENMASK(12, 11)
- #define PAD_SLEW_RATE_EN	BIT(7)
--#define PAD_SCHMITT		GENMASK(9, 8)
--#define PAD_DRIVE		GENMASK(12, 10)
-+#define PAD_SCHMITT_K1		GENMASK(9, 8)
-+#define PAD_DRIVE_K1		GENMASK(12, 10)
-+#define PAD_SCHMITT_K3		BIT(8)
-+#define PAD_DRIVE_K3		GENMASK(12, 9)
- #define PAD_PULLDOWN		BIT(13)
- #define PAD_PULLUP		BIT(14)
- #define PAD_PULL_EN		BIT(15)
- 
-+struct spacemit_pin_drv_strength {
-+	u8		val;
-+	u32		mA;
-+};
-+
-+struct spacemit_pinctrl_dconf {
-+	u64				schmitt_mask;
-+	u64				drive_mask;
-+
-+	struct spacemit_pin_drv_strength *ds_1v8_tbl;
-+	size_t				 ds_1v8_tbl_num;
-+	struct spacemit_pin_drv_strength *ds_3v3_tbl;
-+	size_t				 ds_3v3_tbl_num;
-+};
-+
- struct spacemit_pin {
- 	u16				pin;
- 	u16				flags;
-@@ -67,6 +85,7 @@ struct spacemit_pinctrl_data {
- 	const struct spacemit_pin	*data;
- 	u16				npins;
- 	unsigned int			(*pin_to_offset)(unsigned int pin);
-+	const struct spacemit_pinctrl_dconf	*dconf;
- };
- 
- struct spacemit_pin_mux_config {
-@@ -74,11 +93,6 @@ struct spacemit_pin_mux_config {
- 	u32				config;
- };
- 
--struct spacemit_pin_drv_strength {
--	u8		val;
--	u32		mA;
--};
--
- /* map pin id to pinctrl register offset, refer MFPR definition */
- static unsigned int spacemit_k1_pin_to_offset(unsigned int pin)
- {
-@@ -193,23 +207,70 @@ static void spacemit_pctrl_dbg_show(struct pinctrl_dev *pctldev,
- 	seq_printf(seq, "mux: %ld reg: 0x%04x", (value & PAD_MUX), value);
- }
- 
--/* use IO high level output current as the table */
--static struct spacemit_pin_drv_strength spacemit_ds_1v8_tbl[4] = {
--	{ 0, 11 },
--	{ 2, 21 },
--	{ 4, 32 },
--	{ 6, 42 },
-+static const struct spacemit_pinctrl_dconf k1_drive_conf = {
-+	.drive_mask = PAD_DRIVE_K1,
-+	.schmitt_mask = PAD_SCHMITT_K1,
-+	.ds_1v8_tbl = (struct spacemit_pin_drv_strength[]) {
-+		{ 0, 11 },
-+		{ 2, 21 },
-+		{ 4, 32 },
-+		{ 6, 42 },
-+	},
-+	.ds_1v8_tbl_num = 4,
-+	.ds_3v3_tbl = (struct spacemit_pin_drv_strength[]) {
-+		{ 0,  7 },
-+		{ 2, 10 },
-+		{ 4, 13 },
-+		{ 6, 16 },
-+		{ 1, 19 },
-+		{ 3, 23 },
-+		{ 5, 26 },
-+		{ 7, 29 },
-+	},
-+	.ds_3v3_tbl_num = 8,
- };
- 
--static struct spacemit_pin_drv_strength spacemit_ds_3v3_tbl[8] = {
--	{ 0,  7 },
--	{ 2, 10 },
--	{ 4, 13 },
--	{ 6, 16 },
--	{ 1, 19 },
--	{ 3, 23 },
--	{ 5, 26 },
--	{ 7, 29 },
-+static const struct spacemit_pinctrl_dconf k3_drive_conf = {
-+	.drive_mask = PAD_DRIVE_K3,
-+	.schmitt_mask = PAD_SCHMITT_K3,
-+	.ds_1v8_tbl = (struct spacemit_pin_drv_strength[]) {
-+		{ 0,  2 },
-+		{ 1,  4 },
-+		{ 2,  6 },
-+		{ 3,  7 },
-+		{ 4,  9 },
-+		{ 5,  11 },
-+		{ 6,  13 },
-+		{ 7,  14 },
-+		{ 8,  21 },
-+		{ 9,  23 },
-+		{ 10, 25 },
-+		{ 11, 26 },
-+		{ 12, 28 },
-+		{ 13, 30 },
-+		{ 14, 31 },
-+		{ 15, 33 },
-+	},
-+	.ds_1v8_tbl_num = 16,
-+	.ds_3v3_tbl = (struct spacemit_pin_drv_strength[]) {
-+		{ 0,  3 },
-+		{ 1,  5 },
-+		{ 2,  7 },
-+		{ 3,  9 },
-+		{ 4,  11 },
-+		{ 5,  13 },
-+		{ 6,  15 },
-+		{ 7,  17 },
-+		{ 8,  25 },
-+		{ 9,  27 },
-+		{ 10, 29 },
-+		{ 11, 31 },
-+		{ 12, 33 },
-+		{ 13, 35 },
-+		{ 14, 37 },
-+		{ 15, 38 },
-+	},
-+	.ds_3v3_tbl_num = 16,
- };
- 
- static inline u8 spacemit_get_ds_value(struct spacemit_pin_drv_strength *tbl,
-@@ -237,16 +298,17 @@ static inline u32 spacemit_get_ds_mA(struct spacemit_pin_drv_strength *tbl,
- }
- 
- static inline u8 spacemit_get_driver_strength(enum spacemit_pin_io_type type,
-+					      const struct spacemit_pinctrl_dconf *dconf,
- 					      u32 mA)
- {
- 	switch (type) {
- 	case IO_TYPE_1V8:
--		return spacemit_get_ds_value(spacemit_ds_1v8_tbl,
--					     ARRAY_SIZE(spacemit_ds_1v8_tbl),
-+		return spacemit_get_ds_value(dconf->ds_1v8_tbl,
-+					     dconf->ds_1v8_tbl_num,
- 					     mA);
- 	case IO_TYPE_3V3:
--		return spacemit_get_ds_value(spacemit_ds_3v3_tbl,
--					     ARRAY_SIZE(spacemit_ds_3v3_tbl),
-+		return spacemit_get_ds_value(dconf->ds_3v3_tbl,
-+					     dconf->ds_3v3_tbl_num,
- 					     mA);
- 	default:
- 		return 0;
-@@ -254,16 +316,17 @@ static inline u8 spacemit_get_driver_strength(enum spacemit_pin_io_type type,
- }
- 
- static inline u32 spacemit_get_drive_strength_mA(enum spacemit_pin_io_type type,
-+						 const struct spacemit_pinctrl_dconf *dconf,
- 						 u32 value)
- {
- 	switch (type) {
- 	case IO_TYPE_1V8:
--		return spacemit_get_ds_mA(spacemit_ds_1v8_tbl,
--					  ARRAY_SIZE(spacemit_ds_1v8_tbl),
--					  value & 0x6);
-+		return spacemit_get_ds_mA(dconf->ds_1v8_tbl,
-+					  dconf->ds_1v8_tbl_num,
-+					  value);
- 	case IO_TYPE_3V3:
--		return spacemit_get_ds_mA(spacemit_ds_3v3_tbl,
--					  ARRAY_SIZE(spacemit_ds_3v3_tbl),
-+		return spacemit_get_ds_mA(dconf->ds_3v3_tbl,
-+					  dconf->ds_3v3_tbl_num,
- 					  value);
- 	default:
- 		return 0;
-@@ -510,6 +573,7 @@ static int spacemit_pinconf_get(struct pinctrl_dev *pctldev,
- #define ENABLE_DRV_STRENGTH	BIT(1)
- #define ENABLE_SLEW_RATE	BIT(2)
- static int spacemit_pinconf_generate_config(const struct spacemit_pin *spin,
-+					    const struct spacemit_pinctrl_dconf *dconf,
- 					    unsigned long *configs,
- 					    unsigned int num_configs,
- 					    u32 *value)
-@@ -547,8 +611,8 @@ static int spacemit_pinconf_generate_config(const struct spacemit_pin *spin,
- 			drv_strength = arg;
- 			break;
- 		case PIN_CONFIG_INPUT_SCHMITT:
--			v &= ~PAD_SCHMITT;
--			v |= FIELD_PREP(PAD_SCHMITT, arg);
-+			v &= ~dconf->schmitt_mask;
-+			v |= (arg << __ffs(dconf->schmitt_mask)) & dconf->schmitt_mask;
- 			break;
- 		case PIN_CONFIG_POWER_SOURCE:
- 			voltage = arg;
-@@ -584,10 +648,10 @@ static int spacemit_pinconf_generate_config(const struct spacemit_pin *spin,
- 			}
- 		}
- 
--		val = spacemit_get_driver_strength(type, drv_strength);
-+		val = spacemit_get_driver_strength(type, dconf, drv_strength);
- 
--		v &= ~PAD_DRIVE;
--		v |= FIELD_PREP(PAD_DRIVE, val);
-+		v &= ~dconf->drive_mask;
-+		v |= (val << __ffs(dconf->drive_mask)) & dconf->drive_mask;
- 	}
- 
- 	if (flag & ENABLE_SLEW_RATE) {
-@@ -637,7 +701,8 @@ static int spacemit_pinconf_set(struct pinctrl_dev *pctldev,
- 	const struct spacemit_pin *spin = spacemit_get_pin(pctrl, pin);
- 	u32 value;
- 
--	if (spacemit_pinconf_generate_config(spin, configs, num_configs, &value))
-+	if (spacemit_pinconf_generate_config(spin, pctrl->data->dconf,
-+					     configs, num_configs, &value))
- 		return -EINVAL;
- 
- 	return spacemit_pin_set_config(pctrl, pin, value);
-@@ -659,7 +724,8 @@ static int spacemit_pinconf_group_set(struct pinctrl_dev *pctldev,
- 		return -EINVAL;
- 
- 	spin = spacemit_get_pin(pctrl, group->grp.pins[0]);
--	if (spacemit_pinconf_generate_config(spin, configs, num_configs, &value))
-+	if (spacemit_pinconf_generate_config(spin, pctrl->data->dconf,
-+					     configs, num_configs, &value))
- 		return -EINVAL;
- 
- 	for (i = 0; i < group->grp.npins; i++)
-@@ -693,6 +759,7 @@ static void spacemit_pinconf_dbg_show(struct pinctrl_dev *pctldev,
- 				      struct seq_file *seq, unsigned int pin)
- {
- 	struct spacemit_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
-+	const struct spacemit_pinctrl_dconf *dconf = pctrl->data->dconf;
- 	const struct spacemit_pin *spin = spacemit_get_pin(pctrl, pin);
- 	enum spacemit_pin_io_type type = spacemit_to_pin_io_type(spin);
- 	void __iomem *reg = spacemit_pin_to_reg(pctrl, pin);
-@@ -703,17 +770,17 @@ static void spacemit_pinconf_dbg_show(struct pinctrl_dev *pctldev,
- 
- 	seq_printf(seq, ", io type (%s)", io_type_desc[type]);
- 
--	tmp = FIELD_GET(PAD_DRIVE, value);
-+	tmp = (value & dconf->drive_mask) >> __ffs(dconf->drive_mask);
- 	if (type == IO_TYPE_1V8 || type == IO_TYPE_3V3) {
--		mA = spacemit_get_drive_strength_mA(type, tmp);
-+		mA = spacemit_get_drive_strength_mA(type, dconf, tmp);
- 		seq_printf(seq, ", drive strength (%d mA)", mA);
- 	}
- 
- 	/* drive strength depend on power source, so show all values */
- 	if (type == IO_TYPE_EXTERNAL)
- 		seq_printf(seq, ", drive strength (%d or %d mA)",
--			   spacemit_get_drive_strength_mA(IO_TYPE_1V8, tmp),
--			   spacemit_get_drive_strength_mA(IO_TYPE_3V3, tmp));
-+			   spacemit_get_drive_strength_mA(IO_TYPE_1V8, dconf, tmp),
-+			   spacemit_get_drive_strength_mA(IO_TYPE_3V3, dconf, tmp));
- 
- 	seq_printf(seq, ", register (0x%04x)", value);
- }
-@@ -1051,6 +1118,7 @@ static const struct spacemit_pinctrl_data k1_pinctrl_data = {
- 	.data = k1_pin_data,
- 	.npins = ARRAY_SIZE(k1_pin_desc),
- 	.pin_to_offset = spacemit_k1_pin_to_offset,
-+	.dconf = &k1_drive_conf,
- };
- 
- static const struct pinctrl_pin_desc k3_pin_desc[] = {
-@@ -1387,6 +1455,7 @@ static const struct spacemit_pinctrl_data k3_pinctrl_data = {
- 	.data = k3_pin_data,
- 	.npins = ARRAY_SIZE(k3_pin_desc),
- 	.pin_to_offset = spacemit_k3_pin_to_offset,
-+	.dconf = &k3_drive_conf,
- };
- 
- static const struct of_device_id k1_pinctrl_ids[] = {
+ drivers/phy/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
+index aa2d30e0e3261..3bc7378ea8658 100644
+--- a/drivers/phy/Kconfig
++++ b/drivers/phy/Kconfig
+@@ -104,6 +104,7 @@ config PHY_NXP_PTN3222
+ config PHY_SPACEMIT_K1_PCIE
+ 	tristate "PCIe and combo PHY driver for the SpacemiT K1 SoC"
+ 	depends on ARCH_SPACEMIT || COMPILE_TEST
++	depends on COMMON_CLK
+ 	depends on HAS_IOMEM
+ 	depends on OF
+ 	select GENERIC_PHY
+
+base-commit: 27287e3b52b5954b73203d32ee76ffd5f53f5074
 -- 
-2.52.0
+2.48.1
 
