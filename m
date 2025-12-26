@@ -1,116 +1,211 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qv1-f67.google.com (mail-qv1-f67.google.com [209.85.219.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888FC3A1E92
-	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 17:32:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83E419CD03
+	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 21:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766770355; cv=none; b=RWsN7D6oQF1UvGrf12XOMacECMCUwwhxqjavQppylrwx9g+YYKGNayduSTIzDfPwHEoPG1uq9jQcXUnt3NhswgpyNVTDCwfjvChmgiG2sFgaysRJzrJlnjTt5BdjIhuqcw5KQX/J0E0Ot/iaDV4vDEiEf8YkjaMNEEwyyALbImk=
+	t=1766784512; cv=none; b=IAXZkqDygj1SUuJqD+Qnh8BC0QRqNRvGDIL+AMaRX8N9VbRWqhyqiCBMqCOTHnoSs8GZxBC/FiuuTugWAfo4lhKajWw4V71b9sXwiwq04BUX+QlPLeUVjuQb4gV/wcU5QNjsWSdOwwYTzjsw3iySxRBd2irBJ+aMdUnDuEFpP5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766770355; c=relaxed/simple;
-	bh=PsjgW1fnmOdGnNqFkZMAxC+rOmDEaH/d5UQFZOB7KSg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IRJy1GotMJeiQ5gwulTuUCR91reKxvdQX5TwAw4l7uPOfW0pUx7A8r5b9x2nFT5mqNTgDkKTRuCrh9PVgBHyjgaKyXhrT4/DFRoSo/ryGx05225OBZvd1qkXs5zFeKWBidpwy+hNIgAK4nVJpWmPQp1qvJillqWIN5kFdy6kbrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=KvRqDapI; arc=none smtp.client-ip=209.85.222.170
+	s=arc-20240116; t=1766784512; c=relaxed/simple;
+	bh=vVlakpeqjiBcmcsJZlFjb2lX+iMhz7jh7dMb3xGoowg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kPxqU+4KtPtJvsob3NzxdesG5hB2gBACo4zm6QlP5zTPjxyTjPwG+dIlbIKU4sSZGxraSZjPQcTegyN4WAY5ilHgnGWUGzvM2k8Fa3tm58RMfXi5c/44IwCGWju1s7V9fViAjfnegeqY/a8dL/SzdmSvQ5LguxKoHAZM5BK6C+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=fDQYhxf3; arc=none smtp.client-ip=209.85.219.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="KvRqDapI"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8ba4197fbd4so780785485a.2
-        for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 09:32:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="fDQYhxf3"
+Received: by mail-qv1-f67.google.com with SMTP id 6a1803df08f44-88059c28da1so72291816d6.2
+        for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 13:28:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766770352; x=1767375152; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ciwqItzOvTH80EkqRK45xqhfDMd2iUMF4JpBnkt+bcA=;
-        b=KvRqDapI95w22lHW1en+9ubWz7yLDOSIu/ZRY+bDKy50bXEGd5HFjz6d7mFijgfuxB
-         YPDVLOjJ9PQmG75vAxB3xad4LGfBdEH1MN8gPWmqYeTv9qpWMEigmc/kHcLGTzXuE/c3
-         MX39HjMFBLGRZz92nfMKPBv83mf9ATym7rZLtFlFWCPJEQ/GkCramCKVdCpPdsjC8kUk
-         3Z7cW6ND80TkdGsojv6tg12evli3Qgpkf8AqelGpOVB0x8mlkVLcg4rGoNp9DzEic22W
-         FUj9HlYz/bQ5Rit2Lrb8aiWkEgyyT/a9reNFf4y9RplXLF7n8Uiz3Alkt32pk82ZUmvf
-         raIg==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766784509; x=1767389309; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vvoJVAmM8Wok9hbNQDBnTQeicKDI82DiXYn2ZKWTwHY=;
+        b=fDQYhxf3y1zzRFpMP/C7gagkgSUyxNoFQ7+QzggX+ic30MYuqKSZ9dXbaGJFQVx63n
+         vVC4TrfDii8XsrVCa0aN++t60kPCu//IOu9PbEAX8ay4Ymh4xF1JsI8aqJqm2zGllDA2
+         pyJmKz6hDVZa9tq1/sIIrDxX5w5Hu1tm/becelhG+oqtoHaydxrWVY2vDL2k8JDu4gnH
+         JFv1oJdxPRFrZjPFvkaup4cpMlbdyMFUJwnAAsstb+/TTv9q0YaYpWBvWifsAOtedd/u
+         mUdCyKqcV/HdF97ra5oQ1etM3sSTD5K7dVRRF6TWQP/buK1Cpi5txVpPoErXgnQhFhi7
+         lkxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766770352; x=1767375152;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ciwqItzOvTH80EkqRK45xqhfDMd2iUMF4JpBnkt+bcA=;
-        b=GlZttJTm7pjfLvyGH+0gmSpxagJrz9EgiZu18tTLxyum+JELBl/y+8Jf1A2tNa10H/
-         CkVV9Kh2WSHdMceu2DASri4hZWbjXdUMtdgeC4WNzxM6estYp/cuW00AU/hY3grK/ZIp
-         /9ZXMxRsBbH8Yhp7bGS+JONnxcPSwmnnS765lvhRYlymy0u/BcICKgBxjktesRKvGH57
-         RMMURWDM29xJRwaZvekHd3blO0S/xQy9JJ8juSgjSzKbi7PJznkqIsIPAHQ2WqfAxj4W
-         VmawVNENJl507rIthkTONJ3+QzfEjTjPP1+8qSBuc9E8XyM4aCByxqUcLV+hmhTdgsrL
-         KTng==
-X-Forwarded-Encrypted: i=1; AJvYcCVBVD3GfpVFB9SL3T+TyY6CXfiBSx0UMgY4TJArTp4j8CJxWZq+ve/fKb1O/Zw+7AN6EdLt659org==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxbNgT8rwi+/WBIGCa34LIWYe8N2TL1DRA6M409kjNRnZhl4hj0
-	MyaJoO1E8EeeztoOtaxkKysxkRl5yXmv8fAGEaI5l2XiAzuHDIACjvHZYb7WIDc/5R8=
-X-Gm-Gg: AY/fxX6XN6x9+o5knB60ni3j83lttbG8ptXyhPgvFfrftPlqa2MWNanlPUh0jBGM16V
-	5QbjKYUfxwujyL2zluOc/1LIRzbAXbaA6SgXrFT0ZOI1Jr+bMH1PljZfpkPaLJCacKlQEEtQC8D
-	0iIDUtGgMaXrt0KXH2h1ySNKkGP71DBHqSffvggManD7zDf0SuyICORH+yqg4UbJwKg3EoC4uyW
-	DahVuWwbNJwlNHmMLQWVkJA3Pz/sKt/axSSdGJbHmwywlAydOXs5+l8jo4lGpEtXraZW1mTIbbW
-	aKnDT/fccXf3mIJaDLw4ehvZ1F5LCKte0dxPqZ/1jMyteI+24ab0BcvicvETIxntUZt00QoR+Ks
-	iBuqflmDapmYRsHWwWJZxeg3Xv3gxCkDT/7QzvrdBR6lFav20UNmLy3V6x8lFFfVf7GH9bhiRlj
-	PKOLy7tZbHFK+3v4H5qGS1xGvTfxTfVPy1e6QNHFl38r+KaP668UvUTA==
-X-Google-Smtp-Source: AGHT+IGBstnrzq5tGM78o3fmlA/RjQNKRMjqUXsz1wbOluahiwHWTwU9dUEJYN2xiG5mCT00aGrX4A==
-X-Received: by 2002:a05:620a:17a8:b0:88f:ee0a:3d66 with SMTP id af79cd13be357-8c08fbbc94emr3534421585a.80.1766770352281;
-        Fri, 26 Dec 2025 09:32:32 -0800 (PST)
-Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c0975ee7d5sm1751075385a.49.2025.12.26.09.32.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Dec 2025 09:32:31 -0800 (PST)
-From: Alex Elder <elder@riscstar.com>
-To: vkoul@kernel.org,
-	neil.armstrong@linaro.org
-Cc: dlan@gentoo.org,
-	pjw@kernel.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	guodong@riscstar.com,
-	linux-phy@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH] phy: Kconfig: spacemit: add COMMON_CLK dependency
-Date: Fri, 26 Dec 2025 11:32:27 -0600
-Message-ID: <20251226173228.2020411-1-elder@riscstar.com>
-X-Mailer: git-send-email 2.48.1
+        d=1e100.net; s=20230601; t=1766784509; x=1767389309;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vvoJVAmM8Wok9hbNQDBnTQeicKDI82DiXYn2ZKWTwHY=;
+        b=OFSUawPFMNFs/TFHhGyybe8LofAgrmimUVP8sTFgTmDqOQ+czOYEHyGQx+Aibf3/Xs
+         9yBbTfwpDw7K/+bGlR/ve5qypB6YK/3GNuhlja0XyOF6/fY3v/IQK/71nNx7VhSHasLb
+         WyJ0OgRwvuI2rXkWA8sm8NpfrYa/AbhSFhdVo3nn0nMvAmD0aLkE38KM06WzUGeZRK/A
+         wOUVCyh4xZOoC4iq9TobmGIDjwbUBMa/IAM6m2VPIo3lMsIH7oABsGRmCKfodLGvjZEB
+         I/0blOvm8WVvpxH1f1OSkLZckLNU5IwB5A0dtsdlZHG+gV5DoKhX8F++pwQroj5vCqeP
+         PaSw==
+X-Forwarded-Encrypted: i=1; AJvYcCUMO01+R7SwL9DdG4cCwiVuBelDsnqZBYYHD109qDZ8nH8j0pdDITO9QFaS43kPEEy6es8JaRFefg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxBJlBcFzcxq2h7gXC4jw0CZ6Wnt65pGnHJEkFVVqRC80FNL1uJ
+	8kw8g9aj/LOMkB41S8UHG/e5FMqhscWclqi3pDiVp4ujdbSWW3B01hv2dQLmOSCe5VE=
+X-Gm-Gg: AY/fxX45ZGUwOOtCnrxhpMfh32lvnw5i19M+suzY/kDSku+ugf0enjkQc6LlAR+MywH
+	PsYsm5ILKU7NHLjbbHuXyJLqSuiP/iDJcthVLcnwRjiZEUyj8vJJd2lrHwYORXzsDtRCgPw3PkX
+	MKCDjoFIj/lN7osY/VgomNm5y6NHTTCnJ3uWbmqORorIe6qszmJK8zZwMYKYzz+isjzAHEgX4v2
+	odW8JObkci5FX6hQptKuOR/YWaxXlgyGhgOJjz2+VCSzzG/9Y4zhhYV+byt9Fg/L/icvXRvzYnR
+	65Ir8i5FX1YlFLi0WKAOpqILIgDe7JYcoYbWBb+f7HdwlDps5j5R6qXGbCyCM0sCjG2wXmx7ntQ
+	rovuFI9arePRAA9cpwdIQIh24J8e0qmlgGRPfxhmDv3zG9xYYXyssoUdy1mD0jx70EWpPyEsXK6
+	NYSGlD1m1Le7tiVmtfdJ8wtsKfuNWKf7S9ypCfCOg3ozN75fJqy0c=
+X-Google-Smtp-Source: AGHT+IEizV1iRxg0/jkvz3rtCxyATJyOMlvYGHBDNYHBQHOCyh2uT+JafGkzBCvSmWX6wyzvEHDGdg==
+X-Received: by 2002:a05:6214:da6:b0:880:4736:a20e with SMTP id 6a1803df08f44-88d81278ecbmr437884256d6.2.1766784508605;
+        Fri, 26 Dec 2025 13:28:28 -0800 (PST)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88d99d7d5f4sm176833206d6.40.2025.12.26.13.28.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Dec 2025 13:28:28 -0800 (PST)
+Message-ID: <66c0676a-7920-4825-b916-3c00b1648a08@riscstar.com>
+Date: Fri, 26 Dec 2025 15:28:25 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/13] dt-bindings: riscv: Add B ISA extension
+ description
+To: Guodong Xu <guodong@riscstar.com>, Conor Dooley <conor@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Samuel Holland <samuel.holland@sifive.com>, Anup Patel
+ <anup@brainfault.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
+ Yangyu Chen <cyy@cyyself.name>, Paul Walmsley <paul.walmsley@sifive.com>,
+ Heinrich Schuchardt <xypron.glpk@gmx.de>,
+ Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+ Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+ spacemit@lists.linux.dev, linux-serial@vger.kernel.org
+References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
+ <20251222-k3-basic-dt-v2-7-3af3f3cd0f8a@riscstar.com>
+ <20251222-stitch-preachy-3fab87fd6f0f@spud>
+ <CAH1PCMZ7ywZ3unLy0yHYK+fFHk0y=q2cEtPnRi=qSpf=fc75rw@mail.gmail.com>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <CAH1PCMZ7ywZ3unLy0yHYK+fFHk0y=q2cEtPnRi=qSpf=fc75rw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-The SpacemiT PCIe PHY driver depends on the common clock framework.
-Not specifying that led to a failure when doing a COMPILE_TEST build
-for the SPARC architecture.
+On 12/23/25 12:51 AM, Guodong Xu wrote:
+> Hi, Conor
+> 
+> On Tue, Dec 23, 2025 at 5:17 AM Conor Dooley <conor@kernel.org> wrote:
+>>
+>> On Mon, Dec 22, 2025 at 09:04:17PM +0800, Guodong Xu wrote:
+>>> Add description of the single-letter "B" extennsion for Bit Manipulation.
+>>> B is mandatory for RVA23U64.
+>>>
+>>> The B extension is ratified in the 20240411 version of the unprivileged
+>>> ISA specification. According to the ratified spec, "the B standard
+>>> extension comprises instructions provided by the Zba, Zbb, and Zbs
+>>> extensions.
+>>>
+>>> Hence add a schema check rule to enforce that B implies Zba, Zbb and Zbs.
+>>>
+>>> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+>>> ---
+>>> v2: New patch.
+>>> ---
+>>>   .../devicetree/bindings/riscv/extensions.yaml         | 19 +++++++++++++++++++
+>>>   1 file changed, 19 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/Documentation/devicetree/bindings/riscv/extensions.yaml
+>>> index 565cb2cbb49b552959392810a9b731b43346a594..385e1deb23996d294e7662693f1257f910a6e129 100644
+>>> --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
+>>> +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
+>>> @@ -109,6 +109,13 @@ properties:
+>>>               The standard C extension for compressed instructions, as ratified in
+>>>               the 20191213 version of the unprivileged ISA specification.
+>>>
+>>> +        - const: b
+>>> +          description:
+>>> +            The standard B extension for bit manipulation instructions, as
+>>> +            ratified in the 20240411 version of the unprivileged ISA
+>>> +            specification. The B standard extension comprises instructions
+>>> +            provided by the Zba, Zbb, and Zbs extensions.
+>>> +
+>>>           - const: v
+>>>             description:
+>>>               The standard V extension for vector operations, as ratified
+>>> @@ -735,6 +742,18 @@ properties:
+>>>           then:
+>>>             contains:
+>>>               const: f
+>>> +      # b comprises the following extensions
+>>> +      - if:
+>>> +          contains:
+>>> +            const: b
+>>
+>> What's the value in adding b, if it depends on having all 3 of the
+>> components defined individually too? Currently all "superset" types of
+>> extensions are permitted without their component parts also being defined,
+>> this doesn't follow convention and therefore needs to be explained.
+>>
+>> You obviously need this construct because the kernel does not understand
+>> "b", and even if you added support for interpreting "b" to the kernel
+>> this is probably still needed to make sure the ABI is maintained for
+>> anything importing a devicetree from the kernel.
+> 
+> Yes, exactly. Unlike other single-letter extensions, "b" was ratified
+> (Apr/2024) much later than its components zba/zbb/zbs (Jun/2021).
+> Existing software and the kernel already expect these explicit component
+> strings, so enforcing this dependency ensures cores declaring "b" will
+> also be correctly understood by older software that only looks for
+> zba/zbb/zbs.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512251903.sTVZgg6c-lkp@intel.com/
-Signed-off-by: Alex Elder <elder@riscstar.com>
----
-Note:  This is based on phy/next, which I find doesn't currently build
-       cleanly using "arch/riscv/configs/defconfig".
+I might be misunderstanding you, but I don't think extension "b"
+should *require* the other three extensions.  Instead, the "b"
+extension should be considered *equivalent* to the other three.
+That's what I understand it to mean, anyway.
+   https://github.com/riscv/riscv-b
 
- drivers/phy/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+There's no point in supporting "b" in devicetree to represent
+the others if it also requires the others to be present.
 
-diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
-index aa2d30e0e3261..3bc7378ea8658 100644
---- a/drivers/phy/Kconfig
-+++ b/drivers/phy/Kconfig
-@@ -104,6 +104,7 @@ config PHY_NXP_PTN3222
- config PHY_SPACEMIT_K1_PCIE
- 	tristate "PCIe and combo PHY driver for the SpacemiT K1 SoC"
- 	depends on ARCH_SPACEMIT || COMPILE_TEST
-+	depends on COMMON_CLK
- 	depends on HAS_IOMEM
- 	depends on OF
- 	select GENERIC_PHY
+I think that, instead, "b", "zba", "zbb", and "zbs" should all
+be allowed.
 
-base-commit: 27287e3b52b5954b73203d32ee76ffd5f53f5074
--- 
-2.48.1
+I might even go further and harden the requirement, saying that
+if you specify "b" you should *not* specify "zba", "zbb", or "zbs".
+But that might not be normal practice, and it's not necessary
+because they aren't in conflict.
+
+					-Alex
+
+> I will update the commit message in v3 to clearly explain this reasoning.
+> Does it sound good to you?
+> 
+> Thank you for the review.
+> 
+> BR,
+> Guodong Xu
+> 
+>>
+>>> +        then:
+>>> +          allOf:
+>>> +            - contains:
+>>> +                const: zba
+>>> +            - contains:
+>>> +                const: zbb
+>>> +            - contains:
+>>> +                const: zbs
+>>>         # Zcb depends on Zca
+>>>         - if:
+>>>             contains:
+>>>
+>>> --
+>>> 2.43.0
+>>>
+> 
 
