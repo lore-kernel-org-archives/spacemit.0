@@ -1,246 +1,112 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F209421FF26
-	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 06:53:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B062D17A2FA
+	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 06:56:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766732007; cv=none; b=WBQCId8seT9Ne9h0/Yc5Jwoa/VQrUPE2o146EEMp6wkII96PHg7SBm5OuRM16pv2SOe1GipnA7oHj1JcP6ok0YPsYmRVHNTf55EGV+qJD+/vozH1fjXMX9UKyQts2amz88z9UcbwD6WT5nhlkbSwP3y8TotzX4o83CfKoRKVqMk=
+	t=1766732164; cv=none; b=GEjIzpvU3SJ7fjg4o07DxpE11M0EA6RK5Zmm43nsxph6SwDyfvp+HYgWPwbfEe1oh6owkuOF9zLBrlr2K0T2Pvnoemn1PocfGnkp6/oCNvvl2Qdo0YZQz2tNa7dpkUlZHfDhs342zRrt2bL9C/CeGebf5ka8v1JAs7v+ZlxqGEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766732007; c=relaxed/simple;
-	bh=i8oMWMGJPsjm3Nw9AzoIzlGlrHPCVzUdZaegTERxqYo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LF6uq971cCxZzLg5yKQ84TwlQ8J8vqS0mOKcwoGRELM1sa9IsTI6h1mu50vXjHOsnc71spG5Nf7q0JcJrSmbHh3aeSDCSL4IAHeTYc3nrn+KIw81bJewn3UDt0Frf3ghdvg8KWb8mhE5ud3q4PoKohoM01ncRKaYcaGdwewyUWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=P8EwbRYA; arc=none smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="P8EwbRYA"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-6467bed0d2fso4073255d50.0
-        for <spacemit@lists.linux.dev>; Thu, 25 Dec 2025 22:53:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766732004; x=1767336804; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=In4D9uIw9WRI5SeupWLx7/A1v5eMK/I9jTjhCEC0gVE=;
-        b=P8EwbRYA1dfOWxvBnX/7RFchXJsPmXRj20fVtwIHiMeQePVjLY2B8+K6qhhWvaz9IK
-         AvUg6Jj8JM4FLfwbBNJZkQ2nHzkD2KckKKCq47zfgCyQ0s1EcrZ3tg9b207A7pQ9jIUi
-         NaVwhA19/w6mW5I++iBhD1vCS5ML+4UI39xopDtTiYDEbCqmZT8qs0YIb0VjHjXhe5oM
-         tp2iWgkVyn4oeSOEb4NDMxgny0LcYEZpVqK0nV2wXTZ8ox8WkVS92Skc04lnjVsA2duA
-         Wp5f27xIx0dR1+KT3MKsw+6GKP8FdI6qDhwpE/hW2kveSVTDDsCgFQtDXTe+wNkV5x9R
-         hv8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766732004; x=1767336804;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=In4D9uIw9WRI5SeupWLx7/A1v5eMK/I9jTjhCEC0gVE=;
-        b=VtXHlHsZYHibYCTqgH9mKF5Q3SbBTZeQm2CTEaPVrZCRK/4YdyMXQR+ecF6ZNN2E4h
-         DvR7PeDV9KM3Pttlzl2W7NayjOS0aS/Ix26+HVUvz6reOu7KipP95aREu+aD6smcOrYb
-         nsx3X60hwpZaABzbVAyWcJkNHxsysO3hW1W3grOd56dYYvLGyFcC2WL0jkIaNd/mbuqV
-         S7fat4vIXFEAIOAU9dWMICyzIyWkFC4MQq0RZl6SYMgFM5mVcwODzT6KTN6Vk/YeKadq
-         jvG9GJ7fJ8tV6k8sykfFf5VpZ9EUp/77ff4yRwVelnJ2E9uwKooXfDXyRfdYC8apq57B
-         tbiw==
-X-Forwarded-Encrypted: i=1; AJvYcCWY3QUylZcS8GKf0krOoaHSmBJUKP9mxlOauxFcPD6QBGJ7aTvTBS80cpur8X8PsB1ts8ZKsprH3g==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw3umSUxUyvd3nJEJyxPTDazLfeGLQbUNRwvSIRnaMMDu7+oQON
-	A1BQ2BWl1f0EdR+soCmg37aIS2ycxwGeMEUjIbehmEsxAUvK6eFddbwl1yfIMo1f/AVqk+gCHUJ
-	1bju/xJ6I6pmLWPMVlX8Kqm9FzBiJvb7OGF45f/vQrQ==
-X-Gm-Gg: AY/fxX50dW91ySL6WTOAEoLI6gp0AfnP8+SJOy/XieqG8IO+Lo7C8JTfpbSWUPW6utd
-	8LM07Q/FoK+aW2uJJMHN91X6/IIAPKeveYLfR7nhLGqXJFEdZg6va1O3omxVturxiz+LOlCMuNz
-	PK3C6ZIPkJupYcNTe7PNAQIbq8wYLZOJCoh1k+cR0y6VrbKhLIyB7i+C/huaj6dQ5p5OK5yoFZr
-	ByD/lh7AKva5l6yDvm2pu/JG1MRcx6XcQdNq72Uuk7ap757S7phr+Rn4s8G2uIKe6a8NSY3+eIM
-	snUHAGBs0Ut8M8+iPKV8mTS5dWoNN/+sMwEc3lmu
-X-Google-Smtp-Source: AGHT+IEykdaZ4Rha9W0iaPgKCHo3kRALkhoNrPmt5lxv9NvuluuvBnDgd6routLnDG3edhTl56BVVI71jDU66ZvrElQ=
-X-Received: by 2002:a05:690e:1a08:b0:644:5bba:e497 with SMTP id
- 956f58d0204a3-6466a871e61mr13684712d50.38.1766732003513; Thu, 25 Dec 2025
- 22:53:23 -0800 (PST)
+	s=arc-20240116; t=1766732164; c=relaxed/simple;
+	bh=j9Vuhsha5R+Io6JBbWV9GkR4NJvXsd6kHC5Nr8cp/JU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ubENLONp0MshSlEGhkJ95BlljRHJ5/amt2ZjPyEJwJ5LqrV2+oLaIk9XRGULZebnQUbNb43CYVC7q0loylcC85t3FBXBdf2+elgCj1stiPH6+7h4KYNKZY78+Jhw5A6+0pS8B/ZPvhI8ddfva9wwIPZ04FvavTZ2HPZXMYtM0nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [127.0.0.1] (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 5B0CF340FD9;
+	Fri, 26 Dec 2025 06:55:57 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+Subject: [PATCH v2 0/3] clk: spacemit: refactor common ccu driver
+Date: Fri, 26 Dec 2025 14:55:24 +0800
+Message-Id: <20251226-06-k1-clk-common-v2-0-28b59418b4df@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
- <20251216-k3-basic-dt-v1-7-a0d256c9dc92@riscstar.com> <60948ca2-ed3d-485b-9b11-15df7ef8791d@canonical.com>
- <CAH1PCMb=+TvB1w+G6a2ANDp05HUwC4r6CFBDHXFwSmoP3Mm8xw@mail.gmail.com>
- <f9b6b5e2-ec9e-4208-8267-77020e0a9411@canonical.com> <20251218-basil-quantum-225ce16e4699@spud>
- <CAH1PCMZ3KM9-D3NJ1N2LUHTHFSDVKmGKT5fU8knAL7NnV9E-gw@mail.gmail.com>
- <20251220-repacking-football-c79e660e788a@spud> <4e4c9e7b-d95c-4157-94c3-b06002f94a48@canonical.com>
- <20251222-dimmer-wooing-db29fe925498@spud>
-In-Reply-To: <20251222-dimmer-wooing-db29fe925498@spud>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Fri, 26 Dec 2025 14:53:10 +0800
-X-Gm-Features: AQt7F2rBtU4YKSmnk202JjvlyhsDSwcTDORz2f5ucxaceC-cTv-SHH-Q_N8lHTA
-Message-ID: <CAH1PCMbane4uN=N0UPRDG9x9NUbD9SYsbH+NnP-gzU6Bo8L2wQ@mail.gmail.com>
-Subject: Re: [PATCH 7/8] riscv: dts: spacemit: add initial device tree of
- SpacemiT K3 SoC
-To: Conor Dooley <conor@kernel.org>
-Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@sifive.com>, 
-	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	spacemit@lists.linux.dev, linux-serial@vger.kernel.org, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, 
-	Samuel Holland <samuel.holland@sifive.com>, Anup Patel <anup@brainfault.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Lubomir Rintel <lkundrak@v3.sk>, Yangyu Chen <cyy@cyyself.name>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFwxTmkC/2XOS27DMAwE0KsEXJeGSPinrnKPIgtBlm0ikZRKj
+ pEg8N2j2ssuhwDfzBuyS+IyfJ/ekNwqWWIogb9OYGcTJocylAysuCGmDlWLV0J7u6KN3seA/UC
+ 26bRuVN1BebsnN8pzJ38uR07u91Hk5TiCdzmbXS5Fh6sVcU+6qmulO0ZCCdHOYrw5T97IrSpl8
+ KfNkpeYXvvelXbuIFj9n7YSKhxG7o0ymlqm8+TCEmMV0wSXbds+c+KGg/8AAAA=
+X-Change-ID: 20251217-06-k1-clk-common-8d1c57995047
+To: Stephen Boyd <sboyd@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Alex Elder <elder@riscstar.com>, Guodong Xu <guodong@riscstar.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, Yao Zi <me@ziyao.cc>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1949; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=j9Vuhsha5R+Io6JBbWV9GkR4NJvXsd6kHC5Nr8cp/JU=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpTjFwjT1EQ3/TZbjr+fP0K74qAufxwEFul8TMm
+ 7zkXU0/xfqJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaU4xcBsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+0kUw/+LlgW7OI2eLR9r/EJNQr7Xb/+bnMtNi06E1HC94PApWvcOyxYyt6x7
+ EmNLDuUl0UMJBeOgzthgnaSGtj7CoZ+IpPuQaTe+ZlQukCWGQL+DwV+cfxQr1G8Qn8Pzt/wp5q1
+ vuH1C7k9xFtxbwZVKJIE+uRv8kH3DDqiXVfTiVAR1+aQyy1wKOt9mR1odKb2l8iW9slO3v3q0P1
+ 2RyFiFjGoI+oFfkzc7WTec3Ea8ieY6hQwn2mDWBx0dUIMzWTys+FmLpyQ0N8xoAhwADlSdrh7YF
+ D1CWGiGfBrSrtBjxoB+vvPG5ICm0yPYUqhPHu+lwdduQhcCgGUUlUSXqSOzZZ0UMld33VURBTdD
+ YndJW2DglQYExBXFBZbAF5tbDDILnNxqEGJ/ckB3yBjRawIaKauwwHS5mFeHvdpMzaJWIVX5qa0
+ ilpGXl6Id8BVo/6XCrwGEsyqf7grCT0iSephRM4G8i/F3M9750bUEZlg2C5d12NO/Tj77jBoAn/
+ Smbsanhl/JIbdeinLrrXpU5TgcPSuIrXAY7MW0Epk2girTqjG+G1xg2DtfUWMZPVZHnVYfg2aCY
+ hJigTbuJqTW25Hk9S3F5OYh7oFXGb7YnX/UlInR80gDrmQzbX0X+z6TT4+WIHQQewktQcsy5jDB
+ LMKIb2bkWH5iYJE2QLFs1UDnH7ULM4=
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On Tue, Dec 23, 2025 at 4:36=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
-te:
->
-> Heinrich, Samuel,
->
-> On Sun, Dec 21, 2025 at 01:10:15AM +0100, Heinrich Schuchardt wrote:
-> > On 12/21/25 00:23, Conor Dooley wrote:
-> > > On Fri, Dec 19, 2025 at 10:03:24AM +0800, Guodong Xu wrote:
-> > > > Hi, Conor and Heinrich
-> > > >
-> > > > On Thu, Dec 18, 2025 at 8:56=E2=80=AFAM Conor Dooley <conor@kernel.=
-org> wrote:
-> > > > >
-> > > > > On Wed, Dec 17, 2025 at 09:07:14AM +0100, Heinrich Schuchardt wro=
-te:
-> > > > > > On 12/17/25 08:11, Guodong Xu wrote:
-> > > > >
-> > > > > > > Specifically, I must adhere to
-> > > > > > > Documentation/devicetree/bindings/riscv/extensions.yaml (and =
-cpus.yaml for
-> > > > > > > properties like 'riscv,sv39' which stands for the extension S=
-v39). If I
-> > > > > > > add extension strings that are not yet defined in these schem=
-as, such as
-> > > > > > > supm, running 'make dtbs_check W=3D3' fails with: 'supm' is n=
-ot one of
-> > > > > > > ['i', 'm', 'a', ...], followed by "Unevaluated properties are=
- not allowed."
-> > > > > >
-> > > > > > If Documentation/devicetree/bindings/riscv/extensions.yaml is i=
-ncomplete
-> > > > > > with respect to ratified extensions, I guess the right approach=
- is to amend
-> > > > > > it and not to curtail the CPU description.
-> > > > >
-> > > > > Absolutely. If the cpu supports something that is not documented,=
- then
-> > > > > please document it rather than omit from the devicetree.
-> > > >
-> > > > Thanks for the review. May I clarify one thing? Both of you mention=
-ed
-> > > > document them, given the amount of missing extensions, is it accept=
-able if
-> > > > I submit a prerequisite patch that only documents these strings in
-> > > > riscv/extensions.yaml plus the necessary hwprobe export? Leaving th=
-e actual
-> > > > usage of these extensions (named features) to the future patches.
-> > > >
-> > > > To provide some context on why I ask: I've investigated the commits=
- & lkml
-> > > > history of RISC-V extensions since v6.5, and I summarized the curre=
-nt status
-> > > > regarding the RVA23 profile here:
-> > > > [1] status in v6.18 (inc. v6.19-rc1):
-> > > > https://docularxu.github.io/rva23/linux-kernel-coverage.html
-> > > > [2] support evolution since v6.5:
-> > > > https://docularxu.github.io/rva23/rva23-kernel-support-evolution.ht=
-ml
-> > > >
-> > > > Strictly describing the SpacemiT X100/K3 (or any core) as RVA23-com=
-pliant
-> > > > requires adding these extensions that are currently missing from
-> > > > the kernel bindings:
-> > > > RVA23U64: Ziccif, Ziccamoa, Zicclsm, Za64rs
-> > > > RVA23S64: Ss1p13, Ssccptr, Sstvecd, Sstvala, Sscounterenw, Ssu64xl,
-> > > >            Sha, Shcounterenw, Shvstvala, Shtvala, Shvstvecd, Shvsat=
-pa, Shgatpa
-> > >
-> > >
-> > > > Plus 'Supm', 'Zic64b', 'Ssstateen', 'B' where the kernel supports t=
-hem but
-> > > > they are not literally documented in yaml.
-> > >
-> > > I don't think Supm is suitable for devicetree, doesn't it describe
-> > > what the kernel/userspace are capable of rather than hardware?
-> > > Zic64b doesn't sound like hardware description (so not really suitabl=
-e
-> > > for devicetree either) but block size information is already represen=
-ted
-> > > by some existing properties (see riscv,cbo*-block-size in riscv/cpus.=
-yaml)
-> > > and duplicating that information is not really a great idea.
-> > >
-> > > I'll admit that I do not really understand Sxstateen and how they wor=
-k,
-> > > but my understanding was that knowing about Smstateen is sufficient a=
-nd
-> > > implied Sstateen, but having Ssstateen defined seems harmless and
-> > > possible. I think kvm is the only user of this at the moment, so
-> > > probably worth CCing Anup and maybe Drew Jones on the patch adding
-> > > Ssstateen to make sure it makes sense.
-> >
-> > Supm is described in
-> >
-> > RISC-V Pointer Masking
-> > Version 1.0, 10/2024: Ratified
-> > https://raw.githubusercontent.com/riscv/riscv-j-extension/master/zjpm-s=
-pec.pdf
-> >
-> > The interpretation taken by QEMU has been:
-> >
-> > * Supm implies Ssnpm and Smnpm
-> > * RVA23 capable machine models display it in the device-tree
-> >
-> > If Supm is not shown in the device-tree, software might assume that the
-> > system does not support pointer masking in user mode and is not RVA23
-> > compliant.
-> >
-> > Hence I would suggest:
-> >
-> > If the X100 cores have Ssnpm and Smnpm, add Supm to the device-tree.
-> >
-> > If the kernel does not support user space pointer masking, the kernel s=
-hould
-> > filter out Supm and not announce it, neither in /proc/cpuinfo nor via
-> > hwprobe.
->
-> Samuel seems to have some specific thoughts on how this works, given he
-> didn't blindly implement ssnpm and smnpm, but has made supm be mode
-> dependent and not permitted in dt, hopefully he sees this.
->
-> Personally I'm not convinced that putting supm in dt makes sense, but
-> instead the kernel should imply it if the sxnpm extension matching the
-> mode the kernel is operating in is present and RISCV_ISA_SUPM is set in
-> Kconfig. That's effectively how it works at present, except it'd involve
-> promoting RISCV_ISA_SUPM to a "real" extension instead of being a macro.
-> A validate callback should easily be able to handle checking the
-> mode and whether the Kconfig option is set.
+The goal here is to refactor the clock driver to extract common part, and
+reuse it, so in the future, we can maximize the source code usage once
+adding new clock driver (specifically, for the SpacemiT K3 SoC here)
 
-Hi, Conor
+Since reset driver register via auxiliary bus which requires a adjustment
+of the auxiliary device id accordingly.
 
-As we wait for Samuel to share his opinion, maybe I can submit a patch in
-(I already have it)
-my next version or as in a different patchset to implement what you suggest=
-ed.
- - Assign RISCV_ISA_EXT_SUPM a standalone ext number in hwcap.h
- - Implement a riscv_ext_supm_validate() and put it in the callback of both
-    ssnpm and smnpm.
- - Kconfig will be kept as a top level gatekeeper, no change.
- - dt-binding entry for supm will not be added.
+This patch will depend on Kconfig fix for building modules [1], and the idea
+come from K3 clock's review[2]
 
-The only reason support me to add sump into to the dt binding
-(extensions.yaml) is it's now a mandatory extension required by RVA23U64.
-However, as you explained, that logic seems not strong enough.
+Please note, Patch 1 is needed for both clock and reset driver, so extract it
+out as single independent patch. Then it can be pulled into both subsystem.
 
-Thank you.
+Link: https://lore.kernel.org/all/20251219012819.440972-1-inochiama@gmail.com/ [1]
+Link: https://lore.kernel.org/all/aTo8sCPpVM1o9PKX@pie [2]
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Changes in v2:
+- extract common header file which shared by clock and reset
+- add SoC namespace to differentiate reset for auxiliary bus
+- Link to v1: https://lore.kernel.org/r/20251220-06-k1-clk-common-v1-0-df28a0a91621@gentoo.org
+
+---
+Yixun Lan (3):
+      clk: spacemit: prepare common ccu header
+      clk: spacemit: extract common ccu functions
+      reset: spacemit: fix auxiliary device id
+
+ drivers/clk/spacemit/ccu-k1.c     | 188 ++------------------------------------
+ drivers/clk/spacemit/ccu_common.c | 171 ++++++++++++++++++++++++++++++++++
+ drivers/clk/spacemit/ccu_common.h |  10 ++
+ drivers/reset/reset-spacemit.c    |   2 +-
+ include/soc/spacemit/ccu.h        |  21 +++++
+ include/soc/spacemit/k1-syscon.h  |  13 +--
+ 6 files changed, 213 insertions(+), 192 deletions(-)
+---
+base-commit: 99735a742f7e9a3e7f4cb6c58edf1b38101e7657
+change-id: 20251217-06-k1-clk-common-8d1c57995047
+prerequisite-message-id: 20251219012819.440972-1-inochiama@gmail.com
+prerequisite-patch-id: df430730ed961011cee5c5d47b7ace84b3c5ebb7
+prerequisite-patch-id: 64003618c33be925602e46b7543f2c13d3f36474
+
 Best regards,
-Guodong Xu
+-- 
+Yixun Lan
 
-> That way it would get exposed to userspace using the actual mechanisms,
-> reading the devicetree itself from userspace is not a valid way of
-> checking what extensions are usable after all.
->
