@@ -1,96 +1,104 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2651A3160
-	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 12:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCF92AD2C
+	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 12:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766751500; cv=none; b=qZB5+yJfSpE2xqF4Mh3JhmF/cHdwceYQAiOJfjOJkNnGVXp8Y8U2AqKzBI8oiDQZw0coNXuuODsUAjwPFG7rR4t4I0kbdy+rnoAf1OqIFEuWkWoGyLHb7rHZ4r9N6n149N62/8nJiCMICACyZSmx92ThipA06b4BRcYlyUIu3Jg=
+	t=1766753929; cv=none; b=FioSD+DMYzwTA1QCgkjKVxf9dQZZ+mggY/7/zEY17vXivOgguy32kIgAlNf1/ClJ6oAKP29WqFPGysUBrniGKW+uQct2LeuJizlbS2Cz8c6nuJ38B6zL3Ch+lek0GCpJbkw5b1SZZiJdGL491995E6lyGI4SMTEPEQHKcq7hcUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766751500; c=relaxed/simple;
-	bh=h9CgFTFilRzjMtx4ewKo4ScsC7MNsvFHnDRkjClR7UQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kRdVL5UxCsQRNZwLs/9POIK8ljyTazJlucU5bCXI2kbZB1DnYmswxf5q4TuFwvt+xFW0/MLAYN4kpCEAYcsHJ2XP5x90RcjSFQQVO+xio3Kl5IVBxUT8mwfpqiJmI4fBsvRIr7L9+HZVQmoIXLVZQBGldsLssTNeTZfZt9W9gpE=
+	s=arc-20240116; t=1766753929; c=relaxed/simple;
+	bh=mISs6e4sFOmpqFJF5huwwA03CYAmRcdBj3UxE2vX5+w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=s7xJvkw0ov3F9uFUp6tKPRP4ovC8Sd6J/5E3Jl1VfxkJ6jJta0JT7hwqokamnHupPFetC1IhNPrAOGXgc9V4nMgjU64gYuJlxT+NtGTVwouU71P+TsavvIddd4dc9OcC7JbdetXXD+hYU4HdNTqT9ptKG14xx1m4W0BhQtuJ9tI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
+Received: from [127.0.0.1] (unknown [116.232.18.222])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id E0D16341F62;
-	Fri, 26 Dec 2025 12:18:17 +0000 (UTC)
-Date: Fri, 26 Dec 2025 20:18:12 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 3A3A23415E9;
+	Fri, 26 Dec 2025 12:58:42 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Yao Zi <me@ziyao.cc>
-Cc: Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Haylen Chu <heylenay@4d2.org>,
-	Guodong Xu <guodong@riscstar.com>,
-	Inochi Amaoto <inochiama@gmail.com>, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 5/5] clk: spacemit: k3: add the clock tree
-Message-ID: <20251226121812-GYA2007514@gentoo.org>
-References: <20251226-k3-clk-v3-0-602ce93bb6c3@gentoo.org>
- <20251226-k3-clk-v3-5-602ce93bb6c3@gentoo.org>
- <aU50DIe9qMneb0GT@pie>
+Subject: [PATCH v2 0/3] pinctrl: spacemit: add support for K3 SoC
+Date: Fri, 26 Dec 2025 20:58:23 +0800
+Message-Id: <20251226-02-k3-pinctrl-v2-0-5172397e6831@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aU50DIe9qMneb0GT@pie>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG+GTmkC/13Myw6CMBCF4Vchs3ZMO1y8rHwPw6LQKUw0LWkJ0
+ RDe3Yo7l/9JzrdC4iic4FqsEHmRJMHnoEMB/Wj8wCg2N5CiWmuqURE+SpzE93N84qk89521HVc
+ XC/kzRXby2r17m3uUNIf43vlFf9efRKT+pEWjQte4yrBplOncbWA/h3AMcYB227YPvB1YaasAA
+ AA=
+X-Change-ID: 20251125-02-k3-pinctrl-738cbddbe49d
+To: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1471; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=mISs6e4sFOmpqFJF5huwwA03CYAmRcdBj3UxE2vX5+w=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpToZ2sXKWCLz7sikw7eDEqH4mys554B/JUlG6x
+ g94EcrjLsSJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaU6GdhsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+3nAg//bcFwZe43UMQMUvof6Cd+Ra84AQgnlE06KFJldrRDftkiQBc7+qcPX
+ 03m/xs+cpvQfDH70A/iG7D7aomvbrjii9ydC4lhnJdjanvrmOQ/fnP26QKciI4twg8wLc+iLPcY
+ awK8e7z4j0vpu7He9m1n3mmKl/96bMJcvWcIKvYdZBSJ5x/i5BS4yAz/TpTVZHcYA4JvdPCt2+k
+ QOuLYIFOvRjGfj1pqi1pZ+16a1ICpx0aJ74ifrefy/VKsxnP+pPBGWFQkaD+7HsXhma5gja9kqs
+ hwzZ2SDtPNSRtChi9Zh54xE+Y3umbo/Ft2RhQsd6lWaPjEImL/J//3+VDBuPPv+u/y5qM9o5RPP
+ qAYTIQSQYoxM89Zz2HwZR/eM+5M0iJrRyiKd3I0kzX4FVT9UCuMZzUa6V4pNfC7bSa62aYWw0ut
+ AW/jrZ2JIUQyryK29hJlpQNZ+Y3nNznhsv88SXeDKCnRt6ftxytK61F5Yaw21JuKzkzBLkkpnJR
+ gEgTFtlunDT9su0XDqu3jwvf9Ag6E5LNlEvKq3RHXhd0TOi40D5SfNsMWXAEDw1LIG5rk3V7SXi
+ KmWwLqDG4n8wy/VgG3J+N6vdbCPAYaIeJdHn9nSwlAV4lDRaBts5pF5/Jc15CV91vSxPo92aYjf
+ gyC0dXXDdomG+8DW8zRdr4ZZfooO2s=
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Yao,
+This series attempt to add pinctrl support for SpacemiT K3 SoC,
 
-On 11:39 Fri 26 Dec     , Yao Zi wrote:
-> On Fri, Dec 26, 2025 at 07:01:20PM +0800, Yixun Lan wrote:
-> > Add clock support to SpacemiT K3 SoC, the clock tree consist of several
-> > blocks which are APBC, APBS, APMU, DCIU, MPUM.
-> > 
-> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> > ---
-> >  drivers/clk/spacemit/Kconfig      |    6 +
-> >  drivers/clk/spacemit/Makefile     |    3 +
-> >  drivers/clk/spacemit/ccu-k3.c     | 1482 +++++++++++++++++++++++++++++++++++++
-> >  drivers/clk/spacemit/ccu_common.c |    3 +-
-> >  4 files changed, 1493 insertions(+), 1 deletion(-)
-> 
-> ...
-> 
-> > diff --git a/drivers/clk/spacemit/ccu_common.c b/drivers/clk/spacemit/ccu_common.c
-> > index f1a837aafb46..5132f73be68d 100644
-> > --- a/drivers/clk/spacemit/ccu_common.c
-> > +++ b/drivers/clk/spacemit/ccu_common.c
-> > @@ -144,7 +144,8 @@ int spacemit_ccu_probe(struct platform_device *pdev)
-> >  	 * are in APBS region. Reference to MPMU syscon is required to check PLL
-> >  	 * status.
-> >  	 */
-> > -	if (of_device_is_compatible(dev->of_node, "spacemit,k1-pll")) {
-> > +	if (of_device_is_compatible(dev->of_node, "spacemit,k1-pll") ||
-> > +		of_device_is_compatible(dev->of_node, "spacemit,k3-pll")) {
-> 
-> To me it's better to add a argument to spacemit_ccu_probe to specify the
-> compatible of PLL, so we don't need to modify ccu_common.c each time a
-> new SoC is introduced, and the condition won't be pretty long in the
-> future.
-Adding extra argument will break {struct platform_driver}.probe() prototype
+I've removed the RFC tag as the driver is tested on K3 SoC.
 
-I can think of creating a sepecific helper function for each driver to
-hide the change, but still will bring extra cost, something will like:
- k1_ccu_probe(pdev) -> spacemit_ccu_probe(pdev, compatible)
+The K3 pinctrl IP shares almost same logic with previous K1 SoC generation,
+but has different register offset and pin configuration, I've introduced
+a pin_to_offset() function to handle the difference of register offset.
+for the drive strength and schmitter trigger settings, they are also changed.
 
-> 
-> It isn't a serious issue for now, and I think this piece of code is
-> acceptable.
-right, I'd be reluctant to do the change
+The patch #1 try to add pin support which should handle pin mux, while patch #2
+adjust drive strength and schmitter trigger settings accordingly for new SoC.
 
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Changes in v2:
+- RFC tag removed
+- update dt-binding docs for drive strength
+- fix wrong argument for drive strength
+- Link to v1: https://lore.kernel.org/r/20251220-02-k3-pinctrl-v1-0-f6f4aea60abf@gentoo.org
+
+---
+Yixun Lan (3):
+      dt-bindings: pinctrl: spacemit: add K3 SoC support
+      pinctrl: spacemit: k3: add initial pin support
+      pinctrl: spacemit: k3: adjust drive strength and schmitter trigger
+
+ .../bindings/pinctrl/spacemit,k1-pinctrl.yaml      |  12 +-
+ drivers/pinctrl/spacemit/Kconfig                   |   4 +-
+ drivers/pinctrl/spacemit/pinctrl-k1.c              | 517 +++++++++++++++++++--
+ 3 files changed, 477 insertions(+), 56 deletions(-)
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20251125-02-k3-pinctrl-738cbddbe49d
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan
+
