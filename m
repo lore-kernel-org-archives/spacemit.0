@@ -1,96 +1,103 @@
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CB52F85B
-	for <spacemit@lists.linux.dev>; Sat, 27 Dec 2025 02:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465053126AF;
+	Sat, 27 Dec 2025 11:25:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766800983; cv=none; b=dPs5t2aGl6OcR21SL1aVXo/s0JoOJ5F5bjNGxodcvZNyezdhXhvghUMoVeAutvRayjRuUm46maGqqGpi5ixT3wAgUewR7LuLMGvhaF1GCMCcnUaWq/GBs6qLwbW9c3zFz1Q7otJ+6/mYhAdqqvqxUDZYhkqunZtGFVno8tRjlJM=
+	t=1766834714; cv=none; b=RFAkRLfZ71psC5lmqMmUkRPkuFwhLt4djNgpOU8eK8ZmiPMKxfXvFDfVYhaqjcSzLim+WrIq34muW5EtG7yVV756E9SL0mIh4Xp0sQByy+isF6BPjgUMzq4hRIY6B2om3e0uSDymQxPwUxRZSlVlFc+/VLnUYfDgq/JgrKaHeEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766800983; c=relaxed/simple;
-	bh=5qQE/jGgTswowfQxH/R6THn/S+v/D8nvTlZVqOUq5tg=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=FXfOXRk8pyu1ES94EuoSB14Qxni2D0p9kNSaHHF649hIxjnu/NBIiuZQYk0hcK0M3ZWRV4HoHZ04aegl25SYGTNWuWE3mwCiNrmELCWTGbInmmW7QymozANc5YKqQgI3LvNhKycIBPiE2aGQjwj2aORU29j4sYE0XFlVO3Dh1Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=pF42UkQ7; arc=none smtp.client-ip=15.184.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1766834714; c=relaxed/simple;
+	bh=8kGUYYmACHqbfyv/84HV3f5JbyVZmQjIEIeVSleHFXU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GkQ8k3V4KLZqYW3yzSgHrnTuO0D3NV+8fXJlg6P1pMgHaGYYu1j4B+gyQMbNyHwkjFbkxPk9tVc7G7LVUTFKBaRCiOgqPbQvS8t3uy4iRR3i4hMRxLi5uW39zVHBBtRXDsRqBcxmnoVCqo+UGMLwg4nK4Z7HjsjZiRkRSqHc2LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ukx2DgGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="pF42UkQ7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1766800912;
-	bh=p41JuVTqBNxRCHQKjtwk9ihG/E0dETrJ8qiujU9CX/Q=;
-	h=Message-ID:Date:MIME-Version:To:Subject:From;
-	b=pF42UkQ7UIaMmac2wQ4OC5IlW210rQM8nscuXdslVME1hNkX9OP5yZDlZwu3CCeKb
-	 wEe8liH40que5BfnHpKAb4/gUkmGyYD01XaOr8BHy/c5ImK4oc3ocmEqYOFGd+JUmF
-	 bgv8/ZFI1nWuVlgx85uAz7wLoUw9HjSkHzsM6+8A=
-X-QQ-mid: esmtpsz10t1766800904t01fdd883
-X-QQ-Originating-IP: XEmEg72aS76MD4WYEtk9iltG/a16lqIcS6dJYB0LFMQ=
-Received: from [10.0.90.81] ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sat, 27 Dec 2025 10:01:42 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 992677309466334211
-Message-ID: <F78A665DD30EECAD+3a96ec99-07a5-4077-946a-85cf2241cf9d@linux.spacemit.com>
-Date: Sat, 27 Dec 2025 10:01:42 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ukx2DgGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558CFC4CEF1;
+	Sat, 27 Dec 2025 11:25:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1766834713;
+	bh=8kGUYYmACHqbfyv/84HV3f5JbyVZmQjIEIeVSleHFXU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ukx2DgGuJJW8VM0jkB5y54tMYE+yR5zUT5DlW3aP2nFAn36KzQ3f4p+WO1XQIJPQA
+	 qKHKRR2LM3VFXPQqZWE/V4yloNs/7P4C1QBl5/dgEoO62JbyWr9IfKbBPo827bWAH2
+	 RYkhchHY79Ln7No3atWXIebFoBaUYn1tylRnx5Tl2TiZ+ZPczhsTcu3ve3nelkbkjY
+	 fq3K69Fpg67sgOLFegbiz7BsOikvBHxT37gp4zisUeW1C6SG5bgDG6gqqj4EGd/ZEL
+	 8/gokM+Ww/KEtkhW+5cPbQH6EraPLeytne7tSUWUOmUpbE0rG7CVriMjYex1Prmj1U
+	 Mh1TsMbSMSpAg==
+Date: Sat, 27 Dec 2025 12:25:11 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Stephen Boyd <sboyd@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Haylen Chu <heylenay@4d2.org>, Guodong Xu <guodong@riscstar.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, Yao Zi <me@ziyao.cc>, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] dt-bindings: soc: spacemit: add k3 syscon
+ compatible
+Message-ID: <20251227-glaring-aromatic-raven-cbe30c@quoll>
+References: <20251226-k3-clk-v3-0-602ce93bb6c3@gentoo.org>
+ <20251226-k3-clk-v3-1-602ce93bb6c3@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: huang.ze@linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, dlan@gentoo.org,
- huangze@whut.edu.cn, kishon@kernel.org, krzk+dt@kernel.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-riscv@lists.infradead.org, robh@kernel.org, spacemit@lists.linux.dev,
- vkoul@kernel.org
-References: <20251017-k1-usb2phy-v6-0-7cf9ea2477a1@linux.dev>
-Subject: Re: [PATCH v6 0/2] Add USB2.0 PHY support for SpacemiT K1
-Content-Language: en-US
-From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-In-Reply-To: <20251017-k1-usb2phy-v6-0-7cf9ea2477a1@linux.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: NAtipnnbTPeag2ufG0IrQBlJF3XY/Xj2fFKDUM0ICmCBHifY8wHxcGxO
-	/VadelyRLAGDIStX0WtaMOeoTrc2rqZO46GFzZtWTC/RzgbkRCV6VxVKc0FkALjPV33ZftR
-	wi8hH6BPCZ6LhAGGqIzsu9455mWNsxL1FCqCVxO3t8KPgxm5zt2KfO3Fo4ftEb7an2csJFr
-	RkYosnK1DZj9c0xJwDsh/W46fPoCnybgJEbLfc2uiju3+kyt0C0lKWSUJ8nc58bqdRkZKri
-	bAePDnO3J4u6Vas/kjSUlzqfXwawT+RgiCdHpnL/l1uNjUeZi8I3bsh1cmn2bv5kRxr3Wms
-	ftvInoA4eYQGgTDC5RwasS271ggxbd3LOWtUa77qlYtqiCcl4ceyImYa2N3ZulgLHUkOk/M
-	deTbGNJDX1bwQGp1diLLMuTgp/0a2KOhWo7d+Mga4ZEuKq9aUCyZ5hT1Oni6bCmnzHbJIl/
-	rdQmjTznlBRPjWjyPu2QQANpgyKDVvgQgje0sPQ3KixbIgAet+ELcREZ2Tl+OsWH7fKHsEe
-	VMzaoCRrUr9XhwCjWaSQ4nKIFYFTAA0wXtzARsrcxJyH8ROmf2U27WkL3YOOC21ZFvsqfGF
-	25l+j07I12p7rjIMnKxYMMkuYV60A+a8wIN6vGGfo/pvxbpgKMkE07oZPknPxjKiDPNEHVD
-	4DaBEs6svAdFdRCugIK2SyyfUon7xw69hcnDWu1NuDbUnA66aQ02+JoWL3p4P2Wmyg4h8q3
-	NJkW0opolWcr7kN/Oey70nr7BVvgRyN7n2bk96s2ujpEyogf6Ycp7YRjhFve8glH/n2CcKn
-	CDSIDX729v/MlzsF+tGrlubgo7cFdhn3v8NpQ8+fcF4+n6moRhqv4iXympDhVoau/UGAixY
-	aUCDDVRp7KsQdet4ykytYQ1Qb2jmYRvN3dQaPPxwVnYq9AazDKbnq+1OWmHiH5qSWW96G4T
-	zNRKX9wyefG6lsAoWk3nlOeQr/ge4FUcemoU2btQhwv5cZ6OyMYZNOMjWLO2Z+IOcV2Pdkd
-	eUvjzZ5U31OX8CPTl5dPXCvc94E9E=
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251226-k3-clk-v3-1-602ce93bb6c3@gentoo.org>
 
-On Fri, 17 Oct 2025 22:49:51 +0800, Ze Huang wrote:
-> This patch series introduces support for the USB2.0 PHY on the SpacemiT
-> K1 SoC. The implementation has been tested on the Milk-V Jupiter and
-> BananaPi-f3.
+On Fri, Dec 26, 2025 at 07:01:16PM +0800, Yixun Lan wrote:
+> The SpacemiT K3 SoC clock IP is scattered over several different blocks,
+> which are APBC, APBS, APMU, DCIU, MPMU, all of them are capable of
+> generating clock and reset signals. APMU and MPMU have additional Power
+> Domain management functionality.
 > 
-> K1 includes three USB ports as follows[1]:
-> - A USB2.0 OTG Port
-> - A USB2.0 Host Only Port
-> - A USB3.0 Port with a USB2.0 DRD interface
+> Following is a brief list that shows devices managed in each block:
 > 
-> Each of these ports is connected to a USB2.0 PHY responsible for USB2
-> transmission.
+> APBC: UART, GPIO, PWM, SPI, TIMER, I2S, IR, DR, TSEN, IPC, CAN
+> APBS: various PPL clocks control
+> APMU: CCI, CPU, CSI, ISP, LCD, USB, QSPI, DMA, VPU, GPU, DSI, PCIe, EMAC..
+> DCID: SRAM, DMA, TCM
+> MPMU: various PLL1 derived clocks, UART, WATCHDOG, I2S
 > 
-> This series is based on 6.18-rc1.
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> ---
+>  .../devicetree/bindings/clock/spacemit,k1-pll.yaml |   9 +-
+>  .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  |  13 +-
+>  include/dt-bindings/clock/spacemit,k3-clocks.h     | 390 +++++++++++++++++++++
+>  3 files changed, 407 insertions(+), 5 deletions(-)
 > 
-> Link: https://developer.spacemit.com/documentation?token=AjHDwrW78igAAEkiHracBI9HnTb#part5 [1]
-> 
-> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
-Tested-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+> diff --git a/Documentation/devicetree/bindings/clock/spacemit,k1-pll.yaml b/Documentation/devicetree/bindings/clock/spacemit,k1-pll.yaml
+> index 06bafd68c00a..02ebbe4061e3 100644
+> --- a/Documentation/devicetree/bindings/clock/spacemit,k1-pll.yaml
+> +++ b/Documentation/devicetree/bindings/clock/spacemit,k1-pll.yaml
+> @@ -4,14 +4,17 @@
+>  $id: http://devicetree.org/schemas/clock/spacemit,k1-pll.yaml#
+>  $schema: http://devicetree.org/meta-schemas/core.yaml#
+>  
+> -title: SpacemiT K1 PLL
+> +title: SpacemiT K1/K3 PLL
+>  
+>  maintainers:
+>    - Haylen Chu <heylenay@4d2.org>
+>  
+>  properties:
+>    compatible:
+> -    const: spacemit,k1-pll
+> +    contains:
+
+No drop, there is no such syntax for this property, so you copied here
+something completely different.
+
+> +      enum:
+> +        - spacemit,k1-pll
+> +        - spacemit,k3-pll
+
+Best regards,
+Krzysztof
 
