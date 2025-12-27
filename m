@@ -1,67 +1,38 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070AB23EAA5
-	for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 21:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CB52F85B
+	for <spacemit@lists.linux.dev>; Sat, 27 Dec 2025 02:02:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766784534; cv=none; b=EjDIif7XOXZavV/UrqVTzXb5M8lSdSQ90c84Q+LMZa4LE421QSchk9f46fD/XiraB3NBwM+qI+TzMBwQxTqx/NAev4ig/IzUxsP/PHCsa32nO6KxCdDs+KcZWcnzytJjacDPt0rEocm9QOpNgxNNke8Dln6dVrj9YInpFotx1k4=
+	t=1766800983; cv=none; b=dPs5t2aGl6OcR21SL1aVXo/s0JoOJ5F5bjNGxodcvZNyezdhXhvghUMoVeAutvRayjRuUm46maGqqGpi5ixT3wAgUewR7LuLMGvhaF1GCMCcnUaWq/GBs6qLwbW9c3zFz1Q7otJ+6/mYhAdqqvqxUDZYhkqunZtGFVno8tRjlJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766784534; c=relaxed/simple;
-	bh=NspC7S3ikTMUwNzaq52BA472WHff+d7fgODKBGfPMtk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iO7Zo20Cirj+DOW7ukYBl0veGoXX5BZyDzn2IC1cxjwjXmLYCJ6Q4MswMPo7TEYxBFQpMbhmlBc69zo1A0nDYUWJdm+Dm0cN+ubME7LWMIYxgh3pwZ+XgE7nqihbCzSxI7M2pnOmQ0mZUaytwhnb1miOpzKDiup7H+KPl4YafOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=bgA+9Kfy; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1766800983; c=relaxed/simple;
+	bh=5qQE/jGgTswowfQxH/R6THn/S+v/D8nvTlZVqOUq5tg=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=FXfOXRk8pyu1ES94EuoSB14Qxni2D0p9kNSaHHF649hIxjnu/NBIiuZQYk0hcK0M3ZWRV4HoHZ04aegl25SYGTNWuWE3mwCiNrmELCWTGbInmmW7QymozANc5YKqQgI3LvNhKycIBPiE2aGQjwj2aORU29j4sYE0XFlVO3Dh1Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=pF42UkQ7; arc=none smtp.client-ip=15.184.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="bgA+9Kfy"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8bc53dae8c2so1141794985a.2
-        for <spacemit@lists.linux.dev>; Fri, 26 Dec 2025 13:28:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766784531; x=1767389331; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nntctK0gEdJs8MBuE2OMh+NNa2bU4c08j9CTg1079CE=;
-        b=bgA+9Kfy3ljtJ3K7ZORIBb6IZ3XoLKfEM+qtUmodzFq3egct87SW0r1GhwsVknW56c
-         G1SlEv9Q0nqC7w6FGL2kgfh31ektcxqI4jPT6kSJd4qO1TjFy8Rdw3SuLT7LBOb+V18m
-         0xT2T2EtP5OjIFGh+G+3q+eQeDLaZTRzY/u+ZV/i64RfhTGB0NO3Q2E2/ZUobZLsR7u5
-         SVz1rd94JyuQN7b3T4I8qAKsfwuuKTjalL0hAa6lWfKGCA4F760VZ3s85/rXfyM+5HsC
-         NRIcIxQhXWOzLhJieAQfoIUuffYd5gkXh+WTsfgu4VBfcKt2YIe9cthpcc8ROxWoxIwj
-         q/pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766784531; x=1767389331;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nntctK0gEdJs8MBuE2OMh+NNa2bU4c08j9CTg1079CE=;
-        b=PvuqoW6sVEWj9qsKmezDLmmifucOCgk6DMfjSYyhT/2knhUW/qxjAkskQh1Ksk3svk
-         UJ9TnlU8j1euJvfGAPHH24e3EKqJ32Fa6AbY0YNIgXt20281+LCUwCCXYif/9LPSHhHG
-         YTk+U4OuIHWx2OVUBhJA3HRXrcAP806/NfLnyzZd0ymHC4Ar3qW1O6UU3OqrBN8Lon69
-         dQ+O2pPDDDgrClH/yFNU+GeD10e0gOveACl5CKWK3+cLClVAAZkEajuKgP7wkUpqGIlW
-         Oz+dKib1E3BqVFTTwRSMiD6XQBLmAR3lgOp2KGxlJCdufGhIDgJ3hRPt5mE+Yi/0BPkA
-         Izeg==
-X-Forwarded-Encrypted: i=1; AJvYcCULKjY8ZBdyXEilJskRZWALbqIRMX/IUyHVevpEW0n3cGjjK2HUmhSOz2dYbjGB8hmrXcOZfYZuyg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyh1Zj8dBFv97/Aq8CWs4CGyLZfZp5HyjZdqMdRiDmjZmgyHIdX
-	fNA/eVMMRrNKagX4CxxdpT3VaYQyPMYeCrhSfXUgDVxkkPT/p3i+rYyehQEVBAeJd4k=
-X-Gm-Gg: AY/fxX6A8+nUmMk2hlkXs5Trxp0EA9K6flXwYTDol/eL8rnyILXIXkt0mTCNBUNG7qi
-	3TAWK8m6aFJg0KPHH+BYkHHXmvhz6OpFfyzXUuieKw9hxflrm+2AO9fexZTjzHna29GgKxhAkys
-	QldSw1FuuAEIGOw8tFrhQG6y+2JsxUEUzJhvod0vh45zknMOYGNqS+F8fJYVrS5nfNMKH+WHtjy
-	Fj+2p2AQ8zNXAEmZNxPfWUQh8vEuIjwPYCpA29nFNm5nZp1U54GHkU8pbAIXTNxqBJHCSDQzmbD
-	jnhQTT12OkRXbBO2a0Ztlm7Gm2jD7sbPi6yvkzlS3JYNrqcHR7vS4WBWWISUt/mlXepyIQSsBOZ
-	GJEP2YbarYoecNQ+ADY0YMVFIaeu6bKgwswg5SadVgQlI7/Ht3Bi+YJn3uwgMWJaJ7nPe1SPVZ8
-	tqSqDh89i+ItiHt5qG5FJJFsUatGKAbU+esLRfQj2O0le0qrtcGRA=
-X-Google-Smtp-Source: AGHT+IEy/QOrxe2SQiRFQjJ/+nrpNVPGTV1wSqBMtHRM+j197OQHW+EwApB9rAJn4Nlwz0TrLac2kQ==
-X-Received: by 2002:a05:620a:454d:b0:8b1:ed55:e4f0 with SMTP id af79cd13be357-8c08fbc6077mr3782302885a.39.1766784530950;
-        Fri, 26 Dec 2025 13:28:50 -0800 (PST)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c0973ee08dsm1824350585a.36.2025.12.26.13.28.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Dec 2025 13:28:50 -0800 (PST)
-Message-ID: <fc719e92-10bc-455f-b402-c93bdbf878cf@riscstar.com>
-Date: Fri, 26 Dec 2025 15:28:47 -0600
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="pF42UkQ7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1766800912;
+	bh=p41JuVTqBNxRCHQKjtwk9ihG/E0dETrJ8qiujU9CX/Q=;
+	h=Message-ID:Date:MIME-Version:To:Subject:From;
+	b=pF42UkQ7UIaMmac2wQ4OC5IlW210rQM8nscuXdslVME1hNkX9OP5yZDlZwu3CCeKb
+	 wEe8liH40que5BfnHpKAb4/gUkmGyYD01XaOr8BHy/c5ImK4oc3ocmEqYOFGd+JUmF
+	 bgv8/ZFI1nWuVlgx85uAz7wLoUw9HjSkHzsM6+8A=
+X-QQ-mid: esmtpsz10t1766800904t01fdd883
+X-QQ-Originating-IP: XEmEg72aS76MD4WYEtk9iltG/a16lqIcS6dJYB0LFMQ=
+Received: from [10.0.90.81] ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sat, 27 Dec 2025 10:01:42 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 992677309466334211
+Message-ID: <F78A665DD30EECAD+3a96ec99-07a5-4077-946a-85cf2241cf9d@linux.spacemit.com>
+Date: Sat, 27 Dec 2025 10:01:42 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -69,104 +40,57 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/13] dt-bindings: riscv: Add Supm extension
- description
-To: Guodong Xu <guodong@riscstar.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Samuel Holland <samuel.holland@sifive.com>, Anup Patel
- <anup@brainfault.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
- Yangyu Chen <cyy@cyyself.name>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>, Conor Dooley
- <conor@kernel.org>, Heinrich Schuchardt <xypron.glpk@gmx.de>,
- Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
- Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- spacemit@lists.linux.dev, linux-serial@vger.kernel.org
-References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
- <20251222-k3-basic-dt-v2-11-3af3f3cd0f8a@riscstar.com>
+To: huang.ze@linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, dlan@gentoo.org,
+ huangze@whut.edu.cn, kishon@kernel.org, krzk+dt@kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-riscv@lists.infradead.org, robh@kernel.org, spacemit@lists.linux.dev,
+ vkoul@kernel.org
+References: <20251017-k1-usb2phy-v6-0-7cf9ea2477a1@linux.dev>
+Subject: Re: [PATCH v6 0/2] Add USB2.0 PHY support for SpacemiT K1
 Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20251222-k3-basic-dt-v2-11-3af3f3cd0f8a@riscstar.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Junzhong Pan <panjunzhong@linux.spacemit.com>
+In-Reply-To: <20251017-k1-usb2phy-v6-0-7cf9ea2477a1@linux.dev>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
+X-QQ-XMAILINFO: NAtipnnbTPeag2ufG0IrQBlJF3XY/Xj2fFKDUM0ICmCBHifY8wHxcGxO
+	/VadelyRLAGDIStX0WtaMOeoTrc2rqZO46GFzZtWTC/RzgbkRCV6VxVKc0FkALjPV33ZftR
+	wi8hH6BPCZ6LhAGGqIzsu9455mWNsxL1FCqCVxO3t8KPgxm5zt2KfO3Fo4ftEb7an2csJFr
+	RkYosnK1DZj9c0xJwDsh/W46fPoCnybgJEbLfc2uiju3+kyt0C0lKWSUJ8nc58bqdRkZKri
+	bAePDnO3J4u6Vas/kjSUlzqfXwawT+RgiCdHpnL/l1uNjUeZi8I3bsh1cmn2bv5kRxr3Wms
+	ftvInoA4eYQGgTDC5RwasS271ggxbd3LOWtUa77qlYtqiCcl4ceyImYa2N3ZulgLHUkOk/M
+	deTbGNJDX1bwQGp1diLLMuTgp/0a2KOhWo7d+Mga4ZEuKq9aUCyZ5hT1Oni6bCmnzHbJIl/
+	rdQmjTznlBRPjWjyPu2QQANpgyKDVvgQgje0sPQ3KixbIgAet+ELcREZ2Tl+OsWH7fKHsEe
+	VMzaoCRrUr9XhwCjWaSQ4nKIFYFTAA0wXtzARsrcxJyH8ROmf2U27WkL3YOOC21ZFvsqfGF
+	25l+j07I12p7rjIMnKxYMMkuYV60A+a8wIN6vGGfo/pvxbpgKMkE07oZPknPxjKiDPNEHVD
+	4DaBEs6svAdFdRCugIK2SyyfUon7xw69hcnDWu1NuDbUnA66aQ02+JoWL3p4P2Wmyg4h8q3
+	NJkW0opolWcr7kN/Oey70nr7BVvgRyN7n2bk96s2ujpEyogf6Ycp7YRjhFve8glH/n2CcKn
+	CDSIDX729v/MlzsF+tGrlubgo7cFdhn3v8NpQ8+fcF4+n6moRhqv4iXympDhVoau/UGAixY
+	aUCDDVRp7KsQdet4ykytYQ1Qb2jmYRvN3dQaPPxwVnYq9AazDKbnq+1OWmHiH5qSWW96G4T
+	zNRKX9wyefG6lsAoWk3nlOeQr/ge4FUcemoU2btQhwv5cZ6OyMYZNOMjWLO2Z+IOcV2Pdkd
+	eUvjzZ5U31OX8CPTl5dPXCvc94E9E=
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-On 12/22/25 7:04 AM, Guodong Xu wrote:
-> Add description for the Supm extension. Supm indicates support for pointer
-> masking in user mode. Supm is mandatory for RVA23S64.
+On Fri, 17 Oct 2025 22:49:51 +0800, Ze Huang wrote:
+> This patch series introduces support for the USB2.0 PHY on the SpacemiT
+> K1 SoC. The implementation has been tested on the Milk-V Jupiter and
+> BananaPi-f3.
 > 
-> The Supm extension is ratified in commit d70011dde6c2 ("Update to ratified
-> state") of riscv-j-extension.
+> K1 includes three USB ports as follows[1]:
+> - A USB2.0 OTG Port
+> - A USB2.0 Host Only Port
+> - A USB3.0 Port with a USB2.0 DRD interface
 > 
-> Supm depends on either Smnpm or Ssnpm, so add a schema check to enforce
-> this dependency.
-
-I have the same general question on this, about whether it's really
-necessary for the DT binding to enforce these requirements.  The
-RISC-V specifications are what truly defines their meaning, so I
-don't really see why the DT framework should need to enforce them.
-(That said, I'm sure there are other cases where DT enforces things
-it shouldn't have to.)
-
-
-And now, having looked at these added binding definitions (in patches
-07 through 11 in this series), I wonder what exactly is required for
-them to be accepted.  For the most part these seem to just be defining
-how the extensions specified for RISC-V are to be expressed in
-DT files.  It seems to be a fairly straightforward copy from the
-ratified specification(s) to the YAML format.
-
-Who need to sign off on it?  Conor?  Paul?  DT maintainers?
-
-Thanks.
-
-					-Alex
-
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> ---
-> v2: New patch.
-> ---
->   Documentation/devicetree/bindings/riscv/extensions.yaml | 16 ++++++++++++++++
->   1 file changed, 16 insertions(+)
+> Each of these ports is connected to a USB2.0 PHY responsible for USB2
+> transmission.
 > 
-> diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/Documentation/devicetree/bindings/riscv/extensions.yaml
-> index 1066b7e65dab89704dbac449db4aa5605c95b9d3..4997f533b2c0defad88fd59413a6885b5b9e109a 100644
-> --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
-> +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
-> @@ -267,6 +267,12 @@ properties:
->               ratified in RISC-V Profiles Version 1.0, with commit b1d806605f87
->               ("Updated to ratified state.")
->   
-> +        - const: supm
-> +          description: |
-> +            The standard Supm extension for pointer masking support in user
-> +            mode as ratified at commit d70011dde6c2 ("Update to ratified state")
-> +            of riscv-j-extension.
-> +
->           - const: svade
->             description: |
->               The standard Svade supervisor-level extension for SW-managed PTE A/D
-> @@ -892,6 +898,16 @@ properties:
->                   const: shvstvecd
->               - contains:
->                   const: ssstateen
-> +      # Supm depends on either Smnpm or Ssnpm
-> +      - if:
-> +          contains:
-> +            const: supm
-> +        then:
-> +          anyOf:
-> +            - contains:
-> +                const: smnpm
-> +            - contains:
-> +                const: ssnpm
->         # Zcb depends on Zca
->         - if:
->             contains:
+> This series is based on 6.18-rc1.
 > 
+> Link: https://developer.spacemit.com/documentation?token=AjHDwrW78igAAEkiHracBI9HnTb#part5 [1]
+> 
+> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+Tested-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
 
