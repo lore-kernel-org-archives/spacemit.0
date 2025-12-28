@@ -1,67 +1,67 @@
-Received: from mail-qk1-f193.google.com (mail-qk1-f193.google.com [209.85.222.193])
+Received: from mail-qt1-f196.google.com (mail-qt1-f196.google.com [209.85.160.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7258C2D73A3
-	for <spacemit@lists.linux.dev>; Sun, 28 Dec 2025 23:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A6E2E1EE7
+	for <spacemit@lists.linux.dev>; Sun, 28 Dec 2025 23:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766965827; cv=none; b=AoxQ4NxZrqQ1DHnyeni5AylHYHjtHF/W952MJav2ovwlkY+tltFOQ+ZAuYZMkNs6ZFahCtK4RgD6OKUhZLElMszYDmTnXED+IadIZcIue9xqm6G0B+MK2VYDFKakvJmci8CuKNcOnWuiT5AmxAIXJV9eFBDODXMwaVEG+ATJ3yU=
+	t=1766965831; cv=none; b=NFy+QN3UfQ9FgxbKsNC25KogcXIjnJEZ5le0KsgJt7fUeIc4FdAUYuPiLYwct5S9F4/Hvi/UWrYhrz+3D4FiajaQWb09mfwQmRmGaxc1rYX3lia5JLx6xfeTjw7v0Jy4X8BltikgaOareWcHVttJtD4MfM58XBiHghMNFNwnHUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766965827; c=relaxed/simple;
-	bh=sVpTDADuXtQMnOJQSbV+zhhpNFiOBbGnuogllAgBr+M=;
+	s=arc-20240116; t=1766965831; c=relaxed/simple;
+	bh=FMGcKOOH2QAAM035N5VPwjsf6iLF3bsS2NHda98XWxQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=op/8TcV8w+u3RwytZ28ARdinxKeKl+E1mES/9l7Sblg1mDCq0cQ22LfPwAgxw5+xZACHPozZv3KGbebnQjGkHN7OxuRVow+yef8sMmE7YhonB21GX+PQ6lfu5XXbKlEWxc7JsZVLGnBlDA4mYUL7pXvpR9//uUU4IZ4U+ef4y/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=PoaCzwmJ; arc=none smtp.client-ip=209.85.222.193
+	 In-Reply-To:Content-Type; b=QT0uY1/m8vFufR0ggv/D5s7LG9UHLKbQ4r3v55aM+/mjR2Q6Odo871dtoGr6Hx+gomTUGjXSYihKMIhmMh5t4ZgkxBYxa4TNFWhT4k4OWJYVZecJGRmHupGUUzs8JmDDbqScUNlqhxnw3aVcWlMiVVgD4hTz4VOQizDxxl5rNxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=dto6LWhf; arc=none smtp.client-ip=209.85.160.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="PoaCzwmJ"
-Received: by mail-qk1-f193.google.com with SMTP id af79cd13be357-8b23b6d9f11so966960685a.3
-        for <spacemit@lists.linux.dev>; Sun, 28 Dec 2025 15:50:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="dto6LWhf"
+Received: by mail-qt1-f196.google.com with SMTP id d75a77b69052e-4f1b147eaa9so68930241cf.3
+        for <spacemit@lists.linux.dev>; Sun, 28 Dec 2025 15:50:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766965824; x=1767570624; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766965828; x=1767570628; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tGg9TVkzSyLOYk8NKjbUBxoiYn1jq6nqqC2B9vxuQ20=;
-        b=PoaCzwmJkeqgl2v3Qd6/+JdogTMPjrU2o9D3F2W3kLXiMvcfgiybQQmDpC/ds3DWCq
-         TcUyAwRJPScQ9eyq3n6K6vLrx1/Xfnb1rvpE9yxHkF9QTlfAKYSIoacPAzKz60ocNyW+
-         B5iiYn0ld+me7ZMaz1HHOSSHAJJPlMt/o0LAMoIs6WXq+YojuwU/+AxqaunWyzRK6WkG
-         DCDRij48yv8iN4JWAdEFgQbAZ9XtAsxkn9G+9J0IeIqzqXOCAHccQxCacTIgWoPXiews
-         DH5+Gvs5L1K7nRJGFDm79Az3Mw2qS99MEW7tPU2Vhx2lBNbrrgqDJb1BFCIPv3nGWB1T
-         356Q==
+        bh=0iJY5kULQZeqgTosQ9scmyKuRaTaMg4i5yh/l64mgrA=;
+        b=dto6LWhf13fWCbQgkxfs7nHKHA9Q+dT369rdOzZp0YDIhDQg1IN8AJBkbVeeldHwIu
+         R4cWg69Zubk2rq9ZKhsZfzKG20CBs7hM6PFeLTfCxt80ltbKjCmPQnooqNPMEG0zXxn+
+         0nh53C7uEhmC713Yydu4M8Z1pC3L/ZTL35n4VhnZCeUo9RdIkmGu/5KQyGAKrOnDwTtu
+         xxhjfbs78F0TqR0KRye1+adGJQ8hcUryHqi/oj3Say43TjlraCrRQqByzQ9C5AiYj1Yy
+         r1VK7H4bshE4LCFxvWi66z0xFqEd7YbXOvhlkb40ZAnx86Vj9bDXbAusZqM3tBT9UNPe
+         7EGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766965824; x=1767570624;
+        d=1e100.net; s=20230601; t=1766965828; x=1767570628;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=tGg9TVkzSyLOYk8NKjbUBxoiYn1jq6nqqC2B9vxuQ20=;
-        b=OrSz/Fg6BhzWvpCgtiqGY5i6NFxy4HxMeDuonYSqWXRF8mZjd27TJPJUoqjIu/QvQT
-         bmwp2acEcdSB1cVOFxynzSEheDah3B16EVhvKzjVUi/9Bl6VsUtVoqkmOFhpuMREk1TX
-         /CLW0OWBB1oaBKeTIBgoNz+aOGTKi0dFR2NcWsKJWF3axKJ2sPOehDgckNpqDrCKokzw
-         FKKVye3I/nahr1IWFHp3pU1GXVjVEARsMinTdLueWwLckg8e6+kMqGZfIxixSWTlvhtn
-         GSvePQORepw5p0Mcb5SE+PPHPozHALRx4yWzimfSRecHPyV2BrKAEUrdnGCM9265YM3F
-         6DpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUVFnrcxM90jNz/QCDdD+RZlSG++lA5cwnEUCf8BftnXGn0/PXgrIuFpSnUSbOiCPjt1rAMwqlEDw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwVRTMeEQc8oRts17EX4vS+I/8Te37tXXcvQshY6n8oQuHKzjhj
-	HctQC+8xPi9ikGO41C06AMroK9hQ5HRCt9Quvph1VW5RlJtSMFIhpmU2H4Rv0tERR9w=
-X-Gm-Gg: AY/fxX6V7O3fx4owzZOD9eIfFBo8TruPOrmMAK4nq2Zm9saUtQFDgYORqHJ9+rUNB/r
-	oFom5FijTG6Ggji9uOOBiY6h+k59XUi7DMjHuWLRUs2IickcTo3Ha5IeMT+Tdk+XkJt0pnvB6UR
-	QbQIl32v/cQ00BE8kCy0ynnY5mICmvA121MjcpMBsoAj5rMvU2INo7ueaLfo+1rYR2z9o/9Ten+
-	mMPJbMqepsYO94aBI4MVxpVje3QXmtUv0tvYQNI1UZkoCM8zqdpA/z72mIEIIYc/RoLCQPsNHz+
-	jVsLp7nG30pVG09DxhRtY6ORILyw0mKFeiVMVgh69qhZHBF0khgLW6MMYeZ3tDULK5ix4kolsRY
-	PSwxaHaH4VgLtV5Q8qda9MmMPflVpAxxRvj2EkdRyhbzEvgy1xM28YnPTm6rG8chVP8X/DfsgRR
-	ZYRMk1ATs81spgu4JbKm7DUAGp4DvEkJjsYA//67vnBsiNvvOyEsM=
-X-Google-Smtp-Source: AGHT+IENo+4b0smC8TFEGHw2t77Y1hDrYcgaOhQgijSCe33rGID/qLKQXVh9HVX2zWXUPOmu52A9pQ==
-X-Received: by 2002:a05:620a:2906:b0:8b2:e1bc:f27c with SMTP id af79cd13be357-8c08fabf900mr4212673585a.68.1766965824320;
-        Sun, 28 Dec 2025 15:50:24 -0800 (PST)
+        bh=0iJY5kULQZeqgTosQ9scmyKuRaTaMg4i5yh/l64mgrA=;
+        b=auROJgiDg1j4GaOkwaMF2ccLfyT8BPv97rjO4GAxg+ymzqBFrVzv58M8VU+ndGA+t9
+         uz97RMZR6tAz8CFqq8ryDiKN+AADCSL4fPi+Oe8o/i22Sftr8Oxohdgg6JoAGDs0ZRQa
+         DbtrDdjOqJJmBO+tdplicqSZB1QbdJHZpU84+XQ0GLxyUuX3NFa03lD7WsSrB6b5sVDl
+         xEPtYmmIBPBmXL3ca3lZhVNWbtOsBB8rtV5lIs3TUaypxUr60tMsXFoiE1k21nYoIVnU
+         KBMZ81tI921kJJJzN8ObCMhi/TCFn4zmPY2HadPRWfm+ho7bSkc149A5Q0Zwsp6owoRd
+         PzBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVD+P9J906OWMnvrbk9laEkEQ5Iw4JrJSdI8Pzf5XG7GzvBg3vmfTRC41hUYYWiHXUfAlyuuxkm3Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyZrmp04Z8nbCKBog01WuhhATJAG1Gu07aoo6qurbBFx/ZL277z
+	HyjYgLwim8wPOyQ9Tgi7DroDiYHVzFz7NdLs7PEx1LaCO/vWZrywPQFd8yGOeLqH/Go=
+X-Gm-Gg: AY/fxX6pNBx/FS7kPHv0G4Rh0gn+Hgz1DVxIZuRGJhWSkThYmCSqyBbAVRDI1PhXQ6M
+	ixTa9vDQO3f3AC8OaaCALzJ3itwRQM2fHjTFq0zEAfxMsZkTvNmWXXPZCAsMSj2a/PR/UYXjOrv
+	Q67TPviwKsgFnBfeLKGMvuxDMpf84B5NBneIyrGsEK1KgIeJLqByj3v4P5rGZKdnKV3FHpSJ3dl
+	BiyHQ8UIZSAq6WgoYPjkGcPCHaNGBtw9F3+jNpkpvQNNJ1eEe1AMl8CkRnZ6i7ongwTJqPri2if
+	1sO380yfdVwi+GKgSpxFgJlsvtM0XcYjUyWm9dCmWhJ1m+Fihy79tpk+Bpf8W0v4cp4E5xIGt0t
+	ZX4+gfwqkByQDv8N1NH9PdaMgrZGlQw/gbnlWWpwTaC7xKRDqY5Ew0lY0RtizT+kAwD1NweVdh3
+	cwdSe5fCe1tW3qZR6DJMa+des9HZa+puMUq4wYE56evbHO7D/Ge9I=
+X-Google-Smtp-Source: AGHT+IHMoTvSCcsoBat644ksem8ZqP4Cs7kB7zIlLcWG+j/tQjQblk+rAjCWaI4lEYjd6IAfo873cw==
+X-Received: by 2002:ac8:6f07:0:b0:4f3:4fe8:b5ca with SMTP id d75a77b69052e-4f4abcf6a40mr349244621cf.10.1766965828133;
+        Sun, 28 Dec 2025 15:50:28 -0800 (PST)
 Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c0973f28e3sm2406423185a.45.2025.12.28.15.50.22
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c0973f28e3sm2406423185a.45.2025.12.28.15.50.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 28 Dec 2025 15:50:23 -0800 (PST)
-Message-ID: <50559ab9-c537-4796-9538-495bf3d14069@riscstar.com>
-Date: Sun, 28 Dec 2025 17:50:22 -0600
+        Sun, 28 Dec 2025 15:50:27 -0800 (PST)
+Message-ID: <b3d015aa-01bd-4974-881a-0af297655c55@riscstar.com>
+Date: Sun, 28 Dec 2025 17:50:25 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -69,8 +69,8 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/13] dt-bindings: riscv: Add descriptions for Za64rs,
- Ziccamoa, Ziccif, and Zicclsm
+Subject: Re: [PATCH v2 09/13] dt-bindings: riscv: Add Ssccptr, Sscounterenw,
+ Sstvala, Sstvecd, Ssu64xl
 To: Guodong Xu <guodong@riscstar.com>
 Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
@@ -88,228 +88,151 @@ Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
  spacemit@lists.linux.dev, linux-serial@vger.kernel.org
 References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
- <20251222-k3-basic-dt-v2-8-3af3f3cd0f8a@riscstar.com>
- <8851c155-300a-4241-a5be-5163ba54e47c@riscstar.com>
- <CAH1PCMatKR4rHuBdw0fih5P8naE=KU4Vp5-KNjeDeO-LsEe81g@mail.gmail.com>
+ <20251222-k3-basic-dt-v2-9-3af3f3cd0f8a@riscstar.com>
+ <6925aa57-874c-479f-9f5b-f0fd6ede685b@riscstar.com>
+ <CAH1PCMauCHQ==Fyb1pHzWtkNOCnpRoJ_8KE0zJBC4B6X8TzweA@mail.gmail.com>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <CAH1PCMatKR4rHuBdw0fih5P8naE=KU4Vp5-KNjeDeO-LsEe81g@mail.gmail.com>
+In-Reply-To: <CAH1PCMauCHQ==Fyb1pHzWtkNOCnpRoJ_8KE0zJBC4B6X8TzweA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 12/27/25 10:10 PM, Guodong Xu wrote:
-> Hi, Alex, Conor
+On 12/28/25 6:31 AM, Guodong Xu wrote:
+> Hi, Alex
 > 
 > On Sat, Dec 27, 2025 at 5:28 AM Alex Elder <elder@riscstar.com> wrote:
 >>
 >> On 12/22/25 7:04 AM, Guodong Xu wrote:
->>> Add descriptions for four extensions: Za64rs, Ziccamoa, Ziccif, and
->>> Zicclsm. These extensions are ratified in RISC-V Profiles Version 1.0
->>> (commit b1d806605f87 "Updated to ratified state.").
->>
->> I think stating the RISC-V profiles commit ID here (in the commit
->> header) is good.
->>
->> I do *not* think it's necessary to include it in the descriptions
->> for the extensions, below, but I seem to be late to the party in
->> expressing this opinion...
->>
->> That commit ID is related to this repository:
->>     https://github.com/riscv/riscv-profiles.git
->>
->> I have a few other comments below but generally I think what you
->> did looks good.  I have one overall question though.
->>
+>>> Add descriptions for five new extensions: Ssccptr, Sscounterenw, Sstvala,
+>>> Sstvecd, and Ssu64xl. These extensions are ratified in RISC-V Profiles
+>>> Version 1.0 (commit b1d806605f87 "Updated to ratified state.").
+>>>
 >>> They are introduced as new extension names for existing features and
 >>> regulate implementation details for RISC-V Profile compliance. According
->>> to RISC-V Profiles Version 1.0 and RVA23 Profiles Version 1.0, they are
-> 
-> Thank you for the review.
-> 
-> Together with the filenames, I also listed the Version numbers.
-> 
-> These are officially released versions of profile documents. I mean they
-> won't be changed without modifying the version number.
-> 
->>> mandatory for the following profiles:
+>>> to RISC-V Profiles Version 1.0 and RVA23 Profiles Version 1.0, their
+>>> requirement status are:
 >>>
->>>    - za64rs: Mandatory in RVA22U64, RVA23U64
->>>    - ziccamoa: Mandatory in RVA20U64, RVA22U64, RVA23U64
->>>    - ziccif: Mandatory in RVA20U64, RVA22U64, RVA23U64
->>>    - zicclsm: Mandatory in RVA20U64, RVA22U64, RVA23U64
+>>>    - Ssccptr: Mandatory in RVA20S64, RVA22S64, RVA23S64
+>>>    - Sscounterenw: Mandatory in RVA22S64, RVA23S64
+>>>    - Sstvala: Mandatory in RVA20S64, RVA22S64, RVA23S64
+>>>    - Sstvecd: Mandatory in RVA20S64, RVA22S64, RVA23S64
+>>>    - Ssu64xl: Optional in RVA20S64, RVA22S64; Mandatory in RVA23S64
 >>
->> I did not verify your statements about where these are
+>> Again, I did not verify your statements about where these are
 >> optional and mandatory, but I assume they're correct.
 > 
-> Yes they are correct. As far as what stated in the two profile documents.
+> Thanks for the review.
 > 
->>
->>> Since Ziccamoa depends on the 'A' extension, add a schema check to
->>> enforce this dependency.
->>
->> All of these extensions are related to atomic operations, right?
->> Don't *all* of them (not just Ziccamoa) depend on the A extension?
+> As mentioned in my response to patch 8, the requirement status for these
+> extensions is clearly defined in the RISC-V Profiles specification(s) which
+> I mentioned above.
 > 
-> 
-> Za64rs and Zicclsm: no, they are not 'A'. They are cache related.
+> I have verified these details against the official document to ensure
+> accuracy.
 
-Isn't a Za64rs reservation set related to atomic operations,
-though?  They are related to load-reserved/store conditional
-instructions, which are introduced in the atomic instructions
-section.
+Right, my comment here was just to be transparent that *I* did
+not check this, and am trusting that what you said is right.
+Thanks for confirming.
 
-I was mistaken about Zicclsm, that's related to unaligned
-accesses, but does not apply to atomic operations.
+					-Alex
 
-> Ziccrse and Ziccamoa: yes, they are 'A' related.
+> The extension descriptions are included in the commit message to provide
+> necessary background information.
 > 
-> Ziccrse specifies the main memory must support "RsrvEventual", which is one
-> (totally there are four) of the support level for Load-Reserved/
-> Store-Conditional (LR/SC) atomic instructions.
-> 
-> And in RVA profiles, two named features (exts) are added:
-> Ziccrse: which further define the level of LR/SC operations being supported.
-> Ziccamoa: which further define the level of AMOs instructions being supported.
-> 
-> 
-> We already know that "A" = Zaamo + Zalrsc;
-> 
-> In summary, the dependencies among these extensions are:
-> Ziccrse -> Zalrsc -> A;
-> Ziccamoa -> Zaamo -> A;
-> 
->> Furthermore, the A extension is already mandated by RVA23U64, so
->> is it really necessary to add this logic?
-> 
-> Hi, Conor
-> 
-> What do you think? I am kind of agree with Alex to remove the schema
-> checking logic.
-> 
-> Leaving the dependency check to riscv/cpufeature.c, let the .validate call
-> do the job. If you agree, I can remove the schema checking logic on Ziccamoa
-> and A in my next version.
-
-Yes I think this is a better way to handle it.  Conor?
-
-> Btw, cpufeature.c validate() deserves another patch/patchset.
-> I'll be happy to add that if we reach a consensus here.
-
-Yes I think you should do this once there is concensus.
-
-
-
-> 
->>
 >>
 >>> Signed-off-by: Guodong Xu <guodong@riscstar.com>
 >>> ---
 >>> v2: New patch.
 >>> ---
->>>    .../devicetree/bindings/riscv/extensions.yaml      | 34 ++++++++++++++++++++++
->>>    1 file changed, 34 insertions(+)
+>>>    .../devicetree/bindings/riscv/extensions.yaml      | 32 ++++++++++++++++++++++
+>>>    1 file changed, 32 insertions(+)
 >>>
 >>> diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/Documentation/devicetree/bindings/riscv/extensions.yaml
->>> index 385e1deb23996d294e7662693f1257f910a6e129..a6b9d7e3edf86ecfb117ba72e295ef097bdc9831 100644
+>>> index a6b9d7e3edf86ecfb117ba72e295ef097bdc9831..ed7a88c0ab3b7dc7ad4a4d2fd300d6fb33ef050c 100644
 >>> --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
 >>> +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
->>> @@ -237,6 +237,12 @@ properties:
->>>                as ratified at commit 4a69197e5617 ("Update to ratified state") of
->>>                riscv-svvptc.
+>>> @@ -160,12 +160,26 @@ properties:
+>>>                behavioural changes to interrupts as frozen at commit ccbddab
+>>>                ("Merge pull request #42 from riscv/jhauser-2023-RC4") of riscv-aia.
 >>>
->>> +        - const: za64rs
->>> +          description:
->>> +            The standard Za64rs extension for reservation set size of at most
->>> +            64 bytes, as ratified in RISC-V Profiles Version 1.0, with commit
->>> +            b1d806605f87 ("Updated to ratified state.")
->>
->> The more complete description says:
->>
->>       Reservation sets are contiguous, naturally aligned, and a maximum
->>       of 64 bytes.
->>
->> But as I read on (below) I suppose using the more succinct description
->> from the glossary might be best, forcing people who care to go look
-> 
-> That is exactly what I am doing.
-> 
->> at the reference documents.
->>
+>>> +        - const: ssccptr
+>>> +          description: |
+>>> +            The standard Ssccptr extension for main memory (cacheability and
+>>> +            coherence) hardware page-table reads, as ratified in RISC-V
+>>> +            Profiles Version 1.0, with commit b1d806605f87 ("Updated to
+>>> +            ratified state.")
 >>> +
->>>            - const: zaamo
+>>>            - const: sscofpmf
 >>>              description: |
->>>                The standard Zaamo extension for atomic memory operations as
->>> @@ -378,6 +384,27 @@ properties:
->>>                in commit 64074bc ("Update version numbers for Zfh/Zfinx") of
->>>                riscv-isa-manual.
+>>>                The standard Sscofpmf supervisor-level extension for count overflow
+>>>                and mode-based filtering as ratified at commit 01d1df0 ("Add ability
+>>>                to manually trigger workflow. (#2)") of riscv-count-overflow.
 >>>
->>> +        - const: ziccamoa
->>> +          description:
->>> +            The standard Ziccamoa extension for main memory (cacheability and
->>> +            coherence) must support all atomics in A, as ratified in RISC-V
+>>> +        - const: sscounterenw
+>>> +          description: |
+>>> +            The standard Sscounterenw extension for support writable enables
+>>> +            in scounteren for any supported counter, as ratified in RISC-V
+> 
+> Here, I used the abbreviated version. See below.
+> 
 >>> +            Profiles Version 1.0, with commit b1d806605f87 ("Updated to
 >>> +            ratified state.")
 >>
->> Similar comment here (but also with a similar caveat):
+>> Maybe you should just copy the text from the RVA23 specification
+>> for all of these.  So something like:
+>>
+>>     For any hpmcounter that is not read-only zero, the corresponding
+>>     bit in scounteren must be writable.  This was ratified in the
+>>     RISC-V Profiles specification version 1.0, with commit ...
 >>
 > 
-> I am using what the RVA23 Profile defines:
-> "Ziccamoa: Main memory supports all atomics in A"
+> As you noticed, the RVA23 Profile v1.0 provides two versions of explanation
+> for Sscounterenw:
+> "Sscounterenw: For any hpmcounter that is not read-only zero, the corresponding
+> bit in scounteren must be writable"
+> "Sscounterenw: Support writeable enables for any supported counter"
 > 
-> I prefer to keep it as is.
-
-That's fine.  I don't think I felt strongly about any of the things
-I said about the exact wording used here.
-
-Thanks.
-
-					-Alex
-
 > BR,
-> Guodong
+> Guodong Xu
 > 
->>     Main memory regions with both the cacheability and coherence PMAs
->>     must support all atomics in A.
->>
->> And I might say "the A extension", but maybe that's a bad idea.
->>
 >>> +
->>> +        - const: ziccif
->>> +          description:
->>> +            The standard Ziccif extension for main memory (cacheability and
->>> +            coherence) instruction fetch atomicity, as ratified in RISC-V
->>> +            Profiles Version 1.0, with commit b1d806605f87 ("Updated to
->>> +            ratified state.")
->>> +
->>> +        - const: zicclsm
->>> +          description:
->>> +            The standard Zicclsm extension for main memory (cacheability and
->>> +            coherence) must support misaligned loads and stores, as ratified
->>> +            in RISC-V Profiles Version 1.0, with commit b1d806605f87 ("Updated
->>> +            to ratified state.")
->>> +
->>>            - const: ziccrse
->>>              description:
->>>                The standard Ziccrse extension which provides forward progress
->>> @@ -795,6 +822,13 @@ properties:
->>>            then:
->>>              contains:
->>>                const: f
->>> +      # Ziccamoa depends on A
+>>>            - const: ssnpm
+>>>              description: |
+>>>                The standard Ssnpm extension for next-mode pointer masking as
+>>> @@ -178,6 +192,24 @@ properties:
+>>>                ratified at commit 3f9ed34 ("Add ability to manually trigger
+>>>                workflow. (#2)") of riscv-time-compare.
+>>>
+>>> +        - const: sstvala
+>>> +          description: |
+>>> +            The standard Sstvala extension for stval provides all needed values
+>>> +            as ratified in RISC-V Profiles Version 1.0, with commit b1d806605f87
+>>> +            ("Updated to ratified state.")
 >>
->> Maybe more than just depends on the A extension.
+>> Or alternative to the full text in the spec, you could copy over
+>> the abbreviated description listed in the glossary at the end
+>> instead.  Something like:
+>>
+>>     stval provides all needed values.  This was ratified in...
 >>
 >>                                          -Alex
 >>
->>> +      - if:
->>> +          contains:
->>> +            const: ziccamoa
->>> +        then:
->>> +          contains:
->>> +            const: a
->>>          # Zvfbfmin depends on V or Zve32f
->>>          - if:
->>>              contains:
+>>> +
+>>> +        - const: sstvecd
+>>> +          description: |
+>>> +            The standard Sstvecd extension for stvec supports Direct mode as
+>>> +            ratified in RISC-V Profiles Version 1.0, with commit b1d806605f87
+>>> +            ("Updated to ratified state.")
+>>> +
+>>> +        - const: ssu64xl
+>>> +          description: |
+>>> +            The standard Ssu64xl extension for UXLEN=64 must be supported, as
+>>> +            ratified in RISC-V Profiles Version 1.0, with commit b1d806605f87
+>>> +            ("Updated to ratified state.")
+>>> +
+>>>            - const: svade
+>>>              description: |
+>>>                The standard Svade supervisor-level extension for SW-managed PTE A/D
 >>>
 >>
 
