@@ -1,179 +1,397 @@
-Received: from mail-qt1-f195.google.com (mail-qt1-f195.google.com [209.85.160.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F8921FF21
-	for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 01:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D272781724
+	for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 01:48:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766971602; cv=none; b=Ee8vXM/tSHC9gAixhC9TPzpe4P8nqBk6j0jZSSuQazhqenINiX0l4cHX1drit//1Hd5TXyCHypqFsfhc4HJXTxU8+uuj6XHl5f72fla0uRz049YV1ar2HKzlL2S0HAGScpssfRA6LWSc+tvA2Fb6wTkWG/2nFoy72mPQ+KtkeYA=
+	t=1766972911; cv=none; b=h+sEid/OnQwq8zLSAaQIDKU2PfiENzw5dl2JvIslo+6zQKwVmgLW8M28vkDmHh7x0vICfwklXsQGE34swsoVZ9jlISMrrWU1S+TwyJn7dH1n7Wh4CgH/NoljHEjbOHoDkMQ4QCbq7LlZuR3x2AeiONZ0QpvohyU5jUcIxq37Av8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766971602; c=relaxed/simple;
-	bh=6jVZfNQHfE3ib1e3i/fA6aFiwMFZ5z3vI7XwOplm+ho=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X1lHp6m8zbOCZdZ8GYfRQAr++oIYC6Lslxjdx27YfgibU6Src3yJFNqwrFLbzEgcSgy+zJR+0ZOQYmsQkMflclz+pmjjcbEpV1gqy+NaIRMW4fAWwpMW61uhu90FashOWmvs6XklMcxgVY7sJ44yptccr5f0v5l04EzXtyCjjxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=JmztWsHf; arc=none smtp.client-ip=209.85.160.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1766972911; c=relaxed/simple;
+	bh=I2S8U9E2PDYYAhIBEi5OpvGwaYLqVjdS+2NSpXWICS4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QRXoZqR8wRnbAOzDmdwUd2iCZf0Upa7RHjeLmZuKnnw/pEvzUIAABTDfxw/PoEw+ZRPq8sIx9Zu70kq6NpaHHZYibi52r4Itp4jZKR5R8EewpNgr+/JiBp4q5sPOgzPqQJul/mWyRcAoCmB/dAWyHtuiDMyjcT8athcfrl2lQNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=svqj1OJ6; arc=none smtp.client-ip=18.169.211.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="JmztWsHf"
-Received: by mail-qt1-f195.google.com with SMTP id d75a77b69052e-4eda6a8cc12so97383381cf.0
-        for <spacemit@lists.linux.dev>; Sun, 28 Dec 2025 17:26:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766971600; x=1767576400; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rGBP3a20VsxawgAkzyf8iorKbTSNb1d+2RoMt317030=;
-        b=JmztWsHfEZgVpkJ0XRPMuXfnfQGvn5Vkm2Ye1F6H7mWnmwalz/aINfbY4CcgAPGNi3
-         UzTd/T/S9M0ls9NVWUo7ehlx85VEsTX4LRWfB3JvIzURCiQfXiaKvTy1sPQL1IoxAS0y
-         dKjAhytlmp8qlD2yFTxUSFoef3jybkIP1oTErd6HKHkUG/j/BL+b+GufMU/Ks3UUjbRt
-         162k3LeBxLi6fvWcJBgc/FckcURndxIyui3BCLAtWE/5y4jpW5vg123UFaUPCqfBsDhW
-         ycIp1EVN9+fwqO77IehbR4x+nIHQNOMEWXuiECWFs0mAS6pQXOmHutqOpLR8BngGHHqL
-         Gegw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766971600; x=1767576400;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rGBP3a20VsxawgAkzyf8iorKbTSNb1d+2RoMt317030=;
-        b=urEe39zx9MpeXzFCcS+urs1Xfg/dh7m20YD8mAwsD/4s7BhE4qGSb3w+bsvlHhFJl4
-         WnYG2SbWa8b3zaMRteJcJYcyFBU+DOJGDZ2rseBJnehXj1OcSxfmcsb2mhuVcQEtshB3
-         lt5nTkbdlRg7sZh/0WM7kLBqUBj9f162m7ADjWOlFY87RZb+iJC+XJtI/0FbQ1FT6veY
-         IvV1TauMALwoyHjGep82ir9sYQerVwJL8C9zz7KdKiolDFK1qvNg2YF7u1VOuGJOFDSH
-         PMsQ+ArQhc1Q0tkbL2dKILYtz6IlT/LCC4zHIo1Hj5RfDXN+AfhEQ3PFbF2YgIhE8Ljj
-         7QpA==
-X-Forwarded-Encrypted: i=1; AJvYcCX3yURNHmC29jgzyOEqUk6ftg+N6UOMeZ5zBe5kf6pLa3jeDhMj4Wgw8XB31zQu7A2TsJMZPEBrWA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyi2W1NZc8dV60Ep6HVnbNNyJjxEPphDQHMR8n0WS8ZtAm3lGSa
-	Ps+/r6IdZ0LAwbN50rfF6Ifu+AWo2AjnmshhXjmfa3sTTl7KxLG5W/wuAbw0MPKZCTU=
-X-Gm-Gg: AY/fxX7Ohnr9A1pxLTIeQz8vDSmBEiyxO9mGoZInhUEBUuf+UYZGzC239RWSi0+G4z4
-	5Wv9PfoJH+4X90ZK559DDtext/qw/qdi/HyLEtsVBt0J7cPVl+fi6ckmO21Kb8gKtW1dvyCCVN9
-	+HWQ9H+YGjipej5Y9bCMQgN7O8f+c7Z4TnDCCGajRAQEPTyRjk5e+4CHTh2JS6x5LHcnRsN7jDA
-	Sza6r+9seyUCH1cEWQ41VpuMORVsDtZC0JHn7j9hvipI6POfxEtOt0SNUWJe61FhtT73V8drmOb
-	fMFmtBpCMdYXicYm+medTWAPgzV3f0ZdWOH3mQ0tDVrD3U0NEjCHZAkord/jeYR/N2K2ppQWJr9
-	mU/CvWHBdEOn+joN55k/suljIHlhM7D9W4TZC0mY7bpewhqrgH0+zi4PFuG6FcWHyXs86wO0PTh
-	joT9ZEaG2cakz/zRHXkZI1htlWQsPjEwXbs9zZaiTlDOa2E6Gw9lk=
-X-Google-Smtp-Source: AGHT+IGEzqpbI6AbapIJlA3Uz+KnswrSFec0YE5rCA81t7vFfgvpfz5067CC+VvdDzEo7yRutO/rPA==
-X-Received: by 2002:a05:622a:230d:b0:4f1:e8f1:cbda with SMTP id d75a77b69052e-4f4abd839edmr436267011cf.54.1766971599661;
-        Sun, 28 Dec 2025 17:26:39 -0800 (PST)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f4ac531fa8sm204081481cf.4.2025.12.28.17.26.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 28 Dec 2025 17:26:39 -0800 (PST)
-Message-ID: <ccf5c43c-c7d3-4c89-b578-b40d32dc5b7c@riscstar.com>
-Date: Sun, 28 Dec 2025 19:26:36 -0600
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="svqj1OJ6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1766972851;
+	bh=pKp4BBBIzjtkrzHb/TY0Sl2Q7CgjyC3CDa0BygRoEz8=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=svqj1OJ6z8PotYvGJ31W3RIARbC40HzAz9k8EUa7ClUs6DP7AKctwmuQFefjEiwDC
+	 GeqG/Bymm8ASQB4ws7xa8g1ofyzTFLhANDgdzkWpWG2zYNS6T7Oyaxine015+F2NfQ
+	 GyOKupOLb5Mb87FYLLt0CkJcjrv4yHRTsZlaMSTY=
+X-QQ-mid: zesmtpsz9t1766972845t1d74bf97
+X-QQ-Originating-IP: 6Txu1FUhwNOVdW4fl7stehIexYlfVE6QKCcW/5Pak58=
+Received: from = ( [120.239.196.19])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 29 Dec 2025 09:47:23 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 2698254073377554635
+EX-QQ-RecipientCnt: 8
+Date: Mon, 29 Dec 2025 09:47:23 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Alex Elder <elder@riscstar.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>
+Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v5 2/3] i2c: spacemit: configure ILCR for accurate SCL
+ frequency
+Message-ID: <04D8C3B41BE04120+aVHdqwWZmkPDVGtz@kernel.org>
+References: <20251226-k1-i2c-ilcr-v5-0-b5807b7dd0e6@linux.spacemit.com>
+ <20251226-k1-i2c-ilcr-v5-2-b5807b7dd0e6@linux.spacemit.com>
+ <c908f647-9460-4899-b4b1-489a3f95eafa@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/13] dt-bindings: riscv: Add B ISA extension
- description
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Samuel Holland <samuel.holland@sifive.com>, Anup Patel
- <anup@brainfault.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
- Yangyu Chen <cyy@cyyself.name>, Paul Walmsley <paul.walmsley@sifive.com>,
- Heinrich Schuchardt <xypron.glpk@gmx.de>,
- Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
- Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- spacemit@lists.linux.dev, linux-serial@vger.kernel.org
-References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
- <20251222-k3-basic-dt-v2-7-3af3f3cd0f8a@riscstar.com>
- <20251222-stitch-preachy-3fab87fd6f0f@spud>
- <CAH1PCMZ7ywZ3unLy0yHYK+fFHk0y=q2cEtPnRi=qSpf=fc75rw@mail.gmail.com>
- <66c0676a-7920-4825-b916-3c00b1648a08@riscstar.com>
- <CAH1PCMbBURb=DpChf+Y-DjYjzpXG-pKgoaHAu=TUuG4oVC56cg@mail.gmail.com>
- <5979c8ef-b0fa-40c8-944d-96e226fbcbe8@riscstar.com>
- <CAH1PCMZkQ11-Uk5GnyetLkNLOuO3gs2o0WPWHrFMWVH9R6s8mQ@mail.gmail.com>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <CAH1PCMZkQ11-Uk5GnyetLkNLOuO3gs2o0WPWHrFMWVH9R6s8mQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c908f647-9460-4899-b4b1-489a3f95eafa@riscstar.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NWLpwLZrMWrIXaUnIu+eOoYvOELtg9D1Rbus24AAFiWcbI9PERxWsXYG
+	Idb76FeA2vyP0dc+aaK6NGxIS6UoQiMUP7+Tq0vbRaklfoQOuB/l8Nkz5SEg9ZaMAjS+JF6
+	B+xI7T9Lrgx3hYGTBVpJsvtbArWVFoIk+J/ZJ52TzeKo7u64JwWrx98dzzEVeu0qFCUVDce
+	uQAGiSXjF2blDWRh1hC3YHdJy4L7Yk1gFYMSyS4lSgvY0V8lGd0Q60o4eJZGNKakXGYl53k
+	q+qEVEYguvykwj9k28MaxXI5QQcxAy+LvdtbVe9X4yQBIaZeJpk39bwFWTHuRt5pbrsXDkL
+	JW/aSukou2wl9tfLhOEXTM/2E0osgeyfAznn0TJJBFTTBIO0CQgIp8kkqjQ1PRKDdaRb0j1
+	itR8Bqyf6AUMCl5zPNbGjfhRB6HD3cpAHOywxo7yQo8arUZWYnZaSK43RgrgzcRTDURheoX
+	bdlBYqUflcEI1Ck/+1cUibgA6FDR6QKDg6/iZedk6V53Ve1ktXSrLNl1ONmatXJ1W0y7/4c
+	GTyoQThFeVQkJHikfKysPimeKUVSPcQ+9DVAJREEmklCu5+baJsq2Qf8zEUf3LOqMragx+z
+	72+oMytJ5k1CSiIQFYddnGRp254Pw09m2ryUNjWTEDcotabgk037yH5NFpy6gMjMuWzeXrh
+	xO5Q1wmoW9J1sLWaBxDFZKOMMDMIXzFrtI+O3ORXoebErMKjSUEphs8RkCpcblRkSMLQ4lX
+	/lpJ8iIfRACIxikVYW7dkVywLBV4sTPRPACU9EE1312fGO4vDSI47fogKQvVg2Q10xura65
+	zOEY81Yj/hM6RqNpWP/CTQyr2NM64YGyI4l8LTlbgol2MCYEFkvB93jUQ4sFEO8M4H0su+v
+	J0LjI4Fl4IBRUhcQNjSDRpmnlcIJYdvEILbmtb4dVg52t5depJoDzOTJzPrq+R3S4sNreFD
+	xw+ogK/RCDljDDRDHN+7HD+OiPEuASBwvfbOWdwKugHULRVKqS+uurewkcsenAzN7wfKkBM
+	F5N2cuPaLFDu+MkoWDknDXjzcJNyVOvIsFJcEXC+te7FpTAnL0nyO5t4IouPnoGaVjDUAI7
+	w==
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-On 12/28/25 7:08 PM, Guodong Xu wrote:
-> On Mon, Dec 29, 2025 at 7:50 AM Alex Elder <elder@riscstar.com> wrote:
->>
->> On 12/27/25 8:51 PM, Guodong Xu wrote:
->>>> That's what I understand it to mean, anyway.
->>>>      https://github.com/riscv/riscv-b
->>>>
->>>> There's no point in supporting "b" in devicetree to represent
->>>> the others if it also requires the others to be present.
->>>>
->>>> I think that, instead, "b", "zba", "zbb", and "zbs" should all
->>>> be allowed.
->>>>
->>>> I might even go further and harden the requirement, saying that
->>>> if you specify "b" you should*not* specify "zba", "zbb", or "zbs".
->>> Historical reasons here. "b" came too late. The chip vendors have published
->>> cores with "zba", "zbb", and "zbs"already.
->>>
->>> That's a migration bridge to require "b" must be listed
->>> together with the other three.
->>
->> Are you saying "b" has already been included with "zba", "zbb", and
->> "zbs" in an existing DTS file?
+On Sun, Dec 28, 2025 at 06:56:33PM -0600, Alex Elder wrote:
+> On 12/26/25 2:32 AM, Troy Mitchell wrote:
+> > The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
+> > master mode operations is determined by the ILCR (I2C Load Count Register).
+> > Previously, the driver relied on the hardware's reset default
+> > values for this register.
+> > 
+> > The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
+> > frequencies lower than intended. For example, with the default
+> > 31.5 MHz input clock, these default settings result in an SCL
+> > frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
+> > and approximately 338 kHz (fast mode) when targeting 400 kHz.
+> > These frequencies are below the 100 kHz/400 kHz nominal speeds.
+> > 
+> > This patch integrates the SCL frequency management into
+> > the Common Clock Framework (CCF). Specifically, the ILCR register,
+> > which acts as a frequency divider for the SCL clock, is now registered
+> > as a managed clock (scl_clk) within the CCF.
+> > 
+> > This patch also cleans up unnecessary whitespace
+> > in the included header files.
+> 
+> Was the above sentence meant to describe what the first
+> patch did?
+Yes, I forgot to remove.
+
+> 
+> I have a few comments below.
+[...]
+> 
+> > @@ -104,11 +112,20 @@ enum spacemit_i2c_state {
+> >   	SPACEMIT_STATE_WRITE,
+> >   };
+> > +enum spacemit_i2c_mode {
+> > +	SPACEMIT_MODE_STANDARD,
+> > +	SPACEMIT_MODE_FAST
+> 
+> Will there ever be a mode other than standard and fast?
+> 
+> Just use a Boolean variable to indicate the mode, maybe
+> named fast_mode, so false means standard mode.
+I have talked about that [1]
+> 
+> > +};
+> > +
+> >   /* i2c-spacemit driver's main struct */
+> >   struct spacemit_i2c_dev {
+> >   	struct device *dev;
+> >   	struct i2c_adapter adapt;
+> > +	struct clk_hw scl_clk_hw;
+> > +	struct clk *scl_clk;
+> > +	enum spacemit_i2c_mode mode;
+> > +
+> >   	/* hardware resources */
+> >   	void __iomem *base;
+> >   	int irq;
+> > @@ -129,6 +146,77 @@ struct spacemit_i2c_dev {
+> >   	u32 status;
+> >   };
+> 
+> I don't think this (next) function is needed.
+I agree this is a very small wrapper.
+But it is intended to be used as a devm_add_action_or_reset() callback, so
+that we can avoid additional goto-based error handling in probe().
+
+> 
+> > +static void spacemit_i2c_scl_clk_disable_unprepare(void *data)
+> > +{
+> > +	struct spacemit_i2c_dev *i2c = data;
+> > +
+> > +	clk_disable_unprepare(i2c->scl_clk);
+> > +}
+> > +
+> > +static int spacemit_i2c_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+> > +				     unsigned long parent_rate)
+> > +{
+> > +	struct spacemit_i2c_dev *i2c = container_of(hw, struct spacemit_i2c_dev, scl_clk_hw);
+> > +	u32 lv, lcr, mask, max_lv;
+> > +
+> > +	lv = DIV_ROUND_UP(parent_rate, rate);
+> 
+> Would DIV_ROUND_CLOSEST() produce more accurate rates?  This
+> question applies everywhere you use something like this.
+> 
+> Since clk_round_rate() returns the exact rate that the clock
+> would provide for a given rate, it can be nice to have
+> clk_set_rate() use clk_round_rate().  As it is, it looks
+> like your clk_round_rate() returns a frequency value even if
+> the requested rate is out of range, while clk_set_rate()
+> would return an error when provided the same out-of-range
+> requested rate.
+Right, this implies that clk_round_rate() should only return rates that
+clk_set_rate() can accept.
+I will switch to using DIV_ROUND_CLOSEST() and drop the max_lv check in
+clk_set_rate() to keep the behavior consistent.
+> 
+> > +
+> > +	if (i2c->mode == SPACEMIT_MODE_STANDARD) {
+> > +		mask = SPACEMIT_LCR_LV_STANDARD_MASK;
+> > +		max_lv = SPACEMIT_LCR_LV_STANDARD_MAX_VALUE;
+> > +	} else if (i2c->mode == SPACEMIT_MODE_FAST) {
+> > +		mask = SPACEMIT_LCR_LV_FAST_MASK;
+> > +		max_lv = SPACEMIT_LCR_LV_FAST_MAX_VALUE;
+> > +	}
+> 
+> Since the standard and fast masks are distinct, what
+> is the meaning when they both have non-zero values?
+> Does the SPACEMIT_CR_MODE_FAST determine which of these
+> two fields is used, and the other is ignored?
+Yes, This is hardware behavior.
+> 
+> > +
+> > +	if (!lv || lv > max_lv) {
+> > +		dev_err(i2c->dev, "set scl clock failed: lv 0x%x", lv);
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	lcr = readl(i2c->base + SPACEMIT_ILCR);
+> > +	lcr &= ~mask;
+> > +	lcr |= lv << __ffs(mask);
+> > +	writel(lcr, i2c->base + SPACEMIT_ILCR);
+> 
+> I suppose you can't use FIELD_MODIFY() here, because mask is
+> not constant.
+> 
+> I guess field_modify() should be defined; see c1c6ab80b25c8
+> ("bitfield: Add non-constant field_{prep,get}() helpers").
+> But I'm not going to ask you to do that...
+> 
+> In any case, you could use this instead:
+> 
+> 	lcr = readl(i2c->base + SPACEMIT_ILCR);
+> 	lcr &= ~mask;
+> 	lcr |= field_prep(mask, lv);
+> 	writel(lcr, i2c->base + SPACEMIT_ILCR);
+> 
+> And if you're going to assign the max value, you could even do:
+> 
+> 	lcr = readl(i2c->base + SPACEMIT_ILCR);
+> 	lcr |= field_prep(mask, field_max(mask));
+> 	writel(lcr, i2c->base + SPACEMIT_ILCR);
+Thanks! Since clk_round_rate() uses DIV_ROUND_CLOSEST(), clk_set_rate() no
+longer needs to validate the divider value.
+I will remove the lv check and use FIELD_MODIFY() instead.
+> 
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static long spacemit_i2c_clk_round_rate(struct clk_hw *hw, unsigned long rate,
+> > +					unsigned long *parent_rate)
+> > +{
+> > +	u32 lv, freq;
+> > +
+> > +	lv = DIV_ROUND_UP(*parent_rate, rate);
+> 
+> Could lv contain 0 at this point?
+lv can't be 0.
+
+> 
+> > +	freq = DIV_ROUND_UP(*parent_rate, lv);
+> > +
+> > +	return freq;
+> > +}
+> > +
+> > +static unsigned long spacemit_i2c_clk_recalc_rate(struct clk_hw *hw,
+> > +						  unsigned long parent_rate)
+> > +{
+> > +	struct spacemit_i2c_dev *i2c = container_of(hw, struct spacemit_i2c_dev, scl_clk_hw);
+> > +	u32 lcr, lv = 0;
+> > +
+> > +	lcr = readl(i2c->base + SPACEMIT_ILCR);
+> > +
+> > +	if (i2c->mode == SPACEMIT_MODE_STANDARD)
+> > +		lv = FIELD_GET(SPACEMIT_LCR_LV_STANDARD_MASK, lcr);
+> > +	else if (i2c->mode == SPACEMIT_MODE_FAST)
+> > +		lv = FIELD_GET(SPACEMIT_LCR_LV_FAST_MASK, lcr);
+> > +	else
+> > +		return 0;
+> 
+> What if lv contains 0 at this point?
+The scl clock is: parent_clk_rate / lv.
+So idk the hardware behavior if lv is 0.
+I'll check the lv value.
+> 
+> > +	return DIV_ROUND_UP(parent_rate, lv);
+> > +}
+> > +
+> > +static const struct clk_ops spacemit_i2c_clk_ops = {
+> > +	.set_rate = spacemit_i2c_clk_set_rate,
+> > +	.round_rate = spacemit_i2c_clk_round_rate,
+> > +	.recalc_rate = spacemit_i2c_clk_recalc_rate,
+> > +};
+> > +
+> >   static void spacemit_i2c_enable(struct spacemit_i2c_dev *i2c)
+> >   {
+> >   	u32 val;
+> > @@ -147,6 +235,29 @@ static void spacemit_i2c_disable(struct spacemit_i2c_dev *i2c)
+> >   	writel(val, i2c->base + SPACEMIT_ICR);
+> >   }
+> > +static struct clk *spacemit_i2c_register_scl_clk(struct spacemit_i2c_dev *i2c,
+> > +						 struct clk *parent)
+> > +{
+> > +	struct clk_init_data init = {};
+> > +	char name[64];
+> > +	int ret;
+> > +
+> > +	ret = snprintf(name, sizeof(name), "%s_scl_clk", dev_name(i2c->dev));
+> > +	if (ret >= ARRAY_SIZE(name))
+> > +		dev_warn(i2c->dev, "scl clock name truncated");
+> > +
+> > +	init.name = name;
+> > +	init.ops = &spacemit_i2c_clk_ops;
+> > +	init.parent_data = (struct clk_parent_data[]) {
+> > +		{ .fw_name = "func" },
+> > +	};
+> > +	init.num_parents = 1;
+> > +
+> > +	i2c->scl_clk_hw.init = &init;
+> > +
+> > +	return devm_clk_register(i2c->dev, &i2c->scl_clk_hw);
+> > +}
+> > +
+> >   static void spacemit_i2c_reset(struct spacemit_i2c_dev *i2c)
+> >   {
+> >   	writel(SPACEMIT_CR_UR, i2c->base + SPACEMIT_ICR);
+> > @@ -257,7 +368,7 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
+> >   	 */
+> >   	val |= SPACEMIT_CR_DRFIE;
+> > -	if (i2c->clock_freq == SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
+> > +	if (i2c->mode == SPACEMIT_MODE_FAST)
+> >   		val |= SPACEMIT_CR_MODE_FAST;
+> >   	/* disable response to general call */
+> > @@ -545,14 +656,15 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+> >   		dev_warn(dev, "failed to read clock-frequency property: %d\n", ret);
+> >   	/* For now, this driver doesn't support high-speed. */
+> > -	if (!i2c->clock_freq || i2c->clock_freq > SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
+> > -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+> > -			 i2c->clock_freq, SPACEMIT_I2C_MAX_FAST_MODE_FREQ);
+> > +	if (i2c->clock_freq > SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ &&
+> > +	    i2c->clock_freq <= SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
+> > +		i2c->mode = SPACEMIT_MODE_FAST;
+> > +	} else if (i2c->clock_freq && i2c->clock_freq <= SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+> > +		i2c->mode = SPACEMIT_MODE_STANDARD;
+> > +	} else {
+> > +		dev_warn(i2c->dev, "invalid clock-frequency, fallback to fast mode");
+> > +		i2c->mode = SPACEMIT_MODE_FAST;
+> 
+> I might just be missing something while reviewing, but if it's
+> out of range,
+>
+> what rate is used?  Does clk_set_rate() force it
+> to be valid?
+If it's out of range, it's high-speed mode. up to 3.3MHZ
+set|round|recal_rate don't support. bcs that's another filed in ILCR.
+> 
+> You could combine the fast rate conditions:
+> 
+> 	if (!i2c->clock_freq ||
+> 	    i2c->clock_freq > SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+> 		if (i2c->clock_freq > SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
+> 			dev_warn("too fast... using %u", MAX);
+> 			i2c->clock_freq = MAX;
+> 		}
+No, when add high-speed mode, it must be destroy.
+
+> 		i2c->mode = SPACEMIT_MODE_FAST;
+> 	} else {
+> 		i2c->mode = SPACEMIT_MODE_STANDARD;
+> 	}
+> 
+> >   		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
+> > -	} else if (i2c->clock_freq < SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+> > -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+> > -			 i2c->clock_freq,  SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ);
+> > -		i2c->clock_freq = SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ;
+> >   	}
+> >   	i2c->dev = &pdev->dev;
+> > @@ -574,10 +686,28 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+> >   	if (IS_ERR(clk))
+> >   		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable func clock");
+> > +	i2c->scl_clk = spacemit_i2c_register_scl_clk(i2c, clk);
+> > +	if (IS_ERR(i2c->scl_clk))
+> > +		return dev_err_probe(&pdev->dev, PTR_ERR(i2c->scl_clk),
+> > +				     "failed to register scl clock\n");
+> > +
+> >   	clk = devm_clk_get_enabled(dev, "bus");
+> >   	if (IS_ERR(clk))
+> >   		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable bus clock");
+> > +	ret = clk_set_rate(i2c->scl_clk, i2c->clock_freq);
+> > +	if (ret)
+> > +		return dev_err_probe(&pdev->dev, ret, "failed to set rate for SCL clock");
+> > +
+> > +	ret = clk_prepare_enable(i2c->scl_clk);
+> 
+> Just use:
+> 
+> 	ret = devm_clk_get_enabled(i2c->scl_clk);
+Thanks.
+
+Link: https://lore.kernel.org/all/BD74A47E5BB66010+aU4j6CgGxebcBV5I@kernel.org/ [1]
+
+                            - Troy
+> 
+> 					-Alex
+> 
+> > +	if (ret)
+> > +		return dev_err_probe(&pdev->dev, ret, "failed to prepare and enable clock");
+> > +
+> > +	ret = devm_add_action_or_reset(dev, spacemit_i2c_scl_clk_disable_unprepare, i2c);
+> > +	if (ret)
+> > +		return dev_err_probe(&pdev->dev, ret,
+> > +				     "failed to register cleanup action for clk disable and unprepare");
+> > +
+> >   	spacemit_i2c_reset(i2c);
+> >   	i2c_set_adapdata(&i2c->adapt, i2c);
+> > 
 > 
 > 
-> The risc-v ratification timeline is:
-> "b" was ratified in Apr/2024, which is about 2 years later than its
-> components zba/zbb/zbs (these were ratified in Jun/2021).
-> 
-> I can do this in linux kernel, writing a dts file which contains only "b",
-> but no zba/zbb/zbs. The linux kernel can correctly extend "b" to zba/zbb/zbs.
-> ps: after I or somebody adds the logic into cpufeature.c.
-
-Yes, this part I understand.  (Yes, do that...)
-
-> However, the problem is with the older software who reuse kernel's DTS files,
-> and recognizes only 'zba/zbb/zbs'. (If you search in the riscv/boot/dts,
-> you will notice a lot platforms supports zba/zbb/zbs.)
-> 
-> When there is only "b", these older software may just disable the features
-> related to 'zba/zbb/zbs', because when they developed their feature,
-> "b" doesn't exist yet.
-
-Yes, old DTS files can and will continue to specify
-"zba+zbb+zbs".  But those old DTS files are not expected
-to be changed to replace "zba+zbb+zbs" with just "h".
-
-Once "cpufeature.c" supports the "h" extension, the
-software supports either one:  "h" or "zba+zbb+zbs".
-
-The key point I'm trying to make is that the binding
-should not require "zba+zbb+zbs" to supplied *on top of*
-the "h" in the list of CPU extensions.  Only one or the
-other should be sufficient.  And I think your binding
-was saying "if "h" then required "zba+zbb+zbs".
-
-> Hopefully I explained the logic clear this time.
-
-I think you have done your best.  I hope I'm not just being
-dense.
-
-					-Alex
-
-> BR,
-> Guodong
-> 
->>
->> What I'm suggesting is that (unless someone has already done this in
->> a DTS file), there is no reason to require "b" *and* the other three.
->> You should allow either "b" *or* all of the other three, not both.
->> That would support older platforms as well as newer ones that use
->> the more concise "b" only.
->>
->>                                          -Alex
-
