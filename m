@@ -1,67 +1,67 @@
-Received: from mail-qt1-f195.google.com (mail-qt1-f195.google.com [209.85.160.195])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD791E98E3
-	for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 17:51:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AEC1D86FF
+	for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 18:02:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767030670; cv=none; b=fXJ4fnPJuLlPVHeAOV3psaUwZwLmHovGX1xEQGsGIqUX1WO7K+0uYvkAW/bMFdhl0qX/WjPQ3kXpSBZxRU+N1GeWQxKTdbh4Q8wEMsf0KhFaRz/fZE1pX9/EVwJzCEaVEGtRAfaT8XbBeKlqTt2fedzx75zJEm3+bJv0LtbIbWM=
+	t=1767031348; cv=none; b=Dm5UaHvEP14M60pJw9XoKMSIlp6L+XVHTr6YXJIS6XMFTTzpv/axCLfxZg5GHJIiV0J0MCCQZ6pmrSF4gKDZK4c2EmYYDPE8PbiHg6vh1lfnXGOmcMdkHK4kUhSnlIapfxvb3fW4bqQWeNGEU3GNSdmygmKlN5cH6uFpWTY9jJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767030670; c=relaxed/simple;
-	bh=1XKEYe/CZfMjAILCm6Rc6akSzewyZWwV/1d1uiX5tVY=;
+	s=arc-20240116; t=1767031348; c=relaxed/simple;
+	bh=Wq4FNyNXdL2dOO4wrLWKkEOSeqpU9XuvsacZ1Is3UGQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WdMD+ZmHPfqBdr18+kuRtLispoLEcN+08TmogpFGzWwZjtANlh4RC/drK+JpEnnst9vKJxli1LzzP5BvQsBpN1Grvh/EFEw9UfLwWlIQCWHFH9yJi5KNAJSEpSWhanuNdw1aWSAnumsXSOasNaMo5QKx4pI1yDKtt5VVeJ/LaBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=NuOUeS4H; arc=none smtp.client-ip=209.85.160.195
+	 In-Reply-To:Content-Type; b=k2eoerhzK2+2VNeKZlMkH5KXa5UA+WmmRzzMGNX7f9hJ+3G3sLr9kcsPnSkHgV7hwVudNkr5/3hF0C5yYziE/Fzo9AX/W5Z0iJM6tbgkCIZU0VzvR3zu/hqUo8v0aJKdVHFSJ82CF91zGjxRCjqohxjOvvUadBkwHUmBooiNZqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ms3PjTF7; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="NuOUeS4H"
-Received: by mail-qt1-f195.google.com with SMTP id d75a77b69052e-4f8a6b37b2dso15205231cf.0
-        for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 09:51:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ms3PjTF7"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-88888c41a13so118393356d6.3
+        for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 10:02:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767030666; x=1767635466; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767031345; x=1767636145; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qBVKZpfddpe+Ns0g7Sdt2AUT7i0mQvsGFZpu3wnG5ic=;
-        b=NuOUeS4HjlwOXLCxqdk8fysFoFE7NjW/K1+IVSjCCNARhcAk8FVEkUmPwcJA6wAbSv
-         qqRyvry9PwkImF6EsNsQ26GcgoMjKDYcMfbjE3Z8DCl/1B0VxIpkzdN8oVVgyuIigipX
-         mLU3MzLDeDxOk2Kj+P2FLUTfwxHPlxTCMYjVfQHSgNvwU5TrCZEher2BVRJQ6ZwXiO0V
-         fPZTsFLoN1CMuUZ52Bz5H+exT9eFPv6j4189fD9u6kL62ZVtZ1xXCAXtyuTu3VItPfK1
-         9hW5k+guX7vBC5ny2P5yIsD2IkvjFPSJa6iqfoOu6YZPDlyZ68ZRytMfIWS1eEa9cVyV
-         RQ4g==
+        bh=xDy1M86lySMiZB+6e+NfnSGr5v4JHWbEjB5Zb9z5vPo=;
+        b=ms3PjTF7kre9m7Mmup1BMzlbxaiylffHOlg/yfpo74VxF4cox32zpuK4oo+nuq3Dh7
+         vXGnS93gO1W0j5EoIpqIq4NPwiXOngVsjktJ9Hbgo/VcEkuS0+1jlol1D1RNQ0ucUgu0
+         UMot/H1kPIdtI+/p/HRoMYOqBLFchfVXRrHyPUxnxLqr/0iT6tziOXb5+NLRYsexGoXq
+         3YG8F9yMoZALQfCyv1cbw5/y16FIABjVx+wmIQOzrCNvHkxMWCgXU8ztrUaj2vgZrBae
+         MbWInJ5OOiswLEVmwFp4pL1kdzZ/RTOfLqqNK08UsQjLWXodAwYdk/8yWILzS4b+kG0j
+         5U4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767030666; x=1767635466;
+        d=1e100.net; s=20230601; t=1767031345; x=1767636145;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qBVKZpfddpe+Ns0g7Sdt2AUT7i0mQvsGFZpu3wnG5ic=;
-        b=Jh+cBWgklV4ZFltTVdHxr3WO3ttYnmW0fG5ewNX7KfU56M+nIfC7JXefBluYejUKGN
-         V+2oeBwKP9wPlPxaEBz+mDfZL3DeNwZhbco9HM410NwQGzy+9gjJsu/sN3bOK8azs0to
-         GB2HcTe6xx85cwaQWQ1g+/j6STZ+I9kVecNdhTihrUby5hz1sa3qyRjin/2sMa9ICxpY
-         4BOa307mvuxPyac3E2xv1r2qPqug3GDD/4dFjEX430VC82zJnh3ydHTzt8UqV11hzBZY
-         i+jmICevoJthBXIkaQ4C1ne61yo13/mnmIjqaAYYaNMhvxnEw6gzVofw6lBrqEGQoSts
-         FIoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWNgyvtaTbzyfvRAjvsm/k26KMagvdtTTtAX+R922jGa9QBFZboWJ38fdS3RhfyL2Ctd6LK4xczvg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxLW2GgX7jN+0cTDy6XlMYmL1dAoo+4c3XMOoZAipD9ILdOhuJX
-	nJOCj+NmJD6A8EphR65P2lQqNep2GScS6pXDXTHuwF7Gp6jhbtyOQrisB27hcy9IcIE=
-X-Gm-Gg: AY/fxX6rxR4WMy0gCLhirf8SLLc93Q7P0A0SDMEKaqa58pDeXAOn4PS8BuxPPFwJiZD
-	WApeM7NB1XZpeQ9g5ltAZ8eYxVrySK6r0YsKUd1eVoCBWEa0k3TIRwXQBqqzQFkWcoyKNDcYMy2
-	gmy3LGLlbc2mPEEDb03vDoOBm9P/fQPWpYVjnuSIvgGuch9beFSZJ3r2MyG/aaGuXGoEhoRIVZU
-	S1ezw5F5dKOph0Z5Ee3FyGl1jkcVWKvgiqmo+vgRuOd36xDSeUBtz2AB+6C6MIB8lbVPp+vV5Q8
-	hnbDuvTZmyLrslkIDdEPQSmZZn1/p/sr3Nio7GgRzNVsTrVSPBmnOZs83nKzHzrtmkziIpCM0jE
-	VFD+3/XKj7psV84igHDNGDLo/aCnp1BYNEMgfFDZw/MMX0w3QsfSzS2bVmIfN2iwjp+HN5ErGkQ
-	7SJAHQrSbaXfKKl9SShBP1kVvQCw==
-X-Google-Smtp-Source: AGHT+IEsUPVraniMkuTWC397mM/y7CFhjYXQZl0a4mAweu2WnF2gu2AEx/7J4AZSNaZAIT/grNKtTA==
-X-Received: by 2002:a05:622a:550f:b0:4ed:6e15:d2cc with SMTP id d75a77b69052e-4f4abd72019mr459440771cf.54.1767030666405;
-        Mon, 29 Dec 2025 09:51:06 -0800 (PST)
+        bh=xDy1M86lySMiZB+6e+NfnSGr5v4JHWbEjB5Zb9z5vPo=;
+        b=MXlXKjVjxvUBnW5Dl3L6gNUoqHrFVufOtVroJZNKrPFIKJUhNBreUGEZgW8LGlvLrm
+         +T8xf7KdaSqnSsyZud7y8dEP5BjC95/6w1tFIwqHHFPrtVNC/5koogqhsn8u2jiw9f+C
+         AN/J1I7O59vi71T5rugF7TvIRQ+QsAEqIoPNjcz9i8topaI5eiWSFmvMNn9wsLf1Ul3h
+         aNRZgsvi/V7Qi//xyLVmy6jJB/t1+1tcJaSDdG49mELzTkcesSB3ZJdRuHA9mjP2Isqc
+         r5uh4ybhsyJUvsyr10Ixm1kT3G/BZwavwLWY1yf+9P2v27lBpBt3kqQsxTX3Acj5gI3H
+         aOgg==
+X-Forwarded-Encrypted: i=1; AJvYcCVUGPBTpKB2Vel7Yx/5n/RHnH2BKGlx7JF3cxTO56HGBpSoOVMIjx/EAVix0VR/4U+MxnNDckFIYQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxybluBGcZs6b0OdUPb8p1QLBmaLxjo3XaJD0gm3pMjZNBNT3AO
+	GoD7KRbbzN84XmTiY0SEGf9fTSW8xgD/+tujcu7y3iADm+9LR3kQx2ZweznLWivGGQI=
+X-Gm-Gg: AY/fxX6loMws2mYfj8JzFoFIQzOdHzY4RTk++lepxMzPEGlNuyFez6yV/OLK67nyFUu
+	Aa2mZlt65168wRkak0m2e6X+8ZO5MXSleUa+l/EXY20VsE3BwWRilulc8jxJx5JxvM7uXxKmnKk
+	R9cgQGwZ6QdfJJV3t3dF87MyvbMuqjCJk+JNm0WMlrMGDHnk2zrofhsdXbqSDU1DdeeDLQSGh7X
+	QO6Bv5eCiYMKPcvQNuJD0ii6Lo/LHQPdMzLfsb0tl8jKGjhHtdTZwyS3pn4VWDyQxZgJ7Me5gvl
+	2OIvCSe54PiNUOsobFp1DrZJNKenxi2MKG62kUS2UwM6u5fLfcHKAD4uu6EmrEMBmObTtlK+1Bv
+	zWwHUbyYuVoPq0V7ielSvpYNBbX4pgS11qdCqSvHkxtkeHEQzFX9iv6Lyen54lb7cgIocB7FzI/
+	NPDm/YPD8FeooMMM2gu15nVScWmA==
+X-Google-Smtp-Source: AGHT+IGXtGMT6O6A6KaQIdzPXBUgINz+WinbQ4cwEL4NneioBCpZL0bLeOv1X+9oO0ye3ANqbf5YQw==
+X-Received: by 2002:a05:6214:3a83:b0:888:7d0a:18db with SMTP id 6a1803df08f44-88d83a78234mr548804566d6.48.1767031345078;
+        Mon, 29 Dec 2025 10:02:25 -0800 (PST)
 Received: from [10.211.55.5] ([209.81.125.20])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f4da7c31a1sm145471851cf.5.2025.12.29.09.51.05
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88d997ada77sm231925916d6.37.2025.12.29.10.02.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Dec 2025 09:51:06 -0800 (PST)
-Message-ID: <85d045be-7b18-4bf5-b6a1-09e723cad2a0@riscstar.com>
-Date: Mon, 29 Dec 2025 11:51:04 -0600
+        Mon, 29 Dec 2025 10:02:24 -0800 (PST)
+Message-ID: <4c7c0f69-4732-4f62-970a-2a9273b3b5c7@riscstar.com>
+Date: Mon, 29 Dec 2025 12:02:23 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -69,69 +69,71 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] phy: Kconfig: spacemit: add COMMON_CLK dependency
-To: Vinod Koul <vkoul@kernel.org>
-Cc: neil.armstrong@linaro.org, dlan@gentoo.org, pjw@kernel.org,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
- guodong@riscstar.com, linux-phy@lists.infradead.org,
- spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
-References: <20251226173228.2020411-1-elder@riscstar.com>
- <aVKy87c7afpWIx33@vaman>
+Subject: Re: [PATCH v4 3/3] rtc: spacemit: default module when MFD_SPACEMIT_P1
+ is enabled
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Andi Shyti <andi.shyti@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-i2c@vger.kernel.org, linux-rtc@vger.kernel.org
+References: <20251225-p1-kconfig-fix-v4-0-44b6728117c1@linux.spacemit.com>
+ <20251225-p1-kconfig-fix-v4-3-44b6728117c1@linux.spacemit.com>
+ <202512251653368b33c7e7@mail.local>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <aVKy87c7afpWIx33@vaman>
+In-Reply-To: <202512251653368b33c7e7@mail.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 12/29/25 10:57 AM, Vinod Koul wrote:
-> On 26-12-25, 11:32, Alex Elder wrote:
->> The SpacemiT PCIe PHY driver depends on the common clock framework.
->> Not specifying that led to a failure when doing a COMPILE_TEST build
->> for the SPARC architecture.
+On 12/25/25 10:53 AM, Alexandre Belloni wrote:
+> On 25/12/2025 15:46:33+0800, Troy Mitchell wrote:
+>> The RTC driver defaulted to the same value as MFD_SPACEMIT_P1, which
+>> caused it to be built-in automatically whenever the PMIC support was
+>> set to y.
 >>
->> Reported-by: kernel test robot <lkp@intel.com>
->> Closes: https://lore.kernel.org/oe-kbuild-all/202512251903.sTVZgg6c-lkp@intel.com/
->> Signed-off-by: Alex Elder <elder@riscstar.com>
->> ---
->> Note:  This is based on phy/next, which I find doesn't currently build
->>         cleanly using "arch/riscv/configs/defconfig".
+>> This is not always desirable, as the RTC function is not required on
+>> all platforms using the SpacemiT P1 PMIC.
 > 
-> I dont build rsicv, I should add that. What is the failure you see,
-> looking at changes I dont see anything that might break this
+> But then, can't people simply change the config? I don't feel like
+> this is an improvement.
 
+It's not an improvement for people who want to use the SpacemiT
+P1 PMIC, but it's an improvement for all the other RISC-V builds
+using "defconfig" that would rather have that support be modular
+to avoid needlessly consuming resources.
 
-The clock calls are not defined in the SPARC environment.
+I haven't done any testing on this but it looks fine to me.
 
-   phy-spacemit-k1-pcie.o: in function `k1_pcie_phy_pll_setup':
-   phy-spacemit-k1-pcie.c:299: undefined reference to `devm_clk_hw_register'
-   phy-spacemit-k1-pcie.c:306: undefined reference to `devm_clk_hw_get_clk'
+Acked-by: Alex Elder <elder@riscstar.com>
 
-https://lore.kernel.org/oe-kbuild-all/202512251903.sTVZgg6c-lkp@intel.com/
-
-(I now realize you can just click on the "Closes" link.)
+I think it's a small change worth merging.  I don't think
+doing so does any harm.  Your call or course, Alexandre.
 
 					-Alex
 
+>> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>> ---
+>>   drivers/rtc/Kconfig | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->>   drivers/phy/Kconfig | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
->> index aa2d30e0e3261..3bc7378ea8658 100644
->> --- a/drivers/phy/Kconfig
->> +++ b/drivers/phy/Kconfig
->> @@ -104,6 +104,7 @@ config PHY_NXP_PTN3222
->>   config PHY_SPACEMIT_K1_PCIE
->>   	tristate "PCIe and combo PHY driver for the SpacemiT K1 SoC"
+>> diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
+>> index 50dc779f7f983074df7882200c90f0df21d142f2..53866493e9bbaf35ff0de85cbfe43e8343eadc1e 100644
+>> --- a/drivers/rtc/Kconfig
+>> +++ b/drivers/rtc/Kconfig
+>> @@ -410,7 +410,7 @@ config RTC_DRV_SPACEMIT_P1
+>>   	tristate "SpacemiT P1 RTC"
 >>   	depends on ARCH_SPACEMIT || COMPILE_TEST
->> +	depends on COMMON_CLK
->>   	depends on HAS_IOMEM
->>   	depends on OF
->>   	select GENERIC_PHY
+>>   	depends on MFD_SPACEMIT_P1
+>> -	default MFD_SPACEMIT_P1
+>> +	default m if MFD_SPACEMIT_P1
+>>   	help
+>>   	  Enable support for the RTC function in the SpacemiT P1 PMIC.
+>>   	  This driver can also be built as a module, which will be called
 >>
->> base-commit: 27287e3b52b5954b73203d32ee76ffd5f53f5074
 >> -- 
->> 2.48.1
+>> 2.52.0
+>>
 > 
 
