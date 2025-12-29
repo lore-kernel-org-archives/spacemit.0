@@ -1,139 +1,150 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AEC1D86FF
-	for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 18:02:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54480263F5D;
+	Mon, 29 Dec 2025 20:15:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767031348; cv=none; b=Dm5UaHvEP14M60pJw9XoKMSIlp6L+XVHTr6YXJIS6XMFTTzpv/axCLfxZg5GHJIiV0J0MCCQZ6pmrSF4gKDZK4c2EmYYDPE8PbiHg6vh1lfnXGOmcMdkHK4kUhSnlIapfxvb3fW4bqQWeNGEU3GNSdmygmKlN5cH6uFpWTY9jJE=
+	t=1767039305; cv=none; b=dJswK0+Z05Pee+VzrGRWGWkoI91ACNg4/OXe7Hv7UCNkSUqASGkwHpZJNJFw8ZwDPB/NXfkvzQvDO6IgqW0mRIFSD8kbLfH820MJ7TDShEynt1bRrQFJ457rNljqnKRBNs/jMYy9Dbbu+XTJQh9RVY1NffPBtc0uem5y1uDjnxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767031348; c=relaxed/simple;
-	bh=Wq4FNyNXdL2dOO4wrLWKkEOSeqpU9XuvsacZ1Is3UGQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k2eoerhzK2+2VNeKZlMkH5KXa5UA+WmmRzzMGNX7f9hJ+3G3sLr9kcsPnSkHgV7hwVudNkr5/3hF0C5yYziE/Fzo9AX/W5Z0iJM6tbgkCIZU0VzvR3zu/hqUo8v0aJKdVHFSJ82CF91zGjxRCjqohxjOvvUadBkwHUmBooiNZqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=ms3PjTF7; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1767039305; c=relaxed/simple;
+	bh=JqNKdSEsfYzpSlMWy7gS9prPALVh3jPgoUHA9oC0hT4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dH2Ye53x6WkfprJN5Bt6mc8Izuo1l2WFQsRh3yPuYvnX/lMuft0wRi9R3IB4yxdi5VEw0+DfWrJukwFWCZH8fa6sakuawxYJW/HyZWzMRdzTlVOEaLD5RLGr9eafdB/oAnbgxBqiuXsBQdGvnDrxQxnCf4u9nsEVmuCicXourOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=Zp4437af; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="ms3PjTF7"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-88888c41a13so118393356d6.3
-        for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 10:02:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767031345; x=1767636145; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xDy1M86lySMiZB+6e+NfnSGr5v4JHWbEjB5Zb9z5vPo=;
-        b=ms3PjTF7kre9m7Mmup1BMzlbxaiylffHOlg/yfpo74VxF4cox32zpuK4oo+nuq3Dh7
-         vXGnS93gO1W0j5EoIpqIq4NPwiXOngVsjktJ9Hbgo/VcEkuS0+1jlol1D1RNQ0ucUgu0
-         UMot/H1kPIdtI+/p/HRoMYOqBLFchfVXRrHyPUxnxLqr/0iT6tziOXb5+NLRYsexGoXq
-         3YG8F9yMoZALQfCyv1cbw5/y16FIABjVx+wmIQOzrCNvHkxMWCgXU8ztrUaj2vgZrBae
-         MbWInJ5OOiswLEVmwFp4pL1kdzZ/RTOfLqqNK08UsQjLWXodAwYdk/8yWILzS4b+kG0j
-         5U4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767031345; x=1767636145;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xDy1M86lySMiZB+6e+NfnSGr5v4JHWbEjB5Zb9z5vPo=;
-        b=MXlXKjVjxvUBnW5Dl3L6gNUoqHrFVufOtVroJZNKrPFIKJUhNBreUGEZgW8LGlvLrm
-         +T8xf7KdaSqnSsyZud7y8dEP5BjC95/6w1tFIwqHHFPrtVNC/5koogqhsn8u2jiw9f+C
-         AN/J1I7O59vi71T5rugF7TvIRQ+QsAEqIoPNjcz9i8topaI5eiWSFmvMNn9wsLf1Ul3h
-         aNRZgsvi/V7Qi//xyLVmy6jJB/t1+1tcJaSDdG49mELzTkcesSB3ZJdRuHA9mjP2Isqc
-         r5uh4ybhsyJUvsyr10Ixm1kT3G/BZwavwLWY1yf+9P2v27lBpBt3kqQsxTX3Acj5gI3H
-         aOgg==
-X-Forwarded-Encrypted: i=1; AJvYcCVUGPBTpKB2Vel7Yx/5n/RHnH2BKGlx7JF3cxTO56HGBpSoOVMIjx/EAVix0VR/4U+MxnNDckFIYQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxybluBGcZs6b0OdUPb8p1QLBmaLxjo3XaJD0gm3pMjZNBNT3AO
-	GoD7KRbbzN84XmTiY0SEGf9fTSW8xgD/+tujcu7y3iADm+9LR3kQx2ZweznLWivGGQI=
-X-Gm-Gg: AY/fxX6loMws2mYfj8JzFoFIQzOdHzY4RTk++lepxMzPEGlNuyFez6yV/OLK67nyFUu
-	Aa2mZlt65168wRkak0m2e6X+8ZO5MXSleUa+l/EXY20VsE3BwWRilulc8jxJx5JxvM7uXxKmnKk
-	R9cgQGwZ6QdfJJV3t3dF87MyvbMuqjCJk+JNm0WMlrMGDHnk2zrofhsdXbqSDU1DdeeDLQSGh7X
-	QO6Bv5eCiYMKPcvQNuJD0ii6Lo/LHQPdMzLfsb0tl8jKGjhHtdTZwyS3pn4VWDyQxZgJ7Me5gvl
-	2OIvCSe54PiNUOsobFp1DrZJNKenxi2MKG62kUS2UwM6u5fLfcHKAD4uu6EmrEMBmObTtlK+1Bv
-	zWwHUbyYuVoPq0V7ielSvpYNBbX4pgS11qdCqSvHkxtkeHEQzFX9iv6Lyen54lb7cgIocB7FzI/
-	NPDm/YPD8FeooMMM2gu15nVScWmA==
-X-Google-Smtp-Source: AGHT+IGXtGMT6O6A6KaQIdzPXBUgINz+WinbQ4cwEL4NneioBCpZL0bLeOv1X+9oO0ye3ANqbf5YQw==
-X-Received: by 2002:a05:6214:3a83:b0:888:7d0a:18db with SMTP id 6a1803df08f44-88d83a78234mr548804566d6.48.1767031345078;
-        Mon, 29 Dec 2025 10:02:25 -0800 (PST)
-Received: from [10.211.55.5] ([209.81.125.20])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88d997ada77sm231925916d6.37.2025.12.29.10.02.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Dec 2025 10:02:24 -0800 (PST)
-Message-ID: <4c7c0f69-4732-4f62-970a-2a9273b3b5c7@riscstar.com>
-Date: Mon, 29 Dec 2025 12:02:23 -0600
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="Zp4437af"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=ehhD4wbRH7wTUpUt/VpjfWrT/bv2UxVguaxZJATB154=; b=Zp4437afYBpglBIfsU9Cu7FhPk
+	GOGNSR+oUYd6yiPvLfJUI977dPzBKtmKDt3Qw2RdwgwVHDJk0zOADkDXiwYB+cXfvImJr3n5mgDEC
+	vcoVLWkkifPkpoJMWJR2NgtekkCiM7NH1gYa6uHAAMkABkip9XREI2FqPa/scESAOtjSXgdN4wWcI
+	VmFckGOq8jSUxWwsbEWlxUeh0SWDzaagBfT/IKb65LcpxXdjX6gHDri3SRrrQJk4SlhUO/AIH5Qi4
+	+jJu0IfV3yTVpkMNt82k5RxUSwqpPNEpQYAun05CiSBULG1Ow3yLrakboKUl2KzdlBPK80I30vfJP
+	yyH31Wrg==;
+Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
+	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1vaJdk-00000003dMJ-0mmb;
+	Mon, 29 Dec 2025 21:14:52 +0100
+Date: Mon, 29 Dec 2025 21:14:51 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Ze Huang <huang.ze@linux.dev>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Ze Huang <huangze@whut.edu.cn>
+Subject: Re: [PATCH v6 0/2] Add USB2.0 PHY support for SpacemiT K1
+Message-ID: <aVLhO9hAZBBNUEnP@aurel32.net>
+Mail-Followup-To: Ze Huang <huang.ze@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Ze Huang <huangze@whut.edu.cn>
+References: <20251017-k1-usb2phy-v6-0-7cf9ea2477a1@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] rtc: spacemit: default module when MFD_SPACEMIT_P1
- is enabled
-To: Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Andi Shyti <andi.shyti@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-i2c@vger.kernel.org, linux-rtc@vger.kernel.org
-References: <20251225-p1-kconfig-fix-v4-0-44b6728117c1@linux.spacemit.com>
- <20251225-p1-kconfig-fix-v4-3-44b6728117c1@linux.spacemit.com>
- <202512251653368b33c7e7@mail.local>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <202512251653368b33c7e7@mail.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251017-k1-usb2phy-v6-0-7cf9ea2477a1@linux.dev>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 12/25/25 10:53 AM, Alexandre Belloni wrote:
-> On 25/12/2025 15:46:33+0800, Troy Mitchell wrote:
->> The RTC driver defaulted to the same value as MFD_SPACEMIT_P1, which
->> caused it to be built-in automatically whenever the PMIC support was
->> set to y.
->>
->> This is not always desirable, as the RTC function is not required on
->> all platforms using the SpacemiT P1 PMIC.
+On 2025-10-17 22:49, Ze Huang wrote:
+> This patch series introduces support for the USB2.0 PHY on the SpacemiT
+> K1 SoC. The implementation has been tested on the Milk-V Jupiter and
+> BananaPi-f3.
 > 
-> But then, can't people simply change the config? I don't feel like
-> this is an improvement.
-
-It's not an improvement for people who want to use the SpacemiT
-P1 PMIC, but it's an improvement for all the other RISC-V builds
-using "defconfig" that would rather have that support be modular
-to avoid needlessly consuming resources.
-
-I haven't done any testing on this but it looks fine to me.
-
-Acked-by: Alex Elder <elder@riscstar.com>
-
-I think it's a small change worth merging.  I don't think
-doing so does any harm.  Your call or course, Alexandre.
-
-					-Alex
-
->> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
->> ---
->>   drivers/rtc/Kconfig | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
->> index 50dc779f7f983074df7882200c90f0df21d142f2..53866493e9bbaf35ff0de85cbfe43e8343eadc1e 100644
->> --- a/drivers/rtc/Kconfig
->> +++ b/drivers/rtc/Kconfig
->> @@ -410,7 +410,7 @@ config RTC_DRV_SPACEMIT_P1
->>   	tristate "SpacemiT P1 RTC"
->>   	depends on ARCH_SPACEMIT || COMPILE_TEST
->>   	depends on MFD_SPACEMIT_P1
->> -	default MFD_SPACEMIT_P1
->> +	default m if MFD_SPACEMIT_P1
->>   	help
->>   	  Enable support for the RTC function in the SpacemiT P1 PMIC.
->>   	  This driver can also be built as a module, which will be called
->>
->> -- 
->> 2.52.0
->>
+> K1 includes three USB ports as follows[1]:
+> - A USB2.0 OTG Port
+> - A USB2.0 Host Only Port
+> - A USB3.0 Port with a USB2.0 DRD interface
 > 
+> Each of these ports is connected to a USB2.0 PHY responsible for USB2
+> transmission.
+> 
+> This series is based on 6.18-rc1.
+> 
+> Link: https://developer.spacemit.com/documentation?token=AjHDwrW78igAAEkiHracBI9HnTb#part5 [1]
+> 
+> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+> ---
+> Changes in v6:
+> - phy: spacemit: k1-usb2-phy:
+>   - Fix clock API usage and ensure proper clock disabling in error paths.
+>   - Refactor Register Definitions: Replace address/number-based macros with
+>     feature-based names
+> - Link to v5: https://lore.kernel.org/all/20250527-b4-k1-usb3-phy-v2-v5-3-2d366b0af999@whut.edu.cn
+> 
+> Changes in v5:
+> - phy driver for usb2:
+>   - convert readl/writel to regmap
+>   - fix typo: sentinal -> sentinel
+> - Link to v4: https://lore.kernel.org/r/20250526-b4-k1-usb3-phy-v2-v4-0-eca668fc16a2@whut.edu.cn
+> 
+> Changes in v4:
+> - combphy driver:
+>   - add in-code comments to indicate that PCIe mode is not yet supported.
+>   - replace custom spacemit_reg_update() with standard regmap API.
+>   - drop spacemit_combphy_wait_ready helper function as only used once.
+>   - Fix PHY init timeout handling: ensure proper error reporting when PLL
+>     lock fails during USB3 PHY initialization
+> - Link to v3: https://lore.kernel.org/r/20250517-b4-k1-usb3-phy-v2-v3-0-e0655613a163@whut.edu.cn
+> 
+> Changes in v3:
+> - improve commit message, provide more info about phy hardware
+> - drop superfluous local variable in `spacemit_combphy_wait_ready`
+> - replace devm_reset_control_get with devm_reset_control_get_exclusive
+> - Link to v2: https://lore.kernel.org/r/20250418-b4-k1-usb3-phy-v2-v2-0-b69e02da84eb@whut.edu.cn
+> 
+> Changes in v2:
+> - combphy dt-bindings:
+>   - fix reg-names
+>   - describe reg
+>   - describe #phy-cells argument
+> - drop stale ".owner" in driver struct
+> - add support for usb lfps_thres in combphy
+> - fix Kconfig depends on
+> - Link to v1: https://lore.kernel.org/all/20250407-b4-k1-usb3-v3-2-v1-0-bf0bcc41c9ba@whut.edu.cn
+> 
+> Signed-off-by: Ze Huang <huang.ze@linux.dev>
+> 
+> ---
+> Ze Huang (2):
+>       dt-bindings: phy: spacemit: add K1 USB2 PHY
+>       phy: spacemit: support K1 USB2.0 PHY controller
+> 
+>  .../devicetree/bindings/phy/spacemit,usb2-phy.yaml |  40 +++++
+>  drivers/phy/Kconfig                                |   1 +
+>  drivers/phy/Makefile                               |   1 +
+>  drivers/phy/spacemit/Kconfig                       |  13 ++
+>  drivers/phy/spacemit/Makefile                      |   2 +
+>  drivers/phy/spacemit/phy-k1-usb2.c                 | 200 +++++++++++++++++++++
+>  6 files changed, 257 insertions(+)
+> ---
+> base-commit: cb6649f6217c0331b885cf787f1d175963e2a1d2
+> change-id: 20251017-k1-usb2phy-a53ed4ea51b0
 
+The whole series is:
+
+Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
