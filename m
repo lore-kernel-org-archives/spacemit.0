@@ -1,148 +1,107 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669A517A2FC
-	for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 01:08:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D323A1E99
+	for <spacemit@lists.linux.dev>; Mon, 29 Dec 2025 01:21:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766970524; cv=none; b=UfAFI2dX0YOvJxCFWV1h9qIeHPj4K4uCiB2of/JERN4CKOB1TZi1yFMZkBKwCM1zsbxqymGbLHoP+xVxzjyzEGT2s+dK7/SKZs8sAHQMQ0RKN+x7uDjjSmLhk1dEr8KnfK8nLeoTAirbbHl4892ubzSs1e3lz6CynRdy7Fnn+hg=
+	t=1766971305; cv=none; b=bpFZLwhZEUJLxNOHcCK1lI943att8on+eBk6eNslqDJb4seLu7K6H5+NnPZUtQh8xEicITm46nzwR+Md+8/0IKqj9VelHPjbrSuXgaefTHSFrpSCrVLCzdAKjbF3hNerIiWlVU+0DrLmFB2GmGGt/vwTYrb0vpEKYCDxmQsS718=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766970524; c=relaxed/simple;
-	bh=f8xb7f7Wc6cleIreUIT0R3KFYnTxJ7Zn4E5sKYJ6J/w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EaX8/uGiduIxDaCl+tqwQU6OBciRXgxpG5HpGoRGhhdEBvZKvibYgla7CHnzjaYkYA6bgw12JzTj3+wsjukngUT3WvWfjgYdj63JbR74VITYfkvRvV26aatifc+0y3z4FiloH1YeeGcV1KplpBoxUUgDjKG/DE6+IpNQIUwNhII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=EwUN+2hF; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1766971305; c=relaxed/simple;
+	bh=hsmClUGEQA7rZBxAXqKjeDz/XtsH0eUv/RPooz6i4Bc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PqBRz5aM/vJuKb2Ja8rIvFhvM+AHjwoLleBqsJpi6Vo9CCrAl3fUnuViB3RiU1JbVN/YkfcbzbluJN0n/OdlYpCMAe/O9hzvzPEvvD8+nNgNrUl5Qe+2f4FSfQL4lhibCzc99f2udRosu7nJIZ7c64tRuvoK5TzGW+BdEz7aT4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=aVScxXB5; arc=none smtp.client-ip=54.243.244.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="EwUN+2hF"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-78c696717dbso70183127b3.1
-        for <spacemit@lists.linux.dev>; Sun, 28 Dec 2025 17:08:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1766970521; x=1767575321; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1UE85kVGf+q8GmraHlXZAv1blLIu7cHa4ZcemBTV+hE=;
-        b=EwUN+2hF6sUB5v6Kf/LrUxswcEXcyel2ea34kfSiEMlBAPLQEEWThtlnZjubkkyZL1
-         KGV77cysRYUxZc5ZJpZJlHYGMtZHTo9idLpY2VtnePuUW6T/bIqoRhzDBxEF3R40akDy
-         Ld/RfpRE7iGsfvfNsPVrXjv/Bpj5v7dJoMkkzj7x3ahvioV+S8lMATfNrUl+bach9YcM
-         BDuFalHZS5dPPgBP7u7HgkslCoVPVpyhkMo2KnNTCE6L0JiVYMkZYDqi3EMhVtZrPiQp
-         wfGCRK9o+1NeV714Ag7P+elmY/4I0u/V7hXPu5UFpOQCaVpRdRMbGa4FA7aSD5Ao8oa1
-         QHbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766970521; x=1767575321;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1UE85kVGf+q8GmraHlXZAv1blLIu7cHa4ZcemBTV+hE=;
-        b=QXABoZIqI03kbZsGCbhRBTOL56lylAiBZ2Z8qQ/nMZMiN4OlY75dNBcSzMgPy5STHH
-         9O4mOHIS93mTYjHHuMHoIflW82CgIK5Z/pfNOD3pkUJQFYfVkCnhkbHXmjwpzPxW8+Tw
-         uvdIBJqvLZvrT1Z8aYXuYt8Kgc6H/zVM1ejmgSBfjR+z+52MM8fvxEM+ZCv7FriUE8o1
-         Bi8u62mxZTQ4LMC1cl/hqtu0qGfHT/GbeQm+D8tSrI9LTJiYsKEB4wIEZAKx+ofx85PW
-         1bWcORGdVv9chzcxhWYGlKFdIW2txW0gVOb6pxlDG3X2eQN/S+VJbna/lCepv7CMGBtS
-         MOiw==
-X-Forwarded-Encrypted: i=1; AJvYcCVGUxfgrDQcyoKMvXqwi4IM4DbtEfi5mdOQcbP9tdjbthKNHnaJkLyHqn6s7JtkdxQKjVYudWwokA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyreDTgWx1S9djsauGmFBhcK8+Nmp1pG5Hp9xf2omN4/B4ru4nx
-	/DtwIIoAB2IJm/nulMi3oLnxpShklHIlBMcoYqofhIL5KSMuk9NeVqVcP639HMlmz6x455KYjal
-	wyVb3uE+NaaUL1JPKDVqGzcPVv67L9VvQ0HqjWjDXaw==
-X-Gm-Gg: AY/fxX4SN4+gDggG9US5utCO9VFTNuGK13uOFso+PWQc6GlUunupG5Sz9aXtXaMmQbW
-	T2rCHUWzsMoLwaM4H+iugSRDX4+8ky/VuerfnCZvstjq0id9gDhPWiB/MkKyQhVWu+q0GvPChW+
-	Mo0Cijg8/wx6rRlimr/tZmTjQD8lfpJ9Tn1C/90WpWmP1Cwi4IkvPNiCh1gcNwaZTWuWDpkVOiG
-	Fh3OUpLjeIPyr16XpY14vJyYvn+GJ01CNZXOZtdPJh+TaX36Qw+oJ1Y/UBPBku6ZxYoTdNJLLNu
-	HTN1Ff4shjUBiA/0co6D/x30bp7iY2BHObhidQrNITlp
-X-Google-Smtp-Source: AGHT+IGlhu2CzzIyPT/4Xs4SuTdCSDyVQF/LBTPCx5u8EgG/qGO3ektOwcMaY7F0RocF4UkJ/Asz5Nn328g1rSwFXmQ=
-X-Received: by 2002:a05:690c:6186:b0:78f:a615:2739 with SMTP id
- 00721157ae682-78fb418785cmr210976517b3.55.1766970521358; Sun, 28 Dec 2025
- 17:08:41 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="aVScxXB5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1766971218;
+	bh=HjPCSciAn5sVVRUOoQBxpkF3fdcwbHn1thnE3om09YI=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=aVScxXB5ajk8nsyHVbqyulChahzfyWHuZ6EOvh4MvFwVIc/AKTm5IIWPzh6kmQMSe
+	 h0mCTaJGqJM8fchETHBns4nQJE/59IUULp6f1zgbJtvkQkDqqRELbYkwRoNkOv+3bF
+	 YoiPVThoW4rTJ8Oj3JlkrtytPP5apOWe57ktXwD8=
+X-QQ-mid: zesmtpgz9t1766971209t9fc9de5a
+X-QQ-Originating-IP: fT6Q8r14RLfcZbpJL9RtazBttNJy4iPas1PtPR2xOX0=
+Received: from = ( [183.48.244.56])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 29 Dec 2025 09:20:08 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 16357926230597589350
+EX-QQ-RecipientCnt: 13
+Date: Mon, 29 Dec 2025 09:20:08 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Alex Elder <elder@riscstar.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-i2c@vger.kernel.org,
+	linux-rtc@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] i2c: spacemit: configure ILCR for accurate SCL
+ frequency
+Message-ID: <20BB6D852C5C87DF+aVHXSI7Mn5GH-xBF@kernel.org>
+References: <20251118-p1-kconfig-fix-v3-0-8839c5ac5db3@linux.spacemit.com>
+ <20251118-p1-kconfig-fix-v3-1-8839c5ac5db3@linux.spacemit.com>
+ <81eca0ab-47a3-4b12-98ae-fbd46a15ff93@riscstar.com>
+ <BD74A47E5BB66010+aU4j6CgGxebcBV5I@kernel.org>
+ <569E6DA87DE510D5+aU4-1Jl9XxjAWQq4@kernel.org>
+ <4a76e9bf-926e-4b77-a2f8-ee4a72b2f1dd@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
- <20251222-k3-basic-dt-v2-7-3af3f3cd0f8a@riscstar.com> <20251222-stitch-preachy-3fab87fd6f0f@spud>
- <CAH1PCMZ7ywZ3unLy0yHYK+fFHk0y=q2cEtPnRi=qSpf=fc75rw@mail.gmail.com>
- <66c0676a-7920-4825-b916-3c00b1648a08@riscstar.com> <CAH1PCMbBURb=DpChf+Y-DjYjzpXG-pKgoaHAu=TUuG4oVC56cg@mail.gmail.com>
- <5979c8ef-b0fa-40c8-944d-96e226fbcbe8@riscstar.com>
-In-Reply-To: <5979c8ef-b0fa-40c8-944d-96e226fbcbe8@riscstar.com>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Mon, 29 Dec 2025 09:08:30 +0800
-X-Gm-Features: AQt7F2pCBTgDDH1FNzfMutsdekE-nmpYuROoap71sR-N9Z3O3k31kEU3EyBRcKQ
-Message-ID: <CAH1PCMZkQ11-Uk5GnyetLkNLOuO3gs2o0WPWHrFMWVH9R6s8mQ@mail.gmail.com>
-Subject: Re: [PATCH v2 07/13] dt-bindings: riscv: Add B ISA extension description
-To: Alex Elder <elder@riscstar.com>
-Cc: Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, 
-	Samuel Holland <samuel.holland@sifive.com>, Anup Patel <anup@brainfault.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Lubomir Rintel <lkundrak@v3.sk>, Yangyu Chen <cyy@cyyself.name>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Heinrich Schuchardt <xypron.glpk@gmx.de>, 
-	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, Andrew Jones <ajones@ventanamicro.com>, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
-	linux-serial@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4a76e9bf-926e-4b77-a2f8-ee4a72b2f1dd@riscstar.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: OXvkGtaK08fGzVyBcvDPqJcIA53HT9A+ZpqG1btxeAnhOYGYpEPMnSfv
+	DGcIhq5g6sZKK3vJAWTtne04ZOQZf0wbR/mNi4KJDfbl2N/KScZjlkpO986CQ5ZXGFPXIh2
+	ioZ31RNhXYNUrliC1i49dquCM/I+1VmEy5OvhaKnzZ9YuMW69lowfvbHm421qbdZz77yJ9Z
+	2c0xL1hKMdqFeAilR6kG6v1gDcsAW6r8mEa0zjetDJJTj7Vsn/q1GTeDkh4HNcVFGuZZGfx
+	1z/g0hyvAfMSd0AlKytiaZ/gCFsSQ2RMYKpl2St2K4267pvYcdpCHShDj81scxHacKQ1UdX
+	LdZEjdxVYnxzbHE1jAR3rp48orvIBnkeXQLtpkJER/JcJ7Hn12I+I9ka+5cb/5BfxIvoqut
+	3BNB+DSfmrDKBarbE7cOtJ/A/13vzeYXawFnV2YIk61JQdGr+yJKcDMxD8XMC5ydutzL4JK
+	kJnyc4xThYficgFm21pjvX0K9G6C7YfCsx5fm47mXiVUlMPtgZZZc6Aa1XKxY2mtQmffrJK
+	re4yQsZkhJ2bt7mvtBPBZ1NH2k4G8+5C4jxYRt7eYaUtWvy7RLc+9a6fVS7LcUGnOpnOlhB
+	2Uf0zTNCU9jTdkjAlp/kwJJhzol7zikVaPstUAGni4Fd/xWAz4jVd8BEKMHEj79ZqIVf+TM
+	nSJsE0kqRK0TLN6jAUJ3ZHLGGTAC8HjhCf1zUhuoAPrCcDAh5WB/fivyEdLTWsU1ijvCAKM
+	4V1lEzatn7S7NZNFizdcUQl0gM7w6GzhCJpYqo1xLcxZtOYoE6VJVxcgmrv42uIAL7+RuOP
+	i5sxzZd49LDtE3DzkE3UGbLatJWn8aelU6qFOVUMMciafueaMlUIlJHNQX/k8EBtLr5CC3l
+	xJnYAUAekK4F/JUI9miS35uFQMXXA5EzdozhP5RA2qUVedvSzrMT8VIFY332p5HGIVE/K72
+	Qac2whpmTxtzBrAv+7eTPtz9gN+E+FoYKBHKzGzjheDFhCmZsEbFtnjdy/r0mIUQ7nuWVWz
+	+fzla//JJ8r3Awr2Re3NMWV7UpHjrxrk0G1bjTm9pzFx9n/uYW
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
+X-QQ-RECHKSPAM: 0
 
-On Mon, Dec 29, 2025 at 7:50=E2=80=AFAM Alex Elder <elder@riscstar.com> wro=
-te:
->
-> On 12/27/25 8:51 PM, Guodong Xu wrote:
-> >> That's what I understand it to mean, anyway.
-> >>     https://github.com/riscv/riscv-b
-> >>
-> >> There's no point in supporting "b" in devicetree to represent
-> >> the others if it also requires the others to be present.
-> >>
-> >> I think that, instead, "b", "zba", "zbb", and "zbs" should all
-> >> be allowed.
-> >>
-> >> I might even go further and harden the requirement, saying that
-> >> if you specify "b" you should*not* specify "zba", "zbb", or "zbs".
-> > Historical reasons here. "b" came too late. The chip vendors have publi=
-shed
-> > cores with "zba", "zbb", and "zbs"already.
-> >
-> > That's a migration bridge to require "b" must be listed
-> > together with the other three.
->
-> Are you saying "b" has already been included with "zba", "zbb", and
-> "zbs" in an existing DTS file?
+On Sun, Dec 28, 2025 at 06:58:00PM -0600, Alex Elder wrote:
+> On 12/26/25 1:52 AM, Troy Mitchell wrote:
+> > > > > +static int spacemit_i2c_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+> > > > > +				     unsigned long parent_rate)
+> > > > > +{
+> > > > > +	struct spacemit_i2c_dev *i2c = container_of(hw, struct spacemit_i2c_dev, scl_clk_hw);
+> > > > > +	u32 lv, lcr, mask, shift, max_lv;
+> > > > > +
+> > > > > +	lv = DIV_ROUND_UP(parent_rate, rate);
+> > > > 
+> > > > Would DIV_ROUND_CLOSEST() give a more accurate value?
+> > > I'll test it.
+> > Same result. So I'll keep it.
+> 
+> Is that true for all clock rates? 
+I only test 400k.
+> Anyway, it's not
+> a huge deal, but especially when the number of rates
+> isn't very high this can make a difference.
+I'll test more. Thanks!
 
-
-The risc-v ratification timeline is:
-"b" was ratified in Apr/2024, which is about 2 years later than its
-components zba/zbb/zbs (these were ratified in Jun/2021).
-
-I can do this in linux kernel, writing a dts file which contains only "b",
-but no zba/zbb/zbs. The linux kernel can correctly extend "b" to zba/zbb/zb=
-s.
-ps: after I or somebody adds the logic into cpufeature.c.
-
-However, the problem is with the older software who reuse kernel's DTS file=
-s,
-and recognizes only 'zba/zbb/zbs'. (If you search in the riscv/boot/dts,
-you will notice a lot platforms supports zba/zbb/zbs.)
-
-When there is only "b", these older software may just disable the features
-related to 'zba/zbb/zbs', because when they developed their feature,
-"b" doesn't exist yet.
-
-Hopefully I explained the logic clear this time.
-
-BR,
-Guodong
-
->
-> What I'm suggesting is that (unless someone has already done this in
-> a DTS file), there is no reason to require "b" *and* the other three.
-> You should allow either "b" *or* all of the other three, not both.
-> That would support older platforms as well as newer ones that use
-> the more concise "b" only.
->
->                                         -Alex
+                          - Troy
