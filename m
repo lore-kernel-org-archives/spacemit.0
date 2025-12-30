@@ -1,70 +1,43 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336D51E8329
-	for <spacemit@lists.linux.dev>; Tue, 30 Dec 2025 13:57:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5681A840A
+	for <spacemit@lists.linux.dev>; Tue, 30 Dec 2025 14:12:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767103026; cv=none; b=A9NmN3Ri66MwxyaMRum5s73l2zamTaCnPUegiJc7J4gK4rd+B89AR5/S6T4GVRtzd+yJ+XyH3eUxddldWPQDaKwKDc+FsQOvQlJKdPcX9ykfi9yryFD7bsQyFSmdJvAC8tJLVVkM99tT28Cg+05e2tCvY2NwsCBH/PHE9Lto95A=
+	t=1767103949; cv=none; b=mVw7qVfa2W/JxdGc0I2SVOwY+nxhZeWHCrGlf4Q3vg4oan5+BEly52ejbY07MNcxFTs14NbLS9jvcXKTztjUOn+YQdqlhN0S+z44ZyO5PmW7PZ8rTQ5GirjVGJp8u9fEGQojtC9y6Gnj6vzgpHCPPu1I8VPxQE0Q6wETxAPB43I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767103026; c=relaxed/simple;
-	bh=0xRAbK+n5H+csItC6n3OEL70ZNfh2mdODm1iNTdA9b0=;
+	s=arc-20240116; t=1767103949; c=relaxed/simple;
+	bh=ZCrfW3diL3UVB1Z6PpdpZXyMJbQP00JZRoqAWDHxudw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HE+SKbY8HKyXImXLZ8qkR9NGeCjeapVpAdn0ii0JVgLX5z4/Wf8VJAcfMeTlqZmyGoHmSJBtRINONVFb5Nxx9jzqOBtJ7UtbWCP5R9P3TtbOLkzAls5oJ4snOs2HtUPf3/20y7Qd1pmZdQVxRqEEPxuxdc8nU6jBXPorugKrlJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Im7Neipy; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=JafALw+QwMFuEB6Twb8Pnm/zU0NtJVpT4g+ctD+DBJZZBZtF5ZW5nmqGwEiVyqQ9tgR8WOsJjrae4WCud4j4py/I44lz0wSBH4W+VjRKQfaD68PQWZAhFN47DzA0REZ/Lud/CAKIN3n6oqaT+Azcqu8qJPmi8TxS9mS8jYj4zXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ShnyEpOD; arc=none smtp.client-ip=15.184.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Im7Neipy"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2a0834769f0so98203865ad.2
-        for <spacemit@lists.linux.dev>; Tue, 30 Dec 2025 05:57:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767103024; x=1767707824; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=APWv0N7VAVEafE/tRaAfzsntSA7mb1asugldnCJpAhE=;
-        b=Im7NeipyltfgpqpCdWebK+BVkPXUUPNosaSYbVXU/Wu7PCex79Xgn0ACAbYDHC9k5f
-         ByvDKTT8ittpx2II/XTR8Iv9InuCeeitXWVGLZw6JrTCzJwRRvGizm8CA0pAuJ+ufyUu
-         yHDz3Ou5/pxu8doi2KqHC5SV4ZCAW7SOBgs+fwvZB9YdkfIJ8MMhFUtRpry1T1TQuY1E
-         dvWEEXzKyXfg493wGHyZ6WC9dnXcMIkattrmg/P1WSbOZqnexcsbT3B3PeFSKkDjvPkb
-         0GqCsadXw6ea7RLe7nOB9lkgxBt0zd/ywRbctkmmEiTmL3mPmwB1e4IyfDZgfKradBQJ
-         qBCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767103024; x=1767707824;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=APWv0N7VAVEafE/tRaAfzsntSA7mb1asugldnCJpAhE=;
-        b=CrxKGLH3sP7RtqhOoL2p8tvgGvN44lUBHZ/6hEQtObpQ15py8oZOlvTpyqeLyPsW0V
-         mQ7oEMvBBgnyA8INs/94uSbn2+sLmDtohQdTwV5B3UJK3qgo1WWSbBp4xEVVMlNyqGf+
-         56YIKfumrQ+McPHUg/tlrTmFpzVlHbQD38zo8vjC02kEq/0p2mRclkewXpBZRf7RuiXh
-         qyV+Nsc/p+IBgR1xyVoQw5SE/YjimU3d658Z/t8vbCKAIINcp4Alf2ld7CBuYJXMFrI/
-         Twwhdp0Q7eL9y4psgfMk4TkebXkAkF2ddzR6TSIkjtA/RWCJFhvvobcac/3KdtKq7zVc
-         Aa1g==
-X-Forwarded-Encrypted: i=1; AJvYcCUgXImrEmCVpq9x9nhR0OFM2Qw6JPp0JTqfsUsNh0/y/ZKWfqElu5LO75XJyn0qVckP+rVEDp3v4A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxQCxAn9ldpkBN4i3dt/HSsfXw1L/EVzGajJb3spgcY47zcKbqv
-	qGBhDDPuktCSyeOa/435lgN69UBXYlAmABsTE7bfPoGyUWD4K6/3wxGE
-X-Gm-Gg: AY/fxX4t8xcsPDEbG9o47gJ6m1lBLFuIBK/qbNc8S5sWjOrvSkgRJgSYEVEl6M9a+LA
-	ZBXbfYhyirbWoW/CGUkBCGUzafw21vxNM3SHLd2lgerAefckUmE+r83jGndfGuQS2WpBnIVZFun
-	FeFnyFP5bn9XklY0H651iod0wYPh4+j6Ry4PraTpOTuhDHdsNK+AxEL1gk/24u/E0ai6mDJt7Uc
-	rviFy2lfWhIFErceFHRPWvECbTwGDngiTYFD1OKk+yx/qM72ZVEdB52QUIQH7KoHZJoCA5RwIJM
-	1yABpB0xGqGBmnGEgF/W658gkhhZAHhCP3jnqfHzk0Ekw2uKMLLr2/EknGMjynwjFmDNae1OB4U
-	y8U/TorX1QhB7Hn3MR2ibONPHhQ8ej8qLDmxYw7FR8gPUpuW1W4cMjC7nbrHTdycevQ0DubVb0C
-	PsX8Xm
-X-Google-Smtp-Source: AGHT+IHGfTQHu2drfAKQu53WiG/Gy4iDJrxBQ4VfdVs/FW7w4jXnrnuNi5IJgVAmYtjoOeiIgiSPkg==
-X-Received: by 2002:a17:902:e808:b0:29e:facd:7bf4 with SMTP id d9443c01a7336-2a2f2940511mr319051025ad.50.1767103023863;
-        Tue, 30 Dec 2025 05:57:03 -0800 (PST)
-Received: from localhost ([211.94.234.112])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3d5d407sm299696265ad.72.2025.12.30.05.57.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Dec 2025 05:57:03 -0800 (PST)
-Date: Tue, 30 Dec 2025 21:56:58 +0800
-From: Encrow Thorne <jyc0019@gmail.com>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ShnyEpOD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1767103880;
+	bh=HGcM/4CGiCg5j1GuuOjB4A3W1LbzH42pGnBqQOzGYas=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=ShnyEpODwop694fgDxtILKWs4zmbdLHuNzk+x/a5i4ol3owp9kuA01xMir6Q+w6yp
+	 Qtsmn6A9eJDVgmcrTjm3zncMCtEnosCXXzLwETPPT6xEHTsKLtMBE7ZcBFywU4QRbp
+	 R3j0fmzzKBS1h/19AB81B+O5Rb04uNa6MKhkhqUA=
+X-QQ-mid: zesmtpip4t1767103878t2e71f83a
+X-QQ-Originating-IP: aRra+fta2Rh/1Rh/TuAarSVo2Eo0tTTTZHbS8NjGWpY=
+Received: from = ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 30 Dec 2025 22:11:16 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 12681321409791623687
+EX-QQ-RecipientCnt: 19
+Date: Tue, 30 Dec 2025 22:11:16 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Guodong Xu <guodong@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>
+Cc: Encrow Thorne <jyc0019@gmail.com>,
 	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
 	Philipp Zabel <p.zabel@pengutronix.de>,
@@ -74,11 +47,14 @@ Cc: Krzysztof Kozlowski <krzk@kernel.org>,
 	linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] i2c: spacemit: add reset support
-Message-ID: <20251230135658.GA9515@hailin-HP-Pavilion-Laptop-14-dv0xxx>
+Subject: Re: [PATCH v2 2/3] i2c: k1: add reset support
+Message-ID: <541066FE3973E490+aVPdhNKK70qltaVV@troy-wujie14pro-arch>
 References: <20251219-i2c-reset-v2-0-ad201a602e74@gmail.com>
- <604e5781-5c59-422f-9c5a-ee4be6f8b329@kernel.org>
- <CAH1PCMag00z2Fp8zjMUPS7AdU6Lgk0UsS+mku93NtNejqjyBMg@mail.gmail.com>
+ <20251219-i2c-reset-v2-2-ad201a602e74@gmail.com>
+ <2dmrli7yzznpurg74wet4oidhljjf3csdjly2dwpyvyndhrec3@uc6ke7mep6fv>
+ <CAH1PCMbGbe6MQtAucf-4W+H_G0LrvPNGyaB_OUyxqf5TF=jixg@mail.gmail.com>
+ <zjrd3dgvcg3pxmn4455iljtugbufr4igyokdycusyhpykbzyl5@nrwgz366wm67>
+ <CAH1PCMY9A3CO1PXo-b5_BGY13xdx3nvAqb-R28hUz1VMLzTHWQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -88,43 +64,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH1PCMag00z2Fp8zjMUPS7AdU6Lgk0UsS+mku93NtNejqjyBMg@mail.gmail.com>
+In-Reply-To: <CAH1PCMY9A3CO1PXo-b5_BGY13xdx3nvAqb-R28hUz1VMLzTHWQ@mail.gmail.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NUTz4BkILuKLfPgngVy2VbSwqKFERblinWpytd78pVsafI+Y7EQFZAVv
+	IKnumd+i4592ZOf8feHQuLzd+dmKjyO1UxGtvg69KkbufDgZkOSj1WnKLykMZ0PA75lE7OH
+	nN2ZsyjqQxgduF17crVSHfqnt76Zbi5dUTHdUHk0Dk/RD8ntGlsa2zC4C6//fa5yMvzkGxU
+	+P9HI0o83Vpb6/DMzVcVUjl1jLXqMY5c2wVfahjZZHt4KUCx73Wkj14V9SMvArzdL7dEX9k
+	3QBiQqL/cJeT9Ocr6pKbKVr2B4VGzW0v6YjKLaBONQr8dTLLXoPnfLMgTm1AQaRTCXP0YEm
+	0VfbuTmKAk1WwNdrS7AgmH+5gWWUk0VRNmEXeRuEW+5l+qp1uKwOIXeVRICMVfMGM2xUJYA
+	3bbuP9lmHUtw1yswDtsNk1SfLv8GWzQk2SOOVVyP4rzQgNsojQxjVaIYUFw0Yatuzmv6sf9
+	oDWIp9iHB9a6ha9hliHyNN7zXEzKM3WApDkTVCwQqIEkTmvOKjThysUNv6ckY5vZB7VBhNL
+	BXYP7QD2pBQ/1SVcUnyp+O5HApl7gwOqNomLtS7UGNAHJUIzu3hd/ajchoRVoc/IUq5zqDm
+	d33cuK8ahMIuynaQ48S6ZY/8OHlJvMPj8lAIAUhN/kMNVez6cBIYqIz78e7saFoA49Wenv9
+	Uw0/R+Yre34DLvW/hzewT9vqYqm2p3wzWmlf+q5SiTnAzmdOX3ZEFjYS8vpK7CLUJncoJX5
+	T6xY2oWJ6kPd6dFf+VNfI3X6GZmM8LTYC9tuh1hwR+YWQCHqXUZWPsgx1t33strwymPZiCy
+	7mZN9ITu07hqAGOG+ejQu8tN8vQQLdm5fVWHwMRQNgMH4BBoVqXfq1n/hwu+00dL3SzLm9W
+	5ETg1GcnLtbmqmukSE8i7msN4izjztvUe3hHnKKBI2yLYe3dI12AoH128ASS5+FZhahMw4o
+	GA+pgSHOblbg1W+8oA8I2mljIwVveA0CwA8Sq638nBbZWV0AZcSNV+mYDc7p0w5GLeGW4p9
+	ThWI5h9xKgVcWR6i598G7P4q4cm0klmLC3F+3VoUFog7aPQF+IIDbk4/r03vZTzQrjocs1j
+	Q==
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-RECHKSPAM: 0
 
-On Sun, Dec 28, 2025 at 07:53:52AM +0800, Guodong Xu wrote:
-> On Fri, Dec 19, 2025 at 4:03 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+On Sun, Dec 28, 2025 at 08:42:47AM +0800, Guodong Xu wrote:
+> Hi, Andi
+> 
+> On Sun, Dec 28, 2025 at 3:26 AM Andi Shyti <andi.shyti@kernel.org> wrote:
 > >
-> > On 19/12/2025 08:42, Encrow Thorne wrote:
-> > > Add reset support for the K1 I2C driver. A reset ensures that the
-> > > controller starts in a clean and known state.
-> > >
-> > > Reset ensures that the I2C hardware is in a clean state. We cannot assume
-> > > that no program used I2C before the kernel booted.
-> > >
-> > > Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
-> > > ---
-> > > Changes in v2:
-> > > - Replace reset property in dt-bindings.
+> > Hi Guodong,
 > >
-> > Replace with what? I don't see anything else there - you still have
-> > reset property.
+> > On Fri, Dec 26, 2025 at 07:38:22AM +0800, Guodong Xu wrote:
+> > > On Fri, Dec 26, 2025 at 5:01 AM Andi Shyti <andi.shyti@kernel.org> wrote:
+> > > > > +     rst = devm_reset_control_get_optional_exclusive_deasserted(dev, NULL);
+> > > > > +     if (IS_ERR(rst))
+> > > > > +             return dev_err_probe(dev, PTR_ERR(rst),
+> > > > > +                                  "failed to acquire deasserted reset\n");
+> > > >
+> > > > If this is optional, why are we returning with error?
+> > > >
+> > >
+> > > According to include/linux/reset.h, if the requested reset is not
+> > > specified in the device tree, this function returns NULL instead of
+> > > an error. Therefore, IS_ERR(rst) will only be true for actual
+> > > errors (e.g probe deferral).
+> >
+> > And this is quite obvious, but you haven't answered my qestion.
+> >
+> > Why do we care of internal failures in reset? If reset fails on
+> > an optional reset control function why should we kill our driver?
 > 
-> It looks like a phrasing issue. By 'replace,' I guess, Encrow meant that
-> the resets property was moved (reordered, put into a different 'place')
-> within the file, not that it was swapped for a different property.
+> Thanks for the clarification. I see your point now.
 > 
-> Encow,
-> 
-> Would you please correct your changelog description
-> in the next version with something like
-> 'Reorder the placement of the resets property in the dt-binding file.'
-> 
-> BR,
-> Guodong
-> 
- Thank you for your suggestion, Guodong. I will modify it in the next version.
+> My reasoning is that if the resets property is explicitly listed in the
+> Device Tree, the driver must respect it.
+It's not required.
 
- 			- Encrow
-> >
-> >
-> > Best regards,
-> > Krzysztof
+>
+> If the property is present but
+> we encounter an error (like -EPROBE_DEFER), ignoring that failure could
+> put the hardware in an undefined or dirty state.
+Then why it's optional?
+
+The real reason:
+"Optional" here means the reset line is allowed to be absent from the
+Device Tree. It does not mean we can ignore the failure when it is
+defined in the DT but fails to be acquired.
+
+If devm_reset_control_get_optional_* returns an error (e.g.,
+-EPROBE_DEFER), it indicates the hardware description expects a reset
+control, but the system is not yet ready to provide it. Ignoring this
+error would break the probe deferral mechanism and potentially cause the
+driver to access hardware in an invalid state.
+
+                          - Troy
