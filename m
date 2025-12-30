@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CC0242D97;
-	Tue, 30 Dec 2025 09:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C065428C84A;
+	Tue, 30 Dec 2025 12:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767085566; cv=none; b=u23HJZdePv1pawpglO09BmWyaggnmbn3yjvn6Y6swCvrg7olWYU+X/e9HMOgeRdKKnnBfY3lztQ4BsqPChRFapngtH+/JMXETlVGYEoKqwLOKbGlqRJPx7vP1iZhL7itOuxDCCBESvZTbY6N4ySjQrpCyJ9pyCtyVM86pfKjYNA=
+	t=1767097301; cv=none; b=iEuy/+sVctOy+RIhno6JzDj3UmplSrZztTOw4vdEbCyZoPJFMoHgccDzOSK/G4JRdcgYsRmhe2W7ShI93pDsfQBXAx2eXY0thG8QCOiPVcjqT/yibL3VfnNaj1V59SahwnSpyK3Ru/CbYkBH+j5iBXay5xmnsWCWrQneOKVIfKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767085566; c=relaxed/simple;
-	bh=FFmFLOGcRxnFIt2njib8cEC4BnQSt9mMbKuUEJ06tUc=;
+	s=arc-20240116; t=1767097301; c=relaxed/simple;
+	bh=QKQ5eoIAn/js5eOEFKHYKJSMufjyeI6KZAIRALCLBgA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GwuVXPIeNFtOgGWIeT4rLBH+7PsGDqSSAKg/H9YvXXp9p8QnzEl0n0LeJWGn+mXDHzmxG1bu3D3nLXJAjPCofhdDr2hm2B0d2zUbjZptouLS9yNNLtQaVcK1EgSCC4AQ5tplpLT02AxNhA9ych3xxBPA50AE4xMChBA3Z8Z/qj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DjvhdDsN; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=GhT1INxnjNTOmNp3b3iJsNrJW/MFfnATVcdCrIbnIuOqNM38UNVlbgdm7T7LPl21e0cIEwQmMCTXi23PvWl+i/q1t/E8QzKacyI2hbdmHKgF+3DsAHEheWpYzt5UsjMspYSEJAejWEcy9CllspfgqaXpg+1tlCUi9mqFespLDnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eodlMm/E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DjvhdDsN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87218C4CEFB;
-	Tue, 30 Dec 2025 09:06:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eodlMm/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD36C113D0;
+	Tue, 30 Dec 2025 12:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767085564;
-	bh=FFmFLOGcRxnFIt2njib8cEC4BnQSt9mMbKuUEJ06tUc=;
+	s=k20201202; t=1767097301;
+	bh=QKQ5eoIAn/js5eOEFKHYKJSMufjyeI6KZAIRALCLBgA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DjvhdDsN36CSz4iCvXcvukq1VtRHS/IaElFb/7GS7z/03+KoW3rhHNYtDkBxwxCxm
-	 1oX90ok3SICrkCtolLsEEP6/hPn89Iq6Bfwon8yG0SP9VMtfltT+3EqlfG4MfffVkJ
-	 CuXCONON2VfFKt4i1Dx6pEmggElamNkbxPTs5EurKFeLPAhklTcg/eNo/jkYDSiJj5
-	 tx8h1qRTPHJcDskjMtqlqWMuZfa/qu6xVEx3Ko+ycms4mKI3z4ITmG2eLnyBdiohAb
-	 aF3dinMskLYyyWwhIWTf+zpCGhrci09MKREdk8DlIRTlVvLluyqUYRiAZ8WLHR86S+
-	 vCvvBnSZs6wgQ==
-Date: Tue, 30 Dec 2025 10:06:01 +0100
+	b=eodlMm/Eq7PwChFtTphOGsaKVCSGp2WMv/2Jf6WjbML0qTHtggSiiPllMvgKJCrXQ
+	 WbIqU21S3Ts2x31nnAyc6EsQ/+dK9KERTl6/DuLOuSRPfw3AmNT0wW6UsT5bEcZ++Q
+	 O8m6bihbIz+8znAnTvO2kMoHmQv7KsQaMmMKLvHfij7SrAr9MmmvspBSg7eL8NyH+d
+	 A96/fROTFltCPnOvX20/R0GHFCsF+iNYQiltZkSid2WTBXBGV1W71AmE6u98dcg4xI
+	 1IFCpzoVrpa8t8427wrHJr2Nvl5F2Bhn/M3z/D2wuv9Xdgp6Vv869WHE5xgkssDJG7
+	 3gNw8bedVf1rQ==
+Date: Tue, 30 Dec 2025 13:21:39 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: pinctrl: spacemit: add K3 SoC support
-Message-ID: <20251230-jasper-loon-from-atlantis-c7c2df@quoll>
-References: <20251226-02-k3-pinctrl-v2-0-5172397e6831@gentoo.org>
- <20251226-02-k3-pinctrl-v2-1-5172397e6831@gentoo.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+	Alex Elder <elder@riscstar.com>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/4] dt-bindings: reset: spacemit: Add K3 reset IDs
+Message-ID: <20251230-charming-nonchalant-goat-98bbde@quoll>
+References: <20251229-k3-reset-v1-0-eda0747bded3@riscstar.com>
+ <20251229-k3-reset-v1-1-eda0747bded3@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,51 +45,23 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251226-02-k3-pinctrl-v2-1-5172397e6831@gentoo.org>
+In-Reply-To: <20251229-k3-reset-v1-1-eda0747bded3@riscstar.com>
 
-On Fri, Dec 26, 2025 at 08:58:24PM +0800, Yixun Lan wrote:
-> Add new compatible string for SpacemiT K3 SoC, the pinctrl IP shares
-> almost same logic with previous K1 generation, but has different register
-> offset and pin configuration, for example the drive strength and
-> schmitter trigger settings has been changed.
+On Mon, Dec 29, 2025 at 07:04:04PM +0800, Guodong Xu wrote:
+> Add reset IDs for SpacemiT K3 SoC.
+
+Why? Where is the actual binding? You have entire commit msg to explain
+that, instead of duplicating subject.
+
+I am pretty sure I already asked this for a different patchset from
+you...
+
+
 > 
-> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
 > ---
->  .../devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml     | 12 +++++++++---
->  1 file changed, 9 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
-> index d80e88aa07b4..d2cb994e30c1 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
-> @@ -11,7 +11,9 @@ maintainers:
->  
->  properties:
->    compatible:
-> -    const: spacemit,k1-pinctrl
-> +    enum:
-> +      - spacemit,k1-pinctrl
-> +      - spacemit,k3-pinctrl
->  
->    reg:
->      items:
-> @@ -74,8 +76,12 @@ patternProperties:
->            drive-strength:
->              description: |
->                typical current when output high level.
-> -              1.8V output: 11, 21, 32, 42 (mA)
-> -              3.3V output: 7, 10, 13, 16, 19, 23, 26, 29 (mA)
-> +              For K1 SoC, the settings show as below:
-> +                1.8V output: 11, 21, 32, 42 (mA)
-> +                3.3V output: 7, 10, 13, 16, 19, 23, 26, 29 (mA)
-> +              For K3 SoC, the settings show as below:
-> +                1.8V output: 2, 4, 6, 7, 9, 11, 13, 14, 21, 23, 25, 26, 28, 30, 31, 33 (mA)
-> +                3.3V output: 3, 5, 7, 9, 11, 13, 15, 17, 25, 27, 29, 31, 33, 35, 37, 38 (mA)
-
-This should be a schema rather than free form text. Add oneOf where each
-item is description (1.8 V) + enum. This would be first commit for
-converting text to schema for K1, which you grow for K3 in this commit.
-
+>  include/dt-bindings/reset/spacemit,k3-resets.h | 171 +++++++++++++++++++++++++
+>  1 file changed, 171 insertions(+)
 
 Best regards,
 Krzysztof
