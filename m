@@ -1,117 +1,196 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077272882D3
-	for <spacemit@lists.linux.dev>; Tue, 30 Dec 2025 15:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9415132C305;
+	Tue, 30 Dec 2025 17:10:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767108849; cv=none; b=fJ7onwS22f6O3gB9b6RNDOEQbrw0hsfWHmEVZH2P1QjOr18z6DgjKx8Lpe9sACFIWIOvJk8nPClfHL0HEMQ22fdPZ9u9iTFH/LuoHukLWTdQg0yPILmVT+WbmLxyK5FDR/431gTZDxX9EhGSIsB8JtkZ2oQLvUuiG/Ad/FU5Fjk=
+	t=1767114601; cv=none; b=NjzaX+StIHwOnAccMwqVNx9pVPHJfzXxxQJdzLff5IQn9u32Me5R3OWGH44g8RPEdJM2fBlt77+4NIJB46T3QXX8hUIbZ3Ablja1SGVYklzCbMYeRD70PihlKGuvq4Qcd3Z3D6hm7oiSIBAZ6gzLD7b3PTBYJA4RQ5c8UZxsgV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767108849; c=relaxed/simple;
-	bh=cJNaMYuuC2I7/+95x8jcQiPUFjMk3F+7PHyjW8Lo1tg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GJxVHblfsojvuLvoKfITj4uE/93Qa+YfrfA28boVXnZhbu7wgZAD0r1FnwaAQMiL3sWbLV8Ta8RE67wfykQBk9gIU44Q3rBRltXergQJvepnD0xO8kbYaqtho5X9z12CCD3FUyotkyxWrMFCNWuYrmVsJTd7w8mhYHssy5Y1PZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X1ZpWQvf; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1767114601; c=relaxed/simple;
+	bh=D22/wa8KSWDXfmcDM/UZjmt1GsaferlLEdACnpU/TMU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IKtWY7GWtn0qjhwV96/YsJJYq84/Qb7/ZEYQ+q9bHqwyqK6Jm6Lu8A7lxUBWFdHMR+hDpzCQQrJGS5WBTJRnFm9y/CK1Tc3WsEbdwNxZ41IoYanT4XM6ponIX1bI30L+45oK2omezld1HDeDvRPRAiIvVPnld+mayhqmjfrySNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UkEI6Osh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X1ZpWQvf"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-37ba5af5951so91832801fa.1
-        for <spacemit@lists.linux.dev>; Tue, 30 Dec 2025 07:34:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1767108843; x=1767713643; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IIQJu7CyiY9gIZvx6eWahf0Uexh2lGW7onsdB+Wi7IY=;
-        b=X1ZpWQvf7jfibAv8Vo7vCtvbgX3pin2JpLYlejzMLj8duwaIKG02ZfGkeyRktKV4OJ
-         UVqLs8rPbvFr6RvYCm6lQF8q1zbloSpW0f+z9EJl+WWvLQbnAYkZdtnbn+O+SLRwxqyV
-         RkweCbYeypBjDc97VpUAZHAYcwWJrpuzX7EKj73eD5+crC0gqHFhUd+w0o1TbXxfFVks
-         tSM1EQPocPsq9Mk1tibwQJr4qYZmT/62N6W3f7XRDWqd1ehi5Rwd+eARUdojoL6YSPLA
-         kuI/oY7IVCDyAhHulRiRMbxfhWNYiHBXyb4/38np7MJ7fM4vdLFBKIbozGI8Qhq65r2z
-         6DHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767108843; x=1767713643;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IIQJu7CyiY9gIZvx6eWahf0Uexh2lGW7onsdB+Wi7IY=;
-        b=c/bsKsXwQIJw+R/Nv7nxPYS9bSdguq8vQqe0TBUv/RzoztTtX+Ui8ezwMU1vVW+eDX
-         sRE6YdtZfw9f0Sd9uSg78w4mRpPA/mhUtPNSE1qxQK4FKr9qhB4gVhNHJ0v05VuPbZqr
-         r/Hr8B4qe3d/H/NmMqzB0LQJ6irFoyyfcdULDwfnY62DpAHPGKGFNOtRWns0V2xABnKR
-         EN5U7WG3ei5huDfDEdXLuEwn1z61KN1ZAcld1VDFPTtYOC5eV8/jXsxwNpwnhEcvH+BH
-         bknOqlW8TlvF64sRK5aQbuAWLWMKOetGRJbMTEngZ8OtBcYzmfwntA49DyGhS12Id3za
-         JCgg==
-X-Forwarded-Encrypted: i=1; AJvYcCUvPrq91wBmydL15tVFj1Oxb9LtOXIUsG5sHjw+0fEOujNkfBP11/FxqE9lHUiNgafZvYikBL4DPw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzQ2rpYh2yUgqTSFuGXFnactK/rkIrNGexoUNp0EENHHMKiS3cV
-	Kex9cJl+lWVK3h8MrtJ5OMc7xxW9oHOZ/C5BEWNR0SbP1+ovGpR1POMuNGpjdunSEF4Qm6n3Kx0
-	1aV4RmnLYU0gO59mL71oZ6cfwE0FvDL8Rv9vW6ulW2Q==
-X-Gm-Gg: AY/fxX6NR4sG9dOKVxKe07liWyZHGW/UVl7kEUeCQH2CHWHFVPwFpQmRUCc/ni03/nH
-	lSVIJ1r2/fcuvewIgkOoToND0ba8FkS7Jdl1aGu7Hm7zV1Fshdm780wXTJQcsUwFbmlitGsmrXL
-	9PxcAiUC7Uik22yck6SwxtMjA+hanxZjPiJ1l0umAHRuYMecvun1DD3u6FeUlhcK/UuT5Qpt5Lg
-	QUHdbdPHd2YnpQSCTE1SNvySSku1lv9FJKQjHSnlUtzPRDdcKSh6VSag68DuFh54m5ZEBgq3hoU
-	R+TfOH0=
-X-Google-Smtp-Source: AGHT+IEEzSWxU0Fr9jtKf4rnUE+MZIqWiBIfHx6EwjCFpsAYl5LLEX7BferoDb537v/2XTB1q5TRJQn0YC6nmgiVvgg=
-X-Received: by 2002:a2e:ab89:0:b0:37a:3033:16f6 with SMTP id
- 38308e7fff4ca-3812164513emr98831031fa.35.1767108842896; Tue, 30 Dec 2025
- 07:34:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UkEI6Osh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3C1C4CEFB;
+	Tue, 30 Dec 2025 17:09:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767114600;
+	bh=D22/wa8KSWDXfmcDM/UZjmt1GsaferlLEdACnpU/TMU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UkEI6OshXPjSn99taJ3K4HSF6Nb+dcPepicrpvWCMyczOWvSvfriaSVeyq4Bh2+ub
+	 ys9oBB/k2eHOPuGSUvTiGkW7fwfVZKIwTppjhMkYbfsfai8Q6H0WM8aNi3tmwAWF0v
+	 a804GTQvTyovg2Xs11eF+Dl5U9ySwjOU+BXk6ByzAYBqYvTY2e4/Mu/dwoInSqBTpv
+	 3gtGkJoPSMWJuc6JvIZEKYk/MH9OfRfQgJYjHTQT2/TCPwQLLCOTD0QugsCVOB3D3q
+	 O/F4iWy/d1zkFFvLWF8q96KzulGExHXCzH93MwnzultKnaMNOiRDd2ppMdLSLZgnyU
+	 jlMPJUlW/XSpA==
+Date: Tue, 30 Dec 2025 17:09:52 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: Guodong Xu <guodong@riscstar.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@gentoo.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Anup Patel <anup@brainfault.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Heinrich Schuchardt <xypron.glpk@gmx.de>,
+	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-serial@vger.kernel.org
+Subject: Re: [PATCH v2 07/13] dt-bindings: riscv: Add B ISA extension
+ description
+Message-ID: <20251230-imprison-sleet-6b5a1e26d34b@spud>
+References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
+ <20251222-k3-basic-dt-v2-7-3af3f3cd0f8a@riscstar.com>
+ <20251222-stitch-preachy-3fab87fd6f0f@spud>
+ <CAH1PCMZ7ywZ3unLy0yHYK+fFHk0y=q2cEtPnRi=qSpf=fc75rw@mail.gmail.com>
+ <66c0676a-7920-4825-b916-3c00b1648a08@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251223-07-k1-sdhci-reset-v2-0-5b8248cfc522@gentoo.org>
-In-Reply-To: <20251223-07-k1-sdhci-reset-v2-0-5b8248cfc522@gentoo.org>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 30 Dec 2025 16:33:27 +0100
-X-Gm-Features: AQt7F2oqCrEKFHiJvi35sI497oUVGoB1FksL7aATuRnp8180lObyxwQDc3LztRs
-Message-ID: <CAPDyKFo905ptdO-rSkiJ-ax2u=P_+EAJA30b14n=B4j9adaaKg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] mmc: sdhci-of-k1: add reset support
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Iker Pedrosa <ikerpedrosam@gmail.com>, linux-mmc@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="UppzS2JaFGP6BwpL"
+Content-Disposition: inline
+In-Reply-To: <66c0676a-7920-4825-b916-3c00b1648a08@riscstar.com>
 
-On Tue, 23 Dec 2025 at 03:25, Yixun Lan <dlan@gentoo.org> wrote:
->
-> This series try to add reset support explicitly to SpacemiT SDHCI controller.
-> Previous it works well for eMMC due to it's already initialized at brom or
-> bootloader phase.
->   The controller has two reset lines, one connect to AXI bus which shared by
-> all controllers, while another one connect to individual controller separately.
->
-> Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> ---
-> Changes in v2:
-> - To not break DT ABI, make the reset line request optional
-> - Use devm_reset_control_get_optional() api
-> - Link to v1: https://lore.kernel.org/r/20251221-07-k1-sdhci-reset-v1-0-6780af7fa6e7@gentoo.org
->
-> ---
-> Yixun Lan (3):
->       dt-bindings: mmc: spacemit,sdhci: add reset support
->       mmc: sdhci-of-k1: add reset support
->       riscv: dts: spacemit: sdhci: add reset support
->
->  .../devicetree/bindings/mmc/spacemit,sdhci.yaml      | 10 ++++++++++
->  arch/riscv/boot/dts/spacemit/k1.dtsi                 |  3 +++
->  drivers/mmc/host/sdhci-of-k1.c                       | 20 ++++++++++++++++++++
->  3 files changed, 33 insertions(+)
-> ---
-> base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
-> change-id: 20251221-07-k1-sdhci-reset-1990d1170437
->
-> Best regards,
-> --
-> Yixun Lan
->
 
-Patch 1->2 applied for next, thanks!
+--UppzS2JaFGP6BwpL
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Kind regards
-Uffe
+On Fri, Dec 26, 2025 at 03:28:25PM -0600, Alex Elder wrote:
+> On 12/23/25 12:51 AM, Guodong Xu wrote:
+> > Hi, Conor
+> >=20
+> > On Tue, Dec 23, 2025 at 5:17=E2=80=AFAM Conor Dooley <conor@kernel.org>=
+ wrote:
+> > >=20
+> > > On Mon, Dec 22, 2025 at 09:04:17PM +0800, Guodong Xu wrote:
+> > > > Add description of the single-letter "B" extennsion for Bit Manipul=
+ation.
+> > > > B is mandatory for RVA23U64.
+> > > >=20
+> > > > The B extension is ratified in the 20240411 version of the unprivil=
+eged
+> > > > ISA specification. According to the ratified spec, "the B standard
+> > > > extension comprises instructions provided by the Zba, Zbb, and Zbs
+> > > > extensions.
+> > > >=20
+> > > > Hence add a schema check rule to enforce that B implies Zba, Zbb an=
+d Zbs.
+> > > >=20
+> > > > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > > > ---
+> > > > v2: New patch.
+> > > > ---
+> > > >   .../devicetree/bindings/riscv/extensions.yaml         | 19 ++++++=
++++++++++++++
+> > > >   1 file changed, 19 insertions(+)
+> > > >=20
+> > > > diff --git a/Documentation/devicetree/bindings/riscv/extensions.yam=
+l b/Documentation/devicetree/bindings/riscv/extensions.yaml
+> > > > index 565cb2cbb49b552959392810a9b731b43346a594..385e1deb23996d294e7=
+662693f1257f910a6e129 100644
+> > > > --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
+> > > > +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
+> > > > @@ -109,6 +109,13 @@ properties:
+> > > >               The standard C extension for compressed instructions,=
+ as ratified in
+> > > >               the 20191213 version of the unprivileged ISA specific=
+ation.
+> > > >=20
+> > > > +        - const: b
+> > > > +          description:
+> > > > +            The standard B extension for bit manipulation instruct=
+ions, as
+> > > > +            ratified in the 20240411 version of the unprivileged I=
+SA
+> > > > +            specification. The B standard extension comprises inst=
+ructions
+> > > > +            provided by the Zba, Zbb, and Zbs extensions.
+> > > > +
+> > > >           - const: v
+> > > >             description:
+> > > >               The standard V extension for vector operations, as ra=
+tified
+> > > > @@ -735,6 +742,18 @@ properties:
+> > > >           then:
+> > > >             contains:
+> > > >               const: f
+> > > > +      # b comprises the following extensions
+> > > > +      - if:
+> > > > +          contains:
+> > > > +            const: b
+> > >=20
+> > > What's the value in adding b, if it depends on having all 3 of the
+> > > components defined individually too? Currently all "superset" types of
+> > > extensions are permitted without their component parts also being def=
+ined,
+> > > this doesn't follow convention and therefore needs to be explained.
+> > >=20
+> > > You obviously need this construct because the kernel does not underst=
+and
+> > > "b", and even if you added support for interpreting "b" to the kernel
+> > > this is probably still needed to make sure the ABI is maintained for
+> > > anything importing a devicetree from the kernel.
+> >=20
+> > Yes, exactly. Unlike other single-letter extensions, "b" was ratified
+> > (Apr/2024) much later than its components zba/zbb/zbs (Jun/2021).
+> > Existing software and the kernel already expect these explicit component
+> > strings, so enforcing this dependency ensures cores declaring "b" will
+> > also be correctly understood by older software that only looks for
+> > zba/zbb/zbs.
+>=20
+> I might be misunderstanding you, but I don't think extension "b"
+> should *require* the other three extensions.  Instead, the "b"
+> extension should be considered *equivalent* to the other three.
+> That's what I understand it to mean, anyway.
+>   https://github.com/riscv/riscv-b
+>=20
+> There's no point in supporting "b" in devicetree to represent
+> the others if it also requires the others to be present.
+
+The dependency can be go both ways, to also make specifying "b" mandatory
+when the three components are. That probably produces the most helpful
+devicetree ultimately.
+
+> I think that, instead, "b", "zba", "zbb", and "zbs" should all
+> be allowed.
+
+> I might even go further and harden the requirement, saying that
+> if you specify "b" you should *not* specify "zba", "zbb", or "zbs".
+> But that might not be normal practice, and it's not necessary
+> because they aren't in conflict.
+
+I disagree completely with this "even further", since that's potentially
+actively harmful to importers of kernel devicetrees.
+If "b" is to be allowed, I'm only in favour if having it requires the
+component parts.
+
+--UppzS2JaFGP6BwpL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaVQHXQAKCRB4tDGHoIJi
+0sitAP9XC4rPR71MuBPWD5gaVqjr7j+cuLMhvbbuT0NMc0HsiwD/fGOfXg/HKoaQ
+LVhSMcWQnbakBRz6RXDLYk8GZUczKww=
+=mkYw
+-----END PGP SIGNATURE-----
+
+--UppzS2JaFGP6BwpL--
