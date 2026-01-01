@@ -1,189 +1,93 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761031C3F36
-	for <spacemit@lists.linux.dev>; Thu,  1 Jan 2026 14:38:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44DA24A046
+	for <spacemit@lists.linux.dev>; Thu,  1 Jan 2026 22:50:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767278304; cv=none; b=sDBOwNAmLpqTeVOS3hWFBkN0lYd/9xpKrBzsnIxyqgnVzO712X50q1czxMculm3omtLl3MWf4sJeG1b6ggsfg2mnNsb7tkpTHf0lAhsUG5wEcphdfmPyY52Qt212yHNmxptU12M58aJvn21517NU/Ivo9IMljigLAkGmsQONJmM=
+	t=1767307808; cv=none; b=kk/SYB3J0uiWv95yrGZXdeF4X29PkdqOyvNmXKWIJqQ2uld+JLxX/SfFGbgrdAYvCaQUolND2wpyGsmpr0NE2s0gRp/81oMybZeCFmZl7G0rcJYH1qCWE57EFNuPAv1Wl3a5PHxcId5xm4X26IhmaPNQtRlVREmSPlbWs2pZZTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767278304; c=relaxed/simple;
-	bh=T47W/F1l2yWVLSGFayW2suCfigXYHmLyi9rRC0ZXRcs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cho88cZwvj3qjQT6QKXHzjWIQM0N7wImtHOHKdql29BK3cOQkNBxQs0dJe47je86VQckqBC4sLxZgJ3OjFNUgINldGnnAe7RVLT4vS3zWVxk8YN+BfnP5pvNX0TyhBxRYQKdopl8WAKNBieJ4V8U71kUBwmsOqDuJdLF2S6l8fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 4F0583415D6;
-	Thu, 01 Jan 2026 14:38:21 +0000 (UTC)
-Date: Thu, 1 Jan 2026 22:38:10 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Guodong Xu <guodong@riscstar.com>,
-	Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 1/3] clk: spacemit: prepare common ccu header
-Message-ID: <20260101143810-GYC2019108@gentoo.org>
-References: <20251226-06-k1-clk-common-v2-0-28b59418b4df@gentoo.org>
- <20251226-06-k1-clk-common-v2-1-28b59418b4df@gentoo.org>
- <17c27455-897d-4249-8206-88364230af7d@riscstar.com>
+	s=arc-20240116; t=1767307808; c=relaxed/simple;
+	bh=qoQ2LWoUBAb80RcbR+OV8fg8vhcqgnhQ8/NW3hsNVFk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VE4y4vsq4iyMmAjep5mrVxMTDWohuJdeZVSV489a3gVkII9sDCH2Gk5j1mexFS7dU75yRITYVMscn7tk1MYJJQU93+eSsFJifby+ml1MAI8+7IdqDs0a3hua1m1TwdlSJsljODVcuZRsWZLYeJKVTzzuqqo8lY2KlA8SmuP3yUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IYRH+e1x; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IYRH+e1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBA0C19422
+	for <spacemit@lists.linux.dev>; Thu,  1 Jan 2026 22:50:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767307808;
+	bh=qoQ2LWoUBAb80RcbR+OV8fg8vhcqgnhQ8/NW3hsNVFk=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=IYRH+e1xZasvaKPQTcFF+l7qwCxD82O18aOK/MFql6CMiErq9pPez9MkpXc6fs+PR
+	 vNIxJbPUcUpA0nR6mHzduQZbK0nBsS8EPnzFqpzTTKIbt9mlZiQEH+Hub7X/3udWkU
+	 c2iC5P3APhxNoYuZmYKzhoJesw2LkcufH62SPxn8naJKYBu4mNUPQyBRvpQIxosjL2
+	 i024rcHVvAvioc93SEzzqWXDBXL2NbAQaHbmPRcDkm2R2SJX+1rTz6XdQBb5EuCpXe
+	 ky3FzontcHnhpfChURVpedREzdL+herqaKtMtDSlKPzhu+drjrcSJIdAzFjxVXPh2n
+	 UWasZDHSCAIeA==
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-6447743ce90so10682353d50.2
+        for <spacemit@lists.linux.dev>; Thu, 01 Jan 2026 14:50:08 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCU46oOnyBiDAoI6ofb8JE3KYB/CNbwDC88ZrY8j273Un/T/fUTF+7eORCGu2n/5PNPX5om8jeAQ0Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxoKQIaZJOmwllb1kBBIw8dLCVV+A86fEF4lhM2+ZglrnCVlgYk
+	+iZesH/R/nS36miTx35dtCuGPbdC4d55hxAtLTNMgV3IWRPq+VHLlJCvTNSyvlN+z6bi8PDJk/b
+	bVLdWBWsKdAfNiUeHPu7egL3pyrinr6k=
+X-Google-Smtp-Source: AGHT+IGrOLcTdHnWAvTikdGCf6UnlAcc0B+tsmqY9EjgNAatB1fqNxo0UDIF6456Ig9rz2ogunu8BgIZ5Cj1gcf0eoM=
+X-Received: by 2002:a05:690e:2457:b0:644:60d9:7514 with SMTP id
+ 956f58d0204a3-6466a8c5b6emr24385932d50.88.1767307808085; Thu, 01 Jan 2026
+ 14:50:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <17c27455-897d-4249-8206-88364230af7d@riscstar.com>
+References: <20251226-02-k3-pinctrl-v2-0-5172397e6831@gentoo.org>
+In-Reply-To: <20251226-02-k3-pinctrl-v2-0-5172397e6831@gentoo.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Thu, 1 Jan 2026 23:49:57 +0100
+X-Gmail-Original-Message-ID: <CAD++jL=AeGETR9gT4dO4=MVokCubS4VbbsUdcwShYD8Kjybehg@mail.gmail.com>
+X-Gm-Features: AQt7F2rP7_9KdxaprrRWjgopjc31HFpU37nXxJKU_cZD0aXworSU8dVIf4jtxh0
+Message-ID: <CAD++jL=AeGETR9gT4dO4=MVokCubS4VbbsUdcwShYD8Kjybehg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] pinctrl: spacemit: add support for K3 SoC
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Alex,
+Hi Yixun,
 
-On 18:50 Mon 29 Dec     , Alex Elder wrote:
-> On 12/26/25 12:55 AM, Yixun Lan wrote:
-> > In order to prepare adding clock driver for new SoC, extract common
-> > ccu header file, so it can be shared by all drivers.
-> 
-> You are moving the definition of the SpacemiT CCU auxiliary
-> device structure, plus the to_spacemit_ccu_adev() function,
-> into a new header file.  
-yes, and this is explaining the code which I consider not necessary,
-it's more obvious to read the code..
+thanks for your patches!
 
-> The reason you're doing this is
-> because these two things are generic, but they're defined
-> in the K1 SoC-specific header file "k1-syscon.h".  So you
-> are creating a new header file for this purpose.
-> 
-right
-> These are things you should explain here, to help orient
-> reviewers and will inform anyone in the future looking at
-> commit history.
-I thought I've explained the goal/motivation already with above
-commit message, maybe I can improve it, so how about:
+On Fri, Dec 26, 2025 at 1:58=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
 
-In order to prepare adding clock driver for new K3 SoC, extract generic
-code to a separate common ccu header file, so they are not defined
-in K1 SoC-specific file, and then can be shared by all drivers.
-
-> 
-> > Also introduce a reset name macro, so it can be both used in clock
-> > and reset subsystem, explicitly to make them match each other.
-> 
-> This should go in a separate patch, and should change the
-> code to use the macro so it builds and continues to function
-> with the new change place.
+> This series attempt to add pinctrl support for SpacemiT K3 SoC,
 >
-yes, I could do this in a separate patch
+> I've removed the RFC tag as the driver is tested on K3 SoC.
+>
+> The K3 pinctrl IP shares almost same logic with previous K1 SoC generatio=
+n,
+> but has different register offset and pin configuration, I've introduced
+> a pin_to_offset() function to handle the difference of register offset.
+> for the drive strength and schmitter trigger settings, they are also chan=
+ged.
+>
+> The patch #1 try to add pin support which should handle pin mux, while pa=
+tch #2
+> adjust drive strength and schmitter trigger settings accordingly for new =
+SoC.
+>
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
 
-> However I don't understand why you think it's necessary to
-> introduce the reset name macro.  Is it because you want to
-> incorporate an SoC identifier in the name?
-> 
-I've explained here:
-https://lore.kernel.org/r/20251231020951-GYA2019108@gentoo.org
+As Krzysztof mentioned, try to use an explicit device tree schema to
+enforce the legal drive strength values as e.g. enums.
 
-It's necessary to incorporate the SoC identifier which will help
-to differentiate K1 and K3 reset driver, otherwise there will be
-driver name collision, lead to reset driver probe failure while
-adding K3 SoC ..
+Other than this the code looks fine so once the bindings are
+ACK:ed I'm ready to merge this.
 
-> Even if this is your reason, I still don't think you need
-> the macro.  I'll try to explain what I mean in the
-> next patch.
-> 
-If you still have concerns, and we can't reach certain agreement,
-then I could drop this macro in next version, leave this optimization
-to future patches, I don't want main clock driver delayed by it.
-
-I personally tend to keep the macro, but probably the naming need some
-improvement..
-
-> One more comment, below.
-> 
-> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> > ---
-> >   include/soc/spacemit/ccu.h       | 21 +++++++++++++++++++++
-> >   include/soc/spacemit/k1-syscon.h | 13 +++----------
-> >   2 files changed, 24 insertions(+), 10 deletions(-)
-> > 
-> > diff --git a/include/soc/spacemit/ccu.h b/include/soc/spacemit/ccu.h
-> > new file mode 100644
-> > index 000000000000..84dcdecccc05
-> > --- /dev/null
-> > +++ b/include/soc/spacemit/ccu.h
-> > @@ -0,0 +1,21 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-only */
-> > +
-> > +#ifndef __SOC_SPACEMIT_CCU_H__
-> > +#define __SOC_SPACEMIT_CCU_H__
-> > +
-> > +#include <linux/auxiliary_bus.h>
-> > +#include <linux/regmap.h>
-> > +
-> > +/* Auxiliary device used to represent a CCU reset controller */
-> > +struct spacemit_ccu_adev {
-> > +	struct auxiliary_device adev;
-> > +	struct regmap *regmap;
-> > +};
-> > +
-> > +static inline struct spacemit_ccu_adev *
-> > +to_spacemit_ccu_adev(struct auxiliary_device *adev)
-> > +{
-> > +	return container_of(adev, struct spacemit_ccu_adev, adev);
-> > +}
-> > +
-> > +#endif /* __SOC_SPACEMIT_CCU_H__ */
-> > diff --git a/include/soc/spacemit/k1-syscon.h b/include/soc/spacemit/k1-syscon.h
-> > index 354751562c55..13efa7a30853 100644
-> > --- a/include/soc/spacemit/k1-syscon.h
-> > +++ b/include/soc/spacemit/k1-syscon.h
-> > @@ -5,17 +5,10 @@
-> >   #ifndef __SOC_K1_SYSCON_H__
-> >   #define __SOC_K1_SYSCON_H__
-> >   
-> > -/* Auxiliary device used to represent a CCU reset controller */
-> > -struct spacemit_ccu_adev {
-> > -	struct auxiliary_device adev;
-> > -	struct regmap *regmap;
-> > -};
-> > +#include "ccu.h"
-> >   
-> > -static inline struct spacemit_ccu_adev *
-> > -to_spacemit_ccu_adev(struct auxiliary_device *adev)
-> > -{
-> > -	return container_of(adev, struct spacemit_ccu_adev, adev);
-> > -}
-> > +/* Reset name macro, should match in clock and reset */
-> > +#define _K_RST(_unit)			"k1-" #_unit "-reset"
-> 
-> The generic-sounding _K_RST() encodes "k1" in the name,
-> and it shouldn't.  Also, why do you use the underscore
-> prefix?
-> 
-want to make it slightly generic/short but still keep it local for K1 driver,
-and also avoid potential collision with other drivers in kernel code..
-
-or do you have any sugestion for better naming?
-> Anyway, I'll keep reading.
-> 
-> 					-Alex
-> 
-> >   
-> >   /* APBS register offset */
-> >   #define APBS_PLL1_SWCR1			0x100
-> > 
-> 
-> 
-
--- 
-Yixun Lan (dlan)
+Yours,
+Linus Walleij
