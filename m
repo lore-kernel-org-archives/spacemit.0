@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909BC4CB5B;
-	Thu,  1 Jan 2026 11:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01CF2C11E7;
+	Thu,  1 Jan 2026 11:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767265683; cv=none; b=dnaWvjpTfj2egI4EiLe2xgB8mV++TtFM8w+h1qbBMb2x51IoY0f6QC/5VbD8VR2/wURNeOXCtoc2606JsJNiVUaiTgNlDvvLo8eUG/qJjlzPppRr5Youv0fBrIEMK4I/Oj/EpAriuFQXR5JiN9l6xKoZXXz/17+YNZK03t8vrlc=
+	t=1767265699; cv=none; b=Yfi5BagGSXY5Lpq8t428f/9UzGyj2KTvJWkAKj01WTYkpfkn1JBttUoidVuwMFLM1pPRbqq3XF0BoXcEZWjxh6npixnqaQtkgWZ+lbXNMREkLrx3zINabaRM+ILbfe9U6R4UdGg36lNg1o9RLrSHYD0NmvweP3s4t/JEfWcSGek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767265683; c=relaxed/simple;
-	bh=gp6INFoQIq+43goOk9oT04JrR78Bq4E+oz5E4M6bfiQ=;
+	s=arc-20240116; t=1767265699; c=relaxed/simple;
+	bh=3vaei/sb4rRmaAM32GbT3y9z3sM0igMG4DfOPhlluSU=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=bkaJ060nOiVJTWHoIt6eFwPg5354Y01ps7D1OvlXBKcz2J6zxs15sAZmKw3uRbx6QYraP7Ayc7ugfmHn0ttPkk5LcfiS4UJCXSjvWfPwiQRw3+DH0nbWnfx7VabIFyoQvH8VFOLlmsPv2KzK8aslFslz1zph886OSzDIlamZ7SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GGV10kGk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ry9AlHUBGrEYn3oal/V7KNmBJ3r+wFpawb+3tY01uc5lpLPf7g8Grj5xd5QQMF0QOYWjgbPfUEdoL/1reCGD2MsLDizYp7ZLrxKo493EoeznvyGLMfX7ng1+4vVqKgdj/X6k5i8te+qTP5qTHf78N+wpR9FH0phISIbJiKrEpZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HOIHDwpy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GGV10kGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6753C116B1;
-	Thu,  1 Jan 2026 11:07:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HOIHDwpy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C36BC4CEF7;
+	Thu,  1 Jan 2026 11:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767265683;
-	bh=gp6INFoQIq+43goOk9oT04JrR78Bq4E+oz5E4M6bfiQ=;
+	s=k20201202; t=1767265697;
+	bh=3vaei/sb4rRmaAM32GbT3y9z3sM0igMG4DfOPhlluSU=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=GGV10kGkKqFcf14C5Upi5Cp3QL/wbrh4VI6T8Ueqa6PsJRMWmcOtw0fRl+PBA7lQl
-	 BaboTeuIvtUjkRezkQ47SQ9aiR4YAahqom6C10TrcKt+X814EW5/XXRwXgd04ieomC
-	 CQcATpRqCutGzxFZHRjYe7ajSsHAXZn6A+om9sG0wk9KwIZHHwCUC8xHELH8LMbVIU
-	 fnWO1q+vhQ/Qs7vWBarnf/y0K2C0FzeQ9BU2vBNQxAfz+asfP43imMamyOAwKFSyju
-	 YoorE+vOfapEuKDhn+ewxYbHpTr/8udBzhnrxj+1prGOhpe+SaUNTmwK69OqamWE60
-	 YStqjnX/KzbKQ==
+	b=HOIHDwpytqpPEntMiXTtTqNLwL/AWkk5lnVzoRTfToONZZoRUmf5lgO/goH9KYxdm
+	 DmMwGeNNT7Xp0234TNJlVwAyFexDXn+42kz9noU3Hr51pXAVWDIg2HBgUwSXQIS4wR
+	 FN3DYkYBXOvyX1dQiVlG3N4CXpzz4UwJzspZYcV0bJnWVt3t869+KgZAI3fB8LKF4D
+	 7UzduxE6iPs7C8SH7lx1fKRrXr6DUx74UMFn1WYN7XG3dvNoIuZsPwDUs6O8yUibr6
+	 ZlyALsDgUiyMY5TKd3Qe3Ob1eWfm+dC9KmFYA2jE0LR+FIqSKWLhxyZ1kmuYDmWujs
+	 fR4K48mefwz+g==
 From: Vinod Koul <vkoul@kernel.org>
-To: neil.armstrong@linaro.org, Alex Elder <elder@riscstar.com>
-Cc: dlan@gentoo.org, pjw@kernel.org, palmer@dabbelt.com, 
- aou@eecs.berkeley.edu, alex@ghiti.fr, guodong@riscstar.com, 
- linux-phy@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- kernel test robot <lkp@intel.com>
-In-Reply-To: <20251226173228.2020411-1-elder@riscstar.com>
-References: <20251226173228.2020411-1-elder@riscstar.com>
-Subject: Re: [PATCH] phy: Kconfig: spacemit: add COMMON_CLK dependency
-Message-Id: <176726567931.201416.8144273654305302884.b4-ty@kernel.org>
-Date: Thu, 01 Jan 2026 16:37:59 +0530
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Ze Huang <huang.ze@linux.dev>
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Ze Huang <huangze@whut.edu.cn>
+In-Reply-To: <20251017-k1-usb2phy-v6-0-7cf9ea2477a1@linux.dev>
+References: <20251017-k1-usb2phy-v6-0-7cf9ea2477a1@linux.dev>
+Subject: Re: [PATCH v6 0/2] Add USB2.0 PHY support for SpacemiT K1
+Message-Id: <176726569400.201416.7844610224983761844.b4-ty@kernel.org>
+Date: Thu, 01 Jan 2026 16:38:14 +0530
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -49,17 +50,24 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Fri, 26 Dec 2025 11:32:27 -0600, Alex Elder wrote:
-> The SpacemiT PCIe PHY driver depends on the common clock framework.
-> Not specifying that led to a failure when doing a COMPILE_TEST build
-> for the SPARC architecture.
+On Fri, 17 Oct 2025 22:49:51 +0800, Ze Huang wrote:
+> This patch series introduces support for the USB2.0 PHY on the SpacemiT
+> K1 SoC. The implementation has been tested on the Milk-V Jupiter and
+> BananaPi-f3.
 > 
+> K1 includes three USB ports as follows[1]:
+> - A USB2.0 OTG Port
+> - A USB2.0 Host Only Port
+> - A USB3.0 Port with a USB2.0 DRD interface
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] phy: Kconfig: spacemit: add COMMON_CLK dependency
-      commit: 8df20813eb01fe29b4507fd470d73675bda3e1dd
+[1/2] dt-bindings: phy: spacemit: add K1 USB2 PHY
+      commit: 61b84d5b20af2a4c9944972202c1386026598928
+[2/2] phy: spacemit: support K1 USB2.0 PHY controller
+      commit: fe4bc1a08638309b6be1af37210930b856908eb7
 
 Best regards,
 -- 
