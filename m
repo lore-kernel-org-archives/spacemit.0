@@ -1,233 +1,212 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9320D3126B6
-	for <spacemit@lists.linux.dev>; Wed, 31 Dec 2025 09:36:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAF4182D2;
+	Thu,  1 Jan 2026 00:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767173811; cv=none; b=qsQgJaRbdJya/gXHtXjT8JqmegA7h1btBCmjotPN97uvKvBXAZo70Sdt09t3xHsMBiYxyuLdNLknpZB/MOddYWi2Vi7YO2ZRrYMHqxkoh0wesaCmvktpEifzyHuaY8AmffZ4V628eYWAgJW+UNOrFU1qNpwTkPoPJs8IJuhvUPQ=
+	t=1767226099; cv=none; b=faa+94XEAbkMaGSMAYz8eT7GhHwy5QkVYSNxaXGmyKRbGGnhuz+jGgZ0N3T9WjsUQkNBtm/O4mTkzskcxpzLwtHB+CqcCAmLqoiVArWZgAJdIUGgIGVNBXkV8HQk5VtWaFhR3eE98sEUIPogIQDug3ZUv6Z5jPjWC1qRCx65jo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767173811; c=relaxed/simple;
-	bh=NFYMGA676SEkVsJALqldtmkMw4qPeRAQ2FzyKMLEA+8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MEYKAU+QIsA6GM2VtHoXSmBz7yVdhTp3PubHo+khDMhgv0LHTeihUArr/LtkSFYrDw48Y4fmrCwrIQKbNQ5rVDv1v51j+9mEk9o5JOK4JXLorOiLmAla9/1JEQOPqTX+UfSXPT9uHtCBY0H+i05huvQslsKHVYnEvWAUDA8bNmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=I6BGrGWd; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1767226099; c=relaxed/simple;
+	bh=6X/Tp+Z3T5SzuykhqjUR/+IFjPdcuJD4olbZ2RtSbB4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qG+tUViQfaBJw1DCPg+0XbjVnGZtI6/5qh83NtEyMeeSHF1rcUExgQQd5uYUhKVm1ghzZtoHTlyKrfXRdjOdZ8zOy0+Ol1V23lUfbKRJOiBiS02IZzqX5nJzYMWrZ49ceb3Pwq2AVhBkHB2iFclsVITzxCKpkZyt/TbfncYr1BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vz50lUO6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="I6BGrGWd"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-78e7ba9fc29so95131517b3.2
-        for <spacemit@lists.linux.dev>; Wed, 31 Dec 2025 01:36:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767173807; x=1767778607; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i/3+RSe7fQelQU4YkqbPxOBoE/8zH+jlMkgHbbjEj8c=;
-        b=I6BGrGWdaBdijxiHYMmnkZ8FYm6wDlPySvMaS/sRYLRs4x9yI7HA7kH4naLGCZ6Uzj
-         mgiJ+9HKFgHVeD+TR8Pp+ksrxilINOW79H85taoSjIUhGOaLGJUHSVgMqqvjwO6hiwd8
-         Jo2iWZgxu9TyW2k1G+IFLYK7Z7IDh1JkcNTAFp1al5/H5SNVmRY4C2zCTis+/9KgBOON
-         eiqw5GI+PaXmABLcAyzbUrW/23Z5+YSDtxhg3OQHnhtq/kNLIBPy9aqjNngj6E03hkh0
-         zJZ3MFlXzTaKJXt9e1R0A7O5KNDsPMP30XH/3NMNFFZj+R0Akx4W6HgHGWpD4Ewydcef
-         as8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767173807; x=1767778607;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=i/3+RSe7fQelQU4YkqbPxOBoE/8zH+jlMkgHbbjEj8c=;
-        b=Bd/RjvhilB1z8dSvzTiMTKcj71t5vTJm+6dg0IodJSnhWSZU7wLgkkW9Meu5IyruLp
-         r4N0dK2qL3kxS7ICJYMG+GqQHDXKcmPyNkALwTwlRv5Wl+t6KJBlw9GNfl9k4gWwstXI
-         EsDprvaJuaT7xh4O9EPqmIqxuOEFPgPK3lBp8W0LLa2K2u8AzT/cpt6ry5/kP/fhQYPJ
-         +suQ9JZ+z0g1qCN3kaA2tSb0O7ZbdAj61d05NuAh6A2PpInsAzKCZhQbUG31ANNMA6tj
-         7/jqdIOhZtlwrGw1v+TKN7Hh9NCOVxIvahne7AGLQiHFc/Ug6weZwrJbUxGJJ0nZ140T
-         j1hw==
-X-Forwarded-Encrypted: i=1; AJvYcCUDsEnJty5MB5+cvlqKvZP3NO42b/kjyhHv8OQu2jG1AadgJQXmAeJTzp8n2Org1obBqMtSd65IIA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YylxmbKhzkloaPYpOU8iJWz0ri1Q95WFszE1iHkflpusC6565M2
-	8RsoqQkmiq2LNDb0YGHdN+PP/VY9mVmr6h8cHTHTzD42auQJn+Uvj+aM9KdwVz3TtzfSM+nobWI
-	DsFcNRGadqmFlFOuLHApCKI5NImT4DRoqo8ybCwK7zQ==
-X-Gm-Gg: AY/fxX5Y/4ORZ6iI8+9tjIr64CVQYXSfhGWPtE7Y7SncWNOtMyY18E4si//xQm11YLg
-	9i87ajgo9SO+QwAU8QI9oPOZzqCXFBYqMnnpFyxpdqQnP8tOWfUnMd5T5R2CEJ/p4tDSchaVi9V
-	xZg7DQ/RU8z5zZK4rOiAWPXDhq6M95D56vEAbUbqG8D+a9IOAB1c6KP8MsNzguiETxXvVblmbN2
-	V/0Zhy8H5+ZJe9mm7TFM2KNmCMEJexwnh27/giV5WW/txt9ZOjK7RH94Hr5FloLrz6S+PXFiJ88
-	Ds0p+J0NFB4FJysM+/3jzFNjiyT7rA9EJ2lTo6aEZvtr
-X-Google-Smtp-Source: AGHT+IH9+gy6Ia0VNNIYxSU2fLYpk13oP/Tm8jYmi+Mtb2LEUjTmajm/ISPd0dJ9fMuHW6e5GpVdviDj+Wzpgl4ZTjE=
-X-Received: by 2002:a05:690e:4cf:b0:644:60d9:8674 with SMTP id
- 956f58d0204a3-6466a8d74famr22435914d50.89.1767173807173; Wed, 31 Dec 2025
- 01:36:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vz50lUO6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0D6C113D0;
+	Thu,  1 Jan 2026 00:08:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767226098;
+	bh=6X/Tp+Z3T5SzuykhqjUR/+IFjPdcuJD4olbZ2RtSbB4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Vz50lUO6Ev5+SRB4FShQPTcJK0g2BnszKVTYTQJj8W9zYe1MSD7dXlKg4LXgdmIx3
+	 BCbOrFCfkJwJfPs1lLg+kg8lL0JvOLIVQLVxKOLz2zGqaBo0o8M7Gn47dAYMalzYAg
+	 IsTZ4WFYsxv2f8xLvcsyJDJWgVk8RTiz99ADbpdN5Ks25aC27GNlMf6co0aygCGY+F
+	 zBn+wXxt03uAe5MxUsjawLofeuhQYi5+x6+OumtscQC9R8ORN2WhZkn87Si613pQ7a
+	 ShWpVZQWS5FD5unbP44pw6M+MP+av+29s5MEL5gerp7g8aDI1S9S99TxAsNRen4k8a
+	 JNynEgmb7tvAA==
+Date: Thu, 1 Jan 2026 00:08:11 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Heinrich Schuchardt <xypron.glpk@gmx.de>
+Cc: Rob Herring <robh@kernel.org>, Alex Elder <elder@riscstar.com>,
+	Guodong Xu <guodong@riscstar.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@gentoo.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Anup Patel <anup@brainfault.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-serial@vger.kernel.org
+Subject: Re: [PATCH v2 11/13] dt-bindings: riscv: Add Supm extension
+ description
+Message-ID: <20251231-grew-abrasion-dc1a9d34e632@spud>
+References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
+ <20251222-k3-basic-dt-v2-11-3af3f3cd0f8a@riscstar.com>
+ <fc719e92-10bc-455f-b402-c93bdbf878cf@riscstar.com>
+ <20251230021306.GA3094273-robh@kernel.org>
+ <80e18a32-543a-48f5-81f2-4fa64cb8bf8c@riscstar.com>
+ <CAL_JsqK8hRsVWV6WfbZ6hF1PwFfOJhyOrpWwoOhviAgv5ZxKUw@mail.gmail.com>
+ <20251230-budding-dimple-c34636b0ca4d@spud>
+ <05B0AE03-E7B1-4DCD-88D0-DCB9053F30BA@gmx.de>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251229-k3-reset-v1-0-eda0747bded3@riscstar.com>
- <20251229-k3-reset-v1-3-eda0747bded3@riscstar.com> <20251230-dashing-black-skink-45e5a6@quoll>
-In-Reply-To: <20251230-dashing-black-skink-45e5a6@quoll>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Wed, 31 Dec 2025 17:36:35 +0800
-X-Gm-Features: AQt7F2pQEjLh6AvJYpaZgx8RA130bkC0nRocUhcFJ6RvAy_4of4qZC5SF6hClOo
-Message-ID: <CAH1PCMYG6DEj-oq_S8GNddF0m=tt+h313i9HXjFi7DkeRc7DiA@mail.gmail.com>
-Subject: Re: [PATCH 3/4] reset: spacemit: Extract common K1 reset code
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Alex Elder <elder@riscstar.com>, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="U5hKiFJHOMcGatbm"
+Content-Disposition: inline
+In-Reply-To: <05B0AE03-E7B1-4DCD-88D0-DCB9053F30BA@gmx.de>
+
+
+--U5hKiFJHOMcGatbm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Krzysztof,
-
-On Tue, Dec 30, 2025 at 8:23=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.or=
-g> wrote:
->
-> On Mon, Dec 29, 2025 at 07:04:06PM +0800, Guodong Xu wrote:
-> > Extract the common reset controller code from the K1 driver into
-> > separate reset-spacemit-common.{c,h} files. This prepares for
-> > additional SpacemiT SoCs that share the same reset controller
-> > architecture.
+On Tue, Dec 30, 2025 at 09:41:56PM +0100, Heinrich Schuchardt wrote:
+> Am 30. Dezember 2025 18:37:25 MEZ schrieb Conor Dooley <conor@kernel.org>:
+> >On Tue, Dec 30, 2025 at 09:21:56AM -0600, Rob Herring wrote:
+> >> On Mon, Dec 29, 2025 at 9:14=E2=80=AFPM Alex Elder <elder@riscstar.com=
+> wrote:
+> >> >
+> >> > On 12/29/25 8:13 PM, Rob Herring wrote:
+> >> > > On Fri, Dec 26, 2025 at 03:28:47PM -0600, Alex Elder wrote:
+> >> > >> On 12/22/25 7:04 AM, Guodong Xu wrote:
+> >> > >>> Add description for the Supm extension. Supm indicates support f=
+or pointer
+> >> > >>> masking in user mode. Supm is mandatory for RVA23S64.
+> >> > >>>
+> >> > >>> The Supm extension is ratified in commit d70011dde6c2 ("Update t=
+o ratified
+> >> > >>> state") of riscv-j-extension.
+> >> > >>>
+> >> > >>> Supm depends on either Smnpm or Ssnpm, so add a schema check to =
+enforce
+> >> > >>> this dependency.
+> >> > >>
+> >> > >> I have the same general question on this, about whether it's real=
+ly
+> >> > >> necessary for the DT binding to enforce these requirements.  The
+> >> > >> RISC-V specifications are what truly defines their meaning, so I
+> >> > >> don't really see why the DT framework should need to enforce them.
+> >> > >> (That said, I'm sure there are other cases where DT enforces thin=
+gs
+> >> > >> it shouldn't have to.)
+> >> > >
+> >> > > Does the specification have some way to check it? What happens if =
+a DT
+> >> > > is wrong? Are you going to require a DT update to make things righ=
+t? Or
+> >> > > the kernel has to work-around the error? Neither is great. So havi=
+ng
+> >> > > this as a schema makes sense to prevent either scenario.
+> >> >
+> >> > I'm really glad you weighed in.  I actually have several questions
+> >> > related to RISC-V extensions and DT.  But for now I'll focus on
+> >> > just this...
+> >> >
+> >> > To answer your first question, I'm not sure how the specification
+> >> > is "checked", or what "it" is that you're asking about for that
+> >> > matter.  Also I think we have to be clear about what "wrong" means.
+> >> >
+> >> > RISC-V is defined by a (large and growing) set of specifications
+> >> > that are developed through a well-defined process.  When a spec
+> >> > is *ratified* it is committed, and it won't be changed.  These
+> >> > specifications are ultimately *the* definition of RISC-V
+> >> > compliance.
+> >> >
+> >> > I assumed the "wrong" you're talking about is a DTS/DTB that has
+> >> > been committed but somehow does not match what a RISC-V spec
+> >> > says, but I might be mistaken.
+> >>=20
+> >> That's correct.
+> >>=20
+> >> > Anyway, we can flip that around and have a similar problem:  What
+> >> > if we define the DT binding in such a way that it doesn't match
+> >> > the RISC-V spec?  The (ratified) RISC-V spec is right.
+> >>=20
+> >> Sure. Any time there is more than 1 source of truth, they could be
+> >> mismatched. But it is 1 spec and 1 schema to compare, not N DTS files.
+> >> Checking the schema matches the spec is much easier than reviewing
+> >> every new DTS file.
 > >
-> > The common code now includes handlers for reset assert
-> > deassert operations and probing for auxiliary bus devices.
+> >The objective is not to define things with divergent meanings anyway,
+> >only to say "this string is exactly this version of this extension",
+> >so that if some other version of an extension comes along we have a way
+> >to differentiate. We didn't before and that became problematic for both
+> >standard extensions and vendor specific stuff. You'll note we don't look
+> >to define anything ourselves, just cite the spec that provides the
+> >definitions.
 > >
-> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> > ---
-> >  drivers/reset/spacemit/Kconfig                 |  17 +++-
-> >  drivers/reset/spacemit/Makefile                |   2 +
-> >  drivers/reset/spacemit/reset-spacemit-common.c |  79 +++++++++++++++++
-> >  drivers/reset/spacemit/reset-spacemit-common.h |  53 ++++++++++++
-> >  drivers/reset/spacemit/reset-spacemit-k1.c     | 113 +++--------------=
---------
-> >  5 files changed, 158 insertions(+), 106 deletions(-)
+> >> The only true fix is to make the spec machine readable.
+> >>=20
+> >> > My thought was that we should have software do the verification,
+> >> > and recommend the software (e.g. arch/riscv/kernel/cpufeature.c
+> >> > in Linux) be updated to verify things before committing to a
+> >> > DT binding.
+> >>=20
+> >> That moves validation from build time to run time. How is that better?
+> >> And what about other OSs?
+> >>=20
+> >> I'm very much of the opinion that it is not the kernel's job to
+> >> validate the DT. It obviously has not done a very good job given
+> >> issues we find with schemas. It's fine to have some checks in this
+> >> case if the kernel can't function (or use/enable the extension)
+> >> without the dependent extensions, but there are lots of classes of
+> >> errors the kernel doesn't need to care about.
 > >
-> > diff --git a/drivers/reset/spacemit/Kconfig b/drivers/reset/spacemit/Kc=
-onfig
-> > index 552884e8b72a..56a4858b30e1 100644
-> > --- a/drivers/reset/spacemit/Kconfig
-> > +++ b/drivers/reset/spacemit/Kconfig
-> > @@ -1,10 +1,20 @@
-> >  # SPDX-License-Identifier: GPL-2.0-only
-> >
-> > -config RESET_SPACEMIT_K1
-> > -     tristate "SpacemiT K1 reset driver"
-> > +menu "Reset support for SpacemiT platforms"
-> >       depends on ARCH_SPACEMIT || COMPILE_TEST
-> > -     depends on SPACEMIT_K1_CCU
-> > +
-> > +config RESET_SPACEMIT_COMMON
-> > +     tristate
-> >       select AUXILIARY_BUS
-> > +     help
-> > +       Common reset controller infrastructure for SpacemiT SoCs.
-> > +       This provides shared code and helper functions used by
-> > +       reset drivers for various SpacemiT SoC families.
-> > +
-> > +config RESET_SPACEMIT_K1
-> > +     tristate "Support for SpacemiT K1 SoC"
-> > +     depends on SPACEMIT_K1_CCU
-> > +     select RESET_SPACEMIT_COMMON
-> >       default SPACEMIT_K1_CCU
-> >       help
-> >         Support for reset controller in SpacemiT K1 SoC.
-> > @@ -12,3 +22,4 @@ config RESET_SPACEMIT_K1
-> >         unit (CCU) driver to provide reset control functionality
-> >         for various peripherals and subsystems in the SoC.
-> >
-> > +endmenu
-> > diff --git a/drivers/reset/spacemit/Makefile b/drivers/reset/spacemit/M=
-akefile
-> > index de7e358c74fd..fecda9f211b2 100644
-> > --- a/drivers/reset/spacemit/Makefile
-> > +++ b/drivers/reset/spacemit/Makefile
-> > @@ -1,3 +1,5 @@
-> >  # SPDX-License-Identifier: GPL-2.0
-> > +obj-$(CONFIG_RESET_SPACEMIT_COMMON)  +=3D reset-spacemit-common.o
-> > +
-> >  obj-$(CONFIG_RESET_SPACEMIT_K1)              +=3D reset-spacemit-k1.o
-> >
-> > diff --git a/drivers/reset/spacemit/reset-spacemit-common.c b/drivers/r=
-eset/spacemit/reset-spacemit-common.c
-> > new file mode 100644
-> > index 000000000000..e4b3f0e2c59d
-> > --- /dev/null
-> > +++ b/drivers/reset/spacemit/reset-spacemit-common.c
-> > @@ -0,0 +1,79 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +
-> > +/* SpacemiT reset controller driver - common implementation */
-> > +
-> > +#include <linux/container_of.h>
-> > +#include <linux/device.h>
-> > +#include <linux/module.h>
-> > +
-> > +#include <soc/spacemit/ccu.h>
-> > +
-> > +#include "reset-spacemit-common.h"
-> > +
-> > +static int spacemit_reset_update(struct reset_controller_dev *rcdev,
-> > +                              unsigned long id, bool assert)
-> > +{
-> > +     struct ccu_reset_controller *controller;
-> > +     const struct ccu_reset_data *data;
-> > +     u32 mask;
-> > +     u32 val;
-> > +
-> > +     controller =3D container_of(rcdev, struct ccu_reset_controller, r=
-cdev);
-> > +     data =3D &controller->data->reset_data[id];
-> > +     mask =3D data->assert_mask | data->deassert_mask;
-> > +     val =3D assert ? data->assert_mask : data->deassert_mask;
-> > +
-> > +     return regmap_update_bits(controller->regmap, data->offset, mask,=
- val);
-> > +}
-> > +
-> > +static int spacemit_reset_assert(struct reset_controller_dev *rcdev,
-> > +                              unsigned long id)
-> > +{
-> > +     return spacemit_reset_update(rcdev, id, true);
-> > +}
-> > +
-> > +static int spacemit_reset_deassert(struct reset_controller_dev *rcdev,
-> > +                                unsigned long id)
-> > +{
-> > +     return spacemit_reset_update(rcdev, id, false);
-> > +}
-> > +
-> > +const struct reset_control_ops spacemit_reset_control_ops =3D {
-> > +     .assert         =3D spacemit_reset_assert,
-> > +     .deassert       =3D spacemit_reset_deassert,
-> > +};
-> > +EXPORT_SYMBOL_GPL(spacemit_reset_control_ops);
-> > +
-> > +static int spacemit_reset_controller_register(struct device *dev,
-> > +                                           struct ccu_reset_controller=
- *controller)
-> > +{
-> > +     struct reset_controller_dev *rcdev =3D &controller->rcdev;
-> > +
-> > +     rcdev->ops =3D &spacemit_reset_control_ops;
-> > +     rcdev->owner =3D THIS_MODULE;
->
-> So who is now the owner? This module or actual driver calling and using
-> this?
+> >By and large what's in cpufeature.c is there to turn extensions off
+> >based on kconfig choices (vector support enabled etc) or kernel design
+> >decisions (kernel requiring both d and f extensions for fpu support). I
+>=20
+> Should supm be handled in the same way? Add it to the device-tree of
+> RVA23U64 devices. If a kernel does not support pointer masking in user
+> space, hide the extension in cpufeature.c.
 
-You're absolutely right, good catch & thank you!
+Perhaps.
+Samuel opted not to add supm to dt when he introduced the other relevant
+extensions, so the rationale from him would be helpful but I'd like to
+get more opinions on how to deal with supm specifically. supm doesn't
+really describe hardware capability, since the privilege specific
+instructions are what does that, which makes me question if it should be
+in dt at all. On the other hand, it could be argued that supm describes
+a combination of hardware capability at the dt consumer's privilege level
+and is valid on that basis. Some wording like Zkr will probably be needed,
+specifically mentioning that having supm in the dt means that corresponding
+version sxnpm for the privilege level that the devicetree is provided to
+is supported.
 
-I'll fix it in the v2 version with:
+Either way, we are going to need something in cpufeature.c to imply
+supm so that it appears to userspace if the privilege specific extension
+is detected and supm is enabled in the kernel. The kernel already does
+the implication internally it just isn't reported as an extension to
+userspace IIRC.
+If we permit supm in dt, we're also going to have to turn supm off if
+the Kconfig option is disabled, but that's relatively little effort
+since it mostly (or maybe entirely) reuses code from implying supm.
 
- rcdev->owner =3D dev->driver->owner;
+--U5hKiFJHOMcGatbm
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Best regards,
-Guodong Xu
+-----BEGIN PGP SIGNATURE-----
 
->
-> This feels buggy, assuming this is a module and your
-> MODULE_DESCRIPTION() clearly suggests that.
->
->
-> Best regards,
-> Krzysztof
->
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaVW66AAKCRB4tDGHoIJi
+0jdtAQDh+sAVToaEfPjzGxpRTEXEReCVS1mCPwrMK8rPVPTCgQEAwjo7fMTy9Dft
+Y6qKnMj6ZPI2VhbDfPQ3i6/wGzgxiAE=
+=aAhy
+-----END PGP SIGNATURE-----
+
+--U5hKiFJHOMcGatbm--
