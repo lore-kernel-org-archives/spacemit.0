@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03379EEB3
-	for <spacemit@lists.linux.dev>; Thu,  1 Jan 2026 22:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A9E22D780
+	for <spacemit@lists.linux.dev>; Thu,  1 Jan 2026 22:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767308054; cv=none; b=BzQ2iyhRV7d/wXOnBZQWLIdSRxhSdp3VdUKmsoVu71xXu09BC8MsVDO2gOnJkGiMThtLNbqflqdAtLqR8RlFf8ebTKIpRjoDYzQPnZjYl2MWLsLBVEG2VwjObLSLPzdTaLa60RoCPEMOm9YzTt3hJ1s9b175yfpxJj5mf4TzooU=
+	t=1767308323; cv=none; b=biKJx209Q2RCUwbeu46zbDctJKOd8QEBaEpCCzyVVWfZ8jREsJznWb7p62JZyOXTtG7k/FS43sqGcMGiDUatxB+WoAw1cuSubzZKICzkl9w9n+P1r7sMS4e/qcCkxfd/RnVD2sF4SKuYNc9LMU4eF4ytgJCyXRowV6/DU0KeU9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767308054; c=relaxed/simple;
-	bh=SdIk42cDOk2dycISNtX5+PpGDaZCWGgsqUMPWf4qg9A=;
+	s=arc-20240116; t=1767308323; c=relaxed/simple;
+	bh=RbIi5TJDTEC3UxivySA2nm8bc3JBw7+A82+IHl76Oas=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ROJcHmaaxYBhqFrmwwln2nDXCbFd4L0F3q2lfOFYGUVw+a5QJ/HhVzHtv6RYmMxGGRxDC0yQN1cxbDlFIon/IRzWY6fjq9hs9UQSicrV2n2eHX7GRS4pA0SovoG+ia8OToyXm6pOMeb68gZG101FJmXAO/T5znnqeZU/sJ3Rdjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mz+aMuEp; arc=none smtp.client-ip=10.30.226.201
+	 To:Cc:Content-Type; b=YEfV08/LvnNADkwN1ZZ1eFtUDtP9Wnrd7O9YBartMB9WGKeeRqZPNQBW9uTPHaCCX8EbxXlcKpNe0FCBvUpngkYbPBFz37rwO1mPJZv5kDpdMpip4/UYyUhWMt3L3rTqTdVSLAOls01Qm4ynWzyu0iD6JlWZrCl4IjgLPAeKVQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JMPQ5OEa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mz+aMuEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB4EC19424
-	for <spacemit@lists.linux.dev>; Thu,  1 Jan 2026 22:54:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JMPQ5OEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91187C19425
+	for <spacemit@lists.linux.dev>; Thu,  1 Jan 2026 22:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767308053;
-	bh=SdIk42cDOk2dycISNtX5+PpGDaZCWGgsqUMPWf4qg9A=;
+	s=k20201202; t=1767308322;
+	bh=RbIi5TJDTEC3UxivySA2nm8bc3JBw7+A82+IHl76Oas=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=Mz+aMuEpXt4rAzZOX259vYhz7HwxssjCDEDW9HtT7kX5sHUYA2MNiDSfabVnEj5SG
-	 ArWadhLuZdw8xxc3j+Vb8mqipZAKg/vDsrEsAIfKbjVM+mFGTFLVbStDbKL86363c4
-	 gFJRRzJrdeK2wbxNysUk7JGNLz05Q1/7lkt1QwyFPbkQOq7bKbnoYSnbfFOVJm3Y+h
-	 depROBRYtDimJSLoU7vkpCGdwpOuwGWVAqT/kpHMc1zOVoueKVav/DQ2F6fEyPbbQt
-	 SU6iY/pHS+VVI/J6DC0o1kKQ/DciyKUlLQx+4oC96ObAVvzMo2haKZOQATebYzCVYb
-	 hAPpF5gN4X/Zw==
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-78fccbc683bso84603757b3.3
-        for <spacemit@lists.linux.dev>; Thu, 01 Jan 2026 14:54:13 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWmJuMoXwNEjM6hsAuoAnmnMlUGKGuwPjHffUNQCnGiwfgbfeGZdXUiBgz6Yf2Z0BZtEYbNIm6drA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyW8mY/uRGH14gMV830BZkIxwSnzF1jqiHnBUQuHlpgHk/ZmKs0
-	LnAW6VSW4lo0MyeAxSmwLrd4LRTvfMaERZnv+rqvms1wW/tv9VZx02lWZNkRjnUyVECdRlzByOb
-	+iuBqr2/Co3zerymv4KJABeomeWOZ/eg=
-X-Google-Smtp-Source: AGHT+IHOoFykERP0lAwZMoeMOFbxzQzpVVct6iBZoi4uZM7OehAI1cvgRKKw5UjMcQVmbNq+jXfwDnpUleitrWdX8JI=
-X-Received: by 2002:a05:690e:130b:b0:646:903c:1b90 with SMTP id
- 956f58d0204a3-646903c2353mr20637639d50.41.1767308052926; Thu, 01 Jan 2026
- 14:54:12 -0800 (PST)
+	b=JMPQ5OEavke4eor11qSqdluzacM9pgxLT/75uNftYomx/dZ/c7GN8vIUISllgSs59
+	 Gbw91fqZfVY/D33IIE25lrzp5gUIIZ0XDZSyAVEA6sy7XJ01kj97436zbY+2plwWMF
+	 15anUid3WifUXERa4MmqCUhQu41bT2I9oq8/GctFEAkE0424KwPjMW58x6nLBEoZs2
+	 8vTsXThfyqnOYPmdAz3c7Pa3yt9zz10p1rFwBn0xDPW/lPZIOjAyc3igQn0MoFEXKp
+	 A7O44/U8nJxkIOu5LxhQEhchIzRK6XyAEDLsrHNHp/kTmwDMlmep8oVAQ3jO+mw/Oo
+	 1Px1A480U4JuQ==
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-6467c5acb7dso6963951d50.1
+        for <spacemit@lists.linux.dev>; Thu, 01 Jan 2026 14:58:42 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV3x1L9alhE8TEr0kIBiSl3+qRYErz8YxBt5PKif/YxQi/8NYcap1otr7L/TWwjHcdNm6mewXQOag==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzeq7KhF+vMenOCN3SIGOJlXnirTn+V0S880pPCeRrAt3ONchRk
+	6x++nzEAj7COK9xx450lV1RssLybWkEf2M12Cn7SF02DBqzaz8+S7+EfOyaBnqNl/r14kvsAFEg
+	j4ehnF48/QM26FsQ2+FKaApVcBatDPLk=
+X-Google-Smtp-Source: AGHT+IGS2wpABqiEH3qZJel2X4/tAnT/x9k7y/82/oTjRgpeFKRhQhUMOFnfELr3u2G5kJutP+OFyH7GjaSju3gf+4M=
+X-Received: by 2002:a05:690e:2453:b0:641:f5bc:68de with SMTP id
+ 956f58d0204a3-6466a8d7899mr25549975d50.75.1767308321878; Thu, 01 Jan 2026
+ 14:58:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,17 +43,18 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20251223-kx-pinctrl-aib-io-pwr-domain-v1-0-5f1090a487c7@linux.spacemit.com>
- <20251223-kx-pinctrl-aib-io-pwr-domain-v1-1-5f1090a487c7@linux.spacemit.com>
-In-Reply-To: <20251223-kx-pinctrl-aib-io-pwr-domain-v1-1-5f1090a487c7@linux.spacemit.com>
+ <20251223-kx-pinctrl-aib-io-pwr-domain-v1-2-5f1090a487c7@linux.spacemit.com>
+ <20251223093228-GYA1986709@gentoo.org> <4D38DBB2D5EA96CC+aUpkCTp00KxEuU_Z@kernel.org>
+In-Reply-To: <4D38DBB2D5EA96CC+aUpkCTp00KxEuU_Z@kernel.org>
 From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 1 Jan 2026 23:54:02 +0100
-X-Gmail-Original-Message-ID: <CAD++jL=frL+GiwCRPKfnVe0i6Q+6vwcmvvdGmVLotOk37N_t4Q@mail.gmail.com>
-X-Gm-Features: AQt7F2oAuS27OFHvHrgL7QzWBM7k70aHQ15ssQkK2fmMB8ibqgtBtkyMJgUw5is
-Message-ID: <CAD++jL=frL+GiwCRPKfnVe0i6Q+6vwcmvvdGmVLotOk37N_t4Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: add syscon property
+Date: Thu, 1 Jan 2026 23:58:31 +0100
+X-Gmail-Original-Message-ID: <CAD++jLmQ6Qk=fDt1do6XcpF0bkpD-=JmmEy+iL6pFy54wSfC6A@mail.gmail.com>
+X-Gm-Features: AQt7F2qqol7CqtttbEg-5xwoZiRTRjr4aiAeaJta_tiuinN5LIdgHV3kBp5fC5w
+Message-ID: <CAD++jLmQ6Qk=fDt1do6XcpF0bkpD-=JmmEy+iL6pFy54wSfC6A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] pinctrl: spacemit: support I/O power domain configuration
 To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>, 
+Cc: Yixun Lan <dlan@gentoo.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
 	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
 	Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
 	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
@@ -65,29 +66,29 @@ Hi Troy,
 
 thanks for your patch!
 
-On Tue, Dec 23, 2025 at 10:11=E2=80=AFAM Troy Mitchell
+On Tue, Dec 23, 2025 at 10:43=E2=80=AFAM Troy Mitchell
 <troy.mitchell@linux.spacemit.com> wrote:
 
-> +  spacemit,apbc:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    items:
-> +      - items:
-> +          - description: phandle to syscon that access the protected reg=
-ister
-> +          - description: offset of access secure registers
-(...)
-> +            spacemit,apbc =3D <&syscon_apbc 0x50>;
+> > > +   pctrl->io_pd_reg =3D devm_platform_ioremap_resource(pdev, 1);
+> > > +   if (IS_ERR(pctrl->io_pd_reg))
+> > > +           return PTR_ERR(pctrl->io_pd_reg);
+> > > +
+> > > +   pctrl->regmap_apbc =3D
+> > > +           syscon_regmap_lookup_by_phandle_args(np, "spacemit,apbc",=
+ 1,
+> > > +                                                &pctrl->regmap_apbc_=
+offset);
+> > Can you simply use syscon_regmap_lookup_by_phandle(), then define
+> > #define APBC_ASFAR            0x50
+> > #define APBC_ASSAR            0x54
 
-Isn't the offset implicit from the compatible of the pin controller or
-the syscon or any other compatible?
+> I think it just a minor issue. I will keep it.
+> But if anyone else thinks the same way as Yixun, please let me know.
 
-It's easy to check compatibles in the device tree and just say
-this offset is 0x50 if compatible is so-or-so, and something else
-for another compatible and just give an error if an unknown
-compatible appears.
+It's not minor because it adds stuff to the DT binding we don't need
+and this avoids it.
 
-So: please try to avoid to put things the code can easily look
-up into the device tree.
+Please go with Yixun's suggestion.
 
 Yours,
 Linus Walleij
