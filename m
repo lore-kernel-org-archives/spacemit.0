@@ -1,157 +1,105 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D421DF258
-	for <spacemit@lists.linux.dev>; Fri,  2 Jan 2026 11:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034C830EF6F
+	for <spacemit@lists.linux.dev>; Fri,  2 Jan 2026 12:04:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767353811; cv=none; b=Zvf7jPKZcUWailEK+EmFZmy1lgE5lk9uVWRGIeXm56eVG/2WIKFhN/YN8JG0VEIJwQ+CoJhG1ezbpNBnEswBi6Y2LMQxF5Ogx/42uSQRHL1caiFNxALFOkExkZ1r5L0IpOBfD96wz0TkIVNd8zEw3h4zl1oqVv9tviX+HeuZUnE=
+	t=1767355471; cv=none; b=JLbH2lK1P2PGFTwhVQhGpBLe+S10hpzSjGQEuUmoTQltlShIHBzaroSyy1zfYPzCqIHBFOk9HpaRag1IX8vz/BGJZUm1BxPRvxhh8D+XLF4qPA7FJ2ITYvjv3OL+CCOAnDncG1m032bnXeg0Q233O4DfMv5ddJfGgHN6/4PqYzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767353811; c=relaxed/simple;
-	bh=qYW2fr0EASe6j5jt/RMQovxpWx0lyPJUTq6TeaAySHU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sU8fLeFyf+Rac0ahUZQeNK1KGtbKUyWEJAi0iwZpeu3CS0xBbABAlUme3m9K/1hSrq1hw+sv+WqAkfoZkzmSIENB2RP3pMYCRUV5HEMXv7N2bCwp8l6Evj6rJWy9ztupnpPsy2hyWtkTxzvnCxV+f2mnF+aHFWpbtHSNwKBb0K0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 203E334134D;
-	Fri, 02 Jan 2026 11:36:48 +0000 (UTC)
-Date: Fri, 2 Jan 2026 19:36:43 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] gpio: spacemit: Add GPIO support for K3 SoC
-Message-ID: <20260102113643-GYA2060252@gentoo.org>
-References: <20251229-02-k3-gpio-v1-0-269e76785abb@gentoo.org>
- <20251229-02-k3-gpio-v1-2-269e76785abb@gentoo.org>
- <CAMRc=MfHzP+xm-uX+jad5gPOGDpR23O6mB+xcSvF6ZiZfnxQjg@mail.gmail.com>
+	s=arc-20240116; t=1767355471; c=relaxed/simple;
+	bh=59k3WvNfbtsHGqp3wrH4jG/zkpNkZY4RPujBPr3N4Ec=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VcypWXnGQTcMsJzy5HiTEme+AJxIoUDwYQdGVHVy5NRgKsH/55n6ArzA58gMp3+RxpbCgWb3sXrGaPzJykV6o22Mq9DuUlfKWWHvCdmIM4icWT/am/0JNDOoZHOVcgBKWjw9xyRgRyWjCMop6O3gUOkqREzvMAi+wEuBED45oUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SfnBg3z6; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SfnBg3z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744E6C4AF0B
+	for <spacemit@lists.linux.dev>; Fri,  2 Jan 2026 12:04:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767355470;
+	bh=59k3WvNfbtsHGqp3wrH4jG/zkpNkZY4RPujBPr3N4Ec=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=SfnBg3z6JXiRoZflPmOVGUHFuruFYuiE+zkZrLeS0AEQTeec4jgW+4ZJJziClTTQE
+	 tXZ8fJVnTWbUb/KXHS+l5x8LEQF5LKb9u5iQRQqZgLXMtp7cyTk8GQKj6+Phfmy1wA
+	 2Lx0oLJf4/0Cd//JpD7TwLulUvSEWolWSBZJMFveLSX30K5lfjQ2fIoIVgW/ToD3NX
+	 UMeVez8z4WOgOi7b3n/tFCiRsH0y+xZr3Sap6cH0I+19WMv7KyWW9eJMHjq9Xnr/V4
+	 bVxKz8oG+2sJVFGs1VETgutBH2D8fJlYRWeUwSQpbQPxhBG80r2sYtRPNnntR7wyrf
+	 9DFt5+7ZqJh2A==
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-37ce27af365so104218151fa.0
+        for <spacemit@lists.linux.dev>; Fri, 02 Jan 2026 04:04:30 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWYMyhhYoY8CMGD+f3c4IlOL+quIVaPZY3j7dk02JQB8jM6CpAwmjatJQNWerbN5qPANasA6HsuQg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxfUh6i/Ca0gdPG8eRG3z2bybdeGIvsj9ijQT/7OcJpjjDXXATe
+	1FmqWjszrgsHjoZdd5bMxG/wYXVmT3srxlA5Wj+BDzakXc74aq/YGn/PAIhTIuX167UOJc525/z
+	77hxzcOcXYF52BGsM6NAdBUfa2kUdzaNhNM78l+2Bxw==
+X-Google-Smtp-Source: AGHT+IFUiX6/gBsxHBbe8XiBBJNLN4AHx3ry+rnXue2rQrXSZAdwUQSv/gaC9bW4w7uNTZPy0KYDhnlDKOZnmPqAmek=
+X-Received: by 2002:a05:651c:241:b0:37a:84e5:a1cc with SMTP id
+ 38308e7fff4ca-381216b59b9mr125204291fa.22.1767355469012; Fri, 02 Jan 2026
+ 04:04:29 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 2 Jan 2026 12:04:27 +0000
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 2 Jan 2026 12:04:27 +0000
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260102113643-GYA2060252@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MfHzP+xm-uX+jad5gPOGDpR23O6mB+xcSvF6ZiZfnxQjg@mail.gmail.com>
+References: <20251229-02-k3-gpio-v1-0-269e76785abb@gentoo.org>
+ <20251229-02-k3-gpio-v1-2-269e76785abb@gentoo.org> <CAMRc=MfHzP+xm-uX+jad5gPOGDpR23O6mB+xcSvF6ZiZfnxQjg@mail.gmail.com>
+ <20260102113643-GYA2060252@gentoo.org>
+Date: Fri, 2 Jan 2026 12:04:27 +0000
+X-Gmail-Original-Message-ID: <CAMRc=MeHbod4CaUX7aff_guK531dwyoYhqPOP0rP=i9ydAKmmg@mail.gmail.com>
+X-Gm-Features: AQt7F2rbDr8PJDI60jTnbkM-CN_H7pZqQh59NrJ8eglG_7JODhy0DFRdFCZvpcI
+Message-ID: <CAMRc=MeHbod4CaUX7aff_guK531dwyoYhqPOP0rP=i9ydAKmmg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] gpio: spacemit: Add GPIO support for K3 SoC
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <brgl@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Bart,
+On Fri, 2 Jan 2026 12:36:43 +0100, Yixun Lan <dlan@gentoo.org> said:
+>
+>> >  static u32 spacemit_gpio_bank_index(struct spacemit_gpio_bank *gb)
+>> >  {
+>> >         return (u32)(gb - gb->sg->sgb);
+>> > @@ -60,13 +70,14 @@ static u32 spacemit_gpio_bank_index(struct spacemit_gpio_bank *gb)
+>> >  static irqreturn_t spacemit_gpio_irq_handler(int irq, void *dev_id)
+>> >  {
+>> >         struct spacemit_gpio_bank *gb = dev_id;
+>> > +       struct spacemit_gpio *sg = gb->sg;
+>> >         unsigned long pending;
+>> >         u32 n, gedr;
+>> >
+>> > -       gedr = readl(gb->base + SPACEMIT_GEDR);
+>> > +       gedr = readl(gb->base + to_spacemit_gpio_regs(sg)->gedr);
+>>
+>> Since you're already touching all these register accesses - can you
+>> maybe provide dedicated wrapper functions around readl()/writel() and
+>> avoid any file-wide changes in the future if anything requires further
+>> modification?
+>>
+> can you elaborate a bit further on this?
+> I don't get how a wrapper helper could help to avoid file-wide changes..
+>
 
-On 12:10 Fri 02 Jan     , Bartosz Golaszewski wrote:
-> On Mon, Dec 29, 2025 at 1:47 PM Yixun Lan <dlan@gentoo.org> wrote:
-> >
-> > SpacemiT K3 SoC has changed gpio register layout while comparing
-> > with previous generation, the register offset and bank offset
-> > need to be adjusted, introduce a compatible data to extend the
-> > driver to support this.
-> >
-> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> > ---
-> >  drivers/gpio/gpio-spacemit-k1.c | 150 ++++++++++++++++++++++++++++------------
-> >  1 file changed, 106 insertions(+), 44 deletions(-)
-> >
-> > diff --git a/drivers/gpio/gpio-spacemit-k1.c b/drivers/gpio/gpio-spacemit-k1.c
-> > index eb66a15c002f..02cc5c11b617 100644
-> > --- a/drivers/gpio/gpio-spacemit-k1.c
-> > +++ b/drivers/gpio/gpio-spacemit-k1.c
-> > @@ -15,28 +15,19 @@
-> >  #include <linux/platform_device.h>
-> >  #include <linux/seq_file.h>
-> >
-> > -/* register offset */
-> > -#define SPACEMIT_GPLR          0x00 /* port level - R */
-> > -#define SPACEMIT_GPDR          0x0c /* port direction - R/W */
-> > -#define SPACEMIT_GPSR          0x18 /* port set - W */
-> > -#define SPACEMIT_GPCR          0x24 /* port clear - W */
-> > -#define SPACEMIT_GRER          0x30 /* port rising edge R/W */
-> > -#define SPACEMIT_GFER          0x3c /* port falling edge R/W */
-> > -#define SPACEMIT_GEDR          0x48 /* edge detect status - R/W1C */
-> > -#define SPACEMIT_GSDR          0x54 /* (set) direction - W */
-> > -#define SPACEMIT_GCDR          0x60 /* (clear) direction - W */
-> > -#define SPACEMIT_GSRER         0x6c /* (set) rising edge detect enable - W */
-> > -#define SPACEMIT_GCRER         0x78 /* (clear) rising edge detect enable - W */
-> > -#define SPACEMIT_GSFER         0x84 /* (set) falling edge detect enable - W */
-> > -#define SPACEMIT_GCFER         0x90 /* (clear) falling edge detect enable - W */
-> > -#define SPACEMIT_GAPMASK       0x9c /* interrupt mask , 0 disable, 1 enable - R/W */
-> > -
-> >  #define SPACEMIT_NR_BANKS              4
-> >  #define SPACEMIT_NR_GPIOS_PER_BANK     32
-> >
-> >  #define to_spacemit_gpio_bank(x) container_of((x), struct spacemit_gpio_bank, gc)
-> > +#define to_spacemit_gpio_regs(sg) ((sg)->data->reg_offsets)
-> >
-> >  struct spacemit_gpio;
-> > +struct spacemit_gpio_reg_offsets;
-> 
-> Why not move this structure here instead and avoid the forward declaration?
-> 
-sure, I will do
+Just create functions called "spacemit_gpio_read/write()" that wrap the
+readl()/writel() and its arguments.
 
-> > +
-> > +struct spacemit_gpio_data {
-> > +       struct spacemit_gpio_reg_offsets *reg_offsets;
-> > +       u32 bank_offsets[4];
-> > +};
-> >
-> >  struct spacemit_gpio_bank {
-> >         struct gpio_generic_chip chip;
-> > @@ -49,9 +40,28 @@ struct spacemit_gpio_bank {
-> >
-> >  struct spacemit_gpio {
-> >         struct device *dev;
-> > +       const struct spacemit_gpio_data *data;
-> >         struct spacemit_gpio_bank sgb[SPACEMIT_NR_BANKS];
-> >  };
-> >
-> > +struct spacemit_gpio_reg_offsets {
-> > +       u32 gplr;      /* port level - R */
-> > +       u32 gpdr;      /* port direction - R/W */
-> > +       u32 gpsr;      /* port set - W */
-> > +       u32 gpcr;      /* port clear - W */
-> > +       u32 grer;      /* port rising edge R/W */
-> > +       u32 gfer;      /* port falling edge R/W */
-> > +       u32 gedr;      /* edge detect status - R/W1C */
-> > +       u32 gsdr;      /* (set) direction - W */
-> > +       u32 gcdr;      /* (clear) direction - W */
-> > +       u32 gsrer;     /* (set) rising edge detect enable - W */
-> > +       u32 gcrer;     /* (clear) rising edge detect enable - W */
-> > +       u32 gsfer;     /* (set) falling edge detect enable - W */
-> > +       u32 gcfer;     /* (clear) falling edge detect enable - W */
-> > +       u32 gapmask;   /* interrupt mask , 0 disable, 1 enable - R/W */
-> > +       u32 gcpmask;   /* interrupt mask for K3 */
-> > +};
-> > +
-> >  static u32 spacemit_gpio_bank_index(struct spacemit_gpio_bank *gb)
-> >  {
-> >         return (u32)(gb - gb->sg->sgb);
-> > @@ -60,13 +70,14 @@ static u32 spacemit_gpio_bank_index(struct spacemit_gpio_bank *gb)
-> >  static irqreturn_t spacemit_gpio_irq_handler(int irq, void *dev_id)
-> >  {
-> >         struct spacemit_gpio_bank *gb = dev_id;
-> > +       struct spacemit_gpio *sg = gb->sg;
-> >         unsigned long pending;
-> >         u32 n, gedr;
-> >
-> > -       gedr = readl(gb->base + SPACEMIT_GEDR);
-> > +       gedr = readl(gb->base + to_spacemit_gpio_regs(sg)->gedr);
-> 
-> Since you're already touching all these register accesses - can you
-> maybe provide dedicated wrapper functions around readl()/writel() and
-> avoid any file-wide changes in the future if anything requires further
-> modification?
-> 
-can you elaborate a bit further on this?
-I don't get how a wrapper helper could help to avoid file-wide changes..
+Like:
 
--- 
-Yixun Lan (dlan)
+static u32 spacemit_gpio_read(struct spacemit_gpio_bank *gb, unsigned long reg)
+{
+	return readl(gb->base + func_to_convert_reg_enum_to_offset(reg));
+}
+
+Looks cleaner at call sites even if it's a bit more complex. Just create an
+array mapping the register enum to offset and assign it to platform data.
+
+Bart
