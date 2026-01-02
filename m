@@ -1,112 +1,163 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3752F2D8DB9
-	for <spacemit@lists.linux.dev>; Fri,  2 Jan 2026 13:29:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61521FC101
+	for <spacemit@lists.linux.dev>; Fri,  2 Jan 2026 13:38:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767360594; cv=none; b=MFf3/bEc1uQjPsiak90HqBqjl2uK5WRTobzoQMY+zr4s4xI8aIlp2eN79eMVYrFWnZZFxWNYf7dDwu3mT+3ZeUsB0Hq5aCeKPuTKWBT4y7XZeEVgf26WNa7EFGaFOFGAwdh5nb+dcwfAN7DkSw9wBZZ5FvfnpFzY/L4p4+8Xank=
+	t=1767361095; cv=none; b=sOFn9GXO/HWsgAUCz5G3tPkCQrPkhHxSHcFIjeaKFZ6AJBwSBqkMZ63L8LSIng0ClbIDd32kZusTPeO/0NLHuQ0Twd2XQajMmOBA4CO/UWd+uPsdVjP5LKBp1CIj3gKbcKe89GPIN0+ZmDAU2pBq72174y1Z/6+ubfAy360cdTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767360594; c=relaxed/simple;
-	bh=nbm9P1ws94nNvSuGkZG33czcziePv/A0XDV0BxeQvqs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SfMmtilsCW01V+JAyZY8twcRLLBp6BeXYtHqY2Hv90/Inl7yU0o5wYLx9rsITlf1GyUCXvXmZTagcKXvuDyMUvnii+6d37gaf7+QQoeLt6HogSriQ5Fk9vqSPi06O8ViW/iNY4W+vwlCFTU2hV5+FyO4GBANJjnfImVAH+W5HaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=rZo5w0HJ; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1767361095; c=relaxed/simple;
+	bh=gq+78Fh/gPAKqoWALmYCs3Wq8SZnDyUWpmAJ14Lfa9M=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tBgNSJZjbT9n2Q0egrIfA5l8nhUj3hYpcrgJQyLX6JxTSg8YvAuBSYOeqce0w6wtRQn5RZWQ0rspESdOxf5nFede0g+mNvIEsY2lyhMWl6tOqOGHVfXFb86quPqHqxqzMGKhzUCJds7HEmedE0eITXHF4Rfda6Qzs07g6OuIVZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CZJoR2dh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="rZo5w0HJ"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8b29ff9d18cso1421597485a.3
-        for <spacemit@lists.linux.dev>; Fri, 02 Jan 2026 05:29:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767360591; x=1767965391; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hnJ6jwDgQJU9BTuZLL/HOYsIa/pNPxkZejWHZ4P59ag=;
-        b=rZo5w0HJAvpExwXAzNe3HDHrDey7KrgwCavSk3PiZN3lP6q8TaRsHjM4rAb7iMXcgf
-         MU5vpxUkDjhb7Je7cLqWEec3QiVB7Y7G0eIiQ/WzNs7IzJPDG6snV2tgr5I4f5v1jGCL
-         +Y34qjPOTR3FtbA8q89c+NDlzANbcTXS/ZUG6FO/JAUQXZLkAGAQf8VqELJ87THNw3il
-         Xua/QePVP4db5SM8HhqCBopQDB1nw01PENyrEzvaYS/DaNI7kA4gLOVySO5dP5ekz/88
-         /Rh+9KgQS2YzSfjjnM3hwvycqGCMTlwfN1owUQ2zSf0AeDQzjeBkB+ng7buQvWBIaXwO
-         /yvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767360591; x=1767965391;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hnJ6jwDgQJU9BTuZLL/HOYsIa/pNPxkZejWHZ4P59ag=;
-        b=Irr21QLkJsDM+6bGnhP2Fjn9yBk138fMwatYkXhIJO91JQXyx0P0qlIC6x1HPM1sNs
-         F+kCp3g0qxboAZZPY4xvn1bx9fYyXzVQlabk81nR7XKOGmTvl+i14BgLr7iy47m6p52J
-         8ZBu+ZVxN24Ap6Zkt4RKi5qOZcQiyuygK6E/If6Z4J6mQwblTI0xih2Vq0OYSFdQ8gKb
-         rPVBMoUNuoERGVDre4gLk0eGnYIc9Q4DMZbZ3rotYokZHtxovTJMctN9y9Wz9DVLrA0s
-         I4EZ2UPM83Ik6rGBFPNtyY4trK6VyKK62tg6hJ3kXVMBMnAfOZml9NDnn9TmIsKfdDko
-         kioQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU1WArsTuV/TmqNdRxyAZ0J2m0w8WwxMUbQrCcrtoNEM4l4ALOSYEvQENJkANBAJJFC67ZTu/as4Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwKJY8ry06Tct0nJWEDeTSu1wew5NAgBqsUefkk85KpzNrMrvl4
-	Vr+IQZDVlDcEoEebzJFfizeeGt9CS7Lqd5AjrOrM0KwizXMXChlM/VuiAemR7iDgMXU=
-X-Gm-Gg: AY/fxX6u6RqA1n/KpySyCQ9rRFhOCWkM5m6E4DX7xNSraah4dXr7HIUsuOWwArScnCz
-	RXlR/97hVeLHIlpduQpqODipQtY4WOl35QX8NBtmPHhI2D697ZLrsN/HZJ5T30/4Tk6JlDh0q44
-	GFALlXzYD6g1ojfdaUw8LMn59VZf5Udh6l6Wg4M+btsBjQKLow6DHJQIJlS3ReRJhtrrV+pz0oO
-	QSHmIaXHfUEXAl7F5GQH35Dp6ll4w3IlJetFxRu5puniXHFrXdXLdHHA5sUsRQLwX+clH5iAi4c
-	t7dl8HLxoNhPFaJb9ctw48brVQBFWqigzJVX8itMeaeS+fpcWyUnlxYjVSQZJEwHLFunJl6ouRR
-	O96w+G8CC5Q5iOemoVPHvOUvIzdwZ579DDCGoKOPqsZKenkgyJZKYnmR9d/xABYpQb1sGJ+3nt6
-	VdmHgldw+D8pvNIrjj41jGdrug/1b5/B3hXjn6KymG4cOqEkkb8So=
-X-Google-Smtp-Source: AGHT+IG1Ojp/3ZHOCk+pYw0wTrXWi5TRpNf/s4EXvBvr0lH6ldzNvpRwCYYQWryLM3d/lhoyvZPU1Q==
-X-Received: by 2002:a05:620a:460c:b0:89f:764b:a4aa with SMTP id af79cd13be357-8c08fc0023fmr6594472585a.18.1767360590946;
-        Fri, 02 Jan 2026 05:29:50 -0800 (PST)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c0973ef6bbsm3205417085a.43.2026.01.02.05.29.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Jan 2026 05:29:50 -0800 (PST)
-Message-ID: <fa2d6ac9-a919-4ee6-a470-16f4727a631c@riscstar.com>
-Date: Fri, 2 Jan 2026 07:29:48 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CZJoR2dh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56900C19421
+	for <spacemit@lists.linux.dev>; Fri,  2 Jan 2026 13:38:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767361095;
+	bh=gq+78Fh/gPAKqoWALmYCs3Wq8SZnDyUWpmAJ14Lfa9M=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=CZJoR2dhd3AvgA42ulIUoDPndc0HhGe2/B0lTkgiorXqXwGPvO1J46zmiD1zATfEF
+	 JnmANo/5dpSiK3Ipj//Et47GbCRIWLhKHUXdVMoczQjHSD/IdwILNB0xe4tkulTAW2
+	 FCpsVjHYIAfjAx98lQDVVuW8NwT6GtA5nWfR2n4HAeyp9bExaiEfmip/JdYPyZdhnO
+	 sYJ0Ig/x5ENnJhEkBxB84BnjAhC3etu+UG926KsZFhBwBEuNxAUrb3aylZTZ4MjypU
+	 eU2UB2dOYatljrVaJY7Asy1Wj4avkc8/532VIn0yaz4gQ4Q2oGLTz6+0GTQ9OJCf1Q
+	 HYRrk9xTRpZVA==
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-37b99da107cso113897431fa.1
+        for <spacemit@lists.linux.dev>; Fri, 02 Jan 2026 05:38:15 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXkSlLoKUP82ZgmAQ9tXmdiy5Mp7BmtnTGlA6Fj5h6w/8ArjL7DM0bzMVKalFzxLG6itETTxJ8KkA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxtUBa29hbEGreFFAN3gN2VVrQaeQAz8djkmj71WFD7HjPxoVoQ
+	94O6fHosVgCx17A58WtbskQb/3vk7app7xrofMbtO5ksPb0GadJ3xQp+ee+Rcr4nfo2859GuzE6
+	FnQzvbpwNWCxUFSxyUnSNC6oM1oKd6//Kj3bokXJjrA==
+X-Google-Smtp-Source: AGHT+IGuDMXwA23bDwSJce/Vd9d45irhKXefXohA/Hh2xht/kdpdJ9akMojcELSe93u+/GpGxclkCRihGnFWklcOYY8=
+X-Received: by 2002:a2e:bc18:0:b0:37b:a32b:ed41 with SMTP id
+ 38308e7fff4ca-381215c5edemr119052751fa.18.1767361093846; Fri, 02 Jan 2026
+ 05:38:13 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 2 Jan 2026 08:38:12 -0500
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 2 Jan 2026 08:38:12 -0500
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260102122045-GYA2060493@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] phy: Kconfig: spacemit: add COMMON_CLK dependency
-To: Vinod Koul <vkoul@kernel.org>, neil.armstrong@linaro.org
-Cc: dlan@gentoo.org, pjw@kernel.org, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, guodong@riscstar.com,
- linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- kernel test robot <lkp@intel.com>
-References: <20251226173228.2020411-1-elder@riscstar.com>
- <176726567931.201416.8144273654305302884.b4-ty@kernel.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <176726567931.201416.8144273654305302884.b4-ty@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20251229-02-k3-gpio-v1-0-269e76785abb@gentoo.org>
+ <20251229-02-k3-gpio-v1-2-269e76785abb@gentoo.org> <CAMRc=MfHzP+xm-uX+jad5gPOGDpR23O6mB+xcSvF6ZiZfnxQjg@mail.gmail.com>
+ <20260102113643-GYA2060252@gentoo.org> <20260102122045-GYA2060493@gentoo.org>
+Date: Fri, 2 Jan 2026 08:38:12 -0500
+X-Gmail-Original-Message-ID: <CAMRc=Meq8T_HJwDvf3wm5W2+ZFuHezGjqQx6sj-6HNJhThKjhg@mail.gmail.com>
+X-Gm-Features: AQt7F2qd6dFpn0yYdBOT3j_jTKwwJxkbKKmPhd6nOCJ-bhAWcdN7_KfX3YW0ch8
+Message-ID: <CAMRc=Meq8T_HJwDvf3wm5W2+ZFuHezGjqQx6sj-6HNJhThKjhg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] gpio: spacemit: Add GPIO support for K3 SoC
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Bartosz Golaszewski <brgl@kernel.org>, Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 1/1/26 5:07 AM, Vinod Koul wrote:
-> 
-> On Fri, 26 Dec 2025 11:32:27 -0600, Alex Elder wrote:
->> The SpacemiT PCIe PHY driver depends on the common clock framework.
->> Not specifying that led to a failure when doing a COMPILE_TEST build
->> for the SPARC architecture.
+On Fri, 2 Jan 2026 13:20:45 +0100, Yixun Lan <dlan@gentoo.org> said:
+> Hi bart,
+>
+> On 19:36 Fri 02 Jan     , Yixun Lan wrote:
+>> Hi Bart,
 >>
+>> On 12:10 Fri 02 Jan     , Bartosz Golaszewski wrote:
+>> > On Mon, Dec 29, 2025 at 1:47=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wr=
+ote:
+>> > >
+>> > > SpacemiT K3 SoC has changed gpio register layout while comparing
+>> > > with previous generation, the register offset and bank offset
+>> > > need to be adjusted, introduce a compatible data to extend the
+>> > > driver to support this.
+>> > >
+>> > > Signed-off-by: Yixun Lan <dlan@gentoo.org>
+>> > > ---
+>> > >  drivers/gpio/gpio-spacemit-k1.c | 150 ++++++++++++++++++++++++++++-=
+-----------
+>> > >  1 file changed, 106 insertions(+), 44 deletions(-)
+>> > >
+>> > > diff --git a/drivers/gpio/gpio-spacemit-k1.c b/drivers/gpio/gpio-spa=
+cemit-k1.c
+>> > > index eb66a15c002f..02cc5c11b617 100644
+>> > > --- a/drivers/gpio/gpio-spacemit-k1.c
+>> > > +++ b/drivers/gpio/gpio-spacemit-k1.c
+>> > > @@ -15,28 +15,19 @@
+>> > >  #include <linux/platform_device.h>
+>> > >  #include <linux/seq_file.h>
+>> > >
+> [snip]...
+>> > >  static u32 spacemit_gpio_bank_index(struct spacemit_gpio_bank *gb)
+>> > >  {
+>> > >         return (u32)(gb - gb->sg->sgb);
+>> > > @@ -60,13 +70,14 @@ static u32 spacemit_gpio_bank_index(struct space=
+mit_gpio_bank *gb)
+>> > >  static irqreturn_t spacemit_gpio_irq_handler(int irq, void *dev_id)
+>> > >  {
+>> > >         struct spacemit_gpio_bank *gb =3D dev_id;
+>> > > +       struct spacemit_gpio *sg =3D gb->sg;
+>> > >         unsigned long pending;
+>> > >         u32 n, gedr;
+>> > >
+>> > > -       gedr =3D readl(gb->base + SPACEMIT_GEDR);
+>> > > +       gedr =3D readl(gb->base + to_spacemit_gpio_regs(sg)->gedr);
+>> >
+>> > Since you're already touching all these register accesses - can you
+>> > maybe provide dedicated wrapper functions around readl()/writel() and
+>> > avoid any file-wide changes in the future if anything requires further
+>> > modification?
+>> >
+>> can you elaborate a bit further on this?
+>> I don't get how a wrapper helper could help to avoid file-wide changes..
 >>
-> 
-> Applied, thanks!
-> 
-> [1/1] phy: Kconfig: spacemit: add COMMON_CLK dependency
->        commit: 8df20813eb01fe29b4507fd470d73675bda3e1dd
-> 
-> Best regards,
+> here is my attempt to solve this, define a macro to register address:
+>
+> #define to_spacemit_gpio_regs(gb) ((gb)->sg->data->reg_offsets)
+>
+> #define SPACEMIT_GEDR(gb)      ((gb)->base + to_spacemit_gpio_regs(gb)->g=
+edr)
+>
+> 	gedr =3D readl(SPACEMIT_GEDR(gb));
+>
+> please let me know if this follow your suggestion or not
+>
+> --
+> Yixun Lan (dlan)
+>
 
-Thank you.  It looks like the same problem affects the s390
-build as well.
+I was thinking more of something like this:
 
-  
-https://lore.kernel.org/oe-kbuild-all/202601022046.OKfcBo0x-lkp@intel.com/
+enum spacemit_gpio_registers {
+	SPACEMIT_GPLR,
+	SPACEMIT_GPDR,
+	...
+};
 
-I have confirmed that this fix wasn't applied, and with this
-fix applied the s390 build error no longer occurs.
+static const unsigned int spacemit_gpio_k1_offsets =3D {
+	[SPACEMIT_GPLR] =3D 0x00,
+	[SPACEMIT_GPDR] =3D 0x0c,
+	...
+};
 
-					-Alex
+static const unsigned int spacemit_gpio_k3_offsets =3D ...
+
+struct spacemit_gpio_data {
+	const unsigned int *offsets;
+	u32 bank_offsets[4];
+};
+
+static void spacemit_gpio_write(struct spacemit_gpio_bank *gb,
+				enum spacemit_gpio_registers reg, u32 val)
+{
+	writel(val, gb->base + gb->data->offsets[reg]);
+}
+
+Bart
