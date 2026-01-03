@@ -1,255 +1,120 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C34221D5B0
-	for <spacemit@lists.linux.dev>; Sat,  3 Jan 2026 01:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3737A23A9AE
+	for <spacemit@lists.linux.dev>; Sat,  3 Jan 2026 07:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767405535; cv=none; b=QidsCYyk4n6nyVGzF+WVEAHQHkPgT2DcdJy+5FzvDEVg4fsVv6ybvqlrc2DT8Wtd/61f9kXPCXdXYMtMy3MjVCDZIQ1RIYzZdg5n8zuDIyzCoa3mUv+J3PKZblyyhmSiBVbSH2RnmzIhG8W6/ozm8txx2djdUgh7LwRKD5dPU7A=
+	t=1767425208; cv=none; b=WHMvG+u0zo+pzv8SDDtapDZpBejUxHqjoVu4aEXVhOKmnjY8KK7QzFpQ30IKryS6INJkrNX+Lws8HSZU0fPPhI/n9tM1apGHRXJBDLC+wmycljVqsZqOLHQOO5pl4EwvulX4YGCoY2cUQ1VLtRg4+Rk2+NmcwCx819Vw4752uW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767405535; c=relaxed/simple;
-	bh=23zNtDxWyBX6HS9V9mpDSlycmlai8rIbmU1moexLUPE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WfAb8RG3zBRy5O6Zx6CoJ+hAIp/QICR5MPIsdp/Dyv5rrfvsDonY4PqJUgVTO51J9ZY4xrH8i2N5mWDQVwnqyBDsfn91GvLP1Q/dMPOU7Oe+yrC8lM+F5hUhvBbRfAe/DfGCqNMutV4ZBrIykZroZMoZaSKC37J6/PofHtASQRg=
+	s=arc-20240116; t=1767425208; c=relaxed/simple;
+	bh=2UBPL2Yd1+yxV1XJdoGNsQHljb9tjz7tzWyKUEq7MBk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WKdcxpFH15PloZbbWsh34z8vLB5KiGUuzSDEUruhFs9NXqk6xCNv57D87BOMnDRSi/jVD55bPtm1kz5JPHRLTacfF1WUB5cdqJed4p7kKN9Obx9bc64FEr1Ed7hRTUOmNorm4tlqvtvB/SVNJ2KZoY+cvw0+TLB90jtkCYuDQxA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
+Received: from [127.0.0.1] (unknown [116.232.18.222])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 28519341455;
-	Sat, 03 Jan 2026 01:58:51 +0000 (UTC)
-Date: Sat, 3 Jan 2026 09:58:42 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E96C7340FC1;
+	Sat, 03 Jan 2026 07:26:40 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Guodong Xu <guodong@riscstar.com>,
-	Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 1/3] clk: spacemit: prepare common ccu header
-Message-ID: <20260103015842-GYA2060612@gentoo.org>
-References: <20251226-06-k1-clk-common-v2-0-28b59418b4df@gentoo.org>
- <20251226-06-k1-clk-common-v2-1-28b59418b4df@gentoo.org>
- <17c27455-897d-4249-8206-88364230af7d@riscstar.com>
- <20260101143810-GYC2019108@gentoo.org>
- <cc1cb833-2c4a-4e20-a50d-109a4919e274@riscstar.com>
+Subject: [PATCH v3 0/4] clk: spacemit: refactor common ccu driver
+Date: Sat, 03 Jan 2026 15:26:11 +0800
+Message-Id: <20260103-06-k1-clk-common-v3-0-6061d9f69eef@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cc1cb833-2c4a-4e20-a50d-109a4919e274@riscstar.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJTEWGkC/23OwU7EIBAG4FdpODsNM9IW9rTvYTywlLZkF1Coj
+ WbTdxepB40e/0nm+/87yzY5m9mpubNkN5ddDCU8PjTMLDrMFtxYMiNOHRIOwHu4IpjbFUz0Pga
+ QI5puUKrjYmDl7SXZyb1X8un5yMm+vhV5PY7M25x1lU/Nt6s4kkTVCsHVQIDgQjSL016fZ6/dr
+ S1l7EtbXF5j+qh7N6zcQRD/O21D4DBOJDXXCnvC82zDGmMb01y1jX4K/T8CFYHkpVMC5UWM0y9
+ h3/dPXMw+SEEBAAA=
+X-Change-ID: 20251217-06-k1-clk-common-8d1c57995047
+To: Stephen Boyd <sboyd@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Alex Elder <elder@riscstar.com>, Guodong Xu <guodong@riscstar.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, Yao Zi <me@ziyao.cc>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2288; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=2UBPL2Yd1+yxV1XJdoGNsQHljb9tjz7tzWyKUEq7MBk=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpWMSgZ6lZNd20/VmyN2CFgIClwQKAnNpSevaIR
+ JVJEjknD9GJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaVjEoBsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+3VwRAAm0p9O+pUjjGDtkLvJfflAyKfliyq6r189UJNV9UCe9L2A/kvs8pg+
+ yiue77H9fhmQOfN5Z2ZyIhm2nEjwynB5UBIllXwy7pfxywS9riRRCW5l3UTZNFctJ8ivKJnun8V
+ tAf5AaT/XFvqAehJ2Qhdv7hmKW3rVQxX03onWMYiq891fyG3BTkO4GesWcafDiPoxcQQI8S5Ili
+ moN7ZUWt+HmgaiBkARsyHrqlWPWaqpgoVEgq+XIJZI2yMbogNC7EOY44eDWLn4qWezvpeX1O+X+
+ 33tJkqayEJD2parIsC67mZoVY5oRXOzhudJ+Rf0EK77ESvlUy6ZA+W8dDIvYprRQ60P8V4hRltf
+ VSVwUTTYx519UR4KqCZUSQLo7G79HSQxITepyv4CC1/wBh2IYT5gLoDS/5UPPBmweD6vlqNpj2X
+ PSZmtm2ixk9QbDk1eDN2qVSI3vnaURRASGg5FgDyD9oyWAAMg9hIeArk0yj5kf7zSuDYuFI6UCk
+ SrNPeACxnKIisDNnk3xNWarkt3B6ph8nHwRZc6l2Oc4eg90faPaxRoh+0pdBn9qlbj31/TyW2+i
+ LXaB1WPi1P8YCEE7ip8hrOHPqhNc1ZclsNtSlDGPYESX793LkP63vWzSSR8yEjWXxamVFREeSYc
+ 2VATG8HPTZ9/UZh7ksrvaSXIRMZtBI=
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Alex,
+The goal here is to refactor the clock driver to extract common part, and
+reuse it, so in the future, we can maximize the source code usage once
+adding new clock driver (specifically, for the SpacemiT K3 SoC here)
 
-On 09:42 Fri 02 Jan     , Alex Elder wrote:
-> On 1/1/26 8:38 AM, Yixun Lan wrote:
-> > Hi Alex,
-> > 
-> > On 18:50 Mon 29 Dec     , Alex Elder wrote:
-> >> On 12/26/25 12:55 AM, Yixun Lan wrote:
-> >>> In order to prepare adding clock driver for new SoC, extract common
-> >>> ccu header file, so it can be shared by all drivers.
-> >>
-> >> You are moving the definition of the SpacemiT CCU auxiliary
-> >> device structure, plus the to_spacemit_ccu_adev() function,
-> >> into a new header file.
-> > yes, and this is explaining the code which I consider not necessary,
-> > it's more obvious to read the code..
-> > 
-> >> The reason you're doing this is
-> >> because these two things are generic, but they're defined
-> >> in the K1 SoC-specific header file "k1-syscon.h".  So you
-> >> are creating a new header file for this purpose.
-> >>
-> > right
-> >> These are things you should explain here, to help orient
-> >> reviewers and will inform anyone in the future looking at
-> >> commit history.
-> > I thought I've explained the goal/motivation already with above
-> > commit message, maybe I can improve it, so how about:
-> > 
-> > In order to prepare adding clock driver for new K3 SoC, extract generic
-> > code to a separate common ccu header file, so they are not defined
-> > in K1 SoC-specific file, and then can be shared by all drivers.
-> 
-> This would be much better.  You don't need to explain every detail
-> of the code, but providing the motivation this way and explaining
-> it at a high level helps the reader a lot.
-> 
-> >>> Also introduce a reset name macro, so it can be both used in clock
-> >>> and reset subsystem, explicitly to make them match each other.
-> >>
-> >> This should go in a separate patch, and should change the
-> >> code to use the macro so it builds and continues to function
-> >> with the new change place.
-> >>
-> > yes, I could do this in a separate patch
-> > 
-> >> However I don't understand why you think it's necessary to
-> >> introduce the reset name macro.  Is it because you want to
-> >> incorporate an SoC identifier in the name?
-> >>
-> > I've explained here:
-> > https://lore.kernel.org/r/20251231020951-GYA2019108@gentoo.org
-> > 
-> > It's necessary to incorporate the SoC identifier which will help
-> > to differentiate K1 and K3 reset driver, otherwise there will be
-> > driver name collision, lead to reset driver probe failure while
-> > adding K3 SoC ..
-> 
-> I just had a talk with Guodong and he helped clear up a
-> misunderstanding I had about this.  I was thinking about
-> what happens at probe time, and that only the K1 or the
-> K3 CCU will get registered.
-> 
-> But he explained that the issue is that two *drivers* claim
-> to support the same "compatible" auxiliary device name, and
-> even if only the K1 CCU got registered, both reset drivers
-> are available in the kernel and you still need to specify
-> which reset driver you want use.
-> 
-> You are implementing both the K1 and K3 reset code in the
-> same module, which I think is why this is necessary.
-> 
-> >> Even if this is your reason, I still don't think you need
-> >> the macro.  I'll try to explain what I mean in the
-> >> next patch.
-> >>
-> > If you still have concerns, and we can't reach certain agreement,
-> > then I could drop this macro in next version, leave this optimization
-> > to future patches, I don't want main clock driver delayed by it.
-> 
-> No I no longer have concerns and I accept that you need to
-> encode the platform/SoC in the reset auxiliary device name.
-> 
-> > I personally tend to keep the macro, but probably the naming need some
-> > improvement..
-> 
-> What I'd prefer is to just name the resets directly, to encode the
-> platform ("k1" or "k3") where defined.  I.e.,
-> 
->   static const struct spacemit_ccu_data k1_ccu_mpmu_data = {
-> -	.reset_name	= "mpmu-reset",
-> +	.reset_name	= "k1-mpmu-reset",
-ok, I will go this way
->   	.hws		= k1_ccu_mpmu_hws,
->   	.num		= ARRAY_SIZE(k1_ccu_mpmu_hws),
->   };
-> 
-> Does this lead to a problem somewhere else?  What does hiding
-> this convention behind the _K_RST() macro do that's better
-> than this?  Is it because you want the separate clock and
-> reset drivers to use the same convention?
-yes, I was planing to use same convention for clock and reset
+Since reset driver register via auxiliary bus which requires a adjustment
+of the auxiliary device id accordingly.
 
-> 
-> I think it's a little more difficult to talk about this because
-> we're talking about changes that are implemented by two separate
-> patch series.
-that's true
+This patch will depend on Kconfig fix for building modules [1], and the idea
+come from K3 clock's review[2]
 
-> 
-> >> One more comment, below.
-> >>
-> >>> Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> >>> ---
-> >>>    include/soc/spacemit/ccu.h       | 21 +++++++++++++++++++++
-> >>>    include/soc/spacemit/k1-syscon.h | 13 +++----------
-> >>>    2 files changed, 24 insertions(+), 10 deletions(-)
-> >>>
-> >>> diff --git a/include/soc/spacemit/ccu.h b/include/soc/spacemit/ccu.h
-> >>> new file mode 100644
-> >>> index 000000000000..84dcdecccc05
-> >>> --- /dev/null
-> >>> +++ b/include/soc/spacemit/ccu.h
-> >>> @@ -0,0 +1,21 @@
-> >>> +/* SPDX-License-Identifier: GPL-2.0-only */
-> >>> +
-> >>> +#ifndef __SOC_SPACEMIT_CCU_H__
-> >>> +#define __SOC_SPACEMIT_CCU_H__
-> >>> +
-> >>> +#include <linux/auxiliary_bus.h>
-> >>> +#include <linux/regmap.h>
-> >>> +
-> >>> +/* Auxiliary device used to represent a CCU reset controller */
-> >>> +struct spacemit_ccu_adev {
-> >>> +	struct auxiliary_device adev;
-> >>> +	struct regmap *regmap;
-> >>> +};
-> >>> +
-> >>> +static inline struct spacemit_ccu_adev *
-> >>> +to_spacemit_ccu_adev(struct auxiliary_device *adev)
-> >>> +{
-> >>> +	return container_of(adev, struct spacemit_ccu_adev, adev);
-> >>> +}
-> >>> +
-> >>> +#endif /* __SOC_SPACEMIT_CCU_H__ */
-> >>> diff --git a/include/soc/spacemit/k1-syscon.h b/include/soc/spacemit/k1-syscon.h
-> >>> index 354751562c55..13efa7a30853 100644
-> >>> --- a/include/soc/spacemit/k1-syscon.h
-> >>> +++ b/include/soc/spacemit/k1-syscon.h
-> >>> @@ -5,17 +5,10 @@
-> >>>    #ifndef __SOC_K1_SYSCON_H__
-> >>>    #define __SOC_K1_SYSCON_H__
-> >>>    
-> >>> -/* Auxiliary device used to represent a CCU reset controller */
-> >>> -struct spacemit_ccu_adev {
-> >>> -	struct auxiliary_device adev;
-> >>> -	struct regmap *regmap;
-> >>> -};
-> >>> +#include "ccu.h"
-> >>>    
-> >>> -static inline struct spacemit_ccu_adev *
-> >>> -to_spacemit_ccu_adev(struct auxiliary_device *adev)
-> >>> -{
-> >>> -	return container_of(adev, struct spacemit_ccu_adev, adev);
-> >>> -}
-> >>> +/* Reset name macro, should match in clock and reset */
-> >>> +#define _K_RST(_unit)			"k1-" #_unit "-reset"
-> >>
-> >> The generic-sounding _K_RST() encodes "k1" in the name,
-> >> and it shouldn't.  Also, why do you use the underscore
-> >> prefix?
-> >>
-> > want to make it slightly generic/short but still keep it local for K1 driver,
-> > and also avoid potential collision with other drivers in kernel code..
-> > 
-> > or do you have any sugestion for better naming?
-> 
-> First, I suggest you avoid even using such a macro.  But I
-> could be wrong about that too...
-> 
-ok, see previous comment
-> I would name it RESET_NAME(_unit) or something similar.  It's
-> only used by code and DTS files that are related to SpacemiT
-> platforms.
-> 
-will drop the macro
+Please note, Patch 1 is needed for both clock and reset driver, so extract it
+out as single independent patch. Then it can be pulled into both subsystem.
 
-thanks!
-> 					-Alex
-> 
-> >> Anyway, I'll keep reading.
-> >>
-> >> 					-Alex
-> >>
-> >>>    
-> >>>    /* APBS register offset */
-> >>>    #define APBS_PLL1_SWCR1			0x100
-> >>>
-> >>
-> >>
-> > 
-> 
+Link: https://lore.kernel.org/all/20251219012819.440972-1-inochiama@gmail.com/ [1]
+Link: https://lore.kernel.org/all/aTo8sCPpVM1o9PKX@pie [2]
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Changes in v3:
+- drop reset macro, and have separate patch for changing reset name
+- extract common spacemit_ccu_probe(), leave SoC specific change out
+- improve commit message
+- Link to v2: https://lore.kernel.org/r/20251226-06-k1-clk-common-v2-0-28b59418b4df@gentoo.org
 
+Changes in v2:
+- extract common header file which shared by clock and reset
+- add SoC namespace to differentiate reset for auxiliary bus
+- Link to v1: https://lore.kernel.org/r/20251220-06-k1-clk-common-v1-0-df28a0a91621@gentoo.org
+
+---
+Yixun Lan (4):
+      clk: spacemit: prepare common ccu header
+      clk: spacemit: extract common ccu functions
+      clk: spacemit: add platform SoC prefix to reset name
+      reset: spacemit: fix auxiliary device id
+
+ drivers/clk/spacemit/ccu-k1.c     | 191 +++-----------------------------------
+ drivers/clk/spacemit/ccu_common.c | 171 ++++++++++++++++++++++++++++++++++
+ drivers/clk/spacemit/ccu_common.h |  10 ++
+ drivers/reset/reset-spacemit.c    |   2 +-
+ include/soc/spacemit/ccu.h        |  21 +++++
+ include/soc/spacemit/k1-syscon.h  |  12 +--
+ 6 files changed, 215 insertions(+), 192 deletions(-)
+---
+base-commit: 99735a742f7e9a3e7f4cb6c58edf1b38101e7657
+change-id: 20251217-06-k1-clk-common-8d1c57995047
+prerequisite-message-id: 20251219012819.440972-1-inochiama@gmail.com
+prerequisite-patch-id: df430730ed961011cee5c5d47b7ace84b3c5ebb7
+prerequisite-patch-id: 64003618c33be925602e46b7543f2c13d3f36474
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan
+
