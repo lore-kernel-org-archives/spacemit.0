@@ -1,40 +1,45 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDE331326C
-	for <spacemit@lists.linux.dev>; Mon,  5 Jan 2026 09:41:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0AE340283;
+	Mon,  5 Jan 2026 18:44:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767606120; cv=none; b=iSHt0Qlr3yzNQq1S2Vm0waibRmiFa1AZXe6p4cKv2WJhXprFxvdpS459OEzHmjXRtjkE22Cldphs5HyhVDIAzEJdJyANKiqS3Xa6Mu7gZ/Qg9HV5SlRb4DIpujtl8YHtDWey4/SItK/LZ4KtnZr6dlolVQgluFreAygkqEKC0l8=
+	t=1767638670; cv=none; b=CkMUs9P+hupHd0bS/Y1nE51c74rrSZdvO50Bnfh+dt+hbEbf86NAM9/vpROXEHQJWt4Sq3Rp8SskxI8vlSwxMvWFSwVum9vRi0ICUdhDieSE1R4VBAwxMsr9wv8+yQe4VC4lIctjTTaNRnvW/mNxNSemy7wwT0aXR2XzwfGsM5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767606120; c=relaxed/simple;
-	bh=lPmJf0QXvX6SCkp0icCbKV+O2sDmQUtlcLLStESWJks=;
+	s=arc-20240116; t=1767638670; c=relaxed/simple;
+	bh=5q0yLfH4dcbPw7DocaLNS+0Kq+WDRXRsT1mvD3Ph4Hc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xbk/FayS+Cw5+Rs5o6KelBzqs4vC//uciUKcgqTEgB4+0CH7YNq8Npp9atceq1aNrokc4qIVBVTr2WlO9IX+BnCxhIhgZseOj3RmPeGG4LqNlWlPej0xU9WiP7oL/Sui5T/fswGtU1uEOdXifuBrzbmRENmKI8yowYEVPxYgnM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id C50C1341E55;
-	Mon, 05 Jan 2026 09:41:50 +0000 (UTC)
-Date: Mon, 5 Jan 2026 17:41:46 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Linus Walleij <linusw@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Subject: Re: [PATCH v2 2/2] gpio: spacemit: Add GPIO support for K3 SoC
-Message-ID: <20260105094146-GYB2078702@gentoo.org>
-References: <20260104-02-k3-gpio-v2-0-07377739581a@gentoo.org>
- <20260104-02-k3-gpio-v2-2-07377739581a@gentoo.org>
- <CAMRc=McqmX5T-zOraWHz1Cfap+hcV_X=7dtKQOZehN9O8Fynhw@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=kN4tWg2/BCIVoTgLG2MqLRyBkrRK5MxBM2cc6wiSfAsPx6aLgSxHstVwzCR2kuS6rwG54o70IX/MxIOKcoaHSYwjcGcHnvD+r/90HPFUfnG2L63Oqo/8J1iYojdzvpW8WiCdqKFBGipUAfbJy6uPOPTyrbGevcDlEUNRUKv8nPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vMIOXGxw; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vMIOXGxw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBC3C116D0;
+	Mon,  5 Jan 2026 18:44:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767638670;
+	bh=5q0yLfH4dcbPw7DocaLNS+0Kq+WDRXRsT1mvD3Ph4Hc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=vMIOXGxwX3AOhzzmSSRX9a3a+MWD252fOjDPaC9ic3Liew1wJxwk2OCiFnk13s9ft
+	 PZkodJl5v6KADVat8AVc4aoE0fSUpTyAqztktWUIlHqDf7Qiu2tyS0Gki5CmiQLoZM
+	 UEMc4Vj0hqp3X2ZQqVp1mWwAiSN6ooo+a/PPz5ChrAGOST7+ZqTy7FtmPIe0P3wWB9
+	 SOTyduXV2du/2921kmIkEJ/PxHuvCJ9Ybc4vtG4IvQ3Eo0vnbayIU6G1lv894TbXbB
+	 C/CCL7EiS5NuwbLBNAMRvEp03C9qA5LR7bnGWLgTtBfDoUh/JfwSfjIP1iPo55D7bt
+	 HDMRNlXzswXGQ==
+Date: Mon, 5 Jan 2026 12:44:29 -0600
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Encrow Thorne <jyc0019@gmail.com>
+Cc: guodong@riscstar.com, devicetree@vger.kernel.org, krzk+dt@kernel.org,
+	aou@eecs.berkeley.edu, palmer@dabbelt.com, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, conor+dt@kernel.org,
+	pjw@kernel.org, troy.mitchell@linux.spacemit.com,
+	p.zabel@pengutronix.de, linux-i2c@vger.kernel.org,
+	troymitchell988@gmail.com, dlan@gentoo.org,
+	linux-kernel@vger.kernel.org, andi.shyti@kernel.org, alex@ghiti.fr
+Subject: Re: [PATCH 1/3] dt-bindings: i2c: spacemit: add optional resets
+Message-ID: <176763866898.3087767.8456165135860930088.robh@kernel.org>
+References: <20251230-i2c-reset-v3-0-7500eb93b06e@gmail.com>
+ <20251230150653.42097-1-jyc0019@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,105 +48,20 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAMRc=McqmX5T-zOraWHz1Cfap+hcV_X=7dtKQOZehN9O8Fynhw@mail.gmail.com>
+In-Reply-To: <20251230150653.42097-1-jyc0019@gmail.com>
 
-Hi Bartosz,
 
-On 01:23 Mon 05 Jan     , Bartosz Golaszewski wrote:
-> On Sat, 3 Jan 2026 22:33:39 +0100, Yixun Lan <dlan@gentoo.org> said:
-> > SpacemiT K3 SoC has changed gpio register layout while comparing
-> > with previous generation, the register offset and bank offset
-> > need to be adjusted, introduce a compatible data to extend the
-> > driver to support this.
-> >
-> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
-> > ---
-> >  drivers/gpio/gpio-spacemit-k1.c | 163 ++++++++++++++++++++++++++++------------
-> >  1 file changed, 117 insertions(+), 46 deletions(-)
-> >
-> > diff --git a/drivers/gpio/gpio-spacemit-k1.c b/drivers/gpio/gpio-spacemit-k1.c
-> > index eb66a15c002f..bca5c3dc13ca 100644
-> > --- a/drivers/gpio/gpio-spacemit-k1.c
-> > +++ b/drivers/gpio/gpio-spacemit-k1.c
-> > @@ -15,29 +15,37 @@
-> >  #include <linux/platform_device.h>
-> >  #include <linux/seq_file.h>
-> >
-> > -/* register offset */
-> > -#define SPACEMIT_GPLR		0x00 /* port level - R */
-> > -#define SPACEMIT_GPDR		0x0c /* port direction - R/W */
-> > -#define SPACEMIT_GPSR		0x18 /* port set - W */
-> > -#define SPACEMIT_GPCR		0x24 /* port clear - W */
-> > -#define SPACEMIT_GRER		0x30 /* port rising edge R/W */
-> > -#define SPACEMIT_GFER		0x3c /* port falling edge R/W */
-> > -#define SPACEMIT_GEDR		0x48 /* edge detect status - R/W1C */
-> > -#define SPACEMIT_GSDR		0x54 /* (set) direction - W */
-> > -#define SPACEMIT_GCDR		0x60 /* (clear) direction - W */
-> > -#define SPACEMIT_GSRER		0x6c /* (set) rising edge detect enable - W */
-> > -#define SPACEMIT_GCRER		0x78 /* (clear) rising edge detect enable - W */
-> > -#define SPACEMIT_GSFER		0x84 /* (set) falling edge detect enable - W */
-> > -#define SPACEMIT_GCFER		0x90 /* (clear) falling edge detect enable - W */
-> > -#define SPACEMIT_GAPMASK	0x9c /* interrupt mask , 0 disable, 1 enable - R/W */
-> > -
-> >  #define SPACEMIT_NR_BANKS		4
-> >  #define SPACEMIT_NR_GPIOS_PER_BANK	32
-> >
-> >  #define to_spacemit_gpio_bank(x) container_of((x), struct spacemit_gpio_bank, gc)
-> > +#define to_spacemit_gpio_regs(gb) ((gb)->sg->data->offsets)
-> > +
-> > +enum spacemit_gpio_registers {
-> > +	SPACEMIT_GPLR = 0,	/* port level - R */
+On Tue, 30 Dec 2025 23:06:51 +0800, Encrow Thorne wrote:
+> The I2C controller requires a reset to ensure it starts from a clean state.
 > 
-> No need for the = 0 here.
-ok, I will drop it
+> Add the 'resets' property to support this hardware requirement.
+> 
+> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
 
-> > +static const unsigned int spacemit_gpio_k1_offsets[] = {
-> > +	0x00,
-> > +	0x0c,
-> > +	0x18,
-> > +	0x24,
-> > +	0x30,
-> > +	0x3c,
-> > +	0x48,
-> > +	0x54,
-> > +	0x60,
-> > +	0x6c,
-> > +	0x78,
-> > +	0x84,
-> > +	0x90,
-> > +	0x9c,
-> > +	0xA8,
-> > +};
-> > +
-> > +static const unsigned int spacemit_gpio_k3_offsets[] = {
-> > +	0x0,
-> > +	0x4,
-> > +	0x8,
-> > +	0xc,
-> > +	0x10,
-> > +	0x14,
-> > +	0x18,
-> > +	0x1c,
-> > +	0x20,
-> > +	0x24,
-> > +	0x28,
-> > +	0x2c,
-> > +	0x30,
-> > +	0x34,
-> > +	0x38,
-> > +};
-> 
-> I would very much prefer for you to use the
-> 
->     [ENUM] = 0xVALUE
-> 
-> style of initialization here for better readability.
-> 
-ok, will do
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
-> Otherwise looks good so LGTM on the next iteration.
-> 
-thanks
-
--- 
-Yixun Lan (dlan)
