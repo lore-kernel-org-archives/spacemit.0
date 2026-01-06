@@ -1,83 +1,98 @@
-Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869A121D3C0
-	for <spacemit@lists.linux.dev>; Tue,  6 Jan 2026 02:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AA8E56A
+	for <spacemit@lists.linux.dev>; Tue,  6 Jan 2026 03:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767665013; cv=none; b=YDk1UgNyTb/VT84fx4zbam2XphPcQdNn/eBMkngfn51TNC5JkI9eaMwPsAddKMBguU7JCo1Miug59s+H+pasz+osOds0Tw30biso6jJ/r7yzg53qhu9bXVeDQvXsDaFwfRdSsSXO49uxuD/AYmIC0DX2z6q6cK2HAgJK0dkED84=
+	t=1767668993; cv=none; b=YUYlUAHGwgBULcxONHXf/Ogw4wMPMevdBWXlI1stjBxW5DEKwYmPm5GFRpyNbMQGD80/XnV409phlFL2kk8+rKyNyae11SB1+kZYfyGlDlEpzohYUgsCeFsFF9jZxzHc+86d4DNj6wErQ0aiO9dU7ln83LGWryO4YP6+X8gTECA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767665013; c=relaxed/simple;
-	bh=JSxkuwfLYvxeQ1LuAnv7Q4VDoNnLALsW6LY4/lPnNzs=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hSkKyr9BeG239pCtKaFBrHtnR/KMgvdR/0ayEv26piuaJ+2nWEHG+snPZ1VXlkf+KOYICNM13l0tbrbhNoRhfzMdQgY+mJFoAWRv1T1AbdwtJavtYzKD9nLVIo6lZ7+36JeHqSs+uBR2l19Vn1+1XyNJvQ9az53Uf4s/Od8KeGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nmhZf4oF; arc=none smtp.client-ip=95.215.58.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="nmhZf4oF"
-Date: Tue, 6 Jan 2026 10:03:22 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1767665009;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=y5DxGXKwZLC7iNs7lrVUjR6LdQkjf/YFON8xRxVUjwU=;
-	b=nmhZf4oFZ28U5LJ2uGUafdAuXsg+XobdQc/SB1hSDNClzsxJ9xyfJjcynmfOiQjuNvmQ4i
-	+hONBNNnduVSQOm+4C6SodY3QQ7gW6lrHCvcV1O3V9dIWdIRGGR8RsvISCClu5EG6iaqli
-	9Y4Jc4LIvsmTVrMecdQ3rezW9A/1T4Y=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ze Huang <huang.ze@linux.dev>
-To: Ze Huang <huang.ze@linux.dev>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@gentoo.org>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] riscv: dts: spacemit: Add USB 3.0 support for K1
-Message-ID: <aVxtG4eHkseIHov0@monica.localdomain>
-References: <20251101-k1-usb3dts-v1-0-dd2660e5740b@linux.dev>
- <aVLhQQrYQ0T2rBeq@aurel32.net>
- <aVwj6xm28wG7IYtG@aurel32.net>
+	s=arc-20240116; t=1767668993; c=relaxed/simple;
+	bh=KD1oy6BZNEd6FReBRpFkWMij6GCuCmsGS/RrQ5+b7sQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DeO7xNeAX7gd+56gS6A2qxLszvzghmex2vnXWn2QM3TG5zoajPmJ65CJiSsM8/MAz4tEcFm4/827r6TMHtU0AT1fBkXIwnCyi9u91BKPtbpGs/YwPVwdsFda1nW7c4gicsunGwtNWJHBZ2GVR/oZVnCrg18JjgqSzZSyLO9fazI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [127.0.0.1] (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 3B789340ED8;
+	Tue, 06 Jan 2026 03:09:47 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+Subject: [PATCH v3 0/2] riscv: spacemit: add gpio support for K3 SoC
+Date: Tue, 06 Jan 2026 11:09:31 +0800
+Message-Id: <20260106-02-k3-gpio-v3-0-4800c214810b@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aVwj6xm28wG7IYtG@aurel32.net>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOt8XGkC/23MSwrDIBSF4a0Ux71Fr1VjR91H6SCPGyOFGDRIS
+ 8jeawIdBDo8B75/YYmip8Rup4VFyj75MJYhzyfWDvXoCHxXNkOOSiBa4AgvCW7yASrbaLKq7Xq
+ tWAFTpN6/99jjWfbg0xziZ29nsb1/M1kAB9SWjDaVqpvm7micQ7iE6NjWyfizmgt+PVgslhtpj
+ JFWVaI+2HVdv+lY+ejhAAAA
+X-Change-ID: 20251229-02-k3-gpio-89b6e95cdf65
+To: Bartosz Golaszewski <brgl@kernel.org>, 
+ Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1034; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=KD1oy6BZNEd6FReBRpFkWMij6GCuCmsGS/RrQ5+b7sQ=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpXHzys7SYXHsuJ+qzfW4i9RLnYCerTUdT97kfA
+ xQ8ZmC8+I6JAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaVx88hsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+1Bng/8CkIoBd5fnVv5W2zXHkECrMh24tL+3muE1GfQ9Y7ggNKMuMhGOdo7/
+ QnsumQ/8fYml0PghxlcM2eEAOEjKdDBUquZHMP6FEX7YgVrAecmqmPARtUrHgUXAGSvT0sKXdrZ
+ 3svP5Ax7TrFGIG7l5a4EWHtdPrWL+fgeS1K7bcKahSRGiOvrsiaugV2qvfJnK/iYFnRB/UuDzm6
+ wr01+Qe/9F0W24iss0bSibNqbMHM2vKDhfGdaEaRrLaZQT9WgMnbjJe9e81NN3lYCqYFDbmQRNq
+ nbYGd/a/fAdm1/N0GtcUvyMe85oh4P63g9J4nPTyjyUwPYx7nVV8/1G9xVprz4LKEx77FUZsfhx
+ kKhF6ANTgXqVuzrGp3bm4lgHqGYIn1gvZD+AnsH8MDzTJrE2vVr3hZ6AsQyyRbsz5A9bqSN2c+k
+ nRayOiK5liodR3j04vCBGKVqdJbZ778QMdBOO4R7TICBLjvfBpQn4APr3i5RguPiLlnLJOi0RmO
+ O6Z4qBH/lYZKGESgO0q8Jsq1DohIyhh163TX0zVYvY0R30xAqrAkW0JSAEHvLHB5Vx2yeChI4th
+ G6Y8vgFAggtp0isM8Z0OKCwEkyM2JhbVAV2lgmWi2+Khi4sYhB7n7UP9z0LlXY7KakFXx3wymvv
+ FCzNuScFhEMA3j8ih0g4X29eCUD92c=
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On Mon, Jan 05, 2026 at 09:49:47PM +0100, Aurelien Jarno wrote:
-> Hi,
-> 
-> On 2025-12-29 21:14, Aurelien Jarno wrote:
-> > Hi,
-> > 
-> > On 2025-11-01 17:03, Ze Huang wrote:
-> > > This patch series enables the DWC3 USB 3.0 host controller on the
-> > > Spacemit K1 SoC, and enables it for the Banana Pi F3 board.
-> > > 
-> > > To make USB 3.0 work on the K1, we need patches for the USB2 PHY [1],
-> > > ComboPHY [2], and DWC3 [3] driver, also, ensure enabling the following
-> > 
-> > Note that the ComboPHY part got merged in the meantime.
-> 
-> The USB2 PHY part also got merged, so you might want to send a rebased 
-> version against https://github.com/spacemit-com/linux k1/for-next
-> 
-> Regards
-> Aurelien
+Introduce gpio support for SpacemiT K3 SoC, the gpio controller
+changes its register layout and bank offset, while mostly shares
+other IP logic, so adjust the driver to support this.
 
-Hi Aurelien,
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Changes in v3:
+- fix enum coding style
+- Link to v2: https://lore.kernel.org/r/20260104-02-k3-gpio-v2-0-07377739581a@gentoo.org
 
-Thanks for the heads-up and for testing the series.
-I'll rebase the patches on top of the k1/for-next branch and send out a new
-version shortly.
+Changes in v2:
+- collect tags
+- refactor gpio register read/write, introduce helper function
+- Link to v1: https://lore.kernel.org/r/20251229-02-k3-gpio-v1-0-269e76785abb@gentoo.org
 
-Thanks,
-Ze Huang
+---
+Yixun Lan (2):
+      dt-bindings: gpio: spacemit: add compatible name for K3 SoC
+      gpio: spacemit: Add GPIO support for K3 SoC
+
+ .../devicetree/bindings/gpio/spacemit,k1-gpio.yaml |   4 +-
+ drivers/gpio/gpio-spacemit-k1.c                    | 163 +++++++++++++++------
+ 2 files changed, 120 insertions(+), 47 deletions(-)
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20251229-02-k3-gpio-89b6e95cdf65
+
+Best regards,
+-- 
+Yixun Lan
+
