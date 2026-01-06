@@ -1,67 +1,67 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9875A29D260
-	for <spacemit@lists.linux.dev>; Tue,  6 Jan 2026 14:43:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A0D312825
+	for <spacemit@lists.linux.dev>; Tue,  6 Jan 2026 14:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767710639; cv=none; b=AtVwA6MI86jDW9h8M22ty8x01pfkyMmH3qwIMuHL25AqfgOumYiYgcUGd6fAb/kgOYBwwXY8xrI6PVWU4lf7rI7+yuSy4XnoKM/uCwT4XtTF9gNwg6d/Q0ofB7RENFZi7ufDrOC2sHho6sdOe99nq1mu34jzTzErtfqMjzMyRRE=
+	t=1767710640; cv=none; b=ng6iMnDIk0hLYLMhjy4OXOlL0Db9y7ZofcmyfuM+XST34WDCjSxhWZ3jNHmqF/C8maV2PhaMCe0IDuvbyVX6abr/XmPsN1VgC3soBUmVEyb7W+kmyvfjYH1ilbicPd+B+HyY3O3MW/lu8LMfTgvP7CVdbmhuXqXH7MfJe2Rv4m0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767710639; c=relaxed/simple;
-	bh=lgMKRFdh5v9iRb/pm3a055Mp9ATD38LF+MvykHbBixc=;
+	s=arc-20240116; t=1767710640; c=relaxed/simple;
+	bh=aXyztoGH1zk5aC86ZA1tmUX3uX8ntn+sdIgnb/TvD50=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AxVit4HweMYIuyG+89B4lETyzltQcVSvhgnkcjKY0vzbIYwQy4yfgYruwsdagPcXXpGspkVrS1CUkSYyF6Nbxtf58JXPRVXd8TrJlPBnt0pizb70qZkcoeXZ4RDGu47PQYFgTull2aKDOD0qEYCpJAsDrAret6zgXvux6B+JGSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=0DLSoM28; arc=none smtp.client-ip=209.85.222.174
+	 In-Reply-To:Content-Type; b=uL7aU8xbp3dX/SuFBUzMt8bltgB5BiGV0e+Z0KJ2Ei0HtQlNEPJVOL0JzGK166+lYpKusPGpim54H/1XDriir+V97jgpInqVwXP90cwAW7iflIPfsPabjZfcf8T/YKnjieZI5y/RmMUTwTBLHhhJeRPxOSOaMH0jIX6keWGpZMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=kKXpwDxm; arc=none smtp.client-ip=209.85.222.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="0DLSoM28"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8b2d32b9777so129696685a.2
-        for <spacemit@lists.linux.dev>; Tue, 06 Jan 2026 06:43:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="kKXpwDxm"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8b1e54aefc5so81696385a.1
+        for <spacemit@lists.linux.dev>; Tue, 06 Jan 2026 06:43:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767710635; x=1768315435; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767710636; x=1768315436; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yjnd3cJi73pItwYWnZ/AGVro8SITV6ewWmgFqzGpdOc=;
-        b=0DLSoM28gaS37KI5FCFlWtofk1Z9ycj/hd0vwH5QYX/Jz9imuxvnoJYhHOIbwN/QXl
-         ATjPTWha3PaF++AHZQSyOPU+QzAq9SPKkJNgEdsWEGoTccGyTwxZUupfWAtbfoCJY3F+
-         WKvf9nS4XaEa9LRJrN1Q86ur9KBklL3vntwB9GFKNE9Oa9C3AHP/iTBvZYNe8e82wBJY
-         3V1K6FzWtFKO/6cY7dmnwhWetEih2EfXdKpz1Qm795vDJr18bo9H97aZuNnMh8aWJX1x
-         E0SvHqOSX27A421qJUEm95UthI15vTp1N3BH6+NixfNqOXXb3k4oJ43Mqoc1E3Tp+NZH
-         bfug==
+        bh=Rog/A303nBNnKd9hedF+AVkollAQIitKAnxFL0w4GYY=;
+        b=kKXpwDxmR6raUAMqD/k4Y5W5yY5jB+eLjbvB5pXguzpns3TMfm4Swbd7/ooWF88vYo
+         KWwIhpEiU4cSw7siuwaUeZcx3w9ww6bHLaoeTe1fzUtO24eJ56A3rcO96OYq1vNbdTMq
+         T37ZbuxDLrHO5+08bQXjX4rZBPqrWu5Kct4n0xQxZw0ySwEtKbLxGmGRf/YFRYbketSH
+         tSl6bfxOy0QRjAMUHzXm/kyJgNx7kpbm8IHB95OO8lgtxwvXx1Oaqjqmm44SluONiEup
+         p6t5u+MdYiLcJ+ZunXDygaKuOdeYfKCFncgYu8lSyvhnaqfx4QtmZtRb0kzCb0oLaXuJ
+         LhHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767710635; x=1768315435;
+        d=1e100.net; s=20230601; t=1767710636; x=1768315436;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yjnd3cJi73pItwYWnZ/AGVro8SITV6ewWmgFqzGpdOc=;
-        b=pi7wbyddw6yBct8w8sW3roRwYeABogj+E7CZ0/Hst02xDpNWdbmGS3eJAI8OO6S2gU
-         0z+aJMi/lse1LgGpg+FJTEla/AXe0MIyxwLImvozPG5MjT6VsBRYrfP4jR0ZC0vHpM20
-         eo0yR4GKmi4MDFxw3+l19ucEo2nodr/Rpush7d5MxdyrNLwHxIdkN1MZ2tuVhoTuH63e
-         7Q5aTAuLKXceXK7yUhfb8GP2O3qUAd1QkPhOBmrniZ/gw3IExmqBh1+3A91ay9aH7Jnr
-         FCmF7fcvus6LqLTLJ/4/Qh21pyzZBGM8Uxd6rPHM2h2SWvz6M6jaxNkG9LUTU9lnjmzw
-         X/3g==
-X-Forwarded-Encrypted: i=1; AJvYcCWSR5YgDSyioyMpFcy6JPoxmsFbGsfR24Spbn/ON9YIuzj959vhknkeoparHb53Ch2uzK/fqfPRNA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx+OfORjne7jHO/gEV2EQXSIaYTeaIv2CGrDTVQ3vlk+13tfOC3
-	Ng5bNKTaJ1VR5c3xrcH7VndxsPNFv6RFyb9IuhuqTYtn/s/+03nshdl9Tl+hgZD/5s4=
-X-Gm-Gg: AY/fxX6++iC7R2BvjFbmikv09QuIg/YC217eXi1wVWDlUqFdzYTsuE/taM3814DPpi/
-	unURlGZBdlFvhVgrS0XkmugI2RnDyQmHjzRr4QwOi7qzFgVjb2Cjw7E8SQ656cty1FNxF4I/kWI
-	eyFAmLSe89JHson6/DnURvVk8bRrz1CMgTjG4aCK9dnTR+KWUHTzkK4mSb0WF/3TSUt7O3odRts
-	RjWVltsLGf6Qwcv1aQtt+Y1KWGnlS8Dv+4LhJaM6D4m1TX7iP0HX5cu6k69DNEW67ntLwBWbZwZ
-	9TaO7aROMNIsaafe+467xrsfd3XSLj9+jxk3ctbvUg4zH3TX3DCQnaMPq31GOOpRIyBcIzFBNRM
-	/ywcdmgdzWDfPttHl2YZ3yYy1DrfYeJ3UBbcXYUTsaiovUlckwPmwrCDecUao8W010g9lzwM156
-	GxOfHJmlfJiPekk5fJO5AExwbO130VVgNkyHa18JrdtPragGlVLdA=
-X-Google-Smtp-Source: AGHT+IEt3VwJP5rxykKJZ4q+39Q3RxlylF53FJBHrqUXpOK98r/RkrMmPUkkduDxAmcDVa9qHWO1bA==
-X-Received: by 2002:a05:620a:254a:b0:8b2:1f8d:f115 with SMTP id af79cd13be357-8c37ebcb5b5mr442348785a.65.1767710634577;
-        Tue, 06 Jan 2026 06:43:54 -0800 (PST)
+        bh=Rog/A303nBNnKd9hedF+AVkollAQIitKAnxFL0w4GYY=;
+        b=EM7wg6uCqDIXAhfq6iEzdm/nM8E6yYrKVE3g0/a3SSR7es/qKvYEwMkN8G4aIqObad
+         ji7SmapOIOOyvZ124BqJgZotbAH30dCwdcEved3CHkBKvZmGodHYHakyCeuTMYhFO6du
+         A9G0sx4TVOyD9CqOgkF6fuw/oxHxM516Um0/S35ZZvBaXz3MImfoXKqtDUoCrx2GHcj1
+         730zJ1XL1MH5uqRRO7fg7NmllDXEWSoHdaLRWyv0vyZulArmeyFsUuwGSkpYlu6hJUfO
+         dwLEb/5SvJv+mSQhtHCRssismlLVn8zm5RasqPppkiLP7vRgTLQZ5Bi8iUevsxrAblX2
+         Ta+w==
+X-Forwarded-Encrypted: i=1; AJvYcCVEgUGi6Nnwfvr/U8bslk9Oj92iLw2dkqxf+kjqhWipGkf1yRTERPZMucgQjSGnoYtdMrjigZQWug==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxPnbjqBZhDx/kp33eg+3MH4FGUlouiYaoCcNsYWOynTbSBlmXM
+	C9c3kbpfkWy8PklSpB29nyCJnjM40Bq6ifaqbO8W5Pv1JApQSGkzo/Vi96KroCpV/M4=
+X-Gm-Gg: AY/fxX7LOvZej2zuXm1SFDeilRQHI3JUCMdUu8B/Va3qeUevs0KErMcrf6pLFgYdxey
+	AX0wcDcclZhQ5RNnvYGDT+qvlQOyrCt1YeG3qognfzb6OdEumLU9NcnABr2VKxJRTpVa/8AASOc
+	OiYjQ9GPjqRYrNaAtFsy84sHp/+PPJKnVHa+3IPmguUXVyaIuh2X8Au02zU5oMw/2geA6lHrMpr
+	J2Uje7zEBIMkjIFetJXoBHJePqKfxFSBm3oFEbEMjQEbE1L5TU4resG97FLX3aswFdW+g8kjXtN
+	5u7QhLbO6lyKasNXse8HwTAXWfz1LQm4nd0+/RPgF7YeeapwhZQLtCklOrD9kFQV3Iar6r0rf8F
+	LMVLt5n+NdeaU1X6fQ9y08CERF3z7+sEzDDgw07k+e9jMZPJMGnq+Pi/i/zMaWprFUh1HD156zH
+	/ZIHveJyTnuasQl/Y7/tJPSR/1QbvhGuujjLYW6GqXOkKmde9UyLU=
+X-Google-Smtp-Source: AGHT+IFYqi2toZCdCuQZsUh/EKjp61Zc98MPld9QD98KQo6pAb1fbhQWOQ4ktANOtoLEtXCIeuBplA==
+X-Received: by 2002:a05:620a:25ce:b0:8bb:a675:b540 with SMTP id af79cd13be357-8c37ebca405mr392613485a.69.1767710636222;
+        Tue, 06 Jan 2026 06:43:56 -0800 (PST)
 Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f51b732sm173883085a.25.2026.01.06.06.43.53
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f51b732sm173883085a.25.2026.01.06.06.43.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jan 2026 06:43:54 -0800 (PST)
-Message-ID: <9ceca23a-8709-43b4-b266-38cc0d924aac@riscstar.com>
-Date: Tue, 6 Jan 2026 08:43:52 -0600
+        Tue, 06 Jan 2026 06:43:55 -0800 (PST)
+Message-ID: <a198d2d2-0c82-4c9d-abca-d17221ef1453@riscstar.com>
+Date: Tue, 6 Jan 2026 08:43:54 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -69,86 +69,484 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] clk: spacemit: prepare common ccu header
+Subject: Re: [PATCH v3 2/4] clk: spacemit: extract common ccu functions
 To: Yixun Lan <dlan@gentoo.org>, Stephen Boyd <sboyd@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>,
  Philipp Zabel <p.zabel@pengutronix.de>
 Cc: Guodong Xu <guodong@riscstar.com>, Inochi Amaoto <inochiama@gmail.com>,
  linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ Yao Zi <me@ziyao.cc>
 References: <20260103-06-k1-clk-common-v3-0-6061d9f69eef@gentoo.org>
- <20260103-06-k1-clk-common-v3-1-6061d9f69eef@gentoo.org>
+ <20260103-06-k1-clk-common-v3-2-6061d9f69eef@gentoo.org>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260103-06-k1-clk-common-v3-1-6061d9f69eef@gentoo.org>
+In-Reply-To: <20260103-06-k1-clk-common-v3-2-6061d9f69eef@gentoo.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 1/3/26 1:26 AM, Yixun Lan wrote:
-> In order to prepare adding clock driver for new K3 SoC, extract generic
-> code to a separate common ccu header file, so they are not defined
-> in K1 SoC-specific file, and then can be shared by all clock drivers.
-> 
-> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> Refactor the probe function of SpacemiT's clock, and extract a common ccu
+> file, so new clock driver added in the future can share the same code,
+> which would lower the burden of maintenance. Since this commit changes the
+> module name where the auxiliary device registered, the auxiliary device id
+> need to be adjusted. Idea of the patch comes from the review of K3 clock
+> driver, please refer to this disucssion[1] for more detail.
 
-Looks good.
+Are all of the hunks of moved code moved without change (I
+think so)?  If so I think it's worth mentioning that.  If
+not, you should explain whatever differs, and why.  (I would
+expect the only thing that would have to change is making
+spacemit_ccu_probe() public.)
+
+I made one minor comment below.  I didn't verify, but I
+assume this is all just moving the code around, and based
+on that:
 
 Reviewed-by: Alex Elder <elder@riscstar.com>
 
+> Link: https://lore.kernel.org/all/aTo8sCPpVM1o9PKX@pie/ [1]
+> Suggested-by: Yao Zi <me@ziyao.cc>
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
 > ---
->   include/soc/spacemit/ccu.h       | 21 +++++++++++++++++++++
->   include/soc/spacemit/k1-syscon.h | 12 +-----------
->   2 files changed, 22 insertions(+), 11 deletions(-)
+>   drivers/clk/spacemit/ccu-k1.c     | 179 ++------------------------------------
+>   drivers/clk/spacemit/ccu_common.c | 171 ++++++++++++++++++++++++++++++++++++
+>   drivers/clk/spacemit/ccu_common.h |  10 +++
+>   3 files changed, 186 insertions(+), 174 deletions(-)
 > 
-> diff --git a/include/soc/spacemit/ccu.h b/include/soc/spacemit/ccu.h
-> new file mode 100644
-> index 000000000000..84dcdecccc05
-> --- /dev/null
-> +++ b/include/soc/spacemit/ccu.h
-> @@ -0,0 +1,21 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +
-> +#ifndef __SOC_SPACEMIT_CCU_H__
-> +#define __SOC_SPACEMIT_CCU_H__
-> +
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/regmap.h>
-> +
-> +/* Auxiliary device used to represent a CCU reset controller */
-> +struct spacemit_ccu_adev {
-> +	struct auxiliary_device adev;
-> +	struct regmap *regmap;
-> +};
-> +
-> +static inline struct spacemit_ccu_adev *
-> +to_spacemit_ccu_adev(struct auxiliary_device *adev)
-> +{
-> +	return container_of(adev, struct spacemit_ccu_adev, adev);
-> +}
-> +
-> +#endif /* __SOC_SPACEMIT_CCU_H__ */
-> diff --git a/include/soc/spacemit/k1-syscon.h b/include/soc/spacemit/k1-syscon.h
-> index 354751562c55..0be7a2e8d445 100644
-> --- a/include/soc/spacemit/k1-syscon.h
-> +++ b/include/soc/spacemit/k1-syscon.h
-> @@ -5,17 +5,7 @@
->   #ifndef __SOC_K1_SYSCON_H__
->   #define __SOC_K1_SYSCON_H__
+> diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
+> index 01d9485b615d..02c792a73759 100644
+> --- a/drivers/clk/spacemit/ccu-k1.c
+> +++ b/drivers/clk/spacemit/ccu-k1.c
+> @@ -5,15 +5,10 @@
+>    */
 >   
-> -/* Auxiliary device used to represent a CCU reset controller */
-> -struct spacemit_ccu_adev {
-> -	struct auxiliary_device adev;
-> -	struct regmap *regmap;
+>   #include <linux/array_size.h>
+> -#include <linux/auxiliary_bus.h>
+>   #include <linux/clk-provider.h>
+> -#include <linux/delay.h>
+> -#include <linux/idr.h>
+> -#include <linux/mfd/syscon.h>
+>   #include <linux/minmax.h>
+>   #include <linux/module.h>
+>   #include <linux/platform_device.h>
+> -#include <linux/slab.h>
+>   #include <soc/spacemit/k1-syscon.h>
+>   
+>   #include "ccu_common.h"
+> @@ -23,14 +18,6 @@
+>   
+>   #include <dt-bindings/clock/spacemit,k1-syscon.h>
+>   
+> -struct spacemit_ccu_data {
+> -	const char *reset_name;
+> -	struct clk_hw **hws;
+> -	size_t num;
 > -};
 > -
-> -static inline struct spacemit_ccu_adev *
-> -to_spacemit_ccu_adev(struct auxiliary_device *adev)
-> -{
-> -	return container_of(adev, struct spacemit_ccu_adev, adev);
-> -}
-> +#include "ccu.h"
+> -static DEFINE_IDA(auxiliary_ids);
+> -
+>   /* APBS clocks start, APBS region contains and only contains all PLL clocks */
 >   
->   /* APBS register offset */
->   #define APBS_PLL1_SWCR1			0x100
+>   /*
+> @@ -1001,167 +988,6 @@ static const struct spacemit_ccu_data k1_ccu_apbc2_data = {
+>   	.reset_name	= "apbc2-reset",
+>   };
+>   
+> -static int spacemit_ccu_register(struct device *dev,
+> -				 struct regmap *regmap,
+> -				 struct regmap *lock_regmap,
+> -				 const struct spacemit_ccu_data *data)
+> -{
+> -	struct clk_hw_onecell_data *clk_data;
+> -	int i, ret;
+> -
+> -	/* Nothing to do if the CCU does not implement any clocks */
+> -	if (!data->hws)
+> -		return 0;
+> -
+> -	clk_data = devm_kzalloc(dev, struct_size(clk_data, hws, data->num),
+> -				GFP_KERNEL);
+> -	if (!clk_data)
+> -		return -ENOMEM;
+> -
+> -	clk_data->num = data->num;
+> -
+> -	for (i = 0; i < data->num; i++) {
+> -		struct clk_hw *hw = data->hws[i];
+> -		struct ccu_common *common;
+> -		const char *name;
+> -
+> -		if (!hw) {
+> -			clk_data->hws[i] = ERR_PTR(-ENOENT);
+> -			continue;
+> -		}
+> -
+> -		name = hw->init->name;
+> -
+> -		common = hw_to_ccu_common(hw);
+> -		common->regmap		= regmap;
+> -		common->lock_regmap	= lock_regmap;
+> -
+> -		ret = devm_clk_hw_register(dev, hw);
+> -		if (ret) {
+> -			dev_err(dev, "Cannot register clock %d - %s\n",
+> -				i, name);
+> -			return ret;
+> -		}
+> -
+> -		clk_data->hws[i] = hw;
+> -	}
+> -
+> -	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
+> -	if (ret)
+> -		dev_err(dev, "failed to add clock hardware provider (%d)\n", ret);
+> -
+> -	return ret;
+> -}
+> -
+> -static void spacemit_cadev_release(struct device *dev)
+> -{
+> -	struct auxiliary_device *adev = to_auxiliary_dev(dev);
+> -
+> -	ida_free(&auxiliary_ids, adev->id);
+> -	kfree(to_spacemit_ccu_adev(adev));
+> -}
+> -
+> -static void spacemit_adev_unregister(void *data)
+> -{
+> -	struct auxiliary_device *adev = data;
+> -
+> -	auxiliary_device_delete(adev);
+> -	auxiliary_device_uninit(adev);
+> -}
+> -
+> -static int spacemit_ccu_reset_register(struct device *dev,
+> -				       struct regmap *regmap,
+> -				       const char *reset_name)
+> -{
+> -	struct spacemit_ccu_adev *cadev;
+> -	struct auxiliary_device *adev;
+> -	int ret;
+> -
+> -	/* Nothing to do if the CCU does not implement a reset controller */
+> -	if (!reset_name)
+> -		return 0;
+> -
+> -	cadev = kzalloc(sizeof(*cadev), GFP_KERNEL);
+> -	if (!cadev)
+> -		return -ENOMEM;
+> -
+> -	cadev->regmap = regmap;
+> -
+> -	adev = &cadev->adev;
+> -	adev->name = reset_name;
+> -	adev->dev.parent = dev;
+> -	adev->dev.release = spacemit_cadev_release;
+> -	adev->dev.of_node = dev->of_node;
+> -	ret = ida_alloc(&auxiliary_ids, GFP_KERNEL);
+> -	if (ret < 0)
+> -		goto err_free_cadev;
+> -	adev->id = ret;
+> -
+> -	ret = auxiliary_device_init(adev);
+> -	if (ret)
+> -		goto err_free_aux_id;
+> -
+> -	ret = auxiliary_device_add(adev);
+> -	if (ret) {
+> -		auxiliary_device_uninit(adev);
+> -		return ret;
+> -	}
+> -
+> -	return devm_add_action_or_reset(dev, spacemit_adev_unregister, adev);
+> -
+> -err_free_aux_id:
+> -	ida_free(&auxiliary_ids, adev->id);
+> -err_free_cadev:
+> -	kfree(cadev);
+> -
+> -	return ret;
+> -}
+> -
+> -static int k1_ccu_probe(struct platform_device *pdev)
+> -{
+> -	struct regmap *base_regmap, *lock_regmap = NULL;
+> -	const struct spacemit_ccu_data *data;
+> -	struct device *dev = &pdev->dev;
+> -	int ret;
+> -
+> -	base_regmap = device_node_to_regmap(dev->of_node);
+> -	if (IS_ERR(base_regmap))
+> -		return dev_err_probe(dev, PTR_ERR(base_regmap),
+> -				     "failed to get regmap\n");
+> -
+> -	/*
+> -	 * The lock status of PLLs locate in MPMU region, while PLLs themselves
+> -	 * are in APBS region. Reference to MPMU syscon is required to check PLL
+> -	 * status.
+> -	 */
+> -	if (of_device_is_compatible(dev->of_node, "spacemit,k1-pll")) {
+> -		struct device_node *mpmu = of_parse_phandle(dev->of_node,
+> -							    "spacemit,mpmu", 0);
+> -		if (!mpmu)
+> -			return dev_err_probe(dev, -ENODEV,
+> -					     "Cannot parse MPMU region\n");
+> -
+> -		lock_regmap = device_node_to_regmap(mpmu);
+> -		of_node_put(mpmu);
+> -
+> -		if (IS_ERR(lock_regmap))
+> -			return dev_err_probe(dev, PTR_ERR(lock_regmap),
+> -					     "failed to get lock regmap\n");
+> -	}
+> -
+> -	data = of_device_get_match_data(dev);
+> -
+> -	ret = spacemit_ccu_register(dev, base_regmap, lock_regmap, data);
+> -	if (ret)
+> -		return dev_err_probe(dev, ret, "failed to register clocks\n");
+> -
+> -	ret = spacemit_ccu_reset_register(dev, base_regmap, data->reset_name);
+> -	if (ret)
+> -		return dev_err_probe(dev, ret, "failed to register resets\n");
+> -
+> -	return 0;
+> -}
+> -
+>   static const struct of_device_id of_k1_ccu_match[] = {
+>   	{
+>   		.compatible	= "spacemit,k1-pll",
+> @@ -1195,6 +1021,11 @@ static const struct of_device_id of_k1_ccu_match[] = {
+>   };
+>   MODULE_DEVICE_TABLE(of, of_k1_ccu_match);
+>   
+> +static int k1_ccu_probe(struct platform_device *pdev)
+> +{
+> +	return spacemit_ccu_probe(pdev, "spacemit,k1-pll");
+> +}
+> +
+>   static struct platform_driver k1_ccu_driver = {
+>   	.driver = {
+>   		.name		= "spacemit,k1-ccu",
+> diff --git a/drivers/clk/spacemit/ccu_common.c b/drivers/clk/spacemit/ccu_common.c
+> index 4412c4104dab..5f05b17f8452 100644
+> --- a/drivers/clk/spacemit/ccu_common.c
+> +++ b/drivers/clk/spacemit/ccu_common.c
+> @@ -1,6 +1,177 @@
+>   // SPDX-License-Identifier: GPL-2.0-only
+>   
+> +#include <linux/clk-provider.h>
+> +#include <linux/device/devres.h>
+> +#include <linux/mfd/syscon.h>
+>   #include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/slab.h>
+> +#include <soc/spacemit/ccu.h>
+> +
+> +#include "ccu_common.h"
+> +
+> +static DEFINE_IDA(auxiliary_ids);
+
+I'd insert a space here to make the definition above stand out a
+bit more.
+
+> +static int spacemit_ccu_register(struct device *dev,
+> +				 struct regmap *regmap,
+> +				 struct regmap *lock_regmap,
+> +				 const struct spacemit_ccu_data *data)
+> +{
+> +	struct clk_hw_onecell_data *clk_data;
+> +	int i, ret;
+> +
+> +	/* Nothing to do if the CCU does not implement any clocks */
+> +	if (!data->hws)
+> +		return 0;
+> +
+> +	clk_data = devm_kzalloc(dev, struct_size(clk_data, hws, data->num),
+> +				GFP_KERNEL);
+> +	if (!clk_data)
+> +		return -ENOMEM;
+> +
+> +	clk_data->num = data->num;
+> +
+> +	for (i = 0; i < data->num; i++) {
+> +		struct clk_hw *hw = data->hws[i];
+> +		struct ccu_common *common;
+> +		const char *name;
+> +
+> +		if (!hw) {
+> +			clk_data->hws[i] = ERR_PTR(-ENOENT);
+> +			continue;
+> +		}
+> +
+> +		name = hw->init->name;
+> +
+> +		common = hw_to_ccu_common(hw);
+> +		common->regmap		= regmap;
+> +		common->lock_regmap	= lock_regmap;
+> +
+> +		ret = devm_clk_hw_register(dev, hw);
+> +		if (ret) {
+> +			dev_err(dev, "Cannot register clock %d - %s\n",
+> +				i, name);
+> +			return ret;
+> +		}
+> +
+> +		clk_data->hws[i] = hw;
+> +	}
+> +
+> +	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
+> +	if (ret)
+> +		dev_err(dev, "failed to add clock hardware provider (%d)\n", ret);
+> +
+> +	return ret;
+> +}
+> +
+> +static void spacemit_cadev_release(struct device *dev)
+> +{
+> +	struct auxiliary_device *adev = to_auxiliary_dev(dev);
+> +
+> +	ida_free(&auxiliary_ids, adev->id);
+> +	kfree(to_spacemit_ccu_adev(adev));
+> +}
+> +
+> +static void spacemit_adev_unregister(void *data)
+> +{
+> +	struct auxiliary_device *adev = data;
+> +
+> +	auxiliary_device_delete(adev);
+> +	auxiliary_device_uninit(adev);
+> +}
+> +
+> +static int spacemit_ccu_reset_register(struct device *dev,
+> +				       struct regmap *regmap,
+> +				       const char *reset_name)
+> +{
+> +	struct spacemit_ccu_adev *cadev;
+> +	struct auxiliary_device *adev;
+> +	int ret;
+> +
+> +	/* Nothing to do if the CCU does not implement a reset controller */
+> +	if (!reset_name)
+> +		return 0;
+> +
+> +	cadev = kzalloc(sizeof(*cadev), GFP_KERNEL);
+> +	if (!cadev)
+> +		return -ENOMEM;
+> +
+> +	cadev->regmap = regmap;
+> +
+> +	adev = &cadev->adev;
+> +	adev->name = reset_name;
+> +	adev->dev.parent = dev;
+> +	adev->dev.release = spacemit_cadev_release;
+> +	adev->dev.of_node = dev->of_node;
+> +	ret = ida_alloc(&auxiliary_ids, GFP_KERNEL);
+> +	if (ret < 0)
+> +		goto err_free_cadev;
+> +	adev->id = ret;
+> +
+> +	ret = auxiliary_device_init(adev);
+> +	if (ret)
+> +		goto err_free_aux_id;
+> +
+> +	ret = auxiliary_device_add(adev);
+> +	if (ret) {
+> +		auxiliary_device_uninit(adev);
+> +		return ret;
+> +	}
+> +
+> +	return devm_add_action_or_reset(dev, spacemit_adev_unregister, adev);
+> +
+> +err_free_aux_id:
+> +	ida_free(&auxiliary_ids, adev->id);
+> +err_free_cadev:
+> +	kfree(cadev);
+> +
+> +	return ret;
+> +}
+> +
+> +int spacemit_ccu_probe(struct platform_device *pdev, const char *compat)
+> +{
+> +	struct regmap *base_regmap, *lock_regmap = NULL;
+> +	const struct spacemit_ccu_data *data;
+> +	struct device *dev = &pdev->dev;
+> +	int ret;
+> +
+> +	base_regmap = device_node_to_regmap(dev->of_node);
+> +	if (IS_ERR(base_regmap))
+> +		return dev_err_probe(dev, PTR_ERR(base_regmap),
+> +				     "failed to get regmap\n");
+> +
+> +	/*
+> +	 * The lock status of PLLs locate in MPMU region, while PLLs themselves
+> +	 * are in APBS region. Reference to MPMU syscon is required to check PLL
+> +	 * status.
+> +	 */
+> +	if (compat && of_device_is_compatible(dev->of_node, compat)) {
+> +		struct device_node *mpmu = of_parse_phandle(dev->of_node,
+> +							    "spacemit,mpmu", 0);
+> +		if (!mpmu)
+> +			return dev_err_probe(dev, -ENODEV,
+> +					     "Cannot parse MPMU region\n");
+> +
+> +		lock_regmap = device_node_to_regmap(mpmu);
+> +		of_node_put(mpmu);
+> +
+> +		if (IS_ERR(lock_regmap))
+> +			return dev_err_probe(dev, PTR_ERR(lock_regmap),
+> +					     "failed to get lock regmap\n");
+> +	}
+> +
+> +	data = of_device_get_match_data(dev);
+> +
+> +	ret = spacemit_ccu_register(dev, base_regmap, lock_regmap, data);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to register clocks\n");
+> +
+> +	ret = spacemit_ccu_reset_register(dev, base_regmap, data->reset_name);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to register resets\n");
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_NS_GPL(spacemit_ccu_probe, "CLK_SPACEMIT");
+>   
+>   MODULE_DESCRIPTION("SpacemiT CCU common clock driver");
+>   MODULE_LICENSE("GPL");
+> diff --git a/drivers/clk/spacemit/ccu_common.h b/drivers/clk/spacemit/ccu_common.h
+> index da72f3836e0b..7ae244b5eace 100644
+> --- a/drivers/clk/spacemit/ccu_common.h
+> +++ b/drivers/clk/spacemit/ccu_common.h
+> @@ -7,6 +7,8 @@
+>   #ifndef _CCU_COMMON_H_
+>   #define _CCU_COMMON_H_
+>   
+> +#include <linux/clk-provider.h>
+> +#include <linux/platform_device.h>
+>   #include <linux/regmap.h>
+>   
+>   struct ccu_common {
+> @@ -36,6 +38,12 @@ static inline struct ccu_common *hw_to_ccu_common(struct clk_hw *hw)
+>   	return container_of(hw, struct ccu_common, hw);
+>   }
+>   
+> +struct spacemit_ccu_data {
+> +	const char *reset_name;
+> +	struct clk_hw **hws;
+> +	size_t num;
+> +};
+> +
+>   #define ccu_read(c, reg)						\
+>   	({								\
+>   		u32 tmp;						\
+> @@ -45,4 +53,6 @@ static inline struct ccu_common *hw_to_ccu_common(struct clk_hw *hw)
+>   #define ccu_update(c, reg, mask, val) \
+>   	regmap_update_bits((c)->regmap, (c)->reg_##reg, mask, val)
+>   
+> +int spacemit_ccu_probe(struct platform_device *pdev, const char *compat);
+> +
+>   #endif /* _CCU_COMMON_H_ */
 > 
 
