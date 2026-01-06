@@ -1,119 +1,109 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF09314A82
-	for <spacemit@lists.linux.dev>; Tue,  6 Jan 2026 14:44:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8021327E056
+	for <spacemit@lists.linux.dev>; Tue,  6 Jan 2026 22:28:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767710643; cv=none; b=Yg9ai3DhrLaTiZBQtX1Tsoc94plOQCmoc9bK8/7v2wbVluZkXAN5E6K0Q8EPfq5lwQ+OG44/YlNC/YX2KtHruNK8GJSbG/B6caWyEYG1zslOmRsp78CY2p8maPZOqCaxNmMLP1XSxZDEbGJChCr64kC6l2Y8Vybw+jFSYytikuc=
+	t=1767738488; cv=none; b=NQ8YtOmGmkaSzTle44hVvAk08Hm3Ba9I+dXYd99u7oJ5GzCSNg9stXQdAhpTK8qgXxljHjkQmsRNnBjC48CTEr+R5YZXrsHtouuv/yYuhRQZ04sE/02GlcCSP5CTI1PVicOMLNeId/7CW1/By3bKITZaPfpREO5h/ZSN4ck1Voc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767710643; c=relaxed/simple;
-	bh=xWDoSIsxgM+RQVtckDWggwk39PYhLqYdEi36Mi+d7Xw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YDw+m8bmdH7iQy+BULF1hcyuR72NK5LG69SsRoS2qoJe/7jTJP8AiQAxRQhDEXXXetcGBW+XUANewCcWB0c76vAabBkJvXHa8V4xpn0f1PPwlvu6F7YiIWpbM6c2hZZjOgpYVgPmARE4k5Am0/XFq4TFG4V/B04fuwUATyQS9sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=o2eBF8ie; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="o2eBF8ie"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8b1e54aefc5so81701785a.1
-        for <spacemit@lists.linux.dev>; Tue, 06 Jan 2026 06:44:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767710640; x=1768315440; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a0O6uqIuffeH+rUN8PGPXOYCGY9UdGKz4wTv0c6GmNM=;
-        b=o2eBF8ieDR6VQyPashTtrVk5EGJeMWsr/tpgGZ3fcIvT3CEaf/mumrRQjZ7QaEWr4H
-         cZ1n4qGUSL95KGIe9tuJLytqhyePBwscKvlx7CpqsPNPImeYNP1FvK5ilHEqguZ7XEyB
-         FrMu3Va+uGpf5pEtdAkgrw9HHCYQGZjrXfldlC5Ji1LUVQK3DRuPI732HUH6/Vj281kt
-         /J1KQzIcLMKeHz1LEQtikIP0AvfSTEiUD1ZWIrVy4qzfqmWtRhgg9PfkTLPbuYEC9Bz4
-         jazCiiL+gk6Qem3n1NCOIFUvc3DQZk9sXCA5nm6yHOGuIMED1PuEWVBjOHPlx9hUwx3F
-         VcAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767710640; x=1768315440;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a0O6uqIuffeH+rUN8PGPXOYCGY9UdGKz4wTv0c6GmNM=;
-        b=QgsqKalHGFmyZB1OAwAgvcoCV4L78cRJmJjX0C0FhMizTp8gf9E6qBmk3pLQCBvCre
-         +UKxmDBgJcV2HpA6zITa+CpugRqQBUMIHRxO1lUGdskDCdNK7zhcfN88mKuFNBcE1ZPP
-         8CmKyNx466cUG5DVFDvCiGSv6hpLLxJVDZTr3UjdB7pefZfJyjNdBxWI3SPhjnHjpYok
-         ajPoFLlKeuCFb4iZsB1TfmmMxd/NUzuwcA+RfD/3ChAKG07kQN1Io1CUeUXgAmC6c2t3
-         NtX3O5tKuo8uKxAQbdBBN4xDMl/rVISI8dw69vQd0mHej2QWHgDg/yoAk0ZpKaHBZ83Z
-         k7yQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVya6hSHgIQapun+ZciZq1BenVOU8nYGt/4tmFSWCro68BgUMypBOGoiFHN0VU3UwBkwC4XXHLi9g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzQD+bJKQTpdIrcNiCn0MhMdaaEi4UkIxbQVNH75GeUlGwjK8Bv
-	z7lHjwyEBoY5XTCzLkG+IQz2zLx9LJghcYEFirRXc53PycA3/hX4daNsW7/smnQ7F4o=
-X-Gm-Gg: AY/fxX67VflRQPk3J0MHhGD8G3pdF+6qB+h6FjdHm5TIsqd3Wd/fny9s6dpR+MLnAhZ
-	Dz4323ztub1e+D7P3JzpEmk0N8QDzhRxC74vt0JsZMzHRJVMvaA6kIqZTcNkpwK8t6S3sxlN/gE
-	g+VgbhlqZOS+Z8a99YriVjVByJith4T0UBCG7ltRPl3793EB/U5+H/j/RDymDNg1qLQO59Ww5wx
-	QhOLOfIHY1czi0grgEtACeYVpJ3LqvSWucrkKNmkLTnflq952p/VK8/X0Kv0cVPVBVCmBvMaQ3n
-	Pu2mLmvnnIUy6XL8+ourVgnaxrgxoK4EOTdeEQfi7YY84zS/sxC5k/2gqyKmMzoVTSgJ9ztvdsj
-	jP91V3PoaHZjQYuZLVeUIpWj+by7t1YI2TyJ/K9/UcvQlnwWgmSN1rwYAcgv/kp8KXlv17pvae+
-	RRGfbgtkz51wb1/glGZtkXn2J/lx+FFkERR0S1Hv7UeaZgRocR3MszDF6gc9e7FA==
-X-Google-Smtp-Source: AGHT+IGrfIQofU9ZXGHQqOM8HyQbxngWETjyA4UE68tcePwXWmd7b3PCLuyw9SW25mP3XlxN8HPLDw==
-X-Received: by 2002:a05:620a:1725:b0:8b2:e9d2:9c69 with SMTP id af79cd13be357-8c37eb6cbcamr425625385a.22.1767710640277;
-        Tue, 06 Jan 2026 06:44:00 -0800 (PST)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f51b732sm173883085a.25.2026.01.06.06.43.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jan 2026 06:44:00 -0800 (PST)
-Message-ID: <058d3911-ff2d-4151-b585-5bcb8810bedf@riscstar.com>
-Date: Tue, 6 Jan 2026 08:43:59 -0600
+	s=arc-20240116; t=1767738488; c=relaxed/simple;
+	bh=6CiPxeQxVfJU8cdBtL7Wlr0ubBG27Af5dVrFloYcVzM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OK3e6oZJrnq+RqHdieCaVxXCtZBx/DyXKogq++ZlUz8BtPbSdozreePfQPdCChQu19yjpRaGUqnV9VgYJrFncfqBj0LmWqlwVfd0NrE239YJWtfc6WTuQHVSLm9J7ShEcln7T+tik486tdILRzxtyGG9550/xRjSSmajD5P5o0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 7B48C340F7B;
+	Tue, 06 Jan 2026 22:28:04 +0000 (UTC)
+Date: Wed, 7 Jan 2026 06:27:53 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Alex Elder <elder@riscstar.com>
+Cc: Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Guodong Xu <guodong@riscstar.com>,
+	Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, Yao Zi <me@ziyao.cc>
+Subject: Re: [PATCH v3 2/4] clk: spacemit: extract common ccu functions
+Message-ID: <20260106222753-GYA2092678@gentoo.org>
+References: <20260103-06-k1-clk-common-v3-0-6061d9f69eef@gentoo.org>
+ <20260103-06-k1-clk-common-v3-2-6061d9f69eef@gentoo.org>
+ <a198d2d2-0c82-4c9d-abca-d17221ef1453@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] reset: spacemit: fix auxiliary device id
-To: Yixun Lan <dlan@gentoo.org>, Stephen Boyd <sboyd@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>,
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Guodong Xu <guodong@riscstar.com>, Inochi Amaoto <inochiama@gmail.com>,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-References: <20260103-06-k1-clk-common-v3-0-6061d9f69eef@gentoo.org>
- <20260103-06-k1-clk-common-v3-4-6061d9f69eef@gentoo.org>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260103-06-k1-clk-common-v3-4-6061d9f69eef@gentoo.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a198d2d2-0c82-4c9d-abca-d17221ef1453@riscstar.com>
 
-On 1/3/26 1:26 AM, Yixun Lan wrote:
-> Due to the auxiliary register procedure moved to ccu common module where
-> the module name changed to spacemit_ccu, then the reset auxiliary device
-> register id also need to be adjusted in order to prepare for adding new
-> K3 reset driver, otherwise two reset drivers will claim to support same
-> "compatible" auxiliary device.
+Hi Alex,
+
+On 08:43 Tue 06 Jan     , Alex Elder wrote:
+> On 1/3/26 1:26 AM, Yixun Lan wrote:
+> > Refactor the probe function of SpacemiT's clock, and extract a common ccu
+> > file, so new clock driver added in the future can share the same code,
+> > which would lower the burden of maintenance. Since this commit changes the
+> > module name where the auxiliary device registered, the auxiliary device id
+> > need to be adjusted. Idea of the patch comes from the review of K3 clock
+> > driver, please refer to this disucssion[1] for more detail.
 > 
-> Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> Are all of the hunks of moved code moved without change (I
+> think so)?  If so I think it's worth mentioning that.  If
+> not, you should explain whatever differs, and why.  (I would
+yes, no literal changes with this patch except probe() refactored,
+and the real effective change is the module name changed which
+I mentioned already
 
-This would ideally be merged with the previous patch.  Maybe
-Philipp can negotiate with Stephen to have that happen.
+> expect the only thing that would have to change is making
+> spacemit_ccu_probe() public.)
+to make spacemit_ccu_probe() public, we move SoC specific code
+out of this function which should have no functionality change..
 
-Reviewed-by: Alex Elder <elder@riscstar.com>
+(I think the above commit message is ok, and would not plan to send
+out another version if no serious comment incoming, unless you insist)
 
-> ---
->   drivers/reset/reset-spacemit.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/reset/reset-spacemit.c b/drivers/reset/reset-spacemit.c
-> index e1272aff28f7..cc7fd1f8750d 100644
-> --- a/drivers/reset/reset-spacemit.c
-> +++ b/drivers/reset/reset-spacemit.c
-> @@ -278,7 +278,7 @@ static int spacemit_reset_probe(struct auxiliary_device *adev,
->   
->   #define K1_AUX_DEV_ID(_unit) \
->   	{ \
-> -		.name = "spacemit_ccu_k1." #_unit "-reset", \
-> +		.name = "spacemit_ccu.k1-" #_unit "-reset", \
->   		.driver_data = (kernel_ulong_t)&k1_ ## _unit ## _reset_data, \
->   	}
->   
+> I made one minor comment below.  I didn't verify, but I
+> assume this is all just moving the code around, and based
+> on that:
 > 
+> Reviewed-by: Alex Elder <elder@riscstar.com>
+> 
+[snip]...
+> > diff --git a/drivers/clk/spacemit/ccu_common.c b/drivers/clk/spacemit/ccu_common.c
+> > index 4412c4104dab..5f05b17f8452 100644
+> > --- a/drivers/clk/spacemit/ccu_common.c
+> > +++ b/drivers/clk/spacemit/ccu_common.c
+> > @@ -1,6 +1,177 @@
+> >   // SPDX-License-Identifier: GPL-2.0-only
+> >   
+> > +#include <linux/clk-provider.h>
+> > +#include <linux/device/devres.h>
+> > +#include <linux/mfd/syscon.h>
+> >   #include <linux/module.h>
+> > +#include <linux/of.h>
+> > +#include <linux/slab.h>
+> > +#include <soc/spacemit/ccu.h>
+> > +
+> > +#include "ccu_common.h"
+> > +
+> > +static DEFINE_IDA(auxiliary_ids);
+> 
+> I'd insert a space here to make the definition above stand out a
+> bit more.
+> 
+do you mean a blank line?
+(I could do this while applying this patch since it's quite trivial..)
 
+-- 
+Yixun Lan (dlan)
