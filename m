@@ -1,29 +1,100 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282B22135D7
-	for <spacemit@lists.linux.dev>; Tue,  6 Jan 2026 03:09:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63788309EE5
+	for <spacemit@lists.linux.dev>; Tue,  6 Jan 2026 12:36:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767669001; cv=none; b=lE+ZGJryWR6yGPPXXJdteAKHi5bbWv2VHwB9KOCJqmx06WiZFg+4jqw2tcs/Gv9bDdIZGRtGIAmY9ySD46P9sUFY9iIuLdYFYlMHyp6OWPm1vIDjugyBLLtCfQ7K3OC7mJAi4aWeml1+vfA0KPcx1k/zSWi/JYBo/wf5rxJRccw=
+	t=1767703012; cv=none; b=pDOx6LGtoiYj8da6bMWB/LLUfsD/Q6RoOGjoFSbGIO+B7KRBTU0XRJThrpNpECNGUyyp8GP50T5ixaQUTE/O3FBGmAkX5rcq4V6OrKw2cdOSbrad8GsVYhohuIotGymCICQzg+ktfVyoYZCu7vRGw01OmkgS9gTF/e+8KDAGzXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767669001; c=relaxed/simple;
-	bh=0nb3jxQTRtcOKvtrQjjeKH+5pJa7gVxQM42DMiqMS04=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Hi/AkrSY+qhenw7j8CSOqd+0J50Rr1j48Jed/OJOeESXSKxSw09me5iIIQqBGBmLMWpFyOuvEt3qXz6dilXd0fJMZwdK1At1nI5yrzavxWA9RmC9QGl6fzS+j/lNLYz2lriaCXK9hTPwn6JHSRTISw3L8YYKK/RB3xTa3OHusfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [127.0.0.1] (unknown [116.232.18.222])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 622093411D3;
-	Tue, 06 Jan 2026 03:09:56 +0000 (UTC)
-From: Yixun Lan <dlan@gentoo.org>
-Date: Tue, 06 Jan 2026 11:09:33 +0800
-Subject: [PATCH v3 2/2] gpio: spacemit: Add GPIO support for K3 SoC
+	s=arc-20240116; t=1767703012; c=relaxed/simple;
+	bh=nbxSbu3nNELHHaWQFLTKfq0RQnQb8K45axVnhsVUdMM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=lO/xgCPvlvCQHmhMg+ObnWDo6a+FPbeMItGe7jDkZ4aEBBLa208c2H3grdjy5+0oWp16LMZUbccVfuM9s228bS4LmodWfk24nLInypKpS8GQNWBlH0HCJGFrvNPDDhZJ/jypQaWyiAS7yz4Ibb1iVF698hzQNXizir1RO/yrNMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LHfY6ROv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RPyiEHe8; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LHfY6ROv";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RPyiEHe8"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 606B7t0V2253728
+	for <spacemit@lists.linux.dev>; Tue, 6 Jan 2026 12:36:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	aFdsrGyQzvH3//bxJ/J7dg4vdFiIDNfK+TRRwe0c26E=; b=LHfY6ROv72NXf4Ix
+	BM1LBq/DXviimD3ArWildiNn/cqwURog0HoDfMzQRh70ugKImKOKJ7n77m6mxN9k
+	LBh/VVg+K2o4CMx/LOF//MsyIgQvAWg0yzt0v9eu4u7/PMe6u0yl3pV4bCsSdW8w
+	ZpvBiMSeVEePssN64WYKBmbKfM/yO9iQ+8HAck57Z3JWjY+FcFOaV1FAGIJrRjAB
+	VChlXrIrwZwZpFfIarxV9GZC/mGcUTbxWLy9jE5TTM8n7Olxwfnjhz7ROFOCyaFz
+	wQnjDvxH9OLP9DYBkcQaEXfg6lMYH+NnvitjQOEkkn4Uigq0xysh/Thz1db1Mslr
+	7QhZrw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bgu421c20-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Tue, 06 Jan 2026 12:36:48 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ee09693109so18353261cf.3
+        for <spacemit@lists.linux.dev>; Tue, 06 Jan 2026 04:36:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1767703008; x=1768307808; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aFdsrGyQzvH3//bxJ/J7dg4vdFiIDNfK+TRRwe0c26E=;
+        b=RPyiEHe8OBqhP1Bnm/KIIKEbypZaJZ+txt1Qs0wvUKDasR1cU8VxscyVw0iystYYxh
+         wnbc2XvVIbwYg3Co6ZRxZYB1E/mu5syGCBIvTD7n7ajqNobS2YRbp8Ly4NWj0Alg4nyG
+         3wOknsNskgZfGGKNkodJ07l1fwayXXTSiuXng/3Y457swDgfDG8EVX1lnlChk41QBksc
+         EurP2+4oT303D5hX9wqwlkmhAQ49CT/vhn4PEWf7/dVLtGDrFpIapBpl5pKjUkv4Vm5C
+         lUurvucfOnnj9f2V/p5YPv+zhi7CMlR+alLFib7MXtf9kJfm7S0o/mscrxN0Mrj2DO+4
+         FeIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767703008; x=1768307808;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=aFdsrGyQzvH3//bxJ/J7dg4vdFiIDNfK+TRRwe0c26E=;
+        b=F5knpH3hVVTTTgNWQj4DDgfl09uV2f5jO3TMz5SIZzjp3Coj/Dbz7LLc6k6ZzFpJmq
+         TzyleUTYQZ7Edl5eIKLc8RP0kTp68fkbi2oVKS0VAlZ9S7V7PAm5MnXyVeScY71ktAcy
+         d5ESdOBmU/YBnckWuViwwJiGefhV5HCjwIGF+LOZzaeB9fHSKanrO5te1IaPVuCNQxno
+         o2RRUF8tnwPFjrmtaSG9Ftciau9FV2b+BZzSe/k0NUmQym3JX1D6P4PRbSI0cJPHacCR
+         m/ZM5faLAEx/0eF1KtAH4sZxrYudC8/Nwt/lyYyulS2CaliAzjtR24QxP/gR5YpF0xkp
+         Vucw==
+X-Forwarded-Encrypted: i=1; AJvYcCUhMMBXsgqhckhc31XCVkeXgz+4r+AT55YHAklYB5wsHM4FXiDrGmiujqaw5U/F5Gj7dxVwHUTHMg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwHHml9w6iTmNxaIuknpQOZfD4i8LGEWczMLjwoFrWklEfN8z0s
+	MThcYTSQt1UGQ9Ifg0Md9T+N26J4bC/V5N+tlqYrEsidiLC3FHvXc/6khyepDls6eHUdxKR4Q0w
+	TUDx/Qq7lSBZYpOpQhOHdvzlUaQcSKjIYaZhcOOw45OxS2kj7xokO7WNkl/XfaQ==
+X-Gm-Gg: AY/fxX4KUZF9lTrZjQGYz5Rm7Zb+gLbxbATvW8GFwOar8A5wcWn04qm+p52Urv7Hhd+
+	ypfKWCwcaQXEw3fbAO7pIXBsi0nSJQeYfdcKbd2fVfCMZhl5q+khGsaJbr9Qm5KvzHBFdvSlWO7
+	CoxlmnDvNFJNPOn6ZoL0H4r24Ged4ojqzA1B/RcwwHeppJKA9Fi7gtYfBw5+qbpJ32KVDTNEN5V
+	nBZRsWWq0KmGCv2G1DRGBKryM7Szj1I7FNwsgegE4wqLjUZ/WdzO3q8NpnyoZJi7+6G/kpQKxwN
+	GE9nU2bD2KWoAgU4BhsS4qkRudZX9ldJhS7qJ/A0v/1/ssl6MCSYLohXS/k6bK7FwVIdSIBWkah
+	g0kRtI5HE9SBLv4iAVq4s3VR7J2/2FppZ+zIMlhU=
+X-Received: by 2002:a05:622a:1baa:b0:4ee:1875:42fa with SMTP id d75a77b69052e-4ffa769aa45mr32669251cf.1.1767703008380;
+        Tue, 06 Jan 2026 04:36:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF3OlX/lVZ9eRQ3aOxiW51OeVVVBJf12PTSv0Qtj2HDqO8JCJLlFXFtDil0tgcdGIzjsiK6SA==
+X-Received: by 2002:a05:622a:1baa:b0:4ee:1875:42fa with SMTP id d75a77b69052e-4ffa769aa45mr32669031cf.1.1767703007978;
+        Tue, 06 Jan 2026 04:36:47 -0800 (PST)
+Received: from brgl-qcom.home ([2a01:cb1d:dc:7e00:3980:9f91:8651:f23b])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d7f68f686sm40728415e9.3.2026.01.06.04.36.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jan 2026 04:36:47 -0800 (PST)
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+To: Bartosz Golaszewski <brgl@kernel.org>, Linus Walleij <linusw@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/2] riscv: spacemit: add gpio support for K3 SoC
+Date: Tue,  6 Jan 2026 13:36:45 +0100
+Message-ID: <176770300365.41755.2635230320486109502.b4-ty@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260106-02-k3-gpio-v3-0-4800c214810b@gentoo.org>
+References: <20260106-02-k3-gpio-v3-0-4800c214810b@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -31,342 +102,46 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260106-02-k3-gpio-v3-2-4800c214810b@gentoo.org>
-References: <20260106-02-k3-gpio-v3-0-4800c214810b@gentoo.org>
-In-Reply-To: <20260106-02-k3-gpio-v3-0-4800c214810b@gentoo.org>
-To: Bartosz Golaszewski <brgl@kernel.org>, 
- Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10786; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=0nb3jxQTRtcOKvtrQjjeKH+5pJa7gVxQM42DMiqMS04=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpXHz49OLs6pRoGXnCwpKrwyvxmvmWPq35QPXqz
- O9zo8bbdc6JAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaVx8+BsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+0yaw/9GbHQlTeHeBWoCnKp6Q11VdBicEEaJpiIzBhGQ24a3NkVYt4llHc/K
- zY8Xw31FmeZBoYU+esCzXWA6LnutwN5mEJd31IqjZO2CUkmmiws7pbiITWkgFBMzhQEUVzKwoWR
- uzvbV9n+ky2nc9NupbXPtgPjr3yj6TPUxqOZC9DkNWwOuQeBohKbOvYiYAhYVxnf7lZVq2MVRgl
- +MmyJOhJPrc2Ca79k+P+1VvFtbTlzj15zi4HrG8DrUxnbVXQZx0WUo7/Bg5l1cUWIXSxw3HLxKC
- RrPHq3kxvh3MT2HDhGXEQ/izXVCu6K2pfHiVuDDjZaJSZMehHF/6a11nl78OzZuyWu+GoB4FfoT
- UrjS7DUnpDN1QyUi1cuHGLpLgnjxy7IUNx07t5Ppm9kKPKlK+M0pIubExuo3xiBHpt6sdBrSjv4
- 2zvpklpNzn3YhfqG6UFBbeeuTlpecp84fUncB28CsVvpZPJ7ZSXfrf/5sdYomYvgveY1xV3qEet
- zEbB9/8wLSyJz6tv39HbcIP2q+qlgocWUzs8AphCwhQTs+33KOEznAI5jO9nT+rWQDc5+TbxhYs
- e/t319dQ0GHzjIpn2j8AthleO7qhpKQm2QlQMuky3TRBv/7ZbAyPu2QzIA/+32VyAIBNaK15w3k
- PEAKbK4SCJzO8F5W+VA/igrAYWQt/E=
-X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=dYuNHHXe c=1 sm=1 tr=0 ts=695d01e1 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=aIeBnXaUYv87OnBSPw0A:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: LljKcLCxK2ix9hllzQ2ONVJn-rMkse2v
+X-Proofpoint-ORIG-GUID: LljKcLCxK2ix9hllzQ2ONVJn-rMkse2v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA2MDEwOSBTYWx0ZWRfX3fmua0cBrUVg
+ uYD8Wik2Krh3fJVfo2Z6z9lv5zmCog/VAIM/2jmb5qeQQ1GhyWLQB9BxqOJ2q77o2/tGq9u66e5
+ vV6pL3Ys4CNI5JEkqIqws1DUeLSiyTAM5BzjMh9YrPSRG4uu+PR0CxcHozH410JWMApAkZw8rQV
+ x0bXBPp1OweUrdKzI2ILifzAr94fHKfEyhI+7tNu1Lc7rdpwNc09VkewSK4y9YeHcaFs8XlBLoJ
+ afTUO8rHwDCZazyQOLWLEtsNZF/P4dYzIrq+V9pqV+QXHx7CXTjLuTrlQLHag63vb6r2O7TldzF
+ q4L5AVYcZJDmbsppbOrclHDFhIfWHoxjZMjPogVROzvxeJPx+u5VWy2cubPohWjt9PaIezBuEVc
+ IyyfPs/Dxb3xuo67s4eVSa7qGMm22vm12L19XuCc4t9NlW6qOntNY+rcO8P9hUJQ2fLr7YGdZFg
+ nr5xp6JI8+eC3Evhf2A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-06_01,2026-01-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ clxscore=1011 spamscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601060109
 
-SpacemiT K3 SoC has changed gpio register layout while comparing
-with previous generation, the register offset and bank offset
-need to be adjusted, introduce a compatible data to extend the
-driver to support this.
 
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
----
- drivers/gpio/gpio-spacemit-k1.c | 163 ++++++++++++++++++++++++++++------------
- 1 file changed, 117 insertions(+), 46 deletions(-)
+On Tue, 06 Jan 2026 11:09:31 +0800, Yixun Lan wrote:
+> Introduce gpio support for SpacemiT K3 SoC, the gpio controller
+> changes its register layout and bank offset, while mostly shares
+> other IP logic, so adjust the driver to support this.
+> 
+> 
 
-diff --git a/drivers/gpio/gpio-spacemit-k1.c b/drivers/gpio/gpio-spacemit-k1.c
-index eb66a15c002f..8f570a1a4894 100644
---- a/drivers/gpio/gpio-spacemit-k1.c
-+++ b/drivers/gpio/gpio-spacemit-k1.c
-@@ -15,29 +15,37 @@
- #include <linux/platform_device.h>
- #include <linux/seq_file.h>
- 
--/* register offset */
--#define SPACEMIT_GPLR		0x00 /* port level - R */
--#define SPACEMIT_GPDR		0x0c /* port direction - R/W */
--#define SPACEMIT_GPSR		0x18 /* port set - W */
--#define SPACEMIT_GPCR		0x24 /* port clear - W */
--#define SPACEMIT_GRER		0x30 /* port rising edge R/W */
--#define SPACEMIT_GFER		0x3c /* port falling edge R/W */
--#define SPACEMIT_GEDR		0x48 /* edge detect status - R/W1C */
--#define SPACEMIT_GSDR		0x54 /* (set) direction - W */
--#define SPACEMIT_GCDR		0x60 /* (clear) direction - W */
--#define SPACEMIT_GSRER		0x6c /* (set) rising edge detect enable - W */
--#define SPACEMIT_GCRER		0x78 /* (clear) rising edge detect enable - W */
--#define SPACEMIT_GSFER		0x84 /* (set) falling edge detect enable - W */
--#define SPACEMIT_GCFER		0x90 /* (clear) falling edge detect enable - W */
--#define SPACEMIT_GAPMASK	0x9c /* interrupt mask , 0 disable, 1 enable - R/W */
--
- #define SPACEMIT_NR_BANKS		4
- #define SPACEMIT_NR_GPIOS_PER_BANK	32
- 
- #define to_spacemit_gpio_bank(x) container_of((x), struct spacemit_gpio_bank, gc)
-+#define to_spacemit_gpio_regs(gb) ((gb)->sg->data->offsets)
-+
-+enum spacemit_gpio_registers {
-+	SPACEMIT_GPLR,		/* port level - R */
-+	SPACEMIT_GPDR,		/* port direction - R/W */
-+	SPACEMIT_GPSR,		/* port set - W */
-+	SPACEMIT_GPCR,		/* port clear - W */
-+	SPACEMIT_GRER,		/* port rising edge R/W */
-+	SPACEMIT_GFER,		/* port falling edge R/W */
-+	SPACEMIT_GEDR,		/* edge detect status - R/W1C */
-+	SPACEMIT_GSDR,		/* (set) direction - W */
-+	SPACEMIT_GCDR,		/* (clear) direction - W */
-+	SPACEMIT_GSRER,		/* (set) rising edge detect enable - W */
-+	SPACEMIT_GCRER,		/* (clear) rising edge detect enable - W */
-+	SPACEMIT_GSFER,		/* (set) falling edge detect enable - W */
-+	SPACEMIT_GCFER,		/* (clear) falling edge detect enable - W */
-+	SPACEMIT_GAPMASK,	/* interrupt mask , 0 disable, 1 enable - R/W */
-+	SPACEMIT_GCPMASK,	/* interrupt mask for K3 */
-+};
- 
- struct spacemit_gpio;
- 
-+struct spacemit_gpio_data {
-+	const unsigned int *offsets;
-+	u32 bank_offsets[SPACEMIT_NR_BANKS];
-+};
-+
- struct spacemit_gpio_bank {
- 	struct gpio_generic_chip chip;
- 	struct spacemit_gpio *sg;
-@@ -49,9 +57,22 @@ struct spacemit_gpio_bank {
- 
- struct spacemit_gpio {
- 	struct device *dev;
-+	const struct spacemit_gpio_data *data;
- 	struct spacemit_gpio_bank sgb[SPACEMIT_NR_BANKS];
- };
- 
-+static u32 spacemit_gpio_read(struct spacemit_gpio_bank *gb,
-+			      enum spacemit_gpio_registers reg)
-+{
-+	return readl(gb->base + to_spacemit_gpio_regs(gb)[reg]);
-+}
-+
-+static void spacemit_gpio_write(struct spacemit_gpio_bank *gb,
-+				enum spacemit_gpio_registers reg, u32 val)
-+{
-+	writel(val, gb->base + to_spacemit_gpio_regs(gb)[reg]);
-+}
-+
- static u32 spacemit_gpio_bank_index(struct spacemit_gpio_bank *gb)
- {
- 	return (u32)(gb - gb->sg->sgb);
-@@ -63,10 +84,10 @@ static irqreturn_t spacemit_gpio_irq_handler(int irq, void *dev_id)
- 	unsigned long pending;
- 	u32 n, gedr;
- 
--	gedr = readl(gb->base + SPACEMIT_GEDR);
-+	gedr = spacemit_gpio_read(gb, SPACEMIT_GEDR);
- 	if (!gedr)
- 		return IRQ_NONE;
--	writel(gedr, gb->base + SPACEMIT_GEDR);
-+	spacemit_gpio_write(gb, SPACEMIT_GEDR, gedr);
- 
- 	pending = gedr & gb->irq_mask;
- 	if (!pending)
-@@ -82,7 +103,7 @@ static void spacemit_gpio_irq_ack(struct irq_data *d)
- {
- 	struct spacemit_gpio_bank *gb = irq_data_get_irq_chip_data(d);
- 
--	writel(BIT(irqd_to_hwirq(d)), gb->base + SPACEMIT_GEDR);
-+	spacemit_gpio_write(gb, SPACEMIT_GEDR, BIT(irqd_to_hwirq(d)));
- }
- 
- static void spacemit_gpio_irq_mask(struct irq_data *d)
-@@ -91,13 +112,13 @@ static void spacemit_gpio_irq_mask(struct irq_data *d)
- 	u32 bit = BIT(irqd_to_hwirq(d));
- 
- 	gb->irq_mask &= ~bit;
--	writel(gb->irq_mask, gb->base + SPACEMIT_GAPMASK);
-+	spacemit_gpio_write(gb, SPACEMIT_GAPMASK, gb->irq_mask);
- 
- 	if (bit & gb->irq_rising_edge)
--		writel(bit, gb->base + SPACEMIT_GCRER);
-+		spacemit_gpio_write(gb, SPACEMIT_GCRER, bit);
- 
- 	if (bit & gb->irq_falling_edge)
--		writel(bit, gb->base + SPACEMIT_GCFER);
-+		spacemit_gpio_write(gb, SPACEMIT_GCFER, bit);
- }
- 
- static void spacemit_gpio_irq_unmask(struct irq_data *d)
-@@ -108,12 +129,12 @@ static void spacemit_gpio_irq_unmask(struct irq_data *d)
- 	gb->irq_mask |= bit;
- 
- 	if (bit & gb->irq_rising_edge)
--		writel(bit, gb->base + SPACEMIT_GSRER);
-+		spacemit_gpio_write(gb, SPACEMIT_GSRER, bit);
- 
- 	if (bit & gb->irq_falling_edge)
--		writel(bit, gb->base + SPACEMIT_GSFER);
-+		spacemit_gpio_write(gb, SPACEMIT_GSFER, bit);
- 
--	writel(gb->irq_mask, gb->base + SPACEMIT_GAPMASK);
-+	spacemit_gpio_write(gb, SPACEMIT_GAPMASK, gb->irq_mask);
- }
- 
- static int spacemit_gpio_irq_set_type(struct irq_data *d, unsigned int type)
-@@ -123,18 +144,18 @@ static int spacemit_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 
- 	if (type & IRQ_TYPE_EDGE_RISING) {
- 		gb->irq_rising_edge |= bit;
--		writel(bit, gb->base + SPACEMIT_GSRER);
-+		spacemit_gpio_write(gb, SPACEMIT_GSRER, bit);
- 	} else {
- 		gb->irq_rising_edge &= ~bit;
--		writel(bit, gb->base + SPACEMIT_GCRER);
-+		spacemit_gpio_write(gb, SPACEMIT_GCRER, bit);
- 	}
- 
- 	if (type & IRQ_TYPE_EDGE_FALLING) {
- 		gb->irq_falling_edge |= bit;
--		writel(bit, gb->base + SPACEMIT_GSFER);
-+		spacemit_gpio_write(gb, SPACEMIT_GSFER, bit);
- 	} else {
- 		gb->irq_falling_edge &= ~bit;
--		writel(bit, gb->base + SPACEMIT_GCFER);
-+		spacemit_gpio_write(gb, SPACEMIT_GCFER, bit);
- 	}
- 
- 	return 0;
-@@ -179,15 +200,16 @@ static int spacemit_gpio_add_bank(struct spacemit_gpio *sg,
- 	struct device *dev = sg->dev;
- 	struct gpio_irq_chip *girq;
- 	void __iomem *dat, *set, *clr, *dirin, *dirout;
--	int ret, bank_base[] = { 0x0, 0x4, 0x8, 0x100 };
-+	int ret;
- 
--	gb->base = regs + bank_base[index];
-+	gb->base = regs + sg->data->bank_offsets[index];
-+	gb->sg = sg;
- 
--	dat	= gb->base + SPACEMIT_GPLR;
--	set	= gb->base + SPACEMIT_GPSR;
--	clr	= gb->base + SPACEMIT_GPCR;
--	dirin	= gb->base + SPACEMIT_GCDR;
--	dirout	= gb->base + SPACEMIT_GSDR;
-+	dat	= gb->base + to_spacemit_gpio_regs(gb)[SPACEMIT_GPLR];
-+	set	= gb->base + to_spacemit_gpio_regs(gb)[SPACEMIT_GPSR];
-+	clr	= gb->base + to_spacemit_gpio_regs(gb)[SPACEMIT_GPCR];
-+	dirin	= gb->base + to_spacemit_gpio_regs(gb)[SPACEMIT_GCDR];
-+	dirout	= gb->base + to_spacemit_gpio_regs(gb)[SPACEMIT_GSDR];
- 
- 	config = (struct gpio_generic_chip_config) {
- 		.dev = dev,
-@@ -206,8 +228,6 @@ static int spacemit_gpio_add_bank(struct spacemit_gpio *sg,
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to init gpio chip\n");
- 
--	gb->sg = sg;
--
- 	gc->label		= dev_name(dev);
- 	gc->request		= gpiochip_generic_request;
- 	gc->free		= gpiochip_generic_free;
-@@ -223,13 +243,13 @@ static int spacemit_gpio_add_bank(struct spacemit_gpio *sg,
- 	gpio_irq_chip_set_chip(girq, &spacemit_gpio_chip);
- 
- 	/* Disable Interrupt */
--	writel(0, gb->base + SPACEMIT_GAPMASK);
-+	spacemit_gpio_write(gb, SPACEMIT_GAPMASK, 0);
- 	/* Disable Edge Detection Settings */
--	writel(0x0, gb->base + SPACEMIT_GRER);
--	writel(0x0, gb->base + SPACEMIT_GFER);
-+	spacemit_gpio_write(gb, SPACEMIT_GRER, 0x0);
-+	spacemit_gpio_write(gb, SPACEMIT_GFER, 0x0);
- 	/* Clear Interrupt */
--	writel(0xffffffff, gb->base + SPACEMIT_GCRER);
--	writel(0xffffffff, gb->base + SPACEMIT_GCFER);
-+	spacemit_gpio_write(gb, SPACEMIT_GCRER, 0xffffffff);
-+	spacemit_gpio_write(gb, SPACEMIT_GCFER, 0xffffffff);
- 
- 	ret = devm_request_threaded_irq(dev, irq, NULL,
- 					spacemit_gpio_irq_handler,
-@@ -260,6 +280,10 @@ static int spacemit_gpio_probe(struct platform_device *pdev)
- 	if (!sg)
- 		return -ENOMEM;
- 
-+	sg->data = of_device_get_match_data(dev);
-+	if (!sg->data)
-+		return dev_err_probe(dev, -EINVAL, "No available compatible data.");
-+
- 	regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(regs))
- 		return PTR_ERR(regs);
-@@ -287,8 +311,55 @@ static int spacemit_gpio_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static const unsigned int spacemit_gpio_k1_offsets[] = {
-+	[SPACEMIT_GPLR] = 0x00,
-+	[SPACEMIT_GPDR] = 0x0c,
-+	[SPACEMIT_GPSR] = 0x18,
-+	[SPACEMIT_GPCR] = 0x24,
-+	[SPACEMIT_GRER] = 0x30,
-+	[SPACEMIT_GFER] = 0x3c,
-+	[SPACEMIT_GEDR] = 0x48,
-+	[SPACEMIT_GSDR] = 0x54,
-+	[SPACEMIT_GCDR] = 0x60,
-+	[SPACEMIT_GSRER] = 0x6c,
-+	[SPACEMIT_GCRER] = 0x78,
-+	[SPACEMIT_GSFER] = 0x84,
-+	[SPACEMIT_GCFER] = 0x90,
-+	[SPACEMIT_GAPMASK] = 0x9c,
-+	[SPACEMIT_GCPMASK] = 0xA8,
-+};
-+
-+static const unsigned int spacemit_gpio_k3_offsets[] = {
-+	[SPACEMIT_GPLR] = 0x0,
-+	[SPACEMIT_GPDR] = 0x4,
-+	[SPACEMIT_GPSR] = 0x8,
-+	[SPACEMIT_GPCR] = 0xc,
-+	[SPACEMIT_GRER] = 0x10,
-+	[SPACEMIT_GFER] = 0x14,
-+	[SPACEMIT_GEDR] = 0x18,
-+	[SPACEMIT_GSDR] = 0x1c,
-+	[SPACEMIT_GCDR] = 0x20,
-+	[SPACEMIT_GSRER] = 0x24,
-+	[SPACEMIT_GCRER] = 0x28,
-+	[SPACEMIT_GSFER] = 0x2c,
-+	[SPACEMIT_GCFER] = 0x30,
-+	[SPACEMIT_GAPMASK] = 0x34,
-+	[SPACEMIT_GCPMASK] = 0x38,
-+};
-+
-+static const struct spacemit_gpio_data k1_gpio_data = {
-+	.offsets = spacemit_gpio_k1_offsets,
-+	.bank_offsets = { 0x0, 0x4, 0x8, 0x100 },
-+};
-+
-+static const struct spacemit_gpio_data k3_gpio_data = {
-+	.offsets = spacemit_gpio_k3_offsets,
-+	.bank_offsets = { 0x0, 0x40, 0x80, 0x100 },
-+};
-+
- static const struct of_device_id spacemit_gpio_dt_ids[] = {
--	{ .compatible = "spacemit,k1-gpio" },
-+	{ .compatible = "spacemit,k1-gpio", .data = &k1_gpio_data },
-+	{ .compatible = "spacemit,k3-gpio", .data = &k3_gpio_data },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, spacemit_gpio_dt_ids);
-@@ -296,12 +367,12 @@ MODULE_DEVICE_TABLE(of, spacemit_gpio_dt_ids);
- static struct platform_driver spacemit_gpio_driver = {
- 	.probe		= spacemit_gpio_probe,
- 	.driver		= {
--		.name	= "k1-gpio",
-+		.name	= "spacemit-gpio",
- 		.of_match_table = spacemit_gpio_dt_ids,
- 	},
- };
- module_platform_driver(spacemit_gpio_driver);
- 
- MODULE_AUTHOR("Yixun Lan <dlan@gentoo.org>");
--MODULE_DESCRIPTION("GPIO driver for SpacemiT K1 SoC");
-+MODULE_DESCRIPTION("GPIO driver for SpacemiT K1/K3 SoC");
- MODULE_LICENSE("GPL");
+Applied, thanks!
 
+[1/2] dt-bindings: gpio: spacemit: add compatible name for K3 SoC
+      commit: 48033e4c677be4e3f131df454d44a5d1fb1b334f
+[2/2] gpio: spacemit: Add GPIO support for K3 SoC
+      commit: da64eb51595bc6073b2fb69c2a3859bba93ed75a
+
+Best regards,
 -- 
-2.52.0
-
+Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
