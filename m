@@ -1,90 +1,78 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46A120E6E2
-	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 04:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EF72D73BC
+	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 05:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767846479; cv=none; b=ZUV28KNiJfYpBF0Hm0C9RyWqjZveA4lyxOAwdP1yvZwDYtsDMd31cURUNk647tKoWN/su+kauatTccnixFb94sfVpJcxZi7YJo57Ew4FJqsT0Wk5RSDgwOF3FR8LhsLDmEeW17AFpDK8YH4PnRTFIQFoWW7sayycMtnaiMMcW5k=
+	t=1767849916; cv=none; b=r/e2DvvQIlArLHormM3mfr3rr81YU3xQ7oOpLSxiawupRa0R1JRmrhFBrzH/q0XoN4HEIb4b7lf9Kls0pU/YltVMWluZ55DswLd2rxMIARBMjZ9abgjg2m1w/d/jtv6T+5Y53aDSIsR6XuOSSNF7kBDYW1xfHc+cdMspfJs9Hh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767846479; c=relaxed/simple;
-	bh=zHZWIQePIvKiK5JQEBsXYdgWrN8v6sC165KGtecy9ac=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lVD/slj57gE4LPTT53dCOs6yRfDdCQ1KRumWITrjEjgpChK9LhxvNjAlBygfXWkJd/c6yUW4ihDRvaNb9m5q+i5/tjkL+md0JrcPhOap8YBr0VXz3Ls2G5251lTmx5mv620NbqKf5KGhClr9+mPX0f+HHWrt3GUFLc9UrfxSAtI=
+	s=arc-20240116; t=1767849916; c=relaxed/simple;
+	bh=cUDJ/Jq0808hTirUXhDv4kOOAPo94VpL0FqcReG1YSg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qAlQ4FANs9lRLXyGWQhpNKhlSiiob1/YzG0UD4DVhR+OfnKDWoTiDpETY8mNxu7gjFktxWWOp0z1Y6qfg+m7Bpy9LKFORi1RwOJm27AKuMEaOER+Jf9NMsQTrdF1QYRTsJAAi+w2WLc4JONlcXM3gSmLYPm9rdpcJnCocjkdbHo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
+Received: from ofsar (unknown [116.232.18.222])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 76CDF341E9C;
-	Thu, 08 Jan 2026 04:27:57 +0000 (UTC)
-Date: Thu, 8 Jan 2026 12:27:53 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E62FE340F55;
+	Thu, 08 Jan 2026 05:25:06 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Linus Walleij <linusw@kernel.org>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH 2/2] pinctrl: spacemit: support I/O power domain
- configuration
-Message-ID: <20260108042753-GYA2796@gentoo.org>
-References: <20251223-kx-pinctrl-aib-io-pwr-domain-v1-0-5f1090a487c7@linux.spacemit.com>
- <20251223-kx-pinctrl-aib-io-pwr-domain-v1-2-5f1090a487c7@linux.spacemit.com>
- <20251227-pastel-certain-orca-4b53cf@quoll>
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Encrow Thorne <jyc0019@gmail.com>
+Cc: Yixun Lan <dlan@gentoo.org>,
+	Troy Mitchell <troymitchell988@gmail.com>,
+	Guodong Xu <guodong@riscstar.com>,
+	linux-i2c@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v3 0/3] i2c: spacemit: add reset support
+Date: Thu,  8 Jan 2026 13:24:37 +0800
+Message-ID: <176784920500.341655.1244714161729055220.b4-ty@gentoo.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251230-i2c-reset-v3-0-7500eb93b06e@gmail.com>
+References: <20251230-i2c-reset-v3-0-7500eb93b06e@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251227-pastel-certain-orca-4b53cf@quoll>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Troy, Krzysztof, 
 
-On 14:00 Sat 27 Dec     , Krzysztof Kozlowski wrote:
-> On Tue, Dec 23, 2025 at 05:11:12PM +0800, Troy Mitchell wrote:
-> > IO domain power control registers are used to configure the operating
-> > voltage of dual-voltage GPIO banks. By default, these registers are
-> > configured for 3.3V operation. As a result, even when a GPIO bank is
-> > externally supplied with 1.8V, the internal logic continues to
-> > operate in the 3.3V domain, which may lead to functional failures.
-> > 
-..
-> > +	pctrl->io_pd_reg = devm_platform_ioremap_resource(pdev, 1);
-> > +	if (IS_ERR(pctrl->io_pd_reg))
-> > +		return PTR_ERR(pctrl->io_pd_reg);
-> > +
-> > +	pctrl->regmap_apbc =
-> > +		syscon_regmap_lookup_by_phandle_args(np, "spacemit,apbc", 1,
-> > +						     &pctrl->regmap_apbc_offset);
-> > +
-> > +	if (IS_ERR(pctrl->regmap_apbc))
-> > +		return dev_err_probe(dev, PTR_ERR(pctrl->regmap_apbc),
-> > +				     "failed to get syscon\n");
+On Tue, 30 Dec 2025 22:29:01 +0800, Encrow Thorne wrote:
+> Add reset support for the K1 I2C driver. A reset ensures that the
+> controller starts in a clean and known state.
 > 
-> Actual ABI break.
-> 
-Indeed, there will be a ABI break.
-
-so, how about not abort in probe() if no "spacemit,apbc" phandle found?
-and then do it in a compatible way as old behevior
-
-We may still need to drop this property from "required" section in DT
-
-> Best regards,
-> Krzysztof
+> Reset ensures that the I2C hardware is in a clean state. We cannot assume
+> that no program used I2C before the kernel booted.
 > 
 > 
+> [...]
 
+Applied, thanks!
+
+[3/3] riscv: dts: spacemit: add reset property
+      https://github.com/spacemit-com/linux/commit/91c444d4285c07dbf2e6e4bf954d9a0282157f1f
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan
+
