@@ -1,126 +1,96 @@
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236ED329E5E
-	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 06:43:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349A2325717
+	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 07:37:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767854597; cv=none; b=SWtuOJ+T5vQuEiT6rfWJnYnC0y3KM+oReR1pPcKjmdMoEUIBv8RW1rO17MYnp4iJ+O0pypQ2g2U9dzMZknp5+4d0U4i1v9/jQiPFnZobg4nGaQVXnJ9p0ky+QwwfY1ByQNJp+ilKpV9ooZN7N6qRWEjbep/zB3CVRKN9DES+OCs=
+	t=1767857850; cv=none; b=WZDLrTl4jhcUFb+noBKtxSwwZw0CGRJG/US9FzPIsi3hjYAVUixbsF6oLUK9oM5MklR9ZnmYXT3OYZ65p/ZnEAvvFyFhbldGSTwVc+FfmdRZ5a2dChF6TJh6Gz7mqncK2Fd+Yld9hghZzZc548hyTGFYcO7Iq2igeLyrRU+WVeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767854597; c=relaxed/simple;
-	bh=Yg9i3WROboYmxNA0p0LX5mimjEeDeDaKPbSXU95jUTs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZPKloJ0gGyOFPsmaonfGV1h8aAbSOkIVUWXEthiW+7FeatvLiQwLKrnTSCr0wYieopPIqAHkXF8rjRwKGDvjFn9ipQ+DSt6L6uhN3b+dolG7VySkOLXALR7qD0QcDkZYd1cS8jpVF3EmQHk/Zz9ULLNrp8EhdhszIlb4S1zpQp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Le7JQplL; arc=none smtp.client-ip=15.184.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Le7JQplL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1767854579;
-	bh=RmI7oW3Ye7H0Gv7gofrIS2/gqWoZQQpysgRh3vTjGSA=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=Le7JQplLuA9W20XgCL+rBW5uCbDP9Cziq4Fy5I3ctXGA7bIZeb0xQUV6XozoxXGAy
-	 3tU0YR7ZqlGKy/kMElkinn4XbPcuFU7F6PXiKaiW20h5Bm9vwmkqYt/dbNXTmhPVCw
-	 wjLscr1T+wWD/dLj8FOMvsy2jy79sYmp+TSVdLEI=
-X-QQ-mid: zesmtpsz7t1767854574t1b45140c
-X-QQ-Originating-IP: nqhtGQEKzZptD8rA4rJPzNemzRzLbeCF+vPr7zaTLgE=
-Received: from = ( [120.239.196.107])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 08 Jan 2026 14:42:52 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13233925994878137357
-EX-QQ-RecipientCnt: 15
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Thu, 08 Jan 2026 14:42:40 +0800
-Subject: [PATCH v2 3/3] riscv: dts: spacemit: modify pinctrl node in dtsi
+	s=arc-20240116; t=1767857850; c=relaxed/simple;
+	bh=/g0Knk+PCNEBWe0CdzxrB8HOJijl1G9jpF3ofNoKGEI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u5ZOS3x2HWNqP4zNqht9wCH9uqJWq+GJr80ndcfCw6ubRyAc5dQpXCxSioqe3uUS/aaXT2jOF20exUkOkxWTvp94sqF/DMMLWC6/ylow0cg3lWrOyKSJrkQlKtnnVPPnY8lE4pm1MJmtVg9btcE5udEQCjjvIQP15MGpIf+Gaf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 44324341EB7;
+	Thu, 08 Jan 2026 07:37:26 +0000 (UTC)
+Date: Thu, 8 Jan 2026 15:37:22 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Linus Walleij <linusw@kernel.org>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] riscv: dts: spacemit: modify pinctrl node in dtsi
+Message-ID: <20260108073722-GYA3634@gentoo.org>
+References: <20260108-kx-pinctrl-aib-io-pwr-domain-v2-0-6bcb46146e53@linux.spacemit.com>
+ <20260108-kx-pinctrl-aib-io-pwr-domain-v2-3-6bcb46146e53@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260108-kx-pinctrl-aib-io-pwr-domain-v2-3-6bcb46146e53@linux.spacemit.com>
-References: <20260108-kx-pinctrl-aib-io-pwr-domain-v2-0-6bcb46146e53@linux.spacemit.com>
-In-Reply-To: <20260108-kx-pinctrl-aib-io-pwr-domain-v2-0-6bcb46146e53@linux.spacemit.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
- Linus Walleij <linusw@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- linux-gpio@vger.kernel.org, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1767854560; l=1383;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=Yg9i3WROboYmxNA0p0LX5mimjEeDeDaKPbSXU95jUTs=;
- b=00D5FRFx/hf/cFWmq3s6IJG6Z/e0lXKG3YIdSEnvh73fycgm0SkQ9AxYeRgxWbCZyqrDFCYYR
- wQV18mZxONpCcTvrinbhEzKwJDrgX5cV8RpKj4Lh4yKh7KOXM/7Br6t
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NuQldXZpfNnZQBy4VouBhqyKX3372DMJbk5K6Lz1r8qGJ275nXIcYh10
-	hZ93Hb4PfCLZ1yen1Ub7PXTTIY071g4uJ8GpTRXhfsXKzNIZlZyhOrsryIhL7byq16uLHOS
-	tixbkpe1Uq8y1r3k+0el65MDvMUOHvWPn//liPycWu545FVj9YHiiTEAWWxF1zR3ljjXeaf
-	YmduhSfWuRPwtOxaHF78t3KPT70Fo+Eoms3b4BebbhTpprFQfPPQdZ4O4km60PFMbzzpGI2
-	VfXiRyJMbO2JFhFOfDIqJKiChtNgvshZNGPUvKRgWHL7pcsTOfTQlyl6v57r6HNK5gyjDpg
-	t0bkKEyORkmBuImJNnfqrM2R6b5bZnOM2moZzyqxMKTKITrrBvvhJNPyBxjuuQbQmwzYpyK
-	aVng8Soi5do0qfKYlIKxJupAphHNkObX4P1HyHkn8I27SAdKTWxoMUmJadmJZvAcKpBGoZd
-	oggZwBODpBGQbHSv7JdA1NsoUhmrP8LLIepMp6WkFCUZMtCS6VwaUR5bFaZl2bcVEvnitrX
-	5HEJ73lSj09zKTOj9ApYgQhsw02ysAZx1FM1Q0tGOJBW+kMdrbFuZUvUVdA92aCSmj9rDLA
-	E3ShP1BgWDo1Sa9utBi21IT9nSAYqTUS7tgQkse9P34b4MkratVlt/kGNybWf/TA1mu+2tf
-	oPPNYrSZnKtyTT1jTA3wxrn0Es0eSgGNK3w4L4n8rA1EIWgBeTrXEMDMvm+imjU775hR5mO
-	3je/h7/ZaF4yttaj8rxv/M3cNGKtDD+BgSrJP3elf86mtl68LZBEt76Iy/cZYB/J834YWH0
-	rNNhAIUcr8QI4gZRgqcIzaRWdRVRDeskb3rIjABSGgOO+8ZQj8q+vhjjTSBqDBnFcOcbjZs
-	8Xhw3pMTsDZmqAz5P1/7aTYcCRQKpqLAFeGsdZVmoRteZAxDGmLHaZfwfUWvbh/y04dLSRF
-	B7susrMBQDYLabhm5sp09fLYiKFlQERCMIlf/TREJbPNwmC5ASjgHeSviVONI9/yyUBB4hv
-	sEioyV+Ar5RAnz3hEnwN1q2eODyp3m8QMn/EZ5KeiX5/LOYbXuH11ZiuMZvCPaUyxW66PDB
-	+Jt7+PGNe2616yRQuK449SW3XVswBc7eZ0trCmDCW1JTvj26QM93za1IW3nYK2cQJj/DxsA
-	g1DGRsnRkJJPM7U=
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260108-kx-pinctrl-aib-io-pwr-domain-v2-3-6bcb46146e53@linux.spacemit.com>
 
-Change the size of the reg register to 0x1000 to match the hardware.
-This register range covers the IO power domain's register addresses.
+Hi Troy,
 
-The IO power domain registers are protected. In order to access the
-protected IO power domain registers, a valid unlock sequence must be
-performed by writing the required keys to the AIB Secure Access Register
-(ASAR).
+  if there is one more iteration, I'd suggest to adjust the patch titile, 
+to make it slightly more specific
 
-The ASAR register resides within the APBC register address space.
-A corresponding syscon property `spacemit,apbc` is added to allow
-the pinctrl driver to access this register.
+  riscv: dts: spacemit: pinctrl: update register and IO power
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 7818ca4979b6a7755722919a5958512aa11950ab..f05429723d1bbbd718941549782461c49196ecef 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -565,10 +565,11 @@ i2c8: i2c@d401d800 {
- 
- 		pinctrl: pinctrl@d401e000 {
- 			compatible = "spacemit,k1-pinctrl";
--			reg = <0x0 0xd401e000 0x0 0x400>;
-+			reg = <0x0 0xd401e000 0x0 0x1000>;
- 			clocks = <&syscon_apbc CLK_AIB>,
- 				 <&syscon_apbc CLK_AIB_BUS>;
- 			clock-names = "func", "bus";
-+			spacemit,apbc = <&syscon_apbc>;
- 		};
- 
- 		pwm8: pwm@d4020000 {
+On 14:42 Thu 08 Jan     , Troy Mitchell wrote:
+> Change the size of the reg register to 0x1000 to match the hardware.
+> This register range covers the IO power domain's register addresses.
+> 
+> The IO power domain registers are protected. In order to access the
+> protected IO power domain registers, a valid unlock sequence must be
+> performed by writing the required keys to the AIB Secure Access Register
+> (ASAR).
+> 
+> The ASAR register resides within the APBC register address space.
+> A corresponding syscon property `spacemit,apbc` is added to allow
+> the pinctrl driver to access this register.
+> 
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> ---
+>  arch/riscv/boot/dts/spacemit/k1.dtsi | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> index 7818ca4979b6a7755722919a5958512aa11950ab..f05429723d1bbbd718941549782461c49196ecef 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+> @@ -565,10 +565,11 @@ i2c8: i2c@d401d800 {
+>  
+>  		pinctrl: pinctrl@d401e000 {
+>  			compatible = "spacemit,k1-pinctrl";
+> -			reg = <0x0 0xd401e000 0x0 0x400>;
+> +			reg = <0x0 0xd401e000 0x0 0x1000>;
+>  			clocks = <&syscon_apbc CLK_AIB>,
+>  				 <&syscon_apbc CLK_AIB_BUS>;
+>  			clock-names = "func", "bus";
+> +			spacemit,apbc = <&syscon_apbc>;
+>  		};
+>  
+>  		pwm8: pwm@d4020000 {
+> 
+> -- 
+> 2.52.0
+> 
 
 -- 
-2.52.0
-
+Yixun Lan (dlan)
