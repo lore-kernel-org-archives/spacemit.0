@@ -1,67 +1,67 @@
-Received: from mail-oa1-f65.google.com (mail-oa1-f65.google.com [209.85.160.65])
+Received: from mail-oa1-f67.google.com (mail-oa1-f67.google.com [209.85.160.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD842D7DC4
-	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 19:23:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40A82FD68A
+	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 19:45:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767900221; cv=none; b=OQkmJ7VYCZ3QGHBrdgzqKAtthjUJ1xl6FFY20bY1WOqXBtGOY/RXaHYBfphq43+dYSOjSeuSkIcH67BZpc7VpDR3C0QpEjHaxj7Wtf98IgGVgWSApF2skEmj5ckShHhnNKtaEhZV6wiHUPBOZqGDBsb/aTJHi6ZfFUttuJcgkgo=
+	t=1767901558; cv=none; b=Sw/UxoLGxdI6fwiV4TUIMBiNho/aKp6DloYAOsZ/OsXHcExDhmH6aqrykqRXSqlt/wuvA7QPsTxKuIryCKc5hWRQ6ZXXh92C7zsedysX0Z8HZO2NQ+j0scwF3vY+1UjqNZ4Ud4XTAs7b77H+UaS9z4oZ1YsVy7gwe4mB5jZVysg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767900221; c=relaxed/simple;
-	bh=rQuCPnYPLg4Ui2a0ObeA7TCLE/RLxICLMmiEBGi0cLE=;
+	s=arc-20240116; t=1767901558; c=relaxed/simple;
+	bh=RFSoiJgF2IhE1d/U2C8Dz/1A18MDcqAJmwzPHJkEPn0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M/V08qJq9vHLC6AGaPUTOm1j5O2BJel0B4U1K4mCot1FhEmemfew1U5cNkQT2babhHB+D0492nqdp58BAjK3rPDdjHrZvOdLjH0TakeGCTrdFEd6Qfr5I+BHIyOD/JW87JuwCoRY+Sas7nbzp5Qlk5/CEq9vNtnyB14Zj4aseuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=MI8MQ6n7; arc=none smtp.client-ip=209.85.160.65
+	 In-Reply-To:Content-Type; b=i7ch5QWVQwNKP2ZrGTgptNC4BTr+IuGMXqtODz7RRsqGvUGCeE4uaASepRnyDpOVEUTNJiFNDIP/sW7JE73aHz+D0QO8nY5Ls4OaVKIak95SYd/I8WJD2Px+GV4Ry6n277J7u8IpHZnaQ7DKJIC9RGmtJSCwioYBkcuYZDWCW9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=M8BJfM7d; arc=none smtp.client-ip=209.85.160.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sifive.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="MI8MQ6n7"
-Received: by mail-oa1-f65.google.com with SMTP id 586e51a60fabf-3e3dac349easo3145506fac.2
-        for <spacemit@lists.linux.dev>; Thu, 08 Jan 2026 11:23:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="M8BJfM7d"
+Received: by mail-oa1-f67.google.com with SMTP id 586e51a60fabf-3f9ebb269c3so1478184fac.3
+        for <spacemit@lists.linux.dev>; Thu, 08 Jan 2026 11:45:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sifive.com; s=google; t=1767900215; x=1768505015; darn=lists.linux.dev;
+        d=sifive.com; s=google; t=1767901556; x=1768506356; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Hjqd0wbUL/0gATLT7Jr3bq/fYYzs5CcoqUGsadwzmFw=;
-        b=MI8MQ6n7l0ZhT/N7jZt61w+o/QSU2Ox7lC4yRDu0qeYL+fmv2KxwV9Rme3kpSWUlhh
-         L6EqycgpGwqa8r7wxzImrv6XhSm2DAVhDW0WYfNsXWKdzPcS3JAXptYEv9IIw1GXw95d
-         D3xeMSEGnaUcl6X5anhRW0ayoihxUvlBx3f5YcSvxSkdrUauEwNVDeE95exjXc4X3y18
-         JX0pe4Nwuyt5foXisJqKPQ0nFZdh9oJgBQimPmh4ASxfmjZEaZfzKyJ3SNDgCe65Z+fH
-         txM2BVmaO+VPFy2BxcPVsQuTIlOa4N23rYyU3j/9Y2WS3bhrTtj9ong9vPCOsjQWMNw8
-         fqAw==
+        bh=n0eSk+8SweBNRYF6OiM3wD68xD/JtKcShoUz7XdjZrA=;
+        b=M8BJfM7dcADh9sdfVpPjzfgd+YxyNkY7vVXmdLYrsxoP2wHixvgaIQjbE2is7fBsF1
+         wNDn8Sq2NFOy9QrqMd4ZgfiWLYvyK2tU6O3wewkkIFuuzjvyMtZl06M404zlhERQnfb7
+         q2mZAwKJFGsRVZrN9dw6PQwZtVDHrr8B+Huo1FXrDS5fpmEFNLM9edOQE6wTx4PtprBn
+         1Ww6as0dP9FEzz3Wocr8hf2MhrGVgHvIZKHne+epL8Mv6cpz5Jy0KT6ff4wtxCgv0ACL
+         0oddkgPgAGCV0IBd9icrl5h8DoQ8YCkZgA59YMDQb4yhW+Dqr5t0ppW9CrltziNEPE8B
+         Z85Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767900215; x=1768505015;
+        d=1e100.net; s=20230601; t=1767901556; x=1768506356;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Hjqd0wbUL/0gATLT7Jr3bq/fYYzs5CcoqUGsadwzmFw=;
-        b=jIuRAymKaWMjc3kyCmzQGinEIy3D67y+GEYJVpzrb2Lp8yLGsdQuxd6sQ+j/1PwjPp
-         LMAR1nEGpqEQ5qkn0wSIEqVq/hoVTDrMoY0vliJiO55P5zAcR/AZiOmiTOZxBiOgXbiF
-         5qDybNzqvuS7JmFI/Seh4iRVRCtbqhKh8IC1zPijb34V2SFRzEhFsSDowUsCTiUY4Guy
-         nrLlUKa7VMCJNi1WIkEWK1ugApD0NwrJI0cDI8moycJK6W5zOJWi52eM/+qR0IFumZZY
-         xw8yluIdrRuGelalM4igE7/LhGtBa6fi1t4P4WkDZ5ijh/T8TAMvcviTimq9FrAKYY4C
-         y9Zg==
-X-Forwarded-Encrypted: i=1; AJvYcCVtCKZmiJkv6B09PrJD6VDaDNW3qh7DkRZtdaPgwRFMP7jjSM2gzYGmFoifORtu971YIqCc+Qhogw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzB/vzllcSdWY7gpXkFhCx8UT/zK9x1WQyHn6e3MAnBUOiLtph9
-	ZqnN9DKM5t7JfCBkMS/2fPKCpMmeUWe5A0bJm2wXOhM/z4ZiswhCBMdy2JZhHJYH9VE=
-X-Gm-Gg: AY/fxX49c0SVntPu7yTfKzZA1v03kNMpb6kK3Znxl47aiO0hT8EUG29CXB98x+nziv/
-	EuE6zDf/Fh9sk51LX38klzNtu0GHKOGHmDag/8Ac5lt5GHxvUM9Kd3SE15MQsHXAMS+/xTSXB6o
-	HMlnmWiPEyLoXfAl38uJ5bu5nVrBgITWL5IMQMjshnIf4ZcRwO1qXLDHOV2GFNZiRMTHc7R/GzT
-	6nXDMxi/5O57OByJqjTqeEzTfi41QQMVRQjQJf/6PP6DZLB7tetrqnh5INXFr5V4KEe7ZnY7CMV
-	xMgjAKFm5fImMtCP1UE1FLWuzdGfzUy5Enavlt65MiwpZjITmJ2wDXEyknHYIK77c5676IaQBtx
-	TiuCWHRcf/JiZ6v/9HrcZ9jb/zcZjDXDUPeTR/6pp3/yRyq7tpMVUEa3b86qh1T58sRGUaUTux8
-	xFzdqtYArJN/CoUwyGZwAmh1HqskI=
-X-Google-Smtp-Source: AGHT+IHKLUgghrPd29RErvBws0kQ87awrcNfi7vgU0Zf7ngrlTJY/amh5n0uvlMoYU4vmYrjhXLVGQ==
-X-Received: by 2002:a05:6870:c243:b0:3e8:95d2:389d with SMTP id 586e51a60fabf-3ffc0c02c95mr3135629fac.43.1767900214837;
-        Thu, 08 Jan 2026 11:23:34 -0800 (PST)
+        bh=n0eSk+8SweBNRYF6OiM3wD68xD/JtKcShoUz7XdjZrA=;
+        b=bWW3XOMk/S2qZ50SalH8xHFEUkx3wa+/TyylF8rAsDkLkGX7RRThZWw8RkD1SnWNEk
+         5KWO+b+j2bUOSh5lh2ub/tb0iedEtvFqkTLcrAgvz5F5wOm564DffPHzQz45LrO0790A
+         U/OuI8drJSOMZPdB63l4/dHfwgw44u0tNzHCHPOtQ0vj04x8BNZmVWBO/5hHbcW2xUh4
+         2YWj64Jqq43Rb96VbuQiftjh+4mNHgj+G5Uc3Z4xvjzraIt0O2vR0ZbIz8eRJtw6jWkK
+         OFvIwO1dbPhod8UxDXrez0G0GDplRXvx3Ibib7MrltQ2eoaNz/24om+spMetAhxe8zjW
+         EbEw==
+X-Forwarded-Encrypted: i=1; AJvYcCWTKW01o/nelxzejyOuVeXZ85QofIqooxPLq6lS2aro2IouUG4JdFn0IrM1IENU/VAR6Wvm7RdJ4g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwR15z77AOLOUsvq0X6eKWT1Yy5OpbTiJmYzhzBoW96+RssA5/e
+	IeFJxBYnVzJRoHn9MeNFZgeshdiT8jolI6UaayFTUVhHSat+732hpgUVvYSPWTrdjUA=
+X-Gm-Gg: AY/fxX5BCURoLBLbi+wL7eF9w1Z7NH+GrNXyOk7h3K6Wwn03I96YHUq2SkU52o8lREN
+	2JafWSK5edIGSnpwPkCp7ddiysJ/+VDQs/k0YYAF9EYGbwYrMCRxKx8Oe0l7E51+vpbzZVec7A9
+	2yCQkxgkOcvEDy65LgoT5ampz/igwSmLbIvLVHpeZ/8NzfWINNMlsBWbWISTKvIy3okLLZtZUoy
+	730nJ7kamFUHFKIs3bXSP7K//Gem4V7FAwtGY77GHzdsejXPgYCI1pTdzy17LBQJMY/DxClJFXF
+	JUgmJrh4RXVXyJHePztDBn9TgmwW0BnT5xOQ3O/wfoxYEZ5TfH+NS9FQ6cpq6Au3FrbWq7f51P1
+	72jcg4FQa80h/ZnQlCfgnuF19d1ZAl2TzIZUTTe5Ew3v73nbikdKscXJfC6RUIVdEIvv0ufVfHh
+	uCffZ/EMCerYsNqcKbTM3HZcPJCXk=
+X-Google-Smtp-Source: AGHT+IEnGj7j78QZ6mRN19R9+RwSyzrulyek7pG3baJMhDCtKMbdCTrHEffeVpATRadsKRk6i4mUUw==
+X-Received: by 2002:a05:6870:b3e9:b0:3d4:5a8:38ff with SMTP id 586e51a60fabf-3ffc09e5050mr3655803fac.18.1767901555789;
+        Thu, 08 Jan 2026 11:45:55 -0800 (PST)
 Received: from [100.64.0.1] ([170.85.11.86])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3ffa4de40bfsm5357385fac.5.2026.01.08.11.23.32
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3ffa507235fsm5688464fac.13.2026.01.08.11.45.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Jan 2026 11:23:34 -0800 (PST)
-Message-ID: <9504b2f6-12f5-46c2-ac74-826dba3fb530@sifive.com>
-Date: Thu, 8 Jan 2026 13:23:32 -0600
+        Thu, 08 Jan 2026 11:45:55 -0800 (PST)
+Message-ID: <4ebbe14b-2579-4ba6-808d-d50c24641d04@sifive.com>
+Date: Thu, 8 Jan 2026 13:45:52 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -69,161 +69,86 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] riscv: dts: spacemit: add initial device tree of
- SpacemiT K3 SoC
-To: Conor Dooley <conor@kernel.org>,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Cc: Guodong Xu <guodong@riscstar.com>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@sifive.com>, Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
- linux-serial@vger.kernel.org, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+Subject: Re: [PATCH v2 11/13] dt-bindings: riscv: Add Supm extension
+ description
+To: Conor Dooley <conor@kernel.org>, Heinrich Schuchardt <xypron.glpk@gmx.de>
+Cc: Rob Herring <robh@kernel.org>, Alex Elder <elder@riscstar.com>,
+ Guodong Xu <guodong@riscstar.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
  Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
  Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>,
  Daniel Lezcano <daniel.lezcano@linaro.org>,
  Thomas Gleixner <tglx@linutronix.de>, Anup Patel <anup@brainfault.org>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
- Yangyu Chen <cyy@cyyself.name>
-References: <20251216-k3-basic-dt-v1-0-a0d256c9dc92@riscstar.com>
- <20251216-k3-basic-dt-v1-7-a0d256c9dc92@riscstar.com>
- <60948ca2-ed3d-485b-9b11-15df7ef8791d@canonical.com>
- <CAH1PCMb=+TvB1w+G6a2ANDp05HUwC4r6CFBDHXFwSmoP3Mm8xw@mail.gmail.com>
- <f9b6b5e2-ec9e-4208-8267-77020e0a9411@canonical.com>
- <20251218-basil-quantum-225ce16e4699@spud>
- <CAH1PCMZ3KM9-D3NJ1N2LUHTHFSDVKmGKT5fU8knAL7NnV9E-gw@mail.gmail.com>
- <20251220-repacking-football-c79e660e788a@spud>
- <4e4c9e7b-d95c-4157-94c3-b06002f94a48@canonical.com>
- <20251222-dimmer-wooing-db29fe925498@spud>
+ Yangyu Chen <cyy@cyyself.name>, Paul Walmsley <paul.walmsley@sifive.com>,
+ Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+ Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+ spacemit@lists.linux.dev, linux-serial@vger.kernel.org
+References: <20251222-k3-basic-dt-v2-0-3af3f3cd0f8a@riscstar.com>
+ <20251222-k3-basic-dt-v2-11-3af3f3cd0f8a@riscstar.com>
+ <fc719e92-10bc-455f-b402-c93bdbf878cf@riscstar.com>
+ <20251230021306.GA3094273-robh@kernel.org>
+ <80e18a32-543a-48f5-81f2-4fa64cb8bf8c@riscstar.com>
+ <CAL_JsqK8hRsVWV6WfbZ6hF1PwFfOJhyOrpWwoOhviAgv5ZxKUw@mail.gmail.com>
+ <20251230-budding-dimple-c34636b0ca4d@spud>
+ <05B0AE03-E7B1-4DCD-88D0-DCB9053F30BA@gmx.de>
+ <20251231-grew-abrasion-dc1a9d34e632@spud>
 From: Samuel Holland <samuel.holland@sifive.com>
 Content-Language: en-US
-In-Reply-To: <20251222-dimmer-wooing-db29fe925498@spud>
+In-Reply-To: <20251231-grew-abrasion-dc1a9d34e632@spud>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 Hi all,
 
-Sorry, I wasn't following this thread.
+(Also replied to the v1 thread:
+https://lore.kernel.org/linux-riscv/9504b2f6-12f5-46c2-ac74-826dba3fb530@sifive.com/)
 
-On 2025-12-22 2:36 PM, Conor Dooley wrote:
-> On Sun, Dec 21, 2025 at 01:10:15AM +0100, Heinrich Schuchardt wrote:
->> On 12/21/25 00:23, Conor Dooley wrote:
->>> On Fri, Dec 19, 2025 at 10:03:24AM +0800, Guodong Xu wrote:
->>>> Hi, Conor and Heinrich
->>>>
->>>> On Thu, Dec 18, 2025 at 8:56 AM Conor Dooley <conor@kernel.org> wrote:
->>>>>
->>>>> On Wed, Dec 17, 2025 at 09:07:14AM +0100, Heinrich Schuchardt wrote:
->>>>>> On 12/17/25 08:11, Guodong Xu wrote:
->>>>>
->>>>>>> Specifically, I must adhere to
->>>>>>> Documentation/devicetree/bindings/riscv/extensions.yaml (and cpus.yaml for
->>>>>>> properties like 'riscv,sv39' which stands for the extension Sv39). If I
->>>>>>> add extension strings that are not yet defined in these schemas, such as
->>>>>>> supm, running 'make dtbs_check W=3' fails with: 'supm' is not one of
->>>>>>> ['i', 'm', 'a', ...], followed by "Unevaluated properties are not allowed."
->>>>>>
->>>>>> If Documentation/devicetree/bindings/riscv/extensions.yaml is incomplete
->>>>>> with respect to ratified extensions, I guess the right approach is to amend
->>>>>> it and not to curtail the CPU description.
->>>>>
->>>>> Absolutely. If the cpu supports something that is not documented, then
->>>>> please document it rather than omit from the devicetree.
->>>>
->>>> Thanks for the review. May I clarify one thing? Both of you mentioned
->>>> document them, given the amount of missing extensions, is it acceptable if
->>>> I submit a prerequisite patch that only documents these strings in
->>>> riscv/extensions.yaml plus the necessary hwprobe export? Leaving the actual
->>>> usage of these extensions (named features) to the future patches.
->>>>
->>>> To provide some context on why I ask: I've investigated the commits & lkml
->>>> history of RISC-V extensions since v6.5, and I summarized the current status
->>>> regarding the RVA23 profile here:
->>>> [1] status in v6.18 (inc. v6.19-rc1):
->>>> https://docularxu.github.io/rva23/linux-kernel-coverage.html
->>>> [2] support evolution since v6.5:
->>>> https://docularxu.github.io/rva23/rva23-kernel-support-evolution.html
->>>>
->>>> Strictly describing the SpacemiT X100/K3 (or any core) as RVA23-compliant
->>>> requires adding these extensions that are currently missing from
->>>> the kernel bindings:
->>>> RVA23U64: Ziccif, Ziccamoa, Zicclsm, Za64rs
->>>> RVA23S64: Ss1p13, Ssccptr, Sstvecd, Sstvala, Sscounterenw, Ssu64xl,
->>>>            Sha, Shcounterenw, Shvstvala, Shtvala, Shvstvecd, Shvsatpa, Shgatpa
->>>
->>>
->>>> Plus 'Supm', 'Zic64b', 'Ssstateen', 'B' where the kernel supports them but
->>>> they are not literally documented in yaml.
->>>
->>> I don't think Supm is suitable for devicetree, doesn't it describe
->>> what the kernel/userspace are capable of rather than hardware?
->>> Zic64b doesn't sound like hardware description (so not really suitable
->>> for devicetree either) but block size information is already represented
->>> by some existing properties (see riscv,cbo*-block-size in riscv/cpus.yaml)
->>> and duplicating that information is not really a great idea.
->>>
->>> I'll admit that I do not really understand Sxstateen and how they work,
->>> but my understanding was that knowing about Smstateen is sufficient and
->>> implied Sstateen, but having Ssstateen defined seems harmless and
->>> possible. I think kvm is the only user of this at the moment, so
->>> probably worth CCing Anup and maybe Drew Jones on the patch adding
->>> Ssstateen to make sure it makes sense.
->>
->> Supm is described in
->>
->> RISC-V Pointer Masking
->> Version 1.0, 10/2024: Ratified
->> https://raw.githubusercontent.com/riscv/riscv-j-extension/master/zjpm-spec.pdf
->>
->> The interpretation taken by QEMU has been:
->>
->> * Supm implies Ssnpm and Smnpm
-
-This is not correct for system emulation. Supm (pointer masking visible in the
-U-mode execution environment) requires exactly (S ? Ssnpm : Smnpm), not both of
-them.
-
->> * RVA23 capable machine models display it in the device-tree
-
-This is also not correct for system emulation. It is impossible for QEMU to know
-if pointer masking is visible to the U-mode execution environment, because QEMU
-does not provide the U-mode execution environment. Software inside the VM does.
-
->> If Supm is not shown in the device-tree, software might assume that the
->> system does not support pointer masking in user mode and is not RVA23
->> compliant.
-
-Software shouldn't be looking for Supm in the devicetree, because the devicetree
-does not describe the properties of the U-mode execution environment.
-
->> Hence I would suggest:
->>
->> If the X100 cores have Ssnpm and Smnpm, add Supm to the device-tree.
->>
->> If the kernel does not support user space pointer masking, the kernel should
->> filter out Supm and not announce it, neither in /proc/cpuinfo nor via
->> hwprobe.
+On 2025-12-31 6:08 PM, Conor Dooley wrote:
+>> Should supm be handled in the same way? Add it to the device-tree of
+>> RVA23U64 devices. If a kernel does not support pointer masking in user
+>> space, hide the extension in cpufeature.c.
 > 
-> Samuel seems to have some specific thoughts on how this works, given he
-> didn't blindly implement ssnpm and smnpm, but has made supm be mode
-> dependent and not permitted in dt, hopefully he sees this.
-> 
-> Personally I'm not convinced that putting supm in dt makes sense, but
-> instead the kernel should imply it if the sxnpm extension matching the
-> mode the kernel is operating in is present and RISCV_ISA_SUPM is set in
-> Kconfig. That's effectively how it works at present, except it'd involve
-> promoting RISCV_ISA_SUPM to a "real" extension instead of being a macro.
-> A validate callback should easily be able to handle checking the
-> mode and whether the Kconfig option is set.
-> That way it would get exposed to userspace using the actual mechanisms,
-> reading the devicetree itself from userspace is not a valid way of
-> checking what extensions are usable after all.
+> Perhaps.
+> Samuel opted not to add supm to dt when he introduced the other relevant
+> extensions, so the rationale from him would be helpful but I'd like to
+> get more opinions on how to deal with supm specifically. supm doesn't
+> really describe hardware capability, since the privilege specific
+> instructions are what does that, which makes me question if it should be
+> in dt at all. On the other hand, it could be argued that supm describes
+> a combination of hardware capability at the dt consumer's privilege level
+> and is valid on that basis. Some wording like Zkr will probably be needed,
+> specifically mentioning that having supm in the dt means that corresponding
+> version sxnpm for the privilege level that the devicetree is provided to
+> is supported.
 
-We already do this for hwprobe(), so the only difference is that Supm would be
-added to /proc/cpuinfo. I don't think I have a problem with this.
+Supm describes a combination of the hardware capability (Smnpm or Ssnpm), the
+consumer's privilege level (U), and the software at the next higher privilege
+level (M or S).
+
+If the DT is targeting U-mode, then I can see a case for adding Supm to the DT
+either at runtime or based on the known capabilities of the
+next-higher-privilege-mode software. So it could make sense to add a binding for
+Supm. But we still shouldn't add Supm to this particular DT, because 1) this DT
+is not targeting U-mode, and 2) this DT is not bound to a particular version of
+S-mode software.
+
+> Either way, we are going to need something in cpufeature.c to imply
+> supm so that it appears to userspace if the privilege specific extension
+> is detected and supm is enabled in the kernel. The kernel already does
+> the implication internally it just isn't reported as an extension to
+> userspace IIRC.
+> If we permit supm in dt, we're also going to have to turn supm off if
+> the Kconfig option is disabled, but that's relatively little effort
+> since it mostly (or maybe entirely) reuses code from implying supm.
+
+It's currently exposed to hwprobe() but not in /proc/cpuinfo. This was based on
+my understanding that hwprobe() was the right way to check for availability of
+extensions. I'm okay with adding it to /proc/cpuinfo if there's value in doing
+so, but I would recommend that the extension in cpufeature.c is _not_ parsed
+from the DT and only enabled synthetically.
 
 Regards,
 Samuel
