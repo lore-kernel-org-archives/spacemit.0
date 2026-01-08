@@ -1,68 +1,29 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485E248A2A6
-	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 12:28:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD9F4DE208
+	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 13:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767875298; cv=none; b=UmJ98sWcqBl9MQW9/zBc2PvnoZN8Xc3nfNiC6MXpRb0AlSmwb+b0L7Vc4rE9Uy+xwIDnBDhvkjawU7YCMFcEGoQI4O/Y+r4tAD3V8fBcK+r85cJ4JRBKyOedtuGijHEcT4/Dk1NR2bCl1T/pf1XSiGrSfgA7WLzccSDJ4XLekJY=
+	t=1767879611; cv=none; b=UIHXlzVub0HV6Ry590M79G7/2a7x//DScLQ98Ul9SD/dToS4TQigag8wYLuKg/FhcoDsn/hNYAQq5utFjwT25E7fkN2+/VtX0X6h9d1vhbm2ZnzwyM1immHrJ2CF5f3vVJyz23e1/cU9z+DT954VwfaaWXuIejaRdchPmKnkRCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767875298; c=relaxed/simple;
-	bh=B/xJC06ouJTSzqoVe1zpf/ArcrN3kkBBh4pRafmC2q0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=K3+2OCDQBVgW7BAebyEUBtWEQEssVMK8naJDeCN/nNBo6rB04GM6wvTQbWuuoxtH805rms3w3KxNy4fznFhTv/JUFOokyshcP1fyfDz4vmsd45mxzMUJt647MuJPzu2AT7eYd6VsQ4WpE4x5a1UKRd0aYxgs5NwNRnoicXn0Atk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=AvVN4xa6; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="AvVN4xa6"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-81c72659e6bso977417b3a.0
-        for <spacemit@lists.linux.dev>; Thu, 08 Jan 2026 04:28:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767875296; x=1768480096; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Vr6lqGLFQ3xLUl/SLHoUY02BcAcuWIW3ayvn+T++ix8=;
-        b=AvVN4xa6aXGd6/6tEiYTMzriSaB63WSj41EwL1ODPYraTwJaN4qe19haJ7B+xkDiEQ
-         ZRZf++fQiwX0a3goJ2SHnJk9eh7IfokkcrBlFFGt+uzseXrRLWYfAy6muzdKS/PFFKC3
-         PS4tAAUvgj9mzWkJMwhi8XAiOCfVUu9mu9MFcolF+JsKHvSFnA/wQ8xAa2ZmPd5TtTjQ
-         7PfSsuoJtWngc9fDUVIwtRRYfJZdOp3V9By4if+rYZeJlGmdv5VUvBVx7EfAGsaKw2CA
-         S6oJF7JzGncQ34HqUAuI6btzqil5cNNbxrFrJVHoEsYhBe7Pj6XhjdLyN+zR6nWR0dOA
-         zEig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767875296; x=1768480096;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Vr6lqGLFQ3xLUl/SLHoUY02BcAcuWIW3ayvn+T++ix8=;
-        b=qmDGxM02kEOCR7wG7/7+blwtuD18TeccAW44N361wNaW2JMbH9YsI1k76PT2m+Dy+F
-         MCIncwk6L3SRAFzEJ6QT6FIzGHSJ54zTEG6Y8C/68vly8BAk7NMIzFR4h7MVvoJggEBO
-         a3NSYmnAsckkpvOL90IEWSeueuB9L0n0ENKCe+KRAsQ7Zss7chJlhLYldoDjiSwoDZ1l
-         SU3mVjgx/EY6S4YEr9szZOktYXQMuKGPf2QmJte/u/J2ceQy0v55l+EIDwas6CME1l3m
-         pzD1rc2CQ7NnZ4snXul9wTOAysx8Hg2xj30+hpliz0zBnQNyXUQ1TNV3nVAivKl5+8WP
-         uxYA==
-X-Forwarded-Encrypted: i=1; AJvYcCWKsRt670KR4f+Li51OZH5vqXT3naTGfHETXKLCJb4eRqOD5l3ieha7RcYlFSLQk7Jd3yqz5piBTw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwPy3Ruucw70fXnUqokAm1+NLWnfQlJr1grMUGkYr5U0dMi4nuZ
-	Jo9FvIM/OctKALDQbzHD7M9K1cPZcA2eURBzWuM1WPg9g9XhyWP06Q0rfaee9fAVI7M=
-X-Gm-Gg: AY/fxX5Ncm9DpahYlm2IWojkwt+Ls/owKaCqkdg4hIMtjZnhiCQoVy5cqMoZwigwKch
-	F1782JjAq6K9K+EaiShM4LdSVTOlpmZLrGpwsBVBFVDaH4I1gI+YLIOGTB0g7eq7xhp9RvDndjh
-	YuZabJJGvjOD/hkIFMaCwsNAAmAkj6D3VGCvzD3TwsFYx+570flBmVBgKDv79MsyKZTkH2Jh19U
-	pA25iA8tK7uVapX3pJAbIBHUpTLBMVTCfc8L9EiEIWtUvCk/G4DYS3PYzB/PI/GLkwwaUHUmTK/
-	KLFQ5dw/d33SpOBiZcn4Ry+iUswgwQjFPzkYvRDhDHnKAorl2c293C1m0UEjIdr8h5Wq3nLtiBu
-	+3EE8EYpgvTdUHRirz0Rg0wdRQzVDPMph88NEmQz+F1ZFs36/gtKJZwkcWGmKivbpPw6ZLru2hq
-	ImOr1uJBVf9lAW/eEcyJqALPthV7CgHsA=
-X-Google-Smtp-Source: AGHT+IEp3lIqQRQ8F/+xV31qGFYy3RxmeX8QufC32EgJpFKkC8v8rt/OnKylZz/xtgAcQ5aWbSQxCQ==
-X-Received: by 2002:a05:6a00:3688:b0:819:bad0:1002 with SMTP id d2e1a72fcca58-81b801ce2e1mr5550278b3a.66.1767875295662;
-        Thu, 08 Jan 2026 04:28:15 -0800 (PST)
-Received: from [127.0.1.1] ([2a12:a305:4::40df])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-819bafe991dsm7656401b3a.16.2026.01.08.04.28.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 04:28:15 -0800 (PST)
-From: Guodong Xu <guodong@riscstar.com>
-Date: Thu, 08 Jan 2026 20:26:02 +0800
-Subject: [PATCH v3 11/11] riscv: dts: spacemit: add SpacemiT K3 Pico-ITX
- board device tree
+	s=arc-20240116; t=1767879611; c=relaxed/simple;
+	bh=MuM8y2Uhoh4FKJuIFjdGlqJrAk5DSEPIoFtnZoY3ULk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=egS4YXUeGv56rt4jd/+1BURadfnCr8jsNdp0pQPd0piZs3Z3xCVJox4288RlvcxxgiKPBznbDU8P/xZO3wjQN+OnAiavLYP6vnkVzDErHF7xO118/4zTbkywsYwubEDYx5D1brAwoWSnPTSb367PKj4wC0ZrIyE8zO4eb9lLyuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [127.0.0.1] (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 60305341E78;
+	Thu, 08 Jan 2026 13:40:02 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+Subject: [PATCH v4 0/4] clk: spacemit: refactor common ccu driver
+Date: Thu, 08 Jan 2026 21:39:21 +0800
+Message-Id: <20260108-06-k1-clk-common-v4-0-badf635993d3@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -71,100 +32,94 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260108-k3-basic-dt-v3-11-ed99eb4c3ad3@riscstar.com>
-References: <20260108-k3-basic-dt-v3-0-ed99eb4c3ad3@riscstar.com>
-In-Reply-To: <20260108-k3-basic-dt-v3-0-ed99eb4c3ad3@riscstar.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, 
- Thomas Gleixner <tglx@linutronix.de>, 
- Samuel Holland <samuel.holland@sifive.com>, 
- Anup Patel <anup@brainfault.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>, 
- Yangyu Chen <cyy@cyyself.name>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>, 
- Conor Dooley <conor@kernel.org>, Heinrich Schuchardt <xypron.glpk@gmx.de>, 
- Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, 
- Anup Patel <anup@brainfault.org>, Andrew Jones <ajones@ventanamicro.com>, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
- linux-serial@vger.kernel.org, Guodong Xu <guodong@riscstar.com>
-X-Mailer: b4 0.14.2
+X-B4-Tracking: v=1; b=H4sIAImzX2kC/23OQW6DMBAF0KsgrztoZmIMzir3qLpwwICVYLc2R
+ a0i7l4XWqlVsvxfmjf/JpKNziZxLG4i2sUlF3wO8qkQ7Wj8YMF1OQtGroipBlRwIWivF2jDNAU
+ PTUdtVWtdoaxFPnuNtncfG/n8sudo396zPO+lmGxKZpOPxY+rkbghXUqJumYgcD60ozOTOQ2Tc
+ dcyPxPf2ujSHOLntnehjdsJxvtpCwFC13Nj0GhSTKfB+jmEMsRh0xb+K6gHAmeBm3OlJTVn2fV
+ 3wuFXUEh4eCDkDhQq6nSvtLX/hXVdvwDMMO/EgwEAAA==
+X-Change-ID: 20251217-06-k1-clk-common-8d1c57995047
+To: Stephen Boyd <sboyd@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Alex Elder <elder@riscstar.com>, Guodong Xu <guodong@riscstar.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, Yao Zi <me@ziyao.cc>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2481; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=MuM8y2Uhoh4FKJuIFjdGlqJrAk5DSEPIoFtnZoY3ULk=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpX7Oi7Ane3/Bmlr3fYDnKiV4OlduH7cJBiHlls
+ FV8m2galrGJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaV+zohsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+0KKw/+KMWHaB7O4bXGMBABaGHg8yx7uzzhCg1oaEIzE2Szl9psEi2UulqM8
+ XuSL+ohsKh+ZE3eH8FbKrhAIdYmM21Jn+ielMp9DRyO8LGTQRbAXg0D4X1DPGDJaMnlVndIi9lK
+ 9HwyyaWDphVOP3WAw7rI2bAD/Nn+d4+6+JpiOIqMpwDkDusG+Zr4vDoRWNMm3CH4VsUB4daq7Ps
+ czNtMqEmHPV6keftu1/jiC03Tro0dsj476kX7dVJQEEGtmMaFphm/mmrgU5MQ7eOACLFHTzMFzG
+ dArTDc7gjVQpOgJNWwzsjwXYtyYAEdxn6JPOjg7yBVAqtPij3bc8fyIKAApAU20vQfCX1izGAtC
+ CMrCaWex8hQWEKR+p+v31cFNBDiBydzp72rANvgsCmINA9WcOjCkakvVCQph0+M8H5hRTh7ItcE
+ HKq4l8QECge4PiaMNb6yzJ00RVJQxYxy4ULxF7d0K9j8ssS0OEnMNJHIkIYKPKkhco7nzG66AW0
+ MyL5K8iGu6bpWzpqDu7rmIZfE/wXrqFVlJLG6Mj0xcNA6FPQM9+CAuuu4RwbnEeTW2/46m7Nvp/
+ yUDC4V/9v8I/hbhKmazKr0cCq+4jYaXyUaz97/90fAiwmIbsrlKrfH23tC0etQUmLdomAIG1fwb
+ daXPDk7VKTgraiWRcwiom4N8kAZ47U=
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-K3 Pico-ITX is a 2.5-inch single-board computer equipted with a SpacemiT
-K3 SoC.
+The goal here is to refactor the clock driver to extract common part, and
+reuse it, so in the future, we can maximize the source code usage once
+adding new clock driver (specifically, for the SpacemiT K3 SoC here)
 
-This minimal device tree enables booting into a serial console with UART
-output.
+Since reset driver register via auxiliary bus which requires a adjustment
+of the auxiliary device id accordingly.
 
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
+This patch will depend on Kconfig fix for building modules [1], and the idea
+come from K3 clock's review[2]
+
+Please note, Patch 1 is needed for both clock and reset driver, so extract it
+out as single independent patch. Then it can be pulled into both subsystem.
+
+Link: https://lore.kernel.org/all/20251219012819.440972-1-inochiama@gmail.com/ [1]
+Link: https://lore.kernel.org/all/aTo8sCPpVM1o9PKX@pie [2]
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
 ---
-v3: No change.
-v2: Add aliases node in this board DT.
-    Update the memory node to reflect the hardware truth. Address
-     starts at 0x100000000 (4G) boundary.
+Changes in v4:
+- add runtime dependency message about the fix to reset break
+- collect tags
+- Link to v3: https://lore.kernel.org/r/20260103-06-k1-clk-common-v3-0-6061d9f69eef@gentoo.org
+
+Changes in v3:
+- drop reset macro, and have separate patch for changing reset name
+- extract common spacemit_ccu_probe(), leave SoC specific change out
+- improve commit message
+- Link to v2: https://lore.kernel.org/r/20251226-06-k1-clk-common-v2-0-28b59418b4df@gentoo.org
+
+Changes in v2:
+- extract common header file which shared by clock and reset
+- add SoC namespace to differentiate reset for auxiliary bus
+- Link to v1: https://lore.kernel.org/r/20251220-06-k1-clk-common-v1-0-df28a0a91621@gentoo.org
+
 ---
- arch/riscv/boot/dts/spacemit/Makefile        |  1 +
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 38 ++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+Yixun Lan (4):
+      clk: spacemit: prepare common ccu header
+      clk: spacemit: extract common ccu functions
+      clk: spacemit: add platform SoC prefix to reset name
+      reset: spacemit: fix auxiliary device id
 
-diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-index 95889e7269d1bae679b28cd053e1b0a23ae6de68..7e2b877025718113a0e31917eadf7562f488d825 100644
---- a/arch/riscv/boot/dts/spacemit/Makefile
-+++ b/arch/riscv/boot/dts/spacemit/Makefile
-@@ -4,3 +4,4 @@ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-r2s.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
-+dtb-$(CONFIG_ARCH_SPACEMIT) += k3-pico-itx.dtb
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..037ce757e5bcae0258a326ea6265185d761f2b52
---- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -0,0 +1,38 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/*
-+ * Copyright (c) 2025 SpacemiT (Hangzhou) Technology Co. Ltd
-+ * Copyright (c) 2025 Guodong Xu <guodong@riscstar.com>
-+ */
-+
-+#include "k3.dtsi"
-+
-+/ {
-+	model = "SpacemiT K3 Pico-ITX";
-+	compatible = "spacemit,k3-pico-itx", "spacemit,k3";
-+
-+	aliases {
-+		serial0 = &uart0;
-+		serial2 = &uart2;
-+		serial3 = &uart3;
-+		serial4 = &uart4;
-+		serial5 = &uart5;
-+		serial6 = &uart6;
-+		serial7 = &uart7;
-+		serial8 = &uart8;
-+		serial9 = &uart9;
-+		serial10 = &uart10;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	memory@100000000 {
-+		device_type = "memory";
-+		reg = <0x1 0x00000000 0x4 0x00000000>;
-+	};
-+};
-+
-+&uart0 {
-+	status = "okay";
-+};
+ drivers/clk/spacemit/ccu-k1.c     | 191 +++-----------------------------------
+ drivers/clk/spacemit/ccu_common.c | 171 ++++++++++++++++++++++++++++++++++
+ drivers/clk/spacemit/ccu_common.h |  10 ++
+ drivers/reset/reset-spacemit.c    |   2 +-
+ include/soc/spacemit/ccu.h        |  21 +++++
+ include/soc/spacemit/k1-syscon.h  |  12 +--
+ 6 files changed, 215 insertions(+), 192 deletions(-)
+---
+base-commit: 99735a742f7e9a3e7f4cb6c58edf1b38101e7657
+change-id: 20251217-06-k1-clk-common-8d1c57995047
+prerequisite-message-id: 20251219012819.440972-1-inochiama@gmail.com
+prerequisite-patch-id: df430730ed961011cee5c5d47b7ace84b3c5ebb7
+prerequisite-patch-id: 64003618c33be925602e46b7543f2c13d3f36474
 
+Best regards,
 -- 
-2.43.0
+Yixun Lan
 
