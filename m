@@ -1,68 +1,68 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00AB47279C
-	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 12:28:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485E248A2A6
+	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 12:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767875287; cv=none; b=J3mJc+kKiM5iLdbqRJlVj2kHNKvOwHqaCMIx6/sBsT+m9J9oXiKyMvODbcvtawLWcihX4rQz4D6u4O9UR9IplwjN8yy2+scRFgpfkDfXlSJHXeIjgK3P3HoNUrlsve4hgbrfTQMi/dzpGb61j0Qe5rsOblHl377HGgPri57pIEA=
+	t=1767875298; cv=none; b=UmJ98sWcqBl9MQW9/zBc2PvnoZN8Xc3nfNiC6MXpRb0AlSmwb+b0L7Vc4rE9Uy+xwIDnBDhvkjawU7YCMFcEGoQI4O/Y+r4tAD3V8fBcK+r85cJ4JRBKyOedtuGijHEcT4/Dk1NR2bCl1T/pf1XSiGrSfgA7WLzccSDJ4XLekJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767875287; c=relaxed/simple;
-	bh=WvHkuFps5MTowhcdYFHMWXHNfbPZxAybBkUvVGVSICM=;
+	s=arc-20240116; t=1767875298; c=relaxed/simple;
+	bh=B/xJC06ouJTSzqoVe1zpf/ArcrN3kkBBh4pRafmC2q0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ED9dr7+j/TRQb3O3c3zm6nWobeKjOiTs7IU5vUJ6xSkVER6SmdsZzMJR+A0pYemqMemLtnF+XS+28YpiLeZtWFiJjmTGReA1fsRdtIvolSRNmhvUaPnC9P4cK8mjdYGUG/aq5LMuwkzWf4HaiEaxgpDH2bZzcNN0U/an7aBytLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=KkFh94hE; arc=none smtp.client-ip=209.85.210.178
+	 In-Reply-To:To:Cc; b=K3+2OCDQBVgW7BAebyEUBtWEQEssVMK8naJDeCN/nNBo6rB04GM6wvTQbWuuoxtH805rms3w3KxNy4fznFhTv/JUFOokyshcP1fyfDz4vmsd45mxzMUJt647MuJPzu2AT7eYd6VsQ4WpE4x5a1UKRd0aYxgs5NwNRnoicXn0Atk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=AvVN4xa6; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="KkFh94hE"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-81c5ff546f6so457201b3a.1
-        for <spacemit@lists.linux.dev>; Thu, 08 Jan 2026 04:28:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="AvVN4xa6"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-81c72659e6bso977417b3a.0
+        for <spacemit@lists.linux.dev>; Thu, 08 Jan 2026 04:28:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767875284; x=1768480084; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767875296; x=1768480096; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2RjZIFe2UzhV6iw2gmCrORVc77t6PnohnqkV4qGM4WY=;
-        b=KkFh94hEg8zIPnFVjSzBhdK47hRPrdk7eyPpqtGEyPFl6Ao+aFH4KkMsfJaokZb/Uk
-         zMzSMPGdK/pXSDfWuTxNObBOUK+qgdLXwBVGKqs0gMC1TQ3PxFb23YyDzsGlF2cydMWt
-         vdsvLANm33CaWZiZrW2YOXQFBS00kVM7OInShsuMOBAv9ciONyndvU+3uYA7qe5T4W+X
-         sLObvtdxAbxpa60Ef7peqA49rSWOXcOuiBakSDxULNABTaziEJIhvLsaNwlgze0ou30P
-         e+dD25anKgIoxq3Yallu/wDC3w4etgMf9eM9EdUXBN1Brm2EFERDBe8efJsjRs5JUKZd
-         RZbg==
+        bh=Vr6lqGLFQ3xLUl/SLHoUY02BcAcuWIW3ayvn+T++ix8=;
+        b=AvVN4xa6aXGd6/6tEiYTMzriSaB63WSj41EwL1ODPYraTwJaN4qe19haJ7B+xkDiEQ
+         ZRZf++fQiwX0a3goJ2SHnJk9eh7IfokkcrBlFFGt+uzseXrRLWYfAy6muzdKS/PFFKC3
+         PS4tAAUvgj9mzWkJMwhi8XAiOCfVUu9mu9MFcolF+JsKHvSFnA/wQ8xAa2ZmPd5TtTjQ
+         7PfSsuoJtWngc9fDUVIwtRRYfJZdOp3V9By4if+rYZeJlGmdv5VUvBVx7EfAGsaKw2CA
+         S6oJF7JzGncQ34HqUAuI6btzqil5cNNbxrFrJVHoEsYhBe7Pj6XhjdLyN+zR6nWR0dOA
+         zEig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767875284; x=1768480084;
+        d=1e100.net; s=20230601; t=1767875296; x=1768480096;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=2RjZIFe2UzhV6iw2gmCrORVc77t6PnohnqkV4qGM4WY=;
-        b=SVrkzi/jqZ1CZ9+aIqZ3Ov6TBJXW3jRlyKd8TCgISbP7gTh+l/tJ1GrbGtbW6HAO94
-         QLViuJ/2k/DolmSl+alvn/2Ctlt56hOaOaUxVpW6AnpKtaTyOKZDdjjzq3zj3bjnj/rk
-         bpmYY759CvZCJSH90vFX9Lf9OKVXKn2Ufcihsk7CaNqwNcPmulFucDdKsCSe5HYCVO/P
-         vaWAZuX4FY2cxDitk6uug39vDfUePb8FKgXoN9BsWLemZa6IWjLxFMPlTltUQgnAy7FA
-         cf6cbO9WYKdZAwTj0Qprnq6cQnDLK/EF91w8nGQVq0uNtjUZCmFectMDQ4qj59wnKi4Z
-         Iw3A==
-X-Forwarded-Encrypted: i=1; AJvYcCXfMvBsHKBxVjrxPPXc7Y99yS+zfgV4r7RTJlP6iOkNyhmHg67lXRyF+LCCnGDwxHzc+KL1jWr1mg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzeDg7uXBl+db5vWwhMFX4NBac5+pp/jE7mkQh7Md4PGbUbY1Yh
-	K7+SjNtpAJtN+5G32ubJ78HsifprwyLpDATFTUynb4egiwWNk+DCLyxsvA4bZQi/S2k=
-X-Gm-Gg: AY/fxX4Kem/GJoFbir44xInA4q6zfoOggKLP82B0tJQBtTy4sZJsPhMtztrs8ewHFcS
-	XmeN41itpXwUgN1jd/IQJW1+c90wQEd6+ZHcr9TbpmmX6Y+1lYYrIGHm/e3qFgUfgSANi4v1YjX
-	zodwPCZOBJLSJhEOb8sVFdDqhYQXe/foCjfZuwTlC4XXfC+el12V/IGBWRmM4vmNqfV6wHERhkN
-	qAqyBa3bR6HIcTlicbSQjF/6p0JaeSe3iAYLpzZA3tdj9I0kuVZG2+CbvYQd/2bTnVOVYv8SWxy
-	nuHh03Uc3PHv08303jfhzyKHhUk9/XszemLfcHYukXy/AUoZ0n8D59FIM1lWHFH7E/xFNfIH8qC
-	XqAarAGnhCuRVt8Y4myexqexy7xChTZk4p0SVKJ5B497gTZEQeIaoTjd+MFR6Pi6HXMtCQsg/gg
-	fewzFBI/s6AbbWkd/liMlPwJQY9XZnM8g=
-X-Google-Smtp-Source: AGHT+IEDH148h03h+JKPMlGuiMdLg304yEyTB6ERt/P3nHzYE+eMX9KSboI6vzTfXJMbo1QzBwTWPg==
-X-Received: by 2002:a05:6a00:6101:b0:7e8:3fcb:9b07 with SMTP id d2e1a72fcca58-8194eaf7e8fmr5977772b3a.29.1767875283599;
-        Thu, 08 Jan 2026 04:28:03 -0800 (PST)
+        bh=Vr6lqGLFQ3xLUl/SLHoUY02BcAcuWIW3ayvn+T++ix8=;
+        b=qmDGxM02kEOCR7wG7/7+blwtuD18TeccAW44N361wNaW2JMbH9YsI1k76PT2m+Dy+F
+         MCIncwk6L3SRAFzEJ6QT6FIzGHSJ54zTEG6Y8C/68vly8BAk7NMIzFR4h7MVvoJggEBO
+         a3NSYmnAsckkpvOL90IEWSeueuB9L0n0ENKCe+KRAsQ7Zss7chJlhLYldoDjiSwoDZ1l
+         SU3mVjgx/EY6S4YEr9szZOktYXQMuKGPf2QmJte/u/J2ceQy0v55l+EIDwas6CME1l3m
+         pzD1rc2CQ7NnZ4snXul9wTOAysx8Hg2xj30+hpliz0zBnQNyXUQ1TNV3nVAivKl5+8WP
+         uxYA==
+X-Forwarded-Encrypted: i=1; AJvYcCWKsRt670KR4f+Li51OZH5vqXT3naTGfHETXKLCJb4eRqOD5l3ieha7RcYlFSLQk7Jd3yqz5piBTw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwPy3Ruucw70fXnUqokAm1+NLWnfQlJr1grMUGkYr5U0dMi4nuZ
+	Jo9FvIM/OctKALDQbzHD7M9K1cPZcA2eURBzWuM1WPg9g9XhyWP06Q0rfaee9fAVI7M=
+X-Gm-Gg: AY/fxX5Ncm9DpahYlm2IWojkwt+Ls/owKaCqkdg4hIMtjZnhiCQoVy5cqMoZwigwKch
+	F1782JjAq6K9K+EaiShM4LdSVTOlpmZLrGpwsBVBFVDaH4I1gI+YLIOGTB0g7eq7xhp9RvDndjh
+	YuZabJJGvjOD/hkIFMaCwsNAAmAkj6D3VGCvzD3TwsFYx+570flBmVBgKDv79MsyKZTkH2Jh19U
+	pA25iA8tK7uVapX3pJAbIBHUpTLBMVTCfc8L9EiEIWtUvCk/G4DYS3PYzB/PI/GLkwwaUHUmTK/
+	KLFQ5dw/d33SpOBiZcn4Ry+iUswgwQjFPzkYvRDhDHnKAorl2c293C1m0UEjIdr8h5Wq3nLtiBu
+	+3EE8EYpgvTdUHRirz0Rg0wdRQzVDPMph88NEmQz+F1ZFs36/gtKJZwkcWGmKivbpPw6ZLru2hq
+	ImOr1uJBVf9lAW/eEcyJqALPthV7CgHsA=
+X-Google-Smtp-Source: AGHT+IEp3lIqQRQ8F/+xV31qGFYy3RxmeX8QufC32EgJpFKkC8v8rt/OnKylZz/xtgAcQ5aWbSQxCQ==
+X-Received: by 2002:a05:6a00:3688:b0:819:bad0:1002 with SMTP id d2e1a72fcca58-81b801ce2e1mr5550278b3a.66.1767875295662;
+        Thu, 08 Jan 2026 04:28:15 -0800 (PST)
 Received: from [127.0.1.1] ([2a12:a305:4::40df])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-819bafe991dsm7656401b3a.16.2026.01.08.04.27.51
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-819bafe991dsm7656401b3a.16.2026.01.08.04.28.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 04:28:03 -0800 (PST)
+        Thu, 08 Jan 2026 04:28:15 -0800 (PST)
 From: Guodong Xu <guodong@riscstar.com>
-Date: Thu, 08 Jan 2026 20:26:01 +0800
-Subject: [PATCH v3 10/11] riscv: dts: spacemit: add initial device tree of
- SpacemiT K3 SoC
+Date: Thu, 08 Jan 2026 20:26:02 +0800
+Subject: [PATCH v3 11/11] riscv: dts: spacemit: add SpacemiT K3 Pico-ITX
+ board device tree
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -71,7 +71,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260108-k3-basic-dt-v3-10-ed99eb4c3ad3@riscstar.com>
+Message-Id: <20260108-k3-basic-dt-v3-11-ed99eb4c3ad3@riscstar.com>
 References: <20260108-k3-basic-dt-v3-0-ed99eb4c3ad3@riscstar.com>
 In-Reply-To: <20260108-k3-basic-dt-v3-0-ed99eb4c3ad3@riscstar.com>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -94,571 +94,75 @@ Cc: Paul Walmsley <paul.walmsley@sifive.com>,
  linux-serial@vger.kernel.org, Guodong Xu <guodong@riscstar.com>
 X-Mailer: b4 0.14.2
 
-SpacemiT K3 is equipped with 8 X100 cores, which are RVA23 compliant.
-Add nodes of uarts, timer and interrupt-controllers.
+K3 Pico-ITX is a 2.5-inch single-board computer equipted with a SpacemiT
+K3 SoC.
+
+This minimal device tree enables booting into a serial console with UART
+output.
 
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 ---
-v3: Remove "supm" from the riscv,isa-extensions list.
-v2: Remove aliases from k3.dtsi, they should be in board DTS.
-    Updated riscv,isa-extensions with new extensions from the extensions.yaml
+v3: No change.
+v2: Add aliases node in this board DT.
+    Update the memory node to reflect the hardware truth. Address
+     starts at 0x100000000 (4G) boundary.
 ---
- arch/riscv/boot/dts/spacemit/k3.dtsi | 548 +++++++++++++++++++++++++++++++++++
- 1 file changed, 548 insertions(+)
+ arch/riscv/boot/dts/spacemit/Makefile        |  1 +
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 38 ++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
+index 95889e7269d1bae679b28cd053e1b0a23ae6de68..7e2b877025718113a0e31917eadf7562f488d825 100644
+--- a/arch/riscv/boot/dts/spacemit/Makefile
++++ b/arch/riscv/boot/dts/spacemit/Makefile
+@@ -4,3 +4,4 @@ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-r2s.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
++dtb-$(CONFIG_ARCH_SPACEMIT) += k3-pico-itx.dtb
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
 new file mode 100644
-index 0000000000000000000000000000000000000000..be9335fba32cb9e81915b2b91cf08c55a5e96809
+index 0000000000000000000000000000000000000000..037ce757e5bcae0258a326ea6265185d761f2b52
 --- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -0,0 +1,548 @@
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -0,0 +1,38 @@
 +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
 +/*
 + * Copyright (c) 2025 SpacemiT (Hangzhou) Technology Co. Ltd
 + * Copyright (c) 2025 Guodong Xu <guodong@riscstar.com>
 + */
 +
-+#include <dt-bindings/interrupt-controller/irq.h>
-+
-+/dts-v1/;
++#include "k3.dtsi"
 +
 +/ {
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+	model = "SpacemiT K3";
-+	compatible = "spacemit,k3";
++	model = "SpacemiT K3 Pico-ITX";
++	compatible = "spacemit,k3-pico-itx", "spacemit,k3";
 +
-+	cpus: cpus {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		timebase-frequency = <24000000>;
-+
-+		cpu_0: cpu@0 {
-+			compatible = "spacemit,x100", "riscv";
-+			device_type = "cpu";
-+			reg = <0>;
-+			riscv,isa-base = "rv64i";
-+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "h",
-+					       "sha", "shcounterenw", "shgatpa", "shtvala",
-+					       "shvsatpa", "shvstvala", "shvstvecd", "smaia",
-+					       "smstateen", "ssaia", "ssccptr", "sscofpmf",
-+					       "sscounterenw", "ssnpm", "ssstateen", "sstc",
-+					       "sstvala", "sstvecd", "ssu64xl", "svade",
-+					       "svinval", "svnapot", "svpbmt", "za64rs",
-+					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
-+					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
-+					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
-+					       "ziccamoa", "ziccif", "zicclsm", "zicntr",
-+					       "zicond", "zicsr", "zifencei", "zihintntl",
-+					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
-+					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
-+					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
-+					       "zvkned", "zvkng", "zvknha", "zvknhb", "zvks",
-+					       "zvksc", "zvksed", "zvksg", "zvksh", "zvkt";
-+			riscv,cbom-block-size = <64>;
-+			riscv,cbop-block-size = <64>;
-+			riscv,cboz-block-size = <64>;
-+			i-cache-block-size = <64>;
-+			i-cache-size = <65536>;
-+			i-cache-sets = <256>;
-+			d-cache-block-size = <64>;
-+			d-cache-size = <65536>;
-+			d-cache-sets = <256>;
-+			next-level-cache = <&l2_cache0>;
-+			mmu-type = "riscv,sv39";
-+
-+			cpu0_intc: interrupt-controller {
-+				compatible = "riscv,cpu-intc";
-+				#interrupt-cells = <1>;
-+				interrupt-controller;
-+			};
-+		};
-+
-+		cpu_1: cpu@1 {
-+			compatible = "spacemit,x100", "riscv";
-+			device_type = "cpu";
-+			reg = <1>;
-+			riscv,isa-base = "rv64i";
-+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "h",
-+					       "sha", "shcounterenw", "shgatpa", "shtvala",
-+					       "shvsatpa", "shvstvala", "shvstvecd", "smaia",
-+					       "smstateen", "ssaia", "ssccptr", "sscofpmf",
-+					       "sscounterenw", "ssnpm", "ssstateen", "sstc",
-+					       "sstvala", "sstvecd", "ssu64xl", "svade",
-+					       "svinval", "svnapot", "svpbmt", "za64rs",
-+					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
-+					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
-+					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
-+					       "ziccamoa", "ziccif", "zicclsm", "zicntr",
-+					       "zicond", "zicsr", "zifencei", "zihintntl",
-+					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
-+					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
-+					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
-+					       "zvkned", "zvkng", "zvknha", "zvknhb", "zvks",
-+					       "zvksc", "zvksed", "zvksg", "zvksh", "zvkt";
-+			riscv,cbom-block-size = <64>;
-+			riscv,cbop-block-size = <64>;
-+			riscv,cboz-block-size = <64>;
-+			i-cache-block-size = <64>;
-+			i-cache-size = <65536>;
-+			i-cache-sets = <256>;
-+			d-cache-block-size = <64>;
-+			d-cache-size = <65536>;
-+			d-cache-sets = <256>;
-+			next-level-cache = <&l2_cache0>;
-+			mmu-type = "riscv,sv39";
-+
-+			cpu1_intc: interrupt-controller {
-+				compatible = "riscv,cpu-intc";
-+				#interrupt-cells = <1>;
-+				interrupt-controller;
-+			};
-+		};
-+
-+		cpu_2: cpu@2 {
-+			compatible = "spacemit,x100", "riscv";
-+			device_type = "cpu";
-+			reg = <2>;
-+			riscv,isa-base = "rv64i";
-+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "h",
-+					       "sha", "shcounterenw", "shgatpa", "shtvala",
-+					       "shvsatpa", "shvstvala", "shvstvecd", "smaia",
-+					       "smstateen", "ssaia", "ssccptr", "sscofpmf",
-+					       "sscounterenw", "ssnpm", "ssstateen", "sstc",
-+					       "sstvala", "sstvecd", "ssu64xl", "svade",
-+					       "svinval", "svnapot", "svpbmt", "za64rs",
-+					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
-+					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
-+					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
-+					       "ziccamoa", "ziccif", "zicclsm", "zicntr",
-+					       "zicond", "zicsr", "zifencei", "zihintntl",
-+					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
-+					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
-+					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
-+					       "zvkned", "zvkng", "zvknha", "zvknhb", "zvks",
-+					       "zvksc", "zvksed", "zvksg", "zvksh", "zvkt";
-+			riscv,cbom-block-size = <64>;
-+			riscv,cbop-block-size = <64>;
-+			riscv,cboz-block-size = <64>;
-+			i-cache-block-size = <64>;
-+			i-cache-size = <65536>;
-+			i-cache-sets = <256>;
-+			d-cache-block-size = <64>;
-+			d-cache-size = <65536>;
-+			d-cache-sets = <256>;
-+			next-level-cache = <&l2_cache0>;
-+			mmu-type = "riscv,sv39";
-+
-+			cpu2_intc: interrupt-controller {
-+				compatible = "riscv,cpu-intc";
-+				#interrupt-cells = <1>;
-+				interrupt-controller;
-+			};
-+		};
-+
-+		cpu_3: cpu@3 {
-+			compatible = "spacemit,x100", "riscv";
-+			device_type = "cpu";
-+			reg = <3>;
-+			riscv,isa-base = "rv64i";
-+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "h",
-+					       "sha", "shcounterenw", "shgatpa", "shtvala",
-+					       "shvsatpa", "shvstvala", "shvstvecd", "smaia",
-+					       "smstateen", "ssaia", "ssccptr", "sscofpmf",
-+					       "sscounterenw", "ssnpm", "ssstateen", "sstc",
-+					       "sstvala", "sstvecd", "ssu64xl", "svade",
-+					       "svinval", "svnapot", "svpbmt", "za64rs",
-+					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
-+					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
-+					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
-+					       "ziccamoa", "ziccif", "zicclsm", "zicntr",
-+					       "zicond", "zicsr", "zifencei", "zihintntl",
-+					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
-+					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
-+					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
-+					       "zvkned", "zvkng", "zvknha", "zvknhb", "zvks",
-+					       "zvksc", "zvksed", "zvksg", "zvksh", "zvkt";
-+			riscv,cbom-block-size = <64>;
-+			riscv,cbop-block-size = <64>;
-+			riscv,cboz-block-size = <64>;
-+			i-cache-block-size = <64>;
-+			i-cache-size = <65536>;
-+			i-cache-sets = <256>;
-+			d-cache-block-size = <64>;
-+			d-cache-size = <65536>;
-+			d-cache-sets = <256>;
-+			next-level-cache = <&l2_cache0>;
-+			mmu-type = "riscv,sv39";
-+
-+			cpu3_intc: interrupt-controller {
-+				compatible = "riscv,cpu-intc";
-+				#interrupt-cells = <1>;
-+				interrupt-controller;
-+			};
-+		};
-+
-+		cpu_4: cpu@4 {
-+			compatible = "spacemit,x100", "riscv";
-+			device_type = "cpu";
-+			reg = <4>;
-+			riscv,isa-base = "rv64i";
-+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "h",
-+					       "sha", "shcounterenw", "shgatpa", "shtvala",
-+					       "shvsatpa", "shvstvala", "shvstvecd", "smaia",
-+					       "smstateen", "ssaia", "ssccptr", "sscofpmf",
-+					       "sscounterenw", "ssnpm", "ssstateen", "sstc",
-+					       "sstvala", "sstvecd", "ssu64xl", "svade",
-+					       "svinval", "svnapot", "svpbmt", "za64rs",
-+					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
-+					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
-+					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
-+					       "ziccamoa", "ziccif", "zicclsm", "zicntr",
-+					       "zicond", "zicsr", "zifencei", "zihintntl",
-+					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
-+					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
-+					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
-+					       "zvkned", "zvkng", "zvknha", "zvknhb", "zvks",
-+					       "zvksc", "zvksed", "zvksg", "zvksh", "zvkt";
-+			riscv,cbom-block-size = <64>;
-+			riscv,cbop-block-size = <64>;
-+			riscv,cboz-block-size = <64>;
-+			i-cache-block-size = <64>;
-+			i-cache-size = <65536>;
-+			i-cache-sets = <256>;
-+			d-cache-block-size = <64>;
-+			d-cache-size = <65536>;
-+			d-cache-sets = <256>;
-+			next-level-cache = <&l2_cache1>;
-+			mmu-type = "riscv,sv39";
-+
-+			cpu4_intc: interrupt-controller {
-+				compatible = "riscv,cpu-intc";
-+				#interrupt-cells = <1>;
-+				interrupt-controller;
-+			};
-+		};
-+
-+		cpu_5: cpu@5 {
-+			compatible = "spacemit,x100", "riscv";
-+			device_type = "cpu";
-+			reg = <5>;
-+			riscv,isa-base = "rv64i";
-+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "h",
-+					       "sha", "shcounterenw", "shgatpa", "shtvala",
-+					       "shvsatpa", "shvstvala", "shvstvecd", "smaia",
-+					       "smstateen", "ssaia", "ssccptr", "sscofpmf",
-+					       "sscounterenw", "ssnpm", "ssstateen", "sstc",
-+					       "sstvala", "sstvecd", "ssu64xl", "svade",
-+					       "svinval", "svnapot", "svpbmt", "za64rs",
-+					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
-+					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
-+					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
-+					       "ziccamoa", "ziccif", "zicclsm", "zicntr",
-+					       "zicond", "zicsr", "zifencei", "zihintntl",
-+					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
-+					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
-+					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
-+					       "zvkned", "zvkng", "zvknha", "zvknhb", "zvks",
-+					       "zvksc", "zvksed", "zvksg", "zvksh", "zvkt";
-+			riscv,cbom-block-size = <64>;
-+			riscv,cbop-block-size = <64>;
-+			riscv,cboz-block-size = <64>;
-+			i-cache-block-size = <64>;
-+			i-cache-size = <65536>;
-+			i-cache-sets = <256>;
-+			d-cache-block-size = <64>;
-+			d-cache-size = <65536>;
-+			d-cache-sets = <256>;
-+			next-level-cache = <&l2_cache1>;
-+			mmu-type = "riscv,sv39";
-+
-+			cpu5_intc: interrupt-controller {
-+				compatible = "riscv,cpu-intc";
-+				#interrupt-cells = <1>;
-+				interrupt-controller;
-+			};
-+		};
-+
-+		cpu_6: cpu@6 {
-+			compatible = "spacemit,x100", "riscv";
-+			device_type = "cpu";
-+			reg = <6>;
-+			riscv,isa-base = "rv64i";
-+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "h",
-+					       "sha", "shcounterenw", "shgatpa", "shtvala",
-+					       "shvsatpa", "shvstvala", "shvstvecd", "smaia",
-+					       "smstateen", "ssaia", "ssccptr", "sscofpmf",
-+					       "sscounterenw", "ssnpm", "ssstateen", "sstc",
-+					       "sstvala", "sstvecd", "ssu64xl", "svade",
-+					       "svinval", "svnapot", "svpbmt", "za64rs",
-+					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
-+					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
-+					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
-+					       "ziccamoa", "ziccif", "zicclsm", "zicntr",
-+					       "zicond", "zicsr", "zifencei", "zihintntl",
-+					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
-+					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
-+					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
-+					       "zvkned", "zvkng", "zvknha", "zvknhb", "zvks",
-+					       "zvksc", "zvksed", "zvksg", "zvksh", "zvkt";
-+			riscv,cbom-block-size = <64>;
-+			riscv,cbop-block-size = <64>;
-+			riscv,cboz-block-size = <64>;
-+			i-cache-block-size = <64>;
-+			i-cache-size = <65536>;
-+			i-cache-sets = <256>;
-+			d-cache-block-size = <64>;
-+			d-cache-size = <65536>;
-+			d-cache-sets = <256>;
-+			next-level-cache = <&l2_cache1>;
-+			mmu-type = "riscv,sv39";
-+
-+			cpu6_intc: interrupt-controller {
-+				compatible = "riscv,cpu-intc";
-+				#interrupt-cells = <1>;
-+				interrupt-controller;
-+			};
-+		};
-+
-+		cpu_7: cpu@7 {
-+			compatible = "spacemit,x100", "riscv";
-+			device_type = "cpu";
-+			reg = <7>;
-+			riscv,isa-base = "rv64i";
-+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "h",
-+					       "sha", "shcounterenw", "shgatpa", "shtvala",
-+					       "shvsatpa", "shvstvala", "shvstvecd", "smaia",
-+					       "smstateen", "ssaia", "ssccptr", "sscofpmf",
-+					       "sscounterenw", "ssnpm", "ssstateen", "sstc",
-+					       "sstvala", "sstvecd", "ssu64xl", "svade",
-+					       "svinval", "svnapot", "svpbmt", "za64rs",
-+					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
-+					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
-+					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
-+					       "ziccamoa", "ziccif", "zicclsm", "zicntr",
-+					       "zicond", "zicsr", "zifencei", "zihintntl",
-+					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
-+					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
-+					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
-+					       "zvkned", "zvkng", "zvknha", "zvknhb", "zvks",
-+					       "zvksc", "zvksed", "zvksg", "zvksh", "zvkt";
-+			riscv,cbom-block-size = <64>;
-+			riscv,cbop-block-size = <64>;
-+			riscv,cboz-block-size = <64>;
-+			i-cache-block-size = <64>;
-+			i-cache-size = <65536>;
-+			i-cache-sets = <256>;
-+			d-cache-block-size = <64>;
-+			d-cache-size = <65536>;
-+			d-cache-sets = <256>;
-+			next-level-cache = <&l2_cache1>;
-+			mmu-type = "riscv,sv39";
-+
-+			cpu7_intc: interrupt-controller {
-+				compatible = "riscv,cpu-intc";
-+				#interrupt-cells = <1>;
-+				interrupt-controller;
-+			};
-+		};
-+
-+		l2_cache0: cache-controller-0 {
-+			compatible = "cache";
-+			cache-block-size = <64>;
-+			cache-level = <2>;
-+			cache-size = <4194304>;
-+			cache-sets = <4096>;
-+			cache-unified;
-+		};
-+
-+		l2_cache1: cache-controller-1 {
-+			compatible = "cache";
-+			cache-block-size = <64>;
-+			cache-level = <2>;
-+			cache-size = <4194304>;
-+			cache-sets = <4096>;
-+			cache-unified;
-+		};
-+
-+		cpu-map {
-+			cluster0 {
-+				core0 {
-+					cpu = <&cpu_0>;
-+				};
-+				core1 {
-+					cpu = <&cpu_1>;
-+				};
-+				core2 {
-+					cpu = <&cpu_2>;
-+				};
-+				core3 {
-+					cpu = <&cpu_3>;
-+				};
-+			};
-+
-+			cluster1 {
-+				core0 {
-+					cpu = <&cpu_4>;
-+				};
-+				core1 {
-+					cpu = <&cpu_5>;
-+				};
-+				core2 {
-+					cpu = <&cpu_6>;
-+				};
-+				core3 {
-+					cpu = <&cpu_7>;
-+				};
-+			};
-+		};
++	aliases {
++		serial0 = &uart0;
++		serial2 = &uart2;
++		serial3 = &uart3;
++		serial4 = &uart4;
++		serial5 = &uart5;
++		serial6 = &uart6;
++		serial7 = &uart7;
++		serial8 = &uart8;
++		serial9 = &uart9;
++		serial10 = &uart10;
 +	};
 +
-+	soc: soc {
-+		compatible = "simple-bus";
-+		interrupt-parent = <&saplic>;
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		dma-noncoherent;
-+		ranges;
-+
-+		uart0: serial@d4017000 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd4017000 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <42 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		uart2: serial@d4017100 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd4017100 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <44 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		uart3: serial@d4017200 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd4017200 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <45 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		uart4: serial@d4017300 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd4017300 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <46 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		uart5: serial@d4017400 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd4017400 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <47 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		uart6: serial@d4017500 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd4017500 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <48 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		uart7: serial@d4017600 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd4017600 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <49 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		uart8: serial@d4017700 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd4017700 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <50 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		uart9: serial@d4017800 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd4017800 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <51 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		uart10: serial@d401f000 {
-+			compatible = "spacemit,k3-uart", "intel,xscale-uart";
-+			reg = <0x0 0xd401f000 0x0 0x100>;
-+			reg-shift = <2>;
-+			reg-io-width = <4>;
-+			clock-frequency = <14700000>;
-+			interrupts = <281 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
-+		simsic: interrupt-controller@e0400000 {
-+			compatible = "spacemit,k3-imsics","riscv,imsics";
-+			reg = <0x0 0xe0400000 0x0 0x00200000>;
-+			interrupt-controller;
-+			#interrupt-cells = <0>;
-+			msi-controller;
-+			#msi-cells = <0>;
-+			interrupts-extended = <&cpu0_intc 9>, <&cpu1_intc 9>,
-+					      <&cpu2_intc 9>, <&cpu3_intc 9>,
-+					      <&cpu4_intc 9>, <&cpu5_intc 9>,
-+					      <&cpu6_intc 9>, <&cpu7_intc 9>;
-+			riscv,num-ids = <511>;
-+			riscv,num-guest-ids = <511>;
-+			riscv,hart-index-bits = <4>;
-+			riscv,guest-index-bits = <6>;
-+		};
-+
-+		saplic: interrupt-controller@e0804000 {
-+			compatible = "spacemit,k3-aplic", "riscv,aplic";
-+			reg = <0x0 0xe0804000 0x0 0x4000>;
-+			msi-parent = <&simsic>;
-+			#interrupt-cells = <2>;
-+			interrupt-controller;
-+			riscv,num-sources = <512>;
-+		};
-+
-+		clint: timer@e081c000 {
-+			compatible = "spacemit,k3-clint", "sifive,clint0";
-+			reg = <0x0 0xe081c000 0x0 0x0004000>;
-+			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>,
-+					      <&cpu1_intc 3>, <&cpu1_intc 7>,
-+					      <&cpu2_intc 3>, <&cpu2_intc 7>,
-+					      <&cpu3_intc 3>, <&cpu3_intc 7>,
-+					      <&cpu4_intc 3>, <&cpu4_intc 7>,
-+					      <&cpu5_intc 3>, <&cpu5_intc 7>,
-+					      <&cpu6_intc 3>, <&cpu6_intc 7>,
-+					      <&cpu7_intc 3>, <&cpu7_intc 7>;
-+		};
++	chosen {
++		stdout-path = "serial0";
 +	};
++
++	memory@100000000 {
++		device_type = "memory";
++		reg = <0x1 0x00000000 0x4 0x00000000>;
++	};
++};
++
++&uart0 {
++	status = "okay";
 +};
 
 -- 
