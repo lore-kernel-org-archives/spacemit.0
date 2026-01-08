@@ -1,164 +1,150 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0580D1A01C6
-	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 01:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530EB231A55
+	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 02:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767835332; cv=none; b=MTDgA/j0evCh2/MxVUZk113E3/k7jLy4hsbE7TiAg6ys1Itjh+CSUuDOd/eRLa6FLrIrNK0nz1oA4WAMceoDZgaYZZSdQKPd8ELsD8cmadkVedMUi3geoX7PIdN37vBhL+F0w9OQgJ55kQ354GRjs+hiutwZQmJIftMRmuls9Ck=
+	t=1767838310; cv=none; b=Xwcl4dDSMSXNZMMKZYprwm1JuE6DcEQ4XnaMkmDH488Vns+oH9QglXtXMu1oUXjE8xoQUiI+LNY21fyb4IuxsPV/CVf0tKvEsfWe4GdjuV4buwZ6vwzAMNHl1k7PWWyA7JG0ZxpNMcPG0DUndmky2WSNZQTKTAJvUVlrdM+hChI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767835332; c=relaxed/simple;
-	bh=DZsBbmGRz6FLXcZeeXDv2EWCFkufs+xSaKyxNkLTfOI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HvYSXKEI+kjEMNGI1prs/hzdk68jLDetyvNQHMy7xw7SgHHhAI3adlhde51IESl6Wnuk6+VSuqxBBOOJ8bKO2MRnxoewa2h8dAWYvId/VNXDWak9NWEPY1Bi7K8yA+5OgA/0nUzwGZjKJ/WFM/K00FUV7nO4nE/gam95I6xfLUw=
+	s=arc-20240116; t=1767838310; c=relaxed/simple;
+	bh=MKf7Ad3QNaUrSy/KcMc+P78nwKgoqgOepx0vBDSKhyQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SeQ7yDETHgv7tB7ifeKpsSRbY6JQO7BUPefBlWj9F/IMyMZ6ZhTyQ/r3DrIBCVB1RmNCBLPikdMb+Qr3wG0uCyKYTWudkH8diTtRzq7Zf/LG6zAq4L3CsZ76s62XonaKnCpapjen2HzD9XNcT5BES95C2N1/p22aAbgNQqjPfkc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
+Received: from [127.0.0.1] (unknown [116.232.18.222])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id CE15134168D;
-	Thu, 08 Jan 2026 01:22:08 +0000 (UTC)
-Date: Thu, 8 Jan 2026 09:21:57 +0800
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 67EAF341D13;
+	Thu, 08 Jan 2026 02:11:43 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-To: Ze Huang <huang.ze@linux.dev>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Aurelien Jarno <aurelien@aurel32.net>
-Subject: Re: [PATCH v2 3/3] riscv: dts: spacemit: Enable USB3.0 on BananaPi-F3
-Message-ID: <20260108012157-GYA2355@gentoo.org>
-References: <20260107-k1-usb3dts-v2-v2-0-e659b0f8fe1a@linux.dev>
- <20260107-k1-usb3dts-v2-v2-3-e659b0f8fe1a@linux.dev>
+Subject: [PATCH v5 0/5] Add clock support for SpacemiT K3 SoC
+Date: Thu, 08 Jan 2026 10:11:04 +0800
+Message-Id: <20260108-k3-clk-v5-0-42a11b74ad58@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260107-k1-usb3dts-v2-v2-3-e659b0f8fe1a@linux.dev>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADgSX2kC/2WQQW7DIBBFr2KxLtEMYANe5R5VF4AnDkpsWuNar
+ aLcvcRJ00Rd/tG8p5l/YpmmSJm11YlNtMQc01hC/VKxsHdjTzx2JTMBokYBih8kD8cD77wANNJ
+ YR5KV5feJdvFrFb2+lbyPeU7T9+pd8DK9KRB/FQty4IZI6aAh1D5sexrnlDZp6tnFsYgHTsCdE
+ 4VDYbVXjdNSwT9OPnLNnZOFa0AEstL7Jsgn7nx9YqKPz1LCfP3kr4O2up2vORQjrsaQhiGN3HQ
+ Yam1tDUq3y1rHQDm7Z9ACCoN2oxRYLTjyOKawj25w235w8bgptgvqXabVHOe2MjvwKgRSyuDOl
+ 2dq2VhdBp3poAMFQgePZMr95x/Ke7hEzAEAAA==
+X-Change-ID: 20251204-k3-clk-db2018389ae3
+To: Stephen Boyd <sboyd@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Haylen Chu <heylenay@4d2.org>, Guodong Xu <guodong@riscstar.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, Yao Zi <me@ziyao.cc>, 
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3558; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=MKf7Ad3QNaUrSy/KcMc+P78nwKgoqgOepx0vBDSKhyQ=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpXxJLjNJO64W1MF153pJvKYP3XxqLF9WjINVsj
+ L48p/4Ss9KJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaV8SSxsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+1pbxAAlY9iuexWw4dh4ib4ylDIRaD9MRmNoAnB8gJ2p1Y8GEri0l9ioFUOr
+ kB5zAsrFcxaGAEZjXF5tj57lDHgj3bCOghKiCJW4iyK54aAcds2jKV6rzFPnmfkl8QdmInnyq5F
+ lW8DSq5GxolbEzOgKvxgaSyKkV/xeRRbuHp2nsSgySonfRnDWQ1q9tb8EMQ2+6Ht6dcuyHg5Ic3
+ UlWjIcpneEXpaFnKLj9t4ffn8qOhx2Mr9cgcK94kTE4pJQjL+OPs+rH0kIZp7RDwjK4UEBJYjua
+ GXRIEzjPvPJuanhZ8b0eDR5v/lNi34re19oPs8BAtRgrcIaZARM22Az5ldf0LY95geWQPSZGxOg
+ hR3y/FcB5kag9ukS2V52YiCb/rvsLb0SMPb5sx8lCi+Ms4QolHSTzqxuQ5CXHvQOrJfN8bzgRhw
+ RP/0vHmY9ZYZ2tzC2d5XqP/OiSOw17CjGMMkw+1KpFTB/r+jYs/s2Ggmju/G1fCUuYU+NxoKvxi
+ rw4jJphnCrH3JNRS8/AZkXS5gRIsmkPhMVgD3s50dQMWGuduIUe5/iQ4l1nEoffb13uIZPCpXQX
+ cfg0xpECvzmN2X+s6SrIi3H5Hb6q+mabF2HAZoE+CXd++Fh2rHYzZurIFKYyV386bWuK4hHYeZX
+ ysC33lc5FdvhrWnTUMjX7sRyStR0O4=
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Ze,
+I've dropped the RFC tag as now the driver got tested on K3 SoC.
 
-  thanks for your patch, I have few comments, see below..
+The SpacemiT K3 SoC's CCU (clock control unit) is similar to old K1 generation,
+the clock and reset functionalities are distributed across several IP blocks,
+therefore, we model them as several clock tree accordingly.
 
-On 20:05 Wed 07 Jan     , Ze Huang wrote:
-> Enable the DWC3 USB 3.0 controller and its associated usbphy2 on the
-> Banana Pi F3 board.
-> 
-> The board utilizes a VLI VL817 hub, which requires two separate power
-> supplies: one VBUS and one for hub itself. Add two GPIO-controlled
-> fixed-regulators to manage this.
-> 
-> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-> Signed-off-by: Ze Huang <huang.ze@linux.dev>
-> ---
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 48 +++++++++++++++++++++++++
->  1 file changed, 48 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index 3f10efd925dc..013df91c6a4c 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -59,6 +59,26 @@ reg_vcc_4v: vcc-4v {
->  		regulator-always-on;
->  		vin-supply = <&reg_dc_in>;
->  	};
-> +
-> +	usb3_vbus: regulator-vbus-5v {
-I've checked the schematics, the name is 5V_VBUS there, so for the consistency
-with previous naming convention, let's change to:
-	usb3_vbus_5v: usb3-vbus-5v 
+The PLL clocks has changed register setting layout, so introduce a PLLA type.
+Some gate clocks has inverted enable/disable logic which writing 1 to disable,
+while writing 0 to enable.
 
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "USB30_VBUS";
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-..
-> +		regulator-always-on;
-do you think the "always-on" property really necessary? it indicate the
-power regulator is critical, and should never been disabled even during
-suspend/resume state, for the case of USB, I think it should be totally
-fine to poweroff once the device is not used(suspended) or even disabled
+This patch will depend on two clock series a) fix building for modules [1],
+b) refacor common ccu driver [2]
 
-besides, the regulator is designed with a gpio enabling/disabling control
-which means it can be powered to on/off state?
+Link: https://lore.kernel.org/all/20251219012819.440972-1-inochiama@gmail.com/ [1]
+Link: https://lore.kernel.org/spacemit/20260103-06-k1-clk-common-v3-0-6061d9f69eef@gentoo.org/
 
-> +		gpio = <&gpio K1_GPIO(97) GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +	};
-> +
-> +	usb3_vhub: regulator-vhub-5v {
-why use vhub, but not hub? where does this name come from?
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Changes in v5:
+- update dt-binding search path of valid clock id indices
+- collect tags
+- Link to v4: https://lore.kernel.org/spacemit/20260103-k3-clk-v4-0-4cccba2360f0@gentoo.org/
 
-and for same reason, the name in schematics is VCC5V0_HUB, so how about
-change it to:
-	usb3_hub_5v: usb3-hub-5v 
+Changes in v4:
+- improve commit message for dt-binding
+- fix dt-binding property, drop unnecessary 'contains'
+- drop _K_RST() macro, use raw string
+- use common spacemit_ccu_probe(), implement SoC specific probe() function
+- Link to v3: https://lore.kernel.org/r/20251226-k3-clk-v3-0-602ce93bb6c3@gentoo.org
 
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "USB30_VHUB";
-                                    ~~~need to fix too, if above is valid
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-..
-> +		regulator-always-on;
-ditto
-> +		gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +	};
->  };
->  
->  &combo_phy {
-> @@ -67,6 +87,34 @@ &combo_phy {
->  	status = "okay";
->  };
->  
-..
-> +&usbphy2 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_dwc3 {
-> +	dr_mode = "host";
-> +	vbus-supply = <&usb3_vbus>;
-> +	#address-cells = <1>;
-> +	#size-cells = <0>;
-> +	status = "okay";
-> +
-> +	hub_2_0: hub@1 {
-> +		compatible = "usb2109,2817";
-> +		reg = <0x1>;
-> +		vdd-supply = <&usb3_vhub>;
-> +		peer-hub = <&hub_3_0>;
-> +		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
-> +	};
-> +
-> +	hub_3_0: hub@2 {
-> +		compatible = "usb2109,817";
-> +		reg = <0x2>;
-> +		vdd-supply = <&usb3_vhub>;
-> +		peer-hub = <&hub_2_0>;
-> +		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
-> +	};
-> +};
-> +
-can you move these two after &uart0? I'd like to keep them sorted by 
-label alphabet order..
+Changes in v3:
+- drop RFC, the driver is tested on K3 SoC
+- extract common header file, shared by clock and reset
+- fix reset name for auxiliary bus
+- Link to v2: https://lore.kernel.org/r/20251220-k3-clk-v2-0-1297b46a7340@gentoo.org
 
->  &emmc {
->  	bus-width = <8>;
->  	mmc-hs400-1_8v;
-> 
-> -- 
-> 2.52.0
-> 
+Changes in v2:
+- has dependency on ccu common patch
+- fix wrong indention of DT docs
+- fix kfree() missing header issue
+- Link to v1: https://lore.kernel.org/r/20251211-k3-clk-v1-0-8ee47c70c5bc@gentoo.org
 
+---
+Yixun Lan (5):
+      dt-bindings: soc: spacemit: k3: add clock support
+      clk: spacemit: ccu_mix: add inverted enable gate clock
+      clk: spacemit: ccu_pll: add plla type clock
+      clk: spacemit: k3: extract common header
+      clk: spacemit: k3: add the clock tree
+
+ .../devicetree/bindings/clock/spacemit,k1-pll.yaml |    9 +-
+ .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  |   14 +-
+ drivers/clk/spacemit/Kconfig                       |    6 +
+ drivers/clk/spacemit/Makefile                      |    3 +
+ drivers/clk/spacemit/ccu-k3.c                      | 1487 ++++++++++++++++++++
+ drivers/clk/spacemit/ccu_common.h                  |    1 +
+ drivers/clk/spacemit/ccu_mix.c                     |   12 +-
+ drivers/clk/spacemit/ccu_mix.h                     |   12 +
+ drivers/clk/spacemit/ccu_pll.c                     |  118 ++
+ drivers/clk/spacemit/ccu_pll.h                     |   57 +-
+ include/dt-bindings/clock/spacemit,k3-clocks.h     |  390 +++++
+ include/soc/spacemit/k3-syscon.h                   |  273 ++++
+ 12 files changed, 2363 insertions(+), 19 deletions(-)
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20251204-k3-clk-db2018389ae3
+prerequisite-change-id: 20251217-06-k1-clk-common-8d1c57995047:v3
+prerequisite-patch-id: 96cd13293b888c05f400daf529c3cacf17ddf002
+prerequisite-patch-id: 5f6579799919c4e2e12c8c836ac4164b00ccaaa3
+prerequisite-patch-id: 11e8d5cbe6f3610aa362dc0051b3173001d0a5f4
+prerequisite-patch-id: 622d6606913609be04f66006609550e8c3e7f22b
+prerequisite-message-id: 20251219012819.440972-1-inochiama@gmail.com
+prerequisite-patch-id: df430730ed961011cee5c5d47b7ace84b3c5ebb7
+prerequisite-patch-id: 64003618c33be925602e46b7543f2c13d3f36474
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan
+
