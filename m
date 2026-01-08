@@ -1,120 +1,108 @@
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20F734847E
-	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 08:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E87A4C0D29
+	for <spacemit@lists.linux.dev>; Thu,  8 Jan 2026 11:07:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767861632; cv=none; b=l0axKbOhp/dAjNc1IWh0T4DtrXO0kkbnmIiIsR9yLtutl/XO6xl+BElMgi3rK+od6go7YeGe8HK7Mo5VultWTiAasZz1LoJ1OMOOC/tbGpnx3AyvZ5uLdpr7Pxe2btvqF0E59mZaXEZa+KWXd6hO3V5mgi3e1iWv/CxakZbUgkM=
+	t=1767870474; cv=none; b=ZB8cqfKifF2TL2UPEGqMI48C5+WnlVcRRfxEVDHs703Lp/nx+4vmenyXciyh9aJKdYiCIbGBOMuUzIy5CgTKO0BYT8OyVmLTjTFVBBGYnhlRN2VdeVZeGISERFJEoOQ5DbKtjxNOuahLQRTkv1NMTQrkuVrv3QzrS4dRwwotT/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767861632; c=relaxed/simple;
-	bh=SwCXuUmIT3DgySnnl02i2vZ2GAlXrZQWhCxKhnIHQzw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tzoBrcXvwCEgzG+4ffWYJGAW0fak7FjpEb5mIhd30v/M2xX/k0nLmeSjofOL0slveIYX3OLVzQmiA6FOsu/P1+KCoVfpSQXhxnTal0XTahLXbcGBIEX09HAY6LaM4ada5wdZWALxvTrxzLt5V9Bi/Sg17oeie7dNvd2KXIgf5BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=u7XY7Nsz; arc=none smtp.client-ip=18.194.254.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="u7XY7Nsz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1767861557;
-	bh=Uvn8s4PS4Zfv1GYnrb8c0wteskQ9xtzXuxq/XnZHJDs=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=u7XY7NsziktGSs+QrfqnYMHIfSN33bMcm6EdemJ3vgIfwQ6JdwGboidbs59XaglTP
-	 GyA6PkTCCefRs38HBOiJo/eOTJDUsumdxDhCZHbv7xif9wP6bms0eXqSH+mTxnfeVw
-	 Hw+vaDcg5HjC/DbrGw91yS6fkXtm5k5tAz00Bj6E=
-X-QQ-mid: zesmtpsz7t1767861549t562ab659
-X-QQ-Originating-IP: JrlKtLWhKvgKg+YK19bVS6mC/dYvL2/Cm3SMf/hzeYM=
-Received: from = ( [120.239.196.107])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 08 Jan 2026 16:39:06 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 140231474234214423
-EX-QQ-RecipientCnt: 13
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Thu, 08 Jan 2026 16:38:56 +0800
-Subject: [PATCH v5 3/3] rtc: spacemit: default module when MFD_SPACEMIT_P1
- is enabled
+	s=arc-20240116; t=1767870474; c=relaxed/simple;
+	bh=4ARUFy/0mqoSVLaK6Rqs10QOx8KtOwrI/t5eQyddFCw=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ava4qrL9eyxrGfK/ZVXQlfuwvnKuItlyPIilZEY8zDftTMWW3KACTo7+DtZ4DngJ3nTvJhDKmQLrG/FWkGKBA5L2YGyeEeM87oOenKScxzCjH5SNjIRDz4E6PVAw7DN6j25YJppmkCWSKHdXbIg0sVL/Fxa30OJvpHdn3o5ay3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1vdnrR-0006Ib-0m; Thu, 08 Jan 2026 12:07:25 +0100
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1vdnrQ-009fT1-25;
+	Thu, 08 Jan 2026 12:07:24 +0100
+Received: from pza by lupine with local (Exim 4.98.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1vdnrQ-000000005Vi-2KUV;
+	Thu, 08 Jan 2026 12:07:24 +0100
+Message-ID: <e7fa69f1febc37062a59f566be97537a3a1e6ee0.camel@pengutronix.de>
+Subject: Re: [PATCH v3 4/4] reset: spacemit: fix auxiliary device id
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Alex Elder <elder@riscstar.com>, Yixun Lan <dlan@gentoo.org>, Stephen
+ Boyd	 <sboyd@kernel.org>, Michael Turquette <mturquette@baylibre.com>
+Cc: Guodong Xu <guodong@riscstar.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Date: Thu, 08 Jan 2026 12:07:24 +0100
+In-Reply-To: <058d3911-ff2d-4151-b585-5bcb8810bedf@riscstar.com>
+References: <20260103-06-k1-clk-common-v3-0-6061d9f69eef@gentoo.org>
+	 <20260103-06-k1-clk-common-v3-4-6061d9f69eef@gentoo.org>
+	 <058d3911-ff2d-4151-b585-5bcb8810bedf@riscstar.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-0+deb13u1 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260108-p1-kconfig-fix-v5-3-6fe19f460269@linux.spacemit.com>
-References: <20260108-p1-kconfig-fix-v5-0-6fe19f460269@linux.spacemit.com>
-In-Reply-To: <20260108-p1-kconfig-fix-v5-0-6fe19f460269@linux.spacemit.com>
-To: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
- Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-i2c@vger.kernel.org, 
- linux-rtc@vger.kernel.org, Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1767861535; l=1183;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=SwCXuUmIT3DgySnnl02i2vZ2GAlXrZQWhCxKhnIHQzw=;
- b=YbZjoRK8NM8bVAyK8aIfaNYf9Vb/qa18H4zel5cD4wDS/4ONVTeXqbqNnCVdbN9McAEmfTJXS
- RjNR5dbb9CEDjXIJlTwDpw4JaRMChxvTDGYTrtZsJsbKtsaCH6bU06L
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MoMFunSSeOstWh0xyQH01muvJGHe6YGNDtQUWMxuQqagQUfBQYVVbJRG
-	WDIjKYn12MdPEOoJb2xJmvEyz7KDcIQCeiMNT5qg2bt2JadZZ93ldxxSjViVWp70MYWjZUI
-	nLO5dGZBSUq4qn+RpHXHF86vAEKW9nO8Su8mqwwufDfQrONhXJRxBuy1kLN3yBB8YpbXbib
-	coDY6gnaMAB4kHQZOmcR8IQsANsEzGmgTt7UZ9CUZxsN+uPfRm53XSZwLaYSkiu6BQTv9QZ
-	wOOI0bln/QFHYWm2AfrWGeI+Ym+6BY3WpKNM5fbjA+CNN74uw1SSy3ntSHh6YzXMVsy4EYA
-	4yZQsYVDOG2gKpxGPfTvm8qrEaRiq4GBAdlKaMaMOAtRWBn9opFBstumsAYTa9JPYnyhOyy
-	enJA77KsJPYfLPKwCZg2qPlqCpFzEcV0aZbYm1zO4d5zcay0nY2vF+r3800l9Rer0fjEQMw
-	O3WL7gXCDZJuoutJPfwtftQHRCpP/jVYKCBClz/dQWy6GasgC6R8RX8hbEqC55ZyDVRVYM7
-	tY1340N8Li+FWBJUxh+haW4Kza9kAjSe+NSSSFperJIFejskFNJxQ9iZ5TkWz69JHSnK/h2
-	3KRa6/0RUtFFjeGBNaB5cCAWBQOKslne00o9WziA4EhNTlyb4FEx0hspIUCfm395GCNB2dY
-	noj66x1uFwyHqo8Nzgf9j/OXHdTATkkCGGjIgNci3E3qWxhtCvWSuqLs+sf2CuJg+C7K1zg
-	I1M1FY5jD1GhpB0EKZBDUqnRe37dgVGfnvd9h7eQcmpzJ+O6ZNjrHiowJiSIiWwNedGp3t2
-	qv23d1Vvcf7+lseUcxje7sQnatPTQwq4qdqKdfoX8DBHFMYjZxTiei7MG2uHFW2t9up9vxf
-	CSSeaqEe1V6bt7j150hEhUVgaK2y7p0SezS116xD6SN0yaMVZ5VYVYKh2pZ/saFnKDEiMDg
-	hdPOl8LWosBTs7z422lvWliv/KEhp/Gb/v+KFpNH5mwCcuiwF16Pa/VRDtV3KSBJhdn3cwo
-	jOSwg1rSuapZ6jMqGD2XB5MsGc010SU7ySY19TLYD8Ow04e0a2uGzk2gBx2tPgySs5vMlny
-	0YR7QAZ3R7KfcuD/r4iJeMl6YzXGH5AHW/vkxYO5XTA
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-RECHKSPAM: 0
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: spacemit@lists.linux.dev
 
-The RTC driver defaulted to the same value as MFD_SPACEMIT_P1, which
-caused it to be built-in automatically whenever the PMIC support was
-set to y.
+On Di, 2026-01-06 at 08:43 -0600, Alex Elder wrote:
+> On 1/3/26 1:26 AM, Yixun Lan wrote:
+> > Due to the auxiliary register procedure moved to ccu common module wher=
+e
+> > the module name changed to spacemit_ccu, then the reset auxiliary devic=
+e
+> > register id also need to be adjusted in order to prepare for adding new
+> > K3 reset driver, otherwise two reset drivers will claim to support same
+> > "compatible" auxiliary device.
+> >=20
+> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
+>=20
+> This would ideally be merged with the previous patch.  Maybe
+> Philipp can negotiate with Stephen to have that happen.
+>=20
+> Reviewed-by: Alex Elder <elder@riscstar.com>
+>=20
+> > ---
+> >   drivers/reset/reset-spacemit.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/drivers/reset/reset-spacemit.c b/drivers/reset/reset-space=
+mit.c
+> > index e1272aff28f7..cc7fd1f8750d 100644
+> > --- a/drivers/reset/reset-spacemit.c
+> > +++ b/drivers/reset/reset-spacemit.c
+> > @@ -278,7 +278,7 @@ static int spacemit_reset_probe(struct auxiliary_de=
+vice *adev,
+> >  =20
+> >   #define K1_AUX_DEV_ID(_unit) \
+> >   	{ \
+> > -		.name =3D "spacemit_ccu_k1." #_unit "-reset", \
+> > +		.name =3D "spacemit_ccu.k1-" #_unit "-reset", \
+> >   		.driver_data =3D (kernel_ulong_t)&k1_ ## _unit ## _reset_data, \
+> >   	}
+> >  =20
 
-This is not always desirable, as the RTC function is not required on
-all platforms using the SpacemiT P1 PMIC.
+Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
 
-Acked-by: Alex Elder <elder@riscstar.com>
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
-Change log in v5:
-- add Alex's tag
-- Link to v4: https://lore.kernel.org/all/20251225-p1-kconfig-fix-v4-3-44b6728117c1@linux.spacemit.com/
----
- drivers/rtc/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+to be merged via the clock tree.
 
-diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
-index 50dc779f7f983074df7882200c90f0df21d142f2..53866493e9bbaf35ff0de85cbfe43e8343eadc1e 100644
---- a/drivers/rtc/Kconfig
-+++ b/drivers/rtc/Kconfig
-@@ -410,7 +410,7 @@ config RTC_DRV_SPACEMIT_P1
- 	tristate "SpacemiT P1 RTC"
- 	depends on ARCH_SPACEMIT || COMPILE_TEST
- 	depends on MFD_SPACEMIT_P1
--	default MFD_SPACEMIT_P1
-+	default m if MFD_SPACEMIT_P1
- 	help
- 	  Enable support for the RTC function in the SpacemiT P1 PMIC.
- 	  This driver can also be built as a module, which will be called
+Note that the commits for both patches 2 and 3 will fail to probe the
+reset driver when bisecting.
+If you don't want do merge the corresponding changes to K1_AUX_DEV_ID()
+into those two patches, to make this series (runtime) bisectable, you
+should add a warning to both their commit messages that the reset
+driver will be adapted in the following patch 4.
 
--- 
-2.52.0
-
+regards
+Philipp
