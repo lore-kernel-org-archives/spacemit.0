@@ -1,71 +1,207 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2682734250E;
-	Fri,  9 Jan 2026 08:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D98335090
+	for <spacemit@lists.linux.dev>; Fri,  9 Jan 2026 09:58:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767947270; cv=none; b=VHq1j1wi1AiJc8AUf+fnrIHeeO/V5vKaoX/jDHauW1Ar9Qo0exU0wP2seRH/wyJcE2ARWWgQ3wqoNOfNhqfdR8/4nKhq95EpeA/WZrtNaXvS3iQt+U6IrK7u7G+fq14HTfs79ut3CynnrsQsW/Ih0ItiS/AB+upBusqbBdj3zA8=
+	t=1767952730; cv=none; b=TJv+rFnhxOFKSrKf77le0eHhHJOW+tTRXOw+CfNzBw6sHJejNfmJgEEjTru7mIZyB8RAaL5Bw3AGHTZdNGucPaex+0XTWzEVZRA5XZeUE6Vtb9NBy5Q5VpbECV/NubsC5fYgki7VYzrF29QU0MS08jlrivkVAbah+RaQ4OpbtDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767947270; c=relaxed/simple;
-	bh=sodnMF8RrUOMGPgccPTwIGfL8xNULyfrhroE3CB86Z4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PN54YNkpIV5TpwgzySwGmSfCs7x3mkCURCL74ZSy/EDmI6k4k3/H6Rf4XVWIrUs7b6Z/Ri9WRHwObfHdllBD6IK/AvK8wUlRRrt2NGQ2lUAn2cTIEtOeO68fTPR700BLeqbNZ0swr8cG1IBKhIPPERprp11FdsG9TlMxaOSXcqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tWYjh/Nz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767952730; c=relaxed/simple;
+	bh=HfqN5rsCzLuNeeHAJM65+FWteRwaiCNG9V1ApHVnkXA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gLUWFIMz1j3/nv8w+a5K8bi1qG//CL3CwF8eR5wuyzlRXk64g+lMwK4ZC0PjnQtxOt2xHXg9lOA/P047RnDxjJi4YKZB5YXbCZ0rAZPy6hWI2psN8crnF/DmQMdqDIj29EKo+uoaGn6XybbtWZOYfSeZpCI2dn6LqvTaFXOmovg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=vGc3xKBO; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tWYjh/Nz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F41C4CEF1;
-	Fri,  9 Jan 2026 08:27:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767947269;
-	bh=sodnMF8RrUOMGPgccPTwIGfL8xNULyfrhroE3CB86Z4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tWYjh/Nza7q6DWxWlfm0DTQwzBeuomnr1uhPPWhgbKqpcNms9qrF9YU4ApbTnGJZv
-	 ddP/Sbxt3XuZ34ZKz3R6SYhKSV6iV8NJAy5iJ4DNHPNpfOXrZTHo3+st6r3JXgz7iW
-	 uGGGgZGLwHygK/JpUf8jWUgdpfFKPHa2rO3ZmS166LEXQ++Wjf6WY/Hs/mifd7hd9V
-	 Pneq8uqKqHqZeNPJSvweeVJ0gX5ER+xvqkD0Zwp9Ju+vFL5greZN1OzpEl2Xx8NTnS
-	 72ICXChvJsuKEjiIPEvS37HxStleb0Cq+W2KCH71Xr0lBTkhO4wQeU+tC+3pcskmn+
-	 +voaNigrcvNJg==
-Date: Fri, 9 Jan 2026 09:27:47 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Haylen Chu <heylenay@4d2.org>, Alex Elder <elder@riscstar.com>, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 1/4] dt-bindings: soc: spacemit: Add K3 reset support
- and IDs
-Message-ID: <20260109-woodoo-energetic-hyena-1d2afc@quoll>
-References: <20260108-k3-reset-v2-0-457df235efe9@riscstar.com>
- <20260108-k3-reset-v2-1-457df235efe9@riscstar.com>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="vGc3xKBO"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-78fba1a1b1eso45176677b3.1
+        for <spacemit@lists.linux.dev>; Fri, 09 Jan 2026 01:58:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1767952727; x=1768557527; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JRyjYSTtXcl5FXFODcJzwoMzy+oOw8NWF5mztWKmicQ=;
+        b=vGc3xKBOsCvv63tB93omyl+i6c2EYawyCy5HPq4FPA1menTxzHO1wj2Vx/2Ot9uC8z
+         Ju/ZvFiJ7xTYdC9tbI0NBmYmmuPhAHJjeqXfo3u5NWhQscVm6dIImUfELRnAcvarwSZe
+         Ag078EI7wJeI33ABykWjLHIRcgwygrR3IFVcuAjd8lfCkyJ3fjg4CatbxHe0BeZu587I
+         a9GBljOzJJpLgYQXTG8qWd8+klIyg9EWPucW3g0/qaQiM5eOJqM2WWQrzy1XPidNCe1Z
+         iIBFWLhpOABQjj7VxCzg6Iyl7pKuQKvSgBILwOlx+emwZ7bosFoLzvbP6jICg6ZxbU1U
+         x+Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767952727; x=1768557527;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=JRyjYSTtXcl5FXFODcJzwoMzy+oOw8NWF5mztWKmicQ=;
+        b=kKiGg3zZ7OWU8laWlbX2maNdGoRSqfYNpiL3iPelFUmFwEmwfUClsQUIwhErORHdhm
+         wmpetFNlcbaHpAgQTocKfiyYDf+Lj86RIRrKFVUXbCvF65snkBX1Z4gJDJZcUDqJE7uL
+         0GVqtb7lborYfVsBlXyPgV3LZdvOgW2S/eJ7Gr+HwrljkdflTo5c/0iYwfyfLxsYIrrD
+         FPO8U9L2RzX3DY6VQUz48Zkoi4CMlGgqtm3YyiALdjRJklwhdCX0vJ1s900CkEOZnd6v
+         zqSwPfQDrdzgRNcXPr3ahxgCi+ayi2lS9sLU+Ys+rWypTJJopSO2ZN9VTiJZsCPvwx15
+         3RKA==
+X-Forwarded-Encrypted: i=1; AJvYcCWpIEQIZfMihYO+0NQYeXBqu7VqEPmePA7erF6RCatxwSU/lS4iHAW5NmzW4CSedYbvY4LbgreM5Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxGH4F+XjvTb0xcRNXXr8kzedq/puRhZvsUGXLVq/eNVpIUx/kU
+	Qs7suBgb3moFFql/QsUTk6lopEFHxcc3W+YdD6QULHdjjLoOjNDwN2NOt7k2oivdS32TFDzZ7nL
+	6eUMdqAZ+fumVw4+CqCfSLMaY4qcxN/W0d/4CfWFbXg==
+X-Gm-Gg: AY/fxX7QUDqgCNPWRotER+jxxvnexurQctb5St4HG+CmyFKebALVxN7G9MOC7C7ufc8
+	LBly37LPmPrTkpPw4Cl3LTj9OdjuuxWYZfLS3HHnH7p3+AzvWyA2PX1tZwG+hcVTWyG3vP6W1K2
+	hbni8hducYTouPrrSVDKIkGpnZS5sq/v3ZG/zPKzmrre6OeaP+s85uIsm3l+CAL4gI1zXy1ZG/J
+	b71otavzRMss+Mu7XTL1OPw8PERaO3igkD0uU4re1hRA1OVf1ZI7HyLRzQ0J0m/OmdnVn8381vV
+	Bymg7xOBry5H3BwjTENYE5vRXnN0VSsR9q9ShUewO1I=
+X-Google-Smtp-Source: AGHT+IFW7FLnowocr8JpPLfWWYtEHi7OSPLnkmturePvB00jhuMA0kdr6u8Qb5NpLIfs41qOnuD4QPSn0aG0bk5mMPQ=
+X-Received: by 2002:a05:690e:1188:b0:641:f5bc:692b with SMTP id
+ 956f58d0204a3-6470d2f46b7mr10319192d50.36.1767952727498; Fri, 09 Jan 2026
+ 01:58:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260108-k3-reset-v2-1-457df235efe9@riscstar.com>
+References: <20260108-k3-basic-dt-v3-0-ed99eb4c3ad3@riscstar.com>
+ <20260108-k3-basic-dt-v3-10-ed99eb4c3ad3@riscstar.com> <77f9a001-7f0a-4c29-abcb-501e875da117@sifive.com>
+In-Reply-To: <77f9a001-7f0a-4c29-abcb-501e875da117@sifive.com>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Fri, 9 Jan 2026 17:58:36 +0800
+X-Gm-Features: AQt7F2phDg1o6vGA0EN2FWkwF5OD2jGO_aKHZYYtROeDAwedA-GsX86VaBlzTIs
+Message-ID: <CAH1PCMZ5rKbG8xEbB9jt6TqyB28T5aLgRtf3iJ8Gt6Fk+3XFhQ@mail.gmail.com>
+Subject: Re: [PATCH v3 10/11] riscv: dts: spacemit: add initial device tree of
+ SpacemiT K3 SoC
+To: Samuel Holland <samuel.holland@sifive.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>, Conor Dooley <conor@kernel.org>, 
+	Heinrich Schuchardt <xypron.glpk@gmx.de>, Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>, 
+	Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	spacemit@lists.linux.dev, linux-serial@vger.kernel.org, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>, 
+	Anup Patel <anup@brainfault.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>, Yangyu Chen <cyy@cyyself.name>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 08, 2026 at 10:22:14PM +0800, Guodong Xu wrote:
-> Update the spacemit,k1-syscon.yaml binding to document K3 SoC reset
-> support.
-> 
-> K3 reset devices are registered at runtime as auxiliary devices by the
-> K3 CCU driveri. Since K3 reuses the K1 syscon binding, there is no separate
-> YAML binding file for K3 resets.
-> 
-> Update #reset-cells description to document where reset IDs are defined.
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> ---
-> v2: Update spacemit,k1-syscon binding to clarify K3 reset is supported.
->     Update the commit message to add backgrounds of this patch why,
->       instead of what.
+Hi, Samuel
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+On Fri, Jan 9, 2026 at 2:19=E2=80=AFAM Samuel Holland <samuel.holland@sifiv=
+e.com> wrote:
+>
+> On 2026-01-08 6:26 AM, Guodong Xu wrote:
+> > SpacemiT K3 is equipped with 8 X100 cores, which are RVA23 compliant.
+> > Add nodes of uarts, timer and interrupt-controllers.
+> >
+> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > ---
+> > v3: Remove "supm" from the riscv,isa-extensions list.
+> > v2: Remove aliases from k3.dtsi, they should be in board DTS.
+> >     Updated riscv,isa-extensions with new extensions from the extension=
+s.yaml
+> > ---
+> >  arch/riscv/boot/dts/spacemit/k3.dtsi | 548 +++++++++++++++++++++++++++=
+++++++++
+> >  1 file changed, 548 insertions(+)
+> >
+> > diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts=
+/spacemit/k3.dtsi
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..be9335fba32cb9e81915b2b=
+91cf08c55a5e96809
+> > --- /dev/null
+> > +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> > [...]
+> > +
+> > +             simsic: interrupt-controller@e0400000 {
+> > +                     compatible =3D "spacemit,k3-imsics","riscv,imsics=
+";
+>
+> style: missing space after comma
+
+Thanks, Samuel. I will fix that.
+
+>
+> > +                     reg =3D <0x0 0xe0400000 0x0 0x00200000>;
+> > +                     interrupt-controller;
+> > +                     #interrupt-cells =3D <0>;
+> > +                     msi-controller;
+> > +                     #msi-cells =3D <0>;
+> > +                     interrupts-extended =3D <&cpu0_intc 9>, <&cpu1_in=
+tc 9>,
+> > +                                           <&cpu2_intc 9>, <&cpu3_intc=
+ 9>,
+> > +                                           <&cpu4_intc 9>, <&cpu5_intc=
+ 9>,
+> > +                                           <&cpu6_intc 9>, <&cpu7_intc=
+ 9>;
+> > +                     riscv,num-ids =3D <511>;
+> > +                     riscv,num-guest-ids =3D <511>;
+> > +                     riscv,hart-index-bits =3D <4>;
+> > +                     riscv,guest-index-bits =3D <6>;
+> > +             };
+> > +
+> > +             saplic: interrupt-controller@e0804000 {
+> > +                     compatible =3D "spacemit,k3-aplic", "riscv,aplic"=
+;
+> > +                     reg =3D <0x0 0xe0804000 0x0 0x4000>;
+> > +                     msi-parent =3D <&simsic>;
+> > +                     #interrupt-cells =3D <2>;
+> > +                     interrupt-controller;
+> > +                     riscv,num-sources =3D <512>;
+> > +             };
+>
+> Does the chip also have M-mode IMSIC and APLIC instances? Those need to b=
+e
+> represented in the devicetree as well, for M-mode firmware to access them=
+, just
+> like the CLINT below.
+
+Yes, the K3 chip does have M-mode IMSIC and APLIC instances. Currently, the
+boot firmware (U-Boot) transfers information about these nodes to OpenSBI.
+However, you are correct that they should be properly described in the DT.
+
+In the next version, I will add the M-mode APLIC (maplic) and IMSIC (mimsic=
+)
+nodes to k3.dtsi, for topology representation and potential firmware usage.
+I will set their status to "disabled" because exposing them as "okay" to Li=
+nux
+causes access faults during driver probing.
+
+Please let me know if this approach (adding them but keeping them disabled)
+looks okay to you.
 
 Best regards,
-Krzysztof
+Guodong Xu
 
+>
+> Regards,
+> Samuel
+>
+> > +
+> > +             clint: timer@e081c000 {
+> > +                     compatible =3D "spacemit,k3-clint", "sifive,clint=
+0";
+> > +                     reg =3D <0x0 0xe081c000 0x0 0x0004000>;
+> > +                     interrupts-extended =3D <&cpu0_intc 3>, <&cpu0_in=
+tc 7>,
+> > +                                           <&cpu1_intc 3>, <&cpu1_intc=
+ 7>,
+> > +                                           <&cpu2_intc 3>, <&cpu2_intc=
+ 7>,
+> > +                                           <&cpu3_intc 3>, <&cpu3_intc=
+ 7>,
+> > +                                           <&cpu4_intc 3>, <&cpu4_intc=
+ 7>,
+> > +                                           <&cpu5_intc 3>, <&cpu5_intc=
+ 7>,
+> > +                                           <&cpu6_intc 3>, <&cpu6_intc=
+ 7>,
+> > +                                           <&cpu7_intc 3>, <&cpu7_intc=
+ 7>;
+> > +             };
+> > +     };
+> > +};
+> >
+>
