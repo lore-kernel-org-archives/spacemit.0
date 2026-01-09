@@ -1,107 +1,88 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA00534252B
-	for <spacemit@lists.linux.dev>; Fri,  9 Jan 2026 22:41:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D772EC080
+	for <spacemit@lists.linux.dev>; Fri,  9 Jan 2026 22:56:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767998516; cv=none; b=fPQ4juDFmoPMHJ6gAHh7fxCJg+lwxf+VDR44D4+q5t6Z3XveBuNLCwY15Q+bDpdm1u+/zWu7RceHMnNSmCqxrv7IjPvCZYdx0LdaIUT1Lcp1Lte60Z5EoKRhAVk1eZ0TkpSAiIRLFahTAK19SXac69D917Q5hkDUV51FiNnBdpU=
+	t=1767999375; cv=none; b=ewtF9xeiepxU2+6TtlnbheHJB7oTI1FSjxw160MTMJx9sSCZ0YiXVbe8EMsjXsjPIASBnF+BdqOUqm/z9ITmKAg6myN7T5ZCnZSnhBZsuhTVf49Kh1foVUS8FywrATxmSu6a+nqE/I4FPJEMQXLuICjZPOGGyavUc3KCf9/o4Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767998516; c=relaxed/simple;
-	bh=ewnmzggw4vL+JgalMlOC8ZbOj6qXYjMEUnF5IwDVCRY=;
+	s=arc-20240116; t=1767999375; c=relaxed/simple;
+	bh=SrzAbHBO6S/imREJPrBj15KZzCBcbr/rnkOvNQ+roA8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PRUo+qekOA8ez0QHxmxUsySjyr15l8G6Z/mdm1ssSj0PNT+sW14RWlNEkYPZhEOmZDy54IfJdhJeDdbb3bVhunAJbV/gVStyukM47UokSG0qcFmS7RHSaVAKQtBBl1zkIW6LM3iExIG97C5SSSb1OKkZnAF1y/S2tXh9QGqbsW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=R99jXx+X; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="R99jXx+X"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 32C864E42038;
-	Fri,  9 Jan 2026 22:41:52 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id DD93D606C6;
-	Fri,  9 Jan 2026 22:41:51 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 216C5103C871E;
-	Fri,  9 Jan 2026 23:41:47 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1767998511; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=TIRiQ/9qPrMYe45souwMPpzx4Adluli5Fo5XiSxDj8E=;
-	b=R99jXx+XP+4vPtOEEGfigxKx8uVgoC7/rDcMSFgAbHGkvdVwY4OFtNYvuzr84eG8rBp+yk
-	gtBWCJV2yPWp2hOV0iRnDXU+5tIksWagEIXuvBpuNVT4x8gw6oGd7m3j8P8zotB6Hiplpn
-	WAThoJfKpVeQcgeXBs1eIaAh2nIrx+SL23PUKhEtCTjviQorSDKzxBxgoVbyHPE8HAU2Ts
-	x4yi7bOt+PNdTiXoy+Q5a5W9K36jGQInV53E6VfJGCENbg0C4yrZ5UYhsYzIVsfFrx9ENz
-	W60h8Xbdm0Qby6kxd2GAtAXaDAVp2T2xp7FKzJTd7kvYbmDjDE5gMhLFGB775w==
-Date: Fri, 9 Jan 2026 23:41:47 +0100
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>, Andi Shyti <andi.shyti@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+	 Content-Type:Content-Disposition:In-Reply-To; b=gf0NyIz3aWngJqH4hAewH+2GY21jZAXEJmWF/hWxoQtV2iIA3i8mAPNAgGGe8J8zooCdds506BK0m2iMK+hVLE/q8v2gAuEuxykStVHB1fhyHDTn9VULx12bn/VIe5tM2jqgzZ+BNzNyNTeM24wm/JSzYNXtvRHM8tdQbWAjUJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C4A453415D1;
+	Fri, 09 Jan 2026 22:56:12 +0000 (UTC)
+Date: Sat, 10 Jan 2026 06:56:08 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-i2c@vger.kernel.org, linux-rtc@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] regulator: spacemit: MFD_SPACEMIT_P1 as
- dependencies
-Message-ID: <20260109224147267169ba@mail.local>
-References: <20260108-p1-kconfig-fix-v5-0-6fe19f460269@linux.spacemit.com>
- <20260108-p1-kconfig-fix-v5-1-6fe19f460269@linux.spacemit.com>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/4] dt-bindings: pinctrl: spacemit: add K3 SoC support
+Message-ID: <20260109225608-GYA8877@gentoo.org>
+References: <20260102-02-k3-pinctrl-v3-0-30aa104e2847@gentoo.org>
+ <20260102-02-k3-pinctrl-v3-2-30aa104e2847@gentoo.org>
+ <CAH1PCMaXW4469pFRGC+HcixO7PGLQpKKJ_Z5VEhHUMdd3DNWTg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260108-p1-kconfig-fix-v5-1-6fe19f460269@linux.spacemit.com>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAH1PCMaXW4469pFRGC+HcixO7PGLQpKKJ_Z5VEhHUMdd3DNWTg@mail.gmail.com>
 
-On 08/01/2026 16:38:54+0800, Troy Mitchell wrote:
-> REGULATOR_SPACEMIT_P1 is a subdevice of P1 and should depend on
-> MFD_SPACEMIT_P1 rather than selecting it directly. Using 'select'
-> does not always respect the parent's dependencies, so 'depends on'
-> is the safer and more correct choice.
-> 
-> Since MFD_SPACEMIT_P1 already depends on I2C_K1, the dependency
-> in REGULATOR_SPACEMIT_P1 is now redundant.
-> 
-> Additionally, the default value depends on MFD_SPACEMIT_P1 rather
-> than ARCH_SPACEMIT.
-> 
-> Acked-by: Mark Brown <broonie@kernel.org>
-> Acked-by: Alex Elder <elder@riscstar.com>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
-> Change log in v5:
-> - nothing
-> - Link to v4: https://lore.kernel.org/all/20251225-p1-kconfig-fix-v4-1-44b6728117c1@linux.spacemit.com/
-> 
-> Change log in v4:
-> - default m if MFD_SPACEMIT_P1 instead of default MFD_SPACEMIT_P1
-> Link to v3: https://lore.kernel.org/all/20251118-p1-kconfig-fix-v3-3-8839c5ac5db3@linux.spacemit.com/
-> 
-> Changelog in v3:
-> - modify commit message
-> - change default value from ARCH_SPACEMIT to MFD_SPACEMIT_P1
-> - Link to v2: https://lore.kernel.org/all/20251027-p1-kconfig-fix-v2-4-49688f30bae8@linux.spacemit.com/
-> ---
->  drivers/regulator/Kconfig | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
-> index d2335276cce5ffbd500bbaf251d1761a9116aee9..b51888a9a78f399a6af3294fc19f60792576332c 100644
-> --- a/drivers/regulator/Kconfig
-> +++ b/drivers/regulator/Kconfig
-> @@ -1496,9 +1496,8 @@ config REGULATOR_SLG51000
->  config REGULATOR_SPACEMIT_P1
->  	tristate "SpacemiT P1 regulators"
->  	depends on ARCH_SPACEMIT || COMPILE_TEST
-> -	depends on I2C
-> -	select MFD_SPACEMIT_P1
-> -	default ARCH_SPACEMIT
-> +	depends on MFD_SPACEMIT_P1
-> +	default m if MFD_SPACEMIT_P1
+Hi Guodong, 
 
-default MFD_SPACEMIT_P1 is certainly enough here.
+On 20:20 Fri 09 Jan     , Guodong Xu wrote:
+> Hi, Yixun
+> 
+> On Fri, Jan 2, 2026 at 3:04 PM Yixun Lan <dlan@gentoo.org> wrote:
+> >
+> > Add new compatible string for SpacemiT K3 SoC, the pinctrl IP shares
+> > almost same logic with previous K1 generation, but has different register
+> > offset and pin configuration, for example the drive strength and
+> > schmitter trigger settings has been changed.
+> >
+> > Signed-off-by: Yixun Lan <dlan@gentoo.org>
+> > ---
+> >  .../devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml       | 10 +++++++++-
+> >  1 file changed, 9 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
+> > index 609d7db97822..9a76cffcbaee 100644
+> > --- a/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
+> > +++ b/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
+> > @@ -81,6 +83,12 @@ patternProperties:
+> >                - enum: [ 7, 10, 13, 16, 19, 23, 26, 29 ]
+> >                  description: For K1 SoC, 3.3V voltage output
+> >
+> > +              - enum: [ 2, 4, 6, 7, 9, 11, 13, 14, 21, 23, 25, 26, 28, 30, 31, 33 ]
+> > +                description: For K3 SoC, 1.8V voltage output
+> > +
+..
+> > +              - enum: [ 3, 5, 7, 9, 11, 13, 15, 17, 25, 27, 29, 31, 33, 35, 37, 38 ]
+> > +                description: For K3 SoC, 1.8V voltage output
+> 
+> Should one of these be 3.3V? Both descriptions currently specify 1.8V.
+> 
+right, the latter one should be changed to 3.3V, I will send a patch
+to fix this.
 
+-- 
+Yixun Lan (dlan)
