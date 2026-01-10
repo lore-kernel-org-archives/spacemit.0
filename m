@@ -1,68 +1,68 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com [209.85.215.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B5B23ABA1
-	for <spacemit@lists.linux.dev>; Sat, 10 Jan 2026 05:19:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C869F1F4176
+	for <spacemit@lists.linux.dev>; Sat, 10 Jan 2026 05:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768022380; cv=none; b=gGOz7KoNfPDOqto+VyYLNAeEFywT3GUzlmOGeNdVI1qn+ptCZNyMM/WolHgnlIucy/e0pvPvUCSYYg1m0L94YL7pcMkt859fqwSp3Eev9aOshPae5CNGLIxGbLjHQitLy2PIpS9H2HbtvrchhFN0glliaYD7n2KhaP6i7qcr+3U=
+	t=1768022391; cv=none; b=NJO66lAYGia3cBRX4/X6TB9UpVZa3lHSOtptIBTXNhyBhTrSPkxeAtFhQN22rNJNEvQAh28jhuUtq0rqJZZrUZJ/5Z4IOvZCWO27X6Id8eScyrzhTNVCxkRXKWsGTjQTWQdNDds2rDWV/zVs9gYGG8ewxQVtkwyg+saUXJcFHB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768022380; c=relaxed/simple;
-	bh=JVOErVuwqnxyZxfJUVNdtb8rdirOsuMdezkExIjs9So=;
+	s=arc-20240116; t=1768022391; c=relaxed/simple;
+	bh=S1jisF6ftVT3rCNF0GDuik15Q/hcWo5k5Yu1I9kYLtQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kxOKXq5NTWANq2GskARVkiLYt+qwyveU2RkY4L2TM5PzbbPd2ozIqYpnQURo92h5Hf2DLVTNTxPRBBjcAqpYuAd3we3txRSgiPIfZ8xghYcE7kZcWVkf1hIZ2w5Voe3lGw/uBGnN6kTE/P2ZFWUfITT/aW1b5apIIP/h8g9rfPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=FHBBhBFx; arc=none smtp.client-ip=209.85.214.174
+	 In-Reply-To:To:Cc; b=fNxzXRm03S/oaqaJnGcbOuPQ/8lfukVGWmTqJ4ZQAd3OkfsDWMj6N2nk6wwhLpgCWrTgp1Xax7MAfJRFSyw6V09RQRbdCZqeAnf3U0Ol1lKlW/GVq7oxneIgduF/0boOn7R9C6nLXAImle2cOZ8052x4meareAS0bxSbpAMdjsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=GhouhuWz; arc=none smtp.client-ip=209.85.215.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="FHBBhBFx"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2a09757004cso46060045ad.3
-        for <spacemit@lists.linux.dev>; Fri, 09 Jan 2026 21:19:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="GhouhuWz"
+Received: by mail-pg1-f194.google.com with SMTP id 41be03b00d2f7-c46d68f2b4eso2973662a12.2
+        for <spacemit@lists.linux.dev>; Fri, 09 Jan 2026 21:19:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768022378; x=1768627178; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768022389; x=1768627189; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RB1julTcwsVwIqkOMTaY5tjMY89z5qQTP6TBk69d44k=;
-        b=FHBBhBFxMzaRNb2o+V99nQ32PBqvmZbnIwx5G+qBbmNBN60DX3tGfMguK7vqGq5wHC
-         rkp440haHprtbE3QH0h0bEE/jgau/VoLMzywckVsfPcSPzdg/+jQ1Jgaho/a4B8+3qaT
-         O+eheROuuitNWhEg2+L0NHi0KQUjLH+xS8uHyP9D2Hwr9eGYLa2MQxYFHCXyxOosR2mD
-         aNMYPNu5Yj56vfgO2cWWSAQfs9Yu90VgagazFbk8FNJMJdSQJ875jusTqsGzmrvWuSz5
-         pYzWeGjAmjRG38H25+uRi7tWm/s8+D3IvT//5K9KeWjE72W4wABWwumEZOFq4yaKMZ7w
-         rqZA==
+        bh=BmyABXvs1SN8VuCBpy/0tab2Fs0I2RX3eOqS1zJrtK4=;
+        b=GhouhuWzItoXhiULr3BZ7bLreVm4B91m4fWpVVfHgBAB7ROjfcAWELYFrBskOtsip3
+         SutvEXUvZyJmJUBi1Ye2OMgXyxPdynVlRvrPQD6I+3BG9BMh/IsNctat74nhz8qVxtsM
+         Hzub/tnho2bSAkEkzczkxz5UQJ+PWPloWVVakal/zzOpU8DHICS7fY9p1b9aoIBbt/0T
+         wBd1cywzFAUDQJProbodu3eLasDyaZZw28LwPjnnqO8s0COCBhYekSQgVpTe75PDAs7z
+         kDyTPTwg755RDo0E5hXDssnvQYzC/j/AY971yd0lVMaKIKT5g4+PVUBOa9AoNuqi/0UO
+         unUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768022378; x=1768627178;
+        d=1e100.net; s=20230601; t=1768022389; x=1768627189;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=RB1julTcwsVwIqkOMTaY5tjMY89z5qQTP6TBk69d44k=;
-        b=xP/mEZpoqNI9nsiFEiWYPGKTk5BgapiSaVbHbPhLSPk7JITZe3fw3UjY6xnvKhCf4n
-         lkYoAajkIrP0t6BDMa39GfB+7NCjSva+EKxVK5wVSE48MERpEyLqpNI4z7hlmfTbulcV
-         T7Kj4BmUl664jBDnDzZwk69YvAjukrEgPj06GctdonA+Bm8mMq4Ns26mxtwrKtYdBkU+
-         oQJd+GyV+idmBmJwDxPon2y1or7TzEHJXkFhyPQScpcwhcTJGE+ZU1XHwj57wN+GjK3O
-         Kdv/GbYN68Xhlvk6AAnuGUN0rezgeJH+g3EUsaBWSzFTTeybDyoIu4/Gn42d7DFkiT8I
-         W30Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX+MCZQKV5nuyCCD8Gp+p7Uupu3GV1ohkEJ3EbmbbXlVab3FCDskNW7ryI02QuHCv48BDhj7C6+UQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz8prKyymIG2vNuDI7QNGMLWURi0OBVwriVlRUMynjAFeb3wSZY
-	uNiQtDR4kHh4ZanQr0ofc4EsQ7CpU8EgGRSHMywfd22Q0uFhMeDejh61HYxf/wDktY4=
-X-Gm-Gg: AY/fxX6o1hrphcWBJv2NGAl0P78LsA4gwwhhiqX65kQS5lww3Mq7izNMVLICNnklYYD
-	8a7d8mrzcdkfnKAG4O0jFqicah37ZZ8KNZO4q1yTBe5yF1JJrsd9GbJV5xeF5m2S5mILYNJcvuM
-	pRoyTyj46JbIhA2Dc3ATIAQbKxuhAJbIOX5bH8Fu2Uftj/kMBDCI5uKyfvwLXtDVbyX5l12lheL
-	NN0hgcGQNZ6qlLqfjRzA6W496XACqylzeX+BL2s1PwQSzAEWXyK2uQoBb2PUJPgVkwijsjNh8eS
-	FJCj+y8W4nTc0j8R+cT608P2f9BJYc/HUiHLGWJVBypjndHaXIm5s6ZmLkbXgnAD6qBLntx6sEM
-	kx85Cz55hPaKTa9B4sFkz1ZUG21XF/eqPJ3edpqCd8yTG8b69hv3w7op/3mCCa27S36ig1Zwi99
-	Xsxe/CWWfNtS9/md9JT+P+uExyqBiRsasRe7YWQ0KGkCdmL7j8LFuoSA==
-X-Google-Smtp-Source: AGHT+IEbLN+ufDRbhXFu7As22NIuOsgWDNIIPN8ZaXZZdRrHya+Ppa2gw7UP6RqhkdSdQ7NFe5NtJg==
-X-Received: by 2002:a17:903:1a6b:b0:2a0:a484:6b87 with SMTP id d9443c01a7336-2a3ee49c6dbmr128077985ad.47.1768022378403;
-        Fri, 09 Jan 2026 21:19:38 -0800 (PST)
+        bh=BmyABXvs1SN8VuCBpy/0tab2Fs0I2RX3eOqS1zJrtK4=;
+        b=ns1jepyS3KLWcYrqzhWAmt9vbyBHza6ssUkq7+7YnXDsK2OigQ3fhxv3rEH6xI8TJR
+         QF2Z9gkcPvvIlpqXGjHsp2E2zjvBMSDmxc0VZoEwp2bysQGeSnk/VVVcSR6EQnUHY09J
+         7bZHE01TAXhh9TYC329lwWoqkgIJvCCpzyVQKHwgQyF4o0+5tDJQK0LTJBM/v8ZB355N
+         MxHnIIfrCLi7xXXvePqKVLF5wYjOp1HIwU217RK0jeTdy0ax1YJNayNEKVyeu/O/gSIz
+         48rFMpRJU7lSs+JeeqoBofGQxmZ+Nqi90heaI77cG2rtIIqJc7ZDFDbl7Vw5akLtkCAJ
+         KwwA==
+X-Forwarded-Encrypted: i=1; AJvYcCXwx37+sN1y/0sy012PSV3nsr2Ll9SdCpTpg0mdvS68gOw9Tw475/8YoGqPR/lrFfw8klQ1DoSyXw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw/pxB3YRE4z+QHDQKInSz/jCEa9kIQQuoGLtq0N04ee5Vu0Jje
+	Yv5IpsL6Tv0oU3nLqcZoOeULmhQzuWVdI/prxDHnAH6JRTCk7uEaE4wlnlnS53QtO2M=
+X-Gm-Gg: AY/fxX44axgWru+HtfACRRCvKSuBxg1fnwkXXpK1gOYQcV3YRtnfjSWJOjOAvfZ7hPo
+	cd95DKCNAU9J5TE2rE38N+pugkvewmUuRJUrUN8+HCYh4x8HAPqyZX9kDc5BHNb+gBGVy8KRBH2
+	seaLROCx4wjKvu8+LJL2PkhWOZ2V3rfrKeCkFGIxbhuKPw+JQRnO2dgksYqohWF8qd0QcN8+hOu
+	1lkILKhXEppxXAVXbqi6uDC4TZbVeiwmCJIkHpZWD+KR1RWz+H+P3EeBT6mcEPSFfJmjMBv0WlL
+	1Dr0aZyGYypoBH4gXtvAPjdmHzZggyHwl2PsUI3R6D1UerR6dB3gzghUquagw1bo+t2x0WqtumG
+	2eS+hnGcgKDospOONYYIS/uFTEWl6QZxl9UWLudBsj6LJehVz7PKl3XSbik0J+XNXY5CH4c0C8Y
+	rowfKpKifAfrs60o3G0kTo6IGYlJdyR0ZPlVESjY/9Sln9IyUxm8f5SJoNORl6aP2c
+X-Google-Smtp-Source: AGHT+IEPPeIUWgsSKZBo27LQFfXmf78KQe8uU+5vPpaDED03FOdBQAsZNe/tyTQTcMQjGVrGxwlkJg==
+X-Received: by 2002:a17:902:cf06:b0:2a3:e7aa:dd6e with SMTP id d9443c01a7336-2a3ee48ac0fmr115216775ad.38.1768022389213;
+        Fri, 09 Jan 2026 21:19:49 -0800 (PST)
 Received: from [127.0.1.1] ([45.8.220.108])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cc88cdsm118208265ad.73.2026.01.09.21.19.28
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cc88cdsm118208265ad.73.2026.01.09.21.19.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 21:19:38 -0800 (PST)
+        Fri, 09 Jan 2026 21:19:48 -0800 (PST)
 From: Guodong Xu <guodong@riscstar.com>
-Date: Sat, 10 Jan 2026 13:18:16 +0800
-Subject: [PATCH v4 04/11] dt-bindings: interrupt-controller: add SpacemiT
- K3 IMSIC
+Date: Sat, 10 Jan 2026 13:18:17 +0800
+Subject: [PATCH v4 05/11] dt-bindings: riscv: spacemit: add K3 and Pico-ITX
+ board bindings
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -71,7 +71,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260110-k3-basic-dt-v4-4-d492f3a30ffa@riscstar.com>
+Message-Id: <20260110-k3-basic-dt-v4-5-d492f3a30ffa@riscstar.com>
 References: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
 In-Reply-To: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -91,34 +91,46 @@ Cc: Paul Walmsley <paul.walmsley@sifive.com>,
  Anup Patel <anup@brainfault.org>, Andrew Jones <ajones@ventanamicro.com>, 
  devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
  linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
- linux-serial@vger.kernel.org, Guodong Xu <guodong@riscstar.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+ linux-serial@vger.kernel.org, Guodong Xu <guodong@riscstar.com>
 X-Mailer: b4 0.14.3
 
-Add compatible string for SpacemiT K3 IMSIC.
+Add DT binding documentation for the SpacemiT K3 SoC and the board Pico-ITX
+which is a 2.5-inch single-board computer.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 ---
-v4: No change.
-v3: Add Acked-by from Krzysztof.
-v2: Fix the order to keep things alphabetically.
+v4: Adjust maintainers list in alphabetic order.
+    Declare spacemit,k3-pico-itx as an enum, which can save future
+     code change when adding new boards.
+v3: No change.
+v2: Use one-blank-space between name and email address.
 ---
- Documentation/devicetree/bindings/interrupt-controller/riscv,imsics.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/riscv/spacemit.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/riscv,imsics.yaml b/Documentation/devicetree/bindings/interrupt-controller/riscv,imsics.yaml
-index c23b5c09fdb9..feec122bddde 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/riscv,imsics.yaml
-+++ b/Documentation/devicetree/bindings/interrupt-controller/riscv,imsics.yaml
-@@ -48,6 +48,7 @@ properties:
-     items:
-       - enum:
-           - qemu,imsics
-+          - spacemit,k3-imsics
-       - const: riscv,imsics
+diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+index 9c49482002f7..b958b94a924d 100644
+--- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
++++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+@@ -7,6 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: SpacemiT SoC-based boards
  
-   reg:
+ maintainers:
++  - Guodong Xu <guodong@riscstar.com>
+   - Yangyu Chen <cyy@cyyself.name>
+   - Yixun Lan <dlan@gentoo.org>
+ 
+@@ -26,6 +27,10 @@ properties:
+               - xunlong,orangepi-r2s
+               - xunlong,orangepi-rv2
+           - const: spacemit,k1
++      - items:
++          - enum:
++              - spacemit,k3-pico-itx
++          - const: spacemit,k3
+ 
+ additionalProperties: true
+ 
 
 -- 
 2.43.0
