@@ -1,68 +1,68 @@
-Received: from mail-pl1-f194.google.com (mail-pl1-f194.google.com [209.85.214.194])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84CF279DC3
-	for <spacemit@lists.linux.dev>; Sat, 10 Jan 2026 05:20:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47316279DC3
+	for <spacemit@lists.linux.dev>; Sat, 10 Jan 2026 05:20:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768022420; cv=none; b=g7FPduihxsXwZEqW48iCoVFvXusrA1QVc7hqxlH1lI45v7V6Z0cDIeGEz1dTc71RoWlOyrLTV3KErkIZPUSfxjTMEQJRQXzX4PAe3Z4FyVyA2/qUs56dvV81bFFcPmN4cNg2xnwM+eoBsFmvnwieV2iPPsFLwaaESj1hgNnUTDc=
+	t=1768022430; cv=none; b=CqBJPOlNdXn6o1UFXPZYBBYx2kpbA0j8fujeUQfiKmCxXDeEksX2SZe1iZYztoon7D18FPOzXROAN+2WJYkSMMkJAzBStL0149Gbo5izggzUISyz7UsLCpO4dPoUXrBZ0Uk3Un3ra5O9nD+zQWdU0VwaWIYXiA+p52X1mhkDVHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768022420; c=relaxed/simple;
-	bh=80EhE/OitNlYB1B+6VQ3QGxBv250UUMYzSB2ImKLAxw=;
+	s=arc-20240116; t=1768022430; c=relaxed/simple;
+	bh=oaK5l+uadB/1UtTh6X35C4GVaTS/guc95RdMu2I299c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CuSXcHpuk+B7r0DKtzxah/oN5ZWEloSXRPIqhTQkLxm18LFAaL38SQjosjcbbS+luTjkzxR8kf1ay8Sw5sNtykXbjrQdaRuknXdZuqupykt229q7FAH8/K302VhXp1AxawIB5lsoNCUYNsB0zJe2FA9Ww4PaZdPZA5tUnbgiI9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=xY6hmBYl; arc=none smtp.client-ip=209.85.214.194
+	 In-Reply-To:To:Cc; b=C/4h7rT4NhFIFZMCjuldSGVogvYj2YzNW6amomfrgqEjEtOOMAhA+/NbyMlQ004LxjbYOHB4Ggs+Q4LzIZD0aU+qIlSHjTtdAWZWhOtCUBlHv5PxY3L24M14ioAWzjeGIfQ9mWFIJ9r/5uDUGXCi58rG2upDe/HcrWGvImyup74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=FfQHJWkR; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="xY6hmBYl"
-Received: by mail-pl1-f194.google.com with SMTP id d9443c01a7336-2a081c163b0so34013035ad.0
-        for <spacemit@lists.linux.dev>; Fri, 09 Jan 2026 21:20:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="FfQHJWkR"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a102494058so16512245ad.0
+        for <spacemit@lists.linux.dev>; Fri, 09 Jan 2026 21:20:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768022418; x=1768627218; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768022429; x=1768627229; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5zN0jIJOhzutug7gLJze8M0eK2qEZ0NMWNu3NtKdrP8=;
-        b=xY6hmBYlO78uVUt5eLHlZdITr/PMNWKBQz0h6vZYI7Stc6GaCb+CrphkZiSNQQhwHr
-         1oN2GkiUyT+Qv+mkGWry1pdKOiKwCVwxb2kO/QRaGmrGiSNex++Fh9yC4KU7ch9mBzHa
-         HJKY8HANiqgmQTJcTpUABp0xSuY1ggaQmXYYgD8WDBm2SouqH+41MT9LOGohI4unfUxG
-         9dXygsuDtkV5aO6JyBs6sQgXjohqLFv2iosRfak5XMaxXoT4ZAQjTFj4yHWrZxnXLOmX
-         5tJJWUhDPAdnVe0e7UGZN1njKlDMYjV1PeB+pD64e4Yj+ldK12rwqm6Az3CLxsmpUpNf
-         KMMw==
+        bh=MnKLaktx0YitXAvKONWboruSzuMArssppl0GK0vv2ZI=;
+        b=FfQHJWkRNxdSsLw68dvnvV0mpE2Nosq7F4csVmCQ66moXGlOu41d5pkpSn7aNx69BS
+         5ydFTMl8uU2DLUivz9Ce+0xPk9PbNkREg9Fa8r6P/NUnt6mIdZvtSKtd+7+aarLQJw7S
+         ZtOIAL83dR/Grek++yFqWHvLAW6uOiqFO91AO4CFpm+zHVZxNdziGGhTPUSxEHGtxc6L
+         FnEKl4Dfhgxr6gRKq4sWCn/w5ZBz3+qkSFjJbsuJmzRhIRffvfub6hAGHrFw/3JmOACM
+         uV0DHOms84v8pl+J5L7g/Jqx65aQe4RbejwkY95/Us1arbdKoCRGQ+PE5Y+CpXradyay
+         tXFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768022418; x=1768627218;
+        d=1e100.net; s=20230601; t=1768022429; x=1768627229;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=5zN0jIJOhzutug7gLJze8M0eK2qEZ0NMWNu3NtKdrP8=;
-        b=c6KV4P3+czu0Ma4qA1c0FhhUyARIrxrP94i7QdJFziV+AHAgPu0geVe8kJv4cQ+ARK
-         OWuW0KWIk5YoOCp0ZnMDyjWH+ySD1QE67gYpFU+YXD04SOD4zrPKedvaM0XZ47vmfxnt
-         WOyUVx93uUMudpVe2dTnITAY9xDyxcaKe1NDfsgPAHy2HhWIptreC08zPBstMIMYZ8Ji
-         HXxE+9yHruRNxQi8Xum62TLAxIU7TUvl7Uzokuny156AKwmb2y3/AOuVZKGdGyJ9tx/d
-         ID83IJQuOv+Ief36U3tjeEo3sjMDMiCyTNtOvg/+SnOAl82XzKGusopckM61dWXw8UgO
-         Tmuw==
-X-Forwarded-Encrypted: i=1; AJvYcCVuAyT4jjc6KiJ1pFoeNKPSQMnHqEQ6mxFYbP4dKdknJB4z3hGp0I0lQzw4L5VxFKWCr8N8uc504Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwhB5prS4m27r8newEp/EjFRS9IE0gX420GoQ8C9J4N/GXThWCK
-	+3z81wfqGdV2qKJvvgfiory8p0oMjpL/Wb+93zgybEHk+WBd8sePIYLiQRF/iJaBBJ4=
-X-Gm-Gg: AY/fxX4cOzm1DA3O+CQOCSXf81Y5gA8umCTD9Ugn6NSUMdioT0kXOrBwiF6lGnERLXs
-	ewjXkf7F02Rxmyf1TtxiobJd7Sk8MkL8HsQTOyp1gOPX6X7Mcqd3virn6yReUB5p/owuqAENL6Z
-	M5uKyF/7qDoGlp+NDT1sr8qfYLqRsl1iPBY1FJDMksIf1KoaYPY2yUHZG5jWhYyWPxxAE+/we8g
-	XNTSHqV+fhnCCB1nhVoRlxy5rFHUbiymUDcnT4lhJRazXvR1RTP/Yw7XKJSXMbtBlnAWEzOuqQr
-	6ghVv0jZJ5V0lccByXginPSaMaW4ll8KULsmHVFcFE5xmzeUJ/N2YBxtzVL1gFfitW4Y40ZwMor
-	OgYVMxyfF/KKZLn1wFS8Pv7882wKzMK+FGIfdgyha8poGVm73iqGGrxddSWKeWalclyOyr8kv/c
-	wmEChHtIAadZ9hdMT310jyZtmQ8rEGO6ImCyW68UBzwrKmrjBC2U8UEw==
-X-Google-Smtp-Source: AGHT+IG/YASZ5bP0G4QlJrDOO/Py+JE5tERCJ+CHN75BwBTQicN0ixi/wKAyrG96pxluUrT44Q9eFg==
-X-Received: by 2002:a17:903:124d:b0:2a0:be68:9457 with SMTP id d9443c01a7336-2a3ee4902d6mr98631605ad.44.1768022418148;
-        Fri, 09 Jan 2026 21:20:18 -0800 (PST)
+        bh=MnKLaktx0YitXAvKONWboruSzuMArssppl0GK0vv2ZI=;
+        b=aD2xV1Hm7xSC0vM7xRf5AN/IdlhvdlOlr4IjsR8Rvu4/7Zatj6p81YWO30e2nElxrX
+         8ByJSIXez4605uHIviyMgYNJWvibk8nq0LcslTnEunm+NOwVajdotSoQ8Jj22dcKa7fZ
+         OdEVc6VPkIFDMylqj4SitusucsBh7H20ZvG/CX66fa4wcnohkbOqgkl8lJvRTw7ipOS6
+         8JiaXumFlhd7odDrzHNNfK7dGLfwPzYoL3I5qQZv0h4lpxKSadZzAda5vu/CguXVxZgB
+         16r6ZPMce7fbX2iDiJvGH7i4y6t3wqb5YOu9LZxwIOLwsCexFls5SSJuE+tvEHDTD5rx
+         KfhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWJi6wg/5QGKY4hg5v/f1Ngt0xX7AhJ/g+J+VmESY8YJNF7TgPB5sFacC9ktVs+c9NNzNMjp5O9qw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyyUm0g5jWFqA3+Jj4PA/HsESFFE3ihrAScD71NpSZlqwLMwrY5
+	FMmUx0Cfp0Xg5zX3t41WCBlC62U3UJbvefYaKMU4OCsB8lPJHFQ3y/eadCRc9t4yos4=
+X-Gm-Gg: AY/fxX4KMonoryZJlndesXOolREQFleV2PR++35kIe6C85zw4w1DYsW1Vzq+TJrhMJH
+	Ej4QZeg65Pt0z2louLfm2gE4NqS6OGl4gJqF+QwvdCEJYkE9dtnONW9hqdoLizGzvYG7ggZIcrl
+	KbvhKM8xUseYdZnHt+148mrvZfOqrXc9XGSxRVnBNRK/wOJrSg6xRwZH9L1A28JEqNW0iEfh6cj
+	CyX5o0IJuyWy8fG1qKGZWSJQ4rfAH1q0mIM96NyhkFod/AXeFIatVkI5ndIBz50/TTaVNOko97U
+	3wNMnOVoH0ODg3nmMUzc5KxA9ar24Br3J5gTqqCPllX5dGeW60kmeN8MgmWnZ3LLvEDeuyk+CDo
+	/D9MilN6PRFFzHz5AB5EMd8VLgMZQ7Ij0FkgAX9s6fHCE9mZqDoVN0FvH5WLENht6ZV96hnxzKR
+	3KF4aubhE3zZq/6e8j+FXCtVaUwZqo4dWOeXP6fPzOiQNmootBksW8+g==
+X-Google-Smtp-Source: AGHT+IHLx1wPTjXjzAS2eGdh9903fjAPi7RCiCtnZZLH7PsVuIyVqtFb3O/Bml6wg2iKJ9agI1qtCA==
+X-Received: by 2002:a17:902:dacf:b0:299:bda7:ae45 with SMTP id d9443c01a7336-2a3e39edf19mr141059685ad.25.1768022428644;
+        Fri, 09 Jan 2026 21:20:28 -0800 (PST)
 Received: from [127.0.1.1] ([45.8.220.108])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cc88cdsm118208265ad.73.2026.01.09.21.20.09
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cc88cdsm118208265ad.73.2026.01.09.21.20.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jan 2026 21:20:17 -0800 (PST)
+        Fri, 09 Jan 2026 21:20:28 -0800 (PST)
 From: Guodong Xu <guodong@riscstar.com>
-Date: Sat, 10 Jan 2026 13:18:20 +0800
-Subject: [PATCH v4 08/11] dt-bindings: riscv: Add Ssccptr, Sscounterenw,
- Sstvala, Sstvecd, Ssu64xl
+Date: Sat, 10 Jan 2026 13:18:21 +0800
+Subject: [PATCH v4 09/11] dt-bindings: riscv: Add Sha and its comprised
+ extensions
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -71,7 +71,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260110-k3-basic-dt-v4-8-d492f3a30ffa@riscstar.com>
+Message-Id: <20260110-k3-basic-dt-v4-9-d492f3a30ffa@riscstar.com>
 References: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
 In-Reply-To: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -94,86 +94,116 @@ Cc: Paul Walmsley <paul.walmsley@sifive.com>,
  linux-serial@vger.kernel.org, Guodong Xu <guodong@riscstar.com>
 X-Mailer: b4 0.14.3
 
-Add descriptions for five new extensions: Ssccptr, Sscounterenw, Sstvala,
-Sstvecd, and Ssu64xl. These extensions are ratified in RISC-V Profiles
-Version 1.0 (commit b1d806605f87 "Updated to ratified state.").
+Add descriptions for the Sha extension and the seven extensions it
+comprises: Shcounterenw, Shgatpa, Shtvala, Shvsatpa, Shvstvala, Shvstvecd,
+and Ssstateen.
 
-They are introduced as new extension names for existing features and
-regulate implementation details for RISC-V Profile compliance. According
-to RISC-V Profiles Version 1.0 and RVA23 Profiles Version 1.0, their
-requirement status are:
+Sha is ratified in the RVA23 Profiles Version 1.0 (commit 0273f3c921b6
+"rva23/rvb23 ratified") as a new profile-defined extension that captures
+the full set of features that are mandated to be supported along with
+the H extension.
 
- - Ssccptr: Mandatory in RVA20S64, RVA22S64, RVA23S64
- - Sscounterenw: Mandatory in RVA22S64, RVA23S64
- - Sstvala: Mandatory in RVA20S64, RVA22S64, RVA23S64
- - Sstvecd: Mandatory in RVA20S64, RVA22S64, RVA23S64
- - Ssu64xl: Optional in RVA20S64, RVA22S64; Mandatory in RVA23S64
+Extensions Shcounterenw, Shgatpa, Shtvala, Shvsatpa, Shvstvala, Shvstvecd,
+and Ssstateen are ratified in the RISC-V Profiles Version 1.0 (commit
+b1d806605f87 "Updated to ratified state").
+
+The requirement status for Sha and its comprised extension in RISC-V
+Profiles are:
+ - Sha: Mandatory in RVA23S64
+ - H: Optional in RVA22S64; Mandatory in RVA23S64
+ - Shcounterenw: Optional in RVA22S64; Mandatory in RVA23S64
+ - Shgatpa: Optional in RVA22S64; Mandatory in RVA23S64
+ - Shtvala: Optional in RVA22S64; Mandatory in RVA23S64
+ - Shvsatpa: Optional in RVA22S64; Mandatory in RVA23S64
+ - Shvstvala: Optional in RVA22S64; Mandatory in RVA23S64
+ - Shvstvecd: Optional in RVA22S64; Mandatory in RVA23S64
+ - Ssstateen: Optional in RVA22S64; Mandatory in RVA23S64
 
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 ---
 v4: No change.
-v3: No change.
+v3: Drop dependency check for Sha. Both Sha and the extensions it
+     implies are allowed to co-exist in DT.
 v2: New patch.
 ---
- .../devicetree/bindings/riscv/extensions.yaml      | 32 ++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ .../devicetree/bindings/riscv/extensions.yaml      | 57 ++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/Documentation/devicetree/bindings/riscv/extensions.yaml
-index 345624326e9f..900270e8d22e 100644
+index 900270e8d22e..41cb4aeb2667 100644
 --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
 +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
-@@ -161,12 +161,26 @@ properties:
-             behavioural changes to interrupts as frozen at commit ccbddab
-             ("Merge pull request #42 from riscv/jhauser-2023-RC4") of riscv-aia.
+@@ -129,6 +129,57 @@ properties:
+             Document Version 20211203.
  
-+        - const: ssccptr
+         # multi-letter extensions, sorted alphanumerically
++        - const: sha
 +          description: |
-+            The standard Ssccptr extension for main memory (cacheability and
-+            coherence) hardware page-table reads, as ratified in RISC-V
++            The standard Sha extension for augmented hypervisor extension as
++            ratified in RVA23 Profiles Version 1.0, with commit 0273f3c921b6
++            ("rva23/rvb23 ratified").
++
++            Sha captures the full set of features that are mandated to be
++            supported along with the H extension. Sha comprises the following
++            extensions: H, Shcounterenw, Shgatpa, Shtvala, Shvsatpa, Shvstvala,
++            Shvstvecd, and Ssstateen.
++
++        - const: shcounterenw
++          description: |
++            The standard Shcounterenw extension for support writable enables
++            in hcounteren for any supported counter, as ratified in RISC-V
 +            Profiles Version 1.0, with commit b1d806605f87 ("Updated to
 +            ratified state.")
 +
-         - const: sscofpmf
-           description: |
-             The standard Sscofpmf supervisor-level extension for count overflow
-             and mode-based filtering as ratified at commit 01d1df0 ("Add ability
-             to manually trigger workflow. (#2)") of riscv-count-overflow.
- 
-+        - const: sscounterenw
++        - const: shgatpa
 +          description: |
-+            The standard Sscounterenw extension for support writable enables
-+            in scounteren for any supported counter, as ratified in RISC-V
-+            Profiles Version 1.0, with commit b1d806605f87 ("Updated to
-+            ratified state.")
++            The standard Shgatpa extension indicates that for each supported
++            virtual memory scheme SvNN supported in satp, the corresponding
++            hgatp SvNNx4 mode must be supported. The hgatp mode Bare must
++            also be supported. It is ratified in RISC-V Profiles Version 1.0,
++            with commit b1d806605f87 ("Updated to ratified state.")
 +
-         - const: ssnpm
-           description: |
-             The standard Ssnpm extension for next-mode pointer masking as
-@@ -179,6 +193,24 @@ properties:
-             ratified at commit 3f9ed34 ("Add ability to manually trigger
-             workflow. (#2)") of riscv-time-compare.
- 
-+        - const: sstvala
++        - const: shtvala
 +          description: |
-+            The standard Sstvala extension for stval provides all needed values
++            The standard Shtvala extension for htval be written with the
++            faulting guest physical address in all circumstances permitted by
++            the ISA. It is ratified in RISC-V Profiles Version 1.0, with
++            commit b1d806605f87 ("Updated to ratified state.")
++
++        - const: shvsatpa
++          description: |
++            The standard Shvsatpa extension for vsatp supporting all translation
++            modes supported in satp, as ratified in RISC-V Profiles Version 1.0,
++            with commit b1d806605f87 ("Updated to ratified state.")
++
++        - const: shvstvala
++          description: |
++            The standard Shvstvala extension for vstval provides all needed
++            values as ratified in RISC-V Profiles Version 1.0, with commit
++            b1d806605f87 ("Updated to ratified state.")
++
++        - const: shvstvecd
++          description: |
++            The standard Shvstvecd extension for vstvec supporting Direct mode,
 +            as ratified in RISC-V Profiles Version 1.0, with commit b1d806605f87
 +            ("Updated to ratified state.")
 +
-+        - const: sstvecd
-+          description: |
-+            The standard Sstvecd extension for stvec supports Direct mode as
-+            ratified in RISC-V Profiles Version 1.0, with commit b1d806605f87
-+            ("Updated to ratified state.")
-+
-+        - const: ssu64xl
-+          description: |
-+            The standard Ssu64xl extension for UXLEN=64 must be supported, as
-+            ratified in RISC-V Profiles Version 1.0, with commit b1d806605f87
-+            ("Updated to ratified state.")
-+
-         - const: svade
+         - const: smaia
            description: |
-             The standard Svade supervisor-level extension for SW-managed PTE A/D
+             The standard Smaia supervisor-level extension for the advanced
+@@ -187,6 +238,12 @@ properties:
+             ratified at commit d70011dde6c2 ("Update to ratified state")
+             of riscv-j-extension.
+ 
++        - const: ssstateen
++          description: |
++            The standard Ssstateen extension for supervisor-mode view of the
++            state-enable extension, as ratified in RISC-V Profiles Version 1.0,
++            with commit b1d806605f87 ("Updated to ratified state.")
++
+         - const: sstc
+           description: |
+             The standard Sstc supervisor-level extension for time compare as
 
 -- 
 2.43.0
