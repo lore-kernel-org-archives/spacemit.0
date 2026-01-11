@@ -1,137 +1,149 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DA823C8A0
-	for <spacemit@lists.linux.dev>; Sun, 11 Jan 2026 06:41:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE73934B1A0
+	for <spacemit@lists.linux.dev>; Sun, 11 Jan 2026 19:56:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768113703; cv=none; b=uWIMWvYYomNAmCHjwUg5MluoDLRYOwmlMf92aKK3sWsb+3ITx6nG7fLOEYICxo9aBFwSMVFg5nkQ3PX753wTzmVZHKk3iUZ2bIBfaNol+0X8SLI0kQ7epZ6WYhr2iO2XguDqB6RzcxpVT/xXoETsCACE/kiwdaE8prE7sifkyjQ=
+	t=1768161365; cv=none; b=H7Ja2tQ14t+vSjJy54nAr5WeZA4adI+O3Y2whqeWk7PHd2NJG2P51TVs1HPcsjpnNTcFFbjIWs7FpEnWFUJXHGyeoXE3+9flb3HpHDRdgPzA57SYVn9rFQCjuNZBMcj+gD3lEHGSt/Dpl5S7x9336JxgmCBUxSRstQKnda6NZsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768113703; c=relaxed/simple;
-	bh=OV3HDtkXKdNdbyJh/87CD3+Y37+Ppb3KYEbRVI7Yw3g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=avHvXWNc6xAH2jU95QKswVOZziGbo5jM767ttNDq4gD/YodVXvVy/DamXTZpIlri5cu1kQZjAsXpXLPTo8QwsMuGEKx46odoMXMFUtPbfgjNLB91K2ZjGhE4fgqOJefWzJaJKW+OUhxq5T2knxe5+2qmFC/2H7ePP14OtZlmI6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=DWpZXBqr; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1768161365; c=relaxed/simple;
+	bh=ZrfWh/ijxCDqCCWp/uJ7Kl1B1mKM00e4Rup8caSKxRY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rezySpM9UO23md4wOfw/4fLt1ROiPTZ9kXvaZCukr3A6qo+ZMPbnfswe+uLMJMi4mSyAjQDKGIKpgIsAXAhT3n/cbEa+K2BK7vxBbZoKsEYEsk+zTfSZhWYXWsxeufxqpmlySPbAxeFHHWhw11TJgCAjvWKSvQNbMpwvE64C1oQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=tdXpZ1fZ; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="DWpZXBqr"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1768113699;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YsfMkNLcCSESV8XTR6/jGWPS+9Mk6DJvmsfeb5LRsCE=;
-	b=DWpZXBqrlpzInYX1mFIk3Dr9LS9kCGf5XIAaK7NPVvd85q2tWA0xSijDfqjO2P1kzktmQg
-	VwBlv42q1kEiNZGJphD7exVB+lyfRq4lKJh2JYG8RvqpYguhvOAR5kiohNUAQu4iluou5a
-	P9H7UClYyiBlbnSwk+9SYe3u/iRtdw0=
-From: Ze Huang <huang.ze@linux.dev>
-Date: Sun, 11 Jan 2026 14:41:04 +0800
-Subject: [PATCH v3 3/3] riscv: dts: spacemit: Enable USB3.0 on BananaPi-F3
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="tdXpZ1fZ"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8bb6a27d3edso610237485a.3
+        for <spacemit@lists.linux.dev>; Sun, 11 Jan 2026 11:56:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768161362; x=1768766162; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gOUBhbeaXMEYonUlyi3dh9viIlCbuv3hV4saX11FjGc=;
+        b=tdXpZ1fZ8sW2Wrs6j4uvh9a6BSYpXa8fbwJ/TOPjkhVsFcwNUyy/LqutEpUOuoPKdQ
+         i94mXic8ezGQyxwPTz1nal8DM/Nj+ZAEtZBSkPL21SFyx2FYp9epHoDtuw1o85C2pITt
+         96A11dX9N4UVEk+DiRRlIag2k0h/yNETnhTrz7w8Y1iv49WYMvNnuhOUQRpZ29/v5Mhe
+         8XWd5fw7OBydbT/Oh+S/vrE543ODgY8oAPb5MJH4pGb03GxGoGLmAfjA7j31/uX7IXR5
+         LRtqC9Ba0eipjHO1fzKOymW6XHxvuvdGa0qOqM88RFrRMozG1aEqrJbuiKW7Ms4aaixE
+         /1DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768161362; x=1768766162;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gOUBhbeaXMEYonUlyi3dh9viIlCbuv3hV4saX11FjGc=;
+        b=hPqSb+g9CYTiuPpSCl4QGmIwUxXj66oK6u4HFw0TRpotazsbqI0LhCHsAnJqm5SOxf
+         ViojRQ0R8n7cTr4iKb2h9tlSub4fPiU7KhWx2p1qwjYr1ZMTnilbR+dHHSigTyiMKNss
+         CrM/ydrsfkyPxJ65ecBwMrP2lu20rRVip9AcnmBed3QOWsHz3yuocBGJbGk/5090tEFC
+         9MRJqZ8vFhtFr091Z/PycQGNZ/YF3n4tLhjkG67jotMY18DmjSf7L2lP07ihsABx0KzS
+         s5Xx+QQKoAjLl+ao3UIkruJKpyfz5+NGBvy/sAghXBe3ThI/p4Zv4mzkmr1uSfxGuE7h
+         xcaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXtL9DjjR3a7r/Ja0gHkScx88Wff5s7hqG801KywVJ9KvHnXtlj6gjS4ocMZ4h6bu1o+UbYKEqdUA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwWZrCBJrNV2Wx3N3PDqFWhrEthCCec14P4ZzxZkPYnd3b8pZRB
+	YptSrh4SyeUPcxGbdGRjTR1wy6HlPSN6BjmfZf3UKEvzrlh2OrYajCotiQ5sZapqHcY=
+X-Gm-Gg: AY/fxX5UfAkItOqYNIwiBQ0/sZqu62SuRr22tRvssaMxqrsPXpi7WArrIPbkeYqIk2A
+	fkWQgU8OYFI70VLt2xYoAk8hexlzo421yNaHRMJcchx8U6N3/AFJKu9GPLMmVcZpIpg20qCAyPN
+	u9eZrOH7fcY6fTpmexdCH3O9ox+uS4o5C8MIoFW8+AcogeCRgE1FMh8Kn8jC4dDkMPiHL+ryUbu
+	ZrtHuptRmR1Pwcbn9lxIT9jUrNPAuT5hIIb1mvYWazucMPDJ9QWTfAIEpMNvF8mywoNv/FD4gSS
+	j4g7CQnFZYhIVcw1g5r4rhT1LXWpeSPU58OWL1llNmBZT2OytqPmT7jCcN6CFaAWunHhxTgo+rK
+	n3qpXc3RunzRbjI3M2lrGxUk6ItJbXBp8yaUA5ajNDJzO/6xiLpqS8H5hxmkYstPFTjGMUSb5Ke
+	iFZHeqHgprMzju9D0Du/qG4LDCBog4Vh92SAIqCG8qklMXssNXO0QjThGT4pumOtAA
+X-Google-Smtp-Source: AGHT+IE59tdTZ/GflUoGe/9DlksdMPcDRktcTk1R3UIHBonEpxYes8KI9f6r/aWCmNZietl2oAn6tQ==
+X-Received: by 2002:a05:620a:290c:b0:8b2:ef70:64e9 with SMTP id af79cd13be357-8c38940915emr2288627285a.51.1768161362565;
+        Sun, 11 Jan 2026 11:56:02 -0800 (PST)
+Received: from [10.211.55.5] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c37f4b90c3sm1395290085a.19.2026.01.11.11.56.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 11 Jan 2026 11:56:02 -0800 (PST)
+Message-ID: <a383dbc8-5d14-4654-933d-5dfa73a23b12@riscstar.com>
+Date: Sun, 11 Jan 2026 13:55:59 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/3] rtc: spacemit: default module when MFD_SPACEMIT_P1
+ is enabled
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Lee Jones <lee@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Andi Shyti <andi.shyti@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-i2c@vger.kernel.org, linux-rtc@vger.kernel.org
+References: <20251225-p1-kconfig-fix-v4-0-44b6728117c1@linux.spacemit.com>
+ <20251225-p1-kconfig-fix-v4-3-44b6728117c1@linux.spacemit.com>
+ <202512251653368b33c7e7@mail.local>
+ <4c7c0f69-4732-4f62-970a-2a9273b3b5c7@riscstar.com>
+ <20251230005142d1bfc6f7@mail.local>
+ <6ca28183-1687-4ddc-8b3c-5e5be4255561@riscstar.com>
+ <20260109223627b566d2b0@mail.local>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20260109223627b566d2b0@mail.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260111-k1-usb3dts-v2-v3-3-f5ebd546e904@linux.dev>
-References: <20260111-k1-usb3dts-v2-v3-0-f5ebd546e904@linux.dev>
-In-Reply-To: <20260111-k1-usb3dts-v2-v3-0-f5ebd546e904@linux.dev>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Ze Huang <huang.ze@linux.dev>, Aurelien Jarno <aurelien@aurel32.net>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768113671; l=2061;
- i=huang.ze@linux.dev; s=20250705; h=from:subject:message-id;
- bh=OV3HDtkXKdNdbyJh/87CD3+Y37+Ppb3KYEbRVI7Yw3g=;
- b=7QmwbNwz411D6nDMUFDI2mnhaVs4CUMxhZAKO5UA9BbYQyRBTEXKxEAfL9vCH/BJ3wO7C+zpU
- ff5orXGkRvbArelOjDwlkCHJ2BAN2GMdASK9l3ULe9qSoIYQe0e9jQQ
-X-Developer-Key: i=huang.ze@linux.dev; a=ed25519;
- pk=Kzc4PMu5PTo8eZZQ5xmTNL9jeXcQ9Wml0cs+vlQpBkg=
-X-Migadu-Flow: FLOW_OUT
 
-Enable the DWC3 USB 3.0 controller and its associated usbphy2 on the
-Banana Pi F3 board.
+On 1/9/26 4:36 PM, Alexandre Belloni wrote:
+>> The purpose is to make the driver a module (not built-in)
+>> when "defconfig" is used (without the need for any Kconfig
+>> fragments to unselect things).
+>>
+>>
+>> In arch/riscv/configs/defconfig, we have this:
+>>      CONFIG_ARCH_SPACEMIT=y
+>>
+>> In drivers/mfd/Kconfig b/drivers/mfd/Kconfig, we have this
+>> (added by patch 2 in this series):
+>>      config MFD_SPACEMIT_P1
+>> 	default m if ARCH_SPACEMIT
+>>
+>> So when using defconfig (alone), MFD_SPACEMIT_P1 is set to m,
+>> to benefit non-SpacemiT RISC-V platforms.
+>>
+>> This patch is trying to do the same thing for the RTC,
+>> i.e. having RTC_DRV_SPACEMIT_P1 be defined as a module
+>> by default.
+>>
+>> I think you understand.
+> I'm sorry, I must be dumb but I don't understand. The current behaviour
 
-The board utilizes a VLI VL817 hub, which requires two separate power
-supplies: one VBUS and one for hub itself. Add two GPIO-controlled
-fixed-regulators to manage this.
+I think I'm the dumb one.  I think I finally understand your
+point.
 
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-Signed-off-by: Ze Huang <huang.ze@linux.dev>
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 46 +++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+> is that when MFD_SPACEMIT_P1 is m, then the default value for
+> RTC_DRV_SPACEMIT_P1 will be m. Since patch 2 makes it exactly that way
+> (MFD_SPACEMIT_P set to m), I don't get why it is necessary to mess with
+> the default of RTC_DRV_SPACEMIT_P1.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 3f10efd925dc..5971605754b3 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -59,6 +59,25 @@ reg_vcc_4v: vcc-4v {
- 		regulator-always-on;
- 		vin-supply = <&reg_dc_in>;
- 	};
-+
-+	usb3-vbus-5v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB30_VBUS";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		regulator-always-on;
-+		gpio = <&gpio K1_GPIO(97) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
-+
-+	usb3_hub_5v: usb3-hub-5v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB30_HUB";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
- };
- 
- &combo_phy {
-@@ -313,3 +332,30 @@ &uart0 {
- 	pinctrl-0 = <&uart0_2_cfg>;
- 	status = "okay";
- };
-+
-+&usbphy2 {
-+	status = "okay";
-+};
-+
-+&usb_dwc3 {
-+	dr_mode = "host";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	status = "okay";
-+
-+	hub_2_0: hub@1 {
-+		compatible = "usb2109,2817";
-+		reg = <0x1>;
-+		vdd-supply = <&usb3_hub_5v>;
-+		peer-hub = <&hub_3_0>;
-+		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
-+	};
-+
-+	hub_3_0: hub@2 {
-+		compatible = "usb2109,817";
-+		reg = <0x2>;
-+		vdd-supply = <&usb3_hub_5v>;
-+		peer-hub = <&hub_2_0>;
-+		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
-+	};
-+};
+Your point is that patch has no real effect, at least not
+on the scenario I was talking about.
 
--- 
-2.52.0
+I.e., I was saying this mattered for using defconfig alone.
+But, as you point out, using defconfig alone gives us:
 
+   ARCH_SPACMIT=y	(in defconfig)
+   MFD_SPACEMIT_P1=m	(from patch 2)
+
+And then, *without* this patch:
+   RTC_DRV_SPACEMIT_P1=MFD_SPACEMIT_P1
+meaning
+   RTC_DRV_SPACEMIT_P1=m
+
+And therefore there's no need for this patch to set the
+default to m rather than MFD_SPACEMIT_P1.
+
+
+> The current default behaviour of RTC_DRV_SPACEMIT_P1 seems to be the
+> correct one and the proper fix is then patch 2.
+
+Yes, now I understand.  I'm sorry about my confusion.
+
+					-Alex
