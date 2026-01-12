@@ -1,60 +1,60 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA9333C1A2
-	for <spacemit@lists.linux.dev>; Mon, 12 Jan 2026 08:14:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79597318B9D
+	for <spacemit@lists.linux.dev>; Mon, 12 Jan 2026 08:57:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768205662; cv=none; b=lyEdjagIE5vUgq0Ni9Kkmpt9To2Lfhrhx6WBQfCcFLaxLCo7QW8FATPp5qEf/TlenisneCsLOOO1E33nr47Isb8iMyLx1gqgHQysoVLmcXMKlYED0LzwMiXSIY3fM/8pm+E3R5ZHS9hasmwOrsK76i/8/PwxalGi3nQtLJsDU1o=
+	t=1768208274; cv=none; b=ayVH8oNLUQfznWZ9ikhNAZF9w7IByFpVXzFdZfeXR81SkgGRTo6f8+7MpaL89ninEfGcIhAE3vVfnefAqeBA3GKPJ0VHLyCXbVpFywuojalMMQLmWbC7d3LxYx12hiiilCxeyc2qtqZO6PoG5vEFDqP2ZBrcgAs+ChXCsvaMf3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768205662; c=relaxed/simple;
-	bh=VYy3AjnDSWMpdYMiu5+vuTaZIbRUvnr7IoGcdtG3324=;
+	s=arc-20240116; t=1768208274; c=relaxed/simple;
+	bh=VaZMiPzlaOln98uHBtXqBDV1bn/cvr20Z/exAarYh18=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LXL8NczgJE2gmjpNA0N5GIBNm9hDfR4CbdfkMVYr5myb6faxhsaukJpdDMis7Tl5VnVQf006Gas4y1eYv6/Z4bGvjgdGKaVqm1Nhvc7XqFHNMY8uxsYhDq9mlI3yT4DHeaKrnuleN/AuDrsty63sRtGOi0o4KZmI5xM6IrBb8iA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=fa2COZ4n; arc=none smtp.client-ip=209.85.128.177
+	 To:Cc:Content-Type; b=NNDi++ZJJfo8Bbc+hSt6PRU5b929UIBFPQDjleGJbrc+NYNgNh4XzTRdZB+YZ1gHP3E0NQBJacMoDQgwUME/zOTXYD5zWy4shzrDBF4NoHXz6cD/hhnIdVpn3OuuyAjSgDio+s94L+uATySFCRW8b9e29bu/ed99BTTkPMODhr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=cqKwMI78; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="fa2COZ4n"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-78e7ba9fc29so64398047b3.2
-        for <spacemit@lists.linux.dev>; Mon, 12 Jan 2026 00:14:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="cqKwMI78"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-7927b1620ddso15787617b3.0
+        for <spacemit@lists.linux.dev>; Mon, 12 Jan 2026 00:57:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768205659; x=1768810459; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768208270; x=1768813070; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bdHYyTf8yNUB9PUhTyJBW4AOfvFKsuolfjygPMMLYzM=;
-        b=fa2COZ4nt/eKZOz8zwd0/tnCm+DkCywtHIlRsffsPG4/6869fvNmtZSRNEqVzdAhcG
-         ake9bPceB/P82Z4XOI3/YEUUPWjvIYg5IQObmH9Q6k+1a1LwQpjx6ztc8/iz1Y17yuYK
-         Zs/+saKpsDrjQIbkiZGwsfapQaRFSmZl54k9upm2HqqQ4x2JcxSyo+sgiT/gRUm5/ORM
-         3Q0PneAhik8XDcvkw+AtSq5HgfD+OjYp85muZLVt5QY5eYcwKCOAuN80O0b6N29HL5c3
-         7MzYS7fKsdaeDsCv/PbAc3rHZPT33N/xm0TVrBGKtXAhxlpT8/zci17LfdBi5iZE6rEg
-         YXsg==
+        bh=BOTnLPv4tv9bJjvux1j20Y+ExCg3MSBOD5unB3qoASs=;
+        b=cqKwMI78Fk5Xl5f5DOoV4e1qxPV/7/3qbw9NJiAMw0LPwmD7Oh4yeJcPH4OHcnrs5E
+         feNilAR/1iNyRuHXvASxsW+ho/NK+h5wPY6NI5T8SL5QWhCg47Fxjr4FbH/7K7m1PfDk
+         wmNcCMlupUWQoa/geU23T3gdrVQpUOqDkofQ0hXbBsusJ7Yz6RE5yvOOQBTesIuW4Six
+         GNmwG96SR6g2HkMFq7cMuBpjKkWATNU1EkxFwLwFTObHMMy++s5zah6h99kn1uIAk8KT
+         X8LYYQyqpjlIeIYfnr5Buz8qpTC5mgRel/hjtLzrjsL9TW52AX+z0sjadKrjKzveqnVC
+         oHiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768205659; x=1768810459;
+        d=1e100.net; s=20230601; t=1768208270; x=1768813070;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=bdHYyTf8yNUB9PUhTyJBW4AOfvFKsuolfjygPMMLYzM=;
-        b=IcsePA/4LjzxG8eCG9iOexckpe0KoynMxNn/kkO9KyCJ+jgmAf4R7lhHwxOO5gFtpi
-         tGkN0jMo7/ADycS5w3TyK58Aan7OUy4vB4QUn3v2ecSd1AY31Migk3P+6omC4uEOwJu5
-         wo8j72HyXdYDYKIDQc/Yivg+OPHDkuiYKv65VSOx1v2BoDLPVBsn/m+zfBp0YTiS6agj
-         tIZbiUcXa+vhX03pxP2TCnuLLSSaETnuSxuRr7H/7huGQRrlGPbLzc/8j3Fa//JXevog
-         mk6MGgj5dRzJR08eu4Xfz1xjVcPnesQRNyKDAum/gtzl/m3RYOMijJiX4Z0NI6BB8u4W
-         JHNA==
-X-Forwarded-Encrypted: i=1; AJvYcCXLRdYUPZAGoy9UoMjA7N1PwIh57Maxz/8GrtnGNiS2QV3zOIAvNNVjqngBbMsAFtmp0J1uCGQG4w==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxJ7TTp+XWrYPCD0vVEyGfCx5LZRuiYYOeYVeE8NKxY43NsBfEP
-	QmpYs3GRv7SgIcWTAR+OTHfUy8gao2bx52JzRKVSXBvkzI8JC2Nad9Um9i5KkQlizJDkeX/F/2L
-	n0mV1U+kRCGepPTv2VrxD/BVMMDuP4bzmQanD7tjv6g==
-X-Gm-Gg: AY/fxX5a5b+BvsTUb5HXp5pH1t8AxEl6L7gYwTII8vGAkyH3FvYfkqHweRHvRx6yZZP
-	2KJLrTiu9J2UR1gkA6N98ne+lPv8qvBuqepTBg8Q9+UlKg4yAXKjnNZbsp12EgGvkUSn5+NLF/f
-	pFW2/+KEfcw/wvUHhkKAdFrp+RRT11tTu2NVUzXmDENhfmqRjfNkPfuFvwOAp2Fp6eARh9QWz+C
-	NuEhnk8juOx8vEGrEhB6eUbAZqi04tZUiVuDGQF3SuOZW2IQrVU5D0am8ulJamDI5Q1WL0KrBs+
-	+lCzDSofd7gs6So/XbEThaPB3dCHnIqaG8Eq5RZGwGLmSkeil6iwQ9U=
-X-Google-Smtp-Source: AGHT+IGaUMti/es8KDCK9VKF8Pq/ZGqb+Pn4kB7n8HEpQA0mof3jCeBYsxR3EZFKC9/bg55lrEWXaPLSWS2ilkC4UcA=
-X-Received: by 2002:a05:690e:13c3:b0:640:d255:2d6f with SMTP id
- 956f58d0204a3-64716bda139mr14249893d50.34.1768205658908; Mon, 12 Jan 2026
- 00:14:18 -0800 (PST)
+        bh=BOTnLPv4tv9bJjvux1j20Y+ExCg3MSBOD5unB3qoASs=;
+        b=OIDccs35v335hwvStJQ5Mjt3Jk+vOB5vtZak6N7M+JhAQ+y2YeMlD78NsO6McRO2qt
+         J8and7Z9Q66+ve7+bMcn+yR8Jaf/R0Y+G3kU38kth+aOSHOWVffg57emeKKn7APiebMP
+         yRqf5pIYnOSgvfem5bZmbwJTgbZF7i3zXUnwlnEPTgGKlnNWHI7VGKDz17BvYujCNnZi
+         sgMhoKeQSRKnnP2Y+4SjC0cEkiN2dEFuFeVtf+DsNw41q2XW/yRT2/G49AKvIPnBC9qA
+         pUjeP4O1Lrp0r+9vHYX6aQVfPt0L9zHSKq42zTUdl1dc9U5yEtjyCg9NEV1xtesQLIy7
+         s9Eg==
+X-Forwarded-Encrypted: i=1; AJvYcCXT4OmIBEj4f4937cS5L4DNN4q0mB/lsFkoisvyc9F2MWNv97drcL5DWrvj0LrAxcMgXy9dLaEVTA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwiVT4QI3+Z/nJ3yKfO6iEUlgGrV8fWQ4rczQm912khoGvyxAlx
+	zTG/5n6RykI8QeAWLvdgU+DvWJrDVVzNcpUmDlY8VdtYc42GsCk2yuiNhQAgscWIoagHBDGSyJl
+	SHkBJV59YYMJkO/2C2yg6efqegx+eWOP7COKRTD2W1Q==
+X-Gm-Gg: AY/fxX6L540Ha5U+r1sNhRjLsOHDJPPocMgB9byhmBUJU9NRGgQnVX0eD+lG7jmXG8r
+	mbZcvyJBpT2HI675iNLbLMap7KlfuV/IJlxiYO2yJftabeZIxInTrZ+EBbYuyVdc+4uLrsGclND
+	FSvujgyDI0uVNupeeDZbXnVOu9YlZwq2xFdoS4rK7XAV2Wdhsx0wN9RADTIt+/zv1/omsve9hod
+	S1GQzzj5te4niqoCCAN3pdEAsZa0mu5DUsho4GVFqfhM9TRWSvrWDIUKrDCIsHtwWLnV35JsGj+
+	cSD6uHfytk7w7kyUOxiFhGjnGTe9jtnWkcXSiD2/jAkt
+X-Google-Smtp-Source: AGHT+IHL6qC6Bkth83Jc0kDsLdGPlb1zjnY+NAdd3aSclQU4CUJsna2Gp1MfFiPTsIdJiiM4QkEp+AQp/YU/RgU4yqo=
+X-Received: by 2002:a05:690e:1917:b0:644:7ad3:6528 with SMTP id
+ 956f58d0204a3-6471679490amr11838822d50.41.1768208270556; Mon, 12 Jan 2026
+ 00:57:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -62,18 +62,17 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
- <20260110-k3-basic-dt-v4-10-d492f3a30ffa@riscstar.com> <aWIi9LFdqSF3c-FP@inochi.infowork>
- <20260110110502-GYB12783@gentoo.org>
-In-Reply-To: <20260110110502-GYB12783@gentoo.org>
+ <20260110-k3-basic-dt-v4-11-d492f3a30ffa@riscstar.com> <20260110095707-GYA12783@gentoo.org>
+In-Reply-To: <20260110095707-GYA12783@gentoo.org>
 From: Guodong Xu <guodong@riscstar.com>
-Date: Mon, 12 Jan 2026 16:14:06 +0800
-X-Gm-Features: AZwV_Qhr0dttuBvrLtxWYoEzTqFnHiF6Qe7y0CQjr_1X00MIdkxaUixcgPpB4IM
-Message-ID: <CAH1PCMbh4f1fcZ1sUWGtYoZCH_G1x626rb7YvoNTnKjfm9znXw@mail.gmail.com>
-Subject: Re: [PATCH v4 10/11] riscv: dts: spacemit: add initial device tree of
- SpacemiT K3 SoC
+Date: Mon, 12 Jan 2026 16:57:38 +0800
+X-Gm-Features: AZwV_QjrjPKzZ_O6yKHBkitCXrxqQZum-hZ1CkViiN7l5vhVdnYqXq_Ns-pXHZ0
+Message-ID: <CAH1PCMbXhELJZnUv11izJSqSuzWd0QgvdDKaGXmUefLuUx7-PQ@mail.gmail.com>
+Subject: Re: [PATCH v4 11/11] riscv: dts: spacemit: add SpacemiT K3 Pico-ITX
+ board device tree
 To: Yixun Lan <dlan@gentoo.org>
-Cc: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
 	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
 	Alexandre Ghiti <alex@ghiti.fr>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
 	Thomas Gleixner <tglx@linutronix.de>, Samuel Holland <samuel.holland@sifive.com>, 
@@ -87,68 +86,133 @@ Cc: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi, Yixun and Inochi
+Hi, Yixun
 
-On Sat, Jan 10, 2026 at 7:05=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
+On Sat, Jan 10, 2026 at 5:57=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
 >
 > Hi Guodong,
 >
-> On 18:00 Sat 10 Jan     , Inochi Amaoto wrote:
-> > On Sat, Jan 10, 2026 at 01:18:22PM +0800, Guodong Xu wrote:
-> > > SpacemiT K3 is equipped with 8 X100 cores, which are RVA23 compliant.
-> > > Add nodes of uarts, timer and interrupt-controllers.
-> > >
-> > > Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> > > ---
-> > > v4: Fix missing blank space after commas in compatible string.
-> > >     Add m-mode imsic and aplic node.
-> > >     Reorder properties in simsic, saplic, mimsic, and maplic nodes
-> > >      to match DTS coding style.
-> > > v3: Remove "supm" from the riscv,isa-extensions list.
-> > > v2: Remove aliases from k3.dtsi, they should be in board DTS.
-> > >     Updated riscv,isa-extensions with new extensions from the extensi=
-ons.yaml.
-> > > ---
-> > >  arch/riscv/boot/dts/spacemit/k3.dtsi | 590 +++++++++++++++++++++++++=
-++++++++++
-> > >  1 file changed, 590 insertions(+)
-> > >
-> > > diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/d=
-ts/spacemit/k3.dtsi
-> > > new file mode 100644
-> > > index 000000000000..a815f85cf5a6
-> > > --- /dev/null
-> > > +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> > > @@ -0,0 +1,590 @@
-> ...
-> > > +                   d-cache-sets =3D <256>;
-> > > +                   next-level-cache =3D <&l2_cache0>;
+> I have a minor comment for the subject, it's kind of little bit redundant=
+..
+> so, how about (also apply to patch 10):
+>
+> [PATCH v4 10/11] riscv: dts: spacemit: add initial support for K3 SoC
+> [PATCH v4 11/11] riscv: dts: spacemit: add K3 Pico-ITX board support
+
+Thanks for the review. Sure, I can do it that way.
+
+>
+> On 13:18 Sat 10 Jan     , Guodong Xu wrote:
+> > K3 Pico-ITX is a 2.5-inch single-board computer equipted with a Spacemi=
+T
+> > K3 SoC.
 > >
-> > > +                   mmu-type =3D "riscv,sv39";
+> > This minimal device tree enables booting into a serial console with UAR=
+T
+> > output.
 > >
-> > I think this should be riscv,sv48? IIRC K3 supports it.
-
-You are right that the underlying X100 IP core is capable of supporting
-both SV39 and SV48. However, not K3.
-
+> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > ---
+> > v4: No change.
+> > v3: No change.
+> > v2: Add aliases node in this board DT.
+> >     Update the memory node to reflect the hardware truth. Address
+> >      starts at 0x100000000 (4G) boundary.
+> > ---
+> >  arch/riscv/boot/dts/spacemit/Makefile        |  1 +
+> >  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 38 ++++++++++++++++++++=
+++++++++
+> >  2 files changed, 39 insertions(+)
 > >
-> I would second the idea here, if the underlying hardware support sv48,
-> there is no reason we should limit it in DTS, DT should reflect the actua=
-l
-> hardware.. if user still prefer to use sv39 for simplicity, a "no4lvl"
-> command line argument can be passed.. see
->  arch/riscv/mm/init.c +860 -> set_satp_mode()
+> > diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dt=
+s/spacemit/Makefile
+> > index 95889e7269d1..7e2b87702571 100644
+> > --- a/arch/riscv/boot/dts/spacemit/Makefile
+> > +++ b/arch/riscv/boot/dts/spacemit/Makefile
+> > @@ -4,3 +4,4 @@ dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k1-milkv-jupiter.dtb
+> >  dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k1-musepi-pro.dtb
+> >  dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k1-orangepi-r2s.dtb
+> >  dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k1-orangepi-rv2.dtb
+> > +dtb-$(CONFIG_ARCH_SPACEMIT) +=3D k3-pico-itx.dtb
+> > diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/=
+boot/dts/spacemit/k3-pico-itx.dts
+> > new file mode 100644
+> > index 000000000000..037ce757e5bc
+> > --- /dev/null
+> > +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> > @@ -0,0 +1,38 @@
+> > +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+> > +/*
+> > + * Copyright (c) 2025 SpacemiT (Hangzhou) Technology Co. Ltd
+> > + * Copyright (c) 2025 Guodong Xu <guodong@riscstar.com>
+> strictly, should update to cover current year - which is 2026 now
 
-I have double-checked with SpacemiT, according to SpacemiT, while the X100
-core itself supports both SV39 and SV48, when it was integrated into the K3
-SoC, it was specifically configured to support only SV39.
+Yes, that's a mistake. Happy New Year, 2026!
+I will fix that.
 
-In this case, the K3 SoC's MMU is configured for SV39 only, so mmu-type =3D
-"riscv,sv39" is the correct representation.
+>
+> > + */
+> > +
+> > +#include "k3.dtsi"
+> > +
+> > +/ {
+> > +     model =3D "SpacemiT K3 Pico-ITX";
+> > +     compatible =3D "spacemit,k3-pico-itx", "spacemit,k3";
+> > +
+> > +     aliases {
+> > +             serial0 =3D &uart0;
+> ..
+> > +             serial2 =3D &uart2;
+> > +             serial3 =3D &uart3;
+> > +             serial4 =3D &uart4;
+> > +             serial5 =3D &uart5;
+> > +             serial6 =3D &uart6;
+> > +             serial7 =3D &uart7;
+> > +             serial8 =3D &uart8;
+> > +             serial9 =3D &uart9;
+> > +             serial10 =3D &uart10;
+> I think we only add aliases for devices which actually enabled
+
+Sure. I see your point.
+
+There are different styles existing in the kernel dts. like sophgo, and the=
+ad.
+I checked th1520-lichee-pi-4a.dts, which has aliases for serial0-5, but
+only enables uart0 actually.
+
+However, for SpacemiT convention, and several others, I see a different sty=
+le.
+In k1 boards, both k1-milkv-jupiter.dts and k1-bananapi-f3.dts only have th=
+e
+serial0 alias, with only uart0 enabled.
+
+For SpacemiT K3 boards, to follow the convention, I will remove the unused
+aliases and fix that in my next version.
 
 Best regards,
 Guodong Xu
 
 >
+> > +     };
+> > +
+> > +     chosen {
+> > +             stdout-path =3D "serial0";
+> > +     };
+> > +
+> > +     memory@100000000 {
+> > +             device_type =3D "memory";
+> > +             reg =3D <0x1 0x00000000 0x4 0x00000000>;
+> > +     };
+> > +};
+> > +
+> > +&uart0 {
+> > +     status =3D "okay";
+> > +};
+> >
+> > --
+> > 2.43.0
+> >
+>
 > --
+>
 > Yixun Lan (dlan)
