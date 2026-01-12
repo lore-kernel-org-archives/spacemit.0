@@ -1,112 +1,154 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A49417B505;
-	Sun, 11 Jan 2026 22:11:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B84B672
+	for <spacemit@lists.linux.dev>; Mon, 12 Jan 2026 01:51:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768169493; cv=none; b=D4Jwy7fmV4ZmI0ZepCVO1SCYfXHvCAdW+JOuKayVw+uy6mmcB15L0E9ZNNBDiu7ebB3AcT029gWOp4xdaOxCjBQBWzpSfhE1PnDD8B35/lfKHDYCL3IUvBnjAtVS214T/2DvNWWc/GmnKM7mwi/TryzGCekoK1XwNTpQ6wFaCIE=
+	t=1768182697; cv=none; b=N87GYUqsM+XVi5IZD6LR3dbANUoFiUDlYjhsKn7DLNmzzK1CS9FfuNHqc5OtAsckZMSzNXHUWPUEezh3U61entYl9c/cvaRnm829YAeTkERyui83zQ/ffuX/TbJ8/Uzfh8oo41BC3w5Qu4NV0Y7yV3jan/fezmoqzaGVw4p9n1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768169493; c=relaxed/simple;
-	bh=fyuFy3gDiyxIQK2swhXAdbyrHk8yp6Tcd8rDBBoUIps=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NkPfGbJjm18AEtq9DcONF0Mh99m0/QkbnuFBkeEYFvrc5PDhXHu6nQDcS5tiwgftrbwo8sOPpxNbszdx29GSq32nRXqjE7vCLmlKI3cp3o6noOFmL4LGeGVY9Y1Sq6Vm9iUNhzOLrZKyTj9AgvpLP+l0qEKbaIX51ebITuPTG6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=iWtWuLcO; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1768182697; c=relaxed/simple;
+	bh=ojSmuF3bZThAalVPD7IUaTZ+sCk8cbn5RsgGUwN9KTc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=sCrur1ucQ0t23W5vWrvbjOQi3Ghkw7eq0hZ3YsxIwuEtyNrGCKMPuetypKb+UkPhZ+PM71b5bh95XOIAFVy2c6QddICzmtjNLiT/Lty3DbqSS5mrb6Ppp46Se7P2Ksz1tSMc1W7cfFtYH4ivLQ4yoShmN7gb3Ji+QcJzkdKxH/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ljS1iWNy; arc=none smtp.client-ip=54.204.34.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="iWtWuLcO"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=gPstPsInb9Spla61rJxQEHUOiBzQa2NcgplZETRWFrM=; b=iWtWuLcOj/HdKu593I7VEfL4Kc
-	qXuY3yroBM1deApaPnDH9YLD41koVgSi6aVUG19kRu9zcN6d9ri5fKwOXvbQ+JDby4FOy9tiqbcp2
-	a00oDAsf6GceFmU2BoPOA4ClrYAnRwQXiznIt+drJ1kCyDnSc05cIQSz4DDnKT99Y6XkLR3/ND8u2
-	eWYqeKPqudtWrpK6l0zJTHE4K6HB6fvaHbS3Q+PjkrbRDZty7H3tN5DAFQ52sAFuxuhHayySHpAC6
-	VZ7mA6xRjBpeiFf7HMoM9UY6Ws8KuJd9mylKani0fQPsqpqp6DNk4nWcHXYstAg9o0EXIEYlcGqTh
-	d+uHTAdw==;
-Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
-	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vf3eR-00000000WRQ-3uhj;
-	Sun, 11 Jan 2026 23:11:11 +0100
-Date: Sun, 11 Jan 2026 23:11:10 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Ze Huang <huang.ze@linux.dev>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@gentoo.org>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] riscv: dts: spacemit: Add USB 3.0 support for K1
-Message-ID: <aWQf_jojl-dzw6LK@aurel32.net>
-Mail-Followup-To: Ze Huang <huang.ze@linux.dev>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@gentoo.org>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-References: <20260111-k1-usb3dts-v2-v3-0-f5ebd546e904@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ljS1iWNy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1768182609;
+	bh=vXgizy4wIkS+ntIQMrsglm/OU4vxbvEgmvJk8CbngJo=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=ljS1iWNyyDP7Izbtve5uuShlNoMFo+GAVtivObDIdHgOrEB+IDuMnhbK4tzroiNeQ
+	 M4fyUn6pyPDqBsCx1m8dQOmVO/DsVSxNgb7fRCUSJvcMj9pkidm+DyFkbCWEIVQM6U
+	 ayzcO9Z/nz06f+i5CcC0osniPle4r6NqMnNvlArU=
+X-QQ-mid: zesmtpgz7t1768182601td230d057
+X-QQ-Originating-IP: d/IJDIFXP7NV4/kPf6kV6P2D6IG5d8UiUn9KgZOiZR8=
+Received: from = ( [183.48.247.110])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 12 Jan 2026 09:49:59 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 52625910496199400
+EX-QQ-RecipientCnt: 13
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260111-k1-usb3dts-v2-v3-0-f5ebd546e904@linux.dev>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 12 Jan 2026 09:49:59 +0800
+Message-Id: <DFM8F4B9RK3A.1RG65AV3UCWC6@linux.spacemit.com>
+Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Lee Jones"
+ <lee@kernel.org>, "Yixun Lan" <dlan@gentoo.org>, "Andi Shyti"
+ <andi.shyti@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>, "Mark
+ Brown" <broonie@kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-i2c@vger.kernel.org>, <linux-rtc@vger.kernel.org>
+Subject: Re: [PATCH v4 3/3] rtc: spacemit: default module when
+ MFD_SPACEMIT_P1 is enabled
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Alex Elder" <elder@riscstar.com>, "Alexandre Belloni"
+ <alexandre.belloni@bootlin.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20251225-p1-kconfig-fix-v4-0-44b6728117c1@linux.spacemit.com>
+ <20251225-p1-kconfig-fix-v4-3-44b6728117c1@linux.spacemit.com>
+ <202512251653368b33c7e7@mail.local>
+ <4c7c0f69-4732-4f62-970a-2a9273b3b5c7@riscstar.com>
+ <20251230005142d1bfc6f7@mail.local>
+ <6ca28183-1687-4ddc-8b3c-5e5be4255561@riscstar.com>
+ <20260109223627b566d2b0@mail.local>
+ <a383dbc8-5d14-4654-933d-5dfa73a23b12@riscstar.com>
+In-Reply-To: <a383dbc8-5d14-4654-933d-5dfa73a23b12@riscstar.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: McnXz9EssJMzD/tsDuf0SJgGVRu2/Sr5Aev4csbGYmINtatJRn/yTKTL
+	cNkXWVDoFueM4TVfh6PAh9T6B7H2BcO/zhEpGHhDcfaE1XAhW0FDBTh13hBCjvxs+t5+KAe
+	eghkzXOqqygdwRlmrrv0IoxuB8PCCjG/8s2PytbvUURTSgZxKy4+ZbK+3UnfZ/FuFn/Bc9s
+	mquaP6DzSwUmIyT50OlBMd2+AY9kMbrUVl39DrV18HyppEHDeo2tkb8lCiCmNDO/KhzVLXg
+	tLb6lqDRSHJLcESE7kfdMqy9tdICtzSdbUEfanF1fLxCf9cQEeqLkDSHYiKeRIoR2zPWUYa
+	N+nW946yuS9j20kkzFJ1PbMzRWt+cjF7X5ZhKwLgh1qei9lD7N+JfiBYbe5oL2GXnBBpZgN
+	bJQGUDlviHccrlwUGEl8UfhQeKPeMXMic6rUXND3gQWg+DYsmA/PwesKJ5Gs28jLGApipDq
+	Sgky0qOtYPX8n6zPHJIEPfdLLUjQOxWEvl9qYgwqm7SdGZaS2yuOKMwv7ttz5e8i4hvh5mL
+	tFpiHt0fO3CRNVbxWVK2ipBcwWR0n0MBwwe34zVS+8YyG9So2trXap9x0VOC/Gdck4SbMIF
+	EEyWF/I3XwFDJaq8Fst4EIdwGGNPF18e7b/T3XaqP2SDW6wgIqGSz5pkhfj/a9fFc8xfgDV
+	R16I2uTxtWjAq+2grfpo3NUWV8JKwSnRGd9b53A6JAKarIZP3gf1jYUkRD3AgTbfhuv3/i3
+	QNTnyLOdN6QHYabGhjl9B8htdsaToruu2dw+FUtyAXJedW/iVbjD0q3N4nPRtSeLlWJql3S
+	QcJQorXvyFcnM87Qn6HoinDI6+zCLLE26YjvWB9jCtLhTD69KpiB6PN3HWaxEVmFXbCk1na
+	3bwCq2vtdLkfDwc6v6WJNNthmXlWND9GA42FUK/8tXYfW7UTbyXoiuzDwHFt9tOeOlIWccR
+	0q/5qztWVjHZIJ0wdpwbWaN/UZgUz1zFArlZ9mTvuzPSQ3rOS7Y9qsrpcVy/DLoZs2TcQog
+	tt9ArqhXhN2PFyhNOREtOhapGnp4lR3eQjmObhF3AvYBkwLbU5B0mrK0QFRL4=
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+X-QQ-RECHKSPAM: 0
 
-On 2026-01-11 14:41, Ze Huang wrote:
-> This patch series enables the DWC3 USB 3.0 host controller on the
-> Spacemit K1 SoC and enables it for the Banana Pi F3 board.
-> 
-> For testing, the following kernel configurations should be enabled:
-> 
-> CONFIG_PHY_SPACEMIT_K1_USB2=y
-> CONFIG_PHY_SPACEMIT_K1_PCIE=y
-> CONFIG_USB_DWC3=y
-> CONFIG_USB_ONBOARD_DEV=y
-> 
-> This series is based on the spacemit k1/for-next branch.
-> 
-> Link: https://github.com/spacemit-com/linux
-> 
-> Signed-off-by: Ze Huang <huang.ze@linux.dev>
-> ---
-> Changes in v3:
-> - rename vbus and hub regulator to match schematics
-> - reorder node reference to keep alphabet order
-> - drop regulator-always-on in usb hub regulator node
-> - drop unmanaged vbus-supply in usb host node
-> - Link to v2: https://lore.kernel.org/r/20260107-k1-usb3dts-v2-v2-0-e659b0f8fe1a@linux.dev
-> 
-> Changes in v2:
-> - rebased on spacemit k1/for-next
-> - Link to v1: https://lore.kernel.org/all/20251101-k1-usb3dts-v1-0-dd2660e5740b@linux.dev/
-> 
-> ---
-> Ze Huang (3):
->       riscv: dts: spacemit: Add USB2 PHY node for K1
->       riscv: dts: spacemit: Add DWC3 USB 3.0 controller node for K1
->       riscv: dts: spacemit: Enable USB3.0 on BananaPi-F3
-> 
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 46 +++++++++++++++++++++++++
->  arch/riscv/boot/dts/spacemit/k1.dtsi            | 32 +++++++++++++++++
->  2 files changed, 78 insertions(+)
+On Mon Jan 12, 2026 at 3:55 AM CST, Alex Elder wrote:
+> On 1/9/26 4:36 PM, Alexandre Belloni wrote:
+>>> The purpose is to make the driver a module (not built-in)
+>>> when "defconfig" is used (without the need for any Kconfig
+>>> fragments to unselect things).
+>>>
+>>>
+>>> In arch/riscv/configs/defconfig, we have this:
+>>>      CONFIG_ARCH_SPACEMIT=3Dy
+>>>
+>>> In drivers/mfd/Kconfig b/drivers/mfd/Kconfig, we have this
+>>> (added by patch 2 in this series):
+>>>      config MFD_SPACEMIT_P1
+>>> 	default m if ARCH_SPACEMIT
+>>>
+>>> So when using defconfig (alone), MFD_SPACEMIT_P1 is set to m,
+>>> to benefit non-SpacemiT RISC-V platforms.
+>>>
+>>> This patch is trying to do the same thing for the RTC,
+>>> i.e. having RTC_DRV_SPACEMIT_P1 be defined as a module
+>>> by default.
+>>>
+>>> I think you understand.
+>> I'm sorry, I must be dumb but I don't understand. The current behaviour
+>
+> I think I'm the dumb one.  I think I finally understand your
+> point.
+>
+>> is that when MFD_SPACEMIT_P1 is m, then the default value for
+>> RTC_DRV_SPACEMIT_P1 will be m. Since patch 2 makes it exactly that way
+>> (MFD_SPACEMIT_P set to m), I don't get why it is necessary to mess with
+>> the default of RTC_DRV_SPACEMIT_P1.
+>
+> Your point is that patch has no real effect, at least not
+> on the scenario I was talking about.
+>
+> I.e., I was saying this mattered for using defconfig alone.
+> But, as you point out, using defconfig alone gives us:
+>
+>    ARCH_SPACMIT=3Dy	(in defconfig)
+>    MFD_SPACEMIT_P1=3Dm	(from patch 2)
+>
+> And then, *without* this patch:
+>    RTC_DRV_SPACEMIT_P1=3DMFD_SPACEMIT_P1
+> meaning
+>    RTC_DRV_SPACEMIT_P1=3Dm
+>
+> And therefore there's no need for this patch to set the
+> default to m rather than MFD_SPACEMIT_P1.
+>
+Thanks Alex and Alexandre for the clarification. You're absolutely right -=
+=20
+the patch is indeed redundant since RTC_DRV_SPACEMIT_P1 already inherits=20
+the correct default value (m) through its dependency on MFD_SPACEMIT_P1.
 
-Thanks for this new version. The whole series is:
+I'll drop this patch in the next version and review the rest of the series
+for similar unnecessary default overrides.
 
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+                                          - Troy
+>
+>
+>> The current default behaviour of RTC_DRV_SPACEMIT_P1 seems to be the
+>> correct one and the proper fix is then patch 2.
+>
+> Yes, now I understand.  I'm sorry about my confusion.
+>
+> 					-Alex
 
--- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
