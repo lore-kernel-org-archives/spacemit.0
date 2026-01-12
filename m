@@ -1,105 +1,70 @@
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AED522FE0A
-	for <spacemit@lists.linux.dev>; Mon, 12 Jan 2026 01:53:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D7A145FE0
+	for <spacemit@lists.linux.dev>; Mon, 12 Jan 2026 02:04:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768182799; cv=none; b=kFuyouU2cIMTPKAjvbgNuErOMF9vJ1jmDAeJ3qSqUSxpmSuFJomWH6oy4Gzehe+mzyZPu1ARXkhDnImSx/DxWoAsyWfp8ZwFn5p5Te5iTcwebJfXAMwCvmt3dJGErNh28WHJ5KA5C9o24PBAqqdSJQcEQdgPcUgBNIevhTplYYw=
+	t=1768183451; cv=none; b=AIRDFSAisTClH7p7mHmBdqSeOaYWgjJgPVzKQRZF9WEMbkWEMNpAuIJbYX3uc1KrP3RkXPelyM2LdY71LTrDQcFyHT0l7o13cDnS+OkuKdk9j7LyPk6nvNJE+HFju2HEseU+HZUMpIYb3YxSi+H5KfIKDPsf0DAC0BOZc97XOyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768182799; c=relaxed/simple;
-	bh=R+GMRo3QUZPJ9JA2NR/BUVoI1i0BCUZeh7qUo9qKP5Y=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=uXDjLCPizgTHcLWGdCi6167JBl79NkcSyNnr/F/DTzlfLmep1IvaWA8erOYTpcwy5p91ekOWD3P0NEh4xVabZaotWj0bZJEDGkC0KA8XTIN2E2mzUARBviDWJ0XT/Kno643nHo6xK/LQFgGHSTkYLHlX+v2cIp5eUQHma+WTDdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ZoBjGaIJ; arc=none smtp.client-ip=15.184.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ZoBjGaIJ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1768182728;
-	bh=2V0YGG8KS5edIV8RrxQAVz+N/+s7k9aPRaIemnpjyes=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=ZoBjGaIJlwVYNZVS5E72MHODV60jF+C5fUweMJs0SuXpoagXD/mw3UZJB2rYC5RhU
-	 DJcsd9R6N02Khe0cv9fnsn44flyvJhK0ib/4/a+5tVt7FNteVRMZY4BtVlG5tx/k2s
-	 9LMraGQ/1aTgQb5TNqYpFfSkSAW8bCm2AQ/oR90c=
-X-QQ-mid: zesmtpgz6t1768182720t29d70f31
-X-QQ-Originating-IP: NgU/OvI8KlXz8Hx7N7o9ZcfY708cpKw5XNTQ/HHR3QU=
-Received: from = ( [183.48.247.110])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 12 Jan 2026 09:51:58 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5413789781877142214
-EX-QQ-RecipientCnt: 13
+	s=arc-20240116; t=1768183451; c=relaxed/simple;
+	bh=nP19cY9BLe+A+fwC7uSB2Gu1dLYRgTIoa9a2IkM2Fis=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dMX3ri9RrtYS+vlBOxue420cEGb8LUoAg0en8Lv8Vjml4tnGv4fG9lQFQ9TXgJTKUZwCGWsyaw/go0ml2BNIVHMVGUWX0g9jyLWA97yDl46q/lhrZsMGW+bKGscgCS1jho/Q+b0JCi1mqQPanKx4K/Zcfx4HZkmWwY/Sq90yMBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id BD2EE340FDB;
+	Mon, 12 Jan 2026 02:04:08 +0000 (UTC)
+Date: Mon, 12 Jan 2026 10:03:59 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Ze Huang <huang.ze@linux.dev>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Aurelien Jarno <aurelien@aurel32.net>
+Subject: Re: [PATCH v3 0/3] riscv: dts: spacemit: Add USB 3.0 support for K1
+Message-ID: <20260112020359-GYA19769@gentoo.org>
+References: <20260111-k1-usb3dts-v2-v3-0-f5ebd546e904@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 12 Jan 2026 09:51:58 +0800
-Message-Id: <DFM8GN2AWH1A.1FWVNVF5FLDSH@linux.spacemit.com>
-Cc: "Lee Jones" <lee@kernel.org>, "Yixun Lan" <dlan@gentoo.org>, "Alex
- Elder" <elder@riscstar.com>, "Andi Shyti" <andi.shyti@kernel.org>, "Liam
- Girdwood" <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-i2c@vger.kernel.org>,
- <linux-rtc@vger.kernel.org>
-Subject: Re: [PATCH v5 1/3] regulator: spacemit: MFD_SPACEMIT_P1 as
- dependencies
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Alexandre Belloni" <alexandre.belloni@bootlin.com>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260108-p1-kconfig-fix-v5-0-6fe19f460269@linux.spacemit.com>
- <20260108-p1-kconfig-fix-v5-1-6fe19f460269@linux.spacemit.com>
- <20260109224147267169ba@mail.local>
-In-Reply-To: <20260109224147267169ba@mail.local>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MYi332yUMvzJVTjIZZ6KBo1XNwwLoJ/FzOEarEZg0sPadd7m+1+9d5AD
-	XoRNSaUzYFK9+eWt0hrrucOUdiHcJ/4YKl/pqQ0EOLUXeibCaeFBRPZS9hJ2EfDVusspiiL
-	g7y4wPXRiGoO1WbTfcfys8FPD3BnRzbOQhbto8cnnI5CbAYl0RjS9yGEgu1aMvdrs6cm98/
-	oui71iMGtgn+0BUVRWBKDzhWHuMth8J7XgwK6DP5Kc20NM2aDvYrJQ/yVXO3vz769pMBQ2J
-	4bPExZps/uvl2++xNLEELA85FQrDeSRLLVcLBYzbh4D1yvS87vV+ssUPZPKnyxjoUsX9H46
-	vrpGGw40zYRuiykFxg0WGAmWLUgF+mFSUcsjwlWhu7i25TKEFmMQYiHcR94gjwVBMQBr7WT
-	czCLMywxNtoXRGtSAonIRN8iYM50ZjDj5FKgidsRHuO57BPrdOHJJzTdkOCevcQ7gvg/Wl2
-	Jk/lpV5iSeRdlL06iB383CXW7bMyf6aUx8pY3p5hmkYIBNG4kC9Swa2w/ADRADQRFVS5oj/
-	PDe7PtQwUOoB/h1ay8lKbiPES0co9uprfF2Z4aya6STCyrppUc7zmJHtv47zsPDpJHeHGop
-	H9i3sJk020k9Do26RYpeCszXwWd8gDIg0zxeQAdi+3HMQkrzdf0502FhPSewT55Ba0ss1HR
-	rQ+ri+/w2qdPP/mIX9efj8HwyIek5zpPpfcjrH3vZF+JzKtnNC2lf8ZPBSLVcB7Fm3YuoSA
-	7LDHHNODz7zJugC0bYxJQSBZzc+SZgJpWAeu0LHfbNUiYsosnRQEyXWv0rcL9XVPuKPxpg0
-	OKVOFQQXrZB8jzp14su2nuASHVSV6v83I3KkU7P+C3Tyd6z++6wcFXpTpwFlKb/Y3hr/FzI
-	YtbuGAmJwK4Jalyip0jMpbyuC5IJ0uaOCsj6Nnir/GcNm/wq1MplO7r3xhOmukx0n/USv4+
-	LSbeq4lFv8I4wolzpT6iHrb+dmddnS7iM4y3MbXgYzaDDEYiHm6yJS7LwXvq8/bL3abIqu4
-	UPJqdGIbCBiLWoxmBHqM1W5ba6Dc7viOKXz3LussXdV+c2CG58avjRxJmHYWEdZk63RapnU
-	kPuZab0l0eR5Ok0TW5ZrWg=
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260111-k1-usb3dts-v2-v3-0-f5ebd546e904@linux.dev>
 
-On Sat Jan 10, 2026 at 6:41 AM CST, Alexandre Belloni wrote:
-> On 08/01/2026 16:38:54+0800, Troy Mitchell wrote:
->> diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
->> index d2335276cce5ffbd500bbaf251d1761a9116aee9..b51888a9a78f399a6af3294f=
-c19f60792576332c 100644
->> --- a/drivers/regulator/Kconfig
->> +++ b/drivers/regulator/Kconfig
->> @@ -1496,9 +1496,8 @@ config REGULATOR_SLG51000
->>  config REGULATOR_SPACEMIT_P1
->>  	tristate "SpacemiT P1 regulators"
->>  	depends on ARCH_SPACEMIT || COMPILE_TEST
->> -	depends on I2C
->> -	select MFD_SPACEMIT_P1
->> -	default ARCH_SPACEMIT
->> +	depends on MFD_SPACEMIT_P1
->> +	default m if MFD_SPACEMIT_P1
->
-> default MFD_SPACEMIT_P1 is certainly enough here.
-Yes, Thanks!
-I'll use it in the next version.
+Hi Ze,
 
-                    - Troy
+On 14:41 Sun 11 Jan     , Ze Huang wrote:
+> This patch series enables the DWC3 USB 3.0 host controller on the
+> Spacemit K1 SoC and enables it for the Banana Pi F3 board.
+> 
+> For testing, the following kernel configurations should be enabled:
+> 
+> CONFIG_PHY_SPACEMIT_K1_USB2=y
+> CONFIG_PHY_SPACEMIT_K1_PCIE=y
+> CONFIG_USB_DWC3=y
+> CONFIG_USB_ONBOARD_DEV=y
+> 
+> This series is based on the spacemit k1/for-next branch.
+> 
+> Link: https://github.com/spacemit-com/linux
+> 
+> Signed-off-by: Ze Huang <huang.ze@linux.dev>
+looks good to me
 
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
+
+-- 
+Yixun Lan (dlan)
