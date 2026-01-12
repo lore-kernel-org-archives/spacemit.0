@@ -1,64 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB23D329E76;
-	Mon, 12 Jan 2026 09:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B1B341072;
+	Mon, 12 Jan 2026 21:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768210012; cv=none; b=VOq2sRpxTEJ46YXP30ogAiNj2UD19N1oMLcdusCgsJd8zZnAZDcJ0I0ziFiDMc/ITWgOrzcCI7443wwlbr8h1/cQ5KM6h8h8pVTKkSL+r779QF/Brx+X5Fi3FzTBgU8nUIMNJHub3Xo+dKGM7FJpoTOx+24DYA4Tpp+jH1TdZ7A=
+	t=1768253830; cv=none; b=YgYEP2CrpFjTqPzWYGj7975A/qwbuHHZVcJr/zT9CJ6szRhhvWSOwFujIIwqsiQdwVuCgyeqElkYt0acyEXlMY0dKMWrezwcNhf0yVdweTK08XBVMHm6j+/1XcXiDmMk7/NuXkDLi8EuSlEG8hW3b0QJj1fBDwwC03iMtuccoF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768210012; c=relaxed/simple;
-	bh=jBazrOCw38rW6h1m2e0Cft5KuiYhVaHYsHaQV1DL5NY=;
+	s=arc-20240116; t=1768253830; c=relaxed/simple;
+	bh=KLfsd+rAB5DQE1cOebZTBbLwOW3l7JnPI5gfbjcl0gk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E699JfeGeaccs7e/X58BX/5XAt09jyv1q/kOHUsisqomYAB0AcQ4wQdqdzQxJM2TugSUQRYuooZMQqj0G7Hev/vGLuM3aRhteMuWjM5opmr/uNJiF/pxaW+SUAOR3V+R3REVDqlRwlhtO8n9gvT8OufWit0S8gLXm1Q/9vmN6gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NW1IWrUk; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=QGiQdgT6HYgw8DQQHWpR+Z70krzBuTuSxFo8XKyGH1DOCzYeEvRVd5gmmcnI/cbjTduk3yxt9i3rrI/yeqj/GyYEn+Z4Nq/DNJPSdLZmjyl9QfBBeE3din6WLKAflRNbaZnHJgLseMbJ7ljXPh1dm+mJL2IXpJfmzEDCcY5EcmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fsaoy1gL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NW1IWrUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7924C116D0;
-	Mon, 12 Jan 2026 09:26:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fsaoy1gL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC26CC116D0;
+	Mon, 12 Jan 2026 21:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768210012;
-	bh=jBazrOCw38rW6h1m2e0Cft5KuiYhVaHYsHaQV1DL5NY=;
+	s=k20201202; t=1768253830;
+	bh=KLfsd+rAB5DQE1cOebZTBbLwOW3l7JnPI5gfbjcl0gk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NW1IWrUkmt3jwikhdyS4KdHgsvj+TX8VCgpkBOBQfmXyGcdnaCtoYboAiesaeHkc7
-	 K4HycwM1hbCub5IcVC/TSiNK7FROs9mBiqrfANzJY9SYWFeaAD0r30x/Y53/8UVNH0
-	 4/ek5l2zIcTIOdjjKKAsZgnow2S7V7nxeXIMXRJ02Pdti29MP3+ITuShMXNADJwnqv
-	 POQTH/uO1MT9PIvMyN49sUxq/gCDkA5J3IjDHOfpBpCZ/BHFe/IgNLJMpeA7ilOv0g
-	 kauja+EtmHhnITd1Z8Bvr71W63h/U25o8mhhn3ecztSDfdfmiRKz7Hg2nDMWgsNdJf
-	 yi2MgVySehwBw==
-Date: Mon, 12 Jan 2026 10:26:49 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Yixun Lan <dlan@gentoo.org>
-Cc: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Guodong Xu <guodong@riscstar.com>, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: pinctrl: spacemit: k3: fix drive-strength
- doc
-Message-ID: <20260112-sloppy-careful-lobster-ca42cd@quoll>
-References: <20260110-k3-pinctrl-io-doc-fix-v1-1-7872fe6efb80@gentoo.org>
+	b=fsaoy1gLa2LZFuoH3Fl5IzK774msMnPQb6ililce51w+6u1YYKJsto4Z1SW9YeJGZ
+	 HT+V/71cEkwT1Qk2JUuTvDH7QCuDQjrpGl8IRd3kIuVOI1Nw9LEyX7pqJVetXJoCkg
+	 +y/kA2edgrQatOWosEr30WM5N2aI0lLvAi6zVzuVUlBxFchdjeHSDjj5D/Oa+GmCCn
+	 BXcLhidS4i+GrkTdNy64EVvPk5DVYgCUuMzEBfpxH6XLXMO6K+S8jTTSoac8FiO3ri
+	 OMYB9hZIP7x+rOvJSoSksNFN4+I83BtEHzj59mTYd0z+00FqFBD4Rxm+ZgedZV3rW/
+	 KJXSTS9WSUxLg==
+Date: Mon, 12 Jan 2026 21:37:02 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@gentoo.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Anup Patel <anup@brainfault.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Heinrich Schuchardt <xypron.glpk@gmx.de>,
+	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
+	Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-serial@vger.kernel.org
+Subject: Re: [PATCH v4 05/11] dt-bindings: riscv: spacemit: add K3 and
+ Pico-ITX board bindings
+Message-ID: <20260112-silica-unarmored-6841bb422018@spud>
+References: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
+ <20260110-k3-basic-dt-v4-5-d492f3a30ffa@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Q+tNi72KIO0oXHDo"
 Content-Disposition: inline
-In-Reply-To: <20260110-k3-pinctrl-io-doc-fix-v1-1-7872fe6efb80@gentoo.org>
-
-On Sat, Jan 10, 2026 at 08:20:59PM +0800, Yixun Lan wrote:
-> Fix a typo in the documentation, it should be the 3.3V drive strength table.
-
-This needs wrapping.
-
-Please wrap commit message according to Linux coding style / submission
-process (neither too early nor over the limit):
-https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+In-Reply-To: <20260110-k3-basic-dt-v4-5-d492f3a30ffa@riscstar.com>
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+--Q+tNi72KIO0oXHDo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Best regards,
-Krzysztof
+On Sat, Jan 10, 2026 at 01:18:17PM +0800, Guodong Xu wrote:
+> Add DT binding documentation for the SpacemiT K3 SoC and the board Pico-I=
+TX
+> which is a 2.5-inch single-board computer.
+>=20
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
 
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+
+--Q+tNi72KIO0oXHDo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaWVpeQAKCRB4tDGHoIJi
+0kl2AP98pMkYuAMKepzV7dfRrNTcYkFAC8J93oGWZzOd2s4UHQEAq6nkowI0ND4J
+vCtzUhTNqKUDK0Oa5Hy+1oMYWd3CqQI=
+=5I5s
+-----END PGP SIGNATURE-----
+
+--Q+tNi72KIO0oXHDo--
