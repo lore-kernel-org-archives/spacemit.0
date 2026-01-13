@@ -1,81 +1,89 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3ED2EB859;
-	Tue, 13 Jan 2026 07:53:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E618438FEE3;
+	Tue, 13 Jan 2026 12:42:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768290828; cv=none; b=D3OBEXF4GPk9iEJf3y4t+EINV2ReEjyU9Uilmo+LmnI5jpFi/9CW6xIeNGaaoand1iP4o43OvmuAn/YRJxrEk6tMQ9+o6S4zt+UZYGlqHpbTh865mwRpPOL3kWeyvuNaRjjXKVQCGspWEi/mYWVkbHw+PWvwPttKY+mGS+ti91k=
+	t=1768308167; cv=none; b=ocm/iuBMpWBfYa6hGgkRuUZIigAae1BkzGgkkj9OkjLLJKOv64otKdl7VyCbItdY6zwUUAfHk7LXEnrUWT/OIawfpm9qXQR4UwtXglSYbhOr8vHRsM2M/np9hwkVG/taTwS0hQ34jumUWQDFbs9TzxDPdE1/F7xRVbVqJRItcVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768290828; c=relaxed/simple;
-	bh=h5+vouM/Jp0/qproZWkjY885M2rm4+ktQAA3Wl8iWbA=;
+	s=arc-20240116; t=1768308167; c=relaxed/simple;
+	bh=P2uVOyvO0aRD4x+AWbtaIRkMuZiJS26sqB6OLBNwyiU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wf4uTqxaIj36YGag0+iXKzfx/Bg4ScuyrzgIdOfNQ5u6POrUbeyn3GTId16B2OAwPjQ0Yn3KDKcGH9uUw3+S0gpVhJj8haeilDdMnlOc5lqr8yc0KTOJcuuZhbYZQUKayACHNusExXBxvDVOIkI5wyeVubU856S8750q0QmKuaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 3969B340E6C;
-	Tue, 13 Jan 2026 07:53:43 +0000 (UTC)
-Date: Tue, 13 Jan 2026 15:53:39 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Junhui Liu <junhui.liu@pigmoral.tech>, linux-doc@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 2/2] riscv: dts: Add "b" ISA extension to existing
- devicetrees
-Message-ID: <20260113075339-GYA25466@gentoo.org>
-References: <20260113-adding-b-dtsi-v1-0-22d6e55d19df@riscstar.com>
- <20260113-adding-b-dtsi-v1-2-22d6e55d19df@riscstar.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=HsqZLi1PDPnFakNekFV15TUhZX8o1JhmRtDwZs9G0zvLKgAnMpW6WsCXk/CbuODReESSfQJoP3RRve1nBgxErIlJ3p1QgxwAJ8VL0iutR2DIm7oE0hGL5Wp/OWu0dL/neJZyW4v+ot0oFiJmeIzURe/kuDLfRF5ydokXiQxWvX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZnIVFfJw; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZnIVFfJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460D0C116C6;
+	Tue, 13 Jan 2026 12:42:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768308166;
+	bh=P2uVOyvO0aRD4x+AWbtaIRkMuZiJS26sqB6OLBNwyiU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZnIVFfJwKm6rxZumFVPVq1zTue8z1VtgFnbUgg2XbDd49RMaa2Z6KjHDZi8nXSp4g
+	 kfVmKo4xo9sbtlHDtg7L6RRdDJHVfrOEUTNwuV8iEZz5mYpuv/WidxtUCWt/P4bbmx
+	 ZHxAJiyx9ShQJ3Ujs4OWCMXyGaZQqNV5ecyVAODAanZUDLr2ByhsrPsNYBUmPqauld
+	 vFsWskQcaWrWPfippVT8t4mSDcwMPaLue3lrLcWXs7mZkDaPp5RF5MBRy69FbXVZl/
+	 Qh0q6Gfz8XYf5Am1ah08RfRepEx0wnfkIysMMXovx2N6qZ93wpHpxSWLVDYVmkqxyr
+	 Fxz7wAlc5s6jA==
+Date: Tue, 13 Jan 2026 12:42:41 +0000
+From: Lee Jones <lee@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-i2c@vger.kernel.org, linux-rtc@vger.kernel.org
+Subject: Re: [PATCH v5 2/3] mfd: simple-mfd-i2c: add default value
+Message-ID: <20260113124241.GB2842980@google.com>
+References: <20260108-p1-kconfig-fix-v5-0-6fe19f460269@linux.spacemit.com>
+ <20260108-p1-kconfig-fix-v5-2-6fe19f460269@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260113-adding-b-dtsi-v1-2-22d6e55d19df@riscstar.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260108-p1-kconfig-fix-v5-2-6fe19f460269@linux.spacemit.com>
 
-Hi Guodong,
+On Thu, 08 Jan 2026, Troy Mitchell wrote:
 
-
-On 15:45 Tue 13 Jan     , Guodong Xu wrote:
-> "b" is ratified (Apr/2024) much later than its components zba/zbb/zbs
-> (Jun/2021). With "b" added into riscv/extensions.yaml, a dependency
-> checking rule is now enforced, which requires that when zba, zbb, and zbs
-> are all specified, "b" must be added as well. Failing to do this will
-> cause dtbs_check schema check warnings.
+> The default value of the P1 sub-device depends on the value
+> of P1, so P1 should have a default value here.
 > 
-> According to uabi.rst, as a single-letter extension, "b" should be added
-> after "c" in canonical order.
-> 
-> Update existing devicetree files to conform to this rule. Line balancing
-> is performed where needed to improve readability.
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> Acked-by: Alex Elder <elder@riscstar.com>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 > ---
->  arch/riscv/boot/dts/anlogic/dr1v90.dtsi     |   5 +-
->  arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi | 256 ++++++++++++++--------------
->  arch/riscv/boot/dts/spacemit/k1.dtsi        |  32 ++--
->  3 files changed, 147 insertions(+), 146 deletions(-)
-please have separated patch for different SoCs, so they can go via
-their own SoC tree.. thanks
+> Change log in v5:
+> - nothing
+> - Link to v4: https://lore.kernel.org/all/20251225-p1-kconfig-fix-v4-2-44b6728117c1@linux.spacemit.com/
+> 
+> Change log in v4:
+> - default m if ARCH_SPACEMIT instead of default ARCH_SPACEMIT
+> - Link to v3: https://lore.kernel.org/all/20251118-p1-kconfig-fix-v3-4-8839c5ac5db3@linux.spacemit.com/
+> ---
+>  drivers/mfd/Kconfig | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+> index aace5766b38aa5e46e32a8a7b42eea238159fbcf..c757bc365029dc794c658fc5b10084a0f29ac9b6 100644
+> --- a/drivers/mfd/Kconfig
+> +++ b/drivers/mfd/Kconfig
+> @@ -1276,6 +1276,7 @@ config MFD_SPACEMIT_P1
+>  	depends on ARCH_SPACEMIT || COMPILE_TEST
+>  	depends on I2C
+>  	select MFD_SIMPLE_MFD_I2C
+> +	default m if ARCH_SPACEMIT
+>  	help
+>  	  This option supports the I2C-based SpacemiT P1 PMIC, which
+>  	  contains regulators, a power switch, GPIOs, an RTC, and more.
+
+I already applied v4.
 
 -- 
-Yixun Lan (dlan)
+Lee Jones [李琼斯]
