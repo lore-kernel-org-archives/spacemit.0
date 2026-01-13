@@ -1,112 +1,113 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3432121D3C5
-	for <spacemit@lists.linux.dev>; Tue, 13 Jan 2026 00:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A814D156F45
+	for <spacemit@lists.linux.dev>; Tue, 13 Jan 2026 02:34:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768263690; cv=none; b=BozS5ADD4zECr/9Poh+AYvSamgtB1RgovNVgewOTrS/u/KDrsV/C6w/5/X+cBcaUEASS1rCw9IM5Ay2VjO6d24L85xvLW1EbuASTm27uq1sakwOaFsbRbUt0NOBr1061+rfZWQckiEjbrCnXuMTc8+p6ENW4wqhYD625MT+7NZY=
+	t=1768271681; cv=none; b=cBJun9GqxoIK3jyv3hH+/dQ/OS3nSET74B9izdUlLjNAHhj9ZFhiJeQDRxsL5MxrMyFPrFaeWJg52dWqWCI8ZbJWbD9chvrjxwMIpGD8aduyrGjQCxQ8ABMCs5eeH+mYx8eb3Bkp03igRIFQ3+M6+q4tNHXDW6RVk/j7lIE80DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768263690; c=relaxed/simple;
-	bh=pidtPHvMv8UnN4vChxsQ9PRc0Hl8a1FUcKrswoY1+sM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ANhEm+JsNjVbs0GfgAnx//WbN6lQTfoO/qUrh035anpHuubVkySsz/M9quFoNwcpNHW+fys6BNb84pn98y6+s9JHVSMlQzm9VO+hlsnBut5duyiaPVNYHuXnkUmQHVlArpNAUT1u5fDR/YsnLm07IW+f6i2yB3ERgB7oif+Knc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 8524B3410D6;
-	Tue, 13 Jan 2026 00:21:27 +0000 (UTC)
-Date: Tue, 13 Jan 2026 08:21:23 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Conor Dooley <conor@kernel.org>
-Cc: Guodong Xu <guodong@riscstar.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Anup Patel <anup@brainfault.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
-	Yangyu Chen <cyy@cyyself.name>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Heinrich Schuchardt <xypron.glpk@gmx.de>,
-	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
-	Andrew Jones <ajones@ventanamicro.com>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev, linux-serial@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: Re: [PATCH v4 00/11] riscv: spacemit: Add SpacemiT K3 SoC and K3
- Pico-ITX board
-Message-ID: <20260113002123-GYA19926@gentoo.org>
-References: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
- <20260112-shrivel-sarcastic-36d9acd2d96a@spud>
+	s=arc-20240116; t=1768271681; c=relaxed/simple;
+	bh=yhhPlPoErkV7U1OZygKFQp5vWYV/hKg6zzSze51YuvE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DThvQeUPY1nveh3aPz822M6x31yllDPPfcCSZ2RTejXmb1ehs5/LPnt4Q5Uz85NC6CMQBwnNVgUJe5uEb645CflL5hQpridQOJ4/kAYC4+RWezBUR1YG6fWOVD6GgtgDBg60rdLLkJoFc016yUs5PZ8qC1MEh+evNK7F04+YTgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=akUeUs4r; arc=none smtp.client-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="akUeUs4r"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1768271563;
+	bh=8OGm56BnNU/xjbkupYm2Nu9TvcJ721VGVaRdZdzerGo=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=akUeUs4rsNN++0aI6+L8wU1tSmXNOlJyg1khp6asNN+b/aTFscWjwsaJsV5atER6q
+	 pCoI+ZMmJjWlGJVwiMVxltPwB1lcGXGlCYoVPdQbMulsPAhA4mtWV15v3QaDYstrEC
+	 7j8Nm36ri758sZ1xiGj8v3MQCpM99guCq6PlkDxY=
+X-QQ-mid: esmtpgz12t1768271554t4138d555
+X-QQ-Originating-IP: hxT0YY0pelbElcL0hcdNSCii+H590ZFHp4LoAnEKDu4=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 13 Jan 2026 10:32:33 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 11578108700935340498
+EX-QQ-RecipientCnt: 9
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Tue, 13 Jan 2026 10:32:21 +0800
+Subject: [PATCH] riscv: sbi: vendorid_list: Add SpacemiT Technology to the
+ vendor list
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260112-shrivel-sarcastic-36d9acd2d96a@spud>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260113-spacemit-vendor-id-v1-1-f9650fb8acbc@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIALSuZWkC/x2MQQqAIBAAvxJ7TtCSkL4SHcpdaw9ZuBGB+Pek4
+ zDMZBBKTAJjkyHRw8JnrGDaBvy+xI0UY2XodDdoY3ol1+Lp4Fs9FPFMVStnDaHHsAbroIZXosD
+ vP53mUj6rzQpmZAAAAA==
+X-Change-ID: 20260113-spacemit-vendor-id-841edcdfbf48
+To: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Yixun Lan <dlan@gentoo.org>
+Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768271552; l=874;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=yhhPlPoErkV7U1OZygKFQp5vWYV/hKg6zzSze51YuvE=;
+ b=S/JY50cA4FFYl6PPTHC1S2/6TSvubMHtzhNzvHUKQ16CCghxnvKkpn/03h4ex6Yz6TAQnFF3T
+ Jz4jyId7r5NBmm8xPRLzSxEXHTDOdT2g0B+bdq4MdkD3EALH+0vJ7hv
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NPhoNcGPHxa8PhYYAfOGfMS9xbdxhzsPRKsW6ItxDlFElKzYUWoYFZ6S
+	rfnl0JD55QK/5WpiJclx7hls6hA97oZTTXMYjC+juzIFbTYugFYP6IErG8yZwGRTNPBs95X
+	ze5wXp3jYPiYn6qQILwQvSwTr3ZPsaS/QWcTbBoovkIdbC+v/muEYNy6s6fcNMSXGv0iAt3
+	KCisZUcHA4yqRj2dGjMZNWt595j5F52oGGL4oCSUMsQ3jd3kAWOvXhGkWmcorpLsnsLd9sx
+	hQBjfI5Uc7jZQ1LUV539THtK9ofH8OttCFSPgG+8FP15bTcbnrWJtshEsu2hoTaFDX3PkXT
+	8RrwzUdc5Ema2mk0AeaKGJgM8c0f9Fni5tpa5sbtVBBannySQODCt1A5IQQzFaxGbjBxd+U
+	Txgxu0YVeKt9laV/qzCM9njKYbByx0Nc5CQPU+HxJqlIQqbiB2GixFyjv66FCRMHKnury/U
+	1QnQzVMPD073plYq0kSBcg0q0Q5XGeZP913tSf42AWc8o3Qf2VSkWeDkK1RgysanK3qplEi
+	1KiaFSDCaXG1RjkbWyHoUd0L5Oh0nVuSflsUqakhYlWwaKuomP0vDVDbsIpqS3MUJ5jq2f5
+	fmMENeNGx+YhZqT0MXtWQqkhFU1Sm0T5yeLkx6sqnZ8UKgBgx9uURgMXwzJcfx89J3IKTwH
+	pbEpIas+1Jzr+qp61eDoQmRe+XLV05SUOjvcrxwZasFbKEBQLKd08ba23XCZ72kr9a8VOkz
+	xKO9OK0xiwoMyxPmZYgaMQr1QdJKuRnK1bpUhTwo/v14phk8kZG3f4+zE+c0HpBEJvWi8um
+	OhW5jAjJ9QvRAU1r2/VXV3fLEVsNI3DxOQBFoSB56ySdPDjUyDqbc0Ccn2p7EYAQbP7IfMw
+	OCH3FkCmpwXscH9p2G2VZYL5hMWAXnYKEqOcaCidlQkEslJzIOS0j/QhJ4i4nsv9QgdVJIW
+	3A3pruZI11RInIizPTY16cfKvzoXvLZCPWAG9a/XJaA1LQQiTJAIn0Pl48QGW2Tms6o/fAh
+	4Fxmg5bXl9foCYRgYEoAhZ1B+1nH2w8QgJFfm8IuevZMdX7ErVNgThXX8Q++dLPJ8hkcoKr
+	eidKwRTmA2wj0bUBNCD0k23mwXQ8SlUoQ==
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+X-QQ-RECHKSPAM: 0
 
-Hi Conor,
+Add SpacemiT Technology to the RISC-V vendor list.
 
-On 21:45 Mon 12 Jan     , Conor Dooley wrote:
-> On Sat, Jan 10, 2026 at 01:18:12PM +0800, Guodong Xu wrote:
-> 
-> > Hi, Conor
-> > 
-> > For the binding riscv/extensions.ymal, here's what changed in v3 (no
-> > change in v4):
-> > 
-> >  1. Dropped the patch of adding "supm" into extensions.yaml. At the same
-> >     time, I will start another patchset which implements the strategy
-> >     outlined by Conor in Link [2] and by Samuel in Link [3].
-> 
-> Okay, that seems reasonable to separate out.
-> 
-> > 
-> >  2. Dropped the dependency checks for "sha" on "h", "shcounterenw", and
-> >     6 others. "sha" implies these extensions, and it should be allowed
-> >     to be declared independently. Like "a" implies "zaamo" and "zalrsc".
-> > 
-> >  3. Enchanced the dependency check of "ziccamoa" on "a". Specifically,
-> >      - added the dependency check of "ziccamoa" on "zaamo" or on "a".
-> >      - added the dependency check of "za64rs" on "zalrsc" or on "a".
-> >      - added the dependency check of "ziccrse" on "zalrsc" or "a".
-> >     The commit message of this patch is updated too, to better explain the
-> >     relationship  between "ziccamoa", "za64rs", "ziccrse" and "a".
-> > 
-> >  4. Enhanced checking dependency of "b" and "zba", "zbb", "zbs", making the
-> >     dependency check in both directions, as discussed in [4]. Since "b"
-> >     was ratified much later than its component extensions (zba/zbb/zbs),
-> >     existing software and kernels expect these explicit strings. This
-> >     bidirectional check ensures cores declaring "b" remain compatible
-> >     with older software that only recognizes zba/zbb/zbs.
-> 
-> This I asked about in the relevant patch, I would like to know what your
-> plan for adding the "b"s is.
-> 
-..
-> Spacemit folks, I assume you weren't planning on taking the
-> extensions.yaml stuff via your tree? If you weren't, I'll grab it once
-> the question about b is answered.
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+ arch/riscv/include/asm/vendorid_list.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-sure, please take extension stuff which are patches 6-9, for 1-5, it's
-all about adding support for SpacemiT K3 SoC, to avoid petential conflicts,
-I wouldn't mind if you also taking them? then I can handle the rest 10,11 for DT
+diff --git a/arch/riscv/include/asm/vendorid_list.h b/arch/riscv/include/asm/vendorid_list.h
+index 7f5030ee1fcf830b17c6529e9c430fe19ac68b05..5f75408ddee75d1e45c2c72207c66c5905f9b84d 100644
+--- a/arch/riscv/include/asm/vendorid_list.h
++++ b/arch/riscv/include/asm/vendorid_list.h
+@@ -9,6 +9,7 @@
+ #define MICROCHIP_VENDOR_ID	0x029
+ #define MIPS_VENDOR_ID		0x127
+ #define SIFIVE_VENDOR_ID	0x489
++#define SPACEMIT_VENDOR_ID	0x710
+ #define THEAD_VENDOR_ID		0x5b7
+ 
+ #endif
 
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20260113-spacemit-vendor-id-841edcdfbf48
 
+Best regards,
 -- 
-Yixun Lan (dlan)
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
