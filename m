@@ -1,15 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F3F145A1F
-	for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 00:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8C2137930
+	for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 00:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768349878; cv=none; b=ukZzGZfDDGwmVElm4XYxpWaUq+6ZqEwuY4Ntj8n2clEIM4i6Z2FHtB2t+NtShLjIeXs2v/ZZ38nOM1qpYhEzarxnY2J0pODIXlopRvbr5Rt+OGM+PeP/dUvr3Kfxq9TUFrnNCYtIxkbhD0RYz6oPeO7HJMz4sTcRsAI0gRhqu0I=
+	t=1768351671; cv=none; b=uStKZnZhWawqVTzwBjMqHfxxAlt9OanhtE+hJK8RxJ+XvZeQhrIIIyxJk6JRYLPKhd6bj5TNk8RJkS2X3BLLpndiC/HjzPqnXTw8radSKPXfZEhIyAv226ncnw1gbtb2GKyAagdo/FzBmsBk3xHwq2sOcZBprhaLrYDMbm+b8iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768349878; c=relaxed/simple;
-	bh=orpaLPZIhB6o0YIirbSoKahJaSFWRpyVsDsGAJa9c/s=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=tR6S9IVkBjd32fJp+zbRkmYsDL8RPGXk/+Y4NcdprwbaWw63/k6/b/Rqk00QyWy1BJnvzIO66VGP91l74e1USd8eQQrRfEMJbfagD2oAkVNuU0iFt7AGumefCnghwDblD49cv2ds4WTWYVpFodtAH+o7xWO5SbQK8f5vNlnyQ5Q=
+	s=arc-20240116; t=1768351671; c=relaxed/simple;
+	bh=F7PRGfzbZFNFqXLPAvX1nvariK6Gh2gtLkzBXyRb/b0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KT+1WNA3GqBnQQEUjPKsu65rVWviV8eXpK+3HuJ5vXURjswLGw40MspzVqytr/4v7txl7J444QqXNgWU+pQL0MZZyDripE15nos1StL5Ufae1PgGBn7uAbNEo9fnFy49vqXygHTL9tFU6e6vFGILObC0aloAocxU1pBUFVzj2C4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -18,12 +19,29 @@ Received: from ofovo.local (unknown [116.232.18.222])
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id AAA5034102F;
-	Wed, 14 Jan 2026 00:17:52 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 41FD5340F92;
+	Wed, 14 Jan 2026 00:47:43 +0000 (UTC)
 From: Yixun Lan <dlan@gentoo.org>
-Date: Wed, 14 Jan 2026 08:17:42 +0800
-Subject: [PATCH v2] dt-bindings: pinctrl: spacemit: k3: fix drive-strength
- doc
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Ze Huang <huang.ze@linux.dev>
+Cc: Yixun Lan <dlan@gentoo.org>,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Aurelien Jarno <aurelien@aurel32.net>
+Subject: Re: [PATCH v3 0/3] riscv: dts: spacemit: Add USB 3.0 support for K1
+Date: Wed, 14 Jan 2026 08:47:36 +0800
+Message-ID: <176835146982.13007.17884535903013126936.b4-ty@gentoo.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260111-k1-usb3dts-v2-v3-0-f5ebd546e904@linux.dev>
+References: <20260111-k1-usb3dts-v2-v3-0-f5ebd546e904@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -31,78 +49,31 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260114-k3-pinctrl-io-doc-fix-v2-1-025b05f9e65a@gentoo.org>
-X-B4-Tracking: v=1; b=H4sIAKbgZmkC/4WNTQqDMBBGryKz7pQkij9deY/iwsZJHFoykoi0i
- Hdv6gW6fA++9+2QKDIluBU7RNo4sYQM5lKAncfgCXnKDEaZWmmt8FniwsGu8YUsOIlFx28cu1F
- VJZmq1h3k7RIp67N7HzLPnFaJn/Nm0z/7r7hp1Ni0jXFUk3u0qvcUVpGrRA/DcRxfabMNz7sAA
- AA=
-X-Change-ID: 20260110-k3-pinctrl-io-doc-fix-a9a043e24619
-To: Linus Walleij <linusw@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Guodong Xu <guodong@riscstar.com>, 
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
- Yixun Lan <dlan@gentoo.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1547; i=dlan@gentoo.org;
- h=from:subject:message-id; bh=orpaLPZIhB6o0YIirbSoKahJaSFWRpyVsDsGAJa9c/s=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpZuCtbNOFt9HYFmHL9qwVSgNlpjEqetUNg9x3H
- gGAVmMeiriJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaWbgrRsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+1uyw//T+tPDn0Hytjj/Xe+0H0zwyDbgdSccSl8FQSBfkZsQu6mX7h/MHcdx
- km4joFbr/IyCqdfXGJRuYZS0Ex4mUeCap/PM3x40sYp11cfdOmlElypq1s25wFKOUXyP2We1HQn
- VLzNbXwC1s4pki0lrtwqCHhRYdJGyqJsi6C1F5nVN2N5hYdQ7jc4TJMFm6EE4vqVz31F31MXea1
- jg1tZfp1qXqoZTjVljGXveEderwTvf9fB8JdNg0f/UF7C1FNDB0HD0RMImso8LTBmdWqvmLAr70
- fOhD4qMO4rjmphaGIUK+Zi1Xl+1TpPhTHgJlZFqL5nGQ+bExlhbFK7jcyAEXRoxbDefFBvknyfr
- /3QY4h+eHkCkyrjldWkQ+4F5Fpqmq8qkhi+5HIGQ5bMiTb3//3rivdoPnlQrX41hdQjoisN3gpK
- pXaiOXQRPABTaR3mOlu98bLac/fw6Y4hZRfFZ2y/Ws95i9yRCQhFCvmf78mWe8ynf6QXauxWkep
- CBTBmKueOubvgEqOieoepK5zf5OU3qRhyF1U5Aa5Z3VZtwEvjbU4LlYal87caZ+rUdcCvbfDW+V
- T1TnMpp9Ei32EqyVdkEiu5PsTFfwR8i2I+v+7r7E9dk27qzZDGRqpf6sezZvnBex32iRSeQA0EP
- QJ0yuJF7sVN5zNZQBlrve5SJmkZdYU=
-X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Content-Transfer-Encoding: 8bit
 
-Fix a typo in DT documentation, it should describe the 3.3V drive strength
-table of SpacemiT k3 SoC.
 
-Fixes: 5adaa1a8c088 ("dt-bindings: pinctrl: spacemit: add K3 SoC support")
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Yixun Lan <dlan@gentoo.org>
----
-Hi Linus,
-  Can you also queue this for-next? thanks
----
-Changes in v2:
-- fix >75 lines of commit message
-- collect Ack tags
-- Link to v1: https://lore.kernel.org/r/20260110-k3-pinctrl-io-doc-fix-v1-1-7872fe6efb80@gentoo.org
----
- Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Sun, 11 Jan 2026 14:41:01 +0800, Ze Huang wrote:
+> This patch series enables the DWC3 USB 3.0 host controller on the
+> Spacemit K1 SoC and enables it for the Banana Pi F3 board.
+> 
+> For testing, the following kernel configurations should be enabled:
+> 
+> CONFIG_PHY_SPACEMIT_K1_USB2=y
+> CONFIG_PHY_SPACEMIT_K1_PCIE=y
+> CONFIG_USB_DWC3=y
+> CONFIG_USB_ONBOARD_DEV=y
+> 
+> [...]
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
-index 9a76cffcbaee..f009fed87e6b 100644
---- a/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
-@@ -87,7 +87,7 @@ patternProperties:
-                 description: For K3 SoC, 1.8V voltage output
- 
-               - enum: [ 3, 5, 7, 9, 11, 13, 15, 17, 25, 27, 29, 31, 33, 35, 37, 38 ]
--                description: For K3 SoC, 1.8V voltage output
-+                description: For K3 SoC, 3.3V voltage output
- 
-           input-schmitt:
-             description: |
+Applied, thanks!
 
----
-base-commit: 3f20bdf7151834547a85231c28538f49601481ee
-change-id: 20260110-k3-pinctrl-io-doc-fix-a9a043e24619
+[1/3] riscv: dts: spacemit: Add USB2 PHY node for K1
+      https://github.com/spacemit-com/linux/commit/0346e7284c2a1a39befc8711e5bc7f0306df7bdc
+[2/3] riscv: dts: spacemit: Add DWC3 USB 3.0 controller node for K1
+      https://github.com/spacemit-com/linux/commit/4b8fd1c95f0dd0398da1ea373ab67dd3559afb31
+[3/3] riscv: dts: spacemit: Enable USB3.0 on BananaPi-F3
+      https://github.com/spacemit-com/linux/commit/2c1c8ee2c30f90b2dc2d6629e364aaed622c98b6
 
 Best regards,
 -- 
 Yixun Lan <dlan@gentoo.org>
-
