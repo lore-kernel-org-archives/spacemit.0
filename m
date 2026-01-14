@@ -1,68 +1,29 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0F435580E;
-	Tue, 13 Jan 2026 22:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F3F145A1F
+	for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 00:17:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768343177; cv=none; b=cQwgp3dA2wRTodO2Z68NK7ZENjljjTkqA8n3MxnIw4v7IJDlJPfzifeLuA0gRoutHoQmziYrus0mYPasSyeTvZ9xzHNpTjslxFSfPM/xUAQrDy186yEvV2O9T7AdVfNbLyRJZSzn8AbqlEWRPRdS04vkWqK61BGrCE7aUwjxcLI=
+	t=1768349878; cv=none; b=ukZzGZfDDGwmVElm4XYxpWaUq+6ZqEwuY4Ntj8n2clEIM4i6Z2FHtB2t+NtShLjIeXs2v/ZZ38nOM1qpYhEzarxnY2J0pODIXlopRvbr5Rt+OGM+PeP/dUvr3Kfxq9TUFrnNCYtIxkbhD0RYz6oPeO7HJMz4sTcRsAI0gRhqu0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768343177; c=relaxed/simple;
-	bh=WCS1gUFqazlCTZYwN0/IDLbkTzKhRaU1clOA1skX9OI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u43NsAzXcztijl0yF4CfDPF0vcieFIb1sq2CMStGNR8AahKixsT91DRVgpGVp6h28+nHB+sctNbYnIp5/G6waIzLuIZXcOoMJrlMDRXXBzCIhFa14m0Bw2cryvFZkokdmimSPXiqHFFjgP9S42AAeeZxpYLMCCTUTujTcoh8vlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gAjQsh2Q; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gAjQsh2Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B47C116C6;
-	Tue, 13 Jan 2026 22:26:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768343176;
-	bh=WCS1gUFqazlCTZYwN0/IDLbkTzKhRaU1clOA1skX9OI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gAjQsh2Q8Zo8IrkWVzvZOinEeTF56+8fVVF4LG6nZDqUhljjuk4hSkg+KlH3JEjBI
-	 A6klso1FXuHD1841HEoboi8VO7hBqMNWkn1ypIvsX7z01Azz0jZ+BMcyZbcL/Moghv
-	 F6VfWNj1vOyHOZjy0Z399rj3BOJBbw5mWJ3srJEj3Q1RfoAhCkdbcR1WikzBO5Oe6v
-	 HaAC/ZUHKm3wSqqpphM2HgIQKhZDe7dnioc5xIPJUHaa1C1B0yJQcVfi3h8mKKFuit
-	 BP1HYDeJOqiU3BC475n2y51T6ubFW9QkAmu76wOKBLewGGTAxSyrTrxyGOGB6OGVQL
-	 W5aAezq+Sc3eg==
-From: Conor Dooley <conor@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@gentoo.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Anup Patel <anup@brainfault.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Lubomir Rintel <lkundrak@v3.sk>,
-	Yangyu Chen <cyy@cyyself.name>,
-	Guodong Xu <guodong@riscstar.com>
-Cc: conor@kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Heinrich Schuchardt <xypron.glpk@gmx.de>,
-	Kevin Meng Zhang <zhangmeng.kevin@linux.spacemit.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-serial@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Subject: Re: (subset) [PATCH v4 00/11] riscv: spacemit: Add SpacemiT K3 SoC and K3 Pico-ITX board
-Date: Tue, 13 Jan 2026 22:25:23 +0000
-Message-ID: <20260113-prism-unvaried-abf3b4679e3a@spud>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
-References: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
+	s=arc-20240116; t=1768349878; c=relaxed/simple;
+	bh=orpaLPZIhB6o0YIirbSoKahJaSFWRpyVsDsGAJa9c/s=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=tR6S9IVkBjd32fJp+zbRkmYsDL8RPGXk/+Y4NcdprwbaWw63/k6/b/Rqk00QyWy1BJnvzIO66VGP91l74e1USd8eQQrRfEMJbfagD2oAkVNuU0iFt7AGumefCnghwDblD49cv2ds4WTWYVpFodtAH+o7xWO5SbQK8f5vNlnyQ5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from ofovo.local (unknown [116.232.18.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id AAA5034102F;
+	Wed, 14 Jan 2026 00:17:52 +0000 (UTC)
+From: Yixun Lan <dlan@gentoo.org>
+Date: Wed, 14 Jan 2026 08:17:42 +0800
+Subject: [PATCH v2] dt-bindings: pinctrl: spacemit: k3: fix drive-strength
+ doc
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,34 +31,78 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1079; i=conor.dooley@microchip.com; h=from:subject:message-id; bh=dGkt94bjVYf12COX+6dHA67nfAJ4JApCVWihf8slfBY=; b=owGbwMvMwCVWscWwfUFT0iXG02pJDJlpx4Iz3wp4M1SZqzktZ5nzr3riytyZKtM+VhvcaM4UW /VsesfTjlIWBjEuBlkxRZbE230tUuv/uOxw7nkLM4eVCWQIAxenAEyE4zQjw4VdTbFHuj64X5lZ 47Lp1K3PW1silW2KxfmZrUxUpix/4MrI8ObLZtPFV7SiqgoDbtco1Vx/ks95OF/Z66bb9oDFIZb h/AA=
-X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260114-k3-pinctrl-io-doc-fix-v2-1-025b05f9e65a@gentoo.org>
+X-B4-Tracking: v=1; b=H4sIAKbgZmkC/4WNTQqDMBBGryKz7pQkij9deY/iwsZJHFoykoi0i
+ Hdv6gW6fA++9+2QKDIluBU7RNo4sYQM5lKAncfgCXnKDEaZWmmt8FniwsGu8YUsOIlFx28cu1F
+ VJZmq1h3k7RIp67N7HzLPnFaJn/Nm0z/7r7hp1Ni0jXFUk3u0qvcUVpGrRA/DcRxfabMNz7sAA
+ AA=
+X-Change-ID: 20260110-k3-pinctrl-io-doc-fix-a9a043e24619
+To: Linus Walleij <linusw@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Guodong Xu <guodong@riscstar.com>, 
+ linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Yixun Lan <dlan@gentoo.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1547; i=dlan@gentoo.org;
+ h=from:subject:message-id; bh=orpaLPZIhB6o0YIirbSoKahJaSFWRpyVsDsGAJa9c/s=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpZuCtbNOFt9HYFmHL9qwVSgNlpjEqetUNg9x3H
+ gGAVmMeiriJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaWbgrRsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+1uyw//T+tPDn0Hytjj/Xe+0H0zwyDbgdSccSl8FQSBfkZsQu6mX7h/MHcdx
+ km4joFbr/IyCqdfXGJRuYZS0Ex4mUeCap/PM3x40sYp11cfdOmlElypq1s25wFKOUXyP2We1HQn
+ VLzNbXwC1s4pki0lrtwqCHhRYdJGyqJsi6C1F5nVN2N5hYdQ7jc4TJMFm6EE4vqVz31F31MXea1
+ jg1tZfp1qXqoZTjVljGXveEderwTvf9fB8JdNg0f/UF7C1FNDB0HD0RMImso8LTBmdWqvmLAr70
+ fOhD4qMO4rjmphaGIUK+Zi1Xl+1TpPhTHgJlZFqL5nGQ+bExlhbFK7jcyAEXRoxbDefFBvknyfr
+ /3QY4h+eHkCkyrjldWkQ+4F5Fpqmq8qkhi+5HIGQ5bMiTb3//3rivdoPnlQrX41hdQjoisN3gpK
+ pXaiOXQRPABTaR3mOlu98bLac/fw6Y4hZRfFZ2y/Ws95i9yRCQhFCvmf78mWe8ynf6QXauxWkep
+ CBTBmKueOubvgEqOieoepK5zf5OU3qRhyF1U5Aa5Z3VZtwEvjbU4LlYal87caZ+rUdcCvbfDW+V
+ T1TnMpp9Ei32EqyVdkEiu5PsTFfwR8i2I+v+7r7E9dk27qzZDGRqpf6sezZvnBex32iRSeQA0EP
+ QJ0yuJF7sVN5zNZQBlrve5SJmkZdYU=
+X-Developer-Key: i=dlan@gentoo.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-From: Conor Dooley <conor.dooley@microchip.com>
+Fix a typo in DT documentation, it should describe the 3.3V drive strength
+table of SpacemiT k3 SoC.
 
-On Sat, 10 Jan 2026 13:18:12 +0800, Guodong Xu wrote:
-> This series introduces basic support for the SpacemiT K3 SoC and the
-> K3 Pico-ITX evaluation board.
-> 
-> This series (starting from v2) also adds descriptions about ISA extensions
-> mandated by the RVA23 Profile Version 1.0 into riscv/extensions.yaml.
-> There are extensive discussions about how to handle these new extensions
-> in v2. In v3 (now v4), here is my best understading of what I think we have
-> reached consensus on.
-> 
-> [...]
+Fixes: 5adaa1a8c088 ("dt-bindings: pinctrl: spacemit: add K3 SoC support")
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+---
+Hi Linus,
+  Can you also queue this for-next? thanks
+---
+Changes in v2:
+- fix >75 lines of commit message
+- collect Ack tags
+- Link to v1: https://lore.kernel.org/r/20260110-k3-pinctrl-io-doc-fix-v1-1-7872fe6efb80@gentoo.org
+---
+ Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Applied 6-9 to riscv-dt-for-next :)
+diff --git a/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
+index 9a76cffcbaee..f009fed87e6b 100644
+--- a/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml
+@@ -87,7 +87,7 @@ patternProperties:
+                 description: For K3 SoC, 1.8V voltage output
+ 
+               - enum: [ 3, 5, 7, 9, 11, 13, 15, 17, 25, 27, 29, 31, 33, 35, 37, 38 ]
+-                description: For K3 SoC, 1.8V voltage output
++                description: For K3 SoC, 3.3V voltage output
+ 
+           input-schmitt:
+             description: |
 
-[06/11] dt-bindings: riscv: Add B ISA extension description
-        https://git.kernel.org/conor/c/0cdb7fc1879b
-[07/11] dt-bindings: riscv: Add descriptions for Za64rs, Ziccamoa, Ziccif, and Zicclsm
-        https://git.kernel.org/conor/c/b321256a4f36
-[08/11] dt-bindings: riscv: Add Ssccptr, Sscounterenw, Sstvala, Sstvecd, Ssu64xl
-        https://git.kernel.org/conor/c/c712413333f8
-[09/11] dt-bindings: riscv: Add Sha and its comprised extensions
-        https://git.kernel.org/conor/c/89febd6a0276
+---
+base-commit: 3f20bdf7151834547a85231c28538f49601481ee
+change-id: 20260110-k3-pinctrl-io-doc-fix-a9a043e24619
 
-Thanks,
-Conor.
+Best regards,
+-- 
+Yixun Lan <dlan@gentoo.org>
+
