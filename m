@@ -1,123 +1,75 @@
-Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909C537A493
-	for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 07:42:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FF726AAAB
+	for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 13:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768376527; cv=none; b=r3WBYifVtYxCaWnP/nsHSAKzmJGTiLU06OCU95HOm8UvvddBSuRf+w7ZvxaUTAndX9ZgJwI4sZTF7RRekByKNWi2eZ8oHjfPbfAg7/h9VqPjFQ1m0vOS2Arehs6gr9hEVsvM2fdCFN5gCQl9S1FfZI6iAtCHU+cOvfCSKGZ0cFA=
+	t=1768398870; cv=none; b=C6Y028Six396e34IwpAX86c6UYZVP0S6Nz0IEEq2vpHnZ5O5aFkrbLxKTz8+XYB76y8+aVw+zBvTOULjzaPeLilhqDq8OwXxRptQRbVGYsiaB4EBQQKnHFH7+GZ9q8yoTIY7/4rJa5pGbNeNxF0inkAMMDkJcbWLLq+DbqP1hFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768376527; c=relaxed/simple;
-	bh=6kFdfpIlv+NjbpVMkAAzrX4Pd5Bm8hvjOOYjFPgOi9g=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=BraXr1xYDQbulsvlGmKKKaimANaVMgVtFexNUfcuvsc+RssGJD3LlZtNN3lCSjQpAciIKuWkVr8qKUtsaLhByb+CwJdQ65VhQtxhhAnV/2krNsAruBinup/ZPt7+0yH054hhndhg6FgKtWRZFYgklXjLZfOrw5PRq92nQSYibZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=FaQLCIja; arc=none smtp.client-ip=54.92.39.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1768398870; c=relaxed/simple;
+	bh=pko9oW1g+IluAhY7M1qdOiwhwRkDyq9ZjyBhU9sgrLY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=idX3lnBT1YDamKFJbl4RSSQSDmi0OyQxf0SeUnqLgghmla1k1bhHxiKMZrz9j/7nSzze3ZlkgqtBOkRhBB4pbk1m07kSHQcInW87tyTlqJTFYqpOzvi0mcy/KQZaRgJH8wbly0I6+1epnmM7SG8teKxxOkZLKv+saf9M9GwsD7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cvxhmlDB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="FaQLCIja"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1768376437;
-	bh=Y3hzIqe64eTNPZAr7HNM5Jzs/tphW9qIwXZhK18bDVM=;
-	h=Mime-Version:Date:Message-Id:To:Subject:From;
-	b=FaQLCIja0GDbUuIoZRS8YGTtPKNKvpxQawxnrUpxfSTFcYIymfyz1A7YyGkn+v3zM
-	 XYzL4ijzMz8xaGMFjmaKfVFQnPTKzf4l2GLA/Q1g/PzhRjrqEyycK8iINXcwAPM6Zl
-	 DbysDgD3Hx/3nxVArZiG2Fqh8ATReeI1rjE3mPCU=
-X-QQ-mid: esmtpsz16t1768376428t13e77d3b
-X-QQ-Originating-IP: 7aawJ3yx9b6VmjulJJNVsFBb2N3t4qxK6xGf9s1FjQk=
-Received: from = ( [120.239.196.107])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 14 Jan 2026 15:40:26 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 16254600035269256280
-EX-QQ-RecipientCnt: 13
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cvxhmlDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79EBDC19422
+	for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 13:54:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768398870;
+	bh=pko9oW1g+IluAhY7M1qdOiwhwRkDyq9ZjyBhU9sgrLY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=cvxhmlDBIWz66KMgGJkZsiNg/kcCqFr1SH2ajz4Bvlp3FXF1JN9gkfEwuB94fgep1
+	 KS5DH+zPbowY5TrkhD/Zt5J/WdDPj7dWOv2cn/iyNDzs5idHyyp5AL02jAw5vU90wa
+	 Zv65yzYpKrdbVxK4cH3wJMcTIwAN88JY1bVrc5DyBMDw4syzWnhgJj7hObOk/jj9KM
+	 Dis0MQ7Wvhq5uQeNhfxgCSPCc3lUtg4hOBovQxeRBnMSdsJtfWm5grYPKc0WXD27Xv
+	 JmI7oGwHohvMSsppF/ppe1Xa0s7eSDHVlSCWWCymp53g0mCrR+7QSKuXVpQeNKhDkO
+	 Di5lkP5NfUR2Q==
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-64472c71fc0so8690478d50.0
+        for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 05:54:30 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCU9NipQ5sC2YJtDfNaRVb9+xjIo1inkUfxfAfjrAJgezsh+9sr9xONejQ+uFEZGIyV4XJ5tstWaBg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyaP5Jh8YA6uTGhEwZjwrk7qwYSaMPI5Vb434PimL783LNs/I7G
+	TeagfeVHnEvC+e4r8ORDa9nH70e9Gwjuvnu8bvcA4dRmzpBhksXZE7zxSZDx7WCLbDFfvWKq09I
+	HAE1NY/wvBaMm+CTgOYdZvKOz/PYxaRo=
+X-Received: by 2002:a53:ac8b:0:b0:646:5019:f3f2 with SMTP id
+ 956f58d0204a3-64901a9c702mr2454045d50.19.1768398869885; Wed, 14 Jan 2026
+ 05:54:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260114-k3-pinctrl-io-doc-fix-v2-1-025b05f9e65a@gentoo.org>
+In-Reply-To: <20260114-k3-pinctrl-io-doc-fix-v2-1-025b05f9e65a@gentoo.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Wed, 14 Jan 2026 14:54:17 +0100
+X-Gmail-Original-Message-ID: <CAD++jLk-dg1Hh28QaTo+0nONAP1PiOQza1-L3Nn4XJEeEShmuw@mail.gmail.com>
+X-Gm-Features: AZwV_QgO7G4JdjPod5hP416XqHCDN-684za1JJpJPBU8JnvDVeq9VXheBatx4Aw
+Message-ID: <CAD++jLk-dg1Hh28QaTo+0nONAP1PiOQza1-L3Nn4XJEeEShmuw@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-bindings: pinctrl: spacemit: k3: fix drive-strength doc
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Guodong Xu <guodong@riscstar.com>, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 14 Jan 2026 15:40:26 +0800
-Message-Id: <DFO54J7CRS8U.1D9XZAJHF57HM@linux.spacemit.com>
-To: "Lee Jones" <lee@kernel.org>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-Cc: "Yixun Lan" <dlan@gentoo.org>, "Alex Elder" <elder@riscstar.com>, "Andi
- Shyti" <andi.shyti@kernel.org>, "Alexandre Belloni"
- <alexandre.belloni@bootlin.com>, "Liam Girdwood" <lgirdwood@gmail.com>,
- "Mark Brown" <broonie@kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-i2c@vger.kernel.org>, <linux-rtc@vger.kernel.org>
-Subject: Re: [PATCH v5 2/3] mfd: simple-mfd-i2c: add default value
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260108-p1-kconfig-fix-v5-0-6fe19f460269@linux.spacemit.com>
- <20260108-p1-kconfig-fix-v5-2-6fe19f460269@linux.spacemit.com>
- <20260113124241.GB2842980@google.com>
-In-Reply-To: <20260113124241.GB2842980@google.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NQvpx3reNVf3WhyFtnskoYMLYvgG5oU62ujRS8JtwR9vHStSzynh41GG
-	OXMxYql2bohvBa6JWd06cX4JKPrE6fPg9EbZ0g21wCh2zVKOHaR36UYqhRhYsSiw82gjcSI
-	6dYEYn04C24cLRCd/pCnxabSN1IxDxPE9y8aq3Iuf7IrWNkH2sktsi1rQuUXIzb+U1G9874
-	9+3iSk0OFK3O3+X360goBWmhA7bz/rpag8wFTZDsqxfXal8W26vSb0GAoYhmINxFC+pfrhq
-	6iP9bA29sYXmqt9ZVuu1Y4eaGw9NPAMLPqJw8mdIRtVGiA7h7R+acUoFy0kjhj+I1Z0zM6T
-	1c44ggGLPCcpbIgc+nlGIC0KAOOxmNQAlTbACKx0apXgRzqEhHMV7sjU3C82cmqAeJEDTJI
-	2RiXgE9P+pw+SLATpDrsrCS2FmBuEpxcb2kbXkREvbvNYe9qU/dQDOPu4uovdmsL0iHkh7L
-	cmDWd1XxdwUwyo3rcxgRnQktvDwStwtcFVF4DEyWNjzWZf1f6WemlRLBri8V1+tg2VYpHes
-	cfttwAXToZuuYfD6GX1pDnzQFuE5ZorcHpymtUl7TT2DOk4DuWVQBnv4I3uf5Cti611jsD6
-	hbnwGxKTqsvF4TZXd6mcHsTCNSBDmLl2pj+ZsKsv76xNrMRcbnstWDVIMZfYdPOQpa62JXB
-	kW98a9Xt3UhxUuEL31gPwZEpus8/h7GJy2TYPiWmKde7rHRZDWVN5dUWJIsYAWz+7d7znbH
-	pPG+PKMDzvvHvAAsXxpadL5lKIq1nHwEbtrVVhCISeVJO2NcOkMv2bKnnHaXL4ZQ+RUwBjl
-	RGBTsk3A8PeE9OqXtbKgBSkgLW10Cc4by4cjEmJV46JvK8AktB/FMt3LEqf+cV5CTP0pKAW
-	8rwSeEddoq2CH1TnumFFmMW8jhkpMfGJtFbH7i24uX2WcLWolfpM4wDf1o0zPTWy4FDIyjw
-	A+gojymMAUzXGVSTZzZ53U0IeAgu+egoeU3GEJiyRK3eIRIzX/neY1jzVwtIWY6JRTlm4wo
-	Oew21UJ1zIhHFVmxuU/dZEMjzah/uLZfiXIpk9MF8tZHKK+AFcj9kLdxwwckivTjfBz/kGM
-	RUVOlfIo01A
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-X-QQ-RECHKSPAM: 0
 
-On Tue Jan 13, 2026 at 8:42 PM CST, Lee Jones wrote:
-> On Thu, 08 Jan 2026, Troy Mitchell wrote:
+On Wed, Jan 14, 2026 at 1:17=E2=80=AFAM Yixun Lan <dlan@gentoo.org> wrote:
+
+> Fix a typo in DT documentation, it should describe the 3.3V drive strengt=
+h
+> table of SpacemiT k3 SoC.
 >
->> The default value of the P1 sub-device depends on the value
->> of P1, so P1 should have a default value here.
->>=20
->> Acked-by: Alex Elder <elder@riscstar.com>
->> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
->> ---
->> Change log in v5:
->> - nothing
->> - Link to v4: https://lore.kernel.org/all/20251225-p1-kconfig-fix-v4-2-4=
-4b6728117c1@linux.spacemit.com/
->>=20
->> Change log in v4:
->> - default m if ARCH_SPACEMIT instead of default ARCH_SPACEMIT
->> - Link to v3: https://lore.kernel.org/all/20251118-p1-kconfig-fix-v3-4-8=
-839c5ac5db3@linux.spacemit.com/
->> ---
->>  drivers/mfd/Kconfig | 1 +
->>  1 file changed, 1 insertion(+)
->>=20
->> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
->> index aace5766b38aa5e46e32a8a7b42eea238159fbcf..c757bc365029dc794c658fc5=
-b10084a0f29ac9b6 100644
->> --- a/drivers/mfd/Kconfig
->> +++ b/drivers/mfd/Kconfig
->> @@ -1276,6 +1276,7 @@ config MFD_SPACEMIT_P1
->>  	depends on ARCH_SPACEMIT || COMPILE_TEST
->>  	depends on I2C
->>  	select MFD_SIMPLE_MFD_I2C
->> +	default m if ARCH_SPACEMIT
->>  	help
->>  	  This option supports the I2C-based SpacemiT P1 PMIC, which
->>  	  contains regulators, a power switch, GPIOs, an RTC, and more.
->
-> I already applied v4.
-Apologies, I missed this.
-I will remove the patch in the next version. Thank you for your work.
+> Fixes: 5adaa1a8c088 ("dt-bindings: pinctrl: spacemit: add K3 SoC support"=
+)
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Signed-off-by: Yixun Lan <dlan@gentoo.org>
 
-                    - Troy
+Patch applied.
 
+Yours,
+Linus Walleij
