@@ -1,132 +1,123 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F372F5A12
-	for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 02:33:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909C537A493
+	for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 07:42:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768358029; cv=none; b=WTzLTNrtSRrlLDL7ZIFR8JZezoXaUQ48s8AZsDQgwnE8SX6R3PhasO76H1XtTKcntl+JCpv+HKn8uHc9rmE8u8ptgxBqgIJejaE/XOApB/dE+ZwuOwZbmggNeNlWfiuPjkZUey2xqffrHJCMaDhQcEdhS8uET+O4dhR+9Yqxl5Q=
+	t=1768376527; cv=none; b=r3WBYifVtYxCaWnP/nsHSAKzmJGTiLU06OCU95HOm8UvvddBSuRf+w7ZvxaUTAndX9ZgJwI4sZTF7RRekByKNWi2eZ8oHjfPbfAg7/h9VqPjFQ1m0vOS2Arehs6gr9hEVsvM2fdCFN5gCQl9S1FfZI6iAtCHU+cOvfCSKGZ0cFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768358029; c=relaxed/simple;
-	bh=3Y2xwxnB2VY5O7Wn7NdqLZLtOkwceaDGP163hwmg6x8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KPIz+HZQ4UIJVTxGgddTf134VfkJg4JlleWWBIEmHXCPZj99S55te6lfucUdnmk9T3gqJ0alKEi7SKy6IvHoNXfXFwQTTvY6Gk4FwQhhRZWRdOi4/WrTpQL6pKJKLCxPOsrB3eGitjTUnzBvUg6lUKeTEwoWTkbo4Nxbg6f0/jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=F6LYpCb/; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1768376527; c=relaxed/simple;
+	bh=6kFdfpIlv+NjbpVMkAAzrX4Pd5Bm8hvjOOYjFPgOi9g=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=BraXr1xYDQbulsvlGmKKKaimANaVMgVtFexNUfcuvsc+RssGJD3LlZtNN3lCSjQpAciIKuWkVr8qKUtsaLhByb+CwJdQ65VhQtxhhAnV/2krNsAruBinup/ZPt7+0yH054hhndhg6FgKtWRZFYgklXjLZfOrw5PRq92nQSYibZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=FaQLCIja; arc=none smtp.client-ip=54.92.39.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="F6LYpCb/"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-78fba1a1b1eso7639347b3.1
-        for <spacemit@lists.linux.dev>; Tue, 13 Jan 2026 18:33:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768358025; x=1768962825; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QJBLmrBE8O9239tGEOrHnRxNLRDKlAcLOjCyimagURs=;
-        b=F6LYpCb/7Cui0ct3qhFYUWyzAHPYJaxn61C79Cr6/vTRXex43Y6YBiHr+gQ5JOh2U1
-         dA6Wtk5L6VlNTVQP7NAOcSfGo9+bYyTVedOgHc5FQXJwjgl0q9T2JvYhPEslgvpUiKup
-         yl5mWRQANyDqVoLUGgYOmnxvAldL+PAUqUsLEZENFVinlXJXs+48bjhSm5huS8+OhHW+
-         OXD83gcKx+hgRMmCqwy168dZn27GHfZddnTZjtVK/4g+hdNw/caPyBpncvowq7lZLVk2
-         mveutT8Ycy34d0KwQhZPOhDgZiApveXo1PeRPqWW9+EgCmvGuIrAKOO0oAqv1MKmS6Ng
-         zViA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768358025; x=1768962825;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=QJBLmrBE8O9239tGEOrHnRxNLRDKlAcLOjCyimagURs=;
-        b=FNZjtGkWU0rGT6jxwfjod+D8bQ+WZloPMXGBLxHp8gOjyEzswrDG/6e8d1L8IsJYov
-         963AYSIN57uCbfIs9akqAjv+TTH5Ll7Fm4ytCftSvZVK+TPdhigIMTkyv0PJGuAq/xfp
-         hz/kigPYqPqvZLpkDiO5PMicUbxgN7it4lbQIxqzyR25KmO92gDS1buWFFNSuO/3Prid
-         IlrKw/+L+IEwoBr9fnjsBb6Q90FumVy11zfcuiRuJPlZ+K8jEqfTklFpGV3RmefCsF41
-         GgqN3RyahoF1wqGnohbneyOMBYFJfUBpvSapKXq9Pv4NJX/LT7Ufyo0lVoxvIAiDGUIi
-         iZLw==
-X-Forwarded-Encrypted: i=1; AJvYcCXAgCH0AFqdxWxXtGHFnwCs1V6v2wv2ig1YGIH/ZzBsC5Wu8mZ+vMGmd9+2Yv6zZJVfG1VtWX9EkA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzA0hgY0+uRBPlhpVXjLktJGOXqLrmDdFEr72/vDJfAa5S5ZGFC
-	Y4GVRQZNJTi1YY4iUHzf0WnkTrEqNWNvakaI9SKSDK36C+5q64Mg08mWMQdGWwPqFbzDjphMPk4
-	nIh9Nos4Rz5U0PSOKY9GOsSIXNXWCVsyqGSpm9Kbvpw==
-X-Gm-Gg: AY/fxX6noQBGh5LOmyEUytWajmi/R92Rlzo/t9P5UCXLP7B9yBd8iFArwo416SS+4aj
-	tZ3rSIwinpJpUVD+Y1r0OC9Z4roHhMqkf0dL5U83twRVyoBwo7kD6ACA1IysLL4qqXKj7f99Wj3
-	emmaubi2QX52pvOpwUFW8d1nMq8P1+FShlN3rk+zj4ADTaq+bvxxSHq3VbKomGPEZS3zfQRV8p7
-	c0pmA1vmLp7OC2Ton2nkeSOQvRHyXUOjKJgo4zwdD3IQM4eWQhbwRvJ5geXminCFwRtPg4sHKMj
-	mjjpAjuFLZR438KseJf3YeGmoAkkGfucCdSzoQ==
-X-Received: by 2002:a05:690e:d45:b0:63e:1563:4801 with SMTP id
- 956f58d0204a3-649023ff038mr916948d50.22.1768358025225; Tue, 13 Jan 2026
- 18:33:45 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="FaQLCIja"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1768376437;
+	bh=Y3hzIqe64eTNPZAr7HNM5Jzs/tphW9qIwXZhK18bDVM=;
+	h=Mime-Version:Date:Message-Id:To:Subject:From;
+	b=FaQLCIja0GDbUuIoZRS8YGTtPKNKvpxQawxnrUpxfSTFcYIymfyz1A7YyGkn+v3zM
+	 XYzL4ijzMz8xaGMFjmaKfVFQnPTKzf4l2GLA/Q1g/PzhRjrqEyycK8iINXcwAPM6Zl
+	 DbysDgD3Hx/3nxVArZiG2Fqh8ATReeI1rjE3mPCU=
+X-QQ-mid: esmtpsz16t1768376428t13e77d3b
+X-QQ-Originating-IP: 7aawJ3yx9b6VmjulJJNVsFBb2N3t4qxK6xGf9s1FjQk=
+Received: from = ( [120.239.196.107])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 14 Jan 2026 15:40:26 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 16254600035269256280
+EX-QQ-RecipientCnt: 13
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260113-adding-b-dtsi-v1-0-22d6e55d19df@riscstar.com>
- <20260113-adding-b-dtsi-v1-2-22d6e55d19df@riscstar.com> <20260113075339-GYA25466@gentoo.org>
-In-Reply-To: <20260113075339-GYA25466@gentoo.org>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Wed, 14 Jan 2026 10:33:34 +0800
-X-Gm-Features: AZwV_QiwlJO3ZADv09NVm7VZL0Pi5fI-J1pRA-OmeKisX5gdDwuQlnWQ0Nwjwhc
-Message-ID: <CAH1PCMarzrZJ072iyAQthB-i-LHFCSJ+tZLx6HcWiVcUrQeafw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] riscv: dts: Add "b" ISA extension to existing devicetrees
-To: Conor Dooley <conor@kernel.org>, Yixun Lan <dlan@gentoo.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
-	Conor Dooley <conor.dooley@microchip.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
-	Inochi Amaoto <inochiama@gmail.com>, Junhui Liu <junhui.liu@pigmoral.tech>, 
-	linux-doc@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 14 Jan 2026 15:40:26 +0800
+Message-Id: <DFO54J7CRS8U.1D9XZAJHF57HM@linux.spacemit.com>
+To: "Lee Jones" <lee@kernel.org>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>
+Cc: "Yixun Lan" <dlan@gentoo.org>, "Alex Elder" <elder@riscstar.com>, "Andi
+ Shyti" <andi.shyti@kernel.org>, "Alexandre Belloni"
+ <alexandre.belloni@bootlin.com>, "Liam Girdwood" <lgirdwood@gmail.com>,
+ "Mark Brown" <broonie@kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-i2c@vger.kernel.org>, <linux-rtc@vger.kernel.org>
+Subject: Re: [PATCH v5 2/3] mfd: simple-mfd-i2c: add default value
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260108-p1-kconfig-fix-v5-0-6fe19f460269@linux.spacemit.com>
+ <20260108-p1-kconfig-fix-v5-2-6fe19f460269@linux.spacemit.com>
+ <20260113124241.GB2842980@google.com>
+In-Reply-To: <20260113124241.GB2842980@google.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NQvpx3reNVf3WhyFtnskoYMLYvgG5oU62ujRS8JtwR9vHStSzynh41GG
+	OXMxYql2bohvBa6JWd06cX4JKPrE6fPg9EbZ0g21wCh2zVKOHaR36UYqhRhYsSiw82gjcSI
+	6dYEYn04C24cLRCd/pCnxabSN1IxDxPE9y8aq3Iuf7IrWNkH2sktsi1rQuUXIzb+U1G9874
+	9+3iSk0OFK3O3+X360goBWmhA7bz/rpag8wFTZDsqxfXal8W26vSb0GAoYhmINxFC+pfrhq
+	6iP9bA29sYXmqt9ZVuu1Y4eaGw9NPAMLPqJw8mdIRtVGiA7h7R+acUoFy0kjhj+I1Z0zM6T
+	1c44ggGLPCcpbIgc+nlGIC0KAOOxmNQAlTbACKx0apXgRzqEhHMV7sjU3C82cmqAeJEDTJI
+	2RiXgE9P+pw+SLATpDrsrCS2FmBuEpxcb2kbXkREvbvNYe9qU/dQDOPu4uovdmsL0iHkh7L
+	cmDWd1XxdwUwyo3rcxgRnQktvDwStwtcFVF4DEyWNjzWZf1f6WemlRLBri8V1+tg2VYpHes
+	cfttwAXToZuuYfD6GX1pDnzQFuE5ZorcHpymtUl7TT2DOk4DuWVQBnv4I3uf5Cti611jsD6
+	hbnwGxKTqsvF4TZXd6mcHsTCNSBDmLl2pj+ZsKsv76xNrMRcbnstWDVIMZfYdPOQpa62JXB
+	kW98a9Xt3UhxUuEL31gPwZEpus8/h7GJy2TYPiWmKde7rHRZDWVN5dUWJIsYAWz+7d7znbH
+	pPG+PKMDzvvHvAAsXxpadL5lKIq1nHwEbtrVVhCISeVJO2NcOkMv2bKnnHaXL4ZQ+RUwBjl
+	RGBTsk3A8PeE9OqXtbKgBSkgLW10Cc4by4cjEmJV46JvK8AktB/FMt3LEqf+cV5CTP0pKAW
+	8rwSeEddoq2CH1TnumFFmMW8jhkpMfGJtFbH7i24uX2WcLWolfpM4wDf1o0zPTWy4FDIyjw
+	A+gojymMAUzXGVSTZzZ53U0IeAgu+egoeU3GEJiyRK3eIRIzX/neY1jzVwtIWY6JRTlm4wo
+	Oew21UJ1zIhHFVmxuU/dZEMjzah/uLZfiXIpk9MF8tZHKK+AFcj9kLdxwwckivTjfBz/kGM
+	RUVOlfIo01A
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-RECHKSPAM: 0
 
-Hi, Conor, Yixun
-
-On Tue, Jan 13, 2026 at 3:53=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
+On Tue Jan 13, 2026 at 8:42 PM CST, Lee Jones wrote:
+> On Thu, 08 Jan 2026, Troy Mitchell wrote:
 >
-> Hi Guodong,
+>> The default value of the P1 sub-device depends on the value
+>> of P1, so P1 should have a default value here.
+>>=20
+>> Acked-by: Alex Elder <elder@riscstar.com>
+>> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>> ---
+>> Change log in v5:
+>> - nothing
+>> - Link to v4: https://lore.kernel.org/all/20251225-p1-kconfig-fix-v4-2-4=
+4b6728117c1@linux.spacemit.com/
+>>=20
+>> Change log in v4:
+>> - default m if ARCH_SPACEMIT instead of default ARCH_SPACEMIT
+>> - Link to v3: https://lore.kernel.org/all/20251118-p1-kconfig-fix-v3-4-8=
+839c5ac5db3@linux.spacemit.com/
+>> ---
+>>  drivers/mfd/Kconfig | 1 +
+>>  1 file changed, 1 insertion(+)
+>>=20
+>> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+>> index aace5766b38aa5e46e32a8a7b42eea238159fbcf..c757bc365029dc794c658fc5=
+b10084a0f29ac9b6 100644
+>> --- a/drivers/mfd/Kconfig
+>> +++ b/drivers/mfd/Kconfig
+>> @@ -1276,6 +1276,7 @@ config MFD_SPACEMIT_P1
+>>  	depends on ARCH_SPACEMIT || COMPILE_TEST
+>>  	depends on I2C
+>>  	select MFD_SIMPLE_MFD_I2C
+>> +	default m if ARCH_SPACEMIT
+>>  	help
+>>  	  This option supports the I2C-based SpacemiT P1 PMIC, which
+>>  	  contains regulators, a power switch, GPIOs, an RTC, and more.
 >
->
-> On 15:45 Tue 13 Jan     , Guodong Xu wrote:
-> > "b" is ratified (Apr/2024) much later than its components zba/zbb/zbs
-> > (Jun/2021). With "b" added into riscv/extensions.yaml, a dependency
-> > checking rule is now enforced, which requires that when zba, zbb, and z=
-bs
-> > are all specified, "b" must be added as well. Failing to do this will
-> > cause dtbs_check schema check warnings.
-> >
-> > According to uabi.rst, as a single-letter extension, "b" should be adde=
-d
-> > after "c" in canonical order.
-> >
-> > Update existing devicetree files to conform to this rule. Line balancin=
-g
-> > is performed where needed to improve readability.
-> >
-> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> > ---
-> >  arch/riscv/boot/dts/anlogic/dr1v90.dtsi     |   5 +-
-> >  arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi | 256 ++++++++++++++------=
---------
-> >  arch/riscv/boot/dts/spacemit/k1.dtsi        |  32 ++--
-> >  3 files changed, 147 insertions(+), 146 deletions(-)
-> please have separated patch for different SoCs, so they can go via
+> I already applied v4.
+Apologies, I missed this.
+I will remove the patch in the next version. Thank you for your work.
 
-Understand your concern.
+                    - Troy
 
-> their own SoC tree.. thanks
-
-Conor, is it possible to take this as one patch instead?
-
-It fixes the same dtbs_check warnings from riscv/extensions.yaml across thr=
-ee
-SoCs. Keeping them together maintains readability and clear tracking, IMHO.
-
-Happy to split if needed, but wanted to check first.
-
-Thanks,
-Guodong
-
->
-> --
-> Yixun Lan (dlan)
