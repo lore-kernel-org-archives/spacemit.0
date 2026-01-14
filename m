@@ -1,142 +1,64 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BFA38B988
-	for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 22:55:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D522DECD2;
+	Wed, 14 Jan 2026 23:04:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768431313; cv=none; b=BL0CNK/kBPLrPwB6QsqzGyG5HVGIYNrFHnShsiRkA2XGAwP/YUcXQSrYUCzd1X1AriSCIV9E+CRn79myaxrJC8+ighSwcNtW0Jqykaepg3/CzAQXUcbf5jqyi9ItlUlecMLcPtycUJc0xdlztM7yKcxe7cPXVlGmzxQf2l1fDlg=
+	t=1768431899; cv=none; b=dMan2haFgRyMgeqhjI1DjXa3ChuPGSqbYXN1ZSvOLoun32aWWzpuQEYxOOZcmYuOGr6fqeLa1KyYBP5imb8L4x4VEKQJvn3GdcW8/wm+n2q2W5LHHxQu+eivbPxHWHSlSyKGF9dD+b8hRGpxKv9ppCvrVHgvl1WgWab+Ks6KWH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768431313; c=relaxed/simple;
-	bh=V1py82AjhxEE3vmI27KtbVxIIIMpzO9ROtiUPz6KBIM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZeqnAR/a8QBmiY/HpU1Fz6kI6xNq862DUBmFUziLPR/JOIL/2Y1TuO0alFqY+Bk1bLfn+CJE8rQEVUAGvuHiYcryaowe14yBSh+K8kglwBVZT+HCAWTPi1lnbDrYDB/JdNO8sTMD1QCELzjCiblnul7w8TMDGd5IpCtsdrjjsmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=sEysIDnI; arc=none smtp.client-ip=74.125.224.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1768431899; c=relaxed/simple;
+	bh=5Kn6ZXpXDdtEnOpfSUDcw9fvtuyMFn4uC94zbV1j7ZQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WgUi0EisgzKFK0HT4RUcl9asOeWRBNSG9aTCkTumfNCc539C4ae6qrtu9/Rl+Y8rwSr1jc4UmP98l/Bvi1gwiM/6P5XAiC/3wAQRBKPtDCsvPZNl8V60MXdDTcol+MnegylTX3A0ay+b/IwNv8BCFWtbpG9tHDU5E/MfLWACTtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ItelGoID; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="sEysIDnI"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6446fcddf2fso241705d50.0
-        for <spacemit@lists.linux.dev>; Wed, 14 Jan 2026 14:55:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768431308; x=1769036108; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R3aA2X7iGQsnnel6fRLVe4SLr2+v2d/5zouhV3Vlqcs=;
-        b=sEysIDnIsz6WpOUmSicSxKOrFQft13p1iLkYprPtJcmkkau46CxfQMK4rCUqD5b3xO
-         vkSNZqLl7HRJHbhTrgG472PXOv0TBCzN0/mZ0BKD2u5++NxJT5sB02qhR8H0/3dgin1x
-         ZfG6xw54ekSqta56b4RKZQHZMKiIVLP04jCfpks8HVmkqV0qteMJ3VNDbV286eqGX2AP
-         LuFGIWmmINY0lwA4rOIYgDaK+hODO23mz9HyBEp0PkoBxpYKf1+Oahabl0MRCK6QKxqQ
-         eOudmlKBAiNy57eGQhCbTAT280WQ3yXfTGR1A5VnOUBk8sXaQsWRtfAfZm4kTl/lD+il
-         L+aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768431308; x=1769036108;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=R3aA2X7iGQsnnel6fRLVe4SLr2+v2d/5zouhV3Vlqcs=;
-        b=PqfHuruKFTh8W52NB41uj1QeUhP2DWwaFnsp3UvbNriumb6e79oCuKtXsI5n2V/8bn
-         9Rt+/nnn4LSuvTYHfGtaISHJjOqHPi3kA9tOexnYnX97HFhO9+yFAv026ueFsUOamby6
-         WYs8vZuaLV6HZQwykFBNL1jyt14jDcZhSkD+zUpRtQoy3iREwZxclD6527Rsj2T6KRJp
-         oyd7HwI2O6/zrlErgflgcvaoyTn+FmieGvIz6DqzV6Lyso4kQLdmgQqgQmCysnwvDc5P
-         /tXVx1YwJ7rR0qkVeGobuFqCIHYk4yIxcqP/mpkEpyE0vJyjTN+TrABY4OrOvgnxdM63
-         iEaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVi3AkVge+P8QPShF1PzXPFGUKrV0MM4x02nRSlMVhixVWbJ3BKiFutwvMDU07vS+ZhunTSanEjMw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxHX213f4Y4UKIsqEiuWYP3ihfbsn4YT31K465wB1YWQVNMsixt
-	SY8/oBNSN4xECDoELk9PF6Y/xL6o5G15r2aK8y5MRa9fXfz2Wl074kQMVm22gc6BzhaVPt/OwAi
-	4SmU09XM9sZFU0sdd8r3HH4Khm3RtwFyKVFeXY0iGOA==
-X-Gm-Gg: AY/fxX6YWlp9RdBRWwiEb/XkIbpyMX39Eoaccb9rj/OMGy/wZ+gHhQzTAPLDiHEW1RO
-	DbyhcU+hpSrQ0aYS1x+hT6HsesD6cqQEAPnO30TYKyFGkIGNtXw8KeR2bPMR5t6Hf3ABHlsBMm3
-	RjdXhUjaJ978Uwxch06NqLajZQBG+xNIihmgS24zdP4zg2RpBkcEoYrhICugU79t6fdRDN0o2xt
-	fVefyZhKUtveGhSXhg10XHux8vE7Qc0vRgxeSN65/LWiVb10skMpJi2trywS6vkw4F8LX/QJ//p
-	FjJzg0ga8yIx4aFuhAAYXBX3Jput+L7OrARTIQ==
-X-Received: by 2002:a05:690e:b8d:b0:644:77bb:5705 with SMTP id
- 956f58d0204a3-64903b55ebbmr2982962d50.77.1768431307959; Wed, 14 Jan 2026
- 14:55:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ItelGoID"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25451C4CEF7;
+	Wed, 14 Jan 2026 23:04:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768431898;
+	bh=5Kn6ZXpXDdtEnOpfSUDcw9fvtuyMFn4uC94zbV1j7ZQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ItelGoIDscLo+hcxoNqsKmcbn8bg70Fh4uZqb3Dd3Ivwy+N4Uz7Te9uug1K0ffi/A
+	 lFWJOjvx/Kx8FETWVXw9vLdfUO0OS38ofKRaVbaMV6QSBy6hmODEcEosI3/WYagDuo
+	 XyV6e15Ng7eXub6Pr42U75YwN/rI/Cs29tUX8RgFlfMKOH3N/pmBVJzuamfqIiqh6H
+	 NuzAhN5u42Kq/pjdVuj3UINQ2hJpe4cEmZvcEAZfs9DXZbJ6qZn30NCrTv2p8hIA8d
+	 INzXNNRPLOgxyQ5UMeGaourFoqzPr64Iso5d2X9rbPZBe7o7dJO5Hu1CdHzxqm8P8m
+	 MxNNOLI0SvZsg==
+Date: Thu, 15 Jan 2026 00:04:53 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>, 
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v5 3/3] i2c: spacemit: drop warning when clock-frequency
+ property is absent
+Message-ID: <aWggz23QaXtQbK7g@zenone.zhora.eu>
+References: <20251226-k1-i2c-ilcr-v5-0-b5807b7dd0e6@linux.spacemit.com>
+ <20251226-k1-i2c-ilcr-v5-3-b5807b7dd0e6@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260113-adding-b-dtsi-v1-0-22d6e55d19df@riscstar.com>
- <20260113-adding-b-dtsi-v1-2-22d6e55d19df@riscstar.com> <20260113075339-GYA25466@gentoo.org>
- <CAH1PCMarzrZJ072iyAQthB-i-LHFCSJ+tZLx6HcWiVcUrQeafw@mail.gmail.com> <20260114-evergreen-gluten-b1c8558e7684@spud>
-In-Reply-To: <20260114-evergreen-gluten-b1c8558e7684@spud>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Thu, 15 Jan 2026 06:54:57 +0800
-X-Gm-Features: AZwV_Qhkxzj_Y9cwaD4tSP0GMlfoxTMZyhjGCrw4ED-TcUztP4RUDmlAh8THzag
-Message-ID: <CAH1PCMZAEwO4Vg=TdZ9SR1uwm3OOw_y79iCRC+E+SZiVRNtp+w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] riscv: dts: Add "b" ISA extension to existing devicetrees
-To: Conor Dooley <conor@kernel.org>
-Cc: Yixun Lan <dlan@gentoo.org>, Jonathan Corbet <corbet@lwn.net>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Conor Dooley <conor.dooley@microchip.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Junhui Liu <junhui.liu@pigmoral.tech>, linux-doc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, sophgo@lists.linux.dev, spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251226-k1-i2c-ilcr-v5-3-b5807b7dd0e6@linux.spacemit.com>
 
-On Thu, Jan 15, 2026 at 4:42=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
-te:
->
-> On Wed, Jan 14, 2026 at 10:33:34AM +0800, Guodong Xu wrote:
-> > Hi, Conor, Yixun
-> >
-> > On Tue, Jan 13, 2026 at 3:53=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wro=
-te:
-> > >
-> > > Hi Guodong,
-> > >
-> > >
-> > > On 15:45 Tue 13 Jan     , Guodong Xu wrote:
-> > > > "b" is ratified (Apr/2024) much later than its components zba/zbb/z=
-bs
-> > > > (Jun/2021). With "b" added into riscv/extensions.yaml, a dependency
-> > > > checking rule is now enforced, which requires that when zba, zbb, a=
-nd zbs
-> > > > are all specified, "b" must be added as well. Failing to do this wi=
-ll
-> > > > cause dtbs_check schema check warnings.
-> > > >
-> > > > According to uabi.rst, as a single-letter extension, "b" should be =
-added
-> > > > after "c" in canonical order.
-> > > >
-> > > > Update existing devicetree files to conform to this rule. Line bala=
-ncing
-> > > > is performed where needed to improve readability.
-> > > >
-> > > > Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> > > > ---
-> > > >  arch/riscv/boot/dts/anlogic/dr1v90.dtsi     |   5 +-
-> > > >  arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi | 256 ++++++++++++++--=
-------------
-> > > >  arch/riscv/boot/dts/spacemit/k1.dtsi        |  32 ++--
-> > > >  3 files changed, 147 insertions(+), 146 deletions(-)
-> > > please have separated patch for different SoCs, so they can go via
-> >
-> > Understand your concern.
-> >
-> > > their own SoC tree.. thanks
-> >
-> > Conor, is it possible to take this as one patch instead?
-> >
-> > It fixes the same dtbs_check warnings from riscv/extensions.yaml across=
- three
-> > SoCs. Keeping them together maintains readability and clear tracking, I=
-MHO.
-> >
-> > Happy to split if needed, but wanted to check first.
->
-> I'd rather you split it, sorry.
+Hi Troy,
 
-Sure, will do.
-Thank you both.
+On Fri, Dec 26, 2025 at 04:32:01PM +0800, Troy Mitchell wrote:
+> The clock-frequency property is optional according to the DT binding.
+> Do not emit a warning when the property is missing and fall back to the
+> default frequency instead.
+> 
+> Fixes: 5ea558473fa31 ("i2c: spacemit: add support for SpacemiT K1 SoC")
 
-BR
-Guodong Xu
+besides Alex' suggestion, please, remove Fixes here. This is not
+worth being treated as a fix. What you are doing here is just
+remove a warning.
+
+Thanks,
+Andi
