@@ -1,73 +1,96 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A86A18FDBD;
-	Thu, 15 Jan 2026 00:39:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E0935972;
+	Thu, 15 Jan 2026 02:03:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768437576; cv=none; b=E3lNGj2rKmapfSxsMAgStrHaPva/NAyyb4/R9oXUjulT7B5+U1ak2T6djV8Vl21eRsLaBACcB2G5pTsMXGdBn21QTy5lUQheiTB/J8KGT1UTR64w8NSBfJnMT+SGFkdY/yB/chNxai9Rql9LnbmBE6fCGD5ipoxJZnjvzeV3HD8=
+	t=1768442628; cv=none; b=fwAi3DOzoLQlDtiED/HofzT/xCvxaEI1WGimK3mIxpX1QDCB4jj87vpCM+eRrVVYcpVZ3+uELKZC7zBy84CIJz7YB4vHsi9v2eAh7NPCmYHfHVQlKwbJiHpZJ7ohLN6EeHwgaUpxf5zjdtgoyWJJNMckzhKxRGR9+eK6hlzbjXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768437576; c=relaxed/simple;
-	bh=NK6H6hJtfATaruOaMMeAo/X/tsh1ZpMFyB+26JRS3EU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dq/xNI/ShHoALAN+VK7aB2o+whtMUnQEddYcAQxKA1EOYmVfC7kE+5r32AFL1EztUB2SzCILvHWMNVreZ+/814pfLSDM1Z4YZgi9YzJ86XSiyamlAj8VgLpbMXGjomGNEGyc1aGv+4WxwfyTUpt1obz/rGD581AyqUCguRDuppg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 36B89340FC6;
-	Thu, 15 Jan 2026 00:39:32 +0000 (UTC)
-Date: Thu, 15 Jan 2026 08:39:29 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Junhui Liu <junhui.liu@pigmoral.tech>, linux-doc@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 4/4] riscv: dts: spacemit: k1: Add "b" ISA extension
-Message-ID: <20260115003929-GYA33650@gentoo.org>
-References: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
- <20260115-adding-b-dtsi-v2-4-254dd61cf947@riscstar.com>
+	s=arc-20240116; t=1768442628; c=relaxed/simple;
+	bh=01/BcMefdiQJAFqcbKBCElf2up5LTOkivGiQ1oLjw8U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pfYR7nrx/jB8eIJd99bgsxtA1CgTPEx4fI1AOC8kP+a1V27kPT8sISsqcHTIh8Wjy4H0Ce+nfgGU6FOG+gaXTYUJv3N7/fXRz+t11oEsI0qsUGWvYy7bVBR14XHFHrtCKy+Zymq9yVQAwKhClpAGmjV2bcTQtt/np3jL+9H6AEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VVn8fEIA; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VVn8fEIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC19C4CEF7;
+	Thu, 15 Jan 2026 02:03:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768442627;
+	bh=01/BcMefdiQJAFqcbKBCElf2up5LTOkivGiQ1oLjw8U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=VVn8fEIA0P2SRgOgkH9L9xDnNrFMwSMr+FuTiVabG/Cdb0/fC+lXl31t27L0XMF9r
+	 wUcwVaavEX9Jx1gkCtnOKvybhVsLKNfNZsXG7+zWhSsh9jp2xj7QRNPY6Vtr6S9jNP
+	 QOF01QFmkGXT3gcQiqm/KOzcXTMVg7n2u8gbBzGTGP1j7L/VKYWpDo4bRGoXsGjZCq
+	 OGNT4cFmUE45ETlIKcWHDGxSFPXIqaD++f9Pjjn5PSbpT6TYhB3sY4CtnDaDSJpbvc
+	 uWDmI+0hZi6oltmQM/lADkEDKCDVydRFbhGsbEk8Jy8PhDovfFXCrbtuMqP5/C6u2+
+	 PZjgfQyH19yXQ==
+From: Yixun Lan <dlan@kernel.org>
+To: spacemit@lists.linux.dev
+Cc: Yixun Lan <dlan@kernel.org>,
+	soc@kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] MAINTAINERS: update email address for Yixun Lan
+Date: Thu, 15 Jan 2026 10:03:35 +0800
+Message-ID: <20260115-11-maintainer-dlan-v1-1-64bb698da846@kernel.org>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260115-adding-b-dtsi-v2-4-254dd61cf947@riscstar.com>
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20260115-11-maintainer-dlan-59b2ed54999e
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1535; i=dlan@kernel.org; h=from:subject:message-id; bh=01/BcMefdiQJAFqcbKBCElf2up5LTOkivGiQ1oLjw8U=; b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpaErM36niadQaWqw5X0frjrYPjc3l8ULtEaMp9 27u05vS4WaJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaWhKzBsUgAAAAAAEAA5t YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5 maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU QACgkQMarqR1lNu+3+WA//Y7GmKsRetgi8aRvMXT/Aua6pHOk+QCRE6HwEt/KuzCX1BSVcyRlfG VMKZCuyhXv9bZk3MIFofsxuf7MHT22sw03IN5+njd7s/Ln6QWkaLRSbgcuNgGXW7eiqbZt7xre7 H4mTHV76lVZRdL5p+341Z2/0dD1b2U1Gmzi7j4HVc3f57BtUJlxb+myMdrNbgcTJMJcSwJhdaia rWk7+59EusrC1QvveFPV603NGzVIh+hs17xL/7pAfumLiyQ3TVVgoNBjtI6i3SevofQ63cUroHI QUmrzFKb0g897pirSMrvL9xj5AxhNv7/k2tCk1sKmlrORAaS8uqgZ9hX+4krLYTV/stuyppVN2v TeaGP6UJ9SIKYGBU+YpowJvPyitAQOO9+KW0k/amm2hh5Nnsp3MxLIRoL8LbPBbZkXpDTzAEAIb M/lx9Au8MWj+F/Z82R1m4IS8OezDCyyV1Fr4ii4QRAU8koCeVzazigBInQUCfipRVsY+szRVE49 J33q2hVE7udSPlhrcBZ/UwGBurfeUPVZxxYz7OYf20UvsvN7idsph5JJIFXlcnid3fcdRjU4RaC rEVHWBpzQ10irMr/+QwZ5zhz/zXVNobNJW16IvNP8fWszT5iJDfhwG2VULebb9xt0ShVZxi35hD dbo48wuamlAFwo32yMG02jR6T8NT10=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp; fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Content-Transfer-Encoding: 8bit
 
-Hi Guodong,
+Switch my email address to kernel.org account for more convenience.
+Also add entries to the mailmap.
 
-On 07:19 Thu 15 Jan     , Guodong Xu wrote:
-> "b" is ratified (Apr/2024) much later than its components zba/zbb/zbs
-> (Jun/2021). With "b" added into riscv/extensions.yaml, a dependency
-> checking rule is now enforced, which requires that when zba, zbb, and zbs
-> are all specified, "b" must be added as well. Failing to do this will
-> cause dtbs_check schema check warnings.
-> 
-> According to uabi.rst, as a single-letter extension, "b" should be added
-> after "c" in canonical order.
-> 
-> Update k1.dtsi to conform to this rule.
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+I will send it along with PR to SoC maintainer via SpacemiT's SoC tree
+---
+ .mailmap    | 2 ++
+ MAINTAINERS | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
+diff --git a/.mailmap b/.mailmap
+index 84309a39d329..fa9296de463e 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -868,6 +868,8 @@ Wolfram Sang <wsa@kernel.org> <wsa@the-dreams.de>
+ Yakir Yang <kuankuan.y@gmail.com> <ykk@rock-chips.com>
+ Yanteng Si <si.yanteng@linux.dev> <siyanteng@loongson.cn>
+ Ying Huang <huang.ying.caritas@gmail.com> <ying.huang@intel.com>
++Yixun Lan <dlan@kernel.org> <dlan@gentoo.org>
++Yixun Lan <dlan@kernel.org> <yixun.lan@amlogic.com>
+ Yosry Ahmed <yosry.ahmed@linux.dev> <yosryahmed@google.com>
+ Yu-Chun Lin <eleanor.lin@realtek.com> <eleanor15x@gmail.com>
+ Yusuke Goda <goda.yusuke@renesas.com>
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 5b11839cba9d..8417c0c8cc72 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22518,7 +22518,7 @@ F:	drivers/mailbox/riscv-sbi-mpxy-mbox.c
+ F:	include/linux/mailbox/riscv-rpmi-message.h
+ 
+ RISC-V SPACEMIT SoC Support
+-M:	Yixun Lan <dlan@gentoo.org>
++M:	Yixun Lan <dlan@kernel.org>
+ L:	linux-riscv@lists.infradead.org
+ L:	spacemit@lists.linux.dev
+ S:	Maintained
 
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20260115-11-maintainer-dlan-59b2ed54999e
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan <dlan@kernel.org>
+
