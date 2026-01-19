@@ -1,109 +1,79 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7E41FC7
-	for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 03:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8401E32CF
+	for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 03:55:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768791777; cv=none; b=agxhbaIj6Mn0ByULNVJN/13A0A5Z0Ku0QWzplkqC7CkawMPlQ05u777dA4uiAbX/hCVcx0nDKHPwV2Hd6oJLDAmjKPuqt/rC88Xuct5TiRsKXuBMpsa+jW+BwO1aDfIx7XNzqBJDDSTI5ME0DHorIWO3/W3EJRCR6qXwBZUw1Ps=
+	t=1768794914; cv=none; b=sB9oFG3uikCpN7Byf7PeqRe9h6oHt2XDFbpz3oNb2j8Ti2p24vcOLnf10KnKX7FHv5gURb84uUEcIvwI6guaG6FYT+DHUSnOugkI0ajP5tJ5NzIPwCfCd0SiWN7lk5MprZH2+BabpXBucpBH6r9oiBylSoshzLXRmaClfna4VJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768791777; c=relaxed/simple;
-	bh=iI1aIeduAmNsa/YHJf1fIzQY3U9gF7mFBl2eRFjafRE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u5NcgyoqtKljSpRbt3Ah5JIJ5NYnNOncMHhiOc6PioK6ckPSm4g4PoiTfLT94+v7fnXiy/K65+WlGgwf9BhEXYPgPjVNmHzwN2VRQEvZZHyubrc3Ia1kInCDctmex2uvMhxMWE7185sh2fo8f8AYOWUilMDXB+jwl2ZdokQjpB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.27.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 7F6FD340E06;
-	Mon, 19 Jan 2026 03:02:55 +0000 (UTC)
-Date: Mon, 19 Jan 2026 11:02:51 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Chukun Pan <amadeus@jmu.edu.cn>
-Cc: Rob Herring <robh@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: add fixed regulators for
- OrangePi
-Message-ID: <20260119030251-GYD47382@gentoo.org>
-References: <20260116100001.208334-1-amadeus@jmu.edu.cn>
- <20260116100001.208334-2-amadeus@jmu.edu.cn>
+	s=arc-20240116; t=1768794914; c=relaxed/simple;
+	bh=tgEgiYuM4Qx4be30r2DC8VwO76uF9uH214V+EB39PaA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=urMRKvOtc+O3wH7N5h1W7AaB4HdnEyZBCyLSe2hCW8Pk1cXpoSWNEIxJFlmDJJMNuDEzz6PTWsDcroDMkEgjxs2hgRV58VmsSY9X3/5B/UTw7r0TYvfV84vg9pacnXn9OSs0XieDDGnJ68rC+RK48ZKsO3I/Qf0t+9VShfjVFpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [10.213.20.68] (unknown [210.73.43.101])
+	by APP-03 (Coremail) with SMTP id rQCowACXtt0Eq21pmqS5BQ--.52891S2;
+	Mon, 19 Jan 2026 11:54:45 +0800 (CST)
+Message-ID: <e3890633-351d-401d-abb1-5b2625c2213b@iscas.ac.cn>
+Date: Mon, 19 Jan 2026 11:54:44 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260116100001.208334-2-amadeus@jmu.edu.cn>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] net: spacemit: Check netif_carrier_ok when reading
+ stats
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: Yixun Lan <dlan@gentoo.org>, Paolo Abeni <pabeni@redhat.com>,
+ Jakub Kicinski <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, "David S . Miller"
+ <davem@davemloft.net>, linux-riscv@lists.infradead.org,
+ linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
+ netdev@vger.kernel.org
+References: <20260118100000.224793-1-amadeus@jmu.edu.cn>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20260118100000.224793-1-amadeus@jmu.edu.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:rQCowACXtt0Eq21pmqS5BQ--.52891S2
+X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUY67k0a2IF6FyUM7kC6x804xWl14x267AK
+	xVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGw
+	A2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26ryj
+	6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Cr
+	1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv
+	0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z2
+	80aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF
+	7I0E8cxan2IY04v7MxAIw28IcxkI7VAKI48JMxAqzxv26xkF7I0En4kS14v26r1q6r43Mx
+	C20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAF
+	wI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20x
+	vE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v2
+	0xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxV
+	W8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8fwIDUUUUU==
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Hi Chukun, 
+Hi Cunkun Pan:
 
-On 18:00 Fri 16 Jan     , Chukun Pan wrote:
-> Define the power input and the 4V / 3.3V power as fixed regulator
-> supplies for the PMIC, PCIe and Wi-Fi.
-> 
-> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-> ---
->  arch/riscv/boot/dts/spacemit/k1-orangepi.dtsi | 28 +++++++++++++++++++
->  1 file changed, 28 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi.dtsi b/arch/riscv/boot/dts/spacemit/k1-orangepi.dtsi
-> index b4808f258adf..c71c5bc1d341 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi.dtsi
-> @@ -17,6 +17,34 @@ aliases {
->  	chosen {
->  		stdout-path = "serial0";
->  	};
-> +
-> +	pcie_vcc3v3: regulator-pcie-vcc3v3 {
-can you follow the same name scheme with k1-bananapi-f3.dts?
+On 1/18/26 18:00, Chukun Pan wrote:
+> Currently, when the interface is not linked up, reading the interface
+> stats will print several timeout logs. Add a netif_carrier_ok check to
+> the emac_stats_update function to avoid this situation:
 
-also please add this regulator with explict consumer - pcie,
-otherwise I see the patch isn't really useful
+I am unable to reproduce this problem.
 
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "pcie_vcc3v3";
-> +		regulator-always-on;
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +		vin-supply = <&vcc_5v0>;
-> +	};
-> +
-> +	vcc_5v0: regulator-vcc-5v0 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vcc_5v0";
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +	};
-> +
-> +	vcc4v0: regulator-vcc4v0 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vcc4v0";
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +		regulator-min-microvolt = <4000000>;
-> +		regulator-max-microvolt = <4000000>;
-> +		vin-supply = <&vcc_5v0>;
-> +	};
->  };
->  
->  &eth0 {
-> -- 
-> 2.25.1
-> 
+Can you elaborate on what you mean by "not linked up"? I couldn't
+reproduce this on an unconnected interface.
 
--- 
-Yixun Lan (dlan)
+I would also appreciate more information on this in general - full
+kernel logs, hardware information (which board, what you were doing with
+cables, etc...)
+
+Thanks,
+Vivian "dramforever" Wang
+
