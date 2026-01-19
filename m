@@ -1,79 +1,83 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8401E32CF
-	for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 03:55:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D25278753
+	for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 14:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768794914; cv=none; b=sB9oFG3uikCpN7Byf7PeqRe9h6oHt2XDFbpz3oNb2j8Ti2p24vcOLnf10KnKX7FHv5gURb84uUEcIvwI6guaG6FYT+DHUSnOugkI0ajP5tJ5NzIPwCfCd0SiWN7lk5MprZH2+BabpXBucpBH6r9oiBylSoshzLXRmaClfna4VJ4=
+	t=1768832497; cv=none; b=oOqgRf3ZrYCDNlJhgGobRT59hTNTcBx3cpO27diqcC9kpUr7w1XhI8ppOZWUUa6xAn+D+8vtjoV9CRVL8fw5lcPFlk3THK9RoZsuI18bBsMdNpIiS3NDN0PkixdHbpHS6ehOCaTv0m2DBlulV0ijjTx6CdThxmyH3xn3js0ArMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768794914; c=relaxed/simple;
-	bh=tgEgiYuM4Qx4be30r2DC8VwO76uF9uH214V+EB39PaA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=urMRKvOtc+O3wH7N5h1W7AaB4HdnEyZBCyLSe2hCW8Pk1cXpoSWNEIxJFlmDJJMNuDEzz6PTWsDcroDMkEgjxs2hgRV58VmsSY9X3/5B/UTw7r0TYvfV84vg9pacnXn9OSs0XieDDGnJ68rC+RK48ZKsO3I/Qf0t+9VShfjVFpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [10.213.20.68] (unknown [210.73.43.101])
-	by APP-03 (Coremail) with SMTP id rQCowACXtt0Eq21pmqS5BQ--.52891S2;
-	Mon, 19 Jan 2026 11:54:45 +0800 (CST)
-Message-ID: <e3890633-351d-401d-abb1-5b2625c2213b@iscas.ac.cn>
-Date: Mon, 19 Jan 2026 11:54:44 +0800
+	s=arc-20240116; t=1768832497; c=relaxed/simple;
+	bh=4FsYjzOy2OwoeEB6bDlUhD9xagzXLUPTGlJPIqnDYXQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=LYW0HNy5DdNGtZjLbMNT6tYSPWlqKTXqJUEzvP/WvfOtDcej4ODKThqq8RV2CUJQgUflAD8db/GIseBdCL2oWO1YkLov1J/OJNspRG4lgCNT3HpPzfmEDA04BtWiATmqBhPup8PmInwfGUkoyCP0Tt4hbOtLlG7/sZDjKrlycnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from localhost.localdomain (unknown [116.25.94.187])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 312c49402;
+	Mon, 19 Jan 2026 22:16:28 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: wangruikang@iscas.ac.cn
+Cc: amadeus@jmu.edu.cn,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	dlan@gentoo.org,
+	edumazet@google.com,
+	kuba@kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	netdev@vger.kernel.org,
+	pabeni@redhat.com,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/1] net: spacemit: Check netif_carrier_ok when reading stats
+Date: Mon, 19 Jan 2026 22:16:20 +0800
+Message-Id: <20260119141620.1318102-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <e3890633-351d-401d-abb1-5b2625c2213b@iscas.ac.cn>
+References: <e3890633-351d-401d-abb1-5b2625c2213b@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] net: spacemit: Check netif_carrier_ok when reading
- stats
-To: Chukun Pan <amadeus@jmu.edu.cn>
-Cc: Yixun Lan <dlan@gentoo.org>, Paolo Abeni <pabeni@redhat.com>,
- Jakub Kicinski <kuba@kernel.org>, Eric Dumazet <edumazet@google.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, "David S . Miller"
- <davem@davemloft.net>, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
- netdev@vger.kernel.org
-References: <20260118100000.224793-1-amadeus@jmu.edu.cn>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20260118100000.224793-1-amadeus@jmu.edu.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowACXtt0Eq21pmqS5BQ--.52891S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUY67k0a2IF6FyUM7kC6x804xWl14x267AK
-	xVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGw
-	A2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26ryj
-	6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Cr
-	1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv
-	0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z2
-	80aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF
-	7I0E8cxan2IY04v7MxAIw28IcxkI7VAKI48JMxAqzxv26xkF7I0En4kS14v26r1q6r43Mx
-	C20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAF
-	wI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20x
-	vE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v2
-	0xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxV
-	W8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8fwIDUUUUU==
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9bd69d3e8a03a2kunm0c2bdb8b3281c6
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZHx0aVh9OSBgeHUoeQktIGFYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk9VSkNMWVdZFhoPEhUdFFlBWU9LSFVKS0lCTUtKVUpLS1VLWQ
+	Y+
 
-Hi Cunkun Pan:
+Hi Andrew, Vivian,
 
-On 1/18/26 18:00, Chukun Pan wrote:
-> Currently, when the interface is not linked up, reading the interface
-> stats will print several timeout logs. Add a netif_carrier_ok check to
-> the emac_stats_update function to avoid this situation:
+> I am unable to reproduce this problem.
+>
+> Can you elaborate on what you mean by "not linked up"? I couldn't
+> reproduce this on an unconnected interface.
+>
+> I would also appreciate more information on this in general - full
+> kernel logs, hardware information (which board, what you were doing
+> with cables, etc...)
 
-I am unable to reproduce this problem.
+I apologize for not expressing this question clearly.
 
-Can you elaborate on what you mean by "not linked up"? I couldn't
-reproduce this on an unconnected interface.
+I'm trying to run OpenWrt on OrangePi R2S and OrangePi RV2.
+Unlike other Spacemit K1 boards, OrangePi uses the YT8531C PHY.
 
-I would also appreciate more information on this in general - full
-kernel logs, hardware information (which board, what you were doing with
-cables, etc...)
+Read stats when the interface is not connected to a network cable:
+
+root@OpenWrt:~# ethtool -S eth1
+[   71.725539] k1_emac cac81000.ethernet eth1: Read stat timeout
+NIC statistics:
+     rx_drp_fifo_full_pkts: 0
+     rx_truncate_fifo_full_pkts: 0
+
+I just discovered that adding "motorcomm,auto-sleep-disabled" to disable
+the sleep mode of the MotorComm PHY prevents the problem from occurring.
+
+I will send a DT patch instead. Sorry for the noise.
 
 Thanks,
-Vivian "dramforever" Wang
-
+Chukun
