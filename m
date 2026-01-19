@@ -1,83 +1,74 @@
-Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D25278753
-	for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 14:21:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79E237F74E;
+	Mon, 19 Jan 2026 15:09:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768832497; cv=none; b=oOqgRf3ZrYCDNlJhgGobRT59hTNTcBx3cpO27diqcC9kpUr7w1XhI8ppOZWUUa6xAn+D+8vtjoV9CRVL8fw5lcPFlk3THK9RoZsuI18bBsMdNpIiS3NDN0PkixdHbpHS6ehOCaTv0m2DBlulV0ijjTx6CdThxmyH3xn3js0ArMc=
+	t=1768835376; cv=none; b=XrazvaoQ6+zfN11CPyZHj2vyL8fbrd599DhiOOkU8yDlqj1wStx0bYQLE/ABuycrGlAcqd48FhMvNJMiEOFPaOxCCDoNCEgqsKpwZei7ZQJ3NKm3EipDRNZp20d3n+9+jz53A1/uPlgi3vqrvSoT0NIsG5WEqAd60sTKVdliFQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768832497; c=relaxed/simple;
-	bh=4FsYjzOy2OwoeEB6bDlUhD9xagzXLUPTGlJPIqnDYXQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LYW0HNy5DdNGtZjLbMNT6tYSPWlqKTXqJUEzvP/WvfOtDcej4ODKThqq8RV2CUJQgUflAD8db/GIseBdCL2oWO1YkLov1J/OJNspRG4lgCNT3HpPzfmEDA04BtWiATmqBhPup8PmInwfGUkoyCP0Tt4hbOtLlG7/sZDjKrlycnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from localhost.localdomain (unknown [116.25.94.187])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 312c49402;
-	Mon, 19 Jan 2026 22:16:28 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: wangruikang@iscas.ac.cn
-Cc: amadeus@jmu.edu.cn,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	dlan@gentoo.org,
-	edumazet@google.com,
-	kuba@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	netdev@vger.kernel.org,
-	pabeni@redhat.com,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/1] net: spacemit: Check netif_carrier_ok when reading stats
-Date: Mon, 19 Jan 2026 22:16:20 +0800
-Message-Id: <20260119141620.1318102-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <e3890633-351d-401d-abb1-5b2625c2213b@iscas.ac.cn>
+	s=arc-20240116; t=1768835376; c=relaxed/simple;
+	bh=76alY5Qj2iPAUaMuzypXkuDTBKlDNOSjJAbCo63xZTI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m6fspTNeM3G6zF908AZJVAIoYlcgfr/c7tvthgPK5kZ//qfiH1gIM8H18+dLCaMyLoipcpeAjMsQjO/nD7WYth9m2bqdn+vkC11Phs6tbjPoeRzM+MT1PUO3TzwD720jKWkx6FysygBieGC8HAuMC/IWdgDUMqwK58Cmhg4Gqs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=MC4ly2iX; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="MC4ly2iX"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=34ElnxDRQbNZrGi1RSpU0QbjEZAsJP9D0opkzbG1cjM=; b=MC4ly2iXpNquh53DTz2ysfgs+h
+	krl7wIQO0oWIql0odQRzCSD1domNspeN+8kqQEA4dez2UFKN/DZDiDQVHb/DZSyuRqETDW1H2MYMi
+	HLMUq0zmRseIN3UQhmAdpsug8euvRvmc96ilA8C9pnCeVmaeZ4WosWPTg7WE2YzMjSCA=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vhqsT-003W6M-VF; Mon, 19 Jan 2026 16:09:13 +0100
+Date: Mon, 19 Jan 2026 16:09:13 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: wangruikang@iscas.ac.cn, andrew+netdev@lunn.ch, davem@davemloft.net,
+	dlan@gentoo.org, edumazet@google.com, kuba@kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	netdev@vger.kernel.org, pabeni@redhat.com, spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/1] net: spacemit: Check netif_carrier_ok when reading
+ stats
+Message-ID: <48757af2-bbea-4185-8cc9-2ef51dbc8373@lunn.ch>
 References: <e3890633-351d-401d-abb1-5b2625c2213b@iscas.ac.cn>
+ <20260119141620.1318102-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9bd69d3e8a03a2kunm0c2bdb8b3281c6
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZHx0aVh9OSBgeHUoeQktIGFYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk9VSkNMWVdZFhoPEhUdFFlBWU9LSFVKS0lCTUtKVUpLS1VLWQ
-	Y+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260119141620.1318102-1-amadeus@jmu.edu.cn>
 
-Hi Andrew, Vivian,
+> root@OpenWrt:~# ethtool -S eth1
+> [   71.725539] k1_emac cac81000.ethernet eth1: Read stat timeout
+> NIC statistics:
+>      rx_drp_fifo_full_pkts: 0
+>      rx_truncate_fifo_full_pkts: 0
+> 
+> I just discovered that adding "motorcomm,auto-sleep-disabled" to disable
+> the sleep mode of the MotorComm PHY prevents the problem from occurring.
 
-> I am unable to reproduce this problem.
->
-> Can you elaborate on what you mean by "not linked up"? I couldn't
-> reproduce this on an unconnected interface.
->
-> I would also appreciate more information on this in general - full
-> kernel logs, hardware information (which board, what you were doing
-> with cables, etc...)
+This suggests that when the PHY stops the reference clock, the MAC
+hardware stops working. It needs that clock to access
+statistics. Keeping the clock ticking will increase power usage a
+little.
 
-I apologize for not expressing this question clearly.
+I wounder if anything else stops working? There are some MACs whos DMA
+engine stop working without the reference clock. That can cause
+problems during both probe and remove, or open and close.
 
-I'm trying to run OpenWrt on OrangePi R2S and OrangePi RV2.
-Unlike other Spacemit K1 boards, OrangePi uses the YT8531C PHY.
+So it would be nice to have a better understanding of this. If this
+turns out to be true, maybe a comment by this poll_read_timeout()
+indicating if it does timeout, the PHY might be the problem.
 
-Read stats when the interface is not connected to a network cable:
-
-root@OpenWrt:~# ethtool -S eth1
-[   71.725539] k1_emac cac81000.ethernet eth1: Read stat timeout
-NIC statistics:
-     rx_drp_fifo_full_pkts: 0
-     rx_truncate_fifo_full_pkts: 0
-
-I just discovered that adding "motorcomm,auto-sleep-disabled" to disable
-the sleep mode of the MotorComm PHY prevents the problem from occurring.
-
-I will send a DT patch instead. Sorry for the noise.
-
-Thanks,
-Chukun
+	   Andrew
