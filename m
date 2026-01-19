@@ -1,74 +1,95 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79E237F74E;
-	Mon, 19 Jan 2026 15:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A085289E13
+	for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 23:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768835376; cv=none; b=XrazvaoQ6+zfN11CPyZHj2vyL8fbrd599DhiOOkU8yDlqj1wStx0bYQLE/ABuycrGlAcqd48FhMvNJMiEOFPaOxCCDoNCEgqsKpwZei7ZQJ3NKm3EipDRNZp20d3n+9+jz53A1/uPlgi3vqrvSoT0NIsG5WEqAd60sTKVdliFQk=
+	t=1768866736; cv=none; b=ZRr43pgLsSXcQ7FRaBJf304UdrRr8gfptBAVt6mWS0lmZ27sIxZf/vNjhw0qKvHx45KzlUIdixQXg7fKk355Rv0OEQA0XjOdjst8YJZNsNN1ghHn3QnvfQRs7J2bGQBLpdoL99n6SXVrM9c4xsknwbKYelZjJ5irvfYQMkzq2ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768835376; c=relaxed/simple;
-	bh=76alY5Qj2iPAUaMuzypXkuDTBKlDNOSjJAbCo63xZTI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m6fspTNeM3G6zF908AZJVAIoYlcgfr/c7tvthgPK5kZ//qfiH1gIM8H18+dLCaMyLoipcpeAjMsQjO/nD7WYth9m2bqdn+vkC11Phs6tbjPoeRzM+MT1PUO3TzwD720jKWkx6FysygBieGC8HAuMC/IWdgDUMqwK58Cmhg4Gqs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=MC4ly2iX; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1768866736; c=relaxed/simple;
+	bh=oEUu9/PDf523PRaQvLKq/iXwr4E9yKFjaIG8HW8PyjA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CYDadjMCwLLd0NRD4B3uPZlnjwhEd9bJ9FV47pW7Xd++dTSKTc+MMqvbWkRbfqukUQarOFObAlG5LAMweNzJegZrZ7lQF4aJV4rC1jCfGH3mbt0gGDX9lNdu3f33IFMVC/MB4x9gNFfkKUI8tNMyoppy01IACneId4CRC1ysOxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p1fRNObD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="MC4ly2iX"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=34ElnxDRQbNZrGi1RSpU0QbjEZAsJP9D0opkzbG1cjM=; b=MC4ly2iXpNquh53DTz2ysfgs+h
-	krl7wIQO0oWIql0odQRzCSD1domNspeN+8kqQEA4dez2UFKN/DZDiDQVHb/DZSyuRqETDW1H2MYMi
-	HLMUq0zmRseIN3UQhmAdpsug8euvRvmc96ilA8C9pnCeVmaeZ4WosWPTg7WE2YzMjSCA=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vhqsT-003W6M-VF; Mon, 19 Jan 2026 16:09:13 +0100
-Date: Mon, 19 Jan 2026 16:09:13 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Chukun Pan <amadeus@jmu.edu.cn>
-Cc: wangruikang@iscas.ac.cn, andrew+netdev@lunn.ch, davem@davemloft.net,
-	dlan@gentoo.org, edumazet@google.com, kuba@kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	netdev@vger.kernel.org, pabeni@redhat.com, spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/1] net: spacemit: Check netif_carrier_ok when reading
- stats
-Message-ID: <48757af2-bbea-4185-8cc9-2ef51dbc8373@lunn.ch>
-References: <e3890633-351d-401d-abb1-5b2625c2213b@iscas.ac.cn>
- <20260119141620.1318102-1-amadeus@jmu.edu.cn>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p1fRNObD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4436CC2BCB3
+	for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 23:52:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768866736;
+	bh=oEUu9/PDf523PRaQvLKq/iXwr4E9yKFjaIG8HW8PyjA=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=p1fRNObD1fayH8hVIj8ARBKin7GncYXFtALKlfE99kRfDWhzb498K1nNL5Dfwj1kQ
+	 NC/3A0TQnWp9yzRURdIbLil3TnHKexA5uocZYaxRDjPQzUPSNqxnTpi7hQ226mRI4v
+	 TqCxUjz46PIi9IW9Wzj1xZ725hPrDY36RfJuidS3i9Xp88PentbwSaJshAdYkZiYp5
+	 cC1EyjzmIqdVIcANdtvrfhfeGuebPY5qn5doAJ5Dw0cFikX2oJtr6GxEaKvHCUMQfj
+	 NEkxZVnOs8epjbE7lsc3hfEIwHflA1mpUZUxS1h8VFhjldioE1n/wWypMRo7od0qOq
+	 94g+cnCfEBMgA==
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6481bd1763bso4248413d50.3
+        for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 15:52:16 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWr7Vf30LNHb4/uKWO+X2U+cUY/c24bpeswhnEJzzXxps85hhY2dZx1tM3Oqwro6oRawIdGsup0FA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyL04KqZSei5HIzWzlz2QCd1DleEFT3kWfTWkJzKAQST/Smn5J4
+	HFTC1XGkEAxUpiWByS5xI7fET9g03vHDjFFEW/QBWEjblYotmTTBCfDte3bqP/xaR/Sbpk0ihJy
+	cnO9XjrWRZZFkpkdf0VcsPqOBNwO4kkg=
+X-Received: by 2002:a05:690e:190b:b0:640:cc09:b7c8 with SMTP id
+ 956f58d0204a3-6493c7f3a3fmr116732d50.23.1768866735546; Mon, 19 Jan 2026
+ 15:52:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260119141620.1318102-1-amadeus@jmu.edu.cn>
+References: <20260108-kx-pinctrl-aib-io-pwr-domain-v2-0-6bcb46146e53@linux.spacemit.com>
+In-Reply-To: <20260108-kx-pinctrl-aib-io-pwr-domain-v2-0-6bcb46146e53@linux.spacemit.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Tue, 20 Jan 2026 00:52:04 +0100
+X-Gmail-Original-Message-ID: <CAD++jLnM=1iyb0-=Jzqq+jPKtSvR+dbb1w8BNNcr+evdQFg4Eg@mail.gmail.com>
+X-Gm-Features: AZwV_QgGDEeGRtBiw30NZCmvNLT-lDgyzgro6X2hF8bkv_0hnJ5tDvF5IEFLosE
+Message-ID: <CAD++jLnM=1iyb0-=Jzqq+jPKtSvR+dbb1w8BNNcr+evdQFg4Eg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] pinctrl: spacemit: support I/O power domain configuration
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> root@OpenWrt:~# ethtool -S eth1
-> [   71.725539] k1_emac cac81000.ethernet eth1: Read stat timeout
-> NIC statistics:
->      rx_drp_fifo_full_pkts: 0
->      rx_truncate_fifo_full_pkts: 0
-> 
-> I just discovered that adding "motorcomm,auto-sleep-disabled" to disable
-> the sleep mode of the MotorComm PHY prevents the problem from occurring.
+On Thu, Jan 8, 2026 at 7:43=E2=80=AFAM Troy Mitchell
+<troy.mitchell@linux.spacemit.com> wrote:
 
-This suggests that when the PHY stops the reference clock, the MAC
-hardware stops working. It needs that clock to access
-statistics. Keeping the clock ticking will increase power usage a
-little.
+> This series adds support for configuring IO power domain voltage for
+> dual-voltage GPIO banks on the Spacemit K1 SoC.
+>
+> On K1, IO domain power control registers determine whether a GPIO bank
+> operates at 1.8V or 3.3V. These registers default to 3.3V operation,
+> which may lead to functional failures when GPIO banks are externally
+> supplied with 1.8V but internally remain configured for 3.3V.
+>
+> The IO power domain registers are implemented as secure registers and
+> require an explicit unlock sequence via the AIB Secure Access Register
+> (ASAR), located in the APBC register space.
+>
+> This series ensures that pin voltage configuration correctly reflects
+> hardware requirements.
+>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-I wounder if anything else stops working? There are some MACs whos DMA
-engine stop working without the reference clock. That can cause
-problems during both probe and remove, or open and close.
+Excellent work in this patch series Troy!
 
-So it would be nice to have a better understanding of this. If this
-turns out to be true, maybe a comment by this poll_read_timeout()
-indicating if it does timeout, the PHY might be the problem.
+> Troy Mitchell (3):
+>       dt-bindings: pinctrl: spacemit: add syscon property
+>       pinctrl: spacemit: support I/O power domain configuration
 
-	   Andrew
+These two patches applied to the pin control tree.
+
+>       riscv: dts: spacemit: modify pinctrl node in dtsi
+
+Please funnel this one through the SoC tree.
+
+Yours,
+Linus Walleij
