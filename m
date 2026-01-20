@@ -1,254 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B7847B42D;
-	Tue, 20 Jan 2026 19:35:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161EF3DA7D4
+	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 22:31:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768937708; cv=none; b=k3gdI+Uo93deioI+zO7pNrG1uCpL2KfGtBtwn35IkwxjimwtwWjIZT8Pkrl9iXuHxs65Lw2RdhbEt/ob2QqVou7jAia339I+gDdlRmqwhOni1AccFJsxjZKcsEz27Vdynn/OQujbkcbNRZpuwBw+/TAgNuwqq5jwse7PCDMgH/k=
+	t=1768948300; cv=none; b=rOhjTJP/QXOaeGEHbNjlOli1I7P1c2g355vjAza9oJZn5lVUsKXmrhspDemw0fFgqutYKZZZYMkltJBmU7PuuwJPoQGpgNXGKQ+VG9/vSlgYP000BseQcXvTROge1X6herCSfCfROGZbpq9DdQ7ggpeJa0h8b+8Yvu7KRYp6Bg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768937708; c=relaxed/simple;
-	bh=LhUtgzXOVPV8SD3R2VJ6zeG5rQgZrdms4OAVI/3ji5s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhJ9meRNt0cCha9lH21urnk6yaGT3z9GNrDR/ieUbVUukJ4D2RfLXK6BKFHxNe8SPTykfNvPGXVikML6qkOcx1oEV8FxnoO8d7wno10UkpRz+hr9oJKwNTUqv+6pDfM6j06IuZmT/fvby4OZcY+NZCiUvvSESvuu/BoCMhEqG6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BEVy/UHo; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768948300; c=relaxed/simple;
+	bh=KT7crfYGC+gc35aZUssQokbzc2G2zw05Q7/bzVHxgsc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EFSs1jQFyoOESQb0wPS15AIM7HGH67DhofVO5rx4ormmWYnVzfIFk88I8M0P6lp6/BnSY0hRakoXHJFkAX04UfL7A5PwRFZWluFfRT/3vq9Y0CNhSKYWatEabCEb0Vm/BoHIyFCBBAwJWL+8Q2SpwNo8M45B51EujEVLDmeyKpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QLHhAvUG; arc=none smtp.client-ip=74.125.82.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BEVy/UHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2E1C19421;
-	Tue, 20 Jan 2026 19:35:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768937705;
-	bh=LhUtgzXOVPV8SD3R2VJ6zeG5rQgZrdms4OAVI/3ji5s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEVy/UHoYyT1NPcSaM7OZOWOmpSp4fz9Om0Cj6qr09uIAdFFQCGFWFoJwEBZjZelF
-	 0s5s3uDl6t/EemYHuhJQYi02UXEaIoi+Evq+YYb29zaLur/hnFOBVC+nD9Yt2iJm9i
-	 lk1eIjzyP0wY3B+x8ZZgjXNp6oyxHmqijIoj3gzwx2ATIP5dfPPpTPHB4gMi1iT5aX
-	 6lPTff7/GyXtZswom8WOVMkaJPTGwPTEBLbiSDdprgJetN3HboA+fs0PqAhDoN7XMU
-	 9mLUGTqe3iNigiDAl894Y1WZoUaLiXdGmQUjfl7/XOISnI5+8BQvJSTg4GmXksmwXY
-	 GFUjZem7TrGQg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Guodong Xu <guodong@riscstar.com>,
-	Juan Li <lijuan@linux.spacemit.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	dlan@gentoo.org,
-	dmaengine@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.18] dmaengine: mmp_pdma: Fix race condition in mmp_pdma_residue()
-Date: Tue, 20 Jan 2026 14:34:48 -0500
-Message-ID: <20260120193456.865383-5-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260120193456.865383-1-sashal@kernel.org>
-References: <20260120193456.865383-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QLHhAvUG"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2b0ea1edf11so11111611eec.0
+        for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 14:31:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768948292; x=1769553092; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=oK1Xva04K7ygLWg0U7fdlOWooXBJszh65DA1fNcqFD8=;
+        b=QLHhAvUGdph69Flljmi1lIbYjRsBnUsSAWAsafnwsUaVT+gshgFcsRP2AeCrNROBKt
+         mHdL5c4ejAxeIQHhJmex3BppPjrzOntDpDPvazEiifXDfEX0IQVsugjz7y/Z5i9SfZSu
+         iQ6ekUqKdfz1jkRHqrISiowwhdQopeqQBxnqpNZK0n9PcR+7DiH0PgTx+RiIGKDYiVoe
+         o0J4N3nWSEgP1qYc48pcbygeTYWhiFHcK6/lDeSlBAGJsAirfxbxjFQb7zX7//nTA5n4
+         Uso+BmHe0927Nj4Qo51hdypuJhMUW3VZXQn19xP4Mtii+HvR2eRVJGYIGXXOuMV9/1SR
+         f2Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768948292; x=1769553092;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oK1Xva04K7ygLWg0U7fdlOWooXBJszh65DA1fNcqFD8=;
+        b=tXifGMuMj7ZGuN2K5Q5kydLDggw3JObv4HMJZUHfdfbpJwJ3/bKSVSudEqTKBZqixq
+         edPibEiJ7a9RmipAtjv0P+jmrPuZKlmMBJPKMKN75vLyCAhLKH/TxfOhCKyB0HnsedAi
+         tgNotg2t2Qv4hn71eQgk15eAErxAYfZlHdRafRi7Fy7mT2TuAIsmnlyEbf7nap/yfFf7
+         CNQV/XpF1iLEFvpVQb82k/2lvtILbK/cRvhS0cVksKQ5OhkXhoq9PazE9J3GrSfHMpj5
+         iR70X/y1w72Pi6bfKVTEs73aWjSCGEgMWPFv4J06cHz2omWx3J0m7zmuyJUzZP/xsXhI
+         lyPA==
+X-Forwarded-Encrypted: i=1; AJvYcCVQ+D++CG7l0qsT7jdHSIrrXYBJvtrnA6L1sPFFEnlpqOQswdYXA1x1klqlq7IseQXpJaHVGzq4Lg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyhBg/dwRRUuLP+dzLFakTE18vMHEk7u12EPJdCFWK0h8ILxhVc
+	Ils5bg3tAWRBcOfpgpsFiktoOvIM7JD2POK14Yr0+RXgYHyAcwO+aXKH
+X-Gm-Gg: AZuq6aIDICeZ/iCykRFzrARp5LK3KoYFMhqPwBzEpCQwYZUQS6Awl2bkYmbsQDIOiaG
+	DTSfmPu7tAmPF+LRGi5GuxxSQh7m2d+Rwa3zzC/CuphtJAjz4ekBfOGJrxQgYzfPE8mU7N4otM1
+	gu23deaQBljmskVfANvMxIgivmg4BHYTTLUxcZZO5ZGY8oiKaQwPU21acHPYZ/6oEaG4KS6NHYe
+	SXD096Kv+lsAZkTDE+Hb0fpRWiPanS4AdWBJ4ddH/EJCAqyjsByL9IPDZB45N69pFE1F67IZ/Aq
+	Ecdf01HBQbdqNTxTcMKfKJQi6DrhpjOB+QiEqNRmP8C4adTn7Gp4zjtWCEMJYFjooZgpJkeg4Bv
+	Ws+pyUcqTex/OgoNel3n0OmRwR6XwgrmSQeUBNRbe1y0/WstRZbf155pbfHJshtzbeq48ip8DWY
+	mQz1AfsYxxsiwG9ga2GXBH
+X-Received: by 2002:a05:7300:1493:b0:2ae:5a55:fc0a with SMTP id 5a478bee46e88-2b6b4e287acmr16477739eec.7.1768948292340;
+        Tue, 20 Jan 2026 14:31:32 -0800 (PST)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b712881482sm499886eec.5.2026.01.20.14.31.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jan 2026 14:31:32 -0800 (PST)
+Date: Wed, 21 Jan 2026 06:31:22 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Andrew Lunn <andrew@lunn.ch>, Inochi Amaoto <inochiama@gmail.com>
+Cc: Yao Zi <me@ziyao.cc>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Richard Cochran <richardcochran@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
+	Yanteng Si <siyanteng@cqsoftware.com.cn>, Yao Zi <ziyao@disroot.org>, 
+	Vladimir Oltean <vladimir.oltean@nxp.com>, Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
+	Choong Yong Liang <yong.liang.choong@linux.intel.com>, Maxime Chevallier <maxime.chevallier@bootlin.com>, 
+	Chen-Yu Tsai <wens@kernel.org>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
+	Boon Khai Ng <boon.khai.ng@altera.com>, Quentin Schulz <quentin.schulz@cherry.de>, 
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH net-next 1/3] dt-bindings: net: Add support for Spacemit
+ K3 dwmac
+Message-ID: <aXABw0zVz8n3jLlm@inochi.infowork>
+References: <20260120043609.910302-1-inochiama@gmail.com>
+ <20260120043609.910302-2-inochiama@gmail.com>
+ <aW9fL7r0AM0flALJ@pie>
+ <aW9ou-lsQQ5dVzqW@inochi.infowork>
+ <9334905d-d11b-49d4-92b1-61e8cf644f0f@lunn.ch>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.6
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9334905d-d11b-49d4-92b1-61e8cf644f0f@lunn.ch>
 
-From: Guodong Xu <guodong@riscstar.com>
+On Tue, Jan 20, 2026 at 02:48:12PM +0100, Andrew Lunn wrote:
+> > IIRC, the "phy" clock is used to pass the phy from the mac core, I will
+> > double check if it is possible to connect to the phy directly.
+> 
+> Are you saying this is the reference clock output from the MAC being
+> fed to the PHY? That would be a clock provider, not a clock consumer.
+> 
+> Or is it the reference clock output from the PHY going to the MAC?
+> Then the MAC would be a consumer.
+> 
+> And there are some designs which have a third party generate the
+> clock, and both the MAC and the PHY consume it.
+> 
 
-[ Upstream commit a143545855bc2c6e1330f6f57ae375ac44af00a7 ]
+I have confirmed the clock is directly from the the clock tree and
+is consumed only by the PHY. It seems like I have got a wrong
+information about this. So let's remove it and let the phy consume
+the clock if it use this clock.
 
-Add proper locking in mmp_pdma_residue() to prevent use-after-free when
-accessing descriptor list and descriptor contents.
-
-The race occurs when multiple threads call tx_status() while the tasklet
-on another CPU is freeing completed descriptors:
-
-CPU 0                              CPU 1
------                              -----
-mmp_pdma_tx_status()
-mmp_pdma_residue()
-  -> NO LOCK held
-     list_for_each_entry(sw, ..)
-                                   DMA interrupt
-                                   dma_do_tasklet()
-                                     -> spin_lock(&desc_lock)
-                                        list_move(sw->node, ...)
-                                        spin_unlock(&desc_lock)
-  |                                     dma_pool_free(sw) <- FREED!
-  -> access sw->desc <- UAF!
-
-This issue can be reproduced when running dmatest on the same channel with
-multiple threads (threads_per_chan > 1).
-
-Fix by protecting the chain_running list iteration and descriptor access
-with the chan->desc_lock spinlock.
-
-Signed-off-by: Juan Li <lijuan@linux.spacemit.com>
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
-Link: https://patch.msgid.link/20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-This confirms the `mmp_pdma_residue()` function was added in 2014. The
-race condition has existed since then.
-
-## Analysis Summary
-
-### 1. COMMIT MESSAGE ANALYSIS
-
-The commit message clearly describes:
-- A **use-after-free (UAF) race condition** in `mmp_pdma_residue()`
-- The race occurs between `tx_status()` (calling `mmp_pdma_residue()`)
-  and the DMA tasklet (`dma_do_tasklet()`)
-- **Clear reproduction steps**: running dmatest with `threads_per_chan >
-  1`
-- The CPU timeline diagram explicitly shows the race window between
-  unlocked list iteration and descriptor free
-
-Keywords: "Fix race condition", "use-after-free", "UAF"
-
-### 2. CODE CHANGE ANALYSIS
-
-**The bug:** `mmp_pdma_residue()` iterates over `chan->chain_running`
-list and accesses descriptor contents (`sw->desc`) without holding the
-`desc_lock` spinlock. Meanwhile, `dma_do_tasklet()` can:
-1. Hold `desc_lock`
-2. Move descriptors from `chain_running` to `chain_cleanup` via
-   `list_move()`
-3. Release `desc_lock`
-4. Free the descriptor via `dma_pool_free()`
-
-If `mmp_pdma_residue()` is iterating over the list when this happens, it
-can access freed memory (UAF).
-
-**The fix:** Adds `spin_lock_irqsave(&chan->desc_lock, flags)` before
-the `list_for_each_entry()` loop and `spin_unlock_irqrestore()` at all
-exit points from the function. This is:
-- Small (+6 lines, -0 lines of actual logic)
-- Surgical - uses the existing `desc_lock` that already protects this
-  list elsewhere
-- Follows existing driver patterns (other list operations use this lock)
-
-### 3. CLASSIFICATION
-
-This is a **bug fix** for a **use-after-free vulnerability**. This is a
-serious memory safety issue:
-- Can cause kernel crashes/panics
-- Can lead to data corruption
-- Potential security implications (UAF bugs are commonly exploitable)
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed**: ~10 lines (just adding lock/unlock around existing
-  code)
-- **Files touched**: 1 file
-- **Complexity**: Very low - straightforward spinlock acquisition
-- **Risk of regression**: Minimal - uses existing lock that is designed
-  for this purpose
-- **Potential issues**: Slightly increased lock contention when calling
-  `tx_status()`, but this is necessary for correctness
-
-### 5. USER IMPACT
-
-- **Who is affected**: Users of MMP PDMA DMA controller (Marvell PXA/MMP
-  platforms, SpacemiT K1)
-- **Trigger conditions**: Multi-threaded DMA operations on same channel
-  (common in dmatest, may occur in real workloads)
-- **Severity**: High - UAF can cause kernel crashes or undefined
-  behavior
-- **Reproducibility**: Can be reproduced with dmatest (`threads_per_chan
-  > 1`)
-
-### 6. STABILITY INDICATORS
-
-- Has proper sign-offs: `Signed-off-by` from author, forwarder, and DMA
-  maintainer (Vinod Koul)
-- Link to mailing list discussion included
-- The existing lock (`desc_lock`) has been in the driver since the
-  beginning
-- The locking pattern matches other functions in the driver
-
-### 7. DEPENDENCY CHECK
-
-- No dependencies on other commits
-- The affected code (`mmp_pdma_residue()`) has existed since 2014
-- The `desc_lock` spinlock exists in all stable trees
-- Should apply cleanly to any kernel from 3.15+ (when residue reporting
-  was added)
-
-**Note**: Recent mainline commits added SpacemiT K1 support with 64-bit
-operations (`pdev->ops->get_desc_dst_addr`, etc.), but the core logic
-and the race condition existed with the original 32-bit implementation
-too. For older stable trees (pre-6.x), minor context adjustments might
-be needed due to the `pdev->ops->` refactoring, but the fix concept
-remains the same.
-
-### Conclusion
-
-This commit fixes a clear **use-after-free race condition** in the MMP
-PDMA driver. The bug:
-- Can cause kernel crashes/panics
-- Has existed since 2014 (when residue reporting was added)
-- Is reproducible with standard kernel testing tools (dmatest)
-
-The fix:
-- Is small and surgical (~10 lines of spinlock additions)
-- Uses existing infrastructure (the `desc_lock` already exists for this
-  purpose)
-- Follows existing driver patterns
-- Has minimal regression risk
-
-This is exactly the type of fix stable trees need: a clearly correct fix
-for a real bug that users can hit, with minimal risk of introducing new
-problems.
-
-**YES**
-
- drivers/dma/mmp_pdma.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index d07229a748868..481b58c414e47 100644
---- a/drivers/dma/mmp_pdma.c
-+++ b/drivers/dma/mmp_pdma.c
-@@ -928,6 +928,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- {
- 	struct mmp_pdma_desc_sw *sw;
- 	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(chan->chan.device);
-+	unsigned long flags;
- 	u64 curr;
- 	u32 residue = 0;
- 	bool passed = false;
-@@ -945,6 +946,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- 	else
- 		curr = pdev->ops->read_src_addr(chan->phy);
- 
-+	spin_lock_irqsave(&chan->desc_lock, flags);
-+
- 	list_for_each_entry(sw, &chan->chain_running, node) {
- 		u64 start, end;
- 		u32 len;
-@@ -989,6 +992,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- 			continue;
- 
- 		if (sw->async_tx.cookie == cookie) {
-+			spin_unlock_irqrestore(&chan->desc_lock, flags);
- 			return residue;
- 		} else {
- 			residue = 0;
-@@ -996,6 +1000,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- 		}
- 	}
- 
-+	spin_unlock_irqrestore(&chan->desc_lock, flags);
-+
- 	/* We should only get here in case of cyclic transactions */
- 	return residue;
- }
--- 
-2.51.0
-
+Regards,
+Inochi
