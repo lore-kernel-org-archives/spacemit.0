@@ -1,269 +1,132 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEAE36CDF4
-	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 06:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768891230; cv=none; b=pzKYVEKZNhivox+TMbW4FvljJ8zLOc8VNrKHsIsV84M2yd3zlELJIE2JRkDCtdkcunlmSZEn7sJvyO3Mzlxi3ttcFOrW2YG1s5u366XM7ub0LLJApofSJs6BArcPPiKbMxlFbVsb/kR96TGJ9LwYmCKsJLiK/JNxz8FaXkaf1eM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768891230; c=relaxed/simple;
-	bh=0+Y9hEB70xxqyIY6tsWCzgo3WT4f+mm90U6/OsPJkFU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RCFO+2g1ucqHCiUNeRRmVNOQbqlfm8u22fxafjEsff9+DQFOSgMsRJfq9//wfkBvHU+T+LjhUlGFodl6fi12+3x1dposu6tm3Z8jyzRwTalepez394j74KxmSCSwShXp7kRj+TYKJ4mF8SuWhvyEjw4m0bzTaib0WZYa5hSzOW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EEY54cf4; arc=none smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A71837F8DA
+	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 09:12:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.176
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768900375; cv=pass; b=a+EVuzKlq5lESKKuGpuSNx6i5eB2zn3w7lFos45FavO7sg3eQWS7K0paN6BxeQBfQZm9sylw96gdLMH+x1tkBKfO9SbS8tdg6IHaM1S+sRyefDiCgTXxx1SyRCRKartk1nuK/Vs21UlmGHwyDw6iKmFbHN9wZ5Fo21+3kx9X460=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768900375; c=relaxed/simple;
+	bh=m3kBLRvqqnsqAfb6grqCh1VA5CCALQU1gL8CfPAlgPc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h9X0AwOwcpr8i5ISYZEsUt1+VNngtH6VTKx7gvWGWEIEekhcoKZ1NLhU25rpyQX65a3v5qqSgFXnD5/DHN2YcVlxS56uxIZG+7XDueYBr4DP6HzfcrP25CwvwksaXCUEGd/Vjuxreelw7AQd5/sEX+r/rLBQ7i91mBGuhPcjfds=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=J5XdMspy; arc=pass smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EEY54cf4"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5634d866615so3550097e0c.2
-        for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 22:40:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="J5XdMspy"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-79276cef7beso44121007b3.2
+        for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 01:12:52 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768900371; cv=none;
+        d=google.com; s=arc-20240605;
+        b=cveEYS9hVHjCh4DMcs9YsYOLJ/bpolH/J3LwxrDeW6Jw/VmkHAJ9ZNoCHr7/D5/1IB
+         PcteErNrxiwJv34eTmSMDbUME32O61qvgU7S4Wpq0TMSiJOf7eUk1tpWVF9M+BtwRglx
+         8jewyQvoreEeka5h2e/uKAH1A0upnaxcHIfrcJfAtiPhY6OzsIYAexJuBnSv1NrmweOZ
+         X8iTjRYrPikboEp8HtbWg41ci81yCa1dx5eQFbwttFoR8Zv4DPKqXmMtb3lU3q7PT6Mt
+         IbuD21pWw41XyxeDWkjgPa6PzqsRErAyBtt9J1AufxYN042+Rb7R1+Qn6zXOdhsNBzdO
+         n7pg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=PNxgsdZ6Vqh8ZsmPDkFdaFpUMUQSLQTx1/iXhsZCiLE=;
+        fh=nE7aUTQkInyvl0S7Nk3NTXBCT5G3/+MMymSO2sBMWuw=;
+        b=CMOuozp1ZmrsHwsAm2kN4r5TugGldhXfWYOSxpGBvZ4d4IBR+zVjHhCx7JDS0FJ38p
+         qeEYOWyE4Tz6p8+d4UKcarb5CaXM3Frov2POot69kh8s1cHarHVhN99ugzynQ4FYOApE
+         5ItPd5eE8nl0uC5SgP4mvyciSdxmZB6LH0xkBGc2DEW3eJ7OqBGWrBu7f28fG8itzdMq
+         vLztU0Bq9nN2QWHUUaObsIvl9SJaDUeVpt1I2Z/FOO6CvIPG21a5ZhoqShPFQAZdW5VG
+         eUgDBMEVMHc7imqISHKmkQW0PO1pT9VHZmVBMlCtmJR3SiiV/UrW2gyAstDoWHBlBhVa
+         xfyg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768891226; x=1769496026; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768900371; x=1769505171; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9/P4vB6ZrTUYfKL01JZTaSnR0v+y3e+rmtwAP48/qa4=;
-        b=EEY54cf4RbXZROikd6shMdk6nh8IJfxSjOsnoM7HMFS4ZXZQ23oQA56+YkOdQ7WSQq
-         /X5k3bU57FPLa9NVd6zMukhedyctapGsYUmwaUOrBAS6KXlDNW2P9m53TA7mCTkCOS8+
-         0IblVmVb4VdT9N7zT/ayreQYdyli58u5R4dS56aoPGf5R6YVJO1ujlIWlOdnsFweG/fi
-         iLxw+BQDszmv8i2g1GR2UpBl8hp31Cq0JOaC49BdNlNS5hfqm5kvJrnnB4G3VPVdrsY4
-         Fe8dE6UaQ8RSkpzdUQxtj5aOYhCty6ixLZ4Rd+1o9pZbD6uQ7IXctp5Vt0llMoK+HF0Y
-         rkcw==
+        bh=PNxgsdZ6Vqh8ZsmPDkFdaFpUMUQSLQTx1/iXhsZCiLE=;
+        b=J5XdMspy5HIO8kTu/nGAOgRiGKjmz3SuTp6HMvkqihB8ivVThhXzl1yi/+z4kqyPhY
+         9/3gjtF4PTEatzIV7mxfWqYCfZ0mEkEBJbHwTuLZ2As6mAmPO+yJ7izyDk2IrUYjEZmx
+         V/yTh+Qp2U69062F2P0YESLna9cs4aQI62c+c4KHrSFTioYjyEwfG7suN7mrjaexWQ+E
+         Gkj1Zm0b/U3HxCRhfmZgcjwm+VsOMmwrMYipwrXoxaRyf8AjzfsyhtOr0+yvp6TfCNma
+         x74zxmYj44sIWxuVlz90GKNGX6SXY6dgysCJIZZCuE9ic7pYTVTQlEAlp1jEi7UPSlN4
+         dVqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768891226; x=1769496026;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1768900371; x=1769505171;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=9/P4vB6ZrTUYfKL01JZTaSnR0v+y3e+rmtwAP48/qa4=;
-        b=itmw8clsyNSao4QoVfOqIdzRfSmyGbfy7TJ9oQ1uV23sjtwG2Ca3L5XVOo3rV7JfI0
-         xXoO1773+nv7gMtV+TbJf2SD/nuqiFmXQQTYcYWxKtJG6CHUAeLQWVKOGEVaWPKuosq6
-         dgSpeclqnGQw6A1iVrx9M3AigwMDovdXOmEsC33qrDFTwTqhJf7G8D6+jxv0JncOGc7n
-         h6cpdKxgwx5Ts/b5p5yMUvkgT8I/Mwxkwz/fB8y+VCYbwiK9muT5r+cyrXZZb05tGpwi
-         mM9reJfZ2fBXxbhvIe9KWPJ7ADPb3QdEYrL9ffkitK8WnMTEYFIEDMZVfH2UYbc0JyoW
-         9XbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXOk3k9yUBegwQRRYTE1xxkAwFP/hsFIHGv2QeupbvC0EjWgHIZHPoVXZTR+qa8nSAwivhzbfwFlg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxIXpCXtiQXItwcHOS7g7GJFzz11w1a8k9w/5yt6O6LbwMET3+k
-	h3SiYrw9MbAT6hHH2hvkAHBjYIoZd9nyuENmi6X53tlFb2DK+lj0jPGUVvvrpHMd
-X-Gm-Gg: AZuq6aLWRyG+A5nLb/t3jAPpdupGeALoOjalMFcswD4WZYTv/9wqhEbR5sBb32QSag/
-	A7FGnpKpb0CrYUAHDPh8gYhisIN/x9e0cupZYWbqyDNvXpdw5oUC3hqkLw9BKMvV13QapZP6+Ts
-	BAnLf4J54fR31yEKZsL74qVZfXpRznvkfNAgMTJw5dLbNcY4G6Ny9/4etOQzQLIBwghySqumK8i
-	OAiC5GhkLivofBPFEnuU09A087bm8rEDCJr0PCX06zDO2rhoY9IWsh6wRC9N08oXg3BL62izmim
-	UpzVeta5dK+dlO6Jqr/rYD+3LqHvKmZhRRE2OjT4773ipI77bVLBXjRwu4fYcb7QIrpDNuNWgfH
-	GF0gmfit3SnyFyNQDl0Sd6iwQoJQ6M/EbRF4iR8dTjaQCE6OBUprmrf90AKYdXRROHwimRLHS5k
-	DdW0xWA3U5ng==
-X-Received: by 2002:a05:7300:6d1f:b0:2b0:4e86:8157 with SMTP id 5a478bee46e88-2b6b46eb100mr10720484eec.17.1768883786512;
-        Mon, 19 Jan 2026 20:36:26 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b3502c91sm15459859eec.9.2026.01.19.20.36.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jan 2026 20:36:26 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Yanteng Si <siyanteng@cqsoftware.com.cn>,
-	Yao Zi <ziyao@disroot.org>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>
-Cc: netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH net-next 1/3] dt-bindings: net: Add support for Spacemit K3 dwmac
-Date: Tue, 20 Jan 2026 12:36:06 +0800
-Message-ID: <20260120043609.910302-2-inochiama@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260120043609.910302-1-inochiama@gmail.com>
-References: <20260120043609.910302-1-inochiama@gmail.com>
+        bh=PNxgsdZ6Vqh8ZsmPDkFdaFpUMUQSLQTx1/iXhsZCiLE=;
+        b=s49fGRIEcocEk8BCPrwvI7ZktvKVcSEbgJr10ixpTMaUansVbU5X7xBWbEQO41KYfb
+         PMN4dau5BsY7gtqiOa+Nenubgi2iz/tA8qwY7tnIulJXCHw338dLEOqqGk8eHSPzdryc
+         LiCT18IHZ3WPbvPpvoWtTYpNNT6h8S0ORhCJED1+g7zzLo6OnuFFMOcp5jQegDbFIUDj
+         LnKkpLtNpY6pwuaKe9TvQQUzDAlhp7iuDJ1iE3Ly6comNPcVY8GGMgBw8yTKJOFe8824
+         /+1/AET5jqh2LS9D+rG3uWxznAJx1KVuQUc8N/oUKLXtmrKgUv1jkqdpOdixXx+r2cbd
+         e5Ow==
+X-Forwarded-Encrypted: i=1; AJvYcCVxcM45lQrqSGywoV9mhfrE+KDtyeDWy3DNu2aJwOcktOImDANbgl/JL0c3ceel2KyDa8HHfiJT8A==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz4vaOp7iwc48/VJx2EAzY8hijV4X1d+SRQZCyjGHDTbmSF8gLn
+	FAYBwZQ0r76hT1t42IHodoWtqtiwb+9aBTtlJoI744/jUs4mr8FZ3YeKLAGfmIUkK1CxYocBmQE
+	WKKdSP5QJHrSGTg+1qW3qNxpQE9tGEytB9M8Fuqnc7g==
+X-Gm-Gg: AZuq6aJlBid9Wbt72bd1NZv8z0IVZ9dURDurIylX9sDOz2gGNJ5HIBtk2mYZhrwijft
+	0hcrestWjljKckpuO8DVGiaUslXlOCFRIf6h0tSgvCMC+crJE3KCcjGPMRLhQiGOuBPeuMoKjwx
+	0AzvYKRNKL7XCMSCAfUBPf9kzTH41jSGxM91ztZxnrZtSd65GjZwM9HcmnGdPiUT1Voe/8h4m7E
+	uLsqW+d4qrSLJT5IZlR5AojXE4UhVUO709A0Z5KihrBkrHujqrlQDg/3Pl1KDF6Mxe2nlkcc+ME
+	d5rP+cEh0M9CEQoIuDW2fKLXc/EwMYsDIXPUWn071Qo5
+X-Received: by 2002:a05:690c:dc3:b0:783:6f68:2a05 with SMTP id
+ 00721157ae682-793c5262618mr114246527b3.14.1768900371200; Tue, 20 Jan 2026
+ 01:12:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260108-k3-reset-v2-0-457df235efe9@riscstar.com>
+ <20260108-k3-reset-v2-2-457df235efe9@riscstar.com> <f5a35fdc-9245-4be6-83a3-c1bfe86d30c9@riscstar.com>
+In-Reply-To: <f5a35fdc-9245-4be6-83a3-c1bfe86d30c9@riscstar.com>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Tue, 20 Jan 2026 17:12:39 +0800
+X-Gm-Features: AZwV_QiSUZjFVgUdNJN_FK9z3phGCKu7RzMoyj2ZIW92mPGRdZzm_Uoe-7AvW5g
+Message-ID: <CAH1PCMbxE05U0kp0y1qVcE1Bozpq9DiDvS83DHTsh5XxdeqVsg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] reset: Create subdirectory for SpacemiT drivers
+To: Alex Elder <elder@riscstar.com>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+	Haylen Chu <heylenay@4d2.org>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The GMAC IP on Spacemit K3 is almost a standard Synopsys DesignWare
-MAC (version 5.40a) with some extra clock.
+On Fri, Jan 16, 2026 at 1:27=E2=80=AFAM Alex Elder <elder@riscstar.com> wro=
+te:
+>
+> On 1/8/26 8:22 AM, Guodong Xu wrote:
+> > diff --git a/drivers/reset/spacemit/Makefile b/drivers/reset/spacemit/M=
+akefile
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..de7e358c74fd7b0fac3ec2c=
+18d985331af64fcbb
+> > --- /dev/null
+> > +++ b/drivers/reset/spacemit/Makefile
+> > @@ -0,0 +1,3 @@
+> > +# SPDX-License-Identifier: GPL-2.0
+> > +obj-$(CONFIG_RESET_SPACEMIT_K1)              +=3D reset-spacemit-k1.o
+> > +
+>
+> Didn't git shout at you for having a blank line at the end of this file?
 
-Add necessary compatible string for this device.
+No. But I think I can remove it to keep a constant style with other Makefil=
+es
+under the reset directory.
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
- .../devicetree/bindings/net/snps,dwmac.yaml   |   3 +
- .../bindings/net/spacemit,k3-dwmac.yaml       | 107 ++++++++++++++++++
- 2 files changed, 110 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
+BR,
+Guodong Xu
 
-diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-index dd3c72e8363e..3c2c6cb6b10b 100644
---- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-+++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-@@ -34,6 +34,7 @@ select:
-           - snps,dwmac-5.10a
-           - snps,dwmac-5.20
-           - snps,dwmac-5.30a
-+          - snps,dwmac-5.40a
-           - snps,dwxgmac
-           - snps,dwxgmac-2.10
- 
-@@ -108,6 +109,7 @@ properties:
-         - snps,dwmac-5.10a
-         - snps,dwmac-5.20
-         - snps,dwmac-5.30a
-+        - snps,dwmac-5.40a
-         - snps,dwxgmac
-         - snps,dwxgmac-2.10
-         - sophgo,sg2042-dwmac
-@@ -653,6 +655,7 @@ allOf:
-                 - snps,dwmac-5.10a
-                 - snps,dwmac-5.20
-                 - snps,dwmac-5.30a
-+                - snps,dwmac-5.40a
-                 - snps,dwxgmac
-                 - snps,dwxgmac-2.10
-                 - st,spear600-gmac
-diff --git a/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml b/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
-new file mode 100644
-index 000000000000..58dd98f79e8a
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
-@@ -0,0 +1,107 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/spacemit,k3-dwmac.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Spacemit K3 DWMAC glue layer
-+
-+maintainers:
-+  - Inochi Amaoto <inochiama@gmail.com>
-+
-+select:
-+  properties:
-+    compatible:
-+      contains:
-+        const: spacemit,k3-dwmac
-+  required:
-+    - compatible
-+
-+properties:
-+  compatible:
-+    items:
-+      - const: spacemit,k3-dwmac
-+      - const: snps,dwmac-5.40a
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 3
-+    items:
-+      - description: GMAC main clock
-+      - description: PTP clock
-+      - description: TX clock
-+      - description: PHY clock
-+
-+  clock-names:
-+    minItems: 3
-+    items:
-+      - const: stmmaceth
-+      - const: ptp_ref
-+      - const: tx
-+      - const: phy
-+
-+  interrupts:
-+    minItems: 1
-+    items:
-+      - description: MAC interrupt
-+      - description: MAC wake interrupt
-+
-+  interrupt-names:
-+    minItems: 1
-+    items:
-+      - const: macirq
-+      - const: eth_wake_irq
-+
-+  resets:
-+    maxItems: 1
-+
-+  reset-names:
-+    const: stmmaceth
-+
-+  spacemit,apmu:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    items:
-+      - items:
-+          - description: phandle to the syscon node which control the glue register
-+          - description: offset of the control register
-+          - description: offset of the dline register
-+
-+    description:
-+      A phandle to syscon with offset to control registers for this MAC
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - interrupts
-+  - interrupt-names
-+  - resets
-+  - reset-names
-+
-+allOf:
-+  - $ref: snps,dwmac.yaml#
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    eth0: ethernet@cac80000 {
-+      compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
-+      reg = <0xcac80000 0x2000>;
-+      clocks = <&syscon_apmu 66>, <&syscon_apmu 68>,
-+               <&syscon_apmu 69>;
-+      clock-names = "stmmaceth", "ptp_ref", "tx";
-+      interrupts = <131 IRQ_TYPE_LEVEL_HIGH>, <276 IRQ_TYPE_LEVEL_HIGH>;
-+      interrupt-names = "macirq", "eth_wake_irq";
-+      phy-mode = "rgmii-id";
-+      phy-handle = <&phy0>;
-+      resets = <&syscon_apmu 67>;
-+      reset-names = "stmmaceth";
-+      spacemit,apmu = <&syscon_apmu 0x384 0x38c>;
-+    };
-+
--- 
-2.52.0
-
+>
+> > diff --git a/drivers/reset/reset-spacemit.c b/drivers/reset/spacemit/re=
+set-spacemit-k1.c
+> > similarity index 100%
+> > rename from drivers/reset/reset-spacemit.c
+> > rename to drivers/reset/spacemit/reset-spacemit-k1.c
+> >
+>
