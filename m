@@ -1,25 +1,91 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8472D1F4E
-	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 04:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264D3346FAD
+	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 04:28:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768882778; cv=none; b=gjfQCcR7+le5AtaUs80WTOCWHhSLTdvXYou3fCMnW4kqThHSQlThd5izk5WVPqNQqWAI07zItfk1CNRzbqJfSkgc7a6IQz5rPHJ1wz8YjfNFrq4OBr22kPSyQ9yvqQniSdBwYOGlz+Ng6VoD8AjOpIWtAG2wOgzgwd0F9N6MVEM=
+	t=1768883316; cv=none; b=E5WDaLSmxCtXuYmHw9yn7BPcp101oGId03xD9eztQ7i8xIXun9KOfqFASNlKiHIfrFzfLC9BGDj/zXtA9IkInJy0xCl1VXDdEOrRqoGgLLzXen1w1u+FFlI7N04v1HHSR9sjIOdLKl7rApgqZ/UM7KvA3rM2x1T4BFRT59WrVmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768882778; c=relaxed/simple;
-	bh=enHYcu960fFoW3PDKIuCWxyuA6jr1IeRQ0MrDK6FHgM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pHiQL79wUnZz5oUcCiUKn3zbfgF3jdAFBtHxb45Fxx4stDRWj0SjElcJxu4WhqhWvS2XNzsuWOJvqWC9ABonQH1bLzgeW173gdAF2Q3T8sto23X4HfxVTjFyW9eJhW9ndKf4MzPt5m1ia5+HWj8vraKGEUXKonZQ/fryA8MiJ68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [210.73.43.101])
-	by APP-05 (Coremail) with SMTP id zQCowACXKAxPAm9pZCG3BQ--.23154S2;
-	Tue, 20 Jan 2026 12:19:28 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Tue, 20 Jan 2026 12:19:23 +0800
-Subject: [PATCH net-next] net: spacemit: Clarify stat timeout comments and
- messages
+	s=arc-20240116; t=1768883316; c=relaxed/simple;
+	bh=n5A0OXSyk7lo7f3jHURyz0bX/5X3lYhpTO7Z9MO/Uec=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ADh9tB5sA3HwIamjsQxdtovVfWv8mrTr27HHmWor4h52fwM/CTSsJKznpsCxUF82db8DQ/dECK++EdnuuO+Wz/CabgfZoh78WTp20EV5Nzfjx1jcN0DgkBze67vtTWBXRIPV64yclQ9KJQyH03KzlPIbgDzj2b71Yk0PweBUZds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OtkFVPIb; arc=none smtp.client-ip=209.85.167.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OtkFVPIb"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-45c838069e5so2965783b6e.0
+        for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 20:28:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768883311; x=1769488111; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i2Ldiltg0ilm3GITC1FlZ3jygue5ViLbnCHXlSmV/Sg=;
+        b=OtkFVPIby11ndno9BhM7DgyuIf0rRW6bvauyk4dzjSeq6zL4EIwrEcbr1fSof57ZPw
+         ZdrNicOZnrKYHLBs1gJEEyLiGEzIuQTDlydmSh8zHlSqbJuHHPceWX589QYuAWyIV/1k
+         NezEDoAyE2rE3T8GIVgYmyvE2qAjot/zJILXpMBg2QorFf0W7HcRytb+/TQH8uZEX4Ln
+         gALORbKGM2TzwssMBSI6RM77XxWn5IIQgFnii23hG3SGNTDjF2tAgM6eNi/3wdH2Ldkg
+         l/4t8bL08UnQagDKJpfswCjvvmoQvuoBDeQwOv0V/wDP6YWQ/Ml+YP27eoiin1YCL3FV
+         bq/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768883311; x=1769488111;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=i2Ldiltg0ilm3GITC1FlZ3jygue5ViLbnCHXlSmV/Sg=;
+        b=eEQJsJVX1qmw1TJj30d1Z5oaNcYJRkuahVvW41mpk9uddIImSCcfHSaxahaVbDb1WY
+         w3x2POy06tEGR3G4zp5PFYGEQQgnHmakfK1Ru/YRBbEOMbV+hfraSvHLR8GztMmN9JOk
+         f2BrEX+dypaXy1OWE7KmGmP+D4agzXYRuQN+XZMwxCVvydbikzzC0tqxjAhcb8Jlqdan
+         VaZHq6LHV5irxBRS1i0i/kBA9eNxjzY3PBe1q5sh4SGnHygf8kRIXKAaitObOLQxeTj2
+         Xhw9RYenlDYyGsW1GfTh0KEsoQZBB/HoFK/WWPbScCTnKKSfRiTF9KHRG9ZV0aZABWd+
+         OeyA==
+X-Forwarded-Encrypted: i=1; AJvYcCX5ZfkDw4rnIUPwJ3jvMbNswnVuf4X756/qpHXqWBQYJgBd56jMMBAu40AFTTQUct5wcWOFjoTc8w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxVOAyex9Fu/P5hXr3/1NTXPqmJCxQXqnB5Wyo3WcnSAL6n0qOL
+	G4N3SxUE6OmxZLX+cXEJFMKuB+8Q6BHrqpONf9QSpggrqL98aFFyvlii0TAlYxs6
+X-Gm-Gg: AY/fxX6cTCbaEIA61hUHjMcFhfjfHucjYKwIm75kCtKcNAMQCRaf/gpyQKfjT+Z3GkD
+	Aiku617G5AWkofX9ZNgMwwNjTn8gyTEyGpATZGWyVQdkdLH1yqnjXWY5qBbQ0dnloJzevk8PAOd
+	CBZtBwV/ZvLI3Zpj7a1zvdS7oPh9LzUbXjaxh+mj04SR9dczlpBn5jpBAFDtcahDH8oXpJFEJql
+	O0U8Jxh0emdvJZIVH55uRCbJZgy8iM71sKp6k3CTJ7VvJBKD0qL+eKzCsdot7iUgMZUQoysncX9
+	tb5VLhlxVa2270BRZ7danZq5kLKLFZjR/ZrV8zn9PFNaFQ4f0us/hzkIzEKZ4HA59RSCEVRsSR1
+	z6GmDp7hqOmA0b+jyr1gKAEnHHumYCB5kEvNDpDIwFqOJxu7e6mBQ1BXYyi/XhAER+BYh+vWy67
+	P4TUZxZ5xP5w==
+X-Received: by 2002:a05:7022:925:b0:119:e569:fba6 with SMTP id a92af1059eb24-1244a7195b4mr14136099c88.21.1768877353611;
+        Mon, 19 Jan 2026 18:49:13 -0800 (PST)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1244ac585a9sm16856206c88.2.2026.01.19.18.49.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jan 2026 18:49:13 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Jonathan Corbet <corbet@lwn.net>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Conor Dooley <conor@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Guodong Xu <guodong@riscstar.com>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	linux-doc@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	spacemit@lists.linux.dev
+Subject: Re: (subset) [PATCH v2 0/4] riscv: dts: Add "b" ISA extension to existing devicetrees
+Date: Tue, 20 Jan 2026 10:48:55 +0800
+Message-ID: <176887176536.427065.4468747981087466363.b4-ty@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
+References: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -27,121 +93,27 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260120-k1-ethernet-clarify-stat-timeout-v1-1-108cf928d1b3@iscas.ac.cn>
-X-B4-Tracking: v=1; b=H4sIAEoCb2kC/y2N3QqCQBBGX0Xmugl3AylfJQqmdcyhXGt2FEN89
- 7afy8Ph+84CiVU4QV0soDxJkiFmcJsCQkfxyihNZvClr0rnS7w5ZOtYIxuGO6m0L0xGhiY9D6N
- h471rQ7Mjoj3km4dyK/M3cYTPKvJscPoZ5eeYm/bXF0qMYeh7sbqYqq07oAZ3XlY4resbjlthk
- awAAAA=
-X-Change-ID: 20260120-k1-ethernet-clarify-stat-timeout-d221fcd3aaa8
-To: Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Yixun Lan <dlan@gentoo.org>
-Cc: Chukun Pan <amadeus@jmu.edu.cn>, 
- Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
- netdev@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Vivian Wang <wangruikang@iscas.ac.cn>
-X-Mailer: b4 0.14.3
-X-CM-TRANSID:zQCowACXKAxPAm9pZCG3BQ--.23154S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxXF17KrykAF47AFy7AF4DXFb_yoW5CrWDp3
-	yYkasavr1ktF4YvFsrAr4UJw1fZw4vgFyUuFnFy395ZFn8tFy8Xr10kFWj9FyqkrW8WryY
-	qr4UCFs8CF4DAaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9K14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
-	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
-	n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_Gryl42xK82IYc2Ij64vIr4
-	1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK
-	67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI
-	8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAv
-	wI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14
-	v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUnBTYUUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Transfer-Encoding: 8bit
+Message-ID: <20260120024855.iCWV6cvL2IFzEcYXsT6n52e0tE9dl_zwPeC3aHQO5-M@z>
 
-Someone did run into this timeout in the wild [1], and it turns out to
-be related to the PHY reference clock stopping.
+On Thu, 15 Jan 2026 07:18:56 +0800, Guodong Xu wrote:
+> The RISC-V "b" (Bit-manipulation) extension was ratified in April 2024,
+> much later than its component extensions zba/zbb/zbs (June 2021). Recent
+> updates to the device tree bindings [2] enforce that when all three
+> component extensions are present, "b" must also be specified. Related
+> discussion can also be found in [1].
+> 
+> Patch 1 clarifies the ISA spec version for canonical ordering in uabi.rst.
+> It is a trivial update, but can help readers reference the correct
+> document version. Acked-by Paul Walmsley in v1.
+> 
+> [...]
 
-Improve the comments and error message prints around this to reflect the
-better understanding of how this could happen. This patch doesn't fix
-the problem, but should direct anyone running into it in the future to
-know it is probably a PHY problem, and have a better idea what to do.
+Applied to dt/riscv, thanks!
 
-Link: https://lore.kernel.org/r/20260119141620.1318102-1-amadeus@jmu.edu.cn/ # [1]
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
----
-* Chukun: If you think changing the DTS for the PHY is appropriate, you
-can send the DTS patch separately - that one should go through the
-spacemit SoC tree.
+[3/4] riscv: dts: sophgo: sg2044: Add "b" ISA extension
+      https://github.com/sophgo/linux/commit/f16ae81b80ca4e721f4c4ed1f28390115f7721eb
 
-FWIW, the same timeout thing also happens on the vendor provided OS
-images for the OrangePi RV2, and AFAICT at least the statistics part is
-not recoverable.
-
-So until/unless we manage to get more information on how this works
-under the hood, I think we just don't bother handling the case where the
-PHY can just stop running, since the hardware certainly doesn't seem to
-expect it.
----
- drivers/net/ethernet/spacemit/k1_emac.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-index 220eb5ce7583..387f26ff7714 100644
---- a/drivers/net/ethernet/spacemit/k1_emac.c
-+++ b/drivers/net/ethernet/spacemit/k1_emac.c
-@@ -1099,7 +1099,14 @@ static int emac_read_stat_cnt(struct emac_priv *priv, u8 cnt, u32 *res,
- 					100, 10000);
- 
- 	if (ret) {
--		netdev_err(priv->ndev, "Read stat timeout\n");
-+		/*
-+		 * If you run into this, one possibility is that even though the
-+		 * interface is up the PHY may have stopped its clock anyway for
-+		 * power saving. This MAC doesn't like that, so configure your
-+		 * PHY to not do that.
-+		 */
-+		dev_err_ratelimited(&priv->ndev->dev,
-+				    "Read stat timeout. PHY clock stopped?\n");
- 		return ret;
- 	}
- 
-@@ -1148,16 +1155,20 @@ static void emac_stats_update(struct emac_priv *priv)
- 	assert_spin_locked(&priv->stats_lock);
- 
- 	if (!netif_running(priv->ndev) || !netif_device_present(priv->ndev)) {
--		/* Not up, don't try to update */
-+		/*
-+		 * Not up, don't try to update. If the PHY is stopped, reading
-+		 * stats would time out.
-+		 */
- 		return;
- 	}
- 
- 	for (i = 0; i < sizeof(priv->tx_stats) / sizeof(*tx_stats); i++) {
- 		/*
--		 * If reading stats times out, everything is broken and there's
--		 * nothing we can do. Reading statistics also can't return an
--		 * error, so just return without updating and without
--		 * rescheduling.
-+		 * If reading stats times out anyway, the stat registers will be
-+		 * stuck, and we can't really recover from that.
-+		 *
-+		 * Reading statistics also can't return an error, so just return
-+		 * without updating and without rescheduling.
- 		 */
- 		if (emac_tx_read_stat_cnt(priv, i, &res))
- 			return;
-
----
-base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
-change-id: 20260120-k1-ethernet-clarify-stat-timeout-d221fcd3aaa8
-
-Best regards,
--- 
-Vivian "dramforever" Wang
+Thanks,
+Inochi
 
