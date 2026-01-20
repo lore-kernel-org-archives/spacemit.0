@@ -1,126 +1,166 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CCA3A4F55
-	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 10:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768906646; cv=pass; b=VABAC1UFG1p+cILaOdZUT97H7nOwrShUvbZvQMV3/pQ4M5ObGLQ5wOKU03lZan6SqBNkUSwSfUwcYPpUvlNOMhMd+ni2ilOW3pWqy2UBsvFc78zcXvIL6wChPTSYficJHyTnQICNaCeeRHiIaLdEGhwic+Y84vYkkX32xOchqq0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768906646; c=relaxed/simple;
-	bh=hLhhaaiGUK4UAPYUo2Wht+3suThBEz9Cj77yr1RmrCs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YMCijoTsFG5IVWuDyX8/1U7UQYv9dN6Vyc+JO5KjLsZVfwM0OzfTj5OKeRgwS/4LEhZB7T/P0CBEK89H3ycGMH+sZf6oAJDxi2BOMxSW8cL3vO6KdZbkTO5Ioz12J1CBT5pFsGZ+KfMil9/QCI3WYjQSEzDxXGoDVD9pqP/0v6I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=UfbY76hC; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8212A3ECBC6
+	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 11:11:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768907471; cv=none; b=eKa1jaywp3jUUD8iMWNywG1VtTEv2aK9XZQOiCkkBzmfCZ1TfgiCkZravBJS7VFtDuK8uPCoFw00q73PuBS9oVZPBQxFvQDpPMYjxUbRDCOn7YXCxJJ0Mk4aVHFWPbdIQOnv5Ol7pbC8jYkRmVoL0K7wVWIw5oOtvs5wdQfXKqk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768907471; c=relaxed/simple;
+	bh=cY/d2I/Kt0ylqYIDhKML6y6aDVTO/HHtkuI9wBxPxHI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=aRg5tgU6eR0khchrmTewZdJ4M0i6EALn57qi/OlLR60YxMJoGOGdDhXC3C8gn8lehivJPPXI5Kx1PJ4d2r5HWJz1gMN1YrbYsGAN+WPbQ57T3uuB16LNUtyYRGafwYS/EXbo7ZYlaWGTWLl9BzuHT3VycVc+1L5GdENp28bQKd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=FSPjBSSU; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="UfbY76hC"
-ARC-Seal: i=1; a=rsa-sha256; t=1768906567; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Ak6+zhg/djoSET/jxpadpQyRcrriZ+Hb4IrbOf1xk69NlUklGQMlAFWHFwmYe3Yesq3b5hQ22GYGsF+HGH1Bt05MaD92p74uwnxUUFvPhFQ84McpHwHIm1iz+EQW9QgEc5Xc5zFv6FwCsoa2iYSN8/h5UXVatAvvTisNw1EldZo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768906567; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=ONSVQRKcPO7Hdq9rjeCJBLbi+rJef9ClGejj6CnM0wY=; 
-	b=NOJakvj5baRnkmXoB7LumnUit/KQxGV92PkXR478iuA98Tdt3Of/28od+qlx0Eepp+TIkIeLBAt5wPapNsAjtx9Doj78v/gkaJqNN5QnZPeD1wRDB6IAZiGhCl9gjGgBF3uF+8QEDy5fAE724YLlr0+UDLbM8smzAJ233CuTkzg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ziyao.cc;
-	spf=pass  smtp.mailfrom=me@ziyao.cc;
-	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768906567;
-	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=ONSVQRKcPO7Hdq9rjeCJBLbi+rJef9ClGejj6CnM0wY=;
-	b=UfbY76hCP8zX5WETuGgn6VZM3NN+FjaN8LWv69wwAVNk0zvq8H3HC8pdZHJp2V4c
-	sfOY8cbsd+bhCiZhPaWpES7/nq72N3qz3r2DaTdaXMj1PJmH1Q7eUkPXygOtrxsg6XT
-	wISiqo24iESoNSprYd3gvxcv3ZhFDNNxXiO9pccg=
-Received: by mx.zohomail.com with SMTPS id 1768906565127972.0399174349235;
-	Tue, 20 Jan 2026 02:56:05 -0800 (PST)
-Date: Tue, 20 Jan 2026 10:55:43 +0000
-From: Yao Zi <me@ziyao.cc>
-To: Inochi Amaoto <inochiama@gmail.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Yanteng Si <siyanteng@cqsoftware.com.cn>,
-	Yao Zi <ziyao@disroot.org>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>
-Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next 1/3] dt-bindings: net: Add support for Spacemit
- K3 dwmac
-Message-ID: <aW9fL7r0AM0flALJ@pie>
-References: <20260120043609.910302-1-inochiama@gmail.com>
- <20260120043609.910302-2-inochiama@gmail.com>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="FSPjBSSU"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-81345800791so3492277b3a.0
+        for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 03:11:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768907469; x=1769512269; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vmdP9sVSN2cHqDVsJHM+ds9zx07/+5KgfWHAIVzEViY=;
+        b=FSPjBSSUIItX9Vjs2sqI9SfF4/65JmoChW9Edq8/yog5uuT/gsg2cnpvHoruVEZunZ
+         qBNzqZTl4sPLJU7bvwg7WmfEe+so/Lt7E0M2r+4SRl5SdQAQvhadMwZc1wKoTwaq19Hu
+         fQ20SOwCZ9MXWhdORSRUUqw1V8I5tjcPWJe/etecs2zruCcQtYRm/7MSzAZ8+thAo4cS
+         TMYIeYB3db+MR8r7PL9HUsQInxcRiC7SZQRq4kPDBrsSWd7NrhltgwiY1abdzwa4n+iu
+         OBn1IIoiEHd4WEu2Mi0nNNKLcqfs8zv1AV2+H2bXfjnODJ+CRDCu2byaySuKQXbIb57y
+         LtIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768907469; x=1769512269;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vmdP9sVSN2cHqDVsJHM+ds9zx07/+5KgfWHAIVzEViY=;
+        b=lV1FKAffShjokBPtttCmwjwQ1qkY9BitbVN/1oOgn/tZAQX+jRFhoapF71nXwany9A
+         YH24T5KJodFuI6lebdxdQd/CkvOGq+iQ75nDn1qDeGBmI9JKNVgJr1BLSvGndZ0VtjfP
+         EMl23Zrbrvg+pknZ9Jxsn7kkY2YcSBGTAJBpX9uB4MLC7KQfPMUPUmWxoApfczGKXr3a
+         U+cy/ff6puAjG8J6q3iQWI+UzehPk2fpnzJUFLio243hQCBS3HAKMpaCD5DNk+lfZ2rz
+         2lA8XauN7YjxU4Cl6Sm6SoPRXqiULs2r+tkd5cyICHs0ACavYMp8KeT3zr6bURk2GJwF
+         dhaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV15yLmTiBTDD1eITOMWIw3naLJSjI0LB9urY7dqv88zGtWYuS0xJuQH/oZlbnnb8ArAbsdlH7tgg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx40KFiSe1ZDU2L0GyZS/MD8KCLiSxFs5cIvMFjJaLbOmyvC33X
+	oUUCKZbrv+HSR09w0K0NjeEG3/Ks1wyVzUfZknYlPJcPfZcWddJUrIWquRq2TNPPDSM=
+X-Gm-Gg: AZuq6aLNYJCHoyGxUTp6IiHWI6ZvYH58J+SSbtGiGsNXs/UVj9UKD5fl+kDV2G/C875
+	bOpHj50iioUusnOsIeomYFM3utHd4dEclo6qiWr7E4mboULKblPJj7E86SG+XfYnMXbgTl2QcDc
+	ljoHu30E6w63meBxDzoOuOMGp3dyU2dWb/4JPMIq5RgFbJaWLnnnhydluOXOtayyBAHnxJTEWFg
+	UgOzLKJCE2qZDsRLXIr+Bd6VV6minE1uLZYPvPZhTPU1DRCCLq9WQjEs5Hb0qs9i0QVKnFMKtSp
+	j2YSRJkuSJaVBEjUadYTsjZ+EfwnCRnH0V6vV5QU5HTOAqdWD+3+hJ2NRt0fxN4GEjbtsaK3wyv
+	3Srsv0+OAj8dqMhUUv6PNxrM9xjWrrXms5VCT3JwrGSQbVLOQvHASZ/xRvkYpqRhEVsHKhNChrO
+	dYHY5PMdD4K9ELRzryyrzuCrhHJoX/dBw=
+X-Received: by 2002:a05:6a00:1797:b0:81f:9b0a:812a with SMTP id d2e1a72fcca58-81fa1780e68mr11976552b3a.14.1768907468605;
+        Tue, 20 Jan 2026 03:11:08 -0800 (PST)
+Received: from [127.0.1.1] ([2a12:a305:4::4015])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-81fa10efc6bsm11398349b3a.29.2026.01.20.03.11.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jan 2026 03:11:08 -0800 (PST)
+From: Guodong Xu <guodong@riscstar.com>
+Subject: [PATCH v3 0/4] reset: spacemit: Add support for SpacemiT K3 SoC
+Date: Tue, 20 Jan 2026 19:10:48 +0800
+Message-Id: <20260120-k3-reset-v3-0-effe87f4bdbe@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260120043609.910302-2-inochiama@gmail.com>
-X-ZohoMailClient: External
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALhib2kC/2WOSw7CIBBAr9KwFsOn2NKV9zAuaBksMW0VkNQ0v
+ btIY2J0+Sbz3syCPDgLHjXFghxE6+00JuC7AnW9Gi+ArU6MGGGCMibxlWMHHgKutWwrQcFwSVF
+ avzkwds6p03ljB/dHKoZtiFrlAXfTMNjQFCPMAafqgVAq0VvorQ+Te+ZXIs3G/9VIMcGgFanKq
+ tWg+dFZ3/mg3D6Vcyeyj5vapP5yWXJLUWnDuAAD8sdd1/UFdJX0pBABAAA=
+X-Change-ID: 20251229-k3-reset-8d9b751ef391
+To: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Haylen Chu <heylenay@4d2.org>
+Cc: Alex Elder <elder@riscstar.com>, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Guodong Xu <guodong@riscstar.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
 
-On Tue, Jan 20, 2026 at 12:36:06PM +0800, Inochi Amaoto wrote:
-> The GMAC IP on Spacemit K3 is almost a standard Synopsys DesignWare
-> MAC (version 5.40a) with some extra clock.
-> 
-> Add necessary compatible string for this device.
-> 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> ---
->  .../devicetree/bindings/net/snps,dwmac.yaml   |   3 +
->  .../bindings/net/spacemit,k3-dwmac.yaml       | 107 ++++++++++++++++++
->  2 files changed, 110 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
+This series adds support for the reset controller found on the SpacemiT
+K3 SoC.
 
-...
+The clock driver changes, which defined new auxiliary device name
+patterns for reset on K1 and K3, have been applied to the clock tree.
+To facilitate merging, Yixun Lan has created an immutable tag
+(spacemit-clkrst-v6.20-3) within his pull request to the clock
+subsystem [1]. Hence, the dependencies mentioned in v2 have now
+been deblocked, making the reset driver ready to be applied, if it
+gets approval from review.
 
-> diff --git a/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml b/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
-> new file mode 100644
-> index 000000000000..58dd98f79e8a
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
+In this version (v3), the entire series has been rebased and tested
+on top of the linux-next tag: next-20260119.
 
-...
+General informaiton about the series:
 
-> +  clocks:
-> +    minItems: 3
-> +    items:
-> +      - description: GMAC main clock
-> +      - description: PTP clock
-> +      - description: TX clock
-> +      - description: PHY clock
+The K3 reset controller shares the same architecture as the K1. To
+facilitate support for both and future SoCs, the existing K1 reset
+driver is refactored with the following changes:
 
-Why does the MAC require "phy" clock? Shouldn't this be handled in PHY
-driver instead, or I get its meaning wrong?
+1. The existing K1 driver is moved to a dedicated 'drivers/reset/spacemit/'
+   directory.
+2. Common reset operations are extracted into reset-spacemit-common.{c,h}
 
-Also, I don't see "phy" clock is acquired anywhere in the driver. Is it
-really necessary for the MAC?
+The K3 driver is implemented using this common infrastructure.
+
+Link: https://lore.kernel.org/linux-clk/20260114060410.3340540-1-yixun.lan@gmail.com/ [1]
+
+Changes in v3:
+ - Updated dependency status and base information.
+ - Patch 1:
+     Add Acked-by from Krzysztof and Alex.
+ - Patch 2:
+     Removed trailing blank line from Makefile.
+ - Patch 1/2/3/4:
+     Add Acked-by / Reviewed-by from Alex Elder.
+
+- Link to v2: https://lore.kernel.org/r/20260108-k3-reset-v2-0-457df235efe9@riscstar.com
+
+Changes in v2:
+ - Patch 1:
+     Update the commit message to explain the why.
+     Update the spacemit,k1-syscon.yaml to point to k3 reset IDs
+     header file.
+ - Patch 3:
+     Use dev->driver->owner for the reset controller owner instead of
+     THIS_MODULE to fix the module reference counting issue pointed out
+     by Krzysztof Kozlowski.
+ - Patch 3 and 4:
+     Update the K1_AUX_DEV_ID and K3_AUX_DEV_ID macros to a simpler but direct
+     form, one benefit is to improve the code readability. More discussion
+     can be found in Link [4].
+Link to v1: https://lore.kernel.org/r/20251229-k3-reset-v1-0-eda0747bded3@riscstar.com
+
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+---
+Guodong Xu (4):
+      dt-bindings: soc: spacemit: Add K3 reset support and IDs
+      reset: Create subdirectory for SpacemiT drivers
+      reset: spacemit: Extract common K1 reset code
+      reset: spacemit: Add SpacemiT K3 reset driver
+
+ .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  |   8 +-
+ drivers/reset/Kconfig                              |  12 +-
+ drivers/reset/Makefile                             |   2 +-
+ drivers/reset/spacemit/Kconfig                     |  36 ++++
+ drivers/reset/spacemit/Makefile                    |   5 +
+ drivers/reset/spacemit/reset-spacemit-common.c     |  77 +++++++
+ drivers/reset/spacemit/reset-spacemit-common.h     |  42 ++++
+ .../reset-spacemit-k1.c}                           | 107 +---------
+ drivers/reset/spacemit/reset-spacemit-k3.c         | 233 +++++++++++++++++++++
+ include/dt-bindings/reset/spacemit,k3-resets.h     | 171 +++++++++++++++
+ 10 files changed, 583 insertions(+), 110 deletions(-)
+---
+base-commit: 6ada99659c6d6a0cde83e6c0f4ed0ef0ba1867e1
+change-id: 20251229-k3-reset-8d9b751ef391
 
 Best regards,
-Yao Zi
+-- 
+Guodong Xu <guodong@riscstar.com>
+
