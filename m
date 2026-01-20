@@ -1,121 +1,254 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6EC436370;
-	Tue, 20 Jan 2026 13:56:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B7847B42D;
+	Tue, 20 Jan 2026 19:35:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768917418; cv=none; b=fkY60SStnPyhlhMbYxmGHB+CwUoUL6jjKCHUDWBIcoBqjyZwfpL0r4KYkleLAMY3CeHjWtxj1+JysFY99jV0qjgr+aXaUuU1TbGJt+GkEN9zw+CUWIwOO9+n7W3Dsvs01SavIK6o0Qqrt0lZ4sUI5zlgkYqIkHiHCWT2kqBvQTs=
+	t=1768937708; cv=none; b=k3gdI+Uo93deioI+zO7pNrG1uCpL2KfGtBtwn35IkwxjimwtwWjIZT8Pkrl9iXuHxs65Lw2RdhbEt/ob2QqVou7jAia339I+gDdlRmqwhOni1AccFJsxjZKcsEz27Vdynn/OQujbkcbNRZpuwBw+/TAgNuwqq5jwse7PCDMgH/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768917418; c=relaxed/simple;
-	bh=4NVRsFAY4afcxQiy9YwleRQzDLtfb/NbIdmrFweYpaE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XbSlIgKFCtL32ar4GGdNPam12nyXufRofjl5nMOvUTULrP86dxhoFPdsRS7bqjaQdt25wCb5rJVXXBLcb0cOwz/PryGoiSqfbsOTY6jGQw/pyO7L/TUSKkkMkCA/UwE270GkKGPpKDPBVzHZ/Piry/DC/J9GvTMRjxrtT2JEXyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=oI5F92+Y; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1768937708; c=relaxed/simple;
+	bh=LhUtgzXOVPV8SD3R2VJ6zeG5rQgZrdms4OAVI/3ji5s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bhJ9meRNt0cCha9lH21urnk6yaGT3z9GNrDR/ieUbVUukJ4D2RfLXK6BKFHxNe8SPTykfNvPGXVikML6qkOcx1oEV8FxnoO8d7wno10UkpRz+hr9oJKwNTUqv+6pDfM6j06IuZmT/fvby4OZcY+NZCiUvvSESvuu/BoCMhEqG6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BEVy/UHo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="oI5F92+Y"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=QtbdNomdPucfxnW3rL++HESsroFk6TDesTIE5AoPiVQ=; b=oI5F92+YDAysPNopnvpJdE5ILn
-	TIHf/z42aRZw8xLvonGdJy4BsvmKVOC6ctX7R4KDZO02EHBbu2CY6UrEk/JXHaYcLEbSyfbbz+k4n
-	z4j1Fh0gT+oKgP7jaLDxmEaFpioFiRLlTNzFXE8gsOCHaOwjEl53Dsp/xPGVO7LaygsM=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1viCDa-003gVE-Ex; Tue, 20 Jan 2026 14:56:26 +0100
-Date: Tue, 20 Jan 2026 14:56:26 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Yanteng Si <siyanteng@cqsoftware.com.cn>,
-	Yao Zi <ziyao@disroot.org>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next 3/3] net: stmmac: Add glue layer for Spacemit K3
- SoC
-Message-ID: <f8e4c5ec-94b1-4da0-8a40-976770514828@lunn.ch>
-References: <20260120043609.910302-1-inochiama@gmail.com>
- <20260120043609.910302-4-inochiama@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BEVy/UHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2E1C19421;
+	Tue, 20 Jan 2026 19:35:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768937705;
+	bh=LhUtgzXOVPV8SD3R2VJ6zeG5rQgZrdms4OAVI/3ji5s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=BEVy/UHoYyT1NPcSaM7OZOWOmpSp4fz9Om0Cj6qr09uIAdFFQCGFWFoJwEBZjZelF
+	 0s5s3uDl6t/EemYHuhJQYi02UXEaIoi+Evq+YYb29zaLur/hnFOBVC+nD9Yt2iJm9i
+	 lk1eIjzyP0wY3B+x8ZZgjXNp6oyxHmqijIoj3gzwx2ATIP5dfPPpTPHB4gMi1iT5aX
+	 6lPTff7/GyXtZswom8WOVMkaJPTGwPTEBLbiSDdprgJetN3HboA+fs0PqAhDoN7XMU
+	 9mLUGTqe3iNigiDAl894Y1WZoUaLiXdGmQUjfl7/XOISnI5+8BQvJSTg4GmXksmwXY
+	 GFUjZem7TrGQg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Guodong Xu <guodong@riscstar.com>,
+	Juan Li <lijuan@linux.spacemit.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	dlan@gentoo.org,
+	dmaengine@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18] dmaengine: mmp_pdma: Fix race condition in mmp_pdma_residue()
+Date: Tue, 20 Jan 2026 14:34:48 -0500
+Message-ID: <20260120193456.865383-5-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260120193456.865383-1-sashal@kernel.org>
+References: <20260120193456.865383-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260120043609.910302-4-inochiama@gmail.com>
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.6
+Content-Transfer-Encoding: 8bit
 
-> +/* Note: the delay step value is at 0.1ps */
-> +static const unsigned int k3_delay_step_10x[4] = {
-> +	367, 493, 559, 685
-> +};
+From: Guodong Xu <guodong@riscstar.com>
 
-Am i reading it correctly that RGMII delays are limited to these four
-values?
+[ Upstream commit a143545855bc2c6e1330f6f57ae375ac44af00a7 ]
 
-If so, please add this list to the DT binding.
+Add proper locking in mmp_pdma_residue() to prevent use-after-free when
+accessing descriptor list and descriptor contents.
 
-> +static int spacemit_dwmac_detected_delay_value(unsigned int delay,
-> +					       unsigned int *config)
-> +{
-> +	int i;
-> +	int code, best_code = 0;
-> +	unsigned int best_delay = 0;
-> +	unsigned int best_config = 0;
-> +
-> +	if (delay == 0)
-> +		return 0;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(k3_delay_step_10x); i++) {
-> +		unsigned int step = k3_delay_step_10x[i];
-> +
-> +		for (code = 1; code <= MAX_DLINE_DELAY_CODE; code++) {
-> +			/*
-> +			 * Note K3 require a specific factor for calculate
-> +			 * the delay, in this scenario it is 0.9. So the
-> +			 * formula is code * step / 10 * 0.9
-> +			 */
-> +			unsigned int tmp = code * step * 9 / 10 / 10;
-> +
-> +			if (abs(tmp - delay) < abs(best_delay - delay)) {
-> +				best_code = code;
-> +				best_delay = tmp;
-> +				best_config = i;
-> +			}
-> +		}
-> +	}
+The race occurs when multiple threads call tx_status() while the tasklet
+on another CPU is freeing completed descriptors:
 
-With the four values listed in DT, i would make this a straight match,
-not the nearest, and return -EINVAL otherwise.
+CPU 0                              CPU 1
+-----                              -----
+mmp_pdma_tx_status()
+mmp_pdma_residue()
+  -> NO LOCK held
+     list_for_each_entry(sw, ..)
+                                   DMA interrupt
+                                   dma_do_tasklet()
+                                     -> spin_lock(&desc_lock)
+                                        list_move(sw->node, ...)
+                                        spin_unlock(&desc_lock)
+  |                                     dma_pool_free(sw) <- FREED!
+  -> access sw->desc <- UAF!
 
-    Andrew
+This issue can be reproduced when running dmatest on the same channel with
+multiple threads (threads_per_chan > 1).
+
+Fix by protecting the chain_running list iteration and descriptor access
+with the chan->desc_lock spinlock.
+
+Signed-off-by: Juan Li <lijuan@linux.spacemit.com>
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Link: https://patch.msgid.link/20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+This confirms the `mmp_pdma_residue()` function was added in 2014. The
+race condition has existed since then.
+
+## Analysis Summary
+
+### 1. COMMIT MESSAGE ANALYSIS
+
+The commit message clearly describes:
+- A **use-after-free (UAF) race condition** in `mmp_pdma_residue()`
+- The race occurs between `tx_status()` (calling `mmp_pdma_residue()`)
+  and the DMA tasklet (`dma_do_tasklet()`)
+- **Clear reproduction steps**: running dmatest with `threads_per_chan >
+  1`
+- The CPU timeline diagram explicitly shows the race window between
+  unlocked list iteration and descriptor free
+
+Keywords: "Fix race condition", "use-after-free", "UAF"
+
+### 2. CODE CHANGE ANALYSIS
+
+**The bug:** `mmp_pdma_residue()` iterates over `chan->chain_running`
+list and accesses descriptor contents (`sw->desc`) without holding the
+`desc_lock` spinlock. Meanwhile, `dma_do_tasklet()` can:
+1. Hold `desc_lock`
+2. Move descriptors from `chain_running` to `chain_cleanup` via
+   `list_move()`
+3. Release `desc_lock`
+4. Free the descriptor via `dma_pool_free()`
+
+If `mmp_pdma_residue()` is iterating over the list when this happens, it
+can access freed memory (UAF).
+
+**The fix:** Adds `spin_lock_irqsave(&chan->desc_lock, flags)` before
+the `list_for_each_entry()` loop and `spin_unlock_irqrestore()` at all
+exit points from the function. This is:
+- Small (+6 lines, -0 lines of actual logic)
+- Surgical - uses the existing `desc_lock` that already protects this
+  list elsewhere
+- Follows existing driver patterns (other list operations use this lock)
+
+### 3. CLASSIFICATION
+
+This is a **bug fix** for a **use-after-free vulnerability**. This is a
+serious memory safety issue:
+- Can cause kernel crashes/panics
+- Can lead to data corruption
+- Potential security implications (UAF bugs are commonly exploitable)
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+- **Lines changed**: ~10 lines (just adding lock/unlock around existing
+  code)
+- **Files touched**: 1 file
+- **Complexity**: Very low - straightforward spinlock acquisition
+- **Risk of regression**: Minimal - uses existing lock that is designed
+  for this purpose
+- **Potential issues**: Slightly increased lock contention when calling
+  `tx_status()`, but this is necessary for correctness
+
+### 5. USER IMPACT
+
+- **Who is affected**: Users of MMP PDMA DMA controller (Marvell PXA/MMP
+  platforms, SpacemiT K1)
+- **Trigger conditions**: Multi-threaded DMA operations on same channel
+  (common in dmatest, may occur in real workloads)
+- **Severity**: High - UAF can cause kernel crashes or undefined
+  behavior
+- **Reproducibility**: Can be reproduced with dmatest (`threads_per_chan
+  > 1`)
+
+### 6. STABILITY INDICATORS
+
+- Has proper sign-offs: `Signed-off-by` from author, forwarder, and DMA
+  maintainer (Vinod Koul)
+- Link to mailing list discussion included
+- The existing lock (`desc_lock`) has been in the driver since the
+  beginning
+- The locking pattern matches other functions in the driver
+
+### 7. DEPENDENCY CHECK
+
+- No dependencies on other commits
+- The affected code (`mmp_pdma_residue()`) has existed since 2014
+- The `desc_lock` spinlock exists in all stable trees
+- Should apply cleanly to any kernel from 3.15+ (when residue reporting
+  was added)
+
+**Note**: Recent mainline commits added SpacemiT K1 support with 64-bit
+operations (`pdev->ops->get_desc_dst_addr`, etc.), but the core logic
+and the race condition existed with the original 32-bit implementation
+too. For older stable trees (pre-6.x), minor context adjustments might
+be needed due to the `pdev->ops->` refactoring, but the fix concept
+remains the same.
+
+### Conclusion
+
+This commit fixes a clear **use-after-free race condition** in the MMP
+PDMA driver. The bug:
+- Can cause kernel crashes/panics
+- Has existed since 2014 (when residue reporting was added)
+- Is reproducible with standard kernel testing tools (dmatest)
+
+The fix:
+- Is small and surgical (~10 lines of spinlock additions)
+- Uses existing infrastructure (the `desc_lock` already exists for this
+  purpose)
+- Follows existing driver patterns
+- Has minimal regression risk
+
+This is exactly the type of fix stable trees need: a clearly correct fix
+for a real bug that users can hit, with minimal risk of introducing new
+problems.
+
+**YES**
+
+ drivers/dma/mmp_pdma.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index d07229a748868..481b58c414e47 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -928,6 +928,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ {
+ 	struct mmp_pdma_desc_sw *sw;
+ 	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(chan->chan.device);
++	unsigned long flags;
+ 	u64 curr;
+ 	u32 residue = 0;
+ 	bool passed = false;
+@@ -945,6 +946,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ 	else
+ 		curr = pdev->ops->read_src_addr(chan->phy);
+ 
++	spin_lock_irqsave(&chan->desc_lock, flags);
++
+ 	list_for_each_entry(sw, &chan->chain_running, node) {
+ 		u64 start, end;
+ 		u32 len;
+@@ -989,6 +992,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ 			continue;
+ 
+ 		if (sw->async_tx.cookie == cookie) {
++			spin_unlock_irqrestore(&chan->desc_lock, flags);
+ 			return residue;
+ 		} else {
+ 			residue = 0;
+@@ -996,6 +1000,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ 		}
+ 	}
+ 
++	spin_unlock_irqrestore(&chan->desc_lock, flags);
++
+ 	/* We should only get here in case of cyclic transactions */
+ 	return residue;
+ }
+-- 
+2.51.0
+
