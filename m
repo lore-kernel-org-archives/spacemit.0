@@ -1,44 +1,47 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B2741C301
-	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 11:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768907713; cv=pass; b=OU1ChSPl4FUsrwnmRAt6UuCmU8xPIVOzYhTew6oAU46tEV6NG++4cPWgtOz5lzosOAEBoUNBbBRyYJgW7zxnKCurzXzBvf5rN7iYUoJwIUWthhx33ec90C8cBa45jXPM4KmD5DpkkQnV1jggy6c30ofsCpQqcYTAZ8eaux8YZKY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768907713; c=relaxed/simple;
-	bh=Oql7bqgPicyZz3jIQKvbwNAm9ubAi1sUxOsLdaPn0LU=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFCA41C30F
+	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 11:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768908585; cv=none; b=kcl3GNtXoS6KkeAxiuDAdDXl/dZHhhuWbYZRYZzsQF6b++kH9NGGRafouk933xfSticUWDOMqy1EnISHh89EdEArlfz5r1ccw36eIB+CDHmRa4sS0t0/5odBNtMmLtx+vpwxmoja+sxuGyMCuAw622G3B79jOOgIqfdVMYPpMxw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768908585; c=relaxed/simple;
+	bh=zD8PS2BxyO8mlqAByme4yWQvJMWzaVsGbWniXAdX0VM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ln9onBymPnrBaIPUC/sQi+OTem1FhfXEmayTkempTT0jOlIysQxg/+GvSRvcTRBxIdCDlQnMby6XA0zHuwdHZhxs5Jx5tNKZbStm+oFTpL47SQk2zcirUg9wQwPaQ+0OlZ1lFcsguDFcuckKizFrG7cTgD4y5oB6o+F91uI0avo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=IQ5J3XJX; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+	 Content-Type:Content-Disposition:In-Reply-To; b=nUDxah0MFcuJvXdyTyqWs+4XkKajj1SzkEDRUEExgePrUoA53nP1EsgUQ1m/trt8/vRNvBA4jEB/rr1GtQSH8igj+Wc/ACB8gpMkFdzFuG4dc37EkhNB/DIdHWss+8Ei64WuvqEMnY7++VQ5Nkf7Vq2IKxl1S5mucFt1YQMW+Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=hovWwipu; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="IQ5J3XJX"
-ARC-Seal: i=1; a=rsa-sha256; t=1768907647; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=MLm/apznCo1vkrhgqdt2z6fqtnb1SbIVdgzHikdkv35tmySWGCVPqd99XhKn9owM3TbqWCkOIMUUwMS+4V/TExvZibsn+8Ef//q7UoIpTE2r5lb8zot88oM3B8j424J46SwRKKCxuFyolNStCD9T4Odg+1rktwEjUujOY7kupJg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768907647; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=tJlvsdjO7MakrXAnTGrsJvCK8GVpY/2Oni8KztKsRFI=; 
-	b=h7QuZ28EnDC7OQBna/NjX26H1HsexkJZmeY1FtM/izwfHFAZwH8EL5v++SrxWlMuY3MvlCvGBkrSFHFJvTyjQxl9FabP5zAfyzp91rYyIofRWW4ljwoTCkP2u5S7awWzTYW51Qlgz5vSOqZkTV7986ETKQgVlqL8SVgq5v9KunM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ziyao.cc;
-	spf=pass  smtp.mailfrom=me@ziyao.cc;
-	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768907647;
-	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=tJlvsdjO7MakrXAnTGrsJvCK8GVpY/2Oni8KztKsRFI=;
-	b=IQ5J3XJXRxRY9SMaPXJbxjogepRElpYKptpWbrV3D841tGD/EIepXwW76IZohqcy
-	tnt4sfgsqRQ+Nlu3e54z/Hy1Q5EUkmVxxbP0+LS0HVeGOdWosQZsgLuN1Jw6Fudw2GR
-	WCsTFNyASwHiRvKnThPceu0ee3SM5iJpw8xp1sd8=
-Received: by mx.zohomail.com with SMTPS id 176890764538613.18629924577317;
-	Tue, 20 Jan 2026 03:14:05 -0800 (PST)
-Date: Tue, 20 Jan 2026 11:13:50 +0000
-From: Yao Zi <me@ziyao.cc>
-To: Inochi Amaoto <inochiama@gmail.com>,
+	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="hovWwipu"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=AjnwvV2BqvE2aPiFrCHPh0/mzQujqmD6N4sIt6a5sZU=; b=hovWwipuHB57LKi4MlszUuI8DP
+	CgD3oSh3KhgWsMTfb486kUstGtEakbhWKS3+1iC5/urnMW79/L40gcwZ5abtlbaHeVDneWxj/KXyX
+	eTJv0JZfc3wkTMmGRw7nkB0HxBhoRPNL5zkIKvCd+Dsv6eBFJLW2/pEYOO2FIvMQl4Su8K1KY6UZi
+	PrXKLOXfxQQycmy+X6n53r84bKvM9JlWyEx096TTXdb2WDyBWNjezyvY8YMZ1iQmo/Hfbr+wGtFAY
+	C9aaJwM1f6p7mnsw1EmmDjJrl5vXbwvoF6LduEgFjCuro5aKLguFLKEm7NSzHR4V0bm8WPRMvX/zN
+	vUNCdoYQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:59282)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1vi9us-000000006A6-2vXc;
+	Tue, 20 Jan 2026 11:28:58 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1vi9uj-000000007Tq-3hBk;
+	Tue, 20 Jan 2026 11:28:49 +0000
+Date: Tue, 20 Jan 2026 11:28:49 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Yao Zi <me@ziyao.cc>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
 	Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
@@ -51,7 +54,6 @@ To: Inochi Amaoto <inochiama@gmail.com>,
 	Richard Cochran <richardcochran@gmail.com>,
 	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Yanteng Si <siyanteng@cqsoftware.com.cn>,
 	Yao Zi <ziyao@disroot.org>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
@@ -63,17 +65,18 @@ To: Inochi Amaoto <inochiama@gmail.com>,
 	Boon Khai Ng <boon.khai.ng@altera.com>,
 	Quentin Schulz <quentin.schulz@cherry.de>,
 	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>
-Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+	Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org,
 	Longbin Li <looong.bin@gmail.com>
 Subject: Re: [PATCH net-next 3/3] net: stmmac: Add glue layer for Spacemit K3
  SoC
-Message-ID: <aW9jbqBSgkiLLw8r@pie>
+Message-ID: <aW9m8YOVO1ClIQOd@shell.armlinux.org.uk>
 References: <20260120043609.910302-1-inochiama@gmail.com>
  <20260120043609.910302-4-inochiama@gmail.com>
+ <aW9jbqBSgkiLLw8r@pie>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -82,139 +85,42 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260120043609.910302-4-inochiama@gmail.com>
-X-ZohoMailClient: External
+In-Reply-To: <aW9jbqBSgkiLLw8r@pie>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Tue, Jan 20, 2026 at 12:36:08PM +0800, Inochi Amaoto wrote:
-> Adds Spacemit dwmac driver support on the Spacemit K3 SoC.
+On Tue, Jan 20, 2026 at 11:13:50AM +0000, Yao Zi wrote:
+> On Tue, Jan 20, 2026 at 12:36:08PM +0800, Inochi Amaoto wrote:
+> > +static int spacemit_dwmac_probe(struct platform_device *pdev)
+> > +{
 > 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> ---
->  drivers/net/ethernet/stmicro/stmmac/Kconfig   |  12 +
->  drivers/net/ethernet/stmicro/stmmac/Makefile  |   1 +
->  .../ethernet/stmicro/stmmac/dwmac-spacemit.c  | 224 ++++++++++++++++++
->  3 files changed, 237 insertions(+)
->  create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
+> ...
+> 
+> > +	of_property_read_u32(pdev->dev.of_node, "tx-internal-delay-ps", &tx_delay);
+> > +	of_property_read_u32(pdev->dev.of_node, "rx-internal-delay-ps", &rx_delay);
+> 
+> According to of.h, of_property_read_u32, which in turn calls
+> of_property_read_u32_array, could fail with -ENODATA if there's no value
+> associated with the property. Should the case be handled?
 
-...
+You cut too much. This had:
 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
-> new file mode 100644
-> index 000000000000..72744e60d02a
-> --- /dev/null
-> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
-> @@ -0,0 +1,224 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Spacemit DWMAC platform driver
-> + *
-> + * Copyright (C) 2026 Inochi Amaoto <inochiama@gmail.com>
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/math.h>
+	unsigned int tx_delay = 0;
+	unsigned int rx_delay = 0;
 
-These are the only two headers listed out-of-order. Is this intended?
+at the start of the function.
 
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/property.h>
-> +#include <linux/regmap.h>
+of_property_read_u32_array() says:
 
-...
+ * @out_values: pointer to return value, modified only if return value is 0.
 
-> +static int spacemit_dwmac_detected_delay_value(unsigned int delay,
-> +					       unsigned int *config)
-> +{
-> +	int i;
-> +	int code, best_code = 0;
-> +	unsigned int best_delay = 0;
-> +	unsigned int best_config = 0;
-> +
-> +	if (delay == 0)
-> +		return 0;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(k3_delay_step_10x); i++) {
-> +		unsigned int step = k3_delay_step_10x[i];
-> +
-> +		for (code = 1; code <= MAX_DLINE_DELAY_CODE; code++) {
-> +			/*
-> +			 * Note K3 require a specific factor for calculate
-> +			 * the delay, in this scenario it is 0.9. So the
-> +			 * formula is code * step / 10 * 0.9
-> +			 */
-> +			unsigned int tmp = code * step * 9 / 10 / 10;
-> +
-> +			if (abs(tmp - delay) < abs(best_delay - delay)) {
-> +				best_code = code;
-> +				best_delay = tmp;
-> +				best_config = i;
-> +			}
+and of_property_read_u32() passes &tx_delay or &rx_delay to this. Thus,
+if any error occurs, these will be zero. In other words, a missing
+property is equivalent to setting these to zero, which is entirely
+reasonable.
 
-Is the inner loop really necessary? Could it be replaced by
+However, "unsigned int" _may_ be type equivalent to "u32", but really
+these should be "u32" if of_property_read_u32_array() is used.
 
-	this_code = DIV_ROUND_CLOSEST(delay * 10 * 10, step * 9);
-	this_delay = this_code * step * 9 / 10 / 10;
-
-Then comparing abs(this_delay - delay) and abs(best_delay - delay)?
-
-> +		}
-> +	}
-> +
-> +	*config = best_config;
-> +
-> +	return best_code;
-> +}
-
-...
-
-> +static int spacemit_dwmac_update_ifconfig(struct plat_stmmacenet_data *plat_dat,
-> +					  struct stmmac_resources *stmmac_res,
-> +					  struct regmap *apmu,
-> +					  unsigned int ctrl_offset)
-> +{
-> +	unsigned int mask = PHY_INTF_MII | PHY_INTF_RGMII | WAKE_IRQ_EN;
-> +	unsigned int val = 0;
-> +
-> +	switch (plat_dat->phy_interface) {
-> +	case PHY_INTERFACE_MODE_MII:
-> +		val |= PHY_INTF_MII;
-> +		break;
-
-The OR operation seems unnecessary and could be replaced with an
-assignment. Same for PHY_INTERFACE_MODE_RGMII's case.
-
-> +
-> +	case PHY_INTERFACE_MODE_RMII:
-> +		break;
-> +
-> +	case PHY_INTERFACE_MODE_RGMII:
-> +	case PHY_INTERFACE_MODE_RGMII_ID:
-> +	case PHY_INTERFACE_MODE_RGMII_RXID:
-> +	case PHY_INTERFACE_MODE_RGMII_TXID:
-> +		val |= PHY_INTF_RGMII;
-> +		break;
-> +
-> +	default:
-> +		return -EOPNOTSUPP;
-> +	}
-
-...
-
-> +static int spacemit_dwmac_probe(struct platform_device *pdev)
-> +{
-
-...
-
-> +	of_property_read_u32(pdev->dev.of_node, "tx-internal-delay-ps", &tx_delay);
-> +	of_property_read_u32(pdev->dev.of_node, "rx-internal-delay-ps", &rx_delay);
-
-According to of.h, of_property_read_u32, which in turn calls
-of_property_read_u32_array, could fail with -ENODATA if there's no value
-associated with the property. Should the case be handled?
-
-Regards,
-Yao Zi
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
