@@ -1,118 +1,100 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C500A3148A0
-	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 03:03:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4306F33BBA7
+	for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 04:17:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768878222; cv=none; b=JtjNwnJLmGCYrxg+yR6IgbvdtFrvpjT+aB99Ok3mjdB2aL29rb+RLC8XV2iKQQb1lWaVDHDEZRSXxzZAux1ywizhGQURPdUqdTMf+jbCN4HW9MmLt564POIdDnDrWCaCoZjDK03bDXYGl8OWHz0b5Kf5vqcYIJL4Tl+LMsDHWe4=
+	t=1768882631; cv=none; b=BmfiIllhdH/zUglH1s2WEwh326L3nCPjidMOZkuvNphTN5ZP9N0KAyD3y3PtvQ7ZoTK9X95kydGrTCheIDy5KV2aRsMMb7dmSSusEAkO+QqDD5bI+8dqrc8XwIUzE7+ecQu8ivDMKnCqYvzIYUe49t6GF8lb+mHkasweHsSARoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768878222; c=relaxed/simple;
-	bh=n5A0OXSyk7lo7f3jHURyz0bX/5X3lYhpTO7Z9MO/Uec=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GaWnqttZnxSEbP6LP+ijTZ6zm8GZ+9SxOElYELktU+w6/+RTpLjkqjLoidNmMMNQbaKb0+/zOV1/puDezX05tZfGRPC8xDnu32nNM2YCTFjKsPdE7s4B3qLjXW4j3v6/YMBguaB8CBj3pi8FcNih+tjv6J38Bf7Ncj1u+9H6+24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BGGBm8N8; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BGGBm8N8"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-50145d27b4cso52002351cf.2
-        for <spacemit@lists.linux.dev>; Mon, 19 Jan 2026 19:03:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768878220; x=1769483020; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i2Ldiltg0ilm3GITC1FlZ3jygue5ViLbnCHXlSmV/Sg=;
-        b=BGGBm8N8BfhNi30GLW+2ChtI1bHF/QID/0ZUqxg/pCTWcT1dGJB6PgP/Vkv1HUkM3F
-         pB1nUuicwpbPhFBR5aGE/6UvWi9pB6MJDFtBr2ldjHEfGpbsuu6IPBAMSe0moEA/cFsm
-         qMsgwtt6iaV77YHk9bA2/q73nD2kKfPtrWOipPGja23CU1EDNAkNAObknnIYorqhUszq
-         7xd3rnumtw8mlQpo+Ci7qATaBM7i8qqcu0amUrsg8RZMYE4y9yD6S6O3tXc6FkkkEh20
-         bPK04x7qeJIh+j2LmeExkP5VjQ3OwOWKh/o7wcnjrHRH/Nf+zm2jhOAwmeRl2j6nFWM8
-         UNJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768878220; x=1769483020;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=i2Ldiltg0ilm3GITC1FlZ3jygue5ViLbnCHXlSmV/Sg=;
-        b=nqO1SZc7v2ZZ9O9GbyC5elQQ6FU3raNOQHXbAc8E5eT1IOEvD1hEu3YGhIHsLItKRs
-         Rnn7+nt3PZYPU8zJH2sGi5z1uYjIONQ+nVFYyR3ICNxW8ddN2jltna+YVF4xMoPwnqgL
-         /rNeZDTB/+IJRg7pXVe1DcpT3IyTW72jpnwz/gjNKMUSNXHU5AzbEOxdx4NleAdPiGCm
-         xeo18XqP9kg7JTWBk7a+Z4LgxQtAM6jQCBykneyLZJhAzcGgYchz+tYWK4a2cN8Bz7VO
-         OMpDxnYd5OLa+ts5lcKjeq9LzNc6iMyGt0bGIXaqWTZtN2x4PP2NeIm8RDPAxGLhCABn
-         yw6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXI6Zruj6JQf4rd7MfaDcYZhuZbZNDiFq4S70IgzDNW6DmUYAAMBF04tS6BXnSJvesBIUOESIV/0w==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxJbgn1q95L3tZyS2IKbzAkcnR2QOTk6vyUd909LLK5KyOEPATO
-	xrUkZC3xi/nsf2D88Tb+oXKn47ii0r6WazGwGeWtUB5ZC9Scw/Sb3p6zwUmPl/t1
-X-Gm-Gg: AY/fxX4tT/6917yyiG8eKIgdRu9RKebVI0hyqygPrNnrVfwbD42yOGZfR8yLTWShoeT
-	ljZm/lshVkzT6All0DNMz0Z5PAeUAXRN0ZE7UI6tgwnNC4XiRR2QSF4HKmRRHAK/nZ4PVwAxymJ
-	N7lJG3eRXMaVyIpZfc9ydp7nFwSejShrcGYub2TKIkguvBdN+BM/wJbEhTAF6S40SEILZy1wMgX
-	9wDPGNPcs6QEapQ6w+bbGf0SIpPIwRfP7/NW+i5BdRLrKI1iY2mm0r1ZaNLv4+7UlVRjPryet61
-	OBuhHvgFgkGL05SyuMtSurRB98oyX8sJoKQt3UnhzL+Oai6EBQAH+m1KrosaCesi+LYU4TI8uF6
-	qqdX1rmAeIJ8iAzyJ0yBhH8dD8OIssz8BCtN7fxmPkFPp7StmsM698OimvEinu28AgXDAVl80if
-	Fdy+jw7JHjyShyuBOS2e7J
-X-Received: by 2002:a05:7022:6288:b0:11b:7824:5c97 with SMTP id a92af1059eb24-1244a769feemr12788374c88.40.1768871785704;
-        Mon, 19 Jan 2026 17:16:25 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6fba43c3dsm747540eec.0.2026.01.19.17.16.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jan 2026 17:16:25 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Jonathan Corbet <corbet@lwn.net>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Conor Dooley <conor@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Guodong Xu <guodong@riscstar.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	linux-doc@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	spacemit@lists.linux.dev
-Subject: Re: (subset) [PATCH v2 0/4] riscv: dts: Add "b" ISA extension to existing devicetrees
-Date: Tue, 20 Jan 2026 09:16:14 +0800
-Message-ID: <176887176536.427065.4468747981087466363.b4-ty@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
-References: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
+	s=arc-20240116; t=1768882631; c=relaxed/simple;
+	bh=ygUdyNkfE2jAIcPl2nsg7XS1NoJnGgnoD7iI5CL6pEs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t4VjwCIXzS6WJmnLFdcACxW5dT43HuLndP70T/Ud3gyj9cs35ovSLuINEzMRfgw5adtXw8g1ZPxthEoz/eUXAvKOw7xyTdd8/kG254j+DdT2Bst08hDZ9XOX52QnXLnLDKLqaBPYvirnE0iRT2cJub4E3JPVDppZnCfwcWW98Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [10.213.18.194] (unknown [210.73.43.101])
+	by APP-05 (Coremail) with SMTP id zQCowAAXqg21AW9pXw+3BQ--.1431S2;
+	Tue, 20 Jan 2026 12:16:54 +0800 (CST)
+Message-ID: <f63d455c-7593-4382-86ef-9c31a1ebd283@iscas.ac.cn>
+Date: Tue, 20 Jan 2026 12:16:53 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] net: spacemit: Check netif_carrier_ok when reading
+ stats
+To: Andrew Lunn <andrew@lunn.ch>, Chukun Pan <amadeus@jmu.edu.cn>
+Cc: andrew+netdev@lunn.ch, davem@davemloft.net, dlan@gentoo.org,
+ edumazet@google.com, kuba@kernel.org, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, netdev@vger.kernel.org, pabeni@redhat.com,
+ spacemit@lists.linux.dev
+References: <e3890633-351d-401d-abb1-5b2625c2213b@iscas.ac.cn>
+ <20260119141620.1318102-1-amadeus@jmu.edu.cn>
+ <48757af2-bbea-4185-8cc9-2ef51dbc8373@lunn.ch>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <48757af2-bbea-4185-8cc9-2ef51dbc8373@lunn.ch>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:zQCowAAXqg21AW9pXw+3BQ--.1431S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7KFy5KryruFyxJr18CryxuFg_yoW8WF1kpF
+	43Kw4Fyr1kt3W0qF1Ika1DA3409rZ5tFy5Gr1Fg3s3Aa15Xr1Svr4fKrWjgFyUWryvgw1j
+	vr1qvF4YvFWDAFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
+	c7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
+	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
+	14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
+	IFyTuYvjxUgHanUUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Thu, 15 Jan 2026 07:18:56 +0800, Guodong Xu wrote:
-> The RISC-V "b" (Bit-manipulation) extension was ratified in April 2024,
-> much later than its component extensions zba/zbb/zbs (June 2021). Recent
-> updates to the device tree bindings [2] enforce that when all three
-> component extensions are present, "b" must also be specified. Related
-> discussion can also be found in [1].
-> 
-> Patch 1 clarifies the ISA spec version for canonical ordering in uabi.rst.
-> It is a trivial update, but can help readers reference the correct
-> document version. Acked-by Paul Walmsley in v1.
-> 
-> [...]
+On 1/19/26 23:09, Andrew Lunn wrote:
+>> root@OpenWrt:~# ethtool -S eth1
+>> [   71.725539] k1_emac cac81000.ethernet eth1: Read stat timeout
+>> NIC statistics:
+>>      rx_drp_fifo_full_pkts: 0
+>>      rx_truncate_fifo_full_pkts: 0
+>>
+>> I just discovered that adding "motorcomm,auto-sleep-disabled" to disable
+>> the sleep mode of the MotorComm PHY prevents the problem from occurring.
+> This suggests that when the PHY stops the reference clock, the MAC
+> hardware stops working. It needs that clock to access
+> statistics. Keeping the clock ticking will increase power usage a
+> little.
 
-Applied to dt/riscv, thanks!
+As per suggestion from Chukun, adding realtek,aldps-enable to the DTS on
+BananaPi F3 (with, obviously, a Realtek PHY) also reproduces this
+problem. So this is a good indication that it really is a problem with
+this power saving thing.
 
-[3/4] riscv: dts: sophgo: sg2044: Add "b" ISA extension
-      https://github.com/sophgo/linux/commit/f16ae81b80ca4e721f4c4ed1f28390115f7721eb
+> I wounder if anything else stops working? There are some MACs whos DMA
+> engine stop working without the reference clock. That can cause
+> problems during both probe and remove, or open and close.
+
+At least DMA reset seems to work in this case, so it's probably not as
+big of a problem, but at least I would conclude that the HW design
+didn't have the reference clock stopping in mind. AFAICT from the DTS
+files a bunch of other boards also have motorcomm,auto-sleep-disabled so
+at least SpacemiT isn't alone in this.
+
+> So it would be nice to have a better understanding of this. If this
+> turns out to be true, maybe a comment by this poll_read_timeout()
+> indicating if it does timeout, the PHY might be the problem.
+
+I'll send a patch updating the comments and error prints.
 
 Thanks,
-Inochi
+Vivian "dramforever" Wang
 
