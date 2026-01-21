@@ -1,131 +1,142 @@
-Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA17C30E82D
-	for <spacemit@lists.linux.dev>; Wed, 21 Jan 2026 01:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC750306496
+	for <spacemit@lists.linux.dev>; Wed, 21 Jan 2026 02:17:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768959490; cv=none; b=nZTv4G9deG3I+wK5qzapdzlR787uKHVODre1jH7/yhI6qcHcS0ZlCMKip3Ko6pRHR2X9kEE8mv7hTC559HxWqhRUNz2t3EVC5EAkgFP4Yqd4Yxl0Um+SeP628ITChALRHWg01+oCVAbYtqNRHOZF+XtLCN0yi5c2f3VSLP1M3V8=
+	t=1768961863; cv=none; b=LA2EEpUz6EnO7LBPYDNPP06ymsWnfeuOUejdspGdlYIwLeFWISTCYWIKRrAQ20yIUiO8CY8uuFC51XYGGE455trJWhRW0D2reFBitBUaIHWJglG3BqV9Rz1KYOrBj6ZhSzwnlw5utAo/5YMExSjYuKXO3YbCALho06urv8zmvfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768959490; c=relaxed/simple;
-	bh=vWu9HLOleefdsDITsXsJ53ZaMRnGMvdVMKyNUSlnqlM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sywjWuhVkDhVj0yoyc+vxr4/FoB/xW5VSAEdGO6jCWdHMDPQl9XhtcBfLmpgpVPfa/+lLa5W/1iEgiwkzYXQw2vN/htvgPrUbExdkawwZcXdIMyAjBqUhz0a/wjEHNUE4RWP59+utcw7u3bZDpRQ1/cZRfbh47tdlmpBDkmRJ/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LOjFZ01V; arc=none smtp.client-ip=74.125.82.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LOjFZ01V"
-Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-2ae61424095so5998203eec.1
-        for <spacemit@lists.linux.dev>; Tue, 20 Jan 2026 17:38:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768959484; x=1769564284; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=A5yAAJyzuotg25Ij3sl9iHvHzE6qHnmlHIRrb6J8qac=;
-        b=LOjFZ01V+GUqX0I98vYdcB5O0Ecl4M9P9v6jtxtKn7zbPdtwHfJmtyIHdtYXOo7tzU
-         fbO/ZX4PANOPw5M0gpYd89q5dDeQ8XnkBSzCG9OHwPOZrCiitZULgM3x18y2STUC/xkM
-         oKOkaNw7C+eS6kBnxYnblhNwe8rgRxMRH0DdTpOYN+QFCjWlTCgGCMeyXCA//l24TR5L
-         4hFjtGgZ1I3om8gW1F2dMq9j6ok7cZpN79Edv4YgxdhfCsfMmwp7H6TjJfOX+9eZjQaU
-         JlPFC5guMZpNyxbCnUB7isVaqHlE2yob4iW9qTW7D34jgKrtHU5259yrTJIUiFLWp/xe
-         l9YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768959484; x=1769564284;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A5yAAJyzuotg25Ij3sl9iHvHzE6qHnmlHIRrb6J8qac=;
-        b=CRzuKvqRUbPEzKrH6u2sJyvsA6NgPIM60TiZSz8JnMYDJki6iLa57O6Yu6S4+s+BJp
-         uLsC/wvW7p9Etxjv/dyAB1XXRKeMQfQAjRVImVQb4mpoL9cqQSYbJDbx13d+P0oFam0k
-         YMHmyaAp6HJiKrVNi8eTOADgXccd1YnOX2tHf8BealWNOWB8OHmbpBjixA7tdukXgsJI
-         qW0F0GigMykTjHnVyjneivVbSBL/iMeVJJ6GjRdoREVhG23zROcmfoXaBDLKCp/Y0+Oe
-         e4Ia2Sv7/FCH3Ok2SqIJCmwj8/fgC7ipxMd0pBPBw02HRvqmjEP/hov99qH3I4UfFefY
-         w5Pg==
-X-Forwarded-Encrypted: i=1; AJvYcCULqhY9XXwwekvG+nJn2Aw40F/i5E5c5qRdEz8XzeHu0K+kWiJWs1RyDmWGExlivH+K5D/vs90Xqg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzyurOy5cGxVarwYRmeWwuUGrPpLbWyDYlMiGtKC0xaXjPNd2NS
-	hwlsaNnZ0RaXs1HtiiPFdjyfmWcMeDq3TH47mGCfAfDBpvfbjE13Nspy
-X-Gm-Gg: AZuq6aIz1hjFanQ8xGwl7DD7GqT1Y39dU9+E29v3IxfUNyv+VF1I24DvWdq3JCa2sUN
-	vaROwSNG759GqokehH4dBZLoH8F0qXSeSmDiHpF3HbULhkwmXkXjtuusJkClPNWa7yAsV8w69aY
-	8geUgCGBmopCB25YkSUgDNb/SBRiEGqBe6RZAcTBW1xKCDufjsH5ebh00nhXXRutln8TW4TOfow
-	KFsu0i7aCq46Tx2TkUW7Sa9WJtXjraB1V7JZ7WNCoht1lH3nQctFCSwG0xJuF9SezKOf0PeJsSm
-	MriZIqMkAEQGwqQgDWXJ0ORsApg1iTiX1oVK9DNoInBE3ABx7rPdgi9h+QzpZZ/PiSDGoFKf7jW
-	pu3QCMCEyuimpI3E0VfCwmsbAZhNuroBbuyC7hOyliBVSwXoEmhtYIbLHI1esaazDVA/CuAApI3
-	/aNJaPFDWZBA==
-X-Received: by 2002:a05:7301:2b84:b0:2b7:f12:9503 with SMTP id 5a478bee46e88-2b70f1295ccmr1043461eec.30.1768959484158;
-        Tue, 20 Jan 2026 17:38:04 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7047b099bsm3361798eec.31.2026.01.20.17.38.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jan 2026 17:38:03 -0800 (PST)
-Date: Wed, 21 Jan 2026 09:37:53 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Richard Cochran <richardcochran@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
-	Yanteng Si <siyanteng@cqsoftware.com.cn>, Yao Zi <ziyao@disroot.org>, 
-	Vladimir Oltean <vladimir.oltean@nxp.com>, Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>, Maxime Chevallier <maxime.chevallier@bootlin.com>, 
-	Chen-Yu Tsai <wens@kernel.org>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
-	Boon Khai Ng <boon.khai.ng@altera.com>, Quentin Schulz <quentin.schulz@cherry.de>, 
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next 3/3] net: stmmac: Add glue layer for Spacemit K3
- SoC
-Message-ID: <aXAtMZJorEBiK2R-@inochi.infowork>
-References: <20260120043609.910302-1-inochiama@gmail.com>
- <20260120043609.910302-4-inochiama@gmail.com>
- <f8e4c5ec-94b1-4da0-8a40-976770514828@lunn.ch>
- <aXACRN7BaumIySp3@inochi.infowork>
- <cd5c882e-1632-4623-92d3-8a433c8ccdbb@lunn.ch>
+	s=arc-20240116; t=1768961863; c=relaxed/simple;
+	bh=K65pF9m8TZOykztqSsjFqV3pLM01hu/wEsXWil4paQA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=H33vhSqNbfYMfiKWUmmOg5ZX1AZvfZSyHwWs11mK6p+UPOLxNT1mEDYNLTSyVZlow6vXdOTjyzTPs0Y8Pq6aqHKFfXpUzU7tsS0+rMbvS7HzNjs+rKvfimNXOAnDjyT+42eENKsHO/IUYTf9MS6ROV/sZxzaHY0I+iXt12Jb8lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [210.73.43.101])
+	by APP-03 (Coremail) with SMTP id rQCowADH5NswN3BpnmUNBg--.11234S2;
+	Wed, 21 Jan 2026 10:17:21 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Wed, 21 Jan 2026 10:17:18 +0800
+Subject: [PATCH net v2] net: spacemit: Clarify stat timeout comments and
+ messages
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cd5c882e-1632-4623-92d3-8a433c8ccdbb@lunn.ch>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260121-k1-ethernet-clarify-stat-timeout-v2-1-76ff1a1168d9@iscas.ac.cn>
+X-B4-Tracking: v=1; b=H4sIAC03cGkC/42PS27DMAxEr2JoHQWU/ImdVe5RZEFRVE00thNJM
+ RoEvnsFtwcouJoh+Gb4VomjcFLn6q0ir5JkmYuwh0rRiPMna/FFKwu2A2NBfxnNeeQ4c9Z0wyj
+ hpVPGrLNMvDyz9taaQL5GxF4VzD1ykO894kOVK3X9NSM/niUu/20cJta0TJPkc4VDaE7QDg21g
+ M54H2zrrEEAwsbXpuugPYXa7axRUl7ia39hNTvs/21Xo8tAT2GwvTeuvkgiTEekI83qum3bD8q
+ D2vUjAQAA
+X-Change-ID: 20260120-k1-ethernet-clarify-stat-timeout-d221fcd3aaa8
+To: Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Yixun Lan <dlan@gentoo.org>
+Cc: Chukun Pan <amadeus@jmu.edu.cn>, 
+ Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
+ netdev@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Vivian Wang <wangruikang@iscas.ac.cn>
+X-Mailer: b4 0.14.3
+X-CM-TRANSID:rQCowADH5NswN3BpnmUNBg--.11234S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxXF13AFyxKFyDKw4UtFW8JFb_yoW5Wry5p3
+	yYyasavry8tr4avFsFvr4UXws5Za1vgFyUuF12y3yrXFn0yF18Ar10kFWY9ryqkrW8WryY
+	qr4UAan8CF4DA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9F14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26F1j6w1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+	6r4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr
+	1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
+	6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr
+	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E
+	8cxan2IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFV
+	Cjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWl
+	x4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r
+	1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_
+	JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcS
+	sGvfC2KfnxnUUI43ZEXa7VUbGQ6JUUUUU==
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Wed, Jan 21, 2026 at 02:29:23AM +0100, Andrew Lunn wrote:
-> On Wed, Jan 21, 2026 at 06:36:01AM +0800, Inochi Amaoto wrote:
-> > On Tue, Jan 20, 2026 at 02:56:26PM +0100, Andrew Lunn wrote:
-> > > > +/* Note: the delay step value is at 0.1ps */
-> > > > +static const unsigned int k3_delay_step_10x[4] = {
-> > > > +	367, 493, 559, 685
-> > > > +};
-> > > 
-> > > Am i reading it correctly that RGMII delays are limited to these four
-> > > values?
-> > > 
-> > > If so, please add this list to the DT binding.
-> > > 
-> > 
-> > No, these value are just adjustment interval, and it is also
-> > controlled by another code register, the final delay is calculated
-> > by the following formula:
-> > 
-> > delay = delay_step * delay_code * 0.9;
-> > 
-> > So the delay configuration needs to be calculated instead of
-> > directly assigned.
-> 
-> O.K.
-> 
-> So what is the actual range? Can is do 1000ps? 2000ps? 3000ps? Should
-> there be a basic range check to avoid dumb typos?
+Someone did run into this timeout in the wild [1], and it turns out to
+be related to the PHY reference clock stopping.
 
-It can have a pretty big ranges, and I was told the total delay is fine
-to work between [1200, 2800]. I guess it is fine for us to check the
-upper limit?
+Improve the comments and error message prints around this to reflect the
+better understanding of how this could happen.
 
-Regards,
-Inochi
+This patch isn't a fix for the problem per se, since it is hardware
+behavior. The new message and comments, however, should direct those
+running into this on new hardware towards a fix.
+
+Link: https://lore.kernel.org/r/20260119141620.1318102-1-amadeus@jmu.edu.cn/ # [1]
+Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+---
+Changes in v2:
+- Add "Fixes" and retarget to net (Andrew)
+- Link to v1: https://lore.kernel.org/r/20260120-k1-ethernet-clarify-stat-timeout-v1-1-108cf928d1b3@iscas.ac.cn
+---
+ drivers/net/ethernet/spacemit/k1_emac.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
+index 220eb5ce7583..387f26ff7714 100644
+--- a/drivers/net/ethernet/spacemit/k1_emac.c
++++ b/drivers/net/ethernet/spacemit/k1_emac.c
+@@ -1099,7 +1099,14 @@ static int emac_read_stat_cnt(struct emac_priv *priv, u8 cnt, u32 *res,
+ 					100, 10000);
+ 
+ 	if (ret) {
+-		netdev_err(priv->ndev, "Read stat timeout\n");
++		/*
++		 * If you run into this, one possibility is that even though the
++		 * interface is up the PHY may have stopped its clock anyway for
++		 * power saving. This MAC doesn't like that, so configure your
++		 * PHY to not do that.
++		 */
++		dev_err_ratelimited(&priv->ndev->dev,
++				    "Read stat timeout. PHY clock stopped?\n");
+ 		return ret;
+ 	}
+ 
+@@ -1148,16 +1155,20 @@ static void emac_stats_update(struct emac_priv *priv)
+ 	assert_spin_locked(&priv->stats_lock);
+ 
+ 	if (!netif_running(priv->ndev) || !netif_device_present(priv->ndev)) {
+-		/* Not up, don't try to update */
++		/*
++		 * Not up, don't try to update. If the PHY is stopped, reading
++		 * stats would time out.
++		 */
+ 		return;
+ 	}
+ 
+ 	for (i = 0; i < sizeof(priv->tx_stats) / sizeof(*tx_stats); i++) {
+ 		/*
+-		 * If reading stats times out, everything is broken and there's
+-		 * nothing we can do. Reading statistics also can't return an
+-		 * error, so just return without updating and without
+-		 * rescheduling.
++		 * If reading stats times out anyway, the stat registers will be
++		 * stuck, and we can't really recover from that.
++		 *
++		 * Reading statistics also can't return an error, so just return
++		 * without updating and without rescheduling.
+ 		 */
+ 		if (emac_tx_read_stat_cnt(priv, i, &res))
+ 			return;
+
+---
+base-commit: a9f470594c50ab1ddf25b21a00ca4d3166057f3b
+change-id: 20260120-k1-ethernet-clarify-stat-timeout-d221fcd3aaa8
+
+Best regards,
+-- 
+Vivian "dramforever" Wang
+
