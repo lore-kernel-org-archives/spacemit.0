@@ -1,148 +1,102 @@
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9744418C0
-	for <spacemit@lists.linux.dev>; Wed, 21 Jan 2026 22:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5713BFE4B;
+	Wed, 21 Jan 2026 23:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769035046; cv=none; b=e/9R/mKx9LQCipj0rU0d9RSNiBtrevVKv5oRbOcMwp43Nq9eqTQFUgKyOjL+voQIGrb++f/MMYSU2WU3B8CuOWKdKwvEI6LdxkMyUvJZcQtdqHW4BJONxjOGX5m+PQ01zdzP+AQ7TQXsp+X3Iu8Rr64erEyWRVmX901CTQQyoY4=
+	t=1769039540; cv=none; b=uDcuDaUXBeuPMwNcjMAD4arMt/xa49mjVitXGxneUqVVA7exAuA/+AMPFlv/TdCPKpzKeh9La2MOW+EF/dIpiV1GVaO9oQy6yW/C261GUtn5ib5GrEfT3T2f+Hc8IGLCydGUTzu0ZscHNe+d9Bb1Ojgfu5jFGCIEAbYSN7THexg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769035046; c=relaxed/simple;
-	bh=SlWwyculiBABzhQdRSWezuPYqL5XqkaaZzBL+IrKxxk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n/P7ILX43ZlOXRsJu69Cc90I431Nkx/Lh/jRVkvyvz8X8y73Y0G1a7ZxHEgtOqAmHG9y0MO4wrCedqwtOiV7tOVsDL38TSX+LDq1O8eGciu1nSlG6PODmHaijW2Pqspnu5IOdqQ+1ny0ed+yNXNIphKC2DR7xmejmm/DxX9Iz5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VV/tOxKP; arc=none smtp.client-ip=74.125.82.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769039540; c=relaxed/simple;
+	bh=n1GiS+Ch3u2nLGAQ5qcayVMM0M3M5UTjjiWfRPTnAXA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=q+acJt9rcUTHjFTCmf7Kf9nhPundfLjLN1GGvtXqnQl+kayvWIU+R/5nD+b6AcNjvAwsx+zvAVP8hl2B2h1TaxYlEapmMIvzktOB9PRJuAYtUxQr5MPtbtDekadEa82MFl/G6TYgAohQbNhb2+kphIHfhv8ccU2gmDUJrI7TDEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CqSO0s2Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VV/tOxKP"
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2b720bb90d0so379243eec.0
-        for <spacemit@lists.linux.dev>; Wed, 21 Jan 2026 14:37:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769035044; x=1769639844; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pgjMJi+m/42Lvq5w641HEHT7p6jawBc1Rvrn2olmX9o=;
-        b=VV/tOxKPeYxTzT+dRyzQHnGd9PJV9GKUEQbocUaqUkEQEsDaCPT3QBEgfJkW+HtNL8
-         3il/Y89fgutlBoHBOFK8NPlVRcyilLoRlxWUuwFUZvvcfL5VfFhwqZ+pJwtYzaNcHju/
-         6UKrAAqEoSRFjYfKazAyu1gzaID6bfvHnU0NYjJawj/egO26pxWcFSL1Ynl+U3XJs/LQ
-         sJVoUBM0N5EcX0lokA1F3ap2K0EJ+h1V9zWbv9HS210QeV8vOy6tzjFR1CtHXw4/2T2j
-         01sMRS2HMgyIHhKdHTudcVB+febeA2vM9IJpKBylTjPQOio5AY0CuqudM9p224J29EJ2
-         RPNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769035044; x=1769639844;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pgjMJi+m/42Lvq5w641HEHT7p6jawBc1Rvrn2olmX9o=;
-        b=mnrJHCc2eEz7lYOwk6eKKex+UqYxQqPp2MaFAbaMSLKXSJg2iHNCBnb/B5Uc25sLST
-         mW9Xor+FkkR9x3ETNzpbPxRyv50X14PPPpiMkUsAM3mZ6ZUMqUqEcznLtjMZZL9gDDbj
-         +lFdozk2XufE8ktt1QBku3N+sLy6zYJkXAetc8eYhHanCMj+htwdWZxkQkq+lLY7QuIr
-         kKBLqrUVZKw/5SDS4YY8Z3PL302rsUJBdLskmUjJR7f/hMxsy6GmJiilNkFN5gGfHJJi
-         AXPWZDDZGPWAkN4j805gNY115Up7Iw8Lp4V/GZtlLjltjXBX45cJRPaNaJZuE34YyHDU
-         sdXg==
-X-Forwarded-Encrypted: i=1; AJvYcCWrHuDvBZCnBi6P/y9Jr/0hsbnv+hT55MY3Bus5gGZ4xSrM8Up7b+Q314QBU3NNxYhAtA05qyWybA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzc1KS/KppCirZ3A0UzAB9Nt29BenyAD1HNlak97QSg2X2QW+/8
-	a14QWc7rRTUTp76MrxiRWl7gbgKmP4czQDIduBQkuM24cz1qB8V4iCxA
-X-Gm-Gg: AZuq6aL6ETrlaDXc86CD7ybJi3MYSF9wGok1xLD8r7fqzDsTLq2IVxAzFMPUHRRpm/W
-	tGeVtRnZT74HGg07V4y+QKlEYGkr2F4hm/uyFWHnoEDQBkpKiZo30XmrQEk1pwGUunhEUhauBNB
-	2UcNlM+xaQvgybmwazr54TkIFi+bx5oyHCzczucMv2aIvG/prUJtIi6ppqq45w/ZV8pMFfzSXa1
-	h4neB3/bD9x+Ivrthlkm3+LtmyF7fy/HTrMoJrcNwps5xqOs5feSya+JCKpOT9g2Z1AHnhdxfMf
-	bB1Yiu9rEC3dYHwGAJ/EeSyeEWNrVh8sEVZDRfJG7dkYebuutEnrt8vU2PwCz54SaPswmMopozn
-	CTGNNNsc9RejB0f6fmt0us0gvw70Eb9Hofm5AFeBSDnm/7ixbL60JTUSXqGSHqHxUqabj7IItyk
-	pL35YgBCa1Cw==
-X-Received: by 2002:a05:7300:8b14:b0:2ae:5555:4880 with SMTP id 5a478bee46e88-2b6b4713257mr14102244eec.13.1769035043476;
-        Wed, 21 Jan 2026 14:37:23 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b70d7f729bsm6725736eec.16.2026.01.21.14.37.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 14:37:23 -0800 (PST)
-Date: Thu, 22 Jan 2026 06:37:12 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>, 
-	"Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: Inochi Amaoto <inochiama@gmail.com>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Richard Cochran <richardcochran@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yao Zi <ziyao@disroot.org>, 
-	Yanteng Si <siyanteng@cqsoftware.com.cn>, Vladimir Oltean <vladimir.oltean@nxp.com>, 
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Boon Khai Ng <boon.khai.ng@altera.com>, 
-	Maxime Chevallier <maxime.chevallier@bootlin.com>, Quentin Schulz <quentin.schulz@cherry.de>, 
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next v2 3/3] net: stmmac: Add glue layer for Spacemit
- K3 SoC
-Message-ID: <aXFVAoChTPZhjnGu@inochi.infowork>
-References: <20260121071315.940130-1-inochiama@gmail.com>
- <20260121071315.940130-4-inochiama@gmail.com>
- <aXDBCsfaNrgfGjNK@shell.armlinux.org.uk>
- <73bf2977-ad1a-45fa-9b06-5df083c060a8@lunn.ch>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CqSO0s2Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D25C4CEF1;
+	Wed, 21 Jan 2026 23:52:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769039539;
+	bh=n1GiS+Ch3u2nLGAQ5qcayVMM0M3M5UTjjiWfRPTnAXA=;
+	h=From:Date:Subject:To:Cc:From;
+	b=CqSO0s2ZF2AJmrPdX0PwbVimN87CQgzdk/SMSOVl31MMY3YzTjxAhIF5xoactLYUS
+	 R6UZQDTEGQ2VvYDQHJyUS9TRnXasypqcX2b31bgfPKHo0mlAVcoKpbmFBojo3/sE2a
+	 bwoIH91xDx+BncJn8GPxIqN3cjW5mj7PN1u9tGq4JaeG33HLgPF7wPyh7twKDWywHW
+	 On01DsqKSYJWyadBuSz3I7+yMTDPNBk3Y2XbmiCFYr+2IbcT15MvrLr2Ub3xhdb9QP
+	 F/mOEsvEkjAutydjwywMR9b1IzoaUpY9KhmFIF5dliByuk6ssEqAR4onjEVQIA0juf
+	 rw2ONm047F5uA==
+From: Yixun Lan <dlan@kernel.org>
+Date: Thu, 22 Jan 2026 07:52:00 +0800
+Subject: [PATCH] i2c: spacemit: drop IRQF_ONESHOT flag from IRQ request
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <73bf2977-ad1a-45fa-9b06-5df083c060a8@lunn.ch>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260122-05-k1-i2c-irq-v1-1-9b8d94bbcd22@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAJ9mcWkC/x3MSwqAMAwA0auUrA00qYp6FXEhNmoQ/LQggvTuF
+ pdvMfNClKASoTMvBLk16rFnUGFgWsd9EVSfDWy5tsSMtsKNUHlCDRd6Yue8b2ZqS8jNGWTW5//
+ 1Q0oflqgmzl8AAAA=
+X-Change-ID: 20260122-05-k1-i2c-irq-d1233dd8f194
+To: Andi Shyti <andi.shyti@kernel.org>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@kernel.org>, Alex Elder <elder@riscstar.com>, 
+ linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1295; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=n1GiS+Ch3u2nLGAQ5qcayVMM0M3M5UTjjiWfRPTnAXA=;
+ b=kA0DAAoBMarqR1lNu+0ByyZiAGlxZq6jol8rc6i0KYVnmnJvNIRDpqx3w/Dsiyc1fnnxdLUE0
+ YkCrwQAAQoAmRYhBLW6uMnDG3EVZwIj3DGq6kdZTbvtBQJpcWauGxSAAAAAAAQADm1hbnUyLDIu
+ NSsxLjExLDIsMl8UgAAAAAAuAChpc3N1ZXItZnByQG5vdGF0aW9ucy5vcGVucGdwLmZpZnRoaG9
+ yc2VtYW4ubmV0QjVCQUI4QzlDMzFCNzExNTY3MDIyM0RDMzFBQUVBNDc1OTREQkJFRAAKCRAxqu
+ pHWU277UoOEACZ5p9LnaVA+kkMQ1kg4fhqsbC2b1guKLuo3Fcr0yhW606ffvjtvnQOheIZ1NZUW
+ c01rtedEDpgcXo8DeHxZN1wW4wglAPfcBkg0/QeBu8qA0it+ZuspiSpOVUrolpvnmkZGNc3BK5+
+ lbuXBcT/GW2Dx4li+DaAWQ2sY3GM3anZXmco1w/bU6wM4kasS4HSo1wDBQaKmoB+iLFJDXMr9v8
+ SdtneLNLOMw4Nd3aCQSNkGARNNRcZzE05TBcsEcXPy/rmlanQE3y10sKlg9xbP/urK7HC9+LBJC
+ l9GFYSBndWb5fCNOKFSlb+avHaNfGUUCYHN5mK5PN7nyrJUH4MypFZUDI0gAyRvLBM1/5tv6unc
+ XlnamKu/ceimiHvpLyL3nwTvQtcsFDtXZBB9ZuoulLMy9Jheb5cOIiLl8stEtfrW11ol5SdtUIZ
+ u689oNk7fBLE/kDSDukGdn7g2S4yRv8fWtG8A67IcUai8qTVb/4/Sc3eZ8E1hR4PSH6IAafPoWy
+ ZeqT5LBq9MftKWRbCi3B4266ClgJlgLjO5DO2PDafPrtWSeXkonmAjrXu9bawEFK6Fjtk+I8KPK
+ 0dah5XkLy3RIJAA7D/3JYjYevoYNlYLM+z+zggMO6PPSy+kMgTGsA25YEJI64dY48b612u9kf0s
+ ErLF3Tp9Hvukf+V3gUj0Q==
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On Wed, Jan 21, 2026 at 02:45:24PM +0100, Andrew Lunn wrote:
-> On Wed, Jan 21, 2026 at 12:05:30PM +0000, Russell King (Oracle) wrote:
-> > On Wed, Jan 21, 2026 at 03:13:11PM +0800, Inochi Amaoto wrote:
-> > > +	mask = RGMII_RX_DLINE_STEP | RGMII_TX_DLINE_CODE | RGMII_TX_DLINE_EN |
-> > > +	       RGMII_TX_DLINE_STEP | RGMII_RX_DLINE_CODE | RGMII_RX_DLINE_EN;
-> > > +	val = FIELD_PREP(RGMII_TX_DLINE_STEP, tx_config) |
-> > > +	      FIELD_PREP(RGMII_TX_DLINE_CODE, tx_code) | RGMII_TX_DLINE_EN |
-> > > +	      FIELD_PREP(RGMII_RX_DLINE_STEP, rx_config) |
-> > > +	      FIELD_PREP(RGMII_RX_DLINE_CODE, rx_code) | RGMII_RX_DLINE_EN;
-> > 
-> > So your reply where you basically stated that all the RGMII.*DLINE.*
-> > constants here should be the same was nonsense. How can we trust your
-> > replies?
-> > 
-> > > +static int spacemit_dwmac_fix_delay(struct plat_stmmacenet_data *plat_dat,
-> > > +				    struct regmap *apmu,
-> > > +				    unsigned int dline_offset,
-> > > +				    unsigned int tx_delay, unsigned int rx_delay)
-> > > +{
-> > > +	bool mac_rxid = rx_delay != 0;
-> > > +	bool mac_txid = tx_delay != 0;
-> > > +	unsigned int rx_config = 0;
-> > > +	unsigned int tx_config = 0;
-> > > +	int rx_code;
-> > > +	int tx_code;
-> > > +
-> > > +	plat_dat->phy_interface = phy_fix_phy_mode_for_mac_delays(plat_dat->phy_interface,
-> > > +								  mac_txid,
-> > > +								  mac_rxid);
-> > 
-> > Maybe Andrew can confirm, but this function was to fix up existing
-> > broken DT, and shouldn't be used by brand new drivers.
-> 
-> Hi Russell, thanks for pointing this out.
-> 
-> This function should not be used in this case. MAC drivers in general
-> only add small delays, in order to do fine tuning. The PHY adds the
-> 2ns delay. There are however some MACs who cannot disable their 2ns
-> delay, or have historically been broken, and add 2ns delay. In such
-> cases, the phy_interface passed to the PHY needs masking, to indicate
-> the PHY should not add the 2ns delays. That is what this function
-> does.
-> 
-> Please don't call it. Pass phy_interface as is to the PHY.
-> 
+In commit aef30c8d569c ("genirq: Warn about using IRQF_ONESHOT without a
+threaded handler")[1], it will check IRQF_ONESHOT flag in IRQ request,
+and gives a warning if there is no threaded handler. Drop this flag to
+fix this warning.
 
-Great, I will remove this call and pass the phy_interface.
+Link: https://lore.kernel.org/r/20260112134013.eQWyReHR@linutronix.de/ [1]
+Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+ drivers/i2c/busses/i2c-k1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Regards,
-Inochi
+diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+index d42c03ef5db5..8ef6d5d1927b 100644
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -566,7 +566,7 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, i2c->irq, "failed to get irq resource");
+ 
+ 	ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
+-			       IRQF_NO_SUSPEND | IRQF_ONESHOT, dev_name(i2c->dev), i2c);
++			       IRQF_NO_SUSPEND, dev_name(i2c->dev), i2c);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "failed to request irq");
+ 
+
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20260122-05-k1-i2c-irq-d1233dd8f194
+
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
+
