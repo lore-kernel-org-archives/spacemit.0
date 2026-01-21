@@ -1,125 +1,146 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637F844E050;
-	Wed, 21 Jan 2026 07:28:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204DE361663
+	for <spacemit@lists.linux.dev>; Wed, 21 Jan 2026 08:50:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768980494; cv=none; b=q6X2pQaTbd2yLs+jeta3oCuMDUJ1VjQKedCNlbr98tFA88rHmsdJypdKXuItalcTANF8WGGFLzGAOPk2BlDHZVawWpb713bO5DooWS7UuDpzPB5b0tSPKQtMF2sdENTdP0d/WTNv7uW4Y6ZrGW/FoQyhhY+QohGlNdjq8STHAPM=
+	t=1768985403; cv=none; b=ZSyv/vv+UT5OSxU8vpyy3Hb8TDFido1o1QkNFKoWPjUF4bavCUcTzwfqlkJL5mYDNE/suI7Alq189Lua3jctRmCgqqenI/hgvBo+nKHSo5OozUQIffeBqg3M7kL2yYxRFxM9FJ9s/xQfnfn503JGSgYLPLpHS6GHSXcZek0JNrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768980494; c=relaxed/simple;
-	bh=v62227FUEh7SlB1Slighgoemv0vqLqgB0U/fyZlE6Uo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FGiln/aLL1Ttlt+V2R+5ZCtHlFiqtAOetRWHiixYr5Ldp0Bin+4fUfLOg0gojOq+eiujcy1UOwPKkgC07RXLf7scI0kj1/QpQtKg3NCPWzhbCGw5Vnxr6+L9PntJJf5RdETqM09m95b8/ZflF0J7JxrmyJ62BM4LW8ej66Yl9k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=io7o7FFr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768985403; c=relaxed/simple;
+	bh=ivdSRO/Sa+8y6SbfRo9OGAFBLBdiIOgB64qyEx+BEkA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MITs3hRjwpz180HY5dVi+n/kRGzn6KWIFucLE/QYFgOXLS0ijqpjsTX7XTYrPWkqbEim9XfH5kS+2+DJ6NRSsc1nFIzD4udCF6WAnSZfKOoEnJ5sAqZfuXSKHVH4k0+87DEFeDwfrN143gyzhahc6ptIPkY5F0nxTW2gKe+P00I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IXLRDxl2; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="io7o7FFr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5073C16AAE;
-	Wed, 21 Jan 2026 07:28:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768980492;
-	bh=v62227FUEh7SlB1Slighgoemv0vqLqgB0U/fyZlE6Uo=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=io7o7FFrLMWCCtKWTrgyB4YHnunW9pfgEophMURZGXZXRVQ/pf4eDiajANNglpcko
-	 BYNu0jOKEJqO49jvWsyQijpwy9Nr9wcwJBnvGTWWnDvzniaV7La8aDMBUxmrWrfO3c
-	 sxtLD0kXLuRgHns0khGZBY7dotk9qd7kD5ibCsFjjfJF4DVs94p8Sslf4ZtlDAsqB9
-	 xcz6Ttug/h1QxyGEm2r0Yi0tS7FzTIMhD680t2vEiX/CfjfXtUy7u4sR7vDkYqfXYq
-	 F/dw4p2JS4ne51/VW24zyX6C875KPABpuSzhcjEVsq9fMvr0dLQlFfWnyY/qYx9xwH
-	 Kxs/SYjnDZ/og==
-From: Yixun Lan <dlan@kernel.org>
-Date: Wed, 21 Jan 2026 15:27:36 +0800
-Subject: [PATCH 2/2] mmc: sdhci-of-k1: spacemit: Add support for K3 SoC
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IXLRDxl2"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8c531473fdcso832641985a.3
+        for <spacemit@lists.linux.dev>; Wed, 21 Jan 2026 00:50:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768985401; x=1769590201; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Fbq78sea0hmX5//P4GjhYjkpSX+LqZ+KYNl1xezZDJM=;
+        b=IXLRDxl20kgtHRhxcDwdMoATxs6XU/EeBhyZbBxjowDQw2LSUZo3pWWJIufBw1oPC9
+         yQ6o4bt99R8cLbfFkhgDbrY/HD+EBFzm2fPC3HjBHR1++vV3cFellbWB/Y+Kw0sZmMQg
+         ZFspLqFcc9BfzCvvCZJM/Te935bmHGdqeaHFcQanXiBWM4WfHO1UMqTBXi1vy14z03Yy
+         JG+gd33bJrCQ2IghjJg2pMaCq3CYo9JDAGLIM2q4O1ff0KM50CkuRouG6Euh0dULHSZ1
+         JINzSQ+cuEFERW2rb5JiDg8idePirInSwXZJffhQDSfC1M/fBpbZPyzPAxyQkR/mf/y8
+         2xvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768985401; x=1769590201;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Fbq78sea0hmX5//P4GjhYjkpSX+LqZ+KYNl1xezZDJM=;
+        b=bvc8tIhNbjcP5SC8adJ+U1BCBlHbHxjYJ4qI4KJWSSN2JlGzP/pGGFYiyrPLizk8mI
+         VHdNnCg/ENQB0UTH1QKkacu5QSB0GTL+4U4c4APjYADtFdv5BhH7MhFXbJv+yGcAx9KQ
+         kAAhPtl4GLNCvwHSIMUhVVRonT1p0B2RZ0qe8mBRBnLC+TPXdICK8A6+bH65j6Vq0qU4
+         Vw7UF3oKaLNj3fyRagZNVBM5xSjCmzJrFPjycZVyLC1l3qhF8INFd3/ABQAaYXm51Yoa
+         SvJVZcjbCvonvPQo78tZgD/ubWLcVcCq6/RwIzJdvK/e/mpU5I4VXHkNAyB6Bnckbz7x
+         E0rQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVf/kh5GSQAEJba1sV8JdjV1w/5OQSz4xXdktQvKoRvkgrxWTJb3SR1nyZB8ET7KXDfy7UfiDaY0Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YznZU8tfX32leDTFkkvdAwPSL41wxilqdeURfIr9M8SwzwFv7Rb
+	lS9ShPuVc9Mj/Vu2LBwDy7Uy0hf6X6CLJhQ7EaKuOpRsFUZ4lPJA3SY7T/zXw3Xn
+X-Gm-Gg: AZuq6aJnmPPqlK7sL5WuIk8q1/H0jZdshUMwNnjfOwEthgtVFQxzQOgaCucHHuR6OiR
+	Z9tWQ3zhlEo6BAuo3S1oXpUvpAqiIbbDgRBHxRXVEBnRsOQy01C6SS+MyygQEnTYG+jN1FWVf9B
+	5e5AYxsSuskOX9+wiG4Q/0YFiMzv6KGJjK1wB3RwmNht5mK05hrsqR8DVgiViHzy3db3cDmQuE9
+	R0XRsPEc2pqlXxvNDo8rgyfnIylrdreZY9E5xBUBTKZmB9bd/b4zR+KfOpfENmRhNNdUPgs1JuZ
+	LHkVOXUfVJfwmVEsocYnBbIiOwpuGDv1/8P/awj42WUuXRsPIXNpJ7MFe78kYlOfB7XPEneRgWC
+	nLlx41Gfv98wH+3M9TWdQimJfn7HHv3Rjze+j4QYuoL8hi5JmcA0Gek3fpVg1dpvfQJSaMaD0Gm
+	NMJ4EgXIVb8Q==
+X-Received: by 2002:a05:7022:6b86:b0:11b:923d:773f with SMTP id a92af1059eb24-1244b3081a4mr12334928c88.5.1768979609488;
+        Tue, 20 Jan 2026 23:13:29 -0800 (PST)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1244ad7201fsm24056346c88.7.2026.01.20.23.13.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jan 2026 23:13:29 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Yao Zi <ziyao@disroot.org>,
+	Yanteng Si <siyanteng@cqsoftware.com.cn>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
+	Shangjuan Wei <weishangjuan@eswincomputing.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Boon Khai Ng <boon.khai.ng@altera.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>
+Cc: netdev@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH net-next v2 0/3] riscv: spacemit: Add ethernet support for K3
+Date: Wed, 21 Jan 2026 15:13:08 +0800
+Message-ID: <20260121071315.940130-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260121-07-k3-mmc-v1-2-ff77c07bfdf6@kernel.org>
-References: <20260121-07-k3-mmc-v1-0-ff77c07bfdf6@kernel.org>
-In-Reply-To: <20260121-07-k3-mmc-v1-0-ff77c07bfdf6@kernel.org>
-To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>
-Cc: Yixun Lan <dlan@kernel.org>, linux-mmc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2036; i=dlan@kernel.org;
- h=from:subject:message-id; bh=v62227FUEh7SlB1Slighgoemv0vqLqgB0U/fyZlE6Uo=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpcIAA125EduKPyHGpyZkQWQm0Ruppw/jqojoHV
- pK8q0MbKr2JAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaXCAABsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+1v/Q/+IYGdvuySTpHcRs4eWwSu5b/IhDgPw/C4rXa5s2ayUbw7ILDr8oU31
- ABOBhNnakbAaFbK1bWC7/fVQ07F9rW/UHMBSC1PU4LAXNI39iHADMXIsxVXpZr2oPl11eEYdRAP
- q9OaV5rnn64nD7pAUQKSh9iXFduRzWbhIn2PiVOZb+SEHDkw69aRLvjM5Cgtq5v40+N0YAsDy86
- +1+nnPN8My81wX3Vmt46TO8e+RYbLefo6nVzu4zrme4F8p6uiEVlY2AhTQHlLvo3YM7cCYMAARx
- PU+kssSiht5S4NGjdmmJ+9vHkhUBZK9QFwvUfSShKeODsCIhv9lFI4oMoOY8pkBL/B/+N4/yWxd
- pHE7d+fP44h92ql4LaGMLNny0jpMB0/AyhxL+iAxG/cGIi4vwWtX2h4Rr7p5rYpdB7q8YlelXPy
- BGGhZVMU3wh7Dt2ppqVktPfCfNCDo+RE5HN3RmYAA2neSqbbuKO7HF2LN/gyws/BmtpjUbhW41A
- HcowFb3YfA8tVkXCpmi1iZ+tWRdOsyv3iO65EBPdNmwSmcCFcGx5ldUTQ+ZweQ/014i0N37bEbM
- i2L3g/heLu1lqU2pgWQfdrADTxVVHiZdp6C1Qv2GauglVYTW8WKSd0Hn5cghF3KpMHR8F0dDD6N
- uXaIBAwejZO28a7TRpIVCfSem+QfJk=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Content-Transfer-Encoding: 8bit
 
-The SDHCI controller found on SpacemiT K3 SoC share the same IP with K1
-generation and introduce a compatible data to denote the change that broken
-64BIT DMA issue has been fixed.
+Add initial support for ethernet controller of the Spacemit K3 SoC.
+This ethernet controller is almost a standard Synopsys DesignWare
+MAC (version 5.40a). This controller require a syscon device to
+configure some basic features, like interface type and internal delay.
 
-Signed-off-by: Yixun Lan <dlan@kernel.org>
----
- drivers/mmc/host/sdhci-of-k1.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+Change from v1:
+- https://lore.kernel.org/netdev/20260120043609.910302-1-inochiama@gmail.com
+patch 1:
+1. remove phy clock
+patch 3:
+1. improve comment and include something special about Spacmit K3 dwmac
+2. reorder the included file
+3. fix wrong delay macro used in spacemit_dwmac_set_delay.
+4. add check for maximum supported delay.
+5. use DIV_ROUND_CLOSEST to calculate best delay configuration.
+6. use assign for the ctrl register initial value.
+7. fix input when calling of_property_read_u32().
 
-diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
-index a160e1d5d9bd..a56cb8a36982 100644
---- a/drivers/mmc/host/sdhci-of-k1.c
-+++ b/drivers/mmc/host/sdhci-of-k1.c
-@@ -259,8 +259,20 @@ static const struct sdhci_pltfm_data spacemit_sdhci_k1_pdata = {
- 		   SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
- };
- 
-+static const struct sdhci_pltfm_data spacemit_sdhci_k3_pdata = {
-+	.ops = &spacemit_sdhci_ops,
-+	.quirks = SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK |
-+		  SDHCI_QUIRK_NO_ENDATTR_IN_NOPDESC |
-+		  SDHCI_QUIRK_32BIT_ADMA_SIZE |
-+		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN |
-+		  SDHCI_QUIRK_BROKEN_CARD_DETECTION |
-+		  SDHCI_QUIRK_BROKEN_TIMEOUT_VAL,
-+	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
-+};
-+
- static const struct of_device_id spacemit_sdhci_of_match[] = {
--	{ .compatible = "spacemit,k1-sdhci" },
-+	{ .compatible = "spacemit,k1-sdhci", .data = &spacemit_sdhci_k1_pdata },
-+	{ .compatible = "spacemit,k3-sdhci", .data = &spacemit_sdhci_k3_pdata },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, spacemit_sdhci_of_match);
-@@ -271,10 +283,16 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
- 	struct spacemit_sdhci_host *sdhst;
- 	struct sdhci_pltfm_host *pltfm_host;
- 	struct sdhci_host *host;
-+	const struct sdhci_pltfm_data *data;
- 	struct mmc_host_ops *mops;
- 	int ret;
- 
--	host = sdhci_pltfm_init(pdev, &spacemit_sdhci_k1_pdata, sizeof(*sdhst));
-+
-+	data = of_device_get_match_data(&pdev->dev);
-+	if (!data)
-+		return dev_err_probe(dev, -EINVAL, "failed to get platform data\n");
-+
-+	host = sdhci_pltfm_init(pdev, data, sizeof(*sdhst));
- 	if (IS_ERR(host))
- 		return PTR_ERR(host);
- 
+Inochi Amaoto (3):
+  dt-bindings: net: Add support for Spacemit K3 dwmac
+  net: stmmac: platform: Add snps,dwmac-5.40a IP compatible string
+  net: stmmac: Add glue layer for Spacemit K3 SoC
 
--- 
+ .../devicetree/bindings/net/snps,dwmac.yaml   |   3 +
+ .../bindings/net/spacemit,k3-dwmac.yaml       | 103 ++++++++
+ drivers/net/ethernet/stmicro/stmmac/Kconfig   |  12 +
+ drivers/net/ethernet/stmicro/stmmac/Makefile  |   1 +
+ .../ethernet/stmicro/stmmac/dwmac-spacemit.c  | 221 ++++++++++++++++++
+ .../ethernet/stmicro/stmmac/stmmac_platform.c |   1 +
+ 6 files changed, 341 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
+ create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
+
+--
 2.52.0
 
