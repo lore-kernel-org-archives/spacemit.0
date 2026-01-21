@@ -1,46 +1,72 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35872AF1B;
-	Wed, 21 Jan 2026 00:50:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06B82C21D0;
+	Wed, 21 Jan 2026 01:29:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768956605; cv=none; b=ZvTa3SjF556UHP8EkW44zHg89imHatYn+nX9jrewIf3Y5Ip7GfPEh2PMCxBwxOEP4w0+/41OCmWFvx07Nt+3BQsNp6aQ+xzZmguREuJc5SaH0eCy2ZY9yVo2zNoj/TiigRaDK/pkgOdzh1PS9lZMyWSMXTGAtaGqVNlgjYKfeJU=
+	t=1768959003; cv=none; b=uDE74me19YXuDdF80hw2/2MqWKCjf/IcRED2pfwxSJ2vbTMiTP8+0hMDAH3HE1v5rW4FDYwApAArWbm0xy6ahEeAck7V2Z4NJcAd0E//+ws3JOn5Oi0UZEjCbhvaPeYF3TNCUrcGhiEVF5BsrfN3sWTebWll2jhlI3FYVTrSNCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768956605; c=relaxed/simple;
-	bh=CrwiPhrrePlnWr+/pU7wM0Ao6MmtP3GAWFek3sVv3oQ=;
+	s=arc-20240116; t=1768959003; c=relaxed/simple;
+	bh=Ns7IxwF8dX9CnOQFdLcvYQgbUOvN8sw152BxjUxpi34=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fSzvoLl+hMf6BRxyMr2SOTJVgXakHtuUh7DlYrxs5vwgpIlKIf5QPsh4RyCU0T6htVm9IIhh353P3VOlu3N1v3s1zsxNHcddfNww9CvTTdIorxMTB8N+KjH3etShwhLZXIDNWSitgFTbnmCQ+0ImHUSXyTIK6mX1O9CP4PKL3/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oTFoNRpP; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=opriAlzuTozfNnHdfCHHbEyL0fOfYddant0go0c3Yt9H5c3nHgdnC9AMUMTYn15/BqlIBGHQ9UUsjQPX/nP4gLsFcZMwngzF2Dr6oB8ZZx5ZVoRJcLyjK46b+xgsLrROBubvdHXUrfBKb/25ofJ1q8Ev1Ar85/8ue5hv6uNJVzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=YMq82Iem; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oTFoNRpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BE7C16AAE;
-	Wed, 21 Jan 2026 00:50:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768956605;
-	bh=CrwiPhrrePlnWr+/pU7wM0Ao6MmtP3GAWFek3sVv3oQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oTFoNRpPAa0qgH4Fq5zG8CfEnQZlyyDc39ssKk6FLKNFIpMeN85Nhd15fXqLT97Bn
-	 LOPAY0jLtWG4zvb6CQL79xJAbqbuU4yQSj1JGpqFkzLevIcX/oUQt43VmBP9/E1O4T
-	 7if+oBiV1e4sm+5WQAnntfMK/NixdR7M+smSES4m4NGcf6GN8T7dqd1F7JB211559z
-	 cwRllHESDEsg+ca8Yw10IUZqn7kXNi93ov/nTZCY5/fPAk0npomuWZw6R84HzMkREH
-	 z7VK5wusSkyjEy7KBFVKj5j5RiUwMpQJO6znLMy8l1HdAp8VXr6QWvtVTwtuRTsBtz
-	 y8d4FrnPayRUA==
-Date: Wed, 21 Jan 2026 08:50:02 +0800
-From: Yixun Lan <dlan@kernel.org>
-To: Chukun Pan <amadeus@jmu.edu.cn>
-Cc: Rob Herring <robh@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Conor Dooley <conor+dt@kernel.org>,
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="YMq82Iem"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=BDOJWUmdk5su3pn932MroBf+XrhEzSL8mJ7nZmaOaZY=; b=YMq82IemHhQwH5ZmuAYjfxC2ca
+	SiARZTjIS9ursQLhJulw2hwL2pS9h8JGcdqkhS5tzb73fNnp+WPXGxnC84w8j98KyuLvs4SzlC+1a
+	KFPU2ljW13NNkUUIyxAh+nJj5WIIU+BtsAuiYoKCLAQ3cVDhElltuenA/diVPsOkYdvw=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1viN2B-003lN7-E1; Wed, 21 Jan 2026 02:29:23 +0100
+Date: Wed, 21 Jan 2026 02:29:23 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/1] riscv: dts: spacemit: Disable ETH PHY sleep mode for
- OrangePi
-Message-ID: <20260121005002-GKA61591@kernel.org>
-References: <20260120100001.1285624-1-amadeus@jmu.edu.cn>
- <20260120100001.1285624-2-amadeus@jmu.edu.cn>
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Yanteng Si <siyanteng@cqsoftware.com.cn>,
+	Yao Zi <ziyao@disroot.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Shangjuan Wei <weishangjuan@eswincomputing.com>,
+	Boon Khai Ng <boon.khai.ng@altera.com>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH net-next 3/3] net: stmmac: Add glue layer for Spacemit K3
+ SoC
+Message-ID: <cd5c882e-1632-4623-92d3-8a433c8ccdbb@lunn.ch>
+References: <20260120043609.910302-1-inochiama@gmail.com>
+ <20260120043609.910302-4-inochiama@gmail.com>
+ <f8e4c5ec-94b1-4da0-8a40-976770514828@lunn.ch>
+ <aXACRN7BaumIySp3@inochi.infowork>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -49,69 +75,33 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260120100001.1285624-2-amadeus@jmu.edu.cn>
+In-Reply-To: <aXACRN7BaumIySp3@inochi.infowork>
 
-Hi  Chukun,
-
-On 18:00 Tue 20 Jan     , Chukun Pan wrote:
-> On the SpacemiT K1 platform, the MAC can't read statistics when the PHY
-> clock stops. Disable Link Down Power Saving Mode for the YT8531C PHY on
-> OrangePi R2S and RV2 boards to avoid reading statistics timeout logs.
+On Wed, Jan 21, 2026 at 06:36:01AM +0800, Inochi Amaoto wrote:
+> On Tue, Jan 20, 2026 at 02:56:26PM +0100, Andrew Lunn wrote:
+> > > +/* Note: the delay step value is at 0.1ps */
+> > > +static const unsigned int k3_delay_step_10x[4] = {
+> > > +	367, 493, 559, 685
+> > > +};
+> > 
+> > Am i reading it correctly that RGMII delays are limited to these four
+> > values?
+> > 
+> > If so, please add this list to the DT binding.
+> > 
 > 
-> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-
-Looks good to me
-
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-
-> ---
->  arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts | 2 ++
->  arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 2 ++
->  2 files changed, 4 insertions(+)
+> No, these value are just adjustment interval, and it is also
+> controlled by another code register, the final delay is calculated
+> by the following formula:
 > 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-> index 58098c4a2aab..de75f6aac740 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-> @@ -52,6 +52,7 @@ mdio-bus {
->  
->  		rgmii0: phy@1 {
->  			reg = <0x1>;
-> +			motorcomm,auto-sleep-disabled;
->  		};
->  	};
->  };
-> @@ -75,6 +76,7 @@ mdio-bus {
->  
->  		rgmii1: phy@1 {
->  			reg = <0x1>;
-> +			motorcomm,auto-sleep-disabled;
->  		};
->  	};
->  };
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> index 41dc8e35e6eb..7b7331cb3c72 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> @@ -54,6 +54,7 @@ mdio-bus {
->  
->  		rgmii0: phy@1 {
->  			reg = <0x1>;
-> +			motorcomm,auto-sleep-disabled;
->  		};
->  	};
->  };
-> @@ -77,6 +78,7 @@ mdio-bus {
->  
->  		rgmii1: phy@1 {
->  			reg = <0x1>;
-> +			motorcomm,auto-sleep-disabled;
->  		};
->  	};
->  };
-> -- 
-> 2.25.1
+> delay = delay_step * delay_code * 0.9;
 > 
+> So the delay configuration needs to be calculated instead of
+> directly assigned.
 
--- 
-Yixun Lan (dlan)
+O.K.
+
+So what is the actual range? Can is do 1000ps? 2000ps? 3000ps? Should
+there be a basic range check to avoid dumb typos?
+
+  Andrew
