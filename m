@@ -1,66 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71992FBE12;
-	Wed, 21 Jan 2026 16:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98F03D5241;
+	Wed, 21 Jan 2026 19:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769014016; cv=none; b=mcfsbsI59lwL1dt2dwJZIrsgeiWWjuRGlPhVQwafqfaX1OkHGeaASn7HqjOkXWyt5Q5kUva14iTD9ZLyzFEoo1aUFrXzZMW8AxAPNuq/4heToiakOimoOKdKG1+uC/oDDxcrX0FUe3b6kyGq4lZR83Zq5sr8GWk7DjMivVgh7KY=
+	t=1769022577; cv=none; b=SJA5kUzbKLG4zlYCTbQKwjcdy0mj4vkVgJIBKifLVJhadjU4pz9jJHwofKKYpX/IL6WQHjca0+WXwuKQjSq0/7VhAR7Q8GIqUt3vK5u4wus9UNXYHkIRRykpK9GxkjSPE1V9PWWQDo43m9+KRzNbxROOPHRgZ8p8RUbsCRvq+Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769014016; c=relaxed/simple;
-	bh=Z7AKcqKCdVo5K9fbbsB5xIAy1McNGsgeezfpuSs7aiA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jx2vtybnYGxQUAtbShVb1gHPcWZ5FOzKUO4Z+AiHf0iqgTiQ1TTudADBQ5El1YqXtq/rsDyis+Unt5k2CayknTccWjc/bOVMuJT7w2b/N0zpczBZ6eMQdaWsf5InVpUw1EF8/ViSlpbtpqyeUIoXZUOqQmGyWZ6YH7QKnXhOOPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=meoGeEWM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1769022577; c=relaxed/simple;
+	bh=KL2Tnen2kIHUY1dDWeymZfKFuD7uZ9MVUAn4QAyYmQY=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=nDHmheWSEPkX9u/91jlwLY9ue/4Q5M+fF8CCLesqOv+DGh+BWfcFPJvR4Qo/pi6hKUcMRnzF/wi5ZlFNEzbBwWz4nksAYCckyqzmA+x+Bm5XYWOhPBB7vyEMpNogblURS0fV0xiGh2BiBjfJWnSj2zHgKeUrYqiCgDJtWBzZIew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=epqsfxKN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="meoGeEWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6122FC4CEF1;
-	Wed, 21 Jan 2026 16:46:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="epqsfxKN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D7DC16AAE;
+	Wed, 21 Jan 2026 19:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769014015;
-	bh=Z7AKcqKCdVo5K9fbbsB5xIAy1McNGsgeezfpuSs7aiA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=meoGeEWMh9HsFWabKvkgvplnCsGRr9lNvPY7lZVMnK8hGssgoTaOyapsiLs/RwxCV
-	 X47RUwGKe3P6y8dfoZZesztRtEBVwLTS7j5eHnScJyUmz9VjwkDbsx9pMM1MZUfj/E
-	 yz7ZcQOmkT4DFfJjsc4FDTDcn4WlX6n/4rhXIScKGO0zSzNOKAmKzIq6XLnPHUAx7c
-	 bC7pB4wBDciqkeECt+/tqbLYJzZLgDXEh1lJ8O3+X/WKikNo7YBGWV2xreq2DM4lC7
-	 oLhoXwW7F6vbYQs7NGoipsuaAHQ8Z7jAWZsHX57sX/cL+ndIWYHO5yqtyKZuWTjBDg
-	 PO1o9Y2bPhg7w==
-Date: Wed, 21 Jan 2026 10:46:54 -0600
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: linux-mmc@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	Ulf Hansson <ulf.hansson@linaro.org>, devicetree@vger.kernel.org,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: mmc: spacemit,sdhci: add support for K3
- SoC
-Message-ID: <176901401388.3439509.9465691892166826989.robh@kernel.org>
-References: <20260121-07-k3-mmc-v1-0-ff77c07bfdf6@kernel.org>
- <20260121-07-k3-mmc-v1-1-ff77c07bfdf6@kernel.org>
+	s=k20201202; t=1769022576;
+	bh=KL2Tnen2kIHUY1dDWeymZfKFuD7uZ9MVUAn4QAyYmQY=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=epqsfxKNElJEjtN923mwMr2GHF1jdmCb4xW1reHHsNLfGSV3iEsHeW+4Ndg2Sz7LB
+	 yOoiA1vhsRPvQIQOWmIaQgjUA1IhkgbN22F/LiwkEA4QjmCTigAzjSHdBkZQRKwj3P
+	 Igdak/kw+aEpDoxoBtVoYkrnmy66QLEWk8es/oFDZCBBYOZu0DN5nGQD1Gbp+ebqKm
+	 kgXfezilIh2pTcS/lppl6gEjUJrnKc45JF/ZQAKYCdugQ98/YZWr0147OUOfE3Bkxf
+	 UW/CkXeKLKa/81bvmo43xU3GhzbWIeAQFldc+D2S3I5mTQGFejgW6J3MNYZPqua8hp
+	 3mcofaaw8JnHw==
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260121-07-k3-mmc-v1-1-ff77c07bfdf6@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260114092742-GYC7933267@gentoo.org>
+References: <20260114092742-GYC7933267@gentoo.org>
+Subject: Re: [GIT PULL] clk: spacemit: Updates for v6.20
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Yixun Lan <dlan@gentoo.org>, Michael Turquette <mturquette@baylibre.com>, Guodong Xu <guodong@riscstar.com>, linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+To: Yixun Lan <dlan@gentoo.org>
+Date: Wed, 21 Jan 2026 12:09:34 -0700
+Message-ID: <176902257445.4027.5972559722832621691@lazor>
+User-Agent: alot/0.11
 
+Quoting Yixun Lan (2026-01-13 18:43:33)
+>=20
+> Hi Stephen,
+>=20
+>    Please pull SpacemiT's clock changes for v6.20, This PR basically adds
+> support for SpacemiT new K3 SoC, while doing this I've created an immutab=
+le
+> tag (spacemit-clkrst-v6.20-3) for reset driver in case it also needs to be
+> merged during same merge window, otherwise everything is normal.
+>=20
+> Yixun Lan
+>=20
+>=20
+> The following changes since commit 8f0b4cce4481fb22653697cced8d0d04027cb1=
+e8:
+>=20
+>   Linux 6.19-rc1 (2025-12-14 16:05:07 +1200)
+>=20
+> are available in the Git repository at:
+>=20
+>   https://github.com/spacemit-com/linux tags/spacemit-clk-for-6.20-1
+>=20
+> for you to fetch changes up to e371a77255b837f5d64c9d2520f87e41ea5350b9:
+>=20
+>   clk: spacemit: k3: add the clock tree (2026-01-09 10:48:17 +0800)
+>=20
+> ----------------------------------------------------------------
 
-On Wed, 21 Jan 2026 15:27:35 +0800, Yixun Lan wrote:
-> The SDHCI controller found on SpacemiT K3 SoC share the same IP with
-> K1 generation, while fixed the broken 64BIT DMA issue. Introduce a
-> compatible string to enable support for it.
-> 
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
-> ---
->  Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-
+Thanks. Pulled into clk-next
