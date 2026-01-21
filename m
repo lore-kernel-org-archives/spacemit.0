@@ -1,41 +1,38 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5562030FC1F;
-	Wed, 21 Jan 2026 13:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7072FFFA5;
+	Wed, 21 Jan 2026 16:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769003165; cv=none; b=b/66lrxzmwu2sQKlJ5XaF1MaP+LqGZ/3GpZwH59o6vu+zoGhi71cOM5vutS+voREsiUEtmSEtpj/rNFwm0l9vBJYWeKnBMFC6T+HQWbQ1EtvFwA2wwjl41OlH2YejMF2k8njurovIaPgqy4YvcTNaoFb7kOSb8Ekl8YJ2IRlN60=
+	t=1769012472; cv=none; b=rPKsxcTBqcoafus/kMvQ61C6n+1of8lLloehXNF2pTpsgnOvXV7Yhjrgc34lKLvVesZRQiKz7DGirmepI+IT6kADmSZls/IEfBnoCxr99onaMtfIGCKeahKD85SnWpBg/EHPiM2Jo7DNPDGOA6JjDLukmxk40U+9OdICNIn9PtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769003165; c=relaxed/simple;
-	bh=TNCu1diURZVRHV/wlAOkTYXVb/7LpU8vSsy5ih5Ik6A=;
+	s=arc-20240116; t=1769012472; c=relaxed/simple;
+	bh=NGyz5uwtzeGyvCVcwevBJVgXM2mV1JFZjaxPNVyzlf8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qcpt/l6t+SpzcKBl2gotUacuiq2Lx/a1JovJotL5teh8j3aqkCGdG7eiVADQCZDSqHpuJG2nmouSknHYjCXUGpUYlwXFJq0t4H0H5rbRMOeTvD65eSWUg7cmmZDE1dnkTCgYJGXGjHwrHsNDJnrFgdimNnKG92hM8gM2GOmPVg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=5b+lJUiF; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	 Content-Type:Content-Disposition:In-Reply-To; b=fk3WwPSdJlkcEWHIUHAhJ8AMDQKqJ506rd5YszxFN9Q0dKHAFSlP8C1fnzQaJ5RrFHC5WQ2OJphDbJpzl6YAdQWHoB4zsd/XVMklnQnOfq+UUpRvHmhDOT18qsa44BYLfowEXjz4qZ0lndnjfcuuZfEFcQaftdrXQx3NSyClCas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cFjVUj4H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="5b+lJUiF"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=GA0E+2lExoLTrBoxDpukALnUWndmDpxiv7DFZKJpltk=; b=5b+lJUiFPwVO4dTWd/qFReIVHI
-	7f99yyhyqXgdhUMCdDHEPQCqc1MLMgQKanORtkFU4U6RCDNpUqvSXjBSwcTdCc7xJv69ahZoiVGVN
-	k8+LEDN5Wjx8rpjwbhFUTfrwdpdMpHdB3asxlQfgxxUCsjamsFoUEg21HcN8Scc4H/oo=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1viYWS-003p7S-MM; Wed, 21 Jan 2026 14:45:24 +0100
-Date: Wed, 21 Jan 2026 14:45:24 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: Inochi Amaoto <inochiama@gmail.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cFjVUj4H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97712C4CEF1;
+	Wed, 21 Jan 2026 16:21:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769012471;
+	bh=NGyz5uwtzeGyvCVcwevBJVgXM2mV1JFZjaxPNVyzlf8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cFjVUj4H0wsckTkiSoxCEJxs+g1YF+sMLWNTHKCN39KcZ9O/bqtqPigbyqBHcrl6N
+	 3hG/VgHHw8puwjROLu4lRTxSQpWTe/Cjs6i2kC6GYqqS2VIZEymFmeLkboIuxnyf3F
+	 K8OYBfpuLkC8lVrd1wruo+keYfzUfqkD6uccp+TGLQ6v31JrUFlzWilKaBFXtIu/lH
+	 O664njCntVWQIdJx/nLzAbpY2KUQxxwCk4WVXgK3pINcQ96LXfWJrKZqg2kq38r4cC
+	 /6L4R9+46JTP7u5WegP+KZCt3suZdhkwS3TzQeLvVmzX4tROTrrGM7V5HItgn6mKYb
+	 kfuFuG65fgl5g==
+Date: Wed, 21 Jan 2026 10:21:10 -0600
+From: Rob Herring <robh@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
 	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
@@ -43,6 +40,7 @@ Cc: Inochi Amaoto <inochiama@gmail.com>,
 	Richard Cochran <richardcochran@gmail.com>,
 	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Yao Zi <ziyao@disroot.org>,
 	Yanteng Si <siyanteng@cqsoftware.com.cn>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
@@ -61,12 +59,11 @@ Cc: Inochi Amaoto <inochiama@gmail.com>,
 	linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org,
 	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next v2 3/3] net: stmmac: Add glue layer for Spacemit
- K3 SoC
-Message-ID: <73bf2977-ad1a-45fa-9b06-5df083c060a8@lunn.ch>
+Subject: Re: [PATCH net-next v2 1/3] dt-bindings: net: Add support for
+ Spacemit K3 dwmac
+Message-ID: <20260121162110.GA3314848-robh@kernel.org>
 References: <20260121071315.940130-1-inochiama@gmail.com>
- <20260121071315.940130-4-inochiama@gmail.com>
- <aXDBCsfaNrgfGjNK@shell.armlinux.org.uk>
+ <20260121071315.940130-2-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -75,50 +72,171 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aXDBCsfaNrgfGjNK@shell.armlinux.org.uk>
+In-Reply-To: <20260121071315.940130-2-inochiama@gmail.com>
 
-On Wed, Jan 21, 2026 at 12:05:30PM +0000, Russell King (Oracle) wrote:
-> On Wed, Jan 21, 2026 at 03:13:11PM +0800, Inochi Amaoto wrote:
-> > +	mask = RGMII_RX_DLINE_STEP | RGMII_TX_DLINE_CODE | RGMII_TX_DLINE_EN |
-> > +	       RGMII_TX_DLINE_STEP | RGMII_RX_DLINE_CODE | RGMII_RX_DLINE_EN;
-> > +	val = FIELD_PREP(RGMII_TX_DLINE_STEP, tx_config) |
-> > +	      FIELD_PREP(RGMII_TX_DLINE_CODE, tx_code) | RGMII_TX_DLINE_EN |
-> > +	      FIELD_PREP(RGMII_RX_DLINE_STEP, rx_config) |
-> > +	      FIELD_PREP(RGMII_RX_DLINE_CODE, rx_code) | RGMII_RX_DLINE_EN;
+On Wed, Jan 21, 2026 at 03:13:09PM +0800, Inochi Amaoto wrote:
+> The GMAC IP on Spacemit K3 is almost a standard Synopsys DesignWare
+> MAC (version 5.40a) with some extra clock.
 > 
-> So your reply where you basically stated that all the RGMII.*DLINE.*
-> constants here should be the same was nonsense. How can we trust your
-> replies?
+> Add necessary compatible string for this device.
 > 
-> > +static int spacemit_dwmac_fix_delay(struct plat_stmmacenet_data *plat_dat,
-> > +				    struct regmap *apmu,
-> > +				    unsigned int dline_offset,
-> > +				    unsigned int tx_delay, unsigned int rx_delay)
-> > +{
-> > +	bool mac_rxid = rx_delay != 0;
-> > +	bool mac_txid = tx_delay != 0;
-> > +	unsigned int rx_config = 0;
-> > +	unsigned int tx_config = 0;
-> > +	int rx_code;
-> > +	int tx_code;
-> > +
-> > +	plat_dat->phy_interface = phy_fix_phy_mode_for_mac_delays(plat_dat->phy_interface,
-> > +								  mac_txid,
-> > +								  mac_rxid);
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> ---
+>  .../devicetree/bindings/net/snps,dwmac.yaml   |   3 +
+>  .../bindings/net/spacemit,k3-dwmac.yaml       | 103 ++++++++++++++++++
+>  2 files changed, 106 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
 > 
-> Maybe Andrew can confirm, but this function was to fix up existing
-> broken DT, and shouldn't be used by brand new drivers.
+> diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> index dd3c72e8363e..3c2c6cb6b10b 100644
+> --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> @@ -34,6 +34,7 @@ select:
+>            - snps,dwmac-5.10a
+>            - snps,dwmac-5.20
+>            - snps,dwmac-5.30a
+> +          - snps,dwmac-5.40a
 
-Hi Russell, thanks for pointing this out.
+You don't need this in select as the spacemit schema references this 
+one.
 
-This function should not be used in this case. MAC drivers in general
-only add small delays, in order to do fine tuning. The PHY adds the
-2ns delay. There are however some MACs who cannot disable their 2ns
-delay, or have historically been broken, and add 2ns delay. In such
-cases, the phy_interface passed to the PHY needs masking, to indicate
-the PHY should not add the 2ns delays. That is what this function
-does.
+>            - snps,dwxgmac
+>            - snps,dwxgmac-2.10
+>  
+> @@ -108,6 +109,7 @@ properties:
+>          - snps,dwmac-5.10a
+>          - snps,dwmac-5.20
+>          - snps,dwmac-5.30a
+> +        - snps,dwmac-5.40a
+>          - snps,dwxgmac
+>          - snps,dwxgmac-2.10
+>          - sophgo,sg2042-dwmac
+> @@ -653,6 +655,7 @@ allOf:
+>                  - snps,dwmac-5.10a
+>                  - snps,dwmac-5.20
+>                  - snps,dwmac-5.30a
+> +                - snps,dwmac-5.40a
+>                  - snps,dwxgmac
+>                  - snps,dwxgmac-2.10
+>                  - st,spear600-gmac
+> diff --git a/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml b/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
+> new file mode 100644
+> index 000000000000..e69f3b60c51f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
+> @@ -0,0 +1,103 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/spacemit,k3-dwmac.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Spacemit K3 DWMAC glue layer
+> +
+> +maintainers:
+> +  - Inochi Amaoto <inochiama@gmail.com>
+> +
+> +select:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        const: spacemit,k3-dwmac
+> +  required:
+> +    - compatible
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - const: spacemit,k3-dwmac
+> +      - const: snps,dwmac-5.40a
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: GMAC main clock
+> +      - description: PTP clock
+> +      - description: TX clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: stmmaceth
+> +      - const: ptp_ref
+> +      - const: tx
+> +
+> +  interrupts:
+> +    minItems: 1
+> +    items:
+> +      - description: MAC interrupt
+> +      - description: MAC wake interrupt
+> +
+> +  interrupt-names:
+> +    minItems: 1
+> +    items:
+> +      - const: macirq
+> +      - const: eth_wake_irq
+> +
+> +  resets:
+> +    maxItems: 1
+> +
+> +  reset-names:
+> +    const: stmmaceth
+> +
+> +  spacemit,apmu:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    items:
+> +      - items:
+> +          - description: phandle to the syscon node which control the glue register
+> +          - description: offset of the control register
+> +          - description: offset of the dline register
+> +
 
-Please don't call it. Pass phy_interface as is to the PHY.
+Drop blank line
 
-       Andrew
+> +    description:
+> +      A phandle to syscon with offset to control registers for this MAC
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - interrupts
+> +  - interrupt-names
+> +  - resets
+> +  - reset-names
+
+spacemit,apmu is not required? Looks like the driver requires it.
+
+> +
+> +allOf:
+> +  - $ref: snps,dwmac.yaml#
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    eth0: ethernet@cac80000 {
+
+Drop unused label.
+
+> +      compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
+> +      reg = <0xcac80000 0x2000>;
+> +      clocks = <&syscon_apmu 66>, <&syscon_apmu 68>,
+> +               <&syscon_apmu 69>;
+> +      clock-names = "stmmaceth", "ptp_ref", "tx";
+> +      interrupts = <131 IRQ_TYPE_LEVEL_HIGH>, <276 IRQ_TYPE_LEVEL_HIGH>;
+> +      interrupt-names = "macirq", "eth_wake_irq";
+> +      phy-mode = "rgmii-id";
+> +      phy-handle = <&phy0>;
+> +      resets = <&syscon_apmu 67>;
+> +      reset-names = "stmmaceth";
+> +      spacemit,apmu = <&syscon_apmu 0x384 0x38c>;
+> +    };
+> +
+> -- 
+> 2.52.0
+> 
