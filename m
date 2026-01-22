@@ -1,132 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18D430C626;
-	Thu, 22 Jan 2026 14:24:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769091847; cv=none; b=k+VvFcVYYSZfEvKmLCSZBokYWb1jXlsIK9zKQoUUNUMkzr8eXFl/ddRMXnsFdBzq9+kc5Pa5LZf8tcU7JQ04Z8O6/94xMZhZ/icQfTH+v5DDUyCI5sC+hn9EhH+mo81xzQnxlpgYAoe7BfODRwcEFvyyFY3yOVeweZu7p1anDNQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769091847; c=relaxed/simple;
-	bh=9ldknsSqFx/iQzwBf1LlwoaFp95z9BYgWXvBcs7uj6k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gg1mBggnYfaIMw+YVxs8INbBJ3JderZtoXPWCx+tm7qjbpjn4XQGifxIB+uvVjdoQMtmRsSPcDHvseTYrn/acLlbVUN3O7KZ+EzCObdDUREQhv3w7K+tB9c6Xdlm/UYtfi4EpalQE3jyy74Rn/PJyxQS9aifHIJIk6SI+WT52yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqWqPsQD; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CA73191D8
+	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 14:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769093749; cv=pass; b=cw0Xmlr7WxHUdgsoRFnps4aMbiDE3Kf/xDBWy/E5+RIqFu/jWYiL8VkHZufuzOtkQzwwP005kCeIj7c6wTnzH/1bow7rVOsG+b7/I0+yJf4zkP90ygXZcXnnHaVk5FBdiaTCsotVzsqjOu7xlk/F3XH+aLBjI+jSXBCUCykyvbM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769093749; c=relaxed/simple;
+	bh=JPDh6iyZpRU8+eQaa9r236YqbwqZPCWxtTGDrKz3Wic=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=n/a7pfhEs30LUU2Wke0sTq23+O9OvDvqEn/V/36BwhLOFW/SlyKpW64rStfmH/ps6ZTx51zU+Asela3qXPoKgBGtviRNrY1iRK/Gz7MkmZ3R6mxXR3KAKcTgt8UB+p68UNp0WVFvOV8X70iPTtk5xzeDzaagE1OSwKdTrRrD7sY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=B1b9D2T9; arc=pass smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqWqPsQD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA46DC116C6;
-	Thu, 22 Jan 2026 14:24:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769091846;
-	bh=9ldknsSqFx/iQzwBf1LlwoaFp95z9BYgWXvBcs7uj6k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=gqWqPsQDVP2cdPbl5caNzMQRq9JVr/7CNirfOa++CtZgh6NphXMU6qrpI58rF02s/
-	 1YHcA5mepIAwS0300uSmojrjEGm81rBmttC7Nl0uTbYb5swf/EsnUlxvMwOuQIBT8P
-	 3XppQt4NxA5sk4OYuCn26LiGz2Ed6IZYbd7f0fLC2ADXLBMXo3lhC1DCEKLSUM7QUA
-	 uAXJcH7/fF++4+iP2Ty+hR8bQPHSpUYeUmASOCgA5JIBnZfA8gZ2woWl9El3AfPPNJ
-	 7fOJfMyRKy0cqtJLyDywMCBJjZ7JYTAX8Tp2QoKJA3aBcBSQLlCBuTyrAfM+MlUu2p
-	 nf1bVqF512K/Q==
-From: Yixun Lan <dlan@kernel.org>
-To: soc@lists.linux.dev
-Cc: Yixun Lan <dlan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [GIT PULL] RISC-V SpacemiT Devicetrees for v6.20
-Date: Thu, 22 Jan 2026 22:23:37 +0800
-Message-ID: <20260122220523-GYD3596979@kernel.org>
-X-Mailer: git-send-email 2.52.0
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="B1b9D2T9"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-7927b1620ddso16141197b3.0
+        for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 06:55:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769093746; cv=none;
+        d=google.com; s=arc-20240605;
+        b=IpYZRUqRO/PCkUH+Lnotj9iwqQf3AVgyPAzogVfIw/2MAIpPR3uJk/eZOZfnLLZ5gF
+         t8bdJ43FFUYNKosl2dzbQZ2Yp8G8qurDiCp0KQzX48udO+n6pQYWOICQFE2MRS8eh508
+         iSqYhK1pFVoeHpEC7ut3VOQb9j3w0dFR9fPUz5/qAwELq20j8cql9zxYFBEBzY+Vdfno
+         XQCGuzUbu02x+OuP4VxjFVIUttn4IrIlSOv1lpQyEl4vx0lNd9KtgThk5nM/J39dIauY
+         GQwD8LIBj75uQM/4l02aLhUdkPAIBpyk181fsnHVDf4pgE1Yj0RRD7sQ9rLwhZf3X5ud
+         k9cg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=zNlrb79F8npK3m2Hl07L9rICov5a44ljv+REaE6QtO4=;
+        fh=1iexJJ0gC8teQJIAglOy88dj5vBLfi2PcLBRJxEMfj0=;
+        b=aDebQ5pRosEcKgp+i8XLFmJaBBeWfwFDk3gCMsYIzmUD4ezHdWpU/axrcgDLggWW+O
+         iFB48cl0whVbjxbnC33pKUWH+cCQB+kb0cEZsLc4pwB5dVlGXVC6PzZPi6hKylETrxGE
+         5/Y4aBr4mApB999fPuSfKb7/HeQ5Ob289TZJ9VXLLRJCvIqYZlXVs+0f4MkTigKw1q4Y
+         Aq9mv1kAiAWDN267EzLz8M0X+9wlRmuPIyqpVtUxROOoMTALlpDnWYSIQKWejkFBH81d
+         Kv2n/G39TeRCc9iS7nSZNfNxlcfy2GpsrXvLbVYte4vuapwZOp/cdD1hGa45b6tquZuJ
+         2BrQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1769093746; x=1769698546; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zNlrb79F8npK3m2Hl07L9rICov5a44ljv+REaE6QtO4=;
+        b=B1b9D2T9he4mKDDFexkQFvMWf0hH9CZ3pVIerwbZ8UPfLL3JBdVK2ukFSE8URdWI3o
+         c8tqckmH8fX4khmWsHjji1seYTfqC/qKOXkGapWW2Hj4ktztFVG2xLOAAO1XOX8d0F+w
+         XMU6DUr2wTZDLzaS1fnToBzw1FctgDoTeeTPTtAT4l9npWgiOCDLnm9v0JiNCW2OsGFB
+         QwcPpzAOcKcss02OcuJlV3A7MvMJwmylgLe8dMR0aBIa33QxsSxPQG9b1suhapZJC7lv
+         y/9eqVlyPs3YyLiqcfLYBer6Yh+Cin6wBwi5SvkPUGZiZe9W83HmYBdwIWIXd6KwifJ7
+         Dj5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769093746; x=1769698546;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=zNlrb79F8npK3m2Hl07L9rICov5a44ljv+REaE6QtO4=;
+        b=oS+/sSZA/9p3hSjgx3H+0ptsNNnvw6Ic6WRAAzVlZ13bO4l/PXKo1gNLCU/S+SNetS
+         kd3ovImBN+/r5++xsC9hkEhFa61GTpGhN5LzohvtNEE2xBNNlEj8wstLMgKTtPO5POlj
+         B0XfLjjbholX/cnW5fIFT5Ryxya/KiiIAVkcqJTcbTB5vRKvjNZ0Q5fC205HjUBfUqPh
+         QuE+AIVi932A85LRn8/wCCqUlq18y8C3S4awnwy4NLdn/jOwPXPGt2ZXNa8B2q1FdBMu
+         iBgRrv2zKpEHdT/hIAt02Q41V64dhm+Zy/yLJE63aSh3dlszngQ8Rz20MgI5ge+qL7/1
+         W6cQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUcvg3/ZtfDD3g4qYZfeXZXYGp52yRKgx0TbXm7tAE3yfF7wWLcWmrRJcFatuNFNT5psej9vpicXg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwBGJagHhDe+HGR0ypU+eCEKQbvWpJsEGtvlXILjaEqiAdJsb/U
+	HYXxGap92xnP6080Gpq05rcjiUh0mYnYaI/B0DTnq3e7nHL/nyH/tTFpxnv/5RsPK9aL3G+rshC
+	d3v1k1fOkqq7sqEehWT9rddMR9ZIBpNLVp8r6FZTBjA==
+X-Gm-Gg: AZuq6aKoT8F7b2ZXGq2B72V/8AW9noURPz53YnjE/356vPWkuuiJ4qPIJD3hNME673b
+	1QQZnfaon8gbAxCSKv9ePVZgyKOYzXdmFg0e8pH8+6LcSIGeB8kByXrqfWd8IVmzm18FoffGDPG
+	wTyDioz0ECVC93wLY4a9tGuDyzDPSHSPR408OKQCRUZmMJDjv3VpWE5EdN435yIfBcoobbx+ivF
+	u1Kyafkdb8yN7zEMzekzZSAzEG3VW4CDyfhJcGpSp1YbJ9NczCezMX7TB6emDiHCwMzXZKpbhnD
+	wb2F0Foaq5UecSrvVtqCSrG6+g+75ViAvoKy8Jn5CANk
+X-Received: by 2002:a05:690c:f13:b0:794:e13:6cb4 with SMTP id
+ 00721157ae682-7942a867a86mr25319347b3.24.1769093745796; Thu, 22 Jan 2026
+ 06:55:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
+ <20260122101122-GYA63789@gentoo.org> <77bc5a5f-666d-4beb-ab78-99a242d72a39@sirena.org.uk>
+ <20260122121223-GYC63789@gentoo.org>
+In-Reply-To: <20260122121223-GYC63789@gentoo.org>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Thu, 22 Jan 2026 22:55:34 +0800
+X-Gm-Features: AZwV_QiJGaLsEOdeugS76EcbcaDtGi-z5pG6_55yk_bVABlnd5tqHNMAicmasHQ
+Message-ID: <CAH1PCMaRqXHBZQLY02DY=C1rorMc2DZzzE2ziADofWoAQW8Mzg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] regulator: spacemit-p1: Fix voltage ranges and
+ support board power tree
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Arnd,
+On Thu, Jan 22, 2026 at 8:12=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
+>
+> Hi Mark,
+>
+> On 11:27 Thu 22 Jan     , Mark Brown wrote:
+> > On Thu, Jan 22, 2026 at 06:11:22PM +0800, Yixun Lan wrote:
+> > > On 17:43 Thu 22 Jan     , Guodong Xu wrote:
+> >
+> > > > Patch 1, n_voltages is corrected to match hardware register widths,=
+ as the
+> > > > previous values prevented regulators from reaching higher operation=
+al
+> > > > voltages (e.g., 3.3V on LDOs).
+> >
+> > > This patch bring system-wide change that not only affect Bananapi F3.=
+.
+> >
+> > > Please also provide fix for other boards, I think you may not be able
+> > > to test all boards, but make sure the patches are available, so peopl=
+e
+> > > who interested can test, P.S I can help on milkv jupiter board
+> >
+> > Patch 1 looks like it should be OK as is?
+> then with patch 3, and for other boards (milkv jupiter), should have simi=
+lar
+> DT fix as patch 4..
 
-   Please pull SpacemiT's DeviceTree changes for v6.20
+There is no "spacemit,p1" node in other k1 boards (milkv jupiter).
 
-Yixun Lan
+Best regards,
+Guodong Xu
 
-The following changes since commit 8f0b4cce4481fb22653697cced8d0d04027cb1e8:
-
-  Linux 6.19-rc1 (2025-12-14 16:05:07 +1200)
-
-are available in the Git repository at:
-
-  https://github.com/spacemit-com/linux tags/spacemit-dt-for-6.20-1
-
-for you to fetch changes up to 5164e95565d3fd508ca8a95351323f5716dfb695:
-
-  riscv: dts: spacemit: Disable ETH PHY sleep mode for OrangePi (2026-01-21 08:52:03 +0800)
-
-----------------------------------------------------------------
-RISC-V SpacemiT DT changes for 6.20
-
-- Disable Ethernet PHY auto sleep mode
-- Add pinctrl IO power support
-- Add K3 Pico-ITX board
-- Add support for K3 SoC
-- Add DWC USB support
-- Add reset for eMMC(sdhci)/I2C
-- Add PCIe support
-- Support PMIC for Jupiter board
-
-----------------------------------------------------------------
-Alex Elder (2):
-      riscv: dts: spacemit: Add a PCIe regulator
-      riscv: dts: spacemit: PCIe and PHY-related updates
-
-Chukun Pan (1):
-      riscv: dts: spacemit: Disable ETH PHY sleep mode for OrangePi
-
-Encrow Thorne (1):
-      riscv: dts: spacemit: add reset property
-
-Guodong Xu (8):
-      riscv: dts: spacemit: k1: Add "b" ISA extension
-      dt-bindings: riscv: add SpacemiT X100 CPU compatible
-      dt-bindings: timer: add SpacemiT K3 CLINT
-      dt-bindings: interrupt-controller: add SpacemiT K3 APLIC
-      dt-bindings: interrupt-controller: add SpacemiT K3 IMSIC
-      dt-bindings: riscv: spacemit: add K3 and Pico-ITX board bindings
-      riscv: dts: spacemit: add initial support for K3 SoC
-      riscv: dts: spacemit: add K3 Pico-ITX board support
-
-Javier Martinez Canillas (3):
-      riscv: dts: spacemit: Enable i2c8 adapter for Milk-V Jupiter
-      riscv: dts: spacemit: Define fixed regulators for Milk-V Jupiter
-      riscv: dts: spacemit: Define the P1 PMIC regulators for Milk-V Jupiter
-
-Troy Mitchell (1):
-      riscv: dts: spacemit: pinctrl: update register and IO power
-
-Yixun Lan (1):
-      riscv: dts: spacemit: sdhci: add reset support
-
-Ze Huang (3):
-      riscv: dts: spacemit: Add USB2 PHY node for K1
-      riscv: dts: spacemit: Add DWC3 USB 3.0 controller node for K1
-      riscv: dts: spacemit: Enable USB3.0 on BananaPi-F3
-
- .../bindings/interrupt-controller/riscv,aplic.yaml |   1 +
- .../interrupt-controller/riscv,imsics.yaml         |   1 +
- Documentation/devicetree/bindings/riscv/cpus.yaml  |   1 +
- .../devicetree/bindings/riscv/spacemit.yaml        |   5 +
- .../devicetree/bindings/timer/sifive,clint.yaml    |   1 +
- arch/riscv/boot/dts/spacemit/Makefile              |   1 +
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    |  90 ++++
- arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts  | 135 +++++
- arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts   |   2 +
- arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   |   2 +
- arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       |  33 ++
- arch/riscv/boot/dts/spacemit/k1.dtsi               | 254 ++++++++-
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts       |  29 ++
- arch/riscv/boot/dts/spacemit/k3.dtsi               | 578 +++++++++++++++++++++
- 14 files changed, 1116 insertions(+), 17 deletions(-)
- create mode 100644 arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
- create mode 100644 arch/riscv/boot/dts/spacemit/k3.dtsi
+>
+> --
+> Yixun Lan (dlan)
