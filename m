@@ -1,98 +1,101 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B57378D9A
-	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 10:11:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B2238F926;
+	Thu, 22 Jan 2026 10:20:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769076696; cv=none; b=iAlXZ7OpJzjbmW90oFzs82NKMvH/QC4IO+OtOOGMZl+6sfIB+9vWa6bIpj4qW7fVrOVfFAIzOcreVRtefxFEQZrA8D4OoKDFLZ9BKE4cG4oqSFnqe7U4cho+h3tM62zah3+PaLYadGqxf7Fkr5iLZ7pwv9cDU03x0C4JP1lHVNo=
+	t=1769077237; cv=none; b=UShNN2LQEXktMOyXLfM3GUloEXA65A3RIi9nokudgBcUABUHYo8PeC6ovIzyAzOwu/ZHJzrfR35zSUcZggRUIrPM0R0xX2C2VzVmyEZNjnoz/3yQPzSJD5ZnZCqvcm1qBDgcyXW6YbHE6qZ3Tip3Ab/D+tyoFVuVIqpxpiEs+KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769076696; c=relaxed/simple;
-	bh=6R4gG9+TiV1zEt9QzN6VdOfwqXjtMSM/z3VQOQTcCII=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gLIC3FRuUjr+5lk4SubM1kR9bQzROBtqNQJqJlrga19SHPgm8QEdFZXpQ4ViNDZpLZ5e6n+8SvD5LBnvoCnuh1DrtDZuet21XOENN6BE01CRP7m1yPe1gy+Brsi70Tal+GgcgsER5LliVoMzIChBPbZGiFPsC5vgp5ohhb2YYww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.27.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 603E0341E75;
-	Thu, 22 Jan 2026 10:11:34 +0000 (UTC)
-Date: Thu, 22 Jan 2026 18:11:22 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, devicetree@vger.kernel.org
-Subject: Re: [PATCH 0/4] regulator: spacemit-p1: Fix voltage ranges and
- support board power tree
-Message-ID: <20260122101122-GYA63789@gentoo.org>
-References: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
+	s=arc-20240116; t=1769077237; c=relaxed/simple;
+	bh=ONa6ASogMSTJc/W+Ezo8UvIMrfzEIFIzWJuOeuW3Yyc=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=mFcFhMPn0MbT5/0dDWKDSP4ae9nDQ3VTaOEq3yPL5TUeQYZZk4af/cpASMmwY0wXs155EWJ89spcEAJW1Z+BiGWfDl322TqJrJXkdL1Nfz8Uu61DUITnGaFO4Amh98hc8Ibpb72KmWa4czRyQQM4UkMpffRsRAAmDX1PHgxyk0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GmjYxMPw; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GmjYxMPw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901D8C116C6;
+	Thu, 22 Jan 2026 10:20:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769077237;
+	bh=ONa6ASogMSTJc/W+Ezo8UvIMrfzEIFIzWJuOeuW3Yyc=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=GmjYxMPwKIN11UUWWnFYmSgOkLFagzruNR1r0j1j5026Sut6c1xdjqi9lHfBUk3LQ
+	 if46qrgYkxxaPTN0mk0T26O54kdgForlTYQsm8cYqU9NtkXT4oHs5F7B4hoZ7PQd4c
+	 /L/vhzK50eBVeRlJK45JCqDmffEI59JViAwBehA/UldCK1rna0ubpkCxBT7TLIFSZ1
+	 cSpfc11KdnI0JSLMpqBJuuN2CkB6KRRLeVxhO6yQdZqEXiz6Deo6PnS8iQzzZUdbLa
+	 IPNjJN1sodkysvWoTU1TNwK9o2jTEUHkNQHa2M6CWb9tPBXZTmM8EPJ5SZdJpqNXRx
+	 qQpc9uOphQEag==
+Date: Thu, 22 Jan 2026 04:20:36 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
+ Liam Girdwood <lgirdwood@gmail.com>, Conor Dooley <conor+dt@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Paul Walmsley <pjw@kernel.org>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Lee Jones <lee@kernel.org>, Alex Elder <elder@riscstar.com>, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ Yixun Lan <dlan@gentoo.org>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+In-Reply-To: <20260122-spacemit-p1-v1-2-309be27fbff9@riscstar.com>
+References: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
+ <20260122-spacemit-p1-v1-2-309be27fbff9@riscstar.com>
+Message-Id: <176907723670.1588257.5123730065899244337.robh@kernel.org>
+Subject: Re: [PATCH 2/4] dt-bindings: mfd: spacemit,p1: Add individual
+ regulator supply properties
 
-Hi Guodong,
 
-On 17:43 Thu 22 Jan     , Guodong Xu wrote:
-> This series fixes hardware voltage constraints and enables flexible power
-> tree configurations for the SpacemiT P1 PMIC.
+On Thu, 22 Jan 2026 17:43:43 +0800, Guodong Xu wrote:
+> Add supply properties that match the P1 PMIC's actual hardware topology
+> where each buck converter has its own VIN pin and LDO groups share
+> common input pins. Supply names are defined according to the pinout
+> names in the P1 datasheet.
 > 
-> Patch 1, n_voltages is corrected to match hardware register widths, as the
-> previous values prevented regulators from reaching higher operational
-> voltages (e.g., 3.3V on LDOs).
-> 
-> Patch 2-4, hardcoded supply assumptions are replaced with explicit
-> devicetree properties. PMIC supply connections are board-design decisions.
-> Moving this to DT allows supporting varied topologies without driver
-> modifications.
-> 
-> Note: Patch 3 introduces a bisect breakage by transitioning to
-> pin-specific supply names. Probe failures will occur on existing board
-> (K1 Bananapi F3) until Patch 4 updates the corresponding DTS file.
-This patch bring system-wide change that not only affect Bananapi F3..
-
-Please also provide fix for other boards, I think you may not be able
-to test all boards, but make sure the patches are available, so people
-who interested can test, P.S I can help on milkv jupiter board
-
+> This allows different boards to describe their actual
+> power tree connections in devicetree rather than hardcoding supply
+> relationships in the driver.
 > 
 > Signed-off-by: Guodong Xu <guodong@riscstar.com>
 > ---
-> Guodong Xu (4):
->       regulator: spacemit-p1: Fix n_voltages for BUCK and LDO regulators
->       dt-bindings: mfd: spacemit,p1: Add individual regulator supply properties
->       regulator: spacemit-p1: Update supply names
->       riscv: dts: spacemit: k1-bananapi-f3: Update PMIC supply properties
-> 
 >  .../devicetree/bindings/mfd/spacemit,p1.yaml       | 58 +++++++++++++++++++++-
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    | 12 ++++-
->  drivers/regulator/spacemit-p1.c                    | 25 ++++++----
->  3 files changed, 80 insertions(+), 15 deletions(-)
-> ---
-> base-commit: c8a4a774a9b0d2c86593492625874e27e9cbc9a9
-> change-id: 20260122-spacemit-p1-ae596efe885f
-> 
-> Best regards,
-> -- 
-> Guodong Xu <guodong@riscstar.com>
+>  1 file changed, 56 insertions(+), 2 deletions(-)
 > 
 
--- 
-Yixun Lan (dlan)
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/mfd/spacemit,p1.example.dts:13.1-4 syntax error
+FATAL ERROR: Unable to parse input tree
+make[2]: *** [scripts/Makefile.dtbs:141: Documentation/devicetree/bindings/mfd/spacemit,p1.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1559: dt_binding_check] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20260122-spacemit-p1-v1-2-309be27fbff9@riscstar.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
