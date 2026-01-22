@@ -1,40 +1,45 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFF62F12AB;
-	Thu, 22 Jan 2026 13:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A47A2E6CC5;
+	Thu, 22 Jan 2026 13:17:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769087649; cv=none; b=I0AWgeM+Xzh9yJbOXqnJ18OaFmg0WdFpbYCx8WgmYJjIXgZUwnrO++7MOFmmjgwbOYXHJGIbFDVmikceAQkrDclaPyKl1Hm8dvSUDV2c6nB6ZSDh6CkOE8ZKODXsuA6TAOJPKdK9U+hWN2y94+sq9bVpNZkTCDuRa0VQZsIY68I=
+	t=1769087869; cv=none; b=cIPEpNTHPQMGRGiL4F77OiYMzGoc+A9mYnv/XsAsP7ULjNLQbfLqjSm/R7EzWCEmdMnLcb3awwshjkDYQxMSEXv1ZZtZsyhzM4ha4jW3d0z9AeKqs04GSIjUzXjJj527pBWSw14tG/TydCD1gbzp2wfCIw2YdDVQn+33tcSN1pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769087649; c=relaxed/simple;
-	bh=8k1LjBvIpqNRmEfQAczgAJsNgpdot1XoDuz+xT21Yds=;
+	s=arc-20240116; t=1769087869; c=relaxed/simple;
+	bh=E8ujsvvpS9e727bWjaY1C7H9rvr65j2aOHT/wGSWqw0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F580dxgNy2dJ7zcvxndGjQhFDos0tv7sxEn1mnCMSN7+TyZMITtzcZAvsvs8wG7OsKEcpLpAJq+3sgmO/ORs0rksWTD9cm5s9yrb6tnRzEKMM7EbX0tONOVp5e51VfI/YgM4j4OF6EOEtwhoX0D16CtXXheu/xsW2IVDcOV6adY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgI+oYGs; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=r8DtuuJ+nmMdv2PhTO05nrDdhjTrJNJ6MFm1+cs+dMbh1uZa3FXD90nRmiGmM3PrxY66+oi7HHnYq0QNfP7v5nT+Kf7w6t6w3CB5zT6ARlAV+3nusLxEAUtydIdiRfmpL8nwzXPKPYuWXJyXuttU8OCzn/0tLts7C6pwIQFMu3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=2qRBYCS1; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgI+oYGs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4094FC116C6;
-	Thu, 22 Jan 2026 13:14:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769087648;
-	bh=8k1LjBvIpqNRmEfQAczgAJsNgpdot1XoDuz+xT21Yds=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LgI+oYGs6Dck1/OLZZkU2DIAZ4zRqoTrAfPbF7BBUUO5UtqZM4MyhF7CTXnLJvjpd
-	 DHWxFPeCbwjVU+ZxVBtfn1jiBTINl6wZ2JYkjQp84NJX1gC/aaKaUJqLY3Gl/xWlf9
-	 ZN/LCFzsvjHUBddA3YZw5eftLUzx7S8wa9BU0nU1O9HxvCPO9nDVf6Wkl5guxjjxgf
-	 y29oooCoRJE4oRunmLCn8SydxRnVn6IeQyl1bYDv4tbLkgcKZKBI2uPtcXaxZgIV+D
-	 08gitftdapP3icfelqKmZCPKvFK9E6JfWBwPvWysLY5T9YKIS422QODo6uXRJnPBD6
-	 sVPo6vwS9SR1Q==
-Date: Thu, 22 Jan 2026 14:14:05 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
-	Alex Elder <elder@riscstar.com>, linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH] i2c: spacemit: drop IRQF_ONESHOT flag from IRQ request
-Message-ID: <aXIih2q2lWw2wK6Y@zenone.zhora.eu>
-References: <20260122-05-k1-i2c-irq-v1-1-9b8d94bbcd22@kernel.org>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="2qRBYCS1"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=gmRCqXSnQWS9fdVWGswfFh7XixYJdcyajsnRAYEfYcw=; b=2qRBYCS1v/AwxR1+18R8KWM/dI
+	8+tL0g4HLaPmUnaHbJUVHROgo/hWpRtJnqf8Q6x4MQvFWfh57Xn95ciC9qV5itRJ1fW8VTQ64nQTe
+	nrcgNkKfgr0Xf7o3SdRVd6RamysgcezF9Bl0DjVjgDGj5j+FBWeKrUg4pymObHBMojqw=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1viuZ3-003yOv-DK; Thu, 22 Jan 2026 14:17:33 +0100
+Date: Thu, 22 Jan 2026 14:17:33 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: Vivian Wang <wangruikang@iscas.ac.cn>, Yixun Lan <dlan@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>, Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S . Miller" <davem@davemloft.net>,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, netdev@vger.kernel.org
+Subject: Re: [PATCH 1/1] net: spacemit: display phy driver information
+Message-ID: <b4e0b1d2-cd6d-40f3-89fc-c1bd41c82480@lunn.ch>
+References: <20260122080001.73921-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,21 +48,15 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260122-05-k1-i2c-irq-v1-1-9b8d94bbcd22@kernel.org>
+In-Reply-To: <20260122080001.73921-1-amadeus@jmu.edu.cn>
 
-Hi Yixun,
+On Thu, Jan 22, 2026 at 04:00:01PM +0800, Chukun Pan wrote:
+> Print the PHY driver used and interrupt status after connection.
 
-On Thu, Jan 22, 2026 at 07:52:00AM +0800, Yixun Lan wrote:
-> In commit aef30c8d569c ("genirq: Warn about using IRQF_ONESHOT without a
-> threaded handler")[1], it will check IRQF_ONESHOT flag in IRQ request,
-> and gives a warning if there is no threaded handler. Drop this flag to
-> fix this warning.
-> 
-> Link: https://lore.kernel.org/r/20260112134013.eQWyReHR@linutronix.de/ [1]
-> Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
+The standard way to do this is call phy_attached_info(). Is it missing
+some information you need?
 
-merged to i2c/i2c-host-fixes.
+    Andrew
 
-Thanks,
-Andi
+---
+pw-bot: cr
