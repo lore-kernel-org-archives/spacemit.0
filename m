@@ -1,108 +1,105 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A30B3921FE
-	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 08:06:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B692DC76A;
+	Thu, 22 Jan 2026 09:38:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769069216; cv=none; b=V3808Ej5WviXejNScd0KlljfFKtJUFpfCqCzRh21gnal3u83v8Qh12b/tIpy8gA2syaeGRizoBj0LcueTW4kkVodE9/FXg9KuBWHBfj7hzsilEOOjYgBggVSrj5k2T0Wkf3oIFdElRppuVfqxbEMk7UvNYePNih2kbpV495i+Oc=
+	t=1769074699; cv=none; b=lZI1mIJkyCMjJmZQKots6EokFubAoOvw68t9XbuG1EILyUWwVtW8aW7o2tXli1OuweMC4ZtkLbVFfzbO26aENnDn7VXfYXSLxNUybk6fR09ydkapuG48GUxD/EFeA2twNKnMFJ+fYTVwR2cjStaIcrwn3Vout34w97qf+gWw0+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769069216; c=relaxed/simple;
-	bh=UN81btdLXwLmy+i3FQsqe41ADn+eiw3IDaM94IgibCQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NFJHs0uYl5sqg16k6fhoYIG8wphM0xiPYk7Yx3QfxIWE6x9IPlBg8j9GR8H2Fh7I/NVftH5r+2NBZU2spKAYziAnsRp82sqnVlYwDfUsisaTHFC6z6KM8uxpupnufIKS0bIWss1nL/jDUPg8TuGWj8CSlrZb5EIKiaeOkVdKiWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=AAk52q7f; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1769074699; c=relaxed/simple;
+	bh=EWgAvMz5SU18vwREMMzZWEEapD5INKu1KRD7ZdxGh6w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=f0T09z84X7Gcj5wEiIQbmfYbHRtUxdyj+zCbkc2v+aTAsXz7GczqxY5hCooyYWt1hk248MrvNIJZNSjey7ZQGcj/joG/AlHuWmvClJb7nXBHH48xOs2WYYykHoLm49KIJKWvNB8ZMnZl2+YXmhltEkU8TEfhtnKdSuodaJvLeE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pyM9rVvA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="AAk52q7f"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1769069213;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xnAUpn2svZoy/oq95lU8MjW2YyOALbOwRLuDG6KCbUY=;
-	b=AAk52q7fwkTSDGQk/U7t8SP26AqYSXLy9dKJB1x6zEU1hFIgb85fEeI4cmGEOQS4dyMuPM
-	qqPBt51EGk2s1OgJCWTSv3txSAG7PH+E0PzosgEMrmdGzgGUzNma63dTR1S9fHBEmYORqZ
-	4ebZiAxVmmkWlaLSWH0q6ULU74HXocs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-gbE9hSmUPtykMLgHRNXFVw-1; Thu, 22 Jan 2026 03:06:51 -0500
-X-MC-Unique: gbE9hSmUPtykMLgHRNXFVw-1
-X-Mimecast-MFC-AGG-ID: gbE9hSmUPtykMLgHRNXFVw_1769069210
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-47d5bd981c8so5023855e9.0
-        for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 00:06:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769069210; x=1769674010;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xnAUpn2svZoy/oq95lU8MjW2YyOALbOwRLuDG6KCbUY=;
-        b=lcIbTvH0s29VZXb0gUYEEoAGI3zLfrPAB0ECkxD62ASP2RdSSQ/KaLAn8CRb0zLrWv
-         nm8Q/aPAD96NJT3jHfXgwSv198PTrIV7ab+a5JvkEz72BWDWfUi7h3wW9OdUDyXJFpSk
-         +Zg9rUo7Z1idm3nWe4nTdr7fjWBfrwK+HA22BU4AcMdlMOrMPup9yOmM/nN7R9HoiIEB
-         og4NbqBGxOrL9L+LCgJL38f+0C9pzq37+XlO4GIYvmlAux+CCHuvAG0YWCOJEEpW5re3
-         CCrc3eit1keciK2B6eX7Eb2b1F5QZ1lITkhZUYyMILSwiMa/6HManVoHGMVLrp47w8Uh
-         E3Gw==
-X-Forwarded-Encrypted: i=1; AJvYcCU3KRH4lxRuniTiqs8q7xQZAFYHRMPmh9El2acLUkwZaos1wqpLJznw2QyIJ4EauCeimu1+77S7DA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzBOiBSoX77WYwvgLcztD7BL2O4Bh3jKP5zSVI8Fk5u1rJSi7yy
-	0YBuCGy+mBbuOdGqkzHGNVHVuOedgGTJ/uVwxTsHoNf8whL9ydkSsj53PonALzQk/JwuLhYKfAz
-	h5CIwAvgJd/tNMfTlneqeSaANjKrCv897rDYIlHrLXqQhUonAT3KvURYl4ELBPQeHmSfv
-X-Gm-Gg: AZuq6aJ1qq9A9wPrL5B7AzFwCDJyjTGMB8Dopgn1AXu05DQrBD9tZuJI/GwJl+ZzFch
-	eD9drnw3/kTxuZr+tieE2XM2CF5ERmDsnt5RznJTTM6hqll8F463PoD60ZmOFsEdIuU6zsqJsR2
-	0D4b85yZftYVDnep+YVwIPF3DoMShUMmmAzSqP7NLXTAowc/3pj1JOpzFS0JZJrwUOIhZ4lXSB5
-	2iRxPwTYc8SpR4dQTwvDKrDqNBaZBtWtz3l1t+q7vlWHEuq9InChR0ZyRZLVHbfzCzTRZxKFJ7d
-	rMANoCg/q55IM3JL2HCbyvuLAL/ABtxarsRGF+fhVl8l/FcDNqDFJ/mKmirh2ftSg5J7ql4J79Y
-	FCHcNOBe2v2uxuBmr1zfU080zFJAYf8MQPphFvPta3QLyyjKJQOdYIhnTQF/zhao27nYh
-X-Received: by 2002:a05:600c:46ce:b0:477:7b16:5f9f with SMTP id 5b1f17b1804b1-4801eb0efe0mr306255015e9.31.1769069209708;
-        Thu, 22 Jan 2026 00:06:49 -0800 (PST)
-X-Received: by 2002:a05:600c:46ce:b0:477:7b16:5f9f with SMTP id 5b1f17b1804b1-4801eb0efe0mr306254515e9.31.1769069209274;
-        Thu, 22 Jan 2026 00:06:49 -0800 (PST)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48042c38063sm44525215e9.12.2026.01.22.00.06.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jan 2026 00:06:48 -0800 (PST)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: Yixun Lan <dlan@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, Troy
- Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Yixun Lan <dlan@kernel.org>, Alex Elder <elder@riscstar.com>,
- linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH] i2c: spacemit: drop IRQF_ONESHOT flag from IRQ request
-In-Reply-To: <20260122-05-k1-i2c-irq-v1-1-9b8d94bbcd22@kernel.org>
-References: <20260122-05-k1-i2c-irq-v1-1-9b8d94bbcd22@kernel.org>
-Date: Thu, 22 Jan 2026 09:06:47 +0100
-Message-ID: <87tswedqaw.fsf@ocarina.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pyM9rVvA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56991C116C6;
+	Thu, 22 Jan 2026 09:38:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769074698;
+	bh=EWgAvMz5SU18vwREMMzZWEEapD5INKu1KRD7ZdxGh6w=;
+	h=From:Subject:Date:To:Cc:From;
+	b=pyM9rVvAhHDtByBv2Oha4vhuJsRAOUMauVOR/OMgEcAQfuT6NzTUADMg1Qp+LM7ZI
+	 1IazcLADEbfaWtqOLy28S2f1CBv0Y/iSra+mZ3ip7QGGEb+fEPl5rKRnK9ZJK1jkt0
+	 5oEGQLa/GBdPSHRMvIlV9AiAmNNDDLlZr/oIvZ/R6jXaITi7QrRN3itUH+MGSlH1+a
+	 LY4Ma9YYp7MqDtYS1lE+2JaaPLBbyFMVtGHAaYjQxd35EE7Suqh5ISDIvxQktV7LwG
+	 IyPEo9I18TbZ/gxY7wyThKOEGlgaYVgqO6fLYBKxsRypbmNToDLAEqGJ0ToMODYMAb
+	 LZisFdWcR8e0w==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH v2 0/2] mmc: spacemit: Add support for K3 SoC
+Date: Thu, 22 Jan 2026 17:37:29 +0800
+Message-Id: <20260122-07-k3-mmc-v2-0-3c3ffef25e94@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: akeUbyv8vEQDpY8c5FVMUW4K4aCKbwPF2NW2EVaE70A_1769069210
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANnvcWkC/03MQQ7CIBCF4as0s3YMUAPGlfcwXVQ6tKQWmsEQT
+ cPdxcaFy//l5dsgEXtKcGk2YMo++RhqqEMDdurDSOiH2qCE0kJKhcLg3OKyWNS2F1JpQ+f2BPW
+ /Mjn/2q1bV3vy6Rn5vdNZftefouSfkmugc8ZYYe5ucPo6Ewd6HCOP0JVSPrbwJqyjAAAA
+X-Change-ID: 20260112-07-k3-mmc-6ca01267e834
+To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>
+Cc: Yixun Lan <dlan@kernel.org>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1295; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=EWgAvMz5SU18vwREMMzZWEEapD5INKu1KRD7ZdxGh6w=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpce/+HinEMWPgByCb1BEgVBcsMFS+EUvwcnC8v
+ l1uUlX4WLiJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaXHv/hsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+22YA/6A50NF0MEca1IiK/og/EQsOKYCKWNcMud0+nfCq+qq8XZEg6vanipM
+ 4RzNH3O5z0dIyHqeCAZ+XVnTz8r6cIxoRKKHBLBYn/Ck0CIsLwlEN+9f3DMWeddwPY0WcsEt9cG
+ QTXVDD9wk1uornaqw0j7Z7CAJJ8Mf/9enPXJVKa76uIrMvuIJDkMRfYyTg4IgWJfEo+ngMso1eF
+ nEDKJBSGJs6JZiAjNhyPmeUL5J5TMG1GH5pymhYaNvkGAX3zRrKaKamm+uv3+ocWGc3F5Db8pW5
+ H6PAfZpyXt1nrSWxAl/kRucGMHQx4texhY5zZOAsjCSwBX6YpYLHJ1bzEBDJUG2LuVjZv3Bk5XX
+ 6sBfCtZG47hl76dThzICc1ZXczPW61Se9gaWx+fVnCcGrpZSPTzbdgLaCTUjK7cxfa2rJmTZsPJ
+ 3/4UOshLgZrg3rrJqjaCR7Vax0scjaoyyaKY25zhfoGrXAP4r8B8OtdgkQyEmzhNL7MROThED3g
+ /F8U3CwQzEg+gncEOE4PnwESYlHQF7lL/R5V83Dbsy8LK6Q5HnbUySAzj4MA0C2oADv9xWyRXQ5
+ WYg5S37+RNK3gYvEo/3W/Vsf2TlgKNPmY1zYZxnY71OWx/165kpGMKHoNLQ3Prvd7ye8VAEuJ+B
+ WNM3TvYd4lurJxs0sNP9B6vkaOH3Ac=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Yixun Lan <dlan@kernel.org> writes:
+Enable SDHCI controller support on new SpacemiT K3 SoC, while as before
+only the third controller and the eMMC device has been tested which using
+vendor K3 evb board. This board has not acquired support in mainline
+kernel, so I've omitted the DT part patches for now.
 
-> In commit aef30c8d569c ("genirq: Warn about using IRQF_ONESHOT without a
-> threaded handler")[1], it will check IRQF_ONESHOT flag in IRQ request,
-> and gives a warning if there is no threaded handler. Drop this flag to
-> fix this warning.
->
-> Link: https://lore.kernel.org/r/20260112134013.eQWyReHR@linutronix.de/ [1]
-> Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
-> ---
+The new SDHCI controller almost reuse the same IP as old K1 generation,
+while fixed the broken 64BIT DMA issue.
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Hi Ulf,
+ Any chance to queue this for v6.20? I know it's a little bit late,
+but the patch itself is quite simple and we've tested on evb board.
 
--- 
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Changes in v2:
+- collect Rob's Ack
+- drop uncessary blank line
+- drop return check from of_device_get_match_data
+- Link to v1: https://lore.kernel.org/r/20260121-07-k3-mmc-v1-0-ff77c07bfdf6@kernel.org
+
+---
+Yixun Lan (2):
+      dt-bindings: mmc: spacemit,sdhci: add support for K3 SoC
+      mmc: sdhci-of-k1: spacemit: Add support for K3 SoC
+
+ .../devicetree/bindings/mmc/spacemit,sdhci.yaml       |  4 +++-
+ drivers/mmc/host/sdhci-of-k1.c                        | 19 +++++++++++++++++--
+ 2 files changed, 20 insertions(+), 3 deletions(-)
+---
+base-commit: 6cefff068d030786d63fa50970d6581c354630b2
+change-id: 20260112-07-k3-mmc-6ca01267e834
+
 Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+-- 
+Yixun Lan <dlan@kernel.org>
 
