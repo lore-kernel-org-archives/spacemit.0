@@ -1,75 +1,95 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01E02FA0C6
-	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 15:06:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769094377; cv=none; b=SSIzPno0xR/HcweQy+DwKPuQvc3j1+F5cgWo8beZp7/rO6awMk+YJlgeZj+2cFMf1wYwg5dIU24liCg6E3iZsbFxmwUDe6JepBblki/A9OxMAleXFJ5Es/Zbqv/q/vKsETARqzN3IdaYSvpzpbS2FRs4YqROg3x2pa0XxWIxOl8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769094377; c=relaxed/simple;
-	bh=IVgR7JzQlHJmesyTjWQjjWW4v/SgRoCQ/+97cLwJOkQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GxbE7bJW76CaL0ljeJp5lEw5qDERASr3CaNQRmhl0apGbRb3noOREMpR5cxAcJ4AFRnTgzvXRznIjYwaPxcwDNPvoeQ7ri/ynE2IFARzjRlCoeCRZebT/iLbYxV4tuhigqO+AxoyhJszO/gF19iPlCzWy1TwRx5DEp7dTphNNno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from localhost.localdomain (unknown [116.25.94.187])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 319dee97a;
-	Thu, 22 Jan 2026 23:06:07 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: andrew@lunn.ch
-Cc: amadeus@jmu.edu.cn,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	dlan@kernel.org,
-	edumazet@google.com,
-	kuba@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	netdev@vger.kernel.org,
-	pabeni@redhat.com,
-	spacemit@lists.linux.dev,
-	wangruikang@iscas.ac.cn
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F85355815
+	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 15:13:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769094800; cv=pass; b=uJD01vTCeCR239YbMWzrmzo0F0WW1eh1m7XnQlVCHKWqIz0S3Z1NzTKeU6LDpMDwX2RF5mJ4aGpFGiBTDZXaSf2bmXsz10aDgU6elK0E1zvhj4JAtTvPUrpIh8d9imLY8P7trcVqP9mXRSXFkvvSQCba+IScAI6TjTinEOX+ZfA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769094800; c=relaxed/simple;
+	bh=lqw9kCO+PlKCQmoZym5Am+vYG9C8G+3knV/qvRKbq88=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AAUX90v4mBhD3CNAJobh2DAlqE4CWLeT9lbCYR4+mTlFe6/q3EIPI4OUMzqM0XLcqJ7mnSzzgYkzOANv1tecbXA7HffCyRabc5AyqIlTMuICBwv9CurLs+TjNu3BLkvNrUbKS+0punLrXQ9RMpG09M+SScnT/YVGlbnFPeloXjc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=o+IZLkUH; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="o+IZLkUH"
+ARC-Seal: i=1; a=rsa-sha256; t=1769094778; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=lEoIOIMYjotqF6pMogdQeeX3MKr4ENlCiD/zwjVHEz7oX/aBkcYEGsE/b+AyEz9/qHammd5PwkwUTjHgxSm4xUXMdfvKKymDrKfMO7XVkqxZwi0eFOFpycTX3Ph2VfjoBn2jh/PONyeioR4e3509GRDmI2FA+Je/43/yldSCFMk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1769094778; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Eo/IUXScxtTqfsnFKhZ0cMjvhBNV94SAmIf3IWc0PYg=; 
+	b=AZzM73oOqgb/shBUa24qmbpxOMWgTlo1reLo+3afbd9Xl7CJMIRkBrYmPkdk2CdcDFwLdwbYH74ZtI+L0KF7ytTXDaUDxoTHzgoOcZUfzYExAF5bEEHSigbE2A63ghwesaif6vIXyb2O824EsoihePPHqysB3lNJrcO/mtWQ/qs=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ziyao.cc;
+	spf=pass  smtp.mailfrom=me@ziyao.cc;
+	dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769094778;
+	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=Eo/IUXScxtTqfsnFKhZ0cMjvhBNV94SAmIf3IWc0PYg=;
+	b=o+IZLkUHaUjCBLwjbbYzPaDnbsyf4n4RhgWAG2Yid5tjpLPXo8AzAvbFBQ/tDCoQ
+	bpWF7sPLiJvteO0izmqf5tShsN/HlmNc/nFEa9bui9aQ2xILgsJQCEHu/zBdQxeznix
+	ZOv63McBSVkhandjj20A1es/cJW+yfpOD64EoQ+4=
+Received: by mx.zohomail.com with SMTPS id 1769094776105810.6311707654235;
+	Thu, 22 Jan 2026 07:12:56 -0800 (PST)
+Date: Thu, 22 Jan 2026 15:12:36 +0000
+From: Yao Zi <me@ziyao.cc>
+To: Chukun Pan <amadeus@jmu.edu.cn>, Vivian Wang <wangruikang@iscas.ac.cn>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>, Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S . Miller" <davem@davemloft.net>,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, netdev@vger.kernel.org
 Subject: Re: [PATCH 1/1] net: spacemit: display phy driver information
-Date: Thu, 22 Jan 2026 23:06:01 +0800
-Message-Id: <20260122150601.586846-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <b4e0b1d2-cd6d-40f3-89fc-c1bd41c82480@lunn.ch>
-References: <b4e0b1d2-cd6d-40f3-89fc-c1bd41c82480@lunn.ch>
+Message-ID: <aXI-ZMbwXHBX4XiT@pie>
+References: <20260122080001.73921-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9be63dc98403a2kunm36ae2a8f92c99
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZHUgeVktPGh8ZHRhDSEMZGlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk9VSkNMWVdZFhoPEhUdFFlBWU9LSFVKS0hKTkxOVUpLS1VKQk
-	tLWQY+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260122080001.73921-1-amadeus@jmu.edu.cn>
+X-ZohoMailClient: External
 
-Hi,
+On Thu, Jan 22, 2026 at 04:00:01PM +0800, Chukun Pan wrote:
+> Print the PHY driver used and interrupt status after connection.
+> 
+> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+> ---
+>  drivers/net/ethernet/spacemit/k1_emac.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
+> index c85dc742c404..afb5b6a61c2c 100644
+> --- a/drivers/net/ethernet/spacemit/k1_emac.c
+> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
+> @@ -1568,6 +1568,7 @@ static int emac_phy_connect(struct net_device *ndev)
+>  	struct device *dev = &priv->pdev->dev;
+>  	struct phy_device *phydev;
+>  	struct device_node *np;
+> +	char *irq_str;
+>  	int ret;
+>  
+>  	ret = of_get_phy_mode(dev->of_node, &priv->phy_interface);
+> @@ -1610,6 +1611,11 @@ static int emac_phy_connect(struct net_device *ndev)
+>  		goto err_node_put;
+>  	}
+>  
+> +	irq_str = phy_attached_info_irq(phydev);
+> +	netdev_info(ndev, "PHY driver [%s] (irq=%s)\n",
+> +		    phydev->drv->name, irq_str);
+> +	kfree(irq_str);
 
-> > Print the PHY driver used and interrupt status after connection.
->
-> The standard way to do this is call phy_attached_info(). Is it missing
-> some information you need?
+Would phy_attached_print() simplify the code?
 
-I initially used phy_attached_info(), but it was too long and printed
-phydev_name() "cac80000.ethernet:01" twice:
-
-YT8531 Gigabit Ethernet cac80000.ethernet:01: attached PHY driver (mii_bus:phy_addr=cac80000.ethernet:01, irq=POLL)
-
-So I referenced a part of phylink_bringup_phy() to make it look better:
-
-k1_emac cac80000.ethernet eth0: PHY driver [YT8531 Gigabit Ethernet] (irq=POLL)
-k1_emac cac80000.ethernet eth0: Link is Up - 1Gbps/Full - flow control off
-
-If we're going to use phy_attached_info(), I think `mii_bus:phy_addr`
-is redundant. What's your opinion on this?
-
-Thanks,
-Chukun
+Regards,
+Yao Zi
