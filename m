@@ -1,54 +1,44 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F85355815
-	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 15:13:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769094800; cv=pass; b=uJD01vTCeCR239YbMWzrmzo0F0WW1eh1m7XnQlVCHKWqIz0S3Z1NzTKeU6LDpMDwX2RF5mJ4aGpFGiBTDZXaSf2bmXsz10aDgU6elK0E1zvhj4JAtTvPUrpIh8d9imLY8P7trcVqP9mXRSXFkvvSQCba+IScAI6TjTinEOX+ZfA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769094800; c=relaxed/simple;
-	bh=lqw9kCO+PlKCQmoZym5Am+vYG9C8G+3knV/qvRKbq88=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12D83D3D11;
+	Thu, 22 Jan 2026 15:18:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769095120; cv=none; b=dg1/6N/Y2ab3fDE8Oc323YUuXTGslOLunNmDgInMzUTUcYxHWJEd4rJR+0KNts4Y1N+kxpU6HRBzszHQwCVdsNHFHjT1f8xbqbsltEmXjTbe5Xpx88Gji8u2nK3eAjVCzSnKQYNrI7P5Xp9OhGmKcHYL8It87WHNb5d3BUaBIRk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769095120; c=relaxed/simple;
+	bh=f+GGFDfnQNRvruYoiEZmHylk7P7mRMfGPaBS0zuNP/I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AAUX90v4mBhD3CNAJobh2DAlqE4CWLeT9lbCYR4+mTlFe6/q3EIPI4OUMzqM0XLcqJ7mnSzzgYkzOANv1tecbXA7HffCyRabc5AyqIlTMuICBwv9CurLs+TjNu3BLkvNrUbKS+0punLrXQ9RMpG09M+SScnT/YVGlbnFPeloXjc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=o+IZLkUH; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+	 Content-Type:Content-Disposition:In-Reply-To; b=c2cBEkIN2cPQrleQOAZyQBoKnFkUL0XBLmfdhrzJXt+X+kH8Jhd5Vt/tENYhvATO+lRHci9DWWB7Scb2c1xh5rAefolaLKDevVvf+27/MYfyNT3JV46qovjV0s35cYqV3PUVj9Frntb4XQLtC4F2xesYvjxMG/FTRLzaPe0OKH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=txkh47Ts; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="o+IZLkUH"
-ARC-Seal: i=1; a=rsa-sha256; t=1769094778; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=lEoIOIMYjotqF6pMogdQeeX3MKr4ENlCiD/zwjVHEz7oX/aBkcYEGsE/b+AyEz9/qHammd5PwkwUTjHgxSm4xUXMdfvKKymDrKfMO7XVkqxZwi0eFOFpycTX3Ph2VfjoBn2jh/PONyeioR4e3509GRDmI2FA+Je/43/yldSCFMk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1769094778; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Eo/IUXScxtTqfsnFKhZ0cMjvhBNV94SAmIf3IWc0PYg=; 
-	b=AZzM73oOqgb/shBUa24qmbpxOMWgTlo1reLo+3afbd9Xl7CJMIRkBrYmPkdk2CdcDFwLdwbYH74ZtI+L0KF7ytTXDaUDxoTHzgoOcZUfzYExAF5bEEHSigbE2A63ghwesaif6vIXyb2O824EsoihePPHqysB3lNJrcO/mtWQ/qs=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ziyao.cc;
-	spf=pass  smtp.mailfrom=me@ziyao.cc;
-	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1769094778;
-	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=Eo/IUXScxtTqfsnFKhZ0cMjvhBNV94SAmIf3IWc0PYg=;
-	b=o+IZLkUHaUjCBLwjbbYzPaDnbsyf4n4RhgWAG2Yid5tjpLPXo8AzAvbFBQ/tDCoQ
-	bpWF7sPLiJvteO0izmqf5tShsN/HlmNc/nFEa9bui9aQ2xILgsJQCEHu/zBdQxeznix
-	ZOv63McBSVkhandjj20A1es/cJW+yfpOD64EoQ+4=
-Received: by mx.zohomail.com with SMTPS id 1769094776105810.6311707654235;
-	Thu, 22 Jan 2026 07:12:56 -0800 (PST)
-Date: Thu, 22 Jan 2026 15:12:36 +0000
-From: Yao Zi <me@ziyao.cc>
-To: Chukun Pan <amadeus@jmu.edu.cn>, Vivian Wang <wangruikang@iscas.ac.cn>,
-	Yixun Lan <dlan@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>, Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S . Miller" <davem@davemloft.net>,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev, netdev@vger.kernel.org
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="txkh47Ts"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=Lf8vDYqu1Xu0V5DclzIs8XXcHnL+X33ULLs3B4+PCl8=; b=txkh47TsffNxAQyn9D7y/qFpdO
+	GtDdajbkxbuL1vAjxWKuPQwJQ0NXnQdU4YPkKC7m5zarvb82G/cSyr6dNRt7u5SZs9VI0A6jJ0mup
+	iF39nbqTwjZjWPiMBflT7AodZF3kzC/IR2B3IVXx5f2E2SUbitZXxkvfQxt6I2uWeiy8=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1viwS1-003zTF-Us; Thu, 22 Jan 2026 16:18:25 +0100
+Date: Thu, 22 Jan 2026 16:18:25 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: andrew+netdev@lunn.ch, davem@davemloft.net, dlan@kernel.org,
+	edumazet@google.com, kuba@kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, netdev@vger.kernel.org,
+	pabeni@redhat.com, spacemit@lists.linux.dev,
+	wangruikang@iscas.ac.cn
 Subject: Re: [PATCH 1/1] net: spacemit: display phy driver information
-Message-ID: <aXI-ZMbwXHBX4XiT@pie>
-References: <20260122080001.73921-1-amadeus@jmu.edu.cn>
+Message-ID: <4493e09c-e4fb-424d-a44a-1e4d4510e4e2@lunn.ch>
+References: <b4e0b1d2-cd6d-40f3-89fc-c1bd41c82480@lunn.ch>
+ <20260122150601.586846-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -57,39 +47,24 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260122080001.73921-1-amadeus@jmu.edu.cn>
-X-ZohoMailClient: External
+In-Reply-To: <20260122150601.586846-1-amadeus@jmu.edu.cn>
 
-On Thu, Jan 22, 2026 at 04:00:01PM +0800, Chukun Pan wrote:
-> Print the PHY driver used and interrupt status after connection.
+On Thu, Jan 22, 2026 at 11:06:01PM +0800, Chukun Pan wrote:
+> Hi,
 > 
-> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-> ---
->  drivers/net/ethernet/spacemit/k1_emac.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+> > > Print the PHY driver used and interrupt status after connection.
+> >
+> > The standard way to do this is call phy_attached_info(). Is it missing
+> > some information you need?
 > 
-> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-> index c85dc742c404..afb5b6a61c2c 100644
-> --- a/drivers/net/ethernet/spacemit/k1_emac.c
-> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
-> @@ -1568,6 +1568,7 @@ static int emac_phy_connect(struct net_device *ndev)
->  	struct device *dev = &priv->pdev->dev;
->  	struct phy_device *phydev;
->  	struct device_node *np;
-> +	char *irq_str;
->  	int ret;
->  
->  	ret = of_get_phy_mode(dev->of_node, &priv->phy_interface);
-> @@ -1610,6 +1611,11 @@ static int emac_phy_connect(struct net_device *ndev)
->  		goto err_node_put;
->  	}
->  
-> +	irq_str = phy_attached_info_irq(phydev);
-> +	netdev_info(ndev, "PHY driver [%s] (irq=%s)\n",
-> +		    phydev->drv->name, irq_str);
-> +	kfree(irq_str);
+> I initially used phy_attached_info(), but it was too long and printed
+> phydev_name() "cac80000.ethernet:01" twice:
+> 
+> YT8531 Gigabit Ethernet cac80000.ethernet:01: attached PHY driver (mii_bus:phy_addr=cac80000.ethernet:01, irq=POLL)
 
-Would phy_attached_print() simplify the code?
+This is what everybody expects, so you should use it.
 
-Regards,
-Yao Zi
+You have some control over the names, it is the name you assign when
+creating the struct device. Maybe you can shorten them.
+
+	Andrew
