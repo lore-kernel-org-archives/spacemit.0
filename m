@@ -1,100 +1,94 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939343E9F83
-	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 10:39:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787A83AE70B;
+	Thu, 22 Jan 2026 11:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769078362; cv=none; b=tr9ywBrXBwwLU0887p8wx/OSmqgkmIT9N75KoZqwh7Jlg7aR09ACdKcwsnNX0s1LGR7w7WWKFJHTbNap8zffeJnvQo6yQCrtGGLdpClq5oKtvXqGcvh2bjHOTYbqHnPZUAY9zjRHiVe5x0qKQAkQ0KiT5ZXpJnKmTS85ELdkhlI=
+	t=1769081276; cv=none; b=l0+K8Hy7N5vwR26zEoj0enFaYdK+EDvvWwkjHPaVUgm0v43PdNFg7MILEAkaatwhi1SlEW62OKUKuJZ/gnTdv39rXrSUQK3/YxsE2t/1A3xQ0i5gerq3fRFGr5RQN642fcmDAd5jOt+Er8J7Df8Bfg9aX76pSwWMZgm/ZNnZP8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769078362; c=relaxed/simple;
-	bh=L9h+VVmrw/S7QwFfMyKNXRU5RtA1qftvKbCmgN1C+Zw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UsL6v1UIX9NgyCM7WrTwzza4AQ4C0z8xSVcS9oZ0zDcNAgCbUIyvhBTWFllvL9pZib8HR+8yu8WIIVy2Jdg/+g+91gXrMNUWXqFegN0jjikpBYnaPRomwnuzNkFzO75HlZzuPtCpmlqOANAzw/mzXPmo0C0fk2TuI5t2fPFb+VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [10.213.20.167] (unknown [210.73.43.101])
-	by APP-03 (Coremail) with SMTP id rQCowABnhdxK_nFpSZlDBg--.20370S2;
-	Thu, 22 Jan 2026 18:39:07 +0800 (CST)
-Message-ID: <5639ff0c-dfd1-4528-a0ce-92d3c457ce64@iscas.ac.cn>
-Date: Thu, 22 Jan 2026 18:39:06 +0800
+	s=arc-20240116; t=1769081276; c=relaxed/simple;
+	bh=cqjws9ooAjsbBwZ61CYWYQ//fsA2CNwseWVKxBI1+0c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=evA/Uvso2QH593GEBLYAwHafrPFIOo8xtyQ0210ZfPPjYmNAinpZKDMfweDC+aB7ok8N4d+Ssg0uHvZWcQkHc1vm3hffgJazujKyrML7AP0ZM2xZv1FRDlqrTlQxtm7YiUZ47JF+7n1KwROLSd92HcWA+/aDJn6zWC3wSD6UVNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d7vPrBhG; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d7vPrBhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC1AC116C6;
+	Thu, 22 Jan 2026 11:27:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769081276;
+	bh=cqjws9ooAjsbBwZ61CYWYQ//fsA2CNwseWVKxBI1+0c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=d7vPrBhG7gXRu4QD0E8T9ufg4w39M2sZzihMhPpevwBb6pqdsc5vX8wYg4WlhxgL2
+	 3B/UkK+As2Rn/y3O2q8ulnMeMM4XMzxJOhYL015tDP39vgZ1oQR5Uxg5BstdEOGIGa
+	 eI9east+ya8K+bsJ52XXgk5R7yjD+I8oRCazfyudNMmQu7jtv39Ufc2lWz+g465RyW
+	 OTACBH5GZYQLO+/HTjUcPgKOEk2PGNeRnPCTKtl3doK6+LnZdBlwosUfMiM603d0vr
+	 mMl6ARbX+3rL6Bc8q5nHobSI5l8pJNSG0vfbLF7MOkOqqdKY5Hj61vgv3i/QjHWDoF
+	 S5NOiZLm56ztA==
+Date: Thu, 22 Jan 2026 11:27:50 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Guodong Xu <guodong@riscstar.com>, Liam Girdwood <lgirdwood@gmail.com>,
+	Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH 0/4] regulator: spacemit-p1: Fix voltage ranges and
+ support board power tree
+Message-ID: <77bc5a5f-666d-4beb-ab78-99a242d72a39@sirena.org.uk>
+References: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
+ <20260122101122-GYA63789@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net v2] net: spacemit: Clarify stat timeout comments and
- messages
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Yixun Lan <dlan@gentoo.org>,
- Chukun Pan <amadeus@jmu.edu.cn>,
- Michael Opdenacker <michael.opdenacker@rootcommit.com>,
- netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20260121-k1-ethernet-clarify-stat-timeout-v2-1-76ff1a1168d9@iscas.ac.cn>
- <20260121200439.64c22125@kernel.org>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20260121200439.64c22125@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowABnhdxK_nFpSZlDBg--.20370S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7CryxGw48ZF47tF17KF4Durg_yoW8XF4fpa
-	1IgwsxGF1xtrWkXrsrtw10qFyYvw1vqa43ury3KryDtF15XrZa9r1FkrZ0kFZrZ393u3yj
-	qr42gFyv9FsrZa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9Ib7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r4j6F4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
-	1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_Gw1l42xK82IYc2Ij64vIr41l4I8I3I0E4I
-	kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
-	WwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
-	0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
-	JVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
-	IYCTnIWIevJa73UjIFyTuYvjxUgd-PDUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="kCU7aOWPcG50IcvN"
+Content-Disposition: inline
+In-Reply-To: <20260122101122-GYA63789@gentoo.org>
+X-Cookie: Don't read everything you believe.
 
-On 1/22/26 12:04, Jakub Kicinski wrote:
-> On Wed, 21 Jan 2026 10:17:18 +0800 Vivian Wang wrote:
->> This patch isn't a fix for the problem per se, since it is hardware
->> behavior. The new message and comments, however, should direct those
->> running into this on new hardware towards a fix.
-> Is it not possible to improve the situation?
 
-Maybe I should have made it clearer, but this comment and messages
-improvement was proposed by Andrew in the linked thread [1].
+--kCU7aOWPcG50IcvN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-As an aside, saying that made me realize this patch should be:
+On Thu, Jan 22, 2026 at 06:11:22PM +0800, Yixun Lan wrote:
+> On 17:43 Thu 22 Jan     , Guodong Xu wrote:
 
-Suggested-by: Andrew Lunn <andrew@lunn.ch>
+> > Patch 1, n_voltages is corrected to match hardware register widths, as the
+> > previous values prevented regulators from reaching higher operational
+> > voltages (e.g., 3.3V on LDOs).
 
-> Is the refclock disappearing because of power saving?
-> Or because the link is down?
+> This patch bring system-wide change that not only affect Bananapi F3..
 
-I'm not really well-versed in what's allowed from the PHY here, but at
-least the Motorcomm and Realtek PHYs seem to only stop this clock while
-the link is down. So from what I can tell it's PHY stopping the clock
-because of power saving for when the link is down. I'm not sure how that
-should translate into an answer to your question here...
+> Please also provide fix for other boards, I think you may not be able
+> to test all boards, but make sure the patches are available, so people
+> who interested can test, P.S I can help on milkv jupiter board
 
-> Because if it's the latter we should be able to skip reading the stats
-> when link is down (still racy but better than waiting in cases we can
-> detect?)
+Patch 1 looks like it should be OK as is?
 
-If checking the link is definitely up as a condition for updating stats
-would be acceptable, then maybe the original patch from the linked
-thread [2] can also be adopted?
+--kCU7aOWPcG50IcvN
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Vivian "dramforever" Wang
+-----BEGIN PGP SIGNATURE-----
 
-[1]: https://lore.kernel.org/r/48757af2-bbea-4185-8cc9-2ef51dbc8373@lunn.ch/
-[2]: https://lore.kernel.org/r/20260118100000.224793-1-amadeus@jmu.edu.cn/
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmlyCbUACgkQJNaLcl1U
+h9D/aQf/dEWaK9GmzmmF+ESbSHBcwMTmMmByHHPPRFKrNnkGd9hynfVF6M9fDOHD
+EfN1Lm1BPwuFZF3+/qUg3drebJxFEPVPRfT5kxC+TJ5Bxf6200kqu7RkZiTNpA3H
+ftvyR5aZr1r2lP+nbk5f8BICKQWgcxQ1W4iRnd69UcpV4yRSZe9J3j8PyxNnaaYE
+uWYmlgCnYyOlCMjA/kQGRmXVC9p+qyIouIX4W1ixUw20wmKPIVrhEI48GcS4sWgR
+m85lhXE84rP9UX0S3p+8sWp3hp36sP6VCzB+RCu84jwPdsdrz5++TPVMg5lK2wc9
+aBcV2THb3moaWueejc7XDx9tG0j9tQ==
+=L0Vb
+-----END PGP SIGNATURE-----
 
+--kCU7aOWPcG50IcvN--
