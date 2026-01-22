@@ -1,67 +1,67 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327A8237707
-	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 07:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18A14219FD
+	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 07:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769067031; cv=none; b=eq4828+DPaMXJjMvaEjWllRrFFst9sURWGhf218BUIKHcfflVIzsYDQb0BszTfC4smhHglfIUl2YD0DwCU3sm+DKjxb7HQk5xQ/q/U3lUDYD9dDHGPQp6z10dON4mR2MnanKO+rlrmiHec375mBry7d9s7xctivJrWAtCRklFRo=
+	t=1769067038; cv=none; b=pPd+QuNQle4QiMHtNrZsE0ELIh4ANHCdvz5+7o9bLiZrYQ9UVCoElA37dC4UKC1h284qyDDraFEvvgpPLRT/T5qjoIbKtQ31oYMNC3TvJlkLsUCWNQDkb4B8MHH9/bZISQFie1S1aEc0wPNsVqV7DDB/eIp8CXjUbkCtO0dbodM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769067031; c=relaxed/simple;
-	bh=8siO8agI3GrxN1B0BNfhRFjRtrJW4gj30PGQr6G8Bf8=;
+	s=arc-20240116; t=1769067038; c=relaxed/simple;
+	bh=GJcIqdinoJ8Cp9/UqzllyVA7y/YmJi9zscvo1d6K1aU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZHwtDM7TcRUkMNdteDWp1FsaLUE5nn0Sj4b/Q3IunSs6c6mdF2yc8mjvdFC78NcHRWWN6LMrqsVcw9SQsTtv8/i7SrO6acUaVifq5vX4rfenjhTQKS/fLZcHsGXDYhmiaIH7HU0ZkpyOSxELpku1d88uzvKoLvF+awwJ6JmNqyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=Doz6apXd; arc=none smtp.client-ip=209.85.214.176
+	 In-Reply-To:To:Cc; b=MUOMd5u7goHeaT0pAJkU/54f8KdimrPl8v93g7x+VH3jTRbwzTToN0acdLm5KXQM1uw74HoT7auYXO5gT5oM/i5FZz8caOUd0AN2v3U4FzOoFL47dBlpfO+WEwyN9nlnhN/apetNSwTzpmkCs4sMmpwm6I7L1rdlbuqVuPQ3L4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=3Rxrajhs; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="Doz6apXd"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a07fac8aa1so5558115ad.1
-        for <spacemit@lists.linux.dev>; Wed, 21 Jan 2026 23:30:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="3Rxrajhs"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2a7b23dd036so3625295ad.3
+        for <spacemit@lists.linux.dev>; Wed, 21 Jan 2026 23:30:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1769067021; x=1769671821; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1769067028; x=1769671828; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8p3LGTyptRJ/1/i7rxaDyy2ppqLP8OP36gHwpWf/wko=;
-        b=Doz6apXda3eNzXcqXn8WiV30HjPJbQ07iLECps+xtmaCUebJcALt3jP8ElP6KhFGtm
-         YX6mraS51bOzD7ZlBDUCXqU9i/iByvHy70+nWzkjvU84xhUGYTSQjyTp+nWo2mp9cP/L
-         59T+AuqzI2wFjMZcR5MmDHAYIODKMCb7dBoxvOTBijhIyevysheSS5aFuQ4Qea/S0ylY
-         Gk3w/xYG56jihAPgf84O7rHJapRy2FNsMJmoFGtcvauKe2T/OYA+l0CGui1cLjd6jOkA
-         BmEbQeMFJA9YdOhi4vEMCjf6xqqVUz6/S/YTT41lL5o1bIVEpMBVKif2P/DTCf8lEWH5
-         NZAA==
+        bh=X/UtC0xgbxRNfydioTj9MKeI23LF8ZBahNkg1gMzORk=;
+        b=3Rxrajhsw0yUpDM+woLYy836juPFXEAuRhKbL2RRTYLGBUhg1pM9omaQQO+BTY5BZR
+         TUHzDE1pAfo+FjyTbpKiVgv9/guaJM4VgafKTpCU+fsCMdtu6Z4Py1Wn06kuYFov8cby
+         Cztrq6gvMKjRwxg91PI9V0gtXUwvPWAyXRDPg5OpkKAmwnkU9FKUgtXRCx7xOhevUyNI
+         tOA3cVb3BRchUahdDDMqpulWxRweByEJe+yZCS0qpI02U/Sp1woW8Hhl2t5XTykUMR0B
+         XxXeF9RWy2dkXhN8kD4EFfgbIn4i9kVIO954CTSRVpHcpmSAERseEMaN3TZhZd3u8gjL
+         NQQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769067021; x=1769671821;
+        d=1e100.net; s=20230601; t=1769067028; x=1769671828;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=8p3LGTyptRJ/1/i7rxaDyy2ppqLP8OP36gHwpWf/wko=;
-        b=fgmjRugX5Q2kd13bsCpn2y8HQBKMkBOjHv/gfrCyZVSjwv7LYao+oaRTtkLzFma2LG
-         ssaKifbCdmv8IZqQ0e/F8Q7hCsNEPCyhwJR4hdYvKbbhOb4vzJrw67scM7pSfivTco7k
-         r19gC3wzByw54arQQCFzoSgeO2DELWyaG9lBV4R8R+tDHoHnJND5IIYhepiFe9KVWVyC
-         jVB+uxfrz+QekHIG7hA+owvIgBTE18auilEUV9PN4CY5HYklxbvCwKcp3TC8rbSvtB54
-         n2B+vmke9FZXI4Am3nHrHvFBhJEcLBQ2k699mEsKsyuMK4nWAS6zHS8jLdi/jc+yoL3p
-         OaBw==
-X-Forwarded-Encrypted: i=1; AJvYcCUO7fRjYjNg+2V5eiPQbp94eLEUTSTcfPhjlUgqkBtGkTPpVYbrbbVuAg1j7l6+9Ks08oP67ahZZg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxVRsKAx9NOfE9x96KnRrW+zc+l/AS2FdQjXXlJYtfPXhmeMCzf
-	Nnwouhr6SLQxlhHTSCGorjPRDBXc2kXMSJoNemlbRUmaBGmVj9IBfLSxU2yUlX5NUNQ=
-X-Gm-Gg: AZuq6aIj/Yj4lCvEbze+CTfjOIa3CLz2cQmPKwBkj2uSs5EgOlUYAcfybfZKFqI130m
-	r/+DV+JJsh0Hjk56oPBUosaB3N9+Pnv58wYWex0JpDJtROjKGB4ARrvTjWzYDZBU8CSdIqWapnl
-	xZBjeMY8EUr2sNdLsza0ZM+F0jpA+hAzVBNLi8lpczoDDIuvWzcZUqN67qocNKKY+0KgVPjOD5c
-	89c3YKX6Qc/gXVX0wiFH26gcHTdp9xn+qBTKQ6BtQJLwArpyUE6EtVvVNjsaQfsDzyjR9Sd2AGp
-	aO8eBm2dwbIovOK+lVJIY2HbWBRIqARGPG7WhnkabflDoa6/89/hc3MsFsw3VJm+y8EdDpy4+WY
-	vriCp5rlpQsWqBsetmCjSy2YeEMwdH6KryuQRyZ9uyi8HfnIe7GFqgA/Uc3mYT7llK0w7iAzu+N
-	weHOYeu1z81SO7qWgVE92uDJtvUDDGtaI=
-X-Received: by 2002:a17:903:22c5:b0:295:c2e7:7199 with SMTP id d9443c01a7336-2a76ad6be42mr77946605ad.29.1769067020954;
-        Wed, 21 Jan 2026 23:30:20 -0800 (PST)
+        bh=X/UtC0xgbxRNfydioTj9MKeI23LF8ZBahNkg1gMzORk=;
+        b=jZLwAn/b0HYKvwOXSORA8Wl3iNRea+IJPff/6tmDN5hakdbilrqQs5VowC45A6KSBm
+         p/iIBGFu8bpdUzfZdBnJUtRQVSXR1FerjZUy19suPd7pC5BU189BvpeEmnGOtEPjN4Dy
+         sAj9J8Vpmd4s5TM5jU48ynVGYKn5NOmURRInLTRVI6Kj5wWkNjVU2E55/3BfcCuRjvUU
+         uUHequhIDDxyLBoBT64PDTM85HzQZWqXc5yh9bOE1RrwuIA/QOdYke9D5I0xdF5lkMCa
+         sia6dpczfIsrSCIZJFfmhrERdzB/Wh3LWaQ60fcMdHHOKz9cOCuLt8L7XcHvvdKYpppw
+         tZOw==
+X-Forwarded-Encrypted: i=1; AJvYcCWXaPiVk+u46gCGGaRZjs5NXoJn5WsuLZtkLqLlk+2rgri2HkNRN3645pEabRKilq3xYtK0VxMOvA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxJNFaighTYUuKGzHUYmewYyEG5ECVNEcv8YriOdGr6SR8IYtFR
+	WeHIzoqMQN6SU43y0owu4qQGJIhoSeZlVwjcX/f3whRhZNivFe9WpuevODI5MqNsEVk=
+X-Gm-Gg: AZuq6aLgPn4SH8sIALXiosL66wotynL0X/qRoXEFxpT3/GhY7c9++PRR6HX8t79K+EN
+	Xb0J9RMkmz0dxgi9WAMC6Y0HQEgx+NCBiPeDrb82NnWr9IwtNXaHp7JF0UY0N8AY37z3FOpu+G/
+	YTKNro815uX8Fmd6GUc3YnK+UxPH0I9qkLzjblIDGvjfdRsNGXA4/lagpWgAXJNGdVnCGTFg/Uw
+	WI61oc3TF69jkEIF3B+En+J8QEU3byZKDiT0f2q7tdFHjCYaU1oZbs6119Dl7tDjMDdHg8ZTeBC
+	bXameAIRYEXCL5564o3TaMlI5/QijCdHin+5EiKDn2x8GnIqbtX3hMqxbBfpJBJ+ZBtNR58B54b
+	lGBbeYA1ODl8cAmud+a3y8j5q1CvhNhBfzqXkfECDCLUOx0N1tJ3PDy+7L9dmyz3W+eVmDxfNm3
+	2cQZh1gIAIs+dnnOE95ceBUehxhlwsGRg=
+X-Received: by 2002:a17:903:2343:b0:2a0:c1ca:20f7 with SMTP id d9443c01a7336-2a7188a97ffmr177066245ad.15.1769067027753;
+        Wed, 21 Jan 2026 23:30:27 -0800 (PST)
 Received: from [127.0.1.1] ([2a12:a305:4::30fc])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a7190c9edesm171691845ad.23.2026.01.21.23.30.15
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a7190c9edesm171691845ad.23.2026.01.21.23.30.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 23:30:20 -0800 (PST)
+        Wed, 21 Jan 2026 23:30:27 -0800 (PST)
 From: Guodong Xu <guodong@riscstar.com>
-Date: Thu, 22 Jan 2026 17:43:42 +0800
-Subject: [PATCH 1/4] regulator: spacemit-p1: Fix n_voltages for BUCK and
- LDO regulators
+Date: Thu, 22 Jan 2026 17:43:43 +0800
+Subject: [PATCH 2/4] dt-bindings: mfd: spacemit,p1: Add individual
+ regulator supply properties
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260122-spacemit-p1-v1-1-309be27fbff9@riscstar.com>
+Message-Id: <20260122-spacemit-p1-v1-2-309be27fbff9@riscstar.com>
 References: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
 In-Reply-To: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -86,47 +86,110 @@ Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
  Guodong Xu <guodong@riscstar.com>
 X-Mailer: b4 0.14.2
 
-Higher voltage settings were unusable due to incorrect n_voltages values
-causing registration failures. For example, setting aldo4 to 3.3V failed
-with -EINVAL because the required selector (123) exceeded the allowed
-range (n_voltages=117).
+Add supply properties that match the P1 PMIC's actual hardware topology
+where each buck converter has its own VIN pin and LDO groups share
+common input pins. Supply names are defined according to the pinout
+names in the P1 datasheet.
 
-Fix by aligning n_voltages with the hardware register widths per the P1
-datasheet [1]:
-- BUCK: 255 (was 254), allows selectors 0-254, selector 255 is reserved
-- LDO: 128 (was 117), allows selectors 0-127, selectors 0-10 are for
-  suspend mode, valid operational range is 11-127
+This allows different boards to describe their actual
+power tree connections in devicetree rather than hardcoding supply
+relationships in the driver.
 
-This enables the full voltage range supported by the hardware.
-
-Fixes: 8b84d712ad84 ("regulator: spacemit: support SpacemiT P1 regulators")
-Link: https://developer.spacemit.com/documentation [1]
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 ---
- drivers/regulator/spacemit-p1.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../devicetree/bindings/mfd/spacemit,p1.yaml       | 58 +++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/spacemit-p1.c b/drivers/regulator/spacemit-p1.c
-index 2bf9137e12b1d0bc7a857213d77f05387536fe17..2b585ba01a93d0ce163c33e14c8022a506bdce11 100644
---- a/drivers/regulator/spacemit-p1.c
-+++ b/drivers/regulator/spacemit-p1.c
-@@ -87,13 +87,13 @@ static const struct linear_range p1_ldo_ranges[] = {
- 	}
+diff --git a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+index c6593ac6ef6adb72fc48af570dc13fc9edf77ccb..abdc93b9a67b1872c8fe6955abd950622a0b69e8 100644
+--- a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
++++ b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+@@ -27,8 +27,41 @@ properties:
+   interrupts:
+     maxItems: 1
  
- #define P1_BUCK_DESC(_n) \
--	P1_REG_DESC(BUCK, buck, _n, "vin", 0x47, BUCK_MASK, 254, p1_buck_ranges)
-+	P1_REG_DESC(BUCK, buck, _n, "vin", 0x47, BUCK_MASK, 255, p1_buck_ranges)
+-  vin-supply:
+-    description: Input supply phandle.
++  vin1-supply:
++    description:
++      Power supply for BUCK1. Required if BUCK1 is defined.
++
++  vin2-supply:
++    description:
++      Power supply for BUCK2. Required if BUCK2 is defined.
++
++  vin3-supply:
++    description:
++      Power supply for BUCK3. Required if BUCK3 is defined.
++
++  vin4-supply:
++    description:
++      Power supply for BUCK4. Required if BUCK4 is defined.
++
++  vin5-supply:
++    description:
++      Power supply for BUCK5. Required if BUCK5 is defined.
++
++  vin6-supply:
++    description:
++      Power supply for BUCK6. Required if BUCK6 is defined.
++
++  aldoin-supply:
++    description:
++      Power supply for ALDO1-4. Required if any are defined.
++
++  dldoin1-supply:
++    description:
++      Power supply for DLDO1-4. Required if any are defined.
++
++  dldoin2-supply:
++    description:
++      Power supply for DLDO5-7. Required if any are defined.
  
- #define P1_ALDO_DESC(_n) \
--	P1_REG_DESC(ALDO, aldo, _n, "vin", 0x5b, LDO_MASK, 117, p1_ldo_ranges)
-+	P1_REG_DESC(ALDO, aldo, _n, "vin", 0x5b, LDO_MASK, 128, p1_ldo_ranges)
+   regulators:
+     type: object
+@@ -50,6 +83,15 @@ unevaluatedProperties: false
  
- #define P1_DLDO_DESC(_n) \
--	P1_REG_DESC(DLDO, dldo, _n, "buck5", 0x67, LDO_MASK, 117, p1_ldo_ranges)
-+	P1_REG_DESC(DLDO, dldo, _n, "buck5", 0x67, LDO_MASK, 128, p1_ldo_ranges)
+ examples:
+   - |
++    / {
++        reg_vcc_5v: regulator-vcc-5v {
++            compatible = "regulator-fixed";
++            regulator-name = "vcc_5v";
++            regulator-min-microvolt = <5000000>;
++            regulator-max-microvolt = <5000000>;
++        };
++    };
++
+     i2c {
+         #address-cells = <1>;
+         #size-cells = <0>;
+@@ -58,6 +100,10 @@ examples:
+             compatible = "spacemit,p1";
+             reg = <0x41>;
+             interrupts = <64>;
++            vin1-supply = <&reg_vcc_5v>;
++            vin5-supply = <&reg_vcc_5v>;
++            aldoin-supply = <&reg_vcc_5v>;
++            dldoin1-supply = <&buck5>;
  
- static const struct regulator_desc p1_regulator_desc[] = {
- 	P1_BUCK_DESC(1),
+             regulators {
+                 buck1 {
+@@ -68,6 +114,14 @@ examples:
+                     regulator-always-on;
+                 };
+ 
++                buck5: buck5 {
++                    regulator-name = "buck5";
++                    regulator-min-microvolt = <500000>;
++                    regulator-max-microvolt = <3450000>;
++                    regulator-ramp-delay = <5000>;
++                    regulator-always-on;
++                };
++
+                 aldo1 {
+                     regulator-name = "aldo1";
+                     regulator-min-microvolt = <500000>;
 
 -- 
 2.43.0
