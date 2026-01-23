@@ -1,179 +1,131 @@
-Received: from cstnet.cn (unknown [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E5737F8DA
-	for <spacemit@lists.linux.dev>; Fri, 23 Jan 2026 03:52:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C2F34D91C
+	for <spacemit@lists.linux.dev>; Fri, 23 Jan 2026 08:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769140386; cv=none; b=CPbu+rSBD6/TmkHxhavsPn0YgmEYXwDYWK/HDXoZyGUD0MrL9Faibv0731p5JZoSN4QCHa+QattrBvEmx3bkkkDMxedYRIZesdFFn/FUcvJ/cAmG8krXcvTUFR1ZAI6Ea9RsYSFzDrIzCjnbjMmG0Gaq4gSAKmlDKrYAtoTiJIg=
+	t=1769156626; cv=none; b=u3RJPPhIGUkhmmh9ewQsgAZ1lmKZldcdhYzJfCLv++bTrXlOBk1lYc/PYfZeppfvojqo+CdZraQZ3eGHpVz63iE1gyYt9EHnSGIIB2YeI+Jvhw5JlwKHz3NoQsdMFeIcxdwe68gvKuKzG/bFHAnKo+fnpZkHDgdAmLKW+spCJcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769140386; c=relaxed/simple;
-	bh=4Sq1m95nMhBZ4sWzKktBqG3xAfHUblz60WZRYNYPBq4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ERfZ6luNInEoul6J2IkuzJZk9oxEAMb99nI83egd9WbNXiKH1b1wdQqBYwSG35DaRNmMmr+UczFhbzsalfXTGajIwijKwuLhQ6pdTXF0bQobjcHI3wzDIUSOS9leG/DIzEKugODSMpasASD6LHLsNCJasDxOOAT9PTRrm/UZ/2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.0.2] (unknown [210.73.43.101])
-	by APP-01 (Coremail) with SMTP id qwCowAB3HGh_8HJpaGXcBQ--.18963S2;
-	Fri, 23 Jan 2026 11:52:33 +0800 (CST)
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-Date: Fri, 23 Jan 2026 11:52:23 +0800
-Subject: [PATCH net v3] net: spacemit: Check for netif_carrier_ok() in
- emac_stats_update()
+	s=arc-20240116; t=1769156626; c=relaxed/simple;
+	bh=sk3MTCTd7WHqwWe4zDqa/m3KB8fQqAO1HvbuEq5+7vM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DRYnsQZCIkupYoord+lYcxJHZCgseehNqAWg/5NfpCWK6UXRUhFmHX/Y6o2NyH9tOOYAmDYAxzOXV/qmARMDxG/Uh2FAPNrxIIdrMtvc9rHnAQ2x0e7D+wuV6SxSQgnL6/oKNkiR9WLt5xyxyanF35tkVfZWke4nFj42fj2oSjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gAJc21XA; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gAJc21XA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1769156621;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CD+T1KpcisOIdjn7OKGY4SJv7GT2lLztb8OPYUclLjw=;
+	b=gAJc21XAeqUpLjWuxbFYLUChHHe9jNpzbyO+guoo0LT2xgdqeC3XS2dl9mZ5aZlj+/uyxD
+	VJ2WA+albS7srsQSKTIZ+6ASmUWtTJUxek+GLYkkA4PzGsVQWFW4A7FNRD097FCAURJvJ6
+	6fSc7bpnnMg3igtW4I0bXSan8fG9KSc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-232-O91P92nsMLelreYl8IQDfQ-1; Fri, 23 Jan 2026 03:23:40 -0500
+X-MC-Unique: O91P92nsMLelreYl8IQDfQ-1
+X-Mimecast-MFC-AGG-ID: O91P92nsMLelreYl8IQDfQ_1769156619
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-42fb1c2c403so1445412f8f.3
+        for <spacemit@lists.linux.dev>; Fri, 23 Jan 2026 00:23:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769156619; x=1769761419;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CD+T1KpcisOIdjn7OKGY4SJv7GT2lLztb8OPYUclLjw=;
+        b=knrVcJZgzBXgWctyne3aIpkLw5BvfhigPFg2CYPeexwQB+eXrIo4Xunp3O383FWbGw
+         7aRxdUyhndbo1/oFwalzox/RkSwD1pFqrcvhf8MSCZ2BZwgvGZ9yNIbY5rdZo72Vu+Sj
+         v/KYsvKcR48bgIv5Bv7Wqc51MA4SW33zl+yutq7nWi6W05Xd2rQmY6myxkaoT5YvAhSi
+         +q7L0aXoOsnL1MbYbZquMZPjAHXZdIntVsnrxg9nS6jEEoR4nSMeOuFfMQY2IBBjHVV9
+         Oj4Uycfsxo4fbVIYEqBRXkUYOjuNJzEX88B0/j89S3IdXyCbz7FGf1zUuaqP9Fp20GRL
+         pvbA==
+X-Forwarded-Encrypted: i=1; AJvYcCX0Ls4Mz1KhaXt/4Cx3VtlTa3ZaJ1CUpgZ7jFMzIj++P7ymghPFsctXdD8kjrkBmas5QcJCpFs0eQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy6Yr17Y+lGxC+cgKxN9RYvOFI/6UDkY4+JoYluDCXBRASQVeea
+	x7/8WvOtEUWxawepY7U/TjlUFY35ouK9xemzR/Yf8HNWjALOI5DeHFkfDRWN4UtuUrj/rCFlk4h
+	7qwUvlbYVjF7ZKW46doqQPLxcS/gWfzgoZYONDJ2N/xAgmJHw7pELjOgA5C2t
+X-Gm-Gg: AZuq6aKFTjoN372NGr7n6+DPNM/d4sXkv28BGqt3OdR53ATmPrst1Agm4qSj7yrW32P
+	+90p2m960kQcc5c0DH+F08jF9xRzqS9fSOdl/LaoF702bkqR+ME5DXQRqzHbQPiy3GI4e969I6o
+	jE3IlHzpIyGQPuBCrwCPHghn7MUcFiLY11MnOBzRLCOtVTDVd6jA1J8cZh52YPE2GRFBrVTGEjw
+	8U+Vz1VA4oUCNYBC1dKqPBMaDdSWzxX3myl1l8wXh6jl7KKnWb2BEO+gxm23BpCBfbgU+2gjys5
+	LjRlqRBtACf6kjeEtVTjltbT0uhWBoY45EtecNFTloDY69lxhb4v+olvgprE4auyVIVLMxSJ6yV
+	b3Gc+sW+AkdiTho+pH3tJf14buWTAADXKK/HWJJeFA5dDUQ+wGFWlCgExYpad+HIxahVL
+X-Received: by 2002:a05:6000:144a:b0:435:9653:e151 with SMTP id ffacd0b85a97d-435b1587d3bmr3552715f8f.3.1769156619033;
+        Fri, 23 Jan 2026 00:23:39 -0800 (PST)
+X-Received: by 2002:a05:6000:144a:b0:435:9653:e151 with SMTP id ffacd0b85a97d-435b1587d3bmr3552677f8f.3.1769156618637;
+        Fri, 23 Jan 2026 00:23:38 -0800 (PST)
+Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1c24bedsm4756198f8f.17.2026.01.23.00.23.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Jan 2026 00:23:38 -0800 (PST)
+From: Javier Martinez Canillas <javierm@redhat.com>
+To: Yixun Lan <dlan@gentoo.org>, Guodong Xu <guodong@riscstar.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH 0/4] regulator: spacemit-p1: Fix voltage ranges and
+ support board power tree
+In-Reply-To: <20260122101122-GYA63789@gentoo.org>
+References: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
+ <20260122101122-GYA63789@gentoo.org>
+Date: Fri, 23 Jan 2026 09:23:36 +0100
+Message-ID: <87qzrgenzr.fsf@ocarina.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260123-k1-ethernet-clarify-stat-timeout-v3-1-93b9df627e87@iscas.ac.cn>
-X-B4-Tracking: v=1; b=H4sIAHbwcmkC/43PwW7DMAgA0F+JfJ4rQyKX9LT/mHYgNl6sLUlnu
- 1GrKv9eK9thu1WcAPGAu8qSomR1au4qyRpzXOaatC+NciPPH6Kjr7lCg9YAGv0JWsooaZai3Re
- nGG46Fy66xEmWS9EeEYLzLTOTqsw5SYjXfcWbqlPq/aeY5PtS15XfzsBZtFumKZZT03HrB+4Ii
- NCQdMFaQiRjxHRoyR6p89h72K0x5rKk2/7CCjv2/LUr6BqGXOiRPAzta8yO84Hdwc07v+JfEp4
- gsZJHGwIwgCXf/ye3bXsAGSVarXYBAAA=
-X-Change-ID: 20260120-k1-ethernet-clarify-stat-timeout-d221fcd3aaa8
-To: Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Yixun Lan <dlan@gentoo.org>, Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
- Maxime Chevallier <maxime.chevallier@bootlin.com>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alexandre Ghiti <alex@ghiti.fr>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Chukun Pan <amadeus@jmu.edu.cn>, 
- Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
- netdev@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Vivian Wang <wangruikang@iscas.ac.cn>
-X-Mailer: b4 0.14.3
-X-CM-TRANSID:qwCowAB3HGh_8HJpaGXcBQ--.18963S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxXF17Xw4rAF1rJw1fZw15CFg_yoWrWFW8p3
-	yYvasaqr40kry0vFsIyr4UZrZ8Xa1fJFyUCFyay395WFn0y3WfAry8KayUKF1qvrWkuryY
-	qr1UAa1DCF4DArDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUP0b7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4
-	vEx4A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xv
-	F2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r4j6F
-	4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I
-	648v4I1lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wrylc2xSY4AK67
-	AK6r48MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
-	wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc4
-	0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
-	xVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
-	1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU892-5UU
-	UUU==
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: Fh9UwKcZo4hMCu26t2U9fBufOhvfHI2HgvvOu05VtVs_1769156619
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain
 
-Some PHYs stop the refclk for power saving, usually while link down.
-This causes reading stats to time out.
+Yixun Lan <dlan@gentoo.org> writes:
 
-Therefore, in emac_stats_update(), also don't update and reschedule if
-!netif_carrier_ok(). But that means we could be missing later updates if
-the link comes back up, so also reschedule when link up is detected in
-emac_adjust_link().
+Hello Yixun and Guodong,
 
-While we're at it, improve the comments and error message prints around
-this to reflect the better understanding of how this could happen.
-Hopefully if this happens again on new hardware, these comments will
-direct towards a solution.
+> Hi Guodong,
+>
+> On 17:43 Thu 22 Jan     , Guodong Xu wrote:
+>> This series fixes hardware voltage constraints and enables flexible power
+>> tree configurations for the SpacemiT P1 PMIC.
+>> 
+>> Patch 1, n_voltages is corrected to match hardware register widths, as the
+>> previous values prevented regulators from reaching higher operational
+>> voltages (e.g., 3.3V on LDOs).
+>> 
+>> Patch 2-4, hardcoded supply assumptions are replaced with explicit
+>> devicetree properties. PMIC supply connections are board-design decisions.
+>> Moving this to DT allows supporting varied topologies without driver
+>> modifications.
+>> 
+>> Note: Patch 3 introduces a bisect breakage by transitioning to
+>> pin-specific supply names. Probe failures will occur on existing board
+>> (K1 Bananapi F3) until Patch 4 updates the corresponding DTS file.
+> This patch bring system-wide change that not only affect Bananapi F3..
+>
+> Please also provide fix for other boards, I think you may not be able
+> to test all boards, but make sure the patches are available, so people
+> who interested can test, P.S I can help on milkv jupiter board
+>
 
-Closes: https://lore.kernel.org/r/20260119141620.1318102-1-amadeus@jmu.edu.cn/
-Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-Co-developed-by: Chukun Pan <amadeus@jmu.edu.cn>
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
----
-Changes in v3:
-- Incorporated changes from Chukun to check for netif_carrier_ok().
-  Reworded patch message to match. (Jakub)
-- Link to v2: https://lore.kernel.org/r/20260121-k1-ethernet-clarify-stat-timeout-v2-1-76ff1a1168d9@iscas.ac.cn
+I can also help testing on the milkv jupiter board.
 
-Changes in v2:
-- Add "Fixes" and retarget to net (Andrew)
-- Link to v1: https://lore.kernel.org/r/20260120-k1-ethernet-clarify-stat-timeout-v1-1-108cf928d1b3@iscas.ac.cn
----
-This has a conflict in context lines in emac_adjust_link() with current
-net-next, which will show up when pulling that for next rc1. Just remove
-"emac_set_fc_autoneg(priv);".
----
- drivers/net/ethernet/spacemit/k1_emac.c | 34 ++++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-index 220eb5ce7583..88e9424d2d51 100644
---- a/drivers/net/ethernet/spacemit/k1_emac.c
-+++ b/drivers/net/ethernet/spacemit/k1_emac.c
-@@ -1099,7 +1099,13 @@ static int emac_read_stat_cnt(struct emac_priv *priv, u8 cnt, u32 *res,
- 					100, 10000);
- 
- 	if (ret) {
--		netdev_err(priv->ndev, "Read stat timeout\n");
-+		/*
-+		 * This could be caused by the PHY stopping its refclk even when
-+		 * the link is up, for power saving. See also comments in
-+		 * emac_stats_update().
-+		 */
-+		dev_err_ratelimited(&priv->ndev->dev,
-+				    "Read stat timeout. PHY clock stopped?\n");
- 		return ret;
- 	}
- 
-@@ -1147,17 +1153,25 @@ static void emac_stats_update(struct emac_priv *priv)
- 
- 	assert_spin_locked(&priv->stats_lock);
- 
--	if (!netif_running(priv->ndev) || !netif_device_present(priv->ndev)) {
--		/* Not up, don't try to update */
-+	/*
-+	 * We can't read statistics if the interface is not up. Also, some PHYs
-+	 * stop their reference clocks for link down power saving, which also
-+	 * causes reading statistics to time out. Don't update and don't
-+	 * reschedule in these cases.
-+	 */
-+	if (!netif_running(priv->ndev) ||
-+	    !netif_carrier_ok(priv->ndev) ||
-+	    !netif_device_present(priv->ndev)) {
- 		return;
- 	}
- 
- 	for (i = 0; i < sizeof(priv->tx_stats) / sizeof(*tx_stats); i++) {
- 		/*
--		 * If reading stats times out, everything is broken and there's
--		 * nothing we can do. Reading statistics also can't return an
--		 * error, so just return without updating and without
--		 * rescheduling.
-+		 * If reading stats times out anyway, the stat registers will be
-+		 * stuck, and we can't really recover from that.
-+		 *
-+		 * Reading statistics also can't return an error, so just return
-+		 * without updating and without rescheduling.
- 		 */
- 		if (emac_tx_read_stat_cnt(priv, i, &res))
- 			return;
-@@ -1636,6 +1650,12 @@ static void emac_adjust_link(struct net_device *dev)
- 		emac_wr(priv, MAC_GLOBAL_CONTROL, ctrl);
- 
- 		emac_set_fc_autoneg(priv);
-+
-+		/*
-+		 * Reschedule stats updates now that link is up. See comments in
-+		 * emac_stats_update().
-+		 */
-+		mod_timer(&priv->stats_timer, jiffies);
- 	}
- 
- 	phy_print_status(phydev);
-
----
-base-commit: 4a3dba48188208e4f66822800e042686784d29d1
-change-id: 20260120-k1-ethernet-clarify-stat-timeout-d221fcd3aaa8
-
-Best regards,
 -- 
-Vivian "dramforever" Wang
+Best regards,
+
+Javier Martinez Canillas
+Core Platforms
+Red Hat
 
