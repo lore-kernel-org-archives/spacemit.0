@@ -1,22 +1,22 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675C4314D0C
-	for <spacemit@lists.linux.dev>; Fri, 23 Jan 2026 14:06:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA79272816
+	for <spacemit@lists.linux.dev>; Fri, 23 Jan 2026 14:50:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769177207; cv=none; b=nOs/8iRodcmv4M+BcuhvvFIAMn1OMCOkr965GNRU9hApN2CvXaicqIrCtiu1ZV1ayIGck5XasSQzNfehdElv/umS3jUlEQS/O4QIYwAaQDRysRxztda6HLE1BKcvY4lfjoECFXrhDGY/pe0kAKwAzNq5Gi1iRAsP1eKlYj8Hw1E=
+	t=1769179829; cv=none; b=dFRF1RfiGpuQxLOHqOXlUsXD2SdfFjh3E7BCF3wRyyqw0Eyh6jTgyany1nu/ygqvLkfeQsIidQZoVyPKBD9uJe+s9FIpY4NNd6PyYokkin3YnPjtF03r9Ml1CliINmiBBNMO4GQqmxrtI/t0khbvcxK6AtYf3dz+qH/iPDamqnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769177207; c=relaxed/simple;
-	bh=2MIvdCq9aJYMbKCo1Ko4bPEFLAU0PVh/J/H+jO2oEqM=;
+	s=arc-20240116; t=1769179829; c=relaxed/simple;
+	bh=vQgq34fXXXtY7SXaVqw3lbCmJvJ09Xf94A8lTd9g8zU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NfDHhUvkixT7UAiiwt4wWL7NCnaILbYFCJfKVV82Q8aV4WVhG7ofR8mh381i1z4V8M6TwVJjmGkdl2XfP8SEXurzdn0bYyqGzE0yzDg1hcpmKmo7MNWxmvDxBvhin7iwpcVWpgpU5W2xWRRw2DVyNfXOVVTmDmfk7wyNHYGUr0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
+	 MIME-Version; b=IrMOpxRDRnfLGgR5dKgyyPIbt4SMQiXq8rqDL6Ule2jPgC6/icG/p5XX2UchhQdT+maOdeombkzyEI/ngTpPuTE+ruJ3750wUg5UvTGC/JY8Hjaz8Vfjxc4Ey4OYUGARGPF7oMPUqX1cb+8SRI26+xbh3hk0oDxwSd/LLDKQ6G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
 Received: from localhost.localdomain (unknown [116.25.94.62])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 31c2ab110;
-	Fri, 23 Jan 2026 22:06:36 +0800 (GMT+08:00)
+	by smtp.qiye.163.com (Hmail) with ESMTP id 31c3675a5;
+	Fri, 23 Jan 2026 22:50:21 +0800 (GMT+08:00)
 From: Chukun Pan <amadeus@jmu.edu.cn>
 To: dlan@gentoo.org
 Cc: alex@ghiti.fr,
@@ -30,12 +30,12 @@ Cc: alex@ghiti.fr,
 	pjw@kernel.org,
 	robh@kernel.org,
 	spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/2] riscv: dts: spacemit: add common board dtsi for OrangePi
-Date: Fri, 23 Jan 2026 22:06:25 +0800
-Message-Id: <20260123140625.1918171-1-amadeus@jmu.edu.cn>
+Subject: Re: [PATCH 2/2] riscv: dts: spacemit: add fixed regulators for OrangePi
+Date: Fri, 23 Jan 2026 22:50:15 +0800
+Message-Id: <20260123145015.1926865-1-amadeus@jmu.edu.cn>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260119024255-GYC47382@gentoo.org>
-References: <20260119024255-GYC47382@gentoo.org>
+In-Reply-To: <20260119030251-GYD47382@gentoo.org>
+References: <20260119030251-GYD47382@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,43 +43,48 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9beb2da69d03a2kunm5c2622f7d671e
+X-HM-Tid: 0a9beb55b3fa03a2kunmc924b17ad8fbd
 X-HM-MType: 10
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDTxlNVkhDHkMeHh1DTkMaGVYeHw5VEwETFhoSFy
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaQkNDVkhNQx8aTUJCSE5CTFYeHw5VEwETFhoSFy
 	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk9VTUlZV1kWGg8SFR0UWUFZT0tIVUpLSUJNS0pVSktLVUtZBg
 	++
 
 Hi,
 
-> no, as I checked these two boards having too many differences that
-> I don't think it's worth trying to create a shared dtsi file
+> > +	pcie_vcc3v3: regulator-pcie-vcc3v3 {
+> can you follow the same name scheme with k1-bananapi-f3.dts?
 
-I think some of them can be shared? If you think this is inappropriate,
-I will abandon this. By the way, it seems that the OrangePi R2S lacks
-publicly available schematics.
+Sorry, but I don't quite understand?
 
-Some parts are the same:
-- emmc
-- eeprom
-- ethernet
-- p1 pmic
-- combo phy
-- pdma / uart0
-- always-on regulator
-- pcie (excluding supply)
-- usb2/3 (excluding supply)
+From fixed-regulator.yaml:
+properties:
+  $nodename:
+    anyOf:
+      - description: Preferred name is 'regulator-[0-9]v[0-9]'
+        pattern: '^regulator(-[0-9]+v[0-9]+|-[0-9a-z-]+)?$'
+      - description: Any name allowed
+        deprecated: true
 
-Some parts are different:
-- hdmi
-- qspi
-- sdcard
-- gpio led
-- sdio wifi
-- audio codec
-- pcie supply
-- usb2/3 supply
-- gpio regulator
+Using 'regulator-' as a prefix is correct.
+There are also some commits that changed regulator nodenames. [1]
+
+As for the regulator-name, it should be consistent with the name in
+the schematics so that people can look it up between the two.
+The BPI-F3 also seems to have some names [2] that need improvement:
+
+vcc_4v     -> vcc4v0_sys
+USB30_HUB  -> vcc5v0_hub
+USB30_VBUS -> 5v_vbus
+vin-supply    vcc5v0_sys
+
+> also please add this regulator with explict consumer - pcie,
+> otherwise I see the patch isn't really useful
+
+I will update this in the next version.
+
+[1] https://github.com/torvalds/linux/commit/5c96e63301978f4657c9082c55a066763c8db7b1
+[2] https://drive.google.com/file/d/19iLJ5xnCB_oK8VeQjkPGjzAn39WYyylv/view?usp=sharing
 
 Thanks,
 Chukun
