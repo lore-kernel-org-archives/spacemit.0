@@ -1,90 +1,96 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155763D349E
-	for <spacemit@lists.linux.dev>; Thu, 22 Jan 2026 22:09:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B98B2DF6F4;
+	Fri, 23 Jan 2026 01:24:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769119773; cv=none; b=g7WBpBIiDEEsI0IBHLvurKtsjmfSxs6dXprh/xCy0E+3vOV2eWAvpQ8qlYQbCHHQMd6eeve5CXxCDNEWJKDfn2MQ55eLBYTNZgMPhdn+L0kjlecdq4Z3lG470in3esmLOF4KvV1OEdNuR1VBxWyQ0oy1pLuESYlyX3A8sxMUcTM=
+	t=1769131456; cv=none; b=uQqfOvXtEl7myfI+TCsb2MD04BBDl9gvhnVn+k0fQwawAd4XH1RwBrQntstxQ+PZrMrWOM1hFcooQY5YBC8HBtbjCh+F0sgNtL6QXzCRzmEwpDuuMD5d/tdf/S0V6/v39GZ6tBlarwwNJPpnKeXxK7Y+2fvRkGF+W9zumqQLrqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769119773; c=relaxed/simple;
-	bh=HPY1tNdFe79iOk8YjZfoajJADGJa3IUibRiQibIAAwU=;
+	s=arc-20240116; t=1769131456; c=relaxed/simple;
+	bh=/UCYbgTfvHqzeFToJOfvHYkGR2P9KrAkiNHmRMcwnsk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fmoAcccV11c/RjJu1nQN3nIbd1bKbk0f2+nq+3Ie3HPU5S9W0iDewf1qR2wt6f51oPHKfQhR6vniwoWBRvJDHbl+UVp5oMO4bW/UYPopwH8kJUOGVbKe4D6IW4C4FhU/Zgu3QIewedssmvyk1njSQBdJh+3D6moaG/xWAaE5wCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.27.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 33B77340F21;
-	Thu, 22 Jan 2026 22:09:22 +0000 (UTC)
-Date: Fri, 23 Jan 2026 06:09:18 +0800
-From: Yixun Lan <dlan@gentoo.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=e7hFuzUB34b1JU+7Ai053wuwy5CjDrvnYdgq3eLUjR4bbhkLNyT3bJMMYjrbBLcZKl0+I+wLTAkk2OPoX0GvtpMLeb7xHBgYtP1eFBqCoNYNOwyFgN/NYa490PrQvlNntYneUFhSJ3WxbdcOOMVigjSPhXFwXn8421+o4aQks7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tQFwwSK5; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tQFwwSK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3B3C116C6;
+	Fri, 23 Jan 2026 01:24:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769131455;
+	bh=/UCYbgTfvHqzeFToJOfvHYkGR2P9KrAkiNHmRMcwnsk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tQFwwSK5R5L4zJP22A9CMJaT1uLiAkkw/ScNxv+0agEIKGejgWBOWyfm/RjgHRrfo
+	 j1OWBZWTFTcQv8j/jJhhMPclAkZuHLPRfQZTf2+k2LqE5D6Mjxh47Qs5snlURgbzbE
+	 dH8jnsdt3RG0g4yC8eMuS78GrKRGWR4OzboBfLAgZ6RTm8aRjoSz49NoEFDy++e7XZ
+	 LDrui+/w4MvmAKHLNHg7MrGZRpkuwJleBBqmYBT0M6tADiEJmrO6AABMNuipcJmah9
+	 lYLwY8o2lxk2THQogWbVIl/hqP25PHt0ocPYKT4S8Dn080s0O8exsVS3dqwncCP/mS
+	 EyWQTfclzXJyg==
+Date: Fri, 23 Jan 2026 09:24:13 +0800
+From: Yixun Lan <dlan@kernel.org>
 To: Guodong Xu <guodong@riscstar.com>
-Cc: Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
-	Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, devicetree@vger.kernel.org
-Subject: Re: [PATCH 0/4] regulator: spacemit-p1: Fix voltage ranges and
- support board power tree
-Message-ID: <20260122220918-GYA69249@gentoo.org>
-References: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
- <20260122101122-GYA63789@gentoo.org>
- <77bc5a5f-666d-4beb-ab78-99a242d72a39@sirena.org.uk>
- <20260122121223-GYC63789@gentoo.org>
- <CAH1PCMaRqXHBZQLY02DY=C1rorMc2DZzzE2ziADofWoAQW8Mzg@mail.gmail.com>
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Haylen Chu <heylenay@4d2.org>, Alex Elder <elder@riscstar.com>,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/4] reset: spacemit: Add support for SpacemiT K3 SoC
+Message-ID: <20260123012413-GKA71138@kernel.org>
+References: <20260120-k3-reset-v3-0-effe87f4bdbe@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH1PCMaRqXHBZQLY02DY=C1rorMc2DZzzE2ziADofWoAQW8Mzg@mail.gmail.com>
+In-Reply-To: <20260120-k3-reset-v3-0-effe87f4bdbe@riscstar.com>
 
-Hi Guodong,
+Hi Philipp Zabel,
 
-On 22:55 Thu 22 Jan     , Guodong Xu wrote:
-> On Thu, Jan 22, 2026 at 8:12 PM Yixun Lan <dlan@gentoo.org> wrote:
-> >
-> > Hi Mark,
-> >
-> > On 11:27 Thu 22 Jan     , Mark Brown wrote:
-> > > On Thu, Jan 22, 2026 at 06:11:22PM +0800, Yixun Lan wrote:
-> > > > On 17:43 Thu 22 Jan     , Guodong Xu wrote:
-> > >
-> > > > > Patch 1, n_voltages is corrected to match hardware register widths, as the
-> > > > > previous values prevented regulators from reaching higher operational
-> > > > > voltages (e.g., 3.3V on LDOs).
-> > >
-> > > > This patch bring system-wide change that not only affect Bananapi F3..
-> > >
-> > > > Please also provide fix for other boards, I think you may not be able
-> > > > to test all boards, but make sure the patches are available, so people
-> > > > who interested can test, P.S I can help on milkv jupiter board
-> > >
-> > > Patch 1 looks like it should be OK as is?
-> > then with patch 3, and for other boards (milkv jupiter), should have similar
-> > DT fix as patch 4..
+On 19:10 Tue 20 Jan     , Guodong Xu wrote:
+> This series adds support for the reset controller found on the SpacemiT
+> K3 SoC.
 > 
-> There is no "spacemit,p1" node in other k1 boards (milkv jupiter).
+> The clock driver changes, which defined new auxiliary device name
+> patterns for reset on K1 and K3, have been applied to the clock tree.
+> To facilitate merging, Yixun Lan has created an immutable tag
+> (spacemit-clkrst-v6.20-3) within his pull request to the clock
+> subsystem [1]. Hence, the dependencies mentioned in v2 have now
+> been deblocked, making the reset driver ready to be applied, if it
+> gets approval from review.
 > 
-yes, there is one which accepted during this merge window, and will show up
-in v6.20, please check spacemit tree [1] or [2]
+> In this version (v3), the entire series has been rebased and tested
+> on top of the linux-next tag: next-20260119.
+> 
+> General informaiton about the series:
+> 
+> The K3 reset controller shares the same architecture as the K1. To
+> facilitate support for both and future SoCs, the existing K1 reset
+> driver is refactored with the following changes:
+> 
+> 1. The existing K1 driver is moved to a dedicated 'drivers/reset/spacemit/'
+>    directory.
+> 2. Common reset operations are extracted into reset-spacemit-common.{c,h}
+> 
+> The K3 driver is implemented using this common infrastructure.
+> 
+> Link: https://lore.kernel.org/linux-clk/20260114060410.3340540-1-yixun.lan@gmail.com/ [1]
+> 
 
-Link: https://github.com/spacemit-com/linux/tree/k1/dt-for-next [1]
-Link: https://lore.kernel.org/r/176618016976.76638.11221127377007758575.b4-ty@gentoo.org [2]
+Just want to ping this with my SpacemiT maintainer position, the reset
+driver is the last piece that I hope can be accepted during this merge
+window (target the v6.20 release), it would help other drivers since it
+is a fundamental dependency..
+
+The clock PR which is a dependency for reset has been pulled by Stephen[2],
+and the driver also has been tested for a while locally
+https://lore.kernel.org/r/176902257445.4027.5972559722832621691@lazor [2]
+
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 
 -- 
 Yixun Lan (dlan)
