@@ -1,84 +1,72 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A6E146588
-	for <spacemit@lists.linux.dev>; Sat, 24 Jan 2026 06:25:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BA71E885A;
+	Sat, 24 Jan 2026 17:36:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769235914; cv=none; b=BXocV7bfAQJfpMiA/vUaqYaxQ8kkU8tZjMU1SYyfCmIUtPBlgnXVykpeRckJUO/HvuvaMhQ0TOpAjM4OfmPbtKsWJbbGucqxowjvnGnPQfXVLemetZfZLgAa9qnRsX/YIeuux/qT5pJIsmFTql3A02hGgCkNgAB4UefkLYUkgU4=
+	t=1769276169; cv=none; b=ZtDeACNOF4ZqX4RnOh+MxFlJxN/IBYWhV6AfJcLlLTWp97w5P+/cnmi0Xxh4aY/gYb22juYB3A8nA1rrFqt/alZAmYw9J0PKS3/j5DPoZvlv4YJJ8et8KEN8m8yvqclgpOkqDr7HTqfFRxKkb7ZFUKLaBSOzFmN49VHqKP9Ksqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769235914; c=relaxed/simple;
-	bh=tuFmIXR4ptFr0iyeEET7uJNT++l+8Ych6dqgmhccRUo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SZRJ1jTtQxm+C+BrZnMosAqWdOfMmHhtQ88B3yNk9fUvfSEHWBYK6FY8Ra7rJbiHz3y3WtcwR7Mt21YgkfC7XIqLnxf++ExglExijQJhGR910Kov8t4oaiS2/KXkR9TAq0EryOAqZx1fHrH14ofwAmX3qkKPFh7Y0//HayadoyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.108] (unknown [123.118.222.47])
-	by APP-03 (Coremail) with SMTP id rQCowACHa+KhZXRphz94Bg--.7034S2;
-	Sat, 24 Jan 2026 14:24:34 +0800 (CST)
-Message-ID: <76bd53dd-0ca9-4358-a0b6-a49283e43c5f@iscas.ac.cn>
-Date: Sat, 24 Jan 2026 14:24:33 +0800
+	s=arc-20240116; t=1769276169; c=relaxed/simple;
+	bh=o5yjgO4zWgp3a2Tq1EIDiWeiDjKLYiy1AQcpHao5Pw4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PtM/VXOHDc+E/uWEu3ys/FoBeaIzWLgsoTSZ3tZPNE4A4bjfC226miNjyUtLogOewZt6NIdIdsqrMmVJbHldG6fuN+dPBjdtStlhyIh1Y4dHoIkXVjBjuYte+H1kjNzt4AMJFg7+Se5parDI/3RCLdfObQ6ZE5GNHAa25kIg13M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JiCRFFMS; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JiCRFFMS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B12DC116D0;
+	Sat, 24 Jan 2026 17:36:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769276169;
+	bh=o5yjgO4zWgp3a2Tq1EIDiWeiDjKLYiy1AQcpHao5Pw4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JiCRFFMS3cXmXkLl1+eFI/KX4pzapQG0Wgu4OFpFf2+1EAx0Aq9Clk83+L6j76K5Y
+	 wKg1ovP8I/8fKGq432w1ckjIj2g1mKoWUCGV4wicZjb6ld+aDXVeLg7+KtUoDqebCB
+	 NWjimzZ2Cg29eSaMQhZhL5OwH1cceR8Zh9LXQ4IbAw+OwwZKBQjMnEPp15FqfeioEz
+	 vZexLqHlRFMcEp/u7Za/ByNLqrLqJ4hj/+iicPRfz3I8GHnLdPJUuiebOCo/Gq4jFm
+	 BlIS64kDq8YOaY60aZ1Gachst3GUh+B7UqoUZRzaur8hTqjfz0xX6QC5CJTvZhpaUm
+	 6bIqEjk+l5osQ==
+From: Conor Dooley <conor@kernel.org>
+To: Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Conor Dooley <conor@kernel.org>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Conor Dooley <conor.dooley@microchip.com>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH] riscv: defconfig: spacemit: k3: enable clock support
+Date: Sat, 24 Jan 2026 17:35:56 +0000
+Message-ID: <20260124-doorbell-configure-1cabad91b176@spud>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260124-06-k3-clk-defconfig-v1-1-802674ef2762@kernel.org>
+References: <20260124-06-k3-clk-defconfig-v1-1-802674ef2762@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] regulator: spacemit-p1: Fix voltage ranges and
- support board power tree
-To: Guodong Xu <guodong@riscstar.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, devicetree@vger.kernel.org
-References: <20260124-spacemit-p1-v2-0-2c86b06694ba@riscstar.com>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20260124-spacemit-p1-v2-0-2c86b06694ba@riscstar.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=404; i=conor.dooley@microchip.com; h=from:subject:message-id; bh=RC1Lsv/701n1KFS/c9HlBZQi7uS9JT7LR+huqDel6F0=; b=owGbwMvMwCVWscWwfUFT0iXG02pJDJmlTH+8pra1PfT/wll3+9dcD937ce0589+vnHV/4ZfSe ddvxxae6ihlYRDjYpAVU2RJvN3XIrX+j8sO5563MHNYmUCGMHBxCsBEdtcwMlwQWRnx7YpLrLaf qljOnFWRN9wYDjU6+c4yuvc2XuZctRgjw7o/NSkmS9qPPL0v4D/915X5Rt2Jnl9nGu3YdcXhrVX VCxYA
+X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:rQCowACHa+KhZXRphz94Bg--.7034S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrtr13Jr47ZFW7Zr4rtFWUJwb_yoW3Gwb_A3
-	4Igas7Z3WkuFWa93Z7JFs0yF98Xa1jkFyavr1rJ348X34YkFykC3s2g3sIvr18Gr4UKr1D
-	Wr4kKr4UAFnxKjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbskYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I
-	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0
-	cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
-	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
-	c7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
-	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
-	14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
-	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
-	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
-	IFyTuYvjxU30PfDUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
+From: Conor Dooley <conor.dooley@microchip.com>
 
-On 1/24/26 08:20, Guodong Xu wrote:
-> [...]
->
-> Note: Patch 3 introduces a bisect breakage by transitioning to
-> pin-specific supply names. Probe failures will occur on existing boards
-> until Patch 4 updates the corresponding DTS file.
+On Sat, 24 Jan 2026 06:31:28 +0800, Yixun Lan wrote:
+> Enable the clock driver support for SpacemiT K3 SoC, configure it as
+> built-in by default, but users should be able to change it as kernel
+> module if needed.
+> 
+> 
 
-Ouch, that's not a bisect breakage, that's an *ABI breakage*. And AFAICT
-this is still not okay in 2026,
-see Documentation/devicetree/bindings/ABI.rst
+Applied to riscv-config-for-next, thanks!
 
-So the bindings would need to be changed to accept both the new and old way.
+[1/1] riscv: defconfig: spacemit: k3: enable clock support
+      https://git.kernel.org/conor/c/28edadaa03df
 
-Driver-wise, at a cursory look from someone not familiar with the
-regulator stuff, maybe we can make it compatible with old DTS by adding
-the new names as aliases ({devm_,}regulator_register_supply_alias?) as
-"vin" or "buck5", if we see the old vin-supply definitions?
-
+Thanks,
+Conor.
