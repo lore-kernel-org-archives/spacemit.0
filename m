@@ -1,168 +1,84 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A08E20A5E5
-	for <spacemit@lists.linux.dev>; Sat, 24 Jan 2026 04:29:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A6E146588
+	for <spacemit@lists.linux.dev>; Sat, 24 Jan 2026 06:25:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769228999; cv=none; b=JTlvF1NPHoxVzvrLqpoLHAYCQYcs5k6WHaP0PFs9/NFkGdL9Tae8tk1ko/c+2D6rgSAq6Tu6ZNfYLGP//zDm4QWh7Pnm+To7V+2DUI0koff2niGtM0e+IPNDM7tpuif20met++Fa0uFCEAU7NRyvHq+z2Ix+MWrV9Jcijo80PeI=
+	t=1769235914; cv=none; b=BXocV7bfAQJfpMiA/vUaqYaxQ8kkU8tZjMU1SYyfCmIUtPBlgnXVykpeRckJUO/HvuvaMhQ0TOpAjM4OfmPbtKsWJbbGucqxowjvnGnPQfXVLemetZfZLgAa9qnRsX/YIeuux/qT5pJIsmFTql3A02hGgCkNgAB4UefkLYUkgU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769228999; c=relaxed/simple;
-	bh=TK5ifKaeJlK8Nj0+jenANH0Qw4esuw3msNPslmL5uvo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FnbiEWYSzYJINQCYtkag2kO+hfnYjFGAch+8mj6U5hojTFqNYsh1SLiFwvX8K/F7sfprDhfIpjn+NeFNSteUkG8dCgG2K0jaCW4kqmj8jjDd6aK/QB29wyibQUrr7DhNrf1JI0QMR22agfnFoJxHkfddpIl9XS0q+Ca89kaj9Uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=Wu9FrSJ8; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="Wu9FrSJ8"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-34abc7da414so1612295a91.0
-        for <spacemit@lists.linux.dev>; Fri, 23 Jan 2026 20:29:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1769228997; x=1769833797; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9kHUxJVDnOE3Q1iGBfN9Iw/8AeCEWqX6h3aa/GV7h/g=;
-        b=Wu9FrSJ8LFaWTu2v64Y8v7SdRf7+N89VRHFpmdayXIl4WPjPFf4HK4peRM+4NzzAik
-         9YlSAIdaE4uWwtqX8KjJ3k899IpRI1TbXO2/Pb0YHSz0B0celej+knzwB8yeDJIXzPs8
-         ZiNGGpQ2QdU4Yg2tM3LJ3FgDKWq5lfdxJqGDuw04Y4uc5E/b8vfXMN1Fu7B009Xj1CKu
-         t60TjkvH7DmbP5h5Wj/Ns5+5t1ZNMr9NzbWPccFcu1AiimqY5jt64TYyoHqUiKwip+dH
-         N6v4RNvolkigALMDNhxvOnfuZi4QJ9A+seuIXtT3UePARx3qNLaL3MTY6wJAo7FsM8X3
-         kGpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769228997; x=1769833797;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9kHUxJVDnOE3Q1iGBfN9Iw/8AeCEWqX6h3aa/GV7h/g=;
-        b=krx5owagc12IWdjhzR12jqLH3u4z/dDMitmC3jwt3lwaPs4s6pXSVIEhy6cIFGw2zS
-         o8+Ewo47SqovgnuxJq4+JapVaD2JMdB74j4NCDJsXb45wFu6WW2QlAFCZ4vn/NOPYR1o
-         qXWUhmGp6/cqiB9v/h3vL8A9ylKRvD3hUxJHjl6JbmRcGU70nErPGipWSoqY+FSZBlbw
-         KC6DxKugY4z5TEzR+3I5TLyGKWe6bOsjdKISumfY12n7JJB/B/TeXVoxRJGpPuyugX1V
-         097wU+lPXPzUH6jGJjvAe6gjZgCuRE+upTvWd66SMvLpEtGf3Xxv/mOoHTnSuTRogyDO
-         plOw==
-X-Forwarded-Encrypted: i=1; AJvYcCUcxB6jHnxQ+VKIYhBgPO2xQ3Ql/uNsbeAaTUSCSRB7+lC2m8iK8jxwp0xMEaDUEgolxKrFNb1iKQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyPYf9ofExkOKaco8Js2q7ZXZijxKiWxOell1yTdm34p1+rfUkF
-	F3vpEAdgx93YZD8vvmoX8KZAwvHyRnNC5mvIIoU8iX2rR2kymaaigs8mkKPff7xGSGk=
-X-Gm-Gg: AZuq6aIT5NkfNyYNSrPgkXaJs8xPwsmbL9P03HICX0qULxUSHvqhxJyL9IqlyagkffR
-	H/qTk30pDbrglHq1K9geNa/NveZLX12TA6wE7ufcqG60kBHL/oW8B9ASXFfwnShg/9nbLJaLJqZ
-	8fNqnuJmfjG1HwVpZSpMOEl2Sjw99KS3MaG/zGPHHAkUnajz2YukavpMvOSFotuDB2Nn7xlSnsM
-	jhdXTJ3O5xLOibeUCkd9mxGzgf8wZRPgsJCZ21MdB4jEEwqK4xAGHVA03LGRso5RVGa04DKvRcY
-	tY/9CG4KYTS1c7x+M+2wtR4nlZVrxMh6G+6DKv9gAM+5PgTZT4T8JMpggtWyBAsfFxqO0VBii5A
-	tbsL0DuhcAJ5SvouhZKPqb5SEMrr/Kzd3ZPWcyReYvWm0q4bVhkJEe0FbIAIEt3pgq7zi+Ivd6T
-	I1wg2br2d7Ckt9i4HGGhCAsmspsura8v8=
-X-Received: by 2002:a17:90b:4c4b:b0:341:3ea2:b625 with SMTP id 98e67ed59e1d1-353670285a6mr4633408a91.12.1769228997559;
-        Fri, 23 Jan 2026 20:29:57 -0800 (PST)
-Received: from [127.0.1.1] ([2a12:a305:4::30fc])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8231871d51esm3469423b3a.38.2026.01.23.20.29.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jan 2026 20:29:57 -0800 (PST)
-From: Guodong Xu <guodong@riscstar.com>
-Date: Sat, 24 Jan 2026 08:20:19 +0800
-Subject: [PATCH v2 4/4] riscv: dts: spacemit: Update PMIC supply properties
- for BPI-F3 and Jupiter
+	s=arc-20240116; t=1769235914; c=relaxed/simple;
+	bh=tuFmIXR4ptFr0iyeEET7uJNT++l+8Ych6dqgmhccRUo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SZRJ1jTtQxm+C+BrZnMosAqWdOfMmHhtQ88B3yNk9fUvfSEHWBYK6FY8Ra7rJbiHz3y3WtcwR7Mt21YgkfC7XIqLnxf++ExglExijQJhGR910Kov8t4oaiS2/KXkR9TAq0EryOAqZx1fHrH14ofwAmX3qkKPFh7Y0//HayadoyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.108] (unknown [123.118.222.47])
+	by APP-03 (Coremail) with SMTP id rQCowACHa+KhZXRphz94Bg--.7034S2;
+	Sat, 24 Jan 2026 14:24:34 +0800 (CST)
+Message-ID: <76bd53dd-0ca9-4358-a0b6-a49283e43c5f@iscas.ac.cn>
+Date: Sat, 24 Jan 2026 14:24:33 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260124-spacemit-p1-v2-4-2c86b06694ba@riscstar.com>
-References: <20260124-spacemit-p1-v2-0-2c86b06694ba@riscstar.com>
-In-Reply-To: <20260124-spacemit-p1-v2-0-2c86b06694ba@riscstar.com>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>, 
- Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] regulator: spacemit-p1: Fix voltage ranges and
+ support board power tree
+To: Guodong Xu <guodong@riscstar.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
  Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, devicetree@vger.kernel.org, 
- Guodong Xu <guodong@riscstar.com>
-X-Mailer: b4 0.14.3
+Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, devicetree@vger.kernel.org
+References: <20260124-spacemit-p1-v2-0-2c86b06694ba@riscstar.com>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20260124-spacemit-p1-v2-0-2c86b06694ba@riscstar.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:rQCowACHa+KhZXRphz94Bg--.7034S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrtr13Jr47ZFW7Zr4rtFWUJwb_yoW3Gwb_A3
+	4Igas7Z3WkuFWa93Z7JFs0yF98Xa1jkFyavr1rJ348X34YkFykC3s2g3sIvr18Gr4UKr1D
+	Wr4kKr4UAFnxKjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbskYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I
+	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0
+	cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
+	c7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
+	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
+	14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
+	IFyTuYvjxU30PfDUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Update individual supply properties in pmic "spacemit,p1" node to specify
-the board's power tree topology for BananaPi F3 and Milk-V Jupiter.
 
-Previously these relationships were hardcoded in the driver; now they
-are explicitly defined in the devicetree per the updated binding
-document spacemit,p1.yaml.
+On 1/24/26 08:20, Guodong Xu wrote:
+> [...]
+>
+> Note: Patch 3 introduces a bisect breakage by transitioning to
+> pin-specific supply names. Probe failures will occur on existing boards
+> until Patch 4 updates the corresponding DTS file.
 
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
----
-v2: Added the pmic supply properties for K1 Milkv Jupiter.
-    Updated the commit message accordingly.
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   | 12 ++++++++++--
- arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 12 ++++++++++--
- 2 files changed, 20 insertions(+), 4 deletions(-)
+Ouch, that's not a bisect breakage, that's an *ABI breakage*. And AFAICT
+this is still not okay in 2026,
+see Documentation/devicetree/bindings/ABI.rst
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 5971605754b3..444c3b1e6f44 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -190,7 +190,15 @@ pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
- 		interrupts = <64>;
--		vin-supply = <&reg_vcc_4v>;
-+		vin1-supply = <&reg_vcc_4v>;
-+		vin2-supply = <&reg_vcc_4v>;
-+		vin3-supply = <&reg_vcc_4v>;
-+		vin4-supply = <&reg_vcc_4v>;
-+		vin5-supply = <&reg_vcc_4v>;
-+		vin6-supply = <&reg_vcc_4v>;
-+		aldoin-supply = <&reg_vcc_4v>;
-+		dldoin1-supply = <&buck5>;
-+		dldoin2-supply = <&buck5>;
- 
- 		regulators {
- 			buck1 {
-@@ -221,7 +229,7 @@ buck4 {
- 				regulator-always-on;
- 			};
- 
--			buck5 {
-+			buck5: buck5 {
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <3450000>;
- 				regulator-ramp-delay = <5000>;
-diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-index 800a112d5d70..e2702a781734 100644
---- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-@@ -100,7 +100,15 @@ pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
- 		interrupts = <64>;
--		vin-supply = <&reg_vcc_4v>;
-+		vin1-supply = <&reg_vcc_4v>;
-+		vin2-supply = <&reg_vcc_4v>;
-+		vin3-supply = <&reg_vcc_4v>;
-+		vin4-supply = <&reg_vcc_4v>;
-+		vin5-supply = <&reg_vcc_4v>;
-+		vin6-supply = <&reg_vcc_4v>;
-+		aldoin-supply = <&reg_vcc_4v>;
-+		dldoin1-supply = <&buck5>;
-+		dldoin2-supply = <&buck5>;
- 
- 		regulators {
- 			buck1 {
-@@ -131,7 +139,7 @@ buck4 {
- 				regulator-always-on;
- 			};
- 
--			buck5 {
-+			buck5: buck5 {
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <3450000>;
- 				regulator-ramp-delay = <5000>;
+So the bindings would need to be changed to accept both the new and old way.
 
--- 
-2.43.0
+Driver-wise, at a cursory look from someone not familiar with the
+regulator stuff, maybe we can make it compatible with old DTS by adding
+the new names as aliases ({devm_,}regulator_register_supply_alias?) as
+"vin" or "buck5", if we see the old vin-supply definitions?
 
