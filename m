@@ -1,24 +1,34 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA332DAFB5
-	for <spacemit@lists.linux.dev>; Tue, 27 Jan 2026 04:58:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E1F30B50D;
+	Tue, 27 Jan 2026 11:02:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769489914; cv=none; b=t+FuxdMnkKJfAiMoKPVbiJwCKzYM9ftFYtFuGjCpDhl1a/yL66PwBScsXJXMOnkNyY3LcmKvtLmr8kMV01p7N8XvgynNznjKaekl5makdQ82ItgG9SWR+7RVsPPNZBRDB74aONKas0RIiQla5suzA246bG7HSPfdOD9AaCK6GuM=
+	t=1769511768; cv=none; b=G7Xl5xGxvbDTmUpWVdPjMPnJxG2BIyxBAN54fBcTH4pxlFlVmnN9vYdnLI3+5K/+/56nGGu+VQixrWI7TcyLY2rVAC+oTyc9bKYYmDdbv7sVZx/rKMy0162ih8AyyIfjnxsSmmEd7yIdTBR9vnMi7BA3CbWYmRxxQT6Gm+JZL7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769489914; c=relaxed/simple;
-	bh=okxCCcedbmY5xwZRT+wMLgC1tghiQRHDyS5SR7nVRcQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GhuhJBVg1ea0IdLwrMc5hCuHHf/vfqQNjG6TfKXwljj1panVcav0JDfFP/kte1GrNQo4eGjj/WKsRVu3gaJUynXF+FYOHu1VHDQhptOXG2Kmsjs5ydq6AGzZ+mkZpwrJUShjXHvTWzDb2LICYAooByQO2iu+aDIfmrEUez25DtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [10.213.22.4] (unknown [210.73.43.101])
-	by APP-03 (Coremail) with SMTP id rQCowACXt97tRXhpztPqBg--.49550S2;
-	Tue, 27 Jan 2026 12:58:22 +0800 (CST)
-Message-ID: <9f424b4e-b83b-47a0-8637-3df25e504be7@iscas.ac.cn>
-Date: Tue, 27 Jan 2026 12:58:21 +0800
+	s=arc-20240116; t=1769511768; c=relaxed/simple;
+	bh=y1iQYc67DVhYxrB/p1GAQkjp9lfULkyMwv5pXHH1MeY=;
+	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To; b=ShqPFWpt+5+r1dlblnqHDTh+Df3/5KI1irBjKHE2Dr2pEjbp7sLwX/6bvRPSfA5sIrXFLFQ0jA/qGyEc2f9ji1EMCSg7domeVFg/pU9m+e2Qliv92nTUvheaFXHY36sM/egd1yffGalfRJSx7Csa1hXe3hVekfKehslY5gCYo74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a494yn1e; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a494yn1e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E952FC16AAE;
+	Tue, 27 Jan 2026 11:02:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769511768;
+	bh=y1iQYc67DVhYxrB/p1GAQkjp9lfULkyMwv5pXHH1MeY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=a494yn1earYfQdWtOeC6onTEwHjvoiyDrY14fuT7ksTyakta8da4aokFgA7IBkXxm
+	 0Od5vvfE8dRocCFPZJbZTWC+Fx5utr1a2mVBzED22IBREwvFFn2xx/T8F0tYAWmTOu
+	 sF30e3qIp3P3dF9+zSZBJKTx8rPwo03w9mE32KcwvYaLptde5SXhcTdoWpesHZ4bXE
+	 tMk3S71XjdsRD1gXBRhSepD4pjtfsUZjGC6LHfyhLNBf405Uk8XAI1vVl1QKwb0vJG
+	 yOh7tS9LQ/rQ5IABErR0zw2yNgk/hUUP27S2+lZpqTye7jgZSdBo/vsmVT9kmSIt7q
+	 mgQSsni2aonpA==
+Content-Type: multipart/mixed; boundary="------------KRL6Ja5OIm97DC6q0pB1trVX"
+Message-ID: <1c357d72-2a73-47d8-9ec7-56a2912a2e10@kernel.org>
+Date: Tue, 27 Jan 2026 12:02:38 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -26,73 +36,138 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net v2] net: spacemit: k1-emac: program frame size
- registers for jumbo frames
-To: Tomas Hlavacek <tmshlvck@gmail.com>, netdev@vger.kernel.org
-Cc: linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org,
- "David S . Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
- Yixun Lan <dlan@kernel.org>
-References: <20260126135919.77168-1-tmshlvck@gmail.com>
- <20260126171449.83288-1-tmshlvck@gmail.com>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20260126171449.83288-1-tmshlvck@gmail.com>
+Subject: Re: [PATCH net v3] net: spacemit: Check for netif_carrier_ok() in
+ emac_stats_update(): manual merge
+Content-Language: en-GB, fr-BE
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Chukun Pan <amadeus@jmu.edu.cn>,
+ Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+ netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Mark Brown <broonie@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Yixun Lan <dlan@gentoo.org>, Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+ Maxime Chevallier <maxime.chevallier@bootlin.com>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alexandre Ghiti <alex@ghiti.fr>,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+References: <20260123-k1-ethernet-clarify-stat-timeout-v3-1-93b9df627e87@iscas.ac.cn>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <20260123-k1-ethernet-clarify-stat-timeout-v3-1-93b9df627e87@iscas.ac.cn>
+
+This is a multi-part message in MIME format.
+--------------KRL6Ja5OIm97DC6q0pB1trVX
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowACXt97tRXhpztPqBg--.49550S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Cr15Cw1ruF43AF4kGrWDCFg_yoW8XF1rpa
-	1Y93sI9rnFqF4jkan7Aayjy3yrAay0qFyYkFZ5Z3yrZ34qkryagr98KrW3CryUCFW8GF4F
-	y34qvw13GFyDZw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_KF4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
-	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVW8JVWxJw
-	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l
-	c7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
-	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
-	14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
-	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
-	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
-	IFyTuYvjxUc-txDUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On 1/27/26 01:14, Tomas Hlavacek wrote:
-> The driver allows changing MTU up to 4K via emac_change_mtu() and
-> allocates appropriately sized DMA buffers, but it never programs the
-> MAC_MAXIMUM_FRAME_SIZE and MAC_RECEIVE_JABBER_SIZE registers.
->
-> This causes the MAC hardware to reject frames larger than the default
-> 1518 bytes, even when larger buffers are allocated. Frames exceeding
-> the default size trigger jabber errors and are discarded.
->
-> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Tomas Hlavacek <tmshlvck@gmail.com>
+Hi Vivian,
+
++cc Mark Brown
+
+On 23/01/2026 04:52, Vivian Wang wrote:
+> Some PHYs stop the refclk for power saving, usually while link down.
+> This causes reading stats to time out.
+> 
+> Therefore, in emac_stats_update(), also don't update and reschedule if
+> !netif_carrier_ok(). But that means we could be missing later updates if
+> the link comes back up, so also reschedule when link up is detected in
+> emac_adjust_link().
+> 
+> While we're at it, improve the comments and error message prints around
+> this to reflect the better understanding of how this could happen.
+> Hopefully if this happens again on new hardware, these comments will
+> direct towards a solution.
+
+(...)
+
 > ---
-> v2: Added Fixes tag and Cc stable.
->
->  drivers/net/ethernet/spacemit/k1_emac.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-> index 220eb5ce7583..31b1bdb2827e 100644
-> --- a/drivers/net/ethernet/spacemit/k1_emac.c
-> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
-> @@ -228,6 +228,12 @@ static void emac_init_hw(struct emac_priv *priv)
->  		DEFAULT_TX_THRESHOLD);
->  	emac_wr(priv, MAC_RECEIVE_PACKET_START_THRESHOLD, DEFAULT_RX_THRESHOLD);
->  
-> +	/* Set maximum frame size and jabber size based on configured buffer
-> +	 * size.
-> +	 */
-> +	emac_wr(priv, MAC_MAXIMUM_FRAME_SIZE, priv->dma_buf_sz);
-> +	emac_wr(priv, MAC_RECEIVE_JABBER_SIZE, priv->dma_buf_sz);
-> +
+> This has a conflict in context lines in emac_adjust_link() with current
+> net-next, which will show up when pulling that for next rc1. Just remove
+> "emac_set_fc_autoneg(priv);".
 
-Oh and... maybe these should be priv->ndev->mtu + ETH_HLEN + ETH_FCS_LEN?
+Thank you for this note, this was useful! Just in case it can be useful
+for linux-next and Net maintainers, I confirm the conflict when merging
+'net' in 'net-next' due to this patch applied in 'net':
 
+  2c84959167d6 ("net: spacemit: Check for netif_carrier_ok() in
+emac_stats_update()")
+
+and this one from 'net-next':
+
+  f66086798f91 ("net: spacemit: Remove broken flow control support")
+
+The resolution is attached to this email, and rerere cache is available
+there:
+
+ https://github.com/multipath-tcp/mptcp-upstream-rr-cache/commit/526c74b
+
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
+
+--------------KRL6Ja5OIm97DC6q0pB1trVX
+Content-Type: text/x-patch; charset=UTF-8;
+ name="7daa0aa370b7e9326e11e06fdb247227773bba0a.patch"
+Content-Disposition: attachment;
+ filename="7daa0aa370b7e9326e11e06fdb247227773bba0a.patch"
+Content-Transfer-Encoding: base64
+
+ZGlmZiAtLWNjIGRyaXZlcnMvbmV0L2V0aGVybmV0L3NwYWNlbWl0L2sxX2VtYWMuYwppbmRl
+eCBjODVkYzc0MmM0MDQsODhlOTQyNGQyZDUxLi4yM2I2ZjE1MzFlMGMKLS0tIGEvZHJpdmVy
+cy9uZXQvZXRoZXJuZXQvc3BhY2VtaXQvazFfZW1hYy5jCisrKyBiL2RyaXZlcnMvbmV0L2V0
+aGVybmV0L3NwYWNlbWl0L2sxX2VtYWMuYwpAQEAgLTE1MzEsNiAtMTY0OCwxNCArMTU0NSwx
+MiBAQEAgc3RhdGljIHZvaWQgZW1hY19hZGp1c3RfbGluayhzdHJ1Y3QgbmV0CiAgCQl9CiAg
+CiAgCQllbWFjX3dyKHByaXYsIE1BQ19HTE9CQUxfQ09OVFJPTCwgY3RybCk7CisgCiAtCQll
+bWFjX3NldF9mY19hdXRvbmVnKHByaXYpOwogLQorIAkJLyoKKyAJCSAqIFJlc2NoZWR1bGUg
+c3RhdHMgdXBkYXRlcyBub3cgdGhhdCBsaW5rIGlzIHVwLiBTZWUgY29tbWVudHMgaW4KKyAJ
+CSAqIGVtYWNfc3RhdHNfdXBkYXRlKCkuCisgCQkgKi8KKyAJCW1vZF90aW1lcigmcHJpdi0+
+c3RhdHNfdGltZXIsIGppZmZpZXMpOwogIAl9CiAgCiAgCXBoeV9wcmludF9zdGF0dXMocGh5
+ZGV2KTsK
+
+--------------KRL6Ja5OIm97DC6q0pB1trVX--
