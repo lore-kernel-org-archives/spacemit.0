@@ -1,93 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D882FC86B;
-	Mon, 26 Jan 2026 22:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757BF1DE885
+	for <spacemit@lists.linux.dev>; Tue, 27 Jan 2026 02:05:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769465425; cv=none; b=O6ahHcwsJTs7I4MeNBkt+18VcGkMOxD1F1TPcquyXtHiPNx4y1GzI+EqWP3K/XqJsQnwkjEdnxOCkFNADBDYpgkrLqDnscsKtyRkrvy+w/WRvSBamIhNA07Ac7+0GO6Isn3JIy51jFCUC8EN+mlUWCwYHyKEz4NgiCe5zf38rig=
+	t=1769479540; cv=none; b=e/irMRoe9djlNHbL5vEbHUGn5zK3UVEfRRNisqZXZIgjZ7ylIobJUYu32Hcmt9oOCZ/D5d28AWmTyjuBMcp06uJDIK9/gL6fMDLbDMktgtoMQmoldQJxfzRAjiXdtS0QcG9FDNIklqHqX5V3RnRksMBCJejDe6AJTdkj/8bIWko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769465425; c=relaxed/simple;
-	bh=e+VY0YiRm9WdQtrKQ6RfFsmWCSJBN/5QaCkWJ9Ungeo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=b1837LnUtaEvr3TWUUe2I9Ytd9HRhU211/cbYaYLTBOdrV9n+6gyUJmWs0qYXa3ZFSRR0znOy4SDcmUx+RhCe6jWaSo46m6zyY4kAmKx6ehbFapM2J9OHiYjHtdIabSlwbrfM7c6S/0vZdKXSRdfGCqWepoGQ4MGq0fH3xOLqlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YTzAxIhk; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YTzAxIhk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64C9C116C6;
-	Mon, 26 Jan 2026 22:10:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769465425;
-	bh=e+VY0YiRm9WdQtrKQ6RfFsmWCSJBN/5QaCkWJ9Ungeo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=YTzAxIhk/pSa4n+8h0Gf3q+yExDMsiza3pkly3tahdJJHRSJd35Q5TYaFXlAM1CXY
-	 OTjU8wgz9qT5K9cWqLgJ1uUQNdbe/RBLE+AYBFRGmhBCFqwBgkqyrpidQYaxLofW1y
-	 +wTgXTx6PDWZSYkHsp95py0UlAMwejEaEAu0pLKb3LKbXAoJjd3GUZ9cWXKlqCXziO
-	 ih2kDfXP5UKpLS7HjiyjaZxADKmMSPpZ6+XK17taEH0M61guoBpIxs3MBvs4FLv50l
-	 qYi4Xjvb4ocp2Py7dmdxfCAG61NW+6ENPQVpTjNm8NL1DW2XlMYkZe02S6Zmarpk3X
-	 vfJDnvk8MylJw==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Yixun Lan <dlan@gentoo.org>, 
- Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
- Guodong Xu <guodong@riscstar.com>
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, devicetree@vger.kernel.org
-In-Reply-To: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
-References: <20260122-spacemit-p1-v1-0-309be27fbff9@riscstar.com>
-Subject: Re: (subset) [PATCH 0/4] regulator: spacemit-p1: Fix voltage
- ranges and support board power tree
-Message-Id: <176946542165.977042.9433935491443420344.b4-ty@kernel.org>
-Date: Mon, 26 Jan 2026 22:10:21 +0000
+	s=arc-20240116; t=1769479540; c=relaxed/simple;
+	bh=jtCdFaeN7M/y+/pP+4rZ2c4E1Jn0waySsAtKkf43YI4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gBMeRFDTN1aDAkEnDFfP8mgDDLK0MvkGk7EZoFnGb8Ylbd9JWsltBVxJVwSmDGGaIy2ypLErn1zEwennVdFbzUoU9N0zlyz0BMsIbZpzmLOkBpp3tm99juhKV3tFJ7VkZYkCbaMW8OfqnX5cIyvpNvYkyd1Mz/krYJp5jpJeTDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.27.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id BFB16335D2F;
+	Tue, 27 Jan 2026 02:05:36 +0000 (UTC)
+Date: Tue, 27 Jan 2026 10:05:26 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Tomas Hlavacek <tmshlvck@gmail.com>
+Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org, "David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>, Yixun Lan <dlan@kernel.org>,
+	Vivian Wang <wangruikang@iscas.ac.cn>
+Subject: Re: [PATCH net v2] net: spacemit: k1-emac: program frame size
+ registers for jumbo frames
+Message-ID: <20260127020526-GYA88966@gentoo.org>
+References: <20260126135919.77168-1-tmshlvck@gmail.com>
+ <20260126171449.83288-1-tmshlvck@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-47773
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260126171449.83288-1-tmshlvck@gmail.com>
 
-On Thu, 22 Jan 2026 17:43:41 +0800, Guodong Xu wrote:
-> This series fixes hardware voltage constraints and enables flexible power
-> tree configurations for the SpacemiT P1 PMIC.
+Hi Tomas,
+
+On 18:14 Mon 26 Jan     , Tomas Hlavacek wrote:
+> The driver allows changing MTU up to 4K via emac_change_mtu() and
+> allocates appropriately sized DMA buffers, but it never programs the
+> MAC_MAXIMUM_FRAME_SIZE and MAC_RECEIVE_JABBER_SIZE registers.
 > 
-> Patch 1, n_voltages is corrected to match hardware register widths, as the
-> previous values prevented regulators from reaching higher operational
-> voltages (e.g., 3.3V on LDOs).
+> This causes the MAC hardware to reject frames larger than the default
+> 1518 bytes, even when larger buffers are allocated. Frames exceeding
+> the default size trigger jabber errors and are discarded.
 > 
-> [...]
+> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Tomas Hlavacek <tmshlvck@gmail.com>
+> ---
+> v2: Added Fixes tag and Cc stable.
+> 
+>  drivers/net/ethernet/spacemit/k1_emac.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
+> index 220eb5ce7583..31b1bdb2827e 100644
+> --- a/drivers/net/ethernet/spacemit/k1_emac.c
+> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
+> @@ -228,6 +228,12 @@ static void emac_init_hw(struct emac_priv *priv)
+>  		DEFAULT_TX_THRESHOLD);
+>  	emac_wr(priv, MAC_RECEIVE_PACKET_START_THRESHOLD, DEFAULT_RX_THRESHOLD);
+>  
+> +	/* Set maximum frame size and jabber size based on configured buffer
+> +	 * size.
+> +	 */
+> +	emac_wr(priv, MAC_MAXIMUM_FRAME_SIZE, priv->dma_buf_sz);
+> +	emac_wr(priv, MAC_RECEIVE_JABBER_SIZE, priv->dma_buf_sz);
+> +
+I'm no expert here, but just notice there is additional MAC_TRANSMIT_JABBER_SIZE
+register which is no need to set? or is the problem on receive side only?
 
-Applied to
+>  	/* Configure flow control (enabled in emac_adjust_link() later) */
+>  	emac_set_mac_addr_reg(priv, fc_dest_addr, MAC_FC_SOURCE_ADDRESS_HIGH);
+>  	emac_wr(priv, MAC_FC_PAUSE_HIGH_THRESHOLD, DEFAULT_FC_FIFO_HIGH);
+> -- 
+> 2.52.0
+> 
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-
-Thanks!
-
-[1/4] regulator: spacemit-p1: Fix n_voltages for BUCK and LDO regulators
-      commit: 41399c5d476156635c9a58de870d39318e22fa09
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+-- 
+Yixun Lan (dlan)
