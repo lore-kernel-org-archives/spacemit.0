@@ -1,49 +1,96 @@
-Received: from smtp-usa2.onexmail.com (smtp-usa2.onexmail.com [35.173.142.173])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6C13469FF
-	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 09:34:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.173.142.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329A0327C0F
+	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 09:41:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769592853; cv=none; b=PS9/cEVl2ZSDpphJMMx3fWJcNEWmrCQjJY0elcwutEL9Ps/QAKILTHsBR3SKLVaVleZ7CxlaF395cETf8J4y0UPz9s/MmZjuMcBFTWvuno0gkEWpSDZ0W1AJ/RjtC1iAOZJfHZdJAETgQjG7n5AAgspXMYY14ymR+YEYsvnxXZY=
+	t=1769593315; cv=none; b=g0+7h5UgetHFwuN0CaB4i05rfXVsKWvnKmMGX7xJ+92n/K47fJg51swO1guwDETAPffulJGvwOFlzqjGVSz0qxC0H4JekMyi5WdEIuVLjekRky/Ro5/jYQI34al66hHYXVCLXePd8MP9PdLTJ+LqJkqk6YpevNC48jKjg1DSSUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769592853; c=relaxed/simple;
-	bh=sVnj1C4avZi5lob/WW/jEcsuTEgkILKAFZaa3udSirs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mKPfb0inb8AOswRqHcbhcHJaPICwHytPqC4cQnzRnCi+dAD92VIQk9uSa9hy4YOhgAd0PzOO2YOln6PddLlLj4QlgO73oE8QvZ60UBv01/M1l6PST1upJZWaglNbXluduw+Wonrf5lYkrcO2wDwcLhAWLkZYe1ZZRVGA216CWi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ZUGWTyM8; arc=none smtp.client-ip=35.173.142.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1769593315; c=relaxed/simple;
+	bh=OFVKmxOPOSe4dwXY9+Q/mahXqXR9bxpSOVH3z95Rrkw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dtT1huvLHVpbnQ7pyXpL9JQNOW+pxJjT9GKgLeiBaA3qokCwDdfOSaO3E6OCqwcT/E1yXTUWBYV8Q3Ijqa7hT8eCJBPaKMctTdbGFhDJF8nEsmxYjy0oAJsfpU7XLjsWaHXvpHfWtDvs6qeSqct4XzEwh25wQRp/d901HrrQKJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gH+SyO1e; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SHd7nVBS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ZUGWTyM8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1769592767;
-	bh=YqgQ7XTWnwiLqJRqmob5IA4FpJiapKMV3EHIEwmKLvk=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=ZUGWTyM8Me+1zINdg/FP/yCjoNE8+anpE72BrxAcA8kyh9YZh75xWRTWmrXGHfDDi
-	 hVJiGgtySfMegzlGyVabx4Re67DuHIDMvmwepRsbBG7y9UfdfNWLkCqRF+oD4AoQzy
-	 mL6YDYSv75/9Rsx+wQD1C3KoEd8TP5kPkg9a8Gd8=
-X-QQ-mid: zesmtpgz6t1769592759t9b968819
-X-QQ-Originating-IP: wSV2IFKiia32OYtniGlD6DAAqZvlSdHLzBCZK1/Wp0o=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 28 Jan 2026 17:32:37 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 319744168602380696
-EX-QQ-RecipientCnt: 11
-Date: Wed, 28 Jan 2026 17:32:37 +0800
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Vivian Wang <wangruikang@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Alex Elder <elder@riscstar.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, linux-gpio@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gH+SyO1e";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SHd7nVBS"
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S929Nu811716
+	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 09:41:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	85LiEtbp+zi+7uf3UPx9/LEQW4aYkFFdpd5AsmHIyDE=; b=gH+SyO1eAPIg1Dys
+	TTYgivMQJlYaU5DhyZ3kyCdqalNDxSAgvF7rdN84KxOIekidaPKJPPTZtXBaqNUY
+	4TawC+o2SMTZ68uJg28jX6CjFJtrn9PZNk7JfL6VJ8a3k+EYbjum7ibGgkuqVtBz
+	vHWkeRE7tNKOOkqdsIYI2QihIEIQoF/msdFfsA4PvwQ7wS4U56QBnapHLvP5YdrR
+	B4yCiQO5jOnluox9IQNSpXXw5z1hnrpVWPdbA5XICsPRqDm0zb1jLA0BNDv0fDWP
+	0vGmoEywqCUG60E0wECqHYS5NRzMRcu/uxkEfrH1+Hs/+hkt7Z3S4zQ3ygD4qA7P
+	HSZTKw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4by6qbhvrd-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 09:41:53 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c5e166fb75so1708579485a.0
+        for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 01:41:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1769593312; x=1770198112; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=85LiEtbp+zi+7uf3UPx9/LEQW4aYkFFdpd5AsmHIyDE=;
+        b=SHd7nVBSK51EIqyFNMfOa2IfIFotTD9Wu1YAWAviv11b3ychKm664lnOdjLthdpy2d
+         FZ4711vJHe9IdebCbkPu8vSab/KhIUhuGixJiD6dcdUjMK4KGPpmLnQwpBjMmXisc9VG
+         93L2UDUCN48fOSbnoOrMd0MpLVUp6VIcKyhPr+xhcP81PoHraRUPhbPf2ctg46ylYoqg
+         U9y7AlSAXjIaScYMWnzSdns9Ij+CsgB8SN9nCM58NG6ficNd7w7b5LviuyeosUevevw8
+         4tQ40qbQ8u2Ndp37AID/BMmYu8W/WT4C1QcHnZB2FBztkFFwKLNpzXyMBpKsHJuVUDY9
+         eyOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769593312; x=1770198112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=85LiEtbp+zi+7uf3UPx9/LEQW4aYkFFdpd5AsmHIyDE=;
+        b=mWGO8OuSfQJJngjrnySUAkc74cnqYU6Wt+2BAcP+23vMgCKFCWGbIToQTBV7jFrllT
+         D9fYWsVU1AotU31y4ct8eyk+OT+B6ZYi1Jo9Tc0i9KL1YzHgV3ndopmKMFgGfe5mQtbo
+         sDnvFoA3IPuxGjXhORfRl6omRn34Rc33hQkY/H7v5lp3gRqWXaB1qP/CeEcvpyCJwJA5
+         oIGcfz+b7yCHo+WP4WWLyIlD56m3bpZvlanRXBYzFQSyYxByiko4MwcTRzy3urYT/PN+
+         FxsOmkCkis6fSh+QyTE+5ZDVWgxSgZEhMdn8+I17qdnwwRw9MAYa7FmVVBF3DSUe0NFS
+         gWNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWhKcoIIqEmzkFylETd85HuIv9WwnAEJSa2pc35ksyr03KYIh2Ja+UWwfep2bJgKvODuM6umeWGsQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx5qWbUhYkSbePGWkjdYt2LCSFeESTYLycKzsnzPUc8ZhI+nOKu
+	3rKP+wJOrRoPg6Ozeeds6OYskcBn+uLbA6R933RKhuqo/KTq5wqfTRZk9h6p3fpFXj3wN6SCbK5
+	BG7IrmIzxYmrWwdqUQBwgwvTy4EZX29Wm6KglFZWYpFoDy66tQzRq5tiBJnvgqw==
+X-Gm-Gg: AZuq6aI/XJDiVwiFji0nlgQIuor5Q8tjHKNVpEM7BPHSXf8FVqOJeoWEVZcFLPxOKFr
+	/tG5YJJFDDr7DsyViPQ0wsawOQcIRT7YG+VAyTa/7FXYj0hx4HmA10IA8KvmFLIL3wGK/zCll8G
+	FiWexTDZMc3ttUl5lNQruGixbv7nVT5nft8HUW3+38wkIfUDYgucqUIGfYJxm4aau5YURaxpe3Q
+	oFLy3RRxbw9cmeO8q78D3U1lOqKjRNxY5mNbEVRBWTv6XasR8knkLlQY50MXmwh12FuBlw5lmo9
+	yhFlVTg7/r2xA5r7EqR290/FVwcN2Xu2Te2tT58vh9UxzOl4x/ejdan03/V7a+nUnoCBpE8WkGv
+	TaEpANZipDynYiB5leRthInOUh7REIVuDPjQUJPc=
+X-Received: by 2002:a05:620a:2588:b0:8c6:a734:2c00 with SMTP id af79cd13be357-8c70b82272amr555901385a.15.1769593312449;
+        Wed, 28 Jan 2026 01:41:52 -0800 (PST)
+X-Received: by 2002:a05:620a:2588:b0:8c6:a734:2c00 with SMTP id af79cd13be357-8c70b82272amr555899785a.15.1769593312025;
+        Wed, 28 Jan 2026 01:41:52 -0800 (PST)
+Received: from brgl-qcom.home ([2a01:cb1d:dc:7e00:6cbc:dfde:e62d:3195])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e131cfc9sm5410095f8f.21.2026.01.28.01.41.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Jan 2026 01:41:51 -0800 (PST)
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+To: Linus Walleij <linusw@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>,
+        Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>,
+        Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, linux-gpio@vger.kernel.org,
+        linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+        linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] gpio: spacemit-k1: Use PDR for pin direction, not SDR/CDR
-Message-ID: <85EFBB88D70FB64F+aXnXtS35RG_U6MeC@kernel.org>
+Date: Wed, 28 Jan 2026 10:41:49 +0100
+Message-ID: <176959330536.12707.18374071693115296433.b4-ty@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260127-gpio-spacemit-k1-pdr-v1-1-bb868a517dbc@iscas.ac.cn>
 References: <20260127-gpio-spacemit-k1-pdr-v1-1-bb868a517dbc@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
@@ -51,32 +98,35 @@ List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260127-gpio-spacemit-k1-pdr-v1-1-bb868a517dbc@iscas.ac.cn>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MKzYG8XJzx27luHda+8viI9Zbcs2SNIwmBWR31bLVy7d4Whz+EeimKQt
-	21JWgfTV5aWJfNYrs5hIzjlbfdFAJNmO+kKSWq3c60VgLJHpKNvj/jFVe6kftITNL9bkrAh
-	031kqQQnf5Vhxi3kBExh4upNU2DFx1WIeRKDwlrqEIz8QlygV68APMK8C2OC0UAfgxNWwbO
-	sPp6MqDF/InNLzc++z/7gNJV/aeqij3+f7Y0rDCiahKEr8im+QQRY0tO5VUt6dVwl0ecErR
-	KWHwpQ5W/StWgR9OycHFys4kgXX334Rmwl/iBzRkwcLCUbC62DchViSXVJMRFe8x3nRxgbW
-	DyQAe2Us1zdyIAiLRDwvR7C7yn+i/xqXVjsSLkf1oMuJixziWdq2WxDQ9ZfK29DVVEvtswP
-	/jxjeXwtGtSO3yk3rnPA/MXjPm5CtRz8PAHpLm5xU9qyj4NG/gzQVV0JT7Aa2AEJPdely5q
-	L1HcvJjxfT05s7vTJVC+uQwG/tXx1SGd1K87xneFERYV1C0xHcnCcmphRRas8DZ881gQ7WP
-	5YqU8bWc1CNJwdHlFDqmLwwTnNIKiVyHhOJ+jq8jWYJqPogcdGQU54tl0A+mYt+APwZrgfp
-	zgLRjS5wug7HeWw3DIFf5EVgWECmQ4LVLqSK5X7+dwGlHMLu7FYFz+KVNyfIHGR+CzzhuFs
-	nH/8GrZ+hPgKqUe/n5VyVWzbyaYYGc486b+YpcopQYW6wlBDHVz0wl2oFSjQZcgdcYWd5rj
-	lxW3ze0k+PCUwGoMw1Rs9uzEYEKqmTj7j4HiSI3SOBLKqROidZRfe81zMtFOBBDouxSfgfv
-	LcdZFmGEEr6p8fAZKOJyGuofmTwVlvsVp8yhGJoaZMATVAwWbHdNrNpaywjAlUbN1szajyq
-	jcHthvKySi5BJnEHuqBvAYTYYBYTzq4WQlHasIQBZ10SX0BDH/91Qd7Tu1gw8NuiTKMCkJ+
-	km3W2kirXQ4MM+htGZRNlYwQya+JooAGecFIQYluhTuImB988QCv65howFD81CQwOKlJsda
-	YX7Tzhf2G9oUIV5+/UX8Hwt8RKUuSQXLQkAKl7Zenog5UTi3vdWYnzwEvX1JNbE3owAbzLj
-	3n/Bb4AsiRB
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: Xq81WsiRBrcAw_xbQ0Q4XvFL0fZxoutj
+X-Authority-Analysis: v=2.4 cv=Z4Dh3XRA c=1 sm=1 tr=0 ts=6979d9e1 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gDi01W8oxqZMKvcAlA8A:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: Xq81WsiRBrcAw_xbQ0Q4XvFL0fZxoutj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA3NyBTYWx0ZWRfX/FWslbV1MYAF
+ 5iBn34wGsOQjdUvkqUsTD6XB/1zxsILsJLyA8e9IS2OprQ6CXU5QuWHwjuJ4lo04bqJ+IHuxY0d
+ ITEU0nc+3wJ6wbVUdK7b5KFzJKRHfKLdMdSS59OAwmyij13EW828y/a4Ei3P7S3+AUxwxsC6umP
+ ivZrvHVNPFoCM8OY9jb9eRZRfPYRbstf+1HrW1MxuktxX+MDZBhrxXs88gshgOT4srSkRGySicE
+ 5lcCf5CMIEPFvRhq4OadZOFLguYqkrU/gr++gAdcGtMae4yco1kDBePR0+yKGWPk3mrtYEX/NyR
+ nvFFNa2hmnXeMTOFQUioH+k2uMhoUMVGfSPW/2k4gcQRz7B4gPcrl1NnFLsazXr0vqIE+CA7+g0
+ yXdZOsndBfCqcn9U3l//oL/uxFhmZq6alR/tJmY3ufPbKoQ547gPccxJm/dCdffgpFOYcZnM1IY
+ zgEaLOt5gNDFjph1QKw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-28_02,2026-01-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601280077
 
-On Tue, Jan 27, 2026 at 10:58:49AM +0800, Vivian Wang wrote:
+
+On Tue, 27 Jan 2026 10:58:49 +0800, Vivian Wang wrote:
 > On the SpacemiT GPIO controller, the direction control register PDR is
 > readable and writable [1]. Therefore, implement direction control by
 > using PDR as dirout, and don't mark it as unreadable.
@@ -87,19 +137,13 @@ On Tue, Jan 27, 2026 at 10:58:49AM +0800, Vivian Wang wrote:
 > value with the corresponding bits set to SDR (set as output) or to CDR
 > (set as input). However, gpio-mmio does not actually handle this.
 > 
-> Using only PDR as dirout to match the expectations of gpio-mmio. This
-> also allows us to avoid clobbering potentially important GPIO direction
-> configurations set by pre-Linux boot stages.
-> 
-> Found while trying to add PCIe support to OrangePi RV2, where the
-> regulator (controlled by GPIO 116) turns off on boot while some other
-> GPIO pin in the same bank is touched, which is not desirable.
-> 
-> Link: https://developer.spacemit.com/documentation?token=Rn9Kw3iFHirAMgkIpTAcV2Arnkf#18.4-gpio # [1]
-> Fixes: d00553240ef8 ("gpio: spacemit: add support for K1 SoC")
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-> ---
-> Tested on K1 only - help with K3 testing would be appreciated.
-Confirmed that PDR is also R/W on K3. Thanks!
+> [...]
 
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Applied, thanks!
+
+[1/1] gpio: spacemit-k1: Use PDR for pin direction, not SDR/CDR
+      https://git.kernel.org/brgl/c/aa7e37fd770bafaaf856ab77735296955b93e377
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
