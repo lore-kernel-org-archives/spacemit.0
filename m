@@ -1,66 +1,66 @@
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E545353ED2
-	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 13:29:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2C3354AD4
+	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 13:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769606943; cv=none; b=pBtpRiUktM/fvLsTpS1V/U3DYFyA7ObW/H6CEHmxMuXgd8Tq+D8dFnWb7Pdz/Lqgo/v6CZPDWju7TLgSXDutLENvqgJqkjygGXF4DZJfKNGi362x4pNRLUkl92/mg3JtGEePoZ5QZ2MKmwhgJdk0N6uPMEnOgKEbxjbC+9U4I7A=
+	t=1769606950; cv=none; b=HWCcwxuXILxLYeZ65XvA3j1rWNAEKKHd2jFEFdUrQZZdZeR3EgM0cyggSbtuy0zMqkEwDZa4B8MGNJQtpHDDSVvBl42VG7nEqE9JaC4fYtL/t4Jlhs6Ki3OYdwBwiblDIhsxUrkk94xucmUZ3ykdJE7RhXJrYBMKbJoJ8Rg2QIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769606943; c=relaxed/simple;
-	bh=/SRbLJIOBCp6SkKGBSg0cd0VrfNVnSQQ5K/0eCQIYng=;
+	s=arc-20240116; t=1769606950; c=relaxed/simple;
+	bh=AwkTB+Y8vc2jpSus7qu1cjCswZPdr3ovkHfH+PLJ0xE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UpxTgmdR14OBnZKXHqxuQMtNjXLjE4QvYv2LdgHrXplIMgIrhmj9dIZHNMGnicr3S6CwF6PG1I0rTi0NhzCip8gE4nnk5pyVzdTJdZyOE7b3Jqgwni8Bpp2h9Z3r004SeslVPJF0alnD5w9wEcfbmYTaYqp/zq99vZVTth/3SG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=WphW96iu; arc=none smtp.client-ip=209.85.161.49
+	 In-Reply-To:Content-Type; b=cIvAI++Krn8xATL0ofpXCbfRQNYQYvCr6i1tMUF8F+TwQfy1bzyF7u+4RK/fWlI7Ka9sEEIeKsXWyZ03VD43dTJBkdODp7UfYzRUCxp/In4Jnyg2lJxo/l63zigiLBjCv/VBjMNtoE7/2zj3GLchzBHTIrHF/cQieVAl8b742Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=zQoCfZIQ; arc=none smtp.client-ip=209.85.210.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="WphW96iu"
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-6611cab8ca3so2342876eaf.3
-        for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 05:29:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="zQoCfZIQ"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7cfd0f349c4so3961420a34.1
+        for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 05:29:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1769606940; x=1770211740; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1769606948; x=1770211748; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=O3+eV0m5YOcp1OGVa9q7WwRpTmAwgwaorWnGyCzBuiI=;
-        b=WphW96iuKh9ff9B3/jb6Rx+70ki2h9iLBA9XVtHd1GKpSGKhZx23XNu6lKrQ+L6nTz
-         efvnfDMqZFywDluVudA6ThSyMAONDPKDK+8lnNsqrra0UfUAEgwtrtzfs+MKRW9xGNma
-         beu/tLHOhnfUNENt4pkI9/eAWPGXxQ83IVy3FyMlbvgDsm0t4tj7m90i9s1DELTZg3aZ
-         tsnETqtJeUBeN8hYlF5eXZb2U3a9E3K6lyyQiXnDEm1Eacn7xUMh8wWFvX3VNVGfxhqY
-         3fyJK88KbSgQmIQ5cJMRUu11TLKVqMcL20PhtowdZpgfw1kDNpA87JygPGJ+o599KO5k
-         fyjQ==
+        bh=raYtuP2NjeAqA5181HGaACfoUp8/gkl6VSn/CKYueq0=;
+        b=zQoCfZIQWpJ9a+ZPSYFAOlZVZRbKa2KJndLcF1HgsjvmlQLKlsyv6/pmJZq/7T22Qb
+         ZrTx5NN0hB+m5MLAB41Q2nk54CVdp36KhrQAy23q0MFOAavMmt39c8DprL+zf8ZAb8xd
+         pW1wGOhKZ/l20sT5vF+J46P7j/2C3wARy4ZVR/VVjWqm+B/eRPlC7c5A2a47LrUqrN/b
+         zVLteSm6kVAN95I5PeoGk/0GXT09tpKuQnIKwrC4T+GawVX779qBkC6xdylS6U6vMuBJ
+         fbMn7OYdmiuHjFq4OQ/udDq3UCPboVXlA0pSCDSbc5itoju7gma5RxGDcrGdNx4Fsh7r
+         PmFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769606940; x=1770211740;
+        d=1e100.net; s=20230601; t=1769606948; x=1770211748;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=O3+eV0m5YOcp1OGVa9q7WwRpTmAwgwaorWnGyCzBuiI=;
-        b=JmoJ12LwGUw8bOAh9uo5+KWbj3vurkSQpUEuLr+KVATKfkv2GHmH2bNfYFPQ/q7iPm
-         lggqruVWrIXmEaeDl7ujGC6z5LaK4lwgk9hdBkpG+RSU8RY2C8hiaWDw4hNMrwyNxD00
-         9kPHzJTKQs4o39+g/aBYgoMMcMckv3dwBIlsEN8lYChbEZSS7DnLfl7KIdLSXtO53lWp
-         3B7f4n0HPmPIZexQhwNXKbaXTtPCV00axGIurdHIl9o3YuW/Yqe175mTtAzVn7pMPwBm
-         2Lc0ucvhy9RxMfL2efIM/bdrtIA5CxwlsZbL4KTezaYYxz17/bH42sp8T4Mrj7vXQyWu
-         KIAg==
-X-Forwarded-Encrypted: i=1; AJvYcCVJ40hIDbVBKnHw+bMjlJU+9me3QBeVp0HY7Tr5mEfGZgbSCbwr1tAoarLQcMxa9xe/bLSumWdmcQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzOBDcSyeHWuKcwPT40hEAcgEzM867jBE3xUftPSjhb5/WFoSXO
-	CebQGhEHpQ4eOEQat79OS8vKY3fX5Aif6jmSjTlj1UOLVH8oEY9+4sX7HnXW0WhpjzQ=
-X-Gm-Gg: AZuq6aIFSkb4x9DeCdswsdeJNHi+zfPbfhiw21FKtHGEQaXvFGcDoOW5bgrntHEwWjz
-	JEwKp4Fpu0PfLOTLxNAKI5b0KxbJelEMZdEJnz5LqLjqZEWvF/AHlnkOkKxBbWzezU5MDyIyLz8
-	O8AWWrbbk75pOdo3qnIpLPFUCDb6R0J/HIXdYIUYNt/CYS32JMV1LkfI+070sv74kTjAgGN9xIZ
-	U5c/GgAi2S1bQS8RoAVGBqWZWpnMOf9YoUk8WoW+CyQjNJZ96efwwyqY/wqOTbElpi0jArctSUw
-	GinJIL88wXlqd4bn4iyFoobHT9aNAbRx3TYDiiTR5e3Iv0brv4zHOOpw0j5FX+grAyPkhJOu1sQ
-	R2xy9TgPvh+zgLYNRDniFJNQ1TeoLDVmNCTj3EQBoWIRi/fLrnfOzQlaUUsjfLONWjr/Qoim6qM
-	62Ceu8F9NsH9ivSzxZut+85oqbvtM9LTA+rO3on3OSWnmO5oKqggA=
-X-Received: by 2002:a4a:ee06:0:b0:659:9a49:8efc with SMTP id 006d021491bc7-662f208c524mr3076054eaf.13.1769606940245;
-        Wed, 28 Jan 2026 05:29:00 -0800 (PST)
+        bh=raYtuP2NjeAqA5181HGaACfoUp8/gkl6VSn/CKYueq0=;
+        b=YpZugDHroaVDgbAi6SV6FRodP8s7agE/tsZecuFsUC4JwJ78dIOaMrFE4Khu+8IBxa
+         RDFWbSUaqaox7v8E274Pt1FZyPTg+IrMxkB8jTzFN9OIGSi2V9z7v7U2x22NZsSSs/M6
+         MXzH2MFtqoDyaFz8OdHkPXW8pE2MBFq/SCzfAceL68d4BXMUAuClA5UwjIMoVcQm6l33
+         5uYqn58CYZ4Wf7QP6Gg4ysO8ztx0zbOnTH5kJTroSTQ7xXARteBJ0RYw9ngn4Mes9dpu
+         YLOlBnJ6D7iWgOqcoS1xWI0iTFitCJfyCUbRFY45DuGxFKUT3kDwUXqvQc4aBh4URRo7
+         cMgg==
+X-Forwarded-Encrypted: i=1; AJvYcCX4iK8S/qXfiD6nMjjvKFuDNLxMJYJxGtdPvXAo9LGNgLrp4GyAub/Z8EgjlZqmgnwXH05vjVb40g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzqPLusyZNDyu2Hsit8ZyatVJSAZSWz6z69uZb4pMDS/UvRY896
+	cwGnRNIUAFSg4BfGZhPSbh3qwzcU6nQoEHpV45k1Mew1SkjZ0D/GuUAvq2JLbDU4uNU=
+X-Gm-Gg: AZuq6aKUgY8WEFVFG5NZcvnHw0Z2tQvyewqrqc6mRhW7591ErcMejlZky3P2V4Kpkqw
+	x2D8S7N8DZ1yf5xHqizYnWAn8QNNrw5TKJLO4OkAGpddxyRlGhkKHhTozYxWgzth/08sjeEQjGd
+	ZReFM/uKdeT3C+fCIhw7KUGatpzmrT1xaYYNnDr37tA6E7ta8WVm4CxdJTalWdpNYWoT/jZJFrw
+	z2vUi8TZIvOv2knh+LpeamQNN9Pw/ctRzFxYWWlyD5cqNHd7mMUWsy+tRrY+BXqJCtdeFuSDs9d
+	rlFV6qdUcx6tsfR0HWDq+bAUBVPP2R60MrS9qKAyH4JOsMVfWgQX/9fkexbcdewwKLYAyZghjrI
+	giuhhGBJBVl4UQ/yZutBhUQ/Qdf2fpQy/ofqKWobiUv3zXXuugIOaWAoSPZR8gVVTVOGOHbUfR+
+	NdcurHh5W9479cryYVoicchZEO+46ATpCZPhH5ilxsgoRL8ixifyY=
+X-Received: by 2002:a05:6820:4588:b0:65f:1012:69c5 with SMTP id 006d021491bc7-662f20f917fmr2413146eaf.76.1769606943544;
+        Wed, 28 Jan 2026 05:29:03 -0800 (PST)
 Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-662f994388fsm1374132eaf.4.2026.01.28.05.28.58
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-662f994388fsm1374132eaf.4.2026.01.28.05.29.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jan 2026 05:28:59 -0800 (PST)
-Message-ID: <4395bea9-44d7-4f0f-81d6-c1e05976a308@riscstar.com>
-Date: Wed, 28 Jan 2026 07:28:58 -0600
+        Wed, 28 Jan 2026 05:29:03 -0800 (PST)
+Message-ID: <7f892961-5978-4283-bec9-0f2953db42b7@riscstar.com>
+Date: Wed, 28 Jan 2026 07:29:02 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -68,7 +68,8 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] regulator: spacemit-p1: Update supply names
+Subject: Re: [PATCH v2 4/4] riscv: dts: spacemit: Update PMIC supply
+ properties for BPI-F3 and Jupiter
 To: Guodong Xu <guodong@riscstar.com>, Liam Girdwood <lgirdwood@gmail.com>,
  Mark Brown <broonie@kernel.org>, Yixun Lan <dlan@gentoo.org>,
  Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -79,96 +80,106 @@ To: Guodong Xu <guodong@riscstar.com>, Liam Girdwood <lgirdwood@gmail.com>,
 Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
  spacemit@lists.linux.dev, devicetree@vger.kernel.org
 References: <20260124-spacemit-p1-v2-0-2c86b06694ba@riscstar.com>
- <20260124-spacemit-p1-v2-3-2c86b06694ba@riscstar.com>
+ <20260124-spacemit-p1-v2-4-2c86b06694ba@riscstar.com>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260124-spacemit-p1-v2-3-2c86b06694ba@riscstar.com>
+In-Reply-To: <20260124-spacemit-p1-v2-4-2c86b06694ba@riscstar.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 1/23/26 6:20 PM, Guodong Xu wrote:
-> Update supply names to match the P1 PMIC's actual hardware pinout where
-> each buck has an individual VIN pin (vin1-vin6) and LDO groups have
-> dedicated input pins (aldoin, dldoin1, dldoin2).
+> Update individual supply properties in pmic "spacemit,p1" node to specify
+> the board's power tree topology for BananaPi F3 and Milk-V Jupiter.
 > 
-> The supply is a board design decision and should not be hardcoded to any
-> existing power source. This allows boards to specify their actual power
-> tree topology in devicetree.
+> Previously these relationships were hardcoded in the driver; now they
+> are explicitly defined in the devicetree per the updated binding
+> document spacemit,p1.yaml.
 > 
 > Signed-off-by: Guodong Xu <guodong@riscstar.com>
 
-These are good changes but I have a suggestion on the way
-you define the DLDO descriptors.  I might be mistaken but
-I think you should make this change.
+I acknowledge that you've made an ABI change, and I should
+have done a better job of describing this the first time
+around.  (And reviewers might have caught that!)
 
-Aside from that:
+I had some of the same thoughts about supporting just
+"vin_supply" for older systems.
+
+However I agree with the conclusion you and Vivian
+came to, which is that practically speaking it isn't
+likely to be a problem.  Boards should use either
+old DTB and software or new DTB and software, not
+a mix.
 
 Reviewed-by: Alex Elder <elder@riscstar.com>
 
+
 > ---
-> v2: No change.
+> v2: Added the pmic supply properties for K1 Milkv Jupiter.
+>      Updated the commit message accordingly.
 > ---
->   drivers/regulator/spacemit-p1.c | 25 ++++++++++++++-----------
->   1 file changed, 14 insertions(+), 11 deletions(-)
+>   arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   | 12 ++++++++++--
+>   arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 12 ++++++++++--
+>   2 files changed, 20 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/regulator/spacemit-p1.c b/drivers/regulator/spacemit-p1.c
-> index 2b585ba01a93..57e6e00a73fa 100644
-> --- a/drivers/regulator/spacemit-p1.c
-> +++ b/drivers/regulator/spacemit-p1.c
-> @@ -87,13 +87,16 @@ static const struct linear_range p1_ldo_ranges[] = {
->   	}
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> index 5971605754b3..444c3b1e6f44 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> @@ -190,7 +190,15 @@ pmic@41 {
+>   		compatible = "spacemit,p1";
+>   		reg = <0x41>;
+>   		interrupts = <64>;
+> -		vin-supply = <&reg_vcc_4v>;
+> +		vin1-supply = <&reg_vcc_4v>;
+> +		vin2-supply = <&reg_vcc_4v>;
+> +		vin3-supply = <&reg_vcc_4v>;
+> +		vin4-supply = <&reg_vcc_4v>;
+> +		vin5-supply = <&reg_vcc_4v>;
+> +		vin6-supply = <&reg_vcc_4v>;
+> +		aldoin-supply = <&reg_vcc_4v>;
+> +		dldoin1-supply = <&buck5>;
+> +		dldoin2-supply = <&buck5>;
 >   
->   #define P1_BUCK_DESC(_n) \
-> -	P1_REG_DESC(BUCK, buck, _n, "vin", 0x47, BUCK_MASK, 255, p1_buck_ranges)
-> +	P1_REG_DESC(BUCK, buck, _n, "vin" #_n, 0x47, BUCK_MASK, 255, p1_buck_ranges)
-
-That was a simple change...
-
->   #define P1_ALDO_DESC(_n) \
-> -	P1_REG_DESC(ALDO, aldo, _n, "vin", 0x5b, LDO_MASK, 128, p1_ldo_ranges)
-> +	P1_REG_DESC(ALDO, aldo, _n, "aldoin", 0x5b, LDO_MASK, 128, p1_ldo_ranges)
-
-As stated before, I believe the 128 should be 117 here.  (If
-you change the earlier patch, make sure the change to 128
-doesn't persist here.)  Same comment for the DLDO regulators.
-
-> -#define P1_DLDO_DESC(_n) \
-> -	P1_REG_DESC(DLDO, dldo, _n, "buck5", 0x67, LDO_MASK, 128, p1_ldo_ranges)
-> +#define P1_DLDO1_DESC(_n) \
-> +	P1_REG_DESC(DLDO, dldo, _n, "dldoin1", 0x67, LDO_MASK, 128, p1_ldo_ranges)
-
-Why can't you use _n here like you did for P1_BUCK_DESC() above?
-
-> +
-> +#define P1_DLDO2_DESC(_n) \
-> +	P1_REG_DESC(DLDO, dldo, _n, "dldoin2", 0x67, LDO_MASK, 128, p1_ldo_ranges)
-
-So this is generalizing the input, which is good.  The use
-of "buck5" here was a Banana Pi BPI-F3 design and but it
-doesn't have to be that way.
-
->   static const struct regulator_desc p1_regulator_desc[] = {
->   	P1_BUCK_DESC(1),
-> @@ -108,13 +111,13 @@ static const struct regulator_desc p1_regulator_desc[] = {
->   	P1_ALDO_DESC(3),
->   	P1_ALDO_DESC(4),
+>   		regulators {
+>   			buck1 {
+> @@ -221,7 +229,7 @@ buck4 {
+>   				regulator-always-on;
+>   			};
 >   
-> -	P1_DLDO_DESC(1),
-> -	P1_DLDO_DESC(2),
-> -	P1_DLDO_DESC(3),
-> -	P1_DLDO_DESC(4),
-> -	P1_DLDO_DESC(5),
-> -	P1_DLDO_DESC(6),
-> -	P1_DLDO_DESC(7),
-> +	P1_DLDO1_DESC(1),
-> +	P1_DLDO1_DESC(2),
-> +	P1_DLDO1_DESC(3),
-> +	P1_DLDO1_DESC(4),
-> +	P1_DLDO2_DESC(5),
-> +	P1_DLDO2_DESC(6),
-> +	P1_DLDO2_DESC(7),
->   };
+> -			buck5 {
+> +			buck5: buck5 {
+>   				regulator-min-microvolt = <500000>;
+>   				regulator-max-microvolt = <3450000>;
+>   				regulator-ramp-delay = <5000>;
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> index 800a112d5d70..e2702a781734 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> @@ -100,7 +100,15 @@ pmic@41 {
+>   		compatible = "spacemit,p1";
+>   		reg = <0x41>;
+>   		interrupts = <64>;
+> -		vin-supply = <&reg_vcc_4v>;
+> +		vin1-supply = <&reg_vcc_4v>;
+> +		vin2-supply = <&reg_vcc_4v>;
+> +		vin3-supply = <&reg_vcc_4v>;
+> +		vin4-supply = <&reg_vcc_4v>;
+> +		vin5-supply = <&reg_vcc_4v>;
+> +		vin6-supply = <&reg_vcc_4v>;
+> +		aldoin-supply = <&reg_vcc_4v>;
+> +		dldoin1-supply = <&buck5>;
+> +		dldoin2-supply = <&buck5>;
 >   
->   static int p1_regulator_probe(struct platform_device *pdev)
+>   		regulators {
+>   			buck1 {
+> @@ -131,7 +139,7 @@ buck4 {
+>   				regulator-always-on;
+>   			};
+>   
+> -			buck5 {
+> +			buck5: buck5 {
+>   				regulator-min-microvolt = <500000>;
+>   				regulator-max-microvolt = <3450000>;
+>   				regulator-ramp-delay = <5000>;
 > 
 
