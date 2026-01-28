@@ -1,116 +1,115 @@
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CAB82D97B9
-	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 10:44:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B792EA75E;
+	Wed, 28 Jan 2026 10:52:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769597081; cv=none; b=ZUZTXlZgozFN8xkFWm8CddXrCaEIMkqo6dweQvuFPh3bDBNxL1UR5BGCJrSBb+0QGs9T5hvmJxv+QVirYBUlHL2jlMCLMAMtbHdN4XuL428FQdzplCXOTXsC7XxmYQLOSwFnKyT3/Hcecm9zzQuNImC789Lqi1dOOTQlnm5pLrY=
+	t=1769597551; cv=none; b=lnfqWINouIKamn3RffRzWXZCSKkHkwDwnwl6dw2Y8FEp7dTfeMQwgJRCi/4M6u8VdEtfx3a7p0ra+/IupaaaI85GiYFsOYknZrucnQtg0WBU+7nbs4FJT6w+262o6LoFeuzy6bwWxi0o2FOEpv0G/6pqZeVe2mWXapzd9yCgArw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769597081; c=relaxed/simple;
-	bh=TtrRZVlvHPD/HluPN4mbE6SJ5OBzC3bIvEmY2KwSgoE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sdO5rvWChXtADAitTWtd6nS+PJeunBYY/lKBo1z9u8DgN/7H2oO4PxqmiWNCEra02E07SRAnQ2DqegsC2IuX6kIjP/DcYx4J+cAYjZfnxa8pX35v/bjT/VgRaj95pnvBjVRqzk3bqdjvqMRmYXgFXWYhMkypoNe9do6MqiAKHmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=jUnMIGjJ; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+	s=arc-20240116; t=1769597551; c=relaxed/simple;
+	bh=tucQhTlV8za1lu8MMrRqeJJ31gz69ypAvVJoriihhkE=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=vABlLNeVHXwyRZkaBeP19GAgNd07Yvv4M2TRY/oT3CFjW0jcfXYVqC3w3Tijm0XXrAdiFIah4TK0YcsjmnR2qjs9mp/YS3JyBf1tw2Hj1exyUqPxN0AEhieiuiYTmqWhhu3pYMj/jsk8Nbxvs3z86M++3bkSnOqX11J8KpGDTtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ViEGIoH8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="jUnMIGjJ"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=mFTuDiU8Vo0BWz7M+z3udd6nhM1Sv2pMgRAh1jtNodg=; b=jUnMIGjJB8N/e3tmB1dhe6jNHy
-	QW80cUOaOEVJYbU8vdhPqd/MwxyQqSDoLi4OgOmqpOZ2B+u3hnP/S9+JtEC9ly43ycYrgRJny8aYM
-	u3f13NjG8X3vh1S71+NuN+A0GqvZ9mNCnJPJc2V8JpRPHWibszpXQhalLbLMb55atsWSrZmdtm0rz
-	jtlnej22Ri5hDarpvZrBhXvB00zfMYdphVlGur4/QpBaUQnB9KwmJk8JZZIRvB5/Qx0VvGY05Z8mJ
-	LSMVN3+qc7FlXECUb904BRi3XSOfCOpeMXY5020pSd6mI1rAdCrXXQCdjWfDWo792/AwZ8e9gUoAM
-	+DfaI8PA==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:44758)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1vl31Z-000000007Bf-3r94;
-	Wed, 28 Jan 2026 10:43:50 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1vl31L-000000006uC-3EYm;
-	Wed, 28 Jan 2026 10:43:35 +0000
-Date: Wed, 28 Jan 2026 10:43:35 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yao Zi <ziyao@disroot.org>,
-	Yanteng Si <siyanteng@cqsoftware.com.cn>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next v3 3/3] net: stmmac: Add glue layer for Spacemit
- K3 SoC
-Message-ID: <aXnoV3Ay0uCc3HGQ@shell.armlinux.org.uk>
-References: <20260128072931.875041-1-inochiama@gmail.com>
- <20260128072931.875041-4-inochiama@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ViEGIoH8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B58EC4CEF1;
+	Wed, 28 Jan 2026 10:52:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769597550;
+	bh=tucQhTlV8za1lu8MMrRqeJJ31gz69ypAvVJoriihhkE=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=ViEGIoH8WISDNhvOrX04vjPKG2JsdeQzC++K+VPDpBjbApVieCzQdka6GCKlJJZQM
+	 kJma+zcQwuo0OVZDkJ15DjXbzkJ9jCcPYFv4ZlKyk1P9KnmzLQuxjdWdoLG47nEIi/
+	 zDbiLcOCm7Dj8/UDWp4qXwoh+OOdf+L3B0wjytpMZK6giYRDkSx+hHnimaxwvwfELy
+	 OLDor3AvwD6N+RNTuPJXi6Y3MM9lSyGyv0Z99LeemMHZfyE7wejSGsaHHCdxLWt2ES
+	 SxedeNVs95NdSTuG1A+uh5Pq9Tj0kMP2VBUO0csiNlt3bDroJsfIcRiQ3H/JGbcUtO
+	 KJ8VHi9KMczbw==
+Date: Wed, 28 Jan 2026 04:52:29 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260128072931.875041-4-inochiama@gmail.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-riscv@lists.infradead.org, Albert Ou <aou@eecs.berkeley.edu>, 
+ Andrew Lunn <andrew+netdev@lunn.ch>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Yao Zi <ziyao@disroot.org>, 
+ Longbin Li <looong.bin@gmail.com>, linux-stm32@st-md-mailman.stormreply.com, 
+ Choong Yong Liang <yong.liang.choong@linux.intel.com>, 
+ Yixun Lan <dlan@gentoo.org>, Quentin Schulz <quentin.schulz@cherry.de>, 
+ Jakub Kicinski <kuba@kernel.org>, devicetree@vger.kernel.org, 
+ Paolo Abeni <pabeni@redhat.com>, Conor Dooley <conor+dt@kernel.org>, 
+ Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
+ Paul Walmsley <pjw@kernel.org>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
+ Boon Khai Ng <boon.khai.ng@altera.com>, 
+ Yanteng Si <siyanteng@cqsoftware.com.cn>, spacemit@lists.linux.dev, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Richard Cochran <richardcochran@gmail.com>, 
+ Shangjuan Wei <weishangjuan@eswincomputing.com>, 
+ Eric Dumazet <edumazet@google.com>, netdev@vger.kernel.org, 
+ Chen-Yu Tsai <wens@kernel.org>, 
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, 
+ "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Jose Abreu <joabreu@synopsys.com>, 
+ "David S. Miller" <davem@davemloft.net>
+To: Inochi Amaoto <inochiama@gmail.com>
+In-Reply-To: <20260128072931.875041-2-inochiama@gmail.com>
+References: <20260128072931.875041-1-inochiama@gmail.com>
+ <20260128072931.875041-2-inochiama@gmail.com>
+Message-Id: <176959754960.624625.3292309980701778789.robh@kernel.org>
+Subject: Re: [PATCH net-next v3 1/3] dt-bindings: net: Add support for
+ Spacemit K3 dwmac
 
-On Wed, Jan 28, 2026 at 03:29:29PM +0800, Inochi Amaoto wrote:
-> +#include <linux/clk.h>
-> +#include <linux/math.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/property.h>
-> +#include <linux/regmap.h>
-> +
-> +#include "stmmac_platform.h"
-> +
-> +/* ctrl register bits */
-> +#define PHY_INTF_RGMII			BIT(3)
-> +#define PHY_INTF_MII			BIT(4)
 
-Please add a suitable prefix for these.
+On Wed, 28 Jan 2026 15:29:27 +0800, Inochi Amaoto wrote:
+> The GMAC IP on Spacemit K3 is almost a standard Synopsys DesignWare
+> MAC (version 5.40a) with some extra clock.
+> 
+> Add necessary compatible string for this device.
+> 
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> ---
+>  .../devicetree/bindings/net/snps,dwmac.yaml   |   2 +
+>  .../bindings/net/spacemit,k3-dwmac.yaml       | 103 ++++++++++++++++++
+>  2 files changed, 105 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
+> 
 
-> +
-> +#define WAKE_IRQ_EN			BIT(9)
-> +#define PHY_IRQ_EN			BIT(12)
+My bot found errors running 'make dt_binding_check' on your patch:
 
-While you're renaming the PHY_INTF_*, you might wish to also add the
-same prefix here to identify that they're all part of the same register.
+yamllint warnings/errors:
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.example.dtb: ethernet@cac80000 (spacemit,k3-dwmac): compatible: ['spacemit,k3-dwmac', 'snps,dwmac-5.40a'] does not contain items matching the given schema
+	from schema $id: http://devicetree.org/schemas/net/snps,dwmac.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.example.dtb: ethernet@cac80000 (spacemit,k3-dwmac): compatible: ['spacemit,k3-dwmac', 'snps,dwmac-5.40a'] does not contain items matching the given schema
+	from schema $id: http://devicetree.org/schemas/net/spacemit,k3-dwmac.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.example.dtb: ethernet@cac80000 (spacemit,k3-dwmac): Unevaluated properties are not allowed ('phy-handle', 'phy-mode' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/spacemit,k3-dwmac.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20260128072931.875041-2-inochiama@gmail.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
