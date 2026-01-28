@@ -1,256 +1,105 @@
-Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-usa2.onexmail.com (smtp-usa2.onexmail.com [35.173.142.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C8313959D
-	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 09:21:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6C13469FF
+	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 09:34:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.173.142.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769592071; cv=none; b=qNODQTB9I3zLz9qsOAnshQH5v1LZPWztv/fFkAa31R+BefCQl7EFoIzotKX5ABVgZUckCr8heEQc0hvfycYyeFvV/XbjDCR04vbMgQvKV3SRfz6D8wkPrWpzYGD9vDQrpvhPC48jjDprU1lrnLuDs/+Fqn/29DF2jAFSHIYY0d8=
+	t=1769592853; cv=none; b=PS9/cEVl2ZSDpphJMMx3fWJcNEWmrCQjJY0elcwutEL9Ps/QAKILTHsBR3SKLVaVleZ7CxlaF395cETf8J4y0UPz9s/MmZjuMcBFTWvuno0gkEWpSDZ0W1AJ/RjtC1iAOZJfHZdJAETgQjG7n5AAgspXMYY14ymR+YEYsvnxXZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769592071; c=relaxed/simple;
-	bh=5xIKoh/TwhS0XTiSYjF8TimZ4Mgh0qKu32LLs95xkk8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bb2Pe2OMKl3nNoX2Gv3O/h+IfDi4HbREVMzctOQ9MohXsK5N6xwrHpZerryXrAbbGNAp1KmiaB1VM3Y9cwqWgOZrK7g90KARSrBPH/Rt0G3ildD6LusSsBAhBrIhit0ZdaNoOoyxKScFZjFDSgiFPZlI6yIFA1OcStazI8UxN08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LW36KPwD; arc=none smtp.client-ip=74.125.82.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769592853; c=relaxed/simple;
+	bh=sVnj1C4avZi5lob/WW/jEcsuTEgkILKAFZaa3udSirs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mKPfb0inb8AOswRqHcbhcHJaPICwHytPqC4cQnzRnCi+dAD92VIQk9uSa9hy4YOhgAd0PzOO2YOln6PddLlLj4QlgO73oE8QvZ60UBv01/M1l6PST1upJZWaglNbXluduw+Wonrf5lYkrcO2wDwcLhAWLkZYe1ZZRVGA216CWi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ZUGWTyM8; arc=none smtp.client-ip=35.173.142.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LW36KPwD"
-Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2b785801c93so5839638eec.0
-        for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 01:21:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769592069; x=1770196869; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yEOFkSi2N0vtkbtCff5kn8mqsv72spWR8lTmAsEOTX4=;
-        b=LW36KPwD/Uw0kyot17dyDiK6ExBerk3cHUBYZot7ickTteqECtBIMNnswAZLaAd26f
-         BYW6Uc3HZ4sZHJS8G4VEmw0RujYQ0rWXPI03wFDrr0ru8P0RgNihamuf45Ja78AKwJtp
-         LqR9E+dyfGUVRHE73gEgAIUeYqCzZU25z/1gA5DLJxeiyI5y9I741+Y+HGYIr9HsrAmF
-         85yfLwYoZZt8wRdjeAp06cA6dSQ6a/6bggiUm5s8f3DNVVswW9IMntKFy43U7dBDTXg0
-         uHlIpPVVWinEi1jpKxOuaMfD/qpKl7cyqoclxS1+Xxd859ANiYhrjfHEBi1eIxePdhIj
-         EiJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769592069; x=1770196869;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=yEOFkSi2N0vtkbtCff5kn8mqsv72spWR8lTmAsEOTX4=;
-        b=il/EHZ6D+tdztnp5pqQUhezsuGMh40kks2X1XJQYxDXJ4/fv8lSN8hAmhfExv15322
-         8exAYhLyntJG0KLbl0LNuCLtF+3FeUd5kZoFjbHHHDWIA+jnk7BFb2+/ygp9h5H0BqI9
-         zr0VMteOKZS0qP4h2dErZqgIM38WJ5DvJmN9GOVlMHHU3iOVXZy4hIAb2s5YE7/zi9IN
-         7+h/QHqctBoVRBuNN0YiGzdLfOdxmaPAXDVWJWPQ/2V4UV3Exi38yoakT0WuYHOm6v0N
-         EbAEbTgXZc0pMjOxuoS/mclm/MfYxVr1uvPMG2OoTTKDzEHNoRTCcyrMh1l9Foc0B1ui
-         Qn/g==
-X-Forwarded-Encrypted: i=1; AJvYcCUnbNT9xSI9mGSajOamPikWD0rm0WuIEQADf9txqvENVhkk0zJ1tJXPRRDTA7mmd878GsMaRURTng==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw/urlnNY4OA4bRclEj6CbTP55sECHqguw5NANe0W07wceJFpQ5
-	5ZPF/7XaPPNzCdWwmBnEz+NdbyexXpcBNinW0OVJu49hBDILvQCNVhPt
-X-Gm-Gg: AZuq6aI2ugwtwSCOYy0mxd+grrKeg3xy2jg4gvRwxaRng+yHvQf9bItxot9ESN1Lie/
-	PAkPif648F8gBDYbUqoulQkIVDV4WBJhVrmLfj8WhqoRLY5t6WM4A4kRQonlCTlKKzz6howWs1m
-	i4RNJW3ZQp1dSF2mP1zXHiFV3XAWpCeVK/F3d415R7rXdup0bkOL2N1JnJLzRMZR0Aad0ZqSGek
-	lPRYnNld92r4VBzLiz8lVg+nPeNyUDzl1T9FZtQe3gayBsxiAXE7RJaN7U/YtuolU3IEMZbdbj7
-	yunb3v+mWePtYcCtI9sK3qcMXB51HROOXNAtmrhqfZJKcSTHN03B9uzGYFEoRdMeznyzrSufxPF
-	IAI8ibZLCgTidDzNZHXR9Wba6eGc5lB9U/ZFOdSpuhPibf+tWzdxPpcugWsaYfgnfFCtKeZ8kW8
-	xq8vgQIK4z8g==
-X-Received: by 2002:a05:7300:a188:b0:2a4:3594:d540 with SMTP id 5a478bee46e88-2b78d90178cmr2919827eec.13.1769585396662;
-        Tue, 27 Jan 2026 23:29:56 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a16ef40asm1515483eec.13.2026.01.27.23.29.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jan 2026 23:29:56 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@gentoo.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Yao Zi <ziyao@disroot.org>,
-	Yanteng Si <siyanteng@cqsoftware.com.cn>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>
-Cc: netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ZUGWTyM8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1769592767;
+	bh=YqgQ7XTWnwiLqJRqmob5IA4FpJiapKMV3EHIEwmKLvk=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=ZUGWTyM8Me+1zINdg/FP/yCjoNE8+anpE72BrxAcA8kyh9YZh75xWRTWmrXGHfDDi
+	 hVJiGgtySfMegzlGyVabx4Re67DuHIDMvmwepRsbBG7y9UfdfNWLkCqRF+oD4AoQzy
+	 mL6YDYSv75/9Rsx+wQD1C3KoEd8TP5kPkg9a8Gd8=
+X-QQ-mid: zesmtpgz6t1769592759t9b968819
+X-QQ-Originating-IP: wSV2IFKiia32OYtniGlD6DAAqZvlSdHLzBCZK1/Wp0o=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 28 Jan 2026 17:32:37 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 319744168602380696
+EX-QQ-RecipientCnt: 11
+Date: Wed, 28 Jan 2026 17:32:37 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Vivian Wang <wangruikang@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <brgl@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Alex Elder <elder@riscstar.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, linux-gpio@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH net-next v3 1/3] dt-bindings: net: Add support for Spacemit K3 dwmac
-Date: Wed, 28 Jan 2026 15:29:27 +0800
-Message-ID: <20260128072931.875041-2-inochiama@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260128072931.875041-1-inochiama@gmail.com>
-References: <20260128072931.875041-1-inochiama@gmail.com>
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [PATCH] gpio: spacemit-k1: Use PDR for pin direction, not SDR/CDR
+Message-ID: <85EFBB88D70FB64F+aXnXtS35RG_U6MeC@kernel.org>
+References: <20260127-gpio-spacemit-k1-pdr-v1-1-bb868a517dbc@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260127-gpio-spacemit-k1-pdr-v1-1-bb868a517dbc@iscas.ac.cn>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MKzYG8XJzx27luHda+8viI9Zbcs2SNIwmBWR31bLVy7d4Whz+EeimKQt
+	21JWgfTV5aWJfNYrs5hIzjlbfdFAJNmO+kKSWq3c60VgLJHpKNvj/jFVe6kftITNL9bkrAh
+	031kqQQnf5Vhxi3kBExh4upNU2DFx1WIeRKDwlrqEIz8QlygV68APMK8C2OC0UAfgxNWwbO
+	sPp6MqDF/InNLzc++z/7gNJV/aeqij3+f7Y0rDCiahKEr8im+QQRY0tO5VUt6dVwl0ecErR
+	KWHwpQ5W/StWgR9OycHFys4kgXX334Rmwl/iBzRkwcLCUbC62DchViSXVJMRFe8x3nRxgbW
+	DyQAe2Us1zdyIAiLRDwvR7C7yn+i/xqXVjsSLkf1oMuJixziWdq2WxDQ9ZfK29DVVEvtswP
+	/jxjeXwtGtSO3yk3rnPA/MXjPm5CtRz8PAHpLm5xU9qyj4NG/gzQVV0JT7Aa2AEJPdely5q
+	L1HcvJjxfT05s7vTJVC+uQwG/tXx1SGd1K87xneFERYV1C0xHcnCcmphRRas8DZ881gQ7WP
+	5YqU8bWc1CNJwdHlFDqmLwwTnNIKiVyHhOJ+jq8jWYJqPogcdGQU54tl0A+mYt+APwZrgfp
+	zgLRjS5wug7HeWw3DIFf5EVgWECmQ4LVLqSK5X7+dwGlHMLu7FYFz+KVNyfIHGR+CzzhuFs
+	nH/8GrZ+hPgKqUe/n5VyVWzbyaYYGc486b+YpcopQYW6wlBDHVz0wl2oFSjQZcgdcYWd5rj
+	lxW3ze0k+PCUwGoMw1Rs9uzEYEKqmTj7j4HiSI3SOBLKqROidZRfe81zMtFOBBDouxSfgfv
+	LcdZFmGEEr6p8fAZKOJyGuofmTwVlvsVp8yhGJoaZMATVAwWbHdNrNpaywjAlUbN1szajyq
+	jcHthvKySi5BJnEHuqBvAYTYYBYTzq4WQlHasIQBZ10SX0BDH/91Qd7Tu1gw8NuiTKMCkJ+
+	km3W2kirXQ4MM+htGZRNlYwQya+JooAGecFIQYluhTuImB988QCv65howFD81CQwOKlJsda
+	YX7Tzhf2G9oUIV5+/UX8Hwt8RKUuSQXLQkAKl7Zenog5UTi3vdWYnzwEvX1JNbE3owAbzLj
+	3n/Bb4AsiRB
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
 
-The GMAC IP on Spacemit K3 is almost a standard Synopsys DesignWare
-MAC (version 5.40a) with some extra clock.
+On Tue, Jan 27, 2026 at 10:58:49AM +0800, Vivian Wang wrote:
+> On the SpacemiT GPIO controller, the direction control register PDR is
+> readable and writable [1]. Therefore, implement direction control by
+> using PDR as dirout, and don't mark it as unreadable.
+> 
+> The original implementation, using SDR as dirout and CDR as dirin, is
+> not actually a supported configuration by gpio-mmio. The hardware
+> supports changing the direction of some pins atomically by writing a
+> value with the corresponding bits set to SDR (set as output) or to CDR
+> (set as input). However, gpio-mmio does not actually handle this.
+> 
+> Using only PDR as dirout to match the expectations of gpio-mmio. This
+> also allows us to avoid clobbering potentially important GPIO direction
+> configurations set by pre-Linux boot stages.
+> 
+> Found while trying to add PCIe support to OrangePi RV2, where the
+> regulator (controlled by GPIO 116) turns off on boot while some other
+> GPIO pin in the same bank is touched, which is not desirable.
+> 
+> Link: https://developer.spacemit.com/documentation?token=Rn9Kw3iFHirAMgkIpTAcV2Arnkf#18.4-gpio # [1]
+> Fixes: d00553240ef8 ("gpio: spacemit: add support for K1 SoC")
+> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+> ---
+> Tested on K1 only - help with K3 testing would be appreciated.
+Confirmed that PDR is also R/W on K3. Thanks!
 
-Add necessary compatible string for this device.
-
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
- .../devicetree/bindings/net/snps,dwmac.yaml   |   2 +
- .../bindings/net/spacemit,k3-dwmac.yaml       | 103 ++++++++++++++++++
- 2 files changed, 105 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
-
-diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-index dd3c72e8363e..a3fcb9a251fa 100644
---- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-+++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-@@ -34,6 +34,7 @@ select:
-           - snps,dwmac-5.10a
-           - snps,dwmac-5.20
-           - snps,dwmac-5.30a
-+          - snps,dwmac-5.40a
-           - snps,dwxgmac
-           - snps,dwxgmac-2.10
- 
-@@ -653,6 +654,7 @@ allOf:
-                 - snps,dwmac-5.10a
-                 - snps,dwmac-5.20
-                 - snps,dwmac-5.30a
-+                - snps,dwmac-5.40a
-                 - snps,dwxgmac
-                 - snps,dwxgmac-2.10
-                 - st,spear600-gmac
-diff --git a/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml b/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
-new file mode 100644
-index 000000000000..fc024a927fcc
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
-@@ -0,0 +1,103 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/spacemit,k3-dwmac.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Spacemit K3 DWMAC glue layer
-+
-+maintainers:
-+  - Inochi Amaoto <inochiama@gmail.com>
-+
-+select:
-+  properties:
-+    compatible:
-+      contains:
-+        const: spacemit,k3-dwmac
-+  required:
-+    - compatible
-+
-+properties:
-+  compatible:
-+    items:
-+      - const: spacemit,k3-dwmac
-+      - const: snps,dwmac-5.40a
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: GMAC main clock
-+      - description: PTP clock
-+      - description: TX clock
-+
-+  clock-names:
-+    items:
-+      - const: stmmaceth
-+      - const: ptp_ref
-+      - const: tx
-+
-+  interrupts:
-+    minItems: 1
-+    items:
-+      - description: MAC interrupt
-+      - description: MAC wake interrupt
-+
-+  interrupt-names:
-+    minItems: 1
-+    items:
-+      - const: macirq
-+      - const: eth_wake_irq
-+
-+  resets:
-+    maxItems: 1
-+
-+  reset-names:
-+    const: stmmaceth
-+
-+  spacemit,apmu:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    items:
-+      - items:
-+          - description: phandle to the syscon node which control the glue register
-+          - description: offset of the control register
-+          - description: offset of the dline register
-+    description:
-+      A phandle to syscon with offset to control registers for this MAC
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - interrupts
-+  - interrupt-names
-+  - resets
-+  - reset-names
-+  - spacemit,apmu
-+
-+allOf:
-+  - $ref: snps,dwmac.yaml#
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    ethernet@cac80000 {
-+      compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
-+      reg = <0xcac80000 0x2000>;
-+      clocks = <&syscon_apmu 66>, <&syscon_apmu 68>,
-+               <&syscon_apmu 69>;
-+      clock-names = "stmmaceth", "ptp_ref", "tx";
-+      interrupts = <131 IRQ_TYPE_LEVEL_HIGH>, <276 IRQ_TYPE_LEVEL_HIGH>;
-+      interrupt-names = "macirq", "eth_wake_irq";
-+      phy-mode = "rgmii-id";
-+      phy-handle = <&phy0>;
-+      resets = <&syscon_apmu 67>;
-+      reset-names = "stmmaceth";
-+      spacemit,apmu = <&syscon_apmu 0x384 0x38c>;
-+    };
-+
--- 
-2.52.0
-
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
