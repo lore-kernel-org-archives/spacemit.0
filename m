@@ -1,57 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942E0224AF0;
-	Wed, 28 Jan 2026 01:24:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A87A1D6AA
+	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 03:08:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769563443; cv=none; b=oxv8917JbQalMYgYwtf6h7dCVBiv86arV63KS+TPCVa9tG3ZFLOA5hWNMgSWE+cFVgfea+RMyTSHuAXSfPEetdxd76qLutlClrbr6PNx9QeBzLot92JK4Qi3hwFULDqcKJUaSbpSpHKDKiU4Uk/ur+m9AocRBf++KMHVIqT034E=
+	t=1769569703; cv=none; b=npXnGlk8Q/MLk1VBJ1v8gFmmwJJMRw77+ga+1mPCNjqJ6mvjHuNIYrYgpiYtr2x18BkRFWXLq3NfQnZ0klGTvFm2wr/Ik6c3wPJfDRPbCMwRCsVL7JgpgFFmW9dKxEX8hOb6/1i1Z/kBJ9pS8Pv0If3JpHRmZqf4cHZ233zz6Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769563443; c=relaxed/simple;
-	bh=zWQSF+eV1gOie95S0/r7LJ+YoKdKXI9YPlReRAkCHLU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P1atAKejij3uovbuImbPiNIXEm6Kx/bWWZCGWX7Psxr8BNXpIyqkbgexF1pvpekQgFmi1hTsIDNTRbdzfolyWYl7n4W+S61BP3+VyO3yZt3JLXUSKf4/wBUJyGzs64CVlcku+Kf/G15dPUh++mFfgdO9DXtBnAWU1IdHF1BD46M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G9Y5hbQz; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G9Y5hbQz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6F1C116C6;
-	Wed, 28 Jan 2026 01:24:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769563443;
-	bh=zWQSF+eV1gOie95S0/r7LJ+YoKdKXI9YPlReRAkCHLU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=G9Y5hbQzTbBidacihpKIJr9Odc/oR5CFooSJKh0uzM2rdbMVg/AYYDyi7y8Alco0w
-	 n4Ln5QDS37K+tGmojlFAg3SSgtztPQ0to6qXDmDoyaGw/qgvrUggHx64Kd0CBpqxfL
-	 x6620UeVKJj9VmWCeBv4jvvSPXOS40V7eY+DRQIoSFfiCOhad1F7om/oVPseY2T81b
-	 OJIlOrhASfg3/A3B5fUBzXU+csTqgCkPb2Ih1P5Oh93TXI2N7KIFKVChGvUYPTvuvm
-	 iCzyLqelec34/prSs/6NGNqAL+8q1CS5U4vTtZErx0ExZreKvh2emETD6sJ0POypZ9
-	 /Jkn3q2ZL2CTA==
-Date: Tue, 27 Jan 2026 17:24:01 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Tomas Hlavacek <tmshlvck@gmail.com>, netdev@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, "David S . Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Andrew Lunn <andrew+netdev@lunn.ch>, Yixun Lan
- <dlan@kernel.org>
-Subject: Re: [PATCH net v2] net: spacemit: k1-emac: program frame size
- registers for jumbo frames
-Message-ID: <20260127172401.4bb7bd83@kernel.org>
-In-Reply-To: <9f424b4e-b83b-47a0-8637-3df25e504be7@iscas.ac.cn>
-References: <20260126135919.77168-1-tmshlvck@gmail.com>
-	<20260126171449.83288-1-tmshlvck@gmail.com>
-	<9f424b4e-b83b-47a0-8637-3df25e504be7@iscas.ac.cn>
+	s=arc-20240116; t=1769569703; c=relaxed/simple;
+	bh=efAM1MyZfelBoM/Wl0wv9C48hXEXhh1GmBmJr0Fb75E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QhFlPzEOad/bqaSq+jzr/lBaS6FwecrlUdry2gwkgeTBlp2CpGK3OjueEm9At8RtE/alIRjh63Y7D7sOwMZN4XZEl3WXE1XTxnqw8eR7iN929oG4TWgXemYTu34+L9uvPMtmFMV/BzbVZcTuaQOgz9s0IY71WAh6jxkfWIATNhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.109] (unknown [123.118.222.47])
+	by APP-05 (Coremail) with SMTP id zQCowAC3Sw+bfXlpAQvXBg--.33087S2;
+	Wed, 28 Jan 2026 11:08:12 +0800 (CST)
+Message-ID: <dc31ca81-1854-41ba-a448-718ba1f781da@iscas.ac.cn>
+Date: Wed, 28 Jan 2026 11:08:11 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net v2] net: spacemit: k1-emac: program frame size
+ registers for jumbo frames
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: Tomas Hlavacek <tmshlvck@gmail.com>, netdev@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+ "David S . Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, Yixun Lan <dlan@kernel.org>
+References: <20260126135919.77168-1-tmshlvck@gmail.com>
+ <20260126171449.83288-1-tmshlvck@gmail.com>
+ <9f424b4e-b83b-47a0-8637-3df25e504be7@iscas.ac.cn>
+ <20260127172401.4bb7bd83@kernel.org>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20260127172401.4bb7bd83@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:zQCowAC3Sw+bfXlpAQvXBg--.33087S2
+X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUY67k0a2IF6FyUM7kC6x804xWl14x267AK
+	xVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGw
+	A2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r4j
+	6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Cr
+	1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv
+	0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z2
+	80aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF
+	7I0E8cxan2IY04v7MxAIw28IcxkI7VAKI48JMxAqzxv26xkF7I0En4kS14v26r1q6r43Mx
+	C20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAF
+	wI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20x
+	vE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v2
+	0xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxV
+	W8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8fwIDUUUUU==
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Tue, 27 Jan 2026 12:58:21 +0800 Vivian Wang wrote:
-> Oh and... maybe these should be priv->ndev->mtu + ETH_HLEN + ETH_FCS_LEN?
+On 1/28/26 09:24, Jakub Kicinski wrote:
+> On Tue, 27 Jan 2026 12:58:21 +0800 Vivian Wang wrote:
+>> Oh and... maybe these should be priv->ndev->mtu + ETH_HLEN + ETH_FCS_LEN?
+> + 2 * VLAN_HLEN perhaps?
 
-+ 2 * VLAN_HLEN perhaps?
+... yeah looks like I've simply messed up the whole MTU and max frame
+size configuration thing.
+
+* Tomas: Do you still want to deal with all this and figure out all the
+MTU stuff that needs to be fixed? I can give it a go but I don't want to
+steal your credit.
+
+Regards,
+Vivian "dramforever" Wang
+
+
