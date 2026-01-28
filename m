@@ -1,211 +1,162 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8389A3314AE
-	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 11:22:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B2C225408
+	for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 13:28:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769599343; cv=none; b=nm6LyMykLAdUiR1ClJs007gT4NQuIJawIg/Rq1/mMIj3ptMID4OaML66B916NV2TcDC/tpGZ4W27kjVlon4VSu27ro7h+pzlMTq8oOOSv4I32ps2n3ecvXMcZ06oKmSbRYKDV8B7Shd/cdD4w3pmyuTmEHxt1lUTyixVQXNCrHw=
+	t=1769606932; cv=none; b=AZLmeVtXZ5pahL3S0h1xmHR3+F9btkICbzQI2x3CuF5E6ldMT+lOBhRgUUIr0SMOkxq1ZrnzuGF6ClcUgqe4k1DMnt7hNxPZUpyKBlb7QE7cVF4wXFF0QHFb2kLBbHWEsXSdgHJ+NeemF4lapwHMgsOQ5b+8JXAX05BGdBdjc/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769599343; c=relaxed/simple;
-	bh=XNI1PdxzUMCdX20UCO6iHB0ZsB5uIDvd2qbamyYZI5A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f8+JFOnqTvKi4lX0PB9+HSeQf8VmDC/6P2ojGTZ3DhjniijV/h3snLT4K8msNJOwSKjCVgAl5LL7s7aqPbNDsAAt/cQ7Oeg9eJxALmAw024BzuTbIIZkAxnZb4q6Bx7/yMErUaJg5mK72R6oVxmZyJcrG3vJWJbRpRwh2md0Qus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sk/8l9JY; arc=none smtp.client-ip=74.125.82.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769606932; c=relaxed/simple;
+	bh=7ljei3xi3U8OfQYlSxjCCViYlQqU96DBeVgUd1EakdY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=T3aVUycYm1O7pLGaWbIOMikstgHqUfXg8+s9jZsBZLPtHCVbpomFNVRVt/rPwEx75hJMNhXlEl7JTUSBsD77XAeNJKanESca2EMM+z0lghhdc6eYf9h6pC/vcOi4MVdWeOLtoYIpnaGg0QiZ+b/4RutRvfoZJ1kBYfd2l6xWl4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=T4F7wYUX; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sk/8l9JY"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-124a95e592fso325506c88.0
-        for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 03:22:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="T4F7wYUX"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-662feac825eso174070eaf.3
+        for <spacemit@lists.linux.dev>; Wed, 28 Jan 2026 05:28:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769599341; x=1770204141; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QJUI8NJKVSDnIT+QSuw3y5qsdf/HcwP4R02WUPv/Zns=;
-        b=Sk/8l9JYsrgm20Wng3cfQIybgIL3qgUNrR6iox33wOlIFZKRqeFvqUoBMeb+P6voM3
-         3LWCoqpGCfHRraWDRHRI1PvzP/K3jUMf9c562Ozoe3U7zE4EvO7x7JTfzVMuDqueMMv5
-         fLE1raQ38zVeLXsnWtuNu0gKh4pVKKZF8qeC0/vNHS90iStw0aYpGsBmPe/OXDMEvGK/
-         w4W+EizBtorKNjC8Hco71xLLagsMNnKSllYeyTctc9NnJG1/TkKL+xKxVYru0jX916gW
-         MrBZg1wi7LR/JhU2wjM3VRG7to9qNJMLFuCUqz0Cx3gIkm0GmXHTa4q8G+w27DMHtk7v
-         8lGQ==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1769606930; x=1770211730; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CR+ZvBkGA0rmoAszJtyMWrCYonp7pdFBqImvRwPUKjc=;
+        b=T4F7wYUXHaJsWkMwG/Elm3VP1E3Fh77jegWVr7WUbuaiD1lRS4HG8jVH4hk2mO8qDE
+         iFZa/7dcVvDSwO/wTYg8ZPEX7P517ducoCKBkL2M1iR2quZt+8hKe4EbmfUV+OPkY/Bl
+         hIqfms8II91HfEZtOe8qjodU8YSdkDrWAx2cuunPKo/Hm4PKpjLZNNJ1abUTGD1DIgFL
+         OhlmwfvbUDby9iEYeTG0ayYEqeYv13+zDOodLn8a7g4UPy39+zLU5w4m8wZUbLhlEMGC
+         SRP/1X/8ih5mJp41sIro55ME1pY8C3TiXaMm1SCOnMQfWmP4777l/KSX9WM7AAGj/QZ5
+         uXng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769599341; x=1770204141;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QJUI8NJKVSDnIT+QSuw3y5qsdf/HcwP4R02WUPv/Zns=;
-        b=e+P63Q0UbyVjaul3homJs0LDZ6ZuAoVM+LIV1OkqGwqX1Hti7SQa4A52hr0dF9Zacg
-         9P+7AJqtvIfFN9bTKtMisgZky8SwBM+qkFqiUw2tkTmUQLA/e2whebSAZFYwtrh0Um4s
-         LO9eYA+14fHdOdbAig5xqjopqRyp6mQc/LaD6+5nLM7WJGhDbaIKwtRicVUzWa1m+xle
-         o/Pv1cec3zJyHkIkjB9qxlZGnWgB9xM8UA6netJ0A/MzH8Rc9SUSqn5aTF1lIVdEng0+
-         kqQamiU9v9pWCC7R4hVjsKILlKdFCSwHANgyxoWS0jCDcWe9cSIAyRevzPAlYEQV6Ybf
-         A3Zg==
-X-Forwarded-Encrypted: i=1; AJvYcCWrG3SnRojTkF6Z31zqeo+PDZq7BKPCcWjjzNuZidByoepj+1ORXc4Fr37Bp6hLvK8dv1HlM3ckkw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxkcIfC3ZaaPnPVu6D4CRlUMulyH8C2/DMpve0QXwEugkbTFQIm
-	ySQYWm6pLx8+LF7B3ejg7nAGXTzHGHO796Fp/cZ2RAbMm06HqXqtx9Bj
-X-Gm-Gg: AZuq6aIMImy8oew+87d7xtQajxVBxw4UcC0K0qF6tf1ucgnO5MTr4vb4gpwQE6z2/88
-	x1v+zfbiau4Ia9HxEM3RBtnh2jhSiNh5peNvl4ODN9xi50tHenD9aAoXrz5sCwesQk/+9OKaEBb
-	XeBFDBRErD5ZS/wO5X0okVmD4HvRnDX9YPUcjJYau/0REd0oZFd8EZ89tHtc1IJUIdn/0F8f+Rw
-	zhbE6C2Niw461rCdo33t3Z6mZPz4QYtcSgmPMcTRBDFBc3V/oXiuCRYoRm2kyWOhW8+Fn5nVTVE
-	R3NPxAM3A+LazHCQwoTJICUqhIwOMePuD+QZDW5nZntZx7RW28V6VV3crX8FZuNB3B4XO6uzwY5
-	2uhm2UalSo57addPLDXN7k5TqASTRxXtDbgKNmNkTKY+1Z9zlYVcGWiyPZEeGyttiOCO95JEuFe
-	syKSRC2uXzPQ==
-X-Received: by 2002:a05:7022:eb47:20b0:11d:fd26:234e with SMTP id a92af1059eb24-124a0070cbdmr2385944c88.16.1769599341399;
-        Wed, 28 Jan 2026 03:22:21 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b7a16cf8d6sm2140833eec.3.2026.01.28.03.22.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jan 2026 03:22:20 -0800 (PST)
-Date: Wed, 28 Jan 2026 19:22:02 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Vivian Wang <wangruikang@iscas.ac.cn>, 
-	Inochi Amaoto <inochiama@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Richard Cochran <richardcochran@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
-	Yao Zi <ziyao@disroot.org>, Yanteng Si <siyanteng@cqsoftware.com.cn>, 
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Maxime Chevallier <maxime.chevallier@bootlin.com>, 
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Shangjuan Wei <weishangjuan@eswincomputing.com>, Boon Khai Ng <boon.khai.ng@altera.com>, 
-	Quentin Schulz <quentin.schulz@cherry.de>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
-	Jose Abreu <joabreu@synopsys.com>
-Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next v3 3/3] net: stmmac: Add glue layer for Spacemit
- K3 SoC
-Message-ID: <aXnxDlExQRYrbf6s@inochi.infowork>
-References: <20260128072931.875041-1-inochiama@gmail.com>
- <20260128072931.875041-4-inochiama@gmail.com>
- <f73fc83c-b38d-4974-ba3c-80c5e5556e7e@iscas.ac.cn>
+        d=1e100.net; s=20230601; t=1769606930; x=1770211730;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CR+ZvBkGA0rmoAszJtyMWrCYonp7pdFBqImvRwPUKjc=;
+        b=w+GKJx7DUBLZNG0rvJ9KyG/OigYfRTrEzBz5FqY/sCw6tDg2mtbohx385mVDPxlGz7
+         YuJ2iSfVkXTwTpFZFGeKke4mJcuhg+QjS8fK0cKmAN65XtBZwKmuwpp3JX7FRHP6suCz
+         S5BPTaQK98I1ZeZ7OLrGqjqJuXnrFCQT8x2x0ue0X/lvyOKQ1kHch8MDA/hEAxrIryMs
+         u625xeV+sn1spOzIPXjFnnfvNhvAypF5WShzv++GXX7QiVnFRtN9PWa/eRtEgcUEYO1R
+         O5HjhCs3R2E/5k4fT9XXsbbm2Jx+YQPFGA3oW4io13+StGkjnixGRYW5nxhXPI/eCpU8
+         od9w==
+X-Forwarded-Encrypted: i=1; AJvYcCUUTOvMpuJ0/E94Mp4Lh95jRvTUjnnBV6DmpmQoTg1uMgy6qmgRWTXFd/k5z+TgmWeF924DHdYqTQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YygTIAjT85BuAu/bAIykoFJE/CRTyV2xSdMFwKMd3Ihn0DC5T3T
+	COKqxSuTxTEl7mM4l3jl+Pkxo8ViPpEz6ZeZK/Pcthad/nk2GqqRBsKrLmCxUhy+gKI=
+X-Gm-Gg: AZuq6aJqjDlOGGcKPcIdy8UxmAAIpUxvYqL92g7rO16q3EpfjBCliEXblysvci1SUCs
+	LWAXXx3b352fVjYOsbeRM8cx/tI/lgly2pHxW7FJRfPFM2fxSUBffMGyCTvOvbp7fTcyUbISnYm
+	2YZBhHRweL/1cdNHe45cKsPxI0+QhpzCh+FfwFqU9DS2lg6MpqvO7DY0x1HRYO2MVeCDzUPp1EM
+	xSRAtvjO2En4KDJVTxKNfkqRQEsHIZWIbNnbiPXK4TYgs0FeAP/Pj7mQdi9BFvUqHvo3h1jpyE5
+	CkO14K+zsnt/DomvChrzZVObwAjWxvDc1RG7N8uKR7sG6ioZU/HDC2rH494S5G+Z5fhzPoxBu3w
+	4L/Zn0q0hS+rYs66+oZVW5s8MecOQgGvFvEGmiddKzU7jIal36BW2xkoaAzQqwjniEpgO8nORQh
+	VI0kBgp1DMrjuI7lOgFG7ooZqJNOaJh61chChHb8BHNmrz1oc5Er8=
+X-Received: by 2002:a05:6820:f061:b0:662:f493:181 with SMTP id 006d021491bc7-662f49306cbmr2051118eaf.76.1769606930064;
+        Wed, 28 Jan 2026 05:28:50 -0800 (PST)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-662f994388fsm1374132eaf.4.2026.01.28.05.28.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Jan 2026 05:28:49 -0800 (PST)
+Message-ID: <501849d1-2158-471a-af25-da3dbb070422@riscstar.com>
+Date: Wed, 28 Jan 2026 07:28:48 -0600
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f73fc83c-b38d-4974-ba3c-80c5e5556e7e@iscas.ac.cn>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] regulator: spacemit-p1: Fix n_voltages for BUCK
+ and LDO regulators
+To: Guodong Xu <guodong@riscstar.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, devicetree@vger.kernel.org
+References: <20260124-spacemit-p1-v2-0-2c86b06694ba@riscstar.com>
+ <20260124-spacemit-p1-v2-1-2c86b06694ba@riscstar.com>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20260124-spacemit-p1-v2-1-2c86b06694ba@riscstar.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 28, 2026 at 05:16:46PM +0800, Vivian Wang wrote:
-> Hi Inochi,
+On 1/23/26 6:20 PM, Guodong Xu wrote:
+> Higher voltage settings were unusable due to incorrect n_voltages values
+> causing registration failures. For example, setting aldo4 to 3.3V failed
+> with -EINVAL because the required selector (123) exceeded the allowed
+> range (n_voltages=117).
 > 
-> I have some comments below.
+> Fix by aligning n_voltages with the hardware register widths per the P1
+> datasheet [1]:
+> - BUCK: 255 (was 254), allows selectors 0-254, selector 255 is reserved
+> - LDO: 128 (was 117), allows selectors 0-127, selectors 0-10 are for
+>    suspend mode, valid operational range is 11-127
 > 
-> On 1/28/26 15:29, Inochi Amaoto wrote:
-> > The etherenet controller on Spacemit K3 SoC is Synopsys DesignWare
-> Typo: etherenet -> ethernet
-> > MAC (version 5.40a), with the following special point:
-> Nit: point -> points 
+> This enables the full voltage range supported by the hardware.
+> 
+> Fixes: 8b84d712ad84 ("regulator: spacemit: support SpacemiT P1 regulators")
+> Link: https://developer.spacemit.com/documentation [1]
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> ---
+> v2: No change.
+> ---
+>   drivers/regulator/spacemit-p1.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/regulator/spacemit-p1.c b/drivers/regulator/spacemit-p1.c
+> index 2bf9137e12b1..2b585ba01a93 100644
+> --- a/drivers/regulator/spacemit-p1.c
+> +++ b/drivers/regulator/spacemit-p1.c
+> @@ -87,13 +87,13 @@ static const struct linear_range p1_ldo_ranges[] = {
+>   	}
+>   
+>   #define P1_BUCK_DESC(_n) \
+> -	P1_REG_DESC(BUCK, buck, _n, "vin", 0x47, BUCK_MASK, 254, p1_buck_ranges)
+> +	P1_REG_DESC(BUCK, buck, _n, "vin", 0x47, BUCK_MASK, 255, p1_buck_ranges)
 
-Thanks
+This is correct.  There are 255 possible ranges, 0..254, and
+255 is an illegal value.
 
-> > 1. The rate of the tx clock line is auto changed when the mac speed
-> >    rate is changed, and no need for changing the input tx clock.
-> > 2. This controller require a extra syscon device to configure the
-> >    interface type, enable wake up interrupt and delay configuration
-> >    if needed.
-> >
-> > Add Spacemit dwmac driver support on the Spacemit K3 SoC.
-> >
-> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > ---
-> >  drivers/net/ethernet/stmicro/stmmac/Kconfig   |  12 +
-> >  drivers/net/ethernet/stmicro/stmmac/Makefile  |   1 +
-> >  .../ethernet/stmicro/stmmac/dwmac-spacemit.c  | 218 ++++++++++++++++++
-> >  3 files changed, 231 insertions(+)
-> >  create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
-> >
-> > [...]
-> >
-> > +
-> > +/* dline register bits */
-> > +#define RGMII_RX_DLINE_EN		BIT(0)
-> > +#define RGMII_RX_DLINE_STEP		GENMASK(5, 4)
-> > +#define RGMII_RX_DLINE_CODE		GENMASK(15, 8)
-> > +#define RGMII_TX_DLINE_EN		BIT(16)
-> > +#define RGMII_TX_DLINE_STEP		GENMASK(21, 20)
-> > +#define RGMII_TX_DLINE_CODE		GENMASK(31, 24)
-> > +
-> > +#define MAX_DLINE_DELAY_CODE		0xff
-> > +#define MAX_WORKED_DELAY		2800
-> > +
-> > +/* Note: the delay step value is at 0.1ps */
-> > +static const unsigned int k3_delay_step_10x[4] = {
-> > +	367, 493, 559, 685
-> > +};
-> > +
-> > +static int spacemit_dwmac_set_delay(struct regmap *apmu,
-> > +				    unsigned int dline_offset,
-> > +				    unsigned int tx_code, unsigned int tx_config,
-> > +				    unsigned int rx_code, unsigned int rx_config)
-> > +{
-> > +	unsigned int mask, val;
-> > +
-> > +	mask = RGMII_TX_DLINE_STEP | RGMII_TX_DLINE_CODE | RGMII_TX_DLINE_EN |
-> > +	       RGMII_RX_DLINE_STEP | RGMII_RX_DLINE_CODE | RGMII_RX_DLINE_EN;
-> > +	val = FIELD_PREP(RGMII_TX_DLINE_STEP, tx_config) |
-> > +	      FIELD_PREP(RGMII_TX_DLINE_CODE, tx_code) | RGMII_TX_DLINE_EN |
-> > +	      FIELD_PREP(RGMII_RX_DLINE_STEP, rx_config) |
-> > +	      FIELD_PREP(RGMII_RX_DLINE_CODE, rx_code) | RGMII_RX_DLINE_EN;
-> > +
-> > +	return regmap_update_bits(apmu, dline_offset, mask, val);
-> > +}
-> > +
-> > +static int spacemit_dwmac_detected_delay_value(unsigned int delay,
-> > +					       unsigned int *config)
-> > +{
-> > +	unsigned int best_delay = 0;
-> > +	unsigned int best_config = 0;
-> > +	int best_code = 0;
-> > +	int i;
-> > +
-> > +	if (delay == 0)
-> > +		return 0;
-> > +
-> > +	if (delay > MAX_WORKED_DELAY)
-> > +		return -EINVAL;
-> > +
-> > +	/*
-> > +	 * Note K3 require a specific factor for calculate
-> > +	 * the delay, in this scenario it is 0.9. So the
-> > +	 * formula is code * step / 10 * 0.9
-> > +	 */
-> > +	for (i = 0; i < ARRAY_SIZE(k3_delay_step_10x); i++) {
-> > +		unsigned int step = k3_delay_step_10x[i];
-> > +		int code = DIV_ROUND_CLOSEST(delay * 10 * 10, step * 9);
-> > +		unsigned int tmp = code * step * 9 / 10 / 10;
-> > +
-> > +		if (abs(tmp - delay) < abs(best_delay - delay)) {
-> > +			best_code = code;
-> > +			best_delay = tmp;
-> > +			best_config = i;
-> > +		}
-> > +	}
-> > +
-> > +	*config = best_config;
-> > +
-> > +	return best_code;
-> 
-> Is this really necessary? For K1 I just used the smallest step size.
-> 
-> It seems to me you have, for the smallest step size, about 36.7ps * 0.9
-> = 33ps per step. Theoretically speaking that lets you fine tune the
-> delay to within 1% of the 2ns total required RGMII delay (MAC + PCB +
-> PHY). In practice this number shouldn't be that marginal. 
+I think this bug is an artifact of a change I made while
+chasing an issue during development, and I neglected to
+change it back.
+
+Technically this is a bug fix but it doesn't matter because
+this voltage value (255 represents 3.450 volts) was not
+required.
+
+>   #define P1_ALDO_DESC(_n) \
+> -	P1_REG_DESC(ALDO, aldo, _n, "vin", 0x5b, LDO_MASK, 117, p1_ldo_ranges)
+> +	P1_REG_DESC(ALDO, aldo, _n, "vin", 0x5b, LDO_MASK, 128, p1_ldo_ranges)
+
+I would say this is not correct.
+
+The valid range of values in this register is 0xd-0x1f (11-127),
+which is 117 values; 0xd represents 0.500V and 0x1f represents
+3.400V.
+
+Technically, all other values represent 0.5v (and could therefore
+be considered valid), but I believe those should never be used
+and intentionally considered them invalid.  If 0.5V is desired,
+0xd should be used.
+
+Do you disagree with this?
+>   #define P1_DLDO_DESC(_n) \
+> -	P1_REG_DESC(DLDO, dldo, _n, "buck5", 0x67, LDO_MASK, 117, p1_ldo_ranges)
+> +	P1_REG_DESC(DLDO, dldo, _n, "buck5", 0x67, LDO_MASK, 128, p1_ldo_ranges)
+>   
+>   static const struct regulator_desc p1_regulator_desc[] = {
+>   	P1_BUCK_DESC(1),
 > 
 
-I think it is reasonable, I will take you advice and use the
-smallest step size.
+I have exactly the same comment about this change to the
+number of supported values.
 
-Regards,
-Inochi
+					-Alex
