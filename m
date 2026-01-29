@@ -1,110 +1,234 @@
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E8537F8B1
-	for <spacemit@lists.linux.dev>; Thu, 29 Jan 2026 10:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34D71A267;
+	Thu, 29 Jan 2026 10:08:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769680851; cv=none; b=YiG7Uhf3EvvZi5Ss+5cDfhXGMk9A8y3p85iEoSsXh1WNpDOo4Id3X+9/3jyI1UAEt6q3a/3IFDTmKqC+Bz8D6VSe9o3OUlphUL8HibOR4IvbYiUnd2MJPTAhWxC63thuwbVoC25slEPk+IlZSsGc3V3lxfr33laz3OT3InCcZsE=
+	t=1769681293; cv=none; b=Z3thXp1h574oAwe7R8AHFuEPZJUGl/tMCtJ4FwU4er6Un68h4cIaeDHPVQ2LIDGB737pOlz3wihi+2ctW9DvcKftU2IoU9KdZitPVvX6PJDMaMXMuM/IGoOwutSO6O222WypxWmjocbc1ovjZXfq97T5lAKJGj+MAaP9bad3tVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769680851; c=relaxed/simple;
-	bh=cg2tCmL1MnK8fEfGufJK/74nLuLeP7KQQPFGzywbCWk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=YzSJ0qaFZ0APOw/C3mLmTOwvDFmv4Rb103q8ALJLDEfp5nijPZ79c/PEYd8/eshf1e61XUw5zejAkOHSIRrY3P6wGepRV2W23SvqdRROg264G0rspQLkairp2p6j3U3PLxTlpmjXxHZbf+U8TswBbL1z0gJrHXTg5HkjptdH98E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=vuYThn8U; arc=none smtp.client-ip=54.206.34.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1769681293; c=relaxed/simple;
+	bh=uXkHfa4+z35FpyAOBy2hWJiL6ObVI+X2uHGvORyAOns=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GYu0EsccI0Z1xBLihQe8/ez3ve4Tyg+LtUZg2WA4TkAyaVuvpEaUauH8QyacDkMB0CqJNqBMy4Z1OxkLeB5f4mP1sg5KLLP/lixeIMxhfuwf+xMj5xJyDAv4c6cJm+EiPRSJIXnGs7KnGpjvj4H8uvx+/kheRfEegB2f1BFEqrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tc1tAGQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="vuYThn8U"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1769680734;
-	bh=kSD46m1ogNc6zC/u0ZXCX57K0B/t6fYmWXp2hGNifYg=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=vuYThn8U74BN0Yu/AvpQUIhw2sjpSDauoYx47je587NroJVJ1KMemGuf6sgerOqT3
-	 gLcCg6YCGb27FBP+rj1VFtSXIxsiosv+Sh7FVHCfQ0gnYGYLLKku8NT/xi0F2qcO0E
-	 mHZsOq5HGe2rkvQnMJS7WyRN1VgkQ4r8VdZE51fQ=
-X-QQ-mid: esmtpsz19t1769680725tf47f9eb6
-X-QQ-Originating-IP: NwNr+iF54gvctsdaQA7HUEs9uDmvl39kJiwn0igpLYg=
-Received: from = ( [183.48.244.175])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 29 Jan 2026 17:58:43 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11216958157623042392
-EX-QQ-RecipientCnt: 11
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tc1tAGQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D21C4CEF7;
+	Thu, 29 Jan 2026 10:08:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769681292;
+	bh=uXkHfa4+z35FpyAOBy2hWJiL6ObVI+X2uHGvORyAOns=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tc1tAGQ/6vfMu7sM22oHX6v3VDfEjDyXxw3TVfSNBOXxobmkDsAnRKu91mwZB0I3D
+	 QTS5PRrAsEqPyd77oww6qarDGCnKMSj6MYK9wyMPIQhKo3XTwJWrMh7nDG+iihi8zb
+	 YejnXaKZzUTeNHgNjUouhsgk1nL0r91mz8zDkrSKboNgpHXzmhx9AGcoAeRtv7ZvLm
+	 8zxXCt95tDItdbr7GTC0lvgm4rEMkQwtOuW2KZ34xfk2UwuKVLaTeN3xGFU+YoM4bQ
+	 KtOo89SrtCO0CIJOR7cRnZsgEEp2ZPJ9IifHa2RhcxRl48uZhiWOZ0gyOOZG562MeD
+	 UieC9UBi2JAMg==
+Date: Thu, 29 Jan 2026 10:08:06 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Lv Zheng <lv.zheng@spacemit.com>
+Cc: Tomasz Jeznach <tjeznach@rivosinc.com>, Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Jingyu Li <joey.li@spacemit.com>,
+	Zhijian Chen <zhijian@spacemit.com>, iommu@lists.linux.dev,
+	linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH v1.1 4/7] dt-bindings: iommu: Add spacemit/t100 features
+Message-ID: <20260129-evolution-femur-84eb5668f4a7@spud>
+References: <cover.1769562575.git.lv.zheng@spacemit.com>
+ <cover.1769666438.git.lv.zheng@spacemit.com>
+ <15209d7b8c5a5055f8944ab7261e440d70a18a03.1769666438.git.lv.zheng@spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="g3pOpkxmTCGkgspJ"
+Content-Disposition: inline
+In-Reply-To: <15209d7b8c5a5055f8944ab7261e440d70a18a03.1769666438.git.lv.zheng@spacemit.com>
+
+
+--g3pOpkxmTCGkgspJ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 29 Jan 2026 17:58:43 +0800
-Message-Id: <DG0ZGKX13IY6.3798PMYUYKW8P@linux.spacemit.com>
-Cc: "Andi Shyti" <andi.shyti@kernel.org>, "Yixun Lan" <dlan@gentoo.org>,
- "Alex Elder" <elder@riscstar.com>, "Michael Opdenacker"
- <michael.opdenacker@rootcommit.com>, "Troy Mitchell"
- <troymitchell988@gmail.com>, <linux-i2c@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v6 0/2] i2c: spacemit: introduce pio for k1
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Aurelien Jarno" <aurelien@aurel32.net>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260108-k1-i2c-atomic-v6-0-41b132b70f68@linux.spacemit.com>
- <aXlBe1CHq_HbbpCR@aurel32.net>
-In-Reply-To: <aXlBe1CHq_HbbpCR@aurel32.net>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NkXVHN8YrGFczZQ7FM3RkHP7vr+sTE0CKkTDV9CnTExoPslZtViOeYer
-	w56BNkalZLAOO98MhR4uno5JcjbJ90IF0lzl/sKKQvKZPj1RTEc5zOAhaOi6W4rh2jXtKf4
-	IxeW5+1FJ3bOXwsVRSGvaUsk7md+M1WhcTqZ7RwXimQD3cIg2Aic20RzZpMXxed4YfNkho5
-	FDTMkIW9M1kfFLTlUXi3PSAwOSdUcjf2CMeZ8d4pZrxZxNOKlFxEhv9lV2xfXZcEpyr1TkB
-	fJI4Z7q4TFj+PbOyYJYh7pDrqIPK3SvhBuoskq70SnlJfjtDjgGslr5D8y9+di0yGkXw3Z9
-	tCQcTyY2igy7s7Iu91f0BBC8LscpzudT2gRzd9BIxFUmjV0eUzPddLGTnC7mH/RYvw531q7
-	mnteJwmIosekp4PN7bWX59IjALmcWCvGGGAA5nR0c1Od5I94jW2mmin5iYbgYLMKHWiM09e
-	yrw1BfD5o9+TUkXbe5a5dLeGzFQGtmwrcdA3nh5IR/85x1m80jXBjC1/t8OePAWb8N3ofFJ
-	+A/I+J1++qW4y5v+vFsIQ2QLXq67eKsoqJ0iRq0cXHty6XCnpjSSx7yYNXTaadIF55/Wz5e
-	A1WCK1qA9z+lUdmo6Ix74lzrCkr4UNHXoeUUblBboKvy9Qib9/GKz615VL+fcIYuoRu551T
-	6uXchD7Li14LXmLn6OyT8n4jQHR60OPZAkyW8pjJW+KuJzkb2qb/o5hO2mfSdKo5NO1kZnA
-	1+vjLEEyXmJgXSUzMlqQiuQyXisFdnRQpoaGDpdGEdy7TxpBf663WoLFU72lb+/xpcvQqoy
-	hN3J+el5WhUHIsLoTJOmmLNKr9abvvh9Nx+gG/1m7Z9UhxP8I9xxhcr4pi8gP1+yDpsZm/h
-	iQDQRWMUIylKK5eiWaSvT26pZ73/RPexYCoaAdKtVhpx9+hFwR7jKVxXwZnWFORB1KQj5SS
-	70irZrJtozX2H3djB1nQnQ1PN4EpDcadqb3zaGRcM5YzvvV3QJn0rZ3DKAh6/spQflspO1k
-	436fGMA6nZj18btAQKtHZJ43RaLgy4gZJHW2FQQ+VFZUNRyCvrs+2vQj/V3nqCTwD/gu2dR
-	FyaIzzkq/R8
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-X-QQ-RECHKSPAM: 0
 
-On Wed Jan 28, 2026 at 6:51 AM CST, Aurelien Jarno wrote:
-> Hi Troy,
->
-> On 2026-01-08 15:52, Troy Mitchell wrote:
->> This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
->> enabling the use of I2C in atomic context.
->>=20
->> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
->> ---
->> Troy Mitchell (2):
->>       i2c: spacemit: move i2c_xfer_msg()
->>       i2c: spacemit: introduce pio for k1
->>=20
->>  drivers/i2c/busses/i2c-k1.c | 314 +++++++++++++++++++++++++++++++++----=
--------
->>  1 file changed, 237 insertions(+), 77 deletions(-)
->> ---
->> base-commit: 003e84792ce811256114dee4f4ecc1cafdab2b0d
->> change-id: 20250814-k1-i2c-atomic-f1a90cd34364
->
-> This patch series got a few comments. Do you need help to address them=20
-> and send a new one?
-No. I'll address them ASAP.
-Thanks!
+On Thu, Jan 29, 2026 at 02:09:13PM +0800, Lv Zheng wrote:
+> Adds device tree bindings for SpacemiT T100 specific features.
+>=20
+> vendor-hpm-events: Allow vendor events to be customized in the device
+>                    tree.
+> global-filter: The feature saves silicon area by reducing filters to
+>                one and use it as a global filter across all events.
+>                This usually is sufficient for real applications.
 
-                                  - Troy
->
-> Thanks
-> Aurelien
+Why can these not be determined from a device specific compatible?
 
+> Signed-off-by: Lv Zheng <lv.zheng@spacemit.com>
+> Signed-off-by: Jingyu Li <joey.li@spacemit.com>
+> ---
+>  .../bindings/iommu/riscv,iommu.yaml           | 60 ++++++++++++++++++-
+>  1 file changed, 59 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/devicetree/bindings/iommu/riscv,iommu.yaml b/D=
+ocumentation/devicetree/bindings/iommu/riscv,iommu.yaml
+> index d4838c3b3741..0378eef1f34e 100644
+> --- a/Documentation/devicetree/bindings/iommu/riscv,iommu.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/riscv,iommu.yaml
+> @@ -57,17 +57,42 @@ properties:
+> =20
+>    interrupts:
+>      minItems: 1
+> -    maxItems: 4
+> +    maxItems: 68
+>      description:
+>        Wired interrupt vectors available for RISC-V IOMMU to notify the
+>        RISC-V HARTS. The cause to interrupt vector is software defined
+>        using IVEC IOMMU register.
+> +      Normally the number of interrupt vectors available is 4 for IOATS
+> +      civ/fiv/pmiv/piv interrupts. But for SpacemiT distributed IOMMU,
+> +      the number of interrupt vectors includes IOATC pmiv wired
+> +      interrupts and the maximum number of IOATCs can be up to 64.
+
+The extension to 68 should only be permitted for a soc-specific
+compatible.
+
+> +
+> +  interrupt-names:
+> +    minItems: 1
+> +    maxItems: 68
+> =20
+>    msi-parent: true
+> =20
+>    power-domains:
+>      maxItems: 1
+> =20
+> +  vendor-hpm-events:
+> +    minItems: 1
+> +    maxItems: 120
+> +    description:
+> +      Each item defines a vendor specific event using the format of
+> +      "eventId[:eventName]", where the eventId is an integer filling the
+> +      eventID field of the iohpmevt register and the eventName is an
+> +      optional string used as the annotation of the event instead of the
+> +      default name "eventId".
+> +    $ref: /schemas/types.yaml#/definitions/string-array
+> +
+> +  global-filter:
+> +    type: boolean
+> +    description:
+> +      Indicate the filters programmed across iohpmevt registers are wired
+> +      together in hardware as a global filter applied to all HPM events.
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -145,3 +170,36 @@ examples:
+>              };
+>          };
+>      };
+> +
+> +  - |+
+> +    /* Example 5 (SpacemiT distributed IOMMU) */
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    iommu4: iommu@1bccd000 {
+> +        compatible =3D "qemu,riscv-iommu", "riscv,iommu";
+
+You cannot use the qemu compatible for your device, you must use a
+specific one for the spacemit k3.
+
+Also, why is your version "v1.1"? That should just be "v1", and your
+next version "v2" etc.
+
+pw-bot: changes-requested
+
+Cheers,
+Conor.
+
+> +        reg =3D <0x1bccd000 0x1000>;
+> +        interrupts =3D <58 IRQ_TYPE_LEVEL_HIGH>, <58 IRQ_TYPE_LEVEL_HIGH=
+>,
+> +                     <58 IRQ_TYPE_LEVEL_HIGH>, <58 IRQ_TYPE_LEVEL_HIGH>,
+> +                     <62 IRQ_TYPE_LEVEL_HIGH>, <63 IRQ_TYPE_LEVEL_HIGH>;
+> +        interrupt-names =3D "civ", "fiv", "ioats-pmiv", "piv",
+> +                          "ioatc0-pmiv", "ioatc1-pmiv";
+> +        interrupt-parent =3D <&saplic>;
+> +        #iommu-cells =3D <0x01>;
+> +        /* SpacemiT T100 features */
+> +        global-filter;
+> +        vendor-hpm-events =3D "0x10:pri_page_reqs",
+> +                            "0x11:ptw_cache_reqs",
+> +                            "0x12:dtw_cache_reqs",
+> +                            "0x15:all_trans_reqs",
+> +                            "0x20:dtw_cache_lkps",
+> +                            "0x28:s1l0_ptw_cache_lkps",
+> +                            "0x2A:s1l1_ptw_cache_lkps",
+> +                            "0x2C:s1l2_ptw_cache_lkps",
+> +                            "0x2E:s1l3_ptw_cache_lkps",
+> +                            "0x30:s2l0_ptw_cache_lkps",
+> +                            "0x32:s2l1_ptw_cache_lkps",
+> +                            "0x34:s2l2_ptw_cache_lkps",
+> +                            "0x36:s2l3_ptw_cache_lkps",
+> +                            "0x38:mtlb_lkps",
+> +                            "0x3A:utlb_lkps";
+> +    };
+> --=20
+> 2.43.0
+>=20
+> This message and any attachment are confidential and may be privileged or=
+ otherwise protected from disclosure. If you are not an intended recipient =
+of this message, please delete it and any attachment from your system and n=
+otify the sender immediately by reply e-mail. Unintended recipients should =
+not use, copy, disclose or take any action based on this message or any inf=
+ormation contained in this message. Emails cannot be guaranteed to be secur=
+e or error free as they can be intercepted, amended, lost or destroyed, and=
+ you should take full responsibility for security checking.=20
+> =20
+> =E6=9C=AC=E9=82=AE=E4=BB=B6=E5=8F=8A=E5=85=B6=E4=BB=BB=E4=BD=95=E9=99=84=
+=E4=BB=B6=E5=85=B7=E6=9C=89=E4=BF=9D=E5=AF=86=E6=80=A7=E8=B4=A8=EF=BC=8C=E5=
+=B9=B6=E5=8F=AF=E8=83=BD=E5=8F=97=E5=85=B6=E4=BB=96=E4=BF=9D=E6=8A=A4=E6=88=
+=96=E4=B8=8D=E5=85=81=E8=AE=B8=E8=A2=AB=E6=8A=AB=E9=9C=B2=E7=BB=99=E7=AC=AC=
+=E4=B8=89=E6=96=B9=E3=80=82=E5=A6=82=E9=98=81=E4=B8=8B=E8=AF=AF=E6=94=B6=E5=
+=88=B0=E6=9C=AC=E9=82=AE=E4=BB=B6=EF=BC=8C=E6=95=AC=E8=AF=B7=E7=AB=8B=E5=8D=
+=B3=E4=BB=A5=E5=9B=9E=E5=A4=8D=E7=94=B5=E5=AD=90=E9=82=AE=E4=BB=B6=E7=9A=84=
+=E6=96=B9=E5=BC=8F=E9=80=9A=E7=9F=A5=E5=8F=91=E4=BB=B6=E4=BA=BA=EF=BC=8C=E5=
+=B9=B6=E5=B0=86=E6=9C=AC=E9=82=AE=E4=BB=B6=E5=8F=8A=E5=85=B6=E4=BB=BB=E4=BD=
+=95=E9=99=84=E4=BB=B6=E4=BB=8E=E9=98=81=E4=B8=8B=E7=B3=BB=E7=BB=9F=E4=B8=AD=
+=E4=BA=88=E4=BB=A5=E5=88=A0=E9=99=A4=E3=80=82=E5=A6=82=E9=98=81=E4=B8=8B=E5=
+=B9=B6=E9=9D=9E=E6=9C=AC=E9=82=AE=E4=BB=B6=E5=86=99=E6=98=8E=E4=B9=8B=E6=94=
+=B6=E4=BB=B6=E4=BA=BA=EF=BC=8C=E6=95=AC=E8=AF=B7=E5=88=87=E5=8B=BF=E4=BD=BF=
+=E7=94=A8=E3=80=81=E5=A4=8D=E5=88=B6=E3=80=81=E6=8A=AB=E9=9C=B2=E6=9C=AC=E9=
+=82=AE=E4=BB=B6=E6=88=96=E5=85=B6=E4=BB=BB=E4=BD=95=E5=86=85=E5=AE=B9=EF=BC=
+=8C=E4=BA=A6=E8=AF=B7=E5=88=87=E5=8B=BF=E4=BE=9D=E6=9C=AC=E9=82=AE=E4=BB=B6=
+=E6=88=96=E5=85=B6=E4=BB=BB=E4=BD=95=E5=86=85=E5=AE=B9=E8=80=8C=E9=87=87=E5=
+=8F=96=E4=BB=BB=E4=BD=95=E8=A1=8C=E5=8A=A8=E3=80=82=E7=94=B5=E5=AD=90=E9=82=
+=AE=E4=BB=B6=E6=97=A0=E6=B3=95=E4=BF=9D=E8=AF=81=E6=98=AF=E4=B8=80=E7=A7=8D=
+=E5=AE=89=E5=85=A8=E5=92=8C=E4=B8=8D=E4=BC=9A=E5=87=BA=E7=8E=B0=E4=BB=BB=E4=
+=BD=95=E5=B7=AE=E9=94=99=E7=9A=84=E9=80=9A=E4=BF=A1=E6=96=B9=E5=BC=8F=EF=BC=
+=8C=E5=8F=AF=E8=83=BD=E4=BC=9A=E8=A2=AB=E6=8B=A6=E6=88=AA=E3=80=81=E4=BF=AE=
+=E6=94=B9=E3=80=81=E4=B8=A2=E5=A4=B1=E6=88=96=E6=8D=9F=E5=9D=8F=EF=BC=8C=E6=
+=94=B6=E4=BB=B6=E4=BA=BA=E9=9C=80=E8=87=AA=E8=A1=8C=E8=B4=9F=E8=B4=A3=E5=81=
+=9A=E5=A5=BD=E5=AE=89=E5=85=A8=E6=A3=80=E6=9F=A5=E3=80=82
+
+--g3pOpkxmTCGkgspJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaXsxhgAKCRB4tDGHoIJi
+0lrTAQDUeHiDKYJ2pdgF5qBPFTl2MmUS2TDpj5WaIfHu/f1nGQEAz5zTpEBn+UUL
+r1iuSjsTGijDHp/qZQHhemZyn6Vj2Qk=
+=lo6B
+-----END PGP SIGNATURE-----
+
+--g3pOpkxmTCGkgspJ--
