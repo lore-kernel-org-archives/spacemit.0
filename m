@@ -1,110 +1,80 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34A37346A01;
-	Thu, 29 Jan 2026 17:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE82F1CBEB9;
+	Thu, 29 Jan 2026 18:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769706368; cv=none; b=LiAVLiPHNEyR9I9V5MOVt5X/jc5iX9s9vBCofu5ISF3UdikxkFenS+w17sk6UB/QHnfxAEmPz6h9xy35SJaNka16IuXT8ZdwP6g4KMYSITnQYgkOmQ7YGxTPzP0f2BNcbR3Gqx8qwRgjKp3359fsJiR8CTIBmMj71Ro+B4BKao4=
+	t=1769710565; cv=none; b=aSGEbMF/yeoiiNCdlobg9wBff6L+QYKVO2usu9olx9vXst9YoyC35wIUYVkyaQx1lahHQzvxBVJuEbOLTviFvdvcVSmhDz7QFB38Mn3YYbNg0NLZ6Ey4FXyatNKD1OstC8AFwgJZ2EWJY5DuX2yv50yXHhTXhN9sGsexGDrdmxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769706368; c=relaxed/simple;
-	bh=Bj+6EzKaz2HdsMGmdFcp3gynrSLuJENGKgJTVdXR3xc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eEr0IvEMD+5FO5Afo2DobqexFamMhYGdfJHlaFE/V8BRMLYOy6qNvaYVzpGn0nfaThj/0Zf63Uup/9+L/oQsXOApsfNtIZuhpYdqQpctxA/yItkOfkaCtINmjq754GJERGHtdiUjWV4iR/K6jIvv1dCFRW8aeSbvo/NIGDd77s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F2820153B;
-	Thu, 29 Jan 2026 09:05:58 -0800 (PST)
-Received: from [10.1.196.85] (e121345-lin.cambridge.arm.com [10.1.196.85])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DC81F3F73F;
-	Thu, 29 Jan 2026 09:06:02 -0800 (PST)
-Message-ID: <2f1f48c6-ad75-4e7d-89a2-c93bb1c1d067@arm.com>
-Date: Thu, 29 Jan 2026 17:06:00 +0000
+	s=arc-20240116; t=1769710565; c=relaxed/simple;
+	bh=4DXQDhnPotjP+UKYn76hb5JpjbepnP01qbt9I5JvauM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IbFG39+/JgJOrDZ/iiZkHbaoGxzHN9/W+pzvtYfu4RDiVUWM+fykJXEdxmkvVaAIJ7dB4dcMGneCn1Oqi8phozGkda4kFSzicmOgL5cXDVx1q7OP06AixERqIbtiLJZC3s0FPpmwxCeYe5F8KyovH67C5CbZniAieBMFOwShR2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=anB/Q/jb; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="anB/Q/jb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43245C4CEF7;
+	Thu, 29 Jan 2026 18:16:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769710565;
+	bh=4DXQDhnPotjP+UKYn76hb5JpjbepnP01qbt9I5JvauM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=anB/Q/jbZNTJ+9hs9D5Hw+dbM8AF5A3/ahakg8HQK18cyX/ISdqRhjY56JdPSE7d8
+	 z8tmnFZPr1sOAa1Ix1pEzt4IqsJTXA/fW9jB93ccEDojQbtc9RcO1XjAb2u834CE3v
+	 5poZvGKmQkuXFZk+aS1Orib65norHrWzF3VK3ftyvc7vyoAEms/J9y1SEqcH8Fukw1
+	 q/SrjR39Nvs/kxSKqmsQ5G3/6v2eZCIvSasGpVNMrL2BEa4/j5Btil28GUX/FzmMgy
+	 bOffYtIGplJtqaHSlIZfGmWuYL8PcuG7lW93PU9hUdhQZrre1Z9uyL9blb1HHgiwmF
+	 XgYMm5DwoUUrA==
+Date: Thu, 29 Jan 2026 12:16:04 -0600
+From: Rob Herring <robh@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>,
+	Lee Jones <lee@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] dt-bindings: mfd: spacemit,p1: Add individual
+ regulator supply properties
+Message-ID: <20260129181604.GA1398997-robh@kernel.org>
+References: <20260124-spacemit-p1-v2-0-2c86b06694ba@riscstar.com>
+ <20260124-spacemit-p1-v2-2-2c86b06694ba@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1.1 4/7] dt-bindings: iommu: Add spacemit/t100 features
-To: Conor Dooley <conor@kernel.org>, =?UTF-8?B?6YOR5b6L?=
- <lv.zheng@spacemit.com>
-Cc: Tomasz Jeznach <tjeznach@rivosinc.com>, Joerg Roedel <joro@8bytes.org>,
- Will Deacon <will@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Jingyu Li <joey.li@spacemit.com>,
- iommu <iommu@lists.linux.dev>,
- linux-perf-users <linux-perf-users@vger.kernel.org>,
- linux-riscv <linux-riscv@lists.infradead.org>,
- spacemit <spacemit@lists.linux.dev>, devicetree <devicetree@vger.kernel.org>
-References: <cover.1769562575.git.lv.zheng@spacemit.com>
- <cover.1769666438.git.lv.zheng@spacemit.com>
- <15209d7b8c5a5055f8944ab7261e440d70a18a03.1769666438.git.lv.zheng@spacemit.com>
- <20260129-evolution-femur-84eb5668f4a7@spud>
- <a4684b7f094a6a5ee87d9db722b75594f851b9fb.d4fb292a.1570.47af.8025.bf9af089dc8a@feishu.cn>
- <20260129-grandly-compare-e8e3a105f690@spud>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260129-grandly-compare-e8e3a105f690@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260124-spacemit-p1-v2-2-2c86b06694ba@riscstar.com>
 
-On 29/01/2026 4:41 pm, Conor Dooley wrote:
-> On Thu, Jan 29, 2026 at 06:43:03PM +0800, 郑律 wrote:
->>> From: "Conor Dooley"<conor@kernel.org>
->>> Date:  Thu, Jan 29, 2026, 18:08
->>> Subject:  Re: [PATCH v1.1 4/7] dt-bindings: iommu: Add spacemit/t100 features
->>> To: "Lv Zheng"<lv.zheng@spacemit.com>
->>> Cc: "Tomasz Jeznach"<tjeznach@rivosinc.com>, "Joerg Roedel"<joro@8bytes.org>, "Will Deacon"<will@kernel.org>, "Robin Murphy"<robin.murphy@arm.com>, "Rob Herring"<robh@kernel.org>, "Krzysztof Kozlowski"<krzk+dt@kernel.org>, "Conor Dooley"<conor+dt@kernel.org>, "Paul Walmsley"<pjw@kernel.org>, "Palmer Dabbelt"<palmer@dabbelt.com>, "Albert Ou"<aou@eecs.berkeley.edu>, "Alexandre Ghiti"<alex@ghiti.fr>, "Jingyu Li"<joey.li@spacemit.com>, "Zhijian Chen"<zhijian@spacemit.com>, <iommu@lists.linux.dev>, <linux-perf-users@vger.kernel.org>, <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, <devicetree@vger.kernel.org>
->>> On Thu, Jan 29, 2026 at 02:09:13PM +0800, Lv Zheng wrote:
->>>> Adds device tree bindings for SpacemiT T100 specific features.
->>>>   
->>>> vendor-hpm-events: Allow vendor events to be customized in the device
->>>>                     tree.
->>>> global-filter: The feature saves silicon area by reducing filters to
->>>>                 one and use it as a global filter across all events.
->>>>                 This usually is sufficient for real applications.
->>>   
->>> Why can these not be determined from a device specific compatible?
->>
->> The specification only defines less than 10 standard event types while the
->> real silicons should have implemented many other event types based on
->> their micro-architecture. I tried to provide a common mechanism for all
->> vendor specific event types across different vendors.
+On Sat, Jan 24, 2026 at 08:20:17AM +0800, Guodong Xu wrote:
+> Add supply properties that match the P1 PMIC's actual hardware topology
+> where each buck converter has its own VIN pin and LDO groups share
+> common input pins. Supply names are defined according to the pinout
+> names in the P1 datasheet.
 > 
-> Given that the variance is based on uarch, it sounds like it can be
-> determined from the compatible.
-> 
->> It is similar for the global filter, the global filter mechanism actually
->> complies to the IOMMU specification, users can alter the iohpmevt
->> registers as is what is specified in the IOMMU specification. It only
->> provides slight application difference between the final effection. Thus
->> this could also be a non-device specific option.
-> 
-> What is a "user" in this context? Given you're talking about reducing
-> silicon area, it sounds like this will be set in stone for each SoC, and
-> therefore can be determined by compatible. If other devices do this,
-> they can also determine it from their compatible.
-> 
-> Properties for things that can be determined based on compatible are
-> generally not permitted, so you'll need to provide a compelling
-> rationale. Common mechanism isn't one, since determining based on
-> compatible would be a common mechanism based on match data that people
-> can tack onto for their devices.
+> This allows different boards to describe their actual power tree
+> connections in devicetree rather than hardcoding supply relationships
+> in the driver.
 
-Also, reinventing jevents via devicetree is pretty grim anyway - the PMU 
-can simply expose an "identifier" attribute that uniquely identifies the 
-vendor implementation, and perf tooling can match that to a set of event 
-definitions in userspace, with the added bonus that jevents can also 
-encode meaningful descriptions, metrics and suchlike. There doesn't 
-*need* to be a sysfs alias for every possible event. I see the RISC-V 
-CPU PMUs are already on-board with this approach - note the 
-"Unit"/"Compat" matching for system/uncore PMUs is a little different 
-from the mapfile used for CPUs, but see other architectures for examples.
+You are breaking both forward and backwards compatibility changing both 
+the dts and the driver. If that is fine to do, then explicitly say so. 
 
-Thanks,
-Robin.
+A secondary issue is the binding and dts go via differ trees and we end 
+up with intermittent warnings.
 
+> 
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> ---
+> v2: Remove providers from the dts example.
+>     Pass the 'make dt_binding_check' test.
+> ---
+>  .../devicetree/bindings/mfd/spacemit,p1.yaml       | 49 +++++++++++++++++++++-
+>  1 file changed, 47 insertions(+), 2 deletions(-)
