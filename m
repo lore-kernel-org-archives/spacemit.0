@@ -1,35 +1,37 @@
-Received: from sg-1-18.ptr.blmpb.com (sg-1-18.ptr.blmpb.com [118.26.132.18])
+Received: from va-2-40.ptr.blmpb.com (va-2-40.ptr.blmpb.com [209.127.231.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0B837757C
-	for <spacemit@lists.linux.dev>; Thu, 29 Jan 2026 06:09:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=118.26.132.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19F337757E
+	for <spacemit@lists.linux.dev>; Thu, 29 Jan 2026 06:09:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769666972; cv=none; b=EbVuhucKArEABIJUxUIDkEriu8gXWm+r2C1ePPCDo493oOS8TYhFQdE68hxv2ZqJeHua27TRzf2lBPcAl99gOtvTiHyLcBS23UiT34DERjkpXAQ3uV+T315RgcNMq379B+OTw75q41NRnkGcHpxfQN/iSJJtzKp82J6vVpoCQ8k=
+	t=1769666972; cv=none; b=F8JlaWg2Ndcup+JtcsiTfrRPJbayH6KRR94beDGUXSB5gN+x6rYK+QO9zm2BPD3hNT1k8m/BgHD9XSwxUBrbwvG1L/llm4yrpvbfrQA3xITJS96/fNbiHG06c5EKxU1vAufeNvtr8yr8MQsJDcUHQq9hCMwPIXSWAxW841u74DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1769666972; c=relaxed/simple;
-	bh=nm4fMFeZjEGLN1Nxa+5Br+7EWnJNyqeW7DVkCweO7sc=;
-	h=Date:Message-Id:To:In-Reply-To:Subject:Content-Type:Cc:
-	 Mime-Version:References:From; b=tnAB2DQT8go1L4an0x/HcHk7uxPuxjZcrJellNsiUhnA8jn/a9MUYh5bN/phzi68z3Q7ec7wGfVo6gOpD2Pq3d09Gys9VrAWe0oyCIGK7NNFwH/4FNgFsp7ZyMszi1fiz38CpZgXZtSqN0kQTrqPQZEwFq8IuyetWSstXF3W2q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=spacemit.com; spf=pass smtp.mailfrom=spacemit.com; dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b=jgS4H0s+; arc=none smtp.client-ip=118.26.132.18
+	bh=8upDpzY11T2U3Vc+vOW9Or40gGHbayS9v7UgNrdOKls=;
+	h=Subject:Message-Id:Date:Content-Type:To:From:Mime-Version:
+	 In-Reply-To:Cc:References; b=bnkuQAB18paq99SPeDysttSH2kLAOSgyqaOmWImhI8Bcr3l9AlPFVLD1tSvNFXhpVYa4fTJs6CKt7LCvMFRRDuGzAwriyGCHknyAc7N54jOA+n74HghDuXaqD1HKTEHLE1at+cISmlvfz2VfK4W8xWeHn+AdPjQqiEIlh8S/g8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=spacemit.com; spf=pass smtp.mailfrom=spacemit.com; dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b=tLMlyX6m; arc=none smtp.client-ip=209.127.231.40
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b="jgS4H0s+"
+	dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b="tLMlyX6m"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=feishu2303021642; d=spacemit.com; t=1769666960; h=from:subject:
+ s=feishu2303021642; d=spacemit.com; t=1769666921; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=3ZzioC5tfgK2XZtNHpLeHVEJ7KAWBR9O0yIXwBSvQsU=;
- b=jgS4H0s+3JMv0/9bSTBvPDYzxjHi1DLDRyP4tThcSiioD80AMvuv8hZ5pF7yRLVSnz03bS
- ZYpzRU4i4v7tdoVl9n6jcg1+UwTtKTKHH3+hiCMwN/tPbQDH9API1CLZqehLX+5G1E4gV0
- fGajb2dvxUOoe89rD2Q5UUtqHwLcDEORwxwExRigU6Ml3vX4pKULizBItqzwKr9CEPYHye
- 7Jmgh4A+HPfheSIQqqlPlOSMkL2zSv/xsk1N1tZTYZw6QPz87q2iQPP+PndpAyb0P+6CL4
- m9jr+K0Oboah1l3t/3HPCHw2BKoL4PPzkcVro1LgddT69DzbmUkMgcXRux+BRg==
-Date: Thu, 29 Jan 2026 14:09:13 +0800
-Message-Id: <15209d7b8c5a5055f8944ab7261e440d70a18a03.1769666438.git.lv.zheng@spacemit.com>
-Received: from SurfaceBook2-B.localdomain ([122.224.183.70]) by smtp.feishu.cn with ESMTPS; Thu, 29 Jan 2026 14:09:17 +0800
-X-Lms-Return-Path: <lba+2697af98e+f78e7d+lists.linux.dev+lv.zheng@spacemit.com>
+ bh=rNrYIcOjBoHLzLWKgyHR6MiVadOMXKsbO2l4LxyJKmg=;
+ b=tLMlyX6mHPD63lKQSRFoK4VFzi/dGbmb2be7IIzqYQSkGSDYf3s/3CudCJ8OSw6ELHfa5N
+ V2jPzIyXAZrucfri4cDVopN3O74GF9IxisSD8N48jcBzoNJJdtQ8AH790aXveCUce5f4Id
+ Ln84xsbpI+lgAoZBeisuCeHcWrUewkGqaC8Xu3kGdAWEnhDhZEw+lPJwyHLFjI5P+5c5oP
+ z7A3wt//Yjr5sM1PCaGfy2wPBONo70Dwzj4fgqaS8P0YwXnBhn8Qv6mZ3E5Bw6CE0y1NhJ
+ 57T9kj2oJiaW8n9T/jlpuPwezHUi1JI1sDWxwjOsLxMlQ29wsWNkbGTz0iUcAA==
+Subject: [PATCH v1.1 0/7] iommu/riscv: Add HPM support for RISC-V IOMMU
+Message-Id: <cover.1769666438.git.lv.zheng@spacemit.com>
+Received: from SurfaceBook2-B.localdomain ([122.224.183.70]) by smtp.feishu.cn with ESMTPS; Thu, 29 Jan 2026 14:08:37 +0800
+X-Original-From: Lv Zheng <lv.zheng@spacemit.com>
+Date: Thu, 29 Jan 2026 14:08:17 +0800
+Content-Type: text/plain; charset=UTF-8
 To: "Tomasz Jeznach" <tjeznach@rivosinc.com>, 
 	"Joerg Roedel" <joro@8bytes.org>, "Will Deacon" <will@kernel.org>, 
 	"Robin Murphy" <robin.murphy@arm.com>, "Rob Herring" <robh@kernel.org>, 
@@ -37,125 +39,79 @@ To: "Tomasz Jeznach" <tjeznach@rivosinc.com>,
 	"Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, 
 	"Palmer Dabbelt" <palmer@dabbelt.com>, 
 	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1769666438.git.lv.zheng@spacemit.com>
-Subject: [PATCH v1.1 4/7] dt-bindings: iommu: Add spacemit/t100 features
-X-Original-From: Lv Zheng <lv.zheng@spacemit.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: "Jingyu Li" <joey.li@spacemit.com>, "Lv Zheng" <lv.zheng@spacemit.com>, 
-	"Zhijian Chen" <zhijian@spacemit.com>, <iommu@lists.linux.dev>, 
-	<linux-perf-users@vger.kernel.org>, <linux-riscv@lists.infradead.org>, 
-	<spacemit@lists.linux.dev>, <devicetree@vger.kernel.org>
+From: "Lv Zheng" <lv.zheng@spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1769562575.git.lv.zheng@spacemit.com>
 Content-Transfer-Encoding: quoted-printable
-References: <cover.1769562575.git.lv.zheng@spacemit.com> <cover.1769666438.git.lv.zheng@spacemit.com>
-From: "Lv Zheng" <lv.zheng@spacemit.com>
+Cc: "Jingyu Li" <joey.li@spacemit.com>, "Lv Zheng" <lv.zheng@spacemit.com>, 
+	"Zhijian Chen" <zhijian@spacemit.com>, <iommu@lists.linux.dev>, 
+	<linux-perf-users@vger.kernel.org>, <linux-riscv@lists.infradead.org>, 
+	<spacemit@lists.linux.dev>, <devicetree@vger.kernel.org>
+X-Lms-Return-Path: <lba+2697af967+ce2363+lists.linux.dev+lv.zheng@spacemit.com>
+References: <cover.1769562575.git.lv.zheng@spacemit.com>
 
-Adds device tree bindings for SpacemiT T100 specific features.
+Includes HPM support for RISC-V IOMMU. The HPM hardware mechnism can be
+found in the recent announced SpacemiT SoCs (K3, V100), where T100
+(SpacemiT distributed IOMMU) is shipped.=20
 
-vendor-hpm-events: Allow vendor events to be customized in the device
-                   tree.
-global-filter: The feature saves silicon area by reducing filters to
-               one and use it as a global filter across all events.
-               This usually is sufficient for real applications.
+The tested result can be found as follows:
 
-Signed-off-by: Lv Zheng <lv.zheng@spacemit.com>
-Signed-off-by: Jingyu Li <joey.li@spacemit.com>
----
- .../bindings/iommu/riscv,iommu.yaml           | 60 ++++++++++++++++++-
- 1 file changed, 59 insertions(+), 1 deletion(-)
+ root@sdfirm:~# perf stat --timeout 5000 -a -e riscv_iommu_hpm_0/device_dir=
+_walks,config1=3D0x20c0010000000000/ dmatest; sleep 1
+ [  176.110211] dmatest: Started 1 threads using dma0chan0
+ [  176.114933] dmatest: dma0chan0-copy0: summary 1 tests, 0 failures 394.9=
+4 iops 394 KB/s (0)
+=20
+  Performance counter stats for 'system wide':
+=20
+                  3      riscv_iommu_hpm_0/device_dir_walks,config1=3D0x20c=
+0010000000000/                                  =20
+=20
+        0.081056000 seconds time elapsed
+=20
+ root@sdfirm:~# perf stat --timeout 5000 -a -e riscv_iommu_hpm_0/s_stage_wa=
+lks,config1=3D0x20c0010000000000/ dmatest; sleep 1
+ [   68.152992] dmatest: Started 1 threads using dma0chan0
+ [   68.158071] dmatest: dma0chan0-copy0: summary 1 tests, 0 failures 401.9=
+2 iops 401 KB/s (0)
+=20
+  Performance counter stats for 'system wide':
+=20
+                  6      riscv_iommu_hpm_0/s_stage_walks,config1=3D0x20c001=
+0000000000/                                  =20
+=20
+        0.083192000 seconds time elapsed
 
-diff --git a/Documentation/devicetree/bindings/iommu/riscv,iommu.yaml b/Doc=
-umentation/devicetree/bindings/iommu/riscv,iommu.yaml
-index d4838c3b3741..0378eef1f34e 100644
---- a/Documentation/devicetree/bindings/iommu/riscv,iommu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/riscv,iommu.yaml
-@@ -57,17 +57,42 @@ properties:
-=20
-   interrupts:
-     minItems: 1
--    maxItems: 4
-+    maxItems: 68
-     description:
-       Wired interrupt vectors available for RISC-V IOMMU to notify the
-       RISC-V HARTS. The cause to interrupt vector is software defined
-       using IVEC IOMMU register.
-+      Normally the number of interrupt vectors available is 4 for IOATS
-+      civ/fiv/pmiv/piv interrupts. But for SpacemiT distributed IOMMU,
-+      the number of interrupt vectors includes IOATC pmiv wired
-+      interrupts and the maximum number of IOATCs can be up to 64.
-+
-+  interrupt-names:
-+    minItems: 1
-+    maxItems: 68
-=20
-   msi-parent: true
-=20
-   power-domains:
-     maxItems: 1
-=20
-+  vendor-hpm-events:
-+    minItems: 1
-+    maxItems: 120
-+    description:
-+      Each item defines a vendor specific event using the format of
-+      "eventId[:eventName]", where the eventId is an integer filling the
-+      eventID field of the iohpmevt register and the eventName is an
-+      optional string used as the annotation of the event instead of the
-+      default name "eventId".
-+    $ref: /schemas/types.yaml#/definitions/string-array
-+
-+  global-filter:
-+    type: boolean
-+    description:
-+      Indicate the filters programmed across iohpmevt registers are wired
-+      together in hardware as a global filter applied to all HPM events.
-+
- required:
-   - compatible
-   - reg
-@@ -145,3 +170,36 @@ examples:
-             };
-         };
-     };
-+
-+  - |+
-+    /* Example 5 (SpacemiT distributed IOMMU) */
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    iommu4: iommu@1bccd000 {
-+        compatible =3D "qemu,riscv-iommu", "riscv,iommu";
-+        reg =3D <0x1bccd000 0x1000>;
-+        interrupts =3D <58 IRQ_TYPE_LEVEL_HIGH>, <58 IRQ_TYPE_LEVEL_HIGH>,
-+                     <58 IRQ_TYPE_LEVEL_HIGH>, <58 IRQ_TYPE_LEVEL_HIGH>,
-+                     <62 IRQ_TYPE_LEVEL_HIGH>, <63 IRQ_TYPE_LEVEL_HIGH>;
-+        interrupt-names =3D "civ", "fiv", "ioats-pmiv", "piv",
-+                          "ioatc0-pmiv", "ioatc1-pmiv";
-+        interrupt-parent =3D <&saplic>;
-+        #iommu-cells =3D <0x01>;
-+        /* SpacemiT T100 features */
-+        global-filter;
-+        vendor-hpm-events =3D "0x10:pri_page_reqs",
-+                            "0x11:ptw_cache_reqs",
-+                            "0x12:dtw_cache_reqs",
-+                            "0x15:all_trans_reqs",
-+                            "0x20:dtw_cache_lkps",
-+                            "0x28:s1l0_ptw_cache_lkps",
-+                            "0x2A:s1l1_ptw_cache_lkps",
-+                            "0x2C:s1l2_ptw_cache_lkps",
-+                            "0x2E:s1l3_ptw_cache_lkps",
-+                            "0x30:s2l0_ptw_cache_lkps",
-+                            "0x32:s2l1_ptw_cache_lkps",
-+                            "0x34:s2l2_ptw_cache_lkps",
-+                            "0x36:s2l3_ptw_cache_lkps",
-+                            "0x38:mtlb_lkps",
-+                            "0x3A:utlb_lkps";
-+    };
+Jingyu Li (3):
+  iommu/riscv: Enable IOMMU DMA mapping support
+  iommu/riscv: Fix WSI mode IRQ number handling
+  iommu/riscv: Add HPM support for performance monitoring
+
+Lv Zheng (4):
+  dt-bindings: iommu: Add spacemit/t100 features
+  spacemit/t100: Add vendor event support for RISC-V IOMMU HPM
+  spacemit/t100: Add global filter support for RISC-V IOMMU HPM
+  spacemit/t100: Add SpacemiT T100 IOATC HPM support
+
+ .../bindings/iommu/riscv,iommu.yaml           |   60 +-
+ drivers/iommu/Kconfig                         |    2 +-
+ drivers/iommu/riscv/Kconfig                   |    9 +
+ drivers/iommu/riscv/Makefile                  |    1 +
+ drivers/iommu/riscv/iommu-bits.h              |   20 +-
+ drivers/iommu/riscv/iommu-hpm.c               | 1135 +++++++++++++++++
+ drivers/iommu/riscv/iommu-pci.c               |   13 +-
+ drivers/iommu/riscv/iommu-platform.c          |   12 +-
+ drivers/iommu/riscv/iommu.c                   |   25 +-
+ drivers/iommu/riscv/iommu.h                   |   45 +-
+ 10 files changed, 1308 insertions(+), 14 deletions(-)
+ create mode 100644 drivers/iommu/riscv/iommu-hpm.c
+
 --=20
 2.43.0
 
