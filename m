@@ -1,174 +1,59 @@
-Received: from sg-1-37.ptr.blmpb.com (sg-1-37.ptr.blmpb.com [118.26.132.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5A3330D38
-	for <spacemit@lists.linux.dev>; Fri, 30 Jan 2026 01:39:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=118.26.132.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028E72206A7;
+	Fri, 30 Jan 2026 01:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769737189; cv=none; b=q6gwgJ41lxfpH6qVL+Sxn190mXqOR0u6F/JVn/hlFXD5ZiSVlzz/2vzjGU9iOLXidfLT48pmRYz4MZjr0QVq8ueUTZdfLsGB5NqKPt3MRfV8rwicMCC0Wz7RTDtbAkZ+TAJkIBG3j7AGIR/1jrNowa8rpKh0HdgXCL+UlmT9/ME=
+	t=1769737633; cv=none; b=KBUsC0YytFqwuETY1Dr047siBJa9tNWHlmnRPjTCO9+2paqZex7kS7snGdccUZejNarTTmnvV4jo46C/iSeS5HhC7cyw2hwYFtgrApLr9DMoKvHNlA+82OfwYuUfmcMAS556esZW6MOUedBmjD5jo0tfF4AyX0SJRVEQIfRMD1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769737189; c=relaxed/simple;
-	bh=/1CUBsDJd927BySIY8L9Fe7Z6JCInyOrDcCzO6bWOZ0=;
-	h=Date:Message-Id:From:In-Reply-To:To:Cc:Subject:Mime-Version:
-	 References:Content-Type; b=fnhYxOA8da+kMXMNyBrqtzK1GwEPh8D8UEJbQmrZMGEXoU4/fYO5S+w86aqLeTBMo8oRnuDAQvLcBbp3CbzsMQsVS73T+zbKW2YOqF8QGAn2soeZ4h+gzvf1M5kjNRm+wARvzKecAqKEI4b9A/UM7r17ejTS/tCPrAxf7C1WvCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=spacemit.com; spf=pass smtp.mailfrom=spacemit.com; dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b=CMsIf+xE; arc=none smtp.client-ip=118.26.132.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spacemit.com
+	s=arc-20240116; t=1769737633; c=relaxed/simple;
+	bh=uTSb/3Bkr4NURu+3jD3jtSKpyQ/UkCRXOV9UB1ooxao=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=I7pU8qgwRYLQNO7foqKudBpGBZnZ/Aph3Ol0nMnXl5HTE9LqKjQhqWUuKApqmO7m1dA6YxgKYWXhw+nMlC1fNvi1nuIfM+RngJ49u8XKJZPFj2r/nzPR9Scn+ZQDo6SlFCsdMmv7gsGQkVMf6gFasaVZ+IYVe/JRJekp2R/6q4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZwgkMPgQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=spacemit.com header.i=@spacemit.com header.b="CMsIf+xE"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=feishu2303021642; d=spacemit.com; t=1769737181; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=/1CUBsDJd927BySIY8L9Fe7Z6JCInyOrDcCzO6bWOZ0=;
- b=CMsIf+xE0H3KAtdj7fBL2J7G+2JI8x66aUS39iii9gbWdlgd+D9ixTNjtalZQkfeGSreKs
- wwDz76b2zWVUsGpyeHz5s5MLRs/1ztgYuxNCjrqvqc7Wc/tyNTK1rHeUrfsvrww/VjZHsa
- OfMOGkT00g8r4kAmVnGVn2V4DrHVozImQIQLIpnPB6zsf+UztpOyO+trpa/g+ZMuHumf2D
- 835xIOFZ+6xDkTj/m3+0SwNBKb4uElN/FvkW4m7vSDgFgPw8XeJ3W06cnYPgiToPcNVGcM
- URT/da8lluctXwamy1RpIU3vclARIe6xQFRToU3Hzpr/j/FFkMLOYAmv+8Vg6A==
-Date: Fri, 30 Jan 2026 09:39:38 +0800
-Message-Id: <a4684b7f094a6a5ee87d9db722b75594f851b9fb.f8d0aa16.da0e.4b42.9f4d.e17634051da8@feishu.cn>
-From: =?utf-8?q?=E9=83=91=E5=BE=8B?= <lv.zheng@spacemit.com>
-In-Reply-To: <20260129-grandly-compare-e8e3a105f690@spud>
-Content-Transfer-Encoding: quoted-printable
-To: "Conor Dooley" <conor@kernel.org>
-Cc: "Tomasz Jeznach" <tjeznach@rivosinc.com>, 
-	"Joerg Roedel" <joro@8bytes.org>, "Will Deacon" <will@kernel.org>, 
-	"Robin Murphy" <robin.murphy@arm.com>, "Rob Herring" <robh@kernel.org>, 
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
-	"Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, 
-	"Palmer Dabbelt" <palmer@dabbelt.com>, 
-	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, 
-	"Jingyu Li" <joey.li@spacemit.com>, "iommu" <iommu@lists.linux.dev>, 
-	"linux-perf-users" <linux-perf-users@vger.kernel.org>, 
-	"linux-riscv" <linux-riscv@lists.infradead.org>, 
-	"spacemit" <spacemit@lists.linux.dev>, 
-	"devicetree" <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v1.1 4/7] dt-bindings: iommu: Add spacemit/t100 features
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZwgkMPgQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C906C4CEF7;
+	Fri, 30 Jan 2026 01:47:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769737632;
+	bh=uTSb/3Bkr4NURu+3jD3jtSKpyQ/UkCRXOV9UB1ooxao=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=ZwgkMPgQt7vephvdERWPsEINhAslVuiyMHogeeVGrvSJmc5466bzjhdLBrgMg5IIZ
+	 TqstFv4B+nyUSVrgWW7/FoisVLkFZ31hpWljhjzPIBH5UMbhObNR7E35Mbcp3Qkm8p
+	 ugTb0/uITFunWHMIeRIUr16JM0Ys0+6rJkK/uPt2nxoJ0dEb3iLd2LyDchf2QmimJT
+	 VPO7hTYYz4gnnbfDltJ/ORb3r/zhxbPNgufswZhl/dnTrSsTumnpU5GWLik+V81OTH
+	 3N4U6S779MiELOlRApjmrQLrGo7qduNvRErsi9d2cBmZ1l6jfrhL4I0IiPMI3RdXYp
+	 KLWs0Fp7LEg+w==
+Date: Thu, 29 Jan 2026 17:47:11 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: Tomas Hlavacek <tmshlvck@gmail.com>
+Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, davem@davemloft.net, edumazet@google.com,
+ pabeni@redhat.com, dlan@kernel.org, wangruikang@iscas.ac.cn,
+ stable@vger.kernel.org
+Subject: Re: [PATCH v3] net: spacemit: k1-emac: fix jumbo frame support
+Message-ID: <20260129174711.2965f189@kernel.org>
+In-Reply-To: <20260129042908.410326-1-tmshlvck@gmail.com>
+References: <20260129042908.410326-1-tmshlvck@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-Lms-Return-Path: <lba+1697c0bdb+c5812c+lists.linux.dev+lv.zheng@spacemit.com>
-References: <cover.1769562575.git.lv.zheng@spacemit.com> <cover.1769666438.git.lv.zheng@spacemit.com> <15209d7b8c5a5055f8944ab7261e440d70a18a03.1769666438.git.lv.zheng@spacemit.com> <20260129-evolution-femur-84eb5668f4a7@spud> <a4684b7f094a6a5ee87d9db722b75594f851b9fb.d4fb292a.1570.47af.8025.bf9af089dc8a@feishu.cn>
-	<20260129-grandly-compare-e8e3a105f690@spud>
-Content-Type: text/plain; charset=UTF-8
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-> From: "Conor Dooley"<conor@kernel.org>
-> Date:=C2=A0 Fri, Jan 30, 2026, 00:42
-> Subject:=C2=A0 Re: [PATCH v1.1 4/7] dt-bindings: iommu: Add spacemit/t100=
- features
-> To: "=E9=83=91=E5=BE=8B"<lv.zheng@spacemit.com>
-> Cc: "Tomasz Jeznach"<tjeznach@rivosinc.com>, "Joerg Roedel"<joro@8bytes.o=
-rg>, "Will Deacon"<will@kernel.org>, "Robin Murphy"<robin.murphy@arm.com>, =
-"Rob Herring"<robh@kernel.org>, "Krzysztof Kozlowski"<krzk+dt@kernel.org>, =
-"Conor Dooley"<conor+dt@kernel.org>, "Paul Walmsley"<pjw@kernel.org>, "Palm=
-er Dabbelt"<palmer@dabbelt.com>, "Albert Ou"<aou@eecs.berkeley.edu>, "Alexa=
-ndre Ghiti"<alex@ghiti.fr>, "Jingyu Li"<joey.li@spacemit.com>, "iommu"<iomm=
-u@lists.linux.dev>, "linux-perf-users"<linux-perf-users@vger.kernel.org>, "=
-linux-riscv"<linux-riscv@lists.infradead.org>, "spacemit"<spacemit@lists.li=
-nux.dev>, "devicetree"<devicetree@vger.kernel.org>
-> On Thu, Jan 29, 2026 at 06:43:03PM +0800, =E9=83=91=E5=BE=8B wrote:
-> > > From: "Conor Dooley"<conor@kernel.org>
-> > > Date:=C2=A0 Thu, Jan 29, 2026, 18:08
-> > > Subject:=C2=A0 Re: [PATCH v1.1 4/7] dt-bindings: iommu: Add spacemit/=
-t100 features
-> > > To: "Lv Zheng"<lv.zheng@spacemit.com>
-> > > Cc: "Tomasz Jeznach"<tjeznach@rivosinc.com>, "Joerg Roedel"<joro@8byt=
-es.org>, "Will Deacon"<will@kernel.org>, "Robin Murphy"<robin.murphy@arm.co=
-m>, "Rob Herring"<robh@kernel.org>, "Krzysztof Kozlowski"<krzk+dt@kernel.or=
-g>, "Conor Dooley"<conor+dt@kernel.org>, "Paul Walmsley"<pjw@kernel.org>, "=
-Palmer Dabbelt"<palmer@dabbelt.com>, "Albert Ou"<aou@eecs.berkeley.edu>, "A=
-lexandre Ghiti"<alex@ghiti.fr>, "Jingyu Li"<joey.li@spacemit.com>, "Zhijian=
- Chen"<zhijian@spacemit.com>, <iommu@lists.linux.dev>, <linux-perf-users@vg=
-er.kernel.org>, <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.de=
-v>, <devicetree@vger.kernel.org>
-> > > On Thu, Jan 29, 2026 at 02:09:13PM +0800, Lv Zheng wrote:
-> > > > Adds device tree bindings for SpacemiT T100 specific features.
-> > > >=C2=A0
-> > > > vendor-hpm-events: Allow vendor events to be customized in the devi=
-ce
-> > > > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0tree.
-> > > > global-filter: The feature saves silicon area by reducing filters t=
-o
-> > > > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0one and use =
-it as a global filter across all events.
-> > > > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0This usually=
- is sufficient for real applications.
-> > >=C2=A0
-> > > Why can these not be determined from a device specific compatible?
-> >=C2=A0
-> > The specification only defines less than 10 standard event types while =
-the
-> > real silicons should have implemented many other event types based on
-> > their micro-architecture. I tried to provide a common mechanism for all
-> > vendor specific event types across different vendors.
->=C2=A0
-> Given that the variance is based on uarch, it sounds like it can be
-> determined from the compatible.
+On Thu, 29 Jan 2026 05:29:08 +0100 Tomas Hlavacek wrote:
+> Subject: [PATCH v3] net: spacemit: k1-emac: fix jumbo frame support
 
-I'll give Robin's suggestion a try.
+Could you repost this with subject:
 
-> > It is similar for the global filter, the global filter mechanism actual=
-ly
-> > complies to the IOMMU specification, users can alter the iohpmevt
-> > registers as is what is specified in the IOMMU specification. It only
-> > provides slight application difference between the final effection. Thu=
-s
-> > this could also be a non-device specific option.
->=C2=A0
-> What is a "user" in this context? Given you're talking about reducing
-> silicon area, it sounds like this will be set in stone for each SoC, and
-> therefore can be determined by compatible. If other devices do this,
-> they can also determine it from their compatible.
->=C2=A0
-> Properties for things that can be determined based on compatible are
-> generally not permitted, so you'll need to provide a compelling
-> rationale. Common mechanism isn't one, since determining based on
-> compatible would be a common mechanism based on match data that people
-> can tack onto for their devices.
+[PATCH net v3] net: spacemit: k1-emac: fix jumbo frame support
 
-I see. This sounds like a reasonable rule of DT attributes. I'll do similar
-stuffs based on compatible.
-
-Thanks and best regards,
-Lv
-
-
-This message and any attachment are confidential and may be privileged or o=
-therwise protected from disclosure. If you are not an intended recipient of=
- this message, please delete it and any attachment from your system and not=
-ify the sender immediately by reply e-mail. Unintended recipients should no=
-t use, copy, disclose or take any action based on this message or any infor=
-mation contained in this message. Emails cannot be guaranteed to be secure =
-or error free as they can be intercepted, amended, lost or destroyed, and y=
-ou should take full responsibility for security checking.=20
-=20
-=E6=9C=AC=E9=82=AE=E4=BB=B6=E5=8F=8A=E5=85=B6=E4=BB=BB=E4=BD=95=E9=99=84=E4=
-=BB=B6=E5=85=B7=E6=9C=89=E4=BF=9D=E5=AF=86=E6=80=A7=E8=B4=A8=EF=BC=8C=E5=B9=
-=B6=E5=8F=AF=E8=83=BD=E5=8F=97=E5=85=B6=E4=BB=96=E4=BF=9D=E6=8A=A4=E6=88=96=
-=E4=B8=8D=E5=85=81=E8=AE=B8=E8=A2=AB=E6=8A=AB=E9=9C=B2=E7=BB=99=E7=AC=AC=E4=
-=B8=89=E6=96=B9=E3=80=82=E5=A6=82=E9=98=81=E4=B8=8B=E8=AF=AF=E6=94=B6=E5=88=
-=B0=E6=9C=AC=E9=82=AE=E4=BB=B6=EF=BC=8C=E6=95=AC=E8=AF=B7=E7=AB=8B=E5=8D=B3=
-=E4=BB=A5=E5=9B=9E=E5=A4=8D=E7=94=B5=E5=AD=90=E9=82=AE=E4=BB=B6=E7=9A=84=E6=
-=96=B9=E5=BC=8F=E9=80=9A=E7=9F=A5=E5=8F=91=E4=BB=B6=E4=BA=BA=EF=BC=8C=E5=B9=
-=B6=E5=B0=86=E6=9C=AC=E9=82=AE=E4=BB=B6=E5=8F=8A=E5=85=B6=E4=BB=BB=E4=BD=95=
-=E9=99=84=E4=BB=B6=E4=BB=8E=E9=98=81=E4=B8=8B=E7=B3=BB=E7=BB=9F=E4=B8=AD=E4=
-=BA=88=E4=BB=A5=E5=88=A0=E9=99=A4=E3=80=82=E5=A6=82=E9=98=81=E4=B8=8B=E5=B9=
-=B6=E9=9D=9E=E6=9C=AC=E9=82=AE=E4=BB=B6=E5=86=99=E6=98=8E=E4=B9=8B=E6=94=B6=
-=E4=BB=B6=E4=BA=BA=EF=BC=8C=E6=95=AC=E8=AF=B7=E5=88=87=E5=8B=BF=E4=BD=BF=E7=
-=94=A8=E3=80=81=E5=A4=8D=E5=88=B6=E3=80=81=E6=8A=AB=E9=9C=B2=E6=9C=AC=E9=82=
-=AE=E4=BB=B6=E6=88=96=E5=85=B6=E4=BB=BB=E4=BD=95=E5=86=85=E5=AE=B9=EF=BC=8C=
-=E4=BA=A6=E8=AF=B7=E5=88=87=E5=8B=BF=E4=BE=9D=E6=9C=AC=E9=82=AE=E4=BB=B6=E6=
-=88=96=E5=85=B6=E4=BB=BB=E4=BD=95=E5=86=85=E5=AE=B9=E8=80=8C=E9=87=87=E5=8F=
-=96=E4=BB=BB=E4=BD=95=E8=A1=8C=E5=8A=A8=E3=80=82=E7=94=B5=E5=AD=90=E9=82=AE=
-=E4=BB=B6=E6=97=A0=E6=B3=95=E4=BF=9D=E8=AF=81=E6=98=AF=E4=B8=80=E7=A7=8D=E5=
-=AE=89=E5=85=A8=E5=92=8C=E4=B8=8D=E4=BC=9A=E5=87=BA=E7=8E=B0=E4=BB=BB=E4=BD=
-=95=E5=B7=AE=E9=94=99=E7=9A=84=E9=80=9A=E4=BF=A1=E6=96=B9=E5=BC=8F=EF=BC=8C=
-=E5=8F=AF=E8=83=BD=E4=BC=9A=E8=A2=AB=E6=8B=A6=E6=88=AA=E3=80=81=E4=BF=AE=E6=
-=94=B9=E3=80=81=E4=B8=A2=E5=A4=B1=E6=88=96=E6=8D=9F=E5=9D=8F=EF=BC=8C=E6=94=
-=B6=E4=BB=B6=E4=BA=BA=E9=9C=80=E8=87=AA=E8=A1=8C=E8=B4=9F=E8=B4=A3=E5=81=9A=
-=E5=A5=BD=E5=AE=89=E5=85=A8=E6=A3=80=E6=9F=A5=E3=80=82
+The "net" after "PATCH" is crucial, since the patch conflicts with
+net-next. I needs to be ingested specifically for net in the CI.
+-- 
+pw-bot: cr
