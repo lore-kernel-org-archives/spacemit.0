@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E71B2D877A;
-	Sun,  1 Feb 2026 05:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C47B2DA768;
+	Sun,  1 Feb 2026 05:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769923094; cv=none; b=MefHtA8OncJg8beko6ZoEFqwYgKUDLtJbc2mXzm9Gebv3TFd29IkrmTY3fXSJAZkRiuADR4XK0Hevm2BChQpp7d2CHfawnCRLqG8XpqrBTsHzR6rVi4t12uHvlyCBUw5hkjc1UVE7d2S1mCW3ZHg8u7UEvo2n/YMIx7bCxomsu4=
+	t=1769923095; cv=none; b=gj3FzJtcV7bYIR1PwySjHDdwUmnI1PiRxhbcSxE0p1SlioqiWPUilkyYh2bfPIQRGbIEJ6XTB3JJNJZ4VxiPKKkQgV0GpV1nE8489YQof1ujc9zGBQa0HnrXQYTD7TxykYF3QC1CUllGI+QIH+B5YifvjRiSlXy68YmOIRWdvQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769923094; c=relaxed/simple;
-	bh=+kybUpnrtFuQGoWMBCIC3fHFNqt5wBdFD/Eo2b7zfE8=;
+	s=arc-20240116; t=1769923095; c=relaxed/simple;
+	bh=1le60W0oigdWByY/8TD5ojipz7cEh6LqP0syr4z+JTo=;
 	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=hqRj0iZlJHJLRuTS2PFMw6wns1YMaG5A1c2JNVzN8T19IBhAmeLafI1WjieLAv2fly9nzqGzRmh1v8LPdKqA7J2IuL6oCRt9QMyNK6+VudOc44Iv+nA/NmZwdU03wvScfNKC0C2TmunK0v5oHqcSLtGBdxZfHFvyCQEh+Hx7OQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Npbid27T; arc=none smtp.client-ip=10.30.226.201
+	 References:Date:Message-Id; b=slVwPzMFNRDNpRLIwoR/LThaIAXNFxM5EUCAkXrM/eAdkkVqPjjKtOplyISVtvBhi6l4aH01AizcjLb5ajmyPdSTk4+TzVUXRAu8wVCsKlxlDLzpDj2vI4qQ87lM3+a8nr39k/UXVh6Wc7oQqPMpnznNycZp9OFPYZr/CyWDXwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nxpw8i57; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Npbid27T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAC6C116C6;
-	Sun,  1 Feb 2026 05:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nxpw8i57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1186C19425;
+	Sun,  1 Feb 2026 05:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769923093;
-	bh=+kybUpnrtFuQGoWMBCIC3fHFNqt5wBdFD/Eo2b7zfE8=;
+	s=korg; t=1769923095;
+	bh=1le60W0oigdWByY/8TD5ojipz7cEh6LqP0syr4z+JTo=;
 	h=Subject:From:To:Cc:In-Reply-To:References:Date:From;
-	b=Npbid27TLuRheWz30x8RMRnI8qh8TRjYy3rqMGSvdaKHAg4144DvCku3jAsBRtkN4
-	 I08P2T33RIwwsysKE1Y3t65K+MEQUeVptS81TKdP5YyvaCny8f00KO97KCKChhbc9o
-	 IEjaIdEc6q1U+P8hCtV6lLh3QTYAZkGCwp9/dom0=
+	b=Nxpw8i57i+vomNkiGk7QHu0zC+/5rO+7z96KI0B/h8rGqcyWlUMPYDn8VcXtldeM3
+	 rQ8wvzRfo8+veCVX3nFKD2f28+fBpld4fXAHTK+3sm3Mqnpibg+rMUj6qrtZiwPDo/
+	 QQVCjCBpW83EAKpKe/6P12FJ+ujtAqQYW9B0pS4k=
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -31,8 +31,8 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 3/7] riscv: dts: spacemit: Define the P1 PMIC
- regulators for OrangePi RV2
+Subject: Re: [PATCH 5/7] riscv: dts: spacemit: Update PMIC supply
+ properties for OrangePi RV2
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
@@ -41,35 +41,32 @@ To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Han Gao <rabenda.cn@gmail.com>, Han Gao <gaohan@iscas.ac.cn>
-In-Reply-To: <83affc871efc5fa1c1a08643e66a2dc42b47f24c.1769895215.git.gaohan@iscas.ac.cn>
+In-Reply-To: <485bf9935397707158529bb7c0eec6cb20ffbcc3.1769895215.git.gaohan@iscas.ac.cn>
 References: <cover.1769895215.git.gaohan@iscas.ac.cn>
- <83affc871efc5fa1c1a08643e66a2dc42b47f24c.1769895215.git.gaohan@iscas.ac.cn>
+ <485bf9935397707158529bb7c0eec6cb20ffbcc3.1769895215.git.gaohan@iscas.ac.cn>
 Date: Sun, 01 Feb 2026 00:18:01 -0500
-Message-Id: <176992308158.607015.4408866122835179459@lemur>
+Message-Id: <176992308158.607015.980372835663972481@lemur>
 X-Mailer: b4 0.15-dev-da43f
 
-On Sun, 01 Feb 2026 05:38:10 +0800, Han Gao <gaohan@iscas.ac.cn> wrote:
+On Sun, 01 Feb 2026 05:38:12 +0800, Han Gao <gaohan@iscas.ac.cn> wrote:
 > diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts 
 > b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> index bd1e45e95e38..f87c6ab417c4 100644
+> index d8d0baaec731..c0a0c96f2ac4 100644
 > --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
 > +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> @@ -110,6 +110,116 @@ &i2c8 {
->  	pinctrl-0 = <&i2c8_cfg>;
->  	pinctrl-names = "default";
->  	status = "okay";
-> +
-> +	pmic@41 {
-> +		compatible = "spacemit,p1";
-> +		reg = <0x41>;
-> +		interrupts = <64>;
-> +		vin-supply = <&reg_vcc_4v>;
-> +
+> @@ -134,7 +134,15 @@ pmic@41 {
+>  		compatible = "spacemit,p1";
+>  		reg = <0x41>;
+>  		interrupts = <64>;
+> -		vin-supply = <&reg_vcc_4v>;
+> +		vin1-supply = <&reg_vcc_4v>;
+> +		vin2-supply = <&reg_vcc_4v>;
 
-This vin-supply is replaced by per-rail supplies (vin1-supply through
-vin6-supply, aldoin-supply, dldoin1-supply, dldoin2-supply) in patch
-5/7.  Consider using the final supply properties here directly to avoid
-an intermediate state that is immediately superseded.
+These per-rail supply properties (vin1-supply through dldoin2-supply)
+are not declared in the spacemit,p1.yaml binding, which only has
+vin-supply.  With unevaluatedProperties: false on the PMIC node, these
+will cause dtbs_check failures.  The binding needs to be updated to
+match, or these should remain as the single vin-supply.
 
 -- 
 Konstantin Ryabitsev <konstantin@linuxfoundation.org>
