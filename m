@@ -1,98 +1,60 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF002727F3
-	for <spacemit@lists.linux.dev>; Mon,  2 Feb 2026 10:02:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900292BD022;
+	Mon,  2 Feb 2026 21:43:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770026534; cv=none; b=uk79IINDXlXCZRkLLSDULWXI0yH0svzCub/GY2ibcrbnshlCo1Ke96SyBI/5KpsiANczv2mubUCiSQuvH25f+WnmvXs2qCd+XPHnGAG1mzwF3Q4Y3kbsyNFAkxg9JSAjFg1zAB+8UuIxdwXN7OvhT7L8U42iPLj43OrL0Gr6NiM=
+	t=1770068582; cv=none; b=PrKsgl0FNzcd9Qbk3HgBYOOZEkL7KvrYLuBCgHWYmzs2uzJUFFjGxnmj2cGCaTQDelr8BkUK9Bu5aDeUJxnU5bFgpPZdbGUHE3jxouinyBaiuf9dmvk7U7hBypcMUWi0F4lchk5PIIXlV5UL+LGHWta49RjBouSvrU124JnUrxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770026534; c=relaxed/simple;
-	bh=EkERK/YvJZVeEAaxQXtMPwfz12Ghm/oBYLVlx31ZR+o=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=lMWkk+kYk9O6a+dReWpyZPM2LPqLBiGfCqC9+lIM0Y0T1UmHocRiam6Q5Zc1Lk4EOzyDPl9oE+fyqGKjJaY6JtpV1TxUgBYJmHQwAmpOFcbnD466rNUlD2THu8+CvY99qCtU97t4TIfR14RKEArC8+QbF1IR7re1ZCmfq1/0ihk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from localhost.localdomain (unknown [58.61.141.99])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 32ccae3d3;
-	Mon, 2 Feb 2026 18:02:04 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: [PATCH 1/1] riscv: dts: spacemit: Add 'linux,pci-domain' to PCIe nodes for K1
-Date: Mon,  2 Feb 2026 18:00:00 +0800
-Message-Id: <20260202100000.19176-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1770068582; c=relaxed/simple;
+	bh=EM+yB6h7ZLLXyFPlzm3Er2mFuOEk3fS2kyUl4jgJabs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XR5W/VYPi6VRJ824Gt5PxVrdYS3m9vIqYRPrZKsdUKZQjIKxycstEjjJkcK3ghWoCA5mxYOzAbSdmTFUXAAMorHa05bBPV4Gg8L233QrdM/6xQKvWoe8UrayxSoIZ4fCb48N7EY+mOVDgBIMSfr4gbpIXiwNTs5MIcbeT6SPmHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=4kOt8Uz7; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="4kOt8Uz7"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=X+rJcB2Y3qMDo56ip7zmJMMV7jKekUzDLMK8Xoy/uag=; b=4kOt8Uz7i0mzzy8jrwtiH1Kwzx
+	uUOJtiRZNlPHGyAlZwIPCcxtxOolOVgw/aXNtkbbMovey+opbxKkDEjn6Kfqt/NOtpGxsjjnbdBSX
+	8GTXNJiALuzNd0KGnzWhsiAqeqBkS3LfriJFK5UhOJxrBKQyTaka1VOmJ3c/PUbDVjTY=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vn1gw-005sFZ-Kg; Mon, 02 Feb 2026 22:42:42 +0100
+Date: Mon, 2 Feb 2026 22:42:42 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: Vivian Wang <wangruikang@iscas.ac.cn>, Yixun Lan <dlan@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>, Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S . Miller" <davem@davemloft.net>,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev, netdev@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] net: spacemit: display phy driver information
+Message-ID: <35c9e98d-58f1-489b-a635-4755f518da96@lunn.ch>
+References: <20260201100001.33102-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9c1dcd5e8403a2kunm5c5f4d8f1ec8af
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZH0gaVkgfHR9CH0pKGk8aGFYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlOQ1VNSlVKT0pVQkJZV1kWGg8SFR0UWUFZT0tIVUpLSEpOTE5VSktLVUpCS0
-	tZBg++
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260201100001.33102-1-amadeus@jmu.edu.cn>
 
-The SpacemiT K1 SoC has 3 PCIe EP controller nodes. Add the
-'linux,pci-domain' property to assign a PCI domain number to
-each of the controllers instead of assigning it randomly.
+On Sun, Feb 01, 2026 at 06:00:01PM +0800, Chukun Pan wrote:
+> Print the PHY driver used and interrupt status after connection.
+> 
+> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 529ec68e9c23..d2015201f8e5 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -1033,6 +1033,7 @@ pcie-bus {
- 			#size-cells = <2>;
- 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
- 				     <0x0 0xb8000000 0x1 0x38000000 0x3 0x48000000>;
-+
- 			pcie0: pcie@ca000000 {
- 				device_type = "pci";
- 				compatible = "spacemit,k1-pcie";
-@@ -1044,6 +1045,7 @@ pcie0: pcie@ca000000 {
- 					    "atu",
- 					    "config",
- 					    "link";
-+				linux,pci-domain = <0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
- 				ranges = <0x01000000 0x0 0x00000000 0x0 0x8f002000 0x0 0x00100000>,
-@@ -1087,6 +1089,7 @@ pcie1: pcie@ca400000 {
- 					    "atu",
- 					    "config",
- 					    "link";
-+				linux,pci-domain = <1>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
- 				ranges = <0x01000000 0x0 0x00000000 0x0 0x9f002000 0x0 0x00100000>,
-@@ -1130,6 +1133,7 @@ pcie2: pcie@ca800000 {
- 					    "atu",
- 					    "config",
- 					    "link";
-+				linux,pci-domain = <2>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
- 				ranges = <0x01000000 0x0 0x00000000 0x0 0xb7002000 0x0 0x00100000>,
--- 
-2.25.1
-
+    Andrew
