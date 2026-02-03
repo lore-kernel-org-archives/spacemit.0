@@ -1,60 +1,76 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900292BD022;
-	Mon,  2 Feb 2026 21:43:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B413EBF02
+	for <spacemit@lists.linux.dev>; Tue,  3 Feb 2026 00:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068582; cv=none; b=PrKsgl0FNzcd9Qbk3HgBYOOZEkL7KvrYLuBCgHWYmzs2uzJUFFjGxnmj2cGCaTQDelr8BkUK9Bu5aDeUJxnU5bFgpPZdbGUHE3jxouinyBaiuf9dmvk7U7hBypcMUWi0F4lchk5PIIXlV5UL+LGHWta49RjBouSvrU124JnUrxI=
+	t=1770077134; cv=none; b=AC2bRlvw+bA1mcgWpRznW+qHktHC44MVp3Hcz2/bP5I2dmq5ZA2IQe3miBhWDKhFtSW7ogUzDpSK0admBRptiHcTfKGwD//oxBSmf8Jt1O3H145UBtpPv/kvU9AW4dsyD/zq0PdsdXpFU0xV6ZU3+wFz+hdixHTIU+9ZQbtOp2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068582; c=relaxed/simple;
-	bh=EM+yB6h7ZLLXyFPlzm3Er2mFuOEk3fS2kyUl4jgJabs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XR5W/VYPi6VRJ824Gt5PxVrdYS3m9vIqYRPrZKsdUKZQjIKxycstEjjJkcK3ghWoCA5mxYOzAbSdmTFUXAAMorHa05bBPV4Gg8L233QrdM/6xQKvWoe8UrayxSoIZ4fCb48N7EY+mOVDgBIMSfr4gbpIXiwNTs5MIcbeT6SPmHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=4kOt8Uz7; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1770077134; c=relaxed/simple;
+	bh=kKdeou5Pe7UeE6Ix+YqLXbuufCdY2z3T0wxGDQhiRmE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u+RynOE/oNo0ql+0hHmjD42ls9F51r/LP5LlfWeNsVEXqi1Ki7pZe0GTDTyZ0wuLaLyyKZEFJBP7PwRWfuvcIrx5BzKBUK8R2ZkFPntKKMDeJldcOMF97iiWp2gfcTuhkJqWmdUC+AUxaVedCvJz9m2y7/IuCo6KV1qG+00zQ+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BFnNi+Zv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="4kOt8Uz7"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=X+rJcB2Y3qMDo56ip7zmJMMV7jKekUzDLMK8Xoy/uag=; b=4kOt8Uz7i0mzzy8jrwtiH1Kwzx
-	uUOJtiRZNlPHGyAlZwIPCcxtxOolOVgw/aXNtkbbMovey+opbxKkDEjn6Kfqt/NOtpGxsjjnbdBSX
-	8GTXNJiALuzNd0KGnzWhsiAqeqBkS3LfriJFK5UhOJxrBKQyTaka1VOmJ3c/PUbDVjTY=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vn1gw-005sFZ-Kg; Mon, 02 Feb 2026 22:42:42 +0100
-Date: Mon, 2 Feb 2026 22:42:42 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Chukun Pan <amadeus@jmu.edu.cn>
-Cc: Vivian Wang <wangruikang@iscas.ac.cn>, Yixun Lan <dlan@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>, Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S . Miller" <davem@davemloft.net>,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev, netdev@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] net: spacemit: display phy driver information
-Message-ID: <35c9e98d-58f1-489b-a635-4755f518da96@lunn.ch>
-References: <20260201100001.33102-1-amadeus@jmu.edu.cn>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BFnNi+Zv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237DCC2BC86
+	for <spacemit@lists.linux.dev>; Tue,  3 Feb 2026 00:05:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770077134;
+	bh=kKdeou5Pe7UeE6Ix+YqLXbuufCdY2z3T0wxGDQhiRmE=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=BFnNi+Zv2dDy+uisnj62bhZmOx+Uo1c9U+Shqx5+M+Q41ftZ8Ifk/eOO8xYo4huRR
+	 YPlMfNNCepNr+JIRQqPG2w2vjDnss3R0hIv4JhvSWyjyxC7PNQ4K/3KU5YS/NgidbI
+	 CJNwwXfZ875JGiPaqCLo9lyonoSjbZNTJtkRpggtzfCM+Zl3thRgdOWiOqElJ58I5n
+	 AhhWLprnJG7Druc1mYPMQ+aOXhJ0kgbQIPccu/fsQnWWpa8l2+o15K4QMvtclt4Qj/
+	 pQ4vb8ODVBZIZpqdgZrTWzDTOttVLJiWiVht7YjVJgWoDj7t8NoBsWBAaKih6+GINJ
+	 vG9TqvTQjfWdw==
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-649b31e9010so2482050d50.3
+        for <spacemit@lists.linux.dev>; Mon, 02 Feb 2026 16:05:34 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCU60Ss+y80Oy56e8dAeVV4QiuEKvVqAyAFPCn6/WasmzDivOy/lRs+ivhk6MWGIpPFugv6FuhBF1g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyEo6SZve+XUgkmgaV7iRFWvWMZh3jIKsKhIXG4ftaUh6YKWAfw
+	ZNle5FmoFJh1yzQDX6QffZFM6zN2e9sNRVQY1JyWmd/d+kS3efK92eSnkgofC8DAeInvtmZQj0F
+	xCW0ymzhHSO6E0Zlv8eKpMULfb9M/9c0=
+X-Received: by 2002:a05:690e:124a:b0:644:51a4:4f16 with SMTP id
+ 956f58d0204a3-649a847327dmr10877144d50.45.1770077133463; Mon, 02 Feb 2026
+ 16:05:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260201100001.33102-1-amadeus@jmu.edu.cn>
+References: <20260130-k3-pinctrl-io-drv-fix-v1-1-077aec3ba7ae@kernel.org>
+In-Reply-To: <20260130-k3-pinctrl-io-drv-fix-v1-1-077aec3ba7ae@kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Tue, 3 Feb 2026 01:05:22 +0100
+X-Gmail-Original-Message-ID: <CAD++jLmMRcgo9-sMOh6+y+Hg73HjmXPG_ur=mPUEQ-hhuWCtfg@mail.gmail.com>
+X-Gm-Features: AZwV_QjYr-Xcsc5cz_CTbglqWcpBs2gdc2w-EI4ETCV9es47TMb_bMpE3EZUcaA
+Message-ID: <CAD++jLmMRcgo9-sMOh6+y+Hg73HjmXPG_ur=mPUEQ-hhuWCtfg@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: pinctrl: spacemit: fix drive-strength check warning
+To: Yixun Lan <dlan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Feb 01, 2026 at 06:00:01PM +0800, Chukun Pan wrote:
-> Print the PHY driver used and interrupt status after connection.
-> 
-> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+On Fri, Jan 30, 2026 at 12:22=E2=80=AFPM Yixun Lan <dlan@kernel.org> wrote:
 
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+> The problem is that one value from drive-strength may match to more than
+> two different enum groups which lead to DT complaint, switch to use 'anyO=
+f'
+> to fix this kind warning.
+>
+> Fixes: c3efac0592f8 ("dt-bindings: pinctrl: spacemit: convert drive stren=
+gth to schema format")
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
 
-    Andrew
+Patch applied!
+
+Yours,
+Linus Walleij
