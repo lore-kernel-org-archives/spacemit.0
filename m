@@ -1,51 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCAC340A46;
-	Wed,  4 Feb 2026 17:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF49421EE2;
+	Wed,  4 Feb 2026 18:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770226702; cv=none; b=n3elXQspQ/o9oo4cCgHvGDtLhXEitBrcIobVdbijNxzwz+deoDNjMIlJVWyg6e0wOMroFywDrMmw5Zy/i5BNRNdPi9kEbJraaFQQoE8NiMjp1W6K5W4jwbEQhp3wy4tqP3Y9e6EcxtdsQp9jIeF21m05BBwDEamU0M/3yIhWNeM=
+	t=1770228433; cv=none; b=ACS9zoxIPatGwNX3C7ou/+5dcNzeS5GXMr+g0NHJSyBXy8dUCB5DtUJfTWpvbl69rTDGy5JL1d0i/aPzxpEDWbHUAb8Pi2ARI6xky/1eQcr14Qy2Tc3tMINQ0SIO7MLk8Tf6C45o7C2LXXlmkeXu08U+moOZEOngGcQlt6GXIt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770226702; c=relaxed/simple;
-	bh=szEiRqNQBmBl7xB3+WCKENyasS6skJktBrmm9AAZG38=;
+	s=arc-20240116; t=1770228433; c=relaxed/simple;
+	bh=gUKiYi54MPXOa8OLr2IikMwDAGcFOielFJYFN7kyy48=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yz8YrnBdgBm2Cw0n7bn1w0f3yEjEpxp0A99u2G1XLofa+xHrU3BPpMEQQCzqkJncCap3IYQIWKnPv3O7iq88p26+qXcaqMJmiXIjj866r2F8EhI1qHsRGbVbTbTKWijrVFDw9Ce4w4JG1Q28XpPYRelA1HOCRchNvCGpwBHBkvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OK7mxYwl; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=GOvVWOnfdxCohtca9Gfl++nRGdCYvVZj1wtf5n0lkJ7niJ9pcseeCkEnZTSEUX55//UNtdCPcTDrzqOKrMdBYOWmiQvmQtGuoRbMG24Uj60MDHwaozKQK8xSbhtxOs4crfcsVul3a4euKmzN1AL+02dnNCHMaBKgy7dhpXEwQZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CO8637w7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OK7mxYwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13636C4CEF7;
-	Wed,  4 Feb 2026 17:38:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CO8637w7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C2CC4CEF7;
+	Wed,  4 Feb 2026 18:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770226701;
-	bh=szEiRqNQBmBl7xB3+WCKENyasS6skJktBrmm9AAZG38=;
+	s=k20201202; t=1770228433;
+	bh=gUKiYi54MPXOa8OLr2IikMwDAGcFOielFJYFN7kyy48=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OK7mxYwl5E5s94aPs5ejbwJwn+I0fRMo+pjfbWuEl14jpm/cuNrxDl6nLpp90CEg4
-	 33XUY3dbyIFmQtbo6TJYO+zr5ppcsJbkWWIxWcKxs9J0ZK8ix5Vp0/WedbhUpQsccb
-	 9DuUEZudveuh5ObbojfrsmnZP5QDZ4hsD6/cX4Jt8ODok+fwbWHVKm4S5WpFs37lPJ
-	 U3DGGW2XCWjaLiIO8Qea9A7RTF4iUsOiPD3VvKtwn49l4LYQBQauSb7f3S+vlWjvU6
-	 KmeAvb9OPMU/bHH/1GWkpkFGhlq5yEOpCaNTMirEGJOc/fl+9AqLIDRxALp03Se55B
-	 owkMaQ9Waz6Tg==
-Date: Wed, 4 Feb 2026 17:38:15 +0000
+	b=CO8637w7pGh4pR/NtccsmsLcizq9hT/ISyNTQdwK5YNKBV4NyKbJl5+H7tEU5NIdH
+	 Jr0+GIS1QsJfTBrNy0rqNOy8zo/YYDy+muFeTcCNwfXi6E5hrZ4CHU51V1lhzCsqGf
+	 p1fM5MFDp8ibuKmaTtmMSyc7Angh9Bt16LxE1VewMedEiozZql2YfvBFB5W8V2RzUx
+	 LfQjmokERq7IVuhvEA78mj3na7ijnwTtb/GUN7XsbhPK0j58hVR/plNp6DgnuGeWK3
+	 igVDDJD91rjL6gImYYetAtZgbfVHx58rnT8p5KQmr4ce3SGYQsJ6ymuYBwdCgyl92+
+	 b57dlM3E7qGuA==
+Date: Wed, 4 Feb 2026 18:07:08 +0000
 From: Conor Dooley <conor@kernel.org>
-To: Lv Zheng <lv.zheng@linux.spacemit.com>
-Cc: Tomasz Jeznach <tjeznach@rivosinc.com>, Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Rob Herring <robh@kernel.org>,
+To: Guodong Xu <guodong@riscstar.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>, Alex Elder <elder@riscstar.com>,
+	Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Jingyu Li <joey.li@spacemit.com>,
-	Zhijian Chen <zhijian@spacemit.com>, iommu@lists.linux.dev,
-	linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 8/8] perf vendor events riscv:: Add support for
- spacemit,riscv-iommu HPM aliasing
-Message-ID: <20260204-suds-shush-d85872589cb3@spud>
-References: <cover.1769562575.git.lv.zheng@spacemit.com>
- <cover.1770195980.git.lv.zheng@linux.spacemit.com>
- <5242DDF0A783AF08+e141f1898581018f8dd0723cb5c870c23ec679d6.1770195980.git.lv.zheng@linux.spacemit.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: mfd: spacemit,p1: Add individual
+ regulator supply properties
+Message-ID: <20260204-unlucky-raven-1ca0ed8f3392@spud>
+References: <20260204-spacemit-p1-v3-0-a894b3057026@riscstar.com>
+ <20260204-spacemit-p1-v3-1-a894b3057026@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -53,63 +51,62 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="iqh0NaWGo05RcNxz"
+	protocol="application/pgp-signature"; boundary="I5CCiEoC65J3zMOc"
 Content-Disposition: inline
-In-Reply-To: <5242DDF0A783AF08+e141f1898581018f8dd0723cb5c870c23ec679d6.1770195980.git.lv.zheng@linux.spacemit.com>
+In-Reply-To: <20260204-spacemit-p1-v3-1-a894b3057026@riscstar.com>
 
 
---iqh0NaWGo05RcNxz
+--I5CCiEoC65J3zMOc
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 04, 2026 at 05:09:52PM +0800, Lv Zheng wrote:
-> Add JSON HPM event aliases for SpacemiT distributed IOMMU (T100) which is
-> general and compatible for all SpacemiT RISC-V SoCs.
+On Wed, Feb 04, 2026 at 09:23:01PM +0800, Guodong Xu wrote:
+> Add supply properties that match the P1 PMIC's actual hardware topology
+> where each buck converter has its own VIN pin and LDO groups share
+> common input pins. Supply names are defined according to the pinout
+> names in the P1 datasheet.
 >=20
-> Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
-> Signed-off-by: Jingyu Li <joey.li@spacemit.com>
+> The existing "vin-supply" is marked as deprecated to avoid warnings
+> as dts and dt-bindings go via different trees.
+>=20
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
 > ---
->  MAINTAINERS                                   |   3 +
->  .../arch/riscv/spacemit/iommu/sys/ioatc.json  |  30 ++++
->  .../arch/riscv/spacemit/iommu/sys/ioats.json  | 163 ++++++++++++++++++
->  3 files changed, 196 insertions(+)
->  create mode 100644 tools/perf/pmu-events/arch/riscv/spacemit/iommu/sys/i=
-oatc.json
->  create mode 100644 tools/perf/pmu-events/arch/riscv/spacemit/iommu/sys/i=
-oats.json
+> v3: Mark vin-supply as deprecated.
+> v2: Remove providers from the dts example.
+>     Pass the 'make dt_binding_check' test.
+> ---
+>  .../devicetree/bindings/mfd/spacemit,p1.yaml       | 53 ++++++++++++++++=
++++++-
+>  1 file changed, 52 insertions(+), 1 deletion(-)
 >=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 7c50701b6001..4d91f99aa742 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -22459,12 +22459,15 @@ K:	riscv
+> diff --git a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml b/Doc=
+umentation/devicetree/bindings/mfd/spacemit,p1.yaml
+> index c6593ac6ef6a..41f784408e29 100644
+> --- a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+> @@ -28,7 +28,46 @@ properties:
+>      maxItems: 1
 > =20
->  RISC-V IOMMU
->  M:	Tomasz Jeznach <tjeznach@rivosinc.com>
-> +M:	Lv Zheng <lv.zheng@linux.spacemit.com>
-> +M:	Jingyu Li <joey.li@spacemit.com>
+>    vin-supply:
+> -    description: Input supply phandle.
+> +    deprecated: true
+> +    description:
+> +      Main power input (deprecated). Use individual vin1-6, aldoin,
+> +      dldoin1, and dldoin2 supply properties instead.
 
-To be frank, this looks misguided, or at least premature, to me, given the
-state of the patchset.
+What's the point documenting the deprecated version if it doesn't work
+anymore?
 
->  L:	iommu@lists.linux.dev
->  L:	linux-riscv@lists.infradead.org
->  S:	Maintained
->  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/iommu/linux.git
->  F:	Documentation/devicetree/bindings/iommu/riscv,iommu.yaml
->  F:	drivers/iommu/riscv/
-> +F:	tools/perf/pmu-events/arch/riscv/spacemit/iommu/
-
---iqh0NaWGo05RcNxz
+--I5CCiEoC65J3zMOc
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaYOEBwAKCRB4tDGHoIJi
-0rAbAP9BQO+rmDwgyVtdWWl0COzirfBZ1h1MHPLEsDSPOC3q8AEAkAY/lFFX/2Ft
-ThczQMoz8DL7QCbK+gjE+pWs9vdsNwE=
-=n4nj
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaYOKywAKCRB4tDGHoIJi
+0hPvAQDNhaGRPloJVhFrnHIbYInImXvLdwwaaEw4mhDkuUwL8gEAh71m/l08p23U
+4VuiK+wznUTz8EhMAUZdJpENMVEa5wo=
+=eTr7
 -----END PGP SIGNATURE-----
 
---iqh0NaWGo05RcNxz--
+--I5CCiEoC65J3zMOc--
