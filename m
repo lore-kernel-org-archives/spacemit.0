@@ -1,162 +1,169 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7551C30E0F2
-	for <spacemit@lists.linux.dev>; Wed,  4 Feb 2026 04:09:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475AC38F229;
+	Wed,  4 Feb 2026 09:09:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770178183; cv=none; b=W3+myZTBFx1NbW/ZvHdXABfpAVx9fHJ3ATfpzDg729O4mvKPISY+GdZr66iGzt7RvoF3Vhb4oy2opw4CXSLc6hvvsUH/xYluw3A4erEbGvTc1VqYY9mh72Ib6dcvCwi65QVEJAgvb/XEyyblzJHW0IcrTh2oD7+hZekc6fbkbTU=
+	t=1770196162; cv=none; b=rX4pLb+EXOhLxr+bZ5NekkAuY7115xhRsTeaJYoqV/Z/iid0kg6iBa/qqdQL7/ABzLekiJWcN6qlV4MdqG6cdIYUaFla8Zh9MEm226QrNGcMg8hCKkpCX+m+BPZ8odfdFgjnjThxZjBcSTTJ1OK+jAmP8sIYDJLlWCZxl1fbIDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770178183; c=relaxed/simple;
-	bh=VeokmRxKrzPdkUW4Q5G306mDxXMWUl855v4qe7W+BKw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IBZ9lqQ8P7RGwaFmx3uENp3IP1qBi0/Pj9YPzNLSEyyy+a/BD7t4U1Pf2Vcn56aqjH73/QHQ2cd0ApFRxDltcERFMMLiSKjorYpXwZv5aCDgwoPiiX/6UGNGnXfapdXwMxubXiz8w8rkEgzSkin619GSyyqyU5i2BvLDxcCP0F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A5onF76t; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770196162; c=relaxed/simple;
+	bh=UDJKu6TLZFsNvK/qJEvfwJi1S+NJR8Fs9OkuI3hLRcs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NaflzeVMeaRlXGtgJPJ4LJ9cfyQrraeCPH5O9nqpjiiCxbKduBC3LEzTZDLvb4ChXU4Nn7t6OE0HzSeEIfzKMJXKFWEhxg0hFkL3E56gKztXKSvHQJ6IbxiHwU4zxl0UTfJTQJaFTN4coz87x/6wMgc1/WFr10NDLIXNTkCzvr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=U/RFvZO4; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A5onF76t"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8c7199e7f79so954136185a.0
-        for <spacemit@lists.linux.dev>; Tue, 03 Feb 2026 20:09:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770178180; x=1770782980; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rs6BBarzwmD2Zm1TSaGTp7E5XeDaUo3g+3j+s/whg7M=;
-        b=A5onF76tAfh/nPYBS09hrcUlCuyJu9UzQreVJ2tvlV6og+PRucLAKx3uwrvuI5XyMm
-         Vl1tHK1OiID4ZiZ1p5QdqGO0NUJEjF1utszSSsJPdQHMsOrxcWz9UNk4un3ArMv2yJwO
-         DLLsn6yf0QmuSAxqPTqTLeSz3phHTa8lkTE309L4n9NULRgjdSvkpxHjpuKbEe8ihKmO
-         MSIGJ16yIm2ptgMLdt543KJn0IXzllrB+6qlxhq4K7jMBVLCQ9hiJ68c+t5eqVX29Y/q
-         IvaTUhxdn6T9OgjJ+yO5wdrO1/MCi1ST8xEbusJ/vuiowaZVV6d2hBC38YY6X1d5qOVL
-         Pmuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770178180; x=1770782980;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Rs6BBarzwmD2Zm1TSaGTp7E5XeDaUo3g+3j+s/whg7M=;
-        b=sL5xEooSG5PzRVvSziMt7YaOiGO2dhu2OwQnaoNEgsG6y5wXu3oniWQVAaBQbJOTgH
-         FPfY6piaGyazP8MY4epIDFgIDX1aTLkSK0e+r07h47G2Sajth5W+2REWvGWGAmitbMEx
-         AwAr0ICZHtyXbXqZWo05jDN23I3HEZqXxzBRQpT8UM9rEWUhyJM27Qu0mzjjRQjs0ogC
-         1YDdQiNh4gFgfNiG/WeBoLj2LIg+Tn/Xyzzyye0RSbZ2jjLyIw1OYS0Z/dE8OVjiKGN5
-         lP/9jBvhMpeBAxruoSO/yzX9ZT5LYkIorQApW9hvqHW329urAAYkJ2gUozXEvKLIXTv2
-         54Yw==
-X-Forwarded-Encrypted: i=1; AJvYcCUGC1TGaA3VHGNlokMC4GXI4NX9w2zgev3NrmNcp+6porlvq6SvZ44m0//wccCdYuOvhJ80zQT1fg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwhQV5XOB5wgmTc978bkgyUszxakYPcIMIpyr+r+S9YWSbdvmIm
-	BH/VCo1rUOvGVyGXTUTjsVaYdWzRKkW5psxqgIPc69qXAIcRcZ7C4NZLdwZ86XE/
-X-Gm-Gg: AZuq6aIQ/QkUKvvQgDxpbXkaFNq/teVYvBr/oDHSQ2ExYDiTmdCx6Yr3asCxIOYpUjI
-	fMAR+8Et3nJhZMrBSXb/DX9cyntF2X929dH8pyALWteNgq3QVVTx8EQEdFtV6W1N5U3EFRwn5Fc
-	KtWMdh8Punf1a2PRhy0HMULeJJqXcHQo2huBJ40JNzURi/OpPpLfsWngpCQ4qNk9IZuDF/kqRwF
-	9/AE8nlXeagtxkG9yWIH9N4Le1/O6Ore3q0DyV2sNwzipIq4j9Of5/Y6+SsoOEDWcboyf3QpWBe
-	Botl/k3W6g6d9AxFXzTCJWipX+Az1acOYsk1FeezoPdiqHePuPA4nLDM9s6Xy1+gMuMC1zXjNk0
-	Z5WFVBwy+VIzhV5/8/aHKkLDjORK+/y2Q7FKcH6MzYQedD57FHEU++islF0rhCetJNCs+rLgkYs
-	O3dHZUbWEKxQ==
-X-Received: by 2002:a05:7022:f103:b0:119:e56b:91f2 with SMTP id a92af1059eb24-126f47daa76mr613066c88.35.1770171313127;
-        Tue, 03 Feb 2026 18:15:13 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b832feacc6sm940814eec.35.2026.02.03.18.15.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Feb 2026 18:15:12 -0800 (PST)
-Date: Wed, 4 Feb 2026 10:14:47 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>, 
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Richard Cochran <richardcochran@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yanteng Si <siyanteng@cqsoftware.com.cn>, 
-	Yao Zi <ziyao@disroot.org>, Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
-	Shangjuan Wei <weishangjuan@eswincomputing.com>, Maxime Chevallier <maxime.chevallier@bootlin.com>, 
-	Chen-Yu Tsai <wens@kernel.org>, Zhi Li <lizhi2@eswincomputing.com>, 
-	Boon Khai Ng <boon.khai.ng@altera.com>, Quentin Schulz <quentin.schulz@cherry.de>, 
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next v4 3/3] net: stmmac: Add glue layer for Spacemit
- K3 SoC
-Message-ID: <aYKq4qlgCDo42rnw@inochi.infowork>
-References: <20260130022705.1059214-1-inochiama@gmail.com>
- <20260130022705.1059214-4-inochiama@gmail.com>
- <aYI00Exytbgbnuzp@shell.armlinux.org.uk>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="U/RFvZO4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1770196117;
+	bh=7ZuMw0aQly17hASOLNtnfsuLRFEAsjJjbUhrNvIUsVY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=U/RFvZO4HG6wBmETcvb3+jPzNigmYwBRloHG6fqG8Hsdzscy1jBPqVKf0Ge02Z9WK
+	 b8kSmlc5oDXqk0r/5Ya929qHvI8Eh6c/geFYHqyWP/o9Z7BO2ExPNfcPMzqibKK6G1
+	 d8Z+69MAW/lhsdkMBf/RdNGci1eiztRoN21jtTZ4=
+X-QQ-mid: esmtpsz16t1770196115t30b0e720
+X-QQ-Originating-IP: B58uKBjvV/rf2o6+mC3RVsaz6JIpIozYKaP2j7Fq5yo=
+Received: from SurfaceBook2-B.localdomain ( [101.70.125.34])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 04 Feb 2026 17:08:31 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 2290105156502900697
+EX-QQ-RecipientCnt: 19
+From: Lv Zheng <lv.zheng@linux.spacemit.com>
+To: Tomasz Jeznach <tjeznach@rivosinc.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: Jingyu Li <joey.li@spacemit.com>,
+	Lv Zheng <lv.zheng@linux.spacemit.com>,
+	Zhijian Chen <zhijian@spacemit.com>,
+	iommu@lists.linux.dev,
+	linux-perf-users@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	devicetree@vger.kernel.org
+Subject: [PATCH v3 0/8] iommu/riscv: Add HPM support for RISC-V IOMMU
+Date: Wed,  4 Feb 2026 17:08:19 +0800
+Message-ID: <F9748E3984D2A6F9+cover.1770195980.git.lv.zheng@linux.spacemit.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1769562575.git.lv.zheng@spacemit.com>
+References: <cover.1769562575.git.lv.zheng@spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aYI00Exytbgbnuzp@shell.armlinux.org.uk>
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-1
+X-QQ-XMAILINFO: NYlggeZuI0UG/KlMlGBUTrf77Lgf/zsjGw76oNLG6XNRXDUfkhzJl9D3
+	guMM4f3/Q6CqEP+N8NhTXSJgNBDbZVLpW05tUY4im5HEouteKRRHDkCvY0ISinGDiLWQbqV
+	nie+vb5VTVRzkHg0o3QqSiAQ34sf8JP76goCOszAeFiQPlFC7EItyEbP1kJVzLUH1n9t+5Y
+	IWgG9/3Od7N5KMTj3bULPZr54hJHQfqL8pn7xM0BYqNj5tGE0GjpSypN6XPhaRJT7N6ivlj
+	wUutk8IYA4AyHAP0k1YIHHWcNWRd4LDogKYMhf6jznpMEqNHoAKBqXadomn+lLytVPiVRGt
+	hq3vmRgL9eMnr99sNaFNqd9VnueKq29o4hkwvMLReh3m8ISZNKlpP7zB5BNV5x/u6Wl61B9
+	p3Sx+AJgWuXWI+soTlu3xVayjOnix32SNP9sGLKFOLHIyoqs8YzzJ5+pxAymQv9BmK9NHdp
+	ZiuNuJHRBHo0yBHLqC7EwTZW2yE80X3tibNxfSpYpWiegKpqHJIEcP1f+Lf1xnkRDzFFBLX
+	/nwgU1MsNQ0Ux1al+nKJnlyYzioeEYJzUUPTgR2ZI5Jlv5WGo2Qjw8NY9j17ooNIQDsyrv8
+	dulcWygrRmiizQHuPE/BlKIqYWJw96ENbmFo9JbeHiMgHbpT9IO+6Ssr5LZKINeMCbvYhU3
+	Ekxn8+XGddq9gr6PUJG53Eef529BjpkvQdJe3j5rNyBPdjRxod5DVhzUesasCwiw5tipymA
+	VPXxXfnoRs+VUi8fE9UA1/ik1O+cedENUgh+YrXo6JSwdErs324aWqzUBSJQOI2EK4S+7Ot
+	Hc03OSyOCJPgrY9Yv9ghDwZ6YQ05nRLmBzfh0Gq1BJZExhdKgRBHqeQKNCG35AsR+D3S8Th
+	/AVS3F2frAc1DG0O8a00se4IYxrf78PHPDVPnOKkZC4RxKLe2yoTlx2jRnA9Ypg/7gNbuXj
+	GS6SWkr1HHi4G2bfKGgDZNkmohJs6MUhgaKCpdA2yt7y/dwVAuYbLlfkY
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-RECHKSPAM: 0
 
-On Tue, Feb 03, 2026 at 05:48:00PM +0000, Russell King (Oracle) wrote:
-> On Fri, Jan 30, 2026 at 10:27:04AM +0800, Inochi Amaoto wrote:
-> > +/* ctrl register bits */
-> > +#define CTRL_PHY_INTF_RGMII		BIT(3)
-> > +#define CTRL_PHY_INTF_MII		BIT(4)
-> > +#define CTRL_WAKE_IRQ_EN		BIT(9)
-> > +#define CTRL_PHY_IRQ_EN			BIT(12)
-> 
-> Thanks for updating these.
-> 
-> > +static int spacemit_dwmac_update_ifconfig(struct plat_stmmacenet_data *plat_dat,
-> > +					  struct stmmac_resources *stmmac_res,
-> > +					  struct regmap *apmu,
-> > +					  unsigned int ctrl_offset)
-> > +{
-> > +	unsigned int mask = CTRL_PHY_INTF_MII | CTRL_PHY_INTF_RGMII | CTRL_WAKE_IRQ_EN;
-> > +	unsigned int val = 0;
-> > +
-> > +	switch (plat_dat->phy_interface) {
-> > +	case PHY_INTERFACE_MODE_MII:
-> > +		val = CTRL_PHY_INTF_MII;
-> > +		break;
-> > +
-> > +	case PHY_INTERFACE_MODE_RMII:
-> > +		break;
-> > +
-> > +	case PHY_INTERFACE_MODE_RGMII:
-> > +	case PHY_INTERFACE_MODE_RGMII_ID:
-> > +	case PHY_INTERFACE_MODE_RGMII_RXID:
-> > +	case PHY_INTERFACE_MODE_RGMII_TXID:
-> > +		val = CTRL_PHY_INTF_RGMII;
-> > +		break;
-> > +
-> > +	default:
-> > +		return -EOPNOTSUPP;
-> > +	}
-> > +
-> > +	if (stmmac_res->wol_irq >= 0)
-> > +		val |= CTRL_WAKE_IRQ_EN;
-> > +
-> > +	return regmap_update_bits(apmu, ctrl_offset, mask, val);
-> 
-> I would suggest that this is split into two parts - first, this is
-> renamed and reduced to just controlling CTRL_WAKE_IRQ_EN.
-> 
-> Next, a function hooked into plat_dat->set_phy_intf_sel which sets
-> the CTRL_PHY_INTF_RGMII and CTRL_PHY_INTF_MII bits as appropriate.
-> Note that this function is passed the dwmac's own phy_intf_sel
-> value from common.h which will be PHY_INTF_SEL_GMII_MII,
-> PHY_INTF_SEL_RGMII or PHY_INTF_SEL_RMII for you.
-> 
-> It would also be good to have plat_dat->get_interfaces populated
-> using phy_interface_set_rgmii(), and __set_bit(PHY_INTERFACE_MODE_MII)
-> and __set_bit(PHY_INTERFACE_MODE_RMII) to indicate to phylink which
-> interface modes are permissable.
-> 
-> Thanks.
-> 
-> -- 
-> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+Includes HPM support for RISC-V IOMMU. The HPM hardware mechanism can be
+found in the recent announced SpacemiT SoCs (K3, V100), where T100
+(SpacemiT distributed IOMMU) is shipped. 
 
-Thanks for your detailed guide, I will try to switch to these helper
-apis in the next version.
+Revisions:
+v1
+ Initial release.
+v2 (sent as v1.1)
+ Split and cleanup DT-bindings.
+v3
+ Refactor using vendor specific compatible.
 
-Regards,
-Inochi
+The tested result can be found as follows:
+
+ root@sdfirm:~# perf stat --timeout 5000 -a -e spacemit_ioats_hpm_00/dd_walk,config1=0x20c0010000000000/ dmatest; sleep 1
+ [  145.630224] dmatest: Started 1 threads using dma0chan0
+ [  145.644896] dmatest: dma0chan0-copy0: summary 1 tests, 0 failures 123.60 iops 123 KB/s (0)
+
+  Performance counter stats for 'system wide':
+
+                  3      spacemit_ioats_hpm_00/dd_walk,config1=0x20c0010000000000/                                      
+
+        0.193108000 seconds time elapsed
+
+ root@sdfirm:~# echo dma0chan1 > /sys/module/dmatest/parameters/channel 
+ [  327.001820] dmatest: Added 1 threads using dma0chan1
+ root@sdfirm:~# perf stat --timeout 5000 -a -e spacemit_ioats_hpm_00/s_walk,config1=0x20c0011000000000/ dmatest; sleep 1
+ [  484.037180] dmatest: Started 1 threads using dma0chan1
+ [  484.048832] dmatest: dma0chan1-copy0: summary 1 tests, 0 failures 172.11 iops 172 KB/s (0)
+
+  Performance counter stats for 'system wide':
+
+                  6      spacemit_ioats_hpm_00/s_walk,config1=0x20c0011000000000/                                      
+
+        0.191970000 seconds time elapsed
+
+ root@sdfirm:~# perf stat --timeout 5000 -a -e spacemit_ioatc_hpm_0003/tlb_mis,config1=0x20c0011000000000/ dmatest; sleep 1
+ [  546.332494] dmatest: No channels configured, continue with any
+ [  546.363062] dmatest: Added 1 threads using dma0chan1
+ [  546.377994] dmatest: Started 1 threads using dma0chan1
+ [  546.388376] dmatest: dma0chan1-copy0: summary 1 tests, 0 failures 213.94 iops 213 KB/s (0)
+
+  Performance counter stats for 'system wide':
+
+                  3      spacemit_ioatc_hpm_0003/tlb_mis,config1=0x20c0011000000000/                                      
+
+        0.225062000 seconds time elapsed
+
+Jingyu Li (3):
+  iommu/riscv: Enable IOMMU DMA mapping support
+  iommu/riscv: Fix WSI mode IRQ number handling
+  iommu/riscv: Add HPM support for performance monitoring
+
+Lv Zheng (5):
+  dt-bindings: iommu: Add spacemit/t100 features
+  riscv/iommu: Add vendor event support for RISC-V IOMMU HPM
+  spacemit/t100: Add global filter awareness for RISC-V IOMMU HPM
+  spacemit/t100: Add SpacemiT T100 IOATC HPM support
+  perf vendor events riscv:: Add support for spacemit,riscv-iommu HPM
+    aliasing
+
+ .../bindings/iommu/riscv,iommu.yaml           |   37 +
+ MAINTAINERS                                   |    3 +
+ drivers/iommu/Kconfig                         |    2 +-
+ drivers/iommu/riscv/Kconfig                   |    9 +
+ drivers/iommu/riscv/Makefile                  |    1 +
+ drivers/iommu/riscv/iommu-bits.h              |   18 +
+ drivers/iommu/riscv/iommu-hpm.c               | 1122 +++++++++++++++++
+ drivers/iommu/riscv/iommu-pci.c               |   13 +-
+ drivers/iommu/riscv/iommu-platform.c          |   12 +-
+ drivers/iommu/riscv/iommu.c                   |   25 +-
+ drivers/iommu/riscv/iommu.h                   |   46 +-
+ .../arch/riscv/spacemit/iommu/sys/ioatc.json  |   30 +
+ .../arch/riscv/spacemit/iommu/sys/ioats.json  |  163 +++
+ 13 files changed, 1469 insertions(+), 12 deletions(-)
+ create mode 100644 drivers/iommu/riscv/iommu-hpm.c
+ create mode 100644 tools/perf/pmu-events/arch/riscv/spacemit/iommu/sys/ioatc.json
+ create mode 100644 tools/perf/pmu-events/arch/riscv/spacemit/iommu/sys/ioats.json
+
+-- 
+2.43.0
+
