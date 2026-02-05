@@ -1,171 +1,163 @@
-Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A57817BED0;
-	Thu,  5 Feb 2026 06:12:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770271946; cv=none; b=Vd8Wp2Flc1MUWEcXKblLeo0v4E+gRiFd05Uhab/Jyhl6wCBdERqvUJIikploKh0VHi7pbfUXGBpmFA0V34ZrIIdAjd2e6lxJeFq+Zj10aSWq+LC2SBgk72RW5Q+ZK6/6hbST/ZAjSpTc5H6xTrA/coSZJCOaDw+Awi71mWOr0J4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770271946; c=relaxed/simple;
-	bh=uZpneSQWAnsGaiDthCUuC/HDbbKtK6rBmlvSADRD3Z4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oQKfN8c7229MQcNl2j4pDmmGk3I/zOqQNZJWmifzV6WswvmgSIu0wJMdHa8kfvUuN3OaqdjYqozErb+A5sX1Kih+A/cZVeRtzbqRmA1+iISXIl3cQxo625/b/stFD48fQcxjVBNkBOFUfLXZWF4qSHF5ahcz1XmmfX1L5t1TcRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=xUGscN53; arc=none smtp.client-ip=54.206.16.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6861B35D5E7
+	for <spacemit@lists.linux.dev>; Thu,  5 Feb 2026 07:42:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770277333; cv=pass; b=A8tH2n4Q68iW9NLQb2OTl0aKbALfYsJ846+uheelgpZ3Fgufn7ciEFM25Q1j7KEHuA89/SUBluATPSlSaE4IX4lV98ffptbBK9gzaPNzk35oZznnUW0RhIXA7wU8khMDijtWYJ8Hd3Xg+SFSTgWXhuOC5ulRvG6rfllreq1INT8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770277333; c=relaxed/simple;
+	bh=S/nsTC1/V0Udh3YCNfcgu7V9ClpdOHlVkJ1LUE3M760=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZcY/pW26O0dyuMGbcCTBCWWT5ZEOh7GPzKdSBj4kkPBw44EisgcfMymM2nc+PqxxXFn2dJC5AcGD+lA/PjiOSxV7GI7vnooFieVaULa1+wvpxndrQyJeSMNA56JryNs+B9nNJWS6k03g3Ru3aS4wkMGL/WgWWAQdP45h7EIckNo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=mME6BOTu; arc=pass smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="xUGscN53"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1770271914;
-	bh=tDgt6vZpYx+8Gxn4WiLvnLAeS2beozPCKmdyy780RYY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=xUGscN53mHEDl3yC3r+TmbaLbq0Wz/U52w7ruz0VsD5ArhG8XFRk88CWhXKbsabsr
-	 qKkAQAJXr7YqIJJvw/IB1VCV08hat8gvsJZGvnXFSccsnPiwV/C7z8ZOTmtuO/Vbr3
-	 WkFY8vsjCoD4JTfg06xuJocwhNGpE/DMOTrss7t0=
-X-QQ-mid: zesmtpsz3t1770271912t7844f74a
-X-QQ-Originating-IP: sH+CVXzMSrAXjiTiHvm7S7Z4jmFxT90oqobPcqXkkTs=
-Received: from [10.3.91.191] ( [101.70.125.34])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 05 Feb 2026 14:11:48 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 6470129798004699414
-Message-ID: <6C65A3873186B07C+29da5dbd-ed27-4ace-a5ca-355b3983d60c@linux.spacemit.com>
-Date: Thu, 5 Feb 2026 14:11:48 +0800
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="mME6BOTu"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-79273a294edso5672377b3.3
+        for <spacemit@lists.linux.dev>; Wed, 04 Feb 2026 23:42:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770277332; cv=none;
+        d=google.com; s=arc-20240605;
+        b=QElI47qMcfFbi8ZOyDaYnNDOQ1+LwnQvtq9oqgFGY2xXgTsCu7MYUA6KCRqY8f/FCj
+         AOpMUF2DLNkrQD5tLkZhEpFbUjzGM3jSyTrNtZGFLFmIFGXfWHpDVR+XeBiK6TJySeRj
+         ysHw5FBCumBGdtQpFr8b7OGen+WBo1HSUc0sA8eQj3pozx2GmyzxzhmV3k6mg8TZk33A
+         FaZO/1q+g2BRp2NWen/Y1aOuJLSvL3NLZQQDgzOFijwicudoWtu4f65zD8vX97gf5emM
+         FIZe3VpmVG629iXME/Z9OrFRQdI9SCSW+ss48rM03EygMWSs3J/rvH/eY010nlWg8ds8
+         N7WQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vCsVndFzrtL2hxIQjBbohAaFr2ETBAeGKs4H5l+MANM=;
+        fh=V5McAf2c1iNmo/ZIhE56iZb4HFBGcsXUuyJkQTLNsa0=;
+        b=h75URwTVr/DvGnUBqOG3DaHBnbE4fCnJJO63Ebvf1iGQu+tdk1yLnz1ZfIS6FIwzST
+         qCUHAOClwYocZdUVQbbHh0SHr3vU6XqHLm4opeGad6BxKtlo/5RK56k0T5uDdiqdmPcz
+         EEB/3ZxD/4vxDzwi/Q6GS9I1dNyFYhi8anql/BTm7AEUaRpyPjfEjTKoSJnNia4pHA+n
+         E95l2c5Zs4iUX99mO2bXjY1DibkRP0nIxpE5Fa9ZOQA47GW7amW8Oz+FHwnT16PQuL4y
+         kzjLEA57urll1U/+/QWQLi7+Yj6QApH1pja3Ppldif+YkYxfhxMusw4kG/LI95+xdNYk
+         ndZQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1770277332; x=1770882132; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vCsVndFzrtL2hxIQjBbohAaFr2ETBAeGKs4H5l+MANM=;
+        b=mME6BOTuW94qDVuE3bxOvB6erhaeebGB0FtKCRSXbZMyPXISKhe4gt5UPC8Sn//nSb
+         JdQNnWN/cxIlvl9TRBhlXvWI1oV9p0uRz/2aQuzuWeQEVDZK9OiMKi3bWb2yWRmqskp+
+         q4iGA1U5TaaXLJn+3SqscKDYU2/8ppZfO50UWxdKltHECdZzZfKL1/rexSmN7NX9TLRd
+         Xony88scoZv/7WWl+tqiGGB90Hn9aqlzECMr386KTMeFpYiVf2EXGeIGaz37a5UZ8gxZ
+         1yNZtJeRHIZyXQhQpjt15yhnq3vjEdqG3gi+ocvsv8NTzw3Pk0a/WgLSmUlFcbneomVO
+         X0Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770277332; x=1770882132;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vCsVndFzrtL2hxIQjBbohAaFr2ETBAeGKs4H5l+MANM=;
+        b=VjO/PEOQunO+CyYcSnXxHH/kkcxceXdx3dY6TPOW0K5vLa2s6Rc1cXJGnefC8++O3m
+         jph6YUssocWx3Cim66msOVfukPoNKDJnx4iygL8atH5B88robeoxq5jm1L+wv4h1aimP
+         ZOA5KOOeVVLrhX9uTsC0P9Qc4iwa9kJ066En+AOveEQcG+kDGvZFHcrDKKO32KLJ0vOr
+         eOsrcY7bmplSAvknD1sMRK9m8tf8BiQlXrxfX0VLSuM/f/fCobwvvp/k2ayqk6glYrnx
+         CjPFbmYO68QAlFNbfsaNdVlCaz6lfVYrTPyLhLaczVBBQRAAeaaJq0V9BVABGDpkaDwJ
+         DNUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUGc60eSbOUpioLRaeF4k4qEzzDuGJR8LfvgdgvJEBLPGm73q77amk6USF/0cd7cwuy5RSwG8SNKA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwSW6k4PmviT96x+zpgBUr6/7zAezefoFtiz8sffEZhqucowIZa
+	U9RocjSXiE9YNLvfCSsjjX2FtwgAQS2ogGVf9b3xF3ILWIzwIgYvuaLRsVdqGgOd/CCoRxkzqDe
+	aQoHhlh1S+0ctVVJgzjf7hYUej8P5VrA961BXSLX8zg==
+X-Gm-Gg: AZuq6aLy/MAor0BkqqQmaIyU0GpavVLnulZT5HYwyNrTwgWrpYnzdGYHUBa7QzyIgOc
+	oBjLAwCNPSFyuxM5nvu/WAzOUpaM6CbNKK0RtKmm2RN1IPLhTeYAZKKJAw5s9Q7JfDSf5Ai7rNa
+	PWh6414H5vqPE66KzUo1mmSd5pxVpbgz4W0kogPzlFd7NkGx07itnDxuilLShyCPkILGQg3UJJj
+	AxQLQ1Dg4VReEx+BJnxAULZMNH4FvCJa/FesLbcAfAqnmlzC1OqpFEHO8RP7dFBNoGRt8et1pr2
+	DGLUV7e9IAHba5MEqhu+9oVsXX+GP7HcvyDcyP7mibX1
+X-Received: by 2002:a05:690c:39b:b0:794:fe8f:ad8b with SMTP id
+ 00721157ae682-794fe8fae16mr55216627b3.29.1770277332375; Wed, 04 Feb 2026
+ 23:42:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/8] iommu/riscv: Add HPM support for performance
- monitoring
-To: Zong Li <zong.li@sifive.com>
-Cc: Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Tomasz Jeznach <tjeznach@rivosinc.com>, Joerg Roedel <joro@8bytes.org>,
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Jingyu Li <joey.li@spacemit.com>,
- iommu@lists.linux.dev, linux-perf-users@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- devicetree@vger.kernel.org
-References: <cover.1769562575.git.lv.zheng@spacemit.com>
- <cover.1770195980.git.lv.zheng@linux.spacemit.com>
- <9C0A2AD4850D179B+524146e74e808db90d5f28fcb6ee791cf1d1bfaa.1770195980.git.lv.zheng@linux.spacemit.com>
- <p74snip7yykhogvzqld4gyjlygmd2z4kqnat7w3qj63fwebnmm@dlz6tloevgbs>
- <4D87481E9AABE2C6+72d18f72-9407-4d68-8195-edc6c171df14@linux.spacemit.com>
- <CANXhq0q8N5eHx9ytabZR97Y7AULKwgS2-uEGhcaOOGp9mvbtRQ@mail.gmail.com>
-Content-Language: en-US
-From: Lv Zheng <lv.zheng@linux.spacemit.com>
-In-Reply-To: <CANXhq0q8N5eHx9ytabZR97Y7AULKwgS2-uEGhcaOOGp9mvbtRQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-1
-X-QQ-XMAILINFO: MTI/6z+04aqCmKtOooE8Ec8p6bzHjOcrb9ijGprdxfZjLV+1DnWF1w6F
-	KgSdvHq29w6GBLYtahni+uA0YOQl1KnLM5xYcU7YPiUANN782jlv+Fawbw/Y/eV1lq20GHH
-	paJ/jE2nX/3tfa1R6XUTleXCK1sF8LERhvx0B+lTrEjzHhBF9kQoRxfgcL8+etiP0UcOYSX
-	l8N0s9qU/WI5vQb5PlWc4nFT8wht06g9hvYN2C3QivJSBTRdj7ouISlvnvRI9rYmjvl7lX1
-	FwfoxUeNSKouIHNvjexGVQJO+jmOXgTCU5MVD5G17AbbB3/9tFS1LP6WiXhsz4XuDWoz9cI
-	/pk0m4ivI2UkcbMRX7o6rxgUeG5Vh/vc4TsygpKU/Ypw2R/ufu5CXwvLrJtb/RatOxDeEzN
-	CSFHbauT/5tU0JI0NpdFDixI/+dqZCUhVfCnRVSypgksvICptFbWp7j0WrRBdAYr3GfrH7r
-	8/SbLin974hlZGtQH1rvh/hOQEsyi93hkO8fR9tHWplLzx7RLWmkkWuiTZcSK1tQXyOw7ay
-	S+M9AFp7+Go49KU0/pwWOHGjhaiSp85lE5YKhbkQa5kHfigzFPC7Q6xut1lyTcF37eUQVk5
-	oYKDs8vtB8qBcfL6Yti05CE4CTizojkWIYNNIsG5BV8ArDnqXO2p63RIQ6LEAuD1Cjcv7Uc
-	bvedWzwtLodcxAS2Bt0e46pTZxWfYvZL8T0EicIKP4MTimCUGjJkGZ3ELZU/yFLl1nGvptE
-	3lT8t2qAZGkWrFM2nGh6eeSgESZfx6CGveKJSggD5nuBBW/6RBWH/OSW6w78D2zSZsgoay4
-	WC0JiAujUnGV/LksKQ+Ce7aQM9225H4KBE8Po+vrnXPOKNjHKbexFM6qKe+ONblLTgqhVqZ
-	atZ0vUCljpERjslYGBHHAwfCbKTFWKzkGHHRQ83wOtzDB4Hj3E3MqXX/QLdn1vn4YylYQKP
-	8FGHIK+CwnKgO5abEm68MdxIafphY2UGxGLv1B4TuHSM0of+7I3tMKJGVeMZK6VW2abGq/D
-	teQc+xKj+ED3h2RyZ1P2DigPuqNZbXAa2COUuBg7v7UyzS98ZD
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
+References: <20260204-spacemit-p1-v3-0-a894b3057026@riscstar.com>
+ <20260204-spacemit-p1-v3-1-a894b3057026@riscstar.com> <20260204-unlucky-raven-1ca0ed8f3392@spud>
+In-Reply-To: <20260204-unlucky-raven-1ca0ed8f3392@spud>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Thu, 5 Feb 2026 15:42:01 +0800
+X-Gm-Features: AZwV_QheG0gYs892iDNFuUkxDWoz1fptgEI2peyofeZxhFHIoYa7PK0YeWnUmlw
+Message-ID: <CAH1PCMZ9S95JHzuZc1hG0hwxjVmCg9RezZ6rNjt_xQ25FokQOQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: mfd: spacemit,p1: Add individual
+ regulator supply properties
+To: Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+	Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2/5/2026 11:47 AM, Zong Li wrote:
-> On Thu, Feb 5, 2026 at 11:35 AM Lv Zheng <lv.zheng@linux.spacemit.com> wrote:
->>
->> On 2/5/2026 2:39 AM, Andrew Jones wrote:
->>> How does this relate to
->>>
->>> https://lore.kernel.org/all/20250115030306.29735-1-zong.li@sifive.com/
->>>
->>>   From a quick skim it looks like there's plenty of overlap.
->>
->> We developed the driver in 2024 and demonstrated it in China summit. We
->> didn't notice that a patch is on-going now in the community.
->>
->> Now it looks our approach solved more issues, and we'll check and update
->> if there are any community concerns still not addressed in this patchset.
->>
->> We can add Reviewed-by/Tested-by and Signed-off-by of Zong Li to this
->> patch if he wishes.
->>
->> Thanks,
->> Lv
->>
-> 
-> Perhaps I can first post my next revision to the mailing list (hope it
-> won't waste the community resource), so that you could have a chance
-> to review it and see whether that version is architecturally closer to
-> what the community is looking for, while also addressing your issue.
-> If you also feel that my next revision meets your needs, perhaps you
-> could append your additional implementations on top of it.
+On Thu, Feb 5, 2026 at 2:07=E2=80=AFAM Conor Dooley <conor@kernel.org> wrot=
+e:
 >
+> On Wed, Feb 04, 2026 at 09:23:01PM +0800, Guodong Xu wrote:
+> > Add supply properties that match the P1 PMIC's actual hardware topology
+> > where each buck converter has its own VIN pin and LDO groups share
+> > common input pins. Supply names are defined according to the pinout
+> > names in the P1 datasheet.
+> >
+> > The existing "vin-supply" is marked as deprecated to avoid warnings
+> > as dts and dt-bindings go via different trees.
+> >
+> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > ---
+> > v3: Mark vin-supply as deprecated.
+> > v2: Remove providers from the dts example.
+> >     Pass the 'make dt_binding_check' test.
+> > ---
+> >  .../devicetree/bindings/mfd/spacemit,p1.yaml       | 53 ++++++++++++++=
++++++++-
+> >  1 file changed, 52 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml b/D=
+ocumentation/devicetree/bindings/mfd/spacemit,p1.yaml
+> > index c6593ac6ef6a..41f784408e29 100644
+> > --- a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+> > +++ b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
+> > @@ -28,7 +28,46 @@ properties:
+> >      maxItems: 1
+> >
+> >    vin-supply:
+> > -    description: Input supply phandle.
+> > +    deprecated: true
+> > +    description:
+> > +      Main power input (deprecated). Use individual vin1-6, aldoin,
+> > +      dldoin1, and dldoin2 supply properties instead.
+>
+> What's the point documenting the deprecated version if it doesn't work
+> anymore?
 
-It seems we all composed the RISC-V iommu HPM support by referencing 
-drivers/perf/arm_smmuv3_pmu.
+Keeping "vin-supply" in the binding with "deprecated: true" avoids a cross-=
+tree
+warning. Since dts and dt-bindings go via different trees, the new binding =
++
+old dts triggers:
 
-Robin's comments should all be addressed IMHO.
+pmic@41 (spacemit,p1): Unevaluated properties are not allowed
+('vin-supply' was unexpected)
 
-> Of course, if the community would prefer to go your version, I’m
-> perfectly fine with that as well.
+Rob flagged this in [1] as 'intermittent warnings'.
 
-OK. If we send a next version, we will add your SOB and please help to 
-review and test.
+I'm open to dropping the deprecated markup, maybe just accepting the
+transient warning is fine?
 
-Thanks in advance,
-Lv
+Link: https://lore.kernel.org/all/20260129181604.GA1398997-robh@kernel.org/=
+ [1]
 
-> 
->>>
->>> Thanks,
->>> drew
->>>
->>>
->>> On Wed, Feb 04, 2026 at 05:09:01PM +0800, Lv Zheng wrote:
->>>> From: Jingyu Li <joey.li@spacemit.com>
->>>>
->>>> Introduces perf-based HPM driver for RISC-V IOMMU, enabling performance
->>>> monitoring capabilities.
->>>>
->>>> Note that the RISC-V IOMMU HPM module uses COUNTER_MAX-1 as a static
->>>> counter index of HPMCYCLES, and 0~COUNTER_MAX-2 as the dynamic counter
->>>> indexes of other HPMEVENTS in order to correctly index into IOHPMEVT and
->>>> IOHPMCTR registers that have already been defined in the iommu-bits.h.
->>>> However the users treat 0 as the index of HPMCYCLES and 1~COUNTER_MAX-1 as
->>>> the indexes of other HPMEVENTS, thus care should be taken in dealing with
->>>> counter indexes between userspace and kernel space.
->>>>
->>>> Signed-off-by: Jingyu Li <joey.li@spacemit.com>
->>>> Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
->>>> Link: https://github.com/riscv-non-isa/riscv-iommu
->>>> ---
->>>>    drivers/iommu/riscv/Kconfig          |   9 +
->>>>    drivers/iommu/riscv/Makefile         |   1 +
->>>>    drivers/iommu/riscv/iommu-bits.h     |   6 +
->>>>    drivers/iommu/riscv/iommu-hpm.c      | 843 +++++++++++++++++++++++++++
->>>>    drivers/iommu/riscv/iommu-pci.c      |  13 +-
->>>>    drivers/iommu/riscv/iommu-platform.c |   8 +-
->>>>    drivers/iommu/riscv/iommu.h          |  42 ++
->>>>    7 files changed, 919 insertions(+), 3 deletions(-)
->>>>    create mode 100644 drivers/iommu/riscv/iommu-hpm.c
->>>>
->>>
->>
-> 
-
-
+Best regards,
+Guodong Xu
