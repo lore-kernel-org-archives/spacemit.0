@@ -1,163 +1,177 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6861B35D5E7
-	for <spacemit@lists.linux.dev>; Thu,  5 Feb 2026 07:42:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770277333; cv=pass; b=A8tH2n4Q68iW9NLQb2OTl0aKbALfYsJ846+uheelgpZ3Fgufn7ciEFM25Q1j7KEHuA89/SUBluATPSlSaE4IX4lV98ffptbBK9gzaPNzk35oZznnUW0RhIXA7wU8khMDijtWYJ8Hd3Xg+SFSTgWXhuOC5ulRvG6rfllreq1INT8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770277333; c=relaxed/simple;
-	bh=S/nsTC1/V0Udh3YCNfcgu7V9ClpdOHlVkJ1LUE3M760=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZcY/pW26O0dyuMGbcCTBCWWT5ZEOh7GPzKdSBj4kkPBw44EisgcfMymM2nc+PqxxXFn2dJC5AcGD+lA/PjiOSxV7GI7vnooFieVaULa1+wvpxndrQyJeSMNA56JryNs+B9nNJWS6k03g3Ru3aS4wkMGL/WgWWAQdP45h7EIckNo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=mME6BOTu; arc=pass smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53D232C333;
+	Thu,  5 Feb 2026 09:10:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770282661; cv=none; b=fPq6O17JDCNxzq/0WhDnukJdwStywnKqerMCTqpMMkaMjgwbUO1tfNqTZ52ciJpMF5IimrxyeU0F5YZxAXFX0j/QU/q3v+gdJ6Li6HIHgl9ot5d0f1AeRImHxnqduOfc6sZ2/SWbWmmXqST8vLhKlGOGu5OsjqasoKIiNJIPEe8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770282661; c=relaxed/simple;
+	bh=NB0By9FN34hvS0Z5fUPzrGrRRmnQ7gNZuf24dtcutUw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hzbOwN+pgOMIFaWk2v67s76WYSM+d5aqNH3cIJzzSWipO8i/oNNboo3sYkjauAomjqkIT8qqf1PMzM/4lVAKmmiHWjJais9GtyBS4ZB9qTNEDjNnh9271dafKe0VFTYSSyrVOrbuwwN7mybz8DuGcLmeUuQ05kDOtQvWLZHSIsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=oxhIMknM; arc=none smtp.client-ip=18.132.163.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="mME6BOTu"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-79273a294edso5672377b3.3
-        for <spacemit@lists.linux.dev>; Wed, 04 Feb 2026 23:42:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770277332; cv=none;
-        d=google.com; s=arc-20240605;
-        b=QElI47qMcfFbi8ZOyDaYnNDOQ1+LwnQvtq9oqgFGY2xXgTsCu7MYUA6KCRqY8f/FCj
-         AOpMUF2DLNkrQD5tLkZhEpFbUjzGM3jSyTrNtZGFLFmIFGXfWHpDVR+XeBiK6TJySeRj
-         ysHw5FBCumBGdtQpFr8b7OGen+WBo1HSUc0sA8eQj3pozx2GmyzxzhmV3k6mg8TZk33A
-         FaZO/1q+g2BRp2NWen/Y1aOuJLSvL3NLZQQDgzOFijwicudoWtu4f65zD8vX97gf5emM
-         FIZe3VpmVG629iXME/Z9OrFRQdI9SCSW+ss48rM03EygMWSs3J/rvH/eY010nlWg8ds8
-         N7WQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vCsVndFzrtL2hxIQjBbohAaFr2ETBAeGKs4H5l+MANM=;
-        fh=V5McAf2c1iNmo/ZIhE56iZb4HFBGcsXUuyJkQTLNsa0=;
-        b=h75URwTVr/DvGnUBqOG3DaHBnbE4fCnJJO63Ebvf1iGQu+tdk1yLnz1ZfIS6FIwzST
-         qCUHAOClwYocZdUVQbbHh0SHr3vU6XqHLm4opeGad6BxKtlo/5RK56k0T5uDdiqdmPcz
-         EEB/3ZxD/4vxDzwi/Q6GS9I1dNyFYhi8anql/BTm7AEUaRpyPjfEjTKoSJnNia4pHA+n
-         E95l2c5Zs4iUX99mO2bXjY1DibkRP0nIxpE5Fa9ZOQA47GW7amW8Oz+FHwnT16PQuL4y
-         kzjLEA57urll1U/+/QWQLi7+Yj6QApH1pja3Ppldif+YkYxfhxMusw4kG/LI95+xdNYk
-         ndZQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1770277332; x=1770882132; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vCsVndFzrtL2hxIQjBbohAaFr2ETBAeGKs4H5l+MANM=;
-        b=mME6BOTuW94qDVuE3bxOvB6erhaeebGB0FtKCRSXbZMyPXISKhe4gt5UPC8Sn//nSb
-         JdQNnWN/cxIlvl9TRBhlXvWI1oV9p0uRz/2aQuzuWeQEVDZK9OiMKi3bWb2yWRmqskp+
-         q4iGA1U5TaaXLJn+3SqscKDYU2/8ppZfO50UWxdKltHECdZzZfKL1/rexSmN7NX9TLRd
-         Xony88scoZv/7WWl+tqiGGB90Hn9aqlzECMr386KTMeFpYiVf2EXGeIGaz37a5UZ8gxZ
-         1yNZtJeRHIZyXQhQpjt15yhnq3vjEdqG3gi+ocvsv8NTzw3Pk0a/WgLSmUlFcbneomVO
-         X0Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770277332; x=1770882132;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=vCsVndFzrtL2hxIQjBbohAaFr2ETBAeGKs4H5l+MANM=;
-        b=VjO/PEOQunO+CyYcSnXxHH/kkcxceXdx3dY6TPOW0K5vLa2s6Rc1cXJGnefC8++O3m
-         jph6YUssocWx3Cim66msOVfukPoNKDJnx4iygL8atH5B88robeoxq5jm1L+wv4h1aimP
-         ZOA5KOOeVVLrhX9uTsC0P9Qc4iwa9kJ066En+AOveEQcG+kDGvZFHcrDKKO32KLJ0vOr
-         eOsrcY7bmplSAvknD1sMRK9m8tf8BiQlXrxfX0VLSuM/f/fCobwvvp/k2ayqk6glYrnx
-         CjPFbmYO68QAlFNbfsaNdVlCaz6lfVYrTPyLhLaczVBBQRAAeaaJq0V9BVABGDpkaDwJ
-         DNUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUGc60eSbOUpioLRaeF4k4qEzzDuGJR8LfvgdgvJEBLPGm73q77amk6USF/0cd7cwuy5RSwG8SNKA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwSW6k4PmviT96x+zpgBUr6/7zAezefoFtiz8sffEZhqucowIZa
-	U9RocjSXiE9YNLvfCSsjjX2FtwgAQS2ogGVf9b3xF3ILWIzwIgYvuaLRsVdqGgOd/CCoRxkzqDe
-	aQoHhlh1S+0ctVVJgzjf7hYUej8P5VrA961BXSLX8zg==
-X-Gm-Gg: AZuq6aLy/MAor0BkqqQmaIyU0GpavVLnulZT5HYwyNrTwgWrpYnzdGYHUBa7QzyIgOc
-	oBjLAwCNPSFyuxM5nvu/WAzOUpaM6CbNKK0RtKmm2RN1IPLhTeYAZKKJAw5s9Q7JfDSf5Ai7rNa
-	PWh6414H5vqPE66KzUo1mmSd5pxVpbgz4W0kogPzlFd7NkGx07itnDxuilLShyCPkILGQg3UJJj
-	AxQLQ1Dg4VReEx+BJnxAULZMNH4FvCJa/FesLbcAfAqnmlzC1OqpFEHO8RP7dFBNoGRt8et1pr2
-	DGLUV7e9IAHba5MEqhu+9oVsXX+GP7HcvyDcyP7mibX1
-X-Received: by 2002:a05:690c:39b:b0:794:fe8f:ad8b with SMTP id
- 00721157ae682-794fe8fae16mr55216627b3.29.1770277332375; Wed, 04 Feb 2026
- 23:42:12 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="oxhIMknM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1770282621;
+	bh=NolWR8JIBAdYnikugRoTc6MkkN9oNFAhxt9dq5W7BjA=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=oxhIMknMx2YVOm8VzLcA8EnxFmkSkqDFpcnOiQV73cb+zhIXn9QqypsAQLIFsJu0A
+	 6Xp5H/iZhBePU5eqLYh3T2J0aHsjV2GEj1OOIpkKIl/Gdsnn7ARJ/In037OQ/hDhVl
+	 AIAZrUnnD8GIE9wm1IcMGR8VGjKR1JisNqXGJrD0=
+X-QQ-mid: zesmtpgz4t1770282619t1b7f7520
+X-QQ-Originating-IP: 4xlMdgZm/qRXr0DGjUoqk+B9g6ZxuKZ+q/SLOnxKpyg=
+Received: from SurfaceBook2-B.localdomain ( [101.70.125.34])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 05 Feb 2026 17:10:16 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7761756182653473071
+EX-QQ-RecipientCnt: 19
+From: Lv Zheng <lv.zheng@linux.spacemit.com>
+To: Tomasz Jeznach <tjeznach@rivosinc.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: Jingyu Li <joey.li@spacemit.com>,
+	Lv Zheng <lv.zheng@linux.spacemit.com>,
+	Zhijian Chen <zhijian@spacemit.com>,
+	iommu@lists.linux.dev,
+	linux-perf-users@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	devicetree@vger.kernel.org
+Subject: [PATCH v4 0/7] iommu/riscv: Add HPM support for RISC-V IOMMU
+Date: Thu,  5 Feb 2026 17:09:59 +0800
+Message-ID: <DACC013F46A47459+cover.1770281596.git.lv.zheng@linux.spacemit.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1769562575.git.lv.zheng@spacemit.com>
+References: <cover.1769562575.git.lv.zheng@spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260204-spacemit-p1-v3-0-a894b3057026@riscstar.com>
- <20260204-spacemit-p1-v3-1-a894b3057026@riscstar.com> <20260204-unlucky-raven-1ca0ed8f3392@spud>
-In-Reply-To: <20260204-unlucky-raven-1ca0ed8f3392@spud>
-From: Guodong Xu <guodong@riscstar.com>
-Date: Thu, 5 Feb 2026 15:42:01 +0800
-X-Gm-Features: AZwV_QheG0gYs892iDNFuUkxDWoz1fptgEI2peyofeZxhFHIoYa7PK0YeWnUmlw
-Message-ID: <CAH1PCMZ9S95JHzuZc1hG0hwxjVmCg9RezZ6rNjt_xQ25FokQOQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] dt-bindings: mfd: spacemit,p1: Add individual
- regulator supply properties
-To: Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Alex Elder <elder@riscstar.com>, Lee Jones <lee@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-1
+X-QQ-XMAILINFO: OLsBWtCIHsg6jy1vFAM7i3sntcqk6iP6zXXdmx6q2+zK+K23BakH2/7q
+	trRKF2dBKBaGtASr4cqPfLwkI+TuKokgZi+t94tREZMyzZ5UbgeHw4iXamqnf9F8brZ8Ka8
+	a5HOMRY/ySEfXw2sKLoK6pqY/pjzHCEBr8nJtxz9e+OJ7NN3yqr7nu99f6jgcWsgyFUMIw8
+	Dou3HqBtQRXOl5kt6SzSS31qb+A4ne3wvCXqbYMeoHaC5ns0W3GVWWmk4Q/5mrSHTM2iiyX
+	Td13MTaTRaJTPfmE4//OJxTTvVztf6xVmNxKneoxz/VhWymuwWH12XVIcrGMDLHbBHgUlFy
+	7eQHy4OrT0H7kWmUUaITsudMz2CsIsCn3VCn82ffMBaWq7LzYP/kgSy7YXrKgZD+xkVwQUC
+	bRFpa02IhKuIb30iaiXNC6eISJllG47tqu0bJu0uA6JOZ844Rk3jmCdNNtfWIzV787scGMR
+	58vNc5j8KBHXyaMNm5/Ln6u7eDgQkA34fNGlLtDKAhgAsYjHJLS6ctiKnfRXItVjw0B+0je
+	PQwucgToj8R6IauD3aLqvQd+4UEoJuqNWH+tpb1jufKZj+V7Q4ojCWIDXnujz41v8CUqMQs
+	zHp4I6WPRRFRTCTd5YLoW48naEZJbkarSunZYs3ABKtjwhS2yslGzbtGDcTQET2+BYn3MKU
+	sLPpOPRayRfxSorDwmoSAedqhNNWqTrHX2/J8JKt2FZPs/zpDkZ2UM2WVLTppLqjz5uhR0i
+	9HuLRD9wKsEBDs3fJ+hmllYW08DaaCv1KYhMB4wBWsj2ieIDSEdDCmp3NwppZqe3RxaK7ek
+	YVm7bdSsOqRSp4Wh3r1xG074nlBqoSnCma8LsBm+RL6UeA16RxlTeM/0TtXMnWYVtHNUWD4
+	zWCJylBwlTL0jMzZWbYPgCS8m0yhnbXXgh8z8OXnGQV/qq1ZwfUxjL3FJW1hgBEvbPQFgjt
+	6jnYFyGb2ircQzDNkJmmRiUTKC2VZKuxCcZ4yHgQzU8uilcXGnjEJ4s3GU6scyi799LjG2j
+	SO8X0r9dH0kOH1Zykp7ufWtsV1Q1xpQJt2xCbT+dTA5XtQYh4UlpS3UShFrQIWFvjYtNi85
+	g==
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-On Thu, Feb 5, 2026 at 2:07=E2=80=AFAM Conor Dooley <conor@kernel.org> wrot=
-e:
->
-> On Wed, Feb 04, 2026 at 09:23:01PM +0800, Guodong Xu wrote:
-> > Add supply properties that match the P1 PMIC's actual hardware topology
-> > where each buck converter has its own VIN pin and LDO groups share
-> > common input pins. Supply names are defined according to the pinout
-> > names in the P1 datasheet.
-> >
-> > The existing "vin-supply" is marked as deprecated to avoid warnings
-> > as dts and dt-bindings go via different trees.
-> >
-> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> > ---
-> > v3: Mark vin-supply as deprecated.
-> > v2: Remove providers from the dts example.
-> >     Pass the 'make dt_binding_check' test.
-> > ---
-> >  .../devicetree/bindings/mfd/spacemit,p1.yaml       | 53 ++++++++++++++=
-+++++++-
-> >  1 file changed, 52 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml b/D=
-ocumentation/devicetree/bindings/mfd/spacemit,p1.yaml
-> > index c6593ac6ef6a..41f784408e29 100644
-> > --- a/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
-> > +++ b/Documentation/devicetree/bindings/mfd/spacemit,p1.yaml
-> > @@ -28,7 +28,46 @@ properties:
-> >      maxItems: 1
-> >
-> >    vin-supply:
-> > -    description: Input supply phandle.
-> > +    deprecated: true
-> > +    description:
-> > +      Main power input (deprecated). Use individual vin1-6, aldoin,
-> > +      dldoin1, and dldoin2 supply properties instead.
->
-> What's the point documenting the deprecated version if it doesn't work
-> anymore?
+Includes HPM support for RISC-V IOMMU. The HPM hardware mechanism can be
+found in the recent announced SpacemiT SoCs (K3, V100), where T100
+(SpacemiT distributed IOMMU) is shipped. 
 
-Keeping "vin-supply" in the binding with "deprecated: true" avoids a cross-=
-tree
-warning. Since dts and dt-bindings go via different trees, the new binding =
-+
-old dts triggers:
+Revisions:
+v1
+ Initial release.
+v2 (sent as v1.1)
+ Split and cleanup DT-bindings.
+v3
+ 1. Refactor using vendor specific compatible.
+ 2. Implement vendor events with a userspace identifier.
+v4
+ 1. Drop ICVEC check which is not that usful as WSI device tree can use
+    only 1 vector for IOATS CIV/FIV/PIV/PMIV.
+ 2. Solve DT binding check of "interrupts/maxItems" attribute.
+ 3. Address Robin's comments for an old revision sent by "Zong Li":
+    https://lore.kernel.org/all/20250115030306.29735-1-zong.li@sifive.com/
+ 4. Limit IOATC enumeration by referencing spacemit,riscv-iommu.
 
-pmic@41 (spacemit,p1): Unevaluated properties are not allowed
-('vin-supply' was unexpected)
+The tested result can be found as follows:
 
-Rob flagged this in [1] as 'intermittent warnings'.
+ root@sdfirm:~# perf stat --timeout 5000 -a -e spacemit_ioats_hpm_00/dd_walk,config1=0x20c0010000000000/ dmatest; sleep 1
+ [  145.630224] dmatest: Started 1 threads using dma0chan0
+ [  145.644896] dmatest: dma0chan0-copy0: summary 1 tests, 0 failures 123.60 iops 123 KB/s (0)
 
-I'm open to dropping the deprecated markup, maybe just accepting the
-transient warning is fine?
+  Performance counter stats for 'system wide':
 
-Link: https://lore.kernel.org/all/20260129181604.GA1398997-robh@kernel.org/=
- [1]
+                  3      spacemit_ioats_hpm_00/dd_walk,config1=0x20c0010000000000/                                      
 
-Best regards,
-Guodong Xu
+        0.193108000 seconds time elapsed
+
+ root@sdfirm:~# echo dma0chan1 > /sys/module/dmatest/parameters/channel 
+ [  327.001820] dmatest: Added 1 threads using dma0chan1
+ root@sdfirm:~# perf stat --timeout 5000 -a -e spacemit_ioats_hpm_00/s_walk,config1=0x20c0011000000000/ dmatest; sleep 1
+ [  484.037180] dmatest: Started 1 threads using dma0chan1
+ [  484.048832] dmatest: dma0chan1-copy0: summary 1 tests, 0 failures 172.11 iops 172 KB/s (0)
+
+  Performance counter stats for 'system wide':
+
+                  6      spacemit_ioats_hpm_00/s_walk,config1=0x20c0011000000000/                                      
+
+        0.191970000 seconds time elapsed
+
+ root@sdfirm:~# perf stat --timeout 5000 -a -e spacemit_ioatc_hpm_0003/tlb_mis,config1=0x20c0011000000000/ dmatest; sleep 1
+ [  546.332494] dmatest: No channels configured, continue with any
+ [  546.363062] dmatest: Added 1 threads using dma0chan1
+ [  546.377994] dmatest: Started 1 threads using dma0chan1
+ [  546.388376] dmatest: dma0chan1-copy0: summary 1 tests, 0 failures 213.94 iops 213 KB/s (0)
+
+  Performance counter stats for 'system wide':
+
+                  3      spacemit_ioatc_hpm_0003/tlb_mis,config1=0x20c0011000000000/                                      
+
+        0.225062000 seconds time elapsed
+
+Jingyu Li (2):
+  iommu/riscv: Enable IOMMU DMA mapping support
+  iommu/riscv: Add HPM support for performance monitoring
+
+Lv Zheng (5):
+  dt-bindings: iommu: Add spacemit/t100 features
+  iommu/riscv: Add vendor event support for RISC-V IOMMU HPM
+  spacemit/t100: Add global filter awareness for RISC-V IOMMU HPM
+  spacemit/t100: Add SpacemiT T100 IOATC HPM support
+  perf vendor events riscv:: Add support for spacemit,riscv-iommu HPM
+    aliasing
+
+ .../bindings/iommu/riscv,iommu.yaml           |   53 +-
+ MAINTAINERS                                   |    3 +
+ drivers/iommu/Kconfig                         |    2 +-
+ drivers/iommu/riscv/Kconfig                   |    9 +
+ drivers/iommu/riscv/Makefile                  |    1 +
+ drivers/iommu/riscv/iommu-bits.h              |   18 +
+ drivers/iommu/riscv/iommu-hpm.c               | 1123 +++++++++++++++++
+ drivers/iommu/riscv/iommu-pci.c               |   13 +-
+ drivers/iommu/riscv/iommu-platform.c          |   12 +-
+ drivers/iommu/riscv/iommu.h                   |   46 +-
+ .../arch/riscv/spacemit/iommu/sys/ioatc.json  |   30 +
+ .../arch/riscv/spacemit/iommu/sys/ioats.json  |  163 +++
+ 12 files changed, 1464 insertions(+), 9 deletions(-)
+ create mode 100644 drivers/iommu/riscv/iommu-hpm.c
+ create mode 100644 tools/perf/pmu-events/arch/riscv/spacemit/iommu/sys/ioatc.json
+ create mode 100644 tools/perf/pmu-events/arch/riscv/spacemit/iommu/sys/ioats.json
+
+-- 
+2.43.0
+
