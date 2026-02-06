@@ -1,182 +1,112 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F053009F6;
-	Fri,  6 Feb 2026 10:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF433793BC;
+	Fri,  6 Feb 2026 10:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770373498; cv=none; b=LmnIrIC/ptT0O5g/hcpf4Wjq7PKtnyowwJxgMKgCCI6o9gVMDF18+2AVk0228Q4vU324gIC9aZX+/n2UC5X664zvQgfpECfsnY0YJkgQrTtaM8bmMmXgADdmeq5ItygFTFzwrRBtKMbn1HQfqxTuNraqgrOOY9rTna/fqN0loTw=
+	t=1770374669; cv=none; b=rSJw0m5igwBbwDhYV2i2ptH3QaT76iB/V+ePPSCaO2MEZsRHQ6bcJ0Xt2gX8A/mUkv8R7D/IpgrHitfMlA6WhMm61HHV9X9MJTulnrPQ4nEdYGtFOYRd2PubjQLgS3M35UW+qpVeu1O7SlBURbK+K6kQx6qLyg6TQqsUS53svZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770373498; c=relaxed/simple;
-	bh=nSlDqHzMQr152avoDT8llEAGQVSmXKKZSUd4Xq6kY2M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=im+n260P8UVmwcpBa7po/JabDZVTkDOOA5Z39fSEy1LU18CtPpSo75CAKbkX4eQWlNIrNyNOk0LssJS29JwBwdnQ5IrSZFsZOYHW1QsmwPT9ApcKu8AVZsw6AYQWAxetFjqbMy9u7FhgHimooyiv9znmrAR7cgNUFqXCVWIM6wY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qd6XDHLl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770374669; c=relaxed/simple;
+	bh=xugydUcthMTZyRmenwneIs8e9qCUTdgGq+o8ojDfb3E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BcHorkiUjFrOCDnp/g98ZarpU91gESrQ/rnvapbb2u+7kAaVn4YZm7OmjTHOzJmiXzfU8nCtnzlVFt7e068ldhxxGdekLVDP0vi3Ey2MKh1MtT3dAdwAXjQ0EhL45vl2ormjDnosCISI5q3CTQ8rieGBrjOkmb6u8NUc0FX9x6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qOkxMYuL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qd6XDHLl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C47FC116C6;
-	Fri,  6 Feb 2026 10:24:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qOkxMYuL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3873EC116C6;
+	Fri,  6 Feb 2026 10:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770373497;
-	bh=nSlDqHzMQr152avoDT8llEAGQVSmXKKZSUd4Xq6kY2M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qd6XDHLl3otd4l7745FgtPHKCh+28ET+4Gh4od6CGkx9KS7Rmrnkuzrnifg94r/rN
-	 OLjfInm8mgJh7ONidOWK8Gh54/rKF5snHY8nmT4Q4rMwo4SMe0HxDvtC4zbTBBC+e4
-	 zsyr/lwEOHpNtwSNo56ArmBaMDE4QvCgrJqonWp4CUmMGXLAeJUaMUe9VxH0u/xiYT
-	 dy/j+hH186tZh0Y5Ys1YxM8w8QfAoSSH3ZITUu59upINGLkB1Aze4mRHoP1RhTTyWL
-	 SP+MmDr0FSVqiQj0GIN3bxtbFhxX7Q2wVHBlvgqfRPoInqSTYpWc1ytvp+bh9ts4Eo
-	 ueh0byIlBA+0A==
-Date: Fri, 6 Feb 2026 10:24:52 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Lv Zheng <lv.zheng@linux.spacemit.com>
-Cc: Tomasz Jeznach <tjeznach@rivosinc.com>, Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Jingyu Li <joey.li@spacemit.com>, iommu@lists.linux.dev,
-	linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 4/8] dt-bindings: iommu: Add spacemit/t100 features
-Message-ID: <20260206-buffed-scrubbed-36fc49ada496@spud>
-References: <cover.1769562575.git.lv.zheng@spacemit.com>
- <cover.1770195980.git.lv.zheng@linux.spacemit.com>
- <A0E91F323138E92F+a27d73b00f3324f0d3885128f5596230b3f1370b.1770195980.git.lv.zheng@linux.spacemit.com>
- <20260204-primer-wrought-6f64b14bf152@spud>
- <53171BEB06F43599+7c1f54bc-e72d-4cbd-9d10-194ae6b13744@linux.spacemit.com>
- <20260205-attitude-customer-129fe2bd5dc7@spud>
- <B8005DB6301AACB4+374512e1-f561-4d2f-afd6-7a4b51012501@linux.spacemit.com>
+	s=k20201202; t=1770374669;
+	bh=xugydUcthMTZyRmenwneIs8e9qCUTdgGq+o8ojDfb3E=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=qOkxMYuL8xnqwxL5a2cxQ9jCE5UNd9K/TXUy1eMwIuIUBkR5cqoh8GvZN7+aZ1K41
+	 RgGLneKHvCWR2p+fivyW0PeO+JHq9vveNORB2NesqTwtfSDFwDmshnuvuKQQuYJ3EX
+	 wIrHFRLtKU1w5IspSbfGhzXicn/aY2NjnH0GWD8qzHlGnUZ0BDQz+MfDI6hMKxppOx
+	 TiFLEOEpVIXQ1umJcNp+kIflSkUYvNSX7xdau5ulwdk2Jec7F/brYMjfEzPzVy5wNa
+	 ckf7Mu3Y4/QTzavxGuusNWoeCXsua2MIQNI7p3ycrJfEw8jHrgB1J4jXa4hTx+G8s+
+	 KrbuyIgqCbgGg==
+Message-ID: <6c251cb2-4b13-4837-9a06-883726007bd9@kernel.org>
+Date: Fri, 6 Feb 2026 11:44:23 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8z5ZdYiefbay1YtF"
-Content-Disposition: inline
-In-Reply-To: <B8005DB6301AACB4+374512e1-f561-4d2f-afd6-7a4b51012501@linux.spacemit.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1.1 0/7] iommu/riscv: Add HPM support for RISC-V IOMMU
+To: Lv Zheng <lv.zheng@spacemit.com>, Tomasz Jeznach <tjeznach@rivosinc.com>,
+ Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Jingyu Li <joey.li@spacemit.com>, Zhijian Chen <zhijian@spacemit.com>,
+ iommu@lists.linux.dev, linux-perf-users@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ devicetree@vger.kernel.org
+References: <cover.1769562575.git.lv.zheng@spacemit.com>
+ <cover.1769666438.git.lv.zheng@spacemit.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <cover.1769666438.git.lv.zheng@spacemit.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 29/01/2026 07:08, Lv Zheng wrote:
+> Includes HPM support for RISC-V IOMMU. The HPM hardware mechnism can be
+> found in the recent announced SpacemiT SoCs (K3, V100), where T100
+> (SpacemiT distributed IOMMU) is shipped. 
+> 
+> The tested result can be found as follows:
 
---8z5ZdYiefbay1YtF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What is v1.1 in this patch? Why aren't you following standard process
+which allows us to make review easier (try yourself with b4 diff)?
 
-On Fri, Feb 06, 2026 at 09:33:09AM +0800, Lv Zheng wrote:
-> On 2/6/2026 2:24 AM, Conor Dooley wrote:
-> > On Thu, Feb 05, 2026 at 11:11:51AM +0800, Lv Zheng wrote:
-> > > On 2/5/2026 1:37 AM, Conor Dooley wrote:
-> > > > On Wed, Feb 04, 2026 at 05:09:12PM +0800, Lv Zheng wrote:
-> > > > > Adds device tree bindings for SpacemiT T100 specific features by
-> > > > > introducing spacemit,100 compatible. T100 contains distributed IO=
-ATCs,
-> > > > > each of which exposes pmiv interrupt.
-> > > > >=20
-> > > > > Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
-> > > > > Signed-off-by: Jingyu Li <joey.li@spacemit.com>
-> > > > > ---
-> > > > >    .../bindings/iommu/riscv,iommu.yaml           | 37 +++++++++++=
-++++++++
-> > > > >    1 file changed, 37 insertions(+)
-> > > > >=20
-> > > > > diff --git a/Documentation/devicetree/bindings/iommu/riscv,iommu.=
-yaml b/Documentation/devicetree/bindings/iommu/riscv,iommu.yaml
-> > > > > index d4838c3b3741..2da3456e7402 100644
-> > > > > --- a/Documentation/devicetree/bindings/iommu/riscv,iommu.yaml
-> > > > > +++ b/Documentation/devicetree/bindings/iommu/riscv,iommu.yaml
-> > > > > @@ -32,6 +32,12 @@ properties:
-> > > > >      # should be specified along with 'reg' property providing MM=
-IO location.
-> > > > >      compatible:
-> > > > >        oneOf:
-> > > > > +      - description: SpacemiT distributed IOMMUs
-> > > > > +        items:
-> > > > > +          - enum:
-> > > > > +              - spacemit,t100
-> > > > > +          - const: spacemit,riscv-iommu
-> > > >=20
-> > > > What actually is the t100? Is it an SoC or is it the name of the co=
-re
-> > > > complex IP that spacemit is using in multiple SoCs?
-> > >=20
-> > > T100 is the name of the IOMMU IP developed by SpacemiT, announced in =
-RISC-V
-> > > 2024 China Summit:
-> > > https://www.bilibili.com/video/BV1DNtCeiEBk/
-> > > It's world first server SPEC IOMMU in RISC-V, supports IOTLB placed in
-> > > adjacent to the DMA masters and supports PCIe ATS and PRI.
-> > > You can find it shipped in the recent publicly purchasable SoC Spacem=
-iT K3.
-> >=20
-> > Right, then what you need here is something like:
-> >=20
-> > items:
-> >    - enum:
-> >        - spacemit,k3-iommu
-> >    - spacemit,t100-iommu
-> >    - riscv,iommu
-> >=20
-> > Driver can then match on spacemit,t100-iommu - but you need to have
-> > soc-specific compatibles.
-> > I'm not convinced that riscv,iommu is suitable here though, does the
-> > driver work on your platform without the portions of code that are added
-> > by this series and enabled by your new compatible? If not, the I don't
-> > think the riscv,iommu fallback should be here.
-> >=20
-> > Additionally, please stop sending new versions so frequently and in
-> > response to earlier submissions. I have a v4 in my inbox while we are
-> > still discussing v3.
->=20
-> SpacemiT provides RISC-V IOMMU implementation, T100 is the first
-> generation of the this IP product line, we have plan to develop T200,
-> T300, etc., with more features introduced to be adoptive to new
-> RISC-V IOMMU specifications.
-> Besides, T100 is not only shipped in K3, but also shipped in V100 and
-> the follow-up SoCs, like Kn, Vn00, they will likely use the same
-> synthesis result of T100 RTLs.
->=20
-> From SpacemiT's point of view, we need a common sense of this IP
-> series for something like IOATCs, that's why spacemit,riscv-iommu
-> (this is same like qemu,riscv-iommu) is introduced. And a common sense
-
-No, it's not the same as qemu,riscv-iommu. That exists to avoid
-riscv,iommu being allowed in isolation and as a "SoC"/integration
-specific compatible. The driver matches against riscv,iommu not
-qemu,riscv-iommu and has no qemu,riscv-iommu specific behaviours.
-It is akin to having spacemit,k3-iommu.
-
-> of T100 for all SoCs shipped T100 (like global filters, vendor events
-> and etc.,).
->=20
-> IMO, the current compatible is proper to reflect these concerns.
-> What do you think?
-
-I pretty much already told you what I think, that you need SoC-specific
-compatibles for SoCs that integrate this IP and that the you should drop
-the spacemit,riscv-iommu compatible. The spacemit,riscv-iommu compatible
-doesn't provide any additional value over spacemit,t100-iommu, and has
-the downside of maybe being confusing in the future if spacemit
-produces a iommu that doesn't have the IOATC behaviour.
-
-Also, I don't see an answer to my question about whether the hardware
-will work without the driver changes this series introduces and enables
-with the new compatible?
-
-Cheers,
-Conor.
-
---8z5ZdYiefbay1YtF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaYXBcwAKCRB4tDGHoIJi
-0jyPAP9isV7zyFlG71V/A10awaNoOnM6vetdkFyMEwJt5Yj2ZgD/U8AKoodPKvnt
-PY1aMEIn8pr+p3KARKfZhb9DFBcT2w0=
-=XWl+
------END PGP SIGNATURE-----
-
---8z5ZdYiefbay1YtF--
+Best regards,
+Krzysztof
