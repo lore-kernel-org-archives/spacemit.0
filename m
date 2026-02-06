@@ -1,102 +1,78 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A175A24291E;
-	Fri,  6 Feb 2026 03:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49453624B1
+	for <spacemit@lists.linux.dev>; Fri,  6 Feb 2026 10:05:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770349525; cv=none; b=t5EFdN9Jx0qSoDxg/cMtloX9DeudPBePrT9fZ437Q9QMedoDm1TGXKjyUfDxGKpp77lHugP0AD6i9TEDpx0l1vcN4JLi7bEum1vQHYOozJ1vQGX3SoKNQLUY928G9ULBlZJnEH3cQW25rHuiTP6/Da4DYOYEry0KVgXANaKOOjE=
+	t=1770372319; cv=none; b=nAiA6iWbRsZ9W+NYdega7sN5xJ2w4X4R5e78AecssDRFDG9FcMbE8E5/YKo1QrBjdK2VAHMC06+mvazOFiLKZwelTrOTvzqNtmtFHBcnH6aHrV4vnsx6aDjsaEYWWNLo5/qohOIhptpoipvJN2+mS+heZUji7t+YljlDYyOxgUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770349525; c=relaxed/simple;
-	bh=8QaIt52NdvFuErUCHtvnmmLagd++MM0S9WAKEKHGAHQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MNH9P/ekViRWsfasCLCh1iB4eyL+HLIxpTvSUqgdHOCQDl4FXsX7MKMbv26iPOqwEgb7W4A2s6vFR7YUTTrBPlB1omHb8MO4VG+YKtJ6xig0XqONWx+vfydv41rTtTuU8rm886ZC149nVOtcde1eR+mOTkpUgJDBh9BOdlkMxK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=kWNfDtDV; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="kWNfDtDV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1770349479;
-	bh=I3g42yJH0JWKICHWbMZxYhHhJBEDjcyHd4q+GXqrC5c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=kWNfDtDVpRh1Z4iPqAGXTZTRl0Sv8lQc4KYpySBId31LsUFlNWHCZMh+O0GLeQ9m9
-	 dVSmn9P2exs+fQ/hzbZfUmUxBr6CRvY8bc4ItS+s9rXbPZS/0Oi84o9XDCZ6E3WCbJ
-	 N7eTETKxnv5zi30r2znlo79ijHFAswdIJpkP1xFY=
-X-QQ-mid: zesmtpsz4t1770349470tb06b5594
-X-QQ-Originating-IP: GNClnZ5B0uToiIZaeP+3CrWjtBWwxgmqPCTChay5LDo=
-Received: from [10.3.91.191] ( [101.70.125.34])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 06 Feb 2026 11:44:27 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13007171727628371130
-Message-ID: <049320517C0CBAC7+22eb4b3a-821c-4ae0-8bf8-be7455289929@linux.spacemit.com>
-Date: Fri, 6 Feb 2026 11:44:27 +0800
+	s=arc-20240116; t=1770372319; c=relaxed/simple;
+	bh=dfQgKbLFhsTBFHP+p5lQ/Vb0PrfTuSVawKw/RRbFklU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Xwd//+Ap2fpMkbrWa0KcxKwc3I6aeEcyVC8JBGdLfu18fDCro7VJuLUdVmfMLUn2Td6C7YpxHgivAeFTq+8r7NXcAZG/wB68YBuIs1es3TvH5d73ojor6EcPg+QFpO/c9V6Y3AVmG3CarVpIRD/jatv1NrSVacW8zVhPT7buWRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from localhost.localdomain (unknown [58.61.141.99])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 335ee3599;
+	Fri, 6 Feb 2026 18:05:07 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Yixun Lan <dlan@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Ze Huang <huang.ze@linux.dev>
+Cc: Rob Herring <robh@kernel.org>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-riscv@lists.infradead.org,
+	linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	spacemit@lists.linux.dev
+Subject: [PATCH 1/2] dt-bindings: phy: spacemit: add regulator support to K1 USB2 PHY
+Date: Fri,  6 Feb 2026 18:00:08 +0800
+Message-Id: <20260206100009.873182-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/7] dt-bindings: iommu: Add spacemit/t100 features
-To: Conor Dooley <conor@kernel.org>
-Cc: Tomasz Jeznach <tjeznach@rivosinc.com>, Joerg Roedel <joro@8bytes.org>,
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Jingyu Li <joey.li@spacemit.com>,
- Zhijian Chen <zhijian@spacemit.com>, iommu@lists.linux.dev,
- linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, devicetree@vger.kernel.org
-References: <cover.1769562575.git.lv.zheng@spacemit.com>
- <cover.1770281596.git.lv.zheng@linux.spacemit.com>
- <B1AEE717CF03B1BB+22fe4be0d3c8d2c6b4c5d3c19736c937cbed3c0d.1770281596.git.lv.zheng@linux.spacemit.com>
- <20260205-presoak-reshape-9465d18bca4a@spud>
-Content-Language: en-US
-From: Lv Zheng <lv.zheng@linux.spacemit.com>
-In-Reply-To: <20260205-presoak-reshape-9465d18bca4a@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-1
-X-QQ-XMAILINFO: NOIkHYnr7Vzd/QBa0AWyODA7TWoJiYyxcdouM/QFsngOoMMS8QhO7hoR
-	2RVY2ZSFpqbIEvpo0Udmo2zGonRo1pkXxoelsvMm13DWpcKYIk4Mh85CQ0MNBV6Mw8F5iO/
-	I626Vbj5KGT0STSvbDTPvom4JIcE8cGZiohau9eMBrpxAH8RyM9Mfes8TJ40ljsJZ/vQ/S5
-	Saeeq8/80JLVG7ajEoFF+TvGIQNps5Hhtf7lHptYJCtFaoC7dVmq7qi2hAaGsm6pR2SglIE
-	pU1rfKuufJKBISCYrQ5uqKCK0wiKqVgDS6C3PNdzBUa34zbcEjjeYcl0WqDrpUS/WAziw4w
-	RW2yVrxPh+xEQhkIBFhfmTzqAr1PFrlDn/lWa0fq4Lj7IGDXaDBB/mEyzo5OpeOrzhH66pz
-	Df1xuS2Qr7iLWTsKny3ZqbEJRI41yHOaghhJjS8X+j4zFY0d2aeAGtc74QodB1b9eiyo6N/
-	Nxwh6ek7P6xQGa/9X/RRz92ZNxE5Al2HxsFHHEf4nF6eKq28GQpEAm7b7qGmHy/uI1IS0OU
-	K8+/eGk1F9gn2zRBzPQsMAvCXI8bYPnfF7jKfoNtsqAyJNwxxw//EgRli7gcZBbQFCOWNhL
-	zrmj41PQ0aLYE84NZ2ZtRmabDIVpRucPJGJes5I8TZ6UDOtxzzbQPGLhFvD6cQQk10cFT62
-	dgh7cNEtU+1pg6lq5xZIHoX0u5vyV1PCrubfrI4bR9fI+HztxqyYK5zCCFdpGS1W5lM1nV1
-	S3BCUWF2uiCX0ORcJDd7ZCpmGTqm+Pj2li2RnMmFYfHTCbTAlG5mPrRvdMsim5iz2hRgUpJ
-	Kg7k+JQagM1Wod3sXsnPF+5ttgof2nOIRJEPyDdBt3jG62c+q/kloDHAAXmXI3iRTZ0TWDN
-	OJ6ISUPTUo5I6omZ/kXeCsszPJsYyhY2fpOyf24kSBRHdJ+7aozUH+8bdwis324HAQq7hDb
-	WJjUMzfr60PGQS00pxUa6tmoK6KiddBnhItL6o8Kqg3MNVzIEvwcJBX31QY+Ah4DTZ8yDA6
-	41g8F0LgXXBfJ5LiTXT4lSEm00Qy2HxNnj5Ap3Vw==
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-X-QQ-RECHKSPAM: 0
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9c326999a603a2kunmb90599ad38e347
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCTEoaVk8ZSU1JTh8fQ05NT1YeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlOQ1VNSlVKT0pVQkJZV1kWGg8SFR0UWUFZT0tIVUpLSEpOTE5VSktLVUpCS0
+	tZBg++
 
-On 2/6/2026 2:26 AM, Conor Dooley wrote:
-> On Thu, Feb 05, 2026 at 05:10:43PM +0800, Lv Zheng wrote:
->> Adds device tree bindings for SpacemiT T100 specific features by
->> introducing spacemit,100 compatible. T100 contains distributed IOATCs,
->> each of which exposes pmiv interrupt.
->>
->> Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
->> Signed-off-by: Jingyu Li <joey.li@spacemit.com>
-> 
-> Please wait until discussion has finished on prior versions before
-> sending more. The merge window opens next week, so there's absolutely no
-> rush with this series, there's weeks before anything could happen with
-> it.
+Add an optional phy-supply property to describe the regulator
+supplying for USB VBUS.
 
-Sure, thanks for the help.
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Cheers,
-Lv
+diff --git a/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml
+index 43eaca90d88c..74a1cd5bcdbe 100644
+--- a/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml
+@@ -19,6 +19,10 @@ properties:
+   clocks:
+     maxItems: 1
+ 
++  phy-supply:
++    description:
++      Phandle to a regulator that provides power to VBUS.
++
+   "#phy-cells":
+     const: 0
+ 
+-- 
+2.34.1
 
