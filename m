@@ -1,67 +1,68 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA75A235BE2
-	for <spacemit@lists.linux.dev>; Fri,  6 Feb 2026 02:32:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC6A26A0C7
+	for <spacemit@lists.linux.dev>; Fri,  6 Feb 2026 02:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770345154; cv=none; b=SjNhaDny41RRN31drmxJRAx0Bm1FuB5FhaXVFNreBtTAnhxwNN/XTQj6cJNrbz9hoxHISkmi/RRuDZYknaGik5Ncn2DQRwHsQHeInaPNB6/iTnZDVE85nWBrSkYYAArqpwbpIdrWEoGDeWkJu27Vw+IsrH/Ge/Hw1DBvbt7x5vU=
+	t=1770345160; cv=none; b=XaSSdwgr/ooWt8udPQ7E+8OL38uBMXel2TCRQrzwjsXY3WwUJdyUeQtHxg5GRiH5z1ut4s3XuReT+cpTPX/zqsrz1FpxpPDL3/9zaGQVdBj+4NGg1WC2odildk/9VPnQT5aBBeGiOFLhAWubXqj/pfAU0VW9a+1Ok1UVsB/RTWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770345154; c=relaxed/simple;
-	bh=+EeOMbsrkVrQ/nWNRoy6GEJ8PsMj5M2eB9aEmRc4lyY=;
+	s=arc-20240116; t=1770345160; c=relaxed/simple;
+	bh=rqn+CyC4DmyPqdwEhCuUQzXXWD6gdAtHB88oVgs4zr8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WDC25Axmv7RVT+HiPkuffKC90u+KM8qInNawBScKNJ9pWxc+qY5pee0gMuxA03IbBMEAFqOHPMfu6Gpi1o/UhLG2LQvolpgKy02ke0SjPxScZKWUlWTITN2u8vkXLeThP8Kl61X/cX3zd99R3ZfOKA7uyuhIDMqX1gHqrciIsB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=MEp4hWEa; arc=none smtp.client-ip=209.85.216.47
+	 In-Reply-To:To:Cc; b=T+2Sa1sEXX979HZxRyxD2yka0bzfAwqozXUR9buc7yEa3TxM6uKt1OljsalQ2UhbXefYGo5jNnZjYD2B4HbK/1Xl+gp2gIwLdclFFrNCOKfZhumQYzO+IvarIr/dWRiw8wcYHXBBWL1iQfOp1AyAqAj60oqqFWdJWr0vVasTTms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=mLKaQkB0; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="MEp4hWEa"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3540266d356so1067725a91.0
-        for <spacemit@lists.linux.dev>; Thu, 05 Feb 2026 18:32:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="mLKaQkB0"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3530e7b3dc2so1334599a91.3
+        for <spacemit@lists.linux.dev>; Thu, 05 Feb 2026 18:32:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1770345153; x=1770949953; darn=lists.linux.dev;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1770345159; x=1770949959; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2ZvkXVSIOYFCtEBxE0jhzmf26iD9qAK0/wl2dxGNFLk=;
-        b=MEp4hWEaDdn9XWQ+qBr1IbSqYHv20XwvdXpbHpPVFlTOEmf1kBoEym7dKydK3E9BO3
-         DWyZn9E1m2Pi1ofgY+2DZFzl4tEBqL5RgX8w3oHKEKU2zi4eDPGWglvJG578VOCesbeN
-         GLMxJjNcmBqkgWEU2SnjsgKFzi83ZT0CzJpaQkx324TwF3bG5ECT9ZgvOYjZtvy5wj/k
-         wzstwk6qkVIsrVkgcn9aNuMlht2jipfMnwE3S73HcX9lZ0mU0Rw/ZIFQJS9deHlkuXKL
-         xgxdlbmYjMXObLvqDQcPQSaKf1c29aNLhJIm0VvGqk4JwR6yokZPH/jGO1AAPKgYboYJ
-         V4Pg==
+        bh=/g6xXR3sCpk98fDtquSf1waAlnXZpFapLSMWL6yV+qI=;
+        b=mLKaQkB0aHXSypHPn+FEEkQAxjjuPfYNqmhbXKawtYWEQS3j2u2NLltgpSa/ExA0jY
+         zlObQPcxpUvlrkC3F0Nyq//WCp1b9s9LGPVdXggaCZc/UqXk8pzQB+Gs/3dl8ZJuFbqG
+         /9Fo1NKS9P0dj7IqngC9f2m8pY7LHWL1McAFGOTm251X8ir42ZmkIDvG+eGYnt3rNSGU
+         3XJiCTEKwW60jaHytLdKg2glzK/tggis1rBSML1MVDYFqNLfS7qyBlcuRFmLqwXvfwip
+         Ds4BESPQM0lvw0bT0CUZz5rKO5Y7HXqNXlaDxlqanwWILT78nuvStEXov8EALiZ88Xla
+         eyZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770345153; x=1770949953;
+        d=1e100.net; s=20230601; t=1770345159; x=1770949959;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=2ZvkXVSIOYFCtEBxE0jhzmf26iD9qAK0/wl2dxGNFLk=;
-        b=IKJfsbY3nCbGUdPrwH4wakF6YxyDQnyzDFwy4O8A91XOnog+5xEz4CkdXcivvqSSnN
-         HR8IacO5md8QPmKTdZ8YgC1jzgxTeFrqlOGEq4WIC9N4Ynz4JoiMlpu/tHWXVBYzDIDi
-         7jJGcC/eLj81bqUSfh2Xeoh83YosNEKiVP20hsf6y6G0FnbaqtLRooiZUMgYhk+OT/MY
-         SLAJXmnMjPrFUpQjtwWFtUZQF/1gt2U8NpJhpX/WfCVcGsEeqf0BZa5rDHpJjK0CZIsT
-         XO/0Cf0mbVN0yPJ7FujNFsFTAASb5ZDUrO8hVz7t1miSY8q29hoVoGHG+Vfc9O1o6Lgs
-         wK5w==
-X-Forwarded-Encrypted: i=1; AJvYcCVeV8x+atTRuw4GiygLh0kcY26jP8Cfj8tLggvl0Y3iBt1Z6EXTtIhgYxMS9s+COthHaMOWnsQrVw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzhnQQND/q4joWRmCnILt1ea+/VivYcFBsLX2SZo+jO0w0V7Lrc
-	jgYgy4IG/9uX+BOgfzZKOF34MHgmTocIXk24l2NFBrTp5tGR6bC89aK/HskTipEzzEk=
-X-Gm-Gg: AZuq6aKzCy7cy7pm7ZhNRs4V7i1GWyoHR+/Ku+HA425ncbB8zBPqZY2wNf9MQcsNVEm
-	WyFCJQGJXdN/5O0bdXMuCVsM3P+TwRKyRxUl3ylxfyXnWO4sMaLsWkM3zcoLBnd8vjC6S+0HUli
-	ODb1pJQVLF5q2UAFLs7YVHV1y7shKuZn+AgvIB3yBGlNLkMKgfK08V3Qa10+kZMY+bas6D8OXLT
-	7HgXVAUigbyvnYcWi3DSGYKigHo+lig/N2GYrPRxyOsjmBRyG594DN5hYCzo1zrmAYMUIRs0CLo
-	LaW5Kt9dkn9dzi7A4TQ8h4ansyf7qokBHCA7ypOyrFkO/yOBgFbTcvQWCjSBON753H7JnEj/ZUE
-	enVxi3FvNzE3uXLIsFy/iITPuKmZSiVTTVmIsnMPX/vY1nYL8BCVQ7vvHL2bCp9QtIrjpAk1zfB
-	BN7LbVSkq55mymA82oLMT+dVKtG25aT1dHiBuCxPu8VT2BvxWxBTHivQx0n4Z3WzZdT/0JHS2RM
-	xO1QDCiHeoHSebArBU=
-X-Received: by 2002:a17:90b:4e88:b0:34c:2db6:57d5 with SMTP id 98e67ed59e1d1-354b3ac0385mr944309a91.0.1770345153341;
-        Thu, 05 Feb 2026 18:32:33 -0800 (PST)
+        bh=/g6xXR3sCpk98fDtquSf1waAlnXZpFapLSMWL6yV+qI=;
+        b=VmTwx29k3PuXM1OrLzxj9zPMkHLpKc8RI8pT6mte0aYHcVITHaSZxt5TdkZ2hPQgvJ
+         4ynpadsUjSeRlFtL4ctSKzR7Qpx8n06DjL5xkVn9awYqDmyvOQkoE66qcGSXo1X7YmsO
+         Hlb/MeamOmdFyIgacJWw94BOrHhamORQQDnQT9HSqyri/2S7lFdIgoLaK/BhNlGfj5Mt
+         1pcNBqCM5G/0GNvTqMnuyJyBwAVZutK95RqO0r/QU4aNGKU9O+hJQomNXWALwDgRL3+h
+         UfUNTzQZzUqaMFKCOtfTKiisAYZZU45+LB1lr5aEejRL0mkWHNJITS/QNONB6G8R7SwF
+         CSBA==
+X-Forwarded-Encrypted: i=1; AJvYcCXfDwSN284kqhOO3us5kODZpG4kePwZar+dp2yDd5me49YJKpMN8FnY/SBskMKVabnqtII6jKpwQw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwaHhz1pUGb8l6nRIt0sTMjdkc3arD/WcuhE5dZk7MxQedEWdfQ
+	dHlLugEjSRKAwzfibTevbZxMzaECcTjFm2u2LuWYi2PA7cFHtQVmw4HeYgdB8IC8RrU=
+X-Gm-Gg: AZuq6aLaMR6hWIP+D7WxRqgS7ZftMoHnvUkVaGpbAv3Bq2ryeTd1E9Yco0Yo9Mx+OKI
+	AxkQ6FNwLZc2uEZ8S7CHZojs4SHz2nXmJuKh4/TuwlTi5UT7MTUloM0TwurOO/wvcNlQLfwN1UB
+	+8ks7S6AkQB/XS/Sy2gCc2WFuKznWpNNAprFjEeLO6UOjwccnvIdoJT4i8C2o5LHp+MHdRxJNZP
+	yO+9UAasUfW/8rVfqGHolsz1agGpYTV3F5gXQ3AO9djf+dx8Rg4IjY9Is8LFEnMwz1lzRYcHTNV
+	7SNu9Kf3OPEqyZ4VkaQ3qepyWMDeQHsch+NVSgb58LC77NmnvoCDl7Yk8lJqOHY3pS1IFNZGYKN
+	DS57FbXtblmyeFDj7Ucdu5ZBfemaxdZUd/TOo4S7yA7DwfPrSKLANp/YO4+4BBOOStSkkLLLvWK
+	oRuiv2csSgYsbryf7RFqeNIUplsQLo3nJAmoU75ZzfpieBQsBucpTZ5vJETItIW/lJ3wpzTTat5
+	fRXf8LyjXmbGOdaxU4IpqAhKuAAgw==
+X-Received: by 2002:a17:90b:4d85:b0:343:5f43:933e with SMTP id 98e67ed59e1d1-354b3e267bfmr956262a91.19.1770345159460;
+        Thu, 05 Feb 2026 18:32:39 -0800 (PST)
 Received: from [127.0.1.1] (61-221-120-110.hinet-ip.hinet.net. [61.221.120.110])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-354b64a8a9esm158419a91.1.2026.02.05.18.32.28
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-354b64a8a9esm158419a91.1.2026.02.05.18.32.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Feb 2026 18:32:33 -0800 (PST)
+        Thu, 05 Feb 2026 18:32:39 -0800 (PST)
 From: Guodong Xu <guodong@riscstar.com>
-Date: Fri, 06 Feb 2026 10:32:03 +0800
-Subject: [PATCH v4 2/3] regulator: spacemit-p1: Update supply names
+Date: Fri, 06 Feb 2026 10:32:04 +0800
+Subject: [PATCH v4 3/3] riscv: dts: spacemit: Update PMIC supply properties
+ for BPI-F3 and Jupiter
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,7 +71,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260206-spacemit-p1-v4-2-8f695d93811e@riscstar.com>
+Message-Id: <20260206-spacemit-p1-v4-3-8f695d93811e@riscstar.com>
 References: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
 In-Reply-To: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -86,71 +87,80 @@ Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
  Guodong Xu <guodong@riscstar.com>
 X-Mailer: b4 0.14.2
 
-Update supply names to match the P1 PMIC's actual hardware pinout where
-each buck has an individual VIN pin (vin1-vin6) and LDO groups have
-dedicated input pins (aldoin, dldoin1, dldoin2).
-
-This is an ABI change from the original "vin" and "buck5" supplies.
-The P1/PMIC regulator has no consumers in the DTS tree yet. For the two
-K1 boards in-tree (BPI-F3 and Jupiter), power settings come from
-boot firmware, so a probe failure has minimal impact.
+Use per-regulator supply names in pmic "spacemit,p1" node to specify
+each board's power tree topology and match the updated dt-binding.
 
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 ---
 v4: No change.
-v3: No code change.
-    Update the commit message to state ABI change explicitly.
-v2: No change.
+v3: No code change. Updated commit message to be more precise.
+v2: Added the pmic supply properties for K1 Milkv Jupiter.
+    Updated the commit message accordingly.
 ---
- drivers/regulator/spacemit-p1.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   | 12 ++++++++++--
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 12 ++++++++++--
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/regulator/spacemit-p1.c b/drivers/regulator/spacemit-p1.c
-index 2b585ba01a93d0ce163c33e14c8022a506bdce11..57e6e00a73fa416fd6e557eb5bcada7dc69df444 100644
---- a/drivers/regulator/spacemit-p1.c
-+++ b/drivers/regulator/spacemit-p1.c
-@@ -87,13 +87,16 @@ static const struct linear_range p1_ldo_ranges[] = {
- 	}
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index 5971605754b3533e1cf3713a27c48448aeb4d96f..444c3b1e6f44e98b8b2fd5e29820c5c75282abe1 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -190,7 +190,15 @@ pmic@41 {
+ 		compatible = "spacemit,p1";
+ 		reg = <0x41>;
+ 		interrupts = <64>;
+-		vin-supply = <&reg_vcc_4v>;
++		vin1-supply = <&reg_vcc_4v>;
++		vin2-supply = <&reg_vcc_4v>;
++		vin3-supply = <&reg_vcc_4v>;
++		vin4-supply = <&reg_vcc_4v>;
++		vin5-supply = <&reg_vcc_4v>;
++		vin6-supply = <&reg_vcc_4v>;
++		aldoin-supply = <&reg_vcc_4v>;
++		dldoin1-supply = <&buck5>;
++		dldoin2-supply = <&buck5>;
  
- #define P1_BUCK_DESC(_n) \
--	P1_REG_DESC(BUCK, buck, _n, "vin", 0x47, BUCK_MASK, 255, p1_buck_ranges)
-+	P1_REG_DESC(BUCK, buck, _n, "vin" #_n, 0x47, BUCK_MASK, 255, p1_buck_ranges)
+ 		regulators {
+ 			buck1 {
+@@ -221,7 +229,7 @@ buck4 {
+ 				regulator-always-on;
+ 			};
  
- #define P1_ALDO_DESC(_n) \
--	P1_REG_DESC(ALDO, aldo, _n, "vin", 0x5b, LDO_MASK, 128, p1_ldo_ranges)
-+	P1_REG_DESC(ALDO, aldo, _n, "aldoin", 0x5b, LDO_MASK, 128, p1_ldo_ranges)
+-			buck5 {
++			buck5: buck5 {
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <3450000>;
+ 				regulator-ramp-delay = <5000>;
+diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+index 800a112d5d7054508f03089f0e2adb9965879ebe..e2702a781734beffb331982907a12b20009e37db 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+@@ -100,7 +100,15 @@ pmic@41 {
+ 		compatible = "spacemit,p1";
+ 		reg = <0x41>;
+ 		interrupts = <64>;
+-		vin-supply = <&reg_vcc_4v>;
++		vin1-supply = <&reg_vcc_4v>;
++		vin2-supply = <&reg_vcc_4v>;
++		vin3-supply = <&reg_vcc_4v>;
++		vin4-supply = <&reg_vcc_4v>;
++		vin5-supply = <&reg_vcc_4v>;
++		vin6-supply = <&reg_vcc_4v>;
++		aldoin-supply = <&reg_vcc_4v>;
++		dldoin1-supply = <&buck5>;
++		dldoin2-supply = <&buck5>;
  
--#define P1_DLDO_DESC(_n) \
--	P1_REG_DESC(DLDO, dldo, _n, "buck5", 0x67, LDO_MASK, 128, p1_ldo_ranges)
-+#define P1_DLDO1_DESC(_n) \
-+	P1_REG_DESC(DLDO, dldo, _n, "dldoin1", 0x67, LDO_MASK, 128, p1_ldo_ranges)
-+
-+#define P1_DLDO2_DESC(_n) \
-+	P1_REG_DESC(DLDO, dldo, _n, "dldoin2", 0x67, LDO_MASK, 128, p1_ldo_ranges)
+ 		regulators {
+ 			buck1 {
+@@ -131,7 +139,7 @@ buck4 {
+ 				regulator-always-on;
+ 			};
  
- static const struct regulator_desc p1_regulator_desc[] = {
- 	P1_BUCK_DESC(1),
-@@ -108,13 +111,13 @@ static const struct regulator_desc p1_regulator_desc[] = {
- 	P1_ALDO_DESC(3),
- 	P1_ALDO_DESC(4),
- 
--	P1_DLDO_DESC(1),
--	P1_DLDO_DESC(2),
--	P1_DLDO_DESC(3),
--	P1_DLDO_DESC(4),
--	P1_DLDO_DESC(5),
--	P1_DLDO_DESC(6),
--	P1_DLDO_DESC(7),
-+	P1_DLDO1_DESC(1),
-+	P1_DLDO1_DESC(2),
-+	P1_DLDO1_DESC(3),
-+	P1_DLDO1_DESC(4),
-+	P1_DLDO2_DESC(5),
-+	P1_DLDO2_DESC(6),
-+	P1_DLDO2_DESC(7),
- };
- 
- static int p1_regulator_probe(struct platform_device *pdev)
+-			buck5 {
++			buck5: buck5 {
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <3450000>;
+ 				regulator-ramp-delay = <5000>;
 
 -- 
 2.43.0
