@@ -1,355 +1,95 @@
-Received: from mail-dy1-f193.google.com (mail-dy1-f193.google.com [74.125.82.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1CE266B67
-	for <spacemit@lists.linux.dev>; Sat,  7 Feb 2026 13:57:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808481DE3DB;
+	Sat,  7 Feb 2026 14:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770472659; cv=none; b=L33Ra40EhgYUKu7l1DdxX+rFmd+/wDlgn9JaPoy+3C27G1PfG2MFkrhhL9SFpx9nrSYyBUP8R3P73avROb4F5QE6Oo1RxtILY6HNFyBBq3x5WfZfyPnsmygjTzK+K7o3/XrVBACOltU+4u5caLmNQ4BbFHNfDD3ynpoQYOsAIrI=
+	t=1770476122; cv=none; b=jFW9lR63wJfbth44iYi+/5z8opP7xWkYWJfXnKdO2SCyF4BqOxCRyycNgq3a1iSp6V1NVeSlleVJh+B7DHHWRmG7XAjM6Mu1+Rvx3xhPj1sFG0yPVHPjLw4doBEceiIJX1f2yoITW0hiuDRNn+E+HsHSwvgkUxDNLeRHd/Ic1jE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770472659; c=relaxed/simple;
-	bh=+O5vCEglNwG3OLEbc0sSvqh7rNs0LvxSLOjULErzsPk=;
-	h=From:Mime-Version:Content-Type:Date:Message-Id:Subject:To:Cc:
-	 References:In-Reply-To; b=IsUNrWlf9x0H1x1NPO9etMD3dAvV36QZJBo/uRH1znlHzpDhkKeUW7cfcGUf0yYNMlePOkG0M79s8C+dqnh3rAedHNbQA4AJcphZ017USkfog9INp4d9+NUsREF8GG1kRoJUDjmeCRxgfv8QOb4h55UeuqQY9o3ibUcAaoHBUlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wy85yUzL; arc=none smtp.client-ip=74.125.82.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770476122; c=relaxed/simple;
+	bh=/Vn1e2hoVlCMMBL+WFkQl4UcnH2Hfa5hsCRlW3VBLWs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dZ3GCp+H1CTOhQsSRVBFzCjN9boyWOacmMlJYm0CVm5OpV1s59zPtYWwoEvlvawnUUMzvtRznNNvFSUlOP6ms9KqwQOyUq30kihgxgikDvJLDUOLUqfBvPy05TAxt6uXbGsS0UGFlSKHJaim570XA79FB2YQbkhmAMqtg/JOzYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rei9Oyl4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wy85yUzL"
-Received: by mail-dy1-f193.google.com with SMTP id 5a478bee46e88-2ba64b5a53aso45695eec.0
-        for <spacemit@lists.linux.dev>; Sat, 07 Feb 2026 05:57:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770472658; x=1771077458; darn=lists.linux.dev;
-        h=in-reply-to:references:cc:to:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JhLaNZ2KK6aNK9ALYGKaKSL8yESm+SSWbTP8mbgDklc=;
-        b=Wy85yUzLtfIw0Kfj1ja4+vWEHBWQ/ZzuWfXH7Dfis0xal3NQFQjKfO3Dcgi/bmbdKy
-         KmAD6XRTrdf4jCkhEMiO0q9+Sw/7aEjZdSZJMSDhZAR4+EZ/JTDxdTbek9St5803kVC9
-         yEls7E1q/+WAr4c/claWIDWCFfw81YQh1Uf7bNBf3C8n+2l6KEcMs8ngQrcvPHJKmAEe
-         ndqcruUAvy4RExBlvQNOonXeByAJeJ15z/YzgREDuDdXIU0ZuOeNBSr7AHZta3vnGM19
-         /TzbmBnWxO412sbIWBCfdDSK/HZCjj0oq7wGKfOcQS/pNilqyrJyjDMprCy+NL4gdwIr
-         y3Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770472658; x=1771077458;
-        h=in-reply-to:references:cc:to:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JhLaNZ2KK6aNK9ALYGKaKSL8yESm+SSWbTP8mbgDklc=;
-        b=v4zzno2TqpDbZ3tXX+r2Jh8yLWOjpx7FtlibfQZ4PbYpqij5V7UFZU2zlw+tUXSNEG
-         E5xULj3qv6CrGWwXhB1kw9VagAw2v9QzLNILmcwIG3s/dVCsirjANG7Mft+K7TZVQFil
-         MoG2n6NpvYeCbxGXztK8zxoFtjipZ4UuPj+biYoHnxOJoYua0U+GDnw+xE7EghD2oA80
-         4KTfMq6vfKy9wvPpHpKeG+fqPCtShN1bpEkOCQqdvTDeg5BX6oNXPx4uONeF6nkBNkh4
-         Mm8T/ST+Bosj4wRMLe1i5Bzks6PJWvK2WYnlX4Ov2rAfb1HPg+ed+mLXObijWNlksF5p
-         7TMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUalKuRzapbyB/xzUIwwJowF08xy0JcohalCMnXIfVWu9M+SdDl2oY7XG8r1ZUwLRic/446C48VzA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxD/t1p/EycPiJ5i0dLP4P9AY0IOndPZKwZdFcQBRuFWSehPOlg
-	Vgk2iaYOGehp0mqSlK3C3JWvb26AujWK0vCRVD4kQk98d2EOF4YvX2v1
-X-Gm-Gg: AZuq6aKwBTFurEulX2CqTteHw5yDMjJpF1t/hTMJ8+nnSBPS52EuEefPeq2H1vEgASx
-	63+7MjkC+oQjmi3x5F20vwXrmXndXPRArcsXEDWos+0mUp4O7mgmCXj9pVJ1nu/ynEjpt7zDeN0
-	0DIHiuGxPEZQFvqNgJ8JuUYXgLsw95ytq/qpJQ2siIIqSk/oAg0rVKiNF50rM8/qxBzfoZrncsH
-	B2URXvbrFVqQR7ak1OKv+3SKEj+guBl9uleGhdoR5WoHEnJGDIKLx8OKgoyCgxIyaANHVYK0fWY
-	4IxBLIz7JpolzADq4A0UQkeLhMUR8BQIzWgLRgodZLA9sxrjFyelnKpX8c6ryq5pxbHgGYUPNQE
-	lkoKVsiA74TyXGsOQdUqwM58Wx2yeywrDbretIBOROO+DK7lfG4LqOoy+Kep49nWytQPG4uv2xY
-	8ZzAlWza/fZC8N1w==
-X-Received: by 2002:a05:7301:3f16:b0:2b7:ff39:30eb with SMTP id 5a478bee46e88-2b8560de163mr2076540eec.0.1770472658293;
-        Sat, 07 Feb 2026 05:57:38 -0800 (PST)
-Received: from localhost ([72.11.140.113])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b855ad9a42sm4663573eec.1.2026.02.07.05.57.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Feb 2026 05:57:38 -0800 (PST)
-From: Troy Mitchell <troymitchell988@gmail.com>
-X-Google-Original-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rei9Oyl4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3EDC116D0;
+	Sat,  7 Feb 2026 14:55:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770476122;
+	bh=/Vn1e2hoVlCMMBL+WFkQl4UcnH2Hfa5hsCRlW3VBLWs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Rei9Oyl4Wxf2xzDBJ9LwHboVDd0CBlU2GARJoyFyj1VldpMGSmc/r1sHbhjwVzbFQ
+	 jA5mH24TAFNtiLcE22pTKmo/kg/qFkk1I1ONJWyKeRTvlpF5jKV/CsQhwW+MvgxXCU
+	 PlHwaWzAjcYXzlIQt+CVOqXycKWu5encomi/wDThmt9jgL9dK1eY2hi6e1Jb1Vzgfp
+	 nJDulxCwkAYxInL0vypevNk8UyeGxW3zwq/oUUuKUpevEmZB6s3+QL2h+Qtz3IYU63
+	 NUv1zUKNkOhvQMpAIyBP+9BKM0hbwNCl4wvkiDRxWzngc0/B5Ycuja/ckHK+SqrnsO
+	 xGt0RX3aqKNog==
+Date: Sat, 7 Feb 2026 14:55:16 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Lv Zheng <lv.zheng@linux.spacemit.com>
+Cc: Tomasz Jeznach <tjeznach@rivosinc.com>, Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Jingyu Li <joey.li@spacemit.com>, iommu@lists.linux.dev,
+	linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 4/8] dt-bindings: iommu: Add spacemit/t100 features
+Message-ID: <20260207-gap-taekwondo-40c0661eaa08@spud>
+References: <cover.1769562575.git.lv.zheng@spacemit.com>
+ <cover.1770195980.git.lv.zheng@linux.spacemit.com>
+ <A0E91F323138E92F+a27d73b00f3324f0d3885128f5596230b3f1370b.1770195980.git.lv.zheng@linux.spacemit.com>
+ <20260204-primer-wrought-6f64b14bf152@spud>
+ <53171BEB06F43599+7c1f54bc-e72d-4cbd-9d10-194ae6b13744@linux.spacemit.com>
+ <20260205-attitude-customer-129fe2bd5dc7@spud>
+ <B8005DB6301AACB4+374512e1-f561-4d2f-afd6-7a4b51012501@linux.spacemit.com>
+ <20260206-buffed-scrubbed-36fc49ada496@spud>
+ <7433DA16B96EE987+9b6398e6-edad-4a2e-814d-921483e5f1da@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mN4chUiAHJni2zvS"
+Content-Disposition: inline
+In-Reply-To: <7433DA16B96EE987+9b6398e6-edad-4a2e-814d-921483e5f1da@linux.spacemit.com>
+
+
+--mN4chUiAHJni2zvS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 07 Feb 2026 21:57:34 +0800
-Message-Id: <DG8S6DCW5EWZ.1F1IARVF5M6DZ@linux.spacemit.com>
-Subject: Re: [PATCH v6 2/2] i2c: spacemit: introduce pio for k1
-To: "Alex Elder" <elder@riscstar.com>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>, "Andi Shyti" <andi.shyti@kernel.org>,
- "Yixun Lan" <dlan@gentoo.org>, "Aurelien Jarno" <aurelien@aurel32.net>,
- "Michael Opdenacker" <michael.opdenacker@rootcommit.com>, "Troy Mitchell"
- <troymitchell988@gmail.com>
-Cc: <linux-i2c@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260108-k1-i2c-atomic-v6-0-41b132b70f68@linux.spacemit.com>
- <20260108-k1-i2c-atomic-v6-2-41b132b70f68@linux.spacemit.com>
- <5ddb55a9-ddad-4e4b-90ab-2214f958ea90@riscstar.com>
-In-Reply-To: <5ddb55a9-ddad-4e4b-90ab-2214f958ea90@riscstar.com>
 
-On Fri Jan 16, 2026 at 1:02 AM CST, Alex Elder wrote:
-> On 1/8/26 1:52 AM, Troy Mitchell wrote:
->> This patch introduces I2C PIO functionality for the Spacemit K1 SoC,
->> enabling the use of I2C in atomic context.
->>=20
->> When i2c xfer_atomic is invoked, use_pio is set accordingly.
->>=20
->> Since an atomic context is required, all interrupts are disabled when
->> operating in PIO mode. Even with interrupts disabled, the bits in the
->> ISR (Interrupt Status Register) will still be set, so error handling can
->> be performed by polling the relevant status bits in the ISR.
->>=20
->> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
->
-> I have a few minor comments, but I think this is close to done.
->
->> ---
->> Changes in v6:
->> - modify code style
->> - modify and add comments
->> - Link to v5: https://lore.kernel.org/all/20251226-k1-i2c-atomic-v5-2-02=
-3c798c5523@linux.spacemit.com/
->> ---
->> Changes in v5:
->> - optimize code logic
->> - refactor delay handling into spacemit_i2c_delay() helper
->> - introduce spacemit_i2c_complete() to centralize transfer completion
->> - rework PIO transfer wait logic for clarity and correctness
->> - modify and add some comments
->> - modify commit message
->> - Link to v4: https://lore.kernel.org/all/20251009-k1-i2c-atomic-v4-1-a8=
-9367870286@linux.spacemit.com/
->>=20
->> Changes in v4:
->> - refactor for better readability: simplify condition check and moving i=
-f/else (timeout/
->>    wait_xfer_complete) logic into a function
->> - remove irrelevant changes
->> - remove the status clear call in spacemit_i2c_xfer_common()
->> - sort functions to avoid forward declarations,
->>    move unavoidable ones above function definitions
->> - use udelay() in atomic context to avoid sleeping
->> - wait for MSD on the last byte in wait_pio_xfer()
->> - Link to v3: https://lore.kernel.org/r/20250929-k1-i2c-atomic-v3-1-f7e6=
-60c138b6@linux.spacemit.com
->>=20
->> Changes in v3:
->> - drop 1-5 patches (have been merged)
->> - modify commit message
->> - use readl_poll_timeout_atomic() in wait_pio_xfer()
->> - use msecs_to_jiffies() when get PIO mode timeout value
->> - factor out transfer state handling into spacemit_i2c_handle_state().
->> - do not disable/enable the controller IRQ around PIO transfers.
->> - consolidate spacemit_i2c_init() interrupt setup
->> - rename is_pio -> use_pio
->> - rename spacemit_i2c_xfer() -> spacemit_i2c_xfer_common()
->> - rename spacemit_i2c_int_xfer() -> spacemit_i2c_xfer()
->> - rename spacemit_i2c_pio_xfer() -> spacemit_i2c_pio_xfer_atomic()
->> - call spacemit_i2c_err_check() in wait_pio_xfer() when write last byte
->> - Link to v2: https://lore.kernel.org/r/20250925-k1-i2c-atomic-v2-0-46dc=
-13311cda@linux.spacemit.com
->>=20
->> Changes in v2:
->> - add is_pio judgement in irq_handler()
->> - use a fixed timeout value when PIO
->> - use readl_poll_timeout() in  spacemit_i2c_wait_bus_idle() when PIO
->> - Link to v1: https://lore.kernel.org/r/20250827-k1-i2c-atomic-v1-0-e59b=
-ea02d680@linux.spacemit.com
->> ---
->>   drivers/i2c/busses/i2c-k1.c | 304 +++++++++++++++++++++++++++++++++---=
---------
->>   1 file changed, 232 insertions(+), 72 deletions(-)
->>=20
->> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
->> index accef6653b56bd3505770328af17e441fad613a7..427cd8dc6947c1d5fbdd364a=
-351f7c065ba0b595 100644
->> --- a/drivers/i2c/busses/i2c-k1.c
->> +++ b/drivers/i2c/busses/i2c-k1.c
->> @@ -97,6 +97,10 @@
->>  =20
->>   #define SPACEMIT_BUS_RESET_CLK_CNT_MAX		9
->>  =20
->> +#define SPACEMIT_WAIT_TIMEOUT      1000 /* ms */
->> +#define SPACEMIT_POLL_TIMEOUT      1000 /* us */
->> +#define SPACEMIT_POLL_INTERVAL	   30	/* us */
->> +
->>   enum spacemit_i2c_state {
->>   	SPACEMIT_STATE_IDLE,
->>   	SPACEMIT_STATE_START,
->> @@ -125,6 +129,7 @@ struct spacemit_i2c_dev {
->>  =20
->>   	enum spacemit_i2c_state state;
->>   	bool read;
->> +	bool use_pio;
->>   	struct completion complete;
->>   	u32 status;
->>   };
->> @@ -171,6 +176,16 @@ static int spacemit_i2c_handle_err(struct spacemit_=
-i2c_dev *i2c)
->>   	return i2c->status & SPACEMIT_SR_ACKNAK ? -ENXIO : -EIO;
->>   }
->>  =20
->> +static inline void spacemit_i2c_delay(struct spacemit_i2c_dev *i2c,
->> +				      unsigned int min_us,
->> +				      unsigned int max_us)
->> +{
->> +	if (i2c->use_pio)
->> +		udelay(max_us);
->> +	else
->> +		usleep_range(min_us, max_us);
->> +}
->> +
->>   static void spacemit_i2c_conditionally_reset_bus(struct spacemit_i2c_d=
-ev *i2c)
->>   {
->>   	u32 status;
->> @@ -182,7 +197,8 @@ static void spacemit_i2c_conditionally_reset_bus(str=
-uct spacemit_i2c_dev *i2c)
->>   		return;
->>  =20
->>   	spacemit_i2c_reset(i2c);
->> -	usleep_range(10, 20);
->> +
->> +	spacemit_i2c_delay(i2c, 10, 20);
->
-> Is this delay specified for the hardware somewhere?  I.e.
-> "one must wait at least 10 microseconds after a reset"?
->
-> If so, the delay be moved into spacemit_i2c_reset().
-This is the sole call site requiring a delay; we must ensure a
-sufficient grace period before polling for bus release
+On Sat, Feb 07, 2026 at 12:24:30PM +0800, Lv Zheng wrote:
+>=20
+> >=20
+> > Also, I don't see an answer to my question about whether the hardware
+> > will work without the driver changes this series introduces and enables
+> > with the new compatible?
+>=20
+> Basically, T100 is riscv,iommu compatible, its IOATS part should be able
+> to work using standard HPM events with standard riscv,iommu HPM
+> compatible driver.
 
->
->>  =20
->>   	for (clk_cnt =3D 0; clk_cnt < SPACEMIT_BUS_RESET_CLK_CNT_MAX; clk_cnt=
-++) {
->>   		status =3D readl(i2c->base + SPACEMIT_IBMR);
->> @@ -211,9 +227,15 @@ static int spacemit_i2c_wait_bus_idle(struct spacem=
-it_i2c_dev *i2c)
->>   	if (!(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)))
->>   		return 0;
->>  =20
->> -	ret =3D readl_poll_timeout(i2c->base + SPACEMIT_ISR,
->> -				 val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
->> -				 1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
->> +	if (i2c->use_pio)
->> +		ret =3D readl_poll_timeout_atomic(i2c->base + SPACEMIT_ISR,
->> +						val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
->> +						1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
->> +	else
->> +		ret =3D readl_poll_timeout(i2c->base + SPACEMIT_ISR,
->> +					 val, !(val & (SPACEMIT_SR_UB | SPACEMIT_SR_IBB)),
->> +					 1500, SPACEMIT_I2C_BUS_BUSY_TIMEOUT);
->> +
->>   	if (ret)
->>   		spacemit_i2c_reset(i2c);
->>  =20
->
-> . . .
->
->> +static void spacemit_i2c_handle_state(struct spacemit_i2c_dev *i2c)
->> +{
->> +	u32 val;
->> +
->> +	if (i2c->status & SPACEMIT_SR_ERR)
->> +		goto err_out;
->> +
->> +	val =3D readl(i2c->base + SPACEMIT_ICR);
->
-> The assignment on the next line doesn't even matter and isn't
-> used unless the state isn't idle.  You could move it inside
-> the block below.  In fact, you don't even need to read the
-> ICR value (above) until you have verified the state isn't idle.
-Yes, you are correct.  The assignment is only used when the state
-is not idle. And the register ICR will be cleared when the state is
-idle (in err_check).
+That's fine, that's all I wanted to know. The riscv,iommu compatible can
+stay :)
 
->
->> +	val &=3D ~(SPACEMIT_CR_TB | SPACEMIT_CR_ACKNAK | SPACEMIT_CR_STOP | SP=
-ACEMIT_CR_START);
->> +
->> +	switch (i2c->state) {
->> +	case SPACEMIT_STATE_START:
->> +		spacemit_i2c_handle_start(i2c);
->> +		break;
->> +	case SPACEMIT_STATE_READ:
->> +		spacemit_i2c_handle_read(i2c);
->> +		break;
->> +	case SPACEMIT_STATE_WRITE:
->> +		spacemit_i2c_handle_write(i2c);
->> +		break;
->> +	default:
->> +		break;
->> +	}
->> +
->> +	if (i2c->state !=3D SPACEMIT_STATE_IDLE) {
->> +		val |=3D SPACEMIT_CR_TB;
->> +		if (i2c->use_pio)
->> +			val |=3D SPACEMIT_CR_ALDIE;
->> +
->> +
->> +		if (spacemit_i2c_is_last_msg(i2c)) {
->> +			/* trigger next byte with stop */
->> +			val |=3D SPACEMIT_CR_STOP;
->> +
->> +			if (i2c->read)
->> +				val |=3D SPACEMIT_CR_ACKNAK;
->> +		}
->> +		writel(val, i2c->base + SPACEMIT_ICR);
->> +	}
->> +
->> +err_out:
->> +	spacemit_i2c_err_check(i2c);
->> +}
->> +
->> +/*
->> + * In PIO mode, this function is used as a replacement for
->> + * wait_for_completion_timeout(), whose return value indicates
->> + * the remaining time.
->> + *
->> + * We do not have a meaningful remaining-time value here, so
->> + * return a non-zero value on success to indicate "not timed out".
->> + * Returning 1 ensures callers treating the return value as
->> + * time_left will not incorrectly report a timeout.
->> + */
->> +static int spacemit_i2c_wait_pio_xfer(struct spacemit_i2c_dev *i2c)
->> +{
->> +	u32 mask, msec =3D jiffies_to_msecs(i2c->adapt.timeout);
->> +	ktime_t timeout =3D ktime_add_ms(ktime_get(), msec);
->> +	int ret;
->> +
->> +	mask =3D SPACEMIT_SR_IRF | SPACEMIT_SR_ITE;
->> +
->> +	do {
->> +		i2c->status =3D readl(i2c->base + SPACEMIT_ISR);
->> +
->> +		spacemit_i2c_clear_int_status(i2c, i2c->status);
->> +
->> +		if (!(i2c->status & mask)) {
->> +			udelay(SPACEMIT_POLL_INTERVAL);
->> +			continue;
->> +		}
->> +
->> +		spacemit_i2c_handle_state(i2c);
->
-> This could be:
->
-> 		if (i2c->status & mask)
-> 			spacemit_i2c_handle_state(i2c);
-> 		else
-> 			udelay(SPACEMIT_POLL_INTERVAL);
-I'll. Thanks.
+--mN4chUiAHJni2zvS
+Content-Type: application/pgp-signature; name="signature.asc"
 
-                        - Troy
-> 	} while...
->
->
-> 					-Alex
->
->> +	} while (i2c->unprocessed && ktime_compare(ktime_get(), timeout) < 0);
->> +
->> +	if (i2c->unprocessed)
->> +		return 0;
->> +
->> +	if (i2c->read)
->> +		return 1;
->
-> . . .
+-----BEGIN PGP SIGNATURE-----
 
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaYdSVAAKCRB4tDGHoIJi
+0n51AP4035S/CKCxinCsG9YuPN4rFYU+scihXululGWkNe1FfwEAi9PnqZh5dPw+
+dqNXvYjrQVtAVZ215qZDKcazpcqFHAI=
+=pm4A
+-----END PGP SIGNATURE-----
+
+--mN4chUiAHJni2zvS--
