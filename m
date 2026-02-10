@@ -1,90 +1,82 @@
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5865919EED3
-	for <spacemit@lists.linux.dev>; Tue, 10 Feb 2026 05:50:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D0B2D24B7
+	for <spacemit@lists.linux.dev>; Tue, 10 Feb 2026 07:00:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770702650; cv=none; b=EuAU3lFANVBoVGtbnfzF1J1qQUh+IZ2vN0rTTCLI4m9RDY3107RXGxViKOvk7WtxkG3hNj7bl5z4PeD75hNOviZluCqEIt82yGO9GgsnpRSdw7tPiyLOIbTKAODKWyLCI73ScLIpvxDoPOGPJG9Hw5nWtNv/Oef8DU4dJ4xsP8M=
+	t=1770706829; cv=none; b=lkLzjXO+NpwpXb+cYxjOuAeUd8ZtpaXOETVc9mYygfAdX5ApiUI11DFBueCTOZkzfUMy2bWU0SG7JC1nntYkxneA7EsI1aQldqv5PgC5gp1sR2iDWWdJsQuXlcHaYVlzSYUB0Nzas9W/hojNRs0jpRIlOs2WWBSHNcu8LH2fR5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770702650; c=relaxed/simple;
-	bh=JFqUNAJPbfntakYgXlVmPUWBmjS6ZT274Op0DauQgpg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=TXMdQhBNcEvoeGn5+EzXaSoU3U8Yig2e0Gv0mqBvjQimg6YwfCxVjjBaYI/zyXyVO3joZ/T8SLhxxOQay3af5aR7BNRcFTw8QO7IwXhF2hOvZYvDC4rRKkBniLos3InChQTrm8rJAZ2mI9+lMFcnCRNoIPyh2Kw1/E4mIGqR2pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xKmyqxOK; arc=none smtp.client-ip=95.215.58.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xKmyqxOK"
+	s=arc-20240116; t=1770706829; c=relaxed/simple;
+	bh=D3kEAEt3N6vKWz4crcjlxWDxne0p0vAcw3BldFPSjrc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=huD5yTRVTgbsdX56AWGEenhkRyjaHcqzeV8s1KAzkYFqHTqbQ03GwKVOfbpYxLwZcpSuZpJBGuNCBRPI5KEXdxiRBrUbCByZqAILntny51G2vx6Vnfgl+elLkfIt1Nrhc6IBjEF+tuOM8TWcuLehyRyRhGM3IEyMTFbUMHOt2ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from localhost.localdomain (unknown [58.61.141.99])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 33b43ff1f;
+	Tue, 10 Feb 2026 15:00:16 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: huang.ze@linux.dev
+Cc: amadeus@jmu.edu.cn,
+	broonie@kernel.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	dlan@kernel.org,
+	krzk+dt@kernel.org,
+	krzk@kernel.org,
+	lgirdwood@gmail.com,
+	linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-riscv@lists.infradead.org,
+	neil.armstrong@linaro.org,
+	robh@kernel.org,
+	spacemit@lists.linux.dev,
+	vkoul@kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: phy: spacemit: add regulator support to K1 USB2 PHY
+Date: Tue, 10 Feb 2026 15:00:09 +0800
+Message-Id: <20260210070009.46040-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <DGB1P3K6I14J.1QCMDY84ZR7ZH@linux.dev>
+References: <DGB1P3K6I14J.1QCMDY84ZR7ZH@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1770702646;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JFqUNAJPbfntakYgXlVmPUWBmjS6ZT274Op0DauQgpg=;
-	b=xKmyqxOKd8/xaTlxkb/W4z+DNBVpe10MC+GteYSStR81VuLNbYcB6DflytOpkoJuxjQ2Xs
-	hFJylvG0GlZX+PsWuqAFBimHqkTKy4nDG2A4ekGUXZwZM8x2CM6bK61Dq9rQOgHuUQvk6v
-	LaWj+8VwT1xRY8X7PeIl3xiSEy19iOs=
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 10 Feb 2026 13:50:32 +0800
-Message-Id: <DGB1P3K6I14J.1QCMDY84ZR7ZH@linux.dev>
-Cc: <broonie@kernel.org>, <conor+dt@kernel.org>,
- <devicetree@vger.kernel.org>, <dlan@kernel.org>, <huang.ze@linux.dev>,
- <krzk+dt@kernel.org>, <lgirdwood@gmail.com>,
- <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
- <linux-riscv@lists.infradead.org>, <neil.armstrong@linaro.org>,
- <robh@kernel.org>, <spacemit@lists.linux.dev>, <vkoul@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: phy: spacemit: add regulator support
- to K1 USB2 PHY
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Ze Huang" <huang.ze@linux.dev>
-To: "Chukun Pan" <amadeus@jmu.edu.cn>, <krzk@kernel.org>
-References: <8c3835c4-3602-4cee-9631-0551b0341918@kernel.org>
- <20260209064016.1176056-1-amadeus@jmu.edu.cn>
-In-Reply-To: <20260209064016.1176056-1-amadeus@jmu.edu.cn>
-X-Migadu-Flow: FLOW_OUT
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9c4659ce3303a2kunm2c116fa0524a63
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaT0wYVhlLHh9MH0IYHUtLTFYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlOQ1VNSlVKT0pVQkJZV1kWGg8SFR0UWUFZT0tIVUpLSUJNS0pVSktLVUtZBg
+	++
 
-On Mon Feb 9, 2026 at 2:40 PM CST, Chukun Pan wrote:
-> Hi,
->
->> Plus, if this was a vbus regulator it would not be called "phy"...
->> Even more confusing.
->
-> Sorry, I didn't consider that this naming is confusing. Other
-> platforms, such as Rockchip's inno-usb2phy driver, use the
-> "phy-supply" property. I continued with this bad naming.
->
->> Bindings are supposed to be complete regardless what driver does
->> (or does not).
->>
->> You must list all supplies with proper names.
->>
->> If this regulator was missing, then what else?
->
-> (...)
->
->> Please start describing in the bindings your complete hardware, not
->> your drivers.
->
-> It appears Ze Huang described the vbus-supply property in
-> spacemit.k1-dwc3.yaml.
->
+Hi,
 
-> So I should enable the regulator in the dwc3-generic-plat driver.
-
-No, we will enable regulator at port level.
-
+> > It appears Ze Huang described the vbus-supply property in
+> > spacemit.k1-dwc3.yaml.
+> >
+> > So I should enable the regulator in the dwc3-generic-plat driver.
 >
-> Sorry for the noise.
->
-> Thanks,
-> Chukun
+> No, we will enable regulator at port level.
 
+Since dt-bindings (spacemit.k1-dwc3.yaml) already describes the
+vbus-supply property, why can't it be implemented in the dwc3 driver?
+
+> Previously, the VBUS regulator was defined as regulator-always-on
+> in the device tree as a workaround.
+
+I don't like this workaround because we can control the VBUS regulator
+through the USB PHY driver or the USB Controller driver. These are widely
+implemented in other similar drivers.
+
+Regarding port level, few manufacturers use different VBUS supplies
+for the ports coming out of the USB hub, such as the ArmSoM Sige1 board.
+Most boards use the same VBUS for a single USB socket, so I don't quite
+understand why we need to wait for port level implementation.
+
+Thanks,
+Chukun
