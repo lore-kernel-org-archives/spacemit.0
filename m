@@ -1,257 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B923D1E7C23;
-	Thu, 12 Feb 2026 01:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA4242049;
+	Thu, 12 Feb 2026 01:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770858609; cv=none; b=I2guvpBVl+7sIuXZOKWQoPwC0OWT++9JmNqGIiRRMR3vwiYJqBwutTPMXyuEokeVo00hxkjwfSZRWRl07JvGBH7R7/lybENIhVwcn1zqXw9t1I88TrborP57SFWORKWbNJ4+IMHLEcdHWuMR3w1m3yxhOJycAp6Nwcdry0lQGXY=
+	t=1770860352; cv=none; b=OD+jqy280PVlcetaYL+FGOe/cxo0yXCq9Tt+2XvHhtYmgIAGfl9CSjapgfVTApeLIWVj2IJgIWqfd5o/h5owCtfi3Y80+y9yridjOxru4i6qrCAKqCSvDC0E57zhr0+tiJqY1K0bZoHtGJTPS7EKK7zTrIk5yJRZThURrRLrB3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770858609; c=relaxed/simple;
-	bh=2BUTkqvGtxM61N9vkMccq26T/Mth1/H/gYa0x+OTFfc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fgo3hUzYoh3CanhWlxQpYN+1aVooyKCaUDo686uLucDFdxHnWd1KJ7vUre3m+UL803kqVwFiqChaqQwFiA2w0U/lqvRbEjcBYLNZiE3jh66ky7LVALSoVFs26rxAECJ7v0W4WqzQajz8aN2qang3QvftYLyKp7tuWRUwp5jXPJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r9qokTK/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770860352; c=relaxed/simple;
+	bh=VquqpyhQ3deWhyTUCGHSr6ncunPr+ICzU4ZIHWgQYwg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=joPGha3eR08oYxMaP5Er5Qm8S+fo7O54m6dUUzOyfzqMiqreWez+fXFzMC4sMcFdHEbRbLEZsCWHgSuAu3493P1x8ownYb6bQqWDzsP2UYO01FKV1dzi1URIze2KwRpQxnJguv/InVGQ+6I2crzSJ4PPz9rgeykgM4FSMMO4vtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uK9F4SZz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r9qokTK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6C0C16AAE;
-	Thu, 12 Feb 2026 01:10:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uK9F4SZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BAAC4CEF7;
+	Thu, 12 Feb 2026 01:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770858609;
-	bh=2BUTkqvGtxM61N9vkMccq26T/Mth1/H/gYa0x+OTFfc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r9qokTK/jitWKBPIpcQUjPZGTCuyN477yxFKyjqUe+Lr+IiBOp2PXNkSz0sVJtGoY
-	 JAXDsVAWw6OHCZl+ZDl0VjP/zZjdY2P/zFlMQ98IehwnQkZBEAcsF4h1O9pIfHMYvR
-	 IveOR7HyUvr+6HDsPu4k9yQi52L/H5OUoB8AH/WpILCQPvpx4ZaqTyo6mRm/nd9QjG
-	 8kQXNogQwp9xOCMDrn1DgqvoD07BLbkuSmag7o4x/Cju+MI9VtZk8wC8hk3GHpFD08
-	 UU8/7+Y4QeQXkEsUA0vwqRVxsKB0Je2hdR1b9xX0rAeswN8i81eDvqc66GGxrNphiC
-	 ZlVkQVc1zGz7Q==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	peterhuewe@gmx.de,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
-	dlan@kernel.org,
-	linux-integrity@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-5.15] char: tpm: cr50: Remove IRQF_ONESHOT
-Date: Wed, 11 Feb 2026 20:09:30 -0500
-Message-ID: <20260212010955.3480391-7-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260212010955.3480391-1-sashal@kernel.org>
-References: <20260212010955.3480391-1-sashal@kernel.org>
+	s=k20201202; t=1770860351;
+	bh=VquqpyhQ3deWhyTUCGHSr6ncunPr+ICzU4ZIHWgQYwg=;
+	h=From:Subject:Date:To:Cc:From;
+	b=uK9F4SZzzSpQKeIVDnYVJuKurEkLX9hUsup3ysAgntoPA+Y/VEY0QQDmKFPkUcTIC
+	 jHnwoUk2HuACPhO149g5DgLK5QXzu2e76QcmQs/vCVwFUjMNKHHPdNw1VqJ2LEvUP6
+	 N3nBZZr/mU+xLUGJMdsrhYmh/cS7VQ/GLtZmXRIT/K15kut07ADcCrIr/rCOy1dEPj
+	 cCEgRSW8YnseNYRysMeeNqqXnLg3ckCHKIsNM2yRgIqGRvRyiRWfAesnfJrGbMxtou
+	 YKp9MUErv5BOvxEtNBkFkJy9/LlfjrQyWjlBwD9IoPvpOp5hPKOJTp4Rs0X/67AO2q
+	 7uv8wf1gmsOug==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH 0/3] phy: spacemit: Add USB2 PHY support for K3 SoC
+Date: Thu, 12 Feb 2026 09:38:53 +0800
+Message-Id: <20260212-11-k3-usb2-phy-v1-0-43578592405d@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.19
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAC0vjWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDQyMTXUND3Wxj3dLiJCPdgoxK3WQTM2ODJEtLgyTDNCWgpoKi1LTMCrC
+ B0bG1tQAhkvsqYAAAAA==
+X-Change-ID: 20260124-11-k3-usb2-phy-c4630b990b1f
+To: Vinod Koul <vkoul@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Ze Huang <huang.ze@linux.dev>
+Cc: Junzhong Pan <panjunzhong@linux.spacemit.com>, 
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=842; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=VquqpyhQ3deWhyTUCGHSr6ncunPr+ICzU4ZIHWgQYwg=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpjS8wp+DyNoUIZxHuDikotY3ugiavkMetpWVa0
+ RB4OsKk1hmJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaY0vMBsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+2FwhAAiqE60ONiABOR54DBDtyV3drNY6A/zVY7zaPeWEgM+uSAD9n6EmYdN
+ qyZQdPHHmxsKvFzq/xxhWKyUx8QOgeLbiGplsMVTdP9khtzZDztkNlEbc40NAaDx9m4TC4SKfjH
+ MK3vBBK9bpDq7bh/GpZCWfztDNDYBC1CGqzA1fT5COJUdWwQ+ma8RMBwix+6whxu+/vz51AVODj
+ HzXJkJY/IUA7XJ2Xob6enh93N9UBVX1p6083DcqIa/YrCs71B15F3JL3vsn3KOMEIaLvjQqIAQ7
+ JtAozTCAjJ0t5tm039fOMhZktLqYOP8NP8zO+frDomMipX7zykJRlULT7rmqpEcgDqWe0Eim9Yt
+ lgy4rSEsjHioGewU4b15u9cEQy6xi90tNfzutaA6g5sEsr7+7tZDmwxSCrSLJIdxeGn1w4a+wEr
+ l+Mu7JRt1dcedO+gwHk0WITcoCXOh1EAaoNOsqWWPzGwwCz8vWikIdWLnOtxOY3wiQ7MypJYnZg
+ f1XL7EKAvbRbUC5LShT7HGwm32ctwbs0qahn5XBhdZTI+cMYsMIm0nW7f3qrK+64G29o7pAOo/+
+ tTpv6K/UuV184hEC56emkv/854670YORtk3TuW5G9pk7UCvcYDztukvrpa0iSn6QLPF3QfYLe9r
+ oqLFg3XUi/qs3uk5/OpAh+0wUcL1jk=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+The series trys to add USB2 PHY support for SpacemiT K3 SoC,
+while patch [2/3] implement a disconnect function which is
+needed during next connection.
 
-[ Upstream commit 1affd29ffbd50125a5492c6be1dbb1f04be18d4f ]
+No DTS part has been inclueded in this series, instead I plan
+to submit while adding USB host support.
 
-Passing IRQF_ONESHOT ensures that the interrupt source is masked until
-the secondary (threaded) handler is done. If only a primary handler is
-used then the flag makes no sense because the interrupt can not fire
-(again) while its handler is running.
-
-The flag also prevents force-threading of the primary handler and the
-irq-core will warn about this.
-
-Remove IRQF_ONESHOT from irqflags.
-
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://patch.msgid.link/20260128095540.863589-10-bigeasy@linutronix.de
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 ---
+Yixun Lan (3):
+      dt-bindings: phy: spacemit: k3: add USB2 PHY support
+      phy: k1-usb: add disconnect function support
+      phy: k1-usb: k3: add USB2 PHY support
 
-LLM Generated explanations, may be completely bogus:
-
-Now I have a complete understanding. Let me write up the comprehensive
-analysis.
-
+ .../devicetree/bindings/phy/spacemit,usb2-phy.yaml |  6 ++-
+ drivers/phy/spacemit/phy-k1-usb2.c                 | 52 +++++++++++++++++++++-
+ 2 files changed, 55 insertions(+), 3 deletions(-)
 ---
+base-commit: dd39930f3d9c1d74a40b79d368e1f3d1555e919c
+change-id: 20260124-11-k3-usb2-phy-c4630b990b1f
 
-## Comprehensive Analysis
-
-### 1. Commit Message Analysis
-
-The commit subject is "char: tpm: cr50: Remove IRQF_ONESHOT" and the
-message explains three points:
-1. `IRQF_ONESHOT` is for masking the interrupt source until the
-   **threaded** (secondary) handler completes
-2. These drivers only have primary handlers, so the flag is meaningless
-3. The flag **prevents force-threading** of the primary handler, and the
-   irq-core will warn about this
-
-The commit is authored by **Sebastian Andrzej Siewior** (bigeasy), the
-PREEMPT_RT maintainer, and signed off by **Thomas Gleixner**, the IRQ
-subsystem maintainer and co-maintainer of the Linux kernel. It was
-reviewed by **Jarkko Sakkinen**, the TPM subsystem maintainer.
-
-### 2. Code Change Analysis
-
-The change is minimal and surgical:
-- **`tpm_tis_i2c_cr50.c`**: Removes `IRQF_ONESHOT` from the flags in
-  `devm_request_irq()`, keeping `IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN`
-- **`tpm_tis_spi_cr50.c`**: Removes `IRQF_ONESHOT` from the flags in
-  `devm_request_irq()`, keeping `IRQF_TRIGGER_RISING`
-
-Both interrupt handlers (`tpm_cr50_i2c_int_handler` at line 74 and
-`cr50_spi_irq_handler` at line 65) are trivially simple - they just call
-`complete()` and return `IRQ_HANDLED`. There is no thread_fn.
-`devm_request_irq()` is a wrapper that calls
-`devm_request_threaded_irq()` with `thread_fn = NULL`.
-
-### 3. The Real Bug
-
-The companion commit **`aef30c8d569c`** ("genirq: Warn about using
-IRQF_ONESHOT without a threaded handler") was merged on 2026-01-12 and
-adds a `WARN_ON_ONCE()` in `__setup_irq()`:
-
-```c
-WARN_ON_ONCE(new->flags & IRQF_ONESHOT && !new->thread_fn);
-```
-
-This means that **without this cr50 fix**, every time the cr50 TPM
-driver probes on a system with the updated IRQ core, it will emit a
-`WARN_ON_ONCE` kernel warning at boot. This is a real runtime issue that
-would affect all Chromebook and other systems using cr50/ti50 TPM chips.
-
-More importantly, the core technical issue is that `IRQF_ONESHOT`
-prevents force-threading of the primary handler. From
-`irq_setup_forced_threading()` in `kernel/irq/manage.c`:
-
-```c
-if (new->flags & (IRQF_NO_THREAD | IRQF_PERCPU | IRQF_ONESHOT))
-    return 0;  // Skip force-threading!
-```
-
-On **PREEMPT_RT kernels** (where `force_irqthreads()` returns `true`),
-this means the cr50 interrupt handler runs in hardirq context instead of
-being force-threaded. While the handler itself (`complete()`) is safe in
-hardirq context, this defeats the PREEMPT_RT design goal of having all
-interrupt handlers run in thread context. On non-RT systems with
-`threadirqs` boot parameter, the same issue occurs.
-
-### 4. Classification
-
-This is a **bug fix** that addresses:
-1. **A spurious kernel warning** triggered by the new `WARN_ON_ONCE`
-   check added in `aef30c8d569c`
-2. **Incorrect IRQ flags** - `IRQF_ONESHOT` has never been semantically
-   correct for these drivers since they only use primary handlers
-3. **PREEMPT_RT compatibility** - the flag prevents force-threading,
-   which can be problematic
-
-The fix is not a feature addition - it removes an incorrect flag that
-was always wrong.
-
-### 5. Scope and Risk Assessment
-
-- **Lines changed**: 2 files, 2 lines total (removing `IRQF_ONESHOT`
-  from two flag constants)
-- **Risk**: Extremely low. `IRQF_ONESHOT` had no functional effect on
-  these drivers since they use only primary handlers. The interrupt
-  cannot fire while its primary handler is already running (hardware
-  guarantee), so removing the flag changes nothing about interrupt
-  masking behavior.
-- **Subsystem**: TPM drivers, well-understood, mature code
-- **Testing**: Reviewed by TPM maintainer (Jarkko Sakkinen), authored by
-  PREEMPT_RT maintainer, signed off by IRQ core maintainer
-
-### 6. User Impact
-
-- **Who is affected**: All users with cr50/ti50 TPM chips (primarily
-  Chromebooks and Google-based embedded devices)
-- **Severity without fix**: Kernel `WARN_ON_ONCE` at boot if the
-  `aef30c8d569c` warning commit is also backported; PREEMPT_RT
-  degradation
-- **Severity of regression risk**: Essentially zero - the flag had no
-  functional purpose
-
-### 7. Dependencies
-
-This commit is **self-contained**. It does not require any other patches
-to apply cleanly. However, the motivating warning comes from
-`aef30c8d569c` - if that commit is backported to stable, this fix
-becomes essential to avoid warnings. Even without the warning commit,
-this fix is correct and beneficial (enables proper force-threading on RT
-systems).
-
-The i2c-spacemit driver already got a similar fix (`e351836a54e3`) with
-`Cc: stable@vger.kernel.org` tag, establishing precedent that these
-IRQF_ONESHOT removal patches are considered stable material.
-
-### 8. Stability Indicators
-
-- Author: Sebastian Andrzej Siewior (PREEMPT_RT maintainer) - domain
-  expert
-- Signed-off-by: Thomas Gleixner (IRQ subsystem maintainer) - domain
-  expert
-- Reviewed-by: Jarkko Sakkinen (TPM maintainer) - domain expert
-- Part of a systematic cleanup pattern with prior art (i2c-exynos5,
-  i2c-hix5hd2, i2c-spacemit, drm/msm)
-
-### Conclusion
-
-This is a small, surgical, obviously correct bug fix. The `IRQF_ONESHOT`
-flag was always semantically wrong for these primary-only handlers. The
-fix removes a flag that had no functional benefit but actively prevented
-force-threading on PREEMPT_RT systems and will trigger a `WARN_ON_ONCE`
-with the companion IRQ core warning check. The risk is near-zero, the
-change is trivial (2 lines across 2 files), it was reviewed by all three
-relevant subsystem maintainers, and there is clear precedent for
-identical fixes being marked as stable material (the i2c-spacemit fix
-had `Cc: stable@vger.kernel.org`).
-
-**YES**
-
- drivers/char/tpm/tpm_tis_i2c_cr50.c | 3 +--
- drivers/char/tpm/tpm_tis_spi_cr50.c | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/char/tpm/tpm_tis_i2c_cr50.c b/drivers/char/tpm/tpm_tis_i2c_cr50.c
-index fc6891a0b6936..b48cacacc0664 100644
---- a/drivers/char/tpm/tpm_tis_i2c_cr50.c
-+++ b/drivers/char/tpm/tpm_tis_i2c_cr50.c
-@@ -749,8 +749,7 @@ static int tpm_cr50_i2c_probe(struct i2c_client *client)
- 
- 	if (client->irq > 0) {
- 		rc = devm_request_irq(dev, client->irq, tpm_cr50_i2c_int_handler,
--				      IRQF_TRIGGER_FALLING | IRQF_ONESHOT |
--				      IRQF_NO_AUTOEN,
-+				      IRQF_TRIGGER_FALLING | IRQF_NO_AUTOEN,
- 				      dev->driver->name, chip);
- 		if (rc < 0) {
- 			dev_err(dev, "Failed to probe IRQ %d\n", client->irq);
-diff --git a/drivers/char/tpm/tpm_tis_spi_cr50.c b/drivers/char/tpm/tpm_tis_spi_cr50.c
-index f4937280e9406..32920b4cecfb4 100644
---- a/drivers/char/tpm/tpm_tis_spi_cr50.c
-+++ b/drivers/char/tpm/tpm_tis_spi_cr50.c
-@@ -287,7 +287,7 @@ int cr50_spi_probe(struct spi_device *spi)
- 	if (spi->irq > 0) {
- 		ret = devm_request_irq(&spi->dev, spi->irq,
- 				       cr50_spi_irq_handler,
--				       IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-+				       IRQF_TRIGGER_RISING,
- 				       "cr50_spi", cr50_phy);
- 		if (ret < 0) {
- 			if (ret == -EPROBE_DEFER)
+Best regards,
 -- 
-2.51.0
+Yixun Lan <dlan@kernel.org>
 
