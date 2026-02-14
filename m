@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37B923AB9D;
-	Sat, 14 Feb 2026 12:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D80C23AB9D;
+	Sat, 14 Feb 2026 12:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771072182; cv=none; b=Jo6la9Bkv8mf7zdXpJG/kfZx1m8ziWbNNMnPnh3RFjgXXLib1m896i/J1MUa7QKyY2LCQlsF4M9h+QBbYtSNYGYei53LDN1W4R27c7LNdlWf7q0gp/3CmXWyWrzSJdvvV3XNpuV7VIv+1w+61i5K4m5kYEfPq0g859IGLQFk5oQ=
+	t=1771072187; cv=none; b=UZ1U6EBke9ON4A6fPeaYrXR1mAVsTyJW6daFi/k05D8npBjLgaOaM6MYVLjLWBFR+2GmBfxCothc6az8z1TTQJk0m/xZlKWz3wA2Sq2pQD9YIbz8Hb7mIAOrb/Ft/EmfccpOa/BxgCzT+3/KJGtD8CInWCIrAns74rI105AwSXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771072182; c=relaxed/simple;
-	bh=VfmU0lUs4Slg/JGUcPBhIcqCQuDwGNKonQhkwpcEyFU=;
+	s=arc-20240116; t=1771072187; c=relaxed/simple;
+	bh=R/+dzl78ImcyJC3ajMsl4sx1pTb167EmQ3u/ZqNDDqo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JMZEyOephKj8vxqbJBRyX803/R8i56KoDEPQjONAuxWKubvXGaR40YwFK2X0gPF3g2IogE8bCg4ZUgImgh6S9KelkXbHGONA+lUHuoUWWHYGQBxHFHldp3Yob5C9eOU80dcuzP3180D75PyXJfVc3w25FDExJxph5sYEXrxxwpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dYYvjytU; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=pMzYWp49aBptKXPORUUhGjFMmtMPNUVsfWgWHjUkSPTj7PLFgGXYwlrFOoC0LcNCSgy0JRrfx+uwn0OKW42/JGY/M0V1b5ZyLaOC3rMlQgZJRZFUfCJUxRGroNIl1t6k7vGG4KMLB6on3Mi9//n+HNZD1qdOojuIlVq3beWKH1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TOCosvLO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dYYvjytU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A2FC19423;
-	Sat, 14 Feb 2026 12:29:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TOCosvLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AD0C19424;
+	Sat, 14 Feb 2026 12:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771072182;
-	bh=VfmU0lUs4Slg/JGUcPBhIcqCQuDwGNKonQhkwpcEyFU=;
+	s=k20201202; t=1771072186;
+	bh=R/+dzl78ImcyJC3ajMsl4sx1pTb167EmQ3u/ZqNDDqo=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=dYYvjytUAC3NXiq0SGPRURADH309yF5j7sKkzD2FZaggGJgm8SL5TrAOjM2npwOnQ
-	 NtCJc2SPVPfT6hTnYU6LIrzWuQoud5GyO8IAy0E98UxkuxnuIaobTxyHqnO94w7+oY
-	 iWmc87Tx02GXtrEFVBOHgLLCOLl7MqRg73d+uW0E0A0TiX9wyiG76lJ83WrlzqvKe/
-	 FluisyammkRfQTTGpHfuYGtUrqLF7tSH1IALKM+NnHaJr5A7gJ/M88ibFIHJ7TGnLO
-	 OefebFD1QvZH1VGeHHjN0xsw1WW5+xC9bNoP929G8r+PrQ2fKjIrKGVhPvUs5Tu67o
-	 xIS54AkxIXTlg==
+	b=TOCosvLOUkpUvSy3Cd6K0bENEMRdr8eqgsnwRfG++apQa4xCbrOYaxOAEQOkmnegl
+	 hiFU6jdGKrk1m1yS2mcaN1XFCPVRGZ4ni4B+b2ORa/KNuV3XL0AlnNPoeDTVSiBJMD
+	 xhC9kSInq2I+Cf7g6LYE4386PIJKpvGgYsR6FKMc35dFzcVQtN2VaqyjMXUn6nrdTN
+	 5VAIrnz7m3DwhTLZygeaSRMGI4UAzTb2PCBgbtVkADLgr5RpttEmrNzHSziWEU+ZTQ
+	 OsGXWcvXXWCqS67f5OSWyG0n2oNqrlZ/LswPcYlrsqVTduHFEsm7faDMxmLGHrcd+G
+	 XeMynLklz0U2w==
 From: Yixun Lan <dlan@kernel.org>
-Date: Sat, 14 Feb 2026 20:29:14 +0800
-Subject: [PATCH v2 1/3] dt-bindings: phy: spacemit: k3: add USB2 PHY
- support
+Date: Sat, 14 Feb 2026 20:29:15 +0800
+Subject: [PATCH v2 2/3] phy: k1-usb: add disconnect function support
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -38,7 +37,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260214-11-k3-usb2-phy-v2-1-6ed31e031ab4@kernel.org>
+Message-Id: <20260214-11-k3-usb2-phy-v2-2-6ed31e031ab4@kernel.org>
 References: <20260214-11-k3-usb2-phy-v2-0-6ed31e031ab4@kernel.org>
 In-Reply-To: <20260214-11-k3-usb2-phy-v2-0-6ed31e031ab4@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -48,61 +47,72 @@ To: Vinod Koul <vkoul@kernel.org>,
 Cc: Junzhong Pan <panjunzhong@linux.spacemit.com>, 
  linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
  linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1204; i=dlan@kernel.org;
- h=from:subject:message-id; bh=VfmU0lUs4Slg/JGUcPBhIcqCQuDwGNKonQhkwpcEyFU=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpkGqk74oeID65Ro92lCV4S1UmpfWqKztQkaHpX
- wm05uUOB8SJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaZBqpBsUgAAAAAAEAA5t
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1552; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=R/+dzl78ImcyJC3ajMsl4sx1pTb167EmQ3u/ZqNDDqo=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpkGqncnS5ukAYLLDhRo+37cDaebjFw+ClkAS/U
+ +HXtIFVj+OJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaZBqpxsUgAAAAAAEAA5t
  YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
  maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+1/NQ/9EPpkiSAM4flTUD6Z54ieBpT27zD2O/Qb/o94Ub7O38OVWgKEjffKf
- IjF3QC+Yg1CC9uNhzolxccCY9Rd61lqHh0gYSvg223HNztJb/3KVIh46dOvdeOKRHX35z87Buix
- 0jX05MkKsBUwj4ZcoWo7+DCMx4GMl3vOxt4yYUT6YMFh/hiZuHHZPh7f6BSBPx/hvxD0esP7e6U
- mAt6+Zss+ge7WzmP8SMGDaO3CWmB1LXysncj8D01AUx8tjUn8ljgHfAJt8yLThSlyl/nROZyfHU
- iWMqXzpF4n307jNO25kRLQ0x+Pa+MvqFmI/bcAoCZbzGG2j3mkLX9Fx7D1n6IkCdFBQ09JsdAKL
- i5CLV8twPoBw3ZXPXxUI7yzRgwnT4z+EMxGtSWlL9ALW7v+BJFVmTOTVbgxdqqE1ZPnvDl7LEW8
- Ol5Qhf2M9GWfvpbJIGKHUe90RY+oH6yMRB3Av4p+DyTI4SIjt/qRHLNh8GKOf1GpR+/YU1Y4iak
- yNHCxOHVqRbk6WYI8ItFQ6jeTecqG3eFDH2arZU1QHs+0iiPY0nh0fFXaKkMrfjl0Iy+0VEdMqt
- gJQmltBJikJY2MtIGq/idMcc50gf4tRa/0oIOdcIUs2k/GnxiB55FXxwLgZbhFHl+JkzCa6VNXk
- zrxYjLgmq1unKCr4cZ0o3gHkQOhQd4=
+ QACgkQMarqR1lNu+2LYw/9GmtDDMqAa3Y1Jed10EBIq4pzQY4v9WhRDJ3j+Ip7ZrWx+RSyemVLO
+ sk/PefMncMZU2B5mUQ4JVWzwG3u2RruugSo0H5IYBWz44316Z7zXz8m2S/v1hCu4tTIAIZ3mk+h
+ bspF9ZZeuXmWgeWabUcFouHZe7FVd3pDCbyyuwtsVAy9elAtrPGHy5t5E/8STNa1VEQ4WXeDIZ9
+ HJqUHqvFqrjtB4hrWof1wgmG0q5UW5v2wMdthSkt3XYN8zxkGC81rKCF6KiHGeFhB4HLQLTObz9
+ e6QjNG8Kers/pIbWA1JXZ1y0bZYyO5CE1QTrCeavUwrhdEBOtwuRmGtByQbZ5Wtyu/KgN2WEzSJ
+ jT8amA6uDy8BY86D6cJ1pGU1UxuTcKTvGDFs6kRpAEyFMMU2uyBFpT9dHP23iW5aLKrvuytRFLq
+ pn06wxWNEDVeTdlwBIdnhRkpLv5ZMCjr7+5daUC2eniz3Ebz4VH/kiq7D7vMz4/YpdFp51pWK/y
+ 7UvOPWJjUtYIR/78n8L6zs/TeOt1ht+q12qfrXn/cjV7cegrJynZkSj0bJtMWtW93p+v3CBmiAF
+ aeZoVG67e8EebdjXKBc/q8GGrM/jCj6a8LYsJeqRm5+Cw9FgQyWJOBX1yOcKk2MAiJt17iLN6x9
+ c8eGwaJWOfmMQfdlwsQOycPHEN0Mn0=
 X-Developer-Key: i=dlan@kernel.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Introduce a compatible string for the USB2 PHY in SpacemiT K3 SoC. The IP
-of USB2 PHY mostly shares the same functionalities with K1 SoC, while has
-some register layout changes.
+A disconnect status BIT of USB2 PHY need to be cleared, otherwise
+it will fail to work properly during next connection when devices
+connect to roothub directly.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Fixes: fe4bc1a08638 ("phy: spacemit: support K1 USB2.0 PHY controller")
 Signed-off-by: Yixun Lan <dlan@kernel.org>
 ---
- Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/phy/spacemit/phy-k1-usb2.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml
-index 43eaca90d88c..18025e5f60d6 100644
---- a/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/spacemit,usb2-phy.yaml
-@@ -4,14 +4,16 @@
- $id: http://devicetree.org/schemas/phy/spacemit,usb2-phy.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/phy/spacemit/phy-k1-usb2.c b/drivers/phy/spacemit/phy-k1-usb2.c
+index 342061380012..959bf79c7a72 100644
+--- a/drivers/phy/spacemit/phy-k1-usb2.c
++++ b/drivers/phy/spacemit/phy-k1-usb2.c
+@@ -48,6 +48,9 @@
+ #define  PHY_CLK_HSTXP_EN		BIT(3)		/* clock hstxp enable */
+ #define  PHY_HSTXP_MODE			BIT(4)		/* 0: force en_txp to be 1; 1: no force */
  
--title: SpacemiT K1 SoC USB 2.0 PHY
-+title: SpacemiT K1/K3 SoC USB 2.0 PHY
++#define PHY_K1_HS_HOST_DISC		0x40
++#define  PHY_K1_HS_HOST_DISC_CLR		BIT(0)
++
+ #define PHY_PLL_DIV_CFG			0x98
+ #define  PHY_FDIV_FRACT_8_15		GENMASK(7, 0)
+ #define  PHY_FDIV_FRACT_16_19		GENMASK(11, 8)
+@@ -142,9 +145,20 @@ static int spacemit_usb2phy_exit(struct phy *phy)
+ 	return 0;
+ }
  
- maintainers:
-   - Ze Huang <huang.ze@linux.dev>
++static int spacemit_usb2phy_disconnect(struct phy *phy, int port)
++{
++	struct spacemit_usb2phy *sphy = phy_get_drvdata(phy);
++
++	regmap_update_bits(sphy->regmap_base, PHY_K1_HS_HOST_DISC,
++					   PHY_K1_HS_HOST_DISC_CLR, PHY_K1_HS_HOST_DISC_CLR);
++
++	return 0;
++}
++
+ static const struct phy_ops spacemit_usb2phy_ops = {
+ 	.init = spacemit_usb2phy_init,
+ 	.exit = spacemit_usb2phy_exit,
++	.disconnect = spacemit_usb2phy_disconnect,
+ 	.owner = THIS_MODULE,
+ };
  
- properties:
-   compatible:
--    const: spacemit,k1-usb2-phy
-+    enum:
-+      - spacemit,k1-usb2-phy
-+      - spacemit,k3-usb2-phy
- 
-   reg:
-     maxItems: 1
 
 -- 
 2.52.0
