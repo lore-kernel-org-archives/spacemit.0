@@ -1,35 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6A7307AF0;
-	Fri, 20 Feb 2026 04:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5CF1A9B24
+	for <spacemit@lists.linux.dev>; Mon, 23 Feb 2026 06:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771560660; cv=none; b=F4L3vOoRwN88jvtFrCSs27H1l3vmDh3irGn7E8G+OK9ZrZ3s36bb9+YsdcFHBbVNUpcReVZ36rVx593S7zOg1+wS8bnCEXmUGp/XFNEKEApYZy5tuskFKklGQt/HZ3BvTgajh8Mw52PIXkhkm6oOftkGNFE/9hkvoPxrxe1E+6c=
+	t=1771828976; cv=none; b=pBH6dQ39PEL3j2LPLueV4ALBWsY7tfeNXNErvKwk+z24Td6mXK6ca6alrre0cG1qcGhuMhvG+yaCD0ETK4K+HMzHpUmIcHgt8QkxHhZNcdAp3F4Y+bETQO0ZQQX1EqOc1RNQlRAKfL42uK1WLKDtUL3qJZhzqT+5yPJ0xZ4a8Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771560660; c=relaxed/simple;
-	bh=efjNDJhM9/0diWvBdyGOzP+K21cHz4kM08BrUOfEDRQ=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=IWO6dQF+zx6LeNT0z9NE/vTxWFxLNOhuBzhICPJqISUjNgGDaTquO9+GJO2GQ1k7J3bSZzLIPOgxWwkf+1Hbxnsx65lFBWKs0ec+UeIEsLWxPC/Nfl5Z8uxM7+yAfk1ayT362r+/oygCJUQdUPBVYIgFmpppfunqY6qv3DUneQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s0PWe5C5; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771828976; c=relaxed/simple;
+	bh=8gdOvcIbpSurhYkSmKuW57zxvLN42VVLT9xF2NcaQJ4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=D9di2dJy+PSAaZVenRKyUuBCcYAtd90kgdxfFyoGrxrMjmYPwGmUL9F7CLZTxoMqKewP80gU0uIbno1yayP/+sov7+BtkWSQha8q+C5nRbYEuP95UgVn1+3nRQ1GiNZMG9rhfAmDtxWWD7OywxCh4MUr65zyhizOo/m4uveq2mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TI1xS5T9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s0PWe5C5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98269C116D0;
-	Fri, 20 Feb 2026 04:11:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TI1xS5T9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0029DC116C6;
+	Mon, 23 Feb 2026 06:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771560660;
-	bh=efjNDJhM9/0diWvBdyGOzP+K21cHz4kM08BrUOfEDRQ=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=s0PWe5C5DfEFXvhOpNI7PD7CfmjfKkPnl3Er379KNRdps2JQFPoznWKtIkmcobcVj
-	 nQGi5AvNQIMtqm29dzcR5JBEXVOZSjC7/ZSGvbUqAjqj6fjih/3Cdnzx4k5/VQHovv
-	 ECXpPMVdp67gRv7WTlabd5cKSHZtj0ctTJFvMgi61cM01rTpuh1Is+QEtCJGhUE663
-	 9hoUXMixh3D7BmD//K3rb0GT9JknVLzSS86miuq3vnneDb0PWVddPNyTDKBWT/Z6D+
-	 gOTX9B5N+2k/Cw40A/fepclZYN9UHV/XHkBeirJhkb+CduzAOhngVE89qjJeVFNg1n
-	 beYdy47j4zHmg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 3FE9B3809A88;
-	Fri, 20 Feb 2026 04:11:10 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1771828976;
+	bh=8gdOvcIbpSurhYkSmKuW57zxvLN42VVLT9xF2NcaQJ4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=TI1xS5T9t7n0bBF6Vpe+xMIkf87Uk6AxnG5fhBG5UVrujlzbzZlTSY9ffz5tThJ26
+	 9mXPXyuKE3Tj+a0DFrdt168bPT0W6t05a0rnpIGCjv+QTdYqYbQ6uvYpAaUcQ+ya/F
+	 ZsZ1aE2lQiufC4crgccll5Jk1XoUupNItjS9yN1YxW9p39CNDSph+lquS3rCBcFtnv
+	 scsL89DF797Jlbz57jB/jkGEZjljj9qfGHlRlJ46Mqxvkhkv6R6dHzJ1eZGmsTTR/Y
+	 nXfEWxQA31bsrsjRdTKHu4gNoCoZjeTfeoaOjnYWU9VBcHOHGiUykFuOKG2QaMWe1d
+	 7u+BnQr5rF51w==
+From: Vinod Koul <vkoul@kernel.org>
+To: linux-phy@lists.infradead.org
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Alex Elder <elder@riscstar.com>,
+	Ze Huang <huang.ze@linux.dev>,
+	spacemit@lists.linux.dev
+Subject: [PATCH] phy: move spacemit pcie driver to its subfolder
+Date: Mon, 23 Feb 2026 12:12:39 +0530
+Message-ID: <20260223064240.386617-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -37,44 +44,93 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net v3] net: spacemit: k1-emac: fix jumbo frame support
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <177156066878.189817.17095459510292198861.git-patchwork-notify@kernel.org>
-Date: Fri, 20 Feb 2026 04:11:08 +0000
-References: <20260130102301.477514-1-tmshlvck@gmail.com>
-In-Reply-To: <20260130102301.477514-1-tmshlvck@gmail.com>
-To: Tomas Hlavacek <tmshlvck@gmail.com>
-Cc: linux-riscv@lists.infradead.org, netdev@vger.kernel.org,
- spacemit@lists.linux.dev, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, dlan@kernel.org, wangruikang@iscas.ac.cn,
- stable@vger.kernel.org
 
-Hello:
+Commit fe4bc1a08638 ("phy: spacemit: support K1 USB2.0 PHY controller")
+created spacemit subfolder with usb driver while commit 57e920b92724
+("phy: spacemit: Introduce PCIe/combo PHY") added pcie driver in phy
+folder. Move latter into spacemit subfolder and rename file to
+phy-k1-pcie.c
 
-This patch was applied to riscv/linux.git (fixes)
-by Jakub Kicinski <kuba@kernel.org>:
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/phy/Kconfig                                  | 12 ------------
+ drivers/phy/Makefile                                 |  1 -
+ drivers/phy/spacemit/Kconfig                         | 12 ++++++++++++
+ drivers/phy/spacemit/Makefile                        |  1 +
+ .../phy-k1-pcie.c}                                   |  0
+ 5 files changed, 13 insertions(+), 13 deletions(-)
+ rename drivers/phy/{phy-spacemit-k1-pcie.c => spacemit/phy-k1-pcie.c} (100%)
 
-On Fri, 30 Jan 2026 11:23:01 +0100 you wrote:
-> The driver never programs the MAC frame size and jabber registers,
-> causing the hardware to reject frames larger than the default 1518
-> bytes even when larger DMA buffers are allocated.
-> 
-> Program MAC_MAXIMUM_FRAME_SIZE, MAC_TRANSMIT_JABBER_SIZE, and
-> MAC_RECEIVE_JABBER_SIZE based on the configured MTU. Also fix the
-> maximum buffer size from 4096 to 4095, since the descriptor buffer
-> size field is only 12 bits. Account for double VLAN tags in frame
-> size calculations.
-> 
-> [...]
-
-Here is the summary with links:
-  - [net,v3] net: spacemit: k1-emac: fix jumbo frame support
-    https://git.kernel.org/riscv/c/3125fc170169
-
-You are awesome, thank you!
+diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
+index 02467dfd4fb0..c0574e44f0a3 100644
+--- a/drivers/phy/Kconfig
++++ b/drivers/phy/Kconfig
+@@ -134,18 +134,6 @@ config PHY_NXP_PTN3222
+ 	  schemes. It supports all three USB 2.0 data rates: Low Speed, Full
+ 	  Speed and High Speed.
+ 
+-config PHY_SPACEMIT_K1_PCIE
+-	tristate "PCIe and combo PHY driver for the SpacemiT K1 SoC"
+-	depends on ARCH_SPACEMIT || COMPILE_TEST
+-	depends on COMMON_CLK
+-	depends on HAS_IOMEM
+-	depends on OF
+-	select GENERIC_PHY
+-	default ARCH_SPACEMIT
+-	help
+-	  Enable support for the PCIe and USB 3 combo PHY and two
+-	  PCIe-only PHYs used in the SpacemiT K1 SoC.
+-
+ source "drivers/phy/allwinner/Kconfig"
+ source "drivers/phy/amlogic/Kconfig"
+ source "drivers/phy/apple/Kconfig"
+diff --git a/drivers/phy/Makefile b/drivers/phy/Makefile
+index a648c2e02a83..2773d596e543 100644
+--- a/drivers/phy/Makefile
++++ b/drivers/phy/Makefile
+@@ -16,7 +16,6 @@ obj-$(CONFIG_PHY_SNPS_EUSB2)		+= phy-snps-eusb2.o
+ obj-$(CONFIG_USB_LGM_PHY)		+= phy-lgm-usb.o
+ obj-$(CONFIG_PHY_AIROHA_PCIE)		+= phy-airoha-pcie.o
+ obj-$(CONFIG_PHY_NXP_PTN3222)		+= phy-nxp-ptn3222.o
+-obj-$(CONFIG_PHY_SPACEMIT_K1_PCIE)	+= phy-spacemit-k1-pcie.o
+ obj-$(CONFIG_GENERIC_PHY)		+= allwinner/	\
+ 					   amlogic/	\
+ 					   apple/	\
+diff --git a/drivers/phy/spacemit/Kconfig b/drivers/phy/spacemit/Kconfig
+index 0136aee2e8a2..50b0005acf66 100644
+--- a/drivers/phy/spacemit/Kconfig
++++ b/drivers/phy/spacemit/Kconfig
+@@ -2,6 +2,18 @@
+ #
+ # Phy drivers for SpacemiT platforms
+ #
++config PHY_SPACEMIT_K1_PCIE
++	tristate "PCIe and combo PHY driver for the SpacemiT K1 SoC"
++	depends on ARCH_SPACEMIT || COMPILE_TEST
++	depends on COMMON_CLK
++	depends on HAS_IOMEM
++	depends on OF
++	select GENERIC_PHY
++	default ARCH_SPACEMIT
++	help
++	  Enable support for the PCIe and USB 3 combo PHY and two
++	  PCIe-only PHYs used in the SpacemiT K1 SoC.
++
+ config PHY_SPACEMIT_K1_USB2
+ 	tristate "SpacemiT K1 USB 2.0 PHY support"
+ 	depends on (ARCH_SPACEMIT || COMPILE_TEST) && OF
+diff --git a/drivers/phy/spacemit/Makefile b/drivers/phy/spacemit/Makefile
+index fec0b425a948..a821a21d6142 100644
+--- a/drivers/phy/spacemit/Makefile
++++ b/drivers/phy/spacemit/Makefile
+@@ -1,2 +1,3 @@
+ # SPDX-License-Identifier: GPL-2.0-only
++obj-$(CONFIG_PHY_SPACEMIT_K1_PCIE)		+= phy-k1-pcie.o
+ obj-$(CONFIG_PHY_SPACEMIT_K1_USB2)		+= phy-k1-usb2.o
+diff --git a/drivers/phy/phy-spacemit-k1-pcie.c b/drivers/phy/spacemit/phy-k1-pcie.c
+similarity index 100%
+rename from drivers/phy/phy-spacemit-k1-pcie.c
+rename to drivers/phy/spacemit/phy-k1-pcie.c
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.43.0
 
