@@ -1,149 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414DE280317
-	for <spacemit@lists.linux.dev>; Mon, 23 Feb 2026 14:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F91395DBB;
+	Wed, 25 Feb 2026 19:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771857521; cv=none; b=AC2fsIyN2p2C/gesiW+xibe60sYjyUaEUT7AH9doiY+E0oxSygqVQZSq6UBJNwJywFOPbZkmiwp0llzui6v8wsASO+0DzAkHvUnZvtdXKG6DzBFfmuYvBYw/lOsLD8WIFMKwqSj3Ufe9bfWXhO+UOuNeYEq8cOeKwXE8Pj2acpc=
+	t=1772046443; cv=none; b=sLSoQkPsSCmoVqhnxqBw7Hj8IllAj/p90qi3L0Gubm3BNszd4UrM8bwlvgI/yaQOr0DDA58Y4cC0QiGIQXm21YO9JMHzjxIbV7OTimXZB9vZM8O4YVHU1T43Levh4fSIMQa02M0lgqnq/eZHCx8o3ZXHJaPabqAc7kebXM8W5ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771857521; c=relaxed/simple;
-	bh=kdP5EttDcynG8swMrF1Ca5QeEDVK8y3yg/juEgym6hc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NXx8xivkCQWwH2C/dshDF35aO0ZgQshcX2lRODBNBgnCzzEZZVtnHv13M7KPipTVGTxSEsc88g8l0dGtqtkwxv1gOudHdmxJ8MuZ/Htro4OknBv/TDarvubsIbirDxx3/ZzpFVCXT2BdWZPo2G2x+twA0SEdwGiJv24+XRSYiQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UbFxIzkF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772046443; c=relaxed/simple;
+	bh=UGnc2yVLBjOJ5bDB3H1khNOj/8vIce5Y8Yoi+iCQMyU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Mg7PTUoHBcqDDbBwNF+s+gph1NrzLPmHH2b3fQFIp1k+SeYPjYZhWGJmXQyiCUh7Z1KuxzBt5GXxzohGf8CCyYWoL7PbsSXf3jnvUcKFfZvEZUrE8Hx9unqzuHWWwrtxHb6WEh54KwLdFgk6Fu58eBr+hIDFdE+7g7PxbG0HtOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lecPiPqc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UbFxIzkF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE43EC116C6;
-	Mon, 23 Feb 2026 14:38:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lecPiPqc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63176C19421;
+	Wed, 25 Feb 2026 19:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771857521;
-	bh=kdP5EttDcynG8swMrF1Ca5QeEDVK8y3yg/juEgym6hc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UbFxIzkFzN9D02sfhiEIunEhNGdXiavpqUHuKBIlZ+vNrLxE8yqI386DKuaMAvHjS
-	 r8A3efG+gXeysmaOZM3aVOJ/I96kgNYt200QKfrWFpk/mpCj2jSEtYw77lNzsTCaiU
-	 lijVgwJfZ1LkVkyHJ/afdumn4IARYNL7dlKaLABG3UICbLEsvtC4jj4/NTpiXTU2XN
-	 2XMyxVxFZEQL4NRXdtg/pRrSxKGUUZip0KBwWmFpQmuJxC+etA364ntlD07lQosraO
-	 AejuVn+3kmAYy12+wzAhJHkLkFVJHFaMoqj9t8elzcgStZL76iYYL1llTgOVgBVeWW
-	 I3kusZ/wicdeQ==
-Date: Mon, 23 Feb 2026 22:38:38 +0800
-From: Yixun Lan <dlan@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: linux-phy@lists.infradead.org,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Alex Elder <elder@riscstar.com>, Ze Huang <huang.ze@linux.dev>,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH] phy: move spacemit pcie driver to its subfolder
-Message-ID: <20260223143838-GKA220920@kernel.org>
-References: <20260223064240.386617-1-vkoul@kernel.org>
+	s=k20201202; t=1772046442;
+	bh=UGnc2yVLBjOJ5bDB3H1khNOj/8vIce5Y8Yoi+iCQMyU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=lecPiPqchaN4Uyd5EMQC1EphznXv7RUrLbFWfSCDaTnuy5bNKLVw1euxrNWZo4fo0
+	 pUDN8xo5d2A8fSuTZbtzcMyPFD7T4RWlWof1fKeQ1c7MX6LomD8sC8i+XErZtS0Gzz
+	 1ded8xGVpVNFE2hf8czTOQ7cTGQ4RnWgZzlVwagBJex1vyv8xdYFzTSI28WH3yaJyU
+	 SrpRS+vNekkwchbXAGGZHOelOZp2sqmGV2SwewmJVk9x2HLyWfrsxoOjW8POnpOKXE
+	 4URsYbQYDQaf2roED1HX+Q1VGvSkS6Ek+J0hgsgv3lcu7xX5+1NUoAuMrAGyeO6lOG
+	 7JDifDqd+SMwQ==
+From: Mark Brown <broonie@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>, Alex Elder <elder@riscstar.com>, 
+ Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Yixun Lan <dlan@kernel.org>, Guodong Xu <guodong@riscstar.com>
+Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, devicetree@vger.kernel.org
+In-Reply-To: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
+References: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
+Subject: Re: (subset) [PATCH v4 0/3] regulator: spacemit-p1: Support board
+ power tree via DT properties
+Message-Id: <177204643911.168523.3724548692200647978.b4-ty@kernel.org>
+Date: Wed, 25 Feb 2026 19:07:19 +0000
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260223064240.386617-1-vkoul@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-47773
 
-Hi Vinod,
-
-On 12:12 Mon 23 Feb     , Vinod Koul wrote:
-> Commit fe4bc1a08638 ("phy: spacemit: support K1 USB2.0 PHY controller")
-> created spacemit subfolder with usb driver while commit 57e920b92724
-> ("phy: spacemit: Introduce PCIe/combo PHY") added pcie driver in phy
-> folder. Move latter into spacemit subfolder and rename file to
-> phy-k1-pcie.c
+On Fri, 06 Feb 2026 10:32:01 +0800, Guodong Xu wrote:
+> The patch (Patch 1 in v1 and v2) fixing hardware voltage constraints was
+> applied to regulator.git for-next, so is no longer part of this series.
 > 
-Make sense, this looks better, thanks
-
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/phy/Kconfig                                  | 12 ------------
->  drivers/phy/Makefile                                 |  1 -
->  drivers/phy/spacemit/Kconfig                         | 12 ++++++++++++
->  drivers/phy/spacemit/Makefile                        |  1 +
->  .../phy-k1-pcie.c}                                   |  0
->  5 files changed, 13 insertions(+), 13 deletions(-)
->  rename drivers/phy/{phy-spacemit-k1-pcie.c => spacemit/phy-k1-pcie.c} (100%)
+> Patch 1, 2 and 3 (previously 2-4) enable flexible power tree
+> configurations for the SpacemiT P1 PMIC. Hardcoded supply assumptions
+> are replaced with explicit devicetree properties. PMIC supply connections
+> are board-design decisions. Moving this to DT allows supporting varied
+> topologies without driver modifications.
 > 
-> diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
-> index 02467dfd4fb0..c0574e44f0a3 100644
-> --- a/drivers/phy/Kconfig
-> +++ b/drivers/phy/Kconfig
-> @@ -134,18 +134,6 @@ config PHY_NXP_PTN3222
->  	  schemes. It supports all three USB 2.0 data rates: Low Speed, Full
->  	  Speed and High Speed.
->  
-> -config PHY_SPACEMIT_K1_PCIE
-> -	tristate "PCIe and combo PHY driver for the SpacemiT K1 SoC"
-> -	depends on ARCH_SPACEMIT || COMPILE_TEST
-> -	depends on COMMON_CLK
-> -	depends on HAS_IOMEM
-> -	depends on OF
-> -	select GENERIC_PHY
-> -	default ARCH_SPACEMIT
-> -	help
-> -	  Enable support for the PCIe and USB 3 combo PHY and two
-> -	  PCIe-only PHYs used in the SpacemiT K1 SoC.
-> -
->  source "drivers/phy/allwinner/Kconfig"
->  source "drivers/phy/amlogic/Kconfig"
->  source "drivers/phy/apple/Kconfig"
-> diff --git a/drivers/phy/Makefile b/drivers/phy/Makefile
-> index a648c2e02a83..2773d596e543 100644
-> --- a/drivers/phy/Makefile
-> +++ b/drivers/phy/Makefile
-> @@ -16,7 +16,6 @@ obj-$(CONFIG_PHY_SNPS_EUSB2)		+= phy-snps-eusb2.o
->  obj-$(CONFIG_USB_LGM_PHY)		+= phy-lgm-usb.o
->  obj-$(CONFIG_PHY_AIROHA_PCIE)		+= phy-airoha-pcie.o
->  obj-$(CONFIG_PHY_NXP_PTN3222)		+= phy-nxp-ptn3222.o
-> -obj-$(CONFIG_PHY_SPACEMIT_K1_PCIE)	+= phy-spacemit-k1-pcie.o
->  obj-$(CONFIG_GENERIC_PHY)		+= allwinner/	\
->  					   amlogic/	\
->  					   apple/	\
-> diff --git a/drivers/phy/spacemit/Kconfig b/drivers/phy/spacemit/Kconfig
-> index 0136aee2e8a2..50b0005acf66 100644
-> --- a/drivers/phy/spacemit/Kconfig
-> +++ b/drivers/phy/spacemit/Kconfig
-> @@ -2,6 +2,18 @@
->  #
->  # Phy drivers for SpacemiT platforms
->  #
-> +config PHY_SPACEMIT_K1_PCIE
-> +	tristate "PCIe and combo PHY driver for the SpacemiT K1 SoC"
-> +	depends on ARCH_SPACEMIT || COMPILE_TEST
-> +	depends on COMMON_CLK
-> +	depends on HAS_IOMEM
-> +	depends on OF
-> +	select GENERIC_PHY
-> +	default ARCH_SPACEMIT
-> +	help
-> +	  Enable support for the PCIe and USB 3 combo PHY and two
-> +	  PCIe-only PHYs used in the SpacemiT K1 SoC.
-> +
->  config PHY_SPACEMIT_K1_USB2
->  	tristate "SpacemiT K1 USB 2.0 PHY support"
->  	depends on (ARCH_SPACEMIT || COMPILE_TEST) && OF
-> diff --git a/drivers/phy/spacemit/Makefile b/drivers/phy/spacemit/Makefile
-> index fec0b425a948..a821a21d6142 100644
-> --- a/drivers/phy/spacemit/Makefile
-> +++ b/drivers/phy/spacemit/Makefile
-> @@ -1,2 +1,3 @@
->  # SPDX-License-Identifier: GPL-2.0-only
-> +obj-$(CONFIG_PHY_SPACEMIT_K1_PCIE)		+= phy-k1-pcie.o
->  obj-$(CONFIG_PHY_SPACEMIT_K1_USB2)		+= phy-k1-usb2.o
-> diff --git a/drivers/phy/phy-spacemit-k1-pcie.c b/drivers/phy/spacemit/phy-k1-pcie.c
-> similarity index 100%
-> rename from drivers/phy/phy-spacemit-k1-pcie.c
-> rename to drivers/phy/spacemit/phy-k1-pcie.c
-> -- 
-> 2.43.0
-> 
-> 
+> [...]
 
--- 
-Yixun Lan (dlan)
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[1/3] dt-bindings: mfd: spacemit,p1: Add individual regulator supply properties
+      commit: 82ffa9610ba39d3628a9bec968ddc68fe2fe6612
+[2/3] regulator: spacemit-p1: Update supply names
+      commit: fbb4c52ccdcb4a612d2b7f800aa57090eeee16d7
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
