@@ -1,48 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F91395DBB;
-	Wed, 25 Feb 2026 19:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BC338F229;
+	Thu, 26 Feb 2026 08:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772046443; cv=none; b=sLSoQkPsSCmoVqhnxqBw7Hj8IllAj/p90qi3L0Gubm3BNszd4UrM8bwlvgI/yaQOr0DDA58Y4cC0QiGIQXm21YO9JMHzjxIbV7OTimXZB9vZM8O4YVHU1T43Levh4fSIMQa02M0lgqnq/eZHCx8o3ZXHJaPabqAc7kebXM8W5ws=
+	t=1772093900; cv=none; b=t86iTHFbrukCsQN1f8uDxbuKBHSaSaocrEdeuJyl6cvVQVwLskwlf7UH75tZfunKqU8CyDBQJ4B1ROaLYn0aitjazxj3fHSCIM8SQMzb+TIJVT2sEO2vavkOCBdCwoyS0bDzdJxLNxxN1qxeVfJzC88o6O3vNvPNu7iCDekgzIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772046443; c=relaxed/simple;
-	bh=UGnc2yVLBjOJ5bDB3H1khNOj/8vIce5Y8Yoi+iCQMyU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Mg7PTUoHBcqDDbBwNF+s+gph1NrzLPmHH2b3fQFIp1k+SeYPjYZhWGJmXQyiCUh7Z1KuxzBt5GXxzohGf8CCyYWoL7PbsSXf3jnvUcKFfZvEZUrE8Hx9unqzuHWWwrtxHb6WEh54KwLdFgk6Fu58eBr+hIDFdE+7g7PxbG0HtOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lecPiPqc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772093900; c=relaxed/simple;
+	bh=MEIK9bAonaqTMisJPkjUMTcLudbo3u5sZqZBpvbIB+0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Iv9oUzy3vcctIxC7vx2K6kBH/zKy4+ycZnueWThMtEimWmKyGh7EwH9eTlw4P2e+I4QDob8fF7GctbCS6GqmdUXdpeu72cFWYGumF81drUKSS9xcbg6XYcFr6QG9CkT5wZ+LSL8rTbFp2hpVyCJO78YZ9Zo3qD9ZZzLIBFNvmNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mdrD0Mou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lecPiPqc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63176C19421;
-	Wed, 25 Feb 2026 19:07:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mdrD0Mou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308EDC19422;
+	Thu, 26 Feb 2026 08:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772046442;
-	bh=UGnc2yVLBjOJ5bDB3H1khNOj/8vIce5Y8Yoi+iCQMyU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=lecPiPqchaN4Uyd5EMQC1EphznXv7RUrLbFWfSCDaTnuy5bNKLVw1euxrNWZo4fo0
-	 pUDN8xo5d2A8fSuTZbtzcMyPFD7T4RWlWof1fKeQ1c7MX6LomD8sC8i+XErZtS0Gzz
-	 1ded8xGVpVNFE2hf8czTOQ7cTGQ4RnWgZzlVwagBJex1vyv8xdYFzTSI28WH3yaJyU
-	 SrpRS+vNekkwchbXAGGZHOelOZp2sqmGV2SwewmJVk9x2HLyWfrsxoOjW8POnpOKXE
-	 4URsYbQYDQaf2roED1HX+Q1VGvSkS6Ek+J0hgsgv3lcu7xX5+1NUoAuMrAGyeO6lOG
-	 7JDifDqd+SMwQ==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Alex Elder <elder@riscstar.com>, 
- Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
- Yixun Lan <dlan@kernel.org>, Guodong Xu <guodong@riscstar.com>
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, devicetree@vger.kernel.org
-In-Reply-To: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
-References: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
-Subject: Re: (subset) [PATCH v4 0/3] regulator: spacemit-p1: Support board
- power tree via DT properties
-Message-Id: <177204643911.168523.3724548692200647978.b4-ty@kernel.org>
-Date: Wed, 25 Feb 2026 19:07:19 +0000
+	s=k20201202; t=1772093899;
+	bh=MEIK9bAonaqTMisJPkjUMTcLudbo3u5sZqZBpvbIB+0=;
+	h=From:Date:Subject:To:Cc:From;
+	b=mdrD0MoulcE3hvsq+DbnqJn2wHesZBge4nDY/7hXL4B3kOIcJBacjzAaRX09/CSKm
+	 2vf13Of9r2e6+yInQosbgdDfDcPnV8b65rWVF3KpiDqmwvUEK1H++9U2tX9J34ySHa
+	 WHoapQzMVIUO3qwhdXzfSapuTKkPXO3kz9KbSnO8oIUewfq+9gWyHimsXV+0MwtXs7
+	 UQHVbhxwF6pjQ7EQt4/zICK+JStVu5FhMRMHzzkOOP9LFpZrDI98gg2r7ekdeWi2gw
+	 xLLflivY0+5svHa7VWDndGmvR6YZJoNYBeTMQRSlzN6D7EZyl1yY0donOsYyTIw5z3
+	 esn2t9/0J2e9w==
+From: Yixun Lan <dlan@kernel.org>
+Date: Thu, 26 Feb 2026 08:17:55 +0000
+Subject: [PATCH] riscv: dts: spacemit: pcie: fix missing power regulator
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -51,47 +36,90 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-47773
+Message-Id: <20260226-k1-pcie-fix-pwr-v1-1-94b493cd27e5@kernel.org>
+X-B4-Tracking: v=1; b=H4sIALIBoGkC/x2MQQqAMAzAviI9W7A9TPEr4kFmp0XQ0YEKY393e
+ AwhyZDEVBKMTQaTW5NeZwVqG/D7cm6CulYG7th1zA4PwuhVMOiL8THsAzuigZgWD7WKJlX9x2k
+ u5QNLtrPHYQAAAA==
+X-Change-ID: 20260226-k1-pcie-fix-pwr-7f26118121ac
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Alex Elder <elder@riscstar.com>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Conor Dooley <conor@kernel.org>, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1949; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=MEIK9bAonaqTMisJPkjUMTcLudbo3u5sZqZBpvbIB+0=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpoAHDFweVSpXqP1GdH2N3rzRsEFkwSU6zAJFJj
+ GFXCeWkutuJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaaABwxsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+13WxAAgYPAolKHGdv6bCQUFjtMpZGrsG90LspaVZap1XKgJ9x2ed9s1nKFH
+ IBunzIGn9g796xq3ly0CK5SfputpNpYW0ZNjQLaCjy6DXvOSXbD1AxDviEvTBO1nslXc09IqfXi
+ ZHGQWr/Bh2YzNByCSJiK4Ej41UQS7engrmTU2FZ94JGDarDQuuQ4d8TvJK6xr7zL3YHDKypQBdD
+ D0O+J13Cm6xvQ+azNZk+zDZZxyqLWvjsPMUi1zwlQgrwFpgJgaOjrNp1SQajqbN/fXfrm3XW8qe
+ 7DELIq6sOIB17DFfYrNgflW7Z/cS9gMKwmZH0FVu6jnfvy4WOm/rDMQuN/uJbgKsb3kqyP6ihs+
+ zufIAJGJQ8dkLffmrW8Z1hwisK0O9UXkkx7XcrcdO+dmCe/1J1IoC7k+kwGG+NipGLyGMbafE77
+ Yc+gdYVer6GeG1/VwVy1vIYIuBm76CMIYD8U2flA1GrOKLK+9m2WDcoEenvW91vqIGRhwrMM+v1
+ q4FVjLpLYpzYaFbv+BR1F33xZytlm+5vSY/EovGbdCV+MGXLEI2pMoXxEmIOvOuetlYfuSCbyUj
+ aaT3BK4/2xrMr5qLJPpM5yRWZT0xdmSJkIjGfyxB1ohhGnARqHdXgeMxk76Xo9Oeibo+54RjhBW
+ wHwBYjo3Bv+j3coR+k/4Eqw8JdFKjw=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On Fri, 06 Feb 2026 10:32:01 +0800, Guodong Xu wrote:
-> The patch (Patch 1 in v1 and v2) fixing hardware voltage constraints was
-> applied to regulator.git for-next, so is no longer part of this series.
-> 
-> Patch 1, 2 and 3 (previously 2-4) enable flexible power tree
-> configurations for the SpacemiT P1 PMIC. Hardcoded supply assumptions
-> are replaced with explicit devicetree properties. PMIC supply connections
-> are board-design decisions. Moving this to DT allows supporting varied
-> topologies without driver modifications.
-> 
-> [...]
+The PCIe port require 3.3v power regulator for device to work properly, So
+explicitly add it to fix the DT warning:
 
-Applied to
+arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dtb: pcie@ca400000 (spacemit,k1-pcie): pcie@0: 'vpcie3v3-supply' is a required property
+        from schema $id: http://devicetree.org/schemas/pci/spacemit,k1-pcie-host.yaml
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+Fixes: 0be016a4b5d1 ("riscv: dts: spacemit: PCIe and PHY-related updates")
+Reported-by: Conor Dooley <conor@kernel.org>
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+This patch try to add power regulator to PCIe port node, thus will also
+fix the dts warning when doing DT schema check.
 
-Thanks!
+Please also note driver of spacemit PCIe request 3.3v power regulator, see
+drivers/pci/controller/dwc/pcie-spacemit-k1.c:312, it's not necessary
+because the controller itself doesn't need it to work. But I do see other
+drivers that request the regulator in host controller driver, for example,
+to power it up early before PHY initilization. I'd intentionally leave
+this problem out of this fix, and will do further check & address it
+later.
 
-[1/3] dt-bindings: mfd: spacemit,p1: Add individual regulator supply properties
-      commit: 82ffa9610ba39d3628a9bec968ddc68fe2fe6612
-[2/3] regulator: spacemit-p1: Update supply names
-      commit: fbb4c52ccdcb4a612d2b7f800aa57090eeee16d7
+Problem reported by Conor Dooley, so I added a R-Y tag for him here.
+---
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index 5971605754b3..51f6c6a774b0 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -305,6 +305,7 @@ &pcie1_phy {
+ 
+ &pcie1_port {
+ 	phys = <&pcie1_phy>;
++	vpcie3v3-supply = <&pcie_vcc_3v3>;
+ };
+ 
+ &pcie1 {
+@@ -320,6 +321,7 @@ &pcie2_phy {
+ 
+ &pcie2_port {
+ 	phys = <&pcie2_phy>;
++	vpcie3v3-supply = <&pcie_vcc_3v3>;
+ };
+ 
+ &pcie2 {
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260226-k1-pcie-fix-pwr-7f26118121ac
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
 
