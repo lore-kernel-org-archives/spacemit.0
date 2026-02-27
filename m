@@ -1,116 +1,138 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DD324677A;
-	Thu, 26 Feb 2026 21:50:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08E73D9051;
+	Fri, 27 Feb 2026 05:56:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772142626; cv=none; b=f/EjAblWTQ2wK9mjQTuZ1t3S4bS+EYET7wsxD/ZG+O7iJlYVAK3KlojLBvC61TT9Dpl2TzeQAdydBzOtCKesP4Sq+RBVnvDSkOGbbC251hCJeM03OYJUOgsR6CxbLOGzCc27Q6S82G0Q62G/jwLwxAwcXhp5imrnV3Bl52YJ/Ls=
+	t=1772171803; cv=none; b=K5cl9h0RYllOsM+uzb0K12nNA5bdrRTNhSMpz2S27PAXNihPIWGqrk3a9pSVAwOt/I9VRkSHcaB+Qj8WmJ7FcRoo/b7f2pJI/hwpt9V6QphEK57BCd1sq+KU9iVwekjh/9AedcKKI3vQbGXeoXmVKrBVEkZBquEOeGtHltw9Yok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772142626; c=relaxed/simple;
-	bh=XlVnbkQv+KgOMqXOkb/YTXqihqrtCt6/49DePVPrNgY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TeRD+YnQ7ZdhjSF5tGjYvpCCIxR3mD75lwTy6dte5TYOnEPUjer053v4c22jTFzj4cB8rWMbKthFz870LxZuZWVCAe0rap1SQ1uxohnTlu43LXnISXPSO5JYlweR3poDHpaZOpFrSoLXbFhe5zutQm/cuqa/ak2C4pgG+i2KqIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=lSamVMAu; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1772171803; c=relaxed/simple;
+	bh=YI3Lqou24OzJ6XspOaePodbUgk21I6kVmOQYtT0IBQ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KBk7i04H1clnd4yk5IjPAWXIuYIBC+1zOExXblBHAClprzIfTOUU+z0mTOBwdAwUv4uj6hoT8n1SaJR3QOK0upu4m1INQnovmlXAsOLRamEWPTCX7DTGkSf1fd61+VGgjCxPlR3x/hZZaadd2jJ3jHE8CikHZ30A9Q0Aq8GQQdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=gpt9gYD7; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="lSamVMAu"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=pEo3m7B3INBJlM8bhz6ltlUxFqOUPxhSBYLsN/1EwlM=; b=lSamVMAuYYH3idjj5lTpd2a7jX
-	+wBZ66r2CZ9iHUnEdPN7RXBNxrJKEGQt8LWSMdOP+iI8sPGErj6lmKfM31meZM3huWa7C1v5XYoi1
-	F3shYzQAMI2d8mwwG3L3ZqTCrxskky9Bq+fQo+Aq/zhWKX/w0ozGPN3j4cvXOXTa/SC2FCsaAV1jt
-	Q2300RVGUdE+ZOL8w6p68qJrWK9aJkRxM1cOtyWtxitFiZBmLFrkPtKFp4UsyFYh3pT2rIWo4mJo9
-	9q78BhF0wp/swRuh2ewaZj8wOtuge85Ezj3t/vgsWTbg4XL14G60eqB5WLQ2C/RFd6e8ssd6eaC2R
-	KqeF+Tlg==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vviyH-00000008Bi9-1YrI;
-	Thu, 26 Feb 2026 22:32:33 +0100
-Date: Thu, 26 Feb 2026 22:32:32 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Yanko Kaneti <yaneti@declera.com>
-Cc: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v5 2/2] mfd: simple-mfd-i2c: add a reboot cell for the
- SpacemiT P1 chip
-Message-ID: <aaC78FTN31QYaVg0@aurel32.net>
-Mail-Followup-To: Yanko Kaneti <yaneti@declera.com>,
-	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
-References: <20251102230352.914421-1-aurelien@aurel32.net>
- <20251102230352.914421-3-aurelien@aurel32.net>
- <b51a62513daa9d2390031ec350e0b33bdb7e54aa.camel@declera.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="gpt9gYD7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1772171746;
+	bh=Y2KhPymngzGSQBE6OR3Anz/5+GL7wtEraMjjl76OOn8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=gpt9gYD75clUIWlRXu8niAXnfyIExLdxUP4kU8aILOKs6F0Au2zJtt02JXZ50rkZn
+	 D/8TC0rr78MHohNX+Lvurxc7k2WF5VueeJZxQHrjFFQ1fHdIOQmxBnqvi7aFNNtP+r
+	 0Cykd6bfQovmAVnsdLalPu2V+dLlnM5ySFozw7p0=
+X-QQ-mid: esmtpgz16t1772171738t10cc486f
+X-QQ-Originating-IP: eGIBuzSkTpesFVA6QPbkBaPKQDnm5sd6Q0EQNVNElTk=
+Received: from [10.3.91.191] ( [101.70.127.119])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 27 Feb 2026 13:55:35 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 10523106758613680728
+Message-ID: <81DC457427F3336D+a6fef8d6-cb0c-4ac0-bb18-49d22ccda4b3@linux.spacemit.com>
+Date: Fri, 27 Feb 2026 13:55:34 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b51a62513daa9d2390031ec350e0b33bdb7e54aa.camel@declera.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/8] iommu/riscv: Add HPM support for RISC-V IOMMU
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+ Tomasz Jeznach <tjeznach@rivosinc.com>, Joerg Roedel <joro@8bytes.org>,
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Jingyu Li <joey.li@spacemit.com>,
+ Zhijian Chen <zhijian@spacemit.com>, iommu@lists.linux.dev,
+ linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, devicetree@vger.kernel.org
+References: <cover.1769562575.git.lv.zheng@spacemit.com>
+ <F9748E3984D2A6F9+cover.1770195980.git.lv.zheng@linux.spacemit.com>
+ <a9d9f43a-edf3-419b-bdf7-dbd6bf9e978f@kernel.org>
+ <605D8D5AE96AEF8F+31d65ad3-3956-49ae-8d9f-589747a5086c@linux.spacemit.com>
+ <20260213222135-GYB164498@gentoo.org>
+Content-Language: en-US
+From: Lv Zheng <lv.zheng@linux.spacemit.com>
+In-Reply-To: <20260213222135-GYB164498@gentoo.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-1
+X-QQ-XMAILINFO: NImvdRhE6fHpILLafS3PSInYXCirFRrcim74DrthE4tImMH7+Ah1KPjf
+	xh+RnTjZBd50C381F9C5FqgcThZzAeutLJ4kvjcQK5CUUxZjnCW21z2bW111x6R0hNkDAw0
+	6hMD+G37d8kRaHULK3/0kZdJcKl0DzycCFSOZgaKUXY6MnfIln+byPfupClfFyCcSdEeIDA
+	bxS7kG/xmKWDOwgOJb+pUSeQaOKWm4FwjNXY4RkPBySkoceLClInaAoSdZ6P3xYTtEJpgPv
+	n4OMckLy1oSfLM/hkzTdTfo1KPMaXO66SduqjrQgmvoxu/sLIiGd4yPvO3+ne/DaEqYH1hI
+	DxPSonjNQ/nJhiQ0dXbgmcE9MKZlwzcdGw9IkBDFROu0m3N+b9t6hS+skVHxctiWNjg2tSG
+	GxGXeNm33vWvk6EamBKVcObAd+fwTjB7x7WO7daV/Mezg8p7vtvdI2xBjGLgcOjDb0KgALp
+	iBls3bhGKB4rnWr2+yTa8Fby5VqonR0POABlVGF9hPPkbK50cuhWV8dCiH0jJnKRXH8EIVJ
+	K2NLjb2rOLMjeLHC86H2eNzMQizfDpn8SgMbLRrw97vVE3zz2bELUwA1rvP70X6HRNums2t
+	ligWvQ1dYFw+ZpXZeX4SlrU2glo7efdo+iw4BHClVyWr3YIYBp2NY/S7y5agE1pJlhbHayD
+	4UhBKwItWQw8TMeOgxOWV8DJZz9fkLV+j6ISQktrcvVMRZJIpdUmv86t1d4LSk9yMggBgSb
+	P+chjbsgb68bEJsyOPD6LPHjdNUpUMeUqmhWI6fu8wTZYxQ65ztXbopWS4QLHoTsRhLgsFn
+	kaNb242Y30F2KcMqdYC4Zr2ClcLhnaRfAxp+1k3+bWUbD5Ss0ebervj2dJ1lJxDcmgzFkM1
+	wXPhbT6awwM5iSxI9lbsPCQuioOaqS7nA4GtjJN/tYQ5OlAm3+YtWOORXAg2k0cC3LcvqXh
+	oq6jynVTR0o2bvH7xz1W8Rw8+p01p1z8dnB4ZnhhLD3sOjoZMaA3HJF03yUvM+pNUbGItZ4
+	zC9KJ7mqS9pmHw0x6YXFNeSaQ6AmVIPHtw/DRWPYma0Sz7niux1lEyHEc1EGA=
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+X-QQ-RECHKSPAM: 0
 
-Hi,
-
-On 2026-02-26 16:32, Yanko Kaneti wrote:
-> Hello,
+On 2/14/2026 6:21 AM, Yixun Lan wrote:
+> Hi Lv,
 > 
-> On Mon, 2025-11-03 at 00:02 +0100, Aurelien Jarno wrote:
-> > Add a "spacemit-p1-reboot" cell for the SpacemiT P1 chip.
-> > 
-> > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> > ---
-> > v5: no changes
-> > 
-> >  drivers/mfd/simple-mfd-i2c.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
-> > index 0a607a1e3ca1d..542d378cdcd1f 100644
-> > --- a/drivers/mfd/simple-mfd-i2c.c
-> > +++ b/drivers/mfd/simple-mfd-i2c.c
-> > @@ -99,6 +99,7 @@ static const struct regmap_config spacemit_p1_regmap_config = {
-> >  };
-> >  
-> >  static const struct mfd_cell spacemit_p1_cells[] = {
-> > +	{ .name = "spacemit-p1-reboot", },
-> >  	{ .name = "spacemit-p1-regulator", },
-> >  	{ .name = "spacemit-p1-rtc", },
-> >  };
+> On 11:41 Sat 07 Feb     , Lv Zheng wrote:
+>> On 2/6/2026 6:44 PM, Krzysztof Kozlowski wrote:
+>>> On 04/02/2026 10:08, Lv Zheng wrote:
+>>>> Includes HPM support for RISC-V IOMMU. The HPM hardware mechanism can be
+>>>> found in the recent announced SpacemiT SoCs (K3, V100), where T100
+>>>> (SpacemiT distributed IOMMU) is shipped.
+>>>>
+>>>> Revisions:
+>>>> v1
+>>>>    Initial release.
+>>>> v2 (sent as v1.1)
+>>>>    Split and cleanup DT-bindings.
+>>>> v3
+>>>>    Refactor using vendor specific compatible.
+>>>>
+>>>
+>>>
+>>> Do not attach (thread) your patchsets to some other threads (unrelated
+>>> or older versions). This buries them deep in the mailbox and might
+>>> interfere with applying entire sets. See also:
+>>> https://elixir.bootlin.com/linux/v6.16-rc2/source/Documentation/process/submitting-patches.rst#L830
+>>
+>> Got it.
+>> I'm still using an old fashioned upstream way to collect all revisions
+>> into one thread. Will align to the preferred style.
+>>
+> Using b4 will automate this procedure, you can also take a look at
+> Konstantin's articles, and the b4 doc
+> https://people.kernel.org/monsieuricon/sending-a-kernel-patch-with-b4-part-1
+> https://b4.docs.kernel.org/en/latest/
+
+Yes, we've tried b4, it really can automate this process a lot.
+
+Thanks,
+Lv
+
 > 
-> Perhaps its safe to merge this one now that everything P1 and I2C is
-> already in linus tip ?
+>> Thanks,
+>> Lv
+>>
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>>
+>>
+>>
+> 
 
-Unfortunately, this patchset is still missing:
-https://lore.kernel.org/all/20260207-b4-k3-i2c-pio-v7-0-626942d94d91@linux.spacemit.com/
 
-This means the reboots work most of the time, but are not 100% reliable, 
-and that's the reason why this patch got blocked from merging.
-
-Regards
-Aurelien
-
--- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
