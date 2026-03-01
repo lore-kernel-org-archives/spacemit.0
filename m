@@ -1,138 +1,137 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0C6330D23;
-	Sun,  1 Mar 2026 14:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958C636D51F;
+	Sun,  1 Mar 2026 22:16:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772373688; cv=none; b=uBrG2uzLnE9iqmpnooyfSaWoJLlcyW0QrWj+sDDoAoSOsme/7JM8Nz7m5uXhDljJf9ZwMuhYVUTwRgmrMER41ALWjWz0RI4dm/mvEdAbKKPH76ffPXas5wJs6AhiJ41uJyuALwNN08QOjMzj8ivVUwH0/uy+5+VD710YIj+1FZA=
+	t=1772403416; cv=none; b=XlEAFJRtiMcjvGIWzgk+tcKVT1Uu9Jf12XOK36FQpDOpdQOGLIdynejWeHjtjTlAOpwgXja+Yr98Kr8Ht4Cu/oo68rnsRtFnba/ymfTf/0aerBWwJuS3RxFtgAEF0S4EVy980oKjX1kv2G1K1MP+dj9oqcpR9Hq90QbYNyAY9ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772373688; c=relaxed/simple;
-	bh=UkBj1fdmtvPjwtZegWWzCtYjCqUCWuBNOkweq8/Mwi4=;
+	s=arc-20240116; t=1772403416; c=relaxed/simple;
+	bh=5/P6z8fjjf1aurJ8woAsQpeTI2U1RPCcpceZwVaI32Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rzYhxs6xqC9SBP2PGaerlvAppZIXoICnqkUfYX8oW2FrteXZfMnBye9ZWIEU0OVwsMbEerZ1AoDKSHN9Qed9/XBKTUxJiYF5bui86IoKtDl48V+kIi2Mz+0m/HdIOCcZl9mADTOvg9fQRQokcg16u6oFWG1rdT9HpEHSFt2g1JQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cGXTTNyB; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Imb+XCVfr6OpFtdZwr2i9wG5+Xygn/2VFF3RZ2JyObcDr/yX7WzlnqH27/fWhx6xrTNolHKvlhK/d2uk+lAO2pqAwPQO2deg+hBczDiT7mpOgepf+62memM1ps7sNOWlOhu7OUcN2DQZHg7+pFwOssrKqVsVngYqJiTHdCyu+u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=KRMqaNT6; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cGXTTNyB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E186C116C6;
-	Sun,  1 Mar 2026 14:01:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772373688;
-	bh=UkBj1fdmtvPjwtZegWWzCtYjCqUCWuBNOkweq8/Mwi4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cGXTTNyBmnlKyu44XrDMcP6siXQEcE1rTkKz44S352nCoKVYzDHTizYoQYkdPaQv7
-	 Tdc2cXxNwYr0PLkwc2wA9iRwLyk2LNzHCmLr1WfErPDg+MSpZGpF0jUmB/Iccm4hln
-	 UKVi/T4tlUzyzAaDFLxxoC+WgQdVPwPyD7al/qmb5gieOo/yrAqDwapzRI5WufVhL5
-	 AXYHoJI+CB0uj7IeiJ7bYqvfZAie0z0Fn5A547Fhp+3QOOIdjmJhgx/0wux4FM0YBe
-	 I1/IYSYfL/mjQMq26y7UsuJYo8je+pofw9d6n3UydO7IaajkA17cj4LYar2gxH5itN
-	 CjQ9MCqPspwDA==
-Date: Sun, 1 Mar 2026 14:01:20 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Lv Zheng <lv.zheng@linux.spacemit.com>
-Cc: Conor Dooley <conor.dooley@microchip.com>,
-	Tomasz Jeznach <tjeznach@rivosinc.com>,
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="KRMqaNT6"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=KjrmgbqDuQUoTE7tizH06MNcvn3FP+YVHKxG9kOs+BY=; b=KRMqaNT66WGHYIyuD4Y4Vbgexu
+	jAStbPDQ2v9KhUbU5It83p1lT9e3nB/vQUzRXTX3O8aXvNGmivzBB5/IrFR/G+9bFZQMSEBjeiLQ2
+	+C+bwt54sqmeOvKaP/cGhmLJBBZw3qrb+sBeRqH0oUDjewPoYQJJO/yXyxUJQ9LH/KwCEV8gBw38l
+	PXT/mkAIEP61vvUdgABIm1b2S9CTMoKlVcHbeO+6ytjZcZRC0W48iNNuYB6ct0pFqftHpJKz76VGA
+	a/hFlahbk55aE20SSLwTqK226Wrag13mOEiFvosWFNvzvNIRjVGKglbSDtLUzfVaziNUft7AtanxT
+	4BaR/NIw==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1vwp5a-0000000C8Gc-1plv;
+	Sun, 01 Mar 2026 23:16:38 +0100
+Date: Sun, 1 Mar 2026 23:16:37 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yanko Kaneti <yaneti@declera.com>
+Cc: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>, Yixun Lan <dlan@kernel.org>,
-	Jingyu Li <joey.li@spacemit.com>, Zong Li <zong.li@sifive.com>,
-	Yaxing Guo <guoyaxing@bosc.ac.cn>, iommu@lists.linux.dev,
-	linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 4/8] dt-bindings: iommu: Add spacemit/t100 features
-Message-ID: <20260301-acclimate-suburb-fc46da7e0cea@spud>
-References: <cover.1772289741.git.lv.zheng@linux.spacemit.com>
- <D8CE6E5B1001D797+a6f36da0272ac18fff2a992976b1defc3bb01af6.1772289741.git.lv.zheng@linux.spacemit.com>
- <177231592262.848068.18080490567217057666@spud>
- <CAB7A310CE95B577+5f5c0825-25dd-4035-9316-db940c00216b@linux.spacemit.com>
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v5 2/2] mfd: simple-mfd-i2c: add a reboot cell for the
+ SpacemiT P1 chip
+Message-ID: <aaS6xeKFZz06fb1_@aurel32.net>
+Mail-Followup-To: Yanko Kaneti <yaneti@declera.com>,
+	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
+References: <20251102230352.914421-1-aurelien@aurel32.net>
+ <20251102230352.914421-3-aurelien@aurel32.net>
+ <b51a62513daa9d2390031ec350e0b33bdb7e54aa.camel@declera.com>
+ <aaC78FTN31QYaVg0@aurel32.net>
+ <990bc03ed2baa05e619f0aa9cc6a23acadd66ea6.camel@declera.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6IVfBrCiv9PlDrY6"
-Content-Disposition: inline
-In-Reply-To: <CAB7A310CE95B577+5f5c0825-25dd-4035-9316-db940c00216b@linux.spacemit.com>
-
-
---6IVfBrCiv9PlDrY6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <990bc03ed2baa05e619f0aa9cc6a23acadd66ea6.camel@declera.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Sun, Mar 01, 2026 at 11:48:37AM +0800, Lv Zheng wrote:
-> On 3/1/2026 5:58 AM, Conor Dooley wrote:
-> > On Sat, 28 Feb 2026 22:44:49 +0800, Lv Zheng <lv.zheng@linux.spacemit.c=
-om> wrote:
-> > > Adds device tree bindings for SpacemiT T100 specific features by
-> > > introducing spacemit,t100 compatible. T100 contains distributed IOATC=
-s,
-> > > each of which exposes pmiv interrupt.
-> > >=20
-> > > Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
-> > > Signed-off-by: Jingyu Li <joey.li@spacemit.com>
-> >=20
-> > Patch content here is fine, but the signoff chain on this patch is not
-> > right. What did Jingyu do? You're author and submitter so either Jingyu
-> > did nothing and should be removed, or is a co-developer which requires
-> > attribution via the co-developed-by tag. If the latter, their signoff
-> > should be before yours (the submitter is always last).
-> >=20
-> > pw-bot: changes-requested
->=20
-> She is responsible for the common HPM part, and I just gave my comments to
-> help to improve the quality of that implementation.
-> I was just focusing on enabling and maintaining the T100 specific feature=
-s.
->=20
-> Our patches will go each other's local repository, leaving such tracks. T=
-hat
-> means the patch from me is Reviewed-and-tested-by her.
-> And I'm responsible for sending the whole patchset for upstreaming.
+On 2026-02-27 13:29, Yanko Kaneti wrote:
+> On Thu, 2026-02-26 at 22:32 +0100, Aurelien Jarno wrote:
+> > Hi,
+> > 
+> > On 2026-02-26 16:32, Yanko Kaneti wrote:
+> > > Hello,
+> > > 
+> > > On Mon, 2025-11-03 at 00:02 +0100, Aurelien Jarno wrote:
+> > > > Add a "spacemit-p1-reboot" cell for the SpacemiT P1 chip.
+> > > > 
+> > > > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+> > > > ---
+> > > > v5: no changes
+> > > > 
+> > > >  drivers/mfd/simple-mfd-i2c.c | 1 +
+> > > >  1 file changed, 1 insertion(+)
+> > > > 
+> > > > diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+> > > > index 0a607a1e3ca1d..542d378cdcd1f 100644
+> > > > --- a/drivers/mfd/simple-mfd-i2c.c
+> > > > +++ b/drivers/mfd/simple-mfd-i2c.c
+> > > > @@ -99,6 +99,7 @@ static const struct regmap_config spacemit_p1_regmap_config = {
+> > > >  };
+> > > >  
+> > > >  static const struct mfd_cell spacemit_p1_cells[] = {
+> > > > +	{ .name = "spacemit-p1-reboot", },
+> > > >  	{ .name = "spacemit-p1-regulator", },
+> > > >  	{ .name = "spacemit-p1-rtc", },
+> > > >  };
+> > > 
+> > > Perhaps its safe to merge this one now that everything P1 and I2C is
+> > > already in linus tip ?
+> > 
+> > Unfortunately, this patchset is still missing:
+> > https://lore.kernel.org/all/20260207-b4-k3-i2c-pio-v7-0-626942d94d91@linux.spacemit.com/
+> > 
+> > This means the reboots work most of the time, but are not 100% reliable, 
+> > and that's the reason why this patch got blocked from merging.
+> 
+> I see. Thanks. Sounds to me like sometimes working compared to never
+> working is better , but anyway..
 
-Then you need to either fix your email setup (because it's not inserting
-=46rom: Jingyu Li <joey.li@spacemit.com>) so that she is marked as the
-author or actually set her to the author in git if you haven't.
-Currently it looks like this when applied:
-commit 872978c875731be43e84bec38798cb8ecd42b7a0
-Author: Lv Zheng <lv.zheng@linux.spacemit.com>
-Date:   Sat Feb 28 22:44:49 2026 +0800
+I agree with that, but the decision was to hold on this patch until the 
+I2C PIO part got merged.
 
-    dt-bindings: iommu: Add spacemit/t100 features
-   =20
-    Adds device tree bindings for SpacemiT T100 specific features by
-    introducing spacemit,t100 compatible. T100 contains distributed IOATCs,
-    each of which exposes pmiv interrupt.
-   =20
-    Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
-    Signed-off-by: Jingyu Li <joey.li@spacemit.com>
+> FWIW  with this patch and the pio patcheset I get this rcu splat on
+> reboot (which is still working). Similar splat is there without the pio
+> patcheset.
 
-In both cases, you need to change the order of signoffs so that yours is
-last as the submitter.
+I haven't been able to reproduce the issue here after 10+ reboots on a 
+BPI-F3 board, but I tried the patch on top of 6.19. I'll try to build a 
+7.0.0-rc2 kernel and report back.
 
---6IVfBrCiv9PlDrY6
-Content-Type: application/pgp-signature; name="signature.asc"
+At a first glance the problem seems to happen in the I2C PIO code. On 
+which hardware is that happening?
 
------BEGIN PGP SIGNATURE-----
+Regards
+Aurelien
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaaRGlAAKCRB4tDGHoIJi
-0mn2AP9rkEy4Ug5UediDg3aHRB/C9s3CSKAV8D0oiZ4Ym/UFnAD/UGK6en/VYMcZ
-uBeeFSlzBPwP3I39ikzedY+nhp68sQE=
-=VAxN
------END PGP SIGNATURE-----
-
---6IVfBrCiv9PlDrY6--
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
