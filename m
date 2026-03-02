@@ -1,205 +1,145 @@
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3157836493D
-	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 13:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.125.188.123
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772456952; cv=pass; b=VhFU+Gjw8GneOjJ5FDDheccdYJZJOBPixFyz8BEteXFH7SdQAJSJ5eIx65cQ+ucIQwMkCaKmzpFhL+DLmkvmfGyiFzvVig8xFc2TrY4lNLsESiqsfG26lwaYGfqWssb96MmGmWefs0DpLqSlskhu7H//h205F1zGmhEhATN6hQ0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772456952; c=relaxed/simple;
-	bh=AXkmsR7ZBoHxpbOwLmqOU+xWVUc36k5CuxoMdy/D9aw=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u5DYgp8g7IKhs81FMLFJr97EAwp1pFPtsDoJh1Dh6MJyjWf0w6GkIo8oRo+fieO40D5lQiSH4PqciC2LMyIP54H8eM0cjzwux7UIc7qiDW0E6xrXxrSxuX+KJ0g0oYf3IC8GifAmvhnyCvyhq6qnH7NegcB/AjRfDaiRwDK4s6s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b=V0oqPwpg; arc=pass smtp.client-ip=185.125.188.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFEC1E5B88
+	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 15:13:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772464431; cv=none; b=i0xI5+W2HWd7CIisSHfBir2G1RV7siSXVs0xvSISMAhXmzj+dAGCLbxjaqavJMKARir7xS0D96x374gV1aB2bJxGXxyuNZ+iKAFvDTGnBOdP6FLyyGDEAWip4+gtQqFnHPX9Rxb3LzjSfImuUI80d2NZiIHhx7SEdEm3EEFXddg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772464431; c=relaxed/simple;
+	bh=xoKFcRodsjBoNZCfcW1z1LG/a1f1H2smS58YjpeC2eo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=mkMAviDxh+dsQj8st0153FS7DwFU+kW88RSvLgweKw8XUOs4vXWYlYDziHF/xu1Zf6IfLTcZvAl0hw0OpYPCRgZrZN7mCkRXrTriofXWp09mO3kCf25420bFSqZfL9q5YlCHNLah091TO4DbBZS3y7l/JVMl6hCnqjnf10oCcYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iXksrLm7; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b="V0oqPwpg"
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com [209.85.218.70])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 0DBBE40140
-	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 13:09:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20251003; t=1772456943;
-	bh=/ECnSn+s6d8RzhavbIFJQEnGNDdcB3vQZ0KecCsizik=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type;
-	b=V0oqPwpgSX8HMYdTNuIHFhencAcdIT/Vvcso30FXPH+rrOfpzxXCR0nMHjO3m1xBk
-	 nMJhM3amfo6T18tbwbaE3+b/i/jOz6j8qcueV33lCG1Good3C2/aaI0vYY5rIRcLLw
-	 lkVsw4VCDb7q6StqlO3f0hgzvZvZW9z6UxZZqMnpTbExBTvsitgs8jj6mUiWNKJ/UR
-	 r02blw9yqAreL9OMOy4J22N6YYnQH9b/mdB4Dm3oTyDV+6AUN2iW3JHGOPWKV16ouB
-	 8sCCNQ1qEje6Fwpkq3X+ULJPFM2nUiBvTT1UQbEWmaR7QTKUOu3wxkkZ4NpuI9Nutl
-	 ySfNJj2rYYvjEC2UBzHc2ecmS/IcLdCilD+qyHML+rAkkr7C55OkCGmRRTdm1NfVck
-	 +bEHOPTUK88dk6rtxefAUQf4eFv3nd6N6/qnDGakTSippuFCPKxv2rFhfJsikX8naL
-	 8xZJ6H2MgeUSidQRNrVznGbtQUz47WH3B3cIlECRbhBWexrP/XkKdbOxEKlZjN+j5F
-	 x8Rac5VRVxdLkV7tDRejKVc8M6Dy+4Egb4qhKubSRQ+3PxDQZFNpw4bqF+wVvf8YQa
-	 CJKQNHWxEn25rbicGdj2jSMQ9UDgAn1CGsQKcKDE8SO47NjySk1zDnHw8ZHmEJVURs
-	 p6C3tTo8RMWXKddAVxG60QnU=
-Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-b936b6b4473so418882266b.0
-        for <spacemit@lists.linux.dev>; Mon, 02 Mar 2026 05:09:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772456942; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GGE1K50te3ERmx7hLZpyVWHBc9vsZSBfqZWZgq9SAQapYK5dXrB7usW/R7UEqIl8Vu
-         wMMw0qsPyZgg+m9R87oTa07IqCAVgIdPJCsStKuNgIE9hkrCS6kz0Ulr7bSihlGudMNj
-         8CvR5ORQ9F79H0D2X1AjukoTik9E1i4dwpH3tAnmvxV3NdtBPapJCcoeo9AYp84Bdp37
-         ebyA9wI1WGfI4ujN9nttL6AtvcGiGndERNFLmTJ2+QkAVkH6JauUJu0yu9ir1oKOc9r+
-         6xlcOAs0pKC/l2N1Nk2pbI7jJuK5+8QfTjljIrkAFVfnIwi4/OhNhls5puf+zh9dgH0w
-         2yvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version;
-        bh=/ECnSn+s6d8RzhavbIFJQEnGNDdcB3vQZ0KecCsizik=;
-        fh=fM42649Tcc4KfdX/rgb3/5LK6pfWQSWJFFxnS6GmJNI=;
-        b=cTXtxaIP/vzIbRaePQ7hoJnxtu+SOjBbQbSjZqQ85KGwgU06AiwK9lWlWEn5oc8Ax7
-         95jceCNI6cUQxbsNO5DsbJqIxazjufpzB5JRygsyTuLGN4/IFoJf2nCdkuzpMVAzENJC
-         zFV0t+TvKZW5fjtC16RPEVrU8wzKQoS9fS1GQ8y8VsX0RBJWK2/r6GvLj9upuU9XXbGJ
-         Mq4j761jI2QWES0DH17hS3AWRZfGhkCB16sT1u7gxlISMn03ic2AbG/KiRhQBmY0aFOg
-         v4JQzh5ajJ/w21X66Lzja1vXqTYXymbfP6fGFdnLQYZIefknMywFDTGQlAs/EpjX0Alm
-         FmOw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iXksrLm7"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4806cc07ce7so51807795e9.1
+        for <spacemit@lists.linux.dev>; Mon, 02 Mar 2026 07:13:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772464428; x=1773069228; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4bjNDBX+/PFOXtqF8zgz+Y2Tzpl7yAa/Q3C6j5YXCMg=;
+        b=iXksrLm72lbcExyOd/aoVV5E1pATjGtJufgDsVMQ/hGPW3C2evAo0CKElmL7WyWNVp
+         LBq6zmdfKiG/9CTm9x6cKzwcqCheLJbeMC3rHCDwqE/58etugCIU8yhTVXmIHyikSPiy
+         J4PASra7v7O5PqE8xqdjcqsDB9z8DZhCNAbUGgnRlkgBhHHTgPfgd6gYvwd2zJvh8wiS
+         SoW1b2v07id/TOjgNYpESMqqo9fZ2eBfTDiiZgwstbAY5toFEN3v6ulnXucHhgDz0ndo
+         Au824viyc49tGdaKEbC7pSoMsGs0htQq2O6qAHybtRPce4cq8P/STBHOrBVguQiFRU97
+         HhHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772456942; x=1773061742;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/ECnSn+s6d8RzhavbIFJQEnGNDdcB3vQZ0KecCsizik=;
-        b=p0tQZZNoc0RN3n3X8HQLMpAXorUBKSQ5F0lmPoz61Pqkn0SHUum8RAfNdP9SptsqMC
-         E1IbLkV0E2jsxHFIIxhXDqvG9EsdKPAl2eN0E6srJ1AwU2cEVdiEzLvm/aLrUz136zaW
-         rongm/DxnFEuOtQ2NdaQnqx3kz5WK0o/1Wbzk9Wb2bQJ9j0ehPzycaU/9T5Cjj0HDPMx
-         4AQaMKnJUFPjNSZ+hMqdqA+PCmonHyUXM1w4PcgXQ99yMfzD030nvTRClVbe0ysQj8HP
-         2rDPt9okvwLIDRq1hUvYadO2HTEVSzfSeNCuyngwsPbH+/c1aa0mpNI0TEZOy3LQ5ACO
-         H0FA==
-X-Forwarded-Encrypted: i=1; AJvYcCWsgp+6q1SbS7j8YM9L2Zi9mNHYtBoQgg5NRrKoOdKk7Q7hntp0hqEzK0dhWoEVC6h36+Bt1din5g==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz632+qr9ESuHV/xN165S7Oj8nHAJbi9UkTtQag/8+FBPA3ZOPl
-	BWJchozsH3l9fxhab1pl+kLOmq/36maziZTF7H01PHWCAhkHTo4sHAG7b5UXkgTAnPd3KNGZiJJ
-	yz8spU61mbS/doC5E1T5gjESY4UwHxVClzxNkNOLukjXjFJbXL57bmXnYDTRura3nK8/29ZYyFz
-	ZuJtemueiKzbtqqolVd5FyDjcMWwiI67g5QzNx2lzBZmiCL9z4zZc=
-X-Gm-Gg: ATEYQzxL5LkDz+f4tVCPvilM3/YEQU7vdMHRtMnHmsvBvBqNdZHxfDtgnHCYx+KdrrJ
-	Dt/HnRtu/zSiMgLJPjmqNBBnRJrSoEPkADA0qEfPkmf6iE8oqTuNl1FT8LPEYIpYRZbTR9jV5Vy
-	d9bri/vMletRCrs9Js+Wx3/8itMFBKTpb4pyjlAylzLtIerdgZ0G4sSpz/OaFi28+vuTH+d3PWb
-	hOk
-X-Received: by 2002:a17:906:9fc8:b0:b87:efa:8786 with SMTP id a640c23a62f3a-b937657d99fmr789095866b.55.1772456942103;
-        Mon, 02 Mar 2026 05:09:02 -0800 (PST)
-X-Received: by 2002:a17:906:9fc8:b0:b87:efa:8786 with SMTP id
- a640c23a62f3a-b937657d99fmr789091166b.55.1772456941578; Mon, 02 Mar 2026
- 05:09:01 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 2 Mar 2026 08:08:59 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 2 Mar 2026 08:08:59 -0500
+        d=1e100.net; s=20230601; t=1772464428; x=1773069228;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4bjNDBX+/PFOXtqF8zgz+Y2Tzpl7yAa/Q3C6j5YXCMg=;
+        b=bWNxYFJdMhL6lyCiEONK3Q7W+39zyhx8iBZnz3yC0wzjPOxhHKTra0hKYHbGUFbr+v
+         Mc3AfuHAolRmUTRzUVYLVcravcSNTII/smbdMcGLtV7gFJJ+P32dN15wvXGtKJzo+duO
+         jKw0e8RsMYGcmYzdy6K+I6hhdJXxgkFpVmSn3niHNQTUBHn20UGuGGJyZ2t8hXtFuVXb
+         qIw5kQw700nJdIABMkPHrBb2NgPeFjFuFM8iJt2ycu5px0t9Ze5bMIyO/aa4WKs9n0Zn
+         9AE127NDKIpV1gYwMwOKzEOxqAV/kln1SYSCOJZ8Z2toGRlXOopN5wyzdBelUc7ZrgrD
+         mc+A==
+X-Forwarded-Encrypted: i=1; AJvYcCWls9tErRy4zpE4ZvNSL53C1MmvAhBeSL1qrAb/EGId6W7PBOr/p+alvfBzB2ztMj4PW64dfYXFxg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy+Bgu5Q9TbGnZbhms7cYdv4OeRqW4R48ze7zr8bVR2LfclI64y
+	CKHH1cSLbOks8GXJgsO51oq3ZFAZkhS+ISE+kxL07/oiH/1d8psShPM+
+X-Gm-Gg: ATEYQzznwS4H6j3Wyqp/K+bm86kOK3my4Bubgy/NzeN3WlAIUS8QumHfPplpMoKtgpT
+	2CnhOfAFRer3YkaPkmi/wf7ijDFRUs9Z4NzZlVOteu7ZPa6Ke8S2GGP9eYrV+bvNWDhbXVlLWwt
+	uXUbw8n5Jm7R5QYutnSbQXsVGwlULjJ/iKFv3LQrNDzwBuUXfz8ggtONd9K9cz70F9BmB/Omd9P
+	nULNKLdk6TiqhBjwdI1PpquanRWiOOtL1jgjg4la4/eDMZMwszSZ4M6AFsijxmCwPzr2hz4TmsC
+	P+f2cwPvbCBSwtDnppj7zqjkuDddE28JvHAIiIukVnxn66VRD5zc+fN/p5tCjPm/XYMppfOq5nq
+	DHrISfsE5Ww6PwaqywcL6sHOOxB8JZR4FxlJJlUIowaZ0ji7tYWZ0TDywyzSEZ3FeJXxcaTKI/T
+	QhlZ7JMvfk1aLNF4hhHy70RxR4KqyNtJFd1gpiB+JEbECXkmuV7mElSAOsNKhLrRxlvQ==
+X-Received: by 2002:a05:600c:3486:b0:480:20f1:7aa6 with SMTP id 5b1f17b1804b1-483c9bed9e2mr214730135e9.21.1772464428106;
+        Mon, 02 Mar 2026 07:13:48 -0800 (PST)
+Received: from ipedrosa-thinkpadx1carbongen12.rmtes.csb ([67.218.235.131])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd70e692sm437240265e9.7.2026.03.02.07.13.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Mar 2026 07:13:47 -0800 (PST)
+From: Iker Pedrosa <ikerpedrosam@gmail.com>
+Subject: [PATCH 00/10] riscv: spacemit: enable SD card support with UHS
+ modes for OrangePi RV2
+Date: Mon, 02 Mar 2026 16:13:21 +0100
+Message-Id: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260227075718.2243818-1-inochiama@gmail.com>
-References: <20260227075718.2243818-1-inochiama@gmail.com>
-From: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-User-Agent: alot/0.0.0
-Date: Mon, 2 Mar 2026 08:08:59 -0500
-X-Gm-Features: AaiRm52b-jdW2UNX8CSDWuKrreJ-aGAWnKXn668LfKMnXa2Ks1b4qAF3c1WKw8E
-Message-ID: <CAJM55Z_soPhC9P03edfq_A-GN07PbGqu31aHgE_5kKhkQwkMmQ@mail.gmail.com>
-Subject: Re: [PATCH net-next v5 0/3] riscv: spacemit: Add ethernet support for K3
-To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, Boon Khai Ng <boon.khai.ng@altera.com>, 
-	Chen-Yu Tsai <wens@kernel.org>, Choong Yong Liang <yong.liang.choong@linux.intel.com>, 
-	Conor Dooley <conor+dt@kernel.org>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
-	Inochi Amaoto <inochiama@gmail.com>, Jakub Kicinski <kuba@kernel.org>, Jose Abreu <joabreu@synopsys.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
-	Maxime Chevallier <maxime.chevallier@bootlin.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Paolo Abeni <pabeni@redhat.com>, Paul Walmsley <pjw@kernel.org>, 
-	Quentin Schulz <quentin.schulz@cherry.de>, Richard Cochran <richardcochran@gmail.com>, 
-	Rob Herring <robh@kernel.org>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
-	Yanteng Si <siyanteng@cqsoftware.com.cn>, Yao Zi <me@ziyao.cc>, Yixun Lan <dlan@kernel.org>
-Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, 
-	Longbin Li <looong.bin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MQQ5AQAwAvyI9a1IrBF8Rh7Vb9IK0IRLxd8txJ
+ pm5wViFDbrsBuVTTLY1QZFnEBa/zowSE4MjV5NzNW762V3QIgavEY/FkDiMVDVlO1KAlO7Kk1z
+ /th+e5wV2nN/1ZgAAAA==
+X-Change-ID: 20260226-orangepi-sd-card-uhs-0ecb05839b0c
+To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+ Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
+ Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Iker Pedrosa <ikerpedrosam@gmail.com>
+X-Mailer: b4 0.14.2
 
-Quoting Inochi Amaoto (2026-02-27 08:57:14)
-> Add initial support for ethernet controller of the Spacemit K3 SoC.
-> This ethernet controller is almost a standard Synopsys DesignWare
-> MAC (version 5.40a). This controller require a syscon device to
-> configure some basic features, like interface type and internal delay.
+This series enables complete SD card support for the Spacemit K1-based
+OrangePi RV2 board, including UHS (Ultra High Speed) modes for
+high-performance SD card operation.
 
-I don't know how we can accept this when it can't be tested since it still
-doesn't come with the device tree nodes. If you don't want it to be part of the
-series, just share a tree where this code is working. There are plenty of free
-public git hosting sites available.
+Background
 
-/Emil
+The Spacemit K1 SoC includes an SDHCI controller capable of supporting
+SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
+currently lacks basic SD controller configuration, SDHCI driver
+enhancements for voltage switching and tuning, and power management
+infrastructure.
 
->
-> Change from v4:
-> - https://lore.kernel.org/netdev/20260130022705.1059214-1-inochiama@gmail.com
-> patch 1:
-> 1 Apply Rob's tag.
-> 2 Adjust clock description according to Russell's suggestion.
-> patch 3:
-> 1. Add set_phy_intf_sel() and get_interfaces() hook, suggested by Russell.
->
-> Change from v3:
-> - https://lore.kernel.org/netdev/20260128072931.875041-1-inochiama@gmail.com
-> patch 1:
-> 1. fix the uncorrect compatible string postion
-> patch 3:
-> 1. add "CTRL_" prefix to all ctrl register definition
-> 2. only use delay config 0 to calculate delay code.
-> 3. fix typo in the comment
->
-> Change from v2:
-> - https://lore.kernel.org/netdev/20260121071315.940130-1-inochiama@gmail.com
-> patch 1:
-> 1. remove not needed compatible for select
-> 2. drop empty line in "spacemit,apmu" properties
-> 3. add spacemit,apmu properties to required.
-> patch 3:
-> 1. remove misused phy_fix_phy_mode_for_mac_delays.
-> 2. use local tx clock instead of the clk_tx_i in the dwmac.
->
-> Change from v1:
-> - https://lore.kernel.org/netdev/20260120043609.910302-1-inochiama@gmail.com
-> patch 1:
-> 1. remove phy clock
-> patch 3:
-> 1. improve comment and include something special about Spacmit K3 dwmac
-> 2. reorder the included file
-> 3. fix wrong delay macro used in spacemit_dwmac_set_delay.
-> 4. add check for maximum supported delay.
-> 5. use DIV_ROUND_CLOSEST to calculate best delay configuration.
-> 6. use assign for the ctrl register initial value.
-> 7. fix input when calling of_property_read_u32().
->
-> Inochi Amaoto (3):
->   dt-bindings: net: Add support for Spacemit K3 dwmac
->   net: stmmac: platform: Add snps,dwmac-5.40a IP compatible string
->   net: stmmac: Add glue layer for Spacemit K3 SoC
->
->  .../devicetree/bindings/net/snps,dwmac.yaml   |   2 +
->  .../bindings/net/spacemit,k3-dwmac.yaml       | 103 ++++++++
->  drivers/net/ethernet/stmicro/stmmac/Kconfig   |  12 +
->  drivers/net/ethernet/stmicro/stmmac/Makefile  |   1 +
->  .../ethernet/stmicro/stmmac/dwmac-spacemit.c  | 226 ++++++++++++++++++
->  .../ethernet/stmicro/stmmac/stmmac_platform.c |   1 +
->  6 files changed, 345 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
->  create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
->
-> --
-> 2.53.0
->
->
-> _______________________________________________
-> linux-riscv mailing list
-> linux-riscv@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-riscv
+Implementation
+
+The series enables SD card support through coordinated layers:
+
+- Hardware infrastructure (patches 1-2): Device tree bindings for voltage
+switching hardware and essential clock infrastructure.
+- SDHCI driver enhancements (patches 3-7): Regulator framework
+integration, pinctrl state switching for voltage domains, AIB register
+programming, and comprehensive SDR tuning support for reliable UHS
+operation.
+- SoC and board integration (patches 8-10): Complete K1 SoC controller
+definitions, PMIC power infrastructure, and OrangePi RV2 board enablement
+with full UHS support.
+
+This transforms the OrangePi RV2 from having no SD card support to full
+UHS-I capability, enabling high-performance storage up to 208MHz.
+
+Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+---
+Iker Pedrosa (10):
+      dt-bindings: mmc: spacemit,sdhci: add AIB voltage switching registers
+      mmc: sdhci-of-k1: enable essential clock infrastructure for SD operation
+      mmc: sdhci-of-k1: add regulator framework support
+      mmc: sdhci-of-k1: add pinctrl state switching for voltage changes
+      mmc: sdhci-of-k1: add AIB register support for voltage switching
+      mmc: sdhci-of-k1: add SDR tuning infrastructure
+      mmc: sdhci-of-k1: add comprehensive SDR tuning support
+      riscv: dts: spacemit: k1: add SD card controller and pinctrl support
+      riscv: dts: spacemit: k1-orangepi-rv2: add PMIC and power infrastructure
+      riscv: dts: spacemit: k1-orangepi-rv2: add SD card support with UHS modes
+
+ .../devicetree/bindings/mmc/spacemit,sdhci.yaml    |  15 +
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   |  69 +++++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       |  40 +++
+ arch/riscv/boot/dts/spacemit/k1.dtsi               |  13 +
+ drivers/mmc/host/sdhci-of-k1.c                     | 320 +++++++++++++++++++++
+ 5 files changed, 457 insertions(+)
+---
+base-commit: 5f499bb7a07fcdcf8877acaa8f413a5dc1fcfacc
+change-id: 20260226-orangepi-sd-card-uhs-0ecb05839b0c
+
+Best regards,
+-- 
+Iker Pedrosa <ikerpedrosam@gmail.com>
+
