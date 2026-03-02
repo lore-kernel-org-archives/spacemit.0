@@ -1,159 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3A4277035;
-	Mon,  2 Mar 2026 18:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6590521D3CC;
+	Mon,  2 Mar 2026 20:09:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772475909; cv=none; b=Fthlqc1ONbpVrjR39KbGiNAFxkY7LXoaRribRFJkwzP5x4xXbc7YdXQoa+pLgwX9Xvwj4bXDEfLAVI7gFpT88r6e7cR1vxl9ptLOS3DiYjMdE9/LS0cHsHZcD4jW7yKZxyo0LEwuQtgbmQXpm14I1feEJ/JxmqbWf3eu4lmbaA4=
+	t=1772482152; cv=none; b=Bw03pkpE7L31ESvKmKZyEG+5qC4R/gXKA6oyvFBBCYHEGYZifc82gmhMHM2QM32UNzBbTUlgThw2M3r+wJ3yF3u/+ct/ryl3vIi7WIazf52P5pQlsCsUOWGtr8toOEhfQ5qBwQes6OBkfntz2OWdv3a9Tt66a+sZNlbd5hzMVHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772475909; c=relaxed/simple;
-	bh=hqlQdJr+TwetXdWKctFYGt6ONv9TGR3xJA5uUdRsGnk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p1CvFCm0ELiqA1Q6UKQfaEm+dd2Szzu+r175TtU5RseoNAGG5HvxXBttE2TZsxyc8iofwkTxQSG7soIs1uUCfoCJ6qZOlchVoL656/LbNWxCRKrAJcSZCMXiXaZPQBCdfoZlLTR/udm4xB/aObRf9b0Ya//D+5vdlLgwEhK+dMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OGt9U3xD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772482152; c=relaxed/simple;
+	bh=teVWVpZi8I2gppKw9vPHGEjqeBAZSadaqN2z40LzGqE=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q3ziTtJ06MkhXbNdhneDuFU5GMECRfP1jwNsnWZBNricDUCp6AB+MwfKi1h75nPwYEd3vLyNlEWY0SO696ufFPgJJd3ALVyr1wyfARq1sNzv64ZLs4wBaKoGav2+npKjVYQC2TMLA7ZBbgVMkSHwuPwnYKzjH82Y2/dxRDLtqfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=L8Gn3Obh; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OGt9U3xD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB3BC19423;
-	Mon,  2 Mar 2026 18:25:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772475909;
-	bh=hqlQdJr+TwetXdWKctFYGt6ONv9TGR3xJA5uUdRsGnk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OGt9U3xDvCQN6CIVGOex4BE7QHpNb61w5XBxlJUVPFtv9DuRJh78Oc7k+gpUqLZjU
-	 qjPwqRwzpsxc4wTLJUm7ClOBT5QwEd5bGBPURqbw1gjzecInQzic0mUtVfokZ0DnN4
-	 5zgZSVRTn8d5KxjczSElpn8u8JVgqpCzLNAG21KEiPklO0HjEYpzv21i6h3ra2sZFj
-	 ldRKL0+SqlgUsDfjbOufYVgz7815DGm8Y/6HDWuPgOxris8tcTulN72Sqguji0/RnR
-	 +081cCM5HLlESx40P8S+1XzHGWUJyywyo+HwtkzJs2bX7htwpOnMcYApBxckdU/Swx
-	 GpfgsmaY3W+rw==
-Date: Mon, 2 Mar 2026 18:25:03 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Iker Pedrosa <ikerpedrosam@gmail.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="L8Gn3Obh"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:To:From:Date:Content-Transfer-Encoding:Cc:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=3+zY78mylit5/fdujgN7gsluGF7Jzq9S48A1C8Ytv1M=; b=L8Gn3ObhH/saBw+CuqV4l5WOTv
+	RJOPtfC780LFjQ0NDKj5DaYMeEoZBqtwKXedJvfPk67SOUvAYDwE+M0NpBPMnDRFbQ69S4wdkMK1H
+	515agvtqnisdhWJ9YObmpXe8WrayHDWjx7nqXjfCJnFQ+Tl/llmfIC0Q9qal/CklI60OmhH8W62Qw
+	i2EvXN7Ywk1QBtRMdhrfBabXy/EImPO56+Jt4JTRn/7+anYguBCevoKp57iWuaiwZFgN3/msDwZju
+	wqV96uvnU/j4vh2XX5I9sF0GMaHVZpAzFCZmp3c7d39RJFSVlf1VMnTvq0K0Sr7Da3Py2hIUXHPTR
+	dKl/WWNg==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1vx9Zc-0000000DNAz-0LDs;
+	Mon, 02 Mar 2026 21:09:00 +0100
+Date: Mon, 2 Mar 2026 21:08:59 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yanko Kaneti <yaneti@declera.com>, linux-kernel@vger.kernel.org,
+	Lee Jones <lee@kernel.org>, Sebastian Reichel <sre@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/10] dt-bindings: mmc: spacemit,sdhci: add AIB voltage
- switching registers
-Message-ID: <20260302-crewman-faster-9fd00b62e30c@spud>
-References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
- <20260302-orangepi-sd-card-uhs-v1-1-89c219973c0c@gmail.com>
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v5 2/2] mfd: simple-mfd-i2c: add a reboot cell for the
+ SpacemiT P1 chip
+Message-ID: <aaXuWwyA5NzBZzlW@aurel32.net>
+Mail-Followup-To: Yanko Kaneti <yaneti@declera.com>,
+	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
+References: <20251102230352.914421-1-aurelien@aurel32.net>
+ <20251102230352.914421-3-aurelien@aurel32.net>
+ <b51a62513daa9d2390031ec350e0b33bdb7e54aa.camel@declera.com>
+ <aaC78FTN31QYaVg0@aurel32.net>
+ <990bc03ed2baa05e619f0aa9cc6a23acadd66ea6.camel@declera.com>
+ <aaS6xeKFZz06fb1_@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="iVG0vKrqfY2+UZi0"
-Content-Disposition: inline
-In-Reply-To: <20260302-orangepi-sd-card-uhs-v1-1-89c219973c0c@gmail.com>
-
-
---iVG0vKrqfY2+UZi0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <aaS6xeKFZz06fb1_@aurel32.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Mon, Mar 02, 2026 at 04:13:22PM +0100, Iker Pedrosa wrote:
-> Add SpacemiT K1 AIB register properties for UHS voltage switching
-> support:
->=20
-> - spacemit,aib-mmc1-io-reg: AIB MMC1 IO register address for voltage
->   switching
-> - spacemit,apbc-asfar-reg: APBC ASFAR register address for AIB access
-> - spacemit,apbc-assar-reg: APBC ASSAR register address for AIB access
->=20
-> These properties enable the driver to perform voltage switching between
-> 3.3V and 1.8V required for UHS SD card modes.
->=20
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> ---
->  Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 15 +++++++++=
-++++++
->  1 file changed, 15 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/=
-Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> index 13d9382058fbc1c12be1024d1c550f04a825673c..4d6590aa8262009b6e5697a04=
-b45cf3736c0fa42 100644
-> --- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> @@ -32,6 +32,18 @@ properties:
->        - const: core
->        - const: io
-> =20
-> +  spacemit,aib-mmc1-io-reg:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description: AIB MMC1 IO register address for voltage switching
-> +
-> +  spacemit,apbc-asfar-reg:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description: APBC ASFAR register address for AIB access
-> +
-> +  spacemit,apbc-assar-reg:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description: APBC ASSAR register address for AIB access
-> +
->  required:
->    - compatible
->    - reg
-> @@ -50,4 +62,7 @@ examples:
->        interrupt-parent =3D <&plic>;
->        clocks =3D <&clk_apmu 10>, <&clk_apmu 13>;
->        clock-names =3D "core", "io";
-> +      spacemit,aib-mmc1-io-reg =3D <0xd401e81c>;
+Hi,
 
-This looks very very wrong to me. This is part of the pinctrl
-reservation:
-		pinctrl: pinctrl@d401e000 {
-			compatible =3D "spacemit,k1-pinctrl";
-			reg =3D <0x0 0xd401e000 0x0 0x1000>;
-			clocks =3D <&syscon_apbc CLK_AIB>,
-				 <&syscon_apbc CLK_AIB_BUS>;
-			clock-names =3D "func", "bus";
-			spacemit,apbc =3D <&syscon_apbc>;
-		};
-so if you need to change something here, you need to do it via pinctrl.
+On 2026-03-01 23:16, Aurelien Jarno wrote:
+> On 2026-02-27 13:29, Yanko Kaneti wrote:
+> > On Thu, 2026-02-26 at 22:32 +0100, Aurelien Jarno wrote:
+> > > Hi,
+> > > 
+> > > On 2026-02-26 16:32, Yanko Kaneti wrote:
+> > > > Hello,
+> > > > 
+> > > > On Mon, 2025-11-03 at 00:02 +0100, Aurelien Jarno wrote:
+> > > > > Add a "spacemit-p1-reboot" cell for the SpacemiT P1 chip.
+> > > > > 
+> > > > > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+> > > > > ---
+> > > > > v5: no changes
+> > > > > 
+> > > > >  drivers/mfd/simple-mfd-i2c.c | 1 +
+> > > > >  1 file changed, 1 insertion(+)
+> > > > > 
+> > > > > diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+> > > > > index 0a607a1e3ca1d..542d378cdcd1f 100644
+> > > > > --- a/drivers/mfd/simple-mfd-i2c.c
+> > > > > +++ b/drivers/mfd/simple-mfd-i2c.c
+> > > > > @@ -99,6 +99,7 @@ static const struct regmap_config spacemit_p1_regmap_config = {
+> > > > >  };
+> > > > >  
+> > > > >  static const struct mfd_cell spacemit_p1_cells[] = {
+> > > > > +	{ .name = "spacemit-p1-reboot", },
+> > > > >  	{ .name = "spacemit-p1-regulator", },
+> > > > >  	{ .name = "spacemit-p1-rtc", },
+> > > > >  };
+> > > > 
+> > > > Perhaps its safe to merge this one now that everything P1 and I2C is
+> > > > already in linus tip ?
+> > > 
+> > > Unfortunately, this patchset is still missing:
+> > > https://lore.kernel.org/all/20260207-b4-k3-i2c-pio-v7-0-626942d94d91@linux.spacemit.com/
+> > > 
+> > > This means the reboots work most of the time, but are not 100% reliable, 
+> > > and that's the reason why this patch got blocked from merging.
+> > 
+> > I see. Thanks. Sounds to me like sometimes working compared to never
+> > working is better , but anyway..
+> 
+> I agree with that, but the decision was to hold on this patch until the 
+> I2C PIO part got merged.
+> 
+> > FWIW  with this patch and the pio patcheset I get this rcu splat on
+> > reboot (which is still working). Similar splat is there without the pio
+> > patcheset.
+> 
+> I haven't been able to reproduce the issue here after 10+ reboots on a 
+> BPI-F3 board, but I tried the patch on top of 6.19. I'll try to build a 
+> 7.0.0-rc2 kernel and report back.
 
-> +      spacemit,apbc-asfar-reg =3D <0xd4015050>;
-> +      spacemit,apbc-assar-reg =3D <0xd4015054>;
+I have tried that, and I am still unable to reproduce the issue with a 
+7.0.0-rc2 kernel and a BPI-F3 board.
 
-These two are the apbc syscon:
-		syscon_apbc: system-controller@d4015000 {
-			compatible =3D "spacemit,k1-syscon-apbc";
-			reg =3D <0x0 0xd4015000 0x0 0x1000>;
-			clocks =3D <&osc_32k>, <&vctcxo_1m>, <&vctcxo_3m>,
-				 <&vctcxo_24m>;
-			clock-names =3D "osc", "vctcxo_1m", "vctcxo_3m",
-				      "vctcxo_24m";
-			#clock-cells =3D <1>;
-			#reset-cells =3D <1>;
-		};
-so add a phandle to the syscon (like the pinctrl currently has) and
-access these via its regmap. What you've got here is a non-runner,
-sorry.
-pw-bot: changes-requested
+Regards
+Aurelien
 
-Thanks,
-Conor.
-
---iVG0vKrqfY2+UZi0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaaXV/wAKCRB4tDGHoIJi
-0mz2AP9Q9b/xkWkD/y0/gd0Q80+ijFziY/LsJwgySgJsYSig7gD/YRFFEbPlNDFf
-Bl1OTEmAhqj29hPvOZ0o5CC11uqBGgs=
-=A6Ze
------END PGP SIGNATURE-----
-
---iVG0vKrqfY2+UZi0--
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
