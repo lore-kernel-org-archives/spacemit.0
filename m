@@ -1,117 +1,74 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CE63C2E
-	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 03:37:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8611E7262F;
+	Mon,  2 Mar 2026 03:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772422629; cv=none; b=m81VG9eFbgbsYU2cyIWHy3ZWDlezyKkZPS6lYjnmPM2sMbm9ZH8cRbICA2ask7rgtkB0CCt+3WTgetr8mLnpVkq0FTrNnuQiuuerz9y+txDmjzH6sLsp577C6JSpapjlmxxTlI4M1HP/swt4SC+uwyYahAFwSJrpakpq3vGO0pQ=
+	t=1772422703; cv=none; b=C8CgZqpE1adBOp9VBrmlP/k9H7utL18Raz+WYWdlgUiqYv/41CMAkHch5lsMXaugzLinRMUkfvG54xsEOWTT+ftS0TJj6nKVIVtWkyAcj71qrMKw3lKweI8wfi7snRLe4c4fEI2Q4UVQ98BCHgY6YuQkizRt5060kMO1PUtrzEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772422629; c=relaxed/simple;
-	bh=HlZEZBChSkWIZ0yIr2y0mGvtNu3LDcGkglPa507TXoo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qQHwSjlnaW77aH0DyrFjVIoeKeEJCCBEZlugjnzWKQHdtf5SiUrI30SZIqZ1pW5XlnqsSxDhxRmW5tf0n49jdEzzFUjNjrFxCD8FSfih3k+io26QSd6ZwTgS36HZS3FWJiB/iJdZUUXQ2dhcFTBDZKsRI3eMSLUntE8LtHQfMZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.48.232])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 84C1D341E6C;
-	Mon, 02 Mar 2026 03:37:06 +0000 (UTC)
-Date: Mon, 2 Mar 2026 11:36:55 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Chukun Pan <amadeus@jmu.edu.cn>
-Cc: dlan@kernel.org, alex@ghiti.fr, aou@eecs.berkeley.edu,
-	conor+dt@kernel.org, conor@kernel.org, devicetree@vger.kernel.org,
-	elder@riscstar.com, krzk+dt@kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	palmer@dabbelt.com, pjw@kernel.org, robh@kernel.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH] riscv: dts: spacemit: pcie: fix missing power regulator
-Message-ID: <20260302033655-GYA288339@gentoo.org>
-References: <20260226-k1-pcie-fix-pwr-v1-1-94b493cd27e5@kernel.org>
- <20260302030511.30566-1-amadeus@jmu.edu.cn>
+	s=arc-20240116; t=1772422703; c=relaxed/simple;
+	bh=tkyELmpejTLBUSV5SURHjr2MDlMxpNxT6V7ppU9CESc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=icd0IEUhfWoZXX7dwAqBUnnaGhtFwFiJ/K0d+XyPjb4A8A3E/EwrzKszz7qo4RJxqCjd7scLw/zUhLSXFZZpIuRrKyZUW7K70YTdz6EpQozdrIho/Kb0hHR8Tc91105cabcNJD+v2y1zFD50JT8HrSERr6AQAk4jT1ybZqc1+DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pKB/qdtB; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pKB/qdtB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A48C19423;
+	Mon,  2 Mar 2026 03:38:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772422703;
+	bh=tkyELmpejTLBUSV5SURHjr2MDlMxpNxT6V7ppU9CESc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=pKB/qdtBvj62XtioPQsZZBD5rQlhOvCo4jiur+fhAQAjD6JG7OKhwZ1dixGVw6FUU
+	 KnzeD0LjW6+aPCfghs3z+UbWdDT50E8iiK3rb7cvgjYzA/aH1isS8MAd9Xii+eSiES
+	 CnIogF9cXav74pJH6vwU/j6sa062P6OjRn4HJPYKzK1ADXt2NcYWHDLCe2awDf0p6X
+	 nxCXfSp1N4TqizuVreb/7M9sMsOdJLlKj0F0X9He+j0pC1D6xK1l5QctLIDnkL5kvl
+	 qAngG636MvGQ3ZAsjthyYZfywmZTKqPUKO5U6kYPhNSP8KIvqIB7sWz0TEreXpkXpr
+	 fPbYFAAsIv7Mw==
+From: Yixun Lan <dlan@kernel.org>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Chukun Pan <amadeus@jmu.edu.cn>,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] riscv: dts: spacemit: adapt regulator node name to preferred form
+Date: Mon,  2 Mar 2026 03:38:15 +0000
+Message-ID: <177242109477.25815.16699220030099258528.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260226-02-k1-regulator-names-v1-1-e87695d50159@kernel.org>
+References: <20260226-02-k1-regulator-names-v1-1-e87695d50159@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260302030511.30566-1-amadeus@jmu.edu.cn>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Chukun,
 
-Sorry, I missed your mail due recent problem of my client..
-On 11:05 Mon 02 Mar     , Chukun Pan wrote:
-> Hi,
+On Thu, 26 Feb 2026 09:35:00 +0000, Yixun Lan wrote:
+> The preferred node name for fixed-regulators has changed to pattern [1]:
+>  '^regulator(-[0-9]+v[0-9]+|-[0-9a-z-]+)?$'
 > 
-> > &pcie1_port {
-> >  	phys = <&pcie1_phy>;
-> > +	vpcie3v3-supply = <&pcie_vcc_3v3>;
-> >  };
-> > 
-> >  &pcie1 {
-> > @@ -320,6 +321,7 @@ &pcie2_phy {
-> > 
-> >  &pcie2_port {
-> >  	phys = <&pcie2_phy>;
-> > +	vpcie3v3-supply = <&pcie_vcc_3v3>;
-> >  };
+> Adjust all SpacemiT DT regulator node names to fix this.
 > 
-> ```
-> &pcie1 {
-> 	vpcie3v3-supply = <&pcie_vcc_3v3>;
-> 	status = "okay";
-> };
-> ```
-> 
-> According to DT binding, the vpcie3v3-supply of the &pciex node should
-> be moved to the &pciex_port node. This is simply a duplication of the
-> property.
-> 
-I have confidence that pcie port need to add a regulator to provide 
-supply for devices..
-
-But, I'm not sure whether it's ok to remove regulator from &pciex node,
-it's possibly a 'yes' answer, but to convince me, I'd like to see a real
-test case to prove it: e.g, power supply for pciex is actually off before 
-the driver initialization, then run regular procedure as it should, if
-all works fine
-
-Btw, different drivers request same regulator is ok, and is quite normal,
-can't draw a conclusion that it's a duplication, as they may be used for
-different reasons
-
-> But do we really need this pcie_port (PCIe bridge)?
-> 
-> The PCIe bridge node (pcie@0) was treated as a platform device, but it
-> did not define the interrupts property, which resulted in the following
-> warning: `[    2.897980] irq: no irq domain found for pcie@0 !`
-> 
-> Would it be better to submit a patch to remove this pcie_port?
-> 
-> ```
-> -       ret = k1_pcie_parse_port(k1);
-> -       if (ret)
-> -               return dev_err_probe(dev, ret, "failed to parse root port\n");
-> +       k1->phy = devm_phy_get(dev, "pcie-phy");
-> +       if (IS_ERR(k1->phy))
-> +               return dev_err_probe(dev, PTR_ERR(k1->phy), "missing PHY\n");
-> ```
-
-I've not really looked at this, and not an expert on this area, so will
-leave this to Alex or PCIe maintainers..
-
-> I have tested this change and it works.
-> 
-> Thanks,
-> Chukun
 > 
 
+Applied, thanks!
+
+[1/1] riscv: dts: spacemit: adapt regulator node name to preferred form
+      https://github.com/spacemit-com/linux/commit/edea11c0aa8ca88537cc48d0d83296c66ab69ab8
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan <dlan@kernel.org>
