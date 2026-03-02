@@ -1,126 +1,153 @@
-Received: from mail.bix.bg (mail.bix.bg [193.105.196.21])
-	by smtp.subspace.kernel.org (Postfix) with SMTP id 789D838C42E
-	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 20:34:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.105.196.21
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326C731F9B6;
+	Mon,  2 Mar 2026 22:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772483683; cv=none; b=WhadMKNNTqeieYnEOSUjTGPfp4+LHg8jZEFqtuMM2pAEcxJzJySqBnJmvztWqtTAFHYIRBPPCpRfBMCZvTOxBF2Zm52HirtEZ+B79KzL9rt0a0lD2za+UZrkwPNpvAaEDvUIDJOb8AFSkiRULOOvb0tR5JPZGDl39703/JBRBKY=
+	t=1772491086; cv=none; b=u+w20StNohNQ0fYZxoOCCyjyXVtlC2Syw1oPYFbTe1QvvoFeG4LP75tHgFWce3r9Ud5Uzr+tEMGb81IcWVN2uiMTJ+bcx8hwhGx1mJJf4U2UGBGPdvYOD5II6HZRK93+2T96FuyZD9E24E3dAZDpmppN4Sp537uihs1ulv+aqSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772483683; c=relaxed/simple;
-	bh=MSNT+vzSoz8JEVbz1InyC14pAK5t6L7YnAyF9maZEtQ=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Cod6/R+SccbZKmVUEhIwl2fXKAtrdPxe73pC34el+VSiWod0zXmJ5urhNNHggHipMxI8o0kbUxiRGwitxuIS9aAyO0rQkL3SE64fFQKzOt63TayfWLYZvMpa3D53Yc1OlRo3IhzVIRiNxLOHlyiwOxGJtPtn/202QDnoYJwq53o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=declera.com; spf=pass smtp.mailfrom=declera.com; arc=none smtp.client-ip=193.105.196.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=declera.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=declera.com
-Received: (qmail 19022 invoked from network); 2 Mar 2026 20:34:33 -0000
-Received: from d2.declera.com (HELO ?212.116.131.122?) (212.116.131.122)
-  by indigo.declera.com with SMTP; 2 Mar 2026 20:34:33 -0000
-Message-ID: <36f8df695463e5ff3eaaffbac357fc73026f7373.camel@declera.com>
-Subject: Re: [PATCH v5 2/2] mfd: simple-mfd-i2c: add a reboot cell for the
- SpacemiT P1 chip
-From: Yanko Kaneti <yaneti@declera.com>
-To: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org, Lee
- Jones <lee@kernel.org>, Sebastian Reichel <sre@kernel.org>, Troy Mitchell	
- <troy.mitchell@linux.spacemit.com>, Yixun Lan <dlan@gentoo.org>, Paul
- Walmsley	 <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou	
- <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, "open list:RISC-V
- ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>, "open
- list:RISC-V SPACEMIT SoC Support:Keyword:spacemit"	
- <spacemit@lists.linux.dev>, "open list:SYSTEM RESET/SHUTDOWN DRIVERS"	
- <linux-pm@vger.kernel.org>
-Date: Mon, 02 Mar 2026 22:34:33 +0200
-In-Reply-To: <aaXuWwyA5NzBZzlW@aurel32.net>
-References: <20251102230352.914421-1-aurelien@aurel32.net>
-	 <20251102230352.914421-3-aurelien@aurel32.net>
-	 <b51a62513daa9d2390031ec350e0b33bdb7e54aa.camel@declera.com>
-	 <aaC78FTN31QYaVg0@aurel32.net>
-	 <990bc03ed2baa05e619f0aa9cc6a23acadd66ea6.camel@declera.com>
-	 <aaS6xeKFZz06fb1_@aurel32.net> <aaXuWwyA5NzBZzlW@aurel32.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.59.3 (3.59.3-1.fc45) 
+	s=arc-20240116; t=1772491086; c=relaxed/simple;
+	bh=68t5OIEMxY77Fq28mnKG3kcyRPmRItOFd7ujtleGQZk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bdr0gV3njuJbAOu9Hr7q95jXUZzkkdZMFFl338MJJpKE4jSIfDME17B0svUB+HM6iTynF4vQN5tORdmFHbSsyoCjtjBjirvyJJhGLOJabqnGwo8QQVFQ00j/7The223or38ccV31bnNiBJiLVh2jlXmIWNT/NVa3YDS8iAE7WMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BZkucZxD; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BZkucZxD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E90C19423;
+	Mon,  2 Mar 2026 22:38:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772491085;
+	bh=68t5OIEMxY77Fq28mnKG3kcyRPmRItOFd7ujtleGQZk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BZkucZxDNFGuPU9SCSuMLEfMlasncGepkmMVtmm88jjrbeMmhAiSAJngM4Pj0BFjx
+	 7Od15qYYNB8XvtJflCF5sZjR+KTRIdB5kQj0ixEHyfKnE80E9rprTH+VbOw2qRAMor
+	 x/yoGexhoGOKfeYep9uzc2KgaQ7rDZwvdapTkYndfwCaGihKgSn0M9E8gxkiH3O96s
+	 VR4Qr+Uwska92y39hcooTewslioUa0EMxgoJ43xZswbYxFA18rVJsooZpwGju1vx5y
+	 99J6uU/pbA4hwveulHsIG1eSKkjmilviFrL4lyPnnV0u111z2jVNwfyXwvHAbjeGas
+	 MM7UNvvPHbm+Q==
+Date: Tue, 3 Mar 2026 06:38:03 +0800
+From: Yixun Lan <dlan@kernel.org>
+To: Conor Dooley <conor@kernel.org>
+Cc: Iker Pedrosa <ikerpedrosam@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/10] dt-bindings: mmc: spacemit,sdhci: add AIB voltage
+ switching registers
+Message-ID: <20260302223803-GKB289813@kernel.org>
+References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
+ <20260302-orangepi-sd-card-uhs-v1-1-89c219973c0c@gmail.com>
+ <20260302-crewman-faster-9fd00b62e30c@spud>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260302-crewman-faster-9fd00b62e30c@spud>
 
-Hello,
+Hi Iker, Conor,
 
-On Mon, 2026-03-02 at 21:08 +0100, Aurelien Jarno wrote:
-> On 2026-03-01 23:16, Aurelien Jarno wrote:
-> > On 2026-02-27 13:29, Yanko Kaneti wrote:
-> > > On Thu, 2026-02-26 at 22:32 +0100, Aurelien Jarno wrote:
-> > > > Hi,
-> > > >=20
-> > > > On 2026-02-26 16:32, Yanko Kaneti wrote:
-> > > > > Hello,
-> > > > >=20
-> > > > > On Mon, 2025-11-03 at 00:02 +0100, Aurelien Jarno wrote:
-> > > > > > Add a "spacemit-p1-reboot" cell for the SpacemiT P1 chip.
-> > > > > >=20
-> > > > > > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> > > > > > ---
-> > > > > > v5: no changes
-> > > > > >=20
-> > > > > >  drivers/mfd/simple-mfd-i2c.c | 1 +
-> > > > > >  1 file changed, 1 insertion(+)
-> > > > > >=20
-> > > > > > diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-=
-mfd-i2c.c
-> > > > > > index 0a607a1e3ca1d..542d378cdcd1f 100644
-> > > > > > --- a/drivers/mfd/simple-mfd-i2c.c
-> > > > > > +++ b/drivers/mfd/simple-mfd-i2c.c
-> > > > > > @@ -99,6 +99,7 @@ static const struct regmap_config spacemit_p1=
-_regmap_config =3D {
-> > > > > >  };
-> > > > > > =20
-> > > > > >  static const struct mfd_cell spacemit_p1_cells[] =3D {
-> > > > > > +	{ .name =3D "spacemit-p1-reboot", },
-> > > > > >  	{ .name =3D "spacemit-p1-regulator", },
-> > > > > >  	{ .name =3D "spacemit-p1-rtc", },
-> > > > > >  };
-> > > > >=20
-> > > > > Perhaps its safe to merge this one now that everything P1 and I2C=
- is
-> > > > > already in linus tip ?
-> > > >=20
-> > > > Unfortunately, this patchset is still missing:
-> > > > https://lore.kernel.org/all/20260207-b4-k3-i2c-pio-v7-0-626942d94d9=
-1@linux.spacemit.com/
-> > > >=20
-> > > > This means the reboots work most of the time, but are not 100% reli=
-able,=20
-> > > > and that's the reason why this patch got blocked from merging.
-> > >=20
-> > > I see. Thanks. Sounds to me like sometimes working compared to never
-> > > working is better , but anyway..
-> >=20
-> > I agree with that, but the decision was to hold on this patch until the=
-=20
-> > I2C PIO part got merged.
-> >=20
-> > > FWIW  with this patch and the pio patcheset I get this rcu splat on
-> > > reboot (which is still working). Similar splat is there without the p=
-io
-> > > patcheset.
-> >=20
-> > I haven't been able to reproduce the issue here after 10+ reboots on a=
-=20
-> > BPI-F3 board, but I tried the patch on top of 6.19. I'll try to build a=
-=20
-> > 7.0.0-rc2 kernel and report back.
->=20
-> I have tried that, and I am still unable to reproduce the issue with a=
-=20
-> 7.0.0-rc2 kernel and a BPI-F3 board.
+On 18:25 Mon 02 Mar     , Conor Dooley wrote:
+> On Mon, Mar 02, 2026 at 04:13:22PM +0100, Iker Pedrosa wrote:
+> > Add SpacemiT K1 AIB register properties for UHS voltage switching
+> > support:
+> > 
+> > - spacemit,aib-mmc1-io-reg: AIB MMC1 IO register address for voltage
+> >   switching
+> > - spacemit,apbc-asfar-reg: APBC ASFAR register address for AIB access
+> > - spacemit,apbc-assar-reg: APBC ASSAR register address for AIB access
+> > 
+> > These properties enable the driver to perform voltage switching between
+> > 3.3V and 1.8V required for UHS SD card modes.
+> > 
+> > Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+> > ---
+> >  Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 15 +++++++++++++++
+> >  1 file changed, 15 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> > index 13d9382058fbc1c12be1024d1c550f04a825673c..4d6590aa8262009b6e5697a04b45cf3736c0fa42 100644
+> > --- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> > +++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> > @@ -32,6 +32,18 @@ properties:
+> >        - const: core
+> >        - const: io
+> >  
+> > +  spacemit,aib-mmc1-io-reg:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    description: AIB MMC1 IO register address for voltage switching
+> > +
+> > +  spacemit,apbc-asfar-reg:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    description: APBC ASFAR register address for AIB access
+> > +
+> > +  spacemit,apbc-assar-reg:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    description: APBC ASSAR register address for AIB access
+> > +
+> >  required:
+> >    - compatible
+> >    - reg
+> > @@ -50,4 +62,7 @@ examples:
+> >        interrupt-parent = <&plic>;
+> >        clocks = <&clk_apmu 10>, <&clk_apmu 13>;
+> >        clock-names = "core", "io";
+> > +      spacemit,aib-mmc1-io-reg = <0xd401e81c>;
+> 
+> This looks very very wrong to me. This is part of the pinctrl
+> reservation:
+> 		pinctrl: pinctrl@d401e000 {
+> 			compatible = "spacemit,k1-pinctrl";
+> 			reg = <0x0 0xd401e000 0x0 0x1000>;
+> 			clocks = <&syscon_apbc CLK_AIB>,
+> 				 <&syscon_apbc CLK_AIB_BUS>;
+> 			clock-names = "func", "bus";
+> 			spacemit,apbc = <&syscon_apbc>;
+> 		};
+> so if you need to change something here, you need to do it via pinctrl.
+> 
+> > +      spacemit,apbc-asfar-reg = <0xd4015050>;
+> > +      spacemit,apbc-assar-reg = <0xd4015054>;
+> 
+> These two are the apbc syscon:
+> 		syscon_apbc: system-controller@d4015000 {
+> 			compatible = "spacemit,k1-syscon-apbc";
+> 			reg = <0x0 0xd4015000 0x0 0x1000>;
+> 			clocks = <&osc_32k>, <&vctcxo_1m>, <&vctcxo_3m>,
+> 				 <&vctcxo_24m>;
+> 			clock-names = "osc", "vctcxo_1m", "vctcxo_3m",
+> 				      "vctcxo_24m";
+> 			#clock-cells = <1>;
+> 			#reset-cells = <1>;
+> 		};
+> so add a phandle to the syscon (like the pinctrl currently has) and
+> access these via its regmap. What you've got here is a non-runner,
+> sorry.
 
-I can still see it on every reboot (with the patches that allow reboot
-to work). Do you have CONFIG_PREEMPT_RCU in your config ? its default on
-when anything PREEMPT is selected. In Fedora its CONFIG_PREEMPT_DYNAMIC
-that flips it.
+We've gained this support in pinctrl which already accepted in mainline,
+it's done as Conor suggested here, so you can drop these properties along
+with the patch [5/10], see 
 
-Regards
-Yanko
+https://lore.kernel.org/all/20260108-kx-pinctrl-aib-io-pwr-domain-v2-0-6bcb46146e53@linux.spacemit.com/
 
+> pw-bot: changes-requested
+> 
+> Thanks,
+> Conor.
+
+
+
+-- 
+Yixun Lan (dlan)
