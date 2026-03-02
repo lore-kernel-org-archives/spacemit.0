@@ -1,67 +1,67 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D52341162B
-	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 15:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39D541B35A
+	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 15:13:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772464438; cv=none; b=iiz/WgYvVL565PRyblXe0FXFKDnEBEpbw2l+GpxxkYl47In7WDKKOpE73ydFXN6Yfca/Knq+VmYHg9e2i6CgXjbbQij69mdiYj50CkLcEAKumIWs9XoDfpWkZXvMSmYVQmS94Q836fLYmvKYtvbZOGdLWgNOJJ/r8mtrNXJ/dGM=
+	t=1772464442; cv=none; b=l//QDqUHm6VDDhcTHvD+tXnI+gIPJLEfZZBI8frlgSEz22FxUSt8EgFA0+EPPUOPjf/pjKF3lKUUscnW40PUsygY1YZzAiFVI94HS4VMlZFEc/EbOEGdwbDDkbVbllbR126EoVSHvdR/6xM7ubZvTQxyQT7tKgVbgxv2jKOvUhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772464438; c=relaxed/simple;
-	bh=l7yFNiOmqsvt7j2PZxlgkxZHr4AJ1C5sRtgpqni7WX8=;
+	s=arc-20240116; t=1772464442; c=relaxed/simple;
+	bh=oROrpMpGRFTyu9YVgnx3q3a5mnQL/8tXkXG+ZsNoOvM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pBZ2h91p+9lVrP/wINiP6POOAJTY575M5aiUG8Jl8oX41MVc9EL2x67/Tohrkb1zQSjPni3Toa9YuCOV+5FkfRD0fR8vE5GOwLF96dNWkzSQ7m7bMDh6hfv4MM+KXiVk4ohHZzB/8tt3MXom+WomfO9yEPuNNtl7M3h0a9SeG4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fySQdLv1; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:To:Cc; b=PYAmYwjwEO83GqP+64TZOSj4Te67vGlkrAEkfz/fnRx7+vLTRO7N1YR6baxrN5p9Y4p19jq6jch1GHoRjvSncVTrcyWqlu3Q3dbhyhJoWbWG6nOYn4EuQyKdtpkxl+y9l785W7u7daqd8LcTGXtZFo7vfc3+I9Jn/jWxtn/5oGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T2yzYNEi; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fySQdLv1"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-48371bb515eso70317945e9.1
-        for <spacemit@lists.linux.dev>; Mon, 02 Mar 2026 07:13:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T2yzYNEi"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4836f363d0dso40341715e9.3
+        for <spacemit@lists.linux.dev>; Mon, 02 Mar 2026 07:13:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772464435; x=1773069235; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1772464437; x=1773069237; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eBh/BEMhIYd7yMIKn9wpAoeG/vOOsjbo+uR3/+VkGQw=;
-        b=fySQdLv1HYdqpT1A8UlfRVzr/UFp/CbohFW3IMUkwOxjYX5szHc0M5kbkaYT4AqqTe
-         ffl9bevFAS4JydSEDStzleFt20fOb83N9khbvEGxGpMVWmSqpw3jo3vxrFn8mf18vcIQ
-         XOIw7uO6Eu3ZIEk7ImxjxMXhRPCVCHC4VlAdv0Ww171RPAbGhCj8RBfVgSvW1kK5zmXQ
-         zshFC8WsYUT2S0wFEuFw+jidjtaQu3mXDHDJc4M6mFCnaTWputYOzTHCUaRIckWpqksH
-         17IIzcmxmbiVD/CYiHvHd1/opGQPCqeNp0HFP+RGSZw2UJ7WdOrJY6+7HJoDK627yiJv
-         wc3A==
+        bh=1vMnihDprCpz00E0mqvOLaz+xzD900tygzUTesRDljg=;
+        b=T2yzYNEiGlcD+Bl0SImauiA9gLTFl180+m1hM7AUEc4/eKfN8c8+ChH292XPwxobKa
+         loi1igzQbBJg34KQ827SiV9bhgIBWblhHuUm3h3VfLUPEqXtayFOWBeenLh4QVd6rtdc
+         lprPDalLLRd/3fDZQaO8qE6P0FlnwI4+aeB/xxdssp3toeCJYnStSbmWcd3Cb/v48BD6
+         sEulx2C9Esfx9IWR1MUWA0cz9vJDejUh4K0masArUqSpyToavb1b9ZYRmDLrapZViS8d
+         SHvh6Q6g4CPNqan5cpuImqqwfoPRl1mOpdENhDmzWwowbrCTVnCzvM7k9TGYGhfGUl+X
+         P/sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772464435; x=1773069235;
+        d=1e100.net; s=20230601; t=1772464437; x=1773069237;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=eBh/BEMhIYd7yMIKn9wpAoeG/vOOsjbo+uR3/+VkGQw=;
-        b=gw00m/SJP+yeLlY9Sq8Hbj2pvGSHhRDat7OifYI3dTymVQiL0mVyzLMLRgE3301b5r
-         XOGvg/uKMyGC2SAEs3AoBtFet4HKThAHnULkv+KM/bmXsazjd1Joew0dpciHxkZlDocz
-         5IDuBVQRyTLxehUU1p/D/53BhHIJoBSOrGyWb4WqeM6PM0Vzn3hPp8ucpJCCDVsK0o01
-         emEqFzH5FIq8o+jkZuSWds2qaAU3Wq83/Tmpnt5w1q3qBfwhOlt4299f9VmoBvKQ6c/l
-         ZSgjoXU+JoanoKR0Q9DINKOy/rXYZkmmBciDKGxX9XZ7cZLaKUFkPUxdteR2yKxwDheQ
-         3S4g==
-X-Forwarded-Encrypted: i=1; AJvYcCVgHdXMy+wWgUhgYgejRw5q4/cxJnBjRCCnURd43WUkZgkYq+Vg78fmY3xdWhpW/mmuTSAUhrsEsQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx5PtBI9kvmvGslr8NVwO+FlhFSBwg4ve3ay6Yh8MPkzun7Qnp0
-	9Nq78rg93KcgT249hMRxQ7S7bBvewR4+rabzJTil7BZn5ODHHM71hq9R
-X-Gm-Gg: ATEYQzwgc7917rnjqCBnyaJexv9Uc2KrlUu6tb9VScVmcLc1C6NJCuLl8z3jJAlc7Rh
-	j30lTpsMXilIhif8QWRThcDtw7CDSPkiu52gIu2fVh+7mmLM37J258E9WzxNI/i1Zw9tOXIH64q
-	thj1UqmSjQOJdEw/RVxo3Iw9/4gDu9efh95QDV8hjKSJn4tKxGDI+KJGY8puLkn9S3gxvpDjRMz
-	sfS1pcoI7cgsKK4Iw0oe4qB8/zDN4dW0fZ3QAYvNG7ovfnse01+4R5kDYDf1T0dcIEJPkuaxxTC
-	AFE6hCRmgy6pG12VF8L/+cc3Dj++VuLGosOWYcWGKtoV2Vl8VOoRwE0AAfQyEtnGJ7OcdLY8JgN
-	D1uLaHt6qWocFXIFiDfHt5/YkJQpK+QaapnjtLjJebBHkuOXI3xiuW/NXdMRN97lm8m7Sia0vkY
-	0lMXk5WWD68iylY07kbGgOGqmv0wOc0rdi/yKVf3NXYU8YoCjxRt98tlLv1CdihzPVQg==
-X-Received: by 2002:a05:600c:3b18:b0:483:b01c:9508 with SMTP id 5b1f17b1804b1-483c9bb7c0bmr236115405e9.2.1772464435275;
-        Mon, 02 Mar 2026 07:13:55 -0800 (PST)
+        bh=1vMnihDprCpz00E0mqvOLaz+xzD900tygzUTesRDljg=;
+        b=gJbxqQz1ToWFQsXngmre9t5ANw00TjUHt7NNXdt9IC5SZBOT/cEQItSMFNYFDUzC+S
+         J8ZJB56fnSoUK+vdkimk061iyf4S/F9e0VMCsYdwOAO32SwlT5Oi8PWCFablUqShQa/n
+         v9/h6ZOCK4P42+XuZBfJ/Ps/IeXMp25tcfF680hizkm+DQuDBWw8cQZc+D/K1KGoNvsX
+         75iqiXLqIfIc42xjJT98fTGLusw7u8UVjzbtK8ufxHo9vBjw6Q5Xxuj8NpplBpeKgBXB
+         t0Ig84DbPo9sCMh1sW1C8aSWFMtAOAW/4q/ZFgOwzjXTF6/9SshXZb85/QqE/OIXrQ6J
+         1Vgw==
+X-Forwarded-Encrypted: i=1; AJvYcCVmCt0nq/PDM8nJsJnusJcvA/RAoJVajc9xOB3IJ99pfIEo7o6VGGwaWjzk0QG77VKyA4TPCS2TNw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxJdP4udNsldPsZfy4FrAqKIde8UXHG2ErpxgvCpxnmJPDfFEQ3
+	bwVSSPXMLJ+Y00/FGnGe6/vh7uCc5FI7d9veS9tTTLcIrutflM2jbNeu
+X-Gm-Gg: ATEYQzx1+gCa/gFW+1nXViSo/CF0K8o6eSW8XrIa8HnR+0Wf1lhNkRTqc3I+H0Xz0Z5
+	FXmXtaFjeZJGmOarheypVZb0UATLS6d1Ot0TppywhOMTOV2BHA7Hrq2ZomdXiRH1qJ+ZgVnpk+H
+	tzqcAmxVkM9s2wo3XiC06ARQ4q4A+uJTbfWUrDBmEXWTmndlIg/t9MXXCaQ3+JVwXCCOAfTumgY
+	ba0iIM43t3OF0kiwwaUS5RdvJ5Oga6Txq+HVJ+JZaPRAHikF+l/IGhC/iLz+J3umC7ZGyEAOy47
+	d+9+Vs35WjlZa3Ryb5easqzCpkVgs6og321+6kvZcRXn+Aq85FjiL5lzyH9qisZA6YMkjWGsZeW
+	zzehw0lRL5DyBfim8ea4uFGvGpdYVt18kqCEkE9/PK15GGEoQAJ/t8TbryUGGQb5Gy9hGK+4LRv
+	tNA4uIwZW/sWUceGNm6JxTJgMnEvuIu0nVjIqvYJUvpBImN6ea+hD9Eyr2kF+BQO65fg==
+X-Received: by 2002:a05:600c:c16e:b0:482:e5d4:b7ca with SMTP id 5b1f17b1804b1-483c9bbb8d3mr200785895e9.8.1772464437211;
+        Mon, 02 Mar 2026 07:13:57 -0800 (PST)
 Received: from ipedrosa-thinkpadx1carbongen12.rmtes.csb ([67.218.235.131])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd70e692sm437240265e9.7.2026.03.02.07.13.53
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd70e692sm437240265e9.7.2026.03.02.07.13.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 07:13:54 -0800 (PST)
+        Mon, 02 Mar 2026 07:13:56 -0800 (PST)
 From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Mon, 02 Mar 2026 16:13:25 +0100
-Subject: [PATCH 04/10] mmc: sdhci-of-k1: add pinctrl state switching for
- voltage changes
+Date: Mon, 02 Mar 2026 16:13:26 +0100
+Subject: [PATCH 05/10] mmc: sdhci-of-k1: add AIB register support for
+ voltage switching
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260302-orangepi-sd-card-uhs-v1-4-89c219973c0c@gmail.com>
+Message-Id: <20260302-orangepi-sd-card-uhs-v1-5-89c219973c0c@gmail.com>
 References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
 In-Reply-To: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
 To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
@@ -86,115 +86,118 @@ Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
  Iker Pedrosa <ikerpedrosam@gmail.com>
 X-Mailer: b4 0.14.2
 
-Add support for switching pinctrl states during voltage transitions to
-ensure proper pin drive strength and configuration for different I/O
-voltage domains (3.3V vs 1.8V).
+Add support for SpacemiT K1 Analog Interface Block (AIB) register
+programming required for proper UHS voltage switching. The AIB register
+controls SoC-level voltage domain coordination between the SDHCI
+controller and I/O pins.
 
-Pinctrl states are optional and the driver degrades gracefully if they
-are not defined in the device tree. This allows boards to enable proper
-pin drive strength optimization for UHS-I modes without breaking
-existing functionality.
-
-The pinctrl setup uses:
-- "default" state for 3.3V operation (higher drive strength)
-- "state_uhs" state for 1.8V operation (lower drive strength)
+- Add AIB register address parsing from device tree
+- Implement authentication sequence for secure register access
+- Add voltage domain switching for 3.3V/1.8V operation
 
 Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
 ---
- drivers/mmc/host/sdhci-of-k1.c | 59 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 58 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-of-k1.c | 60 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
 
 diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
-index c260cb89704ae7a25bec0f07831d495553405bbd..2a982bca2a50ca96f43af7b4de5bc4fb4b5b195b 100644
+index 2a982bca2a50ca96f43af7b4de5bc4fb4b5b195b..9425bde6a72541bd628997e91f957072a6266c25 100644
 --- a/drivers/mmc/host/sdhci-of-k1.c
 +++ b/drivers/mmc/host/sdhci-of-k1.c
-@@ -15,6 +15,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_device.h>
-+#include <linux/pinctrl/consumer.h>
- #include <linux/platform_device.h>
+@@ -68,12 +68,19 @@
+ #define  SDHC_PHY_DRIVE_SEL		GENMASK(2, 0)
+ #define  SDHC_RX_BIAS_CTRL		BIT(5)
  
- #include "sdhci.h"
-@@ -70,6 +71,9 @@
++#define  MMC1_IO_V18EN			BIT(2)
++#define  AKEY_ASFAR			0xBABA
++#define  AKEY_ASSAR			0xEB10
++
  struct spacemit_sdhci_host {
  	struct clk *clk_core;
  	struct clk *clk_io;
-+	struct pinctrl *pinctrl;
-+	struct pinctrl_state *pinctrl_default;
-+	struct pinctrl_state *pinctrl_uhs;
+ 	struct pinctrl *pinctrl;
+ 	struct pinctrl_state *pinctrl_default;
+ 	struct pinctrl_state *pinctrl_uhs;
++	u32 aib_mmc1_io_reg;
++	u32 apbc_asfar_reg;
++	u32 apbc_assar_reg;
  };
  
  /* All helper functions will update clr/set while preserve rest bits */
-@@ -219,7 +223,42 @@ static void spacemit_sdhci_pre_hs400_to_hs200(struct mmc_host *mmc)
+@@ -220,6 +227,47 @@ static void spacemit_sdhci_pre_hs400_to_hs200(struct mmc_host *mmc)
+ 			       SPACEMIT_SDHC_PHY_CTRL_REG);
+ }
+ 
++static void spacemit_sdhci_set_aib_mmc1_io(struct sdhci_host *host, int signal_voltage)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct spacemit_sdhci_host *sdhst = sdhci_pltfm_priv(pltfm_host);
++	void __iomem *aib_reg, *asfar_reg, *assar_reg;
++	u32 reg_value;
++
++	if (!sdhst->aib_mmc1_io_reg || !sdhst->apbc_asfar_reg || !sdhst->apbc_assar_reg)
++		return;
++
++	asfar_reg = ioremap(sdhst->apbc_asfar_reg, 4);
++	assar_reg = ioremap(sdhst->apbc_assar_reg, 4);
++	aib_reg = ioremap(sdhst->aib_mmc1_io_reg, 4);
++
++	if (!asfar_reg || !assar_reg || !aib_reg) {
++		dev_err(mmc_dev(host->mmc), "Failed to map AIB registers\n");
++		goto cleanup;
++	}
++
++	writel(AKEY_ASFAR, asfar_reg);
++	writel(AKEY_ASSAR, assar_reg);
++	reg_value = readl(aib_reg);
++
++	if (signal_voltage == MMC_SIGNAL_VOLTAGE_180)
++		reg_value |= MMC1_IO_V18EN;
++	else
++		reg_value &= ~MMC1_IO_V18EN;
++
++	writel(AKEY_ASFAR, asfar_reg);
++	writel(AKEY_ASSAR, assar_reg);
++	writel(reg_value, aib_reg);
++
++cleanup:
++	if (aib_reg)
++		iounmap(aib_reg);
++	if (asfar_reg)
++		iounmap(asfar_reg);
++	if (assar_reg)
++		iounmap(assar_reg);
++}
++
  static int spacemit_sdhci_start_signal_voltage_switch(struct mmc_host *mmc,
  						      struct mmc_ios *ios)
  {
--	return sdhci_start_signal_voltage_switch(mmc, ios);
-+	struct sdhci_host *host = mmc_priv(mmc);
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct spacemit_sdhci_host *sdhst = sdhci_pltfm_priv(pltfm_host);
-+	struct pinctrl_state *state;
-+	int ret;
-+
-+	ret = sdhci_start_signal_voltage_switch(mmc, ios);
-+	if (ret)
-+		return ret;
-+
-+	/* Select appropriate pinctrl state based on signal voltage */
-+	if (sdhst->pinctrl) {
-+		switch (ios->signal_voltage) {
-+		case MMC_SIGNAL_VOLTAGE_330:
-+			state = sdhst->pinctrl_default;
-+			break;
-+		case MMC_SIGNAL_VOLTAGE_180:
-+			state = sdhst->pinctrl_uhs;
-+			break;
-+		default:
-+			dev_warn(mmc_dev(mmc), "unsupported voltage %d\n", ios->signal_voltage);
-+			return 0;
-+		}
-+
-+		if (state) {
-+			ret = pinctrl_select_state(sdhst->pinctrl, state);
-+			if (ret) {
-+				dev_warn(mmc_dev(mmc), "failed to select pinctrl state: %d\n", ret);
-+				return 0;
-+			}
-+			dev_dbg(mmc_dev(mmc), "switched to %s pinctrl state\n",
-+				ios->signal_voltage == MMC_SIGNAL_VOLTAGE_180 ? "UHS" : "default");
-+		}
-+	}
-+
-+	return 0;
- }
- 
- static inline int spacemit_sdhci_get_clocks(struct device *dev,
-@@ -301,6 +340,24 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+@@ -233,6 +281,8 @@ static int spacemit_sdhci_start_signal_voltage_switch(struct mmc_host *mmc,
  	if (ret)
+ 		return ret;
+ 
++	spacemit_sdhci_set_aib_mmc1_io(host, ios->signal_voltage);
++
+ 	/* Select appropriate pinctrl state based on signal voltage */
+ 	if (sdhst->pinctrl) {
+ 		switch (ios->signal_voltage) {
+@@ -341,6 +391,16 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
  		dev_warn(dev, "Failed to get regulators: %d\n", ret);
  
-+	sdhst = sdhci_pltfm_priv(pltfm_host);
-+	sdhst->pinctrl = devm_pinctrl_get(dev);
-+	if (!IS_ERR(sdhst->pinctrl)) {
-+		sdhst->pinctrl_default = pinctrl_lookup_state(sdhst->pinctrl, "default");
-+		if (IS_ERR(sdhst->pinctrl_default))
-+			sdhst->pinctrl_default = NULL;
+ 	sdhst = sdhci_pltfm_priv(pltfm_host);
 +
-+		sdhst->pinctrl_uhs = pinctrl_lookup_state(sdhst->pinctrl, "state_uhs");
-+		if (IS_ERR(sdhst->pinctrl_uhs))
-+			sdhst->pinctrl_uhs = NULL;
++	if (of_property_read_u32(dev->of_node, "spacemit,aib-mmc1-io-reg", &sdhst->aib_mmc1_io_reg))
++		sdhst->aib_mmc1_io_reg = 0;
 +
-+		dev_dbg(dev, "pinctrl setup: default=%p, uhs=%p\n",
-+			sdhst->pinctrl_default, sdhst->pinctrl_uhs);
-+	} else {
-+		sdhst->pinctrl = NULL;
-+		dev_dbg(dev, "pinctrl not available, voltage switching will work without it\n");
-+	}
++	if (of_property_read_u32(dev->of_node, "spacemit,apbc-asfar-reg", &sdhst->apbc_asfar_reg))
++		sdhst->apbc_asfar_reg = 0;
 +
- 	host->mmc_host_ops.start_signal_voltage_switch = spacemit_sdhci_start_signal_voltage_switch;
- 
- 	ret = spacemit_sdhci_get_clocks(dev, pltfm_host);
++	if (of_property_read_u32(dev->of_node, "spacemit,apbc-assar-reg", &sdhst->apbc_assar_reg))
++		sdhst->apbc_assar_reg = 0;
++
+ 	sdhst->pinctrl = devm_pinctrl_get(dev);
+ 	if (!IS_ERR(sdhst->pinctrl)) {
+ 		sdhst->pinctrl_default = pinctrl_lookup_state(sdhst->pinctrl, "default");
 
 -- 
 2.53.0
