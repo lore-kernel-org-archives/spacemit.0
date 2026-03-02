@@ -1,66 +1,67 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFEC1E5B88
-	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 15:13:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D517B407581
+	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 15:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772464431; cv=none; b=i0xI5+W2HWd7CIisSHfBir2G1RV7siSXVs0xvSISMAhXmzj+dAGCLbxjaqavJMKARir7xS0D96x374gV1aB2bJxGXxyuNZ+iKAFvDTGnBOdP6FLyyGDEAWip4+gtQqFnHPX9Rxb3LzjSfImuUI80d2NZiIHhx7SEdEm3EEFXddg=
+	t=1772464434; cv=none; b=rCjts0pmlUtOnTkJNGEUr/NxEn6q3LhK2JrVRavFiUsE/H968hf7tXC4E8PhR+pjMd1cp5Tqv+b/ub+370WJ/7xNZg4bDqK/PrhgiVhNYaVm5RDuFzIL9uy1mEBuGRLIPQ2ZIdOMAQ4H4Tz7Tff61qd4E5YgLqJhE4g6GeA26oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772464431; c=relaxed/simple;
-	bh=xoKFcRodsjBoNZCfcW1z1LG/a1f1H2smS58YjpeC2eo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=mkMAviDxh+dsQj8st0153FS7DwFU+kW88RSvLgweKw8XUOs4vXWYlYDziHF/xu1Zf6IfLTcZvAl0hw0OpYPCRgZrZN7mCkRXrTriofXWp09mO3kCf25420bFSqZfL9q5YlCHNLah091TO4DbBZS3y7l/JVMl6hCnqjnf10oCcYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iXksrLm7; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1772464434; c=relaxed/simple;
+	bh=exV6OpyIj+E7YmJqvnw7Yw8GsUS9yk0uhliZbbcVwO4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ZEdNWChx+8oKc6vPnFRG+s6Z85NEgF7SUfk6AStTViStTOqKmF3XPvAk+zb0WNRuj5ZW7v8dHKUHBaYboAFVxGWGv5HQf/aq0i1KgXlHz6bmqw0mQe11nqr5jdEhyaRuA0Z/haCllUhN9GYcVxaPEVPtl9G63BwZrTv05rPNfsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i7cnHwi7; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iXksrLm7"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4806cc07ce7so51807795e9.1
-        for <spacemit@lists.linux.dev>; Mon, 02 Mar 2026 07:13:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i7cnHwi7"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48373a4bca3so27577185e9.0
+        for <spacemit@lists.linux.dev>; Mon, 02 Mar 2026 07:13:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772464428; x=1773069228; darn=lists.linux.dev;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4bjNDBX+/PFOXtqF8zgz+Y2Tzpl7yAa/Q3C6j5YXCMg=;
-        b=iXksrLm72lbcExyOd/aoVV5E1pATjGtJufgDsVMQ/hGPW3C2evAo0CKElmL7WyWNVp
-         LBq6zmdfKiG/9CTm9x6cKzwcqCheLJbeMC3rHCDwqE/58etugCIU8yhTVXmIHyikSPiy
-         J4PASra7v7O5PqE8xqdjcqsDB9z8DZhCNAbUGgnRlkgBhHHTgPfgd6gYvwd2zJvh8wiS
-         SoW1b2v07id/TOjgNYpESMqqo9fZ2eBfTDiiZgwstbAY5toFEN3v6ulnXucHhgDz0ndo
-         Au824viyc49tGdaKEbC7pSoMsGs0htQq2O6qAHybtRPce4cq8P/STBHOrBVguQiFRU97
-         HhHg==
+        d=gmail.com; s=20230601; t=1772464430; x=1773069230; darn=lists.linux.dev;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qgPMIovbEThLlPPQFVARziyNrmjJuegOTMLHImP/d90=;
+        b=i7cnHwi7df37ivJsQuJmTxKWB9Sd8TVnEkYoOy7OHhHipFz8CU+7U+FOHkmjJDJ2bm
+         2igRQDYl2RjW0Nv4PqIrgquLZMUgrLuA6Lkv/iAXsf8cJJ5ViH8oL3DH71mAmYhDS0ed
+         3d9g5v1cYbluYezxf9s0ZgqwzVN3RdkB4bEj7wocLvQQZM1TJGzLUsqap8ArkNcBPkaV
+         lY95vQMLJk8JcpDfabH+6BaMLKB2FALH6DONJMVv6fVps+e1dWG6em5ho3wPKJZLYq8/
+         e16FWHNxE1FECYrUpPAXaenr6pr3vATcjmAmzJRGNry3XMl8HkjH4NxwH5QjKHt/eVvr
+         AMyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772464428; x=1773069228;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4bjNDBX+/PFOXtqF8zgz+Y2Tzpl7yAa/Q3C6j5YXCMg=;
-        b=bWNxYFJdMhL6lyCiEONK3Q7W+39zyhx8iBZnz3yC0wzjPOxhHKTra0hKYHbGUFbr+v
-         Mc3AfuHAolRmUTRzUVYLVcravcSNTII/smbdMcGLtV7gFJJ+P32dN15wvXGtKJzo+duO
-         jKw0e8RsMYGcmYzdy6K+I6hhdJXxgkFpVmSn3niHNQTUBHn20UGuGGJyZ2t8hXtFuVXb
-         qIw5kQw700nJdIABMkPHrBb2NgPeFjFuFM8iJt2ycu5px0t9Ze5bMIyO/aa4WKs9n0Zn
-         9AE127NDKIpV1gYwMwOKzEOxqAV/kln1SYSCOJZ8Z2toGRlXOopN5wyzdBelUc7ZrgrD
-         mc+A==
-X-Forwarded-Encrypted: i=1; AJvYcCWls9tErRy4zpE4ZvNSL53C1MmvAhBeSL1qrAb/EGId6W7PBOr/p+alvfBzB2ztMj4PW64dfYXFxg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy+Bgu5Q9TbGnZbhms7cYdv4OeRqW4R48ze7zr8bVR2LfclI64y
-	CKHH1cSLbOks8GXJgsO51oq3ZFAZkhS+ISE+kxL07/oiH/1d8psShPM+
-X-Gm-Gg: ATEYQzznwS4H6j3Wyqp/K+bm86kOK3my4Bubgy/NzeN3WlAIUS8QumHfPplpMoKtgpT
-	2CnhOfAFRer3YkaPkmi/wf7ijDFRUs9Z4NzZlVOteu7ZPa6Ke8S2GGP9eYrV+bvNWDhbXVlLWwt
-	uXUbw8n5Jm7R5QYutnSbQXsVGwlULjJ/iKFv3LQrNDzwBuUXfz8ggtONd9K9cz70F9BmB/Omd9P
-	nULNKLdk6TiqhBjwdI1PpquanRWiOOtL1jgjg4la4/eDMZMwszSZ4M6AFsijxmCwPzr2hz4TmsC
-	P+f2cwPvbCBSwtDnppj7zqjkuDddE28JvHAIiIukVnxn66VRD5zc+fN/p5tCjPm/XYMppfOq5nq
-	DHrISfsE5Ww6PwaqywcL6sHOOxB8JZR4FxlJJlUIowaZ0ji7tYWZ0TDywyzSEZ3FeJXxcaTKI/T
-	QhlZ7JMvfk1aLNF4hhHy70RxR4KqyNtJFd1gpiB+JEbECXkmuV7mElSAOsNKhLrRxlvQ==
-X-Received: by 2002:a05:600c:3486:b0:480:20f1:7aa6 with SMTP id 5b1f17b1804b1-483c9bed9e2mr214730135e9.21.1772464428106;
-        Mon, 02 Mar 2026 07:13:48 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772464430; x=1773069230;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qgPMIovbEThLlPPQFVARziyNrmjJuegOTMLHImP/d90=;
+        b=b7qu1j2I9iYL4+N/54scRBdpOckVF8z9eSlHQF28Mr4SjiNRUNyBHbBgVz5w+hngjf
+         meJDvYZhObbekJ4fa75QphaAeddl8XAnun962V6wu4J9dz91d2gOQudEVMi+rUF8D6bv
+         7JeZQoPa2+IPaCTicM7+ZYQ22McIn7MyVG4JsbeWFNWctKlDBAubCBT5E92S/28LmKfZ
+         nKnVzzRrDeSQAIto1wlBJy2kMK08YhG701PmvKkIZsks1bjjCn9Cg7O7khm+dN1tSPO9
+         VohKX2XIWhqVugsR3fwKqYYbrHy0v9DPT6/0c1j7wM319wNFTkV6rAe7xjJee7BOhcuk
+         omsg==
+X-Forwarded-Encrypted: i=1; AJvYcCXF/cveriN9bfSiCoN/I4tgeYkF6pHKMjop656c6DQ2j0Jk2Et+ZQCtHKe49yIJYxvdaYWjGNrveA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy3otpWltWNGfwbq1jpbNU0J+vmyIivc0QKY4ZQGRqvIDlk+i05
+	4TpNqar+g0aNi6mo+NAEF152ONYAcYMDpvwozdgPqw8W6C7IzxS120GN
+X-Gm-Gg: ATEYQzyjYzwD3B6GWNShToVikh/S6HoQB4xs49eczsLMcPRMKKhZfRrr0cLGpmm5RNg
+	/19t4OGeUwSvCwvQsrGOLJlkGHUmIbHRbrrB+bt21YUPjzel5gxkXJkg+AuNZDZ1ZQVkMvb1AAf
+	WQV/D+ThUvsMpKDN1jZPJD6a99Q4H4LOXTYUA+c+dgwNbHgcAMUZn2cdPuDQuVwNT7SxzgYuYp7
+	BnMr1IeEbXtvil9cre1MmLdEDYUE5H7cgrd2rt/TeSVFCGcpoi6JvTiroUHIAm5QUZqwwuDViQ7
+	y+8aThnMvtKt9WHW9FDIL97uUIKJbDnQhP94CPi8lwZbYIA117aCd8YBfUBFkSstN5CJo/kgmli
+	RGUCBYvkfJ9enoczlgJd7Yr13q316e7pD7SVNFxBEs0oHs8tld9km9gmnG3mOG1xSZ2/UqDmNvw
+	xQL43bGgfvBqeEvRffBcdqUj+Pvjm7C/vwjRaKzxPoha9BeOBBu038eVn4DfYV/+4rUA==
+X-Received: by 2002:a05:600c:37c6:b0:483:96d8:9f75 with SMTP id 5b1f17b1804b1-483c9bc5b89mr218710175e9.28.1772464429956;
+        Mon, 02 Mar 2026 07:13:49 -0800 (PST)
 Received: from ipedrosa-thinkpadx1carbongen12.rmtes.csb ([67.218.235.131])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd70e692sm437240265e9.7.2026.03.02.07.13.46
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd70e692sm437240265e9.7.2026.03.02.07.13.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 07:13:47 -0800 (PST)
+        Mon, 02 Mar 2026 07:13:49 -0800 (PST)
 From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Subject: [PATCH 00/10] riscv: spacemit: enable SD card support with UHS
- modes for OrangePi RV2
-Date: Mon, 02 Mar 2026 16:13:21 +0100
-Message-Id: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
+Date: Mon, 02 Mar 2026 16:13:22 +0100
+Subject: [PATCH 01/10] dt-bindings: mmc: spacemit,sdhci: add AIB voltage
+ switching registers
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -69,10 +70,9 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MQQ5AQAwAvyI9a1IrBF8Rh7Vb9IK0IRLxd8txJ
- pm5wViFDbrsBuVTTLY1QZFnEBa/zowSE4MjV5NzNW762V3QIgavEY/FkDiMVDVlO1KAlO7Kk1z
- /th+e5wV2nN/1ZgAAAA==
-X-Change-ID: 20260226-orangepi-sd-card-uhs-0ecb05839b0c
+Message-Id: <20260302-orangepi-sd-card-uhs-v1-1-89c219973c0c@gmail.com>
+References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
+In-Reply-To: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
 To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
@@ -86,60 +86,54 @@ Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
  Iker Pedrosa <ikerpedrosam@gmail.com>
 X-Mailer: b4 0.14.2
 
-This series enables complete SD card support for the Spacemit K1-based
-OrangePi RV2 board, including UHS (Ultra High Speed) modes for
-high-performance SD card operation.
+Add SpacemiT K1 AIB register properties for UHS voltage switching
+support:
 
-Background
+- spacemit,aib-mmc1-io-reg: AIB MMC1 IO register address for voltage
+  switching
+- spacemit,apbc-asfar-reg: APBC ASFAR register address for AIB access
+- spacemit,apbc-assar-reg: APBC ASSAR register address for AIB access
 
-The Spacemit K1 SoC includes an SDHCI controller capable of supporting
-SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
-currently lacks basic SD controller configuration, SDHCI driver
-enhancements for voltage switching and tuning, and power management
-infrastructure.
-
-Implementation
-
-The series enables SD card support through coordinated layers:
-
-- Hardware infrastructure (patches 1-2): Device tree bindings for voltage
-switching hardware and essential clock infrastructure.
-- SDHCI driver enhancements (patches 3-7): Regulator framework
-integration, pinctrl state switching for voltage domains, AIB register
-programming, and comprehensive SDR tuning support for reliable UHS
-operation.
-- SoC and board integration (patches 8-10): Complete K1 SoC controller
-definitions, PMIC power infrastructure, and OrangePi RV2 board enablement
-with full UHS support.
-
-This transforms the OrangePi RV2 from having no SD card support to full
-UHS-I capability, enabling high-performance storage up to 208MHz.
+These properties enable the driver to perform voltage switching between
+3.3V and 1.8V required for UHS SD card modes.
 
 Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
 ---
-Iker Pedrosa (10):
-      dt-bindings: mmc: spacemit,sdhci: add AIB voltage switching registers
-      mmc: sdhci-of-k1: enable essential clock infrastructure for SD operation
-      mmc: sdhci-of-k1: add regulator framework support
-      mmc: sdhci-of-k1: add pinctrl state switching for voltage changes
-      mmc: sdhci-of-k1: add AIB register support for voltage switching
-      mmc: sdhci-of-k1: add SDR tuning infrastructure
-      mmc: sdhci-of-k1: add comprehensive SDR tuning support
-      riscv: dts: spacemit: k1: add SD card controller and pinctrl support
-      riscv: dts: spacemit: k1-orangepi-rv2: add PMIC and power infrastructure
-      riscv: dts: spacemit: k1-orangepi-rv2: add SD card support with UHS modes
+ Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
- .../devicetree/bindings/mmc/spacemit,sdhci.yaml    |  15 +
- arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   |  69 +++++
- arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       |  40 +++
- arch/riscv/boot/dts/spacemit/k1.dtsi               |  13 +
- drivers/mmc/host/sdhci-of-k1.c                     | 320 +++++++++++++++++++++
- 5 files changed, 457 insertions(+)
----
-base-commit: 5f499bb7a07fcdcf8877acaa8f413a5dc1fcfacc
-change-id: 20260226-orangepi-sd-card-uhs-0ecb05839b0c
+diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+index 13d9382058fbc1c12be1024d1c550f04a825673c..4d6590aa8262009b6e5697a04b45cf3736c0fa42 100644
+--- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
++++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+@@ -32,6 +32,18 @@ properties:
+       - const: core
+       - const: io
+ 
++  spacemit,aib-mmc1-io-reg:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: AIB MMC1 IO register address for voltage switching
++
++  spacemit,apbc-asfar-reg:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: APBC ASFAR register address for AIB access
++
++  spacemit,apbc-assar-reg:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: APBC ASSAR register address for AIB access
++
+ required:
+   - compatible
+   - reg
+@@ -50,4 +62,7 @@ examples:
+       interrupt-parent = <&plic>;
+       clocks = <&clk_apmu 10>, <&clk_apmu 13>;
+       clock-names = "core", "io";
++      spacemit,aib-mmc1-io-reg = <0xd401e81c>;
++      spacemit,apbc-asfar-reg = <0xd4015050>;
++      spacemit,apbc-assar-reg = <0xd4015054>;
+     };
 
-Best regards,
 -- 
-Iker Pedrosa <ikerpedrosam@gmail.com>
+2.53.0
 
