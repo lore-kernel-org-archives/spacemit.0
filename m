@@ -1,64 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCE330BBB8;
-	Mon,  2 Mar 2026 17:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912AE280A5B;
+	Mon,  2 Mar 2026 18:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772474002; cv=none; b=BDAGQrmgq+9swOJSRCDNSTriUBGvhT7ZX5MIOTDr0G55FWs7bdocuZ83U3OL59tI5qmnVZvmNtw86NciEdIqHsKB2wH3zJHIP2ikbwMoTUIXPlpflVJ1cYJZd997l/ae4T/WtssXpBvHeyfwSfIthWqDtISPxzNxuczS5rAMbb4=
+	t=1772475066; cv=none; b=nRnRVnrfNLDJuiLO4cYM4B0GBHi9cNiKer2RJivd2hSFjp+tHREvs5Ea7l1J1yttNJ9EXtMBT/53kfboKOlFH1RfuyJ+cJpUKdk7r/zaTO9AQ+VeA18uEDz+CyMUtqmJM749lNwPTpwAuEox9p0U4czriy12nZSbL+xyJR95uPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772474002; c=relaxed/simple;
-	bh=vhDHla+zJiCxWn7+ZSZE11bQ1FNt76Ap+xB09PlL9cw=;
+	s=arc-20240116; t=1772475066; c=relaxed/simple;
+	bh=9vMp8oVY9ly+koARXC2CDFt7G+bOzmkjyESC8o/h6PE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SORjDYhZLVKRYzssuxQMNFS2mi7wuJ6acQazAuyi3Y5xq02o0genu2srbswIjL7ztB+xYOT99U8TIX1ohp9VV5hRROhcrdyHmF3FqFwCM5sLZ4/D8dvXjgGar2sBdtirnlhuy2HRXZnCuasCDOHUNrG0oo9o5EnPeKqXW/RRGak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+AEWwv+; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=q4ewhnqyx7DFGCjC12jnVNjHAj10fb2EpX7I6pgxFhkYe7AxXy/snPBD75NTzwGfeld2a2T7gtZz+4RfN0tdwlTt/CT/P5Pdab8fwJaIh9riMRMDoESbd6qPhUnTkEWfb3cUxpTUYyjK0Qoq9nJj1UHZ3AAzXUKD7hwsmMwbfus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XCThIaT+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+AEWwv+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DCCC19423;
-	Mon,  2 Mar 2026 17:53:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XCThIaT+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB33C2BCAF;
+	Mon,  2 Mar 2026 18:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772474002;
-	bh=vhDHla+zJiCxWn7+ZSZE11bQ1FNt76Ap+xB09PlL9cw=;
+	s=k20201202; t=1772475065;
+	bh=9vMp8oVY9ly+koARXC2CDFt7G+bOzmkjyESC8o/h6PE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=o+AEWwv+jmzgY1erzPnHWxkX3AlnObHZo5pe1wzC5RmpeQHAvqUg/Lsy7SjWk7qTO
-	 7syyv87bwfpmtUFjdF86NQGqR8d7SF0YHRnk2pK4wXJMcGBvjXj4NuEWzAWJrkDFPe
-	 BGVQgvtg+Q1xuibe1C46QzpnqlpcUOgd5T/rCca7k2mP8070Bd2cNwwjMrImOdbEY5
-	 i2uvePt+G4BgarGffz5JzPiBl979bOcBt0dFrOyMDn5XVxzui5u4WMA752C75SN0RF
-	 xrne9rRo80jLSQTD8A5E7W60PU5YZ9SeeMjSvzquU3WYyXBzBsg6lieDQhW15q4nqT
-	 bqkp3jzTJupnA==
-Date: Mon, 2 Mar 2026 17:53:13 +0000
+	b=XCThIaT+vkO8MNEptzSfjE8GU7VO97Um4ozCagAenO6aTvoowkOptMN5DJflr8Iw4
+	 1Fziczj1/mxZoJTXL7ofEKJ5lHHYs1owsVXCRfPbs1eG3rZsYX4MZ70h1T8TPgOTVF
+	 N7V876RrEG0k7Hqh0mmxAMSbgbqa8sAuFO6euRnvFxfJjHmQD8EDcCCSNjHefpAUap
+	 /R7kG63cIyP1yb77zLxeLTB9onoPM5rZzwtYKrnaoPgufk/R9k04aFBSy/cu/VqnuG
+	 QWEFAPY8h/iAjnlWtv7YYl7/N6yUiPNQ9KiiF6HuqaHT7UIKhFnbUe89ZfUeH2se7/
+	 Yf6b9egFtYtjw==
+Date: Mon, 2 Mar 2026 18:11:00 +0000
 From: Conor Dooley <conor@kernel.org>
-To: Lv Zheng <lv.zheng@linux.spacemit.com>
-Cc: Conor Dooley <conor.dooley@microchip.com>,
-	Tomasz Jeznach <tjeznach@rivosinc.com>,
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>, Yixun Lan <dlan@kernel.org>,
-	Jingyu Li <joey.li@spacemit.com>, Zong Li <zong.li@sifive.com>,
-	Yaxing Guo <guoyaxing@bosc.ac.cn>, iommu@lists.linux.dev,
-	linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 4/8] dt-bindings: iommu: Add spacemit/t100 features
-Message-ID: <20260302-constrain-untrue-71626a545008@spud>
-References: <cover.1772289741.git.lv.zheng@linux.spacemit.com>
- <D8CE6E5B1001D797+a6f36da0272ac18fff2a992976b1defc3bb01af6.1772289741.git.lv.zheng@linux.spacemit.com>
- <177231592262.848068.18080490567217057666@spud>
- <CAB7A310CE95B577+5f5c0825-25dd-4035-9316-db940c00216b@linux.spacemit.com>
- <20260301-acclimate-suburb-fc46da7e0cea@spud>
- <B8675026D2F6DF58+946ff82a-2e2e-4abb-a3c4-26fe67c43ab8@linux.spacemit.com>
+To: Yixun Lan <dlan@gentoo.org>
+Cc: Chukun Pan <amadeus@jmu.edu.cn>, dlan@kernel.org, alex@ghiti.fr,
+	aou@eecs.berkeley.edu, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, elder@riscstar.com, krzk+dt@kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	palmer@dabbelt.com, pjw@kernel.org, robh@kernel.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH] riscv: dts: spacemit: pcie: fix missing power regulator
+Message-ID: <20260302-glamorous-undivided-08b11b794939@spud>
+References: <20260226-k1-pcie-fix-pwr-v1-1-94b493cd27e5@kernel.org>
+ <20260302030511.30566-1-amadeus@jmu.edu.cn>
+ <20260302033655-GYA288339@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -66,96 +47,122 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bIo31++ptAE9jI+O"
+	protocol="application/pgp-signature"; boundary="0Cad6xDtBs6YbbZc"
 Content-Disposition: inline
-In-Reply-To: <B8675026D2F6DF58+946ff82a-2e2e-4abb-a3c4-26fe67c43ab8@linux.spacemit.com>
+In-Reply-To: <20260302033655-GYA288339@gentoo.org>
 
 
---bIo31++ptAE9jI+O
+--0Cad6xDtBs6YbbZc
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 02, 2026 at 09:41:55AM +0800, Lv Zheng wrote:
-> On 3/1/2026 10:01 PM, Conor Dooley wrote:
-> > On Sun, Mar 01, 2026 at 11:48:37AM +0800, Lv Zheng wrote:
-> > > On 3/1/2026 5:58 AM, Conor Dooley wrote:
-> > > > On Sat, 28 Feb 2026 22:44:49 +0800, Lv Zheng <lv.zheng@linux.spacem=
-it.com> wrote:
-> > > > > Adds device tree bindings for SpacemiT T100 specific features by
-> > > > > introducing spacemit,t100 compatible. T100 contains distributed I=
-OATCs,
-> > > > > each of which exposes pmiv interrupt.
-> > > > >=20
-> > > > > Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
-> > > > > Signed-off-by: Jingyu Li <joey.li@spacemit.com>
-> > > >=20
-> > > > Patch content here is fine, but the signoff chain on this patch is =
-not
-> > > > right. What did Jingyu do? You're author and submitter so either Ji=
-ngyu
-> > > > did nothing and should be removed, or is a co-developer which requi=
-res
-> > > > attribution via the co-developed-by tag. If the latter, their signo=
-ff
-> > > > should be before yours (the submitter is always last).
-> > > >=20
-> > > > pw-bot: changes-requested
-> > >=20
-> > > She is responsible for the common HPM part, and I just gave my commen=
-ts to
-> > > help to improve the quality of that implementation.
-> > > I was just focusing on enabling and maintaining the T100 specific fea=
-tures.
-> > >=20
-> > > Our patches will go each other's local repository, leaving such track=
-s. That
-> > > means the patch from me is Reviewed-and-tested-by her.
-> > > And I'm responsible for sending the whole patchset for upstreaming.
-> >=20
-> > Then you need to either fix your email setup (because it's not inserting
-> > From: Jingyu Li <joey.li@spacemit.com>) so that she is marked as the
-> > author or actually set her to the author in git if you haven't.
-> > Currently it looks like this when applied:
-> > commit 872978c875731be43e84bec38798cb8ecd42b7a0
-> > Author: Lv Zheng <lv.zheng@linux.spacemit.com>
-> > Date:   Sat Feb 28 22:44:49 2026 +0800
-> >=20
-> >      dt-bindings: iommu: Add spacemit/t100 features
-> >      Adds device tree bindings for SpacemiT T100 specific features by
-> >      introducing spacemit,t100 compatible. T100 contains distributed IO=
-ATCs,
-> >      each of which exposes pmiv interrupt.
-> >      Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
-> >      Signed-off-by: Jingyu Li <joey.li@spacemit.com>
-> >=20
-> > In both cases, you need to change the order of signoffs so that yours is
-> > last as the submitter.
+On Mon, Mar 02, 2026 at 11:36:55AM +0800, Yixun Lan wrote:
+> Hi Chukun,
 >=20
-> BTW, since this version of this patch has been worked out all due your
-> constructive feedback and suggestions. Now that it has functionally
-> converged to what the community requested, can I add "Reviewed-by: Conor
-> Dooley <conor@kernel.org>" for its next version?
+> Sorry, I missed your mail due recent problem of my client..
+> On 11:05 Mon 02 Mar     , Chukun Pan wrote:
+> > Hi,
+> >=20
+> > > &pcie1_port {
+> > >  	phys =3D <&pcie1_phy>;
+> > > +	vpcie3v3-supply =3D <&pcie_vcc_3v3>;
+> > >  };
+> > >=20
+> > >  &pcie1 {
+> > > @@ -320,6 +321,7 @@ &pcie2_phy {
+> > >=20
+> > >  &pcie2_port {
+> > >  	phys =3D <&pcie2_phy>;
+> > > +	vpcie3v3-supply =3D <&pcie_vcc_3v3>;
+> > >  };
+> >=20
+> > ```
+> > &pcie1 {
+> > 	vpcie3v3-supply =3D <&pcie_vcc_3v3>;
+> > 	status =3D "okay";
+> > };
+> > ```
+> >=20
+> > According to DT binding, the vpcie3v3-supply of the &pciex node should
+> > be moved to the &pciex_port node. This is simply a duplication of the
+> > property.
+> >=20
+> I have confidence that pcie port need to add a regulator to provide=20
+> supply for devices..
+>=20
+> But, I'm not sure whether it's ok to remove regulator from &pciex node,
+> it's possibly a 'yes' answer, but to convince me, I'd like to see a real
+> test case to prove it: e.g, power supply for pciex is actually off before=
+=20
+> the driver initialization, then run regular procedure as it should, if
+> all works fine
 
-No, as I said the previous time you asked, I will provide one when I am
-happy with the patch. I have not yet reached a point with you were I am
-comfortable providing tags with the assumption that you will make the
-correct changes. There's no need to hassle me for one at this point
-anyway, because you have to send a v6 anyway. If v6 is satisfactory to
-the maintainers, they'll grab my tag when they apply the series.
+I'm not really sure what this is about. Whether the supply can be off
+before driver probe has nothing to do with what node the supply should
+be in. If you're concerned about removing it from the pcie node causing
+it to not be enabled during probe, then the driver should probably reach
+into the port node, get the regulator and call enable() on it?
+As I said when reporting this, either you need to change the driver and
+dts, or change the binding. If the supply actually is provided to the
+controller and port, then you need to change the binding to have a
+supply in the controller node and change the driver to make sure that
+both the controller node supply and the port node supply are enabled as
+someone could opt to provide them from different regulators.
 
-Cheers,
-Conor.
+Looking at the bpif3 schematic
+https://drive.google.com/file/d/19iLJ5xnCB_oK8VeQjkPGjzAn39WYyylv/view
+I see nowhere where that 3v3 supply is actually provided to the k1,
+which I would expect if it were the supply for the controller itself.
+Instead, the m2 and minipcie slots are where I see that supply provided
+in the schematic. To me, that sounds like the port is what needs the
+supply, not the controller, but I'm not super familiar with pci
+devicetree stuff unfortunately.
 
---bIo31++ptAE9jI+O
+> Btw, different drivers request same regulator is ok, and is quite normal,
+> can't draw a conclusion that it's a duplication, as they may be used for
+> different reasons
+>=20
+> > But do we really need this pcie_port (PCIe bridge)?
+> >=20
+> > The PCIe bridge node (pcie@0) was treated as a platform device, but it
+> > did not define the interrupts property, which resulted in the following
+> > warning: `[    2.897980] irq: no irq domain found for pcie@0 !`
+> >=20
+> > Would it be better to submit a patch to remove this pcie_port?
+> >=20
+> > ```
+> > -       ret =3D k1_pcie_parse_port(k1);
+> > -       if (ret)
+> > -               return dev_err_probe(dev, ret, "failed to parse root po=
+rt\n");
+> > +       k1->phy =3D devm_phy_get(dev, "pcie-phy");
+> > +       if (IS_ERR(k1->phy))
+> > +               return dev_err_probe(dev, PTR_ERR(k1->phy), "missing PH=
+Y\n");
+> > ```
+>=20
+> I've not really looked at this, and not an expert on this area, so will
+> leave this to Alex or PCIe maintainers..
+>=20
+> > I have tested this change and it works.
+> >=20
+> > Thanks,
+> > Chukun
+> >=20
+>=20
+> --=20
+> Yixun Lan (dlan)
+
+--0Cad6xDtBs6YbbZc
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaaXOiQAKCRB4tDGHoIJi
-0poHAQDxsjjLOPKOtb2IC4WJzgt1JbGia7F26+iLWwTvK6+FLwEAzjWz3FACYBYP
-Z2zqTAghSNd/jVb4Yr4Ozyd2TMj26Ao=
-=tGDQ
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaaXStAAKCRB4tDGHoIJi
+0lPgAQCTClU5vis2+9tJyIZfKTjWOd7YSjjJVly2CSagyY0jSwD/QaQ7vxm86Sgy
+owyfMcezZaRHlgKA8IjooEkHjVJuswc=
+=MISq
 -----END PGP SIGNATURE-----
 
---bIo31++ptAE9jI+O--
+--0Cad6xDtBs6YbbZc--
