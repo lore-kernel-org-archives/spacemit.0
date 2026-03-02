@@ -1,42 +1,50 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EFA15539A
-	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 03:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4062129D267;
+	Mon,  2 Mar 2026 03:10:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772421035; cv=none; b=eYG05Lnctd+x6M+I9doBZnV5iOxETWoVNAfue3r4BH9jYcHxBax2Pwa5DG3o18vI2fng+rz6IJnUhGR4eOo8URlCBS/o3pECE6quHr61PfyOv3qBOWQTnSlJG8Ei5Fp5omVEN1uB2cgcofs22MV3F8imQPSawUU0C3wrZJ16v7M=
+	t=1772421040; cv=none; b=aZgmJJKzyOUNFWNCIniEFwWD1JzPB1dlF40BWxTvaeh3CWDfV8IOnijR9M2e5EJ15NxYAl8pVpLYI1LyV4Qf13LdyQ5y+rYf/BK0raMmWp2sq3f11SuPLpk0PXAB6YwBTjuZPFq6J9I6GxpeWyMrTW/BOkR30R7z7lgJCTswra8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772421035; c=relaxed/simple;
-	bh=jxtzlMsFJJI3gAHRVmshlhK3zwO8N+vd4+1PWjNXMg4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fAssGs6UVH8fpIfTwfDbPdrLlLHmmqbbweyvqrhnC2JRgqCOzY3dvIzXI1kPWkHsj5qjkix/bHmHCk0mRWDnFCAa0oqhrrZoNnHbQN/DlnaHMxqFtVKAnyjpgc/ndst3nl3Y1Y/EpevfL7EIBap5Y4jkRQll0Q8Ytvy0fbKse6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from Vostro-3710.lan (unknown [IPV6:240e:3b3:2c02:9c10::aae])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 355ebdd56;
-	Mon, 2 Mar 2026 11:05:19 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: dlan@kernel.org
-Cc: alex@ghiti.fr,
-	aou@eecs.berkeley.edu,
-	conor+dt@kernel.org,
-	conor@kernel.org,
-	devicetree@vger.kernel.org,
-	elder@riscstar.com,
-	krzk+dt@kernel.org,
-	linux-kernel@vger.kernel.org,
+	s=arc-20240116; t=1772421040; c=relaxed/simple;
+	bh=8piDJdEb2svg4illNkL4A8g7vlo1UGyKKu2McF1IevA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZN0iROExt0ohjxZ4PqWxhnS8e2gTbK/twJY0pwP44nSytD6sDtLyFuYGlQrTN/gPmLQAoiWmbucv2Dz6iCSkOL5/4VEI0mfSe1ZAMLNCO9UHHBWnxKdLDDg6D9LwcKPxhY2EugEsWchfev9mWklMrjO1zEIpnWz1j7Ki1FepH8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o7XfhUmB; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o7XfhUmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0603CC116C6;
+	Mon,  2 Mar 2026 03:10:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772421039;
+	bh=8piDJdEb2svg4illNkL4A8g7vlo1UGyKKu2McF1IevA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=o7XfhUmBvLDeLHzdlssWu18VjgCZR2PTujFG9ySGUoGwiTUz+wZmawpVch0WHgNll
+	 OsumX21hsPbyd7lgfd9c1kvcIrbHet4YlbBKvoWv4z/TU5nnVyHTM865cifRfc28xP
+	 tyyPzELsyqOQc4I874jRlSMom7AW20iDttbfH5/x3+FrEaz519ZJJ/zjGRES5K0M8B
+	 OAFR8lekHFd2RT8tKggumSUdzue66SStoF6EktHatEt0XH94d1q4k29+PW0YswuZCv
+	 F0hC+U0fQuIt3qKnDO+lWAicUMbTlA3w4RH6UZInKZdKv0VPHazr3aX2MA/W9KOXxu
+	 L2V3LKUCaObIw==
+From: Yixun Lan <dlan@kernel.org>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Alex Elder <elder@riscstar.com>,
+	Yixun Lan <dlan@kernel.org>
+Cc: devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	palmer@dabbelt.com,
-	pjw@kernel.org,
-	robh@kernel.org,
 	spacemit@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>
+	linux-kernel@vger.kernel.org,
+	Conor Dooley <conor@kernel.org>
 Subject: Re: [PATCH] riscv: dts: spacemit: pcie: fix missing power regulator
-Date: Mon,  2 Mar 2026 11:05:11 +0800
-Message-Id: <20260302030511.30566-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
+Date: Mon,  2 Mar 2026 03:10:31 +0000
+Message-ID: <177242077522.24322.7382117615305152301.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260226-k1-pcie-fix-pwr-v1-1-94b493cd27e5@kernel.org>
 References: <20260226-k1-pcie-fix-pwr-v1-1-94b493cd27e5@kernel.org>
 Precedence: bulk
@@ -45,58 +53,25 @@ List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9cac81e3c503a2kunm810cb4777326d4
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCGkxJVh4aQx4eS0wYTx5KSlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJT0seQUgZSEFJGEtJQUIYSktBQRoaHllXWRYaDxIVHRRZQVlPS0hVSktJQk
-	1LSlVKS0tVS1kG
 
-Hi,
 
-> &pcie1_port {
->  	phys = <&pcie1_phy>;
-> +	vpcie3v3-supply = <&pcie_vcc_3v3>;
->  };
+On Thu, 26 Feb 2026 08:17:55 +0000, Yixun Lan wrote:
+> The PCIe port require 3.3v power regulator for device to work properly, So
+> explicitly add it to fix the DT warning:
 > 
->  &pcie1 {
-> @@ -320,6 +321,7 @@ &pcie2_phy {
+> arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dtb: pcie@ca400000 (spacemit,k1-pcie): pcie@0: 'vpcie3v3-supply' is a required property
+>         from schema $id: http://devicetree.org/schemas/pci/spacemit,k1-pcie-host.yaml
 > 
->  &pcie2_port {
->  	phys = <&pcie2_phy>;
-> +	vpcie3v3-supply = <&pcie_vcc_3v3>;
->  };
+> 
+> [...]
 
-```
-&pcie1 {
-	vpcie3v3-supply = <&pcie_vcc_3v3>;
-	status = "okay";
-};
-```
+Applied, thanks!
 
-According to DT binding, the vpcie3v3-supply of the &pciex node should
-be moved to the &pciex_port node. This is simply a duplication of the
-property.
+[1/1] riscv: dts: spacemit: pcie: fix missing power regulator
+      https://github.com/spacemit-com/linux/commit/8a9071299dec817a544c0fb48f7302396fafdc4b
 
-But do we really need this pcie_port (PCIe bridge)?
-
-The PCIe bridge node (pcie@0) was treated as a platform device, but it
-did not define the interrupts property, which resulted in the following
-warning: `[    2.897980] irq: no irq domain found for pcie@0 !`
-
-Would it be better to submit a patch to remove this pcie_port?
-
-```
--       ret = k1_pcie_parse_port(k1);
--       if (ret)
--               return dev_err_probe(dev, ret, "failed to parse root port\n");
-+       k1->phy = devm_phy_get(dev, "pcie-phy");
-+       if (IS_ERR(k1->phy))
-+               return dev_err_probe(dev, PTR_ERR(k1->phy), "missing PHY\n");
-```
-
-I have tested this change and it works.
-
-Thanks,
-Chukun
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
