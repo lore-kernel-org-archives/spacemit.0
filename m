@@ -1,150 +1,102 @@
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED0FAD24;
-	Mon,  2 Mar 2026 01:43:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EFA15539A
+	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 03:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772415799; cv=none; b=ir/siyZ0cmYXPXMQt1zoMhXyjaKTdh6dlk/A8etccntrZ/MghSWpO6jVNhajTTZouzTvJjXWuJAofXPqVTvdeAjE1Efb+TuPHx0PL8ZaQWSORwJLyziD7CvQgmPOZdYchgQUrQ2cu4ONfu+NTaYVW6tVvyYMLGvVeV8x28u82JM=
+	t=1772421035; cv=none; b=eYG05Lnctd+x6M+I9doBZnV5iOxETWoVNAfue3r4BH9jYcHxBax2Pwa5DG3o18vI2fng+rz6IJnUhGR4eOo8URlCBS/o3pECE6quHr61PfyOv3qBOWQTnSlJG8Ei5Fp5omVEN1uB2cgcofs22MV3F8imQPSawUU0C3wrZJ16v7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772415799; c=relaxed/simple;
-	bh=vUOHHdyEXrPGEk8AvCusVmyfpwCI2ekAWq+T8PVRPV0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HfVtGxXIhYN7J54YA9/9/VdKbwYS9YyBwFNzqvUqTXgZlU1PU4G+cKorPvZ6nwEOYskqZxOEDKKIBLhCGggBvfKfsK8Z/tSuTiCNj3y6nFyWD5RqNCxddQ0Wrmp+zIZ4cCbXAnloKEIjchS8Wkl3O6J+02+JJn1jOjz7uUQRNLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=TdUlJrRe; arc=none smtp.client-ip=15.184.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="TdUlJrRe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1772415732;
-	bh=kRDQRl2R+LRWm2HggZ4Cj1vYHy4GXuClk7m0o1am4dw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=TdUlJrRe6KoS6xPDpC5kBRbyw/L7QLvDkZ3u7sTb103KPWW+/AUiz8x8gpJKwKhio
-	 YjlQsoU5WuN5BNeDdoIi6Mo+ph6AI+Ub6XhcA/hWiJSgvLK9CZ9b9BTRE1KUX+y0Qo
-	 QUofJeo6ADr9uUNBnRLOCXxScSqsNYBheuMm9VlY=
-X-QQ-mid: zesmtpsz8t1772415723tcf6f7fb4
-X-QQ-Originating-IP: w6IfNoMZkeVc0lyzIsKr9uYgMmtkBko/Qpg4ezv6sio=
-Received: from [10.2.99.140] ( [116.237.103.163])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 02 Mar 2026 09:41:59 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 4156359098192319691
-Message-ID: <B8675026D2F6DF58+946ff82a-2e2e-4abb-a3c4-26fe67c43ab8@linux.spacemit.com>
-Date: Mon, 2 Mar 2026 09:41:55 +0800
+	s=arc-20240116; t=1772421035; c=relaxed/simple;
+	bh=jxtzlMsFJJI3gAHRVmshlhK3zwO8N+vd4+1PWjNXMg4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=fAssGs6UVH8fpIfTwfDbPdrLlLHmmqbbweyvqrhnC2JRgqCOzY3dvIzXI1kPWkHsj5qjkix/bHmHCk0mRWDnFCAa0oqhrrZoNnHbQN/DlnaHMxqFtVKAnyjpgc/ndst3nl3Y1Y/EpevfL7EIBap5Y4jkRQll0Q8Ytvy0fbKse6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.lan (unknown [IPV6:240e:3b3:2c02:9c10::aae])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 355ebdd56;
+	Mon, 2 Mar 2026 11:05:19 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: dlan@kernel.org
+Cc: alex@ghiti.fr,
+	aou@eecs.berkeley.edu,
+	conor+dt@kernel.org,
+	conor@kernel.org,
+	devicetree@vger.kernel.org,
+	elder@riscstar.com,
+	krzk+dt@kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	palmer@dabbelt.com,
+	pjw@kernel.org,
+	robh@kernel.org,
+	spacemit@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: Re: [PATCH] riscv: dts: spacemit: pcie: fix missing power regulator
+Date: Mon,  2 Mar 2026 11:05:11 +0800
+Message-Id: <20260302030511.30566-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260226-k1-pcie-fix-pwr-v1-1-94b493cd27e5@kernel.org>
+References: <20260226-k1-pcie-fix-pwr-v1-1-94b493cd27e5@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/8] dt-bindings: iommu: Add spacemit/t100 features
-To: Conor Dooley <conor@kernel.org>
-Cc: Conor Dooley <conor.dooley@microchip.com>,
- Tomasz Jeznach <tjeznach@rivosinc.com>, Joerg Roedel <joro@8bytes.org>,
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Peter Zijlstra <peterz@infradead.org>,
- Ingo Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>,
- Namhyung Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>,
- Adrian Hunter <adrian.hunter@intel.com>, James Clark
- <james.clark@linaro.org>, Yixun Lan <dlan@kernel.org>,
- Jingyu Li <joey.li@spacemit.com>, Zong Li <zong.li@sifive.com>,
- Yaxing Guo <guoyaxing@bosc.ac.cn>, iommu@lists.linux.dev,
- linux-perf-users@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <cover.1772289741.git.lv.zheng@linux.spacemit.com>
- <D8CE6E5B1001D797+a6f36da0272ac18fff2a992976b1defc3bb01af6.1772289741.git.lv.zheng@linux.spacemit.com>
- <177231592262.848068.18080490567217057666@spud>
- <CAB7A310CE95B577+5f5c0825-25dd-4035-9316-db940c00216b@linux.spacemit.com>
- <20260301-acclimate-suburb-fc46da7e0cea@spud>
-Content-Language: en-US
-From: Lv Zheng <lv.zheng@linux.spacemit.com>
-In-Reply-To: <20260301-acclimate-suburb-fc46da7e0cea@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-1
-X-QQ-XMAILINFO: NTHY/YkN8c+xXjKPQhQQ8z6eRFGBjzhi4ywoP07wySu7NtbvDlHpINhr
-	Pz71ihPECjDvoVUYu4bOJShhop0qXeO/e6VWR2mxAL1OJdgg8SyQl4r89L9NDQW36IrH1tf
-	9LIDObU06QeBqm2idDg5fkfpi8mcQB7amzlQ9ANNVR34Zc0UKkYDzsjfQjX1t3sakX9NMV3
-	7GrTFziluMK8RXcwGIgyEOjrnhdlqLV04/4ldNa+x9XiMlRLdyBg4Vwzyt2I7PTGBBB4MLd
-	FwBZMC0DWuU/7ko5WKERfFXndmdrz1ny4rIaeACrDVBG8ylt91hIr+7lEK6XkeHhn9sncJI
-	PkUvLVI4qI3yi1BtHE80IJn/II1474R+ro+5hBacLeQK7n1+LErbRuoky8CXCzrA1OADUhQ
-	V4hiYkwB9jiAzLTeaA78rQ+KNS2zNikOTtAAqHOv2PK24+aqs9Xmx18JwSj+V7rKIHug1CX
-	ZyK0t/Z4wdhB+3uVhTzQzNo7tSfC8kmh59B79rL+ATK77H8P6kq581THWQpcQxalCj+Qq3u
-	xu40K/MKx45Rumf9pe0hdNAj9Z9CZtoEx9jq42y1WE9sgyHnV6UV1DGMUrUOUXEBpgX/BZN
-	CuJ23Gmw+zwNeW0nJLeGCFRDmPnlMGkM8sheofomhz//A3Wh9q4XyKPrAcXftBbrMj0ZeoS
-	+LWA/0FChficDcMmeYQbO2JiVeDY8jVD1syWj0sMsrEI4o25OeQHXMSBdKfFqGCetBglK4x
-	NbbvDJFwYNNduH8hINU3P5UQu9lmLpNHoAmIj9jm5WLizfBu7PpllOxeOrHFsGyK7/gfHDt
-	oWnSrK3a1HpTaAy4VhEgiDqFhcZpnCEBMPRQu6aG/8PNPe2jdLJr0QXfumC37HFsVRAwI4U
-	o8302hBghm68Fp6cndgbo3kTwGzraWx8VjXIn9L/Ju/vY8Pt+rKrX06qINnZmkO3tB2bVVH
-	3zFj1G9owW9FlGYH120cZcBLFyhsIa1GrHCyZ8Be0Nak0vcYCRt0jOd7QuupyWMDQnMErCX
-	kD0Agjj0aDeXlrE22d
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9cac81e3c503a2kunm810cb4777326d4
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCGkxJVh4aQx4eS0wYTx5KSlYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlJT0seQUgZSEFJGEtJQUIYSktBQRoaHllXWRYaDxIVHRRZQVlPS0hVSktJQk
+	1LSlVKS0tVS1kG
 
-On 3/1/2026 10:01 PM, Conor Dooley wrote:
-> On Sun, Mar 01, 2026 at 11:48:37AM +0800, Lv Zheng wrote:
->> On 3/1/2026 5:58 AM, Conor Dooley wrote:
->>> On Sat, 28 Feb 2026 22:44:49 +0800, Lv Zheng <lv.zheng@linux.spacemit.com> wrote:
->>>> Adds device tree bindings for SpacemiT T100 specific features by
->>>> introducing spacemit,t100 compatible. T100 contains distributed IOATCs,
->>>> each of which exposes pmiv interrupt.
->>>>
->>>> Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
->>>> Signed-off-by: Jingyu Li <joey.li@spacemit.com>
->>>
->>> Patch content here is fine, but the signoff chain on this patch is not
->>> right. What did Jingyu do? You're author and submitter so either Jingyu
->>> did nothing and should be removed, or is a co-developer which requires
->>> attribution via the co-developed-by tag. If the latter, their signoff
->>> should be before yours (the submitter is always last).
->>>
->>> pw-bot: changes-requested
->>
->> She is responsible for the common HPM part, and I just gave my comments to
->> help to improve the quality of that implementation.
->> I was just focusing on enabling and maintaining the T100 specific features.
->>
->> Our patches will go each other's local repository, leaving such tracks. That
->> means the patch from me is Reviewed-and-tested-by her.
->> And I'm responsible for sending the whole patchset for upstreaming.
+Hi,
+
+> &pcie1_port {
+>  	phys = <&pcie1_phy>;
+> +	vpcie3v3-supply = <&pcie_vcc_3v3>;
+>  };
 > 
-> Then you need to either fix your email setup (because it's not inserting
-> From: Jingyu Li <joey.li@spacemit.com>) so that she is marked as the
-> author or actually set her to the author in git if you haven't.
-> Currently it looks like this when applied:
-> commit 872978c875731be43e84bec38798cb8ecd42b7a0
-> Author: Lv Zheng <lv.zheng@linux.spacemit.com>
-> Date:   Sat Feb 28 22:44:49 2026 +0800
+>  &pcie1 {
+> @@ -320,6 +321,7 @@ &pcie2_phy {
 > 
->      dt-bindings: iommu: Add spacemit/t100 features
->      
->      Adds device tree bindings for SpacemiT T100 specific features by
->      introducing spacemit,t100 compatible. T100 contains distributed IOATCs,
->      each of which exposes pmiv interrupt.
->      
->      Signed-off-by: Lv Zheng <lv.zheng@linux.spacemit.com>
->      Signed-off-by: Jingyu Li <joey.li@spacemit.com>
-> 
-> In both cases, you need to change the order of signoffs so that yours is
-> last as the submitter.
+>  &pcie2_port {
+>  	phys = <&pcie2_phy>;
+> +	vpcie3v3-supply = <&pcie_vcc_3v3>;
+>  };
 
-OK.
+```
+&pcie1 {
+	vpcie3v3-supply = <&pcie_vcc_3v3>;
+	status = "okay";
+};
+```
 
-BTW, since this version of this patch has been worked out all due your 
-constructive feedback and suggestions. Now that it has functionally 
-converged to what the community requested, can I add "Reviewed-by: Conor 
-Dooley <conor@kernel.org>" for its next version?
+According to DT binding, the vpcie3v3-supply of the &pciex node should
+be moved to the &pciex_port node. This is simply a duplication of the
+property.
 
-Best regards,
-Lv
+But do we really need this pcie_port (PCIe bridge)?
 
+The PCIe bridge node (pcie@0) was treated as a platform device, but it
+did not define the interrupts property, which resulted in the following
+warning: `[    2.897980] irq: no irq domain found for pcie@0 !`
+
+Would it be better to submit a patch to remove this pcie_port?
+
+```
+-       ret = k1_pcie_parse_port(k1);
+-       if (ret)
+-               return dev_err_probe(dev, ret, "failed to parse root port\n");
++       k1->phy = devm_phy_get(dev, "pcie-phy");
++       if (IS_ERR(k1->phy))
++               return dev_err_probe(dev, PTR_ERR(k1->phy), "missing PHY\n");
+```
+
+I have tested this change and it works.
+
+Thanks,
+Chukun
