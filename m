@@ -1,83 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718A915539A;
-	Mon,  2 Mar 2026 03:11:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CE63C2E
+	for <spacemit@lists.linux.dev>; Mon,  2 Mar 2026 03:37:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772421084; cv=none; b=BGDj+1ak+ze4menuEgGBKpjVF+FmMkmwkOHU4nM535XEpE03ZTHMxBNBxXmt3RJnFG3hL3kinBFLDTKqYdPUGgEPokagZWnyS+3pSpMS4CDxmEK5baSpyDgjU9mS32hkWbUx/NJLYt/LcMhHeDkovFm/cYpKuhqoOdE5+yGiB4M=
+	t=1772422629; cv=none; b=m81VG9eFbgbsYU2cyIWHy3ZWDlezyKkZPS6lYjnmPM2sMbm9ZH8cRbICA2ask7rgtkB0CCt+3WTgetr8mLnpVkq0FTrNnuQiuuerz9y+txDmjzH6sLsp577C6JSpapjlmxxTlI4M1HP/swt4SC+uwyYahAFwSJrpakpq3vGO0pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772421084; c=relaxed/simple;
-	bh=VjD7I6E51OlHu+EsXmHswCKFpLlZJ2k8SacV21baGj0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L4D3oYEbWLXlSqkS2JB36G0SbT4KK+lzB9IFD37I+OcNaq+0gNhLeQr7g8ivK7eaL/BvSpX1o0yq07XvATTNsA1e1iQ3qj2YbUZtS8D+ej/LDrpCcAfrtaMib+BZi3qwcHU6z5GRaiW9aU2wbPCwdEkok72TceMknnyjaBjg4O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PLzWJvEp; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PLzWJvEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E45D3C116C6;
-	Mon,  2 Mar 2026 03:11:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772421084;
-	bh=VjD7I6E51OlHu+EsXmHswCKFpLlZJ2k8SacV21baGj0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLzWJvEp+AsKTb/UTc21L5WWH2u6BnxdVzfPNPB6vCOFfACHY5pn027oR8sUZvJVH
-	 72gRdItmVnDO6fW1pZPMTpsvzUYiHZ5V/PFCw7AX1rMRDRBeUziPxRfQsy9rlsFn09
-	 5a4WajbsGVllB3hhij+OazilLVOHTA4FoRPJKP67X4iwGIbJU8ULnYbPvlWEHSHUHE
-	 Ka/WGeJxAVnntcNl+HOEus6JJKrl0GJ+h8urDbKgf8gs71/KjTy+y0AAxJ4/1k5bRU
-	 uSPQGQiCfkTbYRoz5k7UODX2/DvfuYZ8LfaL5uQIZKH6p78l4+r9qjtUWThwOn07Uo
-	 S2yS44FiPBDfA==
-From: Yixun Lan <dlan@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Alex Elder <elder@riscstar.com>,
-	Lee Jones <lee@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>,
-	Guodong Xu <guodong@riscstar.com>
-Cc: linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	devicetree@vger.kernel.org
-Subject: Re: (subset) [PATCH v4 0/3] regulator: spacemit-p1: Support board power tree via DT properties
-Date: Mon,  2 Mar 2026 03:11:15 +0000
-Message-ID: <177242105514.25569.9323033923721110918.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
-References: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
+	s=arc-20240116; t=1772422629; c=relaxed/simple;
+	bh=HlZEZBChSkWIZ0yIr2y0mGvtNu3LDcGkglPa507TXoo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qQHwSjlnaW77aH0DyrFjVIoeKeEJCCBEZlugjnzWKQHdtf5SiUrI30SZIqZ1pW5XlnqsSxDhxRmW5tf0n49jdEzzFUjNjrFxCD8FSfih3k+io26QSd6ZwTgS36HZS3FWJiB/iJdZUUXQ2dhcFTBDZKsRI3eMSLUntE8LtHQfMZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.232])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 84C1D341E6C;
+	Mon, 02 Mar 2026 03:37:06 +0000 (UTC)
+Date: Mon, 2 Mar 2026 11:36:55 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: dlan@kernel.org, alex@ghiti.fr, aou@eecs.berkeley.edu,
+	conor+dt@kernel.org, conor@kernel.org, devicetree@vger.kernel.org,
+	elder@riscstar.com, krzk+dt@kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	palmer@dabbelt.com, pjw@kernel.org, robh@kernel.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH] riscv: dts: spacemit: pcie: fix missing power regulator
+Message-ID: <20260302033655-GYA288339@gentoo.org>
+References: <20260226-k1-pcie-fix-pwr-v1-1-94b493cd27e5@kernel.org>
+ <20260302030511.30566-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260302030511.30566-1-amadeus@jmu.edu.cn>
 
+Hi Chukun,
 
-On Fri, 06 Feb 2026 10:32:01 +0800, Guodong Xu wrote:
-> The patch (Patch 1 in v1 and v2) fixing hardware voltage constraints was
-> applied to regulator.git for-next, so is no longer part of this series.
+Sorry, I missed your mail due recent problem of my client..
+On 11:05 Mon 02 Mar     , Chukun Pan wrote:
+> Hi,
 > 
-> Patch 1, 2 and 3 (previously 2-4) enable flexible power tree
-> configurations for the SpacemiT P1 PMIC. Hardcoded supply assumptions
-> are replaced with explicit devicetree properties. PMIC supply connections
-> are board-design decisions. Moving this to DT allows supporting varied
-> topologies without driver modifications.
+> > &pcie1_port {
+> >  	phys = <&pcie1_phy>;
+> > +	vpcie3v3-supply = <&pcie_vcc_3v3>;
+> >  };
+> > 
+> >  &pcie1 {
+> > @@ -320,6 +321,7 @@ &pcie2_phy {
+> > 
+> >  &pcie2_port {
+> >  	phys = <&pcie2_phy>;
+> > +	vpcie3v3-supply = <&pcie_vcc_3v3>;
+> >  };
 > 
-> [...]
+> ```
+> &pcie1 {
+> 	vpcie3v3-supply = <&pcie_vcc_3v3>;
+> 	status = "okay";
+> };
+> ```
+> 
+> According to DT binding, the vpcie3v3-supply of the &pciex node should
+> be moved to the &pciex_port node. This is simply a duplication of the
+> property.
+> 
+I have confidence that pcie port need to add a regulator to provide 
+supply for devices..
 
-Applied, thanks!
+But, I'm not sure whether it's ok to remove regulator from &pciex node,
+it's possibly a 'yes' answer, but to convince me, I'd like to see a real
+test case to prove it: e.g, power supply for pciex is actually off before 
+the driver initialization, then run regular procedure as it should, if
+all works fine
 
-[3/3] riscv: dts: spacemit: Update PMIC supply properties for BPI-F3 and Jupiter
-      https://github.com/spacemit-com/linux/commit/108c77b34b929e6bdb7ac9613ed65c90da8bcb9f
+Btw, different drivers request same regulator is ok, and is quite normal,
+can't draw a conclusion that it's a duplication, as they may be used for
+different reasons
 
-Best regards,
+> But do we really need this pcie_port (PCIe bridge)?
+> 
+> The PCIe bridge node (pcie@0) was treated as a platform device, but it
+> did not define the interrupts property, which resulted in the following
+> warning: `[    2.897980] irq: no irq domain found for pcie@0 !`
+> 
+> Would it be better to submit a patch to remove this pcie_port?
+> 
+> ```
+> -       ret = k1_pcie_parse_port(k1);
+> -       if (ret)
+> -               return dev_err_probe(dev, ret, "failed to parse root port\n");
+> +       k1->phy = devm_phy_get(dev, "pcie-phy");
+> +       if (IS_ERR(k1->phy))
+> +               return dev_err_probe(dev, PTR_ERR(k1->phy), "missing PHY\n");
+> ```
+
+I've not really looked at this, and not an expert on this area, so will
+leave this to Alex or PCIe maintainers..
+
+> I have tested this change and it works.
+> 
+> Thanks,
+> Chukun
+> 
+
 -- 
-Yixun Lan <dlan@kernel.org>
+Yixun Lan (dlan)
