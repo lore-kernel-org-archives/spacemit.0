@@ -1,113 +1,107 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAD237DE84
-	for <spacemit@lists.linux.dev>; Tue,  3 Mar 2026 04:11:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772511107; cv=pass; b=XGN7WV2BeybtngIIDG0X4zt7N/6cksF01H8C/xrNgQjEY+FvtmUY0k8sQD+Ws84E3kZ/nyxT1tqY8HkbFAOqzIHgXXaN7FDMpkxKa2u88bdPQsLxvTJygUIJs10damR5GPRkBiMXWU5P/Ja3JXx9tAh5Cy1XgCPJdN3mb1peo2k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772511107; c=relaxed/simple;
-	bh=TY11tP+fjvCydeVTJmTrTv4lTOv8tyIwbrRjCYcormg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N5M3OwAnlTuxwbuZb0LrePUoYYoixUO6FEeYYBL3ZZ0/sAr8fp5ymhqWon3Jm5zZtCByuyuRYBiZHcIVROJMQswdNbsEO6aTskfi3LCsK2RwBNztcosTMoV/7zWWJ3eMOUXAMdVGUIqE5dn/V8uHvjO9IwYqdqYo3X5+j2Q81Tk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=IxM0//KW; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="IxM0//KW"
-ARC-Seal: i=1; a=rsa-sha256; t=1772511082; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Nwd9ijqe9wv6K0c1fJjpp7BhOomKu43HENZ9U+A9NHlJQLFetbov2b9WEO6CM5rM6YD3r63aH8daaiHXRVxuolzadDSBBWFMCyIUdQB4l07TUxSKJ5iAmTBBeDHBUuAIC8n543oqABQcjz1nF3Vr+MbpNW7oblg/8SxHjk/ArIM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1772511082; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=K+eU4GhIMfoBUPBn8WXtEEB/bAz12IYbwXDw+L/CKZ0=; 
-	b=Pv8JAHYoaATi8tchKflcyt62D6M0I4CfPrhuXV6LCvZ3rjyQVkqrtW5PmJv7hZ7WaAfEHJwkOh0cgVZSvWaqtuK2uJYosiFMDT8vqH2xUMPE2vdqwc+iuZZ+pqXoM2NGAyFcLI0mgwJhgyoeygVHmNAm1LzamVLjpvCTHpZtUqY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ziyao.cc;
-	spf=pass  smtp.mailfrom=me@ziyao.cc;
-	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772511082;
-	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=K+eU4GhIMfoBUPBn8WXtEEB/bAz12IYbwXDw+L/CKZ0=;
-	b=IxM0//KWXKzn7VPRtt3fLDCmqrjs+oVOtA7heOxoAFjKb3ew4et/slXb0VPKG+Up
-	ZTIP83KQnCKyzRA2e42uPfdE00GCUGts3lkunclkCdESsp6ZCgOLAtJksDREV6xxsWC
-	nQm3KpwXHj80F70EznVrR6MdEAQvlq3F2DEc7F/k=
-Received: by mx.zohomail.com with SMTPS id 1772511080557943.3150450884574;
-	Mon, 2 Mar 2026 20:11:20 -0800 (PST)
-Date: Tue, 3 Mar 2026 04:11:01 +0000
-From: Yao Zi <me@ziyao.cc>
-To: Iker Pedrosa <ikerpedrosam@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 03/10] mmc: sdhci-of-k1: add regulator framework support
-Message-ID: <aaZfVZoCe3AxTzAf@pie>
-References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
- <20260302-orangepi-sd-card-uhs-v1-3-89c219973c0c@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0BA38C405
+	for <spacemit@lists.linux.dev>; Tue,  3 Mar 2026 09:24:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772529901; cv=none; b=tervPY+FjVG3gIlYLkA2ugzwh02MMgiIt5gmnT3iKVLpymLMCIoE6lgLBA2sYS2eaGCpTX6H6+OJCgkippxQW8kZiAknyUWfuPxurdmX9Lw03Y1WoGoMoHpyp/2WYnV26UBsEtr11Ux/fl6a2xZDzcii9wN3uRziSd57u5dVkh4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772529901; c=relaxed/simple;
+	bh=r4HdT4eDrYVYg/rJz37nOvgsHymgxKr++v5KE2g6obc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=HwmQ1XDsLF1FSiBwQkv6JZgwR/LnkwlwIwiRJY46sTOExP2agku418Xn8+8/qPgCft33GIgeHuWtvq0Bytah9z1OIk5Hc+US3LpuQo1dPEl9X7Y/VsZ8I/2s4HRqonRSbxEXZjgytUdPtsPY48TrMDHThE2V5aM98CDBKSMoa88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [210.73.43.101])
+	by APP-01 (Coremail) with SMTP id qwCowAA34WzPqKZpyU4sCQ--.6573S5;
+	Tue, 03 Mar 2026 17:24:33 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Tue, 03 Mar 2026 17:24:20 +0800
+Subject: [PATCH net-next 3/4] net: spacemit: Fix error handling in
+ emac_tx_mem_map()
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260302-orangepi-sd-card-uhs-v1-3-89c219973c0c@gmail.com>
-X-ZohoMailClient: External
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260303-k1-ethernet-more-fixes-v1-3-0ab0122fdd14@iscas.ac.cn>
+References: <20260303-k1-ethernet-more-fixes-v1-0-0ab0122fdd14@iscas.ac.cn>
+In-Reply-To: <20260303-k1-ethernet-more-fixes-v1-0-0ab0122fdd14@iscas.ac.cn>
+To: Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Yixun Lan <dlan@kernel.org>, 
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, 
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.3
+X-CM-TRANSID:qwCowAA34WzPqKZpyU4sCQ--.6573S5
+X-Coremail-Antispam: 1UD129KBjvJXoWruFyfCrW7Cw15uF1kAF1fZwb_yoW8JF1fpa
+	yDWasxCr18JF43WwsFkr4xZa90vay0qry8Ca4Sy39YqasIyw4jgFy0yF17Jrn5ArZ5WryS
+	vw4qv345GF1DAw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUmE14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JrWl82xGYIkIc2
+	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
+	8EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AI
+	xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
+	vE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xv
+	r2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04
+	v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW8uwCF04k20xvY0x0EwIxGrwCFx2Iq
+	xVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r
+	106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AK
+	xVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UMIIF0xvE42xK8VAvwI8IcI
+	k0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4U
+	JVWxJrUvcSsGvfC2KfnxnUUI43ZEXa7VUjoUDJUUUUU==
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Mon, Mar 02, 2026 at 04:13:24PM +0100, Iker Pedrosa wrote:
-> Add regulator framework support for voltage switching operations. This
-> enables proper PMIC control for UHS voltage switching between 3.3V and
-> 1.8V signaling levels.
-> 
-> - Add regulator supply parsing
-> - Implement voltage switching callback
-> - Enable mmc regulator framework integration
-> 
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> ---
->  drivers/mmc/host/sdhci-of-k1.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+The DMA mappings were leaked on mapping error. Free them with the
+existing emac_free_tx_buf() function.
 
-It seems PATCH 4 should be squashed into this one, or the functionality
-of voltage switching isn't really complete.
+Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+---
+ drivers/net/ethernet/spacemit/k1_emac.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
-> index b703b78282ed8d89183c816477c149c0a565618a..c260cb89704ae7a25bec0f07831d495553405bbd 100644
-> --- a/drivers/mmc/host/sdhci-of-k1.c
-> +++ b/drivers/mmc/host/sdhci-of-k1.c
+diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
+index e9e2cd4e6a89..f7f16397a2c2 100644
+--- a/drivers/net/ethernet/spacemit/k1_emac.c
++++ b/drivers/net/ethernet/spacemit/k1_emac.c
+@@ -730,7 +730,7 @@ static void emac_tx_mem_map(struct emac_priv *priv, struct sk_buff *skb)
+ 	struct emac_desc tx_desc, *tx_desc_addr;
+ 	struct device *dev = &priv->pdev->dev;
+ 	struct emac_tx_desc_buffer *tx_buf;
+-	u32 head, old_head, frag_num, f;
++	u32 head, old_head, frag_num, f, i;
+ 	bool buf_idx;
+ 
+ 	frag_num = skb_shinfo(skb)->nr_frags;
+@@ -798,6 +798,15 @@ static void emac_tx_mem_map(struct emac_priv *priv, struct sk_buff *skb)
+ 
+ err_free_skb:
+ 	dev_dstats_tx_dropped(priv->ndev);
++
++	i = old_head;
++	while (i != head) {
++		emac_free_tx_buf(priv, i);
++
++		if (++i == tx_ring->total_cnt)
++			i = 0;
++	}
++
+ 	dev_kfree_skb_any(skb);
+ }
+ 
 
-...
+-- 
+2.53.0
 
-> @@ -291,6 +297,12 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
->  
->  	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
->  
-> +	ret = mmc_regulator_get_supply(host->mmc);
-> +	if (ret)
-> +		dev_warn(dev, "Failed to get regulators: %d\n", ret);
-> +
-> +	host->mmc_host_ops.start_signal_voltage_switch = spacemit_sdhci_start_signal_voltage_switch;
-
-Why not assign start_signal_voltage_switch in the declaration of
-spacemit_sdhci_ops?
-
->  	ret = spacemit_sdhci_get_clocks(dev, pltfm_host);
->  	if (ret)
->  		goto err_pltfm;
-> 
-> -- 
-> 2.53.0
-
-Best regards,
-Yao Zi
