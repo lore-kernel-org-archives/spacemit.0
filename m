@@ -1,156 +1,81 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730C0226863;
-	Tue,  3 Mar 2026 20:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F677372676;
+	Tue,  3 Mar 2026 22:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772570326; cv=none; b=B95fxzM1GpEKiVJWeuW7PVFf4wLfo+A9CBCnOoMWwYCqHAhy0vifKTxpYIvIXn3/4G3X2zQGNTVas3FEer6x8DGljXuNJtGU5OERB63Y7ztmEKOZlzuZQbcRFlQ2O6jylYA0ED/2R7j72wBkCUALjS16+SSpcOzTkF9vuiocbJM=
+	t=1772576883; cv=none; b=Alg/sayAvjLK3TphDWTMhoV1kWJW7zI+oqq5e6jmBbsTvmn4hLiMHiqING22QjvwwifFk4XHnUBFOk27ks4FlSeu7091KqpdHorE17L8Co7qZ6p24TcczdlOp3BCsHHFc3AKstxh+mCq5HACC8X6V853SjTv14tEyUWXHL8qGGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772570326; c=relaxed/simple;
-	bh=mXJ4UmUVxuH0ShdzLqcy4AQHr3CDFCHNtTjfyg2qfto=;
+	s=arc-20240116; t=1772576883; c=relaxed/simple;
+	bh=h+MB5FEoZuD+ObXgiTN2r18cSRl2AQklGvm8fstFmSM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aynSbaWCL5I/eMUdSL6o5RMPiZxepL7wcQlQCV3IJ5Du/wWGtwRdcA+1wQb3xxwpqUllnM6EixzfN/WErOR7l5DxuekhVqG4849fKL74JpVLy5NJ3BCkL2AVTkuvn9T7tRSynve3oxQUeC2Y/6AYR162MBJaE1kRqqpaysbk8qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=kF5mi4y4; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=ly6+Enrimwl1UUDY5IGHviubJXQdiAW63wnJ2gu8ElXj+Z62O4Usvd0bJSJc6pjDMVb5VIV81czCOMf9y5uOTNPFa2eNOAJjYLKaoFVpGqT94sMCcvTlB5Q/YWgqjzw/nAtE9Kw1uq1j74+PhOUQcijGWWbcFHOAQa7zs5u9kQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B2+xQMzV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="kF5mi4y4"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=ZN9YjA7A/E5P7KV/eCgsd8bu8xvdRjvgUVEuCuL5dSI=; b=kF5mi4y4bri056BNgYXfAyhKzE
-	SLZLqP74NX0rq7RrkYwmymPIZ5Vvl1XuDfCR7Ua3Ba0ntlotelICnOhisN57V4qyfT6mGODYpUwZ6
-	o/cIpbd7nuZxP/TOEoSWjY+mE/K7qMOnHo+IJUrA7/vMxUJ+R7rR+nFH73VMVK+kluEwN/FYNOU97
-	rA5pA0P/IVs+eXXCwoJg/bacFLbB/WSmY1pnA13Lf8XuOVyuUhrOX3thTmu1/iH3HVHIKxVQ0tqnX
-	45pnL5MYzw7X51YFEXGzONYfvQLpF1rHdnjlEwUGDRHyMEnxwwqMneDqOWXiOu9BXoY4SCnQCFHEV
-	O0ZC14QQ==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1vxWVf-0000000EkpA-3dfF;
-	Tue, 03 Mar 2026 21:38:27 +0100
-Date: Tue, 3 Mar 2026 21:38:27 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Yanko Kaneti <yaneti@declera.com>
-Cc: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B2+xQMzV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB3EC116C6;
+	Tue,  3 Mar 2026 22:28:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772576882;
+	bh=h+MB5FEoZuD+ObXgiTN2r18cSRl2AQklGvm8fstFmSM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=B2+xQMzVkzxSmK97R5uyX0710fC2BS5mmL0zXKOzhhQhFXaaTyw+uHGX2l8iQ13bo
+	 v1Vbr8eGAdaM0qR3yoILry64iGddqsLSZWL0II9nqzE9B/5TcaPgJdddl+lsOrLI8y
+	 F2gRvJ5fxbWJ2aS1qeJNfuM6R7vIWTxeeg/LXRSoZC3bMbG+7fWmiPiNH/e/4UtAO2
+	 e9YORGzOrk6jQ+e7XoePD5qj/sHE3nmE5p/H/7K8fBneBOlO6v9PmiKkuFpvINwD7r
+	 0Yle/A2Ju2NwhRrM2aWa1lVF1KzlXXfhn6Jffr5Q27rCR4fkD/IBTn9Iigqf0jPMmz
+	 Nei0CJblySrVA==
+Date: Wed, 4 Mar 2026 06:28:00 +0800
+From: Yixun Lan <dlan@kernel.org>
+To: Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: Conor Dooley <conor@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v5 2/2] mfd: simple-mfd-i2c: add a reboot cell for the
- SpacemiT P1 chip
-Message-ID: <aadGw1fIlJyNNoum@aurel32.net>
-Mail-Followup-To: Yanko Kaneti <yaneti@declera.com>,
-	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
-References: <20251102230352.914421-1-aurelien@aurel32.net>
- <20251102230352.914421-3-aurelien@aurel32.net>
- <b51a62513daa9d2390031ec350e0b33bdb7e54aa.camel@declera.com>
- <aaC78FTN31QYaVg0@aurel32.net>
- <990bc03ed2baa05e619f0aa9cc6a23acadd66ea6.camel@declera.com>
- <aaS6xeKFZz06fb1_@aurel32.net>
- <aaXuWwyA5NzBZzlW@aurel32.net>
- <36f8df695463e5ff3eaaffbac357fc73026f7373.camel@declera.com>
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/10] dt-bindings: mmc: spacemit,sdhci: add AIB voltage
+ switching registers
+Message-ID: <20260303222800-GKC289813@kernel.org>
+References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
+ <20260302-orangepi-sd-card-uhs-v1-1-89c219973c0c@gmail.com>
+ <20260302-crewman-faster-9fd00b62e30c@spud>
+ <20260302223803-GKB289813@kernel.org>
+ <CABdCQ=Nd9ZW6OBnAiuki=2+DhVraW19bh_m8=LLQGUKN8TkEdQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <36f8df695463e5ff3eaaffbac357fc73026f7373.camel@declera.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABdCQ=Nd9ZW6OBnAiuki=2+DhVraW19bh_m8=LLQGUKN8TkEdQ@mail.gmail.com>
 
-Hi,
+Hi Iker,
 
-On 2026-03-02 22:34, Yanko Kaneti wrote:
-> Hello,
+On 14:51 Tue 03 Mar     , Iker Pedrosa wrote:
+> El lun, 2 mar 2026 a las 23:38, Yixun Lan (<dlan@kernel.org>) escribió:
 > 
-> On Mon, 2026-03-02 at 21:08 +0100, Aurelien Jarno wrote:
-> > On 2026-03-01 23:16, Aurelien Jarno wrote:
-> > > On 2026-02-27 13:29, Yanko Kaneti wrote:
-> > > > On Thu, 2026-02-26 at 22:32 +0100, Aurelien Jarno wrote:
-> > > > > Hi,
-> > > > > 
-> > > > > On 2026-02-26 16:32, Yanko Kaneti wrote:
-> > > > > > Hello,
-> > > > > > 
-> > > > > > On Mon, 2025-11-03 at 00:02 +0100, Aurelien Jarno wrote:
-> > > > > > > Add a "spacemit-p1-reboot" cell for the SpacemiT P1 chip.
-> > > > > > > 
-> > > > > > > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> > > > > > > ---
-> > > > > > > v5: no changes
-> > > > > > > 
-> > > > > > >  drivers/mfd/simple-mfd-i2c.c | 1 +
-> > > > > > >  1 file changed, 1 insertion(+)
-> > > > > > > 
-> > > > > > > diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
-> > > > > > > index 0a607a1e3ca1d..542d378cdcd1f 100644
-> > > > > > > --- a/drivers/mfd/simple-mfd-i2c.c
-> > > > > > > +++ b/drivers/mfd/simple-mfd-i2c.c
-> > > > > > > @@ -99,6 +99,7 @@ static const struct regmap_config spacemit_p1_regmap_config = {
-> > > > > > >  };
-> > > > > > >  
-> > > > > > >  static const struct mfd_cell spacemit_p1_cells[] = {
-> > > > > > > +	{ .name = "spacemit-p1-reboot", },
-> > > > > > >  	{ .name = "spacemit-p1-regulator", },
-> > > > > > >  	{ .name = "spacemit-p1-rtc", },
-> > > > > > >  };
-> > > > > > 
-> > > > > > Perhaps its safe to merge this one now that everything P1 and I2C is
-> > > > > > already in linus tip ?
-> > > > > 
-> > > > > Unfortunately, this patchset is still missing:
-> > > > > https://lore.kernel.org/all/20260207-b4-k3-i2c-pio-v7-0-626942d94d91@linux.spacemit.com/
-> > > > > 
-> > > > > This means the reboots work most of the time, but are not 100% reliable, 
-> > > > > and that's the reason why this patch got blocked from merging.
-> > > > 
-> > > > I see. Thanks. Sounds to me like sometimes working compared to never
-> > > > working is better , but anyway..
-> > > 
-> > > I agree with that, but the decision was to hold on this patch until the 
-> > > I2C PIO part got merged.
-> > > 
-> > > > FWIW  with this patch and the pio patcheset I get this rcu splat on
-> > > > reboot (which is still working). Similar splat is there without the pio
-> > > > patcheset.
-> > > 
-> > > I haven't been able to reproduce the issue here after 10+ reboots on a 
-> > > BPI-F3 board, but I tried the patch on top of 6.19. I'll try to build a 
-> > > 7.0.0-rc2 kernel and report back.
-> > 
-> > I have tried that, and I am still unable to reproduce the issue with a 
-> > 7.0.0-rc2 kernel and a BPI-F3 board.
+> Thanks for the pointer! I missed that these had already landed in
+> mainline. I'll rebase the series, drop the redundant properties and
+> patch [5/10], and send a v2 shortly.
 > 
-> I can still see it on every reboot (with the patches that allow reboot
-> to work). Do you have CONFIG_PREEMPT_RCU in your config ? its default on
-> when anything PREEMPT is selected. In Fedora its CONFIG_PREEMPT_DYNAMIC
-> that flips it.
+Please wait a little bit longer before sending next version, give me or
+other people more time for reviewing, as a quick test, this series will
+break emmc driver as tested on bananapi-f3 board, I suspect it's probably
+duo to clock related issue, but want to confirm later..
 
-Thanks for the hint, that option was not activated here, it's not the 
-riscv64 defconfig. With it I am also able to reproduce the issue. I'll 
-try to debug that and report back.
-
-Regards
-Aurelien
+Btw, I was also preparing sd part driver, mainly target K3 SoC, but since
+they are mostly same IP, the driver can be shared..
 
 -- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+Yixun Lan (dlan)
