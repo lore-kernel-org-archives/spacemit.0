@@ -1,167 +1,156 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835BC35F195
-	for <spacemit@lists.linux.dev>; Tue,  3 Mar 2026 13:58:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772546307; cv=pass; b=UcYHlC8CJVuv6FcKeDrt9bsUmSDyGMepge9wOUWMGtbaJUGAZowE0PobHA+Mq/vwcKfVFe1C6NNp62BuBxpwcqovSxC7AAknjNltGsTMpu8Hz3JXeCdWKJb5yQb1OGgX55PZgEw8P1k5FZDMfHjY3e4VVvp26gOwyPfGVjpK0Z0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772546307; c=relaxed/simple;
-	bh=cHDl/UGxVI3bg2xIA4BoN5IYdh6+l3v4+cbwiHeVBNg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L4Tt9RYH/Zlk+L1npw8VHDG9jiSn+B1+zQs6eP6RnTZ7adp9aA9fDtdEYXw4keI2GR+WKfRFDbMZD8nq6Am5cwWmgdT6C4EikUSR9XaYi2RKcwZLqXQf4cyLwoCPFisovfESVmyXQyuIGkRkuM6vwFqfpHm+LevVAkL9cGwNbG0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=inlzbsQU; arc=pass smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730C0226863;
+	Tue,  3 Mar 2026 20:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772570326; cv=none; b=B95fxzM1GpEKiVJWeuW7PVFf4wLfo+A9CBCnOoMWwYCqHAhy0vifKTxpYIvIXn3/4G3X2zQGNTVas3FEer6x8DGljXuNJtGU5OERB63Y7ztmEKOZlzuZQbcRFlQ2O6jylYA0ED/2R7j72wBkCUALjS16+SSpcOzTkF9vuiocbJM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772570326; c=relaxed/simple;
+	bh=mXJ4UmUVxuH0ShdzLqcy4AQHr3CDFCHNtTjfyg2qfto=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aynSbaWCL5I/eMUdSL6o5RMPiZxepL7wcQlQCV3IJ5Du/wWGtwRdcA+1wQb3xxwpqUllnM6EixzfN/WErOR7l5DxuekhVqG4849fKL74JpVLy5NJ3BCkL2AVTkuvn9T7tRSynve3oxQUeC2Y/6AYR162MBJaE1kRqqpaysbk8qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=kF5mi4y4; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="inlzbsQU"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-79885f4a8ffso39511447b3.3
-        for <spacemit@lists.linux.dev>; Tue, 03 Mar 2026 05:58:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772546305; cv=none;
-        d=google.com; s=arc-20240605;
-        b=d8sQNxopddjDcFBXKZdne5KuwzDFQ+vtnfYTILgsv4ARxaMGP5/dE0QdjfOD6LU6h9
-         k42mT+JoiRahEL8K1xUcyX0RSLvPUTBIkDTFmQMIsdWqXr3f1/Rw9vSoQMV07g6/S4Af
-         76zmAJLIKmq0lq+F/21RXwnx7Y9tKs3Pf7+N5ZXe08eZTOqMp9sWbcp4BPoM2NIOAifj
-         eaQLgz6JWlOyZQa4MR3P57FvPXIZa/hTS5QGxH7I1Lwzn7aFElJWcHkKgDgcZuWD3wqd
-         uZbqI+LNoGOxUaGxC2Q5k3BSEB9SDxxyKmpjtrGPUV2Z3FKEJEzxsR1ToOI3r96ebQ94
-         gnZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=25Zk0eBlVyMNHvv/kU7Q4vGl++ta3IdblXKrhWJCrxQ=;
-        fh=Xph0VZJGS4CaiQ7NFRz79e9Ng/Lve/EGql/p0srNhWY=;
-        b=bX0GZsansW08crak0HBBefmnFzaAyWDgu4/L8r6SnlG6VXkQN/7kAaScnSLU/rYU4R
-         5KiNROPhLvU9E976TGvOkBRy63HHFvL+EfppeUzDzhcGtixuT36yhP49pA4clGDwle8h
-         OeIEzlOwnESMHV4kmlzBU2868A91Rh53rp+5wZpibFiHjE2RFfvMzW7VhcS8jrt72i2X
-         CvF6Q1xEPlvUJ4qVabC/UHZ+zkd+uxQcL/hDShWx3YsEty10ZTHOyvqggeXN7aHASYCq
-         lqKmROQquAX3CXy/41/Ff3xOtP9nHygIMFWgbgFhQvVuG7QTMxgrtY//ZlRwl00y6z8B
-         dBpw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772546305; x=1773151105; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=25Zk0eBlVyMNHvv/kU7Q4vGl++ta3IdblXKrhWJCrxQ=;
-        b=inlzbsQUWGJj5eOcdUkqjsLSCmLYL7M02QTSJC9vdogQFdtXHDIUmE4yMjF5hb0UpZ
-         AlcYCQhvDtb6vNqv8+GR3kmTBPpRrd/xJJZpY6B3MTqNJ+sBjuer4xERvGVRZZOv/60+
-         jpHD2PsGlXmVoO/0jWIhQiLq9zhytGWY2S7pW5ByRCgNROBiq9yXlH61O+PXRnLp2WJ4
-         TFs4kU7Uq0uZ0dDpOTs8uPXkp4l/MsTVuOFnZW6qPsVEgGC2S0EZwAkBha4EC5FMrL2j
-         PwkWryQvg6OO7OvHwghTcFzt5YFxh7t1u5QWMKcFuTmu3ploB/9y28m3OOdlMXN3Li9C
-         vOoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772546305; x=1773151105;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=25Zk0eBlVyMNHvv/kU7Q4vGl++ta3IdblXKrhWJCrxQ=;
-        b=fD5qh57KbZ7oq52DjJbMenIBga93+Gc38bCUP+37mzI0D8nTjjR3rxcSzYgMgjd5a2
-         sNqNt40QUOWNOPo7eGtCNJPi2JvRHE1l433Sl7dh9oFDfkEWYxYBHLa3vTrXCifnNK8Q
-         iER+kThh+6vdqnUlfXis/Tf6g9DX0xWddhTyTTYx5iI6GlVa/BIX3aAGYCsBQxlAFm7e
-         WWK2NMUHC3aCOYY270+PTpMJ+4AgqeM4fSEDXuQW5gdqVu9s01h38tVUF/82EoUw16ad
-         xCcZZZIP+pf0R3Zg0IWs/xQRsIRYdARpRi+Sv6tsfrkpLRs0dYymunYcKQ9kwCx4lvRU
-         F8yg==
-X-Forwarded-Encrypted: i=1; AJvYcCViiB3KCweXTGjgXxT80EsgS2A68bicyR4Gw2piIKmFR2WPH67/GfUHdD4yFDIlPnKtQLdG/K0tiw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxXZfBG7Rsg1SEqXqtUwJF7iR9vKvii9pwDCga6NYj2GSqRp65s
-	eG8miHKL+G6NYmm0XEboILh8bNx78tG/GUUF3i2VTRN+ByKqAuNQemdDc8uhQGH4Q9MZpSl/q50
-	Rm/pqUd7SduwOolf/EaVkLi0ivu8hQrY=
-X-Gm-Gg: ATEYQzyQFVBZ038N9E5NDj8L1DkASoeVDerVaG14dFKYU2D1O05ZEUE1d9H6EuwIHYU
-	HB/BpnAKAULZ7f+/5dAAUF23stgu8QrFGB29n/ONyxjdC15oNTYvhrL2uMzTtMsG6bL2KG6U5f7
-	DKqLEzBo3GzMwuqaAmDPC6QngbKuzWJR7fRqJaehzUO/InDKyUAY6if78ab8WrDq0+cgMC0v7S9
-	vhbnaRKRS09UAc2q5T3cutIlgiHznmAa2LNTC/smIHZnJ6GOzX6RQtG301WDXiPYsLCn8joe/mH
-	RyxnD11L
-X-Received: by 2002:a53:ecd5:0:b0:64c:bae1:2168 with SMTP id
- 956f58d0204a3-64cc201e46fmr9653985d50.12.1772546305463; Tue, 03 Mar 2026
- 05:58:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="kF5mi4y4"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=ZN9YjA7A/E5P7KV/eCgsd8bu8xvdRjvgUVEuCuL5dSI=; b=kF5mi4y4bri056BNgYXfAyhKzE
+	SLZLqP74NX0rq7RrkYwmymPIZ5Vvl1XuDfCR7Ua3Ba0ntlotelICnOhisN57V4qyfT6mGODYpUwZ6
+	o/cIpbd7nuZxP/TOEoSWjY+mE/K7qMOnHo+IJUrA7/vMxUJ+R7rR+nFH73VMVK+kluEwN/FYNOU97
+	rA5pA0P/IVs+eXXCwoJg/bacFLbB/WSmY1pnA13Lf8XuOVyuUhrOX3thTmu1/iH3HVHIKxVQ0tqnX
+	45pnL5MYzw7X51YFEXGzONYfvQLpF1rHdnjlEwUGDRHyMEnxwwqMneDqOWXiOu9BXoY4SCnQCFHEV
+	O0ZC14QQ==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1vxWVf-0000000EkpA-3dfF;
+	Tue, 03 Mar 2026 21:38:27 +0100
+Date: Tue, 3 Mar 2026 21:38:27 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yanko Kaneti <yaneti@declera.com>
+Cc: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v5 2/2] mfd: simple-mfd-i2c: add a reboot cell for the
+ SpacemiT P1 chip
+Message-ID: <aadGw1fIlJyNNoum@aurel32.net>
+Mail-Followup-To: Yanko Kaneti <yaneti@declera.com>,
+	linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Yixun Lan <dlan@gentoo.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>
+References: <20251102230352.914421-1-aurelien@aurel32.net>
+ <20251102230352.914421-3-aurelien@aurel32.net>
+ <b51a62513daa9d2390031ec350e0b33bdb7e54aa.camel@declera.com>
+ <aaC78FTN31QYaVg0@aurel32.net>
+ <990bc03ed2baa05e619f0aa9cc6a23acadd66ea6.camel@declera.com>
+ <aaS6xeKFZz06fb1_@aurel32.net>
+ <aaXuWwyA5NzBZzlW@aurel32.net>
+ <36f8df695463e5ff3eaaffbac357fc73026f7373.camel@declera.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
- <20260302-orangepi-sd-card-uhs-v1-3-89c219973c0c@gmail.com> <aaZfVZoCe3AxTzAf@pie>
-In-Reply-To: <aaZfVZoCe3AxTzAf@pie>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Tue, 3 Mar 2026 14:58:13 +0100
-X-Gm-Features: AaiRm52kBZDv7RHaHk__HaURlrgDL3u1uXFkZRgyX5QSdwPI4llWUBVCuA0ve_E
-Message-ID: <CABdCQ=NporA_1wRZx-dG3pXE3mmqT1g=M18Utpqpewt5qXLiCg@mail.gmail.com>
-Subject: Re: [PATCH 03/10] mmc: sdhci-of-k1: add regulator framework support
-To: Yao Zi <me@ziyao.cc>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <36f8df695463e5ff3eaaffbac357fc73026f7373.camel@declera.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-El mar, 3 mar 2026 a las 5:11, Yao Zi (<me@ziyao.cc>) escribi=C3=B3:
->
-> On Mon, Mar 02, 2026 at 04:13:24PM +0100, Iker Pedrosa wrote:
-> > Add regulator framework support for voltage switching operations. This
-> > enables proper PMIC control for UHS voltage switching between 3.3V and
-> > 1.8V signaling levels.
-> >
-> > - Add regulator supply parsing
-> > - Implement voltage switching callback
-> > - Enable mmc regulator framework integration
-> >
-> > Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> > ---
-> >  drivers/mmc/host/sdhci-of-k1.c | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
->
-> It seems PATCH 4 should be squashed into this one, or the functionality
-> of voltage switching isn't really complete.
+Hi,
 
-That makes sense. I'm still learning the best way to structure these
-series for the kernel, so I appreciate the guidance. I'll squash patch
-4 into this one for v2 to ensure the voltage switching logic is
-atomic.
+On 2026-03-02 22:34, Yanko Kaneti wrote:
+> Hello,
+> 
+> On Mon, 2026-03-02 at 21:08 +0100, Aurelien Jarno wrote:
+> > On 2026-03-01 23:16, Aurelien Jarno wrote:
+> > > On 2026-02-27 13:29, Yanko Kaneti wrote:
+> > > > On Thu, 2026-02-26 at 22:32 +0100, Aurelien Jarno wrote:
+> > > > > Hi,
+> > > > > 
+> > > > > On 2026-02-26 16:32, Yanko Kaneti wrote:
+> > > > > > Hello,
+> > > > > > 
+> > > > > > On Mon, 2025-11-03 at 00:02 +0100, Aurelien Jarno wrote:
+> > > > > > > Add a "spacemit-p1-reboot" cell for the SpacemiT P1 chip.
+> > > > > > > 
+> > > > > > > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+> > > > > > > ---
+> > > > > > > v5: no changes
+> > > > > > > 
+> > > > > > >  drivers/mfd/simple-mfd-i2c.c | 1 +
+> > > > > > >  1 file changed, 1 insertion(+)
+> > > > > > > 
+> > > > > > > diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simple-mfd-i2c.c
+> > > > > > > index 0a607a1e3ca1d..542d378cdcd1f 100644
+> > > > > > > --- a/drivers/mfd/simple-mfd-i2c.c
+> > > > > > > +++ b/drivers/mfd/simple-mfd-i2c.c
+> > > > > > > @@ -99,6 +99,7 @@ static const struct regmap_config spacemit_p1_regmap_config = {
+> > > > > > >  };
+> > > > > > >  
+> > > > > > >  static const struct mfd_cell spacemit_p1_cells[] = {
+> > > > > > > +	{ .name = "spacemit-p1-reboot", },
+> > > > > > >  	{ .name = "spacemit-p1-regulator", },
+> > > > > > >  	{ .name = "spacemit-p1-rtc", },
+> > > > > > >  };
+> > > > > > 
+> > > > > > Perhaps its safe to merge this one now that everything P1 and I2C is
+> > > > > > already in linus tip ?
+> > > > > 
+> > > > > Unfortunately, this patchset is still missing:
+> > > > > https://lore.kernel.org/all/20260207-b4-k3-i2c-pio-v7-0-626942d94d91@linux.spacemit.com/
+> > > > > 
+> > > > > This means the reboots work most of the time, but are not 100% reliable, 
+> > > > > and that's the reason why this patch got blocked from merging.
+> > > > 
+> > > > I see. Thanks. Sounds to me like sometimes working compared to never
+> > > > working is better , but anyway..
+> > > 
+> > > I agree with that, but the decision was to hold on this patch until the 
+> > > I2C PIO part got merged.
+> > > 
+> > > > FWIW  with this patch and the pio patcheset I get this rcu splat on
+> > > > reboot (which is still working). Similar splat is there without the pio
+> > > > patcheset.
+> > > 
+> > > I haven't been able to reproduce the issue here after 10+ reboots on a 
+> > > BPI-F3 board, but I tried the patch on top of 6.19. I'll try to build a 
+> > > 7.0.0-rc2 kernel and report back.
+> > 
+> > I have tried that, and I am still unable to reproduce the issue with a 
+> > 7.0.0-rc2 kernel and a BPI-F3 board.
+> 
+> I can still see it on every reboot (with the patches that allow reboot
+> to work). Do you have CONFIG_PREEMPT_RCU in your config ? its default on
+> when anything PREEMPT is selected. In Fedora its CONFIG_PREEMPT_DYNAMIC
+> that flips it.
 
->
-> > diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of=
--k1.c
-> > index b703b78282ed8d89183c816477c149c0a565618a..c260cb89704ae7a25bec0f0=
-7831d495553405bbd 100644
-> > --- a/drivers/mmc/host/sdhci-of-k1.c
-> > +++ b/drivers/mmc/host/sdhci-of-k1.c
->
-> ...
->
-> > @@ -291,6 +297,12 @@ static int spacemit_sdhci_probe(struct platform_de=
-vice *pdev)
-> >
-> >       host->mmc->caps |=3D MMC_CAP_NEED_RSP_BUSY;
-> >
-> > +     ret =3D mmc_regulator_get_supply(host->mmc);
-> > +     if (ret)
-> > +             dev_warn(dev, "Failed to get regulators: %d\n", ret);
-> > +
-> > +     host->mmc_host_ops.start_signal_voltage_switch =3D spacemit_sdhci=
-_start_signal_voltage_switch;
->
-> Why not assign start_signal_voltage_switch in the declaration of
-> spacemit_sdhci_ops?
+Thanks for the hint, that option was not activated here, it's not the 
+riscv64 defconfig. With it I am also able to reproduce the issue. I'll 
+try to debug that and report back.
 
-You're right, that=E2=80=99s much cleaner. I'll move the assignment into th=
-e
-spacemit_sdhci_ops declaration for v2. Thanks for the suggestion!
+Regards
+Aurelien
 
->
-> >       ret =3D spacemit_sdhci_get_clocks(dev, pltfm_host);
-> >       if (ret)
-> >               goto err_pltfm;
-> >
-> > --
-> > 2.53.0
->
-> Best regards,
-> Yao Zi
->
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
