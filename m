@@ -1,318 +1,187 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from poodle.tulip.relay.mailchannels.net (poodle.tulip.relay.mailchannels.net [23.83.218.249])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D9B3914E3
-	for <spacemit@lists.linux.dev>; Wed,  4 Mar 2026 08:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772612778; cv=none; b=aI3gsYVR4WahTj9oKVhmI1/FzcAiqpbqCIfLMWUEk+ajxfmX3CX93lokfGcdDOTiRnq2Ov66TKngI0E7XsVfBfmGY4os/CaczGT+Bh48swIJFod9fvk7WoEqIg2eP+RHQdbougjpDpoXNXS0dL2Z7K6SCEnRhhcp+4hqIcVPV0A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772612778; c=relaxed/simple;
-	bh=KsKAPs16NFdju1/0K64Cu51clPSA8TzJO1IbUwhFMfs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qCH8L1GAv7z3RdlacILm0swwR3+3nnWH5FF3/9s1WdBSVdNYMqXoKd1uc8tQZai/76UdDOy+8tZ1d2D400wRSJYTkhp3WgfZ1yrOltvxxvUhYmdI1sB1fvjghkObLlv/0yNlgbXiU1EVJs4oJXYJRls4gCPMY8+x6f0GaYXM7Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jjqce6a+; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC51024BD03
+	for <spacemit@lists.linux.dev>; Wed,  4 Mar 2026 14:15:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.249
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772633733; cv=pass; b=nE8uoJwF8PKRiUHv1sazZwIaHkltrlKnxgoKzIWJnQ1zTGK94U3kwz0bAReBsXsT9KyAtHYeNC28T2pKZxsMVvYN/GZzKt5BoaMqO9mVG7kynefwGi+BOh2HV5lhZbAHmBIiRmN2mQTlKuYFLYVA5VeqAGKVMwIqnsT3HZEAr+A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772633733; c=relaxed/simple;
+	bh=zcIFJDa9JAhohTuTt+/oRm4dvGZDfDCRROXzldJeiWs=;
+	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
+	 Content-Type:Date; b=YA0BivJRf0hT2LztBq7EvS9CsVKiZk44adXMWzoPxTmrd2mtBNQbcJolli1qHtqC8pHuVO+zWsrwBfw7FtNYq06PRcbCkLg72INEc639X5Z5fCVe/JWzZFAWUHAMVlC9SslFu3opCuNugGOtM1cUr0sNgUq/P4FRsD5ksbmp7HQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=nAHTaata; arc=pass smtp.client-ip=23.83.218.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jjqce6a+"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8274843810cso3790426b3a.3
-        for <spacemit@lists.linux.dev>; Wed, 04 Mar 2026 00:26:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772612773; x=1773217573; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=S+0Gl/6jsm6dp6ffbeXLRnGklOmDo7AmQYEeUc9n0f0=;
-        b=Jjqce6a+VnuuSbnuOn6jvXhAgie+MGiqL386wBpo5UxGjMc0pdEZNiUGRFsxPTlUjB
-         13bbby2UKGXn1MhL/ZnejY2k/2Ja7kEShVLRzyJS5cFSH0NWUZObEdJTMA3Fr93NJ+ua
-         3dyVKt6qDyLf44T7UJyebG2iBeiBirmGO+KnQVT9R1jbQKB479bPES4uL3oLiqFxMnzz
-         i1dl4KWc1dlL0UIbO17TPGW1hGv+b70+RzCxb2m7R3+sPuELiI4kHEaPFwibBRj1vGba
-         L3OnGOHn4MZ2P6fnpjVIulQ1p1cFcX41Rerkanlkxs0mhnN9CfEde1uhbmZeKnT191Qy
-         b7VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772612773; x=1773217573;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S+0Gl/6jsm6dp6ffbeXLRnGklOmDo7AmQYEeUc9n0f0=;
-        b=AzXCQSATammnS0iAgNx7YVmhytEWyetaxrysisc+W2mvtbN98DoSukIanPxQTb+v1S
-         ZbE1vWBQew7xUuMtcKU/fUb2Loz+LMSggfx/xPdvDiOZ/x3U0WeDj7w7Gp3s1R0477/d
-         /cpBrLAyaU1w7iZj/41ctphK/ROgp275xiNZMuqa7GZ3H7d8gRtih57AGgmXynSwsxh9
-         EioK5EUqop2iwl2XOZxDVu0JIPdQ3GptzdK0VnO/WKqL7bXnGhW0DZVwyxzMAsLR8XiB
-         rUrVZJP6xlUTld9sF4WZW3+ApiTfkSvwMUJw/D4AQ9Oovjdk/fYbs4rBZAF93r0aB8Oe
-         udyg==
-X-Forwarded-Encrypted: i=1; AJvYcCXa+BO/Adj9bfjgBllqXpERyM+yrtxq52mUZPZ4i9LxxhHWqDXhysVZ+ClwVZ9vUhAyCdkN8CN9PQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyeqVvTUt6wiorcUhy8/+bLn3pp2InyTQd+KEZqlpS+6fyBkciI
-	uzyzicXwiXfP0qddUfOPKnu/ceVFYGiqPTlJzGosf7YsV30BZR7aW5SN
-X-Gm-Gg: ATEYQzxEcrK9MfVTs7R8EoLDyrpY+t9XQHs/sZs6zC3D/uPHFQ4w6+eQS/Ld3ohqXDr
-	2uLDRtyibwwzlAZSSjgusNWQ2HQ/sqHC7ankjhLLvZxI5kxNDSk3Dz4ORUAatLJtR+PDKPcHmP7
-	V+ht7U7+fSglzwkEBXTzQcDPUorv6yMJZl8E3ZDRctOk9xcxt94cZHbaVV2F9AJfcBfs98S/Hx9
-	vFjGrtD7EiX7ifyd8Xn3hp8+kMz8AQslxccGzbX4M3NAiT6prUhA1eM8Vbxezb4GjhEMT/UEWgj
-	hpaKu8yNalFS6wSnFwUUpwap15qGbmzglawI8E35lWhP1kXkqrlBgKMKI8oRe2s1TiNmT52I+B5
-	1nxAEA42hGnDvYvtgfh7QJq/e2Q/pPbVEsYTaWdUqlmEDkQuoN2jEMPpCrLaR4/2db2e5JjmlXQ
-	Oym+Fae61i+MfUz+56e4ICb8AUG640Dulfyw==
-X-Received: by 2002:a05:6a20:26aa:b0:394:5ac7:8ffa with SMTP id adf61e73a8af0-3982ded341amr1286519637.16.1772612772757;
-        Wed, 04 Mar 2026 00:26:12 -0800 (PST)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c7377062904sm1274642a12.30.2026.03.04.00.26.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 00:26:12 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Richard Cochran <richardcochran@gmail.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH] riscv: dts: spacemit: k3: Add ethernet device node
-Date: Wed,  4 Mar 2026 16:25:41 +0800
-Message-ID: <20260304082541.1786223-1-inochiama@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="nAHTaata"
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 471C978201E;
+	Wed, 04 Mar 2026 14:06:12 +0000 (UTC)
+Received: from fr-int-smtpout12.hostinger.io (100-106-44-163.trex-nlb.outbound.svc.cluster.local [100.106.44.163])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 81AD1781F91;
+	Wed, 04 Mar 2026 14:06:07 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+	t=1772633170;
+	b=E4rGt2pgwYi/X5pIzdEVhmdJ1dS1zbJVj+g1R3dILHEficinZ7lPweJIsUMRKffzfX+xY0
+	9V+yJQLFSHcVVga/yfW1nQ3VF6Djuj+AiJOluZ9ZQSoaR2DFECdlmkpjcd2hqvIJfxFfCI
+	mQCPfKT2b/WhsTgCYYtGeH8V6S1gWt7NWwdRvw5BkgdyiSGIfGc+kHjpuJzR+mxPsTx4gB
+	6UwfLlIT43b2pcYXjnH6SxGHBXIKP+XiOKh7HzsrNA0tRZ/QufFf1tSc7mlp7z17t2XOWh
+	DcGHhfpDGitbfACOQrkidPvmHvB+CezybwZu1c36fN9KoFRCl7W2teSgnHSrsw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1772633170;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=6ZcnJ/j/bBqCLcJYERyzEEBssHFy6AjpJje4wPeAnUc=;
+	b=N6uHgBEV8Fc1PqdiXjPDjztuTG1jrKsrEn0ME7iOKPlXkmsXdjbVAZq1Y4N7LmL1yJmteZ
+	cofrX9J23Kntyt5xRft0uUwSUBm6eKZF4v11mjZioHxRqssz3RYYpfBRJAenmA5cbQTblK
+	AmJz7KGqwN/n9lUMXScP8YKV9MMZtnmbCHuMOr2iMQAq4FIE0hvQ6Argy8JBgsHAFJjiiS
+	YL0Bi0v4ezyVR94tTpJ1PkwNuDR7UMsxe6ktcl9kq+mtVtvv6Xulnx2bwcHzVPMdjTYA/6
+	mJiKr0RbhuZYf/usExEFm09bz4caQkAsQfcCPNKRqCjK+MKv0nXjA/wcfrvAMg==
+ARC-Authentication-Results: i=1;
+	rspamd-7f65b64645-78922;
+	auth=pass smtp.auth=hostingeremail
+ smtp.mailfrom=michael.opdenacker@rootcommit.com
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId:
+ hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Bitter-Stop: 54be4d3e301d048f_1772633170763_1578999821
+X-MC-Loop-Signature: 1772633170763:2420406471
+X-MC-Ingress-Time: 1772633170763
+Received: from fr-int-smtpout12.hostinger.io (fr-int-smtpout12.hostinger.io
+ [148.222.54.46])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.106.44.163 (trex/7.1.3);
+	Wed, 04 Mar 2026 14:06:10 +0000
+Received: from [IPV6:2001:861:4450:d360:f268:4cb6:92c5:22a0] (unknown [IPv6:2001:861:4450:d360:f268:4cb6:92c5:22a0])
+	(Authenticated sender: michael.opdenacker@rootcommit.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4fQvbJ62FTz1xmF;
+	Wed,  4 Mar 2026 14:06:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
+	s=hostingermail-a; t=1772633165;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6ZcnJ/j/bBqCLcJYERyzEEBssHFy6AjpJje4wPeAnUc=;
+	b=nAHTaatahqRW98jaGeLTZEnk5Rc+NxOllPE1H9Z9B6ckPb3hbPnf0pb8pGRjuSufoNZNHz
+	XBvE1V4M2HRB/NofQCgcEE/i0PBFK6vIxllZOyfWoWYg3EpkquetP2RG8iW79ZftFbRVC3
+	Kjpey6oaRnMX+8pygcHmPTDbrIinl83ztpz6yBjpymMrFjWO0XhBcn08WTMDjR2ql0WG+k
+	2okX7pZkKvSO37tBAhvEVVB0oVTq9tjDB3Zd8L0wfwJ2elmEm6HZVGjqyRE1g1GJJGn0z1
+	TfyW6JnrJ3sLYCmJKIGqAHoQ62C1IZI9L4J68T0IMVR+J3d7/0kAlkgWDGuElg==
+Message-ID: <e6aa3c65-171e-4bab-b552-5e8cf4bf35ec@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Cc: michael.opdenacker@rootcommit.com,
+ Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/10] riscv: spacemit: enable SD card support with UHS
+ modes for OrangePi RV2
+To: Iker Pedrosa <ikerpedrosam@gmail.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+ Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>
+References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
+Content-Language: en-US
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+In-Reply-To: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Wed,  4 Mar 2026 14:06:04 +0000 (UTC)
+X-CM-Envelope: MS4xfJGaqNo8HVHkf0pbSl1l5Xlg3h6UW8oWB0/I0QhOtT7T7ozYBKTdXa/YX9tbFiOy7N8pc8qFLLntzfRP9vONMIOpdRrtMUyu/P6uOvhuNDEF/XUmY8uJ qQ8y7/aBbQqnbimRVUHV5I99ZkiDtoCtRWoxNDBCh8Ykv10/cIppgBu+54Yqkf2KfNdqcntVX7cmAAh7Grtz5fP64N3D5+JA4u+v0B36DHHd2r1cwHdSMKtr vLmMAf6K6X+YBvYw6z9dfhsdRkAF/QhMKu6tAWMVUCeFYM9HXO5bzVGXtdb1EWURGvov4kGL2NlK9vwOaJsXhoCZVYgHQX45/8iGmsqVtxd6efr56av0snJ0 4Ys5XdrQOWLD7SwWhZniXk/LvvwXX9McjKzJQOJOaIUmOggdfr47F6RqxJzY4hUJicPclfIvYGrRhEglqk9DUpT7XBt5cYlrFiHxKVPM6xu0LcgZ6oUtEyEl IGrtBdDW9Ell6D7IR6jj8HpSNxvDR5GMNeoH21ZVMCYMU89ZPqbdbqLj9N7JsXTOnlcIlR/n7wJex41AiCyk611OueupQ1avamMaLvOM+Xa3qSbLRS7E6dIw 1br6Q1W59xQOrPvNzZH8swxVm5ifwpkUM4RaDgFFozkl6dSmWi22awNJOIXNi8CbJplJHnPhULRAUBHC/5/JMk3cUFv4jZGLVSfgo6+BVNZObRbB0tQkgF3I urYQIXKOPin67XicBSZotg3HnIy8TaJUYrW01C0EUH1xcOzUNhpa6PTM52oceANLA7UPP3IN1g+wlzHZ9QeyJExg4qY1p2Dpx5lDwOmt7DrNdtfKh+WiY8PG s95nhWsEZuO0SRN+cyhDrcRMUo4zXRD56j0R47t3Qs7Y9ciNDRXcVrAMubgwlQ==
+X-CM-Analysis: v=2.4 cv=GMJaEfNK c=1 sm=1 tr=0 ts=69a83c4d a=eDks/dr2Th2ytqR7xoOTkg==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=d70CFdQeAAAA:8 a=pGLkceISAAAA:8 a=cywHqOp7CWn13ELKgeMA:9 a=QEXdDO2ut3YA:10 a=NcxpMcIZDGm-g932nG_k:22
+X-AuthUser: michael.opdenacker@rootcommit.com
 
-Add all ethernet device nodes for K3 SoC. And enable the available
-ethernet device for the PICO ITX board.
+Hi Iker,
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
-Require the following patch series:
-1. Basic DT device patch
-https://lore.kernel.org/spacemit/20260304-01-dts-uart-full-v1-0-50a0aa53a245@kernel.org
-2. Ethernet driver patch
-https://lore.kernel.org/spacemit/20260304080721.1658224-1-inochiama@gmail.com
----
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  20 ++++
- arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi |  38 +++++++
- arch/riscv/boot/dts/spacemit/k3.dtsi         | 106 +++++++++++++++++++
- 3 files changed, 164 insertions(+)
+Thanks a lot for these patches!
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-index b098dbd0e7a1..47e4fa824417 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -6,6 +6,7 @@
+On 3/2/26 4:13 PM, Iker Pedrosa wrote:
+> This series enables complete SD card support for the Spacemit K1-based
+> OrangePi RV2 board, including UHS (Ultra High Speed) modes for
+> high-performance SD card operation.
+>
+> Background
+>
+> The Spacemit K1 SoC includes an SDHCI controller capable of supporting
+> SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
+> currently lacks basic SD controller configuration, SDHCI driver
+> enhancements for voltage switching and tuning, and power management
+> infrastructure.
+>
+> Implementation
+>
+> The series enables SD card support through coordinated layers:
+>
+> - Hardware infrastructure (patches 1-2): Device tree bindings for voltage
+> switching hardware and essential clock infrastructure.
+> - SDHCI driver enhancements (patches 3-7): Regulator framework
+> integration, pinctrl state switching for voltage domains, AIB register
+> programming, and comprehensive SDR tuning support for reliable UHS
+> operation.
+> - SoC and board integration (patches 8-10): Complete K1 SoC controller
+> definitions, PMIC power infrastructure, and OrangePi RV2 board enablement
+> with full UHS support.
+>
+> This transforms the OrangePi RV2 from having no SD card support to full
+> UHS-I capability, enabling high-performance storage up to 208MHz.
+>
+> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+> ---
+> Iker Pedrosa (10):
+>        dt-bindings: mmc: spacemit,sdhci: add AIB voltage switching registers
+>        mmc: sdhci-of-k1: enable essential clock infrastructure for SD operation
+>        mmc: sdhci-of-k1: add regulator framework support
+>        mmc: sdhci-of-k1: add pinctrl state switching for voltage changes
+>        mmc: sdhci-of-k1: add AIB register support for voltage switching
+>        mmc: sdhci-of-k1: add SDR tuning infrastructure
+>        mmc: sdhci-of-k1: add comprehensive SDR tuning support
+>        riscv: dts: spacemit: k1: add SD card controller and pinctrl support
+>        riscv: dts: spacemit: k1-orangepi-rv2: add PMIC and power infrastructure
+>        riscv: dts: spacemit: k1-orangepi-rv2: add SD card support with UHS modes
+>
+>   .../devicetree/bindings/mmc/spacemit,sdhci.yaml    |  15 +
+>   arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   |  69 +++++
+>   arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       |  40 +++
+>   arch/riscv/boot/dts/spacemit/k1.dtsi               |  13 +
+>   drivers/mmc/host/sdhci-of-k1.c                     | 320 +++++++++++++++++++++
+>   5 files changed, 457 insertions(+)
+> ---
+> base-commit: 5f499bb7a07fcdcf8877acaa8f413a5dc1fcfacc
+> change-id: 20260226-orangepi-sd-card-uhs-0ecb05839b0c
+>
+> Best regards,
 
- #include "k3.dtsi"
- #include "k3-pinctrl.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
+Things look all right according to my first tests. First time I'm able 
+to boot a Yocto build root filesystem from SD card with the mainline 
+kernel on the OrangePi RV2 board!
+Tomorrow, I should have time to run tests on BananaPi PF3 too. Fingers 
+crossed for eMMC support...
 
- / {
- 	model = "SpacemiT K3 Pico-ITX";
-@@ -25,6 +26,25 @@ memory@100000000 {
- 	};
- };
+I'll be happy to test your further iterations. That would be awesone to 
+have SD support merged in 7.1 :)
+Thanks again
+Michael.
 
-+&eth0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac0_cfg>;
-+
-+	phy-mode = "rgmii-id";
-+	phy-handle = <&phy0>;
-+	status = "okay";
-+
-+	mdio {
-+		phy0: phy@1 {
-+			compatible = "ethernet-phy-ieee802.3-c22";
-+			reg = <1>;
-+			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
-+			reset-assert-us = <10000>;
-+			reset-deassert-us = <10000>;
-+		};
-+	};
-+};
-+
- &uart0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&uart0_0_cfg>;
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-index efb0f1572188..256880192846 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-@@ -21,4 +21,42 @@ uart0-0-pins {
- 			drive-strength = <25>;
- 		};
- 	};
-+
-+	gmac0_cfg: gmac0-cfg {
-+		gmac0_base_pins: gmac0-0-pins {
-+			pinmux = <K3_PADCONF(0, 1)>,
-+				 <K3_PADCONF(1, 1)>,
-+				 <K3_PADCONF(2, 1)>,
-+				 <K3_PADCONF(3, 1)>,
-+				 <K3_PADCONF(6, 1)>,
-+				 <K3_PADCONF(7, 1)>,
-+				 <K3_PADCONF(11, 1)>,
-+				 <K3_PADCONF(12, 1)>,
-+				 <K3_PADCONF(13, 1)>;
-+
-+			bias-disable;
-+			drive-strength = <25>;
-+			power-source = <1800>;
-+		};
-+
-+		gmac0_rgmii_add_pins: gmac0-1-pins {
-+			pinmux = <K3_PADCONF(4, 1)>,
-+				 <K3_PADCONF(5, 1)>,
-+				 <K3_PADCONF(8, 1)>,
-+				 <K3_PADCONF(9, 1)>,
-+				 <K3_PADCONF(10, 1)>;
-+
-+			bias-disable;
-+			drive-strength = <25>;
-+			power-source = <1800>;
-+		};
-+
-+		gmac0_int_pins: gmac0-3-pins {
-+			pinmux = <K3_PADCONF(14, 1)>;
-+
-+			bias-disable;
-+			drive-strength = <25>;
-+			power-source = <1800>;
-+		};
-+	};
- };
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index a3a8ceddabec..237fb00e4bc4 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -438,6 +438,112 @@ soc: soc {
- 		dma-noncoherent;
- 		ranges;
-
-+		gmac_axi_setup: stmmac-axi-config {
-+			snps,wr_osr_lmt = <0xf>;
-+			snps,rd_osr_lmt = <0xf>;
-+			/* max axi burst len is 256 */
-+			snps,blen = <256 128 64 32 16 0 0>;
-+		};
-+
-+		eth0: ethernet@cac80000 {
-+			compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
-+			reg = <0x0 0xcac80000 0x0 0x2000>;
-+			clocks = <&syscon_apmu CLK_APMU_EMAC0_BUS>,
-+				 <&syscon_apmu CLK_APMU_EMAC0_1588>,
-+				 <&syscon_apmu CLK_APMU_EMAC0_RGMII_TX>;
-+			clock-names = "stmmaceth", "ptp_ref", "tx";
-+			interrupt-parent = <&saplic>;
-+			interrupts = <131 IRQ_TYPE_LEVEL_HIGH>,
-+				     <276 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq", "eth_wake_irq";
-+			resets = <&syscon_apmu RESET_APMU_EMAC0>;
-+			reset-names = "stmmaceth";
-+			rx-fifo-depth = <8192>;
-+			tx-fifo-depth = <8192>;
-+			snps,multicast-filter-bins = <64>;
-+			snps,perfect-filter-entries = <32>;
-+			snps,aal;
-+			snps,tso;
-+			snps,txpbl = <8>;
-+			snps,rxpbl = <8>;
-+			snps,force_sf_dma_mode;
-+			snps,axi-config = <&gmac_axi_setup>;
-+			spacemit,apmu = <&syscon_apmu 0x3e4 0x3e8>;
-+			status = "disabled";
-+
-+			mdio {
-+				compatible = "snps,dwmac-mdio";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
-+		eth1: ethernet@cac82000 {
-+			compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
-+			reg = <0x0 0xcac82000 0x0 0x2000>;
-+			clocks = <&syscon_apmu CLK_APMU_EMAC1_BUS>,
-+				 <&syscon_apmu CLK_APMU_EMAC1_1588>,
-+				 <&syscon_apmu CLK_APMU_EMAC1_RGMII_TX>;
-+			clock-names = "stmmaceth", "ptp_ref", "tx";
-+			interrupt-parent = <&saplic>;
-+			interrupts = <133 IRQ_TYPE_LEVEL_HIGH>,
-+				     <277 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq", "eth_wake_irq";
-+			resets = <&syscon_apmu RESET_APMU_EMAC1>;
-+			reset-names = "stmmaceth";
-+			rx-fifo-depth = <8192>;
-+			tx-fifo-depth = <8192>;
-+			snps,multicast-filter-bins = <64>;
-+			snps,perfect-filter-entries = <32>;
-+			snps,aal;
-+			snps,tso;
-+			snps,txpbl = <8>;
-+			snps,rxpbl = <8>;
-+			snps,force_sf_dma_mode;
-+			snps,axi-config = <&gmac_axi_setup>;
-+			spacemit,apmu = <&syscon_apmu 0x3ec 0x3f0>;
-+			status = "disabled";
-+
-+			mdio {
-+				compatible = "snps,dwmac-mdio";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
-+		eth2: ethernet@cac8e000 {
-+			compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
-+			reg = <0x0 0xcac8e000 0x0 0x2000>;
-+			clocks = <&syscon_apmu CLK_APMU_EMAC2_BUS>,
-+				 <&syscon_apmu CLK_APMU_EMAC2_1588>,
-+				 <&syscon_apmu CLK_APMU_EMAC2_RGMII_TX>;
-+			clock-names = "stmmaceth", "ptp_ref", "tx";
-+			interrupt-parent = <&saplic>;
-+			interrupts = <130 IRQ_TYPE_LEVEL_HIGH>,
-+				     <278 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq", "eth_wake_irq";
-+			resets = <&syscon_apmu RESET_APMU_EMAC2>;
-+			reset-names = "stmmaceth";
-+			rx-fifo-depth = <4096>;
-+			tx-fifo-depth = <4096>;
-+			snps,multicast-filter-bins = <64>;
-+			snps,perfect-filter-entries = <32>;
-+			snps,aal;
-+			snps,tso;
-+			snps,txpbl = <8>;
-+			snps,rxpbl = <8>;
-+			snps,force_sf_dma_mode;
-+			snps,axi-config = <&gmac_axi_setup>;
-+			spacemit,apmu = <&syscon_apmu 0x248 0x24c>;
-+			status = "disabled";
-+
-+			mdio {
-+				compatible = "snps,dwmac-mdio";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		syscon_apbc: system-controller@d4015000 {
- 			compatible = "spacemit,k3-syscon-apbc";
- 			reg = <0x0 0xd4015000 0x0 0x1000>;
-
-base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
-prerequisite-patch-id: 68c4d869548687dc115dd91e2ffb8f4c11482d86
-prerequisite-patch-id: fdadcf964c2cb3406160edb579d99a8d5695f8e6
-prerequisite-patch-id: 73b9e745338b0499b849fa4f7f9508987ab39a59
-prerequisite-patch-id: cd26770c2160c3c31a406bd8a6b01ab666180ae0
-prerequisite-patch-id: 93a515969fca3b15f827b3507979422dda14db8b
-prerequisite-patch-id: a637cffacb823aa7ae91e03ed42831ef8fbd0d1f
-prerequisite-patch-id: 40c49afe4eb71457913c45ddb720a9c8917aa827
---
-2.53.0
+-- 
+Root Commit
+Embedded Linux Training and Consulting
+https://rootcommit.com
 
