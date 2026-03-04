@@ -1,138 +1,318 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FF638F658
-	for <spacemit@lists.linux.dev>; Wed,  4 Mar 2026 08:10:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772611855; cv=pass; b=b+/IFeqMWUbO6hMCf7jUZ6tvCwZJI50RFs6sFSxQZ3Lofiy7zMuFdsU6bhEXkTcnpGpkuAwEHrC6ec8aDwPiGIXrHPgITE1554Wzoqa4DwOONNqO6W9G9lEHNDKyp3yb2LYnrfyBp3RX/ie8pf0U+w87hrdh5/TBYorqrVGffJ4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772611855; c=relaxed/simple;
-	bh=pZPELEAX/XvgCd+EHGG39RWeEAKi/FXGHUEcYZlbyg4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZNLaNCIoXfGJexSfysV2806RqZGMpJS34808uczHzG4XhMZXPJOHmj44IUs2JRHQ/AbymN3To3w/sf1AF+wmwQ6cpqjy11kuYO7l4y4raypwzNilyuEt64MSbzFy+Vdb0IaIl3LNGSXbCC/fNMgOBj6R7ktlGLGdXsizv3zzoRw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ea8x83XO; arc=pass smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D9B3914E3
+	for <spacemit@lists.linux.dev>; Wed,  4 Mar 2026 08:26:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772612778; cv=none; b=aI3gsYVR4WahTj9oKVhmI1/FzcAiqpbqCIfLMWUEk+ajxfmX3CX93lokfGcdDOTiRnq2Ov66TKngI0E7XsVfBfmGY4os/CaczGT+Bh48swIJFod9fvk7WoEqIg2eP+RHQdbougjpDpoXNXS0dL2Z7K6SCEnRhhcp+4hqIcVPV0A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772612778; c=relaxed/simple;
+	bh=KsKAPs16NFdju1/0K64Cu51clPSA8TzJO1IbUwhFMfs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qCH8L1GAv7z3RdlacILm0swwR3+3nnWH5FF3/9s1WdBSVdNYMqXoKd1uc8tQZai/76UdDOy+8tZ1d2D400wRSJYTkhp3WgfZ1yrOltvxxvUhYmdI1sB1fvjghkObLlv/0yNlgbXiU1EVJs4oJXYJRls4gCPMY8+x6f0GaYXM7Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jjqce6a+; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ea8x83XO"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-79800183233so90599207b3.1
-        for <spacemit@lists.linux.dev>; Wed, 04 Mar 2026 00:10:51 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772611851; cv=none;
-        d=google.com; s=arc-20240605;
-        b=leCjZu0ijdVr4K6FroYOG9xJMrOopUfIv7trAvl7s7qYOJFlkrpUF7v6uiie5RjGY8
-         KrTLhQYCOFxEInTN+qSFR/e8uvAvD17UefBzcFir3EVtJyJBNr1Nkjwa5zdZ57SBoFnb
-         ifnSJK0gWcQfMWiRzdT/V8SLZMdxXioGIEyw8yDzoltTxTuMzOYCZsPETO46RfC2ZVCf
-         QXBYZHWNTFKksU9uv+LYrPqwxwIZFKiyo0pwN0VZSZd+KOEFetcBR4PMBhZ0QhtH8CAZ
-         9hE4eUNwGL+4Hcuk2dOePP1aJXUnGpsMpHvPN4ZYKwp/9XD8ohx+Ki52xM4DyIFZyc7v
-         9sUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=xGLcah51hQA85jyOrvUCy/8RViW2Ks3it80HDo6IDSc=;
-        fh=WcK+EPZPn2mV4eW0YzPtxE45aCMfqz6bzQAQou7JFkE=;
-        b=aNnF0Z62fs8CCe4DajXQ0elUNJ4WJFfDvILGK3u7zFTyyQr04iZROYX7a6PM0ZCYMT
-         1gNk4JgIxbrq5gUX3As+gN8vYmth8Gvf+mvuTS5lEcGur+6EDb79oLRHtVoThBWgOZVP
-         IuOoYS7nECqmKPEJjdfqURRgBd8EZsL0lk/xdsYOJf2Ckmp4Wb7YSp7fMMb5kFUAVi2D
-         AxFf3VvI2xIT+FTpSQ+Qly9pLBFd6iIxQbPLez4B56UokXV5MSCGSFpEr9E3aOUNqVit
-         WvGzW++5gIA6IG1SuBvcdwdczpslvky/Qw8UguGxM1n33QHBm6QM2g5UwPV7vDj8Ajqp
-         Bm2g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jjqce6a+"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8274843810cso3790426b3a.3
+        for <spacemit@lists.linux.dev>; Wed, 04 Mar 2026 00:26:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772611851; x=1773216651; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xGLcah51hQA85jyOrvUCy/8RViW2Ks3it80HDo6IDSc=;
-        b=Ea8x83XOq1ptF7yv9pKKp/qwDDT5cMc2rZVzEkt4ZxH98/H9L3B1ZsFEWILof7o3Tm
-         TyvyDPJoBIXCCKPSWlWA1nKpi+rLvcX0nQEiIRB1/6KSsrfEkSZ/RXaXuvJHN49LEWBE
-         wWwCs/2aSHMxPB/ylrhqLlwT7YDaFlE78I53WS3D3FIBa6dinxZadtf7tbBxxhhSFxNv
-         SyK71xt9H3hHc/uoU+xCaRS+ho2WTyBM+RCohfo81VisJ7/mIvzfi6pWeD/xgFHSCYeb
-         pZ1HPQWS2KpcPdhniWa+4R75zm1nwyxjgxQ9xOQcvRvCBySoCMCAY8ch1zQbMOfZGjPF
-         6o/A==
+        d=gmail.com; s=20230601; t=1772612773; x=1773217573; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=S+0Gl/6jsm6dp6ffbeXLRnGklOmDo7AmQYEeUc9n0f0=;
+        b=Jjqce6a+VnuuSbnuOn6jvXhAgie+MGiqL386wBpo5UxGjMc0pdEZNiUGRFsxPTlUjB
+         13bbby2UKGXn1MhL/ZnejY2k/2Ja7kEShVLRzyJS5cFSH0NWUZObEdJTMA3Fr93NJ+ua
+         3dyVKt6qDyLf44T7UJyebG2iBeiBirmGO+KnQVT9R1jbQKB479bPES4uL3oLiqFxMnzz
+         i1dl4KWc1dlL0UIbO17TPGW1hGv+b70+RzCxb2m7R3+sPuELiI4kHEaPFwibBRj1vGba
+         L3OnGOHn4MZ2P6fnpjVIulQ1p1cFcX41Rerkanlkxs0mhnN9CfEde1uhbmZeKnT191Qy
+         b7VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772611851; x=1773216651;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xGLcah51hQA85jyOrvUCy/8RViW2Ks3it80HDo6IDSc=;
-        b=cVOUDOZwbthk2D2NcWFvHXwll7KsrhWcUspnbDlFQx5szoxdfr3qAvGYgObLPFz3wO
-         3vO1tNRAehhu8pnGhEM/8I6M9Gvczvjjv5aRvH7Pkq89rb+MNkiG2UPvZGoEsBp46pVX
-         zi4Wiw7UBHt8KQ9LcTA4oUZClAPrRWh337XntL1HwR5l+x2ubPAELDhE8sO+zg2nLZcQ
-         ZN6kW+JxM1/EBTDVgmwZtXw8yd8rZP7ma4CIeeBzb06qbz45b2tEcwiDodK6faL1fvFe
-         9pOzg/j2UVQBbwWgv79V5j+2gaveFUzcLbqG8ifmq8KiHamXhX2aSGY+SRwKgc8NTKtD
-         WKbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVppwgNu+LGPuBjNescn1GuTHh/vQZMa1G9LNY5ObGF1u8WwEj+1lagOOpWAJbsuONr/i0USc/Upg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwZJcSuVsfh3LQJPgiOAyuX8BoVyeXwNO8ivysxt+uJZpScgxK1
-	x1GQoD5CZ/clgcSmic9GSiCCxL5FgwNMBen5KcBVgNADndTIFsdbxY+1XZO3dpP7Ikatxu+6KDQ
-	3dMJFD16XDLHzDuauGOkLd13bFE6Iwjw=
-X-Gm-Gg: ATEYQzxOv6NomXPBBxwrdNmOrwDdzjGcDqIcuzHsuH6xy6INxCjvskkfCL4p8icN5nO
-	OLIH2ZpXlSBWzMU+ftpQtMhY2whKA5E6lj1Nd9EvLDMCfjcRHcfHSrI0iqUPyszTA8xtLGvZdnx
-	KMbFxaWaGYFRYQZk0+cGTTy4RUQ9UqavM69B1TU6S36t/GO6eEslrxkrVPVLamLMT5QQY8m0AcA
-	jCkUMvOW9j6nPbFUKYXVU+ITkhz/aaKIJhmdu5x1SqBRvO5cDVd6p7Lofng2+phrghNwZEbASQr
-	is2d07fL
-X-Received: by 2002:a05:690c:9a90:b0:794:c283:5fb8 with SMTP id
- 00721157ae682-798bb44f72cmr33135687b3.25.1772611850798; Wed, 04 Mar 2026
- 00:10:50 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772612773; x=1773217573;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S+0Gl/6jsm6dp6ffbeXLRnGklOmDo7AmQYEeUc9n0f0=;
+        b=AzXCQSATammnS0iAgNx7YVmhytEWyetaxrysisc+W2mvtbN98DoSukIanPxQTb+v1S
+         ZbE1vWBQew7xUuMtcKU/fUb2Loz+LMSggfx/xPdvDiOZ/x3U0WeDj7w7Gp3s1R0477/d
+         /cpBrLAyaU1w7iZj/41ctphK/ROgp275xiNZMuqa7GZ3H7d8gRtih57AGgmXynSwsxh9
+         EioK5EUqop2iwl2XOZxDVu0JIPdQ3GptzdK0VnO/WKqL7bXnGhW0DZVwyxzMAsLR8XiB
+         rUrVZJP6xlUTld9sF4WZW3+ApiTfkSvwMUJw/D4AQ9Oovjdk/fYbs4rBZAF93r0aB8Oe
+         udyg==
+X-Forwarded-Encrypted: i=1; AJvYcCXa+BO/Adj9bfjgBllqXpERyM+yrtxq52mUZPZ4i9LxxhHWqDXhysVZ+ClwVZ9vUhAyCdkN8CN9PQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyeqVvTUt6wiorcUhy8/+bLn3pp2InyTQd+KEZqlpS+6fyBkciI
+	uzyzicXwiXfP0qddUfOPKnu/ceVFYGiqPTlJzGosf7YsV30BZR7aW5SN
+X-Gm-Gg: ATEYQzxEcrK9MfVTs7R8EoLDyrpY+t9XQHs/sZs6zC3D/uPHFQ4w6+eQS/Ld3ohqXDr
+	2uLDRtyibwwzlAZSSjgusNWQ2HQ/sqHC7ankjhLLvZxI5kxNDSk3Dz4ORUAatLJtR+PDKPcHmP7
+	V+ht7U7+fSglzwkEBXTzQcDPUorv6yMJZl8E3ZDRctOk9xcxt94cZHbaVV2F9AJfcBfs98S/Hx9
+	vFjGrtD7EiX7ifyd8Xn3hp8+kMz8AQslxccGzbX4M3NAiT6prUhA1eM8Vbxezb4GjhEMT/UEWgj
+	hpaKu8yNalFS6wSnFwUUpwap15qGbmzglawI8E35lWhP1kXkqrlBgKMKI8oRe2s1TiNmT52I+B5
+	1nxAEA42hGnDvYvtgfh7QJq/e2Q/pPbVEsYTaWdUqlmEDkQuoN2jEMPpCrLaR4/2db2e5JjmlXQ
+	Oym+Fae61i+MfUz+56e4ICb8AUG640Dulfyw==
+X-Received: by 2002:a05:6a20:26aa:b0:394:5ac7:8ffa with SMTP id adf61e73a8af0-3982ded341amr1286519637.16.1772612772757;
+        Wed, 04 Mar 2026 00:26:12 -0800 (PST)
+Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c7377062904sm1274642a12.30.2026.03.04.00.26.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 00:26:12 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Richard Cochran <richardcochran@gmail.com>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH] riscv: dts: spacemit: k3: Add ethernet device node
+Date: Wed,  4 Mar 2026 16:25:41 +0800
+Message-ID: <20260304082541.1786223-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
- <20260302-orangepi-sd-card-uhs-v1-1-89c219973c0c@gmail.com>
- <20260302-crewman-faster-9fd00b62e30c@spud> <20260302223803-GKB289813@kernel.org>
- <CABdCQ=Nd9ZW6OBnAiuki=2+DhVraW19bh_m8=LLQGUKN8TkEdQ@mail.gmail.com> <20260303222800-GKC289813@kernel.org>
-In-Reply-To: <20260303222800-GKC289813@kernel.org>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Wed, 4 Mar 2026 09:10:39 +0100
-X-Gm-Features: AaiRm53WZ82ezbm0-nMVrOL-p2i2zBrqno2q7oSRqZHnhzqczyjmu4JOpaAlYaQ
-Message-ID: <CABdCQ=OxA4RM+3Kqjim9QPUQD3xBkAjUTD+ObC5Cmux1Mx1UpQ@mail.gmail.com>
-Subject: Re: [PATCH 01/10] dt-bindings: mmc: spacemit,sdhci: add AIB voltage
- switching registers
-To: Yixun Lan <dlan@kernel.org>
-Cc: Conor Dooley <conor@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Yixun Lan <dlan@gentoo.org>, Adrian Hunter <adrian.hunter@intel.com>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-El mar, 3 mar 2026 a las 23:28, Yixun Lan (<dlan@kernel.org>) escribi=C3=B3=
-:
->
-> Hi Iker,
->
-> On 14:51 Tue 03 Mar     , Iker Pedrosa wrote:
-> > El lun, 2 mar 2026 a las 23:38, Yixun Lan (<dlan@kernel.org>) escribi=
-=C3=B3:
-> >
-> > Thanks for the pointer! I missed that these had already landed in
-> > mainline. I'll rebase the series, drop the redundant properties and
-> > patch [5/10], and send a v2 shortly.
-> >
-> Please wait a little bit longer before sending next version, give me or
-> other people more time for reviewing, as a quick test, this series will
-> break emmc driver as tested on bananapi-f3 board, I suspect it's probably
-> duo to clock related issue, but want to confirm later..
+Add all ethernet device nodes for K3 SoC. And enable the available
+ethernet device for the PICO ITX board.
 
-Thanks for the heads-up. I'll wait for your further review and the
-results of your clock tests on the bananapi-f3.
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+---
+Require the following patch series:
+1. Basic DT device patch
+https://lore.kernel.org/spacemit/20260304-01-dts-uart-full-v1-0-50a0aa53a245@kernel.org
+2. Ethernet driver patch
+https://lore.kernel.org/spacemit/20260304080721.1658224-1-inochiama@gmail.com
+---
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  20 ++++
+ arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi |  38 +++++++
+ arch/riscv/boot/dts/spacemit/k3.dtsi         | 106 +++++++++++++++++++
+ 3 files changed, 164 insertions(+)
 
->
-> Btw, I was also preparing sd part driver, mainly target K3 SoC, but since
-> they are mostly same IP, the driver can be shared..
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index b098dbd0e7a1..47e4fa824417 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -6,6 +6,7 @@
 
-I'm also interested in the K3 SoC integration. Since it's the same IP,
-it makes sense to have a unified driver. Please let me know your
-thoughts on the best way to coordinate our efforts.
+ #include "k3.dtsi"
+ #include "k3-pinctrl.dtsi"
++#include <dt-bindings/gpio/gpio.h>
 
->
-> --
-> Yixun Lan (dlan)
+ / {
+ 	model = "SpacemiT K3 Pico-ITX";
+@@ -25,6 +26,25 @@ memory@100000000 {
+ 	};
+ };
+
++&eth0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&gmac0_cfg>;
++
++	phy-mode = "rgmii-id";
++	phy-handle = <&phy0>;
++	status = "okay";
++
++	mdio {
++		phy0: phy@1 {
++			compatible = "ethernet-phy-ieee802.3-c22";
++			reg = <1>;
++			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
++			reset-assert-us = <10000>;
++			reset-deassert-us = <10000>;
++		};
++	};
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_0_cfg>;
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
+index efb0f1572188..256880192846 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
+@@ -21,4 +21,42 @@ uart0-0-pins {
+ 			drive-strength = <25>;
+ 		};
+ 	};
++
++	gmac0_cfg: gmac0-cfg {
++		gmac0_base_pins: gmac0-0-pins {
++			pinmux = <K3_PADCONF(0, 1)>,
++				 <K3_PADCONF(1, 1)>,
++				 <K3_PADCONF(2, 1)>,
++				 <K3_PADCONF(3, 1)>,
++				 <K3_PADCONF(6, 1)>,
++				 <K3_PADCONF(7, 1)>,
++				 <K3_PADCONF(11, 1)>,
++				 <K3_PADCONF(12, 1)>,
++				 <K3_PADCONF(13, 1)>;
++
++			bias-disable;
++			drive-strength = <25>;
++			power-source = <1800>;
++		};
++
++		gmac0_rgmii_add_pins: gmac0-1-pins {
++			pinmux = <K3_PADCONF(4, 1)>,
++				 <K3_PADCONF(5, 1)>,
++				 <K3_PADCONF(8, 1)>,
++				 <K3_PADCONF(9, 1)>,
++				 <K3_PADCONF(10, 1)>;
++
++			bias-disable;
++			drive-strength = <25>;
++			power-source = <1800>;
++		};
++
++		gmac0_int_pins: gmac0-3-pins {
++			pinmux = <K3_PADCONF(14, 1)>;
++
++			bias-disable;
++			drive-strength = <25>;
++			power-source = <1800>;
++		};
++	};
+ };
+diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+index a3a8ceddabec..237fb00e4bc4 100644
+--- a/arch/riscv/boot/dts/spacemit/k3.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+@@ -438,6 +438,112 @@ soc: soc {
+ 		dma-noncoherent;
+ 		ranges;
+
++		gmac_axi_setup: stmmac-axi-config {
++			snps,wr_osr_lmt = <0xf>;
++			snps,rd_osr_lmt = <0xf>;
++			/* max axi burst len is 256 */
++			snps,blen = <256 128 64 32 16 0 0>;
++		};
++
++		eth0: ethernet@cac80000 {
++			compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
++			reg = <0x0 0xcac80000 0x0 0x2000>;
++			clocks = <&syscon_apmu CLK_APMU_EMAC0_BUS>,
++				 <&syscon_apmu CLK_APMU_EMAC0_1588>,
++				 <&syscon_apmu CLK_APMU_EMAC0_RGMII_TX>;
++			clock-names = "stmmaceth", "ptp_ref", "tx";
++			interrupt-parent = <&saplic>;
++			interrupts = <131 IRQ_TYPE_LEVEL_HIGH>,
++				     <276 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq", "eth_wake_irq";
++			resets = <&syscon_apmu RESET_APMU_EMAC0>;
++			reset-names = "stmmaceth";
++			rx-fifo-depth = <8192>;
++			tx-fifo-depth = <8192>;
++			snps,multicast-filter-bins = <64>;
++			snps,perfect-filter-entries = <32>;
++			snps,aal;
++			snps,tso;
++			snps,txpbl = <8>;
++			snps,rxpbl = <8>;
++			snps,force_sf_dma_mode;
++			snps,axi-config = <&gmac_axi_setup>;
++			spacemit,apmu = <&syscon_apmu 0x3e4 0x3e8>;
++			status = "disabled";
++
++			mdio {
++				compatible = "snps,dwmac-mdio";
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
++		eth1: ethernet@cac82000 {
++			compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
++			reg = <0x0 0xcac82000 0x0 0x2000>;
++			clocks = <&syscon_apmu CLK_APMU_EMAC1_BUS>,
++				 <&syscon_apmu CLK_APMU_EMAC1_1588>,
++				 <&syscon_apmu CLK_APMU_EMAC1_RGMII_TX>;
++			clock-names = "stmmaceth", "ptp_ref", "tx";
++			interrupt-parent = <&saplic>;
++			interrupts = <133 IRQ_TYPE_LEVEL_HIGH>,
++				     <277 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq", "eth_wake_irq";
++			resets = <&syscon_apmu RESET_APMU_EMAC1>;
++			reset-names = "stmmaceth";
++			rx-fifo-depth = <8192>;
++			tx-fifo-depth = <8192>;
++			snps,multicast-filter-bins = <64>;
++			snps,perfect-filter-entries = <32>;
++			snps,aal;
++			snps,tso;
++			snps,txpbl = <8>;
++			snps,rxpbl = <8>;
++			snps,force_sf_dma_mode;
++			snps,axi-config = <&gmac_axi_setup>;
++			spacemit,apmu = <&syscon_apmu 0x3ec 0x3f0>;
++			status = "disabled";
++
++			mdio {
++				compatible = "snps,dwmac-mdio";
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
++		eth2: ethernet@cac8e000 {
++			compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
++			reg = <0x0 0xcac8e000 0x0 0x2000>;
++			clocks = <&syscon_apmu CLK_APMU_EMAC2_BUS>,
++				 <&syscon_apmu CLK_APMU_EMAC2_1588>,
++				 <&syscon_apmu CLK_APMU_EMAC2_RGMII_TX>;
++			clock-names = "stmmaceth", "ptp_ref", "tx";
++			interrupt-parent = <&saplic>;
++			interrupts = <130 IRQ_TYPE_LEVEL_HIGH>,
++				     <278 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq", "eth_wake_irq";
++			resets = <&syscon_apmu RESET_APMU_EMAC2>;
++			reset-names = "stmmaceth";
++			rx-fifo-depth = <4096>;
++			tx-fifo-depth = <4096>;
++			snps,multicast-filter-bins = <64>;
++			snps,perfect-filter-entries = <32>;
++			snps,aal;
++			snps,tso;
++			snps,txpbl = <8>;
++			snps,rxpbl = <8>;
++			snps,force_sf_dma_mode;
++			snps,axi-config = <&gmac_axi_setup>;
++			spacemit,apmu = <&syscon_apmu 0x248 0x24c>;
++			status = "disabled";
++
++			mdio {
++				compatible = "snps,dwmac-mdio";
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++		};
++
+ 		syscon_apbc: system-controller@d4015000 {
+ 			compatible = "spacemit,k3-syscon-apbc";
+ 			reg = <0x0 0xd4015000 0x0 0x1000>;
+
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+prerequisite-patch-id: 68c4d869548687dc115dd91e2ffb8f4c11482d86
+prerequisite-patch-id: fdadcf964c2cb3406160edb579d99a8d5695f8e6
+prerequisite-patch-id: 73b9e745338b0499b849fa4f7f9508987ab39a59
+prerequisite-patch-id: cd26770c2160c3c31a406bd8a6b01ab666180ae0
+prerequisite-patch-id: 93a515969fca3b15f827b3507979422dda14db8b
+prerequisite-patch-id: a637cffacb823aa7ae91e03ed42831ef8fbd0d1f
+prerequisite-patch-id: 40c49afe4eb71457913c45ddb720a9c8917aa827
+--
+2.53.0
+
