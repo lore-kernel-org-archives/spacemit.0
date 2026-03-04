@@ -1,69 +1,67 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC67037EFE1;
-	Wed,  4 Mar 2026 20:58:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9E33DBD63;
+	Wed,  4 Mar 2026 22:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772657914; cv=none; b=r5f8mlwPTeSH8P8sroeiO+BHcRA7oCOB7az3m/KFa+kCsoZnA9veTfunV+YfbjaplRCuGcuaLAAZ/CuBVcXZAvGdv3iixyUspjAZzji0Bu/j2okENbI+x17gATlvAUVXWHokBPNedrTYXOQsXnvXg6kCLLvMeIHJ7SBkopLmJlQ=
+	t=1772661937; cv=none; b=qf2k4g90EDLMa5jfnmfnx6rV29iSmnD0sxvF8uNN3kJ91BbqaeKldJDFp6EO66ZZyLEKWz9j6uoVznpqHcTrRd0HhSKkgbt51+YO8zxSpDCGu+P5Uh/WQN5KQOy5G66xyoJmN3j9tCtLBh2Bs8Odreu4zQ9phIZv5FrMwj69vtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772657914; c=relaxed/simple;
-	bh=wrHDuSd4kFUPU6TMVDFCdQCegEzwLz275EjghmodJYI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LUD8lC+yx62IVYHXg+qVzUFWnjOxkgScMH9xYh/ybd6YqZrtGy7ETU7KVh3P10qNGyNeFRRYDfIe6CjQOgSrHv3avlbziTXlANesTaV0sugkc9M7CGT5HTneeK/3xbuVgn08TrsyvqIZzcnErp6zmhCE1LCy8dwHvqFkbLb4dEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=JjdlpkUH; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1772661937; c=relaxed/simple;
+	bh=yTweHBHkCdS7zf1l+ISMq2/EQiGHtk/j5+I6y51gnTs=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=G4I5cJ6+o2Vyj23mSGPUnDc+Vlvdm8AqKesES28quu8e2/NNmV7FX1eALDN03kM3vqnY/dkVGrMSbcZuGfgd5B2aiWutRe9OU74yz4usMwMszktxBCD+JziNgPE/deka2Z0Rh2g4AKUYi8Najx0fUpZsv7HHEFJhpWp45JVlHhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MbDYNSJ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="JjdlpkUH"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=nJEhDLvUh+H18Fkmzg3CFif9ky3ccbPDC/ejtdiiJKY=; b=JjdlpkUHcTrQd+IgT8cRmCyU8V
-	9XTH4ze8fSFJUfXx/QSPU5XgITc3DPwpdsSN0Q+rA2PZ1s4AL21O505m4aEEIobNeuN2dD+FGdOSV
-	ffx2jzzabKJdug+Jqk3HDBCOTGCwjB0yjbaXha3Lu9cQcMkWsorYrMx0ExeQum+noiEw=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vxtI5-00AAqo-JF; Wed, 04 Mar 2026 21:57:57 +0100
-Date: Wed, 4 Mar 2026 21:57:57 +0100
-From: Andrew Lunn <andrew@lunn.ch>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MbDYNSJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09F2C4CEF7;
+	Wed,  4 Mar 2026 22:05:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772661937;
+	bh=yTweHBHkCdS7zf1l+ISMq2/EQiGHtk/j5+I6y51gnTs=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=MbDYNSJ4yUTHVm5Ec0OTxCd0scI0+zUBtC7SnpebZ12E9ZXEiKuG80/dp/eN/cwj5
+	 hDOfKQBI62whSUM1VF5WeM1C52c317Nyub4gf22LbJw7q65UnTaFwuUOdK8YpnpJSl
+	 LK/V+Ll/LYRx5euZuHudSe00UbZSA9ZakCZy5oZp+nSOAFevRr9ErKALLFJx0GgoJd
+	 spU5p6CZ+K5AqeI9egNXkGyy9BYXYXOXkz4Xl0+Ybckenp4WcnkdtFA4g2ZSKnwTxz
+	 MV41dDCxWw2ZaOm9Hf9xVI/ONfsBKiY/IkGT8PTUoYa2KYiCp3naDPnXJgkuvL3v4L
+	 bp3mTTAE2W33Q==
+Date: Wed, 4 Mar 2026 14:05:35 -0800
+From: Jakub Kicinski <kuba@kernel.org>
 To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Yixun Lan <dlan@kernel.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Cc: Andrew Lunn <andrew@lunn.ch>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Yixun Lan
+ <dlan@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, Vadim
+ Fedorenko <vadim.fedorenko@linux.dev>, Troy Mitchell
+ <troy.mitchell@linux.spacemit.com>, netdev@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
 Subject: Re: [PATCH net-next 1/4] net: spacemit: Remove unused buff_addr
  fields
-Message-ID: <02bbff3d-1f27-4b03-a963-660bbb7facee@lunn.ch>
+Message-ID: <20260304140535.678e65f2@kernel.org>
+In-Reply-To: <02bbff3d-1f27-4b03-a963-660bbb7facee@lunn.ch>
 References: <20260303-k1-ethernet-more-fixes-v1-0-0ab0122fdd14@iscas.ac.cn>
- <20260303-k1-ethernet-more-fixes-v1-1-0ab0122fdd14@iscas.ac.cn>
+	<20260303-k1-ethernet-more-fixes-v1-1-0ab0122fdd14@iscas.ac.cn>
+	<02bbff3d-1f27-4b03-a963-660bbb7facee@lunn.ch>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260303-k1-ethernet-more-fixes-v1-1-0ab0122fdd14@iscas.ac.cn>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 03, 2026 at 05:24:18PM +0800, Vivian Wang wrote:
-> These were never used. Just remove them.
+On Wed, 4 Mar 2026 21:57:57 +0100 Andrew Lunn wrote:
+> On Tue, Mar 03, 2026 at 05:24:18PM +0800, Vivian Wang wrote:
+> > These were never used. Just remove them.
+> > 
+> > Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")  
 > 
-> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+> If you are giving a Fixes: tag, please use the net tree, not net-next.
 
-If you are giving a Fixes: tag, please use the net tree, not net-next.
-
-    Andrew
-
----
-pw-bot: cr
-
+Maybe rephrasing what Andrew said slightly - please read
+https://www.kernel.org/doc/html/next/process/maintainer-netdev.html
+and general documentation about Fixes tags. The tags mean there is
+a bug which may be impacting users.
