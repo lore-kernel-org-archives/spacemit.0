@@ -1,81 +1,114 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F677372676;
-	Tue,  3 Mar 2026 22:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2842C9D;
+	Wed,  4 Mar 2026 07:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772576883; cv=none; b=Alg/sayAvjLK3TphDWTMhoV1kWJW7zI+oqq5e6jmBbsTvmn4hLiMHiqING22QjvwwifFk4XHnUBFOk27ks4FlSeu7091KqpdHorE17L8Co7qZ6p24TcczdlOp3BCsHHFc3AKstxh+mCq5HACC8X6V853SjTv14tEyUWXHL8qGGE=
+	t=1772608791; cv=none; b=Ww4842R3q8HLzPZ6l3HZBy4mlck23Jq9+NLU8SEMBnEeKSsj8aOiovaiuWyEAuqmOpWlMPGMlMZJ56qW+muHPpSF5KV9CSowWsG4+3Zp8PH6SUhQH1H19lH9fu/Hu7Tz9m81ohtO8DCuaOMUK7ORVGYp7frRJtPD4h+NceQpy8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772576883; c=relaxed/simple;
-	bh=h+MB5FEoZuD+ObXgiTN2r18cSRl2AQklGvm8fstFmSM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ly6+Enrimwl1UUDY5IGHviubJXQdiAW63wnJ2gu8ElXj+Z62O4Usvd0bJSJc6pjDMVb5VIV81czCOMf9y5uOTNPFa2eNOAJjYLKaoFVpGqT94sMCcvTlB5Q/YWgqjzw/nAtE9Kw1uq1j74+PhOUQcijGWWbcFHOAQa7zs5u9kQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B2+xQMzV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772608791; c=relaxed/simple;
+	bh=4KgE52dPbV2gpFs6aV7KA/62JEm9ltLn1ws2XcJrOx0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lC2XvxdFCuYU40I/aDRKiv1pLQEig78rfmWM45RWZqyIW8HPMfKt/kWyF2Ew1dgyzZhlombgX/LzFcOOk3WAnrvgqmF8DerZBKMfGEIxc3fp4sKtfwbz15EOOaC/o8XdJmklX7Hp8BBgow0ikGLH4GjW3oEHvIVeFwo6enu2Gv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sj9/H7hv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B2+xQMzV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB3EC116C6;
-	Tue,  3 Mar 2026 22:28:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sj9/H7hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94209C19423;
+	Wed,  4 Mar 2026 07:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772576882;
-	bh=h+MB5FEoZuD+ObXgiTN2r18cSRl2AQklGvm8fstFmSM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=B2+xQMzVkzxSmK97R5uyX0710fC2BS5mmL0zXKOzhhQhFXaaTyw+uHGX2l8iQ13bo
-	 v1Vbr8eGAdaM0qR3yoILry64iGddqsLSZWL0II9nqzE9B/5TcaPgJdddl+lsOrLI8y
-	 F2gRvJ5fxbWJ2aS1qeJNfuM6R7vIWTxeeg/LXRSoZC3bMbG+7fWmiPiNH/e/4UtAO2
-	 e9YORGzOrk6jQ+e7XoePD5qj/sHE3nmE5p/H/7K8fBneBOlO6v9PmiKkuFpvINwD7r
-	 0Yle/A2Ju2NwhRrM2aWa1lVF1KzlXXfhn6Jffr5Q27rCR4fkD/IBTn9Iigqf0jPMmz
-	 Nei0CJblySrVA==
-Date: Wed, 4 Mar 2026 06:28:00 +0800
+	s=k20201202; t=1772608790;
+	bh=4KgE52dPbV2gpFs6aV7KA/62JEm9ltLn1ws2XcJrOx0=;
+	h=From:Date:Subject:To:Cc:From;
+	b=sj9/H7hvP2BZf6uYdbl2QPhcIeyhJSKZbtMDLBtw6OqZzR1mghPPLUUOAim9zL3Vk
+	 C+zeUUwnz7NotcDmn4Q5s9QjrPtY8TVW0D+e6YUM4D0oGmvZLNlEqKojl5DLtehzom
+	 jsKQ3nZ/SOwVyCd3BzSMSQY5fL/tAy1eLoJF255S8piB/F7NLR/mKzx7ZfmqjxQQ2w
+	 F5ZyNwl8s4R5BN+gSqyHdfNoER/fSJ/pl2QNBelLcWND8oTfCP6P7FfSnoYXCV2oh/
+	 f6uhravbUNyFqE5lmTTOV6Dxk3JKj/KoQH6ZzZbbPkT6HMG8bsaDW4oNkuq+SRG/MI
+	 h3inKHxK9PWaw==
 From: Yixun Lan <dlan@kernel.org>
-To: Iker Pedrosa <ikerpedrosam@gmail.com>
-Cc: Conor Dooley <conor@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/10] dt-bindings: mmc: spacemit,sdhci: add AIB voltage
- switching registers
-Message-ID: <20260303222800-GKC289813@kernel.org>
-References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
- <20260302-orangepi-sd-card-uhs-v1-1-89c219973c0c@gmail.com>
- <20260302-crewman-faster-9fd00b62e30c@spud>
- <20260302223803-GKB289813@kernel.org>
- <CABdCQ=Nd9ZW6OBnAiuki=2+DhVraW19bh_m8=LLQGUKN8TkEdQ@mail.gmail.com>
+Date: Wed, 04 Mar 2026 07:19:39 +0000
+Subject: [PATCH] dt-bindings: serial: 8250: spacemit: fix clock property
+ for K3 SoC
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABdCQ=Nd9ZW6OBnAiuki=2+DhVraW19bh_m8=LLQGUKN8TkEdQ@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260304-01-uart-clock-names-v1-1-338483f04a8b@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAArdp2kC/x3MTQ5AMBBA4avIrE3SHyxcRSwmNZigpEUkjbtrL
+ L/FewkiB+EIbZEg8C1Rdp+hywLcTH5ilCEbjDKNsqpCpfGicKJbd7egp40j1rWuGqutGYggl0f
+ gUZ7/2vXv+wEJDhPGZQAAAA==
+X-Change-ID: 20260304-01-uart-clock-names-551463132daa
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Jiri Slaby <jirislaby@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>, 
+ devicetree@vger.kernel.org, Guodong Xu <guodong@riscstar.com>
+Cc: Conor Dooley <conor.dooley@microchip.com>, linux-kernel@vger.kernel.org, 
+ linux-serial@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1326; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=4KgE52dPbV2gpFs6aV7KA/62JEm9ltLn1ws2XcJrOx0=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpp90OSzQi7nGsdg9K58aE5UjVtEEL8S327ubuC
+ npFkrjCvC+JAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaafdDhsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+3vrg//U3TtCvsfKSLVsD4OichzNLJtLFG4hQOnMYqDvayoPwLcQQaJcW8SP
+ X65d2XRLofzH22yepa65GW4ILkEoVe94PHW6Cvg3lfyyfQj42uxRn7P8YcLceRX8g5OrpFFX+Ii
+ uL4Kbo38hj3TN2H5NNsIQCYLPAbAiwzg1C+oe/FpfPj/2Z1UC88CxnY+ilvae+fN2iQhR3R6lr9
+ RgTyZwfa1Cn2s0fyg28kfSxrioYpl/lSukjdEMbXOeWEhDYs9qzi+DRpaIWQ2tX4KIlomDeDZds
+ 50iFQfiEVX85z9BF5cVZzz4AqFUXn7k4LcW/G+cnu5e7op07Uv1gsNe6rg5bfPjUmIwatz/OqNu
+ IfLbdiGaD/Tt/4FXh4yK/8XTCi6a2bTeOGzAAbPDX58+zIZBfEE1CD2o40xkW+jb3n8H62c6U1b
+ aZijE7swdRkBO65TcnHoSSTPhkJ7gxkb5ggtHC4NVeYNvceHSKwQqLluNnM7yftxFZewclqQmFV
+ kTNtZXQQdwmPVFO49PtSBdEVzgAptapdSO5S8jfaORCd6IIMNUAsYc9aicqNMOsjxUeeEttcWPV
+ LT5m2gv8uii6x3mHfk508MeJOlvRb1i8mZ6UpBi21j77grIiRtgZQ29Vfy1ck5mnFa+42drefzv
+ vKeLOcKSuBcc9M/mD2WXHa9fbCa3Kg=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Iker,
+The UART of SpacemiT K3 SoC has same clock property as K1 generation which
+request two clock sources, fix the binding otherwise will get DT check
+warnings.
 
-On 14:51 Tue 03 Mar     , Iker Pedrosa wrote:
-> El lun, 2 mar 2026 a las 23:38, Yixun Lan (<dlan@kernel.org>) escribió:
-> 
-> Thanks for the pointer! I missed that these had already landed in
-> mainline. I'll rebase the series, drop the redundant properties and
-> patch [5/10], and send a v2 shortly.
-> 
-Please wait a little bit longer before sending next version, give me or
-other people more time for reviewing, as a quick test, this series will
-break emmc driver as tested on bananapi-f3 board, I suspect it's probably
-duo to clock related issue, but want to confirm later..
+Fixes: b5024e804ee0 ("dt-bindings: serial: 8250: add SpacemiT K3 UART compatible")
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+ Documentation/devicetree/bindings/serial/8250.yaml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Btw, I was also preparing sd part driver, mainly target K3 SoC, but since
-they are mostly same IP, the driver can be shared..
+diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
+index 73851f19330d..e9e07c2356bc 100644
+--- a/Documentation/devicetree/bindings/serial/8250.yaml
++++ b/Documentation/devicetree/bindings/serial/8250.yaml
+@@ -63,7 +63,9 @@ allOf:
+       properties:
+         compatible:
+           contains:
+-            const: spacemit,k1-uart
++            enum:
++              - spacemit,k1-uart
++              - spacemit,k3-uart
+     then:
+       properties:
+         clock-names:
+@@ -76,6 +78,7 @@ allOf:
+           contains:
+             enum:
+               - spacemit,k1-uart
++              - spacemit,k3-uart
+               - nxp,lpc1850-uart
+     then:
+       required:
 
+---
+base-commit: ec1fb4e55df47ed043ab2ccc6787e39b9d67e49b
+change-id: 20260304-01-uart-clock-names-551463132daa
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan <dlan@kernel.org>
+
