@@ -1,75 +1,69 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C14358D27;
-	Wed,  4 Mar 2026 20:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC67037EFE1;
+	Wed,  4 Mar 2026 20:58:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772655260; cv=none; b=bkWJY/nWmbH7VVz7Ucw//x8nZsnCbM9N6cHeTB23GfS1MCZ66zXxL0nM5tv4m0E7am3Gkrx+5d5gmPpI05wIRtOGBx2L0Sr5URG1lzrm8ZYyd7uQ0YWL5ZcK8nhmm3B8lOXuWR1neg7GurB/42tblPN8otyAbgqRiYiTA1TYwtI=
+	t=1772657914; cv=none; b=r5f8mlwPTeSH8P8sroeiO+BHcRA7oCOB7az3m/KFa+kCsoZnA9veTfunV+YfbjaplRCuGcuaLAAZ/CuBVcXZAvGdv3iixyUspjAZzji0Bu/j2okENbI+x17gATlvAUVXWHokBPNedrTYXOQsXnvXg6kCLLvMeIHJ7SBkopLmJlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772655260; c=relaxed/simple;
-	bh=7LbZg6skQwe1JIVxe4uIFooiyh42caVjXi8zFEyCeHA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iZ9UDgd83iPUOtMblhlHii8wwZ8KWBZA4QRHj+dllJDtX9r8Zr2SC5e4N8aIDAiA+tN01r0soH3y++FJ5qLGIczWNHiggwpXmUOY5/bufrIhrKGCSxvJT8bkkORIKopupg1z6cje5otXM173yP7GorPTjrZWzVpJeblXN7EcyJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vOSWAYP0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772657914; c=relaxed/simple;
+	bh=wrHDuSd4kFUPU6TMVDFCdQCegEzwLz275EjghmodJYI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LUD8lC+yx62IVYHXg+qVzUFWnjOxkgScMH9xYh/ybd6YqZrtGy7ETU7KVh3P10qNGyNeFRRYDfIe6CjQOgSrHv3avlbziTXlANesTaV0sugkc9M7CGT5HTneeK/3xbuVgn08TrsyvqIZzcnErp6zmhCE1LCy8dwHvqFkbLb4dEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=JjdlpkUH; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vOSWAYP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5684C4CEF7;
-	Wed,  4 Mar 2026 20:14:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772655260;
-	bh=7LbZg6skQwe1JIVxe4uIFooiyh42caVjXi8zFEyCeHA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vOSWAYP0ASIUMPrNsRctEnLesB/qOpdMCrQy6ahbi4pLYMii7O8IIBA8F63PZsyg0
-	 ZcCnF1kj3cVmc84Vx9h9Kq96VZaMCMHxuCArllf1CYolj2oqppgnv3vXM3w6laZHlz
-	 NOtq23rucRl5IE/Bb02Fai9gX/5ewV1hAPdziT8RA9B2ev0oqJbQtiikHUnSW5L9q5
-	 Uk7uAI6xqy1wRgSUh7h36AH8oidWLE77AQilsTltHa4bvKQfckiIg6DJMG3yRydPNA
-	 OvbzcQS3k3wio6bMSaigTPS0yMDQddq1Qx4b83K8C3Iv2VNsdfZAH1Ox9lzB5Wl3zL
-	 iEzLjD3XL6GFw==
-Message-ID: <679dbfdd-9e46-4265-a01c-faf163924ec3@kernel.org>
-Date: Thu, 5 Mar 2026 05:14:14 +0900
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="JjdlpkUH"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=nJEhDLvUh+H18Fkmzg3CFif9ky3ccbPDC/ejtdiiJKY=; b=JjdlpkUHcTrQd+IgT8cRmCyU8V
+	9XTH4ze8fSFJUfXx/QSPU5XgITc3DPwpdsSN0Q+rA2PZ1s4AL21O505m4aEEIobNeuN2dD+FGdOSV
+	ffx2jzzabKJdug+Jqk3HDBCOTGCwjB0yjbaXha3Lu9cQcMkWsorYrMx0ExeQum+noiEw=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vxtI5-00AAqo-JF; Wed, 04 Mar 2026 21:57:57 +0100
+Date: Wed, 4 Mar 2026 21:57:57 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Yixun Lan <dlan@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 1/4] net: spacemit: Remove unused buff_addr
+ fields
+Message-ID: <02bbff3d-1f27-4b03-a963-660bbb7facee@lunn.ch>
+References: <20260303-k1-ethernet-more-fixes-v1-0-0ab0122fdd14@iscas.ac.cn>
+ <20260303-k1-ethernet-more-fixes-v1-1-0ab0122fdd14@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH phy-next 01/22] ata: add <linux/pm_runtime.h> where
- missing
-To: Vladimir Oltean <vladimir.oltean@nxp.com>, linux-phy@lists.infradead.org
-Cc: Vinod Koul <vkoul@kernel.org>, Neil Armstrong
- <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
- linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org,
- netdev@vger.kernel.org, spacemit@lists.linux.dev,
- UNGLinuxDriver@microchip.com, Niklas Cassel <cassel@kernel.org>
-References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
- <20260304175735.2660419-2-vladimir.oltean@nxp.com>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260304175735.2660419-2-vladimir.oltean@nxp.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260303-k1-ethernet-more-fixes-v1-1-0ab0122fdd14@iscas.ac.cn>
 
-On 3/5/26 02:57, Vladimir Oltean wrote:
-> It appears that libahci.c, ahci.c as well as the ahci_brcm, ahci_ceva
-> and ahci_qoriq drivers are using runtime PM operations without including
-> <linux/pm_runtime.h>. This header is somehow being indirectly provided
-> by <linux/phy/phy.h>, which would like to drop it (none of the functions
-> it exports need it).
+On Tue, Mar 03, 2026 at 05:24:18PM +0800, Vivian Wang wrote:
+> These were never used. Just remove them.
 > 
-> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
 
-Acked-by: Damien Le Moal <dlemoal@kernel.org>
+If you are giving a Fixes: tag, please use the net tree, not net-next.
 
--- 
-Damien Le Moal
-Western Digital Research
+    Andrew
+
+---
+pw-bot: cr
+
