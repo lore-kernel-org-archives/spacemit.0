@@ -1,72 +1,101 @@
-Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8918379EF0;
-	Thu,  5 Mar 2026 15:36:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.13
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772724967; cv=none; b=sR53jsZI8T5iFU+o4iOs5H0p6FwyDml9GdsxMCFBsSRChHJE960Tjmn6NDWp7dwx6bYz2H2MrEXC/nt0FxfLMQVxjfF+QKE++IqMsQzSPmYJ3p9aqM1+GlHf/rjLIiV/HlVlpgmwukmII4oqH9Y4jtYrJpIrtMQfDfvvRn9tCIY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772724967; c=relaxed/simple;
-	bh=qocaInGB0SlfrWm+uA1O3uhdYbYezjAl8jrEXMJzGhU=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=LWEfGZx3KKfqPR+EulOrLmlCpf/Zbe4FGWLQ38ONHzUkaONzLXL9e6My5PMks7NIArs4AmwsgoWqVrWV9nAjhuWpGrpWu7nVy9K1IDrlnpbbsxe+dAudTWfhENgZOVcfAVbKtdizgBtl3sxPU3CRhJwgBJmfJiRbqPuMFpyAKcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com; spf=pass smtp.mailfrom=perches.com; arc=none smtp.client-ip=216.40.44.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perches.com
-Received: from omf17.hostedemail.com (a10.router.float.18 [10.200.18.1])
-	by unirelay08.hostedemail.com (Postfix) with ESMTP id 9322C14014F;
-	Thu,  5 Mar 2026 15:36:02 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf17.hostedemail.com (Postfix) with ESMTPA id E35031C;
-	Thu,  5 Mar 2026 15:35:55 +0000 (UTC)
-Message-ID: <21e84301a7c37f9d5ce6f0ddcaed7846174d2a4d.camel@perches.com>
-Subject: Re: [PATCH phy-next 22/22] MAINTAINERS: add regex for linux-phy
-From: Joe Perches <joe@perches.com>
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, Neil
- Armstrong	 <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org,
- netdev@vger.kernel.org, 	spacemit@lists.linux.dev,
- UNGLinuxDriver@microchip.com
-Date: Thu, 05 Mar 2026 07:35:54 -0800
-In-Reply-To: <20260305114352.2f7btqixg4tu5bzl@skbuf>
-References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
-	 <20260304175735.2660419-23-vladimir.oltean@nxp.com>
-	 <a8fee1cd-1e69-4a9e-8533-c0988c480fb9@oss.qualcomm.com>
-	 <20260305085148.7cwo3yflp7vcfldf@skbuf>
-	 <f3a5aa3df78553ffc0fd0024f5fd36a4e2158c88.camel@perches.com>
-	 <20260305114352.2f7btqixg4tu5bzl@skbuf>
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEC239A056
+	for <spacemit@lists.linux.dev>; Thu,  5 Mar 2026 15:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772724985; cv=pass; b=ETdjz9AAqnfsIsSsNfr5b4ABbrDiEj4CEHYmhiTcTTfZ5jpx2IJgQaJ+7uIaa9mtYjnHEyOxUFsszSvcwxcMs8PCx4L0W+GUEwmXrejZ9sjxj1+wmRiB2iJxmiybDZfCgDnBlGQsM2cVK4n3Km/ekPKrVvgTBpRmBhCkrBVhVRM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772724985; c=relaxed/simple;
+	bh=wmnmDfTn/TYB5r9+aoFlgGXAOsYfaNsnulGAJHZflIc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZnDl/kcEWm0mCoDbSQSIgNmPuu8Si863jP5ZYVTl1EVg9J32X8vD/bFcdWHEWP5S9n+ITSgsnaFTyD9gUEwyB3Lyo2Q+g201CXmnDrFVaBPcQlzuBWOaUzQNCJ+cwjUWpN41Zyc8yRPqD4HaAPVEVHVavhEoT9x5GbTGLwcMvAs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=JqG9rNmv; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="JqG9rNmv"
+ARC-Seal: i=1; a=rsa-sha256; t=1772724952; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=AUBV+8s6Fr6W2Qv8QMVoNGT2ebVnAQO7jNW0DVQI0T2a/VxA0BAt/OfsL9fu5oahN8anQHCL67IhWH7+d/V0JSb+UmYsxUTD7KrEPUsdcXiX47bHDrIO5P6HQRZ336C7DldHPPMOyhZdn3akF4kzGSZsENorEDpJWLfqx/CuBSM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1772724952; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=QetOvITxHtYsRZdgk4oF96+qwijXoc1Q8T2XTInT1bU=; 
+	b=JRI+jqMJPI3KNTamlXKKMWt3vmxRLnPH3tAVBH+oRkCkNfoCZRz8gQMXMloPJ1KXSq+HwNJDtm+KPE0KehCEuOaEQQRPFhapx+YuaGuHCWAy9udNk0VVjCSWID27C0UWWPRKNX5858583XdbgdAVlnC5XDFBlLsswDNX3tRPslU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ziyao.cc;
+	spf=pass  smtp.mailfrom=me@ziyao.cc;
+	dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772724952;
+	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=QetOvITxHtYsRZdgk4oF96+qwijXoc1Q8T2XTInT1bU=;
+	b=JqG9rNmvuoHb1bv0RbxH79bpE2Si3hAPPbHP//SqKU4QMqkLc14oHuHEKfF3usha
+	BPYfhbWCtPjrAtw7X/czJFdaemmoqoLrFg3CE1Mxq35dSniV2xqmf4xR5WFJf79MzVa
+	a9f+LwpHEjG/nv5mhTF3uOZhkAQH1mAH4/7Nc5m4=
+Received: by mx.zohomail.com with SMTPS id 1772724948845222.5524650203689;
+	Thu, 5 Mar 2026 07:35:48 -0800 (PST)
+Date: Thu, 5 Mar 2026 15:35:39 +0000
+From: Yao Zi <me@ziyao.cc>
+To: Shuwei Wu <shuweiwoo@163.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] thermal: spacemit: k1: Add thermal sensor support
+Message-ID: <aamiy3IEqjTZQz2R@pie>
+References: <20260119-patchv2-k1-thermal-v3-0-3d82c9ebe8a4@163.com>
+ <20260119-patchv2-k1-thermal-v3-2-3d82c9ebe8a4@163.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Stat-Signature: hdghxtayq5bkfzsomxmnfbydyyebzipf
-X-Rspamd-Server: rspamout08
-X-Rspamd-Queue-Id: E35031C
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX19f3I+nQL7Hl0m6eSD18a/IIsXK9f3qkJo=
-X-HE-Tag: 1772724955-671908
-X-HE-Meta: U2FsdGVkX1/X7uxRzGLN+IX8WCZcO8p7ZTfkKmYNWBtz0ybputMaHEYE9yjxoGJ588aNvqlmxPrL8260emaV8dmXUI0e+INEtvEJY25I/Ej/PwqlxILke5yF3tqaj6xtvov8nI2F5oYM0uwbLv+6+skyh/sdJqBRUfJJKxLUzixxjwVPNZYZfPXpcC3lGcz5BMW1nsCCc9lzUvpFfMAODgtiRdX4Al8waTK8ABKVHmTqbt8uPB5EPbopscO3f/XucT2DdozpyI3LxZQRIQw7tIxAWEpzWgj98RYMI3rQa9CVBr40+v4Qte7+qYx1OCa5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260119-patchv2-k1-thermal-v3-2-3d82c9ebe8a4@163.com>
+X-ZohoMailClient: External
 
-On Thu, 2026-03-05 at 13:43 +0200, Vladimir Oltean wrote:
+On Mon, Jan 19, 2026 at 10:41:22AM +0800, Shuwei Wu wrote:
+> The thermal sensor on K1 supports monitoring five temperature zones.
+> The driver registers these sensors with the thermal framework
+> and supports standard operations:
+> - Reading temperature (millidegree Celsius)
+> - Setting high/low thresholds for interrupts
+> 
+> Signed-off-by: Shuwei Wu <shuweiwoo@163.com>
+> ---
+> Changes in v3:
+> - Align multi-line assignments as suggested by reviewer
+> - Remove unnecessary variable definitions
+> 
+> Changes in v2:
+> - Rename k1_thermal.c to k1_tsensor.c for better hardware alignment
+> - Move driver to drivers/thermal/spacemit/
+> - Add Kconfig/Makefile for spacemit and update top-level build files
+> - Refactor names, style, code alignment, and comments
+> - Simplify probe and error handling
+> ---
+>  drivers/thermal/Kconfig               |   2 +
+>  drivers/thermal/Makefile              |   1 +
+>  drivers/thermal/spacemit/Kconfig      |  19 +++
+>  drivers/thermal/spacemit/Makefile     |   3 +
+>  drivers/thermal/spacemit/k1_tsensor.c | 281 ++++++++++++++++++++++++++++++++++
+>  5 files changed, 306 insertions(+)
 
-> K:	(?:struct\s+)?phy(?:_ops|_attrs|_lookup|_provider)?\b
+Though I don't have the time to test it on my K1 board, the driver looks
+good.
 
-You have (?:...)?phy(?:...)?\b
+Reviewed-by: Yao Zi <me@ziyao.cc>
 
-I rather doubt you want anything that ends in phy
-
-That matches words like cryptography and way too many dts/yaml files
+Thanks,
+Yao Zi
