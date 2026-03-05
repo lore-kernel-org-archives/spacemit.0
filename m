@@ -1,96 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B7739F181
-	for <spacemit@lists.linux.dev>; Thu,  5 Mar 2026 12:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A123195EA
+	for <spacemit@lists.linux.dev>; Thu,  5 Mar 2026 12:46:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772714694; cv=none; b=O9dg1XEMkeKwSyuXAvVgZwlWpCGm3AIkq/2pxQN7xK2Ype1W0s49L3tfEoMEU5pZ2AL1O8qnRtmxDjNJcI+zInx5Vwn780n6OWYoxUKgZJnlYPOenfMEeXxzGxeyTjBfeZN94teozQRxl8D6Zlp+/3hYIL//hbKhfKeR4ksNU08=
+	t=1772714792; cv=none; b=nLwSp//nAzkHLNWqywAZMpJKtl/4AZpysGlvAZuBquOMivd5dHVg3CuyzNjujurBfMaYWaXyIzdOChX3JIvfiL8PpwBsdw/p8mCbSe2GdKmMoZ2pAaoVSN2BD4D+b/bcUrZBxgmW3NpCkwEOVsqzpR7048orYoIwwZy4rNz3OcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772714694; c=relaxed/simple;
-	bh=7/B3L3Xu38pLEI9aWzEuoVdxX7Qp2NIDeM+Gg1/xjBI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r74e/WyKWy17LP+csteL1G/Rj/ioWxOvVFWoBaQMifD5YVlaU81j8wBjgTHNvBeJ3j5bu3rJ14aA0eTgwdv6Fv4oUWNy4+P+j/8Q9BVYeenjp0hkBq3++tYiFAoK8+wmNFZCYhBSeNdyKRCj5zVdb4oKNsxptczLyyvM+9qz5Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OtqYMvb5; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772714792; c=relaxed/simple;
+	bh=YT5BdtExYpZoNv3snHWHiJP/l7vrlzxoC2+/p1/Mtzc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=tDui0zCc+X375jKE/huzLkZA/rXTtbYA6CCmqUOW5beCYu9cz/BjXBMp8nsKHyuk6uUR3woX9oy8l+k1sb8dGY3A67w8HxMD0xosprs8a7CgDCY9gYsXB/buDKPEr3bX20HU1je5RI1dxE+aln6P5lAvBX/3G/o+3SQC580GLTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=NUErKxvY; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=S0YYrqZk; arc=none smtp.client-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OtqYMvb5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FC9C4AF0B
-	for <spacemit@lists.linux.dev>; Thu,  5 Mar 2026 12:44:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772714694;
-	bh=7/B3L3Xu38pLEI9aWzEuoVdxX7Qp2NIDeM+Gg1/xjBI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=OtqYMvb5oPxe5sMzeuWM/p9QhfY79P8WSa8Oc0dmxSoFCqAxC+CeiyJ4NR/CKYXp5
-	 2pWsVJ/8dTjJPaOTsMOrLWg9QrWyIT17qWYKoWkp2uev1+hKn84FX5s0QnjAl8bNE/
-	 7JpPIBkXPhGvuxF9NkQde6xY7s3+z78cNibHOOJcW8DPll2R+OOPS/ZPgglANmm0bm
-	 z+fq9gwNqWVY2cpjU7AjP46t/Fi3qyyprLoCv6ETr3JC7/UsdbQoEj4fnlA7mjJ3u9
-	 kpBnTLkqR3bbedcx3T7TtOd2iumdT2sN3/QFxWt88OY6wGjq0mmb5qwwhn72EVc8bD
-	 zEhwMty5ybC+w==
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-64ad46a44easo7001841d50.0
-        for <spacemit@lists.linux.dev>; Thu, 05 Mar 2026 04:44:54 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUZFY6Za4D6vLbQklwi+/ajrjOXmyHfqWoqYXYJHOphMZEBw0Zj97zJgWzI9/v2BMDfZnSdAzau0g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzOjIHzwzKhJ46Xx6q6Zu1/E0yPn37kMz+BO40XlepCxpHyQZ6b
-	HT1TPQMNfCRZQmSrvxTaKYf3ByhAVSek/dyGuQwkAHdrJ//NDVPsYvCzRqfZVk4zntpwnJtwKau
-	4593EFlZ2DZIDZ32lwun3N75D+C2mtfI=
-X-Received: by 2002:a05:690e:1a12:b0:649:5a6e:bc88 with SMTP id
- 956f58d0204a3-64cf9bac208mr3552462d50.46.1772714693758; Thu, 05 Mar 2026
- 04:44:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="NUErKxvY";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="S0YYrqZk"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4fRTmz4R30z9twV;
+	Thu,  5 Mar 2026 13:46:27 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1772714787;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=pUlhsxKJln+rW8kzW1QZ1WnxvxiGGsR+VgHvKa+y9ns=;
+	b=NUErKxvYverSGgEFZAMqpAl51M8lmsZAzl8neGuXaLf2ylHgQ+6NgZdZdUdLkE3a5pzQaD
+	XoDtL8qB4jBH86wwBKxUREeM8hcY3VIi1Do+rdE3Hy3yoctuV5kLX8ccpQdXYEwQDUEj8J
+	x+03jCjl3fDtQFjCkW6cemFIdkthYpZ140ko6KxmMOUO6zJT0S+/TO77a44Wos4zaEZ0co
+	yjNZSAnXn7SuOF4BdDRQ4k22val/VvYm1e5d6J1NmUH5Ex/eTDjQObkHvszQUs+DpqRhLR
+	vIm41m1qrmGjtgDTdJ/tkOK0MOfzf72osyy4w7HJTJBSjrAaBYkkpFg/ksQxvw==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=S0YYrqZk;
+	spf=pass (outgoing_mbo_mout: domain of shuwei.wu@mailbox.org designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=shuwei.wu@mailbox.org
+From: Shuwei Wu <shuwei.wu@mailbox.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1772714786;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=pUlhsxKJln+rW8kzW1QZ1WnxvxiGGsR+VgHvKa+y9ns=;
+	b=S0YYrqZkhp0fW//w8EMIRvU7g0BRjzA14DICNRCxj7pKMyytiYQilQE/6lxExTOUjhRCoN
+	NV9241/jLrtF1EN18mOh88piPzFYdinZ+pEE8cIDB5qLkzd80j678qWl0vXGPOC5RAEqWZ
+	fkIth8nr8VGujeem7pB3lJDVojFE8TfbMxWA6s51mGfWqVXi0sQbGjaZ3lqEAucPP/CZoA
+	/tPXBs9m8+5GfDsjehoFyHtFhgnVmXzL0ApDcBlNqdGH9X/7V5/EJhNJo6LLLqjDNQXQ83
+	44G1S89htEqaaZfGbUuWvsUBXJbYtT7hnEajWdIrj0KyGmF12kGk2Klv2Pd0oQ==
+Date: Thu, 05 Mar 2026 20:46:08 +0800
+Subject: [PATCH] clk: spacemit: ccu_mix: fix inverted condition in
+ ccu_mix_trigger_fc()
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
- <20260304175735.2660419-19-vladimir.oltean@nxp.com> <CAD++jLnCtu20rXcg7sMVLBi24EohscJoz0kN46XJaKPJt00O2w@mail.gmail.com>
-In-Reply-To: <CAD++jLnCtu20rXcg7sMVLBi24EohscJoz0kN46XJaKPJt00O2w@mail.gmail.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 5 Mar 2026 13:44:42 +0100
-X-Gmail-Original-Message-ID: <CAD++jL=m+cEcqy1i2H0tdeBa3Sy76myGAR9HdBqrT4u-x5v50A@mail.gmail.com>
-X-Gm-Features: AaiRm53u9phsGhzUDeKiqEnTp_X3DfbqaQ7dJ0SVurbn78IH1263DExaHPtG4YM
-Message-ID: <CAD++jL=m+cEcqy1i2H0tdeBa3Sy76myGAR9HdBqrT4u-x5v50A@mail.gmail.com>
-Subject: Re: [PATCH phy-next 18/22] pinctrl: tegra-xusb: include PHY provider header
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org, 
-	netdev@vger.kernel.org, spacemit@lists.linux.dev, 
-	UNGLinuxDriver@microchip.com, Thierry Reding <thierry.reding@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260305-k1-clk-fix-v1-1-abca85d6e266@mailbox.org>
+X-B4-Tracking: v=1; b=H4sIAA97qWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDYwNT3WxD3eScbN20zApdI9MkQwPDZAsLE1NLJaCGgqJUoDDYsOjY2lo
+ APR4xe1wAAAA=
+X-Change-ID: 20260305-k1-clk-fix-25b101c88459
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Alex Elder <elder@riscstar.com>, Inochi Amaoto <inochiama@outlook.com>, 
+ Haylen Chu <heylenay@4d2.org>
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Shuwei Wu <shuwei.wu@mailbox.org>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772714777; l=962;
+ i=shuwei.wu@mailbox.org; s=20251125; h=from:subject:message-id;
+ bh=YT5BdtExYpZoNv3snHWHiJP/l7vrlzxoC2+/p1/Mtzc=;
+ b=36mh8wH7swNyMaDMB2jq1M36Hh06A8zDF/sNvVR9RrOowacqTfENWpmnlUbaG4V2Bt5IL974K
+ ePwW2mAC+DCB9RBNFcg6iPERESS7VWegWhhbK1rLdvQzo91VQzGKl9Z
+X-Developer-Key: i=shuwei.wu@mailbox.org; a=ed25519;
+ pk=qZs6i2UZnXkmjUrwO5HJxcfpCvgSNrR4dcU5cjtfTSk=
+X-MBO-RS-ID: b904c4551ad57a56bb1
+X-MBO-RS-META: 19wj5p3km5xs7jumhi65q5cj9u8e17eh
+X-Rspamd-Queue-Id: 4fRTmz4R30z9twV
 
-On Thu, Mar 5, 2026 at 1:43=E2=80=AFPM Linus Walleij <linusw@kernel.org> wr=
-ote:
-> On Wed, Mar 4, 2026 at 7:00=E2=80=AFPM Vladimir Oltean <vladimir.oltean@n=
-xp.com> wrote:
->
-> > The tegra-xusb pinctrl driver is also a PHY provider (calls
-> > devm_phy_create() for PCIe and SATA). However, according to Vinod Koul,
-> > having PHY provider drivers outside of drivers/phy/ is discouraged,
-> > although it would be difficult for me to address a proper movement here=
-.
-> >
-> > Include the private provider API header from drivers/phy/, but leave a
-> > FIXME in place. It will have to be moved, eventually.
-> >
-> > Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
->
-> Fair enough, is this a regression so I should merge it for fixes
-> or just a nonurgent fix that I can apply for next?
+Fix inverted condition that skips frequency change trigger,
+causing kernel panics during cpufreq scaling.
 
-Sorry I realized it needs to go in with the series.
-Reviewed-by: Linus Walleij <linusw@kernel.org>
+Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
+---
+ drivers/clk/spacemit/ccu_mix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-You can take it from here.
+diff --git a/drivers/clk/spacemit/ccu_mix.c b/drivers/clk/spacemit/ccu_mix.c
+index 9578366e9746..a8b407049bf4 100644
+--- a/drivers/clk/spacemit/ccu_mix.c
++++ b/drivers/clk/spacemit/ccu_mix.c
+@@ -73,7 +73,7 @@ static int ccu_mix_trigger_fc(struct clk_hw *hw)
+ 	struct ccu_common *common = hw_to_ccu_common(hw);
+ 	unsigned int val;
+ 
+-	if (common->reg_fc)
++	if (!common->reg_fc)
+ 		return 0;
+ 
+ 	ccu_update(common, fc, common->mask_fc, common->mask_fc);
 
-Yours,
-Linus Walleij
+---
+base-commit: c107785c7e8dbabd1c18301a1c362544b5786282
+change-id: 20260305-k1-clk-fix-25b101c88459
+
+Best regards,
+-- 
+Shuwei Wu <shuwei.wu@mailbox.org>
+
