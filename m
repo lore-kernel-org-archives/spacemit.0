@@ -1,92 +1,72 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2075221D96;
-	Thu,  5 Mar 2026 13:19:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8918379EF0;
+	Thu,  5 Mar 2026 15:36:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772716796; cv=none; b=PuhgkHVfQJ9vDbO/wFEMD8+WMxNErdJjWl6cRNdL4+6p6OzSg3QCoFng0v137Ozw41FgXpJeZ4l7g8kLnJYuk4rFhuC2OT8UaCa8/YradH37OrFqM0ICrtTkK2FN/zcni5iwhkjg4EprrebG9Cvgf4ncY9+57tzVIiL+fTKVXkk=
+	t=1772724967; cv=none; b=sR53jsZI8T5iFU+o4iOs5H0p6FwyDml9GdsxMCFBsSRChHJE960Tjmn6NDWp7dwx6bYz2H2MrEXC/nt0FxfLMQVxjfF+QKE++IqMsQzSPmYJ3p9aqM1+GlHf/rjLIiV/HlVlpgmwukmII4oqH9Y4jtYrJpIrtMQfDfvvRn9tCIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772716796; c=relaxed/simple;
-	bh=2b6ErHbmsNp6ReRrw9T/1LHYX0rELD4FEX/8EiAMxiI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iF/s8TB1C2781w76Y+p6PNxFgfqjpR1m9bVTdjQT4kgbKkDLo4Wa3yTAnwq2Aapam5dHjetjsUGvqEqpw9CXSFTOYoGxptxrn3an1S6hW66xKUMNKwPiOvuVpgF0No7OQu14nrK84xAW/8OBOGwAiT0RECApToc/97MPIi+3poc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jszM+s9v; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jszM+s9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30848C116C6;
-	Thu,  5 Mar 2026 13:19:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772716795;
-	bh=2b6ErHbmsNp6ReRrw9T/1LHYX0rELD4FEX/8EiAMxiI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jszM+s9veUVm+q8AzGoj+JgCcGNarYbGIpIDz/iQaCbiWWGX/aL6yBdKzx+RcpjWq
-	 8tRHL3WXG/FyGYMfI43PZdoOljnANTwy5Sg9/K2SjMo5H/eWet3Py8wV/lDTdURheL
-	 6iXXAfmPCKdAIkQwd3rcsJhFqKBXekgiEQyin0qKp3/6Al9GDyl33U7J5xj5alxJrZ
-	 yFxcGaw0OqYHAj+XZtoDrWhEftts66Ie1SjcZEP2/pyUCTwl+zaz7vNmdxoYEdmMCP
-	 EfQ8KNVfuM5PdV7uiV9Bzj6z2ox7FcX0NWhOVHbrTkxJ+pSa3a9XXN1l9cj/Aimh2A
-	 94CObXLLHbSGQ==
-Date: Thu, 5 Mar 2026 21:19:52 +0800
-From: Yixun Lan <dlan@kernel.org>
-To: Shuwei Wu <shuwei.wu@mailbox.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Alex Elder <elder@riscstar.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Haylen Chu <heylenay@4d2.org>, linux-clk@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: spacemit: ccu_mix: fix inverted condition in
- ccu_mix_trigger_fc()
-Message-ID: <20260305131952-GKA302167@kernel.org>
-References: <20260305-k1-clk-fix-v1-1-abca85d6e266@mailbox.org>
+	s=arc-20240116; t=1772724967; c=relaxed/simple;
+	bh=qocaInGB0SlfrWm+uA1O3uhdYbYezjAl8jrEXMJzGhU=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=LWEfGZx3KKfqPR+EulOrLmlCpf/Zbe4FGWLQ38ONHzUkaONzLXL9e6My5PMks7NIArs4AmwsgoWqVrWV9nAjhuWpGrpWu7nVy9K1IDrlnpbbsxe+dAudTWfhENgZOVcfAVbKtdizgBtl3sxPU3CRhJwgBJmfJiRbqPuMFpyAKcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com; spf=pass smtp.mailfrom=perches.com; arc=none smtp.client-ip=216.40.44.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perches.com
+Received: from omf17.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay08.hostedemail.com (Postfix) with ESMTP id 9322C14014F;
+	Thu,  5 Mar 2026 15:36:02 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf17.hostedemail.com (Postfix) with ESMTPA id E35031C;
+	Thu,  5 Mar 2026 15:35:55 +0000 (UTC)
+Message-ID: <21e84301a7c37f9d5ce6f0ddcaed7846174d2a4d.camel@perches.com>
+Subject: Re: [PATCH phy-next 22/22] MAINTAINERS: add regex for linux-phy
+From: Joe Perches <joe@perches.com>
+To: Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, Neil
+ Armstrong	 <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org,
+ netdev@vger.kernel.org, 	spacemit@lists.linux.dev,
+ UNGLinuxDriver@microchip.com
+Date: Thu, 05 Mar 2026 07:35:54 -0800
+In-Reply-To: <20260305114352.2f7btqixg4tu5bzl@skbuf>
+References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
+	 <20260304175735.2660419-23-vladimir.oltean@nxp.com>
+	 <a8fee1cd-1e69-4a9e-8533-c0988c480fb9@oss.qualcomm.com>
+	 <20260305085148.7cwo3yflp7vcfldf@skbuf>
+	 <f3a5aa3df78553ffc0fd0024f5fd36a4e2158c88.camel@perches.com>
+	 <20260305114352.2f7btqixg4tu5bzl@skbuf>
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260305-k1-clk-fix-v1-1-abca85d6e266@mailbox.org>
+X-Stat-Signature: hdghxtayq5bkfzsomxmnfbydyyebzipf
+X-Rspamd-Server: rspamout08
+X-Rspamd-Queue-Id: E35031C
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX19f3I+nQL7Hl0m6eSD18a/IIsXK9f3qkJo=
+X-HE-Tag: 1772724955-671908
+X-HE-Meta: U2FsdGVkX1/X7uxRzGLN+IX8WCZcO8p7ZTfkKmYNWBtz0ybputMaHEYE9yjxoGJ588aNvqlmxPrL8260emaV8dmXUI0e+INEtvEJY25I/Ej/PwqlxILke5yF3tqaj6xtvov8nI2F5oYM0uwbLv+6+skyh/sdJqBRUfJJKxLUzixxjwVPNZYZfPXpcC3lGcz5BMW1nsCCc9lzUvpFfMAODgtiRdX4Al8waTK8ABKVHmTqbt8uPB5EPbopscO3f/XucT2DdozpyI3LxZQRIQw7tIxAWEpzWgj98RYMI3rQa9CVBr40+v4Qte7+qYx1OCa5
 
-Hi Shuwei,
+On Thu, 2026-03-05 at 13:43 +0200, Vladimir Oltean wrote:
 
-On 20:46 Thu 05 Mar     , Shuwei Wu wrote:
-> Fix inverted condition that skips frequency change trigger,
-> causing kernel panics during cpufreq scaling.
-> 
-> Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-> Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
+> K:	(?:struct\s+)?phy(?:_ops|_attrs|_lookup|_provider)?\b
 
-Thanks for catching this..
+You have (?:...)?phy(?:...)?\b
 
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-> ---
->  drivers/clk/spacemit/ccu_mix.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/spacemit/ccu_mix.c b/drivers/clk/spacemit/ccu_mix.c
-> index 9578366e9746..a8b407049bf4 100644
-> --- a/drivers/clk/spacemit/ccu_mix.c
-> +++ b/drivers/clk/spacemit/ccu_mix.c
-> @@ -73,7 +73,7 @@ static int ccu_mix_trigger_fc(struct clk_hw *hw)
->  	struct ccu_common *common = hw_to_ccu_common(hw);
->  	unsigned int val;
->  
-> -	if (common->reg_fc)
-> +	if (!common->reg_fc)
->  		return 0;
->  
->  	ccu_update(common, fc, common->mask_fc, common->mask_fc);
-> 
-> ---
-> base-commit: c107785c7e8dbabd1c18301a1c362544b5786282
-> change-id: 20260305-k1-clk-fix-25b101c88459
-> 
-> Best regards,
-> -- 
-> Shuwei Wu <shuwei.wu@mailbox.org>
-> 
+I rather doubt you want anything that ends in phy
 
--- 
-Yixun Lan (dlan)
+That matches words like cryptography and way too many dts/yaml files
