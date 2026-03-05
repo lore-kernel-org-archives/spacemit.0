@@ -1,148 +1,137 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10658388364
-	for <spacemit@lists.linux.dev>; Wed,  4 Mar 2026 23:56:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02377231830;
+	Thu,  5 Mar 2026 01:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772668622; cv=none; b=bTJMbCoehueGe68+FKo4XQdc4WhySD2DfDu6YQzUnQbSKEKgKi/8B6CiWgFPQrhy1SOQee3UScy4Ixrpct85DUmChSAEEp7reybOUvGTkPr8s+tAgVc5BdFxywXpNwbHP2ITLYRYOgCgmnwGMiahgxQCpcnUjybw6LZnyokkQo0=
+	t=1772672472; cv=none; b=p5vXJ8leZ0+DDSbRBH8YNVVD5jzW5WzmmPPfpaPXM44tGOmGiN48wgUSanW+2Ez0o0IBf8A8q4N/iMac18O8fcaHQHNhlZbLME4JuH0e3ow+pN7wQJ+InuOun9fpMjlYl8+g5AzlDoKLzpuexakYgTEe8klhhTN7YD/QeUH/4UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772668622; c=relaxed/simple;
-	bh=Q0RmGTaWyrNXkoqSRC4NOGoeVMXVms2krIlt4cMtsHo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jLR6ObABLiDLlR/dNz7aKkiQ4cMZDnqonp1UrJIdmnYd8LVo3+QQNV8xS/V0/AlsMoSQUH9sL4qTS/S3P6UB5F1AwO/HFh0LghcVXIX03JsLhVhRJG9k9/mOHmzZOkhpG+7NBP16+gYHuSTbZMhot0SXyF5NlyP6olG7O3aH47U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=M3gyhoDK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KtF3lp8i; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1772672472; c=relaxed/simple;
+	bh=UMf7X17drXT/2m3cWxTRejsoT3RPHLdFCh83qDuKhBk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RnuWeWiiPLL7lhxX/cjmC2bqXTZe0/JrSNsrAKlHOz8gD7eTILJCD+n3ShPyMBor9EpdW9Lvj2i3O8ZjU/klTcLoJM1Q7plUzwZM9bHyDapvYaHKYld7ZuFJ5xuALSOpuuMgCjEWOPgNlke4CDXVsNWDiY4oUFYaSb4rpCAk3AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UvYRAxs+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="M3gyhoDK";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KtF3lp8i"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 624ILagQ1213714
-	for <spacemit@lists.linux.dev>; Wed, 4 Mar 2026 23:56:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=La/zyW1kZlkdjuba28Y6cKUE
-	jgLjT1PdHqsncSoONxI=; b=M3gyhoDKsD95tRqPBt6AVRtUJ8xAewA9091Llh/v
-	3N7WGAoRQBPzVIJQ+qMMIDlNc/bfennDxIAH2TEssBH789bj2CFI/9WHiWumbLtX
-	Ql5cWWDkmHK/HrduZFYdFIBCxQbuZCUwt9VpsjOneOKdaQDvPYtLjUV+u71lyXmG
-	dmxjU+qXynuSopTYtoQMCaamDnBl8AhwF8OiwiX39d0m+NMjaFXCFWCfbfdsFV2h
-	o+l1R38GMJrzXlm7o2GPUvHPn1156OUgdepeJ2YZzwgJPRbOnHzpNxoiQgsN2xDS
-	DJcDnZ8howbsvkbWgknRmV8ZQ+d0VG8z+7CPjjKVm1P8FQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cpjh5tdnw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <spacemit@lists.linux.dev>; Wed, 04 Mar 2026 23:56:59 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c70cff1da5so4207908585a.2
-        for <spacemit@lists.linux.dev>; Wed, 04 Mar 2026 15:56:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772668618; x=1773273418; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=La/zyW1kZlkdjuba28Y6cKUEjgLjT1PdHqsncSoONxI=;
-        b=KtF3lp8ikkz+h1ulfcxF+PRBh0JYJzc4c2HSe4pi6+GIvNDfp7o6h7ME5WiayBeNg4
-         FYaHwnnnNk4DjzmKENlGTGaYmXWp+P2uBpobHqLh3UFynBUOxuk4KbNu3q9triprQ7wx
-         yMUl7L37ZDUp9Muh0yMSksrBcRdI1MdZCiCY61++7Ax7Hukp+r3phcx+Ef3NvbqlmWif
-         zzI06yoKbqd6fYpvF19UdfLOt83D9b+nO/YGmh6P9Z+8jC2eNkkLNOElTDgCgf80TtIJ
-         1hKcaH8qUtLbVvQMlmacqdta6r+nPpOGf9n4D8rPktjtCYMFqsmceWD87IQquwu3mx1M
-         Qmtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772668618; x=1773273418;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=La/zyW1kZlkdjuba28Y6cKUEjgLjT1PdHqsncSoONxI=;
-        b=Hqpn1S4Ss/S245pyu/iSOCHKKqnbd8DbADwI0Vy5tiF0x9kErFuoaQSnKyfh1mPt6P
-         tLxEXZJXtUMsFSOtzDMjuPGpsNFFAINRaidmx+T6JVj9FGquA1Nadev0ZyBf/+X07z19
-         JAL5O9Mwq6n0AsN8hXeetLTA7/XYPF/aJf1QGW7RdWhEXyTArd2CNQECvFvGKzvHe5Wb
-         bXat4wYK1JqRVMi9Tb1H8zogF48Jm95foynGIP4E1fgWo4c8TLyyaPuj/jvORyxSv82X
-         GIPXj+rDfCTfp2uQ1tUvI0Rt3meWnNh9fKVmBBFIpwMZ4IoWS3Lwxk8XJm8sIiBWEm40
-         AcCA==
-X-Forwarded-Encrypted: i=1; AJvYcCWU5e6iKy8H5bMyRLR1Mnvy3wn5Q4RY878tmbWyxTTRM1LOZk1YKqMduOEPQ8kMqNKuk1FQxxQeyQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwtJiR2NUx/Uba8jIeeWEyEHnhXxswnBr9dxzctXOoCcF0o60Yl
-	eBmXxX6rGyYD1TAVT2GdgVpO1NZLzfxCSMbBu20jtW/9a76JHMe0bMbT/4UqDn03JD8bGATX8tT
-	JLNNvhlrl9WUSLPeCk7qeCm8K5VJsJG0Mt31dTc5LlPkSdbCiTXagC7EJpXYkog==
-X-Gm-Gg: ATEYQzzPxWyVcDj4q/hFVoXDwjYOwfSxzgSvkYa+bAvreF4AKm0G2/ip5anpeHktyPu
-	IMimdWWrFIQ0seHX5MVciOu7yw5FpRFlz6/tu2vdo72Yxj99CQqbo2w0k4zEp38idgRUupLEijn
-	e9gpWBbhGOthzQOxzqgquYDzvOE0SjXDB7bGbeYiSoV69CH1k3Kw5RsA3kZsRCr5xc2EvesOHV8
-	QdAoqSNvRQE/sd2/QY+JhOVtZERF2jciO6Y93iBzLrJuzujRzjCiIiItU9LshVwKJbgeG79EnWq
-	/pHWW8mwjRBSgZ5GaXQetm5F2d40PWRQSvDCU5Ct95syfkmPBn6oxC/Pug6192XT3Krwuj/qY6h
-	qg7pSeUNuspRXo290gMLRLmMvJhY4jNzssAUWatc4AmP4XydsMxh15Suqe6xwlj7dwrd4XySo3A
-	qLuIc6MuUc2ur0EzHW+/bPM6t9OSyqMqAbcSg=
-X-Received: by 2002:a05:620a:44c2:b0:8c6:770c:40d8 with SMTP id af79cd13be357-8cd5af775e5mr481319085a.40.1772668618476;
-        Wed, 04 Mar 2026 15:56:58 -0800 (PST)
-X-Received: by 2002:a05:620a:44c2:b0:8c6:770c:40d8 with SMTP id af79cd13be357-8cd5af775e5mr481314985a.40.1772668617932;
-        Wed, 04 Mar 2026 15:56:57 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a123573df2sm1571493e87.65.2026.03.04.15.56.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 15:56:56 -0800 (PST)
-Date: Thu, 5 Mar 2026 01:56:55 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-can@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-usb@vger.kernel.org, netdev@vger.kernel.org,
-        spacemit@lists.linux.dev, UNGLinuxDriver@microchip.com
-Subject: Re: [PATCH phy-next 21/22] phy: remove temporary provider
- compatibility from consumer header
-Message-ID: <o3yvtltydr5hvve2htwgqbp4bfopgu74ft4gnyelmges3hmiaa@wy3brdd5dnek>
-References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
- <20260304175735.2660419-22-vladimir.oltean@nxp.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UvYRAxs+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6E1C4CEF7;
+	Thu,  5 Mar 2026 01:01:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772672471;
+	bh=UMf7X17drXT/2m3cWxTRejsoT3RPHLdFCh83qDuKhBk=;
+	h=From:Subject:Date:To:Cc:From;
+	b=UvYRAxs+5RBEHlU+mO/Rd//PPziY/Xp6IgtnSnxz5RD7A6WYTXbt1ertF0Dv+h7H/
+	 u72OAbDxv6m/cXSyF3qEa1VUcpAAU0cR/8p9kvz/s51DCKC0p9/F/MmdgvnNws8Vfa
+	 myAFM+BphtYhlPllOkDACsX7hzJwaZFLbksMcdt/alJxrjCBbOnCx0g8DYKR4YURdr
+	 iJydZMQlykUT4hpLWQfOhh0pCoQwYbCMHrghAtKMCbAnj/zKiGD/NxhEwVaIK48G1c
+	 4ZOXcy3RkofLu0fxFdv35nodEBSHOH66k5/8PoXwf5w4cw/jwK3rdPDcqzBybTYvmM
+	 WJ0+43FsH8xSQ==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH v4 0/2] phy: spacemit: Add USB2 PHY support for K3 SoC
+Date: Thu, 05 Mar 2026 01:00:50 +0000
+Message-Id: <20260305-11-k3-usb2-phy-v4-0-15554fb933bc@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260304175735.2660419-22-vladimir.oltean@nxp.com>
-X-Proofpoint-GUID: t13Wrpj4eqC6TLo46xRQCHvgct4pGQ84
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDE5OCBTYWx0ZWRfX0iOksuiLgn7/
- 8vkhKY3/4GfVLQs48bUr5PiihBEQ7oX2b7mCfzPuSyTcg2+GDDwQkOl9iPRKOSHNNZgMe+st1EL
- TG8HA66i8ibtVy9LzqeXLiybcp//O7vDspxFb6QiGKQ6Y8hu12JzzvlTl7wfnkoXXVTNx90CtbN
- 8MhG88iQCQFyS23kQUxOs2aZBdsVyKdHilokEcsRRDoJM7su+/H7wsqOdpsArwmiIRNGYMug654
- Wwbx3/pNjPCQXQA8WYFi/OraRNeqljYE+8oz3Po5IUYAWdA8/P+HAW/v076BpkVWUXjrwLTeAxp
- yPj2VpFgFYQYpLK+Lv8o+55xJrWQ9z4aet8oGjh0djBaPos+6hxjGrzyHpU/nW1Mn3eOYdmtTSF
- UUdsBGmQoY95W99LLh/4IqrneY+GNNbamCU489Nozs3XPPEPOqRzocbiMIETRg6Df63P/zvEzBZ
- 3df/oywxynWDyZNDs1g==
-X-Authority-Analysis: v=2.4 cv=JK82csKb c=1 sm=1 tr=0 ts=69a8c6cb cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=8AirrxEcAAAA:8
- a=EUspDBNiAAAA:8 a=Ji6k5uvf-STsHdHMmocA:9 a=CjuIK1q_8ugA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=ST-jHhOKWsTCqRlWije3:22
-X-Proofpoint-ORIG-GUID: t13Wrpj4eqC6TLo46xRQCHvgct4pGQ84
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-04_09,2026-03-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040198
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMLVqGkC/13MQQ6CMBCF4auQWTumMxQUV97DsLAwQIMB0mojI
+ b27FXcu/5e8bwMvzoqHS7aBk2C9nacU+pBBM9ynXtC2qYEVl4pYIxGOOb68YVyGFRtd5spUlTL
+ UQTotTjr73sFbnXqw/jm7dfcDfdcfxcT/VCBUqPPidC4q1qpor6O4SR7H2fVQxxg/GC/Vwq0AA
+ AA=
+X-Change-ID: 20260124-11-k3-usb2-phy-c4630b990b1f
+To: Vinod Koul <vkoul@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Ze Huang <huang.ze@linux.dev>
+Cc: Junzhong Pan <panjunzhong@linux.spacemit.com>, 
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Yao Zi <me@ziyao.cc>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2217; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=UMf7X17drXT/2m3cWxTRejsoT3RPHLdFCh83qDuKhBk=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpqNXKdJlZsM5D/2qcw85wKs1DVGjsO17huAdmw
+ T0AbvuC5Z6JAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCaajVyhsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+0V/A/+IK4XZuOOeywg4wwMq7NgDKjI1PO6lVmwLNATfV5cC6jS8o28OxsWy
+ n8Y3ZD9Pj587yWj/whTswr+5zBu4jEZHksWZKZ++UkV+CWamqawtiz/hnoWXUinN5kX8KFbgQhr
+ AifrUMoH6rH6U321etwiwtwX1M+qJ41mnUGav6Hasz8tOztNEbxk4nm0iJlv3Q4NBFY5w0uxHvh
+ Rn0sqpVMhxjxykqvbzcFLZqIOv/GYh8XW8UV3457LuSbCvHN+Gk3TS1me+Z3Aq/4NyG5uav6pOo
+ nn15TsHjKhokRbyyAV0PRI1PHgWQkgmbLNX8T/lzr2zSVZ6M2eFTzhz8GLj8ah+CLTvi+yB99mJ
+ bxb7IlSsGFhYzFey8nN8duqKpYhjMxqdx0CFXBoywWP4f02kpPlW6W4Fm15mA/j3ThvycqBowlX
+ 2SKfw4of2mIS9tb03Y7M+3jxFDXtXv1D4Y7Tn9eZhvpuWVyxemtKARWY9RqIEoRAHnt4X+TaTx3
+ cRCtg5QeMW+Bq6LZHs6iRcNihQOiLPbZVvzv4+PvnY+uAIpdYvQvTdv/qtOW5KiOua5l2KDmQ9r
+ Hul04mDlzP+IG7LS3UsFtZftwLfht4gGuDFuIbt/+Af9cBSULv1nM1EuIKjz36GIEEfWyUCpKC0
+ IzJ+FY4iOZWUdpm3TGvQonQb64gywc=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On Wed, Mar 04, 2026 at 07:57:34PM +0200, Vladimir Oltean wrote:
-> Now that all consumers have been updated to no longer dereference fields
-> inside struct phy, we can hide its definition altogether from public view.
-> 
-> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-> ---
->  include/linux/phy/phy.h | 2 --
->  1 file changed, 2 deletions(-)
-> 
+The series trys to add USB2 PHY support for SpacemiT K3 SoC, while 
+patch [1/2] implement a disconnect function which is needed during
+next connection.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+No DTS part has been inclueded in this series, instead I plan to
+submit them later while adding USB host support.
 
+I've collected all patches and pushed a complete review branch here[1],
+for people who interested to test easily, which include DTS and necessary
+changes, other patches may still need to improve, but sufficient for
+verifying the functionality.
+
+Link: https://github.com/spacemit-com/linux/tree/WIP/k3/usb2 [1]
+
+To: Vinod Koul <vkoul@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Ze Huang <huang.ze@linux.dev>
+Cc: Junzhong Pan <panjunzhong@linux.spacemit.com>
+Cc: linux-phy@lists.infradead.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Cc: spacemit@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+
+Changes in v4:
+- rebase to v7.0-rc1
+- fix preceding open parenthesis
+- drop patch 1 which already merged
+- publish a test branch
+- Link to v3: https://lore.kernel.org/r/20260216152653.25244-1-dlan@kernel.org
+
+Change in v3:
+ - split from v2 as bug fix
+ - fix alignment to open parenthesis
+ - http://lore.kernel.org/r/20260216090112.n5jjpui3luqsybb5@skbuf
+ - Link to v2: https://lore.kernel.org/r/20260214-11-k3-usb2-phy-v2-0-6ed31e031ab4@kernel.org
+
+Changes in v2:
+- collect ACK
+- add Fixes tag
+- implement separate phy_ops
+- Link to v1: https://lore.kernel.org/r/20260212-11-k3-usb2-phy-v1-0-43578592405d@kernel.org
+
+---
+Yixun Lan (2):
+      dt-bindings: phy: spacemit: k3: add USB2 PHY support
+      phy: k1-usb: k3: add USB2 PHY support
+
+ .../devicetree/bindings/phy/spacemit,usb2-phy.yaml |  6 ++--
+ drivers/phy/spacemit/phy-k1-usb2.c                 | 34 ++++++++++++++++++----
+ 2 files changed, 33 insertions(+), 7 deletions(-)
+---
+base-commit: d2625d793eefe7dff154361ec66fed7886781d73
+change-id: 20260124-11-k3-usb2-phy-c4630b990b1f
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Yixun Lan <dlan@kernel.org>
+
