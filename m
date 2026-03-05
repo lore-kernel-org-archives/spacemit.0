@@ -1,150 +1,177 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66661288514
-	for <spacemit@lists.linux.dev>; Thu,  5 Mar 2026 08:37:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA29A372EFA
+	for <spacemit@lists.linux.dev>; Thu,  5 Mar 2026 08:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772699869; cv=none; b=TjzUevFNnvU+uwq8nlGf00Vyy5o0HW++NhVw4wPWsrSbxlFk8xk0/8agAreEwXCV2/oe1z84WgDnfAtHIjgVHA45DF8xS5CQBAnTtIdOxHln9LoYvtVUMqsFWM+t7zL9EL5hSW7QSpWQvZfY1I1OQZBdKWxMDSjWDevOMq0yW5I=
+	t=1772699984; cv=none; b=VYfllqPzobH0UaC+P6uRX6M3tjJmGL5HmUDJ4Jhe7+zL2mcX/iKUdM6SB2icufUMLg0cExhkNta7MFEZ8AGHIFn3Kmh3qrQKmcm4H29Pzjv8Sy6ORzLEH2cOAQCCpjixR2Kg2SxWiH1GS6P4djcxApXQmcX8iJsPA2QnFAU6Seo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772699869; c=relaxed/simple;
-	bh=CSh/OPgCewZMrxAGotXGAjNREHTmD2ri4RotS2E+6yc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XzVjRvZc1xYarNuzeyGPrFkx/R469p7zM4Nzw6IQTJ9k8OEufegk4OtNDR6qwdQ2Dr0xacVGg5TwX3v68Fhi9GH6j5BTFeusmsCr0se14n4Ru48+CrqXPiqcZU7+EH60hoapXQcK3B1rvbfFgj7hzrnmdZ+XGR5BHIfDt7a4wdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7d55b97f358so6131223a34.3
-        for <spacemit@lists.linux.dev>; Thu, 05 Mar 2026 00:37:48 -0800 (PST)
+	s=arc-20240116; t=1772699984; c=relaxed/simple;
+	bh=6xaS693NEPvMsmPDTvB8J6q5UsLGM4wm4qipY7xfOGE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=F95Ri+UTaLRBeuj3Elg9ycOdLTdtM7dTe2kcNTkRXsWYHlp6ULE7j/IRe99KzToFgX4znnVXdWQqdDUvIpQOSp3W8AhsuWsu4dtc7XStrND1yZsMXV/STbz7Xzsa7cZqGiDeVONWGCb5IyQaqKH4/BqD4p7NQOZ1vOAfGCPM3T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Zhs1szgR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=C1GG1EWk; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Zhs1szgR";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="C1GG1EWk"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6251Bqjg3482746
+	for <spacemit@lists.linux.dev>; Thu, 5 Mar 2026 08:39:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	kdWMwgc8nLSwvc7+zSIUZsTz2pEGRMvswxdPfflnvOo=; b=Zhs1szgRs6PvG6yC
+	/K6l0Og7co3C6ED8icQT7ngtsI9G5Zp17IaIYa/MOFJSyTxAUHo39qtMLOBGQhpj
+	JO9fE/F/E4F4LvhAKnAlFKn+fH9sEpkGqfNT9M43WTCJkjqaFeUzfOGpTrDAGNtC
+	tA5poP4iW9oFEFa2er9A5XyBDJ8CedmbmCYM1jjJmOXgrD4UqsM96/EbUTiVA/x+
+	+Hq4ib0d4uJFejDRNFTAYPM9OxAzG41cfjw0IJBJVDWkmbFbGS1eLwFkvUDxUI+x
+	i9yGzbk3U3z2KxBfUGbK5GoyOmpZPSUHhrYGJ9ek999ywA1Q/YTR3XTo5MWWFrPw
+	1lqwYw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cps0wjg6t-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Thu, 05 Mar 2026 08:39:40 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8cb5a76f13eso420672585a.2
+        for <spacemit@lists.linux.dev>; Thu, 05 Mar 2026 00:39:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772699980; x=1773304780; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kdWMwgc8nLSwvc7+zSIUZsTz2pEGRMvswxdPfflnvOo=;
+        b=C1GG1EWksO5mERdVlz+46cjoqgS4GdG43oGTJuhCppaUrrvMay036GTrro/dKKAmHi
+         v2ptEtsUqxBf4ZLYAiEP6Xgmc5Eq3lNhDOkjPzwHn0wrzNVXzFDZEBmmuS8VJUV95Pnd
+         26vZhZ9l0kB2puhm/v8wtIg48BW5DcgwOzXjfP3r9lqLhRbhN65edUljFLtYf+yLanOh
+         GdlbOGcdOB7j9Tk86us4Yn8jrF0hgFCnjDrxB4lYEm8NS4NHFZnfSaQ3X2ykVTqGB2oW
+         Y6RGdtLvZJRTUasIIS5KfayouZgYCkh7RTn5rNGGTVxiu8+dFo1O5Txd0grHkHKoESsM
+         NdQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772699867; x=1773304667;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8Ymdw+XC/6Jy9fN+NX35+E/o8bLZmtxZBZ4e3pQeTxE=;
-        b=TEWv8TlZxZ6pX49S8y8daifiNYJJtWk1xKl2vzTA2pdnvOQUta0QayvmYPpmOzf4i4
-         40ahstyu1sHwL7AY9AiFxejK1LGMpky+QjKY6LU66qFavS5n2Zf7Vzh6P6Gf9ncZ12gz
-         Y1N339jFO4LZ5laty+pMIBJYHR2wHi+18I2S2B55x6q9KnhOgveJWpnxml2hokm6SViP
-         pgU/5HjvO0S0CNxAH+shJeYXbZNtjv0QCqssx23rCs1vHt5bfOpCko5VOeoQkxWxl/Qf
-         4Tawgt6RVftrBa+2yaplWPQTW6aYoqQq0swyBMCBJKjBf2X+d6REs9cthCJAwD8WcO/B
-         m6Ng==
-X-Forwarded-Encrypted: i=1; AJvYcCWK/0O0kGqkYhQs9jMbnhHtGifvukrbEstvqIF/Vx9w6PLwmZtoQuFHfpn6duVOfEsknMKfkjGkZA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwJDdrCy7IoiyFVimcjRyJVnOL6sZ44wQkroWlc9M8CbanGQJts
-	F4CbR9udX+Sg6H3OszmGsKxv17SThROGbgbVjiVKI62H5iR0cAH3MKzVO0QYubDL
-X-Gm-Gg: ATEYQzy38Jtfb/vTTEVLZMYB096uzaWCPjTf6ZIhsXph2vMUH3RgoF75i+mF/0uUWpY
-	EN4RXuwn27xg2COVywz1YeqT6EMY499f6dR0TvQ55dmKGaRxgLDsbDcXKOMZ8yvhnWdQQchBjS8
-	yNb8iZsgYYqiss6aFvvlZi+3PXyfF5vkKQ2UdXK9m9OZKcjI+w0y5NkxVihe0N4Y8Al36hXN/Vz
-	5atnn/28okQYmlzB0VLG7KZhstBB5aTiK6Y1UpO1BF23GPeBr5Nk/TUwpdmeryx4W6/FeR99FIa
-	wNgGdDYUtYyRyUAnrQkxI1zWz95JUB63k5AY6BsjXI3FdwUfvsO7vGJNPbCQ5TDNwdmOgCweeAJ
-	QplHMnNo5pG2PMS9wk5ypSZrRW/AlGLwrwe5gza0kZEoEPLrNwDmCZ4wuRWTBSeGCChfKotcPjX
-	KOitOBqM89NsOYCuN2IK+QPj0Us/b4fIzxjKVC5bOvDWUtAJMUTx5eJXv6The0s69zeepZa8c=
-X-Received: by 2002:a05:6830:418c:b0:7d1:4f21:ff79 with SMTP id 46e09a7af769-7d6d13ad29fmr3315755a34.22.1772699867344;
-        Thu, 05 Mar 2026 00:37:47 -0800 (PST)
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com. [209.85.160.46])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d586474d4csm19430222a34.9.2026.03.05.00.37.47
-        for <spacemit@lists.linux.dev>
+        d=1e100.net; s=20230601; t=1772699980; x=1773304780;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kdWMwgc8nLSwvc7+zSIUZsTz2pEGRMvswxdPfflnvOo=;
+        b=BEuMNrT4rs85eH29NaNeSQxmj1RgI3P3yQGS8p6KQ1m3kST2YkpaHf4yJ3Y5uP4h9/
+         0ahtxBmYgf+5eup1VLF+GJpXyn7Q4EF7NQxceb9B9VrDT+0DUkBUgyQmSn24W/fYPnE/
+         gQQ2we2Wm+8Dsh5bC2f1c873dJ7pG5WoyaaHIo8m52o08CiJG0uJckypjf6cmJH9WUQ+
+         NhwM+Ax5gE4bQY5CkI5WIK87guy1OTvE7BcDxJN7EQ4w0SZGE5Y7p5DAviUa/hdFs7II
+         9HXSfVfSsZjglQyGK+tPOD0RTE3s61mC4e+1ehBK6kZfJfJtcELBZNn8q3k1ADZN1ga3
+         i8rA==
+X-Forwarded-Encrypted: i=1; AJvYcCWQXizy/euY/GxppIFOh4W1SEiIeGS9hfyDlfT0URhPZ6PpprQkD9m9RHUg3cRk8Jrf8wIJfzGmkg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzgLAMc/9966afUFdmfWLkz6FOdhuuQkwsUyQtwtr59MJQ/FjKA
+	xdXBC8KHdOl8YAHafOPYZ08nWbTHPdeAvpiQ5slOGKf2vAh1t0XTVM8LKGDWiYWuNV6lOV6Brwb
+	wd8QBXvOiZz/arqGF3BD4ibyNb70DnsaTHXTWRUY7yZ9sLOnzENI+W+ApVlhL9Q==
+X-Gm-Gg: ATEYQzxRy96PiW9VXr6qt6JiQC3d5Ld/FvDot6qJptY9UFIqbCbp5uRWzoSv30sYg5t
+	vN0djqQ4pocyLNrquw8H/sCWsVfxH44sIzvzZNC4X4WYUN2urmuC5Ei9xEGwidxpoAASdOlojQr
+	dki7rKkgiC+OLurrMikduyAIdcwoSX7x0QN+pjf6plH8g7EPhWAdAbSSFw+jWp8xnnwG3enX1A/
+	a4ZlOPvoEBifNdOysMxNjgpM8O6oeVOqmMHhUipp5I2Ti9AZmc5o4bfVWYpD83NxSsERue+K/o3
+	OzDBT/D5wb6fx0etWhRD6/BWyMZv3UUWy/MLXoKHQmz9yP9k5SqxtN+eAdeXjT2Vka7vVy+RX/7
+	Hu4WQFl7GnK+VQowuUS2l9QTtfNZE7vLZkRtyPlPVcbrtskvGj+Xxr85fLspoR3Yeha56+JIDdQ
+	4yVhc=
+X-Received: by 2002:a05:620a:404c:b0:8c7:1b40:d096 with SMTP id af79cd13be357-8cd5afcdcfbmr452359285a.9.1772699980151;
+        Thu, 05 Mar 2026 00:39:40 -0800 (PST)
+X-Received: by 2002:a05:620a:404c:b0:8c7:1b40:d096 with SMTP id af79cd13be357-8cd5afcdcfbmr452356985a.9.1772699979710;
+        Thu, 05 Mar 2026 00:39:39 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65fac06e3fasm6657504a12.25.2026.03.05.00.39.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Mar 2026 00:37:47 -0800 (PST)
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-40438e0cba6so1953169fac.1
-        for <spacemit@lists.linux.dev>; Thu, 05 Mar 2026 00:37:47 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVLGILsVIlI1c+MFNzWrF6unboNcjSoksy1N8fuxztp7y1n5AWeZP61+SRwna1KR8i6KrDRgKwr5w==@lists.linux.dev
-X-Received: by 2002:a05:6102:2ac9:b0:5f7:24dc:3ac3 with SMTP id
- ada2fe7eead31-5ffaaa86250mr1899404137.7.1772699399463; Thu, 05 Mar 2026
- 00:29:59 -0800 (PST)
+        Thu, 05 Mar 2026 00:39:38 -0800 (PST)
+Message-ID: <a8fee1cd-1e69-4a9e-8533-c0988c480fb9@oss.qualcomm.com>
+Date: Thu, 5 Mar 2026 09:39:35 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260304175735.2660419-1-vladimir.oltean@nxp.com> <20260304175735.2660419-18-vladimir.oltean@nxp.com>
-In-Reply-To: <20260304175735.2660419-18-vladimir.oltean@nxp.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 5 Mar 2026 09:29:48 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdXUBhpnFEnnTfyPdECWqNmKLweupX=FY2SedYA3bapG2g@mail.gmail.com>
-X-Gm-Features: AaiRm53mHozL13yvxji6rv0MKzaGvWxuhr7SWHD2SjBJ0VWNhqppZZeXezGpDhg
-Message-ID: <CAMuHMdXUBhpnFEnnTfyPdECWqNmKLweupX=FY2SedYA3bapG2g@mail.gmail.com>
-Subject: Re: [PATCH phy-next 17/22] net: renesas: rswitch: include PHY
- provider header
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org, 
-	netdev@vger.kernel.org, spacemit@lists.linux.dev, 
-	UNGLinuxDriver@microchip.com, 
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, Michael Dege <michael.dege@renesas.com>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH phy-next 22/22] MAINTAINERS: add regex for linux-phy
+To: Vladimir Oltean <vladimir.oltean@nxp.com>, linux-phy@lists.infradead.org
+Cc: Vinod Koul <vkoul@kernel.org>, Neil Armstrong
+ <neil.armstrong@linaro.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-can@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-usb@vger.kernel.org, netdev@vger.kernel.org,
+        spacemit@lists.linux.dev, UNGLinuxDriver@microchip.com
+References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
+ <20260304175735.2660419-23-vladimir.oltean@nxp.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260304175735.2660419-23-vladimir.oltean@nxp.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: vxv6Xp_FWQcP3M1_Ahp-FSjsJJCkHCy2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDA2OCBTYWx0ZWRfX2hs5Oxu+Y81K
+ +oGdOWnrhehnc6Py4rsqXpIp7Nkvy0AkgDkoamiE4gTfX6PpBxH2NOR6oSgjNo8sYMSCYMfRQ9Z
+ 7EnuCM+1V2l84+ow/fNT52yXMLzXgXz49YcMmHU0pleEohHgyzXgSbaSecmhJ7w3mYDysmX4m5B
+ foaLadbt4MQiY+dwlCKaL/fD4u3n3TWsKWutyzlQrxz0HE3ZioDe6kHSdLeaquHOr8hFykmLCnL
+ OaHBaZogze77huymEp8Ylk6xuhbDh6kdSJ4LVmTWNN82N7j+LBxLYDZgRVl6BMDeDpTztseF9Cu
+ es5fRlku5H2SzE7WQQ8pNWIiKLnu6vHtjRlWof2Qi5f5B4q3IMVQ+cvvlGvFcD0l7Bu7riBn13N
+ 82pwaKRGck4XEGRKRSs92UE/2SnHirHwNb5xStOsjDx0G7Je0/9CIrBKeWLgJ0O9ZTIgSkoTdZG
+ PaH5WiZlNhMtL1BDVig==
+X-Authority-Analysis: v=2.4 cv=OYWVzxTY c=1 sm=1 tr=0 ts=69a9414c cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=8AirrxEcAAAA:8 a=GJStlgXwfe-SXQdWLvAA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=ST-jHhOKWsTCqRlWije3:22
+X-Proofpoint-ORIG-GUID: vxv6Xp_FWQcP3M1_Ahp-FSjsJJCkHCy2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-05_02,2026-03-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 adultscore=0 clxscore=1011 priorityscore=1501
+ spamscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050068
 
-On Wed, 4 Mar 2026 at 19:00, Vladimir Oltean <vladimir.oltean@nxp.com> wrote:
-> As a PHY consumer driver, the Renesas rswitch dereferences internal
-> fields of struct phy, something which shouldn't be done, as that is
-> going to be made an opaque pointer.
->
-> It is quite clearly visible that the driver is tightly coupled with the
-> drivers/phy/renesas/r8a779f0-ether-serdes.c, which puts heavy pressure
-> on the Generic PHY subsystem.
->
-> This was discussed before here:
-> https://lore.kernel.org/linux-phy/20260211194541.cdmibrpfn6ej6e74@skbuf/
->
-> but to summarize, it is generally expected that when a Generic PHY
-> function is called, it takes effect immediately. When this doesn't
-> happen, the PHY provider driver must change its implementation rather
-> than the consumer be made to work around it. PHY providers which rely on
-> a hardcoded call sequence in the consumer are just lazy and wrong.
->
-> The most obvious example is commit 5cb630925b49 ("net: renesas: rswitch:
-> Add phy_power_{on,off}() calling"). Problem description:
-> - Ethernet PHYs may change phydev->interface. When this happens, the
->   SerDes must learn of the new phydev->interface using phy_set_mode_ext().
-> - drivers/phy/renesas/r8a779f0-ether-serdes.c implements phy_set_mode_ext(),
->   but this only caches the mode and submode into channel->phy_interface
->   and applies this to hardware during phy_power_on().
->
-> The commit author decided to work around this at the consumer site, by
-> power cycling the PHY for the configuration to take effect.
->
-> This had a worse implication from an API perspective in subsequent
-> commit 053f13f67be6 ("rswitch: Fix imbalance phy_power_off() calling").
-> It was observed that phy_power_on() and phy_power_off() calls need to be
-> balanced, and so, the consumer decided to start looking at the struct
-> phy :: power_count (the technical reason why I'm making this change).
->
-> This is also wrong from an API perspective because
-> - a consumer should only care about its own vote on the PHY power state.
->   If this is a multi-port submode like QSGMII, a single phy_power_off()
->   call will not actually turn the PHY off (nor should it).
-> - the power_count is written under the &phy->mutex, but read unlocked
->   here.
->
-> The rswitch and r8a779f0-ether-serdes drivers both need to be completely
-> rethought in terms of Generic PHY API call sequence. There is no quick
-> fix to apply. Just include the PHY provider API along with the consumer
-> one, to keep working as before when struct phy will be made an opaque
-> pointer to normal PHY consumers. But this is a bad offender (and it's
-> not even a provider) so add a FIXME.
->
+On 3/4/26 6:57 PM, Vladimir Oltean wrote:
+> Some pragmatic shortcuts are being taken by PHY consumer driver authors,
+> which put a burden on the framework. A lot of these can be caught during
+> review.
+> 
+> Make sure the linux-phy list is copied on as many keywords that a regex
+> can reasonably catch.
+> 
+> For simplicity sake this is not perfect (devm_ and of_ are not valid
+> prefixes for all function names), but I tried to pay attention on
+> avoiding false matches on things like:
+> - drivers/net/vendor/device/phy.h
+> - include/linux/phy.h - network PHY, not generic PHY
+> 
+> So I used \b to try to match on actual word boundaries and be explicit
+> about what is matched on.
+> 
 > Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 55af015174a5..bdfa47d9c774 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -10713,6 +10713,7 @@ F:	Documentation/devicetree/bindings/phy/
+>  F:	drivers/phy/
+>  F:	include/dt-bindings/phy/
+>  F:	include/linux/phy/
+> +K:	\b(devm_)?(of_)?phy_(create|destroy|init|exit|reset|power_(on|off)|configure|validate|calibrate|(get|set)_(mode|media|speed|bus_width|drvdata)|get_max_link_rate|pm_runtime_(get|put)|notify_(connect|disconnect|state)|get|put|optional_get|provider_(un)?register|simple_xlate|(create|remove)_lookup)\b|(struct\s+)?phy(_ops|_attrs|_lookup|_provider)?\b|linux/phy/phy\.h|phy-props\.h|phy-provider\.h
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Would looking for the devm/of_phy_ prefix followed by an open parentheses
+not suffice for the 'has function call' case, instead of listing all
+currently present exported functions?
 
-Gr{oetje,eeting}s,
+My worry is that this approach is overbuilt and absolutely no one will
+remember to update it
 
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Konrad
