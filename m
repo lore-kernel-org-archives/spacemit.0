@@ -1,83 +1,117 @@
-Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77A6288510
-	for <spacemit@lists.linux.dev>; Thu,  5 Mar 2026 05:55:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0102C0F69
+	for <spacemit@lists.linux.dev>; Thu,  5 Mar 2026 06:35:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772690131; cv=none; b=UNpVi0pWDKKCXT4nlcYU5c1BIAwJ6HYIOW5QGbNAby2EP4LV+iWcP3uVNPR5dTzlK3SdNGrSTVIhagRwA89xQrxmcIsJScRFOURmHtSfVXe7FVZNhI7c8srpMQl8opcTm6mmrk0awuCwZxO0olDWXjUL9qMO1fMlsEBHXhkBlZ8=
+	t=1772692511; cv=none; b=EuBph3cIbsEVMKeWLnwJcoBjHkwE1dBkt/jSnZKaqtV6+1q+/RZD1RykKJLFFkk/UU+VhjB9aY9bdTEtycxD6pCGs9N/O4TpxjjhXHXNFZwYMneyp94koyppZFP1V8PL5zyt0+BmAjC8Uq4mDUDtoTJ5WdKt91GGoh/pHGsffc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772690131; c=relaxed/simple;
-	bh=Czx2nGVXa4yCKcFO4p1gXOQDdhTXZs9uyUqa0CQuGvk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jfsptp0CXaC/TE5A+Uy81UcUihjWvj1TSPaUZa7zXeDq12bxAWyOZ1XvO7Udi2zGTi2I+TaAZwGYKZDmBeJvScv3mQ6iIW79H5Qosg0YHCCrRaXZSJYXrltMD8911Nsrt5WXiseb61+pbtzmW7K3jqOMujOohGgDDrP6v7pi0jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [10.213.19.140] (unknown [210.73.43.101])
-	by APP-05 (Coremail) with SMTP id zQCowABH1Qi8Gqlpj0uuCQ--.59493S2;
-	Thu, 05 Mar 2026 13:55:08 +0800 (CST)
-Message-ID: <74fd6fda-7607-4afd-a596-b95ca44c4fa5@iscas.ac.cn>
-Date: Thu, 5 Mar 2026 13:55:08 +0800
+	s=arc-20240116; t=1772692511; c=relaxed/simple;
+	bh=/UJ5jdqtAKSPzc8ABxq9qxtgXhxe3+XsR3r8n6e7x64=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=S9Hjf7hyIVZXKstWKbqexCcvEjEd5LVVryeyecxWV/HFvMVwyRWe0l1Dn7NoJyO/G9j4zDtFnNCRw3ju4206Gw9aKTt7JgCpLwsuH18nnKV3iDiZLdRxhP6UBkclSe+7cnG+N5oL40P9FLt1/RtY8vwIQtLQfLZeaWzUXYRMI3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=lm1yAbd0; arc=none smtp.client-ip=80.241.56.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="lm1yAbd0"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4fRKXT4QGzz9tj4;
+	Thu,  5 Mar 2026 07:35:05 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1772692505;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Roprykd/0bxr9LQQRe+mNdX0hmWBmJ1X7LdzolcDU9k=;
+	b=lm1yAbd0qAPVSB0OOQRUd4vtc6/wSfKt2qM2Mf5PCiHXw/Aq5lbJdcLgCoWXi5rGNzqG9h
+	JsPxrV2AZuTaGZHE9YEkXufXbnBOa1vgH/OnrUowClqEfNoiCn0Z2RCtvrYzR+oA3RBpJW
+	e+Nrb02yhjVWSON6v9JBwtizQrlHgMOvTo/30HxJDRNIAzfuXY5d4VmIh7mzzr4cBGo9SX
+	fibh2XYjLeQstM/fIMbgtwCn+WkPMUCv1469slw01W53veN710C6/45blpQJ7jwf568oQT
+	YYEE0Ukn3WsikjqQgjaUW0CHXyLVJTZeb85uiJItA17JeDi5NujobxUHRg6jUw==
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 1/4] net: spacemit: Remove unused buff_addr
- fields
-To: Jakub Kicinski <kuba@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Yixun Lan <dlan@kernel.org>,
- Maxime Chevallier <maxime.chevallier@bootlin.com>,
- Vadim Fedorenko <vadim.fedorenko@linux.dev>,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, netdev@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20260303-k1-ethernet-more-fixes-v1-0-0ab0122fdd14@iscas.ac.cn>
- <20260303-k1-ethernet-more-fixes-v1-1-0ab0122fdd14@iscas.ac.cn>
- <02bbff3d-1f27-4b03-a963-660bbb7facee@lunn.ch>
- <20260304140535.678e65f2@kernel.org>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20260304140535.678e65f2@kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:zQCowABH1Qi8Gqlpj0uuCQ--.59493S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7GrWxJr4UtrWUJr1fWr1rZwb_yoWxCrg_XF
-	1jy3W8Cr4DGr17GrZ7KwsrJrZFya92qryvvw1Yqr43J34fArZaqr4kKr1fK3WfA3yqqr1D
-	KFyYv3y5ur1jvjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbakYjsxI4VWkKwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
-	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0
-	cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r4j6F4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
-	1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_GrWl42xK82IYc2Ij64vIr41l4I8I3I0E4I
-	kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
-	WwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
-	0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
-	JVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
-	IYCTnIWIevJa73UjIFyTuYvjxUgsmRDUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Date: Thu, 05 Mar 2026 14:34:47 +0800
+Message-Id: <DGUN1I6AY5QI.3VWQAV1IQGD7P@mailbox.org>
+Subject: Re: [PATCH v3 0/3] thermal: spacemit: Add support for SpacemiT K1
+ SoC thermal sensor
+From: "Shuwei Wu" <shuwei.wu@mailbox.org>
+To: "Shuwei Wu" <shuweiwoo@163.com>, "Rafael J. Wysocki"
+ <rafael@kernel.org>, "Daniel Lezcano" <daniel.lezcano@linaro.org>, "Zhang
+ Rui" <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@gentoo.org>,
+ "Philipp Zabel" <p.zabel@pengutronix.de>, "Paul Walmsley" <pjw@kernel.org>,
+ "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
+ "Alexandre Ghiti" <alex@ghiti.fr>
+Cc: <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski@oss.qualcomm.com>
+References: <20260119-patchv2-k1-thermal-v3-0-3d82c9ebe8a4@163.com>
+In-Reply-To: <20260119-patchv2-k1-thermal-v3-0-3d82c9ebe8a4@163.com>
+X-MBO-RS-ID: 6a4d1feab15b69ac214
+X-MBO-RS-META: oyujgzgony737ozxqjnzkwqas9ubuoo4
 
-On 3/5/26 06:05, Jakub Kicinski wrote:
-> On Wed, 4 Mar 2026 21:57:57 +0100 Andrew Lunn wrote:
->> On Tue, Mar 03, 2026 at 05:24:18PM +0800, Vivian Wang wrote:
->>> These were never used. Just remove them.
->>>
->>> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")  
->> If you are giving a Fixes: tag, please use the net tree, not net-next.
-> Maybe rephrasing what Andrew said slightly - please read
-> https://www.kernel.org/doc/html/next/process/maintainer-netdev.html
-> and general documentation about Fixes tags. The tags mean there is
-> a bug which may be impacting users.
+Hi,=20
 
-Sorry for misunderstanding this. I'll fix it in v2.
+Sorry for the HTML noise in my previous mail. Correcting the format now.
 
-Vivian "dramforever" Wang
+Gentle ping on this patch.
+Any feedback to help move it forward would be appreciated!
+Thanks!
+
+On Mon Jan 19, 2026 at 10:41 AM CST, Shuwei Wu wrote:
+> Introduce support for the on-die thermal sensor found
+> on the SpacemiT K1 SoC.
+>
+> Include the device tree binding documentation in YAML format, the
+> thermal sensor driver implementation, and the device tree changes to
+> enable the sensor on K1 SoC.
+>
+> ---
+> Changes in v3:
+> - Fix indentation and variable types
+> - Simplify clock management and redundant assignments
+> - Link to v2: https://lore.kernel.org/r/20251216-patchv2-k1-thermal-v1-0-=
+d4b31fe9c904@163.com
+>
+> Changes in v2:
+> - Move driver to drivers/thermal/spacemit/ and update Kconfig/Makefile
+> - Address reviewer feedback on style and structure
+> - Improve variable naming and comments
+> - Link to v1: https://lore.kernel.org/r/20251127-b4-k1-thermal-v1-0-f32ce=
+47b1aba@163.com
+>
+> ---
+> Shuwei Wu (3):
+>       dt-bindings: thermal: Add SpacemiT K1 thermal sensor
+>       thermal: spacemit: k1: Add thermal sensor support
+>       riscv: dts: spacemit: Add thermal sensor for K1 SoC
+>
+>  .../bindings/thermal/spacemit,k1-tsensor.yaml      |  76 ++++++
+>  arch/riscv/boot/dts/spacemit/k1.dtsi               | 101 ++++++++
+>  drivers/thermal/Kconfig                            |   2 +
+>  drivers/thermal/Makefile                           |   1 +
+>  drivers/thermal/spacemit/Kconfig                   |  19 ++
+>  drivers/thermal/spacemit/Makefile                  |   3 +
+>  drivers/thermal/spacemit/k1_tsensor.c              | 281 +++++++++++++++=
+++++++
+>  7 files changed, 483 insertions(+)
+> ---
+> base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+> change-id: 20251215-patchv2-k1-thermal-5ffb838fc1cc
+>
+> Best regards,
 
