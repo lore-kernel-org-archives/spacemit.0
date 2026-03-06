@@ -1,162 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F1F343D80;
-	Fri,  6 Mar 2026 02:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C59234EF12;
+	Fri,  6 Mar 2026 09:56:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.153.233
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772765560; cv=none; b=bfPSLE+Hs4n4PWCN5rxkJ+NzLB+yBZzE800b6PCsl9CPFfFrI7p0hmRGvQ2J+q1XbxAwpJ47GHFonVRw7WDbaxAmhTgTCyF6TPkMTmgh/eW82dqEXUz4dVdp/cyNZ3Yf3TNlpNcasT0yQZxOhmpSE/hKcMupgGXyoUWJJZFzcEE=
+	t=1772791007; cv=none; b=c8B0jC+vJueg9ca6SjKgs3DKZTc/ToHotb8sDpKHETfjgkoDfbe3VGHHSizD1WQDpqyGPvt0qcDmDwl5h8OxyLUZUDSBqPzfTeQzUqWdwtb/YVgPByRxv284cFV3Hgs1Trs9AVPtb+p8F60mBhdqKWqYbOeTbqx8BlZbEVdcfqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772765560; c=relaxed/simple;
-	bh=59Brc3xI7MFaiXfr+R/dXuomEGyJC2J+vM/pJ/BSte8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UBrn9ipYGCJplF9Z4OhjE34eRcpQA40dttQbu05DJ7fu9wA9uyzUoVVDDHgP8Fv24XTv0AfFGt9aeWkDECc+hvN8za2WLhC0m9pcDR1VdiKtnYw3/49MwUCTEa60VhvbpJRjVd4yLwOK6X+RuDSjRT5jphtE/JAxoyQ7ycRLMK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RJUaAkiL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772791007; c=relaxed/simple;
+	bh=M0XofkcuBdV1zkdsuj7RJ1maZEJbks9g3VqYv60iJnU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ea1+hzL+QxNHhc4NtkXjce7NRYEPUt7SEScJMnDDVSgt1WO7VwDxTfQZ6lC+uKKm7Mapo8x3lUsbLwvvFmKw+/+ksx5Ntnsb66twL7erxoY5VVCbkSx3L/C64b1yDTIUUFY5Y5asIiMHZ5I1Xlj6vhhvqoLzq3Gw6Om8WSMTLY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com; spf=pass smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=twuf04TV; arc=none smtp.client-ip=68.232.153.233
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RJUaAkiL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99677C116C6;
-	Fri,  6 Mar 2026 02:52:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772765560;
-	bh=59Brc3xI7MFaiXfr+R/dXuomEGyJC2J+vM/pJ/BSte8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJUaAkiLxDd++c9sKrZnqEjNkKjdzz59SAy9wTUS1ke/qS9IR+iEnm9Z/8NB6RYYS
-	 G4cBNUSwM/FjCfDVijoXBZeTdM6XI5OEt/qpfFy85VNsIy9YabGSW8YMCuVvrmQBvP
-	 vh50wIestjE8G3UWXVt3B13MTpR5ZR+lk8NDl6u/HeetyPp1HbmueZyG101OrPjk6x
-	 riwbXU+4Q+LcUWQq9YgabkBvYTwNF3AiDSPS6qR1+Nuclfz1G7gGt1TlnUNeEi4bWf
-	 COpVWmyM6Wa0LRo2zZbmdhFIWpw7mUNtvPmGI+oGg83DDdnQ/O+37pYUXtM2RpFyqG
-	 lf7jy2ZxDTxEQ==
-From: Jakub Kicinski <kuba@kernel.org>
-To: inochiama@gmail.com
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	davem@davemloft.net,
-	dlan@kernel.org,
-	palmer@dabbelt.com,
-	me@ziyao.cc,
-	boon.khai.ng@altera.com,
-	linux-riscv@lists.infradead.org,
-	edumazet@google.com,
-	joabreu@synopsys.com,
-	pjw@kernel.org,
-	weishangjuan@eswincomputing.com,
-	andrew+netdev@lunn.ch,
-	prabhakar.mahadev-lad.rj@bp.renesas.com,
-	siyanteng@cqsoftware.com.cn,
-	richardcochran@gmail.com,
-	looong.bin@gmail.com,
-	quentin.schulz@cherry.de,
-	alex@ghiti.fr,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	dlan@gentoo.org,
-	alexandre.torgue@foss.st.com,
-	conor+dt@kernel.org,
-	netdev@vger.kernel.org,
-	aou@eecs.berkeley.edu,
-	rmk+kernel@armlinux.org.uk,
-	linux-arm-kernel@lists.infradead.org,
-	vladimir.oltean@nxp.com,
-	mcoquelin.stm32@gmail.com,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	peppe.cavallaro@st.com,
-	devicetree@vger.kernel.org,
-	pabeni@redhat.com,
-	linux-stm32@st-md-mailman.stormreply.com,
-	wens@kernel.org,
-	maxime.chevallier@bootlin.com
-Subject: Re: [net-next,v7,3/3] net: stmmac: Add glue layer for Spacemit K3 SoC
-Date: Thu,  5 Mar 2026 18:52:37 -0800
-Message-ID: <20260306025237.580075-1-kuba@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260304080721.1658224-4-inochiama@gmail.com>
-References: <20260304080721.1658224-4-inochiama@gmail.com>
+	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="twuf04TV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1772791004; x=1804327004;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=M0XofkcuBdV1zkdsuj7RJ1maZEJbks9g3VqYv60iJnU=;
+  b=twuf04TVYVqIu4COwwBJGikIziT4WVc4rAk8o62fHa8wMUUt9TAkhcPX
+   ST/jufyAnvjuucNTVpi+aZKYZPfQnnyN96HCZvGx7+wb2RdjcwzCiKZJW
+   SxRKb8Mk9MuAf8E7H1EiHZA7710ev+JtGXJBbDXJLCEKWd/jy387uXL9F
+   gVBXSJFxHqhi/IFSOAnszB6gqk0JDKLiaL/eWOLdNEbsw99dCnXVMliAM
+   qAQFnmcIphnqS+gWhC43gxQJ4GtHFiJU31ABivT7cNj9/uEm3FEkMLp/W
+   YnB/izdu1UCQe3AdXaqDPOFYylldwmPe1yeJtUDtXO96DHDSf5jv0OPSa
+   g==;
+X-CSE-ConnectionGUID: kkklftjzTt+tmC5CjQykRw==
+X-CSE-MsgGUID: y9hzzWGpTbWY5hyCt1eJ5w==
+X-IronPort-AV: E=Sophos;i="6.23,104,1770620400"; 
+   d="scan'208";a="54313383"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa3.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 06 Mar 2026 02:56:43 -0700
+Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
+ chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.58; Fri, 6 Mar 2026 02:56:27 -0700
+Received: from DEN-DL-M70577 (10.10.85.11) by chn-vm-ex01.mchp-main.com
+ (10.10.85.143) with Microsoft SMTP Server id 15.1.2507.58 via Frontend
+ Transport; Fri, 6 Mar 2026 02:56:22 -0700
+Date: Fri, 6 Mar 2026 10:56:22 +0100
+From: Daniel Machon <daniel.machon@microchip.com>
+To: Vladimir Oltean <vladimir.oltean@nxp.com>
+CC: <linux-phy@lists.infradead.org>, Vinod Koul <vkoul@kernel.org>, "Neil
+ Armstrong" <neil.armstrong@linaro.org>, <dri-devel@lists.freedesktop.org>,
+	<freedreno@lists.freedesktop.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-arm-msm@vger.kernel.org>, <linux-can@vger.kernel.org>,
+	<linux-gpio@vger.kernel.org>, <linux-ide@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+	<linux-pci@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
+	<linux-riscv@lists.infradead.org>, <linux-rockchip@lists.infradead.org>,
+	<linux-samsung-soc@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
+	<linux-tegra@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+	<netdev@vger.kernel.org>, <spacemit@lists.linux.dev>,
+	<UNGLinuxDriver@microchip.com>, Andrew Lunn <andrew+netdev@lunn.ch>, "David
+ S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, "Jakub
+ Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Steen Hegelund
+	<Steen.Hegelund@microchip.com>
+Subject: Re: [PATCH phy-next 07/22] net: lan969x: include missing <linux/of.h>
+Message-ID: <20260306095622.rh3sje3wnexbdsqb@DEN-DL-M70577>
+References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
+ <20260304175735.2660419-8-vladimir.oltean@nxp.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260304175735.2660419-8-vladimir.oltean@nxp.com>
 
-This is an AI-generated review of your patch. The human sending this
-email has considered the AI review valid, or at least plausible.
-
-For local reproduction steps see https://netdev-ai.bots.linux.dev/ai-local.html
----
-net: stmmac: Add glue layer for Spacemit K3 SoC
-
-The ethernet controller on Spacemit K3 SoC is Synopsys DesignWare
-MAC (version 5.40a), with the following special points:
-1. The rate of the tx clock line is auto changed when the mac speed
-   rate is changed, and no need for changing the input tx clock.
-2. This controller require a extra syscon device to configure the
-   interface type, enable wake up interrupt and delay configuration
-   if needed.
-
-Add Spacemit dwmac driver support on the Spacemit K3 SoC.
-
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
-> new file mode 100644
-> index 000000000000..22aa25a7417b
-> --- /dev/null
-> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
-> @@ -0,0 +1,228 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Spacemit DWMAC platform driver
-> + *
-> + * Copyright (C) 2026 Inochi Amaoto <inochiama@gmail.com>
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/math.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/mfd/syscon.h>
+> This file is calling of_property_read_u32() without including the proper
+> header for it. It is provided by <linux/phy/phy.h>, which wants to get
+> rid of it.
+> 
+> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+> ---
+> Cc: Daniel Machon <daniel.machon@microchip.com>
+> Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+> Cc: "David S. Miller" <davem@davemloft.net>
+> Cc: Eric Dumazet <edumazet@google.com>
+> Cc: Jakub Kicinski <kuba@kernel.org>
+> Cc: Paolo Abeni <pabeni@redhat.com>
+> Cc: Steen Hegelund <Steen.Hegelund@microchip.com>
+> ---
+>  drivers/net/ethernet/microchip/sparx5/lan969x/lan969x_rgmii.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/net/ethernet/microchip/sparx5/lan969x/lan969x_rgmii.c b/drivers/net/ethernet/microchip/sparx5/lan969x/lan969x_rgmii.c
+> index 4e422ca50828..249114b40c42 100644
+> --- a/drivers/net/ethernet/microchip/sparx5/lan969x/lan969x_rgmii.c
+> +++ b/drivers/net/ethernet/microchip/sparx5/lan969x/lan969x_rgmii.c
+> @@ -4,6 +4,7 @@
+>   * Copyright (c) 2024 Microchip Technology Inc. and its subsidiaries.
+>   */
+> 
 > +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/property.h>
-> +#include <linux/regmap.h>
-> +
-> +#include "stmmac_platform.h"
+>  #include "lan969x.h"
+> 
+>  /* Tx clock selectors */
+> --
+> 2.43.0
+>
 
-[ ... ]
-
-> +struct spacmit_dwmac {
-> +	struct regmap *apmu;
-> +	unsigned int ctrl_offset;
-> +	unsigned int dline_offset;
-> +};
-
-This isn't a bug, but the struct name is 'spacmit_dwmac' (missing 'e'),
-while the driver filename is 'dwmac-spacemit.c' and all function names use
-'spacemit_*' (e.g., spacemit_dwmac_probe, spacemit_dwmac_set_delay). Should
-the struct be named 'spacemit_dwmac' for consistency?
-
-[ ... ]
-
-> +static int spacemit_dwmac_fix_delay(struct spacmit_dwmac *dwmac,
-> +				    struct plat_stmmacenet_data *plat_dat,
-> +				    unsigned int tx_delay,
-> +				    unsigned int rx_delay)
-> +{
-> +	int rx_code;
-> +	int tx_code;
-> +
-> +	rx_code = spacemit_dwmac_detected_delay_value(rx_delay);
-> +	if (rx_code < 0)
-> +		return rx_code;
-> +
-> +	tx_code = spacemit_dwmac_detected_delay_value(tx_delay);
-> +	if (tx_code < 0)
-> +		return tx_code;
-> +
-> +	return spacemit_dwmac_set_delay(dwmac, tx_code, rx_code);
-> +}
-
-The 'plat_dat' parameter appears to be unused in spacemit_dwmac_fix_delay().
-The function only uses 'dwmac', 'tx_delay', and 'rx_delay'. Is this
-parameter needed?
-
-[ ... ]
+Acked-by: Daniel Machon <daniel.machon@microchip.com>
