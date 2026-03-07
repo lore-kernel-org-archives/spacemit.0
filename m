@@ -1,88 +1,126 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3459D35AC09;
-	Fri,  6 Mar 2026 22:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C18824728F;
+	Sat,  7 Mar 2026 02:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772836801; cv=none; b=t/TrcKFj+j0QfNm6X+3agG4yW+HEHpSHV23MnrxxgSAtzdAthp5XjaDvOnH3O8sZPW6YUUmy5M7qa/QGZVI4OBrwID7mwRphL1Rea6TRsa3O14Lzu/1PuQ5IBCQgwHrMDonYK5DW8akNNKgNqKYyute7KZLD9ouv6+XsfLSsoNA=
+	t=1772850595; cv=none; b=kJFwnRjBLtRp+33M3KVCvnIIJPcEEBvQlv5ff0rsFkF23KgohXdmx+1PAv8XhaS/6d7RSkienrOJ9d5kVh6wKT7arC7LGq24T2/wnSqBIpKbARePwVnp8GZyAtOg8iypRRi1Y8DF1VmIqNC5lD8yI4ARMqFd9TJcksOQ2Uf+3z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772836801; c=relaxed/simple;
-	bh=2pliSVYtv80Y4TlYoK1pP6t8MG+RWP+9x0mqyGizOec=;
+	s=arc-20240116; t=1772850595; c=relaxed/simple;
+	bh=vOYMV5oYzY1jb9kI2UnsuEVGQtVsXkECOuklSwooqNY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t6FMMW1WsOj6lWzuF7EMrt78rlQUzQ/dqII9ua4WVBSbk6vgltQFVEDxkAgnkLbLVwJnOVu5X8uLuhk5aeMWw9UECVtU0ExyLXG9ewf3RZ60O3gPpbw8YI8K/s4pm5t7JqOSZ2gBHEXaLSJpD1tB4nITIx6XUZQfklDQzJR2Jbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MniWxJ9+; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=eSKRsb4cms9tyuExs9sq7uDUCx1x2Nw3XBBZYoJD9/gF6P4otVgPAxX67HqX8zkXdjj5YsGHn91ALmPkjxX3gGbNZbSzV2a8kHAYRm3sONnDS7jC/kOvXlsLZFdeO+5+JIaiZWDDlLBtePVloOj2SRD+RXrtArz4U/jH16CBlFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lh82RDcz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MniWxJ9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F48BC4CEF7;
-	Fri,  6 Mar 2026 22:39:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lh82RDcz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD0CC4CEF7;
+	Sat,  7 Mar 2026 02:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772836800;
-	bh=2pliSVYtv80Y4TlYoK1pP6t8MG+RWP+9x0mqyGizOec=;
+	s=k20201202; t=1772850594;
+	bh=vOYMV5oYzY1jb9kI2UnsuEVGQtVsXkECOuklSwooqNY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MniWxJ9+U76Igg4sPGN5XFVHpZGsZlN0u1T6ycOxXlOOFIB8GG7lOXq+ZhpOpBdMA
-	 NJDZTCVBhDoRVmoBoQ3dEMPijuVwxdonrNbZM4v6ptD6Ec0SiNXFuFMfArjpljmzgq
-	 cI1s2Y60hwx9PSKIfW0gfsgNyEIqUhHHNMjUsfuq3gUqk1OKu7JKLXFm0H7mpSQj/i
-	 UGPCSfavNXYV/gQmgLIgEk2WM699lQ6ajXou+Eppq1avysz+EFE9CXvDGeIQ5mlIIS
-	 nGIrO6MFd0JXQI2q2/bP78/heNK+pM/LCdEnMqyzl8zEyjAL70Vq5VxQUQ6hfwYhYX
-	 UyyqUitTiixoQ==
-Date: Sat, 7 Mar 2026 06:39:58 +0800
+	b=lh82RDczpDMmseaAIlLrISM5VihBBYyxrLaA6CWswNEj8+Hs3pd2/maWsJnnBjUDD
+	 XRZT8wu6vDkPRF3QkLhR6u9qadcTBQb22iltFZNfB3IPmYskDvTmt4NnlPUrLpe343
+	 eTdW8CMi71n/FHDogxGtiRyL+yh/pG7c4nTWNVmBAc0xntlaI9HOgTDPzz5abmi/gj
+	 Of4YaziLG0jcABTOGBC/L4xzOUjH/8HaUIB94BzUyu5UKTnLyNBDoMMbuMJKImtJwL
+	 FDr8I1gxj8numN1KOyCM9vttPjnXeI1xTF4wW9ZVvmu3CJ8lmBEdCReLCbCNuf1Tbf
+	 1zkJOAWhVo+ww==
+Date: Sat, 7 Mar 2026 10:29:51 +0800
 From: Yixun Lan <dlan@kernel.org>
-To: Lee Jones <lee@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Alex Elder <elder@riscstar.com>, Rob Herring <robh@kernel.org>,
+To: Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Guodong Xu <guodong@riscstar.com>, linux-kernel@vger.kernel.org,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	devicetree@vger.kernel.org
-Subject: Re: (subset) [PATCH v4 1/3] dt-bindings: mfd: spacemit,p1: Add
- individual regulator supply properties
-Message-ID: <20260306223958-GKB302167@kernel.org>
-References: <20260206-spacemit-p1-v4-1-8f695d93811e@riscstar.com>
- <177280476778.1042627.3296790673262334325.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/10] mmc: sdhci-of-k1: enable essential clock
+ infrastructure for SD operation
+Message-ID: <20260307022951-GKC302167@kernel.org>
+References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
+ <20260302-orangepi-sd-card-uhs-v1-2-89c219973c0c@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <177280476778.1042627.3296790673262334325.b4-ty@kernel.org>
+In-Reply-To: <20260302-orangepi-sd-card-uhs-v1-2-89c219973c0c@gmail.com>
 
-Hi Jones,
+Hi Iker,
 
-On 13:46 Fri 06 Mar     , Lee Jones wrote:
-> On Fri, 06 Feb 2026 10:32:02 +0800, Guodong Xu wrote:
-> > Add supply properties that match the P1 PMIC's actual hardware topology
-> > where each buck converter has its own VIN pin and LDO groups share
-> > common input pins. Supply names are defined according to the pinout
-> > names in the P1 datasheet.
-> > 
-> > The existing "vin-supply" is dropped from the binding document as the
-> > updated spacemit P1 driver no longer parses it. Only the per-rail names
-> > ("vin1-supply", "vin2-supply", ...) are supported.
-> > 
-> > [...]
+On 16:13 Mon 02 Mar     , Iker Pedrosa wrote:
+> Ensure SD card pins receive clock signals by enabling pad clock
+> generation and overriding automatic clock gating. Required for all SD
+> operation modes.
 > 
-> Applied, thanks!
+> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+> ---
+>  drivers/mmc/host/sdhci-of-k1.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 > 
-> [1/3] dt-bindings: mfd: spacemit,p1: Add individual regulator supply properties
->       commit: e13ebb4cfcff4399a34c3a89c493020899a431f7
-> 
-Not fure if this will cause a conflict, the patch has already been merged
-by Mark, see
+> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+> index 0cc97e23a2f9c7b2f9376318a8a7ebb860571504..b703b78282ed8d89183c816477c149c0a565618a 100644
+> --- a/drivers/mmc/host/sdhci-of-k1.c
+> +++ b/drivers/mmc/host/sdhci-of-k1.c
+> @@ -20,6 +20,13 @@
+>  #include "sdhci.h"
+>  #include "sdhci-pltfm.h"
+>  
+[snip]
 
-https://lore.kernel.org/r/177204643911.168523.3724548692200647978.b4-ty@kernel.org/
+> +	spacemit_sdhci_setbits(host, SDHC_OVRRD_CLK_OEN | SDHC_FORCE_CLK_ON,
+> +			       SPACEMIT_SDHC_OP_EXT_REG);
+As I'm testing on Bananapi F3 board with emmc chip, this line will cause timeout problem
 
-> --
-> Lee Jones [李琼斯]
-> 
+[   27.613806] mmc2: Timeout waiting for hardware interrupt.
+[   27.616592] mmc2: sdhci: ============ SDHCI REGISTER DUMP ===========
+[   27.623007] mmc2: sdhci: Sys addr:  0x00000400 | Version:  0x00000002
+[   27.629429] mmc2: sdhci: Blk size:  0x00007200 | Blk cnt:  0x000003a6
+[   27.635853] mmc2: sdhci: Argument:  0x001ca0a0 | Trn mode: 0x0000002b
+[   27.642277] mmc2: sdhci: Present:   0x01f70106 | Host ctl: 0x00000035
+[   27.648700] mmc2: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
+[   27.655124] mmc2: sdhci: Wake-up:   0x00000000 | Clock:    0x00000107
+[   27.661547] mmc2: sdhci: Timeout:   0x0000000e | Int stat: 0x00000000
+[   27.667971] mmc2: sdhci: Int enab:  0x03ff000b | Sig enab: 0x03ff000b
+[   27.674394] mmc2: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[   27.680818] mmc2: sdhci: Caps:      0x35fc0080 | Caps_1:   0x00002f77
+[   27.687241] mmc2: sdhci: Cmd:       0x0000193a | Max curr: 0x00000000
+[   27.693666] mmc2: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0xfff6dbff
+[   27.700088] mmc2: sdhci: Resp[2]:   0x320f5903 | Resp[3]:  0x00000900
+[   27.706513] mmc2: sdhci: Host ctl2: 0x0000400d
+[   27.710940] mmc2: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x02080208
+[   27.717363] mmc2: sdhci: ============================================
+
+Drop it will make emmc work again.. but I'm still unable to make SD card driver work,
+that's probably another problem
+
+I've took a look at current K3's sdhci driver, all operations on SPACEMIT_SDHC_OP_EXT_REG
+register are used only when doing voltage switch with SD card, snip of the code from vendor
+
+	if (host->mmc->caps2 & MMC_CAP2_NO_MMC) {
+                /* sd/sdio has no phy */
+                spacemit_sdhci_setbits(host, SDHC_TX_INT_CLK_SEL, SPACEMIT_SDHC_TX_CFG_REG);
+
+        } else {
+                /* use phy func mode */
+                spacemit_sdhci_setbits(host, SDHC_PHY_FUNC_EN | SDHC_PHY_PLL_LOCK,
+                                       SPACEMIT_SDHC_PHY_CTRL_REG);
+                spacemit_sdhci_clrsetbits(host, SDHC_PHY_DRIVE_SEL,
+                                          SDHC_RX_BIAS_CTRL |
+                                          FIELD_PREP(SDHC_PHY_DRIVE_SEL, 4),
+                                          SPACEMIT_SDHC_PHY_PADCFG_REG);
+                /* mmc card mode */
+                spacemit_sdhci_setbits(host, SDHC_MMC_CARD_MODE, SPACEMIT_SDHC_MMC_CTRL_REG);
+        }
 
 -- 
 Yixun Lan (dlan)
