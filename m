@@ -1,35 +1,43 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318E83033EA;
-	Sat,  7 Mar 2026 03:10:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6AF3368AF
+	for <spacemit@lists.linux.dev>; Sat,  7 Mar 2026 07:00:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772853024; cv=none; b=J0hKhqGsYPNngF9U0/J4am6tpERSOUAcGhOvi1tuxEVXxNl+5hH1SxHigw8mtntKdQm4q+WDI12cH7YRl+rH07PoLFqQmCv0Ej56MCkZAxTw4oPA6drg0piWp1YUfhDsWH31Zf5OSHXLx6GV646KnnSDMpU9kbTkSmnBxdG/4O8=
+	t=1772866850; cv=none; b=uOstt2jWbDQ7KJix7qpo3MW8GsKmommnmNUMa1TEo5h+c2aLNm6RQ9JoeIJlU+zIyFjZU2VwGTFSFNe8lNRlFqQ5zA27FhdF7ocIHHRyRhfFZNOYG0/NpxhofyfPFKe67ncdgKNc/JtHScNcwYRstKFsYiCnldmOHV3PJEjSvVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772853024; c=relaxed/simple;
-	bh=TiajJF8FGs34cMcYXnME5ueOoAbs9UDJQ7cGdkNKzsU=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=t1BxF9NXQ9YczqZW72nQTcfdMjD+7fe2GnnHi3Y2tpq0dCH2eyEZJANQU8C8osArQXpHzzJpgDiEryoAaSO4GTwQsz2r/NMK5fkt/jKfYfx235MIPyhHzSCdqSLEUJEx53ic5Y+QfqgsQSVjUehyLv9e1tXXO47eYsGr4HB80jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FaSUnY5+; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FaSUnY5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC62C4CEF7;
-	Sat,  7 Mar 2026 03:10:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772853023;
-	bh=TiajJF8FGs34cMcYXnME5ueOoAbs9UDJQ7cGdkNKzsU=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=FaSUnY5+LJDvosPvE9K6uYmazcUbcnbAqKdoouAsxz742LnmiJrFiO+V9Qly3I4bS
-	 Yb2x9XSbRgA65bXi5UmhFpiepN2/SSREYhtTrI1mMk8txuWHbG6CcDsLprjMozZ2tW
-	 QhVheN+Xw7JmX1LuNxudVvy1yTzOb34l/d/xO/VWH7WboKPBxyEi7uPYwb147kXeEV
-	 BkvXHJr07CcKGceE/H+7I964JxyuALRUPyWI5kg1xVuaZpVy34hjXmnI6f6CCX+9i5
-	 ROD8JW2J2EnpXMZa5LKj1DsU8kJwYP/PGTBkrCtsQYQKGo5Z8pT7JndoOINSC/i1FK
-	 IgXsfifn4SZvw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 02C763808200;
-	Sat,  7 Mar 2026 03:10:24 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1772866850; c=relaxed/simple;
+	bh=E9xSzhEG60dObT/Xo4cqG5jmz3opqMdOnErEmUCuL48=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=k6Ckam4XDfDO2qzfsqa1WRIqmVedbeT91yEFbbdjwQXVX9ivSXgRn4r32aAVcaZV7cobOJxRGRvrqxNjeUmqFegI42CiTKoUvSYVIle9K8zD2TXgxROT5Mi+smNMDBePVYdNA6UkfdfSsCOwac19zWRb6x4lWZY2SJ3+8GTJB9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from localhost.localdomain (unknown [58.61.141.9])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 36147d6ec;
+	Sat, 7 Mar 2026 12:38:12 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: dlan@gentoo.org
+Cc: alex@ghiti.fr,
+	amadeus@jmu.edu.cn,
+	aou@eecs.berkeley.edu,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	dlan@kernel.org,
+	krzk+dt@kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	palmer@dabbelt.com,
+	pjw@kernel.org,
+	robh@kernel.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/1] riscv: dts: spacemit: Add 'linux,pci-domain' to PCIe nodes for K1
+Date: Sat,  7 Mar 2026 12:38:06 +0800
+Message-Id: <20260307043806.957175-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260302074235-GYB288339@gentoo.org>
+References: <20260302074235-GYB288339@gentoo.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -37,44 +45,36 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net: spacemit: Remove unused buff_addr fields
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <177285302252.135595.8145843484531781952.git-patchwork-notify@kernel.org>
-Date: Sat, 07 Mar 2026 03:10:22 +0000
-References: 
- <20260305-k1-ethernet-cleanup-buff_addr-v1-1-e978ef119231@iscas.ac.cn>
-In-Reply-To: 
- <20260305-k1-ethernet-cleanup-buff_addr-v1-1-e978ef119231@iscas.ac.cn>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, dlan@kernel.org, netdev@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
+X-HM-Tid: 0a9cc696b9c303a2kunmfc861db58871d2
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCGB0YVhpNSRlLSx9MSx4ZT1YeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlOQ1VNSlVKT0pVQllXWRYaDxIVHRRZQVlPS0hVSktISk5MTlVKS0tVSkJLS1
+	kG
 
-Hello:
+Hi,
 
-This patch was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
+> You describe what's has been done here, but no why?
 
-On Thu, 05 Mar 2026 15:00:29 +0800 you wrote:
-> These were never used. Just remove them.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
-> ---
-> Cleanup patch split out from:
-> 
-> [...]
+Because the PCIe boot order is random, if there are two R8125
+network cards, their interface names will not be fixed.
 
-Here is the summary with links:
-  - [net-next] net: spacemit: Remove unused buff_addr fields
-    https://git.kernel.org/netdev/net-next/c/70eba59f9207
+For example:
+First boot:
+pcie@ca400000 -> eth2
+pcie@ca800000 -> eth3
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Second boot:
+pcie@ca400000 -> eth3
+pcie@ca800000 -> eth2
 
+If their PCI domain numbers are fixed, I can fix the interface
+names by matching /sys/devices using a script.
 
+> Can you add description about why problem with random domain,
+> and the motivation of the change behind?
+
+Should I improve the commit messages?
+
+Thanks,
+Chukun
