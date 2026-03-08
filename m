@@ -1,314 +1,73 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay.hostedemail.com (smtprelay0014.hostedemail.com [216.40.44.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE33F27A477
-	for <spacemit@lists.linux.dev>; Sun,  8 Mar 2026 17:59:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179BA33344C;
+	Sun,  8 Mar 2026 18:41:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772992792; cv=none; b=eL/leLG1LPXSTPWGvkxwVwryUAiBEZClIKoLsUu38+X81C+K1Y8/8S8J4tePGJ8rCv0lTTShHoQejnBYoaWPlCLwJZ2PjbOOVGwbKZKxQ/obyI7QrPBStjviFVnsZtqQr5OowylJexZw/Tka2wM7OtCLylz0EmccA6kSMPgs8sA=
+	t=1772995262; cv=none; b=bVHrNuSBYlYJKDgwlNsP7U1jhCPJ8J7iqIc88EtWn9wbu+sPzjmCGbrhJ9FHaNvJfuU+uJRUB5rrRCJyBp7Q6381IX9lFB13QGK9IR5AzlI1F1Q0WR8AvPYsa4ZnBcA8a+DOZVzGAvUzlCx4dozFtkh4HQr4yp8BH/BEJEuIKSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772992792; c=relaxed/simple;
-	bh=2w00/5rikfHMrMWNlIDnWCYd2a3uo7SKCGFo4KzYTnU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ep3+A+/zuicO/TjDbmUSxz9YBPGTOkkW33BdgOZT8mJEYfVGeUUc3H69QxIWbgFQmdNAROuu9qwj1j6MZfoIRQwjQy7wX8cR14YXK0afvINCyFijAWxYTrnNzEe28JoOkn7SJLnepljPL7Tc1Ri8W3QMb8GFnlAYYnVlPRHWd+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=T67MizfW; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sifive.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="T67MizfW"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-78fc4425b6bso107905837b3.1
-        for <spacemit@lists.linux.dev>; Sun, 08 Mar 2026 10:59:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sifive.com; s=google; t=1772992790; x=1773597590; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TV+fid+6EASBoKc0dODxReLnENoxtwD9DEo9QwziAPo=;
-        b=T67MizfW6mFPfud7aS6yWZYAg4rAStmtEKBNDcaDBPHSS2K8V4dCOSBJ7jH/giEFjl
-         edW9jszlH+oCbKcmLg0ogDP3H7lwDh+gdTM2jD27E7okdfAvaadYU33CeEtc/MwCXbSx
-         1k+PsVQYnJrLsUMf/33Kbp6PqnIapllBr/cWYtA3vN1DtAZbvEcdmIZBrEa14oLqax3R
-         aTNigX32dU3ZNQ9PVl3rcTQMLIgCkdMtYvQln1n7TsPZc/liZP37y5fJZG/O1TwXDVA1
-         uUv6F0OESThDr2FLcBS7aCSmniK1uAINw7+3uAYdfPYdkUgQZL0im4z80QCEA7Do/35g
-         UvcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772992790; x=1773597590;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TV+fid+6EASBoKc0dODxReLnENoxtwD9DEo9QwziAPo=;
-        b=H1W7esKaxi2vy850fHJbZ029E2CmaULH4ZeFRVXE1b9xc1MvsfJGAqdv2oWuRaVcND
-         BWnR0ylNeZ8bMOnWhs3iKS4OYUHNZ2YCXw0bj/WIsQh0rvpJM2hE98xKGFR/dTlOmRGO
-         joKKmKDmRnnPX6K0xeg9zYNrRqrLb3pcrxcPU6q7UzY2rkG1Pyohguo0g4KUO7CPs9CR
-         pryPgZQsVBug8s0HUIu1riJN3Sr4T7V2cP8So9lNz98fchDVHEsNw1kDBLXpM7Vkxg/i
-         nc8UTiOUbDvIu+6oQv5bNFZ6tul74JBD5EMYWnze54QyX+f0++OiOYpiOc7Ele+uRH/f
-         kkgw==
-X-Forwarded-Encrypted: i=1; AJvYcCWhhNuvFIzNtv2Pu0sSAS+77lyCp8hxbVWNxlskozuxPGZooe72uu7caIqfGEBoZAFi+LPaHWDkIg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxg6MMFA4fsHHs0LELZuV0uJPjUOEHg/w/mmlPlhvmgLTPf0jnN
-	IUwurbaVBPcSw8dKeVFoYFhiQsr/qOMVoEHE2QHQ6JLW2i9Wv62wBBFtDSwPx3ZYvc4=
-X-Gm-Gg: ATEYQzzFRHy+A64CZxhhOma93OruMCHq/Zn8g7NUyigUxo053t4jYKGY+IdOA8+wT0i
-	0oK1VYQNyIC/PvhneBe5tqtglpsoQAB7yQ8V42sC8BdRCxneqYSNyTH2MNTASYQbRH5RfLIBont
-	e8BhC99VvtQ1tCCTS+hNyGDvxWkgTome/V2bemk1LF9Pt+VfHsO9HCPXeG5OTagDjy47JMaBTa2
-	fyDrPtZDlzbY65O61eYlyWwVlaqB4HdnG42HnneKSNvs3UNr0Eo9Z/8rxJTz4qtRgETGZu68Ozu
-	V9TKjNsspwRJPB5Kvx2RWR8NrFBXORfhDniX2pIkWdIFkzZdmARix/gcQ7oSAvmNd5zcJza7PTg
-	iqaHsl3L44mGUhXJWcZaG1Rv2DNZSEL/EBXlTjpEGt8TEQqoN4KjsJh5AcUHLeehCzXQ6odaUtz
-	rR3ZIubXOrtE7clzPnQpo7Hnue1h+nkfrWZyW6IW8xc2pHta9zPJk=
-X-Received: by 2002:a05:690c:6b12:b0:797:ac4a:6ff8 with SMTP id 00721157ae682-798dd79737dmr77044737b3.61.1772992789901;
-        Sun, 08 Mar 2026 10:59:49 -0700 (PDT)
-Received: from [100.64.0.1] ([170.85.103.33])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-798dec8b953sm34660587b3.6.2026.03.08.10.59.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Mar 2026 10:59:49 -0700 (PDT)
-Message-ID: <610da0d3-1dc0-4f4f-afb4-869d3ed81321@sifive.com>
-Date: Sun, 8 Mar 2026 12:59:48 -0500
+	s=arc-20240116; t=1772995262; c=relaxed/simple;
+	bh=ZclR3MgADbuk8gJW1YDMUHbgzO8DIPC3p7HfmBQ2uv0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=PgxHPiKsBanMGjkCgr5ygkGLjCp6Ccvt7qyGpv7IBnYvGZAydaT6kuIz5cs+WzxC1FNshwdEcU88HPRZB1R4ovx66h+q2jpDAdCJCV2zS5lYBmXOTD9Kd6yiIxts/MJQB3DUQO/ixxGLK+jbtSnIvtr43TAv3TTnZu3hnYmE/OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com; spf=pass smtp.mailfrom=perches.com; arc=none smtp.client-ip=216.40.44.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perches.com
+Received: from omf19.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay09.hostedemail.com (Postfix) with ESMTP id D43C38CD9E;
+	Sun,  8 Mar 2026 18:40:51 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf19.hostedemail.com (Postfix) with ESMTPA id 6CBA920025;
+	Sun,  8 Mar 2026 18:40:45 +0000 (UTC)
+Message-ID: <ca170cbaf2f8bcbc89bbda68914d8e0d7640f0e7.camel@perches.com>
+Subject: Re: [PATCH v2 phy-next 24/24] MAINTAINERS: add regexes for linux-phy
+From: Joe Perches <joe@perches.com>
+To: vladimir.oltean@nxp.com, linux-phy@lists.infradead.org
+Cc: Vinod Koul <vkoul@kernel.org>, Neil Armstrong
+ <neil.armstrong@linaro.org>, 	dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, 	linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, 	linux-can@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org,
+ netdev@vger.kernel.org, 	spacemit@lists.linux.dev,
+ UNGLinuxDriver@microchip.com
+Date: Sun, 08 Mar 2026 11:40:44 -0700
+In-Reply-To: <20260308114009.2546587-25-vladimir.oltean@nxp.com>
+References: <20260308114009.2546587-1-vladimir.oltean@nxp.com>
+	 <20260308114009.2546587-25-vladimir.oltean@nxp.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add cpu scaling for K1 SoC
-To: Shuwei Wu <shuwei.wu@mailbox.org>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- devicetree@vger.kernel.org, "Rafael J. Wysocki" <rafael@kernel.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Yixun Lan <dlan@gentoo.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-References: <20260308-shadow-deps-v1-0-0ceb5c7c07eb@mailbox.org>
- <20260308-shadow-deps-v1-2-0ceb5c7c07eb@mailbox.org>
-From: Samuel Holland <samuel.holland@sifive.com>
-Content-Language: en-US
-In-Reply-To: <20260308-shadow-deps-v1-2-0ceb5c7c07eb@mailbox.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-Stat-Signature: mibobo4wkbramau4qyjthmehkiqudojz
+X-Rspamd-Server: rspamout01
+X-Rspamd-Queue-Id: 6CBA920025
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX1/1oqpGv8s8V8RuGZRFC80nZh9ljOj3ohI=
+X-HE-Tag: 1772995245-174125
+X-HE-Meta: U2FsdGVkX1+4XRzz60ugpVFQWsQctyjPh9D8dWNkk9O80wKikqTLI//fEpSwY7VKkjTAQqCbvy/bDztttYzuNBQP3PDd6DE18CINvDdnHew5cXtwNDDJn4KiBH3EXroYIs/0V5C/aytRQmLMTGCZZlkmVqa0mog1lMlvYoTUOPxP3MIGj9+OItuBdGt7SwG+E1NN8A/Yc9Sq4U8TJPe/XcW25BuE6rH2bXBjLakvy2b4imYLaL6YRBqKlFvDSAukFbzkOlERn3vJJPcvYBJiMotKjWx2PYK5v4pDPHYsRlN9R//2k7hsjvl6B3t7ELpdAjuD6CN+C7OKO7KQLV3bHimDBNhwcxGB9M1yVBNLk9v9/I7LPCcJRUT7SR2W+eai
 
-Hi Shuwei,
+On Sun, 2026-03-08 at 13:40 +0200, vladimir.oltean@nxp.com wrote:
+> diff --git a/MAINTAINERS b/MAINTAINERS
+[]
+> @@ -10713,6 +10713,17 @@ F:	Documentation/devicetree/bindings/phy/
+> +K:	(?:linux/phy/phy\.h|phy-props\.h|phy-provider\.h)
 
-On 2026-03-07 11:17 PM, Shuwei Wu wrote:
-> Add Operating Performance Points (OPP) tables and CPU clock properties
-> for the two clusters in the SpacemiT K1 SoC.
-> 
-> Also assign the CPU power supply (cpu-supply) for the Banana Pi BPI-F3
-> board to fully enable CPU DVFS.
-> 
-> Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
-> ---
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 34 +++++++++-
->  arch/riscv/boot/dts/spacemit/k1.dtsi            | 86 +++++++++++++++++++++++++
->  2 files changed, 119 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index 444c3b1e6f44..b87bf9d51cb1 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -86,6 +86,38 @@ &combo_phy {
->  	status = "okay";
->  };
->  
-> +&cpu_0 {
-> +	cpu-supply = <&buck1_3v45>;
-> +};
-> +
-> +&cpu_1 {
-> +	cpu-supply = <&buck1_3v45>;
-> +};
-> +
-> +&cpu_2 {
-> +	cpu-supply = <&buck1_3v45>;
-> +};
-> +
-> +&cpu_3 {
-> +	cpu-supply = <&buck1_3v45>;
-> +};
-> +
-> +&cpu_4 {
-> +	cpu-supply = <&buck1_3v45>;
-> +};
-> +
-> +&cpu_5 {
-> +	cpu-supply = <&buck1_3v45>;
-> +};
-> +
-> +&cpu_6 {
-> +	cpu-supply = <&buck1_3v45>;
-> +};
-> +
-> +&cpu_7 {
-> +	cpu-supply = <&buck1_3v45>;
-> +};
-> +
->  &emmc {
->  	bus-width = <8>;
->  	mmc-hs400-1_8v;
-> @@ -201,7 +233,7 @@ pmic@41 {
->  		dldoin2-supply = <&buck5>;
->  
->  		regulators {
-> -			buck1 {
-> +			buck1_3v45: buck1 {
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3450000>;
->  				regulator-ramp-delay = <5000>;
-> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> index 529ec68e9c23..5c7bb5d85fc0 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> @@ -54,6 +54,8 @@ cpu_0: cpu@0 {
->  			compatible = "spacemit,x60", "riscv";
->  			device_type = "cpu";
->  			reg = <0>;
-> +			clocks = <&syscon_apmu CLK_CPU_C0_CORE>;
-> +			operating-points-v2 = <&cluster0_opp_table>;
->  			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
->  			riscv,isa-base = "rv64i";
->  			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
-> @@ -84,6 +86,8 @@ cpu_1: cpu@1 {
->  			compatible = "spacemit,x60", "riscv";
->  			device_type = "cpu";
->  			reg = <1>;
-> +			clocks = <&syscon_apmu CLK_CPU_C0_CORE>;
-> +			operating-points-v2 = <&cluster0_opp_table>;
->  			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
->  			riscv,isa-base = "rv64i";
->  			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
-> @@ -114,6 +118,8 @@ cpu_2: cpu@2 {
->  			compatible = "spacemit,x60", "riscv";
->  			device_type = "cpu";
->  			reg = <2>;
-> +			clocks = <&syscon_apmu CLK_CPU_C0_CORE>;
-> +			operating-points-v2 = <&cluster0_opp_table>;
->  			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
->  			riscv,isa-base = "rv64i";
->  			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
-> @@ -144,6 +150,8 @@ cpu_3: cpu@3 {
->  			compatible = "spacemit,x60", "riscv";
->  			device_type = "cpu";
->  			reg = <3>;
-> +			clocks = <&syscon_apmu CLK_CPU_C0_CORE>;
-> +			operating-points-v2 = <&cluster0_opp_table>;
->  			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
->  			riscv,isa-base = "rv64i";
->  			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
-> @@ -174,6 +182,8 @@ cpu_4: cpu@4 {
->  			compatible = "spacemit,x60", "riscv";
->  			device_type = "cpu";
->  			reg = <4>;
-> +			clocks = <&syscon_apmu CLK_CPU_C1_CORE>;
-> +			operating-points-v2 = <&cluster1_opp_table>;
->  			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
->  			riscv,isa-base = "rv64i";
->  			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
-> @@ -204,6 +214,8 @@ cpu_5: cpu@5 {
->  			compatible = "spacemit,x60", "riscv";
->  			device_type = "cpu";
->  			reg = <5>;
-> +			clocks = <&syscon_apmu CLK_CPU_C1_CORE>;
-> +			operating-points-v2 = <&cluster1_opp_table>;
->  			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
->  			riscv,isa-base = "rv64i";
->  			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
-> @@ -234,6 +246,8 @@ cpu_6: cpu@6 {
->  			compatible = "spacemit,x60", "riscv";
->  			device_type = "cpu";
->  			reg = <6>;
-> +			clocks = <&syscon_apmu CLK_CPU_C1_CORE>;
-> +			operating-points-v2 = <&cluster1_opp_table>;
->  			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
->  			riscv,isa-base = "rv64i";
->  			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
-> @@ -264,6 +278,8 @@ cpu_7: cpu@7 {
->  			compatible = "spacemit,x60", "riscv";
->  			device_type = "cpu";
->  			reg = <7>;
-> +			clocks = <&syscon_apmu CLK_CPU_C1_CORE>;
-> +			operating-points-v2 = <&cluster1_opp_table>;
->  			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
->  			riscv,isa-base = "rv64i";
->  			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
-> @@ -339,6 +355,76 @@ osc_32k: clock-32k {
->  		};
->  	};
->  
-> +	cluster0_opp_table: opp-table-cluster0 {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-614400000 {
-> +			opp-hz = /bits/ 64 <614400000>;
-> +			opp-microvolt = <950000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-819000000 {
-> +			opp-hz = /bits/ 64 <819000000>;
-> +			opp-microvolt = <950000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1000000000 {
-> +			opp-hz = /bits/ 64 <1000000000>;
-> +			opp-microvolt = <950000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1228800000 {
-> +			opp-hz = /bits/ 64 <1228800000>;
-> +			opp-microvolt = <950000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1600000000 {
-> +			opp-hz = /bits/ 64 <1600000000>;
-> +			opp-microvolt = <1050000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +	};
-> +
-> +	cluster1_opp_table: opp-table-cluster1 {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-614400000 {
-> +			opp-hz = /bits/ 64 <614400000>;
-> +			opp-microvolt = <950000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-819000000 {
-> +			opp-hz = /bits/ 64 <819000000>;
-> +			opp-microvolt = <950000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1000000000 {
-> +			opp-hz = /bits/ 64 <1000000000>;
-> +			opp-microvolt = <950000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1228800000 {
-> +			opp-hz = /bits/ 64 <1228800000>;
-> +			opp-microvolt = <950000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1600000000 {
-> +			opp-hz = /bits/ 64 <1600000000>;
-> +			opp-microvolt = <1050000>;
-> +			clock-latency-ns = <200000>;
+phy-props.h and phy-provider.h don't seem to exist.
+Are these going to be added later?
+Maybe this should be phy-common-props.h ?
 
-What is the initial voltage set by firmware before Linux boots? If it is 1.05V,
-this is fine, but if the default is 950mV, then you cannot enable the OPP table
-in the SoC .dtsi file. Boards other than the BananaPi F3 are missing the
-cpu-supply property, so they won't raise the CPU voltage before switching to the
-higher frequency. The usual solution is to put the OPP table (or at least the
-OPPs that require a higher voltage) in a separate .dtsi file, and only include
-that file from boards that provide the cpu-supply.
+Perhaps if matching only the include uses:
+(/ is escaped because get_maintainer is stupid)
+something like:
 
-Regards,
-Samuel
-
+K:	include\s*\<linux\/phy\/phy(?:-common-props|-provider)?\.h\>
