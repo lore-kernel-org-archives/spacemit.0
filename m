@@ -1,104 +1,123 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72CC26ED3F
-	for <spacemit@lists.linux.dev>; Mon,  9 Mar 2026 03:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B2F329391
+	for <spacemit@lists.linux.dev>; Mon,  9 Mar 2026 06:34:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773025219; cv=none; b=KK2VcnOX+nj0O+bFbSEZ95a5sPK2gQRkZAwvTSYiv9Wr3JKXJPsAX5RNXdQ6TQIjCTKywLq84YPn0pRyheJ5cbA5Ky9Jw6/F2B6eXw49NIJMBBSWurNcFRLWtNR212JKXxWQ3g5d9d7wYlmH2p1bZta9gjyiDwwa5XNMM9tbXIo=
+	t=1773038066; cv=none; b=qt7npswuFCAaniQ04NrRieYViA7FPsvo+T0/J17ENfh3xfRk2DISFEfU40RTo2apBpfpkeqB1f8oHx/LCsjNyJYL8eBaofHlqdBuLNObSnD9FjFS+/2Zrqs5xQUHFBUZkaYFBvZGxjX8ZRdSefYR53SC8uI6PLG+I45KSGkQFcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773025219; c=relaxed/simple;
-	bh=wOByeN28U500aRlyt5TiYPPlyULkXcdC8HcZaurn6ik=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=erG47W6ARIhC48tgCZCXRcVd9CyvF6979JlpAYYPNvBp7GsDXpYaGC6byFZkqSVzP0tSOKkmJdEjgFyWZfTPDQImoIk+8SJe01GaRCvI4v15fBBU4FzXE5EZ8+ZB04YqJmoSlNow4Vc7NUWg+LwSJg4cimGRMd8yvZPIokI1deE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from localhost.localdomain (unknown [58.61.141.9])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 362f93ee8;
-	Mon, 9 Mar 2026 11:00:05 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+	s=arc-20240116; t=1773038066; c=relaxed/simple;
+	bh=3Wnjim6yO+itYQGtawQz3xTRie9Znb5BqvmJhBhwVYs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MC/78P9l7WQFmEuXWDEByveb17Vvay2EZpFQvjRSObBIJdBRcowCpJY6pxtqESjFaqs0hMOKSeihyc5/oHC4jjRuutaMY+J9lInPdOyKfQ0DnrO2Mc0wfuP9KkRJelEC8RHphZ7VPGjTF47OwswuFIkVv+XbmaE0uAfmzuInXZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.48.232])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id AC5C4335DB5;
+	Mon, 09 Mar 2026 06:34:23 +0000 (UTC)
+Date: Mon, 9 Mar 2026 14:34:16 +0800
+From: Yixun Lan <dlan@gentoo.org>
+To: Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: [PATCH v2 1/1] riscv: dts: spacemit: Add 'linux,pci-domain' to PCIe nodes for K1
-Date: Mon,  9 Mar 2026 11:00:00 +0800
-Message-Id: <20260309030000.1157040-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
+	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 03/10] mmc: sdhci-of-k1: add regulator framework support
+Message-ID: <20260309063416-GYB318052@gentoo.org>
+References: <20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com>
+ <20260302-orangepi-sd-card-uhs-v1-3-89c219973c0c@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9cd0899e1e03a2kunm4cb197698fbcdb
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaSkMeVkJNHkofQhlMTB8YTlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlOQ1VNSlVKT0pVQllXWRYaDxIVHRRZQVlPS0hVSktISk5MTlVKS0tVSkJLS1
-	kG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260302-orangepi-sd-card-uhs-v1-3-89c219973c0c@gmail.com>
 
-The SpacemiT K1 SoC has 3 PCIe EP controller nodes. Add the
-'linux,pci-domain' property to assign a PCI domain number to
-each of the controllers instead of assigning it randomly.
+Hi IKer,
 
-This creates a stable sysfs path, allowing userspace scripts
-to reliably target specific PCIe devices (such as PCIe NICs).
+On 16:13 Mon 02 Mar     , Iker Pedrosa wrote:
+> Add regulator framework support for voltage switching operations. This
+> enables proper PMIC control for UHS voltage switching between 3.3V and
+> 1.8V signaling levels.
+> 
+> - Add regulator supply parsing
+> - Implement voltage switching callback
+> - Enable mmc regulator framework integration
+> 
+> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+> ---
+>  drivers/mmc/host/sdhci-of-k1.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+> index b703b78282ed8d89183c816477c149c0a565618a..c260cb89704ae7a25bec0f07831d495553405bbd 100644
+> --- a/drivers/mmc/host/sdhci-of-k1.c
+> +++ b/drivers/mmc/host/sdhci-of-k1.c
+> @@ -216,6 +216,12 @@ static void spacemit_sdhci_pre_hs400_to_hs200(struct mmc_host *mmc)
+>  			       SPACEMIT_SDHC_PHY_CTRL_REG);
+>  }
+>  
+> +static int spacemit_sdhci_start_signal_voltage_switch(struct mmc_host *mmc,
+> +						      struct mmc_ios *ios)
+> +{
+> +	return sdhci_start_signal_voltage_switch(mmc, ios);
+> +}
+I'd suggest to implement voltage_switch() instead of start_signal_voltage_switch(),
+and put the pinctrl state switch here, which will be called by
+start_signal_voltage_switch(), see drivers/mmc/host/sdhci.c for more detail
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
----
-Changes in v2:
-- Improve the commit messages
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+sdhci_start_signal_voltage_switch() -> voltage_switch()
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 529ec68e9c23..d2015201f8e5 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -1033,6 +1033,7 @@ pcie-bus {
- 			#size-cells = <2>;
- 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
- 				     <0x0 0xb8000000 0x1 0x38000000 0x3 0x48000000>;
-+
- 			pcie0: pcie@ca000000 {
- 				device_type = "pci";
- 				compatible = "spacemit,k1-pcie";
-@@ -1044,6 +1045,7 @@ pcie0: pcie@ca000000 {
- 					    "atu",
- 					    "config",
- 					    "link";
-+				linux,pci-domain = <0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
- 				ranges = <0x01000000 0x0 0x00000000 0x0 0x8f002000 0x0 0x00100000>,
-@@ -1087,6 +1089,7 @@ pcie1: pcie@ca400000 {
- 					    "atu",
- 					    "config",
- 					    "link";
-+				linux,pci-domain = <1>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
- 				ranges = <0x01000000 0x0 0x00000000 0x0 0x9f002000 0x0 0x00100000>,
-@@ -1130,6 +1133,7 @@ pcie2: pcie@ca800000 {
- 					    "atu",
- 					    "config",
- 					    "link";
-+				linux,pci-domain = <2>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
- 				ranges = <0x01000000 0x0 0x00000000 0x0 0xb7002000 0x0 0x00100000>,
+static const struct sdhci_ops spacemit_sdhci_ops = {
+..
+	.voltage_switch         = spacemit_sdhci_voltage_switch,
+..
+
+> +
+>  static inline int spacemit_sdhci_get_clocks(struct device *dev,
+>  					    struct sdhci_pltfm_host *pltfm_host)
+>  {
+> @@ -291,6 +297,12 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+>  
+>  	host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+>  
+..
+> +	ret = mmc_regulator_get_supply(host->mmc);
+I think this is unnecessary which already handled in core framework, see
+spacemit_sdhci_probbe() -> sdhci_add_host() -> sdhci_setup_host()
+
+https://github.com/torvalds/linux/blob/v7.0-rc3/drivers/mmc/host/sdhci.c#L4289
+
+> +	if (ret)
+> +		dev_warn(dev, "Failed to get regulators: %d\n", ret);
+> +
+> +	host->mmc_host_ops.start_signal_voltage_switch = spacemit_sdhci_start_signal_voltage_switch;
+> +
+with above, this line can be dropped too
+
+>  	ret = spacemit_sdhci_get_clocks(dev, pltfm_host);
+>  	if (ret)
+>  		goto err_pltfm;
+> 
+> -- 
+> 2.53.0
+> 
+
 -- 
-2.25.1
-
+Yixun Lan (dlan)
