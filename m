@@ -1,189 +1,628 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011023.outbound.protection.outlook.com [40.107.130.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECD8354ADB
-	for <spacemit@lists.linux.dev>; Mon,  9 Mar 2026 18:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C275234DB54;
+	Mon,  9 Mar 2026 19:09:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.23
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773082220; cv=pass; b=qX5yLzeefc6u9vP41vJMyAsTT4ytayNPXisG+nbbKMaec940bgs4wrtubIagRwSF9v4zswdBiN/88OWTMfH4SyKKOBwTnUEDLgLIs8oupiha81eSFgJxDF9HoY0o25tdi1lzZk+oOAomBbSuZHSG7eFAO5VDKDVqQU8AMtvu5SI=
+	t=1773083353; cv=fail; b=l+m6nG3rdar0MF36dIvwXGMHSSEw0dlnPhLO1KYc5NTh73lfm170A7eJZDkKUQnyGTKLte1xicHgEKsDhCgr3A9/dLy7Gbe9+9DVD3oaiCFS5diOS68h8ExckMYcW7fDmu5O3o3WQILu8G/D5be2ecsnxF0CUyYM+F7567vjTe0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773082220; c=relaxed/simple;
-	bh=fOVP/fNnR8syWhjc4RBhgcfX6wYbCNnDL9RyXcatRsg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TPynUX3tyVSYWHFZwY21PH7EcRU6Id53ui/6k/KQXhosCzleqCk1Urt8ZD8wdIWvTx1Gs9vL1SEAKVXj9cIRTXn0GQB9tfyjZvB6YMisXl50iL4JPm/xqA2ZzWa8EmG2dKBLk/dDO2PODM6aZawP/EGicWAm5lBHW6AZfpsjD18=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mrbqRgHx; arc=pass smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773083353; c=relaxed/simple;
+	bh=X7/XzpGy3abkHgsSsA6IB4i1QxmevKqfq6o+l7RE03g=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=rsUzJX/qT4WwGdKBwN2hFU2tU84o+oBetrs4wc/F7RBZDyDCBiUbmg9Ki7bYWdtMkU7oY6GCI8GsG+yIM2PVeYFdF1q7XUBM2N+MnFfLNLfs+wFbX335whSQ4HZHL0woEt71CIwvnc8TXXa9CCV2xsmraZZSPWoLPX+f1qFm35Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=B8hcSySU; arc=fail smtp.client-ip=40.107.130.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mrbqRgHx"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b9431300833so491357266b.0
-        for <spacemit@lists.linux.dev>; Mon, 09 Mar 2026 11:50:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773082216; cv=none;
-        d=google.com; s=arc-20240605;
-        b=X2uNlcj5Ry5cU6c6x+O59s00PdtTG0omSadG1fHCtBXy8WAXXRYTTtusWAwI1e1lfZ
-         c/HBJWsEk/5AFn41ErMU55aYHg8xQIPVIePgmY3K5mIHkKENT2TCDLFgbA32QY8A64O1
-         eCP68r/T4RoGdsTDEI1E+JOOqZcI17VrmG+LS1SHDRTK5fyqERoMj1itZAf8t8bkKJIa
-         L11dxXeGMkDw0S5v0HG212+YXS9K52ncDINNOnaAzNl91NeaGQqzya5iICrzuYwlaMBC
-         /C+a+bh+k5Wi+AqPCpIUsDgk/3Ts1i2+MFaLjTn4QhHCJi6idAMovhkoj01zx190ssat
-         F68Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=bowSy7YAPucdHblTmCmhKZ/mGr5O8DBdosAVAbymDGo=;
-        fh=ynZ6Gj2/HwE++q4xfGAw1Y0+gzhi4jnB3DPvOWflsRE=;
-        b=GZdnX8O5JyShbbBROraA7nFVjypC7wifjsWn6B4pLRGBjiYR6CLFKeSR2CgMZ4ELgS
-         qfGXzD+9fNzs5aZxeh1w4aAE02ex15ADy6JIcXmUVQ1wU4lRmcrNA/WAvEHTKI7fggEX
-         D5hz0ZGyHo/hLhXdabaVY3ZPAo/EWxn2pyTySiUTY7VOfcudtveB/DbMA1Hx1bZuUHK9
-         kN+NEKaJ4kku/c3+L5ekHyT10vmS5cTGHsAYxAoLxov99xh4ZZIRiRdGMg/DdXMSCZ9k
-         pyLxxFpVwe+bcmFzB5mwJZG31/k5qS4NbLSo/alY2lzLjNMeyoa8FcUVma1yKtFq9uXJ
-         SuPA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773082216; x=1773687016; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bowSy7YAPucdHblTmCmhKZ/mGr5O8DBdosAVAbymDGo=;
-        b=mrbqRgHxmyTe64VknvqkiYQrJr0+ci4HPuy+rpW01+XdMHYLl+jQxnoqiUSTmZOAYD
-         OSSS2m4cM8BZEBW/nXkCdozV2dbm3x0K4nIv9PXCO45eZaVwWoYAKBbugciGQQ19U8OB
-         asd4cNwURpwBdpaVpD3wKvUaspFFsel0jS1E0u9IF7n2Z0M01bhEupY9DFwUo6frrXjM
-         SuuNownko42PqO1LaxO8kE9alE5U6Z7FoMCzaFm7uINeFC8H9vAoRC+9l16Vrg4PI2f1
-         eT2KqhAIJ1n9xOC4Ph7GHR9PzZe1C29QpP5NFtivG49q3EEeZVpB7tqFCvde6OIhcDDb
-         hLlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773082216; x=1773687016;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bowSy7YAPucdHblTmCmhKZ/mGr5O8DBdosAVAbymDGo=;
-        b=EvRxKg6SZj7veHApWHDJ/P+y9oRJHB09VjYPWxF5jEGbKsw0VI+iarety58WIYq5OB
-         vSeASTzl0MvLD4SsLKQpyS0cXYu1qTTFss4lv8BlXoFwaNKYhmtD+sd48Oh7z8biq5Pz
-         8s+91KvaDxUHWjAK0gtaoqp7MpSbxw3iiiIUIeGkfZT4iQDu5Y8XExAMKKzaBea3kqRx
-         IKxTdArQHNBQmqFL4sz39QNW7MIHErE84EIUyLyZ6+Z98Bzm2jDB7sspL5BjZ3lhdrmX
-         srFT7WfPu67jyuc4SG2Si14REm+P90k25Nf5CA1nLQcFjsTrGXUOyKQ3GlNoGt+Ykgkj
-         VHQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUxoVcKxK6D5w/EQqoY3ouq9m6XMx8kpA/f8AbQ76+9qMN/vsqW9BO3yaMR4OEzBsElUe5ICFiK4g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwX6/8TLdqcEWU3NtpXW5KGLB8o+66tTaOEbfqc2Vt8rfOdURob
-	sHbcCBPxN8DwE1BOEFFHqabIR4G3o/NRlATxXgYJcHUtt13nHbFdIcc6GpgmG8o+IEpy+EyAn19
-	Dp/F8KYsEjcV3Djg4crPvyyNx5O4MrjM=
-X-Gm-Gg: ATEYQzwfSIof4kFV3knJHxA6uobnrcTqHA4Qeyhcn5vX8RoVUtbTxd2Z2pIKegCeMc+
-	P2BQfawW6anyTowShbESYDjg0iWtxoYIYEgXYLiaTbKUiS0OPIpvgCoIXcTRnk9GljvB41cx64A
-	FHEQRzg2s4j7BHIPPcayYnELPdsEA2du+ilVwDuTRnSnf+5m+cEtIpN2ibP4SHRvX2vWWQm9YPz
-	sMxu2k3ls3p/29OegOjJ0AGulI9XPtLdTC9p6xi/XIsU4W46cDmNkvqxT5iG92YdwsVZWB2kzqt
-	uYn4YQ==
-X-Received: by 2002:a17:907:6ea6:b0:b93:c5a9:a5e9 with SMTP id
- a640c23a62f3a-b942db854e8mr585699366b.4.1773082216119; Mon, 09 Mar 2026
- 11:50:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="B8hcSySU"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bNbTDImIY7NqMJVU+MXwEf6Hc8bkSi2eRgLfH3ygomGYHNO6iPbUZ8qOYd3t85zl8nuCylPE/ar952deWfB/gxiNih0kGy1N+iJreRGtLphsR4sdnDhOxOI3MScU+l5gv/Y1XSzaZp1lQj/7KY16yMHgi5A/F3heEgQpXeNeNZyMmhcMHGXeZ7jjr+ovW/cMGO98BxjO3wtxKgA+3258QjJWD7t/98kosI/NLalUf8RxlLqnsKOGyvtWHIoKMPQ1REFjVLdeqV9ft8dCyzRPQXvQ5joraYSNRkzN0Er7bM07P23oxQMn/6RU4IxUxIRrE4B6HezADjbVV4mK8vNJ2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IqFhRoKuEJh7cZsgILk/T3MDhA4GOK/prA32/q3g/gQ=;
+ b=GnpB0pw/YPFXd9adInxlE0TpPjFwc7Kv7Mhvt4jRsJRNZF7N2kahnokFL3jEQD7wMT0FSs6OZS/o5ics5v3zKKnS0h1ANyx+5V6b4j+ZKJ0KbRwfYPIAPMweBbmeg8gqtHnZ0l1HGkRdOz+dpJI5x0XFG4QbYZ5Ss3Cps0AyARI2NvtZZfZKsoUdw20hZGXrvzT7dARghAp9YRsGnGQLjKDVn74zLZRDBHSEEj3dD+DwfE/Cht4fXp5OXQxxp4TjGTdJK0/+7rmS0mqv/RlEtKoNzgcb2ciqqCpmHHP7kmyOWUPGxDNPO6Z2DZ20K7qrn7mD85rkZK5BStrVQPywRQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IqFhRoKuEJh7cZsgILk/T3MDhA4GOK/prA32/q3g/gQ=;
+ b=B8hcSySUemsVNKUSzLuPg8v/55+Sr0SufQPWBfwBUgjJ/BFiK++ll1ncq9LuGL+SHsPULJ+P71LCg2IYvLj5ZXYdgVgJtmAd5054YZ0Ci5TWFmCHqd2vz4lTVIm9yccTiRWn+gQgf2hbJ3299HcIdUKkZ3h1xV4RxD/J4BtWUWyjZQH3M8zxUVYgXOzXiIrT8JT3khgHhZau7TJmrdcxopKATFSGc1KnCEC6hT44akBzJ+gOeFmmFJvSmhrp/TaZXaZnj06XxDjEh1iKXcg0qPLD7u7dThyf2QOMw96613tbkjRGe4uH58RIRquqMXtMRlfCFGQyhQEHW6eZcfkACQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM9PR04MB8585.eurprd04.prod.outlook.com (2603:10a6:20b:438::13)
+ by AM9PR04MB7540.eurprd04.prod.outlook.com (2603:10a6:20b:283::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.25; Mon, 9 Mar
+ 2026 19:09:05 +0000
+Received: from AM9PR04MB8585.eurprd04.prod.outlook.com
+ ([fe80::f010:fca8:7ef:62f4]) by AM9PR04MB8585.eurprd04.prod.outlook.com
+ ([fe80::f010:fca8:7ef:62f4%4]) with mapi id 15.20.9678.023; Mon, 9 Mar 2026
+ 19:09:05 +0000
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: linux-phy@lists.infradead.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-can@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-ide@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	netdev@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	UNGLinuxDriver@microchip.com,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Chanho Park <chanho61.park@samsung.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	David Airlie <airlied@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	Inki Dae <inki.dae@samsung.com>,
+	Jagan Teki <jagan@amarulasolutions.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Joe Perches <joe@perches.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kevin Xie <kevin.xie@starfivetech.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Michael Dege <michael.dege@renesas.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Peter Chen <peter.chen@kernel.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Samuel Holland <samuel@sholland.org>,
+	Sandy Huang <hjc@rock-chips.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Sean Paul <sean@poorly.run>,
+	Sebastian Reichel <sre@kernel.org>,
+	Shawn Guo <shawn.guo@linaro.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Subject: [PATCH v3 phy-next 00/24] Split Generic PHY consumer and provider API
+Date: Mon,  9 Mar 2026 21:08:18 +0200
+Message-ID: <20260309190842.927634-1-vladimir.oltean@nxp.com>
+X-Mailer: git-send-email 2.43.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VI1P190CA0018.EURP190.PROD.OUTLOOK.COM
+ (2603:10a6:802:2b::31) To AM9PR04MB8585.eurprd04.prod.outlook.com
+ (2603:10a6:20b:438::13)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260309-orangepi-sd-card-uhs-v2-0-5bb2b574df5d@gmail.com>
-In-Reply-To: <20260309-orangepi-sd-card-uhs-v2-0-5bb2b574df5d@gmail.com>
-From: Anand Moon <linux.amoon@gmail.com>
-Date: Tue, 10 Mar 2026 00:19:58 +0530
-X-Gm-Features: AaiRm51K4xV8rPWNxLGo_P3SgtaWeN6UkUVkJtFc0B8zhHQGEqIMu2rC6apEjTo
-Message-ID: <CANAwSgRcatU3BQrsd11kA-nj_xos_Oa_47p0P_K+RYrB6QtfXA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] riscv: spacemit: enable SD card support with UHS
- modes for OrangePi RV2
-To: Iker Pedrosa <ikerpedrosam@gmail.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR04MB8585:EE_|AM9PR04MB7540:EE_
+X-MS-Office365-Filtering-Correlation-Id: d8db4a24-62e4-4f49-72c9-08de7e0f554d
+X-LD-Processed: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+ BCL:0;ARA:13230040|19092799006|1800799024|366016|10070799003|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+ XEcgWjBqi6oAw9ADhw/hwylx+r+2Q7iiz83/myXhNFA4LTMwxUpd+4JTrYXlv5Mqf4Mbw7vPobfK60LghGo2iBZSXSJ2xR72X5+EG9GzHoMTJ0MrwjEnfw1Nfn89/bmnodwdWMZgSuxLjXMGDxhxov04Q7Vhc2H7cysYYY271m4yTBMHjZ+HA0ouCyDCNqVdrlaoOSjKVybRUhc3Js3cxYFwsUoSoD1wxSUB2GmtMMKSi2Xzli5jwmCZECSDUotVvVgGqUBIPRyCi5YM2RmtLR+lEICZ3eV7PdvoA29Qq6GZGiZ3YrD9vSwEyZ2UrT8RwokCKoDUCpFuuV3ndtNQkePM+GnaFgDw5luOI7blSD+LaskoMPmytgxviN4sdgA5jj98a/Guilu15YxzHf3v3ZuNKZT8W7JF2hqiaTgDnJkeBI6zkk3LZSnG7AC+NN6DsCINfZnd36qlroaj0nR43GZCkX1D/ARS+6D/YzcZEaCgaJY52n70mlNKaEF7InI0SPmR92sGJgOi6g97lyBce6TUnhMm0XoIQQ5I4XNOrOy4t04MMd/Q6OtOBDoaTVrM0rWv+szu+GMyvbjERTba/qY9lVv3NIGm4BxxowHhpcWC3qRz4N1Nc1qrbuztAFsREU1a0AIxV+s4yRVyqai5g7W7RkSiIfNQsFybc8aMQALnrJRmlxUaUGdZkEUM5nz4
+X-Forefront-Antispam-Report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR04MB8585.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(366016)(10070799003)(7416014)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+ =?utf-8?B?eldQUm1zVDZyUjRrM05QbHB6THY2SUFOWktmLys3eWNXeDIvRDU3Z1JabStT?=
+ =?utf-8?B?ZGN3N3hzQUpudWphaTdReXZYaTM1dHZyRG56MzZKZ1NiWHFONjVNWGs5eEt6?=
+ =?utf-8?B?N1FOQXBLR2orVnJqVk81dGNMYlArcTZwS25ob0RhczJCak5MT3hWMVVTUUg1?=
+ =?utf-8?B?WmlCc0gxK01LcldxZFAxTlJTdlg3RUlHMS9ldUl5dmhZZ0dYZ3did2MvaGZq?=
+ =?utf-8?B?WldVVlovQlRlemlQdDhmOWhtRDYwVVRBUWp4TExLeVV1Qi9KcHdWMVJkRm9R?=
+ =?utf-8?B?VzYwbkNML0pZbGVvOVhCZkRFYXpZSnM4V0pDRCtPb3ZlZlQzSC9DMlZCV0JF?=
+ =?utf-8?B?WVpWWngzS2kvTFl0Miswb0pBRXVscTBObmtGd3Vwd2g3b1lxWEp5WVhkbUVw?=
+ =?utf-8?B?RThFdE9CVkxNbG9vK2I4elhvYnlTOVIrZ1BBRlhLRWNrcXZYbXNNSU1GdFl5?=
+ =?utf-8?B?UXpIc2JNNktFMGlVMUMrbUNZMFpLZlVhKzNxL0RBS3VxbEpBeEphZW9uRGpW?=
+ =?utf-8?B?cklGREYzamlQV0thbndBbGl4Y2M3NEthYWpyTEV0akJ1eUZLSW1UNytjTkdN?=
+ =?utf-8?B?bHk4WEpUNWxzcXZHM3JBdlErSGtQQzFIMkx2NVB3QlBsN3F2bWJrQWVqM3dP?=
+ =?utf-8?B?MjlUTDlxbTRWQjR0a0ZQSlg5T1FLQWFtUmU0UHZ6NUhqdzBaek1YSDZOaVVL?=
+ =?utf-8?B?N1hKWmc0dUQvejlJTHRKQ3lxM25SUTR5eDBYWlhvWHhKVDdINWQ5VUUxM2c4?=
+ =?utf-8?B?eU9QeVovU2M5VUJTcHZDNy92T0JzenA1Q0ozVjh5YXl2Yi96M1VWb0JrZ1lR?=
+ =?utf-8?B?YmdnNEZDZThWV2VVL1VXcm5PRFNqczFMdHI0YnNRektNVDloMGZCSldkYnZh?=
+ =?utf-8?B?bTUyYitlb1VLa0IzVlZYRmlPL0tENjFRQzlxL29rU1Fua3FaQ2R1SE12YkFU?=
+ =?utf-8?B?YUdVdFRLQ3ZYaW91T09nR2VOWmRIRWNmOE9ibXJQaXNTaU9pRWloSkNOajhq?=
+ =?utf-8?B?cUQwTFV4V09aTS9Vbnh1QmVRdEF6N2NrMGpSdXkwVzdMaUxoWFdPam5zVnRY?=
+ =?utf-8?B?UG5GQy9XOXdaSlpKUERFcXlCUFREdEpHK1R2Ri81NC82UzlyNExGdnNqZG1V?=
+ =?utf-8?B?S2hDTjRXUWswbVQ5MllFVkYySElYWEJ0cndLSnhEYzRSdm00YkRKTFJsbmZD?=
+ =?utf-8?B?MmFodXRCUk5NeVprdERlK095U1VLd3FEYVFqekZ2VDNwUjBnU3htYi9NazlG?=
+ =?utf-8?B?WkVYSHJ5NFdrMTN4THM5bWI2WkxiRUJoQUY1QmhlZnBabzBYU2Zpek1qZzB0?=
+ =?utf-8?B?THdXMFgzTDZWQ0lWV0FZNUxUdzNXS3NORkMzcjRhUnp0akdDNkJYd0tDR29k?=
+ =?utf-8?B?ZE9NVFlkOFpybGsrQ25oM1BOMjU3Y0E0aU9TSjM4WVBmTmJrbVJoMHRUSERS?=
+ =?utf-8?B?ZG9pakVtRmJOQ3RRT00yRlYyMGw1a05wbWQ4d1E0eTNwdHlTWlUwTDJERUQ1?=
+ =?utf-8?B?T1VRKzdxS3I0bTNqYzdWd044SDVEWjc0TzdsYklKdFV2TTgveUtTN2xyOGl4?=
+ =?utf-8?B?YlRTaE5tL2xvOUVreUlHY09QbmhweTZmLysydGVBVVBtdmJDT3pVNnN3cHA0?=
+ =?utf-8?B?enVEZE1DNnZYNFlXSmoxY0xxb3YzVm1mOGNlb2hUVVhnbmR1aTczL0g3dmlB?=
+ =?utf-8?B?R1ZjZTlla1NGZVVnQlRJUXZYdnlkZmpFTkFSaERJbVRlNmYyVXJaRnZibEdE?=
+ =?utf-8?B?QUNFb1dudy9lTDBJSXlJeTFnclNLc3NWSDRIRTM0RWVRUUFjRUFPaHhBNURO?=
+ =?utf-8?B?UHZmVEhxaXBZWUUxeVROVlZCTDlhU0NaMjJlbkVxM1poRk1raVQ1U2VwamJ0?=
+ =?utf-8?B?V3pocFlXQUwrWVVVeDYvZ0ZFb3FNZGJ4VW9SenNRZjhKYzdxSVlDOHBsK3Ja?=
+ =?utf-8?B?Y0JXN05EK2o2anlNMFovYmZUeWllRzNkRThscEJNSk5TRHVaWDV2N0JBRi9X?=
+ =?utf-8?B?MHE1a2kwN3ZlSUlHR0hGYkQySkRDNm5BV09RZ3ZrUHNKM2FBTm5wdlQ1WDJw?=
+ =?utf-8?B?UE5KVkd2SmlJN0ZZZUN6bFYxc2diY1MxUFJGQ1JYTU9rcmg3UVZsRXJUMFBC?=
+ =?utf-8?B?Ry9mSG05b3dMdHVCdkxBTWxSR2xic0pTM2J2eW1ZM2MybHljejAyclIwdm5O?=
+ =?utf-8?B?TUhaQlpHc2ZnMmVKMXlXa09yWlpheXFKVlR3WmYyVHhJUnU3bU5xNHdqbFMr?=
+ =?utf-8?B?YW5QelNBN2pscVhsWXEvbXpJc2d4cjMrR2Q0cEJFbXg4UHBza09xU1MxZU1w?=
+ =?utf-8?B?eHZVOU9tVmlLQmJ5di9YMmZONnk2dHNZQ2ltaGFhUGhEMGtXSTFtM1Z0R21J?=
+ =?utf-8?Q?fPn/XMKu8RhTskNqW4usk5R2iwkANv3rOARNoneUEe3y7?=
+X-MS-Exchange-AntiSpam-MessageData-1: 25X3k10J55dIlE6TPhtIwsKPN+CfE6xF8ec=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8db4a24-62e4-4f49-72c9-08de7e0f554d
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8585.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2026 19:09:05.6104
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5mxjD6/cBZmSNNYvle+QI/FI4XTHe8+OQrb7WMkGgQN5jRGmnpvJWqahjcOmetD/K+9d1oEZ3Dqt4xLs+srDHQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB7540
 
-Hi Iker,
+The biggest problem requiring this split is the fact that consumer
+drivers poke around in struct phy, accessing fields which shouldn't be
+visible to them. Follow the example of mux, gpio, iio, spi offload,
+pwrsec, pinctrl and regulator, which each expose separate headers for
+consumers and providers.
 
-On Mon, 9 Mar 2026 at 17:11, Iker Pedrosa <ikerpedrosam@gmail.com> wrote:
->
-> This series enables complete SD card support for the Spacemit K1-based
-> OrangePi RV2 board, including UHS (Ultra High Speed) modes for
-> high-performance SD card operation.
->
-> Background
->
-> The Spacemit K1 SoC includes an SDHCI controller capable of supporting
-> SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
-> currently lacks basic SD controller configuration, SDHCI driver
-> enhancements for voltage switching and tuning, and power management
-> infrastructure.
->
-> Implementation
->
-> The series enables SD card support through coordinated layers:
->
-> - Hardware infrastructure (patches 1-2): Device tree bindings for voltage
-> switching hardware and essential clock infrastructure.
-> - SDHCI driver enhancements (patches 3-7): Regulator framework
-> integration, pinctrl state switching for voltage domains, AIB register
-> programming, and comprehensive SDR tuning support for reliable UHS
-> operation.
-> - SoC and board integration (patches 8-10): Complete K1 SoC controller
-> definitions, PMIC power infrastructure, and OrangePi RV2 board enablement
-> with full UHS support.
->
-> This transforms the OrangePi RV2 from having no SD card support to full
-> UHS-I capability, enabling high-performance storage up to 208MHz.
->
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> ---
-> Changes in v2:
-> - Removed custom AIB voltage switching code per maintainer feedback. The
->   existing pinctrl driver already handles AIB voltage switching
->   automatically via power-source property changes during UHS mode
->   transitions. This eliminates code duplication.
-> - Squashed regulator and pinctrl commits into single voltage switching
->   implementation.
-> - Moved voltage switching callback from dynamic probe assignment to
->   static sdhci_ops declaration. Removed redundant SDHCI core call since
->   the framework handles standard voltage switching automatically.
-> - Made clock override (SDHC_OVRRD_CLK_OEN | SDHC_FORCE_CLK_ON)
->   conditional for SD/SDIO cards only. This follows vendor driver pattern
->   of differentiating SD and eMMC card handling.
-> - Include no-mmc property for SD card.
-> - Link to v1: https://lore.kernel.org/r/20260302-orangepi-sd-card-uhs-v1-0-89c219973c0c@gmail.com
->
+Some off-list discussions were had with Vinod Koul regarding the 3 PHY
+providers outside the drivers/phy/ subsystem. It was agreed that it is
+desirable to relocate them to drivers/phy/, rather than to publish
+phy-provider.h to include/linux/phy/ for liberal use. Only phy.h and
+(new) phy-props.h - consumer-facing headers - stay there.
 
-Thanks. Please include my tested with the SpacemiT Banna F3
+The hope is that developers get a hint when they need to include the
+wrong header to get their job done.
 
-Tested-by: Anand Moon <linux.amoon@gmail.com>
+If that fails, patch 24/24 adds a regex in the MAINTAINERS entry that
+ensures linux-phy is copied on all Generic PHY patches, for an extra set
+of eyes.
 
-Thanks
--Anand
+The series is formatted on linux-phy/next for build testing, but is
+intended to be applied on top of commit
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/commit/?id=4ff5801f45b494ad8251a16ec06c9f303ed3b9a0
+which is v7.0-rc1 + 1 patch, and then merged into linux-phy/next.
+The idea being that it's better to resolve the merge conflict early.
+There are 4 expected conflicts, details in the conflicting patches
+(21/24 and 22/24).
 
-> ---
-> Iker Pedrosa (7):
->       mmc: sdhci-of-k1: enable essential clock infrastructure for SD operation
->       mmc: sdhci-of-k1: add regulator and pinctrl voltage switching support
->       mmc: sdhci-of-k1: add SDR tuning infrastructure
->       mmc: sdhci-of-k1: add comprehensive SDR tuning support
->       riscv: dts: spacemit: k1: add SD card controller and pinctrl support
->       riscv: dts: spacemit: k1-orangepi-rv2: add PMIC and power infrastructure
->       riscv: dts: spacemit: k1-orangepi-rv2: add SD card support with UHS modes
->
->  arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts |  67 ++++++
->  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi     |  40 ++++
->  arch/riscv/boot/dts/spacemit/k1.dtsi             |  13 ++
->  drivers/mmc/host/sdhci-of-k1.c                   | 252 +++++++++++++++++++++++
->  4 files changed, 372 insertions(+)
-> ---
-> base-commit: ec1fb4e55df47ed043ab2ccc6787e39b9d67e49b
-> change-id: 20260226-orangepi-sd-card-uhs-0ecb05839b0c
->
-> Best regards,
-> --
-> Iker Pedrosa <ikerpedrosam@gmail.com>
->
->
-> _______________________________________________
-> linux-riscv mailing list
-> linux-riscv@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-riscv
+Requested merge strategy, I hope this works for everyone:
+- Subsystem maintainers ACK their affected portions
+- Entire series goes through linux-phy
+- linux-phy provides stable tag
+- (optionally) Said tag is merged back into affected subsystem 'next'
+  branches. Those who prefer can handle merge conflicts when they send
+  their PR.
+
+Detailed change log in patches, summary below.
+
+v2->v3:
+- remove unused variable in PCI after device link removal
+- update MAINTAINERS regex pattern to escape forward slashes
+- add more people to CC list
+- provide conflict resolution
+v1->v2:
+- split "phy: include PHY provider header" into smaller chunks to work
+  around mailing list moderation due to patch size
+- improve MAINTAINERS regex pattern
+- make all PHY attribute helpers NULL-tolerant. Not just the new
+  phy_get_bus_width(), but also retroactively, the existing ones.
+- fixed the temporary include path from <linux/phy/phy.h> to
+  "phy-provider.h", removed anyway by the end of the series
+- logical bug fixes in the PCI controller <-> PHY device link removal
+  and Exynos UFS PHY API rework
+
+In case anyone wants to test the series, here it is on top of linux-phy/next:
+https://github.com/vladimiroltean/linux/tree/phy-split-consumer-provider-v3
+
+I've also test-applied it on v7.0-rc1 and provided conflict resolution
+with net-next and with linux-phy/next:
+https://github.com/vladimiroltean/linux/commits/phy-split-consumer-provider-merge/
+
+v2 at:
+https://lore.kernel.org/linux-phy/20260308114009.2546587-1-vladimir.oltean@nxp.com/
+v1 at:
+https://lore.kernel.org/linux-phy/20260304175735.2660419-13-vladimir.oltean@nxp.com/
+
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: "André Draszik" <andre.draszik@linaro.org>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: Andy Yan <andy.yan@rock-chips.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Chanho Park <chanho61.park@samsung.com>
+Cc: Chen-Yu Tsai <wens@kernel.org>
+Cc: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Cc: Damien Le Moal <dlemoal@kernel.org>
+Cc: Daniel Machon <daniel.machon@microchip.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Dmitry Baryshkov <lumag@kernel.org>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Frank Li <Frank.Li@nxp.com>
+Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "Heiko Stübner" <heiko@sntech.de>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Jagan Teki <jagan@amarulasolutions.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: Jessica Zhang <jesszhan0024@gmail.com>
+Cc: Joe Perches <joe@perches.com>
+Cc: Jonas Karlman <jonas@kwiboo.se>
+Cc: Jonathan Hunter <jonathanh@nvidia.com>
+Cc: Kevin Xie <kevin.xie@starfivetech.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: "Krzysztof Wilczyński" <kwilczynski@kernel.org>
+Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Cc: Linus Walleij <linusw@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Magnus Damm <magnus.damm@gmail.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Markus Schneider-Pargmann <msp@baylibre.com>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Michael Dege <michael.dege@renesas.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
+Cc: Niklas Cassel <cassel@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
+Cc: Peter Chen <peter.chen@kernel.org>
+Cc: Peter Griffin <peter.griffin@linaro.org>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>
+Cc: Robert Foss <rfoss@kernel.org>
+Cc: Rob Herring <robh@kernel.org>
+Cc: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Cc: Samuel Holland <samuel@sholland.org>
+Cc: Sandy Huang <hjc@rock-chips.com>
+Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Sebastian Reichel <sre@kernel.org>
+Cc: Shawn Guo <shawn.guo@linaro.org>
+Cc: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Steen Hegelund <Steen.Hegelund@microchip.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>
+Cc: Vincent Mailhol <mailhol@kernel.org>
+Cc: Yixun Lan <dlan@kernel.org>
+Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+
+Vladimir Oltean (24):
+  ata: add <linux/pm_runtime.h> where missing
+  PCI: Add missing headers transitively included by <linux/phy/phy.h>
+  usb: add missing headers transitively included by <linux/phy/phy.h>
+  drm: add <linux/pm_runtime.h> where missing
+  phy: add <linux/pm_runtime.h> where missing
+  phy: spacemit: include missing <linux/phy/phy.h>
+  net: lan969x: include missing <linux/of.h>
+  PCI: Remove device links to PHY
+  ufs: exynos: stop poking into struct phy guts
+  drm/rockchip: dw_hdmi: avoid direct dereference of phy->dev.of_node
+  drm/msm/dp: remove debugging prints with internal struct phy state
+  phy: move provider API out of public <linux/phy/phy.h>
+  phy: make phy_get_mode(), phy_(get|set)_bus_width() NULL tolerant
+  phy: introduce phy_get_max_link_rate() helper for consumers
+  drm/rockchip: dsi: include PHY provider header
+  drm: bridge: cdns-mhdp8546: use consumer API for getting PHY bus width
+  media: sunxi: a83-mips-csi2: include PHY provider header
+  net: renesas: rswitch: include PHY provider header
+  pinctrl: tegra-xusb: include PHY provider header
+  power: supply: cpcap-charger: include missing <linux/property.h>
+  phy: include PHY provider header (1/2)
+  phy: include PHY provider header (2/2)
+  phy: remove temporary provider compatibility from consumer header
+  MAINTAINERS: add regexes for linux-phy
+
+ MAINTAINERS                                   |  11 +
+ drivers/ata/ahci.c                            |   1 +
+ drivers/ata/ahci_brcm.c                       |   1 +
+ drivers/ata/ahci_ceva.c                       |   1 +
+ drivers/ata/ahci_qoriq.c                      |   1 +
+ drivers/ata/libahci.c                         |   1 +
+ .../drm/bridge/analogix/analogix_dp_core.c    |   1 +
+ .../drm/bridge/cadence/cdns-mhdp8546-core.c   |   7 +-
+ drivers/gpu/drm/bridge/nwl-dsi.c              |   1 +
+ drivers/gpu/drm/bridge/samsung-dsim.c         |   1 +
+ drivers/gpu/drm/bridge/synopsys/dw-dp.c       |   2 +-
+ drivers/gpu/drm/msm/dp/dp_aux.c               |   1 +
+ drivers/gpu/drm/msm/dp/dp_ctrl.c              |  18 -
+ drivers/gpu/drm/rockchip/cdn-dp-core.c        |   1 +
+ .../gpu/drm/rockchip/dw-mipi-dsi-rockchip.c   |   1 +
+ drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c   |  25 +-
+ .../sun8i-a83t-mipi-csi2/sun8i_a83t_dphy.c    |   2 +-
+ drivers/net/can/at91_can.c                    |   3 +-
+ drivers/net/can/flexcan/flexcan-core.c        |   3 +-
+ drivers/net/can/m_can/m_can_platform.c        |   3 +-
+ drivers/net/can/rcar/rcar_canfd.c             |   3 +-
+ .../microchip/sparx5/lan969x/lan969x_rgmii.c  |   1 +
+ drivers/net/ethernet/renesas/rswitch_main.c   |   1 +
+ .../controller/cadence/pcie-cadence-plat.c    |   4 -
+ drivers/pci/controller/cadence/pcie-cadence.c |  16 +-
+ drivers/pci/controller/cadence/pcie-cadence.h |   2 -
+ drivers/pci/controller/dwc/pci-dra7xx.c       |  16 -
+ drivers/pci/controller/dwc/pci-keystone.c     |  32 +-
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |   1 +
+ drivers/pci/controller/dwc/pcie-histb.c       |   1 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |   1 +
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c |   2 +
+ drivers/pci/controller/dwc/pcie-tegra194.c    |   1 +
+ drivers/pci/controller/pci-tegra.c            |   1 +
+ drivers/pci/controller/pcie-rockchip-host.c   |   1 +
+ drivers/pci/controller/plda/pcie-starfive.c   |   1 +
+ drivers/phy/allwinner/phy-sun4i-usb.c         |   3 +-
+ drivers/phy/allwinner/phy-sun50i-usb3.c       |   3 +-
+ drivers/phy/allwinner/phy-sun6i-mipi-dphy.c   |   4 +-
+ drivers/phy/allwinner/phy-sun9i-usb.c         |   3 +-
+ drivers/phy/amlogic/phy-meson-axg-mipi-dphy.c |   2 +
+ .../amlogic/phy-meson-axg-mipi-pcie-analog.c  |   3 +-
+ drivers/phy/amlogic/phy-meson-axg-pcie.c      |   2 +
+ .../amlogic/phy-meson-g12a-mipi-dphy-analog.c |   3 +-
+ drivers/phy/amlogic/phy-meson-g12a-usb2.c     |   2 +
+ .../phy/amlogic/phy-meson-g12a-usb3-pcie.c    |   3 +-
+ drivers/phy/amlogic/phy-meson-gxl-usb2.c      |   3 +-
+ drivers/phy/amlogic/phy-meson8-hdmi-tx.c      |   3 +-
+ drivers/phy/amlogic/phy-meson8b-usb2.c        |   3 +-
+ drivers/phy/apple/atc.c                       |   3 +-
+ drivers/phy/broadcom/phy-bcm-cygnus-pcie.c    |   3 +-
+ drivers/phy/broadcom/phy-bcm-kona-usb2.c      |   4 +-
+ drivers/phy/broadcom/phy-bcm-ns-usb2.c        |   3 +-
+ drivers/phy/broadcom/phy-bcm-ns-usb3.c        |   3 +-
+ drivers/phy/broadcom/phy-bcm-ns2-pcie.c       |   3 +-
+ drivers/phy/broadcom/phy-bcm-ns2-usbdrd.c     |   3 +-
+ drivers/phy/broadcom/phy-bcm-sr-pcie.c        |   3 +-
+ drivers/phy/broadcom/phy-bcm-sr-usb.c         |   3 +-
+ drivers/phy/broadcom/phy-bcm63xx-usbh.c       |   3 +-
+ drivers/phy/broadcom/phy-brcm-sata.c          |   3 +-
+ drivers/phy/broadcom/phy-brcm-usb.c           |   2 +-
+ drivers/phy/cadence/cdns-dphy-rx.c            |   3 +-
+ drivers/phy/cadence/cdns-dphy.c               |   4 +-
+ drivers/phy/cadence/phy-cadence-salvo.c       |   3 +-
+ drivers/phy/cadence/phy-cadence-sierra.c      |   3 +-
+ drivers/phy/cadence/phy-cadence-torrent.c     |   3 +-
+ drivers/phy/canaan/phy-k230-usb.c             |   3 +-
+ drivers/phy/eswin/phy-eic7700-sata.c          |   3 +-
+ .../phy/freescale/phy-fsl-imx8-mipi-dphy.c    |   3 +-
+ drivers/phy/freescale/phy-fsl-imx8m-pcie.c    |   4 +-
+ drivers/phy/freescale/phy-fsl-imx8mq-usb.c    |   3 +-
+ drivers/phy/freescale/phy-fsl-imx8qm-hsio.c   |   6 +-
+ .../phy/freescale/phy-fsl-imx8qm-lvds-phy.c   |   3 +-
+ drivers/phy/freescale/phy-fsl-lynx-28g.c      |   3 +-
+ drivers/phy/hisilicon/phy-hi3660-usb3.c       |   3 +-
+ drivers/phy/hisilicon/phy-hi3670-pcie.c       |   3 +-
+ drivers/phy/hisilicon/phy-hi3670-usb3.c       |   3 +-
+ drivers/phy/hisilicon/phy-hi6220-usb.c        |   3 +-
+ drivers/phy/hisilicon/phy-hisi-inno-usb2.c    |   4 +-
+ drivers/phy/hisilicon/phy-histb-combphy.c     |   3 +-
+ drivers/phy/hisilicon/phy-hix5hd2-sata.c      |   3 +-
+ drivers/phy/ingenic/phy-ingenic-usb.c         |   3 +-
+ drivers/phy/intel/phy-intel-keembay-emmc.c    |   3 +-
+ drivers/phy/intel/phy-intel-keembay-usb.c     |   3 +-
+ drivers/phy/intel/phy-intel-lgm-combo.c       |   4 +-
+ drivers/phy/intel/phy-intel-lgm-emmc.c        |   3 +-
+ drivers/phy/lantiq/phy-lantiq-rcu-usb2.c      |   3 +-
+ drivers/phy/lantiq/phy-lantiq-vrx200-pcie.c   |   4 +-
+ drivers/phy/marvell/phy-armada375-usb2.c      |   3 +-
+ drivers/phy/marvell/phy-armada38x-comphy.c    |   3 +-
+ drivers/phy/marvell/phy-berlin-sata.c         |   3 +-
+ drivers/phy/marvell/phy-berlin-usb.c          |   3 +-
+ drivers/phy/marvell/phy-mmp3-hsic.c           |   3 +-
+ drivers/phy/marvell/phy-mmp3-usb.c            |   3 +-
+ drivers/phy/marvell/phy-mvebu-a3700-comphy.c  |   3 +-
+ drivers/phy/marvell/phy-mvebu-a3700-utmi.c    |   3 +-
+ drivers/phy/marvell/phy-mvebu-cp110-comphy.c  |   3 +-
+ drivers/phy/marvell/phy-mvebu-cp110-utmi.c    |   3 +-
+ drivers/phy/marvell/phy-mvebu-sata.c          |   3 +-
+ drivers/phy/marvell/phy-pxa-28nm-hsic.c       |   3 +-
+ drivers/phy/marvell/phy-pxa-28nm-usb2.c       |   3 +-
+ drivers/phy/marvell/phy-pxa-usb.c             |   3 +-
+ drivers/phy/mediatek/phy-mtk-dp.c             |   3 +-
+ drivers/phy/mediatek/phy-mtk-hdmi-mt8195.c    |   1 -
+ drivers/phy/mediatek/phy-mtk-hdmi.h           |   3 +-
+ drivers/phy/mediatek/phy-mtk-mipi-csi-0-5.c   |   2 +-
+ drivers/phy/mediatek/phy-mtk-mipi-dsi.h       |   3 +-
+ drivers/phy/mediatek/phy-mtk-pcie.c           |   2 +-
+ drivers/phy/mediatek/phy-mtk-tphy.c           |   2 +-
+ drivers/phy/mediatek/phy-mtk-ufs.c            |   2 +-
+ drivers/phy/mediatek/phy-mtk-xfi-tphy.c       |   2 +-
+ drivers/phy/mediatek/phy-mtk-xsphy.c          |   2 +-
+ drivers/phy/microchip/lan966x_serdes.c        |   4 +-
+ drivers/phy/microchip/sparx5_serdes.c         |   2 +-
+ drivers/phy/motorola/phy-cpcap-usb.c          |   3 +-
+ drivers/phy/motorola/phy-mapphone-mdm6600.c   |   5 +-
+ drivers/phy/mscc/phy-ocelot-serdes.c          |   3 +-
+ drivers/phy/nuvoton/phy-ma35d1-usb2.c         |   3 +-
+ drivers/phy/phy-airoha-pcie.c                 |   2 +-
+ drivers/phy/phy-can-transceiver.c             |   3 +-
+ drivers/phy/phy-core-mipi-dphy.c              |   4 +-
+ drivers/phy/phy-core.c                        |  52 ++
+ drivers/phy/phy-google-usb.c                  |   4 +-
+ drivers/phy/phy-lpc18xx-usb-otg.c             |   3 +-
+ drivers/phy/phy-nxp-ptn3222.c                 |   3 +-
+ drivers/phy/phy-pistachio-usb.c               |   4 +-
+ drivers/phy/phy-provider.h                    | 256 +++++++++
+ drivers/phy/phy-snps-eusb2.c                  |   2 +
+ drivers/phy/phy-xgene.c                       |   3 +-
+ drivers/phy/qualcomm/phy-ath79-usb.c          |   3 +-
+ drivers/phy/qualcomm/phy-qcom-apq8064-sata.c  |   3 +-
+ drivers/phy/qualcomm/phy-qcom-edp.c           |   3 +-
+ .../phy/qualcomm/phy-qcom-eusb2-repeater.c    |   3 +-
+ drivers/phy/qualcomm/phy-qcom-ipq4019-usb.c   |   3 +-
+ drivers/phy/qualcomm/phy-qcom-ipq806x-sata.c  |   3 +-
+ drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c   |   3 +-
+ drivers/phy/qualcomm/phy-qcom-m31-eusb2.c     |   2 +
+ drivers/phy/qualcomm/phy-qcom-m31.c           |   3 +-
+ drivers/phy/qualcomm/phy-qcom-pcie2.c         |   3 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |   4 +-
+ .../phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c  |   3 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      |   3 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       |   3 +-
+ .../phy/qualcomm/phy-qcom-qmp-usb-legacy.c    |   4 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       |   4 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-usbc.c      |   4 +-
+ drivers/phy/qualcomm/phy-qcom-qusb2.c         |   5 +-
+ drivers/phy/qualcomm/phy-qcom-sgmii-eth.c     |   3 +-
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c |   4 +-
+ .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  |   3 +-
+ drivers/phy/qualcomm/phy-qcom-usb-hs-28nm.c   |   3 +-
+ drivers/phy/qualcomm/phy-qcom-usb-hs.c        |   3 +-
+ drivers/phy/qualcomm/phy-qcom-usb-hsic.c      |   3 +-
+ drivers/phy/qualcomm/phy-qcom-usb-ss.c        |   3 +-
+ drivers/phy/ralink/phy-mt7621-pci.c           |   3 +-
+ drivers/phy/ralink/phy-ralink-usb.c           |   3 +-
+ drivers/phy/realtek/phy-rtk-usb2.c            |   3 +-
+ drivers/phy/realtek/phy-rtk-usb3.c            |   3 +-
+ drivers/phy/renesas/phy-rcar-gen2.c           |   3 +-
+ drivers/phy/renesas/phy-rcar-gen3-pcie.c      |   4 +-
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c      |   3 +-
+ drivers/phy/renesas/phy-rcar-gen3-usb3.c      |   3 +-
+ drivers/phy/renesas/phy-rzg3e-usb3.c          |   3 +-
+ drivers/phy/renesas/r8a779f0-ether-serdes.c   |   4 +-
+ drivers/phy/rockchip/phy-rockchip-dp.c        |   3 +-
+ drivers/phy/rockchip/phy-rockchip-dphy-rx0.c  |   3 +-
+ drivers/phy/rockchip/phy-rockchip-emmc.c      |   3 +-
+ .../phy/rockchip/phy-rockchip-inno-csidphy.c  |   3 +-
+ .../phy/rockchip/phy-rockchip-inno-dsidphy.c  |   4 +-
+ drivers/phy/rockchip/phy-rockchip-inno-hdmi.c |   2 +
+ drivers/phy/rockchip/phy-rockchip-inno-usb2.c |   3 +-
+ .../rockchip/phy-rockchip-naneng-combphy.c    |   3 +-
+ drivers/phy/rockchip/phy-rockchip-pcie.c      |   2 +-
+ .../phy/rockchip/phy-rockchip-samsung-dcphy.c |   3 +-
+ .../phy/rockchip/phy-rockchip-samsung-hdptx.c |   2 +
+ .../phy/rockchip/phy-rockchip-snps-pcie3.c    |   3 +-
+ drivers/phy/rockchip/phy-rockchip-typec.c     |   5 +-
+ drivers/phy/rockchip/phy-rockchip-usb.c       |   3 +-
+ drivers/phy/rockchip/phy-rockchip-usbdp.c     |   2 +
+ drivers/phy/samsung/phy-exynos-dp-video.c     |   3 +-
+ drivers/phy/samsung/phy-exynos-mipi-video.c   |   3 +-
+ drivers/phy/samsung/phy-exynos-pcie.c         |   3 +-
+ drivers/phy/samsung/phy-exynos4210-usb2.c     |   3 +-
+ drivers/phy/samsung/phy-exynos4x12-usb2.c     |   3 +-
+ drivers/phy/samsung/phy-exynos5-usbdrd.c      |   2 +
+ drivers/phy/samsung/phy-exynos5250-sata.c     |   3 +-
+ drivers/phy/samsung/phy-exynos5250-usb2.c     |   3 +-
+ drivers/phy/samsung/phy-s5pv210-usb2.c        |   3 +-
+ drivers/phy/samsung/phy-samsung-ufs.c         |   2 +-
+ drivers/phy/samsung/phy-samsung-ufs.h         |   3 +-
+ drivers/phy/samsung/phy-samsung-usb2.c        |   2 +
+ drivers/phy/samsung/phy-samsung-usb2.h        |   3 +-
+ drivers/phy/socionext/phy-uniphier-ahci.c     |   3 +-
+ drivers/phy/socionext/phy-uniphier-pcie.c     |   3 +-
+ drivers/phy/socionext/phy-uniphier-usb2.c     |   3 +-
+ drivers/phy/socionext/phy-uniphier-usb3hs.c   |   3 +-
+ drivers/phy/socionext/phy-uniphier-usb3ss.c   |   3 +-
+ drivers/phy/sophgo/phy-cv1800-usb2.c          |   3 +-
+ drivers/phy/spacemit/phy-k1-pcie.c            |   4 +-
+ drivers/phy/spacemit/phy-k1-usb2.c            |   2 +
+ drivers/phy/st/phy-miphy28lp.c                |   4 +-
+ drivers/phy/st/phy-spear1310-miphy.c          |   3 +-
+ drivers/phy/st/phy-spear1340-miphy.c          |   3 +-
+ drivers/phy/st/phy-stih407-usb.c              |   3 +-
+ drivers/phy/st/phy-stm32-combophy.c           |   3 +-
+ drivers/phy/st/phy-stm32-usbphyc.c            |   2 +
+ drivers/phy/starfive/phy-jh7110-dphy-rx.c     |   3 +-
+ drivers/phy/starfive/phy-jh7110-dphy-tx.c     |   3 +-
+ drivers/phy/starfive/phy-jh7110-pcie.c        |   3 +-
+ drivers/phy/starfive/phy-jh7110-usb.c         |   3 +-
+ drivers/phy/sunplus/phy-sunplus-usb2.c        |   3 +-
+ drivers/phy/tegra/phy-tegra194-p2u.c          |   3 +-
+ drivers/phy/tegra/xusb-tegra124.c             |   2 +-
+ drivers/phy/tegra/xusb-tegra186.c             |   2 +-
+ drivers/phy/tegra/xusb-tegra210.c             |   2 +-
+ drivers/phy/tegra/xusb.c                      |   2 +-
+ drivers/phy/ti/phy-am654-serdes.c             |   3 +-
+ drivers/phy/ti/phy-da8xx-usb.c                |   3 +-
+ drivers/phy/ti/phy-dm816x-usb.c               |   3 +-
+ drivers/phy/ti/phy-gmii-sel.c                 |   3 +-
+ drivers/phy/ti/phy-omap-usb2.c                |   3 +-
+ drivers/phy/ti/phy-ti-pipe3.c                 |   3 +-
+ drivers/phy/ti/phy-tusb1210.c                 |   1 +
+ drivers/phy/ti/phy-twl4030-usb.c              |   3 +-
+ drivers/phy/xilinx/phy-zynqmp.c               |   4 +-
+ drivers/pinctrl/tegra/pinctrl-tegra-xusb.c    |   2 +-
+ drivers/power/supply/cpcap-charger.c          |   1 +
+ drivers/ufs/host/ufs-exynos.c                 |  24 +-
+ drivers/ufs/host/ufs-exynos.h                 |   1 +
+ drivers/usb/chipidea/ci_hdrc_imx.c            |   1 +
+ drivers/usb/core/hcd.c                        |   1 +
+ drivers/usb/dwc3/dwc3-generic-plat.c          |   1 +
+ drivers/usb/dwc3/gadget.c                     |   1 +
+ include/linux/phy/phy-props.h                 |  75 +++
+ include/linux/phy/phy-sun4i-usb.h             |   2 +-
+ include/linux/phy/phy.h                       | 497 ++++--------------
+ include/linux/phy/ulpi_phy.h                  |   2 +-
+ 237 files changed, 941 insertions(+), 705 deletions(-)
+ create mode 100644 drivers/phy/phy-provider.h
+ create mode 100644 include/linux/phy/phy-props.h
+
+-- 
+2.43.0
+
