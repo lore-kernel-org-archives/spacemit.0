@@ -1,44 +1,44 @@
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C5C3ACEEB
-	for <spacemit@lists.linux.dev>; Mon,  9 Mar 2026 11:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A333A7F7A
+	for <spacemit@lists.linux.dev>; Mon,  9 Mar 2026 11:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773057312; cv=none; b=XgOBLxYRWbShbGUCFUSiU77kDo+yycOZalHgLgxf7PhwI16N3FAmqJJIE+QcC21gdWNsYicx6COMVrm7sQFt4ZZBOh0WkZNBi8C+LX7/8QPMC7ImQuG853r5qFl7lro3TkN8meJffVIsOyBao8Bn0PBBHdPpFeEP7tMYqbA+zzg=
+	t=1773057504; cv=none; b=nd1DV2fj4qyDrfXPZdU/izxu81LuNZdcq9Teiy8yg0J88SnXiekRkTClSnel/SATu/xkjRHC0+wZuxCJ5iKLULd10Nyt45NoCAN0UwMlg8JOD7zE21n5fniyLxPnSVPQYc388/pd0475opaMCUbrfcZtmYtTuqK6gHOlKT+JxMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773057312; c=relaxed/simple;
-	bh=ckaf/5AMYgmZRCMc0oEia9HI+HTLwdDXnMGSI4hSDEc=;
+	s=arc-20240116; t=1773057504; c=relaxed/simple;
+	bh=5UhEkPknfnsB5jTbLVpmF3G52xxS28ffrxg3XyafvTE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ju95xFHe5fjtnSc/hUlpXvykGdc3/vFEQ+sm9h01EWkGJ/0lUgTJkPMvedC1pPg8yMHxX2ew5PWo4f5gxuerRJm8SMz2nmNv+fV34TWZbkEifOeBdPXRNFg7q3Gcans+Zov7PGBaZYkFGuAhJVfV8EzMpoBhEk+qhnb+GbOxNFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=1jbZsRR1; arc=none smtp.client-ip=78.32.30.218
+	 Content-Type:Content-Disposition:In-Reply-To; b=rW3WjQEz61n/V0tm2ghVXgoMsnKIT4sBcaIB+nXB1/hV9hO5sxgnM+vCCzjHB+5PLNgE997v6jfBtxSpU5Y0P1CF3ksNShqEyfqQb5RKXOGqtITUTYe8SQ/lom0bOaic+m+NngJY3OKDMhvcW/zoDr/GNwPInPW+KATQ93Gs3y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=WHB4Atuo; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="1jbZsRR1"
+	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="WHB4Atuo"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
 	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
 	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
 	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=lJFjImxwxadvi+gU8vmzxMQ1ibYsL7sINkxIQOwwhVs=; b=1jbZsRR11GlAwZM7SeLNq1W/zr
-	dnjnW3DZXltJqVd8gPjpmuDHLe0EdnqKkg5+/baGDhE9S1t+3NfOiAoL7DyNpNpUO3WtVajQy7IaV
-	96EJ8jAbkFga/HLi5DePrp+zikjPXo/LmDgBUdDMf7GnVxi7QqUHGGu5Qhi9vFPQg2fZOhxP98ItD
-	mSI7KK+DQCHSyOHt8v3ybXpIHreqEUHXC0xsvxuWjkb70NwcjAuVxbfhtIroivo2g7ZOw2VMUQCkQ
-	050q/FJWAmKIengysoKh1XuNSEw2n3xS/3YbAglYWYvM8/b43oIQMa8nlY96l3BuClCbL8XbuYgSI
-	S4zh7gOA==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:32802)
+	bh=yYsZBJ4GMFIpxA0RqdxTm5oDj/CJzJ+geYC1kQuf9ZA=; b=WHB4Atuobao0lAn8MjHVJj8567
+	IXNy73+/GweBMyUdXZQY5m0teZ5wrje4SFRI/RceHS6J5lW+UWC7XmOo9VWzM2dRN065UqU2Qrwki
+	JlhuOqv9EKf3OEMZiXOxVRBQBruDdmnwTnuNA+OxVTcl9I8R7SKn7aNOYYORHvnnDW7wH7zpytk0k
+	Rtxs7wKQk46X7+x79o+94tGUKPS5YIjz2I0qeggCqRudcIy7AEuESQZOydgt/ZxAEmPGwl2N9TaHM
+	iTEmW9d2YRuT7HRinFWL7AJPyhme0q/v5xF9RmCRQ14g2wBe+0pH0YI8kN3tiuoIHmrf+ZdwUVxSf
+	y6FKQEvw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:35154)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <linux@armlinux.org.uk>)
-	id 1vzZC4-000000003jq-0FdH;
-	Mon, 09 Mar 2026 11:54:40 +0000
+	id 1vzZFD-000000003kV-0QuQ;
+	Mon, 09 Mar 2026 11:57:55 +0000
 Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1vzZBt-000000004Hi-2Zlz;
-	Mon, 09 Mar 2026 11:54:29 +0000
-Date: Mon, 9 Mar 2026 11:54:29 +0000
+	id 1vzZF9-000000004Hq-3KeJ;
+	Mon, 09 Mar 2026 11:57:51 +0000
+Date: Mon, 9 Mar 2026 11:57:51 +0000
 From: "Russell King (Oracle)" <linux@armlinux.org.uk>
 To: Inochi Amaoto <inochiama@gmail.com>
 Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
@@ -68,11 +68,11 @@ Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
 	linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next v8 2/3] net: stmmac: platform: Add
- snps,dwmac-5.40a IP compatible string
-Message-ID: <aa609dEmUQYVXzta@shell.armlinux.org.uk>
+Subject: Re: [PATCH net-next v8 3/3] net: stmmac: Add glue layer for Spacemit
+ K3 SoC
+Message-ID: <aa61v7MQoYq10Jes@shell.armlinux.org.uk>
 References: <20260309004305.315018-1-inochiama@gmail.com>
- <20260309004305.315018-3-inochiama@gmail.com>
+ <20260309004305.315018-4-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -81,14 +81,23 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260309004305.315018-3-inochiama@gmail.com>
+In-Reply-To: <20260309004305.315018-4-inochiama@gmail.com>
 Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Mon, Mar 09, 2026 at 08:42:43AM +0800, Inochi Amaoto wrote:
-> Add compatible string for 5.40a version that can avoid to define some
-> platform data in the glue layer.
-> 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+On Mon, Mar 09, 2026 at 08:42:44AM +0800, Inochi Amaoto wrote:
+> +static int spacemit_dwmac_update_irq_config(struct spacmit_dwmac *dwmac,
+> +					    struct stmmac_resources *stmmac_res)
+> +{
+> +	unsigned int mask = CTRL_WAKE_IRQ_EN;
+> +	unsigned int val = stmmac_res->wol_irq >= 0 ? CTRL_WAKE_IRQ_EN : 0;
+
+This looks like the last thing I can spot that needs to be addressed.
+netdev wants to see "reverse christmas tree" local variable
+declarations.
+
+Please reverse the order of these two declarations to achieve that.
+
+With that fixed:
 
 Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
