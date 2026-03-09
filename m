@@ -1,68 +1,67 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0135B3A7F57
-	for <spacemit@lists.linux.dev>; Mon,  9 Mar 2026 11:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38513A7F57
+	for <spacemit@lists.linux.dev>; Mon,  9 Mar 2026 11:40:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773056440; cv=none; b=Jz3ZeoUn7Za/wqj4GqmS78eBrGJuWRTQ3Gi3uWKCHmaDGMa0WmVhjL46pGBiWVnmFlph5HIvwry2DMblUE/9mfWNHzt/lSDiWzBFbNAZE4enq8nxxLseDmm5qzweq1jTcJnnPf9TQO1prjM+T8WzNjdgk90RCQjuVRd5xO17doU=
+	t=1773056442; cv=none; b=Ce9JsI2zp8FIrPcPf3pW4ToWK04fJ4LDX66tauzrcWa7q56AAzmli5zdWgGedf2+A3F0gRbV/Brl0JsU75wc/jtX/nCdT43UWWQs1ZEx3t5vbCnXlQKdw7uO54S38iI81vIrRS+2zNbwoa6ZStvpba0MwcXu9eFctVndSI+uLz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773056440; c=relaxed/simple;
-	bh=dcEFhqPvKdwQuanA4mTY4Hc01u8XbBg6NksC+/+CuBo=;
+	s=arc-20240116; t=1773056442; c=relaxed/simple;
+	bh=70rfTlR2IAWuKF6gWYOHTAy0yzzcBoXO6BwKFGm1+do=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hU1Lxi7LOmCQ9M9uTtLvBHHYadBLz5lTjHKdpniE5qX41gFfLT1oNONNqK6HNshRA+sGKEMko2x1LRaRGHx6egy9T9qVVHhyhZ+Qaw8ebJFDGI0coY8lIuG13uKd7vKIUPvAHEXYO5WYtC0xeg7ZEP9lauYpZk9esbFgxN6KLV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dv7QiVNQ; arc=none smtp.client-ip=209.85.221.53
+	 In-Reply-To:To:Cc; b=o8vejVF16i6DQOWCTYJ4AUpDTXcteVG5uwPLqlb9ceM5udHupLILn26KwNRXiMgS7RnPtG+mt6JbiysOvIK0CG2n9Vu3Z6d1BGOGQVX9J1Ah0XNLVBRnVLrOxhNdP2JMcADWb6sJZRBZaeiEOj5b281fY2nEJdZ4pa5qwH++0js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UrxmyjD7; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dv7QiVNQ"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-439b611274bso5193356f8f.3
-        for <spacemit@lists.linux.dev>; Mon, 09 Mar 2026 04:40:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UrxmyjD7"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-439cd6b09f8so3457711f8f.3
+        for <spacemit@lists.linux.dev>; Mon, 09 Mar 2026 04:40:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773056437; x=1773661237; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1773056439; x=1773661239; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Dz1rwkI02gKLCCAejR8NRcSe9CYDdLI50V/yGcp3k+8=;
-        b=dv7QiVNQpGEdsE14q6xAmMmiLaYAkLs3X/jtj2VXuKVachFFb/IOcZkRKfgCMB/ngN
-         Jz+87fsXEWskGH32o1DHuxKv70dEjz8KOiuoFGv3IQWv3kLhyCjw2xs3rdxGYFRTJDyK
-         Odidlw/26FErgzu/MhtpRpiY4LFcH5jFatkSeM/TFNORpSjIkG2vvysXPKHT9clbqeVS
-         BXIPxwWJM8IgHM/Oe/jvFFQcs2Nva992b0eDYhcjOZdUFqqsLAbvb9loNmCFB1ch+uyh
-         8gIrb8+42yPV3F68ozVB+RpZKbvEJgoveoI6uMyJ+BCPo7KXSE3rd+KrElcrTnIElbI4
-         3lpw==
+        bh=fiI3b1wOWntFX27ERmDlj5qmTKTz44jgUTrCNSLGaQE=;
+        b=UrxmyjD7OWaGxCm+mpm7EIPDZhtO2JK5kWOFaxXfaE+U5nAP4OW0pW65LV75RKmB+W
+         McF+mIpj1+MUZSv87U9P2jV308J0IgXfc8DZbGwaXdieiSDVxiyNR0ZEQUhb3WaM7KyB
+         dqro7WYiXeoL8GiFLuv3MO+VoRg1n11Hn6SHY+n/joCUZc1H8PO2lzmnwHMmq2pw4VMC
+         TTFO0QqKGLtoCehvNVaMcxKHLLcfEvdaC2nhkmr36fNvOUO49a+u7LpEHXGFD3/UoEsX
+         5+ZRcgpWVWjriNpYF+oravFK1QBx/6+ziiSzOrnA9SQ0GlyVRjEm75kyefwEb7S+w+wV
+         P3dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773056437; x=1773661237;
+        d=1e100.net; s=20230601; t=1773056439; x=1773661239;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Dz1rwkI02gKLCCAejR8NRcSe9CYDdLI50V/yGcp3k+8=;
-        b=szmampv1fXs0kz6XGRWSnVVSg9owzXcr8NPqyspMAq6U1fZoTkTWjMk42ecvOyg+/o
-         /F1o94z664beQn8youapBRo+6cGgP78fuIkAOpZTr2HOfqKsUZcLF3EYW91cfmsH2zsc
-         wQ9OYkniTnnqbBjw3vKy7Vcs7LnHkkUqPxvfn3YWjnYV6y9182ctqjLxJB6EzRpJ9D7R
-         VRdEhJONzlhMWNohnMAA2DoOuJH7btMNykvcymilDuA5Mg1qfu6RfDZNDaZW7+StK0u1
-         2h2EkI6RgpIG2/X+1TXLLYrDAzRnPnQPV1MLNfBdy0p0ljGixtoKBPT0AGvLxSaXwJGV
-         nmdA==
-X-Forwarded-Encrypted: i=1; AJvYcCUMXwHE6tT1/Z7mRDbjkhg3POmkJfuJIXJC6bFzLmLLd6bK3ryauZ6vA0Ixb+YwIg8te1lRN0emLw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwE97wsQc16HLlELj4xaWqkiEXNB/WsQaNUERup3r95TZv/ggwe
-	bGq7y3WoJP4zRNu5AZxmAT7KAW5cbD4pmRcamkbRT4r8gwxErGP43hI+
-X-Gm-Gg: ATEYQzwtwcO2668I4R3KdWCm3AH3lxXj/+1fJGGgC2UBvfJi5W3VBEJC0Wfwh7rMnBR
-	BGPIatc+CXEim8lEaWV90v1TU8PpRZTGkuZyDTZWSfO3nCGvXv/luDitri2wllyMsX3SqXCxFzY
-	irW0wRL8fLJfYcvtB6gTgTSVeQ2x4y8WdE3J6IpsOOyWM4VhZvI5mq/qPJx5Y/h0kVylWx7VJzV
-	YE6ShBvYpE3JM41B37mhC5GNssmUERM7CfrRuPFNmsJ/Sou0dEelMD449z7ta4MWuYQdoRGxr65
-	HSiqEqjglKQLm8JutMBnpf7/NZc5gqXM7i4Agu7GSEdeyTLHtFlG7bW6bQ+0K2B/onfjCRE/k3d
-	/TQFEZpBFosW1ydjCY73c4czmLMJoJvn6qZVMf5kMJ1243IYu212Hr4OMXcZaJmyOfj1SAL6ivt
-	Te7yFFsSQIexOxxCoBjGdIJ+nW0+Mi0Fh2mYBIiNmJ9SGjcS+kmHTuSE2L2XXsM+H6QPy9uXjkp
-	gQ=
-X-Received: by 2002:a5d:5d06:0:b0:439:bb14:23ed with SMTP id ffacd0b85a97d-439da6694afmr18775197f8f.24.1773056437144;
-        Mon, 09 Mar 2026 04:40:37 -0700 (PDT)
+        bh=fiI3b1wOWntFX27ERmDlj5qmTKTz44jgUTrCNSLGaQE=;
+        b=j0EZ8woMcn63W0oIGgkdoFL43/LfqtKFOUcW2cnfgHuzf1pn6KzHPcHqcr1fh0MF1l
+         GoovzgQxruHqOX4ALy7xoTsQ85ydEBymBZGIKn43EQiN1d7HQFIjdHTzkTLLhqjja9gW
+         5/dywVVbM3cm55D500bMbPaEtrpL+SIs/fk/veTbvdd9uUlZC0EkaNfACUYW1614itjs
+         pKgeWbHMUlBSE/82JQ4ugekLrQDDbaLv7wFAfho6s+efkUBpaBUfnnKQuFrWJH2P1Elu
+         5AUUFFJWvpup7O3heFmJoqdiU6NytxoGX5P9qtPPoPuuXAfaA5Ax5Qqkr+NoRAb7uElC
+         89/w==
+X-Forwarded-Encrypted: i=1; AJvYcCXMkkoL/ziuyzpgauoL3lUiehna53I7ojbYBJuGoqAAaWGGXMrxlHS4pD7oLKQStgU35VNly6MwUw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxc6kR4dU7eGpovQH1z0r8NIN6+YJRaQCJKcrP2kTfi3NV30Tds
+	KarJoPqxTU45W2KBmd4vFN9uEC4EH0pohJgCv19Fs21njOOx1UQmulmG
+X-Gm-Gg: ATEYQzyDoGqJ7voKEC1DIjUekjK/rlhLA/FIEnnpYL/yq74Y4xs4u0W6ET2q/wgsBiV
+	/l4o5cBlqKk2mPbBdNDnMByP3xD9FHSoSKc5eMm0uATxUNe/8K/Xv4TpY+aifv1heBc7MvKNHex
+	raI4Ggh97N0vAx9W/faS/994liVt1U85kJAM5e9DuYxzCfdb3X7BoWiVKyUnBeuxbjU2gNHsBvS
+	j7lULToATaDdpDMZq3gVutYlN9qVv+RyDvZYv1vv62AWub/sLbIVnqt8VXyEVbESLXKWkCsiF6v
+	vg8JSi5yAkAx49QY7/CMIxEwW/dJTM3rokXmUgp7ra3LHFh/48gHJyTC4suExPCyJUc7ofvanmS
+	pEftPhH2W3JmHkNksUYzoG5xvTLctOZSV9U/Msju//doEhz5mBGkzdIZXhUHCRaFSOcwd52s37j
+	qGi5wfjQ9qVAuL8sAGIFqOutZrjGXgxjLx+a/bzDjUnsNxjnDFEjXgcIgh9x+Wm4Bc
+X-Received: by 2002:a5d:5d84:0:b0:439:bc0a:4164 with SMTP id ffacd0b85a97d-439da330b92mr19644526f8f.19.1773056439050;
+        Mon, 09 Mar 2026 04:40:39 -0700 (PDT)
 Received: from ipedrosa-thinkpadx1carbongen12.rmtes.csb ([67.218.236.52])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439dad8ec97sm28471699f8f.5.2026.03.09.04.40.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439dad8ec97sm28471699f8f.5.2026.03.09.04.40.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 04:40:36 -0700 (PDT)
+        Mon, 09 Mar 2026 04:40:38 -0700 (PDT)
 From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Mon, 09 Mar 2026 12:40:15 +0100
-Subject: [PATCH v2 5/7] riscv: dts: spacemit: k1: add SD card controller
- and pinctrl support
+Date: Mon, 09 Mar 2026 12:40:16 +0100
+Subject: [PATCH v2 6/7] riscv: dts: spacemit: k1-orangepi-rv2: add PMIC and
+ power infrastructure
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -71,7 +70,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260309-orangepi-sd-card-uhs-v2-5-5bb2b574df5d@gmail.com>
+Message-Id: <20260309-orangepi-sd-card-uhs-v2-6-5bb2b574df5d@gmail.com>
 References: <20260309-orangepi-sd-card-uhs-v2-0-5bb2b574df5d@gmail.com>
 In-Reply-To: <20260309-orangepi-sd-card-uhs-v2-0-5bb2b574df5d@gmail.com>
 To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
@@ -87,96 +86,82 @@ Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
  Iker Pedrosa <ikerpedrosam@gmail.com>
 X-Mailer: b4 0.14.2
 
-Add SD card controller infrastructure for SpacemiT K1 SoC with complete
-pinctrl support for both standard and UHS modes.
+Add Spacemit P1 PMIC configuration and board power infrastructure for
+voltage regulation support.
 
-- Add sdhci0 controller definition with clocks, resets and interrupts
-- Add mmc1_cfg pinctrl for 3.3V standard SD operation
-- Add mmc1_uhs_cfg pinctrl for 1.8V UHS high-speed operation
-- Configure appropriate drive strength and power-source properties
-
-This provides complete SD card infrastructure that K1-based boards can
-enable.
+- Add board power regulators (12V input, 4V rail)
+- Enable I2C8 for PMIC communication
+- Configure PMIC with buck4 (vmmc) and aldo1 (vqmmc) regulators
+- Set up regulator constraints for SD card operation
 
 Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
 ---
- arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi | 40 ++++++++++++++++++++++++++++
- arch/riscv/boot/dts/spacemit/k1.dtsi         | 13 +++++++++
- 2 files changed, 53 insertions(+)
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 48 ++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-index b13dcb10f4d66022d27307de73a6ea3287e97441..8d82011f1af666fb78c282a2abcc0cb88f962053 100644
---- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
-@@ -570,4 +570,44 @@ pwm14-1-pins {
- 			drive-strength = <32>;
- 		};
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+index 7b7331cb3c726f11d597f81917f3a3f5fc21e1b9..414b03f5e6480f05f5d7eeaaa0afb4e86425ae36 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+@@ -19,6 +19,25 @@ aliases {
+ 		ethernet1 = &eth1;
  	};
-+
-+	mmc1_cfg: mmc1-cfg {
-+		mmc1-data-cmd-pins {
-+			pinmux = <K1_PADCONF(104, 0)>,   /* mmc1_d3 */
-+				 <K1_PADCONF(105, 0)>,   /* mmc1_d2 */
-+				 <K1_PADCONF(106, 0)>,   /* mmc1_d1 */
-+				 <K1_PADCONF(107, 0)>,   /* mmc1_d0 */
-+				 <K1_PADCONF(108, 0)>;   /* mmc1_cmd */
-+			bias-pull-up = <1>;
-+			drive-strength = <7>;
-+			power-source = <3300>;
-+		};
-+
-+		mmc1-clk-pins {
-+			pinmux = <K1_PADCONF(109, 0)>;   /* mmc1_clk */
-+			bias-pull-down = <1>;
-+			drive-strength = <7>;
-+			power-source = <3300>;
-+		};
+ 
++	reg_dc_in: dc-in-12v {
++		compatible = "regulator-fixed";
++		regulator-name = "dc_in_12v";
++		regulator-min-microvolt = <12000000>;
++		regulator-max-microvolt = <12000000>;
++		regulator-boot-on;
++		regulator-always-on;
 +	};
 +
-+	mmc1_uhs_cfg: mmc1-uhs-cfg {
-+		mmc1-data-cmd-pins {
-+			pinmux = <K1_PADCONF(104, 0)>,   /* mmc1_d3 */
-+				 <K1_PADCONF(105, 0)>,   /* mmc1_d2 */
-+				 <K1_PADCONF(106, 0)>,   /* mmc1_d1 */
-+				 <K1_PADCONF(107, 0)>,   /* mmc1_d0 */
-+				 <K1_PADCONF(108, 0)>;   /* mmc1_cmd */
-+			bias-pull-up = <1>;
-+			drive-strength = <13>;
-+			power-source = <1800>;
-+		};
-+
-+		mmc1-clk-pins {
-+			pinmux = <K1_PADCONF(109, 0)>;   /* mmc1_clk */
-+			bias-pull-down = <1>;
-+			drive-strength = <13>;
-+			power-source = <1800>;
-+		};
++	reg_vcc_4v: vcc-4v {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_4v";
++		regulator-min-microvolt = <4000000>;
++		regulator-max-microvolt = <4000000>;
++		regulator-boot-on;
++		regulator-always-on;
++		vin-supply = <&reg_dc_in>;
 +	};
++
+ 	chosen {
+ 		stdout-path = "serial0";
+ 	};
+@@ -92,3 +111,32 @@ &uart0 {
+ 	pinctrl-0 = <&uart0_2_cfg>;
+ 	status = "okay";
  };
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 529ec68e9c23eb2a93c04e9ccd3f22a01c4cc4ff..1e9e4f4f41c196326f20c0e5ae6721ea85ea5091 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -1207,6 +1207,19 @@ emmc: mmc@d4281000 {
- 				interrupts = <101>;
- 				status = "disabled";
- 			};
 +
-+			sdhci0: mmc@d4280000 {
-+				compatible = "spacemit,k1-sdhci";
-+				reg = <0x0 0xd4280000 0x0 0x200>;
-+				clocks = <&syscon_apmu CLK_SDH_AXI>,
-+					 <&syscon_apmu CLK_SDH0>;
-+				clock-names = "core", "io";
-+				resets = <&syscon_apmu RESET_SDH_AXI>,
-+					 <&syscon_apmu RESET_SDH0>;
-+				reset-names = "axi", "sdh";
-+				interrupts = <99>;
-+				status = "disabled";
++&i2c8 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c8_cfg>;
++	status = "okay";
++
++	pmic@41 {
++		compatible = "spacemit,p1";
++		reg = <0x41>;
++		interrupts = <64>;
++		vin-supply = <&reg_vcc_4v>;
++
++		regulators {
++			sd_vmmc: buck4 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
 +			};
- 		};
- 	};
- };
++
++			sd_vqmmc: aldo1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-boot-on;
++				regulator-always-on;
++			};
++		};
++	};
++};
 
 -- 
 2.53.0
