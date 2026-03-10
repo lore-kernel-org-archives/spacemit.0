@@ -1,123 +1,124 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FE62D0C9C
-	for <spacemit@lists.linux.dev>; Mon,  9 Mar 2026 22:28:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281773ACEF6
+	for <spacemit@lists.linux.dev>; Tue, 10 Mar 2026 02:45:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773095327; cv=none; b=hPruElY9qw+qt3OTIILZMVCKk0VnfhLSaWW3mtwwlMmxNyOCZG89rJY0pEflUbwY/Kt9AjmGv8SBXXONg0IiyeU3MwxgCeL7+yqI4v6467gTB4t5YbKaLX5htLVKqChkc4DosxLF4fLYChUI7uQ02SswwNckhOdzy6i52oRmNJ0=
+	t=1773110716; cv=none; b=OcwYYOpxgK60k4X10a5LaZ8SPe/U6bMQf6hggZBQj5RvrBIzx67CrAyMJicTv9JYNGPwii6ThwbxXW/ZCc/iFRG7lpnqYHL7Tw2Is9o/GyvudI9F/TyIIJfwfNQo7vmPcKjPunvFXNAw5DvxlpeMpJxNVxs9qx9HJQTWGAwrN1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773095327; c=relaxed/simple;
-	bh=jZe33NHvCpQzQ05RR193bC1srRh1cAqWr65aMtAsAwA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jj9q3M8VveBMLh3k71WUXQGpKNpsxSwiKV8nG8mczeqB3YLqpy2Jd3qCIa8Ny/KawtASmIJG9Ln628zm0FE1JUFkC/fPJ6MVCGVdzbzTwTxmc7aRoHGiR5qTT22esUkoYmdzFyf5QfPzkObstObM9ocKj4be/hWNKajcjrHrrGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y1LmtrSw; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773110716; c=relaxed/simple;
+	bh=AiuSbGc4gyF+r0NsVvYBegnqTPdAIt4V0L/szs51RLs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A1yGtiQVYW2piZ0m4Bfqtv7i+3Sw/pCAuKW+9ec/73CPQ0tHInggCb0fjuGUkhdX2yIAZYdR2NqKc9HvlRvzH84Dl0lAxOQcupCg9PXRj/87N4u6QJEAYl6Z4vsBVpjSdxpfM9m7NiYSVuKxP3RobTu3D4G7NnhfTz/oRP5d6H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=deu669Z9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y1LmtrSw"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-89a06bc2f1bso139742946d6.1
-        for <spacemit@lists.linux.dev>; Mon, 09 Mar 2026 15:28:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773095325; x=1773700125; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uelqhot/SS82mnivEOGwZ5YeQ/ZVb2Ub9laQIz/Sv+M=;
-        b=Y1LmtrSwmmfSRNiQe6hqL0ct97mrDRaZo37H4NZBFvxKW/gAKjpg0Znq8HOPD3hoDt
-         6DJcdxl4WKAVetXJ8KC7+N+oVlL7bF+kzNFZwQofbkMq5IH+rZtcjRiwn20EGowY+6P6
-         ohYsYqihy2uBTlebMmD/YjIQJ+elLBqALH1my8tPfnh/vEs+ZJ9hIsk2Zw+6z3WwmWA/
-         Qfxwr2euX49m20yzWkdM77SjbtFrRxmeBsl48RHG3DuzoWXZQ8s0YjyLH89h6tvSYQHr
-         O2AQLvjW/izWL8q6CosqqWv+8704+q1+qBTFdDaiBT4HJ5dd94tg8XB/tBD5au2vJ9gA
-         lFYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773095325; x=1773700125;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uelqhot/SS82mnivEOGwZ5YeQ/ZVb2Ub9laQIz/Sv+M=;
-        b=KKai0MpZNIqLDJnJuqjASMsN3M1WPZ1gA1MBn5ftKMfOz4Sh7SmsZxsTpO/WnKGSBk
-         QE9rq6MFKSUWtZ6wEEXGXjiKLBIkWz0Ug5eg8N/t9JPvvoKrR3AsGdg9oFiepwJdgUmt
-         4gYA+uZf+rNAetUQnbD9Va/j2HeCpos6eCM4Of0XnWVUhKsH5gMd5QqbFbjNMkIJGjCd
-         qv8tQpm4MyTWNWWJ3lubLyzPjCzH5fj+ALV/NX/k3lN04Y8BIgyr9q7Q/RUTSvW5PyIL
-         fAq747eVk8iA9d7osl9jGwA+7kBiUOnjJdEFOaF4OPMxygqiR+aZMObx50bvTAmefgb1
-         qv1g==
-X-Forwarded-Encrypted: i=1; AJvYcCX/wmJkcwln7nZ/zbOpA9qUyND2iqKuP64OVmit5PH5TpiJ+5JhCYJYWrWpHMB89n/Alv/guOm6Xg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzzx4atAotGXz9gDnfOKuqXhTm/Wk7gzZsLPtPm/fy232E8dyTr
-	ruOEC0uob2r8cX2mt+6DZxNJ9nKKKkWSKIz9NooRexFiiOvZLB2hUSBX
-X-Gm-Gg: ATEYQzz9A9gaWwt33X9VpTUMQLKrPQOpcSvlXS8JV57Wa+qjfByb/MFQhkipN8VgHCd
-	i8NX3p5Ca1vnc8kXzaQK9AmoTFvDkDwS032wUrQ6WvS4V9aUb4dVwfw3Rlvc748Sj2wZLXrg/C+
-	PVgdnFPeJnimNcvU/ZZrSi4PpgbLNvzYJx13kv+Kt0TpruVc51R1CbNkufDgqldm/I60xSbU1r3
-	dk+S+hQu30wC568vA7VIdJ+CAE5YUKsImLE0JHa/KbS5i2tOMAx1RTCMSWYC02qoik1oq0C4K2u
-	2dKuaq0Y2qHBLrsnpcI3KeMaggeNUa09aakKI4SaJgt2Clu30P0MFvNQ9IkjbZHHWsF91MuzEgI
-	ysfA/xIdefug2V2m6AHqQoG2XykJo/LAcvrELqtFqSaqmJDw+xOsRD/G2vO0rQUGf1sT6yfXC8i
-	DQ2WrGxZS123Vpebs+Sx7hq6c=
-X-Received: by 2002:a05:6214:e4c:b0:897:255:d5c2 with SMTP id 6a1803df08f44-89a30a4d3cdmr192944066d6.26.1773095325119;
-        Mon, 09 Mar 2026 15:28:45 -0700 (PDT)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a57a1e68esm6918006d6.2.2026.03.09.15.28.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 15:28:44 -0700 (PDT)
-Date: Tue, 10 Mar 2026 06:28:08 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>, 
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Richard Cochran <richardcochran@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>, Yanteng Si <siyanteng@cqsoftware.com.cn>, 
-	Vladimir Oltean <vladimir.oltean@nxp.com>, Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
-	Shangjuan Wei <weishangjuan@eswincomputing.com>, Maxime Chevallier <maxime.chevallier@bootlin.com>, 
-	Chen-Yu Tsai <wens@kernel.org>, Boon Khai Ng <boon.khai.ng@altera.com>, 
-	Quentin Schulz <quentin.schulz@cherry.de>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
-	Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next v8 3/3] net: stmmac: Add glue layer for Spacemit
- K3 SoC
-Message-ID: <aa9JCWpJ_EJbUzXV@inochi.infowork>
-References: <20260309004305.315018-1-inochiama@gmail.com>
- <20260309004305.315018-4-inochiama@gmail.com>
- <aa61v7MQoYq10Jes@shell.armlinux.org.uk>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="deu669Z9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0963C19423
+	for <spacemit@lists.linux.dev>; Tue, 10 Mar 2026 02:45:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773110716;
+	bh=AiuSbGc4gyF+r0NsVvYBegnqTPdAIt4V0L/szs51RLs=;
+	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc:From;
+	b=deu669Z9bCAa3MHzmq85IHa4IIybHro01N3INe+ETq7xl2XbjqfVmZtHlbKEs3Rpw
+	 tmDIW2kRFqJXcxnteRZJq11Hw220gZXTp/2BYB4i36vmN3QlYcjnB8SKQqD/eYiveS
+	 kdCfsege3WAIPqGpWp0aJs4k8pxbZ0GvI9LVkl3kqCeagxiCHPMyZQh5WFMwuv29jU
+	 r0SkhBw5sUyj4Wd28Ft87E8doiuqor0WxSYfGuRbKELjs/txoCHc7aYpv4jk4tB8A/
+	 duwiqpP9JaL54dfvTeud0bobzW7DtU/TskHR7IvQ8+D1CzPaM9SU8UO1JxP0q5x6zt
+	 BsA6px45ozMxQ==
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-38a4118c4f7so43022921fa.2
+        for <spacemit@lists.linux.dev>; Mon, 09 Mar 2026 19:45:15 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCW4UrM27sHTdFHk1w/9VYAwg8PV2XYW00SiQ8RyaxAwX9U2wd72JXXHZpK2BPcYCAYfOgncSFTwiQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyj6ylalkabuadD3Ijpv6NQpHN7V8alDC0ueI2HeQMeXdYNlb/t
+	LqE8aTwau1b74B5m5PyKTAMOgt5qRh9Bul2kLo1rI+LPllZgTz/1T8xVClgBKJVfJmqUbom4k7U
+	l76MQM8KnjanUkEDRJc0uw3C9eC5Dny8=
+X-Received: by 2002:a05:651c:1104:b0:385:c21f:37e1 with SMTP id
+ 38308e7fff4ca-38a40b6a2d2mr40186201fa.15.1773110714064; Mon, 09 Mar 2026
+ 19:45:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aa61v7MQoYq10Jes@shell.armlinux.org.uk>
+References: <20260309190842.927634-1-vladimir.oltean@nxp.com> <20260309190842.927634-18-vladimir.oltean@nxp.com>
+In-Reply-To: <20260309190842.927634-18-vladimir.oltean@nxp.com>
+Reply-To: wens@kernel.org
+From: Chen-Yu Tsai <wens@kernel.org>
+Date: Tue, 10 Mar 2026 10:45:01 +0800
+X-Gmail-Original-Message-ID: <CAGb2v65surpnqrmv4tbH4TSrx6SaTpdbsQtCsNqwse5xwdb8fA@mail.gmail.com>
+X-Gm-Features: AaiRm535EaFxYtCAjq5FIkHiBmgOxc7_e434rO98DZfg5NrM7RTttw3IOCzqW1Y
+Message-ID: <CAGb2v65surpnqrmv4tbH4TSrx6SaTpdbsQtCsNqwse5xwdb8fA@mail.gmail.com>
+Subject: Re: [PATCH v3 phy-next 17/24] media: sunxi: a83-mips-csi2: include
+ PHY provider header
+To: Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	linux-usb@vger.kernel.org, netdev@vger.kernel.org, spacemit@lists.linux.dev, 
+	UNGLinuxDriver@microchip.com, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 09, 2026 at 11:57:51AM +0000, Russell King (Oracle) wrote:
-> On Mon, Mar 09, 2026 at 08:42:44AM +0800, Inochi Amaoto wrote:
-> > +static int spacemit_dwmac_update_irq_config(struct spacmit_dwmac *dwmac,
-> > +					    struct stmmac_resources *stmmac_res)
-> > +{
-> > +	unsigned int mask = CTRL_WAKE_IRQ_EN;
-> > +	unsigned int val = stmmac_res->wol_irq >= 0 ? CTRL_WAKE_IRQ_EN : 0;
-> 
-> This looks like the last thing I can spot that needs to be addressed.
-> netdev wants to see "reverse christmas tree" local variable
-> declarations.
-> 
-> Please reverse the order of these two declarations to achieve that.
-> 
-> With that fixed:
-> 
-> Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-> 
-> Thanks!
-> 
+On Tue, Mar 10, 2026 at 3:10=E2=80=AFAM Vladimir Oltean <vladimir.oltean@nx=
+p.com> wrote:
+>
+> The introduction commit 576d196c522b ("media: sunxi: Add support for the
+> A83T MIPI CSI-2 controller") says:
+>
+>     This implementation splits the protocol and D-PHY registers and
+>     uses the PHY framework internally. The D-PHY is not registered as a
+>     standalone PHY driver since it cannot be used with any other
+>     controller.
+>
+> However, this does not matter, and is not the only instance of tight PHY
+> provider <-> consumer pairing. According to Vinod Koul, having PHY
+> provider drivers outside of drivers/phy/ is discouraged, although it
+> would be difficult for me to address a proper movement here.
+>
+> So just include the private provider API header from drivers/phy/ and
+> leave a FIXME in place.
+>
+> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-Great, after some lookup, I find the variables in function 
-spacemit_set_phy_intf_sel() are also needed to reversed.
-I will also fix this in the next version.
+Acked-by: Chen-Yu Tsai <wens@kernel.org>
 
-Regards,
-Inochi
-
+> ---
+> Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+> Cc: Chen-Yu Tsai <wens@kernel.org>
+> Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
+> Cc: Samuel Holland <samuel@sholland.org>
+>
+> v1->v3: none
+> ---
+>  .../media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_dphy.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t=
+_dphy.c b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_dphy=
+.c
+> index 24bbcc85013d..1143feeb4fcb 100644
+> --- a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_dphy.c
+> +++ b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_dphy.c
+> @@ -4,9 +4,9 @@
+>   * Author: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+>   */
+>
+> -#include <linux/phy/phy.h>
+>  #include <linux/regmap.h>
+>
+> +#include "../../../../phy/phy-provider.h" /* FIXME */
+>  #include "sun8i_a83t_dphy.h"
+>  #include "sun8i_a83t_mipi_csi2.h"
+>
+> --
+> 2.43.0
+>
