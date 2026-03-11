@@ -1,92 +1,189 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AFE397E61
-	for <spacemit@lists.linux.dev>; Tue, 10 Mar 2026 16:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E2931619C
+	for <spacemit@lists.linux.dev>; Wed, 11 Mar 2026 02:58:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773159555; cv=none; b=RGRqXh7aFYIQrJ0Hv9cKV2jEWuev/LiHhb+J6pfKTALczlgPiLdv9sWNOrlveSMR/sSpRZKavgeiJS6ilHCt3KBSGsDrds8VwKaAKcIKg5yy4E/PgrwEIBeHUe9RiCYSLi/idgzA7pMz68nojHG3Wbaqpy/dh2/1dkQQvfDHmgU=
+	t=1773197911; cv=none; b=KiMhqpuErC8jq2MIjfDIo31C2iOA5bWoQj/AXZeO4spivKuEaqskuBH3Qlyrx1tZOQlw5NgPHm5oHtd4aaHTuRsrdb+pK+Y8WsXQsUOEh3ppJkqS8vnMv2u7aUxHBjJm3PKcVFxfLwZDsW5g39dk3W8EwZrOscb+lzyL5d079jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773159555; c=relaxed/simple;
-	bh=qYTgE//7RAeiJjbyR6YmrrnkI+Pfr/YpzrMs1chOhnE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bs0SeXaK1uTT0PepO02BpjVQyGbhCJ7j7t67aVxxtp0MtXaEwccsUpdPlgEwCo7klI76l+BTT+NM5dh+hsgGTz012tYlbOxZ6qAOyM5o2Q3sXj1lLKCW+TPNyufooim1tXfBBErsfDL3wSy2mFl336Uamyb2nSVg3S1yidfl1LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost.localdomain (unknown [223.166.92.103])
-	by APP-03 (Coremail) with SMTP id rQCowAB3lNtwRLBpMRBECg--.1611S2;
-	Wed, 11 Mar 2026 00:18:57 +0800 (CST)
-From: Han Gao <gaohan@iscas.ac.cn>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>
-Cc: devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Han Gao <rabenda.cn@gmail.com>,
-	Han Gao <gaohan@iscas.ac.cn>
-Subject: [PATCH v2 0/4] riscv: dts: spacemit: Add PMIC regulators usb pcie
-Date: Wed, 11 Mar 2026 00:18:49 +0800
-Message-ID: <20260310161853.3900605-1-gaohan@iscas.ac.cn>
-X-Mailer: git-send-email 2.47.3
+	s=arc-20240116; t=1773197911; c=relaxed/simple;
+	bh=6Rf0uh4RhMJgJFGyR4JqDEKL5ZSyP65SwK4gjPx8Txw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=I36TyZ8fy8a9oN5FKarfkAmMabMgVxBDrOoJiva1e9B9+WGCedMTkE0XrPTxPwxgzNs9wxawwopRe8pu6p0GMepRTDbrGCjxHXpndF8rIHUZ+DepiVQhmt5AHtUb/CUL0aSi+KCKFbpIP97qkvv3n/vUyAwsIzwrYsLv9WGdYcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=LSRChtqn; arc=none smtp.client-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="LSRChtqn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1773197898;
+	bh=cdYAA+g/5AwgfFzsh2zrBrYJPymEr6G4WcYfRqa8g2A=;
+	h=Mime-Version:Date:Message-Id:To:Subject:From;
+	b=LSRChtqnKPeZxggn3LpUvHHohFsMj6mq0FODQYJr7ROt8aSa614pbptPTeNcYG17P
+	 19BuP/CKfSRlhV39wvqOiAU3GFzBXixewOGBjPA4cZWTYh/oTaYIbnJAafzwBeW2N3
+	 OfkFasBS1u8HZ39l5P8Xd3ehe4Vjz/NUUJFhdsoU=
+X-QQ-mid: zesmtpsz6t1773197891tb6bc5c9c
+X-QQ-Originating-IP: JjQFje59Pj2+UWzI0DdnSaJjGPej3hv3InT1nK7o+PE=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 11 Mar 2026 10:58:09 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 11627406965186864480
+EX-QQ-RecipientCnt: 14
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:rQCowAB3lNtwRLBpMRBECg--.1611S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrKryDCr1rXF1UArWrWr4rXwb_yoWkWrX_uF
-	1fGasakryDGFs2kFySq3WUtay8Cr4agFy3tF95Kr47tFy5uF1rG3W7JFy7Z3WrGryDAryD
-	Wa17AFWfJ3W3ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb3xFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-	Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
-	1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
-	n2IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4
-	AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE
-	17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMI
-	IF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4l
-	IxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvf
-	C2KfnxnUUI43ZEXa7VUbGQ6JUUUUU==
-X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBwkCDGmwM1ktHAAAsC
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 11 Mar 2026 10:58:09 +0800
+Message-Id: <DGZM6WUAVPPS.20Y0NIZYI4572@linux.spacemit.com>
+To: "Aurelien Jarno" <aurelien@aurel32.net>, "Yanko Kaneti"
+ <yaneti@declera.com>
+Cc: <linux-kernel@vger.kernel.org>, "Lee Jones" <lee@kernel.org>, "Sebastian
+ Reichel" <sre@kernel.org>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>, "Yixun Lan" <dlan@gentoo.org>, "Paul
+ Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
+ Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "open
+ list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+ "open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit"
+ <spacemit@lists.linux.dev>, "open list:SYSTEM RESET/SHUTDOWN DRIVERS"
+ <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v5 2/2] mfd: simple-mfd-i2c: add a reboot cell for the
+ SpacemiT P1 chip
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20251102230352.914421-1-aurelien@aurel32.net>
+ <20251102230352.914421-3-aurelien@aurel32.net>
+ <b51a62513daa9d2390031ec350e0b33bdb7e54aa.camel@declera.com>
+ <aaC78FTN31QYaVg0@aurel32.net>
+ <990bc03ed2baa05e619f0aa9cc6a23acadd66ea6.camel@declera.com>
+ <aaS6xeKFZz06fb1_@aurel32.net> <aaXuWwyA5NzBZzlW@aurel32.net>
+ <36f8df695463e5ff3eaaffbac357fc73026f7373.camel@declera.com>
+ <aadGw1fIlJyNNoum@aurel32.net>
+In-Reply-To: <aadGw1fIlJyNNoum@aurel32.net>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MgQY1K25Ph0m1e8G99xNUvvP+0z9ll90/jaNnJ17KFdkkwl1AjLndYkE
+	iS9jlWMNKobXn5oEvQjfRrivp6aiz1GhpVtSUfl/Vdouf+sNr4XEUsOADhQBn9x4RtG1MSe
+	ANpfgHD6mvrD5qmV33nV4tX5q03//NTcnqDYfRqmp+eKFntCzcJELJRs+A5Ye7J7A5odbeB
+	fpSE3FRRgRBuC6tgF8yjbD/y186IaoRBjEEw6QDfiioz55MqP1rDfH7CgdRg9DbUuWeswk3
+	ruDHBvmZrZfbr5BwIMYcSO0E10oo+dIgOzbZ2XAuDfhf4Vc9os3Nj0vI6Yrq6YNzvHGkcgP
+	VDGlbjMa8rg5Ftciwi6DnpSbhPqZqeGFlnaZ9Cc2h5fh0ikAzb+4YNddOFl5XShD9GiiT7W
+	1TWM3QbA/ia9n4rHMgQmdgLu9LAuBTRhBhbeSShR01CRejUNd+XDmg6uyuptn9aaYcQwW/0
+	IBC8iLwvMZ8H3q7h7Qe2lWcaQhBAFq+m+jS8NzRLGJNSikmG5fe5MrJW89yZCjZLJ5bckPc
+	DVcBZAIwPe5Yg0y+iWGLiHOr0KAhbWwm5CyKhEC5uNlYR9n0Pl+q2XAKL1DMa5sCyaEa+Rt
+	y2ql4ijpJBjUyVUJVElJJqlSzrVZKAqhBVX3Xp6cP4S9gpPOakZxDo1YR/1SukinblSS9PI
+	Y5ms3hGGSiqak+OwzgCGn6qKKCY+AL7s2nknP8rf5w75FfrAF0TgDhy51Vj1q8mtyBexHZf
+	DyuRauolateszoa5jKMX0ijXrslKrxkOP8AblxztdZqDU2nMJfJw5QNpIFKEuTVa5XI4ae8
+	dp5UGgX1/v1fKV0OgLIcKnWNxxdumc47XcdcQuA4+MNfbCZql/JJG6NZU7Tk7T7Z9p272tY
+	oXU7SRbFlLnMPBptybCqNSmPEIIyO4CMb4zb3epRptRYNIngjmyLwY3qRJIsifhZqs1QXtb
+	bOit9dElGBTQcz0lyMaBPGBTJ+6HA0ILHXx8SF8BTAH66PxAWp5gAUxyRliivBTL4pD5i01
+	0K5RM2wSfj9jrH2RkcrmSPeA1M22vpjBfL9XI7EaueUCdJkSCd99O/quiTDoqDUQdZR3Ow9
+	YzLnjutmQQ9smrM2QsEKd0=
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-RECHKSPAM: 0
 
-This patch series enables the PMIC, voltage regulators, usb and pcie
-for the OrangePi RV2 board.
+On Wed Mar 4, 2026 at 4:38 AM CST, Aurelien Jarno wrote:
+ Hi, Aurelien and Yanko,
+> Hi,
+>
+> On 2026-03-02 22:34, Yanko Kaneti wrote:
+>> Hello,
+>>=20
+>> On Mon, 2026-03-02 at 21:08 +0100, Aurelien Jarno wrote:
+>> > On 2026-03-01 23:16, Aurelien Jarno wrote:
+>> > > On 2026-02-27 13:29, Yanko Kaneti wrote:
+>> > > > On Thu, 2026-02-26 at 22:32 +0100, Aurelien Jarno wrote:
+>> > > > > Hi,
+>> > > > >=20
+>> > > > > On 2026-02-26 16:32, Yanko Kaneti wrote:
+>> > > > > > Hello,
+>> > > > > >=20
+>> > > > > > On Mon, 2025-11-03 at 00:02 +0100, Aurelien Jarno wrote:
+>> > > > > > > Add a "spacemit-p1-reboot" cell for the SpacemiT P1 chip.
+>> > > > > > >=20
+>> > > > > > > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+>> > > > > > > ---
+>> > > > > > > v5: no changes
+>> > > > > > >=20
+>> > > > > > >  drivers/mfd/simple-mfd-i2c.c | 1 +
+>> > > > > > >  1 file changed, 1 insertion(+)
+>> > > > > > >=20
+>> > > > > > > diff --git a/drivers/mfd/simple-mfd-i2c.c b/drivers/mfd/simp=
+le-mfd-i2c.c
+>> > > > > > > index 0a607a1e3ca1d..542d378cdcd1f 100644
+>> > > > > > > --- a/drivers/mfd/simple-mfd-i2c.c
+>> > > > > > > +++ b/drivers/mfd/simple-mfd-i2c.c
+>> > > > > > > @@ -99,6 +99,7 @@ static const struct regmap_config spacemit=
+_p1_regmap_config =3D {
+>> > > > > > >  };
+>> > > > > > > =20
+>> > > > > > >  static const struct mfd_cell spacemit_p1_cells[] =3D {
+>> > > > > > > +	{ .name =3D "spacemit-p1-reboot", },
+>> > > > > > >  	{ .name =3D "spacemit-p1-regulator", },
+>> > > > > > >  	{ .name =3D "spacemit-p1-rtc", },
+>> > > > > > >  };
+>> > > > > >=20
+>> > > > > > Perhaps its safe to merge this one now that everything P1 and =
+I2C is
+>> > > > > > already in linus tip ?
+>> > > > >=20
+>> > > > > Unfortunately, this patchset is still missing:
+>> > > > > https://lore.kernel.org/all/20260207-b4-k3-i2c-pio-v7-0-626942d9=
+4d91@linux.spacemit.com/
+>> > > > >=20
+>> > > > > This means the reboots work most of the time, but are not 100% r=
+eliable,=20
+>> > > > > and that's the reason why this patch got blocked from merging.
+>> > > >=20
+>> > > > I see. Thanks. Sounds to me like sometimes working compared to nev=
+er
+>> > > > working is better , but anyway..
+>> > >=20
+>> > > I agree with that, but the decision was to hold on this patch until =
+the=20
+>> > > I2C PIO part got merged.
+>> > >=20
+>> > > > FWIW  with this patch and the pio patcheset I get this rcu splat o=
+n
+>> > > > reboot (which is still working). Similar splat is there without th=
+e pio
+>> > > > patcheset.
+>> > >=20
+>> > > I haven't been able to reproduce the issue here after 10+ reboots on=
+ a=20
+>> > > BPI-F3 board, but I tried the patch on top of 6.19. I'll try to buil=
+d a=20
+>> > > 7.0.0-rc2 kernel and report back.
+>> >=20
+>> > I have tried that, and I am still unable to reproduce the issue with a=
+=20
+>> > 7.0.0-rc2 kernel and a BPI-F3 board.
+>>=20
+>> I can still see it on every reboot (with the patches that allow reboot
+>> to work). Do you have CONFIG_PREEMPT_RCU in your config ? its default on
+>> when anything PREEMPT is selected. In Fedora its CONFIG_PREEMPT_DYNAMIC
+>> that flips it.
+>
+> Thanks for the hint, that option was not activated here, it's not the=20
+> riscv64 defconfig. With it I am also able to reproduce the issue. I'll=20
+> try to debug that and report back.
+I have sent a patch to address this issue here[1].
 
-Changes in v2:
-- Merge patch 3/5 into 3
-- Merge patch 4/6/7 into 4
-  Remove regulator-always-on in pcie_vcc_3v3
-  Remove pinctrl in combo_phy
-  Add vpcie3v3-supply in pcie*_port
-- Link to v1: https://lore.kernel.org/linux-riscv/cover.1769895215.git.gaohan@iscas.ac.cn/
+Could you please test it on your hardware when you have a chance?
 
-Han Gao (4):
-  riscv: dts: spacemit: Enable i2c8 adapter for OrangePi RV2
-  riscv: dts: spacemit: Define fixed regulators for OrangePi RV2
-  riscv: dts: spacemit: Define the P1 PMIC regulators for OrangePi RV2
-  riscv: dts: spacemit: Enable USB3.0/PCIe on OrangePi RV2
+                        - Troy
 
- .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 233 ++++++++++++++++++
- 1 file changed, 233 insertions(+)
+Link:
+https://lore.kernel.org/all/20260311-v7-0-rc1-rv-dis-int-before-restart-v1-=
+1-bc46b4351cac@linux.dev/ [1]
 
-
-base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
-prerequisite-patch-id: ef6e9c7b5854d0c08066b72f9a7868db8c2140eb
-prerequisite-patch-id: cfe3800f8c791ec4c63e070af9628e88e0fc31b9
-prerequisite-patch-id: b76493e625ae257c8adcd67874178458420e4d47
-prerequisite-patch-id: 88e01dc92c83bd88ddeb78891d3088209fed8d6b
--- 
-2.47.3
+>
+> Regards
+> Aurelien
 
