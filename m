@@ -1,269 +1,102 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B7619EED3
-	for <spacemit@lists.linux.dev>; Thu, 12 Mar 2026 09:39:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773308341; cv=pass; b=fKxeE98hg0SqtOjFNMPKZKAFto7ffwUypud1PvAfULv3N53M+ZR8HtJvFFMiRXkQ3Z1hWYMMtii27FBxidPmDqOMjJKxCrjPHTolFwL1In/PTBPQHu5Lt4p4gRloR6rjuJtWEId6Sx5dRlZOfjvlE2nukMYkEeb9W73HH+Z+8OE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773308341; c=relaxed/simple;
-	bh=anD1VyMEVEgbX5EIAi4s0UBnKZ1U9xE2QUYdli0kx3A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=redJbbfmXhcLv1hxAJgOx9sKX/wpJQl3ulOIlYcB1aHRkATu0o927wqBMMdN2fWoh9Pn0YwkpDsn+SMVZWZ/wjcPQNkGn5nhJ+ie27/EZuCmbBRq3NHfXjL1xqJRoPJTdqWgQijZUN62RoIQmBsbDAtw4il2yAovaUl9cyj/0KM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jEoXpiN0; arc=pass smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1344438F625;
+	Thu, 12 Mar 2026 10:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773311674; cv=none; b=XLLJBXRHn2wHf37Ok/Z3TpoEjCeW5Yyz6FTpACXlg5Kwk8yAdzCgXGawnkVnH8s0zyadQGtZHMYx9lfeGH0qqizyAn78/h2uz6CNCUr/TUwshT38u69mo9oCKJ5ietTDapT+VitUsp3Cgace4hcVCVJuAF0U7O7InRCTEp94C0c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773311674; c=relaxed/simple;
+	bh=eG47Dl2Bc/ZA8mrG8zkkaZ4+w/bWA/2Y9BE8NMR8OPI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jATw8hQFK3UyzKt1fxEJsEdE7ZSIVA/2wCtntaWpajatzDrsHfyMR/XYZv98qFCYWzN6KB6WZBEEjshJFfAvjRm9Gccdxpx5tKL8RkLszpi63sSAx4tTCy+y5jNwO0ZRRnKjmAkYwpdIg0pFjDPrB7vYMuw46LOC50xNe/9uD2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fHNhatLJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jEoXpiN0"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7986fb839f5so7563647b3.0
-        for <spacemit@lists.linux.dev>; Thu, 12 Mar 2026 02:39:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773308339; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Muc2EHduZCCHigEP9rVpNUgnal9jgC1Ztnhcy4yIZO7HM0xjabHzWkov7QAuY7Dfbm
-         Bd/4x2r/LClDNobLqQcIb9Lw95eQ2pbOAaQBD7Ma8BexQaChehIlqOAhlJ3UrobveRYM
-         PDym5ZunbTdNVKUQ17G0FnnmP8eAzeCEyq3jUh9J5PvsItS3aMHzVU4ps/l1K/rSHDrP
-         IvuhJ8fgYs4yQixfgTh8On4slpHeVNfwOlGFxWYzHpDQy71WlSwO1ElvGuseOs9jjVeG
-         DcWnoqCQ7I5oYSYsPaz2Ei4E2fQ9qZmRThXr0obCqQaFqobFUO5wMpYhL7kJwEiYe9bM
-         cx9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=d645qq1RHXY2ZEXrCIAd8Z57nQOQnqeihh5RHWfjYUk=;
-        fh=DginyojmX8JKduZAtgvJtGbM+8rWRTEBXjlFwkVDTAk=;
-        b=XlG+nM/QU1LBl91pjBOOT+wJfya/5pTdLMXhqhb4KzFuGLHCtsehYmeSszkEuD5MjY
-         cysqUpMRa27i0ssLSLjWXn7USmGFM66X82KZluz9LT1ZQzbrZMWq5sqWogaPuOaSkW/F
-         tDwxC8Bl+OLn7G3iWsr+QcbD/+HMUwggo/yP/N/RdX4zvyGeyk9j832NbXX81oYjTuW9
-         zyShl3tpi204I53lN7lVa7zi2bJXEa6Vy+IXd3Jx2h5XMX+VxvnEtm6WXdjJTulg6X8W
-         LzwckyNrqSYLVrMzl/koc2jzTI8fi2L7SQqsNZ4iR49PRzZs0rVeS6KCcXcuwyCkPJzM
-         tucA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773308339; x=1773913139; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d645qq1RHXY2ZEXrCIAd8Z57nQOQnqeihh5RHWfjYUk=;
-        b=jEoXpiN0P4A+tvoIWv6fIbryN83FRYFkAKv13woVuq6Gz+eoXuJb+qeq74B3Ea/tjh
-         qXAgOTtNCJPLYTEbI9v0VQwfcEzJFO3mku7E6xWb85FHfmgdtxg+XZvQMXo3dS2K4vnH
-         hq3yINaRN/BvmDqKOMkwYuKVosYPfRMY3w5I10e9jmYIg1cyI9+skU1mMbA03UJuw6R9
-         YDr58RlP38adb3IWCbKAxJWtjkyNy6Hbo0PkOynxgFrdzxjKFL2HLt4CQOGks74K7vpx
-         xCZ5o0YefxdYYa4u2qYpVroFDWt77+xbW3s4Q+lMF25cu7B6qxtGJDVyDTyIbbHA6Y7O
-         ySTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773308339; x=1773913139;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=d645qq1RHXY2ZEXrCIAd8Z57nQOQnqeihh5RHWfjYUk=;
-        b=vAiJdwW1IHX7OmfunhSABrISqg16Ogtahbj6LifZFK44bMwzxsB80dZc1FUty7TQiG
-         FMZm4m1h9rebzimZkoeouFuIQORDh+X/bv9chvps4gmUX2K6NoJKVWU1ppwz6NpKGQOE
-         ltLFt8rXH7HG3uVvgwL1xNPEeU5Isc6WbiF3MpdrJh5R7LGyyQ3XLfULFHGQ6uotrWT3
-         /U2vE6GV8hNk85U6QgH/nBAO9EA2LuPyAqMc1k2TSN4+9orATeA8VoipcdDniIFeYE2b
-         GJWtI/Oo7X5kvp559woMO5qkRos3Xy9uELOYrvX/MIGsgbGZWnOzkG0L83G+7q0dwveG
-         eqEw==
-X-Forwarded-Encrypted: i=1; AJvYcCXi4/IovQ6NJ3LhI3DVjgnemOqAXRldmbZvef82u6H0A6LGbhCiceyIjcookBiSxqCYJPsNSKYKUQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzWN2Oyy8rt8I/1N3PoM1Nl5+tMFlZkKtXe+QV+1AGdfGpEBo7m
-	M4Fz/Ka6KWh8InJ209TJw6IuiNKDpXa6kqLh8kXktgXXAeoAeIMY65Z62EY73DED2mvEQC/R/xB
-	Ja4QafQcVN95dtKV2J+lA5WORZL/rGio=
-X-Gm-Gg: ATEYQzzzFZDl/k9qfTf4Ppp4YGVOvuh5wdNOuQdDrQAOqz5IeuGxQYAgAvClPOd2IWk
-	c+dr0J2+N3bBwmw9bfKE4QhrLY28sqkvneE0qyxj4MDQ61gqkbzjRxJ0XIyyKWHLkYEbr4hORcf
-	lm3G2bqVkitwUqWME/OJX5QlEsxHV4bLnJzH6VIucAyGmFGtWSFwCh89wZ5albWZo1737JdgjPV
-	hH5/12eawYcCzZNQMO8Fbn7PKiw0fcuPdTdlmUdkSGDvk4FIjnTZxg6lFVdUUS4WMhEdH5ndQ5L
-	75KTvng=
-X-Received: by 2002:a05:690c:6d82:b0:799:1af1:6c69 with SMTP id
- 00721157ae682-7991af16fbamr45243437b3.26.1773308339300; Thu, 12 Mar 2026
- 02:38:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fHNhatLJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9F8C116C6;
+	Thu, 12 Mar 2026 10:34:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773311673;
+	bh=eG47Dl2Bc/ZA8mrG8zkkaZ4+w/bWA/2Y9BE8NMR8OPI=;
+	h=From:Subject:Date:To:Cc:From;
+	b=fHNhatLJTnSPpLPEekFiBI3St6bu+fFOm3/7cDd66ySD42QhhnN4YZdv6dEFwU9Hx
+	 XNtescUwb/hSLSRKzkaOjnItIN03HwLX+zs1o6RhxKEOipWQV8lFNq7Cj2+A9sQQRB
+	 IudIxKtIdUyRrg6Vwfk1D7RkbFthP68TMweD6SFmcaFS0CGiQgQQSicKJjQ7lfQpq7
+	 hRZLp9cVGpbEt6/1bcnf9Ll88Qg3GhZeqImsnIGiaLDPWqd4kOR10/tx7a3TDZdc9B
+	 24Owm+ZkTbnDBi8XimTz5ReuWJN8l6AnvshE7TPHP5gQNixc2fW2WkaKEl2eo4rrIU
+	 sOVkXaJgQHFWg==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH 0/2] reset: spacemit: k3: Decouple the composite reset
+Date: Thu, 12 Mar 2026 10:34:18 +0000
+Message-Id: <20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260309-orangepi-sd-card-uhs-v2-0-5bb2b574df5d@gmail.com>
- <20260309-orangepi-sd-card-uhs-v2-2-5bb2b574df5d@gmail.com> <20260309132219-GKE302167@kernel.org>
-In-Reply-To: <20260309132219-GKE302167@kernel.org>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Thu, 12 Mar 2026 10:38:48 +0100
-X-Gm-Features: AaiRm52BiCFPbC8nIFwrdrDzkLisJX7YfgLkKCTQywgdqQlIVQj3SZM1LgN_fKc
-Message-ID: <CABdCQ=PpA4u+pY-pZgggHPNnDMJUVmgqofMf7O6YMrB+2aDkww@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] mmc: sdhci-of-k1: add regulator and pinctrl
- voltage switching support
-To: Yixun Lan <dlan@kernel.org>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKqWsmkC/x3MMQqAMAxA0atIZgNpxQpeRRyqTTUIKo2KIN7d4
+ viG/x9QTsIKbfFA4ktUtjXDlAWMs18nRgnZYMk6qoxFMrhUmFj5wFMH3EfBEIh89E3tjIdc7om
+ j3P+169/3AyL/eWxlAAAA
+X-Change-ID: 20260312-01-k3-reset-usb-pci-dd00afa7561a
+To: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Junzhong Pan <junzhong.pan@spacemit.com>, 
+ Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1290; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=eG47Dl2Bc/ZA8mrG8zkkaZ4+w/bWA/2Y9BE8NMR8OPI=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpspatpujL2boqdEZkli7eEVCVnQvbqf8bRpgAZ
+ R7LuZFjpbuJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCabKWrRsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+2sjQ/+MZkAD1W11hl4KKJoVbLZ/GRv2XFAwZM9VxPIjzqUPyGgXBBnjnxvv
+ q6gHrI4gcXqIYn+LBExtZawet/TFNSuN2pdMZVOqGWJ5IE6ddL5Hs4e4FeT4JGBTZNIwnhHhzEt
+ U9lWCXi2vcyZ2Gj+ecgBI+5PeU0L8aRZyjw2InWWnmkLLDOW9ZAV+CehkGA+IBf6mh28NLzIaGk
+ o5F5t9BeJ36YWJYtsqRZ8GrlxcK4xWDA7kmxT0d/lXjJbJvSeEKrgno6jcxU52v+zvIhtIgkJBy
+ 6ssZ8QuqqrK9Nm2yZCsLWiaeVI/tGA3LUhNyygJpngx/KyFBIBu3l6ZMFRSvi+nfNUGanaID2nI
+ 9SId0bzDzMtPFCk+RiypcwJ1epr/o1MWCBhwPvpnptkIkbc87b+yrL85R93dsayR2ylwljX1GJI
+ w66d4J6HlJOZtNCkGHXOo1E+x8nkl5anzi1yK3Pl6GRi8mODHVlKq2xw0W6FqewjNT5XWqWcwQz
+ 0XQf2HLihEftIcUOQKhCkXheiIB5IiLx4Nl/zJD/B/JUoclWmBZovsBg6t2Cnr7Yb1FrfMJnJQb
+ 2WVDA//FmZxvNOguPh5bypHvPltR9ZPRnY7gz2k5KcJXVZlUv/WzH7HHJ095UNezhh1/O1X6ct+
+ 163NjyYRhdAvubLJda3QwqLorIm9QI=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-El lun, 9 mar 2026 a las 14:22, Yixun Lan (<dlan@kernel.org>) escribi=C3=B3=
-:
->
-> Hi Iker,
->
-> On 12:40 Mon 09 Mar     , Iker Pedrosa wrote:
-> > Add voltage switching infrastructure for UHS-I modes by integrating bot=
-h
-> > regulator framework (for supply voltage control) and pinctrl state
-> > switching (for pin drive strength optimization).
-> >
-> > - Add regulator supply parsing and voltage switching callback
-> > - Add optional pinctrl state switching between "default" (3.3V) and
-> >   "state_uhs" (1.8V) configurations
-> > - Enable coordinated voltage and pin configuration changes for UHS mode=
-s
-> >
-> > This provides complete voltage switching support while maintaining
-> > backward compatibility when pinctrl states are not defined.
-> >
-> > Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> > ---
-> >  drivers/mmc/host/sdhci-of-k1.c | 59 ++++++++++++++++++++++++++++++++++=
-++++++++
-> >  1 file changed, 59 insertions(+)
-> >
-> > diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of=
--k1.c
-> > index 585c7eca6ebf253aac466dd37cef029deb63f692..8af117a8e271c04a80d8dc7=
-bb5ce12075652dd7a 100644
-> > --- a/drivers/mmc/host/sdhci-of-k1.c
-> > +++ b/drivers/mmc/host/sdhci-of-k1.c
-> > @@ -15,6 +15,7 @@
-> >  #include <linux/module.h>
-> >  #include <linux/of.h>
-> >  #include <linux/of_device.h>
-> > +#include <linux/pinctrl/consumer.h>
-> >  #include <linux/platform_device.h>
-> >
-> >  #include "sdhci.h"
-> > @@ -70,6 +71,9 @@
-> >  struct spacemit_sdhci_host {
-> >       struct clk *clk_core;
-> >       struct clk *clk_io;
-> > +     struct pinctrl *pinctrl;
-> > +     struct pinctrl_state *pinctrl_default;
-> > +     struct pinctrl_state *pinctrl_uhs;
-> >  };
-> >
-> >  /* All helper functions will update clr/set while preserve rest bits *=
-/
-> > @@ -218,6 +222,42 @@ static void spacemit_sdhci_pre_hs400_to_hs200(stru=
-ct mmc_host *mmc)
-> >                              SPACEMIT_SDHC_PHY_CTRL_REG);
-> >  }
-> >
-> > +static void spacemit_sdhci_voltage_switch(struct sdhci_host *host)
-> > +{
-> > +     struct sdhci_pltfm_host *pltfm_host =3D sdhci_priv(host);
-> > +     struct spacemit_sdhci_host *sdhst =3D sdhci_pltfm_priv(pltfm_host=
-);
-> > +     struct mmc_ios *ios =3D &host->mmc->ios;
-> > +     struct pinctrl_state *state;
-> > +     int ret;
-> > +
-> > +     /* Select appropriate pinctrl state based on signal voltage */
-> > +     if (sdhst->pinctrl) {
-> do a sanity check, then abort it early, the advantage is that you can get=
- rid of
-> one indetation for next code..
->
->         if (!sdhst->pinctrl)
->                 return;
->
+Previously, the reset of The USB and PCIe was submited as a composite
+reset, try to decouple them in this series.
 
-Makes sense. I'll get it ready for the next version.
+The motivation behind is that it will will make the result more aligned
+with the hardware which describe them as different reset lines, and also
+match with the K3 dwc3 DT binding which request different reset, 
+K1 and K3 SoC share same topology of the reset line design.
 
->
-> > +             switch (ios->signal_voltage) {
-> > +             case MMC_SIGNAL_VOLTAGE_330:
-> > +                     state =3D sdhst->pinctrl_default;
-> > +                     break;
-> > +             case MMC_SIGNAL_VOLTAGE_180:
-> > +                     state =3D sdhst->pinctrl_uhs;
-> > +                     break;
-> > +             default:
-> > +                     dev_warn(mmc_dev(host->mmc), "unsupported voltage=
- %d\n",
-> > +                              ios->signal_voltage);
-> > +                     return;
-> > +             }
-> > +
-> > +             if (state) {
-> > +                     ret =3D pinctrl_select_state(sdhst->pinctrl, stat=
-e);
-> > +                     if (ret) {
-> > +                             dev_warn(mmc_dev(host->mmc),
-> > +                                      "failed to select pinctrl state:=
- %d\n", ret);
-> > +                             return;
-> > +                     }
-> > +                     dev_dbg(mmc_dev(host->mmc), "switched to %s pinct=
-rl state\n",
-> > +                             ios->signal_voltage =3D=3D MMC_SIGNAL_VOL=
-TAGE_180 ? "UHS" : "default");
-> > +             }
-> > +     }
-> > +}
-> > +
-> >  static inline int spacemit_sdhci_get_clocks(struct device *dev,
-> >                                           struct sdhci_pltfm_host *pltf=
-m_host)
-> >  {
-> > @@ -242,6 +282,7 @@ static const struct sdhci_ops spacemit_sdhci_ops =
-=3D {
-> >       .set_bus_width          =3D sdhci_set_bus_width,
-> >       .set_clock              =3D spacemit_sdhci_set_clock,
-> >       .set_uhs_signaling      =3D spacemit_sdhci_set_uhs_signaling,
-> > +     .voltage_switch         =3D spacemit_sdhci_voltage_switch,
-> >  };
-> >
-> >  static const struct sdhci_pltfm_data spacemit_sdhci_k1_pdata =3D {
-> > @@ -293,6 +334,24 @@ static int spacemit_sdhci_probe(struct platform_de=
-vice *pdev)
-> >
-> >       host->mmc->caps |=3D MMC_CAP_NEED_RSP_BUSY;
-> >
-> > +     sdhst =3D sdhci_pltfm_priv(pltfm_host);
-> ..
-> > +     sdhst->pinctrl =3D devm_pinctrl_get(dev);
-> > +     if (!IS_ERR(sdhst->pinctrl)) {
-> > +             sdhst->pinctrl_default =3D pinctrl_lookup_state(sdhst->pi=
-nctrl, "default");
-> > +             if (IS_ERR(sdhst->pinctrl_default))
-> > +                     sdhst->pinctrl_default =3D NULL;
-> > +
-> > +             sdhst->pinctrl_uhs =3D pinctrl_lookup_state(sdhst->pinctr=
-l, "state_uhs");
-> > +             if (IS_ERR(sdhst->pinctrl_uhs))
-> > +                     sdhst->pinctrl_uhs =3D NULL;
-> > +
-> > +             dev_dbg(dev, "pinctrl setup: default=3D%p, uhs=3D%p\n",
-> > +                     sdhst->pinctrl_default, sdhst->pinctrl_uhs);
-> > +     } else {
-> > +             sdhst->pinctrl =3D NULL;
-> > +             dev_dbg(dev, "pinctrl not available, voltage switching wi=
-ll work without it\n");
-> > +     }
-> > +
-> how about creating a function spacemit_sdhci_get_pins()? similar as get
-> resource for clock, will more readable.
+See the reset part info in binding doc
+Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
 
-Yes, I'll do that. Thank you for the feedback.
+I've not added a Fixes tag here, as previous old reset ID has not been
+used in any DTS, so it shouldn't cause any problem. I also mark
+previous old reset ID as deprecated for now (let me know if it's ok).
 
->
-> >       ret =3D spacemit_sdhci_get_clocks(dev, pltfm_host);
-> >       if (ret)
-> >               goto err_pltfm;
-> >
-> > --
-> > 2.53.0
-> >
->
-> --
-> Yixun Lan (dlan)
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Yixun Lan (2):
+      dt-bindings: soc: spacemit: k3: Decouple composite reset lines
+      reset: spacemit: k3: Add individual reset lines for USB, PCIe
+
+ drivers/reset/spacemit/reset-spacemit-k3.c     | 50 +++++++++++++++-----------
+ include/dt-bindings/reset/spacemit,k3-resets.h | 42 ++++++++++++++++------
+ 2 files changed, 62 insertions(+), 30 deletions(-)
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260312-01-k3-reset-usb-pci-dd00afa7561a
+
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
+
