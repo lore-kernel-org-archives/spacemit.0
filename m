@@ -1,141 +1,101 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D968C35F612
-	for <spacemit@lists.linux.dev>; Thu, 12 Mar 2026 01:23:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773278617; cv=none; b=CDXvmbatBNGbU7D9tYUALqeqJHsVrW/xHMccJFlMDQmqdO1V7nlwSCumcfFaepAnRSWD4XCZG4tc7blwA4SmR4UK8WXpw/nX9fICIcFZeO/dKFp58uRvQ87I7wqHaNyonVSFfEnmONwpBQzspxojPKLVX5bBh7KD5sBzc6PzyOA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773278617; c=relaxed/simple;
-	bh=3McREo9Kk2UYPLjGgyLNM8Spss7Ow8fhuceAlqV3l6Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n01pbO9yiDAWf1O4eoH6McI1/gzddSMCXv0bqH52gUzJupHuySHJaE3NF11QpePwCVhR0fSrFamtksvh3FVxIeBwTt5btZ+2dSmhZwtVXtwOTpy6BP9UK6X1evpuGRLnXFIvgHzzCdPBjV/1fWeEm/uz0gqOJyCmG3NTktuBECQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=diaEYF2D; arc=none smtp.client-ip=209.85.219.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14B1389DE3
+	for <spacemit@lists.linux.dev>; Thu, 12 Mar 2026 08:43:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773305005; cv=pass; b=ESCxZVBW4xCBt6mg3KOynC3iuCEKYzpJzXzC3nFyUee9HO+UNARfyr+9H0xNCeR/EGKotiRFfns+tAAAT8VQB9hI4lSNzIXMVyA7c2afnxUDe3uFtUT4F/6B1GPz1HFEYxg1Fa2hK4wgBe7R3J2pshJSF71jKwdzmWc1amq42fc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773305005; c=relaxed/simple;
+	bh=f+PIqqu6oVpYXE4fiunpYM9+RC9U5ZQdIJciIwi3PyY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=A5m9+/dyp5mMzXOL3Si8vwcBLatNw6JmQrSl0Y/DfiFFLOTI8RywLmpfS+c4YU/zFZO0JjrlN2dBsfwuInLijChoYnwcWoqmCIeInroByB/InB0IZChJFg6C6yJGs3sXOjkz9nI7hfFlJ1NWydA3KXazXPg2kMzelN5ILQMABVU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=iGqgAF3E; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="diaEYF2D"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-899fbf92bdbso6132696d6.0
-        for <spacemit@lists.linux.dev>; Wed, 11 Mar 2026 18:23:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773278614; x=1773883414; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iB9g5jx+x167tNjxcGl7Z3iDMBhQp91ckzQQIEVj78E=;
-        b=diaEYF2D6toxLwEZudKaF6MFb9eLwdPd314eS2XkDlPS3hiyfa8f8+sG62h35MODqA
-         EYXNaC0x1vHSCOFI4oBWzlqOdrCaGePUseDXYq5XOa07N4ARHGthOS3ZFUrVBXfZzV5/
-         7x33ZUgcdUu+A2c9zH9vvoKmTlpFdcg30Ux2Fc5tP5x8ZtstmWhbSQotgR/660s9e1pn
-         kn5AFIEO/CFIuuN4I3rpVpkUclry3Tid8T6qbV55Xw2a2xDGjoh4mVxfxU3QG1QEXkwS
-         zcIJbZrNw95ANBY3VxkvTfzbaEMKcrK9pQ/CD9gHjnjp2a3EgplX7xzM1jMzz/OzIv6K
-         5E4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773278614; x=1773883414;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=iB9g5jx+x167tNjxcGl7Z3iDMBhQp91ckzQQIEVj78E=;
-        b=ptONR6kioxldzv0s0vmq6rrWeR8e1iDNNdGMFeVdbMQjXNbZCG5eNaDhWlw4YwOGh5
-         BFGzoIYIS2dDPmYt7mCtEI3N3LDihlIQLxgCEdlaXMsWluqda7uMR+HWglZI6/5/slrh
-         bgPyQUWfarenVt7mSYSTdPO1iw4/JZ09F4M5hQw5Lt46Rjm+ynDtujVKxBhndthDkzZe
-         vFiG7Jh3cFIp1gtVzmBlD7wfdMQHjMunzUyBVY/9Lt9evfRRiwmx9ZxX77d8rb7tCg7e
-         NJ1RvUrzC9tnagwgOK1QBFcDdUw/gmYAkYRDexLzlYJDnX5trkhz6fiJfS/dby85tPg0
-         mjXg==
-X-Forwarded-Encrypted: i=1; AJvYcCV2FE5+srLQNIH3jUoQwfhfJWwE9dwl+igl1dQo+7vbp5iz+NriUvhX6IresCb6hHeAgrKdQ0Lcpg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwlMRtE9UNHRhrtiJcc54dOhgauOWJYUikmciL1FyRBPpahRj0M
-	M37tDY2SsECGem2KYyPf1DMTtmi3BCIiMueRhA0lfHrm4If+qwzDsncA
-X-Gm-Gg: ATEYQzxhjvJndSvdQJtMgna3OC+KltpVBLWzYCBboXSpLkv/r8NttxzuZx2045yi7Wn
-	8DyJLA/Yq/4Q1dnkHpU4/aK755zrlsj/Z5TS91kAQgAQq7KoRStrl/zzUju+lmN/7z5YTgM4aK0
-	JA7i+a+MNfL/+Kj6luCieqnlgkens8px+vgbWSgO1l4knthp/vaBlqf2aNiA4yNrCTFlzJZg4E5
-	bt7xQW6R6kUyDV2U2hTDBEz+3+oTI+wjaMCMey141j9yFGK+N1f6leuv1VO1cj4Hh/+WQRbGy4Q
-	xbXgqWoDOESI1zB06KutMuvyxycuTkmt8EIcKU24lq0rur2RCVIOewlsoq8FR6fHaH9gV+ksssj
-	24IRcOvImH2cZR0+lX28pmMoa+zvX0lG9zdV75Ogqp6J1Bk3E5uXccb2QdLmcVD3su30rKix1qi
-	V6em8WIHGmXtzW6Bw4O/6EVvEKm1dcLszT2g==
-X-Received: by 2002:a05:6214:2305:b0:89a:717:1e48 with SMTP id 6a1803df08f44-89a66ae1ce8mr61425926d6.58.1773278613817;
-        Wed, 11 Mar 2026 18:23:33 -0700 (PDT)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a65beb4b3sm25165286d6.14.2026.03.11.18.23.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 18:23:33 -0700 (PDT)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Yixun Lan <dlan@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Yao Zi <me@ziyao.cc>,
-	Yanteng Si <siyanteng@cqsoftware.com.cn>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>
-Cc: netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH net-next v9 4/4] MAINTAINERS: add entry for SpacemiT DWMAC glue layer
-Date: Thu, 12 Mar 2026 09:22:26 +0800
-Message-ID: <20260312012232.373713-5-inochiama@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260312012232.373713-1-inochiama@gmail.com>
-References: <20260312012232.373713-1-inochiama@gmail.com>
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="iGqgAF3E"
+ARC-Seal: i=1; a=rsa-sha256; t=1773304989; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=F5hSwpNZcQtPKx7PQE4uUw6GIsAXX1/M4MwaBj7AJ8XzgPjtg/nW1GQ3DCbHGYuda2RvWQHaKnVoAgvLUhf4RViwXDOH8++InsmhJGcIdus2Pw6Nqx6Tg0yD7hCowC3rHtRo3z7lBVnVJnQjL73IayheJ/KOXnJXegTVi3AJYCU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1773304989; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=uQj6ZycW4k8NABW6ZEGD6JBqWI4xAvj29ErMyDzsZ7k=; 
+	b=m2l6mmAxbSZ6YrZB5dsSZ/LhWb93JExKcXB0CoLvvqTJPEs9v0Dm3AXo8bPzI/gtm6ki63XzJDz0ZKmSEKBHztal2mjNExQSon0cBFiQsxesCdZLWh6uDabGPDPF4zX/7YhmqVqOo3bx4JLl3A2bgsWGrx6PlmReDceuXsXrTko=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773304989;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+	bh=uQj6ZycW4k8NABW6ZEGD6JBqWI4xAvj29ErMyDzsZ7k=;
+	b=iGqgAF3ElbsFNoBBYvYlk+7yISCfZose0UO9SS4fheago7uHeddrXBQot6fi8PXw
+	aHkloALKzy/Djrmzef/fbzPgRvjeCI+RKyGUb5QaCES88o08X3hyckMyXvv6INm73IY
+	K8GNxEV5a4iTihTzxZcKAjv0xoF91jwrm+RWOLB0=
+Received: by mx.zohomail.com with SMTPS id 1773304988251269.8455882910689;
+	Thu, 12 Mar 2026 01:43:08 -0700 (PDT)
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+Subject: [PATCH 0/2] gpio/pinctrl: spacemit: Add GPIO pin configuration
+ support for K1
+Date: Thu, 12 Mar 2026 16:42:41 +0800
+Message-Id: <20260312-k1-gpio-set-config-v1-0-8c3541da16b1@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MywqAIBBA0V+JWTfgA3r9SrQoG20IVDQiCP89a
+ XkW976QKTFlmJoXEt2cOfgK2TZgjtU7Qt6rQQnVCS0VnhJd5ICZLjTBW3ZoxdBrGhVtq4EaxkS
+ Wn386L6V8uku2DGQAAAA=
+X-Change-ID: 20260312-k1-gpio-set-config-f0873e92ebac
+To: Linus Walleij <linusw@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Bartosz Golaszewski <brgl@kernel.org>
+Cc: linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Junhui Liu <junhui.liu@pigmoral.tech>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773304980; l=1284;
+ i=junhui.liu@pigmoral.tech; s=20251228; h=from:subject:message-id;
+ bh=f+PIqqu6oVpYXE4fiunpYM9+RC9U5ZQdIJciIwi3PyY=;
+ b=5zW2jnVH1u6pfK3Opx9MYniDsQj3a+gJXL+kgsic5po1fkwmnfqQDhiSxKdD/08ykbVl2Wnfq
+ 33jyxJufWOAAXHu/XQ/JCfVvmzJZA3UMs2Zh+nGhnJcwaO/FuMdCroW
+X-Developer-Key: i=junhui.liu@pigmoral.tech; a=ed25519;
+ pk=3vU0qIPJAH8blXmLyqBhKx+nLOjcLwwYhZXelEpw7h4=
+X-ZohoMailClient: External
 
-Add a MAINTAINERS entry for the SpacemiT DWMAC glue layer driver and
-its DT binding.
+This add GPIO pin configuration support for the Spacemit K1 SoC. Some
+use cases require configuring pin attributes like pull-up/down when using
+GPIO lines.
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+A practical example is the SD card detection pin on the Banana Pi BPI-F3
+board. Since it lacks an external pull-up circuit, the pin must be
+configured with an internal pull-up to function correctly. Such
+configurations can be specified directly in the devicetree:
+
+    cd-gpios = <&gpio K1_GPIO(80) (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+
+To address this, add the set_config() callback to the gpio-spacemit-k1
+driver to enable pin configuration through pinctrl, and modify the
+pinctrl driver to return -ENOTSUPP instead of -EINVAL for unsupported
+parameters, allowing the GPIO subsystem to gracefully handle them.
+
 ---
- MAINTAINERS | 6 ++++++
- 1 file changed, 6 insertions(+)
+Junhui Liu (2):
+      pinctrl: spacemit: return -ENOTSUPP for unsupported pin configurations
+      gpio: spacemit-k1: Add set_config callback support
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2265e2c9bfbe..dd72d26ac837 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -24834,6 +24834,12 @@ W:	https://linuxtv.org
- Q:	http://patchwork.linuxtv.org/project/linux-media/list/
- F:	drivers/media/dvb-frontends/sp2*
- 
-+SPACEMIT DWMAC GLUE LAYER
-+M:	Inochi Amaoto <inochiama@gmail.com>
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/net/spacemit,k3-dwmac.yaml
-+F:	drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
-+
- SPACEMIT K1 I2C DRIVER
- M:	Troy Mitchell <troy.mitchell@linux.spacemit.com>
- S:	Maintained
+ drivers/gpio/gpio-spacemit-k1.c       |  1 +
+ drivers/pinctrl/spacemit/pinctrl-k1.c | 21 ++++++++++++---------
+ 2 files changed, 13 insertions(+), 9 deletions(-)
+---
+base-commit: b29fb8829bff243512bb8c8908fd39406f9fd4c3
+change-id: 20260312-k1-gpio-set-config-f0873e92ebac
+
+Best regards,
 -- 
-2.53.0
+Junhui Liu <junhui.liu@pigmoral.tech>
 
