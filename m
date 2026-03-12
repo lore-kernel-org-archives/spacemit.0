@@ -1,151 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0B436921B;
-	Thu, 12 Mar 2026 10:34:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5950C2DB787
+	for <spacemit@lists.linux.dev>; Thu, 12 Mar 2026 11:09:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773311680; cv=none; b=U+RT7caWWgxi84eYIffDxBrlwwVSuhqbbpSCiwC/V0VKIF960i2XRGrpbfHOePONXXNXhomg/K0m2fsscZ2QFbwHw4lEfsi1zvb/mYDPz0Qac4UpHdSvbzRlRNYH890uyP0cYcVrBmfoabY7yyTo9at25/499AdmWAu10mZYTuI=
+	t=1773313785; cv=none; b=uX1RKAEcdQJY+dNoweK4QuDkgKpMyt7+lVtERPlbciCsUwAcN27gmonXBZA4GYxAPUAFiZZvri1b7CJWSbErEKdLpRizlfjFJg9UHxtOxKj93JtRIGpb6JlZL7awfBoaXytgaNAzT73B6owqxatO5ssnrtePKZeclgxcNJGIqdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773311680; c=relaxed/simple;
-	bh=4vJ6d7QV3xPwTiykwfhRJzRwAyeVmoWsLoGPFgfmzm8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cYbJ44QPW7f0LMNBwXcoErsdftS8On2BFRBu+xC9tchpdLR0EpN4a1XuJrq7voLTtw0eBIETmf3HNuR9JaiDDo2yIR+YeXjcHCR3ewaQSC7OdWaFYPf8XJY9SBP9u4Zdk2jPjv9gShkvtW3sWXo5DYNJmDef27RTl2KSz8hVYsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FMiq6hNu; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FMiq6hNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359DDC4CEF7;
-	Thu, 12 Mar 2026 10:34:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773311680;
-	bh=4vJ6d7QV3xPwTiykwfhRJzRwAyeVmoWsLoGPFgfmzm8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=FMiq6hNu2fSPkZAoChA+OY3rsaeClBJUNjaGrA4OoxLhg19MOS96dCTbyvEiCK52+
-	 3o3Sz7O1hxxZShzlfuTGBRV+G4REkXSBzLoWWqk+5olXaCx7Wssh4rql0Uj7R5TLCF
-	 L6XPs+OGAkkM6lAKeGdFcExvL55rdr4D5IlCyCbeHBCTdUkM9pICKTU9ub0FjgXc+2
-	 8FEKAP+xbRWjkYDllEhUMRaUVUPvEXnlfmXM1wRvXLVDBVZ3speZLlXtrFa7n0xbJk
-	 62ZZtTFClbn2cLobTWHH5ibaei+7PdV737TTkTM3gMUOJxH9UyzNTNGm8TIz1L03h1
-	 lWYz+j+M4D4GQ==
-From: Yixun Lan <dlan@kernel.org>
-Date: Thu, 12 Mar 2026 10:34:20 +0000
-Subject: [PATCH 2/2] reset: spacemit: k3: Add individual reset lines for
- USB, PCIe
+	s=arc-20240116; t=1773313785; c=relaxed/simple;
+	bh=Op03+RD3/hCwiJOIL8EBSDbt1vK5Jph9lkPjxsOpkbE=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=B4yRqcCts/tfL7XRgSOIYjElQeyJ7EeRJrJQCjgso/gY5rDDBCUu22iYMwrE05nir3ChLr50HAYXJpnVm4hmnpAVA8w32S5dBTJ2/suGybBW7dPMTDjoCTmlhRkCrvOlEz8EdDAAeA6NZBlIirytbGb8PaNKBCreVNpbxgsEREk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1w0duk-0001vZ-TI; Thu, 12 Mar 2026 12:09:14 +0100
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1w0dui-0050dj-2d;
+	Thu, 12 Mar 2026 12:09:14 +0100
+Received: from pza by lupine with local (Exim 4.98.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1w0duk-000000006H9-0JQn;
+	Thu, 12 Mar 2026 12:09:14 +0100
+Message-ID: <0abfd76f49e5cedf7bfc84eb4d9a0a1d7543f6f8.camel@pengutronix.de>
+Subject: Re: [PATCH 1/2] dt-bindings: soc: spacemit: k3: Decouple composite
+ reset lines
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Yixun Lan <dlan@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Junzhong Pan <junzhong.pan@spacemit.com>, Guodong Xu
+ <guodong@riscstar.com>, 	devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, 	spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Date: Thu, 12 Mar 2026 12:09:13 +0100
+In-Reply-To: <20260312-01-k3-reset-usb-pci-v1-1-022b24b7340f@kernel.org>
+References: <20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org>
+	 <20260312-01-k3-reset-usb-pci-v1-1-022b24b7340f@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-0+deb13u1 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260312-01-k3-reset-usb-pci-v1-2-022b24b7340f@kernel.org>
-References: <20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org>
-In-Reply-To: <20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org>
-To: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Junzhong Pan <junzhong.pan@spacemit.com>, 
- Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4967; i=dlan@kernel.org;
- h=from:subject:message-id; bh=4vJ6d7QV3xPwTiykwfhRJzRwAyeVmoWsLoGPFgfmzm8=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpspaz/pVzM7e18puyPKELV6xMhE3HoSQ8uC9B+
- Nwrv+1mIFCJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCabKWsxsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+1ZrA//RzGpjGigz45qGwFV2To8lsLhZ64SokRG5vKKj1vwOKA5eXHCbQlwW
- t2HLAeIABB6ic2Iug2CRXyQrDy6V+gX1oN6GfGDZnSQTQZqlIuJmYD1YILMiB0naqt5i7hUQqPU
- /fouQamRSwrgsZQtghRiSo1x6QVWezC1n0epVY2Esxd8A9A2yQ9iiGfUjZ/rUzz76Tqbx6G/6b+
- y3Aa8rAB8076KpMqzwe6Z+2ae/uy/J1XmR19+Pq9Eu69x0a2EQ/g+OwDbbDt9K8mJZ/BdJIAjcF
- tQA4jehxhhMDrRd6esOdYwxfIvZs+XIra3HvAMiJJ57PQMLI1SiCMeVykkaQmQG700waeuPUP9u
- 403YrOPm8sRRRvLAAN3uQRAg++hEWuEtC4l8/EMmJQ32/wwy+6lu1oXespixWsxB57JzhKkPrqT
- SL/lUzHfENqqDTLn/gBrALlRYl5ONGLYZidLZF8T8vVTdmtwGipYNIq092V+sIv1nWOkpn0d7+l
- Yv7zyaFzAT2Cq6DcLK5ANT238aNc7gDhkn6/YKXtJhnSJd1UiNNU7gayrl4ybb2Yakm48BOBQqM
- YTaSgcQ1xxGKBsII+bKCDrVzFO9Fj0YsFfaB4Vv7G8k+6Ppm0Rj8PF2fYIUpJILoNnx4B4E+zP/
- fQTcFGOjotbGOfgVCcGP0BNzxwSXzg=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: spacemit@lists.linux.dev
 
-The DWC3 USB host controller in K3 SoC has three reset lines - AHB,
-VCC, PHY. The PCIe controller also has three reset lines - DBI, Slave,
-Master. So, decouple USB and PCIe reset line to individual ones.
+On Do, 2026-03-12 at 10:34 +0000, Yixun Lan wrote:
+> Instead of grouping several different reset lines into one composite
+> reset, decouple them to individual ones which make it more aligned
+> with underlying hardware.
+>
+> The DWC3 USB host controller in K3 SoC has three reset lines - AHB, VCC,
+> PHY. The PCIe controller also has three reset lines - DBI, Slave, Master.
+>=20
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+>  include/dt-bindings/reset/spacemit,k3-resets.h | 42 ++++++++++++++++++++=
+------
+>  1 file changed, 32 insertions(+), 10 deletions(-)
+>=20
+> diff --git a/include/dt-bindings/reset/spacemit,k3-resets.h b/include/dt-=
+bindings/reset/spacemit,k3-resets.h
+> index 79ac1c22b7b5..c12f8bd32047 100644
+> --- a/include/dt-bindings/reset/spacemit,k3-resets.h
+> +++ b/include/dt-bindings/reset/spacemit,k3-resets.h
+> @@ -97,11 +97,7 @@
+>  #define RESET_APMU_SDH0          13
+>  #define RESET_APMU_SDH1          14
+>  #define RESET_APMU_SDH2          15
+> -#define RESET_APMU_USB2          16
+> -#define RESET_APMU_USB3_PORTA    17
+> -#define RESET_APMU_USB3_PORTB    18
+> -#define RESET_APMU_USB3_PORTC    19
+> -#define RESET_APMU_USB3_PORTD    20
 
-Signed-off-by: Yixun Lan <dlan@kernel.org>
----
- drivers/reset/spacemit/reset-spacemit-k3.c | 50 ++++++++++++++++++------------
- 1 file changed, 30 insertions(+), 20 deletions(-)
+This is backwards incompatible.
+Are there any device trees using the APMU resets yet?
+If not, I wonder if we should just renumber all APMU resets into a
+contiguous range and try to get it into v7.0 as a fix.
 
-diff --git a/drivers/reset/spacemit/reset-spacemit-k3.c b/drivers/reset/spacemit/reset-spacemit-k3.c
-index e9e32e4c1ba5..9f58526b0119 100644
---- a/drivers/reset/spacemit/reset-spacemit-k3.c
-+++ b/drivers/reset/spacemit/reset-spacemit-k3.c
-@@ -112,16 +112,21 @@ static const struct ccu_reset_data k3_apmu_resets[] = {
- 	[RESET_APMU_SDH0]	= RESET_DATA(APMU_SDH0_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_SDH1]	= RESET_DATA(APMU_SDH1_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_SDH2]	= RESET_DATA(APMU_SDH2_CLK_RES_CTRL,	0, BIT(1)),
--	[RESET_APMU_USB2]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(1)|BIT(2)|BIT(3)),
--	[RESET_APMU_USB3_PORTA]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(5)|BIT(6)|BIT(7)),
--	[RESET_APMU_USB3_PORTB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(9)|BIT(10)|BIT(11)),
--	[RESET_APMU_USB3_PORTC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(13)|BIT(14)|BIT(15)),
--	[RESET_APMU_USB3_PORTD]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(17)|BIT(18)|BIT(19)),
-+	[RESET_APMU_USB2_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(1)),
-+	[RESET_APMU_USB2_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(2)),
-+	[RESET_APMU_USB2_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(3)),
-+	[RESET_APMU_USB3_A_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(5)),
-+	[RESET_APMU_USB3_A_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(6)),
-+	[RESET_APMU_USB3_A_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(7)),
-+	[RESET_APMU_USB3_B_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(9)),
-+	[RESET_APMU_USB3_B_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(10)),
-+	[RESET_APMU_USB3_B_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(11)),
-+	[RESET_APMU_USB3_C_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(13)),
-+	[RESET_APMU_USB3_C_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(14)),
-+	[RESET_APMU_USB3_C_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(15)),
-+	[RESET_APMU_USB3_D_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(17)),
-+	[RESET_APMU_USB3_D_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(18)),
-+	[RESET_APMU_USB3_D_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(19)),
- 	[RESET_APMU_QSPI]	= RESET_DATA(APMU_QSPI_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_QSPI_BUS]	= RESET_DATA(APMU_QSPI_CLK_RES_CTRL,	0, BIT(0)),
- 	[RESET_APMU_DMA]	= RESET_DATA(APMU_DMA_CLK_RES_CTRL,	0, BIT(0)),
-@@ -164,16 +169,21 @@ static const struct ccu_reset_data k3_apmu_resets[] = {
- 	[RESET_APMU_UFS_ACLK]	= RESET_DATA(APMU_UFS_CLK_RES_CTRL,	0, BIT(0)),
- 	[RESET_APMU_EDP0]	= RESET_DATA(APMU_LCD_EDP_CTRL,		0, BIT(0)),
- 	[RESET_APMU_EDP1]	= RESET_DATA(APMU_LCD_EDP_CTRL,		0, BIT(16)),
--	[RESET_APMU_PCIE_PORTA]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,	0,
--				BIT(5) | BIT(4) | BIT(3)),
--	[RESET_APMU_PCIE_PORTB]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,	0,
--				BIT(5) | BIT(4) | BIT(3)),
--	[RESET_APMU_PCIE_PORTC]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,	0,
--				BIT(5) | BIT(4) | BIT(3)),
--	[RESET_APMU_PCIE_PORTD]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,	0,
--				BIT(5) | BIT(4) | BIT(3)),
--	[RESET_APMU_PCIE_PORTE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,	0,
--				BIT(5) | BIT(4) | BIT(3)),
-+	[RESET_APMU_PCIE_A_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,	0, BIT(3)),
-+	[RESET_APMU_PCIE_A_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,	0, BIT(4)),
-+	[RESET_APMU_PCIE_A_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,	0, BIT(5)),
-+	[RESET_APMU_PCIE_B_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,	0, BIT(3)),
-+	[RESET_APMU_PCIE_B_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,	0, BIT(4)),
-+	[RESET_APMU_PCIE_B_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,	0, BIT(5)),
-+	[RESET_APMU_PCIE_C_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,	0, BIT(3)),
-+	[RESET_APMU_PCIE_C_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,	0, BIT(4)),
-+	[RESET_APMU_PCIE_C_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,	0, BIT(5)),
-+	[RESET_APMU_PCIE_D_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,	0, BIT(3)),
-+	[RESET_APMU_PCIE_D_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,	0, BIT(4)),
-+	[RESET_APMU_PCIE_D_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,	0, BIT(5)),
-+	[RESET_APMU_PCIE_E_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,	0, BIT(3)),
-+	[RESET_APMU_PCIE_E_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,	0, BIT(4)),
-+	[RESET_APMU_PCIE_E_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,	0, BIT(5)),
- 	[RESET_APMU_EMAC0]	= RESET_DATA(APMU_EMAC0_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_EMAC1]	= RESET_DATA(APMU_EMAC1_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_EMAC2]	= RESET_DATA(APMU_EMAC2_CLK_RES_CTRL,	0, BIT(1)),
+Also, this breaks bisectability.
+reset-spacemit-k3.c will fail to compile between patches 1 and 2.
 
--- 
-2.53.0
-
+regards
+Philipp
