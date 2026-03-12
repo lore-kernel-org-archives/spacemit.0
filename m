@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6867139D6EC;
-	Thu, 12 Mar 2026 11:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C130A39D6EA;
+	Thu, 12 Mar 2026 11:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773314512; cv=none; b=s/t98abGcRdSIDjF/cj2yEK+jYwlpntQzd+QukMR7GbpUIoXd1S1XGqnZqVSNec9jR2iUMXwfpbqadNrVhX5sKwB7Ekdas/XtyMgGNy370z1ULC5Nu9VuJLXNeUVM3oDHNqnNfmL1qh41zFcYP5GiFXJIblHJsKOi7ZoUhgBnt8=
+	t=1773314941; cv=none; b=kNH2jK3mcu+KDoRho98bHcHrc76m0gjEGiv6FEyNDzZa21LHv7TJBXMcmI37Y2raRPlkh5Mg6ZMh3EqYTtYZgA9Q22v1rUYfTURSZu1I5d2fK3W0GITkGc/m970t2cLPwEE08Gv4m22Cym93nlfTTv/Sgu4n+jSafZE3FM3ae0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773314512; c=relaxed/simple;
-	bh=ka1+40NCf1V8bKWsuV29BMn3rQttD0Wiz0TTE+RnufY=;
+	s=arc-20240116; t=1773314941; c=relaxed/simple;
+	bh=I3jwJdCsHstSRrFGSH1oMaY/GRHwpkyvBFzK3V5Esg4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=skXj6jDlh1RbdDwmM3zT9V0to3J53XCgAWJ7piKqfzanl4mgkfvM1hfxjr108F0VBoRiN9QR2PMBd8YYaNJXN7nSYHZ9DFM1sd6mKMJHBNBS8RJ14BUfQpsNd8u7TThZ00TYZKZeqHftxdtcnoztjjtw2wGSDzuQBfGLw0gHQpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tiQdmWnW; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=fkyY7eLZjU/BWI3PUpNCcmsBSboI+Xo3nLw8zUP2fpkF5R+l476QMbXRi9rsASMJrkyHetO53HzzP1X4e6wR334jm4O7QEXqlCltagDL5ucaZPN3iotaSzzoA+1GE41x8Z8RRSC1k5G6I5THX4JxO28BIbm2jOClgeuwnHjp0Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZRAyWZLC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tiQdmWnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C24C4CEF7;
-	Thu, 12 Mar 2026 11:21:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZRAyWZLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00FEC4CEF7;
+	Thu, 12 Mar 2026 11:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773314512;
-	bh=ka1+40NCf1V8bKWsuV29BMn3rQttD0Wiz0TTE+RnufY=;
+	s=k20201202; t=1773314941;
+	bh=I3jwJdCsHstSRrFGSH1oMaY/GRHwpkyvBFzK3V5Esg4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tiQdmWnWhE5sHW3j9Rurh0Srzd7t3zPDVmlikV8bdHLF76o/B6SHwD5wMnpnIrbKm
-	 XbrgqSscDiCC22hLhXR1EHpF0JBC1MTpa+Ql2kNOxO7FGCCAYM0IgPCOaTEMaaATFA
-	 eJb1cyO8ny6vmvYe+nEcnQalde1FvD2Hp6Ijz+jOR1rk/lDXG5ac7jv3DMq1z26eW0
-	 JO1oSccXjF1Ssr5ulQVc+Q0Mz1ngfOgbOqv1yE/c7vw/5zJlenNWI4IYq04rN77Zml
-	 aedgEwlDi4+jHqEQXo02g4am9nr3Bijy/ZHxEQJ/QqDJqGp2Jmw4gE6jorH+kwqI/w
-	 qOHzvuJ4no4Ww==
-Date: Thu, 12 Mar 2026 19:21:49 +0800
+	b=ZRAyWZLCtwhisWSIXGIBgkFyqGlK3d2PUxqdwBm7VoWQdRQC2OeiR+7DdCgy6VYmu
+	 TqJ1XEIw7CFONs70RY9lvFnMxNll6VONm0YfESkI2DFSyIKNPz5LZET9EEAk7H6Wzp
+	 SoHSYdG5J0OXj9A/YOvAlT5Nyk0D0J6LMDMqfTCyyBuu/RWBLEqd8CFKjZ5XAPgJA3
+	 H+L/umWKH9zRxubbgiqTjoQAaMDO1Uct2u69UiVuAqP4zCZenoo2g3Y4RW0njhWUxi
+	 NFBhXLvDBIwNn+/SsWmQOVA9l8PPwZiQj/GCfA4qeEMteNyoC/Nyu7IJffJOjvzy0v
+	 5LVI8dotSIsgw==
+Date: Thu, 12 Mar 2026 19:28:58 +0800
 From: Yixun Lan <dlan@kernel.org>
-To: Junhui Liu <junhui.liu@pigmoral.tech>
-Cc: Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>, linux-gpio@vger.kernel.org,
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Junzhong Pan <junzhong.pan@spacemit.com>,
+	Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] gpio/pinctrl: spacemit: Add GPIO pin configuration
- support for K1
-Message-ID: <20260312112149-GKG302167@kernel.org>
-References: <20260312-k1-gpio-set-config-v1-0-8c3541da16b1@pigmoral.tech>
+Subject: Re: [PATCH 1/2] dt-bindings: soc: spacemit: k3: Decouple composite
+ reset lines
+Message-ID: <20260312112858-GKH302167@kernel.org>
+References: <20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org>
+ <20260312-01-k3-reset-usb-pci-v1-1-022b24b7340f@kernel.org>
+ <0abfd76f49e5cedf7bfc84eb4d9a0a1d7543f6f8.camel@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,47 +49,53 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260312-k1-gpio-set-config-v1-0-8c3541da16b1@pigmoral.tech>
+In-Reply-To: <0abfd76f49e5cedf7bfc84eb4d9a0a1d7543f6f8.camel@pengutronix.de>
 
-Hi Junhui, 
+Hi Philipp,
 
-On 16:42 Thu 12 Mar     , Junhui Liu wrote:
-> This add GPIO pin configuration support for the Spacemit K1 SoC. Some
-> use cases require configuring pin attributes like pull-up/down when using
-> GPIO lines.
+On 12:09 Thu 12 Mar     , Philipp Zabel wrote:
+> On Do, 2026-03-12 at 10:34 +0000, Yixun Lan wrote:
+> > Instead of grouping several different reset lines into one composite
+> > reset, decouple them to individual ones which make it more aligned
+> > with underlying hardware.
+> >
+> > The DWC3 USB host controller in K3 SoC has three reset lines - AHB, VCC,
+> > PHY. The PCIe controller also has three reset lines - DBI, Slave, Master.
+> > 
+> > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> > ---
+> >  include/dt-bindings/reset/spacemit,k3-resets.h | 42 ++++++++++++++++++++------
+> >  1 file changed, 32 insertions(+), 10 deletions(-)
+> > 
+> > diff --git a/include/dt-bindings/reset/spacemit,k3-resets.h b/include/dt-bindings/reset/spacemit,k3-resets.h
+> > index 79ac1c22b7b5..c12f8bd32047 100644
+> > --- a/include/dt-bindings/reset/spacemit,k3-resets.h
+> > +++ b/include/dt-bindings/reset/spacemit,k3-resets.h
+> > @@ -97,11 +97,7 @@
+> >  #define RESET_APMU_SDH0          13
+> >  #define RESET_APMU_SDH1          14
+> >  #define RESET_APMU_SDH2          15
+> > -#define RESET_APMU_USB2          16
+> > -#define RESET_APMU_USB3_PORTA    17
+> > -#define RESET_APMU_USB3_PORTB    18
+> > -#define RESET_APMU_USB3_PORTC    19
+> > -#define RESET_APMU_USB3_PORTD    20
 > 
-> A practical example is the SD card detection pin on the Banana Pi BPI-F3
-> board. Since it lacks an external pull-up circuit, the pin must be
-> configured with an internal pull-up to function correctly. Such
-> configurations can be specified directly in the devicetree:
+> This is backwards incompatible.
+> Are there any device trees using the APMU resets yet?
+> If not, I wonder if we should just renumber all APMU resets into a
+> contiguous range and try to get it into v7.0 as a fix.
 > 
->     cd-gpios = <&gpio K1_GPIO(80) (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-> 
-> To address this, add the set_config() callback to the gpio-spacemit-k1
-> driver to enable pin configuration through pinctrl, and modify the
-> pinctrl driver to return -ENOTSUPP instead of -EINVAL for unsupported
-> parameters, allowing the GPIO subsystem to gracefully handle them.
-> 
-Thanks for working on this, for the series
+No, there is currently no consumers, so I could rework them into a contiguous
+version, thanks for the suggestion
 
-Reviewed-by: Yixun Lan <dlan@kernel.org>
+> Also, this breaks bisectability.
+> reset-spacemit-k3.c will fail to compile between patches 1 and 2.
+> 
+I've tried a first version to squash the two patches, but got a checkpatch.pl complait
+for binding should follow into a separate patch.
 
-> ---
-> Junhui Liu (2):
->       pinctrl: spacemit: return -ENOTSUPP for unsupported pin configurations
->       gpio: spacemit-k1: Add set_config callback support
-> 
->  drivers/gpio/gpio-spacemit-k1.c       |  1 +
->  drivers/pinctrl/spacemit/pinctrl-k1.c | 21 ++++++++++++---------
->  2 files changed, 13 insertions(+), 9 deletions(-)
-> ---
-> base-commit: b29fb8829bff243512bb8c8908fd39406f9fd4c3
-> change-id: 20260312-k1-gpio-set-config-f0873e92ebac
-> 
-> Best regards,
-> -- 
-> Junhui Liu <junhui.liu@pigmoral.tech>
-> 
+I can combine these two patches into one, is this Ok for you?
 
 -- 
 Yixun Lan (dlan)
