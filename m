@@ -1,95 +1,223 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB83333434
-	for <spacemit@lists.linux.dev>; Fri, 13 Mar 2026 14:05:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773410756; cv=none; b=Nh5iMScZY3O1+oT5Dvppl7Q7kRl8mv3XbKliwWeGbCd5xZ/E0KN/KpV0DtfocwHG7JTeObLN0fZvlehrbwh3l6kxPRArBgRjWzUQr54RqACC0IuVpye0kiwNTu0qeUNfRyRmPbE+VNp53C/cCAWfxWfKjuB5YP/98aFfycUJebE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773410756; c=relaxed/simple;
-	bh=BqKrd9MGPnv+gQCWHNNUS2UMAZc7FKqpV0JE5XjCDw0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mT3bboIAm65RUQCxXDSsnH3++Nwp9/+SLOydN/wd2Hs0ePtkDK4bcHeRJUtYYClOb/AaKl7QmrGyVoj2eBt4lNoXxo1aQx1ADKpc2sFKT6VtWI+rHG/TWvtL9J6dVP/kkfkhj0otfv9mo8aQV2mzhzgneMWPWWD9rRWxyXQSJGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qYIitWVQ; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990843346B2
+	for <spacemit@lists.linux.dev>; Fri, 13 Mar 2026 14:15:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773411348; cv=pass; b=AeO29ER4NDD9t6IDXCCfD6w49KrmPKprNqQZBKDjCCiVKiOciC+38Hcjmu9xQ2t5m4z5/FiMDCwgtE2w/U2vN7jzBvgRJpwvZuq2jULZTRCuCxXsY6MO4CJrUOZ6qBuN/gHqdC1QJagJ5jLmxbukgAAMqv3/e4qcwfkrJod/400=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773411348; c=relaxed/simple;
+	bh=BMYkIJzGNQB9BqQChyeP4jCteSWxKiciV5+aVqAqd4Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vo/iYkGmHmE3bHfD7PJx/n7k0RPPbTh7WWhI7SVtBPWJWk7KTzano0ag9z8s0C++8Fv9s9TYI9HK2iWXTYJxaPlogHl6ls7AeftmebxdBdtJmn6/Q0E/A+qSqdSEuaOOG70yU3sVZILqVsHSUYw3R9zDsoB0Z9P9Yqset+ON3hI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=Q1t8PKGP; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qYIitWVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC63C19425
-	for <spacemit@lists.linux.dev>; Fri, 13 Mar 2026 14:05:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773410755;
-	bh=BqKrd9MGPnv+gQCWHNNUS2UMAZc7FKqpV0JE5XjCDw0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=qYIitWVQe5Q8nbcwDKbjNsZkXGT+7nCsErw4C849brpLvV8NNnIi4iGTcwMejdUiU
-	 g5LfhhBULDlg4EJyTt5OdIqMouWPDK0aX5fbWY4sSMVw54yQzc7UzmGns1WWLGeP0Z
-	 lALgqlmr8D2p2UCll8qLKnAZpBIfvyaEI79vKdG8Vn5quqdkj2M38V5Ge0u1SQmk67
-	 WEvWzHg5etGWAyURjSkeQIOppO7nEKZeN1i/BaeCiEBp1JHjSpNPHO4sHO+TcJkqyh
-	 c8fwycoVPMMPgL/p/pgX34J1p2EE+xKyY909/Zz4h8OFvIm8BLFfO3pibLGD1JXx8y
-	 xtoar1IqmGAZg==
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-38a3c62d7d2so16935471fa.1
-        for <spacemit@lists.linux.dev>; Fri, 13 Mar 2026 07:05:55 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCU9xsGSBk9rR6FU6VkA2n1f56wRhWacitATqxt3bO0o24ij8w7Xiv1JY+el7inF0luo0OU8RB3y1g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyJP75yW00vpBBECq4DCYvA0dLW3nYRi/UV+4qD7HwzNicNizZV
-	B5LOXqOqCB4/25up4Mh7yfkWNE2uL5PnxlSN5w7xdX0znX4CCzYWjpLxEKBmmZGaJVUWWvVhfQU
-	oJVjZOX1uh8QE+88hqL9f/wh50Mi3NcO/14cJgEyPEw==
-X-Received: by 2002:a05:651c:2115:b0:37f:c5ca:a6d4 with SMTP id
- 38308e7fff4ca-38a89666433mr11202931fa.6.1773410754347; Fri, 13 Mar 2026
- 07:05:54 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="Q1t8PKGP"
+ARC-Seal: i=1; a=rsa-sha256; t=1773411339; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=iFEA9eJzcAmnXms33ePjSGqMxaL+zBVtJIHp5wTUqGcKOK/vQCZc9LRLYf3ptCfO0LRjJxNhs2fS593oDD8gT0P4nhnfTauaqFDGV/aum6sQh7Zh6L69Hzi3Rr4XhYDZpR9jC3AkQvIKGfwRD91H1DtO79+zGk5uvv6Mqfimoyc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1773411339; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=4yyd8XotYjZZYwF11KV/R0g/vISzO4FDRU2zkUZnLvI=; 
+	b=EcitN7t3/g9tEqt9dilvFyN2RE2BieCKIUtrN41+2pT53dpsXQ0sDA6o728iupzIAcUMjyYdQxZ1FbvRdL6sLjOGSx5hVvkZnkFsinCb+tK8y2MWaE2cTvQn/ekxNPv77D89vr2qESmnkGD1VORZe4eEbjPXVRHCUumSe7UF6BE=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ziyao.cc;
+	spf=pass  smtp.mailfrom=me@ziyao.cc;
+	dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773411339;
+	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:Message-Id:Reply-To;
+	bh=4yyd8XotYjZZYwF11KV/R0g/vISzO4FDRU2zkUZnLvI=;
+	b=Q1t8PKGPX7yPTCBA5zsq9dyX3ZFA0WTh6X92KgdUQzZVpWU92R3u3cpG/0AGjPJB
+	JF9sGc0Xm0rAw46Fr4aHcxIFxS/m6IUsk/R8NDiXpCKWKw/YfuvlZ8rdX1sUH+apGVz
+	Vc7H7Yc9sXVvE3Pd6A8rLH+qCRsmd7ko2v1irjak=
+Received: by mx.zohomail.com with SMTPS id 1773411336146483.83149193111865;
+	Fri, 13 Mar 2026 07:15:36 -0700 (PDT)
+Date: Fri, 13 Mar 2026 14:15:23 +0000
+From: Yao Zi <me@ziyao.cc>
+To: Iker Pedrosa <ikerpedrosam@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/7] mmc: sdhci-of-k1: add comprehensive SDR tuning
+ support
+Message-ID: <abQb-wU4S1NrBPXk@pie>
+References: <20260309-orangepi-sd-card-uhs-v2-0-5bb2b574df5d@gmail.com>
+ <20260309-orangepi-sd-card-uhs-v2-4-5bb2b574df5d@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260312-k1-gpio-set-config-v1-0-8c3541da16b1@pigmoral.tech> <20260312-k1-gpio-set-config-v1-2-8c3541da16b1@pigmoral.tech>
-In-Reply-To: <20260312-k1-gpio-set-config-v1-2-8c3541da16b1@pigmoral.tech>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Fri, 13 Mar 2026 15:05:41 +0100
-X-Gmail-Original-Message-ID: <CAMRc=MdvvqboLa5_EF3Y3Eh7GSu=_eMpJed8mCLQR7upf2oV6Q@mail.gmail.com>
-X-Gm-Features: AaiRm51DxUd0y3wL7awnbPV8W9Fol2pS5cjKcnSSZQnGox51VBH0_3jXriBoQSI
-Message-ID: <CAMRc=MdvvqboLa5_EF3Y3Eh7GSu=_eMpJed8mCLQR7upf2oV6Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] gpio: spacemit-k1: Add set_config callback support
-To: Junhui Liu <junhui.liu@pigmoral.tech>
-Cc: Linus Walleij <linusw@kernel.org>, Yixun Lan <dlan@kernel.org>, linux-gpio@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260309-orangepi-sd-card-uhs-v2-4-5bb2b574df5d@gmail.com>
+X-ZohoMailClient: External
 
-On Thu, Mar 12, 2026 at 9:43=E2=80=AFAM Junhui Liu <junhui.liu@pigmoral.tec=
-h> wrote:
->
-> Assign gpiochip_generic_config() to the set_config() callback to support
-> pin configuration through the GPIO subsystem. This allows users to
-> configure GPIO pin attributes like pull-up/down when specifying a GPIO
-> line in the Device Tree.
->
-> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+On Mon, Mar 09, 2026 at 12:40:14PM +0100, Iker Pedrosa wrote:
+> Implement software tuning algorithm to enable UHS-I SDR modes for SD
+> card operation. This adds both TX and RX delay line tuning based on the
+> SpacemiT K1 controller capabilities.
+> 
+> Key features:
+> - Conditional tuning: only tune when SD card is present and for
+>   high-speed modes (≥100MHz)
+> - TX tuning: configure transmit delay line with default values
+>   (dline_reg=0, delaycode=127) to ensure optimal signal output timing
+> - RX tuning: test full delay range (0-255) with window detection
+>   algorithm to find optimal receive timing
+> - Retry mechanism: multiple fallback delays within optimal window for
+>   improved reliability
+> - Complete register support: add delay line control and configuration
+>   register definitions for fine-grained timing control
+> 
+> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+
+Sorry for raising this late: I think PATCH 3 and PATCH 4 (this one)
+should also be squashed together to form a complete functionality, I
+also doubt otherwise whether compilers complain about unused static
+functions with only PATCH 3 applied.
+
 > ---
->  drivers/gpio/gpio-spacemit-k1.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpio/gpio-spacemit-k1.c b/drivers/gpio/gpio-spacemit=
--k1.c
-> index dbd2e81094b9..5fe813b7f9bb 100644
-> --- a/drivers/gpio/gpio-spacemit-k1.c
-> +++ b/drivers/gpio/gpio-spacemit-k1.c
-> @@ -228,6 +228,7 @@ static int spacemit_gpio_add_bank(struct spacemit_gpi=
-o *sg,
->         gc->label               =3D dev_name(dev);
->         gc->request             =3D gpiochip_generic_request;
->         gc->free                =3D gpiochip_generic_free;
-> +       gc->set_config          =3D gpiochip_generic_config;
->         gc->ngpio               =3D SPACEMIT_NR_GPIOS_PER_BANK;
->         gc->base                =3D -1;
->         gc->of_gpio_n_cells     =3D 3;
->
-> --
-> 2.53.0
->
+>  drivers/mmc/host/sdhci-of-k1.c | 119 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 119 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+> index 79cb7c8d0b6d9c4206bf01721651c8efe8a173c9..d903851b9be0e1d21a2b30636f5e63a52cad0dc2 100644
+> --- a/drivers/mmc/host/sdhci-of-k1.c
+> +++ b/drivers/mmc/host/sdhci-of-k1.c
+> @@ -84,6 +84,12 @@
+>  #define  SDHC_TX_DLINE_REG_MASK         GENMASK(23, 16)
+>  
+>  #define SPACEMIT_RX_DLINE_REG		9
+> +#define SPACEMIT_RX_TUNE_DELAY_MIN	0x0
+> +#define SPACEMIT_RX_TUNE_DELAY_MAX	0xFF
+> +#define SPACEMIT_RX_TUNE_DELAY_STEP	0x1
 
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+I think the STEP constant isn't very helpful, to me its purpose is
+quite obvious in spacemit_sdhci_execute_tuning(), and you could simplify
+the tuning function without adding confusing magic numbers -- since the
+constant is literally one.
 
-Linus, please take it through the pinctrl tree.
+> +#define SPACEMIT_TX_TUNING_DLINE_REG	0x00
+> +#define SPACEMIT_TX_TUNING_DELAYCODE	127
 
-Bart
+...
+
+> +static int spacemit_sdhci_execute_tuning(struct sdhci_host *host, u32 opcode)
+> +{
+> +	int ret = 0;
+> +	int i;
+> +	bool pass_window[SPACEMIT_RX_TUNE_DELAY_MAX + 1] = {false};
+> +	int pass_len = 0, pass_start = 0, max_pass_len = 0, max_pass_start = 0;
+> +	u8 final_delay;
+> +	struct mmc_host *mmc = host->mmc;
+> +	struct mmc_ios ios = mmc->ios;
+> +
+> +	/*
+> +	 * Tuning is required for SDR50/SDR104, HS200/HS400 cards and
+> +	 * if clock frequency is greater than 100MHz in these modes.
+> +	 */
+> +	if (host->clock < 100 * 1000 * 1000 ||
+> +	    !(ios.timing == MMC_TIMING_MMC_HS200 ||
+> +	      ios.timing == MMC_TIMING_UHS_SDR50 ||
+> +	      ios.timing == MMC_TIMING_UHS_SDR104))
+> +		return 0;
+> +
+> +	if (!(mmc->caps2 & MMC_CAP2_NO_SD) && !mmc->ops->get_cd(mmc))
+> +		return 0;
+
+Is this check really necessary? Shouldn't this be handled in MMC core
+instead?
+
+> +	if (mmc->caps2 & MMC_CAP2_NO_MMC) {
+> +		spacemit_sdhci_set_tx_dline_reg(host, SPACEMIT_TX_TUNING_DLINE_REG);
+> +		spacemit_sdhci_set_tx_delay(host, SPACEMIT_TX_TUNING_DELAYCODE);
+> +		spacemit_sdhci_tx_tuning_prepare(host);
+> +
+> +		dev_dbg(mmc_dev(host->mmc), "TX tuning: dline_reg=%d, delaycode=%d\n",
+> +			SPACEMIT_TX_TUNING_DLINE_REG, SPACEMIT_TX_TUNING_DELAYCODE);
+> +	}
+> +
+> +	spacemit_sdhci_prepare_tuning(host);
+> +
+> +	for (i = SPACEMIT_RX_TUNE_DELAY_MIN; i <= SPACEMIT_RX_TUNE_DELAY_MAX;
+> +	     i += SPACEMIT_RX_TUNE_DELAY_STEP) {
+
+The last expression could be simply i++ if you drop
+SPACEMIT_RX_TUNE_DELAY_STEP, this is still quite readable. Same for the
+loop below.
+
+> +		spacemit_sdhci_set_rx_delay(host, i);
+> +
+> +		ret = mmc_send_tuning(host->mmc, opcode, NULL);
+> +		pass_window[i] = (ret == 0);
+> +
+> +		dev_dbg(mmc_dev(host->mmc), "RX delay %d: %s\n",
+> +			i, pass_window[i] ? "pass" : "fail");
+> +	}
+> +
+> +	for (i = SPACEMIT_RX_TUNE_DELAY_MIN; i <= SPACEMIT_RX_TUNE_DELAY_MAX;
+> +	     i += SPACEMIT_RX_TUNE_DELAY_STEP) {
+> +		if (pass_window[i]) {
+> +			if (pass_len == 0)
+> +				pass_start = i;
+> +			pass_len++;
+> +		} else {
+> +			if (pass_len > max_pass_len) {
+> +				max_pass_len = pass_len;
+> +				max_pass_start = pass_start;
+> +			}
+> +			pass_len = 0;
+> +		}
+> +	}
+
+It seems pass_window is only used once in the later loop, why not
+calculate and maintain the best window and its size on the fly? Then you
+could get avoid of the pass_window buffer, and refactor a loop away.
+Something like,
+
+	int current_size, max_window, max_size;
+
+	current_size = 0;
+	max_size = 0;
+	for (i = SPACEMIT_RX_TUNE_DELAY_MIN; i < SPACEMIT_RX_TUNE_DELAY_MAX;
+	     i++) {
+		ret = /* try tuning ... */
+
+		if (ret) {
+			if (max_size < current_size) {
+				max_window = i - current_size;
+				max_size = current_size;
+			}
+
+			current_size = 0;
+		} else {
+			current_size++;
+		}
+	}
+
+	if (current_size > max_size) {
+		max_window = i - current_size;
+		max_size = current_size;
+		current_size = 0;
+	}
+
+should work, too, and is simpler.
+
+Regards,
+Yao Zi
