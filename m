@@ -1,79 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556D639EF2C;
-	Fri, 13 Mar 2026 13:27:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773408421; cv=none; b=E3RlCN4HIFFwpn+t04CRZcXDzy1dF/rxtRM18aqIM7y9uaSqZgsMDSPeK2MZBkYXqDi4i8aLbvI6YZGAnWyZgPZWWLZcczrVCyMTnCRg1rcKJx7xMK2QTgthasC4ObFxmpQgWgQTkb7wT5tz2lrEsAZYT28oOSfpgycqNCcWYMo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773408421; c=relaxed/simple;
-	bh=p2HNkolfJH3glufT8VRymQsTTu1495N3oyZW+nfzmGs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KHvW4GJqkXs2FJhyaeOgFnjLJ6rDL1cQOGROPgCoJ9bL1jqVyhQ9nO/7MrTf1nJxSvbNo/ipNPhdt1GQWBJIXCDdKeB2wKLw5d/svQSVD9THOkW+xnhPySG3m8iU3THfbk9m/kdEKQTsuLuluv6rI+aK+3GdBqaSDj3U69YdegY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BxE6tkrG; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37CD2D7D2E
+	for <spacemit@lists.linux.dev>; Fri, 13 Mar 2026 13:38:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773409083; cv=pass; b=YH9/DN8mLrOS31Mze6nB0S9fLEsEzjLWlJSym1NhvPPI1Ns4yekslgdCi8d5s86wK/Km7XLn+jP/lNp08Po4UAPF9cB/zdKKIAA2AH4/g896Jq+jf1C0MToxmntgg3/xkq5Eqz45iZQ/d3W95xcJRQW/vbWeDyZMUMxnSg8QUlQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773409083; c=relaxed/simple;
+	bh=1EMaOoOWPOC7Nwsl+BdHwxbIv8eBJD7gu8iTli3mgVQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zv5GOwG2SHbK2GB8lyRc4mPG2dbZoij/fAGUbefd3AgN86d63/yxtyCT47V9ViignBquKhNiwSRBL+8JpBxe8o1z5lHAdBVs7q/lNFE/44XpfBc1owOSbTeCkeW6Mxw7bV6+gg31DJCUxxYvnolYdC1kzfF/5RFfxh/PT27InyM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=Z6kJoduV; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BxE6tkrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A818BC19421;
-	Fri, 13 Mar 2026 13:26:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773408421;
-	bh=p2HNkolfJH3glufT8VRymQsTTu1495N3oyZW+nfzmGs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BxE6tkrGV17EN94KsD0hkeNViAZRQiRst5bZ7+z98IIrwk6VXp5KFlLwnx8drW1LC
-	 lTxlGmPMHy7sc4ITE23/M776GpiqKVt0RElPikVynnMIeirF5a2KBlMjApOAcNbCMI
-	 UORlZG8LWbRXqCvyfkovODpPXpmnnNQ7VTb6sJddRZRXMisgEQR0cnRSGAGTI5gsTE
-	 W1ixG9kVUSe68DsM81jBtceBLjgv4IpjlEGqaZM24FEHApkoKzhXX4pMeKxzH/EEt1
-	 MA7tp21mbCg+RCXFEwdCMINFIFt48drIO0wImAzt2LRvZc7BmfupPFx7X8sdqVOno2
-	 EoeM1lxgJqPvA==
-From: Yixun Lan <dlan@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>
-Cc: devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/4] riscv: spacemit: k3: Add more resource to UART
-Date: Fri, 13 Mar 2026 13:26:55 +0000
-Message-ID: <177340832523.17050.323606076175943251.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260304-01-dts-uart-full-v1-0-50a0aa53a245@kernel.org>
-References: <20260304-01-dts-uart-full-v1-0-50a0aa53a245@kernel.org>
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="Z6kJoduV"
+ARC-Seal: i=1; a=rsa-sha256; t=1773409074; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=cg2Za8ytuaIQiCfO0rTWkIE+v+HBEroNtByDdsDSBreHBfeMZeNo7+Ej3k6Wk2gwtqwjITjDl2dzQ9saaytyAqk0mBXtxHHZ8xmc43MsRsitiGj4L1oTYoKZnXCB3d8oq8owfARqSAzrFjlInNTX9Ux6HyoAKS2uQobybyjrNss=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1773409074; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=1EMaOoOWPOC7Nwsl+BdHwxbIv8eBJD7gu8iTli3mgVQ=; 
+	b=YH5WLgV9Hc8ZZ3IsOSxf4f/ktVGEbcLLk8I/nnkBh82WGfJZl0FZYWBYH5G6qnlKJ5zGVVl7vl8LvoGvK0+dSztQsfooJwgHv5SOFVL22x4mBu7gpWVCrnQWTPxM68pYXS1jMSV5P0f/+rBEZh3c12L7OgEgfUomzplj7ArW6SM=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ziyao.cc;
+	spf=pass  smtp.mailfrom=me@ziyao.cc;
+	dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773409074;
+	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=1EMaOoOWPOC7Nwsl+BdHwxbIv8eBJD7gu8iTli3mgVQ=;
+	b=Z6kJoduVHRDoY8n9ISMguJSD8DYG8cvzoN3J3a+e1bZP5wXFDVIMFhv0PJEo7QHU
+	GuhT1sp7rlMqU8rxhGr5AhJbQBdGJENPmIedV9USaHnutxfyKEzCoMLv1AuZyO3xKPR
+	0VFeroTutnQf1Gq9bmD9D1MHTA+uSyO2W4k59eeY=
+Received: by mx.zohomail.com with SMTPS id 1773409071410361.89946816641975;
+	Fri, 13 Mar 2026 06:37:51 -0700 (PDT)
+Date: Fri, 13 Mar 2026 13:37:34 +0000
+From: Yao Zi <me@ziyao.cc>
+To: Junhui Liu <junhui.liu@pigmoral.tech>,
+	Linus Walleij <linusw@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	Bartosz Golaszewski <brgl@kernel.org>
+Cc: linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] pinctrl: spacemit: return -ENOTSUPP for unsupported
+ pin configurations
+Message-ID: <abQTHmE_8_N3F-Hj@pie>
+References: <20260312-k1-gpio-set-config-v1-0-8c3541da16b1@pigmoral.tech>
+ <20260312-k1-gpio-set-config-v1-1-8c3541da16b1@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260312-k1-gpio-set-config-v1-1-8c3541da16b1@pigmoral.tech>
+X-ZohoMailClient: External
 
+On Thu, Mar 12, 2026 at 04:42:42PM +0800, Junhui Liu wrote:
+> Return -ENOTSUPP instead of -EINVAL when encountering unsupported pin
+> configuration parameters. This is more logical and allows the GPIO
+> subsystem to gracefully handle unsupported parameters via functions like
+> gpio_set_config_with_argument_optional(), which specifically ignores
+> -ENOTSUPP but treats others as failure.
 
-On Wed, 04 Mar 2026 07:36:41 +0000, Yixun Lan wrote:
-> This series try to add more resource (clock, pinctrl, reset) to UART driver,
-> So it will not reply on external bootloader for initialization. While doing
-> this, I've tried to break these patchse into more fine pieces, adding clock,
-> pinctrl+gpio, reset separately, then UART.
-> 
-> 
+This sounds like a fix and deserves Fixes tag, though I'm not sure
+whether backporting is appropriate since no existing system should be
+affected...
 
-Applied, thanks!
-
-[1/4] riscv: dts: spacemit: k3: add clock tree
-      https://github.com/spacemit-com/linux/commit/67072c8cd48c1fbb95cea39239eba5526395fcf5
-[2/4] riscv: dts: spacemit: k3: add pinctrl support
-      https://github.com/spacemit-com/linux/commit/d8944577496b5b99061d3b2020704fc86ab1f9e6
-[3/4] riscv: dts: spacemit: k3: add GPIO support
-      https://github.com/spacemit-com/linux/commit/20b77926864203e10b85af5276b17c2812d92ec1
-[4/4] riscv: dts: spacemit: k3: add full resource to UART
-      https://github.com/spacemit-com/linux/commit/28a7f755d7c9a4b9c41c12620fb4885f39b554ad
-
-Best regards,
--- 
-Yixun Lan <dlan@kernel.org>
+Regards,
+Yao Zi
