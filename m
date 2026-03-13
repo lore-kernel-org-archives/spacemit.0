@@ -1,132 +1,107 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DCF242D97;
-	Thu, 12 Mar 2026 17:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABF58C1F;
+	Fri, 13 Mar 2026 00:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773336651; cv=none; b=jXKBAldkXQoiQ9lKC2YsnyRMr4TgDeX8EVo/bSaxpzzL/6cUWLimha58MYwO7AJo9GjBKDVW1tQsxQZQObGcFDdnyEC+B/ozknLdoR6A+x7EkUhyEajaYIztlh7JFWVWGTBdw+UTLwl14Ky1K0Zquo6lFs4+4OqnFCiUW5xxuBA=
+	t=1773360388; cv=none; b=FBZ0WThOORsQEpU6ftmskebI0MWyQlVTzkNvpKrtbxoxvrG8MVOFqKBEQ5LRt1yydcCS7lkSCfdMxpFwyvSadGaOieUp3fPcBSJ0fXYQiwongEtvAVxf/reyONPAipaIM8oUu1Mg1vv3lQQ5eOhIhceeq+WFW40RzqkbKgjClHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773336651; c=relaxed/simple;
-	bh=W6tGZ3NCS57fycGB4Z6FjTao9Hr+IRejW/1XW8Q2EbY=;
+	s=arc-20240116; t=1773360388; c=relaxed/simple;
+	bh=ADruU6Qu0lyTOOBhcf4gScXwICP2AoS82nL0uCZVEiI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q0UC+DRzXZLcweRIW5hPiEX44CXU5RuXS8KWKa5PmBtKHEDtItQq/KC+AA7s0qm0hZGYqyLReWp68Gmj9kK7rnK/6iyLcuCvLJay5oaO8RtljKpT5jc6soxz10huBlSoLl+/W3YJKco9UO/mC2PLlVI618PqKsRbfDKOOjYhw8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V9KRHsRi; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=VlK6fRvIJPKeLSS1pr/CWN1lQh+FEbAfmXuXsNU8hQHsCtQ3viGK8NAg7QVRwthOt8sh0pPCy9eem1A3iz5XtlhwxgOS9kx8d7reQYHwPtAyzMJzG+elIHHxEepRTc32+149KDFOP/feSjI4Gs9h9BJXEPpOkX2JxkiGKbhS5TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OLiCTbuI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V9KRHsRi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05248C19424;
-	Thu, 12 Mar 2026 17:30:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OLiCTbuI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59ABC19424;
+	Fri, 13 Mar 2026 00:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773336651;
-	bh=W6tGZ3NCS57fycGB4Z6FjTao9Hr+IRejW/1XW8Q2EbY=;
+	s=k20201202; t=1773360388;
+	bh=ADruU6Qu0lyTOOBhcf4gScXwICP2AoS82nL0uCZVEiI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V9KRHsRiqVMm1UsQicox1Kr9qVSuXsJ98bMYR51K/SnUhXS1yx0aTqGt4Nm6p6XD4
-	 jRsZfPwgNxkSy1hFZEp9kv3Z9rNst9vugRPBg7pVI1nhuiGFHj67PxTHHnR8TBH2et
-	 JWZmBtLsGZhq53JfLKB5Js7T6bgp1OZlRmloKHrd207TrQq075Q+h/H/FHVjpl697C
-	 tsFPToxalvLUwM9gHDjtJ+bNoBj9ItAqDLNANw9GHpXSAH3PhAgxA2Xvd6JXe7U+fm
-	 IPum2fqKPaEib0tDzoI6TUFDKzGfWmOwnNJKR0GWUIj2baKBy7uGWCWO0xvtzi/KXs
-	 DCHoa+oZnEOxw==
-Date: Thu, 12 Mar 2026 17:30:46 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Junzhong Pan <junzhong.pan@spacemit.com>,
-	Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: soc: spacemit: k3: Decouple composite
- reset lines
-Message-ID: <20260312-legume-unstitch-129b278e14d6@spud>
-References: <20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org>
- <20260312-01-k3-reset-usb-pci-v1-1-022b24b7340f@kernel.org>
- <0abfd76f49e5cedf7bfc84eb4d9a0a1d7543f6f8.camel@pengutronix.de>
- <20260312112858-GKH302167@kernel.org>
+	b=OLiCTbuIcfSCLyQtk52o9rUKoG3xJXGHmOUwJGzEmgjajwdkwVlhH22xbMzFnxQ9z
+	 xbECItjLHUzqR8lNGCrxgrZxVnGDoX/1whKg2+Cb9axF5pnMLuPJ5Fs54jyE4pImMD
+	 KMBEhLtnuDWVDboXE0S1BjXcAF8WtThK39ASceE6ZEtBFIfss6wuCf7d+yoeGL9D/m
+	 fJBkAiHiylPIfDyRpJ2NUxTyJPzYnBGBMDyq9nCZ/fk2mN1PovkYCuoJVEyl0H2imz
+	 lGO1NbmkuVhQubvKM1wg4iR7MAtdHfd4SBKCn6pj2C1tv4L5t3ZJTy2OMb7iTDw6/W
+	 9tG/xaAuAECjQ==
+Date: Fri, 13 Mar 2026 08:06:25 +0800
+From: Yixun Lan <dlan@kernel.org>
+To: Han Gao <gaohan@iscas.ac.cn>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Han Gao <rabenda.cn@gmail.com>
+Subject: Re: [PATCH v2 2/4] riscv: dts: spacemit: Define fixed regulators for
+ OrangePi RV2
+Message-ID: <20260313000625-GKI302167@kernel.org>
+References: <20260310161853.3900605-1-gaohan@iscas.ac.cn>
+ <20260310161853.3900605-3-gaohan@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7Ay2qMKpijP+JeF+"
-Content-Disposition: inline
-In-Reply-To: <20260312112858-GKH302167@kernel.org>
-
-
---7Ay2qMKpijP+JeF+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260310161853.3900605-3-gaohan@iscas.ac.cn>
 
-On Thu, Mar 12, 2026 at 07:28:58PM +0800, Yixun Lan wrote:
-> Hi Philipp,
->=20
-> On 12:09 Thu 12 Mar     , Philipp Zabel wrote:
-> > On Do, 2026-03-12 at 10:34 +0000, Yixun Lan wrote:
-> > > Instead of grouping several different reset lines into one composite
-> > > reset, decouple them to individual ones which make it more aligned
-> > > with underlying hardware.
-> > >
-> > > The DWC3 USB host controller in K3 SoC has three reset lines - AHB, V=
-CC,
-> > > PHY. The PCIe controller also has three reset lines - DBI, Slave, Mas=
-ter.
-> > >=20
-> > > Signed-off-by: Yixun Lan <dlan@kernel.org>
-> > > ---
-> > >  include/dt-bindings/reset/spacemit,k3-resets.h | 42 ++++++++++++++++=
-++++------
-> > >  1 file changed, 32 insertions(+), 10 deletions(-)
-> > >=20
-> > > diff --git a/include/dt-bindings/reset/spacemit,k3-resets.h b/include=
-/dt-bindings/reset/spacemit,k3-resets.h
-> > > index 79ac1c22b7b5..c12f8bd32047 100644
-> > > --- a/include/dt-bindings/reset/spacemit,k3-resets.h
-> > > +++ b/include/dt-bindings/reset/spacemit,k3-resets.h
-> > > @@ -97,11 +97,7 @@
-> > >  #define RESET_APMU_SDH0          13
-> > >  #define RESET_APMU_SDH1          14
-> > >  #define RESET_APMU_SDH2          15
-> > > -#define RESET_APMU_USB2          16
-> > > -#define RESET_APMU_USB3_PORTA    17
-> > > -#define RESET_APMU_USB3_PORTB    18
-> > > -#define RESET_APMU_USB3_PORTC    19
-> > > -#define RESET_APMU_USB3_PORTD    20
-> >=20
-> > This is backwards incompatible.
-> > Are there any device trees using the APMU resets yet?
-> > If not, I wonder if we should just renumber all APMU resets into a
-> > contiguous range and try to get it into v7.0 as a fix.
-> >=20
-> No, there is currently no consumers, so I could rework them into a contig=
-uous
-> version, thanks for the suggestion
+Hi Han,
 
-Only as long as it goes into 7.0, IMO, as a fix.
+On 00:18 Wed 11 Mar     , Han Gao wrote:
+> Define the DC power input and the 4v power as fixed regulator supplies.
+> 
+> Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+> ---
+>  .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> index 93880ba7bdfe..55b3d8d7f7f1 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> @@ -23,6 +23,25 @@ chosen {
+>  		stdout-path = "serial0";
+>  	};
+>  
+> +	reg_dc_in: regulator-dc-in-12v {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "dc_in_12v";
+> +		regulator-min-microvolt = <12000000>;
+> +		regulator-max-microvolt = <12000000>;
+> +		regulator-boot-on;
+> +		regulator-always-on;
+> +	};
+As Trevor pointed out in another thread[1], rv2 use 5v type-c in,
+and I bet this is a copy-and-paste error..
 
-> > Also, this breaks bisectability.
-> > reset-spacemit-k3.c will fail to compile between patches 1 and 2.
-> >=20
-> I've tried a first version to squash the two patches, but got a checkpatc=
-h.pl complait
-> for binding should follow into a separate patch.
->=20
-> I can combine these two patches into one, is this Ok for you?
+And for name I'd suggest to simply use: regulator-vcc-in-5v
 
-Be very very very clear about why they're going together, otherwise you'll
-get yelled at!
+Link: https://lore.kernel.org/r/20260309-orangepi-sd-card-uhs-v2-6-5bb2b574df5d@gmail.com [1]
 
---7Ay2qMKpijP+JeF+
-Content-Type: application/pgp-signature; name="signature.asc"
+> +
+> +	reg_vcc_4v: regulator-vcc-4v {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vcc_4v";
+> +		regulator-min-microvolt = <4000000>;
+> +		regulator-max-microvolt = <4000000>;
+> +		regulator-boot-on;
+> +		regulator-always-on;
+> +		vin-supply = <&reg_dc_in>;
+> +	};
+> +
+>  	leds {
+>  		compatible = "gpio-leds";
+>  
+> -- 
+> 2.47.3
+> 
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCabL4RgAKCRB4tDGHoIJi
-0lFCAQC8R0krTCJ3h8LENWd4AYu7AGIS+9Kr+nwqeEhqxLlJ6gEA9efqzwnlJkD2
-xl++M7pPu/XyyZgMduLa1mwL6FPpUgs=
-=uTkh
------END PGP SIGNATURE-----
-
---7Ay2qMKpijP+JeF+--
+-- 
+Yixun Lan (dlan)
