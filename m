@@ -1,88 +1,136 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAC242AA6;
-	Fri, 13 Mar 2026 01:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618C33385BC;
+	Fri, 13 Mar 2026 02:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773364753; cv=none; b=M+AMjs4HYEARn7B6TXYC7jhYcvPg2W/Sd2gc8FSfhBH4AGltKT/1k3zU5iHqjmkJrpnYmwQgvLIUPEAY128IdDA/54nQNHWSYsYVoFxXx2INOggQhc/AZrLGcb9736sFpr8Z9MgF61ZEodcSKmxyXiymeLpomj74B4DH7rBcCW8=
+	t=1773369263; cv=none; b=oneWcIAeYkuN4H41Bao/7gJ5qubHMxUEba+BGU/jMZXjfpPN+DvH168I8V6J6TOCP3GmdcrAiO7R+i0qdSF4Of7pDat/HsfbNQ5zq+ick8GnGNOIumjoyeTZyc+Uwox/6JOk0SSONr8fXIaQkSDD8J0kHST+t/nq6NXRs9KL40I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773364753; c=relaxed/simple;
-	bh=DBlu2vYwHqk1j0AVAu14WX3YgH/5nx3xXS/Du3SQ55k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VAp5mv7QKreVYtJOY2Puk02sGUnVOm4DiQ0tk1T5GupHUrSkIq5akQelb1zD7B5FVp0Rwq3eZy7z7SPUSzFaekTiIwC0D94sZVXAiI0DbdF6Wi+3Ibof/OOukaemIHL3xybsWvEcCt1PnH2A46Y7x9ycbmrXMcNgcs55im4l4Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uFM+G/a0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773369263; c=relaxed/simple;
+	bh=fI4DMsqLEbxULT+64Hl2jZcUeY9iULBhKP8OUx2adlY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FuqgulYScQzeWunX5dOdMnDS/NDTN7QwVXkFUjU2Y9Ko5jTAlDGEYTKZmdtOZ343JN8xpjLpou+8TqgVPnWzTm0QesnhbK82Y7/G+Y9x7jXiu9+OsVCVOxmyWhXBsTIMONfEF41JeHJDl8BKsCGq1rg15sTk6BA2ZcKyoJzpJuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZcCYKwjA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uFM+G/a0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6632BC4CEF7;
-	Fri, 13 Mar 2026 01:19:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZcCYKwjA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D41CC4CEF7;
+	Fri, 13 Mar 2026 02:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773364753;
-	bh=DBlu2vYwHqk1j0AVAu14WX3YgH/5nx3xXS/Du3SQ55k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uFM+G/a0xcVM1z3FJ17Y5s/3i6Xgajsz7uByrp0BRn5kVkbe3I+ANdAsdzwRQLa+T
-	 VDwpsUB2xt7OnlEtVw8yEe53cAVzHYaeotZetXoqaAXnrdV53yT6OOHukZUSkJ5NNS
-	 YdtpN750zHp8D8cQEcZsYZ0QSt21EfC1aITVm+UGE0MOqaFA7OAs7Mi9P1zWBZiE1D
-	 aTldv4Zpee3Y8UFcAmPlH0ubKQRZLODu/WwqvMSW3PN0uenzi1+8aOiDdBNBGN4Y5q
-	 AWj6XL+hZTVIzIS908fjAnumimaFxxlPbZfGbUBJhk+YH9nwGJS+3G/XJD9GYXt2YK
-	 BqzxIrbneatCQ==
-Date: Fri, 13 Mar 2026 09:19:10 +0800
-From: Yixun Lan <dlan@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Yixun Lan <dlan@gentoo.org>, Jiri Slaby <jirislaby@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Lubomir Rintel <lkundrak@v3.sk>,
-	devicetree@vger.kernel.org, Guodong Xu <guodong@riscstar.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH] dt-bindings: serial: 8250: spacemit: fix clock property
- for K3 SoC
-Message-ID: <20260313011910-GKL302167@kernel.org>
-References: <20260304-01-uart-clock-names-v1-1-338483f04a8b@kernel.org>
- <20260310093446-GYC318052@gentoo.org>
- <2026031226-utter-spellbind-53bf@gregkh>
+	s=k20201202; t=1773369262;
+	bh=fI4DMsqLEbxULT+64Hl2jZcUeY9iULBhKP8OUx2adlY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ZcCYKwjAaTbe42TPu6skNnR42pX3ozbbmWH6WAa9A+ON5RVxKNJg0YgrHdHdIlH2e
+	 /SKtBOGHV52hJPL6XqnVnI/RM/P100HpyrxOb7wCh6B5AlpTImeIZVogeSpjBZA28C
+	 /RDPzVL08Nq3iEGqM33KIJwkzK8MsyCeIrHHGSmoVKPgg2MD/7oc8hb+0GpQSbe7/r
+	 B/2foPwYR2Uwzw30bQZP+wSmEefkG0vi9eCx4ia+eDY4gaI8CMY3YigLOW+ctNeC1W
+	 IeRjERcG4zRbRscT5zZubZnp9lJYppdupwyyygvM0nNxaq14tcDX/Xq9jUyUSALKas
+	 efy3yzSqXsIXQ==
+From: Jakub Kicinski <kuba@kernel.org>
+To: inochiama@gmail.com
+Cc: Jakub Kicinski <kuba@kernel.org>,
+	boon.khai.ng@altera.com,
+	rmk+kernel@armlinux.org.uk,
+	linux-arm-kernel@lists.infradead.org,
+	davem@davemloft.net,
+	andrew+netdev@lunn.ch,
+	joabreu@synopsys.com,
+	linux-stm32@st-md-mailman.stormreply.com,
+	looong.bin@gmail.com,
+	maxime.chevallier@bootlin.com,
+	siyanteng@cqsoftware.com.cn,
+	conor+dt@kernel.org,
+	wens@kernel.org,
+	krzk+dt@kernel.org,
+	mcoquelin.stm32@gmail.com,
+	pjw@kernel.org,
+	edumazet@google.com,
+	palmer@dabbelt.com,
+	alex@ghiti.fr,
+	spacemit@lists.linux.dev,
+	prabhakar.mahadev-lad.rj@bp.renesas.com,
+	devicetree@vger.kernel.org,
+	robh@kernel.org,
+	aou@eecs.berkeley.edu,
+	vladimir.oltean@nxp.com,
+	dlan@kernel.org,
+	me@ziyao.cc,
+	peppe.cavallaro@st.com,
+	alexandre.torgue@foss.st.com,
+	pabeni@redhat.com,
+	weishangjuan@eswincomputing.com,
+	netdev@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	dlan@gentoo.org,
+	quentin.schulz@cherry.de,
+	richardcochran@gmail.com,
+	linux-kernel@vger.kernel.org
+Subject: Re: [net-next,v9,1/4] dt-bindings: net: Add support for Spacemit K3 dwmac
+Date: Thu, 12 Mar 2026 19:34:17 -0700
+Message-ID: <20260313023417.1577310-1-kuba@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260312012232.373713-2-inochiama@gmail.com>
+References: <20260312012232.373713-2-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2026031226-utter-spellbind-53bf@gregkh>
+Content-Transfer-Encoding: 8bit
 
-Hi Greg,
+This is an AI-generated review of your patch. The human sending this
+email has considered the AI review valid, or at least plausible.
 
-On 15:13 Thu 12 Mar     , Greg Kroah-Hartman wrote:
-> On Tue, Mar 10, 2026 at 05:34:46PM +0800, Yixun Lan wrote:
-> > Hi Greg, Jiri,
-> > 
-> >   Do you mind if I taking this patch via SpacemiT's SoC tree? and if
-> > possible, it would be nice to have your Acks..
-> > (or either way works for me, if you grab it and merged via tty tree)
-> > 
-> > On 07:19 Wed 04 Mar     , Yixun Lan wrote:
-> > > The UART of SpacemiT K3 SoC has same clock property as K1 generation which
-> > > request two clock sources, fix the binding otherwise will get DT check
-> > > warnings.
-> > > 
-> > > Fixes: b5024e804ee0 ("dt-bindings: serial: 8250: add SpacemiT K3 UART compatible")
-> > I would just drop the Fixes tag, as I think at the time of Gudong
-> > submitting the patch, the clock driver isn't ready, so he deliberatly
-> > removed this clock contraint and provided with a fixed clock frequency
-> > (the bindings match with DTS)
-> > 
-> > https://github.com/torvalds/linux/blob/v7.0-rc3/arch/riscv/boot/dts/spacemit/k3.dtsi#L414
-> 
-> You need to get a DT maintainer to review it before you can apply it.
-Ok, so Rob gave an Ack
+For local reproduction steps see https://netdev-ai.bots.linux.dev/ai-local.html
+---
+dt-bindings: net: Add support for Spacemit K3 dwmac
 
-> If you want to take it through your tree once that happens, that's fine
-> with me.
-Thanks, so this imply an Ack, but could give an explict Acked-by?
-then I will proceed..
+The GMAC IP on Spacemit K3 is almost a standard Synopsys DesignWare MAC
+(version 5.40a) with some extra clock. This patch adds the necessary
+compatible string for this device, along with a new binding document
+defining the required properties.
 
--- 
-Yixun Lan (dlan)
+> diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> index 38bc34dc4f09..98ebb6276bc6 100644
+> --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+> @@ -109,6 +109,7 @@ properties:
+>          - snps,dwmac-5.10a
+>          - snps,dwmac-5.20
+>          - snps,dwmac-5.30a
+> +        - snps,dwmac-5.40a
+>          - snps,dwxgmac
+>          - snps,dwxgmac-2.10
+>          - sophgo,sg2042-dwmac
+
+[ ... ]
+
+> @@ -656,6 +657,7 @@ allOf:
+>                  - snps,dwmac-5.10a
+>                  - snps,dwmac-5.20
+>                  - snps,dwmac-5.30a
+> +                - snps,dwmac-5.40a
+>                  - snps,dwxgmac
+>                  - snps,dwxgmac-2.10
+>                  - st,spear600-gmac
+
+Is snps,dwmac-5.40a missing from the select block? The binding document has
+a comment at lines 14-17 stating:
+
+    # Select every compatible, including the deprecated ones. This way, we
+    # will be able to report a warning when we have that compatible, since
+    # we will validate the node thanks to the select.
+
+Every other snps,dwmac-* version from 3.40a through 5.30a appears in all three
+locations: the select block (lines 19-43), the properties.compatible enum
+(lines 95-118), and the allOf conditional block (lines 643-673). However,
+snps,dwmac-5.40a only appears in the properties.compatible enum and the allOf
+block.
+
+Without the entry in the select block, a device tree node using
+'snps,dwmac-5.40a' as a standalone compatible (without a vendor-specific first
+entry like 'spacemit,k3-dwmac') would not be selected by this schema for
+validation.
+
+[ ... ]
