@@ -1,65 +1,72 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4E84F5E0;
-	Fri, 13 Mar 2026 13:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDD92DB7BD
+	for <spacemit@lists.linux.dev>; Fri, 13 Mar 2026 13:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773409356; cv=none; b=chFSmiZQXjAUfQQdeuCYmI7TixOxlWBQ44m1uNoVfklJuse4rGh8LOP5yEAl3q8Lnw5i52/xdpSKuMo+a+j4z4i0mDaCZDeC5BDycvwwhfYixn7gCtPsRBwgFEP+aXYCE8tNJD1h+QaQ0XWE/ucMRh0uioQKPopJ3NVKHuC4mK4=
+	t=1773409942; cv=none; b=c8mizboXh/aX2J+3TfJR0EZKhSw7X+rsJlv/ix6dKgAuVR24tAojE6Gix5LEqMLBtP1dIbC9Rji2juEIXjoQD7jOcrwNtxjhNSRCpU9aLmTX9bF4aTma/FuUI7dCBQPBaCVhfHFVI3x338u2dIqLMMccb4/zcshVK9MwBzFeCac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773409356; c=relaxed/simple;
-	bh=N404hNd2TZwFuhFt4ZSZsbQMNcJjqVfNAm4y3u8q4ZE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZVTftTmEKQ8vSKoBm/UTK5BQPLSzbSQ8zx7BfvvEPcFMR37/PrmKl55Cgb3a1Lbbx877YmKySXP3R8+t87hngE+j4HIxMnHy7f/bx3dc2lrJRDBgL5M3sV5NndqHXByWC2oZRwSZGNv0ojrA+Ar0Cm0pWSXhx3FYTixA8p2RVp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G9ZwP6i6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773409942; c=relaxed/simple;
+	bh=VoeqO83H0UC5AMfVMLZGLXHpXTuKkVEN28onYYM0e0Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WSWiFd0I4Do/OWZV3hVHc7Ry28oMNOP9P413/iBwqwKAKLUjUzSz5Evz62UNlJT4FrOUYPZ1reLfohvC6uJvyo2rYj91Y/wytWbQCaT+0SDCNHxPtm1ppxagaj+6ErHeBlVRcordTejQZhRnWqW8TC0egxWkMItX6o/Hnljhkkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MZSmqgCY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G9ZwP6i6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED71FC19421;
-	Fri, 13 Mar 2026 13:42:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MZSmqgCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0367EC2BC9E
+	for <spacemit@lists.linux.dev>; Fri, 13 Mar 2026 13:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773409356;
-	bh=N404hNd2TZwFuhFt4ZSZsbQMNcJjqVfNAm4y3u8q4ZE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=G9ZwP6i6m4lvgrH6TkmdU9FHOc/5nxCrIIjqs0xUVbDpcxqZmvGGnZnS7FFYhcJSD
-	 TyXZS1qkxnnXhCL1lf5bx5lfvbu8/185OzyaAMkvdeasxA3+st8DB11XrSbinVtYt0
-	 ItYmWKJde/J0GuqaSOQ4W0FjaqPF/V8ZxTPD9fBGB5pkteypSTjFJK7xNImDNaO4BJ
-	 1x7ct0ZqJNNe4DSc/uWm4IG7aJLQQiNobpiWcBoE08N2LDrVCTMF9BQgbVE6Hnk6z2
-	 eiJnPeaoELBP3as4y6pLdN6iYeUJkfaYUC3kvgvEALF9V9MVCfOmf8S62ny6QpCQuX
-	 fScm25gHof3lw==
-Date: Fri, 13 Mar 2026 14:42:34 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Junzhong Pan <junzhong.pan@spacemit.com>, Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: soc: spacemit: k3: Decouple composite
- reset lines
-Message-ID: <20260313-certain-idealistic-urchin-001e96@quoll>
-References: <20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org>
- <20260312-01-k3-reset-usb-pci-v1-1-022b24b7340f@kernel.org>
+	s=k20201202; t=1773409942;
+	bh=VoeqO83H0UC5AMfVMLZGLXHpXTuKkVEN28onYYM0e0Q=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=MZSmqgCYwzymB57WylTXJKuy94djkPa14SWh4N5smLlV3ADa12rrsCqb+xDFyjcyN
+	 WtVMjxicsgK94XZdpi1Li4IdWCxfzm/mGA2fRe8yp63tba9ruFVhbmkrd2sVfihfEb
+	 XiMSlTdpvUF14L6RgTgHZrWNGDlIyQTrsvKLrbiautsEzvJXXOrjY828w+/q90h0gM
+	 YFHkKqG8M06P08R6rXJE0XzVpIBJmlb4oorgN/2g4o+IgBmp0Btp44Y88IquwaFOLF
+	 r+z9npaTEHOTsCsB8thWMti/+EPaVHcRP6cgDw1NLc5kAt259u0n7o435MzQ5Xd6Xo
+	 hNa5tAi4YOeDA==
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-38a41026318so19160991fa.0
+        for <spacemit@lists.linux.dev>; Fri, 13 Mar 2026 06:52:21 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWNqD7l9HbkZXNmkQaaTNzx67JfYZA/tsf/8QLWSYfv7J2RuYqYhyvFMs+yQKiV05KtaSnZGiJuew==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx0Kya5FURoKDzWtZNyn8ss48Jnz1YoEwddamx27apFIhaYksIt
+	qRek55v4dUW/cN7FMtToSTeMUGnxioeIDgeghq0slFAY/140fXr3dGy8ggpXN4AIEeJoWbwCLNJ
+	ts28ZUYqvqQj4MmMKjPSFrpbjoDTkZ2a+x5ooueXTVw==
+X-Received: by 2002:a2e:bd14:0:b0:38a:422d:b644 with SMTP id
+ 38308e7fff4ca-38a897bd810mr10674181fa.23.1773409940424; Fri, 13 Mar 2026
+ 06:52:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260312-01-k3-reset-usb-pci-v1-1-022b24b7340f@kernel.org>
+References: <20260312-k1-gpio-set-config-v1-0-8c3541da16b1@pigmoral.tech> <20260312-k1-gpio-set-config-v1-1-8c3541da16b1@pigmoral.tech>
+In-Reply-To: <20260312-k1-gpio-set-config-v1-1-8c3541da16b1@pigmoral.tech>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Fri, 13 Mar 2026 14:52:06 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MfjA=SPOhcLiNu6L+ZgRm5Adr1kBEw7Ma-zTOdQ1dJ5Gg@mail.gmail.com>
+X-Gm-Features: AaiRm52YNR1dZVEn8jJuthdZGp7ne06EpwHE1_pZx_PFXg-Rre7dkHe2Q-4rKok
+Message-ID: <CAMRc=MfjA=SPOhcLiNu6L+ZgRm5Adr1kBEw7Ma-zTOdQ1dJ5Gg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] pinctrl: spacemit: return -ENOTSUPP for unsupported
+ pin configurations
+To: Junhui Liu <junhui.liu@pigmoral.tech>
+Cc: Linus Walleij <linusw@kernel.org>, Yixun Lan <dlan@kernel.org>, linux-gpio@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 12, 2026 at 10:34:19AM +0000, Yixun Lan wrote:
-> Instead of grouping several different reset lines into one composite
-> reset, decouple them to individual ones which make it more aligned
-> with underlying hardware.
-> 
-> The DWC3 USB host controller in K3 SoC has three reset lines - AHB, VCC,
-> PHY. The PCIe controller also has three reset lines - DBI, Slave, Master.
+On Thu, Mar 12, 2026 at 9:43=E2=80=AFAM Junhui Liu <junhui.liu@pigmoral.tec=
+h> wrote:
+>
+> Return -ENOTSUPP instead of -EINVAL when encountering unsupported pin
+> configuration parameters. This is more logical and allows the GPIO
+> subsystem to gracefully handle unsupported parameters via functions like
+> gpio_set_config_with_argument_optional(), which specifically ignores
+> -ENOTSUPP but treats others as failure.
+>
+> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+> ---
 
-Either this is ABI break, which would need explanation, or it is not,
-which also needs explanation and then fixing current bindings before
-they are released.
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
