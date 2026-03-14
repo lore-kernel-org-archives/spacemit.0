@@ -1,95 +1,78 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A6F22D785
-	for <spacemit@lists.linux.dev>; Sat, 14 Mar 2026 08:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0252756472;
+	Sat, 14 Mar 2026 08:05:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773475223; cv=none; b=bU+/arSYT0xXCWezda/5gQ+8nDuRWHPQd9vB+fS+XoTSXwnFdi3T7Vt1RgPgQ9IZOlkwpgmWIy5/7Xq0N40Qfavk6B2HNmbkEmFof2mJ0CnzgUZ43CxdYVQfFb34sQ5zJ2FuXE2WdZDsFaENHDzMlcIGe1Iqp0diG6FNj/0FsWI=
+	t=1773475540; cv=none; b=RYxwO2FasOzpXSF88xzxxq/AuQMtbR9SAgi2eQWDV9zqn5ud6DO+G5RCRAoZuoklQz6UEaaA2lKq8cVlJQxLc5VHAZ7Zha1EBmSwuvhE9oD0FHOhK3y0LfESk+EsYMRwGXWnWjcw0wwyfJgj5ngMxpvNcNrCZgpWqoqzdn6Rqyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773475223; c=relaxed/simple;
-	bh=7cXL1x9VDDJYAcnzsSdDGWEjIgHPn15oz2mI6DIi1Bg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=K/OCWsqboHK+PP4k1IDZlFAAkd9emkNfL394p2cp99MNyhitygnxI5FDvkrKK84DbP4t6nHSipNQKWPjcBdKEoJN75yGPV1EP6U5Vq93fxFKsFwMvso6Epqq/uC9zJncHYuQISjFc+Qf7yZmghCqlOHvmq3x9okB5bxD0BDfw0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from Vostro-3710.lan (unknown [116.25.94.199])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 36eefd5cf;
-	Sat, 14 Mar 2026 16:00:12 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: gaohan@iscas.ac.cn
-Cc: alex@ghiti.fr,
-	aou@eecs.berkeley.edu,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dlan@kernel.org,
-	krzk+dt@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	palmer@dabbelt.com,
-	pjw@kernel.org,
-	rabenda.cn@gmail.com,
-	robh@kernel.org,
-	spacemit@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: Re: [PATCH v2 4/4] riscv: dts: spacemit: Enable USB3.0/PCIe on OrangePi RV2
-Date: Sat, 14 Mar 2026 16:00:03 +0800
-Message-Id: <20260314080003.2573296-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260310161853.3900605-5-gaohan@iscas.ac.cn>
-References: <20260310161853.3900605-5-gaohan@iscas.ac.cn>
+	s=arc-20240116; t=1773475540; c=relaxed/simple;
+	bh=xtjslWx4fw62YVGcblCJxi7bzvL0cBKciLoO0Dsr5G4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YB8NX/2Vd7IHwFz3DLP4FlVXr8FG2TG4msRoZopvrDsizqaqXF+bZF4Od2mEImWkOzCIYoUxm4b0vgZ166IgETd8k8bS3GAnWZhKB38/EUFTSn+1bChjy8k+w5PBFgcIhawvGi5byI36wvFnglqbGu/bKjdkf56RIRbiq7yMypY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DrpHf9+a; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DrpHf9+a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8448DC116C6;
+	Sat, 14 Mar 2026 08:05:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773475539;
+	bh=xtjslWx4fw62YVGcblCJxi7bzvL0cBKciLoO0Dsr5G4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DrpHf9+ahFoxkfnWX78OuatZ7zSuGqkeyHnCyBptqF95hK74YLTwChV9AFrEXGk8L
+	 +XKIE+ZWrJcB9ONro2i2/MO0vj3MTBc3vnflg3MLgcE/BFaOau6Zd0QXSxglLUwJNm
+	 VntAUA3HulkKoxluSIBTTfwl15TvQb1/hjsKSfmkGx8bTrS3wxxt+e4Ky/eraiIx0Q
+	 E9soRgfD/OnNhWVhwi2vgoQJDXTcPmK0DMfiK6Zw8TtiYYPlH0TQrsvAFKFB6HV+Cr
+	 pIIs9N5AVNvHRJlp2e4gTNEITuyjEsvd0TtIYOknI+6yIZLRwtAWIjjfb5CwALSgyb
+	 bW1yin72omPsg==
+Date: Sat, 14 Mar 2026 16:05:37 +0800
+From: Yixun Lan <dlan@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Junzhong Pan <junzhong.pan@spacemit.com>,
+	Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: soc: spacemit: k3: Decouple composite
+ reset lines
+Message-ID: <20260314080537-GKA415778@kernel.org>
+References: <20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org>
+ <20260312-01-k3-reset-usb-pci-v1-1-022b24b7340f@kernel.org>
+ <20260313-certain-idealistic-urchin-001e96@quoll>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9ceb5c2ad603a2kunmb13d530a73040
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDTh5MVk8aGhgaQk8fHRlPGlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk9VSkJCWVdZFhoPEhUdFFlBWU9LSFVKS0lPT09LVUpLS1VLWQ
-	Y+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260313-certain-idealistic-urchin-001e96@quoll>
 
-Hi,
+Hi Krzysztof, 
 
-> +	regulator-usb3-vbus-5v {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "USB30_VBUS";
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +		gpio = <&gpio K1_GPIO(97) GPIO_ACTIVE_HIGH>;
+On 14:42 Fri 13 Mar     , Krzysztof Kozlowski wrote:
+> On Thu, Mar 12, 2026 at 10:34:19AM +0000, Yixun Lan wrote:
+> > Instead of grouping several different reset lines into one composite
+> > reset, decouple them to individual ones which make it more aligned
+> > with underlying hardware.
+> > 
+> > The DWC3 USB host controller in K3 SoC has three reset lines - AHB, VCC,
+> > PHY. The PCIe controller also has three reset lines - DBI, Slave, Master.
+> 
+> Either this is ABI break, which would need explanation, or it is not,
+> which also needs explanation and then fixing current bindings before
+> they are released.
+> 
+Literally, Changing IDs would result an ABI breakage, but since we have
+no consumers - no driver/DT use those IDs so far, so we could safely
+renumber it and push as a fix for it. This issue was already raised by
+Philipp in this thread [1], and I agreeed, will put some explanations.
 
-Is this true?
+Link: https://lore.kernel.org/r/20260312112858-GKH302167@kernel.org [1]
 
-> +		enable-active-high;
-> +	};
-> +
-> +	usb3_hub_5v: regulator-usb3-hub-5v {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "USB30_HUB";
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +		gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
-
-Although GPIO123 is labeled as USB_HUB_EN, it actually
-supplies for USB3 vbus.
-
-> +		enable-active-high;
-> +	};
-
-> ...
-> +		peer-hub = <&hub_3_0>;
-> +		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
-
-Really? GPIO124 is floating.
-
-> +	};
-
-I still insist that the regulator name of DT should be the same
-as on the schematic. This will force us to review the schematic.
-
-Thanks,
-Chukun
+-- 
+Yixun Lan (dlan)
