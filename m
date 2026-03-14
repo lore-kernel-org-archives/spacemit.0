@@ -1,78 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0252756472;
-	Sat, 14 Mar 2026 08:05:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773475540; cv=none; b=RYxwO2FasOzpXSF88xzxxq/AuQMtbR9SAgi2eQWDV9zqn5ud6DO+G5RCRAoZuoklQz6UEaaA2lKq8cVlJQxLc5VHAZ7Zha1EBmSwuvhE9oD0FHOhK3y0LfESk+EsYMRwGXWnWjcw0wwyfJgj5ngMxpvNcNrCZgpWqoqzdn6Rqyc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773475540; c=relaxed/simple;
-	bh=xtjslWx4fw62YVGcblCJxi7bzvL0cBKciLoO0Dsr5G4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YB8NX/2Vd7IHwFz3DLP4FlVXr8FG2TG4msRoZopvrDsizqaqXF+bZF4Od2mEImWkOzCIYoUxm4b0vgZ166IgETd8k8bS3GAnWZhKB38/EUFTSn+1bChjy8k+w5PBFgcIhawvGi5byI36wvFnglqbGu/bKjdkf56RIRbiq7yMypY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DrpHf9+a; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837BB29D29F
+	for <spacemit@lists.linux.dev>; Sat, 14 Mar 2026 08:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773476444; cv=pass; b=P7NPcuaxvRZ23pmaxMX7Xz9m8mTD3b7OCFOOtvzKivU6i35jYTuNbSzeGYmbWWcqI9SS4z14wmVesHGN2RTc6j3okRjlfiC5YgXn1PtwRrniwdtgGRa2Sc0GeBKMdnRvbofaBUN9V0RE7bkA+bHaAW0JkQlCCkMP4PNDWY1JJKQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773476444; c=relaxed/simple;
+	bh=aKEodoFrsnEUz7A+3wp4L6Xznh2GG5VgXnuRS4O4LBk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eagvSkE1KR5GbnuKsFW8JKhcVu+fqtttUYQfQFaKTJCMnRKSHbYx1Z45g8nblYJrizSAktcXUP/Szn2mSlK1Z8rmRRWkgVo2QKmrzV+2BuWm/Pfa6BdkSN1/+80n0nViaMHCwwNvYHRujFiEjQWD6oXAadki4ER57j85M3btoI0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AtwtKoqp; arc=pass smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DrpHf9+a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8448DC116C6;
-	Sat, 14 Mar 2026 08:05:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773475539;
-	bh=xtjslWx4fw62YVGcblCJxi7bzvL0cBKciLoO0Dsr5G4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DrpHf9+ahFoxkfnWX78OuatZ7zSuGqkeyHnCyBptqF95hK74YLTwChV9AFrEXGk8L
-	 +XKIE+ZWrJcB9ONro2i2/MO0vj3MTBc3vnflg3MLgcE/BFaOau6Zd0QXSxglLUwJNm
-	 VntAUA3HulkKoxluSIBTTfwl15TvQb1/hjsKSfmkGx8bTrS3wxxt+e4Ky/eraiIx0Q
-	 E9soRgfD/OnNhWVhwi2vgoQJDXTcPmK0DMfiK6Zw8TtiYYPlH0TQrsvAFKFB6HV+Cr
-	 pIIs9N5AVNvHRJlp2e4gTNEITuyjEsvd0TtIYOknI+6yIZLRwtAWIjjfb5CwALSgyb
-	 bW1yin72omPsg==
-Date: Sat, 14 Mar 2026 16:05:37 +0800
-From: Yixun Lan <dlan@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Junzhong Pan <junzhong.pan@spacemit.com>,
-	Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: soc: spacemit: k3: Decouple composite
- reset lines
-Message-ID: <20260314080537-GKA415778@kernel.org>
-References: <20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org>
- <20260312-01-k3-reset-usb-pci-v1-1-022b24b7340f@kernel.org>
- <20260313-certain-idealistic-urchin-001e96@quoll>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AtwtKoqp"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b96dc65b886so724315566b.0
+        for <spacemit@lists.linux.dev>; Sat, 14 Mar 2026 01:20:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773476442; cv=none;
+        d=google.com; s=arc-20240605;
+        b=i8wUsKvauPg9BqwWrC0Dv7+zewt8WG6W71XS6w7GmUQHvHsbN+I938y1YiBEwzQ6jS
+         /UPlErCsmXXkvrNKr/qudmZDMM5dNHD2jM2XfgjmG4fNJqhqjwrZoylZpVkxm1PPKHkA
+         ABNhX59FqrHpXpNKz5KEf8i0/Oh3EOgdWTRJZvCL1WBKkvoDWN8B/egtuHJFgAGnLaoF
+         Nrnk/ogDrHt+YO95PxYOz95m5qrGWDxJU4R0Wl5NW9ZiI5ZLt56eUPz7N02rGYyHi1Sx
+         ji7TNFPhS+FJvEt5Z22TRh4aqleEY1rTqaQpngxlbFEs9TcJhP/Q9wUvbJWBKLRTU3VZ
+         n9Dw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=aKEodoFrsnEUz7A+3wp4L6Xznh2GG5VgXnuRS4O4LBk=;
+        fh=gHV6bSZyxWXt8K48FYzTNkwo6A806ldAlr6UrNH1Ozw=;
+        b=QrlHBew985JQ/mgidbpTjFFRHjlWwJsxAOEWR/pahc3eD14ZJF3ItgaYmoqFNkAsKr
+         WXBQdZz2YMqtD3KGi0n27mIAPNQS75lnAtkLi4ujvE1uA8c8numX+UWJs6xq8VHGI/Qa
+         5NuCzWd7B3i6l4aagG0eDqF60ZTeCVuuusS/TEagCr14Hbop98YShyf0duGjWfAsYJ6U
+         Pd+/lbrwh2XjvCMCruWtS4uRg5cCm/pJc0CsBdhIjWrSEbk1wlC7wigd3XoD7JMlX+1j
+         ok37BCxP7zz1c39Qyw8Uf2xq/ThaxhekbYEFMNTC3S5IL4a/hhBUYx+Qgwy7hfmNnwIu
+         2/ig==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773476442; x=1774081242; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aKEodoFrsnEUz7A+3wp4L6Xznh2GG5VgXnuRS4O4LBk=;
+        b=AtwtKoqp+1j3/4YayEbC/KruZudBlgfXGsciXwBaawCyicrpEBZxUSp6FbU/rKCK5W
+         tgfwsFlIIsF54UrbToYX0/PkPAtdxTWErdod25mz9c3gUbp0uuuthkhxJARKDEXIJVce
+         AAe+JCBzzQw6qk+xxOiRayEs6zbrn+ZgnkT/Nriq6aMzOHBPFSjHhHtGG7sIIgbaMRIY
+         Ig0PHUdBiIhPb+6bENbl+Ch3n325Rnl0tCZV886ND9nTTJEpMw4KI0TNDowcDNk8r7T9
+         YLNAURNwPwDyQ3x1NI31JFVl71sG+JZANTPbqjGL5EwpxCF2bDfVwZaErihqF+Yrvvvh
+         J1WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773476442; x=1774081242;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aKEodoFrsnEUz7A+3wp4L6Xznh2GG5VgXnuRS4O4LBk=;
+        b=AQkATHwzSp+X1sI8nYATpYbl6WVECQ0oYouzXdfrGzOEFkE/z02Z5mPU4jxgIiCHlw
+         N6s+CCkNcnxYSF6KZSgO/8wUUU55QJBBo/CKrGTaKNMmDqcen45TnSUDCFyMX72vx2uo
+         prT+a3I5OJjfGnvNPBxmBD8A5iJpTF3vktUiUICRaIaWbmyLT2vy6xua0a6Zeqf0zfs8
+         rJRVjSFXmubmrv39el8c0VFZU6K8JexWKQBlgKHrR3jpfSBtQS2Z6IOEWBJbrj/9itbg
+         yffM2aZIF5XHYU1GDafDW2v2GDvJNgAlnhE9lqDiBVr2El5RhVcBwva+ldyq3oPY/saC
+         x8qw==
+X-Forwarded-Encrypted: i=1; AJvYcCVMpo7rnVJNxsxh+1F9LQpeZyD0nHiyBNwvLqRISAtku/9GtPSfACwLVXqrgy36gwwweJuA5/FCOQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwZVhAIYw0BFFCNnsWbaST9vkJ8Sc3c9cAMQnAF/BkPa4ej0Kiw
+	rj+PbChYCxZZzAgsnHejx5W4CeQnF9JUImPnFOBfI8kIOSc1Dk2thdIpxZWfrrrmTgNmik3kpeg
+	p00s9iMNLMC0pOph/S0YESH0vCJfy9OQ=
+X-Gm-Gg: ATEYQzxQ2eQAisWUjYEn2wHqgFyUmQ1RukOsu1vu6km6PA9kMYBq1qdQk6nFJ2SPyVc
+	e6H+npi8QUyCc6fhTSUAAEoTpAG5tXAH4kBhTHNpnNY5neQavi5zp7KdVaHChloQfq8az4OwJyP
+	wi6PFFDJql2OOdu7rKWRMMlxS7n2nGsNGzyUKqafo2kk218GCYTEuczrjKFN4F4pyl38RtmEP9M
+	D4Q2AsOcdcnW/PlAJ3KG7B988S7s4w5lXstKp2UlZRsJ+EPpSYrWxvTm/ADgY82s42Cl/EremIa
+	pqbV4g==
+X-Received: by 2002:a17:906:dc94:b0:b97:80be:c9a0 with SMTP id
+ a640c23a62f3a-b9780bf0140mr178652466b.28.1773476441488; Sat, 14 Mar 2026
+ 01:20:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260313-certain-idealistic-urchin-001e96@quoll>
+References: <20260312-k1-gpio-set-config-v1-0-8c3541da16b1@pigmoral.tech> <20260312-k1-gpio-set-config-v1-1-8c3541da16b1@pigmoral.tech>
+In-Reply-To: <20260312-k1-gpio-set-config-v1-1-8c3541da16b1@pigmoral.tech>
+From: Anand Moon <linux.amoon@gmail.com>
+Date: Sat, 14 Mar 2026 13:50:25 +0530
+X-Gm-Features: AaiRm53rSdWgcmbPnwhHtOT4QoH5qCsuKsNqkPJOpNSMw1Ld03rj8Uh5faUWLZI
+Message-ID: <CANAwSgSreMvKmWuV-wikoiEQDGEQ4YCo3MN8Ke4s4+Y49OOY2Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] pinctrl: spacemit: return -ENOTSUPP for unsupported
+ pin configurations
+To: Junhui Liu <junhui.liu@pigmoral.tech>
+Cc: Linus Walleij <linusw@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+	Bartosz Golaszewski <brgl@kernel.org>, linux-gpio@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Krzysztof, 
+Hi Junhui,
 
-On 14:42 Fri 13 Mar     , Krzysztof Kozlowski wrote:
-> On Thu, Mar 12, 2026 at 10:34:19AM +0000, Yixun Lan wrote:
-> > Instead of grouping several different reset lines into one composite
-> > reset, decouple them to individual ones which make it more aligned
-> > with underlying hardware.
-> > 
-> > The DWC3 USB host controller in K3 SoC has three reset lines - AHB, VCC,
-> > PHY. The PCIe controller also has three reset lines - DBI, Slave, Master.
-> 
-> Either this is ABI break, which would need explanation, or it is not,
-> which also needs explanation and then fixing current bindings before
-> they are released.
-> 
-Literally, Changing IDs would result an ABI breakage, but since we have
-no consumers - no driver/DT use those IDs so far, so we could safely
-renumber it and push as a fix for it. This issue was already raised by
-Philipp in this thread [1], and I agreeed, will put some explanations.
+On Thu, 12 Mar 2026 at 14:14, Junhui Liu <junhui.liu@pigmoral.tech> wrote:
+>
+> Return -ENOTSUPP instead of -EINVAL when encountering unsupported pin
+> configuration parameters. This is more logical and allows the GPIO
+> subsystem to gracefully handle unsupported parameters via functions like
+> gpio_set_config_with_argument_optional(), which specifically ignores
+> -ENOTSUPP but treats others as failure.
+>
+> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+> ---
+Reviewed-by: Anand Moon <linux.amoon@gmail.com>
 
-Link: https://lore.kernel.org/r/20260312112858-GKH302167@kernel.org [1]
-
--- 
-Yixun Lan (dlan)
+Thanks
+-Anand
