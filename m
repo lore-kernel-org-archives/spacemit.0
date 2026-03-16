@@ -1,174 +1,203 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB96C383C9C
-	for <spacemit@lists.linux.dev>; Mon, 16 Mar 2026 09:04:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E674F34B1A1
+	for <spacemit@lists.linux.dev>; Mon, 16 Mar 2026 09:35:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.8
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773651891; cv=pass; b=AtygEOfVJnXJJ6duxcyI0SnsYX/3rUmBnIZ+rX67/wKKmdNjYVxfgEAEniIIN+MW4NQYjTfr75rkilfKLzML9lBviiQHkmZhco+WZiaKz43NNRV3xL7uk9R+tTNd04IKIrSth+pNJByNUMjB5uwFsB1braojeBEzMH4965rCM6o=
+	t=1773653708; cv=fail; b=RFhnDrxqgxe1UuWT68hOGhL4JgMD37uzWKEPbfZp8lbPfox++QUawy2l2qbcC3FikWRZozBWTq+ASKfSxBSeQzBcHEN0ci2SXNjEc0WId/PIno9RUR4eE7ZAzgRyUWI7zB2JpGFcRmAEAH77JAeO92CUaDbIP3Cza+Wlpc93JzM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773651891; c=relaxed/simple;
-	bh=dPguBCLfR9MFLQEUrZGSOp0t96KCwA/gBYgCFDRG9dk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=M1fQK81CSyRe0GPCKaqbgypxElpa4c3p+pKB8EJHp5DQHP1u0/HpH6LiulAYwUR4F69WvS6hrGxU1R47kvEU0OED+Rqs/8as3Y81kztadWYaEuDK7zqVXeO6OdWxsxSnbLTd9dexLBYKRya/m7jSZPRfDdF4BXIYMAcRCTwDklM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JQQVSlOW; arc=pass smtp.client-ip=74.125.224.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773653708; c=relaxed/simple;
+	bh=1HcQEd9gQNgFL9I3W22eKKUQznCMiofwPK+peupcBPE=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=l6NsJfBFEmZVf3xA3CP9w6UkuaI3Y/1xT5SAItp2zrni7q4Xsdcmt9qeGhRbIAcXDGiH9M/Q4kWG0PzMBKugFiogqrMbNqizjC9a9m8G0u5KpcSHVCVqlXxFNnowNIZuMzhkF3kq8fB1I/v+ZXGt2DArJenT4iKUZGuLcagmoRU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Dfj70M/G; arc=fail smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JQQVSlOW"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-64ad8435f46so4385517d50.1
-        for <spacemit@lists.linux.dev>; Mon, 16 Mar 2026 02:04:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773651888; cv=none;
-        d=google.com; s=arc-20240605;
-        b=LVi5qZqvPYJsPXtvBkR91EN4DUiIdEMmKNkOBENZ5UtWqm18cpQ1rkkZgsrGJJxSd3
-         Hu3kfht7tiUdaVzXnbcT5b+qd0wkK7sIJsBNOdsFdSGMl3LWDMxONWhUzsfgUv5un1v3
-         16qx7LfB8PuisnsU313uLviXt3Jb5F44mrQNoWQMf/k9H963ls/BcDNKptRre8q/F+Rb
-         gYAoaubx8TVsRqwctLJ2fF5lSEIdqXJ8v09dKNreKz9PfwbMydmp4qfUXqGVtASg0QqW
-         mEfl+TwPEjC5G4YCZTgUdbG+j93NzjN/Z1lse6xWSmP8kQvO5mVT3bG7tfPqWm5imxHs
-         K87g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3eAjnnl6SnN5G12YdBWuTcivnsr1WNsEqrmyCn5/LX4=;
-        fh=pDLLbVcANf8jcY867KmlR/to06Wx/CbshCHybRpwlB0=;
-        b=AVKfYbqhZplmapxeKFFcOJJuBAA8PxnpBW7IuTO/BMCijFAOBPwZY7HwENSeWGu8Qt
-         AGZxgAhPEgZNflJYui2/z8Ox97/dFpm0aijlfSkveOCfa17QJLDhf7KXMYCRGKM73T2/
-         ppPkyWbssu93+h3KogmA/1FT2YV6krbelKVrg/M553hd8rNal6QF7ZBY9q9EUG1o25Iy
-         rCyUOKfv2oEQPwKBrJnG1YJZUyYNuH/yc01B9yHuswDV/KgAS8foa8ZoFs614+Z6t/Qh
-         w3XC11IDIAFwPP438tbFMesC4SY69Vthodm7SK/M+sL3U2FE7ecBdqi+GAWDEKRABXjn
-         1oDg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773651888; x=1774256688; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3eAjnnl6SnN5G12YdBWuTcivnsr1WNsEqrmyCn5/LX4=;
-        b=JQQVSlOW/whnsjQXkqffexJ29/WJWaCNnvQf1Gq7WFSyYbPY+ATsT5DF4iX7dz7Ga/
-         5jPIYQnZ7qwuCYUbEwWjjFl9LsGDrDiSJlD0bTQ23R45V4nQYzp3N9X2EojQ15x17bLo
-         bVT6+UXOyg32NyOlPdiiDPc2Qcs2MSml4qSZQjwepDLhDbmMxokvMuFRvgHfN/cF/vHS
-         QVfDQDWDyXyv9CxoZ8VLRiaF0q/gClt6bsCBQaOAvKQZjlsdZ4xXSj3xnKeqTg48FFWQ
-         kDgnyjWmflUquK34mAdr4uRJr+h20CRQcQqhMXMQCF6jEHACpQCFThPQ2zv81rVn9PnU
-         QY9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773651888; x=1774256688;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=3eAjnnl6SnN5G12YdBWuTcivnsr1WNsEqrmyCn5/LX4=;
-        b=K3Uue+xe8k2wNJfzUAL5D7ZFvxw0S27LehAz9YrBDsWkNWfKxiGwnQwg+mvme6o/N9
-         /UPyl05mPjVSA41NTov2fCjS2rkXRnLToWqH4oqPWMLfOE07nYMLsLlk7ZOj4TwyX0WT
-         jB2wL4CeEFv/pZ1o76rTwoV06J6cex98T/6+PIH/n5x5TvqwH+DzRWZE6u30SEi9l43S
-         YuVoYi2JFsf7xcu2NyKWi9hP1Ttfh7Ji1qdyaLgoyyU/yfm+f8JIcox/k8WCTzRMRtBD
-         rRN7sO8DyKRJw98xYnjy/43Cz6nMZhLNnO/o0OgAMU/epIioPNgUnFA0HX8afvztN9jp
-         ZreQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUz7tenNPoZDO8TcZLWkQH3X/4oVoSmq3xfzvNIi8wIVRRMGNslq1d446C0jZN0StePXD7dbG/fiQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzURahtR1H0vOWCTim2HVoCtfprH27/Ys+sU6kOIHv7I266mohx
-	xtgjT5Jy74mb9AP0hVWJE1nDGD6KC9EZHwouZVEFOxy3AihoKm5w67s4Lr08MWg38IH5pJ63LfW
-	8nvW0kk28JifTd7ggt7AEgzuvuy/FZkw=
-X-Gm-Gg: ATEYQzzu5QwFz99cQ5aQrVi6I5Nin3CfPpOulMJ7fDulsdEJGhTQnTvDa0V3rLYpP0w
-	B5cXfciggJX5ZSJXiGPWIHvFZF0egFd5Ty62AqrOmBDxZwRcszI5o+u+7ajmpn+j8rt5GTkeIO3
-	dtvdGibXT2b9p4BtZHepUPXWK+QuwRezBRr+YUDs7KY8+v9ehqAfdhNmEidffQddugr1OV5JyS8
-	JyWNYjLmmisU3IBfTwOQMxhhNvipsuDL+p+OfW1qXl7WUwXl6X7egxhvntxgECExWRyyhwD3JEZ
-	3EHWpow=
-X-Received: by 2002:a05:690c:6d0f:b0:79a:3655:9dfa with SMTP id
- 00721157ae682-79a3655a11amr66434377b3.16.1773651888381; Mon, 16 Mar 2026
- 02:04:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Dfj70M/G"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1773653707; x=1805189707;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=1HcQEd9gQNgFL9I3W22eKKUQznCMiofwPK+peupcBPE=;
+  b=Dfj70M/GKyFKRsejLSw2Iko8g/m5f9SE9Hqh/ao4wenzQGhM46/qF9eo
+   g3upGXlEYivFsZ9r9znynaK2F/GxZBIJ1LpDMq54AIWqy0359GS1dTVj+
+   FPsbb181uIG3mXojY39n2YtGDa3HuekH/NvC2pwGfpD1q/svZt3SadwCJ
+   2vuoWSs8SqjjF4yJRqMK5D/Xf8Qncs8rKADSM6DEKEJEZnynieb4OJBDg
+   CvH00FsE76JlLS/H6e5oS2ErEAG2BwioWGB0aZgWlY9kxyqiGSCMMG0Y8
+   lpl+gZJlZfnyyqtUezbQyKYd5afccoVeYZC16jp8Kw8QfW+6fdjZQcZ+/
+   g==;
+X-CSE-ConnectionGUID: L2jYoRzjRbWqGNNB+qwN7Q==
+X-CSE-MsgGUID: Rii419UWQhOsyVK5qazE1Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11730"; a="92233114"
+X-IronPort-AV: E=Sophos;i="6.23,123,1770624000"; 
+   d="scan'208";a="92233114"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2026 02:35:07 -0700
+X-CSE-ConnectionGUID: olTIGRsTQcGKcud65rXjEQ==
+X-CSE-MsgGUID: viLtdvF0RzGMvxjHWCxoPA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,123,1770624000"; 
+   d="scan'208";a="221943757"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2026 02:35:06 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 16 Mar 2026 02:35:05 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Mon, 16 Mar 2026 02:35:05 -0700
+Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.48) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 16 Mar 2026 02:35:04 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ek02ZOJViuuikGF/1oF+hHkjsybhjxS8QkZbIygAz1Cbr+al55lLLQrFS4zTr5WrId8EApQ5KI021YArhTgBmsXCSuTJfYxoSHaLGlVNV9Pqh3QVvxwJIXZ37Sm7KqsvnKtDNQb/bGxnuWhElF6fBjqOzZzfhfelWeoFYhVcyY/gCwtaTyUxpdBZ0aA8K0JZE3XaPt4WIy6qOrbWn2PpYe4upceE9EuXy04KKeN45dNSXEn6M7/eyfdyM/Hx+lXN8bxWEobfYpJf1PZQFlUrDHgad3DTOG6GZ116nIw7MdK3b+geOGn4GonP2wUqNwxtEXxJTXkqOFlKBN03R3CtNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sDkmsXSMC3KdO4O3U8jDaRo8MxZ67RfLHrybyq085gc=;
+ b=Ex8qTUdrutwZ58V4W7blrlYZUfl4BtbA23r89F1jcN4wQIjk5q/NtVth+IMsrjuXKzUzBRrt5ArlGWGWMIeFU+AZEsLOmNWTGMpKD1oXCwjhRGKlM6HqTQPNDWK+XnwgcJWGYmh1A2+zvyur/t6BWfuYc9tcBCXpwiIy5jLYcBdgpTvJhr03NB32WFrc6GS/fk11EGQHE/6LewsSxJBq4y/gLkMF78wcZP31qsSGH5X79w97YG9xN+/Y9k7Oqb5KA1/QlUDlLcyBYTZVoZ75vWJahXNIcwHEDT7wK7kFMBXxGnGYbo5fV8UJiW5hJgavRXINRCY5q3jj9PQ6KEQlAg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
+ by MN2PR11MB4567.namprd11.prod.outlook.com (2603:10b6:208:26d::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.16; Mon, 16 Mar
+ 2026 09:35:02 +0000
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456%6]) with mapi id 15.20.9723.014; Mon, 16 Mar 2026
+ 09:35:02 +0000
+Message-ID: <d822d905-f956-42b4-8441-e5c786d326de@intel.com>
+Date: Mon, 16 Mar 2026 11:34:55 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/7] mmc: sdhci-of-k1: enable essential clock
+ infrastructure for SD operation
+To: Iker Pedrosa <ikerpedrosam@gmail.com>
+CC: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, "Albert
+ Ou" <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan
+	<dlan@kernel.org>, Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>, <linux-mmc@vger.kernel.org>,
+	<devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+	<spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+References: <20260309-orangepi-sd-card-uhs-v2-0-5bb2b574df5d@gmail.com>
+ <20260309-orangepi-sd-card-uhs-v2-1-5bb2b574df5d@gmail.com>
+ <a416dc43-58fd-4462-9ec5-b3dadbbacf8b@intel.com>
+ <CABdCQ=PeB5hhkk3eO3Mu89bb7m=4ccZrwouuZScGOTHwN5owQw@mail.gmail.com>
+Content-Language: en-US
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
+ 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
+ 4, Domiciled in Helsinki
+In-Reply-To: <CABdCQ=PeB5hhkk3eO3Mu89bb7m=4ccZrwouuZScGOTHwN5owQw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: DU7P194CA0026.EURP194.PROD.OUTLOOK.COM
+ (2603:10a6:10:553::23) To IA1PR11MB7198.namprd11.prod.outlook.com
+ (2603:10b6:208:419::15)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260309-orangepi-sd-card-uhs-v2-0-5bb2b574df5d@gmail.com>
- <20260309-orangepi-sd-card-uhs-v2-1-5bb2b574df5d@gmail.com> <a416dc43-58fd-4462-9ec5-b3dadbbacf8b@intel.com>
-In-Reply-To: <a416dc43-58fd-4462-9ec5-b3dadbbacf8b@intel.com>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Mon, 16 Mar 2026 10:04:37 +0100
-X-Gm-Features: AaiRm50b9bQG2sxK_4vk8EljAgLA7HxFRVGyEcc1jQLOb023E3q4ta5OL-EXqAs
-Message-ID: <CABdCQ=PeB5hhkk3eO3Mu89bb7m=4ccZrwouuZScGOTHwN5owQw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] mmc: sdhci-of-k1: enable essential clock
- infrastructure for SD operation
-To: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|MN2PR11MB4567:EE_
+X-MS-Office365-Filtering-Correlation-Id: 01f0f8cd-f420-460a-cbb6-08de833f4c36
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info: vAitGOOH2nDDrOzQC7eBYkEPwadS3Ss6CuqVzKGyeFs3H6fmcem31ePQ0GruJKQ60W49O+spFYAri3OfkpdxEtTXeeL2zTbDtgNOH/bvYuwYnuTUUvyfUZ+RTC209Vhu509+dlJImZVY7fb16nv+N6SeKgc3j9clXsnb+Mkg2psWR700ZhIBzWrZscJkyIDDZiJKTPcX4zsgpDXTNSlCf7gmx022aoJ+EIOwmd9QhCko5ZnSlfxnSdX0xmXP3mPrI6xprTzoYDDDefJS/BiQlGhGlWY0KUmeqRZMFNgguEOF2SN4sc3QGVqaz+2UJCLb+UBpIP654+cSeqaKcuQEuJi3HR1Lw5qky9w9Dk1mbaqZgup5gYn1tGDS0wkdoSzEjVwcxYqZV1sMVm/5mPzZVausJyJ0dbhWOQVW92BFm6MTPt5DHo4DQPVp/4Kr//vKHJ83lVWs8/jnhcxUHxJ3PHH/L1i0A83I1VyFpOlNjeid+UiWFK2cNtNPf9CwYiXnxa5S43oJmmdG4e4xv4TeXQ73Ks5zws6GttNQcMzpIhjKevq088h3U+39iTQAmnvruuIDux5m/l/u3tEUwOc9XTwqvRhYfk+Srn09JwkxeDMGD0qRm+HGHfi3Tjvn2pIE1QOPmOfdk+P1pcnmpJK9OA015hoqSkADNSDe+qn0l2ZddZmLmzBLd9dCwoK3Opz54ywcGRmSiqFxHzqrvxdAKfhGlrVA8cGusYMB5a/CA5ViceG5H4SgMysPeYdNzylN
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(366016)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RmRUMGRoMTBPUEJZYU52YzJ0L2FrVzhiV0cxbEVPQ1o3dG13c3JROUdkeDhw?=
+ =?utf-8?B?aG5KUGVHc3ZFcjFuYTBMcUcrb0x1dlkwZWpnRGJFZU5GM3hNaGl2cFZEWVpD?=
+ =?utf-8?B?TUU5NEE0bEY1RE94UXdtdmVkUXZjaFZCKzRqTU9hSEt1eFZpcW1mS0FheVRh?=
+ =?utf-8?B?aXVyU3NMc2FUMVdGcmNkQXBVUWFwU0FVYnE2Unh5ZnF6Vnh0R094Qm9mOE51?=
+ =?utf-8?B?bUJ4c3dWQmNmVFdkSktHeTlJelNqdDI4c2hjcGpUWEgvS1ZJOHNyM3V4MXNw?=
+ =?utf-8?B?TEwweHlMeGtRRU1TNTdBc0ZjR2VyNGozWE11SkUwdS81OFBLNDQwSVFYdTNF?=
+ =?utf-8?B?NHZXdkU5UnRlKzlqVjAxNVFXbjc2aVV5Mk42VUVmTENOU3JCY1FsQWFhUUp0?=
+ =?utf-8?B?NEZQQ2s4alBKcVlrNTJoYm44ZyswS1NDM29Ma1UrNnF2bGpHRkZQSWlwaVFC?=
+ =?utf-8?B?WnM3dFU5M3V5Y0dZRXFDV1lxZU1adTYzWlZiR3hXcWNTZGd5VTMvVnFxVkhG?=
+ =?utf-8?B?UFZBaDZpNTl6RVd4SFE3clNqd0Rub1RMUzhHeFE4STltU09RS3RrTExaVTRU?=
+ =?utf-8?B?cDdEOFdWeEFKY21teVQ2Znhza1dtWkNvZmhUbW8vSDRTampDYUs5eE9BNjJl?=
+ =?utf-8?B?NEpJQkJvNFBYYkZlS1JJTlNOYVJnRnlweGlRdjhJek55S0ZiVzI5OWhqaDZE?=
+ =?utf-8?B?d0tRR1o4UTdpdGg2alhlTS95SWMyOFNuK0ovZ2ZrYlZ0SmhLbVFtTFNab2dn?=
+ =?utf-8?B?WTd5SU1CWTAwUExUVndTUDdiQVFFNDY4NmtEUWtwZzE2eDVOazNlemtrdmRH?=
+ =?utf-8?B?R3RGOCt5U2JQUHN5VFRVMUVhM2EyRmozRytmZmRaVkNIM0RBY2RjTVFuaXlm?=
+ =?utf-8?B?b3VIUS8xbEtnejV4blNiSkxFZ2FEcnRIbzhLNkQyb3hXT2xLMUtZRVp1TWRy?=
+ =?utf-8?B?cWFkWFdIWk43d25DcVFZVnJyU2xSR1c0WFlCeThtMElSdEVFdTRVNkRlUmR6?=
+ =?utf-8?B?RDRjbTdOVHdOQ1p3R0NDQlpaZ1ZLRnJKMFVrNG83MGFrV21UMWUyN3I0SGdR?=
+ =?utf-8?B?WTVPdjVUWERVdGo1NW82TmJLZHhwakh0ckQyRDFWKzY5L3R6TXAyQ21yQjRW?=
+ =?utf-8?B?cE5uQW83cVRNUUVIVEtPUkZnTGQ1dXZOUUF4QmNrYTVHT1JyQXVDT2x2L3Vp?=
+ =?utf-8?B?ZjUxNlkvRFJPaUFUcEV6OE9uazZ5U3M2dEdWMUdzQWtJS1hHc092NHlubi9E?=
+ =?utf-8?B?dWVzVkVIak1qK21TQ001S1RkNlVVRXRJTzhEd1Z6a2FFSzdjclNic2xzaGpQ?=
+ =?utf-8?B?cXFMUm5SNktsaWllbFo0Q2lwVTN5RUxMUmR0M08zb3o3c3I0dHo4QXVBdE9p?=
+ =?utf-8?B?dXNWRWh6ak9vUk1xTFgxODRZRUtBUWVYRGNzSVFBdWx1VFpGOTRydGxTUlBo?=
+ =?utf-8?B?TXJSNWFUY01DSXlKbzJEYU11UXFya29Ed3NVZ2xac1dJR2JZWlQzTDNyQUQv?=
+ =?utf-8?B?ZzdtMjkwQmNjV0lhZ1JkaG4yZTU5M2hFai9FMm1BUGY0dzhlaGtxbTJETkxo?=
+ =?utf-8?B?QkhMN0E3MFV5NkJyYk9KNTVoRlFHNHpOTVNoMDZ6a3hwaUZ1ZHMxblJtNmsr?=
+ =?utf-8?B?N2tuTnNRL1BGL0V1QTFDOHZjdXl5blFZbjRERSs3cGVwK2JCSFNwQUFZNmYr?=
+ =?utf-8?B?M3A2MjFpVjIwVkNDUGxaenpHVXVpRE9hM3BLMUc1QmZWMFhCQTdGN05tT2Ny?=
+ =?utf-8?B?akdab25SanZWQ2duczJvN0J3dHpXNHc3YnIxVHhEZ1FEUWZucHZYd0JUUW9z?=
+ =?utf-8?B?UnJSMFRmdGFNcXRnMVZGcFhhWk5Xb0FROFFBb1VCRGk3dHNSaWRUS1VDRWpr?=
+ =?utf-8?B?bWxHUk1LN0dMZlJ4UWtUS2JQUzh1dWc4ei9oTU5qWnBxRW1lM2NWQVAvRmpn?=
+ =?utf-8?B?Z1Vtd3NnS29jcC9NeUlHd1l4WlBXd01USzJpMVIxR2hYWTkxcStIZUJpMkNx?=
+ =?utf-8?B?b3YrSU54NHNRTWtaQmZUdERRdHNGZmV2KzN2b1R1L0ZKczZMcWE5RktrQ0FF?=
+ =?utf-8?B?bEttVTNkRm5TQUd0bjRWQ2ZiSldVMk1DbmxPNHgyZlBZZDVVU1dGc05nOERp?=
+ =?utf-8?B?aGlWRDU5NFJpa2k4c0RxQ2ViajJmTHk3ZkJ3OFpMNU1EcDlac0hHd3J3anV6?=
+ =?utf-8?B?dU13YkxqbTJlcStJbkpzaVgrc3g2ZFZhLzJYaEFBZ2VORXhtaGNjZVhUKzla?=
+ =?utf-8?B?bHFTeUl3QVI5ZmdVMzVpMzdjaElsSFBEbTBUa0ZQUm9DMzFCZFBNaytkdG1k?=
+ =?utf-8?B?MFdMb1BtSzgrOWE0d0ZGT0l2WFlXSmFLanJEVitKR0d3eGwzUjZjd25MNE1E?=
+ =?utf-8?Q?MsOdhXANz3YHurqI=3D?=
+X-Exchange-RoutingPolicyChecked: J9YZg1NB6zgDoQ+rcDv9Qq1nWdWZ9abEuEkyqm9EOyvIldQXimIL6GQA+UAm/TaoA6BE8Hti+C/g/ub9eA+fyiw9D/+leBovA2K/Z5RjxlI+zRGDeonNoVaCEh/W/0wGS8hs6MucGtB+5qxT2J4nUF/qkhNS9GMj1hDu6+unfSZbidXbWuJx3sScPzdwz6oluVtoF8wJN5GqjnYZcgn99xxpEJnkcrlbGdffjyMax7I/LtU/4MPB95e0DHXw5mimMHB3Jf1oN5Vh3MftYZTZFPVwV8FFMxygZT7DzVaeqEGE0mQOHIjjwWiDbEn5/c8D3ByzfEzYNdH6YjsZllQgaA==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01f0f8cd-f420-460a-cbb6-08de833f4c36
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Mar 2026 09:35:02.2617
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3iqOZ4fyvqIBus8wipxkTcwCh2aOo2LRbDGAvOV/sbuGqd2f3y3srh0l6G+QM5XAfV4N4plyJLdDUttdCyBQNQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4567
+X-OriginatorOrg: intel.com
 
-El vie, 13 mar 2026 a las 14:04, Adrian Hunter
-(<adrian.hunter@intel.com>) escribi=C3=B3:
->
-> On 09/03/2026 13:40, Iker Pedrosa wrote:
-> > Ensure SD card pins receive clock signals by enabling pad clock
-> > generation and overriding automatic clock gating. Required for all SD
-> > operation modes.
->
-> Need to say why update to "SPACEMIT_SDHC_LEGACY_CTRL_REG" is Ok for
-> non-SD
+On 16/03/2026 11:04, Iker Pedrosa wrote:
+> El vie, 13 mar 2026 a las 14:04, Adrian Hunter
+> (<adrian.hunter@intel.com>) escribió:
+>>
+>> On 09/03/2026 13:40, Iker Pedrosa wrote:
+>>> Ensure SD card pins receive clock signals by enabling pad clock
+>>> generation and overriding automatic clock gating. Required for all SD
+>>> operation modes.
+>>
+>> Need to say why update to "SPACEMIT_SDHC_LEGACY_CTRL_REG" is Ok for
+>> non-SD
+> 
+> After analyzing the reference driver implementation[1], the
+> SDHC_LEGACY_CTRL_REG setting is applied to both eMMC and SD
+> controllers.
+> 
+> The reference driver sets GEN_PAD_CLK_ON for any controller with
+> MMC_CAP2_NO_SDIO set (SDIO disabled). Since both our eMMC and SD
+> controllers have no-sdio; in their device tree configurations, both
+> should receive this setting.
+> 
+> [1] https://github.com/orangepi-xunlong/linux-orangepi/blob/orange-pi-6.6-ky/drivers/mmc/host/sdhci-of-x1.c#L482
+> 
 
-After analyzing the reference driver implementation[1], the
-SDHC_LEGACY_CTRL_REG setting is applied to both eMMC and SD
-controllers.
+"I copied it from somewhere else" is not the best explanation,
+but better than nothing I guess.  However I meant add the
+explanation to the commit message.
 
-The reference driver sets GEN_PAD_CLK_ON for any controller with
-MMC_CAP2_NO_SDIO set (SDIO disabled). Since both our eMMC and SD
-controllers have no-sdio; in their device tree configurations, both
-should receive this setting.
-
-[1] https://github.com/orangepi-xunlong/linux-orangepi/blob/orange-pi-6.6-k=
-y/drivers/mmc/host/sdhci-of-x1.c#L482
-
->
-> >
-> > Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> > ---
-> >  drivers/mmc/host/sdhci-of-k1.c | 13 +++++++++++++
-> >  1 file changed, 13 insertions(+)
-> >
-> > diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of=
--k1.c
-> > index 0cc97e23a2f9c7b2f9376318a8a7ebb860571504..585c7eca6ebf253aac466dd=
-37cef029deb63f692 100644
-> > --- a/drivers/mmc/host/sdhci-of-k1.c
-> > +++ b/drivers/mmc/host/sdhci-of-k1.c
-> > @@ -20,6 +20,13 @@
-> >  #include "sdhci.h"
-> >  #include "sdhci-pltfm.h"
-> >
-> > +#define SPACEMIT_SDHC_OP_EXT_REG     0x108
-> > +#define  SDHC_OVRRD_CLK_OEN          BIT(11)
-> > +#define  SDHC_FORCE_CLK_ON           BIT(12)
-> > +
-> > +#define SPACEMIT_SDHC_LEGACY_CTRL_REG        0x10C
-> > +#define  SDHC_GEN_PAD_CLK_ON         BIT(6)
-> > +
-> >  #define SPACEMIT_SDHC_MMC_CTRL_REG   0x114
-> >  #define  SDHC_MISC_INT_EN            BIT(1)
-> >  #define  SDHC_MISC_INT                       BIT(2)
-> > @@ -100,6 +107,12 @@ static void spacemit_sdhci_reset(struct sdhci_host=
- *host, u8 mask)
-> >
-> >       if (!(host->mmc->caps2 & MMC_CAP2_NO_MMC))
-> >               spacemit_sdhci_setbits(host, SDHC_MMC_CARD_MODE, SPACEMIT=
-_SDHC_MMC_CTRL_REG);
-> > +
-> > +     spacemit_sdhci_setbits(host, SDHC_GEN_PAD_CLK_ON, SPACEMIT_SDHC_L=
-EGACY_CTRL_REG);
-> > +
-> > +     if (host->mmc->caps2 & MMC_CAP2_NO_MMC)
-> > +             spacemit_sdhci_setbits(host, SDHC_OVRRD_CLK_OEN | SDHC_FO=
-RCE_CLK_ON,
-> > +                                    SPACEMIT_SDHC_OP_EXT_REG);
-> >  }
-> >
-> >  static void spacemit_sdhci_set_uhs_signaling(struct sdhci_host *host, =
-unsigned int timing)
-> >
->
