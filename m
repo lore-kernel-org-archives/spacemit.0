@@ -1,218 +1,84 @@
-Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.77.159])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC41199949
-	for <spacemit@lists.linux.dev>; Tue, 17 Mar 2026 02:47:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.77.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE1B27FD51;
+	Tue, 17 Mar 2026 03:21:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773715637; cv=none; b=Kf6bJkfR0D+f3kfgRyha4yMXFd78JAYWcsb5z+XQetgppG9fbSVeLm1SQtqKGVPb9vcTRhjNg8xEfoF24iTAmeBt9KSNoRD7IkdwOQoDIt8yM/RSbt0tVq+d5PajILT40Vu48b26gJXm7cxdqMBGIpAmnlLNfSYfFii3IYX2r7k=
+	t=1773717710; cv=none; b=uolhGoI7zWiMrZhMCR13vkhgMNXBLc2yaq3iZ86mFSTCZ7gUrvMs+vfeC96cKIuzSNd3B3lELZHQPtfbKYr3yRpFRHifLOrJ3CRTM1PZzOEfbdm/DhqesV2xhgwtucmFPJqMxf9SlrITU8LRsNf+kJMI/Vy5H8CtWl+qekf98/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773715637; c=relaxed/simple;
-	bh=+RbazFKI7RM4TVObBqvswd6Yl1ghsMv0NGI1R4PnyaU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=U1sGCXLS4+qnxdnAbxM8RuAkz0n23YcGJTo9Ucl5O/i3j2ft9TPfF6KTX4aVa/FhezKd19Ra5VqXaVAUBzBUG5AbefrH95Cs8EXxqOWCtft4sWYraHM7UBGDBwSOTaUKJ5z9XQUQPCkyIW/TqsYx2luaLdo9ERa3FXmNSMgUKAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev; spf=none smtp.mailfrom=linux.spacemit.com; arc=none smtp.client-ip=114.132.77.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-X-QQ-mid: zesmtpsz9t1773715523t4ae20d3d
-X-QQ-Originating-IP: 2h42IC1ek+5dvQXwfLBVyYcnusnH3Nyf0LxkdkbHyV0=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 17 Mar 2026 10:45:21 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 4810139380364614713
-X-QQ-CSender: troy.mitchell@linux.spacemit.com
-Sender: troy.mitchell@linux.spacemit.com
+	s=arc-20240116; t=1773717710; c=relaxed/simple;
+	bh=2kpU1JJYKn+nMJDIDxbv+GgYoKMUunK160GUW0ypx78=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZOcMx69HWoytee1l3a53cOCE9i2fUVUUqZtDD5uGzFud8yDtHVWQcDIyqcHKY4nrph32XW7FaPaH/A8D19JXjvuRPjqyMirAvlArZDVyMnkU53pNgWFCsQPEaf8D2iaCe3zPZ94PkVD9iiOn99iayVUqZrDGo5tV+Y5SjSGV39w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QkR7dLbx; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QkR7dLbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F062C19421;
+	Tue, 17 Mar 2026 03:21:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773717710;
+	bh=2kpU1JJYKn+nMJDIDxbv+GgYoKMUunK160GUW0ypx78=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=QkR7dLbx7a+ct3rh6FeCJn220b3UqKaggyq5g81S7cnw62UX0l7QtHtlT6WUT8nVf
+	 0P/55uZOqYzMpW1nX8TzE5zbl7eS1GKOndPmR9IZKHBFHjTKHHph3Dl3L4s//urtTh
+	 O0chTqs2zZAGdT1EQUb1upXGG64C/1ygiBwAf/qjasVWc0dFXMXQKCjOK9gpk6PUPD
+	 ta/YVxTk5siE/1FomstF9a9eomkwKr4Rv9AWXq7wbE9/W6bbCAK/WIu2AsuQtZxyIv
+	 OXguMWyKO56lKOePBow329/2cT6vdJqB/64+b9omo5dd/sXVErzbwsC+2Mj/2M77y3
+	 ZlF9paWqkmyUA==
+Date: Mon, 16 Mar 2026 20:21:47 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan
+ <dlan@kernel.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre
+ Torgue <alexandre.torgue@foss.st.com>, Richard Cochran
+ <richardcochran@gmail.com>, Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti
+ <alex@ghiti.fr>, "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, Yao
+ Zi <me@ziyao.cc>, Yanteng Si <siyanteng@cqsoftware.com.cn>, Vladimir Oltean
+ <vladimir.oltean@nxp.com>, Lad Prabhakar
+ <prabhakar.mahadev-lad.rj@bp.renesas.com>, Shangjuan Wei
+ <weishangjuan@eswincomputing.com>, Chen-Yu Tsai <wens@kernel.org>, Zhi Li
+ <lizhi2@eswincomputing.com>, Boon Khai Ng <boon.khai.ng@altera.com>, Maxime
+ Chevallier <maxime.chevallier@bootlin.com>, Quentin Schulz
+ <quentin.schulz@cherry.de>, Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+ Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, Longbin
+ Li <looong.bin@gmail.com>
+Subject: Re: [PATCH net-next v10 1/4] dt-bindings: net: Add support for
+ Spacemit K3 dwmac
+Message-ID: <20260316202147.431d9aeb@kernel.org>
+In-Reply-To: <20260316010041.164360-2-inochiama@gmail.com>
+References: <20260316010041.164360-1-inochiama@gmail.com>
+	<20260316010041.164360-2-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 17 Mar 2026 10:45:21 +0800
-Message-Id: <DH4PODM2MN9W.V6082HZA6E18@linux.dev>
-Cc: <linux-riscv@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
- <spacemit@lists.linux.dev>
-Subject: Re: [PATCH RFC] riscv: disable local interrupts and stop other CPUs
- before restart
-From: "Troy Mitchell" <troy.mitchell@linux.dev>
-To: "Samuel Holland" <samuel.holland@sifive.com>, "Troy Mitchell"
- <troy.mitchell@linux.dev>, "Vivian Wang" <wangruikang@iscas.ac.cn>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260311-v7-0-rc1-rv-dis-int-before-restart-v1-1-bc46b4351cac@linux.dev> <f9079774-1d16-4b84-bf85-bc8444e93446@iscas.ac.cn> <DH40Z14EHV40.1I443BTRU720F@linux.dev> <c1f466f8-4e76-43a2-a7a2-126415fd1f56@sifive.com>
-In-Reply-To: <c1f466f8-4e76-43a2-a7a2-126415fd1f56@sifive.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: No6BRNJhcpN0UX6OEnuJKhkIKXUwxWIZH4DTyp12UVRBbxWlqB7rjqU2
-	G8FUARRYwrpwNuudNoWAluIz+Vs3l64HXkIN0t7E2L5hhmB2jVbn0zuMqt8SSNzGByAdAZY
-	WlR123dCpvQ5Xbzxj/u8e3IzzDOtQI6nULXEsYj6Jn1JPbL6VbTBVkje4l44d3JZSP12i2h
-	sgO7QJOgnH+lzBBFLSGho/h83qv3IbLxiohOoTzJbQGHG1x8XSFkb+IRAouujecQL5vbS1K
-	V5hM+DwMxNmhAXfx2iZej2kPmJqvDBoWqeMJzfi2ubr7fMfSaBQr+Zo6I0NRtiX0cFXPq9y
-	d4EGwh8IqIaLF4ER/CZSLIqD5ItSdU5V0FYT7weWFe1eliK9YHPf1jLiglal3m4C/IdaWW+
-	HYLsLKHEVxxG+Q/oze3DVRtUdMSvuQ5g2oxYu0tNndVSSGNd3gpANdQ+uxQQ4OAfp7srszA
-	uLDqj4YL3+kIX0vl/O9P5URyWlAzJaUF8DDJewbunDrlnB8NzIn55wxpHz8XZ1xVBE+imCm
-	SEFI5mcHoulghMxQPkioG62TeqCE5DtIAcdU+IAQq6jN6nD3qz8aI2UGuHw9UEOdnnp2KF+
-	nRej0aJbO5uxpZRvT9ZcWD/MLliYZho72Ztc5CPo8wAJFgwTr0FR0vUHRyjjaqRfmazNiTw
-	qnovwrxUiKJIhnf+LctDUQnrShiHM5PbxncXcbaTSKXabbDwCc0ve0sSpF+mFjD68W5nioR
-	/kClzt7LsaPZNuvi/5GCA1rEIwMS1HFrp6nWn8FpFSV70vgYJfGTYNlLxsl/CeXGoELS5WP
-	GYdLPM5qaMDn8/YMWIICHN+Pkb0yLMctvuZTOpHdhoob0sP0JrddPUIcFQDQD/QojOYxDj9
-	jO/lvjU7xlwVLQv/fd7J0Vi9h5mTy5BKlsj9tKB4ceFmwJoi0J9ybkRa35WnwJdgNl14b7J
-	1DzBJnzGonqzQTxGhogqBEXAIgeCzpHuKry6gItspV8GLq6NA/oXhR7aLG8XnSgv7cN/D6J
-	UWeYJ+2g==
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon Mar 16, 2026 at 9:19 PM CST, Samuel Holland wrote:
-Hi Samuel,
-> Hi Troy,
->
-> On 2026-03-16 2:23 AM, Troy Mitchell wrote:
->> On Thu Mar 12, 2026 at 11:05 AM CST, Vivian Wang wrote:
->>> On 3/11/26 10:51, Troy Mitchell wrote:
->>>> Currently, the RISC-V implementation of machine_restart() directly cal=
-ls
->>>> do_kernel_restart() without disabling local interrupts or stopping oth=
-er
->>>> CPUs. This missing architectural setup causes fatal issues for systems
->>>> that rely on external peripherals (e.g., I2C PMICs) to execute the sys=
-tem
->>>> restart when CONFIG_PREEMPT_RCU is enabled.
->>>>
->>>> When a restart handler relies on the I2C subsystem, the I2C core check=
-s
->>>> i2c_in_atomic_xfer_mode() to decide whether to use the sleepable xfer
->>>> or the polling atomic_xfer. This check evaluates to true if
->>>> (!preemptible() || irqs_disabled()).
->>>>
->>>> During do_kernel_restart(), the restart handlers are invoked via
->>>> atomic_notifier_call_chain(), which holds an RCU read lock.
->>>> The behavior diverges based on the preemption model:
->>>> 1. Under CONFIG_PREEMPT_VOLUNTARY or CONFIG_PREEMPT_NONE, rcu_read_loc=
-k()
->>>>    implicitly disables preemption. preemptible() evaluates to false, a=
-nd
->>>>    the I2C core correctly routes to the atomic, polling transfer path.
->>>> 2. Under CONFIG_PREEMPT_RCU, rcu_read_lock() does NOT disable preempti=
-on.
->>>>    Since machine_restart() left local interrupts enabled, irqs_disable=
-d()
->>>>    is false, and preempt_count is 0. Consequently, preemptible() evalu=
-ates
->>>>    to true.
->>>>
->>>> As a result, the I2C core falsely assumes a sleepable context and rout=
-es
->>>> the transfer to the standard master_xfer path. This inevitably trigger=
-s a
->>>> schedule() call while holding the RCU read lock, resulting in a fatal =
-splat:
->>>> "Voluntary context switch within RCU read-side critical section!" and
->>>> a system hang.
->>>>
->>>> Align RISC-V with other major architectures (e.g., ARM64) by adding
->>>> local_irq_disable() and smp_send_stop() to machine_restart().
->>>> - local_irq_disable() guarantees a strict atomic context, forcing sub-
->>>>   systems like I2C to always fall back to polling mode.
->>>> - smp_send_stop() ensures exclusive hardware access by quiescing other
->>>>   CPUs, preventing them from holding bus locks (e.g., I2C spinlocks)
->>>>   during the final restart phase.
->>>
->>> Maybe while we're at it, we can fix the other functions in this file as
->>> well?
->> Nice catch. I'll fix other functions in the next version.
->>>
->>> I think the reason we ended up with the "unsafe" implementations of the
->>> reboot/shutdown functions is that on the backend it is usually SBI SRST
->>> calls, which can protect itself from other CPUs and interrupts. Since o=
-n
->>> K1 we're going to be poking I2C directly, we run into the problem
->>> described above. So all of these should disable interrupts and stop
->>> other CPUs before calling the handlers, and can't assume the handlers
->>> are all SBI SRST.
->> Yes, we cannot assume that all platforms rely on this.
->
-> Why isn't K1 using the SBI SRST extension? Resetting the platform from S-=
-mode
-> directly causes problems if you ever want to run another supervisor domai=
-n (for
-> example a TEE or EFI runtime services), which may need to clean up before=
- a
-> system reset.
->
-> As you mention, other platforms use the standard SBI SRST interface, even=
-t if
-> they need to poke a PMIC to perform a system reset. Is there something
-> preventing K1 from following this path?
+On Mon, 16 Mar 2026 09:00:37 +0800 Inochi Amaoto wrote:
+> The GMAC IP on Spacemit K3 is almost a standard Synopsys DesignWare
+> MAC (version 5.40a) with some extra clock.
+> 
+> Add necessary compatible string for this device.
 
-Ideally, yes, resetting the platform should be handled by the firmware (SBI=
- SRST) to
-properly tear down M-mode/TEE states before pulling the plug.
+In the previous version the AI reviewer complained that we're not
+adding the new entry to the select at the top of the file. Other
+compatibles appear in 3 places in
+Documentation/devicetree/bindings/net/snps,dwmac.yaml
 
-However, for the K1 platform, while the SoC itself can be reset via SBI SRS=
-T, this warm
-reset does not propagate to the external PMIC. For instance, if the kernel =
-switches the
-SD card to 1.8V signaling for high-speed mode during runtime, an SoC-only r=
-eset leaves
-the PMIC still supplying 1.8V. Upon reboot, the bootrom/early kernel expect=
-s the SD card
-to be in the default 3.3V state for initialization, which inevitably leads =
-to a boot hang.
+Also I asked whether we can drop the "default m"
 
-Setting the K1-specific hardware design aside, I believe this patch is fund=
-amentally necessary
-to fix a latent bug in the RISC-V Linux kernel itself, regardless of whethe=
-r the final
-reset is backed by SBI or not.
-
-The core issue here is the context in which do_kernel_restart() invokes the=
- restart_handler_list.
-It does so via an atomic_notifier_call_chain. If RISC-V enters this phase w=
-ithout disabling local IRQs,
-we are leaving a trap for any generic driver or kernel subsystem invoked du=
-ring this teardown phase.
-
-Under CONFIG_PREEMPT_RCU, the RCU read lock does not bump the preempt count=
-.
-Without local_irq_disable(), the preemptible() check will unexpectedly eval=
-uate to true.
-
-A quick grep shows that preemptible() is widely relied upon by generic subs=
-ystems to
-determine safe execution paths (~16 occurrences in kernel/ and ~11 in drive=
-rs/).
-This means generic code implicitly trusts the architecture to set up the co=
-rrect
-atomic context during a system restart.
-
-The I2C PMIC crash we encountered is just one symptom of this missing conte=
-xt. If we don't
-fix this at the architecture level, it leaves the door open for other undis=
-covered panics.
-Any driver (watchdog, display, network, etc.) that registers a restart hand=
-ler and internally
-relies on preemptible() to choose between a sleepable or polling path will =
-inevitably trigger
-a schedule(), attempt to acquire a sleeping lock (e.g., a mutex), or call o=
-ther blocking functions
-while holding the RCU read lock, resulting in a fatal splat.
-
-*Aligning machine_restart() with other architectures* by adding local_irq_d=
-isable() and smp_send_stop()
-ensures a deterministic, single-threaded atomic context.
-This protects the Linux teardown sequence from SMP deadlocks and context mi=
-sidentification,
-well before the control is ever handed over to the firmware or hardware.
-
-Does this perspective make sense?
-
-                      - Troy
->
-> Regards,
-> Samuel
-
+Did you disagree with those comments or did you miss them?
+stmmac is a strange beast I don't really know what's going on in 
+the binding, so just double checking this is intentional.. 
