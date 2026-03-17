@@ -1,128 +1,272 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C173921E6
-	for <spacemit@lists.linux.dev>; Tue, 17 Mar 2026 07:42:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF087347506
+	for <spacemit@lists.linux.dev>; Tue, 17 Mar 2026 07:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773733326; cv=none; b=b51cO0fKljN6C2j8PNpfT4S987gxrNfEoHENYVQY+i3hp5EX7REuEILTEyNqUThqHVS8btdolSX9iM4hY0msk4OEmjyno1S6dQO6aqEpZrnXVMFn3PS3Okds6ktnM49gLllneqMKpRFSUKSNweqKcFFvmDf8AdUKZbKW4+n2nSk=
+	t=1773733442; cv=none; b=RrqUUth6GrrS6ZPjBr4kpaVYayLkTUniQ68yNqdF/hIg42/r3NIQzuTMP4JB5OSx0bW/N5IHVOycZeJSAOgZ1icnrdech5GPwpUR7dkg4NUAETRTNHNsjvlWAQ8OF4nCKomViGT6k0BVJRZZhUpmF0OKiWUvkIDUn8SOdHYCQJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773733326; c=relaxed/simple;
-	bh=xg9tpnpgfg5SClBenXIK/4GssEYnuYsuYHsNrY8UiCY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lYmuJiiM0Y09LXvtR57R5nRpMGM9lMjxAmWbwWlNq+m7qdSqM4JtmtZDGMxd5M7zL5vRgwqT/QO/l85eJidt2AG4lATPd5jbnqkG8L/JGzOt+HvpGp+K+5FJSiLPzzM5tScjOQeyZ7Q9+cieNmf4BWCJGg1YYmCNgzG+VwzT3lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mqy2Qc2N; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mqy2Qc2N"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-82990763921so4997240b3a.1
-        for <spacemit@lists.linux.dev>; Tue, 17 Mar 2026 00:42:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773733324; x=1774338124; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3gTRwPvoaoGKMWruMLfYdpsxbqLbc2avIWpIrbVdsbs=;
-        b=Mqy2Qc2NG6GR3HTPHeS1/yKeaJ7Z0eBQOcUBxzhbGxWrspbdvKZaJS/Gynqa281iPf
-         yweTx5cpAVslIqciGRu+FxdJlribJcIjqSv3imRAu87IDao34HcUytkbqxUhcb4uHqDD
-         ze3JkLauPUthYXAW+8apliFTvdk5D2nao+Cc+r7YfeUvVKM9jjiWPKsx6OAFIle7u1qm
-         +jInRVHhRRFfWS4lZvhjM6Zt6BtyXuFvMPJqavIaqt/nxM3KVUmVnveo37RZOCJbn7ca
-         l1JJJpFD60F9hOaauACan2rtwZ5mTF8uNDV1OGldLireIAJQFR5dml7gZLEpz1MMdpHY
-         mj0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773733324; x=1774338124;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3gTRwPvoaoGKMWruMLfYdpsxbqLbc2avIWpIrbVdsbs=;
-        b=fuTe82E99yKmdgBAY4g5n1mNViRKR1OwZ8thGEqHNp70cHAuCwhJG91IduhHa/G2YE
-         Lt2Nopv7Sb3ief0MB4+RAuUaSPtIet7CECstXsNTlrIi4aKo5sIjz44zFhTXFk5Yq3+n
-         4ix1y6Yduv9R1nCNJwDfnKFvYFDVrJcC+omUN+oSfcsDAgdOjvCx0LOuk0ahnVNmatV6
-         h4siOqOKjWDjdr7d9Ba41Vg4w2Mg7n+JJwEmMp9bJj6UogkrQZEso/fgwReVz6GsyWv7
-         VzIuZv3MaDzgiWZW4PDoJZtH7+KYi/EXkkF10FIsr6+fGB24DNx4/92W5iCxlSvWZjJY
-         ngPA==
-X-Forwarded-Encrypted: i=1; AJvYcCU/fu/ws1++y51LeZcvZj1zGFOcEHtA7+HkqOLwCZBKBvzOa3mGxG4uabMsNPLkuFfPChPAYCE87w==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yziz0b/LFiDqHN4GrLu009xDxlhcec1qhZDSQD7kJzi7R8qnexN
-	lrgFajnGrJ1IvWs1VZWfszkgRybXOWeytPgZqGPojYcFuZQ0faBsW6tt
-X-Gm-Gg: ATEYQzwrQoSiuOyfbbOWkbGvyZAJzjZmrvC4dCxjVlxSdw/vuiJejs+VBrMXKaxproa
-	OTIs4khCfN8o55gDODRGWP4GnQkt2Ovty/8kiEP4WWJDzzaYgS8zEeTSubK7oZLT/g/Em7FYN+J
-	v/wHVfieBN8DxRRkS9d6qYn15wa2fSfPCLDPx3Bzq9xIg0n5psABJy0PH3x2YT1jh00q/zs6fad
-	3sUOBl3sL+OaKBEwSYk/i1hqL/1uJuhdAflcmCGp7WqdvI6KOrWoGm9Y8FORU6QH1HahAUYl/Lh
-	OlNf2qnUTCNGvvCEqeBFlryt04h4pibVTOyP6bxEEraIPy/B/DvcJ97YN/TJ/hzCvCFULFf01gj
-	A/84+2DJ9s6uXljdJPhlce6UiYp4PuAK3P4sz/tSpWJyZUtOm19IZhOVn7UAQxFyTNR3sgWQFNg
-	DVclpMFo4VGHNLS9SLAL+/YbE=
-X-Received: by 2002:aa7:88c9:0:b0:81f:4675:c2a9 with SMTP id d2e1a72fcca58-82a1957f3b6mr14731969b3a.0.1773733324070;
-        Tue, 17 Mar 2026 00:42:04 -0700 (PDT)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a0736deb4sm15367325b3a.44.2026.03.17.00.42.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Mar 2026 00:42:03 -0700 (PDT)
-Date: Tue, 17 Mar 2026 15:41:56 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Jakub Kicinski <kuba@kernel.org>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Richard Cochran <richardcochran@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
-	Yao Zi <me@ziyao.cc>, Yanteng Si <siyanteng@cqsoftware.com.cn>, 
-	Vladimir Oltean <vladimir.oltean@nxp.com>, Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
-	Shangjuan Wei <weishangjuan@eswincomputing.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Zhi Li <lizhi2@eswincomputing.com>, Boon Khai Ng <boon.khai.ng@altera.com>, 
-	Maxime Chevallier <maxime.chevallier@bootlin.com>, Quentin Schulz <quentin.schulz@cherry.de>, 
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next v10 1/4] dt-bindings: net: Add support for
- Spacemit K3 dwmac
-Message-ID: <abkEPCRBkQIgx5rx@inochi.infowork>
-References: <20260316010041.164360-1-inochiama@gmail.com>
- <20260316010041.164360-2-inochiama@gmail.com>
- <20260316202147.431d9aeb@kernel.org>
+	s=arc-20240116; t=1773733442; c=relaxed/simple;
+	bh=5uCqIMEyGyMpvHdgGlibrzvD9xtN6n1a4luEJsDNOZg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=LgWFjoTgSC2KQVR56HSOWHpjNhN+GvlQl4/7m0xiPMw/Yww/7WDBNKzuZ8CAughjxNdj+Do4b4GhjH+9uCMxbyD5G9f6+WzhK0U6Q+JTLHqzmwFetXBVjzAI8cxfD4MB/N2Z1vNb5xAKizVrDxZmnfn9tlMnXEiwPaWdLxSX/rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev; spf=none smtp.mailfrom=linux.spacemit.com; arc=none smtp.client-ip=18.132.163.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+X-QQ-mid: esmtpsz10t1773733353t02284f6f
+X-QQ-Originating-IP: 0p7OrIEXIc6/5mK53s8Mf6pDqVlYJYCnKyf1eSqth6M=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 17 Mar 2026 15:42:31 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 8631632203164296220
+X-QQ-CSender: troy.mitchell@linux.spacemit.com
+Sender: troy.mitchell@linux.spacemit.com
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260316202147.431d9aeb@kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 17 Mar 2026 15:42:31 +0800
+Message-Id: <DH4VZWOSTSIH.10276GPTK1HD1@linux.dev>
+Subject: Re: [PATCH RFC] riscv: disable local interrupts and stop other CPUs
+ before restart
+From: "Troy Mitchell" <troy.mitchell@linux.dev>
+To: "Samuel Holland" <samuel.holland@sifive.com>, "Troy Mitchell"
+ <troy.mitchell@linux.dev>, "Vivian Wang" <wangruikang@iscas.ac.cn>, "Paul
+ Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
+ Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>
+Cc: <linux-riscv@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+ <spacemit@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260311-v7-0-rc1-rv-dis-int-before-restart-v1-1-bc46b4351cac@linux.dev> <f9079774-1d16-4b84-bf85-bc8444e93446@iscas.ac.cn> <DH40Z14EHV40.1I443BTRU720F@linux.dev> <c1f466f8-4e76-43a2-a7a2-126415fd1f56@sifive.com> <DH4PODM2MN9W.V6082HZA6E18@linux.dev> <7e80356c-c937-4812-b237-184676a466c0@sifive.com>
+In-Reply-To: <7e80356c-c937-4812-b237-184676a466c0@sifive.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: M4lPCacZ9YlemkVGxZgsQDX0ZYmsyQ3xrlx5oQ78mVpvEeQBAgc3I0Kr
+	RbmZsBRpNhw4qVG6kFS3BGsJ3KJVq1zIt8BDMUCusT1ZGds5lTLHSWReK2IDWSXbkfHRTUK
+	QWa4MsNDKvxfBuA5y3NPmVlKo2kdQlGvzpnaLAx7H4OByCZg8/O6pZ/LKIOnaL6Yl7yZFdK
+	lUobBJ1GDjkPQadN2Icq1+5KCJq04hPz7BqhJ2d41wLr0BxdKJB421GdDmz5lYJGYuBpxvX
+	sux1GUJTKMWT+RU0+On19XkHM10njOkW5St74BPEYc0QrplJusSCwQ+o5R7CHCyIBbRRo/G
+	BMdA0jf2p5+LIvZDzIRKJ7TA5k/HIUZ6cXorktC0/vGhqpIzsLDNYx2fLyV87FHOt1pLO5p
+	rgKmODRgNlusE/cxxqB3xmIRvLNkTQBVzJTjEoIfEIOgx1wkaD3uD/J1EtaMq41gSMDFQpp
+	qN4kddFHnIBjYmxhBepzWVQAGGDA+gQCCAGvIXdfcJF6MIdkgnJniEnDw+8OIZvXd2tCpGL
+	mD9fuoV3NJaJ4AzMsC7uh1uArmFPzLFjiSs7QQx0jHtsV35X/cfw202l2Ky/KsJV/DS2WVs
+	dNbpy8mtSnuAb8eH6snmbO3ujNXqlFus528HjUJus0DmShuc909Fv1x9tZOicK9l2hAsVl8
+	PuddnAB/JVKj2Oq5v7pLM0gkaE+lhuJ4TIHdryY5Nf2scajSd+KkrqVvOFPBcE+FidPJwVg
+	oh7rUYVl+0u9y2VcaMzb64kWAqWAIStFRutfIc4tR0q3XN2nyH5TmjGLfVTkuFmTLayV0oi
+	MJsmqkk4DV8zYR936RN7HvXsVCpFD0KXNm+rY2ynDXar3Qggc4S0KNxJn2pvHk38WJGQuNu
+	T/o4CfCvqW/j9nRROIKkYRICAvMuNGlIMA5egkusjrxRuuAmh5BvGsBJUILCqd4zuIQRjAt
+	Gdl7bs1ERQgyD1/+de77EUtLlT+5nqCAD0wsWf+Kn73vxPB9Tkg/LQAwJwzCNx98syI9/h2
+	ngWmh0eLVuyCOrxJ5l8BcH8veh8bWVnqeM8CBpCA==
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
 
-On Mon, Mar 16, 2026 at 08:21:47PM -0700, Jakub Kicinski wrote:
-> On Mon, 16 Mar 2026 09:00:37 +0800 Inochi Amaoto wrote:
-> > The GMAC IP on Spacemit K3 is almost a standard Synopsys DesignWare
-> > MAC (version 5.40a) with some extra clock.
-> > 
-> > Add necessary compatible string for this device.
-> 
-> In the previous version the AI reviewer complained that we're not
-> adding the new entry to the select at the top of the file. Other
-> compatibles appear in 3 places in
-> Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> 
-> Also I asked whether we can drop the "default m"
-> 
+Hi Samuel,
 
-For the Kconfig, I think it is better to keep the thing the
-same as others. And I guess this question may be related to
-some compromise that I do not know, and it is a hard thing
-for me to answer.
+On Tue Mar 17, 2026 at 12:07 PM CST, Samuel Holland wrote:
+> On 2026-03-16 9:45 PM, Troy Mitchell wrote:
+>> On Mon Mar 16, 2026 at 9:19 PM CST, Samuel Holland wrote:
+>>> On 2026-03-16 2:23 AM, Troy Mitchell wrote:
+>>>> On Thu Mar 12, 2026 at 11:05 AM CST, Vivian Wang wrote:
+>>>>> On 3/11/26 10:51, Troy Mitchell wrote:
+>>>>>> Currently, the RISC-V implementation of machine_restart() directly c=
+alls
+>>>>>> do_kernel_restart() without disabling local interrupts or stopping o=
+ther
+>>>>>> CPUs. This missing architectural setup causes fatal issues for syste=
+ms
+>>>>>> that rely on external peripherals (e.g., I2C PMICs) to execute the s=
+ystem
+>>>>>> restart when CONFIG_PREEMPT_RCU is enabled.
+>>>>>>
+>>>>>> When a restart handler relies on the I2C subsystem, the I2C core che=
+cks
+>>>>>> i2c_in_atomic_xfer_mode() to decide whether to use the sleepable xfe=
+r
+>>>>>> or the polling atomic_xfer. This check evaluates to true if
+>>>>>> (!preemptible() || irqs_disabled()).
+>>>>>>
+>>>>>> During do_kernel_restart(), the restart handlers are invoked via
+>>>>>> atomic_notifier_call_chain(), which holds an RCU read lock.
+>>>>>> The behavior diverges based on the preemption model:
+>>>>>> 1. Under CONFIG_PREEMPT_VOLUNTARY or CONFIG_PREEMPT_NONE, rcu_read_l=
+ock()
+>>>>>>    implicitly disables preemption. preemptible() evaluates to false,=
+ and
+>>>>>>    the I2C core correctly routes to the atomic, polling transfer pat=
+h.
+>>>>>> 2. Under CONFIG_PREEMPT_RCU, rcu_read_lock() does NOT disable preemp=
+tion.
+>>>>>>    Since machine_restart() left local interrupts enabled, irqs_disab=
+led()
+>>>>>>    is false, and preempt_count is 0. Consequently, preemptible() eva=
+luates
+>>>>>>    to true.
+>>>>>>
+>>>>>> As a result, the I2C core falsely assumes a sleepable context and ro=
+utes
+>>>>>> the transfer to the standard master_xfer path. This inevitably trigg=
+ers a
+>>>>>> schedule() call while holding the RCU read lock, resulting in a fata=
+l splat:
+>>>>>> "Voluntary context switch within RCU read-side critical section!" an=
+d
+>>>>>> a system hang.
+>>>>>>
+>>>>>> Align RISC-V with other major architectures (e.g., ARM64) by adding
+>>>>>> local_irq_disable() and smp_send_stop() to machine_restart().
+>>>>>> - local_irq_disable() guarantees a strict atomic context, forcing su=
+b-
+>>>>>>   systems like I2C to always fall back to polling mode.
+>>>>>> - smp_send_stop() ensures exclusive hardware access by quiescing oth=
+er
+>>>>>>   CPUs, preventing them from holding bus locks (e.g., I2C spinlocks)
+>>>>>>   during the final restart phase.
+>>>>>
+>>>>> Maybe while we're at it, we can fix the other functions in this file =
+as
+>>>>> well?
+>>>> Nice catch. I'll fix other functions in the next version.
+>>>>>
+>>>>> I think the reason we ended up with the "unsafe" implementations of t=
+he
+>>>>> reboot/shutdown functions is that on the backend it is usually SBI SR=
+ST
+>>>>> calls, which can protect itself from other CPUs and interrupts. Since=
+ on
+>>>>> K1 we're going to be poking I2C directly, we run into the problem
+>>>>> described above. So all of these should disable interrupts and stop
+>>>>> other CPUs before calling the handlers, and can't assume the handlers
+>>>>> are all SBI SRST.
+>>>> Yes, we cannot assume that all platforms rely on this.
+>>>
+>>> Why isn't K1 using the SBI SRST extension? Resetting the platform from =
+S-mode
+>>> directly causes problems if you ever want to run another supervisor dom=
+ain (for
+>>> example a TEE or EFI runtime services), which may need to clean up befo=
+re a
+>>> system reset.
+>>>
+>>> As you mention, other platforms use the standard SBI SRST interface, ev=
+ent if
+>>> they need to poke a PMIC to perform a system reset. Is there something
+>>> preventing K1 from following this path?
+>>=20
+>> Ideally, yes, resetting the platform should be handled by the firmware (=
+SBI SRST) to
+>> properly tear down M-mode/TEE states before pulling the plug.
+>>=20
+>> However, for the K1 platform, while the SoC itself can be reset via SBI =
+SRST, this warm
+>> reset does not propagate to the external PMIC. For instance, if the kern=
+el switches the
+>> SD card to 1.8V signaling for high-speed mode during runtime, an SoC-onl=
+y reset leaves
+>> the PMIC still supplying 1.8V. Upon reboot, the bootrom/early kernel exp=
+ects the SD card
+>> to be in the default 3.3V state for initialization, which inevitably lea=
+ds to a boot hang.
+>
+> Right, so you would need a driver in M-mode that performs a PMIC-level re=
+set
+> instead of a SoC-level reset when the SBI SRST function is called. Severa=
+l
+> platforms already do this.
+Agreed. Porting the PMIC/I2C driver to M-mode (OpenSBI) is indeed the prope=
+r
+long-term solution for the K1 platform.
+>
+>> Setting the K1-specific hardware design aside, I believe this patch is f=
+undamentally necessary
+>> to fix a latent bug in the RISC-V Linux kernel itself, regardless of whe=
+ther the final
+>> reset is backed by SBI or not.
+>>=20
+>> The core issue here is the context in which do_kernel_restart() invokes =
+the restart_handler_list.
+>> It does so via an atomic_notifier_call_chain. If RISC-V enters this phas=
+e without disabling local IRQs,
+>> we are leaving a trap for any generic driver or kernel subsystem invoked=
+ during this teardown phase.
+>>=20
+>> Under CONFIG_PREEMPT_RCU, the RCU read lock does not bump the preempt co=
+unt.
+>> Without local_irq_disable(), the preemptible() check will unexpectedly e=
+valuate to true.
+>>=20
+>> A quick grep shows that preemptible() is widely relied upon by generic s=
+ubsystems to
+>> determine safe execution paths (~16 occurrences in kernel/ and ~11 in dr=
+ivers/).
+>> This means generic code implicitly trusts the architecture to set up the=
+ correct
+>> atomic context during a system restart.
+>
+> I agree with the conceptual issue, that do_kernel_restart() should be cal=
+led
+> from an atomic context, but may not be. But there seems to be no practica=
+l
+> problem if the first/only entry in restart_handler_list is sbi_srst_reboo=
+t(),
+> which is why we haven't seen problems on other platforms.
+Yes, that perfectly explains why this missing atomic context has remained
+hidden on most other platforms.
 
-> Did you disagree with those comments or did you miss them?
-> stmmac is a strange beast I don't really know what's going on in 
-> the binding, so just double checking this is intentional.. 
+>
+>> The I2C PMIC crash we encountered is just one symptom of this missing co=
+ntext. If we don't
+>> fix this at the architecture level, it leaves the door open for other un=
+discovered panics.
+>> Any driver (watchdog, display, network, etc.) that registers a restart h=
+andler and internally
+>> relies on preemptible() to choose between a sleepable or polling path wi=
+ll inevitably trigger
+>> a schedule(), attempt to acquire a sleeping lock (e.g., a mutex), or cal=
+l other blocking functions
+>> while holding the RCU read lock, resulting in a fatal splat.
+>
+> Are you possibly confusing restart_handler_list and reboot_notifier_list =
+here? A
+> display or network driver would not register a restart handler. And simil=
+arly to
+> the PMIC case, I would expect a platform that resets by watchdog to have =
+a
+> M-mode driver for it and still use the SBI SRST extension.
+You are completely right, I mixed up `restart_handler_list` and
+`reboot_notifier_list`. My apologies for the poor examples. Display and net=
+work
+drivers definitely use the notifiers. The actual restart handlers are mostl=
+y
+limited to watchdogs, PMICs, or specific reset controllers.
 
-Oh, I have forgot to reply to the binding.
+Thank you for pointing this out.
+>
+>> *Aligning machine_restart() with other architectures* by adding local_ir=
+q_disable() and smp_send_stop()
+>> ensures a deterministic, single-threaded atomic context.
+>> This protects the Linux teardown sequence from SMP deadlocks and context=
+ misidentification,
+>> well before the control is ever handed over to the firmware or hardware.
+>>=20
+>> Does this perspective make sense?
+>
+> Yes, I'm not opposed to making this change, because it is conceptually th=
+e right
+> thing to do. I'm only questioning why you are in a position to notice thi=
+s issue
+> in the first place: you only see this because Linux is driving the PMIC d=
+irectly
+> instead of going through firmware.
+Thanks for the ACK and the insightful review.
 
-Currently, I disagree to add something in the select, as a
-new binding is always required for a new device. Even if it
-is already supported in the existing kernel, the new device
-is required to add at least a new compatiable string for it.
+I will prepare and send out a v2 shortly.
+Looking forward to your further review.
 
-Regards,
-Inochi
+                    - Troy
