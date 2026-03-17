@@ -1,180 +1,124 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE90A386457
-	for <spacemit@lists.linux.dev>; Tue, 17 Mar 2026 20:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995203909B1;
+	Tue, 17 Mar 2026 21:44:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773779074; cv=none; b=cY/9OEop6udfLWgyqmj0/flbOljRoPDa/7phWEPnnPp5uXiGgF4EZlwK3zbsA1uZpP1q1TEtHgV4gyIigLG4JspFOv56qmMb6ZdksOevOpeAY95ElxstPm5H2RksBE1yJc1EehbhsY4EEza0jO82ja/YxmIW5V7EAO5d9vcEQXE=
+	t=1773783877; cv=none; b=F5d0m5IYnKmKmACgoiHkvX5vtldARx/9KHYDUljRyUV4o+JlGlEuCLgWpDSk0E0tjWTbz4Nn7CU/FGRc8Nars0fqGDJTbl5Sid4qZFciZVwHerxDTlMp6pPMAyfaAdJUyOg9hrhe1PHMbUKJtt95/yyzp+T4Rm+glilU1yLWgxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773779074; c=relaxed/simple;
-	bh=/pSmMN7yBxcw33FZy6ItYc1Bekt1gKAsnKnNQIrvxNA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sKdkfHJNDbgf6p9LY0boew1aVtt2BNIecCioawRXSd6DGWQGWVRnT6aohrupYdGpF+uS+spec7zcrRtiqcmZwoCQ1Etjp/bstg1uaRXyTPUq5JTqvAbbXUYABqVmPK7n6sQ3nmgeqiG8DJNJQLxp39L1HKUv8N05eFwX77YDAQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=A2joOL4t; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1773783877; c=relaxed/simple;
+	bh=YnJxAqY3yVW0rBxCTAK9ZMy9uB7s9ePxLZFBfN6k5Wg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bk6olEJkkv7bF2PUC+EG53PuvdfJOO3SN+b/nxCl0WWU/E9HcQpcDw1Cm0IM2i1nPUhoIWiEf0Xginbp76eiiyNSRC6Cp/BN3vCNVQC+Fd+x2GTW/ljE3pdwCbeKRTT1Jgtj33tbFAIULFZORxxqmjlcKWm3A94LmvT7TBy/xXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CTiOJc38; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="A2joOL4t"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-50697d6a69cso34770221cf.2
-        for <spacemit@lists.linux.dev>; Tue, 17 Mar 2026 13:24:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1773779072; x=1774383872; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mH049RaW0O4+GDFr4LRnFBkAFDmCy+4RM4isbdlqWYE=;
-        b=A2joOL4t3gxMtbUHUtMUHvV02dMBqylnICMCJNzz6ENQ4ocsd0Mzj15cjzSTCBdUgP
-         SUuHqUBt8InEIugXypMx6qf6GeiIr+AQszvzVfm3RWh1STuAGHteRv7aNy7IJvH4xZvG
-         mLgWHnXOD8Jhq+ljYn4cw9bc7/AH0nbrrXNpJ/ps2uicNPZJd74YHhetzZP5fKH1NpIB
-         1FawdchtmJB9FdNRjPiiBUlIdpuYjgn3ZLN95qvY/+xqhwPRAXTRPba8N4LMe2z1ERi+
-         NDlZS3EiiJH32N08d00onIJtQP1ou8cLJ6R2NVfuUgxdtfCZiL+WV4HIelHmUsehi7wb
-         CHRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773779072; x=1774383872;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mH049RaW0O4+GDFr4LRnFBkAFDmCy+4RM4isbdlqWYE=;
-        b=oD3NOYXyZ1fm5dSET5co/95wKcG07uEiJXmROWxydOTdivAkF64F3wnqw0pHQZBHkY
-         C8WgE9kdk/FmSB5JoKgdzbvliIvGcz8rR5PdbG28aWtru0Bc7iHGzFCpxBV3QnEsPSwj
-         4VEOG27fQZnFFiG3jkDQmM5S6iKkH/mxIYrl7G4F6j+orWYM8MZzcL35XYlV0JXtobG4
-         NV9rFF2QOP4z6IqbT5MCbjmOnhZL/SU27/+MmW3eAePn2aYjQx/8mA+nMoRtDJ7rWYnk
-         IR5aKKkJ1Gy0YvXW7BJBoZgWt1l0s2jvIXzs7p6235iZD5dRLO+uUIRNPUxyUmSfRirL
-         tckA==
-X-Forwarded-Encrypted: i=1; AJvYcCWbPB37+rzuAelz3EDKLAje/dMEPLbVu50OG5LqoRH1s94b8/Vjl7LPLGmtyxBhwcRfdbm489Ncqg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzvY+mTyxL5SPWTR5Bn+dki8Zghh83wBzFjz71n0pwjJH8GNjrw
-	gRg3hlJX5rjFhxJGoSZR/jKPdp94pW1VXZsbzU6pi9MSOEy+04yGYSNpmDdNGZvw3io=
-X-Gm-Gg: ATEYQzwp4GjS4dNjZvZSKY2uFH83RuKevcHn6yj96UpP3v6jyA6V6ePgCf0bjBG6kcT
-	YoMreIdxUoEHkc3fL7ij4HDd/OIFOLzTAMNnoHWuyplCy3fI8qdnsT/NktykUZsxg/UtLbLrv3V
-	or2ce4xvOfWl06YZdRRdCtxWvC9BNfS0YLmQFaEWboFFTKGPDdbsUuBssuGSE8RukybnJW9IIXi
-	TXnBvIRSoNs6XFLgiOcBa7gqiK5+zvucaqFuBZw4aXh7SuVAsUBUaseKzVKbdygYLN24/zeXoHM
-	DunJg306dD84pMJZf+k12ghy3fPn3VZ3cMYZQUscot9m0e+M5gu6av+xoAMGVwo9FTSlPj5PN2n
-	zt9l4zMxa1l4yUo/sbWn1a8eSA08XViAsh69nViDjLOMrWAIX8ptc9OiqF68Qh7cRsJsYH7LmHb
-	huW8F5YM4sUpkmpN29UXaBZMkrpW0QHYNam4SL07PlKg5RduPpi0DY0BcnC+7ZSf1bexu4OCusy
-	1h4
-X-Received: by 2002:a05:622a:41:b0:509:372e:35f5 with SMTP id d75a77b69052e-50b14887949mr8987231cf.55.1773779071676;
-        Tue, 17 Mar 2026 13:24:31 -0700 (PDT)
-Received: from ?IPV6:2001:1970:3847:e000:4c82:63a9:39e9:5c17? ([2001:1970:3847:e000:4c82:63a9:39e9:5c17])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50b135b7e50sm6479901cf.22.2026.03.17.13.24.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Mar 2026 13:24:31 -0700 (PDT)
-Message-ID: <6635a48f-e7b6-4f5d-8285-cb1149754cd1@baylibre.com>
-Date: Tue, 17 Mar 2026 16:24:29 -0400
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CTiOJc38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F6BC4CEF7;
+	Tue, 17 Mar 2026 21:44:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773783877;
+	bh=YnJxAqY3yVW0rBxCTAK9ZMy9uB7s9ePxLZFBfN6k5Wg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CTiOJc38tOqLBn6rKI1YCPrqaDNI0pR0suhd/76OSH8FqwhojyJL044wxft0zFGA7
+	 w+I48l+FEX6LtDsEgVFl2jI8n39BjNL59z9UROKhQOiG7OZvEJOigEYsBP2wi5hk9O
+	 FmsEpuMyAgqtQpmGo2Rexj+dRBKotiX5FNyPpAJMjkFtMAw2GXApL7KCUZ6KWrHea/
+	 en+WOvZRSy2Z0HiZnCp0iRwgqX9uSrgiqbfoXRncbkq+FkqQ+P6Roz4MKSke+pZXQN
+	 kc6l8umBVg5mToKGRlv82fTPz3cnr9E2MpwCL4ID403lX93cBrlYJ18gAnG6zkENKE
+	 LfzKPrZQwg0rw==
+Date: Wed, 18 Mar 2026 05:44:35 +0800
+From: Yixun Lan <dlan@kernel.org>
+To: Conor Dooley <conor@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Ze Huang <huang.ze@linux.dev>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Junzhong Pan <junzhong.pan@spacemit.com>,
+	Inochi Amaoto <inochiama@gmail.com>, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: usb: dwc3: spacemit: add support for K3
+ SoC
+Message-ID: <20260317214435-GKA453922@kernel.org>
+References: <20260317-02-k3-usb20-support-v1-0-d89f59062ad4@kernel.org>
+ <20260317-02-k3-usb20-support-v1-1-d89f59062ad4@kernel.org>
+ <20260317-shortness-gecko-72f14fbc79f2@spud>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/7] riscv: dts: spacemit: k1-orangepi-rv2: add PMIC
- and power infrastructure
-To: Iker Pedrosa <ikerpedrosam@gmail.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Yixun Lan <dlan@kernel.org>
-Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
- Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- Anand Moon <linux.amoon@gmail.com>
-References: <20260316-orangepi-sd-card-uhs-v3-0-aefd3b7832df@gmail.com>
- <20260316-orangepi-sd-card-uhs-v3-5-aefd3b7832df@gmail.com>
-Content-Language: en-US
-From: Trevor Gamblin <tgamblin@baylibre.com>
-In-Reply-To: <20260316-orangepi-sd-card-uhs-v3-5-aefd3b7832df@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260317-shortness-gecko-72f14fbc79f2@spud>
+
+Hi Conor,
+
+On 12:55 Tue 17 Mar     , Conor Dooley wrote:
+> On Tue, Mar 17, 2026 at 11:53:02AM +0000, Yixun Lan wrote:
+> > Add compatible string for DWC3 USB controller found in SpacemiT K3 SoC.
+> > The USB2.0 host controller in K3 SoC actually use DWC3 IP but only has
+> > USB2.0 functionality, and requires only one USB2.0 PHY connected.
+> > 
+> > Explicitly reduce number of phy property to minimal one.
+> 
+> Is this valid for the existing compatible, will it work with only one
+> clock?
+> 
+I didn't change clock binding, do you mean phy?
+
+Both k1 and k3 work with one clock (no change here)
+
+for phy, the existing k1 requires two. for k3, one controller requires
+one phy due to only has USB2.0 support, other controllers requires two
+phys - USB2, USB3 PHY
+
+> > 
+> > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> > ---
+> >  Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml | 6 +++++-
+> >  1 file changed, 5 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> > index 0f0b5e061ca1..cc27b363ca79 100644
+> > --- a/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> > +++ b/Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
+> > @@ -27,7 +27,9 @@ allOf:
+> >  
+> >  properties:
+> >    compatible:
+> > -    const: spacemit,k1-dwc3
+> > +    enum:
+> > +      - spacemit,k1-dwc3
+> > +      - spacemit,k3-dwc3
+> >  
+> >    reg:
+> >      maxItems: 1
+> > @@ -42,11 +44,13 @@ properties:
+> >      maxItems: 1
+> >  
+> >    phys:
+> > +    minItems: 1
+> >      items:
+> >        - description: phandle to USB2/HS PHY
+> >        - description: phandle to USB3/SS PHY
+> >  
+> >    phy-names:
+> > +    minItems: 1
+> >      items:
+> >        - const: usb2-phy
+> >        - const: usb3-phy
+> > 
+> > -- 
+> > 2.53.0
+> > 
 
 
-On 2026-03-16 10:03, Iker Pedrosa wrote:
-> Add Spacemit P1 PMIC configuration and board power infrastructure for
-> voltage regulation support.
->
-> - Add board power regulators (12V input, 4V rail)
-> - Enable I2C8 for PMIC communication
-> - Configure PMIC with buck4 (vmmc) and aldo1 (vqmmc) regulators
-> - Set up regulator constraints for SD card operation
->
-> Tested-by: Anand Moon <linux.amoon@gmail.com>
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> ---
->   arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 48 ++++++++++++++++++++++++
->   1 file changed, 48 insertions(+)
->
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> index 7b7331cb3c726f11d597f81917f3a3f5fc21e1b9..f1533c99881dbf38e16cff5e91e33253cfa7a56d 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> @@ -19,6 +19,25 @@ aliases {
->   		ethernet1 = &eth1;
->   	};
->   
-> +	reg_dc_in: dc-in-12v {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "dc_in_12v";
-> +		regulator-min-microvolt = <12000000>;
-> +		regulator-max-microvolt = <12000000>;
-> +		regulator-boot-on;
-> +		regulator-always-on;
-> +	};
 
-Hi,
-
-This still shows 12V instead of the 5V connector listed in the board's spec.
-
-I was able to test it without issue, but this should be fixed up.
-
-> +
-> +	reg_vcc_4v: vcc-4v {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vcc_4v";
-> +		regulator-min-microvolt = <4000000>;
-> +		regulator-max-microvolt = <4000000>;
-> +		regulator-boot-on;
-> +		regulator-always-on;
-> +		vin-supply = <&reg_dc_in>;
-> +	};
-> +
->   	chosen {
->   		stdout-path = "serial0";
->   	};
-> @@ -92,3 +111,32 @@ &uart0 {
->   	pinctrl-0 = <&uart0_2_cfg>;
->   	status = "okay";
->   };
-> +
-> +&i2c8 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&i2c8_cfg>;
-> +	status = "okay";
-> +
-> +	pmic@41 {
-> +		compatible = "spacemit,p1";
-> +		reg = <0x41>;
-> +		interrupts = <64>;
-> +		vin-supply = <&reg_vcc_4v>;
-> +
-> +		regulators {
-> +			buck4: buck4 {
-> +				regulator-min-microvolt = <500000>;
-> +				regulator-max-microvolt = <3300000>;
-> +				regulator-ramp-delay = <5000>;
-> +				regulator-always-on;
-> +			};
-> +
-> +			aldo1: aldo1 {
-> +				regulator-min-microvolt = <500000>;
-> +				regulator-max-microvolt = <3400000>;
-> +				regulator-boot-on;
-> +				regulator-always-on;
-> +			};
-> +		};
-> +	};
-> +};
->
+-- 
+Yixun Lan (dlan)
