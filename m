@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1CC36A02F;
-	Wed, 18 Mar 2026 08:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3672330D54;
+	Wed, 18 Mar 2026 09:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773823253; cv=none; b=SAopx3TvJojBGXzyG+bGVf02CdraLXfiVp7Taz1iwGmJZlivKGPdEcxjzB8d2ITzn8T/mcorjEdtKAvg7kYjw70qBxiKaoY1qYSEKsPN1xvCA6Dy0OKRSOZScTdhYG8qW6VfokyMODLyIhbrATFSXPlN9w7xmJk2F3iWa8XcU+A=
+	t=1773824468; cv=none; b=fYewY9kD9HdtBy+wiRy2Co5NSCkqNGxn+GZKRS+XZEnfBl4exccv11i4+qEwWYqkTo6p9nZdM9/TK/aINLTiOkBPPQpG4goMTsrpNleaWORuHpwqnwWs8FTWV3prT6U4i27kfdtnOMWbAhoreMYJP9VG70oPvVreWK1xHgSkwTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773823253; c=relaxed/simple;
-	bh=w/wvZV8mEJ2nmUP5hFKuTv6oekBv+2JY4z4KU9pL4o4=;
+	s=arc-20240116; t=1773824468; c=relaxed/simple;
+	bh=Y7NA/QDIalWo3D2nRcGD3UiRiGnKtgUyJPIS23k/YlA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uV+C5hSZ4VqFWu6fxWJbFwweMjUUqGn50rdqFubqTnIy8ibo4U8FA1swibFSOPvwT33QhcRrhLC5PR79BIP/ff7GZhN93p7QYCHEXni94FBq+himFU0a+GByC8WlIoPV+21N/44ZmEguiZCt7VxQnp0/oEsWS4Je27pJeoWdcug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f6TuTikG; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=gM5FRhncQRgkIX36DibsxJ5jpbQXUlY1nGINNZYJ70bl0+mex5NwrRYMa1anLSyE/tS+J2KFsROKFBwBEU5GzCGuWGnkL95Yl1dvvetO8rWR1HzgZde3/qLQsSHZ5zK/o+o6uXMUB22lVEJOvAXfzIs4E4fG88e8Dgrl4NjeL7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oNYnbJhJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f6TuTikG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED52EC19421;
-	Wed, 18 Mar 2026 08:40:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oNYnbJhJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E842EC19421;
+	Wed, 18 Mar 2026 09:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773823253;
-	bh=w/wvZV8mEJ2nmUP5hFKuTv6oekBv+2JY4z4KU9pL4o4=;
+	s=k20201202; t=1773824468;
+	bh=Y7NA/QDIalWo3D2nRcGD3UiRiGnKtgUyJPIS23k/YlA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=f6TuTikGgzrCAcjcuI+NHxt3KfsDGO0OfmoThHvpJ4T8MnWaxevKmWKTPIzPV+5ZP
-	 Xwpw4ai3lIZzogE/4myEtpfM62Nw3w3OXEyNvTJSak0M7OOqJC3T8MHWQnTUj0G3p4
-	 /UyB3oMIIFQMvpCk8D7FSkqBjFYjHELT6sJcoxrEZdq9aRptm2tdyUVQEUxU2bdFgS
-	 TarzIs5yDimieXoixRDhkEGcX9ruo1tIrLkCGtPGNW8iA2DVcszOrvxMZbUI6bi4p2
-	 JsBIabT6fa9EWNjcSk2B4/uv3BlI/1he5LuCt+w9NY41RF2r4wbfhuenVjckSEVxN5
-	 ZfxPgSsWernKA==
-Date: Wed, 18 Mar 2026 09:40:51 +0100
+	b=oNYnbJhJQKFMBTOaoOaL8B3vntvOGTJkSyS/fiTuXvhdF4d5UlKf03QNdWwm6N8N+
+	 xjbBULijEY1lvlNOH023Kplgl+ZhyRFTN3KA7jzoingqBX3gHGgOqGE7SQMroxZRrR
+	 UHytpJQlqFMRtaYh71y5QfcKcbh0mXpmbDBUyKMw5nDLst6AY8qZLaq6ONVvd6z5K/
+	 WR5ytD4+hI8JcG9hAjUodVBrcE53o9X/WUS8VeKiaaR/PTpKeeY+jxNMD+/4bYHS25
+	 EFyGlO9Ui/E6U1G8a850TbCwzg/cdM1X09u/MKXtq1pjYN1usq319IIJLZnqUm87z/
+	 mzVhOiUfKgyNA==
+Date: Wed, 18 Mar 2026 10:01:05 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Matthias Kaehlcke <mka@chromium.org>, 
-	Junzhong Pan <panjunzhong@linux.spacemit.com>, Inochi Amaoto <inochiama@gmail.com>, spacemit@lists.linux.dev, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH 3/3] usb: misc: onboard_usb_dev: Add Terminus FE1.1s
- USB2.0 Hub (1a40:0101)
-Message-ID: <20260318-discreet-rampant-cormorant-ab12c6@quoll>
-References: <20260317-03-usb-hub-fe1-v1-0-71ec3989f5be@kernel.org>
- <20260317-03-usb-hub-fe1-v1-3-71ec3989f5be@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Ze Huang <huang.ze@linux.dev>, 
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Emil Renner Berthing <kernel@esmil.dk>, 
+	Junzhong Pan <junzhong.pan@spacemit.com>, Inochi Amaoto <inochiama@gmail.com>, linux-usb@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] riscv: dts: spacemit: k3: Add USB2.0 support
+Message-ID: <20260318-belligerent-boa-of-resistance-4b98a0@quoll>
+References: <20260317-02-k3-usb20-support-v1-0-d89f59062ad4@kernel.org>
+ <20260317-02-k3-usb20-support-v1-3-d89f59062ad4@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -47,57 +50,23 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260317-03-usb-hub-fe1-v1-3-71ec3989f5be@kernel.org>
+In-Reply-To: <20260317-02-k3-usb20-support-v1-3-d89f59062ad4@kernel.org>
 
-On Tue, Mar 17, 2026 at 08:55:04AM +0000, Yixun Lan wrote:
-> Terminus FE1.1s is USB2.0 protocol compliant 4-port USB HUB, It support
-> MTT (Multiple Transaction Translator) mode, the upstream port supports
-> high-speed 480MHz and full-speed 12MHz modes, also it has integrated 5V
-> to 3.3V/1.8V regulator and Power-On-Reset circuit.
+On Tue, Mar 17, 2026 at 11:53:04AM +0000, Yixun Lan wrote:
+> The USB2.0 controller on Pico-ITX board connnects to a Terminus FE1.1 Hub
+> which fully USB2.0 protocol compliant and provides 4 ports.
 > 
-> Link: https://terminus-usa.com/wp-content/uploads/2024/06/FE1.1s-Product-Brief-Rev.-2.0-2023.pdf [1]
 > Signed-off-by: Yixun Lan <dlan@kernel.org>
 > ---
->  drivers/usb/misc/onboard_usb_dev.c | 2 ++
->  drivers/usb/misc/onboard_usb_dev.h | 8 ++++++++
->  2 files changed, 10 insertions(+)
+>  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 24 +++++++++++++++++++++
+>  arch/riscv/boot/dts/spacemit/k3.dtsi         | 31 ++++++++++++++++++++++++++++
+>  2 files changed, 55 insertions(+)
 > 
-> diff --git a/drivers/usb/misc/onboard_usb_dev.c b/drivers/usb/misc/onboard_usb_dev.c
-> index ba37eb99efba..5732843c6687 100644
-> --- a/drivers/usb/misc/onboard_usb_dev.c
-> +++ b/drivers/usb/misc/onboard_usb_dev.c
-> @@ -570,6 +570,7 @@ static struct platform_driver onboard_dev_driver = {
->  #define VENDOR_ID_MICROCHIP	0x0424
->  #define VENDOR_ID_PARADE	0x1da0
->  #define VENDOR_ID_REALTEK	0x0bda
-> +#define VENDOR_ID_TERMINUS	0x1a40
->  #define VENDOR_ID_TI		0x0451
->  #define VENDOR_ID_VIA		0x2109
->  #define VENDOR_ID_XMOS		0x20B1
-> @@ -673,6 +674,7 @@ static const struct usb_device_id onboard_dev_id_table[] = {
->  	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0414) }, /* RTS5414 USB 3.2 HUB */
->  	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x5414) }, /* RTS5414 USB 2.1 HUB */
->  	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0179) }, /* RTL8188ETV 2.4GHz WiFi */
-> +	{ USB_DEVICE(VENDOR_ID_TERMINUS, 0x0101) }, /* Terminus FE1.1s 2.0 HUB */
->  	{ USB_DEVICE(VENDOR_ID_TI, 0x8025) }, /* TI USB8020B 3.0 HUB */
->  	{ USB_DEVICE(VENDOR_ID_TI, 0x8027) }, /* TI USB8020B 2.0 HUB */
->  	{ USB_DEVICE(VENDOR_ID_TI, 0x8140) }, /* TI USB8041 3.0 HUB */
-> diff --git a/drivers/usb/misc/onboard_usb_dev.h b/drivers/usb/misc/onboard_usb_dev.h
-> index 1a1e86e60e04..4efc5f44c4ee 100644
-> --- a/drivers/usb/misc/onboard_usb_dev.h
-> +++ b/drivers/usb/misc/onboard_usb_dev.h
-> @@ -108,6 +108,13 @@ static const struct onboard_dev_pdata genesys_gl852g_data = {
->  	.is_hub = true,
->  };
->  
-> +static const struct onboard_dev_pdata terminus_fe11s_data = {
-> +	.reset_us = 10,
-> +	.num_supplies = 1,
-> +	.supply_names = { "vdd" },
-> +	.is_hub = true,
-> +};
 
-So same as vialab_vl817_data, use that one.
+DTS cannot be combined in this patchset and must be split. Don't mix
+patches from independent subsystems when you send something explicitly
+targeting only one subsystem.
+See also: Documentation/devicetree/bindings/submitting-patches.rst
 
 Best regards,
 Krzysztof
