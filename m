@@ -1,80 +1,122 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415FD3CE492
-	for <spacemit@lists.linux.dev>; Thu, 19 Mar 2026 12:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7EF3D47AF;
+	Thu, 19 Mar 2026 14:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773924853; cv=none; b=D0Gxn5FVox8EDZ+Oa87eGuaKFp7qeAP1Xxon8qId7tns5sOfYmjJp7A197jWkrnVEq3tiCUechcQj13gxOFFli682DlsMksVnOHcacAwB/5rpNW7+0J55YGqYuf/LtLcXz2hlahi7CB3upAxwr27fJbTeCNdvzrSid613/XrxeY=
+	t=1773930975; cv=none; b=GA+JcZCqEVcIegMWa7dKJKz974wsvRPiYbv19gVAjlqN+oGFrAzdaPRKiQsfJR32R+kFV6cP1JHSEnBNEBExyg95CD2Z7VpRIKh1/6NMJ2jbfgCmI4JvT4/Z+3DNowNTFpxWqqCNIw9ZgtYyAgTW+j1T5CBiOxcDzsLIMAD2EX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773924853; c=relaxed/simple;
-	bh=3iSW66KyCo4L/u2cSUmtSnRq1Ih4KCkQb/PbdYRwPpk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hjndFvUS8d/qC+gfyIwh+YSgkEr8C6u5KjqtQPV5hTnQoYLLybXEo4C8uvGCB7FfJjxEdRi1L+CEUD8zygpbEcEWe5An01Qxb2iHG2V/+NjtWYY68J21wKEGR3WGkj0nDzO9etnVBHHAmZyy9cluztXgkNKeZAp1wsaaXDMll8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PVvo2xWs; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773930975; c=relaxed/simple;
+	bh=0sWepENTLCOfrxR5/+c2+51Ax84QGBYsq5KpzSjrIW8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZHlDiv+SO8lk+p4YPVsyLpuZYwIwocESJdZX3XzLcrwIOyC9BAezwVnbYLBY7Tbt4E/GFTMcFRPbpr7YcDevkWM61WxhMwobSn7panbZ3KnjI+hW7NU0ln7mZWeoCB61zqwe01QnxzALqkYhT+i9KUUK7UfuBhQadtnZj2nHZ/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mvUwICwb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PVvo2xWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E02C19424
-	for <spacemit@lists.linux.dev>; Thu, 19 Mar 2026 12:54:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mvUwICwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F69AC19424;
+	Thu, 19 Mar 2026 14:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773924852;
-	bh=3iSW66KyCo4L/u2cSUmtSnRq1Ih4KCkQb/PbdYRwPpk=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=PVvo2xWsffNFKA82CjReh2BfnxkanYNMH5Ra0sSNWsPXEVo5+GjgjRgkDAUMUAxCt
-	 OeGAqd47pO1gKNhyKVGEbnxmccrVmDRYttpNAJQera+9DxE6j0yS42+TOkz5F5f0CB
-	 qIIQVYTIeNk9vJ0n14+0xZBjqFj3iWqHVCkiNCnO+gt/+01P+4hprlhlFP3LU9WKnA
-	 yZViNfVfWXY/CDfXeivfTOJ+ePs3jusw6jBPcIJmPutPCNLk5DpgnniDfo6Oy+7LaC
-	 rby1BhW9YJh/13mLe3AlyhvKGaMYmj/GlTPytOf8kh8AmhTCsJWyj0mzOGS7fNJbBj
-	 Vw0cch299OeoQ==
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-79a5a37113aso9843857b3.2
-        for <spacemit@lists.linux.dev>; Thu, 19 Mar 2026 05:54:12 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUfVz2ecuvKHP7vJcljCrn1MeErQ8rVcpmZx923Km8NNbx3V/kepNs5ucOcLMpgCPhKRvW0sTftGg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzdM3j2MZxIjewTpSpbZeArwN5M1HnoIVJiwcddL/hZhkxJL7Se
-	SnPf15Tb6gZ/ZHd9eG9p8RL2+H7mzJ0Ndlbku/CjLAhtY6PhS+06sIAYP5KUI3DThzNUrP3qV0K
-	PDGATsp5Ecc/bfDnFJwLripIqDldMuCA=
-X-Received: by 2002:a05:690c:ec9:b0:79a:6e1a:3f2f with SMTP id
- 00721157ae682-79a71834809mr81461497b3.13.1773924852348; Thu, 19 Mar 2026
- 05:54:12 -0700 (PDT)
+	s=k20201202; t=1773930975;
+	bh=0sWepENTLCOfrxR5/+c2+51Ax84QGBYsq5KpzSjrIW8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mvUwICwbqieYDdbpxY5iLebUupFiC2wVL8ay+ylWDUNlIuiVGw8/F5wNm3tcOxksu
+	 RCp3W1hwcaffTSx66C0edF7Yh17YFHjch+ErvwR/Cdwl/zrbzfKGbhorLeBrgJv6HX
+	 Qi7utROptr6/Eg4YARflKNpC6eZIeFszZe6pMNQju5ASLMzui6VdzrRSgqQg1mPwwo
+	 OkFMbWehAhExqwlWkgZ0UdrRaa8KkqDesVAcEXtFUT9fH5GbzbS2T6mhBEHKM0wZ/0
+	 cwv/BbFBEMgkWe9/szEEGBWWpR/HzAHtwDLrvc6VSkNTUkp//hnT+VafrYCPmKofTW
+	 m4Qp3r1iojKlw==
+Date: Thu, 19 Mar 2026 14:36:09 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Ze Huang <huang.ze@linux.dev>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Junzhong Pan <junzhong.pan@spacemit.com>,
+	Inochi Amaoto <inochiama@gmail.com>, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: usb: dwc3: spacemit: add support for K3
+ SoC
+Message-ID: <20260319-garbage-scrunch-37dc1b72d56c@spud>
+References: <20260317-02-k3-usb20-support-v1-0-d89f59062ad4@kernel.org>
+ <20260317-02-k3-usb20-support-v1-1-d89f59062ad4@kernel.org>
+ <20260317-shortness-gecko-72f14fbc79f2@spud>
+ <20260317214435-GKA453922@kernel.org>
+ <20260318-crock-tinderbox-ae12024627d9@spud>
+ <20260319024124-GKB489299@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260312-k1-gpio-set-config-v1-0-8c3541da16b1@pigmoral.tech>
- <20260312-k1-gpio-set-config-v1-2-8c3541da16b1@pigmoral.tech> <CAMRc=MdvvqboLa5_EF3Y3Eh7GSu=_eMpJed8mCLQR7upf2oV6Q@mail.gmail.com>
-In-Reply-To: <CAMRc=MdvvqboLa5_EF3Y3Eh7GSu=_eMpJed8mCLQR7upf2oV6Q@mail.gmail.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 19 Mar 2026 13:54:01 +0100
-X-Gmail-Original-Message-ID: <CAD++jLmhKcP0b-n3F5U3MYeWYMZT87gQzBAqmjw=HDuRzKQm=g@mail.gmail.com>
-X-Gm-Features: AaiRm51pgjUGdP0TcwefP-B1exPpSQSVKtoiqSE_dDtLNQI-rfaw6LzXziWJj10
-Message-ID: <CAD++jLmhKcP0b-n3F5U3MYeWYMZT87gQzBAqmjw=HDuRzKQm=g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] gpio: spacemit-k1: Add set_config callback support
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Junhui Liu <junhui.liu@pigmoral.tech>, Yixun Lan <dlan@kernel.org>, 
-	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3mKkiWYjZ1K2L1Tq"
+Content-Disposition: inline
+In-Reply-To: <20260319024124-GKB489299@kernel.org>
+
+
+--3mKkiWYjZ1K2L1Tq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 13, 2026 at 3:05=E2=80=AFPM Bartosz Golaszewski <brgl@kernel.or=
-g> wrote:
-> On Thu, Mar 12, 2026 at 9:43=E2=80=AFAM Junhui Liu <junhui.liu@pigmoral.t=
-ech> wrote:
-> >
-> > Assign gpiochip_generic_config() to the set_config() callback to suppor=
-t
-> > pin configuration through the GPIO subsystem. This allows users to
-> > configure GPIO pin attributes like pull-up/down when specifying a GPIO
-> > line in the Device Tree.
-> >
-> > Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+On Thu, Mar 19, 2026 at 10:41:24AM +0800, Yixun Lan wrote:
+> Hi Conor,
+>=20
+> On 17:21 Wed 18 Mar     , Conor Dooley wrote:
+> > On Wed, Mar 18, 2026 at 05:44:35AM +0800, Yixun Lan wrote:
+> > > Hi Conor,
+> > >=20
+> > > On 12:55 Tue 17 Mar     , Conor Dooley wrote:
+> > > > On Tue, Mar 17, 2026 at 11:53:02AM +0000, Yixun Lan wrote:
+> > > > > Add compatible string for DWC3 USB controller found in SpacemiT K=
+3 SoC.
+> > > > > The USB2.0 host controller in K3 SoC actually use DWC3 IP but onl=
+y has
+> > > > > USB2.0 functionality, and requires only one USB2.0 PHY connected.
+> > > > >=20
+> > > > > Explicitly reduce number of phy property to minimal one.
+> > > >=20
+> > > > Is this valid for the existing compatible, will it work with only o=
+ne
+> > > > clock?
+> > > >=20
+> > > I didn't change clock binding, do you mean phy?
+> > >=20
+> > > Both k1 and k3 work with one clock (no change here)
+> > >=20
+> > > for phy, the existing k1 requires two. for k3, one controller requires
+> > > one phy due to only has USB2.0 support, other controllers requires two
+> > > phys - USB2, USB3 PHY
+> >=20
+> > Yep, phy is what I meant. Sorry bout that. Since you're relaxing the
+> > constraints for the k1, can you please add a conditional section to the
+> > binding to enforce 2 phys min for k1?
+> >=20
+>=20
+> To be explicit, the change should be applied to both K1 and K3, even in K1
+> use case, it's perfectly fine for designer to choose enabling USB2.0
+> only, and leave the comb phy to pcie contoller, so only one phy required
 
-> Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
->
-> Linus, please take it through the pinctrl tree.
+In that case, can you be more clear in the commit message about why this
+is also being done for the k1 please?
 
-OK done.
+--3mKkiWYjZ1K2L1Tq
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Yours,
-Linus Walleij
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCabwJ1QAKCRB4tDGHoIJi
+0oqyAP4nXoDLetxoQs642+vVHye9yDClNXYMEPidUjtskTK5NwEA3z4OdmCZisdC
+OPflp/85AHIauaJjUPhuhi0GguyjGw0=
+=S1Ui
+-----END PGP SIGNATURE-----
+
+--3mKkiWYjZ1K2L1Tq--
