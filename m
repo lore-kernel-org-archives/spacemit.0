@@ -1,119 +1,163 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC14296BA4;
-	Thu, 19 Mar 2026 07:51:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773906694; cv=none; b=bxigeB8iJP1MXOiv+Ks+Q6qW5uHp0kqoHGpv8hTFlIRJS86fCCRptj3UyzU0woGUf3XVqnb4iw1Ui2lpM9EF1D659L7/sycar4sDwRSRTqVuPb0lJ6mbkYHw711qOCmjg9UStjg0ADsAHwvoX9pHUHtRS8ryeobz8F1Nkf/8JHc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773906694; c=relaxed/simple;
-	bh=IkvVtG/HwHUaGSddu+08TQT396kKULKkFGF77Q0VPTs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DS8U0ehEe32hnZ1ZMTHwYOwM490b7bUA+Ms/341h7z9XtdB/IVAvU1/9srnmyZx4gIIRzgElMIJF4R8WUeKNJrE3Jlj4f4MNvBRCTKdnjZPwnglGn/80aeqosUBtiZeZs3kG5jeDs/UczwsnCJ5bAAPs+cYZHjDb2iF25oMv7vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=POizJ7+M; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4013C2781
+	for <spacemit@lists.linux.dev>; Thu, 19 Mar 2026 10:44:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773917090; cv=pass; b=oQzI43nvdkpYv7wDVTStIEyVSUY+HkR6KefTlKG+onz3YCubq3Kr/F1QuaZ1FmsXaff4GmbeX/mf5o3+kLOJRCA7oFkxNl7bGD531nrydKyKBbP7sycdw1Z9ocmpcljPdkhbNmdFmlLrfblCjflhdLEsLLuDqe+piKr3CYYDR90=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773917090; c=relaxed/simple;
+	bh=EiYofbmwlMfzv/ArY5NjYo10OUgrpmbug4B8jl033qM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H2wHCrk4TQpsPE8rNqR5AwfToZ+UXEcnlYgv4xlik8h9wpEXoWOZJhSahnQ1oS865I+kpxh7REeOGwU5Zrv8grB12qxDg+e4o4qicuqLqEQ/C/6rUfMowKpDv4kYlqqmFjYTIv5k3l6exfXP6yee97joV5/QcNaRNEhVzGh+H2Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OUE4M3DO; arc=pass smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="POizJ7+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B9CC2BCB0;
-	Thu, 19 Mar 2026 07:51:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773906692;
-	bh=IkvVtG/HwHUaGSddu+08TQT396kKULKkFGF77Q0VPTs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=POizJ7+Mv2OfginoQbbYVFt59eEYtW94BTEP2AJBScspPOUxGFTXJc/7C/lylBF41
-	 xIvLDbrHjleQJ3Ao015i6EofQFIofWugrseeuQ9lXjAUvLMjyTBVTyvEVVgqtSBUL8
-	 gWN6MjaiFWfiMykDsiewBhWPi5Uyi1X3Qn7dn9s10BTlev37wWhhVykobuyp99WMq0
-	 qz09H2VCDBPGrjOqhaH5pYWffq8K8b25IAgEfYiYoufTAS39/iLfbMeAs04eKV64f6
-	 klbkReFOLb/83R2MGWn/XNxSS2Aoo/SUtEFKuRNekJ7nYXSfDq1dre8SpgE9vZZYSN
-	 tFwibuuRXke4g==
-From: Yixun Lan <dlan@kernel.org>
-Date: Thu, 19 Mar 2026 07:51:04 +0000
-Subject: [PATCH v2 2/2] usb: misc: onboard_usb_dev: Add Terminus FE1.1s
- USB2.0 Hub (1a40:0101)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OUE4M3DO"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-665634cb208so1523867a12.3
+        for <spacemit@lists.linux.dev>; Thu, 19 Mar 2026 03:44:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773917088; cv=none;
+        d=google.com; s=arc-20240605;
+        b=HfzPYWEkmi/ABgZOFPkD5nRxfWruWgxwS1h/jxgX34K0sqLbSNqmRfXIewG5ulNPM4
+         I7rDGwLHVfkRS3Py9KBBfRlTePNfynw5rXcG2NIOTwnVUrvjgPq7YyN1LdM1GlpLxHnM
+         2My/nw9o3hsAMfobC43X/cd4Q4d5MQRhzbejHYoeTT5LpRk/nQQNW53v8DHYwnHifG80
+         +q8SRQ395WG2rrUU0vs/xsoWGFmJSvxqbHQ42431P64Edtqn63EGxg9AzlPiNbXzFeO1
+         YmrXymoGYgr2uHCLpqdCPN1ntc+qdCyhp1i+ff7yLqDMkk34XSVBSN22wgu/y/qgvqmy
+         V6Lw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=8nsXLrCC8XRALmE6EP9wDlaUdJlORBZ30G/UqxIe1EE=;
+        fh=vIiyw8fBJHs9oJ4HDSv+Pe/f0xDXTYDKeetNezfCh4o=;
+        b=adcPFImVhjvBcjXO7mIT5KlnTtVeZlakNqTIsQkurSPeUd9xa76x/fs2EHcfuSeooi
+         FHHonmilAnH8Cj2bXf392cUW9DbBXSMvZI97Gu7uMZRHC4lh3K9PiyaAjeDptsL9IkIr
+         6yzMsY4vBDrBveCqHxu3VPtbUrIy+imTOBykj0rXa6II7RsWII3eLnACTeA1DbftcZgA
+         Q3MjxOgvu3sRLALDfnGZ+I6km3nAL4umPdX47zP70Bl9dHyrVo/6olN6fIhcOC/jff4B
+         YxH8D3cswROUJKbO8t5dMRGcqjaT1PP10l6dandZjPw4cbE45WtnKsVbFFIPDUtvkDY+
+         SQfQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773917088; x=1774521888; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=8nsXLrCC8XRALmE6EP9wDlaUdJlORBZ30G/UqxIe1EE=;
+        b=OUE4M3DORdTu9VdRAELKWn1W3ChKdrb9fLezsY0W4PBqRZD6LW/gFyp6FiDtU+8LjV
+         5Jt/YjyQ3etpazkqnprciWVbMs7SseX1LmwvXl3On6RaKYuxf0v2u5HFQDzS8YFnLHLU
+         C9z4mR+0u5qN+OGEL/EX1u7Lmh2at+6u2LHllNCETimHi1wLnlu8qg/TIvzRr3mC9Xbs
+         U4whQi26xRsHiyEHu+Kx9pkV7cWGNFzjm/3Ai9fNPGnmmRRroi1nuO97sQ33pFMeYMie
+         vbD/x0agQOYIEQuTOPRlyMTJlPN6fgqssEjnulgpQlttLIILQAluIIWYBbED/Oo6AvNg
+         mOvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773917088; x=1774521888;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8nsXLrCC8XRALmE6EP9wDlaUdJlORBZ30G/UqxIe1EE=;
+        b=bJtZc1ofujNjySC6P4XDJzbV4yHDOV4RNpzkaoyvb4RCghskp/JuUC+POiPpoyY///
+         8pwbFi92qbQnWAfxOfvtmRZ3qkAmj9GZkzE7TdRrUF/ownc1Sh28c98cfWa+TMsza1AE
+         VISuPEOO16bQkYT8MmZKaIwp0IsDS64R3ymj0lxWDa72KkxwJK9qg+NqfVQF7htWATz1
+         8nSWsx9nyyAXVjYR4PIZPaTW59WgbrhCNX7GAxIiFziQcCK7Ang/ZTrhsE/HGBNQQerG
+         t6t/CyayPBlU7uEq4EkcgMNBXsdeqajC7S4jVvkruNW1A4WMUwJwdIjtJgT/HMlxAmIB
+         QV5g==
+X-Forwarded-Encrypted: i=1; AJvYcCVyX6FmxylxJIk+J+zp5xH2FL0jhNT/SqvkEhi25lPmPRLADgAUkRAxoe8r0NdudOG5+AaUNo/oGw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwaCAxTrJ0U11dtElXRw8Kow85RopSqYCgHl1qk3keFcYeNgdDd
+	47OAjRtVTLkxKiwqP2CvdDBwgiMzTLuW1EYD7nO4xzY5oBXnsHfqQsfgYpEJNVmvEpy2qxv5Fbm
+	YDfEEBIYSsQoeLkxoaLDFGFiTy+xzsds=
+X-Gm-Gg: ATEYQzy12eZwN3i6j2pNdXPw73UtVA+v7VmeJ6slVT3QYjmhWXY2u5YtJB3/bWEEmI+
+	oXVN2dqOD77lxr1sAWoBb4lPMUqBSxSZXmhvoX0AmaTBA/hs5sfAa+Bxaoo9cYdWJPvqYO5eA+n
+	DgFAjQ/lD/RZZ6vKVr9LZMpPIjJ0WwXQR6ffU701sgVv4HPAxIEu2kI/HXFc1nw0hgmjCAyAGfu
+	Uebf5sg/MTMtrOb00WiStHd88jeollMNxhPD9k6YsH3IWtYNhjKi6pZuCJL1Kpy0sToPm0DShAF
+	BnuTEA==
+X-Received: by 2002:aa7:ca56:0:b0:667:ddf7:7d9d with SMTP id
+ 4fb4d7f45d1cf-667ddf7835fmr2510617a12.10.1773917087638; Thu, 19 Mar 2026
+ 03:44:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260319-03-usb-hub-fe1-v2-2-e4e26809dd7d@kernel.org>
-References: <20260319-03-usb-hub-fe1-v2-0-e4e26809dd7d@kernel.org>
-In-Reply-To: <20260319-03-usb-hub-fe1-v2-0-e4e26809dd7d@kernel.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Matthias Kaehlcke <mka@chromium.org>
-Cc: Junzhong Pan <panjunzhong@linux.spacemit.com>, 
- Inochi Amaoto <inochiama@gmail.com>, spacemit@lists.linux.dev, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-usb@vger.kernel.org, Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2418; i=dlan@kernel.org;
- h=from:subject:message-id; bh=IkvVtG/HwHUaGSddu+08TQT396kKULKkFGF77Q0VPTs=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpu6r0cV5SrrXvhwaq9QwljBnbuoxcv4AK/zuk5
- b24vjXj4G2JAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCabuq9BsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+2CDw/+NANUB85esiF2p68Cy8EHCAJ6mg6kQl9cLGK1IvV5G/zpO0ZulX+xy
- cl1Xm60bfLK7cv7ciAoo7iqUspvjCSw2L+8PJA0ZVJkKcjAP58SFGzAw20ejkpOOQGBpwHn19lw
- qpa4+ibA8WdxgmwMxgsyMOvpvUO4xJH1FPdYqLwsuCDpiZCg359mct4jLtgYht32jdIzInBMhc3
- XwvtMhJdGhpdz4999ItYXQXPVFcE8dmAYznY2z/4jnkyokL1OCWkWYvTMIV5Gb+toEfEu9yOhF6
- 5ZZ1lpu1G5IGYn4fa1CgaP9zYL0yaz2fPvOC3p+Y7sPS48JpccvsQC4Eru8hq3e4UWSFWpmKqgX
- r1LklOK8uf4TVo+cijcwblwZ5v0S4zMQmN3S9hmOv5v6/YQ3nBi8XxzkWmRXiDhhF/VSuCTh+Yi
- or+GXUdXHlM4JOH7GfDLBxnVv0/CJIvisctsV9bwRvuyM8hPL47M80CiIZS2kPWC0rnzu4G2YXZ
- /CGVxG2h4taugBkU/HeUjihNUEmZJm37gncHNhEVSJiK8S6F4ZA18hCZ1AmUqDWL2v1RZ9PdO8D
- qXMFzgAK7DN4gsLzXBAZ61e4yd9p3K7MkI2ZET8/WycV5nfPM78jJxm0hkmHDYnSRCQPh5rPPqM
- 4/EtXRHzwdDVUgZdi1DDnMCGNmTEUs=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+References: <20251127-b4-k1-thermal-v1-0-f32ce47b1aba@163.com>
+In-Reply-To: <20251127-b4-k1-thermal-v1-0-f32ce47b1aba@163.com>
+From: Anand Moon <linux.amoon@gmail.com>
+Date: Thu, 19 Mar 2026 16:14:30 +0530
+X-Gm-Features: AaiRm52C7IQCXAwHh87UFE9OwrOumGbtL8uwoXCOsBJxz_0fqoGXY7qT2wiZr5Q
+Message-ID: <CANAwSgTp6urWYT9H96XR7viKv7Sy16L4exS2KR5PLq_FJ91xbQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] thermal: spacemit: Add support for SpacemiT K1 SoC
+ thermal sensor
+To: Shuwei Wu <shuweiwoo@163.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Terminus FE1.1s is USB2.0 protocol compliant 4-port USB HUB, It support
-MTT (Multiple Transaction Translator) mode, the upstream port supports
-high-speed 480MHz and full-speed 12MHz modes, also it has integrated 5V
-to 3.3V/1.8V regulator and Power-On-Reset circuit.
+Hi Shuwei,
 
-Link: https://terminus-usa.com/wp-content/uploads/2024/06/FE1.1s-Product-Brief-Rev.-2.0-2023.pdf [1]
-Signed-off-by: Yixun Lan <dlan@kernel.org>
----
- drivers/usb/misc/onboard_usb_dev.c | 2 ++
- drivers/usb/misc/onboard_usb_dev.h | 1 +
- 2 files changed, 3 insertions(+)
+On Wed, 26 Nov 2025 at 17:27, Shuwei Wu <shuweiwoo@163.com> wrote:
+>
+> Introduce support for the on-die thermal sensor unit (TSU)
+> found on the SpacemiT K1 SoC.
+>
+> Include the device tree binding documentation in YAML format, the
+> thermal sensor driver implementation, and the device tree changes to
+> enable the sensor on K1 SoC.
+>
+> Test logs:
+> Hardware: OrangePi-RV2 integrates SpacemiT K1 SoC
+> Kernel: 6.18.0-rc4 mainline
+>
+> Verified that all five thermal sensors are registered and reporting
+> valid temperatures.
+>
+> $ cat /sys/class/thermal/thermal_zone*/type
+> soc-thermal
+> package-thermal
+> gpu-thermal
+> cluster0-thermal
+> cluster1-thermal
+>
+> $ cat /sys/class/thermal/thermal_zone3/temp
+> 28000
+>
+> Dynamic threshold and interrupt tests passed via sysfs trip_point
+> manipulation.
+>
+> ---
+> Shuwei Wu (3):
+>       dt-bindings: thermal: Add SpacemiT K1 thermal sensor
+>       thermal: K1: Add driver for K1 SoC thermal sensor
+>       riscv: dts: spacemit: Add thermal sensor for K1 SoC
+>
+>  .../bindings/thermal/spacemit,k1-thermal.yaml      |  76 +++++
+>  arch/riscv/boot/dts/spacemit/k1.dtsi               | 101 +++++++
+>  drivers/thermal/Kconfig                            |  14 +
+>  drivers/thermal/Makefile                           |   1 +
+>  drivers/thermal/k1_thermal.c                       | 307 +++++++++++++++++++++
+>  5 files changed, 499 insertions(+)
+> ---
+> base-commit: f5f2e20b1cbc5f9ea20b372d15967b24921ede19
+> change-id: 20251124-b4-k1-thermal-eca906e6dd7a
+>
+> Best regards,
 
-diff --git a/drivers/usb/misc/onboard_usb_dev.c b/drivers/usb/misc/onboard_usb_dev.c
-index ba37eb99efba..5732843c6687 100644
---- a/drivers/usb/misc/onboard_usb_dev.c
-+++ b/drivers/usb/misc/onboard_usb_dev.c
-@@ -570,6 +570,7 @@ static struct platform_driver onboard_dev_driver = {
- #define VENDOR_ID_MICROCHIP	0x0424
- #define VENDOR_ID_PARADE	0x1da0
- #define VENDOR_ID_REALTEK	0x0bda
-+#define VENDOR_ID_TERMINUS	0x1a40
- #define VENDOR_ID_TI		0x0451
- #define VENDOR_ID_VIA		0x2109
- #define VENDOR_ID_XMOS		0x20B1
-@@ -673,6 +674,7 @@ static const struct usb_device_id onboard_dev_id_table[] = {
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0414) }, /* RTS5414 USB 3.2 HUB */
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x5414) }, /* RTS5414 USB 2.1 HUB */
- 	{ USB_DEVICE(VENDOR_ID_REALTEK, 0x0179) }, /* RTL8188ETV 2.4GHz WiFi */
-+	{ USB_DEVICE(VENDOR_ID_TERMINUS, 0x0101) }, /* Terminus FE1.1s 2.0 HUB */
- 	{ USB_DEVICE(VENDOR_ID_TI, 0x8025) }, /* TI USB8020B 3.0 HUB */
- 	{ USB_DEVICE(VENDOR_ID_TI, 0x8027) }, /* TI USB8020B 2.0 HUB */
- 	{ USB_DEVICE(VENDOR_ID_TI, 0x8140) }, /* TI USB8041 3.0 HUB */
-diff --git a/drivers/usb/misc/onboard_usb_dev.h b/drivers/usb/misc/onboard_usb_dev.h
-index 1a1e86e60e04..9284bc072f7c 100644
---- a/drivers/usb/misc/onboard_usb_dev.h
-+++ b/drivers/usb/misc/onboard_usb_dev.h
-@@ -153,6 +153,7 @@ static const struct of_device_id onboard_dev_match[] = {
- 	{ .compatible = "usbbda,5411", .data = &realtek_rts5411_data, },
- 	{ .compatible = "usbbda,414", .data = &realtek_rts5411_data, },
- 	{ .compatible = "usbbda,5414", .data = &realtek_rts5411_data, },
-+	{ .compatible = "usb1a40,0101", .data = &vialab_vl817_data, },
- 	{ .compatible = "usb1a86,8091", .data = &wch_ch334_data, },
- 	{ .compatible = "usb1da0,5511", .data = &parade_ps5511_data, },
- 	{ .compatible = "usb1da0,55a1", .data = &parade_ps5511_data, },
+Tested-by: Anand Moon <linux.amoon@gmail.com>
 
--- 
-2.53.0
+Thanks
+-Anand
 
+> --
+> Shuwei Wu <shuweiwoo@163.com>
+>
+>
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
