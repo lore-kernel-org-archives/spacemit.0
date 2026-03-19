@@ -1,72 +1,104 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBDC1A9FB0
-	for <spacemit@lists.linux.dev>; Thu, 19 Mar 2026 06:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD8D3A4F2E;
+	Thu, 19 Mar 2026 07:51:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773901582; cv=none; b=WB+y4Y/z0NOJe0jR08IitvQDSzNqXQfmFE29Pp0OC+D2kiSYmKLLd2qe+tms8b1ZijTCpPT9frG5lFuJ6KklO6xy8nNEXXybj8eqNjaxRw1XllFj6JpOxQYW613COb9FXCKfN5Q5jfwn0H2yCPytQW7DXilEjnfrgr2rx2S/KlA=
+	t=1773906685; cv=none; b=YpajUNh6W4X2JAE4MH4+2CVqaIpJ1L1UO32qDQyDhCqucXsu8aXHjLZlAt0Ujo5ABqI3MfpKksdmeMEhkF3CqZm2UKewu2RvwdzFTl8ZRdl3l2jAnqCLjc+8CHkv7R/OAt4hMAnwkTrEEB25vunU45IRZnAEnYWwz5wivldzR7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773901582; c=relaxed/simple;
-	bh=21xww1wUtJxyoss2A64Nh+1RNmAWHYGyqiWGeKGa+Yg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=MYNXnnUdICfAclBgGMOw1ei14Ew0f1pY8xeSjzDo3/4GY/cIcj4tw/f2E8Q70LuvcWLB2Xgpxv5Ffqx/ZySkb1OO9GqGsdWuLy5fMVbxVK4uPjd8yVhgpnX7QdlsKA8+hbkwH4DGQBJ+4zyL/mgYAPSx1HnsNHJKvOxHsdHWVrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from localhost.localdomain (unknown [116.25.95.187])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 378652ffb;
-	Thu, 19 Mar 2026 14:26:10 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: thinh.nguyen@synopsys.com
-Cc: amadeus@jmu.edu.cn,
-	dlan@kernel.org,
-	gregkh@linuxfoundation.org,
-	huang.ze@linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-usb@vger.kernel.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/1] usb: dwc3: dwc3-generic-plat: Add optional VBUS regulator support
-Date: Thu, 19 Mar 2026 14:26:01 +0800
-Message-Id: <20260319062601.1042965-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260318231542.mmbcrqy36oyw44xc@synopsys.com>
-References: <20260318231542.mmbcrqy36oyw44xc@synopsys.com>
+	s=arc-20240116; t=1773906685; c=relaxed/simple;
+	bh=i1jMaR7Of+P2VM0u1uTYga1uly9QzP3vQQpTIT7NgaA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=uS3GgyvX1POAUxnNcGHSxeU4OUF6kF1BzkcfPJsQLR/370LVIelpWV8rk8krs70vntQ/q7SCFWp2GNL9jBf1FrDoAjtmgmkBwv91a4jCnA8Ms9wWF4GZbvQ/t2awevZt8EYCZrT97HAO4IZvT0Wf8tI8GvWwmpGthSPYP5GSXL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uvJMQjdv; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uvJMQjdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C74BC19424;
+	Thu, 19 Mar 2026 07:51:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773906684;
+	bh=i1jMaR7Of+P2VM0u1uTYga1uly9QzP3vQQpTIT7NgaA=;
+	h=From:Subject:Date:To:Cc:From;
+	b=uvJMQjdvIqKcJBM+oKLcnoS1HISYnv+tsFGZXhfWwwORjxOoIOapQT85B8s0t7ygQ
+	 F/WW6GxkHikvcvogK/1IbtJVZdWD+1eBURSOeITCAfAVMI2WykDqulpgmIOVwl7TD6
+	 YEM5QkPOkwdv72M4z8c6c2Gvx8Jg7K11FQ+znSyxWaJS2TQsFSCSP5h37zPsydqU9Z
+	 UlH9bTykDHDQ/7pNNKPqed82X3NUUxpx3k6/Yj01s8gPKRF3U6bf6rPUH555/Wej87
+	 5ReqOSuKEA3A/Cux5/sLtUBexCbh5djlo1tbO5rfCeGWysT7f1u5h+oNqCYYzoW299
+	 LNYQsqWP+Z7qw==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH v2 0/2] usb: misc: Add Terminus FE1.1 USB2.0 Hub support
+Date: Thu, 19 Mar 2026 07:51:02 +0000
+Message-Id: <20260319-03-usb-hub-fe1-v2-0-e4e26809dd7d@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9d04c5e12303a2kunm33e6bd551ad55b
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaTkkeVkxPHkMeSUxPSksdTlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk5VSkNMWVdZFhoPEhUdFFlBWU9LSFVKS0lCTUtKVUpLS1VLWQ
-	Y+
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOaqu2kC/3XMSw7CIBSF4a00d+w1PKS0jtyH6QDqpSUaMGAbT
+ cPexc4d/ic53waZkqcM52aDRKvPPoYa4tDAOJswEfpbbRBMtExyjUziki3Oi0VHHKVqDZmT7oy
+ yUE/PRM6/d/A61J59fsX02f2V/9a/1MqRoeY0yr7rnbJ0uVMK9DjGNMFQSvkC/JZM9K0AAAA=
+X-Change-ID: 20260317-03-usb-hub-fe1-356aea478a5b
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Matthias Kaehlcke <mka@chromium.org>
+Cc: Junzhong Pan <panjunzhong@linux.spacemit.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, spacemit@lists.linux.dev, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-usb@vger.kernel.org, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1278; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=i1jMaR7Of+P2VM0u1uTYga1uly9QzP3vQQpTIT7NgaA=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpu6ruNkgp8o4z9dTuxMbkk/cRz4Pz3WTVcdyv6
+ xH3uI9M6vKJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCabuq7hsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+2OgBAAjVjPxs+TeMSm2eKu0ytTWbx7GrC96OsPGNhKcAR+VZVYcy7uCwB6w
+ QcoVddOOU4F7HZ/MB2yU6+DmbFVr+Dw06y33psFK42Y/d7ntUN8Dh/8JfvpM9JYOkLIvNPx9si9
+ 2s0JrHKv78uYaa9NPKJUqYyTrQwgLSGxTMt6KqxlXte57KbPuiuvWDBfKtYy6oBuJbA7okylqWC
+ UxvZbwMSliGJrk7KKtPxDjgt9SR1FrE2W4oB+88Vz7S2HIyvkG7Z7O5AIjcncOxWVDPGksT0eb2
+ J74EclC0CPS/GDsAISRLkYqLcoEpr4tNyuprP5remjZkcMOiPa/FDP5oJf4JZhf0wIQX3Dg7KJZ
+ 7XDKnINo4Gn7HitYT4VEPXxWXTslzYojHPkwbrVcUuB01TWi2/W82W9B+laG2YyXcAgrSJbs0vn
+ zD6jIUXXiXkmcCtANuIfwbRiaKHJmhEH7RKxJeusLEV+AmUzCDShJXFdCzmogS0GpFWfigsOdSH
+ bEBhnOkZCiwK5WjhMbBftYMaPAzwuaLA4tWhJurxs7zf7iAsmjqbRB1ERgmTkyA+3q//Y10kkyM
+ HehYiAoPt0e0aNmQ+qWVTFx0clfy/xpnhoIYY3/CuZpFgA0WsL3p4OTxFIRv8OFbK0bbeb33IWm
+ 83OABDOPfuAcj0Wme0i+wStAPIJpWM=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi,
+This series try to add support for Terminus FE1.1 USB2.0 Hub.
 
-> I mean this is a generic glue driver and not specific to your spacemit
-> k1. Some platforms use regulators to drive the vbus (e.g. dwc3 meson)
-> while others for internal controller supplies (e.g. dwc3 exynos). Also,
+The FE1.1 Hub provide interesting choice of selecting power supply from
+either 3.3V or 5V, if need to use integrated 5V to 3.3v regulator, the 5V
+supply should be used. Otherwise, 5V pin can be set to NO-Connection,
+and use the 3.3v external supply source.
 
-So shouldn't the generic glue driver manage vbus, but rather the Spacemit
-USB PHY driver? I don't have any good ideas about the current name.
+Link: https://terminus-usa.com/wp-content/uploads/2024/06/FE1.1s-Product-Brief-Rev.-2.0-2023.pdf [1]
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Changes in v2:
+- drop patch 1, not add Terminus vendor prefix
+- reuse compatible data, no introduce new one
+- fix binding
+- Link to v1: https://lore.kernel.org/r/20260317-03-usb-hub-fe1-v1-0-71ec3989f5be@kernel.org
 
-> if the platform is operating in device mode, there should be no vbus.
+---
+Yixun Lan (2):
+      dt-bindings: usb: Add support for Terminus FE1.1s USB2.0 Hub controller
+      usb: misc: onboard_usb_dev: Add Terminus FE1.1s USB2.0 Hub (1a40:0101)
 
-Do I need to check if it's in host mode?
+ .../devicetree/bindings/usb/terminus,fe11.yaml     | 62 ++++++++++++++++++++++
+ drivers/usb/misc/onboard_usb_dev.c                 |  2 +
+ drivers/usb/misc/onboard_usb_dev.h                 |  1 +
+ 3 files changed, 65 insertions(+)
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260317-03-usb-hub-fe1-356aea478a5b
 
-> Also do we want to disable the regulator on system suspend? If so, we
-> may need a regulator handle.
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
 
-I'll add it if you think it's necessary.
-
-I'm not quite sure how to do it well, thank
-you for taking the time to review.
-
-Thanks,
-Chukun
