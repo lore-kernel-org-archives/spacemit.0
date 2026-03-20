@@ -1,88 +1,89 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B703C5DAC
-	for <spacemit@lists.linux.dev>; Fri, 20 Mar 2026 15:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7432D0607;
+	Fri, 20 Mar 2026 17:30:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774019194; cv=none; b=KBeBEosRJaovIjc9PenIQ9tt8r5VDmu+0CKnFBmKAYCC72A6E98slwfR8QK5F+/vcXW3q1nSryCWQFs22uD0hiUbDABhgc4C+QEu1XKoEBiCW2CbdGrY0g95je8Ph0vp3gNS9DDYDLULZ1XALTtTL+A+EP5bNFoChFjAo17ra/Y=
+	t=1774027843; cv=none; b=SaUVDYv8anJDjN3nIJPQcziMVIr28GnXRcY7ls5DhkXr9m40Kv3nIE/PfccGJ4xGTT/5llyTX5dJHgWrMLlEUfb7osZhhkypFg34FJEo7t9FscNcHL13GXtEI5uxDtZedeX2MemcW4fm/0Ltq+VXCpqGu47lgW3j+EpHgXrpAXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774019194; c=relaxed/simple;
-	bh=+gY0U88ZU3WFbE3S3UKhriDpSE3AB91y+8EwGdS+r/8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=RIzLm2P1PuEuKF5Ptpr4681BDH9Vpit5CY5U7NgEC89YQskFDJejcr5hasJ+2VCEgq3NPHfsQLmtCK/TH/ME9/p1dcvVYh4iSicNRoxJf83Kgs0B9As+51aB7w0q6zeTYTTCvVhbXdNksLnCEcg86/aTtrg/FDUWfq8DdWo9hzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ru+5fBvc; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1774027843; c=relaxed/simple;
+	bh=W4IB0KIghH5BlR6smfsAiYWJPXaF2WzggB/xByUYJXA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FENRQFjZWXOZXucMetjgM1+4VkbrFwK3vm41iTCgydPogITbMgeodY7+D1EeqQiWUcicmzTcBRku/DhBe0wct9etaDpDFWgADn8sItBuVj8tTKjgZLffIjSKezm7mrZu3wrECnPoyK/THDvPH4dC/MGmZvF+09LHCHbbKXWoXrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pLV9ebbE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ru+5fBvc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pLV9ebbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98F8C4CEF7;
+	Fri, 20 Mar 2026 17:30:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774027843;
+	bh=W4IB0KIghH5BlR6smfsAiYWJPXaF2WzggB/xByUYJXA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pLV9ebbEeJiBIRsIU6LNMkM0fPKZZgFkx0VF9RBD1vN2HCShG8ZoRTRmha8W9iFwD
+	 NEmCARqbZ7qDuS306SS5i1psrb/8RlYsKUsB24PH9KQNgZ82MT0Gez1//M8B3l53QX
+	 Q5u35gAUQGowt9ZzSy+yY9NOXHW5yXl+RUqzHH+tsBpdfm4DxF4KKYrwXyLGaHxTQR
+	 0Er3a32Kbv7HFD+ZRbvpf222WssTkCTucO+b013KA13Guzp/MuH7iGrjxd7jspXq0t
+	 Zxb3MiBB2YH9Jl5Fz2rpdwxwtJSj6peRyHhJLfVkOtL1pxQq7MYIs+J1RGYl8a/QrE
+	 Zdt4pVQmnM71g==
+Date: Fri, 20 Mar 2026 17:30:38 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Ze Huang <huang.ze@linux.dev>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Junzhong Pan <junzhong.pan@spacemit.com>,
+	Inochi Amaoto <inochiama@gmail.com>, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: usb: dwc3: spacemit: add support for
+ K3 SoC
+Message-ID: <20260320-rival-distill-c9021491769a@spud>
+References: <20260320-02-k3-usb20-support-v2-0-308ea0e44038@kernel.org>
+ <20260320-02-k3-usb20-support-v2-1-308ea0e44038@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1774019191;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+gY0U88ZU3WFbE3S3UKhriDpSE3AB91y+8EwGdS+r/8=;
-	b=ru+5fBvcm+pEAo0/qfX05QZrWp0JkVZkWaK/eGQezaL3cnyirJyZv/JIfWcEZr2udZrJys
-	gL0u5/AscC8IMzlMsA/pii/52ijo4kxbVFlQM1NI/KKq0zjVsmDEwfSU0xz/UNh7xUJ8EN
-	tSAdsI23J8B4l9To3y/mCEgDpxusVNI=
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="iISLEgBV6Hhio30Z"
+Content-Disposition: inline
+In-Reply-To: <20260320-02-k3-usb20-support-v2-1-308ea0e44038@kernel.org>
+
+
+--iISLEgBV6Hhio30Z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 20 Mar 2026 23:05:33 +0800
-Message-Id: <DH7PARAFZS7V.1YIE6OED3NA6C@linux.dev>
-Subject: Re: [PATCH 1/1] usb: dwc3: dwc3-generic-plat: Add optional VBUS
- regulator support
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Ze Huang" <huang.ze@linux.dev>
-To: "Chukun Pan" <amadeus@jmu.edu.cn>, <huang.ze@linux.dev>
-Cc: <dlan@kernel.org>, <gregkh@linuxfoundation.org>,
- <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <linux-usb@vger.kernel.org>, <spacemit@lists.linux.dev>,
- <thinh.nguyen@synopsys.com>
-References: <DH7ILSL8DXBO.ZR74CL1QEUBU@linux.dev>
- <20260320104026.1350571-1-amadeus@jmu.edu.cn>
-In-Reply-To: <20260320104026.1350571-1-amadeus@jmu.edu.cn>
-X-Migadu-Flow: FLOW_OUT
 
-On Fri Mar 20, 2026 at 6:40 PM CST, Chukun Pan wrote:
-> Hi,
->
->> I think it's better to align the driver with the actual hardware. I'm no=
-t
->> opposed to managing any regulators in usb host/device drivers. But if we
->> do have an onboard hub, and regulator belongs to the downstream ports of
->> the hub, then it's hub's job, right?
->
->> Many boards leave gpio controlled regulators always on, that's what we
->> want to solve. If we have to choose the parent of these regulators, why
->> not put them in the correct hierarchy?
->
-> I think we can manage the regulator in the USB host driver first,
-> and then use it after the onboard_usb_dev driver has been merged.
-> This is better than keeping the regulator always on.
->
->> If such a board really need the regulator, IMO, your patch is the way to=
- go.
->>
->> OrangePi haven't released the schematic yet.
->>
->> That's what I could find [1], which seems similar to RV2.
->
-> There is no onboard USB hub. Just check the image:
->
-> http://www.orangepi.org/img/r2s/details/17.png
-> http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details=
-/Orange-Pi-R2S.html
->
+On Fri, Mar 20, 2026 at 07:15:37AM +0000, Yixun Lan wrote:
+> Add compatible string for DWC3 USB controller found in SpacemiT K3 SoC.
+>=20
+> The USB2.0 host controller in K3 SoC actually use DWC3 IP but only support
+> USB2.0 functionality, thus in the hardware layer, it has only one USB2 PH=
+Y.
+> While in K1 SoC, the USB controller has both USB2 and USB3 Combo PHY
+> connected, but able to work in a reduced USB2.0 mode which requres only
+> one USB2 PHY, leaves the USB3 Combo PHY to PCIe controller. So both K1
+> and K3 SoC are able to work in the USB2.0 mode which requires one PHY.
 
-That's fine, thanks.
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+pw-bot: not-applicable
 
-> Thanks,
-> Chukun
+--iISLEgBV6Hhio30Z
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCab2EPgAKCRB4tDGHoIJi
+0joxAQC5+AAtgwRmBNAtvgPpwSU6oenwPm4CK2S4y2xpyBIyCwEAlWW9LD7E7Nu0
+eRC9bXUrVLtn+AyWk+Qy/EtcHcqKxQs=
+=Exu8
+-----END PGP SIGNATURE-----
+
+--iISLEgBV6Hhio30Z--
