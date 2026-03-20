@@ -1,120 +1,64 @@
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DF237A4BC
-	for <spacemit@lists.linux.dev>; Fri, 20 Mar 2026 09:51:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EFE2F83A2
+	for <spacemit@lists.linux.dev>; Fri, 20 Mar 2026 10:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774000310; cv=none; b=php2GCyOTWHCCsDJ3wZyg8ZBUIrQmNpJrOvIgYc98Ya9qeZwwgncrz0oxWEBtXlBd8Jk70bwkaL5xplIKG9h3Yt/y2akMDR0onSuz3+kaT/EGLlajJtXn/4GU3ztpmiSLE8b3xldKKy0zuVt6oT9dkL8KdeZ9eeNwPupySprEMc=
+	t=1774000903; cv=none; b=SIDcn4TYcg8Bm+OYNFp/4GJjWo0eYUyz3P81uLKbFTIuuU4CNljvRPddoCSWUD4gDoGq1aLGq33QTrgBXZMAzLqhhFXVCzzWdu9ax8QD3Ti4RgjicrVyl0qcGomJSf2GiycchONosRhiiBU3Ifk8PfdyVXl3zs5dWwuYLwIlILM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774000310; c=relaxed/simple;
-	bh=tBusV8I1xKXUrGEu9BjwwnL+Ldksq8Sarqj0TThaMqk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=n9ixIwKmFdoGFST4XTowAyts8MIxEFtjdcM4ALieV2tui7p8b3XDhggI6oMMLOhW/jNcI7k3lDEkxkUdY20FQEzaEQK3neT1LZz6ubMVgGRaHWPQaVsdZfPPcmHGlNxiO5RhqlP8RFj0RmM9gf1kg4fIeRMG+HNeYm5U3TdHOQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ux7sY9yw; arc=none smtp.client-ip=91.218.175.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ux7sY9yw"
+	s=arc-20240116; t=1774000903; c=relaxed/simple;
+	bh=Zwr5iCTnDZBHXBTd2nM7A8Xs0Isd63oW3zv2F2TyMO0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Y3AwzpC6F+WEo/FavqFt9YdEqIxDTVOfCoj3k36KN7qtiVN0q7DES4fWpEEuCs3OxYl0jPCDPgBjbu1OaiBftSuTbqkE0X7MbFosxiT9QTRRulLLmq5KlFBxnHsFr8ULEQRZzmIgpnF9AgJENqoqDee4O5yGdRV7LyFcECfmrpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from localhost.localdomain (unknown [116.25.95.187])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 37b2f4e33;
+	Fri, 20 Mar 2026 18:01:35 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Cc: Yixun Lan <dlan@kernel.org>,
+	Ze Huang <huang.ze@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH v2 0/1] usb: dwc3: Add optional VBUS regulator support to SpacemiT K1
+Date: Fri, 20 Mar 2026 18:01:19 +0800
+Message-Id: <20260320100120.1343629-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1774000306;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=SB0KpBn5A09Moyx+zjJpQCHUxGkKOb8xwpecR+YoJT4=;
-	b=ux7sY9ywu+wS45NR3bq7PywwA4yYp30v4K9OZ3Eua2QuPZ2luZmhd+98gprsJzH8xMB6Nf
-	bXJjA8h8o5i/Y29DqWrnoMESdqi7RX+zRDB2jAHBO9x1sk9Lwda/m2n2LHrDjmm2dXUlqt
-	i6aWySuiFz498jMm/x8VCqt1OVKoXpU=
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 20 Mar 2026 17:50:50 +0800
-Message-Id: <DH7ILSL8DXBO.ZR74CL1QEUBU@linux.dev>
-Cc: <dlan@kernel.org>, <gregkh@linuxfoundation.org>,
- <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <linux-usb@vger.kernel.org>, <spacemit@lists.linux.dev>,
- <thinh.nguyen@synopsys.com>
-Subject: Re: [PATCH 1/1] usb: dwc3: dwc3-generic-plat: Add optional VBUS
- regulator support
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Ze Huang" <huang.ze@linux.dev>
-To: "Chukun Pan" <amadeus@jmu.edu.cn>, <huang.ze@linux.dev>
-References: <DH7FXPBMB1K5.28IT6DZQ280ZV@linux.dev>
- <20260320081826.1331721-1-amadeus@jmu.edu.cn>
-In-Reply-To: <20260320081826.1331721-1-amadeus@jmu.edu.cn>
-X-Migadu-Flow: FLOW_OUT
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9d0ab1744c03a2kunm090bbcfb1f2c00
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDT09DVhhOQh5ISx8dHxhPHlYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk5VSkNMWVdZFhoPEhUdFFlBWU9LSFVKS0lPT09LVUpLS1VLWQ
+	Y+
 
-Hi Chukun
+The vbus-supply property has been declared in spacemit,k1-dwc3.yaml
+https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/usb/spacemit%2Ck1-dwc3.yaml#L71
 
-On Fri Mar 20, 2026 at 4:18 PM CST, Chukun Pan wrote:
-> Hi,
->
->> I don't think it's a good idea to tie this optional VBUS regulator
->> implementation to the SpacemiT K1 platform.
->>
->> While the K1 SoC does have a DRD controller, current boards in the wild
->> (like Jupiter[1], OrangePi RV2[2], and Banana Pi F3[3]) all route this
->> port to an onboard hub[4][5]. IMHO, managing the downstream VBUS regulat=
-or
->> via the onboard_usb_dev driver is the correct approach for us.
->
-> I'm sorry, but I don't quite understand why it's necessary to use
-> onboard_usb_dev driver instead.
->
+Changes in v2:
+- Improve commit title and messages
+- Enable regulator only in host mode
+- Enable regulator when matching compatible "spacemit,k1-dwc3"
+- Link to v1: https://lore.kernel.org/lkml/20260316080000.3130372-1-amadeus@jmu.edu.cn/
 
-I think it's better to align the driver with the actual hardware. I'm not
-opposed to managing any regulators in usb host/device drivers. But if we
-do have an onboard hub, and regulator belongs to the downstream ports of
-the hub, then it's hub's job, right?
+Chukun Pan (1):
+  usb: dwc3: Add optional VBUS regulator support to SpacemiT K1
 
->
-> The DRD controller is connected to the onboard USB hub, so it can
-> only operate in host mode. If all downstream ports of the USB hub
-> use the same VBUS supply, then what's the problem with using this?
+ drivers/usb/dwc3/dwc3-generic-plat.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-It does work.
+-- 
+2.34.1
 
-Many boards leave gpio controlled regulators always on, that's what we
-want to solve. If we have to choose the parent of these regulators, why
-not put them in the correct hierarchy?
-
->
->> K1 platform currently does not need this feature here.
->>
->> Considering the role switch, I think it would be better to hold off on
->> this until there is an actual board/user that relies on it.
->
-> There is a board without onboard USB hub,
-
-If such a board really need the regulator, IMO, your patch is the way to go=
-.
-
->
-> such as the OrangePi R2S.
-> So this is possible for boards that don't have onboard USB hub?
-
-OrangePi haven't released the schematic yet.
-
-That's what I could find [1], which seems similar to RV2.
-
-    &usb3hub {
-    	vbus-gpios =3D <&gpio 123 0>;	/* gpio_123 for usb3 hub pwr and output =
-vbus */
-    	status =3D "okay";
-    };
-
-[1] https://github.com/orangepi-xunlong/linux-orangepi/blob/orange-pi-6.6-k=
-y/arch/riscv/boot/dts/ky/x1_orangepi-r2s.dts#L762
-
->
-> Thanks,
-> Chukun
-
-Thanks,
-Ze
