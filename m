@@ -1,95 +1,88 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10677264612
-	for <spacemit@lists.linux.dev>; Fri, 20 Mar 2026 12:02:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B703C5DAC
+	for <spacemit@lists.linux.dev>; Fri, 20 Mar 2026 15:06:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774008141; cv=none; b=kXFT7BEKBokjM2au2UsAeIAr0o1OqsdJtP+moK0tcbwAR1Gw6iqDmU958TdmSq3hhisx5Tvp8yU6igRsDFBLebfmujaxmoWKnIzAkZV6p276G8jSWApS6R0uJLJa94YGI3g1lrV9OJ6vniHvOqWFYgQFC0KUr0fP4ERs3jzXAos=
+	t=1774019194; cv=none; b=KBeBEosRJaovIjc9PenIQ9tt8r5VDmu+0CKnFBmKAYCC72A6E98slwfR8QK5F+/vcXW3q1nSryCWQFs22uD0hiUbDABhgc4C+QEu1XKoEBiCW2CbdGrY0g95je8Ph0vp3gNS9DDYDLULZ1XALTtTL+A+EP5bNFoChFjAo17ra/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774008141; c=relaxed/simple;
-	bh=f7W2gT+v5OvJG9E6+8EfEXnr3fEu44JM/8Zu34YpB2s=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=AiXAjoCiR4m7frnNGMURZwebv08CFq47pnde6E43P9BbR5XFEUWjmxHLdCp5OLm7zGB6xZ1+5bQ7Vn46A5HZxkXWkQ0MfO0u8+HvUY3Z+rp4RkFfiqbUVNIWbRwfNhqwI5xqPgwBKv1+XI4hcbeiemJv8MWDU0Y5J+DrNK+EEmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1w3YYH-0004n9-Uq; Fri, 20 Mar 2026 13:02:05 +0100
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1w3YYG-001Ecl-2s;
-	Fri, 20 Mar 2026 13:02:04 +0100
-Received: from pza by lupine with local (Exim 4.98.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1w3YYG-0000000085A-3NA2;
-	Fri, 20 Mar 2026 13:02:04 +0100
-Message-ID: <272ed19e2c0d8c9f53b6e621c01dc09f0635bf9d.camel@pengutronix.de>
-Subject: Re: [PATCH v5] reset: spacemit: k3: Decouple composite reset lines
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Yixun Lan <dlan@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Junzhong Pan <junzhong.pan@spacemit.com>, Guodong Xu
- <guodong@riscstar.com>, 	devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, 	spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Date: Fri, 20 Mar 2026 13:02:04 +0100
-In-Reply-To: <20260320-01-k3-reset-usb-pci-v5-1-07f4a5ddd728@kernel.org>
-References: <20260320-01-k3-reset-usb-pci-v5-1-07f4a5ddd728@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+	s=arc-20240116; t=1774019194; c=relaxed/simple;
+	bh=+gY0U88ZU3WFbE3S3UKhriDpSE3AB91y+8EwGdS+r/8=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=RIzLm2P1PuEuKF5Ptpr4681BDH9Vpit5CY5U7NgEC89YQskFDJejcr5hasJ+2VCEgq3NPHfsQLmtCK/TH/ME9/p1dcvVYh4iSicNRoxJf83Kgs0B9As+51aB7w0q6zeTYTTCvVhbXdNksLnCEcg86/aTtrg/FDUWfq8DdWo9hzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ru+5fBvc; arc=none smtp.client-ip=91.218.175.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ru+5fBvc"
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: spacemit@lists.linux.dev
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1774019191;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+gY0U88ZU3WFbE3S3UKhriDpSE3AB91y+8EwGdS+r/8=;
+	b=ru+5fBvcm+pEAo0/qfX05QZrWp0JkVZkWaK/eGQezaL3cnyirJyZv/JIfWcEZr2udZrJys
+	gL0u5/AscC8IMzlMsA/pii/52ijo4kxbVFlQM1NI/KKq0zjVsmDEwfSU0xz/UNh7xUJ8EN
+	tSAdsI23J8B4l9To3y/mCEgDpxusVNI=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 20 Mar 2026 23:05:33 +0800
+Message-Id: <DH7PARAFZS7V.1YIE6OED3NA6C@linux.dev>
+Subject: Re: [PATCH 1/1] usb: dwc3: dwc3-generic-plat: Add optional VBUS
+ regulator support
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Ze Huang" <huang.ze@linux.dev>
+To: "Chukun Pan" <amadeus@jmu.edu.cn>, <huang.ze@linux.dev>
+Cc: <dlan@kernel.org>, <gregkh@linuxfoundation.org>,
+ <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <linux-usb@vger.kernel.org>, <spacemit@lists.linux.dev>,
+ <thinh.nguyen@synopsys.com>
+References: <DH7ILSL8DXBO.ZR74CL1QEUBU@linux.dev>
+ <20260320104026.1350571-1-amadeus@jmu.edu.cn>
+In-Reply-To: <20260320104026.1350571-1-amadeus@jmu.edu.cn>
+X-Migadu-Flow: FLOW_OUT
 
-On Fr, 2026-03-20 at 11:06 +0000, Yixun Lan wrote:
-> Instead of grouping several different reset lines into one composite
-> reset, decouple them to individual ones which make it more aligned
-> with underlying hardware. And for DWC USB driver, it will match well
-> with the number of the reset property in the DT bindings.
->=20
-> The DWC3 USB host controller in K3 SoC has three reset lines - AHB, VCC,
-> PHY. The PCIe controller also has three reset lines - DBI, Slave, Master.
-> Also three reset lines each for UCIE and RCPU block.
+On Fri Mar 20, 2026 at 6:40 PM CST, Chukun Pan wrote:
+> Hi,
+>
+>> I think it's better to align the driver with the actual hardware. I'm no=
+t
+>> opposed to managing any regulators in usb host/device drivers. But if we
+>> do have an onboard hub, and regulator belongs to the downstream ports of
+>> the hub, then it's hub's job, right?
+>
+>> Many boards leave gpio controlled regulators always on, that's what we
+>> want to solve. If we have to choose the parent of these regulators, why
+>> not put them in the correct hierarchy?
+>
+> I think we can manage the regulator in the USB host driver first,
+> and then use it after the onboard_usb_dev driver has been merged.
+> This is better than keeping the regulator always on.
+>
+>> If such a board really need the regulator, IMO, your patch is the way to=
+ go.
+>>
+>> OrangePi haven't released the schematic yet.
+>>
+>> That's what I could find [1], which seems similar to RV2.
+>
+> There is no onboard USB hub. Just check the image:
+>
+> http://www.orangepi.org/img/r2s/details/17.png
+> http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details=
+/Orange-Pi-R2S.html
+>
 
-Although I can't validate correctness of the id-to-bit assignments, the
-changes look consistent.
+That's fine, thanks.
 
-I trust that the reason for the grouped reset lines was just
-convenience, and not some hardware limitation that requires them to be
-controlled at the same time.
+> Thanks,
+> Chukun
 
-There are no patches using the USB/UCIE/RCPU/PCIE resets found on lore,
-so this is not an ABI break.
-
-> As an agreement with maintainer, the reset IDs has been rearranged as
-> contiguous number but keep most part unchanged to avoid break patches
-> which already sent to mailing list. The changes of DT binding header file
-> and reset driver are merged together as one single commit to avoid
-> git-bisect breakage.
->=20
-> Fixes: 938ce3b16582 ("reset: spacemit: Add SpacemiT K3 reset driver")
-> Fixes: 216e0a5e98e5 ("dt-bindings: soc: spacemit: Add K3 reset support an=
-d IDs")
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
-
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-
-If there are no objections, I'll pick this up into reset/fixes for
-v7.0-rc6.
-
-regards
-Philipp
