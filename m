@@ -1,308 +1,333 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E12F2E4274;
-	Fri, 20 Mar 2026 11:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774004792; cv=none; b=Ji5QSBlgd1R7Qke+LKyVXBC/iat/yv8SwjMGL/k/koiIvSWbV/9DggDxZUTzkh3ObrKHuwjkKsoP1eVYzyHWFeIMyFv5LR5wo9IJifu5Ig3fet02eDJZjNSoIkKDlXAwC4Sbbl7LN1NQWCnBU74suEGChbeB05RKnxGGAnWY/ww=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774004792; c=relaxed/simple;
-	bh=WrHj/b8deWiGuar8cbaJPGBckgcFXuxHBpTnu7n5cRY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ChbnEnEv/em25QzrA6LG423XIZ7wEydRZV37Ce44uEp1fPXRXIsCRvTLMx9t9TgjOsbJzKgnVNvOQpFKw1k2Zyn/jRoANrxVEdWlslwLijz0faE6ysLBnVfHzNCVxljNr4joudB5Ixmi1Uiu0wukepFK7HLi2GTHkgjyunjirbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m+Bh1C2P; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5919C39A7E0
+	for <spacemit@lists.linux.dev>; Fri, 20 Mar 2026 11:31:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.7
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774006313; cv=fail; b=NsLU5OBjVVPdfb6D0Nk8Z9TsGcfjQNxPWaBB+m/5dmOkRwaTPVwFz+p+bffNJky5CpQ4zbncHQIzK/UmG6imo//Ke7R5/AuGx+xqelHZoudrd3T9pdUn6eapepYGePkxfDo9tSDlQjJlAfO5ZCcR/Q0ihzfzCuasIJ7Z2M1VUoM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774006313; c=relaxed/simple;
+	bh=ndgGIqAH84ZXr/mq/UypJkNxl8ubE0sX5c74iO0DsK8=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=meigQoVzby0RqvFs00vDiQvH1T7eG2ps0ElG1X6fiPCAKeHTpLI9HyARs4ZEoepXRK6XIq0al1s+0ZVUv+JmMtqRFPenvzftViBvbQDHI/QYG5x/nuqbSZWu0BSpVjQIGu4RrXdsLF0M5WfpaHCJyQQo8cG7AMiHH6JBFAvVeP8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UauRbZ6G; arc=fail smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m+Bh1C2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8E5C4CEF7;
-	Fri, 20 Mar 2026 11:06:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774004792;
-	bh=WrHj/b8deWiGuar8cbaJPGBckgcFXuxHBpTnu7n5cRY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=m+Bh1C2PTGcRjR5raKoibOrhkA6A7B8mUwamLcEwR24j8hwnmY8xC377b+c356uEY
-	 9lBerJRdLlflRG82pjQv6FPT7HzaieCmVyIJdYori21A3krqomfEtNP5hfnBmKo5Rw
-	 K8aa+tIHiqAK974fUxsawVzcJCpnR7KnMtzH3T6enQH86wVsIQ7JYpSlrjX/zDTpQz
-	 JpdicJDDmNlOKxbv9s4lODnzJJWJV8VeMX41m4WnQOG8ceeU3ReXR5/QFMrdXJV+EH
-	 4Nc/bJAEGQHZ6XG5ELpzOdUZyaic794RdnW491xmsfTIquoJkv4ouwSImFH3mRzUih
-	 /madpIkY47GVQ==
-From: Yixun Lan <dlan@kernel.org>
-Date: Fri, 20 Mar 2026 11:06:17 +0000
-Subject: [PATCH v5] reset: spacemit: k3: Decouple composite reset lines
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UauRbZ6G"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1774006311; x=1805542311;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=ndgGIqAH84ZXr/mq/UypJkNxl8ubE0sX5c74iO0DsK8=;
+  b=UauRbZ6G08GVB+WCa66EHAfqgJEFK/Say907uUvRK0e9mf0Rg7mUNv1x
+   WB3ddVL0TvRHh+SbDYW2EJ9cXnn2ReHpOw6Q+Q+zvQirNHTsQ8uWlUMCZ
+   vkhGdA2ehC0QVf49JnLannYLogPZVQXypyTRn+yNRJvE3sRkbTeP0akW1
+   MSu359bQoiAgSYqSLLKKFcVl3TQwOcz5soEqKPms3htORMFB+mmnV5TEW
+   iCbp202Qj5Ad/gjg1/IRWrBgKvo0EdLRYYpkDBb4CEwRKWjBgoMaYZmBU
+   UL873mTnHdwLHdjnyag16Y0uYOeFpVmS7cqmOaUlfc/92rl7QNkByqDM0
+   g==;
+X-CSE-ConnectionGUID: f+TokIB2Qv+0ZkTGahdh2g==
+X-CSE-MsgGUID: icRwKsiDRqK8XN06pcxd2w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11734"; a="100544193"
+X-IronPort-AV: E=Sophos;i="6.23,130,1770624000"; 
+   d="scan'208";a="100544193"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 04:31:50 -0700
+X-CSE-ConnectionGUID: APToZZz8QyqUltB7Gd0c8A==
+X-CSE-MsgGUID: OgdToWsJTv6B1ZVsePRD+g==
+X-ExtLoop1: 1
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 04:31:49 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Fri, 20 Mar 2026 04:31:48 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Fri, 20 Mar 2026 04:31:48 -0700
+Received: from CH1PR05CU001.outbound.protection.outlook.com (52.101.193.31) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Fri, 20 Mar 2026 04:31:48 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fPSLyeccWvkADe38U/Cl4ZB/ldPYwtTvyQFRFqMiDpjnpyth+ig1SyZR4xrLUT+lMeBkf4k60APvpUJp2v5Kt+6rnzaZ07yrqclnV3dy/RHDMATL2pjlTGh25svpLqLweJK2vd2IKL/xU/V3HtA5Jj7jqxHX/hZ74+qr2mGx4Tpt+bRWNHviga7zDy09OGla1/rel6xlPv0GnbPxrZ2Zmhd97Kg0BA3M+jZV53Ex0tsFXM4lDjN7ooR4B8DuZxAbOuqfGqcO/TZUBnrLRXVe/8Dk6ACKJSGkyR1ZpdkBXxGkMmknxyXt0bu+omA2OVxlqYbRQyFryaPMpDuSf5kxbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wTOks4Ib7foLu1ZFwpthfHLnMJHNKh2PhDSf7HWbgEU=;
+ b=YkuxoPzxDwekZwEC1HIlwtdeV+Jk36A9o8j3SfYvlXoIlDLa+7AAu2Mu8EuXExMhBbnQalmNHwjymI2+lcz2Fam9uwAmorB8P0QM5P0PO1m6VRjyZDPAmK03uIzEUR4gUi7lpwkaU4adP8xrELdwwOcHmbA/o2WmxyHOsCzrDOPbNNlkaDgNjc9VXIKfY5necxs/nWiYWRYsFh6d8Zn1cSGsdIPZIdxqCVog0DjzYZGnKvSH+S7FeZRL8a0Anobd8TjFWD6XlqlG+bmpbgsj7OHMX6msODPQ7fxP/kLRJLfQSF5Emrd/EGCGhK/l0py47q1rK94aXXXCab4Glyuf8w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
+ by SA3PR11MB7584.namprd11.prod.outlook.com (2603:10b6:806:305::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.13; Fri, 20 Mar
+ 2026 11:31:40 +0000
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456%6]) with mapi id 15.20.9745.007; Fri, 20 Mar 2026
+ 11:31:40 +0000
+Message-ID: <d3e54adc-46b4-4ece-ad75-fc184f0b111d@intel.com>
+Date: Fri, 20 Mar 2026 13:31:33 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/7] mmc: sdhci-of-k1: add regulator and pinctrl
+ voltage switching support
+To: Iker Pedrosa <ikerpedrosam@gmail.com>
+CC: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, "Albert
+ Ou" <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan
+	<dlan@kernel.org>, Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>, <linux-mmc@vger.kernel.org>,
+	<devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+	<spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>, Anand Moon
+	<linux.amoon@gmail.com>
+References: <20260316-orangepi-sd-card-uhs-v3-0-aefd3b7832df@gmail.com>
+ <20260316-orangepi-sd-card-uhs-v3-2-aefd3b7832df@gmail.com>
+ <182321ef-f01e-4bc8-8f23-aa85b4c70860@intel.com>
+ <CABdCQ=ODJyeC4Lb_XFxHaxQpem0F3v=tw+5CipCHFU8T5zr8Ww@mail.gmail.com>
+Content-Language: en-US
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
+ 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
+ 4, Domiciled in Helsinki
+In-Reply-To: <CABdCQ=ODJyeC4Lb_XFxHaxQpem0F3v=tw+5CipCHFU8T5zr8Ww@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: DUZPR01CA0120.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:4bc::18) To IA1PR11MB7198.namprd11.prod.outlook.com
+ (2603:10b6:208:419::15)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260320-01-k3-reset-usb-pci-v5-1-07f4a5ddd728@kernel.org>
-X-B4-Tracking: v=1; b=H4sIACgqvWkC/33NTWrDMBCG4asErTtlNBpZuKvco2Shn3EiUuwgp
- SYl+O5VsnKJ6fL9YJ65qyolS1Ufu7sqMueap7GFfdupePLjUSCn1oqQOjSaADWcDRSpcoXvGuA
- SM6SE6AfvbKe9apeXIkO+PdXPQ+tTrtep/DyfzPqx/u/NGhCQKBAHZxiH/VnKKF/vUzmqBzjTG
- uFthEBDnyL2rkuWWF4Qs0bcNmIaIhx6zya6xPYF4RVCuI1wQ1zg3mLUqRf6gyzL8guJO5L0hgE
- AAA==
-X-Change-ID: 20260312-01-k3-reset-usb-pci-dd00afa7561a
-To: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Junzhong Pan <junzhong.pan@spacemit.com>, 
- Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11894; i=dlan@kernel.org;
- h=from:subject:message-id; bh=WrHj/b8deWiGuar8cbaJPGBckgcFXuxHBpTnu7n5cRY=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpvSow0FrXTNV49qZWKb4S4N0RUKbukUy+hVo4d
- 7Nj9IqzYIuJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCab0qMBsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+1QTg//bN5yrW53KzKN987sAL6H5EgwH8Kk+xjfUdA2oTNhx8jdNcTrjhkmP
- BSF8+VyCU3lCMS7NKmPDevxLL848tKEsdC+yODv31GXoTNZIU3uXJF0tr1D1sCviW6s09WKwlmD
- LY2Sd+u3zCB2wGhXZAcc48mXXcPaXaOjNNx5hxtPt84Qq92ObIlJTnATKjzEWACd0nncr4NSRyA
- z1xl3P8GV5Ko+zyNvER351q4vG3yNQFS4ravdKJeUq/pwCkPhCUQKxovpkR9K95yfPldLInu9/n
- niaEzynV2FZJf3yztXtdZdNJJavXawI9N8hZQnJML/WhN2LpsVAgDmZ+5WBm96v/f7i9eKTu5Rc
- gl/gdbbB0dqP+jl/p6ny2gdpVSqslQAsr+LJPQU5inMyommhTHuH17FfW6de6sLv5kgjEY76RZX
- eG3c1UTPBixXEzdqj/rTtH2q/Z4IqSCR4lwEbJRCs9ka0vhoNpLb94r6H6uwGeUJZjLqxFhq2hr
- narr4CwYRNllG4ZgntweR0HtxD7zZ3Dw7qHCowaILMD8ZjtyZ6AGse8znhid/Wl+waXI1nKRtUa
- aaSuhQxq3xKtt9foz7UXzUY+eaiS7B1P30AIKMpK1i16VvUU8uiBOPdEAVuGxwiWUjECutC3AQX
- Y2IlMSWsMkUAtoECzSgAHuQo/BC4d4=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|SA3PR11MB7584:EE_
+X-MS-Office365-Filtering-Correlation-Id: cb0dcfaf-25d9-4e11-a83c-08de8674412b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024|18002099003|56012099003|22082099003|7053199007;
+X-Microsoft-Antispam-Message-Info: ylxGBb6sbFxYkPnVnwoCt1yf//bqiQmEbl9CA8qT7lCT2MxRxSn1Cri+XgOIgPDQom5hpQCk29t8hcWG9/ckV66rpC0JqlAPdxLp1iF1W9bCE+0Y0zS1GeV08TTglMqAbtO//kKaOV6QDMIIHVPLJDFHVzUfqlv+6R4btokYqxwTSrumXz9HvRRktFKYrlm2Ajmq6s62eeoq62PuLRlQEy3Xuhfr3kyZJk27k2VQaZjbDiA2lNsQRFHSv7mTa4iPsQGh9ELJA9mHPLHJLYWlM79lMMcFAI8qbq/Mcqx2zBhL8iFibA/aw8p//Qv1bBdh89jLGujEkZI19TWN5mfcYiWyaj3kCzDQ1AQ+WrVb1IOnt+ZYyg2wEz9hcX4OPO/NZfNIBfXvH5Ay0h5LGoCnnSBF/TOuZ+BEd3n9FxfFLBdqbGTYKtax1h/fI1oHokGvtxevUzGwRH1nJuuQh8s5WXUubCr3HcZNG9DT48Dk3CPBsPmT5eKeQQXYOEvwhxWkZrgJ6goVkIleNW188UDfyaURsmQAw3lRK5GY9UP7Ks2lPimfuhoUlWLcbcvkS78aS+1fa/0f4ZAJXLqOvIijy/5AvmwY0wd8zZ1ZSySBcyPPbS+AsYi6L47jIncrinZqqKn4mtM99HRtf1eVxfk7ECG0++Ei8MSfOkryOQPOxU6KaNOKUr/p0FNzvK2NqMyXgTrSrQ2iTNjKLs/sqkq7tXCwOBdpcqcMbK4Vyc8SphE0SDF08/Mff/UZhNa/kvGN
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024)(18002099003)(56012099003)(22082099003)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SkRrb242WG1oTVNpUmttanFyVWxYY2Zpc05EOFV4dEV4VnhsYkZNbk1zN0Uv?=
+ =?utf-8?B?WXlxOHBIQUh3cm56RnNaWEp5dUtObnNtazNTSzAzS3RYeDZMaVNRUVZZMC8y?=
+ =?utf-8?B?c0tXYktXUkg2OXYyR2dJekFoS1U2eHdBMlVvTTJoZzRWOFVBZnNoQlZjTExk?=
+ =?utf-8?B?bWRSNTJuLzRKSW5YMVd0cHpINlhCNGVlbUVscWNNVXkxelplanYyYTNOS3NF?=
+ =?utf-8?B?UVBVNURpdDlNUGtMWlEweFhHSHlzUWNES1N6TUtuNDlNRWhobmwvamtoQVBB?=
+ =?utf-8?B?alpERUZCSHVLS28zSVhzUU5jdWdlZUd4ZTJqMWg1Y2xmTzRVVE5ZeVNPYkFH?=
+ =?utf-8?B?ZzlXazBxOFhzeld1S3RPSU1WMDRNWkFxS3dNemtiU2xrYTkrNk10VDl0eUtC?=
+ =?utf-8?B?YXUycXgyRVRnOTdrMkg0NlloSFdscWpreGVZcitDQ01vSzRzbW9QdUlCc3ZM?=
+ =?utf-8?B?cDI0TTMwcDBmZ0svUlNCY0ZKR3VMemt0aG9yT1R1TTNNdFQ3WkdEUlAwaGRu?=
+ =?utf-8?B?cmwvTnVvM0Jqa2FFT3hzUGxBNnZidTdRaDdQclEzS2IreFNLOTBXUUhkVkdl?=
+ =?utf-8?B?RXpvelRxdG94WEIxYWdzeUdMOXhTSm9WellaZzVIVzYxOUFyT1NkS1pHeHJw?=
+ =?utf-8?B?Z1RNVFJjbW9rc2Q0UFJkb3dxcEhwUFJTMVJCbmNZdmtwcFhoeGZjYXNoUjFl?=
+ =?utf-8?B?YzkyZEltbnlld3NqTFpkanZ4Rk9vRkdxeW9UWi9UQTZiajhZYVFNaXM4dUtK?=
+ =?utf-8?B?ekFuV2NxL3Y1eUlKSTQ1Y0lnVFRrWm84eXdFeXdRYTBqRElGaVFQaitqVE9V?=
+ =?utf-8?B?OHNEemFQRlVGcUMrS1pBM2VyTTFwaDVLYm02VWk3a2Ryb3RRSVZQeUNlVHVz?=
+ =?utf-8?B?SUFONEZXdTY2K3hwZS91WGx0MlVjWmVka2EyWVAvVXdiQUdIdlVKK1l4Wk9l?=
+ =?utf-8?B?RHFHYXEwZmJiRkdoUFFyazJSRnR0akZtRXZHeVRZY2xiUU9rVzJjQndnZW1C?=
+ =?utf-8?B?dGNxOVNkMUZWWDlTTEM1aWppd1dNdGhHd1lsWnRCNUJqQVRRNUg1ZmJvL0Ja?=
+ =?utf-8?B?blNIczZQR0ZQRDB1R0lsLzBDeXY5T28wK210WTFTRis3ZkU2WWhMbzUyd1Nl?=
+ =?utf-8?B?V21FdXdUUmtPQ2NzVkJ2eGZjSjRxbE5rdWNsdG1xVGFaS20wR3NxT0oyS1hM?=
+ =?utf-8?B?RXg5VGNvRVVqNjVIU3lYVE9meTZ6dEcvWjFtUHpMNy82djM3aXFSSkJTZEls?=
+ =?utf-8?B?WGZmVzhBOG5HNVJQTEJXakdSckxZYXZXU2VYZ1RCSWZQVDVuamNPK2xtK01h?=
+ =?utf-8?B?L3dXUFB1M0hHQkV5bTJvZjZ1SGpKdmVoaDU3c0FsbmVFVUx0cGVwZVpWRjla?=
+ =?utf-8?B?Ukc4L3M2RUF6eDVwU29NV2YzRDVJVmZwQmNWWm9lakpLRzhXOEdKUHU1VCsv?=
+ =?utf-8?B?OTFVTmFLc2ZweFgyL3ZZZ1htUUJDTVF6L3JSL1Zmbno3ZTQraWU3djhNVnN1?=
+ =?utf-8?B?VGt4aXl3dmlUMU83Z1RWWHAxNUd2UUp3aXpKYWRuNVNnSkpGdDNEZWJickhX?=
+ =?utf-8?B?Q2xnRk9rTjQwRnFKU3JtOFRBa1ROWVptV0h1SUdlSVpMQldtY01ocXowdjlM?=
+ =?utf-8?B?R1orekpNZVlMcTRhNHVCTzM0OHB6djhmYlVmVzlFTmRxbmVhZUZrSHNzajBF?=
+ =?utf-8?B?bXBMNXRod2tPRUh3LzZNMk4zQVFyN3VLL25XZDJUdTMvTWdsZHh0cEQ3VExM?=
+ =?utf-8?B?bHVkNTZsbnJwanVadVF2cWx2bE4zek1XdmhwOWpqU3JRVlo3Z2lCWVk1T3hs?=
+ =?utf-8?B?Y3RETTk2ZkRLNXNnWjRLeUcxWWhsRXRUdkVWZ2k4UkJGM0xHaVhxdHZrcmxy?=
+ =?utf-8?B?b1FmdmpVNUxRWU1JSG95L3VtNkVWNm5yZTFqL0tuck95eHR2NFhKbVM3WDYr?=
+ =?utf-8?B?dXJ4b0NGdjRTdkVkNnVxNGxlcnlQaDA1L3ErVjAweWE5cm5iQWhuamdjVTJn?=
+ =?utf-8?B?TnNSQnprNmczTkpsS2RnTHVGdTdjRkx3ZHI0cGxDK2Qrd1dsbUxRRnhPMDFr?=
+ =?utf-8?B?YXZoL0NWcXk0cDkwT1lwdHFxQ0RNcnJoYUFPNk9pUFdtTllQOUcramhCWjlt?=
+ =?utf-8?B?ZUN3aFpRWlFzWVRaL0FmWjcyemFrVkp3UXNyS0d6OFNaMkgyRXhMT0NqcW5I?=
+ =?utf-8?B?TWxDYVpkVkpHankyWStPU3U3YmRFOXdMM29WNlRLMzNxQXhlcG5zTFAyVTJm?=
+ =?utf-8?B?RGNOa1p3OUFXb2lyRVhxeWh6SmhQTzZyb0ZMNktvVVZ0WVdlWm1NRnUxc0Zu?=
+ =?utf-8?B?Z3EvcFF5S1lmTlVhYmVuQXJla1NDaVlPYVRYM2NybG5HK3ZEYmh4bHh4Q2JR?=
+ =?utf-8?Q?tkSesuhZWunFBt1g=3D?=
+X-Exchange-RoutingPolicyChecked: mcb0/angYaPirLtz+dROTSa8O8J/wvWOUKDa1D3Zn6X3YtfePh1gfMm4DHP7JrephYDKZz/3xwLiZuSUDwoAHy1tpz3kU2OoHYUd2YVFHVcmzZ98QhQQBc2yblJXqFrVticnfiFpLAe6/ZFwjR+ZZomgIu8Gy4ul0ziyiA5ZZ/PBAy5LPDoWtD2X22KM6cUI0PXUyw/8yxCWkrVdgz4YdLzSHicPb7hLV3qrYG9hlV0mdCg48X0iPYazzQlAMFTG+VCvRcdQ9x4JQ0o8ChEfmzDmkYfOUMuhwh01NrxT5TvXb3FYgQh0JMe3978wrFRKj9n7H3XVnf3fZhSGiyjS8w==
+X-MS-Exchange-CrossTenant-Network-Message-Id: cb0dcfaf-25d9-4e11-a83c-08de8674412b
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2026 11:31:40.3955
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: erVSyPFZaZccr0OTUtKnqkLx8P+1+16Ar93BrFHM/2IK6wnjTKZavZzItM2Pr+8q2T4i1T++Y7rQQeu+ykPZxg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB7584
+X-OriginatorOrg: intel.com
 
-Instead of grouping several different reset lines into one composite
-reset, decouple them to individual ones which make it more aligned
-with underlying hardware. And for DWC USB driver, it will match well
-with the number of the reset property in the DT bindings.
+On 20/03/2026 11:17, Iker Pedrosa wrote:
+> El mar, 17 mar 2026 a las 12:28, Adrian Hunter
+> (<adrian.hunter@intel.com>) escribió:
+>>
+>> On 16/03/2026 16:03, Iker Pedrosa wrote:
+>>> Add voltage switching infrastructure for UHS-I modes by integrating both
+>>> regulator framework (for supply voltage control) and pinctrl state
+>>> switching (for pin drive strength optimization).
+>>>
+>>> - Add regulator supply parsing and voltage switching callback
+>>> - Add optional pinctrl state switching between "default" (3.3V) and
+>>>   "state_uhs" (1.8V) configurations
+>>> - Enable coordinated voltage and pin configuration changes for UHS modes
+>>>
+>>> This provides complete voltage switching support while maintaining
+>>> backward compatibility when pinctrl states are not defined.
+>>>
+>>> Tested-by: Anand Moon <linux.amoon@gmail.com>
+>>> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+>>> ---
+>>>  drivers/mmc/host/sdhci-of-k1.c | 58 ++++++++++++++++++++++++++++++++++++++++++
+>>>  1 file changed, 58 insertions(+)
+>>>
+>>> diff --git a/drivers/mmc/host/sdhci-of-k1.c b/drivers/mmc/host/sdhci-of-k1.c
+>>> index 0dd06fc19b8574ae1b00f7e5d09b7d4c87d06770..01afdadcf70796704b272ee5a31543afd5e01188 100644
+>>> --- a/drivers/mmc/host/sdhci-of-k1.c
+>>> +++ b/drivers/mmc/host/sdhci-of-k1.c
+>>> @@ -16,6 +16,7 @@
+>>>  #include <linux/of.h>
+>>>  #include <linux/of_device.h>
+>>>  #include <linux/reset.h>
+>>> +#include <linux/pinctrl/consumer.h>
+>>>  #include <linux/platform_device.h>
+>>>
+>>>  #include "sdhci.h"
+>>> @@ -71,6 +72,9 @@
+>>>  struct spacemit_sdhci_host {
+>>>       struct clk *clk_core;
+>>>       struct clk *clk_io;
+>>> +     struct pinctrl *pinctrl;
+>>> +     struct pinctrl_state *pinctrl_default;
+>>> +     struct pinctrl_state *pinctrl_uhs;
+>>>  };
+>>>
+>>>  /* All helper functions will update clr/set while preserve rest bits */
+>>> @@ -219,6 +223,33 @@ static void spacemit_sdhci_pre_hs400_to_hs200(struct mmc_host *mmc)
+>>>                              SPACEMIT_SDHC_PHY_CTRL_REG);
+>>>  }
+>>>
+>>> +static void spacemit_sdhci_voltage_switch(struct sdhci_host *host)
+>>> +{
+>>> +     struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>>> +     struct spacemit_sdhci_host *sdhst = sdhci_pltfm_priv(pltfm_host);
+>>> +     struct mmc_ios *ios = &host->mmc->ios;
+>>> +     int ret;
+>>> +
+>>> +     if (!sdhst->pinctrl)
+>>> +             return;
+>>> +
+>>> +     if (ios->signal_voltage != MMC_SIGNAL_VOLTAGE_180) {
+>>> +             dev_warn(mmc_dev(host->mmc), "unsupported voltage %d\n",
+>>> +                      ios->signal_voltage);
+>>> +             return;
+>>> +     }
+>>
+>> In V2, I put "->voltage_switch() is called only for
+>> ios->signal_voltage == MMC_SIGNAL_VOLTAGE_180" by
+>> which I meant that it does not allow the driver to
+>> switch pin state back for 3.3V.
+>>
+>> So you probably need an approach similar to the original
+>> spacemit_sdhci_start_signal_voltage_switch() in:
+>>
+>>         https://lore.kernel.org/linux-mmc/20260302-orangepi-sd-card-uhs-v1-4-89c219973c0c@gmail.com/
+> 
+> Thank you for the feedback. I want to make sure I understand this
+> point correctly to avoid going in circles.
+> 
+> In the v2 feedback , you mentioned that "->voltage_switch() is called
+> only for ios->signal_voltage == MMC_SIGNAL_VOLTAGE_180", which I
+> understood to mean that this callback only needs to handle switching
+> to 1.8V. This meant that the changes I introduced for v3 don't manage
+> the switching to 3.3V.
+> 
+> Can you clarify if I should I revert to implementing
+> "->start_signal_voltage_switch()" instead, which would handle both
+> 1.8V and 3.3V cases? 
 
-The DWC3 USB host controller in K3 SoC has three reset lines - AHB, VCC,
-PHY. The PCIe controller also has three reset lines - DBI, Slave, Master.
-Also three reset lines each for UCIE and RCPU block.
+Yes
 
-As an agreement with maintainer, the reset IDs has been rearranged as
-contiguous number but keep most part unchanged to avoid break patches
-which already sent to mailing list. The changes of DT binding header file
-and reset driver are merged together as one single commit to avoid
-git-bisect breakage.
-
-Fixes: 938ce3b16582 ("reset: spacemit: Add SpacemiT K3 reset driver")
-Fixes: 216e0a5e98e5 ("dt-bindings: soc: spacemit: Add K3 reset support and IDs")
-Signed-off-by: Yixun Lan <dlan@kernel.org>
----
-Previously, the reset of The USB and PCIe was submited as a composite
-reset, try to decouple them in this series.
-
-The motivation behind is that it will will make the result more aligned
-with the hardware which describe them as different reset lines, and also
-match with the K3 dwc3 DT binding which request different reset, 
-K1 and K3 SoC share same topology of the reset line design.
-
-See the reset part info in binding doc
-Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
-
-In V2, I've visited through whole reset driver and decouple more resets,
-which include the block - UCIE and RPCU. Also add an explanation of why
-rearrange the reset IDs as contiguous number.
-
-In V4, I've rearranged all reset IDs to keep them linear(no hole), while
-keep EMAC part IDs unchanged, this still bring lots changes to ID number,
-let me know if it's ok.
-
-In V5, keep most reset IDs that don't have to split unchanged, also fill
-the gap, leave no hole.
----
-Changes in v5:
-- keep IDs don't have to split unchanged
-- Link to v4: https://lore.kernel.org/r/20260320-01-k3-reset-usb-pci-v4-1-7b4950c1d9e2@kernel.org
-
-Changes in v4:
-- rearrange IDs but keep EMAC part unchanged
-- Link to v3: https://lore.kernel.org/r/20260317-01-k3-reset-usb-pci-v3-1-e4b9a43c7d45@kernel.org
-
-Changes in v3:
-- fix checkpatch.pl warning due to missing double quotes in Fixes tag
-- Link to v2: https://lore.kernel.org/r/20260314-01-k3-reset-usb-pci-v2-1-9dc0976d524e@kernel.org
-
-Changes in v2:
-- squash the two patches to avoid git-biset breakage
-- rearrange the ID to make it contiguous
-- also decouple more reset IDs - UCIE and RPCU block
-- add Fixes tag explicitly
-- Link to v1: https://lore.kernel.org/r/20260312-01-k3-reset-usb-pci-v1-0-022b24b7340f@kernel.org
----
- drivers/reset/spacemit/reset-spacemit-k3.c     | 60 +++++++++++++++-----------
- include/dt-bindings/reset/spacemit,k3-resets.h | 48 +++++++++++++++------
- 2 files changed, 72 insertions(+), 36 deletions(-)
-
-diff --git a/drivers/reset/spacemit/reset-spacemit-k3.c b/drivers/reset/spacemit/reset-spacemit-k3.c
-index e9e32e4c1ba5..9841f5e057b2 100644
---- a/drivers/reset/spacemit/reset-spacemit-k3.c
-+++ b/drivers/reset/spacemit/reset-spacemit-k3.c
-@@ -112,16 +112,21 @@ static const struct ccu_reset_data k3_apmu_resets[] = {
- 	[RESET_APMU_SDH0]	= RESET_DATA(APMU_SDH0_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_SDH1]	= RESET_DATA(APMU_SDH1_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_SDH2]	= RESET_DATA(APMU_SDH2_CLK_RES_CTRL,	0, BIT(1)),
--	[RESET_APMU_USB2]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(1)|BIT(2)|BIT(3)),
--	[RESET_APMU_USB3_PORTA]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(5)|BIT(6)|BIT(7)),
--	[RESET_APMU_USB3_PORTB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(9)|BIT(10)|BIT(11)),
--	[RESET_APMU_USB3_PORTC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(13)|BIT(14)|BIT(15)),
--	[RESET_APMU_USB3_PORTD]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0,
--				BIT(17)|BIT(18)|BIT(19)),
-+	[RESET_APMU_USB2_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(1)),
-+	[RESET_APMU_USB2_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(2)),
-+	[RESET_APMU_USB2_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(3)),
-+	[RESET_APMU_USB3_A_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(5)),
-+	[RESET_APMU_USB3_A_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(6)),
-+	[RESET_APMU_USB3_A_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(7)),
-+	[RESET_APMU_USB3_B_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(9)),
-+	[RESET_APMU_USB3_B_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(10)),
-+	[RESET_APMU_USB3_B_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(11)),
-+	[RESET_APMU_USB3_C_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(13)),
-+	[RESET_APMU_USB3_C_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(14)),
-+	[RESET_APMU_USB3_C_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(15)),
-+	[RESET_APMU_USB3_D_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(17)),
-+	[RESET_APMU_USB3_D_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(18)),
-+	[RESET_APMU_USB3_D_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(19)),
- 	[RESET_APMU_QSPI]	= RESET_DATA(APMU_QSPI_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_QSPI_BUS]	= RESET_DATA(APMU_QSPI_CLK_RES_CTRL,	0, BIT(0)),
- 	[RESET_APMU_DMA]	= RESET_DATA(APMU_DMA_CLK_RES_CTRL,	0, BIT(0)),
-@@ -151,10 +156,12 @@ static const struct ccu_reset_data k3_apmu_resets[] = {
- 	[RESET_APMU_CPU7_SW]	= RESET_DATA(APMU_PMU_CC2_AP,		BIT(26), 0),
- 	[RESET_APMU_C1_MPSUB_SW]	= RESET_DATA(APMU_PMU_CC2_AP,	BIT(28), 0),
- 	[RESET_APMU_MPSUB_DBG]	= RESET_DATA(APMU_PMU_CC2_AP,		BIT(29), 0),
--	[RESET_APMU_UCIE]	= RESET_DATA(APMU_UCIE_CTRL,
--				BIT(1) | BIT(2) | BIT(3), 0),
--	[RESET_APMU_RCPU]	= RESET_DATA(APMU_RCPU_CLK_RES_CTRL,	0,
--				BIT(3) | BIT(2) | BIT(0)),
-+	[RESET_APMU_UCIE_IP]	= RESET_DATA(APMU_UCIE_CTRL,		BIT(1),  0),
-+	[RESET_APMU_UCIE_HOT]	= RESET_DATA(APMU_UCIE_CTRL,		BIT(2),  0),
-+	[RESET_APMU_UCIE_MON]	= RESET_DATA(APMU_UCIE_CTRL,		BIT(3),  0),
-+	[RESET_APMU_RCPU_AUDIO_SYS]	= RESET_DATA(APMU_RCPU_CLK_RES_CTRL,	0, BIT(0)),
-+	[RESET_APMU_RCPU_MCU_CORE]	= RESET_DATA(APMU_RCPU_CLK_RES_CTRL,	0, BIT(2)),
-+	[RESET_APMU_RCPU_AUDIO_APMU]	= RESET_DATA(APMU_RCPU_CLK_RES_CTRL,	0, BIT(3)),
- 	[RESET_APMU_DSI4LN2_ESCCLK]	= RESET_DATA(APMU_LCD_CLK_RES_CTRL3,	0, BIT(3)),
- 	[RESET_APMU_DSI4LN2_LCD_SW]	= RESET_DATA(APMU_LCD_CLK_RES_CTRL3,	0, BIT(4)),
- 	[RESET_APMU_DSI4LN2_LCD_MCLK]	= RESET_DATA(APMU_LCD_CLK_RES_CTRL4,	0, BIT(9)),
-@@ -164,16 +171,21 @@ static const struct ccu_reset_data k3_apmu_resets[] = {
- 	[RESET_APMU_UFS_ACLK]	= RESET_DATA(APMU_UFS_CLK_RES_CTRL,	0, BIT(0)),
- 	[RESET_APMU_EDP0]	= RESET_DATA(APMU_LCD_EDP_CTRL,		0, BIT(0)),
- 	[RESET_APMU_EDP1]	= RESET_DATA(APMU_LCD_EDP_CTRL,		0, BIT(16)),
--	[RESET_APMU_PCIE_PORTA]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,	0,
--				BIT(5) | BIT(4) | BIT(3)),
--	[RESET_APMU_PCIE_PORTB]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,	0,
--				BIT(5) | BIT(4) | BIT(3)),
--	[RESET_APMU_PCIE_PORTC]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,	0,
--				BIT(5) | BIT(4) | BIT(3)),
--	[RESET_APMU_PCIE_PORTD]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,	0,
--				BIT(5) | BIT(4) | BIT(3)),
--	[RESET_APMU_PCIE_PORTE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,	0,
--				BIT(5) | BIT(4) | BIT(3)),
-+	[RESET_APMU_PCIE_A_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,	0, BIT(3)),
-+	[RESET_APMU_PCIE_A_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,	0, BIT(4)),
-+	[RESET_APMU_PCIE_A_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,	0, BIT(5)),
-+	[RESET_APMU_PCIE_B_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,	0, BIT(3)),
-+	[RESET_APMU_PCIE_B_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,	0, BIT(4)),
-+	[RESET_APMU_PCIE_B_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,	0, BIT(5)),
-+	[RESET_APMU_PCIE_C_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,	0, BIT(3)),
-+	[RESET_APMU_PCIE_C_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,	0, BIT(4)),
-+	[RESET_APMU_PCIE_C_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,	0, BIT(5)),
-+	[RESET_APMU_PCIE_D_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,	0, BIT(3)),
-+	[RESET_APMU_PCIE_D_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,	0, BIT(4)),
-+	[RESET_APMU_PCIE_D_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,	0, BIT(5)),
-+	[RESET_APMU_PCIE_E_DBI]		= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,	0, BIT(3)),
-+	[RESET_APMU_PCIE_E_SLAVE]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,	0, BIT(4)),
-+	[RESET_APMU_PCIE_E_MASTER]	= RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,	0, BIT(5)),
- 	[RESET_APMU_EMAC0]	= RESET_DATA(APMU_EMAC0_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_EMAC1]	= RESET_DATA(APMU_EMAC1_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_EMAC2]	= RESET_DATA(APMU_EMAC2_CLK_RES_CTRL,	0, BIT(1)),
-diff --git a/include/dt-bindings/reset/spacemit,k3-resets.h b/include/dt-bindings/reset/spacemit,k3-resets.h
-index 79ac1c22b7b5..dc1ef009ba79 100644
---- a/include/dt-bindings/reset/spacemit,k3-resets.h
-+++ b/include/dt-bindings/reset/spacemit,k3-resets.h
-@@ -97,11 +97,11 @@
- #define RESET_APMU_SDH0          13
- #define RESET_APMU_SDH1          14
- #define RESET_APMU_SDH2          15
--#define RESET_APMU_USB2          16
--#define RESET_APMU_USB3_PORTA    17
--#define RESET_APMU_USB3_PORTB    18
--#define RESET_APMU_USB3_PORTC    19
--#define RESET_APMU_USB3_PORTD    20
-+#define RESET_APMU_USB2_AHB      16
-+#define RESET_APMU_USB2_VCC      17
-+#define RESET_APMU_USB2_PHY      18
-+#define RESET_APMU_USB3_A_AHB    19
-+#define RESET_APMU_USB3_A_VCC    20
- #define RESET_APMU_QSPI          21
- #define RESET_APMU_QSPI_BUS      22
- #define RESET_APMU_DMA           23
-@@ -132,8 +132,8 @@
- #define RESET_APMU_CPU7_SW       48
- #define RESET_APMU_C1_MPSUB_SW   49
- #define RESET_APMU_MPSUB_DBG     50
--#define RESET_APMU_UCIE          51
--#define RESET_APMU_RCPU          52
-+#define RESET_APMU_USB3_A_PHY    51	/* USB3 A */
-+#define RESET_APMU_USB3_B_AHB    52
- #define RESET_APMU_DSI4LN2_ESCCLK     53
- #define RESET_APMU_DSI4LN2_LCD_SW     54
- #define RESET_APMU_DSI4LN2_LCD_MCLK   55
-@@ -143,16 +143,40 @@
- #define RESET_APMU_UFS_ACLK      59
- #define RESET_APMU_EDP0          60
- #define RESET_APMU_EDP1          61
--#define RESET_APMU_PCIE_PORTA    62
--#define RESET_APMU_PCIE_PORTB    63
--#define RESET_APMU_PCIE_PORTC    64
--#define RESET_APMU_PCIE_PORTD    65
--#define RESET_APMU_PCIE_PORTE    66
-+#define RESET_APMU_USB3_B_VCC    62	/* USB3 B */
-+#define RESET_APMU_USB3_B_PHY    63
-+#define RESET_APMU_USB3_C_AHB    64
-+#define RESET_APMU_USB3_C_VCC    65
-+#define RESET_APMU_USB3_C_PHY    66
- #define RESET_APMU_EMAC0         67
- #define RESET_APMU_EMAC1         68
- #define RESET_APMU_EMAC2         69
- #define RESET_APMU_ESPI_MCLK     70
- #define RESET_APMU_ESPI_SCLK     71
-+#define RESET_APMU_USB3_D_AHB    72	/* USB3 D */
-+#define RESET_APMU_USB3_D_VCC    73
-+#define RESET_APMU_USB3_D_PHY    74
-+#define RESET_APMU_UCIE_IP       75
-+#define RESET_APMU_UCIE_HOT      76
-+#define RESET_APMU_UCIE_MON      77
-+#define RESET_APMU_RCPU_AUDIO_SYS     78
-+#define RESET_APMU_RCPU_MCU_CORE      79
-+#define RESET_APMU_RCPU_AUDIO_APMU    80
-+#define RESET_APMU_PCIE_A_DBI    81
-+#define RESET_APMU_PCIE_A_SLAVE  82
-+#define RESET_APMU_PCIE_A_MASTER 83
-+#define RESET_APMU_PCIE_B_DBI    84
-+#define RESET_APMU_PCIE_B_SLAVE  85
-+#define RESET_APMU_PCIE_B_MASTER 86
-+#define RESET_APMU_PCIE_C_DBI    87
-+#define RESET_APMU_PCIE_C_SLAVE  88
-+#define RESET_APMU_PCIE_C_MASTER 89
-+#define RESET_APMU_PCIE_D_DBI    90
-+#define RESET_APMU_PCIE_D_SLAVE  91
-+#define RESET_APMU_PCIE_D_MASTER 92
-+#define RESET_APMU_PCIE_E_DBI    93
-+#define RESET_APMU_PCIE_E_SLAVE  94
-+#define RESET_APMU_PCIE_E_MASTER 95
- 
- /* DCIU resets*/
- #define RESET_DCIU_HDMA          0
-
----
-base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
-change-id: 20260312-01-k3-reset-usb-pci-dd00afa7561a
-
-Best regards,
--- 
-Yixun Lan <dlan@kernel.org>
+Or is there a way to make the
+> "->voltage_switch()" approach work properly for both directions?
+> 
+>>
+>>> +
+>>> +     if (sdhst->pinctrl_uhs) {
+>>> +             ret = pinctrl_select_state(sdhst->pinctrl, sdhst->pinctrl_uhs);
+>>> +             if (ret) {
+>>> +                     dev_warn(mmc_dev(host->mmc),
+>>> +                              "failed to select UHS pinctrl state: %d\n", ret);
+>>> +                     return;
+>>> +             }
+>>> +             dev_dbg(mmc_dev(host->mmc), "switched to UHS pinctrl state\n");
+>>> +     }
+>>> +}
+>>> +
+>>>  static inline int spacemit_sdhci_get_clocks(struct device *dev,
+>>>                                           struct sdhci_pltfm_host *pltfm_host)
+>>>  {
+>>> @@ -252,12 +283,37 @@ static inline int spacemit_sdhci_get_resets(struct device *dev)
+>>>       return 0;
+>>>  }
+>>>
+>>> +static inline void spacemit_sdhci_get_pins(struct device *dev,
+>>> +                                         struct sdhci_pltfm_host *pltfm_host)
+>>> +{
+>>> +     struct spacemit_sdhci_host *sdhst = sdhci_pltfm_priv(pltfm_host);
+>>> +
+>>> +     sdhst->pinctrl = devm_pinctrl_get(dev);
+>>> +     if (IS_ERR(sdhst->pinctrl)) {
+>>> +             sdhst->pinctrl = NULL;
+>>> +             dev_dbg(dev, "pinctrl not available, voltage switching will work without it\n");
+>>> +             return;
+>>> +     }
+>>> +
+>>> +     sdhst->pinctrl_default = pinctrl_lookup_state(sdhst->pinctrl, "default");
+>>> +     if (IS_ERR(sdhst->pinctrl_default))
+>>> +             sdhst->pinctrl_default = NULL;
+>>> +
+>>> +     sdhst->pinctrl_uhs = pinctrl_lookup_state(sdhst->pinctrl, "state_uhs");
+>>> +     if (IS_ERR(sdhst->pinctrl_uhs))
+>>> +             sdhst->pinctrl_uhs = NULL;
+>>> +
+>>> +     dev_dbg(dev, "pinctrl setup: default=%p, uhs=%p\n",
+>>> +             sdhst->pinctrl_default, sdhst->pinctrl_uhs);
+>>> +}
+>>> +
+>>>  static const struct sdhci_ops spacemit_sdhci_ops = {
+>>>       .get_max_clock          = spacemit_sdhci_clk_get_max_clock,
+>>>       .reset                  = spacemit_sdhci_reset,
+>>>       .set_bus_width          = sdhci_set_bus_width,
+>>>       .set_clock              = spacemit_sdhci_set_clock,
+>>>       .set_uhs_signaling      = spacemit_sdhci_set_uhs_signaling,
+>>> +     .voltage_switch         = spacemit_sdhci_voltage_switch,
+>>>  };
+>>>
+>>>  static const struct sdhci_pltfm_data spacemit_sdhci_k1_pdata = {
+>>> @@ -324,6 +380,8 @@ static int spacemit_sdhci_probe(struct platform_device *pdev)
+>>>
+>>>       host->mmc->caps |= MMC_CAP_NEED_RSP_BUSY;
+>>>
+>>> +     spacemit_sdhci_get_pins(dev, pltfm_host);
+>>> +
+>>>       ret = spacemit_sdhci_get_clocks(dev, pltfm_host);
+>>>       if (ret)
+>>>               goto err_pltfm;
+>>>
+>>
 
