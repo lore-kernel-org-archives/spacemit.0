@@ -1,135 +1,120 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54D4254B18
-	for <spacemit@lists.linux.dev>; Fri, 20 Mar 2026 09:46:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DF237A4BC
+	for <spacemit@lists.linux.dev>; Fri, 20 Mar 2026 09:51:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773999983; cv=none; b=rec6zxikShgKnO7hURmXDKPRtrBGLvJE3qxcJ+EDiH/I+rbK+qqjf6Kf62KXSAwbMpLAx6rRgeEp8z+6KyninUo44+Z+kMIJEqKL3znZIXUKexDBhj05oPc1V6witInV06Ldbd7DlGQR2bbHVgRk2orvqlvgZHXkJKLA9G32wvM=
+	t=1774000310; cv=none; b=php2GCyOTWHCCsDJ3wZyg8ZBUIrQmNpJrOvIgYc98Ya9qeZwwgncrz0oxWEBtXlBd8Jk70bwkaL5xplIKG9h3Yt/y2akMDR0onSuz3+kaT/EGLlajJtXn/4GU3ztpmiSLE8b3xldKKy0zuVt6oT9dkL8KdeZ9eeNwPupySprEMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773999983; c=relaxed/simple;
-	bh=T1njKK6NL5/ll5maFGIb/AHc30gA7d06rrJchFIQbNk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=HyAyLPX5rS0DrCJr7cwbl10C0AtaHsFBZu4HncmY8drTdruMwBoVI2M+sEQtC9BF/yiEHVe6jbF20yziyMOqc7Uf5ub9kQm2D018VPMjvTKpPE9CE2LZt8cFqpj9C7QG9wiHvEsn3pRJcGgauZjIEGg4n4yGWCBXFNYj1Uer8To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1w3WQO-0008JH-6B; Fri, 20 Mar 2026 10:45:48 +0100
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1w3WQN-001Dhj-1Z;
-	Fri, 20 Mar 2026 10:45:47 +0100
-Received: from pza by lupine with local (Exim 4.98.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1w3WQN-000000003mj-1jdq;
-	Fri, 20 Mar 2026 10:45:47 +0100
-Message-ID: <a3d34ebb16b9ce19c0b81ce07f26ed6b1f73bdaf.camel@pengutronix.de>
-Subject: Re: [PATCH v4] reset: spacemit: k3: Decouple composite reset lines
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Yixun Lan <dlan@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Junzhong Pan <junzhong.pan@spacemit.com>, Guodong Xu
- <guodong@riscstar.com>, 	devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, 	spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Date: Fri, 20 Mar 2026 10:45:47 +0100
-In-Reply-To: <20260320-01-k3-reset-usb-pci-v4-1-7b4950c1d9e2@kernel.org>
-References: <20260320-01-k3-reset-usb-pci-v4-1-7b4950c1d9e2@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+	s=arc-20240116; t=1774000310; c=relaxed/simple;
+	bh=tBusV8I1xKXUrGEu9BjwwnL+Ldksq8Sarqj0TThaMqk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=n9ixIwKmFdoGFST4XTowAyts8MIxEFtjdcM4ALieV2tui7p8b3XDhggI6oMMLOhW/jNcI7k3lDEkxkUdY20FQEzaEQK3neT1LZz6ubMVgGRaHWPQaVsdZfPPcmHGlNxiO5RhqlP8RFj0RmM9gf1kg4fIeRMG+HNeYm5U3TdHOQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ux7sY9yw; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ux7sY9yw"
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: spacemit@lists.linux.dev
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1774000306;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SB0KpBn5A09Moyx+zjJpQCHUxGkKOb8xwpecR+YoJT4=;
+	b=ux7sY9ywu+wS45NR3bq7PywwA4yYp30v4K9OZ3Eua2QuPZ2luZmhd+98gprsJzH8xMB6Nf
+	bXJjA8h8o5i/Y29DqWrnoMESdqi7RX+zRDB2jAHBO9x1sk9Lwda/m2n2LHrDjmm2dXUlqt
+	i6aWySuiFz498jMm/x8VCqt1OVKoXpU=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 20 Mar 2026 17:50:50 +0800
+Message-Id: <DH7ILSL8DXBO.ZR74CL1QEUBU@linux.dev>
+Cc: <dlan@kernel.org>, <gregkh@linuxfoundation.org>,
+ <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <linux-usb@vger.kernel.org>, <spacemit@lists.linux.dev>,
+ <thinh.nguyen@synopsys.com>
+Subject: Re: [PATCH 1/1] usb: dwc3: dwc3-generic-plat: Add optional VBUS
+ regulator support
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Ze Huang" <huang.ze@linux.dev>
+To: "Chukun Pan" <amadeus@jmu.edu.cn>, <huang.ze@linux.dev>
+References: <DH7FXPBMB1K5.28IT6DZQ280ZV@linux.dev>
+ <20260320081826.1331721-1-amadeus@jmu.edu.cn>
+In-Reply-To: <20260320081826.1331721-1-amadeus@jmu.edu.cn>
+X-Migadu-Flow: FLOW_OUT
 
-On Fr, 2026-03-20 at 06:51 +0000, Yixun Lan wrote:
-> Instead of grouping several different reset lines into one composite
-> reset, decouple them to individual ones which make it more aligned
-> with underlying hardware. And for DWC USB driver, it will match well
-> with the number of the reset property in the DT bindings.
->=20
-> The DWC3 USB host controller in K3 SoC has three reset lines - AHB, VCC,
-> PHY. The PCIe controller also has three reset lines - DBI, Slave, Master.
-> Also three reset lines each for UCIE and RCPU block.
->=20
-> As an agreement with maintainer, the reset IDs has been rearranged as
-> contiguous number but keep EMAC part unchanged to avoid break patches
-> which already sent to mailing list. The changes of DT binding header file
-> and reset driver are merged together as one single commit to avoid
-> git-bisect breakage.
->=20
-> Fixes: 938ce3b16582 ("reset: spacemit: Add SpacemiT K3 reset driver")
-> Fixes: 216e0a5e98e5 ("dt-bindings: soc: spacemit: Add K3 reset support an=
-d IDs")
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
-> ---
-> Previously, the reset of The USB and PCIe was submited as a composite
-> reset, try to decouple them in this series.
->=20
-> The motivation behind is that it will will make the result more aligned
-> with the hardware which describe them as different reset lines, and also
-> match with the K3 dwc3 DT binding which request different reset,=20
-> K1 and K3 SoC share same topology of the reset line design.
->=20
-> See the reset part info in binding doc
-> Documentation/devicetree/bindings/usb/spacemit,k1-dwc3.yaml
->=20
-> In V2, I've visited through whole reset driver and decouple more resets,
-> which include the block - UCIE and RPCU. Also add an explanation of why
-> rearrange the reset IDs as contiguous number.
->=20
-> In V4, I've rearranged all reset IDs to keep them linear(no hole), while
-> keep EMAC part IDs unchanged, this still bring lots changes to ID number,
-> let me know if it's ok.
+Hi Chukun
 
-It would be safer to just keep all reset=C2=A0IDs that don't have to be
-split unchanged. Patches using them are trickling in.
+On Fri Mar 20, 2026 at 4:18 PM CST, Chukun Pan wrote:
+> Hi,
+>
+>> I don't think it's a good idea to tie this optional VBUS regulator
+>> implementation to the SpacemiT K1 platform.
+>>
+>> While the K1 SoC does have a DRD controller, current boards in the wild
+>> (like Jupiter[1], OrangePi RV2[2], and Banana Pi F3[3]) all route this
+>> port to an onboard hub[4][5]. IMHO, managing the downstream VBUS regulat=
+or
+>> via the onboard_usb_dev driver is the correct approach for us.
+>
+> I'm sorry, but I don't quite understand why it's necessary to use
+> onboard_usb_dev driver instead.
+>
 
-The search for changed IDs [1] now yields a user of RESET_APMU_DMA [2].
+I think it's better to align the driver with the actual hardware. I'm not
+opposed to managing any regulators in usb host/device drivers. But if we
+do have an onboard hub, and regulator belongs to the downstream ports of
+the hub, then it's hub's job, right?
 
-[1] https://lore.kernel.org/all/?q=3Ddfb:RESET_APMU_USB2%20OR%20dfb:RESET_A=
-PMU_USB3_PORTA%20OR%20dfb:RESET_APMU_USB3_PORTB%20OR%20dfb:RESET_APMU_USB3_=
-PORTC%20OR%20dfb:RESET_APMU_USB3_PORTD%20OR%20dfb:RESET_APMU_QSPI%20OR%20df=
-b:RESET_APMU_QSPI_BUS%20OR%20dfb:RESET_APMU_DMA%20OR%20dfb:RESET_APMU_AES_W=
-TM%20OR%20dfb:RESET_APMU_MCB_DCLK%20OR%20dfb:RESET_APMU_MCB_ACLK%20OR%20dfb=
-:RESET_APMU_VPU%20OR%20dfb:RESET_APMU_DTC%20OR%20dfb:RESET_APMU_GPU%20OR%20=
-dfb:RESET_APMU_ALZO%20OR%20dfb:RESET_APMU_MC%20OR%20dfb:RESET_APMU_CPU0_POP=
-%20OR%20dfb:RESET_APMU_CPU0_SW%20OR%20dfb:RESET_APMU_CPU1_POP%20OR%20dfb:RE=
-SET_APMU_CPU1_SW%20OR%20dfb:RESET_APMU_CPU2_POP%20OR%20dfb:RESET_APMU_CPU2_=
-SW%20OR%20dfb:RESET_APMU_CPU3_POP%20OR%20dfb:RESET_APMU_CPU3_SW%20OR%20dfb:=
-RESET_APMU_C0_MPSUB_SW%20OR%20dfb:RESET_APMU_CPU4_POP%20OR%20dfb:RESET_APMU=
-_CPU4_SW%20OR%20dfb:RESET_APMU_CPU5_POP%20OR%20dfb:RESET_APMU_CPU5_SW%20OR%=
-20dfb:RESET_APMU_CPU6_POP%20OR%20dfb:RESET_APMU_CPU6_SW%20OR%20dfb:RESET_AP=
-MU_CPU7_POP%20OR%20dfb:RESET_APMU_CPU7_SW%20OR%20dfb:RESET_APMU_C1_MPSUB_SW=
-%20OR%20dfb:RESET_APMU_MPSUB_DBG%20OR%20dfb:RESET_APMU_UCIE%20OR%20dfb:RESE=
-T_APMU_RCPU%20OR%20dfb:RESET_APMU_DSI4LN2_ESCCLK%20OR%20dfb:RESET_APMU_DSI4=
-LN2_LCD_SW%20OR%20dfb:RESET_APMU_DSI4LN2_LCD_MCLK%20OR%20dfb:RESET_APMU_DSI=
-4LN2_LCD_DSCCLK%20OR%20dfb:RESET_APMU_DSI4LN2_DPU_ACLK%20OR%20dfb:RESET_APM=
-U_DPU_ACLK%20OR%20dfb:RESET_APMU_UFS_ACLK%20OR%20dfb:RESET_APMU_EDP0%20OR%2=
-0dfb:RESET_APMU_EDP1%20OR%20dfb:RESET_APMU_PCIE_PORTA%20OR%20dfb:RESET_APMU=
-_PCIE_PORTB%20OR%20dfb:RESET_APMU_PCIE_PORTC%20OR%20dfb:RESET_APMU_PCIE_POR=
-TD%20OR%20dfb:RESET_APMU_PCIE_PORTE
-[2] https://lore.kernel.org/all/20260317-k3-pdma-v1-1-f39d3e97b53a@linux.sp=
-acemit.com/
+>
+> The DRD controller is connected to the onboard USB hub, so it can
+> only operate in host mode. If all downstream ports of the USB hub
+> use the same VBUS supply, then what's the problem with using this?
 
-Which means
+It does work.
 
-#define RESET_APMU_DMA           23
+Many boards leave gpio controlled regulators always on, that's what we
+want to solve. If we have to choose the parent of these regulators, why
+not put them in the correct hierarchy?
 
-should stay unchanged as well.
+>
+>> K1 platform currently does not need this feature here.
+>>
+>> Considering the role switch, I think it would be better to hold off on
+>> this until there is an actual board/user that relies on it.
+>
+> There is a board without onboard USB hub,
 
-regards
-Philipp
+If such a board really need the regulator, IMO, your patch is the way to go=
+.
+
+>
+> such as the OrangePi R2S.
+> So this is possible for boards that don't have onboard USB hub?
+
+OrangePi haven't released the schematic yet.
+
+That's what I could find [1], which seems similar to RV2.
+
+    &usb3hub {
+    	vbus-gpios =3D <&gpio 123 0>;	/* gpio_123 for usb3 hub pwr and output =
+vbus */
+    	status =3D "okay";
+    };
+
+[1] https://github.com/orangepi-xunlong/linux-orangepi/blob/orange-pi-6.6-k=
+y/arch/riscv/boot/dts/ky/x1_orangepi-r2s.dts#L762
+
+>
+> Thanks,
+> Chukun
+
+Thanks,
+Ze
