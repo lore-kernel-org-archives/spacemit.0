@@ -1,127 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D61830C360;
-	Fri, 20 Mar 2026 17:57:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B073161A2;
+	Sun, 22 Mar 2026 20:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774029430; cv=none; b=VUVw3ITj7BquJaMAmniuTs2/vvQrsk88KUwvJEpF9R3IhoVln/STywvFn+iUytyBfsglLmebLMWt9S2c6vR4PLc8yyKeiOJspXRmh783JqYCGubifEVWIpQWAxbt5nyIMY3zU1L6IjWft+u48bBXa2cRPn1Oh9/+km6KOQFEQoM=
+	t=1774211123; cv=none; b=d1BO1sK6W6M6P4IntQb/CclUjGhGmL2swOQCDESnxCsKzzSBxKBs7otwhIC9yThbdriH+ms0RGUupmxlt2h9a13gJQ4gLZpbMqoX0tzdUTd0/1z7SINZWWTSvCLpdsej0KpYv4Wn1j1B2SzUI2eNVLgkqXtU/NLtappqJwrHkkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774029430; c=relaxed/simple;
-	bh=8glEvNnreBwR1w2oGJ8ufIdnmrUmRY35kJIHcmNZ0RY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J/y+y2mR595RpfbReWpbasnHyyrftVMQuw4CYk9XRePEdsOfpkyRLWyKYm1MkzzBn8GOrVX7PZlj6EvGN3O3ssQo9OegjBMKPbaIjz1v+VxkmBaijIWdumh3a/Qrfp+MFbW1E0ECFXIrQK/MZjn0Qrhf3+mRTw0uqWbgFKeZQLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TxPSODsG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774211123; c=relaxed/simple;
+	bh=pE0vwXnuP+XgN6SLgExPSVUzCS7wxrj7ZmWthfigl6g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=imGlWBRlH+f0qB2oUf5/LEc0srtlFD/UHrHZK5CEQsnpeJno8+SyD5V4+ToDdYs9QMpjkOy93EjXHATXgiDy8kq0p+eS4WncDuR210PKHFkC8uWCGR1G2tMeRwKMo5GHWMF8zQPbKiySeF33YdUtsK/1fa6gGKHfhibPrfOPfmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=EceHX5FB; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TxPSODsG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BF8C4CEF7;
-	Fri, 20 Mar 2026 17:57:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774029429;
-	bh=8glEvNnreBwR1w2oGJ8ufIdnmrUmRY35kJIHcmNZ0RY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TxPSODsGNorclc3tsg+OMczBTjPIbL0qdr0uUYVvgH4uGPxMgi0WpgOtPvboOW6Pb
-	 yt+QmKPoAITQQLJ0fkMUHOSmdJhU3Nj3XdIzHepscWJrC0nqiT5RFBgBFJeBQeBV6R
-	 07BPHLjUjXIcJFjJ7fjjKgXUjEKu8lD8GhPgj6bxZm/OfbhTmVmkgznZNUuPZgAYwE
-	 15HYrJBvZcfpSRyLLJx0X9mUM2gYuGPtc/RafwF5PGusO2/RwAtu8DYqS7wBZbpYyW
-	 ysuR0LIffpGD5DGpo9PnVGRWTZ+jqOh7AQnxaX5LdhqWv0F4m98XblMi7dddu88xoU
-	 DbUymsQ50Ob2Q==
-Date: Fri, 20 Mar 2026 17:57:05 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Yixun Lan <dlan@kernel.org>, Rob Herring <robh@kernel.org>,
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="EceHX5FB"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
+	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+	bh=bHa+8TMPMx1ILvk4E2TqNsND9CWODuS5VukkZ3jetbc=; b=EceHX5FBf1yLcFaOvIaQUrj8mf
+	LhUzcvUNoXEQRJYJhMi34WbFglOds//tWPthVD1OVHe7/tc1pXDMAK1GO6BsQ2QQnw3Du67YGKPkf
+	PRbSe2h0GACXQZlS/nvtzx+5pw0RYAfgocxGrKoyMGfL+FcS++J26r6xbUm32txJdJbCNCxEwzPOd
+	Cwx39wOFcxNSHDrqZYy8yEcL2NJ3lMBVdPgFC+H6PyfyKVXOYsVQGpn73rRR+Fjpxwidjba89hS2b
+	xV1VTH1Zk8UgaMlXR7xYuPrAOJp31Oe+0+kfqi+wtlEvFojwZY+O3R0F1U+h6l/BjIuiVoyS9ChiO
+	6cLHqLLQ==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1w4PMF-0000000AsAG-1Ndu;
+	Sun, 22 Mar 2026 21:25:11 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: linux-kernel@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Junzhong Pan <junzhong.pan@spacemit.com>,
-	Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5] reset: spacemit: k3: Decouple composite reset lines
-Message-ID: <20260320-starlit-isolation-40c3c80e77a4@spud>
-References: <20260320-01-k3-reset-usb-pci-v5-1-07f4a5ddd728@kernel.org>
- <272ed19e2c0d8c9f53b6e621c01dc09f0635bf9d.camel@pengutronix.de>
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>,
+	Alex Elder <elder@riscstar.com>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
+	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support)
+Subject: [PATCH] riscv: dts: spacemit: drop incorrect pinctrl for combo PHY
+Date: Sun, 22 Mar 2026 21:25:01 +0100
+Message-ID: <20260322202502.2205755-1-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hP8vo3n1R88/WzCL"
-Content-Disposition: inline
-In-Reply-To: <272ed19e2c0d8c9f53b6e621c01dc09f0635bf9d.camel@pengutronix.de>
+Content-Transfer-Encoding: 8bit
 
+The combo PHY on the Banana Pi F3 is used for the USB 3.0 port. The high
+speed differential lanes are always configured as such, and do not
+require a pinctrl entry.
 
---hP8vo3n1R88/WzCL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The existing pinctrl entry only configures PCIe secondary pins, which
+are unused for USB and instead routed to the MIPI CSI1 connector.
 
-On Fri, Mar 20, 2026 at 01:02:04PM +0100, Philipp Zabel wrote:
-> On Fr, 2026-03-20 at 11:06 +0000, Yixun Lan wrote:
-> > Instead of grouping several different reset lines into one composite
-> > reset, decouple them to individual ones which make it more aligned
-> > with underlying hardware. And for DWC USB driver, it will match well
-> > with the number of the reset property in the DT bindings.
-> >=20
-> > The DWC3 USB host controller in K3 SoC has three reset lines - AHB, VCC,
-> > PHY. The PCIe controller also has three reset lines - DBI, Slave, Maste=
-r.
-> > Also three reset lines each for UCIE and RCPU block.
->=20
-> Although I can't validate correctness of the id-to-bit assignments, the
-> changes look consistent.
->=20
-> I trust that the reason for the grouped reset lines was just
-> convenience, and not some hardware limitation that requires them to be
-> controlled at the same time.
->=20
-> There are no patches using the USB/UCIE/RCPU/PCIE resets found on lore,
-> so this is not an ABI break.
->=20
+Remove this incorrect pinctrl entry.
 
-Eh, I think it's an ABI break either way, but it is being done fast
-enough that there's no users since this is new as of -rc1.
+Fixes: 0be016a4b5d1b9 ("riscv: dts: spacemit: PCIe and PHY-related updates")
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+---
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 2 --
+ 1 file changed, 2 deletions(-)
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index 404b69c47b91f..5790d927b93db 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -81,8 +81,6 @@ usb3_hub_5v: regulator-usb3-hub-5v {
+ };
+ 
+ &combo_phy {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pcie0_3_cfg>;
+ 	status = "okay";
+ };
+ 
+-- 
+2.51.0
 
-Just be careful Yixun that U-Boot doesn't import and starting using it,
-I forget if they use -rc1 or released kernels as their import point.
-
-pw-bot: not-applicable
-
-Cheers,
-Conor.
-
-> > As an agreement with maintainer, the reset IDs has been rearranged as
-> > contiguous number but keep most part unchanged to avoid break patches
-> > which already sent to mailing list. The changes of DT binding header fi=
-le
-> > and reset driver are merged together as one single commit to avoid
-> > git-bisect breakage.
-> >=20
-> > Fixes: 938ce3b16582 ("reset: spacemit: Add SpacemiT K3 reset driver")
-> > Fixes: 216e0a5e98e5 ("dt-bindings: soc: spacemit: Add K3 reset support =
-and IDs")
-> > Signed-off-by: Yixun Lan <dlan@kernel.org>
->=20
-> Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
->=20
-> If there are no objections, I'll pick this up into reset/fixes for
-> v7.0-rc6.
->=20
-> regards
-> Philipp
-
---hP8vo3n1R88/WzCL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCab2KcQAKCRB4tDGHoIJi
-0n4FAQCnnReUmA8clg/MCzX+jyZCk7NbP4dF2JecIAuY7go4WgEAy9VobUGZbInL
-sYap5dRIMkC5Q4cA1ppov9UzFaiY5A4=
-=oCVp
------END PGP SIGNATURE-----
-
---hP8vo3n1R88/WzCL--
