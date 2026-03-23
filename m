@@ -1,340 +1,147 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011060.outbound.protection.outlook.com [40.107.130.60])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A658E248166
-	for <spacemit@lists.linux.dev>; Mon, 23 Mar 2026 22:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774304169; cv=none; b=kUe1ADgEdd2N79bNeljjzD8s6qIug6pJ/ho7S8HJbS8ALXKUWQLsnqCjPXiC60AjmvGQb/fbZ1bVyPxm0vZaYATBrsgjx1YMz4n3DGPJI7YrHmf32uCKEg6fe/nfjdOWHDeslwcxBO5uDj8Jg2fp5Jl6shh8xSh1KdA7mH9GFY8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774304169; c=relaxed/simple;
-	bh=pCVjCBdGs4rhG9JmcFfyqvNqUUpVYeTeGY0ZLE09ku0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YDWxqDPnd3vlgiI7okWMO82ltgpGiT9EfRbjGsZ3nRQbJgfEHE+ZYvROVHWZZHwR4hFunCFV3eqm/QYgPGYI4hXcIX3Oos7bDXH7es3KdEhv5aKNPC6EOCj7nyv0zcE/YDBlpJ7yS9tYayRT7Oi8GEd/SAUDMFKcXtNFLSt9ZLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F3sxPLJQ; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062E4382296;
+	Mon, 23 Mar 2026 22:42:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.60
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774305725; cv=fail; b=bBbhLWeZfXvYW/rcNC0CcKwkyekxGnwx4H3Zuvy8yFFmEESPAhiSIEzK8YqY0VftcnJxWEW13euN/CVQ1sb3sX3N2EysV/thdep42Fqanw/SKU98xOhbWCttxOoZBbKR6I4zvev0nmlQPCqHoWCiQmakE33EHResAs0nvsmTqBg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774305725; c=relaxed/simple;
+	bh=OnPWJJpMfukX61AFwAcYGXDDLyIPpG0UtWajnhyiVHk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=e32H5UO+kERF1nwWMOZUBg2HNJaMYTQ4VZDG+tzjut4kZGmkewCIRJnV/jbAVnEWKqZnaQaxXJQOk2SlDyv7sEwZJOR4MJdVfrniyIVkOyHfSIAX7pvKBnCjedTuoJgyDaVI1n7JH8kI7lMwJxOg3wpWKQ0n6ype8b1Z4w9Bs38=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=bcQ+Ul7W; arc=fail smtp.client-ip=40.107.130.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F3sxPLJQ"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82c4b5dfe6cso677796b3a.2
-        for <spacemit@lists.linux.dev>; Mon, 23 Mar 2026 15:16:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774304168; x=1774908968; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9m3F51Q6kwdNP6pHh7F00fvfJerf3+vjJK3BMKjsK5E=;
-        b=F3sxPLJQDWbwbIW52yF/PPzVM4KE3SMGFyj0RNUTqLmgIwgMTXusfqz+S1iX+YPkpz
-         3Hz0DznxlcwWD0A4SD/ru5n68tvembTZLaPAajjYvEMyZSeVOAWWW4Y2H72zMVOBZdbV
-         uddNQCAzJI+T5L3ZXXZZ7mMl0zlkYweCUoGxY3iuBA+svSLGazbiNNp6aTseFsg18cf9
-         EpIi0yFFNu5J+QGVuqix5k+ynaT+Pv6SC6wYQoiOaxlkMFlokjHqu6TogoHNVBXc/GJZ
-         yboR4iybVD7Hvw/+QNwiMoWbu7e9mCaw29QM8UjWn0i9InNy/91Ec5lm7/XE+oq/E/zI
-         vciA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774304168; x=1774908968;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9m3F51Q6kwdNP6pHh7F00fvfJerf3+vjJK3BMKjsK5E=;
-        b=H9WHv7fE5gZ96iHc7VOt6CfUwuUIBeLotDvd4nhbU9jDw0aNpUZxOEO60YCA9HVtAC
-         RbVzX9d0zjMrt5e/hBH1wgauPEIcwZ8g1/4O4mXDwXFPzT+EXSBg3smZFIiaG+woR21+
-         YZJjzjxuHXVaUhPA/DqWAZLJmenjOJrlcv9CxYO2EF5E0flBXM9vKERXc9xuFsXNm6Jx
-         cb5dbYgX3ItWIJ7j/4QEJeDt7L0o9Rxtl07h72bhbaHqc1eHjMtdi1q3OQBLPtgbz9TT
-         dJph8LkWjBAqMThP6nEzTED9v2X6IBVhSJEKeQjJzVmPUnL3MMhQT6ZA/UzekSCEm2wE
-         ODSw==
-X-Forwarded-Encrypted: i=1; AJvYcCUMhFBW7sdq6ddKhUYgQrmuLIngg2d3HHacJO7TtiZlf/tISLE+n09P6ByVRMks8dwG9rRF8SPNHw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwHiGyDSXwmrq55DERVvCSaI8JXkbIjk/l3MwiOentIISu1P+cY
-	8CswtAdspf5A/UFVgYNYkGTAQeUeblwUNgL8depgIMvPSds/Q/VvNRLO
-X-Gm-Gg: ATEYQzwsfd/IytbXYD3HTqmJidag1dTuttY+aPHKC5zAFnmeOl2ukOU7JnMptp24UlD
-	aCZ2rhQp784ty7Cd69mvPHXJOm+8fxt2aZntvevM7/h9SIAw/Wx7zHWhNuBZyJ/Gq8uRRkS4NE1
-	3HGsrVf5C2xUD2vAF/WHfZUJSTX4SNA0/oh7+QayCtpmDQBIo6V1YZEAgn+qXEukslSfUS+2XXq
-	ykkXiJxRaeKl+tX85X5bBtXC4guWhU9Ke7XlhmZlrfHWWnmGlHANV7FTCpx3BxBFqX9BsJdtiVJ
-	RGZO0JrW72Et1wmcX7X79bci4OIqa8cQ7kBehJ25g3fSnHuWV5VT3wpcCY+G4FPpwzkfZu4n9J1
-	3qfW+filemeOLcb9mgJKFO29gmXvQjEOacREqQF/3ROKRJuWdC340TWYutkJhxD3/k0bVpAe6xT
-	Ae3dUGWQ65a0Fq1aZsb7gXv+U=
-X-Received: by 2002:a05:6a00:f88:b0:81f:852b:a91e with SMTP id d2e1a72fcca58-82a8c39ec60mr10913536b3a.59.1774304167832;
-        Mon, 23 Mar 2026 15:16:07 -0700 (PDT)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82b0410a3d7sm10814295b3a.55.2026.03.23.15.16.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 15:16:06 -0700 (PDT)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Richard Cochran <richardcochran@gmail.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v4] riscv: dts: spacemit: Add ethernet device for K3
-Date: Tue, 24 Mar 2026 06:15:51 +0800
-Message-ID: <20260323221552.79937-1-inochiama@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="bcQ+Ul7W"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vEC/VOclQf68OGMyxx8k0ErnssgaHCMV8vZ3ZbxPby/8oaawCB6SM7sTVY01lHyt27GhnDecGVsqazVICrB10RJQgcBemqJIsdts+lIPRii6QrA3T4Q/zzcJ2hgMmR7++XMtBn9U8VbiAtgO+j8/HYJeseNmVU496N1TURYvfssYoSGFOY4fiAby9UMQqTyPO5D/5E4o2TiFIEgV4cOVBJuENPd1lnnv/x+gFVmB0AtKuzpiDNH6dOH3R/ADSNAfntcbsnFSyQis3INC8FB/CWGnouGO50UmSKqreIdNyyGWlWQZELVGAEnYz6gefg3Vhj6aKHCHfpv8L2Sqpxtmug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OnPWJJpMfukX61AFwAcYGXDDLyIPpG0UtWajnhyiVHk=;
+ b=TCN3LpB62HUmjAIMqX8IDF83Za6iRyee5b/YVYNezX4k5C70uzFEs83PzoGEK/iuxjalKBFEN9ZICHgu83vyT3KQ5DeBHZpnHq1q3sUZr4JBtDeD0jel6U4rpxYV7/YKL8m7Qaa4LYB+S487xq7YCz3DhGqIaB38zKo5swcTQWTmI8O8TxX5R1YwvL5eiW+Rv7JtXve05wFEkIXQ3wdKZo0XzyT/+ee92M0p6L2T0AfNLu2YpEMTpxTDaORfYtUrG7AyYgoCXZaL8qhGgCzinVtFYNzASw4CVTVrEm5hGMxQYHMpP+l7xTwqTyVF+4w/L1osx8OXG+IPxLX2kJjvQQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OnPWJJpMfukX61AFwAcYGXDDLyIPpG0UtWajnhyiVHk=;
+ b=bcQ+Ul7WyyTlPY2BifoIe1Ev51k8C6E/KWxuaPH9ruGgt+axhPQkOl/H9HO5G9eWo90tQunhHoyI38u4Wc7yhhrzdwuJefmkCwCTNt/mp/xB5Otk9yum7ZwJgB4Z8jlfczkJ3yqIvZ2PixHvDlu0ckTOwOxabcryWBoupdxIVeIPavnw8OzJVYjSx6f1S+HI5ogZyHXhHH67FpKKOf2N2oBxGk1kZSJzyIdyw0P0Yd641TOcYtpCgTv+QqQpCenI17JlPGspXi72P3l0H/M+/ddL/WfMX2Vpbm7cohILZmBY9+leN3qvCkl4mL/8NdO/OC7zazDzsJXB3EazfT35lQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM9PR04MB8585.eurprd04.prod.outlook.com (2603:10a6:20b:438::13)
+ by PA2PR04MB10376.eurprd04.prod.outlook.com (2603:10a6:102:421::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.25; Mon, 23 Mar
+ 2026 22:41:31 +0000
+Received: from AM9PR04MB8585.eurprd04.prod.outlook.com
+ ([fe80::f010:fca8:7ef:62f4]) by AM9PR04MB8585.eurprd04.prod.outlook.com
+ ([fe80::f010:fca8:7ef:62f4%4]) with mapi id 15.20.9723.030; Mon, 23 Mar 2026
+ 22:41:36 +0000
+Date: Tue, 24 Mar 2026 00:41:55 +0200
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: "'Martin K. Petersen'" <martin.petersen@oracle.com>,
+	linux-phy@lists.infradead.org, 'Vinod Koul' <vkoul@kernel.org>,
+	'Neil Armstrong' <neil.armstrong@linaro.org>,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-can@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	linux-usb@vger.kernel.org, netdev@vger.kernel.org,
+	spacemit@lists.linux.dev, UNGLinuxDriver@microchip.com,
+	'Bart Van Assche' <bvanassche@acm.org>,
+	'Peter Griffin' <peter.griffin@linaro.org>,
+	"'James E.J. Bottomley'" <James.Bottomley@HansenPartnership.com>,
+	'Krzysztof Kozlowski' <krzk@kernel.org>,
+	'Chanho Park' <chanho61.park@samsung.com>
+Subject: Re: [PATCH v5 phy-next 09/27] scsi: ufs: exynos: stop poking into
+ struct phy guts
+Message-ID: <20260323224155.5vx6kqnu4q7y6tz2@skbuf>
+References: <20260319223241.1351137-1-vladimir.oltean@nxp.com>
+ <20260319223241.1351137-10-vladimir.oltean@nxp.com>
+ <yq1a4w3l04g.fsf@ca-mkp.ca.oracle.com>
+ <CGME20260323115859epcas5p10177db12a2e8aee9578271ff1411137b@epcas5p1.samsung.com>
+ <20260323115848.ghdu4sbk75tvggfb@skbuf>
+ <1891546521.01774280282025.JavaMail.epsvc@epcpadp2new>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1891546521.01774280282025.JavaMail.epsvc@epcpadp2new>
+X-ClientProxiedBy: VI1PR09CA0145.eurprd09.prod.outlook.com
+ (2603:10a6:803:12c::29) To AM9PR04MB8585.eurprd04.prod.outlook.com
+ (2603:10a6:20b:438::13)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR04MB8585:EE_|PA2PR04MB10376:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7cf01aa1-a350-499b-4bdf-08de892d5769
+X-LD-Processed: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+ BCL:0;ARA:13230040|366016|10070799003|1800799024|19092799006|7416014|376014|22082099003|56012099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+ U41ZxIpbwkq6sJwBugn1woWYjg8p/rAc1o7U0C4JAclVBH9hEghR4UT9+azy9yfEmklHvqPXrmA7RkPgRx7mECmcCkGZl3SJxPPFIkU2H1dfQQzNPGzR2Xv1eoTWLraK7SoqsaLyoVLgqI6IapOeKYPO2KqToUbuGFRVqbB+UTjP8S8vALr1TZYkPw3oOocBIWa89W0pPc8pA0MI6sIq/xF8tfEo91oTeP4DhH9Wcy0TJQTkgN/PGq7nd7H0jGuYNIRUHfxs4WyckI3wZGSzHwddiMhl/6LMkz+8uxOe30qNRzrr4giBX8RgNwj3jcjeLusBG4SXTn+OGrjUvBhrsC3PfKdfG5V5GhJdRo65ccI+QBVRB0AdPME3O+zpeRAuDszh+ozXHt0L5C1Uk4HNpjHwV7ikqVUwvlJ3AM8SWT96XvlaTSUDYpnsp5MUcvpOxQ03nCOTzpFCkoqjXSTjRrS7ARXU6s/yllTFnFXDa3bDVbWwJkSFTy9oC2Kn38wuHVheY05VgrULzz5Z6TMUg5orrqs17z/hMczlHa40dUbmKxCc2Hj++GiGJLWHhRPT6+JkizCyX1ZV7u1Mcif3FBa9arKxYu5dp105HXOeCQMcVaBPmktXIb4SUux2dBJ1emK3s2EUaap97Ekw+PED1+r/ZcC/m2JgriJv/6dglyDAik3H8DQ1eaiCzKBqAgGjxvwcMABXmgCSWPZr41XPjuVzbRu8AGY20uVHUZufjQg=
+X-Forefront-Antispam-Report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR04MB8585.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(10070799003)(1800799024)(19092799006)(7416014)(376014)(22082099003)(56012099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+ =?us-ascii?Q?0TVCxG5sfXlpq1mETN2UUIKgXF+JAISatRz6N1xi0hQormOkJD2nmkwvzkW1?=
+ =?us-ascii?Q?GHG2ACQnJdyzgoi7AfobGdr2GmW6dY5eEkOGvWlWEjkAAvvapPC3V5Hjg6ly?=
+ =?us-ascii?Q?257RQvJy50Nh+9CBXIpF4ucW8iptDxdHkC5Qc42Zt+3kfvbVvpVeXu+cd0y/?=
+ =?us-ascii?Q?TT8GV3Eq//GIEI07y/tHuNtcnBszsYxT76C64bCVFDdWzgDrb8eZfSiTlZKl?=
+ =?us-ascii?Q?Mp0MQmdQgA2OpyuRsWthziyMVthJuYbNA70ZSQFSUpEVC11XB+X/Dtqq/6uT?=
+ =?us-ascii?Q?n13coWj8PevmcK8LlAejz75jH5bLxQso9g2L6plVugEbumIDHsqBSN5tIgWO?=
+ =?us-ascii?Q?ZCDh/CclblDgzYVIW3kWVsDzd4IsJkC9aaibJxVbXmb1R4rZ30MxpZQgivSM?=
+ =?us-ascii?Q?xAte9W3t8vNY7BR5yEBN57zvi0wS0umzMrEqGm7NYszymvemo2C2mkef4ZuP?=
+ =?us-ascii?Q?uhb6nG4wRuEY7HzoILLOo3Dv8jVKgNQrHy+eruY7P7e9SPWc1bNyu2ijebMu?=
+ =?us-ascii?Q?t1yBwHpgUqsG2DcVWccF0cNk/kss+EnCVcIZ2PJBB0sQGSvmdr50JEQ7VGGw?=
+ =?us-ascii?Q?wCHrlkW6z4EufNfStrO8dUjKcZu+52TXOMwAkQZY1xOST8z1ejrIBfHv8y21?=
+ =?us-ascii?Q?SBwAWcGglwY8DmBto58G7wUK7uY0NzlFxy2LtyXH3JPF6lRegGRDMnUXfTeL?=
+ =?us-ascii?Q?mhyMMKZYmF/9/WLTM6hWn89OiKBTUd2HNBDvxPw3dmtUacfiL6510VGhMQ/n?=
+ =?us-ascii?Q?kqNfS/SZMjk28QV/khs+pQ8J6VTL44MzQuKbhNzZbd6IX8PE1n1cTk+HX5f4?=
+ =?us-ascii?Q?euS2bV4yoRzT82Hv5EAUld0cfz/KB+bZ5GByLniRHGdcijpM3zXp6ISHH1XW?=
+ =?us-ascii?Q?Jf/tZXukVHRrvZrRvoD29S4G/M2gJtdkIYjIshW4Vx8o9hFab3PFpNSVZl9x?=
+ =?us-ascii?Q?12tgoUx9ZKp2pECKAok9qgjLOa3y/6VHFn0VSybGl8jCp1eiSF/kYQg69+AO?=
+ =?us-ascii?Q?yR0epQt07YLTZWWfVvF+xuN7L31ghpcVCjUvsKWJM1C0Zpx/yKM20qMwwCmJ?=
+ =?us-ascii?Q?8yeBKQxKb90065jSH81o9DN3W6a5WoDByoE28kUqpj/zLuF6Gs0lZVQk2mnh?=
+ =?us-ascii?Q?Mmr1lr2vAsrEV3Dp7wclHHXBy6D3cqVFpgcRc/UIf83wNNKVrBUraQWHc3Ii?=
+ =?us-ascii?Q?eK/gRKflVxZZ1pOHAZYd02V5JOWkN5/sRxpmFLdPU7KOthL/8s/L51XiIZfA?=
+ =?us-ascii?Q?j1PP9/ntBObCw3y5nUBDzTGzv9Q7W7TvX7YP6D01pyIn9w2xbXP7Bo1PF+e5?=
+ =?us-ascii?Q?cOgV3/4qcJ6JfFFh3iUbmQbo+aFrQ+tNUMj77eTJ21McMF+ntZkHmwG8fuA/?=
+ =?us-ascii?Q?VPuRjAg3C1PLHPKn/IrEsvDISeTBNToD0RSOrsG9YDiyAM8il+BAokLEykfV?=
+ =?us-ascii?Q?E9d1cEzA5tPBl5x7r7tOyAQf7+jgTVTmBcgRLkkWm0Gmh147ugx1SSavsd5F?=
+ =?us-ascii?Q?R4dcTbWdg0NEQnNWv2CMIc80gccXiVZQSwHY62/5dqaBT6fe8r76/xzvGtzh?=
+ =?us-ascii?Q?pyc3kuE48DXVgGQKnR6TqDbugUGMvFT5D2g9scugUir5PWyiJ9XSuH9bsNjA?=
+ =?us-ascii?Q?6BYZefF74g5c+VqfXraNxaAsnQarzBO0fI0cb9XWv1NPgcXGOUhKXSs6bWPa?=
+ =?us-ascii?Q?Z+frSdtMmePtKKa1gZ12PCyZW0DFUePTMsjAAFP6WUEUxWUVmCMG9gmuewcx?=
+ =?us-ascii?Q?zWx0ihgBLV5wddrzdlSrX2Lmv2+9IDI+lnzsSTlemYh95yj0HRk68xf9GNrC?=
+X-MS-Exchange-AntiSpam-MessageData-1: 7t0SISdxYT2pFMbEXyoY+GuzV5YPKyMP3n8=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7cf01aa1-a350-499b-4bdf-08de892d5769
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8585.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Mar 2026 22:41:36.8488
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: mErGdwGcJOUBf17JGSORAgKN1SLrIHLYD+CNuyd2rAkYspxlXfRU6rm0qWQJx8cozbQksDeKC4gMYOIsvZIhRQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA2PR04MB10376
 
-Add all ethernet device nodes for K3 SoC.
+On Mon, Mar 23, 2026 at 06:05:36PM +0530, Alim Akhtar wrote:
+> Will review and possibly test on one of the board later tonight
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
-Require the following patch series:
-1. Basic DT device patch
-https://lore.kernel.org/spacemit/20260304-01-dts-uart-full-v1-0-50a0aa53a245@kernel.org
-2. Ethernet driver patch
-https://lore.kernel.org/spacemit/20260316010041.164360-1-inochiama@gmail.com
-
-Changed from v3:
-1. Separate the pin as RGMII pin and INT pin.
-2. Add comment for pin usage.
-3. Rename the ethernet pinctrl node to address it is RGMII node.
-
-Changed from v2:
-1. keep aliases in alphabetical order.
-
-Changed from v1:
-1. remove interrupt-parents property
-2. add aliases for ethernet node
----
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  24 +++++
- arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi |  44 ++++++++
- arch/riscv/boot/dts/spacemit/k3.dtsi         | 104 +++++++++++++++++++
- 3 files changed, 172 insertions(+)
- create mode 100644 arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-index b691304d4b74..b63d86b72be6 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -4,13 +4,19 @@
-  * Copyright (c) 2026 Guodong Xu <guodong@riscstar.com>
-  */
-
-+#include <dt-bindings/gpio/gpio.h>
-+
- #include "k3.dtsi"
-+#include "k3-pinctrl.dtsi"
-
- / {
- 	model = "SpacemiT K3 Pico-ITX";
- 	compatible = "spacemit,k3-pico-itx", "spacemit,k3";
-
- 	aliases {
-+		ethernet0 = &eth0;
-+		ethernet1 = &eth1;
-+		ethernet2 = &eth2;
- 		serial0 = &uart0;
- 	};
-
-@@ -24,6 +30,24 @@ memory@100000000 {
- 	};
- };
-
-+&eth0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gmac0_rgmii_0_cfg>, <&gmac0_phy_0_cfg>;
-+	phy-mode = "rgmii-id";
-+	phy-handle = <&phy0>;
-+	status = "okay";
-+
-+	mdio {
-+		phy0: phy@1 {
-+			compatible = "ethernet-phy-ieee802.3-c22";
-+			reg = <1>;
-+			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
-+			reset-assert-us = <10000>;
-+			reset-deassert-us = <10000>;
-+		};
-+	};
-+};
-+
- &uart0 {
- 	status = "okay";
- };
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-new file mode 100644
-index 000000000000..e02254961764
---- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/*
-+ * Copyright (c) 2026 SpacemiT (Hangzhou) Technology Co. Ltd
-+ */
-+
-+#include <dt-bindings/gpio/gpio.h>
-+
-+#define K3_PADCONF(pin, func) (((pin) << 16) | (func))
-+
-+&pinctrl {
-+	gmac0_rgmii_0_cfg: gmac0-rgmii-0-cfg {
-+		gmac-rgmii-0-pins {
-+			pinmux = <K3_PADCONF(0, 1)>,	/* gmac0_rxdv */
-+				 <K3_PADCONF(1, 1)>,	/* gmac0_rx_d0 */
-+				 <K3_PADCONF(2, 1)>,	/* gmac0_rx_d1 */
-+				 <K3_PADCONF(3, 1)>,	/* gmac0_rx_clk */
-+				 <K3_PADCONF(4, 1)>,	/* gmac0_rx_d2 */
-+				 <K3_PADCONF(5, 1)>,	/* gmac0_rx_d3 */
-+				 <K3_PADCONF(6, 1)>,	/* gmac0_tx_d0 */
-+				 <K3_PADCONF(7, 1)>,	/* gmac0_tx_d1 */
-+				 <K3_PADCONF(8, 1)>,	/* gmac0_tx_clk */
-+				 <K3_PADCONF(9, 1)>,	/* gmac0_tx_d2 */
-+				 <K3_PADCONF(10, 1)>,	/* gmac0_tx_d3 */
-+				 <K3_PADCONF(11, 1)>,	/* gmac0_tx_en */
-+				 <K3_PADCONF(12, 1)>,	/* gmac0_mdc */
-+				 <K3_PADCONF(13, 1)>;	/* gmac0_mdio */
-+
-+			bias-disable;
-+			drive-strength = <25>;
-+			power-source = <1800>;
-+		};
-+
-+	};
-+
-+	gmac0_phy_0_cfg: gmac0-phy-0-cfg {
-+		gmac0-3-pins {
-+			pinmux = <K3_PADCONF(14, 1)>;   /* gmac0_int */
-+
-+			bias-disable;
-+			drive-strength = <25>;
-+			power-source = <1800>;
-+		};
-+	};
-+};
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index 6cc31e94c13a..4c0cc135dc09 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -5,6 +5,7 @@
-  */
-
- #include <dt-bindings/clock/spacemit,k3-clocks.h>
-+#include <dt-bindings/reset/spacemit,k3-resets.h>
- #include <dt-bindings/interrupt-controller/irq.h>
-
- /dts-v1/;
-@@ -437,6 +438,109 @@ soc: soc {
- 		dma-noncoherent;
- 		ranges;
-
-+		gmac_axi_setup: stmmac-axi-config {
-+			snps,wr_osr_lmt = <0xf>;
-+			snps,rd_osr_lmt = <0xf>;
-+			/* max axi burst len is 256 */
-+			snps,blen = <256 128 64 32 16 0 0>;
-+		};
-+
-+		eth0: ethernet@cac80000 {
-+			compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
-+			reg = <0x0 0xcac80000 0x0 0x2000>;
-+			clocks = <&syscon_apmu CLK_APMU_EMAC0_BUS>,
-+				 <&syscon_apmu CLK_APMU_EMAC0_1588>,
-+				 <&syscon_apmu CLK_APMU_EMAC0_RGMII_TX>;
-+			clock-names = "stmmaceth", "ptp_ref", "tx";
-+			interrupts = <131 IRQ_TYPE_LEVEL_HIGH>,
-+				     <276 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq", "eth_wake_irq";
-+			resets = <&syscon_apmu RESET_APMU_EMAC0>;
-+			reset-names = "stmmaceth";
-+			rx-fifo-depth = <8192>;
-+			tx-fifo-depth = <8192>;
-+			snps,multicast-filter-bins = <64>;
-+			snps,perfect-filter-entries = <32>;
-+			snps,aal;
-+			snps,tso;
-+			snps,txpbl = <8>;
-+			snps,rxpbl = <8>;
-+			snps,force_sf_dma_mode;
-+			snps,axi-config = <&gmac_axi_setup>;
-+			spacemit,apmu = <&syscon_apmu 0x3e4 0x3e8>;
-+			status = "disabled";
-+
-+			mdio {
-+				compatible = "snps,dwmac-mdio";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
-+		eth1: ethernet@cac82000 {
-+			compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
-+			reg = <0x0 0xcac82000 0x0 0x2000>;
-+			clocks = <&syscon_apmu CLK_APMU_EMAC1_BUS>,
-+				 <&syscon_apmu CLK_APMU_EMAC1_1588>,
-+				 <&syscon_apmu CLK_APMU_EMAC1_RGMII_TX>;
-+			clock-names = "stmmaceth", "ptp_ref", "tx";
-+			interrupts = <133 IRQ_TYPE_LEVEL_HIGH>,
-+				     <277 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq", "eth_wake_irq";
-+			resets = <&syscon_apmu RESET_APMU_EMAC1>;
-+			reset-names = "stmmaceth";
-+			rx-fifo-depth = <8192>;
-+			tx-fifo-depth = <8192>;
-+			snps,multicast-filter-bins = <64>;
-+			snps,perfect-filter-entries = <32>;
-+			snps,aal;
-+			snps,tso;
-+			snps,txpbl = <8>;
-+			snps,rxpbl = <8>;
-+			snps,force_sf_dma_mode;
-+			snps,axi-config = <&gmac_axi_setup>;
-+			spacemit,apmu = <&syscon_apmu 0x3ec 0x3f0>;
-+			status = "disabled";
-+
-+			mdio {
-+				compatible = "snps,dwmac-mdio";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
-+		eth2: ethernet@cac8e000 {
-+			compatible = "spacemit,k3-dwmac", "snps,dwmac-5.40a";
-+			reg = <0x0 0xcac8e000 0x0 0x2000>;
-+			clocks = <&syscon_apmu CLK_APMU_EMAC2_BUS>,
-+				 <&syscon_apmu CLK_APMU_EMAC2_1588>,
-+				 <&syscon_apmu CLK_APMU_EMAC2_RGMII_TX>;
-+			clock-names = "stmmaceth", "ptp_ref", "tx";
-+			interrupts = <130 IRQ_TYPE_LEVEL_HIGH>,
-+				     <278 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq", "eth_wake_irq";
-+			resets = <&syscon_apmu RESET_APMU_EMAC2>;
-+			reset-names = "stmmaceth";
-+			rx-fifo-depth = <4096>;
-+			tx-fifo-depth = <4096>;
-+			snps,multicast-filter-bins = <64>;
-+			snps,perfect-filter-entries = <32>;
-+			snps,aal;
-+			snps,tso;
-+			snps,txpbl = <8>;
-+			snps,rxpbl = <8>;
-+			snps,force_sf_dma_mode;
-+			snps,axi-config = <&gmac_axi_setup>;
-+			spacemit,apmu = <&syscon_apmu 0x248 0x24c>;
-+			status = "disabled";
-+
-+			mdio {
-+				compatible = "snps,dwmac-mdio";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		syscon_apbc: system-controller@d4015000 {
- 			compatible = "spacemit,k3-syscon-apbc";
- 			reg = <0x0 0xd4015000 0x0 0x1000>;
---
-2.53.0
-
+Ok, in that case I'll wait. Thanks.
