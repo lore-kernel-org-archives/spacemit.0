@@ -1,70 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E113E2776;
-	Tue, 24 Mar 2026 06:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F363DB636;
+	Tue, 24 Mar 2026 06:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774334753; cv=none; b=op26egio2f7kdU8i9KQr7CdIomXsZL6Wye3GaFemiMieOTlDINtspZ26/MQv0ZN8MlA1BibmH17w41UnW+qW0aiqUtqtOVO8aKQAyOHXJpuX8mvn69Qh2TF4W2rKkGQ+wLiwhIBpz0nO1CBAibhRZRKh2r2Ur57egduIJguGSQw=
+	t=1774334918; cv=none; b=KCNNIHseJLMQ7oj2FGJsg8cpyHOJv24kAx04iYWAAUwWXYhHj5YwIGKI5MeqD64wEu66xdlrnv9AlW5IiCHPDILL8CxOWMRsY0NiW19wtZjZSVOnQPvYxLpQ7+bD6gIoXvcRaUhonOncroqUFrznBqEF8Wmevb5a+Dpehfspmuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774334753; c=relaxed/simple;
-	bh=nQSem+Qa3va54hpcGSLu2gvFmVM0Xt6MgljRrmslJ3k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LDygCXGGr39qcVFNkO6Zqmv/AT284FlLpvq6EiTIjkncs93pX6ZxO/CD8y2tLYN7sfF5oYKGAEFpVnpBptOD/R4IEMV5ioeFmqaRIzf3SlQNLswtinCD7loDuzLrLTMiYUsMDArlk6Iz3MAfRr2qS65f4X9+zhnL30RP9sUXxGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=roYKMvgg; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774334918; c=relaxed/simple;
+	bh=odvQZT5+RQNdWSOpTEVg/D+eh/9ZL9qJd+SCdaLEbWc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=grCpdFUkdIRbMLieMF74IePyKJh/v6SLLXNKVJ8DiTTE8XV8fvZxNwo4ye2AapVJCunYqsWZbrNgVsKszPaDWYiYbCzHRBoo0LEerdR302JTl0xObKeepINrea5OomnCJ1U9ZolxcRjTjzniLiWRgdEAv3pb416lEpdhduhODQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bzsvAMTt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="roYKMvgg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90481C2BC9E;
-	Tue, 24 Mar 2026 06:45:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bzsvAMTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE76C19424;
+	Tue, 24 Mar 2026 06:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774334752;
-	bh=nQSem+Qa3va54hpcGSLu2gvFmVM0Xt6MgljRrmslJ3k=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roYKMvggSyOEL70JurnNN864sl1cuSmTR0YBbOycah9QlYqV/hyQ8V+fKmyz4piNf
-	 ZdgqPH7QiFEfb9gHxjrVQrW+LObU8EfzzhwWo40Zz+Vy6IBlSo/zufAU5oacRn2sa2
-	 py+3XAk3RGnJCQ38e8FQnXWJB7+6We/cfISCuHdTJNIWbv2zSlyo8EcrpCdae1Ae5f
-	 lVkoD6CHqSadWO0gEEM4Yuh2a2VrbKnU2P1tMecx7YzAxAA/FshCeqIF40AKKcSJjb
-	 OpyuV2409Gf6Wd80oHRQycQRQaBwi3lUT9DQJBuP/jGIoS1ARBNc8VXZUMISSG3qlW
-	 3Pqu5TW5R6Y0A==
+	s=k20201202; t=1774334917;
+	bh=odvQZT5+RQNdWSOpTEVg/D+eh/9ZL9qJd+SCdaLEbWc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bzsvAMTtHq02M8vTpvj4+z3C//6/rTk0CvNXkWZfWGgDXl+UthVLSfzAUgytZFmo0
+	 xx/36ErRwBTVzMPxLlJPNLzKK0sMDldnKRHqOvVtgPzEP6E0UXd+ctxTVRcluCM6AX
+	 KccT28tnAz3SJXQyWHQMPzr/AkTVjPVDKBgvspu+PuWH9vLKtaDcvoLQ6TFCSDpYUh
+	 BtBLWc0iCQUX/C0uIv3FD/uCGQkz8fcuAZII5ng7U0tr/zRf//8jIJTvDljaR0UoKm
+	 burhCtW/stTZv0rw+RxPXM1yGj39USxc2hvcmGvQFVh/wCL2yBS5gutEYnvsIdbaWT
+	 OXs+ge+SE25Gg==
+Date: Tue, 24 Mar 2026 14:48:33 +0800
 From: Yixun Lan <dlan@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Alex Elder <elder@riscstar.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Haylen Chu <heylenay@4d2.org>,
-	Shuwei Wu <shuwei.wu@mailbox.org>
-Cc: Yixun Lan <dlan@kernel.org>,
-	linux-clk@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()
-Date: Tue, 24 Mar 2026 06:45:38 +0000
-Message-ID: <177433463997.242902.739790871603648740.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260305-k1-clk-fix-v1-1-abca85d6e266@mailbox.org>
-References: <20260305-k1-clk-fix-v1-1-abca85d6e266@mailbox.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Richard Cochran <richardcochran@gmail.com>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v5] riscv: dts: spacemit: Add ethernet device for K3
+Message-ID: <20260324064833-GKA736590@kernel.org>
+References: <20260324063714.750428-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260324063714.750428-1-inochiama@gmail.com>
 
+Hi Inochi, 
 
-On Thu, 05 Mar 2026 20:46:08 +0800, Shuwei Wu wrote:
-> Fix inverted condition that skips frequency change trigger,
-> causing kernel panics during cpufreq scaling.
+On 14:37 Tue 24 Mar     , Inochi Amaoto wrote:
+> Add all ethernet device nodes for K3 SoC.
 > 
-> 
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 
-Applied, thanks! Will send to clk maintainer as v7.0 fix
+Looks good to me, thanks
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 
-[1/1] clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()
-      https://github.com/spacemit-com/linux/commit/54e97360b44bed6b4399dd3be3d65f392df940fa
-
-Best regards,
 -- 
-Yixun Lan <dlan@kernel.org>
+Yixun Lan (dlan)
