@@ -1,44 +1,40 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43BE3914F4
-	for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 17:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774372104; cv=pass; b=LKFmZbCnuS7+TDKUJpp6LyfjTL78e6fiMm3UTlJ5Q2WPMwDXpbRur0bHQ6J+FPnPIXfjQ0hrnHxe2TjJ8B/ZSOD6WTo/BNatk1/GEgBGcoXAQ395ehBp5RdEA6ovBovEGSuDJC4IWpT4zlJpDSIe0GW/HTllk4xK8fnxQXJ5S9E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774372104; c=relaxed/simple;
-	bh=oez9X9T7SSS1IgzkoqM6yD7VrW8TgS7l91smZUvHSC4=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A618239085;
+	Tue, 24 Mar 2026 21:19:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774387152; cv=none; b=bxcnCY9ccoNh+tLh0hJKl3MfJCcDNjOXga23l8QdjUFRBIaIAfp6UreRkDl3+ejjHYas3C7UNkN/S2eG5EcI9m3kE+zwcl+56mauguHW/HJcUrbYekdvVEPSmzgw1HmXwy9ivkAjgwrHWxkkuZOTSMhor6qBIzicYWezJe+gu8k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774387152; c=relaxed/simple;
+	bh=MebCNwIMaAXN3V+dpyiAoYVXqH0I/4A2EcrlbP9r6QE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=syZA1DfqUWM9eoILI706QngbVumQn/LV8wiSE5TrR983wMw2FFU20lfBUyTcHG5HCe6eMDnYc1zBAj37yC0zQK6FllfX931y6oco2lO+QtRVxDRi5dr3EXgdJtsezOUyFbhn0Xz5lyfIH8mLcSAe+NUh1j+lQ1NhTqrOdsM85oU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=iDX/j8WO; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+	 Content-Type:Content-Disposition:In-Reply-To; b=QJUd4H8LPBnPMAFDy5ZagWlm9ons6Wp5brK6XUj1z23FuoKm5vkhUdYtLPufSFz78kJsZcsB1TwxNQ2f8mgO80sC5SuJ1RFFIoROJUj3swDikj/rKp3+gst/JdmxDrRi/ZmO2V0LEV6lNDRpeAQg3+WuGmuusYt1mKZGmfjQT3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=u200+ftT; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="iDX/j8WO"
-ARC-Seal: i=1; a=rsa-sha256; t=1774372085; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=MYHkYxhl1kzsmMPu+YSWcmmrZLgIFDepwqCYYTJVmnWBBiOSPXoeNy7/5b6gDQStizKS9VNvUz0zjveuguJXJy48VYplJsPVWgklwVT/ZTpA7Xgj25ODq6uSVtM48MaZPDcGlI8RdTVY/+QFb4VMHF70YGAHtj0MY8bpOPx1zBM=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1774372085; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=yis1W3CG/QCQD456WDjoHGPyDG1Mp4/onsEgXHy2b14=; 
-	b=T5telFO8kWN0M5y2Oyx5U4Te9xi+q909DUtU0a0LNq9Jo5NvPuhd+Whw4dmsIv6ifHjE2ljzkysofhhV/fumQjCJeMFo/9UgZPlkCkty3OXEiNo+/3NRF5Mq40ONsdLlD33U+d2ckXkefX5tGrRseF/TxjjK+mcoDEoi7hJQ0lQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ziyao.cc;
-	spf=pass  smtp.mailfrom=me@ziyao.cc;
-	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1774372085;
-	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=yis1W3CG/QCQD456WDjoHGPyDG1Mp4/onsEgXHy2b14=;
-	b=iDX/j8WOlY/iWQX7G/cLaG8bbz1UIdDs5XuFY4SgibTZIcUKEEuV2I2ZwrebApkN
-	HoT00F82R+5XhE8SrHQp+xK0kIyp2RpaGW8cHuycHMacYW5H65pxZUolcj8VYEwT4UC
-	kT62Rtc39TNjWUTBsLoSunrHGoVql1JyUy1aw0j8=
-Received: by mx.zohomail.com with SMTPS id 1774372083024696.6013806809772;
-	Tue, 24 Mar 2026 10:08:03 -0700 (PDT)
-Date: Tue, 24 Mar 2026 17:07:51 +0000
-From: Yao Zi <me@ziyao.cc>
-To: Yixun Lan <dlan@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="u200+ftT"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=5Qp9pw/xlq5gZ1dNLakBcf07LSncdySe5C25zgQ+rzs=; b=u200+ftT1ds3+6px7BRODPNqvZ
+	IHKW0PZUmrbtdyv/qJjFSCFSZQ6DOMsG3eCE64bHiHAzqOZsh0qcfr/6+4gpmJps67ePBMFveTWWy
+	8GV6lCGQZ+v8fS6VDr7m8R3dbHPXBMnFb+gI16Kg46ZvRyqZwl86vGh1y289pQ3YQMvHJtAYiSM48
+	uj35dv0WXBNDb1hSbBjmNOfzvMY56r9Qdm811Kxzz05hJ7RvOQacKsE3vPX9x6VuBNenyvz/hjVpZ
+	gbhgDM6e4RPJGifCUJaJ/6vRTNuQs78QrL7JtydJKYqgYRMa9TGZOCyGPM9XXSseHTx7kSqUAuzbJ
+	By3Y5zVQ==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1w599Q-0000000Dcjf-2TLc;
+	Tue, 24 Mar 2026 22:19:00 +0100
+Date: Tue, 24 Mar 2026 22:19:00 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yixun Lan <dlan@kernel.org>
 Cc: linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
@@ -49,7 +45,16 @@ Cc: linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
 	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
 Subject: Re: [PATCH 4/6] riscv: dts: spacemit: enable QSPI and add SPI NOR on
  Milk-V Jupiter
-Message-ID: <acLE5xnEBoCtW4Vw@pie>
+Message-ID: <acL_xPYiGXUp_Tir@aurel32.net>
+Mail-Followup-To: Yixun Lan <dlan@kernel.org>, linux-kernel@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
 References: <20260322203356.2206927-1-aurelien@aurel32.net>
  <20260322203356.2206927-5-aurelien@aurel32.net>
  <20260324090220-GKA739629@kernel.org>
@@ -62,9 +67,11 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20260324090220-GKA739629@kernel.org>
-X-ZohoMailClient: External
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Tue, Mar 24, 2026 at 05:02:20PM +0800, Yixun Lan wrote:
+Hi Yixun,
+
+On 2026-03-24 17:02, Yixun Lan wrote:
 > Hi Aurelien,
 > 
 > On 21:28 Sun 22 Mar     , Aurelien Jarno wrote:
@@ -80,7 +87,10 @@ On Tue, Mar 24, 2026 at 05:02:20PM +0800, Yixun Lan wrote:
 > > The m25p,fast-read properties is taken from the vendor kernel.
 > > 
 > So long as this is verified and works fine on board?
-> 
+
+Yes, it's works. And the datasheet also mentions fast read being 
+supported.
+
 > > Add a corresponding flash partition layout, matching the layout and the
 > > names used in the vendor U-Boot.
 > > 
@@ -92,17 +102,14 @@ On Tue, Mar 24, 2026 at 05:02:20PM +0800, Yixun Lan wrote:
 > if not the case or has not been tested, I'd suggest then not to add
 > this property..
 
-Currently no, but it would be a bogus if we could do it at introduction
-of the device, if it's really necessary in pre-DRAM stages of
-bootloaders, e.g. U-Boot SPL. This would reduce the duplicated work of
-downstream projects if they decide to switch to Linux upstream
-devicetree.
+It is currently not used by U-Boot, currently SPL support is not 
+available, but patches have been posted to added it. I just wanted to 
+anticipate the addition of the Milk-V Jupiter board in U-boot, but if 
+that hurt, i can remove it (or you can removed it when merging).
 
-As SpacemiT K1 supports booting from flash, the description of flash
-nodes are likely useful for pre-DRAM bootloaders.
+Regards
+Aurelien
 
-> > 
-> > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-
-Best regards,
-Yao Zi
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
