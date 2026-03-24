@@ -1,114 +1,157 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE84D362136
-	for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 08:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF843932D8
+	for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 08:44:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774339361; cv=none; b=kQIDC+LjlyWiGoLKL3EHzzPnx9rgJG/Y0tkX5oxc7sVn2fM06ePtSYgkfGFNPYS7SqxLjXDIxcd0+xXV79y0brBroL4rxZj+pMRbOB58v77+mpWrwFD4POnOKNjp4f2AL0GSxA+CdDjDxg1jFxpx5PNpFZldFMgih457mfucbaU=
+	t=1774341891; cv=none; b=FycIYImv709V5BqfD9/OfR52rlu8tSoVcivS/7m5hXw3MS6B4VIf3eG56zwXpNYcdpq4XO/21SX+i15vswGc6VHVdirXldhwSrXDmXAtwX7sTmp5nX0HvD3IOmPIrXMvteurm7MAl+m3W+cxRw+A1Ff93JuO0kKR4O90dGnP0tE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774339361; c=relaxed/simple;
-	bh=Pz21v89mgKvxDDXEm4UmGj7tuc5PFErBer+IwkrrpBU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=an/oHexd9kAuBQPuAwpTamE42fo1w860tzmWLjEC2tbaN0Llhn80SrQ/lVxMxEQRV8GB6dR8Ad6pcRHUxQm1f7pMIsmSRUvW4X7RH9m/gHoYfqavvk5J9Bl3XZhoQIcMepEOT8ULKW64V0Zb7xILw6cF5r4fCDwINdcZMRHe7Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ffRjdtZY; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1774341891; c=relaxed/simple;
+	bh=Ms3RGmo9BXjWfapShY57qDrtGqMLyG3DfhKTMFqIWls=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=EJEIGAYujrDwmlEg2NFW8EEJFmG7S7HuyMnSBdeAziQQoiWlLLPDKJq0tWlV397Ensy9+HfCq9txFRpkvNJaFv9i26mAM01R82FxdHV4IuwFj0YmsekyRv96KauFgxWp9IGdCi8y5TzleDZ2FRHGGS3ad4SO39RffySdj1rTNOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=qdYg+cTZ; arc=none smtp.client-ip=18.194.254.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ffRjdtZY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1774339353;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JZkji+aeo/J3L7vBsxBs/MQaHOamVQrNiki5qdjf+wY=;
-	b=ffRjdtZYaRYb+UOrT6usN5PccmXFvVFJCMfphjOjpjj6C5XU1Oy7bIxOi6UyULBBhNOKeT
-	N+tBsmG6Uw65nbBbnhBWMRekrbiyd0HXjFq1CVWSeV7OVGWv6njcU81KVyNcyi1CbdV28U
-	8IUfOQvmpC3SgFPQY8p9y6LSlMi7LjU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-280-fPBo9zTkNlCNPRrc6RDGdg-1; Tue, 24 Mar 2026 04:02:31 -0400
-X-MC-Unique: fPBo9zTkNlCNPRrc6RDGdg-1
-X-Mimecast-MFC-AGG-ID: fPBo9zTkNlCNPRrc6RDGdg_1774339350
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-486fa07f2bbso20508585e9.2
-        for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 01:02:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774339350; x=1774944150;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JZkji+aeo/J3L7vBsxBs/MQaHOamVQrNiki5qdjf+wY=;
-        b=RK2AI7ue710v/pJFoxH8TcPCs+xrw3a0zhDIJhN9Ptp2lLOPb3BH9sZjroc9mOM5LG
-         DXXV0hLsYQ+NPDxOk4k6ZOiANrFqAEzZ2GodFVNCj6mqexR9FBkowLyhtPOYFJei2a43
-         /o2l4vQyhTwi9HIomTDekpd5f1mJsypWHdNT5Sqkt8/Mc2wj0EwvmBJJDJx941lsMVck
-         iIZ1gHDTR2wwabd7EZ5BBn3i4J342tPy5UvbsNScoCKEQvPV3fOtSwgLxTp/EDqHP/V4
-         TkSz1+H4gjDcMsjC3UEoFLU393dlHJ++E9m5kAj3bYfmgm/ayONDNE3J6LLEdOlYvlEy
-         xOWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXpJtgC4eaHtpZ5i2QxMmhdoEEyUDC3QgGl2RA32VETWHqfeU4E2m03igFQLYtO+A7HEKXv/sJnSg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzEri2+DwSa01CrMdIM6HxUQVLFlMCLGcA/dERBviUEDNqhs4Cv
-	nvgjtAWD2Eua9laFcsOVheplMcHP/TORtGvqGYTBbMWnzG4bwcOGPSA6BmtdRmsp2kSeUf0cGZ+
-	3QCKjYvr1A8GVaZ11hB7HPOVH3jKxckymuuc+/pGOZ2eP2P9jz/n62VizLI7B
-X-Gm-Gg: ATEYQzxEtgGxNQmzQl3AagcumdDnVP8Ruola2VLtpqbr6ahC8S7Od42ZWHcFSoXpTw/
-	3mcu/iPnkwyD2r3ZVVLbGViKRYyFRwacGu6wMS7AcM6UE1yBD2X9FrtoNGDqrcSoQopGCwMVCsv
-	5ZoaUtq9kZZQ89iJo3MQVhuiDmfrRh4oaYdiRTZpXYRLoZvlb09eKIQSPMPpzMOajUltIEqc22/
-	QA2np5t9QvPiA8AGgA6GzM0r2pqEzlRjt0o+62n49aP7jLD/lxSXDG71dQYxdUWP1SITnkmDeeH
-	ezslkfx125NQuW/A0lPiy0K3shVqAcpRPQiH865wcMvFz20tNAaLKtDP6Q+F6vpA30qWbDyc+05
-	x3ke8sQLAFU1IlvnSyn8FXHXpDLhBqwFgdvr90F0/IMRxOwB/Er3PwV477gyKZ826a3zSdswO3M
-	K8xGw9
-X-Received: by 2002:a05:600c:8b32:b0:485:4394:b0e with SMTP id 5b1f17b1804b1-486fedbad16mr202978815e9.12.1774339350324;
-        Tue, 24 Mar 2026 01:02:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b32:b0:485:4394:b0e with SMTP id 5b1f17b1804b1-486fedbad16mr202978115e9.12.1774339349760;
-        Tue, 24 Mar 2026 01:02:29 -0700 (PDT)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b6470393fsm36915974f8f.17.2026.03.24.01.02.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2026 01:02:29 -0700 (PDT)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org, Rob
- Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
- Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley
- <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou
- <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: Aurelien Jarno <aurelien@aurel32.net>, "open list:OPEN FIRMWARE AND
- FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, "open
- list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, "open
- list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH 6/6] riscv: dts: spacemit: enable PCIe ports on Milk-V
- Jupiter
-In-Reply-To: <20260322203356.2206927-7-aurelien@aurel32.net>
-References: <20260322203356.2206927-1-aurelien@aurel32.net>
- <20260322203356.2206927-7-aurelien@aurel32.net>
-Date: Tue, 24 Mar 2026 09:02:28 +0100
-Message-ID: <87341p8xkb.fsf@ocarina.mail-host-address-is-not-set>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="qdYg+cTZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1774341812;
+	bh=0YvANwo0IIKUqL+qEoGQdaKoDGB4cYehMUWEEPhPQKA=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=qdYg+cTZcdJp80mbc+BukO97/LQ3trjlCj4lJ9g8uOCO7C0qCWBzqW8ldTYea5nUV
+	 vHdhhrxclvMW3C9SJCLLH847im6eGMtq8aq0q/YfF4LAGFDknoc6ZchGDSNf0b25SA
+	 hywzihie2nWJA5eIcpzXLbYFRAsbaUsqd+KuMzWU=
+X-QQ-mid: esmtpgz10t1774341810te82cbcf8
+X-QQ-Originating-IP: Tkqsk5ZBeYEfXLsi7Obys+UNNLFSDV+KwfMkR4d5z8M=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 24 Mar 2026 16:43:28 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 3668339084073543840
+EX-QQ-RecipientCnt: 13
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 3V0w-u8mUt4zP3_4GpCdNJcJfdU17TtQfXt1KH0My_M_1774339350
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 24 Mar 2026 16:43:28 +0800
+Message-Id: <DHAVODVZL2KG.1NVQFF3B99WV8@linux.spacemit.com>
+Cc: "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley"
+ <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou"
+ <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
+ <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] riscv: dts: spacemit: Add PDMA controller node for K3
+ SoC
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Yixun Lan" <dlan@kernel.org>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260317-k3-pdma-v1-1-f39d3e97b53a@linux.spacemit.com>
+ <20260320091936-GKB525649@kernel.org>
+In-Reply-To: <20260320091936-GKB525649@kernel.org>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: N8Jy6PtD39R8Dfa0ZQzLpgo9QpuWadc0Vlouiu/MVjGBJJr9yT5bfYm/
+	43KNO2cwgzmIYbwsCFR9OwLFC+uGErtLjnL/EjO53LsgzfnV6NuW3jnBtdZ4r0bUdJbs7JF
+	XFvzDBZ85yfeE1NEe1z/0K++X3Cr4V5YkLGQAtCbOwMSJ4/PZqUdI2WZuT0GmkRfRLiNfuO
+	9yb6t1ei/Bv3/xe7pzOmpIkt0nYW0EewxeCPRhQVq2zRocXaPg0rG/YhXvay1c2JSyZ6HSi
+	Uy4fKqAuhlCGy3ad35M1UbGXlDxPHSPgeGeyKs1bbTpeIHbCZLTQbx7kR3Y1RIX6NNIyCLD
+	qwxlvMhM045VcFuYKtrJ4pDCkVIQj9XyJoE3CZeNmzOawZAtlKBmgiwivtSwOCv6TA1zUAG
+	lE0CwbHlojRErxEVme0sRU9IQLZZJpCbemNngd1r15mAkXLxM1LEy8dnqTVApuHSue4xWX6
+	Prs1vQBsDud5ed7HIW8/QfDoOE8BJyyol1NtC6yB+bN0RrbO0P7315mRdNxtbPBBO2H6GND
+	VxJarxuigEs5AjKHJoQHZszhd9OyrU9FdZFldancUhO1UVsUOQpg5lXST/8XBol1QRLtw3a
+	DdXCaM74iQfvnIDWMzVak+qmqMTBaejsisPw0QBrUIZuF7k3kAaNEArMtWcUXyDXO+Nx6QB
+	kZZDqSQkeIsJs4YYciRzMyY6MVHH4QKGHX7Q2pr2KFHuuuRoJp0r9iwEK7PwjkL2s0C0TRI
+	7XfOu+G9LuL4Wr7SWCXRrMeSRACOl3e6Fyid57of5Vgb86dH31ooR0+YL9cfkFvqngftoXm
+	YZdF9/QIS/lTUY84LVlVOxTHQUkIYuG4iGDOP9ssnRJ2yi/260Ic4eX9qFIjW4l1X/H097R
+	2RVaMprowMX1dFikOlYPZmLF6g/C2Hkmy9VgWju9B4vLs0FBUPMqe+81uD1GXlElDlNeHr5
+	QhvE7RFtkIHziGFy4DuweflRNteL+hM7nR6aibuLrSenfIVEcJmT3iJwAx2GbYE9/hAjEj4
+	IIAAj2T1EEa3rjoQ7uZTclmSwufm97+aX/IkjjgLsLgetOGIqR
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+X-QQ-RECHKSPAM: 0
 
-Aurelien Jarno <aurelien@aurel32.net> writes:
-
-> Enable the two PCIe controller along with and their associated PHY. They
-> are routed to the M.2 M-key connector and to the the PCIe x8 slot.
+On Fri Mar 20, 2026 at 5:19 PM CST, Yixun Lan wrote:
+> Hi Troy,
 >
-> Add an always-on regulator sourcing 3.3V from the DC-IN input, to power
-> the PCIe ports.
+> On 15:55 Tue 17 Mar     , Troy Mitchell wrote:
+>> Add the Peripheral DMA (PDMA) controller node for the SpacemiT K3 SoC.
+>> The PDMA controller provides general-purpose DMA capabilities for variou=
+s
+>> peripheral devices across the system to offload CPU data transfers.
+>>=20
+>> Unlike the previous K1 SoC, where some DMA masters had memory addressing
+>> limitations (e.g. restricted to the 0-4GB space) requiring a dedicated d=
+ma-bus
+>> with dma-ranges to restrict memory allocations, the K3 DMA masters have
+>> full memory addressing capabilities. Therefore, the PDMA node is now
+>> instantiated directly under the main soc bus.
+>>=20
+> ..
+>> This configuration defines the essential hardware properties:
+>> - Register base address and size
+>> - High-level triggered interrupt
+>> - Associated APMU clock and reset controls
+>> - 16 hardware DMA channels
+>>=20
+>> The node is disabled by default and should be enabled by specific
+>> board device trees as needed.
+> I would suggest to drop above, as they are quite obvious, and easy for=20
+> people to grab from the code..
+I'll remove them in the next version.
+>>=20
+>> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>> ---
+>>  arch/riscv/boot/dts/spacemit/k3.dtsi | 11 +++++++++++
+>>  1 file changed, 11 insertions(+)
+>>=20
+>> diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/=
+spacemit/k3.dtsi
+>> index a3a8ceddabec..f90d34a81be0 100644
+>> --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
+>> +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+>> @@ -438,6 +438,17 @@ soc: soc {
+>>  		dma-noncoherent;
+>>  		ranges;
+>> =20
+>> +		pdma: dma-controller@d4000000 {
+>> +			compatible =3D "spacemit,k1-pdma";
+> I think here we should introduce a new compatible for K3 SoC,
+> it would avoid ABI breakage if something different with K1?
+> cases exist even same PDMA IP integrated into different SoC..
 >
-> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> ---
+> The commit message tells some difference, although no code changes
+> introduced so far..
+Nice point.
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-
--- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+                            - Troy
+>
+>> +			reg =3D <0x0 0xd4000000 0x0 0x4000>;
+>> +			clocks =3D <&syscon_apmu CLK_APMU_DMA>;
+>> +			resets =3D <&syscon_apmu RESET_APMU_DMA>;
+>> +			interrupts =3D <72 IRQ_TYPE_LEVEL_HIGH>;
+>> +			dma-channels =3D <16>;
+>> +			#dma-cells =3D <1>;
+>> +			status =3D "disabled";
+>> +		};
+>> +
+>>  		syscon_apbc: system-controller@d4015000 {
+>>  			compatible =3D "spacemit,k3-syscon-apbc";
+>>  			reg =3D <0x0 0xd4015000 0x0 0x1000>;
+>>=20
+>> ---
+>> base-commit: 95c541ddfb0815a0ea8477af778bb13bb075079a
+>> change-id: 20260317-k3-pdma-7c1734431436
+>>=20
+>> Best regards,
+>> --=20
+>> Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>>=20
 
