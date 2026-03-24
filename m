@@ -1,155 +1,62 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DC21DC985;
-	Tue, 24 Mar 2026 09:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE98345CD0
+	for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 13:02:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774342945; cv=none; b=SDsnoqvS+FxrMRFq1o5EF/h5kQEadeNfNIDPXWEQ3nX4eSZQDgcnBLmclUeFahmwasnx++p6b+cmLjmSg3M/ueQ8sqIMrZ8sW8PqfRFF/3YXvX2Y1So3tYc+EoGwEpcgZwl3I7P+QvwJf7UxjZ2ycRYy6/bXzNb6SbOsxU9Lfj4=
+	t=1774357369; cv=none; b=qinGrMlMd6U4yw1FrZB8rSukkN8Doezr62FZFVsQ2EHBXm5bVsCQkY5PUldjFw0srbr0dATJGVu0SvOsYponBFcgAQnFRqREFvlKaZL9nQH+Zd32Y0ScBTQSUb8tI/n7VnHOCcm1mZ+QAcKq2LBN4P2klbXhtAdQUGx5ceHntjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774342945; c=relaxed/simple;
-	bh=gfQBMPeoX7S6iuyUT/yJJOwsqJIPItQmTlz9liVZE/0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VIwQguufaS2ordMWPGQadVLvkCeAEeBjIHEcbWtKcUfT1Hbtptveso1anb/vNHCEMD0ZSN2W9heq7HXATkOhGd6BqFa3vSR5aFYoF9HVNEM/jAJ7PjckDNwHuip2lyiVTRG3hH/qAr+GiUZlh4PVOY3kZ1fa2wAineIEh8gnjH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nkmhxkT/; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nkmhxkT/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5EFC2BC9E;
-	Tue, 24 Mar 2026 09:02:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774342944;
-	bh=gfQBMPeoX7S6iuyUT/yJJOwsqJIPItQmTlz9liVZE/0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nkmhxkT/AUfREdS7sbFT32yhFqr8AFFHJiPDTHp1nZBM4Sx/rdHPk1xbfJbUJ7BQz
-	 Ng0C+2y6SyZc/a3/lX67/gM746c0qDqGeyJldtmowAda7W8UKb0YDIyNMqDF8LLOZ4
-	 8Fss1p0RNHn3+yHAUZo64y0x8AOLAliPMf9TMOmZx1NuCYET5VcCyXnwiOz1vRFGHK
-	 l0m3AzY0hzzgeDeGZ2L76D12ZUkdgxbC+vmumK3OdR39z3NZd1/GihSLAnricOf9Ja
-	 jWv9T2YjXuYYUhWBqfNgBe+b794PTFDXS1vZQ9ulD9Uv1XYWnCe958IszTpCJcPnrC
-	 9IZXtS1nXXhDA==
-Date: Tue, 24 Mar 2026 17:02:20 +0800
-From: Yixun Lan <dlan@kernel.org>
-To: Aurelien Jarno <aurelien@aurel32.net>
-Cc: linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH 4/6] riscv: dts: spacemit: enable QSPI and add SPI NOR on
- Milk-V Jupiter
-Message-ID: <20260324090220-GKA739629@kernel.org>
-References: <20260322203356.2206927-1-aurelien@aurel32.net>
- <20260322203356.2206927-5-aurelien@aurel32.net>
+	s=arc-20240116; t=1774357369; c=relaxed/simple;
+	bh=xZ4IcRo4e2msS6ajq65WBz+8GNWxBRGQ6jlRGDrplaY=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=maAy/6T7H/le3i/asouJO4PlPKTV5AMvNMH4N9ykg3mkmJkNWuabSQlMSW+7NflTszuEubrYvqPw9fkn9Sn/VeMkLBTWzAjpDjCB3ibEZO3aX08er2kcgEgFj47ws91laYTW3gE/OWqrRni4Zc85AuJnIEg63sFHHvR5mYWOUhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.lan (unknown [116.25.95.101])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 381dc3069;
+	Tue, 24 Mar 2026 21:02:36 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: thinh.nguyen@synopsys.com
+Cc: amadeus@jmu.edu.cn,
+	dlan@kernel.org,
+	gregkh@linuxfoundation.org,
+	huang.ze@linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-usb@vger.kernel.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 1/1] usb: dwc3: Add optional VBUS regulator support to SpacemiT K1
+Date: Tue, 24 Mar 2026 21:02:28 +0800
+Message-Id: <20260324130228.2913662-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260324014144.yq7s46fmo5gx72ym@synopsys.com>
+References: <20260324014144.yq7s46fmo5gx72ym@synopsys.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260322203356.2206927-5-aurelien@aurel32.net>
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9d1ff09f9903a2kunmd38b0164305f11
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDSRpNVk9CSExLSRhISk1JQlYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk5VSktKWVdZFhoPEhUdFFlBWU9LSFVKS0lCTUtKVUpLS1VLWQ
+	Y+
 
-Hi Aurelien,
+Hi,
 
-On 21:28 Sun 22 Mar     , Aurelien Jarno wrote:
-> Add the QSPI controller node for the Milk-V Jupiter board and describe
-> the attached SPI NOR flash (GD25Q64E).
-> 
-> The flash supports a frequency up to 133MHz (80 MHz for reads), and the
-> SoC supports a frequency up to 104 MHz. However tests have shown that
-> the flash is not reliably detected above 26.5 MHz, consistent with
-> frequency used in the vendor kernel. Therefore, use this frequency.
-> 
-..
-> The m25p,fast-read properties is taken from the vendor kernel.
-> 
-So long as this is verified and works fine on board?
+> Set .properties = DWC3_DEFAULT_PROPERTIES,
 
-> Add a corresponding flash partition layout, matching the layout and the
-> names used in the vendor U-Boot.
-> 
-..
-> Also add the bootph-pre-ram property to make the device tree usable by
-> early firmware/bootloaders without modification, as U-Boot is stored on
-> this NOR flash.
-Is the dtb file actually used by U-Boot? I'd highly doubt about this,
-if not the case or has not been tested, I'd suggest then not to add
-this property..
+I missed it. I'll add it in the next patch.
 
-> 
-> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> ---
->  .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 44 ++++++++++++++++++-
->  1 file changed, 43 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-> index 836311c3f035c..05ab5df50be51 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-> @@ -173,7 +173,7 @@ buck3_1v8: buck3 {
->  				regulator-always-on;
->  			};
->  
-> -			buck4 {
-> +			buck4_3v3: buck4 {
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3300000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -256,6 +256,48 @@ dldo7 {
->  	};
->  };
->  
-> +&qspi {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&qspi_cfg>;
-> +	status = "okay";
-> +
-> +	flash@0 {
-> +		compatible = "jedec,spi-nor";
-> +		reg = <0>;
-> +		spi-max-frequency = <26500000>;
-> +		spi-rx-bus-width = <4>;
-> +		spi-tx-bus-width = <4>;
-> +		vcc-supply = <&buck4_3v3>; /* QSPI_VCC1833 */
-> +		m25p,fast-read;
-> +		bootph-pre-ram;
-> +
-> +		partitions {
-> +			compatible = "fixed-partitions";
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +
-> +			bootinfo@0 {
-> +				reg = <0x0 0x10000>;
-> +			};
-> +			private@10000 {
-> +				reg = <0x10000 0x10000>;
-> +			};
-> +			fsbl@20000 {
-> +				reg = <0x20000 0x40000>;
-> +			};
-> +			env@60000 {
-> +				reg = <0x60000 0x10000>;
-> +			};
-> +			opensbi@70000 {
-> +				reg = <0x70000 0x30000>;
-> +			};
-> +			uboot@a00000 {
-> +				reg = <0xa0000 0x760000>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
->  &uart0 {
->  	pinctrl-names = "default";
->  	pinctrl-0 = <&uart0_2_cfg>;
-> -- 
-> 2.51.0
-> 
+> Any reason for moving this to the bottom? To avoid cherry-pick/rebase
+> conflict in the future, can we place this where it was before?
 
--- 
-Yixun Lan (dlan)
+Sure, I'll move it back to the original place.
+
+Thanks,
+Chukun
