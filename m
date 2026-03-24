@@ -1,69 +1,69 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B70F332EC8
-	for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 07:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B7635A3A9
+	for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 07:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774338956; cv=none; b=eQeA0ggMzc1Uf2ah9sEDD4f0yUlICEhMWGXJIOroHWXhpuTvx/txuU2zyTDMOllWTIQTSaRxI0/dpwvTkbLUZEKZNp02LBk50BeDfVcX8ECTAXwu6DGD7Q3v5UjsbT18TUmLDb+JO5Jp0jQ0KME6m/3IjB15vzvuMXP/DYCrsXA=
+	t=1774338990; cv=none; b=J+/MZZxWXJGnAN9v3goDjQNXHNoYhN4b8IJgFQ9zOtLkTUJvMFAe/qHpoZDLUeOjzgImoKG+aWF90dwQ5L0kZ/bSGN1vy2b7RGNSaSwEyQ0VL8J9fZhAXQM+Vc+NmsjqJEChUchKHmT+Nx4U2w4Cm0/WRD5a7TvGijyMRAWwfyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774338956; c=relaxed/simple;
-	bh=sVVLRcjpRQbfkQhkDa3vSA5KAE5n6GGfeGlTpUj4bbs=;
+	s=arc-20240116; t=1774338990; c=relaxed/simple;
+	bh=JztfBpnQgaPei1/wTdcWLaVfhzVof/rGEWlo5CNrbpU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bG0FnesAENSOp+b0m9N30hBbgKrwYYGfbQACQ25hnaqZOFMzwjfTYDTOV9kAAi5J1BzGo67UawdBddWN1OTrgHJv4w2qIXtq5ZiAE0xeFFLFQapzCepGNSDhrqqJnTkUl+9hxUTWajbC6EozU8cjTV2sWT2GkDbbXX8owpOfrUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gjOa5uvA; arc=none smtp.client-ip=170.10.129.124
+	 MIME-Version:Content-Type; b=PncSubdj6sOoZs+UWmcEcyaGNsnNMj8bzuQXP8m90VG8oW9Ot2SIVTMkONhQ9v8btRjF38X0KYow/UNBPSLBkvXHL02Zi4X4ABWCA1EZz97/+nfxVchzkwBqG5bbgN5/K2kpVOEdYM9Z8Xqaf77ZW/TMgAMbCU850tBV4/U4Wrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Vl3OsENi; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gjOa5uvA"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Vl3OsENi"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1774338946;
+	s=mimecast20190719; t=1774338978;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=sOje9mFQgZLabauafbcXtKwoL6t2U90aeB7/bcx32R0=;
-	b=gjOa5uvApe60sU+1wM5texSe/m7wjUYSU2u17oEGtsSws4B66FCxIQ+z5I0YZLYsJ8q4aF
-	hetMoOb3s2KKYcY6wnQtV+EkzFNgeXUpE+EWG3EKtk3UntlrVAsXOkOmgf+qNFRQAQW2Iw
-	ouD9KwAGqD9LibP9w1KE5elVKdxrPHI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=znX9TqTQEYE5xEdxh0wdrvjA19dzf/Slp63xVt6ggFY=;
+	b=Vl3OsENiFDMfGp0eZjjAQsY24tpvskV1dMPzfaCc+lx8pjEECvZrM+9zZ9MAWDy09lSjuS
+	dyda95sRC1Xe5BjDl6MNj7xV6NZRyalihpl4xZnPWrfIsGlZwcjdlU/GtdlpC8jQ4g1Gx3
+	mpzZVXHIQdC73kuPhLwRCwWIuKAFWk8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-bmixXovyPrmv98VRHankSQ-1; Tue, 24 Mar 2026 03:55:42 -0400
-X-MC-Unique: bmixXovyPrmv98VRHankSQ-1
-X-Mimecast-MFC-AGG-ID: bmixXovyPrmv98VRHankSQ_1774338942
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-43b4e102d77so3040773f8f.1
-        for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 00:55:42 -0700 (PDT)
+ us-mta-367-BURf32QcMVCh73rnNwbEMQ-1; Tue, 24 Mar 2026 03:56:17 -0400
+X-MC-Unique: BURf32QcMVCh73rnNwbEMQ-1
+X-Mimecast-MFC-AGG-ID: BURf32QcMVCh73rnNwbEMQ_1774338976
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-486f89b7f69so35789495e9.0
+        for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 00:56:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774338942; x=1774943742;
+        d=1e100.net; s=20251104; t=1774338976; x=1774943776;
         h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sOje9mFQgZLabauafbcXtKwoL6t2U90aeB7/bcx32R0=;
-        b=IRVJpt/cfM/zJY8y13yy17cTVixRbSPiOu2RZhetaz1p2joRYs3z0TFrr68ecifVRW
-         6uqZE01DPSGgd79vYMt7BHnKgL3a6fKhL+VBvwc23JwHxLjAZniJxn71iaEZcbAlh9K9
-         zD94RlNNIU5bdkBgxqojt+WdTggQvzF6qL1W2kjcCrpCWKsaYNZIK4KGLZbO5q6YXfa0
-         Brivt+WoNeCRvTArmY9Hg1tfufXvHkkI6kigY1oF4kETvsvV24MVNXYDBnjmP9jRSoBN
-         Vusuchk1bXzFVG5pAJqdxlAMSLXJCIQ2BSC/2OImBOvEFvP6NGBgvf1uSnKpVfXjF/Nq
-         r86A==
-X-Forwarded-Encrypted: i=1; AJvYcCX+LsRHvl3KH2z4rgjDzTtWqrgX3bhXEZNuzrANxvOyr5d+P12OL0nAmhZ1Yv6McMAJ6lgrGO9xug==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzXFu/xJ9ozCXicTu7zNiOgI9v0ASq/bDCtNoNYnIyreEVx81kl
-	6RXrCOV4YT8DheeGovYPjo7hM4s1fEg2EamZ21daGbYzWdEv3PIcGQcf/o4Kiy3LvCCOZ7g21C2
-	twlAQgoxUo5b8AOQ+YUKBfS86K6MDCucFNPD8NiFlLb6O7MQYRT8GsWGR8f4T
-X-Gm-Gg: ATEYQzwF2Q7x2Ur6Fp6rIs5GqCE10coPdWkzlVwXiZOhuPKb3fxT6HD1CrGuNqzXv1F
-	6aHK5JizRMVmr2XgI6WcEazZ2nafU0rGMrhhm+J4KSrgm5upF7OLPkoV09w199GYCh0q6nFge5B
-	F/fjMwYAjbeGPLuaSl0Sxki0nZKD+tY3/R0n99sfTnbYaMjwHgVa2e0wn62Pm6+UPQw2ZgN1N4b
-	zd172ylULhJzCFHIHADk+jDd/YxxbbF1cCv1VtD7o4tw830HdZ/hL8xh0+cJlPthO1zDQIJyJDj
-	DkbeKXPbF4vvVVHGekQ+bNMZBvPccvHMX9VnW26oz9kYoTG1NKESg6y4u0YP9TUvKzUPab7MKqL
-	JVl4lGZJqAgQOvcczRTTUqCMAG1ZkthtwhJQR7UCZS7eYe9/pUKK84QRF7BiGXCUkG8k3KiwOLh
-	yOpsg8
-X-Received: by 2002:a05:6000:1843:b0:43a:580:eb02 with SMTP id ffacd0b85a97d-43b6428976emr24163900f8f.49.1774338941580;
-        Tue, 24 Mar 2026 00:55:41 -0700 (PDT)
-X-Received: by 2002:a05:6000:1843:b0:43a:580:eb02 with SMTP id ffacd0b85a97d-43b6428976emr24163874f8f.49.1774338941179;
-        Tue, 24 Mar 2026 00:55:41 -0700 (PDT)
+        bh=znX9TqTQEYE5xEdxh0wdrvjA19dzf/Slp63xVt6ggFY=;
+        b=nsdUEuyqOH5iPRwNCokEDAU02wHZNyJe9QiJSJaSr237LhSECNqqO+fqp2amPfuEoB
+         gv/a17WevJ+nla7h52zCazHwl9HyCYf7G4T1st+VbNakzyMEyqOM5JN0wO7lrtlsTW0e
+         M/t7WW6yqzq8NJRo49IErqNaQ6lNzfOu0IekGvbB2OAQQ483knH0hnkpjItGzlcicfK2
+         9pcLl0DQggy5SyX398mmZ55XBZdz+sFXHsCmoE6yk1+GfxE/FwkB8D3Qmc50umteFV+h
+         sDqIKnewP11HY6bn8dFMHo78AdNd0Lx/BkzpU++6PVI0pvjx7FPi0RO70QD8AWenvapX
+         jvjA==
+X-Forwarded-Encrypted: i=1; AJvYcCXad3c0R4FfmbkU2tYH3Szdtq6h8sqe78zQmTwwsle4QzW8vkPtfF05ygNfWXXdKW2AloubCUZAAQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxf6cGM3Qg72fW/jCCg+65DcL6OhnG/x5UmyeZwNF3avXSHPzrW
+	onSLYiLT/Pocn/74XaYbeFarCgPCfy8F8QqkodLvTVsK39zLa23Zfnng0RDTglUDxC8UEG93oD0
+	sFgGn3MaRnUBd6Yr32lkl2cz5wR54zqbra9bGbeOUnyVx8M1ngiiTfHraRzib
+X-Gm-Gg: ATEYQzzheBiR9jAXkjyHqCrldApdZ9FQ6EBSVriV36lzan3H9oDWZ4fkZBJ5jcoaNoa
+	M6hJhzYRG/oO6wxS288fWq8GwkAIldJI1KTB+jlp4o1JUoAtzEzquST2NLR+/i3U5U4opS6BPbp
+	uMYdGLiOcbuj7K/iiR3SQdfPIrrIMhak2FcSym6eVjpemk/yZMvgcucA3SkcdfdvGCd/GDklAZ0
+	166pjcIfg56SWPu6gvSnZTCZIEdh9mBJP5YukPZdjviDS6sHIFvl3LFYBGEqUvrk4lQ4niBgkgh
+	AAxls1amOHTSnQOdFbhB95q9bZbqA1wE4tDepmCD6nty6wIAP+YdTO0STaOuqVJl8eqbxF2elec
+	NR7iDpfjUxo2GaBrwmq3JeMfF95tzMbeuxoLRWUewwYK4l9K2bEgdmIVI/y4hq8DGjHpBG8423h
+	aEVgi+
+X-Received: by 2002:a05:6000:184d:b0:43b:5762:2989 with SMTP id ffacd0b85a97d-43b6427b212mr22640519f8f.49.1774338976176;
+        Tue, 24 Mar 2026 00:56:16 -0700 (PDT)
+X-Received: by 2002:a05:6000:184d:b0:43b:5762:2989 with SMTP id ffacd0b85a97d-43b6427b212mr22640483f8f.49.1774338975756;
+        Tue, 24 Mar 2026 00:56:15 -0700 (PDT)
 Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b646b0b0csm34387215f8f.15.2026.03.24.00.55.40
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b646b0b0csm34390579f8f.15.2026.03.24.00.56.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2026 00:55:40 -0700 (PDT)
+        Tue, 24 Mar 2026 00:56:15 -0700 (PDT)
 From: Javier Martinez Canillas <javierm@redhat.com>
 To: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org, Rob
  Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
@@ -74,13 +74,13 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>, "open list:OPEN FIRMWARE AND
  FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, "open
  list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>, "open
  list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH 2/6] riscv: dts: spacemit: add 24c04 eeprom on Milk-V
+Subject: Re: [PATCH 3/6] riscv: dts: spacemit: add i2c aliases on Milk-V
  Jupiter
-In-Reply-To: <20260322203356.2206927-3-aurelien@aurel32.net>
+In-Reply-To: <20260322203356.2206927-4-aurelien@aurel32.net>
 References: <20260322203356.2206927-1-aurelien@aurel32.net>
- <20260322203356.2206927-3-aurelien@aurel32.net>
-Date: Tue, 24 Mar 2026 08:55:39 +0100
-Message-ID: <87fr5p8xvo.fsf@ocarina.mail-host-address-is-not-set>
+ <20260322203356.2206927-4-aurelien@aurel32.net>
+Date: Tue, 24 Mar 2026 08:56:14 +0100
+Message-ID: <87cy0t8xup.fsf@ocarina.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -88,19 +88,15 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: GXMnf9ieD6EAHbW4tWsFC6qWRggDJue11h44zIQOMwk_1774338942
+X-Mimecast-MFC-PROC-ID: 0GOJRlryCbQqPoBMJyWE58WidowIy654STxzcphw8Io_1774338976
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain
 
 Aurelien Jarno <aurelien@aurel32.net> writes:
 
-> The Milk-V Jupiter board includes a 24c04 eeprom on the i2c2 bus. The
-> eeprom contains an ONIE TLV table, which on the board I tested only
-> provides a product-name entry. Expose it via an onie,tlv-layout nvmem
-> layout.
->
-> The eeprom is marked as read-only since its contents are not supposed to
-> be modified.
+> Add i2c aliases for i2c2 and i2c8 on Milk-V Jupiter. This is useful to
+> keep a stable number for the /dev entries after loading the i2c-dev
+> module.
 >
 > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
 > ---
