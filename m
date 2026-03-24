@@ -1,86 +1,86 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68B53CE4A9
-	for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 08:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE84D362136
+	for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 08:02:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774339326; cv=none; b=OWI6X2yXFyjuIA/7KnUrSNlrTxYlgp5RdwNFWnSw/PEluaqKMs5RWlwDLqhgmaaOwbsKd+sw5o4yPB3UxW9A+x8isSyp1x7fw3a8vji0prRKoX+FshJnfvmgmQD8EyCMTvNBJ7oyzLBWWosRsT0SQ+mNs07DpSu9MXlN9P1Od5M=
+	t=1774339361; cv=none; b=kQIDC+LjlyWiGoLKL3EHzzPnx9rgJG/Y0tkX5oxc7sVn2fM06ePtSYgkfGFNPYS7SqxLjXDIxcd0+xXV79y0brBroL4rxZj+pMRbOB58v77+mpWrwFD4POnOKNjp4f2AL0GSxA+CdDjDxg1jFxpx5PNpFZldFMgih457mfucbaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774339326; c=relaxed/simple;
-	bh=5SKLbVjvo+BklmZUI0W4Z4Dgtp9azMKMYYOdJ4abq+8=;
+	s=arc-20240116; t=1774339361; c=relaxed/simple;
+	bh=Pz21v89mgKvxDDXEm4UmGj7tuc5PFErBer+IwkrrpBU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ax6rsZNTLVfoccesjNH5Grv+jeN2sVW+QDqpoqKOevSx4fJzf0/fKNuJ/NL//j7EmYYxg4lwLaaqpO1SXtQ+YHqhm0sqWnizymbDYP4VaJD6YXHl1cZNBPxehNxj2vusuSmisz56NvotpJDCERuexcYYHEymWxkpqnt7QRSP8KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=XaS7RrN2; arc=none smtp.client-ip=170.10.129.124
+	 MIME-Version:Content-Type; b=an/oHexd9kAuBQPuAwpTamE42fo1w860tzmWLjEC2tbaN0Llhn80SrQ/lVxMxEQRV8GB6dR8Ad6pcRHUxQm1f7pMIsmSRUvW4X7RH9m/gHoYfqavvk5J9Bl3XZhoQIcMepEOT8ULKW64V0Zb7xILw6cF5r4fCDwINdcZMRHe7Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ffRjdtZY; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="XaS7RrN2"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ffRjdtZY"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1774339316;
+	s=mimecast20190719; t=1774339353;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Bgd+vofP82cnhY2HCjU8+4Ds20YvfUWfxFen0NOxHQs=;
-	b=XaS7RrN2OuhEUn+7HuIBHCuNtBbdJTrGnr1sNoNVXI5SMCzOen7R0BR6oaDRS+HbvN4GqT
-	V4n7MZoiMdvqDNVpPIQX8FiwOHAuoBG2eObJtWylDtNR/d9hnPBnO30Ij+XzVbkULV2KUS
-	2LmgcOSwnWhc9RSrL/DYQpfLCATRkyU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=JZkji+aeo/J3L7vBsxBs/MQaHOamVQrNiki5qdjf+wY=;
+	b=ffRjdtZYaRYb+UOrT6usN5PccmXFvVFJCMfphjOjpjj6C5XU1Oy7bIxOi6UyULBBhNOKeT
+	N+tBsmG6Uw65nbBbnhBWMRekrbiyd0HXjFq1CVWSeV7OVGWv6njcU81KVyNcyi1CbdV28U
+	8IUfOQvmpC3SgFPQY8p9y6LSlMi7LjU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-321-K9bcidBRMuibIOd_5SxW_g-1; Tue, 24 Mar 2026 04:01:54 -0400
-X-MC-Unique: K9bcidBRMuibIOd_5SxW_g-1
-X-Mimecast-MFC-AGG-ID: K9bcidBRMuibIOd_5SxW_g_1774339313
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-483786a09b1so13081095e9.3
-        for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 01:01:54 -0700 (PDT)
+ us-mta-280-fPBo9zTkNlCNPRrc6RDGdg-1; Tue, 24 Mar 2026 04:02:31 -0400
+X-MC-Unique: fPBo9zTkNlCNPRrc6RDGdg-1
+X-Mimecast-MFC-AGG-ID: fPBo9zTkNlCNPRrc6RDGdg_1774339350
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-486fa07f2bbso20508585e9.2
+        for <spacemit@lists.linux.dev>; Tue, 24 Mar 2026 01:02:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774339313; x=1774944113;
+        d=1e100.net; s=20251104; t=1774339350; x=1774944150;
         h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Bgd+vofP82cnhY2HCjU8+4Ds20YvfUWfxFen0NOxHQs=;
-        b=e+mgqDX7u9SJRyxzP45yq2j+Ydey4xefNR3re3aSpD37MxmV+BSF2lFeB1mPkLcq3W
-         Tg6BkfVQcZaVE/rqk0dZOjYMNdDrLwGioqSJUNSFQ8bTlLkxijw0Nql6Om5I0qgCCfy4
-         o+alraThkdKimaJIHjbE5u15N62fzjLopTUhkI7cjH8NYSZI7Hw9vk4fEL47pxgnCvIU
-         3rwivkalmSUd6ZybPf/+hQCzOy6bYNtM74ie/oHndU6zFC285Axz4z4Klj1V1ELMSsw0
-         c/nD60+lsMWQyPjbKXTlBMocQLh+/Gk5VUwpRGgKnX/4Gyr+j8Gb1jzHxTHV2ibk9BPM
-         sNvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWhQmFXSY51zTiUxIW410649Isn29/JV1BRGLLW5kr0U9TN7PM7a2ow0mBNkBJ1F1zjE0OMfB+79Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxQEc6lGJl+06fLdDVVX3hlldUXOapHK/wrpIUdxKiy5y6Z7YcH
-	lYiUHz/FThxdJschdSmQDEL6Lyy0XEVQqoIpQCiMVWd+kRWebp5SP4tbM0z8Yei+WsbBqihZi29
-	PvAxNY4RJ0K5xr8aJYkytFlK01brB1WjnWmGyt/bb2/H9IcI35+/DszuJLH9F
-X-Gm-Gg: ATEYQzzI0t9oYoJzfFzco5IjbzFS+etctaqAQTdSZ36czDoalo6g3h3XOXQQIeDavTO
-	toqjDbWnQhhcFEneNnyXDEs0BofhoiFZYaGGsWZtvzi9vDe4uv9Znj+kPseZkt6W+p+JnIjoBI0
-	muGph7RU4WeGouCl7lzSOjWOityVb9MEGrZ7q9zQI/EGMBAuA+B7r9RG9mGo53pDTEnmLH/Bo14
-	uB6ESn7nplGaZDTc8+tNa85wSm5NwyPLS/WvUCKXqZTiOsmld5nA29iLOOiuMu/Z/a13hSk+lw5
-	XlIyaNSHu/mixtwDtC9C5hFGtp82m6C0b64UX9DXErrrbc4NCudtegM/llrqGir5RZfy3/ovgIy
-	z58cZTfe3DOMxPda5aVURGq97566/ivDb3QB4KJ107N9iFPgjPe/ImVdptaZ0/4yLcOBSoknl5m
-	Bz3bU3
-X-Received: by 2002:a05:600c:3554:b0:485:3ee1:eba5 with SMTP id 5b1f17b1804b1-486ff01cc5bmr216112585e9.27.1774339313302;
-        Tue, 24 Mar 2026 01:01:53 -0700 (PDT)
-X-Received: by 2002:a05:600c:3554:b0:485:3ee1:eba5 with SMTP id 5b1f17b1804b1-486ff01cc5bmr216111995e9.27.1774339312748;
-        Tue, 24 Mar 2026 01:01:52 -0700 (PDT)
+        bh=JZkji+aeo/J3L7vBsxBs/MQaHOamVQrNiki5qdjf+wY=;
+        b=RK2AI7ue710v/pJFoxH8TcPCs+xrw3a0zhDIJhN9Ptp2lLOPb3BH9sZjroc9mOM5LG
+         DXXV0hLsYQ+NPDxOk4k6ZOiANrFqAEzZ2GodFVNCj6mqexR9FBkowLyhtPOYFJei2a43
+         /o2l4vQyhTwi9HIomTDekpd5f1mJsypWHdNT5Sqkt8/Mc2wj0EwvmBJJDJx941lsMVck
+         iIZ1gHDTR2wwabd7EZ5BBn3i4J342tPy5UvbsNScoCKEQvPV3fOtSwgLxTp/EDqHP/V4
+         TkSz1+H4gjDcMsjC3UEoFLU393dlHJ++E9m5kAj3bYfmgm/ayONDNE3J6LLEdOlYvlEy
+         xOWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXpJtgC4eaHtpZ5i2QxMmhdoEEyUDC3QgGl2RA32VETWHqfeU4E2m03igFQLYtO+A7HEKXv/sJnSg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzEri2+DwSa01CrMdIM6HxUQVLFlMCLGcA/dERBviUEDNqhs4Cv
+	nvgjtAWD2Eua9laFcsOVheplMcHP/TORtGvqGYTBbMWnzG4bwcOGPSA6BmtdRmsp2kSeUf0cGZ+
+	3QCKjYvr1A8GVaZ11hB7HPOVH3jKxckymuuc+/pGOZ2eP2P9jz/n62VizLI7B
+X-Gm-Gg: ATEYQzxEtgGxNQmzQl3AagcumdDnVP8Ruola2VLtpqbr6ahC8S7Od42ZWHcFSoXpTw/
+	3mcu/iPnkwyD2r3ZVVLbGViKRYyFRwacGu6wMS7AcM6UE1yBD2X9FrtoNGDqrcSoQopGCwMVCsv
+	5ZoaUtq9kZZQ89iJo3MQVhuiDmfrRh4oaYdiRTZpXYRLoZvlb09eKIQSPMPpzMOajUltIEqc22/
+	QA2np5t9QvPiA8AGgA6GzM0r2pqEzlRjt0o+62n49aP7jLD/lxSXDG71dQYxdUWP1SITnkmDeeH
+	ezslkfx125NQuW/A0lPiy0K3shVqAcpRPQiH865wcMvFz20tNAaLKtDP6Q+F6vpA30qWbDyc+05
+	x3ke8sQLAFU1IlvnSyn8FXHXpDLhBqwFgdvr90F0/IMRxOwB/Er3PwV477gyKZ826a3zSdswO3M
+	K8xGw9
+X-Received: by 2002:a05:600c:8b32:b0:485:4394:b0e with SMTP id 5b1f17b1804b1-486fedbad16mr202978815e9.12.1774339350324;
+        Tue, 24 Mar 2026 01:02:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b32:b0:485:4394:b0e with SMTP id 5b1f17b1804b1-486fedbad16mr202978115e9.12.1774339349760;
+        Tue, 24 Mar 2026 01:02:29 -0700 (PDT)
 Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-487116f173csm38812215e9.2.2026.03.24.01.01.51
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b6470393fsm36915974f8f.17.2026.03.24.01.02.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2026 01:01:52 -0700 (PDT)
+        Tue, 24 Mar 2026 01:02:29 -0700 (PDT)
 From: Javier Martinez Canillas <javierm@redhat.com>
 To: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org, Rob
  Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
- Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, Palmer
- Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Alexandre
- Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>
+ Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley
+ <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou
+ <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
 Cc: Aurelien Jarno <aurelien@aurel32.net>, "open list:OPEN FIRMWARE AND
  FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, "open
  list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, "open
  list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH 5/6] riscv: dts: spacemit: enable USB 3 ports on Milk-V
+Subject: Re: [PATCH 6/6] riscv: dts: spacemit: enable PCIe ports on Milk-V
  Jupiter
-In-Reply-To: <20260322203356.2206927-6-aurelien@aurel32.net>
+In-Reply-To: <20260322203356.2206927-7-aurelien@aurel32.net>
 References: <20260322203356.2206927-1-aurelien@aurel32.net>
- <20260322203356.2206927-6-aurelien@aurel32.net>
-Date: Tue, 24 Mar 2026 09:01:51 +0100
-Message-ID: <875x6l8xlc.fsf@ocarina.mail-host-address-is-not-set>
+ <20260322203356.2206927-7-aurelien@aurel32.net>
+Date: Tue, 24 Mar 2026 09:02:28 +0100
+Message-ID: <87341p8xkb.fsf@ocarina.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -88,26 +88,17 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: R0VYpMGJcJbMgls_DB9B5ftJjmO_0hKJXDQBRzqAiHk_1774339313
+X-Mimecast-MFC-PROC-ID: 3V0w-u8mUt4zP3_4GpCdNJcJfdU17TtQfXt1KH0My_M_1774339350
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain
 
 Aurelien Jarno <aurelien@aurel32.net> writes:
 
-> Enable the DWC3 USB 3.0 controller (USB#2 port in the K1 datasheet) and
-> its associated combo_phy (USB 3 PHY) and usbphy2 (USB 2 PHY) on the
-> Milk-V Jupiter board.
+> Enable the two PCIe controller along with and their associated PHY. They
+> are routed to the M.2 M-key connector and to the the PCIe x8 slot.
 >
-> The board uses a VLI VL817 hub, providing four ports. Two are routed to
-> the 3.0 type-A connectors, and two to the F_USB3 front USB header. The
-> hub requires two separate 5V power supplies: one for the hub itself and
-> one for the USB connectors. Add an always-on regulator sourcing 5V from
-> the DC-IN input, along with two GPIO-controlled fixed regulators to
-> manage the hub and connectors power supplies.
->
-> Note that the board also provides four USB 2.0 ports (two via type-A
-> connectors and two via the F_USB2 front USB header), but these are
-> handled by a different controller (USB#1 port in the K1 datasheet).
+> Add an always-on regulator sourcing 3.3V from the DC-IN input, to power
+> the PCIe ports.
 >
 > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
 > ---
