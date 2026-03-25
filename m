@@ -1,84 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7422C3AC0DE;
-	Tue, 24 Mar 2026 22:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1089335AC17;
+	Wed, 25 Mar 2026 09:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774390192; cv=none; b=nrP1VZE1CDvu0mjE5SSiB0GP6wXysc5dAm5waGQnjeWxgAh1gwYGhtNatnBH+Xd/Xd2l9pUmAMrpQvYQwZxBoj5vx3k7tw7jbOFYfRjBjsjl5xCqKjd/p62BiVlMXbve5BVTgSqLTFac70CLK4eCMTHUK+NtVxps0e5ZBhTEpVQ=
+	t=1774432193; cv=none; b=m0HqsdLg/GYsf3lR3uBV31Jpo1WS0fP/rtaHxnBQ7D0nsBZY9gLKk75GLDtHL56YO1Ya8yNDBZelsQPW+DFyLdmFy59mph6Cem9jRYTJLgUpByTyaGCXpgffzDAex+XWx1cgX5ldN5pUgNtOnVVSVSIFr55A6jW1/n5/sPWLo7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774390192; c=relaxed/simple;
-	bh=7j8Ky5lso1k7J2uDYMW9hlAWHsxyR7vRQ7da5WAJfEw=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XvTZAQQNDAxkvLs/grOeh22HMzyySeih4ISFvLx+/fyb99HGXzB+MbesXmFEYWTrx5jy0MSt5NNvW0y6sWQM6uRnVVnK+d26O716GARYqJ/a0+HGHezcAw2ABMCh0IZJTJwkVuyl0KzGlIcpf7ixrp7/6C2N8fcb9Litbsai8r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tuXinN2+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774432193; c=relaxed/simple;
+	bh=Vaosi1pX1K3xtkInII2d2k9K5rhC7gGh7uUHH86JsCc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QzaTchaFkbjB8Q/tpDxRNBejEvIf3RRvWr1x7BgkFGMyKcxL8o7DEsrbb1O4cCAmAEQrwjUepoUix7+KTxeSjGCLJrcTpqliDNeJ1fweB/+brQ3emDnk+HBFQj/IfnZneq3byOFjMS7gpQHm7Y5DkHn2ZQt4/jsZ2uLwaV5ybFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E7JtgHhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tuXinN2+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4452C19424;
-	Tue, 24 Mar 2026 22:09:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E7JtgHhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF04C2BC9E;
+	Wed, 25 Mar 2026 09:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774390192;
-	bh=7j8Ky5lso1k7J2uDYMW9hlAWHsxyR7vRQ7da5WAJfEw=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=tuXinN2+A68pMTzb1oX5TWUcCu3BHM7Gkw0cdO5VaoJiw0yAVW+FaC1osUUNSIjvO
-	 yKfi2qeDVFViC2Iuja2kaNFYuUCpfaE4RZ46wRugPwNGxOZPwiPoYRYVhdfOj/14DL
-	 jBCyZo7wMmgy6DX3fcOGsXlEzY7pB0uw7N1M2ElDyjq8T1F0B66qD5TbRJb43LU0s9
-	 IA7J5U+zJcSwWBGT4m+XhD9mOI9sGWlJ/YOsjklMtuuv23Om6JACnH+3YvLptzoQf0
-	 YR9ZS++mfRRaOHfK1hcRgw9xgiOwG2VsaOYRY5iofCsOlRHFnJUeTVJF7OAKhQwQT+
-	 9gMcSwhW4QQoQ==
-Date: Wed, 25 Mar 2026 06:09:50 +0800
+	s=k20201202; t=1774432192;
+	bh=Vaosi1pX1K3xtkInII2d2k9K5rhC7gGh7uUHH86JsCc=;
+	h=From:Subject:Date:To:Cc:From;
+	b=E7JtgHhAupTJ8CzREFMJoQ6Bw3YDgrUZkEegxbttFI5MdxI7hDlkknWakc+QOp5eM
+	 r+oIJ8QK7tQCAH+b9wIbSxFCJlgzoSq1GxlsqJnFFYUvLmrrX+1bHp8h6PdfJKwEE4
+	 O1w4RQJmSoye/Kg9pCN119SOdJ9+HB7nIJmuhW6VwbG0KJOlJc+Rq7CVGhBHo5dBDr
+	 2U5TSL254HsHU2Zk3go7QNVojqcWxYFlr19EkIYlFu3bG3x0tb6nb+52g+MDrCypuh
+	 K/nMHvYshfhaApZQkwu8/K/ZsRexsmbCGHGenhUU2A2SMBpXd0P5uDSMjqyxPEIDvR
+	 z4sR3WeBB2A9g==
 From: Yixun Lan <dlan@kernel.org>
-To: linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH 4/6] riscv: dts: spacemit: enable QSPI and add SPI NOR on
- Milk-V Jupiter
-Message-ID: <20260324220950-GKB767626@kernel.org>
-References: <20260322203356.2206927-1-aurelien@aurel32.net>
- <20260322203356.2206927-5-aurelien@aurel32.net>
- <20260324090220-GKA739629@kernel.org>
- <acL_xPYiGXUp_Tir@aurel32.net>
+Subject: [PATCH 0/2] riscv: spacemit: k3: Add I2C support
+Date: Wed, 25 Mar 2026 09:49:23 +0000
+Message-Id: <20260325-02-k3-i2c-v1-0-78f29c83d9ac@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <acL_xPYiGXUp_Tir@aurel32.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKOvw2kC/y3MSwqAMAxF0a1IxgbaFAu6FXFQbNQg+GlVBHHvF
+ nV4Ho97QeQgHKHKLgh8SJR5StB5Bu3gpp5RfDKQIquM1qgIR4NCLVrnCyqsdaUzkP5L4E7Ot1U
+ 3nwOve0pu/3jfD+V51wpwAAAA
+X-Change-ID: 20260311-02-k3-i2c-6ad52566a9a3
+To: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: linux-i2c@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=641; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=Vaosi1pX1K3xtkInII2d2k9K5rhC7gGh7uUHH86JsCc=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpw6+09WRmYMPEjLZE2p7r5oxok1cDWf9KdEPZQ
+ Pu2/KGczIKJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCacOvtBsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+3uOQ//XHHfw4wvmtnMP9Dz38p2iSAG318MgZGdUbv54RWlICA0HQaGkKd/n
+ +WsgTmmZQ/0G5v/7r280fK6c8czBy4EH+ab2sV2CIIey8+Qcd2bmJhZ4tAstvF+owZbdkMvZ9vv
+ T2gQbuqRVXFvuaeq5bEYkJUVn8Ze28I7Q9fwKaXeoYcaBwyrzVG2GFuswZ6w0cMy8DFeV7bfrE9
+ MuB9fUb+ezBHDiN9dBUYM6+EgzjRuCUBz7PcTDtem5BwkaCo2PWfbbAizAN8UPC/by81MwI7kgB
+ tQReS8tPiEt9nDYilZB5pEB4B8lXQL0qcauEUGTQSrzlX0Zac8wRFfTSvVkS/g82ddWUJ3T0uxH
+ H0GM2lXL1aCMsB343AtIhu7P67/crjm0Vhnj7w7dRBDa1bwm+g0/W7+B54psYc+dCUQDZdGoaNt
+ ZV8YswieSxXTE1QORxpAgttMMx4zUGP+gzPSNp/r+uHRl7d8QWFrXeT0hrME2MguDnb+RwflTUR
+ n3VkY3u56KM6bJUhRIG4qdJwQz7l3FhbMYwe/RMl2HuIN/hfdZQCBQN+ulXo1GU3H+ZPdEFaSiB
+ wcucr/S4ItM/7Cm+aII4NctR8lWH1jVxndSHzHHhNweJTdEYxGC4MGGTlZQi/ET2Dph/Ffpt3n3
+ xQHoCJ+B56woGmBQPra4geiaLjOcY8=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi Aurelien, 
+This series try to introduce a compatible string for the I2C
+controller found in K3 SoC, and add all devicetree nodes .
 
-On 22:19 Tue 24 Mar     , Aurelien Jarno wrote:
-> Hi Yixun,
-> 
-> On 2026-03-24 17:02, Yixun Lan wrote:
-> > Hi Aurelien,
-..
-> > ..
-> > > Also add the bootph-pre-ram property to make the device tree usable by
-> > > early firmware/bootloaders without modification, as U-Boot is stored on
-> > > this NOR flash.
-> > Is the dtb file actually used by U-Boot? I'd highly doubt about this,
-> > if not the case or has not been tested, I'd suggest then not to add
-> > this property..
-> 
-> It is currently not used by U-Boot, currently SPL support is not 
-> available, but patches have been posted to added it. I just wanted to 
-> anticipate the addition of the Milk-V Jupiter board in U-boot, but if 
-> that hurt, i can remove it (or you can removed it when merging).
-Not hurt since it isn't really used in Kernel, but I just don't
-want to add things without test..
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Yixun Lan (2):
+      dt-bindings: i2c: spacemit: k3: Add compatible
+      dts: riscv: spacemit: k3: Add i2c nodes
 
-I can remove it if there is no other changes, then no iteration needed.
-Let's wait a few more days to see if people have additional comments for
-this series
+ .../devicetree/bindings/i2c/spacemit,k1-i2c.yaml   |  6 +-
+ arch/riscv/boot/dts/spacemit/k3.dtsi               | 98 ++++++++++++++++++++++
+ 2 files changed, 103 insertions(+), 1 deletion(-)
+---
+base-commit: c68360c0d636dae71f766b7b296ddfcf2827ccc7
+change-id: 20260311-02-k3-i2c-6ad52566a9a3
 
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan <dlan@kernel.org>
+
