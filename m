@@ -1,146 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5E33803FA;
-	Wed, 25 Mar 2026 10:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656923B777F
+	for <spacemit@lists.linux.dev>; Wed, 25 Mar 2026 10:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774432910; cv=none; b=IENznz/MxSCt4370DIizxRONEFbSGM1yGckmyJDp8yzi5c/02Z1InY7nNlE71frh/3Bc3TWgDUR6wGiK7QU5HDf8iSSivrSkGZyyQVA2rkk4ShjqJ3DYvvuN93LAxjyrn+iDeoA8SaGuka56suMyghD30Oy5Ui+jWieqVUYTBg8=
+	t=1774434724; cv=none; b=tVpM4tiv/thbyZSFwHp1knwo6hDJTJPMkcu0DmdaT44CeUrGnRJpkXJuibLAk+FZ1o5db0N0nsdluhT8ByuC0qKjN5sTCUWcQ0VY8rDjFjbAPpJsmaP3faY02R7CSWdq7uBVe5RcWmKD5oAJytQdn2sINgoePb3uXwl/SABbu9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774432910; c=relaxed/simple;
-	bh=Q0y68Sh0drunIWBrbPQGi+mpNZ+3qNgyIEg6q1TJwSs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Nj/HgXlqEl5Ds7O843PYllsuk6FrLzpeiu9+OpETCC1++jyhjYOLuZFxSL+cgbglOTfMDVz0/ix1P/t7ZdhqwJbCV/iIEDJak7FHCOw7SBsVIf16ezYos4x2r4HxOy55cadO9IO9i0hXztlcoX0T0C7nf8jSShejicmgxsqUgLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Do3onyXU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774434724; c=relaxed/simple;
+	bh=ocM1mdWqdcmXzLcIYmHxofHeePVA9vqDrQenuhbw7uQ=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bECsPvaIUxugmhN33iaqmwZdKWGHN2Fsqm7Bn1fzn3d6wk9H24koP9Kb8QTtwzSmN6autqWyX0Yjbep6eybbsvCRuHlkU+8XJ8IVpnE9VbIW14YwBt3+HTVTnidXY3ictFTYY2RT3ZfWaRVeHPiO8bFnNjaiyyh4e/e9nXqSsQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQsLCgUR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Do3onyXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778C0C4CEF7;
-	Wed, 25 Mar 2026 10:01:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQsLCgUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47059C4AF0B
+	for <spacemit@lists.linux.dev>; Wed, 25 Mar 2026 10:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774432910;
-	bh=Q0y68Sh0drunIWBrbPQGi+mpNZ+3qNgyIEg6q1TJwSs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Do3onyXUBuQV8Yzx8HEV2pWDywWlNUTdMFucTiA8sKEuTSZvjsuXkZiBhYiQBaNmf
-	 Y+iVbspzq7WTgkCMPSfxwxyi7w+7hHkkLLOB9NRbgED2iF9PPm2TNAPqZpTShZ53sF
-	 n80ZlTQ/6JXPKKVXoqDZ8H5NPvaGXc0XJ4RPboju1yAO0nOEJLmcn0OigEXJsKfLJd
-	 bwHdtB8hgcryXtQkHLLX4dIp1PBRGLb22la0NEWVU+BnEfVZYG3IL7V1b9s8fhDyPb
-	 hoSezUtwX0s+IBr73BbBMYs53KjrQxvgNDQo6tgcpCPCM61TncIyZKAlTES5nR+Rbs
-	 +3BSYEOXGF5vA==
-From: Arnd Bergmann <arnd@kernel.org>
-To: Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Yixun Lan <dlan@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH] gpio: fix up CONFIG_OF dependencies
-Date: Wed, 25 Mar 2026 11:01:14 +0100
-Message-Id: <20260325100144.1696731-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	s=k20201202; t=1774434724;
+	bh=ocM1mdWqdcmXzLcIYmHxofHeePVA9vqDrQenuhbw7uQ=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=rQsLCgURkLIEosDEkWhGLHl2g1Ra6qaeLKzy2cRqqnyXRcXcVKKwx3toJni6EMrux
+	 2yTlCjJ/KdtIfr9nJlV3R9Uyw8RZjwSCEWZZ46F6kW+ognCmhXZTt+4caRkrSnV4pJ
+	 g4EKHg7lADOkIJM8Zy429vK7uL9pAvIYddbYoRTRMs0BHYvdVDX9uYgNCxGUfYD9zg
+	 KwaTmNGmGRK3/Fgg/iLtZ3V1Oeowegn1mvk53dgavo/7O2ptF2VSu4l/gEOC/UGQ10
+	 b27HeM60vA3MAPu4GdjcQl6p8kfoIuA4k6Bdijgtvn3EOmXmoLIi8zD+zePRhB70dz
+	 j8GibjkFw3IsQ==
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5a27bfadca9so7424270e87.3
+        for <spacemit@lists.linux.dev>; Wed, 25 Mar 2026 03:32:04 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXzbPejcJbf+SA3AY+3pmQQ8bvaqVLhSxWjKpvn06dKoFBIy0p/NQuxp7/qvO0p7hma1FSKDRmQ6Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxwRmYusbsVtvCSXnvM/WwwIvwALD0RP/+FJgBTEg3ZtuSPAeAa
+	kLj7iCBXfH0f2VU/nwQEwjzvKASFPp2HS8RVZQFSBunVm8i3A0PqAVKQ3zXRouLbKCy+PDKEELT
+	SCzqI2+JKzrvHMt2nazUWNrFxzWEKBG2BqAN+MDbgIQ==
+X-Received: by 2002:a05:6512:220f:b0:5a1:34a3:757f with SMTP id
+ 2adb3069b0e04-5a29b9958e6mr1037060e87.25.1774434722860; Wed, 25 Mar 2026
+ 03:32:02 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 25 Mar 2026 03:32:01 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 25 Mar 2026 03:32:01 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260325100144.1696731-1-arnd@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260325100144.1696731-1-arnd@kernel.org>
+Date: Wed, 25 Mar 2026 03:32:01 -0700
+X-Gmail-Original-Message-ID: <CAMRc=Mdwu85gghDjQEu4eP2HZxHjBFpph07q9SOfAifSDMtpVw@mail.gmail.com>
+X-Gm-Features: AaiRm53MDlZLZwdTwMSs-omwMVxdmGT3F6ltQ_Yfx4HD4BKPWevgMv5IzNZGH1g
+Message-ID: <CAMRc=Mdwu85gghDjQEu4eP2HZxHjBFpph07q9SOfAifSDMtpVw@mail.gmail.com>
+Subject: Re: [PATCH] gpio: fix up CONFIG_OF dependencies
+To: Arnd Bergmann <arnd@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>, Yixun Lan <dlan@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, Linus Walleij <linusw@kernel.org>, 
+	Bartosz Golaszewski <brgl@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Arnd Bergmann <arnd@arndb.de>
+On Wed, 25 Mar 2026 11:01:14 +0100, Arnd Bergmann <arnd@kernel.org> said:
+> From: Arnd Bergmann <arnd@arndb.de>
+>
+> A number of GPIO drivers that used to have a CONFIG_OF_GPIO dependency now fail
+> to build on targets without CONFIG_OF:
+>
+> WARNING: unmet direct dependencies detected for GPIO_SYSCON
+>   Depends on [n]: GPIOLIB [=y] && HAS_IOMEM [=y] && MFD_SYSCON [=y] && OF [=n]
+>   Selected by [y]:
+>   - GPIO_SAMA5D2_PIOBU [=y] && GPIOLIB [=y] && HAS_IOMEM [=y] && MFD_SYSCON [=y] && (ARCH_AT91 || COMPILE_TEST [=y])
+>
+> drivers/gpio/gpio-mt7621.c: In function 'mediatek_gpio_bank_probe':
+> drivers/gpio/gpio-mt7621.c:254:20: error: 'struct gpio_chip' has no member named 'of_gpio_n_cells'
+>   254 |         rg->chip.gc.of_gpio_n_cells = 2;
+>       |                    ^
+> drivers/gpio/gpio-tegra186.c: In function 'tegra186_gpio_of_xlate':
+> drivers/gpio/gpio-tegra186.c:502:25: error: 'struct gpio_chip' has no member named 'of_gpio_n_cells'
+>   502 |         if (WARN_ON(chip->of_gpio_n_cells < 2))
+>       |                         ^~
+> drivers/gpio/gpio-lpc32xx.c: In function 'lpc32xx_gpio_probe':
+> drivers/gpio/gpio-lpc32xx.c:523:49: error: 'struct gpio_chip' has no member named 'of_xlate'
+>   523 |                         lpc32xx_gpiochip[i].chip.of_xlate = lpc32xx_of_xlate;
+>       |                                                 ^
+> drivers/gpio/gpio-spacemit-k1.c: In function 'spacemit_gpio_add_bank':
+> drivers/gpio/gpio-spacemit-k1.c:234:11: error: 'struct gpio_chip' has no member named 'of_gpio_n_cells'
+>   234 |         gc->of_gpio_n_cells     = 3;
+>       |           ^~
+>
+> Bring that back as a dependency.
+>
+> Fixes: 7803501e5754 ("gpio: drop unneeded Kconfig dependencies on OF_GPIO")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> ---
+> There may be more fallout from the change, this is just what I found immediately,
+> but you could already fold the changes into the broken patch while I look
+> for additional ones.
+> ---
 
-A number of GPIO drivers that used to have a CONFIG_OF_GPIO dependency now fail
-to build on targets without CONFIG_OF:
+Thanks and sorry for the breakage. However, I'm wondering if it wouldn't make
+sense to do the following:
 
-WARNING: unmet direct dependencies detected for GPIO_SYSCON
-  Depends on [n]: GPIOLIB [=y] && HAS_IOMEM [=y] && MFD_SYSCON [=y] && OF [=n]
-  Selected by [y]:
-  - GPIO_SAMA5D2_PIOBU [=y] && GPIOLIB [=y] && HAS_IOMEM [=y] && MFD_SYSCON [=y] && (ARCH_AT91 || COMPILE_TEST [=y])
+diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
+index 17511434ed077..ce0e0df68dbaa 100644
+--- a/include/linux/gpio/driver.h
++++ b/include/linux/gpio/driver.h
+@@ -473,7 +473,6 @@ struct gpio_chip {
+ 	struct gpio_irq_chip irq;
+ #endif /* CONFIG_GPIOLIB_IRQCHIP */
 
-drivers/gpio/gpio-mt7621.c: In function 'mediatek_gpio_bank_probe':
-drivers/gpio/gpio-mt7621.c:254:20: error: 'struct gpio_chip' has no member named 'of_gpio_n_cells'
-  254 |         rg->chip.gc.of_gpio_n_cells = 2;
-      |                    ^
-drivers/gpio/gpio-tegra186.c: In function 'tegra186_gpio_of_xlate':
-drivers/gpio/gpio-tegra186.c:502:25: error: 'struct gpio_chip' has no member named 'of_gpio_n_cells'
-  502 |         if (WARN_ON(chip->of_gpio_n_cells < 2))
-      |                         ^~
-drivers/gpio/gpio-lpc32xx.c: In function 'lpc32xx_gpio_probe':
-drivers/gpio/gpio-lpc32xx.c:523:49: error: 'struct gpio_chip' has no member named 'of_xlate'
-  523 |                         lpc32xx_gpiochip[i].chip.of_xlate = lpc32xx_of_xlate;
-      |                                                 ^
-drivers/gpio/gpio-spacemit-k1.c: In function 'spacemit_gpio_add_bank':
-drivers/gpio/gpio-spacemit-k1.c:234:11: error: 'struct gpio_chip' has no member named 'of_gpio_n_cells'
-  234 |         gc->of_gpio_n_cells     = 3;
-      |           ^~
+-#if defined(CONFIG_OF_GPIO)
+ 	/*
+ 	 * If CONFIG_OF_GPIO is enabled, then all GPIO controllers described in
+ 	 * the device tree automatically may have an OF translation
+@@ -516,7 +515,6 @@ struct gpio_chip {
+ 	 */
+ 	int (*of_xlate)(struct gpio_chip *gc,
+ 			const struct of_phandle_args *gpiospec, u32 *flags);
+-#endif /* CONFIG_OF_GPIO */
+ };
 
-Bring that back as a dependency.
+ char *gpiochip_dup_line_label(struct gpio_chip *gc, unsigned int offset);
 
-Fixes: 7803501e5754 ("gpio: drop unneeded Kconfig dependencies on OF_GPIO")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
-There may be more fallout from the change, this is just what I found immediately,
-but you could already fold the changes into the broken patch while I look
-for additional ones.
----
- drivers/gpio/Kconfig | 6 ++++++
- 1 file changed, 6 insertions(+)
+Symbols from linux/of.h are stubbed out and these drivers can build just fine
+with !CONFIG_OF. This would naturally increase the build coverage.
 
-diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-index e1e48e432133..bcb8ce89396c 100644
---- a/drivers/gpio/Kconfig
-+++ b/drivers/gpio/Kconfig
-@@ -236,6 +236,7 @@ config GPIO_BRCMSTB
- 	tristate "BRCMSTB GPIO support"
- 	default y if (ARCH_BRCMSTB || BMIPS_GENERIC)
- 	depends on ARCH_BRCMSTB || ARCH_BCM2835 || BMIPS_GENERIC || COMPILE_TEST
-+	depends on OF
- 	select GPIO_GENERIC
- 	select IRQ_DOMAIN
- 	help
-@@ -450,6 +451,7 @@ config GPIO_LPC18XX
- config GPIO_LPC32XX
- 	tristate "NXP LPC32XX GPIO support"
- 	depends on ARCH_LPC32XX || COMPILE_TEST
-+	depends on OF
- 	help
- 	  Select this option to enable GPIO driver for
- 	  NXP LPC32XX devices.
-@@ -492,6 +494,7 @@ config GPIO_MPC8XXX
- config GPIO_MT7621
- 	bool "Mediatek MT7621 GPIO Support"
- 	depends on SOC_MT7620 || SOC_MT7621 || COMPILE_TEST
-+	depends on OF
- 	select GPIO_GENERIC
- 	select GPIOLIB_IRQCHIP
- 	help
-@@ -632,6 +635,7 @@ config GPIO_RTD
- 
- config GPIO_SAMA5D2_PIOBU
- 	tristate "SAMA5D2 PIOBU GPIO support"
-+	depends on OF
- 	depends on MFD_SYSCON
- 	depends on ARCH_AT91 || COMPILE_TEST
- 	select GPIO_SYSCON
-@@ -672,6 +676,7 @@ config GPIO_SNPS_CREG
- config GPIO_SPACEMIT_K1
- 	tristate "SPACEMIT K1 GPIO support"
- 	depends on ARCH_SPACEMIT || COMPILE_TEST
-+	depends on OF
- 	select GPIO_GENERIC
- 	select GPIOLIB_IRQCHIP
- 	help
-@@ -737,6 +742,7 @@ config GPIO_TEGRA186
- 	tristate "NVIDIA Tegra186 GPIO support"
- 	default ARCH_TEGRA_186_SOC || ARCH_TEGRA_194_SOC || ARCH_TEGRA_234_SOC
- 	depends on ARCH_TEGRA_186_SOC || ARCH_TEGRA_194_SOC || ARCH_TEGRA_234_SOC || COMPILE_TEST
-+	depends on OF
- 	select GPIOLIB_IRQCHIP
- 	select IRQ_DOMAIN_HIERARCHY
- 	help
--- 
-2.39.5
-
+Bartosz
