@@ -1,107 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F1B3CF69F;
-	Wed, 25 Mar 2026 11:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E6C3D3D1F;
+	Wed, 25 Mar 2026 11:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774439487; cv=none; b=LtIFpnEq+fdW55N0lJ5KjLHwqz87QXBw7t2gi7SzQ7WC814dygtZXndhoCn1Bx2/SXsCq5ud5BI74XpT/UP/TgOirNOtaunKyg83c8Uy2R+Fbbo1JcMIAyT+Hcv8Ajr3Bye/+MsXhiJzOd6dMbKfTJ02KTrq3Ea4R5ysytVFEX0=
+	t=1774439628; cv=none; b=sWuAdX/hDtau/DNGna/EvDFhUOrErkJYZ1UTmW1Dv4yfHCj/8TdQSJq+gK8Y4cViC3914t+XfSseTii3A3nydHFawyi8bxrxZcP7bYXVABRHNbebngmp9CoF70/0lmkGLxS1665Er3hVC2MDf+6gbeunP/53mac65PKe/VdGzrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774439487; c=relaxed/simple;
-	bh=ijQZYkQ8huX8bzZfiuwKK5l/O+taUFGXBf7mUcCwX/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pgOg2gNFWYMdKBukorfVPT0egm7iZMc+USBbiVREq5qDEdcDrbeYPC6pdtyvYlAWfcnLf3KVYdmhKXHOHEwesGnjA0PunUqH46app9F39WhIdP3Cbk7REtG3OQV3wggnjt633paRVfin0oILpi3CKmgdwUudOG/CCcXXxgba4CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F8VoBQpQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774439628; c=relaxed/simple;
+	bh=x891j24irvPH3LuXqfH3siMnDU7ruLZ7yUOPMjuvGxw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IdRBkwWwTHvtTQsBJESeGbrzGzUAjNW+2Ql+BGtHrOtZqMOQG1PpiYxQvRa85Egey0Me8A6TCiZbStEW/CahWHU0NHq6bdpson6Up3G96uyupXX//ckGxGC14wMggCfBKWMbojRmEQU/eKpuJxtiHR36/dUCnGV8/TX63vrNj2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=syjEWOfH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F8VoBQpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F905C2BCB2;
-	Wed, 25 Mar 2026 11:51:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="syjEWOfH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D06C2BCB9;
+	Wed, 25 Mar 2026 11:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774439486;
-	bh=ijQZYkQ8huX8bzZfiuwKK5l/O+taUFGXBf7mUcCwX/o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=F8VoBQpQxXDFHPLwjgn+FimF064VYiGnb02ISTZuo7sMCK/Or3p4aIxqTZnuLA+uL
-	 /r3T+Vz7lEc5yc54KjVTpnI+VbV4XN+l9Nl46axhDOOVHgzVdpo/UGmLK8hQXPEUNR
-	 ynBx5dd5yG3uJQWeeWTgH1cW2In1W0YVJ8QoBnAUk6K4WIL8a0REi+e01oXpRwalXe
-	 gSeFc6w+k+DbJNNIa/GojyKKWjfTcx03289D4/2LfiEs6Mel5pKCUogETaR2OKLgYy
-	 1ahoOxct2eimH12qdt9HBRcDZVXFXVZm9/7QyfTkESgul2vKzgUyr+V1bDmNBkVBYO
-	 nsJxO9bsBzs0w==
-Date: Wed, 25 Mar 2026 17:21:14 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org, netdev@vger.kernel.org, 
-	spacemit@lists.linux.dev, UNGLinuxDriver@microchip.com, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
-	Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: Re: [PATCH v5 phy-next 10/27] scsi: ufs: qcom: keep parallel track
- of PHY power state
-Message-ID: <vu3cxpynr5mu2fzkrtmjcwijc5jz323wlnbc3r7lp2wxqmhydx@z5xhgf4myw2d>
-References: <20260319223241.1351137-1-vladimir.oltean@nxp.com>
- <20260319223241.1351137-11-vladimir.oltean@nxp.com>
- <ezrcjjwtg5n76w4m65l27szu5mywx66ti3xuprkfcp3x6quvbf@2rew4zrnnbt2>
- <20260325114309.3k7xkfrffpxp5xq4@skbuf>
+	s=k20201202; t=1774439628;
+	bh=x891j24irvPH3LuXqfH3siMnDU7ruLZ7yUOPMjuvGxw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=syjEWOfH5Jp7inTONHk883vuDZoGC7tMLDXxSLbYcF/en2qhbzIR5Bc3njuZJyr0d
+	 AshIJF23WYif5GoKHTooOwHXsGaznEQ8eZJih6Ej15BIm5mUUSpD0CC48gZVRSATWI
+	 /QvdqRflxwmaJVP858Bq5KumMUO/zOh/TW8mNzh6hMBKBxXbQTkPNh+L52TUEgm5FB
+	 hxykqRIg8qs7x0lReYGkGLKpxnKVYvES7HQn5tIerqp4/CZYj3WIEA5iqTqEhObadH
+	 QbsJ0CwS+7BbF7XRKE2AYQJfnEErljIkigX9R6lQDiRGDui663NBibMwr7nMcEtrft
+	 aw8AOE+AvyyOA==
+From: Yixun Lan <dlan@kernel.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Yixun Lan <dlan@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Shuwei Wu <shuwei.wu@mailbox.org>,
+	linux-clk@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [GIT PULL] clk: spacemit: Fixes for v7.0
+Date: Wed, 25 Mar 2026 11:53:30 +0000
+Message-ID: <20260325115111-KYC4742284@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260325114309.3k7xkfrffpxp5xq4@skbuf>
 
-On Wed, Mar 25, 2026 at 01:43:09PM +0200, Vladimir Oltean wrote:
-> On Tue, Mar 24, 2026 at 11:00:10AM +0530, Manivannan Sadhasivam wrote:
-> > On Fri, Mar 20, 2026 at 12:32:24AM +0200, Vladimir Oltean wrote:
-> > > As explained in the similar ufs-exynos.c change, PHY consumer drivers
-> > > should not look at the phy->power_count, because in the general case
-> > > there might also be other consumers who have called phy_power_on() too,
-> > > so the fact that the power_count is non-zero does not mean that we did.
-> > > 
-> > > Moreover, struct phy will become opaque soon, so the qcom UFS driver
-> > > will not be able to apply this pattern. Keep parallel track of the PHY
-> > > power state, instead of looking at a field which will become unavailable
-> > > (phy->power_count).
-> > > 
-> > > About treating the phy_power_off() return code: from an API perspective,
-> > > this should have probably returned void, otherwise consumers would be
-> > > stuck in a state they can't escape. The provider, phy-qcom-qmp-ufs.c,
-> > > does return 0 in its power_off() implementation. I consider it safe to
-> > > discard potential errors from phy_power_off() instead of complicating
-> > > the phy_powered_on logic.
-> > > 
-> > 
-> > You could even simplify the code by getting rid of the 'phy_powered_on' check
-> > altogether. There is no real need to track the PHY power state in this driver.
-> > It is safe to call phy_power_off() without any checks.
-> > 
-> > - Mani
-> 
-> Ok.. as the author of commit 7bac65687510 ("scsi: ufs: qcom: Power off
-> the PHY if it was already powered on in ufs_qcom_power_up_sequence()"),
-> I assume you have hardware to test. Would you mind writing a patch that
-> I could pick up to replace this one with?
-> 
+Hi Stephen,
 
-Sure, will do.
+   Please pull SpacemiT's clock Fixes for v7.0
 
-> I suppose that the power_count test is somehow no longer necessary after
-> commit 77d2fa54a945 ("scsi: ufs: qcom : Refactor phy_power_on/off
-> calls"), but frankly I don't see it - the ufshcd state machine is a bit
-> too complicated for me to just statically analyze.
+Yixun Lan
 
-I believe I added the power_count check for phy_exit(). But since that got
-moved, the check becomes no longer necessary.
+The following changes since commit 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f:
 
-- Mani
+  Linux 7.0-rc1 (2026-02-22 13:18:59 -0800)
 
--- 
-மணிவண்ணன் சதாசிவம்
+are available in the Git repository at:
+
+  https://github.com/spacemit-com/linux tags/spacemit-clk-fixes-for-7.0-1
+
+for you to fetch changes up to 54e97360b44bed6b4399dd3be3d65f392df940fa:
+
+  clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc() (2026-03-24 06:42:29 +0000)
+
+----------------------------------------------------------------
+RISC-V SpacemiT clock fixes for v7.0
+
+- Fix inverted condition check
+
+----------------------------------------------------------------
+Shuwei Wu (1):
+      clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()
+
+ drivers/clk/spacemit/ccu_mix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
