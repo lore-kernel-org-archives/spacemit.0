@@ -1,131 +1,135 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656923B777F
-	for <spacemit@lists.linux.dev>; Wed, 25 Mar 2026 10:32:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18C53BBA07
+	for <spacemit@lists.linux.dev>; Wed, 25 Mar 2026 10:41:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774434724; cv=none; b=tVpM4tiv/thbyZSFwHp1knwo6hDJTJPMkcu0DmdaT44CeUrGnRJpkXJuibLAk+FZ1o5db0N0nsdluhT8ByuC0qKjN5sTCUWcQ0VY8rDjFjbAPpJsmaP3faY02R7CSWdq7uBVe5RcWmKD5oAJytQdn2sINgoePb3uXwl/SABbu9w=
+	t=1774435287; cv=none; b=mU/cfZkclLKgRD2e3BGVrE3mXbH6AF0B8nbhH5jqKNxQ6Z/+N45hPkRVMNF6hkEjItl6q/2oPypUJQ7khcua44GbbzobWuUoBAVIq8okaQcVVceV+J3ZxNC70lQJkAryGf5UE//g8GwpUjGwxBTwXw7Yov42akkWQwIPzukRop8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774434724; c=relaxed/simple;
-	bh=ocM1mdWqdcmXzLcIYmHxofHeePVA9vqDrQenuhbw7uQ=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bECsPvaIUxugmhN33iaqmwZdKWGHN2Fsqm7Bn1fzn3d6wk9H24koP9Kb8QTtwzSmN6autqWyX0Yjbep6eybbsvCRuHlkU+8XJ8IVpnE9VbIW14YwBt3+HTVTnidXY3ictFTYY2RT3ZfWaRVeHPiO8bFnNjaiyyh4e/e9nXqSsQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQsLCgUR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774435287; c=relaxed/simple;
+	bh=5JVNnXfAOSxbrwJgERtWwdI7qhgGCWCYs7yCi+xqRqk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=bC3fQVCR4zvk0i9xnclu8YeZyPJWjn0Lni7T70aZWdlcilf2dgt8DlJ/JyeodcX3xL8wsrPcgqDjumC/wgIa3JwNIO5iXhAd3coIpldYbrbSUeG+7dbH30/odD5ELEe+GT2JALaek6SFAdmaQxrp5UoYcm58b+lrSkEuDyUf6Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=hIoYTVwG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k9JBfeyU; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQsLCgUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47059C4AF0B
-	for <spacemit@lists.linux.dev>; Wed, 25 Mar 2026 10:32:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774434724;
-	bh=ocM1mdWqdcmXzLcIYmHxofHeePVA9vqDrQenuhbw7uQ=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=rQsLCgURkLIEosDEkWhGLHl2g1Ra6qaeLKzy2cRqqnyXRcXcVKKwx3toJni6EMrux
-	 2yTlCjJ/KdtIfr9nJlV3R9Uyw8RZjwSCEWZZ46F6kW+ognCmhXZTt+4caRkrSnV4pJ
-	 g4EKHg7lADOkIJM8Zy429vK7uL9pAvIYddbYoRTRMs0BHYvdVDX9uYgNCxGUfYD9zg
-	 KwaTmNGmGRK3/Fgg/iLtZ3V1Oeowegn1mvk53dgavo/7O2ptF2VSu4l/gEOC/UGQ10
-	 b27HeM60vA3MAPu4GdjcQl6p8kfoIuA4k6Bdijgtvn3EOmXmoLIi8zD+zePRhB70dz
-	 j8GibjkFw3IsQ==
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5a27bfadca9so7424270e87.3
-        for <spacemit@lists.linux.dev>; Wed, 25 Mar 2026 03:32:04 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXzbPejcJbf+SA3AY+3pmQQ8bvaqVLhSxWjKpvn06dKoFBIy0p/NQuxp7/qvO0p7hma1FSKDRmQ6Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxwRmYusbsVtvCSXnvM/WwwIvwALD0RP/+FJgBTEg3ZtuSPAeAa
-	kLj7iCBXfH0f2VU/nwQEwjzvKASFPp2HS8RVZQFSBunVm8i3A0PqAVKQ3zXRouLbKCy+PDKEELT
-	SCzqI2+JKzrvHMt2nazUWNrFxzWEKBG2BqAN+MDbgIQ==
-X-Received: by 2002:a05:6512:220f:b0:5a1:34a3:757f with SMTP id
- 2adb3069b0e04-5a29b9958e6mr1037060e87.25.1774434722860; Wed, 25 Mar 2026
- 03:32:02 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 25 Mar 2026 03:32:01 -0700
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 25 Mar 2026 03:32:01 -0700
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20260325100144.1696731-1-arnd@kernel.org>
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="hIoYTVwG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k9JBfeyU"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1C8E3EC008B;
+	Wed, 25 Mar 2026 06:41:26 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-04.internal (MEProxy); Wed, 25 Mar 2026 06:41:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1774435286;
+	 x=1774521686; bh=AcUhwk3rqiMKPq50OnIJ7QU2UyvK/5IjslJpVaZ0nD0=; b=
+	hIoYTVwGI4bcbO/0Hx0OtkRaT8drsHoKSzEN8QOGDKPfFe8F2vVTCbe5xuRjFgP/
+	JMVbH3ojmaK//XjifU5t8mCLi9VjCbqASladM+m8eTUtHUjlKlf2gSeYUNE0ru6y
+	Jdk1UBGPN1/SZQepX9KIUnxkt52gpAwRmsyB6t+uVfOn7BIilQ4rYIBnhZltzMud
+	NDrKql+R9pTAY8ZrWgzKl3HVN1fwl3sqrsX8881k52GoESgrzsSp7nGWl9R5nBTc
+	6EeuOrkPQtBPtZ1zik6NRVUS3hiUVZYrykLIlSoGZ1VsEpnoUgrNBuImRPgrmU6W
+	68rCn917tNpr+q1GMNsvZg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774435286; x=
+	1774521686; bh=AcUhwk3rqiMKPq50OnIJ7QU2UyvK/5IjslJpVaZ0nD0=; b=k
+	9JBfeyUy8ot9s/AZfT7qTXN5rh9CO/6AjTyssorp2ri8SNdME0RCx/qoy71B3Aly
+	6a7A8egyk3uuNS9O84iDGZdbcGLK8BUeou16lkOyrDdJ9rd5t/mWCduol51WgDkW
+	b2VfzPLKnw875J4AbhTbQPpgAUYVHb0TQxnpHcIK+dZPuORvUeKojHE/bsJsg0ap
+	7M0PsVcFWDmBp22G09z7ZdNmVvG9bSBuVZR5V21jMTrdxLzkA7g9LEoqyBW0ZuZc
+	Gn88KmTbE+tOwlGY8qbHBcOtoNFEwQGaF+ruP/y7Tx93Rjgk4yg8m0QZMd2l8/Ug
+	SuSzAOQDHuY97MdzHvL7Q==
+X-ME-Sender: <xms:1bvDaQYe3JeM4UhvQ0OEwfI2WcDl8Cb9je97ZH7zCZ9vo-lurQsdpg>
+    <xme:1bvDaWMAySiHuSbfamQuNRq-GDG4nnBo4NdedVngBgswu_7aMHJTjU_wAtW3SuZcC
+    IovSnk9E_kYrjC6uVcJHroTxRH2belNxltTHtOaz7c71Pn9DbyySVE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdegvdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehrnhgu
+    uceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvg
+    hrnhephfdthfdvtdefhedukeetgefggffhjeeggeetfefggfevudegudevledvkefhvdei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnh
+    gusegrrhhnuggsrdguvgdpnhgspghrtghpthhtohepuddvpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopegrnhhgvghlohhgihhorggttghhihhnohdruggvlhhrvghgnhhose
+    gtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtohepmhgrthhthhhirghsrdgsghhgsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtoheprghrnhgusehkvghrnhgvlhdrohhrghdprhgtph
+    htthhopegsrhhglheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepughlrghnsehkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehlihhnuhhsfieskhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtoheplhhinhhugidqrghrmhdqkhgvrhhnvghlsehlihhsthhsrdhinhhfrhgruggv
+    rggurdhorhhgpdhrtghpthhtoheplhhinhhugidqmhgvughirghtvghksehlihhsthhsrd
+    hinhhfrhgruggvrggurdhorhhgpdhrtghpthhtoheplhhinhhugidqrhhishgtvheslhhi
+    shhtshdrihhnfhhrrgguvggrugdrohhrgh
+X-ME-Proxy: <xmx:1bvDaSIidv0VH9EqpFf7lWU1nrpoHrkHXYrXOzJdVXpZFb5gLuDrnQ>
+    <xmx:1bvDad0HFZ81O1XtnWeWv6r8TXTtnnJOzlDE4Z__qYZagt-_I-HKeg>
+    <xmx:1bvDabU0OE4KgWfODjpt6QQ1J95WS496bcfA2IdkFOtSBvhmn963qw>
+    <xmx:1bvDaYxWpYq_wG9aRdGmys5MZZo3ErIccxXv68CwfEcbRYrTfWWkNg>
+    <xmx:1rvDaZgl7b-ZsH3SppgAoMe344kDy9kVd7DXZZcbGKYahqqXS0YhL3Z1>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id CD83E700065; Wed, 25 Mar 2026 06:41:25 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-ThreadId: AK0r1PqEPgIR
+Date: Wed, 25 Mar 2026 11:41:04 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Bartosz Golaszewski" <brgl@kernel.org>, "Arnd Bergmann" <arnd@kernel.org>
+Cc: "Yixun Lan" <dlan@kernel.org>,
+ "Matthias Brugger" <matthias.bgg@gmail.com>,
+ "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, "Linus Walleij" <linusw@kernel.org>
+Message-Id: <1789ce66-5a18-4b54-bbad-3b2049f2c26d@app.fastmail.com>
+In-Reply-To: 
+ <CAMRc=Mdwu85gghDjQEu4eP2HZxHjBFpph07q9SOfAifSDMtpVw@mail.gmail.com>
 References: <20260325100144.1696731-1-arnd@kernel.org>
-Date: Wed, 25 Mar 2026 03:32:01 -0700
-X-Gmail-Original-Message-ID: <CAMRc=Mdwu85gghDjQEu4eP2HZxHjBFpph07q9SOfAifSDMtpVw@mail.gmail.com>
-X-Gm-Features: AaiRm53MDlZLZwdTwMSs-omwMVxdmGT3F6ltQ_Yfx4HD4BKPWevgMv5IzNZGH1g
-Message-ID: <CAMRc=Mdwu85gghDjQEu4eP2HZxHjBFpph07q9SOfAifSDMtpVw@mail.gmail.com>
+ <CAMRc=Mdwu85gghDjQEu4eP2HZxHjBFpph07q9SOfAifSDMtpVw@mail.gmail.com>
 Subject: Re: [PATCH] gpio: fix up CONFIG_OF dependencies
-To: Arnd Bergmann <arnd@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>, Yixun Lan <dlan@kernel.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, Linus Walleij <linusw@kernel.org>, 
-	Bartosz Golaszewski <brgl@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Wed, 25 Mar 2026 11:01:14 +0100, Arnd Bergmann <arnd@kernel.org> said:
-> From: Arnd Bergmann <arnd@arndb.de>
+On Wed, Mar 25, 2026, at 11:32, Bartosz Golaszewski wrote:
+> On Wed, 25 Mar 2026 11:01:14 +0100, Arnd Bergmann <arnd@kernel.org> said:
+>>
+>> WARNING: unmet direct dependencies detected for GPIO_SYSCON
+>>   Depends on [n]: GPIOLIB [=y] && HAS_IOMEM [=y] && MFD_SYSCON [=y] && OF [=n]
+>>   Selected by [y]:
+>>   - GPIO_SAMA5D2_PIOBU [=y] && GPIOLIB [=y] && HAS_IOMEM [=y] && MFD_SYSCON [=y] && (ARCH_AT91 || COMPILE_TEST [=y])
+>>
 >
-> A number of GPIO drivers that used to have a CONFIG_OF_GPIO dependency now fail
-> to build on targets without CONFIG_OF:
+> Thanks and sorry for the breakage. However, I'm wondering if it wouldn't make
+> sense to do the following:
 >
-> WARNING: unmet direct dependencies detected for GPIO_SYSCON
->   Depends on [n]: GPIOLIB [=y] && HAS_IOMEM [=y] && MFD_SYSCON [=y] && OF [=n]
->   Selected by [y]:
->   - GPIO_SAMA5D2_PIOBU [=y] && GPIOLIB [=y] && HAS_IOMEM [=y] && MFD_SYSCON [=y] && (ARCH_AT91 || COMPILE_TEST [=y])
 >
-> drivers/gpio/gpio-mt7621.c: In function 'mediatek_gpio_bank_probe':
-> drivers/gpio/gpio-mt7621.c:254:20: error: 'struct gpio_chip' has no member named 'of_gpio_n_cells'
->   254 |         rg->chip.gc.of_gpio_n_cells = 2;
->       |                    ^
-> drivers/gpio/gpio-tegra186.c: In function 'tegra186_gpio_of_xlate':
-> drivers/gpio/gpio-tegra186.c:502:25: error: 'struct gpio_chip' has no member named 'of_gpio_n_cells'
->   502 |         if (WARN_ON(chip->of_gpio_n_cells < 2))
->       |                         ^~
-> drivers/gpio/gpio-lpc32xx.c: In function 'lpc32xx_gpio_probe':
-> drivers/gpio/gpio-lpc32xx.c:523:49: error: 'struct gpio_chip' has no member named 'of_xlate'
->   523 |                         lpc32xx_gpiochip[i].chip.of_xlate = lpc32xx_of_xlate;
->       |                                                 ^
-> drivers/gpio/gpio-spacemit-k1.c: In function 'spacemit_gpio_add_bank':
-> drivers/gpio/gpio-spacemit-k1.c:234:11: error: 'struct gpio_chip' has no member named 'of_gpio_n_cells'
->   234 |         gc->of_gpio_n_cells     = 3;
->       |           ^~
->
-> Bring that back as a dependency.
->
-> Fixes: 7803501e5754 ("gpio: drop unneeded Kconfig dependencies on OF_GPIO")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
-> There may be more fallout from the change, this is just what I found immediately,
-> but you could already fold the changes into the broken patch while I look
-> for additional ones.
-> ---
+> -#if defined(CONFIG_OF_GPIO)
+>  	/*
+>  	 * If CONFIG_OF_GPIO is enabled, then all GPIO controllers described in
+>  	 * the device tree automatically may have an OF translation
+...
+> Symbols from linux/of.h are stubbed out and these drivers can build just fine
+> with !CONFIG_OF. This would naturally increase the build coverage.
 
-Thanks and sorry for the breakage. However, I'm wondering if it wouldn't make
-sense to do the following:
+I don't think we need to worry about the build coverage here, CONFIG_OF
+is still included in x86 allmodconfig and half the randconfig builds,
+so the drivers get enough exposure either way.
 
-diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
-index 17511434ed077..ce0e0df68dbaa 100644
---- a/include/linux/gpio/driver.h
-+++ b/include/linux/gpio/driver.h
-@@ -473,7 +473,6 @@ struct gpio_chip {
- 	struct gpio_irq_chip irq;
- #endif /* CONFIG_GPIOLIB_IRQCHIP */
+On the other hand, dropping the build time check may help avoid
+future Kconfig dependency issues, so that still sounds like a
+reasonable suggestion. At least CONFIG_GPIO_SAMA5D2_PIOBU
+is going to need the 'depends on OF' regardless though to work
+around the other build error I cited above.
 
--#if defined(CONFIG_OF_GPIO)
- 	/*
- 	 * If CONFIG_OF_GPIO is enabled, then all GPIO controllers described in
- 	 * the device tree automatically may have an OF translation
-@@ -516,7 +515,6 @@ struct gpio_chip {
- 	 */
- 	int (*of_xlate)(struct gpio_chip *gc,
- 			const struct of_phandle_args *gpiospec, u32 *flags);
--#endif /* CONFIG_OF_GPIO */
- };
-
- char *gpiochip_dup_line_label(struct gpio_chip *gc, unsigned int offset);
-
-Symbols from linux/of.h are stubbed out and these drivers can build just fine
-with !CONFIG_OF. This would naturally increase the build coverage.
-
-Bartosz
+     Arnd
