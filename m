@@ -1,109 +1,171 @@
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012071.outbound.protection.outlook.com [52.101.66.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56BD3B8948
-	for <spacemit@lists.linux.dev>; Wed, 25 Mar 2026 10:42:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774435370; cv=none; b=EzJ89aEIZNADUIiPKIftCARC7061KAHVeK+5MhKIuhdfSuQXMQmHrzCTpAwtzEOry1MQeuFW5WMLwyHBnexaT83KHgYPub8I2dALV2Xc/ZJ8JNeAioR5CainCF5YsyqfzVOR+mSNgBRtsupvlmIBcoysRks2dAiKJBzpKW4yiQ8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774435370; c=relaxed/simple;
-	bh=Xd3v/lgQPClZhhprKyX8eszD/JDLsPJt3Q2OWgG7cpA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=d6bc0dorVoV5pUMwYmRpsI6eB4zlTqB6AvVx752WwGqHDFoPoLheaFcMVuuvCQA7yGYmbGOI8gIUY2EMnUfUzdu3fgrGsKZz66CExVNNh2ehdVYKNkSnekJ+TkSVwM8Ugija2akNTGYxPvbkD1yvln3dXGOVHm9kLQu3Sw2hZQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=tWIvrTi9; arc=none smtp.client-ip=54.254.200.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B993CFF67;
+	Wed, 25 Mar 2026 11:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.71
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774438998; cv=fail; b=F/PfYbX/XI4ntUNiXoMW+lP5ChE2TtpcV5qgCW6QjYlzmN7b09gIuq5Qy5oVsFaILsqAJy+PFs+8b9AQNAjAejbe+DY5clC+a+3bG7LBi2lmfCgAGp0MQHFZ7Rn8O+HY45Pi7OnbjDgfxzGQ66l/H9UrggFg60mJwNaHG1nX2VU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774438998; c=relaxed/simple;
+	bh=rkDWyxlGPECYdum0VZpfyB4sdIg61BGNWdDdFIHSLlM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=MTBAypeB0yLlCUEsoYX+oN7rEfEyGc9IM2m8Pv1YHbdx3UWF2TgyADL8x7K4y/VTIzDB8NwVvlSCcMmPLhl9VilIYfVNkWVLSL/KvDwOQKUcQ92H2FI9PQXQ71ioR/Ze8nhJfg1pJlYQefsHalc3+ZpEJKQNydyNTM4zpYtug64=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=UGTYVciV; arc=fail smtp.client-ip=52.101.66.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="tWIvrTi9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1774435365;
-	bh=arsbVOQqNrFGFD4zXyvy20fOvHwbaNRzAN3h/Bf6owg=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=tWIvrTi9L4vL/dw0LAImXTWNlwXB1dZxS9DheN3alf4xoKcydjy9Sgxs4DUoorjA1
-	 y/MOHHwpLygobut/sdIrspzJ3F5CChHNO40PQ+mPDYlqews09/QrG3rYXowvZd2qHb
-	 fKW9zttAqn4ekrpwnVpXgXGohbah4Wkc0xuszCXw=
-X-QQ-mid: esmtpgz15t1774435360t08c25bdb
-X-QQ-Originating-IP: 7OPY19mGtSlo4kPWwupOktdlSC4sswfnQ7F5LXLlhdE=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 25 Mar 2026 18:42:38 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7138833924869601224
-EX-QQ-RecipientCnt: 15
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="UGTYVciV"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HH8ZZQzS2OdB6qF4VXP16jqy/py/KwYbSEWi4QMr5oREoIF0sd6flhhIWocF2d46TCg/pZDGH8wfmtql+BRGcA7v61BUr9a1nSKEc8RtfNZcItViIxbicO186k/0r2qsfPQfIBTIxUSYXri0eKwFniFyhPoQUczblcnTeib+uNLxX9c1oiqy88qlrpKrRguwL85Gd5+zbR6O6s8ZKWlndGsSqA1d3PWfo+CBMG52EBkHp2JLGi/qQWal1U7ijsJOISnuYe+sy69cPa5iK7SE3H793auHu9xD26Sjd51xHhZLinnei/EJ8UFbX8ItO+hFHt5kmnw8AqrJRjaUaJCmkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2vFKXGa9EyD8gCXVhuW4dfTTmiqy4V75PSWVxTxMQzg=;
+ b=jFHsQgypE2B+Al12DONj51EYkCGZVj7Ws1EretlxmcCTgbL48Y4hX0h0YqMmaP/UbvMvJs+8VjXo6YwTb3VMeKMGLXDr7lFK8g6uX0AAjisIg0seD7ONO+paMfXNp7Lmn3iTkGciCqpEvBaAflqRsYQn84G25F28fjN1jWBduFh355tHbgllVtw7beOzmUoATxkhnqbPYHBXqQM1o3+L9eAi3uNOsoMtwWIEGaTyO8APOt7xtlOmouUpysgZJLdJgmzjaxNvtOhE+TBdIsfVXtFwx/bsLB1DJlL7RMLkEqlqVxh1ZNRzCrkyANGjp5z+o1f7u90D8VYl7tWGRHvvAw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2vFKXGa9EyD8gCXVhuW4dfTTmiqy4V75PSWVxTxMQzg=;
+ b=UGTYVciVvvAlZoVyaHQ4sIVKvJkenXwmIYlUaIAfT7iwuIBSU3AIfwawHFV6Us0h7VexloxUEmSv8c+eZg/y/Z0vqwTKaCTWeE7aHcrY6HASM56funP/+uvZrLur9BNAgrumKOwJIDknHSO6/yPkYITfjBhLoRMIItipy+Yc1yYytQiDs8HJamwFns3mQqO9s0puCNSw6uET+r9ZqDQ7qsDreAERcrdDMa4bqh5RcPUtz3SyDAavX8yr29bHlZehkdc7AySXTPKonW4eCFucVo5vuMma76+FOC9D9+/vzqLqDUZF4r7JFmU9d00Eite8YBEfEwl2yOB/FQw7JiEyCQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM9PR04MB8585.eurprd04.prod.outlook.com (2603:10a6:20b:438::13)
+ by DU2PR04MB8951.eurprd04.prod.outlook.com (2603:10a6:10:2e2::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Wed, 25 Mar
+ 2026 11:43:14 +0000
+Received: from AM9PR04MB8585.eurprd04.prod.outlook.com
+ ([fe80::f010:fca8:7ef:62f4]) by AM9PR04MB8585.eurprd04.prod.outlook.com
+ ([fe80::f010:fca8:7ef:62f4%4]) with mapi id 15.20.9723.030; Wed, 25 Mar 2026
+ 11:43:13 +0000
+Date: Wed, 25 Mar 2026 13:43:09 +0200
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-can@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	linux-usb@vger.kernel.org, netdev@vger.kernel.org,
+	spacemit@lists.linux.dev, UNGLinuxDriver@microchip.com,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>
+Subject: Re: [PATCH v5 phy-next 10/27] scsi: ufs: qcom: keep parallel track
+ of PHY power state
+Message-ID: <20260325114309.3k7xkfrffpxp5xq4@skbuf>
+References: <20260319223241.1351137-1-vladimir.oltean@nxp.com>
+ <20260319223241.1351137-11-vladimir.oltean@nxp.com>
+ <ezrcjjwtg5n76w4m65l27szu5mywx66ti3xuprkfcp3x6quvbf@2rew4zrnnbt2>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ezrcjjwtg5n76w4m65l27szu5mywx66ti3xuprkfcp3x6quvbf@2rew4zrnnbt2>
+X-ClientProxiedBy: WA2P291CA0011.POLP291.PROD.OUTLOOK.COM
+ (2603:10a6:1d0:1e::23) To AM9PR04MB8585.eurprd04.prod.outlook.com
+ (2603:10a6:20b:438::13)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 25 Mar 2026 18:42:38 +0800
-Message-Id: <DHBSU6889P61.4IKB55N20GPQ@linux.spacemit.com>
-Subject: Re: [PATCH 1/2] dt-bindings: i2c: spacemit: k3: Add compatible
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Yixun Lan" <dlan@kernel.org>, "Andi Shyti" <andi.shyti@kernel.org>,
- "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley"
- <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou"
- <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-Cc: <linux-i2c@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260325-02-k3-i2c-v1-0-78f29c83d9ac@kernel.org>
- <20260325-02-k3-i2c-v1-1-78f29c83d9ac@kernel.org>
-In-Reply-To: <20260325-02-k3-i2c-v1-1-78f29c83d9ac@kernel.org>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NlUc2cqXmL74TKJKu5byzUENTnLS3Dfj1FqhBpm5R4s1CdLKXqBWIXcn
-	z+f5WuxC1g04rlcwXNpskDISEWT7vyUaYikL88cCg+PTIqCdSxvThx2qfmUfEr5qvJQ7MEL
-	8m45F3b5s1CeD2H6pS5VTGgCes664S+VFdNMLVX4uE+8wWyE57k9h6d4uNclzoB2ECPE/ci
-	055EjRgNYXTEFJywBXcFOhL8THFQHsOsDEVEHas6TaFory7xAXhFsqsN8kO6bcLhth2gBEv
-	8ncV8f9VbOzlkB9qw5R3JwbHsNyYqWi5++NvdmV6X7jKD1v04wpelhUj7/rW4uG1UgIVkXF
-	LILCdAcJ77MisOHh8QvJV1vbkNpwxJfc75K2KbyF90OkomBX1ZcoB8HSuhoegEDk+yED54N
-	VfCk3BH2PTyNHt+XKxNPKorzV9g66MlGLGZDNtH5raJYbsGZ6gPfnGfDow6jM7aRBnIMubh
-	WuxTnX29oSpJeVnuBjUcYd69WAhXEfTgjvyydCioLgfS2dlzHBEUQB5KYVLL/WRSI7NEeiX
-	pGi90qBggoUZW+0RynAMhKgHKohQjRKR6neW3D864u6loSE0S2T3o1yrQbro4B+xoZkOPOw
-	owXKBF3KYT9eULVaw1J2WRvlQlV97Fm1Aoo0F0w09MWmH/PnsEKvjgBYVrdDrLcs8RhaiQj
-	fsfq9HEUnaqFESQ2H0K4A7R0uRuD+RLU+tqSn7W+0UNJQjNVltvkynwUIOHT8qX8pLFUowo
-	t9utEXQRac8+Nf4cQvFNWatlSPruz+9ozlk8JtkwKS4MWOiRG9LMf2S8WE+O97x2iph9XBa
-	ptDVTqhss3L8y2NIqHchYuUGYv0hSw7JV4cv9O49TeHUnpVwG2RuAFCA7IZwkIymassLfyx
-	8vGZgnK4HAiJsk+UlgWKmAEYbxDs9WKRZ+jDcfNLNMHEEQc5XDeUXvk8hztK0aQxK1dtTvh
-	nSQ5XoB5X1aIG8NzUmGB9mZCxFXuZ7G/aWHMIvu5HCe5k5KxDEeXqZAjB9WfBkzOyc5HTdF
-	UEFmU0o+jraHG+HuPO7FBGnSX6NxgimC806U0RdJan1Lce0qOvvfcsMR8TgjU=
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR04MB8585:EE_|DU2PR04MB8951:EE_
+X-MS-Office365-Filtering-Correlation-Id: 67580038-d939-42e6-4c8c-08de8a63b29c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|19092799006|1800799024|10070799003|376014|7416014|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	TDkLjGCk59oxN3k1h6kJNSkkPPysnIDson/TIrmVIcgitvLI2U93YTY2h5IX9usTD1geEAZ53Ta6v0FnQog3RBCtFzfHVKXaH8a2ff+rlHWLfgsg9du5zgtMxyZJgBake3QxQHNMd4ckY6vKFn28qt69ebzHZpOoazQTPfLWJcNebOe6B+SWwTDfSRRaZbwCa8WYbvaeylgThEXQ6Nlpti7VB6lVDGN9l4e4vVHVP8LYtcaql8naBE8KChH8wHvm7PoL3LuO3b95RRUc2jOiHyoeYKKDkhYZjFAPdjuySt25aZmAYS+rD/zTGzBD7TRxEMTa2Yq59185y5tT5M4LbVPUEPB0kPc2nKfKZ6Oi318nbm3MzmSXRBGQ1uCs97WsEvPFz3FhOyHOIVGj69f/Txivn2ZqNChAq2pqVJzGsRrJ4y+sFQUCJ+32svBOCqZSvfDuAdL5NMB9RZVRSYIbldyr/5pHJVmcpp7HnkDsO0Xp7LMXNnrdwvHhnY7Wycwh3c2siHVVUYE7D3AI3NsznE8KL2L5RrGUMeZkhFNUI2wLHDkQIbmfnmszrPjZ2FOBKJCNUniOSvl+RhyVz/g3r0ctq7EWzftn2L3TxEmo+V0i+VoLQzqcyWHWEVmrBUyX8hG7yf8ZI3fY2O6uan4h9DAZ9FllPesQnXvPRt8rzInQEhwDlGaA02TR70y/I7uyzbthwQKYJtS7abjrALnkrYQhqpaeOp3d7bYwFWQfHmk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR04MB8585.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(1800799024)(10070799003)(376014)(7416014)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?iWJmwLPIaoPbZ3tsima06lFTVXZJ+kNEMNmQ1rLIvpkStZFV4qgzde6HZnQF?=
+ =?us-ascii?Q?INw6NbJlg+GlePToErCCZ5GWtlT85g8ZhEu/wuJ+GG1U57oDOvLwnH6Ghdz3?=
+ =?us-ascii?Q?u26jhEN0CJLnhrhVECS087aURkMMqM61Qf/J4oYxdPgqc7xUZekWNrZHFTiz?=
+ =?us-ascii?Q?HN8DkgshAIi7ZEtgpxdMivW2xo7WnG9LbWm/Al2dJtGtJz8QSW9hCAdXb+Ik?=
+ =?us-ascii?Q?71QtFJcf4Q63lOkk+KGeSPWbfYrWb+G6c8n+xxDmez/7ITXrk5dIj44vYZ8I?=
+ =?us-ascii?Q?LQjWW433kNESUzpCrCkHdBxfILWUhsRT5LxsUDKki46x8r6Ehc7HgIzB8EAC?=
+ =?us-ascii?Q?M5I3xb02ApH4fs6UXNUik9AZuY/HlkdJfuR6wEEb7emsbrYaY9nn7gvkPX+f?=
+ =?us-ascii?Q?dqEJtgmAY1MKmS28xFpp56nIZxtUyx8UYfxEdlpGbCdXBaj6Dn4fytOsEC2D?=
+ =?us-ascii?Q?66F5QRM6NKDBtzK4BXaXm1tOydMVgathTqf1rQOtwctkPBn9SbigyrcOeiNl?=
+ =?us-ascii?Q?f1LjUfWjhwLcjBRROm3s4Ff0fhc3YRKNIjTTnLbVZCSvuhu0TcutpzDS+kab?=
+ =?us-ascii?Q?VJdg40ueQCZf7wUCKuBo9AY4Fgl4jFUTxNdYbnkI0V0mL0jXcKgRDFCj7vRI?=
+ =?us-ascii?Q?+VOP+JSPVfMOaWV7X9DFYMS/5M/CCjGgiM4+Mz6s7ZIwG4ZYW2PKWIA1aX8h?=
+ =?us-ascii?Q?B/Xpboh9OSQYsMd9AWc1CZz0qls8+RKQkbkJTjOKyncNLv3qYhgj/SFF6BF6?=
+ =?us-ascii?Q?Ot9tJhW+GXU0XVe6TL5LqpMv4eKbxSPCgHsB5F0R6XwhODXOMuyTH2yWo3q7?=
+ =?us-ascii?Q?s7MxjJzLUusLxLpLTMua31TsI8NuDjvlVMLzzbJ8Lv6Y2nno1uO3X1ORjhJ5?=
+ =?us-ascii?Q?j/lj05Ws2T2x9zp8t9pojrZUhBZWR+A5fj7jdES3A+PZi6Q0TVsB+rDk2Wgy?=
+ =?us-ascii?Q?xUV+PERtmnZn5kandwsQ4qhxUoYbGpu3Zv95c5+ASG0mAWK1dDM0hCsy2vTE?=
+ =?us-ascii?Q?QtFnu4yf4JGlF3wZ5bPV8KyI3KGkxAUSWfVRRrCNlBa8lEyPx47xPXJo383j?=
+ =?us-ascii?Q?txIWhHhIGItWBw2omRI5Uzqte2oJQsZ5M2U4aRMc+jFEMQFla/Shl4BCFHwX?=
+ =?us-ascii?Q?Z2w63YAe1TBhkrY1+TaAxh6mOXGiH57xRbb9/X/oWAjQT3vczTlq3RCZhFqm?=
+ =?us-ascii?Q?L7BCKQ+Ij8vN1MGCjNbPaIg+qwAFR+O27C/oav7zDm8u+U/K/q3qQ8YK27ls?=
+ =?us-ascii?Q?9IjO0MfZ94aNAGD108EVSM0RFoM1sr6furWDySPe1f85ZXEVdcrMkhTRCgGd?=
+ =?us-ascii?Q?AvFqg+5XNokX+gObHI5bccsihztYFauMyTsC2GuuPQgkoyDe3erpPYvaqQL8?=
+ =?us-ascii?Q?qVUSjf8B9dZLZOk5yJL7hn3KAKq38jbLTmjiD8fcvxbRuLKO1Mx1wM8/6mCQ?=
+ =?us-ascii?Q?Fc6gH/MWrMcGhWSzK/Dslqk2j7Ubuf0tk6B+Xu3im8EK0ak7JwDJpooWX+Iz?=
+ =?us-ascii?Q?Dr6noHzzYyvCBIkXKNtId5PlZobxXghD5sroRSJb4Kfwuzaes7JCr/6A2o1H?=
+ =?us-ascii?Q?UZRmsqWudf7MOom+wAtGgrjvjDQ2we0Qye8+xFX/bXhyQ1j+cv2UcDI7DWcN?=
+ =?us-ascii?Q?ThBIH0KpxG8VemFn1KiHZ5rXEKvMIyIhwLOj4pRPSNvRaWZn3sXE183/tZne?=
+ =?us-ascii?Q?ocNRFgVxkGc8nat2Jft2SlaXZuJYscv5Lpw3K8Qe12IzBuvivu5eEP3X8XN9?=
+ =?us-ascii?Q?mVKyWcGIjUJ0oNnObUiC0B1mNf92rabwNV8vH/jsvrrlrbc1jAHH+OXqRziH?=
+X-MS-Exchange-AntiSpam-MessageData-1: CXDuAeGTiO7U+w==
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 67580038-d939-42e6-4c8c-08de8a63b29c
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8585.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2026 11:43:13.8297
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: QmhYKydPcdenRdeevcDFt6W4GzHXcXgFQUtOM6MfznRNXgTLw9sJ3AC3Crse1GiM4KbF/sRfeu0rtEGrlVqcbw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR04MB8951
 
-On Wed Mar 25, 2026 at 5:49 PM CST, Yixun Lan wrote:
-> Add a compatible string for the I2C controller found in SpacemiT K3 SoC
-> which use same I2C IP as K1, so make it fallback to K1 compatible.
->
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
-> ---
->  Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml b=
-/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
-> index 5896fb120501..8c04c675b25e 100644
-> --- a/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
-> +++ b/Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
-> @@ -14,7 +14,11 @@ allOf:
-> =20
->  properties:
->    compatible:
-> -    const: spacemit,k1-i2c
-> +    oneOf:
-> +      - items:
-> +          - const: spacemit,k3-i2c
-> +          - const: spacemit,k1-i2c
-> +      - const: spacemit,k1-i2c
-> =20
->    reg:
->      maxItems: 1
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+On Tue, Mar 24, 2026 at 11:00:10AM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Mar 20, 2026 at 12:32:24AM +0200, Vladimir Oltean wrote:
+> > As explained in the similar ufs-exynos.c change, PHY consumer drivers
+> > should not look at the phy->power_count, because in the general case
+> > there might also be other consumers who have called phy_power_on() too,
+> > so the fact that the power_count is non-zero does not mean that we did.
+> > 
+> > Moreover, struct phy will become opaque soon, so the qcom UFS driver
+> > will not be able to apply this pattern. Keep parallel track of the PHY
+> > power state, instead of looking at a field which will become unavailable
+> > (phy->power_count).
+> > 
+> > About treating the phy_power_off() return code: from an API perspective,
+> > this should have probably returned void, otherwise consumers would be
+> > stuck in a state they can't escape. The provider, phy-qcom-qmp-ufs.c,
+> > does return 0 in its power_off() implementation. I consider it safe to
+> > discard potential errors from phy_power_off() instead of complicating
+> > the phy_powered_on logic.
+> > 
+> 
+> You could even simplify the code by getting rid of the 'phy_powered_on' check
+> altogether. There is no real need to track the PHY power state in this driver.
+> It is safe to call phy_power_off() without any checks.
+> 
+> - Mani
 
+Ok.. as the author of commit 7bac65687510 ("scsi: ufs: qcom: Power off
+the PHY if it was already powered on in ufs_qcom_power_up_sequence()"),
+I assume you have hardware to test. Would you mind writing a patch that
+I could pick up to replace this one with?
+
+I suppose that the power_count test is somehow no longer necessary after
+commit 77d2fa54a945 ("scsi: ufs: qcom : Refactor phy_power_on/off
+calls"), but frankly I don't see it - the ufshcd state machine is a bit
+too complicated for me to just statically analyze.
