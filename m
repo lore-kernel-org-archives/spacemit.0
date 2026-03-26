@@ -1,41 +1,40 @@
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
+Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.65.219])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D32F3B8BC6
-	for <spacemit@lists.linux.dev>; Thu, 26 Mar 2026 08:18:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFFD3AA1B9
+	for <spacemit@lists.linux.dev>; Thu, 26 Mar 2026 08:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.65.219
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774513127; cv=none; b=fXMg63AA5jAkDG6M5v68xBKmbQZsXQqAHfFvcQw03Aloi7gFnG617X9wH0H7DcDWLbWQTah+c5+5OG+IPrO85MCT0seYfm7ed1uCIsSJg3pToO2tG3o+BgJv1VJK3QcyH10i6sXT/ZfDex0jkS0GhsN9mk1ZtzElMHsSypGiYbE=
+	t=1774513133; cv=none; b=XaIQ2NWbG1W8cJ0ZL9lvKmJhN4C64qQP9JL4zZ5FOJ3Lz/1Lqm5caJXeBlQjfZWQeGk+r1r4LGAKDcSSGnIhrIiK47sISg6OZ3Ew6gjOowDc0UfyOc0Jf8lkE1gX1pTP3f2+1vHRaYEpnH30p1zB1Q7BBdxab/VL4n5apG6WzdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774513127; c=relaxed/simple;
-	bh=e9ICveQKvF/Pj981F4inXuWs6rjFz4ZRDL/My9t4tn4=;
+	s=arc-20240116; t=1774513133; c=relaxed/simple;
+	bh=nmmcfGtbvriAE+ViUwjIiiQf6Qn588a2oed+diwK3sg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LwAq6wbbJGK2mPk7MXJuj3viuFTMG9bpl4Qj0AD9DMozkdBq1fBhOFpkA7o8RshzldrcA3e2xjD/taK5RmNmq0r2NuOrtNkAdBq5zZSxjG5BtAIbNob/pcw/r1TFi9ks71l3Ob31G6MwrogdVRKWSkuxau5roZdoOYg3+5gx2+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=TeCtfCe4; arc=none smtp.client-ip=54.204.34.129
+	 In-Reply-To:To:Cc; b=rZu8Ie2hy85AbmjRTBCuoRGXFkOcuykJEwwQI5cpYfrBJuY99iEWpF12hyH05Pu1lE/3JmjvMbjYW07YhdDMq0IWe0kz1wgibjPPGuS7lSCMM4haTq6BlhlSdmbKGPqDil2KlpQaeVqm42t5kVssLnH3W+GSPsLdLAJkW6yXBPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ZnF8qyWd; arc=none smtp.client-ip=114.132.65.219
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="TeCtfCe4"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ZnF8qyWd"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1774513088;
-	bh=s2oQFoR0c+QLUYmpARQQP1qguleDXuKVE28NtoCcXFM=;
+	s=mxsw2412; t=1774513102;
+	bh=AfkHhDGLpLQTzVSA1vGgmpyjp0IbMp4aeirdAoHtZNQ=;
 	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=TeCtfCe4Wqb/a5UuLUfHM2T2+GOt+pOfHyKp9CS5hLyWodZ2mYmxQB8D16X5vBZu/
-	 m5RCc+xSX/QyjgfoUyAihUT0/g08yuKOoHnvVtH/n9bMBtn+w1Ics57hMA4SWaBiXf
-	 aPlJAyOqoW7hmzgEqoBMUuyfphmYpkXe8uAolcn0=
-X-QQ-mid: esmtpgz13t1774513086t91d86235
-X-QQ-Originating-IP: WElT2ry7tB8lLshZYv4GJO/uXGJxUAxREOVWudDvM1E=
+	b=ZnF8qyWd04nR6pbG5fweVA2kcWfby8ldbygL9cLIXn9yiqJ+CYFOcN7k7YL0PkcST
+	 qQVNOnVBiZq/FZTeDyw0R+pGxPGPPGTwLtJghEtA4Geg4L8uk1dtMox8v5N03dI4GL
+	 0fpeZYLuRBy5hJMkGIjszj4Fd+t/2O7O5BKvmke0=
+X-QQ-mid: zesmtpgz5t1774513100tbfdf4f0a
+X-QQ-Originating-IP: q82tvM4vTm1zwnQtZr3+sN72ee+stqENddUckWj/GKI=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 26 Mar 2026 16:18:02 +0800 (CST)
+	id ; Thu, 26 Mar 2026 16:18:16 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5813357295309933169
+X-BIZMAIL-ID: 2742092535896640534
 EX-QQ-RecipientCnt: 20
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Thu, 26 Mar 2026 16:17:17 +0800
-Subject: [PATCH v2 2/7] dt-bindings: dmaengine: Add SpacemiT K3 DMA
- compatible string
+Date: Thu, 26 Mar 2026 16:17:20 +0800
+Subject: [PATCH v2 5/7] dmaengine: mmp_pdma: add Spacemit K3 support
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,7 +43,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260326-k3-pdma-v2-2-ca94ca7bb595@linux.spacemit.com>
+Message-Id: <20260326-k3-pdma-v2-5-ca94ca7bb595@linux.spacemit.com>
 References: <20260326-k3-pdma-v2-0-ca94ca7bb595@linux.spacemit.com>
 In-Reply-To: <20260326-k3-pdma-v2-0-ca94ca7bb595@linux.spacemit.com>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -60,60 +59,90 @@ Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
  dmaengine@vger.kernel.org, linux-clk@vger.kernel.org, 
  Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774513072; l=782;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774513072; l=1936;
  i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=vS8ZACtafXuUdon1LCamqQGUmKVZBsmItTUIR/tecmg=;
- b=rZ789pdyPNreWYgyYMj3Ulx6Thkc9cK9AJwqZ8/NSDypf/6iqa3XNSMQxqi/NgvKGq3oXLt6I
- u3K7i7aX6DZARoYYvklMbYEx7O6n6Cu+BVZwc5vgZAMd6pwl3BrABPm
+ bh=naSKBQlGCncc4Sjkd1TAFqDT0cym6ceyGaNaHvhlkkc=;
+ b=gzJG1oV5yaKVjrZQyaBxqKdVvf3DXkLlZJXiJ6LDHZaazSTBBENlrpMm4+JzvfVmKEqLNfO9A
+ FO8Grnpb3geBPvBnhnIpDxbA7MB8QodonXiw/6I0nZyk7cV85pNWkNZ
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
  pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Ngwq0BL9nhqbgpgdtno6pkEZ4mtKvzfy1dngFJc7HTbDDbslCYBDzb/m
-	pFZerPR5CXiwixm2SX49UWu1De9cJVh2Dp8uG2pd9VhyVPN7BXpEGGH9ZJ0vD7S0y04eLBF
-	FQBU9QQymrZRLmpwxs/DsbTWRZpZ8z5ti/GUfp9xvfpR1p1Np0gg23qqLV2BS18zdnsEUB5
-	4nJCX5G7FlU2bkX8KSch/q2o6eimqy/iKVgfdOygP0vfzrMRsZL8cziU3+Ft/4dlee+ETiw
-	Sj8A70o+oG9EBHlcy1Nr6z0vo9V430vU9cRqEwecVWgeKflqLCZhzmwaonU6cVReRRcs4UG
-	oEahoSd+Vpcbz+HuFNo6O/ZnnybsKknVBRSrXyVAM+sSuD49TOh7mR0gVwu6ZaLklpLcPpJ
-	EFBme2G4olHZfosWJBljPslMMjxF9CntRtlyoNAdjpTghq1CudICpBLWNxzf0tQAguTVt4/
-	3TtygpJ+2Me/gqe1C5xBQ7jGwFdq4cHocKeFzDm0q1RLAi7+pHwOA5X8vg560FyX5TDL+dj
-	KTDDTRH3i8at+SU5oTxvP0pX2yr6yyNnIkti6DSJmC63JhM1VreTq14KE5nFxbWQzqbi0Hk
-	4ZxcGzZ64hRPQK1Rs4CMqvTJ/9VBv/JwkVwemhw0/Cik8tc97czkSrQmJooPGfnyESq8KRh
-	kqlTKWN2Vs4nE554X1opRRLjCPhIfG5hECwBQXF+4rZKtCvoACwu036EbMdB04CgLpuL2+T
-	mKq4C2btMAjSOYtFLNrkfQ7SjAYeSnY2XTkKkAMqXcxV7kBvFGcHX9NB9g3vK9OWRxo2TTW
-	PzGQmXDRp+YsPnD4b0J8gJSrerJ9T7EgQ899Fc11hQacRABcDsBtRqD+KWVHYVKxuP5yxwo
-	9rdPWv/3EGep8B4t6NR4MMYD1B1pT+Z7QNanou9lbKXWE43M4clFc1b0nCcS2+r9BuGQ01b
-	zQtzt3HkeshuC04yRvLf1Fs/yvD6bksVfqjb27Z3n0g/2tzbWPqsIvLZtVsZ12qkjXlUUez
-	w5ehpBHpp7ksdAQOqRqHCat8F3If1JDMzj9uzoKHBFhXVrnIphgYJO2MBMHubHOpzf4NWWi
-	PVO/5TeEqwBV8Ly4Vs8ti4=
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NPmDtcYUnVcgDA3jFcLvldAQHB9ct0G//ElTaAQLtiYFncMVSdyaP4Tu
+	LfIcKCVVmXX8FXTWf76ANeaklFp1zWXrNXsHbaMVNrb8TN66qPHJzEDw+nI9B+BVY+odu3d
+	kbbjFXN4p6P9QoLdlVujO2EF1vWAUX5VF/DczETzXcDjxsldS7aksh6G6xD2C9aT6pYpjWI
+	zjhGliYC3u9rYMtVNggUwBj0ao7Oz1jzUgBVS1s61O9r5enjzmUlP5G9tRDs1Wz6Wp4k8pX
+	qd3QuLN8ZXeRlLJLkCsxMlrhFOdgTb05cD5rNXyO8bZN0Muq7577oW6ksPXuYUN9YtORz9T
+	e+D35c9nyeV3taU5fmBMSxjJMrR4K4m8EGHlAvxElXTVo1kVRF4bb2PE/RoPb+AbD5Z8QC5
+	C0qGqBich+fvg5VyB3K9MaI13NCGZL2uvrE0OHDST1Ouq4S4OBoMZUZTS0RR7Vfgr7HsesZ
+	OA7dUodRF/AgmG9WPvXMnC1N2qIHbz1Opl4BeUHq7uEEuomdudYKGPClY8hzhDMIp0IiTeY
+	zR+k1K0yym54Idacx85abH9wK0L17nAeAri5Uz+35lyY5LdSJ88WMyOALGCV511wA+DK7Bc
+	TRN8TmvQU/T58JSAobED/5LZviw+uFTzrUbHpqF4vpFCIPb0Tl1qHDWGU6o76ZA+lH+yo3i
+	u0b9MGOVqRpIlsM3JrEzZHsQMWc1PPp//jiPgykkZMKBWRB3HdG7PFKoHYeLZcYfs27XseU
+	1Ub54G+30SzXo2jGVWkA4l+aEjFrwtxs3oTBkykNy4Ri1hIf4gOZaAWijXsz58C0qocVHMR
+	cqeZjHNE/izLUPERuadaeH7igb1vuLDHjLF/wQz3u2ZyhMuwjIm43NJI291Ul5ZVEpGZAwq
+	/j/ps+OCYJ+iaCsng4w48NM7vCjCI1ZDtj0gJyuVcRyzt1WVpWKizwQP3YKK6LyNg80f8Dl
+	BsC05OrSstaa5CbcbkU0larwN6PsBLVop1TloghTKZJ+663QXeCjsIn1viRZa2v61JK5gtp
+	Pg/NwDr2jqMvLwu/hHdeGorE3ghrNNJ7TXg13Ts/A6FksBD/uN8TmOWLMzkx7EJ7YR6UHOD
+	Upqtxh2MzExBO7kVNq//8WFD9LCgUpTQYoGHU8Y5l4u
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
 X-QQ-RECHKSPAM: 0
 
 From: Guodong Xu <guodong@riscstar.com>
 
-Add k3 compatible string.
+SpacemiT K3 reuses most of the PDMA IP design found on K1, with one difference
+being the extended DRCMR base address. This patch adds "spacemit,k3-pdma"
+compatible string and it defines a new mmp_pdma_ops for k3 pdma.
 
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
- Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/mmp_pdma.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
-index ec06235baf5c..62ce6d81526b 100644
---- a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
-+++ b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
-@@ -14,7 +14,9 @@ allOf:
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index 6112369006ee..386e85cd4882 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -52,6 +52,7 @@
+ #define DCSR_EORINTR	BIT(9)	/* The end of Receive */
  
- properties:
-   compatible:
--    const: spacemit,k1-pdma
-+    enum:
-+      - spacemit,k1-pdma
-+      - spacemit,k3-pdma
+ #define DRCMR_BASE		0x0100
++#define DRCMR_EXT_BASE_K3	0x1000
+ #define DRCMR_EXT_BASE_DEFAULT	0x1100
+ #define DRCMR_REQ_LIMIT		64
+ #define DRCMR_MAPVLD	BIT(7)	/* Map Valid (read / write) */
+@@ -1207,6 +1208,20 @@ static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
+ 	.drcmr_ext_base = DRCMR_EXT_BASE_DEFAULT,
+ };
  
-   reg:
-     maxItems: 1
++static const struct mmp_pdma_ops spacemit_k3_pdma_ops = {
++	.write_next_addr = write_next_addr_64,
++	.read_src_addr = read_src_addr_64,
++	.read_dst_addr = read_dst_addr_64,
++	.set_desc_next_addr = set_desc_next_addr_64,
++	.set_desc_src_addr = set_desc_src_addr_64,
++	.set_desc_dst_addr = set_desc_dst_addr_64,
++	.get_desc_src_addr = get_desc_src_addr_64,
++	.get_desc_dst_addr = get_desc_dst_addr_64,
++	.run_bits = (DCSR_RUN | DCSR_LPAEEN | DCSR_EORIRQEN | DCSR_EORSTOPEN),
++	.dma_width = 64,
++	.drcmr_ext_base = DRCMR_EXT_BASE_K3,
++};
++
+ static const struct of_device_id mmp_pdma_dt_ids[] = {
+ 	{
+ 		.compatible = "marvell,pdma-1.0",
+@@ -1214,6 +1229,9 @@ static const struct of_device_id mmp_pdma_dt_ids[] = {
+ 	}, {
+ 		.compatible = "spacemit,k1-pdma",
+ 		.data = &spacemit_k1_pdma_ops
++	}, {
++		.compatible = "spacemit,k3-pdma",
++		.data = &spacemit_k3_pdma_ops
+ 	}, {
+ 		/* sentinel */
+ 	}
 
 -- 
 2.53.0
