@@ -1,138 +1,108 @@
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BA23A7F62
-	for <spacemit@lists.linux.dev>; Thu, 26 Mar 2026 08:19:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F281932E743
+	for <spacemit@lists.linux.dev>; Thu, 26 Mar 2026 08:40:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774513169; cv=none; b=nknTBJ+MYsXqu/KG3JeWYkzu2Z7lUP8v+rm3xKpOd5RH+1MQ2XyGe5jtNT8TToC/BSqbrxaZJzNYzCMakKCiZ2NKUPDVDUUP7PuUsHGVYyvfuwAkRzIQ3i5vggu/ASI0Hcc7i780uZ5f3oY+PMOyLnCkgKjPYAfJ5RSd1zldFpY=
+	t=1774514412; cv=none; b=oiwLaUC5wyr+TFrHWyMsNaVYJVaN6ZGUj9FzkKj7RZFb7ioQyPUCVcJcBLy5BPEkwOB+a3ww5L7ef5aemXkhYmg7VIDDy4Fk3MNO9MxtjIqiQgYOYpp6dMS232ZHFqtBfuvUdsMDKNuvofk1Kobhknh5EqLctyoB0GkTFPdzjB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774513169; c=relaxed/simple;
-	bh=jTzW/BlP/85Q+ebUua4Muo2x9pnkZwv/64rxq15Xclc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=s1fHGscPAXr3CvLepkb7P/dGjgAVfQ50b0d2AYK2sePiZRbxiJw6bD8m7y3lOKmEFlFO3ou+n8z7KfsG5nDZPx4Nsn7+FQ+Kig2ql+Xi0ZOvURXtaGIClpJd6sfxuScSnC8QJN9I0jOk7T381Xu6iJlc8SqdDuKklwlSv8/l7UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=qwNLRID2; arc=none smtp.client-ip=52.59.177.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1774514412; c=relaxed/simple;
+	bh=QfOa7OzRwwd4XlZR0+3Hhy9wDi0PAtKq+HHQAKzIr2Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cyZDXk3PZrc9LUMMXdgGQtVq5uCTKYAqooVlDU1wrSk2N11srSCnr3SP2YtSYvwqbKoSSw4c57vg6mq7BvzQ7oBy9a+IDyUHF07UfDmX8hg36Y4sDbskwk5oIcsMl/0M+Q3DWTwMlfEh3yHU/jmwBH+PbUz7RMbBeW8ZBTswTUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ftVRdaDO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="qwNLRID2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1774513112;
-	bh=X24IhPieDgBLiSP7Jey6c5qmaVJh9ukNDBwY2l74LNs=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=qwNLRID2fc0egpXFft83BjirTHAuHGFE05gVtrugTHd46SAKhYDlLL4N5I06sgrGF
-	 UPuSfO7nKWQ6wzwpukMMYJaMG4IkKnoMs011Eut3TAwLZt2q0cFcxnZECYScjb2S2P
-	 o2tZoiIUcu5fB1ZKFZwN0mpI5ysfE2r8GccOq200=
-X-QQ-mid: esmtpgz16t1774513110t2f9ee44e
-X-QQ-Originating-IP: 3Fqy/k1KQqWRHqrcdX1d3p6XWIRDCKU/1f8HFVA9VCY=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 26 Mar 2026 16:18:27 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 8687179103118838065
-EX-QQ-RecipientCnt: 20
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Thu, 26 Mar 2026 16:17:22 +0800
-Subject: [PATCH v2 7/7] riscv: dts: spacemit: Add PDMA controller node for
- K3 SoC
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ftVRdaDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4874C4AF0C
+	for <spacemit@lists.linux.dev>; Thu, 26 Mar 2026 08:40:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774514411;
+	bh=QfOa7OzRwwd4XlZR0+3Hhy9wDi0PAtKq+HHQAKzIr2Q=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=ftVRdaDOnFGANoIrp9OBhja30/JqJdcf3WqhVM2IUvVXw1JgNZtfzpu2r9NuVwChu
+	 joOjJsjzXJUWLt+dRFKmTpkTngVjS8DFiBoJ1ku8K6YdkYhh15H9U+Yj2GDrKUaEPa
+	 Sw9pzt32LwMPHlNSpKHdfyI5x+h/+fpuWZY3hm3mQQQsUMdJKtH/Wy3RPLx5CSksGw
+	 zJVQOUPBX2D/joxJX1uJJ01gj+2Q/gRrNklw3vit3m6/D4jR/LSLPCV+ciIuMS1O0K
+	 0Tqg46eygQg5MxDMp9zjKRDyxww15tORBncfdovtYuhN55HeyXHK/qz7TQnyMLjRty
+	 I2Wy4KJzpWdCg==
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-59e4a04f059so810734e87.2
+        for <spacemit@lists.linux.dev>; Thu, 26 Mar 2026 01:40:11 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCV/Z6WoPvvVIansZEV41F3Mi8mA8ncs3eFMPfjOXCAdrPYmOjaaCEcCZYXOSoso6QPsuyoh/Z9IsQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw8O1Zfkr0ydlGh5oOeMaYY8CRmpvGtaU9yxy+K8PPRzRZfoEXB
+	uTiozyCY/zWU+pYYn0OD8w44lhFbHS8sFBm0JMIv7xD40GJ8FxJRRI+NGVj75JBojSse37EOEkU
+	3zEBcXq740+QntekQxpqlXAH0JJlwdzR6m3Nc2b7Vuw==
+X-Received: by 2002:a05:6512:a8f:b0:5a1:3da4:e92f with SMTP id
+ 2adb3069b0e04-5a29b9ab6d8mr2497661e87.43.1774514410393; Thu, 26 Mar 2026
+ 01:40:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260326-k3-pdma-v2-7-ca94ca7bb595@linux.spacemit.com>
-References: <20260326-k3-pdma-v2-0-ca94ca7bb595@linux.spacemit.com>
-In-Reply-To: <20260326-k3-pdma-v2-0-ca94ca7bb595@linux.spacemit.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Guodong Xu <guodong@riscstar.com>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- dmaengine@vger.kernel.org, linux-clk@vger.kernel.org, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774513072; l=1666;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=jTzW/BlP/85Q+ebUua4Muo2x9pnkZwv/64rxq15Xclc=;
- b=3hDlNh1Dew8xF43uT+rE6/WcbKSSrb5z8mSOX+K1w3Dpf+T8T4eRNTDd0Pytzl7fXe/S6kqVV
- wurgTM+kij/C7xADjHYnMoqVJIcsrkYdnT4IF2+ooR1GQ3q4nNclWEh
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OKX6byuwCvg7TA9sWPj9M7slTa/EiaWh0Wir5nsC29eRWMkXMBP9mTJT
-	rtIPe0fBX7F2s807zJNTwN7LvSqRMRLX5XffWCGaSUpN+eGT2LZyFagVHtHNJd9U+WHvKJ7
-	6jaMcP1CskR4xWqqIBTosJgSnqyeO2C+HiPbIFTFyOcIPUzEaNArLUsdW23ZAzI2qgB5RPA
-	B266BqVBRgtA1AZ2VzV4DuZblb7AbFzze/PK1PIrlaW1gaC4wQ6uw88uvXJvh8lppCNRH+Z
-	7ik7A99cu9EapMtdaOlyGLQr+f04vIVa7oEicplPWx3WkCzjUIOuLU5CEh+aTvzxa1uRs+T
-	Qh5K+hdKnxyKZnciEBhjIjCv6qscveOgCc6Gkx6rH06WKpGFf0Rt5VLGX1zRaqWs+6a+egd
-	sUv6hULKczGZtV9eI8jLEUsdoTcxFGxc460n4MRIPQx4+4N9fk7wXI/Cd9g0+YniJZVhANI
-	2k00lYD5fidfsEqVOyzTn/IVPTstjftEa6ksI4czTui51IS1Qn14YFuJN7Wdg77q8H+QSCl
-	rb107IPS5RAmM3CMcJdFU91nsu4/j8hMymNB4udaEyYFlLLbrVoOutohLYD79OtoL+Kuumi
-	GQEL1feSDhH//gX+LL9GTxnnVcuqi/c3BuaYV9Y7PraF7iqIgbPCZDVcryEhkzniE5DzYuU
-	Z0AjSJUOJAVP/t3PvMds6vFWeqk1M7yy3fBZYRHOQZWp/nREqrekjkTr6ufaRehFKrVmfgT
-	QFcJY9Zoy91yIZmn51NHJXlxdHiFM2g1aNwMeodmESN9vmefVsULmdyfCs43uJvHQ8axWS6
-	hCyyMYJWXBGWrvohDw/9XX7R5RMqPli59V7NDLk0z4nbvvjrKO91jcvqiAcSIJm/fpn97LU
-	EM6vvFENWxQktOCIrFXeb4huistr5y5zLCEzT6i3EM0X4ECQMoo+ZCkF07r+hVDkHuxNkWu
-	yDrrwHwki1ZsLUAeD6nIckFyZ8Qb85RIb4PZswjfzQJPPpytWulpQPAWAl4kfYYxijwyZ6n
-	VXomLjmjI9O67mvQhfTCeo95nR9VH1Q7IOZNrmRM2UyFDBZGqPcMnuhPZbVT3YGdlM5Mdnf
-	5RuzFw3/ztaKva+Qeqtp+tVwwYJfW2hbtEgodKQAa3ixCel8xsd3+k971O/xWf3gOIa225M
-	LUwfFkDE9BAuLeik2phu7toTvTxMS7zRDzK2
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-RECHKSPAM: 0
+References: <20260325100144.1696731-1-arnd@kernel.org> <CAMRc=Mdwu85gghDjQEu4eP2HZxHjBFpph07q9SOfAifSDMtpVw@mail.gmail.com>
+ <1789ce66-5a18-4b54-bbad-3b2049f2c26d@app.fastmail.com>
+In-Reply-To: <1789ce66-5a18-4b54-bbad-3b2049f2c26d@app.fastmail.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Thu, 26 Mar 2026 09:39:57 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MfwR9POm3OvuJTRcg8sO1y=LRdBMrbVLQ=eZD177r49qw@mail.gmail.com>
+X-Gm-Features: AQROBzDadLtwyr2raaFqkwGzyCOh9M5RUz_Gm02mFq1aGi1CGm9iwle9RVHpGLA
+Message-ID: <CAMRc=MfwR9POm3OvuJTRcg8sO1y=LRdBMrbVLQ=eZD177r49qw@mail.gmail.com>
+Subject: Re: [PATCH] gpio: fix up CONFIG_OF dependencies
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: Arnd Bergmann <arnd@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	"open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	Linus Walleij <linusw@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add the Peripheral DMA (PDMA) controller node for the SpacemiT K3 SoC.
-The PDMA controller provides general-purpose DMA capabilities for various
-peripheral devices across the system to offload CPU data transfers.
+On Wed, Mar 25, 2026 at 11:41=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> wrot=
+e:
+>
+> On Wed, Mar 25, 2026, at 11:32, Bartosz Golaszewski wrote:
+> > On Wed, 25 Mar 2026 11:01:14 +0100, Arnd Bergmann <arnd@kernel.org> sai=
+d:
+> >>
+> >> WARNING: unmet direct dependencies detected for GPIO_SYSCON
+> >>   Depends on [n]: GPIOLIB [=3Dy] && HAS_IOMEM [=3Dy] && MFD_SYSCON [=
+=3Dy] && OF [=3Dn]
+> >>   Selected by [y]:
+> >>   - GPIO_SAMA5D2_PIOBU [=3Dy] && GPIOLIB [=3Dy] && HAS_IOMEM [=3Dy] &&=
+ MFD_SYSCON [=3Dy] && (ARCH_AT91 || COMPILE_TEST [=3Dy])
+> >>
+> >
+> > Thanks and sorry for the breakage. However, I'm wondering if it wouldn'=
+t make
+> > sense to do the following:
+> >
+> >
+> > -#if defined(CONFIG_OF_GPIO)
+> >       /*
+> >        * If CONFIG_OF_GPIO is enabled, then all GPIO controllers descri=
+bed in
+> >        * the device tree automatically may have an OF translation
+> ...
+> > Symbols from linux/of.h are stubbed out and these drivers can build jus=
+t fine
+> > with !CONFIG_OF. This would naturally increase the build coverage.
+>
+> I don't think we need to worry about the build coverage here, CONFIG_OF
+> is still included in x86 allmodconfig and half the randconfig builds,
+> so the drivers get enough exposure either way.
+>
+> On the other hand, dropping the build time check may help avoid
+> future Kconfig dependency issues, so that still sounds like a
+> reasonable suggestion. At least CONFIG_GPIO_SAMA5D2_PIOBU
+> is going to need the 'depends on OF' regardless though to work
+> around the other build error I cited above.
+>
+>      Arnd
 
-Unlike the previous K1 SoC, where some DMA masters had memory addressing
-limitations (e.g. restricted to the 0-4GB space) requiring a dedicated dma-bus
-with dma-ranges to restrict memory allocations, the K3 DMA masters have
-full memory addressing capabilities. Therefore, the PDMA node is now
-instantiated directly under the main soc bus.
+Fair enough, I'll queue this patch.
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
-Changes in v2:
-- update commit message
-- using k3 compatible string
-- Link to v1: https://lore.kernel.org/all/20260317-k3-pdma-v1-1-f39d3e97b53a@linux.spacemit.com/
----
- arch/riscv/boot/dts/spacemit/k3.dtsi | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index a3a8ceddabec..cd321975fc18 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -438,6 +438,17 @@ soc: soc {
- 		dma-noncoherent;
- 		ranges;
- 
-+		pdma: dma-controller@d4000000 {
-+			compatible = "spacemit,k3-pdma";
-+			reg = <0x0 0xd4000000 0x0 0x4000>;
-+			clocks = <&syscon_apmu CLK_APMU_DMA>;
-+			resets = <&syscon_apmu RESET_APMU_DMA>;
-+			interrupts = <72 IRQ_TYPE_LEVEL_HIGH>;
-+			dma-channels = <16>;
-+			#dma-cells = <1>;
-+			status = "disabled";
-+		};
-+
- 		syscon_apbc: system-controller@d4015000 {
- 			compatible = "spacemit,k3-syscon-apbc";
- 			reg = <0x0 0xd4015000 0x0 0x1000>;
-
--- 
-2.53.0
-
+Bart
