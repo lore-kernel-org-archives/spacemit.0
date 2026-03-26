@@ -1,115 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4735D288CA3;
-	Thu, 26 Mar 2026 18:34:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35BE39EF17;
+	Thu, 26 Mar 2026 18:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774550083; cv=none; b=FO012ERhgBqTnWvKVgPaAjZJM/pIEzfmyWwCbxX9TkIPXNzXEne2iuCR7D1eKRmzyhc6T/W0vMiVmnbk2ClMPpIbZwpYuvgL0lJfr/ARttqgoM2lkEmN7NrrZgbXzZnR0Ljzn4U4rx2jkjdbvYDKOs2I7oy0dKNZ+VUyu8qUpH0=
+	t=1774550286; cv=none; b=i18NAsEV0/ER1FriNWtCdLdG3hbjmV1GWk7IwJCGzv30xqrSZ/cF3hPP47VryTOjGzHBQRi+eNM7xltIC5UES9OeWaMvhMqgAu2kgsksj+KkxZnw15ciUqDCGnTZ0LkBoCReLfdu1NGmaIPvveygWGGXDp86bG0OAW56SXsS3ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774550083; c=relaxed/simple;
-	bh=+WFhHAP+I6U56ZY1SPoQXhOLT+bdcm5oHSlV3lm2fRk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AmHB+gFBIok+m/Y7Ubt0ETEhYQNvLq56BuqJACvQkZsJ5wsqw4a7TNWBtpmWRhOZrqALdg9yjnpDUrKu7sEWwbPSofT2NoQp/7r23An4WrGhpCN+vD4zK7+b9A+pQcK9OVuroCHMXx8Wl4cQhlb269GgeBklAx5KyFvbaowouus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLQ8s2Ys; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774550286; c=relaxed/simple;
+	bh=KEJLxQjVYVnI8xd60sWQTFJnTKUsPZ3CZRjn78h3wSU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ICUMsgF7yQxkUnisZ1tV/7Xwf2elgG0mncsqLel+T9Q2bz9MamciGwjrEbWKZqxIWPfCqS/h5TECsoOkClVBBcE+FMkZyAy7GCJ2m1lxO1a3SEm5QsCCN0fVjyXnMPCsvcZO0aqGDXWz/afcQfOGT1R8zEDz3AiDlCbT2XuIz4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=xpIkWgL1; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLQ8s2Ys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588ACC116C6;
-	Thu, 26 Mar 2026 18:34:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774550083;
-	bh=+WFhHAP+I6U56ZY1SPoQXhOLT+bdcm5oHSlV3lm2fRk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YLQ8s2Ys1REk6EW7Qhg3mlYZf3hKzj8IindqDfPFSPV9j2xX5TipAVNqRAUNL+Wea
-	 x4Y0N8d3LK8wCT2DArdswnWLaR795pWrpELuTVswjw2gttc7K7J4eNtCdjcjpqbJlz
-	 yK/HKpZlVj7Z37+hYHahAhIkr6dwVwIfBpaLT3hLCoQEgAeJNgF7DSLH3zUsKsCDi2
-	 ckkp3Xk9BU37wOBORGkLpHEm38eeWkBZRrpzO5xlZPT4MNuBpD4kU3BAl74GVvgSo5
-	 NsK/KDCX/pTx8/NsY9pHgcp5u+/sfcKA5UVl8fiQSP8dqqxQ67uoL7JcWFreNn9cnY
-	 ZF0JxhevI/KOQ==
-Date: Thu, 26 Mar 2026 18:34:37 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="xpIkWgL1"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
+	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+	bh=pKYF2U3blSKdPTf4iCctXPVsD9JEXM2IleXwM15XUQE=; b=xpIkWgL1inn8tnUCcEBJQlSlRc
+	1WIwWlcU0VvqrlGmv31oKz0EYEmCtP49fD4qV/qbDEd6XNqkHfJx/hBZss6EgkHK75s6NjDNKv/bE
+	reA1bb2TMU0TMLQplE1/xB0sDnKDNgCLgOcQrPJs8Hx7ZjARpWiQTwUNBa/fyTihZzqlCVoxe5oc5
+	catug6YBFqjDl8gGOTon1Yhd4R6bIG7Oc/lddSP3uOkYbC2uIDVZwD2oDSmuq3jt8vrrVg5+RvlH9
+	qIHvVOiYkat2ULrOJ93A2oNiQ2T/5HZ4eDqq3YJ7ysNfFEqFAuSiZcWaM9UUG46t9Ev1DGDSvJHkh
+	pcG+r0rw==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1w5pad-0000000GAiw-2Nke;
+	Thu, 26 Mar 2026 19:37:55 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: linux-kernel@vger.kernel.org,
+	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, Guodong Xu <guodong@riscstar.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 2/7] dt-bindings: dmaengine: Add SpacemiT K3 DMA
- compatible string
-Message-ID: <20260326-explode-surplus-24c0e0813099@spud>
-References: <20260326-k3-pdma-v2-0-ca94ca7bb595@linux.spacemit.com>
- <20260326-k3-pdma-v2-2-ca94ca7bb595@linux.spacemit.com>
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE:Keyword:riscv),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit)
+Subject: [PATCH v2 0/6] riscv: dts: spacemit: enable more devices on Milk-V Jupiter
+Date: Thu, 26 Mar 2026 19:35:28 +0100
+Message-ID: <20260326183745.1370642-1-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3c5c3SbeQ5J8Cvcr"
-Content-Disposition: inline
-In-Reply-To: <20260326-k3-pdma-v2-2-ca94ca7bb595@linux.spacemit.com>
+Content-Transfer-Encoding: 8bit
+
+This patchset improves support of the Milk-V Jupiter board by enabling
+more devices. Most notably the NOR flash (useful for upgrading the
+bootloader), the USB 3 ports and the PCIe ports.
+
+It was inspired by the Banana Pi F3 device tree file. It is based
+against the k1/dt-for-next branch and does not have any other
+dependency.
 
 
---3c5c3SbeQ5J8Cvcr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Changes between version 1 and version 2:
+ - Collect Reviewed-by:
+ - Remove bootph-pre-ram property from SPI NOR flash
+ - Mention that the fast read opcodes is marked as supported in the SPI NOR flash datasheet
+ - Fix typo in the description of patch 6
 
-On Thu, Mar 26, 2026 at 04:17:17PM +0800, Troy Mitchell wrote:
-> From: Guodong Xu <guodong@riscstar.com>
->=20
-> Add k3 compatible string.
+Version 1 of this series is available here:
+  https://lore.kernel.org/lkml/20260322203356.2206927-1-aurelien@aurel32.net
 
-That's obvious. What you need to explain is why it is not compatible with
-the existing k1.
-pw-bot: changes-requested
-Cheers,
-Conor.
 
->=20
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml =
-b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
-> index ec06235baf5c..62ce6d81526b 100644
-> --- a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
-> @@ -14,7 +14,9 @@ allOf:
-> =20
->  properties:
->    compatible:
-> -    const: spacemit,k1-pdma
-> +    enum:
-> +      - spacemit,k1-pdma
-> +      - spacemit,k3-pdma
-> =20
->    reg:
->      maxItems: 1
->=20
-> --=20
-> 2.53.0
->=20
+Aurelien Jarno (6):
+  riscv: dts: spacemit: add LEDs for Milk-V Jupiter board
+  riscv: dts: spacemit: add 24c04 eeprom on Milk-V Jupiter
+  riscv: dts: spacemit: add i2c aliases on Milk-V Jupiter
+  riscv: dts: spacemit: enable QSPI and add SPI NOR on Milk-V Jupiter
+  riscv: dts: spacemit: enable USB 3 ports on Milk-V Jupiter
+  riscv: dts: spacemit: enable PCIe ports on Milk-V Jupiter
 
---3c5c3SbeQ5J8Cvcr
-Content-Type: application/pgp-signature; name="signature.asc"
+ .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 188 +++++++++++++++++-
+ 1 file changed, 187 insertions(+), 1 deletion(-)
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.51.0
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCacV8PQAKCRB4tDGHoIJi
-0iSJAQCYik/5JNh07McaFHFAtO7PKvqeDrCRfWwv0LzCc+MAOQD+I6kaG8JvSER/
-6z5GZ8MFkLGErIBUFMmIqZJuwKZldAo=
-=sPth
------END PGP SIGNATURE-----
-
---3c5c3SbeQ5J8Cvcr--
