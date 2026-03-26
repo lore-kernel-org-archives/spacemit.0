@@ -1,87 +1,121 @@
-Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13BC346E57
-	for <spacemit@lists.linux.dev>; Thu, 26 Mar 2026 08:57:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DC63382F9
+	for <spacemit@lists.linux.dev>; Thu, 26 Mar 2026 10:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774515460; cv=none; b=Lh5U3ossKdTS2CFX/Mt38ypRwovU+UxLsoAnSHdgH17REytT8+1cHwbKm1eWJRp3lXxZKnn/JjhprzabvY8TrgxATvcJxtKTWw1fExkvNOJBHXoeo4QVXoKeXcfjIE9ZYxovyNrOvVVpzgTWG6r3xeglicgv7WJsW+iYqvzzri4=
+	t=1774519231; cv=none; b=TgLkm3Y2qYz8/dOR5DvGuM9DhCHP2sgedwih8zuggb4V0kh4VBxIz62AzjQRxMaqWsJ99JVNAvyxyLE+GwEnDgf5ZQ2kuHMeNVv/QybQvgatPPQpJsQpySpRoe+OopKOAVoibNPt2CfCL/4LqPUYw+2o9kYfxjLJ2P1muOBkGSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774515460; c=relaxed/simple;
-	bh=CYCKnxhioDRbqRac4wq0l2WJYiayLKvejrNQS00kNb4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=s5XoxOnG4avE04IYUhiamc6/+GdZgxT7AqJ2OQN77Wx1YGMkiRM7XzQNktBifY6L8vjrKulTuBXdqg/9+HT9W5pikICi4HSgXiGl0FJpbtNKndmb6u+fkQ1PEI4a7k5lLtIGz+s//jdofos5Hjdgk+Rqt61UOv5OFHPea9SiUUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=oymjH/VJ; arc=none smtp.client-ip=95.215.58.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="oymjH/VJ"
+	s=arc-20240116; t=1774519231; c=relaxed/simple;
+	bh=A6B6kork2804l4UPj6XY1tqmpucgrketuWPpPSNm1ss=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=RuwlvxflnJ/EeornRngQxjhWAT3dOIWdXyudythw1dEO/QKpnGIcphDrroQzI9nSC27TZx0+UZwK4AOMOh/K9jr6byxfL2NOr3/JEcdDOg5vhvn54K+zvAu8dzQk6Zj3vhAmLg23E3BxKSwzMS5lkXsjpAH9sdwsIR4rN93DWmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.lan (unknown [116.25.95.101])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 38672f751;
+	Thu, 26 Mar 2026 18:00:19 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Cc: Yixun Lan <dlan@kernel.org>,
+	Ze Huang <huang.ze@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH v3 1/1] usb: dwc3: Add optional VBUS regulator support to SpacemiT K1
+Date: Thu, 26 Mar 2026 18:00:10 +0800
+Message-Id: <20260326100010.3588454-2-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260326100010.3588454-1-amadeus@jmu.edu.cn>
+References: <20260326100010.3588454-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1774515456;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=LeMHr0vQhEqNCiIKwsjdNZuAZi/ehFggVflJyU2swJM=;
-	b=oymjH/VJae0r8yWcQwTxer+tBfPHSqNf+gIzDk0yXoYH5lcNkO0Vg8qvcUcjsXrjoHqD+F
-	8GFTSup1x5vIqCLYxdt4IIY82haWJmX1XZXytWYyZLHALrJzvph/hTIDlUi1BkGilaYGwF
-	4RVcFbq9nf/9fyq6EYl0DdatxeU0xH0=
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 26 Mar 2026 16:56:20 +0800
-Message-Id: <DHCL7BLD4KP9.2W648STZ3YV7E@linux.dev>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Ze Huang" <huang.ze@linux.dev>
-To: "Felix Gu" <ustc.gu@gmail.com>, "Vinod Koul" <vkoul@kernel.org>, "Neil
- Armstrong" <neil.armstrong@linaro.org>, "Yixun Lan" <dlan@kernel.org>, "Ze
- Huang" <huang.ze@linux.dev>
-Cc: <linux-phy@lists.infradead.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] phy: spacemit: Remove incorrect clk_disable() in
- spacemit_usb2phy_init()
-References: <20260326-k1-usb3-v1-1-0c2b6adf5185@gmail.com>
-In-Reply-To: <20260326-k1-usb3-v1-1-0c2b6adf5185@gmail.com>
-X-Migadu-Flow: FLOW_OUT
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9d2996769503a2kunm60643231383ea9
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCGhkaVksdT0NNGUtIQhhIGFYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk5VSktKWVdZFhoPEhUdFFlBWU9LSFVKS0hLSkxLVUpLS1VLWQ
+	Y+
 
-On Thu Mar 26, 2026 at 12:23 AM CST, Felix Gu wrote:
-> When clk_enable() fails, the clock was never enabled. Calling
-> clk_disable() in this error path is incorrect.
->
-> Remove the spurious clk_disable() call from the error handling
-> in spacemit_usb2phy_init().
->
-> Fixes: fe4bc1a08638 ("phy: spacemit: support K1 USB2.0 PHY controller")
-> Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-> ---
->  drivers/phy/spacemit/phy-k1-usb2.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/drivers/phy/spacemit/phy-k1-usb2.c b/drivers/phy/spacemit/ph=
-y-k1-usb2.c
-> index 9215d0b223b2..e8c1e26428a9 100644
-> --- a/drivers/phy/spacemit/phy-k1-usb2.c
-> +++ b/drivers/phy/spacemit/phy-k1-usb2.c
-> @@ -97,7 +97,6 @@ static int spacemit_usb2phy_init(struct phy *phy)
->  	ret =3D clk_enable(sphy->clk);
->  	if (ret) {
->  		dev_err(&phy->dev, "failed to enable clock\n");
-> -		clk_disable(sphy->clk);
->  		return ret;
->  	}
-> =20
->
-> ---
-> base-commit: 85964cdcad0fac9a0eb7b87a0f9d88cc074b854c
-> change-id: 20260326-k1-usb3-f6a52f413616
->
-> Best regards,
+Some SpacemiT K1 boards (like OrangePi R2S) provide USB VBUS
+through a controllable regulator. Add support for the optional
+vbus-supply property so the regulator can be properly managed
+in host mode instead of left always-on. Note that this doesn't
+apply to USB Hub downstream ports with different VBUS supplies.
 
-Indeed, thanks for catching this.
+The enabled and disabled actions of the regulator are handled
+automatically by devm_regulator_get_enable_optional().
 
-Reviewed-by: Ze Huang <huang.ze@linux.dev>
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ drivers/usb/dwc3/dwc3-generic-plat.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/usb/dwc3/dwc3-generic-plat.c b/drivers/usb/dwc3/dwc3-generic-plat.c
+index e846844e0023..64f5e9f20663 100644
+--- a/drivers/usb/dwc3/dwc3-generic-plat.c
++++ b/drivers/usb/dwc3/dwc3-generic-plat.c
+@@ -12,6 +12,8 @@
+ #include <linux/reset.h>
+ #include <linux/regmap.h>
+ #include <linux/mfd/syscon.h>
++#include <linux/regulator/consumer.h>
++#include <linux/usb/otg.h>
+ #include "glue.h"
+ 
+ #define EIC7700_HSP_BUS_FILTER_EN	BIT(0)
+@@ -69,6 +71,20 @@ static int dwc3_eic7700_init(struct dwc3_generic *dwc3g)
+ 	return 0;
+ }
+ 
++static int dwc3_spacemit_k1_init(struct dwc3_generic *dwc3g)
++{
++	struct device *dev = dwc3g->dev;
++
++	if (usb_get_dr_mode(dev) == USB_DR_MODE_HOST) {
++		int ret = devm_regulator_get_enable_optional(dev, "vbus");
++
++		if (ret && ret != -ENODEV)
++			return dev_err_probe(dev, ret, "failed to enable VBUS\n");
++	}
++
++	return 0;
++}
++
+ static int dwc3_generic_probe(struct platform_device *pdev)
+ {
+ 	const struct dwc3_generic_config *plat_config;
+@@ -201,6 +217,11 @@ static const struct dev_pm_ops dwc3_generic_dev_pm_ops = {
+ 		       dwc3_generic_runtime_idle)
+ };
+ 
++static const struct dwc3_generic_config spacemit_k1_dwc3 = {
++	.init = dwc3_spacemit_k1_init,
++	.properties = DWC3_DEFAULT_PROPERTIES,
++};
++
+ static const struct dwc3_generic_config fsl_ls1028_dwc3 = {
+ 	.properties.gsbuscfg0_reqinfo = 0x2222,
+ };
+@@ -211,7 +232,7 @@ static const struct dwc3_generic_config eic7700_dwc3 =  {
+ };
+ 
+ static const struct of_device_id dwc3_generic_of_match[] = {
+-	{ .compatible = "spacemit,k1-dwc3", },
++	{ .compatible = "spacemit,k1-dwc3", &spacemit_k1_dwc3},
+ 	{ .compatible = "fsl,ls1028a-dwc3", &fsl_ls1028_dwc3},
+ 	{ .compatible = "eswin,eic7700-dwc3", &eic7700_dwc3},
+ 	{ /* sentinel */ }
+-- 
+2.34.1
+
