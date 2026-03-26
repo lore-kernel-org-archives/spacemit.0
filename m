@@ -1,70 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374103F210F;
-	Thu, 26 Mar 2026 15:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4735D288CA3;
+	Thu, 26 Mar 2026 18:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774538776; cv=none; b=DIJqtcQVYRo9sk9ijUrHk2auY8sO+pKweVAGeE1tvzod2N496Yh6Qr45VHSF9Oq0yhYnbg8v90KiRAqwnrWuvrAYYywfa3nGxLWQhpK8rhtYevvS01axhyS31kUf5fYlYkiHkJiuf4dndDavMJVErx0ePReXs97lGDqlSPrRI24=
+	t=1774550083; cv=none; b=FO012ERhgBqTnWvKVgPaAjZJM/pIEzfmyWwCbxX9TkIPXNzXEne2iuCR7D1eKRmzyhc6T/W0vMiVmnbk2ClMPpIbZwpYuvgL0lJfr/ARttqgoM2lkEmN7NrrZgbXzZnR0Ljzn4U4rx2jkjdbvYDKOs2I7oy0dKNZ+VUyu8qUpH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774538776; c=relaxed/simple;
-	bh=n+bIFKSjOB2crmf5AvxNH7lVOr7PCQpihLEsRVjMmi0=;
+	s=arc-20240116; t=1774550083; c=relaxed/simple;
+	bh=+WFhHAP+I6U56ZY1SPoQXhOLT+bdcm5oHSlV3lm2fRk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A7jpUoBLEZfR1+1F3H/NWj6P4ycryKsUsP2iaBxRGrpzJsBtAY34OpWuJ9rEA98LNOavrSF1dUuan97H9HDZDNUWi1jmr896Q2f2X+UvbWZ9Zrn5Lflzh1QgrgAaYnYv1tL99P5lJclYVn9hFW9sEUCjfqY6I7jppT2XFzmGrc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OiQg2z3P; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=AmHB+gFBIok+m/Y7Ubt0ETEhYQNvLq56BuqJACvQkZsJ5wsqw4a7TNWBtpmWRhOZrqALdg9yjnpDUrKu7sEWwbPSofT2NoQp/7r23An4WrGhpCN+vD4zK7+b9A+pQcK9OVuroCHMXx8Wl4cQhlb269GgeBklAx5KyFvbaowouus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLQ8s2Ys; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OiQg2z3P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B53FC2BCB0;
-	Thu, 26 Mar 2026 15:26:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLQ8s2Ys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588ACC116C6;
+	Thu, 26 Mar 2026 18:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774538775;
-	bh=n+bIFKSjOB2crmf5AvxNH7lVOr7PCQpihLEsRVjMmi0=;
+	s=k20201202; t=1774550083;
+	bh=+WFhHAP+I6U56ZY1SPoQXhOLT+bdcm5oHSlV3lm2fRk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OiQg2z3PfkurTNn6KUVBI3W95j4EtDIUdMOnt/ajBxfnUzKpI7FbeG7N/Hp7xP1qy
-	 aBNGJbPw1mvIx8zdLU9X4uZUmaOhHB1mq5fjof7xh+QAzvQS+W9zfg00IsE5D1jSZA
-	 RJ9aExSejDG2F+fJ0YX9h7erEVGXC8DjBAMCXvozi9RspGoKy3WI7Oq9YEqZd3TV1/
-	 dXFTNJwODrGTyl7KSqEc8pN63XfmF9qQF22hCo+dI23TELjRvettaOMpi/CCRQ7iIS
-	 JVpV1mEFUGSKOTb+URSeDkAqNAfLiYRbpviLeGrH8O/SOK52KV40vVKUVVWjS4Jmos
-	 aEWIoRfh/G1yg==
-Date: Thu, 26 Mar 2026 10:26:12 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: linux-kernel@vger.kernel.org, Inochi Amaoto <inochiama@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	spacemit@lists.linux.dev, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-usb@vger.kernel.org,
-	Matthias Kaehlcke <mka@chromium.org>, devicetree@vger.kernel.org,
-	Junzhong Pan <panjunzhong@linux.spacemit.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: usb: Add support for Terminus FE1.1s
- USB2.0 Hub controller
-Message-ID: <177453877141.2506202.3743813210780505738.robh@kernel.org>
-References: <20260319-03-usb-hub-fe1-v2-0-e4e26809dd7d@kernel.org>
- <20260319-03-usb-hub-fe1-v2-1-e4e26809dd7d@kernel.org>
+	b=YLQ8s2Ys1REk6EW7Qhg3mlYZf3hKzj8IindqDfPFSPV9j2xX5TipAVNqRAUNL+Wea
+	 x4Y0N8d3LK8wCT2DArdswnWLaR795pWrpELuTVswjw2gttc7K7J4eNtCdjcjpqbJlz
+	 yK/HKpZlVj7Z37+hYHahAhIkr6dwVwIfBpaLT3hLCoQEgAeJNgF7DSLH3zUsKsCDi2
+	 ckkp3Xk9BU37wOBORGkLpHEm38eeWkBZRrpzO5xlZPT4MNuBpD4kU3BAl74GVvgSo5
+	 NsK/KDCX/pTx8/NsY9pHgcp5u+/sfcKA5UVl8fiQSP8dqqxQ67uoL7JcWFreNn9cnY
+	 ZF0JxhevI/KOQ==
+Date: Thu, 26 Mar 2026 18:34:37 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>, Guodong Xu <guodong@riscstar.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-clk@vger.kernel.org
+Subject: Re: [PATCH v2 2/7] dt-bindings: dmaengine: Add SpacemiT K3 DMA
+ compatible string
+Message-ID: <20260326-explode-surplus-24c0e0813099@spud>
+References: <20260326-k3-pdma-v2-0-ca94ca7bb595@linux.spacemit.com>
+ <20260326-k3-pdma-v2-2-ca94ca7bb595@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3c5c3SbeQ5J8Cvcr"
+Content-Disposition: inline
+In-Reply-To: <20260326-k3-pdma-v2-2-ca94ca7bb595@linux.spacemit.com>
+
+
+--3c5c3SbeQ5J8Cvcr
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260319-03-usb-hub-fe1-v2-1-e4e26809dd7d@kernel.org>
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Mar 26, 2026 at 04:17:17PM +0800, Troy Mitchell wrote:
+> From: Guodong Xu <guodong@riscstar.com>
+>=20
+> Add k3 compatible string.
 
-On Thu, 19 Mar 2026 07:51:03 +0000, Yixun Lan wrote:
-> Terminus FE1.1s is USB2.0 protocol compliant 4-port USB HUB, It support
-> MTT (Multiple Transaction Translator) mode, the upstream port supports
-> high-speed 480MHz and full-speed 12MHz modes, also has integrated 5V to
-> 3.3V, 1.8V regulator and Power-On-Reset circuit.
-> 
-> Introduce the DT binding for it.
-> 
-> Link: https://terminus-usa.com/wp-content/uploads/2024/06/FE1.1s-Product-Brief-Rev.-2.0-2023.pdf [1]
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
+That's obvious. What you need to explain is why it is not compatible with
+the existing k1.
+pw-bot: changes-requested
+Cheers,
+Conor.
+
+>=20
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 > ---
->  .../devicetree/bindings/usb/terminus,fe11.yaml     | 62 ++++++++++++++++++++++
->  1 file changed, 62 insertions(+)
-> 
+>  Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml =
+b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
+> index ec06235baf5c..62ce6d81526b 100644
+> --- a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
+> +++ b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
+> @@ -14,7 +14,9 @@ allOf:
+> =20
+>  properties:
+>    compatible:
+> -    const: spacemit,k1-pdma
+> +    enum:
+> +      - spacemit,k1-pdma
+> +      - spacemit,k3-pdma
+> =20
+>    reg:
+>      maxItems: 1
+>=20
+> --=20
+> 2.53.0
+>=20
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+--3c5c3SbeQ5J8Cvcr
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCacV8PQAKCRB4tDGHoIJi
+0iSJAQCYik/5JNh07McaFHFAtO7PKvqeDrCRfWwv0LzCc+MAOQD+I6kaG8JvSER/
+6z5GZ8MFkLGErIBUFMmIqZJuwKZldAo=
+=sPth
+-----END PGP SIGNATURE-----
+
+--3c5c3SbeQ5J8Cvcr--
