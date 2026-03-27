@@ -1,127 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1A12BE7BB;
-	Fri, 27 Mar 2026 06:53:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E273C2774
+	for <spacemit@lists.linux.dev>; Fri, 27 Mar 2026 07:05:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774594384; cv=none; b=ESnt93odZ5ccH6QecTRpZez+pzGT89aWC5NqsSD8Fhcz/j3N18YOpxXVT0+bixAVPmssGaNK2zDc0HvmLkXEMzWwqty9HsdNmXprVtVgMdG2+G+T5L5RQWwWNWpCSTFW4enPEy2xpyRC3lru1cdjUBoELDq43oS19HqYbTfoCEg=
+	t=1774595157; cv=none; b=FiW+NHQOyDBRC5fnEkntNqhoBerTLJx8hiTA+MvEL7HcBc8mkPOIqHoZi9zkvpcfhMucBU5y31O8qOWVXyy7n2+FK07Fpb2QdyQxQ/7H/5ULpZn5sO8nFEGuo6flSlGsIzWUb/MNt05gdt/wyaoyondiSTO098ghNwQbQrNzIQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774594384; c=relaxed/simple;
-	bh=+6taD/KYX6s6aOGsQO53ivGa0KI2dG/K2GEdTZ29IxI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=maY8VjJ4M8ub7rY6gutpF8eIFQyvtYi1+++x2DcJwHGfOX0f41dZIGa/Utm0EM31BBTovbZ3+CXl08C+ydUVpxWWk/i4kcyZ5hKkqJpgD7zVyXn0oEDR9CpUbgRk9lHRqxSD+owzeafQuMEczQJ88UbSl9Lvv+cLesXXTneo4VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uM9tWBQS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774595157; c=relaxed/simple;
+	bh=acJnhk3DhlEkQc4Hdu9XGurQ2f/IqUWKVh1uoABR9WA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Tny2vcHw8kdO5Kh5VFTAfg33O7JMwhhQ6eAtixp3NBFpLAULCyULO4+2/wE0k6tZwJEcPlxt8t62v7L5eu53HN/LlniZPcDM+GXgbSOJKGz4hE4Ks6J7Z54uBX48EeC4CzdMFC1JqjN+KyHQneGhm4NGMAf23jNs2KDRQnXPK6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=oJT4MR45; arc=none smtp.client-ip=54.243.244.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uM9tWBQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5247EC19423;
-	Fri, 27 Mar 2026 06:52:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774594383;
-	bh=+6taD/KYX6s6aOGsQO53ivGa0KI2dG/K2GEdTZ29IxI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uM9tWBQSBzeOskmqaDM0QvWoV4jUNiC4DsBlIKIFg7In21qbXcrgvL+npIdvVsRu4
-	 qrE69iQ+kiDSqXlcivHy16z+fEY80xVdn90vInQTF9nPU0Nfe7+PBampXS2wO/gG+p
-	 NgAISEoCyX1+VSpZjmfa/Wk2xePLkgGitS5duT/iqLt2Xz6gmhtYoyq/3bAsUtsGq+
-	 2OtE88H/kNHCxHKSKe13LzCtkcFHYUQtieBVLEZ/RgfH2fMVrGZXCU2jVD0wDWvbDI
-	 /UHVNy1S2RfsSIT/lKpdHdy0Vk/hccjI1KCqeAffyJ+BOUCNvP4IiTCz7QCM5HVlUz
-	 YXDRsPrcv0reg==
-Date: Fri, 27 Mar 2026 12:22:46 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org, netdev@vger.kernel.org, 
-	spacemit@lists.linux.dev, UNGLinuxDriver@microchip.com, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
-	Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: Re: [PATCH v5 phy-next 10/27] scsi: ufs: qcom: keep parallel track
- of PHY power state
-Message-ID: <gq4sswslkjaoe5hhxe2mz6z57uiumotqknkryadvfsstj4srx4@qgenqekgrqv4>
-References: <20260319223241.1351137-1-vladimir.oltean@nxp.com>
- <20260319223241.1351137-11-vladimir.oltean@nxp.com>
- <ezrcjjwtg5n76w4m65l27szu5mywx66ti3xuprkfcp3x6quvbf@2rew4zrnnbt2>
- <20260325114309.3k7xkfrffpxp5xq4@skbuf>
- <vu3cxpynr5mu2fzkrtmjcwijc5jz323wlnbc3r7lp2wxqmhydx@z5xhgf4myw2d>
- <20260325115731.genmq2yew2p4dvbs@skbuf>
- <20260326080444.gbesciaa5zwvcgoy@skbuf>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="oJT4MR45"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1774595091;
+	bh=C5sPPhxc2ESUsfKZcmePqfZSGtd39KSgY9EBT4h19Z4=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=oJT4MR45zGFsDiQoi7e3V7hweAfxTuleEh3YMiT8E1pJVzLnTy7gQkvT3j/L9hsBT
+	 8hOTgyJ3jYWn8Snir6f6LKegADFzc6U8jLNeX1bOOYZg5wbx4a2oQwhFloMOjjkgl8
+	 dQsJpnoncULL7vYfFXAsEaGIh18sbWqT0gY9dWAI=
+X-QQ-mid: zesmtpsz9t1774595088tae86de95
+X-QQ-Originating-IP: w/WyDemxcbjpJuaCt1YW/wsPI2c2ZYwcqhNJMRnh9EA=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 27 Mar 2026 15:04:46 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 1752965271814094096
+EX-QQ-RecipientCnt: 21
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260326080444.gbesciaa5zwvcgoy@skbuf>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 27 Mar 2026 15:04:46 +0800
+Message-Id: <DHDDGG4TDFOS.2DPHBA6U2JMVE@linux.spacemit.com>
+Cc: "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley"
+ <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou"
+ <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan"
+ <dlan@kernel.org>, "Vinod Koul" <vkoul@kernel.org>, "Frank Li"
+ <Frank.Li@kernel.org>, "Guodong Xu" <guodong@riscstar.com>, "Michael
+ Turquette" <mturquette@baylibre.com>, "Stephen Boyd" <sboyd@kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+ <dmaengine@vger.kernel.org>, <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH v2 2/7] dt-bindings: dmaengine: Add SpacemiT K3 DMA
+ compatible string
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Conor Dooley" <conor@kernel.org>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260326-k3-pdma-v2-0-ca94ca7bb595@linux.spacemit.com>
+ <20260326-k3-pdma-v2-2-ca94ca7bb595@linux.spacemit.com>
+ <20260326-explode-surplus-24c0e0813099@spud>
+In-Reply-To: <20260326-explode-surplus-24c0e0813099@spud>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: McJfg7Aee/FZuqgBLJa/xaD93ptxSj5gtrQRlr2BHMhaSuQ7Hmc7FSVm
+	nIbSM/Gn9ozMbLDAzyDH+vq5F/k9zjNFar+BG0Flj5Fv5Qb3kLBOQgep/HUvaEWm+0REQgk
+	utQdzLZlWXNyZv2nn0GyzOdluz6WiLSYfnDkvmLzrjDA1IDE7LTjtyNcunyenvlBbjYaBL7
+	mEa7uvvsPio6wr4K+A8wHylXqbN1xA5Omj74pPKdJ+wtE1q9+WC3rVp1Ss5BsRB8d2ghPly
+	NbCS9jz/nQTk4C2cOLP4oNcXZ+C7rrA3EYWGj3tICHboN6UMAl1rPf7fA6NKoqLBaPD6a6E
+	b8X62kTE4p8pepTCHO0caY5TYjyPWGFznU+M06CCNS9yzqWnErMdhJQ0Pdnr5gazRMTq+kj
+	bnz6JW7yTTJ0OBaE2grKZjRUb5XfmfCOPkzi6RQoXsJ34mtxevGQKnXfUufsCCM+TasNNYF
+	bmlQf+G7vCOo+Rt952DsFtLZt4xuH05ppyLSgnFQOjXzZoj3TKEj6EOfwrfnivwaDImWGpm
+	twhLEFYC552lvFErafayaB9W64nfLbRea2jgYNRNxNK5sckvJ7IXERvCT9xDZXp2JkrZ9Zb
+	jqB9h5NezcuFHQzSd92GpEx4yB/mqPX325JDsllEaoxHm9z8tEJ1YK3mSklNr67A943Uze0
+	/Q/lTzNybK/WbckQe+DCVkk7TxkHPwmGxNgNiMgH8lSBQnZ+tTJKbnK8L+G8dDgusUS6Fps
+	CIhnSCyOr1nlHKL/tWEwK2sBNzt6DfcW4XD37Cv9CTWqQgyThhGlnVSSivvBYDqR7pOlC9V
+	herj0wt6QAME/Q62DeFPxjHm17xsYWWc9J2Eo8WvZYcI0n2BCp+4lN9f7mebQTwbtq/QSrg
+	uzgfBsa5kTO7UaFg/BDsF3Ye+YSMuI7L7nG0z6YKHWVrcOUa2Ni5leJnuDmxQb7EAaY9Slv
+	t0l42y7QZtI8y6/adItDuv1OjHxF5HeXI15wNe7gmfFLcCNbxu45AngCu038T5mo/mFAQcL
+	DTr/SpmtZPiOILKrFUksajYQkjbJT0oAAB4HCDo8zzeQQm2O8g
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
-On Thu, Mar 26, 2026 at 10:04:44AM +0200, Vladimir Oltean wrote:
-> On Wed, Mar 25, 2026 at 01:57:31PM +0200, Vladimir Oltean wrote:
-> > On Wed, Mar 25, 2026 at 05:21:14PM +0530, Manivannan Sadhasivam wrote:
-> > > I believe I added the power_count check for phy_exit(). But since that got
-> > > moved, the check becomes no longer necessary.
-> > 
-> > FYI, the power_count keeps track of the balance of phy_power_on() and
-> > phy_power_off() calls, whereas it is the init_count keeps track of
-> > phy_init() and phy_exit() calls. They are only related to the extent
-> > that you must respect the phy_init() -> phy_power_on() -> phy_power_off()
-> > -> phy_exit() sequence. But in any case, both should be considered
-> > PHY-internal fields. The "Order of API calls" section from
-> > Documentation/driver-api/phy/phy.rst mentions the order that I just
-> > described above, and consumers should just ensure they follow that.
-> 
-> Ok, so we can close this topic of "checking the power_count not needed"
-> by linking to the conversation which spun off here:
-> https://lore.kernel.org/lkml/20260325120122.265973-1-manivannan.sadhasivam@oss.qualcomm.com/
-> 
+Hi Conor,
 
-Sure.
+On Fri Mar 27, 2026 at 2:34 AM CST, Conor Dooley wrote:
+> On Thu, Mar 26, 2026 at 04:17:17PM +0800, Troy Mitchell wrote:
+>> From: Guodong Xu <guodong@riscstar.com>
+>>=20
+>> Add k3 compatible string.
+>
+> That's obvious. What you need to explain is why it is not compatible with
+> the existing k1.
+>
+Thanks for the review.
 
-> Mani, I spent some more time to figure out what's really going on with
-> this unexpected phy_power_off() call. Do you think you could
-> regression-test the patch attached?
-> 
+The SpacemiT K3 PDMA requires a new compatible string because it is not ful=
+ly
+backward compatible with the K1 implementation due to two main hardware dif=
+ferences:
+- Variable extended DRCMR base: The DRCMR (DMA Request/Command Register) ba=
+se
+  address for extended DMA request numbers (>=3D 64) is different in the K3=
+ hardware
+  implementation.
+- Memory addressing capabilities: Unlike the K1 SoC, where some DMA masters=
+ had
+  memory addressing limitations (restricted to the 0-4GB space) and require=
+d a
+  dedicated dma-bus, the K3 DMA masters have full memory addressing capabil=
+ities.
 
-I tested the patch. But it fails ufs_qcom_power_up_sequence() if PHY was already
-powered on:
+I will update the commit message in the v3 series.
 
-[   31.513321] qcom-qmp-ufs-phy 1d87000.phy: phy initialization timed-out
-[   31.513335] ufshcd-qcom 1d84000.ufshc: Failed to calibrate PHY: -110
-[   31.565273] ufshcd-qcom 1d84000.ufshc: Enabling the controller failed
-
-Funny thing is, it didn't affect the functionality since the UFS core retries
-ufshcd_hba_enable() and in the error path of ufs_qcom_power_up_sequence(),
-phy_power_off() gets called and that causes the next try to succeed. So it is
-evident that, if PHY was already powered ON, it should be powered off before
-ufs_qcom_phy_power_on(). And due to the UFS driver design,
-ufs_qcom_power_up_sequence() can get called multiple times. So we cannot just
-remove phy_power_off().
-
-Below diff on top of your patch fixes the issue:
-
-```
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index ed067247d72a..2c9fe03f349e 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -567,6 +567,8 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
-        if (ret)
-                return ret;
- 
-+       ufs_qcom_phy_power_off(host);
-+
-        ret = ufs_qcom_phy_set_gear(host, mode);
-        if (ret) {
-                dev_err(hba->dev, "%s: phy_set_mode_ext() failed, ret = %d\n",
-```
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+                                              -Troy
