@@ -1,283 +1,228 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013061.outbound.protection.outlook.com [52.101.72.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2E43537C2;
-	Fri, 27 Mar 2026 11:51:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774612293; cv=none; b=GXqKVkCyDxSkzNO2qLNFjfQPYXxNG4NSbI1EXmcU0RSy2KxJBFVlkJ6Ia1EoX322cWitWjaNgpZDE9K4uBYtODG+tBg5R92G0yTBLzqzQa6Eye1QkxJ/fYXkVRoQp83+lSr6MsmJGaZl7XzNKKYgoww2hEzgZFSA4ODgPFIxolA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774612293; c=relaxed/simple;
-	bh=5yWGAJAeIc3MOgyU7+oWgMBWFC+T9al/49ayYmUDDw8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VNEYa+0C69LxKYTWApm3G+nN/zwpiLYfRUeSQOxQdo25y+7VEHqX394xozo6mJ0ACjfmEZEaxdQADb6dLCSYUdSa44kCYUqan4IQXETNcRVWlZo2z8mjW5k1UiyqKSJY3JOD0HhCO8y66RfxhphbT8P0aIHfronG/4HcblKMWDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CghMV87g; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878C327144B;
+	Fri, 27 Mar 2026 18:48:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.61
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774637319; cv=fail; b=DylchKP7PZW2XzcNMYSTIwZLNpbESEeBLVBqpBzm03/HKL9DCnMFDujVy1y3k954XaNpv2ztsni5KaNZJPf5DfavLA4yoPpiFkKpOI32Wqqoue+EbizAkaQEY1l1ZAcwJTDXcNcurvAfvAhhFVCdR8Ya/tqnWDJK3eqc0fMhGA8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774637319; c=relaxed/simple;
+	bh=Q1M8g9CpctU0nnIOMmpRSKOiBBfoN8cGcXCmk8dreCQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=uxHZiwymcPyKpFisknLuFE7QnifKC/anFyjl4NZOkCMzCz0EKz44qdZ7OU/SayWV+a0CcUWSHknDSZusaMwAXPxfEpox9lU51PIpPAmLXD6bByPPlnN9hdnBBm3gnI1z01YkVXd9fM9sUQcfN5veGwyrNTgVBx/BqeAss/BRxh8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=n7914TgK; arc=fail smtp.client-ip=52.101.72.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CghMV87g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9462FC19423;
-	Fri, 27 Mar 2026 11:51:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774612293;
-	bh=5yWGAJAeIc3MOgyU7+oWgMBWFC+T9al/49ayYmUDDw8=;
-	h=From:Date:Subject:To:Cc:From;
-	b=CghMV87gJOX2yTxVIwzgdQ0whUGTqcBVOectVNkrDhnRQ2p3n328NOi0bhgDadUxc
-	 SQn7JdrI3pABN8GfJWCbqWJBE8qPmN8vjX6WjXrKdeDkV9OICRHZFr4BB2yOUhO5B4
-	 Ith7MG1UaXKoopClWmBT3baUjnc88nXqWzBrp+5T/GsdK5vX/+KB6wmZCdYGSv2MOO
-	 V/n1YQbsJp2YNnfvlXDAr89+nWrtG65JzZtIEL38rw+TM00p142aONXZEmmWFc1RPe
-	 Cb0JdeXqsb01ZJNRONO7FZkH13nR/jvMB7gqFgB1UUDMPPCZ5Xmifc7IkNLEitEBrK
-	 MqDAOxjgfJc7w==
-From: Yixun Lan <dlan@kernel.org>
-Date: Fri, 27 Mar 2026 11:51:18 +0000
-Subject: [PATCH v2] dts: riscv: spacemit: k3: add P1 PMIC regulator tree
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="n7914TgK"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=U5PoWEX6EfPvL3U6+7Ensc60XX58LqXrkiElkT7wBy/7Qi1IqjT/XMz5dAqNd3K0CLeQxKmXZ6yyPdesjitGBbO2Im2B88td6VGqcQ8/DqhFvrS23q813tQqdU3KE3ShHuJjrr+AgriFlwPYd1gGhmc47CJ44bORwGbHBjW1rA6AgM1rJ/mleFUekr/RJafqdJEMAHU2Ri93M/LjFpzsVcwTu/Iw3qwM+qR+DCydx6Kv+62anCtTaXO36IsGQ3kgJsmShLw5Xew9vpO4dcQEgBkru04mZpRZeiw3e9JxKMFK/1S6ZY856tghC6Syi3F2Wm1wYG3mqcvF5imrPOrzoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ogJaDcCH4q7Fssvt91vOpovPL6sWI0u1UMZ/IVso944=;
+ b=O7PBjkOAIV3MigLLi4Ry9x4mRCIQqVqPgELw/KQDNF7bwvn5s+RYvHG6rM85SaZpVj0go78B3AiHpr7coLlJOXIUPmwiqQ6KTeGhoak35AjPxnMFcBe05bOVEEczPv/FIGVJBXcEQG7BX+sbdD8yTrjQU+5d2ebzlnm7oVH4GcA5p8dFJVV58lAi5YnVp64ZRSqi1ou6pVz8fMLHzTPG0mMm4Un3LO71XccGdX98uYF8YNmW9zgHNzSiVgrG3HKrGMf+6O2ySAhzJh9SoG8hquCSKp528+gNJ2AwLUBhVNgDisbN9SznaklxLGNyTnREatp+kVKcNnvtJKitsk64oA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ogJaDcCH4q7Fssvt91vOpovPL6sWI0u1UMZ/IVso944=;
+ b=n7914TgKtpGaorbp4GA6Ad+VBEUrk5FSxeJ9DbnRI4s2in/tnr2S218L95bShMTd2C4h7UN+StEaSlp4TpFloIK1WeRJDS3vf2w9puJ9xTN7tk7g6Pj2kM+vkA80kqtigENLNHaQZYsyRO5hWlBKlvGU/GzS83t2WeBIIoqY5rRkl6WsZFDTNy1thabE3yWrQdrjB4djCwb8WgkEDettVlzjJ088tPlrLwUkfm8ECVVtIX35TEco3eVsM+nbOCGzyj+5BjSrcED+dW59yBMu7kgI1CazgeNYDmRtI3/KwIHqfY2Skhc0t6PundUjWZn6eU4DseXuK+XKRs5lsjkOmA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from DU2PR04MB8584.eurprd04.prod.outlook.com (2603:10a6:10:2db::24)
+ by MRWPR04MB11287.eurprd04.prod.outlook.com (2603:10a6:501:79::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.22; Fri, 27 Mar
+ 2026 18:48:34 +0000
+Received: from DU2PR04MB8584.eurprd04.prod.outlook.com
+ ([fe80::3f9d:4a01:f53c:952d]) by DU2PR04MB8584.eurprd04.prod.outlook.com
+ ([fe80::3f9d:4a01:f53c:952d%5]) with mapi id 15.20.9745.019; Fri, 27 Mar 2026
+ 18:48:34 +0000
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: linux-phy@lists.infradead.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-can@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-ide@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	netdev@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	UNGLinuxDriver@microchip.com,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH v6 phy-next 01/28] ata: add <linux/pm_runtime.h> where missing
+Date: Fri, 27 Mar 2026 20:46:39 +0200
+Message-ID: <20260327184706.1600329-2-vladimir.oltean@nxp.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260327184706.1600329-1-vladimir.oltean@nxp.com>
+References: <20260327184706.1600329-1-vladimir.oltean@nxp.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: VI1P195CA0072.EURP195.PROD.OUTLOOK.COM
+ (2603:10a6:802:59::25) To DU2PR04MB8584.eurprd04.prod.outlook.com
+ (2603:10a6:10:2db::24)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260327-02-k3-i2c-v2-1-9c6b374470c6@kernel.org>
-X-B4-Tracking: v=1; b=H4sIADVvxmkC/32Oyw6CQAxFf8V0bQ3TCcNj5X8YFgNUmGBAO0g0h
- H93gIWuXJ6b3nM7g2dx7CE/zCA8Oe+GPgAdD1C1tm8YXR0YKCITaaUwIuw0OqrQ2Dqm2BibWQ3
- h/i58da/NdSl2Fn48g3Lcw68xDPz35ZOC1dE6Pw7y3t4L0SrZmxT/NCeFCm2S6SQxZZqW1blj6
- fl2GqSBYlmWDxMessbnAAAA
-X-Change-ID: 20260311-02-k3-i2c-6ad52566a9a3
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5726; i=dlan@kernel.org;
- h=from:subject:message-id; bh=5yWGAJAeIc3MOgyU7+oWgMBWFC+T9al/49ayYmUDDw8=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBpxm88mslfk5fagqFT8z+fF7TxZGyPz0mEGNlSr
- hKQ1OCWWruJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCacZvPBsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+1rpBAAkJtudVD5t0mD7vxJ/ftjtaPHX7/z0HcTk/xqka27KPcl3mlWEjh2z
- oMJblxlJUBTZFEwnPJH8mTVur2LWK8ueX7GN/xbJTQAjZI2TjZbzgf/G2p8ua761lPhbwFl+sPs
- TWwEfRxEJqly+HhbYSDe7u6n7F/H3NKFT1Q1+Mhh9aSnlW5s6dM7Aak8fandI1dCxKZ+4ai35cA
- JNZyBKDbmLK6k1pClZVZeVxPBfqMYYJfmp4SzbZAu2ScT+7DkcRjgEQSdpue1PkBGv5wEwQgK94
- eMeAB+mikK+Y/f5s5btYaC6mTi5lBFEX7TJ0FcZu4YeUq4lr/NF2tDXW7yu8LOw+wlUSOyOIsex
- IRvm5/gUGuqaQnH/VmLZ/RMCscjA0jOv1Fc1Id6jSNUGMir67wRUr4D3AflQNR/vDmHxYDqSw+a
- zzSjpVObJjsLnShFC3W9jAU2CVFW5RWWYj8Lvz3x/m51L0l8EYU8tzVxPFhvoZ3Qn//cjqbOMSx
- D5TfVypnEaRVRHpraMJShe0vrw9N319drDmapjtjVpEugybcaOMTJh0/0k2qs17ZHXQawMxQeI7
- jV4KLE43HqjEdqjVuFnAJ6cNayYy15m/jQvjSFxe8cD98xGfzyOgR9tWLsaEBEnU3R7c2/4DSuC
- 9CgKl1T8sSWqU2yaFZUZAVHATuaJP0=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DU2PR04MB8584:EE_|MRWPR04MB11287:EE_
+X-MS-Office365-Filtering-Correlation-Id: c3aa62fd-d0a8-45be-543f-08de8c31730e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|1800799024|366016|10070799003|19092799006|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	rOSNIO+PXtAU2KSXs5Vl/TB/4l4VBc0m6r/C692mE4qBXcQy3S2YAJdkMnGvezUGZ7ETzYuD1qq853BTDnYd0lIr/iQViru+tJCc09LkvWs2HKP+4ru9FCKY3QMT99s74s0e3niYR7H38WcHPVZVfpfMp+bwmC1r1CWe6YyTZ0/Lx4tgYd4NzLDFBuXA+b3/1zkbBTYSq2RgGyN7cPw2tH9Ly+HEuxPi88WtziFghNSzjhE5fALaM6suWjfMTh7B0pTJhnpBmx3ks4FRKZYT1L8nYUjNtJ39VAVKBkyO0B93UrLQd61sBOC7R9PqRp6K4amSlDHtbBWVF2kAKcYwgYvhoyx61o6WTcNMY4Qw5VU5JVadGsITlpWjq18MYOHpOOtatGb7JbO6sMokpYy6wuhYxLR4Lbu+uvczPtBLMhitr1GvRL6WYrM7TItm5yNTN5Uw/m/8xI2IJRwl7IX6y4UuXBPsywvSbZVM8AMxC/irvnPJoMixW+b6xnrtrSAf1dG7ht8WK2eSksBPGQ8D2obhW4r+VvWhMFYdVnPzBMjwrorxSi/lgBssEoqwBkg9p6phyCS4XtNuoklBXtnICzj6cVzGFN1fZ6sdB3IgyqutsFRYEXw83wWl/jepzutOuiiqldsM/oenHEKwVehMTftqs16+F6rGtyXmvzTkriJgh9/sLTeHOUUji+zWDGVb0DX/v9dWIOJK0UDls7cjw5/e3Q97zZzHAbS6OSVtAik=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8584.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016)(10070799003)(19092799006)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?uQCZwwDasW9WMFiQ35NZfFJbZ2nc//OJr3TIigu+izvG2n1in4ePR8qorW26?=
+ =?us-ascii?Q?72VPWHkLcOuceJbrNrlGB1J6aqXacy/VCe0dvrkc7JO8PU/QEmNYP82llSfQ?=
+ =?us-ascii?Q?EZABspUZgTOok+8JtVygsYiwllDZesopw9z14xBOHwTKxm5Hv8+S8aIlW/HY?=
+ =?us-ascii?Q?DZ6fp6hGpoFdW/n2/vlvOeJHflZDhqufpJN0me3YmsCpg3/TSp/XKl2sunNn?=
+ =?us-ascii?Q?+rOng1/TguNR71DchxFYCkLRfQ3KAxY6u6dHeQnKj5ttW/1WNt5nxwhIoV2Y?=
+ =?us-ascii?Q?vhLnjtcS4cSE/a0CgEYd7fC0GhcUAF4k2jCkbH0PAqoRXZ4CIyNPx5kZ4bmf?=
+ =?us-ascii?Q?7SBMOyn1gsDIq6VPEh5SCzhEtyWz/VZ6a/aC+r6+BBr5+uYaOouGrDoUtJ03?=
+ =?us-ascii?Q?QVR9RLajcV1LmbVERBkIqNPFaMFxQdIObmAcyuNJI/5twXKcvUc7OSLDR308?=
+ =?us-ascii?Q?cHJQpklI+rtyBWFPVKsH+LOF4yscJw+n2d3bAVgbQ7Fw64oSAzQQwL1qhWgl?=
+ =?us-ascii?Q?Zq395r/yQaxom0dhXbn5W0UE++FvzUR0oMLuPFoi0GlXkeqv+LCPFVuPK+oo?=
+ =?us-ascii?Q?3Vwd5TwufDYKN8EXkYo/7l92I81MbxajWq63q5vdmqnEfsmGnq7VD4lh95Yl?=
+ =?us-ascii?Q?6R/OwL49/kdXM5CpAjAG26yXPaiSnz+ICwNS9994tUaaORCs9tzlCY0gHhJ5?=
+ =?us-ascii?Q?j9yl9+OR6lr6rNyUL9/LP84tTyx5zcOoewSOMW5M+BpJ9Xig4DC84ix8jkZc?=
+ =?us-ascii?Q?bogWi/cG96cs25niB1ISWqsuNnRp165e1f0BTiKCI2L5AcxMWCTNBhFSF+BW?=
+ =?us-ascii?Q?3PnYwj2WxJJwpwRrU5hg8r1ak5vp50KriIeF6No/y380ywJEbr90M0fgvv+b?=
+ =?us-ascii?Q?DGMLwnKbGGS1lT08DuXl1uo06WhZ23j/u4X1LR9BqPx1AY1L58oRhq7DgcpE?=
+ =?us-ascii?Q?x5au/hwjGTDWQjmrhog+VLkhbgTOeEQiBjbw4Cs+kqdm92AjxunbobiqC9e2?=
+ =?us-ascii?Q?j3+IWVV8XKr9a4pAQ6q2oSuwncPl9y94CUJrQ9ZtbJU5XxQTOSTKmlM+0wne?=
+ =?us-ascii?Q?0kK8TZcc64B7JC63fjX7qUEsI70SQis0D2kToVSgAM//BVmB0Q1NBira0Dxp?=
+ =?us-ascii?Q?cfgzWaHwXcJX8uCAvAK0swc4BbgJwpGUbuCZxqP+cWEZIk3xuXEEXYg8DYoG?=
+ =?us-ascii?Q?pB36eR9P7+TnbjzF0yjVmZd5qOa2S42TCUT7jHFkBXxu9xPZL5JaIWV07ZS0?=
+ =?us-ascii?Q?RGjV94g9eMUYjrhNFrYr+0AU/Yj5+CtKYzmpKc6OoEzfnj8p4o9v0dafCgs1?=
+ =?us-ascii?Q?d8YwyA+OC7bwEm1ParUWaaxGTpT7fsFXvDBK1jLiiytBU8gL97aTMuhoJ4GL?=
+ =?us-ascii?Q?2/gVWnwKRkTpw8w5t5GlcxLBggTT+BgeaoW6/2UJIoNhwnDUpD1qqiV12vUe?=
+ =?us-ascii?Q?+BeskeBzs0k66MVTbVHgdBUy185uo9g8gVNEk+kxTLnav7cKBEbnXecZmqxZ?=
+ =?us-ascii?Q?CtU41CW2ATy5+2m8ILq4IrJFndipIArPe7ICzkumagd4mZL7gejFesUmfY39?=
+ =?us-ascii?Q?4kgX1SnpGcIYBuLoeYpTKqoDe8Wrfj4+C9ThO86IsYd8g826tythbTQyxfeJ?=
+ =?us-ascii?Q?PEfdhGxXBUe8V16lNFlG6zUmefG0iEfWBFkSi6NQQdLOjIpECiJb5tOl6jYb?=
+ =?us-ascii?Q?+vh5wk/brj+SVG/xe+3WkzpGqpHSdPz2nwevlSvXSC184ikJQxYcRr1HhVk1?=
+ =?us-ascii?Q?UuyvfGJFNSqUOcg7tuk8yFPFGqoEVOt/gQgArp6L1IS+NCXSvWeJjti5iYPp?=
+X-MS-Exchange-AntiSpam-MessageData-1: BXtcoemr+mpo7x4YljW4ddDyD1q1iAUgEY4=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c3aa62fd-d0a8-45be-543f-08de8c31730e
+X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8584.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 18:48:34.6137
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: dluCQHfJp/7DVOstV/PSRxCm7fftNX/7nvkD+rjw6VGMG2sz9vQKqA3lO14VO9DvSMRUymdNnsBzV8l7WYIhiA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MRWPR04MB11287
 
-Add the P1 PMIC's regulator topology tree for pico-itx board.
+It appears that libahci.c, ahci.c as well as the ahci_brcm, ahci_ceva
+and ahci_qoriq drivers are using runtime PM operations without including
+<linux/pm_runtime.h>. This header is somehow being indirectly provided
+by <linux/phy/phy.h>, which would like to drop it (none of the functions
+it exports need it).
 
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Acked-by: Damien Le Moal <dlemoal@kernel.org>
 ---
-This series try to add a regulator power tree from P1 PMIC,
-the PMIC is controlled via an I2C interface.
+Cc: Damien Le Moal <dlemoal@kernel.org>
+Cc: Niklas Cassel <cassel@kernel.org>
 
-To test this patch, it will need the I2C patch series [1]
-
-Link: https://lore.kernel.org/all/20260325-02-k3-i2c-v1-0-78f29c83d9ac@kernel.org [1]
+v2->v6: none
+v1->v2: collect tag
 ---
-Changes in v2:
-- drop regulator (dc 12v) which serves no devices
-- drop regulators which current has no users
-- Link to v1: https://lore.kernel.org/r/20260325-02-k3-i2c-v1-1-a793776b88bc@kernel.org
----
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 147 +++++++++++++++++++++++++++
- arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi |  11 ++
- 2 files changed, 158 insertions(+)
+ drivers/ata/ahci.c       | 1 +
+ drivers/ata/ahci_brcm.c  | 1 +
+ drivers/ata/ahci_ceva.c  | 1 +
+ drivers/ata/ahci_qoriq.c | 1 +
+ drivers/ata/libahci.c    | 1 +
+ 5 files changed, 5 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-index 504fe6bd46b2..4486dc1fe114 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -25,6 +25,153 @@ memory@100000000 {
- 		device_type = "memory";
- 		reg = <0x1 0x00000000 0x4 0x00000000>;
- 	};
-+
-+	reg_aux_vcc5v: regulator-aux-vcc5v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "AUX_VCC5V";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		regulator-always-on;
-+	};
-+};
-+
-+&i2c8 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c8_cfg>;
-+	status = "okay";
-+
-+	p1@41 {
-+		compatible = "spacemit,p1";
-+		reg = <0x41>;
-+		interrupts = <64 IRQ_TYPE_LEVEL_HIGH>;
-+		vin1-supply = <&reg_aux_vcc5v>;
-+		vin2-supply = <&reg_aux_vcc5v>;
-+		vin3-supply = <&reg_aux_vcc5v>;
-+		vin4-supply = <&reg_aux_vcc5v>;
-+		vin5-supply = <&reg_aux_vcc5v>;
-+		vin6-supply = <&reg_aux_vcc5v>;
-+		aldoin-supply = <&reg_aux_vcc5v>;
-+		dldoin1-supply = <&buck4>;
-+		dldoin2-supply = <&buck4>;
-+
-+		regulators {
-+			buck1: buck1 {
-+				regulator-min-microvolt = <1050000>;
-+				regulator-max-microvolt = <1050000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck2: buck2 {
-+				regulator-min-microvolt = <1050000>;
-+				regulator-max-microvolt = <1050000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck3: buck3 {
-+				regulator-min-microvolt = <800000>;
-+				regulator-max-microvolt = <800000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck4: buck4 {
-+				regulator-min-microvolt = <2100000>;
-+				regulator-max-microvolt = <2100000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck5: buck5 {
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck6: buck6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <500000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			aldo1: aldo1 {
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <3300000>;
-+				regulator-always-on;
-+				regulator-boot-on;
-+			};
-+
-+			aldo2: aldo2 {
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-always-on;
-+				regulator-boot-on;
-+			};
-+
-+			aldo3: aldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo4: aldo4 {
-+				regulator-min-microvolt = <3300000>;
-+				regulator-max-microvolt = <3300000>;
-+				regulator-always-on;
-+				regulator-boot-on;
-+			};
-+
-+			dldo1: dldo1 {
-+				regulator-min-microvolt = <1200000>;
-+				regulator-max-microvolt = <1200000>;
-+				regulator-always-on;
-+				regulator-boot-on;
-+			};
-+
-+			dldo2: dldo2 {
-+				regulator-min-microvolt = <900000>;
-+				regulator-max-microvolt = <900000>;
-+				regulator-always-on;
-+				regulator-boot-on;
-+			};
-+
-+			dldo3: dldo3 {
-+				regulator-min-microvolt = <800000>;
-+				regulator-max-microvolt = <800000>;
-+				regulator-always-on;
-+				regulator-boot-on;
-+			};
-+
-+			dldo4: dldo4 {
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-boot-on;
-+			};
-+
-+			dldo5: dldo5 {
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-always-on;
-+				regulator-boot-on;
-+			};
-+
-+			dldo6: dldo6 {
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-always-on;
-+				regulator-boot-on;
-+			};
-+
-+			dldo7: dldo7 {
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-always-on;
-+				regulator-boot-on;
-+			};
-+		};
-+	};
- };
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 931d0081169b..aa3c4949c4ab 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -26,6 +26,7 @@
+ #include <linux/device.h>
+ #include <linux/dmi.h>
+ #include <linux/gfp.h>
++#include <linux/pm_runtime.h>
+ #include <scsi/scsi_host.h>
+ #include <scsi/scsi_cmnd.h>
+ #include <linux/libata.h>
+diff --git a/drivers/ata/ahci_brcm.c b/drivers/ata/ahci_brcm.c
+index 29be74fedcf0..48460e515722 100644
+--- a/drivers/ata/ahci_brcm.c
++++ b/drivers/ata/ahci_brcm.c
+@@ -16,6 +16,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_runtime.h>
+ #include <linux/reset.h>
+ #include <linux/string.h>
  
- &eth0 {
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-index a7b5d10c332e..23899d3f308a 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-@@ -45,6 +45,17 @@ gmac0-phy-0-pins {
- 		};
- 	};
+diff --git a/drivers/ata/ahci_ceva.c b/drivers/ata/ahci_ceva.c
+index 2d6a08c23d6a..3938bf378341 100644
+--- a/drivers/ata/ahci_ceva.c
++++ b/drivers/ata/ahci_ceva.c
+@@ -12,6 +12,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_runtime.h>
+ #include <linux/reset.h>
+ #include "ahci.h"
  
-+	/omit-if-no-ref/
-+	i2c8_cfg: i2c8-cfg {
-+		i2c8-pins {
-+			pinmux = <K3_PADCONF(128, 0)>,	/* i2c8 scl */
-+				 <K3_PADCONF(129, 0)>;	/* i2c8 sda */
-+
-+			bias-pull-up = <0>;
-+			drive-strength = <25>;
-+		};
-+	};
-+
- 	/omit-if-no-ref/
- 	uart0_0_cfg: uart0-0-cfg {
- 		uart0-0-pins {
-
----
-base-commit: c9bc6f02e3252c20dd967811de7bf7739812259f
-change-id: 20260311-02-k3-i2c-6ad52566a9a3
-prerequisite-change-id: 20260311-02-k3-i2c-6ad52566a9a3:v1
-prerequisite-patch-id: 9a6b8f6968935c8ed5c9acd8ecb778be2d1a3faa
-prerequisite-patch-id: d43e077460cb3ea4e391fb7c528b6ffa80f35574
-
-Best regards,
+diff --git a/drivers/ata/ahci_qoriq.c b/drivers/ata/ahci_qoriq.c
+index 0dec1a17e5b1..409152bfefb6 100644
+--- a/drivers/ata/ahci_qoriq.c
++++ b/drivers/ata/ahci_qoriq.c
+@@ -14,6 +14,7 @@
+ #include <linux/device.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_runtime.h>
+ #include <linux/libata.h>
+ #include "ahci.h"
+ 
+diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
+index c79abdfcd7a9..e0de4703a4f2 100644
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -30,6 +30,7 @@
+ #include <scsi/scsi_cmnd.h>
+ #include <linux/libata.h>
+ #include <linux/pci.h>
++#include <linux/pm_runtime.h>
+ #include "ahci.h"
+ #include "libata.h"
+ 
 -- 
-Yixun Lan <dlan@kernel.org>
+2.43.0
 
