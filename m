@@ -1,22 +1,21 @@
 Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA7237F8A2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAFD37FF42
 	for <spacemit@lists.linux.dev>; Sun, 29 Mar 2026 17:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774803932; cv=none; b=Rt0XTDgQWcpQHdPikx1jb05LhmDHS/vKLwMp+keILZ/vvWDmjG//EyzxGwZu/Xy6d4e177N5lwSJnDJiLn6dJGDEC6Xa40s/orBBjosBY6P10A+ort9MskjunpvVCUgSXdPxTIZYK0Ss09mwYo3soc5ho3Q8LVq/7GqKs4yqCQQ=
+	t=1774803932; cv=none; b=QqAVIpvjmozgoGdxLpCR6QOzrfZpdRGYg2cIkTcHCf67ca0zPk39X6jprvC4brO15pKUt1qE1GSJRYeSOpgqIGiv2R9ULinHcTtlpNt/iJIS2d/i5anbT/X3JBN/AolYpS6If1T6yiig8rMd01hLersJmEsDWOgR3sB425KK1Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774803932; c=relaxed/simple;
-	bh=wxvRwtn8VQr3u19wAWeRtJ30cDrZI5ec6rb60dN7vHM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHd+WrtSYkssKUrDOt/FVt2dL1wWGAN/Fq0E0f6M/MAV5J3R3vUeAuoeW9XUl2hINidPwylvXWFxci8GKNSIl0UZJT9rXMJm7gZEL9as1O5TuC/upjzHEqIPXYsAfUBWboHX7KUP4ioRCezBF36NUabuLkev12VbdbYN7N534AY=
+	bh=314A2cauoj98vTp8DGdqTlMh6M8hx8O+fIiUSPwXQsk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eT+c2x5xn/3C9V+xSW+SztMayD9o78RGiaVY3ef3b9mMZtOj7EHriu2r8WTenWxloFSa0y3qFxVWJ1Bi2gJWycUjie4pHBpYZ9JGsPka/DRe+x5buG+iFr4aGiQ7EY0j1t5YxWBAqbazhCWqh1t898yc6W8ehMF6JobKNKSac5o=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from localhost.localdomain (unknown [223.166.95.230])
-	by APP-01 (Coremail) with SMTP id qwCowADXfmrNW8lphN+LCw--.7316S5;
-	Mon, 30 Mar 2026 01:05:20 +0800 (CST)
+	by APP-01 (Coremail) with SMTP id qwCowADXfmrNW8lphN+LCw--.7316S2;
+	Mon, 30 Mar 2026 01:05:19 +0800 (CST)
 From: Han Gao <gaohan@iscas.ac.cn>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -32,12 +31,10 @@ Cc: devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Han Gao <rabenda.cn@gmail.com>,
 	Han Gao <gaohan@iscas.ac.cn>
-Subject: [PATCH v3 3/3] riscv: dts: spacemit: Enable USB3.0/PCIe on OrangePi RV2
-Date: Mon, 30 Mar 2026 01:05:15 +0800
-Message-ID: <84f8e713ef1ee46f9be852f400f52d6c055725f8.1774803532.git.gaohan@iscas.ac.cn>
+Subject: [PATCH v3 0/3] riscv: dts: spacemit: Add PMIC regulators usb pcie
+Date: Mon, 30 Mar 2026 01:05:12 +0800
+Message-ID: <cover.1774803532.git.gaohan@iscas.ac.cn>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <cover.1774803532.git.gaohan@iscas.ac.cn>
-References: <cover.1774803532.git.gaohan@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,154 +42,63 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowADXfmrNW8lphN+LCw--.7316S5
-X-Coremail-Antispam: 1UD129KBjvJXoWxWF4xJr4rGF4xGF1UWw1UGFg_yoW5Xw4xpF
-	17Wrsa9a4fAryfKw43Wa4Iga13W3Wvk395Awn5Zr48JF40ga4q9rs3Ar15AF95Wr48X34a
-	yFyjyFy8KFnrKw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUm214x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JrWl82xGYIkIc2
-	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
-	Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
-	8EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AKxVW8Jr0_Cr1U
-	M2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjx
-	v20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1l
-	F7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2
-	IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
-	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
-	CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
-	0xvE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
-	xhVjvjDU0xZFpf9x0JUHWlkUUUUU=
-X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBwoBDGnJP94irgABsM
+X-CM-TRANSID:qwCowADXfmrNW8lphN+LCw--.7316S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7AFyfur15JryfJF1rtr1kXwb_yoW8ur45pr
+	y2vr45Zw4rXw4Iy3yfu39xJryYyFnYyr9xWr1UKw48ArnFgay7ZF4xKr43ZF9xur45tFnx
+	trsayw4xua1xXF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9Y14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AKxVW8JV
+	W8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+	2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
+	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2
+	Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x
+	0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2
+	zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF
+	4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWU
+	CwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCT
+	nIWIevJa73UjIFyTuYvjfUonmRUUUUU
+X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiCREBDGnJP60iRAAAsB
 
-Enable the DWC3 USB 3.0 controller and its associated usbphy2 on the
-OrangePi RV2 board.
 
-The board utilizes a Genesys Logic GL3523 hub, which requires one
-separate power supplies for hub itself.
+Changes in v3:
+- Merge patch 2 into 3
+- Fix
+  Rename regulator-name from USB30_HUB to USB_HUB_EN
+  Drop regulator-usb3-vbus-5v
+  Drop reset-gpios from usb hub nodes
+  Fix reg_dc_in regulator-name from "dc_in_12v" to "dc_in_5v"
+- Link to v2: https://lore.kernel.org/linux-riscv/20260310161853.3900605-1-gaohan@iscas.ac.cn/
 
-Define a 3.3v fixed voltage regulator to be used by PCIe on OPi RV2.
+Han Gao (3):
+  riscv: dts: spacemit: Enable i2c8 adapter for OrangePi RV2
+  riscv: dts: spacemit: Define the P1 PMIC regulators for OrangePi RV2
+  riscv: dts: spacemit: Enable USB3.0/PCIe on OrangePi RV2
 
-Define PCIe and PHY-related Device Tree nodes for the OPi RV2.
+ .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 222 ++++++++++++++++++
+ 1 file changed, 222 insertions(+)
 
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
----
- .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 79 +++++++++++++++++++
- 1 file changed, 79 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-index 1b1b27bc95d8..a53cd2e037ef 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-@@ -23,6 +23,15 @@ chosen {
- 		stdout-path = "serial0";
- 	};
- 
-+	pcie_vcc_3v3: regulator-pcie-vcc3v3 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "PCIE_VCC3V3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		gpio = <&gpio K1_GPIO(116) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
-+
- 	reg_dc_in: regulator-vcc-in-5v {
- 		compatible = "regulator-fixed";
- 		regulator-name = "dc_in_5v";
-@@ -42,6 +51,15 @@ reg_vcc_4v: regulator-vcc-4v {
- 		vin-supply = <&reg_dc_in>;
- 	};
- 
-+	usb3_hub_5v: regulator-usb3-hub-5v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "USB_HUB_EN";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
-+
- 	leds {
- 		compatible = "gpio-leds";
- 
-@@ -54,6 +72,10 @@ led1 {
- 	};
- };
- 
-+&combo_phy {
-+	status = "okay";
-+};
-+
- &eth0 {
- 	phy-handle = <&rgmii0>;
- 	phy-mode = "rgmii-id";
-@@ -230,8 +252,65 @@ dldo7 {
- 	};
- };
- 
-+&pcie1_phy {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie1_3_cfg>;
-+	status = "okay";
-+};
-+
-+&pcie1_port {
-+	phys = <&pcie1_phy>;
-+	vpcie3v3-supply = <&pcie_vcc_3v3>;
-+};
-+
-+&pcie1 {
-+	vpcie3v3-supply = <&pcie_vcc_3v3>;
-+	status = "okay";
-+};
-+
-+&pcie2_phy {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie2_4_cfg>;
-+	status = "okay";
-+};
-+
-+&pcie2_port {
-+	phys = <&pcie2_phy>;
-+	vpcie3v3-supply = <&pcie_vcc_3v3>;
-+};
-+
-+&pcie2 {
-+	vpcie3v3-supply = <&pcie_vcc_3v3>;
-+	status = "okay";
-+};
-+
- &uart0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&uart0_2_cfg>;
- 	status = "okay";
- };
-+
-+&usbphy2 {
-+	status = "okay";
-+};
-+
-+&usb_dwc3 {
-+	dr_mode = "host";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	status = "okay";
-+
-+	hub_2_0: hub@1 {
-+		compatible = "usb5e3,610";
-+		reg = <0x1>;
-+		vdd-supply = <&usb3_hub_5v>;
-+		peer-hub = <&hub_3_0>;
-+	};
-+
-+	hub_3_0: hub@2 {
-+		compatible = "usb5e3,620";
-+		reg = <0x2>;
-+		vdd-supply = <&usb3_hub_5v>;
-+		peer-hub = <&hub_2_0>;
-+	};
-+};
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+prerequisite-patch-id: ef6e9c7b5854d0c08066b72f9a7868db8c2140eb
+prerequisite-patch-id: cfe3800f8c791ec4c63e070af9628e88e0fc31b9
+prerequisite-patch-id: b76493e625ae257c8adcd67874178458420e4d47
+prerequisite-patch-id: 88e01dc92c83bd88ddeb78891d3088209fed8d6b
+prerequisite-patch-id: 60336d10ab8322c70596d0f046b6b5c54bb24b54
+prerequisite-patch-id: 68c4d869548687dc115dd91e2ffb8f4c11482d86
+prerequisite-patch-id: fdadcf964c2cb3406160edb579d99a8d5695f8e6
+prerequisite-patch-id: 73b9e745338b0499b849fa4f7f9508987ab39a59
+prerequisite-patch-id: cd26770c2160c3c31a406bd8a6b01ab666180ae0
+prerequisite-patch-id: e5dfddc32cefae195692da8b80e19adf086e4ad7
+prerequisite-patch-id: 7fd53cbe4977598f26148a4bb1cf692bbdb79a09
+prerequisite-patch-id: 96ebac57bb29619b97fe95422206a685825618e9
+prerequisite-patch-id: 00fac16b52f60383db3140e2885f3f7f8d14dd1a
+prerequisite-patch-id: 3b7a60047b922c48e93599f621cb738856f42354
+prerequisite-patch-id: 275c030b963be05dd1041451f539a130ce614277
+prerequisite-patch-id: 93963424b0871e64276af0e0b2199b52e29b4603
+prerequisite-patch-id: 8383188b1c01ed6280629faaa29c37d699ade241
+prerequisite-patch-id: 5f8126b912b924d63d4a1e0c5eb42d212eb0d369
 -- 
 2.47.3
 
