@@ -1,168 +1,178 @@
-Received: from seahorse.cherry.relay.mailchannels.net (seahorse.cherry.relay.mailchannels.net [23.83.223.161])
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F833B5852
-	for <spacemit@lists.linux.dev>; Mon, 30 Mar 2026 09:57:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.161
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774864628; cv=pass; b=ic0hXYoWKVrPCkVDLQW+oQqfEYyphcIzaFRaiFOMK3Ag/BDiVN4Ecx8EgLqGmsmrRC/M/wdPQJRI75CbdMOMcna7LE5jNhdXT3q8ow1/ahZbn3LeGrLyc1R/Ui9WcLoFm2rElMW5rYOwSFcij3LRxBy8Q7Ov6HfAd7QTDRhFpws=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774864628; c=relaxed/simple;
-	bh=gk2yYfqi9gWLyHWm0NhbfKgNvyZrHE//hIikpP5iXEs=;
-	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
-	 Content-Type:Date; b=FQpRfjT/TUc6Y9nmKr7ZzLjYmhobrRnomNjjT0rIs53aYJDHKNrkbcyXNO0NEcByABa0dHJnWjTDw7w+cxHJfwxmhwvBYhtyofIFfsmT4e7AL3cmfsJ1Tgg6DfcnqFn8xlQ5YDFgrZsYz8qOC+5RIrZ2fXqZpnj+SGidgB2eKHM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=EsU/fRpB; arc=pass smtp.client-ip=23.83.223.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C2C274B46
+	for <spacemit@lists.linux.dev>; Mon, 30 Mar 2026 10:01:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774864866; cv=none; b=B2nnKrkNY7gFPYdBM/SUx7QjxhJVtb39NxOE3U8kXTJdCe4XuKlkZ0hyE6557VpbwM4u3Bs6rtM4mluHwwmzyEFieRhQ7ZCXyxJ06VTSP1kZAGFFDgQC/2Jp3ArTKJkv/xUisOQqodwu6+5gGz9bSWzq3K4tnM40260FWpE26Fo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774864866; c=relaxed/simple;
+	bh=EUJQsnm486l+H6b0Z6VRAeD5tbOrL+rvpqyJzW0XFus=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=W+2nHwsOKc2ZyKOvdURbyQ/fM+M7heuNPRY602GVP/o+IGrhV7onmuhyMMuEqb1lT5H4M27WkmE++OKCD5PT1wZR65oaUCZ9wbpaWeofp9ypNBj6SUz1O8Cspz6Wnup6/bec1KVCSnfGA7/XnK95y2i+MZXA1VjXfxqaAExRTiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=BNkT2/58; arc=none smtp.client-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="EsU/fRpB"
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id F405A8A2DE6;
-	Mon, 30 Mar 2026 09:19:53 +0000 (UTC)
-Received: from de-fra-smtpout1.hostinger.io (100-122-165-184.trex-nlb.outbound.svc.cluster.local [100.122.165.184])
-	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id B80098A2893;
-	Mon, 30 Mar 2026 09:19:49 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
-	t=1774862393;
-	b=Ojv4nw/nJ2FlBl7DACVPMLFpgUl3ZMZFtXPXJTa59gkUXwtQXcgS9PoGTpYpVwXiOGgLM7
-	PYbLDeijs24UXvtuW4CUM0x1EUkgMjSlGe4u7VFS1oN8YV+Yr0klPUS6BGyErfbP113Wdc
-	011i7GqZwVAu1wbTJfzpQXkLm9nhEFJei2m1bGyaZTBcBdtljZWlWjSZY3JKDTUx/0MoCz
-	+Ackpwny/+cJZ4qH93UVjY82cJ4xK8PRYfdg7KhLNuOun/aQaWXM67l4/UkLNC0Qtg1RVi
-	hOec+jsFzcqm1op9Jx5kJdmnAki6FVNZcZ+48ry7icPb7eOPvFu1Y/SlsQj0RA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1774862393;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=xn8ytO1cIDErWyKt0Aui97W2ei8LosNrt38/Xqsonzc=;
-	b=RUp95xcfeT5Z9+ljYt05kwCrTwtBCXfTEkHyH8dGF/ILePW0DugnsFy8Ve6112GsSk9mj+
-	4cKXWTvOl9A4ykYVZl00wIg8Tmy69Yj5HKFKsIVguKHvR3Jt1Hc/hhF4PPnyk6LuqByZ46
-	i7TiugtxnN1Z3eUV4BfMkcGYzL1hvDcwh5cp5tntzcJ6Q2Srihb4KcxGAkX+WfPEF22W8g
-	W/GrtYb4HzdorcQBl9ymFp6v8SpfPYvk2mDGfQ8Aj49j3DHqvGpeKN3LFZM93udYIl9H3m
-	zSnAS4ivnT+LI5dPlFL50pW4J/V+D6YYG1LXnFlhpBfG2ukFdL2L6oSpQ5L2/w==
-ARC-Authentication-Results: i=1;
-	rspamd-7f98bb5847-j2s98;
-	auth=pass smtp.auth=hostingeremail
- smtp.mailfrom=michael.opdenacker@rootcommit.com
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId:
- hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MailChannels-Auth-Id: hostingeremail
-X-Cooperative-Gusty: 181656a42e71f35d_1774862393775_183899981
-X-MC-Loop-Signature: 1774862393774:2731040531
-X-MC-Ingress-Time: 1774862393774
-Received: from de-fra-smtpout1.hostinger.io (de-fra-smtpout1.hostinger.io
- [148.222.55.8])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.122.165.184 (trex/7.1.5);
-	Mon, 30 Mar 2026 09:19:53 +0000
-Received: from [IPV6:2001:861:4450:d360:dd36:70ba:d0ec:421] (unknown [IPv6:2001:861:4450:d360:dd36:70ba:d0ec:421])
-	(Authenticated sender: michael.opdenacker@rootcommit.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4fkm0z1Vp2z3x5h;
-	Mon, 30 Mar 2026 09:19:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
-	s=hostingermail-a; t=1774862388;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xn8ytO1cIDErWyKt0Aui97W2ei8LosNrt38/Xqsonzc=;
-	b=EsU/fRpB4bMNr1MbcjiJcFxFaQrImPdZP8Esq/9JO/3pYYnkpDwzzei3vtoSLw4TGqJ9Q+
-	TNmzMMMjaO57rvtNuIeBP58jf00XaB0KWEpAusBlaZBmzNEAzfQsR5LYAusd9T76XwYYYF
-	DgAn+A5DSahBLtvY4N6wz/MWQor5m4DCe4Y9rUN2Rr23LyUhJoNvI1cv4mQ9GZQMgvtgbW
-	9+ylL8QYrtLYLOWLNwiUWCEReIJiKHjsiUq3B/9DiwyGpCQEVOr4kUAVQFiYT80CH31YR9
-	1wNxXYV5rejUx0twMXT9FiqHulqymKbIrDFsa4NYodEO5fakub07vMFEWnQiwQ==
-Message-ID: <17eb09e8-280d-4a41-8a8c-8c8287160e97@rootcommit.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="BNkT2/58"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1774864748;
+	bh=xj4JN/9EQzjiCXrEokRfqA2hGHPDxG/GX0nXcofrD5I=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=BNkT2/58daOeB+rjzYolq35IW/lF2gr+X9JdN6wALabywurfODKElATskSxO4ytSP
+	 tkDO2hFFrPfVRTHL9oFJ3YbqGXlU0wJmvvUK7YnbJ2mTG1JbbMSCBJI8Zq/UqccRPe
+	 nbrfRYF0Mzb+PJWIUlAJ2cceYDC8wVy24b3OeCFk=
+X-QQ-mid: zesmtpgz8t1774864740t33e6c603
+X-QQ-Originating-IP: BCda8jq6DPAm3ZfzAbSnMcHwGxjKRjGZGjnJwoDRAYk=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 30 Mar 2026 17:58:57 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 11463941060989676982
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Mon, 30 Mar 2026 17:58:53 +0800
+Subject: [PATCH v3] riscv: disable local interrupts and stop other CPUs
+ before reboot/shutdown
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: michael.opdenacker@rootcommit.com,
- Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- Anand Moon <linux.amoon@gmail.com>, Trevor Gamblin <tgamblin@baylibre.com>
-Subject: Re: [PATCH v5 0/9] riscv: spacemit: enable SD card support with UHS
- modes for OrangePi RV2
-To: Iker Pedrosa <ikerpedrosam@gmail.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Yixun Lan <dlan@kernel.org>
-References: <20260330-orangepi-sd-card-uhs-v5-0-bd853604322d@gmail.com>
-Content-Language: en-US
-From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-In-Reply-To: <20260330-orangepi-sd-card-uhs-v5-0-bd853604322d@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Date: Mon, 30 Mar 2026 09:19:47 +0000 (UTC)
-X-CM-Envelope: MS4xfAFrx90go/FDvQ2bCCAciVHZL0elbEQjsnIdsRspr6lsybI6rwV23lYlEa2ApzbvkTfe89o15JrIn57IsD7safNPyhyROCHNc3oWDPM8tqByr5qxkPCt N3cQlUyVDJxYfM80eMvfYbsJ1FGwCJ7ejYjJAkAoFJA7FC25rvWdm0IIeAdFGpq8m14+p6O4Eim/8vOdn1M/WK+43lQmNsAlNaknEzm4mRBa9zn/INJ/1PmR VPkeWM0QNjDPNRY8AMEMY9+GQWWf3lUZ+6vWTOuC+R2evMO4JyXUTxNKoKaWeYpo5WGW81yfsiYOYV7lOTGaButPF7e+/zBFx8TbbNu870v4U3d0NCp0ca9j O8LPNwbs9O59fhMxe4CElqmqn7lj69GmTatAWistWMsC1R3PDJYXi7LS3ARNv58JmfSuxhh3Q+rhnnpAiRwwEA8upv3oUsyya3S3/N/J3z5yz29NFy8Tkiyv D4++CwJMR7mJY0sQETdD2XzKvDgfm+q/NU6hO1Tt8B/L039PqEXVVBj5imzVGsoVwvCsOEiY0g5Z9PlfM8XiZXtjXrLuNxvCqor0lrfF2vQJyj0rAnDHHvIH vpTwCGah5jhet9ix3dmQt7FQMl3haN9C12FhnU+3CrFySGdgv6boOmxRgrG4Kw+RfkXpg7Wl+ycoNpH+uPFmhTbFseqWkfKhK9h8CbZsgDxG1ce8yLIJyamv GVZbdVU2Sgm9NifCORf6pVE0vGKKTtPu9AYanBW2z9D943JQovtJOeVZNZCCHAoVritoDEmWW83RPfjUQNWGE3Xp4ir6KWSQsj7xyjZa/+mey9Kxo+M7Jq3B UgbmtygCKATLhIeqPzrji1a+AX7iEzoyDo912b0lJTeZPw2NkIl4x+UFvKWnGUWiVGIHKZHo9/n1PBdt3dLX1A2sPdi7l2OsXhu9/NS41ehwK4/qwaX7fPS+ +ecuYw==
-X-CM-Analysis: v=2.4 cv=ALriHGRn c=1 sm=1 tr=0 ts=69ca4033 a=UGNOvlGp38Csz17LMCzH0g==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=d70CFdQeAAAA:8 a=np_wIC4uXEsaGhWusoMA:9 a=QEXdDO2ut3YA:10 a=NcxpMcIZDGm-g932nG_k:22
-X-AuthUser: michael.opdenacker@rootcommit.com
+Message-Id: <20260330-v7-0-rc1-rv-dis-int-before-restart-v3-1-5a0577fcd136@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/5XNywrCMBCF4VeRrB3JtVVXvoe4SNKJHZAWJjEop
+ e9ucNWlrg7/5juLyMiEWZx3i2CslGmeWpj9TsTRT3cEGloLLXUnjVJQe5DAUQFXGCgDTQUCppk
+ RGHPxXMAFg057G6w6iQaNlMvM7+9HVW2uf3FVgYIQbRescSr6eHnQ9HwdBqzi1viqt2T/E6kbK
+ THGo0sh9CltyXVdP33VWQMXAQAA
+X-Change-ID: 20260311-v7-0-rc1-rv-dis-int-before-restart-5b3e52a4b419
+To: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.dev>, 
+ Aurelien Jarno <aurelien@aurel32.net>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774864736; l=2941;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=X4sDXSviogdNNvGG5ErzZa5dJDLfstRYX6nniJzWXak=;
+ b=uC6StRG89pkJqwItrW3uM/AV18FzGXVLpE3hQgVfqLZZYcRbix8vggs3eIl32DWUjiopZj92H
+ 7dsSFNTKoCQDz3f9ln4CttJmc3Bo5xfWE+tmr5c0Q/gRtm24FYcyEg/
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NhQ9hXNievYaeuzkVpCWdHu6+BAd7bXHUDhnBmsgeZuBLD4ovlA8O6XI
+	4jHsFWyFLTR8QrtCkALXz8dSYTV9Et/AeGsdUEiSMd6q9TKVfiA1REZExOuos13Opc2/aFZ
+	+2CtxEn3U+gATWk1NBoKjIrSrXzsXJviRPJOPI9g1qwjAdHMjCevzFhvBZgowfpKqSdxn7y
+	djD3r9N6gZ+MKbn1wLwU3TYyjRE9v7hvmvKPpCOVKzWxJ62nEVC0TGO2L+vmwgBGhYFtVOV
+	oKJUNimzg01pG0mUOFIDAR+kSUld1NOW2rqnFQSrhVvR66D+/ylb6vXe5Lm4pF9vHA9ERP9
+	7lsjHmH/L2X0Vs57Z9o9PpwXvXmOiC/JiiEKTc45OWvrrkPteYaLShDS9so9XorjIh86qx8
+	BF+U3Dg0hNfcnXQmd/idsYMoW7b2Hev2gMb4Ko2XC56tFQ/NC72MQNku9J7tDgZ16T4m9L3
+	NfFAb6PDRQzrpZuNrq0p6M0JUp/2d6l0cV/Le2ztulXCyolo3pI0dir1Tdr/Y/BFkSduDlj
+	j4ak1S2V15MNifM58pPoKDK0ttek8jg2zSjP2bQu/Hmf7KfaGvmVtVr3Dr9u9nbfJOm05yU
+	e8/ZtdDs4lf3OVni8Orx9giVsnFgM1T+pRhbJ6ifcgcFPCabKOdqJctbTorce7hWBBSUtpb
+	Hi8ZzOGZbytke1gAtPbb7Q6hBQVfFBe6j6QUHuJxe4M8hIa6YhVAXb/2r4qcV1DUxWd7GAU
+	cehn7lKRN7kpQNo3kzk+/rf+vSIppEFKMqCbDiyULddQE9uLyNTlBEAusMtjZCdrbzS8RuA
+	ssOdVE2ZSWZxECMacEpv3zRcVImECsWC5CrxL5PqE1rGLLXQX9suaaX5CL5QofK83o1ogdc
+	xL8Xi9tdujkRjblWTRjXnneLNjfTsFFVc85EEfDFdYaAKKxKdaaYacrzU6DgOL1ZMnHi3+E
+	4tGrwNEV8BkeskuEp9/sIBggosiqhDrnmB/s1Xl9zNT1fghufcjayTn2V18dJZGc0XD45No
+	ucxgChDO2WFc2ALmAaFS38L1SGoP/MZNcuqq2ZveASOo1dGA5TaRLv/vklbZmNZmDYJTaBP
+	m5qijmklBm4LdkNFdJUGNiFE1QXEN5FQg0H++DoIAahsJjO/kdoi9GUTBNJ1BbEhw==
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
 
-Hi Iker
+From: Troy Mitchell <troy.mitchell@linux.dev>
 
-On 3/30/26 10:38 AM, Iker Pedrosa wrote:
-> This series enables complete SD card support for the Spacemit K1-based
-> OrangePi RV2 board, including UHS (Ultra High Speed) modes for
-> high-performance SD card operation.
->
-> Background
->
-> The Spacemit K1 SoC includes an SDHCI controller capable of supporting
-> SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
-> currently lacks basic SD controller configuration, SDHCI driver
-> enhancements for voltage switching and tuning, and power management
-> infrastructure.
->
-> Implementation
->
-> The series enables SD card support through coordinated layers:
->
-> - Hardware infrastructure (patches 1-2): Device tree bindings for voltage
-> switching hardware and essential clock infrastructure.
-> - SDHCI driver enhancements (patches 3-7): Regulator framework
-> integration, pinctrl state switching for voltage domains, AIB register
-> programming, and comprehensive SDR tuning support for reliable UHS
-> operation.
-> - SoC and board integration (patches 8-10): Complete K1 SoC controller
-> definitions, PMIC power infrastructure, and OrangePi RV2 board enablement
-> with full UHS support.
->
-> This transforms the OrangePi RV2 from having no SD card support to full
-> UHS-I capability, enabling high-performance storage up to 208MHz.
->
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> ---
-> Changes in v5:
-> - Document optional pinctrl-names property supporting "default" and
->    "state_uhs" pinctrl states for coordinating pin configuration changes
->    during UHS-I voltage switching.
-> - Link to v4: https://lore.kernel.org/r/20260323-orangepi-sd-card-uhs-v4-0-567c9775fd0e@gmail.com
+Currently, the RISC-V implementation of machine_restart(), machine_halt(),
+and machine_power_off() invokes the kernel teardown chains (e.g.,
+do_kernel_restart()) with local interrupts enabled and other CPUs still
+running.
 
+This implementation fails to provide a deterministic execution environment
+for registered handlers in the restart or power-off notifier chains. These
+chains are intended to be executed in a strict atomic and single-threaded
+context.
 
-Thanks for the update!
-Successfully tested on OrangePi RV2 (on top of mmc-next... doesn't work 
-on top of master).
+Specifically, under CONFIG_PREEMPT_RCU, rcu_read_lock() does not increment
+the preempt_count. If local interrupts remain enabled, the environment
+is not guaranteed to be atomic. This can lead to a context misidentification
+within generic kernel teardown code, causing it to incorrectly enter
+non-atomic paths (such as attempting to acquire sleeping locks), which
+results in fatal "scheduling while atomic" splats or system hangs.
 
-Tested-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Additionally, stopping other CPUs ensures the primary CPU has exclusive
+access to the hardware state during the final teardown phase, preventing
+unpredictable interference from other active cores.
 
-I'm excited to have this feature in the next kernel.
-Cheers
-Michael.
+Align RISC-V with other major architectures by disabling local interrupts
+and stopping other CPUs at the beginning of the shutdown sequences. This
+guarantees the architectural expectations of the kernel's restart and
+power-off handlers are met.
 
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
+Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+---
+Changes in v3:
+- add Aurelien's tag
+- Link to v2: https://lore.kernel.org/all/20260317-v7-0-rc1-rv-dis-int-before-restart-v2-1-0ecc85fbb7ff@linux.dev/
+
+Changes in v2:
+- expand the fix to cover machine_halt() and machine_power_off() for
+  architectural consistency.
+- update commit message
+- Link to v1: https://lore.kernel.org/r/20260311-v7-0-rc1-rv-dis-int-before-restart-v1-1-bc46b4351cac@linux.dev
+---
+ arch/riscv/kernel/reset.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/riscv/kernel/reset.c b/arch/riscv/kernel/reset.c
+index 912288572226..8c48466c50e9 100644
+--- a/arch/riscv/kernel/reset.c
++++ b/arch/riscv/kernel/reset.c
+@@ -5,6 +5,7 @@
+ 
+ #include <linux/reboot.h>
+ #include <linux/pm.h>
++#include <linux/smp.h>
+ 
+ static void default_power_off(void)
+ {
+@@ -17,18 +18,27 @@ EXPORT_SYMBOL(pm_power_off);
+ 
+ void machine_restart(char *cmd)
+ {
++	local_irq_disable();
++	smp_send_stop();
++
+ 	do_kernel_restart(cmd);
+ 	while (1);
+ }
+ 
+ void machine_halt(void)
+ {
++	local_irq_disable();
++	smp_send_stop();
++
+ 	do_kernel_power_off();
+ 	default_power_off();
+ }
+ 
+ void machine_power_off(void)
+ {
++	local_irq_disable();
++	smp_send_stop();
++
+ 	do_kernel_power_off();
+ 	default_power_off();
+ }
+
+---
+base-commit: 31489a8c1e95cfa2039b7ec4abf124d1fdda31a6
+change-id: 20260311-v7-0-rc1-rv-dis-int-before-restart-5b3e52a4b419
+
+Best regards,
 -- 
-Root Commit
-Embedded Linux Training and Consulting
-https://rootcommit.com
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
