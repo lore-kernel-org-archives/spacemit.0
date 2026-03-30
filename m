@@ -1,53 +1,56 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBA62C027F
-	for <spacemit@lists.linux.dev>; Mon, 30 Mar 2026 09:15:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1D91C8634
+	for <spacemit@lists.linux.dev>; Mon, 30 Mar 2026 09:44:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774862145; cv=none; b=miy3LINB/C6fa7nTgs+6V6SKavbbETiHKICg1RPitDGa3tTPZcIrx8SE2VWDLFDN5z4KEwKaqQJj7vHQYngk+3urVj9a7C/TnhHpMvq7ioZWOP2HEbdDnRLau8aJMsbJ2MoMw3L3tie6wC4ARXI+lMpWmzvvQ77ES2KXWuGKDgo=
+	t=1774863849; cv=none; b=cqbUIUfUGpJ1BgJttbscjXJX8/eHSldLlGPcP6pVuf2yxr1Wfrt0fk1GipcDts68nqvFf43NpsEWBElmiXZYs+p1nXvlbml7s0zTUsiaJ7hfsTWYQYQSCOe/2txeh560CQgUV5L30XEFLJAwIuqwvlScwqNL3bpFKFYMVluQzjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774862145; c=relaxed/simple;
-	bh=a8YvugJH+t8gjC+U2aNmb6hmFv51p6ka7JzEV8FgDjU=;
+	s=arc-20240116; t=1774863849; c=relaxed/simple;
+	bh=iBCwyZpwamRARxbsN2N8EFmrOffuUA1+6BYYKd5CeEc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mockrGz9y+dTuj1nVF8Iw59G7AClYZMRmB6yEIkgVaYxvJ9RqtK04UnSIvqmsuQ6RBO4ErLRZeytw8xvpe+nR5AiBFRJiWdVIuUUmmf4VLuDahuQ9vbs8mQ2bPCxVKIsO0uwYbyT6nN8S1jdeGwAoj8hi5Lp9BU1BpmodvunYw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lxRPe8nd; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 Content-Type:Content-Disposition:In-Reply-To; b=IM5NusH8veD6SjHWD4NQZmRsw313L/xnbHN2r0NbFGx3Rz+vMZjGuOEMgnd8rFOTSpL/9IDyqb6W5ihQAKIuwqaAVI7Z8tJqrrCzeg1fWVUKFNE90MnocUAhtfHLV79/OcFMlPiRPsoQgEOsyxFglsOJmoKBw5qQK2ZkG3cQxU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=OHTh3sQY; arc=none smtp.client-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lxRPe8nd"
-Date: Mon, 30 Mar 2026 17:15:34 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1774862142;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ffNey6SOjj6PKeMnJLurYQewyxdkCi4z/62Wjxr/TDg=;
-	b=lxRPe8ndEyU517wIcgrl2IHaTXvpw4dbrzkXLqhOImcJA1Z/hSzUM6VLjXmAqBlFWoeSXU
-	2UblgqPB0rl3E6gSUr9lMritOmbjAkUdGa27ie9MMebNPGClDFgHJ/Nqp/ZZujsEsftLsA
-	VmYg3LRd4F+Q8Nz738sYapqFq3A6c8U=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Troy Mitchell <troy.mitchell@linux.dev>
-To: Iker Pedrosa <ikerpedrosam@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="OHTh3sQY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1774863763;
+	bh=mTpQwvg5Mz9FjX0WddBd0PpBVlFM1npPuFntNiLEgxA=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=OHTh3sQYXm+rK3EPV3AyeF22RqnCrg94S6xu8CfhCh8ZijApaWkB/gUET0yCk4t/Z
+	 CvtXfjSvcfliYuuQ7izJdYFUznlbKoAun/vP5FDuErT1QoPzw3E+cYIxH1105iC6me
+	 9QM6M/xNfEwJrh8ZpH29814IdwIzoBH4rDzLyB3A=
+X-QQ-mid: esmtpgz16t1774863753te80528ff
+X-QQ-Originating-IP: R17bfHIhJDpspnCPy1NFP2dyutidDbHlsa0JPjeHPGk=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 30 Mar 2026 17:42:30 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 17267774757820905902
+EX-QQ-RecipientCnt: 20
+Date: Mon, 30 Mar 2026 17:42:29 +0800
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Shuwei Wu <shuweiwoo@163.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>
-Cc: Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Anand Moon <linux.amoon@gmail.com>,
-	Trevor Gamblin <tgamblin@baylibre.com>,
-	Troy Mitchell <troy.mitchell@linux.dev>
-Subject: Re: [PATCH v5 3/9] mmc: sdhci-of-k1: add regulator and pinctrl
- voltage switching support
-Message-ID: <aco_NocWwrkGdTaK@kernel.org>
-References: <20260330-orangepi-sd-card-uhs-v5-0-bd853604322d@gmail.com>
- <20260330-orangepi-sd-card-uhs-v5-3-bd853604322d@gmail.com>
+	linux-kernel@vger.kernel.org,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: Re: [PATCH v3 2/3] thermal: spacemit: k1: Add thermal sensor support
+Message-ID: <DF4450E7F5A1BB56+acpFhalHxjbA3d1v@kernel.org>
+References: <20260119-patchv2-k1-thermal-v3-0-3d82c9ebe8a4@163.com>
+ <20260119-patchv2-k1-thermal-v3-2-3d82c9ebe8a4@163.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -56,24 +59,37 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260330-orangepi-sd-card-uhs-v5-3-bd853604322d@gmail.com>
-X-Migadu-Flow: FLOW_OUT
+In-Reply-To: <20260119-patchv2-k1-thermal-v3-2-3d82c9ebe8a4@163.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MlFTQbf74c0X8ovUWACn7Iogmr2oHDUhdSQLmQ5YLl1VxtGvXD3XGnU8
+	3+2iI4SwvsXwB2uBfjgh8YCGE1Lp5XWrAxOe1uwUJj49KseKyARv90LsGskj/lW9N2bVnjz
+	kq5AFyPeo7lMqwMPYOlD493y5X0GhTiY9pwLhjTBuph1KywbsDInuEY+2Nq5MSZXcTbFRGu
+	0YxOSCNtX8ee56nrbubOHA6U0QjhgAazr6MA/Ji6WMUTuspUhnXs3n4/JLetnA+ZHPTuYdX
+	L0mITTQzDArtwQDFPtBCUOC2gIxVgKimrCUlbO3J7eSrmNUlEN8CH9rJ5qKOdjVyEnMG7zD
+	ZGDWR7i1G2RTf5fYUHV8B6DYbdnEdP78NBX4aL8ragIh3wOu8T7dGGT0p5iBpRzFZRgSuNg
+	oWuCbarZjlq6f6laGhW66zmabJ4OM+4GpBOdit4w6feGzhzRyUmp4+dNbHARZ8oiv0gDk4l
+	5a0E3z/5pd7QGrRbLuY7x1nhmVnz8lUUFJvYtD0Ri4/KdE80VaDzVqzhfWYqKCag7dswXJ8
+	ZQWI3+pJvhUKdaqzj8XqBmxPXj+wnTR/Z7he7q2Lo42JWEkc/e/kZWfBZRaWr0k6wltNwO3
+	5s/hAXSBqTdKHDyeNpnAexOoFhsYkI6B8JFSDKhG3T2VIfnYVfWenIDUz1rR0qSij/nAk7B
+	5fjZ/sHgrbap98qI4GdXmtkPvsg+NjBqurQ7V5RvOu2Veg92MkH/qI4T849LAeMd6GP1hpQ
+	3FsNJqDVpOeXf3Ct2JXTfL72OSrUFeu6k3/fQuKMj9HAYtA+UlazORbWXahGr5J+yVv9Y10
+	n2pjCGiUzoFLP6DhT1Yff60kN15I9ZAerBJlRwBxB5yC9A+ntxneg6nsXdozC6uOTj27RPj
+	BXjnqnpbnwT9usC9dmzaZIvb1Leb3KVn01NTcVDoDKEe6X+KSa2EjHjAtacv2dGaHfpXoiF
+	hIdwMpK4OUl4saukKVGVRGMPq+rsyJ2TUC6VS5CVxXvEfYXbPxFkt/j9YLb4oaZkiRDAXhW
+	ezwZVk8/eeiSgjcUTIUakpbTh6kHOWj7gJi8KPhgleuCufvqNh1Tkod54ZfArxG+3Mangwi
+	4F5jb4u14uL+VZwCRsSxlzSOKkUK0qOyLHbIWsWbGoG/8OShA6wDg4=
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
-On Mon, Mar 30, 2026 at 16:38:04 CST, Iker Pedrosa wrote:
-> Add voltage switching infrastructure for UHS-I modes by integrating both
-> regulator framework (for supply voltage control) and pinctrl state
-> switching (for pin drive strength optimization).
+On Mon, Jan 19, 2026 at 10:41:22 CST, Shuwei Wu wrote:
+> The thermal sensor on K1 supports monitoring five temperature zones.
+> The driver registers these sensors with the thermal framework
+> and supports standard operations:
+> - Reading temperature (millidegree Celsius)
+> - Setting high/low thresholds for interrupts
 > 
-> - Add regulator supply parsing and voltage switching callback
-> - Add optional pinctrl state switching between "default" (3.3V) and
->   "state_uhs" (1.8V) configurations
-> - Enable coordinated voltage and pin configuration changes for UHS modes
-> 
-> This provides complete voltage switching support while maintaining
-> backward compatibility when pinctrl states are not defined.
-> 
-> Tested-by: Anand Moon <linux.amoon@gmail.com>
-> Tested-by: Trevor Gamblin <tgamblin@baylibre.com>
-> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.dev>
+> Signed-off-by: Shuwei Wu <shuweiwoo@163.com>
+Thanks for your patch.
+
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
