@@ -1,148 +1,69 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4163D3CEA
-	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 11:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774956417; cv=pass; b=FM13Q9mT/CM83uanDwPD9XJCxYU9b4P03YNz1PVjBtwbIbzLLA7nXyK1S5apr79g4u+JXIdKOVv0w6CBzH/eMlmmq7epGfzL6anZ4dO0HwVQgh2eUgzIzNc+LksWP5SNUKvT45/J23Uto44JpGQN/huHBLaCsnRN1MNahJk5QlY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774956417; c=relaxed/simple;
-	bh=PFCBmuwuKEKtQ0bPc/Rwi452Am7mRq4n8aDYWPjSjzo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oviIUJE1brrH6pJkmGrqLRnS7vob8SamG9DFMRmJNYFQmvHHfojm+bevulSsoaoDFdfyBZyOqmq8LEZtkBRE/Hav8rzJQTOB8SmEh0XnA8zJNbcmrjiU5AjQko9P86iUP2kagjkP/ywMTaEgpWhv1cv/8KIOaaADNIx/ieRQw8I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YuCJN8A/; arc=pass smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YuCJN8A/"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a159c1e65aso5224724e87.0
-        for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 04:26:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774956414; cv=none;
-        d=google.com; s=arc-20240605;
-        b=OiaWV9XlDwHVQQe8yoW2zX7hhI/UFO1Zd3e3vX5XrvTTZcQSx5lcCJUfV9vsiHAXau
-         yvOZpp6lCluxruEF8FXi9tZ22nGeXBrQXRQvMH5RNZzWZB+jg161GZvMSLUMRS8QKlOP
-         onMOibwWUiyHaCCCs6lOgT0Bpl+ombEOTqyKbEMFzjSHIksXPjANV/7GxIdw+jR0dfR3
-         suaN2olpGgVeMpveNRxplqAnnUwfTjbLXXukASRoQ4zjr/JGAIKUhhjqfFsRxa6djfJl
-         cIHEIjbcRh7xlthkPy5JJ/2EdMDFfvI9fQwfB3XDqsytfb8GWBfYR2V+62S06oYFb+/m
-         7Y2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=iP+XvAcB0McyuH4v01BHzzfnUMiwboyQfOJw5woEYVA=;
-        fh=UgTfuhqvE4CJa42KvxVv0GsC5RTidsL7PZzjxohUBMw=;
-        b=SfT16VPdXGgYcWoYHiIa8aj7BJ3OfpDIzFkog35HR7nGSO/clYwhl2CPsiA133Pv0c
-         JnBj5xXSRHHu1CNqG1fhtxb5NBZtzlmOxLFWIs8/5J0Uyh16Cyk4LSIdKiaih+cQVcoa
-         sLP9d4YMFnXN2OUtUgOeW1aKmALwRiNIkPGuuwScJ1IP33gjXUYwVp+oxbgllO6onPsb
-         liwZEu15pCUI4LvvRArqHWgQvn4wW3AzLCN8n+ZJQA4pOH50FQR8rwFx0A7UuuBfCzO4
-         HE+ayGNYYMHRkqv6N4u9C+Z5fVMfLPObhlXP3npiCdFMhdyUSj7Z2LMntgzyL89kq0nc
-         wRyg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774956414; x=1775561214; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=iP+XvAcB0McyuH4v01BHzzfnUMiwboyQfOJw5woEYVA=;
-        b=YuCJN8A/mjC1hjMOA4UgvXECJzS+awS3BHO+9R5sF7xqlBN+y4xt/jZIr4KO5+nXs/
-         nRDHR7udgc5YIasNsmeReP+fIM8J4fvvwdA+RuB4F8BlBTwQvmmv2SIct+LAKhX817Zp
-         lLETjyfha0ms245VIrjlJKJZK1eI0mdelJadYDAfNE+ypMb69b1f4wLAsqjrb+cKvHsx
-         RYwnRJVu2eybRsYPRySUcuc1i7XSF3DNQmcHBmL/GxzL8sWGUpI0RZWYoOhSuqbvn91Q
-         uCwIjzsRXfgCJFh8hXLnedRqXXMfHbhMz9qC4+gVgInBSaTxdXfeoQLE0E7qQwyqCiCz
-         Z6Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774956414; x=1775561214;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iP+XvAcB0McyuH4v01BHzzfnUMiwboyQfOJw5woEYVA=;
-        b=IQ64+Z3of5GuATv9MEizXZzogcr+w+B88W/fL1WXVXlITprXv5oySNfTCfLzGxGAEy
-         Ztz6IyqIxe6VxWANqcuzABhRGYB2Ea3IlSk2Z5F7dMrtbhOjWiN7enkIFgu7atcGAFJQ
-         RPxIV5Fn8qpA2Buxblspu0puczu4cXpOgkIk/+RlNR9xbZQtM8Ibk5wnyvZp0AjyF0HB
-         SPU9kBzGHZhsdq0h46JpZqFspZb9YZc4LGNvLhxUz/w8wm4T0UUwT1mWB+TJm60zOdiB
-         U/ovMZGxgHIqjGWrhpQt3n9WvNnaEFus1jvmWIuNdZtfUJo2lU1I9YNzgkX1Re00I8UD
-         lb9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV1kfM0YW1+VI4MQP03BwPKvvlQ+UrdsP66WKYtLQjA4K8T6of57g+dqAemRLLw+ga2kjlA77QUTA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxLi5dDHS2LgTS34l/O22BQBOdSxWQETqaX6YgPh8v+fFg//m0a
-	NVb6gAT1RnINwMGAa8ivC2zvatFTg0XfQpb99gCVG9Mj0n12bmilEoCPJq8i0+MrNicnwjGe0eP
-	nO/pFz/1/1F7Yb5UvFU/dZ4KDCW3+9awszTs6qbFRXQ==
-X-Gm-Gg: ATEYQzz/jPvUHeS7lJbh7PszlQxQkN8NoAEWc8aUuhxdaXImPNOGFZpsSNkPKyjH450
-	iWmtSiQPtJp5OOUiIdT94mbCW+S/Zr+RBFTYCCg5nihcIBBcjNfbY3iYZIoXeUobfnvRHCzczSp
-	3fjjI5GtJ56gxzGHwvnIEuwtX8FXm1u9DGgosx9FkAH4XvQBYZGBYd+WUGUTObE3qfbanYYQ+yG
-	o6IdUpIU54YdN80A/xmwmNRtok/30RXZqI3QRMpcA941sijbM63GVHPPuLRJbAFovcYFhmWYrAC
-	pcOEjZwE
-X-Received: by 2002:a05:6512:691:b0:5a2:beb2:d440 with SMTP id
- 2adb3069b0e04-5a2beb2d489mr790442e87.22.1774956414346; Tue, 31 Mar 2026
- 04:26:54 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9652E3E3D80
+	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 13:02:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774962169; cv=none; b=QpmaoHWtkEq7XXLzDAjME/dz60FQROmVj6XBnRbNkZctBsU7eUwyYR0M3v8ruCefUB3lcURKPmmTBt+etWmNn2i/S4UfNdy++QQy/eteywm60yhcCLTsyAaxWs/K9RqOD5yBrOuFVpL+ph3vnecN49ds218cIr/EgwAwV4UVA5M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774962169; c=relaxed/simple;
+	bh=4AaSHDyqLaB2+JhX660/Yt1rabMjTe6WBX7beaOccNw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=udvFd2G9Y28Hmmu7+sCLZ1HVg3nrRYwZySi7sdMHqOhGrch/6o4964kos/NkTbijR99jLn/tuhCfE3A0QkaUIQ42D55od5Dl6kDMrjv3YBjHp0F4braSqPe4I10VsNGTVVPd71PEPBHuIRY7Qv55UtRog9j+x95EXKLb4ppGeGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from localhost.localdomain (unknown [116.25.95.185])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 390013f6b;
+	Tue, 31 Mar 2026 21:02:37 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: troy.mitchell@linux.spacemit.com
+Cc: Thinh.Nguyen@synopsys.com,
+	amadeus@jmu.edu.cn,
+	dlan@kernel.org,
+	gregkh@linuxfoundation.org,
+	huang.ze@linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-usb@vger.kernel.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v3 1/1] usb: dwc3: Add optional VBUS regulator support to SpacemiT K1
+Date: Tue, 31 Mar 2026 21:02:30 +0800
+Message-Id: <20260331130230.2913628-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <5E6BDCE16DD4ADB0+acuJBfKF-SCAOu2_@kernel.org>
+References: <5E6BDCE16DD4ADB0+acuJBfKF-SCAOu2_@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260330-orangepi-sd-card-uhs-v5-0-bd853604322d@gmail.com>
- <20260330-orangepi-sd-card-uhs-v5-1-bd853604322d@gmail.com>
- <20260331-eager-kind-civet-62f60a@quoll> <CAPDyKFrafqhNbetL5kOzAFO526yUrJWa6mS_FPX-cw9bj2Mg4Q@mail.gmail.com>
- <1c1b12f2-b305-4341-8269-788fb9e11cdc@kernel.org>
-In-Reply-To: <1c1b12f2-b305-4341-8269-788fb9e11cdc@kernel.org>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 31 Mar 2026 13:26:18 +0200
-X-Gm-Features: AQROBzCzMHq52lgKp4Q316ICmztzPT5EZmpknBt6jAeduwaEYdNsbbTouxZZ4hE
-Message-ID: <CAPDyKFpXq7_UX52zH7MvvYJVdRML=zeWw0p3izG7_EHRA8Te2w@mail.gmail.com>
-Subject: Re: [PATCH v5 1/9] dt-bindings: mmc: spacemit,sdhci: add pinctrl
- support for voltage switching
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Iker Pedrosa <ikerpedrosam@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9d43fd26cc03a2kunm424ea1324c937d
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaGU1MVkIYGUNNQ0lNSk4YGVYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk5VSkNOWVdZFhoPEhUdFFlBWU9LSFVKS0lCTUtKVUpLS1VLWQ
+	Y+
 
-On Tue, 31 Mar 2026 at 13:11, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+Hi,
+
+> > +	if (usb_get_dr_mode(dev) == USB_DR_MODE_HOST) {
+> The logic looks good, but the structure can be further improved to better align with
+> standard kernel coding style:
 >
-> On 31/03/2026 12:58, Ulf Hansson wrote:
-> >>> +        - default
-> >>> +        - state_uhs
-> >>
-> >> Instead: uhs
-> >
-> > While I agree that "uhs" would be better, we have tried to stick with
-> > "state_uhs" for legacy and consistency reasons with other mmc
-> > controllers.
-> >
-> > No strong opinion though, what do you think?
-> >
->
-> I missed that it is already present in other places. Is the name coming
-> from any other referenced schema like mmc-controller? Does the existing
-> common driver code expect state_uhs?
+> if (usb_get_dr_mode(dev) != USB_DR_MODE_HOST)
+>   return 0;
 
-No common schema or binding states that it must be "state_uhs".
+I initially thought of writing it this way too.
 
-It's all described on a per-controller basis, but I was thinking we
-should perhaps make it common at some point.
+> > +		int ret = devm_regulator_get_enable_optional(dev, "vbus");
+> Could you please move the declaration of ret to the top of the function?
 
->
-> If yes, then go with state_uhs, if not then let's switch to new name.
-> Old conventions in the bindings can be changed, we already do many
-> things differently than 10 years ago (e.g. no underscores in node and
-> property names).
+Thank you for your suggestion. This patch has been merged.
+Perhaps it can be revised in the future.
 
-Okay, let's go with solely "uhs" then.
-
-At some point we should make this part of the common mmc-controller
-bindings too.
-
->
-> But followup question - the binding is called sdhci, so maybe sdhci
-> common schema should be referenced?
-
-Yes, that seems reasonable.
-
-Kind regards
-Uffe
+Thanks,
+Chukun
