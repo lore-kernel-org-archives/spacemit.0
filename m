@@ -1,32 +1,41 @@
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2CF3CCFAB
-	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 07:38:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B28172623
+	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 08:27:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774942735; cv=none; b=f9kOkLqrK9z8l9BQeqSbwyEadlzQS7b90cyqLb4LNGS12k5AaSRy3z6wciIcJafxXBwece5L9W9M1K2IWkkYvESxyU03di4ZEMTyPEBT0QZ+hKz4JQNf4u/55OGSygwkUNzvDi1dkpGDvtFJqa4Ru7GZyPEpUMFfc0xkEWIiUBA=
+	t=1774945676; cv=none; b=jJwQOM5HsJZl6h6RdlsIOq8cCDdSJXGb0EIlbzQT6EDAqJ1QsMYqkXu+qA1vLGarmoC9Ed7N//jEkkpgkuwkmPu2OBKqcf5ELLlrT66gPb9y6ulPFo4g5Y4DEYinz1zaI7BopRhEtZYq+QzgO7WuS05RFcEmowDsiFuwHqBIhzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774942735; c=relaxed/simple;
-	bh=6ZuTX0f3YV6I8YAyiul4MVicwk235H4X2B8dhvRPRwc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mGd/MHuYH6MLXFZbqhgVaKmb8YVn3vEQkXtauaGm1X8uCSWieLURvcgsOG50TngHiyYNuxeCtH0Jjeo3C+ZRzesBJXNf8iJYbNAKWEnkiwVl0S6ZAX7yoxxvo18dI6C5N5K+u7YwUOONT+UOnLcUcmZoRdmmSMYb9+x0dU36jU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev; spf=none smtp.mailfrom=linux.spacemit.com; arc=none smtp.client-ip=18.194.254.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev
+	s=arc-20240116; t=1774945676; c=relaxed/simple;
+	bh=LvrL0BHWXs0mIoPugVsaBSOeXicquMoRYDC9CopWJSc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=mSIdOzHnqrNArYvG/y9+q6aFsp30bH7q2aCIuqa88vgpiRA1pCYoE0AUJGXX4L4mXGIshuahCSfpV4DaSeRL6DpMgIffjYCREKWXZME1v1FGDqN67iIUXKXfaUCrqjHhU2guGDeZWr4URaK+ATLx6zAXn2yFuftBwe+S21R/OR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=u39InUvX; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-X-QQ-mid: esmtpsz19t1774942646t6e163ae8
-X-QQ-Originating-IP: Q/Na89Q0HHt78pSa6TqRPYIT8cZiPlVHrbHuOCa5Tic=
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="u39InUvX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1774945635;
+	bh=g1gTKNWnRtZJ6FwHcvY1jPFdNxTPp7lh7M3Cysn4aVw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=u39InUvXqOcpZTHj/jlwmhSdPCJ8NGZHZfucDinKGeH1i9tlm5whiejk+Vb2wlzON
+	 zDCQ4XUdATErbYdlVyu2ScQL8IxQ0t5RFzkT43w4jyFjQ0tuMNatqmgKxG5VKgJjFg
+	 MizOeesW44r+hkUZYPQm+gRwKV6O5hMZPvGPFCKI=
+X-QQ-mid: zesmtpsz9t1774945633t810e87d6
+X-QQ-Originating-IP: B7pH8laYsuYyw/pxu5WiH/fba2fLXc+zOpHSgiJovFU=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 31 Mar 2026 15:37:23 +0800 (CST)
+	id ; Tue, 31 Mar 2026 16:27:09 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 3642038880629496060
-X-QQ-CSender: troy.mitchell@linux.spacemit.com
-Sender: troy.mitchell@linux.spacemit.com
-From: Troy Mitchell <troy.mitchell@linux.dev>
-Date: Tue, 31 Mar 2026 15:37:22 +0800
-Subject: [PATCH] riscv: mm: fix SWIOTLB initialization for systems with
- DRAM above 4GB
+X-BIZMAIL-ID: 9070569684775220452
+EX-QQ-RecipientCnt: 20
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: [PATCH v3 0/5] dmaengine: Add Peripheral DMA support for SpacemiT
+ K3 SoC
+Date: Tue, 31 Mar 2026 16:27:03 +0800
+Message-Id: <20260331-k3-pdma-v3-0-a4e60dd8b4b3@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -35,123 +44,112 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260331-fix-riscv-swiotlb-v1-1-74dd5e6be0f1@linux.dev>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MQQqAMAwEvyI5G2haUPAr4kFr1ICoNKJC8e8Gj
- 8POTgblJKzQFBkSX6KybwZUFhCXfpsZZTQG73zlQiCc5MEkGi/UW/ZzHbCaKHpbaxoJ7HckNul
- vtt37fjvhsa1jAAAA
-X-Change-ID: 20260331-fix-riscv-swiotlb-6f1c226071d1
-To: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.dev>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23MSw6CMBSF4a2Yjr2E9haaOnIfxkEpRW6UR1psM
+ IS9W5hoosP/5ORbWHCeXGCnw8K8ixRo6FPg8cBsa/qbA6pTM5GLMkeu4I4w1p0BZblCKZFLLFl
+ 6j941NO/S5Zq6pTAN/rXDkW/rrxE5cGhQ1+i0qgo05wf1zzkLo7GuoymzQ8c2LIovQJQfQEAO1
+ mhpjaqqQhd/gXVd35T2xzPoAAAA
+X-Change-ID: 20260317-k3-pdma-7c1734431436
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Guodong Xu <guodong@riscstar.com>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774942643; l=3258;
- i=troy.mitchell@linux.dev; s=20250710; h=from:subject:message-id;
- bh=6ZuTX0f3YV6I8YAyiul4MVicwk235H4X2B8dhvRPRwc=;
- b=4suTSPTBaFvbcZu+3/I6gopG6qkefydOjKtIoIvJ6gjVVXZgLsYXsF0jJphNtowj/N7zAW36l
- AJW/r02TwgiBPivNt2Oc1UpRBFGADWYH5mW7VDNBEoFl5wp2rh+X4mp
-X-Developer-Key: i=troy.mitchell@linux.dev; a=ed25519;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774945629; l=2453;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=LvrL0BHWXs0mIoPugVsaBSOeXicquMoRYDC9CopWJSc=;
+ b=bG2SuF13yVtqPTcEtTTXJoZA9l2t1O3ipq+1Qsf91FOD4Zq41V208uOjKQxWF7bZsHm7yUBjh
+ esJjzS7Jb94B6c3eleaYy9CzgAGNvjauQjDAbbtN6kTqdfUBHirHXek
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
  pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OcmVq9lZacab4O7UhSx3XAFvz2/B53ShmucFf6cD8pyDSk4Ij/iazmNz
-	8NqiVNJ1LQU0dX1sVKHVEdloC19C8J7sXBF9Xl4PH6R4Qg9gN9sjnw9iJBHQkmiQyVpRhaY
-	cvljdIcjI1gtv5MCxOIPuzQcu5bOfTIFYg6udYGCtnTEzv/lVCyfN+DgsfE17t6adtYYIN/
-	Opee9hNy53TLtMs+TUQATGXET0W8ong5QIsWDgcpQl+8Yoefp/Ja5pg9+ijXjgQ9duSUiJw
-	dTIsUy4P/CehIDCx+3M92XnC3Ljhl4GjFPECHPOm0V3mBIqEeWYbo+f5a2p4Uoi3eE8BVsj
-	LvowW/cqS8TRPqFJN8ze995jI/SvoeLYvfppdJJCS8mLVDWYOa0k2JD12PrBNo4TNLhZ7e6
-	kw+ShjqLIZ70/dlLzBIGvL8uTIZ16mc8qAVt21mhVECvIZaQrWyjxDGojafwA5wgPLWAY9r
-	HjX0/uj7hP7oTFaJaa52iYUfdp08+Xy7s1n8Dz1QDlzmw8mNJib3uNm+H90RdgNa0ppJ8bl
-	sEi8gyK5TVZmUagaXG1eZ1Kr/48qHfqUCXvkc9azQPcaG4S7feq2IXHw7P/d1T/0fbBkpuf
-	JEWQxeEHyQR+xdXKtZP3fp1uKfcfawh+OXl4tNz3uRnsS9SDexCwn8P0TJa8c/EQOTYeXQ0
-	Q3GHIB6UdTHY4th8E7zXVCIdVr/8fGetClh2KyOEvmc4pD+mEo6vkvY1W1gFmswFMvW9WPI
-	XNxgSaeeH9Gyi3PH4Yqc0SI80+uEX40/6WwNrJDu1k+5KsHVK35jDi2n7zV+JP+YI2Md0RO
-	QtK94W73b+tFuX280VrxkK1VXLB6M/7FXhU2mX1tJ4JoIIx7kiQGOr23rIjb6oTU/qApKSo
-	vBcMCuhFNNTVwcx2d+eoDe7ctuEhbJAkN94IbZQ5VJUO6TkYT8ITd9MmdpThRkk0oTi45sz
-	ztBaCd45h1ZR82dw5MJZ/Zky1wRRWGxNBoLp7fYLgYZGp9cKSbGmkDN2UhuTdk1n8mNiOzt
-	gNVsvxS4JEstW3iVClXY/r/YOwzwPYdqtNp03l2+MsM9H7AbAXSUFgmGL6HD9I3WyxAplTZ
-	nEHb2AhPKTD
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: OT30tXkhdtaaCWeHCGzrz/zv8MUJW4KS7B9X4Tir+AMEhkzj2CeeXcvX
+	jOdnW1bJjIg8gQlmf/Ra6ASLjc6oRRheLF8QLkxYa1fcT8MaNpeE3KcITa3u4yGXZS/CzKv
+	0kPw7ro26zEGhSoULzW11twqEIO79rSyDlVgwyelJi452uY1eV2KHF6etP6rWHqLwL7mXq5
+	aXjnBpQMz1TVlAkhY31lnDUlo2pbtlPg2/2y0BvoEoBzqhiUgsj4MNLQqM24Gso72krri0e
+	AgCJF0GBX5tn3MTHWGYheUVG7WD6JYr5z1buzdQahLn0jWfwjov+kKKewEiGWy8Md+WudID
+	yxLd9URl9Oxi4J15Djg2+WvNqDP7Jx3hN7Wgo84TtJvF43ZR/0ff9dgqPc6ve9+oTaCV+oU
+	Sla907f8gOLnNgg0qb4nyayS58Cu6IlYRDz73puCHxZlnftgl3QWEV6CPlR8R2RYw54cynM
+	6de4P96qgM8Rx90+tyGox2PW/Hcsr3mv4pezeK0oHvYdVEmj6QyKw0epv2inmIVqPykTT2H
+	RGLnS+p/VLRbj3BOLFAtGFZ4putyH9jIkA7tiy8jH2dYNdtL+AbkfNAOfh7xgS3aS8SBwl2
+	OFu+fxkKa9xLbnjj879Daisbl0smXCPqt0KO69tT4QqT56iLb7utzhWdq+ADtxH6eGM0JmH
+	Y/tcObBnyS8SPzFPfaoXi4/yJ3nULvcBPEjobfq5u7HBUZYeUjJrWVTEfAf0SW9IkH+Y9++
+	i/cDcDjoazslpAv51UQzzmH89NblrzIrTO/3caLffa6qo32yzcMwtSACmrJbLrF9In3IWmV
+	F1C7P5RWzB1mFqR+aGASa87ikQQXF0WCX8+mFJCFZt4E8oUnGTcnIxad116IWCT4N/wAW+m
+	QoZMlw2jKWqyNewEiAWu6nqG3qiATB+M6EFQycyrYqB/O4byyNELQssCDjsNaC+nz57VgXA
+	VvDGd99Xf+ijNOn2sdagVwF4QqgqPuHZjYV9GaJFOoPKAD2BDOZzSiepEbs/hUCLS168gTQ
+	ZVvK7Q6AXffQPVq7bqazl1LaJXSuGpqkzC9tJ1BNkMmDsSF1VLPn+oM4QpTGyBt92XD7zWz
+	XF3QP9FL2veMlO56owuzMCJD3jjQiLMZHJ1wY962hpwTki/EYvN3MpQWM9bJb9bjC8TSpkT
+	8CnV
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
 X-QQ-RECHKSPAM: 0
 
-On RISC-V platforms where the entire physical memory (DRAM) resides
-above the 32-bit address space (i.e., above dma32_phys_limit), the
-current SWIOTLB initialization logic fails.
+Hi all,
 
-This patch addresses two interconnected issues on such platforms:
+This patch series introduces Peripheral DMA (PDMA) support for the 
+SpacemiT K3 SoC, leveraging the existing mmp_pdma driver.
 
-1. Incorrect 32-bit DMA bounce assumption:
-The existing condition `max_pfn > PFN_DOWN(dma32_phys_limit)` assumes
-that a 32-bit DMA bounce buffer is required simply because the maximum
-PFN exceeds the 32-bit limit. However, if all DRAM starts above 4GB,
-no memory exists below the limit to satisfy this allocation. Fix
-this by adding a check to ensure `memblock_start_of_DRAM()` is actually
-below the 32-bit limit before enforcing 32-bit SWIOTLB.
+The K3 PDMA IP is largely based on the design found in the previous 
+SpacemiT K1 SoC, but introduces a few key architectural differences:
+1. It features a variable extended DRCMR base address for DMA request 
+   numbers (>= 64) depending on the hardware implementation.
+2. Unlike the K1 SoC, where some DMA masters had memory addressing 
+   limitations (requiring a dedicated dma-bus), the K3 DMA masters 
+   have full memory addressing capabilities.
 
-2. kmalloc() bounce buffer allocation failure on non-coherent systems:
-For non-coherent hardware, a bounce buffer is still mandatory for
-cache-line-aligned kmalloc(), even if 32-bit DMA bouncing is skipped.
-Without the `SWIOTLB_ANY` flag, swiotlb_init() defaults to allocating
-from low memory, which fails completely when DRAM only exists in high
-memory. By appending `SWIOTLB_ANY` to swiotlb_flags, the allocator is
-permitted to allocate this alignment buffer from high memory.
-
-With this patch, systems with non-coherent DMA and DRAM entirely above
-4GB can successfully map the software IO TLB in high memory and boot
-normally.
-
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
----
- arch/riscv/mm/init.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 811e03786c56..3244e4fba89c 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -168,7 +168,9 @@ static void print_vm_layout(void) { }
- 
- void __init arch_mm_preinit(void)
- {
--	bool swiotlb = max_pfn > PFN_DOWN(dma32_phys_limit);
-+	bool swiotlb = max_pfn > PFN_DOWN(dma32_phys_limit) &&
-+		       memblock_start_of_DRAM() < dma32_phys_limit;
-+	unsigned int swiotlb_flags = SWIOTLB_VERBOSE;
- #ifdef CONFIG_FLATMEM
- 	BUG_ON(!mem_map);
- #endif /* CONFIG_FLATMEM */
-@@ -176,17 +178,21 @@ void __init arch_mm_preinit(void)
- 	if (IS_ENABLED(CONFIG_DMA_BOUNCE_UNALIGNED_KMALLOC) && !swiotlb &&
- 	    dma_cache_alignment != 1) {
- 		/*
--		 * If no bouncing needed for ZONE_DMA, allocate 1MB swiotlb
--		 * buffer per 1GB of RAM for kmalloc() bouncing on
--		 * non-coherent platforms.
-+		 * No 32-bit DMA bouncing needed (either all DRAM is within
-+		 * the 32-bit limit, or it all starts above it), but
-+		 * non-coherent hardware still requires cache-line-aligned
-+		 * bounce buffers for kmalloc().  Use SWIOTLB_ANY so that the
-+		 * buffer can be allocated from high memory when DRAM starts
-+		 * above dma32_phys_limit.  Allocate ~1 MB per 1 GB of RAM.
- 		 */
- 		unsigned long size =
- 			DIV_ROUND_UP(memblock_phys_mem_size(), 1024);
- 		swiotlb_adjust_size(min(swiotlb_size_or_default(), size));
- 		swiotlb = true;
-+		swiotlb_flags |= SWIOTLB_ANY;
- 	}
- 
--	swiotlb_init(swiotlb, SWIOTLB_VERBOSE);
-+	swiotlb_init(swiotlb, swiotlb_flags);
- 
- 	print_vm_layout();
- }
+The series is structured as follows:
+- Patch 1: Introduce the necessary dt-bindings: K3 compatible string.
+- Patch 2-3: Refactor the mmp_pdma driver to support variable extended 
+  DRCMR bases, and add the specific implementation/ops for the K3 SoC.
+- Patch 4: Fixes a critical clock issue where the DDR bus clock 
+  (top_dclk) could be gated by CCF, which would cause DMA engines to 
+  hang and lead to system instability.
+- Patch 5: Finally, instantiates the PDMA controller node in the 
+  SpacemiT K3 device tree.
 
 ---
-base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
-change-id: 20260331-fix-riscv-swiotlb-6f1c226071d1
+Changes in v3:
+- Removed the dt-bindings patches related to the DMA number.
+- patch 1/5:
+  - update commit message
+- patch 2-5: nothing
+- Link to v2: https://lore.kernel.org/r/20260326-k3-pdma-v2-0-ca94ca7bb595@linux.spacemit.com
+
+Changes in v2:
+- patch 1-6 are added in this version
+- patch 7/7
+  - update commit message
+  - using k3 compatible string
+  - Link to v1: https://lore.kernel.org/all/20260317-k3-pdma-v1-1-f39d3e97b53a@linux.spacemit.com/
+
+---
+Guodong Xu (3):
+      dt-bindings: dmaengine: Add SpacemiT K3 DMA compatible string
+      dmaengine: mmp_pdma: support variable extended DRCMR base
+      dmaengine: mmp_pdma: add Spacemit K3 support
+
+Troy Mitchell (2):
+      clk: spacemit: k3: mark top_dclk as CLK_IS_CRITICAL
+      riscv: dts: spacemit: Add PDMA controller node for K3 SoC
+
+ .../devicetree/bindings/dma/spacemit,k1-pdma.yaml  |  4 ++-
+ arch/riscv/boot/dts/spacemit/k3.dtsi               | 11 +++++++
+ drivers/clk/spacemit/ccu-k3.c                      |  2 +-
+ drivers/dma/mmp_pdma.c                             | 37 ++++++++++++++++++++--
+ 4 files changed, 49 insertions(+), 5 deletions(-)
+---
+base-commit: 02f90981a67f3b9ee7d6684e7503a4fed7aade0c
+change-id: 20260317-k3-pdma-7c1734431436
 
 Best regards,
 -- 
-Troy Mitchell <troy.mitchell@linux.dev>
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
