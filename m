@@ -1,89 +1,101 @@
-Received: from va-2-36.ptr.blmpb.com (va-2-36.ptr.blmpb.com [209.127.231.36])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264030E0F1
-	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 06:38:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.36
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680E0377016;
+	Tue, 31 Mar 2026 06:48:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774939105; cv=none; b=lJDECVgkXLuVAi+9dy/KCkMoE49mn8HpAUF4cWuJUHXL+R6ucaPAcGbr1Shehg4660P4Gnnz0H8NiNbnDcz1lPZO+5nG08P6ot/Jx7CslpH8RvPP1erwEgZ4w4kaAyD36SeEn8u2cEJtr9Vbv2DUqogJQIGFBvFakVz0bq9xfoQ=
+	t=1774939713; cv=none; b=sal+o0oYYtR6WGfRozavBMiIACFbiMj6WdZ/rdI542kifWsCVqzVsJx/NIM3K6MA82E4hd0OjpYycToaBNphnhYgNCAGJXOqN7Aij5wcWLZQH1WV4lxrJs8d9vJzYgOm5y7i03ZDzrx8Q7MZFrJs5Hua+5kKYUuh38ML8LOhW7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774939105; c=relaxed/simple;
-	bh=IxNwq4JUnKlv/IxnLCJYxLfGCvCAtbvIR9Q4w+rLz14=;
-	h=Message-Id:To:References:In-Reply-To:Date:Subject:From:
-	 Mime-Version:Content-Type:Cc; b=DC0ERdfw4lPzaWV9niMCAe+ooglhO3Ot8gwiqEokvWNySLLrOWgptmUBoCoFaiDHUmSuLZ9p8jpNoN2EqiKjtTDs8VHxeostBE4IT7OxaE9+fjh5XFccOEB44gRSKnd2uUANS98IsDu7yvzXN+0KhAYgehIcSUy7U9hzNf9wLMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io; spf=pass smtp.mailfrom=deepcomputing.io; dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b=1uuAhGbQ; arc=none smtp.client-ip=209.127.231.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
+	s=arc-20240116; t=1774939713; c=relaxed/simple;
+	bh=ezx0Ms8en0l0JsWpz/LL91KCza1vVnbzIyBSo3p3zko=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q2PrArnLuNgAEWCzIYufF6htPshprN/PGBHvXg11DRoqPugXfbiFmabGjuPIWlcTbkQNc+n/qz5UNDRJ4uz1ESWnRWtAl4YOAPMwQDPhVUSHWpVKsVhPNjuPbTbLa7MKKbLA3VRP6+mx9lEHbxtJegd40YcV9BtpoWqYeBZpQvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nanm4Y+t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b="1uuAhGbQ"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1774939095;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=IxNwq4JUnKlv/IxnLCJYxLfGCvCAtbvIR9Q4w+rLz14=;
- b=1uuAhGbQTfbuUnv8ZSpdox1s8TZwMoKE0Q9gnAupkhEjmyMNThMOFVYS529mnlTLTo/cLv
- XvkvVLEY6HlhiiTZrb0TzLQIQHpmWYrIAzLd+GpangPiajF+qdNZjT6DrrsMTHYFHLqH6i
- Tc+A5wANVVJ6hs2t+ekVi2u5zFtbCoIzZBIfeOeSJ/Oi36cYa12VRmf5xhd8+QuRaqbH5D
- 2mQfNxiOhEbB0rAMCDC8Ezp5b34L3ey02n9gRf086dLrgg/G5ZQk6WiKUOprqIbd2S/hBr
- xoiqsrQyT8IJqMZ8GdPKv5m4L3XJD15lA1vqLwP49Fvc4cdfhd2o3sFgJermdQ==
-Message-Id: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.e358f129.78e8.4b7c.a3ea.c90229430d99@feishu.cn>
-To: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-References: <20260331034423.67142-1-sandie.cao@deepcomputing.io> <20260331034539.67167-1-sandie.cao@deepcomputing.io> <20260331060344-GKA976850@kernel.org> <407ce3d77416bb2522b7906b0df3d5adf02c27ee.d811f619.24b1.431f.ad4d.c0bae1097eb9@feishu.cn>
-	<DHGR42QJK86L.10IAY9CB3RZH5@linux.spacemit.com>
-In-Reply-To: <DHGR42QJK86L.10IAY9CB3RZH5@linux.spacemit.com>
-X-Lms-Return-Path: <lba+169cb6bd5+d6a10b+lists.linux.dev+sandie.cao@deepcomputing.io>
-Date: Tue, 31 Mar 2026 14:38:12 +0800
-Subject: Re: [PATCH v1 1/2] dt-bindings: riscv: spacemit: add deepcomputing,fml13v05
-From: =?utf-8?q?=E6=9B=B9=E7=8F=8A=E7=8F=8A?= <sandie.cao@deepcomputing.io>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nanm4Y+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F775C19423;
+	Tue, 31 Mar 2026 06:48:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774939712;
+	bh=ezx0Ms8en0l0JsWpz/LL91KCza1vVnbzIyBSo3p3zko=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nanm4Y+tHZI+aNy/m8diIfcWEKD1SNww+kmlfWUy+EvoLpNJOD/FaCCkOikoZfwb7
+	 /YEm9fGDl3Z4LUmzzqIEu8uOE0/bcMhvvgJ41ZkBZrx/lphkm+Wj2XLyWnISA+uFqG
+	 KnV7bA1jAThzKrhZmmSpxh14e5kI8Kwjaj4jA9zYt4aFKJ/TYw8t1/FxCECcty1Dyw
+	 wKfd3x2k7iXGiMrDOluruC0i4R2p9qx2ahmIABWwal6qer7rsmQPQiBBsVna3sVc9e
+	 QRQSHUhNt1cQcOx5cFIam2PPCsedULcRxeofALjCtNDqcXl9WmIboUCf5Dmnksc1QJ
+	 h5DI5gX/ef/rg==
+Date: Tue, 31 Mar 2026 08:48:30 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>, Javier Martinez Canillas <javierm@redhat.com>, 
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 1/9] dt-bindings: mmc: spacemit,sdhci: add pinctrl
+ support for voltage switching
+Message-ID: <20260331-eager-kind-civet-62f60a@quoll>
+References: <20260330-orangepi-sd-card-uhs-v5-0-bd853604322d@gmail.com>
+ <20260330-orangepi-sd-card-uhs-v5-1-bd853604322d@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: "Yixun Lan" <dlan@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, 
-	"Emil Renner Berthing" <kernel@esmil.dk>, 
-	"Rob Herring" <robh@kernel.org>, 
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
-	"Paul Walmsley" <paul.walmsley@sifive.com>, 
-	"Palmer Dabbelt" <palmer@dabbelt.com>, 
-	"Albert Ou" <aou@eecs.berkeley.edu>, 
-	"Heinrich Schuchardt" <heinrich.schuchardt@canonical.com>, 
-	"Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
-	"Michael Opdenacker" <michael.opdenacker@rootcommit.com>, 
-	"Guodong Xu" <guodong@riscstar.com>, 
-	"Hendrik Hamerlinck" <hendrik.hamerlinck@hammernet.be>, 
-	"Yangyu Chen" <cyy@cyyself.name>, <spacemit@lists.linux.dev>, 
-	<linux-riscv@lists.infradead.org>, <devicetree@vger.kernel.org>, 
-	<linux-kernel@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260330-orangepi-sd-card-uhs-v5-1-bd853604322d@gmail.com>
 
+On Mon, Mar 30, 2026 at 10:38:02AM +0200, Iker Pedrosa wrote:
+> Document pinctrl properties to support voltage-dependent pin
+> configuration switching for UHS-I SD card modes.
+> 
+> Add optional pinctrl-names property with two states:
+> - "default": For 3.3V operation with standard drive strength
+> - "state_uhs": For 1.8V operation with optimized drive strength
+> 
+> These pinctrl states allow the SDHCI driver to coordinate voltage
+> switching with pin configuration changes, ensuring proper signal
+> integrity during UHS-I mode transitions.
+> 
+> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+> ---
+>  .../devicetree/bindings/mmc/spacemit,sdhci.yaml         | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> index 9a055d963a7f0cdba4741c1e3e7269688dcd5f45..201ab97f0e88376a4680dcca7917e8b3172bd84a 100644
+> --- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> @@ -44,6 +44,20 @@ properties:
+>        - const: axi
+>        - const: sdh
+>  
+> +  pinctrl-names:
+> +    minItems: 1
+> +    maxItems: 2
+> +    items:
+> +      enum:
 
-> On Tue Mar 31, 2026 at 2:15 PM CST, =E6=9B=B9=E7=8F=8A=E7=8F=8A wrote:
-> >
-> >> From: "Yixun Lan"<dlan@kernel.org>
-> >> Date:=C2=A0 Tue, Mar 31, 2026, 14:03
-> >> Subject:=C2=A0 Re: [PATCH v1 1/2] dt-bindings: riscv: spacemit: add de=
-epcomputing,fml13v05
-> >> To: "Sandie Cao"<sandie.cao@deepcomputing.io>
-> >> Cc: "Conor Dooley"<conor+dt@kernel.org>, "Emil Renner Berthing"<kernel=
-@esmil.dk>, "Rob Herring"<robh@kernel.org>, "Krzysztof Kozlowski"<krzk+dt@k=
-ernel.org>, "Paul Walmsley"<paul.walmsley@sifive.com>, "Palmer Dabbelt"<pal=
-mer@dabbelt.com>, "Albert Ou"<aou@eecs.berkeley.edu>, "Heinrich Schuchardt"=
-<heinrich.schuchardt@canonical.com>, "Troy Mitchell"<troy.mitchell@linux.sp=
-acemit.com>, "Michael Opdenacker"<michael.opdenacker@rootcommit.com>, "Guod=
-ong Xu"<guodong@riscstar.com>, "Hendrik Hamerlinck"<hendrik.hamerlinck@hamm=
-ernet.be>, "Yangyu Chen"<cyy@cyyself.name>, <spacemit@lists.linux.dev>, <li=
-nux-riscv@lists.infradead.org>, <devicetree@vger.kernel.org>, <linux-kernel=
-@vger.kernel.org>
-> I'm just confused as to why this appeared in the body.
->=C2=A0
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 - Troy
->=C2=A0
+No, that's not enum but list. Look here:
 
-This was the format of my email sender.=C2=A0
-I correct it now.=C2=A0
-Thanks.
-Sandie
+> +        - default
+> +        - state_uhs
+
+Instead: uhs
+
+> +
+> +  pinctrl-0:
+> +    description: Default pinctrl state for 3.3V operation
+
+So first item must be default, not uhs
+
+Best regards,
+Krzysztof
+
