@@ -1,95 +1,101 @@
-Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F443FADEE
-	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 16:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70E745349F;
+	Tue, 31 Mar 2026 21:34:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774974497; cv=none; b=CyEnKU6SZLAeffJdmyKYmZiicElEXi1b++MBahKJDXeSUJTvDGxo+7XH6QPLnn/xY9GVUEFgLeNyGoy1uGn8di9lJhdJ/e/7SHNwQMKkuXiUBM0JeCBMQJ1h8Z3gjHFWnhmnztWze33/MifYlVzVnacmUFUZ9lSt1Wl3L7lOTts=
+	t=1774992891; cv=none; b=dfRa7Aou9sSyvilzWGZRv+ryRoKMl60R2io4Yf5IT9ozjijKLt0TkR/0EnVN0pPVNBbiYkDRwhcL54QMgK+E3mX1xZfg9WedKzLzEiBHfH6ZRBTHclByod3Fv9N36FfplJobjRCj7XCN6U12wPXr7lmpbXPdodpdKmhKnNsyfsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774974497; c=relaxed/simple;
-	bh=jpwxRVLKPoVZv9Fo4wEaj2y+VUHAF/4aKGEQRzoJzpY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3O4cIi9tL5fbNfgnz53rFtfO3p4H2ep0gM2lysIEjGnxasTi3qZdNE4xwHfuo2DWHU/QCbDeP6aDgG4WDquLT/9oxOlQWMNgbZvax1OkaYdnVl9KW498ZjfHpYqH+fHaA2fsyMGsaD+P0TI1W26zYolZnwFpdreT8gMAVgIxCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost.localdomain (unknown [223.166.95.230])
-	by APP-05 (Coremail) with SMTP id zQCowAC3TBAO9stphZUSDA--.56709S3;
-	Wed, 01 Apr 2026 00:27:59 +0800 (CST)
-From: Han Gao <gaohan@iscas.ac.cn>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
+	s=arc-20240116; t=1774992891; c=relaxed/simple;
+	bh=4wR4QylHcmskmt0KG5ly6sLWoHv46ssVh2JkVA+U+Bk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XZquhFSo7AtIyunq3WURMI5yU3Qo2f9DhPi0LDWZaxzsnJwrp3gMUrCl6/q3Js7c7+99MG4wlYd4hzG0uUAVzDGUcIq5td3D66PDX8A4SoSm3ABDX0nEasGixtZ68l2CQRYDvDxcZddPGWgSs57tqm1aDkJDUuFAVebel9MFHvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BRNSCFvA; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BRNSCFvA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1774992890; x=1806528890;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4wR4QylHcmskmt0KG5ly6sLWoHv46ssVh2JkVA+U+Bk=;
+  b=BRNSCFvAohJ3xX6TW7mIg8GMTWiyz2ZO/m0Opg+Quj/1sRoR1k3iTf7Z
+   cZ1Gq0seGsSQplTnhp4XPjl2ADpvFOa3MzYspX4ZWWMZKvww8/TqzZGvx
+   fyNQDM7a1EkxyZZrZFLJGdl/73IJc1ke2v7S671XkmYat5FfCQ4TTm9qd
+   mDaaUYlkfBVWzvHhf3bjdQGvvaSCeH9TA1cnS9FQsOpMY0khLFwYcfN/p
+   BlW37UODQCNDmu+3QhJLBe6yVasQ7/oIi1ooO3Yvu1TtDbEu9SKmrL3aU
+   d2SUe3PHB8/u8aTbxwkdQmW4Eu8GRIsqeh9ErhidN+Vy9CuP9BUuTslzq
+   g==;
+X-CSE-ConnectionGUID: p9wqbk3nRHiUfWfL8ym31g==
+X-CSE-MsgGUID: y2uRtYpUSkiFp3TqDLV67A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11745"; a="75057559"
+X-IronPort-AV: E=Sophos;i="6.23,152,1770624000"; 
+   d="scan'208";a="75057559"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2026 14:34:49 -0700
+X-CSE-ConnectionGUID: KkhM+YH+RY6ZBfPW8wELwQ==
+X-CSE-MsgGUID: Wtm6ipwaSxCfv+Lc/YJdbw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,152,1770624000"; 
+   d="scan'208";a="226353128"
+Received: from lkp-server01.sh.intel.com (HELO 283bf2e1b94a) ([10.239.97.150])
+  by orviesa009.jf.intel.com with ESMTP; 31 Mar 2026 14:34:47 -0700
+Received: from kbuild by 283bf2e1b94a with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1w7gjT-000000004JB-2AzA;
+	Tue, 31 Mar 2026 21:34:43 +0000
+Date: Wed, 1 Apr 2026 05:34:17 +0800
+From: kernel test robot <lkp@intel.com>
+To: Yixun Lan <dlan@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Cc: devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Han Gao <rabenda.cn@gmail.com>,
-	Han Gao <gaohan@iscas.ac.cn>
-Subject: [PATCH v4 1/3] riscv: dts: spacemit: Enable i2c8 adapter for OrangePi RV2
-Date: Wed,  1 Apr 2026 00:27:54 +0800
-Message-ID: <894c94e9d087c6a924146bda9a5649c424de320b.1774974017.git.gaohan@iscas.ac.cn>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <cover.1774974017.git.gaohan@iscas.ac.cn>
-References: <cover.1774974017.git.gaohan@iscas.ac.cn>
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: oe-kbuild-all@lists.linux.dev, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
+Subject: Re: [PATCH v2] riscv: dts: spacemit: k3: Add USB2.0 support
+Message-ID: <202604010550.sTNDXe0k-lkp@intel.com>
+References: <20260330-02-k3-usb20-dts-v2-1-46af262fb4a9@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowAC3TBAO9stphZUSDA--.56709S3
-X-Coremail-Antispam: 1UD129KBjvdXoW7Xry5AF4DWFyxCFyDZFyxZrb_yoW3GrX_CF
-	13Gay0vFyUGFWvkFnrXr1rtayxu3y5KrWSywnaqr1UGasYgrWrKFWUKF4kJw1rurWYvrW3
-	Jw48tFyxJwnIkjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbk8FF20E14v26rWj6s0DM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUGwA2048vs2IY02
-	0Ec7CjxVAFwI0_Gr0_Xr1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xv
-	wVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwA2z4
-	x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8JVW8Jr1le2I2
-	62IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcV
-	AFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG
-	0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2ka0xkIwI
-	1lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_
-	Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17
-	CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0
-	I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I
-	8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73
-	UjIFyTuYvjfU8XdbUUUUU
-X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiDAgDDGnL4tU3VwAAs+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260330-02-k3-usb20-dts-v2-1-46af262fb4a9@kernel.org>
 
-The adapter is used to access the SpacemiT P1 PMIC present in this board.
+Hi Yixun,
 
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
----
- arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+kernel test robot noticed the following build errors:
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-index 7b7331cb3c72..93880ba7bdfe 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-@@ -87,6 +87,12 @@ &pdma {
- 	status = "okay";
- };
- 
-+&i2c8 {
-+	pinctrl-0 = <&i2c8_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
- &uart0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&uart0_2_cfg>;
+[auto build test ERROR on af62a095eb0c3359d477b55ef72d2afd94c83c8f]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Yixun-Lan/riscv-dts-spacemit-k3-Add-USB2-0-support/20260331-231732
+base:   af62a095eb0c3359d477b55ef72d2afd94c83c8f
+patch link:    https://lore.kernel.org/r/20260330-02-k3-usb20-dts-v2-1-46af262fb4a9%40kernel.org
+patch subject: [PATCH v2] riscv: dts: spacemit: k3: Add USB2.0 support
+config: riscv-randconfig-002-20260401 (https://download.01.org/0day-ci/archive/20260401/202604010550.sTNDXe0k-lkp@intel.com/config)
+compiler: riscv32-linux-gcc (GCC) 11.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260401/202604010550.sTNDXe0k-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202604010550.sTNDXe0k-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   Lexical error: arch/riscv/boot/dts/spacemit/k3.dtsi:446.27-46 Unexpected 'RESET_APMU_USB2_AHB'
+   Lexical error: arch/riscv/boot/dts/spacemit/k3.dtsi:447.20-39 Unexpected 'RESET_APMU_USB2_VCC'
+   Lexical error: arch/riscv/boot/dts/spacemit/k3.dtsi:448.20-39 Unexpected 'RESET_APMU_USB2_PHY'
+>> FATAL ERROR: Syntax error parsing input tree
+
 -- 
-2.47.3
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
