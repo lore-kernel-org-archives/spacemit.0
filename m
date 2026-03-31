@@ -1,91 +1,157 @@
-Received: from va-2-49.ptr.blmpb.com (va-2-49.ptr.blmpb.com [209.127.231.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53543CB2FE
-	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 07:26:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2CF3CCFAB
+	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 07:38:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774942008; cv=none; b=AfticX8tEsdLU/0j9DEhyodL2LP2PUEoMCcNeEAAB3TH0NAt8zPhiXl335DrkSvMjkA5P3sVnFTs28gUzy5RyWAJ4vsq9dQ+N5DSSUctBOvvUjheK6DdKpNgUKV9RBxeG7hPmBKaPTJM2FiKFCWSnPsP9BjIAGp/dgRPCbRIlrw=
+	t=1774942735; cv=none; b=f9kOkLqrK9z8l9BQeqSbwyEadlzQS7b90cyqLb4LNGS12k5AaSRy3z6wciIcJafxXBwece5L9W9M1K2IWkkYvESxyU03di4ZEMTyPEBT0QZ+hKz4JQNf4u/55OGSygwkUNzvDi1dkpGDvtFJqa4Ru7GZyPEpUMFfc0xkEWIiUBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774942008; c=relaxed/simple;
-	bh=k1rsPaWJ4Qv2ieYkin+GJzrEKodqZasRzt+A1M6y97w=;
-	h=Content-Type:From:Date:Message-Id:To:Mime-Version:In-Reply-To:Cc:
-	 Subject:References; b=NMaaI2skn/13wAzjJ3gSAAi2StfX/Zep/13bezmmmuMTLum3fJV7xsLRLR0/hwVEtI83GFhh/qe2PWprk+sA/wss0zB8BFvm9qNCeaw5Xut4WQXz1eG5h4vA+unlzO3zjRZAhXRDmF2UmNXdMMFRLL/kVDUZ9KQBbA2w8ckdg+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io; spf=pass smtp.mailfrom=deepcomputing.io; dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b=MvcMZm5o; arc=none smtp.client-ip=209.127.231.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b="MvcMZm5o"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1774941173;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=GQDq7xcPmGfMBCPBOoJzK5rFck21n/XBBgQtt8mMdD0=;
- b=MvcMZm5oSdctm4cRKprkzy8jArHx3mJFhjmk8zcoGwcfzzCMkERmxb9Dr2Brf7TvG20oW5
- 5eX1UiQ0A94elZhPdyq0zaqxZTnZZXKO68X9oabVkqYpmMQT9gzCQpnug7wsz7yKeZOAdg
- O3j3Tf7J94RJsC1cFzP2fe4TmdENKllPNPmD3BLbuXolqfM807u6iUZ1bjspyuDySo8IWF
- HASTrPIznRAa603acg2WgwxikdOr/+7aNnnuMGUnAxlkbmOSrzEsmOgjHDTWF/ZIQO8onj
- d6pRL9T/f/L0k7OihJxeukPsTZSY7YdWC61p51hsmTd5P3b8nVkI0x+rLEO7HQ==
-Content-Type: text/plain; charset=UTF-8
-From: "Sandie Cao" <sandie.cao@deepcomputing.io>
-Date: Tue, 31 Mar 2026 15:12:38 +0800
-Message-Id: <20260331071238.68336-1-sandie.cao@deepcomputing.io>
-Content-Transfer-Encoding: 7bit
-To: "Conor Dooley" <conor+dt@kernel.org>
+	s=arc-20240116; t=1774942735; c=relaxed/simple;
+	bh=6ZuTX0f3YV6I8YAyiul4MVicwk235H4X2B8dhvRPRwc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mGd/MHuYH6MLXFZbqhgVaKmb8YVn3vEQkXtauaGm1X8uCSWieLURvcgsOG50TngHiyYNuxeCtH0Jjeo3C+ZRzesBJXNf8iJYbNAKWEnkiwVl0S6ZAX7yoxxvo18dI6C5N5K+u7YwUOONT+UOnLcUcmZoRdmmSMYb9+x0dU36jU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev; spf=none smtp.mailfrom=linux.spacemit.com; arc=none smtp.client-ip=18.194.254.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+X-QQ-mid: esmtpsz19t1774942646t6e163ae8
+X-QQ-Originating-IP: Q/Na89Q0HHt78pSa6TqRPYIT8cZiPlVHrbHuOCa5Tic=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 31 Mar 2026 15:37:23 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 3642038880629496060
+X-QQ-CSender: troy.mitchell@linux.spacemit.com
+Sender: troy.mitchell@linux.spacemit.com
+From: Troy Mitchell <troy.mitchell@linux.dev>
+Date: Tue, 31 Mar 2026 15:37:22 +0800
+Subject: [PATCH] riscv: mm: fix SWIOTLB initialization for systems with
+ DRAM above 4GB
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-In-Reply-To: <20260331071110.68321-1-sandie.cao@deepcomputing.io>
-X-Original-From: Sandie Cao <sandie.cao@deepcomputing.io>
-X-Mailer: git-send-email 2.43.0
-X-Lms-Return-Path: <lba+269cb73f3+2f8946+lists.linux.dev+sandie.cao@deepcomputing.io>
-Cc: "Emil Renner Berthing" <kernel@esmil.dk>, 
-	"Rob Herring" <robh@kernel.org>, 
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
-	"Yixun Lan" <dlan@kernel.org>, 
-	"Paul Walmsley" <paul.walmsley@sifive.com>, 
-	"Palmer Dabbelt" <palmer@dabbelt.com>, 
-	"Albert Ou" <aou@eecs.berkeley.edu>, 
-	"Heinrich Schuchardt" <heinrich.schuchardt@canonical.com>, 
-	"Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
-	"Michael Opdenacker" <michael.opdenacker@rootcommit.com>, 
-	"Guodong Xu" <guodong@riscstar.com>, 
-	"Hendrik Hamerlinck" <hendrik.hamerlinck@hammernet.be>, 
-	"Yangyu Chen" <cyy@cyyself.name>, <spacemit@lists.linux.dev>, 
-	<linux-riscv@lists.infradead.org>, <devicetree@vger.kernel.org>, 
-	<linux-kernel@vger.kernel.org>, 
-	"Sandie Cao" <sandie.cao@deepcomputing.io>
-Subject: [PATCH v2 1/2] dt-bindings: riscv: spacemit: add deepcomputing,fml13v05
-References: <20260331071110.68321-1-sandie.cao@deepcomputing.io>
-Received: from roma-Laptop-12th-Gen-Intel-Core.. ([218.17.141.187]) by smtp.feishu.cn with ESMTPS; Tue, 31 Mar 2026 15:12:50 +0800
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260331-fix-riscv-swiotlb-v1-1-74dd5e6be0f1@linux.dev>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MQQqAMAwEvyI5G2haUPAr4kFr1ICoNKJC8e8Gj
+ 8POTgblJKzQFBkSX6KybwZUFhCXfpsZZTQG73zlQiCc5MEkGi/UW/ZzHbCaKHpbaxoJ7HckNul
+ vtt37fjvhsa1jAAAA
+X-Change-ID: 20260331-fix-riscv-swiotlb-6f1c226071d1
+To: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.dev>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774942643; l=3258;
+ i=troy.mitchell@linux.dev; s=20250710; h=from:subject:message-id;
+ bh=6ZuTX0f3YV6I8YAyiul4MVicwk235H4X2B8dhvRPRwc=;
+ b=4suTSPTBaFvbcZu+3/I6gopG6qkefydOjKtIoIvJ6gjVVXZgLsYXsF0jJphNtowj/N7zAW36l
+ AJW/r02TwgiBPivNt2Oc1UpRBFGADWYH5mW7VDNBEoFl5wp2rh+X4mp
+X-Developer-Key: i=troy.mitchell@linux.dev; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: OcmVq9lZacab4O7UhSx3XAFvz2/B53ShmucFf6cD8pyDSk4Ij/iazmNz
+	8NqiVNJ1LQU0dX1sVKHVEdloC19C8J7sXBF9Xl4PH6R4Qg9gN9sjnw9iJBHQkmiQyVpRhaY
+	cvljdIcjI1gtv5MCxOIPuzQcu5bOfTIFYg6udYGCtnTEzv/lVCyfN+DgsfE17t6adtYYIN/
+	Opee9hNy53TLtMs+TUQATGXET0W8ong5QIsWDgcpQl+8Yoefp/Ja5pg9+ijXjgQ9duSUiJw
+	dTIsUy4P/CehIDCx+3M92XnC3Ljhl4GjFPECHPOm0V3mBIqEeWYbo+f5a2p4Uoi3eE8BVsj
+	LvowW/cqS8TRPqFJN8ze995jI/SvoeLYvfppdJJCS8mLVDWYOa0k2JD12PrBNo4TNLhZ7e6
+	kw+ShjqLIZ70/dlLzBIGvL8uTIZ16mc8qAVt21mhVECvIZaQrWyjxDGojafwA5wgPLWAY9r
+	HjX0/uj7hP7oTFaJaa52iYUfdp08+Xy7s1n8Dz1QDlzmw8mNJib3uNm+H90RdgNa0ppJ8bl
+	sEi8gyK5TVZmUagaXG1eZ1Kr/48qHfqUCXvkc9azQPcaG4S7feq2IXHw7P/d1T/0fbBkpuf
+	JEWQxeEHyQR+xdXKtZP3fp1uKfcfawh+OXl4tNz3uRnsS9SDexCwn8P0TJa8c/EQOTYeXQ0
+	Q3GHIB6UdTHY4th8E7zXVCIdVr/8fGetClh2KyOEvmc4pD+mEo6vkvY1W1gFmswFMvW9WPI
+	XNxgSaeeH9Gyi3PH4Yqc0SI80+uEX40/6WwNrJDu1k+5KsHVK35jDi2n7zV+JP+YI2Md0RO
+	QtK94W73b+tFuX280VrxkK1VXLB6M/7FXhU2mX1tJ4JoIIx7kiQGOr23rIjb6oTU/qApKSo
+	vBcMCuhFNNTVwcx2d+eoDe7ctuEhbJAkN94IbZQ5VJUO6TkYT8ITd9MmdpThRkk0oTi45sz
+	ztBaCd45h1ZR82dw5MJZ/Zky1wRRWGxNBoLp7fYLgYZGp9cKSbGmkDN2UhuTdk1n8mNiOzt
+	gNVsvxS4JEstW3iVClXY/r/YOwzwPYdqtNp03l2+MsM9H7AbAXSUFgmGL6HD9I3WyxAplTZ
+	nEHb2AhPKTD
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+X-QQ-RECHKSPAM: 0
 
-Document the compatible string for the Deepcomputing fml13v05.
-It's based on the SpacemiT K3 RISC-V SoC and is designed for the Framework
-Laptop 13 Chassis, which has (Framework) SKU FRANHQ0001.
+On RISC-V platforms where the entire physical memory (DRAM) resides
+above the 32-bit address space (i.e., above dma32_phys_limit), the
+current SWIOTLB initialization logic fails.
 
-Signed-off-by: Sandie Cao <sandie.cao@deepcomputing.io>
-Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+This patch addresses two interconnected issues on such platforms:
+
+1. Incorrect 32-bit DMA bounce assumption:
+The existing condition `max_pfn > PFN_DOWN(dma32_phys_limit)` assumes
+that a 32-bit DMA bounce buffer is required simply because the maximum
+PFN exceeds the 32-bit limit. However, if all DRAM starts above 4GB,
+no memory exists below the limit to satisfy this allocation. Fix
+this by adding a check to ensure `memblock_start_of_DRAM()` is actually
+below the 32-bit limit before enforcing 32-bit SWIOTLB.
+
+2. kmalloc() bounce buffer allocation failure on non-coherent systems:
+For non-coherent hardware, a bounce buffer is still mandatory for
+cache-line-aligned kmalloc(), even if 32-bit DMA bouncing is skipped.
+Without the `SWIOTLB_ANY` flag, swiotlb_init() defaults to allocating
+from low memory, which fails completely when DRAM only exists in high
+memory. By appending `SWIOTLB_ANY` to swiotlb_flags, the allocator is
+permitted to allocate this alignment buffer from high memory.
+
+With this patch, systems with non-coherent DMA and DRAM entirely above
+4GB can successfully map the software IO TLB in high memory and boot
+normally.
+
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
 ---
-v2:
-   Use formal format user name.
----
- Documentation/devicetree/bindings/riscv/spacemit.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/mm/init.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/Documentation/devicetree/bindings/riscv/spacemit.yaml
-index b958b94a924d..af8030242bdc 100644
---- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
-+++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
-@@ -29,6 +29,7 @@ properties:
-           - const: spacemit,k1
-       - items:
-           - enum:
-+              - deepcomputing,fml13v05
-               - spacemit,k3-pico-itx
-           - const: spacemit,k3
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 811e03786c56..3244e4fba89c 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -168,7 +168,9 @@ static void print_vm_layout(void) { }
  
+ void __init arch_mm_preinit(void)
+ {
+-	bool swiotlb = max_pfn > PFN_DOWN(dma32_phys_limit);
++	bool swiotlb = max_pfn > PFN_DOWN(dma32_phys_limit) &&
++		       memblock_start_of_DRAM() < dma32_phys_limit;
++	unsigned int swiotlb_flags = SWIOTLB_VERBOSE;
+ #ifdef CONFIG_FLATMEM
+ 	BUG_ON(!mem_map);
+ #endif /* CONFIG_FLATMEM */
+@@ -176,17 +178,21 @@ void __init arch_mm_preinit(void)
+ 	if (IS_ENABLED(CONFIG_DMA_BOUNCE_UNALIGNED_KMALLOC) && !swiotlb &&
+ 	    dma_cache_alignment != 1) {
+ 		/*
+-		 * If no bouncing needed for ZONE_DMA, allocate 1MB swiotlb
+-		 * buffer per 1GB of RAM for kmalloc() bouncing on
+-		 * non-coherent platforms.
++		 * No 32-bit DMA bouncing needed (either all DRAM is within
++		 * the 32-bit limit, or it all starts above it), but
++		 * non-coherent hardware still requires cache-line-aligned
++		 * bounce buffers for kmalloc().  Use SWIOTLB_ANY so that the
++		 * buffer can be allocated from high memory when DRAM starts
++		 * above dma32_phys_limit.  Allocate ~1 MB per 1 GB of RAM.
+ 		 */
+ 		unsigned long size =
+ 			DIV_ROUND_UP(memblock_phys_mem_size(), 1024);
+ 		swiotlb_adjust_size(min(swiotlb_size_or_default(), size));
+ 		swiotlb = true;
++		swiotlb_flags |= SWIOTLB_ANY;
+ 	}
+ 
+-	swiotlb_init(swiotlb, SWIOTLB_VERBOSE);
++	swiotlb_init(swiotlb, swiotlb_flags);
+ 
+ 	print_vm_layout();
+ }
+
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260331-fix-riscv-swiotlb-6f1c226071d1
+
+Best regards,
 -- 
-2.43.0
+Troy Mitchell <troy.mitchell@linux.dev>
+
