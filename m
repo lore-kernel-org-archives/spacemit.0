@@ -1,112 +1,195 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F92B3A1682
-	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 14:16:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42B83EF0A2
+	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 16:28:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774966611; cv=none; b=dprUBxTqOrM3NBvwgxeEQ2Qr9K3mRh+RqOXBurnGxs8azt3Sv/iljsmWLG3fgBwpk/lQ8Cedfb67TN/rMdms9CDPAw1sBYo+Bs6VLCrAys29B+bQDtZoufQg0KOrGYWRLaLBCvxFkvQUszEGXp0RIWcxFozw9dDB5rRdMsUbY/k=
+	t=1774974495; cv=none; b=bzXMdm3UXMU1iOm//WYomCr69R79RE1Lb5jPYAf3wAyezHWsHNG6IUc02d6A0zjaWsrkt/LRhqT6WlPcl5seuNpl/aEFSbG0/ajBaHPsQlQvQt3unZPqnWSPhbWKrMeQ6qBRpfrhXfeb2BImw93o5fEjSplKy8UXUFWYcCHoZ1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774966611; c=relaxed/simple;
-	bh=5Iw9URBB2+huCGNNmJnyie/vcU11kN7G+C2oBsp0qj8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=Plr4ttT8ifR8/j5bcs6VbmiRgKRpj4qAFAVMNqz55JW5ujNKC9YyFiXJVCjPSrYsUnz/rihuSpiy0qY8jo65dGAFNIqPHMWlYr6X3m7GECbXrIhVez4dKvnndWnCH3prR5sACR+b4tqYI/KlLCHdppmsNFHrs4UAj5VE78nPRnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IOh0G8x7; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IOh0G8x7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1774966609;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+cvItjsGlgO+YKuRpumctJ3y5xeOoIq89E46KdlSIjg=;
-	b=IOh0G8x7Jb3pamMC08Q0FMf15bzzEab+J5nT3q/ySXOiWm35iOWyzffd6NmexMyBpe4YOV
-	lXs6imvCZBzlmrOSOLrVejOdVGsD4Ig5wjA3AB0Uy9HEo/u9yppL4obawD2D/+3G0ECgay
-	uCTBvGOX91c4I8ClQGJAzOJpRbhu8UU=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-0Ol3atrYPcavYjkl2_oF5Q-1; Tue, 31 Mar 2026 10:16:45 -0400
-X-MC-Unique: 0Ol3atrYPcavYjkl2_oF5Q-1
-X-Mimecast-MFC-AGG-ID: 0Ol3atrYPcavYjkl2_oF5Q_1774966604
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50b2cbe7223so188076871cf.2
-        for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 07:16:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774966604; x=1775571404;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=+cvItjsGlgO+YKuRpumctJ3y5xeOoIq89E46KdlSIjg=;
-        b=ssmiTVn6qsKp/rhJpzYDkwqR41Q7yNGWSdzX1R36eiPn6uTpQqawmgCEp/tZumxyv9
-         ffs24O65XarBN9IUhgp2vDoZoFQ7gQ3fa8AN48aO3Xy5V7obyx3vpT9I358XhmNZZ+52
-         ZTcxP1nuWsrL1kUHzBU22+qrMcZjiAX5QGXWUmGXfJUGgwdDY16ZWOk31POVwlulLywA
-         7L5I1Ggz4ihUVvE71KKtll9+URJhbaFtX62FBloF994Ku8sP9kyCLNgIT0pDCvy+tLNC
-         pNN2ej2FuXFCpQsFlsQIyvLmO+cZ7Wq/k8Bi23YuvjSvHRoGV9rfSx58jC4fmYnT3VF8
-         xuZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXLHo5987k5UKCxnaG2qxdf6TyX5DACx+eBWo0z5RETL+7Qnf5mZUNtTN2zX8LjpzfGzZ3ZodR6xw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz1O2TJJ6fWge9p1wnbCp+MpFRKrjnhkjtxYP6XLPUzIS57drHc
-	WgtCGubKRHc70QHf1SkxuoB/L0zx66xcQlan9dlGKOnN5C83fmYQYpmJdEHqqOP3GmdxfeNN9a/
-	GzlsyZyCfmO1ZNamKHZPFQDwc6WnfxWGXxdybizoxDyYNHCySnO8It16G/LV8
-X-Gm-Gg: ATEYQzzvQrLi9xjM4twisJo+noQeUlj4AyL4pqUhuVtgarsscSKgBgzGjYUtpkfm9Ai
-	ANo6yaZO4UR4bHvjTczTVI5NrGft3pH+8XEKk+nb/RrB2A0IUN2373/V/r8kae2YOKKbr/3Qf+x
-	OawuIQGclZvxIMiE+8d4pV72sEGkWw4LnHMPZ+G48aHUZctzHc0fNKVm9yl7ruWWnq+6f3ZFmcG
-	qLO3ECOyHf9Z/cIWM0Vjz+sOue6NhVNWsrcQWNeKAYqsYEGOXoMlImCtsva/dD929slip/3+hRy
-	pxgAW/wVRhmAlbPmFs/tVNk6UJZTC0ZL9RLS4HgAzevJHja39s13S9cU1sgdQdEdXTmSEO4FomE
-	xw0qfHvfja45+TdoW
-X-Received: by 2002:a05:622a:5e16:b0:50b:51a0:f744 with SMTP id d75a77b69052e-50ba3816a05mr227957721cf.17.1774966604506;
-        Tue, 31 Mar 2026 07:16:44 -0700 (PDT)
-X-Received: by 2002:a05:622a:5e16:b0:50b:51a0:f744 with SMTP id d75a77b69052e-50ba3816a05mr227957191cf.17.1774966603971;
-        Tue, 31 Mar 2026 07:16:43 -0700 (PDT)
-Received: from redhat.com ([96.66.166.93])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50bb2c67fefsm86643111cf.4.2026.03.31.07.16.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 07:16:43 -0700 (PDT)
-Date: Tue, 31 Mar 2026 10:16:41 -0400
-From: Brian Masney <bmasney@redhat.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+	s=arc-20240116; t=1774974495; c=relaxed/simple;
+	bh=zNEyjWLT5Zos9E5aLhI5kIPw6dON9Xtvhiaz2/9dO8s=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GT4tLAIyfX3cTSAuYXn8MFvtwxUt3W0edHjZjsY+zqs68DHdHnDw2abosKW2W6LtSjimIiQGQD+qlVkHyGtMOKwsN76TFkbMOuB0oH66yz2F2AVblD5NqJ4gT8zI0jB1UXGLHWWfq5tXjtheJgGCIGwJFpefjVVO6a9ceLh8ABY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from localhost.localdomain (unknown [223.166.95.230])
+	by APP-05 (Coremail) with SMTP id zQCowAC3TBAO9stphZUSDA--.56709S4;
+	Wed, 01 Apr 2026 00:27:59 +0800 (CST)
+From: Han Gao <gaohan@iscas.ac.cn>
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Guodong Xu <guodong@riscstar.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 4/5] clk: spacemit: k3: mark top_dclk as
- CLK_IS_CRITICAL
-Message-ID: <acvXSXNWIEcDUpQ3@redhat.com>
-References: <20260331-k3-pdma-v3-0-a4e60dd8b4b3@linux.spacemit.com>
- <20260331-k3-pdma-v3-4-a4e60dd8b4b3@linux.spacemit.com>
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Cc: devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Han Gao <rabenda.cn@gmail.com>,
+	Han Gao <gaohan@iscas.ac.cn>
+Subject: [PATCH v4 2/3] riscv: dts: spacemit: Define the P1 PMIC regulators for OrangePi RV2
+Date: Wed,  1 Apr 2026 00:27:55 +0800
+Message-ID: <8ef9666ad9f12ac97b60676dfbedc339c660fd60.1774974017.git.gaohan@iscas.ac.cn>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <cover.1774974017.git.gaohan@iscas.ac.cn>
+References: <cover.1774974017.git.gaohan@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260331-k3-pdma-v3-4-a4e60dd8b4b3@linux.spacemit.com>
-User-Agent: Mutt/2.3.0 (2026-01-25)
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: v6-dkZUpXvZ0GTlHKws1T5P4swunQLOntEDrMV_q5TY_1774966604
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:zQCowAC3TBAO9stphZUSDA--.56709S4
+X-Coremail-Antispam: 1UD129KBjvJXoWxWw4kCw1UXFWDWw4UuFyUKFg_yoW5AFW3pa
+	15XFsxur1FkFyxJw4Ygw1xta15Wr1Ykas29ry0krWrArW8tFnFkr9rAr1Fya48Jr4kZw4Y
+	yrW7uFy8tF1Ig3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUm014x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jryl82xGYIkIc2
+	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
+	8EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r4UJwAS
+	0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2
+	IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0
+	Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kIc2
+	xKxwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
+	JVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67
+	kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY
+	6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0x
+	vEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVj
+	vjDU0xZFpf9x0JUQXo7UUUUU=
+X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBwkDDGnL4t43NgAAse
 
-On Tue, Mar 31, 2026 at 04:27:07PM +0800, Troy Mitchell wrote:
-> top_dclk is the DDR bus clock. If it is gated by clk_disable_unused,
-> all memory-mapped bus transactions cease to function, causing DMA
-> engines to hang and general system instability.
-> 
-> Mark it CLK_IS_CRITICAL so the CCF never gates it during the
-> unused clock sweep.
-> 
-> Fixes: e371a77255b8 ("clk: spacemit: k3: add the clock tree")
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Define the DC power input and the 4v power as fixed regulator supplies.
 
-Reviewed-by: Brian Masney <bmasney@redhat.com>
+Define the SpacemiT P1 PMIC voltage regulators and their constraints.
+
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 97 +++++++++++++++++++
+ 1 file changed, 97 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+index 93880ba7bdfe..e5e358d49c09 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+@@ -23,6 +23,15 @@ chosen {
+ 		stdout-path = "serial0";
+ 	};
+ 
++	reg_vcc_4v: regulator-vcc-4v {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc4v0";
++		regulator-min-microvolt = <4000000>;
++		regulator-max-microvolt = <4000000>;
++		regulator-boot-on;
++		regulator-always-on;
++	};
++
+ 	leds {
+ 		compatible = "gpio-leds";
+ 
+@@ -91,6 +100,94 @@ &i2c8 {
+ 	pinctrl-0 = <&i2c8_cfg>;
+ 	pinctrl-names = "default";
+ 	status = "okay";
++
++	pmic@41 {
++		compatible = "spacemit,p1";
++		reg = <0x41>;
++		interrupts = <64>;
++		vin1-supply = <&reg_vcc_4v>;
++		vin2-supply = <&reg_vcc_4v>;
++		vin3-supply = <&reg_vcc_4v>;
++		vin4-supply = <&reg_vcc_4v>;
++		vin5-supply = <&reg_vcc_4v>;
++		vin6-supply = <&reg_vcc_4v>;
++		aldoin-supply = <&reg_vcc_4v>;
++		dldoin1-supply = <&buck5>;
++		dldoin2-supply = <&buck5>;
++
++		regulators {
++			buck1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck2 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck3_1v8: buck3 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck4 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck5: buck5 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck6 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			aldo1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-boot-on;
++			};
++
++			dldo1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-boot-on;
++			};
++
++			dldo4 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-always-on;
++			};
++
++			dldo5 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++
++			dldo6 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-always-on;
++			};
++		};
++	};
+ };
+ 
+ &uart0 {
+-- 
+2.47.3
 
