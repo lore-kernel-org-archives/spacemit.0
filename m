@@ -1,153 +1,131 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB09366056
-	for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 10:59:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774954755; cv=pass; b=sVrYD2i3pmmMxanlgbzzjE0wmb3y/8lcd1XP6a/wPqeS2CGQ8nGz6/eZYvf68vWz7TUMaS1UR0ZNOmqdBxbrLEReoaNcT244EkacWG3QJOIMUUdCx7cG7dbslYy+E7f133++CkvECS8+GkXPy9WoH4UAYCx0X9hbfrVR9cd92bA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774954755; c=relaxed/simple;
-	bh=2VUtW0YpXM+NjDn8hDo/IqLapZK8BOphv1C4iFqDS7A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kk23fzt309wD7YLEeP2tdQGGuXY1Jj64KIkh6FMN1azz/OOPONGzaN6mGtnuMqn/SXQO75dKkudLTfi6Vx1AJTeZVT2TKjml1dmWSeuyfVuyOlMZLLaRTGCjCizCqx1y12MwW/glKGi0ajQKo09Xr1aXxpjruzbFZ4YtFWTK1H0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YsKywtsW; arc=pass smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FF23A7829;
+	Tue, 31 Mar 2026 11:11:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774955518; cv=none; b=L/7uqvNKfUmPKimyHJHhijWH5OxA5bGo78qUlscKRTOhRLAc/cKkqNia7VbwPRJ+uKzAFtZSZSkTw/6G3ilREKGGuNkLqJ/WfWBiMGLT9w2EZCzqMvWi8VYh7NocS/QDADo6Cl0E7oIDgWUJdZbOtEe7cmE3ACsY2DwHXvicIQw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774955518; c=relaxed/simple;
+	bh=CC18HRDt6LXZNZI+Ou4OaN37WS8eTGfvpmEcbr7V9dE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e23kto4pmxWAQyzx1qZ8kzWjexZ206XnhuaAKwaQMaCk7mSG+Usy3ZrwGTS4BqVlCT5z9Gb+EOo7RCZoZyyw9K6a88+SjhyW/A+Z9fIQWVHsWLJtnyBZ3pyJiEFIB4GKbOYVOLflQYD42GFwNFjfa588yj4nVmjgu3gV/SmSfos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SBSm912j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YsKywtsW"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-59dea72099eso6829584e87.0
-        for <spacemit@lists.linux.dev>; Tue, 31 Mar 2026 03:59:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774954751; cv=none;
-        d=google.com; s=arc-20240605;
-        b=OFI6xDElW5PWqoehzK616uW/t9194Da+wGv0pcAQjm/vouq5YOp/Ma++FQKQWastSi
-         07HnZt4NqbkL8D5ULu1VT7eihFkYivUoc2JxnRTBv2GkZo0L/HRUvKrPNg7u/lzxG+hq
-         XQLf4vG5KJxDivfYvWgHQ2Uep4U/jLGxqEy53YuhNEgiegNqwU+MCLfa/ahmpiSWKm2e
-         bR/MLWVD7S9Yd3gLnscPOgvQXyLJu9WxhWqDA+A5nPOCY5ORtH6DtXfahwb9JvoHwYHv
-         xypNyQZTMY4l6kfjiORwd6iPRRtAJKjORIzC8QccDZG+EFXxZ0PF9e1dg2Eak5kxCCDL
-         38Jg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=fL8mGMhRS7HqUOu1W0Z30JuQwLChCz1UuGa8bh9Su6c=;
-        fh=DdsayIRrRiftDE+gMKvcDBdNsu/nE3rAt+6GutQ3XI8=;
-        b=N/Iw0JKSAGQ3/mmdjMCyWNpF+VvZdwHiYnklXJPfUD5eWHMMSeHpHxQiRswHJtBTKX
-         JI+m3I1i4K/vzOdRiAf6J/2bPQhbFx16tSge/B+mjDngPOQ9N70t6Rpmk63ih/BWcwQq
-         MSITu7NSTWiK9ZvvwWhb1A6fPa6gl5bnjQAbtisLLSfQeINdCsCnoXgbZwuHUy0LaKhm
-         o/y4uNbWKY5/78hQ0+Y2jnQJ7W0lcHMI0KClOCy3g26xWPT8qoRlHR0fpaHAqmLkWj0L
-         2WIKpZByAgSVoUe/IRSJqV3VnJHOLNcR/qPkIRJoTLgWDwSuSGf4B7jdJfp55SuBY0Ev
-         j65w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774954751; x=1775559551; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fL8mGMhRS7HqUOu1W0Z30JuQwLChCz1UuGa8bh9Su6c=;
-        b=YsKywtsWrczglH9U3IsqEJaHcDUHt2ORIU5WO7oHTSR3Au7xaj/iyaLkiqO11aDk9C
-         pDaf7pPitZHMivbqAIqlpJfNt3gF43kMnes/OSAjfObZwgZG64Y81TUTQ1e3tmDOKKGE
-         qkgt64vBf3QkxYa8IFaThnRCQaO0WBwqZVlIhgTCn4AF6eMPGR5py+aucB0ABiHe0B2w
-         hCp4tG/pQUrGkHyaxRTvsq5h7WCr4aMXMX1viVD7luEC54MPbP6ROFu1zMwhnVeNc02k
-         GLsnqSKLpzhUyxOr3SW0DwACLdtnB4dGm4t7rU0W06AcuiKQnPMrqvk2UHVlF3FCjgIL
-         6O9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774954751; x=1775559551;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fL8mGMhRS7HqUOu1W0Z30JuQwLChCz1UuGa8bh9Su6c=;
-        b=ZWwde071ZpQtCajKe+gptrnhHQV8aSb0OthTs6M3sxaEV5FaKvHm3xb0LOdb78EuDc
-         B+1H7IIBOYP+aZ4s/6HNFNUHFBrNQ6a4bwqMaVr9gaCg231/4xT56iVXz+WhZdyw9TLJ
-         6V5FS3HUKYYlYiUFn6mMykkjSFWGr5gQ6TQoKN1/akFzX7TurU3Xi/czFokrD/XOQfdE
-         RZXPQG6NYvLesvxSC0BdPB4ahgK6EzfDzEuWFNJbkmCC+udFxouyCmbBaDIMJWNX38Co
-         ma6n7qPUkyfK0ae5bu6yR0qAx8HZRBmDJ7jZTskWR7uRn3dzgoctnyRDj86jgP3EtuSS
-         Re9A==
-X-Forwarded-Encrypted: i=1; AJvYcCXc7f4XYlqyQh1yucWLBauZofJR4aPCyGcCMMsLm27tbSRVSZ47cvUWgzxcpEnHLg6SwoZQxB2xoA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YySZJA5up+a7W7BQEKc1TbaZtutPcOyMNjdD1UQiP6ssyiPCOqz
-	E1fe85P3K5vwgh/MFkLlRArveTMOg8SdtiFhzflo6CqUfHq1J4IzZJPx5RI3Gz1S3qFsd9SpDWo
-	ZQtSZsugciiHSaIagNFTYltrYb6XKFDg4j0bQHC1XaA==
-X-Gm-Gg: ATEYQzzk+wpJPrlZdxTImTSXSVslyxFH44ydZJEM1H5c6Gt/bYEk6TVVIVYcNJVe9pc
-	HNm/Spa9ZyDaHxOSYzdGHChb3NpTdg1vYEhz6PlNaRL7it8GgSR+YFzesVS5P24+86fTz5RxGBo
-	jDujZzmbcdY+S5dDf/w0l7Yyktixi1Bu6lihyXRnP0DvSEtYB3lNjETD78V8Jb/h3gD7D+USd56
-	wZAnIds1dwgTwjYEoNYDATG3Pufns2jlT/3kbvw0TjYAe7pZPhfBMwZ3UsprPIyrJMHPhiDRr4s
-	rnenvrE+
-X-Received: by 2002:a05:6512:3482:b0:5a2:b01e:5b5a with SMTP id
- 2adb3069b0e04-5a2b01e5c9amr2976958e87.33.1774954750886; Tue, 31 Mar 2026
- 03:59:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SBSm912j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2CAC19423;
+	Tue, 31 Mar 2026 11:11:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774955518;
+	bh=CC18HRDt6LXZNZI+Ou4OaN37WS8eTGfvpmEcbr7V9dE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SBSm912jlQ9CeXMqTN/1xdHMDhFt6cCk6SmAPsezrNVuTfxIW6xslMbkxndVtl713
+	 Y/nFNujORCX8OVASGKLUnt8q6ANzjBTHfGadDGrCQO4RTTDik0RVThbNhv8nxaIvSH
+	 bktOx964x6oMtUafNGHbocFpE92YstGJcQBnMMwqOtE8TxWXdU9kBZly282zv01dRW
+	 +nZiCZ9pbXrweJ6cGvf+QrXWm39INZgxPI/C15veT6ntiOTDiYYxQG65yOBs9jNYOF
+	 6k/cs8BvNhUI7Qcb39VQAw+LpXX1g7Nc1K9+k0xxEEBaEwCBTfnEUHJQlbpYjQDAYd
+	 P3kkzlX9//yJw==
+Message-ID: <1c1b12f2-b305-4341-8269-788fb9e11cdc@kernel.org>
+Date: Tue, 31 Mar 2026 13:11:52 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260330-orangepi-sd-card-uhs-v5-0-bd853604322d@gmail.com>
- <20260330-orangepi-sd-card-uhs-v5-1-bd853604322d@gmail.com> <20260331-eager-kind-civet-62f60a@quoll>
-In-Reply-To: <20260331-eager-kind-civet-62f60a@quoll>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 31 Mar 2026 12:58:33 +0200
-X-Gm-Features: AQROBzB11zXXvkr31NXEyNIIlW6o7ZaxcYR8a2pmCHpw6-PFnrMqVgTaVeOSgY4
-Message-ID: <CAPDyKFrafqhNbetL5kOzAFO526yUrJWa6mS_FPX-cw9bj2Mg4Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 1/9] dt-bindings: mmc: spacemit,sdhci: add pinctrl
  support for voltage switching
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Iker Pedrosa <ikerpedrosam@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Iker Pedrosa <ikerpedrosam@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Yixun Lan <dlan@kernel.org>,
+ Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+ Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20260330-orangepi-sd-card-uhs-v5-0-bd853604322d@gmail.com>
+ <20260330-orangepi-sd-card-uhs-v5-1-bd853604322d@gmail.com>
+ <20260331-eager-kind-civet-62f60a@quoll>
+ <CAPDyKFrafqhNbetL5kOzAFO526yUrJWa6mS_FPX-cw9bj2Mg4Q@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <CAPDyKFrafqhNbetL5kOzAFO526yUrJWa6mS_FPX-cw9bj2Mg4Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, 31 Mar 2026 at 08:48, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On Mon, Mar 30, 2026 at 10:38:02AM +0200, Iker Pedrosa wrote:
-> > Document pinctrl properties to support voltage-dependent pin
-> > configuration switching for UHS-I SD card modes.
-> >
-> > Add optional pinctrl-names property with two states:
-> > - "default": For 3.3V operation with standard drive strength
-> > - "state_uhs": For 1.8V operation with optimized drive strength
-> >
-> > These pinctrl states allow the SDHCI driver to coordinate voltage
-> > switching with pin configuration changes, ensuring proper signal
-> > integrity during UHS-I mode transitions.
-> >
-> > Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> > ---
-> >  .../devicetree/bindings/mmc/spacemit,sdhci.yaml         | 17 +++++++++++++++++
-> >  1 file changed, 17 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> > index 9a055d963a7f0cdba4741c1e3e7269688dcd5f45..201ab97f0e88376a4680dcca7917e8b3172bd84a 100644
-> > --- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> > +++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> > @@ -44,6 +44,20 @@ properties:
-> >        - const: axi
-> >        - const: sdh
-> >
-> > +  pinctrl-names:
-> > +    minItems: 1
-> > +    maxItems: 2
-> > +    items:
-> > +      enum:
->
-> No, that's not enum but list. Look here:
->
-> > +        - default
-> > +        - state_uhs
->
-> Instead: uhs
+On 31/03/2026 12:58, Ulf Hansson wrote:
+>>> +        - default
+>>> +        - state_uhs
+>>
+>> Instead: uhs
+> 
+> While I agree that "uhs" would be better, we have tried to stick with
+> "state_uhs" for legacy and consistency reasons with other mmc
+> controllers.
+> 
+> No strong opinion though, what do you think?
+> 
 
-While I agree that "uhs" would be better, we have tried to stick with
-"state_uhs" for legacy and consistency reasons with other mmc
-controllers.
+I missed that it is already present in other places. Is the name coming
+from any other referenced schema like mmc-controller? Does the existing
+common driver code expect state_uhs?
 
-No strong opinion though, what do you think?
+If yes, then go with state_uhs, if not then let's switch to new name.
+Old conventions in the bindings can be changed, we already do many
+things differently than 10 years ago (e.g. no underscores in node and
+property names).
 
-[...]
+But followup question - the binding is called sdhci, so maybe sdhci
+common schema should be referenced?
 
-Kind regards
-Uffe
+
+Best regards,
+Krzysztof
