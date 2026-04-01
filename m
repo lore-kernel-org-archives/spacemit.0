@@ -1,37 +1,37 @@
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A9A236453
-	for <spacemit@lists.linux.dev>; Wed,  1 Apr 2026 06:42:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8057133CE88
+	for <spacemit@lists.linux.dev>; Wed,  1 Apr 2026 06:45:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775025766; cv=none; b=e5Bau14SUGtxOAJjvMwbCbGC+UEYqEVTRtVufLT6rbJ4CDtkhQFOygygTj1GfbQtYVTXdrVdE28VKoCi+Jy6u1H/ifuDoiqyYGA6WPVv3UiF5VidP+bxrahaRqRlpskZKVHp8Bno7K52Y73Erc8UQ2cAbrJpfVnCaf2N2wnW21Y=
+	t=1775025955; cv=none; b=ieNr5CQO2UrrzS8o1yoYnKrYHAE6hr+E0d7wdEXFoxYgXrs7qD1Z7XuLgx0kvwKDj3PbhCTnu9HKNIWJ1BuuNDW9PSLJzKDCegsmKUqCQC7YexDw4vfgyrtgsX3Bt8Z/+qT+zeY3z7fRnxCtZ+uYiHs+JyvWiQ2WghFiuiXemC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775025766; c=relaxed/simple;
-	bh=Ocq+KQD9/wpLJU3O08Fj31PBkcKG2sg2axl0If0Lp0k=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=LhIzMXBRq39MD/VrXsJLInnWr7y78p0AV8N9w3ca7fN92Jf82cpW43oRlv/e1JltKSnufe7dwrjVyhyXVybcV9jntXmtg8NDGYhQo54tAywjwsScFpfZK9rNterdiv4vsKfCywhI/OaDa6esbCHxCkh1FXwqWadKoTWWY2ZA78c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=jrRD1U3H; arc=none smtp.client-ip=54.206.34.216
+	s=arc-20240116; t=1775025955; c=relaxed/simple;
+	bh=tsXCo8kHJxaw2PHmUna9SP8WpCxHXFWUfDWgjeE1aCk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=hPImpmHTJmxmUJ7b2cPg3ZwurcOnGQ6SYtERQmkBujRPgQLcnUHFkXvRIwhN3Ae+Wale4dKbi5GSXpUrxSjEl1FiBN6Vq+QwhpElro1O+BjtewOTx47nXf7Hg5IgFjDWOPXxBdoghpzUJLDBM8No5IzHFf7Dta+KGamMhzqNIZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=jQqDFXPL; arc=none smtp.client-ip=18.169.211.239
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="jrRD1U3H"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="jQqDFXPL"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1775025753;
-	bh=5eLuO6Dg0v1DgrfHcmNBLPbXv7rnkJttNKIeZuJk6uI=;
-	h=Mime-Version:Date:Message-Id:To:Subject:From;
-	b=jrRD1U3H0g61Hx8llloEoNmfP4qYExeCfrJpMdcToEShYAwM9C0iowE37F0KU7RG8
-	 NXr3M035ly9SShMsyAnBD2D6pIgOnL+3Tu6mgH/oJbwtFfCiFUi13/LennsXPHg5H/
-	 3T31uWOtnRrldmLmfnxr53BN6nm7Ar1S+I3ZceF8=
-X-QQ-mid: esmtpsz16t1775025750t7591359d
-X-QQ-Originating-IP: fUdCuzUb7Z94GHZIGs6Mh0OqBX5fgjt7XPKfo0NAQzU=
+	s=mxsw2412; t=1775025903;
+	bh=jdSh7Gkw/dQvbevK9ISn2ljXK48jqiWBgsjGy36WQ/c=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=jQqDFXPLrpAGxQZQu+WsloIN51XWDD+ZO4a4UMAweMsPlqhjtwmLznjOrZMMJh6C6
+	 n3QQYFDoS4iLU8O1ZReUCsNmwyyttIb5lanTRgAerRGgouoU0GEk+Ch+/EvRH8SF4o
+	 xsN/dhgdHQFZzbPzlfdKvsfbPZvfmZFw+ciqOVHI=
+X-QQ-mid: esmtpsz18t1775025901t2af1da78
+X-QQ-Originating-IP: rNVcEvc/xIMzFngA6uKPDU8Cfui6+G/HVk6UwmFySyo=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 01 Apr 2026 14:42:28 +0800 (CST)
+	id ; Wed, 01 Apr 2026 14:44:58 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 10449797941589692616
-EX-QQ-RecipientCnt: 19
+X-BIZMAIL-ID: 1209826560755650584
+EX-QQ-RecipientCnt: 21
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -40,100 +40,67 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 01 Apr 2026 14:42:28 +0800
-Message-Id: <DHHM43F6TE9I.1F5A3O0VOS6ND@linux.spacemit.com>
-To: =?utf-8?q?=E6=9B=B9=E7=8F=8A=E7=8F=8A?= <sandie.cao@deepcomputing.io>,
- "Yixun Lan" <dlan@kernel.org>
-Cc: "Conor Dooley" <conor+dt@kernel.org>, "Emil Renner Berthing"
- <kernel@esmil.dk>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Paul Walmsley" <paul.walmsley@sifive.com>, "Palmer
- Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Heinrich Schuchardt" <heinrich.schuchardt@canonical.com>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>, "Michael Opdenacker"
- <michael.opdenacker@rootcommit.com>, "Guodong Xu" <guodong@riscstar.com>,
- "Hendrik Hamerlinck" <hendrik.hamerlinck@hammernet.be>, "Yangyu Chen"
- <cyy@cyyself.name>, <spacemit@lists.linux.dev>,
- <linux-riscv@lists.infradead.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 2/2] riscv: dts: spacemit: add DeepComputing FML13V05
- board device tree
+Date: Wed, 01 Apr 2026 14:44:58 +0800
+Message-Id: <DHHM60NUGNZP.1JLBPAHKZRQFR@linux.spacemit.com>
+Cc: "Vinod Koul" <vkoul@kernel.org>, "Frank Li" <Frank.Li@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>,
+ "Guodong Xu" <guodong@riscstar.com>, "Michael Turquette"
+ <mturquette@baylibre.com>, "Stephen Boyd" <sboyd@kernel.org>, "Paul
+ Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
+ Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
+ <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH v3 1/5] dt-bindings: dmaengine: Add SpacemiT K3 DMA
+ compatible string
 From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Krzysztof Kozlowski" <krzk@kernel.org>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>
 X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260331034423.67142-1-sandie.cao@deepcomputing.io>
- <20260331034616.67183-1-sandie.cao@deepcomputing.io>
- <20260331085925-GKB976850@kernel.org>
- <407ce3d77416bb2522b7906b0df3d5adf02c27ee.4c756029.b64e.488e.905e.99baaf78d6a1@feishu.cn>
-In-Reply-To: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.4c756029.b64e.488e.905e.99baaf78d6a1@feishu.cn>
+References: <20260331-k3-pdma-v3-0-a4e60dd8b4b3@linux.spacemit.com>
+ <20260331-k3-pdma-v3-1-a4e60dd8b4b3@linux.spacemit.com>
+ <20260401-divergent-magenta-dalmatian-3c6c3e@quoll>
+In-Reply-To: <20260401-divergent-magenta-dalmatian-3c6c3e@quoll>
 X-QQ-SENDSIZE: 520
 Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OZF0DnLZf9EItsrKJz0Gd1l/CPcJOKCH38Rz39bMsnnSzvyhhRyUUmVr
-	XdGwzh6vUfqC4SkGmg2DRhLYO5/gfC7y+p8GP8WGOI0cMkps8z0KhE9aUYqx6kSdXtXaIOp
-	N6Ls+db6NogSPbDjd4DoRju/DyYqIfjanqdKllr43PLvNEiOMbSI+82rNZWfooTNdq1GLon
-	bjzr7cRlKbCGoDPFsqv+OLu8pzKjvGdDS9hxyrc+FnW7GvcsUN8hL83TdSzgnb4oadKXfGH
-	dpLQ26RrlWGH6bFKavlhPqCQmq1vovLPFL+Qb3uUIxheoy2R5q8Hg6t3Fi8CPQLWMeGNmBw
-	/3Pdf/Id5/vTZI0mWKlA1TLxciLbL2QrRjzhWHTlE+v6VjxRIPy30ZQv4qz9kU68rHblROq
-	QGBW7OwX+aJDZ08mEn2aLzig0iSXDvtwTeqrj+PQbuMeVDlndsjAFF+REc9p2k1F/+oVQxa
-	f2FQjuQZJ7WBBPR86g8TWxwF0x3G2GNSrQvS31OeqfNj2uSaiONoFL+fa1aX/lzBZhcA4NL
-	f+U7psDwcInbdns1yfgL5+6kIFSRELkH3Zodfn+SVwm2XHemUApQc3iJJHKxuniTVyqxUxc
-	To01AEkfOBTvEqC0oJHQDmqjK/z62jWTUYsllrMLSi1N/FjNnrH7kv/s04Dem+8CX1U6HY5
-	9tLFnEOZMFc/qBZL32ZwlCPAYk1hRXIcBf7pLKkZeZ5nLwjqOhb43Z583Sb3ArnxZbraIrn
-	KmcJd7bqMD9KRMwsRwNQxKLSHVo2BKrFPgTYJsgFKevrySqzAS2aRkqmN7haa59Ij8ooWTu
-	V2lTz4wc1dlG/iFB/FeNyJWcP0K5kDatNDts28EYHdHG0AZcSZmmPHcYt7r+qiZYilq/rd4
-	ie61zlkVm7a/dajLIKgtdpnMnQOTXCK+GPH0sBhRnCtn98rm7TjutkplaRBo5WBwGcYss9v
-	56cIVdl8ziSDV6NOnePbf/WVWJqi+gHUuB6l+rUs5isO0S/5O1H5BYgifmdxVip02kGsspc
-	Qz+4PiWbBS24B4lQ2WnI+OVElJKehTL+azfPii3VCfVs2XB4Bwtjwp0Gbz4b0QkMut52u3s
-	A==
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+X-QQ-XMAILINFO: N9m5DZSiVOZbSjfBIAHCOaI9580cNFua75cW6peU9XPs/5ClY9v4OmN4
+	owqev2zFdNAATCFOi6twzi/iF/GqezRCQWgbLUQw+lPDiXo4wqzgKbKYl8MRq9by7EqOYQw
+	e03FFqbdHOS72KDNHdlv4XNwpvBqYL+0uLu35zqzgrNgDG27HjZBEVEBo+Gg9bWGlpXSL8t
+	UbPXZTbNI04bQ0KxJAJq5a3IdodTDo/yPPjX+moWowygem1dw2rlKHuhSx1km3UdUVTXuCD
+	jVRjhtenQg7hbzqNI1IiUkiZ2PHXjQgRh0DdXX1/8aT6xlHTkbVu7bbUEQ37jVUB36TPQfJ
+	F5uSN+zNWhpsAHbLdY+7tchj/+M5r8/HPHZtcxpox+UIwRau6U1QiJlk+shqC8EOB7K/I9V
+	P3a6HlYeQR/iUkKDn/Xl7dHtvh00wW+FlSpAVegBOwF37rpAX2J3jtSIIZH+oduWaP417hl
+	VraVOmHQnu00Smo4/5fr9XyVpsID8WBHjnqsKqEOpqYU+JIaY1AIAJbN/da7BlBimMYKQcz
+	ncG5Rd3XBoHkxoKECWLBqRdYRldT9WnUXeIBEuOglG88MG/8rP0NOFEB5K77LQylvsdP8Dr
+	6EcdWQTgs7E4bz1CKoCE+TBdI3u9OpnUyVlNYBIs82/qwgvJsYHohy22JJnB+vkWqgnai50
+	OYg0pZ6nM3sDeL93DoNHTLEMAucqxX5KVpHlZonGFw0/YulAw3pXpXYU3L3h/dLdVxbAb8h
+	y9uYn8QWvM7OEPEyGjHRN/YwjWUVUle4tiXfSQ9Y0mg6ynGj5gc4X90yh3ejufllkhN1qPd
+	XwsR3tcsRoRUQx6F343MPF/+7SyGUI5CNhDGGgW0fwY2OCjaonTquc+Q6ak3dVNeuVMDEkm
+	IzojDah2TDJf3Tdryf5ryhJ2X6CsAw5JnXkRgWFRFB1QYuBTlKMnbkEtQacaHAwLzk5BMCc
+	awYWLgI7fBE7+X3mkB9vJCxvMVifTX439yVHnMHlvZ916oFaSn/QPilJSLHZxW+QvXDuMLb
+	UuJNILu1yea/cQorlRbcFt/yLfBZDHlQU3tjWN0Zs3dIJsZb1S/nXMrO+Jl6PkD0jf8Wfxl
+	d2wpM3aEKSYDAh6BbNKrQ0=
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
 X-QQ-RECHKSPAM: 0
 
-On Wed Apr 1, 2026 at 2:10 PM CST, =E6=9B=B9=E7=8F=8A=E7=8F=8A wrote:
-> Hi Lan,
+On Wed Apr 1, 2026 at 2:42 PM CST, Krzysztof Kozlowski wrote:
+> On Tue, Mar 31, 2026 at 04:27:04PM +0800, Troy Mitchell wrote:
+>> From: Guodong Xu <guodong@riscstar.com>
+>> - Memory addressing capabilities: Unlike the K1 SoC, which had memory ad=
+dressing
+>>   limitations (e.g., restricted to the 0-4GB space) and required a dedic=
+ated
+>>   dma-bus with dma-ranges to restrict memory allocations, the K3 DMA mas=
+ters
+>>   possess full memory addressing capabilities.
 >
->> From: "Yixun Lan"<dlan@kernel.org>
->> Hi Sandie,=C2=A0
->>=C2=A0
->> On 11:46 Tue 31 Mar =C2=A0 =C2=A0 , Sandie Cao wrote:
->> > From: sandiecao <sandie.cao@deepcomputing.io>
->> >=C2=A0
->> > The FML13V05 board from DeepComputing incorporates a SpacemiT K3 RISC-=
-V
->> > SoC.It is a mainboard designed for the Framework Laptop 13 Chassis,
->> > which has (Framework) SKU FRANHQ0001.
->> >=C2=A0
->> > The FML13V05 board features:
->> > - SpacemiT K3 RISC-V SoC
->> > - LPDDR5 16GB or 32GB
->> > - eMMC 32GB ~128GB (Optional)
->> > - UFS 3.1 256G (Optional)
->> > - QSPI Flash
->> > - MicroSD Slot
->> > - PCIe-based Wi-Fi
->> > - 4 USB-C Ports
->> > =C2=A0- Port 1: PD 3.0 (65W Max), USB 3.2 Gen 1
->> > =C2=A0- Port 2: PD 3.0 (65W Max), USB 3.2 Gen 1, DP 1.4 (4K@60Hz)
->> > =C2=A0- Port 3 & 4: USB 3.2 Gen 1
->> >=C2=A0
->> > This minimal device tree enables booting into a serial console with UA=
-RT
->> > output.
->> >=C2=A0
->> > Signed-off-by: sandiecao <sandie.cao@deepcomputing.io>
->> > Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
->> > +&uart0 {
->> Can you also add pinctrl data explicitly?
+> Programming interface is still compatible, regardless of memory
+> addressing limitations, so that is rather incorrect reason.
+I'll remove this item. Thanks.
+
+                            - Troy
 >
-> To avoid conflict,=C2=A0 the common pinctrl table "k3-pinctrl.dtsi" shoul=
-d be uploaded by spacemit.=C2=A0
-> Then we will add the pinctrl data after k3-pico-itx.dts. That should be a=
-nother patch.=C2=A0
-> Sandie
-I think you don't understand what Yixun said.
-You should add pinctrl properties here like:
-pinctrl-0 =3D xxx;
-pinctrl-names =3D "default";
+> Best regards,
+> Krzysztof
 
-While the bootloader is expected to initialize the UART pins, explicitly ad=
-ding the pinctrl properties
-ensures hardware state consistency.
-
-                                      - Troy
