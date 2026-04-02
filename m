@@ -1,104 +1,157 @@
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED8B3DEFF1
-	for <spacemit@lists.linux.dev>; Thu,  2 Apr 2026 10:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEC83B9DA9
+	for <spacemit@lists.linux.dev>; Thu,  2 Apr 2026 11:22:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775124036; cv=none; b=e7Qk8PMx6eFOZGlAB2K+hX2WzWZvs7uPDUxzJISNI44TxfGrdUUOth4Szn0A+kA46QKeENdhOdQOR5D3IXVCvHdByiZOFOfqGT7c9ZDKEFQfeByRWcRNtOznUFSXIbTBrpiN1Vz2TpQWreUBIhYHL0LrQ9mS/lVXdvIAvKFQNJE=
+	t=1775128993; cv=none; b=EfrHQ2TgR+w+POx+yjzXIOslF/rNvYikVr6UkHuTTfJMWPsDTXLDMpRfO04r6xtiGxu58d4q0QnkIYAqaj66E2gT8Ryf4YgxunT7VvcAh5sn4cZCWvrWArLbkwZ//Lp5N08TSfVeXNugZH9zox9W2JOz2+zBTeYsRjQODGWG+ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775124036; c=relaxed/simple;
-	bh=JJnpY/87iMHeEp3faBQtcCAjMSkD8erttOPa5Eswg7Q=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=uXuIv0JgdD7TlWQ3ilTsVlAjj2fX3tf27mt7iUIRZAXShrbWXCcc+vdvN/FxfEctDTiS+J539iUEXgAKPS7qAblWe1RSjKS14KQDn81HWmGRAex7d6u5+hwS6B+DjIvzQfnNAbqavBlmv+9/PX/3m4DngVv1MsKOh5WBUaeI55I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from localhost.localdomain (unknown [116.25.95.185])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 394e0eb06;
-	Thu, 2 Apr 2026 18:00:26 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: [PATCH v2 3/3] riscv: dts: spacemit: enable USB3 on OrangePi RV2
-Date: Thu,  2 Apr 2026 18:00:07 +0800
-Message-Id: <20260402100007.110201-4-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260402100007.110201-1-amadeus@jmu.edu.cn>
-References: <20260402100007.110201-1-amadeus@jmu.edu.cn>
+	s=arc-20240116; t=1775128993; c=relaxed/simple;
+	bh=RcX9LDtuyetHVfHjlsGuK7xjHia6Sb6Hr4bV/1hbpVg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=gek2k1l2AaCIsLeHMLlAqJxzzVZ2Q2kmQv7bv6KCRQwmeYRD/LRUEqkMxgg45hhlf5y2fGZ17gtLGQkIR8Fohki2+l1WGiB6hdlveBy+0OHTuYHWGjSRAYncfVjWvRAt8ZP6j3JSmqzTxeEc81ibnjnTNZdtepEvXr7jmBrqHCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev; spf=none smtp.mailfrom=linux.spacemit.com; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+X-QQ-mid: esmtpgz11t1775128897tbf21170d
+X-QQ-Originating-IP: kxlUxpWpaYTKTqzcSIXGMtW5WoW7m1TS67JGq45OFYc=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 02 Apr 2026 19:21:35 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 4623887784994959119
+X-QQ-CSender: troy.mitchell@linux.spacemit.com
+Sender: troy.mitchell@linux.spacemit.com
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9d4da3133903a2kunmcba6113b55c1ba
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZSkIZVkpDTR1KQ0IdQ08eGFYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSk1VSU5VQk5VSkNOWVdZFhoPEhUdFFlBWU9LSFVKS0lPT09LVUpLS1VLWQ
-	Y+
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 02 Apr 2026 19:21:34 +0800
+Message-Id: <DHIMOCFZSFXX.2XZEQBRXLISKN@linux.dev>
+Cc: "Ulf Hansson" <ulf.hansson@linaro.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Adrian Hunter" <adrian.hunter@intel.com>, "Paul
+ Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
+ Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan"
+ <dlan@kernel.org>, "Michael Opdenacker"
+ <michael.opdenacker@rootcommit.com>, "Javier Martinez Canillas"
+ <javierm@redhat.com>, <linux-mmc@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>, "Anand Moon"
+ <linux.amoon@gmail.com>, "Trevor Gamblin" <tgamblin@baylibre.com>
+Subject: Re: [PATCH v5 5/9] riscv: dts: spacemit: k1: add SD card controller
+ and pinctrl support
+From: "Troy Mitchell" <troy.mitchell@linux.dev>
+To: "Iker Pedrosa" <ikerpedrosam@gmail.com>, "Troy Mitchell"
+ <troy.mitchell@linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260330-orangepi-sd-card-uhs-v5-0-bd853604322d@gmail.com>
+ <20260330-orangepi-sd-card-uhs-v5-5-bd853604322d@gmail.com>
+ <aco9oLumPh4OZtIo@kernel.org>
+ <CABdCQ=MFcDPnzcYUEkbQyu_0qZt=aDD04p1kyxCMuVt7Av_P1Q@mail.gmail.com>
+In-Reply-To: <CABdCQ=MFcDPnzcYUEkbQyu_0qZt=aDD04p1kyxCMuVt7Av_P1Q@mail.gmail.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: M+A7tMXGEwPSuXkIce/o+QKPNansc3JhWXzsUMoIhDgXQl3SK17gCqau
+	pnpSt9lg4jJlQtkKtjVehs1IgjWZymBdu9gc5iaAe4b0D6XEEHV/01Wv8Ihje955Co/Dtxu
+	UQu1QLsmCP7cdkg/Gu/z/xroTk2ZKKbKA+LZmbgtjcSYM5uNEtqwHhoNsjZr/43EjcbJqQV
+	JMAB6A8/4CxHGKtekR2o68AGRBuIF8F6VP8Qd89v4pgrBVLh5Xi/4PJ68N/eoPoMtiXbVKH
+	0NM5mu3R8Plcdl3FeEahz0LzYXRdt9RhbVWTlK1TTlVDfnBtYB2KyXgmUl+kmyijh+Fqri0
+	gCKonIcu/TXS3HFmuohxXSsphcg0NP+/vtcp93fVfrI0rOJ7/0lgxdK854TdY4DdTyuvEQB
+	8noyApRZfeaUZ6PXh20JFaeyn3O8PVKFvjjFd4EI6XBsxCfWN5mcaLIEsUCfk9cL8KTJFu7
+	wAn72VX7uQkL3wMHFO468KeddkFRToLgAlNkiFw5/uSaO0P6GSAF7J+QjJjwtTnPa/JHFtT
+	HDW9uKTk4XqWcfowQKelvLTrMA7bHoaWB3+doHRWT7BljxyCpSqsGoGg/cnNi2ejnmrsUMN
+	DgC3/DUttJGpwgaEDuBJqK9rc30jZ0TzKnPwLFgmU2N4uEJERoyy/jHCEKRjzNG0+9iErnL
+	KpvQTa0xxvnSszqDzm8dSnSKY9FPHaDDSOR5AEn7SOz7No9J7+XXA54zXMCfzGrypIfrPIv
+	huIn4vr8wp77/IJJH8sGuEjsiXN/JOIuTJezIXVEzucnvYupfEcm3m30PhHja+/bFxwx9NR
+	PaNggiK+0CURcPn4ulQWzKOWwxv4gdI3xMen5SxlE8D2o46IpNw9KKdB7lD1PQQqb9141LU
+	VG/XlDOtrhh+ioPXPDPLjY1GkQIT4tD7wdDqT7bCNvSgnB+cRpuweJqdDhrLASLV1TsFPzl
+	NayLtqDbv8I0vPIZOhPIW+3hAPfL2Y2tLXgFvd6xFn+oRRunTZ4pzQV0DHSgPfAz6/3tgPH
+	vdvzJJDm9saTqoNfPEhKPr+CsK1DRajGjsojcfpGmbla5K/HDSKf8BlocsAEw=
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+X-QQ-RECHKSPAM: 0
 
-Enable the DWC3 USB3.0 controller and its associated PHY on
-the OrangePi RV2. The onboard GENESYS GL3523 Hub provides 3
-USB3 Type-A ports. Enable the corresponding VBUS regulator.
+On Wed Apr 1, 2026 at 4:53 PM CST, Iker Pedrosa wrote:
+> El lun, 30 mar 2026 a las 11:08, Troy Mitchell
+> (<troy.mitchell@linux.dev>) escribi=C3=B3:
+>>
+>> On Mon, Mar 30, 2026 at 16:38:06 CST, Iker Pedrosa wrote:
+>> > Add SD card controller infrastructure for SpacemiT K1 SoC with complet=
+e
+>> > pinctrl support for both standard and UHS modes.
+>> >
+>> > - Add sdhci0 controller definition with clocks, resets and interrupts
+>> > - Add mmc1_cfg pinctrl for 3.3V standard SD operation
+>> > - Add mmc1_uhs_cfg pinctrl for 1.8V UHS high-speed operation
+>> > - Configure appropriate drive strength and power-source properties
+>> >
+>> > This provides complete SD card infrastructure that K1-based boards can
+>> > enable.
+>> >
+>> > Tested-by: Anand Moon <linux.amoon@gmail.com>
+>> > Tested-by: Trevor Gamblin <tgamblin@baylibre.com>
+>> > Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+>> > ---
+>> >  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi | 40 +++++++++++++++++++=
++++++++++
+>> >  arch/riscv/boot/dts/spacemit/k1.dtsi         | 13 +++++++++
+>> >  2 files changed, 53 insertions(+)
+>> >
+>> > diff --git a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi b/arch/riscv=
+/boot/dts/spacemit/k1-pinctrl.dtsi
+>> > index b13dcb10f4d66022d27307de73a6ea3287e97441..8d82011f1af666fb78c282=
+a2abcc0cb88f962053 100644
+>> > --- a/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+>> > +++ b/arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi
+>> > @@ -570,4 +570,44 @@ pwm14-1-pins {
+>> >                       drive-strength =3D <32>;
+>> >               };
+>> >       };
+>> > +
+>> > +     mmc1_cfg: mmc1-cfg {
+>> > +             mmc1-data-cmd-pins {
+>> > +                     pinmux =3D <K1_PADCONF(104, 0)>,   /* mmc1_d3 */
+>> > +                              <K1_PADCONF(105, 0)>,   /* mmc1_d2 */
+>> > +                              <K1_PADCONF(106, 0)>,   /* mmc1_d1 */
+>> > +                              <K1_PADCONF(107, 0)>,   /* mmc1_d0 */
+>> > +                              <K1_PADCONF(108, 0)>;   /* mmc1_cmd */
+>> > +                     bias-pull-up =3D <1>;
+>> > +                     drive-strength =3D <7>;
+>> I'm a bit concerned about this value. Looking at the downstream 6.6 code=
+, 3.3V uses DS4,
+>> which equals 13mA. Since 7mA maps to DS0, what's the reasoning for using=
+ it here?
+                ^^^^ wrong current
+>> Do we have any documentation or measurement to back this up?
+>
+> Thank you for catching this! You're absolutely right to question these
+> drive strength values.
+>
+> Looking back at my development process, I remember hitting signal
+> integrity issues in the early stages of this driver development. As a
+> quick solution, I lowered the drive strength values, which seemed to
+> resolve the immediate problems, and I moved on without revisiting the
+> electrical characteristics.
+>
+> After your feedback, I investigated this properly by comparing with
+> the vendor kernel. It uses:
+> - 3.3V mode: PAD_3V_DS4 (19mA)
+> - 1.8V UHS mode: PAD_1V8_DS3 (42mA)
+>
+> My original values were indeed backwards from both electrical theory
+> and proven vendor implementation. Testing with the corrected values
+> (19mA/42mA) confirms SD card is working.
+>
+> I'll send v6 with the corrected drive strength values: drive-strength
+> =3D <19> for 3.3V and drive-strength =3D <42> for 1.8V UHS modes.
+Yes, 19mA for 3.3V and 42mA for 1.8V are correct.
+I realized I cited an incorrect value in my previous message (the 13mA).
+Please CC me when you send v6.
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
----
- .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 24 +++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-index 929b70d384b5..ab835c30dd86 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-@@ -52,6 +52,20 @@ vcc4v0: regulator-vcc4v0 {
- 		regulator-max-microvolt = <4000000>;
- 		vin-supply = <&vcc_5v0>;
- 	};
-+
-+	vcc5v0_usb30: regulator-vcc5v0-usb30 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc5v0_usb30";
-+		enable-active-high;
-+		gpios = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		vin-supply = <&vcc_5v0>;
-+	};
-+};
-+
-+&combo_phy {
-+	status = "okay";
- };
- 
- &eth0 {
-@@ -111,3 +125,13 @@ &uart0 {
- 	pinctrl-0 = <&uart0_2_cfg>;
- 	status = "okay";
- };
-+
-+&usbphy2 {
-+	status = "okay";
-+};
-+
-+&usb_dwc3 {
-+	dr_mode = "host";
-+	vbus-supply = <&vcc5v0_usb30>;
-+	status = "okay";
-+};
--- 
-2.34.1
-
+                                    - Troy
