@@ -1,21 +1,22 @@
 Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2413009D4
-	for <spacemit@lists.linux.dev>; Fri,  3 Apr 2026 12:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C13B1F7569
+	for <spacemit@lists.linux.dev>; Fri,  3 Apr 2026 12:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775219859; cv=none; b=EjHBja9nRWGL3P7od3uchEX0GQDRbwrhIQIxVuX9+HhwUAUCon5YlRraNNuxoPetLU8H7Dhg2TUdFVd7hTZ1Np/2Ou9o+7F92sngWWvgGHsiq7Q1Yj3t/zgWZ68OmQuoOehYWACAtqcT7z9bq+wN8Ed8UEAvZN9RTHFFMXOd8Lc=
+	t=1775219860; cv=none; b=bHj/SaXsDkIW2D59KVCh7oT3tY/GyT+aqXln7p2G3egEqlo+6pFTcFJhOoFLH9ekA3ceZgAF53CAMDfm6k4ziQE2dNnCVbLEqo+0USKidvzTM3OOMIAJwCXlOESN+le5sSX963yUn0vUMq/b7mzWsn/iE00azP3eSLwGkxbEjgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775219859; c=relaxed/simple;
-	bh=5u7A2PozaJLqdJlt7qmde/AvEj2FCl14kJaAywP7fso=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CadiIYcWvUZLhsSEwIHxe6ewwC7PKAF8x2czODq4WvD3Z3X1tNKUTpFVK94PBUWJBSy6r5Q4N3PvdY1hS3xu4Pz+HXBJ1hQOo+eo/6aPB0yV1bCBpEkU+mZwItMQJ3tztPYnsLBLN/aJf0or545+/beh6ZTdo/tEhf10BqGDEuk=
+	s=arc-20240116; t=1775219860; c=relaxed/simple;
+	bh=Hzvx0/zQUsHFHqD5657yCiA4l4uXUNli3Tb3DUrLxzE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=erX2UFyM5TUH+OUElsoycObZagSh/igQ290mjuUWDQRN2M7IU6R/g5k+w9af36/3TWh0+KrIF9Izisg9vVqozweGHd/pDeLiq6+Y2x83NyZ61GpCZyLy/KgTt4vc+JpQV7udoWu5GBWJmC7e7kkiQUNNNm9+iGOBG/wfhHUOPzo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from localhost.localdomain (unknown [223.166.95.230])
-	by APP-01 (Coremail) with SMTP id qwCowACXPWmHtM9pCsgRDA--.1349S2;
-	Fri, 03 Apr 2026 20:37:28 +0800 (CST)
+	by APP-01 (Coremail) with SMTP id qwCowACXPWmHtM9pCsgRDA--.1349S4;
+	Fri, 03 Apr 2026 20:37:29 +0800 (CST)
 From: Han Gao <gaohan@iscas.ac.cn>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -32,10 +33,12 @@ Cc: devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Han Gao <rabenda.cn@gmail.com>,
 	Han Gao <gaohan@iscas.ac.cn>
-Subject: [PATCH v7 0/3] riscv: dts: spacemit: Add PMIC regulators usb pcie
-Date: Fri,  3 Apr 2026 20:37:22 +0800
-Message-ID: <cover.1775219669.git.gaohan@iscas.ac.cn>
+Subject: [PATCH v7 2/3] riscv: dts: spacemit: Define the P1 PMIC regulators for OrangePi RV2
+Date: Fri,  3 Apr 2026 20:37:24 +0800
+Message-ID: <bf482a21bc520b0fe831367da43826b73056b408.1775219669.git.gaohan@iscas.ac.cn>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <cover.1775219669.git.gaohan@iscas.ac.cn>
+References: <cover.1775219669.git.gaohan@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,65 +46,186 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowACXPWmHtM9pCsgRDA--.1349S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7ur15XFW8Zry3Xw17Jr4kXrb_yoW8uw17pr
-	y29r43uw4rXw42y393uws8Jr15KFn5Ar9Igr1UKw18ArnFgay7Za1xtr42vF9xur45tFsr
-	trs7Aw4xur4xZF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9014x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
-	n2IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4
-	AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE
-	17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMI
-	IF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4l
-	IxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIda
-	VFxhVjvjDU0xZFpf9x0JUd-B_UUUUU=
-X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBg0GDGnPrIkRQgAAsR
+X-CM-TRANSID:qwCowACXPWmHtM9pCsgRDA--.1349S4
+X-Coremail-Antispam: 1UD129KBjvJXoWxWw4kCFWfAFWDGr1xZrWDArb_yoW5KrW5pa
+	n8ZFsxur4rAFyxJw45Ww1xta15Wr1Ykasrury0krWrJrWUtFnFkr9Fyr1rt3W8Ja1vvw4Y
+	yrW7ZFyxtF1Ig3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUm014x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jryl82xGYIkIc2
+	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
+	8EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AI
+	xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
+	vE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xv
+	r2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04
+	v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j
+	6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7
+	AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE
+	2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcV
+	C2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVj
+	vjDU0xZFpf9x0JUQXo7UUUUU=
+X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBwkGDGnPrI4RTwABsf
 
-Changes in v6:
- - patch 1:
-   reorder i2c8
- - patch 3:
-   restore vcc5v0_usb30
-   remove vin-supply from pcie_vcc3v3
-   restore vpcie3v3-supply from pcie2
-   update hub vdd-supply
- - Link to v6: https://lore.kernel.org/linux-riscv/cover.1775214644.git.gaohan@iscas.ac.cn/
+Define the DC power input and the 4v power as fixed regulator supplies.
 
-Han Gao (3):
-  riscv: dts: spacemit: Enable i2c8 adapter for OrangePi RV2
-  riscv: dts: spacemit: Define the P1 PMIC regulators for OrangePi RV2
-  riscv: dts: spacemit: Enable USB3.0/PCIe on OrangePi RV2
+Define the SpacemiT P1 PMIC voltage regulators and their constraints.
 
- .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 218 ++++++++++++++++++
- 1 file changed, 218 insertions(+)
+Co-developed-by: Chukun Pan <amadeus@jmu.edu.cn>
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 131 ++++++++++++++++++
+ 1 file changed, 131 insertions(+)
 
-
-base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
-prerequisite-patch-id: ef6e9c7b5854d0c08066b72f9a7868db8c2140eb
-prerequisite-patch-id: cfe3800f8c791ec4c63e070af9628e88e0fc31b9
-prerequisite-patch-id: b76493e625ae257c8adcd67874178458420e4d47
-prerequisite-patch-id: 88e01dc92c83bd88ddeb78891d3088209fed8d6b
-prerequisite-patch-id: 60336d10ab8322c70596d0f046b6b5c54bb24b54
-prerequisite-patch-id: 68c4d869548687dc115dd91e2ffb8f4c11482d86
-prerequisite-patch-id: fdadcf964c2cb3406160edb579d99a8d5695f8e6
-prerequisite-patch-id: 73b9e745338b0499b849fa4f7f9508987ab39a59
-prerequisite-patch-id: cd26770c2160c3c31a406bd8a6b01ab666180ae0
-prerequisite-patch-id: e5dfddc32cefae195692da8b80e19adf086e4ad7
-prerequisite-patch-id: 7fd53cbe4977598f26148a4bb1cf692bbdb79a09
-prerequisite-patch-id: 96ebac57bb29619b97fe95422206a685825618e9
-prerequisite-patch-id: 00fac16b52f60383db3140e2885f3f7f8d14dd1a
-prerequisite-patch-id: 3b7a60047b922c48e93599f621cb738856f42354
-prerequisite-patch-id: 275c030b963be05dd1041451f539a130ce614277
-prerequisite-patch-id: 93963424b0871e64276af0e0b2199b52e29b4603
-prerequisite-patch-id: 8383188b1c01ed6280629faaa29c37d699ade241
-prerequisite-patch-id: 5f8126b912b924d63d4a1e0c5eb42d212eb0d369
-prerequisite-patch-id: e80af628a2e0b5f2eeb3cb1b5e7133d08bdd2c4e
-prerequisite-patch-id: 0234a6dca15eb91f98a45a46604ce5b4935048a5
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+index 57ec1cc32b03..f7a1dadaa95f 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+@@ -23,6 +23,25 @@ chosen {
+ 		stdout-path = "serial0";
+ 	};
+ 
++	vcc_5v0: regulator-vcc-5v0 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_5v0";
++		regulator-always-on;
++		regulator-boot-on;
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++	};
++
++	vcc4v0: regulator-vcc4v0 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc4v0";
++		regulator-always-on;
++		regulator-boot-on;
++		regulator-min-microvolt = <4000000>;
++		regulator-max-microvolt = <4000000>;
++		vin-supply = <&vcc_5v0>;
++	};
++
+ 	leds {
+ 		compatible = "gpio-leds";
+ 
+@@ -91,6 +110,118 @@ &i2c8 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2c8_cfg>;
+ 	status = "okay";
++
++	pmic@41 {
++		compatible = "spacemit,p1";
++		reg = <0x41>;
++		interrupts = <64>;
++		vin1-supply = <&vcc4v0>;
++		vin2-supply = <&vcc4v0>;
++		vin3-supply = <&vcc4v0>;
++		vin4-supply = <&vcc4v0>;
++		vin5-supply = <&vcc4v0>;
++		vin6-supply = <&vcc4v0>;
++		aldoin-supply = <&vcc4v0>;
++		dldoin1-supply = <&buck5>;
++		dldoin2-supply = <&buck5>;
++
++		regulators {
++			buck1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck2 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck3_1v8: buck3 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck4_3v3: buck4 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck5: buck5 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck6 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			aldo1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-boot-on;
++			};
++
++			aldo2 {
++				/* not connected */
++			};
++
++			aldo3 {
++				/* not connected */
++			};
++
++			aldo4 {
++				/* not connected */
++			};
++
++			dldo1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-boot-on;
++			};
++
++			dldo2 {
++				/* not connected */
++			};
++
++			dldo3 {
++				/* not connected */
++			};
++
++			dldo4 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-always-on;
++			};
++
++			dldo5 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++
++			dldo6 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-always-on;
++			};
++
++			dldo7 {
++				/* not connected */
++			};
++		};
++	};
+ };
+ 
+ &uart0 {
 -- 
 2.47.3
 
