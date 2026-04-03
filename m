@@ -1,22 +1,22 @@
 Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F845314A86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A5B317160
 	for <spacemit@lists.linux.dev>; Fri,  3 Apr 2026 12:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775219858; cv=none; b=LYWeafqKAuQ+fN7uTZJSateM8RN/H6fAtWMQh5LAX/4hoVxxa7DUScMbMh1yF3X89h+RCLOHInVPKwwc8rlHfqyBXlaJ8Ze4f4bG0v3UeDGgwyYteR8tgeF/1keUAyp2Yqwg7Z2f2ee3XeS7FQYn5pXNviE9Z0FOOT9cwunQDcs=
+	t=1775219859; cv=none; b=Erk4gFIKZKTmopG0EDoA9P06sLWNd80sVV6d57k/kn2T+w/92zJD/Hvp4JTwAHe9A6zbv4XtIsnyqHHpeDAHWdch3+moe0jHM4wIDf/kLtAvzXuz4KvVHz09V9cELZmXdDebR3ACkhu5zII6H34nDBOnuiayBBaQAIg4S2wMbKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775219858; c=relaxed/simple;
-	bh=MKrFLZu/k3+Lwop7Y0K/oCC+/Sd9aNsj671ymO3M0dY=;
+	s=arc-20240116; t=1775219859; c=relaxed/simple;
+	bh=wDL/dz99S7jTnL7ATqnBzmMBnYo7ZzHXUUC2zCV4Njk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JT/OaErmLDp3opq89bnQLPqJuWeMOElygSd8LUxJRrLCRnUW6CZn8r7E6VyUJsxsLJteqUkNFUEHBZmQaEVxBwsHQ80HsIXBFhDbLtZbdhoRmxCoeQGJDUjB2t0O0mrzTsaUTT59VG2XxpsZM3QtWfMHR0RMyF4n3NsxQN3JlME=
+	 MIME-Version; b=AhqieP3CsN6GiqP1NB7nTZX+F3DWTKswFEAHGHzQUOyz0RgEPD3JnS1fwTrx5+4R6j0+e7i6i3SFoxBxtpN9f4CXKNoiYFHbIOISSZ+FN1ZvHsDFxVaeJTh1dsBnj45PFInKjWFHEDVPV8hB090GEaQQeQjtZXA8GFS15EC2h+E=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from localhost.localdomain (unknown [223.166.95.230])
-	by APP-01 (Coremail) with SMTP id qwCowACXPWmHtM9pCsgRDA--.1349S3;
-	Fri, 03 Apr 2026 20:37:28 +0800 (CST)
+	by APP-01 (Coremail) with SMTP id qwCowACXPWmHtM9pCsgRDA--.1349S5;
+	Fri, 03 Apr 2026 20:37:29 +0800 (CST)
 From: Han Gao <gaohan@iscas.ac.cn>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -33,9 +33,9 @@ Cc: devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Han Gao <rabenda.cn@gmail.com>,
 	Han Gao <gaohan@iscas.ac.cn>
-Subject: [PATCH v7 1/3] riscv: dts: spacemit: Enable i2c8 adapter for OrangePi RV2
-Date: Fri,  3 Apr 2026 20:37:23 +0800
-Message-ID: <f9988efabcabb8c97490ea61244cd022c2722c79.1775219669.git.gaohan@iscas.ac.cn>
+Subject: [PATCH v7 3/3] riscv: dts: spacemit: Enable USB3.0/PCIe on OrangePi RV2
+Date: Fri,  3 Apr 2026 20:37:25 +0800
+Message-ID: <c5c899d8b0234f42c08e35660a747cd66323d673.1775219669.git.gaohan@iscas.ac.cn>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <cover.1775219669.git.gaohan@iscas.ac.cn>
 References: <cover.1775219669.git.gaohan@iscas.ac.cn>
@@ -46,50 +46,156 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowACXPWmHtM9pCsgRDA--.1349S3
-X-Coremail-Antispam: 1UD129KBjvdXoW7Xry5AF4DWFyxCFyDZFyxZrb_yoW3GrX_CF
-	13Cay09FyUGrWvkFn7Xr1rta1xu3y5KrWSywnaqr1UGa4FgrWfKrWUKFWkJw15WrWjvrW3
-	Jw48tFyxJwnIkjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbkxFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUGwA2048vs2IY02
-	0Ec7CjxVAFwI0_Gr0_Xr1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xv
-	wVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1l84
-	ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1le2I2
-	62IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcV
-	AFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG
-	0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2ka0xkIwI
-	1lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_
-	Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17
-	CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0
-	I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I
-	8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2Kfnx
-	nUUI43ZEXa7VUjrHUDUUUUU==
-X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBg0GDGnPrIkRRQAAsW
+X-CM-TRANSID:qwCowACXPWmHtM9pCsgRDA--.1349S5
+X-Coremail-Antispam: 1UD129KBjvJXoWxXFyDCF45tF45CF4DXw45Awb_yoW5WFy7pF
+	43ursI9as3Ar1fKw43Wa4IgF43Wa1kGFZ3CwnY9r48Jr4jgas09rZayr1rAFn5Jw4kX34a
+	yFyUAFyxGrnFgw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUmY14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JrWl82xGYIkIc2
+	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
+	8EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AI
+	xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
+	vE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xv
+	r2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04
+	v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j
+	6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7
+	AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE
+	2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0x
+	vEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIev
+	Ja73UjIFyTuYvjfUO_MaUUUUU
+X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBwkGDGnPrI4RTwADsd
 
-The adapter is used to access the SpacemiT P1 PMIC present in this board.
+Enable the DWC3 USB 3.0 controller and its associated usbphy2 on the
+OrangePi RV2 board.
 
+The board utilizes a Genesys Logic GL3523 USB3.0 hub.
+
+Define a 3.3v fixed voltage regulator for PCIe and enable PCIe and
+PHY-related Device Tree nodes for the OrangePi RV2.
+
+Co-developed-by: Chukun Pan <amadeus@jmu.edu.cn>
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
 Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
 ---
- arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 81 +++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
 diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-index 7b7331cb3c72..57ec1cc32b03 100644
+index f7a1dadaa95f..3679a6cb110e 100644
 --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
 +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-@@ -87,6 +87,12 @@ &pdma {
- 	status = "okay";
+@@ -23,6 +23,15 @@ chosen {
+ 		stdout-path = "serial0";
+ 	};
+ 
++	pcie_vcc3v3: regulator-pcie-vcc3v3 {
++		compatible = "regulator-fixed";
++		enable-active-high;
++		gpios = <&gpio K1_GPIO(116) GPIO_ACTIVE_HIGH>;
++		regulator-name = "pcie_vcc3v3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
+ 	vcc_5v0: regulator-vcc-5v0 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vcc_5v0";
+@@ -42,6 +51,16 @@ vcc4v0: regulator-vcc4v0 {
+ 		vin-supply = <&vcc_5v0>;
+ 	};
+ 
++	vcc5v0_usb30: regulator-vcc5v0-usb30 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc5v0_usb30";
++		enable-active-high;
++		gpios = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		vin-supply = <&vcc_5v0>;
++	};
++
+ 	leds {
+ 		compatible = "gpio-leds";
+ 
+@@ -54,6 +73,10 @@ led1 {
+ 	};
  };
  
-+&i2c8 {
++&combo_phy {
++	status = "okay";
++};
++
+ &eth0 {
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+@@ -224,8 +247,66 @@ dldo7 {
+ 	};
+ };
+ 
++&pcie1_phy {
 +	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c8_cfg>;
++	pinctrl-0 = <&pcie1_3_cfg>;
++	status = "okay";
++};
++
++&pcie1_port {
++	phys = <&pcie1_phy>;
++	vpcie3v3-supply = <&pcie_vcc3v3>;
++};
++
++&pcie1 {
++	vpcie3v3-supply = <&pcie_vcc3v3>;
++	status = "okay";
++};
++
++&pcie2_phy {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pcie2_4_cfg>;
++	status = "okay";
++};
++
++&pcie2_port {
++	phys = <&pcie2_phy>;
++	vpcie3v3-supply = <&pcie_vcc3v3>;
++};
++
++&pcie2 {
++	vpcie3v3-supply = <&pcie_vcc3v3>;
 +	status = "okay";
 +};
 +
  &uart0 {
  	pinctrl-names = "default";
  	pinctrl-0 = <&uart0_2_cfg>;
+ 	status = "okay";
+ };
++
++&usbphy2 {
++	status = "okay";
++};
++
++&usb_dwc3 {
++	dr_mode = "host";
++	#address-cells = <1>;
++	#size-cells = <0>;
++	vdd-supply = <&vcc5v0_usb30>;
++	status = "okay";
++
++	hub_2_0: hub@1 {
++		compatible = "usb5e3,610";
++		reg = <0x1>;
++		peer-hub = <&hub_3_0>;
++		vdd-supply = <&vcc_5v0>;
++	};
++
++	hub_3_0: hub@2 {
++		compatible = "usb5e3,620";
++		reg = <0x2>;
++		peer-hub = <&hub_2_0>;
++		vdd-supply = <&vcc_5v0>;
++	};
++};
 -- 
 2.47.3
 
