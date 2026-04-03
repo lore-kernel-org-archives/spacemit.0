@@ -1,133 +1,127 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572363246F0
-	for <spacemit@lists.linux.dev>; Fri,  3 Apr 2026 11:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCAF155C82;
+	Fri,  3 Apr 2026 12:32:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775216246; cv=none; b=g8/Vd9q5jLJ75O4nN528eTdl1cNFCwh4p8fNfHcGJY1edBHgROIf2dKtWXKs/WM40JM8eRiRlZTDmQfGCQAow02q9//pe8XVrG0wdoZygaZ4APOCCNvbhT/YqW2vysN8TOZc3whsCT82sSVJDxjjMCybGctDYyK1TbxDUqFr+hA=
+	t=1775219540; cv=none; b=VxLb4lCk4QUph8npb+PjOMBNXQnegLPjAH46Bjsx9njGtmXXucdeoS/l+Jv6uEKPeyyIFP0BhzNfDMlKhOD1WEZEoslUzNfzMCHT9p4sCwuGGw7oSYQdQozt8s6G2CIpo8D/AA+pTXEPLlE38WgTwnX7rCR/CANxkLhf8h7Sacc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775216246; c=relaxed/simple;
-	bh=BLgHUstfAcn8HjPI3+LMBZ08W2YcL4fGUT7KyF/jEKg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e/getTT1U0lPxQl9A0YBTli7r2sYD7an8ij19IjUgrc+WHAaUf7c2XdymVnBf40vTMu4uGT2Se+lj+lWfYwNbitAFVE+rSl21sEapyMDMlQLl/7uyGaYYa15R4eselE4KeyMloyJOq0V/9Lv+gZr9au6ZEIZzOVHJsksDyIQRyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ieOro9GH; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775219540; c=relaxed/simple;
+	bh=KBUjyrpPe2k4XhKFx345kREYiQ7Vjgg1jBFk6gpSAns=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AfKl8RD+hx3P0R2RiV1aZPrQ1s+kI7F37ZmVRbMPvz9Mczm9oEY3OtTXAXJ8Pi6oYY9gmlzGICcRUUPKmIIMXVmgWH1INXL9i3G++7nY6uiya38iZh9KGQPYvE4AMjbw4pyxdRifMa7rnZoAzcFpjdWBiQ5iaX79uBmFVyj0Ke0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hPIUyh5M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ieOro9GH"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-35d8e548a05so1866535a91.1
-        for <spacemit@lists.linux.dev>; Fri, 03 Apr 2026 04:37:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775216245; x=1775821045; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CuMPAUkAJvfBgKNEN+2BubKNuxBNh0SHWbF0CWlzYqI=;
-        b=ieOro9GH/IwbUNttcI2IcyzK8j3MTY17Up4fAczZQueBTAsmqDEmUODXki0DRa3Z6e
-         ijIzQpP/WdjH/j/79L8LTiw5Y7MuJKqf+X3w98wY93TiRYpT8G7XQBYPpMNrHn2H1MM2
-         oV9zyyhYCK0P4JAdb6nk2RAuV+M4DrCfo50BQqkr6OIxJodNlW2fVP4DVAPxlZE7BPM+
-         KIEwofQVrvCZkeNHLHSEAjWBb2uC3AOt+PtiE3uvglt8Td6cDIv8jX9JKYNgcMGZzAoz
-         ltAtsD0Y9zX4ilX5Y7a/f/UKjQerdybm3n1jqI27kEs37ma6meRo2Um9OSm8S3lP+gaM
-         89yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775216245; x=1775821045;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CuMPAUkAJvfBgKNEN+2BubKNuxBNh0SHWbF0CWlzYqI=;
-        b=MgheuMYv+k0nCMYmjvgVXXycit5mipFMnHIaxOLY0d7BcztR33bPJUb/UdNYd1ofod
-         FVIFfYrwkm71/HZUqOCu5/yMjuwG4pwV5oqRoRTxiOsx0HG/biZiIzTHBJZQxJWvy9AM
-         lMa4jP8Zz9uB0sDjZBKQXxLzC7wILWZDCnk9Mi1zBbmejT3285Ufn5zFuyBN1d5DfeEu
-         Ci/75mVn13p5kySA2ygVOqC/zazxW4qTb4Ro+s3BB+sv4AgYoEtX7SxuW6F4+qYwrmj7
-         YFRTY5ahVYTfpv1aVnWNjM1yWEdEMTv0ySz6uh67oqd1Xn0AeK20DLbzOTkxHBjtdWOP
-         0VaA==
-X-Forwarded-Encrypted: i=1; AJvYcCUhk9GwPgx1C8QhOBPNhoJrChli4JQ3dsIxa7NTx8nW70+6Qn1/Fr64vo1eP27CVpxgNJX92+B8Pg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxTP6zTNr3e4F2EJPy87c9NDqAAIxxRTk+8wcR8KkvUBGGwnzLk
-	DXmFszawwNEASI5nB7AZKq+GF/mHtGilq4dvt4ssNzwAMJ3YDmpX7pVc
-X-Gm-Gg: AeBDies7auPg34m4Krl640BRwCNxzltD7t/ktaagtUYXy9aK+D2GEc31evxFG+YEjaF
-	1KDXBKei8trnZfzXIfluqWLwrsoqHznILxKyLrob4SlYiI6XDPRYpiXzfycrGQ451oOmSc2lBy7
-	kTwtoP4mME4lvsLY0bOoUIzeEyZrvPA5nCycdrPzYDezNDZd2parsudoAW9Bc+W3RdGniDnO82L
-	sl9tMj9u9TQJwySKHMyVCYbFlD5gU4O6XPbmWbAA+RLUWjp9ew5Bea/yu6bzPoeSdm1pLrWlVFw
-	mCbgCIlWU3R3c3+c8xmYo+iDXddjxkV5jEFMYXQxn1JqneV+cg7RhDy0ricEu3OPplPR+XlD285
-	V3ZDR5u/pvHbew8mO+sLTxAI4hPru4HpaFkiOfH7TFiwPWtIgO8EYlPX+gX0CpS+dLP0mGvMVSX
-	kBbhbFcGBniwJp9p5EBfM=
-X-Received: by 2002:a17:90b:350e:b0:35b:9682:51e6 with SMTP id 98e67ed59e1d1-35de691ac13mr2549960a91.16.1775216244668;
-        Fri, 03 Apr 2026 04:37:24 -0700 (PDT)
-Received: from archriscv ([45.112.0.200])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35de6860cfbsm957599a91.6.2026.04.03.04.37.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2026 04:37:24 -0700 (PDT)
-From: Anand Moon <linux.amoon@gmail.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>,
-	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
-	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE),
-	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support),
-	linux-kernel@vger.kernel.org (open list)
-Cc: Anand Moon <linux.amoon@gmail.com>,
-	Han Gao <gaohan@iscas.ac.cn>,
-	Ze Huang <huang.ze@linux.dev>,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: [PATCH linux-next v1 3/3] riscv: dts: spacemit: k1-bananapi-f3: Correct USB hub power hierarchy
-Date: Wed, 25 Mar 2026 13:46:10 +0530
-Message-ID: <20260325081700.1502-4-linux.amoon@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hPIUyh5M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5498DC4CEF7;
+	Fri,  3 Apr 2026 12:32:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775219539;
+	bh=KBUjyrpPe2k4XhKFx345kREYiQ7Vjgg1jBFk6gpSAns=;
+	h=From:To:Cc:Subject:Date:From;
+	b=hPIUyh5MLKJzCMUWJkZ1EW0Uo8J1VVlOIxSZpxB3jrEPp8Eo7JYo0WRfg4Uh2VaZB
+	 oMZxBGwOE2dyRnlhW8I3rRnc93/TWbs7Qcg3A1igt7gshVsKd3WkSuKvC2MIqnvyEY
+	 zAhlQP7Jd4aLyCDwTAigM5M9PlnyJT5tRMko5YRaburX6yg8QF4tuxTGD/1mFwvAAK
+	 8uyWGBegVIt6kuG9Peo2J5f4CqkO44utmxlyGukSbKk6n3pyXq+XMi0S5zhYRGkRQj
+	 cwewXHoyz36eRdQL4iTKYkZraTftrnCe5A4crCoEdK87FMV9lnl5jgrbfRNwYW3eZ4
+	 NHWtWszItvOGw==
+From: Yixun Lan <dlan@kernel.org>
+To: soc@kernel.org
+Cc: Yixun Lan <dlan@gentoo.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [GIT PULL] RISC-V SpacemiT Devicetrees for v7.1
+Date: Fri,  3 Apr 2026 12:32:06 +0000
+Message-ID: <20260403123040-KYC0145825@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260325081700.1502-1-linux.amoon@gmail.com>
-References: <20260325081700.1502-1-linux.amoon@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-Link the usb3_hub_5v regulator to the USB controller’s vbus-supply to
-ensure the USB 3.0 stack is properly powered as per the schematics.
-In addition, align the USB hub regulator with the board schematics
-by renaming it to VCC5V0_HUB and marking it as regulator-always-on
-to maintain power stability.
+From: Yixun Lan <dlan@gentoo.org>
 
-Cc: Han Gao <gaohan@iscas.ac.cn>
-Cc: Ze Huang <huang.ze@linux.dev>
-Cc: Chukun Pan <amadeus@jmu.edu.cn>
-Signed-off-by: Anand Moon <linux.amoon@gmail.com>
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Hi Arnd,
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index c35f4763c800..3dbdf53b6d8e 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -83,9 +83,10 @@ reg_5v_vbus: regulator-usb3-vbus-5v {
- 
- 	usb3_hub_5v: regulator-usb3-hub-5v {
- 		compatible = "regulator-fixed";
--		regulator-name = "USB30_HUB";
-+		regulator-name = "VCC5V0_HUB";
- 		regulator-min-microvolt = <5000000>;
- 		regulator-max-microvolt = <5000000>;
-+		regulator-always-on;
- 		vin-supply = <&reg_vcc5v0_sys>;
- 		gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
-@@ -361,6 +362,7 @@ &usb_dwc3 {
- 	dr_mode = "host";
- 	#address-cells = <1>;
- 	#size-cells = <0>;
-+	vbus-supply = <&usb3_hub_5v>;
- 	status = "okay";
- 
- 	hub_2_0: hub@1 {
--- 
-2.53.0
+   Please pull SpacemiT's DeviceTree changes for v7.1
 
+Yixun Lan
+
+The following changes since commit 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f:
+
+  Linux 7.0-rc1 (2026-02-22 13:18:59 -0800)
+
+are available in the Git repository at:
+
+  https://github.com/spacemit-com/linux tags/spacemit-dt-for-7.1-1
+
+for you to fetch changes up to af62a095eb0c3359d477b55ef72d2afd94c83c8f:
+
+  dts: riscv: spacemit: k3: add P1 PMIC regulator tree (2026-03-30 04:42:10 +0000)
+
+----------------------------------------------------------------
+RISC-V SpacemiT DT changes for 7.1
+
+For K3 SoC
+- Add I2C support
+- Add PMIC regulator tree
+- Add ethernet support
+- Add pinctrl/GPIO/Clock
+- Enable full UART support
+
+For K1 SoC
+ On Milk-V Jupiter
+- Enable PCIe/USB on
+- Enable QSPI/SPI NOR
+- Enable EEPROM, LEDs
+ Others
+- Fix PMIC supply properties
+- Fix PCIe missing power regulator
+
+----------------------------------------------------------------
+Aurelien Jarno (7):
+      riscv: dts: spacemit: drop incorrect pinctrl for combo PHY
+      riscv: dts: spacemit: add LEDs for Milk-V Jupiter board
+      riscv: dts: spacemit: add 24c04 eeprom on Milk-V Jupiter
+      riscv: dts: spacemit: add i2c aliases on Milk-V Jupiter
+      riscv: dts: spacemit: enable QSPI and add SPI NOR on Milk-V Jupiter
+      riscv: dts: spacemit: enable USB 3 ports on Milk-V Jupiter
+      riscv: dts: spacemit: enable PCIe ports on Milk-V Jupiter
+
+Chukun Pan (2):
+      riscv: dts: spacemit: Add 'linux,pci-domain' to PCIe nodes for K1
+      riscv: dts: spacemit: reorder phy nodes for K1
+
+Guodong Xu (1):
+      riscv: dts: spacemit: Update PMIC supply properties for BPI-F3 and Jupiter
+
+Inochi Amaoto (1):
+      riscv: dts: spacemit: Add ethernet device for K3
+
+Yixun Lan (9):
+      riscv: dts: spacemit: pcie: fix missing power regulator
+      riscv: dts: spacemit: adapt regulator node name to preferred form
+      dt-bindings: serial: 8250: spacemit: fix clock property for K3 SoC
+      riscv: dts: spacemit: k3: add clock tree
+      riscv: dts: spacemit: k3: add pinctrl support
+      riscv: dts: spacemit: k3: add GPIO support
+      riscv: dts: spacemit: k3: add full resource to UART
+      dts: riscv: spacemit: k3: Add i2c nodes
+      dts: riscv: spacemit: k3: add P1 PMIC regulator tree
+
+ Documentation/devicetree/bindings/serial/8250.yaml |   5 +-
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    |  26 +-
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts  | 204 +++++++++++-
+ arch/riscv/boot/dts/spacemit/k1.dtsi               | 112 ++++---
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts       | 170 ++++++++++
+ arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi       |  69 ++++
+ arch/riscv/boot/dts/spacemit/k3.dtsi               | 369 ++++++++++++++++++++-
+ 7 files changed, 876 insertions(+), 79 deletions(-)
+ create mode 100644 arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
