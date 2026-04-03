@@ -1,125 +1,119 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CB615665C;
-	Fri,  3 Apr 2026 14:16:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015CD3CD8A2
+	for <spacemit@lists.linux.dev>; Fri,  3 Apr 2026 16:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775225802; cv=none; b=jKJu7BMMRKIfCNN5kGN1qPifmOmXsaK5uwT2X7P9Izei7kUSWU1yony05zc7ImwmL0zP19UGiczwG3MfTUPVWgBxba60Wn++VWirX+id9sku9LHIXTAupxmKzAgm2cDaG1AbAGk6owXHuW8b8HN3MnG69tIr6Oi31kYE6wTO6nU=
+	t=1775233714; cv=none; b=Ion28va1YijbiC4hbR1wkrn+Lrk5ANLy+xKJaa0YAMXVYNEnaOQxBCJXQ6+bVWdXyXXDJpCZmZ4qvz7OAvlcCelgiep90OGTavK1ON2XsM50C5BYahd6EGryfUkvrYjKjNzQxjMlFx1LUoZfo9fjVGiQVKAEq8zwleyaBWtR5xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775225802; c=relaxed/simple;
-	bh=esXZWHWyLG1hbgPkvZiDA90BZY2WUDe0Kif7I3Jkhw0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ThChjwd7Bku5PZbPq3gP6XAg4cz0Z3IDE3EX3N8IBm5pgykot5iXIF/gOSMyodkadk149iSe2KZ1ateXJ9jXi/3BxBYdcByAxogz2He3Hv2DE5gNki7Ig07sco760Qfze+rlwS3lRP5YYY+Mj8DN7vhWAWyH9Xxa/z75+DMfzCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IutkozW3; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775233714; c=relaxed/simple;
+	bh=aa2PFgD6i6VfPTSuB5Nzc6oa7i1InOLAX1+UAJ3qULU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=nbrBiNpjDjlX6hbzVvR0tEecZGlIWqDGdmktcV96D/7xZ70V7R8rr8TiS4ip6PSLqpuifVoBKYYutcCGM1SgbB/bPsb0sG8zwQPK5sMPKDyCJDCgfHIrlHBq49o4VgnTpPgGAGpOIMf2imX8bpEe6Km6IIQhN5cTtjsyJYnaE24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jHK21IAA; arc=none smtp.client-ip=209.85.210.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IutkozW3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD0BC4CEF7;
-	Fri,  3 Apr 2026 14:16:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775225801;
-	bh=esXZWHWyLG1hbgPkvZiDA90BZY2WUDe0Kif7I3Jkhw0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IutkozW33xu28g5tZHPr/jssuQ0RSfTxQ+TkgAsanRykcmHI1uhGU9Ro6hc9crnry
-	 bCxi7I46rpkV4SHHfFk3ck4VQVjYbjkQdxGy1FygH9QJAKwwntdbqrKTn3fYkn0Ddo
-	 1moZGShD2P+6+7EdUXxYI6dBXwfDeThAof7PdPa+8tfI1D+yi3Yybn6ejg3oXPnS4C
-	 lviKVQp+nC7h1sN4jD4V4k89vYhz9W2zAQCHE6iYuIZOHn8H4nQ6uYziHLe4qKDbD0
-	 pGl7mjdxlTUtHMdy76HT5O64iGFIIjxIfGTyzRnriysFkZrjiZ7qbzU1RvJ7I3RNK1
-	 Uq0rUYStEqArQ==
-Date: Fri, 3 Apr 2026 22:16:37 +0800
-From: Yixun Lan <dlan@kernel.org>
-To: Chukun Pan <amadeus@jmu.edu.cn>
-Cc: gaohan@iscas.ac.cn, alex@ghiti.fr, aou@eecs.berkeley.edu,
-	conor+dt@kernel.org, devicetree@vger.kernel.org, krzk+dt@kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	palmer@dabbelt.com, pjw@kernel.org, rabenda.cn@gmail.com,
-	robh@kernel.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v5 3/3] riscv: dts: spacemit: Enable USB3.0/PCIe on
- OrangePi RV2
-Message-ID: <20260403141637-GKA1042809@kernel.org>
-References: <cfe646a5549a2b3fc8a4335c3ab4918599615369.1775148159.git.gaohan@iscas.ac.cn>
- <20260403095036.231761-1-amadeus@jmu.edu.cn>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHK21IAA"
+Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-827270d50d4so1873950b3a.3
+        for <spacemit@lists.linux.dev>; Fri, 03 Apr 2026 09:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775233707; x=1775838507; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nJOmOz2L9YVEihHhZLWaE0nc/BZm+kqpkZgh3ChszGk=;
+        b=jHK21IAAxQ6xe6Ni+bqctzhYO8SxizmAcWHX76cNuNtuYK4K7jjVlQ8GKXQR3cWkwY
+         Zm3gYNfWWNjclMUs3cMXNBGR+DuwQMfQNzHZ7Yt4BwjgUEjwtVWlUjhr34TnW8zLxmxs
+         g10XY3Xm5tGy3wVIpVthlj2I6w0AJ1j2hl4oYrJKMDPlay2GHlDfZy58b76rG4L+3HUE
+         IMvF8/6+O1JloZM4YeXKfNpKLEG9IwR8g204h3TcV3QqouAELlVHMX+ZHK/GUWW3bJ6l
+         dc9mJ5WDg+B5P0eIJaASgIFRDLRAe17DxxkVYKFwvVmmcr287xOjCsEPxpGm20wMhD2O
+         QM9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775233707; x=1775838507;
+        h=content-transfer-encoding:in-reply-to:from:references:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nJOmOz2L9YVEihHhZLWaE0nc/BZm+kqpkZgh3ChszGk=;
+        b=W0uQDXVp1Xyw8pd7zgLZdtSdBr3jlvfEChPYUP1sYEgYpIwvX6N36ixYT48G5oP7Ov
+         Vl50e/zcvg35hQ+9cBvan7Pcf/EBDUBr7dR9g5wdzOp6Zat8P93gGEw0jmtJxbTvnjbZ
+         CHUu1wRffbYFHbVFF8ibYt6flaGgGZV8cUTm4ybgsFg+wSGXL/F/KNlCK5JpTvwc39mW
+         AVnLnDJqHRfqM939b4ry/xvt2ohBf9TO1gze6vKl2OlZLK78H9puJuHVBm3OVUbymF+3
+         +kyqPsxWfIAkdK3rTMynz1AH8X1yZEJ+9WyfYSbrNdw6TX0tDg55ewMik5YYqM7vvx7l
+         W/EA==
+X-Forwarded-Encrypted: i=1; AJvYcCUfHxWIcwk6avYjniSEer+5VyADDFd/ht9dLRHWzIE4yrwqIcU5NjGE3bS8RWo+QOyY63VWkd7vRQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxkHokKn2DHoUKrAFSS0FqGZDLj+ZOXzMstriQSePjYhZLOh4n3
+	inxPl7iWW3fxxFb6MU0UPHDPYSvpGwSy3zMATTxCEleiYjrhQVgPLuNF
+X-Gm-Gg: AeBDievYsyFgnomxBjSLuUQaIXE1M25HbFJPurHiNsXxQbS808lR3/KPLUH+1heT8Ha
+	PS7yyxhSTV4yIs6BzNqVFJ/h4GRQ/K0AXKx/73vjimJI5qj/653+XT/QxzUrFrf7yr1tKSDe2BH
+	Zk+w7ELV1FX2pQ/jzFsAhjINlYxLSNyzFg/ZxWYOmeBHBbVDLSU5o23FBbwxmNO1NURmk8zMuUA
+	NhpfBYfN5u83saLYObzn4f02LcSHbnlu3B0CPhPyNrrqQnnTQ507B8/P6AxjCptnbQD3KZ6X5Bl
+	a+2eRdM8+5YhY3xerJt8COfbokEaO/vZ4F++5BdjyEaZjPvYQZ5nMaPt+L4Cn7hXNtsFwVOeYy7
+	ocx1fzOB1KEI51bKM8YieiyYN2YUf8bHBtEzgrpmv5X47xCw+k9sWtP5NfujfiUebPPuFRdkDk3
+	bmok5X3E2WCFO5rdmBPPvHjOiTZch2MIWVRF7mAn8C
+X-Received: by 2002:a05:6a00:3902:b0:824:a01f:6335 with SMTP id d2e1a72fcca58-82d0daa3ce1mr3501828b3a.22.1775233706143;
+        Fri, 03 Apr 2026 09:28:26 -0700 (PDT)
+Received: from [10.116.188.94] ([114.254.1.240])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9c3ce13sm6592724b3a.38.2026.04.03.09.28.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Apr 2026 09:28:25 -0700 (PDT)
+Message-ID: <7792fddc-0218-4889-97c8-42eebadbb343@gmail.com>
+Date: Sat, 4 Apr 2026 00:28:17 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260403095036.231761-1-amadeus@jmu.edu.cn>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/3] thermal: spacemit: Add support for SpacemiT K1 SoC
+ thermal sensor
+To: Vincent Legoll <legoll@online.fr>, alex@ghiti.fr, aou@eecs.berkeley.edu,
+ conor+dt@kernel.org, daniel.lezcano@linaro.org, devicetree@vger.kernel.org,
+ dlan@gentoo.org, krzk+dt@kernel.org, krzysztof.kozlowski@oss.qualcomm.com,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-riscv@lists.infradead.org, lukasz.luba@arm.com,
+ p.zabel@pengutronix.de, palmer@dabbelt.com, pjw@kernel.org,
+ rafael@kernel.org, robh@kernel.org, rui.zhang@intel.com,
+ spacemit@lists.linux.dev
+References: <36cca49c-0cb4-42b9-87ae-702df825a4a4@online.fr>
+From: Gong Shuai <gsh517025@gmail.com>
+In-Reply-To: <36cca49c-0cb4-42b9-87ae-702df825a4a4@online.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Chukun,
+Hi Vincent,
 
-On 17:50 Fri 03 Apr     , Chukun Pan wrote:
-> Hi,
-> 
-> > +	pcie_vcc_3v3: regulator-pcie-vcc3v3 {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "pcie_vcc3v3";
-> > +		regulator-min-microvolt = <3300000>;
-> > +		regulator-max-microvolt = <3300000>;
-> > +		gpio = <&gpio K1_GPIO(116) GPIO_ACTIVE_HIGH>;
-> > +		enable-active-high;
-> > +	};
-> 
-> I would like to maintain the same property order as the
-> regulator below,
-..
-> and add vin-supply:
-> 
-I think Krzysztof will have objection on this, which isn't used by any
-device, so not really useful, see similar comment for "reg_dc_in" here
-https://lore.kernel.org/all/6530526f-59ca-4753-a068-46c62a1a1fed@kernel.org/
+On 4/3/2026 8:57 PM, Vincent Legoll wrote:> Hello,
+ >
+ >
+ > I applied this series on top of:
+ >
+ > - next-20260402
+ >
+ > -
+ > 
+https://patchwork.kernel.org/project/linux-riscv/patch/20260330-orangepi-sd-card-uhs-v5-9-bd853604322d@gmail.com/
+ >
+ > I need the the SD card series to boot from SD card.
+ >
+You're absolutely right! We do need the SD series patches.
 
+I'm actually building the mainline kernel using meta-riscv, and it's 
+default config
+already includes those patches. I completely forgot about that.
 
-> ```
-> 	pcie_vcc3v3: pcie-vcc3v3 {
-please keep "regulator-" prefix, which is
- 	pcie_vcc_3v3: regulator-pcie-vcc3v3 {
+Thanks.
 
-> 		compatible = "regulator-fixed";
-> 		enable-active-high;
-> 		gpios = <&gpio K1_GPIO(116) GPIO_ACTIVE_HIGH>;
-> 		regulator-name = "pcie_vcc3v3";
-> 		regulator-min-microvolt = <3300000>;
-> 		regulator-max-microvolt = <3300000>;
-> 		vin-supply = <&vcc_5v0>;
-I'm not sure if there is any enforced rules on this? I can understand you
-are trying to sort them in alphabet order.. but I would personally
-prefer old way - in slightly logical order.. but I do have no strong
-preference..
-
-> 	};
-> ```
-> 
-> > +&pcie1 {
-> > +	vpcie3v3-supply = <&pcie_vcc_3v3>;
-> 
-> > +&pcie2 {
-> > +	vpcie3v3-supply = <&pcie_vcc_3v3>;
-> 
-> I think vpcie3v3-supply is not needed here. [1]
-You right, can you send a patch to fix the same issue in tree?
-I was trying to fix vpcie3v3 warning, but realized not fixed all..
-
-> 
-> > +	hub_2_0: hub@1 {
-> > +		compatible = "usb5e3,610";
-> > +		reg = <0x1>;
-> > +		peer-hub = <&hub_3_0>;
-> > +		vdd-supply = <&vcc5v0_usb30>;
-> 
-> vdd-supply = <&vcc_5v0>;
-right, I agree
-> 
-> Please refer to the schematic. [2]
-> 
-> [1] https://lore.kernel.org/linux-pci/u53qfrubgrcamiz35ox6lcdpp5bbzfwcsic466z5r6yyx6xz3n@c64nw2pegtfe/
-> [2] https://drive.google.com/drive/folders/1pcI_U0C3VJKTCg8A1zj08CwNbohnONSR
-> 
-> Thanks,
-> Chukun
-
--- 
-Yixun Lan (dlan)
+ >
+ > I'm also seeing the same "it works" state as Gong Shuai.
+ >
+ > So you can add another:
+ >
+ > Tested-by: Vincent Legoll <legoll@online.fr> # OrangePi-RV2
+ >
+ > Regards
+ >
+ > Thanks
+ >
