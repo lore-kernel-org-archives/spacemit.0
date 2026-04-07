@@ -1,93 +1,98 @@
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from va-2-40.ptr.blmpb.com (va-2-40.ptr.blmpb.com [209.127.231.40])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5304C39D6D2
-	for <spacemit@lists.linux.dev>; Mon,  6 Apr 2026 21:55:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017EA372B5A
+	for <spacemit@lists.linux.dev>; Tue,  7 Apr 2026 05:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775512541; cv=none; b=tueSgEYNvQcl1h/I/qcGWfSbcsRMTZPw2Sa4PbAOSDoii6lh1cgRZorcc8dY1Gu9AXC5ZefIq0cBfFansraQer2uq3OSdjzFZFqemCGwK/xQddoJDEGNiOyA9QD3M9hJpud6Ggmjkmd5RwaKB48Kv3h9wrAczMyWeos/vt2yzpA=
+	t=1775541396; cv=none; b=aApvVpYyNC0hiWg0Oryt4tIF5KEGC8X/ElIEIriDgO7pe9J0JoENJvKyF9Ky0J7yopbAbvYI8rE7+rmI66C6DCOH/TEfFGHCzUbNKjItzR4klITaXcTOXIzfZ1fzT9nLwLJsL3x+WYe5DMrt7/cnp6Qo05aD3gyJGC1Bo1zHPZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775512541; c=relaxed/simple;
-	bh=DQ3TVMXfka0v3/HQEjsDoWEkg45LWDYRwo8w4T6N8IA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=i982jG8MPhoJTOGfZRxbHMH+iWUjsMig0XqC00Q17VoZvGDnC1/b+WamPOjm+jB/q4NfsA33jsDrWoOhWw12XvbBipLDrBZ6sRDEnOprVPguBWY7eIkxU3xOGKfYzfOmvlen1c8ZyqMPXi8YElQ42BdKUUVfTaq91c8gVMcTWfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr; spf=pass smtp.mailfrom=online.fr; arc=none smtp.client-ip=212.27.42.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=online.fr
-Received: from [10.0.0.2] (unknown [82.65.243.93])
-	(Authenticated sender: legoll@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id D19895FFA3;
-	Mon,  6 Apr 2026 23:55:25 +0200 (CEST)
-Message-ID: <bbd2e57f-3107-46cc-a8a7-ee717e577d6e@online.fr>
-Date: Mon, 6 Apr 2026 23:55:25 +0200
+	s=arc-20240116; t=1775541396; c=relaxed/simple;
+	bh=ObVhZQPJwXVDAWpzr2YjOKd7mcMvQEv/KKSlUZjSqWM=;
+	h=Date:Mime-Version:Content-Type:To:Cc:From:Subject:Message-Id; b=UJj6nX5nnKsdSOlEtL06VCDBGH2wQP1KEzHNSXkrrGGafDxljcCoTInKjUo90F7+j/GO66gQmLXtBiFKQ4rYAnDsBeW5Ln+k+o1crGX78vD1F+si91xNS43dwbYnfsCUnXcLsbuoGCE+49JkLlaargnWOEv8YHgnjC7JfToMMPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io; spf=pass smtp.mailfrom=deepcomputing.io; dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b=rufrBMjI; arc=none smtp.client-ip=209.127.231.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b="rufrBMjI"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1775541382;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=hRilJHTgzt+xM5u5r+LCoIm/YrLkOdRsPbaxFkfbYqA=;
+ b=rufrBMjIIFhtbiYPlkGSQLjS1Qy1oks8Y2g4K57Rm2neyxMxCzK6uRJbeggFAHYcuzIxev
+ gOzYthkxf4pm12EjaffgzQnmIgeSDUVtxwvpGstG+/w8NR+Xdt9k8Y6rcH6ykf2l95YqTr
+ Xr/6cZgcjTciTM3bJkqhGQvakANNbglhtWGOgvvhO7y7Xzz7tX96cuzlrH/l7+I+nAq+Tx
+ JBiFE93Zb07CzTT8plexWiDb/N01plL/qvD0JRIdgxRllgeXLEYGMuaWs4Oh6Dqm2t8dcp
+ 8duXFlup5aqPAdPpeDoyaZkwLjj2NxSxcK+uSS8V0A3pxHxtc2Ps1WMxnAJzPw==
+Date: Tue,  7 Apr 2026 13:55:57 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND][PATCH v5] mfd: simple-mfd-i2c: add a reboot cell for the
- SpacemiT P1 chip
-To: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>,
- Yixun Lan <dlan@kernel.org>, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev
-References: <20260401165437.1048786-3-aurelien@aurel32.net>
- <b7e182f9-8bd8-40e6-acaa-dc6e556f2a53@online.fr>
- <adPUTRAlzGBs2wQG@aurel32.net>
-Content-Language: en-US
-From: Vincent Legoll <legoll@online.fr>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@gentoo.org>,
- linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Aurelien Jarno <aurelien@aurel32.net>
-In-Reply-To: <adPUTRAlzGBs2wQG@aurel32.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Received: from roma-Laptop-12th-Gen-Intel-Core.. ([218.17.141.187]) by smtp.feishu.cn with ESMTPS; Tue, 07 Apr 2026 13:56:19 +0800
+X-Lms-Return-Path: <lba+269d49c84+42f1f5+lists.linux.dev+sandie.cao@deepcomputing.io>
+X-Mailer: git-send-email 2.43.0
+Content-Type: text/plain; charset=UTF-8
+To: "Yixun Lan" <dlan@kernel.org>, 
+	"Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+Cc: "Conor Dooley" <conor+dt@kernel.org>, 
+	"Emil Renner Berthing" <kernel@esmil.dk>, 
+	"Rob Herring" <robh@kernel.org>, 
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
+	"Paul Walmsley" <paul.walmsley@sifive.com>, 
+	"Palmer Dabbelt" <palmer@dabbelt.com>, 
+	"Albert Ou" <aou@eecs.berkeley.edu>, 
+	"Heinrich Schuchardt" <heinrich.schuchardt@canonical.com>, 
+	"Michael Opdenacker" <michael.opdenacker@rootcommit.com>, 
+	"Guodong Xu" <guodong@riscstar.com>, 
+	"Hendrik Hamerlinck" <hendrik.hamerlinck@hammernet.be>, 
+	"Yangyu Chen" <cyy@cyyself.name>, <spacemit@lists.linux.dev>, 
+	<linux-riscv@lists.infradead.org>, <devicetree@vger.kernel.org>, 
+	<linux-kernel@vger.kernel.org>, 
+	"Sandie Cao" <sandie.cao@deepcomputing.io>
+From: "Sandie Cao" <sandie.cao@deepcomputing.io>
+Subject: [PATCH v3 0/2] Add DeepComputing FML13V05 board dts
+Message-Id: <20260407055557.1202713-1-sandie.cao@deepcomputing.io>
+Content-Transfer-Encoding: 7bit
+X-Original-From: Sandie Cao <sandie.cao@deepcomputing.io>
 
-Hi Aurelien,
+This series updates Device Tree related files to introduce the
+FML13V05 board from DeepComputing, which incorporates a Spacemit
+K3 SoC.  This board is designed for use on the Framework Laptop 13
+Chassis, which has (Framework) SKU FRANHQ0001.
 
-On 4/6/26 17:42, Aurelien Jarno wrote:
-> On 2026-04-06 11:46, Vincent Legoll wrote:
->> Tell me if there's a new iteration to test, and/or if you want me testing it
->> in a different way.
-> Yes, as written in the original mail, this patchset depends on PIO
-> support in the spacemit I2C driver:
-> https://lore.kernel.org/lkml/20260207-b4-k3-i2c-pio-v7-2-626942d94d91@linux.spacemit.com/
->
-> Without it, you might get this warning message and reboot is not 100%
-> reliable. I still believe it's better than no reboot support at all.
+The series is rebased on k1/dt-for-next.
 
+v3:
+rebased on k1/dt-for-next.
+- Patch 1:
+   Use formal format user name.
+   Remove Reviewed-by Heinrich Schuchardt from internal sysstem.
+- Patch 2:
+   Use formal format user name.
+   Remove Reviewed-by Heinrich Schuchardt from internal sysstem.
+   Add uart0 pinctrl.
 
-OK, I tested a new stack: next-20260406, PIO patchset, reset patchset & 
-USB patchset:
+v2 (deprecated):
+Link to v2: https://lore.kernel.org/all/20260331071110.68321-1-sandie.cao@deepcomputing.io/
 
+v1:
+Link to v1: https://lore.kernel.org/all/20260331034423.67142-1-sandie.cao@deepcomputing.io/
 
-$ git log --oneline
-5030369b32c4 (HEAD -> opirv2-pio-reset-usb) riscv: dts: spacemit: Enable 
-USB3.0/PCIe on OrangePi RV2
-73274ce37441 riscv: dts: spacemit: Define the P1 PMIC regulators for 
-OrangePi RV2
-cda12b8bdbfe riscv: dts: spacemit: Enable i2c8 adapter for OrangePi RV2
-68ce409351c6 (opirv2-pio-reset) mfd: simple-mfd-i2c: add a reboot cell 
-for the SpacemiT P1 chip
-245e0b8e8a91 i2c: spacemit: introduce pio for k1
-a588d756621d i2c: spacemit: move i2c_xfer_msg()
-816f193dd0d9 (tag: next-20260406, next/master, next/HEAD) Add linux-next 
-specific files for 20260406
+Sandie Cao (2):
+  dt-bindings: riscv: spacemit: add deepcomputing,fml13v05
+  riscv: dts: spacemit: add DeepComputing FML13V05 board device tree
 
-This boots and reset properly without the previous WARN.
-
-So if any of those those series need added T-Bs, then here's mine:
-
-Tested-by: Vincent Legoll<legoll@online.fr> # OrangePi-RV2
-
-I also believe this is better than nothing: reboot + (harmless) WARN instead of hang.
-
-PS: I added recipients for the PIO patchset as CC here, for the T-B, hope this is not bothering.
-
-Thanks
+ .../devicetree/bindings/riscv/spacemit.yaml   |  1 +
+ arch/riscv/boot/dts/spacemit/Makefile         |  1 +
+ .../spacemit/k3-deepcomputing-fml13v05.dts    | 31 +++++++++++++++++++
+ 3 files changed, 33 insertions(+)
+ create mode 100644 arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts
 
 
+base-commit: af62a095eb0c3359d477b55ef72d2afd94c83c8f
+-- 
+2.43.0
