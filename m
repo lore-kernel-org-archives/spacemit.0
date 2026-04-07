@@ -1,195 +1,104 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B4C3A7F58
-	for <spacemit@lists.linux.dev>; Tue,  7 Apr 2026 08:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32992393DEB
+	for <spacemit@lists.linux.dev>; Tue,  7 Apr 2026 15:28:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775550379; cv=none; b=CrKbcBYnQE1jcVTiWkf4p9I9/QdTvPq7XoIkW0SfjRdLVWv8h2jXGRll1aPH/SHhmDVFuqXCMQuvt2MuSDMY73+67xHrzF/MpE6GRk93kNLXZ57cteoIN9KANCElpfasFr7CvqxcJH1YgbhAgzrAoyWBMnMjxfKBPtMK8TB6CpM=
+	t=1775575734; cv=none; b=Qsb3EfsvAxC7MflAyplDkrBSM6r+OGdncsWCqRft+RjNRgeZBlMy2usXxijlWCnJZhWMVo8nUyiKN/sy6yqBqqcDoValtGtTV3OyxydHaVHgBA89+9xgeiL3Y7C4M6g/MJU6Z8y3Zm8gROmYmjprTwL2/Btu12LHVYYUuV8cQlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775550379; c=relaxed/simple;
-	bh=yFIoW1VgE9eos0drC7//IWDtDDzHIJ65CgsEt+Mqivs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=niPwJfJr+CODU0IqD7K/clrJAHSY32o9mw/6oJJ7vodPKJJAEvkACMoODHPf9+nAVxhK6zWh635Uo/ZrzLmDAEXhPjJwq462coVt3F04pa0gy+A8iuG8IFEd1tk+ZeAD47QmMfrCkuAsR4mzIIDNSTKKB5WJi+9JmC2Ivi4/JhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f8YkwD3M; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f8YkwD3M"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-43cf3ee0fc1so3833067f8f.1
-        for <spacemit@lists.linux.dev>; Tue, 07 Apr 2026 01:26:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775550376; x=1776155176; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kN3bcWaJsQHhIwZ8SKksLHpWgkJwI9t6gAAiBuFLbmI=;
-        b=f8YkwD3M+pzFAJkuZDJTnyr1Ff9Szf7QTOFEYSucRDPLzvKaJA5/S/9QH9kVbwMDcE
-         GGLmJxkHfVeayhVmCK1H/7WQj/R3uoVw6loEmEtIjxEH8JY401Xf0y9vIED5pF/sGyAx
-         lnUcCIPtgrkhzGiDzxCFgwM8Ku0UbO4Iz881npWp4BdNX/obmJVUvd7pfO55EBcRdYUe
-         JzQOqWTwsfvtR2roaAOW0UWip6XUfBFMLiiu4WPc/J3SHfENjWGQlU1Q3QuLInBwSDPW
-         AIFOW7VV6cfNAdB649FsOcFxr/0cjsG39XWJ9HuJTIAtS296XLUsIThjJcgW6h5wHFj9
-         9EpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775550376; x=1776155176;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=kN3bcWaJsQHhIwZ8SKksLHpWgkJwI9t6gAAiBuFLbmI=;
-        b=BQ8WQzoSv/QJffz8KbchGDhMjgZ+Ny9lbe43KPVQCXH7og9E/NYvyK/WpnM30TRJ0U
-         Ij3iDuxs4jXjfredw8Vgcf7I27bnE/qVKTADazi5aAmlaUrKR0IAc3NNRyuFqdX24Q4Q
-         WyhkhAiYJuPT8sL8z6e9B0gVGizr0JFQPrqk+UaNM8hFDHt2dB+eaPKMlW0WX+MSUdQZ
-         WD1YsFpFgHLgKSWUtC2PaJSBYmTzy+xhSKL2wBaAwylbOT7omPDQOwpGZ4OxYgd0Xl9J
-         vnb+J0lLmETL6FWrCO7MQJE1Ooar9Yja/SDbdxlzBn5ZAEfvJWLZb8aJpycO9KJgW7Mt
-         IymA==
-X-Forwarded-Encrypted: i=1; AJvYcCVtEIuow+/XITrH+JgkgcYZPIXA2zcK5i/qLCDg3GKihs4SWYiL+GenISa0rrxPwVEjZ3bg0d85ng==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyrE48wnCE0BYKDbZCmlTulmdf9c6/R7qIsua8ifJ4KvuiT9GK3
-	Ruvs3RYGmYop9eiPF9zBSZOTOw1Dfb39Cr5d4fJVuDnpNUJRjE0hoEnM
-X-Gm-Gg: AeBDiespzpJ1Zj33OSOpZTM1XrZw2AeqOpKeq9hjNqmtqhjOMNFYcG9ksgjX5EH5N6J
-	uIqIKNj1OxeFma/UWrPHPQ1hO1UyXEwcbqyH8vhWIjKxtlovE9e2cA0qkZWxOFb3B9iwLpJmMc4
-	kQ/e3B3myC7zEKUA0mgLZFKmpriWqelVRhG8j2xi5SQFoDUULxzYAA/e6it79JQVP9+N6hDyvKH
-	/8lGJN5HbZWtCHdlHvWXnP8M6oVOBNhJ2e9NLopgDLw9pjW1Cp/tnBeqhfxwoP9NMCWDezqnPhz
-	8sIxTZFf+QKzPjwRbKRXCOgowSw4bQPfIP0zE5S9ZghpwuEsNtTlMQ6U1mIoAGeVJM6VtWmkqzq
-	YvcPQyH3YKPKBYuo6k3iUeJ4mbXRQKx+9Pc6Kp+ULEKJnjjFMsuidpiHvfYDlkbgdqtTf07bNdx
-	TIA6ZLO8cFXLbgObHuGtjBGYi/ZUebZblGBlIk2YT3OvryPqKfxQ47xbHrkZ31EQUv
-X-Received: by 2002:a05:6000:2908:b0:43b:9d69:43a with SMTP id ffacd0b85a97d-43d21171c88mr28578084f8f.8.1775550376299;
-        Tue, 07 Apr 2026 01:26:16 -0700 (PDT)
-Received: from ipedrosa-thinkpadx1carbongen12.rmtes.csb ([67.218.239.37])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d1e4d29bbsm48669958f8f.21.2026.04.07.01.26.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 01:26:15 -0700 (PDT)
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Tue, 07 Apr 2026 10:25:29 +0200
-Subject: [PATCH v6 9/9] riscv: dts: spacemit: k1-musepi-pro: add SD card
- support with UHS modes
+	s=arc-20240116; t=1775575734; c=relaxed/simple;
+	bh=SNiQltIrN90HlK6s2eEERqwSsfzvbAvIfMh58w6VNfY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=J06yaQ4eCGwFz3xEBbmJRy1UJ6/p0QwRRymL1XbGwgHiiZbZyGiJGPSXDKlarSY0KHZiQD5B4EqpeNTK3+o7E18bZWlfrsnOQgtY8DecuSzoCPRODW8DQiMgF6CSslIZ93KiFEX73/QulMApixqUcDKFP1G1x1kMRn6GFguKdYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from localhost.localdomain (unknown [223.166.95.230])
+	by APP-05 (Coremail) with SMTP id zQCowAB3zhGSItVpaxDVDA--.63755S2;
+	Tue, 07 Apr 2026 23:28:19 +0800 (CST)
+From: Han Gao <gaohan@iscas.ac.cn>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Cc: devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Han Gao <rabenda.cn@gmail.com>,
+	Han Gao <gaohan@iscas.ac.cn>
+Subject: [PATCH v10 0/3] riscv: dts: spacemit: Add PMIC regulators usb pcie
+Date: Tue,  7 Apr 2026 23:28:13 +0800
+Message-ID: <cover.1775575436.git.gaohan@iscas.ac.cn>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260407-orangepi-sd-card-uhs-v6-9-b5b8a1b2bfc8@gmail.com>
-References: <20260407-orangepi-sd-card-uhs-v6-0-b5b8a1b2bfc8@gmail.com>
-In-Reply-To: <20260407-orangepi-sd-card-uhs-v6-0-b5b8a1b2bfc8@gmail.com>
-To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
- Yixun Lan <dlan@kernel.org>, Yixun Lan <dlan@kernel.org>
-Cc: Troy Mitchell <troy.mitchell@linux.dev>, 
- Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
- Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Iker Pedrosa <ikerpedrosam@gmail.com>, 
- Trevor Gamblin <tgamblin@baylibre.com>
-X-Mailer: b4 0.14.2
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:zQCowAB3zhGSItVpaxDVDA--.63755S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7ZFyxtw1fWF4xWrW7uFyUKFg_yoW8uF1UpF
+	y2vr43Zw45Xw42y39xu39xJr1Y9F1rAr9xWr1UKw18ArnFgay7Za1xtr47ZF9xur45tFnr
+	trs7Ar4xuw4xZF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9j14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
+	n2IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4
+	AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE
+	17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMI
+	IF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4l
+	IxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvf
+	C2KfnxnUUI43ZEXa7VUbGQ6JUUUUU==
+X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBgwKDGnVHKkVxgAAsW
 
-From: Trevor Gamblin <tgamblin@baylibre.com>
+Changes in v10:
+ - patch 3:
+   add vin-supply in pcie_vcc3v3
+   reorder vcc5v0_usb30
+   remove vpcie3v3-supply form pcie1
+ - Link to v9: https://lore.kernel.org/linux-riscv/cover.1775417019.git.gaohan@iscas.ac.cn
 
-Update the Muse Pi Pro devicetree with SD card support to match what
-was done for the OrangePi RV2 in [1]. More precisely:
+Han Gao (3):
+  riscv: dts: spacemit: Enable i2c8 adapter for OrangePi RV2
+  riscv: dts: spacemit: Define the P1 PMIC regulators for OrangePi RV2
+  riscv: dts: spacemit: Enable USB3.0/PCIe on OrangePi RV2
 
-- Enable sdhci0 controller with 4-bit bus width
-- Configure card detect GPIO with inversion
-- Connect vmmc-supply to buck4 for 3.3V card power
-- Connect vqmmc-supply to aldo1 for 1.8V/3.3V I/O switching
-- Add dual pinctrl states for voltage-dependent pin configuration
-- Support UHS-I SDR25, SDR50, and SDR104 modes
+ .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 217 ++++++++++++++++++
+ 1 file changed, 217 insertions(+)
 
-[1] https://lore.kernel.org/linux-riscv/20260316-orangepi-sd-card-uhs-v3-0-aefd3b7832df@gmail.com/T/#
 
-Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
-Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
----
- arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts | 66 ++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
-
-diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-index 29e333b670cf0a5c4ed852668460db475b9c44cb..774a4640f06562b5632c510e8961e3d8f60a3b81 100644
---- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-@@ -18,6 +18,24 @@ aliases {
- 		ethernet0 = &eth0;
- 		serial0 = &uart0;
- 	};
-+	reg_dc_in: dc-in-5v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "dc_in_5v";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		regulator-boot-on;
-+		regulator-always-on;
-+	};
-+
-+	reg_vcc_4v: vcc-4v {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc_4v";
-+		regulator-min-microvolt = <4000000>;
-+		regulator-max-microvolt = <4000000>;
-+		regulator-boot-on;
-+		regulator-always-on;
-+	};
-+
- 
- 	chosen {
- 		stdout-path = "serial0";
-@@ -77,3 +95,51 @@ &uart0 {
- 	pinctrl-names = "default";
- 	status = "okay";
- };
-+
-+&i2c8 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c8_cfg>;
-+	status = "okay";
-+
-+	pmic@41 {
-+		compatible = "spacemit,p1";
-+		reg = <0x41>;
-+		interrupts = <64>;
-+		vin-supply = <&reg_vcc_4v>;
-+
-+		regulators {
-+			buck4: buck4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3300000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			aldo1: aldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+				regulator-always-on;
-+			};
-+		};
-+	};
-+};
-+
-+&sdhci0 {
-+	pinctrl-names = "default", "uhs";
-+	pinctrl-0 = <&mmc1_cfg>;
-+	pinctrl-1 = <&mmc1_uhs_cfg>;
-+	bus-width = <4>;
-+	cd-gpios = <&gpio K1_GPIO(80) GPIO_ACTIVE_HIGH>;
-+	cd-inverted;
-+	no-mmc;
-+	no-sdio;
-+	disable-wp;
-+	cap-sd-highspeed;
-+	vmmc-supply = <&buck4>;
-+	vqmmc-supply = <&aldo1>;
-+	sd-uhs-sdr25;
-+	sd-uhs-sdr50;
-+	sd-uhs-sdr104;
-+	status = "okay";
-+};
-
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+prerequisite-patch-id: ef6e9c7b5854d0c08066b72f9a7868db8c2140eb
+prerequisite-patch-id: cfe3800f8c791ec4c63e070af9628e88e0fc31b9
+prerequisite-patch-id: b76493e625ae257c8adcd67874178458420e4d47
+prerequisite-patch-id: 88e01dc92c83bd88ddeb78891d3088209fed8d6b
+prerequisite-patch-id: 60336d10ab8322c70596d0f046b6b5c54bb24b54
+prerequisite-patch-id: 68c4d869548687dc115dd91e2ffb8f4c11482d86
+prerequisite-patch-id: fdadcf964c2cb3406160edb579d99a8d5695f8e6
+prerequisite-patch-id: 73b9e745338b0499b849fa4f7f9508987ab39a59
+prerequisite-patch-id: cd26770c2160c3c31a406bd8a6b01ab666180ae0
+prerequisite-patch-id: e5dfddc32cefae195692da8b80e19adf086e4ad7
+prerequisite-patch-id: 7fd53cbe4977598f26148a4bb1cf692bbdb79a09
+prerequisite-patch-id: 96ebac57bb29619b97fe95422206a685825618e9
+prerequisite-patch-id: 00fac16b52f60383db3140e2885f3f7f8d14dd1a
+prerequisite-patch-id: 3b7a60047b922c48e93599f621cb738856f42354
+prerequisite-patch-id: 275c030b963be05dd1041451f539a130ce614277
+prerequisite-patch-id: 93963424b0871e64276af0e0b2199b52e29b4603
+prerequisite-patch-id: 8383188b1c01ed6280629faaa29c37d699ade241
+prerequisite-patch-id: 5f8126b912b924d63d4a1e0c5eb42d212eb0d369
+prerequisite-patch-id: e80af628a2e0b5f2eeb3cb1b5e7133d08bdd2c4e
+prerequisite-patch-id: 0234a6dca15eb91f98a45a46604ce5b4935048a5
 -- 
-2.53.0
+2.47.3
 
