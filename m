@@ -1,83 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BED43B27D2;
-	Tue,  7 Apr 2026 16:24:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8916175A94
+	for <spacemit@lists.linux.dev>; Wed,  8 Apr 2026 02:49:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775579044; cv=none; b=GM2NTPTRJqRy6v/apPpd5bmsYWDXhZcothfm0lXskzOxuE6LELM/IWowcpG/yGl4fyFnzt1UiKWiS633Le6ZgmJMS9g5lkYMBIs2fNz1NBhOaQrzw2YTLD2i9Hllyv00OyVee/Lqs4GO4PoaIz1sf73iaj+/pgZzf95/TO/v2NU=
+	t=1775616579; cv=none; b=U0zcNHhEm6kc1vQ21lcsoRQSTLcaQ+dQVWthSNltplqa++7imUbURLMRG7BZqiofaoEBxeds7K73i1f36Zoir0xa35R5FPRDL5HWFuiaL5bBvZKB/vw+vzwbJQhUFTJ8nl/ZE6lIcFa+wRayvRIehviJv1DxcN5G8KmD/bVkIqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775579044; c=relaxed/simple;
-	bh=3FooutZHnN5nxUVqQr8hpPgl/W3i5T61GrZ8VKy5aQ4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e0UYnJDvMBekp5zSp70IcX6A/eAOvmhnTrgvfDwXXKlXj2JCkEhHXNwGHBAiB8NGbVu24R1ZSuuMXpCOO1/pCgskmEs7F4fJbOQtJcsJe5IpRXqv0IsPolHf0rSSxB1/IxzMY2sUnsNlkSevdMM8nZfIp10ynKKIOHr0pRcz6e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jZTI9GWl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775616579; c=relaxed/simple;
+	bh=+UuM4q1vgiatpeERAXklQJO9UrZQ54OE+RX5pK9GpGw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=jvC2BJ2Q1ppSapm4+T9c4dM7m1NKYfMHWUjHFByCN9/nqAYGC90ABa5G9+2E2fV7bSrEBfve1mt61zgjIVzVzKSBzVoy3xXDgp3Lo3ZvANZ0GdMS2fkEQvGaeKLKSAFUhKoskqdosNKBAn8gSI9sIVFwqX4ggyZ71mfTuIEYiCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=atl3iZzk; arc=none smtp.client-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jZTI9GWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48ECAC116C6;
-	Tue,  7 Apr 2026 16:24:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775579043;
-	bh=3FooutZHnN5nxUVqQr8hpPgl/W3i5T61GrZ8VKy5aQ4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jZTI9GWldshgdI8QkQvKAxRlMjHNEPzrlwvkpnnvvACiO20Iz9jSLKY6tS+ajKWV8
-	 KjqMjzJOtV7W1VEOqIYS7qpOmKQoZuctvxOnNixmg0PcCwcK0hDhCR7SQzMMn46g5l
-	 mv7uZRCnADCP5icOnDxvJ4SxEPLCfASGWoSB/MgUfrffDSHAdp9MdIXYGCfdbtg1Q4
-	 gR6Ag2dWOvyB7j64m1KzG5e3KmfStMN5s2/nORbSYnW8Tkkve7cM3Y2DasBsroYN/w
-	 lSE0MECiYwv7YbW1l1dwvX29/3CYYgNGFObsQpuXNemJqTS0cdb95trWfYLafqzHH+
-	 NnavoWBgBF3zg==
-Date: Tue, 7 Apr 2026 17:23:58 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Sandie Cao <sandie.cao@deepcomputing.io>
-Cc: Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Guodong Xu <guodong@riscstar.com>,
-	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
-	Yangyu Chen <cyy@cyyself.name>, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: riscv: spacemit: add
- deepcomputing,fml13v05
-Message-ID: <20260407-quickness-ambition-a46682716b22@spud>
-References: <20260407055557.1202713-1-sandie.cao@deepcomputing.io>
- <20260407055707.1202730-1-sandie.cao@deepcomputing.io>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="atl3iZzk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1775616502;
+	bh=yidXhTBb2zJgYkyCk0CYWabO2JRCWHqEgQlmxubluYo=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=atl3iZzki/j71RL0gSmeLB+ZGLs6QOJDHAzrbfmcNL5awRN+UokYdbdjqL+PBttms
+	 EeHqSySVR+D+7rannCfXEUEUfU1t3WOvuZiR3dyDLxl0YLIKhAblIt7gvFVkOT6vAy
+	 KI8u84YCQbYDVGFhBkxDtwle+hKirFTOvWV0Skcw=
+X-QQ-mid: zesmtpsz4t1775616493t5df3e19c
+X-QQ-Originating-IP: UWGoQnXfI+aa6PWQBmbxd+UL7yVcZdzn5VqUhKeqiMo=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 08 Apr 2026 10:48:11 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 8140302945074531097
+EX-QQ-RecipientCnt: 11
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TugsYhRd/uE/+Zd+"
-Content-Disposition: inline
-In-Reply-To: <20260407055707.1202730-1-sandie.cao@deepcomputing.io>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 08 Apr 2026 10:48:11 +0800
+Message-Id: <DHNFIJBTZQI8.C1RI1XWDRL3Q@linux.spacemit.com>
+Subject: Re: [RESEND][PATCH v5] mfd: simple-mfd-i2c: add a reboot cell for
+ the SpacemiT P1 chip
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Vincent Legoll" <legoll@online.fr>, <linux-kernel@vger.kernel.org>,
+ "Lee Jones" <lee@kernel.org>, "Yixun Lan" <dlan@kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>
+Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Andi Shyti"
+ <andi.shyti@kernel.org>, "Yixun Lan" <dlan@gentoo.org>,
+ <linux-i2c@vger.kernel.org>, "Aurelien Jarno" <aurelien@aurel32.net>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260401165437.1048786-3-aurelien@aurel32.net>
+ <b7e182f9-8bd8-40e6-acaa-dc6e556f2a53@online.fr>
+ <adPUTRAlzGBs2wQG@aurel32.net>
+ <bbd2e57f-3107-46cc-a8a7-ee717e577d6e@online.fr>
+In-Reply-To: <bbd2e57f-3107-46cc-a8a7-ee717e577d6e@online.fr>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MXdazUCb/CBOkLJDmIC8M8bgAvWpoDUUVwSBSDgEz8pGQhMdR25Q2gZN
+	X492gJrHD4HOyPINe/n+qPincr25l65Z/vtZbQ/XQA/1Jeb7mIE+Rm51JYJ7K2co9IOqI3S
+	lSMmIpJh4WWRrmv7AN1fkZ9IfItmVccXaAXDPgHVsJeNqn2G1QM11JbicweYhPhWHNUX5NP
+	AhwI1o8yuxBgKEmc+ZlhjGBAXyXLOC+QWbeqp5cMIfKjwDWSAR+SYoQ6jN5w/Xzfb/AgEMd
+	Zuic+v0npbf9pD3K9/qa3u+5FqP8DdVc7QJSOaMo7JPYY3P6ubL94r6otFwQsJ1pBC8r4Io
+	3PKB7TuA37S43JG/1K5gV1roM01/+vsI3eluNfPNbiQdtOaIu13CVcSkJqHHEyqOluXyO4V
+	GiQVbYFzt+KS0+JROdI0dmsPHENSya1sRifZ0gicDRnhR0g4imN02Cuu2CjvTZxLbcMs0hh
+	eLSn8bmJ22c8Ko6B8/vvreL3lUWedAq1YBzop+LPD5iFmnd1p6v1/J84lufW3o2nLnwomQF
+	egFSw+vg/Tuw1MKqfn1UuspYFaY1lwxBsgLbNxP9YMPby/to3aJLZtUM6bxs7x5g00/VQNq
+	c1C6+1tYYH/C5YcynNWTiNnBmb+PwQ4e66LkyzZlEMr4XYjUVut1MPKRtN4S6XyHq6Ei7X4
+	bt0G83eDUB2O6E1ahqXkTTA97EobVHFZXF67BDat+Ui1HO5bTUm6preW3dqAjI5Y+Q/D7bO
+	rwE0rrgprxD4tPFdnOam8ALoX82+TrX5OQBebsTemLtVxXLDb/UCQpz+2M8FbuYEgKZ4qoJ
+	MxWmco3ZrBfF9Fgeubnwh6R8KPYVoJSJ9oLd5XbLFEhmrfxi+mLJJgR/z4EiO4if9rZqx1n
+	fKkTduRhaYC7zjjMqTpUnKSSVk3e121A9sJhT7uvzyudzKVVvRe1EZOw2GQVqIIp8hBTYwy
+	CfyVcKg9WrrjTRpo6R5H2eoiawG+GtxUjaEYhKA0VRU+LjmE8855aNMx55Y1VzVquDxH2qI
+	yYqFr5cnsZEjzYwUAGUz0/O7I6YfJlm12oUQ7aGH/+V7ULvxfvJGQu2BBlsSDyr7yv3IiYp
+	+wlVrSzw+wKZlrzfrNOTAq6vzYOouMpB8n3WCcEsM05h/5/U6WuCrZ8Vo3aMppjTg==
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
+On Tue Apr 7, 2026 at 5:55 AM CST, Vincent Legoll wrote:
+> Hi Aurelien,
+>
+> On 4/6/26 17:42, Aurelien Jarno wrote:
+>> On 2026-04-06 11:46, Vincent Legoll wrote:
+>>> Tell me if there's a new iteration to test, and/or if you want me testi=
+ng it
+>>> in a different way.
+>> Yes, as written in the original mail, this patchset depends on PIO
+>> support in the spacemit I2C driver:
+>> https://lore.kernel.org/lkml/20260207-b4-k3-i2c-pio-v7-2-626942d94d91@li=
+nux.spacemit.com/
+>>
+>> Without it, you might get this warning message and reboot is not 100%
+>> reliable. I still believe it's better than no reboot support at all.
+>
+>
+> OK, I tested a new stack: next-20260406, PIO patchset, reset=C2=A0patchse=
+t=C2=A0&=20
+> USB=C2=A0patchset:
+>
+>
+> $ git log --oneline
+> 5030369b32c4 (HEAD -> opirv2-pio-reset-usb) riscv: dts: spacemit: Enable=
+=20
+> USB3.0/PCIe on OrangePi RV2
+> 73274ce37441 riscv: dts: spacemit: Define the P1 PMIC regulators for=20
+> OrangePi RV2
+> cda12b8bdbfe riscv: dts: spacemit: Enable i2c8 adapter for OrangePi RV2
+> 68ce409351c6 (opirv2-pio-reset) mfd: simple-mfd-i2c: add a reboot cell=20
+> for the SpacemiT P1 chip
+> 245e0b8e8a91 i2c: spacemit: introduce pio for k1
+> a588d756621d i2c: spacemit: move i2c_xfer_msg()
+> 816f193dd0d9 (tag: next-20260406, next/master, next/HEAD) Add linux-next=
+=20
+> specific files for 20260406
+>
+> This boots and reset properly without the previous WARN.
+>
+> So if any of those those series need added T-Bs, then here's mine:
+>
+> Tested-by: Vincent Legoll<legoll@online.fr> # OrangePi-RV2
+I'll take this tag to my PIO patchset. Thanks!
 
---TugsYhRd/uE/+Zd+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-pw-bot: not-applicable
-
---TugsYhRd/uE/+Zd+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCadUvngAKCRB4tDGHoIJi
-0lj6AQDmNDP5TJttVM5GF6cCVSC0t6ifz0ZUtRfCmxJfyIrs4gD7BwQBkCshF4is
-4kqBK1o6NWM6fTkIA5MQo6KETdJhBw0=
-=pV5I
------END PGP SIGNATURE-----
-
---TugsYhRd/uE/+Zd+--
+                                - Troy
