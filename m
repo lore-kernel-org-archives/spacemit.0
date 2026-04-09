@@ -1,87 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37EE2D0614;
-	Wed,  8 Apr 2026 06:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B59E40DFD7;
+	Thu,  9 Apr 2026 00:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775630996; cv=none; b=W2KlKCTIttHEcCNVxvgLdnL3RAAxROas3sphtlKT8JGfbBe8c35f9R5iOD/FW9PK/SVhbBiEROhb3GFb5jcEnx6G+ltz1h9bqPrYnOQG5w4y/4PinxGB/Tlcgcw0OlkyjWT5rTFdlP0UtWGrYarcISuo8HJKl3Bi6zW2YpWV7sw=
+	t=1775695525; cv=none; b=KmaF5IlbTgochu8u8PpjtA0y25IyzS9vy738QkHKKWyGWrmKl4kCeyrduA+MnrtWa0BMFA7+fSITct041QooPSLRpkbZmdWNryNs7olDfsgEe0P1uxm5rtjPn/lgJNo+VNAkyPJL9kD4XT4B3K7FX1jaUiig2VQBPwWX95YwB7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775630996; c=relaxed/simple;
-	bh=OJinugmxk3U59o8Evz03tGU+ZiGJ5IC9Tl/JyCwJolQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bcysq7uQnPr/tL6y70QiFFm2Q9CjbrYP/KRTAxpTpimdsWiPaUm1XBNzhyae+feXxce4gB3MK988TJmXC6Qw4sl8T1oOo3a6daDpKfEYti4N5F/r3yBIyBMoj9ZryddklYbGNg0OYk4bYNbheJkAIhfBD4/vYIFciTeG5siooio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jefaGRsh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775695525; c=relaxed/simple;
+	bh=RrnZjnWzHyFMc/BnaWeEUZwombxgctKzEBN1fyRhhoY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=evFcSeS2LFCUK8G6Ebn9FqGXoCiVe4GKvoujM7SMHJzoFcSUHWyh1hsyKgu42uy7hPMM4W8MXZZB0fyt0xvPQ+rPAVob1lX9is4Qpvyq7T7IOK/gySbq4JAsZHa/eA/4VKkRx0eA3i/9mbjjMuwijR6BbhbGJ3/lECV899M0AII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GOgPu6Az; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jefaGRsh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06413C19424;
-	Wed,  8 Apr 2026 06:49:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GOgPu6Az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6ABEC19421;
+	Thu,  9 Apr 2026 00:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775630996;
-	bh=OJinugmxk3U59o8Evz03tGU+ZiGJ5IC9Tl/JyCwJolQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jefaGRshR9m/AZQS3dwk2dgYtMI7pdtGh7qqqUMcmxKabsrErngqg0ZVO44OaYXzE
-	 +QzXMZkBySSPouG04gvWI9a9iu02cWlGTekQeOuY84SgC0OJls3bBqXl5ccxu+lS6C
-	 gUMqCH3Ip3a7YKnV2THDOiT3OftuWa5rC/dg4Zn8EyCREDJpmAYEgEVkgtx8FxoCGU
-	 F5rZlAikJpGmcH4U2J4M3Z028Dh93XHh9GnbHZ+q9GiXkN8wnhjm7M+ICgM2pi/1J+
-	 pFDsNOEf91T0DV2W6iDagsJYMfFZCMsust1EcrKamzaEFqSAFFzOMvhLzVgSUM2Run
-	 gOVYtaqJ93Z7w==
-Date: Wed, 8 Apr 2026 08:49:54 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Iker Pedrosa <ikerpedrosam@gmail.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
-	Troy Mitchell <troy.mitchell@linux.dev>, Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 1/9] dt-bindings: mmc: spacemit,sdhci: add pinctrl
- support for voltage switching
-Message-ID: <20260408-nocturnal-talented-dinosaur-cbb9c0@quoll>
-References: <20260407-orangepi-sd-card-uhs-v6-0-b5b8a1b2bfc8@gmail.com>
- <20260407-orangepi-sd-card-uhs-v6-1-b5b8a1b2bfc8@gmail.com>
+	s=k20201202; t=1775695525;
+	bh=RrnZjnWzHyFMc/BnaWeEUZwombxgctKzEBN1fyRhhoY=;
+	h=From:Subject:Date:To:Cc:From;
+	b=GOgPu6Azr3VKSAfKz47B/Z/fF2S1vrevG3TT13BtsqX/RwR7XixYWl/T/gMrAN2IK
+	 fODuM+DfU/1LEbHfd2WKQrt/kWak9X6YTeZis76Um83YV1QfjFAh02xPQSVUBkv0Lk
+	 pl9Lvtambjr1D8fk6VEwVFtTlnLjHIWz1Q4Kc4dYQDakr8VtNnTM4MaVFdhaBB/eV8
+	 HlCoT/TsmheBdp0Ju3Tv3yFOxiGvhz4B8wRaHZqoeVmT81VchcMV2OHoXc//tlcaTF
+	 NEaKEQj0tFgvTFLZG9pZQ5gmLV/pQLrTA98N2KsHPx6z/dJ5eeXE2s06aV7uNQ5uJF
+	 3oB+jj6BSq4IA==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH 0/2] pwm: spacemit: Add Support for K3 SoC
+Date: Thu, 09 Apr 2026 00:45:10 +0000
+Message-Id: <20260409-03-k3-pwm-drv-v1-0-1307a06fba38@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260407-orangepi-sd-card-uhs-v6-1-b5b8a1b2bfc8@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJb21mkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDEwNDXQNj3Wxj3YLyXN2UojJdk9RES8vEVGNT0xQzJaCegqLUtMwKsHn
+ RsbW1AD/Np2dfAAAA
+X-Change-ID: 20260401-03-k3-pwm-drv-4ea99ae355d6
+To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ =?utf-8?q?Duje_Mihanovi=C4=87?= <duje@dujemihanovic.xyz>
+Cc: linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=762; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=RrnZjnWzHyFMc/BnaWeEUZwombxgctKzEBN1fyRhhoY=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBp1vaY1PS75n1C7aaWKjI8sKLtxZ3pANVaRYbje
+ fo6dGJMoW+JAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCadb2mBsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMSwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+1hmg/+LfIMahJsYd0rprXF78Qi2pvA6gD0D9FEsJONoNUeQDHgOHlSTRJCK
+ S8oLzRtiNGEyVjc0b5xH+O12ZDfBZax2ybodsZcvoh+R5NXPKIM3h6lswl/V5F764LMgQqSOF7H
+ j0gZtXGlvXj9OUCaaYxNn+5jfhvKBFQ4cbrtBhceo/TOY2GGV8EMVC6yk3YqHySLmde8tIQHoAG
+ dsXY5v00BuVMIOHBZMpGYPbjyJ60QU5PVJDkL+Mc3uUCl3ju7QDe6MyusBBJHqCho6G3+LHQPg0
+ HHP7INdGaoyqt+Yc6ip1JQYWPvIdp5yas6iEqAwRqwHrZuqoJ4/JsODSy7mwrKftZIb8VqT8lAe
+ IZ+xawqzsGHUDtHTikdWIZyqH28yb6QdTQJmf0uYptTgXyLzOE1A6SPkWkkvTXfEHdjaTDlDEWD
+ o8uGj7PMJKu/G4wB/8vBReEcifpdHs52dRYk1gR/r0JpdnVugZ3jMXL3ydZbkpeA96Fjs8OpIno
+ FAMZ3xpfLnp54JegO2MFn0EOOa+gdclyE8mYg4k7ZaRAyzLVIyqVpaWaa153xl8lV5v0HvO8j4u
+ XkJiLPZVSJqhFipW+eITWREtRWfIhQ/fx/DdREb4c7GtrAgCc+sJLHXLHP8uDhhf8JY6KJNwLhV
+ S5rJ8qWXhqyYskePkz5dty+MWIHkx8=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On Tue, Apr 07, 2026 at 10:25:21AM +0200, Iker Pedrosa wrote:
-> Document pinctrl properties to support voltage-dependent pin
-> configuration switching for UHS-I SD card modes.
-> 
-> Add optional pinctrl-names property with two states:
-> - "default": For 3.3V operation with standard drive strength
-> - "state_uhs": For 1.8V operation with optimized drive strength
-> 
-> These pinctrl states allow the SDHCI driver to coordinate voltage
-> switching with pin configuration changes, ensuring proper signal
-> integrity during UHS-I mode transitions.
-> 
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-> ---
->  .../devicetree/bindings/mmc/spacemit,sdhci.yaml          | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> index 9a055d963a7f0cdba4741c1e3e7269688dcd5f45..932fccc609bf8dbaf3ecfe09d9e610852ac7afa0 100644
-> --- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> @@ -11,6 +11,7 @@ maintainers:
->  
->  allOf:
->    - $ref: mmc-controller.yaml#
+The PWM controller in SpacemiT K3 SoC reuse the same IP as previous K1
+generation, while the difference is that one additional bus clock is
+added. Introduce a new compatible string and also adjust driver code to
+support it.
 
-Drop
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Yixun Lan (2):
+      dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT K3 PWM support
+      pwm: pxa: Add optional bus clock
 
-> +  - $ref: sdhci-common.yaml#
+ .../devicetree/bindings/pwm/marvell,pxa-pwm.yaml   | 53 ++++++++++++++++++++--
+ drivers/pwm/pwm-pxa.c                              |  8 +++-
+ 2 files changed, 57 insertions(+), 4 deletions(-)
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260401-03-k3-pwm-drv-4ea99ae355d6
 
 Best regards,
-Krzysztof
+-- 
+Yixun Lan <dlan@kernel.org>
 
