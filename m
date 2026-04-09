@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F3A8BE9;
-	Thu,  9 Apr 2026 16:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403883A2542;
+	Thu,  9 Apr 2026 23:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775752619; cv=none; b=tph5bD37gFnZLn0TdETSoVjEi/F5rf2V7SPp3OxgXV+0beuuvWx+MvddHbjpRIM1A6xJdVazD3OybdtbWViokqI2CAjJuyqM1jhqmCpONXBeGIDo7ZSZzCxfBXAgu+6hB2p1MbWP1JB/czw8RS463gFJvH/VY3Z2RRl3Ms6b57M=
+	t=1775778234; cv=none; b=ai3DAcsDnhEaSoeXSZOpffn4eCQwapYDp+vAuQYrmlBXzVhqct8Na/QKvGpDabo1Ly7IdRBZC3Ux7H9FfZqrZPtvXbRmKlmqSnLk1LSrbJQL3jiVhgaxG+m4VGhLMfgXrQIt2A9B0RjodqRd8HtUoCZD8y2O05XXaKFJouNjR1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775752619; c=relaxed/simple;
-	bh=KOqlFVVDPA8Z6Cqw5fEN1sKBxBwUNHbyg8QMlZBZyrA=;
+	s=arc-20240116; t=1775778234; c=relaxed/simple;
+	bh=gAUOUKeQWfXMQS+gwzMyPSCdGvq7t2FyRZ1piCNyVsw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lp1oTYtcRdKWgqkIugFGYQgX+9GctOXBovO9EoAjMi+cr1TR9lOqjc2boUEbg7PpX0pZ2Ei8A7hVrWJJt4MoBoExtLTNays49k0z8fim32mXHRh9ufBnuDoNEE6kEVgITK9Re9nystSsMODjTtjAQuo6sGZr0mdqlLkfOsWgCHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tO3ctKOr; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=OHBu+a6YvjrfYH9D1MLlUR41Lokg/QFwKdiNNANq2hWPSHvO4lyxkLCoHrPG4IYZFQ7gS/ecBOdbB54WtslU+ZEFd3LSNV/MLJ8NIzX+nK0EuH1j/Kj8AJ3wllQTTfQVlzcPTwJq98GK4QGm3MLhhhluxFaatfVY6YSgvVtPlvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BAmDpI6p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tO3ctKOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F558C4CEF7;
-	Thu,  9 Apr 2026 16:36:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BAmDpI6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58292C2BC87;
+	Thu,  9 Apr 2026 23:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775752619;
-	bh=KOqlFVVDPA8Z6Cqw5fEN1sKBxBwUNHbyg8QMlZBZyrA=;
+	s=k20201202; t=1775778233;
+	bh=gAUOUKeQWfXMQS+gwzMyPSCdGvq7t2FyRZ1piCNyVsw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tO3ctKOrVZJRL2kFL4/4QiCi7kgQpYRH8DHsDAjExEVG0fet21rxehQ7U/a013N79
-	 txPwkC0SXW/3sECmTbpGrFJWXhE6UkSQ+sdCLl/Ex2orjqw/sGnQsWBXSrnI0DW1DI
-	 zEUX820CBJKJOTJwmTGavTqwDwKaZr0atzyIMqHt3GKy3wp+OgK6g++w3Y5ysEby+K
-	 eDYsNJlF6F0ZxGEKoUcDgnn0AilzsGZoJKiR3Gfi/KwSBxvpdXfnO+fqFRgmdxnIVu
-	 w9C5JZLKcrIiJC4cGiu1FgBXMaRW4wOq73cVlzB1i2nTRB+Bmv9O9lhwavEoJMPf61
-	 U40a0PcHRSnNw==
-Date: Thu, 9 Apr 2026 18:36:55 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Yixun Lan <dlan@gentoo.org>, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	Aurelien Jarno <aurelien@aurel32.net>, Alex Elder <elder@riscstar.com>
-Subject: Re: [PATCH v7 0/2] i2c: spacemit: introduce pio for k1
-Message-ID: <adfVk82OC1c3Zn8a@zenone.zhora.eu>
-References: <20260207-b4-k3-i2c-pio-v7-0-626942d94d91@linux.spacemit.com>
+	b=BAmDpI6p5H0OzeaMLCTzHNoflFqzKwKYdloMNxBi+6kGcMaa4S6XHSQ9wg5Wd2jcP
+	 hy+C8CQSJihzNs6WDtWiTnma3TI+IKBcM0eVxqMxPrDOo3PevseGl26/51rvAA4YIG
+	 VG3oYhF9d4HAYX/lDdTcrD3jxGWifNabJHPFhl1M/iMjcjiukfx35yyorXaozrTqqP
+	 Ox7EUsiNQ8S0sKwtrnMmgH39FKcQqDMQq4v2N+q45JKihxhiEwJVX5k7FpKxDFyUnD
+	 IsMTRDGdVcTP0ERDCfC0o8yblXIhHFBYzaJRswWrryilqniMO23nc0rMuc1s83Bjog
+	 09JY03oEqpviA==
+Date: Fri, 10 Apr 2026 07:43:51 +0800
+From: Yixun Lan <dlan@kernel.org>
+To: Conor Dooley <conor@kernel.org>
+Cc: Uwe =?utf-8?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Duje =?utf-8?Q?Mihanovi=C4=87?= <duje@dujemihanovic.xyz>,
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/2] dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT K3
+ PWM support
+Message-ID: <20260409234351-GKA1160389@kernel.org>
+References: <20260409-03-k3-pwm-drv-v1-0-1307a06fba38@kernel.org>
+ <20260409-03-k3-pwm-drv-v1-1-1307a06fba38@kernel.org>
+ <20260409-laboring-announcer-4a0f9ca152a1@spud>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,15 +51,118 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260207-b4-k3-i2c-pio-v7-0-626942d94d91@linux.spacemit.com>
+In-Reply-To: <20260409-laboring-announcer-4a0f9ca152a1@spud>
 
-Hi Troy,
+Hi Conor, 
 
-> Troy Mitchell (2):
->       i2c: spacemit: move i2c_xfer_msg()
->       i2c: spacemit: introduce pio for k1
+On 16:41 Thu 09 Apr     , Conor Dooley wrote:
+> On Thu, Apr 09, 2026 at 12:45:11AM +0000, Yixun Lan wrote:
+> > The PWM controller in SpacemiT K3 SoC reuse the same IP as previous K1
+> > generation, while the difference is that one additional bus clock is
+> > added.
+> > 
+> > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> > ---
+> >  .../devicetree/bindings/pwm/marvell,pxa-pwm.yaml   | 53 ++++++++++++++++++++--
+> >  1 file changed, 50 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/pwm/marvell,pxa-pwm.yaml b/Documentation/devicetree/bindings/pwm/marvell,pxa-pwm.yaml
+> > index 8df327e52810..3427c8ef3945 100644
+> > --- a/Documentation/devicetree/bindings/pwm/marvell,pxa-pwm.yaml
+> > +++ b/Documentation/devicetree/bindings/pwm/marvell,pxa-pwm.yaml
+> > @@ -15,7 +15,9 @@ allOf:
+> >        properties:
+> >          compatible:
+> >            contains:
+> > -            const: spacemit,k1-pwm
+> > +            enum:
+> > +              - spacemit,k1-pwm
+> > +              - spacemit,k3-pwm
+> >      then:
+> >        properties:
+> >          "#pwm-cells":
+> > @@ -26,6 +28,38 @@ allOf:
+> >            const: 1
+> >            description: |
+> >              Used for specifying the period length in nanoseconds.
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - spacemit,k3-pwm
+> > +    then:
+> > +      properties:
+> > +        clock-names:
+> > +          items:
+> > +            - const: func
+> > +            - const: bus
+> 
+> This condition here doesn't appear to do anything? It just repeats
+> what's already done unconditonally below?
+> 
+You right, I should merge clock-names with below..
 
-merged to i2c/i2c-host.
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - spacemit,k3-pwm
+> > +    then:
+> > +      required:
+> > +        - clock-names
+> > +      properties:
+> > +        clocks:
+> > +          minItems: 2
+> > +        clock-names:
+> > +          minItems: 2
+> > +    else:
+> > +      properties:
+> > +        clocks:
+> > +          maxItems: 1
+> > +        clock-names:
+> > +          maxItems: 1
+> >  
+> >  properties:
+> >    compatible:
+> > @@ -36,7 +70,9 @@ properties:
+> >            - marvell,pxa168-pwm
+> >            - marvell,pxa910-pwm
+> >        - items:
+> > -          - const: spacemit,k1-pwm
+> > +          - enum:
+> > +              - spacemit,k1-pwm
+> > +              - spacemit,k3-pwm
+> >            - const: marvell,pxa910-pwm
+> >  
+> >    reg:
+> > @@ -47,7 +83,18 @@ properties:
+> >      description: Number of cells in a pwm specifier.
+> >  
+> >    clocks:
+> > -    maxItems: 1
+> > +    minItems: 1
+> > +    items:
+> > +      - description: The function clock
+> > +      - description: An optional bus clock
+> > +
+> > +  clock-names:
+> > +    minItems: 1
+> > +    maxItems: 2
+> > +    oneOf:
+> > +      - items:
+> > +          - const: func
+> > +          - const: bus
+> >  
+> >    resets:
+> >      maxItems: 1
+> > 
+> > -- 
+> > 2.53.0
+> > 
 
-Thanks,
-Andi
+
+
+-- 
+Yixun Lan (dlan)
