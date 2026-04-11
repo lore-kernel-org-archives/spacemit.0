@@ -1,116 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF30346E57;
-	Fri, 10 Apr 2026 23:37:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06C623EAA3
+	for <spacemit@lists.linux.dev>; Sat, 11 Apr 2026 01:37:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775864268; cv=none; b=YA552OI4UAngcNT7OSU9skDYW0+oJ3Y1ot4JtfBWbJGnxyy1ghDdQVUsQ1VxfFXLuQsAJPazdWEV1+1Lkc7L6CFrtjDtxyatL3Pj3BXpi+bEsJXc+8XwUy8+orSLa3QKhoEq7u1MEY5UN4/kdftC403LfOoeXtxFb011AF7xKU8=
+	t=1775871437; cv=none; b=PdXkxoMbWD0Jvu1aJY1c7yb5eRndUGJaiMzZRynuPqkYPwZaXSFYeS+cuh7AmBVvPcR4q3J9O1vdqZnk1+hfQ3o6k4mD5ca2sHtby2wYFxE5MNhnDEjStfYewfd0+JzG7R1hHZkolxk8+iiYnTBx57MsI83n0i68HbTLt0J6oDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775864268; c=relaxed/simple;
-	bh=9nyWpvl587TXnw2WHO5q+qP+iVSustuNqLD/U3XMv24=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f7vo8Tn4BBA/BRNC+NcMml+VdptUPLjSpG0rFsS+EqbwP7CYgor+2nTHTDy1z4Bzs67Jz4CbqATVzpO2+o+jUi1LpMYkAhZ6KPazyS27j/y9B21Am1i6eiUPjtr24fdwkrE9zDu8w9r3S1dwrJY6dbPF46eoC8Y32azFmzmE5zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iNTF2OFV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775871437; c=relaxed/simple;
+	bh=trZBp4xgmrirhAC9tpRHMpVWRzg2rIoavzjXL+J+LzM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=DxfPZP4cu3akGjFZ1S28m1+LQeuuDXlZU/BBa2gSJBPBcii2jxjCv0BBUkhoofl/rCDHdP9Xa/qKQsrqUujL+IyQLI0yUTus16QNfZ76666UJlGe88c2q83GcJUYGP+iI8/HgxLe0R9CtpJjsHddhtWuBoriXPFFunk4nWkqydo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=wzuT0rIL; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iNTF2OFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4360EC19421;
-	Fri, 10 Apr 2026 23:37:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775864268;
-	bh=9nyWpvl587TXnw2WHO5q+qP+iVSustuNqLD/U3XMv24=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iNTF2OFVv6rlhpMPVLGC+iL5F/WSz2Ou9zFlHB24lyGAb8rY2iRQ01M9hYtEXtKbg
-	 9lzVb4h1hhLNMNbaeq8zIFpV8w+34Je76IAJbFh+U2DBC6HuGiDzwU5yVm1zabkvVw
-	 ZIIC7RQqZul1N8xHXtf1+VwqxZD9FGCtcKmEGTbmHqnr9VWm7wJC0oMsboonlD1U2q
-	 eA8yiYXsE/4fqTO+0H0UsOLxbm46bfgyqVWLEGuiOn5HgDapTGZjzY9AN3CcAZijjY
-	 QCIAgPpBv7QFFIDxu0ibTSk20g2kr2aXQ3YrO5FxdA9heCdDTuo8xQqALxJlLIj5VW
-	 6GmJvWyuUcOkQ==
-Date: Sat, 11 Apr 2026 07:37:46 +0800
-From: Yixun Lan <dlan@kernel.org>
-To: Linus Walleij <linusw@kernel.org>
-Cc: soc@kernel.org, Yixun Lan <dlan@gentoo.org>,
-	Arnd Bergmann <arnd@arndb.de>, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [GIT PULL] RISC-V SpacemiT Devicetrees for v7.1
-Message-ID: <20260410233746-GKA1167630@kernel.org>
-References: <20260403123040-KYC0145825@kernel.org>
- <CAD++jLkQfUwhvDOCkhK2NtRyXrb6y9rwpDckR6h0G3+dzYwW3A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="wzuT0rIL"
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4fsx9Z37lgz9spW;
+	Sat, 11 Apr 2026 03:37:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1775871427;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=trZBp4xgmrirhAC9tpRHMpVWRzg2rIoavzjXL+J+LzM=;
+	b=wzuT0rIL2uFwHD8yWOGa3pC74i7i+kbNV5s14sZ2INtzm+6KEwycNK1rGJcU+b03v899bl
+	ssgLjmEbg5PQkUnSQfPFHlzYEZIv8la+9nxriaqZdd3utxAp1MiCH4A7zu9bJX5iG4qwEh
+	txKwV9cSlndoqF+4A/KxCdtKpxDXzueGgCD1l7/wKHOS/9O6Lt7zdXhtS1sWbIBy75IoOT
+	UkH/YyWnUY/ocbMjOiDvdRwg6q7psNI+NwBNcNIj7vkeddpOFDRrcTCQ18mKR6GGftap0y
+	GhEVJkEEhzAhFEc6LMZoDbh86UFrcKq3enpc/5563AGebXc6XwCZumSYhuts+Q==
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD++jLkQfUwhvDOCkhK2NtRyXrb6y9rwpDckR6h0G3+dzYwW3A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 11 Apr 2026 09:36:47 +0800
+Message-Id: <DHPXVI2SL3PG.3KBRF3ZWZ2WN0@mailbox.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, "Daniel Lezcano"
+ <daniel.lezcano@kernel.org>, "Zhang Rui" <rui.zhang@intel.com>, "Lukasz
+ Luba" <lukasz.luba@arm.com>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Yixun Lan" <dlan@kernel.org>, "Philipp Zabel" <p.zabel@pengutronix.de>,
+ "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>,
+ "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
+ <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski@oss.qualcomm.com>, "Vincent Legoll"
+ <legoll@online.fr>, "Gong Shuai" <gsh517025@gmail.com>
+Subject: Re: [PATCH v4 1/3] dt-bindings: thermal: Add SpacemiT K1 thermal
+ sensor
+From: "Shuwei Wu" <shuwei.wu@mailbox.org>
+To: "Krzysztof Kozlowski" <krzk@kernel.org>
+References: <20260410-k1-thermal-v1-0-12c87dd063c3@mailbox.org>
+ <20260410-k1-thermal-v1-1-12c87dd063c3@mailbox.org>
+ <20260410-inescapable-glossy-cobra-da4bf4@quoll>
+In-Reply-To: <20260410-inescapable-glossy-cobra-da4bf4@quoll>
+X-MBO-RS-META: fc4nazxd5bgp5f7c39jn4cxumdou699c
+X-MBO-RS-ID: a3eee99e18c1cea89b0
 
-Hi Linus,
+On Fri Apr 10, 2026 at 3:22 PM CST, Krzysztof Kozlowski wrote:
+> On Fri, Apr 10, 2026 at 11:31:36AM +0800, Shuwei Wu wrote:
+>> Document the SpacemiT K1 Thermal Sensor, which supports
+>> monitoring temperatures for five zones: soc, package, gpu, cluster0,
+>> and cluster1.
+>>=20
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+>> Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
+>> Tested-by: Vincent Legoll <legoll@online.fr> # OrangePi-RV2
+>> Tested-by: Gong Shuai <gsh517025@gmail.com>
+>
+> No, not possible. Otherwise explain me how your device tested a YAML
+> file.
+>
+> Drop all of such tags.
+Sorry for the noise. I will drop it.
+Thanks for pointing out.
+>
+> Best regards,
+> Krzysztof
 
-On 00:19 Sat 11 Apr     , Linus Walleij wrote:
-> Hi Yixun,
-> 
-> I looked into this pull request.
-> 
-> I'm sorry if I do stupid mistakes in handling it, I'm new to maintaining
-> the SoC tree. Bear with me.
-> 
-> On Fri, Apr 3, 2026 at 2:32 PM Yixun Lan <dlan@kernel.org> wrote:
-> 
-> > Aurelien Jarno (7):
-> >       riscv: dts: spacemit: drop incorrect pinctrl for combo PHY
-> (...)
-> > Yixun Lan (9):
-> >       riscv: dts: spacemit: pcie: fix missing power regulator
-> 
-> [Fixes]
-> fatal: Not a valid object name linus/master
-Could be the problem that your master branch isn't up-to-date?
-
-> Commit: c68360c0d636 ("riscv: dts: spacemit: drop incorrect pinctrl
-> for combo PHY")
-..
->     Fixes tag: Fixes: 0be016a4b5d1b9 ("riscv: dts: spacemit: PCIe and
-> PHY-related updates")
-Above commit was merged for v7.0 cycle, while this PR is for v7.1
-The fix isn't that critical and didn't cause any run-time issue, so
-I do the fix in this v7.1 cycle..
-
->     Has these problem(s):
->         - Inspect: Target SHA is not ancestor of Linus' master branch,
-> which means it is fixing commit in your branch
-> fatal: Not a valid object name linus/master
-> Commit: 8a9071299dec ("riscv: dts: spacemit: pcie: fix missing power regulator")
->     Fixes tag: Fixes: 0be016a4b5d1 ("riscv: dts: spacemit: PCIe and
-> PHY-related updates")
->     Has these problem(s):
->         - Inspect: Target SHA is not ancestor of Linus' master branch,
-> which means it is fixing commit in your branch
-> 
-> So this means you introduced bugs and fix them in the same pull request?
-> 
-> Why?
-> 
-> The practice is to squash such fixes into the offending patches when
-> presenting pull requests. But I went ahead anyway, trying to not be so
-> picky. (The commits are there, in your branch indeed.)
-> 
-Glad to learn this, I will keep it in mind..
-
-> - Checked that it was in linux-next OK
-Right, I think the commit is actually in v7.0-rc1
-
-> - built DTBS OK
-> 
-> Pulled in, thanks.
-Thank you
-
-> 
-> Yours,
-> Linus Walleij
-
--- 
-Yixun Lan (dlan)
+--=20
+Best regards,
+Shuwei Wu
