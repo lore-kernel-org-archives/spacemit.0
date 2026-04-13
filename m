@@ -1,124 +1,144 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172D82264A9;
-	Mon, 13 Apr 2026 08:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163373BAD96
+	for <spacemit@lists.linux.dev>; Mon, 13 Apr 2026 10:49:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776069500; cv=none; b=LxpLOrbjCPb5rIBvpUrMBLSmhh46VXywHvQwMZQb+X+Sp2+D4mfLiyeBHPRuaIMB9Kn+SUnhx7dKaHxqBH1EqBMARYitBAiMi5vB9ulf5wDJiJDGV90brrpRjlJ3fudAShWyViv0jqWqz70UrSRIFAFw/nDJr2me4qEA/ZRzaY8=
+	t=1776077385; cv=none; b=AI6qpKGrsViGVyhoOUIsAU46WZJueHSvbhXADjNvV4cKM6Pl76n6Lc8/MBJmVOcRDNxM1HJglRWsjGW48CDV4tZEfhxsOKPmmgwYYGoAf8PSc13AEgxfktBittgh7exn7dxw2jwIT5cgG7ndnXUg6RyNv9b7fA5xxqveOhVwpGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776069500; c=relaxed/simple;
-	bh=hQC+dWReMp0AEvFExU9znjcR15PjYZSh4RYLGIYnIT8=;
+	s=arc-20240116; t=1776077385; c=relaxed/simple;
+	bh=ANNS0ARrq+yqt38ilBc0b/VrBSbg8FDzwRhQod1Hlxs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aDBtHQZzgnlgMSD1NoojDb7nHL4Jv54S8tQOK/SoGC1yspAmIrGc78Q7BK/mDsGkDfGCeTr5251VSsanWGIU+VDCQSNtMZS7RaVZEkRKNCZXV7RNeAtwIw2JqtaWD/D1CRZd2m2Tk0744LzRjdx9qWWpMQ3f9292RZ4liRo1UwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XYmPI9j4; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=nbKPFVQ/OKBKa2LVZ7hXLugtrO++UzbdiPeGNGKhNTLxeIh/wGylvRsY3z5+bGXaKb12cSmKy4m6HV41qKTKBFt1oKoJ7RAQgt/bestHs0yr1tGNFjOR8CLfppWAKAMgguL4Q+b3J2/7v73KjtqTacuwwOt49asbI7+1iIPY77A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z5+jvsXD; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XYmPI9j4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D0EC116C6;
-	Mon, 13 Apr 2026 08:38:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776069499;
-	bh=hQC+dWReMp0AEvFExU9znjcR15PjYZSh4RYLGIYnIT8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XYmPI9j44m063hu9ojAHSM/uXN31tgSlskZ69wTFDkbrEwjYWOArAXuc6DVj1A2GI
-	 eSp5DXm8GGpsNEFvYi6G6m0/kstL271ISUk3owDGB7ZQAAp9lQGzhN/e4qhpkqDant
-	 6thMApG5MHf/MsrUG9tp7UisfLUl7QCj0KV+R6cb7bZhAP2Z+zUG/2yNQDtwXtLN/3
-	 o5bheZjmDL55JXtbCX17VkUx12GojOI5UigX6Dgi5OkaV5efLNpaabs2SMmpPumJEK
-	 ZUYvlpG48AppzoBtRj7S2SnbjUj7emwCwLykrKEF4lOfDKwIN5ORV9x0ZpTh04QX1v
-	 vTTjv+vu63PzA==
-Date: Mon, 13 Apr 2026 10:38:16 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, 
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z5+jvsXD"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82cd5c07f93so1862417b3a.1
+        for <spacemit@lists.linux.dev>; Mon, 13 Apr 2026 03:49:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1776077383; x=1776682183; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NprvUAprn5meoPNFX+W3YdkJtUZncCH1TUsT0ByUXfo=;
+        b=Z5+jvsXDaMy5aVoiizsbiUXdhnM+HCW56POyUlv5S0VY3H/t5niAPjZyswkRqLsgIy
+         C/xn6Iy82qW9ro+A8PkYqIo3+AmgHdMgRovnijkFr2EgYjxApYeNJk9obMS7RUnaJOXp
+         9v8530MOkDKhW7xX+7X4fhUu4JfKRCIhgyioSsmDHiMxmA2GM4NRth4eV4yfWeBG8F8r
+         22/A+HktyJKYx1Z4TrDckxO7sgKB3VKBNyXXVHwybVnUqJDWBbHrXnnvtrPJEcmP9plp
+         csaEyzaNNTVB3fzD4Moy8Wst2jpth7Z4EUuGtNVEx/TtBTsoUCydC/pL0d5FndZwc41j
+         1GwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776077383; x=1776682183;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NprvUAprn5meoPNFX+W3YdkJtUZncCH1TUsT0ByUXfo=;
+        b=sSFf0/jimH9W4qqJAH1iiN0ivAaSSASWQxi5uOkw2ZYr/2Sb1pKr+JS1F5xgBnrdPA
+         2PHcebd1umGXMeq0JYyFNk9Eaq+bWEGoCQk/A6TalENH1M4VS6YvjdP1ZHTAhGbDS8I2
+         ZmS+aoAd8gCMB4JP1GvQOMNfYqZ5oHHS3aNdg1yJydxXeZNApjJHqqLIKBHWHEx6TVKI
+         THc0JYIUVqkkQdbR2J2c1IDDzJZoCidabKpNVejECb6ou56ecGufL1FctVzG2o5yXWL6
+         Hm16LgEGtMoNzZWTbKpG7pVye7tPZ/Ig2yXQm7FZxdfnDYAKcev9dzzmQCUD4jKcZU9/
+         xiiA==
+X-Forwarded-Encrypted: i=1; AFNElJ9TwsFGtkfptjLLbNzD8ObgnLW3qc7r57+huS+ek5NJVJnorArAWMpyIToMjKVobXkMl3OV+Nwc3g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxCt94x92HvV9cAPh6URzFAVpkBtRrp6PRnOewjG5tFBJcJf8Ti
+	K1jvQ4qQWQ1vJQpNdai9/VhT0jIJTNy8CLq9QBRpG+D3h/LW3AQtTjUKtM918urXa2A=
+X-Gm-Gg: AeBDieupGB264cJ7a+d79Si4R6xBIAWzSncbbOnD2Brglv1UdGStauC/V7CzLTOx3OI
+	PBciAa/ypJeHPLgOaF7xi7maOJKcNwexWUNVgEL8BBgBxzrijj6qgb6ydTfvuV7lZ1+ZNobUWdM
+	PoGOlCJwtnSOKiuqHh5DkMcxFdFe+bSVELvoOpz7YlPV+VMXA81nbneMg/0BvCPg+05jtOArLsT
+	O9uoVP5p1LttohtQ96p7WUBi5PahlHPW8DTV51l0ZxmZQiyht5Ds1/+yevPqxwGLeq77JIzLGVy
+	C6EAEGAxhwl31hGK4kNLOHOO76vjzNis51Ysu+zLTa+vQDm8sCAG+zKyEM5Mkn1QhUe5so765fB
+	qiXXkWb4ejU0Io6Fl34aYFMTXjd/fGOjdpRq/xcAAaLxN3qxCJHQ9I1KqRqR2OeRYvPQmaLwH7x
+	eqZLCv1sBIFQI3wb4CS+KkQZdN
+X-Received: by 2002:a05:6a00:398d:b0:82c:eb46:acb9 with SMTP id d2e1a72fcca58-82f0c187fa6mr13079040b3a.24.1776077383128;
+        Mon, 13 Apr 2026 03:49:43 -0700 (PDT)
+Received: from localhost ([122.172.81.200])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c32e744sm12070430b3a.13.2026.04.13.03.49.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2026 03:49:42 -0700 (PDT)
+Date: Mon, 13 Apr 2026 16:19:39 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: Shuwei Wu <shuwei.wu@mailbox.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Duje =?utf-8?Q?Mihanovi=C4=87?= <duje@dujemihanovic.xyz>, linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 2/2] pwm: pxa: Add optional bus clock
-Message-ID: <adyq-Uckwwe9uACA@monoceros>
-References: <20260409-03-k3-pwm-drv-v1-0-1307a06fba38@kernel.org>
- <20260409-03-k3-pwm-drv-v1-2-1307a06fba38@kernel.org>
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] cpufreq: spacemit: Add cpufreq support for K1 SoC
+Message-ID: <siqn3bu63fxp7ignbaleamvfqskhjjtuzqp64taynlvz2vtiwq@uhpitslu3xnb>
+References: <20260410-shadow-deps-v2-0-4e16b8c0f60e@mailbox.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="763z7lvugsdeouil"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260409-03-k3-pwm-drv-v1-2-1307a06fba38@kernel.org>
+In-Reply-To: <20260410-shadow-deps-v2-0-4e16b8c0f60e@mailbox.org>
 
-
---763z7lvugsdeouil
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 2/2] pwm: pxa: Add optional bus clock
-MIME-Version: 1.0
-
-Hello,
-
-On Thu, Apr 09, 2026 at 12:45:12AM +0000, Yixun Lan wrote:
-> Add one secondary optional bus clock for the PWM PXA driver, also keep it
-> compatible with old single clock.
->=20
-> The SpacemiT K3 SoC require one bus clock for PWM controller, acquire
-
-s/one/a/ ?
-
-> and enable it during probe phase.
->=20
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
+On 10-04-26, 15:58, Shuwei Wu wrote:
+> This series enables dynamic voltage and frequency scaling (DVFS) for
+> the SpacemiT K1 SoC using the generic cpufreq-dt driver.
+> 
+> Tested on Banana Pi BPI-F3, the execution time scales as expected
+> across different CPU frequencies:
+> 
+> ~ # echo userspace > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+> 
+> ~ # echo 1600000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+> ~ # time awk 'BEGIN{for(i=0;i<1000000;i++){}}'
+> real    0m 1.07s
+> user    0m 1.07s
+> sys     0m 0.00s
+> 
+> ~ # echo 1228800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+> ~ # time awk 'BEGIN{for(i=0;i<1000000;i++){}}'
+> real    0m 1.40s
+> user    0m 1.40s
+> sys     0m 0.00s
+> 
+> ~ # echo 1000000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+> ~ # time awk 'BEGIN{for(i=0;i<1000000;i++){}}'
+> real    0m 1.72s
+> user    0m 1.72s
+> sys     0m 0.00s
+> 
+> ~ # echo 819000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+> ~ # time awk 'BEGIN{for(i=0;i<1000000;i++){}}'
+> real    0m 2.10s
+> user    0m 2.10s
+> sys     0m 0.00s
+> 
+> ~ # echo 614400 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+> ~ # time awk 'BEGIN{for(i=0;i<1000000;i++){}}'
+> real    0m 2.80s
+> user    0m 2.80s
+> sys     0m 0.00s
+> 
+> Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
 > ---
->  drivers/pwm/pwm-pxa.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/pwm/pwm-pxa.c b/drivers/pwm/pwm-pxa.c
-> index 0f5bdb0e395e..2ace31405c2d 100644
-> --- a/drivers/pwm/pwm-pxa.c
-> +++ b/drivers/pwm/pwm-pxa.c
-> @@ -53,6 +53,7 @@ struct pxa_pwm_chip {
->  	struct device	*dev;
-> =20
->  	struct clk	*clk;
-> +	struct clk	*bus_clk;
->  	void __iomem	*mmio_base;
->  };
-> =20
-> @@ -177,7 +178,12 @@ static int pwm_probe(struct platform_device *pdev)
->  		return PTR_ERR(chip);
->  	pc =3D to_pxa_pwm_chip(chip);
-> =20
-> -	pc->clk =3D devm_clk_get(dev, NULL);
-> +	pc->bus_clk =3D devm_clk_get_optional_enabled(dev, "bus");
-> +	if (IS_ERR(pc->bus_clk))
-> +		return dev_err_probe(dev, PTR_ERR(pc->bus_clk), "Failed to get bus clo=
-ck\n");
-> +
-> +	/* Get named func clk if bus clock is valid */
-> +	pc->clk =3D devm_clk_get(dev, pc->bus_clk ? "func" : NULL);
+> Changes in v2:
+> - Move OPP tables to dedicated k1-opp.dtsi
+> - Enable OPP only on BPI-F3 with cpu-supply present
+> - Link to v1: https://lore.kernel.org/r/20260308-shadow-deps-v1-0-0ceb5c7c07eb@mailbox.org
+> 
+> ---
+> Shuwei Wu (2):
+>       cpufreq: dt-platdev: Add SpacemiT K1 SoC to the allowlist
+>       riscv: dts: spacemit: Add cpu scaling for K1 SoC
+> 
+>  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts |  35 +++++++-
+>  arch/riscv/boot/dts/spacemit/k1-opp.dtsi        | 105 ++++++++++++++++++++++++
+>  arch/riscv/boot/dts/spacemit/k1.dtsi            |   8 ++
+>  drivers/cpufreq/cpufreq-dt-platdev.c            |   1 +
+>  4 files changed, 148 insertions(+), 1 deletion(-)
 
-A local variable for bus_clk would be sufficient.
+Feel free to take it via the arch code.
 
-I'm not sure, but I think passing "func" unconditionally to
-devm_clk_get() would also work fine.
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 
-Best regards
-Uwe
-
---763z7lvugsdeouil
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmncq3UACgkQj4D7WH0S
-/k7W3QgAoubMFAiRzq6hszjmm/xb9Gcgmkb//pXKEp2aWMTJOS8NxIwApQLcWVSK
-TER943wXO4h2gddLqDhxGqoClG/XTO5sQoTDI1E1iEgtqEhH+ubHu+wcTXTH7/VJ
-ukekULO5bPkCh5Ncgr6yIsL/YwSyBtAYm4PkxW5n+rKR7YHtmCX1T43b8GG4bkux
-u64sL5qYxGV98Mes56lCOu9v7k9fDKuGCrzIr9AL0zU20AVmF2kxVu/vmCJcl2Rt
-Yk7B8O0pYbZmRuGjn1YyulXnvBwo0GTWC6SHzoDC6fZVOMSBuQJJGz4CdpQGkXeE
-huqDvYA/yh/qxaNx8deyGc8oe1RB9Q==
-=xEV+
------END PGP SIGNATURE-----
-
---763z7lvugsdeouil--
+-- 
+viresh
