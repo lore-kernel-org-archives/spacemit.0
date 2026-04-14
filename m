@@ -1,110 +1,183 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FE22C21F4;
-	Tue, 14 Apr 2026 06:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776146697; cv=none; b=l1IZQ/MLUtm5x/8awsq8kPySANHoxnJAQNUR5k/tVOmynoqQ2WcTU4sqUN0aw9X3mkkx98rpK/u34EJ+HTva23B988Ih0JTdcGpf/GxYufq6cejdwcXtstapa4YlHcElFwK+SlbWSkTonK/gaH9VZk32oiZmjxpYrdLxCTNW2uo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776146697; c=relaxed/simple;
-	bh=l6iBfcudaZxGwh852DmRi0hqjipK/40+/a0KJ/CaPyA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IrYf5OcCkLTqLu9n9Fzl09Pz4AAbZwJRkR9qjV0yHd8e+We2dQQRLuzREzt51kuzIpUKBnvvWbiZ1g9xdgb7de2Wpgf1lGEBZCZz/g4PYsnDWmJMVeYznmka3F4iNBs+tJdTedRyGX51a0q7+oCf5VyfYhZrsGePg/oLyc9kedI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tkYJbgrc; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A05335F609
+	for <spacemit@lists.linux.dev>; Tue, 14 Apr 2026 07:12:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776150740; cv=pass; b=F7NBohtoCRzfGE+MTbCF0wmCDMtwn2WheDldYlF+LLuJbrJYALmhUABlx7uFpAIVzYmNm4kndVzNaQHthKzXBv3cYTZ1GcvKfDMx5tPU6rXOZc27FLPhVklnOknBWV7wB6jiR8mkb1bxl+EUUh/hq4a8AoUz8Uu7RMy8lJFdEOc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776150740; c=relaxed/simple;
+	bh=W21hpU/zPwJ5KfRYuG7wgrTjSpZ+RFTg6vZLOJQgufQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=e3m13b4n60pP+m/P4eVmJV7ZzVePdPhmdvr9WCafb7b+YeQi1sRbCrIWdbFo5cd677xxPb0Oqj9SDATS/CnJZH+rCmywnqskggwOkcAAtlqsYHQBnkrKSDSoK0XbNx4sHkayyeJQ8CO61i347Cxjxkks5evKlikwQIPbZHRJYiw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MIy4g4Gk; arc=pass smtp.client-ip=74.125.224.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tkYJbgrc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63420C19425;
-	Tue, 14 Apr 2026 06:04:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776146696;
-	bh=l6iBfcudaZxGwh852DmRi0hqjipK/40+/a0KJ/CaPyA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tkYJbgrczCaFmWG7KuMw4rMZsZ3tEH+yUIbVhVyTfBIVmOh+3LqxmxCJBIo2oPJYw
-	 Xht/EvbxkeJv5tGcJxZxtofyd6SZhbTXyc0eSk1okQ1OADs37rMEOcrHCgE3Xca5qA
-	 R71ORwt0WTwOy3MvQixkRwIDHFpGYbs7+ku34IdONQdifs1nr+JXzBonhaOwYJzTNT
-	 qrf13IZ+FqGfVXTZUIWObDTi78ZAQxAz3aGeYlbN57PAVGKjRTY/NWMycYgBxccoMP
-	 +C5I0ujLEDV/BNqWWNJ2rbwWJaM17EnRpOXPm5kW3SDtY3CN1X6jNy/fi8f++sNVVe
-	 EqS/CiwnNHBMQ==
-Date: Tue, 14 Apr 2026 06:04:53 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Duje =?utf-8?Q?Mihanovi=C4=87?= <duje@dujemihanovic.xyz>,
-	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 2/2] pwm: pxa: Add optional bus clock
-Message-ID: <20260414060453-GKA203300@kernel.org>
-References: <20260409-03-k3-pwm-drv-v1-0-1307a06fba38@kernel.org>
- <20260409-03-k3-pwm-drv-v1-2-1307a06fba38@kernel.org>
- <adyq-Uckwwe9uACA@monoceros>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MIy4g4Gk"
+Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-64d5a7926cfso4786009d50.2
+        for <spacemit@lists.linux.dev>; Tue, 14 Apr 2026 00:12:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776150737; cv=none;
+        d=google.com; s=arc-20240605;
+        b=hS3WV6vG/+wwjgmbkyc1L9XzxY3Hq93rU5uQD6F8Kmt6DFAgxMtv2HdMqUuuWHmY2w
+         PWTgHwiUOBdLgFKc7TN+zHhPTVMexR879QKj9+ffK1XTQ9pUSujk5rnF+CRjZ5ezt89P
+         aPO0SsrJM1fGTO6AlqbBlA/wtciuR9rFc2x9RMDGhhWO/Q78+/qg1pIEu6dViR0BvZjG
+         PdkDHWGwN63dJQDPU1+RXzJExwFSxbpcOwNgaq5bcdbXP/eRrbkzgt8AO/6PUPjggdKQ
+         aq0P62WNPzDhqzSIHcXWBb0yxAggjA9215t08I2LlMmNYE9PphZcMTRsN998pKHl0U+/
+         ZonQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=UEklUAX75lJKcC6L2ltl9qbkuGK/MzM9omGGWWVYxIk=;
+        fh=60f4noTB+BZe6oU5W3YZ+Fo7Rgl2ZehGn7a4JAG83u4=;
+        b=Um+jR/kZlrFQNEPRXPcJxE7b2PpLCsmwwm9/YwYAZko1uqtqKMYnpXiWG0s0TQXmVm
+         QTd9/FzUVdOwDrWGmdsvbdNyFXFR9JS0botnHxhTtdLn+01fYVcvqo2o8BWJ1aWzgdpi
+         8MohwYty3+FuP8UCTYTeT3eRTCBIucgasOAHZJXS7MWkFBIS6qsNA/9CK4XwOFp0VSvP
+         hXt6vxbrNfZYTkGATYm4qbG4zYSDmuW7RlgjnPaDcsWEATWpsAX/geUDAESfXmsrqbjY
+         nHmryd8XgO8/iVw1UqEOQ0jieoxzm0wyCsvQRSkcp3COpN1MD7A0XhQXrzhbn2Dk+DqH
+         vExA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776150737; x=1776755537; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UEklUAX75lJKcC6L2ltl9qbkuGK/MzM9omGGWWVYxIk=;
+        b=MIy4g4GkqvAB4LrMObvEVJBTXNwPJWKCwzTz5HR1iWrS7sK6TQaBaq9lQDK+GZ7xmP
+         3GpkoH+umeNiq0keMjFJNNbpcfzC37RH2OZbhBkLcfiE8UzBozfh6FQRd23DVIN40qis
+         v/V1XW3kCXrJ9xG3HwdK7efOA9H/swa1mUqFlob9yBho1M8CfmS8seCdNAW7/jtZFmlu
+         Y8KEuvuS8CXAw9rO9cIdfftKuxZXnYd6NnYe6vchZA+6wHqpDgNz37FKVBNfe1hLtbDP
+         htfJxr3YL4ZVfXh9dk0WhXHC2QRjCwNlbX6t9CeSSrDDoe/yN1OUOgaRRBZd5zx6Gf9g
+         metA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776150737; x=1776755537;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UEklUAX75lJKcC6L2ltl9qbkuGK/MzM9omGGWWVYxIk=;
+        b=czggXNNXeon7WI7SItLRBov+7MD9gH20XbjZe7+AboRiOOcBZZKdqkD+2AWm2EHkf6
+         uwv2pox8gZg6p1fMP7ZoInRM0jVqALi1mTziFMWXq9I9frthqg17MTlG1e9fbYNcznzp
+         CLHOfNZTuVduHzhq8B//rCjftiNXO+SPHrObQ8Z7v+aLYsIdd/tgAC5k5EhwF6gOTxJ0
+         GzQU2NraD9pqOoocnsL41CQM/tF1zrLz7WHJEkT/AXWXQS82vBq5ekPqV6r/Ts3dWHre
+         zWRK8RenQd39AGGiccLw52cp3kMcDp2FEZHt2yv/Vm81Bt927ZnUsayV9/88Knn3L2OX
+         FTYQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/1z/erO34h29x9vLPT42GUFzOc+jBX2v1T1aKt7ZVpFyD6Phb0xJdfdudvZFFr+DSRK421LAtELQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YySO5vLIloX7zQdf22PpPAHQGsV3epj3G23KNiumWQLZ2EimsMX
+	RvtakboQAobauISaZoaUHnI0DBwXC68Yz/Skon4CkFcUnY+p6pvQwqcMJoNGHcLmbZsg4SPPPby
+	taHTYUs0B2ka+ZT+zBYP2I5YgTzRGO7Q=
+X-Gm-Gg: AeBDievLsgz4d8Vt21bc7LYa/1kph4y/Dv7L0aUzPJ1UkUlkcAIbZGaiw7V1B2j1UZj
+	Ww61UwIopudCDC0awOXelpNmGUtGDzPz3Nj5R3e7itGUzNnDkque53CzXry+19aNiTYdh7Ju7GF
+	wDlxIJDcpa562RbdlwQtOaBQpFFc7bxWYif4nHPmhTmSkN5WDcAUUGOR/VWG5mY3mMsYPc1LmBC
+	D9l0oL1PVT+2Qu5la2+BBwtU0Op3dOe4ZMOVaCrMEeEnMCSdicgJPYMRSkSZ7J2YsnysWd0gqtK
+	ioebthL2
+X-Received: by 2002:a05:690e:168b:b0:651:b5ab:3357 with SMTP id
+ 956f58d0204a3-651b5ab391dmr9912157d50.49.1776150737202; Tue, 14 Apr 2026
+ 00:12:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <adyq-Uckwwe9uACA@monoceros>
+References: <20260413-orangepi-sd-card-uhs-v8-0-c21c40ec16d0@gmail.com> <f58ec12c-3957-4d44-b823-6a1ae1a1dd94@kernel.org>
+In-Reply-To: <f58ec12c-3957-4d44-b823-6a1ae1a1dd94@kernel.org>
+From: Iker Pedrosa <ikerpedrosam@gmail.com>
+Date: Tue, 14 Apr 2026 09:12:06 +0200
+X-Gm-Features: AQROBzCH_H9-7w6mImHbEDf_ELHtA5AMJp2lwX6Y8iAqLMql_XXAAzAws0UviM4
+Message-ID: <CABdCQ=NhTkGJUh_fKnZoQMzdpyO-UbV5zrSfiNVUC7bkSBifTA@mail.gmail.com>
+Subject: Re: [PATCH v8 0/9] riscv: spacemit: enable SD card support with UHS
+ modes for OrangePi RV2
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, Troy Mitchell <troy.mitchell@linux.dev>, 
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
+	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, Anand Moon <linux.amoon@gmail.com>, 
+	Trevor Gamblin <tgamblin@baylibre.com>, Vincent Legoll <legoll@online.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Uwe,
-
-On 10:38 Mon 13 Apr     , Uwe Kleine-König wrote:
-> Hello,
-> 
-> On Thu, Apr 09, 2026 at 12:45:12AM +0000, Yixun Lan wrote:
-> > Add one secondary optional bus clock for the PWM PXA driver, also keep it
-> > compatible with old single clock.
-> > 
-> > The SpacemiT K3 SoC require one bus clock for PWM controller, acquire
-> 
-> s/one/a/ ?
-> 
-Ok
-
-> > and enable it during probe phase.
-> > 
-> > Signed-off-by: Yixun Lan <dlan@kernel.org>
+El lun, 13 abr 2026 a las 10:07, Krzysztof Kozlowski
+(<krzk@kernel.org>) escribi=C3=B3:
+>
+> On 13/04/2026 10:02, Iker Pedrosa wrote:
+> > This series enables complete SD card support for the Spacemit K1-based
+> > OrangePi RV2 board, including UHS (Ultra High Speed) modes for
+> > high-performance SD card operation.
+> >
+> > Background
+> >
+> > The Spacemit K1 SoC includes an SDHCI controller capable of supporting
+> > SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
+> > currently lacks basic SD controller configuration, SDHCI driver
+> > enhancements for voltage switching and tuning, and power management
+> > infrastructure.
+> >
+> > Implementation
+> >
+> > The series enables SD card support through coordinated layers:
+> >
+> > - Hardware infrastructure (patches 1-2): Device tree bindings for volta=
+ge
+> > switching hardware and essential clock infrastructure.
+> > - SDHCI driver enhancements (patches 3-7): Regulator framework
+> > integration, pinctrl state switching for voltage domains, AIB register
+> > programming, and comprehensive SDR tuning support for reliable UHS
+> > operation.
+> > - SoC and board integration (patches 8-10): Complete K1 SoC controller
+> > definitions, PMIC power infrastructure, and OrangePi RV2 board enableme=
+nt
+> > with full UHS support.
+> >
+> > This transforms the OrangePi RV2 from having no SD card support to full
+> > UHS-I capability, enabling high-performance storage up to 208MHz.
+> >
+> > Tested-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+> > Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
 > > ---
-> >  drivers/pwm/pwm-pxa.c | 8 +++++++-
-> >  1 file changed, 7 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/pwm/pwm-pxa.c b/drivers/pwm/pwm-pxa.c
-> > index 0f5bdb0e395e..2ace31405c2d 100644
-> > --- a/drivers/pwm/pwm-pxa.c
-> > +++ b/drivers/pwm/pwm-pxa.c
-> > @@ -53,6 +53,7 @@ struct pxa_pwm_chip {
-> >  	struct device	*dev;
-> >  
-> >  	struct clk	*clk;
-> > +	struct clk	*bus_clk;
-> >  	void __iomem	*mmio_base;
-> >  };
-> >  
-> > @@ -177,7 +178,12 @@ static int pwm_probe(struct platform_device *pdev)
-> >  		return PTR_ERR(chip);
-> >  	pc = to_pxa_pwm_chip(chip);
-> >  
-> > -	pc->clk = devm_clk_get(dev, NULL);
-> > +	pc->bus_clk = devm_clk_get_optional_enabled(dev, "bus");
-> > +	if (IS_ERR(pc->bus_clk))
-> > +		return dev_err_probe(dev, PTR_ERR(pc->bus_clk), "Failed to get bus clock\n");
-> > +
-> > +	/* Get named func clk if bus clock is valid */
-> > +	pc->clk = devm_clk_get(dev, pc->bus_clk ? "func" : NULL);
-> 
-> A local variable for bus_clk would be sufficient.
-> 
-Ok, will do
+> > Changes in v8:
+> > - Resending the series as v8. The v7 submission failed due to an SMTP
+> >   error during transit, which resulted in a broken thread on the mailin=
+g
+> >   list.
+>
+> Hm? Everything is here:
+> https://lore.kernel.org/all/20260413-orangepi-sd-card-uhs-v7-1-16650f49c0=
+22@gmail.com/
+>
+> You can send individual patches to fix up threading, use --in-reply-to.
 
-> I'm not sure, but I think passing "func" unconditionally to
-> devm_clk_get() would also work fine.
-Passing "func" unconditionally, will break old compatibles(not k3-pwm), as only
-one clocks property is provided, but no clock-names property
+My apologies for the noise and the rapid resend.
 
--- 
-Yixun Lan (dlan)
+The reason for v8 was that the v7 cover letter (0/9) failed to reach
+the mailing list due to an SMTP error on my end. This left the v7
+thread "headless" in the archives without the changelog or the full
+context of the series. I was attempting to fix the threading
+immediately so that reviewers would have a complete set of patches to
+look at, but I realize now that resending the entire series on the
+same day was premature.
+
+>
+> > - No functional changes from v7.
+> > - Link to v7: https://lore.kernel.org/r/20260413-orangepi-sd-card-uhs-v=
+7-1-16650f49c022@gmail.com
+> >
+>
+> You already sent it on 13th of April. And now v8 the same day. Wait a
+> few days to allow people to actually review your code.
+>
+> It's BTW merge window, so big series should slow down.
+
+I take your point regarding the merge window. I will step back and
+wait for feedback on v8 once the window closes and you have more room
+for reviews.
+
+>
+> Best regards,
+> Krzysztof
