@@ -1,95 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FBF33BBC0;
-	Mon, 13 Apr 2026 15:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FE22C21F4;
+	Tue, 14 Apr 2026 06:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776094991; cv=none; b=P4ROzgr3VZRDVpsM//sEKU9sv7aY1jaQ2kWubFbOlIY9/WeEcNUAjUTNveVPkaK62mT06zI7gnXOdplsJ7WRl5FKeJinBeX+vw57Vo8CQpOv9aCNwXGNI/RYiVP/wPwgFy6BvVxrgLQhQqB7DkWmGVeriTKSS8J3q1J9FZ8UZFU=
+	t=1776146697; cv=none; b=l1IZQ/MLUtm5x/8awsq8kPySANHoxnJAQNUR5k/tVOmynoqQ2WcTU4sqUN0aw9X3mkkx98rpK/u34EJ+HTva23B988Ih0JTdcGpf/GxYufq6cejdwcXtstapa4YlHcElFwK+SlbWSkTonK/gaH9VZk32oiZmjxpYrdLxCTNW2uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776094991; c=relaxed/simple;
-	bh=J6M91WN4wCbUaBUzpCxhjIP7l+s0mcfpvXiabrHgDQg=;
+	s=arc-20240116; t=1776146697; c=relaxed/simple;
+	bh=l6iBfcudaZxGwh852DmRi0hqjipK/40+/a0KJ/CaPyA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E2jjhWJvkDrI2mdUhbn9rRdEmsaz82nnjG1MoqVKtOhgyAXi8riwlCp259dYEnwtW3yaxpk3XmnqxcuvBkTLNW4YUemb+WDX9NcqUdEkE9kUFJiHvNwHN6SH+pqgqE8j5AGxPyCqsgvi6f5ifbxbqa/8CLWfr9JCtcMMZHVOmhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R7aCrpwn; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=IrYf5OcCkLTqLu9n9Fzl09Pz4AAbZwJRkR9qjV0yHd8e+We2dQQRLuzREzt51kuzIpUKBnvvWbiZ1g9xdgb7de2Wpgf1lGEBZCZz/g4PYsnDWmJMVeYznmka3F4iNBs+tJdTedRyGX51a0q7+oCf5VyfYhZrsGePg/oLyc9kedI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tkYJbgrc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R7aCrpwn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F3DC2BCAF;
-	Mon, 13 Apr 2026 15:43:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tkYJbgrc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63420C19425;
+	Tue, 14 Apr 2026 06:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776094991;
-	bh=J6M91WN4wCbUaBUzpCxhjIP7l+s0mcfpvXiabrHgDQg=;
+	s=k20201202; t=1776146696;
+	bh=l6iBfcudaZxGwh852DmRi0hqjipK/40+/a0KJ/CaPyA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R7aCrpwnUb1R4a7GvWyujsiZt0jFDb4IG44cdICeSBu1WJQFlZtg0a0j1TpFphJUb
-	 Slk8vaaxDFtZkR5y5YPSrGJkaLiY9TPl/ZIGdFMst2FTguMDqptzOZK3oeSJBJCUc0
-	 n89V1Py4jWWoBOtqQuGQus+dzpWOhcx1FAW0ZyWSo0++CjSF85bGb0bM5qWEFOj4uG
-	 LhvbjkH7a8RxkExHNkdqQuFZ26aceoy99TGXuC5DkXe1dWTPeIcjzAj1zarEvDXGpr
-	 V+35PZ9B53Mlt7widHkX0lvULY0b4b5cdR+nplnqCAk/McSkHyANcqNOlE+FijOZOC
-	 Ut8t4eO1IOKpQ==
-Date: Mon, 13 Apr 2026 16:43:05 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Iker Pedrosa <ikerpedrosam@gmail.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	b=tkYJbgrczCaFmWG7KuMw4rMZsZ3tEH+yUIbVhVyTfBIVmOh+3LqxmxCJBIo2oPJYw
+	 Xht/EvbxkeJv5tGcJxZxtofyd6SZhbTXyc0eSk1okQ1OADs37rMEOcrHCgE3Xca5qA
+	 R71ORwt0WTwOy3MvQixkRwIDHFpGYbs7+ku34IdONQdifs1nr+JXzBonhaOwYJzTNT
+	 qrf13IZ+FqGfVXTZUIWObDTi78ZAQxAz3aGeYlbN57PAVGKjRTY/NWMycYgBxccoMP
+	 +C5I0ujLEDV/BNqWWNJ2rbwWJaM17EnRpOXPm5kW3SDtY3CN1X6jNy/fi8f++sNVVe
+	 EqS/CiwnNHBMQ==
+Date: Tue, 14 Apr 2026 06:04:53 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.dev>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 1/9] dt-bindings: mmc: spacemit,sdhci: add pinctrl
- support for voltage switching
-Message-ID: <20260413-marry-discover-e8357e12cf50@spud>
-References: <20260413-orangepi-sd-card-uhs-v7-0-16650f49c022@gmail.com>
- <20260413-orangepi-sd-card-uhs-v7-1-16650f49c022@gmail.com>
+	Duje =?utf-8?Q?Mihanovi=C4=87?= <duje@dujemihanovic.xyz>,
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH 2/2] pwm: pxa: Add optional bus clock
+Message-ID: <20260414060453-GKA203300@kernel.org>
+References: <20260409-03-k3-pwm-drv-v1-0-1307a06fba38@kernel.org>
+ <20260409-03-k3-pwm-drv-v1-2-1307a06fba38@kernel.org>
+ <adyq-Uckwwe9uACA@monoceros>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="url34NB/arvIj4F7"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260413-orangepi-sd-card-uhs-v7-1-16650f49c022@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <adyq-Uckwwe9uACA@monoceros>
 
+Hi Uwe,
 
---url34NB/arvIj4F7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 10:38 Mon 13 Apr     , Uwe Kleine-König wrote:
+> Hello,
+> 
+> On Thu, Apr 09, 2026 at 12:45:12AM +0000, Yixun Lan wrote:
+> > Add one secondary optional bus clock for the PWM PXA driver, also keep it
+> > compatible with old single clock.
+> > 
+> > The SpacemiT K3 SoC require one bus clock for PWM controller, acquire
+> 
+> s/one/a/ ?
+> 
+Ok
 
-On Mon, Apr 13, 2026 at 09:24:43AM +0200, Iker Pedrosa wrote:
-> Document pinctrl properties to support voltage-dependent pin
-> configuration switching for UHS-I SD card modes.
->=20
-> Add optional pinctrl-names property with two states:
-> - "default": For 3.3V operation with standard drive strength
-> - "state_uhs": For 1.8V operation with optimized drive strength
->=20
-> These pinctrl states allow the SDHCI driver to coordinate voltage
-> switching with pin configuration changes, ensuring proper signal
-> integrity during UHS-I mode transitions.
->=20
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+> > and enable it during probe phase.
+> > 
+> > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> > ---
+> >  drivers/pwm/pwm-pxa.c | 8 +++++++-
+> >  1 file changed, 7 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/pwm/pwm-pxa.c b/drivers/pwm/pwm-pxa.c
+> > index 0f5bdb0e395e..2ace31405c2d 100644
+> > --- a/drivers/pwm/pwm-pxa.c
+> > +++ b/drivers/pwm/pwm-pxa.c
+> > @@ -53,6 +53,7 @@ struct pxa_pwm_chip {
+> >  	struct device	*dev;
+> >  
+> >  	struct clk	*clk;
+> > +	struct clk	*bus_clk;
+> >  	void __iomem	*mmio_base;
+> >  };
+> >  
+> > @@ -177,7 +178,12 @@ static int pwm_probe(struct platform_device *pdev)
+> >  		return PTR_ERR(chip);
+> >  	pc = to_pxa_pwm_chip(chip);
+> >  
+> > -	pc->clk = devm_clk_get(dev, NULL);
+> > +	pc->bus_clk = devm_clk_get_optional_enabled(dev, "bus");
+> > +	if (IS_ERR(pc->bus_clk))
+> > +		return dev_err_probe(dev, PTR_ERR(pc->bus_clk), "Failed to get bus clock\n");
+> > +
+> > +	/* Get named func clk if bus clock is valid */
+> > +	pc->clk = devm_clk_get(dev, pc->bus_clk ? "func" : NULL);
+> 
+> A local variable for bus_clk would be sufficient.
+> 
+Ok, will do
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-pw-bot: not-applicable
+> I'm not sure, but I think passing "func" unconditionally to
+> devm_clk_get() would also work fine.
+Passing "func" unconditionally, will break old compatibles(not k3-pwm), as only
+one clocks property is provided, but no clock-names property
 
---url34NB/arvIj4F7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCad0PCQAKCRB4tDGHoIJi
-0ju+AP4tcscdxvK3w0q7a3EslP/B5N38OkukMtHg6HhJxJm+UgD/aSGhGAavzlZG
-/mHJ2SrhK59zNN/4YPhq1XaISVMRzww=
-=Mk/L
------END PGP SIGNATURE-----
-
---url34NB/arvIj4F7--
+-- 
+Yixun Lan (dlan)
