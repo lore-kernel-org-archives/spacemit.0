@@ -1,120 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287903822B1;
-	Mon, 20 Apr 2026 10:29:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC9239934A;
+	Mon, 20 Apr 2026 21:47:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776680944; cv=none; b=dFMHjBY3JOuQSDPUgTfsXQOBg5yzpYvPXIWNWWRGQ5IpGFB3iksHOqIk1xgMFj43QNFrge3af9ymJl/rYKI4AIP1QhVxUubhE+2M/0sg8UCdqb1KaeYPdawfWMp6x/Sjcljcxh7+0FFd9FkKzR+RyyOXNukYriUq/pMl4M7tM+Y=
+	t=1776721634; cv=none; b=VMCdvyB5SsBuwkbObupZjFPf0hgoSkFeBeMdSHhvUVK2pfoAJmGuzfhtE1uQklxmt9UT7xkq6UIb3tF77INnlF7NPF3HSpjRtQB7n+M0pMABloJdVXn2zqwF/rls35FQjCMsfKk2g040oSSAy/2L1XxHsvCVsZa63R8gU5nFtsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776680944; c=relaxed/simple;
-	bh=0l/khbXG365qvHSt4tdnvd9lJkQtLfC0n11gIj8/YcI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bHAXBpo5wezlA3OTl5hPlmIvH4YFf7Aa09l1kZuS5ILuLq7td6QoOZ/ISxuTuMpm9w25nAXhhJLLeUuvSmEoJxvokPbxzotyY7fmmlaP3+B7IkrRQpwH+8PPDOG3f1+DQHHehi5RE0Ey1uG7hNH9icS1mfFEmQl2eKWxIYPHpkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HCLpZkdh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776721634; c=relaxed/simple;
+	bh=CLLSksC9+qDIWHIyI4I9YQ5LoX/FB7wYqB2vmAruL5I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aqplI6I5IJZ7uUbloz5ax59A0r2AhzVBHQBBCjX9MvNvDNaf740Fus2Au+yPeIUyhQXKeSe6E6hIbK+132nhtHnr2djXxXMNHxz3Q1+owZDpOL6gZuxJsvSPTd1NvGsZzN2Om5Vrz/7ktHWG8rV2+uPUncEvrUvTdLSGDxhuX3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=HtBKX5/I; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HCLpZkdh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A254CC19425;
-	Mon, 20 Apr 2026 10:29:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776680943;
-	bh=0l/khbXG365qvHSt4tdnvd9lJkQtLfC0n11gIj8/YcI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HCLpZkdhx8ps1q6lRvBfYLkDjoAcK1NOrDUU9uuRlareQvHvR6z0qHN+3dRcd5Q+G
-	 mt7dlJVOimI2zN/riFJKH25Hw1PJwp6UklTBS+hhxHpqJ38eRneXd+o3sN6Og5DENJ
-	 Thh5Gy4S3bOe61F7tr3qDiUdTSriFYOHAV3t9LEogdBAWPVtVvP7MnJRyzpLugOjTi
-	 XpthXX5pmmuA1Pjqw+Y6KzVgU9VnW41aaTQocF63bSSMtgO4xADGyyQYAVW27/Nmeb
-	 PnyIsX21KRnMKhxiCDgX7iKzgf3QjOh3tRe+wJYbR3JPXw3ANiLJOjvbWfQMzZMGQu
-	 POD3jI6FLJbag==
-Message-ID: <f630642e-0d45-4b8d-8749-3ebdf76df22b@kernel.org>
-Date: Mon, 20 Apr 2026 12:28:58 +0200
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="HtBKX5/I"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=7vNfyFBOnLNbtekuQiXkiG2gtWPCS+o1h1We+Flr9lo=; b=HtBKX5/Il95oqVlLVCfX19riBr
+	g776peq+rh+OfYNsix46NL1UtKwuYZnaex5rnrF3cuzaIE7k8S6rNIK55Iolw5b08FauIzm73h9c0
+	/Ob57V+UtL6X3lmx1DkjhQR2MQawjHwjB1K9zY8wsAU4NeowmqR+xYBkE2z4EMb1gKhtbpWJbCuFt
+	zYbeSYp+4G0jdoLOLgNweuBIs0lOZDVDYAH3auT23Qx8R04lWxFwzWMD0onNH10sL9YC1GVYt+HYu
+	+gNxIKE6cZVQSKRXCTTXutKBm59tMW/ltoJawkhhqZNpj3iR3hIM1VhVVktrXIOGOBK/Cq1JrhqEX
+	wUh1pfvA==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wEvyu-0000000DyKx-2dhQ;
+	Mon, 20 Apr 2026 23:16:36 +0200
+Date: Mon, 20 Apr 2026 23:16:35 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Anand Moon <linux.amoon@gmail.com>
+Cc: Shuwei Wu <shuwei.wu@mailbox.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] riscv: dts: spacemit: Add cpu scaling for K1 SoC
+Message-ID: <aeaXszeaE62rM6BJ@aurel32.net>
+Mail-Followup-To: Anand Moon <linux.amoon@gmail.com>,
+	Shuwei Wu <shuwei.wu@mailbox.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
+References: <20260410-shadow-deps-v2-0-4e16b8c0f60e@mailbox.org>
+ <20260410-shadow-deps-v2-2-4e16b8c0f60e@mailbox.org>
+ <CANAwSgSNHO3MNewNzpYbhuj4K3NTdfzDC9KPoUHbFH97P4M_UQ@mail.gmail.com>
+ <DHUCL24GMX7D.369IWK9DLPZPX@mailbox.org>
+ <CANAwSgRt5-t_ah=phGc+CQYHG-CdWJuOX-2VTW6xE7n7EnVsFw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dts: riscv: spacemit: k3: only keep spacemit,k1-i2c
-To: Sandie Cao <sandie.cao@deepcomputing.io>, Yixun Lan <dlan@kernel.org>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
-References: <20260420083931.1427703-1-sandie.cao@deepcomputing.io>
- <dfa3f1a7-f4c6-4655-94c0-326f88db3896@kernel.org>
- <87ef529e-b591-49f5-9fc9-3099672e2f0f@kernel.org>
- <DHXUQHVK4XRN.3CVZ3GH75L4L4@linux.spacemit.com>
- <20260420090936-GKB203300@kernel.org>
- <407ce3d77416bb2522b7906b0df3d5adf02c27ee.5595e961.9ee2.4959.8935.9a8f33812b0c@feishu.cn>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.5595e961.9ee2.4959.8935.9a8f33812b0c@feishu.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CANAwSgRt5-t_ah=phGc+CQYHG-CdWJuOX-2VTW6xE7n7EnVsFw@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 20/04/2026 11:26, Sandie Cao wrote:
-> 
-> Please know that, I send patch[1] to add DeepComputing FML13V05 board device tree.  The patch is based on k1/dt-for-next[2]. 
-> And it meets dtscheck issue:
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/r/202604140259.eKDaxKua-lkp@intel.com/
-> 
-> On k1/dt-for-next, it doesn't have spacemit,k3-i2c in Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml.
-> Or I use the wrong branch? 
-> 
-> And what should I do for my patch[1] ?  
+Hi Anand,
 
-Test your patch on linux-next. See also maintainer-soc and
-maintainer-soc-clean-dts profiles in kernel.
+On 2026-04-16 17:07, Anand Moon wrote:
+> After reviewing the Banana Pi F3 schematics, I confirmed that Buck1 and B=
+uck2
+> Both supply the CORE_0V9 with 0.9V=C2=B11% rail. To resolve the restricti=
+on errors,
+> I expanded the voltage range in the DTS to 500,000=E2=80=93950,000 =C2=B5=
+V.
+>=20
+> Additionally, I updated the DTS to map the second CPU cluster (cores 4=E2=
+=80=937)
+> to Buck2 to better align with the hardware's power distribution.
 
+Actually the output of Buck1 and Buck2 are connected together, so they=20
+should always be configured with the same output voltage. And both=20
+clusters should be mapped to both outputs.
 
-Best regards,
-Krzysztof
+I also wonder why in the original patch the buck1 regulator is named=20
+buck1_3v45, from the schematics, it should rather be called buck1_0v9.
+
+Regards
+Aurelien
+
+--=20
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
