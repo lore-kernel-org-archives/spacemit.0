@@ -1,163 +1,120 @@
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A87A37FF50
-	for <spacemit@lists.linux.dev>; Mon, 20 Apr 2026 09:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287903822B1;
+	Mon, 20 Apr 2026 10:29:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776677730; cv=none; b=mjZFOFKGDEBdr/F7pr21MEwUEkrJpQmleIE0fIpvzD1dpNCVa+h43c2xAsefB7PPa+9hgGjeMskTS/VXIW937Qc8WffjSjHbBa1UnkJ1rq7OcE8m/86FXbOws+TIGKryjN5IagWYrvDXUj4S1w3Vzb1n1v1S9AtBbTRqEg7okUQ=
+	t=1776680944; cv=none; b=dFMHjBY3JOuQSDPUgTfsXQOBg5yzpYvPXIWNWWRGQ5IpGFB3iksHOqIk1xgMFj43QNFrge3af9ymJl/rYKI4AIP1QhVxUubhE+2M/0sg8UCdqb1KaeYPdawfWMp6x/Sjcljcxh7+0FFd9FkKzR+RyyOXNukYriUq/pMl4M7tM+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776677730; c=relaxed/simple;
-	bh=8W/J8aK+sWUGq5pncpL3L4qdZR0FZTI1XoD1DzM3QFg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Oiy7omOGYZ5JEuZSvmdZbhiN67M9B/ji+gEyYNhfKZTAF3CYboXfaHVJpFg0gBa5uTG7nz5DhAT3zrrDZP7PprqAfUu0V8o6/6+VsWUQrc9tx5dMpPyyulugqBq8JdjX94x9ngI5rm8UEZ5Bq+iFQUnNvokBP8k4fzWqM3B5USM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=y9dY48/l; arc=none smtp.client-ip=54.254.200.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1776680944; c=relaxed/simple;
+	bh=0l/khbXG365qvHSt4tdnvd9lJkQtLfC0n11gIj8/YcI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bHAXBpo5wezlA3OTl5hPlmIvH4YFf7Aa09l1kZuS5ILuLq7td6QoOZ/ISxuTuMpm9w25nAXhhJLLeUuvSmEoJxvokPbxzotyY7fmmlaP3+B7IkrRQpwH+8PPDOG3f1+DQHHehi5RE0Ey1uG7hNH9icS1mfFEmQl2eKWxIYPHpkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HCLpZkdh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="y9dY48/l"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1776677725;
-	bh=vkXbNIbR++h6pZ5ZhTdpzW0zQcZfR0zYZFiVasZtcwg=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=y9dY48/lFdNCv2em4ADMiyDDYROoAqiZuJE48fPMKtvmGMkdLvvhbDvEWCitPDsYA
-	 ZzsLC4Jbcr1MVYxT/pix4i7h8rlKWI7DAh0gb/EaIloN1TNhElsWycvT8zoQhz1kVl
-	 wBRflUXWFV2MlgvJERBDuGZsB19kU2Yl3km390ik=
-X-QQ-mid: zesmtpgz7t1776677719t20d36658
-X-QQ-Originating-IP: L8IWvy8kdMykC/iQ/0qMSe0QQFM6oUby0IAkvkRc1Dg=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 20 Apr 2026 17:35:17 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14122269761632793100
-EX-QQ-RecipientCnt: 16
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HCLpZkdh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A254CC19425;
+	Mon, 20 Apr 2026 10:29:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776680943;
+	bh=0l/khbXG365qvHSt4tdnvd9lJkQtLfC0n11gIj8/YcI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HCLpZkdhx8ps1q6lRvBfYLkDjoAcK1NOrDUU9uuRlareQvHvR6z0qHN+3dRcd5Q+G
+	 mt7dlJVOimI2zN/riFJKH25Hw1PJwp6UklTBS+hhxHpqJ38eRneXd+o3sN6Og5DENJ
+	 Thh5Gy4S3bOe61F7tr3qDiUdTSriFYOHAV3t9LEogdBAWPVtVvP7MnJRyzpLugOjTi
+	 XpthXX5pmmuA1Pjqw+Y6KzVgU9VnW41aaTQocF63bSSMtgO4xADGyyQYAVW27/Nmeb
+	 PnyIsX21KRnMKhxiCDgX7iKzgf3QjOh3tRe+wJYbR3JPXw3ANiLJOjvbWfQMzZMGQu
+	 POD3jI6FLJbag==
+Message-ID: <f630642e-0d45-4b8d-8749-3ebdf76df22b@kernel.org>
+Date: Mon, 20 Apr 2026 12:28:58 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 20 Apr 2026 17:35:17 +0800
-Message-Id: <DHXVORP1EJ4M.1ZOO1F7UVW11@linux.spacemit.com>
-Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Krzysztof
- Kozlowski" <krzk@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Paul Walmsley" <paul.walmsley@sifive.com>, "Palmer Dabbelt"
- <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre
- Ghiti" <alex@ghiti.fr>, <spacemit@lists.linux.dev>,
- <linux-riscv@lists.infradead.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "kernel test robot" <lkp@intel.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] dts: riscv: spacemit: k3: only keep spacemit,k1-i2c
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Sandie Cao" <sandie.cao@deepcomputing.io>, "Yixun Lan"
- <dlan@kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
+To: Sandie Cao <sandie.cao@deepcomputing.io>, Yixun Lan <dlan@kernel.org>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, spacemit@lists.linux.dev,
+ linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
 References: <20260420083931.1427703-1-sandie.cao@deepcomputing.io>
  <dfa3f1a7-f4c6-4655-94c0-326f88db3896@kernel.org>
  <87ef529e-b591-49f5-9fc9-3099672e2f0f@kernel.org>
  <DHXUQHVK4XRN.3CVZ3GH75L4L4@linux.spacemit.com>
  <20260420090936-GKB203300@kernel.org>
  <407ce3d77416bb2522b7906b0df3d5adf02c27ee.5595e961.9ee2.4959.8935.9a8f33812b0c@feishu.cn>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
 In-Reply-To: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.5595e961.9ee2.4959.8935.9a8f33812b0c@feishu.cn>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: N/BaP5J2bFjv+cFlyBYAxWjq06zRbwPipQRfHHX9jufE+m+DfwljltAk
-	DDKL9MEkGJlBl2uwtsuiXbgg7XYtFQfkSURsBNBIhtD8AiI0Yf2Lv3eiMi+FVFPRPo4kXkN
-	kDy1IS0ysQeKwg55GdiFp40YR+2+s6XxP1ghb14iiDBx+ipRMtkgxTrwfDTSIK3zkS6G2Jr
-	Te1LX7PLQYCIXQDJwYz5ROnmue/dkHxa0Tw5EWy1+LQhpsHXu4VQy248G2iizl6rX/hBNzB
-	BJ1rWv6uiybQVF1i8/wTzbQv/7eCP1zWN+1WfdZdNmx1xAx0fRlQxE/OWwjxQpZaMqUBPrP
-	ZTLYrEbVCX7+aJltzl047iWYJu19ukYgce0DdeXDmOebd5PbL8lGqkHQzdS073mrCIX2D1t
-	DvMiw8mpZJclcRtqh0eVsprmAKwCpu7tbNfLraO3X/Vh4f3/MVHJadLpHMjJsH4zBatVJDj
-	KqE0V0DhoiIEPA9ObrOVihsShmDkYj3D+7+ExdiaJqFOc0pSUgHiDi1weWlRxK1D5gvFvMc
-	ZW5kEyVOg3BjtFih4WoiFa+HqKR0VxJOQRxlex1WLWyctV2J4R9bHADLbmdNAdroWSMa2qP
-	ikP2g35mh0KKAm1SeNO8DgELvfSqO0JXwMmJNTH+hhjHZVtNqMTic0RFbqaYU9qKGLd9r9x
-	wjlbL2vIgJST0Paj1TRmGCjKtUMJZmQmctpapivoQYF8gu3Ms6mI9yeuSavrk0WuDuYu9Ey
-	JzP5vvCXNDjnVgJPxq8yQR9P/GIAzbx4XkQtkGKY3KrXRthC3qKzOJ1zhtPtBhnOVMlFm6Y
-	NtPsfp+StA0nkAaPLM/C2jd1/lAoDINPCauMkNeAgSWuD6ViC4RI8d9Fk2W6GQvOrovQJFC
-	kahiz56CCu9QFA5TZQjTADPO+8yUhAq27nXIuYcXoWa6OwoixxeOCDhAfoiyw/b1LF76ZaZ
-	or3pB0rE5qPrHo/1+Jg3BwyH1y7sWHHaw/r/zXoBrn5UHomt/qIoFLgbTb9HoEFU4mkDGf9
-	QwOQJfmjfcEufhTsJJlE9x0rHeOXOaC4pv7FjeUcKEEj3cAII85ffLK1LVPbeQ0lUJs9Ncd
-	gfnsfWzIYPm7XHsG2dPB1mi3Lwe4PhugtPCX+osFNBH
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon Apr 20, 2026 at 5:26 PM CST, Sandie Cao wrote:
-> Hi, Lan & Troy & Krzysztof :
->
->> From: "Yixun Lan"<dlan@kernel.org>
->> Date:=C2=A0 Mon, Apr 20, 2026, 17:09
->
->> Hi Troy,
->>=C2=A0
->> On 16:50 Mon 20 Apr =C2=A0 =C2=A0 , Troy Mitchell wrote:
->> > On Mon Apr 20, 2026 at 4:44 PM CST, Krzysztof Kozlowski wrote:
->> > > On 20/04/2026 10:43, Krzysztof Kozlowski wrote:
->> > >> On 20/04/2026 10:39, Sandie Cao wrote:
->> > >>> Fix dtcheck issue: compatible:0: 'spacemit,k1-i2c' was expected
->> > >>=C2=A0
->> > >> Missing space after main commit msg.
->> > >>=C2=A0
->> > >>> Reported-by: kernel test robot <lkp@intel.com>
->> > >>> Closes: https://lore.kernel.org/r/202604140259.eKDaxKua-lkp@intel.=
-com/
->> > >>>
->> > >
->> > > Also, the file reported in above warning DOES NOT EXIST (I checked
->> > > next-20260414).
->> > In Documentation/devicetree/bindings/pinctrl/spacemit,k1-pinctrl.yaml:
->> >=C2=A0
->> > properties:
->> > =C2=A0 compatible:
->> > =C2=A0 =C2=A0 enum:
->> > =C2=A0 =C2=A0 =C2=A0 - spacemit,k1-pinctrl
->> > =C2=A0 =C2=A0 =C2=A0 - spacemit,k3-pinctrl
->> >=C2=A0
->> I think you refer to wrong file, which should be
->> =C2=A0Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
->>=C2=A0
->> > So there's no reason to use k1-i2c. As far as I can tell, while they a=
-re the same IP,
->> > there are subtle differences between them.
->> >=C2=A0
->> But yes, the idea is correct, so NAK to this patch
->> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 - Troy
->>=C2=A0
->> --=C2=A0
->> Yixun Lan (dlan)
->>=C2=A0
->
-> Please know that, I send patch[1] to add DeepComputing FML13V05 board dev=
-ice tree.=C2=A0 The patch is based on k1/dt-for-next[2].=C2=A0
+On 20/04/2026 11:26, Sandie Cao wrote:
+> 
+> Please know that, I send patch[1] to add DeepComputing FML13V05 board device tree.  The patch is based on k1/dt-for-next[2]. 
 > And it meets dtscheck issue:
 > Reported-by: kernel test robot <lkp@intel.com>
 > Closes: https://lore.kernel.org/r/202604140259.eKDaxKua-lkp@intel.com/
->
-> On k1/dt-for-next, it doesn't have spacemit,k3-i2c in Documentation/devic=
-etree/bindings/i2c/spacemit,k1-i2c.yaml.
-> Or I use the wrong branch?=C2=A0
-Yes... You are using a wrong branch I think.=20
-The k1/dt-for-next branch in this repo is Dlan=E2=80=99s tree. Since DT bin=
-dings are not within
-his purview, they aren't included there. I only mentioned this repository e=
-arlier to
-show that the UART portion of the pinctrl dtsi has already been merged into=
- it;
-it wasn't intended to be used as your development base.
->
-> And what should I do for my patch[1] ? =C2=A0
-I think you can use next-20260417 as your base commit.
-Everything you need is available here.
+> 
+> On k1/dt-for-next, it doesn't have spacemit,k3-i2c in Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml.
+> Or I use the wrong branch? 
+> 
+> And what should I do for my patch[1] ?  
 
-                                      - Troy
->
-> [1] https://lore.kernel.org/all/20260413060524.1235982-1-sandie.cao@deepc=
-omputing.io/
-> [2] https://github.com/spacemit-com/linux/tree/k1/for-next#
->
-> Best regards
-> Sandie
+Test your patch on linux-next. See also maintainer-soc and
+maintainer-soc-clean-dts profiles in kernel.
 
+
+Best regards,
+Krzysztof
