@@ -1,110 +1,124 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C91D301474
-	for <spacemit@lists.linux.dev>; Tue, 21 Apr 2026 08:11:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8425B33F8B4;
+	Tue, 21 Apr 2026 17:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776759064; cv=none; b=S+7cRtHyE0gdr9wYMczZZDIt/bfA1zSuqU3Oh6Y3Om4XOfMTXKolXeUCoMYKa6dmAvSfay+AsQLiS9I+EzJDWKa3IhIMBLNWMAa90Ev0Y/oxyJtvgCFK/4VYwSYwh1T1WsFWbBv5jw0G8eAMpoT081PhWGyIuhOKTK4ns0bPT0g=
+	t=1776791480; cv=none; b=ak8OlrjTkT6+jbxWJZDSLNbtW1Ti29H2GwYOkITF/CrDdn2y3DMFO0QW5N7F9C0ZIqMgy3BtWUZMEMhH31Da72UAQA2cWZZj9wBhZV0MtXlJgiDEq9exJAfl8exgzIE2+XmEHEeh5Lt2XrHlLC0dEZ7qg7sZxplRKFoUInWCTB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776759064; c=relaxed/simple;
-	bh=Tw5y/BjaWKbihGRIOsYkTlgniAaZpFkNRSj8PyADtm8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=jOkQYFHfNKw0q7jrkngkwVAVfhlyDIWauV56ejvFPn8HSsLM62T3p/5IVob9/dSU7GUoJ5ZU+F+99FFznA5/LvqreNH0rReaAUm7WWz22EINVGGJ+5+eTmATrfjuCROP/s71RH9q3M/t7kkvKiBZsWJGAy0xfb26Y1B94c02aJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=dHhiLQWX; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1776791480; c=relaxed/simple;
+	bh=zMNU29+wUjgpn9Ja3lorEBJU6chv56zxhp13d5Ny4L4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LF5RWTwUQr9RmXrLz8ocjDEH0uYs6R5utIOmeRf5Svyea03OLRiqxB54msIH4zyFtt+hiI/ZuhGz4AQiGrdxumO6qjvYBHvMPJ9km9F0GvYpmM3/BwoAPtAb52kN5nwV+56d0vLfBP6t8YPCRugcTKS8VBA7ZfBJO8R9P1A+ebY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=T4HGdHmr; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="dHhiLQWX"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4g0FRJ4rD5z9tMq;
-	Tue, 21 Apr 2026 10:10:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1776759052;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Tw5y/BjaWKbihGRIOsYkTlgniAaZpFkNRSj8PyADtm8=;
-	b=dHhiLQWXIWgWFHaJiWrcbUeW05na81V5ClSqTnpiBMdlHHS+ddX5yPOhQN4CUfDvOifOm5
-	CsSq6HZ64idqIQgd0FbGmyBtHSW0CKc971hEjXK1xMb5zG3S9lqNZ6d1dap736e9vNVEaC
-	fNwf7+pnHoB1wfV0E3XogxIw17WRWOrruixz+kyV4r7PdqziKdFnClKr0BNDgzKlGgtPZQ
-	vVJ0Qw/c1uPhxyYTszZXExAb4cff0lWCwF5/bCI/APZk5t9X+ZrvAEvHzq2jzDXqZzMQYm
-	6z8Pzd+N8x9ow2AEYLmdlqUFtbWSZX9vYDNtVXk40PeZ2dAq9m4Qh8gr9acWNQ==
-Precedence: bulk
-X-Mailing-List: spacemit@lists.linux.dev
-List-Id: <spacemit.lists.linux.dev>
-List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 21 Apr 2026 16:10:39 +0800
-Message-Id: <DHYOIIFMGH7J.228ISQ7XYFGKE@mailbox.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, "Viresh Kumar"
- <viresh.kumar@linaro.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>,
- "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
- "Yixun Lan" <dlan@kernel.org>, <linux-pm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <devicetree@vger.kernel.org>
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="T4HGdHmr"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=VjnkFdeZK7rty5DMcJ7z5EdKxdECkqDgYWJysUP63zQ=; b=T4HGdHmrOrluO2Ljr/dWivyZ/q
+	XEz+F6FFQV9KvN5chUsSMn/90jdUnWIRsl/TcM44S7Dy3dHV6YnkEsuXRIbsP6jk20vj9RHQOoH2O
+	nDN+cdpnUSHl/lZ6RNkDb0eMfHZTOYkqfQbqM2xQfpO06tvvZoUkHJStS8a0CeFISAafOB8YL2qbY
+	osxvAtbGVH7N5b8i/b9nP8mtQgaIYf+4vLO5KvWnEvRmgEvab04CU48qkdvM+WCvnvapYtMWsc2Sc
+	Sq0YXHS/X8f0Iq7bioDgo+IV/lWNUJno4kCUM0K7wsA4JqFa04aGtX2Wvt5YbNzHckZIp6OEroajD
+	Alw1SLTA==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wFEcx-0000000F5X7-3F74;
+	Tue, 21 Apr 2026 19:11:11 +0200
+Date: Tue, 21 Apr 2026 19:11:11 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Shuwei Wu <shuwei.wu@mailbox.org>
+Cc: Anand Moon <linux.amoon@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
 Subject: Re: [PATCH v2 2/2] riscv: dts: spacemit: Add cpu scaling for K1 SoC
-From: "Shuwei Wu" <shuwei.wu@mailbox.org>
-To: "Aurelien Jarno" <aurelien@aurel32.net>, "Anand Moon"
- <linux.amoon@gmail.com>
+Message-ID: <aeevr6Zj3Pwm9wux@aurel32.net>
+Mail-Followup-To: Shuwei Wu <shuwei.wu@mailbox.org>,
+	Anand Moon <linux.amoon@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
 References: <20260410-shadow-deps-v2-0-4e16b8c0f60e@mailbox.org>
  <20260410-shadow-deps-v2-2-4e16b8c0f60e@mailbox.org>
  <CANAwSgSNHO3MNewNzpYbhuj4K3NTdfzDC9KPoUHbFH97P4M_UQ@mail.gmail.com>
  <DHUCL24GMX7D.369IWK9DLPZPX@mailbox.org>
  <CANAwSgRt5-t_ah=phGc+CQYHG-CdWJuOX-2VTW6xE7n7EnVsFw@mail.gmail.com>
  <aeaXszeaE62rM6BJ@aurel32.net>
-In-Reply-To: <aeaXszeaE62rM6BJ@aurel32.net>
-X-MBO-RS-ID: 898c96528d6322090f5
-X-MBO-RS-META: dyrjym6i7ydcwho6k8h6h6sh3yn8yuoe
+ <DHYOIIFMGH7J.228ISQ7XYFGKE@mailbox.org>
+Precedence: bulk
+X-Mailing-List: spacemit@lists.linux.dev
+List-Id: <spacemit.lists.linux.dev>
+List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <DHYOIIFMGH7J.228ISQ7XYFGKE@mailbox.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Hi Aurelien,
+Hi,
 
-Thanks for your addition.
-
-On Tue Apr 21, 2026 at 5:16 AM CST, Aurelien Jarno wrote:
-> Hi Anand,
->
-> On 2026-04-16 17:07, Anand Moon wrote:
->> After reviewing the Banana Pi F3 schematics, I confirmed that Buck1 and =
-Buck2
->> Both supply the CORE_0V9 with 0.9V=C2=B11% rail. To resolve the restrict=
-ion errors,
->> I expanded the voltage range in the DTS to 500,000=E2=80=93950,000 =C2=
+On 2026-04-21 16:10, Shuwei Wu wrote:
+> Hi Aurelien,
+>=20
+> Thanks for your addition.
+>=20
+> On Tue Apr 21, 2026 at 5:16 AM CST, Aurelien Jarno wrote:
+> > Hi Anand,
+> >
+> > On 2026-04-16 17:07, Anand Moon wrote:
+> >> After reviewing the Banana Pi F3 schematics, I confirmed that Buck1 an=
+d Buck2
+> >> Both supply the CORE_0V9 with 0.9V=C2=B11% rail. To resolve the restri=
+ction errors,
+> >> I expanded the voltage range in the DTS to 500,000=E2=80=93950,000 =C2=
 =B5V.
->>=20
->> Additionally, I updated the DTS to map the second CPU cluster (cores 4=
+> >>=20
+> >> Additionally, I updated the DTS to map the second CPU cluster (cores 4=
 =E2=80=937)
->> to Buck2 to better align with the hardware's power distribution.
->
-> Actually the output of Buck1 and Buck2 are connected together, so they=20
-> should always be configured with the same output voltage. And both=20
-> clusters should be mapped to both outputs.
+> >> to Buck2 to better align with the hardware's power distribution.
+> >
+> > Actually the output of Buck1 and Buck2 are connected together, so they=
+=20
+> > should always be configured with the same output voltage. And both=20
+> > clusters should be mapped to both outputs.
+>=20
+> You are right, I received the same response from the official developers.
+>=20
+> Therefore, I'm wondering if an additional regulator-coupled-with: property
+> definition is also needed here?
 
-You are right, I received the same response from the official developers.
+Yes, I think this is the way to go. I even wonder if this shouldn't be a=20
+fix with Cc: stable. This also has to be done for the Milk-V Jupiter=20
+board, I haven't checked the other boards yet, but I guess they all use=20
+the same schematics at that the PMIC level.
 
-Therefore, I'm wondering if an additional regulator-coupled-with: property
-definition is also needed here?
-
->
-> I also wonder why in the original patch the buck1 regulator is named=20
-> buck1_3v45, from the schematics, it should rather be called buck1_0v9.
-
-Yes, my definition here ignores the regulator's default voltage.
-Thank you for pointing this out.
-
->
-> Regards
-> Aurelien
+Regards
+Aurelien
 
 --=20
-Best regards,
-Shuwei Wu
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
