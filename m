@@ -1,168 +1,93 @@
-Received: from mail-dy1-f196.google.com (mail-dy1-f196.google.com [74.125.82.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E5B3AD50D
-	for <spacemit@lists.linux.dev>; Fri, 24 Apr 2026 13:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4219033F5A5;
+	Fri, 24 Apr 2026 17:03:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777039119; cv=none; b=iGLTCoKGDtj48bfSjXZOSJ/KQGpS5S/05YNtpReglppNPi4cjARk4iN4Qnl4mdLCy/sjGu9juy6arFQ+kY1Ax32irsHmFdvP1O61mavHDyI6cItGjFPfuqXsmIAzV4C6qsWVEnGWq2uTOak4I0zt6AypTtHTAzbTNAVzioMGjoU=
+	t=1777050235; cv=none; b=aQkH9qSNTyX1UIAcoO9Uw9Mzbl2DKS/+PN/Ko2wwSaDSZAJBUqRoLBqJV+YNGNkSN8Kv1tnFuWUju3Ez4t253dmU7P7cE5W0hueEwLxizPOkmyJM16xrR1DfYQdeTsMUqwZZaoL+PV0asUayqsThCSTtMSA8a6u7b6LumVTVgyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777039119; c=relaxed/simple;
-	bh=Ssr2le1yMNDssZLgJHFOiNfQv+GrasneJW4v/zdCPU4=;
-	h=From:Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:
-	 References:In-Reply-To; b=gf8at4aeiuoOBqcV/oV4gbbCEh4scmnb7VddjHVM9VOfk0R8Imt9Rh+uq1SFJz56nNvHuEynfa3/YrEi9w/cIDDTR/jtwFwwnnvcovjpV59RIej0pnM284IUP+xZmN6EUBU0K3oYH8kuXRP8+chjJAA5NTfUGJPvpPiF5ul0DA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hbo/7sVC; arc=none smtp.client-ip=74.125.82.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777050235; c=relaxed/simple;
+	bh=vpzvilq6KjAFWPzsZTe/h1k59Km6tBvjeHIMJU1XgVU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PaZT7ekBetI1ZIV6YtHml/fC7DTBlBiIW6oxRr1do3G+houJQj4ZFH+t7d+3as4RSqRjOs0RvciPIyroCJS4wkw5ILepWoOdnFVuleC1+k8Jsdc/3bxaeFedu7rQlN4SENHkl5PgI82IkW4lAK4TF9nW/5CWumMlaQSI5aoCaNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IpugPL49; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hbo/7sVC"
-Received: by mail-dy1-f196.google.com with SMTP id 5a478bee46e88-2bdd40d3c61so7620923eec.1
-        for <spacemit@lists.linux.dev>; Fri, 24 Apr 2026 06:58:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777039114; x=1777643914; darn=lists.linux.dev;
-        h=in-reply-to:references:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PQxAgNQNXDNCO7hb32JxDK6aD4YqIXLUMAcyq751mmc=;
-        b=hbo/7sVCUoPD/jxGeuyJk3MDnvqMdFBMUVJD+Z4eqNCJPYH/mOC2rqlPPR9ibeXlrV
-         7CzrKKpEyRUbNEZ5Mjyhl74RFmQfOFrDrOgqynm1/Aro805M7bQAnm4BtuWUUgyouyE7
-         zh6Y+2RuTkqWVNB//sVg8zNPBqR1GbtGQTlMQn7YCDT3evsaCalNjv8sJCxJKrWJH/8l
-         f7LRZJI2ovc/u1D7g6EYzMlWhIKr7kLv3VwnO6tM06iHuZLWJanSeAl7IRVkUJZvNemo
-         B3VJ8zkExLO6rb1fhqbG8+8adMku7wYxbFqYTHKpp3CKLMoVDtMejRgmMwJoFEQ9+4hd
-         w3xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777039114; x=1777643914;
-        h=in-reply-to:references:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PQxAgNQNXDNCO7hb32JxDK6aD4YqIXLUMAcyq751mmc=;
-        b=BfcfqCC+BdL9nfP/aHITCyDeevL3yUQ/5jvu+Gw6oxuf7RKwCg0HE7TgiyDWE8s2aP
-         pDXaPN51TYI6x1doprMQhA+Ncp9kaRjPyTzozWovYJUzKEqlBnETLQzH710oPXe4CeNr
-         4GB+q0PfpmB8HQWwGM5xpqM7AfxvQemesT8MYPz5TGd1a35MSNapKXwMCLR6G1NLHkfg
-         rLb6FrAZZ1h3iPpDfCYwG2zMhwSTFw6++IFkybmaMy8wHDL+51u+BmZmD0L9jYrafvKm
-         e78ItPEfSJV8GLqUzmCSebd2frjaQ5QXfouX2nfyJM0kEYQspbtOVNRhxF4BtFv5wic0
-         wd4A==
-X-Forwarded-Encrypted: i=1; AFNElJ8M2a2TOJHSimXm0/k0vFKIBpCPS5Th7tXJ0qBIDNCa1SJMCygMFSpIgu0Vpj3FEanOjJ34+35OLg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyk4Qt00utDNNwWt+3mkeEtAn1hP7nEIYBpAkh+6oJRQMOdQub/
-	gKsx0gwXaDImBVmHk7XyzKkjOYLwnSTmuZrXxLjZ6skk7KQESD8S5quw
-X-Gm-Gg: AeBDietnt+924q575k65DDi7OHGeMX1j2K6Jvu/lByyCHVez7cO2ZaRjHIb7I7gZMHN
-	BLT6LD142b+Sm/K9Hv8Myyo9skd6T1O6kBFvwoogBFijsL+yTs2t9qz5+qwtC22AUldFo7bL+1d
-	T/Ai0JPhUzTJPEmA0aWPayX5u35NfQVJQ44clnWFBk59Bn5VB5LSUOVsOFuKWzEjEfbpuJa1awr
-	ssbMyWifprGdQkgs8bXMpm68rbtoIftx9BIzrRzcncrGUKyKUv1xc9kfkPF5aiEHlAGPWhWCANQ
-	DBOsMBsilrm71oIviQP7G9S4/VGEiKE43aDtn8rJOuUs73ezTwqOLQQNm6xgbaq2zTkQWvdtKtS
-	6u7r9M667RQdPeVUQNT6xopB0cOHofAgmJ3JNCD4aMQaqbFSsGA1WesLSTrz09S+LNKMYu042Fr
-	7ohrhT6D7mEsEaPGWloLRF5Z9xiCeUptJw/AkHmNuvns0=
-X-Received: by 2002:a05:693c:2b15:b0:2c1:3f85:747 with SMTP id 5a478bee46e88-2e47a1027d4mr19101535eec.21.1777039114063;
-        Fri, 24 Apr 2026 06:58:34 -0700 (PDT)
-Received: from localhost ([2408:8256:2289:187:7e9d:5b36:3e7c:859d])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2e53dcb487bsm32940358eec.31.2026.04.24.06.58.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Apr 2026 06:58:33 -0700 (PDT)
-From: Troy Mitchell <troymitchell988@gmail.com>
-X-Google-Original-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IpugPL49"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBB8C19425;
+	Fri, 24 Apr 2026 17:03:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777050235;
+	bh=vpzvilq6KjAFWPzsZTe/h1k59Km6tBvjeHIMJU1XgVU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IpugPL49eT4rknt5I79qcZe3fYCzBUMSyILi/UbhYrpOpoDXJilS3IwNftdeMohl0
+	 r2v1HMKoXASRE/RWS1+TEW2XtBCaGY5Zddy1REBKsHeDsEzlPyFt4njYIAUJZC7/pI
+	 YlZ08TtSOsv1pN2mhbws/nv6oP28HANjH8LIatOLOnzUBBbmXwr9CLTEQYNDM6izek
+	 Bv0F1uJ3sUqnvIEq8bQVdJ7A88BNJOHIfkGxwge+/M2mPYOJu1+jmUF5X5yz335kIi
+	 cw1ei+fsew6EHR/N/bKn6eD2ISFWlMJkMTYjRjAAVef0+mnZRyiFe+h2gTv2mzCkxJ
+	 7pC5x8SS72STA==
+Date: Fri, 24 Apr 2026 18:03:49 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	Guodong Xu <guodong@riscstar.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] dt-bindings: dmaengine: Add SpacemiT K3 DMA
+ compatible string
+Message-ID: <20260424-collector-zone-26410e4707a7@spud>
+References: <20260424-k3-pdma-v3-0-efdf2e414a08@linux.spacemit.com>
+ <20260424-k3-pdma-v3-1-efdf2e414a08@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FJVvYi+3HKEojWVf"
+Content-Disposition: inline
+In-Reply-To: <20260424-k3-pdma-v3-1-efdf2e414a08@linux.spacemit.com>
+
+
+--FJVvYi+3HKEojWVf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 24 Apr 2026 21:58:27 +0800
-Message-Id: <DI1FSG6ITXK3.GG7XHRD4JSGC@linux.spacemit.com>
-To: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Vinod Koul"
- <vkoul@kernel.org>, "Frank Li" <Frank.Li@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Guodong Xu"
- <guodong@riscstar.com>, "Michael Turquette" <mturquette@baylibre.com>,
- "Stephen Boyd" <sboyd@kernel.org>, "Paul Walmsley" <pjw@kernel.org>,
- "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Alexandre Ghiti" <alex@ghiti.fr>
-Cc: <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>, "Brian Masney"
- <bmasney@redhat.com>
-Subject: Re: [PATCH v3 0/5] dmaengine: Add Peripheral DMA support for
- SpacemiT K3 SoC
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260424-k3-pdma-v3-0-efdf2e414a08@linux.spacemit.com>
-In-Reply-To: <20260424-k3-pdma-v3-0-efdf2e414a08@linux.spacemit.com>
 
-Apologies, I just realized the version number is incorrect.
-This patchset should be v4.
+On Fri, Apr 24, 2026 at 04:20:29PM +0800, Troy Mitchell wrote:
+> From: Guodong Xu <guodong@riscstar.com>
+>=20
+> Add the "spacemit,k3-pdma" compatible string for the SpacemiT K3 SoC.
+>=20
+> While the K3 PDMA IP reuses most of the design found on the earlier
+> K1 SoC, a new compatible string is required because the DRCMR
+> (DMA Request/Command Register) base address for extended DMA request
+> numbers (>=3D 64) differs from the K1 implementation.
+>=20
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-                                      - Troy
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+pw-bot: not-applicable
 
-On Fri Apr 24, 2026 at 4:20 PM CST, Troy Mitchell wrote:
-> Hi all,
->
-> This patch series introduces Peripheral DMA (PDMA) support for the
-> SpacemiT K3 SoC, leveraging the existing mmp_pdma driver.
->
-> The K3 PDMA IP is largely based on the design found in the previous
-> SpacemiT K1 SoC, but introduces a few key architectural differences:
-> 1. It features a variable extended DRCMR base address for DMA request
->    numbers (>=3D 64) depending on the hardware implementation.
-> 2. Unlike the K1 SoC, where some DMA masters had memory addressing
->    limitations (requiring a dedicated dma-bus), the K3 DMA masters
->    have full memory addressing capabilities.
->
-> The series is structured as follows:
-> - Patch 1: Introduce the necessary dt-bindings: K3 compatible string.
-> - Patch 2-3: Refactor the mmp_pdma driver to support variable extended
->   DRCMR bases, and add the specific implementation/ops for the K3 SoC.
-> - Patch 4: Fixes a critical clock issue where the DDR bus clock
->   (top_dclk) could be gated by CCF, which would cause DMA engines to
->   hang and lead to system instability.
-> - Patch 5: Finally, instantiates the PDMA controller node in the
->   SpacemiT K3 device tree.
->
-> ---
-> Changes in v4:
-> - patch 4/5:
->   - add Brian's RB tag
-> - patch 1/5:
->   - update commit message
-> Link to v3: https://lore.kernel.org/all/20260331-k3-pdma-v3-0-a4e60dd8b4b=
-3@linux.spacemit.com/
->
-> Changes in v3:
-> - Removed the dt-bindings patches related to the DMA number.
-> - patch 1/5:
->   - update commit message
-> - patch 2-5: nothing
-> - Link to v2: https://lore.kernel.org/r/20260326-k3-pdma-v2-0-ca94ca7bb59=
-5@linux.spacemit.com
->
-> Changes in v2:
-> - patch 1-6 are added in this version
-> - patch 7/7
->   - update commit message
->   - using k3 compatible string
->   - Link to v1: https://lore.kernel.org/all/20260317-k3-pdma-v1-1-f39d3e9=
-7b53a@linux.spacemit.com/
->
-> ---
-> Guodong Xu (3):
->       dt-bindings: dmaengine: Add SpacemiT K3 DMA compatible string
->       dmaengine: mmp_pdma: support variable extended DRCMR base
->       dmaengine: mmp_pdma: add Spacemit K3 support
->
-> Troy Mitchell (2):
->       clk: spacemit: k3: mark top_dclk as CLK_IS_CRITICAL
->       riscv: dts: spacemit: Add PDMA controller node for K3 SoC
->
->  .../devicetree/bindings/dma/spacemit,k1-pdma.yaml  |  4 ++-
->  arch/riscv/boot/dts/spacemit/k3.dtsi               | 11 +++++++
->  drivers/clk/spacemit/ccu-k3.c                      |  2 +-
->  drivers/dma/mmp_pdma.c                             | 37 ++++++++++++++++=
-++++--
->  4 files changed, 49 insertions(+), 5 deletions(-)
-> ---
-> base-commit: 02f90981a67f3b9ee7d6684e7503a4fed7aade0c
-> change-id: 20260317-k3-pdma-7c1734431436
->
-> Best regards,
-> -- =20
-> Troy Mitchell <troy.mitchell@linux.spacemit.com>
+--FJVvYi+3HKEojWVf
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaeuidQAKCRB4tDGHoIJi
+0t/CAQCIAOQN4TYlpXK82vNLDwwODSFHT7GsOjh3smrUC7w+mwEA8RlB1ObCy1Og
+Sg0d01zgcYTCnZq0zfzrc83Psv/L+w8=
+=xIIX
+-----END PGP SIGNATURE-----
+
+--FJVvYi+3HKEojWVf--
