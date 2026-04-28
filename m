@@ -1,108 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F191E9B35;
-	Tue, 28 Apr 2026 00:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C7038F658;
+	Tue, 28 Apr 2026 10:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777335458; cv=none; b=n3ywUgAEC2CjRzQrxpNg6pYRPSzUvQxCzSn4EyPvvIHTdUQQbSfFOr0Q04waPeQhnhXeG8Ab8MfavKy5EYPMTz/g1x67wnwArKRJt4wj+Ll46+DPXZUFHy909R7R7g0o6tRldJKkNz3r1cryPP4oIyMexT/W9MqXJnLwme9je9k=
+	t=1777373246; cv=none; b=SM43lw9vZd1ancHTbAjz3uNpp76SDFjc7IaoWdwVWWpE9PFTvAWzak4lMyrsGF283Vu6SaMcVSvV//XphBjyOnRZfFp/KS1ynU3wN0IiYsjqS4TTIyXOO8JEIEVbpgtKTHEn7sezhnAhXEBsLpVmQZ03HNhXMKi915XPIey8AFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777335458; c=relaxed/simple;
-	bh=6RCzVcVHnWB7Xitp60ejz8BoMUtumigfr5ZwTpbOtJc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S4DsFcLzyuh+itm5J8CSzCUzOhA4K8aI+QTPGBhCzfZGpRbZjNAZ3Ihl3JldSSAwmYqoYjOmme809qq7in34h1cPvH3E4VBYYHHu4WE6kBdVAQGXOzgEL9k+NN/ZnA0X81ddIyUg9oTOoSB7HljkRjesl2keNUAZvU0uXJ0IKic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cJ78DAZp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777373246; c=relaxed/simple;
+	bh=hmQkgfT0rpHX0CJzE2hZUP7HWCGF2gixhN4JwZLv+JA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fQl+5Z0t5tT0aTSdZfiO9iAo6OQZxNPgA2fueCdj+KqfSdeM58Sqknn1lghAJ1+HFjrK9HJnO120z9W/UXiaS8lo9bfUI+DGw8un5dl/A6VfAGTKi9jY6yzkUZEgZ1xHygoPFXkYbys2eDgBPcVtNqDbYykGGKu6T7XGjhDM8Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pTUXuWMr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cJ78DAZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13E9C19425;
-	Tue, 28 Apr 2026 00:17:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pTUXuWMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E14C2BCB5;
+	Tue, 28 Apr 2026 10:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777335458;
-	bh=6RCzVcVHnWB7Xitp60ejz8BoMUtumigfr5ZwTpbOtJc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cJ78DAZprfEadaOsdbT59/5Ch0WQGduepbtv8F020hgjU0ql+lhvRnGHz+VTrwjdD
-	 5EehzHaQkK4rgZw4wM0UqMP8ETaTDZ5Ty7c8ziuHuG1jCyEJwPH0J73BFEm6rBQt5a
-	 2vnTUPGVi01plwJSvt8F3c41VgmDMblGOalFxUzPx8tP/M1X2C+lbKUewl/KpFHy+y
-	 4uSL4AejTYdfJGJ13o6kdZnGmIhMQ5rZY4rs/o+kOmRIXoMPCbB7clr2ulMJ0kkE9S
-	 Ui08MzklpYlwOG35XfZzRRDEkmC0qg5VUlKHcASl8ufgrTMib9ww8R+rO3z3BYWcx9
-	 owOWzMyrBOOgQ==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 31EB71AC583E; Tue, 28 Apr 2026 01:17:35 +0100 (BST)
-Date: Tue, 28 Apr 2026 09:17:35 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Alex Elder <elder@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Alex Elder <elder@riscstar.com>
-Subject: Re: [PATCH v9 2/3] spi: spacemit: introduce SpacemiT K1 SPI
- controller driver
-Message-ID: <ae_8n0I_ORDLib1y@sirena.co.uk>
-References: <20260427-spi-spacemit-k1-v9-0-ff753b551302@riscstar.com>
- <20260427-spi-spacemit-k1-v9-2-ff753b551302@riscstar.com>
+	s=k20201202; t=1777373246;
+	bh=hmQkgfT0rpHX0CJzE2hZUP7HWCGF2gixhN4JwZLv+JA=;
+	h=From:Subject:Date:To:Cc:From;
+	b=pTUXuWMrnk8VsUalenBFv70B0MEXJ4/R5rM2VjC4M/M85xBPQcfXCRadYII+zSf5/
+	 kz7VuwVZI5KeV5qBpReRKf8Rm6KjCcTnl3mdvyh7LNyK5MBWGOJ7Uo1Pu19LXC1ypb
+	 bRk35Xutgk/B0dk62/C5Q5TwfdU8N4lh8ZZaP6o9ThCllGdYkhuMWghl10cJaQrkZE
+	 h0sn3Zb1feyTOo4uQPT/mKFr7I3dy49xkg1n5diH47jaoMQGUBphbSr1k/qsCsoE0z
+	 rWi0iaLvzzi8b/+TWu7NwG0xgfFZ+9bewT6QNidFI2E40lkpxDwLF7ALf/h6sealpX
+	 5e5poB5xHn3fw==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH v2 0/2] pwm: spacemit: Add Support for K3 SoC
+Date: Tue, 28 Apr 2026 10:46:49 +0000
+Message-Id: <20260428-03-k3-pwm-drv-v2-0-a532bbe45556@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uloWIL4Vd8FJnYvz"
-Content-Disposition: inline
-In-Reply-To: <20260427-spi-spacemit-k1-v9-2-ff753b551302@riscstar.com>
-X-Cookie: Victory uber allies!
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABmQ8GkC/13MQQ6CMBCF4auQWTumpVCFlfcwLKoMMEEpmZqqI
+ dzdSuLG5f+S9y0QSJgC1NkCQpED+ylFvsvgOripJ+Q2NeQqt6pQGpXB0eD8vGMrEQtyVeXIlGV
+ rIX1moY5fm3duUg8cHl7eGx/1d/1J1Z8UE43aqINTtrs4czyNJBPd9l56aNZ1/QCG0OxfqwAAA
+ A==
+X-Change-ID: 20260401-03-k3-pwm-drv-4ea99ae355d6
+To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ =?utf-8?q?Duje_Mihanovi=C4=87?= <duje@dujemihanovic.xyz>
+Cc: linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=981; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=hmQkgfT0rpHX0CJzE2hZUP7HWCGF2gixhN4JwZLv+JA=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBp8JAwdWxf31B4X/UYDlsnNNL/sigdLdKjBqX4K
+ 1SnRRj9eaOJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCafCQMBsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+3GTg/9GubtELYf0rDa3bh0lEVik0BCce7hVSMXtGLQSH7NNgY0Vs/aVS8TE
+ 8euy3CzBPvYB3BheBE1d3rh9xUJhBXBfgGyi3reM6J4f2z4yXjXix/TOcdHJnlv3Pxl5mILEl1X
+ 7O2dzpUrRStl1nx/OMJDIH1NgwkEJcFOelSfVd4g9LlKmlKytREZFZ2rdSeYhWEywwPcMn2IEYf
+ Fh4bKanfT7FHyG16aFk7lP+kPH/wihe1vJDrZhdXBAQeaI5YzfVfAayF0HI5yN7cokTsIxtYtWP
+ S3RkTP/cZi7Y2rwSL1AdTK42Lg4XMG4mg3VKKTz5xfp4GXzFGISHc6Zrycydwva3OgUjbfwUjP9
+ vG673vNWkiGn/Kcac5kaxKlTebWaQ9DjeSCe6Ce7RPrrLxG8OV/B2dlIfMaGfLk0JpOsJaKRJHc
+ NyNZuoFUFJaUa1QNQBNowu0Mr/fZIua1gi3NFY4HDtT22tj0UaBVKME9jRjCKoSaZoCRvbv1G+p
+ PkSYJrlBMOKBSMXc0AiDvXJ4R2LrjU7OhKxXFNFY9cmMdMaDJ/Y85xkYy3ce3gsfUqreW4xbVTm
+ h4iaMC0SQ8a2yLZaO1GD1HQ5583AJG+p/5Xem7pMrQfBPhYvmuhLiWhi8ndImG7OL/xOXSUMqrn
+ 3Wm6Tat+y3tnCarFNoQUG1M1ePjlVQ=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
+The PWM controller in SpacemiT K3 SoC reuse the same IP as previous K1
+generation, while the difference is that one additional bus clock is
+added. Introduce a new compatible string and also adjust driver code to
+support it.
 
---uloWIL4Vd8FJnYvz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Changes in v2:
+- Merge dt-binding of clock-names property
+- Use local variable for bus clock
+- Rebase to v7.1-rc1
+- Link to v1: https://lore.kernel.org/r/20260409-03-k3-pwm-drv-v1-0-1307a06fba38@kernel.org
 
-On Mon, Apr 27, 2026 at 10:01:28PM -0400, Guodong Xu wrote:
+---
+Yixun Lan (2):
+      dt-bindings: pwm: marvell,pxa-pwm: Add SpacemiT K3 PWM support
+      pwm: pxa: Add optional bus clock
 
-> +static int k1_spi_transfer_one(struct spi_controller *host,
-> +			       struct spi_device *spi,
-> +			       struct spi_transfer *transfer)
-> +{
+ .../devicetree/bindings/pwm/marvell,pxa-pwm.yaml   | 41 ++++++++++++++++++++--
+ drivers/pwm/pwm-pxa.c                              |  8 ++++-
+ 2 files changed, 45 insertions(+), 4 deletions(-)
+---
+base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
+change-id: 20260401-03-k3-pwm-drv-4ea99ae355d6
 
-> +	/* Record how many words the len bytes represent */
-> +	count = transfer->len / drv_data->bytes;
-> +	drv_data->rx_resid = count;
-> +	drv_data->tx_resid = count;
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
 
-This is setting up _resid with a number of words.
-
-> +static void k1_spi_write_word(struct k1_spi_driver_data *drv_data)
-> +{
-> +	struct spi_transfer *transfer = drv_data->transfer;
-> +	u32 bytes = drv_data->bytes;
-> +	u32 val;
-> +
-> +	if (transfer->tx_buf) {
-> +		const void *buf;
-> +
-> +		buf = transfer->tx_buf + (transfer->len - drv_data->tx_resid);
-
-This is using _resid as a byte count.  It'll be fine for 8 bits per word
-(which is by far the most common thing).
-
---uloWIL4Vd8FJnYvz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnv/J4ACgkQJNaLcl1U
-h9BKxgf9HFwNyeCFgiJ1m6lF9UKtdez+pweMTHvDt7wqUtMyufYwnBTIxOIB3Kv7
-mh5QcTbeorohLLIvkOV2893vxCNwlLyZdUU+dFQak6B6RQGSYLJoIjDJtSuyjYhM
-T+2YKiSllt6ejJCezhmo56WDtVCSJR820A3qYN+T5B/52xwFkNa7SoiBG7PB9Wya
-57r8VQLQ4ZeG5MBmwHe23njUPZj2WYYwMUo0Uz0j+9H1gdPugU1nv7B2q9hKCRPe
-Xo1mIWG3NiZ28wHyCT73ICpkRSOj62o8nw9EUauWSu9hwI6z4wT508HxWY+tkSAy
-qBlmsjEqZ/rJtgIQyFZsnKgAi341Vw==
-=TBfs
------END PGP SIGNATURE-----
-
---uloWIL4Vd8FJnYvz--
