@@ -1,60 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5434A313545;
-	Wed, 29 Apr 2026 03:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6CD3859E2;
+	Wed, 29 Apr 2026 04:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777434413; cv=none; b=NlUBxQwz+ZRtBADmKf0t3NxCrCs/5uHEef/P3R9zKseSaDvg27D3v4kyp/iZueITF6Gi8gQmg2Cv6b9Bac8/1NwaA7a9hmcMZT0xn2OXOHAwquEUMozRrj4LWkFIUmVJkYu3Jd6inuS1wqPIlphTxA+dFUyfmhFTgy3Ldd6QwxM=
+	t=1777436408; cv=none; b=Huq181k3v0mcczvgQweB4bsHwvCVkTXs/qs+2k8to+wpUyt7KsXuZfWbBHXzKn9DLDzAqwRWY3H+sDDDpdu1AO0WMkQgjxPnN1KG92PWw8a71JqD+pHF7tc0g7TRUdcql186tOr5uAVB7RmFRWdMTAuq5I9tRFnMEvAFIt6mXsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777434413; c=relaxed/simple;
-	bh=45IZZlvy5m8D36o9FxaXN13xt/oU1CnjDv56aCuJzOw=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=M9FxtHUPHmFN5oJg4JM+yNbRqZgBR+ioV7UPSJdDqWto7+CcT81TDUfLIt0ZsN9SUdPItSaq0crsWye5PaiCeqljwXSoOXRk1/tSOP7CuQcpGZi3EmjzQdMvHtGwV9WI6LQM96R1+WLSQ3Ps98PgeHn8zxk9F9RK8awImM6JjyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CMEZ7Wx7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777436408; c=relaxed/simple;
+	bh=Y3TadPI+Uk+0lcra2ukxy7a1jSLDUZdGEsO0a8IaOuM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=e7znOLc5Q2QguHmAKUWmt0Z0nZTFZQ2e5kPfxHI2qDXe3pz4D/WzC/WO2Z/8Xj7cUpWzXA6OjPLSHvXzx92bCJP9kEHOjMNYvRJUjX/hrUfvA9GisMisJmPmh6uP3Lpu8ZpVaVGQgvXZSHE70PMGK2GFmiLBD7yOl7zF2SfFsxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KtLnoFDX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CMEZ7Wx7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285ACC19425;
-	Wed, 29 Apr 2026 03:46:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KtLnoFDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10462C2BCB4;
+	Wed, 29 Apr 2026 04:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777434413;
-	bh=45IZZlvy5m8D36o9FxaXN13xt/oU1CnjDv56aCuJzOw=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=CMEZ7Wx7i3JLG2fPGaPVomVTVfvffC472xgvjoZrpwaNiVAfRiOHWTnWFVnRWToVE
-	 hays5e0R4dTqkVq1BdIET7Q0CVhsHHzduG/KP1ixv9tcV2kQaXXv64ubYqSh1qtNdi
-	 861p4mBw9gtSA2PVgMXWb9E58QtUPGh/M0Ks+MCrBxJZXEmzk1VC3Uf6QTZJjgWrXN
-	 nthuhbNW9cKa+Srv5wUooxyoS1JFoV91HgxBhPBi9JqkAYlPAeHaISRCxd4vjhqk5A
-	 4YQ29V/6m3R6VE6mHMBpuG52yP71wFK8HTKEmENdI95bSrNTSXJiumKyWLCax3x+Gh
-	 bbttZw/UW+eYg==
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1777436408;
+	bh=Y3TadPI+Uk+0lcra2ukxy7a1jSLDUZdGEsO0a8IaOuM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=KtLnoFDX/LmckW/QlstZ6bfDZxf1oto3yy2sVCHBbWDmtY9LuVjn+O7QtJcerlfZP
+	 aVBxPB4fOZ/WzwQmcvhAkJjZgxhEC5cO3uDlLnvzCRIwcMAva7msvwDS6MflfjJ0FR
+	 4AgqhJxlJ8qKZeHTxRH9k09GbMeDhqsh9OKxkbBHPUc+MQuhTYsLU/+NcUdnrngBK5
+	 N5/qM9+E5Z0Z3wK0z6igY9Q9S/D1LqsKaw5+iE0dPovpGe48vtHhyt9Ko0nfyYSHPO
+	 8MQl9RAUiBhHQEBaNOEMOcEQD4HJsSb3hZ8KwSq3SSUKUs1S+ZOLtL1z+mY4MxgqzG
+	 r3k++/wyxliCw==
+From: Mark Brown <broonie@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Yixun Lan <dlan@kernel.org>, 
+ Jinmei Wei <weijinmei@linux.spacemit.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: linux-sound@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org
+In-Reply-To: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
+References: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
+Subject: Re: (subset) [PATCH 0/7] ASoC: spacemit: bug fixes, refactoring,
+ and K3 SoC support
+Message-Id: <177743049537.363516.3431185859758571339.b4-ty@b4>
+Date: Wed, 29 Apr 2026 11:41:35 +0900
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260424-k3-pdma-v3-4-efdf2e414a08@linux.spacemit.com>
-References: <20260424-k3-pdma-v3-0-efdf2e414a08@linux.spacemit.com> <20260424-k3-pdma-v3-4-efdf2e414a08@linux.spacemit.com>
-Subject: Re: [PATCH v3 4/5] clk: spacemit: k3: mark top_dclk as CLK_IS_CRITICAL
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, Brian Masney <bmasney@redhat.com>, Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Conor Dooley <conor+dt@kernel.org>, Frank Li <Frank.Li@kernel.org>, Guodong Xu <guodong@riscstar.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>, Rob Herring <robh@kernel.org>, Troy Mitchell <troy.mitchell@linux.spacemit.com>, Vinod Koul <vkoul@kernel.org>, Yixun Lan <dlan@kernel.org>
-Date: Tue, 28 Apr 2026 19:03:19 -0700
-Message-ID: <177742819927.5403.12105832893857014560@localhost.localdomain>
-User-Agent: alot/0.12
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1706; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=Y3TadPI+Uk+0lcra2ukxy7a1jSLDUZdGEsO0a8IaOuM=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBp8Yb0K+ucIi3HDtgy/2P9jyTHgZHvTNgpG3lfC
+ rcwtX3nqkeJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCafGG9AAKCRAk1otyXVSH
+ 0HsGB/0SR87C+jiNlh2idBxBsVbfTMnM51S9G6GDqaJKpv/Q0igZROaqjIOgR+7rgwkxtu/APtK
+ roW2rPY+7xkz8uYz9wQb+Y28UuChQFbDcPEcrgIzT6Y7uSxzg9kU0Z2N4MGmf5/uaHAPw81iyy/
+ bYcX2K0Q6OTTGHeR+9xT3hqSupM8HaGMX0ZCHGi+D5h4dPoMWcRaiQ7297iT4x64WngNvviymse
+ yi0pcZRFCp8/QCQ3ll3FugTOHRVdsLE83t0trkfDzgO2uidRU/D6qtbE5xawG8lmzZxbFB3MDoV
+ fECtrWN6f3zAS/C+LisSWJobTUle1BCnFLz6FfkJY7GK8uWR
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
 
-Quoting Troy Mitchell (2026-04-24 01:20:32)
-> top_dclk is the DDR bus clock. If it is gated by clk_disable_unused,
-> all memory-mapped bus transactions cease to function, causing DMA
-> engines to hang and general system instability.
->=20
-> Mark it CLK_IS_CRITICAL so the CCF never gates it during the
-> unused clock sweep.
->=20
-> Fixes: e371a77255b8 ("clk: spacemit: k3: add the clock tree")
-> Reviewed-by: Brian Masney <bmasney@redhat.com>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
+On Wed, 29 Apr 2026 09:38:45 +0800, Troy Mitchell wrote:
+> ASoC: spacemit: bug fixes, refactoring, and K3 SoC support
+> 
+> This series fixes bugs and adds K3 SoC support for the SpacemiT I2S
+> controller driver (sound/soc/spacemit/).
+> 
+> Patches 1-3 are bug fixes and refactoring for the existing K1 I2S driver:
+>   - Fix RX DMA params not being set when TX is already running
+>   - Move hw constraints from hw_params to startup where they belong
+>   - Adjust FIFO trigger threshold to half FIFO size for better DMA
+>     efficiency
+> 
+> [...]
 
-Applied to clk-fixes
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.1
+
+Thanks!
+
+[2/7] ASoC: spacemit: move hw constraints from hw_params to startup
+      https://git.kernel.org/broonie/sound/c/6b4afbaaa342
+[3/7] ASoC: spacemit: adjust FIFO trigger threshold to half FIFO size
+      https://git.kernel.org/broonie/sound/c/03dcb5b68a96
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
