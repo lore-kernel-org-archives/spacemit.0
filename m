@@ -1,41 +1,41 @@
-Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1919175A66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37C9254B18
 	for <spacemit@lists.linux.dev>; Wed, 29 Apr 2026 01:40:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777426812; cv=none; b=DImQugBS+a7oNsHVihU2+8jTtCwtNyEC1hmQtqzlF7fHa78MKlLINgud6IdlmMos0Dj4GRWHYQ5x+pOf6sUMyBNwcJt46j3Bbr5o4elTwmJoZeTu0NXnT9fBVbzMEiDbrtpI8OPFwHAl01fwoavEtaGGSQLoiTWQazUC8GbUi+M=
+	t=1777426813; cv=none; b=DNCPcT1VPWE7L8YyKjLdeYyyOca9WMRfvIjAOfs0zTDZAuQ9zLaKDmpyI50vQWl91TkRSLGzG7V+X/rHv5PADizp+q5i421dKw4vZ/9VsdX3SHugLlvT8ABiTXv9hXY5UqwC1eP1FpSJhr2qJ2ENuhRRCdbcTMNijmXb1cg0ORY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777426812; c=relaxed/simple;
-	bh=qAqcJ83kaw19HjWRQknjj1xWQQygIw8l7xygJK2JwWc=;
+	s=arc-20240116; t=1777426813; c=relaxed/simple;
+	bh=rQ3g1iEURZi4LnziZ1fc6sbszDwJlqQ9RIGs3gyTlGc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hXDL8Nidh57xPeYEhKSDuvstbD6mBIt6GCSGPlVrr1gOYWjPk1ot7BDol5otfBEEhY7FkQo9ECduftBV2ySxrjQ2j0MG/wWR8kXXn4iL/7qzS9MOIk/57v8I7RZvbguqesHZrRnCGAUl8uiNvARfzXfIgyzhc8Bnw2vcQPpNo9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=iBynE3E8; arc=none smtp.client-ip=54.206.16.166
+	 In-Reply-To:To:Cc; b=QDZ61BFbefOR19jrpjF4UMtuuDAmARbHg9NPmzM7ovFzKim+Fkbt6geshMLEssDWk9iVUaR11dWW/9q85qUoPh0smjpWR1Wz5ZnYOmtiScMmbKBJxR1uTgOHppyVbzkysebvgPMSyVcdUalNI64Oe+fPGhnn7XFn6EYWhXC/ziM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=OFpZrdLG; arc=none smtp.client-ip=54.206.34.216
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="iBynE3E8"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="OFpZrdLG"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1777426771;
-	bh=NSNQ83OsaYFc+31IOLlDSGE8Gku2x+xwHFumIM2Xoao=;
+	s=mxsw2412; t=1777426767;
+	bh=Fa1GhJ9Mm6+UlP/0zx8pjid8wYuGhB8oXYTC38+xnlU=;
 	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=iBynE3E8q6fVrTrjEsX44FkX8YiKeZ6Trw36siTtoxZmjMDvTF80C27aHA6OfJBUT
-	 qECcb2tNsAfbgNQcmJlXPjckKPg4Y2fWUPS08PaozpkcD3drZ2aW7CNWaNpiAY0HHr
-	 iFyRi0wpuqQQ9/NznJSkqAvpvQYrmy4U//SPXbAg=
-X-QQ-mid: esmtpgz13t1777426763t62530b6d
-X-QQ-Originating-IP: nmfJNHOigBnEag6KlKG7z7lVhDqeBR83Y7aFBFWp/Tg=
+	b=OFpZrdLGIL5Rp8EVGVfsPCwQaoPT/bwEyQvguwWb8Gsa8MQ/olcHQGa72ZDirruVg
+	 2ElFES1hjIqQPtNgGCeFPUeWwVMjUJGYqjEdWpjaIotgV8mFPZvuzpHgDXQYC8Uosc
+	 3V0esNPEHEyHPm2ncAHN8/cGKkxR3+NJuIhN2U6M=
+X-QQ-mid: esmtpgz14t1777426759ta66e92bf
+X-QQ-Originating-IP: TnZa94EYn/Y67XrWQDnUM6ySI8l1koZCnIZNF1cOgfk=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 29 Apr 2026 09:39:20 +0800 (CST)
+	id ; Wed, 29 Apr 2026 09:39:16 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 590894259723190294
+X-BIZMAIL-ID: 8148319090196438835
 EX-QQ-RecipientCnt: 15
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Wed, 29 Apr 2026 09:38:52 +0800
-Subject: [PATCH 7/7] ASoC: spacemit: add K3 SoC support with additional
- clocks
+Date: Wed, 29 Apr 2026 09:38:51 +0800
+Subject: [PATCH 6/7] ASoC: spacemit: add fixed-sample-rate constraint
+ support
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,7 +44,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-k3-i2s-v1-7-2fe99db11ecb@linux.spacemit.com>
+Message-Id: <20260429-k3-i2s-v1-6-2fe99db11ecb@linux.spacemit.com>
 References: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
 In-Reply-To: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -57,137 +57,94 @@ Cc: linux-sound@vger.kernel.org, linux-riscv@lists.infradead.org,
  devicetree@vger.kernel.org, 
  Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777426731; l=3698;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777426731; l=2155;
  i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=qAqcJ83kaw19HjWRQknjj1xWQQygIw8l7xygJK2JwWc=;
- b=G4wVCG1wze3HR5862QucHtv0jgAgib3iuet7TLLbnJzILRz53wW34MyK+SMvQYBDp3Z1GLaTe
- Wro6x7DQ6BoDdL1BdEdZTo4wfsmQdUODGqAkBfdolzIpj11iVsy3DWQ
+ bh=rQ3g1iEURZi4LnziZ1fc6sbszDwJlqQ9RIGs3gyTlGc=;
+ b=1QAW1hqaGPJM7giTj3fW5j/i0VLxVFmLKJwW6gR8vxiDo5ByP5sbUNgS70bD3NzQFt64DAf0Z
+ HYKiC8VJCVOAt8KHIMtFWqYJgdquan9RXkP5vET9BXSGlQQqWfcQuxr
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
  pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
 Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MllZbBbf79Ayz80qaXo/qEE+OnJwdOkd4XXTW8n7oZwGgEzjcM+OH6wC
-	ba2iKrh70o5BoP6gwovbqbaq+i8+SWGNQLPfK10rh4KYzGT2GsXzDkYaef+PNiQnjOOZcMn
-	3j0m6qKkw6UyfqjA4r3ZHvGyW+AY64DJC/HGLFmUD7EHGaIi3w8pGBh+y5bAhZefsHowbxB
-	JCVsSbvdnOHbIgq6CVk6cjpVhBqr8KPCS8HEsn2KV+f5Z9m+t9yAY2fT0A1aKRdwNczFn5X
-	a/Yz34fgPZrxZofZxG352wQjGRXgauFmW4JRL4sh/i9d9LgTy/sApG39ATRJT5uDJ6gqM0+
-	ljcwo6VNamiD+pWfPkpXg+H+aZhVBmX1I57A7TRtSV1uD7uGkHOi1tZxx1tycfJPp6fUIBa
-	pR21NkLvgShxx9Amybly6Hevpz3co7YlwzIcpEOQLrxQ60Dtx9B57NpwzS57bcoU+DdFyQa
-	OJq9BTNuZamE0U21URFaCG10DaQgksSFm4uJkmodQoEcrBwBIjRVwCK+okkBLfgaODf86wL
-	kdUVn0TiIgPWvFk3hoU7+gZBxCV14h3I1VavUtTvmj9Wuy7JbTk22Gmqm36oYK7nK7SEgHc
-	meMW9ljIWRu7r9FRWIwlZlbbp4TUy7PvEePKMljvSojja8Z+cqaWvjYc7MYje52oUWG3hm8
-	Vw4DWraE4WFgoiaSpPauOcEo/H/b2hk08LTKzYEkXUmzS7EFZEWoLdchERkVLYEmd/YLNba
-	ENjUf6PJZ1law+pGBBP5D2iwR+zmx94KVNvCfjlmwtXtHGbtHuJl28EykfWZLqO1s2BbNJ5
-	e5aQ+O+03Og1YKJw+Ri1bbcwzbypUNiEovkJgdftzl+vWKVA7h0Fv3KbyAry5MXffJbfSsV
-	o7mBZqL9nl0PNqWTlRuOCRex0W/k/oaRqEf+UXEYgmzCa5CPEGoKFapleqEqITEnAiQP7Sf
-	x8T30vhbjNqpWZ3JabC+6fXF/9lYAcBWUnPgG2PTLDGkQrSn1bcMUC5+wKueoYRWPvwuW+w
-	O0ek5lH/GJBE+IjHHbrJPTAs8W2i48ujw+DFgkkOgu2WfGBj87GMC8ogB+aQaIuEn21t/o5
-	z72JMjsUfADXFR30tTwVe34q66Ybonx6EBHmY8xSzMoOUyu0ix0IPAZ34RbuEUFtFPKIqc6
-	zPzE+XU8PyMpyps895smlkADfQ==
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-XMAILINFO: OZqyam1FSiaosYAPBJcGjTlyY+Nl7Xjby3zM2bXOAa9mzlgzEy2FA3ME
+	Qg8pOhr6zcBWmB/gcs59ScX1rPu6hPlxEHN7boBxqghMnp9TAfrrN5+O8RFzDtteD8L2SNl
+	Lau8WiYJIpyvA6bHTsBEIQpN+kTJVK0iEeQw1n5mRpv/0MCQH23nreYvp/8s9ALzSIZfKoq
+	Lb1OjOySOkdNuXfb2RiuHo6ckqL9PCKPvyg31pl3r7khxojDPAOSSLkLJJSYlBabundEiN+
+	l08ckLrd6G9UGS3lIGtGo2lmwVm18qr+1AHlk+TNhKOKq+l6QbJVtkMYzyjpStFWtwuv+hL
+	yjLlsU73L4Tt0NjseFCHy3mcOPZyLpcBVm53uxWonePBB4mCCPFfJ+zSYBqcjIOktwBDFgE
+	VmCuevXQh512xoOA6yvlr7ZHXRsaFVxf1Wo7x9dm+vkFgTK/KDylhy555gYhqC5scCnvQkJ
+	dGTYZJFqaOiIu3iBnNBFtC/Y56teEuqdPK11O8dOdG82QrKW1JT0RVwb1ddHq7U8St62hmc
+	9kPi3OGpW406Q7g9XtzD68hTu/qwsykX83RGkSj3w5nJv1LZ0PzmIhlqCi1CjkEYDx+yHSj
+	dNfjGPi04yN6QC8UUrfsomUAvE30XReWuqi3hSrmCgIyXUnSIx9Zfb7yzOHqtCF6QJasWmr
+	B0ssS7jVZnO8oy01oTIKCZFIFi0a5lnZngSh10Zf2wbmFXrnA/Aeft6r0/QownADpLkfWQU
+	tVg6N208DN1l88TlOF0yOU3SvdN8WjaEgzVQjxKZ1/NtqyOPyAcvPUx2aS7EsDJ4zYmSHTW
+	3IIaSFLTpFISuY1S6FKm2b06Kp4xpqwi2TvZ2jSWc42r+F4igP+jIb4zfswTDuxdHz5VH5Q
+	wCBc5Srug3xP+qnKMKYNFDdDDFcU2h2RidJOpJIdynLlqh9DTcYJ7DzDN0DLGESPj5cQF2W
+	X5DtQ3DRoGvLe/aWzxxRn4Un0T/Xl7rwBxJg0nnllJLOfcsbmAKv3kZFQppOzG6KLAp9ts7
+	3+21ClppmGjH9h8bMLJbLOyLjNLrJ1XTfH7h7dBUF2DlQJOxj6oacHxGjQTLyvLzBoh6oVy
+	9f49m7Qn+iubk3r5bQmBONTgmzD4esNrWoj1BkdggTbgG+nPjdAn0Xbb1luvJlhtzrggj09
+	vSoKlw4pRjYtNL6GhKelgeOMI1auqsy+8ApC
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
 X-QQ-RECHKSPAM: 0
 
-Add support for the SpacemiT K3 SoC I2S controller, which shares the
-same IP as K1 but requires additional clocks: sysclk_div, c_sysclk,
-and c_bclk. These clocks only exist on K3 and are not present on K1.
-The sysclk_div clock is present on most K3 I2S controllers except I2S1.
-The c_sysclk and c_bclk clocks are shared across multiple I2S
-controllers on K3.
+When multiple I2S controllers share a common bclk, they must all use
+the same sample rate. Read the optional spacemit,fixed-sample-rate DT
+property and apply it as a hardware constraint in the startup callback,
+restricting the PCM rate to the specified value.
 
-Use devm_clk_get_optional_enabled() to acquire these clocks so that
-the driver works on both K1 (where they are absent) and K3 without
-needing SoC-specific match data. For K3, the sysclk_div rate is set
-before sysclk in set_sysclk, and the common clock rates are configured
-in hw_params based on the sample rate.
+This applies to both K1 and K3 SoCs and is only needed when two or
+more I2S controllers are active simultaneously.
 
 Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
- sound/soc/spacemit/k1_i2s.c | 36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ sound/soc/spacemit/k1_i2s.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
-index 7d0794d21ea6..c2a2b99d91f8 100644
+index cef883ba4de9..7d0794d21ea6 100644
 --- a/sound/soc/spacemit/k1_i2s.c
 +++ b/sound/soc/spacemit/k1_i2s.c
-@@ -54,6 +54,9 @@ struct spacemit_i2s_dev {
- 	struct clk *sysclk;
+@@ -3,6 +3,7 @@
+ 
+ #include <linux/bitfield.h>
+ #include <linux/clk.h>
++#include <linux/of.h>
+ #include <linux/reset.h>
+ #include <sound/dmaengine_pcm.h>
+ #include <sound/pcm.h>
+@@ -54,6 +55,8 @@ struct spacemit_i2s_dev {
  	struct clk *bclk;
  	struct clk *sspa_clk;
-+	struct clk *sysclk_div;
-+	struct clk *c_sysclk;
-+	struct clk *c_bclk;
  
- 	unsigned int fixed_sample_rate;
- 
-@@ -217,6 +220,14 @@ static int spacemit_i2s_hw_params(struct snd_pcm_substream *substream,
- 		    params_rate(params) *
- 		    data_bits;
- 
-+	ret = clk_set_rate(i2s->c_sysclk, bclk_rate * 2);
-+	if (ret)
-+		return ret;
++	unsigned int fixed_sample_rate;
 +
-+	ret = clk_set_rate(i2s->c_bclk, bclk_rate);
-+	if (ret)
-+		return ret;
-+
- 	ret = clk_set_rate(i2s->bclk, bclk_rate);
- 	if (ret)
- 		return ret;
-@@ -228,10 +239,17 @@ static int spacemit_i2s_set_sysclk(struct snd_soc_dai *cpu_dai, int clk_id,
- 				   unsigned int freq, int dir)
+ 	struct snd_dmaengine_dai_dma_data capture_dma_data;
+ 	struct snd_dmaengine_dai_dma_data playback_dma_data;
+ 
+@@ -111,6 +114,13 @@ static int spacemit_i2s_startup(struct snd_pcm_substream *substream,
  {
- 	struct spacemit_i2s_dev *i2s = dev_get_drvdata(cpu_dai->dev);
-+	int ret;
+ 	struct spacemit_i2s_dev *i2s = snd_soc_dai_get_drvdata(dai);
  
- 	if (freq == 0)
- 		return 0;
- 
-+	if (i2s->sysclk_div) {
-+		ret = clk_set_rate(i2s->sysclk_div, freq);
-+		if (ret)
-+			return ret;
++	if (i2s->fixed_sample_rate) {
++		snd_pcm_hw_constraint_minmax(substream->runtime,
++					     SNDRV_PCM_HW_PARAM_RATE,
++					     i2s->fixed_sample_rate,
++					     i2s->fixed_sample_rate);
 +	}
 +
- 	return clk_set_rate(i2s->sysclk, freq);
- }
+ 	switch (i2s->dai_fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
+ 	case SND_SOC_DAIFMT_I2S:
+ 		snd_pcm_hw_constraint_minmax(substream->runtime,
+@@ -437,6 +447,9 @@ static int spacemit_i2s_probe(struct platform_device *pdev)
+ 		return dev_err_probe(i2s->dev, PTR_ERR(i2s->sspa_clk),
+ 				     "failed to enable sspa clock\n");
  
-@@ -450,6 +468,21 @@ static int spacemit_i2s_probe(struct platform_device *pdev)
- 	of_property_read_u32(i2s->dev->of_node, "spacemit,fixed-sample-rate",
- 			     &i2s->fixed_sample_rate);
- 
-+	i2s->sysclk_div = devm_clk_get_optional_enabled(i2s->dev, "sysclk_div");
-+	if (IS_ERR(i2s->sysclk_div))
-+		return dev_err_probe(i2s->dev, PTR_ERR(i2s->sysclk_div),
-+				     "failed to enable sysclk_div clock\n");
-+
-+	i2s->c_sysclk = devm_clk_get_optional_enabled(i2s->dev, "c_sysclk");
-+	if (IS_ERR(i2s->c_sysclk))
-+		return dev_err_probe(i2s->dev, PTR_ERR(i2s->c_sysclk),
-+				     "failed to enable c_sysclk clock\n");
-+
-+	i2s->c_bclk = devm_clk_get_optional_enabled(i2s->dev, "c_bclk");
-+	if (IS_ERR(i2s->c_bclk))
-+		return dev_err_probe(i2s->dev, PTR_ERR(i2s->c_bclk),
-+				     "failed to enable c_bclk clock\n");
++	of_property_read_u32(i2s->dev->of_node, "spacemit,fixed-sample-rate",
++			     &i2s->fixed_sample_rate);
 +
  	i2s->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
  	if (IS_ERR(i2s->base))
  		return dev_err_probe(i2s->dev, PTR_ERR(i2s->base), "failed to map registers\n");
-@@ -476,6 +509,7 @@ static int spacemit_i2s_probe(struct platform_device *pdev)
- 
- static const struct of_device_id spacemit_i2s_of_match[] = {
- 	{ .compatible = "spacemit,k1-i2s", },
-+	{ .compatible = "spacemit,k3-i2s", },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, spacemit_i2s_of_match);
-@@ -490,4 +524,4 @@ static struct platform_driver spacemit_i2s_driver = {
- module_platform_driver(spacemit_i2s_driver);
- 
- MODULE_LICENSE("GPL");
--MODULE_DESCRIPTION("I2S bus driver for SpacemiT K1 SoC");
-+MODULE_DESCRIPTION("I2S bus driver for SpacemiT K1/K3 SoC");
 
 -- 
 2.54.0
