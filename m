@@ -1,41 +1,41 @@
-Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5973248896
-	for <spacemit@lists.linux.dev>; Wed, 29 Apr 2026 01:39:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0E6246782
+	for <spacemit@lists.linux.dev>; Wed, 29 Apr 2026 01:39:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777426784; cv=none; b=ZRA19P2SzwXGI326924i8yBBp9xjKYwH4R2LEqy04pvIjb4hcfam5BDD33Ag6W6lTD7b5I4dtlIuv8crIX3zt1Por4198RKBhw5hU6S0Clf+8CZykCaQ0in+q3yfjL2R7FOm7cs34xMEMsJ4rvaaDvpXCy8KMSzK2boHjwsdt50=
+	t=1777426788; cv=none; b=ije5rN4zoylR+ALqWi9G/A+UQIUsAvRDvYzlXxfoydMDr6QiTZptZEk2eQUDkaBKLdX7jG+Jh+2pb5MyiwXbAmNQ2vV5DKqvXRLUtF5UNnW28pDqNi85UD4uvKnhbPCexT54rwdNoTiilpOwh0h3HNiIM+i5VZm6oJVg3BGzito=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777426784; c=relaxed/simple;
-	bh=fqs712JSCd2q2Oqmt1LbqXOCERM/xXmlTc8QrXeirL0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OKR3PAnGnekkbuVnS8jig8AbeO6RZaRk4jATL/zXNf2QHNJo6QjBoVv3qNkB65oDcdLQcY4wvnALJwx30VlLHkev38p2k/l6BFxJvVXoJoZGl/I7cIw5c9uheQxNBpY1IoOHWBdhSUjB6A/pcPxApC7hDRZTe7+nBPEVNug5sBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=JgtAV8ft; arc=none smtp.client-ip=18.169.211.239
+	s=arc-20240116; t=1777426788; c=relaxed/simple;
+	bh=RiYU+SgXWMHrp/bAux/PQa9K09I3u18v1QwXk28gNXY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=svZcEIwpr40jAeqnK3gNvuGSwUxuf9Ch3wOJ9857OvSsBLBNmnKCy85K9cvRqE8jRITnZ3QLIyP7IWZyd2VJLkYlSHV88Owi9ERfEZh2H9YH4vsWPN5cFnmWZBsKXyDjrj8r+0dVsyOwCgvFBQmOmzpOWzz2YRfB+/FvJ7vytkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=CHyW+t7X; arc=none smtp.client-ip=54.206.34.216
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="JgtAV8ft"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="CHyW+t7X"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1777426747;
-	bh=umt9s+fWxPSHuP81XZcEF9uKcHi4dTg/6NHhQ9slX2A=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=JgtAV8ft68Szvp8ycIH6DMD7gp6db1AlWe4GdtUUEOLMmHIHj+9R1z3ZheYZ2VDEE
-	 RBFHEAN+cICKiZ+U6OlKiZ5pP/DZeXY2k83nLWBNig5h3e374c4KDZaevyGJDN1Vw8
-	 6XjPk+/nwITeKsoWEcOR89e8y3CWvL1Smo1G0QPs=
-X-QQ-mid: esmtpgz13t1777426738tdd87611e
-X-QQ-Originating-IP: vWIv63VhrF74ROnm/3QKqWXpoDGEYGEsALkQyVl99SY=
+	s=mxsw2412; t=1777426742;
+	bh=1Fe6nYs9JHsL/qqU3dPyTkXSVgm0ocwnWDhLNVSkbzs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=CHyW+t7X5KK4KmcVe7YZL9VwnhZBbzH2921c1xt1fkB4Hqq0gWjAJ9xTLzIXwUV5V
+	 5NhXboG7JE2qLKleQJ1eMnZFYFvrASMqDuEbGqCwp5JVVERRvQ6zUxCwmmvECtAz8M
+	 OkfamLmjVxWZfF7v+UPWVaXmGli9P8stCmeeb5uk=
+X-QQ-mid: zesmtpgz5t1777426734t39b15ba8
+X-QQ-Originating-IP: TPf7klzOlR5kzfZDIyJIWcHEw1Bvxv+z3hDvlJHdUQU=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 29 Apr 2026 09:38:55 +0800 (CST)
+	id ; Wed, 29 Apr 2026 09:38:51 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 10487816630640131910
+X-BIZMAIL-ID: 4341323507646280445
 EX-QQ-RecipientCnt: 15
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Wed, 29 Apr 2026 09:38:46 +0800
-Subject: [PATCH 1/7] ASoC: spacemit: fix RX DMA params not set when TX is
- running
+Subject: [PATCH 0/7] ASoC: spacemit: bug fixes, refactoring, and K3 SoC
+ support
+Date: Wed, 29 Apr 2026 09:38:45 +0800
+Message-Id: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,9 +44,10 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-k3-i2s-v1-1-2fe99db11ecb@linux.spacemit.com>
-References: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
-In-Reply-To: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXM0QpAQBCF4VfRXNtagyWvIheLwVBoByl5d4vLr
+ /5zLhByTAJFcIGjg4WX2SMKA2gGO/ekuPUG1Gh0gpmaYsUoKkVLGOU6S4wBH6+OOj6/o7L6LXs
+ 9UrO9a7jvB82ZfgJqAAAA
+X-Change-ID: 20260427-k3-i2s-52ae21807466
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
  Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
  Yixun Lan <dlan@kernel.org>, Jinmei Wei <weijinmei@linux.spacemit.com>, 
@@ -57,78 +58,72 @@ Cc: linux-sound@vger.kernel.org, linux-riscv@lists.infradead.org,
  devicetree@vger.kernel.org, 
  Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777426731; l=1471;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777426731; l=1818;
  i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=fqs712JSCd2q2Oqmt1LbqXOCERM/xXmlTc8QrXeirL0=;
- b=dOkNR7ewgmOY2VvQT0HJotglsEmMZlVysXzc+cYHBp6B84ugDG50p8cS5glYCM8tWSKL89oW4
- GPOpMOXWpanDhly6ItJjrKyqP673diM7Q2lOO/kPQfEvnQtFmta0DYt
+ bh=RiYU+SgXWMHrp/bAux/PQa9K09I3u18v1QwXk28gNXY=;
+ b=dytFIX3GzeFkPj8nZ2Ocz2RD8jraZK9X/o93auRjGbFdCfGSTcixRXOrk0Fn6gWjrkeRQdcmU
+ rpz3VTbG3zhC7S+WlXOXbzADbMTFLbs8xc1ZGGftBcOYSosKCbspItK
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
  pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: M1PzqxMfCONkR/wmBdc2hGkNDOlGOCx/Gugq1LWihXnuyYH9sJ9H4UJn
-	L3mWVqJGoc2vF8EoAv4WHDEVgOeVwJ1YMntg3hA517UPddcHgpXDgIx1g72wLvGabJQYe1U
-	uzJUcLBtvuCXC/RqqH7vxenu1vewI7TJ1+aGZe2Jttv71N9Rtr47rA7LPUNbwk9ENJCAArV
-	SoPvSiAdJtHB5bT1U+B0tGg+WjxjX2db4drqcj0hQJ0sP/lk/+rwNsgJ/+TNcqAROXofYKx
-	vYjJFbvvRwOJ04/IthEOB2j0kexf3H13QpGqjFUNnn3ng7suGMws4VtWE7pS1iJHXBF+30u
-	XhbPg5wXlPGlmxHdNn0S0Wq0kc+co+r8HHz+6hudju6dZSD6goRLiH5EwzPAHAGxUnW8diW
-	RXxx9ZH154DmcA41pivb6v7vXGj4zDjb8ECmhTt3JMUSy4gWxY/VUO3SHPH5FFAvKbBY1vi
-	hbjqtIrMDKOwN+0sNHRdmVmBbl6Qisvwrab85+RGdM0mkwFfZyf/UKoVXzbVNdvhzNDRwP8
-	5eO8hiBSWuXbsHyZIqFI4zJRqFUP2OUIfucjoTuJJL8RyBJmmz8kHa7BFS0H+x9fTuYoW6f
-	iqMWFeWTTf0VwERSfiLo/YpyFq8oXph4Wh74HM6rZZXksAPJYpeBRgXC+MRLc4mFaOBSt48
-	wu1J7NEW+ed3S2IPg7Ce0aA1+veKGk5WMen4ucxlWuLopjUFvRlS6fTSyMRXXwnF1Qu48+U
-	FJKPwokgm6WmTT6YKmTv036Xy8hFWViORVPmmkTXsL1jWhoqtbsFrKrOyujU3zb3DzalRX+
-	LEZLnM5u5dlmElcVVnwPjpqdIkm6mPT2J1UR+Eh5C1C4eboUYytp0ujnQlfC6zEr19i1Tr+
-	G+/VzblWREsZhRauVBWZXpj1Q4W6pq3DcTVT/MCk+TkIX/FCry6cqraq5qI0rXmg+bwMoab
-	xyeTyl2zd7S7Qc6p9dwu9qNPsck0Fpy7Pfs/O6d9Ftl6d0q0/qL27Zonin+cFy1/2HWk6Kl
-	bo7rPTvXvSC7+aUzAW22Kv+rHbB9kk1dtG6xc2kg9Ggw92KFXPyskcbmz4cmP8ma9TbS1wH
-	HLlMK24Vv2d1kXzxYzqdWrPxDYFVOP/8OA7XAUkBtoGpYvz9ZDubjx8ecQqAZGLtKnCV6mA
-	zm2G
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MDbbjBkt9SC094+zwfVm6O/k5NTINlFWbHifiHSs3DqIpKEVRaCirKf7
+	MtcAlcCjlGeAnzOYzLGlQlCGHPTjmz8HKqHo4fkqdaLInAvQRe7iX4g4pxAf2nkKqHlq+Gq
+	yYvxOynbQEXISdChSVd+4BTD/d3He5OteJlQcuv9RVR2UuAzixmJKzRrAYSiunLpDG5Q51X
+	dHnPOAAhRBnt3a0T0Nqgyu01TwMjCUHZKjKxsRd6EvWuDcWmmcLHK24JCZCRWNSZR8KsRW/
+	tlT4Z/RurhtXr99agzAGd+F8BkWF+tjPgrNy/XL36dGpvGHIBa74wS8uT0su41rDlkBAkLb
+	ll4aVXVpLOIErqKl1YiI1AALxv+V/bZEVUXWe2vF38zaevekphSjpZXuWCmSmzh2O983/GY
+	6BULIkdHnwAtieHPTihSEUJE2hI4bHqbqU6jAtMliUpP4vKAZtIlt4TD6A8URfhSjp7wM+V
+	iPTL6x1JYAmHjuLEB4OU9Zjl5v2cSVNdm7nHuWuvg/LewL2tp28LY94LfSD80HMAKNC1NmE
+	DtiLr6LKSXyaiLjNXJWYyb9DtLxx9pvqU4vler/OjDR9rxrxj90toPYacBSUsEVBOQdd7nF
+	/lM29Uqcj91yroOU1/JwpA4Ok0ASFmgYYIrp8KTqvvZmtkoHW7lGvRxRqV5rYkrfQo1XYVW
+	sDeYkb8P54jACWKdZslAGN9BfhKDFHbBcFxxSKXUeBCSM7qCd/HiB6Ab3vUupQ99ZeNGPxA
+	tpHl26qmwzHdjZr8FXlJCd5xpFSOlQJGI0j4z+9Vp2zY9qX0xq5ns/lgdXET+549HElaKzL
+	hqBZQXsKJP58ZEQGgQ0KRs1ytQP3OCgSi0PN7CcPrviQh8ZcWBP/TRGZxomF1/bf4FVWLcf
+	sFCAoDtVNpsfobfNbn8mc3hyvZSRQAz3SK7SWLmA/9hsCvQfHpDUVUhH1t5ALlOCnOSGhE5
+	F/GEVcNe1OoVpQ/fcRkdGtT4wak5tvxD0oaNWzO5wOD08m+pXvimf9AKSOj+d8FRNKXD5d1
+	O34RXO1+DT9DSTdZ81/xnn7hYGdLH7Rh9BDuw228mVWOMuNuEsbcwdcr7ew46foRQlKEdhS
+	gVo0PZrY+HGPT//YiuLPk+mWwSSeB5+zOage2k2TjkjlpXP+5YNf6U=
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
 X-QQ-RECHKSPAM: 0
 
-When TX is already running (SSCR_SSE is set), the hw_params callback
-returns early before setting up DMA parameters for the RX stream. This
-prevents the capture path from configuring its DMA data properly.
+This series fixes bugs and adds K3 SoC support for the SpacemiT I2S
+controller driver (sound/soc/spacemit/).
 
-Move the SSCR_SSE check after DMA parameter setup and format
-constraints, so both TX and RX streams get their DMA configuration
-regardless of whether the hardware is already enabled. The early return
-now only skips the register writes that would disrupt an active stream.
+Patches 1-3 are bug fixes and refactoring for the existing K1 I2S driver:
+  - Fix RX DMA params not being set when TX is already running
+  - Move hw constraints from hw_params to startup where they belong
+  - Adjust FIFO trigger threshold to half FIFO size for better DMA
+    efficiency
 
-Fixes: 955f7b46873e ("ASoC: spacemit: add i2s support for K1 SoC")
+Patches 4-5 add dt-bindings for the spacemit,k3-i2s compatible and the
+spacemit,fixed-sample-rate property. The K3 SoC uses the same I2S IP as
+K1 but requires additional clocks (sysclk_div, common_sysclk,
+common_bclk) that are shared across multiple I2S controllers.
+
+Patches 6-7 add driver support for the fixed-sample-rate constraint and
+K3 SoC with additional clocks. When multiple I2S controllers share a
+common bclk, they must all use the same sample rate.
+
 Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
- sound/soc/spacemit/k1_i2s.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Troy Mitchell (7):
+      ASoC: spacemit: fix RX DMA params not set when TX is running
+      ASoC: spacemit: move hw constraints from hw_params to startup
+      ASoC: spacemit: adjust FIFO trigger threshold to half FIFO size
+      ASoC: dt-bindings: add SpacemiT K3 SoC compatible
+      ASoC: dt-bindings: add fixed-sample-rate property for SpacemiT K1/K3
+      ASoC: spacemit: add fixed-sample-rate constraint support
+      ASoC: spacemit: add K3 SoC support with additional clocks
 
-diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
-index 1cb99f1abc7c..5c878f02cc93 100644
---- a/sound/soc/spacemit/k1_i2s.c
-+++ b/sound/soc/spacemit/k1_i2s.c
-@@ -117,10 +117,6 @@ static int spacemit_i2s_hw_params(struct snd_pcm_substream *substream,
- 	u32 val;
- 	int ret;
- 
--	val = readl(i2s->base + SSCR);
--	if (val & SSCR_SSE)
--		return 0;
--
- 	dma_data = &i2s->playback_dma_data;
- 
- 	if (substream->stream == SNDRV_PCM_STREAM_CAPTURE)
-@@ -180,6 +176,10 @@ static int spacemit_i2s_hw_params(struct snd_pcm_substream *substream,
- 
- 	}
- 
-+	val = readl(i2s->base + SSCR);
-+	if (val & SSCR_SSE)
-+		return 0;
-+
- 	val = readl(i2s->base + SSCR);
- 	val &= ~SSCR_DW_32BYTE;
- 	val |= data_width;
+ .../devicetree/bindings/sound/spacemit,k1-i2s.yaml |  39 +++++++-
+ sound/soc/spacemit/k1_i2s.c                        | 106 +++++++++++++++++----
+ 2 files changed, 123 insertions(+), 22 deletions(-)
+---
+base-commit: 02f694bcc20c664d9f4754229a3be28683c2a3f8
+change-id: 20260427-k3-i2s-52ae21807466
 
--- 
-2.54.0
+Best regards,
+--  
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
