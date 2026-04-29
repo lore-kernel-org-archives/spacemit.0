@@ -1,87 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FEB2D7D27;
-	Wed, 29 Apr 2026 02:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5434A313545;
+	Wed, 29 Apr 2026 03:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777430111; cv=none; b=MuOlw0qzprjqtRm4NOmzc/N1Nrdns7hzBBE3msbGMC+2DKGpE313+VMfzVZxzaZR3fgaaxnQ/o8DNuxpLJhGmJgnX5KuaxpNazDM1JOWKCimK3ehRIZDELPqXOh2rs+K4nbY4RWeXLnrnGM+fNRLpHp5ZmpjCDgedEbLV8Y9aaQ=
+	t=1777434413; cv=none; b=NlUBxQwz+ZRtBADmKf0t3NxCrCs/5uHEef/P3R9zKseSaDvg27D3v4kyp/iZueITF6Gi8gQmg2Cv6b9Bac8/1NwaA7a9hmcMZT0xn2OXOHAwquEUMozRrj4LWkFIUmVJkYu3Jd6inuS1wqPIlphTxA+dFUyfmhFTgy3Ldd6QwxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777430111; c=relaxed/simple;
-	bh=jpIK6hmwn1Fh9Mum9QGhf4dG9xqtXCD2+W4rd2H5kHI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SxsHudI/DX+NIUVhv1CXH2L5MdwOYOgaxkjBQH5tocx5H+5nfEnPCp9TWkA3e8diwF3SgqPX4ADqBkyQ3NCTCyrhMTuCV1AkdCdqOLuVHDdjDO10hUQPUb38yhIuiuVLWDR55LmOkU5eLcDWXZyPnwvb9sb1qnsBYp6Cxe2NKl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VyE768Oe; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777434413; c=relaxed/simple;
+	bh=45IZZlvy5m8D36o9FxaXN13xt/oU1CnjDv56aCuJzOw=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=M9FxtHUPHmFN5oJg4JM+yNbRqZgBR+ioV7UPSJdDqWto7+CcT81TDUfLIt0ZsN9SUdPItSaq0crsWye5PaiCeqljwXSoOXRk1/tSOP7CuQcpGZi3EmjzQdMvHtGwV9WI6LQM96R1+WLSQ3Ps98PgeHn8zxk9F9RK8awImM6JjyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CMEZ7Wx7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VyE768Oe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2969C2BCB7;
-	Wed, 29 Apr 2026 02:35:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CMEZ7Wx7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285ACC19425;
+	Wed, 29 Apr 2026 03:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777430110;
-	bh=jpIK6hmwn1Fh9Mum9QGhf4dG9xqtXCD2+W4rd2H5kHI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VyE768OeMJEbsnEmzterKf2Ez6S9dXkfXVgURSw0yZZPBa4lC6KimD3De3kJ241hf
-	 EKix9Yx6+xExVdlAmyTJw/rTYuCi5cYPcrDo992b3n5+k8yr9xi3VTN52t5NwURZbu
-	 2NAleXgSgWr9SzC+OFskpT240fur+rU2XAtP8YQyOoRr2tBITlX5YJF3CR9djkISuW
-	 qpxONGLSHpa1nqH9Tx1M9r2L5MOKSVZIm2sT1PH4Du6KOnlZZFe3wyOpZh+27QhFSD
-	 a73xVcMGnKotP50ndLF9TDW1d3CciFrHVQbWLaRvBE1NBnOO6QxqmsdymMTJeLt99K
-	 ynoe4U5qSaXQQ==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id CBF701AC5851; Wed, 29 Apr 2026 03:35:08 +0100 (BST)
-Date: Wed, 29 Apr 2026 11:35:08 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, Yixun Lan <dlan@kernel.org>,
-	Jinmei Wei <weijinmei@linux.spacemit.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-sound@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/7] ASoC: spacemit: fix RX DMA params not set when TX is
- running
-Message-ID: <afFuXO3IfV6CSsLf@sirena.co.uk>
-References: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
- <20260429-k3-i2s-v1-1-2fe99db11ecb@linux.spacemit.com>
+	s=k20201202; t=1777434413;
+	bh=45IZZlvy5m8D36o9FxaXN13xt/oU1CnjDv56aCuJzOw=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=CMEZ7Wx7i3JLG2fPGaPVomVTVfvffC472xgvjoZrpwaNiVAfRiOHWTnWFVnRWToVE
+	 hays5e0R4dTqkVq1BdIET7Q0CVhsHHzduG/KP1ixv9tcV2kQaXXv64ubYqSh1qtNdi
+	 861p4mBw9gtSA2PVgMXWb9E58QtUPGh/M0Ks+MCrBxJZXEmzk1VC3Uf6QTZJjgWrXN
+	 nthuhbNW9cKa+Srv5wUooxyoS1JFoV91HgxBhPBi9JqkAYlPAeHaISRCxd4vjhqk5A
+	 4YQ29V/6m3R6VE6mHMBpuG52yP71wFK8HTKEmENdI95bSrNTSXJiumKyWLCax3x+Gh
+	 bbttZw/UW+eYg==
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Ywcan+wgjpNp2zB0"
-Content-Disposition: inline
-In-Reply-To: <20260429-k3-i2s-v1-1-2fe99db11ecb@linux.spacemit.com>
-X-Cookie: 667:
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260424-k3-pdma-v3-4-efdf2e414a08@linux.spacemit.com>
+References: <20260424-k3-pdma-v3-0-efdf2e414a08@linux.spacemit.com> <20260424-k3-pdma-v3-4-efdf2e414a08@linux.spacemit.com>
+Subject: Re: [PATCH v3 4/5] clk: spacemit: k3: mark top_dclk as CLK_IS_CRITICAL
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, Brian Masney <bmasney@redhat.com>, Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Conor Dooley <conor+dt@kernel.org>, Frank Li <Frank.Li@kernel.org>, Guodong Xu <guodong@riscstar.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>, Rob Herring <robh@kernel.org>, Troy Mitchell <troy.mitchell@linux.spacemit.com>, Vinod Koul <vkoul@kernel.org>, Yixun Lan <dlan@kernel.org>
+Date: Tue, 28 Apr 2026 19:03:19 -0700
+Message-ID: <177742819927.5403.12105832893857014560@localhost.localdomain>
+User-Agent: alot/0.12
 
+Quoting Troy Mitchell (2026-04-24 01:20:32)
+> top_dclk is the DDR bus clock. If it is gated by clk_disable_unused,
+> all memory-mapped bus transactions cease to function, causing DMA
+> engines to hang and general system instability.
+>=20
+> Mark it CLK_IS_CRITICAL so the CCF never gates it during the
+> unused clock sweep.
+>=20
+> Fixes: e371a77255b8 ("clk: spacemit: k3: add the clock tree")
+> Reviewed-by: Brian Masney <bmasney@redhat.com>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> ---
 
---Ywcan+wgjpNp2zB0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Apr 29, 2026 at 09:38:46AM +0800, Troy Mitchell wrote:
-
-> Fixes: 955f7b46873e ("ASoC: spacemit: add i2s support for K1 SoC")
-
-	Fixes tag: Fixes: 955f7b46873e ("ASoC: spacemit: add i2s support for K1 SoC")
-	Has these problem(s):
-		- Target SHA1 does not exist
-
---Ywcan+wgjpNp2zB0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnxblwACgkQJNaLcl1U
-h9AmPgf9EyhGWupByngJPOAIOzddMuTD9q6YNSITxCShSQtFhMR+vK56aZ3D5n1L
-amCgyhAauqiGTQ63bwkPr9qS92t2dbTVyUB3H9/pjkxGFlTKv5Y7V94NpTGZZDFi
-1gquKI8BJzie0dafW99Jt0lo+6K/W5h1MULK0imK8tCDjC/0P3OnzKnWqCzwI0rf
-eGfhYIwotlK622QxStby4B65tEaF3Tbj9T/zvs3wmCzjg2CL6CXiC/UKQsD0vUUG
-tECTMR9TLnBikNBuebd5Tfm+loHIjUNtwT4NioCdcp79oJblFKsrZnZXrLIsWRaN
-uWl6P30eBVqFokFL/GbNRyZJ2uWtRQ==
-=eVWm
------END PGP SIGNATURE-----
-
---Ywcan+wgjpNp2zB0--
+Applied to clk-fixes
