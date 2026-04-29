@@ -1,41 +1,40 @@
-Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3A824A07C
-	for <spacemit@lists.linux.dev>; Wed, 29 Apr 2026 07:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997A830B525
+	for <spacemit@lists.linux.dev>; Wed, 29 Apr 2026 07:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777448983; cv=none; b=ZDFlVKvYx4lyQrvDlTy7YY6gub90nvkpkYMVa9gQQI0mSM4pRD01j1qUT8Oe7VGBOrJbZOJEi2rb/LAfKp2aOkjxXPWymkqUUqAIt8ryEoo4/Enn/49q0wCrF6BczHfAydVgeVXUOqsn5PXfxqdsdPq3X2rgHdsk/RZc1qXPF0k=
+	t=1777448984; cv=none; b=iIt9TC5Hc2teRldP0C7P1KxKYwHs13edGQGwwNWVEBx5iuA+pvAYV9VH8r4u0a4Yv7PIIAx0ydjF/80UbrNfpfbkMKdICAFAxkSnrFfP/+jQtB301Io/A0w/VJ7xKVjieS6UKoLe+LWw56pivVFbRurW5IF3EpU5ipw8w32WZCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777448983; c=relaxed/simple;
-	bh=mCQayAr9RouaadceLxaNioH49sLgj8dEFAMiyWvUNLc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bcPSALfAs3uO0rqB3xI6beCxOH8yXDnyMh7XX3f/XADitXeOrqhw9kz6nf5wfCI/nKgfcck7E99qW59A41fXgLM2wjF4R3Sdtrmved4iGtFX1JISqhq2IKUm9+MFb5ibNre3VH2nUS5lOjh0FOTe+BbBAVV8C1Ax6X0XtlcgeaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=MhMe4Uf7; arc=none smtp.client-ip=18.169.211.239
+	s=arc-20240116; t=1777448984; c=relaxed/simple;
+	bh=hDCWhYWY81WE1DOC2pdOZCxy/P/R4TtpNWVhDuds9fY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DwbN0xZuBkt8OOEh4sM4hD46Ejt8o8nucxrKo3ab4lon2jM4PsdZYYPheYTY6cTj1SBmv3CopbmUlrvWUnooWNkmHg/M2reUaNQWaLuwXkPf4u6eFr3OeHxjrqMTTagN7/fBozV/DQpijDauQxV5AQztNbtymhUEjWGvjECyx3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=q9n/FFIK; arc=none smtp.client-ip=54.204.34.130
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="MhMe4Uf7"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="q9n/FFIK"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1777448952;
-	bh=/XBLU/2EPMf5LiPhya2jhRX0WZEvv8umzim0o1th8vo=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=MhMe4Uf7IiKX9v0zyN3tM8f9+7jaUaWsUJeOlgy0fMdHYxucpaqtw7T6iMvHx0RTL
-	 Ujz3UK5PbjQMDMjv4e2bdECMAqlib/z0QGzuOrsZhBX78kD4q8VKGzkk791hbTW9bj
-	 D8IU6VO134Gml0d53I2GWbJp8bS5bKcQmrEDqqfQ=
-X-QQ-mid: zesmtpgz9t1777448946t7992dc9f
-X-QQ-Originating-IP: NIGDpNr5nns6isGhGyKxzyKT90BztXn9N5xiG1xN5EI=
+	s=mxsw2412; t=1777448946;
+	bh=i5Jd6q2ASwBOX37+hgiBc/0XfTbXNhw+dHB7po+Ag/M=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=q9n/FFIKo6IqGDEh36Jaqp82CegygeVCEIngvx3VxwfOvv2h6JMk004Pu5B2ZRd5T
+	 o5DNDPcvk8WDnaSa2TV3oF4JcJKUlrs6IPYk/NKbY1gbSH67lPS1fbFFSru1l2q1h5
+	 SvrBTmVhL+0L0vcGT0sxRT3lurUD20Cj6GnsFYuI=
+X-QQ-mid: esmtpgz16t1777448939t3b8dbfe6
+X-QQ-Originating-IP: jMIil5oH0Xt1rs2bXU/3HVr3dTF360HXTq1uWmc4p5o=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 29 Apr 2026 15:49:04 +0800 (CST)
+	id ; Wed, 29 Apr 2026 15:48:57 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14935581430065835113
+X-BIZMAIL-ID: 17083034700479194089
 EX-QQ-RecipientCnt: 8
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Wed, 29 Apr 2026 15:48:57 +0800
-Subject: [PATCH v6 2/2] i2c: spacemit: drop warning when clock-frequency
- property is absent
+Subject: [PATCH v6 0/2] i2c: spacemit: improve clock handling and cleanups
+Date: Wed, 29 Apr 2026 15:48:55 +0800
+Message-Id: <20260429-k1-i2c-ilcr-v6-0-1c7a5a5a8b24@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,83 +43,74 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-k1-i2c-ilcr-v6-2-1c7a5a5a8b24@linux.spacemit.com>
-References: <20260429-k1-i2c-ilcr-v6-0-1c7a5a5a8b24@linux.spacemit.com>
-In-Reply-To: <20260429-k1-i2c-ilcr-v6-0-1c7a5a5a8b24@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23MSw6CMBSF4a2Yjr2krZSCI/dhHEB7kRt5pcUGQ
+ 9i7hYkxYfif5HwL8+gIPbueFuYwkKehj5GdT8w0Zf9EIBubSS6V4ELDSwBJA9QaB6aQuVUcU65
+ rFh+jw5rmXbs/Yjfkp8F9djyk23rshBQEINq04Bc0tipuLfXvOfFjabCjKTFDxzYwqB8iZfaPK
+ OBQqZzrSlvLMTtE1nX9AuDi+Uv0AAAA
+X-Change-ID: 20251017-k1-i2c-ilcr-c928d50e407f
 To: Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>, 
  Yixun Lan <dlan@kernel.org>, Yixun Lan <dlan@kernel.org>
 Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
  Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777448937; l=1770;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777448937; l=1169;
  i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=mCQayAr9RouaadceLxaNioH49sLgj8dEFAMiyWvUNLc=;
- b=6XoYLdtoh1REnJ/XnCtZ6jKyFHHng6mH2yjpbp0UYn/RazkzBbdN44yZKhVE2FeyR4yjwF7nl
- /emkxihAbwJAmIItQvo+5FUsweTpM3PjXyvopUvvbfYjrGin1xHSCnt
+ bh=hDCWhYWY81WE1DOC2pdOZCxy/P/R4TtpNWVhDuds9fY=;
+ b=flWdhu1/sWNRwPBAsLvj7zNWqxB+JMGIKbSHYsYI6mE9NZIkiVlpNk2wQiarc2hHWN52nh2un
+ oJ+7UCskgf/DKdRyzcR0xQvE6V3FlYw5I+6K4QDGuNsMRq3PdtSmFu2
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
  pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MeriHi1OVszfSpOBSOeiYDAaFgQrWVj3qNROv/xAg8aYIb/pKXdlZShN
-	NX4AP3Plx+MZx0MHfr30AVBKVeOMOxcfkB8VuGmwBo5FOi2vJ5ifPodPM/e96gE+82sCq/v
-	V6yQy7lullCr0HSbB2XjXCkkncy9ZQQqVSySoIEo+3bBXuB6IzT7mTZ7zxB5XNaThG08Z4K
-	hr+BRHhGdxWTTUdJ8MhZN9ui79V0F/o8RTQgssQFIcmHyH1ma85jv/PzpZOpeuSOzyUw71y
-	h2zSOs7ftTyRp3VGJTPyf8ZgHAk5nkvrHntO/2f9pTIARBJyjvvz+xd3+gDCRKcFcyKv+f+
-	acL7Vzl3ACbWa20300jLi1R2SxMHT2KV4Cyn7CKNgpEPzEtvkaw2SixY/ViZ7svLPANAYL/
-	6RhtEmmBasAbvAnzN12YD9Pg7eppqLdqLz+3mBVmGOwOKFcOtoqcXSqUJosmhafD6Ttwgnm
-	caMbSV32bhH4+0iIYlUDZm0HCCYFw2Ln7MigmU2uQVuvlzDWOhcxZ2bxLoxh3BcUD3xLCT4
-	8Rmgp6Gnsfzxx/bgDiFuhthabQG9z/GD6wiQ1aXRHjfH0/MezF5XwudD+6qUou/kzOB7Olo
-	O7MRYIrpSiugSAAsiE4zob9JoO18b/yqKORhbplgGNDmRh+EfrZEOanGEOI3gcVTSoys2KV
-	kRW9hi3IBFCoZtIBgLagKHBjG12ZfkDXSooPuSpFxx6J+dXp+LSuGEtJWfN6mggwHAEHXa6
-	t1kr1msaTHOO8eBQo94zznNJK10UF3JbOW0B7ArReb4ADnjociR4KA4NYeqx4vv6YtTIgh6
-	DlNWq1djZh3kRBF1QkaSa75tvl/5hDlksC5HCWMQB5ZXLXte2sR+JR/s7vkNEFDxgHcSG3x
-	JR716LO0ElioYRJ9/rZI13+xmrDX0EBGr2xg+aCFOalnZG9g4js8zI22ioIS65H4i10MzTt
-	Hy8fcuaU5QbTpwxUHl4iUi0aWpvrd4xAmTyqUFHnxWIjq0cp7KDFy+NF/gbMbYVw8bmjxcL
-	tuyPuYXnaEtjpjdsWwqhZVVj8LtbHwEf8ekvZzoDfm+v3wOggT322EprzJNFR7SJBN4s7ag
-	fokI1rQjZQpqUOfa0NDuEqfmpznq4KP7TO3s/Ow611iZ2labTwuw40=
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NFN0Qhrj1+QEl6Lvv2KLtnXlYEIEJ0SFpTOn3qOOgsLIG4Rs9bN3sgNc
+	XLnTVvGK9RcVEbWZcjJtT7vaBMKN/fz1KomdlF2Prlb3+KFx0n3HzMdr9smWrBbmn+GJ4fY
+	AZRUwzRHtAZDrUTWvb/P8bbAetRSsSMh8h32hwGVU9Muowo2L8lr1awsyAPyyR58FrIQQ4Y
+	oBXANDCPyyMrD/yh95eyHcyzFJpPCIc/dAssB8fJE4F4gcO3RUAwMzOXAmavKx/T9RfIpym
+	NHpBxxMEu8SD7PK+gLVPaYvN/1mJ15tWgQfy1jMOqhrIqpC8FRE0SkqZfC3lVbdemVNynGa
+	wP5Wnj78ojd7rgl5EGhXonGsrLnVFYSduG0uiimFZ51nDkcFn8pIuPprI+B5eIY71Gptx9y
+	4h0PPkgr3pa5O78XncuJ9p1sevR7d7eS0w0JnSkUHsog4i+Ry+oAxLEQFo+nPIg2NvFQGyJ
+	lFgkINfS2MnL2thV4YXBY6ywwEjssbRkvHK2OEk3WbEGvDPcWfFoDtD8TmUKZee0Ragbblx
+	VskDTlQ9FDf4hxiTg/VtnMX74dntsZkzEmU96/zPaxRBWA3sP05f7QYaYH1UW4/UqXadDFv
+	SsnI+tY5lBrIRwB6iTHBEuJpaPietexBySbAj2+Smh8R1U9QPsYmzg8diyC9x7H7LUwEBEa
+	kkc8adejWGV+sK+xoOsXU/Bumd+CChtwmz/CODBnWW6Q5PWfL+2JpsFNXsO17Tuj3LPmQwh
+	qwFCv6aCHPq0HsoFyMMywbRj7/tQxDgfnX9l5VgTIVpfrBHwG81CJwEuh1mhwkW+Jf/+9Qw
+	sOtkEi9T9DYgsLa9rvmpay3wMKhhNJ+DiAmTx2cnd8WFumuUO22yoRVj3CSmh0tsBylB85s
+	jNotpBcRgd3Bp+0kDGUISCBeV2SAOld1Ser3jPUE/9IqwbKopA5kfG7VPLDXuWKESMHE4PB
+	wITA7fug9sIv29KU6yQEDmAMOz8vIM4UCL7hXQKBoj+42OpNsRmNcOXds9UdwGVzav6JDg0
+	ZaEGbj8vjSzBTqco6JfoFV7sSTCFb0IImp6MKu5Uai5TQ11ZHpZoNqqV9ziRkqzzoCikBiu
+	2C0MpLuWImsrykO+JeOMg4F+Y1CfNcZBVDZ7Zb3BmmJ
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
 X-QQ-RECHKSPAM: 0
 
-The clock-frequency property is optional according to the DT binding.
-Do not emit a warning when the property is missing and fall back to the
-default frequency instead.
+This patch series contains a set of small improvements and cleanups for
+the SpacemiT I2C controller driver.
+
+The main change in this series is to improve SCL frequency accuracy by
+configuring the ILCR register based on the requested clock rate, rather
+than relying on the hardware reset defaults.
+
+The ILCR is exposed as a managed clock via the Common Clock Framework,
+allowing the driver to program appropriate divider values for standard
+and fast modes.
+
+In addition, the series removes a spurious warning when the optional
+clock-frequency DT property is absent.
 
 Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
-Changelog in v6:
-- drop Fixes tag per maintainer feedback (this is not a bug fix)
-- change dev_warn to dev_info when clock-frequency is absent (it is optional)
-- Link to v5: https://lore.kernel.org/r/20251226-k1-i2c-ilcr-v5-0-b5807b7dd0e6@linux.spacemit.com
+Troy Mitchell (2):
+      i2c: spacemit: configure ILCR/IWCR for accurate SCL frequency
+      i2c: spacemit: drop warning when clock-frequency property is absent
+
+ drivers/i2c/busses/Kconfig  |   2 +-
+ drivers/i2c/busses/i2c-k1.c | 164 +++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 154 insertions(+), 12 deletions(-)
 ---
- drivers/i2c/busses/i2c-k1.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+base-commit: 9b45dba17a6b3cede80706d287d8d2fb9087bfa9
+change-id: 20251017-k1-i2c-ilcr-c928d50e407f
 
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-index fad6a20bb43d..8b0a215dfb29 100644
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -823,9 +823,7 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
- 	if (!i2c)
- 		return -ENOMEM;
- 
--	ret = of_property_read_u32(of_node, "clock-frequency", &i2c->clock_freq);
--	if (ret && ret != -EINVAL)
--		dev_warn(dev, "failed to read clock-frequency property: %d\n", ret);
-+	of_property_read_u32(of_node, "clock-frequency", &i2c->clock_freq);
- 
- 	/* For now, this driver doesn't support high-speed. */
- 	if (i2c->clock_freq > SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ &&
-@@ -834,7 +832,7 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
- 	} else if (i2c->clock_freq && i2c->clock_freq <= SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
- 		i2c->mode = SPACEMIT_MODE_STANDARD;
- 	} else {
--		dev_warn(i2c->dev, "invalid clock-frequency, fallback to fast mode");
-+		dev_info(dev, "clock-frequency not set or out of range, using fast mode\n");
- 		i2c->mode = SPACEMIT_MODE_FAST;
- 		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
- 	}
-
--- 
-2.54.0
+Best regards,
+--  
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
