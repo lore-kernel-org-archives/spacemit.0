@@ -1,47 +1,41 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6CD3859E2;
-	Wed, 29 Apr 2026 04:20:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3A824A07C
+	for <spacemit@lists.linux.dev>; Wed, 29 Apr 2026 07:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777436408; cv=none; b=Huq181k3v0mcczvgQweB4bsHwvCVkTXs/qs+2k8to+wpUyt7KsXuZfWbBHXzKn9DLDzAqwRWY3H+sDDDpdu1AO0WMkQgjxPnN1KG92PWw8a71JqD+pHF7tc0g7TRUdcql186tOr5uAVB7RmFRWdMTAuq5I9tRFnMEvAFIt6mXsc=
+	t=1777448983; cv=none; b=ZDFlVKvYx4lyQrvDlTy7YY6gub90nvkpkYMVa9gQQI0mSM4pRD01j1qUT8Oe7VGBOrJbZOJEi2rb/LAfKp2aOkjxXPWymkqUUqAIt8ryEoo4/Enn/49q0wCrF6BczHfAydVgeVXUOqsn5PXfxqdsdPq3X2rgHdsk/RZc1qXPF0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777436408; c=relaxed/simple;
-	bh=Y3TadPI+Uk+0lcra2ukxy7a1jSLDUZdGEsO0a8IaOuM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=e7znOLc5Q2QguHmAKUWmt0Z0nZTFZQ2e5kPfxHI2qDXe3pz4D/WzC/WO2Z/8Xj7cUpWzXA6OjPLSHvXzx92bCJP9kEHOjMNYvRJUjX/hrUfvA9GisMisJmPmh6uP3Lpu8ZpVaVGQgvXZSHE70PMGK2GFmiLBD7yOl7zF2SfFsxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KtLnoFDX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777448983; c=relaxed/simple;
+	bh=mCQayAr9RouaadceLxaNioH49sLgj8dEFAMiyWvUNLc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=bcPSALfAs3uO0rqB3xI6beCxOH8yXDnyMh7XX3f/XADitXeOrqhw9kz6nf5wfCI/nKgfcck7E99qW59A41fXgLM2wjF4R3Sdtrmved4iGtFX1JISqhq2IKUm9+MFb5ibNre3VH2nUS5lOjh0FOTe+BbBAVV8C1Ax6X0XtlcgeaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=MhMe4Uf7; arc=none smtp.client-ip=18.169.211.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KtLnoFDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10462C2BCB4;
-	Wed, 29 Apr 2026 04:20:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777436408;
-	bh=Y3TadPI+Uk+0lcra2ukxy7a1jSLDUZdGEsO0a8IaOuM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=KtLnoFDX/LmckW/QlstZ6bfDZxf1oto3yy2sVCHBbWDmtY9LuVjn+O7QtJcerlfZP
-	 aVBxPB4fOZ/WzwQmcvhAkJjZgxhEC5cO3uDlLnvzCRIwcMAva7msvwDS6MflfjJ0FR
-	 4AgqhJxlJ8qKZeHTxRH9k09GbMeDhqsh9OKxkbBHPUc+MQuhTYsLU/+NcUdnrngBK5
-	 N5/qM9+E5Z0Z3wK0z6igY9Q9S/D1LqsKaw5+iE0dPovpGe48vtHhyt9Ko0nfyYSHPO
-	 8MQl9RAUiBhHQEBaNOEMOcEQD4HJsSb3hZ8KwSq3SSUKUs1S+ZOLtL1z+mY4MxgqzG
-	 r3k++/wyxliCw==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Yixun Lan <dlan@kernel.org>, 
- Jinmei Wei <weijinmei@linux.spacemit.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-sound@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org
-In-Reply-To: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
-References: <20260429-k3-i2s-v1-0-2fe99db11ecb@linux.spacemit.com>
-Subject: Re: (subset) [PATCH 0/7] ASoC: spacemit: bug fixes, refactoring,
- and K3 SoC support
-Message-Id: <177743049537.363516.3431185859758571339.b4-ty@b4>
-Date: Wed, 29 Apr 2026 11:41:35 +0900
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="MhMe4Uf7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1777448952;
+	bh=/XBLU/2EPMf5LiPhya2jhRX0WZEvv8umzim0o1th8vo=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=MhMe4Uf7IiKX9v0zyN3tM8f9+7jaUaWsUJeOlgy0fMdHYxucpaqtw7T6iMvHx0RTL
+	 Ujz3UK5PbjQMDMjv4e2bdECMAqlib/z0QGzuOrsZhBX78kD4q8VKGzkk791hbTW9bj
+	 D8IU6VO134Gml0d53I2GWbJp8bS5bKcQmrEDqqfQ=
+X-QQ-mid: zesmtpgz9t1777448946t7992dc9f
+X-QQ-Originating-IP: NIGDpNr5nns6isGhGyKxzyKT90BztXn9N5xiG1xN5EI=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 29 Apr 2026 15:49:04 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 14935581430065835113
+EX-QQ-RecipientCnt: 8
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Wed, 29 Apr 2026 15:48:57 +0800
+Subject: [PATCH v6 2/2] i2c: spacemit: drop warning when clock-frequency
+ property is absent
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -50,60 +44,83 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1706; i=broonie@kernel.org;
- h=from:subject:message-id; bh=Y3TadPI+Uk+0lcra2ukxy7a1jSLDUZdGEsO0a8IaOuM=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBp8Yb0K+ucIi3HDtgy/2P9jyTHgZHvTNgpG3lfC
- rcwtX3nqkeJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCafGG9AAKCRAk1otyXVSH
- 0HsGB/0SR87C+jiNlh2idBxBsVbfTMnM51S9G6GDqaJKpv/Q0igZROaqjIOgR+7rgwkxtu/APtK
- roW2rPY+7xkz8uYz9wQb+Y28UuChQFbDcPEcrgIzT6Y7uSxzg9kU0Z2N4MGmf5/uaHAPw81iyy/
- bYcX2K0Q6OTTGHeR+9xT3hqSupM8HaGMX0ZCHGi+D5h4dPoMWcRaiQ7297iT4x64WngNvviymse
- yi0pcZRFCp8/QCQ3ll3FugTOHRVdsLE83t0trkfDzgO2uidRU/D6qtbE5xawG8lmzZxbFB3MDoV
- fECtrWN6f3zAS/C+LisSWJobTUle1BCnFLz6FfkJY7GK8uWR
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+Message-Id: <20260429-k1-i2c-ilcr-v6-2-1c7a5a5a8b24@linux.spacemit.com>
+References: <20260429-k1-i2c-ilcr-v6-0-1c7a5a5a8b24@linux.spacemit.com>
+In-Reply-To: <20260429-k1-i2c-ilcr-v6-0-1c7a5a5a8b24@linux.spacemit.com>
+To: Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>, 
+ Yixun Lan <dlan@kernel.org>, Yixun Lan <dlan@kernel.org>
+Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777448937; l=1770;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=mCQayAr9RouaadceLxaNioH49sLgj8dEFAMiyWvUNLc=;
+ b=6XoYLdtoh1REnJ/XnCtZ6jKyFHHng6mH2yjpbp0UYn/RazkzBbdN44yZKhVE2FeyR4yjwF7nl
+ /emkxihAbwJAmIItQvo+5FUsweTpM3PjXyvopUvvbfYjrGin1xHSCnt
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MeriHi1OVszfSpOBSOeiYDAaFgQrWVj3qNROv/xAg8aYIb/pKXdlZShN
+	NX4AP3Plx+MZx0MHfr30AVBKVeOMOxcfkB8VuGmwBo5FOi2vJ5ifPodPM/e96gE+82sCq/v
+	V6yQy7lullCr0HSbB2XjXCkkncy9ZQQqVSySoIEo+3bBXuB6IzT7mTZ7zxB5XNaThG08Z4K
+	hr+BRHhGdxWTTUdJ8MhZN9ui79V0F/o8RTQgssQFIcmHyH1ma85jv/PzpZOpeuSOzyUw71y
+	h2zSOs7ftTyRp3VGJTPyf8ZgHAk5nkvrHntO/2f9pTIARBJyjvvz+xd3+gDCRKcFcyKv+f+
+	acL7Vzl3ACbWa20300jLi1R2SxMHT2KV4Cyn7CKNgpEPzEtvkaw2SixY/ViZ7svLPANAYL/
+	6RhtEmmBasAbvAnzN12YD9Pg7eppqLdqLz+3mBVmGOwOKFcOtoqcXSqUJosmhafD6Ttwgnm
+	caMbSV32bhH4+0iIYlUDZm0HCCYFw2Ln7MigmU2uQVuvlzDWOhcxZ2bxLoxh3BcUD3xLCT4
+	8Rmgp6Gnsfzxx/bgDiFuhthabQG9z/GD6wiQ1aXRHjfH0/MezF5XwudD+6qUou/kzOB7Olo
+	O7MRYIrpSiugSAAsiE4zob9JoO18b/yqKORhbplgGNDmRh+EfrZEOanGEOI3gcVTSoys2KV
+	kRW9hi3IBFCoZtIBgLagKHBjG12ZfkDXSooPuSpFxx6J+dXp+LSuGEtJWfN6mggwHAEHXa6
+	t1kr1msaTHOO8eBQo94zznNJK10UF3JbOW0B7ArReb4ADnjociR4KA4NYeqx4vv6YtTIgh6
+	DlNWq1djZh3kRBF1QkaSa75tvl/5hDlksC5HCWMQB5ZXLXte2sR+JR/s7vkNEFDxgHcSG3x
+	JR716LO0ElioYRJ9/rZI13+xmrDX0EBGr2xg+aCFOalnZG9g4js8zI22ioIS65H4i10MzTt
+	Hy8fcuaU5QbTpwxUHl4iUi0aWpvrd4xAmTyqUFHnxWIjq0cp7KDFy+NF/gbMbYVw8bmjxcL
+	tuyPuYXnaEtjpjdsWwqhZVVj8LtbHwEf8ekvZzoDfm+v3wOggT322EprzJNFR7SJBN4s7ag
+	fokI1rQjZQpqUOfa0NDuEqfmpznq4KP7TO3s/Ow611iZ2labTwuw40=
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
-On Wed, 29 Apr 2026 09:38:45 +0800, Troy Mitchell wrote:
-> ASoC: spacemit: bug fixes, refactoring, and K3 SoC support
-> 
-> This series fixes bugs and adds K3 SoC support for the SpacemiT I2S
-> controller driver (sound/soc/spacemit/).
-> 
-> Patches 1-3 are bug fixes and refactoring for the existing K1 I2S driver:
->   - Fix RX DMA params not being set when TX is already running
->   - Move hw constraints from hw_params to startup where they belong
->   - Adjust FIFO trigger threshold to half FIFO size for better DMA
->     efficiency
-> 
-> [...]
+The clock-frequency property is optional according to the DT binding.
+Do not emit a warning when the property is missing and fall back to the
+default frequency instead.
 
-Applied to
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+Changelog in v6:
+- drop Fixes tag per maintainer feedback (this is not a bug fix)
+- change dev_warn to dev_info when clock-frequency is absent (it is optional)
+- Link to v5: https://lore.kernel.org/r/20251226-k1-i2c-ilcr-v5-0-b5807b7dd0e6@linux.spacemit.com
+---
+ drivers/i2c/busses/i2c-k1.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.1
+diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+index fad6a20bb43d..8b0a215dfb29 100644
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -823,9 +823,7 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+ 	if (!i2c)
+ 		return -ENOMEM;
+ 
+-	ret = of_property_read_u32(of_node, "clock-frequency", &i2c->clock_freq);
+-	if (ret && ret != -EINVAL)
+-		dev_warn(dev, "failed to read clock-frequency property: %d\n", ret);
++	of_property_read_u32(of_node, "clock-frequency", &i2c->clock_freq);
+ 
+ 	/* For now, this driver doesn't support high-speed. */
+ 	if (i2c->clock_freq > SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ &&
+@@ -834,7 +832,7 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+ 	} else if (i2c->clock_freq && i2c->clock_freq <= SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+ 		i2c->mode = SPACEMIT_MODE_STANDARD;
+ 	} else {
+-		dev_warn(i2c->dev, "invalid clock-frequency, fallback to fast mode");
++		dev_info(dev, "clock-frequency not set or out of range, using fast mode\n");
+ 		i2c->mode = SPACEMIT_MODE_FAST;
+ 		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
+ 	}
 
-Thanks!
-
-[2/7] ASoC: spacemit: move hw constraints from hw_params to startup
-      https://git.kernel.org/broonie/sound/c/6b4afbaaa342
-[3/7] ASoC: spacemit: adjust FIFO trigger threshold to half FIFO size
-      https://git.kernel.org/broonie/sound/c/03dcb5b68a96
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+2.54.0
 
