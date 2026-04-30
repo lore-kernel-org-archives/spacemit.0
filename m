@@ -1,61 +1,63 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEDA230264
-	for <spacemit@lists.linux.dev>; Thu, 30 Apr 2026 02:28:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B74227B94
+	for <spacemit@lists.linux.dev>; Thu, 30 Apr 2026 02:28:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777516137; cv=none; b=EGpmFYZdqmRucH3X6lx23UFbaI662YJ1sNGxOhrNF0rFT2Ga7jKCwZ/TPPMW/DooF97bSTE9zO8IbsEH7Y6jvqo12xjUJwMVQkU2envqb1VUAaCQv8btEXJ9fN1UhQzsgmDoQjzb9tGn9+sN+/F7NeHd05SrHuX82Z4coJXM6F8=
+	t=1777516141; cv=none; b=rjNp82A8/vzMiZAcxAPZU1eEYZTjcn1UJwCjOjmbaune/Nq4Hr+/SH0vv+K2kfMzGTInRoI6Rd0nPyN/zJltx05t1Wo1vaJpeGCQ9ZHmsx99+3EztE0jsXRmF/rfa/uq4bysWCYYviUkjnfEwR/ZY41iMgvC3SHw9XIhtHEsaW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777516137; c=relaxed/simple;
-	bh=fpI7ThcAkAntW6jxg6C3O495NPhVSuVAiCMm/40Z5xg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fK5XuO6Odb8LLbBNkY6kItLJSliAmH3huI5M1IvvbJGeTXJ7Of4QdM1WJE6rLFD2LWTngt4X1sbXssFck8LDFl7TPKX9YWyIkVWAUGUVqecx90idImBHh+iD4lyyh3vJFllJ7rCkskKZz168uvjGGUzaUG5LKlp+W2rn8pvD1nA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fb1z4hwF; arc=none smtp.client-ip=209.85.216.42
+	s=arc-20240116; t=1777516141; c=relaxed/simple;
+	bh=m/Xfc0yttr790dvluLCktuZe/Qbje/l2mIZp0WYNOos=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BScrzLZQdJz9N+n79crdgMdbZfhcAaNOW9P2tuNmb/FrDTzGcGq/ssA4+YjueRF2qf0u76gCydavlCXmRQbrlUFTDYktd3FWAzd1B7RKbGrYGf/mPH93hFk4nV8q07Kh4gWh2dJBVMFsr2dUr9/eS+8H7TAqWPZhKCFeDaW+r5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUrDGdgg; arc=none smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fb1z4hwF"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-35d95017a68so258654a91.3
-        for <spacemit@lists.linux.dev>; Wed, 29 Apr 2026 19:28:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUrDGdgg"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c70e27e2b74so123129a12.0
+        for <spacemit@lists.linux.dev>; Wed, 29 Apr 2026 19:28:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777516135; x=1778120935; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fvKNB8FFlV6JIJdaaGCkRo0LW6S72vZF1V6svTAMliY=;
-        b=Fb1z4hwFsmxqtyggMmDB2lx6tjDBp6CRUlAiHAq75+g8QHgMvRrK58fs9z0OFPG9lS
-         0Nk0f+i1nhoFFmeiKs290gxswrrNzKS8caboqonW2PCJSA5EhGi3HLrwK6nVKp075GHC
-         kLZ1DWbPhEGoxSBYj4yatYl25Qc64HG5CD2Yo562NjzzL38G7UwhhauD2ZTsVuNIREmr
-         +BSxaKzGs20gRk9L5QoULJkakTXYF33NONyMgjaRfkonv2GqfLgKm8pe0fNZnbmqvd63
-         AFKfeMOwWWON3H0ngMXinqDowMSfsFeHNsHGclfYyOMul/Riqrkjsuw9sXussvitA2Bc
-         yQvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777516135; x=1778120935;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1777516139; x=1778120939; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fvKNB8FFlV6JIJdaaGCkRo0LW6S72vZF1V6svTAMliY=;
-        b=TLBnrvBtzXwlLmhhuI/fTlK1eqbAjtjka1KVwaBvkqmBohAAmuI1uz2tcoGJOEyL9p
-         4bOWRl3F1Ys0aVCxOc6oX/ZgfLSnfCM7pOjGEQ7bOZ2DQ5oJbenFVNVKbuBg8+Y6dKOY
-         iFU+ws3gZiv+nV7oVNJC9rF7Ow/c4XcZWSaK96b+Oo012X/pvTAajFolI7wsPes3LFqC
-         Aw59wP0cWXzG2aRgvyHJV4Kg+xa589r4Dy++IBj52IlVNe3/VSK5RJO8ibdrpQXExNLS
-         31QoBE1OuJDVz7JQHeVmGvQVNVyk3aUbHJZOKtxJtJGvl3lP2dMJN5wrlhOnaSxEEU6T
-         pQcQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9W+N+2OC7BsE+/cXnk3VK4wfYObdoHfkoN+NVpIt90DlA93kymF875pMoAWSB7N4GndlPw2q2oVQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz6PJvk27am1IPgZRn4uKpqEtQ6L2crI5TXZpQ+qI/wTWOSB+Eh
-	d3DrjDxtP/SdlUsJpNMXd1Cz2BATFHFQZGBwhudU8+VdASb4Cp67Yp7U
-X-Gm-Gg: AeBDievtH3nK8eCmi81hPre45Bx/wjYRZv8lsw165AZsHIIZIJteMEuSoDuJ2Nobc1n
-	LthFz/20dRIkPFoeOo0YWBSvCDWevyyGUr0ZZ78Wez7iRDFklMD6QzGTMP/6x6vqTFQ45eoC/UQ
-	dAfBoVyoPRMppUT8s2DIXmNtEeACzjZiDzq8VeIHLJN9PDQ1fUDXYO/9AFrftsOibFpMrGnaCmw
-	V/u76V81MB0leJ2+djA+tqy6klH8KPVocfl0C6XrrfYZgyrSbzpcMUfPlRff8/GPNmHNHrAOZEe
-	DDIN7aiVHoHkl2t91/u352OypCZr5goHAGKe7nuL7NkmyDBEM3cZDH1Nikh2iGVgFCmNgiYY+w5
-	Rctd1gOPnjNJvkIKTxX0HR1Ctlh/bxx/Lu/fEGTwMkUe0C008Xsn4Uu0ihyymm+Qj/VcXTS8jLq
-	3ZQCkkOu6TE736+AlvwKGL+AB5V4P07mc6zw==
-X-Received: by 2002:a17:90b:3c4e:b0:361:4521:d311 with SMTP id 98e67ed59e1d1-364c309c2b0mr920821a91.18.1777516135395;
-        Wed, 29 Apr 2026 19:28:55 -0700 (PDT)
+        bh=yamg2LURb/TSAJp5ESv6zShjxXxQYQ9667SLJMB3Nuc=;
+        b=KUrDGdggrF4RDl91175zyrfhss3+17YDnlVV7sZEFm2xd0Lo9IVVtRyMwOwIRhzxUC
+         NMpzBc0BNjvVCjiu8u8ktpiWKxkTHsO103jVEaBJY5FZkpna3y1fTck06yMvtDB7kI15
+         xFEFFtFM1UzEaBm84EJRAgIcJf97HYo1YEW3+bjSqGg7gE0dADzmL2DV0EwISB9NnsID
+         zb/1xBfXYUPGEgOoVMjUpmGB1mOaugN+2lbswGJsUztcQ2qbu7HUMlyZoHaQzVXxuv5C
+         e+jyUNhzysemcW251efGQyqSkdperycYvRAcDU+MJDhtHqYQOoblMG/hoMPtnkLgbWvC
+         bKvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777516139; x=1778120939;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=yamg2LURb/TSAJp5ESv6zShjxXxQYQ9667SLJMB3Nuc=;
+        b=JBZSTVXg//FkcdCKgGRFKFSvcL9MQGJ0vFwBKQh4RPgDfYZjf0zophs6627ST4gTyL
+         2UoadCYgKWO1gWcYTAEtAwTS2l1AlEjaTNO8ZD+sAwwPacyQbKdVi6gTFmAxNQYCCPFR
+         WavW0upAFpCy8cSKCrqN49rs4R6wYgJDioW7WmsWkC13sIBpImwVQ9StOlHHQ7eTrwHh
+         m44zanktcE7c6CB89m9D5MoAA1UDANoEKAEgbq++dmWGX9q0BDbUQ+Of6GmM8y0Usiin
+         KNM5kh9RFE7M3JmEviD+PknUfTY4Sx7+j+4CyemtAgyDoMFLj6cmCuCQXcYMLC8BBMw0
+         iM+w==
+X-Forwarded-Encrypted: i=1; AFNElJ8WKynfxc5SJr6cTwAhbPsavD/Lmb/4l47jCwvfh0IMn7nc4IDIijmjJiC3n+/wHnwDjZm149n4TQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzh2v0dCGgSVt56oTymyZ/j6aNtAkg6yKG2jfY9GaOZK4RjXFuj
+	mHdHn2FX7fB7QGjEUYXJXpJWLtT7zuF8H0akRQ4RgmisZpyQHZrR/x71
+X-Gm-Gg: AeBDiespbOwG/rWk8HWDoWLiDmN+nATns/8rHcWp7RyoNDpfVqIDKGtKH4t2IrjspY5
+	VST9ntn/3diMX2+d8vA7eoOLn2y8bW8Yikdd7ykUCE/aAQ8DLLL+fBtQpUGUUCrSf1lrg04cswm
+	8rfiyxDrEvEbzhkX+CdRABULOjFvTaOVjnY14FkOJ3Tj1DTuXq0Oa1UIJdcrBQtFVAvq4UQ6bqD
+	B5/Nk0D2c4NjjvzHAN/Y8gHOE6xPxaFXDlVvHlar3S9CKCuQ8wiwFy4ScqEinfYs9uV5WqkM4qS
+	Ab0o8c3E6JmHoDe3VnNTTUORbgR8ETDzRvBAccjZHMUekLZ7A/MR+/8dizDfmSDbx0wpnsKvnSP
+	dpJuMbVbccK99yayD5GlqR4EYpiG3t2NhWtXXWVk1311EAlZ82rhVMfs72e24ydJowRzDLv9Y3P
+	iMPPiKfi0MSERV07/Nc/jpQK9FLJGcGYkgdQ==
+X-Received: by 2002:a05:6a20:1aa3:b0:3a1:90fd:dcd6 with SMTP id adf61e73a8af0-3a3cf6b2d12mr738604637.31.1777516138751;
+        Wed, 29 Apr 2026 19:28:58 -0700 (PDT)
 Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-364bdf2a71bsm987033a91.1.2026.04.29.19.28.54
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c7fd64f0a08sm3373649a12.15.2026.04.29.19.28.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2026 19:28:54 -0700 (PDT)
+        Wed, 29 Apr 2026 19:28:58 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
@@ -80,10 +82,12 @@ Cc: linux-phy@lists.infradead.org,
 	linux-hardening@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 0/2] riscv: spacemit: Add K3 PCIe/USB comb phy support
-Date: Thu, 30 Apr 2026 10:28:39 +0800
-Message-ID: <20260430022843.1090138-1-inochiama@gmail.com>
+Subject: [PATCH 1/2] dt-bindings: phy: Add Spacemit K3 USB3/PCIe comb phy support
+Date: Thu, 30 Apr 2026 10:28:40 +0800
+Message-ID: <20260430022843.1090138-2-inochiama@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260430022843.1090138-1-inochiama@gmail.com>
+References: <20260430022843.1090138-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -92,27 +96,85 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The PCIe/USB comb phy on K3 is a big phy that contains multiple
-standalone phys for each PCIe and USB controllers. This phy is
-required to configure a syscon device for mux configuration and
-calibration.
+The USB3/PCIe comb PHY on the K3 is a complex PHY group that
+can provide multiple phy for both PCIe and USB controller.
+Its mux configuration is controlled by the APMU syscon device.
 
-Inochi Amaoto (2):
-  dt-bindings: phy: Add Spacemit K3 USB3/PCIe comb phy support
-  phy: spacemit: Add USB3/PCIe comb PHY driver for Spacemit K3
-
- .../bindings/phy/spacemit,k3-comb-phy.yaml    |  63 +++
- drivers/phy/spacemit/Kconfig                  |  16 +
- drivers/phy/spacemit/Makefile                 |   2 +
- drivers/phy/spacemit/phy-k3-combphy.c         | 250 +++++++++++
- drivers/phy/spacemit/phy-k3-common.c          | 398 ++++++++++++++++++
- drivers/phy/spacemit/phy-k3-common.h          |  27 ++
- 6 files changed, 756 insertions(+)
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+---
+ .../bindings/phy/spacemit,k3-comb-phy.yaml    | 63 +++++++++++++++++++
+ 1 file changed, 63 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/phy/spacemit,k3-comb-phy.yaml
- create mode 100644 drivers/phy/spacemit/phy-k3-combphy.c
- create mode 100644 drivers/phy/spacemit/phy-k3-common.c
- create mode 100644 drivers/phy/spacemit/phy-k3-common.h
 
---
+diff --git a/Documentation/devicetree/bindings/phy/spacemit,k3-comb-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k3-comb-phy.yaml
+new file mode 100644
+index 000000000000..7aa2cf9301b7
+--- /dev/null
++++ b/Documentation/devicetree/bindings/phy/spacemit,k3-comb-phy.yaml
+@@ -0,0 +1,63 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/phy/spacemit,k3-comb-phy.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Spacemit K3 PCIE/USB3 Comb PHY
++
++maintainers:
++  - Inochi Amaoto <inochiama@gmail.com>
++
++properties:
++  compatible:
++    const: spacemit,k3-comb-phy
++
++  reg:
++    maxItems: 1
++
++  "#phy-cells":
++    const: 2
++    description:
++      The first one is phy id, the second one is phy type.
++
++  spacemit,apb-spare:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description:
++      Phandle to APB SPARE system controller interface, used for
++      PHY calibration.
++
++  spacemit,apmu:
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    items:
++      - items:
++          - description: phandle of APMU syscon
++          - description: configuration of the PHY lanes
++    description: |
++      Phandle to control PHY mux configuration. The configuration
++      is described as follows:
++      bit 4: 0 - PCIe A x8 mode, 1 - PCIe lane share mode
++      bit 3: 0 - PCIe A x4 mode, 1 - PCIe A x2 and PCIe B x2 mode
++      bit 2: 0 - PCIe C lane 0 is PCIe mode , 1 - USB mode
++      bit 1: 0 - PCIe C lane 1 is PCIe mode , 1 - USB mode
++      bit 0: 0 - PCIe D lane is PCIe mode , 1 - USB mode
++
++      The bit[3:0] is only valid when bit 4 is 1.
++
++required:
++  - compatible
++  - "#phy-cells"
++  - spacemit,apb-spare
++  - spacemit,apmu
++
++additionalProperties: false
++
++examples:
++  - |
++    phy@81d00000 {
++      compatible = "spacemit,k3-comb-phy";
++      reg = <0x81d00000 0x600000>;
++      #phy-cells = <2>;
++      spacemit,apb-spare = <&apb_spare>;
++      spacemit,apmu = <&apmu 0x00>;
++    };
+-- 
 2.54.0
 
