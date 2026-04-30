@@ -1,59 +1,96 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C503A1696
-	for <spacemit@lists.linux.dev>; Thu, 30 Apr 2026 10:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41C2228CB8;
+	Thu, 30 Apr 2026 10:30:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777544616; cv=none; b=Sh772LImQx8o9w1JP1vu13zXfB3GfXggYKcetBYNbmzOsbCClUya6aqpIs2pmCSovSoYkJDJwN9iKM73yHARZ057CTByJHo86/jPIp6jippoz+j9R3uYCDooNrNLtRHKYnUaO4DTKLeU4rIJCzZx7S9acORuOAJ/lFiCue0jQLU=
+	t=1777545058; cv=none; b=moVe2rslKWuwdrocFq65YtP3QrHLwLX9Ld7zbCxA3tcFHoYx4D2HL5GKns5XCAHM5pkicCkkaNeZC74lDB8J3q2ITZ6dN3GAxquvGSgLv6P+HvF1CTnC7wNBfzL9TWWBje65AmVypjtiI6vhvLQiLkRVZzl4fxkp+ZpKgUMNcXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777544616; c=relaxed/simple;
-	bh=/hQ4qJLy3jm7/UQnRB013PzjqtiQSTezw5Wx/dyiEjQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IzJP1VFctBSUV2yHBKwf1N8h4loN7DE3Bgrep00ynTDDzl+iYzQ7NxvBS7P7a/oloXn7q9lLTiUcqBl4DslhMMMi4Y7gUbHnJN4KmZvciviZZsKWoh71NjZLGFuV/gODjLjqFZJLNQhQ6iY4IjoEoTB0gf9qkM6NHsGJiIbo9z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from Vostro-3710.. (unknown [119.122.215.211])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 3cc362e3e;
-	Thu, 30 Apr 2026 18:18:15 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: amadeus@jmu.edu.cn
-Cc: alex@ghiti.fr,
-	aou@eecs.berkeley.edu,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dlan@kernel.org,
-	krzk+dt@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	palmer@dabbelt.com,
-	pjw@kernel.org,
-	robh@kernel.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v3 0/3] riscv: dts: spacemit: enable USB3 on OrangePi
-Date: Thu, 30 Apr 2026 18:18:01 +0800
-Message-Id: <20260430101801.642870-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260410100010.1197804-1-amadeus@jmu.edu.cn>
-References: <20260410100010.1197804-1-amadeus@jmu.edu.cn>
+	s=arc-20240116; t=1777545058; c=relaxed/simple;
+	bh=DmeSSTIGufqnT9oymE4UEk/rZkHHJ5nwP7hD8//UdrQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Q8Y4ICJ407VRJn6YvVTz2ZUHFqrvb0D20IMY79Y4FIzOSdkQTry//q5CZJ/ckioCtG/GsUQ/Q6Mda6/B6VQIQA9Fy+DNe5uOzQidH/sqSkbmHfsDSOP37kkFXUJ99nRorkYig1dLOEiMBtC2V/D19KKQhuNoPopLMBZs1Wo8KRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aWSfmgyx; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aWSfmgyx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E729FC2BCB3;
+	Thu, 30 Apr 2026 10:30:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777545058;
+	bh=DmeSSTIGufqnT9oymE4UEk/rZkHHJ5nwP7hD8//UdrQ=;
+	h=From:Subject:Date:To:Cc:From;
+	b=aWSfmgyxckA5I2LQl2tRlWPVi9qkuSzqU7XBzwtvqKm1KhejCvSOQpDYAnR8/ghAa
+	 jGuIl6wU+kbizMFQFParI6Xx5bf2vMFJGYaT6RzFuBOKG+vesj+cG3uJuxXPFp14VI
+	 DEN2Jy2GWttleO8xyEjSKGoSVWYbsf0ijRJJaZA47A7bKMRq4slbPVILfNFn2JPSk2
+	 92T4+eI96MRRpyS3Vz1Pd183+3DUjzUFLR9Uw6VPD1cqGBxnFpzr6pGsKycN5DddPw
+	 V15CJzYmsaEoIKkw4HW4okayE77MAy8brLA5UvMIeqeSL//kubsSSgDAMzKwzlxe+f
+	 hhucfVKamqZTQ==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH 0/4] riscv: spacemit: k3: some clock fixes related to PCIe
+Date: Thu, 30 Apr 2026 10:30:25 +0000
+Message-Id: <20260430-06-pci-clk-fix-v1-0-32fdc77c02ab@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9ddde5758d03a2kunmc2c93faf17d3cf
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDHU1CVh1JTExCTUgZS0MZH1YeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkJVSklJVUlKTlVJSkpZV1kWGg8SFR0UWUFZS1VLVUtVS1
-	kG
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEIv82kC/x2MSQqAMAwAvyI5G4gLrfgV8aA1alCqtCBC6d8NH
+ mdgJkHkIByhLxIEfiTK5RWqsgC3T35jlEUZaqoNtQ0hGbydoDsPXOVFVtvZmawhCxrdgVX/w2H
+ M+QO8afqrYAAAAA==
+X-Change-ID: 20260430-06-pci-clk-fix-e60487b07607
+To: Stephen Boyd <sboyd@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Inochi Amaoto <inochiama@gmail.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ devicetree@vger.kernel.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=898; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=DmeSSTIGufqnT9oymE4UEk/rZkHHJ5nwP7hD8//UdrQ=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBp8y9Pbw0UXF6v+Sxj7RgIpbKiDLeZUszFWSa/s
+ 2RNtRpR/1OJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCafMvTxsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+1hYRAAhpFGnBLjpvTIg3GcabvxnDktWdIcTYxFZLlnhrNe2Ro7+57RbD4ea
+ Qv1HiMYuaxCfFtdgcvg9AqIkPmcojzHYegSn62QlqCuFXIOV/I+caqbaM3ejVOnpUPMelJnxZBY
+ JG8wXf9k2MouF/IGZs5zPeg+Bc1DAHfEYl5FPvQFXTnLF4Zd6v+sOwVDbhU7LfsFcXMqtey0qI+
+ 9HomizpGDOISaSqh6RS6ttodaeuxNFVEfqddNJ7jU9l8S20IyUT7qocn5/XcDryEjgigStE30Wt
+ N/Bjv5itBBMJ7e2tJ37A6pwp3vsbSrjljj2hp1HYQ/VTekKNpD4qewFEDD34md8jk4+YJOmcRPW
+ MGcmJJ4hDcP6kmb6JYLFwEdp9bVpiNyzOXMqwDvfeyTUiELbyarxsXxjccv6nGG4yT4oFcbknTs
+ NFERPN1sM4HdEOUmNZEz+tWyuruchuP3l65kPTUlycOFdZmN+Kaz4ZxJxXUjkAe+mbT6FyMbuLd
+ ar1IQboD+GA39OlkGuy/d49jQMvfcWgFDiGD867I2MH8MXoqO6HYODTuHqHQt/8T/1AFWT/qWIR
+ HJqleS4bRxzD7TNyB5I47GjheZmug+zFmwb5GHXX0fF/rnliKzpn4Mja2nB5pkV492Cxs5zycuF
+ laMbdX4dbuRuQeCRGcCx0RCToMeX2k=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hi,
+Here are some fixes for previous patch set in order to make PCIe work,
+Add PCIe DBI clock which was missing, Fix the parent clock, And correct
+the PCIe Clock CTRL register offset.
 
->   riscv: dts: spacemit: add fixed regulators for OrangePi R2S
->   riscv: dts: spacemit: enable USB3 on OrangePi R2S
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Yixun Lan (4):
+      dt-bindings: soc: spacemit: k3: Add PCIe DBI clock IDs
+      clk: spacemit: k3: Add PCIe DBI clock
+      clk: spacemit: k3: Switch to pll2_d6 as parent for PCIe clock
+      clk: spacemit: k3: Fix PCIe clock register offset
 
-Friendly ping
+ drivers/clk/spacemit/ccu-k3.c                  | 30 +++++++++++++++++---------
+ include/dt-bindings/clock/spacemit,k3-clocks.h |  5 +++++
+ include/soc/spacemit/k3-syscon.h               |  4 ++--
+ 3 files changed, 27 insertions(+), 12 deletions(-)
+---
+base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
+change-id: 20260430-06-pci-clk-fix-e60487b07607
+
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
+
