@@ -1,91 +1,111 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5D433CE92;
-	Thu, 30 Apr 2026 18:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E4617B50A;
+	Thu, 30 Apr 2026 18:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777575137; cv=none; b=hTQuMokdl5CLgJryj3A9P26l1P2InW07hj6oR35uxiOByjB6tX5sCYxv8ivzS3ivHKr6fkRpr/KtWEeta5uKKLKci93BQq8KJVQm7TDmJCqTnm3eIp+4wJjkWFak4FTu4K4ymPVRy4xTRxdKKce8bU99IjP5SFCXggiAXBSgt6U=
+	t=1777575325; cv=none; b=JBA2eKDCsV6KieJ1JWLZas9APOBzrEWGVvGikPg4FJr0ynCYCO5OHr/Fd6Tq4/XPFtw/TDcNbX7VAIUW6ZrZA2tBQW2OUzIXvmbMt2UzfS8kkTxIuq+QJsnVrYoawZLsIXHFzmoEjBpiiZsUbRKXFipo5EdRmGT2p7nfRzLM8rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777575137; c=relaxed/simple;
-	bh=7ryAeRblcPWnwSjPRvoFAvAgofVV8hhRtulzzlp5ePw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FKr3UuiFaThC0QQuQRChTw3Jz5jSuvqygCrwavftoJa6kpqp4RSsQ3MWg9qKNgx6Mh3z0dZ7mY8PiOo0bk8NIXTgxa3Vfzme8Uf0+4Z3oHHmT88oTNmvtdO/FB37Xk9WnDxsMQ0EyxuCnNHZYFgxPXVY5tt8YH9ynwUA5QCExuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G8A54/OD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777575325; c=relaxed/simple;
+	bh=lWE9HkFpXw9rtE0Jo05d+/92L9aR9NU3+uP7biB7kcU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VJ/mQUEckLpHxASUmy5Jg3j+C0UBauyO0HohclsNDXBSxf3cGEc4nF2k3ZJtWlRUtRP0NsuHPr+fZdXRKqWgbPMJyD5tLx7Ro9MX5dcimsAp2uIyJdwGkQRIkK6VXP75fzmeCqSWessxVQf5cs3XLG3+e+uuBYy6J4AgdAvvIq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RSdYbXN6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G8A54/OD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A79C2BCB3;
-	Thu, 30 Apr 2026 18:52:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RSdYbXN6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA858C2BCB3;
+	Thu, 30 Apr 2026 18:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777575137;
-	bh=7ryAeRblcPWnwSjPRvoFAvAgofVV8hhRtulzzlp5ePw=;
-	h=From:To:Cc:Subject:Date:From;
-	b=G8A54/ODPxbJlb3id7uBBZqmtwkcT+Bhb99lBx3MVW0+qYf4ug9I5TcmSTAUTxrqi
-	 RE7V+zQTuKzBDLtv5d3SbJL1mXJu7/ybSRJClEiFq8EVNfHwtHccUeV2j1iCxeUKEY
-	 FbH5WSdsllKyFblIJ/2xaMl0ZFrIb1Nlw9vvnz2RGEYSTwxlMbpiVgHJRNMOrHflY9
-	 O0e9x/MtPOW1BIGc+gZapX/sQRiz34b33C2FzR9V1QHNl2bD5uwW80lRZJHuviJAEN
-	 gwherCHmJqB1yR/ICu9dITjOGb8Gph3MY+3yFqVLRzXoCs3ZsFCOQFExiNrwNanF5C
-	 d4h1WM0S/0KUQ==
+	s=k20201202; t=1777575325;
+	bh=lWE9HkFpXw9rtE0Jo05d+/92L9aR9NU3+uP7biB7kcU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RSdYbXN686KVP7jsq/GKLBRNM8X4srR9OWumOvVV1zxNc7J8KENy7WTw1x1A3yO23
+	 iStgzBIpGM0Gnaw/tmJWkdb7xHTfQSShZIEn0I8CiuCLM01kqk6xrHgiwbx2119Cbl
+	 Caj+/XrDYXlwvzu/yX4Up2KojwD/1gnLpeA85kCjgBwwjLIl85qQx5r8o0qdyxcTUs
+	 FxMj2gOnKUTRkTzz15MXhWP0lsrhE5/ZzJCzCXfDPyHCWlHkOyXqC4/fuevWQexU2d
+	 IPVfnJukukpc6C3GWHISN7BhC0+8+iBuQ9kjkDeQsK1gj6MtGYytgK7xiK4GjE9s3L
+	 dPWrCGJkqYQDg==
+Date: Thu, 30 Apr 2026 19:55:20 +0100
 From: Conor Dooley <conor@kernel.org>
-To: spacemit@lists.linux.dev
-Cc: conor@kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
+To: Yixun Lan <dlan@kernel.org>
+Cc: Stephen Boyd <sboyd@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@kernel.org>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v1] dts: spacemit: set console baud rate on bpif3
-Date: Thu, 30 Apr 2026 19:52:12 +0100
-Message-ID: <20260430-reword-overstep-3be08b7eab25@spud>
-X-Mailer: git-send-email 2.53.0
+Subject: Re: [PATCH 1/4] dt-bindings: soc: spacemit: k3: Add PCIe DBI clock
+ IDs
+Message-ID: <20260430-plug-bolt-8ff9137717fa@spud>
+References: <20260430-06-pci-clk-fix-v1-0-32fdc77c02ab@kernel.org>
+ <20260430-06-pci-clk-fix-v1-1-32fdc77c02ab@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1222; i=conor.dooley@microchip.com; h=from:subject:message-id; bh=ZzIyf8kNpSShxQake71q8Bn//zWKDFH9gBDY8/gGuwk=; b=owGbwMvMwCVWscWwfUFT0iXG02pJDJmfl9yJzI3N0Hpmfu5hlL/d5g81aqerzMwlPmieYrx3R 0nmxceNHaUsDGJcDLJiiiyJt/tapNb/cdnh3PMWZg4rE8gQBi5OAZjIZQZGhjeVuUWKdt9SMqrd VU7MNbL3lX97Ovv3plPxbLPVfvtMZ2D4H7dqzTfpTfds9p068CRtpoNx2/K5Xr21b29z5h2Renb DgREA
-X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ZyWW5ut6GEwR4kZa"
+Content-Disposition: inline
+In-Reply-To: <20260430-06-pci-clk-fix-v1-1-32fdc77c02ab@kernel.org>
 
-From: Conor Dooley <conor.dooley@microchip.com>
 
-Because the default console's baud rate is not set, defconfig kernels do
-not have any serial output on this platform. Set the baud rate to
-115200, matching what is used by U-Boot etc on this platform.
+--ZyWW5ut6GEwR4kZa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Suggested-by: Vivian Wang <wangruikang@iscas.ac.cn>
-Fixes: d60d57ab6b2a8 ("riscv: dts: spacemit: add Banana Pi BPI-F3 board device tree")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
----
-CC: Rob Herring <robh@kernel.org>
-CC: Krzysztof Kozlowski <krzk+dt@kernel.org>
-CC: Conor Dooley <conor+dt@kernel.org>
-CC: Yixun Lan <dlan@kernel.org>
-CC: devicetree@vger.kernel.org
-CC: linux-riscv@lists.infradead.org
-CC: spacemit@lists.linux.dev
-CC: linux-kernel@vger.kernel.org
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, Apr 30, 2026 at 10:30:26AM +0000, Yixun Lan wrote:
+> Add clock IDs of PCIe DBI (Data Bus Interface) clock.
+>=20
+> Fixes: efe897b557e2 ("dt-bindings: soc: spacemit: k3: add clock support")
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 5790d927b93db..333ac8ebf3f51 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -19,7 +19,7 @@ aliases {
- 	};
- 
- 	chosen {
--		stdout-path = "serial0";
-+		stdout-path = "serial0:115200n8";
- 	};
- 
- 	leds {
--- 
-2.53.0
+Why is this a fix? As-is, this looks like you're abusing the Fixes tag
+so that this gets backported alongside things that are a fix that depend
+on it.
 
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+>  include/dt-bindings/clock/spacemit,k3-clocks.h | 5 +++++
+>  1 file changed, 5 insertions(+)
+>=20
+> diff --git a/include/dt-bindings/clock/spacemit,k3-clocks.h b/include/dt-=
+bindings/clock/spacemit,k3-clocks.h
+> index b22336f3ae40..dfae52547cda 100644
+> --- a/include/dt-bindings/clock/spacemit,k3-clocks.h
+> +++ b/include/dt-bindings/clock/spacemit,k3-clocks.h
+> @@ -380,6 +380,11 @@
+>  #define CLK_APMU_ISIM_VCLK1      86
+>  #define CLK_APMU_ISIM_VCLK2      87
+>  #define CLK_APMU_ISIM_VCLK3      88
+> +#define CLK_APMU_PCIE_PORTA_DBI  89
+> +#define CLK_APMU_PCIE_PORTB_DBI  90
+> +#define CLK_APMU_PCIE_PORTC_DBI  91
+> +#define CLK_APMU_PCIE_PORTD_DBI  92
+> +#define CLK_APMU_PCIE_PORTE_DBI  93
+> =20
+>  /* DCIU clocks */
+>  #define CLK_DCIU_HDMA            0
+>=20
+> --=20
+> 2.53.0
+>=20
+
+--ZyWW5ut6GEwR4kZa
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCafOlmAAKCRB4tDGHoIJi
+0n1rAQCxrTCw7Jgkx0a5N4zQWIUC4Gs8go2JtYFp2UB241sx0gD+NuCdQwdKHF6L
+RzmcK+MGhvdUc6DScyb0unK+KofNrwY=
+=3o1x
+-----END PGP SIGNATURE-----
+
+--ZyWW5ut6GEwR4kZa--
