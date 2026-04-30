@@ -1,140 +1,65 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C9F3B0AFC
-	for <spacemit@lists.linux.dev>; Thu, 30 Apr 2026 12:07:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013C6401A2A;
+	Thu, 30 Apr 2026 12:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777550824; cv=none; b=CtH5YXHq7gFSYNvdQfofJq6u/1+dtbSvSIlq9beWF444Cc845Pzj5xhkH2KXFTdFc2diuebC+sFoiRc6tLGTp/G+AJGqECT+dS6lz5TtxIKaOPsw2B3vTuEs5YpUEAkJ+D00MdrV8isM50Hax9vOnkRdo9+JgiipEfy/wTQBmLo=
+	t=1777552117; cv=none; b=eT1HNayFnhLE6pe2vWQCCm1y2phnHPAs90iRLvruMB3KBZnjOCHP+Jo4cmMALY5pbeL035e9DMzYSNibvvGkgrL9x4EbVWAMg6q8+Po9JU6llE02tC/tVSc0yDDn/xyuQsv6so8+3jnEozRVhNT7PjxcQif7xSBS/W+EilDC33I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777550824; c=relaxed/simple;
-	bh=EZZ2E4Hk4P3ioWVMaervDcnw6ADW65oM1zGar71sbpY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oaizF7YQvwRF38zKiM+1F9defNwTI7v0TSUJyQPOLl4XDDIQPOc3QVhZ58qJGNcWAnFZVJHhyQfR22ETIdWtvpHWvHxEbap55tfNCSL5+pMLaxs4HK6uRWXxP57xI81yx3VJjr3gfACXz898npmX0cjcEPBd9DW7pHz0PBvU/DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7dcdd1b492eso900965a34.1
-        for <spacemit@lists.linux.dev>; Thu, 30 Apr 2026 05:07:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777550822; x=1778155622;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ksIL4rip+tLI1Yx6QhQXSN6krUTnsd9SRkVzjQXrZjA=;
-        b=kcv2D3Gqq6kBM/VkHUYWmZalVbjW42WG44cQ2F0nDVyv9IBUiT1QxseblzvNMPVA3X
-         sCAZWQlvb6wA29mLNQizmjbgznX8SNXVHhbgkOOLJSfGav+zOCNYVQrPG1jmewxdzR20
-         R1jT4KiwgTvcutI2/J+Dd6WwF0hr0Lvx2uiZzdU5J+2zbKBzbIVOyy1QaX23+SG5BUsM
-         FAYlesRGqIq6pUcyGU8SnUd30gFC2a4d5JcSEuVYedj2O4nfhaTEFd+89KrA+LoSeP2/
-         bIGw7SJJN9Z9Uo2KcfVjlNyyRiRzEVEfHJDgUZMIc6weZ9EW8vvZiKMHWvU0U/uYX9sE
-         FtCw==
-X-Forwarded-Encrypted: i=1; AFNElJ8xlkm+XORc1d4hRg0GQ4y96KtgAVPuz76oHvJ7Xp8yw3I3SfPlt7uTbsv1L58yZLe19ApVlXurpA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxFK2+GEiaxYGbHyDbcVjNoFo4Q4fqAtt8xiHtxr0zyHu4w3Oxi
-	ZfrA9PhhZtzaFySB6l99K9GTWLnwYZa3X+UlfqdXpeheUrUrteNTQ9C6rImvBhCO9iw=
-X-Gm-Gg: AeBDieukDGXfE7PY+f5uFGHXyBp6FxIKWwuRicNaiTHgv0HvWBTXvb8trePWgNuvGgd
-	wprMCHRgss/0C62XR9ED4NWzJZyvYnkPHyPm9QkOIGIpJua0DXGSFOc4Vk4ZApICxGvnQ5WblQA
-	/6TXLPrb2ub0pdtQu4h/jltpM2VkYDtvliB+u8t49+SCNYid4pDjKKNWO/hH3fMsLLxfsG5XzKh
-	A9p8pFUmcTsxFD4NU5P2bkK9Dy8jY5VMWoPOeGwRCL64FmyZzqj0Ag0GfbKYPHi5/iPd0Ntdebh
-	MPWUGuW51TVbuX/7IV0VRmRpMxDONqu793jSH1pzUiJe2Pw+l78pw8o6pEkMPaQjQs/rEAf199O
-	ylAsJrD50kqxiaMrcwiETXHA4uDuSgLDZ8mg0JGX2IKdqPWSRnyeTagM06PHtDrq4onERPsgVFo
-	GoELVvsHJwh07vXj+p95HhRbHeg6WwKdDh9HAHJcsZ1U4hvUtZnTNqxYY9+WcVo1wnNxwikyE=
-X-Received: by 2002:a05:6830:7086:10b0:7dc:807:d1f3 with SMTP id 46e09a7af769-7debe3119ecmr519055a34.7.1777550821922;
-        Thu, 30 Apr 2026 05:07:01 -0700 (PDT)
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com. [209.85.160.49])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7deab7cfc5esm3290130a34.5.2026.04.30.05.07.01
-        for <spacemit@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Apr 2026 05:07:01 -0700 (PDT)
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-42321c8b8f5so675524fac.1
-        for <spacemit@lists.linux.dev>; Thu, 30 Apr 2026 05:07:01 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ87TzOhchXfcVQqWTfYh2UQKLmuAQ8ULe4K8F17MKhAb1rRPZftYPTKCp2UR6gorZ+bvUvWse6yIA==@lists.linux.dev
-X-Received: by 2002:a67:e708:0:b0:610:347f:9f3b with SMTP id
- ada2fe7eead31-62afc506100mr613209137.3.1777550404889; Thu, 30 Apr 2026
- 05:00:04 -0700 (PDT)
+	s=arc-20240116; t=1777552117; c=relaxed/simple;
+	bh=6B0X6HrcdX6z6dBIJfJ7PomqkAZaJ9Jzm+7wSfebQDI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=cuwPsGpZv73IcZmtKod56wNGacYnlsoe95WLaxFCARcFaK3v2XofhjJjq1+yo6N18q4mFq5R1GNMpOHS4ytciS5YvvsVzw5vVMOxp1Q9AKlflHqNUr4LhdrEq0VH2uCOJYpWXfel9UF89wJR/h2qh21Gbw+bOlV07Kikw23pRCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M8AWEWWW; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M8AWEWWW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3113DC2BCB3;
+	Thu, 30 Apr 2026 12:28:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777552116;
+	bh=6B0X6HrcdX6z6dBIJfJ7PomqkAZaJ9Jzm+7wSfebQDI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=M8AWEWWWyxV2EuxEvVIMWWA6vnsHj7Sga3jbF6L1GllCvHd97bns6VBGOKnf6w6CY
+	 L382QOdzUqjfcGa82LUuLzNbe0MFlmdvusi1gB1c5xcJF15GdIZrN+tpSQHncA+W4f
+	 giDu0fjHmNj7JCDBMe+2eFpegxbs0QzS1KTh549z7tq84tBK0+a245Cf6h/anUxadp
+	 fkYB4AsFvh5KDNzfvzoz/HM1Fc6T3t/DGYfoBtZKE4bsQ2cLRMQCWbsi3RS3YQsA0a
+	 PGBdaSmcFtRAMiq7QqqGTLAmtu/9OkEmJKM3mInyb7xwwVTASf5qe6LbUxulz3gq/f
+	 Z2lC5WidB1+mA==
+From: Lee Jones <lee@kernel.org>
+To: linux-kernel@vger.kernel.org, Lee Jones <lee@kernel.org>, 
+ Sebastian Reichel <sre@kernel.org>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Yixun Lan <dlan@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>
+Cc: linux-pm@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev
+In-Reply-To: <20251102230352.914421-3-aurelien@aurel32.net>
+References: <20251102230352.914421-3-aurelien@aurel32.net>
+Subject: Re: (subset) [PATCH v5 2/2] mfd: simple-mfd-i2c: add a reboot cell
+ for the SpacemiT P1 chip
+Message-Id: <177755211394.2550722.15714399977264400993.b4-ty@b4>
+Date: Thu, 30 Apr 2026 13:28:33 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260430110652.558622-1-vladimir.oltean@nxp.com> <20260430110652.558622-18-vladimir.oltean@nxp.com>
-In-Reply-To: <20260430110652.558622-18-vladimir.oltean@nxp.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 30 Apr 2026 13:59:53 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdWbeeRmLf6Ae0Fr0un=-z7z5ONc_hDdjebP=KVkXHPbhw@mail.gmail.com>
-X-Gm-Features: AVHnY4K0yYb6vTu9KdtDciwvAziqboYRX_ITZ386sa6ttixZ1EP_Mzy9gi4Pi0E
-Message-ID: <CAMuHMdWbeeRmLf6Ae0Fr0un=-z7z5ONc_hDdjebP=KVkXHPbhw@mail.gmail.com>
-Subject: Re: [PATCH v7 phy-next 17/27] phy: introduce phy_get_max_link_rate()
- helper for consumers
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-usb@vger.kernel.org, netdev@vger.kernel.org, spacemit@lists.linux.dev, 
-	UNGLinuxDriver@microchip.com, Markus Schneider-Pargmann <msp@baylibre.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Andy Yan <andy.yan@rock-chips.com>, Marc Kleine-Budde <mkl@pengutronix.de>, 
-	Vincent Mailhol <mailhol@kernel.org>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.16-dev-ad80c
 
-Hi Vladimir,
+On Mon, 03 Nov 2025 00:02:00 +0100, Aurelien Jarno wrote:
+> Add a "spacemit-p1-reboot" cell for the SpacemiT P1 chip.
 
-On Thu, 30 Apr 2026 at 13:07, Vladimir Oltean <vladimir.oltean@nxp.com> wrote:
-> Consumer drivers shouldn't dereference struct phy, not even to get to
-> its attributes.
->
-> We have phy_get_bus_width() as a precedent for getting the bus_width
-> attribute, so let's add phy_get_max_link_rate() and use it in DRM and
-> CAN drivers.
->
-> In CAN drivers, the transceiver is acquired through devm_phy_optional_get()
-> and NULL is given by the API as a non-error case, so the PHY API should
-> also tolerate NULL coming back to it. This means we can further simplify
-> the call sites that test for the NULL quality of the transceiver.
->
-> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-> Acked-by: Markus Schneider-Pargmann <msp@baylibre.com> # m_can
+Applied, thanks!
 
-Thanks for your patch!
+[2/2] mfd: simple-mfd-i2c: add a reboot cell for the SpacemiT P1 chip
+      commit: b84a9ac61080735b615233e1231ddd19f6624869
 
->  drivers/net/can/rcar/rcar_canfd.c                   | 3 +--
+--
+Lee Jones [李琼斯]
 
-Acked-by: Geert Uytterhoeven <geert+renesas@glider.be> # rcar_canfd
-
-> --- a/include/linux/phy/phy.h
-> +++ b/include/linux/phy/phy.h
-> @@ -57,6 +57,7 @@ int phy_notify_disconnect(struct phy *phy, int port);
->  int phy_notify_state(struct phy *phy, union phy_notify state);
->  int phy_get_bus_width(struct phy *phy);
->  void phy_set_bus_width(struct phy *phy, int bus_width);
-> +u32 phy_get_max_link_rate(struct phy *phy);
-
-This (and all the existing getters) should take a "const struct phy *".
-
->  #else
->  static inline struct phy *phy_get(struct device *dev, const char *string)
->  {
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
