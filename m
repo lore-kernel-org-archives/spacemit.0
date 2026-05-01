@@ -1,474 +1,183 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F472BF3F4
-	for <spacemit@lists.linux.dev>; Fri,  1 May 2026 04:05:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E09346E4E
+	for <spacemit@lists.linux.dev>; Fri,  1 May 2026 09:28:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777608331; cv=none; b=IVsR4BRgsEupkbbouQ2RzEkjkaskO3cgJLHORwED65mt+5y4Z9RMGeEbwSfTyiSOFcXIL5vIKvWM8J64KrVhUpz93aI+XuEWDyCp052/+n2AEF95wuLX19+9hdNLqH15r3y9YjurMXekrzOgcR1wa/t0Sjp2WsCvvNr1LgfEUbA=
+	t=1777627715; cv=none; b=IcFGmEuJq1qzcVvQSJ06LKjFPruYNs0o/tsUkYDo86niGIXjyMUIitMBKgf3FSE7ZtyX9hgZQAvzEZ5uEukEM2ploIk0Zbj822Cq6Ry25QqNOGr/vKW6j+K2hYaZImzKACzyQ9C5pdOfe4AYVFNYUckVMaflJMs29lMpByuuF6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777608331; c=relaxed/simple;
-	bh=hk9menut7yraUPHKVzEP5HkssZqRW7XKvcYZoS6dtfI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qovG+sIR+cmldLgr0mC09gwUcdJ/QZJBSRzjAJcL/IWrj7p/Xg2c0efDZUQU+xP9GwpHXj4vmS0eM98ze6rrEnephgczWWmw1bsKtWS49wiW73tNqZw3t2Elx0/lnHDOOJh9TfFgVn/DNbI23sqvJVf0WSZy9WctgFTCI74Wx98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OoNyOK6d; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777627715; c=relaxed/simple;
+	bh=QjQ4nAyOPlb/OGkFQKngMQxQOf4WvDyR8Rp65HWH7jY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Isdt404fm5HSvxGe11NzMOkJN2LdLaDOi8qFMCPGqHIErNfuS0lVYADFTlxFs2QXJXmX4Pf8Sx/5CAGDvPDwqQXBWNb69syeJvcKpfPy7n9zeEfjYh4U0JoJE0raUFgkAEWXPRu00+iJaNbAFQf1uogdqpaPEZtsyAacYMLGJcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YNyQQy80; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=G6wSREId; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OoNyOK6d"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-82f0884bcfaso1116813b3a.1
-        for <spacemit@lists.linux.dev>; Thu, 30 Apr 2026 21:05:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YNyQQy80";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="G6wSREId"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64120Dnv440710
+	for <spacemit@lists.linux.dev>; Fri, 1 May 2026 09:28:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	D56RpDqAroV4uaRrm4q0sPtgoZMAfljRMYmDNGVWHa4=; b=YNyQQy80WpnZEOwh
+	J4pv8y3yOMoMdkUOb4sg43Ro/01/glsQAukKnPjz/wFlXEynGgAWUgiLBhzlrigh
+	PAPtnTn5xNwb83u7sebH/1fa4T363Opq/miOyrYjZc1Vkg/G63RtXqEmY5X1U59j
+	NLi/hauoMnHRutBeck+Igu/4zSXIE0fyy+cPH+ziBqAQCTpbhpQEAIMRECYYBxgH
+	A05QM83377oq078FX0HzK+R6w3GuEcP+3je+a7ndc++JOWHwMh6ueIch7Z5S+bAV
+	fxjHJrMxKwTlI2qwURxSutbWSi86sFSBLSvEPL7XhY2ieV2iu4iXUXCMtyi02jvL
+	6rNafg==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dvbpwagbp-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Fri, 01 May 2026 09:28:33 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-50f13da9684so20269141cf.3
+        for <spacemit@lists.linux.dev>; Fri, 01 May 2026 02:28:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777608328; x=1778213128; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=NolRfXqrvWqre9Wtxu/jPySBcQ6D9Vpgy/nSf/fmvNk=;
-        b=OoNyOK6dqyNCJu3uSYcdGX+/pUOfio+boL08fxcJUgulPn3nMHG2+UPt0zpBvsxrR+
-         US5sNFlGGGCP9DwQS/M8ngem/BxEcBq9pMTwe+rBBaOxPZjdligDxkMN3+dXOPTCvbqd
-         LeIK8TxPfHZpEeSKT7P7IbYs+PLXmFWWHyyxUa7bTcBAeYLB91+8dPdrsZ/HU0vSyPqh
-         kBFOzHJUq8+PIfbRW8Xxt5NYir0vnof6g9b0+seyuViRgx0GQcltO0Dwo/aJzOiNAsBi
-         ld4/gWuSW7k9FnmhctRa9XkM48zReJ1iAtYrWWW9mqdrh4NwpbCOPKVBK0fzy2dfY/7p
-         U/UA==
+        d=oss.qualcomm.com; s=google; t=1777627713; x=1778232513; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=D56RpDqAroV4uaRrm4q0sPtgoZMAfljRMYmDNGVWHa4=;
+        b=G6wSREIdfPKbf+Bh99w4mW274UUa99QmkehDJOmfSp8ZxaKFQUrMoqeWFLnPvVoe3s
+         KLuiPN8HVA8LS1g5V0cMu0PP7cMJrRZTAt9NqBtBVDMw4xu5iCYITAjfV4LJR0VSR/UJ
+         FwqzHcbjNEUmz7pq4sW2qeI7hNQ3egPpqIzyvqh4JXmnd2Zldo7GSSA+8u4k9LvpdKKx
+         LRwYxl9cFc1OT+jS+Joez4J+KxSZB2G8NA0H5wtCDbIEKC+TsxmsIQyvcEg8aikFzcZp
+         M50vPty3u8lwRX1hdkt5Oc3ApFy9Fy0GWrPeNjzHdF6j52EMaLboVuLPUcKbE82V1fYT
+         KnCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777608328; x=1778213128;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NolRfXqrvWqre9Wtxu/jPySBcQ6D9Vpgy/nSf/fmvNk=;
-        b=nQ6hz2ziq7L8ccZ4nbALFYnXonYht/Ku+5mzTCEc5PFSiRaaddNuUfbeq1ZZkBrXio
-         Jd65RhjilOojYrBqWGEd+5ABrwKNPViSrZ8i53JZbPAk6kI0RfJ4ZELxP6k+d4jV+IjC
-         qTRMnUIbW208qfxLJWM+8/Am0HELe8K1UD8wsAoictV8DicwO2X3xuXwkQd8IpMavPmF
-         +nZWMl9+rueP/8kI/XQPK4//BN9XDNVGXjOHVUMpX9sEvZD2HzsD7ZxLMPBJ1dRmpQHD
-         CtRH01rysd1pU5Lyc4cHtRfIhN/1eMlEV11CDtwTi+5BucwFaLX7zs7nKA0o9wc7CiGq
-         krZg==
-X-Forwarded-Encrypted: i=1; AFNElJ/ELqYEqAB8gVwflg4oSF0CUhRsOOc1iNMUpKBDWSVqfGcXalhF5eB653iTNkRpB7lAdy+FD+b2jw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxcXjbUUjtLh0NW+YE5tCe0Gl1ZvUZ3hH85FvTbqiR96hM/NxGb
-	ZP/sK/StHqo7vj/DKzzLAqtVXxZIEqL/J18rZDO6qeXwEBCbV+qkjGhx
-X-Gm-Gg: AeBDievXvxYYpZeGenUN7MJT/2fRNXphoU1rsPw6MOR9q7Nbeu6/Tryg15vuFg12BhF
-	DZBI3G3S1LkRe3t8b/wVKTy0t/3WX2hXqTtc30RMQ8PeQNoBO4GWJYkInVwu8PYIXtg0CT/REhU
-	pGVatN9UfPNF9Z9zjxNh6xxSQFyezUmCOmFuG44y7RjgA9MKLBw+WpxDmoAUK55eAss8m7DB1TZ
-	gW4F+nB7mzQUJsf/XMLTY46nYk16h1G9sJKTeAu/+QaZjJZu4IP6LtpFS/3vAA/CDRIT+15To4c
-	KZd7rhYwSGH3LJKve6PFS9YfR00E6bETX1tKbRzSCliopTu+A/BlsumLijbe2jFhMGl3tTd/NA4
-	lV03MOJOhQDVP2DusPIxFOY/2gqqJO2gAxlR+9y0UkpJ6DLU25lrzZ9T1KDSKjQ3qRsjkrYfSK6
-	mh/x4hlCUMUCKtL/mi/vPXrivQ9TWZNhuHug==
-X-Received: by 2002:a05:6a00:1405:b0:82f:6858:3f6 with SMTP id d2e1a72fcca58-834fd9b5711mr6791526b3a.0.1777608328272;
-        Thu, 30 Apr 2026 21:05:28 -0700 (PDT)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8351582dd55sm1182119b3a.1.2026.04.30.21.05.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2026 21:05:27 -0700 (PDT)
-Date: Fri, 1 May 2026 12:05:17 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Ze Huang <huang.ze@linux.dev>, Inochi Amaoto <inochiama@gmail.com>, 
-	Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Kees Cook <kees@kernel.org>, 
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Alex Elder <elder@riscstar.com>
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH 2/2] phy: spacemit: Add USB3/PCIe comb PHY driver for
- Spacemit K3
-Message-ID: <afQj0ZaVx9gvx5YF@inochi.infowork>
-References: <20260430022843.1090138-1-inochiama@gmail.com>
- <20260430022843.1090138-3-inochiama@gmail.com>
- <DI6BHTW4FFN1.2YLR7O1P8F0Y3@linux.dev>
+        d=1e100.net; s=20251104; t=1777627713; x=1778232513;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=D56RpDqAroV4uaRrm4q0sPtgoZMAfljRMYmDNGVWHa4=;
+        b=YxQMe9Dq/+MEsCCElCjRKZAgNQLbyn8IdoIgZit2ZdAmOQx/NtsXu+nYL3ADKWGdxG
+         vboPfvtQjtGRMQPdyotQ+1MpnsATZTFywx3U5yBZhRB0SIxoTnsgBp11/cnivfSLDIEI
+         F3ekOGfdLI6SOowSWEGKk/tRPm3vDdy7M67k6LaWMP7pBhRnF3Cyx8DmAUGC7DjiNLYy
+         asKoV1QBrUnAEJ4lgr12gvW9k9XLJ1gFlnPejjtZT4cx5114YB6EGq+afg5EZEjr/jZr
+         bBXK4iEBYCPFu50wai8l9xMucXmxPSoVNNb8eYpSQ6lHyF2Rg8MFLP0eyl7XaYMnu4dA
+         keiw==
+X-Forwarded-Encrypted: i=1; AFNElJ92rflRMo0RoIxZiYN38oVThfAw5CQyYV+tbPBrfZy9Qm9REVEsDDfS86E3XageyI1oEnntCK+ZRg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw+uVK0dlqfxBagXewB0KREUmHV9LZBZDmuZSGiWgpY7zgnVkoQ
+	fCR5sjcS0nsasbsHlNVr2gQ2bbXbH8M1o0AVhB7m0ph61aKfLEfGq6+OhxNrAPoChxR8rozFfV+
+	rEHjhRWxLAdkyzGzgiEA2DpGT+pBAUnbl1QLuXLLRAxCiNIOMxyI2K/O9MHn6LQ==
+X-Gm-Gg: AeBDievaISkRDqUO49aMssHYPL0fgYRf77bmO4dFOMw/l8NH7J7GjTci+eq3NN0iM/U
+	h1mKxij+MYZck7KZb7T5spe13gBpR+qzQ1kPKRseNZXxvdZduSFC84fkjVtr3aT2a/Qk86UAA5n
+	5FSY1xPKNnG0sfYVC9OHIe28ygOZDvjplVknBbGbnLNRpl5NNgxtwVAdU/REYUUX9zV73xpW8Kc
+	KhUbLbsbGSldaeYeHs1mh7QDTLFo4Yu8L9xK86tXSRFbxs1k/ie4l82XO6YmQMLwxJrX1LeA5B+
+	3udLHfxWB3Dv5Z6bI6KmJ9DoDtBYB8gQI3TdDrcnIgr/7B0snsss6WOsb+vlF02XvOPHqb+fkFu
+	deA/3AhX+JmIckkMjppcrerBOLCxeVmZ303wbVUt2zTFsL5GL2/49+CoLNtU=
+X-Received: by 2002:a05:622a:a15:b0:50f:b821:9c3f with SMTP id d75a77b69052e-5102ae7f6a3mr97062031cf.60.1777627712734;
+        Fri, 01 May 2026 02:28:32 -0700 (PDT)
+X-Received: by 2002:a05:622a:a15:b0:50f:b821:9c3f with SMTP id d75a77b69052e-5102ae7f6a3mr97061801cf.60.1777627712316;
+        Fri, 01 May 2026 02:28:32 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.219.94])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a81ed6b89sm119482415e9.1.2026.05.01.02.28.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 May 2026 02:28:31 -0700 (PDT)
+Message-ID: <35a1764d-7328-45d2-8240-6f83eae1f1a9@oss.qualcomm.com>
+Date: Fri, 1 May 2026 11:28:29 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <DI6BHTW4FFN1.2YLR7O1P8F0Y3@linux.dev>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] clk: spacemit: k3: Add PCIe DBI clock
+To: Yixun Lan <dlan@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: Inochi Amaoto <inochiama@gmail.com>, linux-clk@vger.kernel.org,
+        linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
+        spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20260430-06-pci-clk-fix-v1-0-32fdc77c02ab@kernel.org>
+ <20260430-06-pci-clk-fix-v1-2-32fdc77c02ab@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@oss.qualcomm.com; keydata=
+ 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
+ cwzYbmi/Et7T2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <20260430-06-pci-clk-fix-v1-2-32fdc77c02ab@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=dozrzVg4 c=1 sm=1 tr=0 ts=69f47241 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=gOEeR9iKwsj33Yj5oN/cWg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=iAxtvuIsaXa42ajRdEgA:9 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDA4OSBTYWx0ZWRfX1J2lBxPnNnFB
+ XGzy1fFgJ/8Rpoy5sXLwo9Ae3yL8e/502H0Mo3EeJissrIm93ma+0Lv+oPcB0ZflW/NB2amykwJ
+ Uvd7aHCD9U3wLcdU9AL1etUk5yBk1anjnoz89u2dUWpW8zq2VpLJvij1V2s28d5ucDjdjGiSkEv
+ 2qodnTkXHx9eZv6ho6ulQQ0+hAL6A3G4QwZY/FPlxIqs3qBYzM+YHO9ox43p0S8iF7LijuCM/Xh
+ ZPYPiPu1Fsj/Kd1eMJ4zkWvuPofoRQ4/Yj4zIIkj21fB5oqt91qRCr1NHIvnI1X/ldi1JvdDDze
+ 3GyC1uZFicFWHJ8VcMh1UHGKJlObb3XAhr3cid5bklrSzcPUF2GGl1Cqih20TTSnA3CwudV9Dpb
+ ZArUM7oaGmnN2/RVJmtuPJESq/ra9CdxZOrNpQ+N+pSgT3fVkKdewjv/3QBnml3e8HvMxvo06lu
+ AQ8DS0zEvQKwGdqhINw==
+X-Proofpoint-ORIG-GUID: 9-aY8L15Tm4YZfnxbQJTt_Zf4nfKhTJP
+X-Proofpoint-GUID: 9-aY8L15Tm4YZfnxbQJTt_Zf4nfKhTJP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-01_02,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 impostorscore=0 clxscore=1011 suspectscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605010089
 
-On Thu, Apr 30, 2026 at 03:39:51PM +0800, Ze Huang wrote:
-> On Thu Apr 30, 2026 at 10:28 AM CST, Inochi Amaoto wrote:
-> > The comb PHY on K3 requires to configure a syscon device for the
-> > right mux configuration. And it requires calibration before any
-> > usage.
-> >
-> > Add USB3/PCIe comb PHY driver for Spacemit K3.
-> >
-> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > ---
-> >  drivers/phy/spacemit/Kconfig          |  16 ++
-> >  drivers/phy/spacemit/Makefile         |   2 +
-> >  drivers/phy/spacemit/phy-k3-combphy.c | 250 ++++++++++++++++
-> >  drivers/phy/spacemit/phy-k3-common.c  | 398 ++++++++++++++++++++++++++
-> >  drivers/phy/spacemit/phy-k3-common.h  |  27 ++
-> >  5 files changed, 693 insertions(+)
-> >  create mode 100644 drivers/phy/spacemit/phy-k3-combphy.c
-> >  create mode 100644 drivers/phy/spacemit/phy-k3-common.c
-> >  create mode 100644 drivers/phy/spacemit/phy-k3-common.h
-> >
-> > diff --git a/drivers/phy/spacemit/Kconfig b/drivers/phy/spacemit/Kconfig
-> > index 50b0005acf66..5fdf18fce499 100644
-> > --- a/drivers/phy/spacemit/Kconfig
-> > +++ b/drivers/phy/spacemit/Kconfig
-> > @@ -23,3 +23,19 @@ config PHY_SPACEMIT_K1_USB2
-> >  	help
-> >  	  Enable this to support K1 USB 2.0 PHY driver. This driver takes care of
-> >  	  enabling and clock setup and will be used by K1 udc/ehci/otg/xhci driver.
-> > +
-> > +config PHY_SPACEMIT_K3_COMMON_OPS
-> > +	tristate
-> > +	select MFD_SYSCON
-> > +	select GENERIC_PHY
-> > +
-> > +config PHY_SPACEMIT_K3_COMBO_PHY
-> > +	tristate "SpacemiT K3 USB3/PCIe PHY support"
-> > +	depends on (ARCH_SPACEMIT || COMPILE_TEST) && OF
-> > +	depends on COMMON_CLK
-> > +	select PHY_SPACEMIT_K3_COMMON_OPS
-> > +	help
-> > +	  Enable this to support K3 USB3/PCIe combo PHY driver. This
-> > +	  driver takes care of enabling and clock setup and will be used
-> > +	  by K3 dwc3 driver.
-> > +	  If unsure, say N.
-> > diff --git a/drivers/phy/spacemit/Makefile b/drivers/phy/spacemit/Makefile
-> > index a821a21d6142..41be7b0388da 100644
-> > --- a/drivers/phy/spacemit/Makefile
-> > +++ b/drivers/phy/spacemit/Makefile
-> > @@ -1,3 +1,5 @@
-> >  # SPDX-License-Identifier: GPL-2.0-only
-> >  obj-$(CONFIG_PHY_SPACEMIT_K1_PCIE)		+= phy-k1-pcie.o
-> >  obj-$(CONFIG_PHY_SPACEMIT_K1_USB2)		+= phy-k1-usb2.o
-> > +obj-$(CONFIG_PHY_SPACEMIT_K3_COMBO_PHY)		+= phy-k3-combphy.o
-> > +obj-$(CONFIG_PHY_SPACEMIT_K3_COMMON_OPS)	+= phy-k3-common.o
-> > diff --git a/drivers/phy/spacemit/phy-k3-combphy.c b/drivers/phy/spacemit/phy-k3-combphy.c
-> > new file mode 100644
-> > index 000000000000..66fa6330ad6e
-> > --- /dev/null
-> > +++ b/drivers/phy/spacemit/phy-k3-combphy.c
-> > @@ -0,0 +1,250 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * phy-k3-usb3.c - SpacemiT K3 Type-C Orientation Switch Driver
-> > + *
-> > + * Copyright (c) 2025 SpacemiT Technology Co. Ltd
-> > + */
-> > +
-> > +#include <linux/bitfield.h>
-> > +#include <linux/io.h>
+On 30/04/2026 12:30, Yixun Lan wrote:
+> Add PCIe DBI (Data Bus Interface) clock which was missing.
 > 
-> ...
-> 
+> Fixes: e371a77255b8 ("clk: spacemit: k3: add the clock tree")
 
-> > +
-> > +	phy->apb_spare = syscon_regmap_lookup_by_phandle(node, "spacemit,apb-spare");
-> > +	if (IS_ERR(phy->apb_spare))
-> > +		return dev_err_probe(dev, PTR_ERR(phy->apb_spare),
-> > +				     "Failed to fine APB SPARE syscon");
-> 
-> typo, s/fine/find
-> 
-> > +
-> > +	apmu = syscon_regmap_lookup_by_phandle_args(node, "spacemit,apmu", 1, &config);
-> > +	if (IS_ERR(apmu))
-> > +		return dev_err_probe(dev, PTR_ERR(phy->apb_spare),
-> > +				     "Failed to fine APMU syscon");
-> 
-> 1. typo, s/fine/find
-> 2. PTR_ERR(phy->apb_spare) should be PTR_ERR(apmu)
-> 
+Describe what the bug is in your commit msg.
 
-Thanks for pointing that
-
-> > +
-> > +	ret = k3_comb_phy_update_config(apmu, config);
-> > +	if (ret < 0)
-> > +		return dev_err_probe(dev, ret, "Failed to set lane configuration");
-> > +
-> > +	phy->dev = dev;
-> > +	platform_set_drvdata(pdev, phy);
-> > +
-> > +	ret = k3_phy_calibrate(phy->apb_spare);
-> > +	if (ret < 0)
-> > +		return dev_err_probe(dev, ret, "Failed to calibrate phy");
-> > +
-> > +	ret = k3_comb_phy_init_lanes(phy, config);
-> > +	if (ret < 0)
-> > +		return dev_err_probe(dev, ret, "Failed to init lanes");
-> > +
-> > +	provider = devm_of_phy_provider_register(dev, k3_comb_phy_xlate);
-> > +	if (IS_ERR(provider))
-> > +		return dev_err_probe(dev, PTR_ERR(provider),
-> > +				     "Failed to register provider\n");
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static const struct of_device_id k3_comb_phy_of_match[] = {
-> > +	{ .compatible = "spacemit,k3-comb-phy" },
-> > +	{ },
-> > +};
-> > +MODULE_DEVICE_TABLE(of, k3_comb_phy_of_match);
-> > +
-> > +static struct platform_driver k3_comb_phy_driver = {
-> > +	.probe = k3_comb_phy_probe,
-> > +	.driver = {
-> > +		.name = "spacemit,k3-comb-phy",
-> > +		.of_match_table = k3_comb_phy_of_match,
-> > +	},
-> > +};
-> > +module_platform_driver(k3_comb_phy_driver);
-> > +
-> > +MODULE_DESCRIPTION("SpacemiT K3 USB3/PCIe comb PHY driver");
-> > +MODULE_LICENSE("GPL");
-> > diff --git a/drivers/phy/spacemit/phy-k3-common.c b/drivers/phy/spacemit/phy-k3-common.c
-> > new file mode 100644
-> > index 000000000000..77c4b4073b96
-> > --- /dev/null
-> > +++ b/drivers/phy/spacemit/phy-k3-common.c
-> > @@ -0,0 +1,398 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +
-> > +#include <linux/bitfield.h>
-> > +#include <linux/cleanup.h>
-> > +#include <linux/io.h>
-> > +#include <linux/iopoll.h>
-> > +#include <linux/module.h>
-> > +#include <linux/regmap.h>
-> > +#include <linux/usb.h>
-> > +
-> > +#include <dt-bindings/phy/phy.h>
-> > +
-> > +#include "phy-k3-common.h"
-> > +
-> > +/* PHY Registers */
-> > +#define PHY_VERSION			0x0
-> > +
-> > +#define PHY_RESET_CFG			0x04
-> > +
-> > +#define PHY_RESET_RXBUF_RST		BIT(0)
-> > +#define PHY_RESET_SOFT_RST_PCS		BIT(1)
-> > +#define PHY_RESET_SOFT_RST_AHB		BIT(2)
-> > +#define PHY_RESET_EN_SD_AFTER_LOCK	BIT(6)
-> > +
-> > +#define PHY_CLK_CFG			0x08
-> > +
-> > +#define PHY_CLK_PLL_READY		BIT(0)
-> > +#define PHY_CLK_TXCLK_INV		BIT(2)
-> > +#define PHY_CLK_RXCLK_EN		BIT(3)
-> > +#define PHY_CLK_TXCLK_EN		BIT(4)
-> > +#define PHY_CLK_PCLK_EN			BIT(5)
-> > +#define PHY_CLK_PIPE_PCLK_EN		BIT(6)
-> > +#define PHY_CLK_REFCLK_FREQ		GENMASK(10, 7)
-> > +#define PHY_CLK_REFCLK_24M		2
-> > +#define PHY_CLK_SW_INIT_DONE		BIT(11)
-> > +#define PHY_CLK_PU_SSC_OUT		BIT(23)
-> > +
-> > +#define PHY_MODE_CFG			0x0C
-> > +
-> > +#define PHY_MODE_PCIE_INT_EN		BIT(0)
-> > +#define PHY_MODE_LFPS_TPERIOD		GENMASK(9, 8)
-> > +#define PHY_MODE_LFPS_TPERIOD_USB	3
-> > +
-> > +#define PHY_PU_SEL			0x40
-> > +
-> > +#define PHY_PU_CFG_STATUS		BIT(9)
-> > +#define PHY_PU_OVRD_STATUS		BIT(10)
-> > +
-> > +#define PHY_PU_CK_REG			0x54
-> > +
-> > +#define PHY_PU_REFCLK_100		BIT(25)
-> > +
-> > +#define PHY_PLL_REG1			0x58
-> > +
-> > +#define PHY_PLL_FREF_SEL		GENMASK(15, 13)
-> > +#define PHY_PLL_FREF_24M		0x1
-> > +#define PHY_PLL_SSC_DEP_SEL		GENMASK(27, 24)
-> > +#define PHY_PLL_SSC_5000PPM		0xa
-> > +#define PHY_PLL_SSC_MODE		GENMASK(29, 28)
-> > +#define PHY_PLL_SSC_MODE_CENTER_SPREAD	0
-> > +#define PHY_PLL_SSC_MODE_UP_SPREAD	1
-> > +#define PHY_PLL_SSC_MODE_DOWN_SPREAD	2
-> > +#define PHY_PLL_SSC_MODE_DOWN_SPREAD1	3
-> > +
-> > +#define PHY_PLL_REG2			0x5c
-> > +
-> > +#define PHY_PLL_SEL_REF100		BIT(21)
-> > +
-> > +/* PHY RX Register Definitions */
-> > +#define PHY_RX_REG_A			0x60
-> > +
-> > +#define PHY_RX_REG0_RLOAD		BIT(4)
-> > +#define PHY_RX_REG1_RTERM		GENMASK(11, 8)
-> > +#define PHY_RX_REG1_RC_CALI		GENMASK(15, 12)
-> > +#define PHY_RX_REG2_CSEL		GENMASK(19, 16)
-> > +#define PHY_RX_REG2_FORCE_CSEL		BIT(20)
-> > +#define PHY_RX_REG2_PSEL		GENMASK(23, 21)
-> > +#define PHY_RX_REG3_I_LOAD		GENMASK(26, 24)
-> > +#define PHY_RX_REG3_SEL_CBOOST_CODE	BIT(27)
-> > +#define PHY_RX_REG3_ADJ_BIAS		GENMASK(29, 28)
-> > +#define PHY_RX_REG3_RDEG1		GENMASK(31, 30)
-> > +
-> > +#define PHY_RX_REG_B			0x64
-> > +
-> > +#define PHY_RX_REGB_MASK		GENMASK(23, 0)
-> > +
-> > +#define PHY_RX_REG4_RDEG2		GENMASK(2, 1)
-> > +#define PHY_RX_REG4_ENVOS		BIT(4)
-> > +#define PHY_RX_REG4_RTERM_SEL		BIT(5)
-> > +#define PHY_RX_REG4_MANUAL_CFG		BIT(7)
-> > +#define PHY_RX_REG5_RCELL_VCM		GENMASK(11, 8)
-> > +#define PHY_RX_REG5_RCELL_BIAS		GENMASK(15, 12)
-> > +#define PHY_RX_REG6_H1_REG		GENMASK(19, 16)
-> > +#define PHY_RX_REG6_ADAPT_GAIN		GENMASK(21, 20)
-> > +#define PHY_RX_REG6_BYPASS_ADPT		BIT(22)
-> > +
-> > +#define PHY_ADPT_CFG0			0x140
-> > +#define PHY_ADPT_AFE_RST_OVRD_EN	BIT(1)
-> > +#define PHY_ADPT_AFE_RST_OVRD_VAL	BIT(4)
-> > +
-> > +#define PHY_RXEQ_TIME			0xb4
-> > +#define PHY_RXEQ_TIME_OVRD_POST_C_SOC	BIT(21)
-> > +#define PHY_RXEQ_TIME_CFG_AMP_SOC	GENMASK(23, 22)
-> > +#define PHY_RXEQ_TIME_AMP_SOC_650M	0
-> > +#define PHY_RXEQ_TIME_AMP_SOC_800M	1
-> > +#define PHY_RXEQ_TIME_AMP_SOC_870M	2
-> > +#define PHY_RXEQ_TIME_AMP_SOC_900M	3
-> > +#define PHY_RXEQ_TIME_OVRD_AMP_SOC	BIT(24)
-> > +
-> > +#define PCIE_PU_ADDR_CLK_CFG		0x0008
-> > +#define PHY_CLK_PLL_READY		BIT(0)
-> > +#define PCIE_INITAL_TIMER		GENMASK(6, 3)
-> > +#define CFG_INTERNAL_TIMER_ADJ		GENMASK(10, 7)
-> > +#define CFG_SW_PHY_INIT_DONE		BIT(11)
-> > +
-> > +/* Lane RX/TX configuration (per‑lane, at lane_base) */
-> > +#define PCIE_RX_REG1			0x050
-> > +#define PCIE_TX_REG1			0x064
-> > +
-> > +#define PCIE_PLL_TIMEOUT		500000
-> > +#define PCIE_POLL_DELAY			500
-> > +
-> > +
-> 
-> ...
-> 
-> > +static int k3_pcie_phy_init(struct phy *phy)
-> > +{
-> > +	struct k3_lane_group *lg = phy_get_drvdata(phy);
-> > +	void __iomem *phy_base = lg->base + lg->data->offsets[0];
-> > +	u32 val;
-> > +	int ret;
-> > +	int i;
-> > +
-> > +	val = readl(phy_base + PHY_PLL_REG1);
-> > +	val = u32_replace_bits(val, 0x2, GENMASK(15, 12));
-> > +	writel(val, phy_base + PHY_PLL_REG1);
-> > +
-> > +	val = readl(phy_base + PHY_PLL_REG2);
-> > +	val = u32_replace_bits(val, 0, BIT(21));
-> > +	writel(val, phy_base + PHY_PLL_REG2);
-> > +
-> > +	for (i = 0; i < lg->data->lanes; i++) {
-> > +		void __iomem *lane_base = lg->base + lg->data->offsets[i];
-> > +
-> 
-> > +		val = readl(lane_base + PCIE_RX_REG1);
-> > +		val = u32_replace_bits(val, 0, 0x3);
-> > +		writel(val, phy_base + PCIE_RX_REG1);
-> 
-> This looks like a copy-paste bug.
-> 
-> Read from lane_base but write the modified value to phy_base.
-> 
-
-Yes, it should be the lane_base.
-
-> > +	}
-> > +
-> > +	val = readl(phy_base + PHY_PLL_REG2);
-> > +	val |= BIT(20);
-> > +	writel(val, phy_base + PHY_PLL_REG2);
-> > +
-> 
-> > +	writel(0x00006505, phy_base + PCIE_RX_REG1);
-> 
-> Is it intentional? The loop above configured PCIE_RX_REG1, while the
-> hard-coded 0x00006505 overwrites what's done for lane0.
-> 
-
-Yes, the logic is coming from vendor.
-
-> > +
-> > +	/* pll_reg1 of lane0, disable SSC: pll_reg4[3:0] = 0 */
-> > +	val = readl(phy_base + PHY_PLL_REG1);
-> > +	val = u32_replace_bits(val, 0, GENMASK(27, 24));
-> > +	writel(val, phy_base + PHY_PLL_REG1);
-> 
-> A little confusing here, comment says "pll_reg4[3:0] = 0" but the code is
-> modifying PHY_PLL_REG1[27:24]
-> 
-
-I think this is is a mistake from the vendor code. IIRC, the
-reg4 may could be the [31:24]. As it is divided into four parts.
-
-> > +
-> > +	for (i = 0; i < lg->data->lanes; i++) {
-> > +		void __iomem *lane_base = lg->base + lg->data->offsets[i];
-> > +
-> > +		/* set cfg_tx_send_dummy_data to be 1'b1 for disable dash data */
-> > +		val = readl(lane_base + PHY_PU_SEL);
-> > +		val = u32_replace_bits(val, 1, BIT(13));
-> > +		writel(val, lane_base + PHY_PU_SEL);
-> > +
-> > +		/* disable en_sample_data_after_cdr_locked */
-> > +		val = readl(lane_base + PHY_RESET_CFG);
-> > +		val = u32_replace_bits(val, 0, BIT(6));
-> > +		writel(val, lane_base + PHY_RESET_CFG);
-> > +
-> > +		/* Dynamic Lock */
-> > +		val = readl(lane_base + PHY_MODE_CFG);
-> > +		val = u32_replace_bits(val, 1, BIT(2));
-> > +		writel(val, lane_base + PHY_MODE_CFG);
-> > +
-> > +		val = FIELD_PREP(GENMASK(7, 0), 0x10) |
-> > +			FIELD_PREP(GENMASK(15, 8), 0x78) |
-> > +			FIELD_PREP(GENMASK(23, 16), 0x98) |
-> > +			FIELD_PREP(GENMASK(31, 24), 0xdf);
-> > +		writel(val, lane_base + PHY_RX_REG_A);
-> > +
-> > +		val = readl(lane_base + PHY_RX_REG_B);
-> > +		val &= ~PHY_RX_REGB_MASK;
-> > +		val |= FIELD_PREP(GENMASK(7, 0), 0xb4) |
-> > +			FIELD_PREP(GENMASK(15, 8), 0x88) |
-> > +			FIELD_PREP(GENMASK(23, 16), 0x28);
-> > +		writel(val, lane_base + PHY_RX_REG_B);
-> 
-> Can we define macros for these values? Just like you did for
-> PHY_CLK_CFG.
-> 
-
-We can, but I guess this makes no sense. As no detailed document
-about these magic numbers, there is no meaningful name for
-these numbers and fields.....
-
-Regards,
-Inochi
-
-> > +
-> > +		/* Set init done */
-> > +		val = readl(lane_base + PCIE_PU_ADDR_CLK_CFG);
-> > +		val = u32_replace_bits(val, 1, CFG_SW_PHY_INIT_DONE);
-> > +		writel(val, lane_base + PCIE_PU_ADDR_CLK_CFG);
-> > +	}
-> > +
-> > +	ret = readl_poll_timeout(phy_base + PCIE_PU_ADDR_CLK_CFG, val,
-> > +				 (val & PHY_CLK_PLL_READY), PCIE_POLL_DELAY,
-> > +				 PCIE_PLL_TIMEOUT);
-> > +	if (ret) {
-> > +		dev_err(&lg->phy->dev, "PHY PLL lock timeout\n");
-> > +		return ret;
-> > +	}
-> > +
-> > +	return 0;
-> > +}
+Best regards,
+Krzysztof
