@@ -1,44 +1,65 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7210F2E06D2;
-	Tue,  5 May 2026 01:09:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BD3353EDF
+	for <spacemit@lists.linux.dev>; Tue,  5 May 2026 01:54:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777943362; cv=none; b=PLuglFOn4Yk/UvEKH5WNFseYWcwkJb1wangAnx9Pckcf9RQljzNT/MFOt8gWCHvpsBNJLf68J1uEkA1XWQqiPm5ZzihsrHGNgQFTzoFQQk2KrQY9nOuxDsuQdvif4e3UKg/56eCpwNmF8lmGkMV1ktHCsyPlkYSBy4putK/F3HI=
+	t=1777946045; cv=none; b=hJmDd/nQGhLYsj3dY9BCV1Tr64t6wD3KbFCQmMkIDO2MvtiJ6IS5Sdy8LQR6techejCKTrwpQ2+eiGcfXyMfiO98XYpoy93HgzSiX3zlIq+lmSdlBv/qrfCiN2R3UNJHqhBrlCwFxQlmg9m/FNgleoD8E3oia+DFxL2X5V87YWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777943362; c=relaxed/simple;
-	bh=nImo5ObXpWvU5qmCvtxUSoYcaKKF8ZKzQ/NntiTwEN4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=qR3t44N7bPP3jlw5fFy+inYDHirMSQa/gHoMXn86CaTEPFM7mOHmUYAoY/YkZ2VShGTRHESjMMZymki0KUgF0/ZaIXn76E3mtNUmPwF8MWk+NQ+QBGzIdwzfHr+IsJdK8SxIoXrPAqa8WYusu2r4QTkN5G4Vlrs/9jy8SsjYPu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QWaBBOE8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777946045; c=relaxed/simple;
+	bh=bCXcH22VETc/1TUN/+hBoB9VD44HhAx4Bt4mZr0aROE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=RrN/QLJyoShI5Cz2GytPxMJWdRDNHIV+mOdfz+/6aqzFCBVQSPpcUOi8mg0Vd1JjSFfXXKe2V3vduDEuytmBpuzMYZEfG+Vo8D1B5oQFlxpfoUduBSz+Af+KVb7qo363QtDjRJvbnk5q4SoU7YwU9B45lO3DHzKC4qvndw7wa+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=KybR+5Ii; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QWaBBOE8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7EDC2BCB8;
-	Tue,  5 May 2026 01:09:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777943362;
-	bh=nImo5ObXpWvU5qmCvtxUSoYcaKKF8ZKzQ/NntiTwEN4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=QWaBBOE8+ol4FXKcJ76nymFji0n4gpdl1o8FAADvWpJX0V0ByZ17RnE6traPPa7Vp
-	 2+gsIxSoVkZaVPWeEXtO3VGdiTsMQFx57iyyoHzHaFhzbGTqk1UJq/GaG650qF8tnZ
-	 hb4ONSaVyGpYniAsuC9uWjYYXrwKbSnf3M8D9sYzW95jag9CthhDiBiAPJpo7qn0FO
-	 Mx7Kiqd2Kyc+Ld1LPsD/Xsxrh3msJcYSYvAuZAgoOavl6EHsgWzBJGI8nqPuX8Hlb8
-	 yK0VImm7SjBYK4yWgGW96z03KeakMztzmfX+rjfLreagew+PkmjYC6XQCtZiTl6lbT
-	 eW2GJm558e25g==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Yixun Lan <dlan@kernel.org>, 
- Jinmei Wei <weijinmei@linux.spacemit.com>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-sound@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-In-Reply-To: <20260429-k1-i2s-fix-v2-1-8d67835aaddc@linux.spacemit.com>
-References: <20260429-k1-i2s-fix-v2-1-8d67835aaddc@linux.spacemit.com>
-Subject: Re: [PATCH v2] ASoC: spacemit: fix RX DMA params not set when TX
- is running
-Message-Id: <177789977513.458539.3948395874655836368.b4-ty@b4>
-Date: Mon, 04 May 2026 22:02:55 +0900
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="KybR+5Ii"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-82f8b60e54dso3620728b3a.2
+        for <spacemit@lists.linux.dev>; Mon, 04 May 2026 18:54:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1777946042; x=1778550842; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=A4fW5IFCF+h7MNSs7mItaLMetGKpr2bIN5LAG6vg93E=;
+        b=KybR+5IiyVtWBukOYou32K5Rif0TCEwKV7CEtbJFBI+CkUkLqM2jjBsDB/QlYD2d92
+         UOZ8mg83tydKiHrvL9i5+RmVJ7vQo5P/z/m85KdvrD+YyCySDsuVEsoV3aEH2Ivm70zH
+         5zVKMRU/wXXzfZ8S1D0a57O6PzPMztaUroH2JHNwsL0YfrWmo24RZO9tms+u/a5HQX3n
+         X/FpZlJupFRDkg93PyhswaIbcD/A81bvo9xTVnRG4EjszTA0y9FqXqMc6GULKBoM6SkH
+         xfkd5qrjLoVN/Aa/mfBggi3Yh/GElzdXcyJY2RCMfrCUHuzOs07npoY2MmCsPbknnK5p
+         X24Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777946042; x=1778550842;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A4fW5IFCF+h7MNSs7mItaLMetGKpr2bIN5LAG6vg93E=;
+        b=OCqs97K3NdTBTXsi0KfRs+ibMie6xgJExcsksLur2I5gjsvskWt86bwx+oOFMHD0ng
+         ZSeaFXqPQcxddRolRcSAhvNaM6L+FH2l47qgvXAB1RPJqgft69b7xrfYbxRwLSIk7LP+
+         MqSF+0SOFTazTjWtlS6VE5JOEzRrFO3uKw/5ZlYOrg8t0rlJo8YhrL+cjMdNxvY/a458
+         gKgniFn9+2rzPxda0/yIRBoNJdfok83C0igwOa2aVG2gNBh+J9u5hl9RSEalsU1WilAT
+         hH2BqYPIFJhyp1Z+NtrK35BiBW6gkNaO4OgvrwrYoUXtHJOI3boaebC6tGEOrzPDTQ73
+         DetQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8660haY5pbBiagkuSnDIhL7XBZANqlUkyvROwa/F17mP+0GXpK6MA7wDy7Etm7DOA96AIWxVqq4w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzgbAFgAbD2c7yGK+lKTDh5+bBdRXNAko/slIN8XoWCfBnA9vUu
+	POQ+XuWxiD8E409sUN/V8/N0rE2IZpdaHCAHUm/cYnY7+9gGjtg+exPSGX++4JM1UuY=
+X-Gm-Gg: AeBDievkCsFT1reADonh1PoAV6oCE08bH50jfoMudN/h2jkjk3lf0VfPAXM9+1M4bKo
+	f7ERqlxfsZ7LPA+l6aTRUZkrIplOf+2ZWQQ5WA6qx8QSpLZURLPV6+p3hHuZLvH6f1Uyyfgjuys
+	hTf2CiktOtUTETIXkYeY9jQVpSFez6myGQvw3wLVbi+GNyd67l/3RfUG/Pa2HzaadTUblsnqbtn
+	FwexQVuvliCFIwtgUePfVN2I7tXDPqk89F50kiDoe5JYRVXpDSDLQAiBCGOyfGjlhBVpkPtV48k
+	59PX1QZ9z8mF/0Yr+iMd4BZfFXIMZlFPtpZKaRcnKHZXpOu6bwjijFMNYruWBdQogQmhQw9zq4l
+	YV5eL25Xg3A58tvQbmwwsn3rmtq6klmIuMxCXd86QquDmHeFW9jEt/3OdV3r8Blet/Vu84hpTqo
+	dyVsP98bn6XAW7B9/ezzB2aiRPoY3K6wpFy+c/S3TqTqclHr/woZZYXBBrnM8nsyBJ
+X-Received: by 2002:a05:6a00:1250:b0:837:a211:4edd with SMTP id d2e1a72fcca58-837a21153a9mr6252120b3a.3.1777946042159;
+        Mon, 04 May 2026 18:54:02 -0700 (PDT)
+Received: from [127.0.1.1] ([2a12:a305:4::3016])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-839682a4bffsm211375b3a.56.2026.05.04.18.53.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2026 18:54:01 -0700 (PDT)
+From: Guodong Xu <guodong@riscstar.com>
+Date: Tue, 05 May 2026 09:53:34 -0400
+Subject: [PATCH] spi: spacemit: add u64 cast to NSEC_PER_SEC to avoid
+ 32-bit overflow
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -47,47 +68,64 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1139; i=broonie@kernel.org;
- h=from:subject:message-id; bh=nImo5ObXpWvU5qmCvtxUSoYcaKKF8ZKzQ/NntiTwEN4=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBp+UM/TkHidV6dIxc25HjU7MFgUg9136xCHKLp3
- Li5Zwd0PeiJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCaflDPwAKCRAk1otyXVSH
- 0HNJB/0bxhuwGjLhVB3xyCWT6U8VsQxY/EwjI8SDhh8J/ZWdjUvh7CZuzM3Zl9FMSc1I4p8k7Fk
- qTcXCPLSdCflxHVjGezzpqxqEeG+kZKnBaUy1K9iJvoyqW1O36ZY1De5HJGDRkZRMpeCK4d5Pjr
- M4TbpRaPREaYmNLUuP0QEw9jm2x+d08OFOeaHzS9RA9U6aaDbXDPnNJLIuGEEmr76/G0OQRVv2v
- vesOxbpObzKcmQnxwMqNzKjDCNR6Mo8Z9J8WLAo1EMnsE2077VhYVcQd2lJUmAXoATySVIDECcz
- muj5DFtODqcEynvOSy0pUhb19gAznZxSpbELdb5CQwpcaEMl
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+Message-Id: <20260505-spi-spacemit-k1-fix-overflow-v1-1-77564c2e4e86@riscstar.com>
+X-B4-Tracking: v=1; b=H4sIAF32+WkC/yXMywqDMBCF4VeRWXcgBqymr1K6iHHUsa2RjDcQ3
+ 73TdnEWHwf+A4QSk8AtOyDRysJxVOSXDELvx46QGzVYY6+mMAXKxDof6M0zPnNsece4UmpfccO
+ qdK6pg/XkStDElEj/X/7++FuWeqAwf5twnh9PJHf6gAAAAA==
+X-Change-ID: 20260505-spi-spacemit-k1-fix-overflow-8799dbc2ae97
+To: Mark Brown <broonie@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Alex Elder <elder@riscstar.com>
+Cc: linux-spi@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ kernel test robot <lkp@intel.com>, Guodong Xu <guodong@riscstar.com>
+X-Mailer: b4 0.15.1
 
-On Wed, 29 Apr 2026 17:00:50 +0800, Troy Mitchell wrote:
-> ASoC: spacemit: fix RX DMA params not set when TX is running
+NSEC_PER_SEC expands to the long constant 1000000000L, so NSEC_PER_SEC *
+BITS_PER_BYTE (8 * 10^9) overflows on 32-bit-long architectures
+before the result reaches the u64 nsec_per_word.
 
-Applied to
+Promote the multiplication to u64 by casting the first operand, which is
+NSEC_PER_SEC.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.1
+Fixes: efcd8b9d1111 ("spi: spacemit: introduce SpacemiT K1 SPI controller driver")
+Suggested-by: Alex Elder <elder@riscstar.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202605050437.RS6mmV2b-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202605050317.Tf9j487w-lkp@intel.com/
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+---
+Hi, Mark
 
-Thanks!
+This is an incremental fix on top of your for-7.2, addressing the
+overflow warning.
 
-[1/1] ASoC: spacemit: fix RX DMA params not set when TX is running
-      https://git.kernel.org/broonie/sound/c/ec0611868f2f
+Verified on BPI-F3 with a GD25Q64E SPI NOR, read/write/erase still work.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Thank you.
+Guodong
+---
+ drivers/spi/spi-spacemit-k1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+diff --git a/drivers/spi/spi-spacemit-k1.c b/drivers/spi/spi-spacemit-k1.c
+index 99db429db0b26..215fe66d27b4d 100644
+--- a/drivers/spi/spi-spacemit-k1.c
++++ b/drivers/spi/spi-spacemit-k1.c
+@@ -390,7 +390,7 @@ static int k1_spi_set_speed(struct k1_spi_driver_data *drv_data,
+ 	 *   ticks_per_word = BITS_PER_BYTE * drv_data->bytes;
+ 	 * We do the divide last for better accuracy.
+ 	 */
+-	nsec_per_word = NSEC_PER_SEC * BITS_PER_BYTE * drv_data->bytes;
++	nsec_per_word = (u64)NSEC_PER_SEC * BITS_PER_BYTE * drv_data->bytes;
+ 	nsec_per_word = DIV_ROUND_UP_ULL(nsec_per_word, drv_data->rate);
+ 
+ 	/*
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+---
+base-commit: efcd8b9d111177d48c841d09beca43b15d5b9e5f
+change-id: 20260505-spi-spacemit-k1-fix-overflow-8799dbc2ae97
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+--  
+Guodong Xu <guodong@riscstar.com>
 
