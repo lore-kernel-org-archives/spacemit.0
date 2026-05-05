@@ -1,249 +1,348 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013012.outbound.protection.outlook.com [40.107.162.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44C732FA2A;
-	Tue,  5 May 2026 09:39:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777973982; cv=fail; b=EbaZaUIvgpx/wRYrJ16E93YU+mlNgQaLLdF54kYXU5wjGZDnQgde/a6XoEA+3ZZ0SDEsoJs/+n+7zodYdnYyjwI6dOODm8C43mbgyPQwqnF/nJi354WxJR/cOMU0rDgbNYBYpAkWZRppeDnDKyBw8na9aRcSzIbjzeRSfgvMpEs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777973982; c=relaxed/simple;
-	bh=PIh/GC/2BJYDMm16KJGL4R29T4pbgIQzCQ0cAXkT7KQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=SuFQKHpaeKFzOWJnYOIrfgiRfblUvvj2tHim3SWe03buIVSJCfORb5di+am1RTYNVIhXa/MtAaVA3eAQPL91HBD4y6MZ9NrmfoAk3SShZ2RGVEfW/H46r4tIWy3kHBn/hBkAj8c55s8jqlvHnh+1rdLmt7xSrKawTPNR6r5NC+w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=fNqw//8o; arc=fail smtp.client-ip=40.107.162.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB751337BBD;
+	Tue,  5 May 2026 09:52:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777974743; cv=none; b=Vs7TBqZGhUBtS44UIMLNUILo2j+Ym8giptDpdOS3cgflBkDxqTB6YMh/tjIehL4i5dgwYxqGYnL+vSbeHRxs6YUevisJBbwEMLTldrSQ6Ck2cqw9nqFoafsWjKjiYsei3f6X160jewv6dbP7LdGg82+c26FI2/p32l8+AUcNSx8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777974743; c=relaxed/simple;
+	bh=y1Qfm0/uyx8vh96/sDNbnmLNVzbgaLb2euW3sAZ87qo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Dr3JuMYl+IaR3fVKQjJOrb4T/uLWrXXVa2/J0g3SWxAg73arOnknQSsbCWjyiG2es83j8apt7ywvfmbAZm8DchFXmrCk2Sw2WYTiXuBGF9Rvdaf0awB139M1sw3n5FVhtE8B4dasLYDhwZUHAXaZzFxL7k+CrPaKi3SGipH5YqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FzTSWr5W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="fNqw//8o"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lMYYUycoO1/gMQEFOOA2EIYDiMz7fsLrlHDNvhteZeZGOLwmLfWrk+dJsLoqU/Ik/gnzMRw6wjqTHknJsiq8pLY/NUFBwNy3j0VMQFun0rP9Uby8md6rBkCO5AMmnmYRJmA3op6FjTyFHh7EmG/P9A22n7zzk2C/qCoKwFs08vMhiBGBvABIwAd6CXljaPEKhnCFjd0WJXnRG4ZPoqut35dz43aaX+Yc0cYH3Xab5Uyg46LTVaPCRcl5V3SqxlFNcV0Z7XSWMK6MYSQGnjnuFRfta7mzJa55rFrWo/TtBZlruf4o5LGq5RL2KP0NU+6J1KU1QNQ3szdScugm1TIoYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=277qg3AObcu3QT1JVkFDQjOH+nMDqxM36gB1RSDct9g=;
- b=NX3AxIcRb0wHi8ZwTBtfJVqxe7s1kz4XqExsy9RKWDAlGMYEh9y6YPPYn1tHFNLkY32tfB6bC0IbQ5OhUROBlHkfWVzU3tq+3Ebjvy3x/QtZ5N77eaTYm6b8heOyLWOwDNeGbTdSbpsNBIl4cvDluqAgnuODDXyS/9KkD86/cQSx8TnWJNT87eoyLhYoXMVGjbdiLS3hprI4kLv++qvSjjqsYoPrKAauzMia6JkMdI2UdZ65cA/xZ3AEXMUrWFz2448SS2IOm3YpCxC83rfdCNVycrTZJ5+4cxlV1qSRbW+7tM3TcqWk5ytLiCHBjDXf+770E9YR1wwE24ZOVdSwqQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=277qg3AObcu3QT1JVkFDQjOH+nMDqxM36gB1RSDct9g=;
- b=fNqw//8om3zPuQkqPxH1WCNobvsnO2S6X+4lBJZYxc4Mlyd0eGnnLI28KuuNt1iISSS0jTSG2qsrEKNqfvkmlkqw8aUfRPTyI0oznPvF9h4MdCvcZlXB76WacZQ6R7mnaezdCN2Ilay6QEBS0QmrViDEQO8a3B1JlRNFSU7hHlUTBRg383Uz44XO4tpQOrWersV2SeBNX6FxvZv//erM9q8oPqugT7K7giczhwFTG6D07nDJk7qLqa/9cUmKhWR1n+F0Ovh8Nnu6h6OcVx09altFVbMzCJ3I/tXyfxBFdH7IiY/NAT2sNpvaMeg7wN/2ezpAxhsGz691YFR6JJd3JA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from AM9PR04MB8585.eurprd04.prod.outlook.com (2603:10a6:20b:438::13)
- by AS1PR04MB9430.eurprd04.prod.outlook.com (2603:10a6:20b:4da::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.27; Tue, 5 May
- 2026 09:39:30 +0000
-Received: from AM9PR04MB8585.eurprd04.prod.outlook.com
- ([fe80::f010:fca8:7ef:62f4]) by AM9PR04MB8585.eurprd04.prod.outlook.com
- ([fe80::f010:fca8:7ef:62f4%4]) with mapi id 15.20.9870.023; Tue, 5 May 2026
- 09:39:29 +0000
-Date: Tue, 5 May 2026 12:39:25 +0300
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
-To: linux-phy@lists.infradead.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-can@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-	linux-usb@vger.kernel.org, netdev@vger.kernel.org,
-	spacemit@lists.linux.dev, UNGLinuxDriver@microchip.com,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	JC Kuo <jckuo@nvidia.com>, Johan Hovold <johan+linaro@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Mathias Nyman <mathias.nyman@intel.com>,
-	Thierry Reding <thierry.reding@gmail.com>
-Subject: Re: [PATCH v7 phy-next 13/27] usb: host: tegra: avoid direct
- dereference of phy->dev.of_node
-Message-ID: <20260505093925.c3rshtu7hcuwglbp@skbuf>
-References: <20260430110652.558622-1-vladimir.oltean@nxp.com>
- <20260430110652.558622-14-vladimir.oltean@nxp.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260430110652.558622-14-vladimir.oltean@nxp.com>
-X-ClientProxiedBy: VI6PEPF0000022E.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:808:1::8e8) To AM9PR04MB8585.eurprd04.prod.outlook.com
- (2603:10a6:20b:438::13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FzTSWr5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A28AC2BCB9;
+	Tue,  5 May 2026 09:52:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777974742;
+	bh=y1Qfm0/uyx8vh96/sDNbnmLNVzbgaLb2euW3sAZ87qo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=FzTSWr5WdJd8ONxMCuS6TcVZhoigKDuNTesK4DqVzz5MX7cr/xWNmHInKL3cTuOxQ
+	 M9LiOtZAFfRytPjhvAGLDJO3oKbg1pfbi23IjtgapVBs/BSilcv/YXyrcnwN+3NhvH
+	 XRWRTC56Od3fQ16AY18MtA6bdDpgb7Q1X6VxywrLMgXwqOI5v5vGH2BMlLDSOu/T5G
+	 4dxFSADna51qZELpIOnMAA38+ddA2Tzq50nNiXwIJGqjvZhK7RwYx+dQpAptdvLKIT
+	 hyL4L9/k9WlrDtdVlPC0+Dg/0xqa0DQLhsOc0K2atrSt78iYqq0XYgu3461QWkEb+A
+	 HTCYfiQJtnLwQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	dlan@kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0] ASoC: spacemit: move hw constraints from hw_params to startup
+Date: Tue,  5 May 2026 05:51:26 -0400
+Message-ID: <20260505095149.512052-10-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
+References: <20260505095149.512052-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR04MB8585:EE_|AS1PR04MB9430:EE_
-X-MS-Office365-Filtering-Correlation-Id: f6cc615d-4d54-4a9e-5d9f-08deaa8a3440
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|19092799006|7416014|10070799003|376014|1800799024|22082099003|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	38M2IT60LoJeqjadxDMOTV49Rz/Q/ZTfKrCI1Im603XgRFxDwVr0mUxjypsLyS0Gjdz1vDqnzlLz4uN789cnJUTJ9gquU2wFTkP7Ga+NYna0oqB2ekBgE7w0sDMWZVwuZo+JVAnlQsyYUXbZWVmfe2UgMcG6yO81BBbglXMNXuoo06+2KbgfofhuCHMJUA7mIfrSk57ZLJVzoUth2ERIREAIAXdyrXnkgpJETc819ZRpg4HdFQNBNXuL6hkBXQZW51VvQTq4/Gz/YXwFMhqsB9RmP1ybBN+9uctxAIw+gRlcF//+4ODiiGharJ5q4+0m1n9KK6DO3LHuAUHADCjcpACUCLQ0JTYS72m9ICrYtk1aDpiydNwyNn9c0QAB7Or39+pT/tbFIXpx1Sh9HJ10KT1aglLlg5gSL7xFb0RIokn5mjO8ogVVdr/tj3A5ibYF6DhV5fWtFqRlh5WfkAURzIbnrQZDYEQ0mE7pc3wfR9ce82/UP7A7GCIG/RkRB3bJVfZFNHoP90hvknZq+IyvFX4+adKOPZZ1UMfhZYX6xR4yvYFgfrMqsKfrldshi/emWOuYZ2EHFSomA0RGn3JfFlk+AoaCE07H+veryofOfeBP4K1wKe11jvtb0dzdh7kAsg2bobMMWjsHvg6rpdmwQGEtP4ykfXUPfZGAlB16Zqp8U32Afg9OKbq4lz+Dc5jS
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR04MB8585.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(7416014)(10070799003)(376014)(1800799024)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?dPTaA+5r5psx7V5alPpED1xaxZ8uAkbUB4Dmgay5In3tuslKjiWYA0aieZHA?=
- =?us-ascii?Q?I/zGz9lp1AEyX1Gw2EQyxcWrblJNGohKxGSOMDojq1YlsQEtQWleE3ZlaNB4?=
- =?us-ascii?Q?MFXyCDFAP8Dw2GNceW8Sn4L9G+/QZ6poQ2u0GxsgN9CFv7rWKr1MjMLf39Hq?=
- =?us-ascii?Q?ATt3rLyg0tkuk1QCHs5BnUfMFoXc785WiFLtPnMj7bRSrA5qf2zXyxp7T2Mx?=
- =?us-ascii?Q?/bueFnctbE/sjc+qszllg2zhx9IJr93Jv9XN2gc+qO6F4AKPPLug2+S914xp?=
- =?us-ascii?Q?P7jGVAD2M8FchLiGanNysUGqirsURyLog0EZoI+zwSBTb/5nnMClZoLrNaqE?=
- =?us-ascii?Q?5IDX8asKX02/F0wAd9t1P4fWQJDqTN97auqbs3/xUaHZ+o1Ostv2bzeyQoUJ?=
- =?us-ascii?Q?24V5HNdpJbdizVw4+N78spKb8LMZzaspeKEh8GxZy/a9oovYIlN4URgX7hEW?=
- =?us-ascii?Q?wA3GMF8nXjzoQ3iMRqzPEfrNtIi+RoixEmXptkRW/CdceaKQr+DMdLgaLGfg?=
- =?us-ascii?Q?LorNyhD0wCkycvDuTO9UaZ4xPgrfEMCRPMWnE2Zlt12Agy5NUWt433qtVBnM?=
- =?us-ascii?Q?N9apVO5c62io7G2UYqICXOvHYcfYuhdwVxIS/DBsI14xCMAqIMXUL7rCWK2X?=
- =?us-ascii?Q?E4hiiaoIWkiyS3y/bkCJ6v1aSd+RDu0OWsUl6FIOzdhxNE2aU6ZAwYjgnwIJ?=
- =?us-ascii?Q?0hKY5lQ/XmslMneDOK02tpa7fMqhzrP5F4cZVTdEyc6I/TazsLjeWhA2tN9W?=
- =?us-ascii?Q?pJSA/AtHvoFBtx2hTH+kTmt1MCdQDe2E8mni82gNeuSNCAMlh2GQdrzw5cuL?=
- =?us-ascii?Q?/XyzNOo5to+m4He9VnoOsQsGeHeoQPcbn/KwoblvZl5Qu4xEQbO1pvPUai8e?=
- =?us-ascii?Q?jXghIQ2WWb5p8eM8LPhio1vSOTjNJqWdbWsN59a0Fz0Nrh4sDiyrIJrtqHCq?=
- =?us-ascii?Q?k+edNJ99Rdk9cUXT7yISwPO7eoBxepKe3jVLZUxA0AGT+PJxKrT/RgLVMd/x?=
- =?us-ascii?Q?Yik11HVxcQwGT+jdHBFElrS7jGGc4GjjtXZMmq41AIwhdNrZzOAKTnhF1tvk?=
- =?us-ascii?Q?H7Sx1VYgeB5Cc319/L+qWmbzidU90vj5b5y7FaotVUcnlWHBVLDkdet+K/iu?=
- =?us-ascii?Q?81fU4hupIT+A6fy23dFKeLxWgGnavtx65m+UG+dK9onav/+dEplxLI6EXTlr?=
- =?us-ascii?Q?ara8SIL/QV7D1FcFGZJRS2TQnh0bwCi96pYl4nF09Jtlr24wnJlIkf6PWJYz?=
- =?us-ascii?Q?/AAunJaQPFC6dHTjkk8XNFwEJiWr7KmzuneTxc+Mq7T358CcrQR2asYpkaeJ?=
- =?us-ascii?Q?LtfH2AFpWKSvsEuF3ylHSS46/pdFuvyuSub7Kskl0nWRhz4gxWCfy7DZY+Nl?=
- =?us-ascii?Q?VXUaRsJj2HU5T9aTWct2njXy7cuvKPhzZqSLitlt6WQW+wz+Vlhtqe9K14ky?=
- =?us-ascii?Q?bQ3YBho23lpvwxOXxJz4bJyK4K93t89gx+Z+bG8nZi1LohOonzpNqx9of8/I?=
- =?us-ascii?Q?2j2kMTP9TD1QeyDqFkaaZp7f69u64uMrbqcEW+t5KcKPnQZLCYlhkVgkNmru?=
- =?us-ascii?Q?kbOuhFeza9D9O+in9KA6NQ+B3QieHnItV2RWHE4d0VGZmjIXXdtd8GOSbqGh?=
- =?us-ascii?Q?y5emVwD7G+YxpeyYgvVrpEqijjJ4clX/9A8nrt9eq7G02Rtzdh4s8vHIPj9K?=
- =?us-ascii?Q?jqeP8DYmtAn53EO8bOlCifAaT3Z/oeImi7VbcOi+dVySEiyNPl5AwPFC9xoF?=
- =?us-ascii?Q?z/MFIpP5iDsOtmbnGBxWzsj36f1To1Qrajuh5ip7NdqnOmZVo8iZEnqEoWyF?=
-X-MS-Exchange-AntiSpam-MessageData-1: sVhd5/P607flHRTB0MsDHPGVfpJkh3N5wRo=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f6cc615d-4d54-4a9e-5d9f-08deaa8a3440
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8585.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2026 09:39:29.4124
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IqrZzUd7S4DMQ9zrpvq8vb3r/2wrya0Fl3CMZ/igUH0ZP0EbFTryFtMftkVQIWXPrZMvoKZB1Z6MbAIUvrDz8w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR04MB9430
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 7.0.3
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Sashiko says:
-> commit 037a329bd1e70f26b8d861fb06f3bbc539fb2c49
-> Author: Vladimir Oltean <vladimir.oltean@nxp.com>
-> usb: host: tegra: avoid direct dereference of phy->dev.of_node
-> 
-> This commit updates the Tegra USB host driver to retrieve the PHY OF node
-> using the "phys" phandle rather than directly accessing phy->dev.of_node.
-> This addresses an upcoming change where struct phy will become an opaque
-> pointer. It also simplifies a debug message to log the array index.
-> 
-> > diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-> > index d2214d309e96..99b0ac9763f9 100644
-> > --- a/drivers/usb/host/xhci-tegra.c
-> > +++ b/drivers/usb/host/xhci-tegra.c
-> > @@ -1491,6 +1491,7 @@ static int tegra_xhci_id_notify(struct notifier_block *nb,
-> >  
-> >  static int tegra_xusb_init_usb_phy(struct tegra_xusb *tegra)
-> >  {
-> > +	struct device_node *np = dev_of_node(tegra->dev);
-> >  	unsigned int i;
-> >  
-> >  	tegra->usbphy = devm_kcalloc(tegra->dev, tegra->num_usb_phys,
-> > @@ -1504,23 +1505,33 @@ static int tegra_xusb_init_usb_phy(struct tegra_xusb *tegra)
-> >  	tegra->otg_usb3_port = -EINVAL;
-> >  
-> >  	for (i = 0; i < tegra->num_usb_phys; i++) {
-> > -		struct phy *phy = tegra_xusb_get_phy(tegra, "usb2", i);
-> > +		struct of_phandle_args args;
-> > +		struct usb_phy *usbphy;
-> > +		int index, err;
-> > +		char prop[8];
-> >  
-> > -		if (!phy)
-> > +		snprintf(prop, sizeof(prop), "usb2-%d", i);
-> > +
-> > +		/*
-> > +		 * usb-phy is optional, continue if it's not available.
-> > +		 */
-> > +		index = of_property_match_string(np, "phy-names", prop);
-> > +		if (index < 0)
-> >  			continue;
-> >  
-> > -		tegra->usbphy[i] = devm_usb_get_phy_by_node(tegra->dev,
-> > -							phy->dev.of_node,
-> > -							&tegra->id_nb);
-> > -		if (!IS_ERR(tegra->usbphy[i])) {
-> > -			dev_dbg(tegra->dev, "usbphy-%d registered", i);
-> > -			otg_set_host(tegra->usbphy[i]->otg, &tegra->hcd->self);
-> > -		} else {
-> > -			/*
-> > -			 * usb-phy is optional, continue if its not available.
-> > -			 */
-> > -			tegra->usbphy[i] = NULL;
-> > -		}
-> > +		err = of_parse_phandle_with_args(np, "phys", "#phy-cells",
-> > +						 index, &args);
-> > +		if (err)
-> > +			continue;
-> 
-> The call to of_parse_phandle_with_args() increments the reference count
-> of the device tree node and populates it in args.np. The new code passes
-> args.np to devm_usb_get_phy_by_node(), but does not appear to call
-> of_node_put() to drop the reference when it is done. Does this leak the
-> device node reference on both the success and error paths of the loop?
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-I've added an of_node_put(args.np) after devm_usb_get_phy_by_node() for v8.
+[ Upstream commit 6b4afbaaa342eaa52172e0be5ef8d1fcbf9ff460 ]
 
-> > +
-> > +		usbphy = devm_usb_get_phy_by_node(tegra->dev, args.np,
-> > +						  &tegra->id_nb);
-> 
-> Also in tegra_xusb_init_usb_phy(), the single notifier block instance
-> tegra->id_nb is passed to devm_usb_get_phy_by_node() for every USB PHY
-> being processed. Because the struct notifier_block API uses an embedded next
-> pointer for its singly-linked list, does registering the exact same object
-> to multiple independent PHY notifier chains overwrite its next pointer and
-> corrupt the lists?
+Hardware constraints should be applied in the startup callback rather
+than hw_params, as hw_params may be called too late for the constraints
+to take effect properly.
 
-If this is a problem, it is a pre-existing and completely unrelated
-problem which I don't have knowledge how to handle, so I will leave it
-alone.
+Move the channel count and format constraints for I2S and DSP_A/DSP_B
+modes into a new startup callback. This also tightens the I2S mode
+channel constraint from 1-2 to exactly 2, matching the actual hardware
+behavior.
 
-> > +		if (IS_ERR(usbphy))
-> > +			continue;
-> > +
-> > +		tegra->usbphy[i] = usbphy;
-> > +		dev_dbg(tegra->dev, "usbphy-%d registered", i);
-> > +		otg_set_host(tegra->usbphy[i]->otg, &tegra->hcd->self);
-> >  	}
-> >  
-> >  	return 0;
-> [...]
-> >  drivers/usb/host/xhci-tegra.c | 42 ++++++++++++++++++++++-------------
-> >  1 file changed, 26 insertions(+), 16 deletions(-)
-> > 
-> > @@ -2168,8 +2179,7 @@ static void tegra_xhci_disable_phy_wake(struct tegra_xusb *tegra)
-> >  			continue;
-> >  
-> >  		if (tegra_xusb_padctl_remote_wake_detected(padctl, tegra->phys[i]))
-> > -			dev_dbg(tegra->dev, "%pOF remote wake detected\n",
-> > -				tegra->phys[i]->dev.of_node);
-> > +			dev_dbg(tegra->dev, "PHY %d remote wake detected\n", i);
-> >  
-> >  		tegra_xusb_padctl_disable_phy_wake(padctl, tegra->phys[i]);
-> >  	}
-> 
-> In tegra_xhci_disable_phy_wake(), the loop counter i is declared as an
-> unsigned int. The updated dev_dbg() message formats this variable using
-> the %d specifier. This isn't a bug since the values are bounded by
-> tegra->num_phys, but should it use %u to match the unsigned integer type?
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Link: https://patch.msgid.link/20260429-k3-i2s-v1-2-2fe99db11ecb@linux.spacemit.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-I've changed to %u printing for v8.
+LLM Generated explanations, may be completely bogus:
+
+## Phase Walkthrough
+Step 1.1 Record: Subsystem `ASoC: spacemit`; action verb `move`; intent
+is to apply PCM hardware constraints in `.startup` instead of
+`.hw_params`.
+
+Step 1.2 Record: Tags present: `Signed-off-by: Troy Mitchell`, `Link: ht
+tps://patch.msgid.link/20260429-k3-i2s-v1-2-
+2fe99db11ecb@linux.spacemit.com`, `Signed-off-by: Mark Brown`. No
+`Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by`, `Acked-by`, or
+`Cc: stable`.
+
+Step 1.3 Record: The body says constraints in `.hw_params` may be too
+late to affect ALSA parameter negotiation, and that I2S should be
+constrained to exactly 2 channels. Symptom is invalid PCM
+formats/channel counts being allowed for the SpacemiT I2S mode. No crash
+trace or affected kernel versions are stated.
+
+Step 1.4 Record: This is a hidden bug fix: it is phrased as
+moving/refactoring constraints, but it corrects when ALSA constraints
+are installed and prevents unsupported hardware parameters.
+
+Step 2.1 Record: One file changed, `sound/soc/spacemit/k1_i2s.c`, 32
+insertions and 13 deletions. Modified functions/objects: new
+`spacemit_i2s_startup`, existing `spacemit_i2s_hw_params`, and
+`spacemit_i2s_dai_ops`. Scope is single-file, driver-local, surgical.
+
+Step 2.2 Record: Before, the driver advertised broad 1-2 channel and
+S16/S32 capabilities and only added mode-specific constraints inside
+`.hw_params`, after parameters had already been selected. After,
+`.startup` constrains I2S to 2ch/S16 and DSP_A/DSP_B to 1ch/S32 before
+userspace parameter selection completes.
+
+Step 2.3 Record: Bug category is logic/correctness in hardware parameter
+negotiation. There is no memory safety, locking, refcounting, or
+resource lifetime change.
+
+Step 2.4 Record: Fix quality is good: it moves existing constraints to
+the ALSA callback used for early constraints and tightens I2S channels.
+Regression risk is low but not zero: unsupported mono I2S streams will
+now fail earlier, which is intended if the author’s hardware statement
+is correct.
+
+Step 3.1 Record: `git blame` shows the changed constraint code was
+introduced by `fce217449075d` / local full SHA
+`fce217449075d59b29052b8cdac567f0f3e22641`, “ASoC: spacemit: add i2s
+support for K1 SoC”, first described as contained before `v6.19-rc1`.
+
+Step 3.2 Record: No `Fixes:` tag in this candidate, so there was no tag
+to follow. I inspected the driver-introduction commit instead.
+
+Step 3.3 Record: Recent file history contains the original driver plus
+two small later fixes: failure handling for `spacemit_i2s_init_dai()`
+and an `sspa_clk` error-check fix. No prerequisite refactor is needed
+for this patch.
+
+Step 3.4 Record: Author Troy Mitchell authored the original K1 I2S
+driver and one related later fix, so he is directly familiar with this
+driver.
+
+Step 3.5 Record: The patch is part of a 7-patch series, but `b4` and
+`git apply --check` confirmed patch 2 applies cleanly standalone to the
+current tree.
+
+Step 4.1 Record: `b4 dig` against a temporary commit matched the lore
+thread at the provided patch-msgid URL. `b4 dig -a` found only v1. The
+full thread shows Mark Brown applied patch 2 to `broonie/sound.git
+for-7.1` as commit `6b4afbaaa342`.
+
+Step 4.2 Record: `b4 dig -w` shows ASoC/sound maintainers and lists were
+included, including Mark Brown, Liam Girdwood, Jaroslav Kysela, Takashi
+Iwai, `linux-sound`, and relevant SpacemiT/RISC-V lists.
+
+Step 4.3 Record: No separate bug report, syzbot report, or user report
+was linked for this specific patch.
+
+Step 4.4 Record: Series context: patches 1-3 are described as K1 bug
+fixes/refactoring; patches 4-7 are K3 feature/binding work. Mark Brown
+explicitly noted fixes and new features had no textual overlap and
+applied only patches 2 and 3 from the subset.
+
+Step 4.5 Record: Stable-specific web search was blocked by lore Anubis,
+and a local pending-branch grep was stopped after timing out. No stable-
+specific discussion was verified.
+
+Step 5.1 Record: Key function added/modified: `spacemit_i2s_startup`;
+key function simplified: `spacemit_i2s_hw_params`.
+
+Step 5.2 Record: Callers verified: `.startup` is called through
+`snd_soc_dai_startup()` from `__soc_pcm_open()`. `.hw_params` is called
+through `snd_soc_dai_hw_params()` from `__soc_pcm_hw_params()`.
+
+Step 5.3 Record: Key callees are `snd_pcm_hw_constraint_minmax()` and
+`snd_pcm_hw_constraint_mask64()` in startup, and clock/DMA/register
+setup remains in `hw_params`.
+
+Step 5.4 Record: Reachability is via ALSA PCM open and hw_params
+operations; userspace audio applications can trigger the affected
+negotiation path by opening/configuring a PCM device for this DAI.
+
+Step 5.5 Record: Similar local ASoC pattern verified: many drivers
+install constraints in `.startup`, and ASoC core comments confirm
+startup is part of PCM open.
+
+Step 6.1 Record: The file is absent at `v6.18` and present with the same
+blob in `v6.19`, `v7.0`, `v7.0.3`, `pending-6.19`, and `pending-7.0`.
+Likely relevant stable trees start at 6.19.y.
+
+Step 6.2 Record: Backport difficulty is low: the patch applies cleanly
+to the current 7.0.3 checkout, and the file blob is identical in checked
+6.19/7.0 branches.
+
+Step 6.3 Record: No related fix for this exact subject exists in checked
+stable branches; the candidate commit exists locally as `6b4afbaaa342`
+but is not contained in the checked pending stable branches I verified.
+
+Step 7.1 Record: Subsystem is ASoC platform driver under
+`sound/soc/spacemit`; criticality is PERIPHERAL/driver-specific.
+
+Step 7.2 Record: Subsystem activity is low and localized: only four
+local commits under `sound/soc/spacemit`, including the original driver
+and small fixes.
+
+Step 8.1 Record: Affected population is config/platform-specific:
+`CONFIG_SND_SOC_K1_I2S`, depending on `COMPILE_TEST || ARCH_SPACEMIT`,
+`HAVE_CLK`, and `DMA_CMA`.
+
+Step 8.2 Record: Trigger is normal PCM device open/parameter selection
+on SpacemiT K1 I2S hardware. Unprivileged reachability depends on local
+audio device permissions, which I did not verify.
+
+Step 8.3 Record: Failure mode is unsupported audio configuration being
+accepted or constrained too late, causing bad/failed audio operation
+rather than a verified crash, corruption, or security issue. Severity:
+MEDIUM for affected hardware users.
+
+Step 8.4 Record: Benefit is moderate: corrects real hardware parameter
+negotiation for a supported driver. Risk is low: one driver, one file,
+no ABI/API change, clean apply, and maintainer-applied.
+
+Step 9.1 Record: Evidence for backporting: real driver correctness bug,
+normal userspace audio path, introduced in stable-relevant 6.19-era
+driver, small contained patch, clean apply, maintainer accepted.
+Evidence against: no reporter/test tag, no crash/security/data-loss
+evidence, exact “I2S is 2ch only” hardware fact not independently
+verified outside author/maintainer review.
+
+Step 9.2 Record: Stable rules: obviously correct enough: yes, based on
+ALSA callback ordering and existing constraints; real bug: yes;
+important issue: moderate hardware functionality bug, not critical;
+small/contained: yes; no new API/feature: yes; can apply: yes to checked
+6.19/7.0-family trees.
+
+Step 9.3 Record: No automatic exception category like device ID, quirk,
+DT-only, build-only, or documentation-only applies.
+
+Step 9.4 Record: Decision is to backport. The risk is low and the patch
+fixes a real, user-visible hardware configuration bug in a stable-
+relevant driver.
+
+## Verification
+- [Phase 1] Parsed commit `6b4afbaaa342` with `git show`; confirmed tags
+  and lack of `Fixes`/reporter/stable tags.
+- [Phase 2] Inspected candidate diff; confirmed only `k1_i2s.c` changes,
+  adding `.startup` and moving constraints out of `.hw_params`.
+- [Phase 3] Ran `git blame` on changed lines; confirmed original code
+  from `fce217449075d`.
+- [Phase 3] Ran file history and author history; found only localized
+  SpacemiT I2S changes.
+- [Phase 4] Used `b4 am`, `b4 mbox`, and `b4 dig`; confirmed v1 thread,
+  maintainer application to `for-7.1`, and reviewer/maintainer
+  recipients.
+- [Phase 5] Read ASoC core code; confirmed startup occurs during PCM
+  open and hw_params occurs later during ALSA hardware parameter setup.
+- [Phase 6] Checked tags/branches and patch application; confirmed file
+  presence from `v6.19` onward and clean standalone apply.
+- [Phase 7] Read `Kconfig`; confirmed driver-specific SpacemiT K1 I2S
+  config scope.
+- [Phase 8] Assessed trigger/failure from verified ALSA call paths and
+  driver-advertised constraints.
+- UNVERIFIED: Independent hardware documentation proving I2S mode is
+  exactly 2 channels; this claim comes from the commit author and
+  maintainer-accepted patch.
+- UNVERIFIED: Stable mailing-list search results, because lore WebFetch
+  was blocked and one local pending-branch grep was stopped after
+  timeout.
+
+**YES**
+
+ sound/soc/spacemit/k1_i2s.c | 45 ++++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
+
+diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
+index 1cb99f1abc7cd..bb73d32a1b097 100644
+--- a/sound/soc/spacemit/k1_i2s.c
++++ b/sound/soc/spacemit/k1_i2s.c
+@@ -106,6 +106,37 @@ static void spacemit_i2s_init(struct spacemit_i2s_dev *i2s)
+ 	writel(0, i2s->base + SSINTEN);
+ }
+ 
++static int spacemit_i2s_startup(struct snd_pcm_substream *substream,
++	struct snd_soc_dai *dai)
++{
++	struct spacemit_i2s_dev *i2s = snd_soc_dai_get_drvdata(dai);
++
++	switch (i2s->dai_fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
++	case SND_SOC_DAIFMT_I2S:
++		snd_pcm_hw_constraint_minmax(substream->runtime,
++					     SNDRV_PCM_HW_PARAM_CHANNELS,
++					     2, 2);
++		snd_pcm_hw_constraint_mask64(substream->runtime,
++					     SNDRV_PCM_HW_PARAM_FORMAT,
++					     SNDRV_PCM_FMTBIT_S16_LE);
++		break;
++	case SND_SOC_DAIFMT_DSP_A:
++	case SND_SOC_DAIFMT_DSP_B:
++		snd_pcm_hw_constraint_minmax(substream->runtime,
++					     SNDRV_PCM_HW_PARAM_CHANNELS,
++					     1, 1);
++		snd_pcm_hw_constraint_mask64(substream->runtime,
++					     SNDRV_PCM_HW_PARAM_FORMAT,
++					     SNDRV_PCM_FMTBIT_S32_LE);
++		break;
++	default:
++		dev_dbg(i2s->dev, "unexpected format type");
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static int spacemit_i2s_hw_params(struct snd_pcm_substream *substream,
+ 				  struct snd_pcm_hw_params *params,
+ 				  struct snd_soc_dai *dai)
+@@ -157,22 +188,9 @@ static int spacemit_i2s_hw_params(struct snd_pcm_substream *substream,
+ 			dma_data->maxburst = 32;
+ 			dma_data->addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+ 		}
+-
+-		snd_pcm_hw_constraint_minmax(substream->runtime,
+-					     SNDRV_PCM_HW_PARAM_CHANNELS,
+-					     1, 2);
+-		snd_pcm_hw_constraint_mask64(substream->runtime,
+-					     SNDRV_PCM_HW_PARAM_FORMAT,
+-					     SNDRV_PCM_FMTBIT_S16_LE);
+ 		break;
+ 	case SND_SOC_DAIFMT_DSP_A:
+ 	case SND_SOC_DAIFMT_DSP_B:
+-		snd_pcm_hw_constraint_minmax(substream->runtime,
+-					     SNDRV_PCM_HW_PARAM_CHANNELS,
+-					     1, 1);
+-		snd_pcm_hw_constraint_mask64(substream->runtime,
+-					     SNDRV_PCM_HW_PARAM_FORMAT,
+-					     SNDRV_PCM_FMTBIT_S32_LE);
+ 		break;
+ 	default:
+ 		dev_dbg(i2s->dev, "unexpected format type");
+@@ -303,6 +321,7 @@ static int spacemit_i2s_dai_remove(struct snd_soc_dai *dai)
+ static const struct snd_soc_dai_ops spacemit_i2s_dai_ops = {
+ 	.probe = spacemit_i2s_dai_probe,
+ 	.remove = spacemit_i2s_dai_remove,
++	.startup = spacemit_i2s_startup,
+ 	.hw_params = spacemit_i2s_hw_params,
+ 	.set_sysclk = spacemit_i2s_set_sysclk,
+ 	.set_fmt = spacemit_i2s_set_fmt,
+-- 
+2.53.0
+
