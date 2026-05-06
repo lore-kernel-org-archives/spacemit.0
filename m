@@ -1,160 +1,220 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47CF3DC4A3;
-	Wed,  6 May 2026 09:58:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1958A3368A9
+	for <spacemit@lists.linux.dev>; Wed,  6 May 2026 15:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778061498; cv=none; b=Mypo4EzqjemjblwtLDc1mkm5j96aA1RKZ5+wv1khGyxeDY7HfgOIqPOxjWGBSLJ0XQk0bVixYFRnnGnfFrLDtT3/h+p2soWDm8Uevy9i5Oqh5TBdHgMLJlOf2/iBNYkMgqBc8HdSPedxJpU/iJi5iCD7UOHzP14a/WoVmkxSCJw=
+	t=1778079808; cv=none; b=QWZGc2lrNEoUYfxwJs39vSQAEMok10GYDg/swu7yN1SMEPRBqD8tIAtZ2t2MqxqoNM6vw+XfokuOJIJje9ucHzG69UIV246RiqdUrwnC5BHViRscxMJdt4z1Z96oa5p+MIejQg2GhnDMYEu2ap5t5j9txt0lHS0aWz+Zqvn35Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778061498; c=relaxed/simple;
-	bh=v2Z43waBNb1sScGZkywyBPPfu9AJTH0bPEJbypNx/9Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sl+/dOmKy+Za8vTBmZceHymoPnVua7fF1AzHTqYuAKEEr7/0298YXje77VYMa9oadMzpWuxW0YlQhFtWPVshcsGhVVcYv2oOZRTOZ38W3vukMxtZxkccAJccXlp4yA4tN+rYIIpmh9BDXxH+iOb8Mh9Rq6KMjLQYgaNFIt8G/RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WG44oO9T; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778079808; c=relaxed/simple;
+	bh=B87l/+dXX9ZwdipiWVnNUuu8nCGR2/ZMqtA9tPmwvi4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=pD66A5/qLPM824kCwRdb9ETFP2i86d62dbf0fCuyd22t12x3CwxjThp6MieDs9g1G1gjqpUFZBC1FO7msQ89SzkEdfazDcM6ZOkM4dHiIoXwQsF69V/yDwsvSa60OE3HsniCoATl9Xiu+uG/tVe6GtKcVO3/nD53Z4s3t4JMACc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E4iO/5Lb; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WG44oO9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60557C2BCC9;
-	Wed,  6 May 2026 09:58:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778061497;
-	bh=v2Z43waBNb1sScGZkywyBPPfu9AJTH0bPEJbypNx/9Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WG44oO9TMvF7kiD51Etx91un/RdtZOeMoteCnQgQFqUaqeA25FD+DAHQIemqgDZng
-	 56v2HgLykir7ilGwY9wv7O7zsRQvLUgh5yDL6057DboKTr1t3Py+T+6fRjT0wPJsW8
-	 CdoPtl1bodVpxIaCoadImuzAM6g7WIWpVpbgBiwlZQpAqExNBrz1j8fUi9MLTQVy4p
-	 yXc1RAc8fUEGvdOwVurE48hcOFFCAwlnvPWr1Co5fXGmL1rkzzS/f9hVLCB+UTHR0X
-	 kiT5vg85L0QLRi+TpixO/5bbuxbl+WQzFAIoaf9HUpWupesFCATXTu2Wvyob4pHuh8
-	 UqMinIs5doyBQ==
-From: Conor Dooley <conor@kernel.org>
-To: Linus Walleij <linusw@kernel.org>
-Cc: conor@kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: [RFC v1 4/4] pinctrl: spacemit: move over to generic pinmux dt_node_to_map implementation
-Date: Wed,  6 May 2026 10:57:42 +0100
-Message-ID: <20260506-womb-bonus-68a236490084@spud>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260506-energize-dramatize-051909e54256@spud>
-References: <20260506-energize-dramatize-051909e54256@spud>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E4iO/5Lb"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b936331786dso792436166b.3
+        for <spacemit@lists.linux.dev>; Wed, 06 May 2026 08:03:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1778079805; x=1778684605; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=J2mDJXIFYlupSX9LmHl3D1F2SQl0bbq2hvtOpkX4whw=;
+        b=E4iO/5LbVI7GvUXTdf8CDZneOdXmykItdUePSp1R1F76fsVE2o+G2zQRwJh5oazqU1
+         KEZH3pmH1bsUOuE7z3oSTedZ4WS+t4Bfht+++z36eD11yZJx432iTJ2vEHQak76IYh63
+         qdQiPoPer4/4gK9+e5iqgfknzy+hA/pkUKRb/X6mLdypOVketnt9rvP90/77T3x1oP4Q
+         gyQyzxtg+rsNPDntOXK4ESUyBxyUfxhPiDcJ1I0/QxnKJEIDwFD/8ajBnvuTUWwhyyKI
+         h/acuAM3fASU6xChRhM+H5IwW92odLJvSxfmCsUrT4Ds+sjGrM1+pZGh/ddlJRkcTHeV
+         rApQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778079805; x=1778684605;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J2mDJXIFYlupSX9LmHl3D1F2SQl0bbq2hvtOpkX4whw=;
+        b=cqMxLEwDAu3+45w69FJ1cPwhzvRCKtUJPFtoLsIXjou7ggqT4WeGbKzSjHkFQ09KSl
+         WBhcUPW3Hs3UEKTBlphKfmZN6Yg7THL5L/STH2YVDKV8qmXOASPP8mfa85fh9RIJCj37
+         AWcOan6snusT5LRgnOQ7EjBZYKFGIqQgaIl9XJ/KIunkNjkTpRdaZLaVic+KErt/40Hi
+         cMYqKjVzzcGTIiXubE9pC7/e4yFvH/FUbIIwSZ7QIlqNhe3OS43gx6QswZrbeEYoMZRd
+         BKsigyw5k/2Fn6Z4zf/ElPzQjqtXpwF+PNFv2P8500IaXi8wif53fy9A7ZTyO3viAv+S
+         Dzow==
+X-Forwarded-Encrypted: i=1; AFNElJ/XK0lN85ItLwcI7evuN4xYeRJZ8UpYo7gT6w3q64kogGXjHtfSIf58uLzN6KwJrGQe/byulJLVnw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz9o2/mdb+M7yiSAlu1lEI4ll8rkAdhz7ksGL/s9mm9OxsJsTI3
+	DVdWuHjru0K/pc7/OfKBM1DxhJyOLopDa29HQQ6UEaQ8LHMSUCaMNr/Mdm7f9FMvkso=
+X-Gm-Gg: AeBDievuIh7O/AZ9h3Hoxqgj8InhaKv00d11yymAs/7SuV/r2VfwE5m8Bx/wxd4SwqE
+	NBrO8O21iurd9DQp4pAC5cZiALrbexjdm36AWBOqKlacYTionafl68EmpW7xAmMXvchF0QJJyK3
+	LP1qEVmTjwd2MFlU+J9a18oGbpqq3N6cqGj83Y0tUJFOqhjr+t1stDh125k4d3V8AyBSNAPsHqr
+	OjJ+MB8oeqJw0ENl//Nx2gLE7ZpKLUImbKTviMUmCsZbNINJpb5q9hHFBkT6AQcdOOxgC6pFppR
+	1b8xEJRtUNtAAddRW0Vznp5RN+MCsiqIeo9/sMaXtrL94GAgUiMrX4aiDswbYL44r2QD7RQU8ZA
+	QjkcwMejRFAvAGeTdRORufFUUaibneerUFufiEP4EnJjWGVHiWsSOvVUUVKKzIjTiGfF1nySZOl
+	oTJnK5t1tKvxSNlDVQUOlK+XeHGr4Un8Y/OXhdHv27dN0qVS/jlgadqjhXqHWC2zBTb5jN18CiT
+	ll73wU4BIKNASk4kA==
+X-Received: by 2002:a17:907:fd8a:b0:bba:3bd7:17c7 with SMTP id a640c23a62f3a-bc56ac3654amr180224366b.7.1778079805146;
+        Wed, 06 May 2026 08:03:25 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:5798:67fd:c866:b378? ([2a01:e0a:106d:1080:5798:67fd:c866:b378])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45052953383sm12652260f8f.13.2026.05.06.08.03.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 May 2026 08:03:24 -0700 (PDT)
+Message-ID: <e2427d64-c7dd-4184-8824-f79cf15773d5@linaro.org>
+Date: Wed, 6 May 2026 17:03:23 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3606; i=conor.dooley@microchip.com; h=from:subject:message-id; bh=EBo7vsj45Fm6ts8vxVZqmKyxIs0BuENJUV4vbK7h45M=; b=owGbwMvMwCVWscWwfUFT0iXG02pJDJm/BSb39VRuPlyx7dTVybtPFKcGfqt8LVWl+3qm9zZDQ Z9Oix2nO0pZGMS4GGTFFFkSb/e1SK3/47LDuectzBxWJpAhDFycAjARz4+MDPvXrE5ff0aqJjZ+ 72rz29sKlLcx7hURWFDwKJSjs+PzSw6Gf4Y7Z25c31Yd73LtiJXD7brJorYHdHd7HHn/8v2O0Gw XcSYA
-X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/2] phy: k1-usb: k3: add USB2 PHY support
+To: Yixun Lan <dlan@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Ze Huang <huang.ze@linux.dev>
+Cc: Junzhong Pan <panjunzhong@linux.spacemit.com>,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org, Yao Zi <me@ziyao.cc>
+References: <20260305-11-k3-usb2-phy-v4-0-15554fb933bc@kernel.org>
+ <20260305-11-k3-usb2-phy-v4-2-15554fb933bc@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260305-11-k3-usb2-phy-v4-2-15554fb933bc@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+On 3/5/26 02:00, Yixun Lan wrote:
+> Add USB2 PHY support for SpacemiT K3 SoC.
+> 
+> Register layout of handling USB disconnect operation has been changed,
+> So introducing a platform data to distinguish the different SoCs.
+> 
+> Reviewed-by: Yao Zi <me@ziyao.cc>
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+>   drivers/phy/spacemit/phy-k1-usb2.c | 34 +++++++++++++++++++++++++++++-----
+>   1 file changed, 29 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/phy/spacemit/phy-k1-usb2.c b/drivers/phy/spacemit/phy-k1-usb2.c
+> index 9215d0b223b2..87b943d9111f 100644
+> --- a/drivers/phy/spacemit/phy-k1-usb2.c
+> +++ b/drivers/phy/spacemit/phy-k1-usb2.c
+> @@ -51,6 +51,9 @@
+>   #define PHY_K1_HS_HOST_DISC		0x40
+>   #define  PHY_K1_HS_HOST_DISC_CLR		BIT(0)
+>   
+> +#define PHY_K3_HS_HOST_DISC		0x20
+> +#define  PHY_K3_HS_HOST_DISC_CLR		BIT(8)
+> +
+>   #define PHY_PLL_DIV_CFG			0x98
+>   #define  PHY_FDIV_FRACT_8_15		GENMASK(7, 0)
+>   #define  PHY_FDIV_FRACT_16_19		GENMASK(11, 8)
+> @@ -145,7 +148,7 @@ static int spacemit_usb2phy_exit(struct phy *phy)
+>   	return 0;
+>   }
+>   
+> -static int spacemit_usb2phy_disconnect(struct phy *phy, int port)
+> +static int spacemit_k1_usb2phy_disconnect(struct phy *phy, int port)
+>   {
+>   	struct spacemit_usb2phy *sphy = phy_get_drvdata(phy);
+>   
+> @@ -155,10 +158,27 @@ static int spacemit_usb2phy_disconnect(struct phy *phy, int port)
+>   	return 0;
+>   }
+>   
+> -static const struct phy_ops spacemit_usb2phy_ops = {
+> +static int spacemit_k3_usb2phy_disconnect(struct phy *phy, int port)
+> +{
+> +	struct spacemit_usb2phy *sphy = phy_get_drvdata(phy);
+> +
+> +	regmap_update_bits(sphy->regmap_base, PHY_K3_HS_HOST_DISC,
+> +			   PHY_K3_HS_HOST_DISC_CLR, PHY_K3_HS_HOST_DISC_CLR);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct phy_ops spacemit_k1_usb2phy_ops = {
+>   	.init = spacemit_usb2phy_init,
+>   	.exit = spacemit_usb2phy_exit,
+> -	.disconnect = spacemit_usb2phy_disconnect,
+> +	.disconnect = spacemit_k1_usb2phy_disconnect,
+> +	.owner = THIS_MODULE,
+> +};
+> +
+> +static const struct phy_ops spacemit_k3_usb2phy_ops = {
+> +	.init = spacemit_usb2phy_init,
+> +	.exit = spacemit_usb2phy_exit,
+> +	.disconnect = spacemit_k3_usb2phy_disconnect,
+>   	.owner = THIS_MODULE,
+>   };
+>   
+> @@ -167,12 +187,15 @@ static int spacemit_usb2phy_probe(struct platform_device *pdev)
+>   	struct phy_provider *phy_provider;
+>   	struct device *dev = &pdev->dev;
+>   	struct spacemit_usb2phy *sphy;
+> +	const struct phy_ops *ops;
+>   	void __iomem *base;
+>   
+>   	sphy = devm_kzalloc(dev, sizeof(*sphy), GFP_KERNEL);
+>   	if (!sphy)
+>   		return -ENOMEM;
+>   
+> +	ops = device_get_match_data(dev);
+> +
+>   	sphy->clk = devm_clk_get_prepared(&pdev->dev, NULL);
+>   	if (IS_ERR(sphy->clk))
+>   		return dev_err_probe(dev, PTR_ERR(sphy->clk), "Failed to get clock\n");
+> @@ -185,7 +208,7 @@ static int spacemit_usb2phy_probe(struct platform_device *pdev)
+>   	if (IS_ERR(sphy->regmap_base))
+>   		return dev_err_probe(dev, PTR_ERR(sphy->regmap_base), "Failed to init regmap\n");
+>   
+> -	sphy->phy = devm_phy_create(dev, NULL, &spacemit_usb2phy_ops);
+> +	sphy->phy = devm_phy_create(dev, NULL, ops);
+>   	if (IS_ERR(sphy->phy))
+>   		return dev_err_probe(dev, PTR_ERR(sphy->phy), "Failed to create phy\n");
+>   
+> @@ -196,7 +219,8 @@ static int spacemit_usb2phy_probe(struct platform_device *pdev)
+>   }
+>   
+>   static const struct of_device_id spacemit_usb2phy_dt_match[] = {
+> -	{ .compatible = "spacemit,k1-usb2-phy", },
+> +	{ .compatible = "spacemit,k1-usb2-phy", .data = &spacemit_k1_usb2phy_ops },
+> +	{ .compatible = "spacemit,k3-usb2-phy", .data = &spacemit_k3_usb2phy_ops },
+>   	{ /* sentinel */ }
+>   };
+>   MODULE_DEVICE_TABLE(of, spacemit_usb2phy_dt_match);
+> 
 
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
----
- drivers/pinctrl/spacemit/pinctrl-k1.c | 33 ++++++++++-----------------
- 1 file changed, 12 insertions(+), 21 deletions(-)
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
-index 41d8a34bc386b..c90b6ccfce2ea 100644
---- a/drivers/pinctrl/spacemit/pinctrl-k1.c
-+++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
-@@ -114,11 +114,6 @@ struct spacemit_pinctrl_data {
- 	const struct spacemit_pinctrl_dconf	*dconf;
- };
- 
--struct spacemit_pin_mux_config {
--	const struct spacemit_pin	*pin;
--	u32				config;
--};
--
- /* map pin id to pinctrl register offset, refer MFPR definition */
- static unsigned int spacemit_k1_pin_to_offset(unsigned int pin)
- {
-@@ -474,7 +469,6 @@ static int spacemit_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	ngroups = 0;
- 	guard(mutex)(&pctrl->mutex);
- 	for_each_available_child_of_node_scoped(np, child) {
--		struct spacemit_pin_mux_config *pinmuxs;
- 		unsigned int config, *pins;
- 		int i, npins;
- 
-@@ -497,10 +491,6 @@ static int spacemit_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
- 		if (!pins)
- 			return -ENOMEM;
- 
--		pinmuxs = devm_kcalloc(dev, npins, sizeof(*pinmuxs), GFP_KERNEL);
--		if (!pinmuxs)
--			return -ENOMEM;
--
- 		for (i = 0; i < npins; i++) {
- 			ret = of_property_read_u32_index(child, "pinmux",
- 							 i, &config);
-@@ -509,11 +499,6 @@ static int spacemit_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
- 				return -EINVAL;
- 
- 			pins[i] = spacemit_dt_get_pin(config);
--			pinmuxs[i].config = config;
--			pinmuxs[i].pin = spacemit_get_pin(pctrl, pins[i]);
--
--			if (!pinmuxs[i].pin)
--				return dev_err_probe(dev, -ENODEV, "failed to get pin %d\n", pins[i]);
- 		}
- 
- 		map[nmaps].type = PIN_MAP_TYPE_MUX_GROUP;
-@@ -522,7 +507,7 @@ static int spacemit_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
- 		nmaps += 1;
- 
- 		ret = pinctrl_generic_add_group(pctldev, grpname,
--						pins, npins, pinmuxs);
-+						pins, npins, &config);
- 		if (ret < 0)
- 			return dev_err_probe(dev, ret, "failed to add group %s: %d\n", grpname, ret);
- 
-@@ -559,7 +544,7 @@ static const struct pinctrl_ops spacemit_pctrl_ops = {
- 	.get_group_name		= pinctrl_generic_get_group_name,
- 	.get_group_pins		= pinctrl_generic_get_group_pins,
- 	.pin_dbg_show		= spacemit_pctrl_dbg_show,
--	.dt_node_to_map		= spacemit_pctrl_dt_node_to_map,
-+	.dt_node_to_map		= pinctrl_generic_pinmux_dt_node_to_map,
- 	.dt_free_map		= pinctrl_utils_free_map,
- };
- 
-@@ -568,8 +553,8 @@ static int spacemit_pmx_set_mux(struct pinctrl_dev *pctldev,
- {
- 	struct spacemit_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
- 	const struct group_desc *group;
--	const struct spacemit_pin_mux_config *configs;
- 	unsigned int i, mux;
-+	unsigned int *configs;
- 	void __iomem *reg;
- 
- 	group = pinctrl_generic_get_group(pctldev, gsel);
-@@ -579,11 +564,17 @@ static int spacemit_pmx_set_mux(struct pinctrl_dev *pctldev,
- 	configs = group->data;
- 
- 	for (i = 0; i < group->grp.npins; i++) {
--		const struct spacemit_pin *spin = configs[i].pin;
--		u32 value = configs[i].config;
-+		const struct spacemit_pin *spin;
-+		u32 value = configs[i];
-+
-+		spin = spacemit_get_pin(pctrl, group->grp.pins[i]);
-+		if (!spin) {
-+			dev_err(pctrl->dev, "Invalid pin %u\n", group->grp.pins[i]);
-+			return -EINVAL;
-+		}
- 
- 		reg = spacemit_pin_to_reg(pctrl, spin->pin);
--		mux = spacemit_dt_get_pin_mux(value);
-+		mux = value;
- 
- 		guard(raw_spinlock_irqsave)(&pctrl->lock);
- 		value = readl_relaxed(reg) & ~PAD_MUX;
--- 
-2.53.0
-
+Thanks,
+Neil
