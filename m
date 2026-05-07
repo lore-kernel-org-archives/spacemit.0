@@ -1,123 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFD440DFB9;
-	Thu,  7 May 2026 02:45:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D19A33C1BE
+	for <spacemit@lists.linux.dev>; Thu,  7 May 2026 06:41:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778121927; cv=none; b=jL5GIhMDC+vTcWIi//WcHNsMPWS1j7pGHDqiviojoqB7vjlcvNye04UtNP6ROYfYxaugzG0cz0VddoBXpI6JhIbTmDYxPS8l+o+g39P84/DSGEaZgHD2mP31rD+HShcejioajdug2UC++9wnJdxcy+Nb4QRHl/ap8Jne5Ijtoo4=
+	t=1778136071; cv=none; b=HvQgP9SVIlXDtlhjTTBNgmhB0JrTVsRolPf8R9kRbPh2YbLQ3CH7POCl5Bh4JVDSF9HRXd4jLWoYxU74RerdcyY+7OKShnJGbn1P2E/0SMYfldEohRDc/Bal/yB3iocWrI9MogpOVdmdti2peU52PwCVrCcTtnuzXlYeMXb7pWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778121927; c=relaxed/simple;
-	bh=GVDgyNBjLVJtO0PjEWdPQZ+br1pnpWOGwCkKrGbMVKY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j0Aa9qvveFs0V9y3Wa/IEBCI9CnwXVAmKqIWe9kBMr4FhqVFgwF/K6pMfo6vi8jGMjbjUFWmqHonbBwlPW3Vd9mIkhL+NTaCFRMPA+ciuSB8StrZAPCVckszqnp6Ctz4MU2L4e8XsQ6I2y0sxm1BSEHm4HzqHqaqzYJnaKEFrbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qpj1qYcr; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qpj1qYcr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E609CC2BCB0;
-	Thu,  7 May 2026 02:45:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778121927;
-	bh=GVDgyNBjLVJtO0PjEWdPQZ+br1pnpWOGwCkKrGbMVKY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Qpj1qYcrB2K6aLv1IaeZuNOwPCUdI+3QGKr40V78B/F3Nl90L20lL3c3Aa6ViiCxm
-	 zpSZl9i4y5RsNk2dnVmrzlb0+2o2rQgyr58CEYhwizs5YUL15KfkQCEUyGVScjLrdy
-	 naDPsrm67kPdWXE0BrEvbefGTDoQaQdhD1tnMBHk4XRV4unHxDD3ALSbb7G+VT4wtd
-	 WkNwusG5+NN+trr0hYEH1g9URbJb1iGbc4E21AbRrBF4Eu2oUEXpKhPszLF8tT3ilz
-	 oUhcjLj9pzn9fP3aGM30K5QG8RwC7iLAtbYPKr8/hxv6BO6aaBSEnLofKASeIRpy+3
-	 TO36e5KAClafw==
-Date: Thu, 7 May 2026 02:45:24 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Anand Moon <linux.amoon@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
-	open list <linux-kernel@vger.kernel.org>,
-	Han Gao <gaohan@iscas.ac.cn>, Ze Huang <huang.ze@linux.dev>,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: Re: [PATCH v2 1/4] riscv: dts: spacemit: k1-bananapi-f3: Add
- vcc5v0_sys regulator for Banana Pi F3
-Message-ID: <20260507024524-GKA3579608@kernel.org>
-References: <20260502051906.8160-1-linux.amoon@gmail.com>
- <20260502051906.8160-2-linux.amoon@gmail.com>
+	s=arc-20240116; t=1778136071; c=relaxed/simple;
+	bh=T27QlmveSBFxRGPT1ePedOrPM/kGQ1CBhU2kFnK4fCw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=tU/5LrI2HUCD5vO2g2ICuEUX68HiwaG4rUk7yiUYNRYlEu1B5tmU8TERiLo/CF17zFXqZIMD9LAZ2Dz7a4GZztK/faUJ52bo9IadJR6Q61/EIo5T0nRUNAAcul33GpBqZxbVpEI1dQjX4tuXfunqc2G8PvT/KoZzxNXl86G4TEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.. (unknown [119.122.215.211])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 3d7029094;
+	Thu, 7 May 2026 14:40:55 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: linux.amoon@gmail.com
+Cc: alex@ghiti.fr,
+	amadeus@jmu.edu.cn,
+	aou@eecs.berkeley.edu,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	dlan@kernel.org,
+	gaohan@iscas.ac.cn,
+	huang.ze@linux.dev,
+	krzk+dt@kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	palmer@dabbelt.com,
+	pjw@kernel.org,
+	robh@kernel.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 2/4] riscv: dts: spacemit: k1-bananapi-f3: Update USB regulator on onboard usb and label
+Date: Thu,  7 May 2026 14:40:50 +0800
+Message-Id: <20260507064050.1881348-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260502051906.8160-3-linux.amoon@gmail.com>
+References: <20260502051906.8160-3-linux.amoon@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260502051906.8160-2-linux.amoon@gmail.com>
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9e012afe1e03a2kunm6dfa036b197e03
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCH0tDVkxJThodSk1OQkpITFYeHw
+	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkJVSklJVUlKTlVJSkpZV1kWGg8SFR0UWUFZT0tIVUpLSE
+	pOTE5VSktLVUpCS0tZBg++
 
-Hi Anand,
+Hi,
 
-On 10:48 Sat 02 May     , Anand Moon wrote:
-> Define the system 5V fixed regulator (vcc5v0_sys) supplied by the
-> DC input. As per the schematics, vcc5v0_sys is the input power source
-> for the VCC5V0_HUB and 5V_VBUS reglators. Update these regulators
-> to correctly reference vcc5v0_sys as their parent (vin-supply).
-> 
-> Cc: Han Gao <gaohan@iscas.ac.cn>
-> Cc: Ze Huang <huang.ze@linux.dev>
-> Cc: Chukun Pan <amadeus@jmu.edu.cn>
-> Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-> ---
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index 5790d927b93d..9727ecdd9f6b 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -50,6 +50,16 @@ reg_dc_in: regulator-dc-in-12v {
->  		regulator-always-on;
+> @@ -366,7 +366,7 @@ &usb_dwc3 {
+>  	hub_2_0: hub@1 {
+>  		compatible = "usb2109,2817";
+>  		reg = <0x1>;
+> -		vdd-supply = <&usb3_hub_5v>;
+> +		vdd-supply = <&reg_5v_vbus>;
+>  		peer-hub = <&hub_3_0>;
+>  		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
 >  	};
->  
-> +	reg_vcc5v0_sys: regulator-vcc5v0-sys {
-This will fall into the catogery of "non-controllable & serve no devices"
-see similar comment for 'reg_dc_in' which raised by Krzysztof
-
-https://lore.kernel.org/all/6530526f-59ca-4753-a068-46c62a1a1fed@kernel.org/
-
-or should I ask, what's the real problem if regulator has no vin-supply?
-Any probe failure or something bad happen? (besides /sys/../regulator_summay)
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vcc5v0_sys";
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +		regulator-boot-on;
-> +		regulator-always-on;
-> +		vin-supply = <&reg_dc_in>;
-> +	};
-> +
->  	reg_vcc_4v: regulator-vcc-4v {
->  		compatible = "regulator-fixed";
->  		regulator-name = "vcc_4v";
-> @@ -66,6 +76,7 @@ regulator-usb3-vbus-5v {
->  		regulator-min-microvolt = <5000000>;
->  		regulator-max-microvolt = <5000000>;
->  		regulator-always-on;
-> +		vin-supply = <&reg_vcc5v0_sys>;
->  		gpio = <&gpio K1_GPIO(97) GPIO_ACTIVE_HIGH>;
->  		enable-active-high;
+> @@ -374,7 +374,7 @@ hub_2_0: hub@1 {
+>  	hub_3_0: hub@2 {
+>  		compatible = "usb2109,817";
+>  		reg = <0x2>;
+> -		vdd-supply = <&usb3_hub_5v>;
+> +		vdd-supply = <&reg_5v_vbus>;
+>  		peer-hub = <&hub_2_0>;
+>  		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
 >  	};
-> @@ -75,6 +86,7 @@ usb3_hub_5v: regulator-usb3-hub-5v {
->  		regulator-name = "USB30_HUB";
->  		regulator-min-microvolt = <5000000>;
->  		regulator-max-microvolt = <5000000>;
-> +		vin-supply = <&reg_vcc5v0_sys>;
->  		gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
->  		enable-active-high;
->  	};
-> -- 
-> 2.50.1
-> 
 
--- 
-Yixun Lan (dlan)
+This is incorrect. The hub is powered by vcc5v0_hub. According
+to the schematic, 5v_vbus provides the VBUS for the USB3 ports.
