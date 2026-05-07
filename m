@@ -1,41 +1,41 @@
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F733B4E97
-	for <spacemit@lists.linux.dev>; Thu,  7 May 2026 10:32:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DE23E6DE6
+	for <spacemit@lists.linux.dev>; Thu,  7 May 2026 10:32:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778149963; cv=none; b=JKmzIsw9N1wfBack/BU5HcfpQklgOsI85WOl6ddhQQi2YQag7f0m94VrNTErsjhHTq5w9aJ+BnHnn9SCdHZoYgM+FDauiGbjHlT4M6LtmuwdoatasZnFABKeE43K+NilKkUO29IEq+/Dk2X2V2cSo0GBYsADuh3aqtTEP35IP8s=
+	t=1778149964; cv=none; b=uLWAo56WzTbFdNbvxtPanpnzqEF2pKFowQdNSbdONpWOiDoJ93ncTDGRi1wwTFywNeyfTLAmzWfVRdySXq//XTivYuJQriB1U/1FdFji20z5If7gohvdxyKNYepKJN/HidqNX1I4cZDY5pHlYsYXOt4LuzHaZvcYLW8bhbU3Z5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778149963; c=relaxed/simple;
-	bh=cv2adx8Rg4J05JSCVkpK9fVN6nGWQyV85tXuSPLQF8E=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cQCsRsDM5dBlp4pDv5IO5c+sUTxiTy4haXZyS0cxN8n4EyZLGrcg89c/i9enWZveYJuttlvhRu54zJ6Ra6jcthMKHShdR6Bqv5eZS696i+QfQwgim+dl6BwmxCyldshTxBJfGMJ89VtiyZoF/bNxklpkRFlT6vpkfdXEeX+bAdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=AcUtWF+i; arc=none smtp.client-ip=54.206.34.216
+	s=arc-20240116; t=1778149964; c=relaxed/simple;
+	bh=HevkQyYoy3kiO1VrBKioDTilzos+sth9T5xZNgNnIUQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Ch6hjakkA0X0lWoPcPs2Y28YvyBrYsVHnHoyX6PfzQmrU9zgDvbFKEy+6S0Tc6pdNkSRbXWv6FIZ+qCjCdL9G4Iv/U+0klBPz8751NEZP3C5swJh0HOFhkFDVVcL42LpaVMZDzsvfWZyz0QXRllL1T+X5sRc8aUIA+UmuYmcchc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=PNhSn0Ee; arc=none smtp.client-ip=18.132.163.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="AcUtWF+i"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="PNhSn0Ee"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1778149918;
-	bh=HMxdC70uHV4fxLbpX1dpPLUxU+NKK8HjnIfqpV3YcOc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:To;
-	b=AcUtWF+i+FF9qYF1tf8blbsGrkj8jlAjJ65GRPcN5PthT3f9Wstz0h0+HKL+NKqQw
-	 +emEpOi0r5PDhpNqIeIV5OzD+PvRf38K8qWE9FRclXa8vxGJ2HuCbUzTNtX/4yyJob
-	 8e/ZLqzYSCxMFX4XzVzjY9bZL38R9r//ZXzcmue8=
-X-QQ-mid: esmtpgz15t1778149911t24780b90
-X-QQ-Originating-IP: /AW6x9TJsEakn5lu2t+rQL4bqA3sOv9DptrdcSatRoc=
+	s=mxsw2412; t=1778149922;
+	bh=AA/l8RpNRgQWhJKMhQO6AtegRn3p6g7Rx5XU5wAB/G8=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=PNhSn0Ee31tJ3uJ/xa6TiwTCkPGpFg1kxVZBxGr6sKsRaOzX5h755muva1OxuKJBc
+	 qUaF6LLUldXE+PH8cip1ZVI3OCjvKiNv2xPYaKRLla9nh8H5LcdJ3PJ6aeytKJy8Vp
+	 uriFXz/aVuEkTduVipO9Y7DiTWyOTalZcEc0gMYc=
+X-QQ-mid: zesmtpgz1t1778149914t5eb95826
+X-QQ-Originating-IP: q0iU5z36pYpAszH2oFPO8xEGSgQLaSK2gKm4e5W7naI=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 07 May 2026 18:31:48 +0800 (CST)
+	id ; Thu, 07 May 2026 18:31:52 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13817591298618918627
+X-BIZMAIL-ID: 5667795704540246135
 EX-QQ-RecipientCnt: 11
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: [PATCH v2 0/3] ASoC: add shared BCLK rate constraint for cross-DAI
- coordination
-Date: Thu, 07 May 2026 18:31:41 +0800
-Message-Id: <20260507-i2s-same-blk-v2-0-ede05a22f732@linux.spacemit.com>
+Date: Thu, 07 May 2026 18:31:42 +0800
+Subject: [PATCH v2 1/3] ASoC: soc-dai: add shared BCLK clock for cross-DAI
+ rate constraints
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,11 +44,9 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1WNyw6CMBBFf4XM2pK2PCKu/A/Doq2DjAIlHSAYw
- r8L6MblSc49dwHGQMhwiRYIOBGT7zbQpwhcbboHCrpvDFrqXKa6EKRZsGlR2OYlKlRSW3V2mXG
- wTfqAFc1H7lZ+mUf7RDfsjd2oiQcf3sffpHbvl07kf3pSQorEqEqmaHOVFdeGunGOuTcOWxpi5
- 1so13X9ACrlLhvDAAAA
-X-Change-ID: 20260429-i2s-same-blk-fe102b18c5ac
+Message-Id: <20260507-i2s-same-blk-v2-1-ede05a22f732@linux.spacemit.com>
+References: <20260507-i2s-same-blk-v2-0-ede05a22f732@linux.spacemit.com>
+In-Reply-To: <20260507-i2s-same-blk-v2-0-ede05a22f732@linux.spacemit.com>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
  Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
  Yixun Lan <dlan@kernel.org>
@@ -56,111 +54,122 @@ Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
  jinmei.wei@spacemit.com, Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778149908; l=3376;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778149908; l=3103;
  i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=cv2adx8Rg4J05JSCVkpK9fVN6nGWQyV85tXuSPLQF8E=;
- b=X8U79HASwCdRUHtoMWNb4xq8p656tExUqi0Pnf7GFG2DlzeD0LTY9/rb157pj0FNd3Le+1138
- TBchimRgOFNBMhDIpRZ8WpiZ/IlWe9j7L9GI3UFTtUnlC8z/7tTjBn3
+ bh=HevkQyYoy3kiO1VrBKioDTilzos+sth9T5xZNgNnIUQ=;
+ b=1wBfk5r93og4rl4TtfoXHWvQGYLKZnrhFvSIKzGC1ey5HGqMKcv7LK7VfR0vrHYQZCaGTkoyK
+ Wbc0o53lQPQDdzDPTZEDHUk3FMXDaSVGgmHrvxWQmT9XMc4oMxyeXgU
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
  pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OJyXPBiBBuXg7/d/ortqhEWUh5s65aIrgjbi7XjyrE6hyaSLjv+XfBVn
-	gzB9+SKFfPPUu91dqYYEXElFP82n3++HADRQdzXksaDBQdkbKEYdE3T/57N1GnXlLQIrFkp
-	y0MLNNzFspdIaSGA3hK7r8QuUkPUUHKImjIwyepdDUZ8tUJ1cpwpgtKM4ve7pvxx67Kf2Sd
-	sVPQwgaibPGUwnA/W0KjvXnEQ832PvHZsOCq7y1D0QIKUp6IXSSJ1FgATaZeUOGB+SYHM8Y
-	AYf5aYm8jej5fNZDuv0By/R2Y+pZHRGDOmUpJwXi8V6yfUF++cS7UOeKd6QT/yWu+NB0fs6
-	0j0mIdnfy0I4bqrBuq39Ipk/Pp6m3+Ws9SgsuhNDqHUOfgyp6C5CSywMyToUHNOSYYwq9TU
-	G7cdq+CEkl4NC9ufnwGGcaBorR1pW4joFYXn9/uh55RLMPyO75oJGctlgjboq9KDraepFla
-	oJ+tqkWXgaCPhlUKEG0Jufc/92D0JSPjIAn44Mytxrna2QDVLxPrdTu0yZ7ZnXiIhUyCSO9
-	Ge0EM+0KqWGIepH91Cg5Wmux3EOeCSxB01wmHsvMaDoWhL6voyHohVVKDSxJPvYngB/p884
-	w5vkoNq6Koxh/mgR/fWCURNcMW8PrXeDFkYYl1ttgVRESbKqvTPGu08TFNgvnmD7imoQx3l
-	Zx+wKiq+EQvORTnNn8qdt/FnjiYC8v+6StONwJkpoHwBQ+qaIp70dId13wKQUF7XAnwSuB2
-	vJZMo6RdTNzCP5xbCM+uu9baF5dkPscCHRFMMgr9QkOzrRh0X3rPXUsxB/wn14UH1aTEYDt
-	05K6sWtMgx/MRC08yZyiHYu6z2RT9oJc4Tag8elGTdSKli7qGihjuonEUHduWLBuAAU8k4h
-	esvLUFI5Yq4A05PFBJriR9BWKkGQ6kV+jwfwq2FA34K28sfJqvsrXXSls2sYrFqiuVIja/B
-	kqL1oHoq4n09/fYGM6YZ97y0cUO05fNOCHsRLu2/PQeVgffQHqX6pCK92y4U7JcLhw+LKQ5
-	UAXDg3zvIaq6EjVQSBc52dBov4odX2MoU0V/QYd6sZGeP+1FKZ5CJcbk0UFt6JvXxxw8Y7R
-	i3YxWoWicU4+YftDrtS1DPaeRgBLfdIxeIwEB4BFRv6CGBajmbrYbgIgMtTAm+zbHbq1iXI
-	qSlNEuj/+X2MVw5T3ZIZr36OJA==
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: N8edJDk+W1P1jwgUkHjUR7MXieo7dbpv+jDa6x/5xwbZRxnYW8c+lYNb
+	A3Wx8VDtlm/v2J3fX3BXY3NLMJ5DybEIAaWO+66Lobw26SaczMqXBS5y00MKxzas9/34+qb
+	D0V9jJJj5vfiiQr0G/r/c3Aj/mjzoD1KkcUxR2+x7nZFr5q1iixaWyOr1JufH8xoegTixh1
+	XwyXEvav1u3tL/x74ooP5poxpvROkO9akfYGg89vno8MUz6aRavqaPbJ/FLTGTE8eSEFvO8
+	XcHrCx1BSC6nnmIVSiXLoeLcv8AV9KO001qjRR7a2GGiGyQx3u2Zw68BWedMovmva6FFQqr
+	YzielhbjmmRIlx44rKWWtR/eelVKXrCNlb6SlXZyLUFBagTSonvFc5570czfzv1JWsYDVOD
+	OYyeHiBGqFo1avhXCyWfUSo/H3o0SntHzW4zC7ElgZ9xwdKoZuESuhSuT6ZrD4C/mq+504n
+	4eoLIDKubW8dEAOa7PzixULGP+vkXEfUDXdm+QGaztx9FKIV+oG53ZC8gYCRzeFVpfEn7iB
+	fsPvOJ2cPYGVUzEWVuZTZy4G0bZiXB0EoeLGEbH5zKC0U3n7OqKtueCORb2YebV2joHc0kj
+	R/QJ1xRRy+G5R6YJEqMasrB+UvPSFIDfLJd+T9YjlOQYtlxSkVPAaQFnTrDbUoa6KHnMoGl
+	oVNAwfNVfAT2rBsbmvmfcXnsgaGeB/uvtY6czzrRDQtvZelNSHjEUisNgEI/wQA3Hx5xMnq
+	BEgDBPOsZyPDtPo3mdf/EDIeteFOeyWCN6iRfrVN1S4O6BQX+86I1tcntn+1L1UUJGFT72e
+	4P+gWWNySM9lKh9oQ6Jp3sDIr0Li1p8uKmJweNt5sZALJpEd6q3aWxyv1QxkjiN22OXf/p7
+	XCe5vJf6sF2PkFN/FxWHLojalAlEisjKlLx2FJBeElHvCsyOsrYj08NRcJpxLhQEEOM0FqI
+	7yqZYyLqepnfJTMEAESHphV0Gk0zlaPqOjELAN/RG8UtJpAPUcf5PccMl3Qu+1uWeqbISt7
+	P3ZBle8K8EguA3pJg0KcSWFtG1HYOYwqhNnaQ57mWBF8qcGo6tVbzDNIE/DSTBtsVeLfKjG
+	UeAC4Be6GkB09+sanx5R+919zWXTOzgpfpaMkD6bZ87Uj9SHdPgSWCpF5Iwtmmk4FoRpLQJ
+	CN7C
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 X-QQ-RECHKSPAM: 0
 
-On some SoCs (e.g. SpacemiT K3), multiple I2S controllers share the
-same physical BCLK. When one controller is already streaming, the
-others must use hw_params that result in the same BCLK rate, otherwise
-the shared clock would be reconfigured and corrupt the active stream.
+Add a bclk field to struct snd_soc_dai and a helper function
+snd_soc_dai_set_bclk_clk() that platform drivers can use to declare
+which clock is their BCLK.
 
-This series adds framework-level support for this constraint:
+Also cache the bclk_ratio in snd_soc_dai_set_bclk_ratio() so that
+the framework can use it later in hw_rule evaluation for TDM
+configurations where BCLK = rate * slots * slot_width.
 
-Patch 1 adds the dt-bindings for the spacemit,k3-i2s compatible.
-The K3 SoC uses the same I2S IP as K1 but requires additional clocks:
-a dedicated sysclk_div, along with c_sysclk and c_bclk which are
-shared across multiple I2S controllers.
-
-Patch 2 adds the constraint logic in soc-pcm.c. During PCM open,
-every DAI that has a bclk clock pointer gets a hw_rule registered
-unconditionally. The rule callback runs at hw_refine time: it scans
-the card for an active peer sharing the same physical BCLK (via
-clk_is_match()) that has already completed hw_params, then constrains
-the current stream's rate to match the established BCLK rate. The
-first DAI to complete hw_params is unconstrained; subsequent DAIs
-must match. Two modes are supported:
-
-  - Default (I2S): BCLK = rate * channels * sample_bits. The rule
-    derives the valid rate range from the current channel and
-    sample_bits intervals.
-
-  - Explicit ratio (TDM): if the driver sets dai->bclk_ratio
-    (e.g. slots * slot_width), the rule computes the single valid
-    rate as active_bclk_rate / bclk_ratio.
-
-Patch 3 wires up the SpacemiT K1/K3 I2S driver: a single call to
-snd_soc_dai_set_bclk_clk(dai, i2s->c_bclk) in the DAI probe. On SoCs
-where the BCLK is not shared (c_bclk is NULL from
-devm_clk_get_optional_enabled), the rule is a no-op. On K3, multiple
-I2S instances share the same c_bclk, and the framework automatically
-constrains their rates.
-
-This series was prompted by review feedback on the SpacemiT K3 I2S
-series, where a vendor-specific fixed-sample-rate property was rejected
-in favor of a generic framework solution:
-https://lore.kernel.org/all/afFqgF6ZRwYdfUmL@sirena.co.uk/
+When multiple DAIs on the same card share the same physical BCLK
+(detected via clk_is_match()), the ASoC core can automatically
+constrain their hw_params so that the resulting BCLK rates are
+compatible. This commit adds the data structure support; the actual
+constraint logic follows in the next patch.
 
 Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
-Changes in v2:
-- Only store bclk_ratio when set_bclk_ratio op succeeds, avoiding stale
-  ratio on real errors
-- Hold card->mutex during rtd list traversal in hw_rule callback
-- Link to v1: https://patch.msgid.link/20260430-i2s-same-blk-v1-0-3a1f04eb6159@linux.spacemit.com
+ include/sound/soc-dai.h |  7 +++++++
+ sound/soc/soc-dai.c     | 18 ++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-To: Liam Girdwood <lgirdwood@gmail.com>
-To: Mark Brown <broonie@kernel.org>
-To: Jaroslav Kysela <perex@perex.cz>
-To: Takashi Iwai <tiwai@suse.com>
-To: Yixun Lan <dlan@kernel.org>
-Cc: linux-sound@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-riscv@lists.infradead.org
-Cc: spacemit@lists.linux.dev
+diff --git a/include/sound/soc-dai.h b/include/sound/soc-dai.h
+index 6a42812bba8c..df010a91b350 100644
+--- a/include/sound/soc-dai.h
++++ b/include/sound/soc-dai.h
+@@ -17,6 +17,7 @@
+ struct snd_pcm_substream;
+ struct snd_soc_dapm_widget;
+ struct snd_compr_stream;
++struct clk;
+ 
+ /*
+  * DAI hardware audio formats.
+@@ -188,6 +189,8 @@ int snd_soc_dai_set_pll(struct snd_soc_dai *dai,
+ 
+ int snd_soc_dai_set_bclk_ratio(struct snd_soc_dai *dai, unsigned int ratio);
+ 
++void snd_soc_dai_set_bclk_clk(struct snd_soc_dai *dai, struct clk *bclk);
++
+ /* Digital Audio interface formatting */
+ int snd_soc_dai_get_fmt_max_priority(const struct snd_soc_pcm_runtime *rtd);
+ u64 snd_soc_dai_get_fmt(const struct snd_soc_dai *dai, int priority);
+@@ -473,6 +476,10 @@ struct snd_soc_dai {
+ 	unsigned int symmetric_channels;
+ 	unsigned int symmetric_sample_bits;
+ 
++	/* shared BCLK clock for cross-DAI rate constraints */
++	struct clk *bclk;
++	unsigned int bclk_ratio; /* BCLK = rate * bclk_ratio (0 = use channels * sample_bits) */
++
+ 	/* parent platform/codec */
+ 	struct snd_soc_component *component;
+ 
+diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
+index 2f370fda1266..1719ddcefa4b 100644
+--- a/sound/soc/soc-dai.c
++++ b/sound/soc/soc-dai.c
+@@ -116,10 +116,28 @@ int snd_soc_dai_set_bclk_ratio(struct snd_soc_dai *dai, unsigned int ratio)
+ 	    dai->driver->ops->set_bclk_ratio)
+ 		ret = dai->driver->ops->set_bclk_ratio(dai, ratio);
+ 
++	if (!ret)
++		dai->bclk_ratio = ratio;
++
+ 	return soc_dai_ret(dai, ret);
+ }
+ EXPORT_SYMBOL_GPL(snd_soc_dai_set_bclk_ratio);
+ 
++/**
++ * snd_soc_dai_set_bclk_clk - set the BCLK clock for shared clock detection
++ * @dai: DAI
++ * @bclk: BCLK clock pointer (or NULL to clear)
++ *
++ * When multiple DAIs share the same physical BCLK (detected via
++ * clk_is_match()), the ASoC core will automatically constrain their
++ * hw_params so that the resulting BCLK rates are compatible.
++ */
++void snd_soc_dai_set_bclk_clk(struct snd_soc_dai *dai, struct clk *bclk)
++{
++	dai->bclk = bclk;
++}
++EXPORT_SYMBOL_GPL(snd_soc_dai_set_bclk_clk);
++
+ int snd_soc_dai_get_fmt_max_priority(const struct snd_soc_pcm_runtime *rtd)
+ {
+ 	struct snd_soc_dai *dai;
 
----
-Troy Mitchell (3):
-      ASoC: soc-dai: add shared BCLK clock for cross-DAI rate constraints
-      ASoC: soc-pcm: constrain hw_params when DAIs share the same BCLK
-      ASoC: spacemit: declare shared BCLK for cross-DAI rate constraint
-
- include/sound/soc-dai.h     |   7 +++
- sound/soc/soc-dai.c         |  18 +++++++
- sound/soc/soc-pcm.c         | 119 ++++++++++++++++++++++++++++++++++++++++++++
- sound/soc/spacemit/k1_i2s.c |   2 +
- 4 files changed, 146 insertions(+)
----
-base-commit: db490fe819ac280fe608b23d98c54a5467ef2948
-change-id: 20260429-i2s-same-blk-fe102b18c5ac
-
-Best regards,
---  
-Troy Mitchell <troy.mitchell@linux.spacemit.com>
+-- 
+2.54.0
 
