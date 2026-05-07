@@ -1,22 +1,22 @@
 Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D19A33C1BE
-	for <spacemit@lists.linux.dev>; Thu,  7 May 2026 06:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D5D34104B
+	for <spacemit@lists.linux.dev>; Thu,  7 May 2026 06:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778136071; cv=none; b=HvQgP9SVIlXDtlhjTTBNgmhB0JrTVsRolPf8R9kRbPh2YbLQ3CH7POCl5Bh4JVDSF9HRXd4jLWoYxU74RerdcyY+7OKShnJGbn1P2E/0SMYfldEohRDc/Bal/yB3iocWrI9MogpOVdmdti2peU52PwCVrCcTtnuzXlYeMXb7pWQ=
+	t=1778136927; cv=none; b=aFWd7NlzJM8Rprxu0LgLUV+UH9WTfk4S/KVD+7/f3QPKkue4JRrfT2Csc8a6eF+v/1Vw7DCtyaLpeVCpbp5NZ7EHQwJmGceHxGdkyCKyZswa1pOtiHcEh1ZVas31wycRVjLseEL+7WICMYlUQ9ZS6lahDvDTtq6gFBF78f46XIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778136071; c=relaxed/simple;
-	bh=T27QlmveSBFxRGPT1ePedOrPM/kGQ1CBhU2kFnK4fCw=;
+	s=arc-20240116; t=1778136927; c=relaxed/simple;
+	bh=xRQzefjZDSutd5Xd5WSrMKEfveXiEhWRhN5BByEGscQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tU/5LrI2HUCD5vO2g2ICuEUX68HiwaG4rUk7yiUYNRYlEu1B5tmU8TERiLo/CF17zFXqZIMD9LAZ2Dz7a4GZztK/faUJ52bo9IadJR6Q61/EIo5T0nRUNAAcul33GpBqZxbVpEI1dQjX4tuXfunqc2G8PvT/KoZzxNXl86G4TEw=
+	 MIME-Version; b=UNDDTXe8R3qdN5ZpLV32MAfgO4SmK6nUTuMbmGL6SiI59+C4+4MfUJ3BLjF5VUgEeO041xU82CipnHqb2nHEgVOii0A3CRAwua2X3tHbVb0Tv92MVe/iXhdajJAUkb/vJw32S85wCu46GqKZCfoCd69Ew2wLUN0wym4HjNISmsQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
 Received: from Vostro-3710.. (unknown [119.122.215.211])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 3d7029094;
-	Thu, 7 May 2026 14:40:55 +0800 (GMT+08:00)
+	by smtp.qiye.163.com (Hmail) with ESMTP id 3d7029228;
+	Thu, 7 May 2026 14:50:10 +0800 (GMT+08:00)
 From: Chukun Pan <amadeus@jmu.edu.cn>
 To: linux.amoon@gmail.com
 Cc: alex@ghiti.fr,
@@ -34,12 +34,12 @@ Cc: alex@ghiti.fr,
 	pjw@kernel.org,
 	robh@kernel.org,
 	spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 2/4] riscv: dts: spacemit: k1-bananapi-f3: Update USB regulator on onboard usb and label
-Date: Thu,  7 May 2026 14:40:50 +0800
-Message-Id: <20260507064050.1881348-1-amadeus@jmu.edu.cn>
+Subject: Re: [PATCH v2 3/4] riscv: dts: spacemit: k1-bananapi-f3: Correct USB hub power hierarchy
+Date: Thu,  7 May 2026 14:50:02 +0800
+Message-Id: <20260507065002.1883127-1-amadeus@jmu.edu.cn>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260502051906.8160-3-linux.amoon@gmail.com>
-References: <20260502051906.8160-3-linux.amoon@gmail.com>
+In-Reply-To: <20260502051906.8160-4-linux.amoon@gmail.com>
+References: <20260502051906.8160-4-linux.amoon@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -47,33 +47,36 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9e012afe1e03a2kunm6dfa036b197e03
+X-HM-Tid: 0a9e0133775103a2kunmfaa00f951983c8
 X-HM-MType: 10
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCH0tDVkxJThodSk1OQkpITFYeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkJVSklJVUlKTlVJSkpZV1kWGg8SFR0UWUFZT0tIVUpLSE
-	pOTE5VSktLVUpCS0tZBg++
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDGB5MVhpOSE9PHUlLSE0fT1YeHw
+	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkJVSklJVUlKTlVJSkpZV1kWGg8SFR0UWUFZT0tIVUpLSU
+	9PT0tVSktLVUtZBg++
 
 Hi,
 
-> @@ -366,7 +366,7 @@ &usb_dwc3 {
->  	hub_2_0: hub@1 {
->  		compatible = "usb2109,2817";
->  		reg = <0x1>;
-> -		vdd-supply = <&usb3_hub_5v>;
-> +		vdd-supply = <&reg_5v_vbus>;
->  		peer-hub = <&hub_3_0>;
->  		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
->  	};
-> @@ -374,7 +374,7 @@ hub_2_0: hub@1 {
->  	hub_3_0: hub@2 {
->  		compatible = "usb2109,817";
->  		reg = <0x2>;
-> -		vdd-supply = <&usb3_hub_5v>;
-> +		vdd-supply = <&reg_5v_vbus>;
->  		peer-hub = <&hub_2_0>;
->  		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
->  	};
+>  	usb3_hub_5v: regulator-usb3-hub-5v {
+>  		compatible = "regulator-fixed";
+> -		regulator-name = "USB30_HUB";
+> +		regulator-name = "VCC5V0_HUB";
 
-This is incorrect. The hub is powered by vcc5v0_hub. According
-to the schematic, 5v_vbus provides the VBUS for the USB3 ports.
+Suggested changes:
+	vcc5v0_hub: regulator-vcc5v0-hub {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc5v0_hub";
+
+>  		regulator-min-microvolt = <5000000>;
+>  		regulator-max-microvolt = <5000000>;
+> +		regulator-always-on;
+
+Why always on?
+
+> @@ -361,6 +362,7 @@ &usb_dwc3 {
+>  	dr_mode = "host";
+>  	#address-cells = <1>;
+>  	#size-cells = <0>;
+> +	vbus-supply = <&usb3_hub_5v>;
+>  	status = "okay";
+
+This is incorrect. See the previous reply.
