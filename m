@@ -1,306 +1,264 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406FD3C73D7
-	for <spacemit@lists.linux.dev>; Thu,  7 May 2026 09:57:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778147880; cv=pass; b=UgMaCpAi+DsG+bNLg6lB0YTt/m3O/Fvij2pcNt6QFkaDz4YSwcr9WbcpzTvQ+5CJtRSkvzGr+HX5BG1DB5vU20qzKid3uonO1+MhffXaVEK7WVCdSnzBjs1s3yU87DbV9xsRR2eDCxRY8nrdGRwNGyj+VKbk5aNOF1Fvy7VJtQ4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778147880; c=relaxed/simple;
-	bh=lG/WFeH87vqtjnptzvJW446/nEgEoeKoQkm/5Djazz8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hZwZsTb+FuVntsYY2RUfzTmjN+w4dE4IqpgwE6dyNs1RGkoxCCxRzjdCIERKKvBLIDQR7oZVybCP9z3AeHSRraQYYRDLetYfr3gdve2/2iOXQLujf45prxkOtah+7PAb4Rg+/1nSE8VUyStweLOZt0qGd3Rn0CgVwkI1N8wwweo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qGRJaiN6; arc=pass smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410333E92A5
+	for <spacemit@lists.linux.dev>; Thu,  7 May 2026 10:32:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778149960; cv=none; b=Hz6azGc3U9F45Le2UaG/iNv6RHO6B5IoLoYe++WeFpXxXtLIfS0i9KGwguanYQ+6Xdis1FXDkVPwfTJM9GH3U+6rJJyRT52HrGw1NyOAp13LBFK5PamTpcDTyWmQSzuKcJ+KOk4vfrkxRixEgC/SwF39YChVyKchXAgGMw4Oubs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778149960; c=relaxed/simple;
+	bh=dHcuwQewOQ91+lcIOJFibASbfSOLIkUa8mNyTgSGWBs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=t/qoQwCcYGQk1B5nsPJhkihumaCdfT+R76lWaWsmj81Fq/rOej+8WDqtLc0b+4snHiZBkrkZuMgm2eu6oB1/7rltK8DhIvpaVzPdBoYv0Rl9DpHBvtQofwSyjXdCZUnHj67sXAGI7ck7ekRfBzqV8mGfaWZbLFTfUmW0u95s0+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=lUUZ9cT+; arc=none smtp.client-ip=54.92.39.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qGRJaiN6"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7bf02533706so5896627b3.0
-        for <spacemit@lists.linux.dev>; Thu, 07 May 2026 02:57:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778147878; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JtUArq0Y1PqZxPSEJA7/ZVOk+lxLiZwGC7jSjcP04lqOfqI+AxzayqbTILRlPkabMH
-         VkgseRxXsvBRDQ0MX/pbyMFjASMDQduJ1cNsWh0pOlWiqI4EoU9CCmo7AjXRHSq9kgV4
-         L8uqeHzZf50G4LAA0BqBmMJFRVX60RCglGK098W1dKOVgHfxUUv+kja0WlLS0ZXQQ/65
-         i8DKNkfXiPoQfzYBlbij40IRPRyjOnKCFWjbNGrZRQ2UwhnM/UzEtwpVE4+hwgRdhjuU
-         +mutgJ/+KBAVb6nvtdpEexcV66tSNUXtlVJA/tWXF2yVEJjZnIIcHNor98Y6R0UGvi5D
-         1WpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=teeg7B/cv6Maulsok9TtnxjcrBZjPFk85S/kl2WpsR8=;
-        fh=al63v4jNTE5YKTdsaD03cvcUg4gkN2tEU/XT3sTyT/o=;
-        b=QcWWEj8Uo05fSXD37tDDnQC9DFK2nkypvxyhu2KMPGGBgshkU8mx+vZqbtchrViJyS
-         Qm4CmZq38r1vGoZ+O7j/0uNqFGWG12M5JKjQ2M5RDH7sHJGkSsTWcI5ZSOCHgN/5UA43
-         GDeg9PDhbQZWWEbgpkh+DPc/8sOyAtKYl3ng5jE7AspxlURYRSCo3fjBAV8TLN190cEt
-         P0t8iYVrWPYgwNi5SsPm9pnaATeY+74q3/7ak+BegkSuPwD/t3TvkG9oF2VRPxT0j3r1
-         lcclwX0yC+5Cmkgqr4+jnPizOwGa3PW60XX2dfK+TcE2G3LxK69CIOmcI2N1FIwo0muU
-         7atg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778147878; x=1778752678; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=teeg7B/cv6Maulsok9TtnxjcrBZjPFk85S/kl2WpsR8=;
-        b=qGRJaiN6qxLjJWSsp/LsWrS2bDVGpta5R+i8JIPApNk3HXqTLpu7JP1ebd6TZA/Xqg
-         pl5Q+EinuJGsQoVKVPI37bM21YZ/VFuGm9LDEDxKtSnELD3uksSq9kxErQnGX/3ryMPo
-         aYVgxmdWBoDp6srTDVUftDyYg1+LUD7Nzbf/IY+ihzmYuGYt+7Wc1mV/hSGmdvv7/4wL
-         RmXjuAMEMFLglZjUL3zl6jgTs/OLMT0MGu1TbkpZP0Sws2v1sLlPNAkt2vC0wk0T4LHm
-         yYOWVsxNTYYCjx5h8pv4LhP/06fGedk1oIMHPM8DRRhEa+O8it85qOVR5GMn7G4wkXAA
-         UTOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778147878; x=1778752678;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=teeg7B/cv6Maulsok9TtnxjcrBZjPFk85S/kl2WpsR8=;
-        b=OxZGyyGGEdpuPsNLQt6xGBnNmWiXr1s6K04FECQ3UoXAhkBY8vfomsGhBhP1s6zo1Q
-         UDF3wrLcDi8rD9ne2cTTN/0KMFmXTOFXnGm4zbsc0NS6r4hxCazraZgY2aBmw0BmD4yt
-         8cR0ESRUBrP8snlRuSPLS+QjA3Re1e0a2QYZSN9hCxJTMHurHhcjgogLRqOIMM21XS1c
-         1ydzNuQrHbfbWguThFnaHa2SUONAEpsdl+w/hQp/tqQJbp8eGoHqdqEz4U15mIGTVWES
-         +/+gaqlDYZszvuFzZ63yCmNV/wNVjltVFqqjhAq+G3kQ9JCUlWJbVSDLm2FTwDV7M/q6
-         r1CA==
-X-Forwarded-Encrypted: i=1; AFNElJ+5+dnvOykM1ZOq9GioOasIutnKIHNhuv0DubgcG4t4Fz5VfKrU0ixd/+B9dy9A8ew1yt3WzzF/1A==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz6AxdGeYE9zfHgDyIqXV7sqQyF6EHRqTpEXv18EpVO01jlloUc
-	8bRP/rWCINsX+KYkyZwHR+MHskvDL00JVZxuILMAlry2jQ1aHuLw62Uk2SsGcRpEo9IahOH/3Rt
-	9mqBFeblIFdIquL+oJm+uXdjTLFIfS70=
-X-Gm-Gg: AeBDietv86mmu2O6ll8jdJIITW3/oR/gMaI3OG6UghVR0u17XJ5PZ296F9xF6L97+B+
-	VEU+RO1Rcf5y9/dOfeHZeAUNCRJuic1zxdpa1f9FqhO1zHS/hnoJVsrq+bCM4ook3e4C+mBi8gP
-	9R7Sdc5/SG9Sqmvmg0PJ0gvjQaDW+DfNsOACcGBfj5hEbwZ1FeLf54pNfDmbHbf1uDo0xPPHP64
-	h2zP9Hqi8fICpKA6cBUdTC97gsLcGgj/3rrFZ+zXnsNF5A2Kwr6wq3rjkSQuVjoieV/t+qwZ7Wz
-	sEQSEC8O9A+O4IYY+Go=
-X-Received: by 2002:a05:690c:c509:b0:7a0:4a34:16d6 with SMTP id
- 00721157ae682-7bdf5f205a6mr74538287b3.44.1778147878025; Thu, 07 May 2026
- 02:57:58 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="lUUZ9cT+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1778149926;
+	bh=MzLAGIAWkK+XCchAd4hGeXE2CHkEuJGkm4cHQuRIBJ0=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=lUUZ9cT+GygDgLz6wdHzaE3Y3IQwIJzkI7slPaanjOcSMLA5E2SCUTFIzMVobD3sR
+	 4yKrfwShNYDbS9u457NmEqCT9cX3T5Emcktsruh9y9vZnrOMyMsa7JS6D3Raulc2vE
+	 uSiR3W72yq0Jpxy+WfnQBEgYlAxNXmfKADzR3YO4=
+X-QQ-mid: esmtpgz16t1778149918tf7e27786
+X-QQ-Originating-IP: mHa7ppekGTzd1+13tMcGS5yqyWnnUNMpj+ng21mAHZk=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 07 May 2026 18:31:56 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 15051299853537787261
+EX-QQ-RecipientCnt: 11
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Thu, 07 May 2026 18:31:43 +0800
+Subject: [PATCH v2 2/3] ASoC: soc-pcm: constrain hw_params when DAIs share
+ the same BCLK
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260413-orangepi-sd-card-uhs-v8-0-c21c40ec16d0@gmail.com> <CANAwSgRNrs4C4B2o5KBpr29QWowTzpqVcQktAbFigiagxaFZAA@mail.gmail.com>
-In-Reply-To: <CANAwSgRNrs4C4B2o5KBpr29QWowTzpqVcQktAbFigiagxaFZAA@mail.gmail.com>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Thu, 7 May 2026 11:57:47 +0200
-X-Gm-Features: AVHnY4IwLcYKNF0aQ66jlkAuqkfaQcbCBgeiWc7FTgCbiHIV5r1xsERI_gMwI6s
-Message-ID: <CABdCQ=N5VHPeGvKYrYeAGCsCP5-wQ_50FsuW+hRY=9JK5WjQqQ@mail.gmail.com>
-Subject: Re: [PATCH v8 0/9] riscv: spacemit: enable SD card support with UHS
- modes for OrangePi RV2
-To: Anand Moon <linux.amoon@gmail.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, Troy Mitchell <troy.mitchell@linux.dev>, 
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, Trevor Gamblin <tgamblin@baylibre.com>, 
-	Vincent Legoll <legoll@online.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260507-i2s-same-blk-v2-2-ede05a22f732@linux.spacemit.com>
+References: <20260507-i2s-same-blk-v2-0-ede05a22f732@linux.spacemit.com>
+In-Reply-To: <20260507-i2s-same-blk-v2-0-ede05a22f732@linux.spacemit.com>
+To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Yixun Lan <dlan@kernel.org>
+Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ jinmei.wei@spacemit.com, Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778149908; l=5785;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=dHcuwQewOQ91+lcIOJFibASbfSOLIkUa8mNyTgSGWBs=;
+ b=NbtniqEW25n4xUv0iVA/ktb5BAl2nFn4hzHuUE0SFUHJHAcndBmILS4Oonh6PP9u3dYgZGyUA
+ pm4l88XWS+KDFpmXtGlKehkpEsI2/oEDh61kfA8VU0l40jZOViVemRV
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MzOrCbSXFQdfTT7uEET/FBlgp5PRiXI+H3t4NRuIB6slvEH2swrf9GUa
+	oYvFHPbeZFcbwjqgh+ks8vF0wSeKoW7HwcAhjECyJdJbGMGtVPyY81WYhZkEl0cl6yCSRel
+	E7Rr/UY7+s/4etipwIA2iOjoVTnQfx9VwETNR1WvFJqDy/98MvZ90KpX9bcxfaqqL8I5aCC
+	juQ26FYBD6cCJwNjz0y3Pv4eytDeWH9SlQNigQLtiVqPEqV5J0WP6RRMnYiQPjyXnJmZ0t7
+	lsdoCauCiM6qphlzHNPk8RQR2Cmu7wFBV2i9ky9V0/e2tJOJvrjXEsJdebFhntwEVB4bEk2
+	mL2lbpnxArRWMcU9s2YTnRe/7ifxgGrK6TQsnMBnppRnznQVg3dLksPlsMcHhIJn1tGjBrj
+	PxpzZ1TstlfcZTL8yBEox5iPGTHdUVCNBpDxFahikOJwUQSdpE4t2DXnxWb/P8U/Wk8h0VF
+	P/hK67Wea3ru0E3j2UunmXwU1GU+Pas3L3zSVQgW20LGUznr7r1Jr3JTQtF46babjHlkijY
+	SSEfBFYAFgNyQ9pYvMMyhg5qmUBjX0pjpd8QEIPebGyAdkl6vALi6fbeClyPbKcITZYvsuG
+	G68ThD2JTys0xoHkyZ7GxCJexBnN4DC0HMN+dfby4S+0IdG+xkcNWzw+i9PQsRo0xfPI98L
+	lz4Bj+Y73UjrO3ZFu/pH5ITU8QXBgPLB/2mGVYsZ0qBtA8JblQw1aD8+0tUNJIlWMfS3qLL
+	PfUZn/ndA8jZ+KKqPzaKSp4B8GHBRU0TXQoGgudRJxMdCo+YagapupgxthLL+wMA3Sux4ss
+	vHkQUCF6IS4i3s3+zxrSwbotxbuI0bILPttR09ny4Ab4iuVdiGeGmLGvOZhOeA12qoS/SHm
+	7fW5b2s9u8mCX5imbKGl/DCRX6OWyDXo+GRtkl0A3CnktjnXwwNGaP7hzD7+r9K9YSgkmNn
+	NXQCMEX5Ckf9qD76haAaxZXrPsnnAJ4dMcSI30Y4P40aD8gXUKtkKaHRZccaPK10aWoq1jf
+	nOiRIWsv/2nekxgpLBbK1XAMtsCw1QE+RpUSC8iQXf9iNVvPE8oHd8YkTdAAl6PzlGC8Oy0
+	6PQSrnG2zbXal3X25Hy8wnzB8iYitOSc6b8J+rgTkTxIaJXvsMrwKsSwkfsTKHHJg==
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+X-QQ-RECHKSPAM: 0
 
-Hi everyone,
+When multiple CPU DAIs on the same sound card share the same physical
+BCLK, add a hw_rule during PCM open that constrains the sample rate so
+the resulting BCLK rate stays consistent across all sharing DAIs.
 
-Now that the merge window has settled, I=E2=80=99d like to bring this serie=
-s
-back to your attention.
+The hw_rule is registered unconditionally for every DAI that has a bclk
+clock pointer set. The actual peer scanning happens inside the rule
+callback at hw_refine time: it walks all DAIs on the card, looking for
+an active peer that shares the same physical BCLK (via clk_is_match())
+and has already completed hw_params (checked via dai->symmetric_rate
+!= 0). This ensures the constraint uses the real BCLK rate established
+by the peer's clk_set_rate() in hw_params, not a stale boot-time
+default.
 
-The series has been stable and tested across the OrangePi RV2, Banana
-Pi F3, and Muse Pi Pro. Is there anything else needed on my end to get
-this ready?
+The first DAI to complete hw_params is unconstrained (no active peer
+yet); subsequent DAIs are constrained to match.
 
-El jue, 23 abr 2026 a las 14:42, Anand Moon (<linux.amoon@gmail.com>) escri=
-bi=C3=B3:
->
-> Hi All,
->
-> On Mon, 13 Apr 2026 at 13:32, Iker Pedrosa <ikerpedrosam@gmail.com> wrote=
-:
-> >
-> > This series enables complete SD card support for the Spacemit K1-based
-> > OrangePi RV2 board, including UHS (Ultra High Speed) modes for
-> > high-performance SD card operation.
-> >
-> > Background
-> >
-> > The Spacemit K1 SoC includes an SDHCI controller capable of supporting
-> > SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
-> > currently lacks basic SD controller configuration, SDHCI driver
-> > enhancements for voltage switching and tuning, and power management
-> > infrastructure.
-> >
-> > Implementation
-> >
-> > The series enables SD card support through coordinated layers:
-> >
-> > - Hardware infrastructure (patches 1-2): Device tree bindings for volta=
-ge
-> > switching hardware and essential clock infrastructure.
-> > - SDHCI driver enhancements (patches 3-7): Regulator framework
-> > integration, pinctrl state switching for voltage domains, AIB register
-> > programming, and comprehensive SDR tuning support for reliable UHS
-> > operation.
-> > - SoC and board integration (patches 8-10): Complete K1 SoC controller
-> > definitions, PMIC power infrastructure, and OrangePi RV2 board enableme=
-nt
-> > with full UHS support.
-> >
-> > This transforms the OrangePi RV2 from having no SD card support to full
-> > UHS-I capability, enabling high-performance storage up to 208MHz.
-> >
-> > Tested-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-> > Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
->
-> I'm just checking the status of this series. Since it hasn't been
-> applied to linux-next,
-> Will it be included in the next kernel release cycle?
->
-> Thanks
-> -Anand
-> > ---
-> > Changes in v8:
-> > - Resending the series as v8. The v7 submission failed due to an SMTP
-> >   error during transit, which resulted in a broken thread on the mailin=
-g
-> >   list.
-> > - No functional changes from v7.
-> > - Link to v7: https://lore.kernel.org/r/20260413-orangepi-sd-card-uhs-v=
-7-1-16650f49c022@gmail.com
-> >
-> > Changes in v7:
-> > - Remove sdhci-common.yaml reference from DT binding.
-> > - Link to v6: https://lore.kernel.org/r/20260407-orangepi-sd-card-uhs-v=
-6-0-b5b8a1b2bfc8@gmail.com
-> >
-> > Changes in v6:
-> > - Add pinctrl support for voltage switching. Document optional
-> >   pinctrl-names property supporting "default" and "uhs" pinctrl states
-> >   for coordinating pin configuration changes during UHS-I voltage
-> >   switching.
-> > - Update pinctrl state naming from "state_uhs" to "uhs" to match DT
-> >   binding naming convention.
-> > - Fix MMC drive strength values based on vendor kernel investigation.
-> >   Correct 3.3V operation from 7mA to 19mA and 1.8V UHS operation from
-> >   13mA to 42mA to match proven vendor implementation.
-> > - Link to v5: https://lore.kernel.org/r/20260330-orangepi-sd-card-uhs-v=
-5-0-bd853604322d@gmail.com
-> >
-> > Changes in v5:
-> > - Document optional pinctrl-names property supporting "default" and
-> >   "state_uhs" pinctrl states for coordinating pin configuration changes
-> >   during UHS-I voltage switching.
-> > - Link to v4: https://lore.kernel.org/r/20260323-orangepi-sd-card-uhs-v=
-4-0-567c9775fd0e@gmail.com
-> >
-> > Changes in v4:
-> > - Revert to start_signal_voltage_switch() approach for bidirectional
-> >   voltage switching: replace voltage_switch() callback with
-> >   start_signal_voltage_switch() to properly handle both 3.3V and 1.8V
-> >   signal voltage directions.
-> > - Fix DC input voltage specification: corrected the main power supply
-> >   from 12V to 5V to match the OrangePi RV2 board specifications. The
-> >   board uses a 5V USB-C input connector, not a 12V rail as previously
-> >   specified in the device tree.
-> > - k1-bananapi-f3.dts: add `broken-cd` property to work around card
-> >   detection. Using `broken-cd` disables hotplug detection but keeps SD
-> >   card functionality working without additional dependencies.
-> > - Add SD card support for Muse Pi Pro board (contributed by Trevor
-> >   Gamblin): enable SD card support with UHS-I capabilities following th=
-e
-> >   same pattern as OrangePi RV2, including dual pinctrl states, PMIC
-> >   power supplies, and card detection.
-> > - Link to v3: https://lore.kernel.org/r/20260316-orangepi-sd-card-uhs-v=
-3-0-aefd3b7832df@gmail.com
-> >
-> > Changes in v3:
-> > - Rebase on mmc.git/next to resolve conflicts with "mmc: sdhci-of-k1:
-> >   add reset support" patch.
-> > - Squash tuning infrastructure and implementation patches (3 and 4)
-> >   together to form complete functionality and avoid unused function
-> >   warnings.
-> > - Reduce code nesting: implemented an early return sanity check in
-> >   spacemit_sdhci_voltage_switch() to reduce indentation and improve
-> >   logic flow.
-> > - Refactor pinctrl initialization: moved pinctrl resource acquisition
-> >   and state lookup into a dedicated helper function,
-> >   spacemit_sdhci_get_pins().
-> > - Use generic regulator node names (buck4, aldo1) instead of
-> >   device-specific aliases (sd_vmmc, sd_vqmmc) to better reflect that
-> >   these PMIC outputs serve multiple devices.
-> > - Remove dead code handling 3.3V voltage switching from
-> >   spacemit_sdhci_voltage_switch().
-> > - Optimize tuning algorithm to use single-pass window detection instead
-> >   of storing results in array, reducing memory usage and complexity.
-> > - Remove unnecessary card detect check in execute_tuning() - rely on MM=
-C
-> >   core.
-> > - Clarify commit message to mention both SD (UHS-I) and eMMC (HS200)
-> >   tuning support.
-> > - Add SD card support for Banana Pi BPI-F3 board with UHS-I capabilitie=
-s
-> >   following the same pattern as OrangePi RV2.
-> > - Link to v2: https://lore.kernel.org/r/20260309-orangepi-sd-card-uhs-v=
-2-0-5bb2b574df5d@gmail.com
-> >
-> > Changes in v2:
-> > - Removed custom AIB voltage switching code per maintainer feedback. Th=
-e
-> >   existing pinctrl driver already handles AIB voltage switching
-> >   automatically via power-source property changes during UHS mode
-> >   transitions. This eliminates code duplication.
-> > - Squashed regulator and pinctrl commits into single voltage switching
-> >   implementation.
-> > - Moved voltage switching callback from dynamic probe assignment to
-> >   static sdhci_ops declaration. Removed redundant SDHCI core call since
-> >   the framework handles standard voltage switching automatically.
-> > - Made clock override (SDHC_OVRRD_CLK_OEN | SDHC_FORCE_CLK_ON)
-> >   conditional for SD/SDIO cards only. This follows vendor driver patter=
-n
-> >   of differentiating SD and eMMC card handling.
-> > - Include no-mmc property for SD card.
-> > - Link to v1: https://lore.kernel.org/r/20260302-orangepi-sd-card-uhs-v=
-1-0-89c219973c0c@gmail.com
-> >
-> > ---
-> > Iker Pedrosa (8):
-> >       dt-bindings: mmc: spacemit,sdhci: add pinctrl support for voltage=
- switching
-> >       mmc: sdhci-of-k1: enable essential clock infrastructure for SD op=
-eration
-> >       mmc: sdhci-of-k1: add regulator and pinctrl voltage switching sup=
-port
-> >       mmc: sdhci-of-k1: add comprehensive SDR tuning support
-> >       riscv: dts: spacemit: k1: add SD card controller and pinctrl supp=
-ort
-> >       riscv: dts: spacemit: k1-orangepi-rv2: add PMIC and power infrast=
-ructure
-> >       riscv: dts: spacemit: k1-orangepi-rv2: add SD card support with U=
-HS modes
-> >       riscv: dts: spacemit: k1-bananapi-f3: add SD card support with UH=
-S modes
-> >
-> > Trevor Gamblin (1):
-> >       riscv: dts: spacemit: k1-musepi-pro: add SD card support with UHS=
- modes
-> >
-> >  .../devicetree/bindings/mmc/spacemit,sdhci.yaml    |  15 ++
-> >  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    |  24 +-
-> >  arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts     |  66 ++++++
-> >  arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   |  67 ++++++
-> >  arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       |  40 ++++
-> >  arch/riscv/boot/dts/spacemit/k1.dtsi               |  13 ++
-> >  drivers/mmc/host/sdhci-of-k1.c                     | 257 +++++++++++++=
-++++++++
-> >  7 files changed, 480 insertions(+), 2 deletions(-)
-> > ---
-> > base-commit: 4c3b07bf68391122266dfb01126484daf352cf70
-> > change-id: 20260226-orangepi-sd-card-uhs-0ecb05839b0c
-> >
-> > Best regards,
-> > --
-> > Iker Pedrosa <ikerpedrosam@gmail.com>
-> >
+The rule supports two modes:
+- If the DAI has an explicit bclk_ratio set (e.g. for TDM where
+  BCLK = rate * slots * slot_width), the rate is constrained to
+  active_bclk_rate / bclk_ratio.
+- Otherwise, the default formula BCLK = rate * channels * sample_bits
+  is used to derive the valid rate range.
+
+The constraint is purely additive: DAIs that do not set a bclk clock
+pointer are completely unaffected.
+
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+ sound/soc/soc-pcm.c | 119 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 119 insertions(+)
+
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 9b12eedb77c3..e75c343b8d4e 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -12,6 +12,7 @@
+ 
+ #include <linux/kernel.h>
+ #include <linux/init.h>
++#include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/pinctrl/consumer.h>
+ #include <linux/slab.h>
+@@ -467,6 +468,117 @@ static int soc_pcm_apply_symmetry(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
+ 
++/*
++ * Shared BCLK constraint: when multiple DAIs share the same physical BCLK,
++ * constrain hw_params so that the BCLK rate (rate * channels * sample_bits,
++ * or rate * slots * slot_width for TDM) remains consistent.
++ */
++
++static int soc_pcm_shared_bclk_rule_rate(struct snd_pcm_hw_params *params,
++					 struct snd_pcm_hw_rule *rule)
++{
++	struct snd_soc_dai *dai = rule->private;
++	struct snd_soc_card *card = dai->component->card;
++	struct snd_soc_pcm_runtime *rtd;
++	struct snd_soc_dai *other_dai;
++	unsigned long active_bclk_rate = 0;
++	struct snd_interval *rate = hw_param_interval(params, SNDRV_PCM_HW_PARAM_RATE);
++	struct snd_interval constraint = { .empty = 1 };
++	unsigned int target_rate;
++	int i;
++
++	/*
++	 * Protect the rtd list traversal.  No nesting: this callback runs
++	 * from snd_pcm_hw_refine() which does not hold card->mutex.
++	 */
++	guard(mutex)(&card->mutex);
++
++	/* Scan all DAIs on the card for an active peer sharing the same BCLK */
++	for_each_card_rtds(card, rtd) {
++		for_each_rtd_cpu_dais(rtd, i, other_dai) {
++			if (other_dai == dai)
++				continue;
++			if (!other_dai->bclk)
++				continue;
++			if (!snd_soc_dai_active(other_dai))
++				continue;
++			/*
++			 * Skip peers whose hw_params hasn't run yet.
++			 * symmetric_rate is set by soc_pcm_set_dai_params()
++			 * after snd_soc_dai_hw_params(), so non-zero means
++			 * the DAI's clk_set_rate() has already executed.
++			 */
++			if (!other_dai->symmetric_rate)
++				continue;
++			if (!clk_is_match(dai->bclk, other_dai->bclk))
++				continue;
++
++			active_bclk_rate = clk_get_rate(other_dai->bclk);
++			if (active_bclk_rate)
++				goto found;
++		}
++	}
++
++	return 0;
++
++found:
++	if (dai->bclk_ratio) {
++		/*
++		 * Driver has set an explicit BCLK ratio (e.g. for TDM where
++		 * BCLK = rate * slots * slot_width). The only valid rate is
++		 * active_bclk_rate / bclk_ratio.
++		 */
++		target_rate = active_bclk_rate / dai->bclk_ratio;
++
++		constraint.min = target_rate;
++		constraint.max = target_rate;
++	} else {
++		struct snd_interval *channels = hw_param_interval(params,
++						SNDRV_PCM_HW_PARAM_CHANNELS);
++		struct snd_interval *sample_bits = hw_param_interval(params,
++						SNDRV_PCM_HW_PARAM_SAMPLE_BITS);
++
++		/*
++		 * Default: BCLK = rate * channels * sample_bits.
++		 * Calculate the range of valid rates given the current
++		 * channel and sample_bits intervals.
++		 */
++		if (!channels->min || !sample_bits->min)
++			return 0;
++
++		constraint.max = active_bclk_rate /
++				 ((unsigned long)channels->min * sample_bits->min);
++
++		if (channels->max && sample_bits->max)
++			constraint.min = active_bclk_rate /
++					 ((unsigned long)channels->max * sample_bits->max);
++		else
++			constraint.min = constraint.max;
++	}
++
++	constraint.integer = 1;
++	constraint.empty = 0;
++
++	return snd_interval_refine(rate, &constraint);
++}
++
++static int soc_pcm_apply_shared_bclk(struct snd_pcm_substream *substream,
++				     struct snd_soc_dai *dai)
++{
++	if (!dai->bclk)
++		return 0;
++
++	dev_dbg(dai->dev,
++		"ASoC: registering shared BCLK rate constraint\n");
++
++	return snd_pcm_hw_rule_add(substream->runtime, 0,
++		SNDRV_PCM_HW_PARAM_RATE,
++		soc_pcm_shared_bclk_rule_rate, dai,
++		SNDRV_PCM_HW_PARAM_CHANNELS,
++		SNDRV_PCM_HW_PARAM_SAMPLE_BITS,
++		-1);
++}
++
+ static int soc_pcm_params_symmetry(struct snd_pcm_substream *substream,
+ 				struct snd_pcm_hw_params *params)
+ {
+@@ -903,6 +1015,13 @@ static int __soc_pcm_open(struct snd_soc_pcm_runtime *rtd,
+ 		if (ret != 0)
+ 			goto err;
+ 	}
++
++	/* Shared BCLK constraint across DAIs on the same card */
++	for_each_rtd_cpu_dais(rtd, i, dai) {
++		ret = soc_pcm_apply_shared_bclk(substream, dai);
++		if (ret != 0)
++			goto err;
++	}
+ dynamic:
+ 	snd_soc_runtime_activate(rtd, substream->stream);
+ 	ret = 0;
+
+-- 
+2.54.0
+
