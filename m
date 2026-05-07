@@ -1,128 +1,108 @@
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B3E3EAC61
-	for <spacemit@lists.linux.dev>; Thu,  7 May 2026 10:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8942874E6
+	for <spacemit@lists.linux.dev>; Thu,  7 May 2026 10:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778150231; cv=none; b=rw6GhN34RA4oN5f/CMA1n95JIfdBUZDQfOtI72awaSIun1McUMa211/pr8xq5VWjG1rRuZTXI/lsxBbzJL2vtW0ko+QIvRZY0XwHOuWO3i8fQ7HhTVIPX21cT2a1jm/rRZhRUbRdKWUc5RBJVzx99Dhz2Auz+qu+YqCfschrGDc=
+	t=1778150746; cv=none; b=pMoehebtfCfuVrOInwN7nlbS7NdLkSKimAF7D6USM1lJKM6UYZCxN+ZmPVw3vHdA6h01PNuGVCnncp9+ZBGo3JOztgQxd5kZ2MSYqNX1hpuTfqlIpi4AZlAB6YtLBRRoLp0ZT0rB7UzhhybEsPBoacr0yJmM2Lcys+Fw3ZCP8g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778150231; c=relaxed/simple;
-	bh=Q7iJZ6VUq1H8Bt3WwDMb4K4clOEXomOap5ooldumwW4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=N9jgDpI6zZsW9vPDd+2TIEdM8lLIQLrt/930xErm+1CtrirUe/4s54WAfCQZywiauM0mUY7HpRtgOfFXdzRDmhEpGzNX9TbDXEu8EPqtKx3DC+5n35LplQcRohDVBPKvQKzUsRUkAODB26n3agArHgl2p6Dv2vCnM7ohaA40m2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=uRMixVZ2; arc=none smtp.client-ip=54.207.19.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1778150746; c=relaxed/simple;
+	bh=312zN6LsAnZx88D9I1aFkKivaozIPa5muYYM2DQoykI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=Tp20cmckv76XHBjpmm4dpzlOR4NPifBZQglJSDd2OuZZssQVEp/QREaj0nGx4rFOkPIxAiCvdzhJsouqFTW0suWGbdZzmhKNLCVn04R+lMecJhF81bzGl+8AZJRDK2ndungOWhjL+CQd8ZWtzxue+vcESoERYVT/+ZrXJ19wCto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qPQvdZZ9; arc=none smtp.client-ip=95.215.58.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="uRMixVZ2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1778150201;
-	bh=gy+vLIjyMT6857Vtois325dTt+YrnhLSIrioPPR6St8=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=uRMixVZ25rJuwH6sWdxE6UJv3SKMf1mqHNqfsmGMdee6wb+F2UQ4ZBWUO64RA1c5S
-	 Dw624zZyDFqyC2hds+c5fRe+8ycJat/pdn8n4fCKFpzREIu+/xZENPGltnQWmEshd/
-	 A2AvkwFhiVSfOaPpYL6xRVYZywzairkB59xtjSHc=
-X-QQ-mid: zesmtpgz4t1778150192t8267e74b
-X-QQ-Originating-IP: ujIz8YOVnSW7B60VWyM9hjIqW8IOmbsxyg9lb4tPWKE=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 07 May 2026 18:36:28 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11798738260488790432
-EX-QQ-RecipientCnt: 21
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Thu, 07 May 2026 18:36:20 +0800
-Subject: [PATCH v5 1/4] dt-bindings: dmaengine: Add SpacemiT K3 DMA
- compatible string
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qPQvdZZ9"
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260507-k3-pdma-v5-1-6b9743038026@linux.spacemit.com>
-References: <20260507-k3-pdma-v5-0-6b9743038026@linux.spacemit.com>
-In-Reply-To: <20260507-k3-pdma-v5-0-6b9743038026@linux.spacemit.com>
-To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
- Guodong Xu <guodong@riscstar.com>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
- Conor Dooley <conor.dooley@microchip.com>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778150183; l=1136;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=yaSmXSO5vYt5nKO5ZoIxkQx6dxueeCXO+Z09BlgFE88=;
- b=DfAnWhO59vA3gBFJDzFcMc47+7DcXxyYCFrlZJezXk22v/rK7/MplMET66tfXPZitK6x2nwTQ
- +sW7iDjz0+KDEwT4CU4F0tje6Of1netzpHoWZEOt2qD9c+ud4BvBgoY
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MXi6VldghLL7KNMlXpEfS+zl8XikIkiGAWAnqtt4jiwS+Fdal2uY7+1d
-	rXa6j4MDRHzc1QO4G9qvd3haUWYdw3eWSUwnl1+ZM2qTkVAwOFmrfh7Q7oPUI8Xw4xCoBoV
-	qICeJNNAMnqmCUY76l66nrgZsfIv3vLLjusqay72OQyZW4Nz3YhnmvUWR+1VaYcqCsBis/D
-	8kM+/AIE1dGxzUyC3yI8RFu2Tl7rxBgSOnWUuHtz/E1eOe5Bhr+mEeUgH+fTMmiKTtFQLeU
-	jBx1dL2K8CEjUWCLpM3FCIV/fxu0hlE08sUTwKhymghtqDpdESzvNj+HeZeDJqdUEzRjBDL
-	Kn/Y7YvWiK/8qViFQKUcGpXuHuCcR/o+6Zl5tk4P93GU6w0ouAVeDFtSis5drw496ljC+0j
-	hNJhqq8QoOU51wCq5pfcCXK8ciT2uW2g4cxyu4445eDKZz62xzZs9WFhHQ3oxl4RI9kvPEW
-	YyS/pxFDRZPkAaE8XNQvLGrzCMeoCsJTxbHOUOa2YJFCYxYewWDw+DBoNFFsaP6RsQPcxx2
-	k/9ou9rMUZliveW+Dvfp1b6vJTJnco4LJE6DlEU8sDALoqsL4cs6ePWLRAKeahbH9w78BbG
-	ONHL9ePXgOLR2NpBwB636lD+sIdVerhgkGL9CBNCEtvHWE8JrieZI2r7gpm8wvjVmVDTK3v
-	CIZi1JW0QVHTeweFMYdanTm9TFE4DyTADn6gCBrnG7lKiTBviVcf5KgfxbO5WJo+XkFqLYW
-	zow7GQ9a55nFr45MHXYZkC49NVX+5YC8QLap2UGw6RcSoij9I1Dvx1S8RrsuGWO95WF/7uk
-	TNmL2s2AQvBaj3W+NI5WzA8AwQdQcUVaQJ7xKGZF2CJFH4f1vAGstfDsLb2op9RQeKCJKlf
-	ZKcETueMz8A9L9FhteopulvZ5K4b+sJhlOk2cNncp+fPFNyExWTwYjoWml0bMdAGsbtuSlG
-	c6agxrQ+zjqo626UQ/Sa/or90eIJn/MpN4JybNI+HrCP4Zay4HpTsQ3CucVZtNRGcH+GMnk
-	ZEs9rZm1V+/shQGQ6hsCvg0gMUMmS2dY2J7a2wGLMNOv5etcQkUS9iJriyhE6YXKe9E7ODE
-	nUjrXl5SI4uBUwvmn+67ovkfuEQwU/Lv5IgNW1w0e3oUHukmSe/K7HeKXkgsjnYlrbzuqsZ
-	yLJh
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1778150742;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=wfLuyOPRCmmDdUHD7nj8FmD30fIBLkwBsUJFvuCmkBQ=;
+	b=qPQvdZZ9NGUW5GSrDqiO42DiH/zl3tkl6A1e9fYYs1UYUXWFnjsHBfbC/scvJ2rOxMtX6M
+	OU0bhSlvZDm6kNsbvILN5h9ybLDylI6fzaRmXJZBq2/GhPeAxFGOv+TbyRXdS5hXW6KeXn
+	4b3UWDEyiFf1sYzQuWFt5cXI513OGmw=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 07 May 2026 18:45:07 +0800
+Message-Id: <DICDTHYTPDSP.210EBVHTQ6966@linux.dev>
+Subject: Re: [PATCH v8 8/9] riscv: dts: spacemit: k1-bananapi-f3: add SD
+ card support with UHS modes
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Troy Mitchell" <troy.mitchell@linux.dev>
+To: "Iker Pedrosa" <ikerpedrosam@gmail.com>, "Margherita Milani"
+ <margherita.milani@amarulasolutions.com>
+Cc: "Ulf Hansson" <ulf.hansson@linaro.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Adrian Hunter" <adrian.hunter@intel.com>, "Paul
+ Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
+ Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan"
+ <dlan@kernel.org>, "Troy Mitchell" <troy.mitchell@linux.dev>, "Michael
+ Opdenacker" <michael.opdenacker@rootcommit.com>, "Javier Martinez Canillas"
+ <javierm@redhat.com>, <linux-mmc@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>, "Anand Moon"
+ <linux.amoon@gmail.com>
+References: <20260413-orangepi-sd-card-uhs-v8-0-c21c40ec16d0@gmail.com>
+ <20260413-orangepi-sd-card-uhs-v8-8-c21c40ec16d0@gmail.com>
+ <CA+Xcp4nY9GVMOmtMG-PNhY2vqP4Cc_amAMSa+M3vuDjWUkuCHw@mail.gmail.com>
+ <CABdCQ=OsPva9=YPdBd=3HW1OO7=_zJtpXjvaiA0WLEDT5Scs_Q@mail.gmail.com>
+In-Reply-To: <CABdCQ=OsPva9=YPdBd=3HW1OO7=_zJtpXjvaiA0WLEDT5Scs_Q@mail.gmail.com>
+X-Migadu-Flow: FLOW_OUT
 
-From: Guodong Xu <guodong@riscstar.com>
+On Thu May 7, 2026 at 5:53 PM CST, Iker Pedrosa wrote:
+> Hi,
+>
+> El jue, 7 may 2026 a las 10:20, Margherita Milani
+> (<margherita.milani@amarulasolutions.com>) escribi=C3=B3:
+>>
+>> Good morning Iker,
+>>
+>> > Add complete SD card controller support with UHS high-speed modes.
+>> >
+>> > - Enable sdhci0 controller with 4-bit bus width
+>> > - Configure card detect GPIO with inversion
+>> > - Connect vmmc-supply to buck4 for 3.3V card power
+>> > - Connect vqmmc-supply to aldo1 for 1.8V/3.3V I/O switching
+>> > - Add dual pinctrl states for voltage-dependent pin configuration
+>> > - Support UHS-I SDR25, SDR50, and SDR104 modes
+>>
+>>
+>> Tested-by: Margherita Milani <margherita.milani@amarulasolutions.com>
+>>
+>> However I noticed it only works when CONFIG_I2C_K1 is enabled.
+>> Michael Opdenacker told me it's necessary to enable the regulators
+>> used by the mmc controller.
+>> Should we add the dependency between CONFIG_MMC_SDHCI_OF_K1 and
+>> CONFIG_I2C_K1? (Unless some boards don't have these dependency?)
+>> Thank you for your patchset which was really nice!
+>
+> Thank you for catching this! You're absolutely right about the dependency=
+.
+>
+> From what I can see, all current SpacemiT K1 boards follow this design
+> pattern where the SD card power is provided by an I2C-controlled PMIC.
+> However, before adding a hard dependency, I'd like to get input from
+> the community, does anyone know of K1-based boards that provide SD
+> card power through fixed regulators or other means that don't require
+> I2C?
+if K1 needs to switch between standard and high-speed (UHS) modes,
+I believe the I2C-controlled PMIC is mandatory to handle the voltage
+switching (typically 3.3V to 1.8V).
 
-Add the "spacemit,k3-pdma" compatible string for the SpacemiT K3 SoC.
+I don't think any board would want to be stuck in standard mode permanently=
+.
+If high-speed mode is an option, why not use it? I think adding this
+dependency is a good idea, but keep in mind it also needs to depend on P1.
 
-While the K3 PDMA IP reuses most of the design found on the earlier
-K1 SoC, a new compatible string is required because the DRCMR
-(DMA Request/Command Register) base address for extended DMA request
-numbers (>= 64) differs from the K1 implementation.
-
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
- Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
-index ec06235baf5c..62ce6d81526b 100644
---- a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
-+++ b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
-@@ -14,7 +14,9 @@ allOf:
- 
- properties:
-   compatible:
--    const: spacemit,k1-pdma
-+    enum:
-+      - spacemit,k1-pdma
-+      - spacemit,k3-pdma
- 
-   reg:
-     maxItems: 1
-
--- 
-2.54.0
-
+                            - Troy
