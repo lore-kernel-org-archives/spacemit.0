@@ -1,213 +1,208 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDFF3CF69D;
-	Thu,  7 May 2026 22:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D424B3783B1
+	for <spacemit@lists.linux.dev>; Fri,  8 May 2026 06:37:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778193739; cv=none; b=jn/oF2e4qn6Q3NeADv1SckusvEV4+Dxtx+e2HJk0Kfx8cL4jIxZg6XFZvidVz8cOCdGEFZWcPhq6LoMTAg5LKAElcaw3l1v3Whet2nnzbm+IWzjnrEl442aY1fXTldOY+zG9IVE0AD/4tVGV/UArzjQhM3CppeURftR4yCgM5ec=
+	t=1778222285; cv=none; b=jqzFJzzZbOoLhzz3gX5yi0jLRqEIn4wUuORCGNiZ+XsbPOfgWX5Rmz1zpGkdTB/nbYY6g9mAnBaEUbJSyeeAuKoPPqHuZDp7Q7AojbA7EjsPbyxy6Zq6CfCRyFsjsYgWEFgc74XeqKTCso+gHS4zQmkruyXn6t0RSBJUiUuHLYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778193739; c=relaxed/simple;
-	bh=J0kRFG9bUaWTTHIU1f8/BZmV72pbWWRzeSv5tn2IJ+Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=qreVWgYtvi809Em1da/n4yDmuID8/BEb8XUTAn9f2lhSF/u/MI8r+Bj/3XcBa4Y0hV+3+mKya1ODNsRMyg7BDWkHLmBAD7+d8eZxENKy+Nxo6UDM/uwb+6+CCbOx3h8tA8is9ULzkc/KLEEX5wW/VS4gB3E1xHRmmkF/HW/u1VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pZ8OJoJD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778222285; c=relaxed/simple;
+	bh=jUNTNksXf1a4WzCOPfsBigv1Fqr11+Wd0EF0+pdo7Ig=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=F7CqnvqPAMa/fPw/iykbzdMAH3OEEddkO/QWeZrspzqTfjD9GkQVllogaycJtaklRGKCINlQQTpXmXjGAopi0IgkGWyfpHEDxoDnIe3FV8YnF5PDVp2cHCWKntix4yBdqICFBxWVHbqoGR3JCpjsZsiNTKhaHZw7zA2RZUlr5Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=UTcaQbXQ; arc=none smtp.client-ip=54.92.39.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pZ8OJoJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED86C2BCB2;
-	Thu,  7 May 2026 22:42:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778193739;
-	bh=J0kRFG9bUaWTTHIU1f8/BZmV72pbWWRzeSv5tn2IJ+Y=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=pZ8OJoJDjVp74T5HTAFYAW24ULTzTS5u6XyQpEYzf/fwJ5askHm4Fepx+Mb8uIuBh
-	 TTWkblCiS9WBse7RVNTyWkBEd6TQDKcRX4EFPjrBJ1/wnrNBYScemGuDwm5uQmWla2
-	 F/28EibEfFcTpulfbdWpo4wOhiE4GwjNtSEVwOK9iKai27Zxp2rvtKUTNoPQ+UJR9B
-	 N7G5SWN8B3xOPKcvsiFMQTUaj/25gFtPjx0RFsJAuhRUmDrSRJg5R0nF0XDYF1LUdZ
-	 saU/G2E92XATlbrCE6iN3x0H4Jfxqq+T1rAzFc+lQSLeDTrl0JYmf65tvMbU+dZE+U
-	 or2kQaRwQdKVA==
-Date: Thu, 7 May 2026 17:42:17 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Alex Elder <elder@riscstar.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH 5/5] PCI: spacemit-k1: Add Spacemit K3 PCIe host
- controller support
-Message-ID: <20260507224217.GA48780@bhelgaas>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="UTcaQbXQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1778222245;
+	bh=8JEEYGi3KIhC5hASnjM+XwuYNJ31pZv1KHpSN+PB1g0=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=UTcaQbXQPU4WAgAPqUC5ZvcTLQSZGCn37LAcRNBSY5aeFYnJhijrH/I+9Lkf+86O3
+	 xMcN3i2Zl8h4N86Tb/FMWyV14W3v0wY25UjcFoUvCG69kp+O210vQndo/myozYe1yb
+	 jIrVRjIvCvs/VMUpAF0UGnea345woL491br1EhI4=
+X-QQ-mid: esmtpsz10t1778222238t9023b831
+X-QQ-Originating-IP: /HYZdUY2KNZVeYoHWNpv7D+eFSQ2gIKlhmT7/A5s2ik=
+Received: from = ( [27.42.96.100])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 08 May 2026 14:37:16 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 11761350832640437751
+EX-QQ-RecipientCnt: 8
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260502101319.2364052-6-inochiama@gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 08 May 2026 14:37:14 +0800
+Message-Id: <DID36992GF2G.229YAG9BSQ3VZ@linux.spacemit.com>
+Subject: Re: [PATCH v6 1/2] i2c: spacemit: configure ILCR/IWCR for accurate
+ SCL frequency
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Alex Elder" <elder@riscstar.com>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>, "Andi Shyti" <andi.shyti@kernel.org>,
+ "Yixun Lan" <dlan@kernel.org>
+Cc: <linux-i2c@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260429-k1-i2c-ilcr-v6-0-1c7a5a5a8b24@linux.spacemit.com>
+ <20260429-k1-i2c-ilcr-v6-1-1c7a5a5a8b24@linux.spacemit.com>
+ <01278362-ae7c-424a-838b-4add1718e7f6@riscstar.com>
+In-Reply-To: <01278362-ae7c-424a-838b-4add1718e7f6@riscstar.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MMKL56urm3zQV7YJ/4+hEDQDhDqRuSm0rVJAUOxlSg9Qa65SepnVx6/0
+	OsyBJRlydIF2swX9SWpWR4R0iLrURbJPw/HC5gXE+nN2igVmvkjKFB05rSHKhJ3MPKTLvFu
+	umlULDEs2yJBuFh47XmsJWFzz5fLL9kBbj/5VBUzQ8VVDmktS10AFAf/uxtgBwLWcRYurNv
+	oKdTy9CU4x9hT4z3aeznijyPw3CSCiFilg7AK3Pek7ObwnKDgsOHDtf2LpfgOEKrILYJjAL
+	yFoFR9kqXmWhwYyK4XlbEsM2CwMbBeLN047bpngQO20+YlfMUgOhEHS7TsAKpJ8QW4Nvaj5
+	6OUdJkFu86/dEy4fuTqkIeJh1eXq0WL7BsfjtnRDEwiRTyIxNnXX87CEsMovtHefNrKVX+g
+	pUy5a+2V9GAD+OdTHDDqc4Pez7j/PHa0uhlCRx0ZVSIZjwQBtcpwsvMFh2GSmk1AE32LIv3
+	ZcxM74JYIGcuxYlxcFU20ndg6MR9XA+6G8nMUthYUPod7fVmU553RCFRCerwxZiaJYuCic0
+	P2NLo7xOi+ceneI5wiqL2f6DpbtDYMWi0GW2RTn0GWuuIzl3XpCLnw+WhqKa7qtNNZ+w1F/
+	67NV6odHMvV4RegWa8nvOSSFa5wBtuvi2K9vOmCdmJ8bRobO2ibZVpgt2g0EkAVRBLC4QHp
+	97H6OlRBgEKRg0FyIzjaTn/uuUVcMGfq1+lClg94VB/EZiYMAiXBSZOf3dyCNeIc3w3UpFs
+	k0qBtMSJgGSYiEhrv7/UgIcBkm3bCLcFOz4dqnOuGWRW0XjXMGRNBChbyfY8J1g0bjR9xtC
+	2/ENNiiXdMRHJ3FGfTyhdulSqTK1XmKPD+2oxICNVocNaf+qMDGIHdDICTEp4E5AUcYg/9G
+	nAtdiJLWzJexCSkxg1fPO4hy/FUlW+k4DM0tYw4Y3kYIRlmDHdP7pRc3ukzwGrsB7pIrcdc
+	o7a5nbe8w6DOzJ3sjf3Ywyvnk5FsORSUIgw63NSJCnOmLTN1KhFC2h0ckEQTytST1gdY0zZ
+	SKq80qOU6FpK6Ej/aJbKuZ1KcPvoz816f1TvszZtIyBY6CTDe1hpFnbqvdQ4apXxXZNKsP2
+	w==
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
-On Sat, May 02, 2026 at 06:13:18PM +0800, Inochi Amaoto wrote:
-> The PCIe controller on Spacemit K3 is almost a standard Synopsys
-> Designware PCIe IP with extra link and reset control. Unlike
-> the PCIe controller on K1, this controller supports external MSI
-> interrupt controller and can use multiple phy at the same time.
-> 
-> Add driver to support PCIe controller on Spacemit K3 PCIe.
-> 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+On Wed Apr 29, 2026 at 8:40 PM CST, Alex Elder wrote:
+> On 4/29/26 2:48 AM, Troy Mitchell wrote:
 
-Sashiko had some good questions:
-https://sashiko.dev/#/patchset/20260502101319.2364052-1-inochiama%40gmail.com
+[...]
 
-Looks like the CONFIG_PCIE_SPACEMIT_K1 menu item and help text
-drivers/pci/controller/dwc/Kconfig should be updated to include K3.
+>>   #define SPACEMIT_ISR		 0x4		/* Status register */
+>>   #define SPACEMIT_IDBR		 0xc		/* Data buffer register */
+>>   #define SPACEMIT_IRCR		 0x18		/* Reset cycle counter */
+>> +#define SPACEMIT_ILCR		 0x10		/* Load Count Register */
+>> +#define SPACEMIT_IWCR		 0x14		/* Wait Count Register */
+>>   #define SPACEMIT_IBMR		 0x1c		/* Bus monitor register */
+>>  =20
+>>   /* SPACEMIT_ICR register fields */
+>> @@ -88,6 +92,12 @@
+>>   #define SPACEMIT_BMR_SDA         BIT(0)		/* SDA line level */
+>>   #define SPACEMIT_BMR_SCL         BIT(1)		/* SCL line level */
+>>  =20
+>> +#define SPACEMIT_LCR_LV_STANDARD_MASK		GENMASK(8, 0)
+>> +#define SPACEMIT_LCR_LV_FAST_MASK		GENMASK(17, 9)
+>> +
+>> +/* Required by I2C IP for correct SCL timing */
+>> +#define SPACEMIT_IWCR_INIT_VALUE		0x142A
+>
+> Even if it's just used to "do the right thing", I still think it's
+> useful to break this numeric value into what it *represents*.  The
+> register is defined this way:
+> COUNT		GENMASK(4:0)
+> HS_COUNT1	GENMASK(9:5)
+> HS_COUNT2	GENMASK(14:10)
+> (the rest is reserved)
+>
+> So 0x142a represents:
+> COUNT		10	33 MHz I2C functional clock (versus 66 MHz)
+> HS_COUNT1	2	Count defining start bit setup/hold times
+> HS_COUNT2	3	Count defining stop bit setup/hold times
+>
+> The first one in particular *could* be managed in your clock
+> to support even more accurate clock rates.  But even if you
+> don't change its value I think it's meaningful to know what
+> the value represents.
+>
+> That said--what I suggest won't change what the code does,
+> it just helps the reader understand what it's doing.
+Thanks for the suggestion.
+I've broken SPACEMIT_IWCR_INIT_VALUE into its constituent fields
+using FIELD_PREP. One small correction: 0x142A actually decodes
+to COUNT=3D10, HS_COUNT1=3D1, HS_COUNT2=3D5 (not 2 and 3).
+>
+>> +
+>>   /* i2c bus recover timeout: us */
+>>   #define SPACEMIT_I2C_BUS_BUSY_TIMEOUT		100000
+>>  =20
+>>
+[...]
 
-The "CONFIG_PCIE_SPACEMIT_K1" name itself should stay the same.
+>> +
+>> +static int spacemit_i2c_clk_determine_rate(struct clk_hw *hw,
+>> +					   struct clk_rate_request *req)
+>> +{
+>> +	struct spacemit_i2c_dev *i2c =3D container_of(hw, struct spacemit_i2c_=
+dev, scl_clk_hw);
+>> +	u32 lv, denom;
+>
+> Can you have clk_set_rate() call clk_determine_rate(), or at
+> least have them both share a helper that does these (duplicated)
+> calculations?
+Done. Extracted spacemit_i2c_calc_lv() as a shared helper used
+by both set_rate and determine_rate.
 
-s/Designware/DesignWare/, also in 4/5 commit log
-s/phy/PHY/ here and other patches and subject lines
-s/msi/MSI/ in 3/5 subject and commit log when it's a stand-alone word
-s/pci:/PCI:/ in 4/5 subject to match history (and patch 3/5)
+>
+>> +
+>> +	denom =3D DIV_ROUND_CLOSEST(req->best_parent_rate, req->rate);
+>> +
+>> +	if (i2c->mode =3D=3D SPACEMIT_MODE_STANDARD) {
+>> +		lv =3D (denom <=3D 8) ? 0 : DIV_ROUND_CLOSEST(denom - 8, 2);
+>> +		req->rate =3D DIV_ROUND_CLOSEST(req->best_parent_rate, lv * 2 + 8);
+>> +	} else {
+>> +		lv =3D (denom <=3D 10) ? 0 : DIV_ROUND_CLOSEST(denom - 10, 2);
+>> +		req->rate =3D DIV_ROUND_CLOSEST(req->best_parent_rate, lv * 2 + 10);
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
 
-> +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+[...]
 
-> +#define INTR_STATUS				0x0010
-> +
->  #define INTR_ENABLE				0x0014
->  #define MSI_CTRL_INT			BIT(11)
-> +#define RDLH_LINK_UP_INT		BIT(20)
-> +
-> +#define K3_PHY_AHB_IRQSTATUS_INTX		0x0008
-> +
-> +#define K3_PHY_AHB_IRQENABLE_SET_INTX		0x000c
-> +#define LEG_EP_INTERRUPTS		(BIT(6) | BIT(7) | BIT(8) | BIT(9))
+>>  =20
+>> +static struct clk *spacemit_i2c_register_scl_clk(struct spacemit_i2c_de=
+v *i2c)
+>> +{
+>> +	struct clk_init_data init =3D {};
+>> +	char name[64];
+>> +	int ret;
+>> +
+>> +	ret =3D snprintf(name, sizeof(name), "%s_scl_clk", dev_name(i2c->dev))=
+;
+>> +	if (ret >=3D ARRAY_SIZE(name))
+>> +		dev_warn(i2c->dev, "scl clock name truncated");
+>> +
+>> +	init.name =3D name;
+>> +	init.ops =3D &spacemit_i2c_clk_ops;
+>> +	init.parent_data =3D (struct clk_parent_data[]) {
+>> +		{ .fw_name =3D "func" },
+>> +	};
+>> +	init.num_parents =3D 1;
+>> +
+>> +	i2c->scl_clk_hw.init =3D &init;
+>> +
+>> +	return devm_clk_register(i2c->dev, &i2c->scl_clk_hw);
+>
+> The comments above clk_register() indicate that this is a deprecated
+> interface, and you should use a form of clk_hw_register() instead.
+> devm_clk_hw_register() exists and takes the same arguments, but
+> returns an int rather than the clock pointer.  But I think then you
+> can call devm_clk_get_enabled() in the caller (spacemit_i2c_probe()).
+> That would allow you to get rid of your clk_disable_unprepare()
+> wrapper too.
+I've switched to devm_clk_hw_register() as suggested. However,
+devm_clk_get_enabled() isn't applicable here because the SCL clock is
+registered internally by the driver rather than being described in the
+Device Tree. Since devm_clk_get_enabled() relies on clk_get(),
+it would fail to find the clock without a DT entry or a clkdev lookup.
 
-Would be nicer to use "INTX" rather than "LEG" here since we use
-"INTX" in K3_PHY_AHB_IRQENABLE_SET_INTX, in the comments, etc.
+Instead, I'm using devm_clk_hw_get_clk() to retrieve the struct clk
+directly from the clk_hw, followed by a manual clk_prepare_enable()
+with a devm action for automated cleanup.
 
-> +#define K3_PHY_AHB_IRQENABLE_SET_MSI		0x0014
-> +/* MSI defined as BIT(11) in existing INTR_ENABLE, reusing */
-> +
-> +#define K3_ADDR_INTR_STATUS1			0x0018
-> +
-> +#define K3_ADDR_INTR_ENABLE1			0x001C
-
-You're using a mix of upper- and lower-case hex here.  Be consistent
-and match the existing code.
-
-Seems a little weird to have a mix of "IRQ" names (e.g.,
-K1_PHY_AHB_IRQ_EN, K3_PHY_AHB_IRQSTATUS_INTX,
-K3_PHY_AHB_IRQENABLE_SET_INTX) and "INTR" names (e.g., INTR_STATUS,
-INTR_ENABLE, K3_ADDR_INTR_STATUS1, K3_ADDR_INTR_ENABLE1) when I think
-they're really talking about the same concept.
-
-And why do the new K3 names have "ADDR" in the middle when the
-existing "INTR_ENABLE" names don't?  It's obvious these are addresses
-(well, actually I think they're *offsets*, but no need to be that
-detailed).
-
-> +static int k3_pcie_init(struct dw_pcie_rp *pp)
-> +{
-> ...
-> +	val = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
-> +	val &= ~(0xffff << 8);
-> +	val |= ((0x1 << 4) << 8);
-
-Can you use FIELD_MODIFY and some #defines here?
-
-> +	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, val);
-> +
-> +	/* Set the PCI vendor and device ID */
-
-Superfluous comment since the code is obvious.
-
-> +	dw_pcie_dbi_ro_wr_en(pci);
-> +	dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, PCI_VENDOR_ID_SPACEMIT);
-> +	dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, PCI_DEVICE_ID_SPACEMIT_K3);
-> +	dw_pcie_dbi_ro_wr_dis(pci);
-> +
-> +	/* Finally, as a workaround, disable ASPM L1 */
-
-I guess this means a device erratum?  It advertises L1 but it doesn't
-actually work?
-
-> +	k1_pcie_disable_aspm_l1(k1);
-
-> +static int k3_pcie_msi_host_init(struct dw_pcie_rp *pp)
-> +{
-> ...
-> +	val = dw_pcie_readl_dbi(pci, COHERENCY_CONTROL_3_OFF);
-> +	val |= (0xf << 11);
-
-FIELD_MODIFY and some #defines here?
-
-> +static int k3_pcie_start_link(struct dw_pcie *pci)
-> +{
-> +	struct k1_pcie *k1 = to_k1_pcie(pci);
-> +	u32 val;
-> +
-> +	k1_pcie_start_link(pci);
-> +
-> +	/* Enable INTx */
-> +	val = readl_relaxed(k1->link + K3_PHY_AHB_IRQENABLE_SET_INTX);
-> +	val |= LEG_EP_INTERRUPTS;
-> +	writel_relaxed(val, k1->link + K3_PHY_AHB_IRQENABLE_SET_INTX);
-> +
-> +	/* Enable MSI/MSIX specific to K3 */
-
-s/MSIX/MSI-X/ to match spec usage.
-
-> +	val = readl_relaxed(k1->link + K3_ADDR_INTR_ENABLE1);
-> +	val |= (MSI_INT | MSIX_INT);
-> +	writel_relaxed(val, k1->link + K3_ADDR_INTR_ENABLE1);
-
-Generally speaking I think the interrupt setup belongs somewhere other
-than .start_link().  Usually .start_link() only enables LTSSM.
-
-> +	return 0;
-> +}
-
-> +static irqreturn_t k3_pcie_irq_thread(int irq, void *data)
-> +{
-> +	struct k1_pcie *k1 = data;
-> +	struct dw_pcie_rp *pp = &k1->pci.pp;
-> +	struct device *dev = k1->pci.dev;
-> +	u32 status0, status1, status2;
-> +
-> +	k3_pcie_clear_irq_status(k1, &status0, &status1, &status2);
-> +
-> +	writel_relaxed(status0, k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
-> +	writel_relaxed(status1, k1->link + INTR_STATUS);
-> +	writel_relaxed(status2, k1->link + K3_ADDR_INTR_STATUS1);
-> +
-> +	if (FIELD_GET(RDLH_LINK_UP_INT, status1)) {
-> +		msleep(PCIE_RESET_CONFIG_WAIT_MS);
-> +		/* Rescan the bus to enumerate endpoint devices */
-> +		pci_lock_rescan_remove();
-> +		pci_rescan_bus(pp->bridge->bus);
-
-This is the *only* driver that uses pci_rescan_bus() this way, which
-automatically makes it suspicous.  Maybe it's the first hardware that
-implements or is willing to use RDLH_LINK_UP_INT for this, but somehow
-I doubt it.
-
-> +		pci_unlock_rescan_remove();
-> +	} else if (!status0 && !status1 && !status2)
-> +		dev_WARN_ONCE(dev, true,
-> +			      "Received unknown event. status0=0x%08x status1=0x%08x status2=0x%08x\n",
-> +			      status0, status1, status2);
-> +
-> +	return IRQ_HANDLED;
-> +}
+                            - Troy
