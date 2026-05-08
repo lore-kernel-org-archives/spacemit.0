@@ -1,145 +1,95 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0034285CBC
-	for <spacemit@lists.linux.dev>; Fri,  8 May 2026 07:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778226231; cv=pass; b=XerEoNsGsJpIpsVvKOQoySdpkr5OCkeipG8I1btXSERzAY4QFxob0leXEcXwu5zJzIawqR0JCMLxAKeWqlCyAw0ChgMISOh4phQWDpYcGMNd+yuDSnO+00bOoyUQkPgn4EvGVijzU+Gi9aJkQRvMeVXnI8L/p8llNIrlMGIjKD0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778226231; c=relaxed/simple;
-	bh=Iw22eUoGp1D4r0AHZTcHg3b+hM9yukk2NIOisBGH+5o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r7EP9QqeDStAZVirXrImfpxwyuRBAXluYim6vOZKNgH+PX/V9sN7/Y+dbTx9rB9TaAZNtWaPMoYVp+2fFW8NbVRFh6xVmtWwjQpRTZeSUmR7BLen5W+/ctz3X0fPF+bX1DVnuMC6Pc0+R4KlwRvnYS5kQAyrgYbHYhb/GCDJ60Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d4uYP3NM; arc=pass smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C66388395;
+	Fri,  8 May 2026 22:27:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778279237; cv=none; b=DqFdjxkRH1C/vnIKRpxFf/xcOOCDTlHZONY29Wn72SYSJg7l9r8VAZ/gp6z3Yulmy8/P3pY8OxD4neWOXPsioDk7dtXYaNRmMuag/BpD2yK7WHufLPp/c+KcGVQEwbyB5KuAYBRMLqys21AN/R4iiUbxZBpiNCNOEJE0S67n+WQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778279237; c=relaxed/simple;
+	bh=ARXB7IXHajXNXClhcBq3h8oAt0A8+aZDLCr3/8KxfqY=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nAKxPNjLudmXGa5rDLHKUesiewrwB83P6Ckza1GdZC8gJ0uXf7dBDlPrFES5VaW7K2L38JsOiBOvvCUOdCZPeQH8cHANBBU9Ck+2WQ/PvvDgzoCFMYQjr92S6oos1US83bEzrKE0jPfLGX4XuOJ4qGopCfAJygxw2Ly/KYrgmrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q14sNOL/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d4uYP3NM"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-65c0891f4e9so2690773a12.1
-        for <spacemit@lists.linux.dev>; Fri, 08 May 2026 00:43:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778226227; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NvX+GiHjUMUoRj7LkT+72e6hn43qojIFlWwYuidTOKqsA5PejHsZnkT5jMMH7dDSjN
-         kffpzWm4wat7J/TEvqp6VrOuO0xdGQRVgyct/4F3Elrr3er+kz0Y5hwu4ywb2s7KmQcC
-         WbEcPXVz28JURQlWtqwk3pXJeguVI6zxPE/Fr2Xbpk5K7ujsqo4eRceRHRn3qddqO2fw
-         c/wbrANu5wxlDyh3rWKXrqchE4G1LNqsAh5xzLTF3BoUTHPXmwjM4SUe0zCl9geUfZ2v
-         1fNXWOPKXBPpd6JdsbVVRLSOaB9abINs3ioeFELZtd7sDaRGb4NCki68bkHJ4SOS6XnF
-         FlEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=RvfEhNCkx1Dd9Nb7GO1+BBfvDbuW9Tnr5NBRBlIyPKU=;
-        fh=XaF75WKNzy7GEXsaYc6rZkNk86yvzWTbe46u3hv86Kc=;
-        b=XCh8gBkzjtp5scrlTNKczeRUpAjhlc2gR1QGM5jGiVXHNBrl3dz+tLBZhaOsooAkxD
-         l1MA5ZGN+4+lkhX3X0EFo+1dCwUJNvBfyvouGevAgfGQsSPYl/klk1RMyozaVRMgI3x9
-         XLT+1mToCg4oe9zSXMpOeIpVp56GeyHc+qAkxgRryfMdQWGLzyI25u/McjO+CGC9C1s4
-         91GAydvagYkxwplBAlx1pTHEyPFri5PsWz7QRMjfx1RVJUyOeagvlQs+Gq1GizWBOzV6
-         3N0R2uoQBo1xYfJ6RNh7dxTVVTXmzpEBJyqPFViBewCKubXWeRwSuY7mRifQQezZCd4Z
-         9dbQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778226227; x=1778831027; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RvfEhNCkx1Dd9Nb7GO1+BBfvDbuW9Tnr5NBRBlIyPKU=;
-        b=d4uYP3NMH581ny1qs0SHk9jFOSt3zN0uTUjlNWqXdNmCWn1OyfZLHnAaJpM4HI/nBM
-         gs3vKq3oxYvHPVegcyTy0sRLPvHaY7FPNu1HN9zeFIRhtDrR9QbwvPvbwebDeJ5KtSMj
-         dkQHGaQWVg+qs1QSO7Mnza3zoov+b6TW93lUQyYXFzFpAxqZ2coJ+Z6znu2VO8O4fYt+
-         uLulpt/vg4u+URr42C8pmyuKAovp0odVm5QOixvuUPIKtfXZfcqoXz2H+1CNuKuGnKIv
-         oLvl1J6f7yLSxtyZyATr+N+APyLnhYWgeI23uJFLq4lQKzmJjwFgGGJ8AEFXY20x0/zs
-         K/gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778226227; x=1778831027;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RvfEhNCkx1Dd9Nb7GO1+BBfvDbuW9Tnr5NBRBlIyPKU=;
-        b=oSFf2hw8wyRtLCmYN0kEdxH7nc1ZAZt98e/s06zKQB4vY0OZnj67Ye8dWGBoolDzf7
-         e9aCUIB4b9wtpQDeuhq3yxoLK6ZKVcz7QO5j1BttVDcoUYZcTHwJyQCt62/ucE5H9v7J
-         AixWUahg5ZayOSO+rGdcggLTnW8ReFJ7tWh19eISCbv7D+VdT91DLVaDmja5WICr4ahd
-         s+KwjYYdUAIVqO74Q7urgvzVoD0fTtkVVQmFJfihk3pOsVShehloz34k65XXnmgOvDdo
-         keiya60Y/ucm2LGDMjtYy+92dCb8MZ9r/sySBVlLz4FTLyASj2C4+PcT3TYYkTMp4+UW
-         e/XA==
-X-Forwarded-Encrypted: i=1; AFNElJ+XLfOeED9aSp8VC1Xhw5VXE8ath+XKZq2jqvJDsQIxDXfawxsyzyh+RjZKLPjTEuIed5kSlOT8Ew==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzMurD7ECAO7MM/3LOvFmxMrwMZS9G5MfHerJYBiMrNyVGRHL4k
-	7AbGQXZY3RJv0kktUp89jdeuVsH7qPaVNPJOsyzd4YarDXB98/7e89zUJITHyTTvbQvUsq1QoIt
-	HP+sK8x4TXp4LAXS/z2MSRKrGImgvOtI=
-X-Gm-Gg: Acq92OFP2Jgtj+5Rl51po5WKKWAQlY7ITHce/SK4d1x0Njq/ByBEWU30veXtEAeMJmH
-	ZSmfC0EsVyons1Q7ek1ucBj9FRnGmtQGRwluhK8zvUq5a642bSwl/QGGZhYiC3Uaq4V4bfpPEA5
-	8Yz0riYc2u+36vvW+7jdwQ6UEThf76C6ts5cJkN+3EbsVFZplktmNPiuF5SiiPppZde/P+P+pJw
-	BBGMf4qtdil88FyS/jZV4El0y6pbDx5K3INAG285pcVStLqzBAzmrEB73WHFyQ6V/el2lERUQnA
-	HDfu
-X-Received: by 2002:a05:6402:3137:b0:67c:4e1b:9134 with SMTP id
- 4fb4d7f45d1cf-67d642c320fmr4048316a12.14.1778226226925; Fri, 08 May 2026
- 00:43:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q14sNOL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7953C2BCB0;
+	Fri,  8 May 2026 22:27:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778279237;
+	bh=ARXB7IXHajXNXClhcBq3h8oAt0A8+aZDLCr3/8KxfqY=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=Q14sNOL/eiPwdP3e+3zHr0JzszikuMTxc6cRHiRSPs4RiC6YNtwehVosdJWfo4gSJ
+	 NF8iCTtzbnvpTjyBeo4l2jEvTCvrJcDOVFlRkmKMDjewpV/P1FEBtfcPtXdCA3iJnW
+	 2z4MjcJC9S+Ywfwx62aiQ3O4BJnBlnVwWqoGSFc5CSTbGT52RmKzWyKhzl32msJ1pc
+	 9V5RWKv4QpiP1PPKSm6WJjsqx4dfnxQMNM/Ne2ciHLGf3DTuXzkNXXu//wFQXMFg1Y
+	 dfPgrXQfbDFd98LFcr4xQ78caV/fGPKhOHZ+kfITSv/nAE17xrpsloMLz5/N53m2cU
+	 S/BlIJbLTz8eQ==
+Date: Fri, 8 May 2026 22:27:14 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Iker Pedrosa <ikerpedrosam@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Anand Moon <linux.amoon@gmail.com>
+Subject: Re: [PATCH v8 8/9] riscv: dts: spacemit: k1-bananapi-f3: add SD card
+ support with UHS modes
+Message-ID: <20260508222714-GKA3590877@kernel.org>
+References: <20260413-orangepi-sd-card-uhs-v8-0-c21c40ec16d0@gmail.com>
+ <20260413-orangepi-sd-card-uhs-v8-8-c21c40ec16d0@gmail.com>
+ <afzZ6Fjdt4puGjZ6@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260502051906.8160-1-linux.amoon@gmail.com> <20260502051906.8160-5-linux.amoon@gmail.com>
-In-Reply-To: <20260502051906.8160-5-linux.amoon@gmail.com>
-From: Anand Moon <linux.amoon@gmail.com>
-Date: Fri, 8 May 2026 13:13:29 +0530
-X-Gm-Features: AVHnY4JlnCRZnKTvTMdYqQJwi8x36a1HcWfn2B5BacrqHqsRYonr5CXEMpLcf3o
-Message-ID: <CANAwSgREs-Ai5RxuiD4Ue-8OGGdrhnLSBmSePBrjN3x9=59zrA@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] riscv: dts: spacemit: k1-bananapi-f3: Add
- vin-supply for PCIe 3.3V regulator
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>, open list <linux-kernel@vger.kernel.org>
-Cc: Han Gao <gaohan@iscas.ac.cn>, Ze Huang <huang.ze@linux.dev>, 
-	Chukun Pan <amadeus@jmu.edu.cn>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <afzZ6Fjdt4puGjZ6@aurel32.net>
 
-Hi All,
+Hi Iker,  Aurelien 
 
-On Sat, 2 May 2026 at 10:49, Anand Moon <linux.amoon@gmail.com> wrote:
->
-> The PCIe 3.3V fixed regulator node (pcie_vcc_3v3) lacked a parent
-> supply reference. Wire it to the 5V system rail (reg_vcc5v0_sys)
-> via the vin-supply property to reflect the actual board power tree.
-> This ensures correct regulator hierarchy in DTS and allows drivers
-> to resolve supply dependencies cleanly during probe.
->
-Plese check power tree page 4
-
-USBVBUS->SY8386J UXXX -> PCIE_VCC3V3 for pcie vin source
-
-USBVBUS is power source from the typec port.
-
-Thanks
--Anand
-
-> Cc: Han Gao <gaohan@iscas.ac.cn>
-> Cc: Ze Huang <huang.ze@linux.dev>
-> Cc: Chukun Pan <amadeus@jmu.edu.cn>
-> Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-> ---
-> v2: new patch in this series.
-> ---
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index 3dbdf53b6d8e..6c06480ba100 100644
+On 20:28 Thu 07 May     , Aurelien Jarno wrote:
+> Hi,
+..
+> > +&sdhci0 {
+> > +	pinctrl-names = "default", "uhs";
+> > +	pinctrl-0 = <&mmc1_cfg>;
+> > +	pinctrl-1 = <&mmc1_uhs_cfg>;
+> > +	bus-width = <4>;
+> > +	cd-gpios = <&gpio K1_GPIO(80) GPIO_ACTIVE_HIGH>;
+> > +	cd-inverted;
+> > +	broken-cd;
+> 
+> Card detect is marked as broken as a proper definition requires pull-up 
+> support in pinctrl. Support for that went into 7.1, so I guess it's not 
+> safe to use the proper definition. That means using the following 
+> changes on to of this patch:
+> 
 > --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
 > +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -39,6 +39,7 @@ pcie_vcc_3v3: regulator-pcie-vcc3v3 {
->                 regulator-min-microvolt = <3300000>;
->                 regulator-max-microvolt = <3300000>;
->                 regulator-always-on;
-> +               vin-supply = <&reg_vcc5v0_sys>;
->         };
->
->         reg_dc_in: regulator-dc-in-12v {
-> --
-> 2.50.1
->
+> @@ -406,9 +406,7 @@ &sdhci0 {
+>  	pinctrl-0 = <&mmc1_cfg>;
+>  	pinctrl-1 = <&mmc1_uhs_cfg>;
+>  	bus-width = <4>;
+> -	cd-gpios = <&gpio K1_GPIO(80) GPIO_ACTIVE_HIGH>;
+> -	cd-inverted;
+> -	broken-cd;
+> +	cd-gpios = <&gpio K1_GPIO(80) (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+I agree, please see this patch which was merged
+
+https://lore.kernel.org/all/20260312-k1-gpio-set-config-v1-0-8c3541da16b1@pigmoral.tech/
+
+
+-- 
+Yixun Lan (dlan)
