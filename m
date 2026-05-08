@@ -1,132 +1,202 @@
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CFF361667
-	for <spacemit@lists.linux.dev>; Fri,  8 May 2026 07:26:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778225188; cv=none; b=jXurYRWXUMkR+AP3jBQKaaRsWGD5sY73yiVLA4mTyQ6idMsA2Gb0U8+kjWHVYuDXp0s95ctfmAusdhH0jRIrfyQ+J6Um6B7p0oLE0ydfvzLXAS+0YLaZAmz1vo2d5/I1x87vL2gQ+myP5BlOI0lot6hWj4B3Le6GZGrU3YFa8aA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778225188; c=relaxed/simple;
-	bh=M4lbjoUhPJoCny3IpmEjnduHHjV318FmUyFmpW3E6zo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=T6nmgwft4NtIJi92FygOiA5DYhkLImofWJNNGzj6pa+bCueTL13LTi4Pp0uraIRd3aWA1msnEXIsqZ/5PpvFKj28S+me/zLR4iCQBcYD1E8EPDodlPlPBz7i6wn4M25vawuynUaNA3/Iv1/1hZ0kZCAVxc+QIUnMbbHOLjqYfUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=A+ZHduP7; arc=none smtp.client-ip=54.207.19.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39223890EA
+	for <spacemit@lists.linux.dev>; Fri,  8 May 2026 07:36:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778225793; cv=pass; b=JMjh4Ze4UyUWU23zB+ENOD8xnA138tAi/XOxGFqjTpYwuJswddkRZNl0/EFGKKqxz0XboXiLrmRw7NZmIEjvpv2TkpEV4F/T85vv9mW4s8W0O1v0H2k4U8yROwGe9ekPIEEV/CVV+SMCdsMGCdwXKLLHRWrPyQuOoqG5gRmz96A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778225793; c=relaxed/simple;
+	bh=/9IPBABBlUmX6oVvFKAFFIYxh2fd35YOKdzr67DM7kY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=G4GXDTrTHcNqYiKIONwRwD3/FXwZ2C+itcF1gj14dOb2aKvUng3991U6JkmqljPDmBC32G8xu7bWyYS0KOcnkU92mXMPgfzBFhme7Np5qxDtZHE8luuXHnPPOTVce4oMTPf3Sa19RgcqcVbwqDRK73F+LZio7DuE0nAf8YCjlfA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nxxj+y+O; arc=pass smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="A+ZHduP7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1778225141;
-	bh=rbweoWs65LxK6V/Lcm00CesALe08dny3oLDJ8d/9Clk=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=A+ZHduP79W5W0f4M72QoQUgJw8fJux5FRGDRnNsWWZ/Jcs02jpvm1ZMVqldTauqf4
-	 rHxAI1DSB5dogdLJY5BMMbDEh6IkHEp0ARBhbzNg+gMYwy8DaXkwaHVgnYS3mIh/EM
-	 XQkMTJkzQ2YHf0W/S6Rh7UzePjwVRosLYybRhN08=
-X-QQ-mid: esmtpgz16t1778225135t2ec53698
-X-QQ-Originating-IP: GvWsHhv6gPUuVDAnAl6L7AnrUg0HjU2QvetGSF/n2Sg=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 08 May 2026 15:25:33 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14195893166969710674
-EX-QQ-RecipientCnt: 8
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Fri, 08 May 2026 15:25:25 +0800
-Subject: [PATCH v7 2/2] i2c: spacemit: drop warning when clock-frequency
- property is absent
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nxxj+y+O"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ba699316b42so279658066b.3
+        for <spacemit@lists.linux.dev>; Fri, 08 May 2026 00:36:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778225789; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lHOK18sAUk1+++WDoPMOkTbD7tRsCqUBm9muf2kFJhi13FvxIwoxk4t9QeRk0CXrqS
+         4OkP+ASLg+n2cNDZdesJCcK21+melYzFy9DP9w19xfgG1cRdrnfG239n/QOaUTmxWApH
+         k5a9PtL5csk9t+0Ny/Co+hn3VvkbjcBmRkpQu0exZp5lf3VEa1zDSKiTkoBOTBtCJMV+
+         yGegmz1VJwN339zNVk0fvaeGLKBoEUx+s7W5eynrEiIKLKKWwV62rL1fQSiOC3XsqXBb
+         Upp5P9btBlKurGRLrbiWum4boyOXPxGZExumwx0ZsZ3NXP1W1uWvpGIYSfOvOg10rp3Y
+         M6Gw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=gBUyU0oRSZqCXNEYym0i+uTF7lcEuag7L4S3HbzckJI=;
+        fh=Xf1MhZ2UKpjHnCmST0NStrnb3hgzZnYYxQQFVPGZrME=;
+        b=BsmxF3laarTBSffcQz8Y/uYWt6/tig8VmR+GA+d+I8MHgGHWgsBlaM7HZFZktNe3aD
+         1NCN7GXaIMgnPd4unVHp0MctD3UtyWLt5tABOtQ4Lx4YXCfhXQacPKtqukS3m5X44yGM
+         ynlo0g9grc7tECMXvtuv//lGHz10mMRFPQs+O7HQoqX0kof2MRnlGirf0O5rsTrEbonJ
+         pl6jH36flOG4hWo1a6QEd/mIyvGiPOcRt1aLr1USm/djTHBdytiyd9yEGJNaUDqGV83z
+         U4EKEqoz9redVL51hGwdiaGBgzXgvcZYSfjYwUHZlJJYKdO9hmDeNBI4GmL3xPQ1g4Xb
+         kBKA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778225789; x=1778830589; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gBUyU0oRSZqCXNEYym0i+uTF7lcEuag7L4S3HbzckJI=;
+        b=nxxj+y+OtbpFvQW+DyBgMgmKz6j0JBG+xwnjwMksVSYok3anujjstLb5PX7JSGVzxM
+         iVAYsrzTW18+ozsewgFrA5usgiNC1fUwis3gf+6nQNUvb5EF7d8Enkvr81HDjgZhLFP0
+         oG1Mzc1pi64h5to0ar4ZASF2NbtnJ0LC3owTHUWMJREiBhExE2Jnpn2vWaPs43+8LFhp
+         qi7QFEQ+nsr06w0m1mFc+jFhVnMg28/gAhF4DArhtVLAqefbkNDwjxiQV/pTbHOOfaZ7
+         LqT/odSZSA9x5Bcm1fmupyamVdA/FVuaE6aAaU8OQ9ChPudqqHschVhRQ6xYQQ6BniRC
+         AL5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778225789; x=1778830589;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gBUyU0oRSZqCXNEYym0i+uTF7lcEuag7L4S3HbzckJI=;
+        b=Xo7Hw5BrHnYC4EXFaIczkONqrVv6fjSp/l9+3bm45ZvaavzhDBq4j2V61PlBDZFKIs
+         XB8k6/IiogYhPeVY9qdBX4H+3O3LJb9wAHKlPu6pMr3x0gl2obOWsoDkDvdasP+nuCdl
+         g55Ir+1QIiYNIY0+I8eEveWCpT6UNJQx2JfB0qyfrwr+HG7Dp6rPsDkW1y5gzt/hPNae
+         cGWuXGK3TcEDWrxphx9iD4C0Wl66KKwFFlG+rzeiYdQMHIp/7EojnfJWzOVhs2PDa0Rj
+         YBNb6030YFcPyQvJDY5WuLWsiSkFZJUN/54TuznSMmMsDq3yYeoEiEzmXlvAfbkdlOfZ
+         5yiA==
+X-Forwarded-Encrypted: i=1; AFNElJ82pNftS+/ey44iIC2P5ZL9iuyoeRXSapo+jGfbJsy0IioiGkjwUhu+StddGI5nmHyaj6+1vq8ODQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx8IcXR/GLkgpSPKjdKJA2/F8jDzW/L4pXOSvCa/wj6234dFh+M
+	gG8YtJb7cFy4TWDK4vdNcYthkIx7fIZFHPyG0+cU9IBwCwzCsMBvgq3BZ1vl7QdYgG8kmI0goMl
+	3RBW0LuZ1dfIolDNyUbz0s4BaYEuvmZs=
+X-Gm-Gg: AeBDieu8+9naD2GEhbdT/C+LWdeBeZRfPhY5v0cRjtrTbg0K5tpByfuRJRHyX57UKsW
+	5wsa52MbnDyds7PsUSXwmzbz+vFhq4EYNnglz7K1Fe1Z+L48U/nPU+ekNf9ycOud6kDEvbZdYQt
+	fQGZFl5oAuXuivs6wDPyxZFMCTMIEdu3VqaPGW+8isiJ0FQvuEjveGnRNkQyMj+f6l2rfqwi5IA
+	pLdk/QF+cw4B8c7WWH9nYLuv9sl6cYWIIq8q1zNuFYU56qpDKFnlrLeZIwEPKbe0xFe7/FvUfRw
+	XLwg4xT+lgVIABk=
+X-Received: by 2002:a17:907:3cc7:b0:bc4:aafa:65cf with SMTP id
+ a640c23a62f3a-bc56c92bfc1mr713084366b.16.1778225787261; Fri, 08 May 2026
+ 00:36:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260508-k1-i2c-ilcr-v7-2-8c2dde5c3ed5@linux.spacemit.com>
-References: <20260508-k1-i2c-ilcr-v7-0-8c2dde5c3ed5@linux.spacemit.com>
-In-Reply-To: <20260508-k1-i2c-ilcr-v7-0-8c2dde5c3ed5@linux.spacemit.com>
-To: Andi Shyti <andi.shyti@kernel.org>, Alex Elder <elder@riscstar.com>, 
- Yixun Lan <dlan@kernel.org>, Yixun Lan <dlan@kernel.org>
-Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778225126; l=1956;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=M4lbjoUhPJoCny3IpmEjnduHHjV318FmUyFmpW3E6zo=;
- b=L1QVCc9kPq+VZX1eNxdP9Uhfxn4G0ma/iZS8P0qUY/XLiZd0Std0gRCjyRoUdDg2gOXNGwYsv
- lkUlaG1kSaiDz5AAWxS2Aq6oSj4NkyEk7NqbRBv+NAZ8jWVI7JMsX7k
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: N8RLcQ8dzVhj2mrFTixT9so0omh7/fjfhx5jYyMcWJTa53ERrehX134L
-	8GbMuAYZ6XMji2v8k4d91KQQHLIKgFIBn+qGlI0FuSoNnwa3Im6CK7Nf7tkopOEI/2pjhPG
-	shu1zgs3YGsSSJI2T/TP8IJaOQu1/1dU80DVeOOoGGDfAFntXLwScXshTVK39bA6V+kTJZT
-	XYHV4xwXNksmVu67T8UoJ4YNsi+sShu4PT0pggKuux9zsfO1XSyn+KLSrw2yC4TSBEQltSR
-	UXfdkHwnRzKUVXs+CPLFL92hmkdHsODtkU3gPADu2B7WMssxpFsrKV/JnC5fyPiRjS/EkLn
-	wuT4OLPkbw0lL7Gbj4RnLv7yiN7VMc3F46ZFMPi5aAeojVCuhA4JZXCgyxs3DS6MlDSLiuT
-	5KDYVT8MNZ67D+peSEb+qwsbofE92WKyztm1nJqC/GOpDj3TcjVV0d289w2vogv66012J3P
-	WwvyIkklf5clDjNYpszC5AX0TY+NU7k3oBKrr5dd9xhvROViPZQv1M9YPC46yobXNg472L7
-	xBhVYp51XPTM7C6AtJCPg50L8jtUOjm4UJ9KeBvdBQ/eqfYBfi3U1iC52LJOVKzeIOlqwl+
-	AM+3CgKQIAItohLyglovrJ5XVELJvAR7HMac1SkkX5mK3Iu/m+qSUUxS1ZXt1cma8DB4leA
-	9YhgLG6pblKRQoVkQDyp4o8zgX3FF7+Q5dGf9Z++LlGfge3jXVxVELSJDKs/gbpmEh2DtXB
-	VlmXRGvmEltpKsYctG7byD7UBlPLwrZbCDCxUMpqsxDyVkKlGmiCQaFiXDc7wDl1DO1/C9d
-	N5JjOJMA1Ua9tuZZhjJPnFTnNW/OtH83B6HdFs2pKQMVrmcTZE7EF3/WpcKbXgNP1LyL+pE
-	bh3eX5uJR38xOkkn7p3Uk0nH2G4VO2tza7zRIU613J4f483b+kaw3ayn1DcAFWyUt3HiaVr
-	SjC2rJ0XKTdItWGliiR4tMBN5ImtcmK2i252HzYQ2ewONoGHnk0lMvEF15WnLsHnXBlJQWr
-	Fw9nMJ/lHyHcuyoNkgF4koNoSFAE6v3f0rDrqE8u96cqMxkD1Lz20ayWwSYhxpYLEV4qEVw
-	VwOEd0uLvUgizdjHy2R+NY6mvBjq74MHB8Tlpmppr6LdVTzhE0vKc81dX21tMyUZabYtP3J
-	gVpw/vMZDSgsndh+rHrVBKNd2642pfCrkIS8
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+References: <20260502051906.8160-1-linux.amoon@gmail.com> <20260502051906.8160-2-linux.amoon@gmail.com>
+ <20260507024524-GKA3579608@kernel.org>
+In-Reply-To: <20260507024524-GKA3579608@kernel.org>
+From: Anand Moon <linux.amoon@gmail.com>
+Date: Fri, 8 May 2026 13:06:07 +0530
+X-Gm-Features: AVHnY4KAmj7VrysTgYaoh89w72UBvUEf0oATrqx17Po5ftzAdn9p97hUDfjyrYc
+Message-ID: <CANAwSgQLhgC6puNy2dkMjL=hd+yTYizBBFykd63KJDbw48219w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] riscv: dts: spacemit: k1-bananapi-f3: Add
+ vcc5v0_sys regulator for Banana Pi F3
+To: Yixun Lan <dlan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, 
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, 
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>, open list <linux-kernel@vger.kernel.org>, 
+	Han Gao <gaohan@iscas.ac.cn>, Ze Huang <huang.ze@linux.dev>, Chukun Pan <amadeus@jmu.edu.cn>
+Content-Type: text/plain; charset="UTF-8"
 
-The clock-frequency property is optional according to the DT binding.
-Do not emit a warning when the property is missing and fall back to the
-default frequency instead.
+Hi Yixun,
 
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
-Changelog in v7:
-- add Alex's tag
-- Link to v6: https://lore.kernel.org/all/20260429-k1-i2c-ilcr-v6-2-1c7a5a5a8b24@linux.spacemit.com/
+Thanks for your review comments.
 
-Changelog in v6:
-- drop Fixes tag per maintainer feedback (this is not a bug fix)
-- change dev_warn to dev_info when clock-frequency is absent (it is optional)
-- Link to v5: https://lore.kernel.org/r/20251226-k1-i2c-ilcr-v5-0-b5807b7dd0e6@linux.spacemit.com
----
- drivers/i2c/busses/i2c-k1.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+On Thu, 7 May 2026 at 08:15, Yixun Lan <dlan@kernel.org> wrote:
+>
+> Hi Anand,
+>
+> On 10:48 Sat 02 May     , Anand Moon wrote:
+> > Define the system 5V fixed regulator (vcc5v0_sys) supplied by the
+> > DC input. As per the schematics, vcc5v0_sys is the input power source
+> > for the VCC5V0_HUB and 5V_VBUS reglators. Update these regulators
+> > to correctly reference vcc5v0_sys as their parent (vin-supply).
+> >
+> > Cc: Han Gao <gaohan@iscas.ac.cn>
+> > Cc: Ze Huang <huang.ze@linux.dev>
+> > Cc: Chukun Pan <amadeus@jmu.edu.cn>
+> > Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+> > ---
+> >  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 12 ++++++++++++
+> >  1 file changed, 12 insertions(+)
+> >
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > index 5790d927b93d..9727ecdd9f6b 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > @@ -50,6 +50,16 @@ reg_dc_in: regulator-dc-in-12v {
+> >               regulator-always-on;
+> >       };
+> >
+> > +     reg_vcc5v0_sys: regulator-vcc5v0-sys {
+> This will fall into the catogery of "non-controllable & serve no devices"
+> see similar comment for 'reg_dc_in' which raised by Krzysztof
+>
+> https://lore.kernel.org/all/6530526f-59ca-4753-a068-46c62a1a1fed@kernel.org/
+>
+> or should I ask, what's the real problem if regulator has no vin-supply?
 
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-index c6fe2052e479..7cf5c05a20d2 100644
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -833,9 +833,7 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
- 	if (!i2c)
- 		return -ENOMEM;
- 
--	ret = of_property_read_u32(of_node, "clock-frequency", &i2c->clock_freq);
--	if (ret && ret != -EINVAL)
--		dev_warn(dev, "failed to read clock-frequency property: %d\n", ret);
-+	of_property_read_u32(of_node, "clock-frequency", &i2c->clock_freq);
- 
- 	/* For now, this driver doesn't support high-speed. */
- 	if (i2c->clock_freq > SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ &&
-@@ -844,7 +842,7 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
- 	} else if (i2c->clock_freq && i2c->clock_freq <= SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
- 		i2c->mode = SPACEMIT_MODE_STANDARD;
- 	} else {
--		dev_warn(i2c->dev, "invalid clock-frequency, fallback to fast mode");
-+		dev_info(dev, "clock-frequency not set or out of range, using fast mode\n");
- 		i2c->mode = SPACEMIT_MODE_FAST;
- 		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
- 	}
+If the device tree is not configured with the correct power source it
+will affect performance.
 
--- 
-2.54.0
+> Any probe failure or something bad happen? (besides /sys/../regulator_summay)
 
+Not really; the regulator summary just confirms the PMIC used the
+correct power source.
+with te device ip blocks.
+
+Bananapi F3 schematics.
+[1] https://drive.google.com/file/d/19iLJ5xnCB_oK8VeQjkPGjzAn39WYyylv/view
+(page 24)
+
+Please check the shematics VCC5V0_SYS page 4
+VCC5V0_SYS->USB_VCC5V0->HDMI_VCC5V0->FAN_VCC5V0->VCC3V3_SYS
+
+Please check the shematics VCC5V0_SYS page 24
+VCC5V0_SYS input for VCC5V0_HUB and 5V_VBUS give the USB hub,
+which is enabled by USB3_PWREN (gpio pin)>
+
+Plese check power tree page 4
+USBVBUS->SY8386J UXXX -> PCIE_VCC3V3 for pcie vin source
+
+So, this series tries to fix the vin source for USB 3.0 and PCIe nodes.
+
+Thanks
+-Anand
+>
+> > +             compatible = "regulator-fixed";
+> > +             regulator-name = "vcc5v0_sys";
+> > +             regulator-min-microvolt = <5000000>;
+> > +             regulator-max-microvolt = <5000000>;
+> > +             regulator-boot-on;
+> > +             regulator-always-on;
+> > +             vin-supply = <&reg_dc_in>;
+> > +     };
+> > +
+> >       reg_vcc_4v: regulator-vcc-4v {
+> >               compatible = "regulator-fixed";
+> >               regulator-name = "vcc_4v";
+> > @@ -66,6 +76,7 @@ regulator-usb3-vbus-5v {
+> >               regulator-min-microvolt = <5000000>;
+> >               regulator-max-microvolt = <5000000>;
+> >               regulator-always-on;
+> > +             vin-supply = <&reg_vcc5v0_sys>;
+> >               gpio = <&gpio K1_GPIO(97) GPIO_ACTIVE_HIGH>;
+> >               enable-active-high;
+> >       };
+> > @@ -75,6 +86,7 @@ usb3_hub_5v: regulator-usb3-hub-5v {
+> >               regulator-name = "USB30_HUB";
+> >               regulator-min-microvolt = <5000000>;
+> >               regulator-max-microvolt = <5000000>;
+> > +             vin-supply = <&reg_vcc5v0_sys>;
+> >               gpio = <&gpio K1_GPIO(123) GPIO_ACTIVE_HIGH>;
+> >               enable-active-high;
+> >       };
+> > --
+> > 2.50.1
+> >
+>
+> --
+> Yixun Lan (dlan)
