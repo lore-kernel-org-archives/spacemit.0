@@ -1,30 +1,29 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2E726F2B9;
-	Sat,  9 May 2026 13:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC70B26F2B9;
+	Sat,  9 May 2026 13:52:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778334758; cv=none; b=Y7aSn6XWCWBdHaDbGvGhqApvLFWS2+LnlsiZKI3unlwVzd+QQb43I0/QbOyylMFWTNOccJsUu3ySXdUGc43vHOcNF42kPmoyK0oUncJarRw6qnUMCkwYRSy8Ba/wL5cMwpiA3H3kJN/G+M/cHezDYM3mmIqnu6Hki9ryHae7lio=
+	t=1778334763; cv=none; b=kxrzaddE6CG0cagTByeFFWVZK9gw4kXSHeXRj0s91Wtel7Q0SyDqT38Pd0qtzBQ3lNeSTOUKmzSuAF1Rwbvp4pbEk5kxSCMg4xFEgvF+O3Zuhp57/zLQIDVeh9BxsdCoAvL0WlP0knnP7e3S07lFX5CAiIoi0Zznnw0GHVFtqss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778334758; c=relaxed/simple;
-	bh=UFi8CqcGrdM1pAGmF4kAgBHhbHA8IisD+Tn5ow/NNJ4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=g6sOUfJZrKItf2Vvka2+EnJteg15Nogdz3VT4SKq0WYN1LUWTqzKf/XmBjW6AWWKArT+7WDPWPnn8mv1W7Ar8uEpw5xxrbN6RBrlhONbeX8zlPHEESgd9Z0A2JCSisHSx84ntg16m7eCVyecFcrl3txqAd1jRRiewolnIhDKmWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=Au0TXh4Z; arc=none smtp.client-ip=117.135.210.2
+	s=arc-20240116; t=1778334763; c=relaxed/simple;
+	bh=XslxQDWUqHuPR9kl+dCUY8yQGz2G39WEj2ulGmwl8e0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ui7uhqFfWNCvznhxL8DLIyJmISTDCuhRDp7bhLkubl5k8QiWMH291huZ/0feRvMNv+F4h10NhyHp2sQ1c66NfPGghrJV9bvmlj+kqTBRe/xjvjmplLNgIXwyadquWhqBDB0KFgWs9yC46OBRvzQY9/RYrjt0g7/R//+7/0/lpFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=XC8ZlNs3; arc=none smtp.client-ip=220.197.31.2
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="Au0TXh4Z"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="XC8ZlNs3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=LT
-	H5VZR3wbji2shWxUMqCGICYtJFJYr1trTdG4CcqwA=; b=Au0TXh4Zc5TrHQ8/OC
-	ZGsjr7P+w0iJx7MFRGdSSw6hCgJdXQpdZ0P6Y9VbjenliJC6iKlJlWGUJ1DnFc4w
-	wkbsjW1cHk13iEITJDfiJF57uzeZKGWEyUZeBxp7ACJMKSLEOyL/reQY/dEqBEyy
-	IEkq33Cfj1mv6Tbny8VtbKYM0=
+	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=mI
+	OPut41WSK0wYvb6vxdmeoEPL8RRyCrJZJUvtEZxAE=; b=XC8ZlNs3NhGX18IY9t
+	j6I6UhqXs73kv2pIp/r9Gt5lUsDCkK0iccAYOOx8W7o1m7VhAxFqoode05hmjDj/
+	cpYcpOSUU/AFOqZfeipmG2LaOlBLEi/vLumvaHFGT7P+0sPXLINCJd5ShbVRSCEG
+	M2yZDdph28Cc/jCHv0gpHkUyM=
 Received: from Precision-7960.. (unknown [])
-	by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id _____wDXLzL8O_9p486jAQ--.37610S3;
-	Sat, 09 May 2026 21:51:58 +0800 (CST)
+	by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id _____wDXLzL8O_9p486jAQ--.37610S2;
+	Sat, 09 May 2026 21:51:57 +0800 (CST)
 From: Hans Zhang <18255117159@163.com>
 To: bhelgaas@google.com,
 	lpieralisi@kernel.org,
@@ -43,12 +42,10 @@ Cc: mx@lists.linux.dev,
 	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Hans Zhang <18255117159@163.com>
-Subject: [PATCH 1/3] PCI: dwc: Add pcie_cap field and helper in designware header
-Date: Sat,  9 May 2026 21:51:50 +0800
-Message-Id: <20260509135152.2241235-2-18255117159@163.com>
+Subject: [PATCH 0/3] PCI: dwc: Cache PCIe capability offset and simplify drivers
+Date: Sat,  9 May 2026 21:51:49 +0800
+Message-Id: <20260509135152.2241235-1-18255117159@163.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260509135152.2241235-1-18255117159@163.com>
-References: <20260509135152.2241235-1-18255117159@163.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -56,60 +53,50 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDXLzL8O_9p486jAQ--.37610S3
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KFWxCF4kArWUWw4fGr1fXrb_yoW8Ww45pa
-	y3JFySkF48AFWava13AanxZr15tas3ArW7Ga9rKw1SqF9xCFyUGa18AryYyF17Kr4Ikrya
-	kw45t34rCFn8JFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zE3CzZUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbCxB5oDGn-O-4CewAA3U
+X-CM-TRANSID:_____wDXLzL8O_9p486jAQ--.37610S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Cw1kuFy3ZryfAw4ruFWxWFg_yoW8CF1rpa
+	y5tFWIyF1rtF4avF4Yy3WDuF13t3Z7AFWDK39xW3WSvFyaka1UXr1rtryrtr9rtrWIqr13
+	Kr1Uta47GF4fJFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0ziO6pDUUUUU=
+X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbCwx1oDGn-O-395gAA3x
 
-Add a pcie_cap field to struct dw_pcie to store the offset of the
-PCI Express Capability structure. Provide a helper dw_pcie_get_pcie_cap()
-which performs the capability search on first call and caches the result.
+The DWC PCIe core and its many platform drivers repeatedly call
+dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to obtain the offset of the
+PCI Express Capability structure. This is wasteful and makes the code
+verbose. And some even search for the PCI_CAP_ID_EXP offset value within
+the suspend/resume functions.
 
-This is a preparatory step for replacing repetitive capability searches
-in both core and platform drivers.
+Add a cached pcie_cap field in struct dw_pcie and a helper
+dw_pcie_get_pcie_cap() to initialize it once at probe time. Then replace
+all explicit capability searches with the cached value across the
+entire dwc subtree.
 
-Signed-off-by: Hans Zhang <18255117159@163.com>
----
- drivers/pci/controller/dwc/pcie-designware.h | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+Hans Zhang (3):
+  PCI: dwc: Add pcie_cap field and helper in designware header
+  PCI: dwc: Use cached PCIe capability offset in core
+  PCI: dwc: Simplify platform drivers using cached capability offset
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 3e69ef60165b..4baf7eb072eb 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -568,6 +568,8 @@ struct dw_pcie {
- 	 * use_parent_dt_ranges to true to avoid this warning.
- 	 */
- 	bool			use_parent_dt_ranges;
-+
-+	u8			pcie_cap;	/* PCIe capability offset */
- };
- 
- #define to_dw_pcie_from_pp(port) container_of((port), struct dw_pcie, pp)
-@@ -805,6 +807,21 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
- 	dw_pcie_writel_dbi(pci, reg, val);
- }
- 
-+/**
-+ * dw_pcie_get_pcie_cap() - Return cached PCIe Capability offset
-+ * @pci: DWC instance
-+ *
-+ * Finds and caches the offset of PCI_CAP_ID_EXP on first call.
-+ * Returns 0 if the capability is not present.
-+ */
-+static inline u8 dw_pcie_get_pcie_cap(struct dw_pcie *pci)
-+{
-+	if (!pci->pcie_cap)
-+		pci->pcie_cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+
-+	return pci->pcie_cap;
-+}
-+
- static inline int dw_pcie_start_link(struct dw_pcie *pci)
- {
- 	if (pci->ops && pci->ops->start_link)
+ drivers/pci/controller/dwc/pci-imx6.c         |  6 +--
+ .../pci/controller/dwc/pci-layerscape-ep.c    |  4 +-
+ drivers/pci/controller/dwc/pci-meson.c        |  4 +-
+ .../pci/controller/dwc/pcie-designware-ep.c   |  4 +-
+ .../pci/controller/dwc/pcie-designware-host.c |  4 +-
+ drivers/pci/controller/dwc/pcie-designware.c  | 16 +++---
+ drivers/pci/controller/dwc/pcie-designware.h  | 17 +++++++
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c | 15 +++---
+ drivers/pci/controller/dwc/pcie-eswin.c       |  3 +-
+ drivers/pci/controller/dwc/pcie-fu740.c       |  2 +-
+ drivers/pci/controller/dwc/pcie-intel-gw.c    |  2 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     | 11 ++--
+ drivers/pci/controller/dwc/pcie-qcom.c        | 24 ++++-----
+ drivers/pci/controller/dwc/pcie-sophgo.c      |  8 ++-
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c |  5 +-
+ drivers/pci/controller/dwc/pcie-spear13xx.c   |  6 +--
+ drivers/pci/controller/dwc/pcie-tegra194.c    | 51 +++++++------------
+ 17 files changed, 85 insertions(+), 97 deletions(-)
+
+
+base-commit: 70390501d1944d4e5b8f7352be180fceb3a44132
 -- 
 2.34.1
 
