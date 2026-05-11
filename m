@@ -1,83 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8267402BA0;
-	Mon, 11 May 2026 16:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0247C42EEB1;
+	Mon, 11 May 2026 16:56:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778515414; cv=none; b=a7Wvn9mP+yxK+s1JvIbdq7jcUozQQeXuhGHs9A6yTUStvSoYdzEOt052a5ClD3Vd1xTBMPCPWycvjdNTdlcN/j3g2wPx1e+TQdssugpG50m8JMGnVRpaohvlrDFBAw9S5LjyZntLI2AoGNkoUXuQ+kqB4TZwpVr212x045mlbtw=
+	t=1778518572; cv=none; b=gva9ppiY4SNAXuPYxwJzduf84Om0oi9GHSzZGlov/+nHdJ/9KbKa2CPckS9UzQCUb5gCiVxKSVqoqITb4vdCg8SjQjhFWMf9O9MdbghnEJTYswyxSoSytFGvcfDbCIj3x4tzyMKKx0Evk9qezpjebTP0I+vPMM5AyRp3yVR/4ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778515414; c=relaxed/simple;
-	bh=tnssC6hzI7TtVFOUZpDeV/SJwOj+VIPiHlIHrHS+MsE=;
+	s=arc-20240116; t=1778518572; c=relaxed/simple;
+	bh=rBQpmDiJ4kzQOa1dGHDK9kSEwdy1gsaL/djBxZWUqw4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m6sV6waqLcgRLCq3vb02/Vp9MvtfNP5K0Q4RTQx0nTxPRU3ABhE/Zb8FmgV4szLJn6MV1VkvHx85y8DfxyjQSmbMZlxzsZ8LlqvGcstl7R8CXyFGDgY+2P5IOXsRcxIL+CUKjNSMjH/+td811S1IZF73AG2eHaBW2BnvbHlQBXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h1CJx+Er; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=MglNztTRvqjs9OHyRQPU9W1h+MeH60Zhy7VS8uS7FIkLk4NHj6m+ue6Sid0VOvF0GOzNHg/cWz3r/tDe+Xy4uKTQnqr50qtJIw28w8z4uacHI5/4T2reijARfx9hXMUV9OWeNAaFExyrn/Ic18sA6AZf2gTgssvvEHItDj/ixUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=mJbiTZwp; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h1CJx+Er"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E40DC2BCB0;
-	Mon, 11 May 2026 16:03:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778515414;
-	bh=tnssC6hzI7TtVFOUZpDeV/SJwOj+VIPiHlIHrHS+MsE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=h1CJx+ErexpwUsremaPUA5m1lnGcSosFevHHgUgV6uys97zQ/7Vq1EH08p4nNhO5H
-	 RosKpfe3GV+sKrldFLpaww1uxpYl5Zt87ATj015vIBQWKqL7gYdPz5eqkzz96S9dAU
-	 w2yrmoEpxPn/5rwULZxNMAOnalZbAetuaJGufkdaros7fkJCKzt75MwHatBPQqenJ/
-	 ACy6EDfEW/NtYjPhpouOBU/fQjjFVuvR9RAWgHa/8yTBblF32IY8jiTIIk/IP87QX2
-	 1baJNxgkMOWxAr58N/2qBqxvsF8MYVl/P36Krldtxnj5ZcuT/EfwDT3IY9MAcFG8W4
-	 LOounhu7CatcQ==
-Date: Mon, 11 May 2026 17:03:29 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="mJbiTZwp"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=L78XUyfmd1N5LDsAK22uGyO5m/vZ7XFauhOa9Q1DPPA=; b=mJbiTZwpBLn1iJ9s002v6d53kF
+	7ltMVdCI3QMDRuKY7nS6SB1R1fdJNnWumYyoperh77ipD4k5J/eXJ0A5OxPDP2U+Wxu0e5W976yxn
+	Fx+6njvE/EaDADFnsK1iG2R13jjYl/2oicpHYZu46xcL0ehRB0eIsqz548jxMEfGOfjBxtCwluHQF
+	QwBu1I1AcnCkeg8V8yPf0ZuAzGXcDTJSt67J5+Nlc7qRr62Cs90MdsjGyYhWvCcOBOnEI3PXXAf7U
+	ExQCpxGrzxevFd2KUhimBfG3aaAqZwAq1dhaazcmdkkQh8O+zGYHdV571/XYWp6t7tpwqdmRhzlx/
+	rfoAAA+g==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wMTv5-00000003ZV9-2MVR;
+	Mon, 11 May 2026 18:55:51 +0200
+Date: Mon, 11 May 2026 18:55:50 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
+	devicetree@vger.kernel.org,
+	Margherita Milani <margherita.milani@amarulasolutions.com>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Troy Mitchell <troy.mitchell@linux.dev>, linux-mmc@vger.kernel.org,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v9 7/8] riscv: dts: spacemit: k1-bananapi-f3: add SD card
+ support with UHS modes
+Message-ID: <agIKFnO1i9eJWXfY@aurel32.net>
+Mail-Followup-To: Iker Pedrosa <ikerpedrosam@gmail.com>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	devicetree@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] dt-bindings: soc: spacemit: k3: Add PCIe DBI
- clock IDs
-Message-ID: <20260511-freebee-pebbly-585cb309a00c@spud>
-References: <20260511-06-pci-clk-fix-v2-0-c9a5e563bab3@kernel.org>
- <20260511-06-pci-clk-fix-v2-3-c9a5e563bab3@kernel.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
+	devicetree@vger.kernel.org,
+	Margherita Milani <margherita.milani@amarulasolutions.com>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Troy Mitchell <troy.mitchell@linux.dev>, linux-mmc@vger.kernel.org,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+References: <20260511-orangepi-sd-card-uhs-v9-0-ae48c0b2b2cf@gmail.com>
+ <20260511-orangepi-sd-card-uhs-v9-7-ae48c0b2b2cf@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JBh/GwDPbWz+MZ2f"
-Content-Disposition: inline
-In-Reply-To: <20260511-06-pci-clk-fix-v2-3-c9a5e563bab3@kernel.org>
-
-
---JBh/GwDPbWz+MZ2f
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260511-orangepi-sd-card-uhs-v9-7-ae48c0b2b2cf@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Mon, May 11, 2026 at 02:59:11AM +0000, Yixun Lan wrote:
-> Add clock IDs of PCIe DBI (Data Bus Interface) clock.
->=20
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
+On 2026-05-11 10:54, Iker Pedrosa wrote:
+> Add complete SD card controller support with UHS high-speed modes.
+> 
+> - Enable sdhci0 controller with 4-bit bus width
+> - Configure card detect GPIO with inversion
+> - Connect vmmc-supply to buck4 for 3.3V card power
+> - Connect vqmmc-supply to aldo1 for 1.8V/3.3V I/O switching
+> - Add dual pinctrl states for voltage-dependent pin configuration
+> - Support UHS-I SDR25, SDR50, and SDR104 modes
+> 
+> This enables full SD card functionality including high-speed UHS modes
+> for improved performance.
+> 
+> Suggested-by: Anand Moon <linux.amoon@gmail.com>
+> Tested-by: Anand Moon <linux.amoon@gmail.com>
+> Tested-by: Margherita Milani <margherita.milani@amarulasolutions.com>
+> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+> ---
+>  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 22 ++++++++++++++++++++--
+>  1 file changed, 20 insertions(+), 2 deletions(-)
+> 
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-pw-bot: not-applicable
+Thanks for including the card detect change.
 
---JBh/GwDPbWz+MZ2f
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagH90QAKCRB4tDGHoIJi
-0vnbAPwKILdBfNPqMJ1bvTlNTvWQekjhYzoZzigGKTzY3YcAngEApU6smdGXVENQ
-bNK9AQxsbubcUW1bZ9aMkD1xe69eawc=
-=9jgE
------END PGP SIGNATURE-----
-
---JBh/GwDPbWz+MZ2f--
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
