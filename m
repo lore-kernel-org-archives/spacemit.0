@@ -1,151 +1,142 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1498B3A7850
-	for <spacemit@lists.linux.dev>; Mon, 11 May 2026 08:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778486540; cv=pass; b=cOLDuvdVfWDhpBnK2iMH0dqaHWQDAY/rc9Wc75mJp41xP7PgRSlIt0bVZEgxF4BRNd7EyAvKMUQv95yS2VNhpBxR5zOEYn2IFLoLr2UEyB6sQBE7yIyf7p9ecCDqgVZ8mOxlCzZv+j1YoNHZnT7aVl917nX1/tmtem9p83YG5bg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778486540; c=relaxed/simple;
-	bh=hAvNwN3LdfvaDvVGl1LPpgogRMQ+ezfmubbeLc9ID7I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Gvtwno4eX+pFRnaxxk97PGZUZOunnNt7LcOkCB6WSMnSvSZ8xg1vdxyhY/ZHZMyxlyQk/fq2rl+lgbBQ+3UlSIhyhgZr91YZYL9mZ78bBfZw80cXLFS/+jHEgMPG2Q9JK1oKVFRmIoxTlkUJYoIM+oPZHdhOII0OXaGVInQXe98=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZCfX0qLr; arc=pass smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7043BF680
+	for <spacemit@lists.linux.dev>; Mon, 11 May 2026 08:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778489671; cv=none; b=jDXEnr6KjoQPhG8Nd1yZ8ECXgDh2Lt+H5POIUMB2o1iczdaznRCDjgqq3EnVTtNAg67h97LmYHBJd7N7g9RUeBS1XfbeLJO2aC/wnRIPHMV3CRrO35JAqduS3wvEFSO38j3aHKcIEPx8uCQ+hsJ/wxUM8DUnfXPJEUK+pXJNEEE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778489671; c=relaxed/simple;
+	bh=Zbia6kwCaTPqaM7mSuVvAG80BXlogFVq9JLCXZ979Zg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=dA4StB+M8gxE7NXs6dXmBxOj25vjw5DgLm6xFcW844b8DG4ee1jugVKv+zH9WSohh/PnjUMJsdC77mBkteySC0VTxYsZPQCLxOg/WhZkmzw542l5joriALAxE1g2augVS3ufRwC59xfBWmF5LldTkon7OuCuaNXly7tP9JqdOHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZBsYd9O0; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZCfX0qLr"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-65c7a459105so4373409d50.0
-        for <spacemit@lists.linux.dev>; Mon, 11 May 2026 01:02:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778486530; cv=none;
-        d=google.com; s=arc-20240605;
-        b=bp9aBl8QC1O1jVrz+3RuPpzOLMpFx5Bwb6WaCMZ9DFXPB6vaJoDz2b5eyfnfXt/CfQ
-         4gctx8NRFDjZsna7F8fc4WpAz3+QIdOrIIBLcIQReJRHn2KI8D8SeE7/Hndtnt61P6s5
-         yBzdU7aoIemEl7MHcIfpFma5vYX483L9agDzEqY7lEwWu9nkXq9DV/YEHO1aRA5AfwY/
-         AqjMKkGSZEVoW9U7jsertYj3Xca6E5CJkaUws+moJeyEiGdJC6r671GTW1sn7uvnhBcI
-         hdClEXAf2MDCmlAg/fkdVzGIR1cbz/0xlQI8VtWqkV8JF/nVUeugEOiVjl3qXwzFgwai
-         D0vg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=sW6azkXa80yI0rJXwT2HYG22XiYQ/sn39R3AWBjjzho=;
-        fh=TDAld+PzvNxuFWy/xTfl4pmY02nL1t3HRNM7qxeVPs4=;
-        b=ZjOJi7iTEXGc2sEI5RM0GPWKxZeYJGLuThvdxQMvVGeN461NWYV6dkNRjZh+TymX+q
-         ldG0o6I1sGzszx/d7evxRJZ4D6u8epW9rGk4GRIHzFs0Aecf0/e2n53VWJVFbamnK7Fd
-         MUML2W8O5sG1WebuQ86+KQIInpuLb4fTAjMicjTYoMYrQ8GoPZHjk5SSCxspGvuu6RWq
-         XgGrCzeUkLpIBsFXF6MHXxRTLdjAugjlFQpnXN6xa4PwNUvxNrPGzmSsxb0bIRWdXsIO
-         rz2F0qZi3W64afmTZ1tSO7H0r3mf61T6a2b0jY/uGuTuO8w4l7KbaC1rFgIDz/HLLkxu
-         Fexw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZBsYd9O0"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-44dd5cb0f81so3204666f8f.0
+        for <spacemit@lists.linux.dev>; Mon, 11 May 2026 01:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778486530; x=1779091330; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sW6azkXa80yI0rJXwT2HYG22XiYQ/sn39R3AWBjjzho=;
-        b=ZCfX0qLrVlv890MpuhbcuBoHpB/J3woObUqA9uI1Vmbm6W6/Hb7BJKWMwC77BzUV1Q
-         lbcWYhjnmvtA0iZNaNMTlCw+WocO/uoeBIAFMqlQbJB5nluY+jD0K0MQSOYsKSwL3LpW
-         pKRh6gddoZHJDXESIgUuLUY3eoCS1Xh7sGjOl+xsPNfGtFkHjIL0x0tF9szYLf2xt6aU
-         089PO1044nH5qAirmaghOShb1us42pIc4DkoCM+drzB+0XwumUbR+GfgQMpbotWb4sWF
-         kVW49lUJqXlkvdDaPmDIix1SVXULJgKa8y2o1N/qZPt7HcOYcLwnbQOgSffd3zUGoSxG
-         5OrQ==
+        d=gmail.com; s=20251104; t=1778489669; x=1779094469; darn=lists.linux.dev;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mNCRp7u8GA5aDjDB3Y0lI0oGuBZ5cilcPaEkSfJ5vdc=;
+        b=ZBsYd9O0KqQaHyG7xaLsxUvDkXGeOE0zx3nc59i9Ot8FpssJF9zm1YwcKc8sSQJUYK
+         hwdv0cH46z7et+WPiecev+NotKNpqT4ssij5joXCiRmXF1FoymPpANtobwWLLwkTlGkk
+         xT+1s94OzGqQR/88mkGdrIvsvq1+sMsXKU2dXGcJXeSMmndTUP3Me76oTKiz+mf4AU93
+         a6fNx19eCV2rKeK8DmGd8MLj1PsTyi/wgP3OsZyVQKOivk69W/a1+Fyz+cIDYNiAb6eC
+         C+9xBwwUm0YVOSX8AfkFMVUjcQpzoOq0Kw5Rd6PRx0jhfryGUMIH+E5ho7aguQta8py7
+         afgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778486530; x=1779091330;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=sW6azkXa80yI0rJXwT2HYG22XiYQ/sn39R3AWBjjzho=;
-        b=CIq4E1R7HLEcf5mB0BblMVzdJ+uzvN6pT3szwT1UmG702EmC5eZMdA/DN1XK2kAqIt
-         qPPcNBciQgaHC9XOCGVQJ5/7tz8W5nYyKxfkbEzklXSa6sWbUgpKuMsCBxlnMrjj+0af
-         PNVrUbZJW9OmNrzcfLo+r61dxDGZRAQbiled4MkGAcY8lvZB8JL27on7NCoffGbQL79+
-         ebImejBUhR341XjvFkjjGa8gJQau4dBst2J8tBDm8lxUENy/esU0b2l07OsaBurpB+eh
-         EjEubv6yUxsDFTLRS3Bm9SlPFqwz1QHZHjXOFd7TlkbjeWQ5F6Kq3HdsnnoBCXa2ddcL
-         eQSw==
-X-Forwarded-Encrypted: i=1; AFNElJ8aHbYRFs2F1a9JT9y/fLpa1J8UaRAEDU66FOeKkvnOTRk5dnBGDTKBgIG6ohnwEZby4rIrba9LAQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YydnDU/56ffBqjspiy++TQ4AJpF7sxr/8AiMNp21/9Tw9OrzdJP
-	eGL87lkl4B3b5HAvtK6hQatuMsk3xyiNTAGBB0bHBVmfg+qwBKHkjwHhJ435hloHCBivc4BNgq2
-	gGLHNFsT3P2I90JW8zIdbbZruQKUO3N4=
-X-Gm-Gg: Acq92OHt4fUnzMbZapWR0+qejnWefKxxVysND9+hUiiDJDW6R++X7hmN4j7f0K/zoco
-	gNJ9gJmn/qDs0bwLLfVm9lpfPJSzzQCoYgmV6DjxvbPkBBHgyF1GQPY20Jxqm/q24qI0HTDYHjl
-	J83EQuxAQAlycLkDBDBJYFybYR4zermEMJyuBjVhP8cGlfl1/odOPxuG3ptTpisSSrwR/Fbqpu5
-	PYqtKma+x7YMtJIM3conEN3YKDb+OLYyR6LB2k7RrxaaBTRk/6PTRV94LMZgH8qj8ZJfwuyGo4C
-	KpIowbhe
-X-Received: by 2002:a05:690e:1905:b0:65c:6ffb:3038 with SMTP id
- 956f58d0204a3-65d7e822e64mr13587707d50.17.1778486529994; Mon, 11 May 2026
- 01:02:09 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1778489669; x=1779094469;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mNCRp7u8GA5aDjDB3Y0lI0oGuBZ5cilcPaEkSfJ5vdc=;
+        b=rhtKvSTFrv//SL8gi/tC+zHnIUSaqppzqvHGoUSAFYmA7Y0LPWHK6e1Ry1U6y+8/pK
+         oFQ3KwO9dODoZf05BIhQSObJOQSxwy54jnlobMdgIkMy09c07VAKok+071yIL9QfAnq+
+         WDyq3TTGLAeD5V2XQhZdxWguS9hj9gVXWazkq/V8RESVo/bTX6IixxzjLjMBxNRv0R7o
+         sXSnClQOPqiNVDoPgZw7yOC/YGvg2j1vwWAiZkQ92JypHP88bNSmYIwO5jVF/Rt3PTpf
+         zNAD0mPMis1P9czCG7d103jRgjOwFNgpaRBW6mqFGFrz9CkJ8ncDZzsDeDC4DfqKHem7
+         3FKg==
+X-Forwarded-Encrypted: i=1; AFNElJ/csrcd1F/hE8lUqExGc23S9Tzmu9p9yg1otd6oUVeGIm+hyTs3SwL178jqYwyK6oFlSAxw0c326A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxlUBNrArc/jwrHFdsF4Jdf28a7gvs0p9eCpSKdyjPpewdhw7/6
+	scP09zJQd9iXNMuiF2oDVtkjFuibT9UVFmOzgMcS4CaCA91MoMnrmSiPPNsxww==
+X-Gm-Gg: Acq92OGvX+WR0hd5GTkJisNlWeiCfC59NJRfsJlNYJMdCIohEmH/uiTvpVzeWbC7gId
+	IEe+P5VQo7f8Yu1uUp5jLL1gtGl1TqdIZnGdEqadBL5DC7MgYZK3jisJ5m1v9h/vKRKGA/8J9Cd
+	5bUS5FudivB9GcUgoO2ZSlIo87wcE8zC/qQFdT7LaRufZqi+uBoSZAL2VDL1SssPZUppcAon74n
+	nJgfTN0mTwngrIZF1jR4nZPN93LkTa1NS4D/5rNExAZbXVrsgN7TkRWqaa2qf7TeECzpVUtGULz
+	7L+IWwcyxih/mL5GzdSflX2TkW24fp/YYd8SR/8Hax16jsbRW9xGl5gdxNYY4z8qTQSAnXrRa5i
+	PfU3v+kP9xZ6n2PXnxbr5Hyiog0ACQ3FE1PYi+6K+JGNDnuJV9LNrxydeQpZN6vP6HMD7MAYLuh
+	EFYwzqe6apE/BG2Ktv4/Yy41COUYMCV5oVDQfnPiNsxVbI1gsbS4DNZbuOzv6zsDZ2Bg==
+X-Received: by 2002:a05:6000:2181:b0:44f:b82f:2d18 with SMTP id ffacd0b85a97d-452e81764a0mr19569331f8f.11.1778489668568;
+        Mon, 11 May 2026 01:54:28 -0700 (PDT)
+Received: from ipedrosa-thinkpadx1carbongen12.rmtes.csb ([67.218.237.202])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45491ca2fd6sm24944189f8f.30.2026.05.11.01.54.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 May 2026 01:54:28 -0700 (PDT)
+From: Iker Pedrosa <ikerpedrosam@gmail.com>
+Date: Mon, 11 May 2026 10:53:56 +0200
+Subject: [PATCH v9 1/8] dt-bindings: mmc: spacemit,sdhci: add pinctrl
+ support for voltage switching
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260413-orangepi-sd-card-uhs-v8-0-c21c40ec16d0@gmail.com>
- <20260413-orangepi-sd-card-uhs-v8-8-c21c40ec16d0@gmail.com>
- <CA+Xcp4nY9GVMOmtMG-PNhY2vqP4Cc_amAMSa+M3vuDjWUkuCHw@mail.gmail.com>
- <CABdCQ=OsPva9=YPdBd=3HW1OO7=_zJtpXjvaiA0WLEDT5Scs_Q@mail.gmail.com>
- <DICDTHYTPDSP.210EBVHTQ6966@linux.dev> <20260508225341-GKB3590877@kernel.org> <20260508231051-GKC3590877@kernel.org>
-In-Reply-To: <20260508231051-GKC3590877@kernel.org>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Mon, 11 May 2026 10:01:58 +0200
-X-Gm-Features: AVHnY4Jd8hC8nSk1elUyO1V0E_fXdX8QCiSMcWMOA11otgjNrlNzYjy97ZtHNls
-Message-ID: <CABdCQ=NFuW-XBK2zrw2TUFrEg0Q1Wf3_qS28zT3v-Hfud8mkew@mail.gmail.com>
-Subject: Re: [PATCH v8 8/9] riscv: dts: spacemit: k1-bananapi-f3: add SD card
- support with UHS modes
-To: Yixun Lan <dlan@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260511-orangepi-sd-card-uhs-v9-1-ae48c0b2b2cf@gmail.com>
+References: <20260511-orangepi-sd-card-uhs-v9-0-ae48c0b2b2cf@gmail.com>
+In-Reply-To: <20260511-orangepi-sd-card-uhs-v9-0-ae48c0b2b2cf@gmail.com>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Yixun Lan <dlan@kernel.org>, Ulf Hansson <ulfh@kernel.org>, 
+ Ulf Hansson <ulfh@kernel.org>, Yixun Lan <dlan@kernel.org>
 Cc: Troy Mitchell <troy.mitchell@linux.dev>, 
-	Margherita Milani <margherita.milani@amarulasolutions.com>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
-	Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, Anand Moon <linux.amoon@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ Michael Opdenacker <michael.opdenacker@rootcommit.com>, 
+ Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Iker Pedrosa <ikerpedrosam@gmail.com>, 
+ Conor Dooley <conor.dooley@microchip.com>
+X-Mailer: b4 0.14.3
 
-El s=C3=A1b, 9 may 2026 a las 1:10, Yixun Lan (<dlan@kernel.org>) escribi=
-=C3=B3:
->
->
-> On 22:53 Fri 08 May     , Yixun Lan wrote:
-> > Hi Iker, Troy,
-> >
-> ..
-> > I would object to add CONFIG_I2C_K1 as hard dependency, the reason is
-> > that the spacemit sdhci driver (sdhci-of-k1.c) has no used i2c
-> > api/function, it's just need I2C function via an indirect requirement,
-> > which sdhci -> regulator(p1) -> i2c, besides, from the hardware design
-> > perspective, it just happens that K1 use P1(via I2C) as PMIC, it's
-> > totally possible(even in theory) to use other PMIC as power supply
-> > control which may not be I2C interface (maybe use SPI, for example)
-> >
-> > If we want to solve this more gracefully, I'm in favor to add explict
-> > option enabled in defconfig..
-> >
-> or I think it's better we do this way..
->
-> +++ b/drivers/i2c/busses/Kconfig
-> @@ -794,6 +794,7 @@ config I2C_K1
->         tristate "SpacemiT K1 I2C adapter"
->         depends on ARCH_SPACEMIT || COMPILE_TEST
->         depends on OF
-> +       default ARCH_SPACEMIT
+Document pinctrl properties to support voltage-dependent pin
+configuration switching for UHS-I SD card modes.
 
-Thank you all for the feedback! I agree that enabling I2C_K1 by
-default makes sense for the user experience.
+Add optional pinctrl-names property with two states:
+- "default": For 3.3V operation with standard drive strength
+- "state_uhs": For 1.8V operation with optimized drive strength
 
-To keep this patchset focused and avoid cross-subsystem complexity,
-I'll send the I2C default configuration change as a separate patch to
-the I2C maintainers after this series lands.
+These pinctrl states allow the SDHCI driver to coordinate voltage
+switching with pin configuration changes, ensuring proper signal
+integrity during UHS-I mode transitions.
 
-This way we can get the SD card support merged without delays while
-still solving the dependency issue properly.
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+---
+ Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
->
->
-> --
-> Yixun Lan (dlan)
+diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+index 9a055d963a7f..34d202af909f 100644
+--- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
++++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+@@ -44,6 +44,18 @@ properties:
+       - const: axi
+       - const: sdh
+ 
++  pinctrl-names:
++    minItems: 1
++    items:
++      - const: default
++      - const: uhs
++
++  pinctrl-0:
++    description: Default pinctrl state for 3.3V operation
++
++  pinctrl-1:
++    description: Optional pinctrl state for 1.8V UHS operation with "uhs" name
++
+ required:
+   - compatible
+   - reg
+@@ -62,4 +74,7 @@ examples:
+       interrupt-parent = <&plic>;
+       clocks = <&clk_apmu 10>, <&clk_apmu 13>;
+       clock-names = "core", "io";
++      pinctrl-names = "default", "uhs";
++      pinctrl-0 = <&sdhci_default_cfg>;
++      pinctrl-1 = <&sdhci_uhs_cfg>;
+     };
+
+-- 
+2.54.0
+
