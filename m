@@ -1,63 +1,64 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD635364046
-	for <spacemit@lists.linux.dev>; Mon, 11 May 2026 11:11:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDF2367F4A
+	for <spacemit@lists.linux.dev>; Mon, 11 May 2026 11:11:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778497885; cv=none; b=cBQB1zjKa6f6FobIqvopZe+B/YwkHaaBEyZc+KQYL3/AlvNRjEi/yA06Jth8dFAYaLrGIG13Tja4L++qu+3jfZV9lNz4ZaWaWStzvsw/bSDZrbjO2QwfBKbj+EKYhSVUcLjHBzsiUK/a9virNnnN0nLoZR7H/s2dcjvmBye0qh8=
+	t=1778497886; cv=none; b=a6D670il/bXl896olIyUCB6QBdSIUHZnVLvIQ4sOoJZLNmgrH0HpoZfm0dUqJ13bqWRoqFD6r757NB4ENSYFVmgeF7kMXILUHkY0/9dyMHVmC+TttDxFjqHqpCmY0j2GiII4/DmfbBgkKVfyr4NAUGuIvA9gAeL73LyRadIxbNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778497885; c=relaxed/simple;
-	bh=ACfYTENujjxxbI6dHCTiFazUiQcwMopzM5/RtPNXh4U=;
+	s=arc-20240116; t=1778497886; c=relaxed/simple;
+	bh=wf5+F3IJ7PHN/4gxwWfDTlalBjHbtHC1YY7hC84qZII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QOwjbLpfp4ktgn6IDkod32e4k4tu625sw0ZGll3EAprqB1jQ7ZJIa+2rBARGIMIBJEUek5GteVgv5o2tnAdR/mzlQfEgcq2zCIR5/ZmbY1tbSXifyajnYxWkuKJRtOvxlJjygX7Bruz23+9i4oNmvHHuyWDLWf03cXcgrPec2lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GUxJTuT2; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version; b=qX60VIKKrAsK3diaxv3K5t5wb4hIo1tYs5a+9xn8qRXigebD7Rlcuf3L93k+Qwssa7ItwJNTO0Laa9QL2HGkqSsv84Icem3GKU9cA+Sc9gduOYYDi91GcDDZjcLzP/TfXXwQpoAxLwvkiOFawTBmrn8g5p+f+VnAHU0eiSxVmp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A0CVta6o; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GUxJTuT2"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-48d146705b4so52112365e9.3
-        for <spacemit@lists.linux.dev>; Mon, 11 May 2026 04:11:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A0CVta6o"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-48a7fe4f40bso48604345e9.0
+        for <spacemit@lists.linux.dev>; Mon, 11 May 2026 04:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778497882; x=1779102682; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1778497884; x=1779102684; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=V+BDkQR0yOyma2a6dWvMQJlddEtkYzccD9yu5cOlZj8=;
-        b=GUxJTuT2DvP+0xdcWoiddob+tYv+ATJuFVKwR5XHGS6S5468si37wIDCdJNjsXb+jy
-         u5aAQ8Ys15DpO6hoPMIUmajuALz27x6sZW8W0TeJ+0hulEIjycgaU9dfBuCRVzpNTqHE
-         sV13qzo7PzcxEHY6ux1Nv2clU1TyCplkvXr/8NJQJpV9SKYSjorEkI9W79n34CqpASDm
-         gsrzMdZ95SKEOz9a55mo1h9IuPGFweIGvmtdOdUJstCzz85anNzu3fj3Ind/Hv8rmQYE
-         32DSAeLG/Lx4gAypJMa3rLeG54+ge/EqjfvdZ2DKoo9rBevUlO0+5mFIiIo3DOZ0XL2x
-         dmCA==
+        bh=P/ImowRCcqssAiG38GcpnppUO6MMYNPjG1Lujw+hqMY=;
+        b=A0CVta6oDF+bkHd3tSeeZ+LyP2qPwPh+Mx0KRiWjs4iPMNgdAa/u9gccC6p0c1zvIx
+         WCnZ1150o2osrUBWg7m4UV9EJuU59RyiWYq4FkMIVtQvlf8m0Hn4AnSlywlEEKiCY3Ih
+         Whwg9KYi685+SifVCUymFbDYku5w+wkmj4c9N4RnhFuXLLV9Wcuy2o8H4hcnDueR9RxD
+         8OudDJz6Uo8xqRBJxR4b/z40Xq97YMxFnasqRMCb0cvU1AFGSo4rfJuR0LV0qQPLEtR+
+         j/R8pfQp5PGXquZ/BEJiubZQCU6zQNxK/xvPZoX7QxyEh31RV/mDA28sAoYSarxYUweu
+         LXEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778497882; x=1779102682;
+        d=1e100.net; s=20251104; t=1778497884; x=1779102684;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=V+BDkQR0yOyma2a6dWvMQJlddEtkYzccD9yu5cOlZj8=;
-        b=ZDrO+InyIcBX+RI0mpHENiHVCEYUHvjFRXVPCgg989NujioLF2aCCtkGbHsY6EuKQ0
-         ctYHWVrhpIggv2M4+kBxh4STcTFKUQq5woj+/WemeyuJy8WMp34n5YyJWF/EGdcfiPWJ
-         auHrND8sdf85iWz76ORbCUnkS3pf3tDbAbhZle3lXQfm798a4W71IhD++Ef/m2YBczK5
-         RoL4haj9GFdTkjUUOoiiA73058z0vdwPkuRmIHdtGyN4mwE/Dg2VSZGZGBQ7W5cdU0Br
-         tsTNuk0Y6h5Fjl2cKEA6RsNuFaMvkGfDuiLHsCpLEeFS8GQHpovCAEzYc9wOoOiVsMvX
-         bifw==
-X-Forwarded-Encrypted: i=1; AFNElJ+yay7V/uQy+kU+u09rGqLi2fOFU9SqkyPpXRw20PuTpx8llaW35jgpFi9Fgs6pImgMR8LaJ8DnzA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YycbmzqJx/A4eGw1DrZK96D4ZMQFRE5i3c1Qc8VZkROxdxussed
-	LvuM4dWhhMLFyc91ggar3jMbFh/rBe0KHdtx1rBFp3rEI14MA4W8+sMJ
-X-Gm-Gg: Acq92OGjj58O5WdnRy8kt7Tz028mK4uhgVwIRwtMo3pMPCR7kDaHeg3zXqAD6/mwgqo
-	OyXCspcCmxDFb44SL56CeNYudJ1UhbumIz644exn50qnVw+UFEEdGX1Hj1JaXbQmK5AZjY8MRZh
-	kM4YP7uoRqV5bc2PC+RjRnAHSkLD3I9EQK5MeEJnIXmf+oXm2s+2aHn4Pa6S//UlTiWH5rNUAEZ
-	rxAYW2FL9djfoBo/7lXm62l8bB8xs6bn1H9Uyel8IU9C385h7G4CuSXz2FI39zmAWv/FgPOtuWc
-	9guN75EPtPNmXmai9MMkkm37B7uKBgOZxDJZokX1D1ybJC1lxO9pAogqStmBF3sjCN9LgrbaClu
-	q/7wvUsmYgGGrH7i/yINiQb2P3+hLNCrc7f8JhpbBmoNwYm0ufUKFs74lHlkLx0qZHwtE29phQ7
-	6Go5NUfzQCiyTcdiIcH/nggtZl3e3hGGgiHWiX4u8jAfjS/tVZKjBlchR68/yhgmeRJg==
-X-Received: by 2002:a05:600c:3e05:b0:488:9ed3:1492 with SMTP id 5b1f17b1804b1-48e51f2a997mr407079165e9.10.1778497881912;
-        Mon, 11 May 2026 04:11:21 -0700 (PDT)
+        bh=P/ImowRCcqssAiG38GcpnppUO6MMYNPjG1Lujw+hqMY=;
+        b=LKfa9Itc790XyDsaDOIXdNPG72EKlEF1xsy9bLdvWBLz/S6cE48LY26RRdcwLlwZAR
+         529QTWF32cKjpJ3m79Mnh6mHVBjzxGJVFApI0QEQI9g6g+OPOtL6h57EkWIOFuqrd8eI
+         7gDwKtqv+c5xwLB7uZuKNPxC22QQShwrJTVkM8llsXpmyw054NW0ZRPj3qyPFkytIf0E
+         iMCoupsV1e9/5+6dJH4tygJjz2Q4Zkj0jGR21GLRAlLCgayoKxQ0k0jclrTvkXDo/vHl
+         RTHD6ovTGjpVlrbQmf7q16xJ05V1X+PMMaGqgsghkfBIlaSpWBodUiQTC7eW46PR/gyd
+         aZ8A==
+X-Forwarded-Encrypted: i=1; AFNElJ+dCQlx34rl+FfZQERr1R1n+b56GqgP/hdjsyth0CysC3XTQcnjIoUx1GOTHQiqiARLetGpqin8wQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzcvNMOCIzdslLwHF6JDudfWJAVMx/O/LaBmSXwlt89DtQvlzqw
+	17YNlhnhcdXBZA/9tqa1o2dmtSfNmCpvJuRavlmU6ReBXAqQ968+edRR
+X-Gm-Gg: Acq92OE5ApH/S0x52Xf0Th5wKtDb+6tJHLJkUOKtqZ03pE3Gz89plMN/4XK/p7eMZFy
+	b55W6Qx0THlCbSMqvmFY6fLKJHGfD1tywiIr7lnSzIfsJavuPjrGGsljphmHegc65vfPVSQ7Ydg
+	HmD7LNsZjYkQcw6Q4GGBZvBCUA9TZEdKzgrQK0yLFfcxURDMyAxx1sSD/NbRrIPjGnPYkL4rcgi
+	fdr9AlrkMk86yTrthNrYhzv0I4sgwrRyUWhf1suHHru9txwcEcnrWUhsUh5jQcvc4vurSfvKB95
+	1ktRqEpknHUAaS3pNgn30IhYrUZkeAYgt0CafXqniiEHso+ENdCPHsrvDHyG3zGWY04lND8epk2
+	F9rjtE+yBCCh7mxlfOn8adovf0G5t2tT2vXi+aNHgRXF+KPs1WowpZqfhy6+KCqfgyM5WHBUSJi
+	7j1aRlGWaTwgQdtc3KspVPPjz7R1WSQB/7bbBG5vldwWhwP0rvb1028ynRCuORB0LaynO0gp0cZ
+	Pm1
+X-Received: by 2002:a05:600c:a305:b0:48a:5970:2005 with SMTP id 5b1f17b1804b1-48e51e08362mr251837475e9.2.1778497883359;
+        Mon, 11 May 2026 04:11:23 -0700 (PDT)
 Received: from mamamia.internal (a89-182-129-90.net-htp.de. [89.182.129.90])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e701e9585sm175077375e9.5.2026.05.11.04.11.21
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e701e9585sm175077375e9.5.2026.05.11.04.11.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2026 04:11:21 -0700 (PDT)
+        Mon, 11 May 2026 04:11:22 -0700 (PDT)
 From: Andre Heider <a.heider@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -71,9 +72,9 @@ Cc: devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/6] riscv: dts: spacemit: k1-musepi-pro: add 24c04 eeprom
-Date: Mon, 11 May 2026 13:11:09 +0200
-Message-ID: <20260511111116.1109643-3-a.heider@gmail.com>
+Subject: [PATCH v2 3/6] riscv: dts: spacemit: k1-musepi-pro: enable QSPI and add SPI NOR
+Date: Mon, 11 May 2026 13:11:10 +0200
+Message-ID: <20260511111116.1109643-4-a.heider@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511111116.1109643-1-a.heider@gmail.com>
 References: <20260511111116.1109643-1-a.heider@gmail.com>
@@ -85,92 +86,77 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Enable i2c2 and add the connected 24c04 EEPROM.
+Add the QSPI controller node and describe the attached SPI NOR flash
+(Winbond W25Q64FWSSAQ).
 
-It contains an ONIE TLV table:
-=> tlv_eeprom
-TLV: 0
-[  12.162] TlvInfo Header:
-[  12.162]    Id String:    TlvInfo
-[  12.165]    Version:      1
-[  12.168]    Total Length: 58
-[  12.171] TLV Name             Code Len Value
-[  12.175] -------------------- ---- --- -----
-[  12.179] Product Name         0x21  16 k1-x_MUSE-Pi-Pro
-[  12.184] Serial Number        0x23  17 BPMIMXXXXXXXXXXXX
-[  12.189] Unknown              0x41   1  0x02
-[  12.194] Base MAC Address     0x24   6 FE:FE:FE:XX:XX:XX
-[  12.199] MAC Addresses        0x2A   2 2
-[  12.203] CRC-32               0xFE   4 0x395ECD34
-[  12.207] Checksum is valid.
-
-(With 0x41 as TLV_CODE_DDR_CSNUM)
+Add a corresponding vendor flash partition layout.
 
 Signed-off-by: Andre Heider <a.heider@gmail.com>
 ---
- .../riscv/boot/dts/spacemit/k1-musepi-pro.dts | 35 ++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ .../riscv/boot/dts/spacemit/k1-musepi-pro.dts | 43 ++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
 diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-index 88c35ad1ef2ae..79415d760f162 100644
+index 79415d760f162..7ebace0e46edb 100644
 --- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
 +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-@@ -17,6 +17,7 @@ / {
- 	aliases {
- 		ethernet0 = &eth0;
- 		serial0 = &uart0;
-+		i2c2 = &i2c2;
- 		i2c8 = &i2c8;
- 	};
+@@ -166,7 +166,7 @@ buck3_1v8: buck3 {
+ 				regulator-always-on;
+ 			};
  
-@@ -92,6 +93,38 @@ &pdma {
- 	status = "okay";
+-			buck4 {
++			buck4_3v3: buck4 {
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-ramp-delay = <5000>;
+@@ -249,6 +249,47 @@ dldo7 {
+ 	};
  };
  
-+&i2c2 {
-+	pinctrl-0 = <&i2c2_0_cfg>;
++&qspi {
 +	pinctrl-names = "default";
++	pinctrl-0 = <&qspi_cfg>;
 +	status = "okay";
 +
-+	eeprom@50 {
-+		compatible = "atmel,24c02";
-+		reg = <0x50>;
-+		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC1V8 */
-+		pagesize = <8>;
-+		read-only;
-+		size = <256>;
++	flash@0 {
++		compatible = "jedec,spi-nor";
++		reg = <0>;
++		spi-max-frequency = <26500000>;
++		spi-rx-bus-width = <4>;
++		spi-tx-bus-width = <4>;
++		vcc-supply = <&buck4_3v3>; /* QSPI_VCC1833 */
++		m25p,fast-read;
 +
-+		nvmem-layout {
-+			compatible = "onie,tlv-layout";
++		partitions {
++			compatible = "fixed-partitions";
++			#address-cells = <1>;
++			#size-cells = <1>;
 +
-+			product-name {
++			bootinfo@0 {
++				reg = <0x0 0x10000>;
 +			};
-+
-+			serial-number {
++			private@10000 {
++				reg = <0x10000 0x10000>;
 +			};
-+
-+			mac-address {
-+				#nvmem-cell-cells = <1>;
++			fsbl@20000 {
++				reg = <0x20000 0x40000>;
 +			};
-+
-+			num-macs {
++			env@60000 {
++				reg = <0x60000 0x10000>;
++			};
++			opensbi@70000 {
++				reg = <0x70000 0x30000>;
++			};
++			uboot@a00000 {
++				reg = <0xa0000 0x760000>;
 +			};
 +		};
 +	};
 +};
 +
- &i2c8 {
- 	pinctrl-0 = <&i2c8_cfg>;
+ &uart0 {
+ 	pinctrl-0 = <&uart0_2_cfg>;
  	pinctrl-names = "default";
-@@ -126,7 +159,7 @@ buck2 {
- 				regulator-always-on;
- 			};
- 
--			buck3 {
-+			buck3_1v8: buck3 {
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1800000>;
- 				regulator-ramp-delay = <5000>;
 -- 
 2.53.0
 
