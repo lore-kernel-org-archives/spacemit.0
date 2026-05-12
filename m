@@ -1,52 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02FB3D75B6;
-	Tue, 12 May 2026 05:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8FD3C3C00;
+	Tue, 12 May 2026 11:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778564646; cv=none; b=bULcmtYesV6nWcPBtsBDDCoaglPrny/VEXlghmlYIL2BLjMtV2Bby/whZ/AYChLc6KyujWAHMVn6116WbYWqSucLJuz/cr/VNYCzE10o4NKuYMGS0w5qX8s05QTrnrbuCTPX5tekZCiNqOH4rcJKUBhUbGrazON1FvUznzqXJZs=
+	t=1778585685; cv=none; b=Z7is/p6xZuYbqKRN9Do089Hy6kwooo0JKyxLPKO6ihC+cLRosy1iu/Bs0rgveI1JTct6FXKcjeA0lIAAH/orY9JcwjUZUCIi+KKjoxUuv/IZ9FkQip2YhE8g0dL+ZD3giwzE0wcTHngqnxOGzwA8qObfxzr/JkQsRB67P6PAsTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778564646; c=relaxed/simple;
-	bh=8knoL5yl+L/C1sO73WYMrEIqVvOTPdr2v82r8D/MlYw=;
+	s=arc-20240116; t=1778585685; c=relaxed/simple;
+	bh=rEH0LubyCwBzQ9XB43fGcRH9yWcSU7fpspDXa3oAJV4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FvZcLWX6VK9y7oap1k/wYe1XpniK8MNNpD5vkC9wlzdvI3cVodfaP9V/QmQHYOJB3cvZUZgGyap1T3gDTEbx9jrcM0M0TDRlDP32FtKpHl5wwEgg/GJmQID1b/AZsqq9ipR60x/2qxgQ01mrH1MwXE/qw50HDbiW1CrinfNaznA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UAsFfDP9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=N1gI283vVUyi/gb5HmaGyCsfmyGMCnpR63ATplb+E0++NxQuPcXKhTi6rDtK5KEo7JwuP6TZij0GcKSg0QwXTHmQDm7sHAA2e/50FTIQs6dy4UQp7g5VoLHbhIw7hzut4RzXG4joouqYnUr/jfb+u1PdSIQ9hFe41NL3c0BtrdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=huhAFQz0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UAsFfDP9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE32C2BCB0;
-	Tue, 12 May 2026 05:44:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="huhAFQz0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2701C2BCB0;
+	Tue, 12 May 2026 11:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778564641;
-	bh=8knoL5yl+L/C1sO73WYMrEIqVvOTPdr2v82r8D/MlYw=;
+	s=k20201202; t=1778585685;
+	bh=rEH0LubyCwBzQ9XB43fGcRH9yWcSU7fpspDXa3oAJV4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UAsFfDP93SdyCex0eOLxjTPzb+hB66LGW0zPAflAuQTW6kShm78EL/2RCIIES6gvT
-	 mrRnNz6EJ1cg2tvH9CMEzndU0Eu9gmPMHy9il0MIE2Hc7iQ3oG6DWta371i2NGLyGB
-	 6oR6EF0SI1JvI3AnOGDadLeVLhYdXBNMU3eGdt5jPKzbjMMDPpzp9loRwfOj9PT1YG
-	 ATcTOWbf8HkUfej7yOecqVv6jkgi3vtK5tA9S24Dyf/AzOkOAaC5XhoWYbNQrFvoBN
-	 CidtdC2+K2AOyUQ6ZFLyIFsny+FFOc+HpKTzlMoNiVQ0jnwkOrBAxMOcsLMJ7SwDOv
-	 DoWzjh7BrnQEg==
-Date: Tue, 12 May 2026 05:43:58 +0000
+	b=huhAFQz0karYLPQmSKNvruvCoi9lXwDr+HDIeX1PLbcemcWgTcyi1FHXNgUOlw35X
+	 QUp0wFLaXU6CWU4hhnxo9409qn8U5rpGBgONtlq9J65ZABGGU3wl/AMsIymEFbmRvp
+	 GS7OWxtVkaE92OV0P+2OxFOExJfH54t39olwbk/p2mfNPWV+q1vK6oO5tOyKs0KS7S
+	 84ualVrNHj0xC8bx1XYfwWKsRhI/Cq14GsYD8KuQyHfMXugh0Q31/V6vZJlK6VvpTZ
+	 IW16r5BvcRS2OBKnMUff/wkL5Qe68X/hMaCAxqMlRmIiHBOx3z/p6/lU6ghGNdXG8s
+	 JPAGhj16JAggQ==
+Date: Tue, 12 May 2026 11:34:41 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: Iker Pedrosa <ikerpedrosam@gmail.com>
+To: Andre Heider <a.heider@gmail.com>
 Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@gentoo.org>,
 	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Ulf Hansson <ulfh@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.dev>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Anand Moon <linux.amoon@gmail.com>,
-	Margherita Milani <margherita.milani@amarulasolutions.com>
-Subject: Re: [PATCH v9 7/8] riscv: dts: spacemit: k1-bananapi-f3: add SD card
- support with UHS modes
-Message-ID: <20260512054358-GKE3624147@kernel.org>
-References: <20260511-orangepi-sd-card-uhs-v9-0-ae48c0b2b2cf@gmail.com>
- <20260511-orangepi-sd-card-uhs-v9-7-ae48c0b2b2cf@gmail.com>
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 5/6] riscv: dts: spacemit: k1-musepi-pro: enable PCIe
+ ports
+Message-ID: <20260512113441-GKF3624147@kernel.org>
+References: <20260511111116.1109643-1-a.heider@gmail.com>
+ <20260511111116.1109643-6-a.heider@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -55,98 +48,93 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260511-orangepi-sd-card-uhs-v9-7-ae48c0b2b2cf@gmail.com>
+In-Reply-To: <20260511111116.1109643-6-a.heider@gmail.com>
 
-Hi Iker,
+Hi Andre,
 
-Please note, once you are sending new patch series, please drop patch 1-4
-which already picked by Ulf, but keep increase the version number
-
-
-On 10:54 Mon 11 May     , Iker Pedrosa wrote:
-> Add complete SD card controller support with UHS high-speed modes.
+On 13:11 Mon 11 May     , Andre Heider wrote:
+> Enable the two PCIe controller along with and their associated PHYs. They
+> are routed to the M.2 M-key connector and to the PCIe slot.
 > 
-> - Enable sdhci0 controller with 4-bit bus width
-> - Configure card detect GPIO with inversion
-> - Connect vmmc-supply to buck4 for 3.3V card power
-> - Connect vqmmc-supply to aldo1 for 1.8V/3.3V I/O switching
-> - Add dual pinctrl states for voltage-dependent pin configuration
-> - Support UHS-I SDR25, SDR50, and SDR104 modes
-> 
-> This enables full SD card functionality including high-speed UHS modes
-> for improved performance.
-> 
-> Suggested-by: Anand Moon <linux.amoon@gmail.com>
-> Tested-by: Anand Moon <linux.amoon@gmail.com>
-> Tested-by: Margherita Milani <margherita.milani@amarulasolutions.com>
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+> Signed-off-by: Andre Heider <a.heider@gmail.com>
 > ---
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 22 ++++++++++++++++++++--
->  1 file changed, 20 insertions(+), 2 deletions(-)
+>  .../riscv/boot/dts/spacemit/k1-musepi-pro.dts | 50 +++++++++++++++++++
+>  1 file changed, 50 insertions(+)
 > 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index e20daa50a152..8fea6e87acec 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -221,7 +221,7 @@ buck3_1v8: buck3 {
->  				regulator-always-on;
->  			};
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+> index 9c90c2817ecb7..2d3e30f0bd806 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+> @@ -36,6 +36,24 @@ led1 {
+>  		};
+>  	};
 >  
-> -			buck4 {
-> +			buck4: buck4 {
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3300000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -242,7 +242,7 @@ buck6 {
->  				regulator-always-on;
->  			};
->  
-> -			aldo1 {
-> +			aldo1: aldo1 {
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3400000>;
->  				regulator-boot-on;
-> @@ -374,3 +374,21 @@ hub_3_0: hub@2 {
->  		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
+> +	pcie_vcc_3v3: regulator-pcie-vcc3v3 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "PCIE_VCC3V3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +		regulator-always-on;
+> +		vin-supply = <&reg_usb_vbus>;
+> +	};
+> +
+> +	mpcie_vcc_3v3: regulator-mpcie-vcc3v3 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "MPCIE_VCC3V3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +		regulator-always-on;
+> +		vin-supply = <&reg_usb_vbus>;
+> +	};
+> +
+>  	reg_usb_vbus: regulator-usb-vbus {
+>  		compatible = "regulator-fixed";
+>  		regulator-name = "USBVBUS";
+> @@ -275,6 +293,38 @@ dldo7 {
 >  	};
 >  };
-> +
-> +&sdhci0 {
-I'd suggest to add alias (to 'aliases' node), so we will have stable
-dev node regardless whichever device probe first.. something should like
-	aliases {
-		..
-		mmc0 = &emmc;
-		mmc1 = &sdhci0;
-		..
-	}
-
-So, how about let's make it convention here, first device is emmc, second
-is SD card, third is sdio device (haven't added yet).. We introduced emmc
-early before this patch, so it stays unchanged which is nice for end user
-
-Please apply this alias idea to all boards although I only comment in this
-patch..
-
-> +	pinctrl-names = "default", "uhs";
-> +	pinctrl-0 = <&mmc1_cfg>;
-> +	pinctrl-1 = <&mmc1_uhs_cfg>;
-> +	bus-width = <4>;
-> +	cd-gpios = <&gpio K1_GPIO(80) (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-> +	no-mmc;
-> +	no-sdio;
-> +	disable-wp;
-> +	cap-sd-highspeed;
-> +	vmmc-supply = <&buck4>;
-> +	vqmmc-supply = <&aldo1>;
-> +	sd-uhs-sdr25;
-> +	sd-uhs-sdr50;
-> +	sd-uhs-sdr104;
+>  
+> +&pcie1_phy {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie1_3_cfg>;
 > +	status = "okay";
 > +};
-> 
+> +
+> +&pcie1_port {
+> +	phys = <&pcie1_phy>;
+> +	vpcie3v3-supply = <&pcie_vcc_3v3>;
+> +};
+> +
+> +&pcie1 {
+..
+> +	vpcie3v3-supply = <&pcie_vcc_3v3>;
+drop vpcie3v3-supply which not needed
+
+> +	status = "okay";
+> +};
+> +
+> +&pcie2_phy {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie2_4_cfg>;
+> +	status = "okay";
+> +};
+> +
+> +&pcie2_port {
+> +	phys = <&pcie2_phy>;
+> +	vpcie3v3-supply = <&mpcie_vcc_3v3>;
+> +};
+> +
+> +&pcie2 {
+> +	vpcie3v3-supply = <&mpcie_vcc_3v3>;
+same here
+> +	status = "okay";
+> +};
+> +
+>  &qspi {
+>  	pinctrl-names = "default";
+>  	pinctrl-0 = <&qspi_cfg>;
 > -- 
-> 2.54.0
+> 2.53.0
 > 
 
 -- 
