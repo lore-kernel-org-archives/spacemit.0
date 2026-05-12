@@ -1,286 +1,169 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFFC368D5C
-	for <spacemit@lists.linux.dev>; Tue, 12 May 2026 12:20:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917643D79F0;
+	Tue, 12 May 2026 17:03:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778588455; cv=none; b=DbuYvNIoH2sTnujRHSJ3f2Wg7+nQrIJUMEpURVxArE9KVOhrtkvuJ5qQhytb5yjGlN/2El6RPP73ERAyouGeGJ1rifgEth29rQ91qhylZjcwh4ztIZMj2ePBxjehvtH4Lgl5xpx2APcSerxEFSgo21DptAnARauSWTEy5j5RBsY=
+	t=1778605405; cv=none; b=ed0+PQybVlXvJe2+5iLvLf0RCc/sP0bWjyUBhqp//cKKasdlx8YrEkJZV4bCzYO9vuqfcwL8orYtMcpJ98+67qF6v9sT4I6Wn7XlA7Iak0PiZwhnRPm8JTt1GFkxgOpJ2S5i0Be0ep7EVFBh0T6g7zp5t+DgC87jkpMhfNon9/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778588455; c=relaxed/simple;
-	bh=7SP+tpQC7/RleL3IvjZFwBLSatpQVTWn6uCxFw5dSFw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NS/bE8w17QQtB6RsB3z6u3JPLlMpr1yZ9Tb4MrAVv4yCtQrdbjXFZzSVgyIojiMPFzQVtOWou8MNRwkl1Zb9e0ZaFZX4AI1doa9kpEjTGjY00k/Lf477bQAT68p3vn/sZhrjz2a8pB3WPniED+WwRN7dCJFdEDPPckqDRwi0qZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JP+ZIcH8; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778605405; c=relaxed/simple;
+	bh=r1YOJ+96f+7856o47RUX5ERzYHm9soj3U++w0Pxh1aA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MB942fJnZ9gKdlBxXe2Yv/jSCrC+7VEoqx95dRvOCjEXO1zagSNtacibdwLsoVL+rIhPX0X1o7n+UXk7T6E/ZjtB5puo93CmqDDLYPpHHgYMOCFM2bJ2FqyzNkAeDt1lY0YOtQuBbMufh8eaFseUjjfQu2Q1HjfEVk6+xdj9DiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=EXQuzNNU; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JP+ZIcH8"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-44c4cc7c1cfso4444921f8f.0
-        for <spacemit@lists.linux.dev>; Tue, 12 May 2026 05:20:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778588452; x=1779193252; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rAedPaQpPe7CcNir+E8j0QYU1SXE2Pa0U/4eeZrHwts=;
-        b=JP+ZIcH8JKIz0rGA3jPo8mz0rZQ+AfJLTG+EF0q0euhkOCqFK9MjF83j2ygkI8qLck
-         xhyE3ZyDyNhp2JOaLyNbU2tCgQPU7L+aSbpyRhR0LY/8PbI/gxDP0SPBfmTSQ9T/wlIM
-         aB1JriiiDVL2vn3HgGZk5MG98HPfS3tAnFeA3uz4exorrDmV7WFewom5FibOClCkqJkv
-         tYxhAYRGWLVtxtmlEahoEJZKDf/ZiW/aYINVB90veqEml4tQcEKwGxcpYlIIzo/OJMPR
-         KIgKTZ8Bnh8qBJeTB/vnvOVQrTXlQYIFG54AP0NRFl+QYYlGfutxP6LuK48ovTkczOc7
-         FKYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778588452; x=1779193252;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rAedPaQpPe7CcNir+E8j0QYU1SXE2Pa0U/4eeZrHwts=;
-        b=pXpNVxsBOMK9FCBQLFYGxCwFXH0Ph2/c7wnf6ca/+xLerASoOOYsh4HmoIAO/sOt0G
-         1knPV0JGFQ9aki3ql8zvS71emHxcF3nFUEnaRXsHJBAv1IUaiOjUDo387q9QgqlYoy+N
-         Xsggq//udHESycueXii5VyS+9MyUbgwSjHhCzwlOZgdWMimb7JVvn4DEvwBZMHwHqSfW
-         pBlLT1WHucdB1bXeG3MehEh2n68QhX+ZQnk2PZxRnoU+pK53uacVQgIFA4od8UcltBeX
-         ueUja201iCNT3az9ZC0S22u0kwE6HfBg9xM2grwyW7DNR0JuHTpJe+dxuGx4aVZnb9Qu
-         8RSg==
-X-Forwarded-Encrypted: i=1; AFNElJ+wNIzt+2a25wN7CegZwUQXgAUvrc8RMS4fToB4/aKNcIBrfo7IcE2mgcLctl4vNMJ4XCktN5mmfg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxL5kbpSBvi1CeoB2lkrB89bmyJAR6VOjOWbFPQwAvUCuax5vqW
-	JOQudZBIXr0HwH6TuAGvYe2iiogR901+on/1toka6Gr3JaW4XM8iXPrZ
-X-Gm-Gg: Acq92OHwKrXRJeNXFvmdyWxbuxZwlQ5W2jqvsUZvP/UzYTwyqoEDxbIbD3k14ZyDlGf
-	hdAtCKLQ3Qq+H0vsgK8ASmqEln2QYuecHa2iwFPpC0u8ZlBgBiv6AKQus5TVa4TvDDvGdlCwlcU
-	DohTpyzkGT+vewmSlCcRwAKbObffV+CGyvoCq5qHiVzZW2A8DzTGVNmu5PeJmrtfKPgSf9zNhaL
-	P+u6ON0dBerO1Gu4OH6G3DPaeRae4kN2burC5oKnF66YMbjZYWv/eVMMMro0s90wc29YQFJ6FNn
-	riMIhHxLmzQbYyBfNNHkmQ6bCMIpQICisvvh9+Qjb4seK7AYxh+kuef3FglTkeuWlroWr1jCIVK
-	VTNFejzHPbAXHDZUFp4JzND6kjJbkYHADDffuZrKtxiSS8zywyWBjN5usXN05rGQplM5Js1FBYM
-	MQwQUBvX0Lx+JoX1o2SDQmeE+JbX/BTx9X/41cdJvczvAYxqJxQxneoQ6LuH0CU0g=
-X-Received: by 2002:a5d:64e3:0:b0:441:1cf8:be9b with SMTP id ffacd0b85a97d-4515d9a06cemr43636765f8f.37.1778588450808;
-        Tue, 12 May 2026 05:20:50 -0700 (PDT)
-Received: from [192.168.0.40] (a89-182-129-90.net-htp.de. [89.182.129.90])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45491f8d4c3sm32022927f8f.34.2026.05.12.05.20.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 May 2026 05:20:50 -0700 (PDT)
-Message-ID: <a41f87cc-55e4-4a48-bbee-d863e5a4b00a@gmail.com>
-Date: Tue, 12 May 2026 14:20:49 +0200
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="EXQuzNNU"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=RfeqH0Cmtp9+NntQslpQpPTwstKhK8P2xes8sXl5U3A=; b=EXQuzNNUQOE0CyKC4fgiohPMr9
+	5DW2Av4OA+aPD5gm2ohSXn7eG74vsAUQnnQx5u2jvNxIpBNWUpsyIUT2wBfy8kMuAQMCyEiw7nEXF
+	eUT5lbnnjDapMElGn26Qvo9rjzzZPxzjX3wbT5BXG8qOxlhzdEcbVo0ZMwA+kR9F5ZgVs0mYcIltS
+	Ii7h0lrkHK3HG9pYlmkqSjNe+nDRmTS1CWMOMAU+lKdWokxxNbPYY7u/s8ABeV/SCFKyIjnkKkY41
+	b/DVIjT7flr3TBpjihDhl9P++1OKmeDcgpPsWp2WKoIz9kDcesy6Ype9nFQauBvgHWT7Wd5UG+p45
+	MBhOwX6A==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wMqVj-00000004u8d-1Kjt;
+	Tue, 12 May 2026 19:03:11 +0200
+Date: Tue, 12 May 2026 19:03:10 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Iker Pedrosa <ikerpedrosam@gmail.com>, Rob Herring <robh@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Troy Mitchell <troy.mitchell@linux.dev>, linux-mmc@vger.kernel.org,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	linux-riscv@lists.infradead.org, Ulf Hansson <ulfh@kernel.org>,
+	Margherita Milani <margherita.milani@amarulasolutions.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Paul Walmsley <pjw@kernel.org>, spacemit@lists.linux.dev,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
+Subject: Re: [PATCH v9 7/8] riscv: dts: spacemit: k1-bananapi-f3: add SD card
+ support with UHS modes
+Message-ID: <agNdTiFbwtllEw0Z@aurel32.net>
+Mail-Followup-To: Yixun Lan <dlan@kernel.org>,
+	Iker Pedrosa <ikerpedrosam@gmail.com>,
+	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Troy Mitchell <troy.mitchell@linux.dev>, linux-mmc@vger.kernel.org,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	linux-riscv@lists.infradead.org, Ulf Hansson <ulfh@kernel.org>,
+	Margherita Milani <margherita.milani@amarulasolutions.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Paul Walmsley <pjw@kernel.org>, spacemit@lists.linux.dev,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
+References: <20260511-orangepi-sd-card-uhs-v9-0-ae48c0b2b2cf@gmail.com>
+ <20260511-orangepi-sd-card-uhs-v9-7-ae48c0b2b2cf@gmail.com>
+ <20260512054358-GKE3624147@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] riscv: dts: spacemit: k1-musepi-pro: add PMIC and
- power infrastructure
-To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20260511111116.1109643-1-a.heider@gmail.com>
- <20260511111116.1109643-2-a.heider@gmail.com>
- <20260512113913-GKH3624147@kernel.org>
-From: Andre Heider <a.heider@gmail.com>
-Content-Language: de-DE
-In-Reply-To: <20260512113913-GKH3624147@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260512054358-GKE3624147@kernel.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 12.05.26 1:39 PM, Yixun Lan wrote:
-> Hi Andre,
+Hi Yixun,
+
+On 2026-05-12 05:43, Yixun Lan wrote:
+> Hi Iker,
 > 
-> On 13:11 Mon 11 May     , Andre Heider wrote:
->> Enable i2c8 and add the connected SpacemiT P1 PMIC with its related regulators
->> for the board's power infrastructure and voltage regulation support.
->>
->> Signed-off-by: Andre Heider <a.heider@gmail.com>
->> ---
->>   .../riscv/boot/dts/spacemit/k1-musepi-pro.dts | 144 ++++++++++++++++++
->>   1 file changed, 144 insertions(+)
->>
->> diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
->> index 29e333b670cf0..88c35ad1ef2ae 100644
->> --- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
->> +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
->> @@ -17,6 +17,7 @@ / {
->>   	aliases {
->>   		ethernet0 = &eth0;
->>   		serial0 = &uart0;
->> +		i2c8 = &i2c8;
->>   	};
->>   
->>   	chosen {
->> @@ -33,6 +34,25 @@ led1 {
->>   			default-state = "on";
->>   		};
->>   	};
->> +
-> ..
->> +	reg_usb_vbus: regulator-usb-vbus {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "USBVBUS";
->> +		regulator-min-microvolt = <12000000>;
->> +		regulator-max-microvolt = <12000000>;
->> +		regulator-boot-on;
->> +		regulator-always-on;
->> +	};
-> I think you can further drop above regulator, which merely serve as vin-supply
-> and not used by devices, plus it's a non-controllable fixed regulator
-
-It is, but as mentioned on the cover letter I left this one as it's consistent with the other k1 boards.
-I don't care either way, so I'll just drop it.
-
-Thanks,
-Andre
-
+> Please note, once you are sending new patch series, please drop patch 1-4
+> which already picked by Ulf, but keep increase the version number
 > 
->> +
->> +	reg_vcc_4v0: regulator-vcc-40v {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "VCC4V0";
->> +		regulator-min-microvolt = <4000000>;
->> +		regulator-max-microvolt = <4000000>;
->> +		regulator-boot-on;
->> +		regulator-always-on;
->> +		vin-supply = <&reg_usb_vbus>;
->> +	};
->>   };
->>   
->>   &emmc {
->> @@ -72,6 +92,130 @@ &pdma {
->>   	status = "okay";
->>   };
->>   
->> +&i2c8 {
->> +	pinctrl-0 = <&i2c8_cfg>;
->> +	pinctrl-names = "default";
->> +	status = "okay";
->> +
->> +	pmic@41 {
->> +		compatible = "spacemit,p1";
->> +		reg = <0x41>;
->> +		interrupts = <64>;
->> +		vin1-supply = <&reg_vcc_4v0>;
->> +		vin2-supply = <&reg_vcc_4v0>;
->> +		vin3-supply = <&reg_vcc_4v0>;
->> +		vin4-supply = <&reg_vcc_4v0>;
->> +		vin5-supply = <&reg_vcc_4v0>;
->> +		vin6-supply = <&reg_vcc_4v0>;
->> +		aldoin-supply = <&reg_vcc_4v0>;
->> +		dldoin1-supply = <&buck5>;
->> +		dldoin2-supply = <&buck5>;
->> +
->> +		regulators {
->> +			buck1 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3450000>;
->> +				regulator-ramp-delay = <5000>;
->> +				regulator-always-on;
->> +			};
->> +
->> +			buck2 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3450000>;
->> +				regulator-ramp-delay = <5000>;
->> +				regulator-always-on;
->> +			};
->> +
->> +			buck3 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <1800000>;
->> +				regulator-ramp-delay = <5000>;
->> +				regulator-always-on;
->> +			};
->> +
->> +			buck4 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3300000>;
->> +				regulator-ramp-delay = <5000>;
->> +				regulator-always-on;
->> +			};
->> +
->> +			buck5: buck5 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3450000>;
->> +				regulator-ramp-delay = <5000>;
->> +				regulator-always-on;
->> +			};
->> +
->> +			buck6 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3450000>;
->> +				regulator-ramp-delay = <5000>;
->> +				regulator-always-on;
->> +			};
->> +
->> +			aldo1 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +				regulator-boot-on;
->> +			};
->> +
->> +			aldo2 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +			};
->> +
->> +			aldo3 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +			};
->> +
->> +			aldo4 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +			};
->> +
->> +			dldo1 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +				regulator-boot-on;
->> +			};
->> +
->> +			dldo2 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +			};
->> +
->> +			dldo3 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +			};
->> +
->> +			dldo4 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +				regulator-always-on;
->> +			};
->> +
->> +			dldo5 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +			};
->> +
->> +			dldo6 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +				regulator-always-on;
->> +			};
->> +
->> +			dldo7 {
->> +				regulator-min-microvolt = <500000>;
->> +				regulator-max-microvolt = <3400000>;
->> +			};
->> +		};
->> +	};
->> +};
->> +
->>   &uart0 {
->>   	pinctrl-0 = <&uart0_2_cfg>;
->>   	pinctrl-names = "default";
->> -- 
->> 2.53.0
->>
->>
 > 
+> On 10:54 Mon 11 May     , Iker Pedrosa wrote:
+> > Add complete SD card controller support with UHS high-speed modes.
+> > 
+> > - Enable sdhci0 controller with 4-bit bus width
+> > - Configure card detect GPIO with inversion
+> > - Connect vmmc-supply to buck4 for 3.3V card power
+> > - Connect vqmmc-supply to aldo1 for 1.8V/3.3V I/O switching
+> > - Add dual pinctrl states for voltage-dependent pin configuration
+> > - Support UHS-I SDR25, SDR50, and SDR104 modes
+> > 
+> > This enables full SD card functionality including high-speed UHS modes
+> > for improved performance.
+> > 
+> > Suggested-by: Anand Moon <linux.amoon@gmail.com>
+> > Tested-by: Anand Moon <linux.amoon@gmail.com>
+> > Tested-by: Margherita Milani <margherita.milani@amarulasolutions.com>
+> > Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+> > ---
+> >  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 22 ++++++++++++++++++++--
+> >  1 file changed, 20 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > index e20daa50a152..8fea6e87acec 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> > @@ -221,7 +221,7 @@ buck3_1v8: buck3 {
+> >  				regulator-always-on;
+> >  			};
+> >  
+> > -			buck4 {
+> > +			buck4: buck4 {
+> >  				regulator-min-microvolt = <500000>;
+> >  				regulator-max-microvolt = <3300000>;
+> >  				regulator-ramp-delay = <5000>;
+> > @@ -242,7 +242,7 @@ buck6 {
+> >  				regulator-always-on;
+> >  			};
+> >  
+> > -			aldo1 {
+> > +			aldo1: aldo1 {
+> >  				regulator-min-microvolt = <500000>;
+> >  				regulator-max-microvolt = <3400000>;
+> >  				regulator-boot-on;
+> > @@ -374,3 +374,21 @@ hub_3_0: hub@2 {
+> >  		reset-gpios = <&gpio K1_GPIO(124) GPIO_ACTIVE_LOW>;
+> >  	};
+> >  };
+> > +
+> > +&sdhci0 {
+> I'd suggest to add alias (to 'aliases' node), so we will have stable
+> dev node regardless whichever device probe first.. something should like
+> 	aliases {
+> 		..
+> 		mmc0 = &emmc;
+> 		mmc1 = &sdhci0;
+> 		..
+> 	}
+> 
+> So, how about let's make it convention here, first device is emmc, second
+> is SD card, third is sdio device (haven't added yet).. We introduced emmc
+> early before this patch, so it stays unchanged which is nice for end user
+> 
+> Please apply this alias idea to all boards although I only comment in this
+> patch..
 
+Having a stable naming is definitely a good idea.
+
+What about boards that have no or optional emmc, like the Milk-V Jupiter 
+board? I plan to submit a patch for it, so I wonder if we still number 
+the SD card as mmc1 even if there is no emmc.
+
+Thanks
+Aurelien
+
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
