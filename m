@@ -1,29 +1,32 @@
-Received: from mail-m81246.netease.com (mail-m81246.netease.com [47.88.81.246])
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A363CF05C
-	for <spacemit@lists.linux.dev>; Wed, 13 May 2026 06:01:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.88.81.246
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5ABE3D45D4
+	for <spacemit@lists.linux.dev>; Wed, 13 May 2026 06:40:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778652085; cv=none; b=Ilmrnq6z+k3Nb2gPzgeBpfruPdrn6PgPrir1Z9LSJC9JL4s8ECsR22oLb/8+EZF29BFXkUrH0OGSgNVV8okANDAh2fRbeiWSaoQHIw2C2Fyinqzh4my/yGtnjm9wk1HlQKwB4p0sF3fAJf0kmrezXqF+elurFwspV1VZ3Fzj+wI=
+	t=1778654425; cv=none; b=BNanLMWzkJS/5uPhVxN87KSGWUxUw9Q4ePYUrMYSzSXM2EJqvUcX75ZhD5IU2y/46KnaYfk9eLJMAdvlpjVyoj+yP1DEnMQWVMq38GulSUxNmFE8VhtF/K7DSOZITB939ASIfUiTYVkb8ZvGPNC/nU1k8B/kwH2gbcSoJroq6aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778652085; c=relaxed/simple;
-	bh=QhNr8jmpw55RK1ebaXOMEGE/6b563n9NFnVQtQvOWZk=;
+	s=arc-20240116; t=1778654425; c=relaxed/simple;
+	bh=5RtJsBCfEP9nTcSgqq35MYiy5uXqZAi4jEbQlmPUxEI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fhnrC4Zb2TTYq+f0ZluUnYltO8EKyvSvbz9loiBEDCgmimjCfq88p/vekXyynizhszSGLrzeFPQtguuF+UuPcOq52N8jdTTwYaqTBdzij+zkYjlH3FO1oqxFsC++9kL/qx7Y6+pWfIjWsWHnv3zuHcltG7sLk7k624muPiqiwo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=47.88.81.246
+	 MIME-Version; b=QgxqmA7rgaa0fHy1eWr2/HbctEx3QwmmJ3HGvtCA35n8N72AEtZOGlPyoMVsvEg09ixMEThqCIKt347zK2wHacOF9rOOzOgSzkgw/D06HVIzXw8/lJWz7PxxQutdMf8IohGUr3EvQy2Ok+nWKzlXjMGgA4/UO0YiY1l+IzNBZHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
 Received: from Vostro-3710.. (unknown [119.122.215.211])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 3e3542995;
-	Wed, 13 May 2026 14:01:08 +0800 (GMT+08:00)
+	by smtp.qiye.163.com (Hmail) with ESMTP id 3e366dfe8;
+	Wed, 13 May 2026 14:40:08 +0800 (GMT+08:00)
 From: Chukun Pan <amadeus@jmu.edu.cn>
-To: dlan@kernel.org
+To: linux.amoon@gmail.com
 Cc: alex@ghiti.fr,
 	amadeus@jmu.edu.cn,
 	aou@eecs.berkeley.edu,
 	conor+dt@kernel.org,
 	devicetree@vger.kernel.org,
+	dlan@kernel.org,
+	gaohan@iscas.ac.cn,
+	huang.ze@linux.dev,
 	krzk+dt@kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
@@ -31,12 +34,12 @@ Cc: alex@ghiti.fr,
 	pjw@kernel.org,
 	robh@kernel.org,
 	spacemit@lists.linux.dev
-Subject: Re: [PATCH v3 1/2] riscv: dts: spacemit: add fixed regulators for OrangePi R2S
-Date: Wed, 13 May 2026 14:00:30 +0800
-Message-Id: <20260513060030.616473-1-amadeus@jmu.edu.cn>
+Subject: Re: [PATCH v2 2/4] riscv: dts: spacemit: k1-bananapi-f3: Update USB regulator on onboard usb and label
+Date: Wed, 13 May 2026 14:40:01 +0800
+Message-Id: <20260513064001.621329-1-amadeus@jmu.edu.cn>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260511070718-GKC3624147@kernel.org>
-References: <20260511070718-GKC3624147@kernel.org>
+In-Reply-To: <CANAwSgSP8W8QH26-X-mdNBtncDAbHR9CtYRO0F+rjmxKfhDt9w@mail.gmail.com>
+References: <CANAwSgSP8W8QH26-X-mdNBtncDAbHR9CtYRO0F+rjmxKfhDt9w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,41 +47,24 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9e1fecbaa003a2kunm76fdac8128a16
+X-HM-Tid: 0a9e20106ec603a2kunm8225ea4f2a54a
 X-HM-MType: 10
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCSRpKVk8ZHR1NTUJOTB0YTlYeHw
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCHkJOVhpJTUJIGhlLGh1JTFYeHw
 	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkJVSklJVUlKTlVJSkpZV1kWGg8SFR0UWUFZT0tIVUpLSE
-	pOTE5VSktLVUpCS0tZBg++
+	lNT0JVSktLVUpCS0tZBg++
 
 Hi,
 
-> please check my comment below, I think this patch has similar issue
+> > -             vdd-supply = <&usb3_hub_5v>;
+> > +             vdd-supply = <&reg_5v_vbus>;
+
+> As per the schematics USB3_PWREN (GPIO97) pin is used to power the
+> USB hub ports 5V_VBUS, please check this again.
 >
-> https://lore.kernel.org/all/20260511065338-GKA3624147@kernel.org/
+> VCC5V0_SYS -> USB3_PWREN -> 5V_VBUS
+>
+> 5V_VBUS is used to power all the USB3_TypeA_Dual ports.
 
-I don't think this is an issue. Otherwise, these commits need to be fixed:
-https://github.com/torvalds/linux/commit/1df07a40453fd652132051419140950d47941fe9
-https://github.com/torvalds/linux/commit/ae9d03f8aec76c1bff21083b67c211238d7c57b1
-
-Let's confirm the current DT preferred:
-
-- regulator-fixed
-
-  nodename: Preferred name is 'regulator-[0-9]v[0-9]'
-
-  gpio/gpios: Preferred 'gpios'
-  https://github.com/torvalds/linux/commit/12df2c182ccb850988d2680a422211a812fb5cb2
-
-There is no specification or preference stating that regulators without
-software or GPIO control should be removed.
-
-This has been discussed many times, and people are used to describing DT
-according to the schematic:
-https://lore.kernel.org/all/44ba02e34d7bf6a6657894802a87b690@manjaro.org/
-
-Therefore, if you consider these regulators unacceptable, we should remove
-them from other dts in spacemit, or allow such changes.
-
-Thanks,
-Chukun
+This is correct, so shouldn't 5V_VBUS be for vbus-supply?
+VCC5V0_HUB powers the VL817 chip.
