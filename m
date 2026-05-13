@@ -1,79 +1,79 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC783D6488
-	for <spacemit@lists.linux.dev>; Wed, 13 May 2026 07:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8212C3D34BF
+	for <spacemit@lists.linux.dev>; Wed, 13 May 2026 07:20:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778656810; cv=none; b=teevZdXbwwvGGuUt9n49kb6ZXnST9Ri0el/wJYsi1UvkJuXhIzKF/PxuvV1Mt/jMTbpvOLi4iNZkV+BXr2rZvQEzxXq9bYnehvqtdm0HjS2bDmEwNVwpdMafCooonZLPCxhvkNk3na0qe5/7v4aGSdc/J5xAkGWytoaw9ko7+xQ=
+	t=1778656811; cv=none; b=jV5UOlcIZH5jbl8gXxoSuh42t6c9LU/tuYwOxMhfAtXNFrEyjPF5ml7aFgyTxPhqMUXgxNCN1NcuR671/lOGiwU2I05deShWWiXoi3c0cgtb1RfYH0UnUK/sQUdOHI+OY7hyLF4Na0DbUEE+t5DS0izu8AJOWQAtRf/6ylJTRiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778656810; c=relaxed/simple;
-	bh=8lXGXxe7CmSHQS/TM+hU3YDjchOov6HnwAdnLL9Bv+0=;
+	s=arc-20240116; t=1778656811; c=relaxed/simple;
+	bh=uNSwcyUwEwn/AjpWiIsnTrOKx1GlTbDyhEAmHx5+bes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QbsmjA9Oh2UXtzh1zg7B7y96r0wSnJBL/fi8kRFn1ebFfUotWpCNZpAiMmnDibCQ8bnssTzy1UeEbS3mv1VVdprSZ0yJ38/3HK8HVn2kzx6BzM9yMTisnFWIL3PhNbkhEqtCd6mX9Xr+AzE/5nSO1Fwlj3gLg9n+zBD1X48QRlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kSvh8N7d; arc=none smtp.client-ip=209.85.221.54
+	 MIME-Version; b=ltVB8T7BqA6pvfIVTDO6+XgsjQX0uiq1+igjOfAogaAGC47RSIHOfA3pMhgj3anE4kNRCBKA9oZg+OPr46UWquGTU3oQiNZOQ+keq4PZsWy78vNbwCu59KFnQBqUGRex780u9QQOnP9e7Y8xQgyxaozViwFaB1TcRAu5ecQn0ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PCn3lFgK; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kSvh8N7d"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-44a044cb827so5049276f8f.0
-        for <spacemit@lists.linux.dev>; Wed, 13 May 2026 00:20:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PCn3lFgK"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-488b0e1b870so107475145e9.2
+        for <spacemit@lists.linux.dev>; Wed, 13 May 2026 00:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778656805; x=1779261605; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1778656807; x=1779261607; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MTREOXSgwxN5P0eOv/Eor7AYmmvvClB/UMV1LwJRNDE=;
-        b=kSvh8N7dKWyFvw8bYRu0OKHrd7zhtK2DBiik4jflSoG7X9fTi2ST2rXZjErgzxe1+6
-         gBY/J0B5EQbavlncU4Qofg17HW6JoOzMa+Cx3YjaaST4zRe16TQTWllL0MMHIPOp1Dpf
-         yd5edb3DvsWga8te7U/cQgrq8RERN1Mg5Ww+8XysUe0f7scuyXu1HdztzYVvfmYY66oj
-         CgiTkQu/o1RBMI/Fj3BXPN7tngFYJ+EjktiFFe7bcwyITjfVXX3GZb8ZU/Ev1XKHWRIJ
-         Ed0E2ULRtstHj4xk1PfaIuOVNE3FUWpzTmCqeH5lpgFah/Tu6dI/E/ktsm1g6lsiqup+
-         TYCQ==
+        bh=TyIQ7iWPDNCyYdAg7Qk9EkFJ3vVi7O0lfN1qGYuYqLo=;
+        b=PCn3lFgKPaauKCsi8hp/yugNhbJDZkDxvYFi/0ncUO4KcLPrlV+kd4qHW0kDfJEcyJ
+         fAhO6/2gAhjJ6d5RtvNVzoYxBQw7pnoDQDtXmLQYPR2Nq5rAs+BtGFNA37v+PLrIlFxg
+         AA61r4b5wOHCFUOQTNLQWl8ZRjTCql5nqF1W8JCH+3I+psjThZbRtWQmTamPJtDMeMyC
+         Clik1tqOw1EAYSWUAthCeZYVNtXVYagYiFJE+Sxor8Yp4MqIjNNWCaH5qGan8y1gNONc
+         20yo/QP+P9IdHDU+Y84sjsJhmQvNFCUc+p/ee7QlIDE1an+M1R06kXN8cqEjnDBKDdWe
+         Wd4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778656805; x=1779261605;
+        d=1e100.net; s=20251104; t=1778656807; x=1779261607;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=MTREOXSgwxN5P0eOv/Eor7AYmmvvClB/UMV1LwJRNDE=;
-        b=aezG5wEXYANkbItZX0jSW5tJx9/QDNIuq3cugRlg3NA669E6P8GX7753+N59Vg78g/
-         txXNKA+y+wahjlw84BmoSfOk1gk1hdEzbmboaOoVpAszHPzuPbFAz9nwlZOOW2QX5WBW
-         WPx+b7+jiEzEobghqcx3oqX/CYlHGn/YtlWfxcIhk8zdYKAbnRsLkNbimcOycTYpNQlj
-         ekOS3QJQk5ad4yzdhepWgVRa1hJaZZ/KyNqVQzoMX49s9xHRSpNCL+GSylo5N5QDDJs1
-         k5Ikr5hz5fdvhVDduBSlOGcQpcydBnfWWWjMp3IzM1kT+YYHZKsb6sjUOsL5ONCUoNgL
-         tXbA==
-X-Forwarded-Encrypted: i=1; AFNElJ/tlkvpx/u2ipODYtw+AFvrsLtTTnCv7X4SZlzXenoXBcbPEp/83bxZEtnsI5a1SAosL21PjGTXhQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxgpS6UigRNd9t6s8rb+R+UBXkc5eEuPu3ih2kHR9lfq2j23lTR
-	vK/4/aIq16lWEqprzTcZ81PntrEKSblVfw3xohthfZ4vix6+0e9jASyH
-X-Gm-Gg: Acq92OFOlbcPibynpTPHnyyVY70xzwu+6QFP1/kS85cuWuvvktDc+pLw3KFRxqQvv03
-	h/IQDZkMz2LIrlAIWUigoEyhg8/AszzL5yLlBz4uI2BGlcNkPJC54dY7kyWBZVSKFwC4qVwSN//
-	kDmRuHu1jn5t86P02/DjUFG614pkwdqSMzLH2396/1Vb4CnenJjXigxI0FAde3udKYCXtJnRm1B
-	AbubGj+ShMfJYEkGmNhjV3qCZ9arnG+Ygt8n2VqyhkIPlGU6aYwORhh4Mc8qTB+q09sjots7SPx
-	QM1gSrVp3Na6WQ0bNUBdTdc8PLEmophLGJfjJeTqDE0HfyE7HAH7IA4AdMFMOJPWjwxFDUdTGdQ
-	It9vE3/W8FstGv3irPjykHXByksyCpnrEN9TUeHfYZTK2Pn35gaC/Y2hH8H0TRolPcvQjzTw365
-	VXa5zGhJsIh29TBgocT3FgQEmG+IzpApnnREBTHGtPJLd39uZ3rkwezDiI9qhYLLVE5A==
-X-Received: by 2002:a05:600c:4583:b0:489:1d23:4524 with SMTP id 5b1f17b1804b1-48fce9b30eemr18812985e9.5.1778656805095;
-        Wed, 13 May 2026 00:20:05 -0700 (PDT)
+        bh=TyIQ7iWPDNCyYdAg7Qk9EkFJ3vVi7O0lfN1qGYuYqLo=;
+        b=S0zFEGg0Y4Cuc+C7UHu9+jQw8wZBgdZfGFt79bK0gbwQTCUcWEKr7QK4WhGxKhV3Ul
+         ksKw1Q4JSjM14VOeLpHlFtCJ9xdySag+1uxD72oR3g21Sep0eXoldoQoO3fAgue43EE1
+         5uSAr44OXjZIu6KqncGzRWB272HDVAt1b31YpCplRu9j2hp0HNulHq47Eo668Cv/n+ya
+         2RnA8F/2ozzRFX3Uh5lqegpQnmXQz2iD3eXHOBug95h+zjF4KsdBA1H9t2Oc1grapSet
+         9QbfoGVCz+TjVcjFsTI2s0VgS09cnOWd7Xl1Xjs9E4aQA9SW22u6tFy1GlOvrxdus02s
+         D+bQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+adcCZljkQ60c3N2E6g2ckJaVa8FaGDHZkpZKrVrY4zPx0erdlxqhOt8Gi+mFsSsSgzKMb05DlvQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywz11nHF3AXvWE0pQHg8U4HzClo/w1kD0F9nq/rbvUChKcbxpAc
+	qe47ylfhzed6bKbdUJ5tr2ZqN8D9gXQV26dawKUDVGmCKfqIgsGVTWZo
+X-Gm-Gg: Acq92OEzoleh3IVTtUZujrqqrK9nrKdDR35G8n3Dl1LY6qod1w9UVhidDMqKSeYnBTf
+	4rPRnTvKcBVLTI7M5OaAk8JUr0p0qSGnqmbDNtGq9iFTMBjwZ2N+v45YVaEyVB6QQGvxDSvh0Ba
+	rvAgFnyusvYeScaMAAIB25cOAy+C4iqy924YWdNetu9emWjBHiko1g0Ns+SiiOqx7FS8ZpZfAY0
+	pWlAgFuw6KVltf6p408a4JspU13XiyJ1EfSFaiSjz03xFBUU2uw+rn6Nde8b5NyNlY8GFKzsAoW
+	FHC18yh0dL75XSr3utHzNfXaoTSdpKg6aJfdekPlYqzi/BShDuVtc+DAbHggJwBK7xTQiUuflnU
+	7w1cD/uQdKLsIPpV4InL2ESMgueEeoM8cprNpu4km1mAsEPHdMA0WZ78OR5iQPSIMvUO/YL/QRt
+	gOfp7ft9x6HvCyO5AlVYlNqbixtA5Y70R0OEwhkNWNl5nsq4JjriG5NhHOVlderE/+cQ==
+X-Received: by 2002:a05:600c:8b86:b0:48a:53ea:140b with SMTP id 5b1f17b1804b1-48fcea207f4mr20153515e9.28.1778656806489;
+        Wed, 13 May 2026 00:20:06 -0700 (PDT)
 Received: from mamamia.internal (a89-182-129-90.net-htp.de. [89.182.129.90])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fc8d62422sm58498115e9.11.2026.05.13.00.20.04
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fc8d62422sm58498115e9.11.2026.05.13.00.20.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2026 00:20:04 -0700 (PDT)
+        Wed, 13 May 2026 00:20:06 -0700 (PDT)
 From: Andre Heider <a.heider@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@gentoo.org>,
 	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@gentoo.org>
+	Alexandre Ghiti <alex@ghiti.fr>
 Cc: devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 3/6] riscv: dts: spacemit: k1-musepi-pro: enable QSPI and add SPI NOR
-Date: Wed, 13 May 2026 09:19:51 +0200
-Message-ID: <20260513071958.29574-4-a.heider@gmail.com>
+Subject: [PATCH v3 4/6] riscv: dts: spacemit: k1-musepi-pro: enable USB 3 ports
+Date: Wed, 13 May 2026 09:19:52 +0200
+Message-ID: <20260513071958.29574-5-a.heider@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260513071958.29574-1-a.heider@gmail.com>
 References: <20260513071958.29574-1-a.heider@gmail.com>
@@ -85,84 +85,90 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the QSPI controller node and describe the attached SPI NOR flash
-(Winbond W25Q64FWSSAQ).
+Enable the DWC3 USB 3.0 controller, its associated combo_phy (USB 3 PHY)
+and usbphy2 (USB 2 PHY) on the MusePi Pro board.
 
-Add a corresponding vendor flash partition layout.
+The board uses a VLI VL817 hub, providing four ports.
 
 Signed-off-by: Andre Heider <a.heider@gmail.com>
 ---
- .../riscv/boot/dts/spacemit/k1-musepi-pro.dts | 50 +++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ .../riscv/boot/dts/spacemit/k1-musepi-pro.dts | 52 +++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
 diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-index 41d7d6d20a797..b0f66f49db4b7 100644
+index b0f66f49db4b7..b24b378b1b220 100644
 --- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
 +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-@@ -44,6 +44,15 @@ reg_vcc_4v0: regulator-vcc-4v0 {
- 		regulator-boot-on;
+@@ -53,6 +53,26 @@ reg_qspi_vcc1v833: regulator-qspi-vcc1v833 {
  		regulator-always-on;
+ 		vin-supply = <&buck4_3v3>;
  	};
 +
-+	reg_qspi_vcc1v833: regulator-qspi-vcc1v833 {
++	reg_5v_vbus: regulator-5v-vbus {
 +		compatible = "regulator-fixed";
-+		regulator-name = "QSPI_VCC1833";
-+		regulator-min-microvolt = <1833000>;
-+		regulator-max-microvolt = <1833000>;
++		regulator-name = "5V_VBUS";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
 +		regulator-always-on;
-+		vin-supply = <&buck4_3v3>;
++		gpio = <&gpio K1_GPIO(79) GPIO_ACTIVE_HIGH>; /* USB3_PWREN */
++		enable-active-high;
++	};
++
++	reg_vcc5v_hub: regulator-vcc5v-hub {
++		compatible = "regulator-fixed";
++		regulator-name = "VCC5V0_HUB";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-always-on;
++		gpio = <&gpio K1_GPIO(127) GPIO_ACTIVE_HIGH>; /* HUB_PWREN */
++		enable-active-high;
 +	};
  };
  
  &emmc {
-@@ -239,6 +248,47 @@ dldo7 {
- 	};
+@@ -65,6 +85,10 @@ &emmc {
+ 	status = "okay";
  };
  
-+&qspi {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&qspi_cfg>;
++&combo_phy {
 +	status = "okay";
-+
-+	flash@0 {
-+		compatible = "jedec,spi-nor";
-+		reg = <0>;
-+		spi-max-frequency = <26500000>;
-+		spi-rx-bus-width = <4>;
-+		spi-tx-bus-width = <4>;
-+		vcc-supply = <&reg_qspi_vcc1v833>;
-+		m25p,fast-read;
-+
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			bootinfo@0 {
-+				reg = <0x0 0x10000>;
-+			};
-+			private@10000 {
-+				reg = <0x10000 0x10000>;
-+			};
-+			fsbl@20000 {
-+				reg = <0x20000 0x40000>;
-+			};
-+			env@60000 {
-+				reg = <0x60000 0x10000>;
-+			};
-+			opensbi@70000 {
-+				reg = <0x70000 0x30000>;
-+			};
-+			uboot@a0000 {
-+				reg = <0xa0000 0x760000>;
-+			};
-+		};
-+	};
 +};
 +
- &uart0 {
- 	pinctrl-0 = <&uart0_2_cfg>;
+ &eth0 {
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+@@ -294,3 +318,31 @@ &uart0 {
  	pinctrl-names = "default";
+ 	status = "okay";
+ };
++
++&usbphy2 {
++	status = "okay";
++};
++
++&usb_dwc3 {
++	dr_mode = "host";
++	#address-cells = <1>;
++	#size-cells = <0>;
++	vbus-supply = <&reg_5v_vbus>;
++	status = "okay";
++
++	hub_2_0: hub@1 {
++		compatible = "usb2109,2817";
++		reg = <0x1>;
++		vdd-supply = <&reg_vcc5v_hub>;
++		peer-hub = <&hub_3_0>;
++		reset-gpios = <&gpio K1_GPIO(123) GPIO_ACTIVE_LOW>; /* HUB_RST */
++	};
++
++	hub_3_0: hub@2 {
++		compatible = "usb2109,817";
++		reg = <0x2>;
++		vdd-supply = <&reg_vcc5v_hub>;
++		peer-hub = <&hub_2_0>;
++		reset-gpios = <&gpio K1_GPIO(123) GPIO_ACTIVE_LOW>; /* HUB_RST */
++	};
++};
 -- 
 2.53.0
 
