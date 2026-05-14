@@ -1,54 +1,55 @@
 Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381CB3264FD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3813F3264ED;
 	Thu, 14 May 2026 16:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778774676; cv=none; b=HYvUmQ/GvLwSWMkxhoMQVSNBzd9YZuVcnpSKWeu6BUQnpfyGKEoDxUHEW+Nm2HwPzsHUT5VtOuqlaqFnjBakhsEL7gY16KLqqfuE0t0KvYGBXr311NJl/scQHUQdYgz6YUL2ZTgIp+jEzmpmBXKjp2Kg+uYE3RN2uS9hzYD1ngA=
+	t=1778774677; cv=none; b=WW/YySavGlLbLRonWzHcJrMWqBHSYniHSKnEIvzV6GtizAaHEk7xMz9MVYILe2XRDatpBPtPoJBDtrSyeSG3kOd4/TIeNPI4xFNgf7ObcaPFWg/AsF7c+l/lgABDcF5T4mdoRpnSJZoZ07tCv+vG9qMkhm+EAQex/ZLG3nCjjig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778774676; c=relaxed/simple;
-	bh=SDBMuQKwD535Qqg1XjqjuYM6h0x6PydibQyyVhZd9LM=;
+	s=arc-20240116; t=1778774677; c=relaxed/simple;
+	bh=eu3v3I361q2EV1iS1kJRe54qVoxVJi+BB6/PgoCfGkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSatRzBGXSgz6Bpt77u+9RtF+o9J67c0CtocyYsKf/OktamSh1Cb0Ub+6+cj/zOR3rx7sDd7tLYTO73aIz89PIzgkbY+kG5S4VM8yicQpISSjIn/Rz1ZdUG2GpzoyehoGcLB5zFD8ftT+hzpR6mmK3EyBQ197WOVXb/HAAQQFvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=DgBxONhy; arc=none smtp.client-ip=195.154.119.183
+	 MIME-Version; b=uuWLEikwGkRnkhbLK/CzbVbue79RHy7RCmDl+Krk5Lz6s/PvGgVE0GPzN0y0uflhxnbKvrhOyyBt4H9taB0NbhHY9rmz7ZcE8HsUN8LkanQGuLUeqv9LPl7n2OwWChJQdy1URSmRb2+FXBBDG1oxK/dYfgEUCepnFZjowvV794M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=DT70ziJu; arc=none smtp.client-ip=195.154.119.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="DgBxONhy"
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="DT70ziJu"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
 	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:References:
 	In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Content-Type:From:Reply-To:
 	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=MDcF53V9v5HqtxunpienYMcM0tRyYISFa1MdRC1QzVQ=; b=DgBxONhy/TY6ZRn+5OyMN1kj3x
-	bW5DyDiWmAfvdOr3j/NToJdpSwi2LERqUXuSZAoW0dD0PQypa5V0E2zxdjSJY2xnIoFe1zOnAp7KZ
-	gBNoy95/V2OqOen/T0lNrSML/nPe4B+zsuDlxWLmghUNuEhsQNLHhQRaiWi2LTBq00IyszLXaaPX+
-	7d3PEbAEPitrp2xl1f769C18OzeQGJwdogP3kMi0cAj1h0Lj/TZo5OcxH0HjyUeeu/LWphhW/A1I1
-	VpQN4J5EmLWF5Z6wqIh/WQq6EAUDL9NKt6zS7ifl0iR+apvgVBIhczvagBJBB2zvmaD3/qB9V5YRS
-	0reKX3Pg==;
+	bh=sqRxMWMXlSnZN0jD0+5LubNrtpBuXqfyan8I6F7qG0c=; b=DT70ziJu/3UUj2Pji9ORK5HhLG
+	bAhTe0+36Ce0cTWrZ28/9ufa/TftuKG9moM/2IO25vBVgzLwNKPuQ44IjxWYlHBzDpFzarCsol3TH
+	BuQm0mJzZ/jpuH+hd32eWhQi/go0cWbEOfaScObYd8jnKiurL/cRh22OcgNIPU43vDmKi6PPy6oxj
+	wGXr/5LzMY7ydU4mEMDG3mvJWICwK8fKKjIbKyfa3XFz4bufQO2ZwrYaMIaLZABWt4FxnMQGuy4df
+	UsNX3WF0FAhFZjOhpHkp6aTr6upPxaAHwpGBUsiAZqmOpHCgKMAi6WhWd31SS2qwyHGHUlqdvQDaT
+	JQInceTg==;
 Received: from authenticated user
 	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <aurelien@aurel32.net>)
-	id 1wNYXz-00000007W2G-2Go9;
-	Thu, 14 May 2026 18:04:27 +0200
+	id 1wNYXy-00000007W2C-0qnA;
+	Thu, 14 May 2026 18:04:26 +0200
 From: Aurelien Jarno <aurelien@aurel32.net>
 To: linux-kernel@vger.kernel.org,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
 	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>
+	Javier Martinez Canillas <javierm@redhat.com>
 Cc: Aurelien Jarno <aurelien@aurel32.net>,
 	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
-	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE),
+	linux-riscv@lists.infradead.org (open list:RISC-V SPACEMIT SoC Support),
 	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support)
-Subject: [PATCH 3/4] riscv: dts: spacemit: enable eMMC on Milk-V Jupiter
-Date: Thu, 14 May 2026 17:56:23 +0200
-Message-ID: <20260514160356.1642075-4-aurelien@aurel32.net>
+Subject: [PATCH 1/4] riscv: dts: spacemit: set console baud rate on Milk-V Jupiter
+Date: Thu, 14 May 2026 17:56:21 +0200
+Message-ID: <20260514160356.1642075-2-aurelien@aurel32.net>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260514160356.1642075-1-aurelien@aurel32.net>
 References: <20260514160356.1642075-1-aurelien@aurel32.net>
@@ -60,43 +61,30 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Milk-V Jupiter board has a connector for an eMMC module. Add an
-entry for it in the device tree and alias it mmc0. As it is not
-populated by default, do no mark it as non-removable.
+Because the default console's baud rate is not set, defconfig kernels do
+not have any serial output on this platform. Set the baud rate to
+115200, matching what is used by U-Boot etc on this platform.
 
+See-also: 24c12ca43b12c ("dts: spacemit: set console baud rate on bpif3")
+Fixes: 5b90a3d6092d9 ("riscv: dts: spacemit: Add Milk-V Jupiter board device tree")
 Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
 ---
- arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-index 450d28e438293..b9b8ddc8e7fb0 100644
+index 95c35154da96d..9b1dfddf2bac5 100644
 --- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
 +++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-@@ -17,6 +17,7 @@ aliases {
- 		ethernet1 = &eth1;
- 		i2c2 = &i2c2;
- 		i2c8 = &i2c8;
-+		mmc0 = &emmc;
- 		serial0 = &uart0;
+@@ -21,7 +21,7 @@ aliases {
  	};
  
-@@ -138,6 +139,15 @@ &cpu_7 {
- 	cpu-supply = <&buck1_3v45>;
- };
+ 	chosen {
+-		stdout-path = "serial0";
++		stdout-path = "serial0:115200n8";
+ 	};
  
-+&emmc {
-+	bus-width = <8>;
-+	mmc-hs400-1_8v;
-+	mmc-hs400-enhanced-strobe;
-+	no-sd;
-+	no-sdio;
-+	status = "okay";
-+};
-+
- &eth0 {
- 	phy-handle = <&rgmii0>;
- 	phy-mode = "rgmii-id";
+ 	leds {
 -- 
 2.53.0
 
