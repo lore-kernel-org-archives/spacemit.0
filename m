@@ -1,74 +1,107 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA0031AF33;
-	Thu, 14 May 2026 16:04:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D929E279329;
+	Thu, 14 May 2026 18:57:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778774678; cv=none; b=bLuuKkxdhE6ukjpoZuWKuyEA+l83AW8RmFu6wTnFvwv2/xC+zxvTxqz9bVfvh/Z609ndpIR5D/UInSrKkaEUh8HTj/RHDWHZ41M/bpBJplT28Yj/0K8Thd3MsFV6GGvaYyfblZF96Y0dRptzNwlJLGwWtbliR8vbaREJReRD8n0=
+	t=1778785066; cv=none; b=JGGD9aTgJce8rxDzFkQCb5ggWS95cWZpSvw1FQuTOpkDVBiGsCgFIWBksBmFvXCIJIuHdfStfBnAMnzXv/IsvzwrUopeVGMLJyG/lKde4PDAYSedhVOMLz5HO2n0djDssgPHq+nhLhcuhfMwJdiYmxBl0C5rrn4ACeOFR+zjZA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778774678; c=relaxed/simple;
-	bh=PqsmGDY7T6gx+9okGXN4V0/415CBIKAn34Xet3Sxc9M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DjtSRFmv7F3uLeTI5AkgwYfcTIPyG6cO2lZLCChFGsbkofYtVSuKpJi+pFSj07m6LsnZJCTH+gVhr2roZC75fV9bpJQu+1JUCkeD/8T+RvcZeH5v5LE1l7i4gLi43UMXgFkxWIifrvnm/DuVV4n9/VYoIrL79c53q2WaMOZPEZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=D6kV5Dk9; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1778785066; c=relaxed/simple;
+	bh=+FM6hA+10TTi7iU5PA1MKulFrGwvHU/KyYs1Y/Opk94=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TYn/lh/jiNHwh0eg+kPXS7QPlJNfP5ISRl2Em7mmOgiId28OQE4TYc4gzH1YMWCa4Dw3TQsYf+V0Scps4I2S7gSJUsGCAAwXKToaXAop4f4ZIZu/MetA1Dnddak6KxlaZ7zedwb3wkY25oNaMnYlMT2a2qq3/kFgio2kYgXxN+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G9hhLWKF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="D6kV5Dk9"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
-	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
-	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
-	bh=JARAgOxWgx/BmBgpATzav7ngBmd3um0PYsWZ9kX/7f4=; b=D6kV5Dk9H5LOFeb729H2DsI0Bw
-	c5djFikSM0W4LPoJcZgvA/6Y6HEZ35S2pzSjM/C+zlNA1RHazDJB/wKWiU+uigd5q4hkTUTl7OIWe
-	xfM4/cMHw5v6g/MFjLax3KTDfbGeo+hcXVQDRmyHOP5xQjIfBewzK22wSCwdUtZAushQDnkorwqOs
-	PbBr68U8WevDnGtmmCv9G2bnmrOXLKJ+joB+cMpzMrajPW4xoVPilVIFl1F+y4yqxpBH6uJcO00va
-	58BbpPpcOZ2op42Ydn5vsvX03ZDGk7uVnO01yVFNtnqCKdSryfhKecmE0TMyxQbiUABs8ztFVSm0G
-	evVb99Qg==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1wNYXx-00000007W27-1lZX;
-	Thu, 14 May 2026 18:04:25 +0200
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: linux-kernel@vger.kernel.org,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
-	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE:Keyword:riscv),
-	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit)
-Subject: [PATCH 0/4] riscv: dts: spacemit: improve Milk-V Jupiter device tree
-Date: Thu, 14 May 2026 17:56:20 +0200
-Message-ID: <20260514160356.1642075-1-aurelien@aurel32.net>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G9hhLWKF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC839C2BCB3;
+	Thu, 14 May 2026 18:57:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778785066;
+	bh=+FM6hA+10TTi7iU5PA1MKulFrGwvHU/KyYs1Y/Opk94=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=G9hhLWKFWIVd/foKe6YYx5dv48kqWpysPUwK0LZaP2I6dy8uvNUrOTrO4ou/DI/Gh
+	 K8EfpuI6Giwo5ewulsKBJndXG1ZHWIBC00Sozh+uYZ9BNSdX5fHP2bU7HdewyFn+ob
+	 wqNma7qU8Go0tOaOI+MFH6xJcyTqd+UJmFbXkwEHoiGUVHYrGAitb8gKfmX9Livtjk
+	 1NwWSFYxZIl24oyNV5mOmSZvmYUPOM4q21yKkF6+UdDEgxUJ7T9Ttk+6bbD6Fc+yBh
+	 dxhEhIfSfgIWb+c1FzrU6BNkAqjK1/ljPPuEFGF2PaIZ7R+muuRyG/6v0MJX7w7WrL
+	 iqmeHGRYKtvmw==
+Date: Thu, 14 May 2026 19:57:42 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Linus Walleij <linusw@kernel.org>
+Cc: Conor Dooley <conor.dooley@microchip.com>, Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [RFC v1 0/4] generic pinmux dt_node_to_map implementation
+Message-ID: <20260514-used-revival-306ddced4ab8@spud>
+References: <20260506-energize-dramatize-051909e54256@spud>
+ <CAD++jLkEfqDrqaxTjxf4AwHPcdCppPfO5F7H5YnR2gebzhZFig@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="G1HwXNExfpOqsnk7"
+Content-Disposition: inline
+In-Reply-To: <CAD++jLkEfqDrqaxTjxf4AwHPcdCppPfO5F7H5YnR2gebzhZFig@mail.gmail.com>
 
-This patchset updates the Milk-V Jupiter device tree to align with the
-changes recently done for other SpacemiT K1 based boards.
 
-In addition the last patch enables SD card support, but it depends on
-the SD card support series for the K1 SoC to be merged first:
-https://lore.kernel.org/linux-riscv/20260511-orangepi-sd-card-uhs-v9-0-ae48c0b2b2cf@gmail.com/
+--G1HwXNExfpOqsnk7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Aurelien Jarno (4):
-  riscv: dts: spacemit: set console baud rate on Milk-V Jupiter
-  riscv: dts: spacemit: sort aliases on Milk-V Jupiter
-  riscv: dts: spacemit: enable eMMC on Milk-V Jupiter
-  riscv: dts: spacemit: enable SD card support on Milk-V Jupiter
+On Mon, May 11, 2026 at 10:23:16PM +0200, Linus Walleij wrote:
+> On Wed, May 6, 2026 at 11:58=E2=80=AFAM Conor Dooley <conor@kernel.org> w=
+rote:
+>=20
+> > Whipped this up last week, at to a first glance it appears to work,
+> > although the spacemit platform I've used to implement this has very
+> > limited in-tree use of pinctrl so it is hard to be sure.
+>=20
+> I like it, if it wasn't RFC I would merge it.
 
- .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 35 +++++++++++++++++--
- 1 file changed, 32 insertions(+), 3 deletions(-)
+Half the reason that it is RFC is that I knew dlan wanted to take a look
+but told me they weren't available, so I said I'd send it on the list in
+the interim.
 
--- 
-2.53.0
+> > What I don't love though is how similar the functions
+> > pinctrl_generic_pins_function_dt_node_to_map() and
+> > pinctrl_generic_pinmux_dt_node_to_map() are - essentially identical
+> > other than which function they in turn call.
+>=20
+> Hm we can maybe think of something more descriptive
+> to the first one?
 
+I think the name is actually okay, it was the similarity of the code
+that I don't like. There's a fair bit of duplication.
+
+> I think the new function is very much to the point. That's what
+> it does. pinctrl_generic_pins_function_dt_node_to_map() could
+> perhaps be names something that make it evident what is
+> special about it. Not that I have a good idea.
+>=20
+> > Basically, I wanna know if you think that that is acceptable,
+>=20
+> Looks Good To Me (TM) no-one else is helping out with pin
+> control core work so I'm happy for everything I get.
+
+Right, well I'll go clean it up I suppose. I might send a rfc v2 with an
+extra patch that tries to get rid of some of the code duplication and
+you can tell me which version you prefer?
+
+--G1HwXNExfpOqsnk7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCagYbJgAKCRB4tDGHoIJi
+0pQuAQDdsm05Tu6s305sA0AF4zcLSMo5WeLpHnAmao/S4UXj2AD/VgBbmKWYI8YG
+d3/lbYthJp15vGrtvCrbRjMd8nqi2Q4=
+=CZj+
+-----END PGP SIGNATURE-----
+
+--G1HwXNExfpOqsnk7--
