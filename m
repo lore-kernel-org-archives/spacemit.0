@@ -1,50 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4811A683B;
-	Sat, 16 May 2026 02:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60289224F3;
+	Sat, 16 May 2026 02:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778897235; cv=none; b=fAxbNr0E02UFoZPe9vsL+KJ3Te4Bz4rpomyKo/zrker/ifBgqgdg1ckw8ZtmfSsDsMZV3IS+ujwAPbR3uN5YFY3e6lGPp7QT5vNBf1lsQhDXvwxhpyuQeBH6CiNlOVhFLcqKo2B1J1nP7E7X77ofhIiSoZrIJeedEXSd/J4PwbY=
+	t=1778900228; cv=none; b=Viw3VSlV8QMkemagsijFY26TSc9PFjIpLd5SKkHZppghOdETLLubomphsl9LH8uIzLUCBrMv6+atgTLZ7VfFP2K2GUkC+d5uLpGQDZ4YlnwhiBSC1QGaVrUEtpvOsfjZpoJPqxsXPPVCOMH5vTF76ma5xnqe/KnptXXPWso601o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778897235; c=relaxed/simple;
-	bh=iqCIplJrqfaiHknlrsPCYdWY6TiMpIdZBid5zJCNkGE=;
+	s=arc-20240116; t=1778900228; c=relaxed/simple;
+	bh=M6nGzuhtuydJTS24X+joMHBqfjHReQnk/JS+UtPAYmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jrFVLgBGZKTWlARvt5ERQd3P+mpidXHFMvCwRfFpBM4owPKqOga2J/LuJ9YfNPXu2CpONdpTgvJ8bCDHK9Fg3ho9YqVa7kGZ7dvT+gXqe2yUyWiGPiC3HLKeERVrMqxcmMcD+9dcUJ1zNq8GhgVq2QhxBBt4YIJJIFE4xW2O80w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VFuKdFAA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y7XVq5y9mAHeVoOmBN3o1/OCcj25Uf+vMHf2uIsqlkw4f5UTu6iiCDimwnYDRpcP6AnAAOvIwyFZNWk++JxABLwSw0FWUupV4AjT9qAxYASpQOQ7bjYhdFgyHU9lJvCmqfT4JzL4jg+HIs+45SCDeedVJpd0o4NpwR3YplrU83U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nQj0ikvA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VFuKdFAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B8FC2BCB0;
-	Sat, 16 May 2026 02:07:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nQj0ikvA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258BDC2BCB0;
+	Sat, 16 May 2026 02:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778897235;
-	bh=iqCIplJrqfaiHknlrsPCYdWY6TiMpIdZBid5zJCNkGE=;
+	s=k20201202; t=1778900228;
+	bh=M6nGzuhtuydJTS24X+joMHBqfjHReQnk/JS+UtPAYmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFuKdFAACaO2gG2mF0pAsPqW+U5ygN31EDpTvZADccBwfqZ5b1uYXD+79dj3KBecc
-	 2x5+81wsmC1ULUYJz5AlMv0NIvq9rph5/yuzVUR+T6KePKGnRZYI+R1cxe3br2nT32
-	 n/Yf+45tJcxol25prBdxczVb0J2L852cu+KS+rNElUk0YSDc4aJL1KLoIzTODETI35
-	 OSCcEncLwgm38tB/no0wCVLd6ib7Lj8ARq/JXNhluhMyLR/btdczu61RW3jWQoOPuM
-	 cizul79Ox73ddRKnMZjzYfROLAmNAmYgfRtfN8aUHKc5F2Dl5OHRuHZfMos8ClZKZb
-	 QjNUkgUxlU9Aw==
+	b=nQj0ikvAvGebOjidCeb4lbqYeg8nWzV8uPsr0sQVf3ecOhvzKxj98lVehAxGLs1c5
+	 51IWimbv16mI2OvpE9Q15vyhAg2Pu2g3PVUHLImA6Pz6xLGojlP5/f2Gh0kWWhGt0l
+	 pg0b8R38jUAt26+e+4xjtGctsO9kyUkG+DQyLeexwd4O1oLT2maxfcfgTLWJAHCWfT
+	 4zpzx+Cxaq8uFzLbVsYPDtdDQcQGcIvqEtN6AGw4XvEijH7ed1SqcCznvoCsHvvz0m
+	 n44CEczj0bsaAoin7ZIS0jwy38kxzSmdO5DRs5k9a/5uXack3vocg9bK2zDodzqqwA
+	 Ug82cbfcDkJIw==
 From: Yixun Lan <dlan@kernel.org>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>
-Cc: devicetree@vger.kernel.org,
+	Ulf Hansson <ulfh@kernel.org>,
+	Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-mmc@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] riscv: dts: spacemit: k3: Add USB2.0 support
-Date: Sat, 16 May 2026 02:07:08 +0000
-Message-ID: <177889719089.2290560.15121464517928343972.b4-ty@b4>
+	linux-kernel@vger.kernel.org,
+	Anand Moon <linux.amoon@gmail.com>,
+	Trevor Gamblin <tgamblin@baylibre.com>,
+	Vincent Legoll <legoll@online.fr>,
+	Margherita Milani <margherita.milani@amarulasolutions.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Andre Heider <a.heider@gmail.com>
+Subject: Re: (subset) [PATCH v10 0/4] riscv: spacemit: enable SD card support with UHS modes for OrangePi RV2
+Date: Sat, 16 May 2026 02:57:00 +0000
+Message-ID: <177889984452.2298656.1074391459031404894.b4-ty@b4>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260330-02-k3-usb20-dts-v2-1-46af262fb4a9@kernel.org>
-References: <20260330-02-k3-usb20-dts-v2-1-46af262fb4a9@kernel.org>
+In-Reply-To: <20260515-orangepi-sd-card-uhs-v10-0-094af27e310d@gmail.com>
+References: <20260515-orangepi-sd-card-uhs-v10-0-094af27e310d@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -55,20 +68,33 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 30 Mar 2026 22:15:21 +0000, Yixun Lan wrote:
-> There is one USB2.0 host in K3 SoC which use DWC3 IP but only provide
-> USB2.0 functionality, and with only one USB2 PHY connected.
+On Fri, 15 May 2026 12:48:58 +0200, Iker Pedrosa wrote:
+> This series enables complete SD card support for the Spacemit K1-based
+> OrangePi RV2 board, including UHS (Ultra High Speed) modes for
+> high-performance SD card operation.
 > 
-> The USB2.0 controller on Pico-ITX board connects to a Terminus FE1.1 Hub
-> which fully USB2.0 protocol compliant and provides 4 ports.
+> Background
 > 
+> The Spacemit K1 SoC includes an SDHCI controller capable of supporting
+> SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
+> currently lacks basic SD controller configuration, SDHCI driver
+> enhancements for voltage switching and tuning, and power management
+> infrastructure.
 > 
 > [...]
 
+Hi Iker,
+I've picked patch 1-3, for [4/4] I think it should be merged after
+https://lore.kernel.org/all/20260513071958.29574-1-a.heider@gmail.com/
+
 Applied, thanks!
 
-[1/1] riscv: dts: spacemit: k3: Add USB2.0 support
-      https://github.com/spacemit-com/linux/commit/d3bd58f3060f28ecd30df51925a9b1f62e5e8c9b
+[1/4] riscv: dts: spacemit: k1: add SD card controller and pinctrl support
+      https://github.com/spacemit-com/linux/commit/2d77e577109967ef65f269c1fc1d6a659d4260fb
+[2/4] riscv: dts: spacemit: k1-orangepi-rv2: add SD card support with UHS modes
+      https://github.com/spacemit-com/linux/commit/2585c60ce2f977b13f14a67d1e3ed9c73fd7f381
+[3/4] riscv: dts: spacemit: k1-bananapi-f3: add SD card support with UHS modes
+      https://github.com/spacemit-com/linux/commit/c76e2f058cbcab84e4a703f26857a58bdf6a0042
 
 Best regards,
 -- 
