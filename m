@@ -1,86 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6F71A683F;
-	Sat, 16 May 2026 05:37:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA77372681
+	for <spacemit@lists.linux.dev>; Sat, 16 May 2026 08:06:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778909854; cv=none; b=THI3M8sdKMbFuodo5i6QjUPtI003KXFkrvK8xjjL88K7Yt40u4KFDuFnFMinD4yi5ury/lEcShNcwzKfYLcdk+Z7M6LaA46Sa3f69875n3OxqcG+iva73bfhQxyIi3p5VoEkpALMqZdVtN8IJVzqeRn4yIWaAGg5T2yG6lGPk94=
+	t=1778918806; cv=none; b=j44en/ei9egi3vRHaLFdlQlyGogOTjtQxJF9QkcHUJA/c81WTXyLe3MaysqbC3R914IquR6wsoyET5FVy9I4guoD4vCM3zFLlXgjMCw/82yaM+7ii/X9OaNqJQhSeNCH4zEflc4u81GDqxRR2bp80Z83sOKM1fu0BwV9NNg/Z+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778909854; c=relaxed/simple;
-	bh=8yBvfhLzYDJAvKIHnzpbKWBDmTKaskcNlT36hAQ0Img=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j49GsB6d5jG19q4MnI2AIow4reih3C48mYn6un9S04oIcE8KwnKC3ufwq9J3g6PM+0ad8gNTvnlUTnT61WB93MZNxjqm+etx6fQeQ3dFXbMC+eealaMlKKY9UBbBqQ6QCNjNlPlMHwWlB5+3sb9lX/drRcQ3/49cOaQMvI/z/u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fK1aSbm8; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fK1aSbm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DF4C19425;
-	Sat, 16 May 2026 05:37:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778909854;
-	bh=8yBvfhLzYDJAvKIHnzpbKWBDmTKaskcNlT36hAQ0Img=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=fK1aSbm8mudfk4ee6EzKpdHjeIFsFfF7nm+GOPlpahSUotCWY0ksHkUGF0m19EPrY
-	 g7GKFh7EWTb+zSaVr5DrMQOy8/YmU9Euao08L9AS3Ba4d3BU0ce17We++sgwaXZb3k
-	 DOpv0NSN11xQ9ubjC1lofG9vE+ItMhTPE/gwz5/JPDrGvwxuDNmJgF7SHeIxz+oLay
-	 0A2DxcvfWSluN1ERcvKOpZE4ITsDfuM85GDxsK3YAR/Z1/cfpszJTjxW7bj2JHODv+
-	 DpKSTCb+zmpj+AO9EyQbRjTYA/dfhXJ9v6RdZLSIX2HUUGLnzXlhft9Ym9XMKMnekg
-	 C149fh8jHax6Q==
-Date: Sat, 16 May 2026 05:37:30 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: E Shattow <e@freeshell.de>, linux-kernel@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
+	s=arc-20240116; t=1778918806; c=relaxed/simple;
+	bh=kwAb+8t7n6fTixn8aUsPP7FN/BlIfXS+yinz1sN4Ei8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=aK0zpR9GC+8mqRfgWU8iD2PXghkQOlx6EH0FkZQkOZQ+ptfGYpTt9WPL+UqBkrG/BUTcbbUqOqsYmhMBTtMnMpy9vBvnsSM8S3GwA2sruDDcwxP9yTdSGb66/0Fa5aQk5quGF1ygXX/H8bOI1hDVHLWt8w/lXOGZ6YoaxrQeucg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.. (unknown [119.122.215.211])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 3ea911568;
+	Sat, 16 May 2026 16:01:23 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH 3/4] riscv: dts: spacemit: enable eMMC on Milk-V Jupiter
-Message-ID: <20260516053730-GKA3675990@kernel.org>
-References: <20260514160356.1642075-1-aurelien@aurel32.net>
- <20260514160356.1642075-4-aurelien@aurel32.net>
- <f52a821b-157a-467d-84ee-4d1d4a96f673@freeshell.de>
- <agbP0-OsfQRFJcr0@aurel32.net>
+	linux-riscv@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH 1/1] riscv: dts: spacemit: enable QSPI for OrangePi RV2
+Date: Sat, 16 May 2026 16:00:30 +0800
+Message-Id: <20260516080030.1736836-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <agbP0-OsfQRFJcr0@aurel32.net>
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9e2fcde40103a2kunm3c86e68bda47e
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCSR9IVh0ZQxpLGB1OSU5CHVYeHw
+	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkJVSklJVUlKTlVJSkpZV1kWGg8SFR0UWUFZT0tIVUpLSU
+	9PT0tVSktLVUtZBg++
 
-Hi Aurelien,
+Enable the QSPI controller and the XM25QU128C SPI NOR flash on the
+OrangePi RV2 board. Add a flash partition layout from vendor UBoot.
 
-On 09:48 Fri 15 May     , Aurelien Jarno wrote:
-> On 2026-05-14 23:49, E Shattow wrote:
-> > On 5/14/26 08:56, Aurelien Jarno wrote:
-> > > The Milk-V Jupiter board has a connector for an eMMC module. Add an
-> > > entry for it in the device tree and alias it mmc0. As it is not
-> > > populated by default, do no mark it as non-removable.
-> > > 
-> > 
-> > The meaning of "non-removable" here is whether it is expected to be
-> > added and removed during use, requiring to be probed again; not whether
-> > it is a user configurable module or soldered down part.
-> 
-> Not connecting the eMMC module and larking it as non-removable causes this info
-> message to appears in the logs:
-> 
-> mmc0: SDHCI controller on d4281000.mmc [d4281000.mmc] using ADMA
-> mmc0: Failed to initialize a non-removable card
-> 
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 45 +++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-I'm with E Shattow here, and would prefer to add "non-removable" property,
-Unlike SD card, the eMMC has no CD pin, some logic may be handled slightly
-differently.
-
-For that failure message, I have no idea how to deal with it but might
-just ignore it.. Guess it's the price that have to pay if enabling the
-eMMC in DT but has no module soldered or plugged in?
-
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+index c95ca38e3d4a..3081065cec0e 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+@@ -288,6 +288,51 @@ &pcie2 {
+ 	status = "okay";
+ };
+ 
++&qspi {
++	pinctrl-names = "default";
++	pinctrl-0 = <&qspi_cfg>;
++	status = "okay";
++
++	flash@0 {
++		compatible = "jedec,spi-nor";
++		reg = <0>;
++		spi-max-frequency = <26500000>;
++		spi-rx-bus-width = <4>;
++		spi-tx-bus-width = <4>;
++		vcc-supply = <&buck3_1v8>;
++
++		partitions {
++			compatible = "fixed-partitions";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			bootinfo@0 {
++				reg = <0x00000 0x010000>;
++			};
++
++			private@10000 {
++				reg = <0x10000 0x010000>;
++			};
++
++			fsbl@20000 {
++				reg = <0x20000 0x040000>;
++			};
++
++			env@60000 {
++				reg = <0x60000 0x010000>;
++			};
++
++			opensbi@70000 {
++				reg = <0x70000 0x030000>;
++			};
++
++			uboot@a00000 {
++				reg = <0xa0000 0x760000>;
++			};
++		};
++	};
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_2_cfg>;
 -- 
-Yixun Lan (dlan)
+2.34.1
+
