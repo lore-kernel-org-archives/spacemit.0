@@ -1,63 +1,63 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1368F1917FB
-	for <spacemit@lists.linux.dev>; Sun, 17 May 2026 01:49:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8910304BDC
+	for <spacemit@lists.linux.dev>; Sun, 17 May 2026 01:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778982566; cv=none; b=HhZ4VzuGXt0zMdFo8G0Wkhg6FF8WySYbD285UktZFsVHFN8Al5uha2ZfXMJraolFBPwAkVYGdILf6CKQwKcariRRGZcfhw2AUW9RJy/0ksR7nRbJ27e+5ApnzEhcJd9vjdG0XELkBwDYaV3xpt5TADFUWZ061+zQ5+CpANbjFiA=
+	t=1778982567; cv=none; b=WqdkYSXb4V5rvo5jcuBdk2Dl07D4ZfHFwuXahRbH7I2vht3lfDDhfy57AeanpPJKR0GuxYYg4OxltKFLKQmmpB2L3KV0UJUTP4YxbIBfI4pgffzyASbaOWoaSWZuPUalJwcZon5ldPpyNMD77isQ1et1Va4/9SG+DptvXwGt7vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778982566; c=relaxed/simple;
-	bh=0Oscz7/WLUKTye1b+R/+VWNQskuTvIsNTNGkBlIb80Y=;
+	s=arc-20240116; t=1778982567; c=relaxed/simple;
+	bh=44csRfRZMQMnbhYT2ypXHrgXGaPwDpJHCybAdwDm4h0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+OyRvTubY0z03eVrdDJnVXB4loLmu3Nm4gJFmhfbL49vQOzJF69z3WsLkzXD2BTwjfhnh6ZXBvljC6kdt+kn48X8456rrqleSaFNlA90tZNMsDi+F5QcKnZ+LTHWCX3YYLkC/ZUb1MaKAIQlnv9e7o2S1P9OvKRZCTo42PL5Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bpwvkl5e; arc=none smtp.client-ip=209.85.210.170
+	 MIME-Version; b=Gt60kbK3ik/edZ3ebOtQ24g1/+1eEDFpM4vhj8gBzXqlgXhi134yXAqyokbP/inFfr8O6mUFDhej6lT7y5YPWSR0a1tIkI3TmEiLKQFw6nj8pfCVT+YMfZevCMhneSxo8fggsrG5r+u5Pl7Et51oVUCGSVcz5NbpZ8nm7RGjn+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j2E0BUN9; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bpwvkl5e"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-83538fbd0b2so389706b3a.0
-        for <spacemit@lists.linux.dev>; Sat, 16 May 2026 18:49:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j2E0BUN9"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2bd80b3aa13so6732985ad.0
+        for <spacemit@lists.linux.dev>; Sat, 16 May 2026 18:49:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778982562; x=1779587362; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1778982565; x=1779587365; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pBf3UIF6lGXHsknt4Ghf3Tw97w9Ex+KKpzto98h8Prs=;
-        b=bpwvkl5exQQ+140242Dr6M/3WbmOJX/OA+4c+O6mbSdvLV8I86kICLpqZv1IHbRIe2
-         WYuPALgmel06/97tYAgNCjiJBuORFR4sMfK1k2Fwms8kTtsy0wOhwR4VsU9osQDN/8n9
-         sSWpnVpqnW8tWHjDiORxjE91rfGEne5XkgARQdu7fazewCrXC5sKZI5WTp4aQvW/7CpJ
-         lpzl5mGvevE7Ewxl3ikTk3AkUCDVJyXWNxxc1fBIp4y1hl1B6D9RXy+qXhvR5El3gVM7
-         sdPt7XobqKlnmwVUXmsmo+B9WThe3nUBckKdVlucfKDVGLRGypmkDCn1yE0PyX/Uv6xk
-         WfzQ==
+        bh=PCXH+i9l3J50hp/oNhGfXSVKTT+GnfnP1ORn6KkZK5A=;
+        b=j2E0BUN9Xy00FQYt3I3QgTthq4o9g+IGEHR09+f4P7rkcpPLBEQZ2EL9QOtSlZ6PkN
+         sMqg09MMg2iY5/eJzGOfGIIQfDfyeruehf4namgLlTcl9atnl5F6U1KssfuFA9dlaaLG
+         YPe/tyPbQczgm1Uj5co92J+Gi1BHwLbZtr14qX8MW7jtHQI9GVwXdVFAllCfpgVvvpaS
+         QBN0uGXRQUb95Z3HltKfHT/lm08wpeNnaD9ckAfNBAMrjWl4CQmB4sWh70HPa53MqfDC
+         QEWF+AtmmrKCJdFddiGfYO+TAhG0J8vgXO6MjBftlQgNhyHJi+am+8bzR5n77ysVZIip
+         QbeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778982562; x=1779587362;
+        d=1e100.net; s=20251104; t=1778982565; x=1779587365;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=pBf3UIF6lGXHsknt4Ghf3Tw97w9Ex+KKpzto98h8Prs=;
-        b=fXJzGw8HeGPSZQIUCSMrcMouqdckiF+MmNsFy7iEZm2UxYrTWtWaKWzli9O9C0R2bN
-         resV0Pxauq1NqgBnhHruR7ZHwnhqEYbvJVjS6oqXILGa0O4HRyHtpuJaQlF6tzIm5QvW
-         Py6Z2iR1uqz/ygBay1q6e9NeMCM6ItgQY4kfFJkDwTivy0A0BBA2ayEHi4fkqneQOn+G
-         fJJudpuS5k9F98trQI1ewWjjANK/3qa3LFyo9VdPiRJ7iDU+COQodiYqBFLWeY/pzeOJ
-         jU/AFS+Npvim9jHrS/euWTDfuUDxbcXyaG6rhNw0+OUtGoDVI4PJBTP/v5LRRwqTbWbq
-         kC/A==
-X-Forwarded-Encrypted: i=1; AFNElJ9Ru9OiV0XUJ37gA1KPlMqOdg5Mq3WxeuEPDfMzaIrc9QA00m1gPN1Q1k4oZWmKXQ8WAA1mBaGr6g==@lists.linux.dev
-X-Gm-Message-State: AOJu0YysmWywId7W8Twhn8rVfdUisK4X704BDyIRF/PTEl8ETfO5Jgqo
-	c63OMmgLJVzI0X/z32pGNpRjF4TwMUkwLh10Fin1bCRTyewWIovFtPRV
-X-Gm-Gg: Acq92OGy3y6h1BVwJS/TwcuQwh+Dty53QwsqpG3Kj4nNzeG5zXxGz5BJg36enOs/c8t
-	U5pclV7Upox2DvBBPth/FdV1aEagKBHhi3b3Whc5970fPA2Zz1nFIiLyHY0Afr8TBarn6LLDjqs
-	oOt4gGfABuVZHL7gdMcxO/3k2OGDz5z3LLcY1Z4a6G6SFQJb+saabObn/DcR99VyjQwVIkqJT7j
-	2Cncri+SVyckKQGlYbO/FbTJRv62LzG+SkgQmidbccIQaUk66CaPiaV3IBMXnFqZdnn/euGI6vv
-	yDzDGoUJKSSYQoYYbm84UGKTjqLMGQ/ZvyX3c8n642RO05qgOCOjhn/NxqpxuL5eyZTJeyBLT5D
-	pacWnP070dZ8pRm6PS68wZiKLPEDF+0WDi+6e6DLG2HgQvt644HAtkEJyYP0I+x25PUa9A5eeRx
-	fFSNZXYok17pI4fDiyoqY17us=
-X-Received: by 2002:a05:6a00:a20e:b0:82c:e1aa:21e3 with SMTP id d2e1a72fcca58-83f33bca81dmr10011080b3a.10.1778982562438;
-        Sat, 16 May 2026 18:49:22 -0700 (PDT)
+        bh=PCXH+i9l3J50hp/oNhGfXSVKTT+GnfnP1ORn6KkZK5A=;
+        b=RK7RLYp9X+JrsxrZQ3b0Vc+4F7AsPW+RLQoh2+4Edu751EYDsbiJ+y0VYAJ73yMXoq
+         z1yAWWj3rwFkiEs6V548pqWmbJT7kxyE9XfmE9ndtBjjKmvIBMSy5LnJnANgZR31IJ5m
+         6nDUE8yX5xhjsnZui30hPoJmapX+ehcwKy9PUByQNILCSJC52LEulKwm19ihTV0DFqSc
+         fk1ootRr9q3U8Mc6C8hODoiF6MCLmDHdi3gK9NAyM5DC8nB8i7vmVvHz3UWA3wPhqCUz
+         /pX0TSdyx+VtcRSP6R9uJlpLTPbEsBDym1sgxyysxneabhocUiY6HZWh5LKbMS0DTjuJ
+         LrdA==
+X-Forwarded-Encrypted: i=1; AFNElJ+iHBx6Yu8DqV9thWMWcF1OjwNoVlueG5NQWjG5THzM0q2kl90bavn+MWKpmmYSKSn4uEs7fexKxw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyg4KIXyk+PwCSYKsAU+MM9sElDBgcms3wUGiIl3fsz2lM9SygZ
+	fTTlHbWymVCjRNF2SxPpCZquqjkq9zwP8HcjqODlmGPEpl+hM4qoHfAn
+X-Gm-Gg: Acq92OHo1EPmsJeKUB17ZfzzpZX2ez95z4knMrWEvg8xlJDzXVMnFdpYkqFkUXIo4iB
+	SLPOeUB00vNKU74PMlozWu6s1yoZczM2UX/SAvkQSpE+wzcdPkWs0bOBFwvB85zvMWxZ15pz7tk
+	ZOfEp+WIT9z2TnzVPtrJA0+6RFSvTLPLv89XN4VEEqVAKnVBkQQoAg+tx8mcbjBpa7U56ZKLt5F
+	IqtbGsFlzMJngMM+mLzbDcTRHWe3HHNmgQhPw1s2EHFN3RIJ8607YyB0KrHYeMyzrYrjpmCelhA
+	uHi7ezElfDzLKfdbDfXTQ4OY4Qo9S6BymId22UXPZwhHBxIjZ0qJ57aIKOiiSdQI2DIAF+D9tcD
+	op81PdyfwdIBFe8SWoNKtnM05E7g9PHDtotgxK6OCtWy5xh2gsMTkevXDJL7gFtz8i00pFJp6Q/
+	2mdyVCtQ8u+KUqv8jDXOaKxhtCkxlEh5Fkdw==
+X-Received: by 2002:a17:903:1209:b0:2bd:d4dc:a4f9 with SMTP id d9443c01a7336-2bdd4dcb523mr2759755ad.26.1778982565125;
+        Sat, 16 May 2026 18:49:25 -0700 (PDT)
 Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19f7cc8bsm10511314b3a.55.2026.05.16.18.49.21
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5cfe49a4sm95507955ad.38.2026.05.16.18.49.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 May 2026 18:49:22 -0700 (PDT)
+        Sat, 16 May 2026 18:49:24 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Jingoo Han <jingoohan1@gmail.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
@@ -91,9 +91,9 @@ Cc: linux-pci@vger.kernel.org,
 	spacemit@lists.linux.dev,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v2 3/5] dt-bindings: PCI: snps,dw-pcie: Add msi-parent for MSI handle check
-Date: Sun, 17 May 2026 09:48:38 +0800
-Message-ID: <20260517014841.254085-4-inochiama@gmail.com>
+Subject: [PATCH v2 4/5] dt-bindings: PCI: spacemit: Introduce Spacemit K3 PCIe host controller
+Date: Sun, 17 May 2026 09:48:39 +0800
+Message-ID: <20260517014841.254085-5-inochiama@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260517014841.254085-1-inochiama@gmail.com>
 References: <20260517014841.254085-1-inochiama@gmail.com>
@@ -105,37 +105,157 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The IMSIC device on RISC-V based system does not require ID
-remapping for MSI. So this device only needs "msi-parent"
-property for IMSIC-based SoC, and the "msi-map" is not a
-necessary property.
-
-Add new condition for MSI handling on IMSIC based SoC.
+Add binding support for the PCIe controller on the SpacemiT K3 SoC.
+This controller is almost a standard Synopsys DesignWare PCIe IP,
+with some extra link and reset state control.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
 ---
- Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ .../bindings/pci/spacemit,k3-pcie-host.yaml   | 135 ++++++++++++++++++
+ 1 file changed, 135 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k3-pcie-host.yaml
 
-diff --git a/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml b/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
-index b3216141881c..91bbbc8924f6 100644
---- a/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
-@@ -27,8 +27,11 @@ allOf:
-   - $ref: /schemas/pci/snps,dw-pcie-common.yaml#
-   - if:
-       not:
--        required:
--          - msi-map
-+        anyOf:
-+          - required:
-+              - msi-map
-+          - required:
-+              - msi-parent
-     then:
-       properties:
-         interrupt-names:
+diff --git a/Documentation/devicetree/bindings/pci/spacemit,k3-pcie-host.yaml b/Documentation/devicetree/bindings/pci/spacemit,k3-pcie-host.yaml
+new file mode 100644
+index 000000000000..46147a37a9ce
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pci/spacemit,k3-pcie-host.yaml
+@@ -0,0 +1,135 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pci/spacemit,k3-pcie-host.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: SpacemiT K3 PCI Express Host Controller
++
++maintainers:
++  - Inochi Amaoto <inochiama@gmail.com>
++
++description:
++  The SpacemiT K3 SoC PCIe host controller is based on the Synopsys
++  DesignWare PCIe IP. The controller uses the external MSI interrupt
++  controller.
++
++allOf:
++  - $ref: /schemas/pci/pci-host-bridge.yaml#
++  - $ref: /schemas/pci/snps,dw-pcie.yaml#
++
++properties:
++  compatible:
++    const: spacemit,k3-pcie
++
++  reg:
++    items:
++      - description: DesignWare PCIe registers
++      - description: Data Bus Interface (DBI) shadow registers
++      - description: ATU address space
++      - description: PCIe configuration space
++      - description: Link control registers
++
++  reg-names:
++    items:
++      - const: dbi
++      - const: dbi2
++      - const: atu
++      - const: config
++      - const: link
++
++  clocks:
++    items:
++      - description: DWC PCIe Data Bus Interface (DBI) clock
++      - description: DWC PCIe application AXI-bus master interface clock
++      - description: DWC PCIe application AXI-bus slave interface clock
++
++  clock-names:
++    items:
++      - const: dbi
++      - const: mstr
++      - const: slv
++
++  resets:
++    items:
++      - description: DWC PCIe Data Bus Interface (DBI) reset
++      - description: DWC PCIe application AXI-bus master interface reset
++      - description: DWC PCIe application AXI-bus slave interface reset
++
++  reset-names:
++    items:
++      - const: dbi
++      - const: mstr
++      - const: slv
++
++  msi-parent: true
++
++  phys:
++    description:
++      PHY phandle from the Combo PHY, the lane number does not depends
++      on this, since the number of lanes provided by Combo PHY can be
++      1 or 2.
++    minItems: 1
++    maxItems: 6
++
++  phy-names:
++    minItems: 1
++    maxItems: 6
++
++  spacemit,apmu:
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    description:
++      A phandle that refers to the APMU system controller, whose regmap is
++      used in managing resets and link state, along with and offset of its
++      reset control register.
++    items:
++      - items:
++          - description: phandle to APMU system controller
++          - description: register offset
++
++required:
++  - clocks
++  - clock-names
++  - resets
++  - reset-names
++  - msi-parent
++  - spacemit,apmu
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++
++    soc {
++      #address-cells = <2>;
++      #size-cells = <2>;
++
++      pcie@80000000 {
++        compatible = "spacemit,k3-pcie";
++        reg = <0x0  0x80000000 0x0 0x00001000>,
++              <0x0  0x80100000 0x0 0x00001000>,
++              <0x0  0x80300000 0x0 0x00003f20>,
++              <0x11 0x00000000 0x0 0x00010000>,
++              <0x0  0x82900000 0x0 0x00001000>;
++        reg-names = "dbi", "dbi2", "atu", "config", "link";
++        device_type = "pci";
++        #address-cells = <3>;
++        #size-cells = <2>;
++        clocks = <&syscon_apmu 89>,
++                 <&syscon_apmu 56>,
++                 <&syscon_apmu 57>;
++        clock-names = "dbi", "mstr", "slv";
++        msi-parent = <&simsic>;
++        ranges = <0x01000000 0x00 0x00010000 0x11 0x00010000 0x0 0x00100000>,
++                 <0x02000000 0x0  0x00110000 0x11 0x00110000 0x0 0x7fef0000>,
++                 <0x43000000 0x18 0x00000000 0x18 0x00000000 0x1 0x00000000>;
++        resets = <&syscon_apmu 76>,
++                 <&syscon_apmu 78>,
++                 <&syscon_apmu 77>;
++        reset-names = "dbi", "mstr", "slv";
++        linux,pci-domain = <0>;
++        spacemit,apmu = <&syscon_apmu 0x1f0>;
++      };
++    };
++
 -- 
 2.54.0
 
