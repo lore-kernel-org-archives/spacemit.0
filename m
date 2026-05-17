@@ -1,63 +1,63 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8910304BDC
-	for <spacemit@lists.linux.dev>; Sun, 17 May 2026 01:49:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D1230C372
+	for <spacemit@lists.linux.dev>; Sun, 17 May 2026 01:49:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778982567; cv=none; b=WqdkYSXb4V5rvo5jcuBdk2Dl07D4ZfHFwuXahRbH7I2vht3lfDDhfy57AeanpPJKR0GuxYYg4OxltKFLKQmmpB2L3KV0UJUTP4YxbIBfI4pgffzyASbaOWoaSWZuPUalJwcZon5ldPpyNMD77isQ1et1Va4/9SG+DptvXwGt7vQ=
+	t=1778982571; cv=none; b=IY0WgGF42S+eWQ3aZl9LcBbsaaXseG+fYq5TJ8Wc7JmsTuhXA9F+45oShmkj6jliactxE7V8fA/uOCOmcOlcQBNSyx66L0D8MD/wjhLk0gY3URxSgGmrYn25PCbQqcjyGviBHZFvB5QNCRqcfaQvWQFhholb2haQIzonpn/Txz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778982567; c=relaxed/simple;
-	bh=44csRfRZMQMnbhYT2ypXHrgXGaPwDpJHCybAdwDm4h0=;
+	s=arc-20240116; t=1778982571; c=relaxed/simple;
+	bh=sl9eoUEuuug2fKZ7asFlwOV6fpkC8fTTfUlujR+t0SY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gt60kbK3ik/edZ3ebOtQ24g1/+1eEDFpM4vhj8gBzXqlgXhi134yXAqyokbP/inFfr8O6mUFDhej6lT7y5YPWSR0a1tIkI3TmEiLKQFw6nj8pfCVT+YMfZevCMhneSxo8fggsrG5r+u5Pl7Et51oVUCGSVcz5NbpZ8nm7RGjn+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j2E0BUN9; arc=none smtp.client-ip=209.85.214.169
+	 MIME-Version; b=Ek5qxC8aiIugUX64UxJDT/1Kxnrvn08n2rW3rnbUh7ThfLY00zF9g23lGE3+PzGnCbYr+OvtToAchUlIinwDJOh6ALGJ0DzOKeviQYgmfnRgU0XOaUNuetavKPU8/WjH0l2jq7EHTyiXYfbNzP2vRhXUsIc9P49ThcnO5pkXeic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hlU23T3X; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j2E0BUN9"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2bd80b3aa13so6732985ad.0
-        for <spacemit@lists.linux.dev>; Sat, 16 May 2026 18:49:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hlU23T3X"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3697c35eab7so341427a91.0
+        for <spacemit@lists.linux.dev>; Sat, 16 May 2026 18:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778982565; x=1779587365; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1778982568; x=1779587368; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PCXH+i9l3J50hp/oNhGfXSVKTT+GnfnP1ORn6KkZK5A=;
-        b=j2E0BUN9Xy00FQYt3I3QgTthq4o9g+IGEHR09+f4P7rkcpPLBEQZ2EL9QOtSlZ6PkN
-         sMqg09MMg2iY5/eJzGOfGIIQfDfyeruehf4namgLlTcl9atnl5F6U1KssfuFA9dlaaLG
-         YPe/tyPbQczgm1Uj5co92J+Gi1BHwLbZtr14qX8MW7jtHQI9GVwXdVFAllCfpgVvvpaS
-         QBN0uGXRQUb95Z3HltKfHT/lm08wpeNnaD9ckAfNBAMrjWl4CQmB4sWh70HPa53MqfDC
-         QEWF+AtmmrKCJdFddiGfYO+TAhG0J8vgXO6MjBftlQgNhyHJi+am+8bzR5n77ysVZIip
-         QbeA==
+        bh=GeZkpj1zuQf2Hxz4Sd2FM8Ip5yddG0cz8geYRJ8r5eU=;
+        b=hlU23T3X0cmZ7mqdD6pdpHG93qoMpI3/z50RMA00s0clfFFSXgZ64wzVBMy+tw/zAj
+         w4nB7UOX8mrLEGaSQDiZVNdxO3MBAdPa9D58ay97ZIb0GTrqLtfP5w2ZS8q0E8fEdaiL
+         Nl0v3VdUH/BrHbpU3GZzC8h3iLTo9z7576bXbX0qa3TThcypkwW+TSNcm22MuwdyJXR2
+         UJdDGsL2aIW5mmaxyx5OodL8zRfUIbXRovQc29MeqpW7wDNgJ1EQRxV8S4UFsi79jS6D
+         3R1SAKrQFgt+ndwyMNMJBMMKe6FdJgrZz3xEowXJTcW0uIeHIVzunj7io/lIyNlbxIYP
+         PsgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778982565; x=1779587365;
+        d=1e100.net; s=20251104; t=1778982568; x=1779587368;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=PCXH+i9l3J50hp/oNhGfXSVKTT+GnfnP1ORn6KkZK5A=;
-        b=RK7RLYp9X+JrsxrZQ3b0Vc+4F7AsPW+RLQoh2+4Edu751EYDsbiJ+y0VYAJ73yMXoq
-         z1yAWWj3rwFkiEs6V548pqWmbJT7kxyE9XfmE9ndtBjjKmvIBMSy5LnJnANgZR31IJ5m
-         6nDUE8yX5xhjsnZui30hPoJmapX+ehcwKy9PUByQNILCSJC52LEulKwm19ihTV0DFqSc
-         fk1ootRr9q3U8Mc6C8hODoiF6MCLmDHdi3gK9NAyM5DC8nB8i7vmVvHz3UWA3wPhqCUz
-         /pX0TSdyx+VtcRSP6R9uJlpLTPbEsBDym1sgxyysxneabhocUiY6HZWh5LKbMS0DTjuJ
-         LrdA==
-X-Forwarded-Encrypted: i=1; AFNElJ+iHBx6Yu8DqV9thWMWcF1OjwNoVlueG5NQWjG5THzM0q2kl90bavn+MWKpmmYSKSn4uEs7fexKxw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyg4KIXyk+PwCSYKsAU+MM9sElDBgcms3wUGiIl3fsz2lM9SygZ
-	fTTlHbWymVCjRNF2SxPpCZquqjkq9zwP8HcjqODlmGPEpl+hM4qoHfAn
-X-Gm-Gg: Acq92OHo1EPmsJeKUB17ZfzzpZX2ez95z4knMrWEvg8xlJDzXVMnFdpYkqFkUXIo4iB
-	SLPOeUB00vNKU74PMlozWu6s1yoZczM2UX/SAvkQSpE+wzcdPkWs0bOBFwvB85zvMWxZ15pz7tk
-	ZOfEp+WIT9z2TnzVPtrJA0+6RFSvTLPLv89XN4VEEqVAKnVBkQQoAg+tx8mcbjBpa7U56ZKLt5F
-	IqtbGsFlzMJngMM+mLzbDcTRHWe3HHNmgQhPw1s2EHFN3RIJ8607YyB0KrHYeMyzrYrjpmCelhA
-	uHi7ezElfDzLKfdbDfXTQ4OY4Qo9S6BymId22UXPZwhHBxIjZ0qJ57aIKOiiSdQI2DIAF+D9tcD
-	op81PdyfwdIBFe8SWoNKtnM05E7g9PHDtotgxK6OCtWy5xh2gsMTkevXDJL7gFtz8i00pFJp6Q/
-	2mdyVCtQ8u+KUqv8jDXOaKxhtCkxlEh5Fkdw==
-X-Received: by 2002:a17:903:1209:b0:2bd:d4dc:a4f9 with SMTP id d9443c01a7336-2bdd4dcb523mr2759755ad.26.1778982565125;
-        Sat, 16 May 2026 18:49:25 -0700 (PDT)
+        bh=GeZkpj1zuQf2Hxz4Sd2FM8Ip5yddG0cz8geYRJ8r5eU=;
+        b=Cl8tAWbXCMRQ2eh4GjQCt1eE1eSqfbMAoR29dkEHsMs8NkOeVPI8/GBRrL13qc0kSu
+         gFwSZzFaCRqKmhwMAdJ78KkZbJb4SOtQwPDPKC8WkswDo+/3snAu+MepzQNZK8z5W+Hz
+         zXX93peP/pH4aKMR2jwqjMJpH0pgZtRUDcTB89US82wdz+gCzEn8btbFSf2gRwMLYe/c
+         hdUYbtwRrfBxkiSYKvBN/WxM1B6wPaRvN1f3LYgrrO8aiETotVYNnC7/8Bd+TD0DOUgs
+         2JRHulDaDrMaQqHqAbg7xWtMYZRLozHw3OBpCTWAaXh74cJY8n9TP4X2kOgZRPPiFHoH
+         v+lw==
+X-Forwarded-Encrypted: i=1; AFNElJ8GC6du3gDMlBRJloYP+GDOnBpx4YGnDTh6lHm8n11v4n2TIt5RNCA7wnuELIzaU5Z10aqdbZagvg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyKQj+FcSCjFsikYyKTY3PFl5nYf9QMMgCMSbRgSCL+z57cOI2K
+	0rLyavSNhnMHka07FLPAbxgBjgm/RC6XyhdO0jGOhVrypxkrtf3WIbKn
+X-Gm-Gg: Acq92OF9ayPcUEUFY7PTRC+8ZqtZz7o6Wl1LP3FF9VLduJWIgD/sItkv1D5elSUJz2j
+	TwlZmV8tL6Dvse0r+cqUPKrNVYbgkZKQmDpmO44fa3aolWEAcIocMb//jlaWO7YPRInMFnBedWO
+	qvbUctRuA+90ddKf+j2WAiaeh/V5MCFIZhFzWeE/6mR3s0o+hOPZhmUD9/p2yLC5pJ2YkHlUfPQ
+	ZzxGtjHKeeW0k29KRoMuBaNELdMjAFOWrl7B7hLYOzaogmDhiLfVKezMTidvnEFt0IfNeE4Dv7g
+	nhtJ0kPn4q9zWNCNFiCslx26HO1ofcElzs8tN3xM3eYlQGkGgTqpQIef23mNtBkzBcTUILVhdWK
+	/nZTXVFWifddo2RbjrF3OX8T42OLvrJomXSP0kXjXuGUabwicXIczrEOMnXa11zOz2GAhKEsmqw
+	JEIqqYSHm39TXhsD70V8n5XP8=
+X-Received: by 2002:a17:90b:33c4:b0:35d:9c32:6219 with SMTP id 98e67ed59e1d1-369519e8faamr9623598a91.9.1778982567704;
+        Sat, 16 May 2026 18:49:27 -0700 (PDT)
 Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5cfe49a4sm95507955ad.38.2026.05.16.18.49.24
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-369512424c2sm6853019a91.4.2026.05.16.18.49.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 May 2026 18:49:24 -0700 (PDT)
+        Sat, 16 May 2026 18:49:27 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Jingoo Han <jingoohan1@gmail.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
@@ -91,9 +91,9 @@ Cc: linux-pci@vger.kernel.org,
 	spacemit@lists.linux.dev,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v2 4/5] dt-bindings: PCI: spacemit: Introduce Spacemit K3 PCIe host controller
-Date: Sun, 17 May 2026 09:48:39 +0800
-Message-ID: <20260517014841.254085-5-inochiama@gmail.com>
+Subject: [PATCH v2 5/5] PCI: spacemit-k1: Add Spacemit K3 PCIe host controller support
+Date: Sun, 17 May 2026 09:48:40 +0800
+Message-ID: <20260517014841.254085-6-inochiama@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260517014841.254085-1-inochiama@gmail.com>
 References: <20260517014841.254085-1-inochiama@gmail.com>
@@ -105,157 +105,253 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add binding support for the PCIe controller on the SpacemiT K3 SoC.
-This controller is almost a standard Synopsys DesignWare PCIe IP,
-with some extra link and reset state control.
+The PCIe controller on Spacemit K3 is almost a standard Synopsys
+DesignWare PCIe IP with extra link and reset control. Unlike
+the PCIe controller on K1, this controller supports external MSI
+interrupt controller and can use multiple PHYs at the same time.
+
+Add driver to support PCIe controller on Spacemit K3 PCIe.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 ---
- .../bindings/pci/spacemit,k3-pcie-host.yaml   | 135 ++++++++++++++++++
- 1 file changed, 135 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/pci/spacemit,k3-pcie-host.yaml
+ drivers/pci/controller/dwc/Kconfig            |   4 +-
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 169 ++++++++++++++++++
+ 2 files changed, 171 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/spacemit,k3-pcie-host.yaml b/Documentation/devicetree/bindings/pci/spacemit,k3-pcie-host.yaml
-new file mode 100644
-index 000000000000..46147a37a9ce
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pci/spacemit,k3-pcie-host.yaml
-@@ -0,0 +1,135 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pci/spacemit,k3-pcie-host.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+index f2fde13107f2..fae971ecd876 100644
+--- a/drivers/pci/controller/dwc/Kconfig
++++ b/drivers/pci/controller/dwc/Kconfig
+@@ -439,7 +439,7 @@ config PCIE_SOPHGO_DW
+ 	  Sophgo SoCs.
+ 
+ config PCIE_SPACEMIT_K1
+-	tristate "SpacemiT K1 PCIe controller (host mode)"
++	tristate "SpacemiT K1/K3 PCIe controller (host mode)"
+ 	depends on ARCH_SPACEMIT || COMPILE_TEST
+ 	depends on HAS_IOMEM
+ 	select PCIE_DW_HOST
+@@ -447,7 +447,7 @@ config PCIE_SPACEMIT_K1
+ 	default ARCH_SPACEMIT
+ 	help
+ 	  Enables support for the DesignWare based PCIe controller in
+-	  the SpacemiT K1 SoC operating in host mode.  Three controllers
++	  the SpacemiT K1/K3 SoC operating in host mode. Three controllers
+ 	  are available on the K1 SoC; the first of these shares a PHY
+ 	  with a USB 3.0 host controller (one or the other can be used).
+ 
+diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+index 7f6f1df31cd8..7854d26220a9 100644
+--- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
++++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+@@ -23,6 +23,7 @@
+ 
+ #define PCI_VENDOR_ID_SPACEMIT		0x201f
+ #define PCI_DEVICE_ID_SPACEMIT_K1	0x0001
++#define PCI_DEVICE_ID_SPACEMIT_K3	0x0002
+ 
+ /* Offsets and field definitions for link management registers */
+ #define K1_PHY_AHB_IRQ_EN			0x0000
+@@ -32,8 +33,20 @@
+ #define SMLH_LINK_UP			BIT(1)
+ #define RDLH_LINK_UP			BIT(12)
+ 
++#define INTR_STATUS				0x0010
 +
-+title: SpacemiT K3 PCI Express Host Controller
+ #define INTR_ENABLE				0x0014
+ #define MSI_CTRL_INT			BIT(11)
++#define RDLH_LINK_UP_INT		BIT(20)
 +
-+maintainers:
-+  - Inochi Amaoto <inochiama@gmail.com>
++#define K3_PHY_AHB_IRQSTATUS_INTX		0x0008
 +
-+description:
-+  The SpacemiT K3 SoC PCIe host controller is based on the Synopsys
-+  DesignWare PCIe IP. The controller uses the external MSI interrupt
-+  controller.
++#define K3_ADDR_INTR_STATUS1			0x0018
 +
-+allOf:
-+  - $ref: /schemas/pci/pci-host-bridge.yaml#
-+  - $ref: /schemas/pci/snps,dw-pcie.yaml#
++#define K3_CACHE_MSTR_AWCACHE_MODE	GENMASK(14, 11)
++#define K3_CACHE_MSTR_AWCACHE_BEHAVIOR	0xf
 +
-+properties:
-+  compatible:
-+    const: spacemit,k3-pcie
++#define K3_MAX_PHY_NUMBER		6
+ 
+ /* Some controls require APMU regmap access */
+ #define SYSCON_APMU			"spacemit,apmu"
+@@ -48,6 +61,9 @@
+ 
+ #define PCIE_CONTROL_LOGIC			0x0004
+ #define PCIE_SOFT_RESET			BIT(0)
++#define PCIE_PERSTN_OE			BIT(24)
++#define PCIE_PERSTN_OUT			BIT(25)
++#define PCIE_IGNORE_PERSTN		BIT(31)
+ 
+ struct k1_pcie {
+ 	struct dw_pcie pci;
+@@ -262,6 +278,152 @@ static const struct dw_pcie_ops k1_pcie_ops = {
+ 	.stop_link	= k1_pcie_stop_link,
+ };
+ 
++static int k3_pcie_enable_phy(struct k1_pcie *pcie)
++{
++	int i, ret;
 +
-+  reg:
-+    items:
-+      - description: DesignWare PCIe registers
-+      - description: Data Bus Interface (DBI) shadow registers
-+      - description: ATU address space
-+      - description: PCIe configuration space
-+      - description: Link control registers
++	for (i = 0; i < pcie->phy_count; i++) {
++		ret = phy_init(pcie->phy[i]);
++		if (ret)
++			goto err_phy;
++	}
 +
-+  reg-names:
-+    items:
-+      - const: dbi
-+      - const: dbi2
-+      - const: atu
-+      - const: config
-+      - const: link
++	return 0;
 +
-+  clocks:
-+    items:
-+      - description: DWC PCIe Data Bus Interface (DBI) clock
-+      - description: DWC PCIe application AXI-bus master interface clock
-+      - description: DWC PCIe application AXI-bus slave interface clock
++err_phy:
++	while (--i >= 0)
++		phy_exit(pcie->phy[i]);
 +
-+  clock-names:
-+    items:
-+      - const: dbi
-+      - const: mstr
-+      - const: slv
++	return ret;
++}
 +
-+  resets:
-+    items:
-+      - description: DWC PCIe Data Bus Interface (DBI) reset
-+      - description: DWC PCIe application AXI-bus master interface reset
-+      - description: DWC PCIe application AXI-bus slave interface reset
++static int k3_pcie_init(struct dw_pcie_rp *pp)
++{
++	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
++	struct k1_pcie *k1 = to_k1_pcie(pci);
++	u32 reset_ctrl = k1->pmu_off + PCIE_CLK_RESET_CONTROL;
++	u32 val;
++	int ret;
 +
-+  reset-names:
-+    items:
-+      - const: dbi
-+      - const: mstr
-+      - const: slv
++	regmap_clear_bits(k1->pmu, reset_ctrl, LTSSM_EN);
 +
-+  msi-parent: true
++	k1_pcie_toggle_soft_reset(k1);
 +
-+  phys:
-+    description:
-+      PHY phandle from the Combo PHY, the lane number does not depends
-+      on this, since the number of lanes provided by Combo PHY can be
-+      1 or 2.
-+    minItems: 1
-+    maxItems: 6
++	ret = k1_pcie_enable_resources(k1);
++	if (ret)
++		return ret;
 +
-+  phy-names:
-+    minItems: 1
-+    maxItems: 6
++	regmap_set_bits(k1->pmu, reset_ctrl, PCIE_AUX_PWR_DET);
++	regmap_clear_bits(k1->pmu, reset_ctrl, APP_HOLD_PHY_RST);
 +
-+  spacemit,apmu:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description:
-+      A phandle that refers to the APMU system controller, whose regmap is
-+      used in managing resets and link state, along with and offset of its
-+      reset control register.
-+    items:
-+      - items:
-+          - description: phandle to APMU system controller
-+          - description: register offset
++	ret = k3_pcie_enable_phy(k1);
++	if (ret) {
++		k1_pcie_disable_resources(k1);
++		return ret;
++	}
 +
-+required:
-+  - clocks
-+  - clock-names
-+  - resets
-+  - reset-names
-+  - msi-parent
-+  - spacemit,apmu
++	/* K3: Set IGNORE_PERSTN and drive PERSTN_OE high (assert reset) */
++	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
++			PCIE_IGNORE_PERSTN | PCIE_PERSTN_OE | PCIE_PERSTN_OUT);
++	usleep_range(1000, 2000);
++	regmap_clear_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC, PCIE_PERSTN_OUT);
 +
-+unevaluatedProperties: false
++	msleep(PCIE_T_PVPERL_MS);
 +
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
++	/*
++	 * Put the controller in root complex mode, and indicate that
++	 * Vaux (3.3v) is present.
++	 */
++	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
++			PCIE_PERSTN_OUT | PCIE_PERSTN_OE);
 +
-+    soc {
-+      #address-cells = <2>;
-+      #size-cells = <2>;
++	val = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
++	val = u32_replace_bits(val, GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE,
++			       GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
++	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, val);
 +
-+      pcie@80000000 {
-+        compatible = "spacemit,k3-pcie";
-+        reg = <0x0  0x80000000 0x0 0x00001000>,
-+              <0x0  0x80100000 0x0 0x00001000>,
-+              <0x0  0x80300000 0x0 0x00003f20>,
-+              <0x11 0x00000000 0x0 0x00010000>,
-+              <0x0  0x82900000 0x0 0x00001000>;
-+        reg-names = "dbi", "dbi2", "atu", "config", "link";
-+        device_type = "pci";
-+        #address-cells = <3>;
-+        #size-cells = <2>;
-+        clocks = <&syscon_apmu 89>,
-+                 <&syscon_apmu 56>,
-+                 <&syscon_apmu 57>;
-+        clock-names = "dbi", "mstr", "slv";
-+        msi-parent = <&simsic>;
-+        ranges = <0x01000000 0x00 0x00010000 0x11 0x00010000 0x0 0x00100000>,
-+                 <0x02000000 0x0  0x00110000 0x11 0x00110000 0x0 0x7fef0000>,
-+                 <0x43000000 0x18 0x00000000 0x18 0x00000000 0x1 0x00000000>;
-+        resets = <&syscon_apmu 76>,
-+                 <&syscon_apmu 78>,
-+                 <&syscon_apmu 77>;
-+        reset-names = "dbi", "mstr", "slv";
-+        linux,pci-domain = <0>;
-+        spacemit,apmu = <&syscon_apmu 0x1f0>;
-+      };
-+    };
++	dw_pcie_dbi_ro_wr_en(pci);
++	dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, PCI_VENDOR_ID_SPACEMIT);
++	dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, PCI_DEVICE_ID_SPACEMIT_K3);
++	dw_pcie_dbi_ro_wr_dis(pci);
 +
++	/* Finally, as a workaround, disable ASPM L1 */
++	k1_pcie_disable_aspm_l1(k1);
++
++	return 0;
++}
++
++static int k3_pcie_msi_host_init(struct dw_pcie_rp *pp)
++{
++	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
++	u32 val;
++
++	dw_pcie_dbi_ro_wr_en(pci);
++
++	val = dw_pcie_readl_dbi(pci, COHERENCY_CONTROL_3_OFF);
++	val |= u32_replace_bits(val, K3_CACHE_MSTR_AWCACHE_BEHAVIOR,
++				K3_CACHE_MSTR_AWCACHE_MODE);
++	dw_pcie_writel_dbi(pci, COHERENCY_CONTROL_3_OFF, val);
++
++	dw_pcie_dbi_ro_wr_dis(pci);
++
++	return 0;
++}
++
++static const struct dw_pcie_host_ops k3_pcie_host_ops = {
++	.init		= k3_pcie_init,
++	.deinit		= k1_pcie_deinit,
++	.msi_init	= k3_pcie_msi_host_init,
++};
++
++static const struct dw_pcie_ops k3_pcie_ops = {
++	.link_up	= k1_pcie_link_up,
++	.start_link	= k1_pcie_start_link,
++	.stop_link	= k1_pcie_stop_link,
++};
++
++static void k3_pcie_clear_irq_status(struct k1_pcie *k1,
++				     u32 *status0, u32 *status1, u32 *status2)
++{
++	*status0 = readl_relaxed(k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
++	*status1 = readl_relaxed(k1->link + INTR_STATUS);
++	*status2 = readl_relaxed(k1->link + K3_ADDR_INTR_STATUS1);
++
++	writel_relaxed(*status0, k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
++	writel_relaxed(*status1, k1->link + INTR_STATUS);
++	writel_relaxed(*status2, k1->link + K3_ADDR_INTR_STATUS1);
++}
++
++static int k3_pcie_parse_port(struct k1_pcie *k1)
++{
++	struct device *dev = k1->pci.dev;
++	u32 status0, status1, status2;
++	int i;
++
++	k1->phy = devm_kmalloc_array(dev, K3_MAX_PHY_NUMBER, sizeof(*k1->phy),
++				     GFP_KERNEL);
++	if (!k1->phy)
++		return -ENOMEM;
++
++	for (i = 0; i < K3_MAX_PHY_NUMBER; i++) {
++		k1->phy[i] = devm_of_phy_get_by_index(dev, dev->of_node, i);
++		if (IS_ERR(k1->phy[i])) {
++			if (PTR_ERR(k1->phy[i]) == -ENODEV)
++				break;
++
++			return PTR_ERR(k1->phy[i]);
++		}
++	}
++
++	k1->phy_count = i;
++	if (k1->phy_count == 0)
++		return -EINVAL;
++
++	k3_pcie_clear_irq_status(k1, &status0, &status1, &status2);
++
++	return 0;
++}
++
+ static int k1_pcie_parse_port(struct k1_pcie *k1)
+ {
+ 	struct device *dev = k1->pci.dev;
+@@ -363,8 +525,15 @@ static const struct k1_pcie_device_data k1_pcie_device_data = {
+ 	.parse_port	= k1_pcie_parse_port,
+ };
+ 
++static const struct k1_pcie_device_data k3_pcie_device_data = {
++	.host_ops	= &k3_pcie_host_ops,
++	.ops		= &k3_pcie_ops,
++	.parse_port	= k3_pcie_parse_port,
++};
++
+ static const struct of_device_id k1_pcie_of_match_table[] = {
+ 	{ .compatible = "spacemit,k1-pcie", .data = &k1_pcie_device_data},
++	{ .compatible = "spacemit,k3-pcie", .data = &k3_pcie_device_data},
+ 	{ }
+ };
+ 
 -- 
 2.54.0
 
