@@ -1,34 +1,41 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BBD37C0F3;
-	Mon, 18 May 2026 02:59:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0016131F9A4
+	for <spacemit@lists.linux.dev>; Mon, 18 May 2026 03:33:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779073141; cv=none; b=LuOvOwsCdfj6VUGZSMQKCW2TzJO3wMj9a4GWGy+Cneu2nNvHXfwtE3XR7gdz+MICvDyQUrZQNWr40upSBreo8fRw1LWJGUnL7gsSrDoR//KyUPY5J+bk9BKRMKN3VMOkGGZwp/8/678V9q4wnY8vasGw2WvnNRCKUBrIu2gePNA=
+	t=1779075213; cv=none; b=klbTSu3iQASXv/D5IjAS+6slCD9Ssn4RsbAKrPvf72RO6RJ4TjQBafXS2BPlg7ZFNHwIxnIeMBmQMeX+pHQcEcvgUHTw3Q9oLWKM7iLq1JlbJdx+9gaXSiwlANKsraJ4uPJllstBQsqaYMSaLmBF7ksVHGPNkQtcFoDOxwjnR8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779073141; c=relaxed/simple;
-	bh=XxdEmKf8DS55rZAzMNuHJSIOWTeQpZR6aHl3tGKnq/A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OzejnTzQsjvkDTAV6JUnTE99mhDvdzsYe9YFvyS1QfbpG05P4NS6Z1QeXPIhwbwDgsj7Sp5WH+2A07gbWa9LglHQZDcMEfjOgyPWevjWuR5ja2gL+rfPGQPexgOG2OwGnsVQtLQXoIV2Z7/qlCrtKesuuO+/CDVrqwhBjWyGjJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Da7WudO0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779075213; c=relaxed/simple;
+	bh=U/ceIKjZFY01LMWlZnV2z7oRNT3AaZvlRAEcN9W12vM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=oLyN1ru2ChwkR+YQMxf2rzpvhho0Lwjkg0WWdGXZjMvBwIC0AAX8X21rryfJ6IxPkINW0P2oYrkHUL0aUnKwpN13vF5k/f2pOLgiwLDMPEh2US3GiTLfPK7uEZEOtcBImbBW2TFgMXq4NRC5nTL5yg7F9YoQMkv78ZiXN1uqTt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=qNxuxase; arc=none smtp.client-ip=52.59.177.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Da7WudO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760D3C4AF0D;
-	Mon, 18 May 2026 02:58:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779073141;
-	bh=XxdEmKf8DS55rZAzMNuHJSIOWTeQpZR6aHl3tGKnq/A=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Da7WudO0HE8s5xqa86YcxMA9/x7IAUwGlSaK0AaQir+YkB7pWy3FxMIknQwbh6NVT
-	 P619raV3EuOdXwk5LDDXPRg1VqDv7kp9m87Q405ZoBUDSbAH3VgQ+qezNfSlfPQSPQ
-	 OuvyjYv5TOThVod6MIzGLRsKZQIZ/GsGN4VytgU4pdLxnO07khgXDjHuKytax56Kly
-	 O5wCjgX0oikGz1Mv7QVIErECbERVa8bQYs9pO0rmvAlrrenHozVla61gr16FGnzIkG
-	 cmUQxwOD/eB9WT+72usczdbXHtzC8LptC+dXfnOyjhpECLxni57uE/NM5oLswnSzSw
-	 jgLJSge3637KQ==
-From: Yixun Lan <dlan@kernel.org>
-Date: Mon, 18 May 2026 02:58:37 +0000
-Subject: [PATCH 2/2] reset: spacemit: k3: fix USB2 ahb reset
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="qNxuxase"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1779075174;
+	bh=0lG//UW+nL0bVF6fLvPjKVtHMq7p9Uujc8wu21iQ3/w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=qNxuxaseIiI1pf/6rMqCBx5vJF+conJh4lced9m76BEPSXZFYd/hDIuYlaF2Xmdso
+	 uBVLVy5ZUZj0xl24fnGS7D4edVeIvIuUxzxhnf5fHw4psYHTG/n/nR8MRtKYzAK/RM
+	 mpVTM1Pw2jLmO1wLD0+CSqWBb1E/mx3ERecd2k2o=
+X-QQ-mid: esmtpgz10t1779075165t2fa57b58
+X-QQ-Originating-IP: mx2jasJbyqyltMLsj9OqOTWy41Ajp5D7/7w5+wz3FeM=
+Received: from = ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 18 May 2026 11:32:41 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 1709424969747522539
+EX-QQ-RecipientCnt: 21
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: [PATCH v6 0/4] dmaengine: Add Peripheral DMA support for SpacemiT
+ K3 SoC
+Date: Mon, 18 May 2026 11:32:40 +0800
+Message-Id: <20260518-k3-pdma-v6-0-67fdf319a8f8@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -37,62 +44,148 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-06-clk-reset-usb-fix-v1-2-14fc235e692b@kernel.org>
-References: <20260518-06-clk-reset-usb-fix-v1-0-14fc235e692b@kernel.org>
-In-Reply-To: <20260518-06-clk-reset-usb-fix-v1-0-14fc235e692b@kernel.org>
-To: Philipp Zabel <p.zabel@pengutronix.de>, Stephen Boyd <sboyd@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Yixun Lan <dlan@kernel.org>, Junzhong Pan <panjunzhong@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XPzQ7CIAzA8VcxnMUALSCefA/jgbFOie4jQxfNs
+ neXeZmJevy3zS/pyBL1kRLbrUbW0xBTbJscZr1i4eybE/FY5mZKKCNAWn4B3pW15zZIC4ggEQz
+ L111PVXy8pcMx9zmmW9s/3/Ag5+m3MUgueQWuBHK20OD319jcH5vU+UB1vG1CW7MZG9QHoMwCK
+ C548A6Dt0Whnf4LwAKgwgWADFBVVopQohfbv4BeAC0+XtAZMIWzCAK2efsTmKbpBQdfrwhqAQA
+ A
+X-Change-ID: 20260317-k3-pdma-7c1734431436
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Guodong Xu <guodong@riscstar.com>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1442; i=dlan@kernel.org;
- h=from:subject:message-id; bh=XxdEmKf8DS55rZAzMNuHJSIOWTeQpZR6aHl3tGKnq/A=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqCoBqIyhwbnCf8GhDiubAMBbGYAuQ7egUVaHEG
- AGig3UheUaJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCagqAahsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+2EYg//byp11dyLr30tTs4QfbIupcvVoRaoMOYXjdn/452MbESYQlTbDME0C
- +b+eSCNdjCNlTA82gPzkMRkjq0ySHexOWYJ4+Bq0D0MQ8GY3zAiulwDcLPNrljkg8PkTdpVmEEj
- 1ei+7mOp9ZaH+WkaayDk+oesl46hCwCAP02YVPAZ0csm7Sp/YdiI2Wz9HDmc7XTI0npCPC7ngRS
- QWzw49cdhjsT9amC7wuXjElaC2l3cpm5O/du/JdDMbyb/tMFY8xfIx166nPhYIO2cx9frzxmcR5
- Z/BAghJand+pNucUyrPfMYgHZfGIIgvonKikoV0HUT70Yv+PPdRSR0PKEu2yP1k2fr1onZ8z+te
- LwhEo5Z3//2xg7xRWrR0RDA6TiUxObaTFYY1l6W5GsHyN4H2T14h7eiOXQiIOXvXolIlTQMfTzf
- w8bRXU+HzuNlBo2WVITrkp/W0tDLCJka/307tAS7cZHyB/YvElb0+NVTSHEo6bL7uz+He9NNJ4f
- MOzMBcLyNjgiBGD7/dEoHrJsQnH7xx5q1C34XRh8oe9qYzlqfzPK53zjTneipskzsix9nJyKCRY
- 4bRFqs5UvOkJlsARTglefRzb3iZFk5M/Vs6/DlJyLZXpDxdle1LLhkeetmocyIv3nhcvsMJ2g7H
- OPkzw0DY2KRglPTWfqW6mPT0kELScI=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779075161; l=3651;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=U/ceIKjZFY01LMWlZnV2z7oRNT3AaZvlRAEcN9W12vM=;
+ b=o8lOYG5aXVodRXrfGBNGNT1VCeJDoqFQe0QGU1qddTVylWgSIMGoO90sTl0GxX+FPSuknU03H
+ bFKTw1P+1h1BcXnfs43q7Ilo/Kp7d3lrLFTFXsBU7idZ95fWjfMTmgx
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NxaXz+5yuHzbtGJvujyIbKBjBTDOyj03TQRW8SzitAHZvnHOShsTeIea
+	F1oC5gvtJ4TWucyh0AeMPHvDRrEyvDkmQj80DdzDq0HFKT5qO15MAX3vbh30TzRcE00dEWW
+	KJowm1MJOe8ZUts8S2J8WsD/pTZfYN+anKoYtbs6hGT8jZZo0BbEqpb+NoO3jdMB2s/yyJ9
+	E9MRlqHZq74SqZ6dUapJyqv6MhTFDWPy8iAh5BKhYuHwVtvkL2QAz0B7CVpoPpzM4yh7j16
+	Kcf2hpMDPF0BznQgHrEItCN+QTpmCFjfkqSoS3yTCcrrU/I9dNd1uFh3y9sOjIb1VhkoNU8
+	brUAUb3KdvQMQR2I+0v9MqV8Yk07dxGZYdbASb3E99jR+cE7zODiMHgvOnbT4smlcC/iu1a
+	Uj0u+lyC5QkzpFdhyWA+x6ahG+5Vsze3C6EFGNKqXmKSEf7VIzWYOcdi7kJD/tu/OyIBp7P
+	uUyu77qhILvzgmqbg3qN+rLjV6ZNcPeYK6ZdPuQOXRLMMaJr8VQobGhUSIh2K9Vq8mZldl5
+	51Wlr5KYyOcKMDh7O5HMXMQDCwCrAfSXeLg/s3fOw6x5lD7FywoKfU4fdaD7AAVZ8vyygAy
+	UotlQp6ZI2vhjAaef08Iw7r2FeNDFEHdmpormDWHEk59i+vJOGThJZOBASjgz+mEQslMPti
+	N7y2F7VR09AfXKaVf/cOF0BFPhIio8tA3zVMDBkxf9gRP77ZEly7zIoPTVvMEreczdzU3th
+	zr0ch/vBaS4kB1hKZiVaeUuY0DZN3CS3fStjKAs5XiL5x8IKpWjm3EWlRzIX+Q4km7t9+V0
+	AKMcFGWabooSEru0MHdJ4G1c+wnYCgOtqKAcWb7hQ3ZKN9CF9M9Gf7+JETdub7poZji1j/Y
+	PsBkhcfI7mEzun5iycJiWmsGRPnEi0pmzPO75LWiOxoZDSZyxqpGT4WGshJ9Q/DmCoydr9l
+	njG8hC5BCaNrGQMMATSd4y9/V4J0uZhwpEzWncCJjrrVTddEO9ECEL8eTtqKI6tSdP7+pgd
+	hrF/OSaeVGDIW4/noOJBEcy8fkYGBnNYZuQl6Khf+jiD2A4bcHbRN45A+AuhFBKP83v3pbl
+	Yaw30aSWMQ1/Y63Q0vnUOqnPVyd9PknHp2cUPsF4CITUW89A/j2hbb9ybiEwWm0K/u5/00r
+	cFz+EYMmEQhNbmg=
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
 
-According to SpacemiT K3's updated docs, the USB2 ahb reset and USB2 bus
-clock enable bit was wrongly swapped, the correct one should be:
+Hi all,
 
-Register : APMU_USB_CLK_RES_CTRL
-bit[1]   : usb2_port_bus_clk_en
-bit[0]   : usb2_port_ahb_rstn
+This patch series introduces Peripheral DMA (PDMA) support for the
+SpacemiT K3 SoC, leveraging the existing mmp_pdma driver.
 
-Fixes: a0e0c2f8c5f3 ("reset: spacemit: k3: Decouple composite reset lines")
-Reported-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+The K3 PDMA IP is largely based on the design found in the previous
+SpacemiT K1 SoC, but introduces a few key architectural differences:
+1. It features a variable extended DRCMR base address for DMA request
+   numbers (>= 64) depending on the hardware implementation.
+2. Unlike the K1 SoC, where some DMA masters had memory addressing
+   limitations (requiring a dedicated dma-bus), the K3 DMA masters
+   have full memory addressing capabilities.
+
+The series is structured as follows:
+- Patch 1: Introduce the necessary dt-bindings: K3 compatible string.
+- Patch 2-3: Refactor the mmp_pdma driver to support variable extended
+  DRCMR bases, and add the specific implementation/ops for the K3 SoC.
+- Patch 4: Fixes a critical clock issue where the DDR bus clock
+  (top_dclk) could be gated by CCF, which would cause DMA engines to
+  hang and lead to system instability.
+- Patch 5: Finally, instantiates the PDMA controller node in the
+  SpacemiT K3 device tree.
+
 ---
- drivers/reset/spacemit/reset-spacemit-k3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes in v6:
+- patch 2/4: rewrite commit message per Frank Li review (avoid "this patch",
+  use imperative mood, update subject to better describe the refactoring)
+- patch 3/4: rewrite commit message per Frank Li review (remove "This patch
+  adds", use imperative mood)
+- Link to v5: https://patch.msgid.link/20260507-k3-pdma-v5-0-6b9743038026@linux.spacemit.com
 
-diff --git a/drivers/reset/spacemit/reset-spacemit-k3.c b/drivers/reset/spacemit/reset-spacemit-k3.c
-index 9841f5e057b2..2e87f320cf11 100644
---- a/drivers/reset/spacemit/reset-spacemit-k3.c
-+++ b/drivers/reset/spacemit/reset-spacemit-k3.c
-@@ -112,7 +112,7 @@ static const struct ccu_reset_data k3_apmu_resets[] = {
- 	[RESET_APMU_SDH0]	= RESET_DATA(APMU_SDH0_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_SDH1]	= RESET_DATA(APMU_SDH1_CLK_RES_CTRL,	0, BIT(1)),
- 	[RESET_APMU_SDH2]	= RESET_DATA(APMU_SDH2_CLK_RES_CTRL,	0, BIT(1)),
--	[RESET_APMU_USB2_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(1)),
-+	[RESET_APMU_USB2_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(0)),
- 	[RESET_APMU_USB2_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(2)),
- 	[RESET_APMU_USB2_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(3)),
- 	[RESET_APMU_USB3_A_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(5)),
+Changes in v5:
+- drop patch 4/5 (has been merged)
+- add Conor's tag
+- Link to v4: https://lore.kernel.org/all/20260424-k3-pdma-v3-0-efdf2e414a08@linux.spacemit.com/
 
--- 
-2.54.0
+Changes in v4:
+- patch 4/5:
+  - add Brian's RB tag
+- patch 1/5:
+  - update commit message
+Link to v3: https://lore.kernel.org/all/20260331-k3-pdma-v3-0-a4e60dd8b4b3@linux.spacemit.com/
+
+Changes in v3:
+- Removed the dt-bindings patches related to the DMA number.
+- patch 1/5:
+  - update commit message
+- patch 2-5: nothing
+- Link to v2: https://lore.kernel.org/r/20260326-k3-pdma-v2-0-ca94ca7bb595@linux.spacemit.com
+
+Changes in v2:
+- patch 1-6 are added in this version
+- patch 7/7
+  - update commit message
+  - using k3 compatible string
+  - Link to v1: https://lore.kernel.org/all/20260317-k3-pdma-v1-1-f39d3e97b53a@linux.spacemit.com/
+
+To: Vinod Koul <vkoul@kernel.org>
+To: Frank Li <Frank.Li@kernel.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Yixun Lan <dlan@kernel.org>
+To: Guodong Xu <guodong@riscstar.com>
+To: Paul Walmsley <pjw@kernel.org>
+To: Palmer Dabbelt <palmer@dabbelt.com>
+To: Albert Ou <aou@eecs.berkeley.edu>
+To: Alexandre Ghiti <alex@ghiti.fr>
+Cc: dmaengine@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Cc: spacemit@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org
+
+---
+Guodong Xu (3):
+      dt-bindings: dmaengine: Add SpacemiT K3 DMA compatible string
+      dmaengine: mmp_pdma: refactor DRCMR access with helper function
+      dmaengine: mmp_pdma: add SpacemiT K3 support
+
+Troy Mitchell (1):
+      riscv: dts: spacemit: Add PDMA controller node for K3 SoC
+
+ .../devicetree/bindings/dma/spacemit,k1-pdma.yaml  |  4 ++-
+ arch/riscv/boot/dts/spacemit/k3.dtsi               | 11 +++++++
+ drivers/dma/mmp_pdma.c                             | 37 ++++++++++++++++++++--
+ 3 files changed, 48 insertions(+), 4 deletions(-)
+---
+base-commit: 02f90981a67f3b9ee7d6684e7503a4fed7aade0c
+change-id: 20260317-k3-pdma-7c1734431436
+
+Best regards,
+--  
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
