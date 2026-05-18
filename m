@@ -1,213 +1,102 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2380A3C3BFE
-	for <spacemit@lists.linux.dev>; Mon, 18 May 2026 08:47:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7315730E851
+	for <spacemit@lists.linux.dev>; Mon, 18 May 2026 10:05:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779094070; cv=none; b=UVNKozFmhafYxDbXDOVRITNQqKDlBIeSx66wzJDYkrrYrlkJJUIunk60p+mZOLlsax7qJF9LRSvKnmEzWcf3e9a7lORP/+lBsu/pvMKQUh+RCP9bK5N0JGDSvC2yEZmNSDVYiiROWd+bnfRljdIbHI8wDWkOPuyPmMFMLFzhNm0=
+	t=1779098761; cv=none; b=IwmJFOIFoiAkvZDVxuvPyj0Azf+DrRz0OuapsggkZB210bYvngzHQw+zMGjlZnI39XFiP/qb0fzHgaHRK97CCOhHJGxIITgBvsQZoHfTP+DO4cIa+oLa+VgD1u3TB8FdsUgxKOlxjbD0hhMN0IIAhImtTDYL62S1QHP3dPviIis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779094070; c=relaxed/simple;
-	bh=DHPAKjRLYypwh3bA49mBwncAmaZJK8amg2Af0dOXzfY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=U7H9Jp2PlalWTUjQw45PhupX0M9jhOXJLcjEUkT/EP3mZjmJ9/2EDz6EH5yHNyZeza4jAJUgsiTsAJin/7a3Xgk22+Mwlh2Ge8S8xjYAr+Ndw6BUBzKpnyxvVCgfKCvdr+wXqxsJVif1WNULt0bXdsBS1GUxPVN8/9VYNlgHW1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=bbj+B+MR; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="bbj+B+MR"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4gJrzL552tz9v7Y;
-	Mon, 18 May 2026 10:47:42 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1779094062;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GlgVOaC185Vrws/963WnBHTcONduokD+jbAIjLcGsU0=;
-	b=bbj+B+MRhSa8fFMr2AAd0F2ATSdCQS0S7e9bnjhpQdVICeI0aDR1I/DKWY8DPaDHQluakp
-	gwy92Ql3tC9F0fSIRLcOTvK0/ceDXpKh0aDz32TESqF19i1LKdZSVj/eKP/3q6DwPlUuj1
-	tXqFSOVJusgezXfrty1crLjjq2YdjDH/ZmAdNVEdZv906xklDJQsImlSz4QHDbxOhy8+bV
-	IqcgbA5gV06p4f0DatnC+D0brpT0GEKQMy7e/J23EfwC2AwhXvuy83l4dSI/U6aTll3kDW
-	yMB6H+DnXaufj/GVoA4PQFUvipRxmrdALASFF6HHz9yBoh2jhCI0MFe1/ZfLLw==
+	s=arc-20240116; t=1779098761; c=relaxed/simple;
+	bh=0tfAzFMJ40E/JjfP6FdPvkJS1Us5o4hbVMYh7ny6N0g=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RNGsrZRw+pj86wCCla+ZfB1mCGouign6aNapNmBwqcsPhpY2Ih0x3772PhopDo2YtRmOAx3EsjrVPTglCxU3+YAehOQ9+iIL5aT1CHQdv/d+NS3oRQf9W4cfFwnF12x9AlD8Y1xHc9gnt12Smrp6FXFZ04wIeDz+naQJ6pmY85Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.. (unknown [119.122.215.211])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 3ed2313df;
+	Mon, 18 May 2026 18:00:37 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH v2 1/1] riscv: dts: spacemit: enable USB3 on OrangePi R2S
+Date: Mon, 18 May 2026 18:00:30 +0800
+Message-Id: <20260518100030.2354606-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 18 May 2026 16:46:55 +0800
-Message-Id: <DILO6ZRWYPUO.3ULDGZ95JZ9SP@mailbox.org>
-Subject: Re: [PATCH v2 2/2] riscv: dts: spacemit: Add cpu scaling for K1 SoC
-From: "Shuwei Wu" <shuwei.wu@mailbox.org>
-To: "Anand Moon" <linux.amoon@gmail.com>, "Rafael J. Wysocki"
- <rafael@kernel.org>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>,
- "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan" <dlan@kernel.org>,
- <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <devicetree@vger.kernel.org>
-References: <20260410-shadow-deps-v2-0-4e16b8c0f60e@mailbox.org>
- <20260410-shadow-deps-v2-2-4e16b8c0f60e@mailbox.org>
- <CANAwSgSNHO3MNewNzpYbhuj4K3NTdfzDC9KPoUHbFH97P4M_UQ@mail.gmail.com>
- <DHUCL24GMX7D.369IWK9DLPZPX@mailbox.org>
- <CANAwSgRt5-t_ah=phGc+CQYHG-CdWJuOX-2VTW6xE7n7EnVsFw@mail.gmail.com>
- <aeaXszeaE62rM6BJ@aurel32.net> <DHYOIIFMGH7J.228ISQ7XYFGKE@mailbox.org>
- <aeevr6Zj3Pwm9wux@aurel32.net>
- <CANAwSgSCo-mESo6=KSc08oUzTWAgzpYu0JaW5KqmnCNiPYHjxQ@mail.gmail.com>
- <CANAwSgRFQiNEi1Ac+sCvJWkj1R+yEPGt0RCjZu-3ZiD0Ffm6Hg@mail.gmail.com>
-In-Reply-To: <CANAwSgRFQiNEi1Ac+sCvJWkj1R+yEPGt0RCjZu-3ZiD0Ffm6Hg@mail.gmail.com>
-X-MBO-RS-META: nx3ns7n3zttnticfsuooxwsz1st8cz3x
-X-MBO-RS-ID: 516b02047a5133bc5ab
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9e3a87c55103a2kunm8420fbff14e784
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkZTB1JVkxPGB9KSB5OSEIeTlYeHw
+	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkJVSklJVUlKTlVJSkpZV1kWGg8SFR0UWUFZT0tIVUpLSU
+	9PT0tVSktLVUtZBg++
 
-Hi Anand,
+Enable the DWC3 USB3.0 controller and its associated PHY on the
+OrangePi R2S. The USB regulator provides VBUS for USB2 and USB3
+ports, but the USB2 ports are handled by a separate controller.
 
-Thank you for your consistent attention and practical suggestions.
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+v2: Remove vin-supply for the vcc5v0_usb regulator.
+---
+ .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 23 +++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-On Sun May 17, 2026 at 12:35 PM CST, Anand Moon wrote:
-> Hi Shuwei,
->
-> On Wed, 22 Apr 2026 at 11:44, Anand Moon <linux.amoon@gmail.com> wrote:
->>
->> Hi Shuwei,
->>
->> On Tue, 21 Apr 2026 at 22:41, Aurelien Jarno <aurelien@aurel32.net> wrot=
-e:
->> >
->> > Hi,
->> >
->> > On 2026-04-21 16:10, Shuwei Wu wrote:
->> > > Hi Aurelien,
->> > >
->> > > Thanks for your addition.
->> > >
->> > > On Tue Apr 21, 2026 at 5:16 AM CST, Aurelien Jarno wrote:
->> > > > Hi Anand,
->> > > >
->> > > > On 2026-04-16 17:07, Anand Moon wrote:
->> > > >> After reviewing the Banana Pi F3 schematics, I confirmed that Buc=
-k1 and Buck2
->> > > >> Both supply the CORE_0V9 with 0.9V=C2=B11% rail. To resolve the r=
-estriction errors,
->> > > >> I expanded the voltage range in the DTS to 500,000=E2=80=93950,00=
-0 =C2=B5V.
->> > > >>
->> sorry I was wrong from the doc below 1.2.1 CORE Power Design
->>
->> The typical core voltage is 0.9 V to 1.05 V. Actual voltage is
->> dynamically regulated by
->> the **remote-sense dynamic voltage** adjustment circuit inside P1.
->> P1 BUCK1 and BUCK2 must be combined to supply the core rail.
->>
->> [1] https://www.spacemit.com/community/document/info?nodepath=3Dhardware=
-/key_stone/k1/k1_hw/k1_hw_design_guide.md&lang=3Den
->>
->> > > >> Additionally, I updated the DTS to map the second CPU cluster (co=
-res 4=E2=80=937)
->> > > >> to Buck2 to better align with the hardware's power distribution.
->> > > >
->> > > > Actually the output of Buck1 and Buck2 are connected together, so =
-they
->> > > > should always be configured with the same output voltage. And both
->> > > > clusters should be mapped to both outputs.
->> > >
->> > > You are right, I received the same response from the official develo=
-pers.
->> > >
->> > > Therefore, I'm wondering if an additional regulator-coupled-with: pr=
-operty
->> > > definition is also needed here?
->> >
->> correct.
->> > Yes, I think this is the way to go. I even wonder if this shouldn't be=
- a
->> > fix with Cc: stable. This also has to be done for the Milk-V Jupiter
->> > board, I haven't checked the other boards yet, but I guess they all us=
-e
->> > the same schematics at that the PMIC level.
->> >
->> > Regards
->> > Aurelien
->> >
->
-> The following changes resolve the warning on my setup.
-> If possible, please integrate them into the next version.
->
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index c2a1b759d41f..8512c7417f94 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -116,19 +116,19 @@ &cpu_3 {
->  };
->
->  &cpu_4 {
-> -       cpu-supply =3D <&buck1_3v45>;
-> +       cpu-supply =3D <&buck2_3v45>;
->  };
->
->  &cpu_5 {
-> -       cpu-supply =3D <&buck1_3v45>;
-> +       cpu-supply =3D <&buck2_3v45>;
->  };
->
->  &cpu_6 {
-> -       cpu-supply =3D <&buck1_3v45>;
-> +       cpu-supply =3D <&buck2_3v45>;
->  };
->
->  &cpu_7 {
-> -       cpu-supply =3D <&buck1_3v45>;
-> +       cpu-supply =3D <&buck2_3v45>;
->  };
->
->  &emmc {
-> @@ -248,14 +248,14 @@ pmic@41 {
->                 regulators {
->                         buck1_3v45: buck1 {
->                                 regulator-min-microvolt =3D <500000>;
-> -                               regulator-max-microvolt =3D <3450000>;
-> +                               regulator-max-microvolt =3D <950000>;
->                                 regulator-ramp-delay =3D <5000>;
->                                 regulator-always-on;
->                         };
->
-> -                       buck2 {
-> +                       buck2_3v45: buck2 {
->                                 regulator-min-microvolt =3D <500000>;
-> -                               regulator-max-microvolt =3D <3450000>;
-> +                               regulator-max-microvolt =3D <1050000>;
->                                 regulator-ramp-delay =3D <5000>;
->                                 regulator-always-on;
->                         };
-
-As previously discussed, Buck1 and Buck2 are connected and must share the s=
-ame
-voltage. However, you not only separated them but also set their voltage ra=
-nges
-to different values, which violates the requirement.
-
-Additionally, in the schematic, 0.9V represents the default output voltage,
-not the maximum.
-
-The problem you noted likely stems from different clusters sharing
-the same voltage while having different OPP tables.
-
-In the new patch, I will unify them to use the same OPP table.
-
->
-> Thnaks
-> -Anand
-
---=20
-Best regards,
-Shuwei Wu
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+index de75f6aac740..1ecc40749e5a 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+@@ -21,6 +21,19 @@ aliases {
+ 	chosen {
+ 		stdout-path = "serial0";
+ 	};
++
++	vcc5v0_usb: regulator-vcc5v0-usb {
++		compatible = "regulator-fixed";
++		enable-active-high;
++		gpios = <&gpio K1_GPIO(126) GPIO_ACTIVE_HIGH>;
++		regulator-name = "vcc5v0_usb";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++	};
++};
++
++&combo_phy {
++	status = "okay";
+ };
+ 
+ &emmc {
+@@ -90,3 +103,13 @@ &uart0 {
+ 	pinctrl-0 = <&uart0_2_cfg>;
+ 	status = "okay";
+ };
++
++&usbphy2 {
++	status = "okay";
++};
++
++&usb_dwc3 {
++	dr_mode = "host";
++	vbus-supply = <&vcc5v0_usb>;
++	status = "okay";
++};
+-- 
+2.34.1
 
