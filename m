@@ -1,264 +1,213 @@
-Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458803DEAEC
-	for <spacemit@lists.linux.dev>; Mon, 18 May 2026 06:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2380A3C3BFE
+	for <spacemit@lists.linux.dev>; Mon, 18 May 2026 08:47:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779085340; cv=none; b=ehg/Z8vx+vuJxtYT3KaoV7bNdMVOCAqHP8JtFAyOEohIyGaRPpncXiDDpq9beXQJt4Aide1kv5RLqjLBdHZEEnDP2rYKdArmAwiKTfjsj8+POIGVFgawd9PCfWi2olx5OD+3sEHMxG06L+4rE7lh6g8X1PG8JEM6BdwyQjvTAdo=
+	t=1779094070; cv=none; b=UVNKozFmhafYxDbXDOVRITNQqKDlBIeSx66wzJDYkrrYrlkJJUIunk60p+mZOLlsax7qJF9LRSvKnmEzWcf3e9a7lORP/+lBsu/pvMKQUh+RCP9bK5N0JGDSvC2yEZmNSDVYiiROWd+bnfRljdIbHI8wDWkOPuyPmMFMLFzhNm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779085340; c=relaxed/simple;
-	bh=dHcuwQewOQ91+lcIOJFibASbfSOLIkUa8mNyTgSGWBs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rrNf3h+jERrAvp9AKlUzbEC4DwhRkvAPEpNW96OVL8qbcBylWJbrXuz5Ki+DFettqQsyWFeYKUyc+OP+yJNejs2Tv1U7Bu1BBWEmGGVddy3tHSLkGdq48pKdrPU9oxDqee7BYO8dyEVchGyBBkzD5PMa/xtDQ7/Im2Q8U8Rm0ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=jstzffJx; arc=none smtp.client-ip=54.207.22.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1779094070; c=relaxed/simple;
+	bh=DHPAKjRLYypwh3bA49mBwncAmaZJK8amg2Af0dOXzfY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=U7H9Jp2PlalWTUjQw45PhupX0M9jhOXJLcjEUkT/EP3mZjmJ9/2EDz6EH5yHNyZeza4jAJUgsiTsAJin/7a3Xgk22+Mwlh2Ge8S8xjYAr+Ndw6BUBzKpnyxvVCgfKCvdr+wXqxsJVif1WNULt0bXdsBS1GUxPVN8/9VYNlgHW1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=bbj+B+MR; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="jstzffJx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1779085288;
-	bh=MzLAGIAWkK+XCchAd4hGeXE2CHkEuJGkm4cHQuRIBJ0=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=jstzffJxK8VTfUEGmM5FnTWoPh/mmOmV9akrGQkPng+SOHZbd1YEISiXWOb+fO9vy
-	 yiV4Hr0btWdRMu9SqmYYaHnxT8lvxPymkUAomcgslCszm/uxeVLibZ1GcoSUStJ+yL
-	 Ac3NAq5P7cQVsYmzDhw3iKvNtUIukyS/GsG7A+NA=
-X-QQ-mid: zesmtpsz8t1779085280t3c7af7b1
-X-QQ-Originating-IP: E3Ys73emsUdUyf9XkmiQ0SIGqXhmKVAS1Gx4p/Hd35g=
-Received: from = ( [61.145.255.150])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 18 May 2026 14:21:17 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 1184573455148698779
-EX-QQ-RecipientCnt: 11
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Mon, 18 May 2026 14:21:09 +0800
-Subject: [PATCH v3 2/2] ASoC: soc-pcm: constrain hw_params when DAIs share
- the same BCLK
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="bbj+B+MR"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4gJrzL552tz9v7Y;
+	Mon, 18 May 2026 10:47:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1779094062;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GlgVOaC185Vrws/963WnBHTcONduokD+jbAIjLcGsU0=;
+	b=bbj+B+MRhSa8fFMr2AAd0F2ATSdCQS0S7e9bnjhpQdVICeI0aDR1I/DKWY8DPaDHQluakp
+	gwy92Ql3tC9F0fSIRLcOTvK0/ceDXpKh0aDz32TESqF19i1LKdZSVj/eKP/3q6DwPlUuj1
+	tXqFSOVJusgezXfrty1crLjjq2YdjDH/ZmAdNVEdZv906xklDJQsImlSz4QHDbxOhy8+bV
+	IqcgbA5gV06p4f0DatnC+D0brpT0GEKQMy7e/J23EfwC2AwhXvuy83l4dSI/U6aTll3kDW
+	yMB6H+DnXaufj/GVoA4PQFUvipRxmrdALASFF6HHz9yBoh2jhCI0MFe1/ZfLLw==
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-i2s-same-blk-v3-2-2ba1c4f41db9@linux.spacemit.com>
-References: <20260518-i2s-same-blk-v3-0-2ba1c4f41db9@linux.spacemit.com>
-In-Reply-To: <20260518-i2s-same-blk-v3-0-2ba1c4f41db9@linux.spacemit.com>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Yixun Lan <dlan@kernel.org>
-Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- jinmei.wei@spacemit.com, Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779085269; l=5785;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=dHcuwQewOQ91+lcIOJFibASbfSOLIkUa8mNyTgSGWBs=;
- b=6D8ZuFt4bPxPHExkd2VotXaHhHDkhYQIpQWWLctSzGnwYoo5vGnXrVA+KDrcBHyUi0VT6bZRN
- cCCTk/mVDvxA2/rSOjSYgWCjJbwhHGuyVCyIClLZ27dHpzhyBTdJd9J
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OcFnI1CoIwQYRA1yQVDrADRzvBuxzly4b/O9GzOrBTjZ5CCTvLm+4ZMU
-	RsTZ1jlUx+fi207Su7vlKwLrnDRFsipQyc1SVIE69myzeLHlPrZbEtrkI3DyRfswnAP4SrP
-	1pIlaft3S1d6UqPJD60tqM37lhBs9pMZwZAnaWLzvOREXuyhIODN+Mfv6bEneKEaPAF/Wrk
-	760WAi6WlCkSZCibSyPFS/H92975BLZxpFAzAvk+OU4aq9Uc/t5d4oBtwPXT+kXn5BFlOLW
-	i8lS92a3WV/C1iWN7VVi77vctKbygqgDAnqMyj7pbl364NbDuO/zOe+Wq5WXgYvql5Xa1j6
-	rSm+mmIgxaguHkPnxaLjp3uDFfS/5XWyXA+7bskauhfdD8PDtBK79bipfTBmozmYQZeCPlB
-	359OPbONXt3iLhg887gRmJoLNDT1x+y5b6Z6sG1X/AzwMQWW52kyI7CyXS4aynxG55p/l1+
-	wMbFOrwE9plfKhc+2fidOh6Re5aeygW3yzwGdC5VCVu1vvZjTFFoEpc/npn3UZicQulX0wc
-	Rwad62a4jRIykaGodaww46yRGBDG6K4fKez/8Lm4lEA8VqDLsSaKX8dgt4cyHSIIFA0fZOy
-	dgJk/uOz2XmoNjy7YXmlX3Rf2/T0lwEuQqh1PwC46LTiE7HPVUeMYOR7G4BHT8KNDzJk32r
-	r8pJkXJCu26WVJfWh9bFd6HZlT3t23JdwTwZNWpZTTaJmF1tNo19/FPqWv/EwIBfyYgcqWq
-	LAM3QAsZlNzZIXafAwywLfyL5A0v+uumJsofeKF9/q/PStPrC/xN4Jp7SutpYlWfWdkUjql
-	6x3ZRZWl3wP/Ht20kF7vyvwLpn1JpMZwJu7kvdJb/oevX9g2Lhh5cbEhgpcaJuoEawcfFg4
-	MIQ51CzEtsn1gRQUj9iA9Xgeya6xzh5diX6HPTtXMM03Q/ybfhdzXGb8N59jFpy31rAEoNi
-	RvHC85xDPZ6IKWL3QLZWavUk8WWRQhsuvI//BzZ7o0Kj+uvAOzXsHN+k9YUlcCfZcz1E7lw
-	owars6muFN/8Ttvhdq3ZZIby+CcZlvN9yphHEXi5l5ieLAhuzCmb1gA+/9lUzekshKa6//o
-	n+An9BPtlLK44t/p7bVrXTh+JFuhcb23q1kmt6gUyxHhC3ANSWMOIqaYSWnfv3uUw==
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 18 May 2026 16:46:55 +0800
+Message-Id: <DILO6ZRWYPUO.3ULDGZ95JZ9SP@mailbox.org>
+Subject: Re: [PATCH v2 2/2] riscv: dts: spacemit: Add cpu scaling for K1 SoC
+From: "Shuwei Wu" <shuwei.wu@mailbox.org>
+To: "Anand Moon" <linux.amoon@gmail.com>, "Rafael J. Wysocki"
+ <rafael@kernel.org>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>,
+ "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
+ "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan" <dlan@kernel.org>,
+ <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <devicetree@vger.kernel.org>
+References: <20260410-shadow-deps-v2-0-4e16b8c0f60e@mailbox.org>
+ <20260410-shadow-deps-v2-2-4e16b8c0f60e@mailbox.org>
+ <CANAwSgSNHO3MNewNzpYbhuj4K3NTdfzDC9KPoUHbFH97P4M_UQ@mail.gmail.com>
+ <DHUCL24GMX7D.369IWK9DLPZPX@mailbox.org>
+ <CANAwSgRt5-t_ah=phGc+CQYHG-CdWJuOX-2VTW6xE7n7EnVsFw@mail.gmail.com>
+ <aeaXszeaE62rM6BJ@aurel32.net> <DHYOIIFMGH7J.228ISQ7XYFGKE@mailbox.org>
+ <aeevr6Zj3Pwm9wux@aurel32.net>
+ <CANAwSgSCo-mESo6=KSc08oUzTWAgzpYu0JaW5KqmnCNiPYHjxQ@mail.gmail.com>
+ <CANAwSgRFQiNEi1Ac+sCvJWkj1R+yEPGt0RCjZu-3ZiD0Ffm6Hg@mail.gmail.com>
+In-Reply-To: <CANAwSgRFQiNEi1Ac+sCvJWkj1R+yEPGt0RCjZu-3ZiD0Ffm6Hg@mail.gmail.com>
+X-MBO-RS-META: nx3ns7n3zttnticfsuooxwsz1st8cz3x
+X-MBO-RS-ID: 516b02047a5133bc5ab
 
-When multiple CPU DAIs on the same sound card share the same physical
-BCLK, add a hw_rule during PCM open that constrains the sample rate so
-the resulting BCLK rate stays consistent across all sharing DAIs.
+Hi Anand,
 
-The hw_rule is registered unconditionally for every DAI that has a bclk
-clock pointer set. The actual peer scanning happens inside the rule
-callback at hw_refine time: it walks all DAIs on the card, looking for
-an active peer that shares the same physical BCLK (via clk_is_match())
-and has already completed hw_params (checked via dai->symmetric_rate
-!= 0). This ensures the constraint uses the real BCLK rate established
-by the peer's clk_set_rate() in hw_params, not a stale boot-time
-default.
+Thank you for your consistent attention and practical suggestions.
 
-The first DAI to complete hw_params is unconstrained (no active peer
-yet); subsequent DAIs are constrained to match.
+On Sun May 17, 2026 at 12:35 PM CST, Anand Moon wrote:
+> Hi Shuwei,
+>
+> On Wed, 22 Apr 2026 at 11:44, Anand Moon <linux.amoon@gmail.com> wrote:
+>>
+>> Hi Shuwei,
+>>
+>> On Tue, 21 Apr 2026 at 22:41, Aurelien Jarno <aurelien@aurel32.net> wrot=
+e:
+>> >
+>> > Hi,
+>> >
+>> > On 2026-04-21 16:10, Shuwei Wu wrote:
+>> > > Hi Aurelien,
+>> > >
+>> > > Thanks for your addition.
+>> > >
+>> > > On Tue Apr 21, 2026 at 5:16 AM CST, Aurelien Jarno wrote:
+>> > > > Hi Anand,
+>> > > >
+>> > > > On 2026-04-16 17:07, Anand Moon wrote:
+>> > > >> After reviewing the Banana Pi F3 schematics, I confirmed that Buc=
+k1 and Buck2
+>> > > >> Both supply the CORE_0V9 with 0.9V=C2=B11% rail. To resolve the r=
+estriction errors,
+>> > > >> I expanded the voltage range in the DTS to 500,000=E2=80=93950,00=
+0 =C2=B5V.
+>> > > >>
+>> sorry I was wrong from the doc below 1.2.1 CORE Power Design
+>>
+>> The typical core voltage is 0.9 V to 1.05 V. Actual voltage is
+>> dynamically regulated by
+>> the **remote-sense dynamic voltage** adjustment circuit inside P1.
+>> P1 BUCK1 and BUCK2 must be combined to supply the core rail.
+>>
+>> [1] https://www.spacemit.com/community/document/info?nodepath=3Dhardware=
+/key_stone/k1/k1_hw/k1_hw_design_guide.md&lang=3Den
+>>
+>> > > >> Additionally, I updated the DTS to map the second CPU cluster (co=
+res 4=E2=80=937)
+>> > > >> to Buck2 to better align with the hardware's power distribution.
+>> > > >
+>> > > > Actually the output of Buck1 and Buck2 are connected together, so =
+they
+>> > > > should always be configured with the same output voltage. And both
+>> > > > clusters should be mapped to both outputs.
+>> > >
+>> > > You are right, I received the same response from the official develo=
+pers.
+>> > >
+>> > > Therefore, I'm wondering if an additional regulator-coupled-with: pr=
+operty
+>> > > definition is also needed here?
+>> >
+>> correct.
+>> > Yes, I think this is the way to go. I even wonder if this shouldn't be=
+ a
+>> > fix with Cc: stable. This also has to be done for the Milk-V Jupiter
+>> > board, I haven't checked the other boards yet, but I guess they all us=
+e
+>> > the same schematics at that the PMIC level.
+>> >
+>> > Regards
+>> > Aurelien
+>> >
+>
+> The following changes resolve the warning on my setup.
+> If possible, please integrate them into the next version.
+>
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> index c2a1b759d41f..8512c7417f94 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> @@ -116,19 +116,19 @@ &cpu_3 {
+>  };
+>
+>  &cpu_4 {
+> -       cpu-supply =3D <&buck1_3v45>;
+> +       cpu-supply =3D <&buck2_3v45>;
+>  };
+>
+>  &cpu_5 {
+> -       cpu-supply =3D <&buck1_3v45>;
+> +       cpu-supply =3D <&buck2_3v45>;
+>  };
+>
+>  &cpu_6 {
+> -       cpu-supply =3D <&buck1_3v45>;
+> +       cpu-supply =3D <&buck2_3v45>;
+>  };
+>
+>  &cpu_7 {
+> -       cpu-supply =3D <&buck1_3v45>;
+> +       cpu-supply =3D <&buck2_3v45>;
+>  };
+>
+>  &emmc {
+> @@ -248,14 +248,14 @@ pmic@41 {
+>                 regulators {
+>                         buck1_3v45: buck1 {
+>                                 regulator-min-microvolt =3D <500000>;
+> -                               regulator-max-microvolt =3D <3450000>;
+> +                               regulator-max-microvolt =3D <950000>;
+>                                 regulator-ramp-delay =3D <5000>;
+>                                 regulator-always-on;
+>                         };
+>
+> -                       buck2 {
+> +                       buck2_3v45: buck2 {
+>                                 regulator-min-microvolt =3D <500000>;
+> -                               regulator-max-microvolt =3D <3450000>;
+> +                               regulator-max-microvolt =3D <1050000>;
+>                                 regulator-ramp-delay =3D <5000>;
+>                                 regulator-always-on;
+>                         };
 
-The rule supports two modes:
-- If the DAI has an explicit bclk_ratio set (e.g. for TDM where
-  BCLK = rate * slots * slot_width), the rate is constrained to
-  active_bclk_rate / bclk_ratio.
-- Otherwise, the default formula BCLK = rate * channels * sample_bits
-  is used to derive the valid rate range.
+As previously discussed, Buck1 and Buck2 are connected and must share the s=
+ame
+voltage. However, you not only separated them but also set their voltage ra=
+nges
+to different values, which violates the requirement.
 
-The constraint is purely additive: DAIs that do not set a bclk clock
-pointer are completely unaffected.
+Additionally, in the schematic, 0.9V represents the default output voltage,
+not the maximum.
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
- sound/soc/soc-pcm.c | 119 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 119 insertions(+)
+The problem you noted likely stems from different clusters sharing
+the same voltage while having different OPP tables.
 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index 9b12eedb77c3..e75c343b8d4e 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -12,6 +12,7 @@
- 
- #include <linux/kernel.h>
- #include <linux/init.h>
-+#include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/pinctrl/consumer.h>
- #include <linux/slab.h>
-@@ -467,6 +468,117 @@ static int soc_pcm_apply_symmetry(struct snd_pcm_substream *substream,
- 	return 0;
- }
- 
-+/*
-+ * Shared BCLK constraint: when multiple DAIs share the same physical BCLK,
-+ * constrain hw_params so that the BCLK rate (rate * channels * sample_bits,
-+ * or rate * slots * slot_width for TDM) remains consistent.
-+ */
-+
-+static int soc_pcm_shared_bclk_rule_rate(struct snd_pcm_hw_params *params,
-+					 struct snd_pcm_hw_rule *rule)
-+{
-+	struct snd_soc_dai *dai = rule->private;
-+	struct snd_soc_card *card = dai->component->card;
-+	struct snd_soc_pcm_runtime *rtd;
-+	struct snd_soc_dai *other_dai;
-+	unsigned long active_bclk_rate = 0;
-+	struct snd_interval *rate = hw_param_interval(params, SNDRV_PCM_HW_PARAM_RATE);
-+	struct snd_interval constraint = { .empty = 1 };
-+	unsigned int target_rate;
-+	int i;
-+
-+	/*
-+	 * Protect the rtd list traversal.  No nesting: this callback runs
-+	 * from snd_pcm_hw_refine() which does not hold card->mutex.
-+	 */
-+	guard(mutex)(&card->mutex);
-+
-+	/* Scan all DAIs on the card for an active peer sharing the same BCLK */
-+	for_each_card_rtds(card, rtd) {
-+		for_each_rtd_cpu_dais(rtd, i, other_dai) {
-+			if (other_dai == dai)
-+				continue;
-+			if (!other_dai->bclk)
-+				continue;
-+			if (!snd_soc_dai_active(other_dai))
-+				continue;
-+			/*
-+			 * Skip peers whose hw_params hasn't run yet.
-+			 * symmetric_rate is set by soc_pcm_set_dai_params()
-+			 * after snd_soc_dai_hw_params(), so non-zero means
-+			 * the DAI's clk_set_rate() has already executed.
-+			 */
-+			if (!other_dai->symmetric_rate)
-+				continue;
-+			if (!clk_is_match(dai->bclk, other_dai->bclk))
-+				continue;
-+
-+			active_bclk_rate = clk_get_rate(other_dai->bclk);
-+			if (active_bclk_rate)
-+				goto found;
-+		}
-+	}
-+
-+	return 0;
-+
-+found:
-+	if (dai->bclk_ratio) {
-+		/*
-+		 * Driver has set an explicit BCLK ratio (e.g. for TDM where
-+		 * BCLK = rate * slots * slot_width). The only valid rate is
-+		 * active_bclk_rate / bclk_ratio.
-+		 */
-+		target_rate = active_bclk_rate / dai->bclk_ratio;
-+
-+		constraint.min = target_rate;
-+		constraint.max = target_rate;
-+	} else {
-+		struct snd_interval *channels = hw_param_interval(params,
-+						SNDRV_PCM_HW_PARAM_CHANNELS);
-+		struct snd_interval *sample_bits = hw_param_interval(params,
-+						SNDRV_PCM_HW_PARAM_SAMPLE_BITS);
-+
-+		/*
-+		 * Default: BCLK = rate * channels * sample_bits.
-+		 * Calculate the range of valid rates given the current
-+		 * channel and sample_bits intervals.
-+		 */
-+		if (!channels->min || !sample_bits->min)
-+			return 0;
-+
-+		constraint.max = active_bclk_rate /
-+				 ((unsigned long)channels->min * sample_bits->min);
-+
-+		if (channels->max && sample_bits->max)
-+			constraint.min = active_bclk_rate /
-+					 ((unsigned long)channels->max * sample_bits->max);
-+		else
-+			constraint.min = constraint.max;
-+	}
-+
-+	constraint.integer = 1;
-+	constraint.empty = 0;
-+
-+	return snd_interval_refine(rate, &constraint);
-+}
-+
-+static int soc_pcm_apply_shared_bclk(struct snd_pcm_substream *substream,
-+				     struct snd_soc_dai *dai)
-+{
-+	if (!dai->bclk)
-+		return 0;
-+
-+	dev_dbg(dai->dev,
-+		"ASoC: registering shared BCLK rate constraint\n");
-+
-+	return snd_pcm_hw_rule_add(substream->runtime, 0,
-+		SNDRV_PCM_HW_PARAM_RATE,
-+		soc_pcm_shared_bclk_rule_rate, dai,
-+		SNDRV_PCM_HW_PARAM_CHANNELS,
-+		SNDRV_PCM_HW_PARAM_SAMPLE_BITS,
-+		-1);
-+}
-+
- static int soc_pcm_params_symmetry(struct snd_pcm_substream *substream,
- 				struct snd_pcm_hw_params *params)
- {
-@@ -903,6 +1015,13 @@ static int __soc_pcm_open(struct snd_soc_pcm_runtime *rtd,
- 		if (ret != 0)
- 			goto err;
- 	}
-+
-+	/* Shared BCLK constraint across DAIs on the same card */
-+	for_each_rtd_cpu_dais(rtd, i, dai) {
-+		ret = soc_pcm_apply_shared_bclk(substream, dai);
-+		if (ret != 0)
-+			goto err;
-+	}
- dynamic:
- 	snd_soc_runtime_activate(rtd, substream->stream);
- 	ret = 0;
+In the new patch, I will unify them to use the same OPP table.
 
--- 
-2.54.0
+>
+> Thnaks
+> -Anand
+
+--=20
+Best regards,
+Shuwei Wu
 
