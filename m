@@ -1,228 +1,79 @@
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA6B1EEA49
-	for <spacemit@lists.linux.dev>; Tue, 19 May 2026 02:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7842F83A0;
+	Tue, 19 May 2026 04:15:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779158518; cv=none; b=AQsNQU5Nwy28lwcX2T1r/pKccIlFHaP6R3yUy/SfB2ojjmtdcGpH2TRLh3+l8xuZJJq798JDfEUPfAJ/DedB8cD0VcmnDHGU04kNdUz+PWMKGnKoxkCeZb2d1wn+kd5q6pqM1PXxEa6Rg/djpzUZU8xEcN+gt58dRJLUtd33TAg=
+	t=1779164119; cv=none; b=uGH3q8f8alkYJdN0Z/a3NQiHbXq98DZcCwQdxaNFJJbGjXehRqEi9vXmUfrl+alJtAz7Xql9Lw5iGSXlDVVP5bjkrjwPIQifYcBSJb7oKeNuinpImZIQ6hmZWEKsDomgsx9vvDpoUnZ8iBDrenk+2R8vr+AqOjbIOoOqleFkvKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779158518; c=relaxed/simple;
-	bh=R0bw45W4CGsbembmwVaCzRAcowRsSDgWPJsqgFxagAo=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=hBY/f3JHygOJiX/njc8FgpTCtyCpeOEbW4SQ39cs7YFxb+F3Bhhrj1oSz8IfgscerSYbov406NJo4zvVnj4lRelIqnPh/TFht0wyOVQjWXIHimUtl0Kwuqp+fr+G3b1i5hakGXevKv9iGkQHtDMGM1F/C+arx+6K4aL0pBx8hkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=Zk5jYLge; arc=none smtp.client-ip=80.241.56.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1779164119; c=relaxed/simple;
+	bh=hQ4ybYY8IccBZrx/lFW2t56YbVsHuuc1glrYU0T6uUY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=D3fHPEx9eRvhFH1qQUOOh+LjeCYXpq8yZdEXwyTgp8/4S3Qy+S9I403nQTiwSbK5W5GoajVWah1InhYk9+6vRCVV2DghRFaHJy8qZAGAzYZUMC/WCFSlXvJ+ebuiyB419ZXp9VGPwa85FANGN8su6zUjHPgkNRHtc2ABeqOA1QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=NG2m1G6G; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="Zk5jYLge"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4gKJpl2Z2Vz9v86;
-	Tue, 19 May 2026 04:41:51 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1779158512;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bDcRH1NI5ohQC+8+KyXW8eoTp/NLzHa6GAXlQDvIRGo=;
-	b=Zk5jYLgezbUaeotn+EN1Af21OuqAYuWUYfpzSTIhirx7abiMuM8yP5JWHDwnqCpzVyCnFv
-	8Gig1TpFtxTNadWAdpvDlvuAVb62sSD0ZJK1jAMZKcMe7SUGGjYF+PFZRmZNA6lbAn/2Hb
-	aHo3Qa4MbnyczPDG4FMGDCScl/LAET0BKyhEQ6dJn/ASJCxI61KnVtTZurAMgKDAbE1szw
-	+MlE1M5B2xODK5690RFdle8g6oVXGNCzUl3rBj+eskBvGAi9rLw1dHhWhfSDxEQch1mZT5
-	rv2HNctFuKV3Mc7mLiytV682F7+m42xwVbbFqI/Qzh2OF7gkAoUfecX3d/EN+A==
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="NG2m1G6G"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
+	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+	bh=wM4H58iEOJFXQLWNwkR2FmcvNn+x1jTyqvj3BChTMss=; b=NG2m1G6GxfGiHbGuQn6kUo2drP
+	JQOh6frU1TtpzshZxfbua3NQvA/sm/17TJMFNHcaBp0eF3MlZRwMy+aNBD5AYC9rUQDzX++uh5gmX
+	HsqgrdzvVWoFOkJgfCYGqpX8B/4yN0/NkDnfRVobBueRZfH4fPhaLUVKct+UWfueso1Z8gtDBpqC0
+	N8o34186X/SvmZTKY/ixix/wU1du+yAbjZhamtGMAdaclHNNaBd2NiFPYeLS7YCStgq+47WTaU/9d
+	T15eieUl7VKwpqzbsvX2yYda0CpzqJzMj7xa94PRLgjEqG3Tn63aRcNzBk0PkomQ/lWUNE6U1/6Va
+	NtFePZKw==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wPBrG-000000032le-2MrT;
+	Tue, 19 May 2026 06:15:06 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: linux-kernel@vger.kernel.org,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE:Keyword:riscv),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit)
+Subject: [PATCH v2 0/5] riscv: dts: spacemit: improve Milk-V Jupiter device tree
+Date: Tue, 19 May 2026 06:12:34 +0200
+Message-ID: <20260519041458.3287843-1-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 19 May 2026 10:41:27 +0800
-Message-Id: <DIMB1PN1XURX.2SKN1XCULACU7@mailbox.org>
-From: "Shuwei Wu" <shuwei.wu@mailbox.org>
-To: "Yixun Lan" <dlan@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, "Daniel Lezcano"
- <daniel.lezcano@kernel.org>, "Zhang Rui" <rui.zhang@intel.com>, "Lukasz
- Luba" <lukasz.luba@arm.com>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Philipp Zabel" <p.zabel@pengutronix.de>, "Paul Walmsley" <pjw@kernel.org>,
- "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Alexandre Ghiti" <alex@ghiti.fr>, <linux-pm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>, "Vincent
- Legoll" <legoll@online.fr>, "Gong Shuai" <gsh517025@gmail.com>
-Subject: Re: [PATCH v5 3/3] riscv: dts: spacemit: Add thermal sensor for K1
- SoC
-References: <20260427-k1-thermal-v5-0-df39187480ed@mailbox.org>
- <20260427-k1-thermal-v5-3-df39187480ed@mailbox.org>
- <20260519002602-GKE3679294@kernel.org>
-In-Reply-To: <20260519002602-GKE3679294@kernel.org>
-X-MBO-RS-META: a8gyojcb1u79paamze3ow1xuowf3feiy
-X-MBO-RS-ID: c3256d9df03ab1dced4
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Hi Yixun,
+This patchset updates the Milk-V Jupiter device tree to align with the
+changes recently done for other SpacemiT K1 based boards, including
+enabling SD card support.
 
-On Tue May 19, 2026 at 8:26 AM CST, Yixun Lan wrote:
-> Hi Shuwei,
->
-> On 15:15 Mon 27 Apr     , Shuwei Wu wrote:
->> Include the Thermal Sensor node in the SpacemiT K1 dtsi
->> with definitions for registers, clocks, and interrupts.
->> Additionally, configure thermal zones for the soc, package, gpu, and
->> clusters to enable temperature monitoring via the thermal framework.
->>=20
->> Tested-by: Vincent Legoll <legoll@online.fr> # OrangePi-RV2
->> Tested-by: Gong Shuai <gsh517025@gmail.com>
->> Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
->>=20
->> ---
->> Changes in v2:
->> - Update compatible to "spacemit,k1-tsensor"
->> ---
->>  arch/riscv/boot/dts/spacemit/k1.dtsi | 101 ++++++++++++++++++++++++++++=
-+++++++
->>  1 file changed, 101 insertions(+)
->>=20
->> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/=
-spacemit/k1.dtsi
->> index 529ec68e9c23..e9952204224e 100644
->> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
->> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
->> @@ -339,6 +339,96 @@ osc_32k: clock-32k {
->>  		};
->>  	};
->> =20
->> +	thermal-zones {
->> +		soc-thermal {
->> +			polling-delay-passive =3D <0>;
->> +			polling-delay =3D <0>;
->> +			thermal-sensors =3D <&thermal 0>;
->> +
->> +			trips {
->> +				soc-crit {
->> +					temperature =3D <115000>;
->> +					hysteresis =3D <0>;
->> +					type =3D "critical";
->> +				};
->> +			};
->> +		};
->> +
->> +		package-thermal {
->> +			polling-delay-passive =3D <0>;
->> +			polling-delay =3D <0>;
->> +			thermal-sensors =3D <&thermal 1>;
->> +
->> +			trips {
->> +				package-crit {
->> +					temperature =3D <115000>;
->> +					hysteresis =3D <0>;
->> +					type =3D "critical";
->> +				};
->> +			};
->> +		};
->> +
->> +		gpu-thermal {
->> +			polling-delay-passive =3D <100>;
->> +			polling-delay =3D <0>;
->> +			thermal-sensors =3D <&thermal 2>;
->> +
->> +			trips {
->> +				gpu-alert {
->> +					temperature =3D <85000>;
->> +					hysteresis =3D <2000>;
->> +					type =3D "passive";
->> +				};
->> +
->> +				gpu-crit {
->> +					temperature =3D <115000>;
->> +					hysteresis =3D <0>;
->> +					type =3D "critical";
->> +				};
->> +			};
->> +		};
->> +
->> +		cluster0-thermal {
->> +			polling-delay-passive =3D <100>;
->> +			polling-delay =3D <0>;
->> +			thermal-sensors =3D <&thermal 3>;
->> +
->> +			trips {
->> +				cluster0-alert {
->> +					temperature =3D <85000>;
->> +					hysteresis =3D <2000>;
->> +					type =3D "passive";
->> +				};
->> +
->> +				cluster0-crit {
->> +					temperature =3D <115000>;
->> +					hysteresis =3D <0>;
->> +					type =3D "critical";
->> +				};
->> +			};
->> +		};
->> +
->> +		cluster1-thermal {
->> +			polling-delay-passive =3D <100>;
->> +			polling-delay =3D <0>;
->> +			thermal-sensors =3D <&thermal 4>;
->> +
->> +			trips {
->> +				cluster1-alert {
->> +					temperature =3D <85000>;
->> +					hysteresis =3D <2000>;
->> +					type =3D "passive";
->> +				};
->> +
->> +				cluster1-crit {
->> +					temperature =3D <115000>;
->> +					hysteresis =3D <0>;
->> +					type =3D "critical";
->> +				};
->> +			};
->> +		};
->> +	};
->> +
->>  	soc {
->>  		compatible =3D "simple-bus";
->>  		interrupt-parent =3D <&plic>;
->> @@ -494,6 +584,17 @@ syscon_apbc: system-controller@d4015000 {
->>  			#reset-cells =3D <1>;
->>  		};
->> =20
->> +		thermal: thermal@d4018000 {
->> +			compatible =3D "spacemit,k1-tsensor";
->> +			reg =3D <0x0 0xd4018000 0x0 0x100>;
->> +			clocks =3D <&syscon_apbc CLK_TSEN>,
->> +				 <&syscon_apbc CLK_TSEN_BUS>;
->> +			clock-names =3D "core", "bus";
->> +			interrupts =3D <61>;
->> +			resets =3D <&syscon_apbc RESET_TSEN>;
->> +			#thermal-sensor-cells =3D <1>;
->> +		};
-> Ok, so if I understand correctly the thermal is a SoC feature, so with
-> above it will be enabled by default for all boards, but for the conventio=
-n
-> we usually disable it in dtsi file, and enable it at board dts level
->
-> Please convince me doing above is better? as I'm not sure if there is
-> cases that user want it disabled (but could possible)..
+Changes in v2:
+- Rebase on linux-next, which includes the SD card support series for
+  the K1 SoC
+- Mark the eMMC as non-removable
+- Add patch to fix uboot partition offset
+- Link to v1: https://lore.kernel.org/linux-riscv/20260514160356.1642075-1-aurelien@aurel32.net/
 
-I had two reasons for keeping the thermal node enabled in k1.dtsi,
-rather than requiring each board to opt in:
+Aurelien Jarno (5):
+  riscv: dts: spacemit: set console baud rate on Milk-V Jupiter
+  riscv: dts: spacemit: sort aliases on Milk-V Jupiter
+  riscv: dts: spacemit: enable eMMC on Milk-V Jupiter
+  riscv: dts: spacemit: enable SD card support on Milk-V Jupiter
+  riscv: dts: spacemit: fix uboot partition offset on Milk-V Jupiter
 
-1. Other SoCs follow the same pattern: the RISC-V JH7110 and Allwinner D1s
-both define their thermal sensor nodes and thermal-zones in the SoC dtsi
-without status =3D "disabled".
+ .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 38 +++++++++++++++++--
+ 1 file changed, 34 insertions(+), 4 deletions(-)
 
-2. Thermal protection is safety-critical, and the silicon trip points
-don't vary between boards. Leaving it disabled by default risks boards
-booting without thermal shutdown.
+-- 
+2.53.0
 
---=20
-Best regards,
-Shuwei Wu
