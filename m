@@ -1,129 +1,103 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99AD3AFCE2;
-	Tue, 19 May 2026 16:28:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56712352000
+	for <spacemit@lists.linux.dev>; Tue, 19 May 2026 16:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779208090; cv=none; b=ZCNH9wQZk/Fq6Qx2yEDqeozDlwTQ53dWa7wCsX0ii2jXaKexQvwT/MEqo0NGudJ41jqwguln1xr06uyQvx8pkBFtaerSZKb8bx0gWZybnItVxibsTGUQ6XnLk+WS4Ckuzof3MRFghcyDXOZEFNt4qtNdUvNyKXljB76hiJTXn8A=
+	t=1779208839; cv=none; b=AZfiOTAmzZS5a8A09S6MqG3q7ol7l55SwOm3IpEkbr/kNdIaUHOO9A96etXwZFVy6f8TDb6GCFllPmAPPhmrMAkvXlPLt4d8zs6VLshdKLaySEt+yaxFVg8wGZaJR5V1psxuThWG0QlA96faLY4MUIMHkjXHHghaVLKvcY2HoRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779208090; c=relaxed/simple;
-	bh=FeiTM+7OVHfbYXfRZDgT8Q3Gkd/oBE3Iw726clnjCxs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ar5t6Da8vWUIuZzu8TSeRTfZDHtOQd8KiOmlurds57QY5HJc2DOp7TkOFHNDg9xAG6naSyHxobxYBdRjhajw8JZwSrLr3UYpfUPECvFg80GHvii5aTvaJe3/Ba4z4UEqJR+9SI01Hil6XmxL9GjqYceMTLcqhrBGoyRx1eVysyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=mkAQ+9qg; arc=none smtp.client-ip=220.197.31.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="mkAQ+9qg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=HEzVodalGePwQa0r0A0yc+dOQ9J8DF1f8pqfWHrsuSk=;
-	b=mkAQ+9qgGabS1i8OItgzH9nPB22PSXb1+d91WzICOmsEtS/r6QFeeHtqKA1W5/
-	m9VrN7fmFjkpo6vTEdLqaVrbjqtXsvmwIJodwhdIl3IMv7T2BavKmxqxify2H8uO
-	PjyXtOG+aBdv1+ITi0wqxv/8WztCkfwZOUJRUZNCESIyk=
-Received: from [IPV6:240e:b8f:91b3:d000:9130:b3d8:6241:39fd] (unknown [])
-	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wDXEFBpjwxq6iYtCQ--.55083S2;
-	Wed, 20 May 2026 00:27:22 +0800 (CST)
-Message-ID: <3464ded9-721a-4eb2-afb6-bbca6fdc8a46@163.com>
-Date: Wed, 20 May 2026 00:27:21 +0800
+	s=arc-20240116; t=1779208839; c=relaxed/simple;
+	bh=pAVRAof20PXDUytVbYsQzoxT26t3SRhqDpq90i2F7lA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lTBdUmxua5mtn0KnzgUgrxmWLZCIEh0jgZH9d+fRoKZxsxyK7uJ8Q1S4hhS0cGicecil2zwmtbzs6Bgj53ieAegunkbN5NAEQTRXhVIrurRdQGM5CI/KamrcACcp+2PLz5hWu7cktcYoBJP1H01XUNMfdlNoQfvJH5MP6hiua2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from localhost.localdomain (unknown [223.166.95.230])
+	by APP-03 (Coremail) with SMTP id rQCowAB3W+Jvkgxq+lqQEQ--.18430S2;
+	Wed, 20 May 2026 00:40:17 +0800 (CST)
+From: Han Gao <gaohan@iscas.ac.cn>
+To: Linus Walleij <linusw@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
+	Han Gao <gaohan@iscas.ac.cn>,
+	Anand Moon <linux.amoon@gmail.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: linux-gpio@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Han Gao <rabenda.cn@gmail.com>
+Subject: [PATCH] pinctrl: spacemit: fix NULL check in spacemit_pin_set_config
+Date: Wed, 20 May 2026 00:40:07 +0800
+Message-ID: <20260519164007.122574-1-gaohan@iscas.ac.cn>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] PCI: dwc: Cache PCIe capability offset and simplify
- drivers
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
- jingoohan1@gmail.com, mx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-tegra@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260509135152.2241235-1-18255117159@163.com>
- <beqy5ykxgo4ianya6r4mahkkyujs6lly475u26vqaemgqsdnhp@2pn5ipczwc34>
- <5cc6fbcc-98eb-4da5-b123-2c04c4d39326@163.com>
- <bejh7em2a67a6wohtakovbg6wqwhjoxkuqtdompsexfm5bbzrf@yqwcqeg6yugq>
-Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <bejh7em2a67a6wohtakovbg6wqwhjoxkuqtdompsexfm5bbzrf@yqwcqeg6yugq>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wDXEFBpjwxq6iYtCQ--.55083S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxJr47Gw4rWF47AFy3tr43Jrb_yoW8uryfpa
-	y3JF1Syr48XF4fXan2va1rZF4xt3ZxArWUZ395Cryavr9I9Fy3JrsY9ryYkF9rCFs2yr15
-	uF4Yqry29r15AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRiiSJUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbCxAubP2oMj2sFdQAA3Z
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:rQCowAB3W+Jvkgxq+lqQEQ--.18430S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7tr4fJr17uw4UWF1Utr45trb_yoW8XrW3pF
+	43Zrnak345tw48KF4vq3929FyFkan7XryUCa1a9r9rZan5CFy5GryUKFWYqrZ7CrWrJr1F
+	qws8ta4Yg3WUAF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9014x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
+	n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7x
+	kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
+	67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
+	CI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
+	MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIda
+	VFxhVjvjDU0xZFpf9x0JUd-B_UUUUU=
+X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiDAYLDGoLKuDdZgACsf
 
+spacemit_pin_set_config() looks up the per-pin descriptor with
+spacemit_get_pin() then checks the wrong variable for failure:
 
+	const struct spacemit_pin *spin = spacemit_get_pin(pctrl, pin);
+	...
+	if (!pin)
+		return -EINVAL;
 
-On 5/20/26 00:15, Manivannan Sadhasivam wrote:
-> On Wed, May 20, 2026 at 12:09:28AM +0800, Hans Zhang wrote:
->>
->>
->> On 5/19/26 21:57, Manivannan Sadhasivam wrote:
->>> On Sat, May 09, 2026 at 09:51:49PM +0800, Hans Zhang wrote:
->>>> The DWC PCIe core and its many platform drivers repeatedly call
->>>> dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to obtain the offset of the
->>>> PCI Express Capability structure. This is wasteful and makes the code
->>>> verbose. And some even search for the PCI_CAP_ID_EXP offset value within
->>>> the suspend/resume functions.
->>>>
->>>
->>> Sashiko has flagged some real issues with this series in accessing DBI space
->>> very early and 'pci->pcie_cap' being 0.
->>
->>
->> Hi Mani,
->>
->> We have discussed this issue in the Cadence driver. I think it won't cause
->> any problems. Specifically as follows:
->>
->> https://lore.kernel.org/linux-pci/5823faec-d972-4c77-90ec-a215c686e0a8@163.com/
->> """
->> As per PCIe r7.0, sec 7.5.1.1.11, Since all PCI Express Functions are
->> required to implement the PCI Express Capability structure, which
->> must be included somewhere in this linked list.
->> """
->>
->>
->>
->> Bjorn also responded as follows:
->> https://lore.kernel.org/linux-pci/20260505212306.GA744158@bhelgaas/
->> """
->> It's true that all Root Ports must have a PCIe Capability.
->> """
->>
-> 
-> Ok, what about reading the DBI registers very early?
+	reg = spacemit_pin_to_reg(pctrl, spin->pin);
 
-Hi Mani,
+pin is an unsigned int pin id, where 0 (GPIO_0 / gmac0_rxdv on K3) is a
+valid pin, so rejecting it here drops the PAD config write for the first
+pin of every group. On K3 Pico-ITX the GMAC RGMII group lists pin 0 as
+its first entry, so its drive-strength / bias configuration was silently
+ignored.
 
-Yes. I have performed the DBI read register operation at the very 
-beginning of the following code.
+The intended guard is against spacemit_get_pin() returning NULL when the
+pin id isn't in the SoC's pin table. Check spin instead, which both
+restores PAD setup for pin 0 and prevents a NULL deref on spin->pin.
 
+Fixes: a83c29e1d145 ("pinctrl: spacemit: add support for SpacemiT K1 SoC")
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/pinctrl/spacemit/pinctrl-k1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-dw_pcie_ep_init()
-   dw_pcie_get_pcie_cap(pci);
-
-dw_pcie_host_init
-   dw_pcie_get_pcie_cap(pci);
-
-
-However, for some glue drivers, they need to configure the registers of 
-the PCIe Express Capability earlier than calling 
-dw_pcie_host_init()/dw_pcie_ep_init(). So, for example, in the file: 
-drivers/pci/controller/dwc/pcie-tegra194.c. Here, it is necessary to 
-find the value of 'pci->pcie_cap' earlier. Then, 
-dw_pcie_host_init()/dw_pcie_ep_init() will no longer search for the 
-offset value of the PCIe Express Capability.
-
-
-Best regards,
-Hans
+diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
+index b0be62b1c816..95024e2bb5a5 100644
+--- a/drivers/pinctrl/spacemit/pinctrl-k1.c
++++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
+@@ -795,7 +795,7 @@ static int spacemit_pin_set_config(struct spacemit_pinctrl *pctrl,
+ 	void __iomem *reg;
+ 	unsigned int mux;
+ 
+-	if (!pin)
++	if (!spin)
+ 		return -EINVAL;
+ 
+ 	reg = spacemit_pin_to_reg(pctrl, spin->pin);
+-- 
+2.47.3
 
