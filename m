@@ -1,87 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB4C343894;
-	Tue, 19 May 2026 17:40:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BC2352003;
+	Tue, 19 May 2026 23:21:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779212450; cv=none; b=a+5gaCNGT99N6pskptG0wQcv6cbBN4UIGpY+LnYos1j5ojnBki/q9h0TGIUXJah4bJWirBv5cjgEMnst6/Q8CtMk6jOEM/mqLH/Qf6CoTpM3Nh2FOHj02B5GKaesuzLyHdXuitpEHYELtdoRwl5ZR5GHjKxBWWv4HLoiNjVGLGo=
+	t=1779232918; cv=none; b=nBVrcpNYFcqI2t7U+WUUeLtDYmp8voPfoCMrEmym7AEAzh3BzP1lrMaIX5I/JuYUGx7XJjIMwJOsIfzOtEJNbX/hc07hAF0/z/aHViYS/fMDJBhK4oFp9753l6P91c78Gm/NWnomuWM9CVf7P4SfAvblMReJ8Ck57zhxY7QGRrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779212450; c=relaxed/simple;
-	bh=roncchQ6gRIvDa6f3EmKw01L4C9zHft5fUpPmg64Ig4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=duPgeeN2VhGTRyMb8PEVq2Sv1fso6e6p9UXaj3ZatQDE9MuF8PcRn5Ebi5Os/YNdns9RiVz4kA+bYHQ5r4slhGvcCgd4N6D6BaDekgUkybjg/1bovTuRX74UkXJliozld48xw29U5s0EDgrpfzWVnTTG0yceF7AwovPUwR9B9k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d3ZEqBwD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779232918; c=relaxed/simple;
+	bh=of6cfuYDOuPHZQqFwY6adJj8H3lq4Bxw08GbEIKhY+Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nf23c69c5Ia+FZQPq3n+FCdUn7qu15cJ/KiNZ8gTIl92el7fiuhZEa3on/Cb8wrFO8hkZowVno56R+c8TCXbukTs1NQDb0Tjx0ZnLagFLQHPJukLZUhYG0+lfR0sa+QOS6r8D5IUH00XYCKsj56mn2tEpk7nqeVnBjqgdNXdbpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OH0BZj/N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d3ZEqBwD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194C8C2BCB3;
-	Tue, 19 May 2026 17:40:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779212450;
-	bh=roncchQ6gRIvDa6f3EmKw01L4C9zHft5fUpPmg64Ig4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=d3ZEqBwDa0DWUqJMsmhhTGT6C+kFcGKS5uTqPAQOpmOobLBT0fgvJcqyeRw+ryL9h
-	 uKPsi8d8WIT8FLjU4PE0psjZj8upRSI2NCeBS/9H4JDA6kNuTfBFNBL+BTvjHc5Epj
-	 Cn58lvbDWYVTNY79TkHeFQl2NuxqSy0eDsv51JUNatQeGGG4fuyu5vKH7kg0vBbkwW
-	 gUM/UJr/r67cSryalNsrSgXMH9bx4cJgeEEEJhdio39kwEYFZz1CBS/llPTL2UZ28A
-	 SzzDExhuaWi+f8a9llPCX8rD5T78XW20un6Hk0QMZzzneefZAlKvZIVzU29m4b6iEY
-	 LT0IUyJsw8Q4A==
-From: Vinod Koul <vkoul@kernel.org>
-To: Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
- Guodong Xu <guodong@riscstar.com>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
- Conor Dooley <conor.dooley@microchip.com>
-In-Reply-To: <20260518-k3-pdma-v6-0-67fdf319a8f8@linux.spacemit.com>
-References: <20260518-k3-pdma-v6-0-67fdf319a8f8@linux.spacemit.com>
-Subject: Re: (subset) [PATCH v6 0/4] dmaengine: Add Peripheral DMA support
- for SpacemiT K3 SoC
-Message-Id: <177921244361.339411.17197667376748873904.b4-ty@kernel.org>
-Date: Tue, 19 May 2026 23:10:43 +0530
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OH0BZj/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA371F000E9;
+	Tue, 19 May 2026 23:21:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779232917;
+	bh=rTHVrMvCwYTZlktit7SkyBCR9EOe2m+vAOtAPQ7Cebk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=OH0BZj/N3kGv0Krj7B8nAn/aKUUeD0Rg7L0DfA3kXFym101kBPtk07yt3Jc2y0wEQ
+	 KROqKjkHqzcqj1jdg6WGggS81iCbX82cmNxjrFIQnBjzyDL3lGnMvaXSC7XPteDOiX
+	 uhxE1jgpaqweBOkwjytfCsqa9pNKtLw/Fj1UVEGrmrsF9G+UVDARBvDCffthdh1lVw
+	 0upvOwMEx37iVh8MDYANV03I9xE4QhrU50ne/CHZse9O9N4hdg+vz/Yx1nxNMVgd0M
+	 lPaBjARuSL+j5X4e/RCrAddi4cZJpmYSapDsA+vMKbMEV/nt1aoikZ/6/Ah1nLsvMg
+	 n9p2nEbTpi3oQ==
+Date: Tue, 19 May 2026 23:21:54 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Linus Walleij <linusw@kernel.org>, Han Gao <gaohan@iscas.ac.cn>
+Cc: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
+	Anand Moon <linux.amoon@gmail.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Han Gao <rabenda.cn@gmail.com>
+Subject: Re: [PATCH] pinctrl: spacemit: fix NULL check in
+ spacemit_pin_set_config
+Message-ID: <20260519232154-GKA3708537@kernel.org>
+References: <20260519164007.122574-1-gaohan@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260519164007.122574-1-gaohan@iscas.ac.cn>
 
+Hi Linus,
 
-On Mon, 18 May 2026 11:32:40 +0800, Troy Mitchell wrote:
-> This patch series introduces Peripheral DMA (PDMA) support for the
-> SpacemiT K3 SoC, leveraging the existing mmp_pdma driver.
+Can you take this as a fix for v7.1 cycle?
+
+On 00:40 Wed 20 May     , Han Gao wrote:
+> spacemit_pin_set_config() looks up the per-pin descriptor with
+> spacemit_get_pin() then checks the wrong variable for failure:
 > 
-> The K3 PDMA IP is largely based on the design found in the previous
-> SpacemiT K1 SoC, but introduces a few key architectural differences:
-> 1. It features a variable extended DRCMR base address for DMA request
->    numbers (>= 64) depending on the hardware implementation.
-> 2. Unlike the K1 SoC, where some DMA masters had memory addressing
->    limitations (requiring a dedicated dma-bus), the K3 DMA masters
->    have full memory addressing capabilities.
+> 	const struct spacemit_pin *spin = spacemit_get_pin(pctrl, pin);
+> 	...
+> 	if (!pin)
+> 		return -EINVAL;
 > 
-> [...]
+> 	reg = spacemit_pin_to_reg(pctrl, spin->pin);
+> 
+> pin is an unsigned int pin id, where 0 (GPIO_0 / gmac0_rxdv on K3) is a
+> valid pin, so rejecting it here drops the PAD config write for the first
+> pin of every group. On K3 Pico-ITX the GMAC RGMII group lists pin 0 as
+> its first entry, so its drive-strength / bias configuration was silently
+> ignored.
+> 
+> The intended guard is against spacemit_get_pin() returning NULL when the
+> pin id isn't in the SoC's pin table. Check spin instead, which both
+> restores PAD setup for pin 0 and prevents a NULL deref on spin->pin.
+> 
+> Fixes: a83c29e1d145 ("pinctrl: spacemit: add support for SpacemiT K1 SoC")
+> Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+LGTM, thanks
 
-Applied, thanks!
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+> ---
+>  drivers/pinctrl/spacemit/pinctrl-k1.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
+> index b0be62b1c816..95024e2bb5a5 100644
+> --- a/drivers/pinctrl/spacemit/pinctrl-k1.c
+> +++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
+> @@ -795,7 +795,7 @@ static int spacemit_pin_set_config(struct spacemit_pinctrl *pctrl,
+>  	void __iomem *reg;
+>  	unsigned int mux;
+>  
+> -	if (!pin)
+> +	if (!spin)
+>  		return -EINVAL;
+>  
+>  	reg = spacemit_pin_to_reg(pctrl, spin->pin);
+> -- 
+> 2.47.3
+> 
 
-[1/4] dt-bindings: dmaengine: Add SpacemiT K3 DMA compatible string
-      commit: 55620b11186c81757b05fb8e2df9ddc7127d6fd2
-[2/4] dmaengine: mmp_pdma: refactor DRCMR access with helper function
-      commit: f46b47623e70dea8b03794a5420ffba060425e85
-[3/4] dmaengine: mmp_pdma: add SpacemiT K3 support
-      commit: 6587b8661a0b61c2f4b260bfc9f0e9ef9de0ea2e
-
-Best regards,
 -- 
-~Vinod
-
-
+Yixun Lan (dlan)
