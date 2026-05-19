@@ -1,225 +1,134 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7917A331A77;
-	Tue, 19 May 2026 05:38:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21663793CB
+	for <spacemit@lists.linux.dev>; Tue, 19 May 2026 06:17:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779169105; cv=none; b=DMCh6usyVG21O1meaRWrsnxE9ejx/AKFpWUYUoNsLUpvPRkDaX7b+gVtdb+xnOGf5yhC0F9jkOjJ6vJQ0INzWGwAnfoiuatSozJQa07CBIV+iXh/Ny8kZYbR1JWtfy7/j8vGUXqhZ1LpN3OdWzTdWbO4d26zctU8/lftDgloIKw=
+	t=1779171426; cv=none; b=p+P5RKTBYz7Wg3onDgpOeJvqdWeKnAKZGh5i9SN0lROejQUBcriIppuh/ju6OrXdPIt6D+fFurkzcYNDCgsqBsp7aErVYm61qKB914oU8hmdgY40CAAmyASBkxeoCo51zGDGrPRm2xIMYlij5Hvk4OtrPJZDEuKkqW0r5qPYB28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779169105; c=relaxed/simple;
-	bh=Psc9YO6boKUU786uu3Ie0bpQH19f4iilC5X7LSyJNtw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rw5J1w13+RQVXDwTCRlZH6hi3zqXP8vzubc1+DPHSeIqLoWTG0dPBK2AyJDX0gXLii0dkwsz3ijjJd8ZZj4YkkKQa5EcTaMvvr8pWfiS6YMPeTYuLifqlyoV2ZBlzthAu+PqagXMArBabJVp/U6AAOadvVdIe0QgFhH7fUztwV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MVzASog7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779171426; c=relaxed/simple;
+	bh=IRf66rMUn0EauExfU5hPO+7wssB+4ZO7/x8sY0FiJIk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=B210NrsHUwFqABPgBMwUvSPGYGboE0veeLn0wJV6J8OPsLhTKsXGQNGoDyhBnOwlMBY0KmU89ia3de5YhKiBfyjL9CsNd1+iAWI0H4RQh3nhO6/rsKqapX+yrVxPoB8o4UQnZ6vVb6nBGwRU6pajBmbC7cENrcLqHKiIoeylvEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AbSSRdJi; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MVzASog7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298C7C2BCB3;
-	Tue, 19 May 2026 05:38:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779169104;
-	bh=Psc9YO6boKUU786uu3Ie0bpQH19f4iilC5X7LSyJNtw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MVzASog7bBmivdNYQ7uhlJ7jFrpnEwd3nOg+U2fW1H9vtyIC+dJ2j52XQ7HSntd3t
-	 kr3ZF17XW+EznhglwB4/qEyka5HM1BDR6uGjRAZ7Mwc9YZ8wKXnigQspT9R40/8a2z
-	 OS9pj8w1+KTzqhudtyIAHAxXB4v9viig/WM2qo5m4OfKkSrt4k+kxCwfwUDeMySbPb
-	 6hCgadagksm0P1a88T7sKSkio1kO5xIx95RzfhQptdm6UV28wY6J8UrW9VKTLK191E
-	 Sr9Ri3Wr62G6cxwITsCgehADflooe4x2OhTwbDqmaagsGI7yHeM0Vh7FrmBrntWQ/Y
-	 mSYGEA/YZouRw==
-Date: Tue, 19 May 2026 05:38:21 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Shuwei Wu <shuwei.wu@mailbox.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Vincent Legoll <legoll@online.fr>,
-	Gong Shuai <gsh517025@gmail.com>
-Subject: Re: [PATCH v5 3/3] riscv: dts: spacemit: Add thermal sensor for K1
- SoC
-Message-ID: <20260519053821-GKF3679294@kernel.org>
-References: <20260427-k1-thermal-v5-0-df39187480ed@mailbox.org>
- <20260427-k1-thermal-v5-3-df39187480ed@mailbox.org>
- <20260519002602-GKE3679294@kernel.org>
- <DIMB1PN1XURX.2SKN1XCULACU7@mailbox.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AbSSRdJi"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-836ed29d1e5so1280844b3a.2
+        for <spacemit@lists.linux.dev>; Mon, 18 May 2026 23:17:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779171424; x=1779776224; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l4dJkPtRJlrakoxNtYsMbmeYzTOO5LSMpVcjFeyWMwk=;
+        b=AbSSRdJiB6dnmFXs/X1Ug6Q1PUWc0NOq2VplifkgAT2MM2jOjmzSWSrmDHvuo0n4j9
+         pWH/AVopd3MxX4zt/QiEEB0HoihVShNbeEo1bsNUoOmmZ1osxcJCe5tCjRiOg151fdbt
+         y6abPT1jmj/1RvM58UD/4o09U5If8LsXHyGoOL+JlCkPxN+za68SNaJmpP3m1oX7yVk8
+         cVRCUH3NOHZEwqQn1oJRBSd1Ic5GEm4af0E819Z9vnD+emoxcjDiPiAnAQRpwrCbmOTi
+         Cw+y061C4Vcp3M9dzqs1uQYT0aS625ZsVfCfdpmhdnez4eLu4+3grQPKW4K9HOB1HYOA
+         I2+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779171424; x=1779776224;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l4dJkPtRJlrakoxNtYsMbmeYzTOO5LSMpVcjFeyWMwk=;
+        b=iFQf64M7TsL0wMtvDc6g7+nmsQA0mTJZeFEL5xb6eiGCwph5nXNNH3/BLCxwEw/oug
+         gz7zm68LLBNVUgdCP+GJIiHFAHXg/Wt5FsaM7TYnbiIUTV+UG80XQuVh14SJ8InImycY
+         okC8ZgdD6JLZUpSAvXUygx4YGOR15S2neaof4Eh6GN4Ol4J0Q6kHJaKC/65NOPRxEDMm
+         PBdwfoAVUhiltDvESZGQVkAaLp5gKSmWlgfO8MV4Onps6XjWBqXAaesugRQ+nMba/Tk9
+         nbb6jp4HnjsIvPlRaVOTP+/uF6xyFBPUFujEVA+Xsul+6JR/5HkgBlqRCl4IpAs9Gt9I
+         zKBw==
+X-Forwarded-Encrypted: i=1; AFNElJ/MCD/Ifae7TBAgG0jSsZt2mZlUg2kaeWKKve0+rehgYH8S75TafIzfZgH1Hi/tdnzF/wEF0FDtQA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwGn2bDOUZUiRmnVwZnToJgcgmc26N94KkBtJv4F2Xg6UY2RW0H
+	nMncHhD3lVZCOu7ecHlYxO86gl3Cj0Fsi5ZzTKdowjAncLXtv17DyJJZ
+X-Gm-Gg: Acq92OFFJ+fB3+qcrhAp0vLMwDE++8t8abkRt2IcZPHqgb879xWBcdeDvOfsBOef1Xu
+	rEFWQxQQYH4UjH9zjIXL2ZPLQZn+2ZXOZ+rHjXwF6AxDXBoWnPhVgx/LKjveDVA2G//7NiC5DZZ
+	IaagzcycgKXchuz9Kozd4OlyY+NuRu7xIPeRioErzP9r7liXOQHZkx+AVof0rnvR0QCfjcbn2oz
+	DMEJm0iPhD0E31vPEzz6gvTPywplNqvCwesm8Y46Vv8u7UEwxout36jrXWXyfNPRpKxcVLNAKjT
+	Sho1mJE/Z5Ih6MXIzfeHpeEj+t0CpHw5FWuOB4O9yMaC3mE+Xd3UWsq6z+roE2gbFULKsosQSo5
+	rLK2K/QS5cX4B6KA+QvZbSTZkeQmLTY2KWuI0Lomz0u6qNGMiBjUiyMaq8EeScRGYHNMe6ZkgeG
+	4yGpAToIfIyhqEW3PzkCJwyoTr9wM8L/Jv8BAYsEuq
+X-Received: by 2002:aa7:8882:0:b0:82a:6f69:7f72 with SMTP id d2e1a72fcca58-83f33f0fddcmr18309030b3a.47.1779171424126;
+        Mon, 18 May 2026 23:17:04 -0700 (PDT)
+Received: from [10.240.146.115] ([2.27.148.101])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19c7f202sm16112266b3a.43.2026.05.18.23.16.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2026 23:17:03 -0700 (PDT)
+From: Zhengyu He <hezhy472013@gmail.com>
+Subject: [PATCH 0/3] spi: enable the SpacemiT K3 SoC QSPI
+Date: Tue, 19 May 2026 14:15:54 +0800
+Message-Id: <20260519-k3-pico-itx-qspi-v1-v1-0-c32afeeaf741@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DIMB1PN1XURX.2SKN1XCULACU7@mailbox.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MQQqAIBAAvyJ7bkGtPPSV6BC21hKoaUgQ/j3pO
+ AwzL2RKTBkm8UKiwpmDb6A6AfZY/U7IW2PQUhs5KoNnj5FtQL4fvHJkLAodyaFJbYfRQStjIsf
+ Pf52XWj8cBcVXZQAAAA==
+X-Change-ID: 20260516-k3-pico-itx-qspi-v1-fe040512c45f
+To: Han Xu <han.xu@nxp.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-spi@vger.kernel.org, imx@lists.linux.dev, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Zhengyu He <hezhy472013@gmail.com>, Cody Kang <cody.kang.hk@outlook.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1315; i=hezhy472013@gmail.com;
+ h=from:subject:message-id; bh=IRf66rMUn0EauExfU5hPO+7wssB+4ZO7/x8sY0FiJIk=;
+ b=owEBbQKS/ZANAwAKAc32nDaAuA3YAcsmYgBqDABSfcnC9ZjpkklceVU1Dc84Db35p/VpVrwwE
+ QDGds/SgceJAjMEAAEKAB0WIQS9XD2kxy1NmfC2u/XN9pw2gLgN2AUCagwAUgAKCRDN9pw2gLgN
+ 2HqzD/0VAmqmljFG81AwhK9sHmx+W7G0+tQQEk/jObuf+VKS7IU2TNYECbcuBa/u6SMRj0B5R4v
+ mas/Bvw0fsXZ8tUPIoblkQNY6illXhaf4Ptj+k/atW51oI7U/6A3o3Fm+3mypFodkn1bLzNoKXH
+ SOuiD+fKWCg6LqOMKhkIGSwQ59akev0vQCKY3UV0u0fzC13IdjEFyVfadZ6pw1z8tYVQkPTmt0Y
+ ryg3W44kH75nsUbpIEPp3gl35SpGNrK6eVAwUJn8rFryxFcIXiiyhNhvOQ6Szn5PtJrAcRJ/Vur
+ fJwYIceLo3QSBxv9yFttP8SjD7Et9BFN2V9bC8htLx39j5Q53pqJWpfbW0/Ul1QuG+PNm92dbPD
+ tliQeDh3FbQgvfX8HPO7Ca1c0AVh7+HolFliXHliJK13cDsN3rGTsljCdqtLJBjJ+wHtNsUk6/i
+ qIFs2XgDOjBepZq2zwwndBURVG6gYRI7MBiqWPnraOjZgcJ083gVbxwiOXLlpf7unGoWDZ4C/ks
+ INTULC98JS7VaoVJqBUGys8eIetJoB52S20S/JpxLCikDKkFXXh6hePzehXnIAYB0Hg1TxmIRvE
+ 295eKmyvRMfiX7X//ERs8MSS9yCA/sg222P5Haf5mgRz+O1AAsRCVwi6Y54Pn3fWg5QSV5Lqzrd
+ PiBjAzVbs7knGjw==
+X-Developer-Key: i=hezhy472013@gmail.com; a=openpgp;
+ fpr=26CA97B1A229C229822278F254AF850165158959
 
-Hi Shuwei,
+This series adds support for the SpacemiT K3 SoC QSPI and enables
+the SPI NOR flash on the K3 Pico-ITX board.
 
-On 10:41 Tue 19 May     , Shuwei Wu wrote:
-> Hi Yixun,
-> 
-> On Tue May 19, 2026 at 8:26 AM CST, Yixun Lan wrote:
-> > Hi Shuwei,
-> >
-> > On 15:15 Mon 27 Apr     , Shuwei Wu wrote:
-> >> Include the Thermal Sensor node in the SpacemiT K1 dtsi
-> >> with definitions for registers, clocks, and interrupts.
-> >> Additionally, configure thermal zones for the soc, package, gpu, and
-> >> clusters to enable temperature monitoring via the thermal framework.
-> >> 
-> >> Tested-by: Vincent Legoll <legoll@online.fr> # OrangePi-RV2
-> >> Tested-by: Gong Shuai <gsh517025@gmail.com>
-> >> Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
-> >> 
-> >> ---
-> >> Changes in v2:
-> >> - Update compatible to "spacemit,k1-tsensor"
-> >> ---
-> >>  arch/riscv/boot/dts/spacemit/k1.dtsi | 101 +++++++++++++++++++++++++++++++++++
-> >>  1 file changed, 101 insertions(+)
-> >> 
-> >> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> >> index 529ec68e9c23..e9952204224e 100644
-> >> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> >> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> >> @@ -339,6 +339,96 @@ osc_32k: clock-32k {
-> >>  		};
-> >>  	};
-> >>  
-> >> +	thermal-zones {
-> >> +		soc-thermal {
-> >> +			polling-delay-passive = <0>;
-> >> +			polling-delay = <0>;
-> >> +			thermal-sensors = <&thermal 0>;
-> >> +
-> >> +			trips {
-> >> +				soc-crit {
-> >> +					temperature = <115000>;
-> >> +					hysteresis = <0>;
-> >> +					type = "critical";
-> >> +				};
-> >> +			};
-> >> +		};
-> >> +
-> >> +		package-thermal {
-> >> +			polling-delay-passive = <0>;
-> >> +			polling-delay = <0>;
-> >> +			thermal-sensors = <&thermal 1>;
-> >> +
-> >> +			trips {
-> >> +				package-crit {
-> >> +					temperature = <115000>;
-> >> +					hysteresis = <0>;
-> >> +					type = "critical";
-> >> +				};
-> >> +			};
-> >> +		};
-> >> +
-> >> +		gpu-thermal {
-> >> +			polling-delay-passive = <100>;
-> >> +			polling-delay = <0>;
-> >> +			thermal-sensors = <&thermal 2>;
-> >> +
-> >> +			trips {
-> >> +				gpu-alert {
-> >> +					temperature = <85000>;
-> >> +					hysteresis = <2000>;
-> >> +					type = "passive";
-> >> +				};
-> >> +
-> >> +				gpu-crit {
-> >> +					temperature = <115000>;
-> >> +					hysteresis = <0>;
-> >> +					type = "critical";
-> >> +				};
-> >> +			};
-> >> +		};
-> >> +
-> >> +		cluster0-thermal {
-> >> +			polling-delay-passive = <100>;
-> >> +			polling-delay = <0>;
-> >> +			thermal-sensors = <&thermal 3>;
-> >> +
-> >> +			trips {
-> >> +				cluster0-alert {
-> >> +					temperature = <85000>;
-> >> +					hysteresis = <2000>;
-> >> +					type = "passive";
-> >> +				};
-> >> +
-> >> +				cluster0-crit {
-> >> +					temperature = <115000>;
-> >> +					hysteresis = <0>;
-> >> +					type = "critical";
-> >> +				};
-> >> +			};
-> >> +		};
-> >> +
-> >> +		cluster1-thermal {
-> >> +			polling-delay-passive = <100>;
-> >> +			polling-delay = <0>;
-> >> +			thermal-sensors = <&thermal 4>;
-> >> +
-> >> +			trips {
-> >> +				cluster1-alert {
-> >> +					temperature = <85000>;
-> >> +					hysteresis = <2000>;
-> >> +					type = "passive";
-> >> +				};
-> >> +
-> >> +				cluster1-crit {
-> >> +					temperature = <115000>;
-> >> +					hysteresis = <0>;
-> >> +					type = "critical";
-> >> +				};
-> >> +			};
-> >> +		};
-> >> +	};
-> >> +
-> >>  	soc {
-> >>  		compatible = "simple-bus";
-> >>  		interrupt-parent = <&plic>;
-> >> @@ -494,6 +584,17 @@ syscon_apbc: system-controller@d4015000 {
-> >>  			#reset-cells = <1>;
-> >>  		};
-> >>  
-> >> +		thermal: thermal@d4018000 {
-> >> +			compatible = "spacemit,k1-tsensor";
-> >> +			reg = <0x0 0xd4018000 0x0 0x100>;
-> >> +			clocks = <&syscon_apbc CLK_TSEN>,
-> >> +				 <&syscon_apbc CLK_TSEN_BUS>;
-> >> +			clock-names = "core", "bus";
-> >> +			interrupts = <61>;
-> >> +			resets = <&syscon_apbc RESET_TSEN>;
-> >> +			#thermal-sensor-cells = <1>;
-> >> +		};
-> > Ok, so if I understand correctly the thermal is a SoC feature, so with
-> > above it will be enabled by default for all boards, but for the convention
-> > we usually disable it in dtsi file, and enable it at board dts level
-> >
-> > Please convince me doing above is better? as I'm not sure if there is
-> > cases that user want it disabled (but could possible)..
-> 
-> I had two reasons for keeping the thermal node enabled in k1.dtsi,
-> rather than requiring each board to opt in:
-> 
-> 1. Other SoCs follow the same pattern: the RISC-V JH7110 and Allwinner D1s
-> both define their thermal sensor nodes and thermal-zones in the SoC dtsi
-> without status = "disabled".
-> 
-> 2. Thermal protection is safety-critical, and the silicon trip points
-> don't vary between boards. Leaving it disabled by default risks boards
-> booting without thermal shutdown.
-> 
-Ok, sounds good to me, I will queue it unless objection from others
+The K3 QSPI controller can be supported by the existing fsl-qspi
+driver with K3-specific device type data.  The changes are:
+  - Documenting the SpacemiT K3 QSPI compatible
+  - Adding SpacemiT K3 device type data to the fsl-qspi driver
+  - Enabling the QSPI controller and SPI NOR flash on K3 Pico-ITX
 
-Reviewed-by: Yixun Lan <dlan@kernel.org>
+This series is available here:
+  https://github.com/imguoguo/linux/tree/k3-pico-itx-qspi-v1
 
+Signed-off-by: Zhengyu He <hezhy472013@gmail.com>
+---
+Zhengyu He (3):
+      spi: dt-bindings: fsl-qspi: support SpacemiT K3
+      spi: fsl-qspi: add SpacemiT K3 support
+      riscv: dts: spacemit: add QSPI support for K3 Pico-ITX
+
+ .../devicetree/bindings/spi/fsl,spi-fsl-qspi.yaml  |  5 +-
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts       | 58 ++++++++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi       | 21 ++++++++
+ arch/riscv/boot/dts/spacemit/k3.dtsi               | 16 ++++++
+ drivers/spi/spi-fsl-qspi.c                         |  1 +
+ 5 files changed, 100 insertions(+), 1 deletion(-)
+---
+base-commit: 6916d5703ddf9a38f1f6c2cc793381a24ee914c6
+change-id: 20260516-k3-pico-itx-qspi-v1-fe040512c45f
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Zhengyu He <hezhy472013@gmail.com>
+
