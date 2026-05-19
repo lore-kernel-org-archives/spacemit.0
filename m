@@ -1,91 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA2A394474;
-	Tue, 19 May 2026 08:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941A43F5BFA;
+	Tue, 19 May 2026 09:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779180749; cv=none; b=MuoDxWFQ/jIu2Y42aG1B0EpkZfrI9nffEaxcKUDUUFC6hKekTlKEgWddamYbc1fwTNRh8QEk0Nrosp4uStfKo9ShcN9dOhz1q/h6yGUfD74cFSw4MXfBwQJ82/9AA1ir4R1r7cZfK20J9/l4iVraumHBW2+Jpt8k9a1aOfEiGvs=
+	t=1779183448; cv=none; b=YN0X9whnEMUsL8uBdb/rdckGHUow0Ic9U9KDlje12iTSW7OVVMyj37XVEpmJMWkhypcgoYqnXBrw31we8RISja0ONLUMkgfahVfzTL7jm0seeiRFDabICBXnM2kmETpRjr2Dcd8oi67kgCGux3VRMAPM1HViZP8Szs8TM45sIrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779180749; c=relaxed/simple;
-	bh=+HfGak7yHuL/XgYwB0Bq0zu3smcoi8dm7pRi4GjPR8o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D1C+In+OAHIJ14aMCedjtig0wRbhrgHUa6uCEDgNxRWeBQYOCoSvJPYaMn14ZFTqBo+WCw8Ym2TwkHv0mc/BB9v7JMIUIgpnUMIM1gkcX8jKxZBJglSCkDQkzADQRdcxy2N44DN1FoaAxnp1vjxOO53+NSrYYs6GkZQSAZVDkJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y2CO19Ew; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779183448; c=relaxed/simple;
+	bh=qDdvmjaunk6TN/1qHnT3BTLbjQvZfSxUEzn57UVh0Uo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=spCLUDeJdUjgjvqHCDWZPUIfkk1uIoi9JqYcGg7cdNBng7y34ygFG6wcvdD7CbB9c7hwPA4fwiua/xnQBaitkAVMHN0CDM6lw8gtSAt7s7I3vmll2g4jcH9cv9aIFNe7XVcdizGsSTSUZBHImYOVGgF93l8axL1838+JwCi1iRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s5aXzQVy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y2CO19Ew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2447C2BCB3;
-	Tue, 19 May 2026 08:52:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s5aXzQVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A8EC2BCB3;
+	Tue, 19 May 2026 09:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779180749;
-	bh=+HfGak7yHuL/XgYwB0Bq0zu3smcoi8dm7pRi4GjPR8o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y2CO19EwhBh9ujMggPV1riiBBdFi0ZpZd4G6bSZiquF4m7Yj7ba1rTdZ/21o2nT/r
-	 mJUiJ2WVwaPjXjzPknmGinP2N5r+wa2t1EgcUyR6Ie2W8KIIkTAQdFngJxYhnxyzsY
-	 EI11iIQHMp8QNKwddp8rwcNP2xiH2BVlB90fu0fMcxA2SwjIxXikODspgdzf7nlZfY
-	 6RjdTGEoLu8EEPIzvYOTgurM+twW40ejwhCnRxv+SVv7ar4pl9RbCxpPM1/KTyZf5u
-	 x1LznxrbbM63VSdPi4kVrqOtXiRBwclF/rjYiEM6G7iFmSBghs1OBCHR/Tii6oW0g2
-	 Rwr0GnJXuxc9A==
-Date: Tue, 19 May 2026 09:52:22 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Zhengyu He <hezhy472013@gmail.com>
-Cc: Han Xu <han.xu@nxp.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-spi@vger.kernel.org, imx@lists.linux.dev,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	Cody Kang <cody.kang.hk@outlook.com>
-Subject: Re: [PATCH 1/3] spi: dt-bindings: fsl-qspi: support SpacemiT K3
-Message-ID: <c7833af4-eab0-4651-821a-68c53b9a62fc@sirena.org.uk>
-References: <20260519-k3-pico-itx-qspi-v1-v1-0-c32afeeaf741@gmail.com>
- <20260519-k3-pico-itx-qspi-v1-v1-1-c32afeeaf741@gmail.com>
+	s=k20201202; t=1779183448;
+	bh=qDdvmjaunk6TN/1qHnT3BTLbjQvZfSxUEzn57UVh0Uo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=s5aXzQVyGutaB0BSXqGu5ZFm6wQxk7otbeKvXS3DBer4mkP+A8WQ7CQQCF8M39eOB
+	 q8xHWMbt6OkPm34RZtvxyFeDbDpmQaZh+wkOd4ijDodKMfC2Sm7XOZPDM5x6fYxpAC
+	 txd206E2PSb6UMkKMyusUxFxLVnazryLriOC5SemmIBNBLWLiiV6YkUAMciw4Rpicg
+	 QnwBRDUNV9EeO3ijLKa8peNdZVjBpZqI7cTjASOFD/fbDhbQ1jyHF6yKBFfSNOcO4c
+	 QlcPDR0St7kP3kLuMurLHmJCbfxxXovJW7QKyRKoCwCbq/W7jAE4CwNa1+1mNPVmRc
+	 XeiDYjlk8jDaQ==
+From: Conor Dooley <conor@kernel.org>
+To: Linus Walleij <linusw@kernel.org>
+Cc: conor@kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: [PATCH v2 0/4] generic pinmux dt_node_to_map implementation/spacemit driver converted to use it
+Date: Tue, 19 May 2026 10:37:21 +0100
+Message-ID: <20260519-germinate-ageless-631033d22797@spud>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8SblKUXhOngtSLCU"
-Content-Disposition: inline
-In-Reply-To: <20260519-k3-pico-itx-qspi-v1-v1-1-c32afeeaf741@gmail.com>
-X-Cookie: Huh?
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1474; i=conor.dooley@microchip.com; h=from:subject:message-id; bh=VEO/EDA8mz9uAsDtHOb/ghhDWuVIsYgsMIHjfhrwfRQ=; b=owGbwMvMwCVWscWwfUFT0iXG02pJDFk8+kEeU15YZOz4/WGtsoukUPPPOMW/D91kWPpfcvQdy ROI7RDvKGVhEONikBVTZEm83dcitf6Pyw7nnrcwc1iZQIYwcHEKwETmdDIyPJV6MUXw86Pwu/1p qVeS1oWp+87PWOjz4FQ265L796fIdDMyzPfbvvfftgmfz866x/ynbpPmU1/RnGibYo17GSYVF3I /8wEA
+X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp; fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
+Content-Transfer-Encoding: 8bit
 
+From: Conor Dooley <conor.dooley@microchip.com>
 
---8SblKUXhOngtSLCU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hey folks,
 
-On Tue, May 19, 2026 at 02:15:55PM +0800, Zhengyu He wrote:
-> Add the SpacemiT K3 QSPI compatible to the fsl-qspi binding.
->=20
-> K3 has its own SoC integration, so board DTs should describe it
-> with a K3-specific compatible instead of reusing the K1 string.
->=20
-> Signed-off-by: Zhengyu He <hezhy472013@gmail.com>
-> Signed-off-by: Cody Kang <cody.kang.hk@outlook.com>
-> ---
+Here's a real version of my generic pinmux dt_node_to_map
+implementation. I tested this on my bpif3 but the dts in mainline is
+very limited in terms of pinctrl use so I would really appreciate any
+testing that could be done with a more complete setup.
 
-The signoff of whoever is sending the patch should be last in the list
-of signoffs, each signoff is certifying the ones before.
+If you try to apply this, it's on top of Frank's mux series. It's also
+here if any of the spacemit-ters want to look at what I did to their
+driver:
+https://git.kernel.org/pub/scm/linux/kernel/git/conor/linux.git/log/?h=spacemit-pinctrl
 
---8SblKUXhOngtSLCU
-Content-Type: application/pgp-signature; name="signature.asc"
+Cheers,
+Conor.
 
------BEGIN PGP SIGNATURE-----
+CC: Linus Walleij <linusw@kernel.org>
+CC: Yixun Lan <dlan@kernel.org>
+CC: Conor Dooley <conor.dooley@microchip.com>
+CC: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+CC: linux-gpio@vger.kernel.org
+CC: linux-kernel@vger.kernel.org
+CC: linux-riscv@lists.infradead.org
+CC: spacemit@lists.linux.dev
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoMJMUACgkQJNaLcl1U
-h9ChuQf+PprmNVxKDo7Qo1X+Me5eypSTZ1LJGD9uf589k2G4Z5l1SAIJ6UvdSCTC
-uNghM/uNx0j6KPxpgPYumiVC5kSiMpFCq3AAalBE+TyuIrQkSbUCsOFuE+2wyJfo
-vD6hBOUXU3r48JRY2YaZAnO51xdP8IpFTx09WpnWmsw9fgehpOGjumEgc7aK34VQ
-MMDyRi2ex/gRHqFw4dPhJt+LTtC1DAPUUMLNFH5f/uUiDlN9mE93qE3q99m1XLWz
-D7tTorYqemjTVt6XBmuodAeO0ubJFSEcPTp3QPdkRIfdCaYsCr04/+AcvT4DEHq0
-sDa6//E+EXqeM3SX6Aul9vW6hvlX1w==
-=VJUZ
------END PGP SIGNATURE-----
+Conor Dooley (4):
+  pinctrl: generic: change signature of pinctrl_generic_to_map() to pass
+    void data
+  pinctrl: add new generic groups/function creation function for pinmux
+  pinctrl: spacemit: delete spacemit_pctrl_check_power()
+  pinctrl: spacemit: move over to generic pinmux dt_node_to_map
+    implementation
 
---8SblKUXhOngtSLCU--
+ drivers/pinctrl/pinconf.h             |  20 ++-
+ drivers/pinctrl/pinctrl-generic.c     | 124 ++++++++++++++----
+ drivers/pinctrl/spacemit/Kconfig      |   4 +-
+ drivers/pinctrl/spacemit/pinctrl-k1.c | 177 ++------------------------
+ 4 files changed, 128 insertions(+), 197 deletions(-)
+
+-- 
+2.53.0
+
