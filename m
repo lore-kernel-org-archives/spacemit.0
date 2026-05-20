@@ -1,84 +1,220 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BB2351C2E;
-	Wed, 20 May 2026 08:21:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1183D4118
+	for <spacemit@lists.linux.dev>; Wed, 20 May 2026 10:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779265277; cv=none; b=Ws4UfwyH/l+HCLIz5K8FvkE3nh1KwV10WjD44y4a54Cw/xYb25023/7dB7VyqMe0/sypptdqwN/YRnRTY28s99/0IE1TeMx0r9dUJ3ZEAcdo0WykPlXepor8yu88ZuYHI6sAFjL6pHCCewApp/7mvTSSwWcPG7ZNzgXqWJA3o40=
+	t=1779271537; cv=none; b=FQIlDrbVHVTQSEr4DKMhuW3EYDch91kpIHB4j00lOeLmP9txJPJmuVBCH2NQZFaox/KSpnWcer+NTTsR4UglKhxn97Q/hsjAQlH0LfOf7eexqMg+Wo3xvD4TaekNioSjGp1pRAm7ED1vFy8J+dJnS2tjRWvyzl7qgTHkdEKT8Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779265277; c=relaxed/simple;
-	bh=SpnVTrdCw4sV7tR53B1L5ddp+RIehJ6MqGOdXClbhUc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZysavtJTYuTdOwADu5WoJbEVBUrg4FvlWVWwFB/qW3MA6HaJRr/5LMeK4ZPhWrjMqyLqsxF7RyGWVWfsCx+0yJuhwvds10TuxO6v5FDdDBVsRcF2L56aezwjWZxpnCz/zSu2J0eoWeXpebDujwDQ2TFoElybrJ+6M/4Q7evS1cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UUbvHMcy; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UUbvHMcy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20691F000E9;
-	Wed, 20 May 2026 08:21:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779265276;
-	bh=Po3Z5+mOkTPLwxcG4O1YIvwMOZN8HACWf+P1iZYwYdg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=UUbvHMcyacHh2278Tx93WTf0EVpJu0QoLk3ddNYshHlawJfwzsM3vKUKzCEp6oYAE
-	 Qa39lSKeUiQuAYbWRx+GEwwPbRH2OjBJelDAF9P+gBQRgIAUSGDSGCN2WPxGLLbYM3
-	 2Atlx5f8tObEi0xhjyk4WaU8acipCKE0pTsPk2d2P9Q8WFbdq1/2lSQ3e4VzzT8qrz
-	 G7IiRS3hFIPpMiA9BMSXV0w+3Zbycx7OG7JcWrSqdbkcPayn+/pywkfA3N3mhH64UC
-	 Ym4IqA/eatExsTRQVzbEXA/MWeB7LqioV8TAd4NERCajtoeHrsRgDFetSflx3dhbj5
-	 Y0NanhEn3GEcQ==
-Date: Wed, 20 May 2026 08:21:12 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Aurelien Jarno <aurelien@aurel32.net>
-Cc: linux-kernel@vger.kernel.org, Paul Walmsley <pjw@kernel.org>,
+	s=arc-20240116; t=1779271537; c=relaxed/simple;
+	bh=pski7XBsuhbjIavTXw6+KZPkR7NoukNSf8oY8daP1fM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=S0F9ySyGkAcQxiDQGrU9aUhyrrFy4CwA0iZmB7f3U1BYrKq9SWwoMqjPZ1yMBpOFxsNf4ULwh+0BDSaKLddIxu3TJg9Kvfpc4etSA9hQshOsHeBLVcT6y/2yspkIpXLtS2gEUBaCmwm2DqI8gRNCJYwzR3N4NNYucNP0QRPYqn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.. (unknown [113.80.141.90])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 3f243c2bc;
+	Wed, 20 May 2026 18:00:16 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Albert Ou <aou@eecs.berkeley.edu>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v2 0/5] riscv: dts: spacemit: improve Milk-V Jupiter
- device tree
-Message-ID: <20260520082112-GKA3717228@kernel.org>
-References: <20260519041458.3287843-1-aurelien@aurel32.net>
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH 1/1] riscv: dts: spacemit: enable PMIC on OrangePi R2S
+Date: Wed, 20 May 2026 18:00:00 +0800
+Message-Id: <20260520100000.575719-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260519041458.3287843-1-aurelien@aurel32.net>
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9e44d4287503a2kunma0ccfee1365fd
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkZQx5MVklLTk5DHU0fHx5JHVYeHw
+	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkhVQ0tVSk9KVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0lCQ0
+	NMVUpLS1VLWQY+
 
-Hi Aurelien, 
+Enable the i2c8 interface and add the connected SpacemiT P1 PMIC and
+its associated regulators to support voltage regulation on the board.
 
-On 06:12 Tue 19 May     , Aurelien Jarno wrote:
-> This patchset updates the Milk-V Jupiter device tree to align with the
-> changes recently done for other SpacemiT K1 based boards, including
-> enabling SD card support.
-> 
-> Changes in v2:
-> - Rebase on linux-next, which includes the SD card support series for
->   the K1 SoC
-> - Mark the eMMC as non-removable
-> - Add patch to fix uboot partition offset
-> - Link to v1: https://lore.kernel.org/linux-riscv/20260514160356.1642075-1-aurelien@aurel32.net/
-> 
-Looks good to me, thanks
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 134 ++++++++++++++++++
+ 1 file changed, 134 insertions(+)
 
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-
-> Aurelien Jarno (5):
->   riscv: dts: spacemit: set console baud rate on Milk-V Jupiter
->   riscv: dts: spacemit: sort aliases on Milk-V Jupiter
->   riscv: dts: spacemit: enable eMMC on Milk-V Jupiter
->   riscv: dts: spacemit: enable SD card support on Milk-V Jupiter
->   riscv: dts: spacemit: fix uboot partition offset on Milk-V Jupiter
-> 
->  .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 38 +++++++++++++++++--
->  1 file changed, 34 insertions(+), 4 deletions(-)
-> 
-> -- 
-> 2.53.0
-> 
-
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+index 1ecc40749e5a..b13a8d6a2670 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+@@ -13,6 +13,7 @@ / {
+ 	compatible = "xunlong,orangepi-r2s", "spacemit,k1";
+ 
+ 	aliases {
++		i2c8 = &i2c8;
+ 		serial0 = &uart0;
+ 		ethernet0 = &eth0;
+ 		ethernet1 = &eth1;
+@@ -22,6 +23,15 @@ chosen {
+ 		stdout-path = "serial0";
+ 	};
+ 
++	vcc4v0: regulator-vcc4v0 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc4v0";
++		regulator-always-on;
++		regulator-boot-on;
++		regulator-min-microvolt = <4000000>;
++		regulator-max-microvolt = <4000000>;
++	};
++
+ 	vcc5v0_usb: regulator-vcc5v0-usb {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+@@ -94,6 +104,130 @@ rgmii1: phy@1 {
+ 	};
+ };
+ 
++&i2c8 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c8_cfg>;
++	status = "okay";
++
++	pmic@41 {
++		compatible = "spacemit,p1";
++		reg = <0x41>;
++		interrupts = <64>;
++		vin1-supply = <&vcc4v0>;
++		vin2-supply = <&vcc4v0>;
++		vin3-supply = <&vcc4v0>;
++		vin4-supply = <&vcc4v0>;
++		vin5-supply = <&vcc4v0>;
++		vin6-supply = <&vcc4v0>;
++		aldoin-supply = <&vcc4v0>;
++		dldoin1-supply = <&buck5>;
++		dldoin2-supply = <&buck5>;
++
++		regulators {
++			buck1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck2 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck3_1v8: buck3 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck4_3v3: buck4 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck5: buck5 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck6 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3450000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			aldo1_3v3: aldo1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-boot-on;
++			};
++
++			aldo2 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++
++			aldo3 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++
++			aldo4 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++
++			dldo1 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-boot-on;
++			};
++
++			dldo2 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++
++			dldo3 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++
++			dldo4 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-always-on;
++			};
++
++			dldo5 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++
++			dldo6 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++				regulator-always-on;
++			};
++
++			dldo7 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++		};
++	};
++};
++
+ &pdma {
+ 	status = "okay";
+ };
 -- 
-Yixun Lan (dlan)
+2.34.1
+
