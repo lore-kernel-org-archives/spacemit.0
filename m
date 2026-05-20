@@ -1,220 +1,162 @@
-Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1183D4118
-	for <spacemit@lists.linux.dev>; Wed, 20 May 2026 10:05:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3CF3DA7F7
+	for <spacemit@lists.linux.dev>; Wed, 20 May 2026 11:11:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779271537; cv=none; b=FQIlDrbVHVTQSEr4DKMhuW3EYDch91kpIHB4j00lOeLmP9txJPJmuVBCH2NQZFaox/KSpnWcer+NTTsR4UglKhxn97Q/hsjAQlH0LfOf7eexqMg+Wo3xvD4TaekNioSjGp1pRAm7ED1vFy8J+dJnS2tjRWvyzl7qgTHkdEKT8Zk=
+	t=1779275499; cv=none; b=nrUj+vZEWnBad7xCt/KAh4dy6iE7fpooNopGFRDbFqTCiMgQuTq0W7bqoCnWnHAnoDCl1MCszdpyM38G92Cx6qwU2d9V91/oeI0RmfIOjuuSi3FY+UJv0L657m/IZR1NTbX7ZwY5TIRW4X/SImt3cMVYd4GBYgkTIDQiksdDd8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779271537; c=relaxed/simple;
-	bh=pski7XBsuhbjIavTXw6+KZPkR7NoukNSf8oY8daP1fM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=S0F9ySyGkAcQxiDQGrU9aUhyrrFy4CwA0iZmB7f3U1BYrKq9SWwoMqjPZ1yMBpOFxsNf4ULwh+0BDSaKLddIxu3TJg9Kvfpc4etSA9hQshOsHeBLVcT6y/2yspkIpXLtS2gEUBaCmwm2DqI8gRNCJYwzR3N4NNYucNP0QRPYqn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from Vostro-3710.. (unknown [113.80.141.90])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 3f243c2bc;
-	Wed, 20 May 2026 18:00:16 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: [PATCH 1/1] riscv: dts: spacemit: enable PMIC on OrangePi R2S
-Date: Wed, 20 May 2026 18:00:00 +0800
-Message-Id: <20260520100000.575719-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1779275499; c=relaxed/simple;
+	bh=cfAIhH8OlC/rUFBfMHcfbIEw1X3DBJ4OiDfy5zoYzMg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eGZ2GMEsaNA4Qv950tCezLLNSAnU3nx/slbF56qh7y0QFMiTt3k2WCx2f/FF7qsVBubZx0YOa8NkVw2ahfrs4WKlTU1XOyaSYsNIrRfVkJ/gPyxgpObabZ7qQdcn8FJ72/L47yzNmPC37Mo1ldlmZKTmrKHcKeYPZCBMi0OVHUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=d0pVainO; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="d0pVainO"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-90fa736d46fso301716785a.0
+        for <spacemit@lists.linux.dev>; Wed, 20 May 2026 04:11:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1779275496; x=1779880296; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lIkzPbGJvuJiBs7z1ji9U2DALkh6krIE8tTV4POiT4k=;
+        b=d0pVainO1lHysBT0t0F8COMigAJgeEVOHYvk4aYcIItqDp1eogtiLvT9nhVNVksNNz
+         bC68ma1M48q98wX7jWA5qfDeKP07bPC0BVngA7pMHMiT6LnHPHFKoADyccf3ZROMbgN3
+         iJEBnkd0j60dj/9DxeCLUVSC+1/IuQQP6khwsSnCMYbwcDKk3X2qIwbG+yUQ3uD9YPVu
+         Wwc226c+lkPswGTC72s+ID9ZlagoRltMvyhgWF3a6+t9Mx6yI61ZdbK8EOqmHnvpJZym
+         X6egkzyIhdYNlWDm1gukh3eD69L52jG4e6mEGanKfr8J5mOG+KW22N7pDrVMEQdUURh1
+         nJ9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779275496; x=1779880296;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lIkzPbGJvuJiBs7z1ji9U2DALkh6krIE8tTV4POiT4k=;
+        b=dokHhhfsATCcMMHaY0eylanwDHcS6qYTjH2qnXyvWl5s6NeZWX0TnzVM40NfDOmZXp
+         L+XptN+A2A5SBcCEaUKrPKcX2Z1DSWPA9seS8c5+Fc4STveHLpzPCyGbVzVcAcGiLi5C
+         WehharWvNq4YCR//wIwWLBu2OWogKhlRPWQgbaZFVZK2w8Qsv3u5BLMfGrxwCgWHJKM8
+         go55xQonaSvK+2loQeX/Q/JqxL+U3yO51bWZagD/Id7BogkSYjaanXmyATzA3bLGZIhK
+         Y3eQ3ViCnOnLPjA7ICoerCQzZCHY+rIx7Gtvb90HcUkPqd9AWzwx9DyPnTbbQSjhVNGZ
+         TTLw==
+X-Forwarded-Encrypted: i=1; AFNElJ+i2NmXWTxuZ8ujmjFQq/EyP3tDvKxB4xOv6+j3HOnyUiXThKvMYaTzyncDt0mQCkqYPlwuArfAng==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwStwIuo8ZNWtIYj9+YrM3mRQlWaDksVticNzoDYyQRIk7kkgac
+	qTuYR9XdNuFHFK5doI4Yf0N9iIMjgfm93vRvEi0IzcORWKy5EsMsUXWZcCCo5PGch+Q=
+X-Gm-Gg: Acq92OFtC+mChvz+PVd8K9b4LvTDnt34ZTRngUqrCdwg3MRYCBhWqaUemQJh2617Ayf
+	ZBBuvkia+KYHxphFhGxhTOhC7GEslQWImCp6L2GkH9eln+f/wQn2BrE47P8IMuzpaUN6y7IkvP+
+	mXQ3pm50kgoXxbpa1M8Rr1tU10RObigYOx/S8HZb7o8SA9+As5KeQ5Zlq6YOb6F8Hf4ca6NlXKe
+	x28kJiyMKDKUj4/MkxxyWJ18MEvVb3d1VaDg1UV4J4aECaWAjYBVDn+3AZTmkKk1zv58FuCh341
+	IqYk18cyFQv3EKFtlS7hUFsP+nfEj9xyTbbWbqP9ziJnDammOE/vCYuz3nd34XodYN+/V1cJYLm
+	uU3c9TOxU60wAkdml9tv7xgKdUgUCBGgh1tesMSzcBrKJk+LEbwvXJ/dVBoA7wVJAExWe2K7bTi
+	+S6D3rHGo1KpQnxj7oMkQVEeGoHO6QsFssQ/rgjwpZMwzYglxZ9RecWFgiYvGCXVRZFtkBlNWb9
+	N6H
+X-Received: by 2002:a05:620a:1a0a:b0:90f:6d8b:2654 with SMTP id af79cd13be357-911ce332987mr3395608885a.22.1779275496216;
+        Wed, 20 May 2026 04:11:36 -0700 (PDT)
+Received: from ?IPV6:2001:1970:3847:e000:9cf2:2d6b:fbf2:991c? ([2001:1970:3847:e000:9cf2:2d6b:fbf2:991c])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9138a830c89sm1320813985a.6.2026.05.20.04.11.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 May 2026 04:11:35 -0700 (PDT)
+Message-ID: <86ac46cd-b7bc-42cc-8c29-996ae21f3654@baylibre.com>
+Date: Wed, 20 May 2026 07:11:32 -0400
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9e44d4287503a2kunma0ccfee1365fd
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkZQx5MVklLTk5DHU0fHx5JHVYeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkhVQ0tVSk9KVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0lCQ0
-	NMVUpLS1VLWQY+
+User-Agent: Mozilla Thunderbird
+Subject: Re: (subset) [PATCH v10 0/4] riscv: spacemit: enable SD card support
+ with UHS modes for OrangePi RV2
+To: Andre Heider <a.heider@gmail.com>, Yixun Lan <dlan@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Ulf Hansson <ulfh@kernel.org>, Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: Troy Mitchell <troy.mitchell@linux.dev>,
+ Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+ Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Anand Moon <linux.amoon@gmail.com>, Vincent Legoll <legoll@online.fr>,
+ Margherita Milani <margherita.milani@amarulasolutions.com>,
+ Aurelien Jarno <aurelien@aurel32.net>
+References: <20260515-orangepi-sd-card-uhs-v10-0-094af27e310d@gmail.com>
+ <177889984452.2298656.1074391459031404894.b4-ty@b4>
+ <7e68e745-0d70-46db-9475-38d3dd5b9cf4@baylibre.com>
+ <6b945153-5a7b-415e-904a-1c350b7d52ee@gmail.com>
+Content-Language: en-US
+From: Trevor Gamblin <tgamblin@baylibre.com>
+In-Reply-To: <6b945153-5a7b-415e-904a-1c350b7d52ee@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Enable the i2c8 interface and add the connected SpacemiT P1 PMIC and
-its associated regulators to support voltage regulation on the board.
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
----
- .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 134 ++++++++++++++++++
- 1 file changed, 134 insertions(+)
+On 2026-05-20 03:53, Andre Heider wrote:
+> Hi Trevor,
+>
+> On 16.05.26 2:35 PM, Trevor Gamblin wrote:
+>>
+>> On 2026-05-15 22:57, Yixun Lan wrote:
+>>> On Fri, 15 May 2026 12:48:58 +0200, Iker Pedrosa wrote:
+>>>> This series enables complete SD card support for the Spacemit K1-based
+>>>> OrangePi RV2 board, including UHS (Ultra High Speed) modes for
+>>>> high-performance SD card operation.
+>>>>
+>>>> Background
+>>>>
+>>>> The Spacemit K1 SoC includes an SDHCI controller capable of supporting
+>>>> SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
+>>>> currently lacks basic SD controller configuration, SDHCI driver
+>>>> enhancements for voltage switching and tuning, and power management
+>>>> infrastructure.
+>>>>
+>>>> [...]
+>>> Hi Iker,
+>>> I've picked patch 1-3, for [4/4] I think it should be merged after
+>>> https://lore.kernel.org/all/20260513071958.29574-1-a.heider@gmail.com/
+>>
+>> Hi Yixun,
+>>
+>> That makes sense. In response to your earlier feedback I had drafted 
+>> a more
+>> complete dts after another schematic comparison, but Iker and I 
+>> discussed it
+>> and opted to avoid changing scope too much. Andre's series includes 
+>> the bits I
+>> wanted to add and more, so that works out.
+>
+> I have 4/4 rebased on my series anyway, do you want me to send it?
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-index 1ecc40749e5a..b13a8d6a2670 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-@@ -13,6 +13,7 @@ / {
- 	compatible = "xunlong,orangepi-r2s", "spacemit,k1";
- 
- 	aliases {
-+		i2c8 = &i2c8;
- 		serial0 = &uart0;
- 		ethernet0 = &eth0;
- 		ethernet1 = &eth1;
-@@ -22,6 +23,15 @@ chosen {
- 		stdout-path = "serial0";
- 	};
- 
-+	vcc4v0: regulator-vcc4v0 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vcc4v0";
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <4000000>;
-+		regulator-max-microvolt = <4000000>;
-+	};
-+
- 	vcc5v0_usb: regulator-vcc5v0-usb {
- 		compatible = "regulator-fixed";
- 		enable-active-high;
-@@ -94,6 +104,130 @@ rgmii1: phy@1 {
- 	};
- };
- 
-+&i2c8 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c8_cfg>;
-+	status = "okay";
-+
-+	pmic@41 {
-+		compatible = "spacemit,p1";
-+		reg = <0x41>;
-+		interrupts = <64>;
-+		vin1-supply = <&vcc4v0>;
-+		vin2-supply = <&vcc4v0>;
-+		vin3-supply = <&vcc4v0>;
-+		vin4-supply = <&vcc4v0>;
-+		vin5-supply = <&vcc4v0>;
-+		vin6-supply = <&vcc4v0>;
-+		aldoin-supply = <&vcc4v0>;
-+		dldoin1-supply = <&buck5>;
-+		dldoin2-supply = <&buck5>;
-+
-+		regulators {
-+			buck1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck3_1v8: buck3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <1800000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck4_3v3: buck4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3300000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck5: buck5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			buck6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3450000>;
-+				regulator-ramp-delay = <5000>;
-+				regulator-always-on;
-+			};
-+
-+			aldo1_3v3: aldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			aldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			aldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo1 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-boot-on;
-+			};
-+
-+			dldo2 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo3 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo4 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo5 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+
-+			dldo6 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+				regulator-always-on;
-+			};
-+
-+			dldo7 {
-+				regulator-min-microvolt = <500000>;
-+				regulator-max-microvolt = <3400000>;
-+			};
-+		};
-+	};
-+};
-+
- &pdma {
- 	status = "okay";
- };
--- 
-2.34.1
+If you have an update to make, please do!
 
+Trevor
+
+>
+> Thanks,
+> Andre
+>
+>>
+>> Thanks!
+>>
+>> Trevor
+>>
+>>>
+>>> Applied, thanks!
+>>>
+>>> [1/4] riscv: dts: spacemit: k1: add SD card controller and pinctrl 
+>>> support
+>>> https://github.com/spacemit-com/linux/commit/2d77e577109967ef65f269c1fc1d6a659d4260fb
+>>> [2/4] riscv: dts: spacemit: k1-orangepi-rv2: add SD card support 
+>>> with UHS modes
+>>> https://github.com/spacemit-com/linux/commit/2585c60ce2f977b13f14a67d1e3ed9c73fd7f381
+>>> [3/4] riscv: dts: spacemit: k1-bananapi-f3: add SD card support with 
+>>> UHS modes
+>>> https://github.com/spacemit-com/linux/commit/c76e2f058cbcab84e4a703f26857a58bdf6a0042
+>>>
+>>> Best regards,
+>
