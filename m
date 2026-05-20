@@ -1,106 +1,148 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B433A1A317D
-	for <spacemit@lists.linux.dev>; Wed, 20 May 2026 06:20:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BDA374E4E
+	for <spacemit@lists.linux.dev>; Wed, 20 May 2026 07:53:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779258019; cv=none; b=Kk6aCpoCU1AqkDvsbUVHQxraNrfg9gNYOEVMRSPHxPFC2LrUOQ15D18uu5n0T1D2rQtQ87XrJXGQ9QHTNe8B69n3V1NjPGAjzP5DhjGdZVflA9KxGRb2dU2+bTo0jwtRXXDpRZ3bBGNgyGnJPuFuKQXfbBbijwnBExlIyuLr3w8=
+	t=1779263635; cv=none; b=AyuqaDnxzClRRzYloUGprawtQXyODe3KfoN8tONkRyKjWD1koL6Br/rZ9EGCU/ava1bJIyxoQg8pkJW55RNciLLygYu9OI9EP77co3dvjfZ7U2JRWTzRQGMtnDJtCM/pdvpq/xobSRY2tnFqQG8ByDzQprGb2hkj878wXacI9r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779258019; c=relaxed/simple;
-	bh=a6fGxEH5BMyjsqkygp2GVPtB+r+Rb9RjEJSwUu9XC/g=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=pL7ePVHGsI+kYkOUOPRRQw1RyFRfO87ftUMwEw/qL24OJGWBaVC7mJjbB3EXOPX063MEWhh953YzzZ5nGxoZH01ezdhbqQFnfA4k6dt+p6ZfUrFKqwlZd3FABp7DeitX0eWL4lTJkoeOsb/5xm/28D6MkO6G2PcScVYatSq2SuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=a1tTMgD6; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1779263635; c=relaxed/simple;
+	bh=hWRBU29dNFkhPABz8wMZX5qI45LPRwRDkloljDEwgiY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Sc++gXTTanzqN/wrTaukm7VVtlqq+pybVvjwe0PnDkfZYpgJOVxjpkjXXMCx+Gf7y/CLxO26E5ahDPDITYxLOodkjjE4ZZ21qPx40mvMhQoJODodueEhWbWvbhD50qX5koh7M4M04k2Pp+VV8/umD55nUYpPVqY1e2xl5d1k/Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f5B2JfEu; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="a1tTMgD6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1779257949;
-	bh=hg5KK2xUCyB4FLoYLYP8YswpRDV5uXbEMujGSGVHGUA=;
-	h=Mime-Version:Date:Message-Id:From:To:Subject;
-	b=a1tTMgD6pTfjaggmgL42RSaT4YhHoLKTs0wYqvr0xnhj3x0tx+wMEpBACCqwxgPb+
-	 l15qc8pd57Q+lIO4khmpkVi9gcRNSn/m3qPDycREwbzMb6OqIgNnpveqA8KMYeBWgw
-	 ch3qtxd1kJ2klhCiyixHE8cdoQmw6We6GPLSkUo4=
-X-QQ-mid: esmtpsz11t1779257947tda20d2be
-X-QQ-Originating-IP: 0xEUe3OK3WD/fOJoDhBLmRz2RyrACzSv+nYtYCmdgDQ=
-Received: from = ( [210.3.135.34])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 20 May 2026 14:19:04 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 9958252558601639694
-EX-QQ-RecipientCnt: 12
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f5B2JfEu"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-48a7fe4f40bso54537945e9.0
+        for <spacemit@lists.linux.dev>; Wed, 20 May 2026 00:53:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779263631; x=1779868431; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sLZA4hvW9xs9FgysnR1c1k6UhOsTdTrM6VQ3/eZLexk=;
+        b=f5B2JfEuWvGtaeh+rO4BZttPLmv0LbdZX3ndiwGsHlNCPg3w7n9G0avZl9oWHX4OgE
+         anxf7Qi7THaYhVV+X7K1ULtZetkDGOu7zpXYbMj3RmaMUwcR4PnxN41BWm7ftARLgRBm
+         jVVJuFjNBkHbJZcLScHhlw+rQNFcCFB6kVNrweTJJEztiSQqGq2Ew4QtpyGs4sidLkXc
+         SyQwofa6H8ZxXO7xiP2DAtc5ijJPdyrKuaS+A+1D4pUqYvyTxPQTo7YAikTFTgSZLnND
+         7AAf2NYUqP/O68383trMfmxiyJZUG+MDZIri2jo2D921pOs6keGpwWOVv7eusL6gFFAv
+         OF+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779263631; x=1779868431;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sLZA4hvW9xs9FgysnR1c1k6UhOsTdTrM6VQ3/eZLexk=;
+        b=T+DXiZge8ehBNSCNY7VehfflnuWpzamT+T0PfLYNXzOuzas8/y3Qn8FycVxW3dy68E
+         XXR/izdaBXBCHlXSkbgLY55CxcZkqbCaxcYtIkBG+Txx9S38dHviNSEkTwLPtq6j/JnJ
+         WXdEeDARQTQnp3Pbhj1Qxxx3Ki6avcrHIb/V61P0SEl3wiZ/lFaxPJoOHQRs6a63Xxqo
+         gqp/IM/vGPM8fSCE15FajU+H1LF2YWtHOeuU6eaxvRRjkBhfE4rX+7Sm8djdxlNw+cX1
+         yr7ElY5zxCbk5GOUr52Qg1T3emz3nbVSWdQi1GsSURMxl83ceS4D5ng1/11U6SLHbF/h
+         juYw==
+X-Forwarded-Encrypted: i=1; AFNElJ+eMUEH7NcESvGobGmLjdbjWvKL51IEdQhedt7Ipdhii/mcBA9Tynz5/urcQFhQX6H5wRDFucdWZg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwCl/3LgdJZMBkvSa+jvyDdMFW9TEH0exUKuth8+LxhDpmAMg09
+	IDSMySywJ7Qb7LwuDcMmX+SnSsxlZCdYhSbhJJvNgbHl5WUP3RLQJ4Pl
+X-Gm-Gg: Acq92OEltHqEZ2X2uWO2mBpebE+dnGHXWUl6pQzh5ADxeyootkgz62c/uqtBMHQckFx
+	TJJxO4QlmQolSUv/cMkDu4HSZFBr6BsCPJtz1MRFp/d6ZTZmSRzqq3DKJaMKRvgpoXFn4U4xhF+
+	/IRiIst5qwjAx4IiVOtre9Pelv3P5qEyBYYyvwUdW7d1Fc711UE7L8F0fC1+ePdGhkgKWmm4+Sm
+	hla0/GtY1L6NS7W2c1X3u7mDGxsppUYSQLI/Vgiva4JkYW/Bju+QA1h0FfefeGPU4PzbNwYyaQL
+	24mO/RedNBuOT8wTKaecUkHSA0pmAvXm2/rITjjmIEJwPnHMmxzphENkHQ1erDJ6HI1NO8eUWcP
+	La6CiLJAyJv72De/HMR7nB+XW0//HhJ+0eJtmO/ARenRQt9RLT2JVDYTwmKuil7OTIADZ+S/Fjz
+	j2jrfMtKQqU3uh07W0GjyhF/Ngaum9V5+wM0VfWH4z0fVnwZgUcdu7nVKOeLhPVZRyWEki8SI7B
+	BWg
+X-Received: by 2002:a05:600c:a309:b0:486:fba7:b150 with SMTP id 5b1f17b1804b1-48fe61f20a7mr291977335e9.15.1779263630727;
+        Wed, 20 May 2026 00:53:50 -0700 (PDT)
+Received: from [192.168.0.40] (a89-182-137-241.net-htp.de. [89.182.137.241])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48ffed60c8esm91723435e9.10.2026.05.20.00.53.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 May 2026 00:53:50 -0700 (PDT)
+Message-ID: <6b945153-5a7b-415e-904a-1c350b7d52ee@gmail.com>
+Date: Wed, 20 May 2026 09:53:48 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 20 May 2026 14:19:03 +0800
-Message-Id: <DINAAUZDL8PS.3KJXPTIHPXQQY@linux.spacemit.com>
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Han Gao" <gaohan@iscas.ac.cn>, "Linus Walleij" <linusw@kernel.org>,
- "Yixun Lan" <dlan@kernel.org>, "Hendrik Hamerlinck"
- <hendrik.hamerlinck@hammernet.be>, "Anand Moon" <linux.amoon@gmail.com>,
- "Junhui Liu" <junhui.liu@pigmoral.tech>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-Cc: <linux-gpio@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>, "Han Gao"
- <rabenda.cn@gmail.com>
-Subject: Re: [PATCH] pinctrl: spacemit: fix NULL check in
- spacemit_pin_set_config
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260519164007.122574-1-gaohan@iscas.ac.cn>
-In-Reply-To: <20260519164007.122574-1-gaohan@iscas.ac.cn>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: N1ZgNUtaKtmxFhz/8yV8b59Rf/Xjd5V4g197HXPXFy8kmwrfWjtJ1eLK
-	3AH+Khnk+xT4mCC0EnLVgIOAA/dy0hvU/uCH0qp7dcypvu7uNBmL5MHreik9gzPPiqaXC73
-	orfJ1tesQBQOVlx0vDg4TeCB7O72Yw0FmvFSjrFSxXw/D6sui1sUCNS3NQbsNi7qG9lWr72
-	ujoNKA5DXgWGwpl247SUH1JeyghyBxYjDq9EACVjPDHQS8Ptoef0H1QI6M4MfoGPjAvbqRv
-	0mDxEidEwMS5gcrJafSzOhuV2+tXuElJE17LHovA9RMStUf+kTh95AgC2GMmCTYCcbYq8No
-	8B2Mcvzh8v880nF4QHzwQ29N3yrZPjUrOJ/Kk8lrY05JUszC5EFROD2YNngFVSeMWQaT5rs
-	qaw+0QyzW8mXsOdgJL1YyHYCMtllFHcZeAyyjCcbIEPbJ4f0p1BWzZ8wE97j+fMD1iaqLt9
-	opgD18PY1qN91fvHPls/piU5sT9HVMnoCLaoKurj2u+nP7+q6PJjcaxtH3/JgoN4suHYUHh
-	HEMWdtuzZYI3cIX15Soax1OPqzcQiHB8QY+qv6jx6ogwhpmi4IuPxUElKYfBrBOj437nDbK
-	49sO2j2yZkwKxI5DZTqdKtsW7dXGqizZxFXVn+SnhE7kOcJdQ8EGM2Bw4hfiUzmiiN08gBc
-	7ObzDJQWFR0rb+elKWhNTQcjz1BMe2hBlfGaht6oh1Y/v5A/Rz3jJkbGMfmb4aG77lDDn32
-	NQ9yWNcplVXEBP/jEoWp9TaTpQCqncjs1nzDN+4OyueK253ged24JXTE6/k4ipbKwZM0P1/
-	BUCU8YZR1+UZWxfdeixFTvZt9DJRuZwzQZ5urRoBc+rn7Wmf4K0a6fwX8jaVrOBJDcQGSyI
-	wjHx5koIndeiU4d8/daoPgLvqpV+yuz235GeKjQzPU9GnzrhhKjuHjzzCNIU+wFQU95eG3V
-	KkE+r+5KUk4/HQJwxNBtAXcgxi90CW92rrOvc20lZ6abyKpYSb2LChg4YPiyTLyHroLLDuO
-	T99UBsz7HAn/5BBSKJ
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: (subset) [PATCH v10 0/4] riscv: spacemit: enable SD card support
+ with UHS modes for OrangePi RV2
+To: Trevor Gamblin <tgamblin@baylibre.com>, Yixun Lan <dlan@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Adrian Hunter <adrian.hunter@intel.com>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Ulf Hansson <ulfh@kernel.org>, Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: Troy Mitchell <troy.mitchell@linux.dev>,
+ Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+ Javier Martinez Canillas <javierm@redhat.com>, linux-mmc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Anand Moon <linux.amoon@gmail.com>, Vincent Legoll <legoll@online.fr>,
+ Margherita Milani <margherita.milani@amarulasolutions.com>,
+ Aurelien Jarno <aurelien@aurel32.net>
+References: <20260515-orangepi-sd-card-uhs-v10-0-094af27e310d@gmail.com>
+ <177889984452.2298656.1074391459031404894.b4-ty@b4>
+ <7e68e745-0d70-46db-9475-38d3dd5b9cf4@baylibre.com>
+From: Andre Heider <a.heider@gmail.com>
+Content-Language: de-DE
+In-Reply-To: <7e68e745-0d70-46db-9475-38d3dd5b9cf4@baylibre.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed May 20, 2026 at 12:40 AM CST, Han Gao wrote:
-> spacemit_pin_set_config() looks up the per-pin descriptor with
-> spacemit_get_pin() then checks the wrong variable for failure:
->
-> 	const struct spacemit_pin *spin =3D spacemit_get_pin(pctrl, pin);
-> 	...
-> 	if (!pin)
-> 		return -EINVAL;
->
-> 	reg =3D spacemit_pin_to_reg(pctrl, spin->pin);
->
-> pin is an unsigned int pin id, where 0 (GPIO_0 / gmac0_rxdv on K3) is a
-> valid pin, so rejecting it here drops the PAD config write for the first
-> pin of every group. On K3 Pico-ITX the GMAC RGMII group lists pin 0 as
-> its first entry, so its drive-strength / bias configuration was silently
-> ignored.
->
-> The intended guard is against spacemit_get_pin() returning NULL when the
-> pin id isn't in the SoC's pin table. Check spin instead, which both
-> restores PAD setup for pin 0 and prevents a NULL deref on spin->pin.
->
-> Fixes: a83c29e1d145 ("pinctrl: spacemit: add support for SpacemiT K1 SoC"=
-)
-> Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
-Thanks.
+Hi Trevor,
 
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+On 16.05.26 2:35 PM, Trevor Gamblin wrote:
+> 
+> On 2026-05-15 22:57, Yixun Lan wrote:
+>> On Fri, 15 May 2026 12:48:58 +0200, Iker Pedrosa wrote:
+>>> This series enables complete SD card support for the Spacemit K1-based
+>>> OrangePi RV2 board, including UHS (Ultra High Speed) modes for
+>>> high-performance SD card operation.
+>>>
+>>> Background
+>>>
+>>> The Spacemit K1 SoC includes an SDHCI controller capable of supporting
+>>> SD cards up to UHS-I speeds (SDR104 at 208MHz). However, mainline
+>>> currently lacks basic SD controller configuration, SDHCI driver
+>>> enhancements for voltage switching and tuning, and power management
+>>> infrastructure.
+>>>
+>>> [...]
+>> Hi Iker,
+>> I've picked patch 1-3, for [4/4] I think it should be merged after
+>> https://lore.kernel.org/all/20260513071958.29574-1-a.heider@gmail.com/
+> 
+> Hi Yixun,
+> 
+> That makes sense. In response to your earlier feedback I had drafted a more
+> complete dts after another schematic comparison, but Iker and I discussed it
+> and opted to avoid changing scope too much. Andre's series includes the bits I
+> wanted to add and more, so that works out.
+
+I have 4/4 rebased on my series anyway, do you want me to send it?
+
+Thanks,
+Andre
+
+> 
+> Thanks!
+> 
+> Trevor
+> 
+>>
+>> Applied, thanks!
+>>
+>> [1/4] riscv: dts: spacemit: k1: add SD card controller and pinctrl support
+>>        https://github.com/spacemit-com/linux/commit/2d77e577109967ef65f269c1fc1d6a659d4260fb
+>> [2/4] riscv: dts: spacemit: k1-orangepi-rv2: add SD card support with UHS modes
+>>        https://github.com/spacemit-com/linux/commit/2585c60ce2f977b13f14a67d1e3ed9c73fd7f381
+>> [3/4] riscv: dts: spacemit: k1-bananapi-f3: add SD card support with UHS modes
+>>        https://github.com/spacemit-com/linux/commit/c76e2f058cbcab84e4a703f26857a58bdf6a0042
+>>
+>> Best regards,
+
