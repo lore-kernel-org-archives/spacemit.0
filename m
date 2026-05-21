@@ -1,88 +1,66 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D4125B09E;
-	Thu, 21 May 2026 13:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4293E1689;
+	Thu, 21 May 2026 13:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779368486; cv=none; b=UKHimv/q0nb/r26lnapLmBCTSLLQnxLt7/Q7OXD2nDaaP6pCOM3y4Gejb2FtQnS4IqlOJBsFpCRwLJ9wUyay2Q+iilubCQ+ipL/anXoPsVjw7r/WieP80h5At1Rpin1p8Ypb2rdEBeMeoiRoyS90J19Jg1Nje48mANew3fQ9flU=
+	t=1779369190; cv=none; b=cx0cCKR6GotYRve8EsA7LjIIyWIs2tTqK3+cM2a0KULpdMbBukjRCMy1Kz4QOXSNydofk8sOcmL008zK9SQ3ka3aB2cFCdDo8jciUAnrXggL9JKMqNPvnlHmfaYR65dZKTPQAYAhNU3NkAUJdiicB0KPaa/jFl9gS4V8p4MXq4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779368486; c=relaxed/simple;
-	bh=LzBBA30mVQR9do3IoDIGdLISLgWIk5G5D/Lq3aUaJIc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YcucgJgkiIUt+O1sX+xcXapEGhSeAObJ7hZX/l/lc17ObvDPNtXeWZc1GxO15YRqlPeScsB0QgX+NhePCafi4KCxMN7AVQ9E2WIGprlzAk3YMkIwLHYXu7AwkWxFJI9EHevfqHiDFSWtdtldOWDHLXtkjj7MfzFH8r43Z2wHcfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YQzDXNuy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779369190; c=relaxed/simple;
+	bh=Zef4hq7qHQqGuoWfrK+4IAr+ZRdBbb0gYXaHjquOOVk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o4mvCUg/LmwMrS/3pt/N0DXCFFZAuekxEIyjvpWpOn3ZaVVwPJSourmDgnqM8F5Ce/1caSxgTSuIAwToQGJLGqSm3vC9b9oaDXm4ITGkEtUmQW1vsRh17bDhQVs4SfjQY2BsO1hnH+Xl40JkrzNbvNosOoBGls1wVinxT5omDd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bp31nYHS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YQzDXNuy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E454B1F000E9;
-	Thu, 21 May 2026 13:01:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bp31nYHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD4C1F000E9;
+	Thu, 21 May 2026 13:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779368485;
-	bh=YZ4Q3TUDO2GIop7GRyVIOG7OcA4OTXp7XlWjhqU8v/c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YQzDXNuydk9jwibHbEes12ds66ESkTE8eyo5qKVKsOw8bZclsMscV09t4FUiAnSoM
-	 5M64ai58AK16ClOm1Sf49PpUrAcfrPHjkYv/pQ0uS8LJQdve7+Y4gOo5iLTdokSpBC
-	 LPDLZqcwRMmUSCivmnekAB0cT98ufnYnPl5Gng4kjZiOiLbbAbaFF/sGFEEjJN1E0Y
-	 TYvc09KJIqjoU0x2J/CmwKybhFv8H1ELM/2W+NsoPQW+gFzQrlvoygYrBOWorEfzyP
-	 7pex8RxEPGnQTPpE1CGJwdK/QMn6z+bZxyl1a8BZSYDuhkHZ43N4HSLxivVeM4jwoy
-	 jdTyyg9Xhg45g==
+	s=k20260515; t=1779369188;
+	bh=igWpYRd7nceDsGMf2M6kAUT9G6B5P9tILKlWPpy71w0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Bp31nYHS+InA9kOjCwJNq2G2DxBetezP2RDP123toJzCTE6xUkye/TnRndYkVidmC
+	 WeJRnS8KjJLsb7bUWu5mq095zAELK/KSmzLEyfhLF0HKb5UBN9FLjxQtCG6MFbdhrj
+	 QXn8W5FEU60Jd2t/6jiOtf35im5SEXXPaOudwZyXoSF3y1vnJyNejVFo4p0nE780nU
+	 KtHd1dOFxc5pW/RjRwPWh62h+ce3kWHcnNjp5E/8Ck520yvCoeJ8Jfoz1Ee7Okx6R6
+	 jUNCvRgYvZVHExeDqyMsQ0ZSNAJ4iW3JVqc+SibgTYmnS/2PFhyW9mRjVTjX/fMb2k
+	 RCrCJ0Xlg95hA==
+Date: Thu, 21 May 2026 13:13:05 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <pjw@kernel.org>,
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: Rob Herring <robh@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Shuwei Wu <shuwei.wu@mailbox.org>
-Cc: Yixun Lan <dlan@kernel.org>,
-	linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Anand Moon <linux.amoon@gmail.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Yao Zi <me@ziyao.cc>,
-	Vincent Legoll <legoll@online.fr>,
-	Gong Shuai <gsh517025@gmail.com>
-Subject: Re: (subset) [PATCH v5 0/3] thermal: spacemit: Add support for SpacemiT K1 SoC thermal sensor
-Date: Thu, 21 May 2026 13:01:16 +0000
-Message-ID: <177936776325.387485.15662058076324687710.b4-ty@b4>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260427-k1-thermal-v5-0-df39187480ed@mailbox.org>
-References: <20260427-k1-thermal-v5-0-df39187480ed@mailbox.org>
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 1/1] riscv: dts: spacemit: enable USB3 on OrangePi R2S
+Message-ID: <20260521131305-GKA3727373@kernel.org>
+References: <20260518100030.2354606-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260518100030.2354606-1-amadeus@jmu.edu.cn>
 
+Hi Chukun,
 
-On Mon, 27 Apr 2026 15:15:14 +0800, Shuwei Wu wrote:
-> Introduce support for the on-die thermal sensor found
-> on the SpacemiT K1 SoC.
+On 18:00 Mon 18 May     , Chukun Pan wrote:
+> Enable the DWC3 USB3.0 controller and its associated PHY on the
+> OrangePi R2S. The USB regulator provides VBUS for USB2 and USB3
+> ports, but the USB2 ports are handled by a separate controller.
 > 
-> Include the device tree binding documentation in YAML format, the
-> thermal sensor driver implementation, and the device tree changes to
-> enable the sensor on K1 SoC.
-> 
-> [...]
-
+> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
 Applied, thanks!
 
-[3/3] riscv: dts: spacemit: Add thermal sensor for K1 SoC
-      https://github.com/spacemit-com/linux/commit/247c77ff5806bcd6a5ff802718de1f0aa2bcba6c
+[1/1] riscv: dts: spacemit: enable USB3 on OrangePi R2S
+      https://github.com/spacemit-com/linux/commit/c5ad6737df88bd3c3e83145edb25737cb19f9a1f
 
-Best regards,
 -- 
-Yixun Lan <dlan@kernel.org>
+Yixun Lan (dlan)
