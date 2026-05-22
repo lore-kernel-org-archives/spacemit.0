@@ -1,113 +1,76 @@
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334BF3D3309
-	for <spacemit@lists.linux.dev>; Fri, 22 May 2026 13:35:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC8344E043;
+	Fri, 22 May 2026 16:12:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779456936; cv=none; b=aQYPOAPvVLKrDaP3KgDiLw8mGbcOjaw8xZw+fKFUUYH9Pk9+tflmyoicDG362QMS//ijvdC2FHt32CichcAjV95R3f/jM31RreTDdI/8YIovjhh7mIWwgymW/s32K1fp1ccDRqbcmRmTYOfuAYNung2nKRFS9Cd/E8bh/huek9k=
+	t=1779466325; cv=none; b=pSVRsh3RSvRhZQT5psg5YUehnjOID5xsXcdv6BjoD+SHeMp8h5sHGjDc7i/BLBSqSUSPnko9e5ncu89wGbhkY5gsnoMvx333e/DgffP0tfGx7CUKzPqVIsPyP86UMUBrWMw8I/ycsOGOGHF0kitGWgHgdgqwsfyhAl8398JadTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779456936; c=relaxed/simple;
-	bh=4E68yMd3eSt5QcCRQ/X6OQqgriJicM8enmFAo74DqRk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bvCdGvRPcM+GubDcjqAtCe2/hmYrPKT0VM+TcNupW8JWCAUuMsXBWN2ycV5vUINjqGHgjdNXksUR0KhM8zPTgAokEtH3/iGYCEBsuQdRkZjJUvJCeDeJW/AmOmDB8QDFmt4/wGf+42aSqBZCqbnlySTKdAO/bjYm5VmQIph7EoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=tKnDNVJ7; arc=none smtp.client-ip=54.254.200.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1779466325; c=relaxed/simple;
+	bh=2U5XU9h6HYcXCdG4wEmURLpHZMMYjCkqLOCkJD6b5Tk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u5hHZgSuE4EjkEVbgjn2ZuBrBKjN7tl9ayk9iu+eby/LwhwEIVBs0NTdSnHQsdQv+w3HC6QbMsCz+8kBI9+HAxVFl1FH6+3JpHTbGM1XovEP1dbs8WNjbt6m4kEXoIKTu/eQw54G0w2YFjE9AFFSAy0kK2l1ksHb6UeT76FpLNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fA93VpCP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="tKnDNVJ7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1779456854;
-	bh=IPfPFi70Qm+zWzKp1zbmboEkHwR9Rb5JOffwqU6/ztA=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=tKnDNVJ7zEhiKF66o7yt/onzdqS/shpqCn5DvSK+K2tNMixRWaWl/8/xOpDJj7/tX
-	 Q1mTp1MIfWad+Vb2qDZlkcoGtRwxbdGlyZkPetZ5pLQ+LgZsxFGTrB4Qlwe0Y/mPXK
-	 rezaYOZVUOOmM/7gffUQTmnKa0aGe5ptZ+FUL2aY=
-X-QQ-mid: zesmtpgz5t1779456847tc2efd188
-X-QQ-Originating-IP: ZC/rMsBumSkgZ+kt8SH8TmvM2M5XUU6pwGD4yaQ75XU=
-Received: from = ( [61.145.255.150])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 22 May 2026 21:34:04 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 10530091963664582811
-EX-QQ-RecipientCnt: 11
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Fri, 22 May 2026 21:33:58 +0800
-Subject: [PATCH v4 2/3] ASoC: soc-pcm: add DEFINE_GUARD for
- snd_soc_card_mutex
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fA93VpCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218241F00A3F;
+	Fri, 22 May 2026 16:11:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779466319;
+	bh=2U5XU9h6HYcXCdG4wEmURLpHZMMYjCkqLOCkJD6b5Tk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=fA93VpCPmy+jWUvyevRGqWdtiIeTGi7HFk9lql29Ms9RUwm0t0Alp58nr/myQB+ZM
+	 eOmaYytmMdpk+23mwYjnTEtVoH5K0ODmzWwNDdf8QtKUiAYR1kFKU2tLTyW82pFN7w
+	 w9ciZb6K9wlrC+drD9a9umF1kuWbq4RCdhXYPM1FB9MinqnYvBUwD3gMwm14J1rZU+
+	 P5qSxWJPTp+dzGXupvcioJxP/2FRBve10aSZdBMbEdNuoV1smd0rNEYtcZXVa2m1w3
+	 9lLYadMeUtVuUfIZP009hb0Dbk8TH4STSRjX0PS+YdPYYKCZ3c12OAUVjILDhlKSJw
+	 ndLx3E0oDaCTg==
+Date: Fri, 22 May 2026 17:11:54 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Junhui Liu <junhui.liu@pigmoral.tech>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, Vivian Wang <wangruikang@iscas.ac.cn>,
+	Paolo Abeni <pabeni@redhat.com>, Guodong Xu <guodong@riscstar.com>,
+	Yangyu Chen <cyy@cyyself.name>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: riscv: spacemit: Add Banana Pi BPI-CM6
+ compatible
+Message-ID: <20260522-endpoint-refueling-892a742e3251@spud>
+References: <20260522-bpi-cm6-v1-0-707ef1917a30@pigmoral.tech>
+ <20260522-bpi-cm6-v1-1-707ef1917a30@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260522-i2s-same-blk-v4-2-a71a86faaa20@linux.spacemit.com>
-References: <20260522-i2s-same-blk-v4-0-a71a86faaa20@linux.spacemit.com>
-In-Reply-To: <20260522-i2s-same-blk-v4-0-a71a86faaa20@linux.spacemit.com>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- Yixun Lan <dlan@kernel.org>
-Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- jinmei.wei@spacemit.com, Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779456837; l=887;
- i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
- bh=4E68yMd3eSt5QcCRQ/X6OQqgriJicM8enmFAo74DqRk=;
- b=W138CBf31i6kdfNrlYIBg2W3QfM5Y52U4DJE0KvkIRyjXVR+gg7RlXoY5XOJ61Uwx6AJq4PrI
- RY1Buee0KFcDpY3EO/RKglrKmW0Tboh2jCVvnI3kwLFOFlvvYavC1ng
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
- pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NZu/AFmKGNRJQKOBYz618w5cy4ScexV6qZ2aboG33Hu8guIapLOb5UzR
-	UkOu1+aa6wv4/Zvb5fSIxQUcCDoYHziNZjTlUqUd6gjnj+dBQ0j9yYh3GzjCyyyXVarxwEl
-	Ow029fy2OofnpVd7Xw+r+ZFmSOxpZd9haKYXGE2Ddc09xTUBla4zV08Ov7fW264QEyyGOhy
-	LLFsdPVzYM1tP81yvfmxcHI69IWm/Y/1KbOzfzrMI6sAsMb4fEATHaAW4PGIQToeuNktm/K
-	S+1pYSO4SnZF67TXDRCEQuQaL8hsnia036vzE9kAhsJuk04qYUeFBIcgwNYI/jLHAXGw1OQ
-	fMWrNNLEB9XJRgCiB+QIeKSjiiRqYdX/KCHBbk4JXXuz+0xnE3o1JKuGuexxRqPODQ2AaEP
-	RiU9qyEGQf/BlA5I8Yqw1OKzOFNwbaDGCjC/KzxJt8kE+xp4B4HDWX2QKQpdw5tTvubcUrt
-	ZNRMjNv6mZBJ3wv7hlMsBExU2VKA3OAo2VDTb/otdvgFN0onyeG25T0ztH3OaDC9N6m2QQp
-	dpPwdF9KfnrA1ZuMzxgqHRmgfC8JwOVf+cMs6lvwgbh3wfS/g5wbSuD4xgPAF8gU5XBWzUd
-	X9Ots9j2ilCJxmVu2+Pcv6ax6fXF+EE1h3AYcc/LxzhnpZRv8ZsD+wEle5x21fUQBF2esoY
-	LLJAoIS0HuVKWNfeIumOgUurPNg9I/bpN1F6/+Dr6XZ646Fbcd4S2H9csYgnuqBpM0hb29k
-	iJGut4VG+DG3oLo7lx6XRqeouQXJd5VhMRUwk2/xLovIwovKPoDRYN+g4UZFUgZzYJVZahO
-	IiJb1YaH4epTtvrfijXWrqP0VRroZXF8k3bUA+bPEwsPWcfF4VUEx0Dlt8PmYxoQIgqjBep
-	ql/FdCQyLcreXyOy/MrUhZk6Y93McHitwRdhvE91YAQUFTxJDcDWk/om8dM0ud/toMYr7IS
-	GKaDlNab5bYfirLGhoEUrsPRZY1dRLGHmQNPwBstPQKaj+Z1huV/P8IW37OJJP+xjQ/L+Uc
-	Zn0/iJNGzUC8vXDieCCiP74WvAa70WuaQ5K60HR0wzw+ttbXOC6lQdPgIk52h0bMVsHSx6O
-	epAdGjstuS3kjA0hQAdPyHZZcEScrEkEi02INg6+TO8OAjwUb5ta99gMy04MVDkL4X7fl0w
-	kNBHy3Ktv10iv20=
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-X-QQ-RECHKSPAM: 0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="GnUjvP1EuQAp69tA"
+Content-Disposition: inline
+In-Reply-To: <20260522-bpi-cm6-v1-1-707ef1917a30@pigmoral.tech>
 
-Define a guard class wrapping snd_soc_card_mutex_lock() and
-snd_soc_card_mutex_unlock() so that scope-based locking can be used
-while still picking up the SND_SOC_CARD_CLASS_RUNTIME lockdep subclass.
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
- sound/soc/soc-pcm.c | 3 +++
- 1 file changed, 3 insertions(+)
+--GnUjvP1EuQAp69tA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index 9b12eedb77c3..25e494c4ed81 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -26,6 +26,9 @@
- #include <sound/soc-link.h>
- #include <sound/initval.h>
- 
-+
-+DEFINE_GUARD(snd_soc_card_mutex, struct snd_soc_card *,
-+	     snd_soc_card_mutex_lock(_T), snd_soc_card_mutex_unlock(_T))
- #define soc_pcm_ret(rtd, ret) _soc_pcm_ret(rtd, __func__, ret)
- static inline int _soc_pcm_ret(struct snd_soc_pcm_runtime *rtd,
- 			       const char *func, int ret)
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+pw-bot: not-applicable
 
--- 
-2.54.0
+--GnUjvP1EuQAp69tA
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCahCASQAKCRB4tDGHoIJi
+0p+yAP0d8Sxf6GoYo9bB7UbBSI7sa9vU7FdmIgQHUBrpqHLJ4QEA+MIg1uouFWTU
+Qi9GvV5bXvR2VMKO3dJbHBBql3EM+gk=
+=aTs1
+-----END PGP SIGNATURE-----
+
+--GnUjvP1EuQAp69tA--
