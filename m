@@ -1,92 +1,89 @@
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F8F3D9691
-	for <spacemit@lists.linux.dev>; Fri, 22 May 2026 11:27:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB49A1A23A6;
+	Fri, 22 May 2026 12:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779449257; cv=none; b=XizRASGoyDjhSGbf2P4Jye7r7zeap+eGDEvk+grKVe00nH13+eTNfqdUZopk8l2p0TDKyfAHhTcSabkavLeX3+GfwOkam6vmg4ZanZ7lgrxCfDTt1ZdqykNndi9BovMuHOvsJZVsMhwEKWekm0IAKG0OH8G8S0eKD0eGesJt654=
+	t=1779454741; cv=none; b=j/CAk1PRxG4Gj4I/t6R00UWsrCDEAafe/ONiTKBZh1L7zkJSYrOxoT1Ir6wrmyK4fJZwof0pDx4hk8G7AP57dL3zMp91kRtxkbGr3JqZfOUrFpYJQmIdsOfvBsYABe6MeinFQS/GlGUr+3dzu3Xf625SlnP+K5LXsLGnDiWeBrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779449257; c=relaxed/simple;
-	bh=4q/myfyVbmEyFIe6+941BMQwtch6h4nWsms2RIJ1+Dg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=dWeZSXN84HjSNEzOXIaKXoaMSoRIM8hbfQ2ILEEx6PMho03hKDCgJLFn8dcKQjYu83fmCK/WRJoe43JlSCw9mNfDqNbACX4ZHXAi5BVFhiosN9soD2Jab1WznTJdM0sYrvCTVJEqsQXwz2GYK1tAT2o0VGRS1Eo7pqw/CPWPBYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=QxTAp/nY; arc=none smtp.client-ip=54.254.200.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1779454741; c=relaxed/simple;
+	bh=WZdL4ajWIMPy64SlgTcFPX9rVhAj1DrKanxrjeCWZjs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c4fe/TwfXNtLmbqBKqyt46tTMJAZTzqNoFYXIYNMGA9OWtJUIBHXD7Q5khAx2z7CvtIFci1SQa4WPOjb4IGr/ffyeXOu/ry6yszL9Zb+C5+qZrgBW7ES9cabqegZFLacHsydHDjwdhuvt7CxT3IS7gOHo83eocgDN+czkt9zbCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AodPdG6k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="QxTAp/nY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1779449215;
-	bh=4q/myfyVbmEyFIe6+941BMQwtch6h4nWsms2RIJ1+Dg=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=QxTAp/nYGkFn70NXFt9qnYBm0HJGxNToTXspAhX4OI6OYl/GpLOinjUCVZCq5pxSr
-	 2b91As0ZZKM3i2DddJARbmciZ/2l+rqvMrkh+T6wWSxKyV8FHpGgCz4oi3wCp7vPxS
-	 +wAM0K8UUz03UHmoXLrcS5qWQJzoGYb3ZYcxFkl4=
-X-QQ-mid: esmtpsz19t1779449213t87449ebb
-X-QQ-Originating-IP: VyEj+Nv6piyvhL1JE5iTrnptQpzwWFWaLaZ/u8HF/Ko=
-Received: from = ( [210.3.135.34])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 22 May 2026 19:26:51 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 2874474236348965011
-EX-QQ-RecipientCnt: 9
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AodPdG6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8721F000E9;
+	Fri, 22 May 2026 12:58:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779454740;
+	bh=dwSUWSNVkWQiU2Ps9u08I+NkEf0pbbAy9oZawlGfs7E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=AodPdG6kqN8TqpkCsUXCZOv+7MY36Qy89EI2xQcgUo7TTd0ky/v1q5VAVq0Rd/Ydu
+	 cITFfow0zhLSKsnzAzwugCTevD9e61iLHD7wSV/7E9cXXL6vthpMGOF1BAza5cz4Ly
+	 dA+PNm4ItVfQCaLWVDnnDEZQiwmgSPnG9Bgl8x27Bam0AZiMHeZjdOZeSXUtUq8Qzd
+	 PB5u1OwvAsGdWrtLtD0AEi5k5q/sjGruk/fjypCTUtL8+NMBgCMBP5zqAotooArzgk
+	 cvnnBfg3F0VjHR/2/tCB45NEP8/GQBm6+vcCOYYk01LCmbznedCj1MHyi9p9nIHZJB
+	 pnQ5iX+nbJuQg==
+Date: Fri, 22 May 2026 13:58:55 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>, Yixun Lan <dlan@kernel.org>,
+	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	jinmei.wei@spacemit.com
+Subject: Re: [PATCH v3 2/2] ASoC: soc-pcm: constrain hw_params when DAIs
+ share the same BCLK
+Message-ID: <be91aacd-2e02-45d8-9293-e9551f688c68@sirena.org.uk>
+References: <20260518-i2s-same-blk-v3-0-2ba1c4f41db9@linux.spacemit.com>
+ <20260518-i2s-same-blk-v3-2-2ba1c4f41db9@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 22 May 2026 19:26:49 +0800
-Message-Id: <DIP63LFPHYTN.XDUDRDCPPZVQ@linux.spacemit.com>
-Cc: "Conor Dooley" <conor.dooley@microchip.com>, "Yixun Lan"
- <dlan@kernel.org>, "Troy Mitchell" <troy.mitchell@linux.spacemit.com>,
- <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v2 4/4] pinctrl: spacemit: move over to generic pinmux
- dt_node_to_map implementation
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Conor Dooley" <conor@kernel.org>, "Linus Walleij" <linusw@kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260519-germinate-ageless-631033d22797@spud>
- <20260519-cosmetics-careless-0e9a219c51ef@spud>
-In-Reply-To: <20260519-cosmetics-careless-0e9a219c51ef@spud>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OeNW/oXGg/KmjwL+9YmKXZqjKPh0QCz9xdXXjE8pMpmVCwodNzNHiU8O
-	7PgIgzgY3jbf9iIQ5uX+nkdKBriUW9ejZYeXWECZdJdugVngRjCLpqWXV6mbDlfs+7nuxZQ
-	ztkn4Hz7n20Tmfc8GJMvfRQg6PFOm0N4jbVF3Eg/MWaSFmFfhpXb+XzKbJkiVyLVrya6eBQ
-	JJw1PuSZlXZnR0VSiSmoy0zGrpkfQ3sXB/1FOv2emo4xZLQivI41pGJ31rWjUt+YGEO+/QG
-	W0QjwvvRZRMkqxrQVjdjdXAWtv1KIfGOWhkXd0NsVzmDcucRDE62XxAS3QyCzd9fnCF3Pdz
-	3n7TcIpHqHsf1TcGpMqSNhAJPtJSSuqwA1+igLWSYwqSSyTwVFuaD7XYIvgrg1A0Ke80xb1
-	EjrhXGn5dD/jbt2Km1a6+2OROL/zKtej6R+aj37ZJb704aegCxvgfjR6DLQJgMVsYyw3wsZ
-	6S+KukFcAaPngGMAlPTJirIH6Wt+T5prfx4HIFJ+kxG0tHMQylfuM1M89YoSQBDWd1cqQHB
-	CLG12hwdmSclaJt6gYppfiSAEO2ReTLYaHvOEHM7/kAm2aY1K8PTsjdAK8Pu5V3RdrdEKGU
-	QHjTFDcqNlxGQ0WRT6fv1/yUk68U2ZMpvNoxfAtbKbd4/mE6AMDGQkXZ+tQXxEP6h56ei6e
-	STRhlAK2k4QnNaoCzMztSWn1WiALiTzCgzEMw+vH+Yv8eFdPE/+KLy6eCJaApWmVJj4jJX/
-	aSwvAWK1qIonvP8Gnjq8HaYpxJAyLik9O1HLX8S1ba65WGXHnM2Xp8X7FVnEbZwR4DYhipD
-	7Q2PBw7UCUliw361F/DMU6o6bvimlM9VabV0wmyZxDcJz3yiua3lbfnboQFVH+JrfdT4IRx
-	6VyJmIKigyMlAmMK44uvHWtNueq8P6HSP8XIfhoYTfNNfjyXge3pu/A/zCeMA+qv7K3BfmZ
-	638QHiabeIC5Vz/l56LRmpkdtL/0ebPMXquMS1ug6yNGceBdmYjkiwios27C7RO0llkLWwg
-	n0/0IJ26lCq/+ym+ZeyLp6SleQNssahLue7ylGPsxpJ6kRnCnTmOOt4tjzMwu7wZXPONnIq
-	TVugy4Zvdlu
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sKTSFcLS+m+I2M8w"
+Content-Disposition: inline
+In-Reply-To: <20260518-i2s-same-blk-v3-2-2ba1c4f41db9@linux.spacemit.com>
+X-Cookie: Celebrity voices impersonated.
 
-On Tue May 19, 2026 at 5:37 PM CST, Conor Dooley wrote:
-> From: Conor Dooley <conor.dooley@microchip.com>
->
-> Replace the custom implementation of dt_node_to_map with
-> pinctrl_generic_dt_node_to_map() to demonstrate its use.
-> spacemit_pin_mux_config didn't provide much value in the first place,
-> because the group contains the information required to look up the
-> spacemit_pin struct corresponding to a pin, so there's no loss in
-> functionality as a result of the generic function carrying only the mux
-> data in the group's data pointer rather than having an array of
-> spacemit_pin_mux_config structs.
->
-> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
+--sKTSFcLS+m+I2M8w
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Mon, May 18, 2026 at 02:21:09PM +0800, Troy Mitchell wrote:
+> When multiple CPU DAIs on the same sound card share the same physical
+> BCLK, add a hw_rule during PCM open that constrains the sample rate so
+> the resulting BCLK rate stays consistent across all sharing DAIs.
+
+> +	/*
+> +	 * Protect the rtd list traversal.  No nesting: this callback runs
+> +	 * from snd_pcm_hw_refine() which does not hold card->mutex.
+> +	 */
+> +	guard(mutex)(&card->mutex);
+
+We have helpers for acquiring these mutexes which deal with some lockdep
+issues using subclasses.  Either use those or provide whatever's needed
+to have the equivalent thing in a guard.
+
+--sKTSFcLS+m+I2M8w
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoQUw4ACgkQJNaLcl1U
+h9C7OQf+Jwocql2ZUuQWSU2AMaZmusiVEka81SMZdP6KS2iSwEL8pf6oWkxkCcTs
+jnHnBGKwmPtnApfDY+mN2FmkMrFjUGf5p4Q21j4YoXYA9I3tnj84SAyxP75mZ8DD
+c788haT1VvukP/xOi1aVmQAZDxrrZcM9c+bB4h1t1CPCSwFCTRs6Qy1Xunn971Kq
+l2gLaQOZNdPAUZrnzwUBRZp3m7vfF+AYSeONZlLmKWSwlSmZ9srpCSB8dRwj+oqo
+pKo6258W0y0dduExgblci93/+kft52DovE4X+RvJiYPi+dx+5A+5ir9nFbMvwNDZ
+rabUYy1fGILu3GuPhD89+3KrXeAEbg==
+=mDIW
+-----END PGP SIGNATURE-----
+
+--sKTSFcLS+m+I2M8w--
