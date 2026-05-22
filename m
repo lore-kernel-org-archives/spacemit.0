@@ -1,76 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D453395D87;
-	Thu, 21 May 2026 19:46:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC96C382F0D
+	for <spacemit@lists.linux.dev>; Fri, 22 May 2026 09:04:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779392771; cv=none; b=mzKv5WBTR9UR3lqNbfHOIx2V96vfSrvHA3okw4VR8LcozZ+vEuuA4AtEnxZqafs0E00JkaVvZuk9mPKlgVICjSuYObo54jfl4HOXISKm7X2IgEAJ97Q0v2HdCI8PO11M8YsG8Lh23kCY2vFf6dwabFQOicrO5T0Yx1CwZX8bd1U=
+	t=1779440674; cv=none; b=iwmSjCj+Cm5sKZrvgybNWh4eFGWLh4Wz+mOv0Pb+NTXmVQdWo7RjtmEDoXGKpmGiwT4X+mqK44ulYlqYHDwQ5E8jKqO3674GVF1El+oHRt4iz3Hz4Sp4JlmcwnEk1OatsPgJmwZTLHaGH+Ns2RLScohNY4T6vJsH0quT/jObIm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779392771; c=relaxed/simple;
-	bh=Fl5Rt2JQDBkzN2IYCYCNYaDmr7KbbjfvidjX3o3GvT4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kco9CYjRcEjC51+BDEmcA8jjybCP2EhZ8GLnYx0DEexTbgtSePuSHQdEP1uGbh+oEFy6XHtK9u7h2a7GyAC2ve7ixhBJpLqkn5YyQtWFbAVMNMJpJzidQIUl4rmknkmYMUZKsNbS1iolPOKSUFzwdL0ldrbgxJR1p3vmgPkTT+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KmDSF4Yx; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KmDSF4Yx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E29D1F000E9;
-	Thu, 21 May 2026 19:46:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779392770;
-	bh=Fl5Rt2JQDBkzN2IYCYCNYaDmr7KbbjfvidjX3o3GvT4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=KmDSF4YxGK5lwh/3XI1QId7FTwnvYtyg5GcUHSUYLjdVDqUTh+tz9sXyQZRnVa36W
-	 FLZgDGbkeXI5aKbhlWW0rdho0Z+rUjF6Si7m2ePcBUSRKf3sUYHlsTPho0wvE/7Acq
-	 efzddQ1TtpyTLtcNg6KO5bIDIJM21Z0ffOGgF1wmWUSWCIhUH4C+hGwWxmaJReYQh8
-	 FoN0z0TqL3bpiURNqKHOiMo9W4wLXZi/MKKzX80wFo9nqNrQds0ajaPN6KfzvwMlp6
-	 a6+yIEDdcsYwJdeTZ7QIQdjw+4oioynjwxqZZB4VL2ZIbn+IGU+OEyxRPjsT3nY0bl
-	 f6/jbTabO8O5Q==
-Date: Thu, 21 May 2026 20:46:04 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Zhengyu He <hezhy472013@gmail.com>
-Cc: Han Xu <han.xu@nxp.com>, Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-spi@vger.kernel.org, imx@lists.linux.dev,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	Wei Fu <wefu@redhat.com>, Cody Kang <cody.kang.hk@outlook.com>
-Subject: Re: [PATCH v2 1/2] spi: dt-bindings: fsl-qspi: support SpacemiT K3
-Message-ID: <20260521-justly-power-2cc7ebc7b71e@spud>
-References: <20260521-k3-pico-itx-qspi-v2-for-next-20260521-v2-0-52bce26e5fd8@gmail.com>
- <20260521-k3-pico-itx-qspi-v2-for-next-20260521-v2-1-52bce26e5fd8@gmail.com>
+	s=arc-20240116; t=1779440674; c=relaxed/simple;
+	bh=GmpQyCnwSi3HeTaUflvNba8/clR0PQ0pY+xm4O82Ykc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=D9A3PKeqE5ZV1LI1qcUjY8OzhpZnhSpQzPKTRxKmo7+YCUU1MrxhBV9CZbSRxHwCYuUeaDYx2pjMeXUEJzajbmk7gMHzkQQP9anu9VCNmP8Hfz3PsqEeMHI0Tnfl2Cg6204uGfzINWOR69s/Dl3HNf4LwVtGPbQj0KdUKfoB1Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr; spf=pass smtp.mailfrom=online.fr; arc=none smtp.client-ip=212.27.42.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=online.fr
+Received: from [10.0.0.2] (unknown [82.65.243.93])
+	(Authenticated sender: legoll@free.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 85DA65FFAA;
+	Fri, 22 May 2026 11:04:08 +0200 (CEST)
+Message-ID: <a1e63aaa-1069-4308-931c-8140774d87e0@online.fr>
+Date: Fri, 22 May 2026 11:04:08 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Q1v/qv2VOGr4z9Xj"
-Content-Disposition: inline
-In-Reply-To: <20260521-k3-pico-itx-qspi-v2-for-next-20260521-v2-1-52bce26e5fd8@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] riscv: dts: spacemit: set console baud rate on OrangePi
+ RV2
+To: Jennifer Berringer <jberring@redhat.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Cc: spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260520111150.3300707-1-jberring@redhat.com>
+Content-Language: en-US
+From: Vincent Legoll <legoll@online.fr>
+In-Reply-To: <20260520111150.3300707-1-jberring@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hello Jennifer,
 
---Q1v/qv2VOGr4z9Xj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 5/20/26 13:11, Jennifer Berringer wrote:
+> Set the baud rate to 115200, matching what is used by U-Boot on this
+> platform so that the console is usable even when console options are not
+> specified in cmdline.
+>
+> Fixes: bab8dea259100 ("riscv: dts: spacemit: Add OrangePi RV2 board device tree")
+> Signed-off-by: Jennifer Berringer <jberring@redhat.com>
+> ---
+>   arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> index 7c49bce427f30..07dbd292eee33 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> @@ -22,7 +22,7 @@ aliases {
+>   	};
+>   
+>   	chosen {
+> -		stdout-path = "serial0";
+> +		stdout-path = "serial0:115200n8";
+>   	};
+>   
+>   	pcie_vcc3v3: regulator-pcie-vcc3v3 {
+>
+> base-commit: e2518e8cb1dde64af2d1bb246639bb7ef7523f7a
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-pw-bot: not-applicable
+I did the same patch, a few days ago, and tested it OK, but did not have 
+time to do a proper submission.
 
---Q1v/qv2VOGr4z9Xj
-Content-Type: application/pgp-signature; name="signature.asc"
+So, if it's useful, you can add my:
 
------BEGIN PGP SIGNATURE-----
+Tested-by: Vincent Legoll <legoll@online.fr>
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCag9g/AAKCRB4tDGHoIJi
-0vF6AP9gFrzDNEgWZsaPmwdKK3f9biN7qcrDFQj/muohigql/gD+Ka6ru1AwIEwJ
-P070LTEI8edHNAQk8SECkFyTMhMHlgM=
-=VhWP
------END PGP SIGNATURE-----
+Regards
 
---Q1v/qv2VOGr4z9Xj--
