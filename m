@@ -1,104 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C09C20FA81;
-	Mon, 25 May 2026 12:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BE61B4223;
+	Mon, 25 May 2026 13:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779712380; cv=none; b=T2dzSnf/pGHQmroa+yX5EwgPVP75GWfbRiqF4xvijv65WeYunAKEv9o8qfNEQvRDxTk8xzkhK5Fj4oOpOhJYtGPIxZRiHUPNqnTjSFVGQuFROZr/6TszYh5ah5sabc+zsiUNM1mi8N9owFsFW111CVzv7qXXLAw95nY7cThTt2E=
+	t=1779714974; cv=none; b=bhi2vWCXTOGiK+J5Wpo0nd23OyWtR5IoUfQDvPgB1LRDBrOCehbCp3+sgRQ1mqgxd1uZhAE2elYzTPTvaCpoJHd0oUOwnHj2hg3I/BydHQ82ATkwD7ss4/jcL70x7bubb833iBynnISbziSVwO0Sm/MbFEvPavN/Cy47yDrkJQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779712380; c=relaxed/simple;
-	bh=Y62EjQrTI/wSasqd24Qm7vHOI5mLk5aLoaHjk20gWhs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=s5F/1/1tDvNdYdWDJRXClM/yFcqc7s0AFiRSky5IaFKkB+QDxDoBoyo5yjb/r/zp+Ry11TK7SyxEuwIwbcE5i1i89j+pstG9rKN9IHP/qXDGadYb4xLV7LsCTebM/czQYLK9PIdmqdI8gYgkaqqd4Bzk397rSvIWc+Ar4S7FcA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jdICNlEU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779714974; c=relaxed/simple;
+	bh=CiHfOFWBBVlGq3ebj4AHhQdzY89mtfr/b9jzInJKPEw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PQFCHS2VC0WH4vk8YiXCYyf01yWZJ4JlD8wVQvA4uUBGp2EFcDeXCWWvCHbxJGgXRWm2zCJTEBt288d65nc9Z+qOfUw1paH/j2Rn0eoiGvmlPuuFCTUfAeWwOwBRZ7sEwHKEXsCjiVf7XHoeR1ISGE2z9OQYvbX1n3PQP/9uNkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nbmlAnIs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jdICNlEU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F7B1F000E9;
-	Mon, 25 May 2026 12:32:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nbmlAnIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A401F000E9;
+	Mon, 25 May 2026 13:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779712378;
-	bh=pcXHjhTpKtr1K6sv89ixblt4tmYGJwk9oE+oZa0GpaY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=jdICNlEULNzIr3Rk/p/u+/4YhqCEH/LuU26Nyaho9Acr7ozu2uMrx8ZNlfAgckhtF
-	 vYBZZb4nEBxaihsphGkX4UPGeqk6gpvHYn4kn/fSdeaDZUudGdY3rU3N+8CDYU0nY5
-	 +7SBY9rorJS8Nfdl/Sw4DFP/jsUQVufREJRwz+kRkxx5wasebV+zHH7Qsqw/RqMCzj
-	 x7Pz2iJVGrbVDFNXB0XkWc92wzKbOxfS+yqDMoN3W7uRTTog3y5uJaVyTTyakzNWa9
-	 jLlWRjAIwloYBm1Frkraku4hXOxHmjiJh8+qQPxMc0swG5gKjfSR8FXSKWo57y2eHI
-	 gb94xowLTdHVw==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Yixun Lan <dlan@kernel.org>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- jinmei.wei@spacemit.com
-In-Reply-To: <20260522-i2s-same-blk-v4-0-a71a86faaa20@linux.spacemit.com>
-References: <20260522-i2s-same-blk-v4-0-a71a86faaa20@linux.spacemit.com>
-Subject: Re: [PATCH v4 0/3] ASoC: add shared BCLK rate constraint for
- cross-DAI coordination
-Message-Id: <177970577309.18223.13869981116408028929.b4-ty@b4>
-Date: Mon, 25 May 2026 11:42:53 +0100
+	s=k20260515; t=1779714973;
+	bh=6UIuQRfv+UYVJqZIp+HBt5FvsWW0qcjFFZ8GAxI7t2o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=nbmlAnIs/faHTIuHHvV8JMFp7Y8b+haaZfFACz0NX5xAK6EBWpj29zYMTUO0S+pod
+	 L7hcxEQgwyAv76oCXL93o8572ihIT4ByXDYsuuqGDEZyJXxSIfBz6rQP7mw8J7c9cW
+	 0b0yv2zLCm0gIFsVEvZYoSoNfsRhWWnhonqSC+ZVMqSMr/zXnfro0wND67FWuHCUbC
+	 FOo9ezmMvGjXTPdEL4X+LRvyc2bZ2Rni6zGeZ1H+fhnp89mhH38CWIh6QUrGQD9sUf
+	 R0MGaQ69wMyuDvl8La0qb+e19htvquteiXtB2BqZ2ew9VX4GQEbOraR/SIdJ/mNgpO
+	 0fMrX1r08x5dg==
+Date: Mon, 25 May 2026 13:16:09 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Linus Walleij <linusw@kernel.org>
+Cc: Han Gao <gaohan@iscas.ac.cn>,
+	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
+	Anand Moon <linux.amoon@gmail.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-gpio@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Han Gao <rabenda.cn@gmail.com>
+Subject: Re: [PATCH] pinctrl: spacemit: fix NULL check in
+ spacemit_pin_set_config
+Message-ID: <20260525131609-GKA3748271@kernel.org>
+References: <20260519164007.122574-1-gaohan@iscas.ac.cn>
+ <20260519232154-GKA3708537@kernel.org>
+ <CAD++jL=gAXc0oRg3RJCuaH0_oDXJ39aShAXtQz0tpt339mFB5Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1706; i=broonie@kernel.org;
- h=from:subject:message-id; bh=Y62EjQrTI/wSasqd24Qm7vHOI5mLk5aLoaHjk20gWhs=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqFEF4pfhTzer6xrAFujII+cjOcHF5tb35E97n0
- 85zunBrPBCJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCahRBeAAKCRAk1otyXVSH
- 0O8RB/9u7miaMTfVs5fjqarX6UWjqaL4JDrbNfzhpUFwSXpRq4DkeHyuk/PqW82XZJ55hsSO5g6
- U+jQWfVrlwZ4eLuJL7F9EJxN/LfxVjgMlgJNd6Cm0Zoq5R0OnITTehRHXkCe/aj3hCtmbDexYQn
- IxRutkM7yocacbO8W3yYy7BbFkBDcM2YDgHszoivDsLMVBo+WYSW74vC/O7BzgTPy8jj27lNXsK
- MuSzf7PSK5cH5x5MLbClOgT9UyXOx6EPObnupIuf5oaYpK7Iu644wuSyFYCTz0MPTD+pbdw84+L
- q4SpwcGaRjM4UfwKnaGyev2g68X/avE5/Ls/6maiLWXcW1i3
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD++jL=gAXc0oRg3RJCuaH0_oDXJ39aShAXtQz0tpt339mFB5Q@mail.gmail.com>
 
-On Fri, 22 May 2026 21:33:56 +0800, Troy Mitchell wrote:
-> ASoC: add shared BCLK rate constraint for cross-DAI coordination
+Hi Linus,
+
+On 10:48 Mon 25 May     , Linus Walleij wrote:
+> On Wed, May 20, 2026 at 1:21 AM Yixun Lan <dlan@kernel.org> wrote:
 > 
-> On some SoCs (e.g. SpacemiT K3), multiple I2S controllers share the
-> same physical BCLK. When one controller is already streaming, the
-> others must use hw_params that result in the same BCLK rate, otherwise
-> the shared clock would be reconfigured and corrupt the active stream.
+> > Can you take this as a fix for v7.1 cycle?
 > 
-> [...]
-
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.2
-
-Thanks!
-
-[1/3] ASoC: soc-dai: add shared BCLK clock for cross-DAI rate constraints
-      https://git.kernel.org/broonie/sound/c/94bdfad3a665
-[2/3] ASoC: soc-pcm: add DEFINE_GUARD for snd_soc_card_mutex
-      https://git.kernel.org/broonie/sound/c/2555c62275a1
-[3/3] ASoC: soc-pcm: constrain hw_params when DAIs share the same BCLK
-      https://git.kernel.org/broonie/sound/c/c8c2ffd722a6
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+> Only if you can provide proof that it is a regression, i.e crashes
+> systems that were working with v7.0.
+> 
+Ok, I'm fine with it applied as noncritical fixes, as the problem exist
+in v7.0 and can't say it's a regression, it shouldn't cause crashes but
+only fail to configure pin when id equal to 0.
+-- 
+Yixun Lan (dlan)
