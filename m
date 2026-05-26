@@ -1,42 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C123D8101;
-	Tue, 26 May 2026 13:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31B82222A9;
+	Tue, 26 May 2026 13:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779801819; cv=none; b=amo4byXd/iPpYhk6SzLsbxD86VBd84lAXj0p8Eh8LV+K1iMO2MD4KpTuLomJlc9m5MZ2BlNogxiI/odTm1WCFU73+nPPpjpCbQeNHguiw+LBxs4nNfJ37j9CA9oqM3/EAgawqvH7sZf6BOUJQr3xQ6wgQdbq8Zd4VV9GKiGugPE=
+	t=1779802704; cv=none; b=jFkaK0B4Q8suu4ygSNt4riIXtCFsGDf476/dsSV+M08mTGUwuxTLr668JbCUItp2fjwynufU8Oe4skE3n3HbjTBMB4b1dGr/CMZVHR4hcnpTsDUNKrAeJ+CpBa4WNLQ4lZfkWd8OgzGu9LevTB1yQg/6EVavJ70m5mdiyI1aXPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779801819; c=relaxed/simple;
-	bh=xa6v7ngwc2cnj2rf28HH4G6L+Fet3va6uvGYQWGwXJM=;
+	s=arc-20240116; t=1779802704; c=relaxed/simple;
+	bh=GKR6jAHMNd0M/COoz/zU2+k0T3766nM8cziPl83inEA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EvIF4oZtwGwj7WaF7zkgKSM6b6u2I5vM3Fe/sEoY0AQs4k3oxgLt3PdJ2g7JrCav63xVVUFEUFtjiBVSv+Ro+Ao+8DJrnkBtSBJkU65T/5AIGJ+vq8Bgml4ETNYO0st00pUT9f4CMsToxRR8h0KUTegrPNavZwh9PUnA2YR/Iu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oTi/aKLT; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=qS2ZWJb0buG6cgxM9SLNL1Zf3Q/WJCf2X6e6+fn1NwXJR6aSJCyj397lLjJjFgy25MYWUfBxYVwY5RYsBwYP+4IUM+yFy1l7H30eaOT3x4vTa84VF98Mi2WKVcO47SJ5XZ5PoW1Ckmlj0DtC7CCQCqI5/axE6MbvNoS+7q6NtW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oiu9R8Rn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oTi/aKLT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A441F00A3F;
-	Tue, 26 May 2026 13:23:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oiu9R8Rn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164F71F00A3A;
+	Tue, 26 May 2026 13:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779801818;
-	bh=9fv80VV3utaUxsA1KkGnOso3BBAIoOuR6H5XCcuVXds=;
+	s=k20260515; t=1779802703;
+	bh=oOKcXaMosfo/owsXW+WMOSw10vIYBJ3tP8qIY78PgJA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=oTi/aKLTZSU5m++odfVsqV0tvdnglLJGcUt1yQXeOcWjp16HnZX3gEzUPYFIJyFR4
-	 5/5PpS8OOhURwqtbi2RTL4jyoITqoLKMuxjr80SLTrhUA8WY0MZsz9IhlwLP6GD9bj
-	 AOfI255lVQnHYLngP29jtv7+RuCo60LxAK5xLpf9h+CZTZRl0rfKQ+xIZzaRRJyIyV
-	 4HnJJCthLDeZOZ8l4+rneOLIcfPjblzCIZ3dNWANSGt5vdgv8BZtdh/FV4ITlphWil
-	 Dj9bRVrDBoT0RmyGdvDdl5PhyWbv6pVGkYui+1c2kkXlSVpM6CkUdoidB9VaayVWJ/
-	 /99rRGxhRac7A==
-Date: Tue, 26 May 2026 13:23:35 +0000
+	b=oiu9R8RnVsntp+r4GoHbV3UbMUxnK42UzM7CQADH87umbw39O0GA9VnsLKsP66Dn1
+	 FsGGTeVGEjCIfPU46hirCe5shVz/ClDseF7VTqF22ml+vLSz4iay+Gv0BGK2joRee2
+	 Hm3S/PDdht6KVdBZCJ39zFgBbtVHVMmctVaoYRnc26S8bKIPpeh/IyT9L+78patlBg
+	 +PKbBcB+pOMEw48XmdhVY5R5ZP9kO70UKk+lH0yDWVKpr4L1N7hgtFIUPeX/MJjhPu
+	 KXORLa9eT94GCfBt6kUfzQfF/NBx7dZaARwhSfQE6DqbG5z3zWt05t9hoy8SoI9a9H
+	 /tESKaH/O46Eg==
+Date: Tue, 26 May 2026 13:38:21 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: Philipp Zabel <p.zabel@pengutronix.de>, Stephen Boyd <sboyd@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Junzhong Pan <panjunzhong@linux.spacemit.com>
-Subject: Re: [PATCH 2/2] reset: spacemit: k3: fix USB2 ahb reset
-Message-ID: <20260526132335-GKB3748271@kernel.org>
-References: <20260518-06-clk-reset-usb-fix-v1-0-14fc235e692b@kernel.org>
- <20260518-06-clk-reset-usb-fix-v1-2-14fc235e692b@kernel.org>
+To: Andre Heider <a.heider@gmail.com>
+Cc: Iker Pedrosa <ikerpedrosam@gmail.com>,
+	Trevor Gamblin <tgamblin@baylibre.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Ulf Hansson <ulfh@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Anand Moon <linux.amoon@gmail.com>,
+	Vincent Legoll <legoll@online.fr>,
+	Margherita Milani <margherita.milani@amarulasolutions.com>,
+	Aurelien Jarno <aurelien@aurel32.net>
+Subject: Re: (subset) [PATCH v10 0/4] riscv: spacemit: enable SD card support
+ with UHS modes for OrangePi RV2
+Message-ID: <20260526133821-GKC3748271@kernel.org>
+References: <20260515-orangepi-sd-card-uhs-v10-0-094af27e310d@gmail.com>
+ <177889984452.2298656.1074391459031404894.b4-ty@b4>
+ <7e68e745-0d70-46db-9475-38d3dd5b9cf4@baylibre.com>
+ <6b945153-5a7b-415e-904a-1c350b7d52ee@gmail.com>
+ <86ac46cd-b7bc-42cc-8c29-996ae21f3654@baylibre.com>
+ <CABdCQ=M_E1uHU5WTXCn2mXaxf3-+7M9gXCL=tp1qBW50jf7d5Q@mail.gmail.com>
+ <8b9c613c-df1a-4f44-b15d-cdcc21905bc5@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,51 +65,25 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260518-06-clk-reset-usb-fix-v1-2-14fc235e692b@kernel.org>
+In-Reply-To: <8b9c613c-df1a-4f44-b15d-cdcc21905bc5@gmail.com>
 
-Hi Philipp Zabel,
+HI All,
 
-On 02:58 Mon 18 May     , Yixun Lan wrote:
-> According to SpacemiT K3's updated docs, the USB2 ahb reset and USB2 bus
-> clock enable bit was wrongly swapped, the correct one should be:
+On 18:45 Mon 25 May     , Andre Heider wrote:
+> Hi Iker,
 > 
-> Register : APMU_USB_CLK_RES_CTRL
-> bit[1]   : usb2_port_bus_clk_en
-> bit[0]   : usb2_port_ahb_rstn
+> On 25.05.26 11:36 AM, Iker Pedrosa wrote:
+..
+> > 
+> > So, how has this turned out in the end? Andre, will you take care of
+> > sending the latest version for the MUSE Pi Pro?
 > 
-> Fixes: a0e0c2f8c5f3 ("reset: spacemit: k3: Decouple composite reset lines")
-> Reported-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
-
-Would be it ok from your side to queue this patch for v7.2 cycle?
-or do you want me to combine it and go via clk tree when sending PR to
-Stephen? I think as long as they are accepted in same cycle, then should
-be no problem, otherwise will result a broken USB2 driver.
-
-P.S, we will activate USB2 driver for K3 in v7.2, so kicking this in
-same cycle should be a good reason, no necessary to rush for v7.1 fix..
-
-> ---
->  drivers/reset/spacemit/reset-spacemit-k3.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Yes, in fact I already sent it last week:
+> https://lore.kernel.org/spacemit/20260520130624.1763487-1-a.heider@gmail.com/T/#u
 > 
-> diff --git a/drivers/reset/spacemit/reset-spacemit-k3.c b/drivers/reset/spacemit/reset-spacemit-k3.c
-> index 9841f5e057b2..2e87f320cf11 100644
-> --- a/drivers/reset/spacemit/reset-spacemit-k3.c
-> +++ b/drivers/reset/spacemit/reset-spacemit-k3.c
-> @@ -112,7 +112,7 @@ static const struct ccu_reset_data k3_apmu_resets[] = {
->  	[RESET_APMU_SDH0]	= RESET_DATA(APMU_SDH0_CLK_RES_CTRL,	0, BIT(1)),
->  	[RESET_APMU_SDH1]	= RESET_DATA(APMU_SDH1_CLK_RES_CTRL,	0, BIT(1)),
->  	[RESET_APMU_SDH2]	= RESET_DATA(APMU_SDH2_CLK_RES_CTRL,	0, BIT(1)),
-> -	[RESET_APMU_USB2_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(1)),
-> +	[RESET_APMU_USB2_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(0)),
->  	[RESET_APMU_USB2_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(2)),
->  	[RESET_APMU_USB2_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(3)),
->  	[RESET_APMU_USB3_A_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(5)),
+Ok, I will take it
+> You should have received that (unless I messed something up) ;)
 > 
-> -- 
-> 2.54.0
-> 
-
+P.S, please bear with me, I'm currently on travel now, so may slow on this
 -- 
 Yixun Lan (dlan)
