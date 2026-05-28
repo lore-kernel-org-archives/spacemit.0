@@ -1,89 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31B82222A9;
-	Tue, 26 May 2026 13:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779802704; cv=none; b=jFkaK0B4Q8suu4ygSNt4riIXtCFsGDf476/dsSV+M08mTGUwuxTLr668JbCUItp2fjwynufU8Oe4skE3n3HbjTBMB4b1dGr/CMZVHR4hcnpTsDUNKrAeJ+CpBa4WNLQ4lZfkWd8OgzGu9LevTB1yQg/6EVavJ70m5mdiyI1aXPo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779802704; c=relaxed/simple;
-	bh=GKR6jAHMNd0M/COoz/zU2+k0T3766nM8cziPl83inEA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qS2ZWJb0buG6cgxM9SLNL1Zf3Q/WJCf2X6e6+fn1NwXJR6aSJCyj397lLjJjFgy25MYWUfBxYVwY5RYsBwYP+4IUM+yFy1l7H30eaOT3x4vTa84VF98Mi2WKVcO47SJ5XZ5PoW1Ckmlj0DtC7CCQCqI5/axE6MbvNoS+7q6NtW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oiu9R8Rn; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC15C2C11F9
+	for <spacemit@lists.linux.dev>; Thu, 28 May 2026 05:18:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779945534; cv=pass; b=WHsuG0gZm9qxKv39k00R/Fm2yf/wQHe8EMmIpABiHB12bUtMdWM9fuqi+cjBL04sctrpTzMIjnIJruVsKX6UlguDA4xowwo2E6F0hPyJvL2djK5/N3Usb0YHAM2TYQrGmhOOTM4hovWPcCYv8VMIYNTkRaU4VX2wGSBIJToeUi0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779945534; c=relaxed/simple;
+	bh=K5J/i9QQFjNtTNEst0+r2fQ7v/Sikc7WovZzz3fcli8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WTf0LdYeP30owUJMNRhGYiOawLu5qyCJrgGGdxmiF3Fso6yfaVe6p1eXED5WQdUSHPgUwzbhUFMMKChvwgdU0M4qHZVuEtVh7HMg417kz34yfjqtELaR2OCkDG2v4FhTqbQoc+sWPPN9EmSX9T9LiNj5yvAWd2ai7fSXMTwPAxo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=XQ8XPvln; arc=pass smtp.client-ip=74.125.224.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oiu9R8Rn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164F71F00A3A;
-	Tue, 26 May 2026 13:38:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779802703;
-	bh=oOKcXaMosfo/owsXW+WMOSw10vIYBJ3tP8qIY78PgJA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=oiu9R8RnVsntp+r4GoHbV3UbMUxnK42UzM7CQADH87umbw39O0GA9VnsLKsP66Dn1
-	 FsGGTeVGEjCIfPU46hirCe5shVz/ClDseF7VTqF22ml+vLSz4iay+Gv0BGK2joRee2
-	 Hm3S/PDdht6KVdBZCJ39zFgBbtVHVMmctVaoYRnc26S8bKIPpeh/IyT9L+78patlBg
-	 +PKbBcB+pOMEw48XmdhVY5R5ZP9kO70UKk+lH0yDWVKpr4L1N7hgtFIUPeX/MJjhPu
-	 KXORLa9eT94GCfBt6kUfzQfF/NBx7dZaARwhSfQE6DqbG5z3zWt05t9hoy8SoI9a9H
-	 /tESKaH/O46Eg==
-Date: Tue, 26 May 2026 13:38:21 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Andre Heider <a.heider@gmail.com>
-Cc: Iker Pedrosa <ikerpedrosam@gmail.com>,
-	Trevor Gamblin <tgamblin@baylibre.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Ulf Hansson <ulfh@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.dev>,
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Anand Moon <linux.amoon@gmail.com>,
-	Vincent Legoll <legoll@online.fr>,
-	Margherita Milani <margherita.milani@amarulasolutions.com>,
-	Aurelien Jarno <aurelien@aurel32.net>
-Subject: Re: (subset) [PATCH v10 0/4] riscv: spacemit: enable SD card support
- with UHS modes for OrangePi RV2
-Message-ID: <20260526133821-GKC3748271@kernel.org>
-References: <20260515-orangepi-sd-card-uhs-v10-0-094af27e310d@gmail.com>
- <177889984452.2298656.1074391459031404894.b4-ty@b4>
- <7e68e745-0d70-46db-9475-38d3dd5b9cf4@baylibre.com>
- <6b945153-5a7b-415e-904a-1c350b7d52ee@gmail.com>
- <86ac46cd-b7bc-42cc-8c29-996ae21f3654@baylibre.com>
- <CABdCQ=M_E1uHU5WTXCn2mXaxf3-+7M9gXCL=tp1qBW50jf7d5Q@mail.gmail.com>
- <8b9c613c-df1a-4f44-b15d-cdcc21905bc5@gmail.com>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="XQ8XPvln"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-660390acd71so664005d50.1
+        for <spacemit@lists.linux.dev>; Wed, 27 May 2026 22:18:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779945531; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Ng5WN0ggCFZRa1eL9Xi707SHsz8yXb9VElt6zgwsRQvwGV4Gwr/Rsn1hKUg+FXmggI
+         NkonkHwRPpLQAPQLh9P38gAmh1Jn0rw/GvEnsDqEEE5o/eDqjN3HdgP8OSpnJvHF2Lli
+         efgkwPrcR7xBoa/eMgtk+5U1QaTFkUnwDYd4MdKPQTlbLzl0YXXlEW3eeP+n3ltYK5Jy
+         dB6OLkwHdT0RrQ7VvxwRtHbLSVYgWnC/JdJRPoZXoYuam4ExTp2ldej7zOS3cO9R55QO
+         gD9KwBB7x6E2p253S5XXV+z79k2FMNO4y0gx3zyGEvVNyVan8mlg0jbV68IBBzYOXMCe
+         JAGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=WTNofcIOZbXjLpaLD+DL3cOLpKPj2wtfgJ0EVk0XvKg=;
+        fh=1zohWL3jUFKvbC5BMc+TB/wLG+yJR9wbuWEZ13ZV6yg=;
+        b=hGkf4IlVSTnQngEiSWs2MJHYrlG6fP7kp0p6ta7ADtZIuDm183EukNo3M1vhihmVqw
+         SlKZxCdIAzQzda8KFYf6xdkhXruW7zD4cd0jm3OgMH5aAmQNa+NAHN73rDHRx0NIG+dU
+         /YDlZZNS1D/e8piY5Vgg+phlZASa9jFlWyScBhAsHXZm+NBmFB+nWWddyD7SCouLz9Yg
+         4yuaf6AHTUXvRbOaz1LP7Vjz4sG9+S9aGd23PQffpM8ucXxn3JSrhMAR/IBnaFD/jVym
+         8q7ou7WcARebGunYQIQk/hagePYOTDtrG+EPsV7JcfjF+1P/Iitzps2vVy2xAIHIUaeV
+         vPsw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1779945531; x=1780550331; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WTNofcIOZbXjLpaLD+DL3cOLpKPj2wtfgJ0EVk0XvKg=;
+        b=XQ8XPvln+2gk0OFvrAdZDt5YSJWUay/uCJo588ejN/gSnfPJYoR0+C33Wccoe+F8EU
+         6Hil/CfF6wNWqLLdO5OUHQKBY04z2a2hML9eIGvP7UeWXKGSNafTrowYtPtNIYw9R+AF
+         1Ri42DKFDe7y1pOhD6QrI56s5x974rFqaFtnh4hQWaCh3OmcVenevkt7xC8bmF26XEzr
+         v27IE1l+OiMxiqf5qKfeXkc4oA67j+CJ4CYJ8qMzIYw2niXyE93NpwfCeE/9jbcLjk19
+         7gdFTl7ZRNGIcWQz2NmpdCi7ldxI/adrayeIWst2417j9eUEDawBNI0HCYA26LrvxpMP
+         T3qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779945531; x=1780550331;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=WTNofcIOZbXjLpaLD+DL3cOLpKPj2wtfgJ0EVk0XvKg=;
+        b=kqW/LiktlMs2dOwZI9RrSg/KjUCA5F4WoRncXWJnOZ1qXjJrlVEcNM06mQhb6ikVvo
+         aTAnDCvKKVv2YQHNhPuCoKGrcC2UtrdvxvjD/J4muDygS/Fdbqm2UwSItagyuU3TQTTU
+         NMo3CJV5RsnACXWHimy5pY3i6PEIai+8M/u2+mnDhrsjGMG7maWUYYDb/iEagUVn49Zt
+         yxmYHW2YtTTEsjSyz07FatE0TkBoZdfL09D8dWXQDlrQK0Q2ubr6uLD0zrxiTe83VkIw
+         nU9Px/DTezQWkHEQovRUK3Cn/DJ4sDD0eZ0uiKFrVMLt+6T/dgT7CuRHJ7hXBPGT8P97
+         9Nzw==
+X-Forwarded-Encrypted: i=1; AFNElJ/alV8YNgVcfqWYTl2JzyRZ9/rt6oBPsM1YKeH1ShkzvPC74Vj86cxhJ5zyRt/6bnbO7MvttgOF5Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx3VFA4OBJ6dHricz1IVJ0kO9DC+vtONNRK0E6OVaWR2PqSyk3A
+	Ewu1qmySR1O0TJx98ApH6Sj8o36FOzlbUh+RPo2Og86QuH50N3IBBfmScRKS4T2tH8OF7siQARD
+	oy5/KYXU8mR+SESIEMfLyG8nerEX68tz6wUM+IC6nBA==
+X-Gm-Gg: Acq92OEYaAAH+I5qVFcReRkDq5IV1vUxBHFSzyfpXxwv4Hn5mIeGtzCijTRHufV+TmU
+	EPEf6idEdJ/RCUEBDkpL4KOoSISmEXwr8Qo7OuZDmO0kDJpQRjz2H2LD+Nc10rvY/6M9kMkedRg
+	UC4i9OYxey5jaQbIKCzMUBHhmmGEU40NkvHa5kKv7paiH3I3giFrK6egJmAnWZqY5hiSxS0ncTd
+	3COJU1kb/qknAXFIqbWWWT9aJD6VF2/m2iTEhDGwMoUcIsUWo8Wx4THPZbQ1TD/fzJd6OC1Nbke
+	1eMsdSLzvWZN5eEOQWNhWNFF4crjga7BZpLnW6UUWBk1KsGxfyR74A6c10T2Kyfab2qKfEHYqEg
+	VDQ==
+X-Received: by 2002:a05:690e:1181:b0:654:6450:19f7 with SMTP id
+ 956f58d0204a3-6604471b0bdmr104584d50.0.1779945530981; Wed, 27 May 2026
+ 22:18:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8b9c613c-df1a-4f44-b15d-cdcc21905bc5@gmail.com>
+References: <20260526-k3-ziccrse-v1-1-c759792ca3a3@riscstar.com>
+In-Reply-To: <20260526-k3-ziccrse-v1-1-c759792ca3a3@riscstar.com>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Thu, 28 May 2026 13:18:39 +0800
+X-Gm-Features: AVHnY4KOywjUf4xyXWLMCKeI0N-wdBoPItg6KtOmuhSwAAW2j9qgS8Kea3oyUX8
+Message-ID: <CAH1PCMa_RJ0NVNyxkqsXPfrF4tz_69ZbWeqkh8xRCu7bLDkr-A@mail.gmail.com>
+Subject: Re: [PATCH] riscv: dts: spacemit: k3: Add Ziccrse extension for X100 cores
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Guodong Xu <docularxu@outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-HI All,
+On Tue, May 26, 2026 at 3:23=E2=80=AFPM Guodong Xu <guodong@riscstar.com> w=
+rote:
+>
+> Add the Ziccrse ISA extension to all eight X100 cores. Ziccrse
+> provides a forward progress guarantee on LR/SC sequences in main
+> memory regions with cacheability and coherence PMAs.
+>
+> The SpacemiT X100 core supports it per the SpacemiT K3 hardware
+> specification.
 
-On 18:45 Mon 25 May     , Andre Heider wrote:
-> Hi Iker,
-> 
-> On 25.05.26 11:36 AM, Iker Pedrosa wrote:
-..
-> > 
-> > So, how has this turned out in the end? Andre, will you take care of
-> > sending the latest version for the MUSE Pi Pro?
-> 
-> Yes, in fact I already sent it last week:
-> https://lore.kernel.org/spacemit/20260520130624.1763487-1-a.heider@gmail.com/T/#u
-> 
-Ok, I will take it
-> You should have received that (unless I messed something up) ;)
-> 
-P.S, please bear with me, I'm currently on travel now, so may slow on this
--- 
-Yixun Lan (dlan)
+For the record, I have tested this change on SpacemiT K3 Pico-ITX.
+
+The stress test is run by enabling CONFIG_LOCK_TORTURE_TEST=3Dy then
+boots the kernel with:
+
+  locktorture.torture_type=3Dspin_lock locktorture.nwriters_stress=3D16
+
+driving all 8 harts. It survived sustained torture [ran for ~10 minutes]
+with 0 Fail.
+
+... ...
+[  735.588947] torture_spin_lock_write_delay: delay =3D 25 jiffies.
+[  738.015096] torture_spin_lock_write_delay: delay =3D 25 jiffies.
+[  739.204713] torture_spin_lock_write_delay: delay =3D 25 jiffies.
+[  741.195211] Writes:  Total: 714319420  Max/Min: 45946599/43679876   Fail=
+: 0
+
+Thanks,
+Guodong / docularxu
+docularxu@outlook.com
+
+>
+> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> ---
+>  arch/riscv/boot/dts/spacemit/k3.dtsi | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/s=
+pacemit/k3.dtsi
