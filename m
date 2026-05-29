@@ -1,110 +1,153 @@
-Received: from smtp.forwardemail.net (smtp.forwardemail.net [121.127.44.73])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812523D7D7A
-	for <spacemit@lists.linux.dev>; Fri, 29 May 2026 11:39:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=121.127.44.73
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780054802; cv=none; b=UZWBCw70HQGgHAao208ZhwAGg9tVQ4LL2hzsEBxf3ITtELzrH4VexbcHcUaTLvLo9KDquOBdDz9XCrTOIQHmhBO/UwPZktgPXUajRu/uSMM798zbhaTKfhgR2HwRywyCAiKJU+aH/cHUB9p7zPu9VCdLdSCQ9CprmQfST+GR2GE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780054802; c=relaxed/simple;
-	bh=BFbpEcP2gl8SzS9V6g807nEM04+krO73ZpdU1ywX/YY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=iWHvGcRP8iR3KOIE+742iHxM8zEsXi5BOSNBWR6WpKieUsfL/RH+oKDoNqLYFhNa7myYuu0HCe1BoIwNv45AhOvRcJIKBsGeiha/H6sHfJZlyVVho4jpYSESOmkejC4zRx2lkEKlt+bDYaht75DbjR6054WoG94c1ksDHQEviH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ubuntu.com; spf=pass smtp.mailfrom=fe-bounces.ubuntu.com; dkim=pass (2048-bit key) header.d=ubuntu.com header.i=@ubuntu.com header.b=VZbS/zX/; arc=none smtp.client-ip=121.127.44.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ubuntu.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fe-bounces.ubuntu.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805192A1CF
+	for <spacemit@lists.linux.dev>; Fri, 29 May 2026 13:22:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780060970; cv=pass; b=Orm6EZeh3stYMra347/VKUwuSZBD8IeRB3g7wp6UFOqQmrItff2faJzURXMUaqY4Dt/VoNtdHisNgwGWVjCwmIrWutcjDK9jnQbbVEY8u/r1sebay2Lmniqh9WadrhrCpnUYynUqdt4UpIuxoCKbg7lIFqDYV1vugkVhI8vdwDs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780060970; c=relaxed/simple;
+	bh=IAsxPFjVuJP+GW36OLLktoHQwp0GqX6ZN5zfutXTnoM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uhiSRlT4Z/NwYUnKvCUXrzCoyjj7S3k8qMshC8fXu2Nw+gSk/DKNixzMr7WJ3Nod0ne1RcBZVEzmc+FSTvi9w7mETGcsN78QaWX86ju8bHFUtaCoSZ6Q+S6hiHnc70TCT/7AnanKyG256qTotijRQhHk82sV/oOck1IGH/fEvDA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=r/nwLyFX; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ubuntu.com header.i=@ubuntu.com header.b="VZbS/zX/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ubuntu.com;
- h=In-Reply-To: References: Cc: To: From: Subject: Message-Id: Date:
- Content-Type: Content-Transfer-Encoding: Mime-Version; q=dns/txt;
- s=fe-953a8a3ca9; t=1780054798;
- bh=mvGXi3GnoQLfXUwepfNKreQtoZ065df4GYADd0i3vGY=;
- b=VZbS/zX/szNJKb7EbvE+4V4ABFIKuNOQXkc/8rtKb1tHOPreiihPJVZZ9qXU0ZZ6AIiYWyGuZ
- F3+bMTpT736vBeTFy7MIsFaVP99cilzzv16YK9xQ3Olm7GZw7xZlI9sJDEDJj+waQQvlwPUtCqX
- Z4lAupR9FARkcySXTZoPfhoE8+jjbURqWT0P4lyeTqr7r7teMOdqdR3il1THok4lPka6LZNHioG
- 6a5Aw0MqecSzxs3fVSEBCAUS2ox07OVpLnKBH0rJX2wKT5X5e+y/jDifcdmoEhoNnAbVAjDSnZd
- B3xme771VoQ0yDWGgo47kBV66MAhcNgQ38jE30/dvGvQ==
-X-Forward-Email-ID: 6a1978895c58ed9868160fa3
-X-Forward-Email-Sender: rfc822; jpeisach@ubuntu.com, smtp.forwardemail.net,
- 121.127.44.73
-X-Forward-Email-Version: 2.8.15
-X-Forward-Email-Website: https://forwardemail.net
-X-Complaints-To: abuse@forwardemail.net
-X-Report-Abuse: abuse@forwardemail.net
-X-Report-Abuse-To: abuse@forwardemail.net
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="r/nwLyFX"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7dc78af7371so22518117b3.1
+        for <spacemit@lists.linux.dev>; Fri, 29 May 2026 06:22:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780060968; cv=none;
+        d=google.com; s=arc-20240605;
+        b=SToXvU5jC3vWtq4LVyXrs/+/Q5TA77LdmJTkmIfTlqirmrCDdwdeqZaca5A9MRxL2G
+         7Z089OyV8bKIAWRCkMDxKN/rIDZi1rxpruEZaqGqnMV+jF45OYQ5fQDg8X/BxBrqylZY
+         F6C3CUZ2O2/RUwQkzvtthivdYIDHeTIOeRO6nzQrEGFb7QzHFJT7jXtG4/CcuoPxWTo0
+         AbND7RGdzVNAulw2W1OSCCesRdlQA+jEYAfEpBA/eGZ2i9h8+5hXQuGSyV43bEqLGggR
+         GRtunRruLy4zdIWWW3Jf7PAgyortm6rRf5UjBk4wVqvOQZSsbrQziRAE+pxX1abkBAL7
+         E1JQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=K/bBMAZzJL24oJclVZF8zBPsn8HZUbVy1gcl63SMoMQ=;
+        fh=lKOisNJc1G6hV9S/5tQIaOF6Wh1nrOUvX7rD4fxtMmo=;
+        b=eh911tYO2K2uKEPWLpv2X57Kx67O0902tjw/gsBhmJkRVhxkkeZrdKmdbfsScbwA9w
+         oHyFZAWU6WFfyup9Khd1Hf7rOVn9RsxqiB425vN/Yp1B95C7+hYn/tg0SheooWOeuaji
+         HPo08UQ/7r2ftxtJaR0uDqkbuogUFPIDNen3XT6LlLOIQg1YCisTO8JljRdO2oAjhaho
+         OS85FreoGq1/Qfw3ywjBmvQ+cCcbFaQzq+MvFIApf5ogRzIqit61gyI0rm427i4tsvkq
+         uAa5NZstzGuS0+EcY60ffIA8u8WyKZ2YHBZRI71aLU00y+5DuN5JzekevLNQkyGFV6M/
+         RhAA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1780060968; x=1780665768; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=K/bBMAZzJL24oJclVZF8zBPsn8HZUbVy1gcl63SMoMQ=;
+        b=r/nwLyFX6hkWz6sCgDUbiqXBWMWFLq0OaF8PFZH9moz/i5jTeoZKlb6kJabigp/ij3
+         y/zp5ZQEuexU9DDlUnNudFEOQdR/EotnTuSQe9weyVKLV7qaw84dSoverSNUkmyg3KJ8
+         Q+KJQwpY+Iqnzjkib47iFCMGiMLpAjYEqurqALaMXRQJpS6NVwuno43nwPs77Rs9+VLG
+         t9gdJdyYBzTs+NXk+U8n5hE1tYfDWKEuu/J/Qt2YcTE8lS2TId86VobkpCJl4gNSO39l
+         hM3J+5v0g0uAy3vsg7yCl1GE2Cy2nNu9SYhEHecSHsyKtX7ZloeR3jnEcRjZdqJG8CmG
+         qbBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780060968; x=1780665768;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=K/bBMAZzJL24oJclVZF8zBPsn8HZUbVy1gcl63SMoMQ=;
+        b=rcHxTmdBrWVloyjvj91NM2EK+Rcy1fWDiFF/9cPgWwSi5620DvJevU/mNED4JYoV/g
+         95x06kvukVe1xwUXax4iBvjPkwmABL6VV5NzxNFavhjvBNo+m1ukPiEmfSULspjyi6wI
+         6VKlAJGm2WHr7w5eWxxRkOATy/1MvN9TNpe442pOx7gyLAx8Mw+/X0khM/slfUwYRExh
+         NdkaxnpMYnweAbAZQ5aziIDDMwRZqR07DO9RcsxDEkqmtnNU9dORB4Q9cWV2WXYUhIYI
+         2owwHBQ+7yta2DPdvLc+Op5j/IQrbg9rfQ5Ij7hNC3BYl5jwjq2EiC1GHyn7Cf5jgGWY
+         66sw==
+X-Forwarded-Encrypted: i=1; AFNElJ8vGVKM9Q/h0DBbYNqjqft0yqJ0MZOeQEpApcmLkFKA0WyyW2xdJ72oTXY+xlFOf/ylavXC6byEYw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx/2F/iqzUpaXdFX7SeK6xQQ3mHXVzgqgfdkjZwAiGuIOuTEpZ+
+	tcJi414ncVgfQSOssO4gCW2PO6OF87xr2NTTXpIXJlNRUwzHHAO/rb/I+ysI/YDBaYFLsWt6p1S
+	FBmbEWXJ98Nwo7C2B6XwdfHMQmfYi0HUOE9uDViwhFQ==
+X-Gm-Gg: Acq92OHiphIbb7fl+jIyxV9LpoaLAUc/t0uV9ZSy6FgfIbvcJQV/nicYEaxhV55P1El
+	2FuM+UvdvaGc/9OiHiaPAKiaeHaV9ZhpaYTl/ofrKfTBcYCQpm9xgOj6pFdg3Dq3tAA1nR7FbKc
+	uy+GPcVAad2zuB+WgMp+ap1JDif9kewjnbaRdgje1uIUziR54UrQPSanCTne4OPuU7SPKsHm+Jf
+	PRTlyOvqrQPzD9NmK/eQpdZTHqZybacS+Ourl63t5d3+CCPivW3v3pgttn8cdEqDbLOMDRPEeeG
+	C5BpKrcweEtJZ2MvDTVABiCG5ZOdJBMZNdpsFG/SrQUNAE/W4y0GULYo56UhnRn96kbGnSLRtaB
+	8sQ==
+X-Received: by 2002:a05:690c:670a:b0:7bd:69b8:f2e5 with SMTP id
+ 00721157ae682-7de44db875amr23947297b3.3.1780060968349; Fri, 29 May 2026
+ 06:22:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260526-k3-ziccrse-v1-1-c759792ca3a3@riscstar.com>
+ <CAH1PCMa_RJ0NVNyxkqsXPfrF4tz_69ZbWeqkh8xRCu7bLDkr-A@mail.gmail.com> <20260529062159-GKE3748271@kernel.org>
+In-Reply-To: <20260529062159-GKE3748271@kernel.org>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Fri, 29 May 2026 21:22:37 +0800
+X-Gm-Features: AVHnY4Iab8wgmxmC75EDPrBfu1KDkBxpc0a7EJvkUE8WSVNftvwon2aew66vIo8
+Message-ID: <CAH1PCMbNv3pGNvjhr02fiibRS3mt929+C3jwreWePN-3O5eLOw@mail.gmail.com>
+Subject: Re: [PATCH] riscv: dts: spacemit: k3: Add Ziccrse extension for X100 cores
+To: Yixun Lan <dlan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Guodong Xu <docularxu@outlook.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8; format=Flowed
-Date: Fri, 29 May 2026 07:29:08 -0400
-Message-Id: <DIV4J6UGUQGG.28KL8EGBZWJSJ@ubuntu.com>
-Subject: Re: [PATCH v1 4/6] power: Use named initializers for
- platform_device_id arrays
-From: "Joshua Peisach" <jpeisach@ubuntu.com>
-To: =?utf-8?b?VXdlIEtsZWluZS1Lw7ZuaWcgKFRoZSBDYXBhYmxlIEh1Yik=?=
- <u.kleine-koenig@baylibre.com>, "Sebastian Reichel" <sre@kernel.org>
-Cc: "Yixun Lan" <dlan@kernel.org>, "Andreas Kemnade" <andreas@kemnade.info>,
- "Matti Vaittinen" <mazziesaccount@gmail.com>, "Sven Peter"
- <sven@kernel.org>, "Janne Grunau" <j@jannau.net>, "Neal Gompa"
- <neal@gompa.dev>, "Amit Sunil Dhamne" <amitsd@google.com>, "Samuel Kayode"
- <samkay014@gmail.com>, <linux-pm@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>, <asahi@lists.linux.dev>,
- <linux-arm-kernel@lists.infradead.org>, <imx@lists.linux.dev>
-X-Mailer: aerc 0.21.0
-References: <cover.1780048925.git.u.kleine-koenig@baylibre.com>
- <1ceacf4f9c3f827bcad85b378aa04cdca1c04635.1780048925.git.u.kleine-koenig@baylibre.com>
-In-Reply-To: <1ceacf4f9c3f827bcad85b378aa04cdca1c04635.1780048925.git.u.kleine-koenig@baylibre.com>
 
-On Fri May 29, 2026 at 6:18 AM EDT, Uwe Kleine-K=C3=B6nig (The Capable Hub)=
- wrote:
-> Named initializers are better readable and more robust to changes of the
-> struct definition. This robustness is relevant for a planned change to
-> struct platform_device_id replacing .driver_data by an anonymous union.
+Hi, Yixun
+
+On Fri, May 29, 2026 at 2:22=E2=80=AFPM Yixun Lan <dlan@kernel.org> wrote:
 >
-> While touching these arrays unify spacing and usage of commas.
+> Hi Guodong,
 >
-> Signed-off-by: Uwe Kleine-K=C3=B6nig (The Capable Hub) <u.kleine-koenig@b=
-aylibre.com>
-> ---
->  drivers/power/reset/spacemit-p1-reboot.c | 4 ++--
->  drivers/power/reset/tps65086-restart.c   | 2 +-
->  drivers/power/supply/bd71828-power.c     | 8 ++++----
->  drivers/power/supply/macsmc-power.c      | 2 +-
->  drivers/power/supply/max77759_charger.c  | 2 +-
->  drivers/power/supply/max8998_charger.c   | 2 +-
->  drivers/power/supply/pf1550-charger.c    | 2 +-
->  drivers/power/supply/rt5033_charger.c    | 2 +-
->  8 files changed, 12 insertions(+), 12 deletions(-)
+> On 13:18 Thu 28 May     , Guodong Xu wrote:
+> > On Tue, May 26, 2026 at 3:23=E2=80=AFPM Guodong Xu <guodong@riscstar.co=
+m> wrote:
+> > >
+> > > Add the Ziccrse ISA extension to all eight X100 cores. Ziccrse
+> > > provides a forward progress guarantee on LR/SC sequences in main
+> > > memory regions with cacheability and coherence PMAs.
+> > >
+> > > The SpacemiT X100 core supports it per the SpacemiT K3 hardware
+> > > specification.
+> >
+> > For the record, I have tested this change on SpacemiT K3 Pico-ITX.
+> >
+> > The stress test is run by enabling CONFIG_LOCK_TORTURE_TEST=3Dy then
+> > boots the kernel with:
+> >
+> >   locktorture.torture_type=3Dspin_lock locktorture.nwriters_stress=3D16
+> >
+> > driving all 8 harts. It survived sustained torture [ran for ~10 minutes=
+]
+> > with 0 Fail.
+> >
+> > ... ...
+> > [  735.588947] torture_spin_lock_write_delay: delay =3D 25 jiffies.
+> > [  738.015096] torture_spin_lock_write_delay: delay =3D 25 jiffies.
+> > [  739.204713] torture_spin_lock_write_delay: delay =3D 25 jiffies.
+> > [  741.195211] Writes:  Total: 714319420  Max/Min: 45946599/43679876   =
+Fail: 0
+> >
+> I appreciate you give more info about the test, just want to make sure,
+> for the kernel config, the CONFIG_RISCV_TICKET_SPINLOCKS is not enabled?
+> so it will fall back to use ziccrse implementation..
 
-[snip]
+Correct. Thanks for double-checking.
 
-> diff --git a/drivers/power/supply/macsmc-power.c b/drivers/power/supply/m=
-acsmc-power.c
-> index 33ca07460f3a..ced07f71e0a8 100644
-> --- a/drivers/power/supply/macsmc-power.c
-> +++ b/drivers/power/supply/macsmc-power.c
-> @@ -834,7 +834,7 @@ static void macsmc_power_remove(struct platform_devic=
-e *pdev)
->  }
-> =20
->  static const struct platform_device_id macsmc_power_id[] =3D {
-> -	{ "macsmc-power" },
-> +	{ .name =3D "macsmc-power" },
->  	{ /* sentinel */ }
->  };
->  MODULE_DEVICE_TABLE(platform, macsmc_power_id);
+In the above test, CONFIG_RISCV_TICKET_SPINLOCKS was not enabled.
+And since X100 has neither Zabha nor Zacas, the runtime selection in
+riscv_spinlock_init() falls through to the Ziccrse branch.
 
-For macsmc-power,
+BR,
+Guodong Xu
+docularxu@outlook.com
 
-Reviewed-by: Joshua Peisach <jpeisach@ubuntu.com>
-
-(I'm not sure if one can "Review-by" a specific section of a singular
-patch, but also the other changes in the patch look fine to me, so
-consider it reviewed as well.)
+> --
+> Yixun Lan (dlan)
