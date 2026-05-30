@@ -1,70 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6741175A66;
-	Sat, 30 May 2026 03:03:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C48395AD3
+	for <spacemit@lists.linux.dev>; Sat, 30 May 2026 08:27:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780110202; cv=none; b=b1V3CHYK1HlOJ8eyYYskjoPqLitOF2jZkFbU4gCsMvKYAbpY84Gf/GnygKpqxQiu9RTilk4OfNugmCw9jrM7EnpePnNxs0j03333Dv/+h3V8/9rfnwmK2+xuDHmhSB3gyIVWdJY1RAD5qUpG5KwxPrAuRxVfGgv1OqqCBWcxrE8=
+	t=1780129662; cv=none; b=SPB0vJyjM5rvVbRXK3NkdzfJhor7NW7HUGDfJktr2Wo9GByKuA8dUUpvNZu+FI7mgDck141xM2rTuNCwyhNd6TXLJhRV33IUgsCZTbwG/W7jhZWo9KkdEynwj0ofHGUkD+urwWpFBbLFrC4dOg7y49e64E9c0a5IsceIw6+/C+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780110202; c=relaxed/simple;
-	bh=9O2tdNxdzKqtSSFxKwCQqUXPKygGm77hCPN/2gyL7UI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UnoG+WN+aGiyhNzAQpQS3N5z18i/g7sCwcAWze6vECJyqDX4m0IVzmCEgNQkFdfOmK3CUrd4p94Ej+PMUOSx3/gtA8LGeUI9mpSrMJ1iH+bWkeF7J7AIqm6rnKef0CjriXzXfUq+eK2CRxyFKWkZA2unT+pLjUSXKBKoK24/AC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oFeFMKOU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780129662; c=relaxed/simple;
+	bh=8X9UjEfTum+4mzdRr+694A8pmGM798NUYMH/9J/4quY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qGKUrA9Qssa9iXUOTi7iec6f5LgZXIKbTs7LxyG0YDBf7AYmoLAej7lmRaPmbHO5HwOAIE3f50ZrdtoPEwBjHXF+n1zIKu6znHXu9tmima2g++nY7tbiF5cLwQhNy/jNjGNmQmMR/RZxCYQefAsxxo762hRhyuiSevRgxiIbu0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eI9gl+Zx; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oFeFMKOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F831F00893;
-	Sat, 30 May 2026 03:03:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780110201;
-	bh=lV76AH1HBmgcxLbMccze3T0BHd4sPS3mDORlT8NSVC8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=oFeFMKOUmBDgQJ/Ers8G0P8ui1p3EETlX5hPRVKl4gC71fHeFzNm8vb3L043SmcnB
-	 ZVVGpL6Whb92ngsvTjlxMUg8GAceD/BSN5NqaUaIvktbKWa4T8mhsh3kkSIik51sN9
-	 WSyK4SG6HYO2V7cfdvioFDeU95fc4kgDk3gmDWfA1EzJ8wJ3kUxO9FPVi8oLGZowMW
-	 TZg2bXVWxRJh0Mnp+PXzVohL7MgQ237ydtk/549EJLhn3MfvfpUh9b3oHW33YmCi4z
-	 z2ErPhNqkBBBxv93YMWq27/Oy7p4YY2xrLKEWbqNWume/HhjLAu9DKUvM84SkYf9fQ
-	 D6x+Qf21+wV1w==
-Date: Sat, 30 May 2026 03:03:19 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Guodong Xu <docularxu@outlook.com>
-Subject: Re: [PATCH] riscv: dts: spacemit: k3: Add Ziccrse extension for X100
- cores
-Message-ID: <20260530030319-GKG3748271@kernel.org>
-References: <20260526-k3-ziccrse-v1-1-c759792ca3a3@riscstar.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eI9gl+Zx"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4904c1ce4c1so90481605e9.3
+        for <spacemit@lists.linux.dev>; Sat, 30 May 2026 01:27:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780129659; x=1780734459; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Qddz/zxZpUl2T8fFl77Vhtb+HfEDnwtpIpBzWfm1IYU=;
+        b=eI9gl+ZxaVYdTrBqFuOxTYOT/xz31MHM1ciZc4XRbQJGQJjFSWEMfoG53UDJlKQbh9
+         sFpzJtPbm17Pgrc/XM0hx6cWI4etV9bt3ajZZupXN8+/AeNuee3D34Z17JkuHVPGO0Wx
+         y0nHGaJ4lv716x4Z03Cy3kQ7ezG02A3NxPKxhx9QvZQcZFDYNuRxiCbDv8bxA5N6WbXG
+         4miECy3TaedxTwH0Q7rICW63H0EeyZ2CCPnVUZxoQacT97KAg/1RYgOjJ2DX/0YO6hFI
+         6uOgbVIaiIUVFau8Yv2nADK9RR6wjit7iOVlLsnuoIbRRksx8ZsuaTVUM1Y3qhElPf8K
+         g6PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780129659; x=1780734459;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Qddz/zxZpUl2T8fFl77Vhtb+HfEDnwtpIpBzWfm1IYU=;
+        b=Lma/2vYnkEqHDzi+xCNthfdcXpPSQBKSvjT7sdXg8r6eVF1myTBCDxvhnv45Ezg4wj
+         roSwozVoGVFOag1tUdV+Qe1ybkf5tkb2tu276b3lwUKSDaWsKYNIdBeuDuOuvOYK2liE
+         jGRp2DFCiiJp5xk853ibI9NjzLaQXZBkzcNzCh/ZVUHa6t9sqvkzVkuRmZfY+rNrSHLy
+         xV6oSsfeEJ8q3vPN2MrlpLkHJwFTRm1H8QWlzbqso3FaPBYxluikAMjtZQyyt/B4aL1C
+         UCM1m7e3TvnRfz5IbyBNTJxufAk/gfTunR42hjIZYgazvRZDWfI5xZAmbemKyiW9Gl8R
+         LJuw==
+X-Forwarded-Encrypted: i=1; AFNElJ9wCvHaKyQSB+pMScFoCDxbLriFZk2dRayl5DY9LNAUp3DFCjVjOquEjl+bq7GMhqGr6EOY/XYBEw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwrJrKFN5tlfFSZUWjmK/4Yxeb62suD1e8Fh/k9bvv6iUZxCZ6L
+	6kn0ZuDgWJ9p7cErDWjWdJN9Pkc85Mm7nAgl/5xF2RDMUPJq+Svm1zZZ
+X-Gm-Gg: Acq92OFAwFPnNI3TkLKI7Imk1cSUk1qMTTH1TMTrD71h93uy4H8cP458eakK0NaTcDw
+	KVskD/A2ZeAX5nEYEaaF+6u8+IXd+58UFXgEyf0ILJd59nAJ8XYIwbTGhgmuyeX+TflZzdsWsGl
+	7U07PINefC0uUcAULHPkTtXjB+muASwujzgwfyGPcHGz3UEkG+0BEzV8B0i9y9USI3Pei47z35z
+	QFY+llV3dgFygCv5F6NTDRQTNpcjsOnbRdSpkROFuST8b3Nh2El2bl0qlVIP1Oija8wKHj1Bs2j
+	koc92zbOSdfRV8f9iXV9hUdJq1EGhcod0VvxVvCDr1hi+ajf9G0y6ApnIlExglpL5iQmAWK+pXe
+	eGpe9t9TEdCl4WILw1r9dUVtJL7LL339j2TrYkW1sJeKuwlY6NwrJHmdUwvI72B2R9nUA/oGMw4
+	WKkf3l6ZVXwX2Rse+c0HqhJ+Vi7Zp4IT6qLVOABpa5XitILsyxdAYMZXWy/bA2oGSsF+pqSQOh4
+	w==
+X-Received: by 2002:a05:600c:c3c1:20b0:490:9d1b:2022 with SMTP id 5b1f17b1804b1-490a2938ad2mr37014665e9.13.1780129658899;
+        Sat, 30 May 2026 01:27:38 -0700 (PDT)
+Received: from [192.168.0.40] (a89-182-131-96.net-htp.de. [89.182.131.96])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909c0498e0sm42526475e9.0.2026.05.30.01.27.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 30 May 2026 01:27:38 -0700 (PDT)
+Message-ID: <1dc5141e-b43e-43ab-a2d5-a04069352941@gmail.com>
+Date: Sat, 30 May 2026 10:27:37 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260526-k3-ziccrse-v1-1-c759792ca3a3@riscstar.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] riscv: dts: spacemit: enable PMIC on OrangePi R2S
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: alex@ghiti.fr, aou@eecs.berkeley.edu, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, dlan@kernel.org, krzk+dt@kernel.org,
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+ palmer@dabbelt.com, pjw@kernel.org, robh@kernel.org, spacemit@lists.linux.dev
+References: <20260520100000.575719-1-amadeus@jmu.edu.cn>
+ <20260530021021.1167953-1-amadeus@jmu.edu.cn>
+From: Andre Heider <a.heider@gmail.com>
+Content-Language: de-DE
+In-Reply-To: <20260530021021.1167953-1-amadeus@jmu.edu.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Guodong,
+Hi Chukun,
 
-On 15:22 Tue 26 May     , Guodong Xu wrote:
-> Add the Ziccrse ISA extension to all eight X100 cores. Ziccrse
-> provides a forward progress guarantee on LR/SC sequences in main
-> memory regions with cacheability and coherence PMAs.
+On 30.05.26 4:10 AM, Chukun Pan wrote:
+> Hi,
 > 
-> The SpacemiT X100 core supports it per the SpacemiT K3 hardware
-> specification.
+>> Enable the i2c8 interface and add the connected SpacemiT P1 PMIC and
+>> its associated regulators to support voltage regulation on the board.
 > 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> friendly ping
 
-Looks good, I will queue it, thanks
+nice to see how all the k1 dts files are progressing ;)
 
-Reviewed-by: Yixun lan <dlan@kernel.org>
+Looking at the two opi ones some bits are still missing:
 
--- 
-Yixun Lan (dlan)
+rv2:
+- i2c8 alias
+- i2c2 + eeprom + onie,tlv-layout + alias
+
+r2s:
+- sys-led
+- i2c2 + eeprom + onie,tlv-layout + alias
+- pcie
+- qspi + spi-nor + vendor partition layout
+
+You seems to own both, do you plan to work on that?
+
+Best regards,
+Andre
