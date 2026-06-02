@@ -1,127 +1,176 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D5820B80B;
-	Tue,  2 Jun 2026 06:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D8D33B6FB;
+	Tue,  2 Jun 2026 07:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780381058; cv=none; b=ORU2PIPf8lhKrO92UiJJ8NsBXmSxh7vp2/Xp0pHGoakF+AXXyPgUeFRBFgwaZZphk+bINu80fIL2tTPgY6wFYisT2ganNGfky3x2CgkwoWmAwR5B+SH5XuCBuB9HVMH7d1PBvcAzi05BtWLxxM5jvnYpfl73qPUf4fzaGKpQ+wk=
+	t=1780384226; cv=none; b=QHvFdr/ZaJ454GnNm8CX8+jnPIWblkL9857MF2knfeTTaWJo9UpIrRihSg/e/YmZ7DpT9u0hJzfC6eE4PvrboeBsstwmbcHMsTq101jZOTpCvnAi2f0tpYD3kH5VlkynDAiaCXAqz9Mod3x7PfCiEXDNRSlO6mO23prGjYI9Tg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780381058; c=relaxed/simple;
-	bh=g+WWstFohr4XgH1pa86nhmb5NQQNc09s9RD3WqGrHzA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c7RoMPKsXmIk73PMHHM4xVOtSTRok19DSVoPcQhmZfRGtg/TysUEFa1zEi1G606nhbApg3LxXh9Z6RtNvApfSQu5Fl4Kew2A4kCV5BuKb3m466mrDI9fBYoyHWWdzQDilOipwkPiGDTi7xfDP2MDkeGVTVo12r7GY7q9FnBJs1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LzF6m1Vd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780384226; c=relaxed/simple;
+	bh=mi+Ui8uhpiFLF54HFLHPUPVEUd58KrSEXZRn3Ux4u88=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=imLyga4BB8OdV9LVNtRyc5ivim0F5snrdXQBpqtLVUq+wR1g7KmzJLQdsCaQYL71/dKWSItqXr3O/c+bvGD2ulKeWV8EWUvNfI6OfDQkLKaTbsrdXLWBWuhzclEfElpuIpEbXYtjH7O21O9KO4LW1E26C6C9MD9IRLei/d9TCG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nd7OQAge; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LzF6m1Vd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6082C1F00898;
-	Tue,  2 Jun 2026 06:17:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nd7OQAge"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45AD1F00893;
+	Tue,  2 Jun 2026 07:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780381056;
-	bh=1jN+H2Z0mlbgHjg8etd2+1gBs27Oz5beSO0czG79fUM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LzF6m1Vd3isa6eEBj+SiWZl0ljK9y5YGOAMdWP6WZpBAAhVH0x3cSQeAKADQNlmfE
-	 IrcTh053yTlcPfKihsfQd3DoZlGoVmaTR0oUi9BWG3GmqPODjkBber1fJl2siZuIkp
-	 a39KoNpcp9JJehN0IRuv64lD1S4l9l7bplUGtEtqRy8M9oUYlV+VDjzPfhKe1+npK2
-	 rQhMYfjljEbetDUliY5zZTyq8/0WhnvzRhlqe33vmKUzKpc2lFLOzsasmlVpfvu4za
-	 l2mytWbsew22qsncwowKV4NYMtcYjf/r8fkduluVg9S2mfKjP99sNEdgQwjK/QZPpU
-	 hRxo5OufHWavQ==
-Date: Tue, 2 Jun 2026 06:17:34 +0000
+	s=k20260515; t=1780384224;
+	bh=1KZd8akmP8KBtmPjtnCo0FTThqVg1y62b9+Gritm7ys=;
+	h=From:To:Cc:Subject:Date;
+	b=nd7OQAgeW2M/11z4Ea4pVVlbUv9nz9VyJaN4u8dp8hilAfL3vy3l5EOEGCty8kona
+	 ek5VCXz+xRJm0ALJHs3eW3mI+wpH7p8xUajm77j97odYFUNF5FzoR2eTejVxnBX8GU
+	 Dtt0OK0hMQ/VGOWkbsXTSQQ/6SdJHrOrbcWq9OY9eGYdaYSTVON8G06QJJOWFp4jNK
+	 sqgNYDE9+SC5FOYe6h7znC1d0oadduBBRviHxxa3Vhss8yMv+IxnwuKICYWeKJw+2i
+	 sB1y4UBnY6jAUHEKkgp4UwqeCMGZiQCFR5GxAeim2auI2jBLDQ0BWbxCAOutRUhu0/
+	 sX20jIw2xSj5g==
 From: Yixun Lan <dlan@kernel.org>
-To: Guodong Xu <docular.xu@gmail.com>
-Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, Philipp Zabel <p.zabel@pengutronix.de>,
-	Alex Elder <elder@riscstar.com>
-Subject: Re: [PATCH] MAINTAINERS: add entry for SpacemiT reset controller
- driver
-Message-ID: <20260602061734-GKD3815935@kernel.org>
-References: <20260601-b4-spacemit-reset-maintainers-v1-1-1ab3014e9a35@gmail.com>
+To: soc@kernel.org
+Cc: Yixun Lan <dlan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [GIT PULL] RISC-V SpacemiT Devicetrees for v7.2
+Date: Tue,  2 Jun 2026 07:10:07 +0000
+Message-ID: <20260602070257-KYC5031219@kernel.org>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260601-b4-spacemit-reset-maintainers-v1-1-1ab3014e9a35@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Guodong,
+Hi SoC Maintainers,
 
-I appreciate someone help on this, only few comments.
+   Please pull SpacemiT's DeviceTree changes for v7.2
 
-On 21:35 Mon 01 Jun     , Guodong Xu wrote:
-> The SpacemiT reset controller driver under drivers/reset/spacemit/
-> (common code plus the K1 and K3 SoC instances) and its reset-ID header
-> have no dedicated MAINTAINERS entry; today they fall only under the
-> broad drivers/reset/ entry of the reset subsystem and the N:/K:
-> catch-all of the RISC-V SpacemiT SoC umbrella.
-> 
-It make sense to just fall back to SpacemiT SoC without MAITAINERS
-entry, the whole point of adding a didicated entry means someone
-willing to put effort in future maintenance, to help review/refactor/fix
-you can emphasis on this, and I just want to make sure we algined on
-this..
+Yixun Lan
 
-> Add a dedicated entry and list myself as maintainer. I introduced the
-> drivers/reset/spacemit/ subdirectory, moved and refactored the existing
-> K1 reset support (originally written by Alex Elder) into it, and wrote
-> the K3 reset driver. The series that created this directory and these
-> files is archived at [1].
-> 
-This paragraph provide addtional information of the history (which already 
-done), I'd personally prefer not puting them into commit message, but put
-them below "---" as background introduction if you still want..
+The following changes since commit 254f49634ee16a731174d2ae34bc50bd5f45e731:
 
-> [1] https://lore.kernel.org/spacemit/20260120-k3-reset-v3-0-effe87f4bdbe@riscstar.com/
-for the convention, suggest to use more formal format like 
-Link: https://.. [1]
+  Linux 7.1-rc1 (2026-04-26 14:19:00 -0700)
 
-> 
-also no blank line above
+are available in the Git repository at:
 
-> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
-> ---
-> I contributed this driver as Guodong Xu <guodong@riscstar.com>;
-> docular.xu@gmail.com is my current address. A matching .mailmap update
-> has been submitted at
-> https://lore.kernel.org/all/20260601-b4-mailmap-guodong-xu-v1-1-ee9eff1e57ba@gmail.com/
-> ---
->  MAINTAINERS | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 9ec290e38b44a..c9d87244c1715 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -25119,6 +25119,13 @@ S:	Maintained
->  F:	Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
->  F:	drivers/i2c/busses/i2c-k1.c
->  
-> +SPACEMIT RESET CONTROLLER DRIVER
-> +M:	Guodong Xu <docular.xu@gmail.com>
-> +L:	linux-riscv@lists.infradead.org
-and I'd still sugest to add spacemit mailing list explicitly
+  https://github.com/spacemit-com/linux spacemit-dt-for-7.2-1
 
-> +S:	Maintained
-> +F:	drivers/reset/spacemit/
-> +F:	include/dt-bindings/reset/spacemit,k3-resets.h
-> +
->  SPANISH DOCUMENTATION
->  M:	Carlos Bilbao <carlos.bilbao@kernel.org>
->  R:	Avadhut Naik <avadhut.naik@amd.com>
-> 
-> ---
-> base-commit: e43ffb69e0438cddd72aaa30898b4dc446f664f8
-> change-id: 20260601-b4-spacemit-reset-maintainers-4b5a91599585
-> 
-> Best regards,
-> --  
-> Guodong Xu <docular.xu@gmail.com>
-> 
-> 
+for you to fetch changes up to 793cc54475b49b5b558902b5c13e4bfe66530a50:
 
--- 
-Yixun Lan (dlan)
+  riscv: dts: spacemit: enable PMIC on OrangePi R2S (2026-06-01 06:32:42 +0000)
+
+----------------------------------------------------------------
+RISC-V SpacemiT DT changes for 7.2
+
+For K3 SoC
+- Add Ziccrse extension
+- Add PWM support
+- Add PDMA support
+- Add USB2.0 support
+- Add CoM260-IFX board
+- Add DeepComputing FML13V05 board
+- Fix I/O power of pinctrl
+
+For K1 SoC
+- Add Micro SD card support
+- Add baudrate to console
+- Add SPI support
+- Enable thermal sensor
+- Fix 32K clock
+
+For boards of K1
+- Milk-V Jupiter
+  - Enable eMMC
+- MusePi-Pro
+  - Enable EEPROM/PCIe/QSPI/USB
+- OrangePi R2S
+  - Enable PMIC/USB3
+- OrangePi RV2
+  - Enable eMMC/I2C/PCIe/PMIC/QSPI/USB
+
+----------------------------------------------------------------
+Alex Elder (1):
+      riscv: dts: spacemit: define a SPI controller node
+
+Andre Heider (6):
+      riscv: dts: spacemit: k1-musepi-pro: add PMIC and power infrastructure
+      riscv: dts: spacemit: k1-musepi-pro: add 24c02 eeprom
+      riscv: dts: spacemit: k1-musepi-pro: enable QSPI and add SPI NOR
+      riscv: dts: spacemit: k1-musepi-pro: enable USB 3 ports
+      riscv: dts: spacemit: k1-musepi-pro: enable PCIe ports
+      riscv: dts: spacemit: k1-musepi-pro: set default console baud rate
+
+Aurelien Jarno (5):
+      riscv: dts: spacemit: set console baud rate on Milk-V Jupiter
+      riscv: dts: spacemit: sort aliases on Milk-V Jupiter
+      riscv: dts: spacemit: enable eMMC on Milk-V Jupiter
+      riscv: dts: spacemit: enable SD card support on Milk-V Jupiter
+      riscv: dts: spacemit: fix uboot partition offset on Milk-V Jupiter
+
+Chukun Pan (4):
+      riscv: dts: spacemit: enable eMMC for OrangePi RV2
+      riscv: dts: spacemit: enable QSPI for OrangePi RV2
+      riscv: dts: spacemit: enable USB3 on OrangePi R2S
+      riscv: dts: spacemit: enable PMIC on OrangePi R2S
+
+Conor Dooley (1):
+      dts: spacemit: set console baud rate on bpif3
+
+Guodong Xu (1):
+      riscv: dts: spacemit: k3: Add Ziccrse extension for X100 cores
+
+Han Gao (3):
+      riscv: dts: spacemit: Enable i2c8 adapter for OrangePi RV2
+      riscv: dts: spacemit: Define the P1 PMIC regulators for OrangePi RV2
+      riscv: dts: spacemit: Enable USB3.0/PCIe on OrangePi RV2
+
+Iker Pedrosa (3):
+      riscv: dts: spacemit: k1: add SD card controller and pinctrl support
+      riscv: dts: spacemit: k1-orangepi-rv2: add SD card support with UHS modes
+      riscv: dts: spacemit: k1-bananapi-f3: add SD card support with UHS modes
+
+Sandie Cao (2):
+      dt-bindings: riscv: spacemit: add deepcomputing,fml13v05
+      riscv: dts: spacemit: add DeepComputing FML13V05 board device tree
+
+Shuwei Wu (1):
+      riscv: dts: spacemit: Add thermal sensor for K1 SoC
+
+Trevor Gamblin (1):
+      riscv: dts: spacemit: k1-musepi-pro: add SD card support with UHS modes
+
+Troy Mitchell (1):
+      riscv: dts: spacemit: Add PDMA controller node for K3 SoC
+
+Yixun Lan (6):
+      dts: riscv: spacemit: correct 32k clock frequency
+      riscv: dts: spacemit: k3: Add USB2.0 support
+      riscv: dts: spacemit: k3: Add pwm support
+      dt-bindings: riscv: spacemit: Add K3 CoM260-IFX board
+      riscv: dts: spacemit: k3: Initial support for CoM260-IFX board
+      dts: riscv: spacemit: k3: Fix I/O power settings
+
+ .../devicetree/bindings/riscv/spacemit.yaml        |   6 +
+ arch/riscv/boot/dts/spacemit/Makefile              |   2 +
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    |  33 +-
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts  |  38 +-
+ arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts     | 329 ++++++++++-
+ arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts   | 157 ++++++
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   | 292 ++++++++++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       |  60 ++
+ arch/riscv/boot/dts/spacemit/k1.dtsi               | 131 ++++-
+ arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts     |  21 +
+ arch/riscv/boot/dts/spacemit/k3-com260.dtsi        | 190 +++++++
+ .../dts/spacemit/k3-deepcomputing-fml13v05.dts     |  31 +
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts       |  24 +
+ arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi       | 623 +++++++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k3.dtsi               | 281 +++++++++-
+ 15 files changed, 2200 insertions(+), 18 deletions(-)
+ create mode 100644 arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
+ create mode 100644 arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+ create mode 100644 arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts
