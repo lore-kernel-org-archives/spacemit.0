@@ -1,110 +1,142 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0121A275
-	for <spacemit@lists.linux.dev>; Mon,  1 Jun 2026 06:49:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077CE342C8B
+	for <spacemit@lists.linux.dev>; Mon,  1 Jun 2026 13:35:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780296543; cv=none; b=qboJv88tCMQ4akxCLvaU3dtDxdL76qLGVIgzQASR9vXGtQ0EJe3qfnGP3bfsrBFqrJwQaPu/8y0PC1p/5Whh5oec9lQWUEDRw3yIgw42jyC3n8e8Vcq1UM8NRhGksnsCzJblzXAFh+m3al/aVysL2fbbDFODE49xQ07tCtlD1FQ=
+	t=1780320955; cv=none; b=IqqcYc2LVXMNPPspSQEKMFmMLSrfZMKuqHgV0SdJctHHYibswSbisH9JPe68CiMECMQBNrEdEKjD8u+ddKJO+hTD0+HOtpeVQDos9lzdjL/rb5melg7FCyFZ8M5xlBOv6dplmD2WYyT5rP3vrekDUOEsFBfZD/jYV+k0fuHvIPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780296543; c=relaxed/simple;
-	bh=y4/ouupBjoYRS77m3fiaKDERYhLyJZEdAdivWI66SqA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UWaGmT6MaHl+Ot5bl/WXaYQQQhP77FsRWzsVUD5C5oPgMJQQYEunecmc2oPEef8F+NMQBFZqWS0KNHL9NFHCQF+U8U3BEJ5kijQlGew4Os4Ev9kPKB+XlkZ3ckylwRBH0Mg+y5Ua0E51w8MStGhNjZcG00KVtTViYzq/TNguVCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gu6rjTN4; arc=none smtp.client-ip=209.85.167.45
+	s=arc-20240116; t=1780320955; c=relaxed/simple;
+	bh=U81JaS+uVsOCq5xH8KHw7CF8Re1+ZOxCZXh7B8IuBNE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Afq6RzAbEVfn5YI+TXdZF8yMWsycqZ1olNa6yM4kBUkZzqpRTw7RL4POIb7WLo6fXIHZ8m3RhEgdWtULLI6uDTSIVlOGpHgK6ccSgWZu8w1gMjxwx6F6jJzzF1zYSLoZnOF7rSM+lOqNALxUIY7bjCLCttrJy2VRLo7ztBl2E4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=baHGMTqs; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gu6rjTN4"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5aa68e66128so886056e87.2
-        for <spacemit@lists.linux.dev>; Sun, 31 May 2026 23:49:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="baHGMTqs"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2c0c3184c71so9678015ad.1
+        for <spacemit@lists.linux.dev>; Mon, 01 Jun 2026 06:35:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780296541; x=1780901341; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pGxbL9faVDVgrvfQsBar+KVqQ+FJr+nh53Wa1vgTsOQ=;
-        b=gu6rjTN4pWCuTZsYyKnIVX9rDYs1yl+zmsuKbYQqQYXFzNKIKv3zs6ZzvjWMOopyeC
-         6lomPK4q0jzDi/oO2/VJQnNS4dAMZWLkwuqXtiRydpGx0q0eEaZ23Uog6gZLBBh4HvMY
-         ah0cKuPWXkamnCC7k/UaVHpLQA+psKlu8IZFIW66lrjOi/iAKzqAdiNcfFWcN67ERgu3
-         KQ9CL/KhJYhhyqmItz/vbiiwAQg5Db+AIXLvk0OSMJGMll+FtMKnm7Kn70ftLO92OG3D
-         gNpaMvHJZuvQy7lhEIOrbFKBoPqchceenyZ6HuEVNvSAJUqd6Wa1U4a/LUxWyBsWTYXx
-         oKKQ==
+        d=gmail.com; s=20251104; t=1780320953; x=1780925753; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IbcsOvpeEjozPZH+4z97yjnc522GeGwDhfuuOcja+k0=;
+        b=baHGMTqsyq7IjUXvjE4mZRT/WPsy/6JVQQWIyaruI+MZtOCK/CiiU+YpHNsnbzFJ/X
+         isxRMzNago8YjJkzlv7MoY7iN1Zv+TuxR/geOgjc/0O3/1uefOhiKIQw20NzdUPA3xdu
+         msmDxjb6xw2HAv5lmbqZ3jmnxBKbxyvBhS4qek5BhWrxx16qFriiBbxU373KxG5QIN1c
+         LWBQktjcTysrLK85SU4j76Ylo6oqoNhpxSJMuttct5LX11eINBezD4H/BYmnXmQBmX1Q
+         0YFku3dJVyfire1onehUSERl+3XrRhV5ZJOJLyPaDayKBnjJWodeQNayXIh8bhplNfGB
+         oveQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780296541; x=1780901341;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pGxbL9faVDVgrvfQsBar+KVqQ+FJr+nh53Wa1vgTsOQ=;
-        b=lrPqBaidM+9lXUFzQ+zXq/ndjz8d8VkneOfR/FBJlYuUZyGKaSBmuQLAVvoi/6+ljq
-         9JUKgiAfKwfpowClj1bg+DOuqsGbBR7Cj7wZ/4tIqgexjs26z2C2DKSfvmjUXHgKyfCB
-         YpunekE3U8uiG2rBMvniQ2nZjuUlFwnTNr82+BB0pikjY1TMTOb+1sjD+/Ua8lyuPGHd
-         i0iFcJ1o8OdW52E9+UxsPhOkuBbTytomklekZk0/cuDFuuXVvVv8wS+bvtkHLeCEfezx
-         Vdu4+G1eAOybfjLSjqAm4za1REAjmtCIMgbFqwMgO2RWV8X7M0daNOBKpJt6Xxo3j2rU
-         A0lQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+6Lx/4+VoVkYkGaXV78pCSQ88hvHL1MqASPPM5UpevgCg9axNItfitEEo/5eQgeNnLRS/d08ezjA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxgMPv/OdBZrRzTkpIgDnPTERLj/rIaEmGH6JxX8qsL193UsBYd
-	QcXn/+ZVWmKzPBzi8hMu+4mKAxcxduLyIiMr5JE3C/15lpRJ/3iI0fIK
-X-Gm-Gg: Acq92OFQQ+3Z+l2SSfxBahlCwf8wq14dncphwaNWa4IMo4/2/FAV1S+AWPemTI+wZTz
-	xA9po2CCMx4ztQe4OTnOnT5/cy3up8KZqYpJ3w3hnYFwUbzZH46BssoIHz451MVE5tJ5dnUYTMU
-	28mISwUfCUTlA7w3gzpf0z7rZQAeYnqHLK+dJRKtcnLjilDzKcwHpdnWv76WztHBC+e7RhWJHz+
-	UOtfIEV7lK5Eyq883BmnpP/daPAsWZOskbEC4hLA2izzKP9Nw5J14XYCF60sDa60yBhAWPIigrK
-	//m6TeYiW80gdVrTNrFfZukGwBlDu3YNgIqIocwgquzQVJwE3yhm6p7RHeGR1WNBVLncUhQcwcH
-	CC6XN6rFl86FK3GsfH6FFUuhCWRGQF1uU9wBe8OPzROYphLx271Hjsukak2GtgIlR77VkoOt/lx
-	CfjOERNY5+cGXAZiUtzCP9rfVJNK1z9XUrMOT1Atx5sEAe474ZCWtd3eYtiMmypCsMZMScmjOJu
-	uhdMBVH1mW1nx2LGpo=
-X-Received: by 2002:a05:6512:2306:b0:5a3:f25f:cc30 with SMTP id 2adb3069b0e04-5aa60a32f56mr3289885e87.32.1780296540285;
-        Sun, 31 May 2026 23:49:00 -0700 (PDT)
-Received: from ?IPV6:2a10:a5c0:800d:dd00:8fdf:935a:2c85:d703? ([2a10:a5c0:800d:dd00:8fdf:935a:2c85:d703])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa5b793e24sm1898970e87.73.2026.05.31.23.48.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 31 May 2026 23:48:59 -0700 (PDT)
-Message-ID: <b509c623-a47f-4216-9202-2c542f3c2e7b@gmail.com>
-Date: Mon, 1 Jun 2026 09:48:58 +0300
+        d=1e100.net; s=20251104; t=1780320953; x=1780925753;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IbcsOvpeEjozPZH+4z97yjnc522GeGwDhfuuOcja+k0=;
+        b=CHHxsR5rH13sx4WJc3PstYzUobk5X9P/A5Hbi0jTmRjo1FMbICfSO063gy586L7mMk
+         HD9IayERXLSrDsPNeSz7rC5C3ZuOenEKZkkjhZOqgCh0038ul2LgqGp4DwM0831AIBD/
+         EDOcIOyF38VZkG4wT/NF4bi7R2bgrhkcU3Y1gzjFVlCHghtvbu0DM5EHvVpyYZIwAN2g
+         oGZt+ls16y8prd55fJnngYhDZvmPu6ec25NNNuM1jM2fIf5lgWqCDkfQhQK7PN8SRnBE
+         xm6zC3wEx5vlDuDg+dHn1hjFiHMoW0MUUeqOGSE867qR/0nWnsiAyZ2tMMhpyQa5JvHT
+         9OEw==
+X-Forwarded-Encrypted: i=1; AFNElJ+SiIkOe3E31U/5JbRH7JPPRvF3xrrVs4kKGYPiSxWzFpsZui0H8jIFygWnCb/40X74Ks+0NKZDxw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw91gZyr86ecVc+kBMamSdiHg2gTpL4y2jWTFdqkFhDPxRJn3JD
+	R6+Hx2xW9GIPdSSCktTQ2AE72sKyxP5x8t4nIM3CvCgbYxiGqxOa0xrJpD5ZMRxPJ6A=
+X-Gm-Gg: Acq92OGqPejmupo8kL/KNTDu3D1i00Jz0nXMtwVCu/27OXL6IeaeSBrPKKr7L+kIQTS
+	Uh2oQQC7oNHbLoWnx/IzaQPZR2DWnCH+V3YCjJtCGNike2HSH+ThZeWJlsLelDCi1Es/iz50X1P
+	X5Z26YiJP6emuD8eZlzAxX7gm49O0bw92rQxSnNBC9p56+agvP/VotJJWmtwTfjswnAm6Zu2RcO
+	q/6NBfntpo1Ya9UkAxCeSGmaVbhKAB2LBmnOQFE0og2wRYZrHiQtQGvDDeL9ZJgtXdjsqwF/d48
+	X6n4lqTcS3Pv8lPPsx4RRdJ7yoSa+DfKJATZrfbxl0irMKs6gapca4SmONxEKs63XGAwv5U3t6R
+	QhGnY2PI9t/WhR5y8nhFxW6U/lRgqUcpZp3Rf3bj0qFCPPqBp+ypB6sRaR9QgQ18eXdu1d625HI
+	I8Ae+1YTWklg==
+X-Received: by 2002:a17:903:244e:b0:2c0:d097:51ba with SMTP id d9443c01a7336-2c0d0975470mr58699645ad.26.1780320953126;
+        Mon, 01 Jun 2026 06:35:53 -0700 (PDT)
+Received: from [127.0.1.1] ([2a12:a305:4::40e8])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bf23b011f7sm143136885ad.41.2026.06.01.06.35.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jun 2026 06:35:52 -0700 (PDT)
+From: Guodong Xu <docular.xu@gmail.com>
+Date: Mon, 01 Jun 2026 21:35:06 -0400
+Subject: [PATCH] MAINTAINERS: add entry for SpacemiT reset controller
+ driver
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 4/6] power: Use named initializers for
- platform_device_id arrays
-To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig_=28The_Capable_Hub=29?=
- <u.kleine-koenig@baylibre.com>, Sebastian Reichel <sre@kernel.org>
-Cc: Yixun Lan <dlan@kernel.org>, Andreas Kemnade <andreas@kemnade.info>,
- Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
- Neal Gompa <neal@gompa.dev>, Amit Sunil Dhamne <amitsd@google.com>,
- Samuel Kayode <samkay014@gmail.com>, linux-pm@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev
-References: <cover.1780048925.git.u.kleine-koenig@baylibre.com>
- <1ceacf4f9c3f827bcad85b378aa04cdca1c04635.1780048925.git.u.kleine-koenig@baylibre.com>
-Content-Language: en-US, en-AU, en-GB, en-BW
-From: Matti Vaittinen <mazziesaccount@gmail.com>
-In-Reply-To: <1ceacf4f9c3f827bcad85b378aa04cdca1c04635.1780048925.git.u.kleine-koenig@baylibre.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260601-b4-spacemit-reset-maintainers-v1-1-1ab3014e9a35@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAEkzHmoC/yXMQQrCMBBG4auUWTuQlKYYryIukvRXR2gsmShC6
+ d2NdfEW3+atpCgCpVO3UsFbVJ65wR46SveQb2CZmqk3/WhGYzkOrEtImKVygaLyHCTXForyEF3
+ w1nnvjo7aYym4ymf/ny9/6ys+kOpvStv2BbDluqCBAAAA
+X-Change-ID: 20260601-b4-spacemit-reset-maintainers-4b5a91599585
+To: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Yixun Lan <dlan@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Philipp Zabel <p.zabel@pengutronix.de>, 
+ Alex Elder <elder@riscstar.com>, Guodong Xu <docular.xu@gmail.com>
+X-Mailer: b4 0.15.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1868; i=docular.xu@gmail.com;
+ h=from:subject:message-id; bh=U81JaS+uVsOCq5xH8KHw7CF8Re1+ZOxCZXh7B8IuBNE=;
+ b=owGbwMvMwCXWtEl1Z3CGpCDjabUkhiw543Cn5BU3Fq/3y9acfvJ192yRmf3GW2/tSJ72OW1Fz
+ ITTgfKrO0pZGMS4GGTFFFkOH23J3vrKJ9r3OecPmDmsTCBDGLg4BWAihxYy/C8LDnoeba06o9/Z
+ oPDTZB25Fx8us7wqecOn0vRuyyw7n1aGf+p5F5NKPRlOGMhrS3Ra3NO/v6Lg8Xff2LmOy9IDVov
+ P4QYA
+X-Developer-Key: i=docular.xu@gmail.com; a=openpgp;
+ fpr=90B1DC3DF0BD10FD1227BD6344F254AF42F143EE
 
-On 29/05/2026 13:18, Uwe Kleine-König (The Capable Hub) wrote:
-> Named initializers are better readable and more robust to changes of the
-> struct definition. This robustness is relevant for a planned change to
-> struct platform_device_id replacing .driver_data by an anonymous union.
-> 
-> While touching these arrays unify spacing and usage of commas.
-> 
-> Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+The SpacemiT reset controller driver under drivers/reset/spacemit/
+(common code plus the K1 and K3 SoC instances) and its reset-ID header
+have no dedicated MAINTAINERS entry; today they fall only under the
+broad drivers/reset/ entry of the reset subsystem and the N:/K:
+catch-all of the RISC-V SpacemiT SoC umbrella.
 
-Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Add a dedicated entry and list myself as maintainer. I introduced the
+drivers/reset/spacemit/ subdirectory, moved and refactored the existing
+K1 reset support (originally written by Alex Elder) into it, and wrote
+the K3 reset driver. The series that created this directory and these
+files is archived at [1].
 
-Yours,
-	-- Matti
+[1] https://lore.kernel.org/spacemit/20260120-k3-reset-v3-0-effe87f4bdbe@riscstar.com/
 
--- 
-Matti Vaittinen
-Linux kernel developer at ROHM Semiconductors
-Oulu Finland
+Signed-off-by: Guodong Xu <docular.xu@gmail.com>
+---
+I contributed this driver as Guodong Xu <guodong@riscstar.com>;
+docular.xu@gmail.com is my current address. A matching .mailmap update
+has been submitted at
+https://lore.kernel.org/all/20260601-b4-mailmap-guodong-xu-v1-1-ee9eff1e57ba@gmail.com/
+---
+ MAINTAINERS | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-~~ When things go utterly wrong vim users can always type :help! ~~
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9ec290e38b44a..c9d87244c1715 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -25119,6 +25119,13 @@ S:	Maintained
+ F:	Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
+ F:	drivers/i2c/busses/i2c-k1.c
+ 
++SPACEMIT RESET CONTROLLER DRIVER
++M:	Guodong Xu <docular.xu@gmail.com>
++L:	linux-riscv@lists.infradead.org
++S:	Maintained
++F:	drivers/reset/spacemit/
++F:	include/dt-bindings/reset/spacemit,k3-resets.h
++
+ SPANISH DOCUMENTATION
+ M:	Carlos Bilbao <carlos.bilbao@kernel.org>
+ R:	Avadhut Naik <avadhut.naik@amd.com>
+
+---
+base-commit: e43ffb69e0438cddd72aaa30898b4dc446f664f8
+change-id: 20260601-b4-spacemit-reset-maintainers-4b5a91599585
+
+Best regards,
+--  
+Guodong Xu <docular.xu@gmail.com>
+
