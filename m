@@ -1,106 +1,139 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD413D301B;
-	Tue,  2 Jun 2026 12:07:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780402042; cv=none; b=MkN6aqjv7yVMYZQXtMYeZjR027m5RbDL9jby6XU3LQjUQr8MOu3LPuNYEmi2zcfpmeQEpHFwnXob+CrUdGHPoTTWxYHBeG4B4QOYOGWP09Y2vPdZXz+NCqDimAdCsnv/ySj2uW2uVaPWLRE9cT/GPphOX/1zm6QC29VZ7kmIAJA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780402042; c=relaxed/simple;
-	bh=hLZrVWdpgEiigLLE1L+kDHlZRBGb2UU6XAcUIO8GOa0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=dhWPacJCrYVyoEmXx34LPMi4rzC8TnIZnnyjtD0TAouEPga662gl4ICFXqz67XAMjROY/hvHRgNIQiemVVe1Yu3YklEMBwUySLdrCmt97fMwBy2a8iI/h5rYOWXXvrptULIlRxKB/PIFJUsxx1cSV3zT6PrYGMsHUQlp2U+uu/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UuZgpxr4; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540093A759D
+	for <spacemit@lists.linux.dev>; Tue,  2 Jun 2026 21:43:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780436584; cv=pass; b=nyAIhS8bXOGt2yA/7F9G75kvs+7hcpQkFjarT6n7ci/PnptSyxmBWmp8L1dzbkucx4JVe4iR4F7Glaprcn9dZrAiFA9P+6e4sQl2xpnyFjJNwb87Z1msUUUQI8en1O3o2KAbWfdRjxQZ7nppswdqILwJSDIFsS3wfDSuZhTpm1k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780436584; c=relaxed/simple;
+	bh=t4tKC8tTqtar0OSd/aKDG59lS9LLkPQiuXg2Vsq3cJY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JgBVed7/GAUhqmE3VrcT1q9tfAQLpuUzf6BodVzcbCH/8nsEMbUM+cobGKbfy7rxppOL7uWmQW5ZFPq7WZcGwtD0dPyBEhxecosc6TH6/4LhXT2RXoUK4QqJ+YiAheLPyYcoSAqJbTuHKJ0uqDBjw4pdpdw09UjmxK/MyOxU9x0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyyj5hOD; arc=pass smtp.client-ip=209.85.210.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UuZgpxr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1D71F00893;
-	Tue,  2 Jun 2026 12:07:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780402040;
-	bh=pEBanZXD28yLbzyFMoCw8vpjCe8PBdySKqmDHHVxhBo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=UuZgpxr4Bz6wK4Y/umHh3809GRuLo2prrzI8tybC7jqf0MyNIYnVdCKjEJJX9Fbxf
-	 Dot6L7mXi22VU0qRQB9/uMScKzhYulT9pEzNEH6+LUoJNit2YWc6qs79tJupg4fAq5
-	 Zd66Nfp9I6aCs/D/vjLvbvR7On48YV+2X/vMH4i9/6+m5duLzdL+9k/CHc1jm3QW/i
-	 Z5MPGZ+KxfWHpBtxnV9P5Yka0g8FDMitu+twjlnNXjnW0r1tRjuSwY+RTjkGF4JJ9f
-	 rELLAHdUk/jGWBjgpoLxfUqgGjyxAypRDN4nVhC7+lcKHi81iL7SuJ7D8EYcjsAatO
-	 ggcI8/TURz6ow==
-From: Mark Brown <broonie@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Yixun Lan <dlan@kernel.org>, 
- Jinmei Wei <weijinmei@linux.spacemit.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-sound@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org
-In-Reply-To: <20260522-k3-i2s-v3-0-08e3eb811d93@linux.spacemit.com>
-References: <20260522-k3-i2s-v3-0-08e3eb811d93@linux.spacemit.com>
-Subject: Re: [PATCH v3 0/2] ASoC: spacemit: add K3 SoC support
-Message-Id: <178032605224.44654.17377992015065063925.b4-ty@b4>
-Date: Mon, 01 Jun 2026 16:00:52 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyyj5hOD"
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7e66f966d01so4073222a34.3
+        for <spacemit@lists.linux.dev>; Tue, 02 Jun 2026 14:43:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780436582; cv=none;
+        d=google.com; s=arc-20240605;
+        b=C9+SfM3SxW+q8X0ul9fvXPUnA/sVTV3u9j1QcJyvy/JhGDRKCyjpDVuoYdMNPrTjW4
+         EAon+xlKz+iVUpoLIpDQCQkfQnqQgpgGAs/joKETaCq45qi8ZFSnRryp2Cn3+Q0oehSR
+         02Nq4kzxYWI06uVRqH+3VyXBJes0D1t80oHd8kzuLNCDXNesj126uy8KRm9pkpkBq0zp
+         utkackRujEZQFS8MM3qy4K+wLooV1tXl0u7xs87kBXz6IzmdZHQ3igL+D/MB4TVZX2M+
+         sPxcczs1CZYG8oawwKMCowUo6ZHaHtpiMkZpTH5vqFp5lc9bLyxgrYruXcSRn8/42bij
+         gpLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=t4tKC8tTqtar0OSd/aKDG59lS9LLkPQiuXg2Vsq3cJY=;
+        fh=6e1Nwx45sUg2Qm01AkPgrjg7/AK6uL/C1W3pPbBeZRE=;
+        b=j5EW0wy/feTsnrkiEc0qZmlYiFtl4FA7u2fZN1TjkwbQqURTl1n3Z0tolj1ph2YLez
+         w07Us0ctqvlclGx0lxx7wln2SIxd6PGed7vG1AXYcceZJdBFVlfMult+dkgYagKXvA0a
+         /Y2wPxv5fPq1qvHT1w6Kz/jaR6mqdd0tsKQPMmuWNmW9vZ/SICijmLlGAao5eNhS9OwC
+         X7CNt5MSwR2aKi2iXhhbmJJDfwRFEy8TWt2atraOO22dOa4Ek14vSe9gPJGTGWc3FlFl
+         DTXxyzXsmfOisEh+oaF5Q4ddlM1P82iX/3phNwxqzerZ3dVtyCM05i6cFSyQbWyY6zHz
+         uWVg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780436582; x=1781041382; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=t4tKC8tTqtar0OSd/aKDG59lS9LLkPQiuXg2Vsq3cJY=;
+        b=fyyj5hOD33j41S6nogTZPfatp+kMvZWS9hdEHAEGYdzjP1qBw66jVkZ4MLnVv7COjs
+         expzC/SN7VGgJA/Rp2I26OmiLfEhr6Qcx9xKc+HxtnNAfBsBvnrK9r2Ko3cPn3saJ+G2
+         tKDuND7+su773bAIWmku0R9pMk3/wLiqBHOj1Y/AB9Gc130e4z0zWadCdHeF8Bym78oJ
+         Uz4GZbcZ+Un1uADZkSxY5RqcaZawDXzihRYVnjwCTC+f8Vph5QYU8yTt+b8Nf3YxXTZX
+         0gx1o/hpfN6eotzad9kznAlfXvfT99Bo+yRbSw6l966MMNelrmtN+A8VygBLQMwlHsJj
+         PXlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780436582; x=1781041382;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t4tKC8tTqtar0OSd/aKDG59lS9LLkPQiuXg2Vsq3cJY=;
+        b=RxJJ5c18EOeUXbWISe3DHea/g+jNwxxJm1gBChAiXvs20OyFEhvlk8sVzod9RWRYui
+         TcL+MhoKr9DU8nROVuiCyL+ZlHg0J+45mbhHviQAnBRZJL4Mdfrh9zWnhsXvIYUt980D
+         kaYLOZtRop6b52jSGt7fvzVmS+/9iLPr4uT3OWzQZI/ZL4Z4RXvQbNgDjREMcUf6s7Xp
+         cd3osrOgZz77xMdSaIPSjc9z///8KhgC/+hT+wYsHzyPD519/nUvNdeDHU7fRiWjcbYR
+         BkiX0fBaAJUqhPlAI3Ts1TOWw4FsC2oVAn1d780awCONzoAcYYkgWjHFYs9RHlNwzUEp
+         XKTg==
+X-Forwarded-Encrypted: i=1; AFNElJ/JfckvXfwqBF+GupA5fLaBpLW3UHcdauRa7KJ07ictC3fYKbVQFZwIMxZR3Wwc5i4iGD5wYy4Sgg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzL16cNVbxIH+/cDxQaiLFRGlrZlkPpKrZyNEoRt/8KNx9IB7U9
+	zK5li1hk24q6bJg9Xpn1RjkzXS3i/o2JNSnjhDE23pHcGYqe4wAhVmm/GH+NQjfd6IFqnJXkEoJ
+	rEq4tYG24jXZj7iCXUTn3vt3O7Z6ZYfA=
+X-Gm-Gg: Acq92OHjuUsDdlelRyXclGxR+wTw0tn1ImaWaYAdI8MXIhz5DXu5F4/tWXqkgk5Pvl+
+	E+/BnJyz/Sk3H29rYk12gdAX7hnxV1j9TF3F8rZa/SpZfatNmzd2dt7q+QSWnl281oAD5aQgxjt
+	GR7uUKqhO0a1Sn0YDyMBwK1qen/sPdF8OXoXXvJ3Tn4/VhH8wl/MaxKmmcQubaUeA6V0x+DDZc/
+	L4hzykbN4Toe30QPw34qzlhURwPvH1UGbEpU6fYPj7QGjl9QMy1nat9MoiQcWmEfonWdYy+1ctQ
+	8LMna7yqjLnn/2i3SDbZBQw=
+X-Received: by 2002:a05:6820:2082:b0:69d:a224:6ee7 with SMTP id
+ 006d021491bc7-69e480f3a64mr536219eaf.54.1780436582388; Tue, 02 Jun 2026
+ 14:43:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1548; i=broonie@kernel.org;
- h=from:subject:message-id; bh=hLZrVWdpgEiigLLE1L+kDHlZRBGb2UU6XAcUIO8GOa0=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqHsd0rI4ckJ7Hm165gVtJqeWD+VGtD9cXsVPN3
- dejlbxrFqaJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCah7HdAAKCRAk1otyXVSH
- 0Ie+B/9kXwOMyqDW7DQB2QR+IlYPuicwCYo7eHYZsh0vcs7GVf49egNza5+h7CGQ3u7VPy2vVyl
- IPesk2nJs0c3CYCeZSBG7amhiSp2cAPlx2yjVW0z4AOXGaQY5KglIZRuDoJl5h4h9ACEY29QcjQ
- 9Lnu9yCyqWbzM/Jaw9Cthe7oU7XRAgwuFWaOtW51mYmma+uO1TaR9Hs/LZ3bTwiLxO9nf53Z7yB
- IMNLLH60ifiy7cpsx/6NZR8/szyte7mITd8zaRF4AgytSbkXeGWr/z17Cgytn40A3uFD73ONTvm
- YRyhrUq/i6uSawoa8P9dEZYNQFi20YgYD2wqQl9BtIKYFIOM
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+References: <20260601-b4-spacemit-reset-maintainers-v1-1-1ab3014e9a35@gmail.com>
+ <20260602061734-GKD3815935@kernel.org>
+In-Reply-To: <20260602061734-GKD3815935@kernel.org>
+From: Guodong Xu <docular.xu@gmail.com>
+Date: Wed, 3 Jun 2026 05:42:51 +0800
+X-Gm-Features: AVHnY4LQ6lzq__rT7CAOcTBxcODK3EXVz8CNbmDQAi0qqWOKUZdVQOQ0Up1QUNk
+Message-ID: <CA+Ck9FZH=b8yc=d=s3n5k7dO5keZDQBxOJVc+ms4A8e_rVDDNw@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: add entry for SpacemiT reset controller driver
+To: Yixun Lan <dlan@kernel.org>
+Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Alex Elder <elder@riscstar.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 22 May 2026 21:12:13 +0800, Troy Mitchell wrote:
-> ASoC: spacemit: add K3 SoC support
-> 
-> This series adds K3 SoC support for the SpacemiT I2S controller driver.
-> 
-> Patch 1 adds the dt-bindings for the spacemit,k3-i2s compatible. The K3
-> SoC uses the same I2S IP as K1 but requires additional clocks
-> (sysclk_div, c_sysclk, c_bclk) that are shared across multiple I2S
-> controllers.
-> 
-> [...]
+Hi, Yixun
 
-Applied to
+Thanks for the review.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.2
+> entry, the whole point of adding a didicated entry means someone
+> willing to put effort in future maintenance, to help review/refactor/fix
+> you can emphasis on this, and I just want to make sure we algined on
 
-Thanks!
+Right, that's the part I should have made explicit. I do plan to keep
+maintaining drivers/reset/spacemit/, K1 and K3 now, K5 and K7 as they
+land. I'll keep up with review and fixes, and reword the commit message
+to say that.
 
-[1/2] ASoC: dt-bindings: add SpacemiT K3 SoC compatible
-      https://git.kernel.org/broonie/sound/c/6bc6b28c0314
-[2/2] ASoC: spacemit: add K3 SoC support with additional clocks
-      https://git.kernel.org/broonie/sound/c/1c6ca2ca5c1b
+> done), I'd personally prefer not puting them into commit message, but put
+> them below "---" as background introduction if you still want..
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Sure, will move that below '---'.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+>
+> > [1] https://lore.kernel.org/spacemit/20260120-k3-reset-v3-0-effe87f4bdbe@riscstar.com/
+> for the convention, suggest to use more formal format like
+> Link: https://.. [1]
+>
+> >
+> also no blank line above
+>
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+Agree, will do.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+> and I'd still sugest to add spacemit mailing list explicitly
 
-Thanks,
-Mark
+I will add that line:
+L: spacemit@lists.linux.dev
 
+I'll send v2 with these.
+
+Thank you.
+Guodong Xu
+
+>
+> --
+> Yixun Lan (dlan)
