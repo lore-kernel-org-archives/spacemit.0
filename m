@@ -1,67 +1,66 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229A13CDBD7
-	for <spacemit@lists.linux.dev>; Tue,  2 Jun 2026 23:13:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE873CF02C
+	for <spacemit@lists.linux.dev>; Tue,  2 Jun 2026 23:13:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780441991; cv=none; b=XFFU4Zcn4bQg3Ls7ta3EAVDyOOzwunv+lRpOjpEdk7MVomDgOl20/Rm+vkstjJF0Dr9XoMfG+l/crXXLb6ZRq4pckzSNtyukxSufEs78OSh5OCWrQIwVRhX9+t7dqQ/dlyKumlkeCcU2jr6NeymDucGYPYo+xfwmOsya00wcwow=
+	t=1780442003; cv=none; b=Pjc7Wvz0L7Cun0tHwdcMWP8gSYGaTUwyu1a+sp5US2YbtF2Wjf7wcBW54lVv+YEg3mcD7dF0+jnaudpKxxT87vPNaj9RWOoD2O2lMXG7gCtHmXLoa41rP92oYGueozaF7JqXOoxIC3uTYTjMQ9fAEwxlWA3QqX3RwQCGQh7hkCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780441991; c=relaxed/simple;
-	bh=rqTVVVJCoPVd96u+yhPMJffItnZ+P3H94JKRDHrTXaQ=;
+	s=arc-20240116; t=1780442003; c=relaxed/simple;
+	bh=w5hL82QQ++PqDm6UbHYyjJthETVpbKd8rNq8XZCKaUE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Lr8HKhQSO2RRpi6RNvkIGPsP/5ivWZCSA+AcllzxwrtfYw4o7dQh/Y0L30VmfkEp8Lzu0A9glKnMDIokY6mLMN5//ogYIUmT+E5YwSACnhK216GplYroH6yP18Kf3GuKbbVfjLJFI+B1Qa/qczO/3tbTGJV70+HksrJgfygLPT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I/O1zW/1; arc=none smtp.client-ip=209.85.214.177
+	 In-Reply-To:To:Cc; b=qzksofWSTIHCcI95qA6ySQu3YM+eja9zj+FiSGuK+83FI3jc8O9iRjEFACugX2cOfaj/01KA0UQZRgFqfHkH/RtsAW7Ij3onkTmTqh+K5mj0R2uQFM1dJd2pr0NcUxXPLCuXGOw3z8rUxVUkIFV1LotDC7b2e+pmpQy0sVD7xJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=baCZkNVI; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I/O1zW/1"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2bf36a6905cso26396105ad.3
-        for <spacemit@lists.linux.dev>; Tue, 02 Jun 2026 16:13:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="baCZkNVI"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-36da151a152so2096339a91.1
+        for <spacemit@lists.linux.dev>; Tue, 02 Jun 2026 16:13:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780441989; x=1781046789; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1780442001; x=1781046801; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hHFIY+oFxYCby8roDhyuYsQin7Ul79zLqHihVHlWSyo=;
-        b=I/O1zW/1hMqwB5fXUT5B8aRswWq2Mdcys6nZwEZDWicpLOhD+40Ax3c4/ljI1go8H1
-         nJrsOyX1eE+3dTiV7js7lYlQ3BosyPeOdjNtytYALq5NBcM1rAbrmMWGxyL9XjrU1Oqu
-         6WkYlJiAu1/5h+jp0qMV0cJ4MsHXh7eOwqYBVtw1IT51SjDngtQAW9TOJSmvbpm5Zad5
-         WT7wx+OZQlfmFFcJv2rNwtWph2+00Zpf1RSq8ShG8U6bph3KwwGXzXcg0MjYCzuUwSTG
-         KD9GdrkhrB8O53FQr3Kq9+Fdjb11DMQmAvXMZCneRl2nucHr84Fzr0TWGXmfk9sa+eOr
-         nqgQ==
+        bh=rZlQE/SX+m4OYa5W7MwrfjYgIcakLhXqjfGv9ucXNCI=;
+        b=baCZkNVI5iUW8TpHwqpp9fvidth4AM/zoaOjW841H6nEYYB9Wp2g4+bV4H/BpP472w
+         G8aOud8twiwK606sqLjpd/Kp4OCG7VCE1kWF2sWByn93i2AtNOpy75mNAdi3aJ8k2/RV
+         9MAzRwOkIQV9g8TGAda9HkeDlSMFhD+kVzcgS5HFjtNFk+4FZSyWcw9pJ0881lVR4MXF
+         yDg+553qHYWNYZmKLHuTgTFS4dyP2HE4kafwhKfx8RnPemHpVKbe9pWQN6XwQ9Mx8iHT
+         4njAyEXRiGUeehBdAnqG5tTKw9Mw0SN216MixxwyDJUCXyi/M2ALRnzDuMOQ6eGELS7k
+         vIsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780441989; x=1781046789;
+        d=1e100.net; s=20251104; t=1780442001; x=1781046801;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=hHFIY+oFxYCby8roDhyuYsQin7Ul79zLqHihVHlWSyo=;
-        b=cBASEguEweYyPwRAXCc5ZzhDvKLVkBxUgEwMw/8xXaH3U2K6PNlH1Z5IBtq/LrNriu
-         C+5wCAgZczaTPLvOTAMKoU9Ynh6qekcHNjIIbxlHLq4fN/ZHje2Z3foJ2Waabj3ZUxNu
-         Nl/RHlmVkceFOQMWMaH3xydqdkHDSG9WkbDVykEvGwBGIT+NNSngifWvWoOQl7O9Bciw
-         Dn/O0lW+No+TBzVnD2FVaNZjEwKZux/JRe4o2cM4SmfRaA/aWMjITXU/E6ydNro4tzzq
-         9i1kA4jb64dyDu8E0ZOAqqvtvs/BiIM1w6B51750z0NVA3AZtkM5kBU5o+Pc1AHtPVYt
-         sEAQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8apJWPHX0ewU6I6oVIRqzn83Hd5Ey8y9GLmN+tWVoKcsae+jDI6BfjfyLY+tSXGhWlIOgE9hrgdw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyeS2V0pIco4KvLb7HeQsxPN6+QnhNQqxFJhbbrn1Ovq+RtScPQ
-	2R0UMqA05ZM/SpHAPB9BaRaSTTHevAVE9wkV/D13AwTOKhTvqyaiDKnj
-X-Gm-Gg: Acq92OEy6Elw2DD6t6PwuC0xbVRbQDYn4YnzEUuJ6ERNCHjSmP14lTVRkLvEgwmYJTW
-	RIqXav4L2+XvOfaU66jSByBqdT/c7lP38ekw6k/Ns1KCPxUf+Wyq9gTxvqk3xhG8iWB18brk736
-	8vL+djbgjpGxK6D+PS/yydosMHmcyM4cF2toKfouQ6vklttVLOCOPms+T3OH5q9djHS5S1C+zl3
-	/cqa7hwXGTpedUCF0mVE5hxF7qpkzMcpNY79t23dGMTmAlI+Y03uxiv8vNL7R1vrshze8gnLr+i
-	fhEE7fRoVLvC5A0IE9gisLQrv5dTaskrug6EiQj4tD2wN7d3ok5FGWdc8nL3YhKr/L0lWcZ4JWC
-	jZqyLz4sI7oNlPs8pN9v+jgGd+HP0OmrOKE0GQpLKHe2IDVhtbt/fy4BRQ75mZH1rDlfde5ASzA
-	n+C0iRegdPICTk7549HvZd
-X-Received: by 2002:a17:902:c950:b0:2bf:3074:34dc with SMTP id d9443c01a7336-2c163a59aa1mr7469645ad.14.1780441989552;
-        Tue, 02 Jun 2026 16:13:09 -0700 (PDT)
+        bh=rZlQE/SX+m4OYa5W7MwrfjYgIcakLhXqjfGv9ucXNCI=;
+        b=i9cvWELUOcynchtl1evgkdxapDf9U9TcnKy3RVv8zLRwXVugVsUggJE9/uwfcQ+Z+s
+         WsB0XCJmGkdHb0nCGWUg4Fe8igWcXXIaKuSsE2PidV6IyE2aVGbwxpd+bfGc4Bn55PyH
+         8xejqrjHN22HjSqraqnLzb3aJC7c5EwahHSzDv5Tf4Viz8AwzLKkWD5fgpoeCR3vtqAS
+         gmEJhHqhqrM80pc/A46IdNUvEmsayWgT622C0qqindqLTCnSmSvzIKnwqWXHCs7cZ/K2
+         Ehj8gpjeUA69q6jIn7sEvCUqWhon+cNjR5yQcoZOvRDvniUtRgg3syCLY/sDzF/77kxa
+         aYoQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9lYcpBZ6Rx71yAdqEHYVlbGWlveqB4bYLqXOdwIyUQvt4ECXjqbSF4tRWWxwLKSUxEutB+yoJk+A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwAGLK1qqGxRtXJZiDoS0Tjuec4F05EQoQGMwrDXvlIWpYwq0WI
+	LFITcdthJBkTgw8OXn2TRfJni5yLCQIu4SsqssuQmngbK8dgV7h97ixv
+X-Gm-Gg: Acq92OE5eEkNPo317+XL1uRMXtM6aDBTF76GinOxmBfbeFuYcC3RvsedDBC46lKdI+y
+	RZE4K/mlpGv4n+O2jgYdCFF+SoABEiNs8ElJBqj0/nWfAy1qFKz0yW2ITFeNKEH00owyDCD7cPz
+	2J8OX8k/0duBtLcNaG6yxoArq42y6hC9+WjXtiMwhXmZh1oJ1w0khRMOZWLFZATj8bFYE54c5Qa
+	aPDw/qbdYaXoet/3hygCFkkYl3vDv9ABSwpukA6Xc7mUMQCSoqPbcm/9SJxnpnn0jaQ9owPtAiI
+	ucNcTmTdMDQHWWuvwcT9RUnolOQYyzFrC4DUfHtJ3Zi5SU6f8cPSAUAYP51fbOIl8RuRJP4qsPu
+	OEyNaGrfSCXa2Ij8EEItdya3T2tyr036eyINc0DSquUwxT8hozBkV1auI/OG9bqgW2/5V3espcY
+	GXvkzKtAO5NA==
+X-Received: by 2002:a17:90b:5289:b0:36a:7c8f:1423 with SMTP id 98e67ed59e1d1-36e30e14912mr724051a91.9.1780442000567;
+        Tue, 02 Jun 2026 16:13:20 -0700 (PDT)
 Received: from [127.0.1.1] ([2a12:a305:4::40e9])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16649d2dfsm3302965ad.75.2026.06.02.16.12.59
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16649d2dfsm3302965ad.75.2026.06.02.16.13.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 16:13:09 -0700 (PDT)
+        Tue, 02 Jun 2026 16:13:20 -0700 (PDT)
 From: Guodong Xu <docular.xu@gmail.com>
-Date: Wed, 03 Jun 2026 07:11:57 -0400
-Subject: [PATCH v3 02/15] riscv: hwprobe.rst: Document EXT_ZICFISS and
- EXT_ZICFILP
+Date: Wed, 03 Jun 2026 07:11:58 -0400
+Subject: [PATCH v3 03/15] riscv: Standardize extension capitalization
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,7 +69,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260603-rva23u64-hwprobe-v2-v3-2-5529a7b28384@gmail.com>
+Message-Id: <20260603-rva23u64-hwprobe-v2-v3-3-5529a7b28384@gmail.com>
 References: <20260603-rva23u64-hwprobe-v2-v3-0-5529a7b28384@gmail.com>
 In-Reply-To: <20260603-rva23u64-hwprobe-v2-v3-0-5529a7b28384@gmail.com>
 To: Jonathan Corbet <corbet@lwn.net>, 
@@ -93,58 +92,413 @@ Cc: linux-doc@vger.kernel.org, linux-riscv@lists.infradead.org,
  Andrew Jones <andrew.jones@oss.qualcomm.com>, 
  Charles Jenkins <thecharlesjenkins@gmail.com>, 
  Samuel Holland <samuel.holland@sifive.com>, 
- Guodong Xu <docular.xu@gmail.com>
+ Guodong Xu <docular.xu@gmail.com>, Charlie Jenkins <charlie@rivosinc.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2083; i=docular.xu@gmail.com;
- h=from:subject:message-id; bh=rqTVVVJCoPVd96u+yhPMJffItnZ+P3H94JKRDHrTXaQ=;
- b=owGbwMvMwCXWtEl1Z3CGpCDjabUkhiwFHmbj4O13uthymy6JvU+rEL4dKfZMr+tUpU9DpyHf0
- ydWIhM6SlkYxLgYZMUUWQ4fbcne+son2vc55w+YOaxMIEMYuDgFYCI1PQx/eHnlc18+d3FcUZbm
- v82hY/8q8W0sHw4vvh+j1hzCevjDDkaG66/Wxs9YyBsrs37Fy717DyUeav92P6Wk2bE7UWuB6nZ
- dLgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=16637; i=docular.xu@gmail.com;
+ h=from:subject:message-id; bh=Lvrl9MDwIWnyzBpUSrpsEPeOLpHJ//EeSWwI/wa1+uE=;
+ b=owGbwMvMwCXWtEl1Z3CGpCDjabUkhiwFHuba5GmzytdxTpaL2f0rx0SDUUxOa7kv6/9bc+9et
+ vTwm3Kro5SFQYyLQVZMkeXw0Zbsra98on2fc/6AmcPKBDKEgYtTACaybTPDb5arKzymyso5X5v+
+ lcniQEOqsGnNtjylz0WZ5zd1XTDnuM3I0GA1aS3LZqU70/bUXFU02Hps4fnF0Sd/iU2e+2xHOrM
+ iHwcA
 X-Developer-Key: i=docular.xu@gmail.com; a=openpgp;
  fpr=90B1DC3DF0BD10FD1227BD6344F254AF42F143EE
 
-Commit 30c3099036a9 ("riscv/hwprobe: add zicfilp / zicfiss
-enumeration in hwprobe") added RISCV_HWPROBE_EXT_ZICFISS and
-RISCV_HWPROBE_EXT_ZICFILP, but did not add matching entries to
-Documentation/arch/riscv/hwprobe.rst.  Add them now.
+From: Charlie Jenkins <charlie@rivosinc.com>
 
-Fixes: 30c3099036a9 ("riscv/hwprobe: add zicfilp / zicfiss enumeration in hwprobe")
+The base extensions are often lowercase and were written as lowercase in
+hwcap, but other references to these extensions in the kernel are
+uppercase. Standardize the case to make it easier to handle macro
+expansion.
+
+Signed-off-by: Charlie Jenkins <thecharlesjenkins@gmail.com>
+[Apply KVM_ISA_EXT_ARR(), fixup all KVM use.]
+Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
 Signed-off-by: Guodong Xu <docular.xu@gmail.com>
+Acked-by: Anup Patel <anup@brainfault.org>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+
 ---
 v3:
-- Also document RISCV_HWPROBE_EXT_ZICFILP (bit 63 of IMA_EXT_0), the
-  sibling enumeration added by the same commit (Andrew).
-v2: New patch.
+- Collected Anup's Acked-by and Reviewed-by.
+- Rebased onto v7.1-rc6: two more occurances between -rc2 and -rc6:
+   1). isa2hwcap[] indices added by commit 41337097f2823
+   2). the T-Head "v" workaround's clear_bit() added by commit d272b8d2dd132
+v2:
+- Rebased onto v7.1-rc2.
+- KVM_ISA_EXT_ARR() consolidation moved to its new upstream location
+  (kvm/isa.c); host-side checks now use kvm_riscv_isa_check_host().
 ---
- Documentation/arch/riscv/hwprobe.rst | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/riscv/include/asm/hwcap.h     | 18 ++++++++--------
+ arch/riscv/include/asm/switch_to.h |  4 ++--
+ arch/riscv/kernel/cpufeature.c     | 44 +++++++++++++++++++-------------------
+ arch/riscv/kernel/sys_hwprobe.c    |  4 ++--
+ arch/riscv/kvm/isa.c               | 16 +++++++-------
+ arch/riscv/kvm/main.c              |  2 +-
+ arch/riscv/kvm/vcpu_fp.c           | 20 ++++++++---------
+ arch/riscv/kvm/vcpu_onereg.c       |  6 +++---
+ arch/riscv/kvm/vcpu_vector.c       | 10 ++++-----
+ 9 files changed, 62 insertions(+), 62 deletions(-)
 
-diff --git a/Documentation/arch/riscv/hwprobe.rst b/Documentation/arch/riscv/hwprobe.rst
-index a09a8f16bd16f..3cedaaa53f331 100644
---- a/Documentation/arch/riscv/hwprobe.rst
-+++ b/Documentation/arch/riscv/hwprobe.rst
-@@ -289,6 +289,11 @@ The following keys are defined:
-     defined in the RISC-V ISA manual starting from commit f88abf1 ("Integrating
-     load/store pair for RV32 with the main manual") of the riscv-isa-manual.
+diff --git a/arch/riscv/include/asm/hwcap.h b/arch/riscv/include/asm/hwcap.h
+index 7ef8e5f55c8dc..44bf8c7d8acc5 100644
+--- a/arch/riscv/include/asm/hwcap.h
++++ b/arch/riscv/include/asm/hwcap.h
+@@ -10,15 +10,15 @@
  
-+  * :c:macro:`RISCV_HWPROBE_EXT_ZICFILP`: The Zicfilp extension is supported,
-+    as defined in version 1.0 of the RISC-V Control-flow Integrity (CFI)
-+    extensions specification, ratified in commit ff03d8485a04 ("Update to
-+    ratified state") of riscv-cfi.
-+
- * :c:macro:`RISCV_HWPROBE_KEY_CPUPERF_0`: Deprecated.  Returns similar values to
-   :c:macro:`RISCV_HWPROBE_KEY_MISALIGNED_SCALAR_PERF`, but the key was
-   mistakenly classified as a bitmask rather than a value.
-@@ -391,3 +396,8 @@ The following keys are defined:
- * :c:macro:`RISCV_HWPROBE_KEY_IMA_EXT_1`: A bitmask containing additional
-   extensions that are compatible with the
-   :c:macro:`RISCV_HWPROBE_BASE_BEHAVIOR_IMA`: base system behavior.
-+
-+  * :c:macro:`RISCV_HWPROBE_EXT_ZICFISS`: The Zicfiss extension is supported,
-+    as defined in version 1.0 of the RISC-V Control-flow Integrity (CFI)
-+    extensions specification, ratified in commit ff03d8485a04 ("Update to
-+    ratified state") of riscv-cfi.
+ #include <uapi/asm/hwcap.h>
+ 
+-#define RISCV_ISA_EXT_a		('a' - 'a')
+-#define RISCV_ISA_EXT_c		('c' - 'a')
+-#define RISCV_ISA_EXT_d		('d' - 'a')
+-#define RISCV_ISA_EXT_f		('f' - 'a')
+-#define RISCV_ISA_EXT_h		('h' - 'a')
+-#define RISCV_ISA_EXT_i		('i' - 'a')
+-#define RISCV_ISA_EXT_m		('m' - 'a')
+-#define RISCV_ISA_EXT_q		('q' - 'a')
+-#define RISCV_ISA_EXT_v		('v' - 'a')
++#define RISCV_ISA_EXT_A		('a' - 'a')
++#define RISCV_ISA_EXT_C		('c' - 'a')
++#define RISCV_ISA_EXT_D		('d' - 'a')
++#define RISCV_ISA_EXT_F		('f' - 'a')
++#define RISCV_ISA_EXT_H		('h' - 'a')
++#define RISCV_ISA_EXT_I		('i' - 'a')
++#define RISCV_ISA_EXT_M		('m' - 'a')
++#define RISCV_ISA_EXT_Q		('q' - 'a')
++#define RISCV_ISA_EXT_V		('v' - 'a')
+ 
+ /*
+  * These macros represent the logical IDs of each multi-letter RISC-V ISA
+diff --git a/arch/riscv/include/asm/switch_to.h b/arch/riscv/include/asm/switch_to.h
+index 0e71eb82f920c..ff35a4d04f85a 100644
+--- a/arch/riscv/include/asm/switch_to.h
++++ b/arch/riscv/include/asm/switch_to.h
+@@ -60,8 +60,8 @@ static inline void __switch_to_fpu(struct task_struct *prev,
+ 
+ static __always_inline bool has_fpu(void)
+ {
+-	return riscv_has_extension_likely(RISCV_ISA_EXT_f) ||
+-		riscv_has_extension_likely(RISCV_ISA_EXT_d);
++	return riscv_has_extension_likely(RISCV_ISA_EXT_F) ||
++		riscv_has_extension_likely(RISCV_ISA_EXT_D);
+ }
+ #else
+ static __always_inline bool has_fpu(void) { return false; }
+diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
+index f46aa5602d74d..686dde3ce3b98 100644
+--- a/arch/riscv/kernel/cpufeature.c
++++ b/arch/riscv/kernel/cpufeature.c
+@@ -84,7 +84,7 @@ EXPORT_SYMBOL_GPL(__riscv_isa_extension_available);
+ static int riscv_ext_f_depends(const struct riscv_isa_ext_data *data,
+ 			       const unsigned long *isa_bitmap)
+ {
+-	if (__riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_f))
++	if (__riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_F))
+ 		return 0;
+ 
+ 	return -EPROBE_DEFER;
+@@ -146,7 +146,7 @@ static int riscv_ext_f_validate(const struct riscv_isa_ext_data *data,
+ 	 * Due to extension ordering, d is checked before f, so no deferral
+ 	 * is required.
+ 	 */
+-	if (!__riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_d)) {
++	if (!__riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_D)) {
+ 		pr_warn_once("This kernel does not support systems with F but not D\n");
+ 		return -EINVAL;
+ 	}
+@@ -189,7 +189,7 @@ static int riscv_ext_vector_float_validate(const struct riscv_isa_ext_data *data
+ 	 * Since this function validates vector only, and v/Zve* are probed
+ 	 * after f/d, there's no need for a deferral here.
+ 	 */
+-	if (!__riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_d))
++	if (!__riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_D))
+ 		return -EINVAL;
+ 
+ 	return 0;
+@@ -224,7 +224,7 @@ static int riscv_ext_zcd_validate(const struct riscv_isa_ext_data *data,
+ 				  const unsigned long *isa_bitmap)
+ {
+ 	if (__riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_ZCA) &&
+-	    __riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_d))
++	    __riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_D))
+ 		return 0;
+ 
+ 	return -EPROBE_DEFER;
+@@ -237,7 +237,7 @@ static int riscv_ext_zcf_validate(const struct riscv_isa_ext_data *data,
+ 		return -EINVAL;
+ 
+ 	if (__riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_ZCA) &&
+-	    __riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_f))
++	    __riscv_isa_extension_available(isa_bitmap, RISCV_ISA_EXT_F))
+ 		return 0;
+ 
+ 	return -EPROBE_DEFER;
+@@ -490,15 +490,15 @@ static const unsigned int riscv_c_exts[] = {
+  * New entries to this struct should follow the ordering rules described above.
+  */
+ const struct riscv_isa_ext_data riscv_isa_ext[] = {
+-	__RISCV_ISA_EXT_DATA(i, RISCV_ISA_EXT_i),
+-	__RISCV_ISA_EXT_DATA(m, RISCV_ISA_EXT_m),
+-	__RISCV_ISA_EXT_SUPERSET(a, RISCV_ISA_EXT_a, riscv_a_exts),
+-	__RISCV_ISA_EXT_DATA_VALIDATE(f, RISCV_ISA_EXT_f, riscv_ext_f_validate),
+-	__RISCV_ISA_EXT_DATA_VALIDATE(d, RISCV_ISA_EXT_d, riscv_ext_d_validate),
+-	__RISCV_ISA_EXT_DATA(q, RISCV_ISA_EXT_q),
+-	__RISCV_ISA_EXT_SUPERSET(c, RISCV_ISA_EXT_c, riscv_c_exts),
+-	__RISCV_ISA_EXT_SUPERSET_VALIDATE(v, RISCV_ISA_EXT_v, riscv_v_exts, riscv_ext_vector_float_validate),
+-	__RISCV_ISA_EXT_DATA(h, RISCV_ISA_EXT_h),
++	__RISCV_ISA_EXT_DATA(i, RISCV_ISA_EXT_I),
++	__RISCV_ISA_EXT_DATA(m, RISCV_ISA_EXT_M),
++	__RISCV_ISA_EXT_SUPERSET(a, RISCV_ISA_EXT_A, riscv_a_exts),
++	__RISCV_ISA_EXT_DATA_VALIDATE(f, RISCV_ISA_EXT_F, riscv_ext_f_validate),
++	__RISCV_ISA_EXT_DATA_VALIDATE(d, RISCV_ISA_EXT_D, riscv_ext_d_validate),
++	__RISCV_ISA_EXT_DATA(q, RISCV_ISA_EXT_Q),
++	__RISCV_ISA_EXT_SUPERSET(c, RISCV_ISA_EXT_C, riscv_c_exts),
++	__RISCV_ISA_EXT_SUPERSET_VALIDATE(v, RISCV_ISA_EXT_V, riscv_v_exts, riscv_ext_vector_float_validate),
++	__RISCV_ISA_EXT_DATA(h, RISCV_ISA_EXT_H),
+ 	__RISCV_ISA_EXT_SUPERSET_VALIDATE(zicbom, RISCV_ISA_EXT_ZICBOM, riscv_xlinuxenvcfg_exts, riscv_ext_zicbom_validate),
+ 	__RISCV_ISA_EXT_DATA_VALIDATE(zicbop, RISCV_ISA_EXT_ZICBOP, riscv_ext_zicbop_validate),
+ 	__RISCV_ISA_EXT_SUPERSET_VALIDATE(zicboz, RISCV_ISA_EXT_ZICBOZ, riscv_xlinuxenvcfg_exts, riscv_ext_zicboz_validate),
+@@ -897,7 +897,7 @@ static void __init riscv_fill_hwcap_from_isa_string(unsigned long *isa2hwcap)
+ 		 * marchid.
+ 		 */
+ 		if (acpi_disabled && boot_vendorid == THEAD_VENDOR_ID && boot_archid == 0x0)
+-			clear_bit(RISCV_ISA_EXT_v, source_isa);
++			clear_bit(RISCV_ISA_EXT_V, source_isa);
+ 
+ 		riscv_resolve_isa(source_isa, isainfo->isa, &this_hwcap, isa2hwcap);
+ 
+@@ -1105,13 +1105,13 @@ void __init riscv_fill_hwcap(void)
+ 	unsigned long isa2hwcap[RISCV_ISA_EXT_BASE] = {0};
+ 	int i, j;
+ 
+-	isa2hwcap[RISCV_ISA_EXT_i] = COMPAT_HWCAP_ISA_I;
+-	isa2hwcap[RISCV_ISA_EXT_m] = COMPAT_HWCAP_ISA_M;
+-	isa2hwcap[RISCV_ISA_EXT_a] = COMPAT_HWCAP_ISA_A;
+-	isa2hwcap[RISCV_ISA_EXT_f] = COMPAT_HWCAP_ISA_F;
+-	isa2hwcap[RISCV_ISA_EXT_d] = COMPAT_HWCAP_ISA_D;
+-	isa2hwcap[RISCV_ISA_EXT_c] = COMPAT_HWCAP_ISA_C;
+-	isa2hwcap[RISCV_ISA_EXT_v] = COMPAT_HWCAP_ISA_V;
++	isa2hwcap[RISCV_ISA_EXT_I] = COMPAT_HWCAP_ISA_I;
++	isa2hwcap[RISCV_ISA_EXT_M] = COMPAT_HWCAP_ISA_M;
++	isa2hwcap[RISCV_ISA_EXT_A] = COMPAT_HWCAP_ISA_A;
++	isa2hwcap[RISCV_ISA_EXT_F] = COMPAT_HWCAP_ISA_F;
++	isa2hwcap[RISCV_ISA_EXT_D] = COMPAT_HWCAP_ISA_D;
++	isa2hwcap[RISCV_ISA_EXT_C] = COMPAT_HWCAP_ISA_C;
++	isa2hwcap[RISCV_ISA_EXT_V] = COMPAT_HWCAP_ISA_V;
+ 
+ 	if (!acpi_disabled) {
+ 		riscv_fill_hwcap_from_isa_string(isa2hwcap);
+diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
+index 1659d31fd288f..f8f68ba781b45 100644
+--- a/arch/riscv/kernel/sys_hwprobe.c
++++ b/arch/riscv/kernel/sys_hwprobe.c
+@@ -88,10 +88,10 @@ static void hwprobe_isa_ext0(struct riscv_hwprobe *pair,
+ 	if (has_fpu())
+ 		pair->value |= RISCV_HWPROBE_IMA_FD;
+ 
+-	if (riscv_isa_extension_available(NULL, c))
++	if (riscv_isa_extension_available(NULL, C))
+ 		pair->value |= RISCV_HWPROBE_IMA_C;
+ 
+-	if (has_vector() && riscv_isa_extension_available(NULL, v))
++	if (has_vector() && riscv_isa_extension_available(NULL, V))
+ 		pair->value |= RISCV_HWPROBE_IMA_V;
+ 
+ 	/*
+diff --git a/arch/riscv/kvm/isa.c b/arch/riscv/kvm/isa.c
+index 1132d909cc25c..94077117d1136 100644
+--- a/arch/riscv/kvm/isa.c
++++ b/arch/riscv/kvm/isa.c
+@@ -17,14 +17,14 @@
+ /* Mapping between KVM ISA Extension ID & guest ISA extension ID */
+ static const unsigned long kvm_isa_ext_arr[] = {
+ 	/* Single letter extensions (alphabetically sorted) */
+-	[KVM_RISCV_ISA_EXT_A] = RISCV_ISA_EXT_a,
+-	[KVM_RISCV_ISA_EXT_C] = RISCV_ISA_EXT_c,
+-	[KVM_RISCV_ISA_EXT_D] = RISCV_ISA_EXT_d,
+-	[KVM_RISCV_ISA_EXT_F] = RISCV_ISA_EXT_f,
+-	[KVM_RISCV_ISA_EXT_H] = RISCV_ISA_EXT_h,
+-	[KVM_RISCV_ISA_EXT_I] = RISCV_ISA_EXT_i,
+-	[KVM_RISCV_ISA_EXT_M] = RISCV_ISA_EXT_m,
+-	[KVM_RISCV_ISA_EXT_V] = RISCV_ISA_EXT_v,
++	KVM_ISA_EXT_ARR(A),
++	KVM_ISA_EXT_ARR(C),
++	KVM_ISA_EXT_ARR(D),
++	KVM_ISA_EXT_ARR(F),
++	KVM_ISA_EXT_ARR(H),
++	KVM_ISA_EXT_ARR(I),
++	KVM_ISA_EXT_ARR(M),
++	KVM_ISA_EXT_ARR(V),
+ 	/* Multi letter extensions (alphabetically sorted) */
+ 	KVM_ISA_EXT_ARR(SMNPM),
+ 	KVM_ISA_EXT_ARR(SMSTATEEN),
+diff --git a/arch/riscv/kvm/main.c b/arch/riscv/kvm/main.c
+index cb8a65273c1f0..70640701310c8 100644
+--- a/arch/riscv/kvm/main.c
++++ b/arch/riscv/kvm/main.c
+@@ -85,7 +85,7 @@ static int __init riscv_kvm_init(void)
+ 	char slist[64];
+ 	const char *str;
+ 
+-	if (!riscv_isa_extension_available(NULL, h)) {
++	if (!riscv_isa_extension_available(NULL, H)) {
+ 		kvm_info("hypervisor extension not available\n");
+ 		return -ENODEV;
+ 	}
+diff --git a/arch/riscv/kvm/vcpu_fp.c b/arch/riscv/kvm/vcpu_fp.c
+index 6ad6df26a2fd4..bb11e6757d349 100644
+--- a/arch/riscv/kvm/vcpu_fp.c
++++ b/arch/riscv/kvm/vcpu_fp.c
+@@ -21,8 +21,8 @@ void kvm_riscv_vcpu_fp_reset(struct kvm_vcpu *vcpu)
+ 	struct kvm_cpu_context *cntx = &vcpu->arch.guest_context;
+ 
+ 	cntx->sstatus &= ~SR_FS;
+-	if (riscv_isa_extension_available(vcpu->arch.isa, f) ||
+-	    riscv_isa_extension_available(vcpu->arch.isa, d))
++	if (riscv_isa_extension_available(vcpu->arch.isa, F) ||
++	    riscv_isa_extension_available(vcpu->arch.isa, D))
+ 		cntx->sstatus |= SR_FS_INITIAL;
+ 	else
+ 		cntx->sstatus |= SR_FS_OFF;
+@@ -38,9 +38,9 @@ void kvm_riscv_vcpu_guest_fp_save(struct kvm_cpu_context *cntx,
+ 				  const unsigned long *isa)
+ {
+ 	if ((cntx->sstatus & SR_FS) == SR_FS_DIRTY) {
+-		if (riscv_isa_extension_available(isa, d))
++		if (riscv_isa_extension_available(isa, D))
+ 			__kvm_riscv_fp_d_save(cntx);
+-		else if (riscv_isa_extension_available(isa, f))
++		else if (riscv_isa_extension_available(isa, F))
+ 			__kvm_riscv_fp_f_save(cntx);
+ 		kvm_riscv_vcpu_fp_clean(cntx);
+ 	}
+@@ -50,9 +50,9 @@ void kvm_riscv_vcpu_guest_fp_restore(struct kvm_cpu_context *cntx,
+ 				     const unsigned long *isa)
+ {
+ 	if ((cntx->sstatus & SR_FS) != SR_FS_OFF) {
+-		if (riscv_isa_extension_available(isa, d))
++		if (riscv_isa_extension_available(isa, D))
+ 			__kvm_riscv_fp_d_restore(cntx);
+-		else if (riscv_isa_extension_available(isa, f))
++		else if (riscv_isa_extension_available(isa, F))
+ 			__kvm_riscv_fp_f_restore(cntx);
+ 		kvm_riscv_vcpu_fp_clean(cntx);
+ 	}
+@@ -89,7 +89,7 @@ int kvm_riscv_vcpu_get_reg_fp(struct kvm_vcpu *vcpu,
+ 	void *reg_val;
+ 
+ 	if ((rtype == KVM_REG_RISCV_FP_F) &&
+-	    riscv_isa_extension_available(vcpu->arch.isa, f)) {
++	    riscv_isa_extension_available(vcpu->arch.isa, F)) {
+ 		if (KVM_REG_SIZE(reg->id) != sizeof(u32))
+ 			return -EINVAL;
+ 		if (reg_num == KVM_REG_RISCV_FP_F_REG(fcsr))
+@@ -102,7 +102,7 @@ int kvm_riscv_vcpu_get_reg_fp(struct kvm_vcpu *vcpu,
+ 		} else
+ 			return -ENOENT;
+ 	} else if ((rtype == KVM_REG_RISCV_FP_D) &&
+-		   riscv_isa_extension_available(vcpu->arch.isa, d)) {
++		   riscv_isa_extension_available(vcpu->arch.isa, D)) {
+ 		if (reg_num == KVM_REG_RISCV_FP_D_REG(fcsr)) {
+ 			if (KVM_REG_SIZE(reg->id) != sizeof(u32))
+ 				return -EINVAL;
+@@ -138,7 +138,7 @@ int kvm_riscv_vcpu_set_reg_fp(struct kvm_vcpu *vcpu,
+ 	void *reg_val;
+ 
+ 	if ((rtype == KVM_REG_RISCV_FP_F) &&
+-	    riscv_isa_extension_available(vcpu->arch.isa, f)) {
++	    riscv_isa_extension_available(vcpu->arch.isa, F)) {
+ 		if (KVM_REG_SIZE(reg->id) != sizeof(u32))
+ 			return -EINVAL;
+ 		if (reg_num == KVM_REG_RISCV_FP_F_REG(fcsr))
+@@ -151,7 +151,7 @@ int kvm_riscv_vcpu_set_reg_fp(struct kvm_vcpu *vcpu,
+ 		} else
+ 			return -ENOENT;
+ 	} else if ((rtype == KVM_REG_RISCV_FP_D) &&
+-		   riscv_isa_extension_available(vcpu->arch.isa, d)) {
++		   riscv_isa_extension_available(vcpu->arch.isa, D)) {
+ 		if (reg_num == KVM_REG_RISCV_FP_D_REG(fcsr)) {
+ 			if (KVM_REG_SIZE(reg->id) != sizeof(u32))
+ 				return -EINVAL;
+diff --git a/arch/riscv/kvm/vcpu_onereg.c b/arch/riscv/kvm/vcpu_onereg.c
+index bb920e8923c93..5cc7ddd4aa276 100644
+--- a/arch/riscv/kvm/vcpu_onereg.c
++++ b/arch/riscv/kvm/vcpu_onereg.c
+@@ -770,7 +770,7 @@ static inline unsigned long num_fp_f_regs(const struct kvm_vcpu *vcpu)
+ {
+ 	const struct kvm_cpu_context *cntx = &vcpu->arch.guest_context;
+ 
+-	if (riscv_isa_extension_available(vcpu->arch.isa, f))
++	if (riscv_isa_extension_available(vcpu->arch.isa, F))
+ 		return sizeof(cntx->fp.f) / sizeof(u32);
+ 	else
+ 		return 0;
+@@ -799,7 +799,7 @@ static inline unsigned long num_fp_d_regs(const struct kvm_vcpu *vcpu)
+ {
+ 	const struct kvm_cpu_context *cntx = &vcpu->arch.guest_context;
+ 
+-	if (riscv_isa_extension_available(vcpu->arch.isa, d))
++	if (riscv_isa_extension_available(vcpu->arch.isa, D))
+ 		return sizeof(cntx->fp.d.f) / sizeof(u64) + 1;
+ 	else
+ 		return 0;
+@@ -878,7 +878,7 @@ static inline unsigned long num_sbi_regs(struct kvm_vcpu *vcpu)
+ 
+ static inline unsigned long num_vector_regs(const struct kvm_vcpu *vcpu)
+ {
+-	if (!riscv_isa_extension_available(vcpu->arch.isa, v))
++	if (!riscv_isa_extension_available(vcpu->arch.isa, V))
+ 		return 0;
+ 
+ 	/* vstart, vl, vtype, vcsr, vlenb and 32 vector regs */
+diff --git a/arch/riscv/kvm/vcpu_vector.c b/arch/riscv/kvm/vcpu_vector.c
+index 62d2fb77bb9b9..f26108a4e601e 100644
+--- a/arch/riscv/kvm/vcpu_vector.c
++++ b/arch/riscv/kvm/vcpu_vector.c
+@@ -26,7 +26,7 @@ void kvm_riscv_vcpu_vector_reset(struct kvm_vcpu *vcpu)
+ 
+ 	cntx->vector.vlenb = riscv_v_vsize / 32;
+ 
+-	if (riscv_isa_extension_available(isa, v)) {
++	if (riscv_isa_extension_available(isa, V)) {
+ 		cntx->sstatus |= SR_VS_INITIAL;
+ 		WARN_ON(!cntx->vector.datap);
+ 		memset(cntx->vector.datap, 0, riscv_v_vsize);
+@@ -45,7 +45,7 @@ void kvm_riscv_vcpu_guest_vector_save(struct kvm_cpu_context *cntx,
+ 				      unsigned long *isa)
+ {
+ 	if ((cntx->sstatus & SR_VS) == SR_VS_DIRTY) {
+-		if (riscv_isa_extension_available(isa, v))
++		if (riscv_isa_extension_available(isa, V))
+ 			__kvm_riscv_vector_save(cntx);
+ 		kvm_riscv_vcpu_vector_clean(cntx);
+ 	}
+@@ -55,7 +55,7 @@ void kvm_riscv_vcpu_guest_vector_restore(struct kvm_cpu_context *cntx,
+ 					 unsigned long *isa)
+ {
+ 	if ((cntx->sstatus & SR_VS) != SR_VS_OFF) {
+-		if (riscv_isa_extension_available(isa, v))
++		if (riscv_isa_extension_available(isa, V))
+ 			__kvm_riscv_vector_restore(cntx);
+ 		kvm_riscv_vcpu_vector_clean(cntx);
+ 	}
+@@ -154,7 +154,7 @@ int kvm_riscv_vcpu_get_reg_vector(struct kvm_vcpu *vcpu,
+ 	void *reg_addr;
+ 	int rc;
+ 
+-	if (!riscv_isa_extension_available(isa, v))
++	if (!riscv_isa_extension_available(isa, V))
+ 		return -ENOENT;
+ 
+ 	rc = kvm_riscv_vcpu_vreg_addr(vcpu, reg_num, reg_size, &reg_addr);
+@@ -180,7 +180,7 @@ int kvm_riscv_vcpu_set_reg_vector(struct kvm_vcpu *vcpu,
+ 	void *reg_addr;
+ 	int rc;
+ 
+-	if (!riscv_isa_extension_available(isa, v))
++	if (!riscv_isa_extension_available(isa, V))
+ 		return -ENOENT;
+ 
+ 	if (reg_num == KVM_REG_RISCV_VECTOR_CSR_REG(vlenb)) {
 
 -- 
 2.43.0
