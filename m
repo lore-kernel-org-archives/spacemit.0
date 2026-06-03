@@ -1,72 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from freeshell.de (freeshell.de [116.202.128.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A8639B978
-	for <spacemit@lists.linux.dev>; Wed,  3 Jun 2026 15:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A804E3E4C98
+	for <spacemit@lists.linux.dev>; Wed,  3 Jun 2026 20:28:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780498818; cv=none; b=QdpHF1uAuh7m8kJJdGv+xC4t2j+IVdlK+avHH1CBYQUmDJ5aL6rRtsQBPFRhUQd8GptQwwk+EA/RxoHstgVwp+HHOpI9+j1tE1xAsh2ax4+ReS2HfYgriQIcJZ2O4u+z8z3nsaWTs0+R9vZErpV7nqF1UFWL4GfpF6wpb0p6Yz4=
+	t=1780518504; cv=none; b=tb5amXq6qSG9dMbeyzvuGERhFjfN9tfeNsxjOUKHYgfLaRIIa15bTgR1ChfHqJx32eO2sCrca3FnDD8NFNW9ByeDJ7NjShkVGsNM2rfzeWnFUzmEHICyDoJ+gQRMJnWxYjdMSCLPoXdnW1TIxlbLHxk6wz03slACHfR5Gg+7kZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780498818; c=relaxed/simple;
-	bh=GmMfpPD+F/j8AdmLcTVikc8rJ+b68xlTEOWdEKRGgM4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L5+4qnVLfU9qfJqQubd5s1cwyZbyONbWERc9REroy5M/vd5nIYm1490c2FypTXUw3HdTW3VjnRt6D1YEkyDvcPY4bbkWbyZAD0kyOql9b7jW3WJwLwAOsZE7qMT1WMaEvo/YRbaatxqGSIEoKnArvsiU4cAZ0GLGOxHFb0Hco/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RX7Z4jbh; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780518504; c=relaxed/simple;
+	bh=XYunRdMmAzqUsQMnnJO4P8x+6tdzgJ5ccjupNfcQffo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aM1MNzWcjjWbn4aNVLwoR4c/25JV1DiCSCJkwGdrBJvxpxRXzjvPQ7ikIMmWxuKYcXjepAUY2fbBiCuFYc722AGPNUSZM3MZquUtBjqDkvdK1EK1tpVZ22mIeb6gCeAYPJ5aL/r8x7Ot0X8M71xSlj+fqKPg/SbpSgKtVaJcQhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=MnHl7vsX; arc=none smtp.client-ip=116.202.128.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RX7Z4jbh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB801F00899;
-	Wed,  3 Jun 2026 15:00:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780498816;
-	bh=5esXABQ9v1IkhyhfkHBvjiSAaiXKlrhHmgVnAOcCx0U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=RX7Z4jbhEtr+yf27l5vG/SqQtPyvoP9k25J9wYtm+iiuZ5bqp/0iPm+Un9lDIREfr
-	 3lDCiEcw/8mGGaRlfbaTVj1W9STT3Nga1OTxwfj+lEuhThSZ7i4RZBaPnXjZ9gtm1G
-	 GqD+Uio0JHZnqHOgVuAxyYr82Ke0gV3p/cQvhhYlr80jaaJ+a3OqKfy3ZWuIGrGzqQ
-	 Dwhxd2ZRo7BTJj0PMTARF6RhMU1HD5AyiImlyJDp48ZhtSpBRwrfY8ZR9e4ACYJ7jQ
-	 fRWKFTxMroM9wVLYk14y1NwrCFJo2iH0A7ATJtjY5If4WgvwUjmDjyVMfxXhea1eEV
-	 kROk5hy+FRtwQ==
-Date: Wed, 3 Jun 2026 15:00:13 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Subject: Re: [PATCH] riscv: defconfig: spacemit: enable i2c driver for K1 SoC
-Message-ID: <20260603150013-GKC3727415@kernel.org>
-References: <CGME20260603082338eucas1p2ec88154477479bf0547e5221e0919b07@eucas1p2.samsung.com>
- <20260603082332.3200814-1-m.szyprowski@samsung.com>
+	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="MnHl7vsX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
+	s=s2025; t=1780517888;
+	bh=SVSZqLrNktqGcyxLR2Ua1Ku73FMd2lVYF7WXhi+1RiI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MnHl7vsXPkKjoE61gw+tZRPVMDzdX7/vPbpNvbu9Y2zweKgL2bKl2L+/VcQ1/Zr8u
+	 rWrIDcohxwQSN0yzkE/ewXx46WfqMjjwm4ZWKtzJGS+opUH22IrpsNS1Uc349f7zya
+	 iv04qny+mPrK9QFjK0zcRjWsTNe4ROMYfi6vsc3cJK7aSQdd9hfzk5kWO14VQAWSXH
+	 X9v1vzvrDLukFbdCo42/zX2anRQgV8bvO8pbCLMGf8fHMykXHjI+mJ+qy03LWXXAXm
+	 4hySMNOYCVyGa01QTIVp7aLOFBLj0dFqbqVhpfqmjZl8oOIlS4K+/oOEmgMGy2Ra5o
+	 ZeYyO723JfsqA==
+Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
+	(Authenticated sender: e)
+	by freeshell.de (Postfix) with ESMTPSA id 0F5B7B220A94;
+	Wed,  3 Jun 2026 22:18:05 +0200 (CEST)
+Message-ID: <9585b7c7-100c-4d77-bed1-d2b6b25b3940@freeshell.de>
+Date: Wed, 3 Jun 2026 13:17:56 -0700
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260603082332.3200814-1-m.szyprowski@samsung.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dts: riscv: spacemit: k3: Fix I/O power settings
+To: Yixun Lan <dlan@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Inochi Amaoto <inochiama@gmail.com>, Han Gao <gaohan@iscas.ac.cn>,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20260518-07-dts-pinctrl-io-power-v1-1-abe19c14a726@kernel.org>
+Content-Language: en-US
+From: E Shattow <e@freeshell.de>
+In-Reply-To: <20260518-07-dts-pinctrl-io-power-v1-1-abe19c14a726@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Marek,
-
-On 10:23 Wed 03 Jun     , Marek Szyprowski wrote:
-> Enable K1 SoC I2C driver to properly probe PMIC chip on BananaPiF3 board.
+On 5/18/26 13:58, Yixun Lan wrote:
+> SpacemiT K3 SoC support dual-voltage I/O power domain, while initially
+> configure to 3.3v, and need to access register from APBC space to switch
+> to 1.8v domain.
 > 
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> Fix the GMAC0's I/O pins 1.8v switch failure that will result a broken
+> ethernet driver.
+> 
+> Fixes: d8944577496b ("riscv: dts: spacemit: k3: add pinctrl support")
+> Reported-by: Han Gao <gaohan@iscas.ac.cn>
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
 > ---
->  arch/riscv/configs/defconfig | 1 +
+> This issue is reported by Han while booting kernel from UFS storage, and
+> found the ethernet driver is broken, we can see the message as below:
+> 
+>  [    1.635881] mdio_bus stmmac-0: MDIO device at address 1 is missing.
+> 
+> This problem is caused by GMAC driver that unable to configure I/O power
+> domain to 1.8v, which leads to the MDIO communication failure.
+> 
+> We didn't find this problem due to using tftp(net) to load kernel images
+> while bootloader already configured the I/O power.
+> ---
+>  arch/riscv/boot/dts/spacemit/k3.dtsi | 1 +
 >  1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-> index c2c37327b987..08445df56006 100644
-> --- a/arch/riscv/configs/defconfig
-> +++ b/arch/riscv/configs/defconfig
-> @@ -157,6 +157,7 @@ CONFIG_HW_RANDOM_JH7110=m
->  CONFIG_I2C=y
->  CONFIG_I2C_CHARDEV=m
->  CONFIG_I2C_DESIGNWARE_CORE=y
-> +CONFIG_I2C_K1=y
-We've got one patch already which try to solve it in another way..
-https://lore.kernel.org/all/20260526-orangepi-sd-card-i2c-v1-1-b92268bfd467@gmail.com/
+> diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> index 815debd16409..2b0bf9cd755b 100644
+> --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> @@ -803,6 +803,7 @@ pinctrl: pinctrl@d401e000 {
+>  			clocks = <&syscon_apbc CLK_APBC_AIB>,
+>  				 <&syscon_apbc CLK_APBC_AIB_BUS>;
+>  			clock-names = "func", "bus";
+> +			spacemit,apbc = <&syscon_apbc>;
+>  		};
+>  
+>  		uart10: serial@d401f000 {
+> 
+> ---
+> base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
+> change-id: 20260518-07-dts-pinctrl-io-power-1bd33bfe5894
+> 
+> Best regards,
+> --  
+> Yixun Lan <dlan@kernel.org>
+> 
+> 
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
 
--- 
-Yixun Lan (dlan)
+Hi Yixun,
+
+This property on its own does not seem to be enough to get the ethernet
+network port functional on Sipeed K3 Pico-ITX 32GB model that I have,
+when it is loading Debian 13 Trixie debian-installer netinst initramfs
+(with cross-compiled Linux kernel and modules from -next 20260602).
+
+Reproducer instructions for cross-compiling and debian-installer netinst
+initramfs modification at:
+https://wiki.debian.org/InstallingDebianOn/SpacemiT/K3PicoITX?action=recall&rev=2
+
+In addition to those instructions above I am using within the factory
+pre-installed vendor U-Boot the following commands to try what your
+patch does:
+
+fdt addr $fdt_addr_r
+fdt resize
+fdt header get filesize totalsize
+fdt rm /soc/pinctrl@d401e000 spacemit,apbc
+fdt get value spacemit_apbc_phandle /soc/system-controller@d4015000 phandle
+fdt set /soc/pinctrl@d401e000 spacemit,apbc <$spacemit_apbc_phandle>
+
+I then verify within Linux environment the presence of
+/sys/firmware/devicetree/base/soc/pinctrl@d401e000/spacemit,apbc
+
+The same Linux kernel and modules as modified into the installer then do
+have functional ethernet networking on that board if running from the
+installed system and with the spacemit,apbc devicetree property. Is this
+a dependency or ordering issue of the modules, or the Kconfig options?
+
+Also, the more general problem is that cycling rmmod and modprobe on the
+ethernet networking related modules fails:
+
+rmmod dwmac_spacemit
+rmmod stmmac_platform
+rmmod stmmac
+rmmod mdio
+modprobe dwmac_spacemit
+
+[ 1487.618517] mdio_bus stmmac-0: MDIO device at address 1 is missing.
+
+[ 1487.623815] spacemit-dwmac cac80000.ethernet end0: renamed from eth0
+
+rmmod dwmac_spacemit
+rmmod stmmac_platform
+rmmod stmmac
+rmmod mdio
+modprobe dwmac_spacemit
+
+[ 1539.374486] spacemit-dwmac cac80000.ethernet end0: cannot attach to
+PHY (erro
+r: -ENODEV)
+[ 1615.299451] spacemit-dwmac cac80000.ethernet end0: stmmac_dvr_remove:
+removin
+g driver
+
+Please advise how to troubleshoot?  Thanks,
+
+- E Shattow
