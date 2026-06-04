@@ -1,296 +1,252 @@
-Received: from TYVP286CU001.outbound.protection.outlook.com (mail-japaneastazon11011036.outbound.protection.outlook.com [52.101.125.36])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CB44418E4;
-	Wed,  3 Jun 2026 22:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.125.36
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780525815; cv=fail; b=dibdk13u4kkRddF67xo8gcaIlzz/5KdeMokzfXOfKpP8dteIQYJIJ+gGI3O35b68Q/3gbPDkXyfP7p24VAN2+UWnDdDsjR5tn+fV8mBM/lU0VAyQzN6wGQidzisk96tX/ROhvgUylyJbhBykmZhYTKeTqN2Gu5ipfbSFme1O7kE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780525815; c=relaxed/simple;
-	bh=WTS5ddFEdnOSo9/IV5+3mQLL8kJAv06vfsAF0SDG5gs=;
-	h=Message-ID:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 Date:MIME-Version; b=ECzf5FEymJWLDJ4RvCMf/HpBcApuZ74NycOrcT+OjssviSJb1bxBF9zJbShJ2cOVPvujITJDOW4+eJyCr7dVAfwVgPZD4kBiixnm4gcf8uUpct3iWT1HUxSKIr9ji+Sbz91kg2G9gnzoVCgR+jhJqQLriqOBXbXUL2XfaOTax5Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=ULF/oiWs; arc=fail smtp.client-ip=52.101.125.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1723932F2
+	for <spacemit@lists.linux.dev>; Thu,  4 Jun 2026 15:48:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780588118; cv=none; b=t9zQXosCtLlOY6O/DRsuWPAn69X+4qguHEVU7cejlyqrFEk84jXDB067bJIiiQQ+73yDQ3ScA3cLkoNKfihVD5Rz3HHwmdi2VHxCn7v4p6v/hDFKF9/qMJKgneE8xp+tJobrkUdI6J+REqTHlfBJkgzbvik24bYF+6ZCRUaqsU8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780588118; c=relaxed/simple;
+	bh=TQZ3atWXP/F/XI/SjQlzb5ztk+kdqOw4+QF2X9bBJQE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V01P6Y0s7ewWlo6OU70qL9nAtXcAnnwBH0M65+Oqr4y5jfSc1wWqlrpzJPD8SgstXiQpSzIokJYjN10rIViyKCKlTZamy8bCcV7QUaF4dosNvRluIdY3fgX/n6P9UYujZKPeRfUmYVY0Ms/9BqwwE5Pw+4Cy5NZQn5ITiK+JYYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pNByy7ks; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ac/eb8LT; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="ULF/oiWs"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LiDlgTOjquM/2FE5w5nqTPrFknXxRQZP/CGzYppoHfAaqwgYMbOmu3M8v9wE1vxp+RvIyJ/EtYz1GyL4XKb4DRCZgnII91tczhuEndI2P0WEBgOOtGvXTVe4E/IRu6afZ1nB/IXc3OdcsoyBUalSAvZVs05YkhBs4YalBTkgl7/+Nc13KXP8V8FYculSePWX4fFitda4ACghvbbrSIMac+Rift6XingS9pXBYLO03duoKDb6t9//3ZkbFrC5Nr+Ys5Udhz0uDWaoxPGd8La8jmfHH+CTy0FhnKxffCJ8TuTv00LCOinNbLCWnQEuS0fnVXvLY2i/32S33Pd2Phjvqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qbXB38SUTgltPz28Qrbj5oXXKCfe23ekoxc3LjZrCj4=;
- b=Uk5ZvW2XjrhF55mroyq9r1J1MXZTRDnVmt25JPun6SVbPHEYuwjv88KO7KKpl2Jwl5VtK2ye4POVjCE3N6usuAFFN1Bj8+G0eklBRrFQWdOCF1evYoqc8+xj/m479ApBx/2fMKLQaYiBAv95GfvNQl/hKXHILo3GEMetWxC6Ta8Ke//elW0NTgk9FMgbiPbie/AkRnciQKd8H0685AVCBMc+TE8pdpFMcnidh3jDcTemNXBsB5t1gvDmt+pbKm8/tXlH6YYkV+QXOB2fN6TT7Zm+JSUbhYkKKNrPjWCjI+I//bxDxzdX7d1yomx0cPJb8SPUpP7itGRW5yiPjeeNig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qbXB38SUTgltPz28Qrbj5oXXKCfe23ekoxc3LjZrCj4=;
- b=ULF/oiWs23LHbBNk+vejikbK1FT5bQkDAWfG4U8i/7Z+VlzWKWx55Ko/bNbZtsuGZwDZUw4FqRWehWPb98eAhsdF5oeTBECaBpMGkl+EqZqReIig2ErCwptcVO6Bx6g7CGjTgMgD6zN3Jr7P4oauU5V7KTPAC601ibJ1aGB+3Yc=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-Received: from TY3PR01MB11797.jpnprd01.prod.outlook.com (2603:1096:400:373::8)
- by OSAPR01MB7280.jpnprd01.prod.outlook.com (2603:1096:604:142::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
- 22:30:10 +0000
-Received: from TY3PR01MB11797.jpnprd01.prod.outlook.com
- ([fe80::1868:c915:c230:a383]) by TY3PR01MB11797.jpnprd01.prod.outlook.com
- ([fe80::1868:c915:c230:a383%5]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
- 22:30:10 +0000
-Message-ID: <87se7345qm.wl-kuninori.morimoto.gx@renesas.com>
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-To: Herve Codina <herve.codina@bootlin.com>
-Cc: "Alvin =?UTF-8?B?xaBpcHJhZ2E=?=" <alsi@bang-olufsen.dk>,
-	"J.M.B.\
- Downing" <jonathan.downing@nautel.com>,
-	"Martin =?UTF-8?B?UG92acWhZXI=?="
- <povik+lin@cutebit.org>,
-	"Nuno =?UTF-8?B?U8Oh?=" <nuno.sa@analog.com>,
-	"Uwe\
- =?UTF-8?B?S2xlaW5lLUvDtm5pZw==?= (The Capable Hub)"
- <u.kleine-koenig@baylibre.com>,
-	Alexandre Belloni
- <alexandre.belloni@bootlin.com>,
-	Alexandre Torgue
- <alexandre.torgue@foss.st.com>,
-	AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>,
-	Arnaud Pouliquen
- <arnaud.pouliquen@foss.st.com>,
-	Baojun Xu <baojun.xu@ti.com>,
-	Bartosz
- Golaszewski <brgl@kernel.org>,
-	Ben Bright <ben.bright@cirrus.com>,
-	Benson
- Leung <bleung@chromium.org>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Binbin
- Zhou <zhoubinbin@loongson.cn>,
-	Bram Vlerick
- <bram.vlerick@openpixelsystems.org>,
-	Charles Keepax
- <ckeepax@opensource.cirrus.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Cheng-Yi
- Chiang <cychiang@chromium.org>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Daniel Mack
- <daniel@zonque.org>,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Frank Li
- <Frank.Li@nxp.com>,
-	Fred Treven <fred.treven@cirrus.com>,
-	Geert
- Uytterhoeven <geert+renesas@glider.be>,
-	Guenter Roeck
- <groeck@chromium.org>,
-	Guoqing Jiang <guoqing.jiang@canonical.com>,
-	Haojian
- Zhuang <haojian.zhuang@gmail.com>,
-	HariKrishna Sagala
- <hariconscious@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Hsieh Hung-En
- <hungen3108@gmail.com>,
-	James Ogletree <jogletre@opensource.cirrus.com>,
-	Jarkko Nikula <jarkko.nikula@bitmer.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jerome Brunet
- <jbrunet@baylibre.com>,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	Jonathan
- Hunter <jonathanh@nvidia.com>,
-	Kevin Cernekee <cernekee@chromium.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Kevin Lu <kevin-lu@ti.com>,
-	Kirill
- Marinushkin <k.marinushkin@gmail.com>,
-	Kiseok Jo
- <kiseok.jo@irondevice.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Kunihiko
- Hayashi <hayashi.kunihiko@socionext.com>,
-	Lad Prabhakar
- <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Lars-Peter Clausen
- <lars@metafoo.de>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Luca Ceresoli
- <luca.ceresoli@bootlin.com>,
-	M R Swami Reddy <mr.swami.reddy@ti.com>,
-	Mark
- Brown <broonie@kernel.org>,
-	Martin Blumenstingl
- <martin.blumenstingl@googlemail.com>,
-	Masami Hiramatsu
- <mhiramat@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Max
- Filippov <jcmvbkbc@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Nicolas Ferre
- <nicolas.ferre@microchip.com>,
-	Nicolas Frattaroli
- <frattaroli.nicolas@gmail.com>,
-	Nicolin Chen <nicoleotsuka@gmail.com>,
-	Oder
- Chiou <oder_chiou@realtek.com>,
-	Olivier Moysan
- <olivier.moysan@foss.st.com>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Peter
- Rosin <peda@lysator.liu.se>,
-	Piotr Wojtaszczyk
- <piotr.wojtaszczyk@timesys.com>,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Ray
- Jui <rjui@broadcom.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Samuel Holland
- <samuel@sholland.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Scott Branden
- <sbranden@broadcom.com>,
-	Sen Wang <sen@ti.com>,
-	Sharique Mohammad
- <sharq0406@gmail.com>,
-	Shenghao Ding <shenghao-ding@ti.com>,
-	Shengjiu Wang
- <shengjiu.wang@gmail.com>,
-	Steven Eckhoff
- <steven.eckhoff.opensource@gmail.com>,
-	Support Opensource
- <support.opensource@diasemi.com>,
-	Sylwester Nawrocki
- <s.nawrocki@samsung.com>,
-	Takashi Iwai <tiwai@suse.com>,
-	Thierry Reding
- <thierry.reding@kernel.org>,
-	Tim Bird <tim.bird@sony.com>,
-	Troy Mitchell
- <troy.mitchell@linux.spacemit.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
-	Vijendar Mukunda
- <Vijendar.Mukunda@amd.com>,
-	Vishwas A Deshpande
- <vishwas.a.deshpande@ti.com>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Xiubo Li
- <Xiubo.Lee@gmail.com>,
-	Yixun Lan <dlan@kernel.org>,
-	Zhang Yi
- <zhangyi@everest-semi.com>,
-	chrome-platform@lists.linux.dev,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mips@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-sound@vger.kernel.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 02/83] ASoC: codecs: framer-codec: don't use array if single pattarn
-In-Reply-To: <20260603140939.091f126f@bootlin.com>
-References: <8733zfj5jj.wl-kuninori.morimoto.gx@renesas.com>
-	<87zf1nhqxx.wl-kuninori.morimoto.gx@renesas.com>
-	<20260603140939.091f126f@bootlin.com>
-User-Agent: Wanderlust/2.15.9 Emacs/29.3 Mule/6.0
-Content-Type: text/plain; charset=US-ASCII
-Date: Wed, 3 Jun 2026 22:30:09 +0000
-X-ClientProxiedBy: TY4PR01CA0115.jpnprd01.prod.outlook.com
- (2603:1096:405:379::17) To TY3PR01MB11797.jpnprd01.prod.outlook.com
- (2603:1096:400:373::8)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pNByy7ks";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ac/eb8LT"
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 654EpcD1528629
+	for <spacemit@lists.linux.dev>; Thu, 4 Jun 2026 15:48:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Uw6QCWYPdO8p/liVgrtg/ryP
+	3ZKKZlZR6/0SedffSUI=; b=pNByy7ks5oSDTnmu36TN5VYqBmPDe63399FI0X6l
+	ZA88pX43aENr1iZ7AnflhF1bzR0OVso3Jw6jDP7M7e4RDnQWxLm0JulstTIvfnoG
+	BWAXc3BwzYHx4QwNVrtiutwK9IDFVM6oZVb56/G00KEELVEzCZWfoUtgAvHPHxaT
+	8zRae5m7dyfDM3wwu7GSMfNdDe3YNUQ62Qd2zVdBuT0OFNEnDd7j44NrLAOY4tdW
+	B6AX8Fi6KILGJTnnJZyLqy4MCcFkOTeqnWQsCm5v2SwoBMs5TiQc0cg+D6qTeEfk
+	AhYhIfPWZrnsr1j0XbiVghZ5NNmUXqBr6xotAKuBC2UMig==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ekbgdr97p-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Thu, 04 Jun 2026 15:48:34 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-304dd917645so783347eec.1
+        for <spacemit@lists.linux.dev>; Thu, 04 Jun 2026 08:48:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1780588113; x=1781192913; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Uw6QCWYPdO8p/liVgrtg/ryP3ZKKZlZR6/0SedffSUI=;
+        b=ac/eb8LTfjjq6tZHVz3j0CWcXPEtT6vMUy9M4U2qvApikL8i4VHTFSusO6hpHBfoBD
+         X9W3FrBHAEvdwD0A2W0d0MK92Icw7TWp8LGT75b5H2siTh4XbSENZmzp/UBoUZbhL79t
+         0OZjwiYzCfanNR3dIMNDS4kIku9B8Mv8C3TdzAhT8anNgsK2+WOoZIFF+wV7FdsVkGD8
+         9BjZ3uVENt9ECK4YdR60CQcIkQ1fXn41qYHr3sokqLHfrNQv97c7InGOxE0SeSexVObT
+         CSMrcGRrIGmnMEHJXuUGvF5mIIBw/lXb4z/IHkskqQy8N4cVekHnKk2/wvTO/5wq+zKP
+         rrZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780588113; x=1781192913;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Uw6QCWYPdO8p/liVgrtg/ryP3ZKKZlZR6/0SedffSUI=;
+        b=YQECtnc5giGPOvNPVQW47ajVZYHry+RHz77C35HRwnkUobljQD6TC8bxMHT/WpOrAl
+         zJ22SkXMIP34gNAjYgwpGMKzIXusZBuo6G7I+GMdKZEO7XKXdclEXEUChODGcEPf8HEN
+         8eIl3CJkZGZ7gTbZ1SJQ4X4JW2WawqdnGEEJz3aHpfvuHGevqldt2lfggwX6BRy1KCaM
+         4+0afQjWDNO17TKv3EoTSR8IlhAjHxFdmp20gAQCwFVFrxT+4gS4veAaINuqDkZ9KMCl
+         yvcfV7f0zBicx9Rotnkxrz+GNjyFt7cebXePuFiRBcuxAhUcKTU8qYzwKkptfHkjAtDT
+         I0Yg==
+X-Forwarded-Encrypted: i=1; AFNElJ9GMPtL0Qy/3i3KoUrjMrI0HeS+NHSJ5BQ6jLh7Mc5Y6J2+filkD1Uc+y6P8/VLl3cQBNr9JR5b0Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywk0VAva4OhRA1aDRhofD6xexLA/mdlwHW2twVfkt38VH6NCqoD
+	IROtCOqbiYaQJfIBljJmzlSg3n/ixeDKDPdqqM4ketLGpUlh2wwOwNgc7aLCix0Q9qtDnML6ka6
+	SBEGG2ZdbBX+x7AS8AMdrCc6VlzBD1xtwnmqv2k4w3rjKaEaUUkzNQ2umv0JLCQ==
+X-Gm-Gg: Acq92OFih+7FPcTVqOdov5KZMJXQjO6Qur1Z15QrtUAipZuA3uxRiVUBFw7iVF6xpWy
+	FhVRxcXHY32qmJTCBd/G0YwBoSqUL6MxW5IkYciJPIMCgFk9qGXInL+/pEfoT8RnejfWZT3yPqO
+	Qz8+H/OFO/r+q1q5C2YCcN3nedHdw0lq4QLrrzbfb3FZm//7h1OvhHZ0Mj50pw/2ksln+lWbrO3
+	encTA95aF8Y1WU/ZAMfxf2h942DO/N6pouGOpbrHRdMvTmKrW9z9bft6zglql2z1AJSihRnn+Kv
+	rMkPX6I8fRQxi8576+EsL6l7M1Mn9LM0wqz0juJCgPwxTweekr+UmEnj79eBqRme4+5kPe0q+m+
+	KMNVqQzRIpPnn2kp31srJCy2wUSUgOhi+k4daVYks1A==
+X-Received: by 2002:a05:7300:a985:b0:304:6139:5a3e with SMTP id 5a478bee46e88-3074fc35ee5mr4025045eec.34.1780588113000;
+        Thu, 04 Jun 2026 08:48:33 -0700 (PDT)
+X-Received: by 2002:a05:7300:a985:b0:304:6139:5a3e with SMTP id 5a478bee46e88-3074fc35ee5mr4025000eec.34.1780588112429;
+        Thu, 04 Jun 2026 08:48:32 -0700 (PDT)
+Received: from localhost ([140.82.166.162])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074d9fde90sm8054492eec.0.2026.06.04.08.48.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jun 2026 08:48:32 -0700 (PDT)
+Date: Thu, 4 Jun 2026 10:48:30 -0500
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+To: Guodong Xu <docular.xu@gmail.com>
+Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+        Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+        Zong Li <zong.li@sifive.com>, Deepak Gupta <debug@rivosinc.com>,
+        Anup Patel <anup@brainfault.org>, Atish Patra <atish.patra@linux.dev>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+        Chen Wang <unicorn_wang@outlook.com>,
+        Inochi Amaoto <inochiama@gmail.com>,
+        Conor Dooley <conor.dooley@microchip.com>,
+        Shuah Khan <shuah@kernel.org>, Christian Brauner <brauner@kernel.org>,
+        linux-doc@vger.kernel.org, linux-riscv@lists.infradead.org,
+        linux-kernel@vger.kernel.org, kvm@vger.kernel.org,
+        kvm-riscv@lists.infradead.org,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>,
+        devicetree@vger.kernel.org, spacemit@lists.linux.dev,
+        sophgo@lists.linux.dev, linux-kselftest@vger.kernel.org,
+        Charles Jenkins <thecharlesjenkins@gmail.com>,
+        Samuel Holland <samuel.holland@sifive.com>
+Subject: Re: [PATCH v3 08/15] riscv: Add Zic64b to cpufeature and hwprobe
+Message-ID: <4dh7hewwdowucpcz7wpg55wruh2ze4afjkk2nwxfm6pfucfnzt@pujmvbwax4ot>
+References: <20260603-rva23u64-hwprobe-v2-v3-0-5529a7b28384@gmail.com>
+ <20260603-rva23u64-hwprobe-v2-v3-8-5529a7b28384@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY3PR01MB11797:EE_|OSAPR01MB7280:EE_
-X-MS-Office365-Filtering-Correlation-Id: 12607daf-5c35-4ee7-4d86-08dec1bfabd8
-X-LD-Processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|52116014|7416014|376014|1800799024|4143699003|11063799006|56012099006|38350700014|22082099003|18002099003|41080700001;
-X-Microsoft-Antispam-Message-Info:
-	TzHfVoj7TpgdvJ0HaGWwBMagVB+iozqFbkXG3tqI/A+k0Q2rZwkMIB5Xx3ck6auLWKhc7o6+wZ4bwSxnZ9ogH8It4qEBWtw1aIsCJd11CygAQ1F4yyZtNvDSoIIp/lIJC85yb94H4WAHP87hQmsft9/ZyUOn3u/CUHqDhFepHbaIPsFIb71BPNQJk6n3dUf49wwd18j/MdGNOBeG3yJaspINvLZL1noqZINg8S/AQF66DylY/EzUUU6WtLvxbhfMDQFrznaVBzSrubhuIXUejOSR+c/RiKsDaMADknHbfX8sEqhCY233XPCJzjOD9CdgdkYMdVF6qd1DDRfSpj7Xp7eAliJrUvjQ/pz6evXYjVra64yWF9m9XZ1+TbBFnAsTRXg/DbGpN7JsR+8mfK6CF2bccqF8N7qBst00qqedEkfIQ1U8hK3lJJItYdngZMgQTYsREmzb4lQzLDoSqgNrwRc3SCyed1/YcNEtOnSyIlHKk8jXB9nHhKph5kqYOX62GmzM2lnh2humnTqNrV8Me8AJg7DL48c3WTJnupZdYNHrs0q5J21E6JYzQH5ECf7zt0RE6FBXRLn6c1axLC4DFTEMsCc6qEh0NGBWcMhwF32fZSOdZjVzcuVOmv4QlGmJXGjwUrTnCYHijp7U3rBpcGiAKjewtJQEieXKxU5wUwRU8ci7adSQI2R/1W3Qwx9z7u5upyIbtWXK1p56WD+7WayH0vfH6e8OkUyTrBR6oqpwrW5uuMy1KVIg/4z89G5fGC2T/5vZdSWTCG3Q78Uy/w==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY3PR01MB11797.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(52116014)(7416014)(376014)(1800799024)(4143699003)(11063799006)(56012099006)(38350700014)(22082099003)(18002099003)(41080700001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?lijGfEg2qt0pQmb+mOI2PAFjEPX5cvZTcz81IkTfz7udR+nM8t7IJasJJUvA?=
- =?us-ascii?Q?BkFvJ2fR+7rRjtqcfD9WtFILE68AkGFRGZgLf+1/SGECmnVxZTGtHkc6n0m5?=
- =?us-ascii?Q?z0ZmomtME2rKjn6+MJD9N1bX8ZQ9Lhg9LlSzvEIgIogY1EY+b97qbuWHWwzu?=
- =?us-ascii?Q?S+UNO0yTdFJuHat548RBYCSdywiq+Z/aiBuj/gixLL5aT9Solk26WkaJ/bbJ?=
- =?us-ascii?Q?BRByFu8MTY0oYso1I89HeeJ853ISSyvLqom7RqMbchmyPsggg4AHeP/2oWcw?=
- =?us-ascii?Q?D1tK2woenELOe9S4eZ9XvzhydxAXzlNL+Rzz3pU+o+7hw/SSOQibgCq9n87p?=
- =?us-ascii?Q?vWUm+czOwilM92gdCGaHmfngiAxHQd/dhheYlSTWMIXI02ijWSlIdMUORkdS?=
- =?us-ascii?Q?udpFHyuEIi0ewq5VVw1l36NqBWxtG+Z0xLIWIx0RnujNhxGbNXWTN1GKsKfS?=
- =?us-ascii?Q?7XSE5aTWUrfyJXvrKPKTbjgVKymunDlyBj7OpewOFWqREFbCj0C72+mQhowz?=
- =?us-ascii?Q?TxPXra3+QqOtEu/zl1AvgtUsn8pSYyGsbYNwegoxsrQD9YJVaUSr3IBRgmjw?=
- =?us-ascii?Q?j339RbHAgPrcu/nAR4xIxBQA2sO1rWWLmZ4EpFbk+ez2Q9o8zf+2nmbW5Ns5?=
- =?us-ascii?Q?9cEnW9dpfldeBEzGc9JuDspkKKrrijTOSplwLQ8RZFmkYzQwehu9tniQD1fB?=
- =?us-ascii?Q?oPyFA1Av8VrlDRZlhcUvyOSJ/4BbSED1f46A1jDRWU6rFVpdf2Kbth6RF9/q?=
- =?us-ascii?Q?3WfjMI4zS19/1BQ8GOEsS9eNRRrgYp61eMrbbYS3KH7uu6qQ3uoWlYrECcCA?=
- =?us-ascii?Q?Q/Pmp+hY9uWiP+nw2MJ93u/CE3MoqRww5y0rRajWvu1cWKwFsGQzUIfTtJaI?=
- =?us-ascii?Q?+lAtn+RdnSEN9yJ+SygTCHCAJJGKAJeHtvQsco0xD7CqYsRgq+lgFYgHl/MC?=
- =?us-ascii?Q?XhtHQOOwosIbVUeqVBLqW7WY4dhQzkfnD3oKDnWS8UNSU7P6NE7csts1roqm?=
- =?us-ascii?Q?cwfCaguCX9ky4q5Vmq1nvNR49bPEfeO14KCv08n0/TGWf3SgNVQm+jvIrO72?=
- =?us-ascii?Q?l0ry2ZVaIJhpJtkwS6Mz4dCchmJq80SlX1x6k9dwK8/ojdWJmNMXofvuLUDC?=
- =?us-ascii?Q?aydCDmVSal2VKz4C3hWRuUnGuGEIbqj0lpnSr3UyFou9GNxpg76Ghv1gH2wG?=
- =?us-ascii?Q?Cq31PW8EfXdtNBNvh8NB8A4fk1gzCEzu7/HxlqdYG4eT/mDCA59Yvi6z7aHq?=
- =?us-ascii?Q?9VvX53yqqG1rwPmdot49PgNfjS8KIdh8h8Y8fMmQ99WvWfVoa0BE791bvRip?=
- =?us-ascii?Q?iFJaBEa+yYEn5uCnfV0uXVDNrd/FnYaqBEBiGjtxdlV6NRTGvvH3lhISs4cD?=
- =?us-ascii?Q?pkCYlUo1S6rmoBUNu0GUZdWMfVemPowbfDSp6Ek777P6jfkyLWKtGtP9El0p?=
- =?us-ascii?Q?9Ghr+8TeF4ys/ILqWWMYXAnyMkRKaa2R+HzDia5nyC603B4UnX+9qkBcGfqS?=
- =?us-ascii?Q?KJCfdec5Bt1Eb44J33SLn7MJ8cYUqoSK7n9vCOnznTI7bqdM3VkPFoVwQRwj?=
- =?us-ascii?Q?b/fF7s4jePi+DBbVhWEgeJvi1XzngYhHJqpwFNUrpGp3IaC0g43/7p8064ZW?=
- =?us-ascii?Q?f4i7tmukWnPoQnaGAg/RfmYYuuJzXINCh6wMSsWz221+nQwNIX1JeervuiKF?=
- =?us-ascii?Q?q6SqRaPYePYZhToevnWWbbFBruSKi1cGVMvNACGEgRdLxUXPnmVvjVHdKyBx?=
- =?us-ascii?Q?5euAeZDvxxCg2LmKfL4PNJ+TJ2Qrl4I=3D?=
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 12607daf-5c35-4ee7-4d86-08dec1bfabd8
-X-MS-Exchange-CrossTenant-AuthSource: TY3PR01MB11797.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 22:30:10.0343
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EyC61S6I4F1H/JUrqLmYIDVpFK/SlSm13DNt6xUltouV4dvhcRjKpd8NRDA+hLX49R6tOu3NrKhHMj8PEAtVUobxHahqkGQLa4wogB/tn+T5ZY2VVwdW9b3Hw9vVFBbs
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSAPR01MB7280
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260603-rva23u64-hwprobe-v2-v3-8-5529a7b28384@gmail.com>
+X-Proofpoint-GUID: S8zIoHg9XY7i8gzIssQFoiIFJAE4JSm-
+X-Proofpoint-ORIG-GUID: S8zIoHg9XY7i8gzIssQFoiIFJAE4JSm-
+X-Authority-Analysis: v=2.4 cv=a8cAM0SF c=1 sm=1 tr=0 ts=6a219e52 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=cvcws7F5//HeuvjG1O1erQ==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=pe5oJuNUrb7EmSQ8bfMA:9 a=CjuIK1q_8ugA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDE1NCBTYWx0ZWRfX54T7zfj55HzY
+ hIMOaxnr0ROhb0RAWCYr/do5SHW+7f0vCxHJFs0PUUrTh0A+ifp0aJvfn7DgNBLLdZdCFmgPBGw
+ C4cdZV+NjkKMP1chXeItpoT8/jmvE6FCeqvgwAeA9blnZdmBO4ZsimFSSVuNTJxxNJRj1lB5+Y1
+ /d/GYaSQMYumyFhP5f1Yw00dACj/9QfqoEpCf7dx3kC7lmTTeN+peCXYRQABRVXLO6xCCoGmqEw
+ i4nnIGsHSVa4ZI+8ih6TM9i2pBd3RjLH8D7bGZXBL4Li+jvWC6o3eIFe9mT6jFnagdP1BdADvc6
+ HVag0QWX3m6Lg2IVz+wAuGM0UOuKM3LJ5l7VeSYVau6rY7ATb/fSzD7sY2B6xkPg93e2bNoJU+C
+ konLtJ6eRqSrJtSZ/Xp2jggyczqHLGj8/dxhK7VgGuTltTFoGWvf9O7AoQIX8gjz4r/qobuuqxq
+ cqgNHhpwP+Ad42W78rA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-04_04,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 clxscore=1011 suspectscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606040154
 
+On Wed, Jun 03, 2026 at 07:12:03AM -0400, Guodong Xu wrote:
+> Zic64b mandates 64-byte naturally aligned cache blocks and is a
+> mandatory extension of the RVA22 and RVA23 profiles.  Allocate a
+> RISCV_ISA_EXT_ZIC64B id, parse "zic64b" from the ISA string with a
+> validate callback that requires cbom/cbop/cboz cache block sizes of 64
+> bytes, and export it through hwprobe.
+> 
+> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
+> ---
+> v3: New patch.
+> ---
+>  Documentation/arch/riscv/hwprobe.rst  |  3 +++
+>  arch/riscv/include/asm/hwcap.h        |  1 +
+>  arch/riscv/include/uapi/asm/hwprobe.h |  1 +
+>  arch/riscv/kernel/cpufeature.c        | 18 ++++++++++++++++++
+>  arch/riscv/kernel/sys_hwprobe.c       |  1 +
+>  5 files changed, 24 insertions(+)
+> 
+> diff --git a/Documentation/arch/riscv/hwprobe.rst b/Documentation/arch/riscv/hwprobe.rst
+> index 002d5046ab689..601e81f561421 100644
+> --- a/Documentation/arch/riscv/hwprobe.rst
+> +++ b/Documentation/arch/riscv/hwprobe.rst
+> @@ -425,3 +425,6 @@ The following keys are defined:
+>    * :c:macro:`RISCV_HWPROBE_EXT_B`: The B extension is supported, as defined
+>      in version 1.0 of the Bit-Manipulation ISA extensions, and implies the
+>      presence of the Zba, Zbb, and Zbs sub-extensions.
 
-Hi Herve
+Need a blank line here.
 
-> > Because it is confusable during debugging ASoC FW update, tidyup
-> > auto format style not to use array if single pattern case.
-> > 
-> > Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-> > ---
-(snip)
-> Just a typo in the commit title:
-> s/pattarn/pattern/
+> +  * :c:macro:`RISCV_HWPROBE_EXT_ZIC64B`: The Zic64b extension is supported,
+> +    as defined in the RISC-V Profiles specification starting from commit
+> +    b1d80660 ("Updated to ratified state.")
+> diff --git a/arch/riscv/include/asm/hwcap.h b/arch/riscv/include/asm/hwcap.h
+> index 58523b3a1998a..36572c1ff438a 100644
+> --- a/arch/riscv/include/asm/hwcap.h
+> +++ b/arch/riscv/include/asm/hwcap.h
+> @@ -117,6 +117,7 @@
+>  #define RISCV_ISA_EXT_ZICCAMOA		107
+>  #define RISCV_ISA_EXT_ZICCIF		108
+>  #define RISCV_ISA_EXT_ZA64RS		109
+> +#define RISCV_ISA_EXT_ZIC64B		110
+>  
+>  #define RISCV_ISA_EXT_XLINUXENVCFG	127
+>  
+> diff --git a/arch/riscv/include/uapi/asm/hwprobe.h b/arch/riscv/include/uapi/asm/hwprobe.h
+> index 430dc49a82863..36ec8ab470423 100644
+> --- a/arch/riscv/include/uapi/asm/hwprobe.h
+> +++ b/arch/riscv/include/uapi/asm/hwprobe.h
+> @@ -122,6 +122,7 @@ struct riscv_hwprobe {
+>  #define		RISCV_HWPROBE_EXT_ZICCRSE	(1ULL << 4)
+>  #define		RISCV_HWPROBE_EXT_ZA64RS	(1ULL << 5)
+>  #define		RISCV_HWPROBE_EXT_B		(1ULL << 6)
+> +#define		RISCV_HWPROBE_EXT_ZIC64B	(1ULL << 7)
+>  
+>  /* Increase RISCV_HWPROBE_MAX_KEY when adding items. */
+>  
+> diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
+> index e0197160af6dd..79ff431768139 100644
+> --- a/arch/riscv/kernel/cpufeature.c
+> +++ b/arch/riscv/kernel/cpufeature.c
+> @@ -154,6 +154,23 @@ static int riscv_ext_zicbop_validate(const struct riscv_isa_ext_data *data,
+>  	return 0;
+>  }
+>  
+> +static int riscv_ext_zic64b_validate(const struct riscv_isa_ext_data *data,
+> +				     const unsigned long *isa_bitmap)
+> +{
+> +	/*
+> +	 * Zic64b mandates 64-byte naturally aligned cache blocks; cross-check the
+> +	 * cbom/cbop/cboz block-size device-tree properties to avoid inconsistency.
+> +	 */
+> +	if (riscv_cbom_block_size != 64 ||
+> +	    riscv_cbop_block_size != 64 ||
+> +	    riscv_cboz_block_size != 64) {
+> +		pr_err("Zic64b detected in ISA string, disabling as the cache block size is not 64 bytes\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static int riscv_ext_f_validate(const struct riscv_isa_ext_data *data,
+>  				const unsigned long *isa_bitmap)
+>  {
+> @@ -524,6 +541,7 @@ const struct riscv_isa_ext_data riscv_isa_ext[] = {
+>  	__RISCV_ISA_EXT_SUPERSET(b, RISCV_ISA_EXT_B, riscv_b_exts),
+>  	__RISCV_ISA_EXT_SUPERSET_VALIDATE(v, RISCV_ISA_EXT_V, riscv_v_exts, riscv_ext_vector_float_validate),
+>  	__RISCV_ISA_EXT_DATA(h, RISCV_ISA_EXT_H),
+> +	__RISCV_ISA_EXT_DATA_VALIDATE(zic64b, RISCV_ISA_EXT_ZIC64B, riscv_ext_zic64b_validate),
+>  	__RISCV_ISA_EXT_SUPERSET_VALIDATE(zicbom, RISCV_ISA_EXT_ZICBOM, riscv_xlinuxenvcfg_exts, riscv_ext_zicbom_validate),
+>  	__RISCV_ISA_EXT_DATA_VALIDATE(zicbop, RISCV_ISA_EXT_ZICBOP, riscv_ext_zicbop_validate),
+>  	__RISCV_ISA_EXT_SUPERSET_VALIDATE(zicboz, RISCV_ISA_EXT_ZICBOZ, riscv_xlinuxenvcfg_exts, riscv_ext_zicboz_validate),
+> diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
+> index dcc102bf8f183..3e80e5551ae0d 100644
+> --- a/arch/riscv/kernel/sys_hwprobe.c
+> +++ b/arch/riscv/kernel/sys_hwprobe.c
+> @@ -211,6 +211,7 @@ static void hwprobe_isa_ext1(struct riscv_hwprobe *pair,
+>  		EXT_KEY(isainfo->isa, ZICCRSE, pair->value, missing);
+>  		EXT_KEY(isainfo->isa, ZA64RS, pair->value, missing);
+>  		EXT_KEY(isainfo->isa, B, pair->value, missing);
+> +		EXT_KEY(isainfo->isa, ZIC64B, pair->value, missing);
+>  	}
+>  
+>  	/* Now turn off reporting features if any CPU is missing it. */
+> 
+> -- 
+> 2.43.0
+>
 
-Oops, thank you for pointing it.
-Will fix in v2
+Other than the missing blank line,
 
-Thank you for your help !!
-
-Best regards
----
-Kuninori Morimoto
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
