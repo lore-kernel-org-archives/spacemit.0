@@ -1,37 +1,66 @@
-Received: from freeshell.de (freeshell.de [116.202.128.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB50419306
-	for <spacemit@lists.linux.dev>; Fri,  5 Jun 2026 10:13:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDA8346A11
+	for <spacemit@lists.linux.dev>; Fri,  5 Jun 2026 13:15:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780654397; cv=none; b=emF4SIsYQmYn39DMV8eixlKpjBE6kO2W+l7RPOtbWKWL9qivP+akK7rqrrr7o+88MwbiBFrBcbd2BKMrJ3bENWpp/HTtVnvzGbf0gTWglDWcctDYNMJx6bBN3EFV6rrzoKNt/2j8DfKrwYkmfdbzgxCAzOVyEMyZk8c2CzyBv5g=
+	t=1780665355; cv=none; b=WzJGNF3tvutAFDDkxwzjurDK88rqqOPqxWj9wgvZm1AVD1TrnhJE6/9fctp3+Ye5/N/M8JTelC53cNw/xOS6/f6ClSG5lwdT3KezuHRu+DdgIVlW5OqCcYmDhRx+O0pv1DyZrjsk/B2KgSJSqElAzFXL2YQbo93ch6uzqz6Czx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780654397; c=relaxed/simple;
-	bh=BYZVYTJnCg0PX1gJ9dVp+6HiLzKwx2xIYiCwJzp+Cdw=;
+	s=arc-20240116; t=1780665355; c=relaxed/simple;
+	bh=8GzRpG09VCGlsJ7Ud+t3q/W6QVKe4lC7YNpFfCZi0Wo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MBmpb5sB/g4VXeLSuOd/EDzKsILPiOxyCQ7ZFUsUIhWhFOxa7g7R4lRyvWIscqvLXT5s1pLTTAJI6IskfVg8gYxAMxop7U5urXrCalyqw7pg5MUqSWRDldjcGQNxn7o+l/sptbLtqW6PWdcgxnKXYLAFr+tw9BNimgfb8HGsiEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=nQcW91k/; arc=none smtp.client-ip=116.202.128.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
+	 In-Reply-To:Content-Type; b=RvVFOlFwrwKIjLQNyjbDoBKZkaIbOQ1GVWT66DIW6F4byNvD+PHXPYd73091ok0WbLfbMZ+4zPW3VHW17dI9DELfdhoF+3YjTNm/6isgqhl5zRy00XJfiDUMXQL2/GxR+z9tlht+7xNHa3NMpUJVt/zHscu77CpFvunbFiOYP5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=T+abMvnm; arc=none smtp.client-ip=209.85.210.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="nQcW91k/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
-	s=s2025; t=1780654354;
-	bh=0lr/zu4IPfaQqyGBv4gvTpdr4/Ndpx8k3h5r0Jez7fY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nQcW91k/M1H0NM2NzjsUaNEMoqJt6rlag5zt1j8Q6ZipM4Q6fKQIm7weISZAsAGsg
-	 RWI5CY6VzERPkp/GRn+3rwsL6vfb0FalvGBFTtbnrCuGhMUk9jcVb0YFr5Z1XhmclZ
-	 Aj4BiFlzT9umvxCHfYn3H2TLc5xP2ZECa1l2XRpXzFYbnxxu1J4U7GW5RdgxhrO/LX
-	 InheyCF8HfmoiU6r0jA54Movha8YBPfHUUCcgyVkiMwQO4ha3CQxvNezSIg8M8PQPb
-	 97xZRWLaA/g/LcYCj/LyNjsaSQOi3Hu4EToZ9v1cRVsy90hfED6pGfmpVSurSEA5Z2
-	 1XC+58DNCFF9g==
-Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
-	(Authenticated sender: e)
-	by freeshell.de (Postfix) with ESMTPSA id BE0C7B22013F;
-	Fri,  5 Jun 2026 12:12:31 +0200 (CEST)
-Message-ID: <7ff3ec2b-fbc3-46b3-9dd8-71c193db4059@freeshell.de>
-Date: Fri, 5 Jun 2026 03:12:07 -0700
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="T+abMvnm"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7e6d14aaef8so820995a34.3
+        for <spacemit@lists.linux.dev>; Fri, 05 Jun 2026 06:15:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1780665349; x=1781270149; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=80H/6gzN2Fx+w9MgBdvx+Y3iWbR4+/4hOV49CAjxSdQ=;
+        b=T+abMvnmOLPglq8U1ppTt6r1U+c0nU7n2aMxnbkKQ9J/VrcXRXiHLlpW/BNDrNA48v
+         lqNr8gxS4IBJcOlKcHfe7Ra8/4oIY6JEAxqmfo5+PJIIIwd/pxJxZzDM3zK7ESjNAuWG
+         OaJZRt1ji03tJLsQvkCGjDqdKfjWh22kPh3uYlkXrNnLz3HvGc9FudUNtUE8wTQWbxPN
+         nPu3Cz3UsjkUejxHR7jOMZYpSoDuNUdLqsuXk1RIlO/Y+3vphweVlIjQFtXrqGlCn5iZ
+         BPhsAp6adBVDNfR+5wNlOunEarovbB1u5e9x21Em6qkRZjpgy0LbShgOVyRUmxKIvHor
+         JBYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780665349; x=1781270149;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=80H/6gzN2Fx+w9MgBdvx+Y3iWbR4+/4hOV49CAjxSdQ=;
+        b=RPknbO4HWFZO139Npwyu7530Oe3nNHgAO3UIcJwGp1OFnQrGkQg+4WXmJ8uCwNzu6a
+         4R3Iq9rRupWRHI746B684yCn5j63B+CcCevrx3fh4wXwJcxVBJGBWEZDcxRUCkT1u3EL
+         XOdzaMGDy/gju5118s66Op/GA4REH3weIC4/YS8hGlq8BjhC++xEtJyU5xnhGRD6fDQ+
+         87j4/zgqNl8yUOdTiHOZlaJN1IBUsrqW2i+Vo4awttiQaxjb7qwHljbolL/bmQSmR88Y
+         je0+GnGhvxozEKDqnK2qPQceEgHoQZAIL4D36I9znOatTYVx/r02F9gx0SNE/qD+2B+x
+         3gpA==
+X-Forwarded-Encrypted: i=1; AFNElJ8S1mJ4Mdh/scRaUy1EIbqAkpy5ji8R6tDkjaFgSPk4zmOx95L2SWA3cf9oPC43VPNJq/PSrFbdKQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxt1grfj6VUnyDymx1m7XafgGMc0JRiWIsStNIUK56dAvaIkiOa
+	Y8ZJICG8DNljl2MRflLkDWkXAYMf0uNg4gOOvMLWR72ceTW7Pim8gJTO3RseSnWwczI=
+X-Gm-Gg: Acq92OEuy8GJ/LQEPEQgvtKVa7rSfLcg8Gwyg2xBdBW3rIFdaEMDKde6+3KmAfLnirC
+	evE3XW4Kv6sweHPbNQprXWXtYHvIMvt2Vs7ctoE4Qfk+jMIiR8Ta95KK7AMN9sAoyMP3v7lYieE
+	rtiFf8KlosFAk5wMNbebg7CjX0i21s1X1+IZo1Ej7Ernc9k0j3UsDTBih4zJeq11tYOw96wr4SY
+	duMYr+Llf8mgdMsfdQ5/gggCe37AKkD5U/mAqaRud5izvaGBMwc9+80A7z7OczWKjovGL3hmtyj
+	r98ljHS+/cx/vVW1BhPGugaKHZ6QEOBDtSB57F8GrxvoYTaO+wFD3YKUhxNY5cJMJw+PfqMjp9R
+	+nnaehd94k2jFqRFDZe80Z3up2N1RxyUQweaQSPXBtC1XfagqfzuEZSByS1v8SkdQOPf1zMCNG+
+	rW/MtleKs6zJv0rIy6acOP24nrZ+qIz33hn1M=
+X-Received: by 2002:a05:6830:2714:b0:7e6:f709:a2bb with SMTP id 46e09a7af769-7e70ca505d5mr1629026a34.20.1780665349316;
+        Fri, 05 Jun 2026 06:15:49 -0700 (PDT)
+Received: from [172.22.22.234] ([73.62.185.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e6e746965asm5812794a34.4.2026.06.05.06.15.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Jun 2026 06:15:48 -0700 (PDT)
+Message-ID: <db056a30-7b09-41f1-bae3-42dafb73cbfc@riscstar.com>
+Date: Fri, 5 Jun 2026 08:15:46 -0500
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -39,198 +68,417 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dts: riscv: spacemit: k3: Fix I/O power settings
-To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Inochi Amaoto <inochiama@gmail.com>,
- Han Gao <gaohan@iscas.ac.cn>, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20260518-07-dts-pinctrl-io-power-v1-1-abe19c14a726@kernel.org>
- <9585b7c7-100c-4d77-bed1-d2b6b25b3940@freeshell.de>
- <20260605085802-GKD3727415@kernel.org>
+Subject: Re: [PATCH v7 1/2] i2c: spacemit: configure ILCR/IWCR for accurate
+ SCL frequency
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@kernel.org>
+Cc: linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+References: <20260508-k1-i2c-ilcr-v7-0-8c2dde5c3ed5@linux.spacemit.com>
+ <20260508-k1-i2c-ilcr-v7-1-8c2dde5c3ed5@linux.spacemit.com>
 Content-Language: en-US
-From: E Shattow <e@freeshell.de>
-In-Reply-To: <20260605085802-GKD3727415@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20260508-k1-i2c-ilcr-v7-1-8c2dde5c3ed5@linux.spacemit.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-On 6/5/26 01:58, Yixun Lan wrote:
-> Hi E Shattow,
+On 5/8/26 2:25 AM, Troy Mitchell wrote:
+> The SpacemiT I2C controller's SCL (Serial Clock Line) frequency for
+> master mode operations is determined by the ILCR (I2C Load Count Register).
+> Previously, the driver relied on the hardware's reset default
+> values for this register.
 > 
-> On 13:17 Wed 03 Jun     , E Shattow wrote:
->>
->> Hi Yixun,
->>
->> This property on its own does not seem to be enough to get the ethernet
->> network port functional on Sipeed K3 Pico-ITX 32GB model that I have,
->> when it is loading Debian 13 Trixie debian-installer netinst initramfs
->> (with cross-compiled Linux kernel and modules from -next 20260602).
->>
-> I don't think your problem directly connect to this pacth..
+> The hardware's default ILCR values (SLV=0x156, FLV=0x5d) yield SCL
+> frequencies lower than intended. For example, with the default
+> 31.5 MHz input clock, these default settings result in an SCL
+> frequency of approximately 93 kHz (standard mode) when targeting 100 kHz,
+> and approximately 338 kHz (fast mode) when targeting 400 kHz.
+> These frequencies are below the 100 kHz/400 kHz nominal speeds.
 > 
->> Reproducer instructions for cross-compiling and debian-installer netinst
->> initramfs modification at:
->> https://wiki.debian.org/InstallingDebianOn/SpacemiT/K3PicoITX?action=recall&rev=2
->>
->> In addition to those instructions above I am using within the factory
->> pre-installed vendor U-Boot the following commands to try what your
->> patch does:
->>
->> fdt addr $fdt_addr_r
->> fdt resize
->> fdt header get filesize totalsize
->> fdt rm /soc/pinctrl@d401e000 spacemit,apbc
->> fdt get value spacemit_apbc_phandle /soc/system-controller@d4015000 phandle
->> fdt set /soc/pinctrl@d401e000 spacemit,apbc <$spacemit_apbc_phandle>
->>
->> I then verify within Linux environment the presence of
->> /sys/firmware/devicetree/base/soc/pinctrl@d401e000/spacemit,apbc
->>
->> The same Linux kernel and modules as modified into the installer then do
->> have functional ethernet networking on that board if running from the
->> installed system and with the spacemit,apbc devicetree property. Is this
->> a dependency or ordering issue of the modules, or the Kconfig options?
->>
-> I've checked with the failure kernel dmesg log (you provided offline),
-> the dwmac driver has been probed twice, with first time failed, it
-> might be the PHY driver not been initialized, adjust following 
-> configuration works for me..
+> This patch integrates the SCL frequency management into
+> the Common Clock Framework (CCF). Specifically, the ILCR register,
+> which acts as a frequency divider for the SCL clock, is now registered
+> as a managed clock (scl_clk) within the CCF.
 > 
-> CONFIG_STMMAC_ETH=y
-> CONFIG_REALTEK_PHY=y
-> CONFIG_I2C_K1=y
+> The actual hardware timing formulas are:
+> - standard mode: SCL = FCLK / (2 * SLV + 8)
+> - fast mode:     SCL = FCLK / (2 * FLV + 10)
 > 
-> the PMIC/Power Regulator rely on I2C driver..
+> These formulas are only valid when the IWCR (Wait Count Register) is
+> programmed to 0x142A, a value specified by the I2C IP designer. The
+> driver now initializes IWCR to this value during controller init.
 > 
->> Also, the more general problem is that cycling rmmod and modprobe on the
->> ethernet networking related modules fails:
->>
->> rmmod dwmac_spacemit
->> rmmod stmmac_platform
->> rmmod stmmac
->> rmmod mdio
->> modprobe dwmac_spacemit
->>
->> [ 1487.618517] mdio_bus stmmac-0: MDIO device at address 1 is missing.
->>
->> [ 1487.623815] spacemit-dwmac cac80000.ethernet end0: renamed from eth0
->>
->> rmmod dwmac_spacemit
->> rmmod stmmac_platform
->> rmmod stmmac
->> rmmod mdio
->> modprobe dwmac_spacemit
->>
-> Need to investigate, could be problem of resource deinitialization issue..
+> Reviewed-by: Yixun Lan <dlan@gentoo.org>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
+I have several comments below, but none of them are really
+critical, they're just suggestions.  Consider incorporating
+each of them, but that's up to you.  Either way:
+
+Reviewed-by: Alex Elder <elder@riscstar.com>
+
+> ---
+> Changelog in v7:
+> - break SPACEMIT_IWCR_INIT_VALUE into FIELD_PREP fields with GENMASK definitions
+> - extract spacemit_i2c_calc_lv() as shared helper for set_rate and determine_rate
+> - switch from devm_clk_register() to devm_clk_hw_register() (deprecated API)
+> - use devm_clk_hw_get_clk() to obtain struct clk* from clk_hw
+> - Link to v6: https://lore.kernel.org/all/20260429-k1-i2c-ilcr-v6-1-1c7a5a5a8b24@linux.spacemit.com/
 > 
->> [ 1539.374486] spacemit-dwmac cac80000.ethernet end0: cannot attach to
->> PHY (erro
->> r: -ENODEV)
->> [ 1615.299451] spacemit-dwmac cac80000.ethernet end0: stmmac_dvr_remove:
->> removin
->> g driver
->>
->> Please advise how to troubleshoot?  Thanks,
->>
->> - E Shattow
->>
+> Changelog in v6:
+> - fix SCL frequency calculation to match hardware timing formulas
+>    (SCL = FCLK / (2*SLV+8) for standard, FCLK / (2*FLV+10) for fast)
+> - initialize IWCR to 0x142A during init(required by I2C IP for
+>    correct SCL timing)
+> - use DIV_ROUND_CLOSEST() instead of DIV_ROUND_UP() for more accurate frequency
+> - use field_prep() instead of manual bit shift for ILCR register programming
+> - replace .round_rate with .determine_rate (round_rate was removed from clk_ops)
+> - remove _MAX_VALUE macros (no longer needed after removing max_lv validation)
+> - remove redundant max_lv validation in set_rate (determine_rate guarantees valid values)
+> - simplify scl_clk_disable_unprepare callback to take clk pointer directly
+> - remove unused parent parameter from spacemit_i2c_register_scl_clk()
+> - remove stale description about whitespace cleanup from commit message
+> - Link to v5: https://lore.kernel.org/r/20251226-k1-i2c-ilcr-v5-0-b5807b7dd0e6@linux.spacemit.com
+> 
+> Changelog in v5:
+> - use __ffs() instead of *_SHIFT
+> - remove useless *_SHIFT
+> - check return value when scl clk name array is truncated
+> - rebase to v6.19-rc1
+> - Link to v3: https://lore.kernel.org/all/20251017-k1-i2c-ilcr-v4-1-eed4903ecdb9@linux.spacemit.com/
+> 
+> Changelog in v4:
+> - initialize clk_init_data with {} so that init.flags is implicitly set to 0
+> - minor cleanup and style fixes for better readability
+> - remove unused spacemit_i2c_scl_clk_exclusive_put() cleanup callback
+> - replace clk_set_rate_exclusive()/clk_rate_exclusive_put() pair with clk_set_rate()
+> - simplify LCR LV field macros by using FIELD_GET/FIELD_MAX helpers
+> - Link to v3: https://lore.kernel.org/all/20250814-k1-i2c-ilcr-v3-1-317723e74bcd@linux.spacemit.com/
+> 
+> Changelog in v3:
+> - use MASK macro in `recalc_rate` function
+> - rename clock name
+> - Link to v2: https://lore.kernel.org/r/20250718-k1-i2c-ilcr-v2-1-b4c68f13dcb1@linux.spacemit.com
+> 
+> Changelog in v2:
+> - Align line breaks.
+> - Check `lv` in `clk_set_rate` function.
+> - Force fast mode when SCL frequency is illegal or unavailable.
+> - Change "linux/bits.h" to <linux/bits.h>
+> - Kconfig: Add dependency on CCF.
+> - Link to v1: https://lore.kernel.org/all/20250710-k1-i2c-ilcr-v1-1-188d1f460c7d@linux.spacemit.com/
+> ---
+>   drivers/i2c/busses/Kconfig  |   2 +-
+>   drivers/i2c/busses/i2c-k1.c | 174 ++++++++++++++++++++++++++++++++++++++++++--
+>   2 files changed, 167 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
+> index 8c935f867a37..89898fff1967 100644
+> --- a/drivers/i2c/busses/Kconfig
+> +++ b/drivers/i2c/busses/Kconfig
+> @@ -793,7 +793,7 @@ config I2C_JZ4780
+>   config I2C_K1
+>   	tristate "SpacemiT K1 I2C adapter"
+>   	depends on ARCH_SPACEMIT || COMPILE_TEST
+> -	depends on OF
+> +	depends on OF && COMMON_CLK
+>   	help
+>   	  This option enables support for the I2C interface on the SpacemiT K1
+>   	  platform.
+> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+> index 9152cf436bea..c6fe2052e479 100644
+> --- a/drivers/i2c/busses/i2c-k1.c
+> +++ b/drivers/i2c/busses/i2c-k1.c
+> @@ -4,7 +4,9 @@
+>    */
+>   
+>   #include <linux/bitfield.h>
+> +#include <linux/bits.h>
+>   #include <linux/clk.h>
+> +#include <linux/clk-provider.h>
+>   #include <linux/i2c.h>
+>   #include <linux/iopoll.h>
+>   #include <linux/module.h>
+> @@ -17,6 +19,8 @@
+>   #define SPACEMIT_ISR		 0x4		/* Status register */
+>   #define SPACEMIT_IDBR		 0xc		/* Data buffer register */
+>   #define SPACEMIT_IRCR		 0x18		/* Reset cycle counter */
+> +#define SPACEMIT_ILCR		 0x10		/* Load Count Register */
+> +#define SPACEMIT_IWCR		 0x14		/* Wait Count Register */
+>   #define SPACEMIT_IBMR		 0x1c		/* Bus monitor register */
+>   
+>   /* SPACEMIT_ICR register fields */
+> @@ -88,6 +92,19 @@
+>   #define SPACEMIT_BMR_SDA         BIT(0)		/* SDA line level */
+>   #define SPACEMIT_BMR_SCL         BIT(1)		/* SCL line level */
+>   
+
+/* SPACEMIT_ILCR register fields */
+
+> +#define SPACEMIT_LCR_LV_STANDARD_MASK		GENMASK(8, 0)
+> +#define SPACEMIT_LCR_LV_FAST_MASK		GENMASK(17, 9)
+> +
+> +/* SPACEMIT_IWCR register fields */
+> +#define SPACEMIT_WCR_COUNT			GENMASK(4, 0)
+> +#define SPACEMIT_WCR_HS_COUNT1			GENMASK(9, 5)
+> +#define SPACEMIT_WCR_HS_COUNT2			GENMASK(14, 10)
+> +
+> +/* Required by I2C IP for correct SCL timing */
+> +#define SPACEMIT_IWCR_INIT_VALUE		(FIELD_PREP(SPACEMIT_WCR_COUNT, 10) | \
+> +						 FIELD_PREP(SPACEMIT_WCR_HS_COUNT1, 1) | \
+> +						 FIELD_PREP(SPACEMIT_WCR_HS_COUNT2, 5))
+> +
+>   /* i2c bus recover timeout: us */
+>   #define SPACEMIT_I2C_BUS_BUSY_TIMEOUT		100000
+>   
+> @@ -109,11 +126,20 @@ enum spacemit_i2c_state {
+>   	SPACEMIT_STATE_WRITE,
+>   };
+>   
+> +enum spacemit_i2c_mode {
+> +	SPACEMIT_MODE_STANDARD,
+> +	SPACEMIT_MODE_FAST
+> +};
+> +
+>   /* i2c-spacemit driver's main struct */
+>   struct spacemit_i2c_dev {
+>   	struct device *dev;
+>   	struct i2c_adapter adapt;
+>   
+> +	struct clk_hw scl_clk_hw;
+> +	struct clk *scl_clk;
+> +	enum spacemit_i2c_mode mode;
+> +
+>   	/* hardware resources */
+>   	void __iomem *base;
+>   	int irq;
+> @@ -135,6 +161,85 @@ struct spacemit_i2c_dev {
+>   	u32 status;
+>   };
+>   
+> +static void spacemit_i2c_scl_clk_disable_unprepare(void *data)
+> +{
+
+I know a cast from void pointer is not needed, but I normally
+would expect to see this here:
+
+	struct clk *clk = data;
+
+> +	clk_disable_unprepare(data);
+> +}
+> +
+> +/*
+> + * Calculate the ILCR divider value (lv) from the target SCL rate.
+> + *
+> + * Hardware timing formulas:
+> + * - standard mode: SCL = FCLK / (2 * SLV + 8)
+> + * - fast mode:     SCL = FCLK / (2 * FLV + 10)
+
+This is a very clear description of what you're doing here.
+
+> + */
+> +static u32 spacemit_i2c_calc_lv(struct spacemit_i2c_dev *i2c,
+> +				unsigned long parent_rate,
+> +				unsigned long target_rate)
+> +{
+> +	u32 offset, denom;
+> +
+> +	offset = (i2c->mode == SPACEMIT_MODE_STANDARD) ? 8 : 10;
+
+No need for the parentheses above.
+
+> +	denom = DIV_ROUND_CLOSEST(parent_rate, target_rate);
+> +
+> +	return (denom <= offset) ? 0 : DIV_ROUND_CLOSEST(denom - offset, 2);
+
+Parentheses are not needed here around the condition here either
+(and in general for simple ternary conditional operators).
+
+> +}
+> +
+> +static int spacemit_i2c_clk_set_rate(struct clk_hw *hw, unsigned long rate,
+> +				     unsigned long parent_rate)
+> +{
+> +	struct spacemit_i2c_dev *i2c = container_of(hw, struct spacemit_i2c_dev, scl_clk_hw);
+> +	u32 lv, lcr, mask;
+> +
+> +	lv = spacemit_i2c_calc_lv(i2c, parent_rate, rate);
+> +
+> +	mask = (i2c->mode == SPACEMIT_MODE_STANDARD) ?
+> +		SPACEMIT_LCR_LV_STANDARD_MASK : SPACEMIT_LCR_LV_FAST_MASK;
+> +
+> +	lcr = readl(i2c->base + SPACEMIT_ILCR);
+> +	lcr &= ~mask;
+> +	lcr |= field_prep(mask, lv);
+> +	writel(lcr, i2c->base + SPACEMIT_ILCR);
+> +
+> +	return 0;
+> +}
+> +
+> +static int spacemit_i2c_clk_determine_rate(struct clk_hw *hw,
+> +					   struct clk_rate_request *req)
+> +{
+> +	struct spacemit_i2c_dev *i2c = container_of(hw, struct spacemit_i2c_dev, scl_clk_hw);
+> +	u32 lv, offset;
+> +
+> +	lv = spacemit_i2c_calc_lv(i2c, req->best_parent_rate, req->rate);
+> +	offset = (i2c->mode == SPACEMIT_MODE_STANDARD) ? 8 : 10;
+> +	req->rate = DIV_ROUND_CLOSEST(req->best_parent_rate, lv * 2 + offset);
+> +
+> +	return 0;
+> +}
+> +
+> +static unsigned long spacemit_i2c_clk_recalc_rate(struct clk_hw *hw,
+> +						  unsigned long parent_rate)
+> +{
+> +	struct spacemit_i2c_dev *i2c = container_of(hw, struct spacemit_i2c_dev, scl_clk_hw);
+> +	u32 lcr, lv = 0;
+> +
+> +	lcr = readl(i2c->base + SPACEMIT_ILCR);
+> +
+
+You could structure this function a little more like
+spacemit_i2c_clk_determine_rate().
+
+Or you could create a tiny helper that computes the rate,
+given the parent rate, lv, and mode.  The main reason for
+doing that is that the "complex" math is isolated rather
+than duplicated.
+
+> +	if (i2c->mode == SPACEMIT_MODE_STANDARD) {
+> +		lv = FIELD_GET(SPACEMIT_LCR_LV_STANDARD_MASK, lcr);
+> +		return DIV_ROUND_CLOSEST(parent_rate, lv * 2 + 8);
+> +	}
+> +
+> +	lv = FIELD_GET(SPACEMIT_LCR_LV_FAST_MASK, lcr);
+> +	return DIV_ROUND_CLOSEST(parent_rate, lv * 2 + 10);
+> +}
+> +
+> +static const struct clk_ops spacemit_i2c_clk_ops = {
+> +	.set_rate = spacemit_i2c_clk_set_rate,
+> +	.determine_rate = spacemit_i2c_clk_determine_rate,
+> +	.recalc_rate = spacemit_i2c_clk_recalc_rate,
+> +};
+> +
+>   static void spacemit_i2c_enable(struct spacemit_i2c_dev *i2c)
+>   {
+>   	u32 val;
+> @@ -153,6 +258,28 @@ static void spacemit_i2c_disable(struct spacemit_i2c_dev *i2c)
+>   	writel(val, i2c->base + SPACEMIT_ICR);
+>   }
+>   
+> +static int spacemit_i2c_register_scl_clk(struct spacemit_i2c_dev *i2c)
+> +{
+> +	struct clk_init_data init = {};
+> +	char name[64];
+> +	int ret;
+> +
+> +	ret = snprintf(name, sizeof(name), "%s_scl_clk", dev_name(i2c->dev));
+> +	if (ret >= ARRAY_SIZE(name))
+> +		dev_warn(i2c->dev, "scl clock name truncated");
+> +
+> +	init.name = name;
+> +	init.ops = &spacemit_i2c_clk_ops;
+> +	init.parent_data = (struct clk_parent_data[]) {
+> +		{ .fw_name = "func" },
+> +	};
+> +	init.num_parents = 1;
+> +
+> +	i2c->scl_clk_hw.init = &init;
+> +
+> +	return devm_clk_hw_register(i2c->dev, &i2c->scl_clk_hw);
+> +}
+> +
+>   static void spacemit_i2c_reset(struct spacemit_i2c_dev *i2c)
+>   {
+>   	writel(SPACEMIT_CR_UR, i2c->base + SPACEMIT_ICR);
+> @@ -286,7 +413,7 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
+>   		val |= SPACEMIT_CR_MSDIE;
+>   	}
+>   
+> -	if (i2c->clock_freq == SPACEMIT_I2C_MAX_FAST_MODE_FREQ)
+> +	if (i2c->mode == SPACEMIT_MODE_FAST)
+>   		val |= SPACEMIT_CR_MODE_FAST;
+>   
+>   	/* disable response to general call */
+> @@ -309,6 +436,14 @@ static void spacemit_i2c_init(struct spacemit_i2c_dev *i2c)
+>   	writel(val, i2c->base + SPACEMIT_IRCR);
+>   
+>   	spacemit_i2c_clear_int_status(i2c, SPACEMIT_I2C_INT_STATUS_MASK);
+> +
+> +	/*
+> +	 * Initialize IWCR to the value specified by the I2C IP designer.
+> +	 * The SCL frequency formulas (SCL = FCLK / (2*SLV+8) for standard
+> +	 * mode, SCL = FCLK / (2*FLV+10) for fast mode) are only valid when
+> +	 * IWCR contains this specific value.
+> +	 */
+
+Nice explanation for writing the magic number.
+
+					-Alex
+
+> +	writel(SPACEMIT_IWCR_INIT_VALUE, i2c->base + SPACEMIT_IWCR);
+>   }
+>   
+>   static void spacemit_i2c_start(struct spacemit_i2c_dev *i2c)
+> @@ -703,14 +838,15 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+>   		dev_warn(dev, "failed to read clock-frequency property: %d\n", ret);
+>   
+>   	/* For now, this driver doesn't support high-speed. */
+> -	if (!i2c->clock_freq || i2c->clock_freq > SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
+> -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+> -			 i2c->clock_freq, SPACEMIT_I2C_MAX_FAST_MODE_FREQ);
+> +	if (i2c->clock_freq > SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ &&
+> +	    i2c->clock_freq <= SPACEMIT_I2C_MAX_FAST_MODE_FREQ) {
+> +		i2c->mode = SPACEMIT_MODE_FAST;
+> +	} else if (i2c->clock_freq && i2c->clock_freq <= SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+> +		i2c->mode = SPACEMIT_MODE_STANDARD;
+> +	} else {
+> +		dev_warn(i2c->dev, "invalid clock-frequency, fallback to fast mode");
+> +		i2c->mode = SPACEMIT_MODE_FAST;
+>   		i2c->clock_freq = SPACEMIT_I2C_MAX_FAST_MODE_FREQ;
+> -	} else if (i2c->clock_freq < SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ) {
+> -		dev_warn(dev, "unsupported clock frequency %u; using %u\n",
+> -			 i2c->clock_freq,  SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ);
+> -		i2c->clock_freq = SPACEMIT_I2C_MAX_STANDARD_MODE_FREQ;
+>   	}
+>   
+>   	i2c->dev = &pdev->dev;
+> @@ -732,6 +868,15 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+>   	if (IS_ERR(clk))
+>   		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable func clock");
+>   
+> +	ret = spacemit_i2c_register_scl_clk(i2c);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to register scl clock\n");
+> +
+> +	i2c->scl_clk = devm_clk_hw_get_clk(dev, &i2c->scl_clk_hw, "scl");
+> +	if (IS_ERR(i2c->scl_clk))
+> +		return dev_err_probe(dev, PTR_ERR(i2c->scl_clk),
+> +				     "failed to get scl clock\n");
+> +
+>   	clk = devm_clk_get_enabled(dev, "bus");
+>   	if (IS_ERR(clk))
+>   		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable bus clock");
+> @@ -741,6 +886,19 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+>   		return dev_err_probe(dev, PTR_ERR(rst),
+>   				     "failed to acquire deasserted reset\n");
+>   
+> +	ret = clk_set_rate(i2c->scl_clk, i2c->clock_freq);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to set rate for SCL clock");
+> +
+> +	ret = clk_prepare_enable(i2c->scl_clk);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to prepare and enable clock");
+> +
+> +	ret = devm_add_action_or_reset(dev, spacemit_i2c_scl_clk_disable_unprepare,
+> +				       i2c->scl_clk);
+> +	if (ret)
+> +		return ret;
+> +
+>   	spacemit_i2c_reset(i2c);
+>   
+>   	i2c_set_adapdata(&i2c->adapt, i2c);
 > 
 
-Yes, confirming now that the network is functional (with -next 20260603
-from 4th Jun 2026, inclusive of this patch as-is) in debian-installer
-netinst by manually configure and ping the network interface before the
-application begins the network probe action. After the network probe
-action the network device is not reachable.
-
-I'm not experienced with internals of debian-installer to know if the
-module is rmmod/modprobe cycled or how else this may be triggered by the
-debian-installer application and its network probe action. I do note the
-following, that 'lsmod' output has changed:
-
- Module                  Size  Used by
- sd_mod                167936  0
- uas                    36864  0
- usb_storage           110592  1 uas
- scsi_mod              405504  3 sd_mod,usb_storage,uas
- scsi_common            20480  4 scsi_mod,sd_mod,usb_storage,uas
- onboard_usb_dev        24576  0
- xhci_plat_hcd          24576  0
- xhci_hcd              569344  1 xhci_plat_hcd
- dwc3_generic_plat      12288  0
- dwc3                  471040  1 dwc3_generic_plat
--realtek                61440  0
-+realtek                61440  1
- phy_package            16384  1 realtek
- udc_core              114688  1 dwc3
- roles                  20480  1 dwc3
- dwmac_spacemit         12288  0
- stmmac_platform        40960  1 dwmac_spacemit
- stmmac                495616  2 stmmac_platform,dwmac_spacemit
- usbcore               536576  6
-xhci_hcd,onboard_usb_dev,usb_storage,uas,xhci_pl
- at_hcd,dwc3
- pcs_xpcs               36864  1 stmmac
- phylink               118784  2 stmmac,pcs_xpcs
- i2c_k1                 28672  0
- usb_common             24576  6
-xhci_hcd,usbcore,dwc3_generic_plat,xhci_plat_hcd
- ,dwc3,udc_core
- phy_k1_usb2            12288  2
-
-before and after probe respectively. There is no other change in the
-'lsmod' output. The corresponding change in dmesg as follows:
-
- [    4.911996]  sda: sda1
-
- [    4.912160] sd 0:0:0:0: [sda] Attached SCSI removable disk
-
- [   14.820291] workqueue: work func deferred_probe_timeout_work_func
-enqueued on deprecated workqueue. Use system_{percpu|dfl}_wq instead.
-
-+[   33.767106] dldo4: disabling
-
-+[   47.890240] spacemit-dwmac cac80000.ethernet end0: Register
-MEM_TYPE_PAGE_POOL RxQ-0
-+[   47.920334] spacemit-dwmac cac80000.ethernet end0: PHY [stmmac-0:01]
-driver [RTL8211F Gigabit Ethernet] (irq=POLL)
-
-+[   47.921411] dwmac4: Master AXI performs any burst length
-
-+[   47.921426] spacemit-dwmac cac80000.ethernet end0: No Safety
-Features support found
-+[   47.921791] spacemit-dwmac cac80000.ethernet end0: IEEE 1588-2008
-Advanced Timestamp supported
-
-+[   47.921958] spacemit-dwmac cac80000.ethernet end0: registered PTP
-clock
-+[   47.921966] spacemit-dwmac cac80000.ethernet end0: configuring for
-phy/rgmii-id link mode
-
-+[   49.087144] spacemit-dwmac cac80000.ethernet end0: Register
-MEM_TYPE_PAGE_POOL RxQ-0
-+[   49.128304] spacemit-dwmac cac80000.ethernet end0: PHY [stmmac-0:01]
-driver [RTL8211F Gigabit Ethernet] (irq=POLL)
-
-+[   49.238342] dwmac4: Master AXI performs any burst length
-
-+[   49.238357] spacemit-dwmac cac80000.ethernet end0: No Safety
-Features support found
-+[   49.238400] spacemit-dwmac cac80000.ethernet end0: IEEE 1588-2008
-Advanced Timestamp supported
-
-+[   49.238580] spacemit-dwmac cac80000.ethernet end0: registered PTP
-clock
-+[   49.238588] spacemit-dwmac cac80000.ethernet end0: configuring for
-phy/rgmii-id link mode
-
-+[   52.325163] spacemit-dwmac cac80000.ethernet end0: Link is Up -
-1Gbps/Full - flow control rx/tx
-
-Thanks for looking into this,
-
--E
