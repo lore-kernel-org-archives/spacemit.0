@@ -1,67 +1,67 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DA836D51D
-	for <spacemit@lists.linux.dev>; Tue,  9 Jun 2026 19:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D93341166A
+	for <spacemit@lists.linux.dev>; Tue,  9 Jun 2026 19:47:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781034454; cv=none; b=XmP8ITYzNq0hos7EDVIeb2YOpbQXvTTO9GViod1kp70Row0eFZAhFwIVUunEg6R1rlIjuLeuNVVmtwc4JLN22ccbYhLpau1rnDrhi24L8XH0N4KjofMXbplulb21rbLEXL/PtmBgL4giKGhOlxg8m+UNtT23nSOeHCTwXKnZXJ4=
+	t=1781034459; cv=none; b=cgZWYzCjWVUuTdijCjlWq6j9p3glFuUkG5U+duHEYu/I67yWKXfsR1zkRfIT7MoLUw/lL5ESyhfulStsHrEQxzVp7jkcsIdU0797jaEdknHY37GBMNYd4NwyOLNkrgDGB7kq1edGXq7rDQsF78tsm26fX0OQgi2p8ItoLxouCik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781034454; c=relaxed/simple;
-	bh=EzzIUT5MAy1lGbLLNCNBDiXKEEHYTWLc2oHrRYIeMQA=;
+	s=arc-20240116; t=1781034459; c=relaxed/simple;
+	bh=H/kR+2HYwlqkml7voLWdHY49vUjyuP/Tsib1MnxQLD4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Zc56HUu6UzVh3uRWTMFRF4Rwto8sXqSjRb/qzpChPG3dSEVPPigtXB9CFyVqCgB+BzTjccV46mh5F7gnnj/WWUc9oT7y0855TmJ4PoV7iDRlq0EV94a68UNcoTAUKTYxEUkRrgdYbcNpVsdsoCtEz8tq+fkVlsI4hS9NByh1/R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SAGgIwFC; arc=none smtp.client-ip=209.85.215.176
+	 In-Reply-To:To:Cc; b=oufA2/gJiZ3y/eF6ubR+0sGBiZq+N2hKD1CS9FjAHfbyfOt4XyLokQxkdQNvilVzW+fxKVVvjvEm1B5XKx+aeJmVjNCZNahHQeLFcryBrNEJpJLDwE4uONQM4SHN/DZZNb0KCkiWppE2Dfhh6q5TCmlTnYSh2K5X4zUXbcDwaJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BbBclbrD; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SAGgIwFC"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c85a297d2d2so3522146a12.0
-        for <spacemit@lists.linux.dev>; Tue, 09 Jun 2026 12:47:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BbBclbrD"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-36bcbd7821fso2590779a91.2
+        for <spacemit@lists.linux.dev>; Tue, 09 Jun 2026 12:47:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781034448; x=1781639248; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781034452; x=1781639252; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ai+yr6kaqjO1MjNvHgFNGMTR2U+5LiRo2MrcPACWJdo=;
-        b=SAGgIwFCNNvqbVUwhybXrCTKoNnN33rydsVWRQ+cLNk1fr0YMG5JhPmADz76uWI+f5
-         2KU5buTtwymcYTFXWka18OFf6MGpEM3WTlySFKjQ/NlBTrZ2XmMVPFNPlpWnfG4iQtZ1
-         QItRaL7o99rkjyVziSRZLdTft+yjFiFSz44FxlEleNh8krR/fEISD9YzW4/wgG6c21gE
-         Fm96m6DtIbx1p/DMPiYfRwCidXTuDGFZEcAJKRmsTzmnYfsK9Jauwf03zyqRCE02wKRt
-         pHHxBjla1sJy3c4cIgYOfFmbwNnsukDAUJEwNKoyfux4ycXqHDhinCelqqQaZNA5vqyT
-         WEtA==
+        bh=MpR6igjuZL+55NUetVLOlJ7WyoEDc1JskAO0eU1M5r0=;
+        b=BbBclbrD+wN/ueorTdvqiIETJh0kYu+KVZhp8xPaFRTdzUR9+bd/ckZLc+QpwMc6OU
+         nHhLG0/qBsOZjx7NzYFmRyN1FxaqRlcxa9h18sQvztGvugGwe61CpjGrtTJXypqYHPfP
+         iDKjAZLq4/HRfPlpByrQ7CshhMKK1rCrig3ARXNKx8Wt7uJ+OW68SRPExqW4asfXhHdX
+         EqU/1iRPOVARuA/02QN2Rx5BJZdSbgaadLU/0L/0agDiC1HE/b1l/4WPnXj6nHrjbtnt
+         OQ0bAfG2VSagL8X7vfhFN4viG6qfkqAPdlE1qvntMjfRkdc4HbsqA7HRy0yActac7mqy
+         8aUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781034448; x=1781639248;
+        d=1e100.net; s=20251104; t=1781034452; x=1781639252;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=ai+yr6kaqjO1MjNvHgFNGMTR2U+5LiRo2MrcPACWJdo=;
-        b=lBrfDYDC6qd2sUhPIF7T+xAH73uzJD3AHDwDe+wcu9NQdcBNgE9oYLpCYNC1iEQ162
-         dZHPiw1eusihzCftLxq6r80dvwgbLd+vonDtHC2Nm3XZ998PHx0/FPbKqs0c9d00/kD4
-         J56pgkaXRcn9EdQKYA4k+lwt6Jh9GDKG0A2vuPSWpWWSfxQm1bD2eVE6N8jh/0rr5d7I
-         Vr6O3wWVLaFASCQeVAwT37ss5X2OI0KzolIbVBuRL1Ann9UZ+D7tyrVSFjzqon6DV9RF
-         S5sbfBNX329FosYeiT17SAQLrFAPtUxMRnGl346RSDnOLqcoEXQHHugD28mILMOj/jd4
-         5ONw==
-X-Forwarded-Encrypted: i=1; AFNElJ8teTJxBoinS0FyFVV1mLNcF9J9GheRxM30Qfa+w+LZzcRJx/t3+EdGQwV2bVeIkCR+SMwI6erw1Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxkJ1HOe7OlM1cTPe7h2+v/6XUomDQmMbIBy5kF3wMPa3NS3t6B
-	AQNVrnmwQKCmqZay5sU8vSYdzRj84Z47+Mso3JYR8eAjkBBecBp7u3p8
-X-Gm-Gg: Acq92OFEk+JIkQDyuU8AWJQenU6meIHspladMH/GGIJDnyisUvaQ0psZQOP5xmVlKMZ
-	JiWoaaVaofUabe1LCXjUW+72qxiHii2eOFksKdH0p7sbaUVfGYizfUgd5cRT+tKibAyAVWlyNi9
-	e93yxaHfdf5JjVoZRCUTkDXlJq2mNr7bYfBntlCNWTgg6dxSfjAJUfP17kkhmfWHh7hOmeYiE+U
-	EF4/6NBL5nH7XP0lc30Juo7nPEP8CvqxcNaZELBoTg3DBMsri8SEMgvx0keUtLHtmcYvbwEbbC9
-	5P+EYatTHYAOT6VlAfIaUOtW192lAA24zLPM6yGysnNnmDye53KwbmA4e39fzH5oSA+JcFdVOgF
-	OGOnjPk9hcVDDmsVxxX3TdgbDgMMVLj30Dtii41+WES0EI6EU+3tUVm63JdATBoB7lt9+g1uC9X
-	Egh3jLRkLD
-X-Received: by 2002:a05:6a21:1b81:b0:3b4:84de:aa79 with SMTP id adf61e73a8af0-3b4cd09b4f5mr26397065637.44.1781034447703;
-        Tue, 09 Jun 2026 12:47:27 -0700 (PDT)
+        bh=MpR6igjuZL+55NUetVLOlJ7WyoEDc1JskAO0eU1M5r0=;
+        b=a3F6+jIW/AWp9dijDwGkhSynlpMsMI71CMa9BDV/HZ8rSS54B1Nw1tWcADduDUPFpY
+         hiarK2cFTA2ZLJJOlefXf8LsEgsUUMZrekeX6432Oc9X8sjrq8kOVBC0QI/cTVCbdF2r
+         N21F5VdlBmE/MoYrD92mWfUxyod6epOJTsuTbUEVR1WD7GgwtiSNFZvXMS4unC18YRgw
+         sl41RO2mRkxOY8eROLJV3xdd3Em4+Rcno8c/JESsknGa3SW8OSHDXvEi98FjV/B9YCGE
+         sc1HmeTvws+YlQdQTU2lTJFDXd4IEj/G4VBlP+m8uWHkLnAzs5GoEZJemXFIYiqA8fFP
+         fpkg==
+X-Forwarded-Encrypted: i=1; AFNElJ8E9o1AZ1Upsf0cQeaPt7XzGMs4ZWJxZGIGz9IaSZk6QMeWFc/8/hlqPClC8SxSTWtJNYtV4ZzX/A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyW2iycuEn6AmPVs5mpGPHZkB0thrJk4o4DR0MbrCwLPWFk+/pS
+	yFx8m6Dv4T1RLLkpwQAu1NKpokt2LgEPham4hgWGrzINoFs7d0hPTOZV
+X-Gm-Gg: Acq92OGTiRKzcKhbHvK/j9ccBk5ebUC9PH1TsUg7W2aHKhsnGXWX/z3Mt8vEaI0Fm7j
+	REnpWlsuY6iJckVuCyGplTIUZDOIEKHs+S0OS/hfbbLAcmz458Scfm6Rz7SnlYKD8VSqkohXGBA
+	1HJ8yIBCOLp8oU94dbzBc2un/T9kkgyH0IadE6FlysEOiJvcBBTYL41B1OPjhzc4qrWHVdWo7O7
+	eqDMAfUGQUxqfqxAjnUt5H3gPLGNo8SbyoeAFmkuVWCK7qZaeuI1LNSwix/y0VHqGdT5hDSR5oK
+	2I+JZM0yIrQDWB9eySb4urJ7ELswEdedKx6LIqWoPLvoT7XqZeEtwYG7TBvRRifp8FeJJr0c7+I
+	+aJ0Gx4VUXH3VyEII0Z8FfMNgnKp0HoggrV4x3R39bz/rE9ikFN9qFE0MUefrJmbs9JgP1lz0Ej
+	VER2I+s/D5
+X-Received: by 2002:a05:6300:2213:b0:3b4:6026:6c78 with SMTP id adf61e73a8af0-3b4ccd45617mr26253003637.11.1781034452412;
+        Tue, 09 Jun 2026 12:47:32 -0700 (PDT)
 Received: from [127.0.1.1] ([2a12:a305:4::3060])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df04ff24sm19517121a12.14.2026.06.09.12.47.23
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df04ff24sm19517121a12.14.2026.06.09.12.47.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2026 12:47:27 -0700 (PDT)
+        Tue, 09 Jun 2026 12:47:32 -0700 (PDT)
 From: Guodong Xu <docular.xu@gmail.com>
-Date: Tue, 09 Jun 2026 15:46:38 -0400
-Subject: [PATCH v2 1/2] dt-bindings: dmaengine: Add SpacemiT K1 PDMA
- request numbers
+Date: Tue, 09 Jun 2026 15:46:39 -0400
+Subject: [PATCH v2 2/2] riscv: dts: spacemit: Use symbolic PDMA request
+ numbers on K1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260609-b4-k1-pdma-req-macros-v2-1-5d5d7b997b54@gmail.com>
+Message-Id: <20260609-b4-k1-pdma-req-macros-v2-2-5d5d7b997b54@gmail.com>
 References: <20260609-b4-k1-pdma-req-macros-v2-0-5d5d7b997b54@gmail.com>
 In-Reply-To: <20260609-b4-k1-pdma-req-macros-v2-0-5d5d7b997b54@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
@@ -82,89 +82,50 @@ Cc: linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
  devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
  spacemit@lists.linux.dev, Guodong Xu <docular.xu@gmail.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2445; i=docular.xu@gmail.com;
- h=from:subject:message-id; bh=EzzIUT5MAy1lGbLLNCNBDiXKEEHYTWLc2oHrRYIeMQA=;
- b=owGbwMvMwCXWtEl1Z3CGpCDjabUkhiyN3KO6peH6ogFrT3w3CXzGLPg+vUyi5MExqZDtnurBm
- vzsfG87SlkYxLgYZMUUWQ4fbcne+son2vc55w+YOaxMIEMYuDgFYCK/VBkZvhxyetYgV7N7tez3
- I6qzLtu/sNNOjX8qquLUcUbj4P3D3owMi9eUpqentj1kePg61cHpZbJ18vWTvPtSTles5jmtHu3
- NBgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1153; i=docular.xu@gmail.com;
+ h=from:subject:message-id; bh=H/kR+2HYwlqkml7voLWdHY49vUjyuP/Tsib1MnxQLD4=;
+ b=owGbwMvMwCXWtEl1Z3CGpCDjabUkhiyN3GM9QkaZAY4pz7LmFC1dU6c9iz/tlMZKQ7fXVvMvK
+ 4nY+yd0lLIwiHExyIopshw+2pK99ZVPtO9zzh8wc1iZQIYwcHEKwER+HmdkOHPhNCfP+fsPPTcn
+ 1nqfuZncluzK03QtbIry7o75tWsLqxgZztYqCf0tjHyftnB9yeSb33LSxM8wrTAwv3V5m/txgWc
+ 5/AA=
 X-Developer-Key: i=docular.xu@gmail.com; a=openpgp;
  fpr=90B1DC3DF0BD10FD1227BD6344F254AF42F143EE
 
-Add a dt-bindings header that gives symbolic names to the SpacemiT K1
-PDMA request lines of the non-secure peripherals. Device trees can use
-these K1_PDMA_* macros instead of magic numbers.
+The K1 SPI3 node's "dmas" property hard-codes its PDMA request numbers.
+Include <dt-bindings/dma/spacemit,k1-pdma.h> and use the K1_PDMA_SPI3_RX/TX
+macros instead, for better code readability and easy for future
+maintenance.
+
+No functional change.
 
 Signed-off-by: Guodong Xu <docular.xu@gmail.com>
 ---
-V2: Drop the #dma-cells description change in spacemit,k1-pdma.yaml; the
-    request numbers are hardware-fixed and unused by the driver.
+V2: No change.
 ---
- include/dt-bindings/dma/spacemit,k1-pdma.h | 56 ++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/dt-bindings/dma/spacemit,k1-pdma.h b/include/dt-bindings/dma/spacemit,k1-pdma.h
-new file mode 100644
-index 0000000000000..491976516550a
---- /dev/null
-+++ b/include/dt-bindings/dma/spacemit,k1-pdma.h
-@@ -0,0 +1,56 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * This header provides DMA request number for non-secure peripherals of
-+ * SpacemiT K1 PDMA.
-+ *
-+ * Copyright (c) 2026 Guodong Xu <docular.xu@gmail.com>
-+ */
-+
-+#ifndef _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_
-+#define _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_
-+
-+#define K1_PDMA_UART0_TX	3
-+#define K1_PDMA_UART0_RX	4
-+#define K1_PDMA_UART2_TX	5
-+#define K1_PDMA_UART2_RX	6
-+#define K1_PDMA_UART3_TX	7
-+#define K1_PDMA_UART3_RX	8
-+#define K1_PDMA_UART4_TX	9
-+#define K1_PDMA_UART4_RX	10
-+#define K1_PDMA_I2C0_TX		11
-+#define K1_PDMA_I2C0_RX		12
-+#define K1_PDMA_I2C1_TX		13
-+#define K1_PDMA_I2C1_RX		14
-+#define K1_PDMA_I2C2_TX		15
-+#define K1_PDMA_I2C2_RX		16
-+#define K1_PDMA_I2C4_TX		17
-+#define K1_PDMA_I2C4_RX		18
-+#define K1_PDMA_SPI3_TX		19
-+#define K1_PDMA_SPI3_RX		20
-+#define K1_PDMA_I2S0_TX		21
-+#define K1_PDMA_I2S0_RX		22
-+#define K1_PDMA_I2S1_TX		23
-+#define K1_PDMA_I2S1_RX		24
-+#define K1_PDMA_UART5_TX	25
-+#define K1_PDMA_UART5_RX	26
-+#define K1_PDMA_UART6_TX	27
-+#define K1_PDMA_UART6_RX	28
-+#define K1_PDMA_UART7_TX	29
-+#define K1_PDMA_UART7_RX	30
-+#define K1_PDMA_UART8_TX	31
-+#define K1_PDMA_UART8_RX	32
-+#define K1_PDMA_UART9_TX	33
-+#define K1_PDMA_UART9_RX	34
-+#define K1_PDMA_I2C5_TX		35
-+#define K1_PDMA_I2C5_RX		36
-+#define K1_PDMA_I2C6_TX		37
-+#define K1_PDMA_I2C6_RX		38
-+#define K1_PDMA_I2C7_TX		39
-+#define K1_PDMA_I2C7_RX		40
-+#define K1_PDMA_I2C8_TX		41
-+#define K1_PDMA_I2C8_RX		42
-+#define K1_PDMA_CAN0_RX		43
-+#define K1_PDMA_QSPI_RX		44
-+#define K1_PDMA_QSPI_TX		45
-+
-+#endif /* _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_ */
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index 08a0f28d011fe..c413a64d5560c 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include <dt-bindings/clock/spacemit,k1-syscon.h>
++#include <dt-bindings/dma/spacemit,k1-pdma.h>
+ #include <dt-bindings/phy/phy.h>
+ 
+ /dts-v1/;
+@@ -1094,7 +1095,7 @@ spi3: spi@d401c000 {
+ 				clock-names = "core", "bus";
+ 				resets = <&syscon_apbc RESET_SSP3>;
+ 				interrupts = <55>;
+-				dmas = <&pdma 20>, <&pdma 19>;
++				dmas = <&pdma K1_PDMA_SPI3_RX>, <&pdma K1_PDMA_SPI3_TX>;
+ 				dma-names = "rx", "tx";
+ 				status = "disabled";
+ 			};
 
 -- 
 2.43.0
