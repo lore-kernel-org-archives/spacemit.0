@@ -1,150 +1,123 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E163377EBF
-	for <spacemit@lists.linux.dev>; Tue,  9 Jun 2026 16:11:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235AB40488C
+	for <spacemit@lists.linux.dev>; Tue,  9 Jun 2026 18:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781021492; cv=none; b=RJR2fx+3m8AMHq815Qg+mvT6rfGgkJnw6O2ydT1VL7gOb/7uuz54GFnfQjzdnFzdvz6PQv5xt3nK5LxBTNArjg8SkzNIZg/krimdcorp4aLF1x5JlKWUVRColqR2s3cHpOx9utCAXx9npyqr6hmEkMQMTavzELKJHVqahdypgoc=
+	t=1781029492; cv=none; b=uSfLypGYw4+xqV57s5+emyvmXKafTJlQLkLKfpMi9LscYialwMbf688QGcQE7QvsAHtk6cx+0F9NA8E/Gb69gZVHLJBg2MHi0iJYuipKdJ4pJt9EAeLK8rL3a2Usfh1IWziOQJXDQvHGPOW7x+ku4wIQzuMA7RPaHINQ1hiLszk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781021492; c=relaxed/simple;
-	bh=jXG4PWaLculkrGCMBKvWz16KNAcutg4Nr5j1HtVB5eg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DInIGTBLEs3ixSGKCpFzb8xyCtKAicnSUbh2L7VV1VB20+I6SpZCJm9QCJqe77LPn/nZWhAl+7p6W/78hsEswPyPeCZH8RRwjMM7ulkgp2q/Txy241zFPK93MJAJFYJoahtSSGpzGfz4t4KbjVYKfnQIgS9rUt5K+Mt7z827knw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=SngcbQ3z; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1781029492; c=relaxed/simple;
+	bh=cYprcqby07aD8H622Y4drSTVA2JemKQFeIJ8S7r/+Z4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MbwL6oDai98K1Thxl2+XVBqDbL5VkKg3xkM+8hgGOzqusNzidn/ZlLgh5QunEvJcMeq5M8f47H0cIDA8boF3POUSGOPEt65NkRtGqaty2j4eaWNPxIVk4wA1/kbB2UZr4pIPJBukfKN3gTiy5v2RhabS05I2YYW5sTNn03whIGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rembrandt.dev; spf=pass smtp.mailfrom=rembrandt.dev; dkim=pass (2048-bit key) header.d=rembrandt.dev header.i=@rembrandt.dev header.b=EixPZ2KM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=daGzXBDp; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rembrandt.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rembrandt.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="SngcbQ3z"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-48611addcfbso2350771b6e.1
-        for <spacemit@lists.linux.dev>; Tue, 09 Jun 2026 09:11:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1781021490; x=1781626290; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6Uz2/S8q1bGzYbvjOi+dd2PPF/EKmkqQlSRIaTmPAZs=;
-        b=SngcbQ3zI157GViBQmkaEs4oNB7rCsqeqeo+fqYqDn24EVSzGZiKsez4q5vJx7mh1B
-         H/8qJJ0dFKDPgdzP9iRzymCW0TPMEuQZWvey8CLF4tSzkMRTpZIaDCMfrYiyfGpVz9uW
-         OR6W1lTjbmet5JthTI7g9o2l1iU1EhD57684eyH8SoWcDVlQLpPwGwYRSdTIeVQaMQ4J
-         9AmiXB8+uBTNpFJKQmtcpfMdTUF0/vdUThRFU8ysO7BjifY2DsE85glU338NrPPTjSnl
-         ZZb2gz5/GfgTmbyf5QY4vUbufI8t6TDQVcCzxTGioWC2REX/J3pCq5zePU19TX/NhpIO
-         oCYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781021490; x=1781626290;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6Uz2/S8q1bGzYbvjOi+dd2PPF/EKmkqQlSRIaTmPAZs=;
-        b=FsudfIXrALgkuzw2y4hhy1qRbMb4Ox/N3A2N7wyEuKNgzy5xy7tKAa4GGKD3nTwSmi
-         ZHZSWeezSg7svPYpR5WWPW5S2gS/bLWZvmrFW7dBDlN1441EGOOqMgao1pwajl+rxtHv
-         lhqEteIlV+0sIRtqXuW/AF7r59dBjatmv7m/ZlY7l186pZgj256jVpZKgAt61bcIZUF6
-         HEbal6fzgQtOxCmRLPyEf+DUNLYs7egYuZyvqoTZ65MKT4oNVYu5Q9CeKDcHLTFOupBR
-         JSRynGXyPW4aRPZDor2i6F6rYIMo/hi3t0PjMEoDazWlWUloNkGH41K1730cL7lj/840
-         R8ag==
-X-Forwarded-Encrypted: i=1; AFNElJ+gYAKWKXPCQadlL1HS0mj70hD8YyBzarhZRXMPKYS21z8UoCqPB/I2ryklhkj9+qVjreOSC33djg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyW8xnA3LYRjP4VrmZvjSN1A4AQ5xR0LcWVsJA7rjONdPVUDkPF
-	6Hcb5FqmJE6T2oh+XGAPt9XMQwRISYss1620LiSa2mBnag8Gdjktq/U3jD3SsFA+1u0=
-X-Gm-Gg: Acq92OG6F5Btyfh86nQ5OEKQxvosbLoGNJ1vGyE1IWXMW6B2z84+t3OxAkL0bHKLneM
-	8QMJ7p+SxnfTwL7f9GrROvWkmQiqWBsAw1+hqc3tbKdAg2XlLZugErMlfpG/stdepMigrIgDhkl
-	IZFVJycSX6S6ZtvxO8VnpgrSvrfdrP/pN10ZsH2uoyqC43tOIuQgZC61g/0rV+s86bSNqE9kfkS
-	I/KQ+8mz5ZOUPtAOjkUmRiLNwX+ITIMvgK7G7TlhtM+/zBqUQNn4jl256WKa3TjfKJyg75untX9
-	Xb1PkRf/l/efS0OZPtTGo7x05qK6Fu5XXiyKAr4iVUvq+tn/9n3iLn2Qy+BJWcvbyUYn1rrj5gH
-	LCo2RUhhJeS7L4jAEkncvNuUdm4rWmQIYGQjHHAdUgdlhD8sn9WrfqxQUZ8k7+AWNOwNTUEWtpb
-	hWartp84sjHCwoUWTjEdk4FHlmym2822vqZU1vbp1agZkj
-X-Received: by 2002:a05:6808:1301:b0:47b:d07b:ecac with SMTP id 5614622812f47-4868db2e306mr15084950b6e.10.1781021490024;
-        Tue, 09 Jun 2026 09:11:30 -0700 (PDT)
-Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4865b91f944sm16430240b6e.9.2026.06.09.09.11.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 09:11:29 -0700 (PDT)
-Message-ID: <b025f81e-e3a5-4b55-a6b4-cbd9731fe0df@riscstar.com>
-Date: Tue, 9 Jun 2026 11:11:27 -0500
+	dkim=pass (2048-bit key) header.d=rembrandt.dev header.i=@rembrandt.dev header.b="EixPZ2KM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="daGzXBDp"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 250BB7A017C;
+	Tue,  9 Jun 2026 14:24:49 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Tue, 09 Jun 2026 14:24:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rembrandt.dev;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1781029488; x=
+	1781115888; bh=cYprcqby07aD8H622Y4drSTVA2JemKQFeIJ8S7r/+Z4=; b=E
+	ixPZ2KMTPtrBWcgx5w8G/hiz0XIr//c07Li4camk8/JBNA8dZE+t2qd94lmLOOY3
+	epq/J5GTF1JeMuEDpw0d2s3jaWS8lT9B0+sVk1xxkEkqSuTWQcg3mrPMCivgEK2Y
+	HC5W6rwGuTB1wR6jlUvQtcVst03yyd0QVi0joP20c6dgsIX9J/XHCk1upAW1ejK0
+	UVrMbVC6MdsjxjFMHEZAyh5Vlj+FSmKLr8ITiBSrpyjzBIHM24vmTxpCWaKadv2n
+	JDYaLLgAFTZlrzHnmyICJqpmPehpIxdWOvOpeAf00HZoCwPrO8gVJBXpHlKhNT0z
+	WMiJh7FXnvhxhgfkQfznQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781029488; x=1781115888; bh=cYprcqby07aD8H622Y4drSTVA2JemKQFeIJ
+	8S7r/+Z4=; b=daGzXBDpWuelL4RVm/tpHueKcaTVhfyc2xVBiHfdlClsf4O4jCa
+	7jM1YWuTiL0moRy5VYrX7cuSgtlF0M+CsxbiCs8guZLbRKJUWyJO1Bj8+MNkPzm3
+	cif0IlUDUIjWqQKP5aK6pKxDpPbkjir70OHb8M1MSoiPWj7hyZNRENNaFeu6LPFe
+	fkIZxNunBTqJaxMDN2e2C1iKz8ISMfu9oRt7Pb7LYiRy3PrCRotQfBqiiYYcXaSF
+	wbMb0KMNKgxtVmDgV5SjPomUVeDKYiLoaj5nheJLWKnNPgl2Eu357268bav4IGOk
+	AcpDbZmoWiJKj3WMFtZ6TNRBCHn/uKzGNfQ==
+X-ME-Sender: <xms:cFooahUZmfI8ZWfVuMTS4j2cbJJH5QEOCKQOnREJzOAISa9mDcuvLQ>
+    <xme:cFooaqjlEDHDbNiVxanXyRX5msD9EHPz5KfTJ9Y5MeMKy3MCMzqcCWycBguxfmdk7
+    LU72yOtoBwgqefiF835GvnETcnRYP8AKtxfzwFeDdBYyZaBdCGr>
+X-ME-Received: <xmr:cFooao8AoM-3iVuTHpMTIwnsIJ_hxhSPJEIMxw48qJpk9jrCzCIM9qiMkd0>
+X-ME-Proxy-Cause: dmFkZTFS/rLKkzzrwQjGc4OyFeT9ka5Vx98G66TcKfRWgrNpaGXQ+37ZpynXpSDv5HcYc6
+    ujBcVXTGtHId4F423cwtbfu3KBYGGmBJ8NYo7m5u91coeLroixEFq2X4iDT00GE2ivhlsD
+    Ym78+iuTKYMVeA+ZFdx+Lq8S17J2qSvoBjWEnrQtAh5HF40wIt75FeXR0G48w9paeC+ykx
+    8ElnZOHZFOOwQTSnWulMh6C3eLnrOyH/M5q21lcIotJRtMvSZVDoKAqGjVvLO1I9XOzzIO
+    UOgY4q1OJb9f2L19lBVX4+QeWYZqsRYPHhocSLQquySetI+lvQVTJDKIJcEGGqaGXhBzdj
+    Jpk7IWVA+R6DogxT7DlfJQ9bkEeVGzCyXdfUzlv3L4xN8fD8NLEKu0+kyo8mXxMhudCPdR
+    SG4QFnLiHs7Je0wAzTCEDFe/7teVGcSM/jE3gVdJeA0VtVZ5lakf5ZX1kDRzvZLDEM6u61
+    7Mk43JzPvoV8JPHgEAV6MA1GZEtdO4f4f92zmZPU5ri9KBbVS+gwtje9+mx9ZA5wMyGGmz
+    A+iNzlFue07yXZqFiedJLVRdJcopFzGL5O/b+5qVWT1s68ieRXR1PG27f2rqJ3PkR4EHfW
+    W7jBYCHGAoHImc27LGZKUFe93tW3shlELaeQiD8e/VO33hpgpPTQpWh4C9Vg
+X-ME-Proxy: <xmx:cFooakb45aQJSvtjdLYg8LqKRvggHLeb_o2ufTavYkx31xuojNiCUA>
+    <xmx:cFooan30RLAxx14o9tJ0tRP-4iX8Ezip_ho084LOQoW0CH0CltVVNQ>
+    <xmx:cFooavbWLa4u47oQrdn-owk_yz8jBXqr6Exug0Pt2MQQBdjdTRB4xA>
+    <xmx:cFooavJZ4z2XEBcSvk5VxU8eTFmr2-zKZG3LCVNJBs6pUuuViO7Y3Q>
+    <xmx:cFooasGkl9V7dLPmVaTlqz1nbQKaIXvsEwgTVcFIGWri2yxt5UphMX0L>
+Feedback-ID: iec564b6b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Jun 2026 14:24:48 -0400 (EDT)
+Date: Tue, 9 Jun 2026 20:24:46 +0200
+From: Andrew Rembrandt <kernel@rembrandt.dev>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Yixun Lan <dlan@kernel.org>, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] riscv: dts: spacemit: k3-pico-itx: Fix non-functional
+ ethernet TX timing
+Message-ID: <aihYftGNcpUd4UUR@mcmanus>
+References: <20260608182358.170489-1-kernel@rembrandt.dev>
+ <aiemGajqcQeY9avz@inochi.infowork>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] PCI: spacemit-k1: Add Spacemit K3 PCIe host
- controller support
-To: Manivannan Sadhasivam <mani@kernel.org>,
- Inochi Amaoto <inochiama@gmail.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Christian Bruel <christian.bruel@foss.st.com>,
- Vincent Guittot <vincent.guittot@linaro.org>,
- Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
- Nam Cao <namcao@linutronix.de>, Siddharth Vadapalli <s-vadapalli@ti.com>,
- Randolph Lin <randolph@andestech.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Vidya Sagar <vidyas@nvidia.com>, Neil Armstrong <neil.armstrong@linaro.org>,
- Gustavo Pimentel <gustavo.pimentel@synopsys.com>, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-References: <20260517014841.254085-1-inochiama@gmail.com>
- <20260517014841.254085-6-inochiama@gmail.com>
- <wztjdv4t5cn7djj3jyvheest7rn5nr2g3efzwods2fz3yy5wn2@hbl644sd6fst>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <wztjdv4t5cn7djj3jyvheest7rn5nr2g3efzwods2fz3yy5wn2@hbl644sd6fst>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aiemGajqcQeY9avz@inochi.infowork>
 
-On 6/9/26 9:18 AM, Manivannan Sadhasivam wrote:
-> On Sun, May 17, 2026 at 09:48:40AM +0800, Inochi Amaoto wrote:
->> The PCIe controller on Spacemit K3 is almost a standard Synopsys
->> DesignWare PCIe IP with extra link and reset control. Unlike
->> the PCIe controller on K1, this controller supports external MSI
->> interrupt controller and can use multiple PHYs at the same time.
->>
->> Add driver to support PCIe controller on Spacemit K3 PCIe.
->>
->> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
->> ---
->>   drivers/pci/controller/dwc/Kconfig            |   4 +-
->>   drivers/pci/controller/dwc/pcie-spacemit-k1.c | 169 ++++++++++++++++++
->>   2 files changed, 171 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
->> index f2fde13107f2..fae971ecd876 100644
->> --- a/drivers/pci/controller/dwc/Kconfig
->> +++ b/drivers/pci/controller/dwc/Kconfig
->> @@ -439,7 +439,7 @@ config PCIE_SOPHGO_DW
->>   	  Sophgo SoCs.
->>   
->>   config PCIE_SPACEMIT_K1
->> -	tristate "SpacemiT K1 PCIe controller (host mode)"
->> +	tristate "SpacemiT K1/K3 PCIe controller (host mode)"
-> 
-> Can you just say 'SpacemiT PCIe controller (host mode)"? I believe I asked Alex
-> while adding K1 support and he said this driver might not support future IP
-> revisions, but here we are.
+On Tue, Jun 09, 2026 at 01:37:56 pm Inochi Amaoto wrote:
+> You should set tx-internal-delay-ps of the phy instead of
+> the controller. This is a phy in "rgmii-id" mode.
+Thanks for the review. I don't think that works on this board, but
+please let me know if I'm missing something.
 
-(Sorry if I said that in error.)  Will this be K1 and K3 only?
-If so what you say is fine, but I agree with Mani, if it's going
-to also form the basis of K5 (or whatever) just make it "SpacemiT".
-And probably change the Kconfig symbol to PCIE_SPACEMIT.
+The PHY is a Realtek RTL8211F. Its driver only toggles the chip's fixed
+~2ns delay on/off from phy-mode, and per the datasheet that's a hardware
+limit, not a driver one -- the RTL8211F has no tunable delay, so a ps
+value on the PHY node has nothing to act on.
 
-					-Alex
+The only configurable delay element on K3 is the SoC RGMII delay line,
+and dwmac-spacemit programs it from tx-/rx-internal-delay-ps read off
+the controller node (spacemit_dwmac_probe()), so that is where the
+property has to live to take effect. This is the MAC "fine tuning ...
+values expected here are small" case described in
+Documentation/devicetree/bindings/net/ethernet-controller.yaml: the
+RTL8211F supplies the fixed ~2ns via rgmii-id and the MAC adds a 400ps
+trim on top. Ideally the PHY would own the delay, but as Andrew Lunn
+noted reviewing dwmac-meson8b, that requires the PHY to implement a
+configurable delay, which not all do.
 
->>   	depends on ARCH_SPACEMIT || COMPILE_TEST
->>   	depends on HAS_IOMEM
->>   	select PCIE_DW_HOST
->> @@ -447,7 +447,7 @@ config PCIE_SPACEMIT_K1
->>   	default ARCH_SPACEMIT
->>   	help
->>   	  Enables support for the DesignWare based PCIe controller in
->> -	  the SpacemiT K1 SoC operating in host mode.  Three controllers
->> +	  the SpacemiT K1/K3 SoC operating in host mode. Three controllers
->>   	  are available on the K1 SoC; the first of these shares a PHY
->>   	  with a USB 3.0 host controller (one or the other can be used).
->>   . . .
+The already-merged k1-bananapi-f3 does the same thing: eth1 combines
+phy-mode = "rgmii-id" with tx-internal-delay-ps = <250> on the
+controller node (via the K1 EMAC rather than dwmac, but the same DT
+pattern).
+
+Would you be OK keeping it on the controller given the above? For v2 I
+can add an explicit rx-internal-delay-ps = <0> to match the other
+SpacemiT boards (k1-bananapi-f3 included) and spell this reasoning out
+in the commit message.
+
+Thanks,
+Andrew
