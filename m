@@ -1,123 +1,206 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235AB40488C
-	for <spacemit@lists.linux.dev>; Tue,  9 Jun 2026 18:24:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C974C040D
+	for <spacemit@lists.linux.dev>; Tue,  9 Jun 2026 18:56:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781029492; cv=none; b=uSfLypGYw4+xqV57s5+emyvmXKafTJlQLkLKfpMi9LscYialwMbf688QGcQE7QvsAHtk6cx+0F9NA8E/Gb69gZVHLJBg2MHi0iJYuipKdJ4pJt9EAeLK8rL3a2Usfh1IWziOQJXDQvHGPOW7x+ku4wIQzuMA7RPaHINQ1hiLszk=
+	t=1781031370; cv=none; b=Nixyl1Wtrg1ZwgK6rj58dzZ66+ALDhRPW4NT3diJelZVfz/M7rA9IKG0cEV+YHVPWxh95qOiaydL1NMi44VnL8t8WRxTmSVW3cshyYsElrtQU2iqk3jnNfdcQeggTEOTqO02YE/BPQ6D0+6tdZ8i81/0pujOVbnOZtFkeVRuoLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781029492; c=relaxed/simple;
-	bh=cYprcqby07aD8H622Y4drSTVA2JemKQFeIJ8S7r/+Z4=;
+	s=arc-20240116; t=1781031370; c=relaxed/simple;
+	bh=qv6NSO78UBvOvcAVkfVRgLKn0cSCdV/ghe8m+ViedI0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MbwL6oDai98K1Thxl2+XVBqDbL5VkKg3xkM+8hgGOzqusNzidn/ZlLgh5QunEvJcMeq5M8f47H0cIDA8boF3POUSGOPEt65NkRtGqaty2j4eaWNPxIVk4wA1/kbB2UZr4pIPJBukfKN3gTiy5v2RhabS05I2YYW5sTNn03whIGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rembrandt.dev; spf=pass smtp.mailfrom=rembrandt.dev; dkim=pass (2048-bit key) header.d=rembrandt.dev header.i=@rembrandt.dev header.b=EixPZ2KM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=daGzXBDp; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rembrandt.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rembrandt.dev
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nn0Gpoz1Z33JWlZZCk6JGCrJx7Llo6wl7i62Hx8a7qwY5WjZe1KlA1TSBGbgrcE5F07rhPUTVCZeF24bV6d5sxg0n4cmaFo3ovJNUJ04SMCTlPLzBPPg6PuDy1FKEIobuZiGDO6XaLdt4uIYUgdzUttzEjiBCT3F0JnawOzoVZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l7xODj/O; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rembrandt.dev header.i=@rembrandt.dev header.b="EixPZ2KM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="daGzXBDp"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 250BB7A017C;
-	Tue,  9 Jun 2026 14:24:49 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Tue, 09 Jun 2026 14:24:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rembrandt.dev;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1781029488; x=
-	1781115888; bh=cYprcqby07aD8H622Y4drSTVA2JemKQFeIJ8S7r/+Z4=; b=E
-	ixPZ2KMTPtrBWcgx5w8G/hiz0XIr//c07Li4camk8/JBNA8dZE+t2qd94lmLOOY3
-	epq/J5GTF1JeMuEDpw0d2s3jaWS8lT9B0+sVk1xxkEkqSuTWQcg3mrPMCivgEK2Y
-	HC5W6rwGuTB1wR6jlUvQtcVst03yyd0QVi0joP20c6dgsIX9J/XHCk1upAW1ejK0
-	UVrMbVC6MdsjxjFMHEZAyh5Vlj+FSmKLr8ITiBSrpyjzBIHM24vmTxpCWaKadv2n
-	JDYaLLgAFTZlrzHnmyICJqpmPehpIxdWOvOpeAf00HZoCwPrO8gVJBXpHlKhNT0z
-	WMiJh7FXnvhxhgfkQfznQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781029488; x=1781115888; bh=cYprcqby07aD8H622Y4drSTVA2JemKQFeIJ
-	8S7r/+Z4=; b=daGzXBDpWuelL4RVm/tpHueKcaTVhfyc2xVBiHfdlClsf4O4jCa
-	7jM1YWuTiL0moRy5VYrX7cuSgtlF0M+CsxbiCs8guZLbRKJUWyJO1Bj8+MNkPzm3
-	cif0IlUDUIjWqQKP5aK6pKxDpPbkjir70OHb8M1MSoiPWj7hyZNRENNaFeu6LPFe
-	fkIZxNunBTqJaxMDN2e2C1iKz8ISMfu9oRt7Pb7LYiRy3PrCRotQfBqiiYYcXaSF
-	wbMb0KMNKgxtVmDgV5SjPomUVeDKYiLoaj5nheJLWKnNPgl2Eu357268bav4IGOk
-	AcpDbZmoWiJKj3WMFtZ6TNRBCHn/uKzGNfQ==
-X-ME-Sender: <xms:cFooahUZmfI8ZWfVuMTS4j2cbJJH5QEOCKQOnREJzOAISa9mDcuvLQ>
-    <xme:cFooaqjlEDHDbNiVxanXyRX5msD9EHPz5KfTJ9Y5MeMKy3MCMzqcCWycBguxfmdk7
-    LU72yOtoBwgqefiF835GvnETcnRYP8AKtxfzwFeDdBYyZaBdCGr>
-X-ME-Received: <xmr:cFooao8AoM-3iVuTHpMTIwnsIJ_hxhSPJEIMxw48qJpk9jrCzCIM9qiMkd0>
-X-ME-Proxy-Cause: dmFkZTFS/rLKkzzrwQjGc4OyFeT9ka5Vx98G66TcKfRWgrNpaGXQ+37ZpynXpSDv5HcYc6
-    ujBcVXTGtHId4F423cwtbfu3KBYGGmBJ8NYo7m5u91coeLroixEFq2X4iDT00GE2ivhlsD
-    Ym78+iuTKYMVeA+ZFdx+Lq8S17J2qSvoBjWEnrQtAh5HF40wIt75FeXR0G48w9paeC+ykx
-    8ElnZOHZFOOwQTSnWulMh6C3eLnrOyH/M5q21lcIotJRtMvSZVDoKAqGjVvLO1I9XOzzIO
-    UOgY4q1OJb9f2L19lBVX4+QeWYZqsRYPHhocSLQquySetI+lvQVTJDKIJcEGGqaGXhBzdj
-    Jpk7IWVA+R6DogxT7DlfJQ9bkEeVGzCyXdfUzlv3L4xN8fD8NLEKu0+kyo8mXxMhudCPdR
-    SG4QFnLiHs7Je0wAzTCEDFe/7teVGcSM/jE3gVdJeA0VtVZ5lakf5ZX1kDRzvZLDEM6u61
-    7Mk43JzPvoV8JPHgEAV6MA1GZEtdO4f4f92zmZPU5ri9KBbVS+gwtje9+mx9ZA5wMyGGmz
-    A+iNzlFue07yXZqFiedJLVRdJcopFzGL5O/b+5qVWT1s68ieRXR1PG27f2rqJ3PkR4EHfW
-    W7jBYCHGAoHImc27LGZKUFe93tW3shlELaeQiD8e/VO33hpgpPTQpWh4C9Vg
-X-ME-Proxy: <xmx:cFooakb45aQJSvtjdLYg8LqKRvggHLeb_o2ufTavYkx31xuojNiCUA>
-    <xmx:cFooan30RLAxx14o9tJ0tRP-4iX8Ezip_ho084LOQoW0CH0CltVVNQ>
-    <xmx:cFooavbWLa4u47oQrdn-owk_yz8jBXqr6Exug0Pt2MQQBdjdTRB4xA>
-    <xmx:cFooavJZ4z2XEBcSvk5VxU8eTFmr2-zKZG3LCVNJBs6pUuuViO7Y3Q>
-    <xmx:cFooasGkl9V7dLPmVaTlqz1nbQKaIXvsEwgTVcFIGWri2yxt5UphMX0L>
-Feedback-ID: iec564b6b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Jun 2026 14:24:48 -0400 (EDT)
-Date: Tue, 9 Jun 2026 20:24:46 +0200
-From: Andrew Rembrandt <kernel@rembrandt.dev>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Yixun Lan <dlan@kernel.org>, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] riscv: dts: spacemit: k3-pico-itx: Fix non-functional
- ethernet TX timing
-Message-ID: <aihYftGNcpUd4UUR@mcmanus>
-References: <20260608182358.170489-1-kernel@rembrandt.dev>
- <aiemGajqcQeY9avz@inochi.infowork>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l7xODj/O"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2c0c2a68d01so40629775ad.1
+        for <spacemit@lists.linux.dev>; Tue, 09 Jun 2026 11:56:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781031368; x=1781636168; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=G32fw+YDIkyZWRzyQasWU1L7Th532AaegrDAEvejK28=;
+        b=l7xODj/OvMxwGZFd39hSJ7eX/kA8rTlVzxTYE9/48p4j+Oji/rVqorcsjebrGN3oy/
+         6b3gsaghKj2QX9RjpSAac+WCywNc7Ec8rB0cyK8D0ne4qDmpvBeNLk7Adepjztqb0+DI
+         hx6Id+UGlDQfJ5oIMJheBJU2SfToDj7oh6OkTNePlelHqcOfRSbPIKir3qsdK0vKG7ss
+         wGxbKs9YE01SYXNcJGVf+VOtS6U8gNNCaH/AHXxvsLr7MaDQ2XdbhZhcIRkQMguApBob
+         ngT97bWk5rQgtgPoSVyQ31CO59Xk3H71GH5yY0s5pB1RMDXBmBkldwMi5q/PJMSHPUcZ
+         hjFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781031368; x=1781636168;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=G32fw+YDIkyZWRzyQasWU1L7Th532AaegrDAEvejK28=;
+        b=rRKacMRDJrw+9IMdQKZ2Pf9Yn97ElTnqI2mhgfKxjRYVRm/b8ZQklVAZ7sB3Gnv8My
+         MAx1v1oJKrhgxynO41qwA6RJ40CQhQxEZahpr6kSZttY1uNPg01J61zNb56CKT8C7QLF
+         Kdl+jFLtpdvlBlFGvhDzku4ASqKy7shV6nFGeqqbnndoBYKViFHSCYBG+WckNdr3B6x0
+         Z5+g0m7Mkfu/vtgqiL6JANSt7svKbaWIisw7/6Qa3tuv6M6kRDvF9W0PBDYCaDUhZoIh
+         0iPN5aY2CpuvFpD+oG/nS8KiMcIGMbuI2HER4Gr0or2ibdbzzqkAGrHgA69OEUilY0L7
+         ZErA==
+X-Forwarded-Encrypted: i=1; AFNElJ/9iEcr/gp3lYgZfMb/6Yz3Owu5ch3xfn6iWNcNuH+T3XTe/c79Z+p2C40HfSHDeLv/MyHvLJ19gQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzCP5nXVtNBC+e5oQ/xp9yvMa53AAxp1vWkaZz8TF+x9RnNb4kT
+	hkxBHXXiqzwvJwE6rpZtR84C5j9U9zSzKOk0J+4/04Yk/R4S1ZrzKq/H
+X-Gm-Gg: Acq92OFYtzzQPwxN9hjekgZtlxEUSPWX4aNUuBP86NDQPAKE4EuB/voHFBpb2+m1O5c
+	kTzTAPgQt39LW8JP92S5ZdBhgnfUk9YvV9pkrWaSTVDj+0g9bMUJe3yF6gOL5MSn50mSjQfKkPl
+	1IZDZQhL1BvXFfnrAzFKpS+U1p1PO7fvysMiNBzThLshnEPMlnp+j8YMKyZberigpUJuAJT/Agx
+	+RXeUtNOaWp+NW6Z4mS5K0y+pShMpz0KjUmSJozOYPgkGttGtnj1jXMCF8TDgMVggw4oRUleJRs
+	abm9zUMNRqbGavwuDc2hgPiYIKwPCmaAm1Cdi++D110wHe+B0Mg4O8wVaH93QRLmrMr3TInsPhe
+	1miclPJsotcqbFsC4HFeBPtLQLDnKFbwNWLtRmzw4yyMhomiff0jRxzWedKLrU4rLCsd0gfSAKq
+	5cb15+0g==
+X-Received: by 2002:a17:902:ced1:b0:2c0:fa4e:91f6 with SMTP id d9443c01a7336-2c1e7d41eabmr240045285ad.13.1781031368012;
+        Tue, 09 Jun 2026 11:56:08 -0700 (PDT)
+Received: from localhost ([2a12:a305:4::3060])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c245dd3b5dsm95637445ad.81.2026.06.09.11.56.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jun 2026 11:56:07 -0700 (PDT)
+Date: Tue, 9 Jun 2026 14:55:59 -0400
+From: Guodong Xu <docular.xu@gmail.com>
+To: Conor Dooley <conor@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/2] dt-bindings: dmaengine: Add SpacemiT K1 PDMA request
+ numbers
+Message-ID: <qxcpvj3eseclgonwuwx2szn2tj4uxci27mvpqwotj6uaiyj65p@7sx5tyzbfs2g>
+References: <20260607-b4-k1-pdma-req-macros-v1-0-5b2a3955007c@gmail.com>
+ <20260607-b4-k1-pdma-req-macros-v1-1-5b2a3955007c@gmail.com>
+ <20260608-dazzling-hacksaw-dbe84766ec76@spud>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <aiemGajqcQeY9avz@inochi.infowork>
+In-Reply-To: <20260608-dazzling-hacksaw-dbe84766ec76@spud>
 
-On Tue, Jun 09, 2026 at 01:37:56 pm Inochi Amaoto wrote:
-> You should set tx-internal-delay-ps of the phy instead of
-> the controller. This is a phy in "rgmii-id" mode.
-Thanks for the review. I don't think that works on this board, but
-please let me know if I'm missing something.
+Hi, Conor
 
-The PHY is a Realtek RTL8211F. Its driver only toggles the chip's fixed
-~2ns delay on/off from phy-mode, and per the datasheet that's a hardware
-limit, not a driver one -- the RTL8211F has no tunable delay, so a ps
-value on the PHY node has nothing to act on.
+On 2026-06-08 18:33, Conor Dooley wrote:
+>On Sun, Jun 07, 2026 at 01:41:30PM -0400, Guodong Xu wrote:
+>> Add a dt-bindings header that gives symbolic names to the SpacemiT K1
+>> PDMA request lines of the non-secure peripherals. Device trees can use
+>> these K1_PDMA_* macros instead of magic numbers.
+>>
+>> Point the spacemit,k1-pdma binding's #dma-cells description at the new
+>> header.
+>>
+>> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
+>> ---
+>>  .../devicetree/bindings/dma/spacemit,k1-pdma.yaml  |  4 +-
+>>  include/dt-bindings/dma/spacemit,k1-pdma.h         | 56 ++++++++++++++++++++++
+>>  2 files changed, 59 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
+>> index ec06235baf5ca..0d4ac9849e27b 100644
+>> --- a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
+>> +++ b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
+>> @@ -35,7 +35,9 @@ properties:
+>>    '#dma-cells':
+>>      const: 1
+>>      description:
+>> -      The DMA request number for the peripheral device.
+>> +      The single cell is the DMA request number for the peripheral device.
+>> +      See <dt-bindings/dma/spacemit,k1-pdma.h> for the list of valid request
+>> +      numbers.
+>>
+>>  required:
+>>    - compatible
+>> diff --git a/include/dt-bindings/dma/spacemit,k1-pdma.h b/include/dt-bindings/dma/spacemit,k1-pdma.h
+>
+>Why does this need to be in a binding when there is no use of this in
+>the driver? May as well be a header, particularly if these are numbers
 
-The only configurable delay element on K3 is the SoC RGMII delay line,
-and dwmac-spacemit programs it from tx-/rx-internal-delay-ps read off
-the controller node (spacemit_dwmac_probe()), so that is where the
-property has to live to take effect. This is the MAC "fine tuning ...
-values expected here are small" case described in
-Documentation/devicetree/bindings/net/ethernet-controller.yaml: the
-RTL8211F supplies the fixed ~2ns via rgmii-id and the MAC adds a 400ps
-trim on top. Ideally the PHY would own the delay, but as Andrew Lunn
-noted reviewing dwmac-meson8b, that requires the PHY to implement a
-configurable delay, which not all do.
+Thanks for the review. You are correct that these are not referenced in the
+driver. My change to k1-pdma.yaml should be dropped.
 
-The already-merged k1-bananapi-f3 does the same thing: eth1 combines
-phy-mode = "rgmii-id" with tx-internal-delay-ps = <250> on the
-controller node (via the K1 EMAC rather than dwmac, but the same DT
-pattern).
+>with a set meaning that are lifted from the TRM, rather than made up
+>numbers to make a driver work. The former seems likely, given you're
+>indexing from 3 not 0.
 
-Would you be OK keeping it on the controller given the above? For v2 I
-can add an explicit rx-internal-delay-ps = <0> to match the other
-SpacemiT boards (k1-bananapi-f3 included) and spell this reasoning out
-in the commit message.
+Yes, it is defined in the K1 manual [1], see 9.4.3 DMA Connectivity &
+Assignments
 
-Thanks,
-Andrew
+Link: https://www.spacemit.com/community/document/info?lang=en&nodepath=hardware/key_stone/k1/k1_docs/k1_usermanual/9.Top_System.md [1]
+
+I will fix that in v2.
+
+BR,
+Guodong
+
+>
+>> new file mode 100644
+>> index 0000000000000..491976516550a
+>> --- /dev/null
+>> +++ b/include/dt-bindings/dma/spacemit,k1-pdma.h
+>> @@ -0,0 +1,56 @@
+>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+>> +/*
+>> + * This header provides DMA request number for non-secure peripherals of
+>> + * SpacemiT K1 PDMA.
+>> + *
+>> + * Copyright (c) 2026 Guodong Xu <docular.xu@gmail.com>
+>> + */
+>> +
+>> +#ifndef _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_
+>> +#define _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_
+>> +
+>> +#define K1_PDMA_UART0_TX	3
+>> +#define K1_PDMA_UART0_RX	4
+>> +#define K1_PDMA_UART2_TX	5
+>> +#define K1_PDMA_UART2_RX	6
+>> +#define K1_PDMA_UART3_TX	7
+>> +#define K1_PDMA_UART3_RX	8
+>> +#define K1_PDMA_UART4_TX	9
+>> +#define K1_PDMA_UART4_RX	10
+>> +#define K1_PDMA_I2C0_TX		11
+>> +#define K1_PDMA_I2C0_RX		12
+>> +#define K1_PDMA_I2C1_TX		13
+>> +#define K1_PDMA_I2C1_RX		14
+>> +#define K1_PDMA_I2C2_TX		15
+>> +#define K1_PDMA_I2C2_RX		16
+>> +#define K1_PDMA_I2C4_TX		17
+>> +#define K1_PDMA_I2C4_RX		18
+>> +#define K1_PDMA_SPI3_TX		19
+>> +#define K1_PDMA_SPI3_RX		20
+>> +#define K1_PDMA_I2S0_TX		21
+>> +#define K1_PDMA_I2S0_RX		22
+>> +#define K1_PDMA_I2S1_TX		23
+>> +#define K1_PDMA_I2S1_RX		24
+>> +#define K1_PDMA_UART5_TX	25
+>> +#define K1_PDMA_UART5_RX	26
+>> +#define K1_PDMA_UART6_TX	27
+>> +#define K1_PDMA_UART6_RX	28
+>> +#define K1_PDMA_UART7_TX	29
+>> +#define K1_PDMA_UART7_RX	30
+>> +#define K1_PDMA_UART8_TX	31
+>> +#define K1_PDMA_UART8_RX	32
+>> +#define K1_PDMA_UART9_TX	33
+>> +#define K1_PDMA_UART9_RX	34
+>> +#define K1_PDMA_I2C5_TX		35
+>> +#define K1_PDMA_I2C5_RX		36
+>> +#define K1_PDMA_I2C6_TX		37
+>> +#define K1_PDMA_I2C6_RX		38
+>> +#define K1_PDMA_I2C7_TX		39
+>> +#define K1_PDMA_I2C7_RX		40
+>> +#define K1_PDMA_I2C8_TX		41
+>> +#define K1_PDMA_I2C8_RX		42
+>> +#define K1_PDMA_CAN0_RX		43
+>> +#define K1_PDMA_QSPI_RX		44
+>> +#define K1_PDMA_QSPI_TX		45
+>> +
+>> +#endif /* _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_ */
+>>
+>> --
+>> 2.43.0
+>>
+
+
