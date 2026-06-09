@@ -1,151 +1,166 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EF63E2765
-	for <spacemit@lists.linux.dev>; Tue,  9 Jun 2026 21:06:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD95301708;
+	Tue,  9 Jun 2026 23:11:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781039196; cv=none; b=B8h4eUjqPwyEqki95np7YafXIihQ36eRrVlZVoS5Eai+DphOiOJyskQfmzaTmgQbjVgyQTmW2vVLfP6/eY6dgGVQWJnQs2Yg+B4RWwXvrKlWJwhqn5JlR7VIQseIG3u0BShGo42AwJtS7PkQpHJleuMWDA0Twkvz04QIYqYmAHo=
+	t=1781046686; cv=none; b=osW2KXCi9X1t9Yoyo2MsjLyoHuF8j8tjGsByZQSzZz0xm2rZAXn4MDTYmHQyJoPgY7Uqxalw+HtTfRlgxLftFfe8XqcJ4fQf7nqmKqxUqoGQ/DC8rlP+NidDg/CDhC90BEpm2CeK3E2lvq8Ke2pOF+kY57sjNFovDyLYx5yFxoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781039196; c=relaxed/simple;
-	bh=JnRgX0E23Ha/jYZIEprqGGXXF9FSZBw76QfDOqcYCMs=;
+	s=arc-20240116; t=1781046686; c=relaxed/simple;
+	bh=cIUrQfjWhexxtEG3nThdTBHEdFiN5tzrGQ/NU86nAuc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fNhK2LBX10VtW1yvnmMEWn/vU98i1IuCYwknrpnplqfAjXbveJoOtRYfpuYE4OsHpSY510w3nmENoUs9d6KDDg54b4rNH57lOo+dVRj5E8wYqjxTbcradvns2JeirInVQ3/Ov5reoMkBIUz+1a4G3uWHeojV8mwbTlfVSl6dgs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XCuP8G8k; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=dzWalfGQutj+tWeYWLrP8XLiiEXUGsecijxyaiIOsa2miYf3DPPXfEYHigcHgMvz1IU9Vovec83ojw45RVwS5EOD2tk/ABszpd2SCLL9jK3g4nZ8hpkyuvStWeo3qiAUxZTZuEs6GDOxzYImgosrXJDTAQGlZ7p43YvjpGCGiUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OQLqyvEX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XCuP8G8k"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-36bb3551f6eso5321710a91.1
-        for <spacemit@lists.linux.dev>; Tue, 09 Jun 2026 14:06:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781039193; x=1781643993; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1dX9Gf5auhZd7M2vITh4vuMczhC2UZxTRI4fFpUYnQg=;
-        b=XCuP8G8krP4XEEjuij/Ob891KCJrYvKM5MftsTIoUAzGNnzAjU+E7pEeJyJk6ZmVud
-         RarSd5WfiaVpimOQvPhZVZyR4LKzrf9bE60LPPQHFxVdDH9LD56U/rJx45RmYhfef05g
-         YL+5wF8yXzu6BRXMMFVE3Zk8UygZ1WCJm+wx+rRkWqTJjoL5Lnq4hG7ZKaPXV79TQgk+
-         FtgEESUvfzhlX39aMt2gy2opiaavePUOudvi/kL6lvvhA79VniAIbWVhelG9Wyn4YwMR
-         KvnDpXF42K2ndpX0WAgjcJHaE0DS42THm4UX6o5hzh/+zFR/JfZagvUqHT7q5IeLnKYF
-         Az1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781039193; x=1781643993;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1dX9Gf5auhZd7M2vITh4vuMczhC2UZxTRI4fFpUYnQg=;
-        b=jflhLrUukP1FSoc8My46AbKjuYqiElOIUAkeWCW1vnvZheLikK+ktjM2kP5NjKpaIO
-         39PxqmtgTtml5W4yRnhaNaYpYBRT9izUNV+mJaDr7u97eoEngr1TlblGpENvJhV4t83p
-         IDCcMbUaWHXWzHJ6NiNBPOJwFXempSTqeX5JEGXwvRpsrYOoUV8dXpZQ7F7k0qmDhekz
-         4Ys+VuJ4FHKv8SUBDtWqGdflAdhrphtvKEnhfSgvR87NSb03+KVWCZb4qyuBcPI1iAFn
-         wUXfjcGrLWZ2h8ZiwvJNi1JLBpcbEYjnwhVX07MGG339lPwTy8X7MjBpEDRX3AKAipux
-         pOfA==
-X-Forwarded-Encrypted: i=1; AFNElJ/3CC6jO9uNzScT23LWaR8yT+MNnp5y1oHIZgKgWfNZT21JCFT9Qs+Y/0XStbr+BNPljtikZZYoAQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzGAX2VRZdA93hdLMuBnopVA4K/N+outSxXW0a/ViWumUHIDYKD
-	mdyDigZRXvoBcUz14SnsJP2N8iw7DHel6YWdhCWWnyV5ZvHTaNyicrTt
-X-Gm-Gg: Acq92OG1N/ru/aSvIOPJRWIQYoNCvCUvy4H1FlBikctuwwu5sviD2R86o7+AOy2Zse1
-	QLXt1LGuZi3gfrQ8tKO0KCXoq+WxB/Ov4icylt0cBmBaDl8c5l/CTAyNAqxh7AZtoJKYPZpzP94
-	0dHbi8iOVQGmUpmpm0e0Lc3HMj6UHhHHQPkjBfnRJeHyZckeBtNfEmaX/gCoTpxhqGwo3vvKm8b
-	K+CgMqKsuqNLSM7dX46NekEJaA09OSXGwdCbhD2WBNf3DD7oi+bYfT7j9TP82TRyWGNgbDZZ27w
-	QUvHEDnaYE0Bp8LsFV7Vhi/GutwSvzErHm36yc4y3o7+p0DD3xPpBnY2KGMkaaRKgxOzGcRVaFO
-	emoehIP3frl4S4+6eev9LLISFEOtnlC7jZdEGro1yLJ0mukBgP4dlFNjzr7fAwhuW07GwuI1Cqn
-	3C325+6g==
-X-Received: by 2002:a17:90b:5345:b0:35c:30a8:330 with SMTP id 98e67ed59e1d1-370ebff342fmr22737341a91.0.1781039192824;
-        Tue, 09 Jun 2026 14:06:32 -0700 (PDT)
-Received: from localhost ([2a12:a305:4::3060])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36f6bf903fasm20158546a91.2.2026.06.09.14.06.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2026 14:06:32 -0700 (PDT)
-Date: Tue, 9 Jun 2026 17:06:24 -0400
-From: Guodong Xu <docular.xu@gmail.com>
-To: Conor Dooley <conor@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/2] dt-bindings: dmaengine: Add SpacemiT K1 PDMA request
- numbers
-Message-ID: <6ycdvhpgygnelzp3ot63xtzcnlvac7emngvj7tviiclst4a7km@kjq7oqvecnxx>
-References: <20260607-b4-k1-pdma-req-macros-v1-0-5b2a3955007c@gmail.com>
- <20260607-b4-k1-pdma-req-macros-v1-1-5b2a3955007c@gmail.com>
- <20260608-dazzling-hacksaw-dbe84766ec76@spud>
- <qxcpvj3eseclgonwuwx2szn2tj4uxci27mvpqwotj6uaiyj65p@7sx5tyzbfs2g>
- <20260609-freeload-luckiness-7a143eae62f4@spud>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OQLqyvEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D908C1F00893;
+	Tue,  9 Jun 2026 23:11:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781046684;
+	bh=RTQ7Dfa+YIedQNlrk2pBh0acv1cJxf0hqLHt+u/Ia8k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=OQLqyvEXsQZCwc5mO4VNP1T5EDWq5EHl3fArZI4AsaiVQjoGwHMLSdaYH3feXYArf
+	 fA6x7Iqa5b1Vdz7luA+0gDRuJ1XmAEUkt/r7ywxYQMlscO7jIp85Mn7Bt/a3Vkib/K
+	 XHkJTs3ngEVXcvWR3YkCRbm7FYaE6fnBJbU/D1fQUNY1YbBiR8reElwFHflN+o5FMC
+	 2kGiJh2HfnxFpucnbb1auSIIVjs9G8jtku5/p/NM7tHSgcKrFaYMvunEtSYvxtPMY4
+	 VlIIKbCjTFTIquDLJGrYzR9sMbZaVxpIwo4E11M6Qj9dFtBTdmz5wZnGVN4e4fMzNB
+	 U3k49y4B9I9PA==
+Date: Wed, 10 Jun 2026 00:11:19 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Guodong Xu <docular.xu@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 1/2] dt-bindings: dmaengine: Add SpacemiT K1 PDMA
+ request numbers
+Message-ID: <20260610-atrophy-gullible-938789978f76@spud>
+References: <20260609-b4-k1-pdma-req-macros-v2-0-5d5d7b997b54@gmail.com>
+ <20260609-b4-k1-pdma-req-macros-v2-1-5d5d7b997b54@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="mDjp111cseA+tWiA"
 Content-Disposition: inline
-In-Reply-To: <20260609-freeload-luckiness-7a143eae62f4@spud>
+In-Reply-To: <20260609-b4-k1-pdma-req-macros-v2-1-5d5d7b997b54@gmail.com>
 
-On 2026-06-09 20:54, Conor Dooley wrote:
->On Tue, Jun 09, 2026 at 02:55:59PM -0400, Guodong Xu wrote:
->> Hi, Conor
->>
->> On 2026-06-08 18:33, Conor Dooley wrote:
->> > On Sun, Jun 07, 2026 at 01:41:30PM -0400, Guodong Xu wrote:
->> > > Add a dt-bindings header that gives symbolic names to the SpacemiT K1
->> > > PDMA request lines of the non-secure peripherals. Device trees can use
->> > > these K1_PDMA_* macros instead of magic numbers.
->> > >
->> > > Point the spacemit,k1-pdma binding's #dma-cells description at the new
->> > > header.
->> > >
->> > > Signed-off-by: Guodong Xu <docular.xu@gmail.com>
->> > > ---
->> > >  .../devicetree/bindings/dma/spacemit,k1-pdma.yaml  |  4 +-
->> > >  include/dt-bindings/dma/spacemit,k1-pdma.h         | 56 ++++++++++++++++++++++
->> > >  2 files changed, 59 insertions(+), 1 deletion(-)
->> > >
->> > > diff --git a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
->> > > index ec06235baf5ca..0d4ac9849e27b 100644
->> > > --- a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
->> > > +++ b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
->> > > @@ -35,7 +35,9 @@ properties:
->> > >    '#dma-cells':
->> > >      const: 1
->> > >      description:
->> > > -      The DMA request number for the peripheral device.
->> > > +      The single cell is the DMA request number for the peripheral device.
->> > > +      See <dt-bindings/dma/spacemit,k1-pdma.h> for the list of valid request
->> > > +      numbers.
->> > >
->> > >  required:
->> > >    - compatible
->> > > diff --git a/include/dt-bindings/dma/spacemit,k1-pdma.h b/include/dt-bindings/dma/spacemit,k1-pdma.h
->> >
->> > Why does this need to be in a binding when there is no use of this in
->> > the driver? May as well be a header, particularly if these are numbers
->>
->> Thanks for the review. You are correct that these are not referenced in the
->> driver. My change to k1-pdma.yaml should be dropped.
->>
->> > with a set meaning that are lifted from the TRM, rather than made up
->> > numbers to make a driver work. The former seems likely, given you're
->> > indexing from 3 not 0.
->>
->> Yes, it is defined in the K1 manual [1], see 9.4.3 DMA Connectivity &
->> Assignments
->>
->> Link: https://www.spacemit.com/community/document/info?lang=en&nodepath=hardware/key_stone/k1/k1_docs/k1_usermanual/9.Top_System.md [1]
->>
->> I will fix that in v2.
->
->Just in case I wasn't clear (and I think I wasn't), when I said "may as
->well be a header" I meant a header in arch/riscv/boot/dts/spacemit.
 
-Oh, got it. Makes sense. I will move it to
-arch/riscv/boot/dts/spacemit/k1-pdma.h
+--mDjp111cseA+tWiA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Note that I already sent v2 before reading this, please disregard v2.
+On Tue, Jun 09, 2026 at 03:46:38PM -0400, Guodong Xu wrote:
+> Add a dt-bindings header that gives symbolic names to the SpacemiT K1
+> PDMA request lines of the non-secure peripherals. Device trees can use
+> these K1_PDMA_* macros instead of magic numbers.
+>=20
+> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
+> ---
+> V2: Drop the #dma-cells description change in spacemit,k1-pdma.yaml; the
+>     request numbers are hardware-fixed and unused by the driver.
 
-I will send v3.
+Worth noting that while this wasn't the change I wanted, I didn't
+express myself clearly and Guodong is going to send a v3 after I
+clarified:
+https://lore.kernel.org/all/6ycdvhpgygnelzp3ot63xtzcnlvac7emngvj7tviiclst4a=
+7km@kjq7oqvecnxx/
 
-BR,
-Guodong
+ta,
+Conor.
+
+> ---
+>  include/dt-bindings/dma/spacemit,k1-pdma.h | 56 ++++++++++++++++++++++++=
+++++++
+>  1 file changed, 56 insertions(+)
+>=20
+> diff --git a/include/dt-bindings/dma/spacemit,k1-pdma.h b/include/dt-bind=
+ings/dma/spacemit,k1-pdma.h
+> new file mode 100644
+> index 0000000000000..491976516550a
+> --- /dev/null
+> +++ b/include/dt-bindings/dma/spacemit,k1-pdma.h
+> @@ -0,0 +1,56 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * This header provides DMA request number for non-secure peripherals of
+> + * SpacemiT K1 PDMA.
+> + *
+> + * Copyright (c) 2026 Guodong Xu <docular.xu@gmail.com>
+> + */
+> +
+> +#ifndef _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_
+> +#define _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_
+> +
+> +#define K1_PDMA_UART0_TX	3
+> +#define K1_PDMA_UART0_RX	4
+> +#define K1_PDMA_UART2_TX	5
+> +#define K1_PDMA_UART2_RX	6
+> +#define K1_PDMA_UART3_TX	7
+> +#define K1_PDMA_UART3_RX	8
+> +#define K1_PDMA_UART4_TX	9
+> +#define K1_PDMA_UART4_RX	10
+> +#define K1_PDMA_I2C0_TX		11
+> +#define K1_PDMA_I2C0_RX		12
+> +#define K1_PDMA_I2C1_TX		13
+> +#define K1_PDMA_I2C1_RX		14
+> +#define K1_PDMA_I2C2_TX		15
+> +#define K1_PDMA_I2C2_RX		16
+> +#define K1_PDMA_I2C4_TX		17
+> +#define K1_PDMA_I2C4_RX		18
+> +#define K1_PDMA_SPI3_TX		19
+> +#define K1_PDMA_SPI3_RX		20
+> +#define K1_PDMA_I2S0_TX		21
+> +#define K1_PDMA_I2S0_RX		22
+> +#define K1_PDMA_I2S1_TX		23
+> +#define K1_PDMA_I2S1_RX		24
+> +#define K1_PDMA_UART5_TX	25
+> +#define K1_PDMA_UART5_RX	26
+> +#define K1_PDMA_UART6_TX	27
+> +#define K1_PDMA_UART6_RX	28
+> +#define K1_PDMA_UART7_TX	29
+> +#define K1_PDMA_UART7_RX	30
+> +#define K1_PDMA_UART8_TX	31
+> +#define K1_PDMA_UART8_RX	32
+> +#define K1_PDMA_UART9_TX	33
+> +#define K1_PDMA_UART9_RX	34
+> +#define K1_PDMA_I2C5_TX		35
+> +#define K1_PDMA_I2C5_RX		36
+> +#define K1_PDMA_I2C6_TX		37
+> +#define K1_PDMA_I2C6_RX		38
+> +#define K1_PDMA_I2C7_TX		39
+> +#define K1_PDMA_I2C7_RX		40
+> +#define K1_PDMA_I2C8_TX		41
+> +#define K1_PDMA_I2C8_RX		42
+> +#define K1_PDMA_CAN0_RX		43
+> +#define K1_PDMA_QSPI_RX		44
+> +#define K1_PDMA_QSPI_TX		45
+> +
+> +#endif /* _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_ */
+>=20
+> --=20
+> 2.43.0
+>=20
+
+--mDjp111cseA+tWiA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaiidlwAKCRB4tDGHoIJi
+0gqdAQDHkJNkld9XKOrvHNTBvPSzUlW9HGCxoEAZz+aOul9PggD/ZoDUW2fCKmZW
+bBkaF7fEvO7Fd+9eaehZv6GsOP6twgU=
+=vNgE
+-----END PGP SIGNATURE-----
+
+--mDjp111cseA+tWiA--
