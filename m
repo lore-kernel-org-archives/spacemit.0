@@ -1,166 +1,127 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD95301708;
-	Tue,  9 Jun 2026 23:11:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8191D3EDADA
+	for <spacemit@lists.linux.dev>; Tue,  9 Jun 2026 23:15:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781046686; cv=none; b=osW2KXCi9X1t9Yoyo2MsjLyoHuF8j8tjGsByZQSzZz0xm2rZAXn4MDTYmHQyJoPgY7Uqxalw+HtTfRlgxLftFfe8XqcJ4fQf7nqmKqxUqoGQ/DC8rlP+NidDg/CDhC90BEpm2CeK3E2lvq8Ke2pOF+kY57sjNFovDyLYx5yFxoc=
+	t=1781046906; cv=none; b=E/G8/OZxM20yPKKFk58oYa9uXFwqNP9mlZuFNIFBVU8jPl7mWRBWqPFVkQhdDG3cbTML/cGlP/I+obI64yPGibopx28fBLFxv1VZ+GqUISf7FP8TrjAMa7VlZ8BzW5jFH/SlKporsSWQihfwzOl3i3mg719KTz9Q9jaFLJZjza0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781046686; c=relaxed/simple;
-	bh=cIUrQfjWhexxtEG3nThdTBHEdFiN5tzrGQ/NU86nAuc=;
+	s=arc-20240116; t=1781046906; c=relaxed/simple;
+	bh=RuVJB9nyNrq3adxmXLdwNELFE9kcapRmML0DfpetoKc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dzWalfGQutj+tWeYWLrP8XLiiEXUGsecijxyaiIOsa2miYf3DPPXfEYHigcHgMvz1IU9Vovec83ojw45RVwS5EOD2tk/ABszpd2SCLL9jK3g4nZ8hpkyuvStWeo3qiAUxZTZuEs6GDOxzYImgosrXJDTAQGlZ7p43YvjpGCGiUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OQLqyvEX; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=bPjGDsxyBEuxcb81M173dh08l+x95CvUgQZ4NOWQx2yuuWpUrNv6QVrR5IYPVQ1g6l/BOXsiy+NVfZs+6pUNNE+Pzl/IYu1SsvqQG3WxjSOKpfqPxUeRsbZKcwzg7yBWuvVVANe978Pk/B3GTs60AqlNoUgAIHBefdtZxQ+U8Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XQlNZxe4; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OQLqyvEX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D908C1F00893;
-	Tue,  9 Jun 2026 23:11:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781046684;
-	bh=RTQ7Dfa+YIedQNlrk2pBh0acv1cJxf0hqLHt+u/Ia8k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=OQLqyvEXsQZCwc5mO4VNP1T5EDWq5EHl3fArZI4AsaiVQjoGwHMLSdaYH3feXYArf
-	 fA6x7Iqa5b1Vdz7luA+0gDRuJ1XmAEUkt/r7ywxYQMlscO7jIp85Mn7Bt/a3Vkib/K
-	 XHkJTs3ngEVXcvWR3YkCRbm7FYaE6fnBJbU/D1fQUNY1YbBiR8reElwFHflN+o5FMC
-	 2kGiJh2HfnxFpucnbb1auSIIVjs9G8jtku5/p/NM7tHSgcKrFaYMvunEtSYvxtPMY4
-	 VlIIKbCjTFTIquDLJGrYzR9sMbZaVxpIwo4E11M6Qj9dFtBTdmz5wZnGVN4e4fMzNB
-	 U3k49y4B9I9PA==
-Date: Wed, 10 Jun 2026 00:11:19 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Guodong Xu <docular.xu@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] dt-bindings: dmaengine: Add SpacemiT K1 PDMA
- request numbers
-Message-ID: <20260610-atrophy-gullible-938789978f76@spud>
-References: <20260609-b4-k1-pdma-req-macros-v2-0-5d5d7b997b54@gmail.com>
- <20260609-b4-k1-pdma-req-macros-v2-1-5d5d7b997b54@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XQlNZxe4"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2c0c3184c71so47106695ad.1
+        for <spacemit@lists.linux.dev>; Tue, 09 Jun 2026 16:15:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781046905; x=1781651705; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ae/32RAlZzOkrMKZrBalt4ZXi3T3OToTPv5Duv2/6FA=;
+        b=XQlNZxe4yVXRtKg88wYffh6Rxl2959NhC+6kf6izntXEg8bIieYVlTWDnvxZ3qYtVK
+         jZHJmf3QdMmVQ/JilrGOrCxQ9t2Rc9ZKkRwWRc8TrHHVHJ1WG8SqqvSnQ9Y0ATX06Jck
+         2RUrVMfbjx3rSM0sfnuzdhNfKwgmMLR0VSJrspWViL+VmYwOCpc5jlftXq7MlbQWJlfF
+         8V+QmDm9Vn2H0cNhwlUkF6oGGO0J+dQEO5Y9fwhrkmicKTGSIULm31BH4p3fihHGMQ1x
+         PD5dLv+ct+l9I6yQoEc70ONItb692FoSogQ1BuFPDPFrFOJedn9CqLYRESLfP9GiFIVd
+         hSbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781046905; x=1781651705;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ae/32RAlZzOkrMKZrBalt4ZXi3T3OToTPv5Duv2/6FA=;
+        b=IZvw750WOhQfktJ2PlKoBtjd4KcyjoB7I3+peX+NS4HIMMkyKC/q6y+3TuuhapC9uD
+         HA4nMVnQNkH7NqHL+j6KYA/SP9mdDE/aRsXqnBKYvV0pd4d3Grt1V7EScQ1AWBPr3dwI
+         unmbCw3/Yf058Bi8GJMDgEjx2DBr8uFpqNobjlz+cYcQ1nXEm/XJb+xuXn1mb+NJ1OhX
+         xflK9NvR6MobRtF0rum9VU2fDHwcopiv5yCV94b455fyJD1o5rnc04YGaoM69JPW4Q33
+         VHjNUz3pJ7KVXDst+Osy6gHWxSd6LxzI9+DQhHooK5D+t9ZgZJrkmLzh1gtJuBrlLta7
+         8f5g==
+X-Forwarded-Encrypted: i=1; AFNElJ+SorETBtFVCbLO2bFM/h9n9dWInJxfnnn6aQIWZQWCXmmiMYRZGIDuvIvSys1xp3rfUyPHyvoqlQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyw7QskgEXguWbc3o8oszsPWCDKmWIhOCe+RUsk2VYx+wSi58jT
+	OvdM5qBxGLE4LuewuBum0n4TFurEKxhTd0/omsKC1DC+vNPlUy5+TRpk
+X-Gm-Gg: Acq92OFFGPT4vLWRu0ttmwLLiMxVyLyFfAnXl0GPmPFiiTEmNXTb3YEThrjw8ZY9k3M
+	1Qp5KrK78IaeEX6AJCB0BTYiZHxxXa4gxobebedPmV9DH8DkWhM4R17GRk/GPweuadduGekJS6l
+	ypLIArWmB2GjgNdaGJtitFvX7q0hcy+9/7SxMX6CgYvciLnGNI/siNjxvdiOO5yHLVese3ByeX3
+	Q7nwKAbFIwqPLfwGTF+pl4oG4emzPgpjvThbLTzEZKckCWyw7NQ/OLjq1zi2qre3MoiY4gbC4IA
+	Ad0kuYa1s6F7LLy6sBUpFuT5oT4sHU4m7MUW9sPmR81Qjtl+yFT3CByVyOZz+4ptleVEdAxSpcE
+	JgoxQWRqVwN71x1K45kNsHHbMYZG4ix1JNCmRANfWiy4iYt7Ue/WrhXLWWb3quXyxBZYHWazvMN
+	n3UixAu5LhIA==
+X-Received: by 2002:a17:903:19ef:b0:2c1:5667:2740 with SMTP id d9443c01a7336-2c1e810bd1fmr284368035ad.21.1781046904581;
+        Tue, 09 Jun 2026 16:15:04 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d1e5sm211741165ad.12.2026.06.09.16.15.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jun 2026 16:15:04 -0700 (PDT)
+Date: Wed, 10 Jun 2026 07:14:56 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Andrew Rembrandt <kernel@rembrandt.dev>, 
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: Yixun Lan <dlan@kernel.org>, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] riscv: dts: spacemit: k3-pico-itx: Fix non-functional
+ ethernet TX timing
+Message-ID: <aiid4Y6x6Dbbwszf@inochi.infowork>
+References: <20260608182358.170489-1-kernel@rembrandt.dev>
+ <aiemGajqcQeY9avz@inochi.infowork>
+ <aihYftGNcpUd4UUR@mcmanus>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mDjp111cseA+tWiA"
-Content-Disposition: inline
-In-Reply-To: <20260609-b4-k1-pdma-req-macros-v2-1-5d5d7b997b54@gmail.com>
-
-
---mDjp111cseA+tWiA
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <aihYftGNcpUd4UUR@mcmanus>
 
-On Tue, Jun 09, 2026 at 03:46:38PM -0400, Guodong Xu wrote:
-> Add a dt-bindings header that gives symbolic names to the SpacemiT K1
-> PDMA request lines of the non-secure peripherals. Device trees can use
-> these K1_PDMA_* macros instead of magic numbers.
->=20
-> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
-> ---
-> V2: Drop the #dma-cells description change in spacemit,k1-pdma.yaml; the
->     request numbers are hardware-fixed and unused by the driver.
+On Tue, Jun 09, 2026 at 08:24:46PM +0200, Andrew Rembrandt wrote:
+> On Tue, Jun 09, 2026 at 01:37:56 pm Inochi Amaoto wrote:
+> > You should set tx-internal-delay-ps of the phy instead of
+> > the controller. This is a phy in "rgmii-id" mode.
+> Thanks for the review. I don't think that works on this board, but
+> please let me know if I'm missing something.
+> 
+> The PHY is a Realtek RTL8211F. Its driver only toggles the chip's fixed
+> ~2ns delay on/off from phy-mode, and per the datasheet that's a hardware
+> limit, not a driver one -- the RTL8211F has no tunable delay, so a ps
+> value on the PHY node has nothing to act on.
+> 
+> The only configurable delay element on K3 is the SoC RGMII delay line,
+> and dwmac-spacemit programs it from tx-/rx-internal-delay-ps read off
+> the controller node (spacemit_dwmac_probe()), so that is where the
+> property has to live to take effect. This is the MAC "fine tuning ...
+> values expected here are small" case described in
+> Documentation/devicetree/bindings/net/ethernet-controller.yaml: the
+> RTL8211F supplies the fixed ~2ns via rgmii-id and the MAC adds a 400ps
+> trim on top. Ideally the PHY would own the delay, but as Andrew Lunn
+> noted reviewing dwmac-meson8b, that requires the PHY to implement a
+> configurable delay, which not all do.
+> 
+> The already-merged k1-bananapi-f3 does the same thing: eth1 combines
+> phy-mode = "rgmii-id" with tx-internal-delay-ps = <250> on the
+> controller node (via the K1 EMAC rather than dwmac, but the same DT
+> pattern).
+> 
+> Would you be OK keeping it on the controller given the above? 
 
-Worth noting that while this wasn't the change I wanted, I didn't
-express myself clearly and Guodong is going to send a v3 after I
-clarified:
-https://lore.kernel.org/all/6ycdvhpgygnelzp3ot63xtzcnlvac7emngvj7tviiclst4a=
-7km@kjq7oqvecnxx/
+Yes, it is good for me.
 
-ta,
-Conor.
 
-> ---
->  include/dt-bindings/dma/spacemit,k1-pdma.h | 56 ++++++++++++++++++++++++=
-++++++
->  1 file changed, 56 insertions(+)
->=20
-> diff --git a/include/dt-bindings/dma/spacemit,k1-pdma.h b/include/dt-bind=
-ings/dma/spacemit,k1-pdma.h
-> new file mode 100644
-> index 0000000000000..491976516550a
-> --- /dev/null
-> +++ b/include/dt-bindings/dma/spacemit,k1-pdma.h
-> @@ -0,0 +1,56 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * This header provides DMA request number for non-secure peripherals of
-> + * SpacemiT K1 PDMA.
-> + *
-> + * Copyright (c) 2026 Guodong Xu <docular.xu@gmail.com>
-> + */
-> +
-> +#ifndef _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_
-> +#define _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_
-> +
-> +#define K1_PDMA_UART0_TX	3
-> +#define K1_PDMA_UART0_RX	4
-> +#define K1_PDMA_UART2_TX	5
-> +#define K1_PDMA_UART2_RX	6
-> +#define K1_PDMA_UART3_TX	7
-> +#define K1_PDMA_UART3_RX	8
-> +#define K1_PDMA_UART4_TX	9
-> +#define K1_PDMA_UART4_RX	10
-> +#define K1_PDMA_I2C0_TX		11
-> +#define K1_PDMA_I2C0_RX		12
-> +#define K1_PDMA_I2C1_TX		13
-> +#define K1_PDMA_I2C1_RX		14
-> +#define K1_PDMA_I2C2_TX		15
-> +#define K1_PDMA_I2C2_RX		16
-> +#define K1_PDMA_I2C4_TX		17
-> +#define K1_PDMA_I2C4_RX		18
-> +#define K1_PDMA_SPI3_TX		19
-> +#define K1_PDMA_SPI3_RX		20
-> +#define K1_PDMA_I2S0_TX		21
-> +#define K1_PDMA_I2S0_RX		22
-> +#define K1_PDMA_I2S1_TX		23
-> +#define K1_PDMA_I2S1_RX		24
-> +#define K1_PDMA_UART5_TX	25
-> +#define K1_PDMA_UART5_RX	26
-> +#define K1_PDMA_UART6_TX	27
-> +#define K1_PDMA_UART6_RX	28
-> +#define K1_PDMA_UART7_TX	29
-> +#define K1_PDMA_UART7_RX	30
-> +#define K1_PDMA_UART8_TX	31
-> +#define K1_PDMA_UART8_RX	32
-> +#define K1_PDMA_UART9_TX	33
-> +#define K1_PDMA_UART9_RX	34
-> +#define K1_PDMA_I2C5_TX		35
-> +#define K1_PDMA_I2C5_RX		36
-> +#define K1_PDMA_I2C6_TX		37
-> +#define K1_PDMA_I2C6_RX		38
-> +#define K1_PDMA_I2C7_TX		39
-> +#define K1_PDMA_I2C7_RX		40
-> +#define K1_PDMA_I2C8_TX		41
-> +#define K1_PDMA_I2C8_RX		42
-> +#define K1_PDMA_CAN0_RX		43
-> +#define K1_PDMA_QSPI_RX		44
-> +#define K1_PDMA_QSPI_TX		45
-> +
-> +#endif /* _DT_BINDINGS_DMA_SPACEMIT_K1_PDMA_H_ */
->=20
-> --=20
-> 2.43.0
->=20
+> For v2 I can add an explicit rx-internal-delay-ps = <0> to match 
+> the other SpacemiT boards (k1-bananapi-f3 included) and spell this
+> reasoning out in the commit message.
+> 
 
---mDjp111cseA+tWiA
-Content-Type: application/pgp-signature; name="signature.asc"
+Do not do this, just leave the rx-internal-delay-ps untouched.
 
------BEGIN PGP SIGNATURE-----
+For this patch
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaiidlwAKCRB4tDGHoIJi
-0gqdAQDHkJNkld9XKOrvHNTBvPSzUlW9HGCxoEAZz+aOul9PggD/ZoDUW2fCKmZW
-bBkaF7fEvO7Fd+9eaehZv6GsOP6twgU=
-=vNgE
------END PGP SIGNATURE-----
+Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
 
---mDjp111cseA+tWiA--
+Regards,
+Inochi.
