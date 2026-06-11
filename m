@@ -1,194 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from freeshell.de (freeshell.de [116.202.128.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EA13FAE19;
-	Wed, 10 Jun 2026 12:34:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA4B3AF65C
+	for <spacemit@lists.linux.dev>; Thu, 11 Jun 2026 07:30:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781094886; cv=none; b=PfHJngu3dR/Xi48kWjidbJG4PU/mjXh/YiUTrm7COvSCkc18f1OiNh+u1OGkcsS9JbQy31xfa2uoXPMAzLb4DiJr1bU+6FrKCnpJbGNbYUtCtTO38LCmyfkjHwC7tRzgC3e6zuWTAF4IzhycR9SleJ7boCJv8wbBF/RGfZsMeFw=
+	t=1781163012; cv=none; b=QOCsEmbd+Jq1MItyuwIXfHBSzeB4bleK4f8VLxytwAKH0/4GrlPum4kDFReU+Z2K/03zayVzKhFfZYzaWEhdPYJoAsd3CDbzqe60cH8zkeTqaqj95/enlvMRa5uLi5Xj7XAr3H44prj9YC9yIveO2eHwJbSNOHH6pwazNEZPFDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781094886; c=relaxed/simple;
-	bh=APunAFCOhvnEPzJn8enVpgW8mKtpnQazcb7rHmyqvDI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pUXJQ+HCl2WChRFX+WXeaHiXattYLYUqykQWDBLsJ7bI0bv6QlxvFUSt3Jcrnayq7hRuoiM4Nwse8I8JLZILjjsQK+3UrNWgbsGgqmZhpG/J4QssglfwdqJtSmZgrq9lyGxH2+1C1kv0JQ9yz6E8EaCrElZc3Rr0gxQzrl7l8mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WAW7EbX3; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781163012; c=relaxed/simple;
+	bh=fDrU3y/yTatGDnB3UYv1FrktwPZBuB5O5BWi06QqeOk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=H3mtgqleMBXqm1KifJkNneTSCMHgRxqctc2t1h2b304gmKYncVUEY0hYf8pz+bdBtXezt7+w2fxpmq6X64sk0ogcw1UJrQaJPFVsU6vRHCrmingDpwMLo4bgF5RwNJ3nSEioQAs4aHk03sCoS+gbhRj14xpgBpNxg681Z9TKX7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=kPUPwVyS; arc=none smtp.client-ip=116.202.128.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WAW7EbX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556F91F00898;
-	Wed, 10 Jun 2026 12:34:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781094885;
-	bh=ZaI6xM8qV9yj7Kk8/veyhQXGEM9b9uFkMLsDWbN/Mno=;
-	h=From:Date:Subject:To:Cc;
-	b=WAW7EbX3zLsR9uS+VOMh5DykdskbOLwyT8fEpY8eH1jPSkGFGlEGrrEkUq2MA8LEp
-	 SUgchyz5j41en1mKBYTwskhxzorj56A9EFytSpAQtKttLCRG269Key+AMt6PHVSu4v
-	 3acvLXzRaWjqJ8mu0d/G6S4TbjcOzRZ+6xvvsduRLhEiRm//djuoJGJUzuV46q5u7h
-	 CS9GIoFYGOrK0KLH8Gvzs+vddsMWPU0qVgjBKY6dtxJqoOOnPaSnWcIXMI1hia0Hfm
-	 H0Cru6rZX9PgF5JXX7fruidszfHXm6Ms/SIqTNJFmeuw91ArRYX2vSeqhExp0JR0XP
-	 hKFZiAwL4Yf0Q==
-From: Yixun Lan <dlan@kernel.org>
-Date: Wed, 10 Jun 2026 12:34:32 +0000
-Subject: [PATCH] riscv: dts: spacemit: k3: Enable SD card support
+	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="kPUPwVyS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
+	s=s2025; t=1781162962;
+	bh=tXwNWGOOumPfnfOExtCjj1A+ApEBHFbhZpzx7F0Nykc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=kPUPwVySZMqiuG04aTeDdngzZ8VBrEfoCzQmkf1gC5+nZLlUJmtoVsoEdMfuuFlOI
+	 wG07rIGtS39S877IWhyCcItkK4+43/gK2djrW+MSEv/L/V5BDy5RGCBQ2Ox0zCNEhC
+	 927q87yHJSGxFzAHdPuurfGTJxEqDbyinPTAvQLPslaAKh3EMCB3J4FOroTWuqMXq2
+	 S/iCDUQv3aM55kyi1pBYM76l9p32AutS4xOuD5UdDIItOBNaeG9SZ9a8wj/jxgPatK
+	 QAVPXOXrUbGVSZ3rX6vLtnyCNd7jhR/Vflia/IMjotm9fOJ5p+oyfiTqGJ7Y7y0Vho
+	 ZNqLG8KfYVLMA==
+Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
+	(Authenticated sender: e)
+	by freeshell.de (Postfix) with ESMTPSA id A534AB2213AB;
+	Thu, 11 Jun 2026 09:29:21 +0200 (CEST)
+Message-ID: <77a48b81-7906-4e18-9229-48643a67f402@freeshell.de>
+Date: Thu, 11 Jun 2026 00:29:12 -0700
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] riscv: dts: spacemit: k3-pico-itx: Fix non-functional
+ ethernet TX timing
+To: Andrew Rembrandt <kernel@rembrandt.dev>,
+ Inochi Amaoto <inochiama@gmail.com>
+Cc: Yixun Lan <dlan@kernel.org>, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20260608182358.170489-1-kernel@rembrandt.dev>
+ <aiemGajqcQeY9avz@inochi.infowork> <aihYftGNcpUd4UUR@mcmanus>
+ <aiid4Y6x6Dbbwszf@inochi.infowork> <aikmOfazxdrhpty7@mcmanus>
+Content-Language: en-US
+From: E Shattow <e@freeshell.de>
+In-Reply-To: <aikmOfazxdrhpty7@mcmanus>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260610-07-k3-enable-sd-v1-1-196ae29bd091@kernel.org>
-X-B4-Tracking: v=1; b=H4sIANdZKWoC/yXMSwqDQBBF0a1IjVNQGvC3lZCB2q+1TGhDl0pA3
- Hs6yfAM7j3IEBVGbXZQxK6mS0jILxkNUxdGsLpkKqQopZSGpeLHlRG6/gk2x8id89II6spTql4
- RXt+/4+3+t239jGH9bug8P50aqNBzAAAA
-X-Change-ID: 20260609-07-k3-enable-sd-e1ddf090e87f
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3734; i=dlan@kernel.org;
- h=from:subject:message-id; bh=APunAFCOhvnEPzJn8enVpgW8mKtpnQazcb7rHmyqvDI=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqKVneuUjSmx5vCKm2/SFZfUIpAQ2MpJfBx6JSI
- VJxnUXRqWSJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCailZ3hsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+3HuQ/+P2iFsk7XJHMo45AkR6GasC+7AEF/qC+dAN1wf1ASvGjoe24mvYQ9z
- /hiJYhC3bqJ+Cgl1O9whbN4O8kIrfKaAgYbXj97QAo7IvF+97ooVC31IMdFJtit63lsLFXTSTRV
- Ezp9ddk/vbQ3bFDl8RhbT2mG4mst7+1UHeTN1evs9dRLIKYHzALeXegGr9ORwxYXG9NLIdKWWKj
- Eg7kIJuBkmTYnKivzaR9FygAPim/v9jSz9MouqWf/MAw8/1Iqcf4brp1Q3DEC00xLCUbVWfxAGq
- iOB+xH29bkuzqZgQ+kys1QGp3KIDRNnn3e0yomN5z5/64vNotuaYmy13qOfK0y86KXQemK1opAl
- wX0BovgoRef40Fc6LoZ06F71ErPPsTh7pBunoM4VrgQ9upgF8svHFNLHugIBS2l8a/Tho1pmRoK
- aOCit+zYjKwHnNjUCQ1j+EtXQ4TuQDxtvEsMHLgmK060OrvquHbUvLxzfdupF28rfBz8ih5XEvp
- 4Db+j7BoHZ+2gf4v5/Kh1Dd3QH0qPghtLkFlCgmQm4UH8XgcrFLFvrVWh8rJRwObZ6X+mlLJLXh
- m28ryakiYGqHUfcqmNjfQvofHaqSpvyIb7CQ8gK4yEIfXld7ZbqFfHV/FuIxC3wR8FYqIJWbbO2
- 3m+t66UJaB531DO//Uh522eqUGV7BM=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Add the device tree node of SDHCI-0 controller which found on CoM260-IFX
-board, it's currenty used for Micro SD card slot, and one GPIO pin is
-configured as card insertion/removal detection pin, the slot use 4-bit
-data bus, and up support to SDR104 speed mode.
+Hi Andrew,
 
-Signed-off-by: Yixun Lan <dlan@kernel.org>
----
- arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts | 18 +++++++++++
- arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi   | 44 ++++++++++++++++++++++++++
- arch/riscv/boot/dts/spacemit/k3.dtsi           | 13 ++++++++
- 3 files changed, 75 insertions(+)
+On 6/10/26 02:05, Andrew Rembrandt wrote:
+> On Wed, Jun 10, 2026 at 07:14:56 am Inochi Amaoto wrote:
+>> Do not do this, just leave the rx-internal-delay-ps untouched.
+> 
+> Sounds good, I'll leave v1 as-is. Many thanks for the review.
+> 
+> Regards,
+> 
+> Andrew
+> 
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-index 238bb03d0e9e..e7f76cd24b90 100644
---- a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-@@ -19,3 +19,21 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- };
-+
-+&sdhci0 {
-+	pinctrl-names = "default","uhs";
-+	pinctrl-0 = <&mmc1_cfg>;
-+	pinctrl-1 = <&mmc1_uhs_cfg>;
-+	bus-width = <4>;
-+	cd-gpios = <&gpio K3_GPIO(4) GPIO_ACTIVE_HIGH>;
-+	no-mmc;
-+	no-sdio;
-+	disable-wp;
-+	cap-sd-highspeed;
-+	vmmc-supply = <&aldo4>;
-+	vqmmc-supply = <&aldo1>;
-+	sd-uhs-sdr25;
-+	sd-uhs-sdr50;
-+	sd-uhs-sdr104;
-+	status = "okay";
-+};
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-index 3ee1471f3798..6b808f890a28 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-@@ -689,4 +689,48 @@ uart0-0-pins {
- 			drive-strength = <25>;
- 		};
- 	};
-+
-+	mmc1_cfg: mmc1-cfg {
-+		mmc1-data-cmd-pins {
-+			pinmux = <K3_PADCONF(132, 0)>,	/* mmc1 dat3 */
-+				 <K3_PADCONF(133, 0)>,	/* mmc1 dat2 */
-+				 <K3_PADCONF(134, 0)>,	/* mmc1 dat1 */
-+				 <K3_PADCONF(135, 0)>,	/* mmc1 dat0 */
-+				 <K3_PADCONF(136, 0)>;	/* mmc1 cmd */
-+
-+			bias-pull-up = <0>;
-+			drive-strength = <25>;
-+			power-source = <3300>;
-+		};
-+
-+		mmc1-clk-pins {
-+			pinmux = <K3_PADCONF(137, 0)>;	/* mmc1 clk */
-+
-+			bias-pull-down;
-+			drive-strength = <25>;
-+			power-source = <3300>;
-+		};
-+	};
-+
-+	mmc1_uhs_cfg: mmc1-uhs-cfg {
-+		mmc1-uhs-data-cmd-pins {
-+			pinmux = <K3_PADCONF(132, 0)>,	/* mmc1 dat3 */
-+				 <K3_PADCONF(133, 0)>,	/* mmc1 dat2 */
-+				 <K3_PADCONF(134, 0)>,	/* mmc1 dat1 */
-+				 <K3_PADCONF(135, 0)>,	/* mmc1 dat0 */
-+				 <K3_PADCONF(136, 0)>;	/* mmc1 cmd */
-+
-+			bias-pull-up = <0>;
-+			drive-strength = <21>;
-+			power-source = <1800>;
-+		};
-+
-+		mmc1-uhs-clk-pins {
-+			pinmux = <K3_PADCONF(137, 0)>;	/* mmc1 clk */
-+
-+			bias-pull-down;
-+			drive-strength = <21>;
-+			power-source = <1800>;
-+		};
-+	};
- };
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index 19fc9b49668e..dabb0d5e6bad 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -1099,6 +1099,19 @@ pll: clock-controller@d4090000 {
- 			#clock-cells = <1>;
- 		};
- 
-+		sdhci0: mmc@d4280000 {
-+			compatible = "spacemit,k3-sdhci";
-+			reg = <0x0 0xd4280000 0x0 0x200>;
-+			clocks = <&syscon_apmu CLK_APMU_SDH_AXI>,
-+				 <&syscon_apmu CLK_APMU_SDH0>;
-+			clock-names = "core", "io";
-+			resets = <&syscon_apmu RESET_APMU_SDH_AXI>,
-+				 <&syscon_apmu RESET_APMU_SDH0>;
-+			reset-names = "axi", "sdh";
-+			interrupts = <99 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+		};
-+
- 		syscon_apmu: system-controller@d4282800 {
- 			compatible = "spacemit,k3-syscon-apmu";
- 			reg = <0x0 0xd4282800 0x0 0x400>;
+I do not notice any difference with or without this property present,
+tested Linux -next with U-Boot modification to devicetree:
 
----
-base-commit: 38d5f73d1f5af60d87047b981736b89521e49213
-change-id: 20260609-07-k3-enable-sd-e1ddf090e87f
+load usb 0:1 $fdt_addr_r /dtb/spacemit/k3-pico-itx.dtb
+fdt addr $fdt_addr_r
+fdt resize
+fdt header get filesize totalsize
+fdt set /soc/ethernet@cac80000 tx-internal-delay-ps <400>
+load usb 0:1 $kernel_addr_r /EFI/BOOT/BOOTRISCV64.EFI
+# throwaway use of ping is workaround for broken vendor U-Boot
+ping 127.0.0.1; bootefi $kernel_addr_r $fdt_addr_r
 
-Best regards,
---  
-Yixun Lan <dlan@kernel.org>
+Aside, there is still some problem with the driver which does cause it
+to fail. This can be reproduced by unloading the module and then loading
+the module; built from -next with 'olddefconfig' of debian Kconfig for
+kernel 7.1, no patches.
 
+# modprobe -r dwmac_spacemit
+# modprobe dwmac_spacemit
+[   61.469745] spacemit-dwmac cac80000.ethernet end0: cannot attach to
+PHY (error: -ENODEV)
+
+[   91.544646] spacemit-dwmac cac80000.ethernet end0: cannot attach to
+PHY (error: -ENODEV)
+
+If not reloading the module then I don't see any difference, traffic
+passes (ping 1.1.1.1) with or without your suggested
+tx-internal-delay-ps property. Is there a specific test to run to
+observe expected difference?
+
+Thanks,
+
+-E
