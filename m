@@ -1,56 +1,58 @@
 Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809693AE19B
-	for <spacemit@lists.linux.dev>; Fri, 12 Jun 2026 09:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645773D6488
+	for <spacemit@lists.linux.dev>; Fri, 12 Jun 2026 09:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781257913; cv=none; b=cbUUWPOV418mBUCOXlPQEdih2zvCepb6EO+tiOFNjxnWvtZ1b9BIGfqYk6IbcQ9izbobo2p1ckSzQEc4SI+36ebAlfT93rRZOIbl4FVHE/tV5z5w2yqkruYKU+tMfV1nnO7xI5CCoOSzZhCM45fvtCnKxA5BnahydSNJmMuE+EU=
+	t=1781257923; cv=none; b=FFVdA+KtlfRlMvxFeZJSyt0i7YRM0jMO353dDGZNyQI3rwuVBJGUVxIcKho/Lcr7AowJf3bRbqLm06Qpc4wMW+RG69/2VCEp+VjwOhKIkraz23cZvMJ1K/12O8jln+rKfrMmQQND2NSnlNgM/CUAUAFbusKAJk8rkofjkwV932g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781257913; c=relaxed/simple;
-	bh=8WwzrHxgFv4Bql+YAmkeQAyvc/z04SQjiw3ZFs2Csq0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hL0ToNcDgt3OeJPWdv652HRI0N2A/mj2T5/2qbM9rfWqql4B6ZEkxsblQzJDsdMGLhCdLLxkjhD691A6mbu/q2UacT9nVO76wVq/EQWtX8daiq7U96MMKjXKlavvsQ5tJ4VKcVD1WboY414VkRAqOUTRsEZvsgj6UugrY+7KxBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=Oo0IgB5r; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=k1aUJ+NV; arc=none smtp.client-ip=80.241.56.151
+	s=arc-20240116; t=1781257923; c=relaxed/simple;
+	bh=kMk70jSxtb3MD3cA34JzN4CJWO0HzPs0M08gJr1gSr0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=gpQjv2nL209Gx/ikC/mkwR7lMM4uoQgDEXGv2yF18vazFwzIODIG0lcj2FibgBj5s4i/0XnlewPhXHEaoXdy68F8pvm4A45JLk5UfA9vxoSlODR82i6U6E1cLoinE3//bQMNdygm4aGSrONkNh7cgJnBywmc9z6Ri6CTXqcSYrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=tT7kVdOE; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=jrcr2scJ; arc=none smtp.client-ip=80.241.56.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="Oo0IgB5r";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="k1aUJ+NV"
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="tT7kVdOE";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="jrcr2scJ"
 Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4gcFCY2mDvz9tpN;
-	Fri, 12 Jun 2026 11:51:37 +0200 (CEST)
+	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4gcFCw3RThz9tpN;
+	Fri, 12 Jun 2026 11:51:56 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1781257897;
+	t=1781257916;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=230pkd5gomLN4/5M7G+ooajqrscGYkDpD19KGlJrTRg=;
-	b=Oo0IgB5r3ksGBAThpOfySeXrKCRRmELReBH3Odn9VtitrMt2Wz20hKA0VzpoU5BazzcZv1
-	CqJ54u7JINJGM52n7T7dzklhkNB9KrO5gxcbOU91la5KuR1AIYLctvmLtXKqMfn188OsIO
-	l+dIx6nxVq0qYFE51DJfyg3zkKWdol101tZb1Cb//t372t04SZeU0ftYaDbcz5P0mrkRGh
-	E8Quj03poEf3EIQW48QNnl/exZPqQ88i1LbItwSptET8UGDd7sSwuH2mzMJ9qD52GJn4D4
-	pQtOtr/SrdwQZlMmpsUwqY+Ke612Ixiq/6yJL8u6Ml/wm2pYRUhGiK0rrtkhVw==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Zfe/dJqFfrMrhmEzQiIVU+r4LtnZx/69uLFhmgVm3jQ=;
+	b=tT7kVdOEYN0LqfPUDL413lWeNxqI+/6uJWUGW5KslSuMaNG7E3n1oZ5SDbjs1/hozJX5vT
+	4A0NgftunkyhpJZPuH0HUyYShouOp/GSXFJaMmcV7X0sPXT1Z6A4Qo9WzB1bPfuZzspr64
+	L7Ws1sF3N9pBr2jkrQCMQuDR6OBEA3y/edJQ/CwZ/BeCC8nkisyzQtp7jfdsiBrDbaeu0q
+	Ol//wNue89IXNZXzGXrcYIXwrkgX88gubgdz3XSSB36/vAWQVUDYnAO1XaaQbiHQeUbbHk
+	9+UO7O2K0N+iaI1Y6Yh34qJ196xXadi3SWYP4kdsMUf7iOCdVb80D4+qfNMWYQ==
 Authentication-Results: outgoing_mbo_mout;
-	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=k1aUJ+NV;
+	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=jrcr2scJ;
 	spf=pass (outgoing_mbo_mout: domain of shuwei.wu@mailbox.org designates 2001:67c:2050:b231:465::2 as permitted sender) smtp.mailfrom=shuwei.wu@mailbox.org
 From: Shuwei Wu <shuwei.wu@mailbox.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1781257895;
+	t=1781257914;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=230pkd5gomLN4/5M7G+ooajqrscGYkDpD19KGlJrTRg=;
-	b=k1aUJ+NV2szgplo0Sn+DduSpYWa/wOoY1PPgzbQpis+xhG+ypdmFvA+rwbmYWb1rvIh92n
-	obDFVdHs/k3KZX9QM7ihRNULZf1PVv8rY3uhnkJqb0qZo6+Uk6PxmfIsy3BAscWV8znjLh
-	Z+w8L8ZCbxpdzLxETikza08wQwwsmLTKofUODrW2gkfDfIh7nyaJEUjwUD44OCY3NkGEmP
-	Igxqz79X1kskHkbjIPBwYF00xDvFsgHDRUTERooVIyY4cnIV0XRZ8BJ3Dyc81qKLhl9mzX
-	T4n3w4LuoQbYZssfhnb3tQujoLzJ27OKlecUBZm4ZdGTSfyCdeNwpwshv39ydw==
-Subject: [PATCH v3 0/2] cpufreq: spacemit: Add cpufreq support for K1 SoC
-Date: Fri, 12 Jun 2026 17:51:00 +0800
-Message-Id: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Zfe/dJqFfrMrhmEzQiIVU+r4LtnZx/69uLFhmgVm3jQ=;
+	b=jrcr2scJwWan4crijrU3QtEOUNAKBSj15cGswWgFkGhHn2qsgEgvDoTKVw/vKuW4T4DFIb
+	O70Xi8WJiiaXOnKShEueNLU5rydIcYGz2saxns0R/9mGVU311OZPL23XWLlBgspkShn5AF
+	Y9Krr6nGqPCREasabZ7E8ZTXVwZ3JFi84Gyx4FaRLbEqUCbZqrnNc5aF6585PIajKzD4Y9
+	/uALLUL/s+/QQX1+VFsrmNgrtBfO0NUAPJq1fcRLNPF2RrMKHfREk89hQmqp6WeayfWmVf
+	S477EQuFsIkJTMzOP2cz9z9XE8L+DS0ULaJQJj1omNoxwsVGQF7a00ZdaK3+cA==
+Date: Fri, 12 Jun 2026 17:51:02 +0800
+Subject: [PATCH v3 2/2] riscv: dts: spacemit: Add cpu scaling for K1 SoC
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -59,14 +61,9 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIbWK2oC/22Q22rDMBAFf8X4uRt08UqyKSX/UfqgyzoRiWNXc
- t2UkH+v4hTaQB9XMKPhXOpMKVKuu+pSJ1pijuOpHPKpqv3ennYEMZS7FkwoJpmGvLdh/IRAUwa
- JRlhtrNWo6kJMifp4Xm2vb/c70ftHkc73x3qys98XZVdxbFxoei2YJ2QKAxrXGhPI9EJLwbRrG
- tSCbt6BcrZrSlc9ryWCKciT9TTEGSYOSwMMTK9aDK00nNM2xezzbNPGj8PL/xLJEA4c/PEAJRs
- WDhys89ZgUCSU2g42Ht143oxptyqczQTFVz7tKuSqoRaxpMs+IDMFtC1K5FLIHjVXoXclqL4ts
- Y95HtPXOvPC1yl+EszDoqWBQVnEodeeaXJ/G1bTIn7phrNHWhS6Ia6c8axXjB7p6/X6DSLYL3D
- wAQAA
-X-Change-ID: 20260307-shadow-deps-3582a78aa756
+Message-Id: <20260612-shadow-deps-v3-2-2f3ba88611ff@mailbox.org>
+References: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
+In-Reply-To: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
 To: "Rafael J. Wysocki" <rafael@kernel.org>, 
  Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -77,89 +74,242 @@ To: "Rafael J. Wysocki" <rafael@kernel.org>,
 Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
  devicetree@vger.kernel.org, Shuwei Wu <shuwei.wu@mailbox.org>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781257883; l=3367;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781257883; l=7264;
  i=shuwei.wu@mailbox.org; s=20251125; h=from:subject:message-id;
- bh=8WwzrHxgFv4Bql+YAmkeQAyvc/z04SQjiw3ZFs2Csq0=;
- b=SBdk/P5ptowOOfdxAdM9FnB6FHVS/Td8pSYqPYn4Jqll8MN1REG8DlcGXmQtjIdxg4H9txoPE
- mYcsdd6V9ZkDHiFX+JxFeXE4jdXiTlgYjBobVMxxppMlOiuAdHYQo3U
+ bh=kMk70jSxtb3MD3cA34JzN4CJWO0HzPs0M08gJr1gSr0=;
+ b=R8lUg0Ck/5RNYU+5FwX9zIpHYKFMuRl28uMk31qF020V2HHOw5tMB/6X3/CDqkdrm7adyeLLH
+ Lf4KOaLz98wBBs1pFM6Q8jVQFaNBidqxNl7UUcVvlrz6VfHdM42cQZP
 X-Developer-Key: i=shuwei.wu@mailbox.org; a=ed25519;
  pk=qZs6i2UZnXkmjUrwO5HJxcfpCvgSNrR4dcU5cjtfTSk=
-X-MBO-RS-ID: 450bb4674b0fe0811f4
-X-MBO-RS-META: ksxe7amy6wpsowkxf67gdmiyxsukc1j3
-X-Rspamd-Queue-Id: 4gcFCY2mDvz9tpN
+X-MBO-RS-META: pkdxdm4u4y1dubcmy3i5fjwcjecejtby
+X-MBO-RS-ID: 372acceaeecb71d3147
+X-Rspamd-Queue-Id: 4gcFCw3RThz9tpN
 
-This series enables CPU frequency scaling for the SpacemiT K1 SoC.
+Use one shared CPU OPP table for all CPUs and add CPU clock properties
+for the two CPU clock clusters.
 
-K1 has two CPU cluster clocks but one shared CPU voltage rail. Add a
-small K1-specific cpufreq driver so the two clocks and the shared OPP
-transition can be handled together.
-
-Tested on Banana Pi BPI-F3. The system boots with all eight CPUs online,
-the K1 cpufreq driver registers one policy for CPUs 0-7, and both CPU
-cluster clocks follow the selected cpufreq rate.
-
-~ # cat /sys/devices/system/cpu/online
-0-7
-
-~ # ls /sys/devices/system/cpu/cpufreq
-policy0
-
-~ # cat /sys/devices/system/cpu/cpufreq/policy0/affected_cpus
-0 1 2 3 4 5 6 7
-
-~ # cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies
-614400 819000 1000000 1228800 1600000
-
-With the userspace governor:
-----------------------------------------------------------------------------
-Frequency    | scaling_cur | cpu_c0_core | cpu_c1_core | Real    | User
-(kHz)        | (kHz)       | (Hz)        | (Hz)        | (s)     | (s)
--------------+-------------+-------------+-------------+---------+----------
-1,600,000    | 1,600,000   | 1600000000  | 1600000000  | 1.80s   | 1.80s
-1,228,800    | 1,228,800   | 1228800000  | 1228800000  | 2.33s   | 2.33s
-1,000,000    | 1,000,000   | 1000000000  | 1000000000  | 2.88s   | 2.87s
-  819,000    |   819,000   |  819200000  |  819200000  | 3.53s   | 3.52s
-  614,400    |   614,400   |  614400000  |  614400000  | 4.72s   | 4.72s
-----------------------------------------------------------------------------
+Enable CPU DVFS on Banana Pi BPI-F3 by including the OPP table and
+wiring the CPU nodes to the CPU regulator supply.
 
 Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
 ---
 Changes in v3:
-- Add a K1-specific cpufreq driver for the shared-rail, dual-clock topology
-- Use one shared CPU OPP table and one cpufreq policy for all CPUs
-- Link to v2: https://lore.kernel.org/r/20260410-shadow-deps-v2-0-4e16b8c0f60e@mailbox.org
+- Use one shared CPU OPP table for all CPUs
 
 Changes in v2:
-- Move OPP tables to dedicated k1-opp.dtsi
-- Enable OPP only on BPI-F3 with cpu-supply present
-- Link to v1: https://lore.kernel.org/r/20260308-shadow-deps-v1-0-0ceb5c7c07eb@mailbox.org
-
+- Add k1-opp.dtsi with OPP tables for both CPU clusters
+- Assign CPU supplies and include OPP table for Banana Pi BPI-F3
 ---
-Shuwei Wu (2):
-      cpufreq: spacemit: Add K1 cpufreq driver
-      riscv: dts: spacemit: Add cpu scaling for K1 SoC
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 35 ++++++++++++-
+ arch/riscv/boot/dts/spacemit/k1-opp.dtsi        | 70 +++++++++++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi            |  8 +++
+ 3 files changed, 112 insertions(+), 1 deletion(-)
 
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts |  35 +++-
- arch/riscv/boot/dts/spacemit/k1-opp.dtsi        |  70 +++++++
- arch/riscv/boot/dts/spacemit/k1.dtsi            |   8 +
- drivers/cpufreq/Kconfig                         |   4 +
- drivers/cpufreq/Kconfig.riscv                   |  15 ++
- drivers/cpufreq/Makefile                        |   3 +
- drivers/cpufreq/cpufreq-dt-platdev.c            |   2 +
- drivers/cpufreq/spacemit-k1-cpufreq.c           | 251 ++++++++++++++++++++++++
- 8 files changed, 387 insertions(+), 1 deletion(-)
----
-base-commit: 5164e95565d3fd508ca8a95351323f5716dfb695
-change-id: 20260307-shadow-deps-3582a78aa756
-prerequisite-patch-id: 154bd4f720ce5065d58b988de8f273207b44572e
-prerequisite-message-id: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
-prerequisite-patch-id: 5da3e75b18291a5540d4f66d7a0600fb8975ef62
-prerequisite-patch-id: bcf41917414ecef8cf743095d130f6004c32f6a5
-prerequisite-patch-id: cfe3800f8c791ec4c63e070af9628e88e0fc31b9
-prerequisite-message-id: <20260305-k1-clk-fix-v1-1-abca85d6e266@mailbox.org>
-prerequisite-patch-id: 7c7fb9f87dba019ece4c97c45750349a7cd28f3a
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index 444c3b1e6f44..81ab5f70176b 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -5,6 +5,7 @@
+ 
+ #include "k1.dtsi"
+ #include "k1-pinctrl.dtsi"
++#include "k1-opp.dtsi"
+ 
+ / {
+ 	model = "Banana Pi BPI-F3";
+@@ -86,6 +87,38 @@ &combo_phy {
+ 	status = "okay";
+ };
+ 
++&cpu_0 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_1 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_2 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_3 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_4 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_5 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_6 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_7 {
++	cpu-supply = <&buck1_0v9>;
++};
++
+ &emmc {
+ 	bus-width = <8>;
+ 	mmc-hs400-1_8v;
+@@ -201,7 +234,7 @@ pmic@41 {
+ 		dldoin2-supply = <&buck5>;
+ 
+ 		regulators {
+-			buck1 {
++			buck1_0v9: buck1 {
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <3450000>;
+ 				regulator-ramp-delay = <5000>;
+diff --git a/arch/riscv/boot/dts/spacemit/k1-opp.dtsi b/arch/riscv/boot/dts/spacemit/k1-opp.dtsi
+new file mode 100644
+index 000000000000..3627812e1344
+--- /dev/null
++++ b/arch/riscv/boot/dts/spacemit/k1-opp.dtsi
+@@ -0,0 +1,70 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++
++/ {
++	cpu_opp_table: opp-table-cpu {
++		compatible = "operating-points-v2";
++		opp-shared;
++
++		opp-614400000 {
++			opp-hz = /bits/ 64 <614400000>;
++			opp-microvolt = <950000>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-819000000 {
++			opp-hz = /bits/ 64 <819000000>;
++			opp-microvolt = <950000>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1000000000 {
++			opp-hz = /bits/ 64 <1000000000>;
++			opp-microvolt = <950000>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1228800000 {
++			opp-hz = /bits/ 64 <1228800000>;
++			opp-microvolt = <950000>;
++			clock-latency-ns = <200000>;
++		};
++
++		opp-1600000000 {
++			opp-hz = /bits/ 64 <1600000000>;
++			opp-microvolt = <1050000>;
++			clock-latency-ns = <200000>;
++		};
++	};
++};
++
++&cpu_0 {
++	operating-points-v2 = <&cpu_opp_table>;
++};
++
++&cpu_1 {
++	operating-points-v2 = <&cpu_opp_table>;
++};
++
++&cpu_2 {
++	operating-points-v2 = <&cpu_opp_table>;
++};
++
++&cpu_3 {
++	operating-points-v2 = <&cpu_opp_table>;
++};
++
++&cpu_4 {
++	operating-points-v2 = <&cpu_opp_table>;
++};
++
++&cpu_5 {
++	operating-points-v2 = <&cpu_opp_table>;
++};
++
++&cpu_6 {
++	operating-points-v2 = <&cpu_opp_table>;
++};
++
++&cpu_7 {
++	operating-points-v2 = <&cpu_opp_table>;
++};
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index 529ec68e9c23..bdd109b81730 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -54,6 +54,7 @@ cpu_0: cpu@0 {
+ 			compatible = "spacemit,x60", "riscv";
+ 			device_type = "cpu";
+ 			reg = <0>;
++			clocks = <&syscon_apmu CLK_CPU_C0_CORE>;
+ 			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
+ 			riscv,isa-base = "rv64i";
+ 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
+@@ -84,6 +85,7 @@ cpu_1: cpu@1 {
+ 			compatible = "spacemit,x60", "riscv";
+ 			device_type = "cpu";
+ 			reg = <1>;
++			clocks = <&syscon_apmu CLK_CPU_C0_CORE>;
+ 			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
+ 			riscv,isa-base = "rv64i";
+ 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
+@@ -114,6 +116,7 @@ cpu_2: cpu@2 {
+ 			compatible = "spacemit,x60", "riscv";
+ 			device_type = "cpu";
+ 			reg = <2>;
++			clocks = <&syscon_apmu CLK_CPU_C0_CORE>;
+ 			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
+ 			riscv,isa-base = "rv64i";
+ 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
+@@ -144,6 +147,7 @@ cpu_3: cpu@3 {
+ 			compatible = "spacemit,x60", "riscv";
+ 			device_type = "cpu";
+ 			reg = <3>;
++			clocks = <&syscon_apmu CLK_CPU_C0_CORE>;
+ 			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
+ 			riscv,isa-base = "rv64i";
+ 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
+@@ -174,6 +178,7 @@ cpu_4: cpu@4 {
+ 			compatible = "spacemit,x60", "riscv";
+ 			device_type = "cpu";
+ 			reg = <4>;
++			clocks = <&syscon_apmu CLK_CPU_C1_CORE>;
+ 			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
+ 			riscv,isa-base = "rv64i";
+ 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
+@@ -204,6 +209,7 @@ cpu_5: cpu@5 {
+ 			compatible = "spacemit,x60", "riscv";
+ 			device_type = "cpu";
+ 			reg = <5>;
++			clocks = <&syscon_apmu CLK_CPU_C1_CORE>;
+ 			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
+ 			riscv,isa-base = "rv64i";
+ 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
+@@ -234,6 +240,7 @@ cpu_6: cpu@6 {
+ 			compatible = "spacemit,x60", "riscv";
+ 			device_type = "cpu";
+ 			reg = <6>;
++			clocks = <&syscon_apmu CLK_CPU_C1_CORE>;
+ 			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
+ 			riscv,isa-base = "rv64i";
+ 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
+@@ -264,6 +271,7 @@ cpu_7: cpu@7 {
+ 			compatible = "spacemit,x60", "riscv";
+ 			device_type = "cpu";
+ 			reg = <7>;
++			clocks = <&syscon_apmu CLK_CPU_C1_CORE>;
+ 			riscv,isa = "rv64imafdcbv_zicbom_zicbop_zicboz_zicntr_zicond_zicsr_zifencei_zihintpause_zihpm_zfh_zba_zbb_zbc_zbs_zkt_zvfh_zvkt_sscofpmf_sstc_svinval_svnapot_svpbmt";
+ 			riscv,isa-base = "rv64i";
+ 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "b", "v", "zicbom",
 
-Best regards,
 -- 
-Shuwei Wu <shuwei.wu@mailbox.org>
+2.53.0
 
