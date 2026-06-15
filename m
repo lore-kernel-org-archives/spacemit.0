@@ -1,104 +1,116 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1F13AFAE3
-	for <spacemit@lists.linux.dev>; Mon, 15 Jun 2026 06:12:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E0C37D11A
+	for <spacemit@lists.linux.dev>; Mon, 15 Jun 2026 06:34:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781503949; cv=none; b=qYknXq+nk4+OqhsPNmn4OPve+13ujDtcHFjMTpl3E76LWNWAOHPdJPFRzrTU6y1t04g/I12o23OAIibOFPyQz3HWmojd+tVKzfFDOWQrZRWSbUgL3NICZVWyph4aHWlYSoWlhv00HNCI8ZGmv0DdI1oav0cDF1o1dG2xBrTZjKo=
+	t=1781505295; cv=none; b=EZbL3U9AA3PA8Fb0Cja+QEF3wiwEqbEDM5o92YD0auAUC4Dz2rZO0pVvJodqd6R1QuL37NgrR3plaAx4sVeH08LZ4qcjaQ3qVDW7XYktqra5b2/e27fdlX70oeEOW6oskeA2nvh2v8JSdrA8EDrQ09FwgTqGrHQrJlWnZhl+1Jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781503949; c=relaxed/simple;
-	bh=/VZ4zClhJzZrNLtXfhTdULU67m3ZVri2koYZWW3a9LM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=AXFbq/+/wBzcSPg3D7hyWaeg7fmJ4G8Uyi9s12UfDmgowK8awzCN7qb0TzQUMb5z24afV2TPLZCSoTt0cE/W2z7vP9XxIJ9dL9zNnId0qvIix7A0c6RleQ5CctbPBdo1oagXzmHZDCsgwFdJOBOhr+T5HRtp6eUbEpaqO9B+D2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=phzulaZ+; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1781505295; c=relaxed/simple;
+	bh=S1Oly4VRINHCM1QG4R4tTGNPNvyYOvpI2d0QTuC1ElI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NhP5DmHYULQUeXj43BDsqqANaJnklYJAQxn9Vf4/2nnYpNprR8SbYLueJ0VouZmXcMm1CpSNs0HxrR2gmQxna+G+hCHQXplWVmevNeeSRvDzcu0pyQbgiL5qSSKpPs+kmwu3/oRhpemdAk6cMUwTzYW5y5nLStuYjvtxGaSNR+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RRhD/YoP; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="phzulaZ+"
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4gf0C6218Bz9ts6;
-	Mon, 15 Jun 2026 08:12:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1781503938;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/VZ4zClhJzZrNLtXfhTdULU67m3ZVri2koYZWW3a9LM=;
-	b=phzulaZ+JyLogfpRQ7HBGAPyUMuCFbqDHsgS63IH86zVwE8JMmlOMK4nk7h97gqkdCHKxr
-	85o+QvnD4AhHyhIbYJI3x805Kj7mVedsv5/10NsrzmctqpG06QaWDs0AMBbKod33GbqWbE
-	CMXEgj7yXNvTP3OLaJ50rO2esiTi86Z2Gu3ousMffnuP7WqudyJYpUgPpCkSPRhJNNMFna
-	/9YC0E+9+5uITErC3cZ2r6T0inWTtmPpHHPtC390U8Av2ISJnVBDdxOijDUBH066+ifG1x
-	WV14TL+3PwH/B6+X927t8quPY+Yrj3EBRgDeEMCt9taYl+e2NHF5SfuJth5Bug==
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RRhD/YoP"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8423f236418so1544817b3a.1
+        for <spacemit@lists.linux.dev>; Sun, 14 Jun 2026 23:34:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1781505294; x=1782110094; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kpTWnKEfXWiCzl373nMMsDrR/prBlQwjYUYc6wVEFfc=;
+        b=RRhD/YoPvdLluC1zGs0Lg3M5L1D3oQhrnEiqUtebC9UpkPrpf3HfO8xtlXEOodq86k
+         wb9lKCLgUWRWNE02wNaC1+WRXfKr9yPWOQEKF3LwFbhxLYAKO1DjQg3NYrnAdY7x5MV4
+         7FondMyqf3kmS28qhwwd5NvDsACELo3wL9Kb5YKY94hGlJehkpjZR65GZRjEpSn2DXd4
+         7AvOpzlyweSYuF/2msBlJzTN7etq1+8aqr2M8hJMoZoLZCFjJBXKa5TUTPB55gW/1vsI
+         ztCqX3e0BMBQgC75Qiq2u/cKYCJI3nbO+l6Ou5VvheoPAtrc7RCt8+PcH7NnhUyIw5ri
+         d+2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781505294; x=1782110094;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kpTWnKEfXWiCzl373nMMsDrR/prBlQwjYUYc6wVEFfc=;
+        b=nO08iPt9ZQmI6GfwGYDFAEfeukEi+ZCKMpoyTYXWgSPmW6IcSz/P5wOiNFXZbWWs+c
+         +J9QK38ISvjDvb8bIWh0xVPjOQRHuHb+9DEVH2mUe4NB3mozF3msia9LGGZVNW4+klsm
+         AzXSmE9eQSKYVR2iWcIKFZdoMR10DIYxqA7THDPPU0hAvETwZUdxDYj2OrOD3syI+BIJ
+         VVrj+/aP/Ug6pRGjkijhLhaPZ6RnM5k+uAioBNbxK5CaAHGvyLBv7SlXkQ96fIqEYq63
+         KQc1LoCgGlAx6hPgjK4Z5S7m/kQgruaKtESKkC6pd3O1+6GjS2UvtDb9ag00u66J51bp
+         wEVQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8wQY0/6J7pJJyFeGFcS5JGWZ86zvgPs7DdoS8CJ5g6QxEfhPccKhj5Vj96+iKXMHIl2GfRKKHS0w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxtcSs9BksMYQIuFAbV31E6rL9aDDJ1LcpUvI+U40f/dS7p+C5/
+	4p6i1yx/4N4V+6YMKhWMKKsQsbw2i/c/pe3GMlQOttQphWGv157tAal62/r/wXjH0d8=
+X-Gm-Gg: Acq92OEX/njKl8pKiE1dLKre3W63U/gCYMVKoQATj76gddm1rXYAdlCs4+h0QIvDLlo
+	Dlp+hkI2iyxHexJWwk71KvgSzT07KcSxnTzDefX+8v8FJ53vvZBV2vRHnr87I9v5lfjGXKCA1/Y
+	8eXw9NBMV0bH0AgdrCWQST6+xNxdE8nt+Ewcrm2fvFJYNLDJ77j9XijvZAhCT36Wq0Sa7Qj625L
+	EvQJLq3swTRu9JmpowGO+vdpUvhplhBNs/hTljjZb/UJesV/ukpfB3qa1aWtWKeJ+r8lpFCj8ST
+	UUKVWZNDqZ///y5EUyuP0y86cGlm782TJW8P9KtA+k5VusKh+kMQYWGjlnm+031BpFmzAFQCEUC
+	/TMTcxVmKIjFh5RaJEBLdRshnD9I0aclZoI4p1P669P+/qfOmL427IUy7egafEIrzaMO4Ks0ayT
+	EbX6+f+iOrhhHcISYOL+e3KCFAS8VPu1jRRQ==
+X-Received: by 2002:a05:6a00:891:b0:842:21f0:5114 with SMTP id d2e1a72fcca58-8434ce784abmr13630133b3a.30.1781505293590;
+        Sun, 14 Jun 2026 23:34:53 -0700 (PDT)
+Received: from localhost ([122.172.82.94])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434b040718sm9297405b3a.51.2026.06.14.23.34.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Jun 2026 23:34:52 -0700 (PDT)
+Date: Mon, 15 Jun 2026 12:04:50 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: Shuwei Wu <shuwei.wu@mailbox.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] cpufreq: spacemit: Add K1 cpufreq driver
+Message-ID: <wjwkykv555gkeqxabsqcdfn4lomcopawsv7bgm4bydc5likhjs@p3ca3p7wbri5>
+References: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
+ <20260612-shadow-deps-v3-1-2f3ba88611ff@mailbox.org>
+ <bd4s2icqgusnuujvrpoag4cniy3g2e4bumecqxt5yffl77aqpq@kxg4dj4c2wk3>
+ <DJ9EFPG561VZ.1WGRYYHJ2W9J9@mailbox.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 15 Jun 2026 14:12:06 +0800
-Message-Id: <DJ9EFPG561VZ.1WGRYYHJ2W9J9@mailbox.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, "Palmer
- Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan" <dlan@kernel.org>,
- <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v3 1/2] cpufreq: spacemit: Add K1 cpufreq driver
-From: "Shuwei Wu" <shuwei.wu@mailbox.org>
-To: "Viresh Kumar" <viresh.kumar@linaro.org>
-References: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
- <20260612-shadow-deps-v3-1-2f3ba88611ff@mailbox.org>
- <bd4s2icqgusnuujvrpoag4cniy3g2e4bumecqxt5yffl77aqpq@kxg4dj4c2wk3>
-In-Reply-To: <bd4s2icqgusnuujvrpoag4cniy3g2e4bumecqxt5yffl77aqpq@kxg4dj4c2wk3>
-X-MBO-RS-ID: c7b5cf38a87e3ca26a7
-X-MBO-RS-META: zjp4t73kp1bk1dehp139gn986jjq6dpj
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DJ9EFPG561VZ.1WGRYYHJ2W9J9@mailbox.org>
 
-Hi Viresh,
+Hi Shuwei,
 
-Thanks for your reply.
+On 15-06-26, 14:12, Shuwei Wu wrote:
+> The clusters have separate clocks, but they share the same voltage supply.[1]
+> So two independent policies would be unsafe: one policy could lower the shared
+> voltage while the other cluster is still running at a higher frequency.
 
-On Mon Jun 15, 2026 at 1:24 PM CST, Viresh Kumar wrote:
-> On 12-06-26, 17:51, Shuwei Wu wrote:
->> K1 has two CPU cluster clocks but one shared CPU voltage rail. Use one
->> cpufreq policy for all CPUs, let the OPP core handle the shared regulato=
-r
->> and the cluster0 clock, and update the cluster1 clock explicitly.
->
-> If the clusters can do DVFS individually (as they have separate clocks), =
-this
-> should be represented as two separate policies. Isn't it ?
+No, both will vote for the regulator contraints using CPU device and the
+regulator core will make sure it doesn't break any of them. This is what all
+frameworks do, regulator, clk, etc.
 
-The clusters have separate clocks, but they share the same voltage supply.[=
-1]
-So two independent policies would be unsafe: one policy could lower the sha=
-red
-voltage while the other cluster is still running at a higher frequency.
-This means they can't use different policies.
+> This means they can't use different policies.
 
-From a hardware perspective, the eight cores of the K1 are homogeneous,
-so using the same policy for them is relatively reasonable.
+This is incorrect.
 
-I used a K1-specific driver because cpufreq-dt only manages one CPU clock
-through the CPU device used for the OPP transition.
-On K1, the policy needs to control two independent cluster clocks and one s=
-hared
-regulator, so the driver has to update the second cluster clock explicitly =
-and
-keep the ordering safe: raise voltage before raising either cluster, and lo=
-wer
-both cluster clocks before lowering the shared voltage.
+> From a hardware perspective, the eight cores of the K1 are homogeneous,
+> so using the same policy for them is relatively reasonable.
 
-[1] https://lore.kernel.org/spacemit/aeaXszeaE62rM6BJ@aurel32.net/
+Right, but this is inefficient. One cluster can be idle, or in low freq mode
+while other can be in higher. They MUST be two policies.
 
---=20
-Best regards,
-Shuwei Wu
+> I used a K1-specific driver because cpufreq-dt only manages one CPU clock
+> through the CPU device used for the OPP transition.
+> On K1, the policy needs to control two independent cluster clocks and one shared
+> regulator, so the driver has to update the second cluster clock explicitly and
+> keep the ordering safe: raise voltage before raising either cluster, and lower
+> both cluster clocks before lowering the shared voltage.
+> 
+> [1] https://lore.kernel.org/spacemit/aeaXszeaE62rM6BJ@aurel32.net/
+
+-- 
+viresh
