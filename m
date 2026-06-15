@@ -1,116 +1,91 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E0C37D11A
-	for <spacemit@lists.linux.dev>; Mon, 15 Jun 2026 06:34:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CDF3B3C18
+	for <spacemit@lists.linux.dev>; Mon, 15 Jun 2026 07:16:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781505295; cv=none; b=EZbL3U9AA3PA8Fb0Cja+QEF3wiwEqbEDM5o92YD0auAUC4Dz2rZO0pVvJodqd6R1QuL37NgrR3plaAx4sVeH08LZ4qcjaQ3qVDW7XYktqra5b2/e27fdlX70oeEOW6oskeA2nvh2v8JSdrA8EDrQ09FwgTqGrHQrJlWnZhl+1Jc=
+	t=1781507790; cv=none; b=DBUzz77EtJ30c7Jg4vtRSZkAXGzgN3c0pi8Ic2Srhqk8eaa4/IN0NJmM1hIum7hqMI1l0T5jhlf1HUUZFrws3MSdM+RAxjYLJI1WkXPH+iMURW549hM+8X6dfImwFa/o7nZvj5qf/n/ZRYB0EWHQeGVmk/WWFRB325yWLex9Xl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781505295; c=relaxed/simple;
-	bh=S1Oly4VRINHCM1QG4R4tTGNPNvyYOvpI2d0QTuC1ElI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NhP5DmHYULQUeXj43BDsqqANaJnklYJAQxn9Vf4/2nnYpNprR8SbYLueJ0VouZmXcMm1CpSNs0HxrR2gmQxna+G+hCHQXplWVmevNeeSRvDzcu0pyQbgiL5qSSKpPs+kmwu3/oRhpemdAk6cMUwTzYW5y5nLStuYjvtxGaSNR+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RRhD/YoP; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1781507790; c=relaxed/simple;
+	bh=AO+GKKowcBgDGHCAL00C6jOZKBMVwQulRMK315fL3yU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=e5e6VRMn9+gpkNRZm3ybgm7RSA6he98dkZmz+Df6TmIKMg0z1xRgzRI+JjTHGaa+kFbcsJ9Suja6OGVaooOZdPjITS8FWDSPkzJsfS+vqKGPjSIa5k3gA9QB7cjfkxCmgetFf88rvNXJAWyuvWCAXV554JDiwONIexbpzxYMeg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=tKy3gtpI; arc=none smtp.client-ip=54.204.34.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RRhD/YoP"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8423f236418so1544817b3a.1
-        for <spacemit@lists.linux.dev>; Sun, 14 Jun 2026 23:34:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1781505294; x=1782110094; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kpTWnKEfXWiCzl373nMMsDrR/prBlQwjYUYc6wVEFfc=;
-        b=RRhD/YoPvdLluC1zGs0Lg3M5L1D3oQhrnEiqUtebC9UpkPrpf3HfO8xtlXEOodq86k
-         wb9lKCLgUWRWNE02wNaC1+WRXfKr9yPWOQEKF3LwFbhxLYAKO1DjQg3NYrnAdY7x5MV4
-         7FondMyqf3kmS28qhwwd5NvDsACELo3wL9Kb5YKY94hGlJehkpjZR65GZRjEpSn2DXd4
-         7AvOpzlyweSYuF/2msBlJzTN7etq1+8aqr2M8hJMoZoLZCFjJBXKa5TUTPB55gW/1vsI
-         ztCqX3e0BMBQgC75Qiq2u/cKYCJI3nbO+l6Ou5VvheoPAtrc7RCt8+PcH7NnhUyIw5ri
-         d+2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781505294; x=1782110094;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kpTWnKEfXWiCzl373nMMsDrR/prBlQwjYUYc6wVEFfc=;
-        b=nO08iPt9ZQmI6GfwGYDFAEfeukEi+ZCKMpoyTYXWgSPmW6IcSz/P5wOiNFXZbWWs+c
-         +J9QK38ISvjDvb8bIWh0xVPjOQRHuHb+9DEVH2mUe4NB3mozF3msia9LGGZVNW4+klsm
-         AzXSmE9eQSKYVR2iWcIKFZdoMR10DIYxqA7THDPPU0hAvETwZUdxDYj2OrOD3syI+BIJ
-         VVrj+/aP/Ug6pRGjkijhLhaPZ6RnM5k+uAioBNbxK5CaAHGvyLBv7SlXkQ96fIqEYq63
-         KQc1LoCgGlAx6hPgjK4Z5S7m/kQgruaKtESKkC6pd3O1+6GjS2UvtDb9ag00u66J51bp
-         wEVQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8wQY0/6J7pJJyFeGFcS5JGWZ86zvgPs7DdoS8CJ5g6QxEfhPccKhj5Vj96+iKXMHIl2GfRKKHS0w==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxtcSs9BksMYQIuFAbV31E6rL9aDDJ1LcpUvI+U40f/dS7p+C5/
-	4p6i1yx/4N4V+6YMKhWMKKsQsbw2i/c/pe3GMlQOttQphWGv157tAal62/r/wXjH0d8=
-X-Gm-Gg: Acq92OEX/njKl8pKiE1dLKre3W63U/gCYMVKoQATj76gddm1rXYAdlCs4+h0QIvDLlo
-	Dlp+hkI2iyxHexJWwk71KvgSzT07KcSxnTzDefX+8v8FJ53vvZBV2vRHnr87I9v5lfjGXKCA1/Y
-	8eXw9NBMV0bH0AgdrCWQST6+xNxdE8nt+Ewcrm2fvFJYNLDJ77j9XijvZAhCT36Wq0Sa7Qj625L
-	EvQJLq3swTRu9JmpowGO+vdpUvhplhBNs/hTljjZb/UJesV/ukpfB3qa1aWtWKeJ+r8lpFCj8ST
-	UUKVWZNDqZ///y5EUyuP0y86cGlm782TJW8P9KtA+k5VusKh+kMQYWGjlnm+031BpFmzAFQCEUC
-	/TMTcxVmKIjFh5RaJEBLdRshnD9I0aclZoI4p1P669P+/qfOmL427IUy7egafEIrzaMO4Ks0ayT
-	EbX6+f+iOrhhHcISYOL+e3KCFAS8VPu1jRRQ==
-X-Received: by 2002:a05:6a00:891:b0:842:21f0:5114 with SMTP id d2e1a72fcca58-8434ce784abmr13630133b3a.30.1781505293590;
-        Sun, 14 Jun 2026 23:34:53 -0700 (PDT)
-Received: from localhost ([122.172.82.94])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434b040718sm9297405b3a.51.2026.06.14.23.34.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Jun 2026 23:34:52 -0700 (PDT)
-Date: Mon, 15 Jun 2026 12:04:50 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Shuwei Wu <shuwei.wu@mailbox.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] cpufreq: spacemit: Add K1 cpufreq driver
-Message-ID: <wjwkykv555gkeqxabsqcdfn4lomcopawsv7bgm4bydc5likhjs@p3ca3p7wbri5>
-References: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
- <20260612-shadow-deps-v3-1-2f3ba88611ff@mailbox.org>
- <bd4s2icqgusnuujvrpoag4cniy3g2e4bumecqxt5yffl77aqpq@kxg4dj4c2wk3>
- <DJ9EFPG561VZ.1WGRYYHJ2W9J9@mailbox.org>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="tKy3gtpI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1781507751;
+	bh=Rl+ZSdOniMSyh82VzHmUiRVvvJR52OxzsBllOm+XbfY=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=tKy3gtpIjx6nxWH1u+QO9D/dLbhlD1LmBOhOmFbpfEhnyPtp1kPjvYmCPEEHpMA50
+	 RVFAGH1G3Fh9NzQvu+dsm1arReoOmXMO5eY/nlsspRsvjJFFUqvTMtBFrkcIWJuOPT
+	 y194RquLe2Jr4udwxmdDalQ07gxZM1YxuizUBIiI=
+X-QQ-mid: esmtpsz17t1781507743t9aefb8c6
+X-QQ-Originating-IP: KTItmJz4aezgBawcldJnwoLV+hCx1XKUKIOMrGlx7OE=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 15 Jun 2026 15:15:41 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 12401090553256602982
+EX-QQ-RecipientCnt: 9
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DJ9EFPG561VZ.1WGRYYHJ2W9J9@mailbox.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 15 Jun 2026 15:15:40 +0800
+Message-Id: <DJ9FSDGD51UL.19AY499L4RI3K@linux.spacemit.com>
+Cc: <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>
+Subject: Re: [PATCH] dmaengine: mmp_pdma: fix wrong extended DRCMR base for
+ SpacemiT K3
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Vinod Koul"
+ <vkoul@kernel.org>, "Frank Li" <Frank.Li@kernel.org>, "Yixun Lan"
+ <dlan@kernel.org>, "Guodong Xu" <guodong@riscstar.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260615-k3-pdma-fix-drcmr-base-v1-1-ee1af124199f@linux.spacemit.com>
+In-Reply-To: <20260615-k3-pdma-fix-drcmr-base-v1-1-ee1af124199f@linux.spacemit.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Oa8H3HVvYs2abSlmz1mtvuX+yKs/TntbMuZUhzGM6SnOulCjS2fld6QS
+	dnpMpJk0iSHPI1ZO81X2GpBHNWX9uS6aBv1bGMXhUQFiRYq8anKqRXUHNLcReG31aSlqrWb
+	/IUZK28Hw+8qNQ0ZNY91Qd8t5RG15mKR8g7wkNdTacAwdvYpgGLZmRA/VKL8TfAInLCMika
+	9HmDohTFAypzqsy2zYbJJl1M1ZbeNy6ME2i/hz3BX0eGrkNiQ3cgxtLj2AFBWJqjqic6FKU
+	R9SwwakUjZ2lN6Wl23IruL09tpehztWa/cpWvC4Z8QVYXVQ+knpqDV8SbkW0M5Dnp4bQ4Xd
+	DzLljIR6oGgZr0Ypuu1hCdhX5PkrbO3USDhj2DdduxgQLh2thbMYwKJRpuUlOh9fjCznlBk
+	DuYTY+CCGUZKPy4t/T7/dUfjVQNLYG8czq0CdO+B4RmIpBA992DnNf53CEOokRoAQVdn/O1
+	jku9U0z83xIkB9TtCvzIqol7exBShaBAa+O3+WUXqudOePgT1xb96cEmuJp2Mzv+sf3TMaR
+	OS1u74KMEMwi1F0gsZPB20ebJJf7nx5RPgG5t8TB/2y9rPqvrg+liMJGU7wtm2b3YO4jSF0
+	JDHCO57pXaMGXcZTNWIG6EU8aS3qdTJHewRWCsvz+Nz7PUlcDXOJAVaAY3/e2DPUkwuchAZ
+	V4VF945uZIa4p+V7bsyG0Jmuw/v83oyTaZf/k00zBkRH9nE7ivf99WfAj7imLQeDqYcVLm2
+	Tvy0QUuhIX/TuTyQFlMQkesYelbJX1bGkGb/CuSt5XBZzyoHKsQVLXD/qd08W+xcGTHgqPL
+	daXlUp8nR8NPKsGdK6j3rPJastrLsGK4I/6mkMIFZrIMa0YNx/fN5kapHUyPHa63hfNsrpm
+	oN7YxP/WaC5ietB+90dHQiqExEJcXUU4/q4cKZF22i9CIAhh88/cnqBhaFqAUAgJhoZP78r
+	l4otON7luaLHVKQb9fCssucdi1KuCyJ1+/qGAA4nYKg7IXLY5LJ+P+BwypGrufkx+/3XJSy
+	by2UhgkA7YaTIsDvlZq4iu7rXG5h/2tgG017moYN7I0XWcH6C2
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+X-QQ-RECHKSPAM: 0
 
-Hi Shuwei,
+On Mon Jun 15, 2026 at 10:53 AM CST, Troy Mitchell wrote:
+> K3 PDMA shares the same DRCMR layout as K1, where the extended DRCMR
+> base address is 0x1100. Commit 6587b8661a0b ("dmaengine: mmp_pdma: add
+> SpacemiT K3 support") incorrectly defined DRCMR_EXT_BASE_K3 as 0x1000,
+> causing all DRCMR accesses for channels >=3D 64 to be off by 0x100.
+>
+> Drop the bogus DRCMR_EXT_BASE_K3 macro and reuse DRCMR_EXT_BASE_DEFAULT
+> for the K3 ops.
+>
+> Fixes: 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support")
+To clarify: the previous version was not untested; it simply hadn't been
+tested with SPI DMA specifically. This issue only affects DMA for SPI
+devices, rather than all DMA-capable peripherals
 
-On 15-06-26, 14:12, Shuwei Wu wrote:
-> The clusters have separate clocks, but they share the same voltage supply.[1]
-> So two independent policies would be unsafe: one policy could lower the shared
-> voltage while the other cluster is still running at a higher frequency.
-
-No, both will vote for the regulator contraints using CPU device and the
-regulator core will make sure it doesn't break any of them. This is what all
-frameworks do, regulator, clk, etc.
-
-> This means they can't use different policies.
-
-This is incorrect.
-
-> From a hardware perspective, the eight cores of the K1 are homogeneous,
-> so using the same policy for them is relatively reasonable.
-
-Right, but this is inefficient. One cluster can be idle, or in low freq mode
-while other can be in higher. They MUST be two policies.
-
-> I used a K1-specific driver because cpufreq-dt only manages one CPU clock
-> through the CPU device used for the OPP transition.
-> On K1, the policy needs to control two independent cluster clocks and one shared
-> regulator, so the driver has to update the second cluster clock explicitly and
-> keep the ordering safe: raise voltage before raising either cluster, and lower
-> both cluster clocks before lowering the shared voltage.
-> 
-> [1] https://lore.kernel.org/spacemit/aeaXszeaE62rM6BJ@aurel32.net/
-
--- 
-viresh
+                                          - Troy
