@@ -1,135 +1,172 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBA63C0A03
-	for <spacemit@lists.linux.dev>; Mon, 15 Jun 2026 08:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8D533DEFE
+	for <spacemit@lists.linux.dev>; Mon, 15 Jun 2026 12:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781510519; cv=none; b=XWVMeyYHYG8nUQzdy5iZY05T/Fpzo7xN3klw+wrIUrkRokv8aO7FJIGsj2PAff8MmKSt9Pvtv/cmQ+eJT9BNeqZtrJWcAWfak83FnHZggWn6aINDuOOozKqaPiMfuzx5I0+b3PvdasjO4PEkpRsxUrUsQnxI/vnckdWZmSFjKBc=
+	t=1781525478; cv=none; b=h89hgrJaWvdgRP3kELRbPxxAmCeI3OlJFiOUwy5aJs3tr148aYJ0rR4uZ0l5zsQRH02VdtjGiQSSpmyKkRaKa9Di2yI8SrSg+Ox4VhjsfKincFmo6CHwwu8PpeERZ3yai8IrDJeb9nCUwRS5vbPT4seLaQp8LNuc60HN5SzGYMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781510519; c=relaxed/simple;
-	bh=dYd01TaLWp+b1weWv03OfjwDWGyIew+KlNl179rn/70=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LaV/f+nV3XuXjZEBzBYkElqhj0XQOny78fYR7v6ZaI55hwCHMIIUcrtPPgnTIag2BNGiVHFOpKYcWwGXICPE4cf7ndlRESrKdi7VGJJrf+bM65ulMc1LdEp8TaQ/ESNvf/WyJf5Pj/6PzKDytI8nGvs57G+cxaT3PcFs3X+v0rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J9KCQb+o; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781525478; c=relaxed/simple;
+	bh=FANZUCVXVRpn2CEeRrNobR3DPc0KUQ/Ujz4qmUnKyFc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Hl/4x9KEEoRbFtTmXdzRMvCWXZl/zCoILiQ+56VyGFEWhzZdPxwE6LlozCp9EYpnHtCPteyFfP/RUnZT5UGMNBSeGnd3dqp5FWeJq6T0b+j+/fYBYXHuDlzw/V5O0WnL+Ikm1QylYCGuHhu9U2sqV84Ivsi2NWv7fJDykqeHmIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=Lrd3GhbC; arc=none smtp.client-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J9KCQb+o"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-84236f9b638so1447809b3a.2
-        for <spacemit@lists.linux.dev>; Mon, 15 Jun 2026 01:01:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781510517; x=1782115317; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dYd01TaLWp+b1weWv03OfjwDWGyIew+KlNl179rn/70=;
-        b=J9KCQb+op94MM+opsbEmWRldpxvtxblfNilSV2jseBbVhix7+HezxPSdmnQjFYmaA3
-         2witGH3hvSjedMm7ZlUeMmbtvX0GxcqZ6nnjiYkL+D0ciuUrG5jA5AF6abQlNuyjuL3o
-         IoRzbpakxH8yYHAmtlINcJokYltRXJ5StwTJSu+jNjCOP0vRzCK4HWDk3Qyilde6t7Bz
-         K0a5+T90UAw5IYaEdDj8a7XEQXW21Aa9iKF5vP51xjwOYMmhDt4U/yL8HsVW8qlBGuQn
-         ElzNPzhCYDd5D3mnzHaGkEhcE0w9C1AmJbVRt6JyM6LoolUMnt0pw7uMH+gD+F/l8puG
-         iIWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781510517; x=1782115317;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dYd01TaLWp+b1weWv03OfjwDWGyIew+KlNl179rn/70=;
-        b=sEaq1w7q8CuzxvXtJvpJtj8rcgsbog/1nyZKAbrs1Wl7LBILDU1SqE16RYFaRzF5qA
-         1YXm0oYkwXtOg+wcKhScbGz7/qSVTkTFmq1eFOR7mbAmksQayBxlGYS8EcCtP9psfdzp
-         v95dsh7lV/v8faSnKDA5dWOgHbJvYVj5hnv16z9xnpzzI41X0aiZCWompxX/uNWnR8kN
-         JUJWzS9f5/Mk/aqCrl31YTumCTsFTkLpKOuXPX2MjZFuGHpyQOHQuUoRxbaH5G2XNCPg
-         qWUeEjHN6fBJQ8y/jcjd+qhcKvqNcNvBxICYNPhgUQ1U2P6stzefZs06C92m/L0DXWVh
-         9/mA==
-X-Forwarded-Encrypted: i=1; AFNElJ9fr7XYCHEkBtX9al/SoaX/OMy4cV5J7iN9mcze8bxVkbij+rCxV2Po2Zua7TJsFuBKilDvTzBmGA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy+PbgiNS9EYvpSiPafWeIr8Mi0jXEop5ZeuRTPRUXPJ0aDKenL
-	xqfVC3GwvUOry2AK8CwchUE0/vxyS10/1BrdFlEaHIF1m+c4OuSB8k/i
-X-Gm-Gg: Acq92OE+Y7acB+Qbskhpacc5OIhwIEgfuxgChz7GXCy1ijZ86P6NEKccqJCJwTBMY3T
-	1PMLuzb3AExgGhmUxhrBMZfHOkokUGBNDPACTQH8vWVw7m88Yeivn0AQLzVscXRZSTL+/acSDfo
-	4NX74tAKrQavXfV6P0p59UP84s6a14a6lNkq0F6z4MPn2Dajtw9BUkd8dMKCrxZHpvxU0rJRS/u
-	O1SsX3NIr0T9aSna9WySxPmWPpwBxygj/erusD3FwEOz33S7H5qOy2u8+gZzuvxDglQfyOR+JrH
-	3n/cqI3NWZaa+hCrPPg3TwvpC0YNS5W8sA7DtXgT68ZX0PvHTLuQDmpSFrpC1vdzQpek7eXNoDr
-	Rcgh6QyFfkqm66GbhdxYSxxVqI4PNXKlmkN0WD4JDG4y2wO5nc5LwtK9xz5shPUyvn6qLon0=
-X-Received: by 2002:a05:6a00:984:b0:82f:72e6:ed4 with SMTP id d2e1a72fcca58-844e1596c86mr10840924b3a.0.1781510516767;
-        Mon, 15 Jun 2026 01:01:56 -0700 (PDT)
-Received: from localhost ([2a12:a305:4::302d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434b055095sm10890663b3a.57.2026.06.15.01.01.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 01:01:56 -0700 (PDT)
-Date: Mon, 15 Jun 2026 04:01:43 -0400
-From: Guodong Xu <docular.xu@gmail.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Yixun Lan <dlan@kernel.org>, Guodong Xu <guodong@riscstar.com>, dmaengine@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH] dmaengine: mmp_pdma: fix wrong extended DRCMR base for
- SpacemiT K3
-Message-ID: <4wo2ylvv2v2kmec4vzycgide3orx2zwjzdjunfm23t6pclknbl@pqtb7lw2parx>
-References: <20260615-k3-pdma-fix-drcmr-base-v1-1-ee1af124199f@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="Lrd3GhbC"
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4gf89D2qK2z9vCH;
+	Mon, 15 Jun 2026 14:11:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1781525472;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=C2ni2HKLJTKwWZDPeU4N3Yd1IXA3apJPvhe3IpmDCyc=;
+	b=Lrd3GhbCEc5wkRYKdr2J366BSm0U6EkvUYfCptFiN9eJRq+LITYHf3+5N8ANNvuNXLOJ6k
+	8lvR3SYktrUnYFp4ZOWQibYOL1iVpIFxe/rD6QJzOFERqj4qbSQN94qDW6hXWEmF+JJ29b
+	DPO2Yvp45sdI2YgMxR+Y+EWn8gkC9KuME+ViX54t222iAWcm4PJnydxnAzL7KW0aaytNZp
+	ymhDbnOF9Xjo6It6uDPDKzgCDQcVaXews96bYjsd78yjj4BQUodKP6WiKVCJO/c8sug//A
+	JpRmUJkSCPmMxotQUfUn/fyX8KiZnmeE5JhH2Z0OsnlMqpf4e/P845hOCqbr/g==
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260615-k3-pdma-fix-drcmr-base-v1-1-ee1af124199f@linux.spacemit.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 15 Jun 2026 20:11:01 +0800
+Message-Id: <DJ9M2IDYE6XZ.20RN5AFBYNB9Y@mailbox.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, "Palmer
+ Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
+ "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan" <dlan@kernel.org>,
+ <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v3 1/2] cpufreq: spacemit: Add K1 cpufreq driver
+From: "Shuwei Wu" <shuwei.wu@mailbox.org>
+To: "Viresh Kumar" <viresh.kumar@linaro.org>
+References: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
+ <20260612-shadow-deps-v3-1-2f3ba88611ff@mailbox.org>
+ <bd4s2icqgusnuujvrpoag4cniy3g2e4bumecqxt5yffl77aqpq@kxg4dj4c2wk3>
+ <DJ9EFPG561VZ.1WGRYYHJ2W9J9@mailbox.org>
+ <wjwkykv555gkeqxabsqcdfn4lomcopawsv7bgm4bydc5likhjs@p3ca3p7wbri5>
+In-Reply-To: <wjwkykv555gkeqxabsqcdfn4lomcopawsv7bgm4bydc5likhjs@p3ca3p7wbri5>
+X-MBO-RS-ID: 8f80bbf1dd5291ba946
+X-MBO-RS-META: edisx4wchww8awjnyt6qkyss1w8jk1uh
 
-Hi Troy,
+Hi Viresh,
 
-Thanks for the patch.
+Thanks for pointing it out.
 
-On 2026-06-15 10:53, Troy Mitchell wrote:
->K3 PDMA shares the same DRCMR layout as K1, where the extended DRCMR
-
-K1 never touches DMA request numbers higher than 45. It's not K1 who needs
-the extended DRCMR. PXAxx needs them.
-
->base address is 0x1100. Commit 6587b8661a0b ("dmaengine: mmp_pdma: add
->SpacemiT K3 support") incorrectly defined DRCMR_EXT_BASE_K3 as 0x1000,
-
-The SpacemiT K3 datasheet still 'incorrectly' carries the base 0x1000.
-Refer to [1], Section 16.1.4.6 DMA Connectivity & Assignments
-which still states 0x1000 as the base:
-
-0x1004 Request for SSP0 TxReq 0xD4040000
-0x1008 Request for SSP0 RxReq 0xD4040000
-
-I would recommend you double check with the SpacemiT team to make sure.
-It's better SpacemiT can fix both the online document and downloadable PDF
-as well.
-
-[1]: https://www.spacemit.com/community/document/info?lang=en&nodepath=hardware/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/dma.md
-
->causing all DRCMR accesses for channels >= 64 to be off by 0x100.
+On Mon Jun 15, 2026 at 2:34 PM CST, Viresh Kumar wrote:
+> Hi Shuwei,
 >
->Drop the bogus DRCMR_EXT_BASE_K3 macro and reuse DRCMR_EXT_BASE_DEFAULT
->for the K3 ops.
-
+> On 15-06-26, 14:12, Shuwei Wu wrote:
+>> The clusters have separate clocks, but they share the same voltage suppl=
+y.[1]
+>> So two independent policies would be unsafe: one policy could lower the =
+shared
+>> voltage while the other cluster is still running at a higher frequency.
 >
->Fixes: 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support")
->Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
->---
->This is a minimal fix for the wrong DRCMR_EXT_BASE_K3 value introduced
->by commit 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support").
->K3 PDMA shares the same extended DRCMR base (0x1100) as K1, so the K3
->ops now reuses DRCMR_EXT_BASE_DEFAULT.
-
-Before we flip it, could you please confirm your source fo truth:
-did you confirm 0x1100 on k3 silicon with a real DMA transaction,
-or from the datasheet? It would help if you could share your
-test setup.
-
-BR,
-Guodong Xu
-
->Best regards,
->--
->Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> No, both will vote for the regulator contraints using CPU device and the
+> regulator core will make sure it doesn't break any of them. This is what =
+all
+> frameworks do, regulator, clk, etc.
 >
+>> This means they can't use different policies.
 >
->_______________________________________________
->linux-riscv mailing list
->linux-riscv@lists.infradead.org
->http://lists.infradead.org/mailman/listinfo/linux-riscv
+> This is incorrect.
+>
+>> From a hardware perspective, the eight cores of the K1 are homogeneous,
+>> so using the same policy for them is relatively reasonable.
+>
+> Right, but this is inefficient. One cluster can be idle, or in low freq m=
+ode
+> while other can be in higher. They MUST be two policies.
+
+Yes, you're right. Two policies are not inherently unsafe.
+The regulator framework handles multi-consumer voting correctly.
+
+The actual problem was using single value opp-microvolt. With one cluster a=
+t
+a low frequency holding a precise [950000, 950000] on the shared rail, and =
+the
+other requesting [1050000, 1050000] for 1.6 GHz, the regulator finds no
+intersection:
+
+~ # echo 1600000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+[  544.744195] buck1: Restricting voltage, 1050000-950000uV
+[  544.757073] cpu cpu0: _set_opp_voltage: failed to set
+              voltage (1050000 1050000 1050000 mV): -22
+[  544.771304] cpufreq: __target_index: Failed to change
+              cpu frequency: -22
+
+The fix is to use the <target min max> triplet for the lower OPPs so the
+regulator always has a valid intersection:
+
+-    cpu_opp_table: opp-table-cpu {
++    cluster0_opp_table: opp-table-cluster0 {
+         compatible =3D "operating-points-v2";
+         opp-shared;
+         opp-614400000 {
+-            opp-microvolt =3D <950000>;
++            opp-microvolt =3D <950000 950000 1050000>;
+         };
+         opp-819000000 {
+-            opp-microvolt =3D <950000>;
++            opp-microvolt =3D <950000 950000 1050000>;
+         };
+         ...
+         opp-1600000000 {
+             opp-microvolt =3D <1050000>;
+         };
+     };
++    cluster1_opp_table: opp-table-cluster1 {
++        // same OPP entries and voltage ranges as above
++    };
+-    &cpu_0 { operating-points-v2 =3D <&cpu_opp_table>; };
++    &cpu_0 { operating-points-v2 =3D <&cluster0_opp_table>; };
+     ...
+-    &cpu_7 { operating-points-v2 =3D <&cpu_opp_table>; };
++    &cpu_3 { operating-points-v2 =3D <&cluster0_opp_table>; };
++    &cpu_4 { operating-points-v2 =3D <&cluster1_opp_table>; };
+     ...
++    &cpu_7 { operating-points-v2 =3D <&cluster1_opp_table>; };
+
+This way the low frequency cluster accepts up to 1.05 V on the rail.
+That is safe: high voltage at low frequency costs power but does not cause
+instability.
+
+With two cpufreq-dt policies (one per cluster) and these ranges, neither cl=
+uster
+blocks the other. Tested on BPI-F3 and OrangePi Rv2 boards, works as expect=
+ed.
+
+Does this look good to you, or would you prefer a different approach?
+>
+>> I used a K1-specific driver because cpufreq-dt only manages one CPU cloc=
+k
+>> through the CPU device used for the OPP transition.
+>> On K1, the policy needs to control two independent cluster clocks and on=
+e shared
+>> regulator, so the driver has to update the second cluster clock explicit=
+ly and
+>> keep the ordering safe: raise voltage before raising either cluster, and=
+ lower
+>> both cluster clocks before lowering the shared voltage.
+>>=20
+>> [1] https://lore.kernel.org/spacemit/aeaXszeaE62rM6BJ@aurel32.net/
+
+--=20
+Best regards,
+Shuwei Wu
