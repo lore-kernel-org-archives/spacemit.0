@@ -1,79 +1,40 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72F63B47DD
-	for <spacemit@lists.linux.dev>; Tue, 16 Jun 2026 08:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B303283FF5;
+	Tue, 16 Jun 2026 23:18:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781597952; cv=none; b=WRPXBSex7rI4Hq8+5gRItQApNrmM3gVLdFXkMEP6LaZOEMl3MRj5AUF9ZF7rZ3UNSm0MUTylMjuXhrSp2q6Yzsj0glgR15Tbobthn2mamDSXwA7yXcRceihXcSZi49+pbP0NJ0RxXsKAv6qJn0aiu8p5eBD+oBa8FTvUh5QEa9M=
+	t=1781651900; cv=none; b=WihjvTK7xVSRcbwQAVJr5EsqxO8D34PHjE4flhoJCMEhj+pEGAf8M3EToU/UwYX+0Df60Ti4/JyrKafctSD2LfqkuvsHpd52iL8MV+Bz6TneMmsFN7l8XX3diGC3FsZAGIC8FgZrrcA50ddsoRreU/5qOkhXYsaZuwjL+ip1X5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781597952; c=relaxed/simple;
-	bh=xYc99uvXLsYWScO0EmNoWIRKvKiJpOTShn+ZEKrkN1Y=;
+	s=arc-20240116; t=1781651900; c=relaxed/simple;
+	bh=tPxweJfUOnNi3nYFYFGOwOppY8+P5BdN3O3dzIJYXhE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GwXhdlKPCCuMNZgnykXdOmSW92qB/45HWNZn7HatDhR2yDY+ioRFR7KgzcneO7VkUwHK2aq5GTUkP05DYVM65wMTrA/lk3rt0TuaXy2CgCrUIUp/54o1PxKG+qwxxjDYcnhIJ+153/D8KuhdGtFzcILGjVfDXbuLdCC3YPmhsTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DQA8LYhT; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=sb0VNlgnawhQEamkCL+yLF02JYnBJVA0ftQZecypcsau8L14DjsZ65+JaHy6wMMbZor4Sebj76Dv9oEh9txPKYgGFy5zNK/Kz37egfpeQG8h8RAaEiGVUlpNim3FxlSrVermsoLz7v3xa4tQ6Gvq9jy0Xy04+nc1xYKA1RtcY0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jg90PenM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DQA8LYhT"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2c27fc587ebso16686655ad.0
-        for <spacemit@lists.linux.dev>; Tue, 16 Jun 2026 01:19:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1781597951; x=1782202751; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PhNt6MHC4AegleV/WbvHUk1ZYZMA3NIq1ay5U/dxpKQ=;
-        b=DQA8LYhTedR9E+SCEqvpubrhylfhmu0pS/Jh9pZTxLHt6841Dcn7jpLLKZXCqpVjuy
-         fUKNfe3b64wHrreEOqbXluG4fXGASHMUEsE/eyrmfWixoOlKVoEvHP1opMRKNDs4b73A
-         uJCV3YH6IWjs7VPdPRbQmWrzzDb2pVoeFD4KMWrBec2gjYwJiLnPnFv2LxSDsjtO1DBs
-         mpo3Ld8FTUw8fNgUa7oZyoEKLOtbksRzwg/V5hjOsZ8jf/ak0dFEL5jO7dwRX1D6dHVj
-         ifAacVv82G9QjQXq6/htm6SvdCQf4qu4aVLyLgBwIXXBuoX8ChxhzPTo7XgV2fZ94gL4
-         q+cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781597951; x=1782202751;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PhNt6MHC4AegleV/WbvHUk1ZYZMA3NIq1ay5U/dxpKQ=;
-        b=noFKnlhoKziCZBeKN55ZPktJV8TYrVId10g/d7/V2U21J3ufQTmCj5SaWTsKorTlUB
-         i3h7XjRBP9OIzGCGPzy814pk2fkCKmGKYvUfVeGBxKvYBpI0A7q3WpoBlJd83RruG7/+
-         vG/YDH/eShYb9vbzfktL+7e4Yvzybt0cW7A2oHkbUy56cYelVzFNhpIRFeN13VCrgmAB
-         +EVsA57NgghdnIFICJ59dW8kVGsgYG0e4MxgoLYg3y5Acl5O5s+qyH2/QMBlbOVhSo+9
-         +hUI5tm96ES2ikBJJeOWLuE2lq9nNEx8XwxAR445dgnUDM1MjTx3HmqlotSKziPyjvwd
-         Z5MQ==
-X-Forwarded-Encrypted: i=1; AFNElJ85KCB6YkVIQwdMopOzz62N0NfhfHsCvMyGlV+octMbBVo5gNJ4eEdtsnbEQiIRPbiAkh85ci0doQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzrU9pnuWM1fl4KpXHSHfnUmC6JZt6AJehGT8UqS347QDhbrzrT
-	wAh/gvndJSJq2I7jFZRpXTcq0fbseu6FI8QSsBziLmC/gwK4+oa8PKz6M2sWmxlt+Ic=
-X-Gm-Gg: Acq92OGQgeVZXxQyDf4a92NhKFHS3sl6S5d6l7aV+U/ifombCm1gxQ71+3l/cc8uRwz
-	45948GJHE+skDAa/tm0rLTZsfqz7UiEVvg6VVSBE20oZaljGTOZLgtMMO9kMAU/HhhloGDZisde
-	MYIFtGiOXnsq0cZlSk226vWEQgM4w8ux9mq/pTRKrWvQ4iP+tzuUbR9cOD4UjOCYw2Vg9B5ayoA
-	NKVbGqMXq7ziyey/Ga1AJVXYpEm0EWN5ZAxMTSQXpi4qFL66KTCBw06dbEhm8L1CMmZg5ZchW2M
-	qcqVWQX6TdHAxsZBWx/Ej300HUsGO/E4ZM4Bt17XYF7yBZrOrwUt0PGosdnCw/wtu/EWPwMdCQk
-	+HIvv2bAFYgc8I25MGCpyFyofGVtu2hqfWSyjiuyF7xXegoBGnpYDlAFXQqw5oFnHbMRJ+tzn0d
-	bgPVaEOHz0LbFQ/JoEDYZAMxU=
-X-Received: by 2002:a17:903:3890:b0:2bc:b80f:677e with SMTP id d9443c01a7336-2c69a1965ddmr27832715ad.25.1781597950906;
-        Tue, 16 Jun 2026 01:19:10 -0700 (PDT)
-Received: from localhost ([122.172.82.94])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c4327ac631sm124267105ad.44.2026.06.16.01.19.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2026 01:19:10 -0700 (PDT)
-Date: Tue, 16 Jun 2026 13:49:07 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Shuwei Wu <shuwei.wu@mailbox.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] cpufreq: spacemit: Add K1 cpufreq driver
-Message-ID: <nffvtnb765pa72xcfhmxe3wepxpld3e6265s7imvldbwounkzk@jmrrhtrwau34>
-References: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
- <20260612-shadow-deps-v3-1-2f3ba88611ff@mailbox.org>
- <bd4s2icqgusnuujvrpoag4cniy3g2e4bumecqxt5yffl77aqpq@kxg4dj4c2wk3>
- <DJ9EFPG561VZ.1WGRYYHJ2W9J9@mailbox.org>
- <wjwkykv555gkeqxabsqcdfn4lomcopawsv7bgm4bydc5likhjs@p3ca3p7wbri5>
- <DJ9M2IDYE6XZ.20RN5AFBYNB9Y@mailbox.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jg90PenM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B891F000E9;
+	Tue, 16 Jun 2026 23:18:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781651899;
+	bh=2uIFQDYqrhlKjWeD5rf3vmj7TAhAKI5XKv0WTBppYP4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=jg90PenM5pUumMc46VrLSFfmUZuMbDFODJ1X4JRsLtHFI7Hmi+E7Ic9TDdwzUgh1y
+	 vH86LdSwTAdwX1wnN6o8aGhMD8OhleGjjS3h7YLurkFSWHTXXQ9+ORhb3YuxLI/Yo+
+	 KuV+Gj7s1qDsNZsCXyTkBl/k4G8N2XYChgMaZNDolLehbWJdGsDKS4Z9yzjwLLuvmB
+	 6xOTs+vwrwZUebG1UzLLxeSQOJbqp9kkFHLmIRaH15Jf/2YcuDGM7Ukmk9fIAC7/S2
+	 Qi5t6VE/5/pgu+dmg9m27l9c6wcAt0llMnrWHmJJ6mPwB0Kp8SHuyw7vjsAOASCqOu
+	 ZbyDw5xAYhr8w==
+Date: Wed, 17 Jun 2026 01:18:14 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Alex Elder <elder@riscstar.com>, Yixun Lan <dlan@kernel.org>, 
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v7 0/2] i2c: spacemit: improve clock handling and cleanups
+Message-ID: <ajHZlsTAp3bWRF1V@zenone.zhora.eu>
+References: <20260508-k1-i2c-ilcr-v7-0-8c2dde5c3ed5@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -82,15 +43,15 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DJ9M2IDYE6XZ.20RN5AFBYNB9Y@mailbox.org>
+In-Reply-To: <20260508-k1-i2c-ilcr-v7-0-8c2dde5c3ed5@linux.spacemit.com>
 
-On 15-06-26, 20:11, Shuwei Wu wrote:
-> With two cpufreq-dt policies (one per cluster) and these ranges, neither cluster
-> blocks the other. Tested on BPI-F3 and OrangePi Rv2 boards, works as expected.
-> 
-> Does this look good to you, or would you prefer a different approach?
+Hi Troy,
 
-Looks correct.
+> Troy Mitchell (2):
+>       i2c: spacemit: configure ILCR/IWCR for accurate SCL frequency
+>       i2c: spacemit: drop warning when clock-frequency property is absent
 
--- 
-viresh
+Sorry for the big delay, merged to i2c/i2c-for-7.2.
+
+Thanks,
+Andi
