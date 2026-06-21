@@ -1,187 +1,140 @@
-Received: from mail-pj1-f67.google.com (mail-pj1-f67.google.com [209.85.216.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2B0392811
-	for <spacemit@lists.linux.dev>; Sat, 20 Jun 2026 14:23:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F4728C84A;
+	Sun, 21 Jun 2026 13:15:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781965435; cv=none; b=kA4G4o3P6dQc8QK2AytBXoJvjTxxkfopM1YSMgJL2/heokQelmZad7o9Z7MCjs1uSxjqft2CdU8Q9QVW/WgwM+xsbsHO8fRP8DaxU3bi4xiU6v3xm+P1FcNayv49Zd9c7mdBMF9gGo6EVZbp5eBpghuhYjlFKtMC1N+2AX3sRuE=
+	t=1782047702; cv=none; b=KsMOYqPb8wpsl8nGAZkvy/+WMjHm6xMlAw5/ntVLJRhACM8L0cT9yij3ZkGwG8gCRMUA3RnnM6FsclcR1JUUV/9nGUvK7oR51S3HtaR3Tabru9ESoyhn5l48RsE/tMygjvRqO/Jje6F1dDh4Ic2HTDMYlj81GJzn3kZ2EV2QObI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781965435; c=relaxed/simple;
-	bh=1A3yRBCyiXnf2+7dCdstiNNFsshcbr96SxsOGFDoLtY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VZxkU233vsAgi3Eg0Yt6XQdRuw2cGRyfsOIS95uf10DS7EfS5L3JEUlge7Iyd9xPXKbSrpaLWAmItKDHrRZzT6WegSx9kSChXyefoRQTiiLII6IUyL//bUH25Pm8NApffM/kWefH1qAt1L3XomgOt3XJlyosyc7Xn0n3xBRRhN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l5VCpAIA; arc=none smtp.client-ip=209.85.216.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782047702; c=relaxed/simple;
+	bh=Ggyqf4V9QdplCClTk9Hgs7Wmob2TRbKYdHkBOyzeNPY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qsl2MeppW46ATYDUh2iN9Rz8qsKLl7wfioG9LXhIGqZ8dgxhtbWN+9IHRwd2FPZFogkf8IRpOgqCf4/94keDd5Yi18ZmvdKdPmOxyVBkJ6vtPjBFEUodwPwZx4OpkIEdOit5YpDBQRJlpVZpXKzRTDlISeKx72tdS50XAmyvEb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=YNyrsNRJ; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l5VCpAIA"
-Received: by mail-pj1-f67.google.com with SMTP id 98e67ed59e1d1-37c867bd3e0so1433343a91.0
-        for <spacemit@lists.linux.dev>; Sat, 20 Jun 2026 07:23:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781965434; x=1782570234; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X2ppqhiXhC3WFA2wZf37Gep+L6TyBObHMBsyL7sziZw=;
-        b=l5VCpAIA4n8zogBv7/Uk9jqYUE2bmKfU2SVyLAr3pYvGbaK16k8VQtqeCFnzszALTm
-         Lcwppwmn3F/6eAfpmjFI0B3E3CqLo+4Eo2Sb32H271Dc0+N8PplUVEDNVBE+PJAEzWXG
-         emwmysq4c0CBGh7FXLadkGX2bxWUzQUAe13khHxACp93HCVoPDB9p+R4ho6mq3ikb75I
-         EiyWDPtxiw76BEt7z0LNEmuwIyntQeUY2Rt/RB00mIzCT0Mg/WOvWJx+7H/5qK48jcwz
-         2HavHJ0j8doHngXjTrS+AfMKCL2ozsmDmF6w+5WeUJN73Dkns+kmJXB6XsYqZovmgDng
-         zjSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781965434; x=1782570234;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=X2ppqhiXhC3WFA2wZf37Gep+L6TyBObHMBsyL7sziZw=;
-        b=mJP82s3Lwn15z1ll9Rbm3QiBaaLFj8g8G2Sg4PTb6S/NgOmtObTljZo4Keu3NSVqHG
-         N8tyNwELc5DRAAJhQJmqcBWYDs9Y/kY1n7AIDYLzyZtU4ItDm7nlbBXeN8oduaKYqDxC
-         M7ghVor/HbS2JJU1GxzMg2qF9dSLg3pW1g3BpmUfg4LyrLDNrMvmkte5SfnFF9GfvAeR
-         qfbvMWwJSHuwLbnxphcaLJG4DUPrJnywt/ihY0FqBt72qEByN6BZh+XfMbEMTqoJjXp5
-         9s4BK2xtg+b+assfSkaAS2V8/kPj1J3dDpVsjAk43mXDQf260a2qSA54CxDx3M2BF/w0
-         zXgA==
-X-Forwarded-Encrypted: i=1; AFNElJ8pRP06O2xzxAQSZoZeupJHpYT4EP49P7AQj5VWkqNrPE26iJt85nuJpTgkqaQ8cWHRvdB4Tl4LWg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyfN7iU3u5xlqBqIcOQXi8i//d5EER15BnTvPy6CH+C6R5KIvl8
-	iMT3YktsoH8pBwt85jXAg8aZhIVeVNrBmG95ncVkFiCbvuqW5lAEWUFD
-X-Gm-Gg: AfdE7cl6C0ySLCt/2D0+oODxniCvIyd/F+hgQS98NntpQqWoglhH+Cz8hZVv8exxJXi
-	98BN3YfloWT+EElF7R5fU10R4Msgk41+5s8x3gYSlTpiMb4SXnUvYrLtFH8r75MaKYhrM3iqpPd
-	Z41ii/ihov+698H5gQS4/Ly5WkQj9SbOIo2o7rv8KkgrzdIcHiqx282LFU/XS9LMWbBFDMNL6xA
-	Y9PeeQEf0IRuU9YuisuEm1D0WwA2GsT6u8ge31Qy7pOsRJD5c6IHSi92JRUWzShFtL0cJso7ngZ
-	2UxFd9pd+bgxp3FxaRl4JdhLK2a5PvqOM8yvhF/iMRGI29GTDv2I+MY/5AvGwPQOUwCZj67VP9H
-	hcg6lTVGQVcwcU1qb2o/QMrM74Cor22bvfNcKgwE9xR3e9f6N+ChzARCYlJzr0ZjOtGzHUNmPfw
-	VMwZFQJc1psmlRye3S847iUxpKomPw7zosBqm6zIfUB+1o3+aqoNtVQ78I8zbs3Oam
-X-Received: by 2002:a05:6a20:6a0f:b0:3b4:7c33:296b with SMTP id adf61e73a8af0-3bb3564431fmr7384251637.32.1781965433512;
-        Sat, 20 Jun 2026 07:23:53 -0700 (PDT)
-Received: from ?IPV6:240e:304:27f3:cf00:402d:ef5b:4082:aa65? ([240e:304:27f3:cf00:402d:ef5b:4082:aa65])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c8bc563c406sm2556778a12.19.2026.06.20.07.23.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 Jun 2026 07:23:52 -0700 (PDT)
-Message-ID: <bae98712-2d0c-4831-8142-bb1318d147b1@gmail.com>
-Date: Sat, 20 Jun 2026 22:23:44 +0800
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="YNyrsNRJ"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=b+7H29dkhVMGO3TYR7p0AjHCtsPqiNAR3VmqxDlgg4k=; b=YNyrsNRJGh7cNXixVSGLbXkyEk
+	T2/vIARUjYirxMyH2xW4s2iHF1+SyuVXCAhsx17kSaGPIt9VCEuhS7RZHOLUoqMPRRG/APRk6ZMJi
+	sz7ka3/uEhDz1YzflamAKg4DTOUVCnMYeFdxW8PjHiMRzxxm3miJFfNJL0WFLUtt2WLkioGyj7liw
+	BH8K8gporiEqUMXxArI8SON95X2V7JP66KqR6so/4uxrR99r3WPeX+hqwZlrLI+vZRA2Ryvvy+yW0
+	3ZoeEK0h0NrIALxny7BBN8wSUdQFvSfTm4+Y+67MVh8BapQ8XdARoRG1yAGXvGTM3SeE745RLoQ7i
+	KCQQOSLg==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wbI0h-00000001gBd-1xzv;
+	Sun, 21 Jun 2026 15:14:51 +0200
+Date: Sun, 21 Jun 2026 15:14:50 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+Subject: Re: [PATCH 2/5] riscv: dts: spacemit: enable the i2c2 adapter on K3
+ Pico-ITX board
+Message-ID: <ajfjyvSCVBVgr-UO@aurel32.net>
+Mail-Followup-To: linux-kernel@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>,
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+References: <20260620062238.3199108-1-aurelien@aurel32.net>
+ <20260620062238.3199108-3-aurelien@aurel32.net>
+ <20260620062948.0A1161F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] cpufreq: spacemit: Add cpufreq support for K1 SoC
-To: Shuwei Wu <shuwei.wu@mailbox.org>, "Rafael J. Wysocki"
- <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>,
- Vincent Legoll <legoll@online.fr>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- devicetree@vger.kernel.org
-References: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
-From: Gong Shuai <gsh517025@gmail.com>
-In-Reply-To: <20260612-shadow-deps-v3-0-2f3ba88611ff@mailbox.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260620062948.0A1161F000E9@smtp.kernel.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 6/12/2026 5:51 PM, Shuwei Wu wrote:
-> This series enables CPU frequency scaling for the SpacemiT K1 SoC.
-> 
-> K1 has two CPU cluster clocks but one shared CPU voltage rail. Add a
-> small K1-specific cpufreq driver so the two clocks and the shared OPP
-> transition can be handled together.
-> 
-> Tested on Banana Pi BPI-F3. The system boots with all eight CPUs online,
-> the K1 cpufreq driver registers one policy for CPUs 0-7, and both CPU
-> cluster clocks follow the selected cpufreq rate.
-> 
-> ~ # cat /sys/devices/system/cpu/online
-> 0-7
-> 
-> ~ # ls /sys/devices/system/cpu/cpufreq
-> policy0
-> 
-> ~ # cat /sys/devices/system/cpu/cpufreq/policy0/affected_cpus
-> 0 1 2 3 4 5 6 7
-> 
-> ~ # cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies
-> 614400 819000 1000000 1228800 1600000
-> 
-> With the userspace governor:
-> ----------------------------------------------------------------------------
-> Frequency    | scaling_cur | cpu_c0_core | cpu_c1_core | Real    | User
-> (kHz)        | (kHz)       | (Hz)        | (Hz)        | (s)     | (s)
-> -------------+-------------+-------------+-------------+---------+----------
-> 1,600,000    | 1,600,000   | 1600000000  | 1600000000  | 1.80s   | 1.80s
-> 1,228,800    | 1,228,800   | 1228800000  | 1228800000  | 2.33s   | 2.33s
-> 1,000,000    | 1,000,000   | 1000000000  | 1000000000  | 2.88s   | 2.87s
->    819,000    |   819,000   |  819200000  |  819200000  | 3.53s   | 3.52s
->    614,400    |   614,400   |  614400000  |  614400000  | 4.72s   | 4.72s
-> ----------------------------------------------------------------------------
-> 
-> Signed-off-by: Shuwei Wu <shuwei.wu@mailbox.org>
-> ---
-> Changes in v3:
-> - Add a K1-specific cpufreq driver for the shared-rail, dual-clock topology
-> - Use one shared CPU OPP table and one cpufreq policy for all CPUs
-> - Link to v2: https://lore.kernel.org/r/20260410-shadow-deps-v2-0-4e16b8c0f60e@mailbox.org
-> 
-> Changes in v2:
-> - Move OPP tables to dedicated k1-opp.dtsi
-> - Enable OPP only on BPI-F3 with cpu-supply present
-> - Link to v1: https://lore.kernel.org/r/20260308-shadow-deps-v1-0-0ceb5c7c07eb@mailbox.org
-> 
-> ---
-> Shuwei Wu (2):
->        cpufreq: spacemit: Add K1 cpufreq driver
->        riscv: dts: spacemit: Add cpu scaling for K1 SoC
-> 
->   arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts |  35 +++-
->   arch/riscv/boot/dts/spacemit/k1-opp.dtsi        |  70 +++++++
->   arch/riscv/boot/dts/spacemit/k1.dtsi            |   8 +
->   drivers/cpufreq/Kconfig                         |   4 +
->   drivers/cpufreq/Kconfig.riscv                   |  15 ++
->   drivers/cpufreq/Makefile                        |   3 +
->   drivers/cpufreq/cpufreq-dt-platdev.c            |   2 +
->   drivers/cpufreq/spacemit-k1-cpufreq.c           | 251 ++++++++++++++++++++++++
->   8 files changed, 387 insertions(+), 1 deletion(-)
-> ---
-> base-commit: 5164e95565d3fd508ca8a95351323f5716dfb695
-> change-id: 20260307-shadow-deps-3582a78aa756
-> prerequisite-patch-id: 154bd4f720ce5065d58b988de8f273207b44572e
-> prerequisite-message-id: <20260206-spacemit-p1-v4-0-8f695d93811e@riscstar.com>
-> prerequisite-patch-id: 5da3e75b18291a5540d4f66d7a0600fb8975ef62
-> prerequisite-patch-id: bcf41917414ecef8cf743095d130f6004c32f6a5
-> prerequisite-patch-id: cfe3800f8c791ec4c63e070af9628e88e0fc31b9
-> prerequisite-message-id: <20260305-k1-clk-fix-v1-1-abca85d6e266@mailbox.org>
-> prerequisite-patch-id: 7c7fb9f87dba019ece4c97c45750349a7cd28f3a
-> 
-> Best regards,
+Both issues reported by Sashiko AI (see below) are valid, I'll submit a=20
+v2 fixing them, but I'll first leave a few more days for humans to also=20
+have a look at the patches.
 
+Regards
+Aurelien
 
-Hi Shuwei and Vincent,
+On 2026-06-20 06:29, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Low] The pinctrl subnode is named `i2c2-0-pins` but belongs to the `i2=
+c2-1-cfg` parent node.
+> - [Low] Missing space before the assignment operator in `bias-pull-up=3D =
+<0>;`.
+> --
+>=20
+> commit 4dc6c92d42831e85b38f3350c15707d0e2b3af18
+> Author: Aurelien Jarno <aurelien@aurel32.net>
+>=20
+> riscv: dts: spacemit: enable the i2c2 adapter on K3 Pico-ITX board
+>=20
+> This commit defines the I2C2 pinctrl properties and enables the adapter
+> on the K3 Pico-ITX board. It will be used by the 24c02 eeprom.
+>=20
+> > diff --git a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi b/arch/riscv/=
+boot/dts/spacemit/k3-pinctrl.dtsi
+> > index 23899d3f308a0..c9fe9c2e5aeee 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
+> > +++ b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
+>=20
+> [ ... ]
+>=20
+> > @@ -45,6 +45,17 @@ gmac0-phy-0-pins {
+> >  		};
+> >  	};
+> > =20
+> > +	/omit-if-no-ref/
+> > +	i2c2_1_cfg: i2c2-1-cfg {
+> > +		i2c2-0-pins {
+>=20
+> [Severity: Low]
+> This isn't a bug, but should this subnode be named i2c2-1-pins to match
+> the i2c2-1-cfg parent node? It seems to diverge from the standard naming
+> pattern where the suffix of the parent and child matches.
+>=20
+> > +			pinmux =3D <K3_PADCONF(46, 5)>,	/* i2c2 scl */
+> > +				 <K3_PADCONF(47, 5)>;	/* i2c2 sda */
+> > +
+> > +			bias-pull-up=3D <0>;
+>=20
+> [Severity: Low]
+> This isn't a bug, but there is a missing space before the equals sign
+> here, which diverges from the spacing used in the surrounding code.
+>=20
+> > +			drive-strength =3D <25>;
+> > +		};
+> > +	};
+>=20
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260620062238.31=
+99108-1-aurelien@aurel32.net?part=3D2
+>=20
 
-I have tested this series on the OrangePi RV2 board (4GB) on top of
-linux-next (next-20260619), with the v3 cpufreq series and Vincent's
-patch "k1-orangepi-rv2: Add cpu scaling" applied.
-
-The driver works as expected: all 8 CPUs are online and share a single
-policy (policy0). Writing to
-/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
-correctly changes the frequency for all cores simultaneously, and all
-scaling_setspeed files show the same value. The frequency transitions
-are smooth, and performance (tested with a simple awk loop, following
-Vincent's approach) scales linearly with the set frequency.
-
-Both of you can add my tag:
-
-Tested-by: Gong Shuai <gsh517025@gmail.com> # OrangePi-RV2
-
-If you send a new version, I'm also willing to test it again.
-
-Thanks for the work.
-
-Regards,
-Shuai
-
-
+--=20
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
