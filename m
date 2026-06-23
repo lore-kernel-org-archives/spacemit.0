@@ -1,160 +1,106 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFA038737B
-	for <spacemit@lists.linux.dev>; Tue, 23 Jun 2026 02:50:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782183011; cv=pass; b=FYlZDpMl50lDuqVZX5XvtL5v4/A4M5xjQ/Hc1jfOz3i/CmH4tJzfKxMLYPxlv1asEhErXfBXnEFr3JGZGvKGqUzmH2zokcn8qI21SW5K481b0PfUQM195zVPobh1dOjNYSVyWwQ+XzyLYxQyEmrBqGRBzMEjuzjlLRZjorchdPg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782183011; c=relaxed/simple;
-	bh=0/n35Voh+5ojdPBR3qx+elkjhoB6WNleuxFAonpdkPk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=TitBa/WwgtDsqXx7WOkC+WGT5InfYQTwktF3tmoVmxqGrLmStM0Ku8lQu5BUd0Tcs1NC/EOIBoASXeTS9+3sYq3wF++ngh7/6vDC9r7mJx2p1CiN22utbZfwsXxUFCNKYXEsjMCnZCuSBSgqophd9BJ9m0xKCv6sMPXwsHhyM+U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=h7AGDLF5; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764DB3BCD05
+	for <spacemit@lists.linux.dev>; Tue, 23 Jun 2026 07:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782200820; cv=none; b=Jkx72O179nU7vYpEJgiNjhl3/zg7+pgnd7++7cG0ADjM9pSEiMjgsbZuUd8G5vKkibgD6IB/7DJBz+lEIZfpzdsYXJZPUZNb3X5f5XYH5n/z9d3u/H+Fw3O9hh/sEV4h36wFPCKbuHt2CUm4oZ3aO/+Rx+lMLXaE6UolMclvRzc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782200820; c=relaxed/simple;
+	bh=6n7H95oCjC1hgvkIqkVmsZD5RKSMNQ+H/5eZ6bZxyIE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UZIgiJNd1FXwBJ3SNjNlFMcuMQaPCpWFBE1Bu8/zDBwogEYymXVlEELgwUvMc1DBQqyhP4b6vU+fL7wQG4oHchjYWE7QuKHM4fDZthLaRFJP1hyFHCqwkVdR5D4+U7cKSw84NL8w6w7doLSg/758pY8OS3h6iNPS/SrzyK9btL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HMP5FbsX; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="h7AGDLF5"
-ARC-Seal: i=1; a=rsa-sha256; t=1782182996; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=iQCWG4qycHcGoS0QF7L3jbrdvD4NZrB6dJ4fCwCMatUFsEwcP3CZ08vcD3r3OjmtIBXfVJmLqlLd6cotEQUzdtv0kfw9DjSInuPo+GfidRnQ4VZYAz27U3doAeWgYZsIeoEPqTIphnoRhp7cbaOm6NW1gGr5h/ZDuP7cN3756BY=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1782182996; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=6uwLUim5YbEQWxqk15fz80zmZ92ufANQDv/XH/rQ6m8=; 
-	b=f36ce6s5nJFgg7/8jAWPkrm5pPEUKDKcZckG8iuPLk0MixvRKs8pkRREPQbeI61vPsTNwpx6TaKNzO3pGSn4QlbLrUIHgb+fqePDh/przoK+6uUJocMFx5kYpQB1dRMr0GW+zYcfTNL5d/tzdroWRU/GkpTXW4ZzEXFRSQNI3gA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1782182996;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:To:To:Cc:Cc:Reply-To;
-	bh=6uwLUim5YbEQWxqk15fz80zmZ92ufANQDv/XH/rQ6m8=;
-	b=h7AGDLF57TvTJAwNRAGfioZgEOyIOhoyraazOqOirxAMMBx4I0pilmb8pkxJHYRy
-	8a5OaWbDvXJpZrXNWQK3cJBNMlgzHQeRiBH22ocYkhONIP6WWD9pHzsiWYYzOz0cNu1
-	xVGAT4FB1hxRR8uY3IfKwGh80jVGudhGpaOPiHME=
-Received: by mx.zohomail.com with SMTPS id 1782182993856948.8207460762544;
-	Mon, 22 Jun 2026 19:49:53 -0700 (PDT)
-From: Junhui Liu <junhui.liu@pigmoral.tech>
-Date: Tue, 23 Jun 2026 10:49:25 +0800
-Subject: [PATCH] platform: generic: spacemit: k1: fix wrong address
- definitions
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HMP5FbsX"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8422f148dfcso2944073b3a.3
+        for <spacemit@lists.linux.dev>; Tue, 23 Jun 2026 00:46:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782200819; x=1782805619; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WiYA62dHorpFymdfXssg5HAuL1K3q/QdPM1UUVatA4k=;
+        b=HMP5FbsX3/9uC8JbGApJswDV4/2eVAegxLfVr+LGmUj/DRkgHyqbC5OMAzG3D+llVJ
+         voh76xGV6tSCqmg4CHDfP8rqTFUbo2kbLqT5afSC4XLS4qgW2RPmZx/x6cjg9SLioD1A
+         Nmw2uaeMlnwIEe6sIgWPHHYU34aooL5gJk2bKn9HujHKxiJW0IrTiwHu8DKrFAkdJau0
+         HyBilDNOLmcfeGi8R/utbwmayirKbAVLhMzqOJs5u0/YUp1/NaXviWBykv5Id0uC6ljS
+         4xwjzrKP/l2zN/Mpak43i0rWYUvWRNdOIV34iGT4zOPTnjGQAOAhCGQhSG5jIWF9VFUT
+         tpVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782200819; x=1782805619;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WiYA62dHorpFymdfXssg5HAuL1K3q/QdPM1UUVatA4k=;
+        b=G60fdtbSYofINek5SKiRUluLYpBx9mJNpr6GXfedbFXL+UPxTyxUNFR2vHzufHp/dU
+         ld+ptMfyD86KnffK1wAPjvTK7qU9+tXNwrXwEcl9P4ho8UWQ7vS+3eq+7fX2kttYHnCh
+         OtvuuIgA9zOZaZKzFY+aLMy8ctxaPMRUMEDcUwA9dfc0JbUmxEL03bcJXSpZ+eccXYSg
+         D0/lZslhwIRIQqaZWbD+yIZ4h7w1orUVxMJlkum+NaagOfkdlreDR/uJ9GY8cD59NV1y
+         jEbDOelZ8G5v2s3bxTdJET8IdM1OuzDTGc1jIgn1obxFoGUYFc+PytLDW/Iu/mRKROow
+         8CPw==
+X-Forwarded-Encrypted: i=1; AFNElJ8e56W7MCEr8MNbHm3UoYo3JyS7kECXKhCaG/xx7e9eyCuN1GHluayGlTknoHOKi1fPE7PkZwkLYQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzGKhuzkpdQUFxHgC9L2MpGiQCuFxYvp7hLmyQmZ1NS12zAfNc2
+	Kkb2Dcu+H+nzUb04IFly2z28EHHZwpaIw9HbQEHFrYLFy4X7k6+SnOaU
+X-Gm-Gg: AfdE7cn+3gPKG1sorFbhe/r0+ROfRqDD90rCKYAwaJB+S+0buhyYXFi8/BgNH9cwZ0S
+	2OiB57h7pvOXLi8ggRFKhEn95wG43/Eo0YeTJ4q2Y3YrK7o3gaBG0lGBoXA29xTLq36001UIVon
+	enm9q2zHH5PUedn1urNjEfET7YpOVeZNoxqwtD/xigX1w+27sNtOuBUFio4puJYXruRRGC3S7LT
+	bjYQkMsU5ajNcjMYi8AJYiT3pH26a2w8QM0d45KGldlsNNQ2TwjUcyT7hMBBD+gbFiU4kQqhiNu
+	e1EqW55BM2xni+YJQ7bv1ku/spsHKidHefkhiDyYO3e4joktf4BSNzq7LvSoDEpR6faZcsFY+bT
+	XU1vaLY0eDqdxvbD0TwWTuTP4eCsfxVc2GeqANO7Y70rqc/BeEBSizRVapJ2JEBL14f5Swl20Ul
+	TBYk8RJMwEM/Z6JrGRkIHB9g==
+X-Received: by 2002:a05:6a00:3d09:b0:842:5711:9a2f with SMTP id d2e1a72fcca58-845508a0edamr18772015b3a.36.1782200818608;
+        Tue, 23 Jun 2026 00:46:58 -0700 (PDT)
+Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84564ed9516sm9765519b3a.57.2026.06.23.00.46.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2026 00:46:58 -0700 (PDT)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Inochi Amaoto <inochiama@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Yixun Lan <dlan@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Cc: netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH net v2 0/2] net: stmmac: dwmac-spacemit: Fix wrong macro definition
+Date: Tue, 23 Jun 2026 15:46:33 +0800
+Message-ID: <20260623074637.503864-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260623-k1-fix-addr-v1-1-3dbde8c03bd6@pigmoral.tech>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMyw5AMBCF4VeRWZukrejCq4hFL1OGBGkRiXh3x
- fLLyfkvSBSZEjTFBZEOTrzMGbIswA1m7gnZZ4MSSgstapwkBj7ReB+RVB20qqQLVkJ+rJHy9tX
- a7nfa7UhuexNw3w+Hm4eJbwAAAA==
-X-Change-ID: 20260605-k1-fix-addr-e25f6231cfb1
-To: opensbi@lists.infradead.org
-Cc: Xianbin Zhu <xianbin.zhu@linux.spacemit.com>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, spacemit@lists.linux.dev, 
- Junhui Liu <junhui.liu@pigmoral.tech>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782182988; l=4361;
- i=junhui.liu@pigmoral.tech; s=20251228; h=from:subject:message-id;
- bh=0/n35Voh+5ojdPBR3qx+elkjhoB6WNleuxFAonpdkPk=;
- b=i7+5K1n9qyIl8Kc2K/1kRRZTEJFawdoJqZImyjUsxFOVNi94JGFwBmu8ZE/CKN+2Mlo+m2JOa
- wrghxvufhQWDoPkOH1M/NGb/4ZQRSNg3Zz5HeycHmS/TeyTaOKdR2Wk
-X-Developer-Key: i=junhui.liu@pigmoral.tech; a=ed25519;
- pk=3vU0qIPJAH8blXmLyqBhKx+nLOjcLwwYhZXelEpw7h4=
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
 
-PMU_AP_CORE2_IDLE_CFG and PMU_AP_CORE3_IDLE_CFG are not continuous with
-PMU_AP_CORE0_IDLE_CFG and PMU_AP_CORE1_IDLE_CFG. They are at PMU AP
-base + 0x160 and + 0x164, matching the vendor OpenSBI definitions. After
-fixing these addresses, the intermediate cluster offset macros are
-redundant now, so define the wakeup and idle registers directly as
-PMU_AP_BASE offsets. This makes the actual register addresses easier to
-inspect and compare against the vendor code.
+Fix Wrong macro definition of the Spacemit K3.
 
-C1_RVBADDR_HI_ADDR is also corrected according to the vendor OpenSBI
-definition. This was tested by writing an invalid value to the corrected
-address, which prevents cluster1 CPUs from coming online, while doing
-the same with the old address does not affect SMP boot.
+Changed from v1:
+- https://lore.kernel.org/netdev/20260618064143.1102179-1-inochiama@gmail.com
+1. Separate the patch into two patches
+2. Use the right macro name for the LPI interrupt.
 
-Fixes: 1f84ec2a ("platform: generic: spacemit: add K1")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
----
- platform/generic/include/spacemit/k1.h | 46 +++++++++++++---------------------
- 1 file changed, 18 insertions(+), 28 deletions(-)
+Inochi Amaoto (2):
+  net: stmmac: dwmac-spacemit: Fix wrong phy interface definition
+  net: stmmac: dwmac-spacemit: Fix wrong irq definition
 
-diff --git a/platform/generic/include/spacemit/k1.h b/platform/generic/include/spacemit/k1.h
-index bd666346..7095bc08 100644
---- a/platform/generic/include/spacemit/k1.h
-+++ b/platform/generic/include/spacemit/k1.h
-@@ -25,33 +25,23 @@
- 
- #define PMU_AP_BASE				0xd4282800
- 
--#define PMU_AP_CORE0_WAKEUP_OFFSET		(PMU_AP_BASE + 0x12c)
--#define PMU_AP_CORE4_WAKEUP_OFFSET		(PMU_AP_BASE + 0x324)
--#define PMU_AP_CLUSTER0_WAKEUP_OFFSET(index)	(PMU_AP_CORE0_WAKEUP_OFFSET + index * 4)
--#define PMU_AP_CLUSTER1_WAKEUP_OFFSET(index)	(PMU_AP_CORE4_WAKEUP_OFFSET + index * 4)
--
--#define PMU_AP_CORE0_IDLE_CFG_OFFSET		(PMU_AP_BASE + 0x124)
--#define PMU_AP_CORE4_IDLE_CFG_OFFSET		(PMU_AP_BASE + 0x304)
--#define PMU_AP_CLUSTER0_IDLE_CFG_OFFSET(index)	(PMU_AP_CORE0_IDLE_CFG_OFFSET + index * 4)
--#define PMU_AP_CLUSTER1_IDLE_CFG_OFFSET(index)	(PMU_AP_CORE4_IDLE_CFG_OFFSET + index * 4)
--
--#define PMU_AP_CORE0_WAKEUP			PMU_AP_CLUSTER0_WAKEUP_OFFSET(0)
--#define PMU_AP_CORE1_WAKEUP			PMU_AP_CLUSTER0_WAKEUP_OFFSET(1)
--#define PMU_AP_CORE2_WAKEUP			PMU_AP_CLUSTER0_WAKEUP_OFFSET(2)
--#define PMU_AP_CORE3_WAKEUP			PMU_AP_CLUSTER0_WAKEUP_OFFSET(3)
--#define PMU_AP_CORE4_WAKEUP			PMU_AP_CLUSTER1_WAKEUP_OFFSET(0)
--#define PMU_AP_CORE5_WAKEUP			PMU_AP_CLUSTER1_WAKEUP_OFFSET(1)
--#define PMU_AP_CORE6_WAKEUP			PMU_AP_CLUSTER1_WAKEUP_OFFSET(2)
--#define PMU_AP_CORE7_WAKEUP			PMU_AP_CLUSTER1_WAKEUP_OFFSET(3)
--
--#define PMU_AP_CORE0_IDLE_CFG			PMU_AP_CLUSTER0_IDLE_CFG_OFFSET(0)
--#define PMU_AP_CORE1_IDLE_CFG			PMU_AP_CLUSTER0_IDLE_CFG_OFFSET(1)
--#define PMU_AP_CORE2_IDLE_CFG			PMU_AP_CLUSTER0_IDLE_CFG_OFFSET(2)
--#define PMU_AP_CORE3_IDLE_CFG			PMU_AP_CLUSTER0_IDLE_CFG_OFFSET(3)
--#define PMU_AP_CORE4_IDLE_CFG			PMU_AP_CLUSTER1_IDLE_CFG_OFFSET(0)
--#define PMU_AP_CORE5_IDLE_CFG			PMU_AP_CLUSTER1_IDLE_CFG_OFFSET(1)
--#define PMU_AP_CORE6_IDLE_CFG			PMU_AP_CLUSTER1_IDLE_CFG_OFFSET(2)
--#define PMU_AP_CORE7_IDLE_CFG			PMU_AP_CLUSTER1_IDLE_CFG_OFFSET(3)
-+#define PMU_AP_CORE0_WAKEUP			(PMU_AP_BASE + 0x12c)
-+#define PMU_AP_CORE1_WAKEUP			(PMU_AP_BASE + 0x130)
-+#define PMU_AP_CORE2_WAKEUP			(PMU_AP_BASE + 0x134)
-+#define PMU_AP_CORE3_WAKEUP			(PMU_AP_BASE + 0x138)
-+#define PMU_AP_CORE4_WAKEUP			(PMU_AP_BASE + 0x324)
-+#define PMU_AP_CORE5_WAKEUP			(PMU_AP_BASE + 0x328)
-+#define PMU_AP_CORE6_WAKEUP			(PMU_AP_BASE + 0x32c)
-+#define PMU_AP_CORE7_WAKEUP			(PMU_AP_BASE + 0x330)
-+
-+#define PMU_AP_CORE0_IDLE_CFG			(PMU_AP_BASE + 0x124)
-+#define PMU_AP_CORE1_IDLE_CFG			(PMU_AP_BASE + 0x128)
-+#define PMU_AP_CORE2_IDLE_CFG			(PMU_AP_BASE + 0x160)
-+#define PMU_AP_CORE3_IDLE_CFG			(PMU_AP_BASE + 0x164)
-+#define PMU_AP_CORE4_IDLE_CFG			(PMU_AP_BASE + 0x304)
-+#define PMU_AP_CORE5_IDLE_CFG			(PMU_AP_BASE + 0x308)
-+#define PMU_AP_CORE6_IDLE_CFG			(PMU_AP_BASE + 0x30c)
-+#define PMU_AP_CORE7_IDLE_CFG			(PMU_AP_BASE + 0x310)
- 
- /* power down */
- #define PMU_AP_IDLE_PWRDWN			BIT(0)
-@@ -68,7 +58,7 @@
- #define C0_RVBADDR_LO_ADDR			0xd4282db0
- #define C0_RVBADDR_HI_ADDR			0xd4282db4
- #define C1_RVBADDR_LO_ADDR			0xd4282eb0
--#define C1_RVBADDR_HI_ADDR			0xd4282c04
-+#define C1_RVBADDR_HI_ADDR			0xd4282eb4
- 
- #define CCI_550_PLATFORM_CCI_ADDR		0xd8500000
- 
+ .../net/ethernet/stmicro/stmmac/dwmac-spacemit.c    | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
----
-base-commit: a8be5e9478be08f09a720f7013ec30d6e2bd9fcc
-change-id: 20260605-k1-fix-addr-e25f6231cfb1
-
-Best regards,
---  
-Junhui Liu <junhui.liu@pigmoral.tech>
+--
+2.54.0
 
