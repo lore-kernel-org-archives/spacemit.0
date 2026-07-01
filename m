@@ -1,84 +1,134 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06793603D3;
-	Wed,  1 Jul 2026 15:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A84E416D01;
+	Wed,  1 Jul 2026 15:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782920846; cv=none; b=sxO6ac8G1mhqdygb2DeezB3L0aKE+5t/iF9jdfWdrZg6aI9F0xBltgZo9IUeSeWVdYNuPSGmoQaPoYO/a7/DcsI/4lN3fb1pWoMi16VErxnNkoOHIJ8SIGNVVBaDlRBx6sOl8wjQAgLOXPBFkNtPz4g19/ol/jgT0aYwfYcL1lQ=
+	t=1782921254; cv=none; b=Cp09jOrbfXRzB4W5Bddfpr63TcfFVIeE329oGd/HPbqk/yRY3w9PinJ1ZkxkspkwyLeMVbsTbXwTbWLsbqjg0ufVKEM0aTuHnS3+hpnpHSXXI+BVFLZtlfe4yMQRLDzHRw7UEsseIuSFhz+RuMlmTTbT4/ZRgI30H9qu7Ec1sVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782920846; c=relaxed/simple;
-	bh=NcgWAkkpvQ6GIyO0lNfvcz5hShiLJ0aGbZIzu82PdNk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=twGk6ixbCytxEo7T2UEysZTjWjC7ZYRIUfn6bnyJHaSj5bOH5S+4BDTzJoPXuaY/db6+6cJ5dq7VHx/Jtfaql/03KUH9xZUQXr1l8Z67bSaHYMWK30Vl4ZJOx6947LDKL7Idu7RWmXhe9zo2m0iMiJ/dWtQJlM70cxSZjrnZBBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IflC72ft; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782921254; c=relaxed/simple;
+	bh=G1qx4lJ/FOReXWbODYP3XMesRUo+qlxSfgomKdm87DA=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=f7zTUP98vzOFo1KFPqQMogXU9/vbSR71GFOOcgYLw+8l3yAa8eXfzQS7OEQdr6i9sqsecVBjmdPl+E3AfAXoza7SLO97G0UEDuFCgLaV0GjfhpxB+c1BUpEEJpyC6RXpIK1oCdEZhNu3c4HgdJsXsqeWQF0nPHcg9qDk99sPZ/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OEOXN1Cb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IflC72ft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6090B1F000E9;
-	Wed,  1 Jul 2026 15:47:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OEOXN1Cb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90E71F000E9;
+	Wed,  1 Jul 2026 15:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782920845;
-	bh=F1d53/TBKMgbtfDcw1+aV1I5xnxDEUc79F11nQ0A4cU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=IflC72ftbroGcxiInCSEuqCl31BxPbBA3SEZdpE+F01220IMOaDKLlwUBPvSaWztX
-	 s6hp+2f2KfRXr7jP7W6CaZAqstAke0DMIwhPVZ6icN61fHoGz39YFsgwX5H8gGZS0r
-	 nKsW58hEPcG6FFkhTfqXVd+DPYrOLZUY92DSUxNE7F5esGosa3cdfecoW68g6KgsZJ
-	 XRsxQoSEcTqH/ctXo5isbcshBNLD7aSBoooN9NYnXW7C4SmOXdT8YBs5hdFaf/tUzG
-	 f8Q464Fw6wfHw2MS8o6QGik1WH98FAQNPU3C/AqgBMeJBgK3Pmv7v/c2E35AEVZefu
-	 nki6I5cEQZkQw==
-Date: Wed, 1 Jul 2026 16:47:21 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: linux-next@vger.kernel.org, soc@kernel.org, spacemit@lists.linux.dev
-Subject: Re: Include in next: Switch SpacemiT SoC tree's repo
-Message-ID: <5a6b7770-948f-41ac-9956-e0646228ed5e@sirena.org.uk>
-References: <20260701001506-GKA20854@kernel.org>
+	s=k20260515; t=1782921253;
+	bh=Day1pHQbKZLb168bI+sP1UZxbLRw56ZZ/BDr3gtOMiQ=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject;
+	b=OEOXN1CbmqbmzOHS4xMU9zz61FwVoCI0s68qSt/fMFnPQAtQDSI9WRjlK+tUTfm7W
+	 YMGFkMn0G8o79DO1GWLJHoAFBmpvbYb7AMyNFQ1CBAOH3lIZ1XdwqwfXztENUdEGOP
+	 VsJ8LHmL5fgC5eFahjw3d+/4fx6zGP30xf5NOjXyx57RHcxnBNqPOqpIcjlEu09pgX
+	 kM2HD76Qskh2xjdNXvo423hw6HGkgGW4VB6wuRzMNJ90GISmxlQfHInTfCe6v9hs0B
+	 S3fk2J2JC82vh8hKsk0tW2YbnNLhgV8eJWG7PcgoKKGbVj8C8+JV1L+g+4CbHU04gr
+	 MuldJFsj5M1IQ==
+Date: Wed, 01 Jul 2026 10:54:12 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HIzxHE8oQ4+E41L0"
-Content-Disposition: inline
-In-Reply-To: <20260701001506-GKA20854@kernel.org>
-X-Cookie: Do unto others before they undo you.
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Deepak Gupta <debug@rivosinc.com>, sophgo@lists.linux.dev, 
+ Conor Dooley <conor.dooley@microchip.com>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Jonathan Corbet <corbet@lwn.net>, Inochi Amaoto <inochiama@gmail.com>, 
+ kvm@vger.kernel.org, spacemit@lists.linux.dev, 
+ Jesse Taube <jtaubepe@redhat.com>, Atish Patra <atish.patra@linux.dev>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
+ Paul Walmsley <pjw@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Chen Wang <unicorn_wang@outlook.com>, linux-doc@vger.kernel.org, 
+ Zong Li <zong.li@sifive.com>, Conor Dooley <conor@kernel.org>, 
+ Shuah Khan <skhan@linuxfoundation.org>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Anup Patel <anup@brainfault.org>, 
+ Charlie Jenkins <thecharlesjenkins@gmail.com>, 
+ Andrew Jones <andrew.jones@oss.qualcomm.com>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-riscv@lists.infradead.org, 
+ Chen Wang <chen.wang@linux.dev>, linux-kselftest@vger.kernel.org, 
+ kvm-riscv@lists.infradead.org, Palmer Dabbelt <palmer@dabbelt.com>
+To: Guodong Xu <docular.xu@gmail.com>
+In-Reply-To: <20260701-rva23u64-hwprobe-v2-v5-8-2c61f94a695a@gmail.com>
+References: <20260701-rva23u64-hwprobe-v2-v5-0-2c61f94a695a@gmail.com>
+ <20260701-rva23u64-hwprobe-v2-v5-8-2c61f94a695a@gmail.com>
+Message-Id: <178292125218.626337.4829523300943840761.robh@kernel.org>
+Subject: Re: [PATCH v5 08/17] dt-bindings: riscv: Require block-size for
+ Zicbom, Zicbop, and Zicboz
 
 
---HIzxHE8oQ4+E41L0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, 01 Jul 2026 08:52:21 -0400, Guodong Xu wrote:
+> Zicbom, Zicbop, and Zicboz have no default cache block size, so a
+> devicetree that declares one must also provide the matching
+> riscv,cbom/cbop/cboz-block-size property. Make it required so a
+> missing block-size property can be caught by dtbs_check.
+> 
+> Suggested-by: Conor Dooley <conor.dooley@microchip.com>
+> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
+> ---
+> v5: New patch.
+> ---
+>  .../devicetree/bindings/riscv/extensions.yaml      | 26 ++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+> 
 
-On Wed, Jul 01, 2026 at 12:15:06AM +0000, Yixun Lan wrote:
+My bot found errors running 'make dt_binding_check' on your patch:
 
->   Previously, the SpacemiT SoC tree was hosted in github.com[1],
-> while now we've created a new kernel tree at kernel.org[2],
-> so please help to update the repo url for linux-next tree to the
-> new one, and the other info should being unchanged, that's:
->   branch for master: for-next
->   branch for pending-fixes: fixes
-> =20
->   I will also switch to new repo for sending next Pull-Request to
-> SoC tree maintainer.
+yamllint warnings/errors:
 
-I've updated the -next configuration, the new locations will be used
-=66rom tomorrow.
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@0 (riscv): 'riscv,cbom-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@0 (riscv): 'riscv,cbop-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@0 (riscv): 'riscv,cboz-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@0 (riscv): Unevaluated properties are not allowed ('riscv,isa' was unexpected)
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@1 (riscv): 'riscv,cbom-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@1 (riscv): 'riscv,cbop-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@1 (riscv): 'riscv,cboz-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@1 (riscv): Unevaluated properties are not allowed ('riscv,isa' was unexpected)
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@10 (riscv): 'riscv,cbom-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@10 (riscv): 'riscv,cbop-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@10 (riscv): 'riscv,cboz-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@10 (riscv): Unevaluated properties are not allowed ('riscv,isa' was unexpected)
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@11 (riscv): 'riscv,cbom-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@11 (riscv): 'riscv,cbop-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@11 (riscv): 'riscv,cboz-block-size' is a required property
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/cpu/idle-states.example.dtb: cpu@11 (riscv): Unevaluated properties are not allowed ('riscv,isa' was unexpected)
+	from schema $id: http://devicetree.org/schemas/riscv/cpus.yaml
 
---HIzxHE8oQ4+E41L0
-Content-Type: application/pgp-signature; name="signature.asc"
+doc reference errors (make refcheckdocs):
 
------BEGIN PGP SIGNATURE-----
+See https://patchwork.kernel.org/project/devicetree/patch/20260701-rva23u64-hwprobe-v2-v5-8-2c61f94a695a@gmail.com
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpFNokACgkQJNaLcl1U
-h9CwYwf8DmpHFH8encN3APwISqw4XWsjz1H2GlfBxN43/vu3YcAPfSHbd7EDeD7v
-DbaZ44PJSuoKKrSNl6eYmHH3xr19aO/smoBilNTG8kDE8V+O8xOu+/tycJnFFu0V
-vRtt3WuN5Gwmr9AOQXNT2gGLJo+dyAyJBg0rlWmUYHC6Hy0n7DYBVOUyBVuoi+Rv
-ciA/0YW3wJzN63YJSo5wjRt4e8HT4OrWARGUAvDk7kn6JzMOuHIyrX/REBStbSlm
-Dl8oiJbnZHtuiIf2+l3rBLcYlqGZs1AM845maODE6tWLCwNWp7Gq2ylhYoJs8s7R
-YoV8uUFNpPJYh797AnHblGLsf8kvhg==
-=lCDk
------END PGP SIGNATURE-----
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
---HIzxHE8oQ4+E41L0--
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
