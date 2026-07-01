@@ -1,66 +1,67 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D64F48A2DE
-	for <spacemit@lists.linux.dev>; Wed,  1 Jul 2026 12:54:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897C148A2DB
+	for <spacemit@lists.linux.dev>; Wed,  1 Jul 2026 12:54:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782910460; cv=none; b=aAoWeA3rmSpmb6IVgOsFwBOMRh4DNXPiuiCLthlHkYUN4F4ve2GiG6eAvt5xdo8S/wINHtKR7zWK4a8K9hY+KZmOO62wBMJJHiCgkOrcRIaPllxwtHNh8BsAeHnYm2YRydi15dSCREveeNzWQt5i5st3wt2+1nvdh7qYh4GuVKM=
+	t=1782910469; cv=none; b=Oh9OsDt3c2pLOQd6nuo9R9z7imKpanLstUOQqPop6aI9sIFefDHPy9EjECZiioVcnYgNLtedN5+deRug6hGtOj466Bv6ZW1ckFLPd/yzuSfphKNwoyQFu6mAqDyVwmTU3Fz/EjJH91u4NQd6GTHmn5/sllD0kwzXwvt1NfRcev8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782910460; c=relaxed/simple;
-	bh=If9Vv8oTlPVOiMHTe3lA0EFHDNlAsYSdgct+20oWDfk=;
+	s=arc-20240116; t=1782910469; c=relaxed/simple;
+	bh=DMwDkKEw4/W4wb3nG5fYdwj+pS9teyZf57wY87cO440=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=G0YMCGVdeH2K5kgz289mnNfYGygpxy9Sf/uX4NUlTaXr8omV9AseQVDCPMusRLXoQirqo7UUqBwyx0VFlkUz8kQFhg2fHxyGoP+pTeSqwe/OLvV/QpE6sgSX7eo3ZM+kASa0TyLoIXfZ1jGFLwdX+Y4BJIhw0EI8NLw174vCeJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UV64cUga; arc=none smtp.client-ip=209.85.210.170
+	 In-Reply-To:To:Cc; b=Ah/Yfg6ioiN7zNj/65kCMl4qPgbKjHJAz3iMmCBkr3N/THtHy5QM9fez+jKVz23hEPpIAI7YLsr3Xw/rmdPH6qnFIHTIHLviKPg4dFvjLiwZVzokTJh6ZPh5/81zZNE8gEXDWWy+9ImsLEgbvPPi2z3AWz3YfD73de23hJ2krCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DF5qMl1/; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UV64cUga"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-845e363246aso455641b3a.1
-        for <spacemit@lists.linux.dev>; Wed, 01 Jul 2026 05:54:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DF5qMl1/"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-84783bce476so507987b3a.0
+        for <spacemit@lists.linux.dev>; Wed, 01 Jul 2026 05:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782910458; x=1783515258; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1782910468; x=1783515268; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8K/a6AEhCKKl6b6WVU/a0dv3ErkxxiYJVhxQewlVnUE=;
-        b=UV64cUgag55WF6TwHyPZ12ZjMjf8S6C2z5Vi4F4Oj8x/PpELhDyR3Tn4FkTlo+eMDM
-         ayJYZ2W5x9dHWaUQSHP5m5lxcOaCgBQnpL02Pulo2C5B6VkZGhY6/G5kB1o9DuhIsQTU
-         pWiV5KnP0SGrfNc6q4k3GWZ1TTXaswqqz0oOkvPWxd+4HrSnzjhOpoiEPEEpD5JhCN+A
-         R0on/TAGJt6jc++ROPPYXgMLmx1vVc40gYLnPPjpdsd/hldXksKLEYnGql8dSABkMyTX
-         N5ylMOZ6djIyrNwYrXO6NJXFouV2hP9uJWU3v1T11FnVmeSMgENvYyQ4e5+JShGWg6ZL
-         SIGQ==
+        bh=br1R9cFbOnUnCWiZ0K+QWZ2nkx7lCYM/TPEMcK2Ah0s=;
+        b=DF5qMl1/+mEbd6IWiGP0ARwsf/EeG8gojHP/yp00e/yrfgntqezThHhfzakTRPHDzC
+         EiB2nGQL+BiXncDPm+VuCQA1AEsRx1U6/h8hRa1wXzVOFtlVxyq3BxFxAApDCrT8M9v2
+         Zw+ncB10h32oUrGYkSXk6nlpjJl1GR2bwhjC2y4N8UIlfxjKZIA4iRNo/iUjuTwe2iDe
+         VfzNoHMVRQe8pQAyP73yWn3JlqzYAdF2rIabDT68iMycT7CCzKMgEoHt2AjXCNu/dD9i
+         IWa8teVno1poCg7gEexj8N4XFjLwpTf13gMx4IfvrTihsBj2X7w2tU+GGIjtnrza13YP
+         AEdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782910458; x=1783515258;
+        d=1e100.net; s=20251104; t=1782910468; x=1783515268;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=8K/a6AEhCKKl6b6WVU/a0dv3ErkxxiYJVhxQewlVnUE=;
-        b=mVZ38vH6hUvimlRMPmOPppoxtejIA4VOaVZ5Ll6hNU1jaDVDRFxviTdyavCroi06qR
-         sHsS0wpQScHEY9pDfAOXuBJSaLBVXYrXzYJBYSnaiivGQb/mjJujVxNC9vn3cfS4+NtF
-         OcsCCzr1+x03D24SKdHQo3uV8RigmroBmCaB4m6JN5RBQx7AJeaLh6tUmtd4/lg+IS8c
-         7/pNtlVD606r00NWSRs+3zScEnf6ETYawUyIvgZ+C6F1Y0BhvKWp3MWwWIWT8hGIbCbv
-         Gf75m857ryWdcVqcStP5xX4t6JAgY3X93IyEhU5+NqHv1w4ILnO1FJo6DEEv1YXn9AlS
-         rwdA==
-X-Forwarded-Encrypted: i=1; AFNElJ8wf3BxG3jfbcfm8Zrc+Oh1KmZiQ0nWxwgckZ8xYF+IOz+IUeFJQ3JK0BSEP+/K8daRYMCF4OzIvQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzC8/rEh3SyRoqy/45khlK6zRiaN8r1Yj0Yh03l/tm71XyITyrW
-	SUQri2ixBMYaiPW1GW05bK+v3CySHiipnMtNnA6GKbALdLiOnkXOjEhl
-X-Gm-Gg: AfdE7cm1ldKMP2V4Jtd5KLepgA1m8LlqQWjSCN5atwbRDidw4kVw5VJmGiFuciwRA6Q
-	2rfQzKnPGI4na+UYV45JBB8Cmjz5WRriL4lMxAMn5XsjNY+AIgWkywtb59hkJMFqhrg+OX3EcoW
-	W3M3dfMDudYPwmJiJk8Wd0Ev4klnImFjO3k4zUmMkSncWV9Yp9AkGK4d8Iyc6vXYzs2XfVd2Mev
-	WftuHshsoorR+Wh0sn7/BZGtxEvOZ9n6/EVf7c21SbgAmeWFm9QAuwfJwmcx6ASbfEx44bEzS2c
-	mWATwFUiJDOHhGeLo6wSq8+fxXndtSvqM5bdxj/3hn9pKQWE9DLXQPZy47NODJjYtsWYqgektDa
-	H3s/pweEH/5+2MyifKU0b4xkmG/+S5JtlZTQITt45ux5yjcRRThlsyXCr3mqo/1XQ7KuECF2gKG
-	GLAVcXVs8NxFH3MayheJ30
-X-Received: by 2002:a05:6a00:27ac:b0:847:99b4:d005 with SMTP id d2e1a72fcca58-847c097d0bdmr1329287b3a.61.1782910457611;
-        Wed, 01 Jul 2026 05:54:17 -0700 (PDT)
+        bh=br1R9cFbOnUnCWiZ0K+QWZ2nkx7lCYM/TPEMcK2Ah0s=;
+        b=dVntULGnXqZygJZON/I5S4p42Y5PwWtqMUW7wzGfbXc+Y6HhDTDpVL3joxNykj8ird
+         Ooqw2uEMXx291KiLbgmTQlTEFUOOrWiuhLpNaXaq3qEA0BM76BoBj4Kyl/xYRxriXtQz
+         0JP0Myl3pFzu2EpQQXQIUqw25lIaKx5dlPyMDGW4BD2YqgZMu/VgoKZrho9BP2KFDTal
+         VzKWgDlqV3Ah8HNpNInqwgzCKFRTR0Pa0MGcgqpOB28SBv/1UmvKVBbg4WZ+z/DNCrSY
+         fXyaMf7Gwm6xtZWsR4O5Co2C/WKby2Yfd1zQ694nCdLKdwi5MPpzhKXcrKyBRkW/Tk3J
+         BC+w==
+X-Forwarded-Encrypted: i=1; AHgh+RrU5U9LgKdfeNRXehqav6NkBGM1GknggObOeGB8ZMburergQRpxNt5S4pI8i2v6sM8yfqp1ECaeRA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyayEJPUinvyfzj6D1psCe/dGVU5zM5fNoK65ncfY1OSzC2wrtC
+	azu0DhVwBTPKfhCA9vsoqrlkRK97h3zMqYPX+xcekcRu0ckdB3Fd14ry
+X-Gm-Gg: AfdE7cl0L7XIdO9HZOWoSs7Tjzl4CWx5dGPErhneJx5CxmuWCuM4xL370ytYC0I6/5+
+	tWxYUCTX1M2BckTQ0cOuZlyH/z1YlLggKOIDJqLonTfEoUDG4y2MUQ5kZsRLyPdIgCP/SS/kNnX
+	kxVHhr2U2P5YhueukoIzV8ykX3ptRP++T75htmDKiNv9n22ClpabktjsBLUiY6ZBeVa3HSPidR6
+	0OFtaFp26pcLwM0QqBLjHREILNfDiakRRqTbA9M3r0ugEyV9jS4X9nWTT8L0dizZZ56LnQw+SbI
+	019LLGgmctTaJ2JZt6wPXJmbCDPAwmEtg05aewgfEhtofx2PfRh0Vvwm4v6HD5HMZr2+spuWsVk
+	jtyqreq9hi2irAlTHydUZQjUnhic1yYzh49nnJSKGzpP1cB6q1RbYiOADL/Yhcec25xSCY8DxlV
+	4y0SvyQH9WrszAJb40qmWp
+X-Received: by 2002:a05:6a00:b49:b0:845:e44c:2e5 with SMTP id d2e1a72fcca58-847c07c3680mr1376084b3a.22.1782910467604;
+        Wed, 01 Jul 2026 05:54:27 -0700 (PDT)
 Received: from [127.0.1.1] ([120.244.9.45])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847a03778basm3999403b3a.49.2026.07.01.05.54.07
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847a03778basm3999403b3a.49.2026.07.01.05.54.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 05:54:17 -0700 (PDT)
+        Wed, 01 Jul 2026 05:54:27 -0700 (PDT)
 From: Guodong Xu <docular.xu@gmail.com>
-Date: Wed, 01 Jul 2026 08:52:23 -0400
-Subject: [PATCH v5 10/17] riscv: Add Zic64b to cpufeature and hwprobe
+Date: Wed, 01 Jul 2026 08:52:24 -0400
+Subject: [PATCH v5 11/17] riscv: dts: spacemit: k3: Add Zic64b ISA
+ extension
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -69,7 +70,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-rva23u64-hwprobe-v2-v5-10-2c61f94a695a@gmail.com>
+Message-Id: <20260701-rva23u64-hwprobe-v2-v5-11-2c61f94a695a@gmail.com>
 References: <20260701-rva23u64-hwprobe-v2-v5-0-2c61f94a695a@gmail.com>
 In-Reply-To: <20260701-rva23u64-hwprobe-v2-v5-0-2c61f94a695a@gmail.com>
 To: Jonathan Corbet <corbet@lwn.net>, 
@@ -89,141 +90,139 @@ Cc: linux-doc@vger.kernel.org, linux-riscv@lists.infradead.org,
  Charlie Jenkins <thecharlesjenkins@gmail.com>, 
  Andrew Jones <andrew.jones@oss.qualcomm.com>, devicetree@vger.kernel.org, 
  spacemit@lists.linux.dev, sophgo@lists.linux.dev, 
- linux-kselftest@vger.kernel.org, Guodong Xu <docular.xu@gmail.com>, 
- Qingwei Hu <qingwei.hu@bytedance.com>, 
- Conor Dooley <conor.dooley@microchip.com>
+ linux-kselftest@vger.kernel.org, Guodong Xu <docular.xu@gmail.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5679; i=docular.xu@gmail.com;
- h=from:subject:message-id; bh=v3bkflKvhJMLJLs8CMo44CCLgRBUGW+Y8dK7sdakiYs=;
- b=owGbwMvMwCXWtEl1Z3CGpCDjabUkhixX3tazczNXzLhx5cH0q81iznKfxGu/tW0t8p6zlUOwv
- dw+dkF1RykLgxgXg6yYIsvhoy3ZW1/5RPs+5/wBM4eVCWQIAxenAEwkV5iR4ci3HSE7VJ8F1Efe
- bXjOnabyreTLwwt7b655ZlGtNKm5HqjiwzttdxH9y3MqV0nEMPKERs4+p1MXPcOKKSz56MzUxA/
- MAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6862; i=docular.xu@gmail.com;
+ h=from:subject:message-id; bh=DMwDkKEw4/W4wb3nG5fYdwj+pS9teyZf57wY87cO440=;
+ b=owGbwMvMwCXWtEl1Z3CGpCDjabUkhixX3rYJk16ueXGt6Ky07qnpjIXlxX9Sp5+dsI9Fep1ZV
+ jNvpmZWRykLgxgXg6yYIsvhoy3ZW1/5RPs+5/wBM4eVCWQIAxenAEzkCj8jQ+M2t22+r2Y+nTDh
+ 0Lm19f3HEw4KleoIrZhZ/MRNyMv+zXmGf5ZeJld1fmRdLfI7ZLjepXL7NNOzaQ/tp7EUyr/vasj
+ 2ZgIA
 X-Developer-Key: i=docular.xu@gmail.com; a=openpgp;
  fpr=90B1DC3DF0BD10FD1227BD6344F254AF42F143EE
 
-From: Qingwei Hu <qingwei.hu@bytedance.com>
+The K3 X100 cores have 64-byte cache blocks, already described by their
+cbom/cbop/cboz-block-size of 64, so they implement Zic64b, a mandatory
+RVA23 extension.  Declare it in each core's riscv,isa-extensions.
 
-Zic64b mandates 64-byte naturally aligned cache blocks and is a
-mandatory extension of the RVA22 and RVA23 profiles.  Allocate a
-RISCV_ISA_EXT_ZIC64B id, parse "zic64b" from the ISA string with a
-validate callback that requires each cbom/cbop/cboz cache block size to
-be 64 bytes when it is present, and export it through hwprobe.
-
-Link: https://lists.riscv.org/g/tech-unprivileged/topic/question_about_zic64b_and/119631059
-Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
-Co-developed-by: Guodong Xu <docular.xu@gmail.com>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Guodong Xu <docular.xu@gmail.com>
 ---
-v5:
-- Collected Reviewed-by from Andrew Jones and Conor Dooley.
-v4:
-- Credit Qingwei Hu's earlier Zic64b cpufeature patch: set him as
-  author, with Co-developed-by (Guodong Xu).
-- Validate only the cbom/cbop/cboz block sizes that are present; Zic64b
-  does not imply the CMO extensions (Conor, Qingwei, Greg).
-- Add a Link: to Greg's confirmation on the tech-unprivileged list.
-- Add the missing blank line before the ZIC64B hwprobe.rst entry
-  (Andrew).
-- Did not carry Andrew Jones's v3 Reviewed-by: the validation was
-  rewritten (present block sizes only) and the patch is now authored by
-  Qingwei, so it warrants a fresh review.
+v5: Collected Reviewed-by from Yixun Lan.
+v4: No change.
 v3: New patch.
 ---
- Documentation/arch/riscv/hwprobe.rst  |  4 ++++
- arch/riscv/include/asm/hwcap.h        |  1 +
- arch/riscv/include/uapi/asm/hwprobe.h |  1 +
- arch/riscv/kernel/cpufeature.c        | 19 +++++++++++++++++++
- arch/riscv/kernel/sys_hwprobe.c       |  1 +
- 5 files changed, 26 insertions(+)
+ arch/riscv/boot/dts/spacemit/k3.dtsi | 48 ++++++++++++++++++------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/Documentation/arch/riscv/hwprobe.rst b/Documentation/arch/riscv/hwprobe.rst
-index fc68dea397aae..32a14331eb9de 100644
---- a/Documentation/arch/riscv/hwprobe.rst
-+++ b/Documentation/arch/riscv/hwprobe.rst
-@@ -425,3 +425,7 @@ The following keys are defined:
-   * :c:macro:`RISCV_HWPROBE_EXT_B`: The B extension is supported, as defined
-     in version 1.0 of the Bit-Manipulation ISA extensions, and implies the
-     presence of the Zba, Zbb, and Zbs sub-extensions.
-+
-+  * :c:macro:`RISCV_HWPROBE_EXT_ZIC64B`: The Zic64b extension is supported,
-+    as defined in the RISC-V Profiles specification starting from commit
-+    b1d80660 ("Updated to ratified state.")
-diff --git a/arch/riscv/include/asm/hwcap.h b/arch/riscv/include/asm/hwcap.h
-index 58523b3a1998a..36572c1ff438a 100644
---- a/arch/riscv/include/asm/hwcap.h
-+++ b/arch/riscv/include/asm/hwcap.h
-@@ -117,6 +117,7 @@
- #define RISCV_ISA_EXT_ZICCAMOA		107
- #define RISCV_ISA_EXT_ZICCIF		108
- #define RISCV_ISA_EXT_ZA64RS		109
-+#define RISCV_ISA_EXT_ZIC64B		110
- 
- #define RISCV_ISA_EXT_XLINUXENVCFG	127
- 
-diff --git a/arch/riscv/include/uapi/asm/hwprobe.h b/arch/riscv/include/uapi/asm/hwprobe.h
-index 430dc49a82863..36ec8ab470423 100644
---- a/arch/riscv/include/uapi/asm/hwprobe.h
-+++ b/arch/riscv/include/uapi/asm/hwprobe.h
-@@ -122,6 +122,7 @@ struct riscv_hwprobe {
- #define		RISCV_HWPROBE_EXT_ZICCRSE	(1ULL << 4)
- #define		RISCV_HWPROBE_EXT_ZA64RS	(1ULL << 5)
- #define		RISCV_HWPROBE_EXT_B		(1ULL << 6)
-+#define		RISCV_HWPROBE_EXT_ZIC64B	(1ULL << 7)
- 
- /* Increase RISCV_HWPROBE_MAX_KEY when adding items. */
- 
-diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
-index 9eee53b264de1..4c3bf813af052 100644
---- a/arch/riscv/kernel/cpufeature.c
-+++ b/arch/riscv/kernel/cpufeature.c
-@@ -136,6 +136,24 @@ static int riscv_ext_zicbop_validate(const struct riscv_isa_ext_data *data,
- 	return 0;
- }
- 
-+static int riscv_ext_zic64b_validate(const struct riscv_isa_ext_data *data,
-+				     const unsigned long *isa_bitmap)
-+{
-+	/*
-+	 * Zic64b mandates 64-byte naturally aligned cache blocks; cross-check the
-+	 * cbom/cbop/cboz block-size (when declared) device-tree properties to
-+	 * avoid inconsistency.
-+	 */
-+	if ((riscv_cbom_block_size && riscv_cbom_block_size != 64) ||
-+	    (riscv_cbop_block_size && riscv_cbop_block_size != 64) ||
-+	    (riscv_cboz_block_size && riscv_cboz_block_size != 64)) {
-+		pr_err("Zic64b detected in ISA string, disabling as a CBO block size is not 64 bytes\n");
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static int riscv_ext_f_validate(const struct riscv_isa_ext_data *data,
- 				const unsigned long *isa_bitmap)
- {
-@@ -506,6 +524,7 @@ const struct riscv_isa_ext_data riscv_isa_ext[] = {
- 	__RISCV_ISA_EXT_SUPERSET(b, RISCV_ISA_EXT_B, riscv_b_exts),
- 	__RISCV_ISA_EXT_SUPERSET_VALIDATE(v, RISCV_ISA_EXT_V, riscv_v_exts, riscv_ext_vector_float_validate),
- 	__RISCV_ISA_EXT_DATA(h, RISCV_ISA_EXT_H),
-+	__RISCV_ISA_EXT_DATA_VALIDATE(zic64b, RISCV_ISA_EXT_ZIC64B, riscv_ext_zic64b_validate),
- 	__RISCV_ISA_EXT_SUPERSET_VALIDATE(zicbom, RISCV_ISA_EXT_ZICBOM, riscv_xlinuxenvcfg_exts, riscv_ext_zicbom_validate),
- 	__RISCV_ISA_EXT_DATA_VALIDATE(zicbop, RISCV_ISA_EXT_ZICBOP, riscv_ext_zicbop_validate),
- 	__RISCV_ISA_EXT_SUPERSET_VALIDATE(zicboz, RISCV_ISA_EXT_ZICBOZ, riscv_xlinuxenvcfg_exts, riscv_ext_zicboz_validate),
-diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
-index dcc102bf8f183..3e80e5551ae0d 100644
---- a/arch/riscv/kernel/sys_hwprobe.c
-+++ b/arch/riscv/kernel/sys_hwprobe.c
-@@ -211,6 +211,7 @@ static void hwprobe_isa_ext1(struct riscv_hwprobe *pair,
- 		EXT_KEY(isainfo->isa, ZICCRSE, pair->value, missing);
- 		EXT_KEY(isainfo->isa, ZA64RS, pair->value, missing);
- 		EXT_KEY(isainfo->isa, B, pair->value, missing);
-+		EXT_KEY(isainfo->isa, ZIC64B, pair->value, missing);
- 	}
- 
- 	/* Now turn off reporting features if any CPU is missing it. */
+diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+index 19fc9b49668ed..9a03b72e271c4 100644
+--- a/arch/riscv/boot/dts/spacemit/k3.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+@@ -35,9 +35,9 @@ cpu_0: cpu@0 {
+ 					       "svinval", "svnapot", "svpbmt", "za64rs",
+ 					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
+ 					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
+-					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
+-					       "ziccamoa", "ziccif", "zicclsm", "ziccrse", "zicntr",
+-					       "zicond", "zicsr", "zifencei", "zihintntl",
++					       "zfh", "zfhmin", "zic64b", "zicbom", "zicbop",
++					       "zicboz", "ziccamoa", "ziccif", "zicclsm", "ziccrse",
++					       "zicntr", "zicond", "zicsr", "zifencei", "zihintntl",
+ 					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
+ 					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
+ 					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
+@@ -76,9 +76,9 @@ cpu_1: cpu@1 {
+ 					       "svinval", "svnapot", "svpbmt", "za64rs",
+ 					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
+ 					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
+-					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
+-					       "ziccamoa", "ziccif", "zicclsm", "ziccrse", "zicntr",
+-					       "zicond", "zicsr", "zifencei", "zihintntl",
++					       "zfh", "zfhmin", "zic64b", "zicbom", "zicbop",
++					       "zicboz", "ziccamoa", "ziccif", "zicclsm", "ziccrse",
++					       "zicntr", "zicond", "zicsr", "zifencei", "zihintntl",
+ 					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
+ 					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
+ 					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
+@@ -117,9 +117,9 @@ cpu_2: cpu@2 {
+ 					       "svinval", "svnapot", "svpbmt", "za64rs",
+ 					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
+ 					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
+-					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
+-					       "ziccamoa", "ziccif", "zicclsm", "ziccrse", "zicntr",
+-					       "zicond", "zicsr", "zifencei", "zihintntl",
++					       "zfh", "zfhmin", "zic64b", "zicbom", "zicbop",
++					       "zicboz", "ziccamoa", "ziccif", "zicclsm", "ziccrse",
++					       "zicntr", "zicond", "zicsr", "zifencei", "zihintntl",
+ 					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
+ 					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
+ 					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
+@@ -158,9 +158,9 @@ cpu_3: cpu@3 {
+ 					       "svinval", "svnapot", "svpbmt", "za64rs",
+ 					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
+ 					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
+-					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
+-					       "ziccamoa", "ziccif", "zicclsm", "ziccrse", "zicntr",
+-					       "zicond", "zicsr", "zifencei", "zihintntl",
++					       "zfh", "zfhmin", "zic64b", "zicbom", "zicbop",
++					       "zicboz", "ziccamoa", "ziccif", "zicclsm", "ziccrse",
++					       "zicntr", "zicond", "zicsr", "zifencei", "zihintntl",
+ 					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
+ 					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
+ 					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
+@@ -199,9 +199,9 @@ cpu_4: cpu@4 {
+ 					       "svinval", "svnapot", "svpbmt", "za64rs",
+ 					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
+ 					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
+-					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
+-					       "ziccamoa", "ziccif", "zicclsm", "ziccrse", "zicntr",
+-					       "zicond", "zicsr", "zifencei", "zihintntl",
++					       "zfh", "zfhmin", "zic64b", "zicbom", "zicbop",
++					       "zicboz", "ziccamoa", "ziccif", "zicclsm", "ziccrse",
++					       "zicntr", "zicond", "zicsr", "zifencei", "zihintntl",
+ 					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
+ 					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
+ 					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
+@@ -240,9 +240,9 @@ cpu_5: cpu@5 {
+ 					       "svinval", "svnapot", "svpbmt", "za64rs",
+ 					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
+ 					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
+-					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
+-					       "ziccamoa", "ziccif", "zicclsm", "ziccrse", "zicntr",
+-					       "zicond", "zicsr", "zifencei", "zihintntl",
++					       "zfh", "zfhmin", "zic64b", "zicbom", "zicbop",
++					       "zicboz", "ziccamoa", "ziccif", "zicclsm", "ziccrse",
++					       "zicntr", "zicond", "zicsr", "zifencei", "zihintntl",
+ 					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
+ 					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
+ 					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
+@@ -281,9 +281,9 @@ cpu_6: cpu@6 {
+ 					       "svinval", "svnapot", "svpbmt", "za64rs",
+ 					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
+ 					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
+-					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
+-					       "ziccamoa", "ziccif", "zicclsm", "ziccrse", "zicntr",
+-					       "zicond", "zicsr", "zifencei", "zihintntl",
++					       "zfh", "zfhmin", "zic64b", "zicbom", "zicbop",
++					       "zicboz", "ziccamoa", "ziccif", "zicclsm", "ziccrse",
++					       "zicntr", "zicond", "zicsr", "zifencei", "zihintntl",
+ 					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
+ 					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
+ 					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
+@@ -322,9 +322,9 @@ cpu_7: cpu@7 {
+ 					       "svinval", "svnapot", "svpbmt", "za64rs",
+ 					       "zawrs", "zba", "zbb", "zbc", "zbs", "zca",
+ 					       "zcb", "zcd", "zcmop", "zfa", "zfbfmin",
+-					       "zfh", "zfhmin", "zicbom", "zicbop", "zicboz",
+-					       "ziccamoa", "ziccif", "zicclsm", "ziccrse", "zicntr",
+-					       "zicond", "zicsr", "zifencei", "zihintntl",
++					       "zfh", "zfhmin", "zic64b", "zicbom", "zicbop",
++					       "zicboz", "ziccamoa", "ziccif", "zicclsm", "ziccrse",
++					       "zicntr", "zicond", "zicsr", "zifencei", "zihintntl",
+ 					       "zihintpause", "zihpm", "zimop", "zkt", "zvbb",
+ 					       "zvbc", "zvfbfmin", "zvfbfwma", "zvfh",
+ 					       "zvfhmin", "zvkb", "zvkg", "zvkn", "zvknc",
 
 -- 
 2.43.0
