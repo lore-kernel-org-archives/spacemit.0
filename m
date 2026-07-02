@@ -1,151 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596B13955C6;
-	Wed,  1 Jul 2026 20:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2195D30C176;
+	Thu,  2 Jul 2026 02:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782938368; cv=none; b=tV7tA25ICIMdrnllipmZwgBnSV/7582EdqoJqaHO96Cxv0sWHRsiQwWIjChNL1QQPhdRhQF5YIxKiE8lcw3/GMmQpcRoGPfJZbtJHkudrdOd+2VYW/ZzqcUEo0b83fHrvKJKYzmFjZRpac8ojG9+GP+QFYj917NIVioH5hrJgl0=
+	t=1782959524; cv=none; b=caQxLGEc2EtTI0+qrK5dACnsMwNUIehAnllTOuNsn0HjGUpM6kiOuZyBFXTPy6wqHMWIdIjN1GqFgMt/8IaLkLt1Oacrs5t+SrvcjM1tqLbEwskSJ5QQOMus5cqtI1ilJI6ExiDGfDYO0T+r7ThkgBslEPssiI48EAH1N56LlrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782938368; c=relaxed/simple;
-	bh=K2JyJxCXLtM1eTdlopzD3fjkU2xPZMINicFo0HL5CgQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z/uI6peXbqzGKkuQSoY47bCoVaoUXvQ2QpGjsI8+6/YjevlMklLHzRFp9gjRRQHwag6cD/j7dCW7WoLHRKnz4tikoMwbCB3A6lz809c3V7nBlzWMqfzONIHhKPXaZ/qKkFNkE8Cz4nQ+uVXl5d0sTLojADZMYjj1CtrCf4hIiPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RJRDi4cw; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782959524; c=relaxed/simple;
+	bh=0m5J9NbGxKRymNVGA9lJ8TLozdjBBPgBgLpzf2DlPwE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=US8f8pzsJJZ6sg04b6Ezee5qzDdmr6AxAOoraDblTxFwFpLtEv6gLZXuYekSroku0ksAzl7h3h7Y2kWvxPoPEfYvVEjuZ7BAhAfTC10HFN5AQIQBuY88vwxtOp0RJIST/nUTUN61knw+3pTittcWK9K8nCT/7aQfmhzfkYfn74Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TiXMZpdp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RJRDi4cw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC711F000E9;
-	Wed,  1 Jul 2026 20:39:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TiXMZpdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A091F000E9;
+	Thu,  2 Jul 2026 02:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782938367;
-	bh=f6QVBJJnOqTAmv9bGgn42fUJj2cY0FZxJ1ME1xdC+T8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=RJRDi4cwA05SdSW+713uFlPiyHLZCwR49gpm/dBeCn1+LQodBzos5L0rNrOeB3byQ
-	 WYhZPYks9Se42SWieNvBWgUMjEsqBcwWOs4xOFFLRMbHi6ddQDqKg30NUNu0SRnybo
-	 Dxb53nC6CoI0/DRmyz5F3NPVghBQyDdplb73P47xUpH/v/YS8//CW0poBUhA6iC8QZ
-	 umZIFhJEUn1UA3tMpqYUH5xGl95l2jJ2JSaktuQKz/5/5/JCb3OwudfJXCtAean9jS
-	 MjQR6siiOHHeuqOsor+6mVOYZFjNM2kgMm41a5faaSghy28LcMtS8/BW+wK19MQomK
-	 Bdzqn1x2pljIA==
-Date: Wed, 1 Jul 2026 21:39:19 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Guodong Xu <docular.xu@gmail.com>
-Cc: Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Zong Li <zong.li@sifive.com>, Deepak Gupta <debug@rivosinc.com>,
-	Anup Patel <anup@brainfault.org>,
-	Atish Patra <atish.patra@linux.dev>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Chen Wang <chen.wang@linux.dev>, linux-doc@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	kvm@vger.kernel.org, kvm-riscv@lists.infradead.org,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Jesse Taube <jtaubepe@redhat.com>,
-	Charlie Jenkins <thecharlesjenkins@gmail.com>,
-	Andrew Jones <andrew.jones@oss.qualcomm.com>,
-	devicetree@vger.kernel.org, spacemit@lists.linux.dev,
-	sophgo@lists.linux.dev, linux-kselftest@vger.kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: Re: [PATCH v5 08/17] dt-bindings: riscv: Require block-size for
- Zicbom, Zicbop, and Zicboz
-Message-ID: <20260701-squiggle-aging-459cd99cb2dc@spud>
-References: <20260701-rva23u64-hwprobe-v2-v5-0-2c61f94a695a@gmail.com>
- <20260701-rva23u64-hwprobe-v2-v5-8-2c61f94a695a@gmail.com>
+	s=k20260515; t=1782959522;
+	bh=0mzufPi/gcdYrtWTe+eFUdf5gAg5oV6c3Nf6kNqYd38=;
+	h=From:Subject:Date:To:Cc;
+	b=TiXMZpdpoCbUEgRlXTvmzBNivUO+fTxVuM2YuxXa7yyh/yxhSnNGdT/Q3Z73VVlVa
+	 iUs54TF8k0mTEz3hv6qhx7kKZB8xBY+sQCa7RGkWqDGcRn4N326A2j0iiW8LeNhjKg
+	 6X4k1vs1LilXbfcevocB6E7mXa49LXGS9FDHcu3pgiDWHMH5Oqz7cEfc093faBfnm5
+	 9qVb9p4h0PbjWG3BPO/JHbcEUATs+D4NMUjOuxsNdvlHz+hxwwPDbAYxRpu5qVnW7N
+	 k3efegEyVGsKDBEUdJGsiDz9PkZRfNlHDiq6zF4U7rFW6kUkbFC/BevSMf7VrhyqdU
+	 tx3XQ84MjckLw==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH 0/3] Add UFS Host driver support for SpacemiT K3 SoC
+Date: Thu, 02 Jul 2026 02:31:34 +0000
+Message-Id: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dKXZ0SKTAmT4FGH2"
-Content-Disposition: inline
-In-Reply-To: <20260701-rva23u64-hwprobe-v2-v5-8-2c61f94a695a@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIbNRWoC/yXMTQqEMAxA4atI1hOI9YfiVWQW2okaB7Q0VgTx7
+ tPR5bd47wTlIKzQZCcE3kVlXRLyVwZu6paRUT7JYMjUVFOFZPFbYBwUNXq/hg2d7QuyXOYVG0i
+ dDzzIcT/b92ON/cxu+4/gun7b8bPQdQAAAA==
+X-Change-ID: 20260605-08-k3-ufs-support-c8b308e415e2
+To: Alim Akhtar <alim.akhtar@samsung.com>, 
+ Avri Altman <avri.altman@sandisk.com>, Bart Van Assche <bvanassche@acm.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2020; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=0m5J9NbGxKRymNVGA9lJ8TLozdjBBPgBgLpzf2DlPwE=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqRc2Qb2OLDYHTyGsT/k/gIcqtfxuquTB0Lo0UM
+ dxEgNRRmpaJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCakXNkBsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+3yzQ/7BopnXC574D0cLsH6ODlTjX4GyGGbiaaqryxYBq4AGrhqdG7R7N5s8
+ wDrUZJnVSdVeyeg+jdC2Um32WnirRL0213BgTpU8qnMtFhxoyUvQe919w9aUSym7TXShfflCa8a
+ 7Q7Bl4y5GAtdbm509OYiQowUDQNQL2mU5bJaUsNnIJtGEpxrRBOtGP4cPcb7JvZ4o2i7UwFVre+
+ GYtSTFGCvftXTe8tTvAZue0Mm+mTm4tQVBmj0pFeb/I2E0LdB24sb0lQy7Ipp8Z8X1t8tLNJNdB
+ YPH0lsEY8K7JpTw7esgZieH89jDqvVWrF0zzZy3lS5RYjyAb8y/UKoML1znQu7/HLzdM//beYnp
+ U83asFtF+NxE+GKDtMfrzv4HYwM6AOe8Us6IWwlWQuoiNcAZ9affOnzZwOoRBVkSnSuAOJsNLOd
+ PukY5ZsFQrsTgtIgEWCU3jcjZjTXV0qYf0WlRU6HKqzdeeFnC5OyVcx+Y5qFQwiXf9eYZs44B96
+ o51TKLH0C9uKEM30B/c0z5Yq43z+UKMAbsrZxLVBhQMCloLmNT/lu6Xgr+ZVN244/oEp/LjAZGc
+ YUjTnxS4ubuj5ce9x2uUFPP9aSeLJlYk32OqTjJJE3w85DTcjffqZYM0Vxpzj9i4hRgYVo/k3X0
+ /NdhOBvuSdAx00WnzcCB5Juak5R2RI=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
---dKXZ0SKTAmT4FGH2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This series try to add UFS support for SpacemiT K3 SoC, the controller
+components consists of System Bus Interface Unit, UFS Host Controller
+Interface, UFS Transport Protocol Layer, UFS Host Registers, Device
+Management Entity (DME), Transport Layer, Network Layer, Data Link
+Layer, PHY Adapter Layer, and M-PHY Interface. A more detail functional
+block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
 
-On Wed, Jul 01, 2026 at 08:52:21AM -0400, Guodong Xu wrote:
-> Zicbom, Zicbop, and Zicboz have no default cache block size, so a
-> devicetree that declares one must also provide the matching
-> riscv,cbom/cbop/cboz-block-size property. Make it required so a
-> missing block-size property can be caught by dtbs_check.
->=20
-> Suggested-by: Conor Dooley <conor.dooley@microchip.com>
-> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
-> ---
-> v5: New patch.
-> ---
->  .../devicetree/bindings/riscv/extensions.yaml      | 26 ++++++++++++++++=
-++++++
->  1 file changed, 26 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/Do=
-cumentation/devicetree/bindings/riscv/extensions.yaml
-> index 5ffc40d599c02..f4dd34d446c02 100644
-> --- a/Documentation/devicetree/bindings/riscv/extensions.yaml
-> +++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
-> @@ -1142,6 +1142,32 @@ allOf:
->            not:
->              contains:
->                const: zilsd
-> +  # All three Zicbo* extensions require their block size property as the=
-re's no
-> +  # default.
-> +  - if:
-> +      properties:
-> +        riscv,isa-extensions:
-> +          contains:
-> +            const: zicbom
+Please note, in order to test this driver, the UFS clock driver[2] here
+should be applied first as a prerequisite patch.
 
-I think the way to fix this is to add
-  required:
-    - riscv,isa-extensions
-to each of these if conditions
-(not got time to test it right now, sorry)
+One known issue is that the device will occasionally raise BKOPS interrupt
+when doing some high load test, log from dmesg shows
 
-> +    then:
-> +      required:
-> +        - riscv,cbom-block-size
-> +  - if:
-> +      properties:
-> +        riscv,isa-extensions:
-> +          contains:
-> +            const: zicbop
-> +    then:
-> +      required:
-> +        - riscv,cbop-block-size
-> +  - if:
-> +      properties:
-> +        riscv,isa-extensions:
-> +          contains:
-> +            const: zicboz
-> +    then:
-> +      required:
-> +        - riscv,cboz-block-size
-> =20
->  additionalProperties: true
->  ...
->=20
-> --=20
-> 2.43.0
->=20
+[  806.710763] ufshcd-spacemit c0e00000.ufshc: ufshcd_bkops_exception_event_handler: device raised urgent BKOPS exception for bkops status 1
 
---dKXZ0SKTAmT4FGH2
-Content-Type: application/pgp-signature; name=signature.asc
+Link: https://spacemit.com/community/document/info?nodepath=hardware/key_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md&lang=en [1]
+Link: https://lore.kernel.org/all/20260630-06-clk-ufs-support-v1-0-cf7521d1d0fe@kernel.org/ [2]
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Yixun Lan (3):
+      scsi: ufs: spacemit: dt-bindings: Add UFS controller for K3 SoC
+      scsi: ufs: spacemit: k3: Add UFS Host Controller driver
+      riscv: dts: spacemit: k3: Add UFS support
 
------BEGIN PGP SIGNATURE-----
+ .../devicetree/bindings/ufs/spacemit,k3-ufshc.yaml |  54 ++
+ arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts     |   4 +
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts       |   4 +
+ arch/riscv/boot/dts/spacemit/k3.dtsi               |  13 +
+ drivers/ufs/host/Kconfig                           |  12 +
+ drivers/ufs/host/Makefile                          |   1 +
+ drivers/ufs/host/ufs-spacemit.c                    | 931 +++++++++++++++++++++
+ drivers/ufs/host/ufs-spacemit.h                    |  90 ++
+ 8 files changed, 1109 insertions(+)
+---
+base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
+change-id: 20260605-08-k3-ufs-support-c8b308e415e2
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCakV69wAKCRB4tDGHoIJi
-0qZuAPsE7PpkS7Q9Q/QdOXMXVi0vMgDYbeEgMRtzf0lMlv6w6gEA1JDV5vGVvkwY
-e3dZ2Ec1Eq1CjjFHEnDtDfSSbocyhQw=
-=AQmB
------END PGP SIGNATURE-----
+Best regards,
+--  
+Yixun Lan <dlan@kernel.org>
 
---dKXZ0SKTAmT4FGH2--
