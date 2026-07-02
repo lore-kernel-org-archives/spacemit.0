@@ -1,72 +1,177 @@
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF899331EB6
-	for <spacemit@lists.linux.dev>; Thu,  2 Jul 2026 15:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783007619; cv=none; b=Xekyd33ydZKTWK1HOCFpieAFSlo9JrKCyJDi6UYZJzet8bdhBqimrvZXtPHfLWWgtJpBvoZCEUIyRWXGLf5E+ncQ+ehHQYMmvFBtcIPW25Yf4D59k4if7o5xbz8mUi99nBb2pe6hgLOTpqlvXfJ5o8QOLNqG5tqibCml8u/TGBQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783007619; c=relaxed/simple;
-	bh=v969tZW/2hyq8qZnqoyWvimix+b7bWWKmDeqXoG6APA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=q1WoweYAmPGCanwyFq0cAfPgbaCmmaBU7hnSUqtufR4VFbL6ecDD94jah8YVXFQAR0p0oXqptwoZfcQ3V/bWZZylh0IW/isw0eLX3DwExKNYqZIsQqBLZrPMkXqVK+fdROq0huKt4ub6tnaZAqgQne2gbnXagpYTpHoj/vw0ycw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
-	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 9E7DD200EDF;
-	Thu, 02 Jul 2026 17:53:34 +0200 (CEST)
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1wfJjK-005lg1-1j;
-	Thu, 02 Jul 2026 17:53:34 +0200
-Received: from pza by lupine with local (Exim 4.98.2)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1wfJjK-00000000Fe5-1uow;
-	Thu, 02 Jul 2026 17:53:34 +0200
-Message-ID: <ae1e67ae363956c1df695213c13f2463b73dfa72.camel@pengutronix.de>
-Subject: Re: [PATCH 0/2] spacemit: fix USB2 clock and reset
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Yixun Lan <dlan@kernel.org>, Stephen Boyd <sboyd@kernel.org>, Michael
- Turquette <mturquette@baylibre.com>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, Junzhong Pan
-	 <panjunzhong@linux.spacemit.com>
-Date: Thu, 02 Jul 2026 17:53:34 +0200
-In-Reply-To: <20260518-06-clk-reset-usb-fix-v1-0-14fc235e692b@kernel.org>
-References: <20260518-06-clk-reset-usb-fix-v1-0-14fc235e692b@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D570349CF2
+	for <spacemit@lists.linux.dev>; Thu,  2 Jul 2026 17:21:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783012920; cv=pass; b=G+jxTfOa9z5TEEZThlgIJ2D12CtDlT4ugfWJe16R2y8IjS7Ol5gPwQn3DSMQBKQHzbdZKBZSsIBEGLP35KYjnKyMpRlobgT2fVYdYYZLX9lqLaileJjyBdwnsCtQwCxgFNNvpof6nb9rDsCGT4ekAwNPN7QExoe8XGSfqeRsKkg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783012920; c=relaxed/simple;
+	bh=WKXl5DNRTgzt+SOnpU70QjMbXzXMWWllLiITV91acYQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b63KtFUuMxPdxAkfZjGXB0ko0Z9w7PoEVlbCtIcOSATb21a/Mjl6oRFqeaFmC+1M7K/zsRtP9eFIPnx9/qbqmWx03t6eMvioMdX8v494I6tGwTrR7HjUqb72wrg4yOd2yQvn+/5iFajMBPLG+h0a7LqvDQvRPxF/D+j+WEOR82s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=GyeG/Lbv; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="GyeG/Lbv"
+ARC-Seal: i=1; a=rsa-sha256; t=1783012899; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=JHbhhu4+gy/a0FtQBodKmH8tfye9dtnI1bra6MNmLaCFkNqrb6FXQm+VYdeZBVT1XDPEzGR+7i/ylQHeq2Oa2tgpQ+uOuURs5SAAeZPLdm7RqW4j6QEIvUgCmCfb/emvoiH8kDK4XAD0liQ4DojFCNT1i018rJGIqegCfkqAk2g=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1783012899; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=3pNo6VHmqaTxuE9Yer6GmVl/yimS+PJKHFrww1qNWgY=; 
+	b=OFguuJ8cZm/Z2FXaJI8Xjy5LXQWg71bg1+t2pLK8ialmgDWF5vwlUBuZlJJpApz39jT27oiMKHfEFibUxg7grafkn3BmhAsgpuNMOFXAeyCuaVhJeqmUtYNJNYBZDhyc6AvIhXR4nuPA/KqLbEBvrkQjQZlHzxr6FbBgIpdpP7U=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ziyao.cc;
+	spf=pass  smtp.mailfrom=me@ziyao.cc;
+	dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1783012899;
+	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=3pNo6VHmqaTxuE9Yer6GmVl/yimS+PJKHFrww1qNWgY=;
+	b=GyeG/LbvT2GVo1Bb8LvkcalxaeCk2VKhcP9DZy7NKFE0TZ3C8Uokxn91yfyBo/RR
+	aK45+fEeyVHJXFO2ePAQhUUZVr3s7ZCG8b+XbFNxhaVerhRczGNuJqZTER5j5zOWOUr
+	+AG0Va499glfZqqM6lkE9WYO+Ab1ZBbhbqC/nNKQ=
+Received: by mx.zohomail.com with SMTPS id 1783012895431464.9970225222668;
+	Thu, 2 Jul 2026 10:21:35 -0700 (PDT)
+Date: Thu, 2 Jul 2026 17:21:08 +0000
+From: Yao Zi <me@ziyao.cc>
+To: Yixun Lan <dlan@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Yao Zi <me@ziyao.cc>
+Subject: Re: [PATCH 2/3] scsi: ufs: spacemit: k3: Add UFS Host Controller
+ driver
+Message-ID: <akaeBJv5T3YmlfpC@pie>
+References: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
+ <20260702-08-k3-ufs-support-v1-2-1a64a3ab128f@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260702-08-k3-ufs-support-v1-2-1a64a3ab128f@kernel.org>
+X-ZohoMailClient: External
 
-On Mo, 2026-05-18 at 02:58 +0000, Yixun Lan wrote:
-> In current code (v7.1-rc1), the register bit of bus clock and ahb reset
-> for USB2 were wrongly swapped, but this didn't cause any problem, because
-> from setting the register bits perspective, the de-assert reset operation
-> is effectly equivalent to enabling the clock bit, both of them will set
-> value 1.
->=20
-> This issue was found during suspend/resume test with vendor's internal
-> kernel.
+On Thu, Jul 02, 2026 at 02:31:36AM +0000, Yixun Lan wrote:
+> SpacemiT K3 SoC consist of UFS (Universal Flash Storage) Host Controller
+> which has features compatible with JEDEC UFS 2.2, MIPI UniPro v1.61 and
+> M-PHY v3.0 standard.
+> 
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+>  drivers/ufs/host/Kconfig        |  12 +
+>  drivers/ufs/host/Makefile       |   1 +
+>  drivers/ufs/host/ufs-spacemit.c | 931 ++++++++++++++++++++++++++++++++++++++++
+>  drivers/ufs/host/ufs-spacemit.h |  90 ++++
+>  4 files changed, 1034 insertions(+)
 
-[...]
+...
 
-Applied to reset/fixes, thanks!
+> +static int ufs_spacemit_wait_mphy_pll_lock(struct ufs_hba *hba)
+> +{
+> +	int timeout = MPHY_PLL_LOCK_TIMEOUT_US;
+> +	u32 val;
+> +
+> +	while (timeout-- > 0) {
+> +		val = ufshcd_readl(hba, UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
+> +		if (val & MPHY_PLL_LOCK_BIT)
+> +			return 0;
+> +
+> +		udelay(1);
+> +	}
+> +
+> +	dev_err(hba->dev, "M-PHY PLL lock timeout\n");
+> +	return -ETIMEDOUT;
+> +}
 
-[2/2] reset: spacemit: k3: fix USB2 ahb reset
-      https://git.kernel.org/pub/scm/linux/kernel/git/pza/linux.git/commit/=
-?id=3D1ca22c6aa006
+Could this loop be replaced by read_poll_timeout() like
 
-regards
-Philipp
+	read_poll_timeout(ufshcd_readl, val, val & MPHY_PLL_LOCK_BIT,
+			 1, MPHY_PLL_LOCK_TIMEOUT_US, false, hba,
+			 UFS_PHY_MSG_BASE + UFS_MPHY_PU_CTRL);
 
+
+...
+
+> +/**
+> + * ufs_spacemit_init - init phy and prepare clk
+> + * @hba: host controller instance
+> + */
+> +static int ufs_spacemit_init(struct ufs_hba *hba)
+> +{
+> +	int err = 0;
+> +	struct device *dev = hba->dev;
+> +	struct ufs_spacemit_host *host;
+> +
+> +	host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
+> +	if (!host)
+> +		return -ENOMEM;
+> +
+> +	host->rst = devm_reset_control_get_optional_exclusive_deasserted(dev, NULL);
+
+"resets" property is marked as required in the binding, but the optional
+API is used here. Is this expected?
+
+...
+
+> +/**
+> + * ufs_spacemit_hce_enable_notify - Configure HCE enable sequence
+> + * @hba: host controller instance
+> + * @status: notification status (PRE_CHANGE or POST_CHANGE)
+> + *
+> + * Configures host controller enable with proper sequencing.
+> + * Handles crypto enable if supported.
+> + *
+> + * Returns: 0 on success
+> + */
+> +static int ufs_spacemit_hce_enable_notify(struct ufs_hba *hba,
+> +					  enum ufs_notify_change_status status)
+> +{
+> +	struct ufs_spacemit_host *host = ufshcd_get_variant(hba);
+> +	u32 enable_val, val;
+> +
+> +	if (status == PRE_CHANGE) {
+> +		enable_val = CONTROLLER_ENABLE;
+> +
+> +		if (hba->caps & UFSHCD_CAP_CRYPTO)
+> +			enable_val = CRYPTO_GENERAL_ENABLE | CONTROLLER_ENABLE;
+> +
+> +		if (!host->first_hce_done) {
+> +			host->first_hce_done = true;
+> +			dev_dbg(hba->dev, "First HCE enable\n");
+> +		} else {
+> +			val = ufshcd_readl(hba, REG_CONTROLLER_ENABLE);
+> +			if (val == enable_val) {
+> +				ufshcd_writel(hba, enable_val & (1 << CONTROLLER_ENABLE),
+> +					      REG_CONTROLLER_ENABLE);
+> +
+> +				while (ufshcd_readl(hba, REG_CONTROLLER_ENABLE) ==
+> +				       (enable_val & (1 << CONTROLLER_ENABLE)))
+> +					;
+
+Shouldn't we set a timeout for the polling loop?
+
+> +			}
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+
+Regards,
+Yao Zi
