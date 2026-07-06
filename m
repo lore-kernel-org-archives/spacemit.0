@@ -1,194 +1,79 @@
-Received: from 011.lax.mailroute.net (011.lax.mailroute.net [199.89.1.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833A4377ECC
-	for <spacemit@lists.linux.dev>; Mon,  6 Jul 2026 14:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30D43D904D;
+	Mon,  6 Jul 2026 20:07:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783346531; cv=none; b=IV9eACxiD5lniKEojv8efRfzgaiGshAEBc7FfzJ275nJYNRKqI3ig+vx0IwuQp8Pj0YTLS6yg8zLG0tEOdgJoAkeLJEh2jqpyzrISAmD3wOgJOsPJjOUcdyzFKWV0WbIFGg8eWgOLmt+ufFPet5ZLD5aDKSnyUwLNtrdHXeP4SM=
+	t=1783368440; cv=none; b=ePo1NOEeof4fz7eIOcAT7x5cvgEhJsJsj2CZOM6+jV/UUkz2BM1BzHJ1fml/rRlS1IeTjfrlFC8NSnVE7rdKnzfyuLf5gUvSZFm7BBdD/6f1sDJ8XjsH22PVO3NanKR43FO9rviU1EPNxXRQUZI1qJblu4+K81UuUVTkdrdHYTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783346531; c=relaxed/simple;
-	bh=kR1mcwRu68froGsjeJRT1hkq1H5uQEJ2k2olRMbQmq8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hu94vfvYqLCOUx2l9D1NWVxR3cdYJ0XHUhRR1v8E8/ZkhvS+WGv0KFj424/tcPMSVUjWFK32DRADuplCgn39VoiOUCX0oMyRVJ9JyPP1MtquHlUC9g7V30GA10flpx/7wSfeCrW2iYLfP2gjqnJyJzRDdTb6cc8ntp1Gu5s8Cwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=bwUzpgp1; arc=none smtp.client-ip=199.89.1.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+	s=arc-20240116; t=1783368440; c=relaxed/simple;
+	bh=DVkJ80ei0QraDVvglBABDS8jJMefAqNaSrs+5dbxpV0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QJcLxm00VjHzXVBkc5/24veAqvpCBlafOq34ZLnQDq95ZMvQxRS845y8GZ96KilRvzCsmPffblZe2h+XT4w0ztjdgLFn1tU234L45JyulpLgVLJPOg+zvhOsib+Zi7AWxbOuWak0oIwak7Kvkv8lLBngj2V+2i4qknfALLZD+kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QBzhBI8x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="bwUzpgp1"
-Received: from localhost (localhost [127.0.0.1])
-	by 011.lax.mailroute.net (Postfix) with ESMTP id 4gv5dX75Wjz1XM6JQ;
-	Mon,  6 Jul 2026 14:02:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1783346513; x=1785938514; bh=SWQu/Y+XC68Sm5MppnTOFQED
-	FDkVGjBC+cLSsIsk2pc=; b=bwUzpgp1uLbCon5o1MbBED+9l+vJSXKRjS7vqFdB
-	Vps58b90aV/5Ou/oe2HqwU2q4Ma1JAIs6aUZhpcYy5OFC4l65LqE16uatgXMUq4x
-	aUf1Bp0H3eKAfT83gwjkLRkw5LRFFhKJgMBR3OCJz5IJ4C3REVjmhKacEn2waBoA
-	s3oJ5IeqPMPA0GLcFiivmIak/rOaijZnKMDMyqy6S1YtXT4OA8sQOwshS/lpa2s1
-	suR1jnCrq03rTk+rXVzz47LRnCum+0XMqoAraNR7AEPN5d6suH4Oyg9qXPifImOn
-	HTB15MbC1+pAbedC3AbMx8LBi+zg5IHp3NGEUqRDbftAGQ==
-X-Virus-Scanned: by MailRoute
-Received: from 011.lax.mailroute.net ([127.0.0.1])
- by localhost (011.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id 24qOXGkWAkgZ; Mon,  6 Jul 2026 14:01:53 +0000 (UTC)
-Received: from [192.168.51.14] (c-73-231-117-72.hsd1.ca.comcast.net [73.231.117.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 011.lax.mailroute.net (Postfix) with ESMTPSA id 4gv5d473bZz1XM6J4;
-	Mon,  6 Jul 2026 14:01:43 +0000 (UTC)
-Message-ID: <f46d7520-bc2e-49f7-9049-ecdba2837b5d@acm.org>
-Date: Mon, 6 Jul 2026 07:01:42 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QBzhBI8x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1331F000E9;
+	Mon,  6 Jul 2026 20:07:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783368438;
+	bh=CkZHCYA2DevLfCsQnJY3TrD+OoWM9RORj16SR09p82k=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=QBzhBI8xRIkLKkOqJo7nvjcxvlhhfqZAORALMzMu5QWqDmjEXUHdKaMiJBkoo7Ejl
+	 +83yZ5JrB71Srk2b6RhwM/lhRmxNweutuWUDaDfcy4h1GOA+V+XVhSm48modEyyyLe
+	 gbxCHBiM6xHlUx5nJutqs5XAW0FAxWmK1D6dt0vBe4dscbGC17txjdAoQyK/joRzqX
+	 XGAqGEc1XKARGWolR51CBbNVGokZHCEibB+zSlK7MSCqNZOhzx9PSxXyOIpcrI+UqN
+	 dpNvRMh27FaAzx3b2gFGs+KMrIOvYCoha0HkdlDUXOJlaoQXN2XFiMILcInPOOf+SK
+	 vcUaujYT3LMDw==
+From: Yixun Lan <dlan@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Han Gao <gaohan@iscas.ac.cn>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	Drew Fustini <fustini@kernel.org>,
+	linux-clk@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/2] clk: spacemit: k3: set few clocks as critical
+Date: Mon,  6 Jul 2026 20:07:12 +0000
+Message-ID: <178336796970.834791.13749678515323157051.b4-ty@b4>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260630-06-clk-hdma-critial-v1-0-443c0ac88c5f@kernel.org>
+References: <20260630-06-clk-hdma-critial-v1-0-443c0ac88c5f@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] scsi: ufs: spacemit: k3: Add UFS Host Controller
- driver
-To: Yixun Lan <dlan@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Avri Altman <avri.altman@sandisk.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
- <20260702-08-k3-ufs-support-v1-2-1a64a3ab128f@kernel.org>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20260702-08-k3-ufs-support-v1-2-1a64a3ab128f@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
 
-On 7/1/26 7:31 PM, Yixun Lan wrote:
-> +config SCSI_UFS_SPACEMIT
-> +	tristate "SpacemiT UFS controller driver"
-> +	depends on SCSI_UFSHCD_PLATFORM && ARCH_SPACEMIT
+On Tue, 30 Jun 2026 08:53:18 +0000, Yixun Lan wrote:
+> Some clocks in K3 SoC need to set the critical flag so it will never
+> get these clocks closed.
+>   The HDMA clock provides the clock source for internal TCM access path
+> of X100 RISC-V core, and from the real test case, shut down this clock
+> will cause whole Linux system hang in a quite minimal environment with
+> only ethernet, UFS modules enabled.
+>   The RCPU clock is needed for RCPUs which are two RT24 RISC-V cores and
+> it's responisble for running ESOS instance. ESOS should be always kept
+> running behind Linux, so set it as critical flag to prevent it from being
+> shut off.
+> 
+> [...]
 
-What would break if ARCH_SPACEMIT is left out?
+Applied, thanks! Queued in for-clk-fixes-v7.2 branch
+(Pick only patch 1/2, while leaving 2/2 for now)
 
-Please make sure that this driver can be compile-tested easily.
+[1/2] clk: spacemit: k3: set hdma clock as critical
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=eb525edd48907795c0d4e498ff57ad168070b289
 
-> +	u32 host_reg[] = {
-> +		(UFS_PHY_MNG_BASE + UFS_MPHY_RST_CTRL),
-> +		(UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL),
-> +		(UFS_PHY_MNG_BASE + UFS_DEVICE_IO_CTRL),
-> +		0xFFF,
-> +	};
-
-Can this array be declared 'static const'?
-
-The parentheses in the above array definition are superfluous.
-Please remove these.
-
-> +	buf = kzalloc(VENDOR_DUMP_BUF_SIZE, GFP_ATOMIC);
-
-Why GFP_ATOMIC? ufs_spacemit_dump_host_regs() is never called from
-atomic context, isn't it?
-
-> +	len += scnprintf(buf + len, VENDOR_DUMP_BUF_SIZE - len, "vendor specific registers:");
-
-This function will be much easier to review and to maintain if a struct
-seq_buf instance is created for 'buf' and if seq_buf_printf() would be
-used instead of scnprintf().
-
-> +static bool is_fsm_state_valid(u32 state)
-> +{
-> +	return (state == FSM_STATE_ACTIVE || state == FSM_STATE_LS_BURST);
-> +}
-
-"return" is not a function. Please remove the superfluous parentheses.
-
-> +static int ufs_spacemit_mphy_init(struct ufs_hba *hba)
-> +{
-> +	int ret;
-> +
-> +	/* reset all mphy logical */
-> +	ufshcd_writel(hba, 0x003, UFS_PHY_MNG_BASE + 0x0);
-> +	mdelay(1);
-
-Why mdelay() instead of msleep()?
-
-> +static int ufs_spacemit_uniprov1p6_init(struct ufs_hba *hba)
-> +{
-> +	/* PA_TXHSG1SYNCLENGTH */
-> +	ufshcd_dme_set(hba, UIC_ARG_MIB(0x1552), 0x4f);
-> +
-> +	/* PA_TXHSG1PREPARELENGTH */
-> +	ufshcd_dme_set(hba, UIC_ARG_MIB(0x1553), 0xf);
-
-The code in this function is very repetitive. Please convert all the
-ufshcd_dme_set() calls into a loop over an array.
-
-> +	/*LCC_DISABLE*/
-
-Here and everywhere else in this source file, please follow the
-convention used elsewhere in the Linux kernel and change /*comment*/
-into /* comment */.
-
-> +/**
-> + * ufs_spacemit_hibern8_notify - Handle hibernate enter/exit
-> + * @hba: host controller instance
-> + * @cmd: UIC command (HIBER_ENTER or HIBER_EXIT)
-> + * @status: notification status
-> + *
-> + * Manages M-PHY power state during hibernate transitions.
-> + */
-> +static void ufs_spacemit_hibern8_notify(struct ufs_hba *hba, enum uic_cmd_dme cmd,
-> +					enum ufs_notify_change_status status)
-> +{
-> +	int ret;
-> +
-> +	dev_dbg(hba->dev, "Hibern8 notify: cmd=%d, status=%d\n", cmd, status);
-> +	if (status == PRE_CHANGE) {
-> +		if (cmd == UIC_CMD_DME_HIBER_EXIT) {
-> +			mdelay(1);
-> +
-> +			/* Enable reference clock */
-> +			ufshcd_writel(hba, MPHY_DEVICE_RESET_DEASSERT,
-> +				      UFS_PHY_MNG_BASE + UFS_DEVICE_IO_CTRL);
-> +			mdelay(1);
-> +
-> +			/* Power up all */
-> +			ufshcd_writel(hba, MPHY_PU_ALL, UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
-> +			mdelay(1);
-> +
-> +			/* Assert ana_rx_hb8_reset */
-> +			ufshcd_writel(hba, MPHY_PU_WITH_HB8_RESET,
-> +				      UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
-> +			mdelay(1);
-> +
-> +			/* Deassert ana_rx_hb8_reset */
-> +			ufshcd_writel(hba, MPHY_PU_ALL, UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
-> +
-> +			ret = ufs_spacemit_wait_mphy_pll_lock(hba);
-> +			if (ret < 0)
-> +				return;
-> +
-> +			mdelay(1);
-> +			ufshcd_dme_set(hba, UIC_ARG_MIB(0xdd), 0x57);
-> +			mdelay(1);
-> +			ufshcd_dme_set(hba, UIC_ARG_MIB(0xe8), 0x57);
-> +		}
-> +	}
-
-Please move all the code in this function that is indented by two tabs 
-into new functions to improve code readability and to reduce
-indentation. This advice comes from the Linux kernel coding style guide.
-
-Thanks,
-
-Bart.
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
