@@ -1,85 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4FF3E63A4;
-	Mon,  6 Jul 2026 20:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54E225782D;
+	Mon,  6 Jul 2026 22:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783370178; cv=none; b=lO2zue7VH01a1Y8yXbggq6p7hBlJY02iyES0kWJ3xvC2uY3KhOP9bXHWHSSKs6VnhBiqGWNA7C4c7Lb1/WXa09uu7bw+fuyKuxeIbIvthvHRRfnrQA22gTMI4yPm4LpARg+LE/o3it3bbqBmNJZzup2iyMv6NvM1LmHJQ+6s9WQ=
+	t=1783376957; cv=none; b=RHi5K2LOyd/hqnbdyvguPs1l9Ay6JEicP9IEPh666TLEfilDNpE4jxDQkwEPW/vZKiKRiDxnLIXRCtKgcGa/KR8azT8amh81zjrTGnC7zyFJN9zHm7IKo9Gy57Z90vPn7VSYjOXTEGpGAFEbxxTQiq+lJYjtEb469Fg60S1GwQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783370178; c=relaxed/simple;
-	bh=h+ZeJN80uyduAca8j1bETSDuUAFukgrb8PVBxu+USiM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=SlphxZhF/1T6Or+DZPdVWVwrr006LyJID6kEq0Tfsd5kf3XDqF0B00dqcykemEyb8bBMoln39H9na8EwVPKy+gtLH1Uw11A5Zz+H/hVyH0zWKru5W2k+m0DEppmxYOBIwN/PCuA0CHfVyq8oBs/HH6wxVcqW7lJ5ubvw1tX0Q8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TIjo6xi+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783376957; c=relaxed/simple;
+	bh=RNYHsdS28HPuySSWvP1Yyr5i9l6ITmxkysSASJfZwD0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eUzMG0++WkJG1I4oyJdaL8JTw3bUVkVskn5ysR4Ha55KEKZJ02W3K68XA5+1D31D6Rsdxs3hZJWpFj/V8U4vPF/+piYVPcA+i5caLdMTGqtGaqv/9IqOZcjVyP98uXpizqzesBJ/cvRIG5ac7PSTKWLy14W8lIX0PRM4KGHm7ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G1CpuDRr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TIjo6xi+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D271F000E9;
-	Mon,  6 Jul 2026 20:36:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G1CpuDRr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CBD1F000E9;
+	Mon,  6 Jul 2026 22:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783370177;
-	bh=CnbXOCT1WGn9UITK2bontSHU7zyzH+gzQkCjzXQv3ak=;
-	h=From:To:Cc:Subject:Date;
-	b=TIjo6xi+XLf0kYcvC0OzsTFrqzySzXNJ1ijbCQJtmjAicMEp//vyCIs2EeiWsGsOC
-	 vbMz+yU+kE14z8yHbvuAopR2XqTnAy6vHhnck+CW0g/cEy5HImJcBfS29JEXCodzyN
-	 g9wfpyJZC/nZ7lgJ9fYfct8vybJ/QZyyiqxI0FG19glQDqG7HBHsOLy4h3vG2A+hVd
-	 MeFktm8tmDsGiL9GcH11Z2AVL4RYWntqoDklrTUC8R1Bseh/s2AgwfHvmH5aLkec5y
-	 VipVjPIuIJQ3KheRQr/ahZIOtAAcGFfKp6pvVgxJrrWnwS4LAfLv8eybJIIUEXUYVw
-	 6J52Xd77iDb6w==
+	s=k20260515; t=1783376955;
+	bh=NIKhsdKujmUyo5f1I8e0key9LsLGYc70ehoq2AKl2uE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=G1CpuDRrdmcEC3wEPp2EVGqS3HOURCh2yKP14x2Er3LIpE0Tkc0mbAgDMaBJN5W0X
+	 181F/jwiOAN1KUKl7d8Tt9eqaXftQp+0szy8NqHpE4ZGAN+l6ygxC6pQRp6QD4Qi9b
+	 PD+cjXv5G0p1b4RhnU3thcwBP/tAEKulVNe+MkjBA+OskiUYP4gz5Af3sxvILh5i9y
+	 NSaJwEybJx+Cmcj73mmLNBb+CZKxXIwmgW3FpsZ9uRWTaj3E2yosi1DEV/TEJrrTx1
+	 sRsIQcEh/TffxG3kOyZY+Vh0qjdF+17MokOULQIjZKL+OkpTJomQieKfasUeuzHmUS
+	 qgxzLhRCrca0A==
+Date: Mon, 6 Jul 2026 22:29:13 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Yixun Lan <dlan@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-clk@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [GIT PULL] clk: spacemit: fixes for v7.2-1
-Date: Mon,  6 Jul 2026 20:35:51 +0000
-Message-ID: <20260706203425-KYC2957292@kernel.org>
-X-Mailer: git-send-email 2.54.0
+To: Guodong Xu <docular.xu@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v4] riscv: dts: spacemit: Use symbolic PDMA request
+ numbers on K1
+Message-ID: <20260706222913-GKD35811@kernel.org>
+References: <20260620-b4-k1-pdma-req-macros-v4-1-3cf77d0bd0d6@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260620-b4-k1-pdma-req-macros-v4-1-3cf77d0bd0d6@gmail.com>
 
-Hi Stephen,
+On 01:07 Sat 20 Jun     , Guodong Xu wrote:
+> The PDMA request numbers (DRQ) are fixed values specific to the SoC from
+> a hardware perspective. The detailed definition can be found in K1 User
+> Manual [1], Chapter 9.4.3 DMA Connectivity & Assignments. Add a DTS
+> header file to define the symbolic names for the DRQs of non-secure DMA
+> peripherals.
+> 
+> Convert the K1 SPI3 node to these macros.
+> 
+> Link: https://www.spacemit.com/community/document/info?lang=en&nodepath=hardware/key_stone/k1/k1_docs/k1_usermanual/9.Top_System.md [1]
+> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
+Thanks
 
-   Please pull two small SpacemiT's clock fixes for v7.2
-First patch for USB2 clock fix need to go in pair with USB2 reset fix, the
-reset part patch was already accepted by Philipp Zabel as a fix for v7.2.
-Second patch fixes a system hang due to HDMA clock being shut off.
-   Thank you
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 
-Yixun Lan
-
-The following changes since commit dc59e4fea9d83f03bad6bddf3fa2e52491777482:
-
-  Linux 7.2-rc1 (2026-06-28 12:01:31 -0700)
-
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/ tags/spacemit-clk-fixes-for-7.2-1
-
-for you to fetch changes up to eb525edd48907795c0d4e498ff57ad168070b289:
-
-  clk: spacemit: k3: set hdma clock as critical (2026-07-06 19:45:17 +0000)
-
-----------------------------------------------------------------
-RISC-V SpacemiT clock fixes for v7.2
-
-- Fix USB2 bus clock
-- Fix HDMA clock
-
-----------------------------------------------------------------
-Yixun Lan (2):
-      clk: spacemit: k3: fix USB2 bus clock
-      clk: spacemit: k3: set hdma clock as critical
-
- drivers/clk/spacemit/ccu-k3.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+-- 
+Yixun Lan (dlan)
