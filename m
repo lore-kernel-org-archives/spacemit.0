@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54E225782D;
-	Mon,  6 Jul 2026 22:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D542A42A80;
+	Tue,  7 Jul 2026 06:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783376957; cv=none; b=RHi5K2LOyd/hqnbdyvguPs1l9Ay6JEicP9IEPh666TLEfilDNpE4jxDQkwEPW/vZKiKRiDxnLIXRCtKgcGa/KR8azT8amh81zjrTGnC7zyFJN9zHm7IKo9Gy57Z90vPn7VSYjOXTEGpGAFEbxxTQiq+lJYjtEb469Fg60S1GwQA=
+	t=1783405084; cv=none; b=a2CsIOdxTwRLOLPkbrbWkv9TwtLctpOQFNeVlcaMowoFhFgkGyC2X3e748/POI5LAgYp0RZYayEpNzivypc+yRM25b4ceY34Rn2mB5mwU8gzJXE/2ABwAeDA4+4BYWYN+mUW1N+5IGv7LfSnofIeh/yf4N/uY1QFlc2dvEjQH6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783376957; c=relaxed/simple;
-	bh=RNYHsdS28HPuySSWvP1Yyr5i9l6ITmxkysSASJfZwD0=;
+	s=arc-20240116; t=1783405084; c=relaxed/simple;
+	bh=LWoQjKuRIeel909XfYCh2RCKPsZj4sdhdcr63Eh67mk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eUzMG0++WkJG1I4oyJdaL8JTw3bUVkVskn5ysR4Ha55KEKZJ02W3K68XA5+1D31D6Rsdxs3hZJWpFj/V8U4vPF/+piYVPcA+i5caLdMTGqtGaqv/9IqOZcjVyP98uXpizqzesBJ/cvRIG5ac7PSTKWLy14W8lIX0PRM4KGHm7ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G1CpuDRr; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kiqo9/c2TGZ/gF//QzJRpdY+/PqET436U89gx9Uo2CUyiSvL7htZbNuL2q4b40LHfzaH8xtb7wXnZ5MQ+/RMDe9ORHJ7ylA1SE/GYgn56evJ9dKfjNBZQ17v6stspsPTuDrtapI7FpNcY5ZfJNibR2i6kkOWDu3AUtIjYBlQP/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=os1AnOLT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G1CpuDRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CBD1F000E9;
-	Mon,  6 Jul 2026 22:29:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="os1AnOLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746B31F000E9;
+	Tue,  7 Jul 2026 06:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783376955;
-	bh=NIKhsdKujmUyo5f1I8e0key9LsLGYc70ehoq2AKl2uE=;
+	s=k20260515; t=1783405083;
+	bh=5yHbzKzGNqiUCBIQAfXyOuu/Ap/WwSqdBvZYe/QZ19o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=G1CpuDRrdmcEC3wEPp2EVGqS3HOURCh2yKP14x2Er3LIpE0Tkc0mbAgDMaBJN5W0X
-	 181F/jwiOAN1KUKl7d8Tt9eqaXftQp+0szy8NqHpE4ZGAN+l6ygxC6pQRp6QD4Qi9b
-	 PD+cjXv5G0p1b4RhnU3thcwBP/tAEKulVNe+MkjBA+OskiUYP4gz5Af3sxvILh5i9y
-	 NSaJwEybJx+Cmcj73mmLNBb+CZKxXIwmgW3FpsZ9uRWTaj3E2yosi1DEV/TEJrrTx1
-	 sRsIQcEh/TffxG3kOyZY+Vh0qjdF+17MokOULQIjZKL+OkpTJomQieKfasUeuzHmUS
-	 qgxzLhRCrca0A==
-Date: Mon, 6 Jul 2026 22:29:13 +0000
+	b=os1AnOLTHq6Jt7FndhS5zenrQc8ZDHoss2lgmiMee3GQLoa1k10cyFdgt8AAcmWxt
+	 JZKnRTWSxOf+I2+mcCGYmnvpUNDvIRMHfvGk1L4M/Xo9g7bBwCzT6+84SMBDXwnO7B
+	 o7fR5Hc2jQdusYtrvTgauhFoxBO8ui5P+32RsPYrnx8nczhjk1640vn7wEoUrIxV/5
+	 82PoLs4O5XQ3+5z4IU3YD8/o1Ieq8T+n3vRCDeGK+bXqzLGLokGrstcO0bCrCLEGOk
+	 X0Z/OjA870aXM1HZh3gnfHKaSpZP9NTK4pc8r/DiK/cXWL11PkRQN0L0XnisGYqQk2
+	 CHe9zWxB+NvVQ==
+Date: Tue, 7 Jul 2026 06:18:00 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: Guodong Xu <docular.xu@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+To: Aurelien Jarno <aurelien@aurel32.net>
+Cc: linux-kernel@vger.kernel.org, Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v4] riscv: dts: spacemit: Use symbolic PDMA request
- numbers on K1
-Message-ID: <20260706222913-GKD35811@kernel.org>
-References: <20260620-b4-k1-pdma-req-macros-v4-1-3cf77d0bd0d6@gmail.com>
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>
+Subject: Re: [PATCH v2 0/5] riscv: dts: spacemit: serial/i2c/ethernet
+ improvements for the K3 Pico-ITX board
+Message-ID: <20260707061800-GKE35811@kernel.org>
+References: <20260623204431.498700-1-aurelien@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -50,22 +46,40 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260620-b4-k1-pdma-req-macros-v4-1-3cf77d0bd0d6@gmail.com>
+In-Reply-To: <20260623204431.498700-1-aurelien@aurel32.net>
 
-On 01:07 Sat 20 Jun     , Guodong Xu wrote:
-> The PDMA request numbers (DRQ) are fixed values specific to the SoC from
-> a hardware perspective. The detailed definition can be found in K1 User
-> Manual [1], Chapter 9.4.3 DMA Connectivity & Assignments. Add a DTS
-> header file to define the symbolic names for the DRQs of non-secure DMA
-> peripherals.
-> 
-> Convert the K1 SPI3 node to these macros.
-> 
-> Link: https://www.spacemit.com/community/document/info?lang=en&nodepath=hardware/key_stone/k1/k1_docs/k1_usermanual/9.Top_System.md [1]
-> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
-Thanks
+hi Aurelien,
 
+On 22:43 Tue 23 Jun     , Aurelien Jarno wrote:
+> This patch series tries to improve the K3 Pico-ITX board DTS by configuring the
+> default baud rate for the serial port, enabling the 24c02 eeprom on i2c2,
+> adding aliases for i2c2 and i2c8 ports, and enabling power saving features on
+> the RTL8211F PHY.
+> 
+> Changes in v2:
+> - Collect Reviewed-by tag
+> - Fix issues reported by Sashiko AI in patch 2
+> - Link to v1: https://lore.kernel.org/linux-riscv/20260620062238.3199108-1-aurelien@aurel32.net
+> 
+for the series, looks good, so
 Reviewed-by: Yixun Lan <dlan@kernel.org>
+
+> 
+> Aurelien Jarno (5):
+>   riscv: dts: spacemit: set console baud rate on K3 Pico-ITX board
+>   riscv: dts: spacemit: enable the i2c2 adapter on K3 Pico-ITX board
+>   riscv: dts: spacemit: add 24c02 eeprom on K3 Pico-ITX board
+>   riscv: dts: spacemit: add i2c aliases on K3 Pico-ITX board
+>   riscv: dts: spacemit: improve RTL8211F PHY configuration on K3
+>     Pico-ITX board
+> 
+>  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 42 +++++++++++++++++++-
+>  arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi | 11 +++++
+>  2 files changed, 52 insertions(+), 1 deletion(-)
+> 
+> -- 
+> 2.53.0
+> 
 
 -- 
 Yixun Lan (dlan)
