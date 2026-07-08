@@ -1,223 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20E53E92B9;
-	Wed,  8 Jul 2026 07:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D4F3DD870;
+	Wed,  8 Jul 2026 07:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783494670; cv=none; b=kS48VESEXoj0Kq6sxafEhTDHtT2A0Kzt5wPwtGCun5eJfGIA/+NASKzeuUn1OXjZ6YE/QtM3oJuyyUAMdvkV9kPuNtorRczjSo4ewCJI/0hE9t33O/hwVPa43TbizLDyl6YBF+0i0vJSBIVnf9nzLv7iGjvA8wEsnLv9Fk9UzVk=
+	t=1783495352; cv=none; b=qmMRXokDxppsMELl3gR7GLK65fLMipPvH1EnMmJigywWSQ7l6hlEJQnMXGPYEZSLNIB87x/2RVZ28b3TcYh/K/TlbaWTVqnF+4i8dOgF0fnWeZU13gx7IY7SZnfbBmahC5hls7c7u+1TArHpVv5lEVKlKbmRCWfq047yjgrc56M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783494670; c=relaxed/simple;
-	bh=EO8rwZ36YeyLT/sXpw4ATKnuSIm/oXL7+9lYYgob4Rs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CcoWOTgQlAN/JvJEZ1OL0YvmBAhkYIe8zDFNR1629hKlL70cDiAKg+KIAc64Q7EpS4jOwv6abkD0wFzJYDwkwg2j0bzd4JOPZN80WdZur1UdB0Ey/FmsAngcapuw2qznUMBIxeQXOxqQ6/rnJzpHCnnFbtFCjzF7Fdt0wxt5qME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f+Cp9KOD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783495352; c=relaxed/simple;
+	bh=0sYbVskSjmCcx7cCy496GpXciPQg52CuM7SLw2/kyC4=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=P8K2S/5fKFZK473a0QsjHOOB4DVId5ajkzHjRcHBGl86uIDvf8iVHbbXZAHg2q64w7D2qU89UxuGdRRlaCmcuMNDDNCzMcmhXdDK+glZOam59GXeVo2qUuFd5UsfuoL253yM3Li2OUA3L0Yx7yR6+RZBsrx4akN2eRRlKti9hD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nyhJAboT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f+Cp9KOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927AE1F000E9;
-	Wed,  8 Jul 2026 07:10:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nyhJAboT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023DB1F000E9;
+	Wed,  8 Jul 2026 07:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783494655;
-	bh=9lFckwIb4MzKsBiFEkNV2g14zZYu8DPrganDJnFIB54=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=f+Cp9KODOsntNhrZioFLgu6XB/1aYTT3+tkAtYydVccet0AkopOetcASLqj2E2aLz
-	 +q3XG51TaNoalrrULQrWDR2Q7ZG6M4Es7o8dw18Z59NgGLqldEwNcr5PSUVfPY6yi0
-	 TZG4nGmsxX4Uau/OsArg0PGCgOTIfI51ZwM9UV4JShInWRzZqBrp8e2TVK3ntKCIJC
-	 OSShf7ckqXLuvd485rzh8ozEHoo0YJ6BkHpV5ySMisWkOl01+LILPYLHKEQhKj48D/
-	 yYqc9RXX3veVxNC0Nhr63yr9Y/R+F3czrNPmnrwTjE8+0lhh7Q7ggTRmYdFAFuC9Jn
-	 1ll3nkp0Dshrw==
-Date: Wed, 8 Jul 2026 07:10:51 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Bart Van Assche <bvanassche@acm.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@sandisk.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] scsi: ufs: spacemit: k3: Add UFS Host Controller
- driver
-Message-ID: <20260708071051-GKJ35811@kernel.org>
-References: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
- <20260702-08-k3-ufs-support-v1-2-1a64a3ab128f@kernel.org>
- <f46d7520-bc2e-49f7-9049-ecdba2837b5d@acm.org>
+	s=k20260515; t=1783495338;
+	bh=nXrz1JhJYkK5xTRspbR1Vl1uzVDLKgTjni3ddD1l4bI=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References;
+	b=nyhJAboTtmB+ho6GeJp/6cio7XVRXPa1T6M1RlCOTdimLwLY+xzrwBDvzXmPnsuq2
+	 mv9kWcMCKFUT5hl7fbZz/yRoVLwoiDyfrPuvMYNNe457u1Qi8y4nrWWNh1hj+1HHf/
+	 kMlRCkf16ojSdgwMWOmJnP/Xt4r6lAGeJyY+cwTgGtVksnL5xH2ahCVMK6ZK7kdvF7
+	 sOO+nEwHzJ/CgmE5o5O4yWIOECzDqCWI9LPuaq2vQ/039UdRwdVTpQFjPt9z5e4/Gf
+	 8L+rEg0VswcoNaRSrv3siM9TIOYteqCLPc7HQOwTZHDpYhIv6s5BweMF7b25+fy9vl
+	 B76dTAN3GGf4Q==
+Date: Wed, 8 Jul 2026 01:22:16 -0600 (MDT)
+From: Paul Walmsley <pjw@kernel.org>
+To: Guodong Xu <docular.xu@gmail.com>
+cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+    Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+    Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+    Zong Li <zong.li@sifive.com>, Deepak Gupta <debug@rivosinc.com>, 
+    Anup Patel <anup@brainfault.org>, Atish Patra <atish.patra@linux.dev>, 
+    Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+    Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+    Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+    Chen Wang <chen.wang@linux.dev>, linux-doc@vger.kernel.org, 
+    linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+    kvm@vger.kernel.org, kvm-riscv@lists.infradead.org, 
+    Paul Walmsley <paul.walmsley@sifive.com>, Conor Dooley <conor@kernel.org>, 
+    Jesse Taube <jtaubepe@redhat.com>, 
+    Charlie Jenkins <thecharlesjenkins@gmail.com>, 
+    Andrew Jones <andrew.jones@oss.qualcomm.com>, devicetree@vger.kernel.org, 
+    spacemit@lists.linux.dev, sophgo@lists.linux.dev, 
+    linux-kselftest@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>
+Subject: Re: [PATCH v5 01/17] dt-bindings: riscv: sort multi-letter Z extensions
+ alphanumerically
+In-Reply-To: <20260701-rva23u64-hwprobe-v2-v5-1-2c61f94a695a@gmail.com>
+Message-ID: <a9f1aaa4-aca9-64fa-bf1c-100297a42d22@kernel.org>
+References: <20260701-rva23u64-hwprobe-v2-v5-0-2c61f94a695a@gmail.com> <20260701-rva23u64-hwprobe-v2-v5-1-2c61f94a695a@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f46d7520-bc2e-49f7-9049-ecdba2837b5d@acm.org>
+Content-Type: text/plain; charset=US-ASCII
 
-Hi Bart,
+On Wed, 1 Jul 2026, Guodong Xu wrote:
 
-On 07:01 Mon 06 Jul     , Bart Van Assche wrote:
+> The multi-letter extension enum is documented as being sorted
+> alphanumerically (see the "multi-letter extensions, sorted
+> alphanumerically" comment), but several Z entries have drifted out of
+> order.
 > 
-> On 7/1/26 7:31 PM, Yixun Lan wrote:
-> > +config SCSI_UFS_SPACEMIT
-> > +	tristate "SpacemiT UFS controller driver"
-> > +	depends on SCSI_UFSHCD_PLATFORM && ARCH_SPACEMIT
+> Reorder the affected entries so the multi-letter Z list is sorted
+> alphanumerically again.
 > 
-> What would break if ARCH_SPACEMIT is left out?
-> 
-Should be fine, I see no hard build dependency
+> Acked-by: Conor Dooley <conor.dooley@microchip.com>
+> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
 
-> Please make sure that this driver can be compile-tested easily.
-> 
-I could make it "SCSI_UFSHCD_PLATFORM && (ARCH_SPACEMIT || COMPILE_TEST)"
+Thanks, will plan to send this for v7.2-rc.
 
-> > +	u32 host_reg[] = {
-> > +		(UFS_PHY_MNG_BASE + UFS_MPHY_RST_CTRL),
-> > +		(UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL),
-> > +		(UFS_PHY_MNG_BASE + UFS_DEVICE_IO_CTRL),
-> > +		0xFFF,
-> > +	};
-> 
-> Can this array be declared 'static const'?
-> 
-Yes, sure
 
-> The parentheses in the above array definition are superfluous.
-> Please remove these.
-> 
-Ok, will do
-
-> > +	buf = kzalloc(VENDOR_DUMP_BUF_SIZE, GFP_ATOMIC);
-> 
-> Why GFP_ATOMIC? ufs_spacemit_dump_host_regs() is never called from
-> atomic context, isn't it?
-> 
-No, it will be called from interrupt context
-
-devm_request_threaded_irq(dev, irq, ufshcd_intr, ufshcd_threaded_intr,..)
-ufshcd_intr() 
-    ufshcd_sl_intr()
-         ufshcd_check_errors() 
-            ufshcd_update_evt_hist
-                 ufshcd_vops_event_notify()
-                       ufs_spacemit_event_notify
-
-but I will see if able to move this function to .dbg_register_dump() and
-redesign it with ufshcd_dump_regs(), or simply drop it from this version,
- and implement it as a separate patch in future.
-
-P.S, checked ufshcd_dump_regs() also use GFP_ATOMIC for memory allocation,
-see drivers/ufs/core/ufshcd.c:174
-
-> > +	len += scnprintf(buf + len, VENDOR_DUMP_BUF_SIZE - len, "vendor specific registers:");
-> 
-> This function will be much easier to review and to maintain if a struct
-> seq_buf instance is created for 'buf' and if seq_buf_printf() would be
-> used instead of scnprintf().
-> 
-should depend on above..
-
-> > +static bool is_fsm_state_valid(u32 state)
-> > +{
-> > +	return (state == FSM_STATE_ACTIVE || state == FSM_STATE_LS_BURST);
-> > +}
-> 
-> "return" is not a function. Please remove the superfluous parentheses.
-> 
-Ok
-
-> > +static int ufs_spacemit_mphy_init(struct ufs_hba *hba)
-> > +{
-> > +	int ret;
-> > +
-> > +	/* reset all mphy logical */
-> > +	ufshcd_writel(hba, 0x003, UFS_PHY_MNG_BASE + 0x0);
-> > +	mdelay(1);
-> 
-> Why mdelay() instead of msleep()?
-> 
-Ok, TBO, I need to check more widely about the delay functions,
-generally there are too many, too long delay()s ..
-
-some could be simply dropped, some could be reduced,
-some could be converted into sleepable function..
-
-> > +static int ufs_spacemit_uniprov1p6_init(struct ufs_hba *hba)
-> > +{
-> > +	/* PA_TXHSG1SYNCLENGTH */
-> > +	ufshcd_dme_set(hba, UIC_ARG_MIB(0x1552), 0x4f);
-> > +
-> > +	/* PA_TXHSG1PREPARELENGTH */
-> > +	ufshcd_dme_set(hba, UIC_ARG_MIB(0x1553), 0xf);
-> 
-> The code in this function is very repetitive. Please convert all the
-> ufshcd_dme_set() calls into a loop over an array.
-> 
-Ok
-
-> > +	/*LCC_DISABLE*/
-> 
-> Here and everywhere else in this source file, please follow the
-> convention used elsewhere in the Linux kernel and change /*comment*/
-> into /* comment */.
-> 
-Ok
-
-> > +/**
-> > + * ufs_spacemit_hibern8_notify - Handle hibernate enter/exit
-> > + * @hba: host controller instance
-> > + * @cmd: UIC command (HIBER_ENTER or HIBER_EXIT)
-> > + * @status: notification status
-> > + *
-> > + * Manages M-PHY power state during hibernate transitions.
-> > + */
-> > +static void ufs_spacemit_hibern8_notify(struct ufs_hba *hba, enum uic_cmd_dme cmd,
-> > +					enum ufs_notify_change_status status)
-> > +{
-> > +	int ret;
-> > +
-> > +	dev_dbg(hba->dev, "Hibern8 notify: cmd=%d, status=%d\n", cmd, status);
-> > +	if (status == PRE_CHANGE) {
-> > +		if (cmd == UIC_CMD_DME_HIBER_EXIT) {
-> > +			mdelay(1);
-> > +
-> > +			/* Enable reference clock */
-> > +			ufshcd_writel(hba, MPHY_DEVICE_RESET_DEASSERT,
-> > +				      UFS_PHY_MNG_BASE + UFS_DEVICE_IO_CTRL);
-> > +			mdelay(1);
-> > +
-> > +			/* Power up all */
-> > +			ufshcd_writel(hba, MPHY_PU_ALL, UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
-> > +			mdelay(1);
-> > +
-> > +			/* Assert ana_rx_hb8_reset */
-> > +			ufshcd_writel(hba, MPHY_PU_WITH_HB8_RESET,
-> > +				      UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
-> > +			mdelay(1);
-> > +
-> > +			/* Deassert ana_rx_hb8_reset */
-> > +			ufshcd_writel(hba, MPHY_PU_ALL, UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
-> > +
-> > +			ret = ufs_spacemit_wait_mphy_pll_lock(hba);
-> > +			if (ret < 0)
-> > +				return;
-> > +
-> > +			mdelay(1);
-> > +			ufshcd_dme_set(hba, UIC_ARG_MIB(0xdd), 0x57);
-> > +			mdelay(1);
-> > +			ufshcd_dme_set(hba, UIC_ARG_MIB(0xe8), 0x57);
-> > +		}
-> > +	}
-> 
-> Please move all the code in this function that is indented by two tabs 
-> into new functions to improve code readability and to reduce
-> indentation. This advice comes from the Linux kernel coding style guide.
-> 
-Ok, will do
-
--- 
-Yixun Lan (dlan)
+- Paul
