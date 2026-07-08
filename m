@@ -1,101 +1,118 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFBF3F7A8C;
-	Tue,  7 Jul 2026 12:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8861D5160;
+	Wed,  8 Jul 2026 02:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783426462; cv=none; b=IaxeeU3Xqxwtk3fqTOJIRp78O018s+23EQx6OBBVE01iOeZAGraQj9h3WzFDxQY6aIRusNnDwty4OJErhQ1pP/OuZR0pnbcEuDgEBKoh2UT/hpN00eOye8LInjdHjwG7KOLQGfCvtzx66vTfjHJrUHI+YxMKDN1O4zQgWRyK1gw=
+	t=1783477076; cv=none; b=lIWRocfCP/duPByQgB5E1lSZmjKZMgTUKG64G9Y1eUIMJIigovGpAalp0HpxYJ1RQY2XrsOzSuLKWZ+s5mT5T0hkH0qw+A3/S7SjbeZMxim1CI9YJr3k5mPXlpsnePi8Mm5q9uegBns2xq2QZvlKuMY8L/yBxtWbvkcCkWzksLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783426462; c=relaxed/simple;
-	bh=0fMo0Ai5b6OPM4a+oWovyOu7xp467x/HRKSIL6CZA84=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sygb+1bfy7I29dd3LBO5D1Um4TzYsOSk8cs5ORIPAqKrCvLQTK++9CCKI93GZiB4HYema/Sr6ACCsrlHgtdqPFzobNzi5Q3WflgKMo3HeMwhcoBKoF/5bF9e1fvAj+dzdXdCw9H6vzVqPR8iPf0a8GCCu/Zg0nGHbUec5T3v/Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bMdnufIX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783477076; c=relaxed/simple;
+	bh=defb1Q3Z6ylClQwKTpft+/Iwhnrnu/ThyTH9/eB1C3Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y2P8kFiQ7l2LmQd7vd7jY+baoaqSR+wMyUwMWgOK36Yv6xxpXu4S0JF2A37t+Rm2KlKCCSWxcWajvTYwy7Gn88I2urJhsHFF7138NI92nqklEDgj0s+QLD1zoZuu3zgKYEbfHxLIsHs7S1cKUIJ5nLwsV8UMcrqJQGXKqRrEt00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y6UWUk8V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bMdnufIX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF07C1F000E9;
-	Tue,  7 Jul 2026 12:14:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y6UWUk8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBE81F000E9;
+	Wed,  8 Jul 2026 02:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783426461;
-	bh=FLZItHyiaMaW57bwLBmHqpv4/AV1bxfodu1YkXciPTg=;
-	h=From:Date:Subject:To:Cc;
-	b=bMdnufIXFQ5ocViqnfxvhbZXDlEoy1MZIMpTs7n1ak0ik3AOXWCDy47lr+tvkE7YV
-	 OC7so3z4TmkPtzfme4nQ17178GHB8HwvduMj40PjO+H6PvEADwNDA4nyy9xQeG9Kuf
-	 VK62pYxyKH7yugqRjoSLVA0u+S/ttfuVoLJXwOK2Ho7b8qu00LwXzmrseYIOqsZ1pq
-	 2pNI8EkoSX+NxCxg+U7AjAfqyjHBONoTJeRRn1AqdPNGKEqvBDdU5LGAqEKURCjQYa
-	 qP0AyH2lmJj15G2S3TlBlB7AzEDEkYqeUX2LMp7NM+NjryJnYY9N86vGU9FKaQCeJV
-	 g7JmWSc6GJtKw==
+	s=k20260515; t=1783477074;
+	bh=kIHZQkBG4dVsKYZdSJUwIGIZF8zO/xu9yTXMYf0l6VQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Y6UWUk8VT6ihOiUv++Oz7SIr67DpWO6YoStjUxH4/PfZiOWTU0OcaZf892wY1UDvP
+	 F0MapI4xSAZJ+QFGVi6A50PRDgS1Vujai4RQ6dY6Db+OmxUO7YzwRZnnFSv7nhzYUE
+	 ZZUKUSnWUglSMeq9MhoFk8exLwWi8L+7W3IGwZ7xZVZnzuR1FmLSNn1KHbzkkbGPV5
+	 QvLMJpf0/pSlOaST9j7bjr6enu+n9J/DAPVLsemdgKhFsBbL+E3n2tf2MtZharPatR
+	 6judu/G7/szzJ9gfcZKN0n5pbornbc4f5hVwsbuWJK5YUTGxv3qglsIhW0JzO+0zDo
+	 voCxKcQzB/S3A==
+Date: Wed, 8 Jul 2026 02:17:52 +0000
 From: Yixun Lan <dlan@kernel.org>
-Date: Tue, 07 Jul 2026 12:14:14 +0000
-Subject: [PATCH] MAINTAINERS: Update SpacemiT SoC git tree repository
+To: Jennifer Berringer <jberring@redhat.com>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] riscv: dts: spacemit: k3: Add UFS support
+Message-ID: <20260708021752-GKI35811@kernel.org>
+References: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
+ <20260702-08-k3-ufs-support-v1-3-1a64a3ab128f@kernel.org>
+ <akkSL1nQ5UieqHNs@rhdev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260707-07-spacemit-git-repo-url-v1-1-137697316a4c@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAJXtTGoC/yWMQQrCQAxFr1KyNhAHcUavIi7GaVoj2g5JK0Lp3
- RsV/l+8xXsLGKuwwblZQPktJuPgsN81UO556BmldYZA4UiRIvqs5sIvmbD3K9cRZ31i6g4pB6I
- TpQiuV+VOPr/05fpnm28PLtO3B+u6AcS3aqN8AAAA
-X-Change-ID: 20260707-07-spacemit-git-repo-url-8f48a2009087
-To: soc@kernel.org
-Cc: linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1064; i=dlan@kernel.org;
- h=from:subject:message-id; bh=0fMo0Ai5b6OPM4a+oWovyOu7xp467x/HRKSIL6CZA84=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqTO2YHOfT2CDVqOSeRNJn1VpcYMih4bVaKMYjA
- Nab9w+s1AOJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCakztmBsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+0FJRAAgzgj3q+JVVDUOWL/QynAmeMkQbF1LTITJ0bH+iw1aGAiuIyGLWss4
- kkejHVfGlGMWje+wfmHLHZHOjk9+c9T+CUFljcPgyQuyBe4SgtKBWd0DT28C5ZODXBpsRnlSOxK
- O1TpXezkzDUq2OeUytwwkNE0mZE0LN4gT714BAdK2NeZKxEC3gE6DNoGj9ajbxqqiBor4CjRBzN
- THwFC5C8pn6azyHUbAdFTkRKzjolXH8RO6EWEnHbUf8EfsX9sSXt9U0yXsQYPYKeduGOwWlWiwU
- SoQaColvaG+B6/BapwZRaIbf4wRcQ0oSSbar6ajw7Lx7cStOthD8Co7R1FMex3QozNsLpZKy40i
- BhPrVI6dKR13yTjmuVfeKlPGRmjCVfsW7hs+KYngS/cLhPnuKrYdYVBWOEUoK6wsY9kTUzF3d/w
- 6D8nD/9oEFWWUtftfTkXDpy+TBQR8jZ2N3xr1i5Y3+EfkXsdFIQoWIbZnMBLf4eBjRxm+w7vqla
- 8RRrYwyWIj9phgd53k/GwEaYm/rRvlgKUCBKM/jU3SrKg0eOeZ+b3G2Oblf0VwWP6Cel3f8BA9S
- M9UJw5HctXvhXpgJBDNsB0ZCnjc6OIPMoKnCB0cIZrBX69UX5xVwqp+4lmdiXrFqanYsFBFVi8w
- dBi7WlfYz5FeU7f9/awc7rHgAj7MQw=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <akkSL1nQ5UieqHNs@rhdev>
 
-Due to security concern, switch SpacemiT kernel SoC tree's repository
-from github.com to kernel.org
+Hi Jennifer,
 
-Signed-off-by: Yixun Lan <dlan@kernel.org>
----
-Hi SoC maintainers,
-  Could you just pick this patch? otherwise I could queue it in
-SpacemiT's SoC kernel tree, and send it along for v7.3 cycle, let
-me know what's the best way to deal with this, Thanks
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 10:01 Sat 04 Jul     , Jennifer Berringer wrote:
+> On Thu, Jul 02, 2026 at 02:31:37AM +0000, Yixun Lan wrote:
+> > Add UFS Host Controller support for SpacemiT K3 SoC, and enable
+> > it both on both Pico-ITX and CoM260-IFX boards.
+> > 
+> > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> > ---
+> >  arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts |  4 ++++
+> >  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts   |  4 ++++
+> >  arch/riscv/boot/dts/spacemit/k3.dtsi           | 13 +++++++++++++
+> >  3 files changed, 21 insertions(+)
+> > 
+> > diff --git a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
+> > index 238bb03d0e9e..b37e1c7b03e3 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
+> > +++ b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
+> > @@ -19,3 +19,7 @@ chosen {
+> >  		stdout-path = "serial0:115200n8";
+> >  	};
+> >  };
+> > +
+> > +&ufshc {
+> > +	status = "okay";
+> > +};
+> 
+> I believe k3-com260.dtsi would be a more fitting file for this change.
+> UFS is soldered on the underside of the compute module and not part of
+> the carrier board.
+> 
+Right, I agree
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 15011f5752a9..a97f48464e19 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -23312,7 +23312,7 @@ L:	spacemit@lists.linux.dev
- S:	Maintained
- W:	https://github.com/spacemit-com/linux/wiki
- C:	irc://irc.libera.chat/spacemit
--T:	git https://github.com/spacemit-com/linux
-+T:	https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git
- F:	arch/riscv/boot/dts/spacemit/
- N:	spacemit
- K:	spacemit
+> Because it is next to the microSD card slot, a picture showing both can
+> be seen in section 5.12 (TF-Card Interface) of the PDF version of the K3
+> CoM260 User Guide. That picture is notably not visible in the HTML
+> version.
+> 
+> https://www.spacemit.com/community/document/info?lang=en&nodepath=hardware/eco/k3_com260/com260_user_guide.md
+> 
+> > diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> > index b89c1521e664..f1560a5a9031 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> > +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> > @@ -221,3 +221,7 @@ hub@1 {
+> >  &usb2_phy {
+> >  	status = "okay";
+> >  };
+> > +
+> > +&ufshc {
+> > +	status = "okay";
+> > +};
+> 
+> Nit: if sorted by label, ufshc would be before usb2_host.
+> 
+Right, will sort in next version
 
----
-base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
-change-id: 20260707-07-spacemit-git-repo-url-8f48a2009087
-
-Best regards,
---  
-Yixun Lan <dlan@kernel.org>
-
+-- 
+Yixun Lan (dlan)
