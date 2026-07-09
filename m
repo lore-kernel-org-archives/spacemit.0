@@ -1,62 +1,62 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B75B34A78F
-	for <spacemit@lists.linux.dev>; Thu,  9 Jul 2026 04:01:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA913388E45
+	for <spacemit@lists.linux.dev>; Thu,  9 Jul 2026 04:01:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783569692; cv=none; b=YfWHXRxxS7HfUJWgkxD7wld/Ic8zucZRs1ne7ucqkrqDvuA+rqNmHOLderjYz/pj/PRb3B7oD405fKU7Lu1XoSjzjI0fsg1ZnA5PrFF7aqGLFrDo7SaHEFJQxKfUUlZ4pCq+MtYgy4d2g9mTSNV+kHomAg7zl0TGWSGc5fX2UG4=
+	t=1783569695; cv=none; b=c3rH/GUvBGEYZVX66rYsUd7b06JUDOSsrO996EOKTC9tqr3IntVJG5IN7+jpmCGP/UcKevDgAz6Kbj6K1DgAlY0/XD9lBRw9iMSNRVP0JfEOCh7d75GxtuLNxNXewb8ggympWPmEUNopvzanCyj3SppkQ2akcHBzUD5YNQ6aCIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783569692; c=relaxed/simple;
-	bh=L3fsKyGi5rpLNg8G/ROz7kxtpDKTfFUi8q+A7hQ20Dk=;
+	s=arc-20240116; t=1783569695; c=relaxed/simple;
+	bh=tT7VHBhWW/0ENtiLY3CsIjS6UXJSVBBo9toNQ+Sp3xU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=npvIe5qlZgi15wYf5SEu7PMcxo1YsnpkmW/sT9HXiiKISO8MiwHSeHsHQm7tWaCQoFTWd0RvuqOZk0bxEj8DV75yMrYR3ykDg+yCqqUPSmD8Tg7BRSf6niv5IhwAc6uJ5a4zDjMu/op6Cx+LNJNaY7qWQvxjYoQkpK+yJ1gBxoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SEHt5LhO; arc=none smtp.client-ip=209.85.210.177
+	 MIME-Version; b=iNr81CR0IH9rsBD2sdlyD9OFPpd3zTYfFkkDFnVXKTspS1hsOJsJ0gEszjpU+QIAd7NEh/xa81ypsC8tTKyQLMcrSDnj5FKt54qehybHcGBlEzJSvsm7x187tyaofhnjkLwbIYnvKEQwWPssGczLET3j6YJl+aUewhtZ+3Yk1S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NkDLz2TH; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SEHt5LhO"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-848479c9bd5so1016883b3a.3
-        for <spacemit@lists.linux.dev>; Wed, 08 Jul 2026 21:01:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NkDLz2TH"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-846970f0acaso469826b3a.3
+        for <spacemit@lists.linux.dev>; Wed, 08 Jul 2026 21:01:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783569691; x=1784174491; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1783569693; x=1784174493; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=7AEeGlWy9uXP/q/PPr93GfqgOECgNHQd0LWMUmr1tVw=;
-        b=SEHt5LhOOM7JE3hng13Rj34szKGwBkc3D5kFrrK6ahpc+W3HgvcLHaBjcoa33dbYxg
-         mIw+J3Ry+9Jqgyd+2JwR9KRwdo6JP3PPIm5jIInUnze/7N3NPbrvY4He2EocWsM2+DAm
-         oj5BHkr1f8g70vkt+LIBBZ9T6HZLnyUN6/dCjbXXnwhO2x2mNNl7b9kvahtgyh4aUWbU
-         amp/m5koGhVgF0S8EvR+/0DtTOetRMliy+0uWerkLG2stILRwz5Lp+XNdbmg6prJxAIh
-         3DoAA2BKO27RAUcXz2M4fyLwNvEz5Iq111rrKxB76YgGcirPWv0QQrEVcQs/3m56YhVS
-         gUxg==
+        bh=z4ITEkWMTQ7J+Xoqp3nk8zHPj5XC/FSGr4Xf18I5rrE=;
+        b=NkDLz2THgm3qBG13CTWIKfKXlL063+qmnBgaldCQaH4uQuHGt9hvlphXgDbUrHZt4q
+         /O/ZF2aBbavf2z6Gvye0EJFH5kil9Sn4sPMWTAE1Z6FQOqAxT4Fm+7EzI6LKWKvdKPO+
+         F7Cdxjuj3N/36h38514liPNRToL0A5V3RryCldEu34IdgHR8jfcrKmgpzTN63pwxARx2
+         0L2UdB7rx3OcCKiykSmyrDU2ayJmBCKNE+0VVF5iDKrbbE4lHFzxN5t20LoPMbOUC2QU
+         ikcxD89K+XLRZ/YcVFHyaqZPFn0trl6gb6Ac+z+quy84IKKhexYaTwvRo90EpgZqPEeY
+         YHOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783569691; x=1784174491;
+        d=1e100.net; s=20251104; t=1783569693; x=1784174493;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=7AEeGlWy9uXP/q/PPr93GfqgOECgNHQd0LWMUmr1tVw=;
-        b=r/rCS68Ox3Qs38geFUzU64f9+Z/kYhhqzPlVlCdVR2kXU7qdMcvuYoMGPwCAgUEiyA
-         FcxzEzUPm5ZIIugrmKbqMs5qdE5/aqiwXjbTeTaHwbKRubpDrkaG3F0Ba+SXCVG9G5rf
-         yyj6Zm30f0UfxDWYYFeL6CRxvHZ1jdYjQz+om/HvBSG3xemRebNzzjSnRuk+8p8TSdCS
-         2RKGPcTs/MzF+pPoDigafWQLpcq28ZD8ASj/q8OU52H75xIZXMGAUIXGcsAFFJbzv6DN
-         GT0Q9i/ZErbWwi92Eo+0zGcF4H1gzvxMBuQ2O741Aim/7K2vcO+8ibNsQETksi8yPImR
-         Yy6g==
-X-Forwarded-Encrypted: i=1; AHgh+Rrd2juwZKD+2S675wGDyMgPdjYtz5Hl3yd6iNMCzrXoDFmH6Be9eL3mPxvGSN/9L+zRQ+PJNcU5JA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxh3BALDefyd93EJngG2p1thjpL/HFzpAolYOqNuQqjXWsK/+DM
-	6p7RLFK4c/cMl9Xpfq+32GVV8kmgwsEv1Q70daSstrkf/7h+HGub7ZFM
-X-Gm-Gg: AfdE7cm/Vwegg2h7cr7xMJyVltazW9Sq4gtGbCqeJ9rc2poev2FwXtf5SCPHb0B6PYv
-	YVYkR4hmuYd240xASXynE970cIpSLXcz+F9baJCKL8fuCQzWkvD5rcRscaGkWJDSuW5vD1wgCKw
-	aCl8xof0Argur+IPZr4CdxcpmuPVK0ZQpDlqdWy0fblJucNB75GDYFD6FrbOJifSI4Xd+mm36PL
-	eCxPSfMePdOhpJ/I4l0LP3/NeghNq8Ev9LxsTrRHBkP09gurq2KJP0vV+Rif48yGVZPakgqwahg
-	QaTbvhr/gS9HQ1N10ylerAXy0601pCBWQv4KrHKF9g+LFM09TNBc7LmQnYJVs3ZLjpNKgpOV5+x
-	gulWM+Md1cVehCsTUKiat0e9knzjfMQFckd8Wfo2MnwWvPWxhlWt65NXggIlMpno+
-X-Received: by 2002:a05:6a00:c88:b0:847:881c:7026 with SMTP id d2e1a72fcca58-84842eb7ef9mr4875368b3a.3.1783569690624;
-        Wed, 08 Jul 2026 21:01:30 -0700 (PDT)
+        bh=z4ITEkWMTQ7J+Xoqp3nk8zHPj5XC/FSGr4Xf18I5rrE=;
+        b=rJDLRDzgUX0uNRjfeQz/PVqXNwlL67wkA4Ngjgudo5Foq/b27hJPbJ0BfUoT4CVova
+         NShltujrfqB1yqDfw9pC+3ObwdE5Wx9MahxLcF/4Eb1hpo1yHLXHruHjbqrIwsvGRlZp
+         Mfahk7Q0zbWiKTwL5TM7Rh+jWF48YmLQ66QNzMeQgjrAvDRCli/S5etWHN2vmDRMGO85
+         pon+W274JsE2HFK5VmT+TNwXz0Ec+Br2rFngMwPT91QW5j6niv7ZJHxo1qrrXg8cDhMN
+         q//NMkFD9E49UaRrWl8ljZ3RGPhhdddmwo8MhaFHS59px4VuXdrwoDkCXL5xFac4Jayy
+         cofw==
+X-Forwarded-Encrypted: i=1; AHgh+RqsD8cEE7eJz1AYTOyVFtO9Bngt57A+8UbLSyLb9XVO4s3GAPZQcKlTxtS6g+O6Nb/eBOQKK3fsJA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwFukKFlRMv+YPEuonAkZS2guaRIrL/JwD0/CkTN32pfqV8oxxF
+	s3ya+7529STpTlUpzhk8WLtRoLHGPhDVyfVs37ma/V/nZItOrsWNytV9
+X-Gm-Gg: AfdE7cldEPZcrkyGAvVzJ6Mbzl38pTToZq01iZ3X315CxD+B3cX7RDaGocUnbcMNy/1
+	VUqo9LwGIXjf10xlW60xzWZTFENgzygLap6W8Rdg6TqxlsC9TdaIk1sMUqqLHGZPhTGtV9XIB9M
+	GKVtznMz2j7CQsQyTenucm84zl+TKpJ4n01anDfY3nto607fX0T7n/lpv6U+Hy4p+uQR+R1FALy
+	fEP5h2S1x4N2ft/aCnDe6glDG075zr79o9ZvPsXCd82zs7JQglbMVwdtIpiAovv7ggfdjEd0rk3
+	kZtrnY6WCyW9+ZiUnn8Nbmx0xvlrj74Wpt3a3Q/OkLjpTM24jkLdPCZOcynyynvpiEGfL002nQJ
+	HOD2l/tlIZViofAY5qw+eUs9X3vXfD2/h/uUplJ6rXxhZ/N3yskLsvoCj63a7hLx2
+X-Received: by 2002:a05:6a00:9493:b0:848:4754:28e5 with SMTP id d2e1a72fcca58-84847542dbbmr4333053b3a.16.1783569692809;
+        Wed, 08 Jul 2026 21:01:32 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6b93f8csm8273199b3a.19.2026.07.08.21.01.29
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6b6057dsm8064705b3a.7.2026.07.08.21.01.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2026 21:01:30 -0700 (PDT)
+        Wed, 08 Jul 2026 21:01:32 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Jingoo Han <jingoohan1@gmail.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
@@ -91,9 +91,9 @@ Cc: linux-pci@vger.kernel.org,
 	spacemit@lists.linux.dev,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v4 4/6] dt-bindings: PCI: snps,dw-pcie: Add msi-parent for MSI handle check
-Date: Thu,  9 Jul 2026 12:00:24 +0800
-Message-ID: <20260709040027.958400-5-inochiama@gmail.com>
+Subject: [PATCH v4 5/6] dt-bindings: PCI: spacemit: Introduce Spacemit K3 PCIe host controller
+Date: Thu,  9 Jul 2026 12:00:25 +0800
+Message-ID: <20260709040027.958400-6-inochiama@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709040027.958400-1-inochiama@gmail.com>
 References: <20260709040027.958400-1-inochiama@gmail.com>
@@ -105,37 +105,118 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The IMSIC device on RISC-V based system does not require ID
-remapping for MSI. So this device only needs "msi-parent"
-property for IMSIC-based SoC, and the "msi-map" is not a
-necessary property.
-
-Add new condition for MSI handling on IMSIC based SoC.
+Add binding support for the PCIe controller on the SpacemiT K3 SoC.
+This controller is almost a standard Synopsys DesignWare PCIe IP,
+with some extra link and reset state control.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
 ---
- Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ .../bindings/pci/spacemit,k1-pcie-host.yaml   | 50 ++++++++++++++++---
+ 1 file changed, 43 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml b/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
-index b3216141881c..91bbbc8924f6 100644
---- a/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml
-@@ -27,8 +27,11 @@ allOf:
-   - $ref: /schemas/pci/snps,dw-pcie-common.yaml#
-   - if:
-       not:
--        required:
--          - msi-map
-+        anyOf:
-+          - required:
-+              - msi-map
-+          - required:
-+              - msi-parent
-     then:
-       properties:
-         interrupt-names:
+diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+index c4c00b5fcdc0..54817d6fd9af 100644
+--- a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
++++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+@@ -14,26 +14,29 @@ description: >
+   PCIe IP.  The controller uses the DesignWare built-in MSI interrupt
+   controller, and supports 256 MSIs.
+ 
+-allOf:
+-  - $ref: /schemas/pci/snps,dw-pcie.yaml#
+-
+ properties:
+   compatible:
+-    const: spacemit,k1-pcie
++    enum:
++      - spacemit,k1-pcie
++      - spacemit,k3-pcie
+ 
+   reg:
++    minItems: 4
+     items:
+       - description: DesignWare PCIe registers
+       - description: ATU address space
+       - description: PCIe configuration space
+       - description: Link control registers
++      - description: Data Bus Interface (DBI) shadow registers.
+ 
+   reg-names:
++    minItems: 4
+     items:
+       - const: dbi
+       - const: atu
+       - const: config
+       - const: link
++      - const: dbi2
+ 
+   clocks:
+     items:
+@@ -66,6 +69,8 @@ properties:
+   interrupt-names:
+     const: msi
+ 
++  msi-parent: true
++
+   spacemit,apmu:
+     $ref: /schemas/types.yaml#/definitions/phandle-array
+     description:
+@@ -84,7 +89,8 @@ patternProperties:
+ 
+     properties:
+       phys:
+-        maxItems: 1
++        minItems: 1
++        maxItems: 6
+ 
+       vpcie3v3-supply:
+         description:
+@@ -96,13 +102,43 @@ patternProperties:
+ 
+     unevaluatedProperties: false
+ 
++allOf:
++  - $ref: /schemas/pci/snps,dw-pcie.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: spacemit,k1-pcie
++    then:
++      properties:
++        reg:
++          maxItems: 4
++
++        reg-names:
++          maxItems: 4
++
++      patternProperties:
++        '^pcie@':
++          properties:
++            phys:
++              maxItems: 1
++
++      required:
++        - interrupts
++        - interrupt-names
++    else:
++      properties:
++        reg:
++          minItems: 5
++
++        reg-names:
++          minItems: 5
++
+ required:
+   - clocks
+   - clock-names
+   - resets
+   - reset-names
+-  - interrupts
+-  - interrupt-names
+   - spacemit,apmu
+ 
+ unevaluatedProperties: false
 -- 
 2.55.0
 
