@@ -1,68 +1,37 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from freeshell.de (freeshell.de [116.202.128.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C27142A160
-	for <spacemit@lists.linux.dev>; Fri, 10 Jul 2026 12:51:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B2D29D260
+	for <spacemit@lists.linux.dev>; Fri, 10 Jul 2026 14:44:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783687871; cv=none; b=lNKjrxaK+is7fr8CropGbfD5YrGjqa+hASpMsq1RAJajWDo6Uec7INmLLCkfcNiJqdAaGia8KBLH68mvYUMIKf28S+E4MsvtZQa//MCNQOW1bvZOs1NYzXzk3NF0I0bHaasah2E6Qk2yJL/gPz8NH5iveh5vAlXN0+QMs0tD8oo=
+	t=1783694668; cv=none; b=rIc3K6yPiI5XZE/sy11jqNMR6mjkpygY8BHuIu0Tfc76NofvceQGzNYcuPOg+hmuVnzPWb92R95A+LWP9wfHQTPKvcYb3JtOoI0OVgAcP3xdDREjs/H3qpISyZxFmVdfOwY/zyh0tdRGePvMf/Mbr0nr/aL188QZrhDWEbBxCEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783687871; c=relaxed/simple;
-	bh=6ikcLdHgMP7Ta1QNKMU8D2+OrlHjityLyO+ugcqC5/s=;
+	s=arc-20240116; t=1783694668; c=relaxed/simple;
+	bh=btF1p3wQZL4rW6JxCK9jYb4/9Bc6hNEQFL0xhLFTN+g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=htr79bf7OcxznO3snlIEcJulV6N3hdJ9j6Z8ZBk7ESt2DBo0WKNOD8F62MsYg89aNZbo+jzNvC5NPit1x7cD2UYITzP5kyVqc/f5oqnwvicgkvNcvcCeyzBoGHRfg5MmF5c8Y/AFXWwTElIirRD4jWE4htMnAHDrlTsWU0jm0j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=om9k98lp; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	 In-Reply-To:Content-Type; b=rjcQMaq8Gsl8pDt3atRLQpbsXXKTPp0UihFPSXkxDtCmf/Pq+XJBCwbbcMkDG89S8/kv3ucccE4gzwE4znl6JCM027H/bZQ6JL+Jz1IXqVEaAxsoN8+TvueBElzCOx+tJo0WSNiqMiuy2NYEoxpacy01vBJbbDNBQTGKJve/lmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=lYd2+YJC; arc=none smtp.client-ip=116.202.128.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="om9k98lp"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-8ff88549786so8521216d6.3
-        for <spacemit@lists.linux.dev>; Fri, 10 Jul 2026 05:51:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1783687868; x=1784292668; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RI31gw/Ag7VVxVHoPD2L4lb5ga+FSsjQx8Z6xYz3UlU=;
-        b=om9k98lp+W3kjfN6ftktC6Xw/eoXIOxq+CFOy0dPmLty5k86IoYWLg426UChJx82Pw
-         crJfb6xfZP9CoxX+CG3bR6W+SJkBM9bQ/3IHJ6ZxG9VwSXwkqidX3t1r3t9LkPDbtMqO
-         hziCgNp7aDnQ9LpjxUX3KLGywGbyeQI++r6nhVCbVZWptJ3m0I97g2t/56hPtFEl9XAF
-         h+1Q4J0OeVaZjG8NX8fNlsz7uDAdCS2J7XUplVkZCMV4uRWWkDOYmZKozbDCkensebDf
-         PUD4Xsgw3VzD3rzjzD/BACUb9xc2IC6bxCnBMwpWPWCkkytCBJOUvVoF0vGDxnA7aG+n
-         R6pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783687868; x=1784292668;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=RI31gw/Ag7VVxVHoPD2L4lb5ga+FSsjQx8Z6xYz3UlU=;
-        b=R/Sx7+257yCbOq40i9ilqEVux2XK6KVcEQoLu13SYLf3hoLB59cCj2P7oPdxcW1SqH
-         PyUyj31WpRDa7mO77egDJtwqXWJyNL7t1szHPRWzLQnMAZMyu0SFhSUc2YtXUpJiDEJY
-         Y+gVfNsAZyDVEUTxvdNIxY+efuWI9IdO/AfVTE4D1NXB9jdIzQ0jnZt3w7pUvgr74mLM
-         YdwjNdS2GP2jLXEPq3404R5fFks6fp4+UhAYKzRMI1eWCx5FVsnZ9SfBZOUTKBkG5AXR
-         suMv0we+UR3yBxVDN86D6/8OMrZBginLqV4QQfAk4ixhImZJv9T/XyKuLluVJhTjKRoA
-         cLfA==
-X-Forwarded-Encrypted: i=1; AHgh+RrqVpD9QWojSvLPVaVT4hmWc5T6cNjZTvXNWI6gUAI1xTYoQpWvTK0tkdZ2XULBdIfAVCCVAyzzCg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwVsbftSh9bPwVxkzShRnAwv8wAFIrKuwzwCAUqXVJ1kMawYX2q
-	k88hcKpKk8V2GkZiV2efTXu+IMwnT5Q6/NHg8UcycQuVfnDCwJoPQ2peWmj6fDoS+JiSNuuxHKq
-	PMhdOEdM=
-X-Gm-Gg: AfdE7cmSJWj7Kvt5WAe5asVGIYbbZ0G8mnfLLPyMazL7vMoZzjjxIZ5//LmvHzHv78+
-	hL8D/7D3+082xTAIybTdqlMK429RDLacDRdKmFQ9Bt8HmUALW3N3OpGUx8eClZi0rr96JLFz5+M
-	EiW3rreg7oGYw84n3TZrc8ji+MWZYDLzGcKvUSD+Q48tj6vQI+lwnJpOdJgYM1yfqLLbaZAZOE2
-	EFeatNVQxVaNpZXdD8bSPho4UnRiR3YzEp6QHgMyb7WcFhsPCXzvYt+WEpDnyYrF8hJhlkdK3Zv
-	oQTmI+uyRVrNOZc+QVXQ3+IzbmKxd2HiZg9KtviGMe0Im1LUXGI2fqugX3J67xsDnNPBKvoq74B
-	LuLrbqE7+MegLCmm7K0hTTkWfkGANCfExfEo6HkkL5Pnd7zZgyNwWt+e2Al4OfccZsKGwQM/fcl
-	xOQaVjER+Znp5l
-X-Received: by 2002:a05:6214:2487:b0:8ce:aace:eaf7 with SMTP id 6a1803df08f44-8fec246fde7mr144215156d6.39.1783687868337;
-        Fri, 10 Jul 2026 05:51:08 -0700 (PDT)
-Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd80fd82csm40299876d6.35.2026.07.10.05.51.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jul 2026 05:51:07 -0700 (PDT)
-Message-ID: <9de024d9-c7a8-4291-a79d-83acc77b261d@riscstar.com>
-Date: Fri, 10 Jul 2026 07:51:05 -0500
+	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="lYd2+YJC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
+	s=s2025; t=1783694084;
+	bh=86FHXPa2XXe0jpQafsCvPbpMnYcFK7y2K3Df68+mJKk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lYd2+YJCdkpWfiyt34fYgzav+QBwTBrGQ8g8y14C2NJaYu2FaZgoEvPxcNJVg5CQx
+	 SGaIpwkn/Nc3/2cgIpEtIp0dlEVq+ayUjQxo4LYmXeEdIR6gZDLEsupr4gOamtyuvB
+	 fwY8snMn84TiVbX7+nOzgR9SImP5eBhsXLhhVmMJbl0FY9hZV9OZaEoSwwFhapeEHV
+	 mHLk+kumdOGOwOCOF+OLGdHp/cyRNOp3dYbeCPtKzA9/Xts43s99Kbw1JEJTsQntm9
+	 tz9cnPYuWzq3SKmrddGUIpR0L2oQuBerK3yLoMM2FxwufklZ4WJL9+FhorLhktD2rR
+	 JOs+ncGQ7qrFQ==
+Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
+	(Authenticated sender: e)
+	by freeshell.de (Postfix) with ESMTPSA id 42B5FB221FCB;
+	Fri, 10 Jul 2026 16:34:43 +0200 (CEST)
+Message-ID: <738ce6b8-798b-4689-a0f5-791fe85addbc@freeshell.de>
+Date: Fri, 10 Jul 2026 07:34:34 -0700
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,63 +39,97 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/6] PCI: spacemit-k1: Add multiple PHY handles support
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Inochi Amaoto <inochiama@gmail.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>, Manivannan Sadhasivam
- <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Christian Bruel <christian.bruel@foss.st.com>, Frank Li <Frank.Li@nxp.com>,
- Nam Cao <namcao@linutronix.de>, Qiang Yu <qiang.yu@oss.qualcomm.com>,
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Xincheng Zhang <zhangxincheng@ultrarisc.com>,
- Siddharth Vadapalli <s-vadapalli@ti.com>, Vidya Sagar <vidyas@nvidia.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Gustavo Pimentel <gustavo.pimentel@synopsys.com>, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-References: <20260709040027.958400-1-inochiama@gmail.com>
- <20260709040027.958400-3-inochiama@gmail.com>
- <ak9KzNFF26B0Kttz@ashevche-desk.local>
+Subject: Re: [PATCH] riscv: dts: spacemit: k3-pico-itx: Fix non-functional
+ ethernet TX timing
+To: Yixun Lan <dlan@kernel.org>
+Cc: Andrew Rembrandt <kernel@rembrandt.dev>,
+ Inochi Amaoto <inochiama@gmail.com>, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20260608182358.170489-1-kernel@rembrandt.dev>
+ <aiemGajqcQeY9avz@inochi.infowork> <aihYftGNcpUd4UUR@mcmanus>
+ <aiid4Y6x6Dbbwszf@inochi.infowork> <aikmOfazxdrhpty7@mcmanus>
+ <77a48b81-7906-4e18-9229-48643a67f402@freeshell.de>
+ <20260710022551-GKA106000@kernel.org>
 Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <ak9KzNFF26B0Kttz@ashevche-desk.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: E Shattow <e@freeshell.de>
+In-Reply-To: <20260710022551-GKA106000@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 7/9/26 2:16 AM, Andy Shevchenko wrote:
->> +		if (IS_ERR(k1->phy[i])) {
->> +			if (PTR_ERR(k1->phy[i]) == -ENODEV)
->> +				break;
->> +
->> +			return PTR_ERR(k1->phy[i]);
->> +		}
-> 		if (PTR_ERR(k1->phy[i]) == -ENODEV)
-> 			break;
-> 		if (IS_ERR(k1->phy[i]))
-> 			return PTR_ERR(k1->phy[i]);
+Hi Yixun,
 
-I'm not sure this is a huge improvement.  Checking IS_ERR()
-before using PTR_ERR() is comforting (a little along the
-lines of the other issue you mentioned--assigning a result
-before checking for an error).  Anyway, it's a little bit
-of an ugly construct no matter how you do it.  Here's another
-possible way to do it.
+On 7/9/26 19:25, Yixun Lan wrote:
+> Hi E Shattow,
+> 
+> On 00:29 Thu 11 Jun     , E Shattow wrote:
+>> Hi Andrew,
+>>
+>> On 6/10/26 02:05, Andrew Rembrandt wrote:
+>>> On Wed, Jun 10, 2026 at 07:14:56 am Inochi Amaoto wrote:
+>>>> Do not do this, just leave the rx-internal-delay-ps untouched.
+>>>
+>>> Sounds good, I'll leave v1 as-is. Many thanks for the review.
+>>>
+>>> Regards,
+>>>
+>>> Andrew
+>>>
+>>> _______________________________________________
+>>> linux-riscv mailing list
+>>> linux-riscv@lists.infradead.org
+>>> http://lists.infradead.org/mailman/listinfo/linux-riscv
+>>
+>> I do not notice any difference with or without this property present,
+>> tested Linux -next with U-Boot modification to devicetree:
+>>
+>> load usb 0:1 $fdt_addr_r /dtb/spacemit/k3-pico-itx.dtb
+>> fdt addr $fdt_addr_r
+>> fdt resize
+>> fdt header get filesize totalsize
+>> fdt set /soc/ethernet@cac80000 tx-internal-delay-ps <400>
+>> load usb 0:1 $kernel_addr_r /EFI/BOOT/BOOTRISCV64.EFI
+>> # throwaway use of ping is workaround for broken vendor U-Boot
+>> ping 127.0.0.1; bootefi $kernel_addr_r $fdt_addr_r
+>>
+>> Aside, there is still some problem with the driver which does cause it
+>> to fail. This can be reproduced by unloading the module and then loading
+>> the module; built from -next with 'olddefconfig' of debian Kconfig for
+>> kernel 7.1, no patches.
+>>
+>> # modprobe -r dwmac_spacemit
+>> # modprobe dwmac_spacemit
+>> [   61.469745] spacemit-dwmac cac80000.ethernet end0: cannot attach to
+>> PHY (error: -ENODEV)
+>>
+>> [   91.544646] spacemit-dwmac cac80000.ethernet end0: cannot attach to
+>> PHY (error: -ENODEV)
+>>
+> The problem is unrelated to this patch itself, but I can actually confirm here
+> 
+>> If not reloading the module then I don't see any difference, traffic
+>> passes (ping 1.1.1.1) with or without your suggested
+>> tx-internal-delay-ps property. Is there a specific test to run to
+>> observe expected difference?
+>>
+> 
+> Although I haven't narrowed down to the root cause, but it's kind of
+> something wrong with the reset procedure, remove it from phy node will fix
+> this issue..
+> 
+> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> @@ -232,9 +232,6 @@ mdio {
+>                 phy0: phy@1 {
+>                         compatible = "ethernet-phy-ieee802.3-c22";
+>                         reg = <1>;
+> -                       reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
+> -                       reset-assert-us = <10000>;
+> -                       reset-deassert-us = <10000>;
+> 
+> 
 
-	k1->phy[i] = devm_of_phy_get_by_index(dev, node, i);
-	if (!IS_ERR(k1->phy[i]))
-		continue;
-
-	ret = PTR_ERR(k1->phy[i]);
-	if (ret == -ENODEV)
-		break;
-
-	return ret;
-
-					-Alex
+Yes, confirming that workaround (removing nodes as you suggested) is
+functional for debian-installer where that reset trouble is being
+observed. If there is a patch or discussion later I will follow up then,
+also.  On the topic of this ethernet TX timing thread I don't know what
+this does? Is there a test situation I may try to know if it is doing
+anything? Thanks very much, -E
