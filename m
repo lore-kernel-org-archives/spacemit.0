@@ -1,49 +1,52 @@
 Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213243C108B
-	for <spacemit@lists.linux.dev>; Fri, 10 Jul 2026 07:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8796F331EDC
+	for <spacemit@lists.linux.dev>; Fri, 10 Jul 2026 07:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783667703; cv=none; b=qSUx9KYY4vX+rKH+76EruomCrsKsp9KW6vhQ0PyTm87W3ilYdz1whKJ0kNE6WB9DTJEYeHtcRvlkGw8n4LWMwrabSpBJQzV/GUrf634UnzCuvVExawKBEor2uqOY/K3WxZQ4JJqfWXZHQLcDEscDAb7WMxG62PdII2xXuCwSQ0M=
+	t=1783668088; cv=none; b=tLnA3YnaBs0nJI9MRbkEeeDwVsAtgzBDAuh6wQRzuAfg8oZeC7eP+uFKnvwZ6SYts/u4S8k8nmsWeKbFUiLmcbWeshXH6PhLGbp1NXrb7ekOPE25PZXpk1oO3KUetSBHAFL5e5qYRMue9ntE5iHp1itEciaRUK8eDteKJ0puvvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783667703; c=relaxed/simple;
-	bh=2Cn35MZ8x0XVQzpU/ywbP5YqOKf1adgk6dOzj3RMaM8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=JQ8j9pJrXzQejBi20ST2e6VeJxCKWkbYE6ej8RGfn9VeZNDS4BSlepD7izf5i2oes+WTKRtQwTesTOKKDCxHZj9WJYBFNjlHLtI7Qjic92HiugGJDGFGMWmNhs7g6f89nDwA2k4N32DFA453sXU7k1Q3fdpGmGlhuwS8ajXolk8=
+	s=arc-20240116; t=1783668088; c=relaxed/simple;
+	bh=z4L4ZkQYHyig4URT0kCVt9O/hFGJluUXU4oaiBSG8Uk=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ZEbm5WMxZ6a+3Y1gsM4rmAxZtNyp7k8hqmS+8UYXgaUFRTGBJX4qLDIfhMDcGWuulwq79IKffiLs1GzCFWQrHUMXJ1DZ9KexWSz+n5u1KjXCY2ZHy1qsc6FEQ3BGKGBMt78hdDDIwuSNt2O1gGTGgMfiDiL/6qBjETG2EblzNkA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 0c534f9e7c2f11f1aa26b74ffac11d73-20260710
+X-UUID: f0e909327c2f11f1aa26b74ffac11d73-20260710
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:3fda7a07-90be-492d-a724-fbdc6e4a7286,IP:0,U
-	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:25
-X-CID-META: VersionHash:e7bac3a,CLOUDID:524841a8a8194384b88d989a6e4ed4a6,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:102|850|865|898,TC:nil,Content:0|15|50,E
-	DM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:
-	0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-O-INFO: VERSION:1.3.12,REQID:36a2410f-9e0c-452c-8314-d28fac6f15b3,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:e7bac3a,CLOUDID:014e708fb9bc66c8bc41b1640a6d7c68,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:81|82|102|850|865|898,TC:nil,Content:0|1
+	5|50,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI
+	:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 0c534f9e7c2f11f1aa26b74ffac11d73-20260710
+X-UUID: f0e909327c2f11f1aa26b74ffac11d73-20260710
 X-User: xiaopei01@kylinos.cn
 Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
 	(envelope-from <xiaopei01@kylinos.cn>)
 	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 104388478; Fri, 10 Jul 2026 15:14:53 +0800
+	with ESMTP id 288467373; Fri, 10 Jul 2026 15:21:17 +0800
 From: Pei Xiao <xiaopei01@kylinos.cn>
-To: troy.mitchell@linux.spacemit.com,
-	andi.shyti@kernel.org,
+To: xiaopei01@kylinos.cn
+Cc: andi.shyti@kernel.org,
 	linux-i2c@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Cc: Pei Xiao <xiaopei01@kylinos.cn>
-Subject: [PATCH] i2c: spacemit: fix spurious IRQ handling returning IRQ_HANDLED
-Date: Fri, 10 Jul 2026 15:14:49 +0800
-Message-Id: <ef8b623f45d4e430721e46572c2598d882044aed.1783667603.git.xiaopei01@kylinos.cn>
+	spacemit@lists.linux.dev,
+	troy.mitchell@linux.spacemit.com
+Subject: [PATCH v2] i2c: spacemit: fix spurious IRQ handling returning IRQ_HANDLED
+Date: Fri, 10 Jul 2026 15:21:13 +0800
+Message-Id: <ef8b623f45d4e430721e46572c2598d882044aed.1783667875.git.xiaopei01@kylinos.cn>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <ef8b623f45d4e430721e46572c2598d882044aed.1783667603.git.xiaopei01@kylinos.cn>
+References: <ef8b623f45d4e430721e46572c2598d882044aed.1783667603.git.xiaopei01@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -61,6 +64,9 @@ caught.
 
 Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
 Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+---
+changlog in v2:
+modify gitlog for Modify the incorrect Git commit message to match the reason for the modification.
 ---
  drivers/i2c/busses/i2c-k1.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
