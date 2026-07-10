@@ -1,135 +1,196 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA013D6493
-	for <spacemit@lists.linux.dev>; Fri, 10 Jul 2026 09:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045B03FADF2
+	for <spacemit@lists.linux.dev>; Fri, 10 Jul 2026 10:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783675737; cv=none; b=FFV8TqxsnFERlV+8DoikDsFX+4MuQmvLuA9rBYrgDAWQB9kvXVheZM/JN02v+bWdXwg0MuDOQ6iq0LHZiR1ykeSwrRsvRT5xBB4/1dwIoHWtxCNjFQ/gfMValqAY5DC5ieMmbPrG2UHSnf1a4fTDUC/SKQ20gbHwDsuaMKScQwA=
+	t=1783680954; cv=none; b=sF9i0Ym9s9pj+Marx6SE19j7HVYijmsFmtMPgWwzgP99o0FgC7W3wFZWrpD4NnYFXnyK513P6RI+M7FCcf9Kwo62PtNCjqmMJ+VgptVt/4F8SGK0MqONvgOuxTSfWuhRBr9+ngIN2zQpBL4jIFYU/gUW8YbKJbwy82KLXsFCTdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783675737; c=relaxed/simple;
-	bh=T+cJ+gvOtj2VWeehJN93IAHjOkQMfIaxHa9V02dDf2M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=havOFjr+4NQzZReut4gKPushHyTDOgiDBTrK1g1tp/twTA81bKTuOUq4kAQe2j/TdYZjVk0bgM7OnuAOYl683VrVP0sI5oapDQyw74Z7Bu7i9j1dGsjZCOQHkOIGMkv+uLHw+nXn42lE0F+/gZjo6lER/jFGmCC/C2SGSJGcDEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: c1107e9a7c4111f1aa26b74ffac11d73-20260710
-X-CID-CACHE: Type:Local,Time:202607101718+08,HitQuantity:1
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:af1b9d85-80da-486c-8882-358161c4481b,IP:0,U
-	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:0
-X-CID-META: VersionHash:e7bac3a,CLOUDID:cd795b6054e965ba326532fc26a42d67,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:80|81|82|83|102|865|898,TC:nil,Content:0
-	|15|52,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,O
-	SI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: c1107e9a7c4111f1aa26b74ffac11d73-20260710
-X-User: xiaopei01@kylinos.cn
-Received: from [10.42.12.251] [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <xiaopei01@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 1414417490; Fri, 10 Jul 2026 17:28:47 +0800
-Message-ID: <d047f823-feff-414c-b1b4-54f6ccea6b66@kylinos.cn>
-Date: Fri, 10 Jul 2026 17:28:45 +0800
+	s=arc-20240116; t=1783680954; c=relaxed/simple;
+	bh=xlSYGNU16W6S2PY8aAe6JeUMg8Dxgfqi4tAC4006wEw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kxAu/112S/4KQGNvYf590w+Ci9pjLReRKvGSyWbivz6SI5ykLJfByxxiVgmyqBNwtGlQ81pQjzFmDB9mpJbiKCyu5UAzrdbbqcSJ1WGP9qrIRUmAJQiEr7h1znzPGwrAMEeVqgiiGuR9TUul+OY0z1+w8ro9hUnF+IL4wtWsSWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FyWdxNBt; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FyWdxNBt"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-84864086bfeso672041b3a.1
+        for <spacemit@lists.linux.dev>; Fri, 10 Jul 2026 03:55:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783680952; x=1784285752; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DYS+VjE3ZeLF6fGUZwF6+bVV7JweMtmHNhPsPcBJC0k=;
+        b=FyWdxNBtVhCbK6RAp9dIN5vgRa2S6l6JlEgFKaqkyvTRr5yLw80U7JoEsP0ZRWEYD0
+         5XK4QVzEbzBpImGpSpzVjAH2COsj8N0ACsUv3m9AwnosdWtAsJX4oGXTdo3ep3xLwE4G
+         oWLwHEIbIWpRXt3+sZJtWjQjNCjVECphTV85pFPhqCU66Icm+Eb/hWzsOx0uDfIMQEbQ
+         18HVZvR6/4JVx4/UYp/qIbkAdqi06Irh0Mv2dmLDmJXBovMZq75IhaX21uQGdB3QiwwY
+         VpeuWZRk4T/4t3NdTzg5U2s+6V0eAvs98me9SgT7u+NW8nKv17XFvpXuFHZFQn3SkO38
+         sujw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783680952; x=1784285752;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DYS+VjE3ZeLF6fGUZwF6+bVV7JweMtmHNhPsPcBJC0k=;
+        b=kZ58YF9zRu7kE1paruq2Yx1ttOVcaaCWwjTbICoxtW5KWAxlpchxxmFIMCfwwJKWvd
+         9mxO5vDSU30lsWFuDLpkb/SGzTCHtPeFHJHPDimDpj0KUET2eW+7GrrZhs2r2k6qVI65
+         B/lcx5tF5vPaqalyET191muqtCzzjG4brkkRrSB5fHEe7o3cXUvbq6xC9TekvU7nyeZo
+         7ur979r6nyxBhzAkWpbnvdBlSMSz+OCmUrDjJUAYLYhANB6zmmMAYkEwBSpDduX20a/U
+         Ze4p+8duexLRoWXU3a2dDG6n4Vjtu3ddf2lIRrMBIeBog3G3163wpY6uuwTaTTw804GQ
+         be9w==
+X-Forwarded-Encrypted: i=1; AHgh+Rru0TqoQbPlCMedH2x/GMswW5dbaMGkSYNi2nMSua9HVJtUCm52SkCvZIV9kC1W0ZDy/01BOrxdXA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzTwygsJ13FSgPtqkeRga0CyD2V5pyMJb0BD5Kcwuq35LteL2Gk
+	v34IXabiDDhwfapnSat12L8XdDG38wTy01zjWRkoMSYw02ZjRG3jYU4E
+X-Gm-Gg: AfdE7clF/vnYVdOwKrPbwSTY5woI2xtlx2ZxADZ9fyLN2MNpIqI9/887jx/74nfthCl
+	HEKoedI5JNSKuPVO0JVWplFxLLnTgGMMfpV3M0NDQn7nnQBF0q61jkm4Omly/7vONgfbdbWzUDw
+	WvRhjq3tC6J8xRH00kbM9FidFnKWzwjf6p5sk0c53Ag0cNJVcbAS1z1pbh5MwoOSZGbolPvzpm7
+	/AzRl8AKuZpowXV1X8bzmIYISuNfjUKGXzVka/YDLyAGpZOKsKamKxYhAKZvoirwX7fmG9aY9GO
+	mxCbkV4GsS2hn0y9BHklMgtXQm+ugjslETTHfmarXzBjwd8lbAd8rIMKI8dg7KohabBQw2kg51v
+	owl7InszBHqi99iOpxfWGabCuTriZxktRaH3lHc+OnXgvIVzlmpGtYsiaXzaV1yr3
+X-Received: by 2002:a05:6a00:288f:b0:845:4888:74c5 with SMTP id d2e1a72fcca58-84842eecdafmr10377896b3a.23.1783680952357;
+        Fri, 10 Jul 2026 03:55:52 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ca5af6df87fsm4986672a12.5.2026.07.10.03.55.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jul 2026 03:55:51 -0700 (PDT)
+Date: Fri, 10 Jul 2026 18:55:10 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Christian Bruel <christian.bruel@foss.st.com>, 
+	Frank Li <Frank.Li@nxp.com>, Nam Cao <namcao@linutronix.de>, 
+	Qiang Yu <qiang.yu@oss.qualcomm.com>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>, Alex Elder <elder@riscstar.com>, 
+	Siddharth Vadapalli <s-vadapalli@ti.com>, Vidya Sagar <vidyas@nvidia.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, 
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v4 2/6] PCI: spacemit-k1: Add multiple PHY handles support
+Message-ID: <alDNlfb0_T9g-ATO@inochi.infowork>
+References: <20260709040027.958400-1-inochiama@gmail.com>
+ <20260709040027.958400-3-inochiama@gmail.com>
+ <ak9KzNFF26B0Kttz@ashevche-desk.local>
+ <alBNXgMAwXPKwiJ2@inochi.infowork>
+ <alCoTEDUY8AO9OzD@ashevche-desk.local>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] i2c: spacemit: fix spurious IRQ handling returning
- IRQ_HANDLED
-To: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Cc: andi.shyti@kernel.org, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, troy.mitchell@linux.spacemit.com
-References: <ef8b623f45d4e430721e46572c2598d882044aed.1783667603.git.xiaopei01@kylinos.cn>
- <ef8b623f45d4e430721e46572c2598d882044aed.1783667875.git.xiaopei01@kylinos.cn>
- <76c5567a-cc93-422c-a18f-a32dcb101428@oss.qualcomm.com>
-From: Pei Xiao <xiaopei01@kylinos.cn>
-In-Reply-To: <76c5567a-cc93-422c-a18f-a32dcb101428@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alCoTEDUY8AO9OzD@ashevche-desk.local>
 
+On Fri, Jul 10, 2026 at 11:07:40AM +0300, Andy Shevchenko wrote:
+> On Fri, Jul 10, 2026 at 09:57:05AM +0800, Inochi Amaoto wrote:
+> > On Thu, Jul 09, 2026 at 10:16:28AM +0300, Andy Shevchenko wrote:
+> > > On Thu, Jul 09, 2026 at 12:00:22PM +0800, Inochi Amaoto wrote:
+> 
+> ...
+> 
+> > > >  struct k1_pcie {
+> > > >  	struct dw_pcie pci;
+> > > >  	const struct k1_pcie_device_data *data;
+> > > > -	struct phy *phy;
+> > > > +	struct phy **phy;
+> > > 
+> > > Should it be annotated by __counted_by_ptr() ?
+> > 
+> > Yes, I think it can, this is something I have missed.
+> > 
+> > > > +	unsigned int phy_count;
+> > > 
+> > > Ah, you allocate much more memory than possible PHYs... Can you redesign and
+> > > use the above annotation?
+> > 
+> > IIRC use the annotation does not reduce this memory usage...
+> 
+> It's about how you allocate it, the code uses max_phy_count instead of
+> phy_count.
+> 
+> > > >  	void __iomem *link;
+> > > >  	struct regmap *pmu;	/* Errors ignored; MMIO-backed regmap */
+> > > >  	u32 pmu_off;
+> > > 
+> > > >  }
+> 
+> ...
+> 
+> > > > +	k1->phy_count = i;
+> > > > +	if (k1->phy_count == 0)
+> > > > +		return -EINVAL;
+> > > > +
+> > > > +	return 0;
+> > > 
+> > > This doesn't seem correct to me, I would expect phy_count to be assigned only
+> > > when it's valid. (Yes, perhaps 0 is the same as it was, but semantically it's
+> > > different 0 in this case.)
+> > 
+> > I guess you think 0 is a valid number? I can not understand what you thing
+> > Assign this to 0 if there is no phy is fine to me, which shows there is 0
+> > vaild phy found.
+> 
+> Isn't it already 0? Semantically code is wrong in a flow (not in the result).
+> 
 
+In fact it is already 0 here. But I am not understand why you thing is wrong.
+Could you explain it in detail? (Maybe you think it is not good to return 
+-EINVAL?)
 
-在 2026/7/10 16:50, Mukesh Savaliya 写道:
->
->
-> On 7/10/2026 12:51 PM, Pei Xiao wrote:
->> When the interrupt status register reads zero, the handler should
->> return IRQ_NONE instead of IRQ_HANDLED. What the return value
->> actually feeds into is the spurious interrupt accounting in
->> note_interrupt(): falsely claiming IRQ_HANDLED defeats the "irq XX:
-> note_interrupt() ? You mean to say No interrupt OR invalid interrupt
-> here ? I could not understand function name. 
-https://elixir.bootlin.com/linux/v7.2-rc1/source/kernel/irq/spurious.c#L222
+> > > See also above. Do we have some PHY API that just counts provided PHYs?
+> > > If not, that what you should probably add first, before this patch.
+> > 
+> > I have not found any api for this. But the actual problem is, how the api
+> > is designed. I have checked both the array bulk api for reset and clock,
+> > it seems like it is much more than this patch...
+> 
+> Yeah, I looked at the phy-core and I think it will be hard to implement.
+> So, the idea is then is to reallocate the pointer each time you get a new PHY.
+> In this case the phy_count will reflect the actual memory consumption by phy.
+> 
 
-if(unlikely
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/unlikely>(action_ret==IRQ_NONE
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/IRQ_NONE>)){ /* * If
-we are seeing only the odd spurious IRQ caused by * bus asynchronicity
-then don't eventually trigger an error, * otherwise the counter becomes
-a doomsday timer for otherwise * working systems */ if(time_after
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/time_after>(jiffies
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/jiffies>,desc->last_unhandled
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/last_unhandled>+HZ
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/HZ>/10))
-desc->irqs_unhandled
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/irqs_unhandled>=1;
-else desc->irqs_unhandled
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/irqs_unhandled>++;
-desc->last_unhandled
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/last_unhandled>=jiffies
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/jiffies>; } ...
+Emmm, I think it is kind of buggy and not necessary. In most case
+this array is not long actually, so allocate some pointer should be
+fine and be an acceptable cost.
 
-if(unlikely
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/unlikely>(desc->irqs_unhandled
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/irqs_unhandled>>99900)){
-/* * The interrupt is stuck */ __report_bad_irq
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/__report_bad_irq>(desc,action_ret);
-/* * Now kill the IRQ */ pr_emerg
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/pr_emerg>("Disabling
-IRQ #%d\n",irq); desc->istate
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/istate>|=IRQS_SPURIOUS_DISABLED
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/IRQS_SPURIOUS_DISABLED>;
-desc->depth <https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/depth>++;
-irq_disable
-<https://elixir.bootlin.com/linux/v7.2-rc1/C/ident/irq_disable>(desc) a
-stuck interrupt source would catch here.
+> ...
+> 
+> > > > +	for (i = 0; i < k1->phy_count; i++)
+> > > 
+> > > 	for (unsigned int i = 0; i < k1->phy_count; i++)
+> > > 
+> > 
+> > I agree with the unsigned int, but I guess this definition is not
+> > allowed in linux.
+> 
+> It's allowed and it's encouraged even by Linus. As long as iterator is local,
+> use this syntax sugar and reduce its scope. It hardens the code.
+> 
 
+Could you give me a reference url to check, I have not found this
+on the coding-style.
+https://www.kernel.org/doc/html/latest/process/coding-style.html
 
->> nobody cared" detection, so a stuck interrupt source would never be
->> caught.
->>
->> Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
->> Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
->> ---
->> changlog in v2:
->> modify gitlog for Modify the incorrect Git commit message to match
->> the reason for the modification.
->> ---
->>   drivers/i2c/busses/i2c-k1.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
->> index c2d090f6ba80..487f23fde725 100644
->> --- a/drivers/i2c/busses/i2c-k1.c
->> +++ b/drivers/i2c/busses/i2c-k1.c
->> @@ -728,7 +728,7 @@ static irqreturn_t spacemit_i2c_irq_handler(int
->> irq, void *devid)
->>         status = readl(i2c->base + SPACEMIT_ISR);
->>       if (!status)
->> -        return IRQ_HANDLED;
->> +        return IRQ_NONE;
->>         i2c->status = status;
->>   
->
->
+> > > > +		phy_exit(k1->phy[i]);
+> 
+> -- 
+> With Best Regards,
+> Andy Shevchenko
+> 
+> 
 
+Regards,
+Inochi
