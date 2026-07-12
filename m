@@ -1,137 +1,129 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349D23BB9ED
-	for <spacemit@lists.linux.dev>; Sat, 11 Jul 2026 13:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783775058; cv=none; b=T7Y4vqFl0ufzJssC5UyTY6Hmd5gOq57LIBqotIHS9swSqK2vMGKMs9s1sEUn6rLwPrSLCoDV9xjeIDphUpALMk9iDoucbMVBFq0nJZPwaHTKOccELxGwQTAiNztlcGBv6QcN4nUuKIwdZGEjApUI5VVQsJ/HJ3swsuhgONsPQpk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783775058; c=relaxed/simple;
-	bh=dh/NC1ZAMj5F/j++S19UU/UH7ttb+MchcJhoqRF0piY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=azYPt2iqxqvgbVdP3T4Hd4QhFX5j9e0WpqotAVnHDRMZYEQln4CtoNKlA487Il9yiDtBUHLfE1W/0nBWkT8Wumsu0/zuJ2rTwpL7HXIpZryJY4yY4occLunCOjvPY72YiQ79Kt8uWFrchS5U9ZiS4XlXLKwpogQRAgy+pEYsNoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KZZefRbk; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A8921255A
+	for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 04:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783828859; cv=pass; b=XCUgiCfMSO50dqkXVHVSXJiN3UPbjSE78a+g6el17iaZMB1XZ71YTdeUj/xsb1N23cx1H2vYJT+72LGyn8AuxR0b3k2+CM/tWLgvYtQFsFZqJq2F0boqpcKBkjzowqnvnaDfs/ePrUwmWsMwngYfzi+8rKS0JM+VeP9wds/RaRY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783828859; c=relaxed/simple;
+	bh=O03rd95rLTU1Dxveo4k6sEWLV/W7qWnJWqsuUvJW/Zk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=elFWMXDhznXV++qJul9hgy2r9HKsIfvG393RsJWuvIV/iIRdmdnmUqWXEw6RNhmNRFiVldr/i4DlJnEuvgkIsHe8m/SxbH0KaONrhRRi+ASZqDzfaw3WFr+j7Wa7cQmvSNQVE5CyCtk7Gs0GrXGiXfGgv6LLxtgqQTBwKsk+b70=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=l2S7Hmft; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KZZefRbk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783775058; x=1815311058;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=dh/NC1ZAMj5F/j++S19UU/UH7ttb+MchcJhoqRF0piY=;
-  b=KZZefRbkKT7M5iP+USqO9uX7utDBQkYB5KgT4MLYCES8fwhThCp9IIef
-   CEZ/kEtG2xtR97+O/St8EDrSoHDJCX/R9W/wAmIFAkydu8nEfzbC8eDN+
-   GJsCjpg+ZzFmvlu3HCtdP+S9BdoGHyMYCMBtaBPOFRo8ooOvJ8mgkZJOo
-   XAWoz4K3MIVGfeQkP42tr7YN1CVZgVAz8LrvKJKmPcCnIcLtfBclH44vR
-   BDnp8Xjf02F/y4YcEXHxwA6WgwvVZ+BJuxqFJl8kq+as87QUSw82YSWIC
-   nkeh4wZP8v+GM0+ArXPdWgxKHiXu4ZK7UUbl7xLubZoo63Y4PuW49jY/E
-   A==;
-X-CSE-ConnectionGUID: Udda/PggR8mHQuz0ZovVaA==
-X-CSE-MsgGUID: JBxY2L0FTBiJ73UQuhFFSQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="84474541"
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="84474541"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 06:04:17 -0700
-X-CSE-ConnectionGUID: Bwi9OOBeQiOd5U9xEkaNew==
-X-CSE-MsgGUID: qw7nWE8zQg++guoxV6gm1g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="285214472"
-Received: from abityuts-desk.ger.corp.intel.com (HELO localhost) ([10.245.244.254])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 06:04:10 -0700
-Date: Sat, 11 Jul 2026 16:04:07 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Alex Elder <elder@riscstar.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>, Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Christian Bruel <christian.bruel@foss.st.com>,
-	Frank Li <Frank.Li@nxp.com>, Nam Cao <namcao@linutronix.de>,
-	Qiang Yu <qiang.yu@oss.qualcomm.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v4 2/6] PCI: spacemit-k1: Add multiple PHY handles support
-Message-ID: <alI_RxpH8E3-Hsy4@ashevche-desk.local>
-References: <20260709040027.958400-1-inochiama@gmail.com>
- <20260709040027.958400-3-inochiama@gmail.com>
- <ak9KzNFF26B0Kttz@ashevche-desk.local>
- <9de024d9-c7a8-4291-a79d-83acc77b261d@riscstar.com>
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="l2S7Hmft"
+ARC-Seal: i=1; a=rsa-sha256; t=1783828839; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=AoIicxmLV6OUnyp0cFxOOjHslEVx3rB07tTxvdFjhw74lx720FeqKYjocfzFE/ujdL4urHG38iq12LMt4shTGflGuN+G7c7xLuir4Ek/rTf2m+W04hVwWf+//YyTUDhv3bZuZp2ObR8/WCfG/njL6sj8Aq0CB9e57SgKMwoGm78=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1783828839; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=sxgMUK4leE9QWcjxVwljumsqOPffhM1uKVFIxXk15jM=; 
+	b=LHyh7drvGCjYnFXK15mBzkP88TC4qu5dyTfLR7E8xTUVsYomU5/HSm+ZY6ECD0CPGtq1UPqf4eHRYdQT9o6rmlFqhIC33qOdmSclWimFZ3cw9Di7XvVx+tItu4qEGu+KK/EdUbYEbKzj+TIKiE6nlMsWh+WL/GIme9y2TtuEfg4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1783828839;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+	bh=sxgMUK4leE9QWcjxVwljumsqOPffhM1uKVFIxXk15jM=;
+	b=l2S7Hmft+4LQBWykqqWShcAXyzlWZI0Glx5oWLGMajMmGONhMlLYRuZzdrlYnlcR
+	WkgWXIHh/l67Ajy/FnJ6HBxe7z1/Vif8/oqi/tbO/F0uOdfugLp/xolSr5qgBrShXD9
+	pZwWtn8yaHLWh+d+ApFKdjj09MLvskaq2sHbyF0c=
+Received: by mx.zohomail.com with SMTPS id 1783828837085345.73913355068294;
+	Sat, 11 Jul 2026 21:00:37 -0700 (PDT)
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+Subject: [PATCH v3 0/3] spacemit: k1: Add support for Banana Pi BPI-CM6 IO
+ board
+Date: Sun, 12 Jul 2026 12:00:00 +0800
+Message-Id: <20260712-bpi-cm6-v3-0-8d1e2045179d@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9de024d9-c7a8-4291-a79d-83acc77b261d@riscstar.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2WNyw6CMBBFf4XM2po+Ig9X/odxUcoUJpFXi42G8
+ O8WXGB0eW7mnJnBoyP0cE5mcBjIU99FUIcETKO7GhlVkUFymfKTlKwciJk2ZZVRuS0EKosG4vX
+ g0NJzK11vH3Y4PmJw2seG/NS71/YtiHX9DwfBOMt4hlYUItOKXwaq297p+3FC08DaCfLbzXdXR
+ rfiWCorVWpQ/7rLsrwByFNphPMAAAA=
+X-Change-ID: 20260522-bpi-cm6-dc38f91e3fec
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Guodong Xu <guodong@riscstar.com>, Yangyu Chen <cyy@cyyself.name>, 
+ Vivian Wang <wangruikang@iscas.ac.cn>, Paolo Abeni <pabeni@redhat.com>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Michael Opdenacker <michael.opdenacker@rootcommit.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783828822; l=2474;
+ i=junhui.liu@pigmoral.tech; s=20251228; h=from:subject:message-id;
+ bh=O03rd95rLTU1Dxveo4k6sEWLV/W7qWnJWqsuUvJW/Zk=;
+ b=xx0DNzPTLuQ1kJQCbT8D2D8FunRl9hCmDJtpOmAD4JmJjRaB56Pcf22rOu2beVES1uAKHqrLo
+ /CS2qpMvJxqB0c+zMnNMsf0IEsK6mIjFJ/bw8V9ddqMg/7BV7hSm1yb
+X-Developer-Key: i=junhui.liu@pigmoral.tech; a=ed25519;
+ pk=3vU0qIPJAH8blXmLyqBhKx+nLOjcLwwYhZXelEpw7h4=
+X-ZohoMailClient: External
 
-On Fri, Jul 10, 2026 at 07:51:05AM -0500, Alex Elder wrote:
-> On 7/9/26 2:16 AM, Andy Shevchenko wrote:
+This adds initial support for the Banana Pi BPI-CM6 IO board. The
+BPI-CM6 is an industrial-grade RISC-V compute module powered by the
+SpacemiT K1 SoC, featuring board-to-board connectors similar to the
+Raspberry Pi CM4 form factor. For evaluation and development, the module
+is paired with a companion IO carrier board.
 
-...
+During the board bring-up, GPIO45 and GPIO46 were found to be used by
+the BPI-CM6 hardware as Ethernet PHY reset GPIOs, while the common K1
+GMAC pinctrl groups currently mux them as optional GMAC reference clock
+pins. Since the reference clock pins are not required on all K1 boards,
+the second patch separates them into independent pinctrl groups so board
+DTS files can select them only when the signal is actually wired.
 
-> > > +		if (IS_ERR(k1->phy[i])) {
-> > > +			if (PTR_ERR(k1->phy[i]) == -ENODEV)
-> > > +				break;
-> > > +
-> > > +			return PTR_ERR(k1->phy[i]);
-> > > +		}
-> > 		if (PTR_ERR(k1->phy[i]) == -ENODEV)
-> > 			break;
-> > 		if (IS_ERR(k1->phy[i]))
-> > 			return PTR_ERR(k1->phy[i]);
-> 
-> I'm not sure this is a huge improvement.  Checking IS_ERR()
-> before using PTR_ERR() is comforting (a little along the
-> lines of the other issue you mentioned--assigning a result
-> before checking for an error).  Anyway, it's a little bit
-> of an ugly construct no matter how you do it.
+Link: https://docs.banana-pi.org/en/BPI-CM6/BananaPi_BPI-CM6
+Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+---
+Changes in v3:
+- Remove uncontrolled always-on intermediate fixed regulators to
+  reduce device tree bloat
+- Rebase to v7.2-rc1
+- Link to v2: https://lore.kernel.org/r/20260528-bpi-cm6-v2-0-d0eb3f236cea@pigmoral.tech
 
-Yeah...
+Changes in v2:
+- Keep gmac_clk_ref pinctrl groups referenced on existing boards where
+  the pins are routed to optional PHY refclk paths
+- Remove duplicate vpcie3v3-supply property from pcie1 and pcie2 nodes
+- Collect tags
+- Link to v1: https://lore.kernel.org/r/20260522-bpi-cm6-v1-0-707ef1917a30@pigmoral.tech
 
-> Here's another possible way to do it.
-> 
-> 	k1->phy[i] = devm_of_phy_get_by_index(dev, node, i);
-> 	if (!IS_ERR(k1->phy[i]))
-> 		continue;
-> 
-> 	ret = PTR_ERR(k1->phy[i]);
-> 	if (ret == -ENODEV)
-> 		break;
+---
+Junhui Liu (3):
+      dt-bindings: riscv: spacemit: Add Banana Pi BPI-CM6 compatible
+      riscv: dts: spacemit: k1: Split gmac_clk_ref into independent pinctrl groups
+      riscv: dts: spacemit: k1: Add Banana Pi BPI-CM6 IO board
 
-In this case one can simplify to
+ .../devicetree/bindings/riscv/spacemit.yaml        |   5 +
+ arch/riscv/boot/dts/spacemit/Makefile              |   1 +
+ .../riscv/boot/dts/spacemit/k1-bananapi-cm6-io.dts | 177 +++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi  | 217 +++++++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    |   4 +-
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts  |   4 +-
+ arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts     |   2 +-
+ arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts   |   4 +-
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi       |  24 ++-
+ 9 files changed, 427 insertions(+), 11 deletions(-)
+---
+base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
+change-id: 20260522-bpi-cm6-dc38f91e3fec
 
-	k1->phy[i] = devm_of_phy_get_by_index(dev, node, i);
-	ret = PTR_ERR_OR_ZERO(k1->phy[i]);
-	if (ret == -ENODEV)
-		break;
-	else if (ret)
-		return ret;
-
--- 
-With Best Regards,
-Andy Shevchenko
-
+Best regards,
+--  
+Junhui Liu <junhui.liu@pigmoral.tech>
 
