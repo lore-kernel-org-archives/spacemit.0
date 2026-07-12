@@ -1,212 +1,100 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC352E7623
-	for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 07:39:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646B936B07E
+	for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 08:56:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783841977; cv=none; b=HDOCSZCpx+PUBIR6q/G+HiKWnRybypgTjPrbTuqfuTFiv5NurpMC3UZKssTA7GEt0Nynwi5Auh+zCRwD9XAKUkFDKdRPFX6noHhhJf8TMGs3MmcJEaNu2Rl4Fxzu37Ykj6v/QAVaXC1E64mi7kqC+Yf9Op7hlB20yw3WeufEYDo=
+	t=1783846572; cv=none; b=qntkwRBuRYP5ZqW7syDJizvBkgP4doIm7xjrly34LaHsbbryPGIYkcCoNMNKt/Gam73kc6r74RKjZUyDSnbmIJgT0+9lcZe+7LenkFAZzCugjS8g0gU9IOnrh0yiwAUyQ4XIbfjcHL/w77+ChiroFr7wkgjEDkSKVKdK6lVDMoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783841977; c=relaxed/simple;
-	bh=fAvTWsD9sw32WdUtuhGi8/HFepILucEW6Mr5vR3sUUk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RkLdUl46bCK7UDxDU9HxJPagNImY42He18kVgnX8bDcevV24ceWR5+xvtyQwJd4sWojSBEz/LLZQ+eWm5GlY1KfBuo3RoE0l46135wAcf3XuxpKISBvPSwuMxaqhGLrtb2i+//1Oe56nosXpUXwUI9nfRtqn7qg1cYwC7I++f1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cQJPP5ns; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783846572; c=relaxed/simple;
+	bh=NB44c/iontyfby0/z6SLYsrbBcWm69gIjXt8NWCrKeI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WlmSHIVxLWZM51Fr639gFbrBBFWxZBD1F4qivNgIfrAv7PDP464Llko1Q+n6sqS216QdJ10fT98iilaU7qUU/wljDBjnAc13kjQy7HDn4wL+hdD/ngQrTkwo7HpNKhKogFykxP+HZ6BXmV69Z5tXnpFpopxIdE0ylfhbFiKSoeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=eBTmwlyq; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cQJPP5ns"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-381c51fde6bso2140565a91.2
-        for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 00:39:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783841976; x=1784446776; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=/eu7dHrjo+8poscG/MBw9L5sZo7bmfQR/ckNZrU5PQs=;
-        b=cQJPP5ns2t5WpWANDxBPFSo37iGqWwiehtzQhhRpmVj23SrnziPHOz+Nu+rs3dhPQO
-         NuXUX96/pRis9RSeUvhBrE+71SkqxIvHa+3nltPOrCOnUgJBZ0PsP5rZZfSupaS241VT
-         ZHHAwn/7pY8wR2Fs6/tq3KMKchm6cbbgJ5hPVCIF66EHe+7sw44JWOLl+gLR8lMQUSJR
-         VrC/xdPMFnqE6nCF7smXc6jKyNG4T+xPCrxVpAwEwguyCWmuVhAc/2695zV1PH3cu/vl
-         /nclD2umY7B9RrQc4WA5VCSBtz92fBIvigrI16JFaZEC6Sa0qJWpdrGy+HRre5YD5cEX
-         ocJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783841976; x=1784446776;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/eu7dHrjo+8poscG/MBw9L5sZo7bmfQR/ckNZrU5PQs=;
-        b=CblBVCvpiCKthNorznE1w30j/AqXPMHQrWXgnnm/obGHlgR9uiYYNp1e1sqkk+CKYS
-         Ihus0OJkF25ADkhscb57UnCelZa+HPkIsnZsnM+vMEtTcN+N7ELNfTJ9++OFIJCKKEao
-         ce5jb0WzRiDK5Add/Zuz9HMg7VxDfEHFaUBhJ8sDnhTaJCXIysnkszsYWiK7wUkXd9WI
-         7OQyS8RxLhYieGeSoxLJzwtzYTd5W5mDLhnSByCEmRmzuALQXImKZW7247iVSebtbvIC
-         MiAED25e29GYzF/zyHbGCNSV62MaEzyPDns6rl89SO5k2U+VgmkR1eOzUeOt77rqt3Gm
-         6nUw==
-X-Forwarded-Encrypted: i=1; AHgh+RqWMXgspOslxGqv/07h81l57pyPdLNr7D1Zv4aym6HCEHgKlybBBKnahMufgXNpA62c5tx7Mi8u+g==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw+TJJEyTEZMZ6rpsCFziW4IVpcKQPp9SqlVx2SORRvGqV+Ujeu
-	7s8Ht3d4hy+hqG7AwD8dHBTrYujb96/QNyFgSA13xuEThwEP5tLzmYZg
-X-Gm-Gg: AfdE7cl00EPj0t4wwAMe227EYEirpLXMXsFFtsJbBWh5tA9Ih4WcjJYauobzCcfMHfN
-	3sW1gSgdps+Yt5TqocF1G8/jL1s4ThhqfCWYYqGM/gF3AiTdpGfpE7gEYxG9ezJTzdO+PwOmVLP
-	//lDBatSIgOv95Mu4R35kaIBc0k1DeUcHn/yCPzsBn4Eu3IcIKfeq0COCQOBA3NMwkzaO4tHn/B
-	xhVtn3Ll4wJdumF2w2Qlcj2TptoHXH8uJIkq//pTvKQvcMJfrv0oHJarvS+Fiv2ckJFGFBMMM8y
-	AwDi4BwLZI9V5moxSVnv5VETCPluCDViYbWaet32dvvE8HHuh46NXdzmBwxUgJo8/DM43BBAzje
-	gCG2ep60BNEnqjW5PRec/qqAxU8EohoNO4nad5gGyhP9KWO8VfbrycAlvzeLoFTQX
-X-Received: by 2002:a17:90b:390f:b0:387:df8f:1406 with SMTP id 98e67ed59e1d1-38dc77ce51amr4336096a91.39.1783841975574;
-        Sun, 12 Jul 2026 00:39:35 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38a5516ad85sm4803452a91.2.2026.07.12.00.39.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jul 2026 00:39:35 -0700 (PDT)
-Date: Sun, 12 Jul 2026 15:38:51 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Alex Elder <elder@riscstar.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Jingoo Han <jingoohan1@gmail.com>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
-	Christian Bruel <christian.bruel@foss.st.com>, Frank Li <Frank.Li@nxp.com>, Nam Cao <namcao@linutronix.de>, 
-	Qiang Yu <qiang.yu@oss.qualcomm.com>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Xincheng Zhang <zhangxincheng@ultrarisc.com>, Siddharth Vadapalli <s-vadapalli@ti.com>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Vidya Sagar <vidyas@nvidia.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-Cc: linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v4 1/6] PCI: spacemit-k1: Add device data support
-Message-ID: <alNDI8JVUuhpJblo@inochi.infowork>
-References: <20260709040027.958400-1-inochiama@gmail.com>
- <20260709040027.958400-2-inochiama@gmail.com>
- <338687f9-e80e-40e8-b14e-1218e61e4e0c@riscstar.com>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="eBTmwlyq"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 1EDBF1A0F7C;
+	Sun, 12 Jul 2026 08:56:03 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id DC3B560341;
+	Sun, 12 Jul 2026 08:56:02 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 743A811BD39CB;
+	Sun, 12 Jul 2026 10:55:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1783846561; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=Y7El/GvvQcgfO05yr3MPYiblRZfsw0etG5ZwJOy721U=;
+	b=eBTmwlyq5grs9SuLbAKD5Y75NROGxAC1QetQ5b7HUGAnFwTASj+WWM9Y2Iot07rey7XZXP
+	dJ0YFCv8Carw54kXlnGxJE/UfFRe1GE5u6FuZv37KeO3KFh7WR4Cf4O4tbdJcYj5mg6bz7
+	0Cjqq3AkI+EXauwXN+Fl+CLvRiO597RuxtO5GpSkyHIwkww0pu4ABAmGHXuH7iniyCLzWC
+	n2O7JocA0WdizEixyG5XtkjLeNAqVVNlcFbJwOzKWAy9/XtXLivw47muUa7buKjuXB15J8
+	R37JSbRS8ynuqRJaJJsnMzV+lKRWSBvpjNNQF+/zwqu25Hkx79lJHJ5MNvk+6A==
+Message-ID: <bc78469c-3f45-4234-88b0-49f050d651db@bootlin.com>
+Date: Sun, 12 Jul 2026 10:55:51 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <338687f9-e80e-40e8-b14e-1218e61e4e0c@riscstar.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Failed to reinit phy of spacemit-dwmac when reset-gpio is present
+To: Inochi Amaoto <inochiama@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ Eric Dumazet <edumazet@google.com>, "David S. Miller" <davem@davemloft.net>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Yixun Lan <dlan@kernel.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc: netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ E Shattow <e@freeshell.de>, Han Gao <gaohan@iscas.ac.cn>
+References: <20260712045233.800748-1-inochiama@gmail.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Content-Language: en-US
+In-Reply-To: <20260712045233.800748-1-inochiama@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Fri, Jul 10, 2026 at 11:01:16AM -0500, Alex Elder wrote:
-> On 7/8/26 11:00 PM, Inochi Amaoto wrote:
-> > To reuse the K1 PCIe driver logic for K3 PCIe controller, add device
-> > data to handle the K1 specific logic and make room for the incoming
-> > logic for K3.
-> > 
-> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> 
-> I have two suggestions/questions, but I think this looks
-> good overall (please add the space that Andy suggested).
-> 
-> If you drop the data field in the k1_pcie structure you
-> can keep this tag:
-> 
-> Reviewed-by: Alex Elder <elder@riscstar.com>
-> 
-> > ---
-> >   drivers/pci/controller/dwc/pcie-spacemit-k1.c | 30 ++++++++++++++++---
-> >   1 file changed, 26 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> > index be20a520255b..f6ae8ff3589a 100644
-> > --- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> > +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> > @@ -49,8 +49,17 @@
-> >   #define PCIE_CONTROL_LOGIC			0x0004
-> >   #define PCIE_SOFT_RESET			BIT(0)
-> > +struct k1_pcie;
-> > +
-> > +struct k1_pcie_device_data {
-> > +	const struct dw_pcie_host_ops *host_ops;
-> > +	const struct dw_pcie_ops *ops;
-> > +	int (*parse_port)(struct k1_pcie *k1);
-> > +};
-> > +
-> >   struct k1_pcie {
-> >   	struct dw_pcie pci;
-> > +	const struct k1_pcie_device_data *data;
-> 
-> Is it strictly necessary to keep a copy of the data
-> pointer in the k1_pcie structure?
-> 
-> It can be convenient to do so if you reuse the fields
-> in that structure rather than duplicating them, but
-> often the constant platform data is meant only for
-> initialization, and never needed after that.
-> 
+Hi Inochi,
 
-In fact it is not, I think it is fine to remove it.
-Recording this is more like a habit for me for the
-future usage.
-
-> >   	struct phy *phy;
-> >   	void __iomem *link;
-> >   	struct regmap *pmu;	/* Errors ignored; MMIO-backed regmap */
-> > @@ -278,14 +287,21 @@ static int k1_pcie_parse_port(struct k1_pcie *k1)
-> >   static int k1_pcie_probe(struct platform_device *pdev)
-> >   {
-> > +	const struct k1_pcie_device_data *data;
-> >   	struct device *dev = &pdev->dev;
-> >   	struct k1_pcie *k1;
-> >   	int ret;
-> > +	data = device_get_match_data(dev);
-> > +	if (!data)
-> > +		return -ENODEV;
-> > +
-> >   	k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
-> >   	if (!k1)
-> >   		return -ENOMEM;
-> > +	k1->data = data;
-> > +
-> >   	k1->pmu = syscon_regmap_lookup_by_phandle_args(dev_of_node(dev),
-> >   						       SYSCON_APMU, 1,
-> >   						       &k1->pmu_off);
-> > @@ -299,11 +315,11 @@ static int k1_pcie_probe(struct platform_device *pdev)
-> >   				     "failed to map \"link\" registers\n");
-> >   	k1->pci.dev = dev;
-> > -	k1->pci.ops = &k1_pcie_ops;
-> > +	k1->pci.ops = data->ops;
-> >   	k1->pci.pp.num_vectors = MAX_MSI_IRQS;
-> >   	dw_pcie_cap_set(&k1->pci, REQ_RES);
-> > -	k1->pci.pp.ops = &k1_pcie_host_ops;
-> > +	k1->pci.pp.ops = data->host_ops;
-> >   	/* Hold the PHY in reset until we start the link */
-> >   	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
-> > @@ -320,7 +336,7 @@ static int k1_pcie_probe(struct platform_device *pdev)
-> >   	platform_set_drvdata(pdev, k1);
-> > -	ret = k1_pcie_parse_port(k1);
-> > +	ret = data->parse_port(k1);
-> >   	if (ret)
-> >   		return dev_err_probe(dev, ret, "failed to parse root port\n");
-> > @@ -338,8 +354,14 @@ static void k1_pcie_remove(struct platform_device *pdev)
-> >   	dw_pcie_host_deinit(&k1->pci.pp);
-> >   }
-> > +static const struct k1_pcie_device_data k1_pcie_device_data = {
-> > +	.host_ops	= &k1_pcie_host_ops,
-> > +	.ops		= &k1_pcie_ops,
-> > +	.parse_port	= k1_pcie_parse_port,
-> > +};
-> > +
-> >   static const struct of_device_id k1_pcie_of_match_table[] = {
-> > -	{ .compatible = "spacemit,k1-pcie", },
-> > +	{ .compatible = "spacemit,k1-pcie", .data = &k1_pcie_device_data},
+On 7/12/26 06:52, Inochi Amaoto wrote:
+> TL;DR:
 > 
-> In addition to the missing space that Andy mentioned,
-> adding a comma means the line won't need to change
-> when you add another entry to the array.
+> The DWMAC on Spacemit K3 is failled to register phy after the reload
+> the driver module (rmmod then insmod). Because the reset-gpio is
+> asserted while unloading the driver and is not desserted before reading
+> the c22 id, which leads to a fault.
+
+You're not the first one facing this type of issues, this is a long standing
+source of issues. The problem is partially hidden by the fact that often times
+the bootloader deals with the PHY reset (like the case you're facing)
+
+Take a look at these discussions :
+
+https://lore.kernel.org/netdev/cover.1761732347.git.buday.csaba@prolan.hu/
+
+and maybe more intersting, Russell suggested an approach on how we could potentially
+address this here :
+
+https://lore.kernel.org/all/aTBeVTlsElGXUCSN@shell.armlinux.org.uk/
+
+
+> ---
+> --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> @@ -196,7 +196,8 @@ &eth0 {
 > 
+>  	mdio {
+>  		phy0: phy@1 {
+> -			compatible = "ethernet-phy-ieee802.3-c22";
+> +			compatible = "ethernet-phy-id001c.c916",
+> +				     "ethernet-phy-ieee802.3-c22";
 
-I do not think the comma has this meaning in this scene. It is
-weird to wrap in the device table when having enough space.
-Further more, this line must be changed for the last "}", so
-it always require a change for adding data.
+Indeed that's merely a workaround :(
 
-> >   	{ }
-> >   };
-> 
-
-Regards,
-Inochi
+Maxime
