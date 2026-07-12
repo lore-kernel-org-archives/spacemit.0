@@ -1,93 +1,51 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72B334A78E
-	for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 10:05:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4141FF1C7;
+	Sun, 12 Jul 2026 13:50:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783850722; cv=none; b=RncdgACHrzxes5K6X8VAtJ+d9g09WQvelpWcyCld61sbf4n85Ordsylo6BZpu5MGwe7djwNqnr2OqBZ7NchCFMU34E7Bdg0l+2YjJ93qssquxiOP+/0jIQ0AV6NNAbAbv2Lb/yVawrptOgelhSkhUIMCBfFu2hofQFbkEiu8IYY=
+	t=1783864211; cv=none; b=E3fIOPLCoL1rSNZt/sJoE39Q5Rkaez/8fqFRPxGsxusRTUiOUPeg/3k+u8OgOzSA852cVYfQPP09HUBaHbx7C2fm0t3xxhwNX7kAguPa0mJVUh5dSMlh+BnfMtivI1i2BTmCKCIm/y5nbk/BORWPb9tCCyuCLgUHuntFfmx3qwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783850722; c=relaxed/simple;
-	bh=mtNrxxMixLSJ5IBYSZLOCEDNhvuQ+B9NEif7MbnZofM=;
+	s=arc-20240116; t=1783864211; c=relaxed/simple;
+	bh=d1jcEnPcnzVCs1WAGyTkfmji/4DAeVJaukvqVtizUpo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TonEn9amzOuPySSPcYwb1d8dkVn/e0nxCuFWXN7JacbqxVnJvX5u2W3LwP5wHHbU6Twgtm/zW11HB3NAxVGsHzj49oogjScYOpnjJ4V6hxzO0nO2SXre15gUsxlg63lBEJGGExnTBAWEKXE9SCtSiERjGilLYv8tHPx4prgjmdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LPAvgRVk; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZPHKXHALcfi5l7gZEdOB8m1ooF3nAP8m45cN/dRHBuNAd3SK3ehFlzZyCpQSij54oOW8K/8NtL9v/KcpIUZo4btZoOuvw4epd62MEerTjHZk63RaIHQQTu4Gz53uxvJGhzZ1J+Cq9Kw8UWurDwATztVN9X6Jl0luQiCAox8HZ+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=Ok/hkJ5D; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LPAvgRVk"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2caed617615so23329965ad.3
-        for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 03:05:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783850720; x=1784455520; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=vtBVbtAq8/J9WfLZAmtmwFvAK1PPs6W2XE0Zv0PL61A=;
-        b=LPAvgRVkgceG9IMERXo0TtqfReBXuPeU9yPE4CQPEXcy0Jn1kqWBaP1rVfUHTlcxAF
-         7ivBsFZVCHsGj11qhoO+a8Wb+kzhwc/wM7Wbp+L1/4kRQ1BvBBP8Y8PipKRlEG1mvWF+
-         QgaN7xGXjATmMXgJqWf2t35RZya5LMLuC/iYKuIzEvc6/sHwXlw45NB0pXkuPlgo4S3Z
-         ZLIZ1bhTrkLltAlGwPd/nlmVOl53Dr/E3j++qDGS50J84dCD1zv7p7xw1dFsebwKSWBx
-         04p5a8xbuzo2B2bXboDkwKcN21jChf3vHAAHh9FroXrCEnINBKHg5/8x5e4gZKZHABRo
-         sjQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783850720; x=1784455520;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vtBVbtAq8/J9WfLZAmtmwFvAK1PPs6W2XE0Zv0PL61A=;
-        b=iA6061RNrCliAH7mCsi4+a6ABGnT73+1V/NKQ5cwHUg/vEow17MeOnb6UtUo8DJsaO
-         T+XmqRNgjIoDjFlCO60FJv3X+8TK/U7ZNFNKvS4qj+C/+pbAEpvd6QpIdyBZ0fHOovJv
-         3xoJOfZ5zaLFa6zZ0qoUKrz9eXutBAOO9hXOzqsZnH8BevwIQ4f/0xQQIdh9pn9bkIiL
-         6XBMHzAuVq2PyUjGbXcbzeMLU+wbLuUGWgGeLBfuwVC7aPBGGwbYihUkKpnHJDOAO8X8
-         OM3w9BD55MvcI/JZ0lXspmbxoAhNHGZbXv8Ev/OuLwiSS2CBhc+lab6/S7dgf2x+urqX
-         nOYg==
-X-Forwarded-Encrypted: i=1; AHgh+RoZILQSUTauwEowwnHAbrb2bMToC6Uv8tWZmBSSW3+NggM5kdeeSL4oVp/jtbGJ7TS71DFXV/IYWA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzp6xJhzV6ER1ad3N1VeKlA9YLMJIVnawsZQOZ5eR4k2f3H7A/f
-	Ppmzc3yTyaOpk8BdKMDDWFqy/2J91NQIK//l20HGjp+o0FYHmknGr+kF
-X-Gm-Gg: AfdE7cl5ezGalX5A0tOB3Yn3bOAw4gwBKn29ptntJYwjjpcTbuZn2DkW4Yd20assv7l
-	fm+LSqwd8g01ZKxzX3SRzIErkYrJwQFhXMzc4mqX1O7pNBmEXKHoTZbDi/27IvZvizwnmzXD0UO
-	ekWxnsCCGFMBmSMpfnACl6JIGagWes0BKI6EipD9SI40ng1LOYPxYJ7Ypc+mRCHfdUrDTODIAJX
-	q2j7490moYxGU1n6jxNKAsWvlDjZMSneprVxAsyhQ2BSW8omBL4f8xB8rLOWctx8VRoYvc4RqNO
-	LyP9X14tvmU/kJXKXgwQFAAQ79wxi4sfkexNKMd1SAQLp/++YOseJzAcZbLlv8gqhPFJ1fSXzUy
-	h3mksp374650L2W8M7eoW90cCw+x3ApA/WWqoIwztmDPLSlR6OGhqd1RkTbBLHuxB
-X-Received: by 2002:a17:902:d987:b0:2cc:ae2b:b6d2 with SMTP id d9443c01a7336-2ce9eac1d98mr54983735ad.15.1783850720120;
-        Sun, 12 Jul 2026 03:05:20 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9bf77e4sm83401535ad.22.2026.07.12.03.05.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Jul 2026 03:05:19 -0700 (PDT)
-Date: Sun, 12 Jul 2026 18:04:35 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Christian Bruel <christian.bruel@foss.st.com>, 
-	Frank Li <Frank.Li@nxp.com>, Nam Cao <namcao@linutronix.de>, 
-	Qiang Yu <qiang.yu@oss.qualcomm.com>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Xincheng Zhang <zhangxincheng@ultrarisc.com>, Alex Elder <elder@riscstar.com>, 
-	Siddharth Vadapalli <s-vadapalli@ti.com>, Vidya Sagar <vidyas@nvidia.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, 
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v4 2/6] PCI: spacemit-k1: Add multiple PHY handles support
-Message-ID: <alNjykt9ERnMXTZ7@inochi.infowork>
-References: <20260709040027.958400-1-inochiama@gmail.com>
- <20260709040027.958400-3-inochiama@gmail.com>
- <ak9KzNFF26B0Kttz@ashevche-desk.local>
- <alBNXgMAwXPKwiJ2@inochi.infowork>
- <alCoTEDUY8AO9OzD@ashevche-desk.local>
- <alDNlfb0_T9g-ATO@inochi.infowork>
- <alI6ml4xQboFOgxG@ashevche-desk.local>
- <alMmkHrfgWoN8RqS@inochi.infowork>
- <alNf1OoBtscauPXV@ashevche-desk.local>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Ok/hkJ5D"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=aJQLR1BZeiLOJtrMrJZsDmYK7XktL1Qw34JZsr4WT9U=; b=Ok/hkJ5DV6vMXXo56g9YdXpbOk
+	7ywYGl6xicj493JvdcbNXNUxSp8gA+nMZ5XXPPS2bXPXli32bj0R/6lPT+fqiswTmtxTbtjfpLUin
+	/lYT6Dz7ruNgsZXQSZAjHXyRLrPFJ8PXLtyEXkQRX03NJRnoD0CvO9gJ2LKiyKLZhGnk=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1wiuYx-00Bv9D-IP; Sun, 12 Jul 2026 15:49:43 +0200
+Date: Sun, 12 Jul 2026 15:49:43 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Yixun Lan <dlan@kernel.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	E Shattow <e@freeshell.de>, Han Gao <gaohan@iscas.ac.cn>
+Subject: Re: Failed to reinit phy of spacemit-dwmac when reset-gpio is present
+Message-ID: <8689bf7d-e00d-4097-bd3c-4d7d7844d1d2@lunn.ch>
+References: <20260712045233.800748-1-inochiama@gmail.com>
+ <bc78469c-3f45-4234-88b0-49f050d651db@bootlin.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -96,80 +54,22 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <alNf1OoBtscauPXV@ashevche-desk.local>
+In-Reply-To: <bc78469c-3f45-4234-88b0-49f050d651db@bootlin.com>
 
-On Sun, Jul 12, 2026 at 12:35:16PM +0300, Andy Shevchenko wrote:
-> On Sun, Jul 12, 2026 at 01:41:25PM +0800, Inochi Amaoto wrote:
-> > On Sat, Jul 11, 2026 at 03:44:10PM +0300, Andy Shevchenko wrote:
-> > > On Fri, Jul 10, 2026 at 06:55:10PM +0800, Inochi Amaoto wrote:
-> > > > On Fri, Jul 10, 2026 at 11:07:40AM +0300, Andy Shevchenko wrote:
-> > > > > On Fri, Jul 10, 2026 at 09:57:05AM +0800, Inochi Amaoto wrote:
-> > > > > > On Thu, Jul 09, 2026 at 10:16:28AM +0300, Andy Shevchenko wrote:
-> > > > > > > On Thu, Jul 09, 2026 at 12:00:22PM +0800, Inochi Amaoto wrote:
-> 
-> ...
-> 
-> > > Then the counted_by will be incorrect as it may access valid memory, but
-> > > unused by the driver.
+> > --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> > +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> > @@ -196,7 +196,8 @@ &eth0 {
 > > 
-> > After some search I found a requirement in GCC patch:
-> > https://gcc.gnu.org/pipermail/gcc-patches/2024-May/653123.html
-> > 
-> > It seems like the array can have more elements than the counter.
-> > Some I guess the reallocation is not necessary and the counter
-> > is still correct. Correct me if I am wrong.
+> >  	mdio {
+> >  		phy0: phy@1 {
+> > -			compatible = "ethernet-phy-ieee802.3-c22";
+> > +			compatible = "ethernet-phy-id001c.c916",
+> > +				     "ethernet-phy-ieee802.3-c22";
 > 
-> There will be no problem from memory accesses point of view, but there are two
-> disadvantages:
-> - the waste of memory for unused items
-> - the memory accesses beyond used items, which may lead to or show the subtle
->   issues in the code elsewhere
-> 
-> Better to be correct. It might help debugging as well in some other cases.
-> 
-For correct number, I guess using "fwnode_property_get_reference_args"
-is a idea, it is kind of ugly, but it does provide some function for
-use to get the phy numbers. It is more like "of_clk_get_parent_count"
-and "reset_control_get_count" in the clk/reset subsystems. 
+> Indeed that's merely a workaround :(
 
-I think adding a function like the above one is a good start point for
-the phy array/bulk. At least this phy function is implementable for me,
-since it is quite simple and straightforward.
+Despite is being a workaround, there has not been much progress on a
+generic framework for dealing with clocks, resets, regulators etc,
+before probing PHYs. So this is probably what you want to do.
 
-Regards,
-Inochi
-
-> ...
-> 
-> > > > > > > > +	for (i = 0; i < k1->phy_count; i++)
-> > > > > > > 
-> > > > > > > 	for (unsigned int i = 0; i < k1->phy_count; i++)
-> > > > > > 
-> > > > > > I agree with the unsigned int, but I guess this definition is not
-> > > > > > allowed in linux.
-> > > > > 
-> > > > > It's allowed and it's encouraged even by Linus. As long as iterator is local,
-> > > > > use this syntax sugar and reduce its scope. It hardens the code.
-> > > > 
-> > > > Could you give me a reference url to check,
-> > > 
-> > > Sure, there are two (one for integers and one for pointers)
-> > > https://lore.kernel.org/lkml/CAHk-=wiCOTW5UftUrAnvJkr6769D29tF7Of79gUjdQHS_TkF5A@mail.gmail.com/
-> > > https://lore.kernel.org/lkml/CAHk-=wgy8p4is8ApEQCT5NS7XFb+NXeo-TKz7jRRZVksLLBSrQ@mail.gmail.com/
-> > > 
-> > > > I have not found this on the coding-style.
-> > > > https://www.kernel.org/doc/html/latest/process/coding-style.html
-> > > 
-> > > Feel free to update the documentation.
-> > 
-> > Good to know thanks.
-> 
-> Are you going to update documentation? I can review it.
-> 
-> > > > > > > > +		phy_exit(k1->phy[i]);
-> 
-> -- 
-> With Best Regards,
-> Andy Shevchenko
-> 
-> 
+       Andrew
