@@ -1,91 +1,86 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEBA369207
-	for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 05:42:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9002D7DCE
+	for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 05:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783834931; cv=none; b=BzeeNCrkHPIS/hjpHGKpO8Wn5sqp6ZCpIP+MmA/RDmepj9t+a1gydXXvGi1QVEcZcWG38wDrhZRGHCTZk334UZa2qEC/iS9b9t+1ndiPwh8GGl/HYh2buEgf9r54Ohq+olujCLf2FKawzWnngrOB8en+14ZaGn+7YipVh21nNQ8=
+	t=1783835059; cv=none; b=hwVb+8gd7Jc9gXo/FZnv5aHDpFdEbVELQTu+W5GTGeR7d8/1KNJpEAb8jnPX+7ocWMUN95XMZHFkGovnhJImtaAAp9nfUq1gHdf0ttBCGAY5zPJxqDFG1YSoznhw4q9+XOnIa11P8hBNRIJiOb6quO6dA4SzbJbWTeUodh3lzuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783834931; c=relaxed/simple;
-	bh=nlR3zh/p1mRq+F3TPAsXvl1Jqlr9oLfFdqFjFZlqsJg=;
+	s=arc-20240116; t=1783835059; c=relaxed/simple;
+	bh=IaU5AQLMyj4VZ3NhJA/7Pd/ODMHBYTuf7q8H473n99g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tHPnG2/bgMpR7hlQKq7rteS+sXpHhQUS3kf2KeXo6rI3XvGrzwpz4dHAaRGY3UaAvNXOWZQkeaz81/ZUvcyyi5VN1ajUleDd57kTQabok5siLpdgxVmDcXHPouL4uG0Of0BakTLI6wKm5nImm/9he2pFUhypqGqdUNny6nBXp5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eWIrK8I9; arc=none smtp.client-ip=209.85.210.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=ExgSWScWFGScUxh0td6kuytf+MZYGx/yAYy2udhyfEfCNnnYcirbtO0vWekQyKsZvy0QXyScOAcdwta8Jxw+YPzrO+Z9hMqzXVLphzpjPiHqZOmh1pPAHEZK8HwKyqaKK5xNRaEVoJI6rPK6y/nLH1h++CKNB6e4EQsJuIi2WkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nCUHKjCh; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eWIrK8I9"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-848882fdb18so1219017b3a.0
-        for <spacemit@lists.linux.dev>; Sat, 11 Jul 2026 22:42:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nCUHKjCh"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-38175907a56so2512815a91.0
+        for <spacemit@lists.linux.dev>; Sat, 11 Jul 2026 22:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783834929; x=1784439729; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1783835057; x=1784439857; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=FaLvu9plWauuInWbH6Nm3IcDF3YBj3kM6gVC9OQY//0=;
-        b=eWIrK8I99DsGoJnnRag7rrGP2O/mvIdoSEQgrO9abqkDv1JiOO5htG96TvOfzRzA2P
-         JvNj5nQRbVuNZSQ0v6x7pFmkL5z7vGmgNtVaMNzxEejWQHJsgprbgJlm0Dk5AN90bCzg
-         WjwT2BsdzKiDbQGxT/0ZjZa3UTFteL/nsS/OjLWCpR5T4FLai4u8FgpRQqBG58q3vgIS
-         R9hAPBGaVE/C+8mlfWpzbZw/2c+lRYhTxhNzFJfQj5JdTNvsC0bS3p3avav8XaPXesgB
-         hqLpas2M8nHR1uliLfmOn+Co7Q6CHAznMZoMqslSLZINSZfuk8f3Plom9DikL1O3Jaqb
-         2aaw==
+        bh=tHBOsAK2LL1+dFyhqlDju8abtbkr9TbGvS+9b0ZjGQ4=;
+        b=nCUHKjCh+VF0BWzL073X2UEjjihCO2FvUq7cV98oH3eq+2HbnY14J70/wCfUq3XQHA
+         ECSPmfJhAz2hr26zirwr/nA2tcSNl67t9AqKw8BE0f/tH/NlWKy5xSvipazdyCgaS4un
+         +/4uIxgbcV2P0PpdFfPdikDewu9XXSXKUMHajdFs9yOBFWSgQqGdGj/aG95SAS5fFI90
+         Y5N9pVyAyEgc4wIwD/3Of5icz2cgPX3aMOX/ptP06B+YlOvS1PGJHeSUMluiRE7IJC/z
+         CqphJYvF7msWr5IP9kC+M+ar6eJfNPfg0qx5BeQIlBhz+lWfZHxNi4WCg7Q5PEm9D4N6
+         GiSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783834929; x=1784439729;
+        d=1e100.net; s=20251104; t=1783835057; x=1784439857;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=FaLvu9plWauuInWbH6Nm3IcDF3YBj3kM6gVC9OQY//0=;
-        b=Vn/fDHpPvTfyT905yylGIeOys05t3wLZk6F5vW9fhpR19rDSGUcTqCRf+tLHTGjv3V
-         0gxCNYFK6QfIBteZxTq6culvHaK4zgj2k1NGDdg+Sr/ieaAUz1LTDX7UTsJIYKPKmZqY
-         wKEDyzzD2YWy+z9kQlpRZA1QUUzt8u6wkdGftxZWgAxXkcaaaDKoYGKg+j7tudakGkel
-         5dOzDoKuBXAkOn1WTGylU4eRfImdpz6i6ofr1I6PIi8H1q46Ka55eC3p7ZkgoycKtwx2
-         dmIc6uL+iyv4TOaPzwtx2LPF9TwTrhznqeDQ6M47WyPguVhJ9BZg6fp0DybmJn15Yk5B
-         JRkA==
-X-Forwarded-Encrypted: i=1; AHgh+RogfRc9Wvvkfruhh/2cFnPivRo8wXsRo1bELCFIFKZ4KAWnWA+AI3TqZCXiwTudlesaj1VmwNNB7Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzW7n52cKWt2fH6qF1wZZavWCw3JQLBzUWtasNI4TxfhUkiO3yh
-	eS8ebxekJ6sPFT8zH+hkcJMIuFNitVgAkvNYzE0r8rxJcLEFVYdhgNMO2kyHC0PB
-X-Gm-Gg: AfdE7ckA4tXge//jRQaEJGQ/vPOUjz30k+dkaQm9nctBmQE36wvzoTdmCIcy1ISDX5U
-	qBfeHHhE8EKkPCjp0z6LxD2vzkWnHmNNB3ebYBpKPEEkKMRy0bicY74l5lwCGC/vag9uonkEChu
-	mO2i6gW4QD3WbYpgZVygWofoFx1zCgNjGLKcnePdlAGmfpSt2j+194h4yO6n0VNYo0Xz95O9Nru
-	IDrlpkKteLBW81CqV4WLgwu9enPGGj9HP2H/TCfcpxVVzdz3wwm28rm2DUQSKpbyhxRBINYs7yz
-	+1agtN8fw4cFFX9dBsQLnnOMhLgH9J/Nt0g/GAsvv22W6IrCHeisgDCHRFmeUqbzXERsoDLJ/0m
-	f4jfsJbIeRTXJQ0sxn8XVvIf2aCbE1t+fVWfbd1aGL3T94Hy0e10Liq6n+NLNQ6e+
-X-Received: by 2002:a05:6a00:4487:b0:842:3a3b:d6e7 with SMTP id d2e1a72fcca58-8488965bcf6mr4272160b3a.23.1783834929207;
-        Sat, 11 Jul 2026 22:42:09 -0700 (PDT)
+        bh=tHBOsAK2LL1+dFyhqlDju8abtbkr9TbGvS+9b0ZjGQ4=;
+        b=I6P0WIr/yEXy/GlhdmHf18rwlYbIHOsOe/DZ6RdEJqf2u5XHBPiL6Y1uf7gwi/4K9r
+         tdv6JlqHAa2JVA1BpFsa7gbBJvsoQau1NWRFAml/qpeqVe077LqiXTmMAd4vy6JSRv+E
+         498kW4vtXFFTlEx/0nvMChQeOVZkYlVYUPKWBA7xcXJBixk8uCvqRnFwwfRbeePrEx1d
+         I7rvepAVWaWCxA+v3lcQiJLnaWhcT09ZbEDICPuV3VJmdFFg4ZQ+AMIVEGoB613S/xOM
+         PxLtohew4k3VpuvfgFyCgxr5UeJqP9GcL2ngwBpHHcKGi4n9d4h/Xb9WQhOUcNghiZoz
+         6fuw==
+X-Forwarded-Encrypted: i=1; AHgh+Rr/qsfpqEvdw432TWiWJ1j/L2dZkq2O1fm7of8vWUkCNXvC3yTUY3r7CNPMkH7b7XY0FKoMf0ip7Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwPd/8hv4x0Q8y8QRliYaUN4cWque7V/zpQHTZttKCzgtmcxDsX
+	cY7EATlhBuqmkqmCC80f6G4czi3sMDp8S2FHn1UNdPDpE5FontQpK7TN
+X-Gm-Gg: AfdE7ckDN9lx6k318HXqpkf9KvBXfUjX1luT6QQR9HVsyyIJsuldDcwxFMn/B/XZTNL
+	GTOHdwf4CDWCAQg2UQ79z+VWqwyynYHmVfAJWV2j9c5bL9LZAEL8Egr7jwOMLXFZaTf+i9aFYVs
+	dQEeSsaQpbEz02ddZlxTGS7B3Fz36ATxvGYngf+n6JJ8Zme+VYdgJBnqhdxi85s3f2qNtYre9l8
+	Y9Zf5mPaIQbYE4fGzJTWbG/0FTucslZ8e99ftYU0WZXIbCghZ+NscWKPMtNPR1BG8Xt2UOF7i7w
+	yQu1vstu3AUKJrkJa2PZHtSRs2BPzzHVkFT0Mv1aK9gSbD4i10qEweLghOym+Xb4o9N3NLQnrmc
+	MCEL4RNguPDHhE6oOEblpAC7Pa2BdBmHSD02vkaLzf0sJkvVHszuvNvUhuT9DdFob
+X-Received: by 2002:a17:90b:5903:b0:37f:9e21:91d8 with SMTP id 98e67ed59e1d1-38dc834de8fmr3876818a91.15.1783835057412;
+        Sat, 11 Jul 2026 22:44:17 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84a15e36158sm691343b3a.47.2026.07.11.22.42.08
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38d11280409sm1900696a91.0.2026.07.11.22.44.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Jul 2026 22:42:08 -0700 (PDT)
-Date: Sun, 12 Jul 2026 13:41:25 +0800
+        Sat, 11 Jul 2026 22:44:17 -0700 (PDT)
+Date: Sun, 12 Jul 2026 13:43:33 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Christian Bruel <christian.bruel@foss.st.com>, 
-	Frank Li <Frank.Li@nxp.com>, Nam Cao <namcao@linutronix.de>, 
+To: Alex Elder <elder@riscstar.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Jingoo Han <jingoohan1@gmail.com>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+	Christian Bruel <christian.bruel@foss.st.com>, Frank Li <Frank.Li@nxp.com>, Nam Cao <namcao@linutronix.de>, 
 	Qiang Yu <qiang.yu@oss.qualcomm.com>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Xincheng Zhang <zhangxincheng@ultrarisc.com>, Alex Elder <elder@riscstar.com>, 
-	Siddharth Vadapalli <s-vadapalli@ti.com>, Vidya Sagar <vidyas@nvidia.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, 
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v4 2/6] PCI: spacemit-k1: Add multiple PHY handles support
-Message-ID: <alMmkHrfgWoN8RqS@inochi.infowork>
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>, Siddharth Vadapalli <s-vadapalli@ti.com>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Vidya Sagar <vidyas@nvidia.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Gustavo Pimentel <gustavo.pimentel@synopsys.com>
+Cc: linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v4 5/6] dt-bindings: PCI: spacemit: Introduce Spacemit K3
+ PCIe host controller
+Message-ID: <alMpUW6902TC5T4a@inochi.infowork>
 References: <20260709040027.958400-1-inochiama@gmail.com>
- <20260709040027.958400-3-inochiama@gmail.com>
- <ak9KzNFF26B0Kttz@ashevche-desk.local>
- <alBNXgMAwXPKwiJ2@inochi.infowork>
- <alCoTEDUY8AO9OzD@ashevche-desk.local>
- <alDNlfb0_T9g-ATO@inochi.infowork>
- <alI6ml4xQboFOgxG@ashevche-desk.local>
+ <20260709040027.958400-6-inochiama@gmail.com>
+ <58948c74-0990-449e-8eee-88cbb38db7e7@riscstar.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -94,115 +89,150 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <alI6ml4xQboFOgxG@ashevche-desk.local>
+In-Reply-To: <58948c74-0990-449e-8eee-88cbb38db7e7@riscstar.com>
 
-On Sat, Jul 11, 2026 at 03:44:10PM +0300, Andy Shevchenko wrote:
-> On Fri, Jul 10, 2026 at 06:55:10PM +0800, Inochi Amaoto wrote:
-> > On Fri, Jul 10, 2026 at 11:07:40AM +0300, Andy Shevchenko wrote:
-> > > On Fri, Jul 10, 2026 at 09:57:05AM +0800, Inochi Amaoto wrote:
-> > > > On Thu, Jul 09, 2026 at 10:16:28AM +0300, Andy Shevchenko wrote:
-> > > > > On Thu, Jul 09, 2026 at 12:00:22PM +0800, Inochi Amaoto wrote:
-> 
-> ...
-> 
-> > > > > > +	k1->phy_count = i;
-> > > > > > +	if (k1->phy_count == 0)
-> > > > > > +		return -EINVAL;
-> > > > > > +
-> > > > > > +	return 0;
-> > > > > 
-> > > > > This doesn't seem correct to me, I would expect phy_count to be assigned only
-> > > > > when it's valid. (Yes, perhaps 0 is the same as it was, but semantically it's
-> > > > > different 0 in this case.)
-> > > > 
-> > > > I guess you think 0 is a valid number? I can not understand what you thing
-> > > > Assign this to 0 if there is no phy is fine to me, which shows there is 0
-> > > > vaild phy found.
-> > > 
-> > > Isn't it already 0? Semantically code is wrong in a flow (not in the result).
+On Fri, Jul 10, 2026 at 11:01:38AM -0500, Alex Elder wrote:
+> On 7/8/26 11:00 PM, Inochi Amaoto wrote:
+> > Add binding support for the PCIe controller on the SpacemiT K3 SoC.
+> > This controller is almost a standard Synopsys DesignWare PCIe IP,
+> > with some extra link and reset state control.
 > > 
-> > In fact it is already 0 here. But I am not understand why you thing is wrong.
-> > Could you explain it in detail? (Maybe you think it is not good to return 
-> > -EINVAL?)
+> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 > 
-> You rewrite 0 by 0, but the fact of the rewriting is inaccuracy.
-> We should not rewrite the default (whatever it is) with 0 count
-> as semantically they are different cases. The rule of thumb, we
-> don't assign values in case of errors, we leave them as is and
-> it's user / caller responsibility to assign the default and handle
-> errors properly. This is simple layering violation.
+> This looks OK to me.  What I see is that K3 does not require
+> the interrupts and interrupt-names properties, allows up to
+> six PHYs (not just one), and adds a dbi2 register that is not
+> used by K1.
 > 
-> Your code should be
+> I might have missed it, but I don't see where the dbi2 register
+> is used by the K3 code you have added.  In pcie-designware.c,
+> I see that if no "dbi2" resource is found, memory at offset
+> 4096 from the "dbi" base is used.  Does that apply for K3?
+> If so, maybe there's no need to define dbi2.
 > 
-> 	if (i == 0)
-> 		return -EINVAL;
-> 
-> 	k1->phy_count = i;
-> 	return 0;
+> 					-Alex
 > 
 
-Good, I understand it. Thanks.
+Weird, I have found the following logic in dw_pcie_get_resources()
+of pcie-designware.c
 
+```
+	/* DBI2 is mainly useful for the endpoint controller */
+	if (!pci->dbi_base2) {
+		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "dbi2");
+		if (res) {
+			pci->dbi_base2 = devm_pci_remap_cfg_resource(pci->dev, res);
+			if (IS_ERR(pci->dbi_base2))
+				return PTR_ERR(pci->dbi_base2);
+		} else {
+			pci->dbi_base2 = pci->dbi_base + SZ_4K;
+		}
+	}
+```
 
-> > > > > See also above. Do we have some PHY API that just counts provided PHYs?
-> > > > > If not, that what you should probably add first, before this patch.
-> > > > 
-> > > > I have not found any api for this. But the actual problem is, how the api
-> > > > is designed. I have checked both the array bulk api for reset and clock,
-> > > > it seems like it is much more than this patch...
-> > > 
-> > > Yeah, I looked at the phy-core and I think it will be hard to implement.
-> > > So, the idea is then is to reallocate the pointer each time you get a new PHY.
-> > > In this case the phy_count will reflect the actual memory consumption by phy.
-> > 
-> > Emmm, I think it is kind of buggy and not necessary. In most case
-> > this array is not long actually, so allocate some pointer should be
-> > fine and be an acceptable cost.
-> 
-> Then the counted_by will be incorrect as it may access valid memory, but
-> unused by the driver.
-> 
-
-After some search I found a requirement in GCC patch:
-https://gcc.gnu.org/pipermail/gcc-patches/2024-May/653123.html
-
-It seems like the array can have more elements than the counter.
-Some I guess the reallocation is not necessary and the counter
-is still correct. Correct me if I am wrong.
-
-> ...
-> 
-> > > > > > +	for (i = 0; i < k1->phy_count; i++)
-> > > > > 
-> > > > > 	for (unsigned int i = 0; i < k1->phy_count; i++)
-> > > > > 
-> > > > 
-> > > > I agree with the unsigned int, but I guess this definition is not
-> > > > allowed in linux.
-> > > 
-> > > It's allowed and it's encouraged even by Linus. As long as iterator is local,
-> > > use this syntax sugar and reduce its scope. It hardens the code.
-> > 
-> > Could you give me a reference url to check,
-> 
-> Sure, there are two (one for integers and one for pointers)
-> https://lore.kernel.org/lkml/CAHk-=wiCOTW5UftUrAnvJkr6769D29tF7Of79gUjdQHS_TkF5A@mail.gmail.com/
-> https://lore.kernel.org/lkml/CAHk-=wgy8p4is8ApEQCT5NS7XFb+NXeo-TKz7jRRZVksLLBSrQ@mail.gmail.com/
-> 
-> > I have not found this on the coding-style.
-> > https://www.kernel.org/doc/html/latest/process/coding-style.html
-> 
-> Feel free to update the documentation.
-> 
-
-Good to know thanks.
-
-> > > > > > +		phy_exit(k1->phy[i]);
-> 
-> -- 
-> With Best Regards,
-> Andy Shevchenko
-> 
-> 
 Regards,
 Inochi
+
+> > ---
+> >   .../bindings/pci/spacemit,k1-pcie-host.yaml   | 50 ++++++++++++++++---
+> >   1 file changed, 43 insertions(+), 7 deletions(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+> > index c4c00b5fcdc0..54817d6fd9af 100644
+> > --- a/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+> > +++ b/Documentation/devicetree/bindings/pci/spacemit,k1-pcie-host.yaml
+> > @@ -14,26 +14,29 @@ description: >
+> >     PCIe IP.  The controller uses the DesignWare built-in MSI interrupt
+> >     controller, and supports 256 MSIs.
+> > -allOf:
+> > -  - $ref: /schemas/pci/snps,dw-pcie.yaml#
+> > -
+> >   properties:
+> >     compatible:
+> > -    const: spacemit,k1-pcie
+> > +    enum:
+> > +      - spacemit,k1-pcie
+> > +      - spacemit,k3-pcie
+> >     reg:
+> > +    minItems: 4
+> >       items:
+> >         - description: DesignWare PCIe registers
+> >         - description: ATU address space
+> >         - description: PCIe configuration space
+> >         - description: Link control registers
+> > +      - description: Data Bus Interface (DBI) shadow registers.
+> >     reg-names:
+> > +    minItems: 4
+> >       items:
+> >         - const: dbi
+> >         - const: atu
+> >         - const: config
+> >         - const: link
+> > +      - const: dbi2
+> >     clocks:
+> >       items:
+> > @@ -66,6 +69,8 @@ properties:
+> >     interrupt-names:
+> >       const: msi
+> > +  msi-parent: true
+> > +
+> >     spacemit,apmu:
+> >       $ref: /schemas/types.yaml#/definitions/phandle-array
+> >       description:
+> > @@ -84,7 +89,8 @@ patternProperties:
+> >       properties:
+> >         phys:
+> > -        maxItems: 1
+> > +        minItems: 1
+> > +        maxItems: 6
+> >         vpcie3v3-supply:
+> >           description:
+> > @@ -96,13 +102,43 @@ patternProperties:
+> >       unevaluatedProperties: false
+> > +allOf:
+> > +  - $ref: /schemas/pci/snps,dw-pcie.yaml#
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            const: spacemit,k1-pcie
+> > +    then:
+> > +      properties:
+> > +        reg:
+> > +          maxItems: 4
+> > +
+> > +        reg-names:
+> > +          maxItems: 4
+> > +
+> > +      patternProperties:
+> > +        '^pcie@':
+> > +          properties:
+> > +            phys:
+> > +              maxItems: 1
+> > +
+> > +      required:
+> > +        - interrupts
+> > +        - interrupt-names
+> > +    else:
+> > +      properties:
+> > +        reg:
+> > +          minItems: 5
+> > +
+> > +        reg-names:
+> > +          minItems: 5
+> > +
+> >   required:
+> >     - clocks
+> >     - clock-names
+> >     - resets
+> >     - reset-names
+> > -  - interrupts
+> > -  - interrupt-names
+> >     - spacemit,apmu
+> >   unevaluatedProperties: false
+> 
+> 
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
