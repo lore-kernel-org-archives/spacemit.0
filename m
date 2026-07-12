@@ -1,101 +1,122 @@
-Received: from freeshell.de (freeshell.de [116.202.128.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31C823C368
-	for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 14:50:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0071A0BF3
+	for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 20:16:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783867828; cv=none; b=nmXJHBT3JW0maiN0KghPLTdqnuzlDgXHby1ZZSBXirridDIOtxbC+frJW6ZbwXZImv7fuwOGyL5wN3+xq4o/5esKgmzqK7Ixhs2THSIjGIixmJ9RMMyioDYW2atYNAbqeHYPc9WSDhPRcSi7oYLYkD/UB06yJtDRpjoqon42H0s=
+	t=1783887408; cv=none; b=glZoDJW1R/ZxXFBJ6Vv/+/pOckyDMkTn4ojUjQBigqBPb9XGizTdC728wK9XDO5vS2EJ4FgfxXzEjRzBK18ivCkKlNvhNYlGmhO3iimXVuJVtfDtVtctwCOyzM4yleMRqGJaEtvOAmuQHsWGGNCFiw9amTEikOCHoxt6R0tEgEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783867828; c=relaxed/simple;
-	bh=RRavhV5FIeJDdP7Im3Ubg5sj2lE53nE/4lMGo3DPKUc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TOE98rjhw++PXmbF3dlt+p28XI0DnaPzmH985KN6TsBq/9XVxqRkVDcBJpAGUs91zWfLmPIaI3N0CNfDOV3mAVpUXyRgXyZngHToj5ilBHO5eabFXLdbY0T9E5PCEjosRPW/CgJqcKEP7yQ5rHcSyD4zEy1YDdx+TF5gUCXqsds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=e1f+qC+L; arc=none smtp.client-ip=116.202.128.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
+	s=arc-20240116; t=1783887408; c=relaxed/simple;
+	bh=3QLR3KK8Id6mI23Kry/sbc3hYjkLOFnlNehgggqEwkk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aiC+ZQIIBrx4aayB/XcZUaLDB1OioRcJUXswYiZ5srdOnw/4QttImEZvmbaOATbBC2qe0sp8FmkwWD1ESMwVJBwu5DXh0YosMgrLj8oYnV7zPSlhb/135SiEGQslOySaDLcVNNcen+vSH98W7U+xOBVgISoe6MFrBSgAM9b3l4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=emVoe0LR; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tenstorrent.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="e1f+qC+L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
-	s=s2025; t=1783867767;
-	bh=Rgbu6YiDUX9kznSJSlo+OHz7QKMcuRkPsGR/yA4U/Cc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=e1f+qC+L/WnrDmmFa5VDmWfCQGJJmU9bOVHt5snbPF8fi/BKsz3/qb1GkPUE0p/3+
-	 M2KLArFP9AgM+wzed/pgadxFOk3u4quiCcXHV+X24rR6A9PwmtC3ieuuiW3K5gsMKj
-	 14cSfFjUJ9Q+9MPOpdj9frQWqoxI7TAs/e9hKriXEqerM733L5CwqAVqwBJ0kbBVM8
-	 P7/aowqXTgMMcCah3k1GJYwucCF4Ild3dlLv/bcCa24dRK9+bK4QJgmoAiKzut1sC9
-	 tZhstVazyV3ZN6Rtp7UT837VBE+896rjsA33YVVLfM6o0cNetHLRZuGPa8ueBTwJXy
-	 l7eKaYLWxXNkw==
-Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
-	(Authenticated sender: e)
-	by freeshell.de (Postfix) with ESMTPSA id 11F2EB2214E1;
-	Sun, 12 Jul 2026 16:49:23 +0200 (CEST)
-Message-ID: <203fffef-bef1-4d56-a6f0-a2fe482821db@freeshell.de>
-Date: Sun, 12 Jul 2026 07:49:15 -0700
+	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="emVoe0LR"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-81e69a2db34so36597987b3.0
+        for <spacemit@lists.linux.dev>; Sun, 12 Jul 2026 13:16:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tenstorrent.com; s=google; t=1783887404; x=1784492204; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Sexe2OJDiMkFGhURClJc1NsMoa58P5WaL0Byl520pbw=;
+        b=emVoe0LRQCVjCvkrnFEPyA0PDKxQ0pG2TA17eCDRBge3PvecIUAFUjDNNhcStJqHN3
+         KK/0SJ1tBx+PJ3S886PhjshY8wbYFPDJB7pYsjQLK8UU8ooSXZorGxY4W09sopwDuL4T
+         7Bs0gCnec2tJPN40UxrYSsBGwGUB73JlZa2xOcrCv5EpJJ6xqXRoZLOo89LM+60/HKMZ
+         4D7PJrjl5Nh+SXu9eVaSLqEaVxHgrcvCqDgRzIiuRNsbVTa/bSKxVh1/zsJG29UVVu4M
+         ZYCrOZZguQRy9YEXrNS8Kto1CngtYOzehjT8frHQ20NoaA5x1DFMBR/8aSrMEuRwEBCH
+         MmbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783887404; x=1784492204;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Sexe2OJDiMkFGhURClJc1NsMoa58P5WaL0Byl520pbw=;
+        b=W5s+3ZeLHyJoxC6ktJ3wjL97UpBQ6vgWCAhF/EhR2SLsfcDnNuw648p1Oc67WUPJ7u
+         ZY6dZE5ZjC5d60fWzkyKr2xRg/NbcggEaYhJ0OUqms0opN3vHmj1DW78FY7tR8lfKRR7
+         VlJHyl9Aj4AAlawDyyJNPC3PAElZOp5ViqLC+qq6iOaQsIU1RYiMp+pRx2/NWRO3G3rm
+         NqVFaLgLnaKaexp+ZSCMRk3T2mP1PraRo99BL0VpzvRHVlFtph1SvQGVv7Xe+omRqWk/
+         /CV9FlDy9CIJXXSLAPI8QJfk32XNLhVGCxiKNb9GRELWrq5k90XNkUIK4RPAncAbJkNH
+         qWzA==
+X-Forwarded-Encrypted: i=1; AHgh+RrEMCCWNqplfL1DpHtONAbbnGRDaoEXZoW/v2ZabZuigq0jUAXgSyp9f8QeF6RwXhi3hOIhXRjfqg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxtOwGRVepUgzzlo9r0799YeKPjItAW/INhnHkkomrG53aPQq6M
+	h8hYgKEBOXNOCBxItmEcEJ3BZnZCC998K2BB1kC17+QY/RKRKyq9pxByPxiGal+RQKw=
+X-Gm-Gg: AfdE7cnVO/9XNQVbYjvk7fu0p/u9kVd6MORgrnuhiRuGkyOvNqgNAMHt8ZLIHxXmogN
+	2HYA1TKRC2cXoU+1dn9gYnS2baGQaIQ//kdOr2u21mHQdF6bbSGyvNwGPVKjTOPdTuotRb4FGaY
+	H9BduvIv+FlGTN0B7hclwlZxg3s7IH2+HqKtRh+965p9F58oTDWJWi3/lX5fkJIAQo6UF6RNHwa
+	uk0p/pr0aRc0KzFWW4l1StKXGRhc0gQcU3yOV3OuVAoO6bhURY5IeSptbafV/zmt2AS6WXcQapg
+	lvshcfmQFVbZJ2kv7aPxq5MtnnjNdWWrtv1yEgtexDcmD4+o+UQzpeThF3qw7JAAjNXSQ3eWv9z
+	cQUxmnnOT1MROfI167D9UlsDWwwp+B8LsGPszrXtjuKpc19B0yPQsDE9htBFlsk483urkYoLPCB
+	2OeM3B6u6fo9RPZHS9mFyX5Mc+Lalv8OszZ49jD5lVbqHXTdAy0K7ZeYZ1Io4ZHRmrCUNT
+X-Received: by 2002:a05:690c:250a:b0:81e:68a2:89d5 with SMTP id 00721157ae682-81e901b3d89mr51627807b3.55.1783887404652;
+        Sun, 12 Jul 2026 13:16:44 -0700 (PDT)
+Received: from toolbox ([2600:1700:220:59e0:5e9b:73c6:ee82:165e])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81e6c1f11bbsm98699367b3.35.2026.07.12.13.16.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Jul 2026 13:16:43 -0700 (PDT)
+Date: Sun, 12 Jul 2026 15:16:40 -0500
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>, 
+	Avri Altman <avri.altman@sandisk.com>, Bart Van Assche <bvanassche@acm.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	"Martin K. Petersen" <martin.petersen@oracle.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, linux-scsi@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] scsi: ufs: spacemit: k3: Add UFS Host Controller
+ driver
+Message-ID: <7x3b4sttnc4oxkuvxmpkihfi76lkapjcigo7khgcgfytvol7w2@v5ykuyrk2z3m>
+References: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
+ <20260702-08-k3-ufs-support-v1-2-1a64a3ab128f@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Failed to reinit phy of spacemit-dwmac when reset-gpio is present
-To: Andrew Lunn <andrew@lunn.ch>,
- Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
- Eric Dumazet <edumazet@google.com>, "David S. Miller" <davem@davemloft.net>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Yixun Lan <dlan@kernel.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>, netdev@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- Han Gao <gaohan@iscas.ac.cn>
-References: <20260712045233.800748-1-inochiama@gmail.com>
- <bc78469c-3f45-4234-88b0-49f050d651db@bootlin.com>
- <8689bf7d-e00d-4097-bd3c-4d7d7844d1d2@lunn.ch>
-Content-Language: en-US
-From: E Shattow <e@freeshell.de>
-In-Reply-To: <8689bf7d-e00d-4097-bd3c-4d7d7844d1d2@lunn.ch>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260702-08-k3-ufs-support-v1-2-1a64a3ab128f@kernel.org>
 
-
-On 7/12/26 06:49, Andrew Lunn wrote:
->>> --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
->>> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
->>> @@ -196,7 +196,8 @@ &eth0 {
->>>
->>>  	mdio {
->>>  		phy0: phy@1 {
->>> -			compatible = "ethernet-phy-ieee802.3-c22";
->>> +			compatible = "ethernet-phy-id001c.c916",
->>> +				     "ethernet-phy-ieee802.3-c22";
->>
->> Indeed that's merely a workaround :(
+On Thu, Jul 02, 2026 at 02:31:36AM +0000, Yixun Lan wrote:
+> SpacemiT K3 SoC consist of UFS (Universal Flash Storage) Host Controller
+> which has features compatible with JEDEC UFS 2.2, MIPI UniPro v1.61 and
+> M-PHY v3.0 standard.
 > 
-> Despite is being a workaround, there has not been much progress on a
-> generic framework for dealing with clocks, resets, regulators etc,
-> before probing PHYs. So this is probably what you want to do.
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+>  drivers/ufs/host/Kconfig        |  12 +
+>  drivers/ufs/host/Makefile       |   1 +
+>  drivers/ufs/host/ufs-spacemit.c | 931 ++++++++++++++++++++++++++++++++++++++++
+>  drivers/ufs/host/ufs-spacemit.h |  90 ++++
+>  4 files changed, 1034 insertions(+)
 > 
->        Andrew
+> diff --git a/drivers/ufs/host/Kconfig b/drivers/ufs/host/Kconfig
+> index ff170c0b6da0..4f53b7f7688f 100644
+> --- a/drivers/ufs/host/Kconfig
+> +++ b/drivers/ufs/host/Kconfig
+> @@ -132,6 +132,18 @@ config SCSI_UFS_VARIABLE_SG_ENTRY_SIZE
+>  	bool
+>  	default y if SCSI_UFS_EXYNOS && SCSI_UFS_CRYPTO
+>  
+> +config SCSI_UFS_SPACEMIT
+> +	tristate "SpacemiT UFS controller driver"
+> +	depends on SCSI_UFSHCD_PLATFORM && ARCH_SPACEMIT
 
-Aside for my participation in reporting and testing here, I confirm that
-the above addition to 'compatible' node does not itself resolve what I
-observed to be a problem for debian-installer, however it does itself
-resolve the rmmod/modprobe cycling issue of the eventual installed
-Debian system as I described and what I am quoted as having reported
-from dmesg output.
+Can you add SCSI_UFSHCD_PLATFORM and SCSI_UFS_SPACEMIT as modules to
+riscv defconfig (or just add the former and add a default y if
+ARCH_SPACEMIT in this Kconfig entry). This will let defconfig kernels
+to boot with persistant rootfs on these devices.
 
-So the other report of increasing de-assert from 10ms to 50ms is needed
-for success of the debian-installer hwprobe detection, and this here
-issue of adding to the 'compatible' is needed for success of
-rmmod/modprobe cycling. In concert together both fixes resolve all of
-the trouble I observed and reported, tested and verified on Sipeed K3
-Pico ITX.
-
-Thanks for tracking this down it is very much appreciated :)
-
-With that,
-
-Tested-by: E Shattow <e@freeshell.de>
+> 
+> -- 
+> 2.54.0
+> 
