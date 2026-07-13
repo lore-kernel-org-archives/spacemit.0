@@ -1,172 +1,123 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D8930FC12
-	for <spacemit@lists.linux.dev>; Mon, 13 Jul 2026 15:04:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783955063; cv=pass; b=QCOCQh4CVe98IvIJelXliqtfw8E1LwwDZA4DOsYWIN/NyOMumEC8BvYSu4y8YVajF1uCOQQuqjVlwVHWezkTtW59f9Ys/p5ZTTGTfScCrQ5kfpYiqIDIWumKePL2lJbRa0vEF90WlEC4K9eRd2QvjBo6IfFe7atNlprZDMnkjFA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783955063; c=relaxed/simple;
-	bh=DdmiiPv2CWV6FGKdSRK7QlPHxig2ZU+jUpooF0D21NA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tZkjsrHxGJS2+277S5Ivw2ln6eiqtthMGKCsCRNbAlNQJ3msbAMHvJ/qx0FKZTW1sGnyzhQ64Do04O6tsyjHC2H68MPWiQmD2e3QLWpcyijStvxpcj4kiPDXaxklMcLBJm7mqWUyLn8F2NmCxQ1X43hjxdtzQSpVEoFAAJYKW0A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=FbJu52ZU; arc=pass smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tenstorrent.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67C42E8B9B;
+	Mon, 13 Jul 2026 23:57:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783987066; cv=none; b=t1JS698JUO5zrFigJwX+4ID9ngTW5efY6bD4TWcA9dSc/oAtuZQ7Mo7wZWECC9gPoyq6/NkqgGHC0pvTt+s7/c4ouzmciHUkqi6PG4DnOtYf64NdM3kzACaFUz63uEuqpjVmgd1AbowOWDNwchIsZXJIlsC1Pz6OQQLlzPT+0Kw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783987066; c=relaxed/simple;
+	bh=024uMThOd6cyS6qgBSZV8Ud/4QoWdnppLmUJ/jWWSvg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K4KOOi2zjaqoatnQ19zM5hcAiQ6GjUWiO5rP04lUPhtJPk+Zbzeq1SfeKrEvjUYoXEeBo5nTNvwnGdkxIIS1Mw6djRe802IJy8rRTr454qI1EOxQgP9XnUXhvwHozpF0mPq419YtSf+kUPnmBx2I8Lnvf07y66lJ54yyot8XPm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fq7zOW9x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="FbJu52ZU"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-81eb41c1f1aso6008957b3.2
-        for <spacemit@lists.linux.dev>; Mon, 13 Jul 2026 08:04:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783955060; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YgsTw7IPsgpyks1yp1Osy+x2o+3NMgKdgFKr4Tq/n2FV2lUE3E73JzItk06gQ+O/oS
-         NJXcOIBgsmPBheNVgNuy0Hgk405k7gvs1xfd9XGPdZu8ExEVP5BSbc+iekC8v7qbeXbD
-         EEaC6f8h3ymHxwFU3eqpWyrNgN29i1Wf4E3uTlCZW2l4JoX4kIJaDyI70iGnwm6J3gg9
-         lx/mYjKWmumc69mUc9wvttDH5Vn63pcVq+3Rhj/uMlhNiXFLha9q3aV3wMdeQv5bA8wR
-         YEpxBO48DAHH43Gm961uW6P/s2ce00sRza9H8f6PIWukU5Mc+XXsnWh5gRqlc+Ss3Ske
-         VhOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=q8n+QaMEuJqrqloV8S/HPmVYYpG0MPjKiFB8NNDgUFc=;
-        fh=AWW+2GhdnWo/OiyRZeHxVHzBmpqjyBhwPGYYlTlPqQQ=;
-        b=iSZOIksn94kWlmTtwc9awoHfoXXTdd+sUOCfDRPRY5ahQOK2Xch5NkUc8SbW8YGyUd
-         xB4RA0dwvAqo+pjcewHPqZPyKlsnLmMtg6Uxx8v2RhSk/q9IQv7iObO5R+n1dGzE/FAm
-         WsRK70PWVqO0UE6FYKyTg27zx4PLDIdrFAkG8boKhSqlWO8zQUHZ1On1Brd48uBJjEoi
-         csEBPP9EkeUq/D7BiCZ86HkJpSUkiPiaRkKbbTaR7CqiUq5i2hzA4VJD23QpBOo+lsQX
-         xKiUDoPX+ncEE7JQN97x9y0QKAFNGcj4ilbpYc1Zq4to9M9o1CC8nXVcBhGAkKo8V2rX
-         QpCw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tenstorrent.com; s=google; t=1783955060; x=1784559860; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=q8n+QaMEuJqrqloV8S/HPmVYYpG0MPjKiFB8NNDgUFc=;
-        b=FbJu52ZUz/WLjjWnzlvufYbetB2py9MtLvTDdq1VI+mT1A24Yq9oc/AY+JjwuFXYXz
-         ACmRoAfIkBzwx0h+BJkhMFjUIT8kahDu5M0TZIwWZrrHcGDz64+BamXYxszwQtyiOzNI
-         7YnnTu6jJXrUPJaRpxFANCKri6HxVbnvBPI8JkTwx6VXQwmvB/K9sb923T+moEl3n5v6
-         BtrH/jGE5ZM5kIYAUnpMQTuuZ+Jj0jHvroAnRwpBHkyWX1N4+04bqPtYg+XCJiFYfShR
-         EZBBpUr6pqa52J4wCAKk9z/0i3bRTjEh495thS0vxZT01teBDhiXTe1xPVJd1wa655Ht
-         W2Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783955060; x=1784559860;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=q8n+QaMEuJqrqloV8S/HPmVYYpG0MPjKiFB8NNDgUFc=;
-        b=lZqE/r4jzncYUpTKsWm43gS5Z/pAVGz6+Se8QkKPUX4GA5daVMfJq3OB1cEOIjLV4+
-         UZFe96Zv1V+xjpLahYvsPED897TwNphVAuXw5n2JLLGbOKJKwt4g0Zr9gcL77POaevB3
-         tGeV8udOwP/LJ8aeD6v3e8f1jiNSEw2xEZX8VExiVXbM0Y6/kj+v1r+LtNXQDej0Art5
-         y0Xu2fAuSh92/hV6j2ucIbnRFl7S4EvQbQ6NdGJpQtVjGiIsu4+Q9TBhy29/IBA282IP
-         bx5UktVPl0GjPKwgF5OMhxT9nuOmYafZyW9fSSq/hO4S7nalT6b8Nqz3xYEDgy+M+Oub
-         ZrLA==
-X-Forwarded-Encrypted: i=1; AHgh+RqS1Na0pJ5ASEH/JaLiO7qOjrbmLVWwmkYo1XZfJs2MX8K6ccyAjH3QPJtBR+BWZdm1+UQrQu+e5Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwDbsuZ5dWAUYdEtN2fSxb8mNdBoMW0o+l8F0Ow9LLBbGNBYfuD
-	svPQDZvkWGz1LOBCAcK2Xf/hphw8RMN3MxbCN3Su+OXan2FNcEJ17MZCHmfUVPo1hRLyaDGKEZn
-	rMH6/2VvlWmmMjDhJQEHbFdY7YHk4cgALpn7in2K98g==
-X-Gm-Gg: AfdE7ckTaCNRpvk7bU5JLnpt02ilLh1ox27NDHDXIp4HoSChqYfJoduAwwQs84nOAJZ
-	cYRr1nDdqEjidSE/fLabFkxFmaYNZFdKOqj91y1KqFP/xJrM146Q3VFrXZKIXsUZddWmgSKvBTg
-	hO9Wo021NnHDkYGLQ5pkyCZTiONc0s+qFSlVXnCI+H+yo/UuddKCP2V1z3h8fsr/JHzDGYcocJ9
-	286l25gG9yYjjTcCFN62/nKSKKZhc0TkBVVH8DC5t+VPGYdaJmex61HhIPhxFAiJoiNTbywumHL
-	Ht/sHLoFGfjaFsINiPjNMInQh1M=
-X-Received: by 2002:a05:690c:6c90:b0:80c:85b6:75ba with SMTP id
- 00721157ae682-81e902d8144mr73453177b3.67.1783955060060; Mon, 13 Jul 2026
- 08:04:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fq7zOW9x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FE21F000E9;
+	Mon, 13 Jul 2026 23:57:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783987064;
+	bh=xIhyR3zgIocehUTam0YtcBB6EqA+r73EXcnFWOui1a4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=fq7zOW9xN/onRd4/dFSQRSTXLCOxG14Xv/GM3rN4tHxAaVmnlvkQkaMZvRc5tkni/
+	 OmgLQuza8B/thbJq8udck8bYCe2DrMcooTzy28LTcKkDE6c43PVO8w52FDiqolhibu
+	 wTPypcN3vs9GoQRP32YsTmjSVfcJkS78xZc8HjTn/uwtr0TGKMirpvK7d63tASXw90
+	 GCXbPFkqqySHnXWKNDb7GNCHj0111QOz+PBD/2cx7YOGADFadkD92F0lEmAkoPoz9O
+	 pnbIGwJYdNUSdP7qBrxzem0u5tGaLwtXuqBh40GVMuLLzL+d4LfEI7cY/6TZmNMGCy
+	 Vq2LNGgiUdlcA==
+Date: Mon, 13 Jul 2026 23:57:42 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] Add UFS Host driver support for SpacemiT K3 SoC
+Message-ID: <20260713235742-GKE106000@kernel.org>
+References: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
+ <wjbz5tp7vjrsjwjaiu3n7du5ksbrlsduuxhwg2wriyxshkrqd5@t3sdxr6ua2sg>
+ <20260713123759-GKD106000@kernel.org>
+ <CAEev2e-g3bZcohFf_7b5CaVyi0BeWi5uwLGj6MuhQXp16jiyEQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260709040415.977784-1-inochiama@gmail.com> <20260709040415.977784-3-inochiama@gmail.com>
- <2ml6mcgwkf4eidwjetmd75henrkig4zzugzfww7buirucddho7@qrs4gasurnv3> <alRmA-X4xbQ9zPFn@inochi.infowork>
-In-Reply-To: <alRmA-X4xbQ9zPFn@inochi.infowork>
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Mon, 13 Jul 2026 10:04:09 -0500
-X-Gm-Features: AUfX_mygn974aliQ_zk7qpCoilxAZo7T3vjRorPpP-S-Z4fzXu4A4fxxFoW4GGA
-Message-ID: <CAEev2e8ZyM+b9qLxS6NZjkBZy5GFz37vjgtEfH0ax24nfPozow@mail.gmail.com>
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: k3: Add PCIe device node
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, 
-	Longbin Li <looong.bin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAEev2e-g3bZcohFf_7b5CaVyi0BeWi5uwLGj6MuhQXp16jiyEQ@mail.gmail.com>
 
-Hi Inochi,
+Hi Anirudh,
 
-On Sun, Jul 12, 2026 at 11:19=E2=80=AFPM Inochi Amaoto <inochiama@gmail.com=
-> wrote:
->
-> On Sun, Jul 12, 2026 at 11:13:07PM -0500, Anirudh Srinivasan wrote:
-> > Hi Inochi,
+On 09:56 Mon 13 Jul     , Anirudh Srinivasan wrote:
+> Hi Yixun,
+> 
+> On Mon, Jul 13, 2026 at 7:38 AM Yixun Lan <dlan@kernel.org> wrote:
 > >
-> > On Thu, Jul 09, 2026 at 12:04:14PM +0800, Inochi Amaoto wrote:
-> > > Add all PCIe device node for Spacemit K3.
+> > Hi Anirudh,
+> >
+> > On 22:40 Sun 12 Jul     , Anirudh Srinivasan wrote:
+> > > Hi Yixun,
 > > >
-> > > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > > ---
-> > >  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  38 ++++
-> > >  arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi |  33 ++++
-> > >  arch/riscv/boot/dts/spacemit/k3.dtsi         | 195 +++++++++++++++++=
-++
-> > >  3 files changed, 266 insertions(+)
+> > > On Thu, Jul 02, 2026 at 02:31:34AM +0000, Yixun Lan wrote:
+> > > > This series try to add UFS support for SpacemiT K3 SoC, the controller
+> > > > components consists of System Bus Interface Unit, UFS Host Controller
+> > > > Interface, UFS Transport Protocol Layer, UFS Host Registers, Device
+> > > > Management Entity (DME), Transport Layer, Network Layer, Data Link
+> > > > Layer, PHY Adapter Layer, and M-PHY Interface. A more detail functional
+> > > > block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
+> > > >
+> > > > Please note, in order to test this driver, the UFS clock driver[2] here
+> > > > should be applied first as a prerequisite patch.
+> > > >
+> > > > One known issue is that the device will occasionally raise BKOPS interrupt
+> > > > when doing some high load test, log from dmesg shows
+> > > >
+> > > > [  806.710763] ufshcd-spacemit c0e00000.ufshc: ufshcd_bkops_exception_event_handler: device raised urgent BKOPS exception for bkops status 1
+> > > >
+> > > > Link: https://spacemit.com/community/document/info?nodepath=hardware/key_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md&lang=en [1]
+> > > > Link: https://lore.kernel.org/all/20260630-06-clk-ufs-support-v1-0-cf7521d1d0fe@kernel.org/ [2]
+> > > > Signed-off-by: Yixun Lan <dlan@kernel.org>
 > > >
+> > > I see this during probe on a k3-pico-itx. Does the UFS chip on board
+> > > have an RPMB block on it? Is this error of any concern.
+> > >
+> > It's probably true of having a RPMB block, but not used in K3 platform, so can ignore
 > >
-> > I see some warnings printed during probe
-> >
-> > [   10.842955] r8169 0002:01:00.0: of_irq_parse_pci: failed with rc=3D-=
-22
-> >
-> > [   10.937754] rtw89_8852be 0004:01:00.0: of_irq_parse_pci: failed with=
- rc=3D-22
-> >
->
-> This is an expected error because the driver does not support INTx
-> but the hardware claims it supports. Since the vendor does not want
-> to support it, so there is no way for the upstreamer to add this.
+> > > [    5.957864] ufshcd-spacemit c0e00000.ufshc: ufshcd_scsi_add_wlus: BOOT WLUN not found
+..
+> > > [    5.963319] bus_add_device: cannot add device 'ufs_rpmb0' to unregistered bus 'ufs_rpmb'
 
-Are you saying that the hardware advertises support for INTx, but
-spacemit hasn't provided a driver that uses it?
+Just checked code under drivers/ufs/, and couldn't find where ufs_rpmb bus is registered,
+so this kind of warning/error message is expected, or could UFS maintainer confirm this?
 
-Is there a way to let the driver know to not try setting up legacy
-interrupts then? It seems like it's trying to do that now, and failing
-to find interrupts node in the DT.
+> > > [    5.971155] ufshcd-spacemit c0e00000.ufshc: Failed to register UFS RPMB device 0
+> > >
+> > Maybe disable CONFIG_RPMB to silent this? I've not tested this option locally
+> 
+> I'm testing on a distro defconfig, so it has this option enabled.
+> 
+> Is there anything we can do in the driver to have it ignore the RPMB?
 
->
-> > I see that all the 3 rc nodes are missing an interrupts node and an
-> > interrupt parent (saplic). The vendor DT seems to have this. Not sure i=
-f
-> > this is related.
-> >
-> > The 10G ethernet probes fine, but the wifi card fails to probe. Seems
-> > like the card is trying to request 32 bit DMA addresses and we're
-> > failing cause we have 64 bit memory only.
-> > The vendor kernel seems to have a patch to enable 36 bit DMA in
-> > the rtw89 driver. That'll probably fix this.
-> >
->
-> This warning is also found on my test, it is not related to
-> the PCIe driver, but a lack of the RTL phy driver. :(
->
-> You may also noticed a bad performance on this 10G ethernet,
-> it is caused by the single queue used by the RTL driver.
-> IIRC, even 9800 X3D can not achieve the max speed.
+No, but why not disable CONFIG_RPMB in the first place
 
-I don't have the ability to test the 10G NIC unfortunately :(
+> If the error is a red-herring, we shouldn't be displaying it at all in
+> the first place.
+> 
 
-Regards
-Anirudh Srinivasan
+Either fix the code or just ignore it..
 
->
-> Regards,
-> Inochi
->
+-- 
+Yixun Lan (dlan)
