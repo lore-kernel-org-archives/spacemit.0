@@ -1,114 +1,117 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830C33BBFA4
-	for <spacemit@lists.linux.dev>; Mon, 13 Jul 2026 08:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220CE3BB671
+	for <spacemit@lists.linux.dev>; Mon, 13 Jul 2026 09:02:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783932913; cv=none; b=Yr23KLLUGBMhtTTV1nhC7AdXmFC5kPjxWcNNA05PXSTznSDMvWIEu34JJB97S8aeXU5jUao53GmlHEiG09XXHyu2UIPYlQHHnT7tzR1CQtcmuRfIxrCxJm9ntD9QV8SXz/XP20xGtHo42izy3vNcM/eIY8XdarFeefH35doBhXU=
+	t=1783933327; cv=none; b=GPTN36+hOhCf55NIo1eai6ZJxgAGfSs6fQmDpCPecQBVQqLNWCF1tyuflAV+zO9LBw6Jq59Pr+N4Bx4+ZeyZ22oU5Trksh39DeeFi7U/bT+HEWavIsaH6sQI5v9Xnp7wMs8AOasknGi3YIptjpBOU3gz8KsdIDnilTgefLOsk2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783932913; c=relaxed/simple;
-	bh=VnNQUNNWfqJOOiJYXk+lRd4b5j5mxp8/oV1/E4Au1hA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=kAe0xMdJesgPzDcVQWj48fOSLxo8ACYxR9PxTd9QkAmcc1QNlm0LpubqADF5j1H6SJLYTPXG0lacnJJe2va/e16K2CpJQo95AStNvexcRdqItLRncIdu54u8pBMTAulnIeOpA4TKhVmY6SRMDwLpKo4LxJwSDp1AxK0CtUbH3dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 8a2c76d27e9811f1aa26b74ffac11d73-20260713
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:b08b7908-6ba1-47a0-bc27-f9f3a9c617b8,IP:0,U
-	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:0
-X-CID-META: VersionHash:e7bac3a,CLOUDID:974d90335f713990e03f3fae66e8281f,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:80|81|82|83|102|865|898,TC:nil,Content:0
-	|15|52,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,O
-	SI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 8a2c76d27e9811f1aa26b74ffac11d73-20260713
-X-User: xiaopei01@kylinos.cn
-Received: from [10.42.12.251] [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <xiaopei01@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 1774913962; Mon, 13 Jul 2026 16:55:04 +0800
-Message-ID: <b7803ac7-c9e1-4905-9256-4b67e41ad1ac@kylinos.cn>
-Date: Mon, 13 Jul 2026 16:55:01 +0800
+	s=arc-20240116; t=1783933327; c=relaxed/simple;
+	bh=NEnR0/uhPeqIpCCQVfQvUN1cbbziqbsKeCUGGhwo/YU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=Scp1nA+AInvjWLW1ICs6mb682uiaykZ0R1RZGlrIS8mEgXvSPWwvyY6+9GDN15mSZsLYcLv2rtva8FqPmqOUmyCtaBUIV0C8FYZPzv86L1Dw4OIYwb6rlqu6thvwnMTkhGa/xlkC/RQ65ryK3H9nEQq454/IAFamxpjbocbT6+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=vhcE8S4a; arc=none smtp.client-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="vhcE8S4a"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1783933291;
+	bh=rfDq6XPlv8R4XIJ1/9itc+1o8grDKU8S7i/xorOHrq8=;
+	h=Mime-Version:Date:Message-Id:From:To:Subject;
+	b=vhcE8S4aZ1b1Gfj5eZ5STO6ok2DGOdR5gXFNXhXlD1+fvk9j5dJ1LkRxp/3m1eTB/
+	 vnmNL1fhNoPt72dHy92JcMEh0O6/UY1JDhE4Hpp03GFetgzrrlZVyVtQfWxEWYi7cc
+	 ihEqkEdDjDn5a54C70E3ket81RqH2qiHDlj9VqZA=
+X-QQ-mid: esmtpgz13t1783933289t8710c04f
+X-QQ-Originating-IP: uYeZvJY1YPz9m9I2VRUZhVLMDbWxBVchNNwN8t2JL+0=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 13 Jul 2026 17:01:28 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 12062326101475102107
+EX-QQ-RecipientCnt: 7
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] thermal: spacemit: k1: disable hardware on driver remove
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, dlan@kernel.org,
- rafael@kernel.org, shuwei.wu@mailbox.org, linux-pm@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <1db7d94eeaced9a92e3670d28e0c97c22f15f108.1783931396.git.xiaopei01@kylinos.cn>
- <DJXB4PDMYX0G.1TC9VBR96MHMA@linux.spacemit.com>
-From: Pei Xiao <xiaopei01@kylinos.cn>
-In-Reply-To: <DJXB4PDMYX0G.1TC9VBR96MHMA@linux.spacemit.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Mon, 13 Jul 2026 02:01:27 -0700
+Message-Id: <DJXBKMGB3NLZ.1NH7HSR669XF0@linux.spacemit.com>
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Pei Xiao" <xiaopei01@kylinos.cn>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>
+Cc: <andi.shyti@kernel.org>, <linux-i2c@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>
+Subject: Re: [PATCH v2] i2c: spacemit: fix spurious IRQ handling returning
+ IRQ_HANDLED
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <ef8b623f45d4e430721e46572c2598d882044aed.1783667603.git.xiaopei01@kylinos.cn> <ef8b623f45d4e430721e46572c2598d882044aed.1783667875.git.xiaopei01@kylinos.cn> <DJUQ3TZHM7OO.34ULEC76Z2BDY@linux.spacemit.com> <e453a825-4d73-4d35-a699-a495b0ca1058@kylinos.cn>
+In-Reply-To: <e453a825-4d73-4d35-a699-a495b0ca1058@kylinos.cn>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NVu/uN2EcufQ2/Vo4zOzxog+GCp25ZAKLkVyCAD0xt5o3OyOPeBT+7uQ
+	V0eHXCPXv19kK1QXZU8RB/mBaK/+TZYD88T+6uJjQnQrEqc4GPObqF26TIPrNF2rt0Orjff
+	5I920LXehgsPFU6+UIrKBlZjsSjuOVaqed6wMBGZUKnds+/4I9Q8vLJdC0uS1m//YYnFv18
+	L8RFyFHeh2zD4MYO/XWLL6gAjzZrqSLyjPIYHVmcG9KjWQHUCFfG/d+yEgBjOxFNo1G95DR
+	OoIECL/gnlGWW7BQNxjQo6d9Qm7dDrS8ZFEPzabn01/EAjB6vu8GWDHNA/drLqt7th299gr
+	Wu1YoNqFbN6mP1plYw0KY2xCPeflLe9bgS6jM2SKNhup5VQHG6DE6L98Z2J6xa0hadwJU5q
+	ExEFRKL6U9RuyOzDEoSW7Y4rXpcfUIhIR1o2h8NmHU2v3T99znvwrVVx3jQY0ss4j9zwrvn
+	7i66MfXV28UEJgBUNAI4TechIp84cgAKSkhpM0OX45WVnDw15pLKnx7QvmdtJuAvuKr/ns3
+	l104MfE24rN2FpD1trdK4c4ojvKRbDe+H6EPRJzUofLc/TgK3yXwQoe8uWiUzbSrkx0MHhS
+	DBJPP6rBwRIvK4t9e++xwur95tiJax6iwD2w3sqMKcIQ77bS4IbNg3wT2XhMlEBcnRgpH1L
+	Uojh824Wzq4Y538zR/vmcnEgXU/DwKBykUW2t2VMQbhbBw7FHHZp889OZSAB66CCe0B1ViR
+	LSBgtblOwQg9JdRVzL54KuQGCgvoKzeF9JJ16LPnEfqJrpvf0zEcLlRx0ji+EZ9Pga1gewk
+	uR+K5wNhYC+/2oSdoQBFLV2Z5dxNSa+2yySIDd4t/0r6QneUrdI6FBLzTrKy3xIWbwlLY8B
+	9c6nMvok/N/YXiyzgKMEI7ORiz24LHK0B3HphWhY+D7nmPip9kMEwnmD6JvrhGsCfmVfOdQ
+	u/hIdLanVA9CROX/aLcQ23pk9WzqNJyaIPXddwiMJ9a+WCUccA+S8CbfmQ7fZ2Fs6x0eKtW
+	V3sH75HfaOmpKJdr2t7yYUXUWbhA/UwXlU9dl5cHmomtUdrQ/kdm2MKQnRqnCV7d3MfxPru
+	jUj0fqXywKN34oqjZodXsQ=
+X-QQ-XMRINFO: OD9hHCdaPRBw6CmXJi6UaqSbLUGYIq/CyA==
+X-QQ-RECHKSPAM: 0
 
-
-
-在 2026/7/13 16:40, Troy Mitchell 写道:
-> On Mon Jul 13, 2026 at 1:32 AM PDT, Pei Xiao wrote:
->> The driver uses devm_request_threaded_irq() but never disables the
->> hardware interrupt enable, sensor enable, or sensor power bits when
->> the driver is unbound.
->>
->> Add a devm action that clears K1_TSENSOR_INT_EN_REG,
->> K1_TSENSOR_EN_ALL, and K1_TSENSOR_PCTRL_ENABLE on remove, mirroring
->> what k1_tsensor_init() sets up.
->>
->> Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
->> ---
->>  drivers/thermal/spacemit/k1_tsensor.c | 27 +++++++++++++++++++++++++++
->>  1 file changed, 27 insertions(+)
->>
->> diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spacemit/k1_tsensor.c
->> index 79222d233129..cf79dc7d403f 100644
->> --- a/drivers/thermal/spacemit/k1_tsensor.c
->> +++ b/drivers/thermal/spacemit/k1_tsensor.c
->> @@ -199,6 +199,29 @@ static irqreturn_t k1_tsensor_irq_thread(int irq, void *data)
->>  	return IRQ_HANDLED;
->>  }
->>  
->> +static void k1_tsensor_shutdown(struct k1_tsensor *ts)
->> +{
->> +	u32 val;
->> +
->> +	/* Disable all interrupts */
->> +	writel(0xffffffff, ts->base + K1_TSENSOR_INT_EN_REG);
->> +
->> +	/* Disable all sensor */
->> +	val = readl(ts->base + K1_TSENSOR_EN_REG);
->> +	val &= ~K1_TSENSOR_EN_ALL;
->> +	writel(val, ts->base + K1_TSENSOR_EN_REG);
->> +
->> +	/* Power down the sensor module */
->> +	val = readl(ts->base + K1_TSENSOR_PCTRL_REG);
->> +	val &= ~K1_TSENSOR_PCTRL_ENABLE;
-> Why is only the ENABLE bit cleared here?
-> At init time the driver also sets:
->     val |= K1_TSENSOR_PCTRL_RAW_SEL |
->     K1_TSENSOR_PCTRL_TEMP_MODE |
->     K1_TSENSOR_PCTRL_HW_AUTO_MODE |
->     K1_TSENSOR_PCTRL_ENABLE;
+On Fri Jul 10, 2026 at 2:18 AM PDT, Pei Xiao wrote:
 >
-> Should the other bits be cleared in shutdown as well, or is clearing ENABLE
-> alone?
-Hi Troy,
- Maybe Wu(author) have someting to say about these regs.
- Thanks.
+>
+> =E5=9C=A8 2026/7/10 15:46, Troy Mitchell =E5=86=99=E9=81=93:
+>> On Fri Jul 10, 2026 at 12:21 AM PDT, Pei Xiao wrote:
+>>> When the interrupt status register reads zero, the handler should
+>>> return IRQ_NONE instead of IRQ_HANDLED. What the return value
+>>> actually feeds into is the spurious interrupt accounting in
+>>> note_interrupt(): falsely claiming IRQ_HANDLED defeats the "irq XX:
+>>> nobody cared" detection, so a stuck interrupt source would never be
+>>> caught.
+>>>
+>>> Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+>>> Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+>> The commit message now describes the actual mechanism correctly,
+>> thanks for reworking it:
+>>
+>> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>>
+>> One process note, though: please don't repost new versions this
+>> quickly. v2 followed the review comments almost immediately, which
+>> means other reviewers who were still looking at v1 never got a
+>> chance to chime in before the thread moved on, and the discussion
+>> gets fragmented across versions.
+> Because I noticed a simple mistake right after sending v1
+> =E2=80=94I forgot to include the version number and changelog for v2=E2=
+=80=94
+> so I thought that by fixing it without waiting for reviewers to point it
+> out,=C2=A0
+> I could save reviewers' time and get the patch merged more quickly.
+> =C2=A0I may have been wrong about that. Sorry.
+>
+I'm not referring to this thread. You posted an earlier version [1],
+and then sent the patches in this thread just one day later (I know that
+one was sent by mistake, without a changelog).
 
-Pei.
+Link: https://lore.kernel.org/all/aaba8ba228a99f580050004c5b7e262d855de44c.=
+1783590752.git.xiaopei01@kylinos.cn/ [1]
 
-
->                             - Troy
-
+                                          - Troy
