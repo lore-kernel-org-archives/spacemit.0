@@ -1,123 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67C42E8B9B;
-	Mon, 13 Jul 2026 23:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB933F2109;
+	Tue, 14 Jul 2026 09:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783987066; cv=none; b=t1JS698JUO5zrFigJwX+4ID9ngTW5efY6bD4TWcA9dSc/oAtuZQ7Mo7wZWECC9gPoyq6/NkqgGHC0pvTt+s7/c4ouzmciHUkqi6PG4DnOtYf64NdM3kzACaFUz63uEuqpjVmgd1AbowOWDNwchIsZXJIlsC1Pz6OQQLlzPT+0Kw=
+	t=1784019988; cv=none; b=BMryXhL14/kc8nhTXhYbNVjO1iIWIhAt4hFXAiU+xfq6ozWh+M1nAGcVPriFi0nIFDD6RRMW0ublHlGZvj59TmoI+xWK2XnVCBYkxQvuYS8mQp8kibgpzOzMoYILbfSjoD73vQRxR/BSvVCj5iJ2hAbOpmYzcBgSqA7+IUcaHaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783987066; c=relaxed/simple;
-	bh=024uMThOd6cyS6qgBSZV8Ud/4QoWdnppLmUJ/jWWSvg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K4KOOi2zjaqoatnQ19zM5hcAiQ6GjUWiO5rP04lUPhtJPk+Zbzeq1SfeKrEvjUYoXEeBo5nTNvwnGdkxIIS1Mw6djRe802IJy8rRTr454qI1EOxQgP9XnUXhvwHozpF0mPq419YtSf+kUPnmBx2I8Lnvf07y66lJ54yyot8XPm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fq7zOW9x; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784019988; c=relaxed/simple;
+	bh=GY14zh/my075SNbA1L2uLH1RSCRv9L5xm5DFIfu2uhk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hWadgpTOt9hygHrAqVWtYLF2REa+w/R0f59aqWXdoGEz9MGSm8It6eZdZp19cMNsJdUfrxTeAKictvkRzz/+zvJRSPeQa5F4qg67Itlx1/2l2ncFYa9uIdqg49Z14Hju7KNFXUH0M5rMt4V7BlZLi5zf31izEYjh879Nt8VYg4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XRdqX2/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fq7zOW9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FE21F000E9;
-	Mon, 13 Jul 2026 23:57:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XRdqX2/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150021F000E9;
+	Tue, 14 Jul 2026 09:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783987064;
-	bh=xIhyR3zgIocehUTam0YtcBB6EqA+r73EXcnFWOui1a4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fq7zOW9xN/onRd4/dFSQRSTXLCOxG14Xv/GM3rN4tHxAaVmnlvkQkaMZvRc5tkni/
-	 OmgLQuza8B/thbJq8udck8bYCe2DrMcooTzy28LTcKkDE6c43PVO8w52FDiqolhibu
-	 wTPypcN3vs9GoQRP32YsTmjSVfcJkS78xZc8HjTn/uwtr0TGKMirpvK7d63tASXw90
-	 GCXbPFkqqySHnXWKNDb7GNCHj0111QOz+PBD/2cx7YOGADFadkD92F0lEmAkoPoz9O
-	 pnbIGwJYdNUSdP7qBrxzem0u5tGaLwtXuqBh40GVMuLLzL+d4LfEI7cY/6TZmNMGCy
-	 Vq2LNGgiUdlcA==
-Date: Mon, 13 Jul 2026 23:57:42 +0000
+	s=k20260515; t=1784019987;
+	bh=BfXRK1IPIAsjAFqmpmhhdLhhp42aSKoS7MLm5BuZBxQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=XRdqX2/u2Bm2dY1A5iy3D13tHeEDj0ls+cX4HEmK7fUGBvaVAZ8gmMyqfMCviuWH8
+	 vzSgwydbkxOpjs/yDSZITVrzlzVSa6MCqsBd4Vv/k2nh55FcjxUa6EBwxPcDY/oXFT
+	 Z4ZzZwLVjtZsRaOL1USIJbPzZd0lsqJHfyP8SNBxAkrCgvQzFuKMGx2eTvyzLvfUb6
+	 GbUO578XHvYLFXU3WB0yj9xJl8szzFx2XKPG8e5jD3petdXJK0S4ttQriDFwgzSvxn
+	 oqoLbc/4mcwCWh5+KVCOQfewDrkn/QqB/ZE3wlEi/ycQ2NWTSPA/1kEb2D4Rk0gDR6
+	 jlftdsfZRNylw==
 From: Yixun Lan <dlan@kernel.org>
-To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@sandisk.com>,
-	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+To: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] Add UFS Host driver support for SpacemiT K3 SoC
-Message-ID: <20260713235742-GKE106000@kernel.org>
-References: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
- <wjbz5tp7vjrsjwjaiu3n7du5ksbrlsduuxhwg2wriyxshkrqd5@t3sdxr6ua2sg>
- <20260713123759-GKD106000@kernel.org>
- <CAEev2e-g3bZcohFf_7b5CaVyi0BeWi5uwLGj6MuhQXp16jiyEQ@mail.gmail.com>
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Guodong Xu <docular.xu@gmail.com>
+Cc: Yixun Lan <dlan@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v4] riscv: dts: spacemit: Use symbolic PDMA request numbers on K1
+Date: Tue, 14 Jul 2026 09:06:20 +0000
+Message-ID: <178401990255.1566747.5241634632803101071.b4-ty@b4>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260620-b4-k1-pdma-req-macros-v4-1-3cf77d0bd0d6@gmail.com>
+References: <20260620-b4-k1-pdma-req-macros-v4-1-3cf77d0bd0d6@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAEev2e-g3bZcohFf_7b5CaVyi0BeWi5uwLGj6MuhQXp16jiyEQ@mail.gmail.com>
 
-Hi Anirudh,
 
-On 09:56 Mon 13 Jul     , Anirudh Srinivasan wrote:
-> Hi Yixun,
+On Sat, 20 Jun 2026 01:07:48 -0400, Guodong Xu wrote:
+> The PDMA request numbers (DRQ) are fixed values specific to the SoC from
+> a hardware perspective. The detailed definition can be found in K1 User
+> Manual [1], Chapter 9.4.3 DMA Connectivity & Assignments. Add a DTS
+> header file to define the symbolic names for the DRQs of non-secure DMA
+> peripherals.
 > 
-> On Mon, Jul 13, 2026 at 7:38 AM Yixun Lan <dlan@kernel.org> wrote:
-> >
-> > Hi Anirudh,
-> >
-> > On 22:40 Sun 12 Jul     , Anirudh Srinivasan wrote:
-> > > Hi Yixun,
-> > >
-> > > On Thu, Jul 02, 2026 at 02:31:34AM +0000, Yixun Lan wrote:
-> > > > This series try to add UFS support for SpacemiT K3 SoC, the controller
-> > > > components consists of System Bus Interface Unit, UFS Host Controller
-> > > > Interface, UFS Transport Protocol Layer, UFS Host Registers, Device
-> > > > Management Entity (DME), Transport Layer, Network Layer, Data Link
-> > > > Layer, PHY Adapter Layer, and M-PHY Interface. A more detail functional
-> > > > block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
-> > > >
-> > > > Please note, in order to test this driver, the UFS clock driver[2] here
-> > > > should be applied first as a prerequisite patch.
-> > > >
-> > > > One known issue is that the device will occasionally raise BKOPS interrupt
-> > > > when doing some high load test, log from dmesg shows
-> > > >
-> > > > [  806.710763] ufshcd-spacemit c0e00000.ufshc: ufshcd_bkops_exception_event_handler: device raised urgent BKOPS exception for bkops status 1
-> > > >
-> > > > Link: https://spacemit.com/community/document/info?nodepath=hardware/key_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md&lang=en [1]
-> > > > Link: https://lore.kernel.org/all/20260630-06-clk-ufs-support-v1-0-cf7521d1d0fe@kernel.org/ [2]
-> > > > Signed-off-by: Yixun Lan <dlan@kernel.org>
-> > >
-> > > I see this during probe on a k3-pico-itx. Does the UFS chip on board
-> > > have an RPMB block on it? Is this error of any concern.
-> > >
-> > It's probably true of having a RPMB block, but not used in K3 platform, so can ignore
-> >
-> > > [    5.957864] ufshcd-spacemit c0e00000.ufshc: ufshcd_scsi_add_wlus: BOOT WLUN not found
-..
-> > > [    5.963319] bus_add_device: cannot add device 'ufs_rpmb0' to unregistered bus 'ufs_rpmb'
-
-Just checked code under drivers/ufs/, and couldn't find where ufs_rpmb bus is registered,
-so this kind of warning/error message is expected, or could UFS maintainer confirm this?
-
-> > > [    5.971155] ufshcd-spacemit c0e00000.ufshc: Failed to register UFS RPMB device 0
-> > >
-> > Maybe disable CONFIG_RPMB to silent this? I've not tested this option locally
+> Convert the K1 SPI3 node to these macros.
 > 
-> I'm testing on a distro defconfig, so it has this option enabled.
-> 
-> Is there anything we can do in the driver to have it ignore the RPMB?
+> [...]
 
-No, but why not disable CONFIG_RPMB in the first place
+Applied, thanks!
 
-> If the error is a red-herring, we shouldn't be displaying it at all in
-> the first place.
-> 
+[1/1] riscv: dts: spacemit: Use symbolic PDMA request numbers on K1
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=d3cfc81d95384d555f5ffdd8730af186f302a0e8
 
-Either fix the code or just ignore it..
-
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan <dlan@kernel.org>
