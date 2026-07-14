@@ -1,74 +1,264 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7631A2DB7BD;
-	Tue, 14 Jul 2026 09:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBDC34E75A
+	for <spacemit@lists.linux.dev>; Tue, 14 Jul 2026 10:37:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784020801; cv=none; b=cjp2DMTsvoN2ZvKYyV3m2ypgEsCCQZ1Nk/jXfqVKHy7/2BoxgXvRPoeUdgfhiwrr6WId9Wxl1uVwmJtyYOcooXXgVpb3dbUDk0cWZmRiIpD/M5ShyOWgRcd41dnhG2Rxoa7XAY7XOyajRJ8G2ypyB5zHKZVe7iuVX+sEorz44ck=
+	t=1784025441; cv=none; b=dOEPvx/ZCqdgKiKZsdUHfw9WnE+aBMJCtevq+CtIUYScJ8r+eYSeA6g/sqUXwbUMl3pg3ZrDKsEeHVS7ZDLol3gxGFksUmp3Dfq8pHUms6GfVlzU3neotkD8cecPNSywpqnk8mq3E3SRmSuEkek0FHNZd8EQiQGF1UN9ezqux80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784020801; c=relaxed/simple;
-	bh=0hL5myBtQdEaRWeNueUETTnrEakF/viJaerEDOByIi8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eQ0LqC2ur5ddZz7F1TUyRr037mCnubi7PoQTTjNRg69CvD+JhsMYte9xI/sMCTSzb20xgq8I57Vf/KfYq9m1fbcsmauQI08CbXH3QFuXNlgeh1a3eAIDlmuVKVv7fyvTLs+ds4g8XomWGph9kK9yJ8dN1elxHBygBXv3v63tl5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZgIMC8fq; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784025441; c=relaxed/simple;
+	bh=ddjug4FRAhzqNcIheOQuVpJhXkcdJhc8oo8KHgQqags=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=dTA9OBCPXd3h29zK7BDAK2eLdlF8EyJThsIR1pKpsbXo6DwcrlXsTdul1Sq71JV9B3FkTYRPXLMHbhWrQDtPnfY9MgpWasBwIYkwAVwF9CaVlhpeUeC9SNr19ZvTu4ZzkkMfs4NRSRvu4Qgk616gbhgS7/YP9LOKOmMtwB9xotQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=yjCk071X; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=V5T5SpTd; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZgIMC8fq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C351F000E9;
-	Tue, 14 Jul 2026 09:19:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784020800;
-	bh=NvIQGG17Gg6DcApfmewQ2HnIgUe9CvNeraPvhuLErkY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZgIMC8fq8Y7SDpWpKGGfZshWrTsaMJ2RLMvcqXwYFLdK8Y45Exq6BgifINGTkCRon
-	 8xm6gjqK5+4+1RVRqsLGMxIEOhbkjb4Mi7UWAQbsRmEW5CuxIcffb4PUclJxCKEaIa
-	 Ix3fxa+VOUImnOe7gjGO5/wCkWyLAntWpOUhE2q+gGv9IaS3HEEwB8zR/ceGOuq0T1
-	 l2t+aHBehC1C5Zz+u7K6cOYlUHI9EtmMAkOFCa1gUGii9IZiZJvI5kfCZdaDVz3n+y
-	 1o4Dv2tCW+zYSzuRnt+/Uy2B/XBGCZ+S8lqhBP8WmjfYiSe38Ez+D7CGHQ/cqKTnRU
-	 5WW59IX/476jg==
-From: Yixun Lan <dlan@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@kernel.org>
-Cc: linux-clk@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH 0/3] clk: spacemit: Add clock support for UFS
-Date: Tue, 14 Jul 2026 09:19:54 +0000
-Message-ID: <178402023785.1567931.15038161534812979659.b4-ty@b4>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260630-06-clk-ufs-support-v1-0-cf7521d1d0fe@kernel.org>
-References: <20260630-06-clk-ufs-support-v1-0-cf7521d1d0fe@kernel.org>
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="yjCk071X";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="V5T5SpTd"
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4gzwjR2vkfzKngL;
+	Tue, 14 Jul 2026 12:37:15 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1784025435;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1fJftTlqcE8eGqPtuk9WNWMOkdgjG7MBJckMaW+Ctd4=;
+	b=yjCk071X+S4HfzaHmqtjhvuSeEbGlGnYTbaY9AzfBzULBfWei2jZwsSwtScHtZ3WtJuVKz
+	DkIK3HyDU6JOLOhI+zu/38QN3BeaEX4gHoE7JFTJWPShdJf2WfTm7tiLUtGfmK+cIykg/E
+	+e1qlSXSs6GRBYVotVNAa+rO8bq6p4brai7k4VaQsBZW/v2qN7IoMS2bu1hDSXb1AQ3+2C
+	13e60lwZYNqxvsr2CY1yxcOpeGQY8KIE+LHGFL0H1mgpaNmTX2jz6sALoSI7j9gSrf+8Ai
+	O0G4hwMGpPJy/my2bbXjA8pxRey7qNCUR7Npro88+gpDXPBvIe6r23YgBX2UPQ==
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1784025433;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1fJftTlqcE8eGqPtuk9WNWMOkdgjG7MBJckMaW+Ctd4=;
+	b=V5T5SpTduNeivrpuenzg45SjjTyc8GkSKnn3uTMiGldsqUP9gNRJl0cyId5d+yelfTi6XT
+	rPVPXo6uc+6yxydWEMrHqmFOt+4Bx05i+amAk+2zQ6YllKqiWAt3qM05J8thgofCGFxN8x
+	Y+BHe4jy2Nurb6fFVRK/JHL8kw+sXEuRtaxTL94eS8ukPBxJ4JtjPsBWE4nftpG6JbgfDU
+	7EnIfrppq1zILJ81GDS9DPuvQkidImOdidp6OONjdFJ65eXuHA0RM3Lf8oNTmqYjKJaWfQ
+	wBDVophvGdyV1fv1B8Qv8ocj/hJG7lS6twlj7eHIXzZdWnR6COg4o3vygmEjkw==
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 14 Jul 2026 18:36:59 +0800
+Message-Id: <DJY88BBD7RCM.20K3BATZ6JIM7@mailbox.org>
+Subject: Re: [PATCH] thermal: spacemit: k1: disable hardware on driver
+ remove
+From: "Shuwei Wu" <shuwei.wu@mailbox.org>
+To: "Pei Xiao" <xiaopei01@kylinos.cn>, <dlan@kernel.org>,
+ <rafael@kernel.org>, <troy.mitchell@linux.spacemit.com>,
+ <shuwei.wu@mailbox.org>, <linux-pm@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>
+References: <1db7d94eeaced9a92e3670d28e0c97c22f15f108.1783931396.git.xiaopei01@kylinos.cn>
+In-Reply-To: <1db7d94eeaced9a92e3670d28e0c97c22f15f108.1783931396.git.xiaopei01@kylinos.cn>
+X-MBO-RS-META: dawor4uopnap8bhihc8hfk6snj5jbmo4
+X-MBO-RS-ID: 9c12ea2705f8e50f429
 
+Hi Pei,
 
-On Tue, 30 Jun 2026 12:52:44 +0000, Yixun Lan wrote:
-> This series try to fix parent clock of UFS aclk which was submitted as
-> wrong version, so correct it according to updated doc[1] here. Also, add
-> a UFS reference clock which was missing in previous patchset.
+On Mon Jul 13, 2026 at 4:32 PM CST, Pei Xiao wrote:
+> The driver uses devm_request_threaded_irq() but never disables the
+> hardware interrupt enable, sensor enable, or sensor power bits when
+> the driver is unbound.
+>
+> Add a devm action that clears K1_TSENSOR_INT_EN_REG,
+> K1_TSENSOR_EN_ALL, and K1_TSENSOR_PCTRL_ENABLE on remove, mirroring
+> what k1_tsensor_init() sets up.
+>
+> Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+> ---
+>  drivers/thermal/spacemit/k1_tsensor.c | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+>
+> diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spac=
+emit/k1_tsensor.c
+> index 79222d233129..cf79dc7d403f 100644
+> --- a/drivers/thermal/spacemit/k1_tsensor.c
+> +++ b/drivers/thermal/spacemit/k1_tsensor.c
+> @@ -199,6 +199,29 @@ static irqreturn_t k1_tsensor_irq_thread(int irq, vo=
+id *data)
+>  	return IRQ_HANDLED;
+>  }
+> =20
+> +static void k1_tsensor_shutdown(struct k1_tsensor *ts)
+> +{
+> +	u32 val;
+> +
+> +	/* Disable all interrupts */
+> +	writel(0xffffffff, ts->base + K1_TSENSOR_INT_EN_REG);
+> +
+> +	/* Disable all sensor */
+> +	val =3D readl(ts->base + K1_TSENSOR_EN_REG);
+> +	val &=3D ~K1_TSENSOR_EN_ALL;
+> +	writel(val, ts->base + K1_TSENSOR_EN_REG);
+> +
+> +	/* Power down the sensor module */
+> +	val =3D readl(ts->base + K1_TSENSOR_PCTRL_REG);
+> +	val &=3D ~K1_TSENSOR_PCTRL_ENABLE;
+> +	writel(val, ts->base + K1_TSENSOR_PCTRL_REG);
+> +}
+> +
+> +static void devm_k1_tsensor_shutdown(void *data)
+> +{
+> +	k1_tsensor_shutdown(data);
+> +}
+> +
+>  static int k1_tsensor_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev =3D &pdev->dev;
+> @@ -229,6 +252,10 @@ static int k1_tsensor_probe(struct platform_device *=
+pdev)
+> =20
+>  	k1_tsensor_init(ts);
+> =20
+> +	ret =3D devm_add_action_or_reset(dev, devm_k1_tsensor_shutdown, ts);
+> +	if (ret)
+> +		return ret;
+> +
+>  	irq =3D platform_get_irq(pdev, 0);
+>  	if (irq < 0)
+>  		return irq;
 
-Applied, thanks!
+Sorry, I missed the hardware cleanup in the original driver.
+Thanks for fixing it.
 
-[1/3] clk: spacemit: k3: fix parent clock of UFS aclk
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=7a588b62679c51abd08171d31df6e44589f0097d
-[2/3] dt-bindings: soc: spacemit: k3: Add clock ID for UFS refclk
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=4fc567e1bacdb5da85628de8dd1d1e3328060798
-[3/3] clk: spacemit: k3: Add UFS refclk clock
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=8abba78dc0ee4ffa7c4e0e05b93c58bd94ff11c0
+I also found that registering the shutdown action immediately after
+k1_tsensor_init() would cause the thermal zones to be released before
+the IRQ during devres cleanup. The IRQ thread may then access an
+unregistered thermal zone.
 
+I changed the order so that the thermal zones are registered first,
+followed by the IRQ and the shutdown action.
+On removal, the hardware interrupt is disabled first, then the IRQ
+is released, and finally the thermal zones are released.
+
+-> % git --no-pager diff drivers/thermal/spacemit/k1_tsensor.c
+diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spacem=
+it/k1_tsensor.c
+index 79222d233129..57dbc652a405 100644
+--- a/drivers/thermal/spacemit/k1_tsensor.c
++++ b/drivers/thermal/spacemit/k1_tsensor.c
+@@ -199,6 +199,32 @@ static irqreturn_t k1_tsensor_irq_thread(int irq, void=
+ *data)
+ 	return IRQ_HANDLED;
+ }
+
++static void k1_tsensor_shutdown(struct k1_tsensor *ts)
++{
++	u32 val;
++
++	/* Disable all interrupts */
++	writel(0xffffffff, ts->base + K1_TSENSOR_INT_EN_REG);
++
++	/* Disable all sensors */
++	val =3D readl(ts->base + K1_TSENSOR_EN_REG);
++	val &=3D ~K1_TSENSOR_EN_ALL;
++	writel(val, ts->base + K1_TSENSOR_EN_REG);
++
++	/* Clear the sampling configuration set by k1_tsensor_init(). */
++	val =3D readl(ts->base + K1_TSENSOR_TIME_REG);
++	val &=3D ~(K1_TSENSOR_TIME_FILTER_PERIOD |
++		 K1_TSENSOR_TIME_ADC_CNT_RST |
++		 K1_TSENSOR_TIME_WAIT_REF_CNT);
++	writel(val, ts->base + K1_TSENSOR_TIME_REG);
++
++	/* Clear the control bits configured by k1_tsensor_init(). */
++	val =3D readl(ts->base + K1_TSENSOR_PCTRL_REG);
++	val &=3D ~(K1_TSENSOR_PCTRL_RAW_SEL |
++		 K1_TSENSOR_PCTRL_TEMP_MODE |
++		 K1_TSENSOR_PCTRL_HW_AUTO_MODE |
++		 K1_TSENSOR_PCTRL_ENABLE);
++	writel(val, ts->base + K1_TSENSOR_PCTRL_REG);
++}
++
++static void devm_k1_tsensor_shutdown(void *data)
++{
++	k1_tsensor_shutdown(data);
++}
++
+ static int k1_tsensor_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev =3D &pdev->dev;
+@@ -229,34 +255,48 @@ static int k1_tsensor_probe(struct platform_device *p=
+dev)
+
+ 	k1_tsensor_init(ts);
+
+-	irq =3D platform_get_irq(pdev, 0);
+-	if (irq < 0)
+-		return irq;
+-
+-	ret =3D devm_request_threaded_irq(dev, irq, NULL,
+-					k1_tsensor_irq_thread,
+-					IRQF_ONESHOT, "k1_tsensor", ts);
+-	if (ret < 0)
+-		return ret;
+-
+ 	for (i =3D 0; i < MAX_SENSOR_NUMBER; ++i) {
+ 		ts->ch[i].id =3D i;
+ 		ts->ch[i].ts =3D ts;
+ 		ts->ch[i].tzd =3D devm_thermal_of_zone_register(dev, i, ts->ch + i, &k1_=
+tsensor_ops);
+-		if (IS_ERR(ts->ch[i].tzd))
+-			return PTR_ERR(ts->ch[i].tzd);
++		if (IS_ERR(ts->ch[i].tzd)) {
++			ret =3D PTR_ERR(ts->ch[i].tzd);
++			goto err_shutdown;
++		}
+
+ 		/* Attach sysfs hwmon attributes for userspace monitoring */
+ 		ret =3D devm_thermal_add_hwmon_sysfs(dev, ts->ch[i].tzd);
+ 		if (ret)
+ 			dev_warn(dev, "Failed to add hwmon sysfs attributes\n");
++	}
+
+-		k1_tsensor_enable_irq(ts->ch + i);
++	ret =3D platform_get_irq(pdev, 0);
++	if (ret < 0) {
++		goto err_shutdown;
+ 	}
+
++	ret =3D devm_request_threaded_irq(dev, irq, NULL,
++					k1_tsensor_irq_thread,
++					IRQF_ONESHOT, "k1_tsensor", ts);
++	if (ret < 0)
++		goto err_shutdown;
++
++	ret =3D devm_add_action_or_reset(dev, devm_k1_tsensor_shutdown, ts);
++	if (ret)
++		return ret;
++
++	/* Enable interrupts only after all zones and the handler are ready. */
++	for (i =3D 0; i < MAX_SENSOR_NUMBER; ++i)
++		k1_tsensor_enable_irq(ts->ch + i);
++
+ 	platform_set_drvdata(pdev, ts);
+
+ 	return 0;
++
++err_shutdown:
++	k1_tsensor_shutdown(ts);
++	return ret;
+ }
+
+ static const struct of_device_id k1_tsensor_dt_ids[] =3D {
+
+--=20
 Best regards,
--- 
-Yixun Lan <dlan@kernel.org>
+Shuwei Wu
