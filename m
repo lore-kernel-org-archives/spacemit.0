@@ -1,47 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A3C3F4829;
-	Tue, 14 Jul 2026 09:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BAB32AAA0;
+	Tue, 14 Jul 2026 09:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784020209; cv=none; b=lFFwKI90HS5vMsgn2NoPvSGXVMkE3Fg52T/Ghuc8nAsBbBChCf4P0E5iKh8Xpmw1HRa0CqJhwe91zEn9QAoa1+SmE4+bbKyIklHknko3AL/CqcVYj8/U9LLlMpM0LM5ScVA7XttxKn2PXxztXvbaq5JdaHd6gYXA0nxbs1DFkiE=
+	t=1784020326; cv=none; b=LaDEPBaugXTMfiY+uOSy5sCINAIcW+uTulTyFossvTr4jyz1puzMRgzF/uEfdqqOLr/tkxKb2NkxkJPbDBNrrT5V6bch0bidQP5OSFvmLwaG5jXGZ9vqtO88EpQ+YLtFvDJllezS5pGmX9Q1en9daXH4ThdkWTSdAQhQWYy/4Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784020209; c=relaxed/simple;
-	bh=ClbGW+XGjZ/fQugTtNXfE5bZIgYXZ/rHqa0wN56YvQw=;
+	s=arc-20240116; t=1784020326; c=relaxed/simple;
+	bh=4jFuKhT1ET8uRm76rjsSNFtNGde0a6vl8wN80kGvhKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CakImQExE4lzbBHx9As97yib7WnIIz1+dQgZIW7qYSJic8T2l9S3lRL4niXydZE68/i13p0raqBJb2325rbgFjb/Lxm6G1j+2Z6pG6HDoiyHT5lhqaer+HG4Mhlmi/48o5jKysBRhRSaTagj8jiKxtcyuD7fZgqoAF3rHJrBGqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eZqi6nsA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XszFcQEX82aaSNklbTXn46iaLrzN6y4ztWXsF52VA4+KKKJsa8/qE8HAgdC2LqtNy/ZNQ6W9xOY6sqa7OB9ZhFO98PbiB3rlJbViVd2JGToNBS6jKDR32H47Tu94He3wJoIgqbJUfgCfdgfi2bO9nNv/AeLGgyWVnZ1Qf4sf9Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B67xo9vh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eZqi6nsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238BF1F000E9;
-	Tue, 14 Jul 2026 09:10:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B67xo9vh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428C11F000E9;
+	Tue, 14 Jul 2026 09:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784020208;
-	bh=V28WrlVcLhHenO4/n9XjQ5Tw/iutUPxfCf4Ex0Jl6Qw=;
+	s=k20260515; t=1784020324;
+	bh=HS8GPuh1k2NPJ/kyd+W9EnihrSZfG4zVFWpsfKm2RLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eZqi6nsA8Hoy2MPOuro1Ybre0ychdoZJY1US0kVo1Hr+lMNqRux/ruy7BB9NEq9I+
-	 WnTt3o/+ChH7lRtLx/XCylmMvjHylSHbWCmuQGa5blWDbN/B33wc2a/kvTo0xHNerB
-	 jKBMUMfu8gvU+bR7Ma3puRf0a+WGAg1Cvtb2OAoF2Gsg1cq3ln0VJL3lLTUaYsZgCL
-	 yW+pR0Yb+rDNdhjmwgBb8jbgUVr8AwOpRb3UJdpizlEyxGOE1Hlm09RoiR6Ej2psmQ
-	 by6SU8IGfjNarWMlihDtxAv3rIaA6MbANrgEnnvR4eqA1zfpJ8PPOKsJA2yJvYHHIP
-	 326Hh9Yick8gg==
+	b=B67xo9vh3DdJ8o/dp4ZQsuG29EfitlgjNPjp9PmbZ06SgBuPm1LwkQGs5sE68LroG
+	 7In1YqIfMytKKyWpIBuaTW5YipC4g7dFypUI0irviF3Ba0EhuPvTgsCPc+6p97NUsM
+	 ormiUF7raDaQ6dVZN81dDALkPVJ9miYWxabK7lS4a+EA4hVJqxkN4zSrmyiY299vkk
+	 5TK0hxNkuAicY8VvItMDC5wQTKc0HYr5lC2B5BvgC0DE+UP4NAvOAoDvdwWofcOw93
+	 4mHz0Yr+Bez5qqiFf6YhIXMwHD4n+TRSV3/2QjSyFktYsjfno50kVSlz4ArvpCpUrb
+	 72ZJxtrVklgAw==
 From: Yixun Lan <dlan@kernel.org>
-To: linux-kernel@vger.kernel.org,
+To: "Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	Aurelien Jarno <aurelien@aurel32.net>
+	Shuwei Wu <shuwei.wu@mailbox.org>
 Cc: Yixun Lan <dlan@kernel.org>,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH v2 0/5] riscv: dts: spacemit: serial/i2c/ethernet improvements for the K3 Pico-ITX board
-Date: Tue, 14 Jul 2026 09:10:01 +0000
-Message-ID: <178402012051.1567515.12651523506378538429.b4-ty@b4>
+	spacemit@lists.linux.dev,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 0/2] cpufreq: spacemit: Add cpufreq support for K1 SoC
+Date: Tue, 14 Jul 2026 09:11:56 +0000
+Message-ID: <178402025712.1568061.9223355686030414906.b4-ty@b4>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260623204431.498700-1-aurelien@aurel32.net>
-References: <20260623204431.498700-1-aurelien@aurel32.net>
+In-Reply-To: <20260626-shadow-deps-v4-0-bba9831f2f1d@mailbox.org>
+References: <20260626-shadow-deps-v4-0-bba9831f2f1d@mailbox.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -52,31 +59,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 23 Jun 2026 22:43:44 +0200, Aurelien Jarno wrote:
-> This patch series tries to improve the K3 Pico-ITX board DTS by configuring the
-> default baud rate for the serial port, enabling the 24c02 eeprom on i2c2,
-> adding aliases for i2c2 and i2c8 ports, and enabling power saving features on
-> the RTL8211F PHY.
+On Fri, 26 Jun 2026 16:10:22 +0800, Shuwei Wu wrote:
+> This series enables CPU DVFS for the SpacemiT K1 SoC using the generic
+> cpufreq-dt driver.
 > 
-> Changes in v2:
-> - Collect Reviewed-by tag
-> - Fix issues reported by Sashiko AI in patch 2
-> - Link to v1: https://lore.kernel.org/linux-riscv/20260620062238.3199108-1-aurelien@aurel32.net
+> K1 has two CPU clock clusters. The two clusters have separate CPU clocks,
+> so they are represented as two cpufreq policies: policy0 for CPUs 0-3 and
+> policy4 for CPUs 4-7.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/5] riscv: dts: spacemit: set console baud rate on K3 Pico-ITX board
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=84a9b686f24490e9340961c913072df7fc9518a1
-[2/5] riscv: dts: spacemit: enable the i2c2 adapter on K3 Pico-ITX board
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=e08ab32f61b1fc7c35253b708f3840530a2c13cc
-[3/5] riscv: dts: spacemit: add 24c02 eeprom on K3 Pico-ITX board
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=6e59ab1a2b4539cda3677d4927a08609be28de6c
-[4/5] riscv: dts: spacemit: add i2c aliases on K3 Pico-ITX board
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=ca259920d5551b0c68e5dc188a2f0118baa151ec
-[5/5] riscv: dts: spacemit: improve RTL8211F PHY configuration on K3 Pico-ITX board
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=ccbfb13d278abbde13e544316e961d3ab03a77c8
+[1/2] cpufreq: dt-platdev: Add SpacemiT K1 SoC to the allowlist
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=6f6369ada94038b189096b7a98330dee9814082a
+[2/2] riscv: dts: spacemit: Add cpu scaling for K1 SoC
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=199380e4d8cd22e539a08d4949e9582b09390bd5
 
 Best regards,
 -- 
