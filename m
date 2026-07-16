@@ -1,148 +1,140 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B0B3D667F
-	for <spacemit@lists.linux.dev>; Thu, 16 Jul 2026 22:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784240864; cv=pass; b=EhtvsgcmOchTa2Mz/Z741IxRxBpLhiQrY1FnR0maq4DBjpEg/CKzbYSSODei83FhIAwO9VPax1vLlZ6ABBNnRqZMi04c8ME33iZt2gx6Fsv6+czkIQypwRiqRAsY8Ft/YwKVl+6KA2eo0gUT2kiW/fdkliWGyafSJ37fb3URApw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784240864; c=relaxed/simple;
-	bh=6ZU0yywrvxPHG6hK8bj9GpWMCRYihvW5KONWikHDtR4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JKSFRA0tYLljhjg6PXpSelyAGzGYXeL1DNE0M5alNteHZCdkWXZu8UQC9RT85wzECiSxTuoMp70qcga2HSBF7av3QmtNCa1Z+wPI8rHxEPy0oHJnEINSLDUqy/NZtMDeRJKgYSO8bOjPqx0M49DvARE2h6csWLSWk3epg5xogAE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=RZlONvMK; arc=pass smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0D13C3F50
+	for <spacemit@lists.linux.dev>; Thu, 16 Jul 2026 23:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784243136; cv=none; b=nIkQlKVElgkKKqnZWli6V6ieP11560Uw88K3BXRCm400xLPqoYCQ0FTzzQ3f4Q20nNLbS1bVwFo5LexWfFlEkjVg7pO2S0FOsz8XTfW1fk7eJugr+oER7qCyo4Xz+1b3niaV+YtJGm+hIICPkZQrQ8fN1N+C1ncbtg3vQr7C1HY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784243136; c=relaxed/simple;
+	bh=XjCIt0KCuhMV6ueAwPxlgNW+xh//owQIPs0SDmY2sfk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=r4C9ZfWIuurZP2nXFt4cwu9qN6eStcO/coMuF2G0Mt2heQGDeEMOSs/DbiOUVc6GSQhMzhcbvQqn6JyLIMYzKRVYxvmZQy/BSDz2ZqO2piWmE5AUTCppdZx19IdMCbB0vtgBG+cbXblZCQPRv6a2V7Gb7eKLGd7fy4BUdhRhn2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=GQganIE2; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tenstorrent.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="RZlONvMK"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-6682259cae6so2095349d50.3
-        for <spacemit@lists.linux.dev>; Thu, 16 Jul 2026 15:27:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784240860; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fEz/DgKJ7a9Rc49IPRsEt7otQ1QMc0J/P6ft0zavwvVbq70ftCeBG/yYfuwc4FvjIJ
-         9UK1LbxsE9QkCsnSyUSLvUeFxIjCuNiX7h3Xvb1idOfVpfYlYqsVQKdRYrfdTZlTeUmU
-         LhbMTzW4mc6RUjIabpwOnMiYLhJZi1K9K7U7ZEeFVr+6EKz2KaijIUts3PtKkvgyihrJ
-         chyqVmGdtSmRfTwucvQnb2DRInjH8I/9Er7TewbUmYalrAYqSqGaVNMHyjXkH2Xkwu3b
-         w+fEWdcZra2ho02xiyMTwIR/N3P0MH9DT0ImrHAPZkKqYOe7RaisriNDlrfGSJA8qLKM
-         ldyA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=6ZU0yywrvxPHG6hK8bj9GpWMCRYihvW5KONWikHDtR4=;
-        fh=nmJ8SSdo1AADfnIiLmdecd0XySkK9bf1pqNhCxqi6IM=;
-        b=R7YXpOYYT9Qfqz988YfbXtdw3pe8mH5607HmQbtstxiRC+LdJ9nPELUXqfy+HGYSlp
-         E3j5EoJJEkau8Q1lx0Qy5ov4r660dTNq++Azx99SVpYD38NloswFnOOvFcCQAYfSemj3
-         bBzd0TdXo9BydOGFBOS3wufyEztNJa4CCQ786ucCExUFTFOeHfgUzoO0r6UQ2PA21tmp
-         9yrwyzJ6ZyudubCKgF5Q+Wguk2ErWF336ep2L77Mj/GJAMdFl7tvn7KBKtPIyoPBOXrI
-         lRwC2MurEdFqcmykQ0q8GIpqA7kDYeW20OarWrXud7ZCYUK85BgOT2c3KlTkiWA/HKHh
-         G2Pg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="GQganIE2"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-80a123ef90aso21293737b3.0
+        for <spacemit@lists.linux.dev>; Thu, 16 Jul 2026 16:05:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tenstorrent.com; s=google; t=1784240860; x=1784845660; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=6ZU0yywrvxPHG6hK8bj9GpWMCRYihvW5KONWikHDtR4=;
-        b=RZlONvMKax4wDVoM+IWKkTBDqBpyL0NwZj4DIsdwqiXNPlOTHD4ApLaOVEiHB/9sQB
-         DsGWp8aXQ1FsvRmeCBRC2ZFigUHwXO+FAR/gQTLGazcLVesrfPnMlJ0PPVq480S1Bi5i
-         8Rdjce6UUFbPp1nWNw1RfxW2F8xNl2QJ5KnuYkosZ+9WDYSoKUY9QTfa89u9Z9JxSjD6
-         9gMkiLPFiVM+4R79AHW3XDCQgXIY9MOX0JbMC0C/sKYc9B0VKcb2XSzKBs04ENCHdT5Y
-         +qgrbWtVnIybfrvrAmp2a1Bje/t8KrODl6GfoVHCNPaGfCgPpLjG85u4GRXFou4OQaM1
-         mjMQ==
+        d=tenstorrent.com; s=google; t=1784243132; x=1784847932; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=oK6R8pSf4q5klrNu6IUKUSP5IXczJYV+oguJ7eE6+Dk=;
+        b=GQganIE20Twb4YM9s1TN94waamKBWzzhOJdvM8FRroTZXW7sii/4AnwRotwm/anNVw
+         jTUg4bWNpOaoOM8Vch0Qlk/H7j28gDMGJLr+wRHTG4QZwaZi03IK9SxebdZamlDamutV
+         GpiSvfDY3HwqSvHl0SMio7+W7TonZ50SPDOmLQV5cCNuanwxHmTHAAg0ukmvUbrexD6O
+         Agd50F2gb7T4N1Dvrqww9DCkvs/bGHvzLBLhQsaRX9z0fxEBFmPmFZ/9CWISw/Z7apzJ
+         zkMre9T8PF9XB0C68I4plEH9l4G/F9PhE9+rjoTcarGoi0F/xAXzIuAr8B84e3eVmJY3
+         yh/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784240860; x=1784845660;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6ZU0yywrvxPHG6hK8bj9GpWMCRYihvW5KONWikHDtR4=;
-        b=BuLQ7YIx92JHboMZImR2fS5VecjYQ9k2UcRCEbWINHlZvnGDStxmKBiNCKVT0bMLi2
-         eosYqyni5E+sY0NA+FX0hh6DRGQEGbQVqqPU7cWWOSoX2lqubxVYTb73Nzkm7q3NNIzS
-         3f+T1C6fKPtXumzwo8OKusfNBJ4aB+kda41a/qMttPM2/Cigymu6OhOJ5X3ksCTrSGdG
-         fcWyHUDDsmUclJUEBq/lVyWUFWKJrk4DKWIOa6r6pmPcM/sUnR5yQgj6zILVGrXwaNW3
-         FwnQeA39v/UBnPievmJG5OE7HQ6LZv4uJt5VDD2IODJdaPV/LpyYW251ON4nD4rYH3ud
-         v6Hw==
-X-Forwarded-Encrypted: i=1; AHgh+RqTVA1krgb9Q28nPeCGjLHmtMEtPraKiP3qZ/u4DMrIyZiZmNTjZamQd/h/WWmnX5fEJqL8OOhtRg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywi8SKe7qcrer/oLHbtkg3K8bGpIM+m8t9Ba737W/TSekRUzjW9
-	bJQu77oirPSNo+r8iIcRPYj8w3Fm5mu9F3QIj8hEe/6LENtVYElnnyGYvtdE9vJz575FEI3GNxC
-	RimW+tsIdZsK8zHSBlLBq5b7QRQgOxs9Gqb+CTpQsCw==
-X-Gm-Gg: AfdE7cmOOiAP22uOYmDfXHu4tKE/ms2x3vgCuoXZdrh6SzhWHZlpD6Z/xlvuljqkTqR
-	4aUdkJzdX/09w/Uf27opz3jIU3ZkFzNIu9qpHAsTg5eiCyUfdejBZxTMmpABZ9yl0NGHjvw6ezA
-	GvThLOgGEmJtaDXuQQbgH2eDKaldmS/TvxVgnYqWP93245bmsm9cnyrS2ExYmTk7cqwbbAYJbrL
-	7CFsl6M0iiw+iG+RGsVb4/ccg5UjiwfUA/XgNwXAlkm74hcU1YtdTNi6OhTnImN/jQ/MkFWbcaY
-	htkRCQ07cbX+0bEUyQ==
-X-Received: by 2002:a05:690e:4292:20b0:664:ae6b:b499 with SMTP id
- 956f58d0204a3-668134128f7mr5521399d50.78.1784240860157; Thu, 16 Jul 2026
- 15:27:40 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1784243132; x=1784847932;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=oK6R8pSf4q5klrNu6IUKUSP5IXczJYV+oguJ7eE6+Dk=;
+        b=i+vS5TbNU6I2MZzXgNS2DugQU6jk7ZBZP9unMyLJI1LAvnC5A9RkQtiV63XpBLDrJd
+         lMwS7ewliYEmdh/Kv2hnUPbtzLbb/KhVecMGB5tjx+sWMrPW/Ps2Ys8tHUsC+C1WcGdE
+         84eeRheZOmgtBKykWv26KooeFn47fWUvyEZPLicQfroWD63jFYRLO/eNFWLapcDdsnlP
+         qMLlc2faMrjQNaDGU9rP5X8sp8OLbHgwq7JZge8sYKlW2etSUSQyvAzfN+aM0/iSJqrS
+         RNOAZhv1RbIcc8NJWkjw2YMxjN5hcIXFKkrhT0MrKLU4saEcktdYqroEfIg7K8314HXN
+         aJjg==
+X-Forwarded-Encrypted: i=1; AHgh+RoCMCSx3kCHd1YQfPoQtCeJSbBmIkMlCTVjTUhngJ8GV1OegGyGqCovN+8ogvQSlaBumtuXrXSu2w==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yya5uNXoG/gZ8XTAdAd22KU4CbqpSZd+4f34krKVNQsXBn5Sb/Z
+	S0MQO+VC18k8bu0rQ/f9aJJChtZCjerT5Rfj1w2oZ70qJS3XETTuWjXYsUTXwxtAwq4=
+X-Gm-Gg: AfdE7cnPA9A3DzuYv2iQ8QbCI9zUcGMkfG8n0xWrpbEhV5Qobi8dhGGukPC/sKbkLIo
+	TBlGPb7KJB88dUnBdBQ2KyxQunO50P/9lskNPB1Gg1TwmOmalor1PtGSSehmNOIDcFiXM+PoU/V
+	YVReavJldDd8iyl3YbqWQG9SnYKiI/6Go93ZW6rvgnYbVimUL1DNVMCELVB5ZCgKcSxIarps3iV
+	clpX+vBuDT9htMIa+MmklloLFx4JxZeIci8gPUz4KQKNauBR83IKibdxNeK+qDtNgLJJbKPEjE1
+	cK+i5yVymHBTINLDn1kMb91gu3smIjtXRJEIeUTpIQPZE+qWaCZVyfGgrPAqPj0miI5/ARr2Yuw
+	EEKgRLpUT7VesKQ9xmel9tWqex6Thxi4UNvKpEfwKhEZJHaNbZ8ciX06qYqBm0dCH8EKw4BvRze
+	wba0qD+98ohKVdQ87pArAQgR/ONM2aqaOjVh///ip7/44ko2vuggqY9JKS9g==
+X-Received: by 2002:a05:690c:289:b0:7dc:1c56:2901 with SMTP id 00721157ae682-81ee27da32dmr27774457b3.1.1784243132428;
+        Thu, 16 Jul 2026 16:05:32 -0700 (PDT)
+Received: from [192.168.2.129] ([2600:1700:220:59e0:40df:d071:3a06:1c14])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-81e6be90499sm207006837b3.5.2026.07.16.16.05.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jul 2026 16:05:32 -0700 (PDT)
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Subject: [PATCH v2 0/2] Enable WiFi on Spacemit K3 Pico ITX
+Date: Thu, 16 Jul 2026 18:05:09 -0500
+Message-Id: <20260716-rtw89-spacemit-k3-v2-0-392b577ebf75@oss.tenstorrent.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260715-rtw89-spacemit-k3-v1-0-e577bc63706b@oss.tenstorrent.com>
- <20260715-rtw89-spacemit-k3-v1-2-e577bc63706b@oss.tenstorrent.com>
- <e7a43955e41c4dbdb864e89edc3d9fe6@realtek.com> <allZOmTRIvot39Gj@inochi.infowork>
-In-Reply-To: <allZOmTRIvot39Gj@inochi.infowork>
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Thu, 16 Jul 2026 17:27:29 -0500
-X-Gm-Features: AUfX_mwxPqzyWp7O4WLTTM2K_5Fn9GaDNvcy6d1xA8kFX3CnozHTqWZXOkjwN2k
-Message-ID: <CAEev2e_QaaGmc-fSd4dWQAm2YOqOmBDn-xi1coWrAnoh0JUqRQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] wifi: rtw89: pci: enable 36-bit DMA on spacemit K3
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Ping-Ke Shih <pkshih@realtek.com>, Bjorn Helgaas <bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>, 
-	"spacemit@lists.linux.dev" <spacemit@lists.linux.dev>, 
-	"linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKVjWWoC/32OQQ6CMBBFr0K6dkhLAxVX3sOwoHWUamyxU1BDu
+ LsFTdy5fJP/35+JEQaLxHbZxAKOlqx3CYpNxkzXujOCPSZmBS8qrkQJIT62NVDfGrzZCFcJrVS
+ mVkpoaSRLvT7gyT5X56H5MA36giYuom8i4H1IY/EX6yxFH17rJ6NYrv9GRwEcsFRKm0oqXum9J
+ 8ojukUS0MXc+Btr5nl+Az91dJ7jAAAA
+X-Change-ID: 20260715-rtw89-spacemit-k3-a37c9771b3c3
+To: Bjorn Helgaas <bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>, 
+ Ping-Ke Shih <pkshih@realtek.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Inochi Amaoto <inochiama@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
+Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-wireless@vger.kernel.org, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+X-Mailer: b4 0.15.1
 
-Hi Inochi,
+The Spacemit K3 Pico ITX has a RTL8852BE Wifi card attached via PCIe.
+The probe for the rtw89 driver currently fails because driver tries to
+allocate a kernel page with GFP_DMA32, and this board has memory only
+above the 32 bit range. The rtw89 driver has the ability to use 36 bit
+DMA addresses, but this is only enabled for certain PCIe bridge/rootport
+that have been validated to work on. Enable this ability for the PCIe
+root port. A similar patch seems to exist in the vendor kernel tree.
 
-On Thu, Jul 16, 2026 at 5:24=E2=80=AFPM Inochi Amaoto <inochiama@gmail.com>=
- wrote:
->
-> On Thu, Jul 16, 2026 at 09:22:17AM +0000, Ping-Ke Shih wrote:
-> > Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com> wrote:
-> > > The Spacemit K3 Pico ITX Board has a RTL8852BE pcie card behind a PCI=
-e
-> > > root port, but the SoC doesn't have any 32 DMA addreseses which the
-> > > rtw89 seems to use by default. Enable 36 bit DMA ability that the dri=
-ver
-> > > has when this particular root port is detected so that the driver can
-> > > probe on this SoC.
-> > >
-> > > Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-> >
-> > This patch looks good to me:
-> >
-> > Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-> >
-> > But I wonder how this patchset goes via which tree. I'm happy to merge
-> > them into rtw tree and then wireless-next tree if people can ack
-> > patch 1/2.
-> >
-> >
->
-> These IDs are from my patchset.
-> https://lore.kernel.org/spacemit/20260709040027.958400-1-inochiama@gmail.=
-com/
->
-> I think Anirudh can move this ID and add them to the pci_ids.h
-> directly, And I can adjust my patch to depend on this. It still
-> needs some improvement to be merged.
+To test this, you'll need the 3 patch series adding the K3 PCIe RC
+Driver[1], K3 PCIe Phy[2] and K3 PCIe DTS[3].
 
-Sounds good, I'll drop the dependency on your series and just have my
-series add these IDs to linux.pci_ids.h. I'll send out a V2 tonight.
+I've dropped the dependency on [1] from v1 and added the PCI IDs to
+pci_ids.h here directly. Inochi's PCIe RC series will now use the PCI
+IDs added by this series.
 
->
-> Regards,
-> Inochi
->
->
+One question I had was about whether the IOMMU on the K3 could be used
+to do DMA mappings and allow the wifi card to work with a 32 bit virtual
+address. The K3's IOMMU isn't supported currently in the kernel DT. It
+seems to not be enabled in the vendor kernel too. Even if the IOMMU was
+enabled, I'm not sure if it would help with this exact problem. The fix
+proposed in this patch works to solve this problem, so I've sent it to
+the list.
+
+[1] https://lore.kernel.org/spacemit/20260709040027.958400-1-inochiama@gmail.com/
+[2] https://lore.kernel.org/spacemit/20260703021024.495433-1-inochiama@gmail.com/
+[3] https://lore.kernel.org/spacemit/20260709040415.977784-1-inochiama@gmail.com/ 
+
+Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+---
+Changes in v2:
+- Updated Patch 1's commit with reason for where the PCI IDs will be used
+- Dropped the hard dependency on Inochi's PCIe RC series and add the PCI ids in this patch directly 
+- Added Acked by from Bjorn and Ping-Ke, Tested by from Aurelien
+- Link to v1: https://patch.msgid.link/20260715-rtw89-spacemit-k3-v1-0-e577bc63706b@oss.tenstorrent.com
+
+---
+Anirudh Srinivasan (2):
+      PCI: Move Spacemit vendor and device IDs to linux/pci_ids.h
+      wifi: rtw89: pci: enable 36-bit DMA on spacemit K3
+
+ drivers/net/wireless/realtek/rtw89/pci.c      | 4 ++++
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 3 ---
+ include/linux/pci_ids.h                       | 4 ++++
+ 3 files changed, 8 insertions(+), 3 deletions(-)
+---
+base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
+change-id: 20260715-rtw89-spacemit-k3-a37c9771b3c3
+
+Best regards,
+--  
+Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+
