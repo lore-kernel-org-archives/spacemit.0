@@ -1,303 +1,187 @@
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F1B3815DF
-	for <spacemit@lists.linux.dev>; Thu, 16 Jul 2026 04:40:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC24388E72
+	for <spacemit@lists.linux.dev>; Thu, 16 Jul 2026 07:04:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784176804; cv=none; b=Dub4lxompXldPZl5eVUNUHOwaBKj2JSJU6A6Mjnc2z7+dlvkaop5IdkEO+sm5yX46qBhScs8GUfUWt5wNb5OQ2Nwgg3YuHkS+YlbpwDKCHwMjmtxLNn9SOnhO1hiINdGNS3yIjtMbzbh8cxZKmJouszZWM9PeECZMvLea8oX54k=
+	t=1784185475; cv=none; b=VIup6b7Rr2QdV1gnOHRpGhkRxG/FY/cVgTt2Ka1g8rrllLP02n+ZJ0A2DJ2PX7UeIkr38XAPu+4tKX69vhFZh28SMacRHxGz46kaL7ZNMbrKajgJcMOZowQOVs54rdlAZC6S/c3bK/UvEOs9jKlZH8Bq37ZW/yoHz5NuAW0ZTAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784176804; c=relaxed/simple;
-	bh=c3RN7BRpX8QKB3ff0Sn+PujzwmiYcJUf1hhXXZ5BExI=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=EF8kQwDiT4G/cWnsLfhCL2J62OaF/aaag2H/CuUNnAmTYfL9682EnFgOVcK6ifLAPEjXQl0/Avpcaq2gBerUBHo+1bY7idYe5ShLK08jdv9dhEqBI0kBJ3VuEQfBOL1RXdF04o6arXkJiWDWItA6vRLfDWV1/cmG2QGhkMYnw8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=kObxUABI; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=RPBrLGvj; arc=none smtp.client-ip=80.241.56.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="kObxUABI";
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="RPBrLGvj"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
-	(No client certificate requested)
-	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4h10hC1dx1zKsGZ;
-	Thu, 16 Jul 2026 06:39:55 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1784176795;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JcpkV9siobUpO+f7IdelxmPLDPFX/aFAfSsv5BsO2uo=;
-	b=kObxUABIKDkKw1LnU/pAk1nBEJo1kIXNiOx3DMGefy5Jd+NpXcSKuTl89RxJhR09FmDTqf
-	cXyYUNsy+MqcQYG8/MjoKqnzkk46UOI8x9x0LSr4vY8QmJz8IEIG/lBvWAyl2sLqgvlArL
-	IEqHCXAkW75S+jSpJX3naAOfwklnmWwYASn4MeyyxaPe/NLvcfakLE/p14oVSsqv7MiWRb
-	C3Ydf6AkVm42eU2056hAXGo4I7HuNF68srLr2tdzMECPon2SClj+ZPWq/f6ytb7k8yya2u
-	RiND1A9m5HiUNMmbN7EdJF9g7Ou10D3ayE0+fkCOJhg3G2bbxI+Q97xmEpNC8Q==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=RPBrLGvj;
-	spf=pass (outgoing_mbo_mout: domain of shuwei.wu@mailbox.org designates 2001:67c:2050:b231:465::1 as permitted sender) smtp.mailfrom=shuwei.wu@mailbox.org
+	s=arc-20240116; t=1784185475; c=relaxed/simple;
+	bh=otAMbqmauztUEEt8tijWrwidHh7IcUZnrAphqegrvwM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Ew/N2gOfAIZsmpTbFhWZoTJqt5G4X/1MM3QuNNqtkDg+X98JFn4QIHlP1nZEc22bzAMExT58TWSx0ns7e1fotzuRS6++RlHuFjKZCdvwlfwZxIj1Dwhz20l28E17JASWK0Ta2jXIJYbSmcc8ML9/So85j/XmzSoyNoVSP5KoDvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 93267c4e80e411f1aa26b74ffac11d73-20260716
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:0ae7e942-b482-4ff1-a06c-e927528614e2,IP:0,U
+	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:0
+X-CID-META: VersionHash:e7bac3a,CLOUDID:917364be80770ce4303355b53af277ab,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|136|850|865|898,TC:nil,Content:0|15|
+	50,EDM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,
+	OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 93267c4e80e411f1aa26b74ffac11d73-20260716
+X-User: xiaopei01@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <xiaopei01@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1791035787; Thu, 16 Jul 2026 15:04:23 +0800
+From: Pei Xiao <xiaopei01@kylinos.cn>
+To: shuwei.wu@mailbox.org,
+	troy.mitchell@linux.spacemit.com,
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	dlan@kernel.org,
+	daniel.lezcano@kernel.org
+Cc: Pei Xiao <xiaopei01@kylinos.cn>
+Subject: [PATCH v2] thermal: spacemit: k1: add shutdown action and reorder registration order
+Date: Thu, 16 Jul 2026 15:04:19 +0800
+Message-Id: <1967d2bcc8fede6fbd25fc8eee07f2873fb41472.1784184867.git.xiaopei01@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1784176794;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JcpkV9siobUpO+f7IdelxmPLDPFX/aFAfSsv5BsO2uo=;
-	b=RPBrLGvjcV/+Lfmvn4bVyUypkYIW58wSNxEe8hKBD4BaPZCUFLNRGclbguxtwPHxuZ/JHS
-	uUVl5qgoNHTh0uu/AruB1EhUS1dYxN57JUxROMfvSKV0rSSrQR5VONGPyU6G07BR7PtQD7
-	p8y0QG9GLngtry0pwfpuRrEpmUzKQ5kt4q0UbHf5283711EMxhgJV9o7oEEdSn4feBV+0t
-	+Df22U9+gjPvAuQW9vWgdcEUMEtlB8Bs1fsGv5YbKQqWiq9JgA1N8oOP50QtphAXGNYrDD
-	NUQW4Gu4W0eZ0liZBSM3eIg5VB5SypU1C/Evx8wmZjlNzfoWRntmLAa/ZvjgdA==
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 16 Jul 2026 12:39:41 +0800
-Message-Id: <DJZPVU5G5M3L.QJOUYNYKKDCJ@mailbox.org>
-Subject: Re: [PATCH] thermal: spacemit: k1: disable hardware on driver
- remove
-From: "Shuwei Wu" <shuwei.wu@mailbox.org>
-To: "Pei Xiao" <xiaopei01@kylinos.cn>, "Shuwei Wu" <shuwei.wu@mailbox.org>,
- <dlan@kernel.org>, <rafael@kernel.org>, <troy.mitchell@linux.spacemit.com>,
- <linux-pm@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-References: <1db7d94eeaced9a92e3670d28e0c97c22f15f108.1783931396.git.xiaopei01@kylinos.cn> <DJY88BBD7RCM.20K3BATZ6JIM7@mailbox.org> <c054b269-9507-4da1-8e20-cbc85cdafe23@kylinos.cn>
-In-Reply-To: <c054b269-9507-4da1-8e20-cbc85cdafe23@kylinos.cn>
-X-MBO-RS-ID: f29254968fa440c7861
-X-MBO-RS-META: qwk9mydffxwmycptreb4fndyc16ocqj7
-X-Rspamd-Queue-Id: 4h10hC1dx1zKsGZ
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Hi Pei,
+Add a devm action to clean hardware interrupts, sampling, and control
+registers on driver unbind, mirroring what k1_tsensor_init() sets up.
 
-On Wed Jul 15, 2026 at 11:11 AM CST, Pei Xiao wrote:
->
->
-> =E5=9C=A8 2026/7/14 18:36, Shuwei Wu =E5=86=99=E9=81=93:
->> Hi Pei,
->>
->> On Mon Jul 13, 2026 at 4:32 PM CST, Pei Xiao wrote:
->>> The driver uses devm_request_threaded_irq() but never disables the
->>> hardware interrupt enable, sensor enable, or sensor power bits when
->>> the driver is unbound.
->>>
->>> Add a devm action that clears K1_TSENSOR_INT_EN_REG,
->>> K1_TSENSOR_EN_ALL, and K1_TSENSOR_PCTRL_ENABLE on remove, mirroring
->>> what k1_tsensor_init() sets up.
->>>
->>> Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
->>> ---
->>>  drivers/thermal/spacemit/k1_tsensor.c | 27 +++++++++++++++++++++++++++
->>>  1 file changed, 27 insertions(+)
->>>
->>> diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/sp=
-acemit/k1_tsensor.c
->>> index 79222d233129..cf79dc7d403f 100644
->>> --- a/drivers/thermal/spacemit/k1_tsensor.c
->>> +++ b/drivers/thermal/spacemit/k1_tsensor.c
->>> @@ -199,6 +199,29 @@ static irqreturn_t k1_tsensor_irq_thread(int irq, =
-void *data)
->>>  	return IRQ_HANDLED;
->>>  }
->>> =20
->>> +static void k1_tsensor_shutdown(struct k1_tsensor *ts)
->>> +{
->>> +	u32 val;
->>> +
->>> +	/* Disable all interrupts */
->>> +	writel(0xffffffff, ts->base + K1_TSENSOR_INT_EN_REG);
->>> +
->>> +	/* Disable all sensor */
->>> +	val =3D readl(ts->base + K1_TSENSOR_EN_REG);
->>> +	val &=3D ~K1_TSENSOR_EN_ALL;
->>> +	writel(val, ts->base + K1_TSENSOR_EN_REG);
->>> +
->>> +	/* Power down the sensor module */
->>> +	val =3D readl(ts->base + K1_TSENSOR_PCTRL_REG);
->>> +	val &=3D ~K1_TSENSOR_PCTRL_ENABLE;
->>> +	writel(val, ts->base + K1_TSENSOR_PCTRL_REG);
->>> +}
->>> +
->>> +static void devm_k1_tsensor_shutdown(void *data)
->>> +{
->>> +	k1_tsensor_shutdown(data);
->>> +}
->>> +
->>>  static int k1_tsensor_probe(struct platform_device *pdev)
->>>  {
->>>  	struct device *dev =3D &pdev->dev;
->>> @@ -229,6 +252,10 @@ static int k1_tsensor_probe(struct platform_device=
- *pdev)
->>> =20
->>>  	k1_tsensor_init(ts);
->>> =20
->>> +	ret =3D devm_add_action_or_reset(dev, devm_k1_tsensor_shutdown, ts);
->>> +	if (ret)
->>> +		return ret;
->>> +
->>>  	irq =3D platform_get_irq(pdev, 0);
->>>  	if (irq < 0)
->>>  		return irq;
->> Sorry, I missed the hardware cleanup in the original driver.
->> Thanks for fixing it.
->>
->> I also found that registering the shutdown action immediately after
->> k1_tsensor_init() would cause the thermal zones to be released before
->> the IRQ during devres cleanup. The IRQ thread may then access an
->> unregistered thermal zone.
->>
->> I changed the order so that the thermal zones are registered first,
->> followed by the IRQ and the shutdown action.
->> On removal, the hardware interrupt is disabled first, then the IRQ
->> is released, and finally the thermal zones are released.
-> I notice that the changes you've made are significantly more extensive
-> than my original patch.
-> =C2=A0Could you please let me know whether you plan to submit this patch
-> yourself,=C2=A0
-> or whether you would like me to send it? If you would prefer me to
-> submit it,=C2=A0
-> I would be delighted to contribute to the community.
+Reorder the registration order within probe(): register the thermal
+zones first, then request the IRQ, and register the shutdown action
+last.  On removal, the hardware interrupt is disabled first, then the
+IRQ is released, and finally the thermal zones are released.  This
+avoids the IRQ thread accessing an already unregistered thermal zone
+during devres cleanup.
 
-Thank you for your reply. Since the original cleanup issue was
-identified by you, I would be happy for you to submit the update patch.
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+---
+changlog in v2:
+1.Disable all regs mirroring what k1_tsensor_init() sets up
+2.reorder registration order
+3.rename devm_k1_tsensor_shutdown to k1_tsensor_shutdown_action
+4.modify git commit log 
+---
+ drivers/thermal/spacemit/k1_tsensor.c | 73 ++++++++++++++++++++++-----
+ 1 file changed, 60 insertions(+), 13 deletions(-)
 
->
-> Thanks=EF=BC=81
-> Pei.
->
->> -> % git --no-pager diff drivers/thermal/spacemit/k1_tsensor.c
->> diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spa=
-cemit/k1_tsensor.c
->> index 79222d233129..57dbc652a405 100644
->> --- a/drivers/thermal/spacemit/k1_tsensor.c
->> +++ b/drivers/thermal/spacemit/k1_tsensor.c
->> @@ -199,6 +199,32 @@ static irqreturn_t k1_tsensor_irq_thread(int irq, v=
-oid *data)
->>  	return IRQ_HANDLED;
->>  }
->>
->> +static void k1_tsensor_shutdown(struct k1_tsensor *ts)
->> +{
->> +	u32 val;
->> +
->> +	/* Disable all interrupts */
->> +	writel(0xffffffff, ts->base + K1_TSENSOR_INT_EN_REG);
->> +
->> +	/* Disable all sensors */
->> +	val =3D readl(ts->base + K1_TSENSOR_EN_REG);
->> +	val &=3D ~K1_TSENSOR_EN_ALL;
->> +	writel(val, ts->base + K1_TSENSOR_EN_REG);
->> +
->> +	/* Clear the sampling configuration set by k1_tsensor_init(). */
->> +	val =3D readl(ts->base + K1_TSENSOR_TIME_REG);
->> +	val &=3D ~(K1_TSENSOR_TIME_FILTER_PERIOD |
->> +		 K1_TSENSOR_TIME_ADC_CNT_RST |
->> +		 K1_TSENSOR_TIME_WAIT_REF_CNT);
->> +	writel(val, ts->base + K1_TSENSOR_TIME_REG);
->> +
->> +	/* Clear the control bits configured by k1_tsensor_init(). */
->> +	val =3D readl(ts->base + K1_TSENSOR_PCTRL_REG);
->> +	val &=3D ~(K1_TSENSOR_PCTRL_RAW_SEL |
->> +		 K1_TSENSOR_PCTRL_TEMP_MODE |
->> +		 K1_TSENSOR_PCTRL_HW_AUTO_MODE |
->> +		 K1_TSENSOR_PCTRL_ENABLE);
->> +	writel(val, ts->base + K1_TSENSOR_PCTRL_REG);
->> +}
->> +
->> +static void devm_k1_tsensor_shutdown(void *data)
->> +{
->> +	k1_tsensor_shutdown(data);
->> +}
->> +
->>  static int k1_tsensor_probe(struct platform_device *pdev)
->>  {
->>  	struct device *dev =3D &pdev->dev;
->> @@ -229,34 +255,48 @@ static int k1_tsensor_probe(struct platform_device=
- *pdev)
->>
->>  	k1_tsensor_init(ts);
->>
->> -	irq =3D platform_get_irq(pdev, 0);
->> -	if (irq < 0)
->> -		return irq;
->> -
->> -	ret =3D devm_request_threaded_irq(dev, irq, NULL,
->> -					k1_tsensor_irq_thread,
->> -					IRQF_ONESHOT, "k1_tsensor", ts);
->> -	if (ret < 0)
->> -		return ret;
->> -
->>  	for (i =3D 0; i < MAX_SENSOR_NUMBER; ++i) {
->>  		ts->ch[i].id =3D i;
->>  		ts->ch[i].ts =3D ts;
->>  		ts->ch[i].tzd =3D devm_thermal_of_zone_register(dev, i, ts->ch + i, &=
-k1_tsensor_ops);
->> -		if (IS_ERR(ts->ch[i].tzd))
->> -			return PTR_ERR(ts->ch[i].tzd);
->> +		if (IS_ERR(ts->ch[i].tzd)) {
->> +			ret =3D PTR_ERR(ts->ch[i].tzd);
->> +			goto err_shutdown;
->> +		}
->>
->>  		/* Attach sysfs hwmon attributes for userspace monitoring */
->>  		ret =3D devm_thermal_add_hwmon_sysfs(dev, ts->ch[i].tzd);
->>  		if (ret)
->>  			dev_warn(dev, "Failed to add hwmon sysfs attributes\n");
->> +	}
->>
->> -		k1_tsensor_enable_irq(ts->ch + i);
->> +	ret =3D platform_get_irq(pdev, 0);
->> +	if (ret < 0) {
->> +		goto err_shutdown;
->>  	}
-> irq =3D platform_get_irq(pdev, 0); if (irq < 0) { ret =3D irq; goto
-> err_shutdown; }=C2=A0 =C2=A0=C2=A0
+diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spacemit/k1_tsensor.c
+index 79222d233129..ab12e2ec8ae4 100644
+--- a/drivers/thermal/spacemit/k1_tsensor.c
++++ b/drivers/thermal/spacemit/k1_tsensor.c
+@@ -199,6 +199,39 @@ static irqreturn_t k1_tsensor_irq_thread(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
++static void k1_tsensor_shutdown(struct k1_tsensor *ts)
++{
++	u32 val;
++
++	/* Disable all interrupts */
++	writel(0xffffffff, ts->base + K1_TSENSOR_INT_EN_REG);
++
++	/* Disable all sensors */
++	val = readl(ts->base + K1_TSENSOR_EN_REG);
++	val &= ~K1_TSENSOR_EN_ALL;
++	writel(val, ts->base + K1_TSENSOR_EN_REG);
++
++	/* Clear the sampling configuration set by k1_tsensor_init() */
++	val = readl(ts->base + K1_TSENSOR_TIME_REG);
++	val &= ~(K1_TSENSOR_TIME_FILTER_PERIOD |
++		 K1_TSENSOR_TIME_ADC_CNT_RST |
++		 K1_TSENSOR_TIME_WAIT_REF_CNT);
++	writel(val, ts->base + K1_TSENSOR_TIME_REG);
++
++	/* Clear the control bits configured by k1_tsensor_init() */
++	val = readl(ts->base + K1_TSENSOR_PCTRL_REG);
++	val &= ~(K1_TSENSOR_PCTRL_RAW_SEL |
++		 K1_TSENSOR_PCTRL_TEMP_MODE |
++		 K1_TSENSOR_PCTRL_HW_AUTO_MODE |
++		 K1_TSENSOR_PCTRL_ENABLE);
++	writel(val, ts->base + K1_TSENSOR_PCTRL_REG);
++}
++
++static void k1_tsensor_shutdown_action(void *data)
++{
++	k1_tsensor_shutdown(data);
++}
++
+ static int k1_tsensor_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -229,34 +262,48 @@ static int k1_tsensor_probe(struct platform_device *pdev)
+ 
+ 	k1_tsensor_init(ts);
+ 
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0)
+-		return irq;
+-
+-	ret = devm_request_threaded_irq(dev, irq, NULL,
+-					k1_tsensor_irq_thread,
+-					IRQF_ONESHOT, "k1_tsensor", ts);
+-	if (ret < 0)
+-		return ret;
+-
+ 	for (i = 0; i < MAX_SENSOR_NUMBER; ++i) {
+ 		ts->ch[i].id = i;
+ 		ts->ch[i].ts = ts;
+ 		ts->ch[i].tzd = devm_thermal_of_zone_register(dev, i, ts->ch + i, &k1_tsensor_ops);
+-		if (IS_ERR(ts->ch[i].tzd))
+-			return PTR_ERR(ts->ch[i].tzd);
++		if (IS_ERR(ts->ch[i].tzd)) {
++			ret = PTR_ERR(ts->ch[i].tzd);
++			goto err_shutdown;
++		}
+ 
+ 		/* Attach sysfs hwmon attributes for userspace monitoring */
+ 		ret = devm_thermal_add_hwmon_sysfs(dev, ts->ch[i].tzd);
+ 		if (ret)
+ 			dev_warn(dev, "Failed to add hwmon sysfs attributes\n");
++	}
+ 
+-		k1_tsensor_enable_irq(ts->ch + i);
++	irq = platform_get_irq(pdev, 0);
++	if (irq < 0) {
++		ret = irq;
++		goto err_shutdown;
+ 	}
+ 
++	ret = devm_request_threaded_irq(dev, irq, NULL,
++					k1_tsensor_irq_thread,
++					IRQF_ONESHOT, "k1_tsensor", ts);
++	if (ret < 0)
++		goto err_shutdown;
++
++	ret = devm_add_action_or_reset(dev, k1_tsensor_shutdown_action, ts);
++	if (ret)
++		return ret;
++
++	/* Enable interrupts only after all zones and the handler are ready */
++	for (i = 0; i < MAX_SENSOR_NUMBER; ++i)
++		k1_tsensor_enable_irq(ts->ch + i);
++
+ 	platform_set_drvdata(pdev, ts);
+ 
+ 	return 0;
++
++err_shutdown:
++	k1_tsensor_shutdown(ts);
++	return ret;
+ }
+ 
+ static const struct of_device_id k1_tsensor_dt_ids[] = {
+-- 
+2.25.1
 
-agreed.
-
->
->>
->> +	ret =3D devm_request_threaded_irq(dev, irq, NULL,
->> +					k1_tsensor_irq_thread,
->> +					IRQF_ONESHOT, "k1_tsensor", ts);
->> +	if (ret < 0)
->> +		goto err_shutdown;
->> +
->> +	ret =3D devm_add_action_or_reset(dev, devm_k1_tsensor_shutdown, ts);
-> *Do we need to rename=C2=A0|devm_k1_tsensor_shutdown|=C2=A0to a function =
-name=C2=A0
-> without the=C2=A0|devm|=C2=A0prefix? I feel the=C2=A0|devm|=C2=A0prefix i=
-s a bit redundant.
-
-yes, k1_tsensor_shutdown_action() would be a clearer name.
-
->
-> *
->> +	if (ret)
->> +		return ret;
->> +
->> +	/* Enable interrupts only after all zones and the handler are ready. *=
-/
->> +	for (i =3D 0; i < MAX_SENSOR_NUMBER; ++i)
->> +		k1_tsensor_enable_irq(ts->ch + i);
->> +
->>  	platform_set_drvdata(pdev, ts);
->>
->>  	return 0;
->> +
->> +err_shutdown:
->> +	k1_tsensor_shutdown(ts);
->> +	return ret;
->>  }
->>
->>  static const struct of_device_id k1_tsensor_dt_ids[] =3D {
->>
-
---=20
-Best regards,
-Shuwei Wu
