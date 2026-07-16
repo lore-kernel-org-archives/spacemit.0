@@ -1,83 +1,105 @@
-Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E4033CEA5;
-	Thu, 16 Jul 2026 09:23:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=211.75.126.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9096A4302E1;
+	Thu, 16 Jul 2026 16:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784193788; cv=none; b=W6qoZ+PH5CuZOp9ue9eWiRf5b4xTtf3zN+pAJDiq9JHHTrykIr1xFynirtHROSHeU363E8bQ1oFVU42lmktprG0xuixG6/udqK2EdV2GXVgljkQXMZsdPShdMwOqz4a2BGFHPZaGakBiavPCGbiRYgNajC6jywpac7dPl26P03c=
+	t=1784220227; cv=none; b=EWCgNrwpcSe0D1PtDG7W2esGiZLRzB0erEw9GAKFVgDV/m7WmOr2F+vxx5m7Z+JysrPP3NIUOZOFs9n/RGZhOcy4hMUTBIcmfE0V19ZK2E6zVOnZDyjM9J+Xn0P9klyLOtxEK2XRVz5NRR52PKoh3jlzlnnXgJvi5u2tIPm3UVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784193788; c=relaxed/simple;
-	bh=oWR/+zaRnb0CksvjCoRnlIkdqqWHcmWebf50cRymkmw=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=kxi5E830ZLZvtDVtoG6bEvSCondYNE4/1UriEDnpx53bNi8GuErJGYaqW1fF5sUymiMEss0qtMEM+/tNsE7rMKmKUSUh6zkX8SnXLLtk/gKmbvVk8x1qjo0xTZhDrcR0UblToWHbuwp3XkO2VawSrwVteYWQsv4KItPqIG6W2Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com; spf=pass smtp.mailfrom=realtek.com; dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b=RxHhN5Lu; arc=none smtp.client-ip=211.75.126.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtek.com
+	s=arc-20240116; t=1784220227; c=relaxed/simple;
+	bh=SnP8QQIUdNZrOqvASHOtouNYTYwfv/BR4v1iwdm4dEA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=lvKUPrM6d0/jr5B0h2UN2Sn6GqLStx/wEDLSYiUYe7GtcZXUAFj3NM7BpikHwxl2b05mzWo+SNqiB7ahxSp8IK4N5MN350sd17a4dEJJdmTKnwP7ubJwbitZ1ZI0ncFoQkcEv4V8T6BuaYj9sanfeLPJj5qy1ftERw3jq/GNbf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kGu44Drr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b="RxHhN5Lu"
-X-SpamFilter-By: ArmorX SpamTrap 5.80 with qID 66G9MIdvC3536744, This message is accepted by code: ctloc85258
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=realtek.com; s=dkim;
-	t=1784193738; bh=oWR/+zaRnb0CksvjCoRnlIkdqqWHcmWebf50cRymkmw=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	b=RxHhN5Lu3I1LU0f6JBkimisE+FmdRFhb3cXIRcmmU7r4yYjhjJb8Vv9+PtuZrZxde
-	 PinFV0xHX+Bxp3dgiIdr6xpI0YuPOUc5zgoQGLgXp8kZns6CYOQVRkiVDXtCiNQ/zf
-	 UckzKBl/7rjpthevb9o/Gdc5rUmcA+kntCA1JbvaOin0Zhp5MyA9030V8wpX0XqUC3
-	 OOquG0hZ4AZ+X6df7pyWtsuL3m+k7rEQA4VBFwGPZFBZ3NVjro4qt8O5A8ElhnXS8f
-	 UKYAnWrQoz1R/HNYRow48MX3Z9+2HGS4S/75VdkPG+ly0CQCWj1JDiA/JKh5gv/awT
-	 AbXTyzenX9F1g==
-Received: from mail.realtek.com (rtkexhmbs03.realtek.com.tw[10.21.1.53])
-	by rtits2.realtek.com.tw (8.15.2/3.29/5.94) with ESMTPS id 66G9MIdvC3536744
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Thu, 16 Jul 2026 17:22:18 +0800
-Received: from RTKEXHMBS06.realtek.com.tw (10.21.1.56) by
- RTKEXHMBS03.realtek.com.tw (10.21.1.53) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Thu, 16 Jul 2026 17:22:17 +0800
-Received: from RTKEXHMBS06.realtek.com.tw ([::1]) by
- RTKEXHMBS06.realtek.com.tw ([fe80::e6fd:5a3f:8946:92c4%10]) with mapi id
- 15.02.2562.017; Thu, 16 Jul 2026 17:22:17 +0800
-From: Ping-Ke Shih <pkshih@realtek.com>
-To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, Bjorn Helgaas
-	<bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>, Lorenzo Pieralisi
-	<lpieralisi@kernel.org>, =?utf-8?B?S3J6eXN6dG9mIFdpbGN6ecWEc2tp?=
-	<kwilczynski@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, "Rob
- Herring" <robh@kernel.org>, Inochi Amaoto <inochiama@gmail.com>
-CC: "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
-	"spacemit@lists.linux.dev" <spacemit@lists.linux.dev>,
-	"linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>
-Subject: RE: [PATCH 2/2] wifi: rtw89: pci: enable 36-bit DMA on spacemit K3
-Thread-Topic: [PATCH 2/2] wifi: rtw89: pci: enable 36-bit DMA on spacemit K3
-Thread-Index: AQHdFNJRP59ehs1nXEC4sFhzEXMQ0LZv3oqg
-Date: Thu, 16 Jul 2026 09:22:17 +0000
-Message-ID: <e7a43955e41c4dbdb864e89edc3d9fe6@realtek.com>
-References: <20260715-rtw89-spacemit-k3-v1-0-e577bc63706b@oss.tenstorrent.com>
- <20260715-rtw89-spacemit-k3-v1-2-e577bc63706b@oss.tenstorrent.com>
-In-Reply-To: <20260715-rtw89-spacemit-k3-v1-2-e577bc63706b@oss.tenstorrent.com>
-Accept-Language: en-US, zh-TW
-Content-Language: zh-TW
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kGu44Drr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CF91F000E9;
+	Thu, 16 Jul 2026 16:43:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784220217;
+	bh=uqfDMBky8ltos50nXdtqbBp/S+h2mdqQ130ynwz+gXE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To;
+	b=kGu44DrrjOKxlgbOcTiOuR1I/XNU2QiBR684H1vljQJXdas5Tzoj8WFgGq18y8Mlb
+	 FTAtzUdlbr/OsvG55DWfX3M0V/K678nWbV4pH4Xcu0NY10xioGPGfxM3yFVRXieYbd
+	 9Jtb68tARNAkX2cHgedXpUU9r44uDsW48K6q38H6hhxDbxfjbL+iqTar6vahWDD/hA
+	 URrFDmx/r7ROje1vVzSFPhRpYQoYQYCKFAjzmbQmO4bplQzKYnuFT96LwM9a0N6Y1n
+	 UcmE0g19yVWfd0PcPbKERL1iST9NijbSaMtQuf5KkQy6h5/ZRBn164en3PGbxv0oiX
+	 A87mCkzrLrSbg==
+Date: Thu, 16 Jul 2026 11:43:36 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>, Inochi Amaoto <inochiama@gmail.com>,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-wireless@vger.kernel.org
+Subject: Re: [PATCH 1/2] PCI: Move Spacemit vendor and device ID to
+ linux/pci_Ids.h
+Message-ID: <20260716164336.GA40813@bhelgaas>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260715-rtw89-spacemit-k3-v1-1-e577bc63706b@oss.tenstorrent.com>
 
-QW5pcnVkaCBTcmluaXZhc2FuIDxhc3Jpbml2YXNhbkBvc3MudGVuc3RvcnJlbnQuY29tPiB3cm90
-ZToNCj4gVGhlIFNwYWNlbWl0IEszIFBpY28gSVRYIEJvYXJkIGhhcyBhIFJUTDg4NTJCRSBwY2ll
-IGNhcmQgYmVoaW5kIGEgUENJZQ0KPiByb290IHBvcnQsIGJ1dCB0aGUgU29DIGRvZXNuJ3QgaGF2
-ZSBhbnkgMzIgRE1BIGFkZHJlc2VzZXMgd2hpY2ggdGhlDQo+IHJ0dzg5IHNlZW1zIHRvIHVzZSBi
-eSBkZWZhdWx0LiBFbmFibGUgMzYgYml0IERNQSBhYmlsaXR5IHRoYXQgdGhlIGRyaXZlcg0KPiBo
-YXMgd2hlbiB0aGlzIHBhcnRpY3VsYXIgcm9vdCBwb3J0IGlzIGRldGVjdGVkIHNvIHRoYXQgdGhl
-IGRyaXZlciBjYW4NCj4gcHJvYmUgb24gdGhpcyBTb0MuDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBB
-bmlydWRoIFNyaW5pdmFzYW4gPGFzcmluaXZhc2FuQG9zcy50ZW5zdG9ycmVudC5jb20+DQoNClRo
-aXMgcGF0Y2ggbG9va3MgZ29vZCB0byBtZToNCg0KQWNrZWQtYnk6IFBpbmctS2UgU2hpaCA8cGtz
-aGloQHJlYWx0ZWsuY29tPg0KDQpCdXQgSSB3b25kZXIgaG93IHRoaXMgcGF0Y2hzZXQgZ29lcyB2
-aWEgd2hpY2ggdHJlZS4gSSdtIGhhcHB5IHRvIG1lcmdlDQp0aGVtIGludG8gcnR3IHRyZWUgYW5k
-IHRoZW4gd2lyZWxlc3MtbmV4dCB0cmVlIGlmIHBlb3BsZSBjYW4gYWNrDQpwYXRjaCAxLzIuDQoN
-Cg0K
+On Wed, Jul 15, 2026 at 10:21:54PM -0500, Anirudh Srinivasan wrote:
+> Move the vendor and device IDs for Spacemit PCIe Root Complexes to
+> include/linux/pci_ids.h so that they can be referenced elsewhere.
+> 
+> Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+
+To help motivate this patch, it would be nice to say specifically
+where PCI_VENDOR_ID_SPACEMIT will be used.
+
+In subject line, s/pci_Ids.h/pci_ids.h/
+
+> ---
+>  drivers/pci/controller/dwc/pcie-spacemit-k1.c | 4 ----
+>  include/linux/pci_ids.h                       | 4 ++++
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+> index 680acc93f5395..7b0bc1802954a 100644
+> --- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+> +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+> @@ -21,10 +21,6 @@
+>  
+>  #include "pcie-designware.h"
+>  
+> -#define PCI_VENDOR_ID_SPACEMIT		0x201f
+> -#define PCI_DEVICE_ID_SPACEMIT_K1	0x0001
+> -#define PCI_DEVICE_ID_SPACEMIT_K3	0x0002
+> -
+>  /* Offsets and field definitions for link management registers */
+>  #define K1_PHY_AHB_IRQ_EN			0x0000
+>  #define PCIE_INTERRUPT_EN		BIT(0)
+> diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+> index 1c9d40e09107d..d6f26cacc8e35 100644
+> --- a/include/linux/pci_ids.h
+> +++ b/include/linux/pci_ids.h
+> @@ -2640,6 +2640,10 @@
+>  #define PCI_VENDOR_ID_SUNIX		0x1fd4
+>  #define PCI_DEVICE_ID_SUNIX_1999	0x1999
+>  
+> +#define PCI_VENDOR_ID_SPACEMIT		0x201f
+> +#define PCI_DEVICE_ID_SPACEMIT_K1	0x0001
+> +#define PCI_DEVICE_ID_SPACEMIT_K3	0x0002
+> +
+>  #define PCI_VENDOR_ID_HINT             0x3388
+>  #define PCI_DEVICE_ID_HINT_VXPROII_IDE 0x8013
+>  
+> 
+> -- 
+> 2.43.0
+> 
