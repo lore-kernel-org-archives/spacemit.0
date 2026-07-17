@@ -1,153 +1,135 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7453639B960
-	for <spacemit@lists.linux.dev>; Fri, 17 Jul 2026 10:23:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A5E42B302
+	for <spacemit@lists.linux.dev>; Fri, 17 Jul 2026 14:46:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784283823; cv=none; b=WpVi3LX72TUO0GNdEIgu4Lo5S2NEqBD5k8j9W1bJmlZgb5mDwMrqWCVyODQTY3RmBmiK7P0x05S38iXPc7pN+hK8rDXatOiizX9qbui+vDSb8ODkLiV4G6ZfEX5yLuFT8RknbJ3zC9LFtvWzi52/jgAIGC4LFmGjllF6rEWckQU=
+	t=1784299584; cv=none; b=neyN9bI1Htxe4H5ljaTeBuR09yjQnoWl816wfK1WRxW5G7ve0DqRo8SH1lV70UI3XYf1EWuiSW4e3xOGaRlsu2SZ7WxDkTG9P8TiqnbJozIpesszMTgc2uoxdhA+JM9vUye2hz23no3FCPqEv0Itjwp28j0m7TdUrWhTm02vZao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784283823; c=relaxed/simple;
-	bh=tGvidDqf6jtkfzTcLaP8DnYMHTXgmGClLCAu67eKaQY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MfQ25/7hgeTqr1u5WbGncskB2GHKMfaIBIC446lMfc4iZK6L+I9Ed8UN1gNqQgmYq53j98HYsvH/EYyLOqyrKczfmj2OS078TxeZYYDjXg2oXqy7OFxmt/56YEflJLMdBzdCsyl10OxHvrY1cWcalpu7CXL279xbOa4JdXsFprg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dwjeFEh+; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1784299584; c=relaxed/simple;
+	bh=OIPMXvKZwuWAWDHePcauH/eSNbDXWC6yVHtpY8sqHRI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=oPgxVsFH4RAP/eso8J0KL5vK+l9OLhFZ3MvX88QM1RoasXkYdQgoVBZVWfYjDb6Vkt94c42us+fbhHZ48VYb+Wwv25enhnhNHLJ89lxD6y3HIalk7aK0gWVLR1M0SFZBzwpKEm4rl0LERrNeYFSZk1Ol2ugDmsOb2EnX6w51vfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l5XSubZQ; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dwjeFEh+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1784283822; x=1815819822;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=tGvidDqf6jtkfzTcLaP8DnYMHTXgmGClLCAu67eKaQY=;
-  b=dwjeFEh+1V7ytPYzCuiqX4FWeqbfCx8D9cw46bZ6+Qh9xsLtM8Lfir0R
-   e2PVqEzEcsZKE7J42hwccsKu94Sj/GUWlAHW6jPRNYGbRPxWRz7vo5rIo
-   jUK/RFHL3tsNDeJ9TUg7qQkqGgDDq1RsMiyh5dw8tcbHLMGWVTDw31n31
-   5uYlI7GPdt0Xb3sPYQsbKp/gxNd+PiQAsfbLKVwsp9BmdFhyVGsd+dKch
-   WGB+2egtENWIKA44Evr23UwC6vWbdyc+765A1T8NIr1h8J23K44L+5djv
-   cCnkHgIfhMveiTEvA6c6UQ5JWvfSW8H5Tqcoc6zr5nmQMCsrJ3lvR+zSk
-   w==;
-X-CSE-ConnectionGUID: QlxiKytMQyOkYIyjTKq3Uw==
-X-CSE-MsgGUID: UhpdcA+0SPi9TxIDdGIOFA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11848"; a="95555318"
-X-IronPort-AV: E=Sophos;i="6.25,169,1779174000"; 
-   d="scan'208";a="95555318"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2026 03:23:41 -0700
-X-CSE-ConnectionGUID: HwnTdJuoTTmMif+Zc0HdWA==
-X-CSE-MsgGUID: Bz+8y56PT0i4xLSMqjGqew==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,169,1779174000"; 
-   d="scan'208";a="258745095"
-Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.143])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jul 2026 03:23:35 -0700
-Date: Fri, 17 Jul 2026 13:23:32 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Pan Chuang <panchuang@vivo.com>
-Cc: Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Hoan Tran <hoan@os.amperecomputing.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	=?iso-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>,
-	Ming Yu <tmyu0@nuvoton.com>, Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>, Yixun Lan <dlan@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	"open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"moderated list:BROADCOM BCM7XXX ARM ARCHITECTURE" <linux-arm-kernel@lists.infradead.org>,
-	"open list:ARM/RISC-V/RENESAS ARCHITECTURE" <linux-renesas-soc@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
-	"moderated list:ARM/STM32 ARCHITECTURE" <linux-stm32@st-md-mailman.stormreply.com>
-Subject: Re: [PATCH] gpio: Remove redundant dev_err()/dev_err_probe()
-Message-ID: <aloCpCgDYjps9yQu@ashevche-desk.local>
-References: <20260717083037.284134-1-panchuang@vivo.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l5XSubZQ"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-84864086bfeso8446302b3a.1
+        for <spacemit@lists.linux.dev>; Fri, 17 Jul 2026 07:46:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784299582; x=1784904382; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=m6JMxGAMeORwl1SYUzJ4Avq6RnSUEQpdwdVOG9zM+x0=;
+        b=l5XSubZQvTRc4VW2RnlP/bDGVsckukS6vbsTrIeps7I4VdHgjeh4tSyTgjUgsbavtl
+         1Ziz2pTIb4nXJMrDamhvdQTL1kHFURZy4XN1NNNdLUMqGQdumAr0VguxoZlV6gKBfMmr
+         uQIU/jXAtgaXb5FobkRgMJGDmEiU3+05EkJLXIn1wmXui75P4yH3eYfVUpb+5MPqGLeq
+         vCGLrcVlqm2xTCXnqgzOEBu4/4Y1ymKkYqBR/z3nFJbRSxLhCWoXr643/hnjIELg25a5
+         l1OKmqSEcuMc4pGzMVGIuO5eliXoJdVTKY2nimKNZXMlPmwEEexoYNUyRC/wYFQHF/LO
+         c1TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784299582; x=1784904382;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=m6JMxGAMeORwl1SYUzJ4Avq6RnSUEQpdwdVOG9zM+x0=;
+        b=OT3l78yIXLJZW7iizHFk2U37YehAcu59K6RPGTYPClkJWkU/W6zxFkitPQx2ecBCsv
+         C+n0tD2Sbb5HyhvQByqkIudt8SGkcI7SLcaOVMgxJGfmDz2FSkJHxNWNTlbh8+lJ2Yk5
+         cFx4KxMWGLA5B32DSCkW0e5+N6M7CjnxLReBUR8vJ7syglU/Bt5PuZNj/COrcjxOcFrh
+         93zWOTQtZVRDGEJeQQOHbAY50E0cjBkkMqdzl8s5SVmWSv4oJj6ijseMI06iZvTVhhET
+         OSbKoxUYZ0bzdM46wBiNzeTj0cK82Ak9Ot8qVNc4dYS/IEbqXAG2dal/gWzCcXbXYIfw
+         uNCA==
+X-Forwarded-Encrypted: i=1; AHgh+RpTwyVYRY4SsfwpDlwn5dL8JBRj/KM08OZgfYn72iX6kly3WGcKaO5Fw2U1D0iqZvBgzQ8GAsAgrA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxv0Um3maR867togScBNVeJPUBPHYTVFBe6Y3Kffb+rg/ap9Dnh
+	QPu/6FzCmaIZtFWB7AI/q6mRJLW0mxtYPW+pcEIIDBBqPOWFjDjEZt0Q
+X-Gm-Gg: AfdE7ckFzqRL1u1IN7XIqOtf86NlLmi7W3d0oN6CO3+kWxDMACViejFhhOSx886j5Ui
+	cu0wSNvZHwwp498o1dEKDFdOGVLxliSQwa4MRbHUKsh2mGX/l9uvw/qkICFxjqCuIruiCTIVa2X
+	4MKZfVEPL44wlwSE4YPA9e3azeX+JEF56ZgoT1URT4dJIuuB5uXOgTo2CJNlnpzLx4moogZNQjh
+	f3i/JWhRYyryrfU5MVkcyvbXfajsGDLqDhcRUvKmDgesxkLt3/RJavL5gYHTYNkA0y6MRHfdh9K
+	MXV9XsmgYLjfc2Z3qLg+8fZNjENk58WwVoRFcj7Um4Nvfqyt3EPE+xkZ6MAIc+0TCXuVQfyrGZJ
+	v4IfSK/fNpX+91v6yS/C7D52yN+bvsIABFkHljPChiBn75m1/YWpWrU0Y4kdzPFQpxzj2AMWCLv
+	qvIQ==
+X-Received: by 2002:a05:6a00:1784:b0:848:65f3:23c0 with SMTP id d2e1a72fcca58-84c2923a63bmr2877553b3a.1.1784299582194;
+        Fri, 17 Jul 2026 07:46:22 -0700 (PDT)
+Received: from [127.0.1.1] ([192.220.14.58])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84c2af6d519sm1166408b3a.40.2026.07.17.07.46.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jul 2026 07:46:21 -0700 (PDT)
+From: Zhengyu He <hezhy472013@gmail.com>
+Subject: [PATCH 0/4] spi: spacemit: support K3 SPI controllers
+Date: Fri, 17 Jul 2026 07:45:24 -0700
+Message-Id: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-0-969a1b0f783f@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260717083037.284134-1-panchuang@vivo.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/z2N0QrCMBAEf6XcswtJDIn4K+KDTS96im3JaRVK/
+ 91UwceB2Z2ZlIuw0r6ZqfAkKkNfwW4aSpdTf2ZIV5mcccFEG3DbIg33CtBRMEU4lOTQeozrnl/
+ 4qybGvAud9T4bqodVyPL+xg7HH+uzvXJ6rAValg9gBWi9jgAAAA==
+X-Change-ID: 20260716-k3-com260-spi-v7-2-rc2-b4-preview-20260716-077f86d144f0
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
+ Mark Brown <broonie@kernel.org>, Alex Elder <elder@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ linux-spi@vger.kernel.org, Zhengyu He <hezhy472013@gmail.com>, 
+ wefu@redhat.com, liyeshan <yeshan.li@spacemit.com>, 
+ Guodong Xu <docular.xu@gmail.com>, Cody Kang <cody.kang.hk@outlook.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1159; i=hezhy472013@gmail.com;
+ h=from:subject:message-id; bh=OIPMXvKZwuWAWDHePcauH/eSNbDXWC6yVHtpY8sqHRI=;
+ b=owEBbQKS/ZANAwAKAc32nDaAuA3YAcsmYgBqWkAt6LQ1BMVvY5sduW/KRV9RVz2vmM1p+9bjq
+ P+2is2xrAaJAjMEAAEKAB0WIQS9XD2kxy1NmfC2u/XN9pw2gLgN2AUCalpALQAKCRDN9pw2gLgN
+ 2LRYEACGXe+KRwOLl6dDegR3fIqUbV3Spz7oC1VhGZo+Ogpb4C56+sLl8CngaAHlpFyyv3gyqpQ
+ q58zd8HxcznBK6W+syG9HQzhCaeQxpceyb/WYTeEb7+UoKPbZ0IyhJFSn4dlqdFdIpaZgmYwCdM
+ xLQVaG36ffyc1/u/6n3b3REhKzWKKhB7P+Sh/8V1ZF2aDbDzGpr/E6DSKQN3Wo4RtSuTemi+PJ+
+ PwC013IrNg4LLps7qPu5IqJ6RQ8y9MH1thoFIMHAUoWi1/b+Ixajk0xRYXJ9X1Mihz1MiJWKrd4
+ wGPAKrayGl0CjOKI6wjqEw2VnHdHEOK/0w+PMGWzsLtBILZCFSL0ZBL2rpv0bJfYvACPmFT08PR
+ QCao193VhuW0hQHbFbH6Km+tzmg921cKQH08Y9S5vQkz+Cj3LHS+pCH0M3D3d0ssf0tFxnMIuIF
+ CMiAAE2XTH5vPZE0HQK36n7Ez1p+POPLhQZx2MhpX9WeSErDz3LRDH+vRe9lOgXZK+T9jv7k2/l
+ 4r6s0ahnqkJUaI7aw0zZG/+Dn6QhyduANPqsIvruZmZdaq17su/+3rgdiDX9sFcJ8ixJ3lucdn+
+ MQvbvaV/5tIsgDiX3p5iGNlC+iE3oHHB7pKozFtVxrFAKIiYGuzVaSvAyqtedi4HIqBrBZXPGLj
+ GtbxA0tYKjHBjig==
+X-Developer-Key: i=hezhy472013@gmail.com; a=openpgp;
+ fpr=26CA97B1A229C229822278F254AF850165158959
 
-On Fri, Jul 17, 2026 at 04:30:33PM +0800, Pan Chuang wrote:
-> Since commit 55b48e23f5c4 ("genirq/devres: Add error handling in
-> devm_request_*_irq()"), devm_request_irq() and devm_request_threaded_irq()
-> automatically log detailed error messages on failure. Remove the
-> now-redundant driver-specific dev_err() and dev_err_probe() calls.
+This series adds K3 PDMA request numbers, documents the K3 SPI
+compatible, and enables SPI0 on the K3 CoM260-IFX.
 
+This series is available here:
+  https://github.com/imguoguo/linux/tree/k3-com260-spi-v1
 
-...
+This series is based on v7.2-rc2.
 
-> -	if (err != 0) {
-> -		dev_err(chip->parent, "can't request IRQ#%d: %d\n",
-> -			adnp->client->irq, err);
-> +	if (err != 0)
+Signed-off-by: Zhengyu He <hezhy472013@gmail.com>
+---
+Zhengyu He (3):
+      spi: dt-bindings: spacemit: add K3 SPI compatible
+      riscv: dts: spacemit: add SPI controllers for K3
+      riscv: dts: spacemit: enable SPI0 on K3 CoM260-IFX
 
-This style is discouraged, so while at it, please replace with
+liyeshan (1):
+      riscv: dts: spacemit: add K3 PDMA request numbers
 
-	if (err)
+ .../devicetree/bindings/spi/spacemit,k1-spi.yaml   |  6 +-
+ arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts     | 13 +++-
+ arch/riscv/boot/dts/spacemit/k3-pdma.h             | 83 ++++++++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi       | 21 ++++++
+ arch/riscv/boot/dts/spacemit/k3.dtsi               | 49 ++++++++++++-
+ 5 files changed, 169 insertions(+), 3 deletions(-)
+---
+base-commit: 8cdeaa50eae8dad34885515f62559ee83e7e8dda
+change-id: 20260716-k3-com260-spi-v7-2-rc2-b4-preview-20260716-077f86d144f0
 
->  		return err;
-> -	}
->  
->  	return 0;
-
-...
-
-> +++ b/drivers/gpio/gpio-brcmstb.c
-> @@ -489,10 +489,8 @@ static int brcmstb_gpio_irq_setup(struct platform_device *pdev,
->  					       IRQF_SHARED,
->  					       "brcmstb-gpio-wake", priv);
->  
-> -			if (err < 0) {
-> -				dev_err(dev, "Couldn't request wake IRQ");
-> +			if (err < 0)
-
-This style might be okay, but has no sense, we know that there is no positive
-out from this function, so, please also replace with
-
-			if (err)
-
->  				goto out_free_domain;
-> -			}
->  		}
->  		priv->irq_chip.irq_set_wake = brcmstb_gpio_irq_set_wake;
->  	}
-
-...
-
-> +++ b/drivers/gpio/gpio-max77620.c
-> @@ -356,10 +356,8 @@ static int max77620_gpio_probe(struct platform_device *pdev)
->  	ret = devm_request_threaded_irq(&pdev->dev, gpio_irq, NULL,
->  					max77620_gpio_irqhandler, IRQF_ONESHOT,
->  					"max77620-gpio", mgpio);
-> -	if (ret < 0) {
-> -		dev_err(&pdev->dev, "failed to request IRQ: %d\n", ret);
-> +	if (ret < 0)
->  		return ret;
-> -	}
-
-Ditto. And so on...
-
--- 
-With Best Regards,
-Andy Shevchenko
-
+Best regards,
+--  
+Zhengyu He <hezhy472013@gmail.com>
 
