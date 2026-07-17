@@ -1,67 +1,41 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9556C3D810D
-	for <spacemit@lists.linux.dev>; Thu, 16 Jul 2026 23:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4853638F232
+	for <spacemit@lists.linux.dev>; Fri, 17 Jul 2026 07:27:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784243137; cv=none; b=jgKe2KE3ui0gWYWhBlfcw7jbvgvXgd6/9i8NTRfZZIpcLr81gdNBTJvzVmAVPG6CCcI09liqMN7QfA5eK5tXLCiqmZbcY8z+7Yx3Ztmdi5UMvz0DnRfr05dH8mSa/qosBzxk2rMT34+qSgvD4Keo9PMUuhQCTd0Dpm8fOpkXle8=
+	t=1784273225; cv=none; b=tKZpUA3Z+9j0RmqKtE85FrYgfh6aEphi9yNyo6LNUv9JBtZ8ff0MYjObsVIw5McEzLXisMrFHD34gJhO+SzU9zqeE2QIDqMmzyI8+7XpZQ1I7SoSrwsQMiYo92KHkFP7xbVt7n3RCCinGN1NHEVPQ5Rn0beH16jPtJZtfhUT5fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784243137; c=relaxed/simple;
-	bh=5kEJIrTmt6UgJJ9EIAIP1lfd2Jytm7zKjTI/lyAE8bQ=;
+	s=arc-20240116; t=1784273225; c=relaxed/simple;
+	bh=pmDemkdZ9ingitjiHnQJPHF6cz5rSUrFawXebGp5onc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KObrPr/ZTE5lkYvj1qybQeci/fscMRl8pWnKx0T3+r4R2IcdGW77+O6ybLhA/KA6Y3ey5Jvc45dKSJ1IHLraay/Wmgzi+a9jtRefd8wVbrYBArazZzDvu6eGHuzNIbS1ONRKVOsoGiPlmKq0Qr4j6zACuNmz9e/DxXi69k5pILU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=W4AoOgcD; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tenstorrent.com
+	 In-Reply-To:To:Cc; b=Dmg3dW4HOaM52UBASvEAM+EUREO7YGDO2T4Ykhgo6wDNfLGaYvQSPRzfgKybnIq4fq+8mr8lL3WUy8nsH0zU4+/29OalFvaPg0R58nJIFT2+z/UXnRQCTL1Jim+rZKBRs6UT1foLQWtNx+ToJ1o0WcIDPXvgaGUitnzWE7CkL+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=spV0IHG0; arc=none smtp.client-ip=54.92.39.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="W4AoOgcD"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-80e24970f1dso31036007b3.0
-        for <spacemit@lists.linux.dev>; Thu, 16 Jul 2026 16:05:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tenstorrent.com; s=google; t=1784243134; x=1784847934; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=bk3USZv12WGxErumeiIAVcQcqRoeJeqlNLEHc8GMv1c=;
-        b=W4AoOgcDME5vch5P0m3lyO5MpApr654ac9bAMUrlr07G01/c3DREdekwuTwZ0XHiGQ
-         KrvZb6stUa/y1mG4GOMonVPONFrrb3ErNSL3fqAgw1wN5/MN6D3GHwY8jujy6hK/5oRK
-         c7WrJNZso0XuQfP2ITGYiJmBF0XsP+SjW0lUKupwM5lHepyNeRfbo+CcdI38KYmpkiHj
-         8hAY9WqhKXHJBoGBfLwUiKyC+bhscoo3e8ob2r6NkrhFFsMpsU2hKl1crRbx2sST2ms2
-         J0EhE2nP5NErvHsh7NV0lrGTBxePShZmHTvtivP5EINXJbuCH+Y2O49/896PDbxgF1Lx
-         vnxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784243134; x=1784847934;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bk3USZv12WGxErumeiIAVcQcqRoeJeqlNLEHc8GMv1c=;
-        b=Q2jjYgPDe2ngW94H1eGYvE1ubsmuHQd4e2+65qyMtzx3yHqfn+NB+VsOvWZXf48dqu
-         swWfC8Vt6meEy5Gr6sjYXnGLulanCX4KG4TG1II8CjhSSl20X1a425QtWxuOr7btN1xx
-         bdaDKX/ydlUhyek/3FLDDU5c/lReSSeFlyhJy8g7eqg3hfCnfA0vC8+yBan/SE3xEM94
-         31ZwB9DVQ5IKxj+nIvfneXY26KyQVSRhTa4juNazTvS3sAo0NKlRhc7AI/DAiDD8dEGa
-         cKdgPgCz7HWsqLE12YtvFL8nwf2omIvMTaQjaprTJbKGn88mtnamVGcGtJrcQDKFjW9d
-         yHwA==
-X-Forwarded-Encrypted: i=1; AHgh+RoGL0Jr/PAcBgUnQAOnkQPxcqyT/VnDzwZUHOzGk+aRbm/zNdkLo45yWRwyribuZseHfL87GjA3OA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwwNP2UpChcpJyVhIVoC4YFySy+C81PEj/R4wsHQxQFQHAVMeSb
-	+Wc76FbhKwkvyzxx4YSwjyDRTel2KHx5F7HFppUzR9WCx7CaWIIhl580THU4ujgESEY=
-X-Gm-Gg: AfdE7ckH83dTduphaLqdd2SSVZzwmopHT1IYfMY8q7NGvDfNDkPUYbViWKZIH0k0OWE
-	855R6Bds/UBdfDad46WxlnBGaA4hBobpvJb1XXiO2wfBm3Kh8UcCy3gj6rRT9RAunt9alzRbmBy
-	BbBxahnDrj+V8ax7CTWI+jbhiAGZVtnHuOd7OHwwVazZ1eEPvlHQkiD5lfyWh4TVRlbPchr5dke
-	J/DlOI3A9IoOGk3jdRA8HcQzi5+nVvuZX5ck09iuPsh10Jr/UXY9oNdk9kEDM/kGCjA/deH0mfM
-	JzAB7CxB7ruH/dmkS8L4KhPqAHKtC5uPRFxCOpQTg1tRGWUtLtJ1BU9wMqlIGjmrDd8rQzq+7CY
-	u3INR3usgzo4pQrcgHHYSkM50k4xRb/xxUDceiPtKqCVHT73b3x0OHczegCFDeSDhuo8qZA0C8m
-	RfZZQYqs5pqQ1TlTQDdcnKtDvaiznR3d7baer415SdRtCyNUDcGP2XGvPAVg==
-X-Received: by 2002:a05:690c:6101:b0:81d:a1e5:a498 with SMTP id 00721157ae682-81eedf06896mr7708727b3.62.1784243134324;
-        Thu, 16 Jul 2026 16:05:34 -0700 (PDT)
-Received: from [192.168.2.129] ([2600:1700:220:59e0:40df:d071:3a06:1c14])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-81e6be90499sm207006837b3.5.2026.07.16.16.05.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2026 16:05:34 -0700 (PDT)
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Thu, 16 Jul 2026 18:05:11 -0500
-Subject: [PATCH v2 2/2] wifi: rtw89: pci: enable 36-bit DMA on spacemit K3
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="spV0IHG0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1784273184;
+	bh=fymj27WXKJG2RMZe+ljkSj5ptI3AG/Qlm4jztXs9Ax0=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=spV0IHG0Fn8u4G7YI8Jsh9Bl7y1ARaS9Sqqe07kyXSlAiSbKvUYtlGJBbkXu7OToY
+	 X8w8h/ATVr9kQNZL+wzqVDI1ESiRx9ICngOC8YoT7Lh1Q11VZ9/seX2Qkw2/gADQFi
+	 UZlXev1YioXIE1MOzJ7yzJQTHbw56KDmNraDANQs=
+X-QQ-mid: esmtpsz19t1784273177tf811608e
+X-QQ-Originating-IP: i5+anhGPQj0cZfDYZeOkgyTzjxq1pAkh6BJR4p17JNI=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 17 Jul 2026 15:26:14 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 9954810506696884270
+EX-QQ-RecipientCnt: 14
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Fri, 17 Jul 2026 00:26:01 -0700
+Subject: [PATCH 1/3] dt-bindings: soc: spacemit: k3: add i2s_sysclk,
+ i2s_bclk_factor and i2s1_sysclk_src IDs
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,50 +44,80 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260716-rtw89-spacemit-k3-v2-2-392b577ebf75@oss.tenstorrent.com>
-References: <20260716-rtw89-spacemit-k3-v2-0-392b577ebf75@oss.tenstorrent.com>
-In-Reply-To: <20260716-rtw89-spacemit-k3-v2-0-392b577ebf75@oss.tenstorrent.com>
-To: Bjorn Helgaas <bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>, 
- Ping-Ke Shih <pkshih@realtek.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
- Inochi Amaoto <inochiama@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
-Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-wireless@vger.kernel.org, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-X-Mailer: b4 0.15.1
+Message-Id: <20260717-k3-clk-fix-i2s-v1-1-e95001a692ee@linux.spacemit.com>
+References: <20260717-k3-clk-fix-i2s-v1-0-e95001a692ee@linux.spacemit.com>
+In-Reply-To: <20260717-k3-clk-fix-i2s-v1-0-e95001a692ee@linux.spacemit.com>
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>, 
+ Yixun Lan <dlan@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ devicetree@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1318;
+ i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
+ bh=pmDemkdZ9ingitjiHnQJPHF6cz5rSUrFawXebGp5onc=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFmRN/m8Wz11pnE8dDmXuOxFvGnZqXJxY47AnWELXaoae
+ xuXinR3lLIwiHExyIopsnQ/4NlW4BNlWyBQ6Aszh5UJZAgDF6cATORxCSPDyQaFznrTkE1vxI4d
+ dOhqtL/jMWOJl+fUBrEeNo2z1VVTGBmaWLXr/Do436zPLV74siyqT6Fmisva851lp+a9jps0pYY
+ TAA==
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
+ fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NqN/wpVFVRYXOxlE2cRx/EeylxrLvwXRRmJBJvn7PPUMOSenr+bZ/JIW
+	Hg4GIRS0zIU76z3FudxKWR506GBVs3Jpdu8HG/9m33+Y3r8SM3b+JtawRtBO3nS8i6w+qLi
+	k7hX0OK//XMGcyAYGdu4gnNbbvAyKEnU0CBtsEGCx3l9wwcZVWkdU1yANWU0qKj5Rq5uznj
+	eAzZ3NhkF5z+ixulKQPGLjZcI/h1a+Hbk9VChSrTdJZSso2Vy7vOkwyKt+ZryDgIWFJIZgw
+	tGMaJQkPMSYcs0ylF12dHdk8jcp3URrm+fAiXun6eYtREQZM2yPXs2Kzrnn2hwHm5aQSmSl
+	W+UcIX1GEUD/AB9sjgCAAAIP2z5NZpe/FtTaLnhviN/SVN8yFImF6hlFIAahKhdDr2oAUNS
+	1JTbUzasnwkziUpMKyqSMCNL/TQbzMXU39+TVSzir97MgxUBf2fRMoXA7lklhkROT4x15DN
+	b4NmOwhWoMiUNzBjxB22nek1Cz42+7+Xs1sRO2MrGIWeN4UhNtodVyaOzQDM3r67AFW5ejl
+	IYC22gk74l7oYWVgsmlWo4dYfpN+Uwrt8AS4FRqqD6czHRy2/WK/vcFZIgdAzXLz+Tx4Lk1
+	lBE8helEbvZl7219r4Pp/CPEMmMU0q9Dz2ell52eIfbUtoKAkoYhsXlj9EDKIK5bZwNA5QR
+	PnyrGT4wxdxXEijNqHX0nOsj7NHPx7qmdi6ygCZiiUJkKMrx+ez4Cq8Xk6vc+tCdUhO0cPP
+	ZJSIxK26ho+PZeq27YVlyJu8Swrl8AZVgEqwb5ydsm63juH0aVICsIQ8pLwVjCrF6VbjDz0
+	PyMT75GRroD0cVeyuKYV7XZqeQ5MQzEf3eHI268rT+ux+LyxnOdPFHZAQ/gWAppZR+O2wgq
+	EdVrJGT+eiK4WNweRZwDlmWUTQZI2fVKWExcDQWSBq7NSwuveWYNyWFO4NKdTH6jB6ebWW6
+	L1z25W55JQe/gsAPKhLfXHe/x+AMGXWuwst/hSCW/dgEBj4Dx3P9Bw7a3PjQNpwfIQfgnwc
+	c1bP0D4MLv1daHU91c4aGZsC+8zMbyFgEvJHLHaPoDaC63R+Eksqu3eTaZKe4=
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+X-QQ-RECHKSPAM: 0
 
-The Spacemit K3 Pico ITX Board has a RTL8852BE pcie card behind a PCIe
-root port, but the SoC doesn't have any 32 bit DMA addreseses which the
-rtw89 seems to use by default. Enable 36 bit DMA ability that the driver
-has when this particular root port is detected so that the driver can
-probe on this SoC.
+Add three new clock IDs to expose clocks introduced by the topology fix:
+- CLK_MPMU_I2S_SYSCLK (51): the common i2s sysclk DDN at MPMU_ISCCR1
+- CLK_MPMU_I2S_BCLK_FACTOR (52): the implicit /2 factor feeding i2s_bclk
+- CLK_MPMU_I2S1_SYSCLK_SRC (53): the dedicated i2s1 sysclk source mux
 
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+CLK_MPMU_I2S1_SYSCLK keeps its existing ID (47) but will be repointed to
+the real per-instance i2s1 clock in a subsequent patch. No in-tree user
+references this ID so the semantic change is contained.
+
+Fixes: efe897b557e2 ("dt-bindings: soc: spacemit: k3: add clock support")
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
- drivers/net/wireless/realtek/rtw89/pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/dt-bindings/clock/spacemit,k3-clocks.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
-index 102bae4881805..c5b82fc46d063 100644
---- a/drivers/net/wireless/realtek/rtw89/pci.c
-+++ b/drivers/net/wireless/realtek/rtw89/pci.c
-@@ -3326,6 +3326,10 @@ static bool rtw89_pci_is_dac_compatible_bridge(struct rtw89_dev *rtwdev)
- 		if (bridge->device == 0x2806)
- 			return true;
- 		break;
-+	case PCI_VENDOR_ID_SPACEMIT:
-+		if (bridge->device == PCI_DEVICE_ID_SPACEMIT_K3)
-+			return true;
-+		break;
- 	}
+diff --git a/include/dt-bindings/clock/spacemit,k3-clocks.h b/include/dt-bindings/clock/spacemit,k3-clocks.h
+index dfae52547cda..df0b9fe43b76 100644
+--- a/include/dt-bindings/clock/spacemit,k3-clocks.h
++++ b/include/dt-bindings/clock/spacemit,k3-clocks.h
+@@ -145,6 +145,9 @@
+ #define CLK_MPMU_I2S3_SYSCLK     48
+ #define CLK_MPMU_I2S4_SYSCLK     49
+ #define CLK_MPMU_I2S5_SYSCLK     50
++#define CLK_MPMU_I2S_SYSCLK      51
++#define CLK_MPMU_I2S_BCLK_FACTOR 52
++#define CLK_MPMU_I2S1_SYSCLK_SRC 53
  
- 	return false;
+ /* APBC clocks */
+ #define CLK_APBC_UART0           0
 
 -- 
-2.43.0
+2.55.0
 
