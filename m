@@ -1,119 +1,136 @@
-Received: from freeshell.de (freeshell.de [116.202.128.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025FE2D9EE7
-	for <spacemit@lists.linux.dev>; Sun, 19 Jul 2026 16:06:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784477219; cv=none; b=j3uER6HtxgshhG579ufZ6OUx3YIdCJyqMAuRqInS+9oqkQNWJILSGZc2nZUZNoYiRLOePBLhEgTGtyDCatR6QiJdj+bwt8M5NH5yQKsVXBPzjBr9blmvaJ0fEhwuzZ/wDdp0T7y6Jhs6RMXEShfyUMzZL34MsJDfDisy8XX1mk0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784477219; c=relaxed/simple;
-	bh=VFTghjX6HKXGwzRY/MGUvlwIx+XVV7uZiVfIe0hJTz0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pme5jaNq3eUayAPWQY+UTZA/5qtHILlXZ+RVZmKLCMgkr8EP+Wi6+0KqOexKOq8MOu6mg12q9ande+zzVhylsdGZbma0CwFy9seENBYlyiL2OAM2j3udlwMnGrqRTRWOJFj6LdwWdsH6ZxEH9vGz4gft6svV4D5Ca/PwNftG1p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=ahtVlENi; arc=none smtp.client-ip=116.202.128.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B7935959
+	for <spacemit@lists.linux.dev>; Sun, 19 Jul 2026 19:45:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784490328; cv=pass; b=gn4W7F3spLA7zjrvXp1JWrsSvp+bOc17YxrNjhjez7w7A8o7qmKcwg43kteESF3u//L7SaP8XN+jFAaiIeLcGdxNDM23aH73SRqZVJarhRNfNNRgT4JI3JieiKYzxn8tM14dmfyLJUPccUclJ0ozON17Ne4VHqS3/GTvpKlgUoo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784490328; c=relaxed/simple;
+	bh=hzqj8ZBKZ29Yi7PqswJvk51me6CG0de6kNBgJ9WQj6Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OjCQ6knMvMOiXy/D2AQRD5eyOBWBHD6rEcS1VxAvygM/vqBvM1QkT0ePo35xHBlx4rAJC9tDBYGz0rOs9oqPLsVsqRnxA3tjIhgUJ2lcb4+/3J0dit8P9Ja8dtFjpFAkaGnOyciIcgF8s/qpVTpk6Ha6ohqOETWoGMp9fax0kfw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=L2RydeKj; arc=pass smtp.client-ip=74.125.224.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tenstorrent.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="ahtVlENi"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
-	s=s2025; t=1784477180;
-	bh=Q8iDxIG5rzBraxaTwXCs8qargwBew5IqNBt/AQGfd0c=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ahtVlENi3Rsd0F4VNPQMMXB9sLLN28kd2elgVRrmhkB9g7RXYfZp8nFyqLYcF0Mxr
-	 w8Lrn6WtqDPO99n/b49BKEjdhP7RxtpA+Noy14wUeqJJ0fkTJmtKzeRccNzRifzx49
-	 Gn0YT1oulm9eSg0gIvqd6mQKF21pO9QhH7VtSvEUuK0UR1/E1xnIa2b40zc+rRaAVw
-	 A0RpTReWQB4+zo8Z/a192VnEKPG0vYfmAXZlRzph/f5Tb/hYzbgOvrOARkOujuhKHS
-	 PIMal1dWGyHKfgiHNRdQI2BhfqYvLw5qzzn7/lMiMimau35njqDh7Kt7if4smwXg4y
-	 tz115qnfFqjyA==
-Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
-	(Authenticated sender: e)
-	by freeshell.de (Postfix) with ESMTPSA id 8E1AEB2213CB;
-	Sun, 19 Jul 2026 18:06:19 +0200 (CEST)
-Message-ID: <501b84f5-ca7d-441d-818f-eb78dc202983@freeshell.de>
-Date: Sun, 19 Jul 2026 09:06:04 -0700
+	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="L2RydeKj"
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-667ef69424bso7676801d50.2
+        for <spacemit@lists.linux.dev>; Sun, 19 Jul 2026 12:45:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784490326; cv=none;
+        d=google.com; s=arc-20260327;
+        b=AiUvdixEfJhOCXMIHiA03pgzJe2wL8unQAPmOo1i/Qc3hOlMcOGqsjKg/wDqq2DN1R
+         FoiHO3v54b8meKSTzi0uSQj5kx9H7kSyHsG1gXs5+3a9EaquzmYbxDUGY+nLNP3slowH
+         xQL8f+Pl+EDnZMB233cxjeMbOni6ASZKUoKlH4pwjvgvo87r4evCJboJwwhmEtf+KzlI
+         hdg/zPH11aq9Yc1rQy1trT+4FlnmKysP+epEbHgvwWFmr2wY3q353DLC+dzbZN2L7T/4
+         jredv3im8gfpVX0HzCqlCkBakjdoYM3igP53ki1sTdSnVL7OA8mAy12Qj+crocxibY4t
+         4kdA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kCW/8p9Fn7t72z7ayiDXwy9RgjgcbYwz48bHsjcjcIw=;
+        fh=/LUtVJrCfDQLAECiFdCKd4sxAvJDJtTUFU4Lpzw4sfI=;
+        b=Ci7JWAOLxx3ZoaqecM2SLBs8Ut0IrpwiBrjQxt7roDiRlpYQ4RSopm7LJbqNljh1cE
+         z2pZ+pgFhNbC2G21uJUeY1GWWzXsVZXbW9q/GXTRQ29YZbum+OE8dPYD8mMVbYj7+e1H
+         IBY6yEeLmc725+kR/4T7GFu99Tx5CLJDbE5GjYaJw0mk8uiGA6Q/PSFgAWSkitzU9Ts9
+         GBj9K9hfYzcVjUULGsmO4gFqoeLAJHVsUgR21or/LUJGyD6Cf/SQ2ePjLRGGMhrKeHQz
+         3dyr4Ka8AMSoYFZuBkADv9O+ous0QCD63exadIrrLsR3q04nnYBekqFMYAse5ChePQk7
+         8SKQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tenstorrent.com; s=google; t=1784490326; x=1785095126; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kCW/8p9Fn7t72z7ayiDXwy9RgjgcbYwz48bHsjcjcIw=;
+        b=L2RydeKjZWkFEUblkteT95+Mcy1RB3MtgBd9XBuLD8Ndc+i1SfJu9rTDmXgWknEsbc
+         0PmtvxIse/gwI/yB0pbbVhuSb/ebX5CxwybLydPzHMzfDtWg2zKbk1EtYxNKKIvrtIV8
+         1YpbzmyMoF3ocnMilMpGXiTBzBOZJ5DOpEQNREqua5QgEuCjW4eVEglh9lVtpKEbSHHk
+         vQMn6iCIS9tWkx5S/dFHbVtZvTfK7PLmnFYQ0GuK02xkkQjr23Yo2IBTVQmbssWpTGfi
+         /ngVRtqUfPO1FUwQQ+j0R+qCRzTHJQv9ntMsgvzvSaeKOuvcZ5I6jE8QDY415Kpp19bE
+         OtPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784490326; x=1785095126;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kCW/8p9Fn7t72z7ayiDXwy9RgjgcbYwz48bHsjcjcIw=;
+        b=PDu9Uv2LXcfzV7xiRhv0g89ADC09gxpo8nccv19HivrEACGlGH+yR/I84/lpz1YlD1
+         jQeUbG44OQAaQzWJbC8TGcV/dGLAJ0C7rLobxFyYC7IuMsFXE1Ad7MkNMwATzBfxa9wE
+         +ppGvyrn9xf19RkRKlVQyPj1u8uZnifenbwOVfOJ1ktdWr9U4sUJmKHOdu7VrKjKfaxp
+         QfE/Jd80kg5TgOvr/RiioqZk1LykMNjKX0bgwC35OJE6UbO3uBrzYa+QqOCgAY0H+ztY
+         FJMgd+vvW2VSOQxxi1fSLDGlo30GnAvU3cAT78frBxNf/ZM/6CrSgjp9DMnVP0QogIIO
+         UAGQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpRiE0CzmmA5JJzK9GYEIn4u54UoM5FCmUZ50OCCjwcw/pbTDeTOIT1uxCdJgDRPS/9wrXeeNho6A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YymHLuuIUDlkmkd7bmTlY/aj2yD1oXRn6J8BrEkVXpGGeAoecpT
+	AvzrAFvijKy95FFmuDW37zxuEeyiQgNSYQdhuggRzPSRvaHmil1uCv1GlQ+yzczESykglm5B0mX
+	/Egq8XbJXYlNFuIqJXpm/j1Ty1Q7PgTdA/bNVv4zObw==
+X-Gm-Gg: AfdE7cmYRFTs/4TOMXLPnWJqa7uE8erLmu2sYKYDgl+DZUH7CUIETvNq+9mEVWjuiCr
+	CFmGuLL+RU4mOxocpKwGsroMIxD44DAJv5nsmMVOQiMvZcrzUjgu09Lpp9mOpeuZHBbC5IRtq9L
+	iSeTgnS5ChoUnXzn+iKeH12nF4uSYvaimXKbGK//BBfxKDMQEP9NT4y9e+sPBZNo5ewEGgb7CiZ
+	CkfxYKfq/DmjjzSZ/VdACD44s8uHgh3s4AYZlx7Xv2dNRhglyvasZAATetHUz682qiet6mMeSNn
+	BZKUF+d1ARD1Mo+1ow/rk4HdndrfRkeYQ7SC7jwtVO6HZcw=
+X-Received: by 2002:a53:acc7:0:10b0:667:bb60:78a5 with SMTP id
+ 956f58d0204a3-6683bce8a39mr2368237d50.52.1784490325858; Sun, 19 Jul 2026
+ 12:45:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] riscv: dts: spacemit: k3-pico-itx: Fix non-functional
- ethernet TX timing
-To: Yixun Lan <dlan@kernel.org>, Andrew Rembrandt <kernel@rembrandt.dev>
-Cc: Inochi Amaoto <inochiama@gmail.com>, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20260608182358.170489-1-kernel@rembrandt.dev>
- <aiemGajqcQeY9avz@inochi.infowork> <aihYftGNcpUd4UUR@mcmanus>
- <aiid4Y6x6Dbbwszf@inochi.infowork> <aikmOfazxdrhpty7@mcmanus>
- <77a48b81-7906-4e18-9229-48643a67f402@freeshell.de>
- <20260710022551-GKA106000@kernel.org>
- <738ce6b8-798b-4689-a0f5-791fe85addbc@freeshell.de>
- <als2a8ra4PB6Y1t5@mcmanus> <20260719102857-GKA8523@kernel.org>
-Content-Language: en-US
-From: E Shattow <e@freeshell.de>
-In-Reply-To: <20260719102857-GKA8523@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260716213314.3027969-1-aurelien@aurel32.net>
+In-Reply-To: <20260716213314.3027969-1-aurelien@aurel32.net>
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Date: Sun, 19 Jul 2026 14:45:13 -0500
+X-Gm-Features: AUfX_mxEqgyZYEKypyXx4gej1zq8pkt4w3TINWsQX9aT6B0qN1Sg9IzP2i44kqE
+Message-ID: <CAEev2e8M7hDz+d7Kb9r2crA3_5roKhgVEf3kCsZCfLXQj8g+xg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Enable Bluetooth and WiFi rfkill on K3 Pico ITX
+To: Aurelien Jarno <aurelien@aurel32.net>
+Cc: linux-kernel@vger.kernel.org, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
+	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>, 
+	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Andrew, Yixun,
+On Thu, Jul 16, 2026 at 4:33=E2=80=AFPM Aurelien Jarno <aurelien@aurel32.ne=
+t> wrote:
+>
+> This patchset enables Bluetooth through USB on the K3 Pico ITX board and =
+adds the
+> rfkill nodes for Bluetooth and WiFi so that the devices can be activated.
+>
+> Note that the patch 4 is only useful with the following patch series:
+> - https://lore.kernel.org/spacemit/20260709040027.958400-1-inochiama@gmai=
+l.com/
+> - https://lore.kernel.org/spacemit/20260703021024.495433-1-inochiama@gmai=
+l.com/
+> - https://lore.kernel.org/spacemit/20260709040415.977784-1-inochiama@gmai=
+l.com/
+> - https://lore.kernel.org/spacemit/20260715-rtw89-spacemit-k3-v1-0-e577bc=
+63706b@oss.tenstorrent.com/
+>
+> Aurelien Jarno (4):
+>   riscv: defconfig: enable RFKILL and RFKILL_GPIO
+>   riscv: dts: spacemit: k3: add rfkill node for Bluetooth on Pico-ITX
+>     board
+>   riscv: dts: spacemit: k3: add USB3 B and C controllers for Pico-ITX
+>     board
+>   riscv: dts: spacemit: k3: add rfkill node for WLAN on Pico-ITX board
+>
+>  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 32 ++++++++++
+>  arch/riscv/boot/dts/spacemit/k3.dtsi         | 65 ++++++++++++++++++++
+>  arch/riscv/configs/defconfig                 |  2 +
+>  3 files changed, 99 insertions(+)
 
-On 7/19/26 03:28, Yixun Lan wrote:
-> Hi Andrew,
-> 
-> On 11:07 Sat 18 Jul     , Andrew Rembrandt wrote:
->> Hi E, Yixun,
->>
->> On Fri, Jul 10, 2026 at 07:34:34 am E Shattow wrote:
->>> On the topic of this ethernet TX timing thread I don't know what
->>> this does? Is there a test situation I may try to know if it is doing
->>> anything? Thanks very much, -E
->> Apologies for the slow reply -- I've been swamped the past month.
->>
->> Thank you for taking the time to test this; your results are what
->> prompted me to go back and re-test properly, and it turns out my
->> original premise was wrong.
->>
->> The non-functional TX I originally saw was not fixed by this delay
->> property at all. An unrelated commit that landed between v7.1-rc1 and
->> v7.1-rc7 is what actually fixed the dead TX on my board. While
->> developing this patch I'd inadvertently picked up that change, and I
->> wrongly concluded the tx-internal-delay-ps addition was what got traffic
->> flowing.
+Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 
-I guess this refers to commit 3ea695eb111f ("dts: riscv: spacemit: k3:
-Fix I/O power settings") pulled in for 7.2 and with the fixes tag also
-applied for 7.1 prior to 7.1-rc6 tag. That was confusing for me until
-having the benefit of an explanation by the Fedora RISC-V special
-interest group discussion member(s) highlighting that patch, as I was
-experiencing three distinct problems for that network interface. My use
-of debian-installer just happens to be a reproducer for all three
-problems. The Fedora RISC-V SIG members did not have difficulty with
-their distro development processes on two of the three problems I
-experience which led me to identify there are remaining problems not
-fixed in 7.1
-
->>
->> To confirm, I re-ran a series of iperf3 tests without the delay patch
->> and saw no transmission problem whatsoever -- a full 1Gb/s in both
->> directions with no errors. So this matches exactly what you and perhaps
->> Yixun also observed: on a current base the property makes no measurable
->> difference, because the TX path already works without it.
-
-Andrew, there are remaining problems of de-assert delay [1] and
-rmmod/modprobe cycle failure [2]. I suggest you test and validate the
-proposed changes so providing another data point of [1] the minimum
-delay that is successful. The rmmod/modprobe cycling workaround [2] can
-also benefit from testing. In the case of Kconfig with k3 networking =m
-as modules, or =y compiled-in either way it would be helpful to know
-that your use of networking is not disrupted in some unexpected way with
-the expected fixes.
-
-Yixun, are patches [1] [2] expected as fixes for 7.2 ?
-
-1:
-https://lore.kernel.org/lkml/20260710063314.1030249-1-inochiama@gmail.com/
-2: https://lore.kernel.org/lkml/20260712045233.800748-1-inochiama@gmail.com/
-
-- E
+>
+> --
+> 2.53.0
+>
