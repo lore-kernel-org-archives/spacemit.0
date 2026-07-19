@@ -1,136 +1,198 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B7935959
-	for <spacemit@lists.linux.dev>; Sun, 19 Jul 2026 19:45:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAFD37F732
+	for <spacemit@lists.linux.dev>; Sun, 19 Jul 2026 23:20:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784490328; cv=pass; b=gn4W7F3spLA7zjrvXp1JWrsSvp+bOc17YxrNjhjez7w7A8o7qmKcwg43kteESF3u//L7SaP8XN+jFAaiIeLcGdxNDM23aH73SRqZVJarhRNfNNRgT4JI3JieiKYzxn8tM14dmfyLJUPccUclJ0ozON17Ne4VHqS3/GTvpKlgUoo=
+	t=1784503222; cv=pass; b=uzCah3jegGYNsssxL89+/ffjGRjv+jniefBWp2x1rabKqWgdkqSKe74vDLMO1qxW0jf9uNYy9ndRU23ZaEZlh5HiCNl5sdU9oitOZus0KQytNido421k0rPngm8LM1MuCcNXJCJiOe+UpcuWx+q73TBWNejzPYb5arwCI7FFa3I=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784490328; c=relaxed/simple;
-	bh=hzqj8ZBKZ29Yi7PqswJvk51me6CG0de6kNBgJ9WQj6Y=;
+	s=arc-20240116; t=1784503222; c=relaxed/simple;
+	bh=DWT7/MJowsj2WV+e/BvUBOitlHcs+O939V9MzG/T3iw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OjCQ6knMvMOiXy/D2AQRD5eyOBWBHD6rEcS1VxAvygM/vqBvM1QkT0ePo35xHBlx4rAJC9tDBYGz0rOs9oqPLsVsqRnxA3tjIhgUJ2lcb4+/3J0dit8P9Ja8dtFjpFAkaGnOyciIcgF8s/qpVTpk6Ha6ohqOETWoGMp9fax0kfw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=L2RydeKj; arc=pass smtp.client-ip=74.125.224.52
+	 To:Cc:Content-Type; b=t1OQL78HSqhnrOe8mzRDK48pxiKp3Pa/LBBfGnJarOtvNsiNZzAaNBvdRYwwGnMVv+qvRSFMrSN7G2W6FJzNX4oooCFlqb44mMipK5nzhGeuPxFYCBWJXc8PG//Isb1RW6tELwNONeAP1OPcilyA+xtzQWc1D/N/W+bF1evx+Fs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=DE5B6wmL; arc=pass smtp.client-ip=74.125.224.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tenstorrent.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="L2RydeKj"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-667ef69424bso7676801d50.2
-        for <spacemit@lists.linux.dev>; Sun, 19 Jul 2026 12:45:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784490326; cv=none;
+	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="DE5B6wmL"
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-664db84f074so12752318d50.0
+        for <spacemit@lists.linux.dev>; Sun, 19 Jul 2026 16:20:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784503219; cv=none;
         d=google.com; s=arc-20260327;
-        b=AiUvdixEfJhOCXMIHiA03pgzJe2wL8unQAPmOo1i/Qc3hOlMcOGqsjKg/wDqq2DN1R
-         FoiHO3v54b8meKSTzi0uSQj5kx9H7kSyHsG1gXs5+3a9EaquzmYbxDUGY+nLNP3slowH
-         xQL8f+Pl+EDnZMB233cxjeMbOni6ASZKUoKlH4pwjvgvo87r4evCJboJwwhmEtf+KzlI
-         hdg/zPH11aq9Yc1rQy1trT+4FlnmKysP+epEbHgvwWFmr2wY3q353DLC+dzbZN2L7T/4
-         jredv3im8gfpVX0HzCqlCkBakjdoYM3igP53ki1sTdSnVL7OA8mAy12Qj+crocxibY4t
-         4kdA==
+        b=Eon6DH1Q2VFGAXlfFbC7e5exqy8XuWAqlAqymrR7G9nF/+nIf+8QTk85uQL727KUiN
+         SQCFnwWVXJoDBPtOj/7yUiunAaJracFQsEwrrLVBNR9wWQBZ+l5QdXDMxvcfdEutIP7b
+         91IJITSp+09v0hptn/FrZlYcizt19bx4LdWaoRFrHLJHpX48aTI15+oLql/2RWpvdEj/
+         grsEzMP0xSGD1+Foe85vhWPIWI3iam7LQ8Ur9/aIHakviD60IyP4nDywAxM1CWP16m4S
+         UpSzSo+IjMHtEHZ0jo57wNPp4xNdJBi4mjrPM+iwk3kIPiXe+vw9V/Vf6tqja0ujdh4e
+         8hxw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=kCW/8p9Fn7t72z7ayiDXwy9RgjgcbYwz48bHsjcjcIw=;
-        fh=/LUtVJrCfDQLAECiFdCKd4sxAvJDJtTUFU4Lpzw4sfI=;
-        b=Ci7JWAOLxx3ZoaqecM2SLBs8Ut0IrpwiBrjQxt7roDiRlpYQ4RSopm7LJbqNljh1cE
-         z2pZ+pgFhNbC2G21uJUeY1GWWzXsVZXbW9q/GXTRQ29YZbum+OE8dPYD8mMVbYj7+e1H
-         IBY6yEeLmc725+kR/4T7GFu99Tx5CLJDbE5GjYaJw0mk8uiGA6Q/PSFgAWSkitzU9Ts9
-         GBj9K9hfYzcVjUULGsmO4gFqoeLAJHVsUgR21or/LUJGyD6Cf/SQ2ePjLRGGMhrKeHQz
-         3dyr4Ka8AMSoYFZuBkADv9O+ous0QCD63exadIrrLsR3q04nnYBekqFMYAse5ChePQk7
-         8SKQ==;
+        bh=UPqjPIJbJ4hSMkmX6fzNuKXuPBcJE4+S9+cyMi05hk4=;
+        fh=yNVKJR2aBspSvIGPwg9HtQ89tDUbU5y2tqmoGo1H524=;
+        b=p2EY2nKMmcQ50Bg6O2GT+COzol75XVWiotnBx7Ne9Kka1I+d5ZgVMtmMMWJfiKRaV3
+         wCPACB4U0wpk9eYQw7+zgCmr7DA+pvfj35QsM3N7LQM/T04ObCrXDUqoyZBMZVbsXayx
+         bHnsTuHXtaHPPAJypHKs3BpmMPbI6m0XdKGy6ODHZcyDg4EAetiXzHbGzLuvBHsYSeBo
+         oC1PO4Dum21Xcwa80sG8yZO78x4rXbIJNSmiYV4lL5H6TvhdMDtk7mJEhLmzefzaSCPF
+         Pjf9QCby5Md8zmjOhvKeB6lqX3nWwYBU4HkHn2Oqf8UOZJ5NA2i5g7TM3xanllLUc8f5
+         wn/Q==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tenstorrent.com; s=google; t=1784490326; x=1785095126; darn=lists.linux.dev;
+        d=tenstorrent.com; s=google; t=1784503219; x=1785108019; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=kCW/8p9Fn7t72z7ayiDXwy9RgjgcbYwz48bHsjcjcIw=;
-        b=L2RydeKjZWkFEUblkteT95+Mcy1RB3MtgBd9XBuLD8Ndc+i1SfJu9rTDmXgWknEsbc
-         0PmtvxIse/gwI/yB0pbbVhuSb/ebX5CxwybLydPzHMzfDtWg2zKbk1EtYxNKKIvrtIV8
-         1YpbzmyMoF3ocnMilMpGXiTBzBOZJ5DOpEQNREqua5QgEuCjW4eVEglh9lVtpKEbSHHk
-         vQMn6iCIS9tWkx5S/dFHbVtZvTfK7PLmnFYQ0GuK02xkkQjr23Yo2IBTVQmbssWpTGfi
-         /ngVRtqUfPO1FUwQQ+j0R+qCRzTHJQv9ntMsgvzvSaeKOuvcZ5I6jE8QDY415Kpp19bE
-         OtPw==
+        bh=UPqjPIJbJ4hSMkmX6fzNuKXuPBcJE4+S9+cyMi05hk4=;
+        b=DE5B6wmLU7JTYad+2s+UXz/C5TZtS+HjgwsHQEBPe94WAUjOLDMT95Oq7a3nzdflZh
+         vl1Uaa0ARcPbFYCvGLrpIOljTmXeGwWVpKBL1iBoeCZ7cQ/XiN7jOGuus91QsdESUN7V
+         5N4rjdqcNcqjhcmPXQzM17RK6XlXCoAvakBTg/liBtO6Ohppe7C/sRsVmlg/iAbAr0+1
+         RbQI9IozkRMHGrfIrCZ5wBVcIgVrMzuT8cGbvzjF3+2EzbhAY/RwgvE97YeCrwFL6KcF
+         sycXxZrOaC8NC5GADF5R2Y6RL8oisKUfhW1r62dNTIE98oz7GIAgLYmzjfdnmyL+Opug
+         KDSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784490326; x=1785095126;
+        d=1e100.net; s=20251104; t=1784503219; x=1785108019;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=kCW/8p9Fn7t72z7ayiDXwy9RgjgcbYwz48bHsjcjcIw=;
-        b=PDu9Uv2LXcfzV7xiRhv0g89ADC09gxpo8nccv19HivrEACGlGH+yR/I84/lpz1YlD1
-         jQeUbG44OQAaQzWJbC8TGcV/dGLAJ0C7rLobxFyYC7IuMsFXE1Ad7MkNMwATzBfxa9wE
-         +ppGvyrn9xf19RkRKlVQyPj1u8uZnifenbwOVfOJ1ktdWr9U4sUJmKHOdu7VrKjKfaxp
-         QfE/Jd80kg5TgOvr/RiioqZk1LykMNjKX0bgwC35OJE6UbO3uBrzYa+QqOCgAY0H+ztY
-         FJMgd+vvW2VSOQxxi1fSLDGlo30GnAvU3cAT78frBxNf/ZM/6CrSgjp9DMnVP0QogIIO
-         UAGQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpRiE0CzmmA5JJzK9GYEIn4u54UoM5FCmUZ50OCCjwcw/pbTDeTOIT1uxCdJgDRPS/9wrXeeNho6A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YymHLuuIUDlkmkd7bmTlY/aj2yD1oXRn6J8BrEkVXpGGeAoecpT
-	AvzrAFvijKy95FFmuDW37zxuEeyiQgNSYQdhuggRzPSRvaHmil1uCv1GlQ+yzczESykglm5B0mX
-	/Egq8XbJXYlNFuIqJXpm/j1Ty1Q7PgTdA/bNVv4zObw==
-X-Gm-Gg: AfdE7cmYRFTs/4TOMXLPnWJqa7uE8erLmu2sYKYDgl+DZUH7CUIETvNq+9mEVWjuiCr
-	CFmGuLL+RU4mOxocpKwGsroMIxD44DAJv5nsmMVOQiMvZcrzUjgu09Lpp9mOpeuZHBbC5IRtq9L
-	iSeTgnS5ChoUnXzn+iKeH12nF4uSYvaimXKbGK//BBfxKDMQEP9NT4y9e+sPBZNo5ewEGgb7CiZ
-	CkfxYKfq/DmjjzSZ/VdACD44s8uHgh3s4AYZlx7Xv2dNRhglyvasZAATetHUz682qiet6mMeSNn
-	BZKUF+d1ARD1Mo+1ow/rk4HdndrfRkeYQ7SC7jwtVO6HZcw=
-X-Received: by 2002:a53:acc7:0:10b0:667:bb60:78a5 with SMTP id
- 956f58d0204a3-6683bce8a39mr2368237d50.52.1784490325858; Sun, 19 Jul 2026
- 12:45:25 -0700 (PDT)
+        bh=UPqjPIJbJ4hSMkmX6fzNuKXuPBcJE4+S9+cyMi05hk4=;
+        b=lpK50Vw44Gga8cVwdwaSOP1Ko+uBUXuEZEKDARyJ9tomRaOSa4xKZiRG9/J1lHnyIO
+         yEt2xeg9ec4KkRC+IoUrNoe6OBE4+oe3asJrB1rHbf2NmgM0Rf4dS0z6p71i2D/F/iWT
+         eUehNhBi7G/DdjgzTHpjkyRbRyqQw5T4O0rnr+8IfiEGxLGmlaY9DqHuYV6MzWAEq+5g
+         1iqYPy7BW4GDwUguTsRC5Gd4u72kibO0c+ENtWBdSUn5Ms1/Hy54ZGYEqV5xUbhYRSI4
+         As5Md90VTovwHlzSKwcS715CyfNLcIgTmRCIPwdAUgebeOsEEfizH8TAQzuJI7OcOQ+s
+         2WIA==
+X-Forwarded-Encrypted: i=1; AHgh+Rphajlj9+/mN7lXnTTaXIIc9zMhLrwBj7hbP3aFDLFi3M+aEGnniemtbCYX0udh+uKPLe24kQyo8A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyUNozHa6K9hYlmZAhBEToGl43wNmgD3HyPwd2ElBsWk74PY28i
+	atFI0mjzOMgbINDaV/OcPJobRx7Cwaq6zP+okOjAEBuCmTcfq5VIWTCOSkyieFEqLkxcnkIUG0s
+	FpKt7arc3sVwUmS2sO6oX/3qE7N6A8lT36B0oA8H+og==
+X-Gm-Gg: AfdE7clNagK/xgaQ66p88xzC67YyB4PV/C2QypbuK4h4jXHzpZHMirebqdVU50q8Kob
+	6nLP3CpvsNtIPYF8HjdMWvv9gWTqb+sXzAvmbbofFxfUswb/5gx5O8SycHmv9xI4y21UXxaZpOd
+	fRmRHzopu+fmy/dhvEAPdApHrMCVLfTG/mjiwm1hnD79OftaJNR4msSwJZOnQvJoM734VorqH4S
+	X7l0VJ47z6CcsWm0rSDmZm9WejGRzhHN8igLRxlWUmZfIgHX60hgBVx6yNtuGAaNeWM+jq61VLH
+	6Sk0NfXsQwtXD4yYB3CtLl77jE5zDHCprcOVEIgUczmsetmZM6s=
+X-Received: by 2002:a05:690e:2504:10b0:667:c15b:dab6 with SMTP id
+ 956f58d0204a3-6683be6aa35mr2695296d50.95.1784503219030; Sun, 19 Jul 2026
+ 16:20:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260716213314.3027969-1-aurelien@aurel32.net>
-In-Reply-To: <20260716213314.3027969-1-aurelien@aurel32.net>
+References: <20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org>
+ <wjbz5tp7vjrsjwjaiu3n7du5ksbrlsduuxhwg2wriyxshkrqd5@t3sdxr6ua2sg>
+ <20260713123759-GKD106000@kernel.org> <CAEev2e-g3bZcohFf_7b5CaVyi0BeWi5uwLGj6MuhQXp16jiyEQ@mail.gmail.com>
+ <20260713235742-GKE106000@kernel.org>
+In-Reply-To: <20260713235742-GKE106000@kernel.org>
 From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Sun, 19 Jul 2026 14:45:13 -0500
-X-Gm-Features: AUfX_mxEqgyZYEKypyXx4gej1zq8pkt4w3TINWsQX9aT6B0qN1Sg9IzP2i44kqE
-Message-ID: <CAEev2e8M7hDz+d7Kb9r2crA3_5roKhgVEf3kCsZCfLXQj8g+xg@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Enable Bluetooth and WiFi rfkill on K3 Pico ITX
-To: Aurelien Jarno <aurelien@aurel32.net>
-Cc: linux-kernel@vger.kernel.org, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>, 
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>
+Date: Sun, 19 Jul 2026 18:20:08 -0500
+X-Gm-Features: AUfX_mxUPpHWs2hIHbiNCUZT8v6smWRhuvoQSN4l0SVoBHHrNzCPKAS_FyVfPXc
+Message-ID: <CAEev2e_hmQBrk3Vfv4WmeH+ex_gMwW_9mgNKaUjFaiCScxAqTQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Add UFS Host driver support for SpacemiT K3 SoC
+To: Yixun Lan <dlan@kernel.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@sandisk.com>, 
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	"Martin K. Petersen" <martin.petersen@oracle.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 16, 2026 at 4:33=E2=80=AFPM Aurelien Jarno <aurelien@aurel32.ne=
-t> wrote:
->
-> This patchset enables Bluetooth through USB on the K3 Pico ITX board and =
-adds the
-> rfkill nodes for Bluetooth and WiFi so that the devices can be activated.
->
-> Note that the patch 4 is only useful with the following patch series:
-> - https://lore.kernel.org/spacemit/20260709040027.958400-1-inochiama@gmai=
-l.com/
-> - https://lore.kernel.org/spacemit/20260703021024.495433-1-inochiama@gmai=
-l.com/
-> - https://lore.kernel.org/spacemit/20260709040415.977784-1-inochiama@gmai=
-l.com/
-> - https://lore.kernel.org/spacemit/20260715-rtw89-spacemit-k3-v1-0-e577bc=
-63706b@oss.tenstorrent.com/
->
-> Aurelien Jarno (4):
->   riscv: defconfig: enable RFKILL and RFKILL_GPIO
->   riscv: dts: spacemit: k3: add rfkill node for Bluetooth on Pico-ITX
->     board
->   riscv: dts: spacemit: k3: add USB3 B and C controllers for Pico-ITX
->     board
->   riscv: dts: spacemit: k3: add rfkill node for WLAN on Pico-ITX board
->
->  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 32 ++++++++++
->  arch/riscv/boot/dts/spacemit/k3.dtsi         | 65 ++++++++++++++++++++
->  arch/riscv/configs/defconfig                 |  2 +
->  3 files changed, 99 insertions(+)
+Hi Yixun,
 
-Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+On Mon, Jul 13, 2026 at 6:57=E2=80=AFPM Yixun Lan <dlan@kernel.org> wrote:
+>
+> Hi Anirudh,
+>
+> On 09:56 Mon 13 Jul     , Anirudh Srinivasan wrote:
+> > Hi Yixun,
+> >
+> > On Mon, Jul 13, 2026 at 7:38=E2=80=AFAM Yixun Lan <dlan@kernel.org> wro=
+te:
+> > >
+> > > Hi Anirudh,
+> > >
+> > > On 22:40 Sun 12 Jul     , Anirudh Srinivasan wrote:
+> > > > Hi Yixun,
+> > > >
+> > > > On Thu, Jul 02, 2026 at 02:31:34AM +0000, Yixun Lan wrote:
+> > > > > This series try to add UFS support for SpacemiT K3 SoC, the contr=
+oller
+> > > > > components consists of System Bus Interface Unit, UFS Host Contro=
+ller
+> > > > > Interface, UFS Transport Protocol Layer, UFS Host Registers, Devi=
+ce
+> > > > > Management Entity (DME), Transport Layer, Network Layer, Data Lin=
+k
+> > > > > Layer, PHY Adapter Layer, and M-PHY Interface. A more detail func=
+tional
+> > > > > block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
+> > > > >
+> > > > > Please note, in order to test this driver, the UFS clock driver[2=
+] here
+> > > > > should be applied first as a prerequisite patch.
+> > > > >
+> > > > > One known issue is that the device will occasionally raise BKOPS =
+interrupt
+> > > > > when doing some high load test, log from dmesg shows
+> > > > >
+> > > > > [  806.710763] ufshcd-spacemit c0e00000.ufshc: ufshcd_bkops_excep=
+tion_event_handler: device raised urgent BKOPS exception for bkops status 1
+> > > > >
+> > > > > Link: https://spacemit.com/community/document/info?nodepath=3Dhar=
+dware/key_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md&lang=3Den [1]
+> > > > > Link: https://lore.kernel.org/all/20260630-06-clk-ufs-support-v1-=
+0-cf7521d1d0fe@kernel.org/ [2]
+> > > > > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> > > >
+> > > > I see this during probe on a k3-pico-itx. Does the UFS chip on boar=
+d
+> > > > have an RPMB block on it? Is this error of any concern.
+> > > >
+> > > It's probably true of having a RPMB block, but not used in K3 platfor=
+m, so can ignore
+> > >
+> > > > [    5.957864] ufshcd-spacemit c0e00000.ufshc: ufshcd_scsi_add_wlus=
+: BOOT WLUN not found
+> ..
+> > > > [    5.963319] bus_add_device: cannot add device 'ufs_rpmb0' to unr=
+egistered bus 'ufs_rpmb'
+>
+> Just checked code under drivers/ufs/, and couldn't find where ufs_rpmb bu=
+s is registered,
+> so this kind of warning/error message is expected, or could UFS maintaine=
+r confirm this?
 
+Seems like both of these are bugs with the existing UFS/RPMB code in
+the kernel.  The dev_err("BOOT WLUN not found") print should probably
+be downgraded to a dev_warn. And like you mentiond above, the ufs_rpmb
+bus doesn't seem to be registered before the ufs device is probed.
+
+>
+> > > > [    5.971155] ufshcd-spacemit c0e00000.ufshc: Failed to register U=
+FS RPMB device 0
+> > > >
+> > > Maybe disable CONFIG_RPMB to silent this? I've not tested this option=
+ locally
+> >
+> > I'm testing on a distro defconfig, so it has this option enabled.
+> >
+> > Is there anything we can do in the driver to have it ignore the RPMB?
+>
+> No, but why not disable CONFIG_RPMB in the first place
+>
+> > If the error is a red-herring, we shouldn't be displaying it at all in
+> > the first place.
+> >
+>
+> Either fix the code or just ignore it..
 >
 > --
-> 2.53.0
->
+> Yixun Lan (dlan)
