@@ -1,90 +1,145 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F2A424D70;
-	Mon, 20 Jul 2026 13:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784553607; cv=none; b=BnOXQhqHRq8i+rxDJw3Gz0m8zSapifLVuMSet39HqbQHsk1+iVp8cwHFpGd8Vm4L1/3BpfGm0Clr1zOY08nKl7ZBDuaZgRZYqAG6uAlFyVZdDHehk1I3EBazLoDL5srtqfMXtU14WDzoQp4SHzjJoRWxl5Ht3IwEDpJmRhzNQBU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784553607; c=relaxed/simple;
-	bh=lNDsCrr6Zr1a04BpBZ3lfOtH7qJfNJwbYY0TuEgr1a8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=eMT3WqFHYPhpbHwnTNPD6feAmXh/aUkr5K73Si5H/97VXDsUl0rVTk5+Wo3FShZgvT7CaifC4/l5wSP2ZSdefH4gGvL4jcNGKnoBjXVzAH9Ztb+YaQGxTnFslQ9mTTb/eX6u0tCoD0xOJJGFWoovS5bjdwkXDVlgrRoze3Oxyrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iK05cXzG; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A04432E7D
+	for <spacemit@lists.linux.dev>; Mon, 20 Jul 2026 14:54:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784559257; cv=pass; b=gLuICc8D2HqNJHJZ+Kt4lMF4/a8eJiAOpvsTGTySPW23S+TZA+OTbCnnXUZjAYBL3BOuGBWbytvIuq0xtrL5tXv39TatJxN2tJUkdMbIhEZLrpQHVZsVmDr14rJp6ls8umMNEiulVd+J0tx+6yR+rNJ7MufMPNTuw4S+i9IIhqk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784559257; c=relaxed/simple;
+	bh=temBpWxqPmEUiaCW+JFviLYqWJ/cLM5Aq3hOWyylZNY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ke8+CQJ3vYV6ntey6uiZSdbCh4T9fmM1/FcnvyU0Jodwnd7TD/ul0S/MXMFPc7Kv282mwbXeoBMc1VyI9OuzCRvwRXlCHgj02XyfBaka2eNgTN9MKVhVuMkz8DtNEe2O/eTdmaUK2ITUrtO+CrqFaOtlhreNj3EBDtczze1bmzA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=KhxKINaJ; arc=pass smtp.client-ip=74.125.224.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tenstorrent.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iK05cXzG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC141F000E9;
-	Mon, 20 Jul 2026 13:20:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784553606;
-	bh=bB8LbbQ8ato4eUpI/pD/xOs6h3QBYChFQmgrhaxvC8s=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=iK05cXzGHHMN+9KPEzYdSfXWKYItWmCHctLtMUa31qHmsjose29IsskHQDTahKwCm
-	 yVQPLbdZJIrdzNpRhzeCuomzgjFBkFrz7MWsTGf3ndJngG9Kfh7hWGQowjdb1uXMEJ
-	 Ij6gKgGGhm7pCLpaiW4F3SqS4rBbLStmx2LdEBLf5ydy9+iS0f1hGIU1TovVBMGSSo
-	 n6MAOYF7YSdETFxFlMMJH7hL3csUE19ZjkuyPgNOW0mQAPDSmk1UwLi4PJtNQrQ7iP
-	 c4iaOsAkoeawpz6JPQW3+JZKwTyVi8VD5a6kgqy6Y4HNqnRoF8klq0AVXOlrv27b/3
-	 rGUcpiUYKws/w==
-From: Mark Brown <broonie@kernel.org>
-To: Yixun Lan <dlan@kernel.org>, Zhengyu He <hezhy472013@gmail.com>
-Cc: wefu@redhat.com, linux-spi@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org, Peixin Xie <peixin.xie@spacemit.com>
-In-Reply-To: <20260715-k1-spi-tx-fifo-fix-v1-for-next-v1-1-02024223b08a@gmail.com>
-References: <20260715-k1-spi-tx-fifo-fix-v1-for-next-v1-1-02024223b08a@gmail.com>
-Subject: Re: [PATCH] spi: spacemit: Correct TX FIFO slot calculation
-Message-Id: <178449558269.33801.416545162576183224.b4-ty@b4>
-Date: Sun, 19 Jul 2026 22:13:02 +0100
+	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="KhxKINaJ"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-664ce3000e6so5581242d50.0
+        for <spacemit@lists.linux.dev>; Mon, 20 Jul 2026 07:54:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784559255; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MVKp9irxJMD4SxPZco7rHOt3im4pJIafltM5YptI7SgwqmnhXKbekDSE1C9LQKQIMO
+         X/qzzFCuxfF/+1e1R88upBuJpaG5im0UYE9gk/Bzqspj3TvM5nhqh7kLuK2QUHTuqB7W
+         PuEFpG0EVflWj8Igozb8/juHyxs9B+U+8xnioVqYhKjXZH3TnZd2iD7+ToYD3aEYSmy4
+         5xNI5Vk5HetG1mwDfdDdLjtowgbO3BmR5lq8HHlRaBs/i185utymknr/mzB2wR/QfnUh
+         KdRDwcMo1jdUgMLChCA+Udt7nlUqeHhqG6O0Gat1t9ehpgd3u5meIwLy2qieIbkX2/y6
+         3KIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=I0GVcV6hLmc+NX2bk98Kn3FEQV44lshItim/tETy764=;
+        fh=fg4KyR05Cypx0WE0JePNoBzCLX51769anex0eKCSatA=;
+        b=nUsIijdvYS7cqE1itV8iyBhba1UhiNOjwMnf6E8BEJ4x5XhHUnPSazGJm8Giw5mGTW
+         M+WhX9J5mOTPYf50YsaHcq9nqhOliJ1ZSssvmpXhlYn36jIh/vQvegzct42yhVt1w87Z
+         jj5Iz7atU029J1W5fTPav8uf4UULAaZAzH4SNObMuuSaPDpfaWZZ6AgXrti/ymH8qY5A
+         r/VTFauFL5MjetxBIZBHT5kMrLNmTkC/J0KzprNha2fRHWw8XvGXZQn9t5JOyNfaIZeA
+         Q+eP1rYZZbsSpwBaOdEbyMji16YQRsPxkl1c4cUl3Mda/4CzEHIQSHKjmXVvb3WbLA14
+         JzaA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tenstorrent.com; s=google; t=1784559255; x=1785164055; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=I0GVcV6hLmc+NX2bk98Kn3FEQV44lshItim/tETy764=;
+        b=KhxKINaJJcm0j1F+NJQ4nQFO0EaHgitDPA5Zo7wxN9iQeMs3XgKxh6MZC6jrxiar+B
+         mkXt0GwQaA8jVyeP2vgC+8fQinRb7ePgbY1W9qKme40J7WdNgnrpUy+KLTaNmYQlrIxt
+         mJbdjxweBJkTYQ9+6m3S/bMhY8fc72itK7dOTye5Fu9P+zXBl+CRoayfPCxVaDK5EJ0q
+         9qdqzDI3I+0i69hGULhZ6n8k0WJIdUBkhLWUp5ghv4xqGXg92oveOJJ2141CGtK+rgHB
+         oNEDdriVsxlPH2Nuod8Jfchp573FusP2J3QaAEzXbZlkfbvsNTxRXy/npoVYRZhD4SSS
+         k/YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784559255; x=1785164055;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=I0GVcV6hLmc+NX2bk98Kn3FEQV44lshItim/tETy764=;
+        b=VdLVkpWhHrTRYzIak+HbX1iHyB35Jgso5D8MfqFcaw01hKrUIJPG0jRan92BgKkLYG
+         V95ZLO7tI6N3CEYnupXmzQJK7kMTz2j+RhVl4Ygcahvg/xoCnj4W9j+6biBvOjv9N7ME
+         3NgUDC7V4FPZzS6+8/H9/OUCXfuxbuBw8vogpG1kf9smT8fSymI8gzjiopabmOw3rBD+
+         dg2/sFtyuIxsKSev00PtGrJmuzKiyyG2zEjQEaFPE2yKbNi1bXuGDVUTp0MdjECC3LgE
+         JusqI73oOndheyN4guEExLMyW/6X5SOKToj+Q9hNqAMNBrk8+7sl0+FFc/kzUUObOVwu
+         gxeg==
+X-Forwarded-Encrypted: i=1; AHgh+RrCNXtpPbqAflH3rnZcNcyA4kAslzKLJORDioz0P2Y4DBoFxbFPqeSfUZFkeetXfKavmdgrrsTXaQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwfWZpU+WntEbnHw7r9KnIoTqwrxLkhy/mCTMpwbtQV1+t/RQxC
+	mfazPcCRHa5GHijG8Bb3QiKidWewdS+YHQvnk1lCENNlBDqz/2ZqaiSlvk9uhpXxNoqsI1p8pJM
+	URqVH3ISZhqAUHY3TMA2T4oRc3szvijsuaTCinL7Shg==
+X-Gm-Gg: AR+sD106tObczuSrTch50JvMJ185MMwib0i/vVJSAoR29QDOw/Osxe18Q1R9RnqHscy
+	WDCoe8lfxaMt4Y2o5Mx1sbBTogglgHNjNB0GFOvlAINdecFFuLh0LtRgK+tX6I+Em38DGPf9eXf
+	Z4hV7RxIh1mngMWcp1aI93lp/98tcaikcD3cRx/PU4xNWIIkuO2n0biPeq7YyUZRMTEgxWN0isS
+	ABltoDXem7rR11idSseyeVG91WxpskhSw8ByKYLF5+g38KGtu48I4SYv4ehH7ecG5DrRfqqlbrc
+	f33rjbJB6ZxyPiJg
+X-Received: by 2002:a05:690e:4105:b0:668:7014:4ca with SMTP id
+ 956f58d0204a3-66870140b44mr796774d50.58.1784559254891; Mon, 20 Jul 2026
+ 07:54:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1106; i=broonie@kernel.org;
- h=from:subject:message-id; bh=lNDsCrr6Zr1a04BpBZ3lfOtH7qJfNJwbYY0TuEgr1a8=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqXiCEOyek79WHHGGiFXCeTAW8F77//b0UOazmO
- DXeim3CFjWJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCal4ghAAKCRAk1otyXVSH
- 0JB3B/sGiLFZW8tY8oSWfbgOEY5rtcyssZ6mdOCkSFUjCHdM71rqTs7M0hwMcXo8vjuE8zQFZF+
- oq8fxc6FoG+lRnqWwim6F7ZylZS6Y83MszA+46+HXz9dSQcno+l05zzRAaeJl0wPgX0LrFPmn5l
- F2EXDwTEu7GG4a/XOWSZ/mXX83arEsylSvh0yvRAh8BfV69LRD2SsOd2T3b81flqBRgVCKMDK/L
- CFofHiqSTYsHC1naZuHGyQPjYaGrUTZltAlQN04ZQ1nlqfoqAfbCk8KrIa72aHOLhOW6izjebAU
- hPx0DPv1WiL2REbIyRknW7e2yLITYb3C53w73w+gqDzy9Pmz
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+References: <20260429-fix-riscv-swiotlb-v2-1-fa99dfdfc94d@linux.dev>
+ <k55h7j5qnn3dryqro2oof7kgjcdhyoarvg7uvtm6sbrgdtnfzy@br6areeqp4ng> <57a24fb1-1ca6-3bb5-1c1e-bdcb50ce2b7e@kernel.org>
+In-Reply-To: <57a24fb1-1ca6-3bb5-1c1e-bdcb50ce2b7e@kernel.org>
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Date: Mon, 20 Jul 2026 09:54:03 -0500
+X-Gm-Features: AUfX_myMpZ4WtjKhLTFNevvbFR59U6AEJ6ipYVurDAp_Rw5Z-rFxfTZK12VSyqc
+Message-ID: <CAEev2e_odw-Rcz1dKQq7oNDN6sex0cnVgdYtR=NZkKoo57p7Mg@mail.gmail.com>
+Subject: Re: [PATCH v2] riscv: mm: fix SWIOTLB initialization for systems with
+ DRAM above 4GB
+To: Paul Walmsley <pjw@kernel.org>
+Cc: Troy Mitchell <troy.mitchell@linux.dev>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, linux-riscv@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 15 Jul 2026 20:52:15 +0800, Zhengyu He wrote:
-> spi: spacemit: Correct TX FIFO slot calculation
+Hi Paul,
 
-Applied to
+On Sun, Jul 19, 2026 at 7:55=E2=80=AFPM Paul Walmsley <pjw@kernel.org> wrot=
+e:
+>
+> Hi Troy, Anirudh,
+>
+> a few questions -
+>
+> On Tue, 14 Jul 2026, Anirudh Srinivasan wrote:
+>
+> > On Wed, Apr 29, 2026 at 07:41:54PM +0800, Troy Mitchell wrote:
+> > > On RISC-V platforms where the entire physical memory (DRAM) resides
+> > > above the 32-bit address space (i.e., above dma32_phys_limit), the
+> > > current SWIOTLB initialization logic fails.
+>
+> Is this primarily for the SpacemiT K3?  Or are there other
+> platforms that this fixes?
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-7.2
+Blackhole has this similar issue with no DMA32 ranges. This fix
+applies to that too.
 
-Thanks!
-
-[1/1] spi: spacemit: Correct TX FIFO slot calculation
-      https://git.kernel.org/broonie/spi/c/a88df1d92fcf
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+>
+> > > This patch addresses two interconnected issues on such platforms:
+> > >
+> > > 1. Incorrect 32-bit DMA bounce assumption:
+> > > The existing condition `max_pfn > PFN_DOWN(dma32_phys_limit)` assumes
+> > > that a 32-bit DMA bounce buffer is required simply because the maximu=
+m
+> > > PFN exceeds the 32-bit limit. However, if all DRAM starts above 4GB,
+> > > no memory exists below the limit to satisfy this allocation. Fix
+> > > this by adding a check to ensure `memblock_start_of_DRAM()` is actual=
+ly
+> > > below the 32-bit limit before enforcing 32-bit SWIOTLB.
+> > >
+> > > 2. kmalloc() bounce buffer allocation failure on non-coherent systems=
+:
+> > > For non-coherent hardware, a bounce buffer is still mandatory for
+> > > cache-line-aligned kmalloc(), even if 32-bit DMA bouncing is skipped.
+>
+> I'm not sure I'm parsing this correctly.  Shouldn't this read "for
+> *non*-cache-aligned kmalloc()" ?  Or am I missing the point?
+>
+>
+> - Paul
