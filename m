@@ -1,120 +1,87 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761293CF211
-	for <spacemit@lists.linux.dev>; Mon, 20 Jul 2026 10:36:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD5A3FDBE7;
+	Mon, 20 Jul 2026 11:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784543778; cv=none; b=I7LhO+z3KQCuwxNk1MhdWKZ/dQmkhFKEaJD0GtgDYHnyOf7kZ/iRDw2C10Dvi0qX6tmPbk4aWcnfbZ4EkBA+P/y39imuiYgku542NIvheFqhoi3sle6UoLvSdlGdgxLejOmvzrh/U1YzlHavYUMTeHdRJpVcDXNoQ0umlJfT1Fg=
+	t=1784547810; cv=none; b=KvAxuNMWMvNtrEvJxgcTEJHQmgOJz4hXfJTaRYHhMasnAFa4eXTCWtsJWJUGGHwE7xhFhyJpyN/+5AsQR9A0pZozUUEY6Bz+ZEQf3q/2h9K7RCMSweKQGD7o6GxdYvRHxDtOjE8p8F4Db+9DYvAzkaP3kB2334iLCLr6G+uRrHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784543778; c=relaxed/simple;
-	bh=me5QHrqM02UHPXwABM4TQ2szLl1FcOkdKMdKCXza+sE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DHM9N5L7YXSfT6AbmtmLHiGPvn2246EGwzxW8dQPSvPZmBEeiRKNYeCdYbxg5b3FaMzzHYIi8Kajsl349GnVu3TntE0HcwHQsBsFV6oj4FzzU7dHGRpSj7DOH7oPHrSCNA+nvh/M0rSOpfvjMHvHWnBzcuiAO2bS/Tr1C+YjNF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+r8famv; arc=none smtp.client-ip=209.85.215.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784547810; c=relaxed/simple;
+	bh=W6JRfOaTjOH/psjdJJNvEN+KaLZy6BySTLkUfOX8cgY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=NTp/raoNbCmNiOEahf37Z+gG7wterKMCwi5wUeWCse9mNncepbfa6AAI6zAf3Gjuc5TVt0lKsTWKXhTfLQUu0406g2sJXUKTbrSkgbZOKuj6Sryy0REZ1Ah+X7WBidepQAclvc4SOZMt7YSXuwV1N9SOX6lfCWODEqnLUzbgHZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bpOsEiDa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+r8famv"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-cb5b8572b70so1782412a12.2
-        for <spacemit@lists.linux.dev>; Mon, 20 Jul 2026 03:36:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784543777; x=1785148577; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=3oqW8KaEsXv0dXUfcgcDqMh+LX2DCloRVbZb54sf32E=;
-        b=b+r8famvkVHlvkDFnDRQk3PVcGPz5IkXY3wCDCTRZHDRLKF0tQwYZ7EzD3ZTfaIvVm
-         sUqZROAFsvCmjs1W+XC5+vtwqTspkMmWwhuPYA5bUSU+ViXfSXbQwUPRuR44GigW7MN/
-         pMIKsTaGyXHpw8y/NtXE5tTb1C0yZYvcUutOHSl2UqfhYkBdlLHNrqCwOez+vGQhX8a0
-         l4u+bf9AgHbJaL0Y3IZm6L2EjnvXrzRpaxnXm+iW8NkKHie2VHfBTxwXX/bvQbvugbml
-         Dfz2RvbyO7F8CELx1lCPGBLFeO31m045BDd1RrxLNYGVQZtlelIewJvgDZ0xC2bsYajU
-         CLWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784543777; x=1785148577;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3oqW8KaEsXv0dXUfcgcDqMh+LX2DCloRVbZb54sf32E=;
-        b=HQoikx9LSVQ+M9G07s9m1LH/G31uAQniahp71irysxNUdVhw8f+ytE8U3OsG28jebV
-         R2fDO7z0gOY0gQ5OxHLi7WbTgI6RECLMwK4Zm0sStC/qIpYEmoxCU4ZZH32plsfkp4VU
-         OLqdtW1TK9dn7St5ll72ekgq8E7icQz3KzdIkKs7FQUryfmfaN9YzmT/i+5wSKPcKSMM
-         ZlGTneFM+UuLarKir8RjwQaIZeaEX0FdF1tCO06JbD4aSONJhmhwlnJFbTjU8ySBzqfm
-         O+iCn6zUzZ+DrJcdvBnug/7I1LUtNiphvQ4+cxmVy2ZI5liJAUQiET/TepS2pGlOmDkZ
-         sQig==
-X-Forwarded-Encrypted: i=1; AHgh+Rov4iZyKxleb4GQ7unmJaQzqCmC8YwVx50R9VHe0+jc+W+p5t2+SDB55eM80j4G+JT8QhFjP29+7Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy3DU7MmgEYSD5PdZdEmclNiILjgXZVYgUXifKythbAIxwxdbOB
-	gOsI4c5527N3sGOP4kINybOIJBcyE7QznwrWVhReWqfJiCZURjsWoWQ=
-X-Gm-Gg: AfdE7cn2ePbckRPcmVCSRaY5wCg39hehPgK6pu5tjhQAk1mjvze6l10rQGeFQj1HW29
-	PyARlKtk3SP3R+D3hl9EI69evg+drqu34MfWeleGKL64qOldIZ+FKfZItpc3xO2jjXsoR2dY1fO
-	wuIAQusaQsl/jLujr5/PgazSCQh2Ensx+xXUW8ho4swaSf5WQk/YnKeGgfVuyRS9/4fZ+P2L7vO
-	ORzu18r5/C+PQtMBAtZRoZGADZNda6PkAtxLAeZtx9FomutEOTvpb1qxpjZ9qBcDMdTwhXOlQK4
-	cK5X9kTjXyD2f5qrxVEWNhWSrkVlQunOS6j0MPr5/xJg7PgUnie5WPGoON7oPGf2z7keKSGTWfF
-	UHt6Hrn5BEJPaoSmOPwKpClCH4wPkax5YFWyQOs+vTxEucbpZ9LA21kYOQPhOQA0VKXW4gyLJX2
-	8UnOcaRw0TfSx51iK6Yjd+NabDdg==
-X-Received: by 2002:a05:6a20:728a:b0:3c3:a1e6:a62a with SMTP id adf61e73a8af0-3c3ad99c684mr14396156637.63.1784543776540;
-        Mon, 20 Jul 2026 03:36:16 -0700 (PDT)
-Received: from t-rex ([2401:4900:c200:8f2e:8d2c:f805:595:9600])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31429ff04absm32697446eec.8.2026.07.20.03.36.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 03:36:15 -0700 (PDT)
-From: kr494167@gmail.com
-To: rafael@kernel.org,
-	daniel.lezcano@kernel.org,
-	dlan@kernel.org
-Cc: rui.zhang@intel.com,
-	lukasz.luba@arm.com,
-	shuwei.wu@mailbox.org,
-	linux-pm@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	surendra <kr494167@gmail.com>
-Subject: [PATCH] thermal: spacemit: validate clamped trip thresholds
-Date: Mon, 20 Jul 2026 16:06:06 +0530
-Message-ID: <20260720103606.93924-1-kr494167@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bpOsEiDa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CADF1F00ACA;
+	Mon, 20 Jul 2026 11:43:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784547808;
+	bh=jksvQuGJlzz+/4Aqk8TfN68mdO4WqGHnmBV95K91OZI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=bpOsEiDaIbN7OGiv7cjPKKtUgu3rNub1z904ya8JeruJorGiRPMGeDDKD6d7Tk+P7
+	 vJDN7t3OBmirceI+A4PIpZ3QglMM4mdNi+PGbIVBRhEksV0bh5YrqswA/P9XyEzpux
+	 ef3An1rVopb/HTeRyUd468oziyI8Thc6MyeS+pDV83j5TDVaa1YKgXIvf051b+uXyb
+	 cHMshVPtFsRjmY8UBpaefAy+vdC1ztg0oSCMdAM4xUtv3UiV8UFY7srerA1VYuGJcB
+	 DEVJmCjutGKYT6LZ4Qjz+5/FLhj3IrirnXpI5C2lOgNVyoTFrI7F3OHbX1zEjzt4fY
+	 ficoVttbv6OJQ==
+From: Vinod Koul <vkoul@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Alex Elder <elder@riscstar.com>, Ze Huang <huang.ze@linux.dev>, 
+ Inochi Amaoto <inochiama@gmail.com>
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ Longbin Li <looong.bin@gmail.com>, Yixun Lan <dlan@kernel.org>
+In-Reply-To: <20260703021024.495433-1-inochiama@gmail.com>
+References: <20260703021024.495433-1-inochiama@gmail.com>
+Subject: Re: [PATCH v2 0/2] riscv: spacemit: Add K3 PCIe/USB comb phy
+ support
+Message-Id: <178454780165.1388616.1849106686224680549.b4-ty@kernel.org>
+Date: Mon, 20 Jul 2026 17:13:21 +0530
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-From: surendra <kr494167@gmail.com>
 
-k1_tsensor_set_trips() checks the requested trip temperatures before
-converting them to the sensor register representation. Distinct
-out-of-range temperatures can clamp to the same hardware value, leaving the
-sensor with an invalid low/high threshold pair.
+On Fri, 03 Jul 2026 10:10:21 +0800, Inochi Amaoto wrote:
+> The PCIe/USB comb phy on K3 is a big phy that contains multiple
+> standalone phys for each PCIe and USB controllers. This phy is
+> required to configure a syscon device for mux configuration and
+> calibration.
+> 
+> Changed from v1:
+> patch 1:
+> 1. Add extra description for "#phy-cells" and "spacemit,apmu"
+> patch 2:
+> 1. Fix multiple spelling errors and copy-paste errors.
+> 2. Make some magic number as meaningful macros.
+> 3. Remove USB3 set_speed() callback as it is not needed.
+> 4. Fix the wrong land data config and mask.
+> 
+> [...]
 
-Validate the ordering after conversion and clamping.
+Applied, thanks!
 
-Fixes: 296a977f2bac ("thermal/drivers/spacemit/k1: Add thermal sensor support")
-Signed-off-by: surendra <kr494167@gmail.com>
----
- drivers/thermal/spacemit/k1_tsensor.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+[1/2] dt-bindings: phy: Add Spacemit K3 USB3/PCIe comb phy support
+      commit: 013004374b4da621e292408112413b103dd28b03
+[2/2] phy: spacemit: Add USB3/PCIe comb PHY driver for Spacemit K3
+      commit: 7a099760ea63ced7b194852b7dbbdcd951585f15
 
-diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spacemit/k1_tsensor.c
-index 79222d233129..a9eaedefdac3 100644
---- a/drivers/thermal/spacemit/k1_tsensor.c
-+++ b/drivers/thermal/spacemit/k1_tsensor.c
-@@ -156,13 +156,12 @@ static int k1_tsensor_set_trips(struct thermal_zone_device *tz, int low, int hig
- 	struct k1_tsensor *ts = ch->ts;
- 	u32 val;
- 
--	if (low >= high)
--		return -EINVAL;
--
- 	low = clamp_val(low / 1000 + TEMPERATURE_OFFSET, TEMPERATURE_OFFSET,
- 			FIELD_MAX(K1_TSENSOR_THRSH_LOW_MASK));
- 	high = clamp_val(high / 1000 + TEMPERATURE_OFFSET, TEMPERATURE_OFFSET,
- 			 FIELD_MAX(K1_TSENSOR_THRSH_HIGH_MASK));
-+	if (low >= high)
-+		return -EINVAL;
- 
- 	val = readl(ts->base + K1_TSENSOR_THRSH_REG(ch->id));
- 
+Best regards,
 -- 
-2.55.0
+~Vinod
+
 
