@@ -1,98 +1,181 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC820433BA2;
-	Mon, 20 Jul 2026 15:08:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75ECA446856
+	for <spacemit@lists.linux.dev>; Tue, 21 Jul 2026 09:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784560111; cv=none; b=upOIBnCiElGlc61o58ZHqaVBFo3LCWV8ZCRlkPUyoJqd+IC1lJrXNdz3BgSYZ929Nagpdswk2RciZZra1Vv8ESWLfA70ZdiSxSxfcw9+K3WmvzzZ3FvMDlgu4YMULFfqEnh8StnyFuAoiJ9H2xNPfIjI4a0adGs61Ki5SavcjSg=
+	t=1784627331; cv=none; b=RZQW0g66DqpUh/WLStJNm3cXH41/8impGspyqODOTwCBwgij6i0YPLouaVa+dob4Rj7zPjYYHczSJUDpcKcSBWXP90/1+3bygiLZ1yRMa2pUl8DDbsl8kHJZg1czOvjdvo1tdkswIIDcmLud7/JVi+2XLNepRFaxs4H1MxTy4ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784560111; c=relaxed/simple;
-	bh=66IBhF1pQmHCc5Bn86cYjQ39VKbzO0j4snPG+BTKAT0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JosmCn8G9TlSBmCbxVgM7/HVQG+2d9RDH882RR4Al+V5rUQwHF6eZ1WinpHQEX3azmcSmEPm3rbLkPwMxGK4Dk4wI4zqo3cfOyzcr9Yvqi7Boda17mdfegDw1LwlHdTc+xURRwvtE241Glh07R5qhHhJ7+fIeIWYkRMXYo18lHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=PL56MJC6; arc=none smtp.client-ip=220.197.31.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1784627331; c=relaxed/simple;
+	bh=ZuBbGDtILLJc9cljeN2cxK5OUQN09Do0FRqsNBN0hcg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=msHdLhFRC2caweB7jK9QNkVM9j2N6bHjQAJ8/E9ODk4PTKdroltgcqRmQiI1vGvnThVeo+rBhneirIxqMyJI2ext25FdCkwfybs9ZJWYXppIwc1FtMQHoAHbOiji6tzXPz9cZHfzOzyRcwUJRnC9H28Yy3ElG/M9ZvKmBTNLOF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=n34G9VU4; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="PL56MJC6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=VX
-	L2XKRY5F3qPW2VboJTa9SPw1RX8rEnzJV3c1g8W44=; b=PL56MJC6Mw2Dm3beJw
-	EGXf2JsTShEbMBOlljS+EgYO6qacNN2UjIkc8WYsI3Z3k7cA6sDekfjYsxzQ//WC
-	ct1DT3oLvPkTGbHh3jinH59RtwXi3SySdmeiigJq4uG8QntqeP+JmCy4vww5lACu
-	u6uUmyYQXJwiJIDj086urjZ4o=
-Received: from zhb.. (unknown [])
-	by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wDX5ybVOV5q0OGYJQ--.29751S2;
-	Mon, 20 Jul 2026 23:08:06 +0800 (CST)
-From: Hans Zhang <18255117159@163.com>
-To: bhelgaas@google.com,
-	lpieralisi@kernel.org,
-	kwilczynski@kernel.org,
-	mani@kernel.org,
-	jingoohan1@gmail.com
-Cc: imx@lists.linux.dev,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-amlogic@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Hans Zhang <18255117159@163.com>
-Subject: [PATCH v3 16/16] PCI: dwc: ultrarisc: Use cached PCIe capability offset
-Date: Mon, 20 Jul 2026 23:06:19 +0800
-Message-Id: <20260720150619.24733-17-18255117159@163.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260720150619.24733-1-18255117159@163.com>
-References: <20260720150619.24733-1-18255117159@163.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="n34G9VU4"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1784627326;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=qItdemN2VjjBBlZQtxInsZBw9ADrmvr0MbevsqcHD1s=;
+	b=n34G9VU4ASHowXrkO6ymj5wOj+Hhz7LPiaXvB2nNIMszIkqTdqaEIdEqRQdFDIwZy2TELB
+	1B8P2aCnGrmLwmfzmmiy2ejsxcHXyvwgkGRFI91I+UfnaSHtBXAerO/qobiXIuKJLn4ySC
+	ii6P833hl+YUP9JDkrHTOMlsoRjfL8U=
+From: Troy Mitchell <troy.mitchell@linux.dev>
+Subject: [PATCH v2 0/6] hwmon: (lm63) Add Sensylink CTF2301 support
+Date: Tue, 21 Jul 2026 02:48:26 -0700
+Message-Id: <20260721-ctl2301-v2-0-ef5fb342872a@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDX5ybVOV5q0OGYJQ--.29751S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7ZFy7CF43CF1xGry8JFy7KFg_yoW8Grykpa
-	y3WryjyF1Dtr4YvFs2v3WDXF13tFnxAr9xJanrGrnIvF1akrWUJ390k34rtFn7GFWUKryY
-	kr1YyFy5Ga4rtwUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pi0tCwUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbCxBa1WWpeOdYHFAAA32
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2XMQQ6CMBCF4auQWVszHSoFV97DsNAyyCQESIsNh
+ vTuVrYu/5eXb4fAXjjAtdjBc5Qg85SDTgW44TG9WEmXGwjpgo2ulFtHKlErNLp6oi0d1Qj5vXj
+ uZTuke5t7kLDO/nPAUf/WfyNmRjWWratNT87Y2yjTezt3HKFNKX0BUHUPFZ4AAAA=
+X-Change-ID: 20250916-ctl2301-0416b073c280
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Guenter Roeck <linux@roeck-us.net>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Yixun Lan <dlan@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+ Shuah Khan <skhan@linuxfoundation.org>
+Cc: Troy Mitchell <troy.mitchell@linux.dev>, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-doc@vger.kernel.org, Jean Delvare <jdelvare@suse.de>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5529;
+ i=troy.mitchell@linux.dev; h=from:subject:message-id;
+ bh=ZuBbGDtILLJc9cljeN2cxK5OUQN09Do0FRqsNBN0hcg=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFnxDnlPzDzTcg1bZky8su906bqlev4H332b6yFzQoa5q
+ HVvmNe3jlIWBjEuBlkxRZbuBzzbCnyibAsECn1h5rAygQxh4OIUgImsusLwv+jXFbtlq7vbTv8+
+ sFswl8eiv7VaRfjlhr6NOdlnF3m8b2Bk+KvafvfxloTObI0oqa2rk5nXeHNtbau2s3r3cmPR/sU
+ PeQE=
+X-Developer-Key: i=troy.mitchell@linux.dev; a=openpgp;
+ fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
+X-Migadu-Flow: FLOW_OUT
 
-Inside .init we call dw_pcie_get_pcie_cap() to obtain the offset, because
-the core has not yet cached it. Hardware is already enabled by the driver
-before this point.
+Sensylink CTF2301 is a system-level thermal management solution chip.
 
-Signed-off-by: Hans Zhang <18255117159@163.com>
+The CTF2301 is an I2C/SMBus compatible device featuring:
+  - One local temperature sensor with +/-0.5 degree C accuracy and
+    0.0625 degree C resolution.
+  - One remote temperature sensor for external diode-connected
+    transistors, offering +/-1 degree C accuracy and 0.125 degree C
+    resolution (temperature range: -40 degree C to +125 degree C).
+  - An integrated PWM fan controller capable of operating in two modes:
+      1. Direct-DCY: Open-loop direct duty cycle control.
+      2. Auto-Temp: Closed-loop automatic fan speed control based on
+         measured temperature.
+  - A 1-channel fan speed monitor (TACH input) for RPM measurement.
+
+As Guenter pointed out on v1, the CTF2301 register map is a near match
+for the LM63/LM96163 family (local and remote temperature, tachometer and
+PWM fan control), so this version drops the standalone ctf2301 driver
+and instead adds CTF2301 as a new chip type in the existing lm63 driver.
+This reuses the shared temperature, limit, alarm and PWM handling instead
+of duplicating it.
+
+The CTF2301-specific differences are handled on top of lm63: 12-bit local
+temperature input and high-limit values, nine conversion rates, 12
+fan-control lookup table entries, and optional 22.5 kHz high-resolution
+PWM. When no IRQ is described, the shared ALERT/TACH pin is configured as
+a tachometer input. The LM63 family can also register as a thermal cooling
+device when the device tree provides the #cooling-cells property.
+
+The required SpacemiT I2C controller clock series has been merged but is
+not yet included in an rc release:
+https://lore.kernel.org/all/20260508-k1-i2c-ilcr-v7-0-8c2dde5c3ed5@linux.spacemit.com/
+
+Apply that series before testing this series on K3. Without it, the I2C
+controller cannot generate an accurate 400 kHz SCL clock and CTF2301
+accesses may fail.
+
+Tested on a SpacemiT K3 CoM260 by booting an initramfs and verifying the
+CTF2301 probe. Temperature, tachometer, PWM, and conversion-rate behavior
+were checked against direct I2C register accesses and the datasheet.
+
+Datasheet:
+https://www.sensylink.com/upload/1/net.sensylink.portal/1689557281035.pdf
+
+Register description:
+https://github.com/TroyMitchell911/ctf2301-datasheet
+
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
 ---
-In pcie-ultrarisc, the call chain is:
+Changes in v2:
+- Replace the standalone CTF2301 driver with a new lm63 chip type, as
+  suggested by Guenter, reusing the existing temperature, limit, alarm,
+  tachometer, PWM, and automatic fan-control paths.
+- Add the temperature thresholds, alarms, and automatic fan-control lookup
+  table support which were missing from the v1 driver.
+- Handle CTF2301-specific 12-bit local temperature values, nine conversion
+  rates, 12 lookup table entries, shared ALERT/TACH pin, and optional
+  22.5 kHz high-resolution PWM.
+- Propagate SMBus failures from lm63 initialization and write paths.
+- Add optional thermal cooling-device support for the LM63 family using
+  the existing manual PWM control path.
+- Move the National LM63-family compatibles from trivial-devices.yaml to a
+  dedicated binding which permits #cooling-cells.
+- Add CTF2301 to the LM63-family binding instead of keeping the standalone
+  schema from v1. Do not declare #cooling-cells on K3 CoM260 yet because
+  the board has no thermal consumer.
+- Fix the binding errors reported by Rob by using a plain compatible string
+  and wrapping the description.
+- Document CTF2301 support in the lm63 hwmon documentation and provide the
+  detailed register description used for review.
+- Add the K3 CoM260 I2C6 pinctrl state and CTF2301 device node for hardware
+  testing.
+- Link to v1: https://lore.kernel.org/r/20250916-ctl2301-v1-0-97e7c84f2c47@linux.dev
 
-  static const struct dw_pcie_host_ops ultrarisc_pcie_host_ops = {
-    .init = ultrarisc_pcie_host_init,
-  };
-  ultrarisc_pcie_host_init()
-    -> dw_pcie_find_capability()
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Guenter Roeck <linux@roeck-us.net>
+To: Paul Walmsley <pjw@kernel.org>
+To: Palmer Dabbelt <palmer@dabbelt.com>
+To: Albert Ou <aou@eecs.berkeley.edu>
+To: Alexandre Ghiti <alex@ghiti.fr>
+To: Yixun Lan <dlan@kernel.org>
+To: Jonathan Corbet <corbet@lwn.net>
+To: Shuah Khan <skhan@linuxfoundation.org>
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-hwmon@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Cc: spacemit@lists.linux.dev
+Cc: linux-doc@vger.kernel.org
+
 ---
- drivers/pci/controller/dwc/pcie-ultrarisc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Troy Mitchell (6):
+      dt-bindings: vendor-prefixes: Add Sensylink
+      dt-bindings: hwmon: Move LM63 family to a dedicated binding
+      dt-bindings: hwmon: Add Sensylink CTF2301
+      hwmon: (lm63) Add Sensylink CTF2301 support
+      riscv: dts: spacemit: Add K3 I2C6 pinctrl state
+      riscv: dts: spacemit: Add CTF2301 on K3 CoM260
 
-diff --git a/drivers/pci/controller/dwc/pcie-ultrarisc.c b/drivers/pci/controller/dwc/pcie-ultrarisc.c
-index 6ee661ceff67..3f6e3ab0aa69 100644
---- a/drivers/pci/controller/dwc/pcie-ultrarisc.c
-+++ b/drivers/pci/controller/dwc/pcie-ultrarisc.c
-@@ -49,7 +49,7 @@ static int ultrarisc_pcie_host_init(struct dw_pcie_rp *pp)
- 	FIELD_MODIFY(PORT_FLT_SF_MASK, &val, PORT_FLT_SF_VAL_64);
- 	dw_pcie_writel_dbi(pci, PCIE_TIMER_CTRL_MAX_FUNC_NUM, val);
- 
--	cap_exp = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	cap_exp = dw_pcie_get_pcie_cap(pci);
- 	val = dw_pcie_readl_dbi(pci, cap_exp + PCI_EXP_LNKCTL2);
- 	FIELD_MODIFY(PCI_EXP_LNKCTL2_TLS, &val, PCI_EXP_LNKCTL2_TLS_16_0GT);
- 	dw_pcie_writel_dbi(pci, cap_exp + PCI_EXP_LNKCTL2, val);
--- 
-2.34.1
+ .../devicetree/bindings/hwmon/national,lm63.yaml   |  52 +++
+ .../devicetree/bindings/trivial-devices.yaml       |   6 -
+ .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
+ Documentation/hwmon/lm63.rst                       |  22 ++
+ arch/riscv/boot/dts/spacemit/k3-com260.dtsi        |  19 +
+ arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi       |  11 +
+ drivers/hwmon/Kconfig                              |   8 +-
+ drivers/hwmon/lm63.c                               | 393 +++++++++++++++++----
+ 8 files changed, 433 insertions(+), 80 deletions(-)
+---
+base-commit: a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+change-id: 20250916-ctl2301-0416b073c280
+
+Best regards,
+--  
+Troy Mitchell <troy.mitchell@linux.dev>
 
