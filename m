@@ -1,134 +1,104 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD442BE02C
-	for <spacemit@lists.linux.dev>; Wed, 22 Jul 2026 12:20:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF910302163;
+	Wed, 22 Jul 2026 13:34:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784722807; cv=none; b=PC9YxmVLvEw/O5Q2kYOLG24dVyoAERa7Xq0hKekDoOpux+UvAG0C4RFbEFot8HKMIPPk4r0Mqsyy4W/kuAI7w2s9gd+cME/z79TT5/HxK0/MBfy8K6k04pezi+wGEhuzTiTJDRjzAA0mtIuXVIi/fak93kU2fZRsgvw82EBVIGU=
+	t=1784727246; cv=none; b=FhDiLCEfOjS0l156yQ44XJ4lit0fqL78wGt8kZp8VXe81kQQownWFT3rj1aX8BT5Kt5PzGUaJPzdy/exBjWYiofaX0ARlAiH/wn/6LbTI84XDt7OPtFjpml64OGKmcKbDnS0GlV9ypoBWiMQv/P9kN/nZ/0mk3peOkSxrwu4rSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784722807; c=relaxed/simple;
-	bh=AgSIsFIB5hJk9F7GwArLvCsxDs8srGNqiUbKoqtKay4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mnaoAtfoWC64X7HTN4gLIr0+9QxGmnh5SExgGkKDs3Iuxf8pNDDyCHAHmWm/5gN9Lea2IUHskN0De/L3WeAvs5SDdxYt3qsgTS8WAeFkzjELUeEN9TJlQFznuu7lvrA2H28dZ9QsORPJgOK2X97GFyLhLTR/2WMjAZBVuEi1fmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=XalLXeT9; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+	s=arc-20240116; t=1784727246; c=relaxed/simple;
+	bh=3XhPVfYAn5ogg+I8EwpEx5n1phNWzzGfCew+/3A7vfY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=fQNBg4eXvdsKboqy/wqmayNCggqRr2/a/fUvEWBHEbShR1Y19hK1mP8vLx/YbmyLgL6nydeSGwFNZEeX4ZTCc4+NRbSoebWcBBvkPfkMcy/6BZ6Gv8qVMYM5HXkwobNUFNYj7D9cRX44J8+/Ynjn1eJ3vGmtaEHddMux/XghNxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+xE/OUx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="XalLXeT9"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-92e5c92c389so846172485a.3
-        for <spacemit@lists.linux.dev>; Wed, 22 Jul 2026 05:20:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1784722803; x=1785327603; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=5qvzOJZC5dLwV+0rw2sHYPHDnXSJxTaB22HkTCSR960=;
-        b=XalLXeT99pPb3W4dGVEAul+LP1hBljOAPFEbu9r3DzQBdR8OwbIsMZMl8bgfiM8aoz
-         zK8G4hL/b8crrFdJwL0/1/4Nx/9c3E52VsPXZ8A/8ct9TedPut6JPQvjPHXQZnogZcnt
-         rkrMi8dONQkfFnw4/Hn/uGvQRs+Mk3iffn72EUdyBD8oyM9J2snk0wGVW7yRgiqdX/Ih
-         6cOWSbaLpo6mOFzKGNKE4uZBG66afh/lCOEBq08cIZQe26txaRZ6mBH4EEOOWsK21es+
-         IdKN5spBDAwu10MjSil1K9JfbP4rFjrs/sVJpUSymuVo0RSShBJgegFxwDrvfBpdqmW+
-         WKYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784722803; x=1785327603;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=5qvzOJZC5dLwV+0rw2sHYPHDnXSJxTaB22HkTCSR960=;
-        b=duZJrRG1WqkLl8+xQ/cmrXRFDZ9eZWL9yR7YQObCqZbp27KC0/OGH3wMmbHrzE8ADw
-         g9BuwzVQKtMSqO7tKMWknW08Y8EWmqNlFhHHxWsbeh/CTl4ylcvHT2tqovD23WMigXzu
-         yDy5CaGb27dhHgQ5IFIPr7ZsMDY0srcb75jfc02dThBtG0WF0MlZpNmDQ1jY0UeEkXB6
-         w55k/0R8DyYcpfJ3s4PbrP5PKnrt13O/joUWurasORzf/LBvaVo/R2oc7Ee4YnwCawHQ
-         FoPvuY/8t/pPInWCjOpgMEmKWsbCjDB56S7+h1fFaYh6ND4VGkZU0dw71oHbaWbvVfCH
-         MNNw==
-X-Forwarded-Encrypted: i=1; AHgh+RrgBLCyiSsjng9o88FtksxxioROs09xmwDsqGF8hceiY5Mh0KG0T7wEv8c2kwFArY4mAnWLO+wpig==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwYti1rY20Xpds6SQMOSdZQgBJTIrDGk6F2Uentv9xMyn47vCvY
-	Qs1efaGrGssvaWzPxniYJRW5jYvehhMje43LK3BxOgSFZBeJsxUGwpdPcOz+M+xzQNo=
-X-Gm-Gg: AR+sD121CHzAl6uNy9wEt8VW+6isQfXH9AdjRBQxj+O82EHTyn9Qz2nzNDPNDbLoOIq
-	S5ei9J6LRUsip4h1bKKH688Q8fFpVsVspsWS4bWLbdWh1kU7t1/a70Af08/FsTIKl6vpKxR0QAz
-	4rnjKbuHjQ42Ci7Gz3z/Rskm7nTCnfu3LGs7hep0KAs9l7jRTCZ2wJ8F1TayLUBgAwCbIvehQxj
-	Zp8xVo2QVxUv221ik8dW2IbtCYDRUPHXc3SEAqRhS+53valACxRHKh7W0e0TIgbwnNgSh1JABml
-	jner5OSM7fsw61qisVTkBXhFFnnOrRtwNYQ4pD3JnWyLnd/VfRHDyA8fLYRRTBsPj13JPX2EZre
-	871kwrK3g9oi1x4chB9lbPKYK7KC9o7J8vSxcJ6Hi1wzfMa2gT3zXdj/Z8Bb3CCwtjWuejkdzcP
-	Ay8w==
-X-Received: by 2002:a05:620a:2989:b0:930:f306:8275 with SMTP id af79cd13be357-930f30682bemr389512085a.9.1784722803506;
-        Wed, 22 Jul 2026 05:20:03 -0700 (PDT)
-Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-930f68d323asm151978385a.19.2026.07.22.05.20.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Jul 2026 05:20:03 -0700 (PDT)
-Message-ID: <7d7938cd-80bb-448b-89d0-6ac6d2717e98@riscstar.com>
-Date: Wed, 22 Jul 2026 07:20:01 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+xE/OUx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0F31F00A3A;
+	Wed, 22 Jul 2026 13:34:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784727244;
+	bh=Nlz16QiOQhVVn8iXqqYb5Q5dqwZF2ocDB1E2YIBPKJA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=H+xE/OUxoazgHV3/EbDlhN+tSyNFM5sM0csw7NkmHKLCFDb3Nd+TYeuxWBOCvxmsl
+	 CpWohe/e56Zx+lPC2jvi8n+O735kadt/Ki/D/0dP4GvYkA0l37tl44FdzCtIQzLSQn
+	 mokLge1Yw6G5XFy2b/INo63kr2cGCrqBNELbpdXJEoukN0uULKWIDMMCmciZyHtO8U
+	 nyRx9ysPQOkxqavP5+/SEj2+qeSfjaJ/cwblPbAmWBbVgTtYPK898up6q65FobHpBO
+	 AxkdAhLe8N7RWShdo+eofHR2Q6cpaCeHcTqKoL82xPcIVYpLjJahfk3tV3fn5kc3LD
+	 HDLhLAsUHXraQ==
+From: Mark Brown <broonie@kernel.org>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
+ Alex Elder <elder@kernel.org>, Zhengyu He <hezhy472013@gmail.com>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ linux-spi@vger.kernel.org, wefu@redhat.com, 
+ liyeshan <yeshan.li@spacemit.com>, Guodong Xu <docular.xu@gmail.com>, 
+ Cody Kang <cody.kang.hk@outlook.com>
+In-Reply-To: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-0-969a1b0f783f@gmail.com>
+References: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-0-969a1b0f783f@gmail.com>
+Subject: Re: (subset) [PATCH 0/4] spi: spacemit: support K3 SPI controllers
+Message-Id: <178467008173.260430.15881924669346340499.b4-ty@b4>
+Date: Tue, 21 Jul 2026 22:41:21 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i2c: spacemit: request IRQ after controller
- initialization
-To: Linmao Li <lilinmao@kylinos.cn>,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Andi Shyti <andi.shyti@kernel.org>
-Cc: Yixun Lan <dlan@kernel.org>, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev
-References: <20260722094302.2284191-1-lilinmao@kylinos.cn>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260722094302.2284191-1-lilinmao@kylinos.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1338; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=3XhPVfYAn5ogg+I8EwpEx5n1phNWzzGfCew+/3A7vfY=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqYMbHcpeaZIkEhoZSEkLpuqvZJ8xpWXXkReHdy
+ gRpwegzGEOJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCamDGxwAKCRAk1otyXVSH
+ 0PMtB/9FGlzd12BgBvdcW30NNMQqd8KjXqB+KkLAmtx4cNoA1IzxpACg62sIUpQAcGGBV7wIp8r
+ 2GFCXThClJZHaGn+35Uom0jKZToHaaS4aABEdWdQfC73b4gxoh2KbRmRA4UfoN9X+Rr/d7LVIoR
+ APYRfwIrqemHA++MbBhjHVoQIEr+qkL7YJf71/6MsURlSL79E8EeMZxsfN+rMsUu4pJ+nugAoMz
+ 6MYS/xSGb6fXxPjVCV7j4i3c+9G9vRydRicMMd/BzydCpR+LrHBnnHSoEc9MC+Hd4/ckFexIBgi
+ arjULGqLLZgWGpEKeqKEORE/SIou9COaGv0mhv8rskpjxhA+
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
 
-On 7/22/26 4:43 AM, Linmao Li wrote:
-> spacemit_i2c_probe() requests the IRQ before it enables the clocks, resets
-> the controller and runs init_completion(). If an interrupt is already
-> pending, the handler runs too early: it reads registers while the clocks
-> are still off and calls complete() on an uninitialized completion. Request
-> the IRQ after the controller and completion are initialized, but still
-> before the adapter is registered.
+On Fri, 17 Jul 2026 07:45:24 -0700, Zhengyu He wrote:
+> spi: spacemit: support K3 SPI controllers
 > 
-> Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-> Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-
-This looks correct.
-
-Reviewed-by: Alex Elder <elder@riscstar.com>
-
-> ---
->   drivers/i2c/busses/i2c-k1.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
+> This series adds K3 PDMA request numbers, documents the K3 SPI
+> compatible, and enables SPI0 on the K3 CoM260-IFX.
 > 
-> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-> index 51a0c3d80fc9..3fe716cc153d 100644
-> --- a/drivers/i2c/busses/i2c-k1.c
-> +++ b/drivers/i2c/busses/i2c-k1.c
-> @@ -723,11 +723,6 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
->   	if (i2c->irq < 0)
->   		return dev_err_probe(dev, i2c->irq, "failed to get irq resource");
->   
-> -	ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
-> -			       IRQF_NO_SUSPEND, dev_name(i2c->dev), i2c);
-> -	if (ret)
-> -		return dev_err_probe(dev, ret, "failed to request irq");
-> -
->   	clk = devm_clk_get_enabled(dev, "func");
->   	if (IS_ERR(clk))
->   		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable func clock");
-> @@ -755,6 +750,11 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
->   
->   	init_completion(&i2c->complete);
->   
-> +	ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
-> +			       IRQF_NO_SUSPEND, dev_name(i2c->dev), i2c);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "failed to request irq");
-> +
->   	platform_set_drvdata(pdev, i2c);
->   
->   	ret = i2c_add_numbered_adapter(&i2c->adapt);
+> This series is available here:
+>   https://github.com/imguoguo/linux/tree/k3-com260-spi-v1
+> 
+> [...]
+
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-7.2
+
+Thanks!
+
+[2/4] spi: dt-bindings: spacemit: add K3 SPI compatible
+      https://git.kernel.org/broonie/spi/c/6389eaf11d6c
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
