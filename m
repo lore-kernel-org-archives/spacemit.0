@@ -1,172 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4923741D10A;
-	Wed, 22 Jul 2026 16:15:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129CC439F70
+	for <spacemit@lists.linux.dev>; Wed, 22 Jul 2026 16:25:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784736941; cv=none; b=K7CsXxQ0aZnCFLBaomZd9h0lNbTfneYpfGpHSEuaYPD0Nzxd1ctiWOzY1QzBSl3OYw3+/Rtv9CGMlL0RivFyPK9qfK2NGWlquNPP0KeizI//Ei7zOL9KlcneoJNdOriQXK1XhfRQlpJdt5oGLXSuSyy9xwX/Y482jT0ZlSwY5oc=
+	t=1784737504; cv=none; b=m8NaDv5OBBz+Nc8234LoZod5Bs2NWIBcU8s8O1S1hBbnFB57bz1BY1GriKL7j6FWdgI4stNOYYdO8RhMJzudho5Dow4APklo8j7TXMuxtv96vWH/arXxDnS2d4Yt0fW4R9bq1jLBMsggsiLoZLx9hx4orhgOAt5DhyXSldlyHYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784736941; c=relaxed/simple;
-	bh=JRSSPH5/mIjuijfbAtoGLk+DIcsPFNtlz6RKZFC686Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IpP4FHCXqatIpYvWNeERHDdHDcFy+hAd4L4axliKN7Fce8uL2TnMq6x4f1RK2HcacMCA93/o3ZqSB6jGJMVoF55Y6NvvrnX7ivrWDOmMK0h/hxR83+iHDc7px3N6u+y/brw92EmhyGNF6FKg2EecVDe5Pts99yIsIt7waDFLQRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XM0FpB8U; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784737504; c=relaxed/simple;
+	bh=afNZGMtYzA30KV4bDEhm00UcoH2/+9UJYMOEjo4Xyt8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=USeoHBh/p6VfZ6zfkeScHuVp5lklH7hitDB2OI1QMToCVsHDi3spc+K0vGni2FUkRXEuMQhs0l0AN5cEPHP7TOZRM14s+RcsSg35ClTrUp4OEgofAVyUXz7fWsoH7w6dWpbDKVdeqwXBplXo8w7wczZULT3JzJ4nYvzvo0u8d0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jz9OK3VH; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XM0FpB8U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF311F000E9;
-	Wed, 22 Jul 2026 16:15:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784736940;
-	bh=UCNZNSZ/KaKi2HN6huz+/6/BGuqPjjLEs0PsS30eq/Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=XM0FpB8U/90EUWbEOIg1nBMzeofr1gZH6J9DDpXlLp4O25TXo+64QORFvIO7W6Y2p
-	 XATOmuAWT4AMBig2bgQo40IhsC31gg6igpFfyYF3r0CwYXtRuYUhduCVzFp0RkGVKE
-	 61TH8e72D9xgVWfpkuNLAHKJhsdFxs7i4sULhnTfg6kCPfhCnJlFr1jOFXGpGd7+6W
-	 rey7BHkkIlxSjZNu3Ve9cXHqpgUjCaHGOY7gLJR0/JdBZjypdhzeLrRIwh0JMDznh7
-	 2sK8M1h2hXrOleY3m8zbpncqD4THVvImQfrDqWDEM/9FgvR/Qp1w7DaUUkl6t0Xsd7
-	 +6bRabeO/FP3g==
-Date: Wed, 22 Jul 2026 17:15:34 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Troy Mitchell <troy.mitchell@linux.dev>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-doc@vger.kernel.org
-Subject: Re: [PATCH v2 1/6] dt-bindings: vendor-prefixes: Add Sensylink
-Message-ID: <20260722-devious-seventh-9859bb3741b3@spud>
-References: <20260721-ctl2301-v2-0-ef5fb342872a@linux.dev>
- <20260721-ctl2301-v2-1-ef5fb342872a@linux.dev>
- <20260721-dill-dab-df15585090d2@spud>
- <673be23a-2a84-43b7-9be7-a661cf0e7935@roeck-us.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jz9OK3VH"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-ca7bea5e5b3so9168596a12.1
+        for <spacemit@lists.linux.dev>; Wed, 22 Jul 2026 09:25:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784737502; x=1785342302; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=tXYrafFh6v41hHNrCujwkEXP25aXy1QcuniyU+tuiOM=;
+        b=Jz9OK3VHc1WMyFcYM634kqG4tJBkzzwUixfbHc42PFV1dXwD9evsqGDVCiY2mSojbm
+         bu+TRV6zrHU2X5klomkYPpSHJPAqRSlcy/wCmq4qAIO/+iugvwCG/IfTtOTvVcagZYIY
+         JZlNDvW7I/wdTkGnyIeJCEj9tt+V4+hcAaASohg/kzNCGpe77YNSPvwfLkIH913Fj8pm
+         VnmBTcxBqa9oKfojpNh4J+LKFYrnZwFquUXLTeDEp9PUKQN+nhEJ/MevZqI5VbOc5ApT
+         r0x1ZYAdgZZFuc/q45d84P1mt1xcNvEmNjWH/MU/hYZZFWih66K01SdsA88SVZormACQ
+         YXtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784737502; x=1785342302;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tXYrafFh6v41hHNrCujwkEXP25aXy1QcuniyU+tuiOM=;
+        b=hDb64auNSC+tGdVtDslbgr7sPpB93slGwHElYaK2Zh+yKF18tDiktkLc3uk4nj1I57
+         2ztJS4OisCSiJMrlygvmC0mtjG3ka7Y+1Xe3/LQX2kHGdHNcTntNsZfaCL5f4RN0pDaq
+         jEdfeVA9L0AoijqkCwU8gXaivPn9ppy2jS9dYf4AKx9nAI78L6BwGy60aNw4nRdwt3Jt
+         hOdCSsn01A/PPSnDuIcIqP/poCngTSOqSua5BtQfMqHCLZMZURwQC+8fYq6mrkMKMdBG
+         HozMNnL99MQYmH0uIdINln2mQCkr2cSRkbTaH667tJzbDC5YgkcuxXeZ/p6hnfwCOndb
+         up5w==
+X-Forwarded-Encrypted: i=1; AHgh+RqP7ADKULadmb03iTf6yf1d5QbnhIsd8miWKDV9AWFCBHfqDg/U6GMo8k0d2plnstf7GegOSrSmwg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YysT2BgF/gyIMZUNPAWvs1foKSmRbd/To0+SgYt14Qlm741/x5t
+	RefBcwFdE+MySCFHQMlQq9UHOpigERRZKKh6f4fAVdgfhq9eyj/kOJM=
+X-Gm-Gg: AR+sD13pu1iWyTxRDcHduZ0YbJOOQEUl5Bq/pwUj8lnNUfMHY3QBVVXh8bEPBcKwoDc
+	O4sRcMSRcxQSQmhmtM1M0806uoIrWmteII79sLKc4TbnvEwB0oJl+o2+9PSs22hfrZvev1NQ177
+	j/X75XRSxfWdP3OUEMdGhb0DvORFyWXSZvrD1rVGV6xgjzBwQ3uEfyKT3hOShtzOMWxibKXRW1a
+	z7gXNcwt7Cln7LGIAag/R3qAKT1V3NOCWe8UUz8hFIeL3FhCV/y1MLn0IC+qqI2BT7BdlCpNSOx
+	NjvVSLeHd+cvmpVfZ1QKv2qs6BrVMl2esJjHdCVPUA7LrieCYRoXAKdVvxu3WrJqmLyvR2bpXq1
+	BvTr2ng6V64S3+GNwwATBGsE663qy3uOYXX1Eu1e0J1y63cbfE2T2+qRr1Xp9YZrsYKkVE8+W7o
+	0zfFLuxns+85OVQYQ6cCcx7f58IF6TsHfbDdqt
+X-Received: by 2002:a05:6a20:a10a:b0:3c3:88a5:83db with SMTP id adf61e73a8af0-3c3ad6036b0mr25638872637.5.1784737502208;
+        Wed, 22 Jul 2026 09:25:02 -0700 (PDT)
+Received: from t-rex ([2401:4900:c212:546e:3d3e:f0d9:52c0:8a0])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147dc6162csm10753122eec.7.2026.07.22.09.24.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jul 2026 09:25:01 -0700 (PDT)
+From: kr494167@gmail.com
+To: broonie@kernel.org,
+	dlan@kernel.org
+Cc: elder@riscstar.com,
+	linux-spi@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Surendra Singh Chouhan <kr494167@gmail.com>
+Subject: [PATCH v2] spi: spacemit: prepare both DMA descriptors before submitting
+Date: Wed, 22 Jul 2026 21:54:44 +0530
+Message-ID: <20260722162444.11415-1-kr494167@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EpgLK6YPQDxaGwyB"
-Content-Disposition: inline
-In-Reply-To: <673be23a-2a84-43b7-9be7-a661cf0e7935@roeck-us.net>
+Content-Transfer-Encoding: 8bit
 
---EpgLK6YPQDxaGwyB
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+From: Surendra Singh Chouhan <kr494167@gmail.com>
 
-On Tue, Jul 21, 2026 at 10:56:36AM -0700, Guenter Roeck wrote:
-> On 7/21/26 08:49, Conor Dooley wrote:
-> > On Tue, Jul 21, 2026 at 02:48:27AM -0700, Troy Mitchell wrote:
-> > > Add the vendor prefix for Sensylink Microelectronics.
-> > >=20
-> > > Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
-> > > ---
-> > >   Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
-> > >   1 file changed, 2 insertions(+)
-> > >=20
-> > > diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b=
-/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> > > index 396044f368e7..22d0d26f1bbd 100644
-> > > --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> > > +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> > > @@ -1467,6 +1467,8 @@ patternProperties:
-> > >       description: Sensirion AG
-> > >     "^sensortek,.*":
-> > >       description: Sensortek Technology Corporation
-> > > +  "^sensylink,.*":
-> > > +    description: Sensylink Microelectronics Technology Co., Ltd.
-> >=20
-> > Googling the company to see what their website is, I seem to see a
-> > different name for the company: Shanghai Sensylink Microelectronics Inc.
-> > Their website has that with the Shanghai dropped.
-> >=20
-> > Also, probably the commit message should contain
-> > Link: https://en.sensylink.com/
-> >=20
->=20
-> Asking Google search: "Why the two names ? Did they rename themselves at =
-some point ?"
+k1_spi_dma_one() currently submits the TX DMA descriptor to the DMA engine
+before preparing the RX DMA descriptor. If preparing the RX descriptor
+subsequently fails, the function jumps to the fallback error path without
+canceling or aborting the already submitted TX DMA descriptor.
 
-The google search "AI" response was what showed me the different name,
-sounds like I should have questioned it some more!
+Fix this by preparing both the TX and RX descriptors before submitting
+either of them to the DMA engine.
 
->=20
-> Response:
->=20
-> Understanding the Name Structure
->=20
-> 1. English Legal Name vs. Marketing Abbreviation
->=20
-> Sensylink Microelectronics Technology Co., Ltd.:
-> This is the literal translation of their full, formal registered corporat=
-e name
-> used for international trade, customs, and legal documentation.
->=20
-> Sensylink Microelectronics Inc.:
-> This is a simplified, Westernized abbreviation used on their official
-> English website and marketing materials for cleaner global branding.
->=20
-> 2. The Native Chinese Name
->=20
-> =E4=B8=8A=E6=B5=B7=E7=94=B3=E7=9F=BD=E5=87=8C=E5=BE=AE=E7=94=B5=E5=AD=90=
-=E7=A7=91=E6=8A=80=E8=82=A1=E4=BB=BD=E6=9C=89=E9=99=90=E5=85=AC=E5=8F=B8 (S=
-hanghai Shenxiling Microelectronics Technology
-> Co., Ltd.): This is the company's sole, official legal name registered wi=
-th
-> the Chinese government.
->=20
-> "Sensylink" is a portmanteau created specifically for international marke=
-ts,
-> blending "Sensing" (their core technology) and "Link" (their interface and
-> connectivity products).
->=20
-> Prodding further, asking if the previous response was complete, it tells
-> me that there was a name change:
->=20
-> According to Chinese corporate registry data (via Tianyancha and Qcc),
-> they did change their official Chinese legal name:
->=20
-> Old Name: =E4=B8=8A=E6=B5=B7=E7=94=B3=E7=9F=BD=E5=87=8C=E5=BE=AE=E7=94=B5=
-=E5=AD=90=E7=A7=91=E6=8A=80=E6=9C=89=E9=99=90=E5=85=AC=E5=8F=B8 (Shanghai S=
-ensylink Microelectronics Technology
-> Co., Ltd.)
->=20
-> New Name: =E4=B8=8A=E6=B5=B7=E7=94=B3=E7=9F=BD=E5=87=8C=E5=BE=AE=E7=94=B5=
-=E5=AD=90=E7=A7=91=E6=8A=80=E8=82=A1=E4=BB=BD=E6=9C=89=E9=99=90=E5=85=AC=E5=
-=8F=B8 (Shanghai Sensylink Microelectronics Technology
-> Co., Ltd. by Shares / Joint-Stock Company)
->=20
-> I don't know if Linux has a policy about Legal vs. Marketing names. Perso=
-nally
-> I don't have an opinion. Your call, really.
+Fixes: efcd8b9d1111 ("spi: spacemit: introduce SpacemiT K1 SPI controller driver")
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Signed-off-by: Surendra Singh Chouhan <kr494167@gmail.com>
+---
+ drivers/spi/spi-spacemit-k1.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-I don't know what the policy is, or if there is one, but personally I
-wouldn't use the westernised abbreviation since they may decide to rebrand
-that etc and the vendor prefix information should remain static.
+diff --git a/drivers/spi/spi-spacemit-k1.c b/drivers/spi/spi-spacemit-k1.c
+index 215fe66d27b4..96b41b67fcbf 100644
+--- a/drivers/spi/spi-spacemit-k1.c
++++ b/drivers/spi/spi-spacemit-k1.c
+@@ -278,25 +278,25 @@ static int k1_spi_dma_one(struct spi_controller *host, struct spi_device *spi,
+ 			  struct spi_transfer *transfer)
+ {
+ 	struct k1_spi_driver_data *drv_data = spi_controller_get_devdata(host);
+-	struct dma_async_tx_descriptor *desc;
++	struct dma_async_tx_descriptor *txdesc, *rxdesc;
+ 	u32 val;
+ 
+-	/* Prepare the TX descriptor and submit it */
+-	desc = k1_spi_dma_prep(drv_data, transfer, true);
+-	if (!desc)
++	/* Prepare the TX descriptor */
++	txdesc = k1_spi_dma_prep(drv_data, transfer, true);
++	if (!txdesc)
+ 		goto fallback;
+-	dmaengine_submit(desc);
+ 
+-	/* Prepare the RX descriptor and submit it */
+-	desc = k1_spi_dma_prep(drv_data, transfer, false);
+-	if (!desc)
++	/* Prepare the RX descriptor */
++	rxdesc = k1_spi_dma_prep(drv_data, transfer, false);
++	if (!rxdesc)
+ 		goto fallback;
+ 
+ 	/* When RX is complete we also know TX has completed */
+-	desc->callback = k1_spi_dma_callback;
+-	desc->callback_param = drv_data;
++	rxdesc->callback = k1_spi_dma_callback;
++	rxdesc->callback_param = drv_data;
+ 
+-	dmaengine_submit(desc);
++	dmaengine_submit(txdesc);
++	dmaengine_submit(rxdesc);
+ 
+ 	val = readl(drv_data->base + SSP_TOP_CTRL);
+ 	val |= TOP_TRAIL;		/* Trailing bytes handled by DMA */
+-- 
+2.55.0
 
-So this is probably fine as-is, just I'd like to see that link added to
-their website.
-
-Thanks (and thanks for doing the extra digging),
-Conor.
-
-
---EpgLK6YPQDxaGwyB
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCamDsowAKCRB4tDGHoIJi
-0tcBAP44s90TlKfjWN2tr4LUjXBc0U/1shHw59sier4x+iVQ/gEAr8zXcYYlzXk4
-TCp4Mym7totPI/aTPLaNyKSkbm8gLgM=
-=aJPc
------END PGP SIGNATURE-----
-
---EpgLK6YPQDxaGwyB--
