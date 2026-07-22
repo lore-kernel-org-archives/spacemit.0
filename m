@@ -1,104 +1,172 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF910302163;
-	Wed, 22 Jul 2026 13:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4923741D10A;
+	Wed, 22 Jul 2026 16:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784727246; cv=none; b=FhDiLCEfOjS0l156yQ44XJ4lit0fqL78wGt8kZp8VXe81kQQownWFT3rj1aX8BT5Kt5PzGUaJPzdy/exBjWYiofaX0ARlAiH/wn/6LbTI84XDt7OPtFjpml64OGKmcKbDnS0GlV9ypoBWiMQv/P9kN/nZ/0mk3peOkSxrwu4rSE=
+	t=1784736941; cv=none; b=K7CsXxQ0aZnCFLBaomZd9h0lNbTfneYpfGpHSEuaYPD0Nzxd1ctiWOzY1QzBSl3OYw3+/Rtv9CGMlL0RivFyPK9qfK2NGWlquNPP0KeizI//Ei7zOL9KlcneoJNdOriQXK1XhfRQlpJdt5oGLXSuSyy9xwX/Y482jT0ZlSwY5oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784727246; c=relaxed/simple;
-	bh=3XhPVfYAn5ogg+I8EwpEx5n1phNWzzGfCew+/3A7vfY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=fQNBg4eXvdsKboqy/wqmayNCggqRr2/a/fUvEWBHEbShR1Y19hK1mP8vLx/YbmyLgL6nydeSGwFNZEeX4ZTCc4+NRbSoebWcBBvkPfkMcy/6BZ6Gv8qVMYM5HXkwobNUFNYj7D9cRX44J8+/Ynjn1eJ3vGmtaEHddMux/XghNxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+xE/OUx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784736941; c=relaxed/simple;
+	bh=JRSSPH5/mIjuijfbAtoGLk+DIcsPFNtlz6RKZFC686Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IpP4FHCXqatIpYvWNeERHDdHDcFy+hAd4L4axliKN7Fce8uL2TnMq6x4f1RK2HcacMCA93/o3ZqSB6jGJMVoF55Y6NvvrnX7ivrWDOmMK0h/hxR83+iHDc7px3N6u+y/brw92EmhyGNF6FKg2EecVDe5Pts99yIsIt7waDFLQRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XM0FpB8U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+xE/OUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0F31F00A3A;
-	Wed, 22 Jul 2026 13:34:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XM0FpB8U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF311F000E9;
+	Wed, 22 Jul 2026 16:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784727244;
-	bh=Nlz16QiOQhVVn8iXqqYb5Q5dqwZF2ocDB1E2YIBPKJA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=H+xE/OUxoazgHV3/EbDlhN+tSyNFM5sM0csw7NkmHKLCFDb3Nd+TYeuxWBOCvxmsl
-	 CpWohe/e56Zx+lPC2jvi8n+O735kadt/Ki/D/0dP4GvYkA0l37tl44FdzCtIQzLSQn
-	 mokLge1Yw6G5XFy2b/INo63kr2cGCrqBNELbpdXJEoukN0uULKWIDMMCmciZyHtO8U
-	 nyRx9ysPQOkxqavP5+/SEj2+qeSfjaJ/cwblPbAmWBbVgTtYPK898up6q65FobHpBO
-	 AxkdAhLe8N7RWShdo+eofHR2Q6cpaCeHcTqKoL82xPcIVYpLjJahfk3tV3fn5kc3LD
-	 HDLhLAsUHXraQ==
-From: Mark Brown <broonie@kernel.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
- Alex Elder <elder@kernel.org>, Zhengyu He <hezhy472013@gmail.com>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- linux-spi@vger.kernel.org, wefu@redhat.com, 
- liyeshan <yeshan.li@spacemit.com>, Guodong Xu <docular.xu@gmail.com>, 
- Cody Kang <cody.kang.hk@outlook.com>
-In-Reply-To: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-0-969a1b0f783f@gmail.com>
-References: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-0-969a1b0f783f@gmail.com>
-Subject: Re: (subset) [PATCH 0/4] spi: spacemit: support K3 SPI controllers
-Message-Id: <178467008173.260430.15881924669346340499.b4-ty@b4>
-Date: Tue, 21 Jul 2026 22:41:21 +0100
+	s=k20260515; t=1784736940;
+	bh=UCNZNSZ/KaKi2HN6huz+/6/BGuqPjjLEs0PsS30eq/Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=XM0FpB8U/90EUWbEOIg1nBMzeofr1gZH6J9DDpXlLp4O25TXo+64QORFvIO7W6Y2p
+	 XATOmuAWT4AMBig2bgQo40IhsC31gg6igpFfyYF3r0CwYXtRuYUhduCVzFp0RkGVKE
+	 61TH8e72D9xgVWfpkuNLAHKJhsdFxs7i4sULhnTfg6kCPfhCnJlFr1jOFXGpGd7+6W
+	 rey7BHkkIlxSjZNu3Ve9cXHqpgUjCaHGOY7gLJR0/JdBZjypdhzeLrRIwh0JMDznh7
+	 2sK8M1h2hXrOleY3m8zbpncqD4THVvImQfrDqWDEM/9FgvR/Qp1w7DaUUkl6t0Xsd7
+	 +6bRabeO/FP3g==
+Date: Wed, 22 Jul 2026 17:15:34 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Troy Mitchell <troy.mitchell@linux.dev>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-doc@vger.kernel.org
+Subject: Re: [PATCH v2 1/6] dt-bindings: vendor-prefixes: Add Sensylink
+Message-ID: <20260722-devious-seventh-9859bb3741b3@spud>
+References: <20260721-ctl2301-v2-0-ef5fb342872a@linux.dev>
+ <20260721-ctl2301-v2-1-ef5fb342872a@linux.dev>
+ <20260721-dill-dab-df15585090d2@spud>
+ <673be23a-2a84-43b7-9be7-a661cf0e7935@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1338; i=broonie@kernel.org;
- h=from:subject:message-id; bh=3XhPVfYAn5ogg+I8EwpEx5n1phNWzzGfCew+/3A7vfY=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqYMbHcpeaZIkEhoZSEkLpuqvZJ8xpWXXkReHdy
- gRpwegzGEOJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCamDGxwAKCRAk1otyXVSH
- 0PMtB/9FGlzd12BgBvdcW30NNMQqd8KjXqB+KkLAmtx4cNoA1IzxpACg62sIUpQAcGGBV7wIp8r
- 2GFCXThClJZHaGn+35Uom0jKZToHaaS4aABEdWdQfC73b4gxoh2KbRmRA4UfoN9X+Rr/d7LVIoR
- APYRfwIrqemHA++MbBhjHVoQIEr+qkL7YJf71/6MsURlSL79E8EeMZxsfN+rMsUu4pJ+nugAoMz
- 6MYS/xSGb6fXxPjVCV7j4i3c+9G9vRydRicMMd/BzydCpR+LrHBnnHSoEc9MC+Hd4/ckFexIBgi
- arjULGqLLZgWGpEKeqKEORE/SIou9COaGv0mhv8rskpjxhA+
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="EpgLK6YPQDxaGwyB"
+Content-Disposition: inline
+In-Reply-To: <673be23a-2a84-43b7-9be7-a661cf0e7935@roeck-us.net>
 
-On Fri, 17 Jul 2026 07:45:24 -0700, Zhengyu He wrote:
-> spi: spacemit: support K3 SPI controllers
-> 
-> This series adds K3 PDMA request numbers, documents the K3 SPI
-> compatible, and enables SPI0 on the K3 CoM260-IFX.
-> 
-> This series is available here:
->   https://github.com/imguoguo/linux/tree/k3-com260-spi-v1
-> 
-> [...]
+--EpgLK6YPQDxaGwyB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Applied to
+On Tue, Jul 21, 2026 at 10:56:36AM -0700, Guenter Roeck wrote:
+> On 7/21/26 08:49, Conor Dooley wrote:
+> > On Tue, Jul 21, 2026 at 02:48:27AM -0700, Troy Mitchell wrote:
+> > > Add the vendor prefix for Sensylink Microelectronics.
+> > >=20
+> > > Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
+> > > ---
+> > >   Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+> > >   1 file changed, 2 insertions(+)
+> > >=20
+> > > diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b=
+/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> > > index 396044f368e7..22d0d26f1bbd 100644
+> > > --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> > > +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+> > > @@ -1467,6 +1467,8 @@ patternProperties:
+> > >       description: Sensirion AG
+> > >     "^sensortek,.*":
+> > >       description: Sensortek Technology Corporation
+> > > +  "^sensylink,.*":
+> > > +    description: Sensylink Microelectronics Technology Co., Ltd.
+> >=20
+> > Googling the company to see what their website is, I seem to see a
+> > different name for the company: Shanghai Sensylink Microelectronics Inc.
+> > Their website has that with the Shanghai dropped.
+> >=20
+> > Also, probably the commit message should contain
+> > Link: https://en.sensylink.com/
+> >=20
+>=20
+> Asking Google search: "Why the two names ? Did they rename themselves at =
+some point ?"
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-7.2
+The google search "AI" response was what showed me the different name,
+sounds like I should have questioned it some more!
 
-Thanks!
+>=20
+> Response:
+>=20
+> Understanding the Name Structure
+>=20
+> 1. English Legal Name vs. Marketing Abbreviation
+>=20
+> Sensylink Microelectronics Technology Co., Ltd.:
+> This is the literal translation of their full, formal registered corporat=
+e name
+> used for international trade, customs, and legal documentation.
+>=20
+> Sensylink Microelectronics Inc.:
+> This is a simplified, Westernized abbreviation used on their official
+> English website and marketing materials for cleaner global branding.
+>=20
+> 2. The Native Chinese Name
+>=20
+> =E4=B8=8A=E6=B5=B7=E7=94=B3=E7=9F=BD=E5=87=8C=E5=BE=AE=E7=94=B5=E5=AD=90=
+=E7=A7=91=E6=8A=80=E8=82=A1=E4=BB=BD=E6=9C=89=E9=99=90=E5=85=AC=E5=8F=B8 (S=
+hanghai Shenxiling Microelectronics Technology
+> Co., Ltd.): This is the company's sole, official legal name registered wi=
+th
+> the Chinese government.
+>=20
+> "Sensylink" is a portmanteau created specifically for international marke=
+ts,
+> blending "Sensing" (their core technology) and "Link" (their interface and
+> connectivity products).
+>=20
+> Prodding further, asking if the previous response was complete, it tells
+> me that there was a name change:
+>=20
+> According to Chinese corporate registry data (via Tianyancha and Qcc),
+> they did change their official Chinese legal name:
+>=20
+> Old Name: =E4=B8=8A=E6=B5=B7=E7=94=B3=E7=9F=BD=E5=87=8C=E5=BE=AE=E7=94=B5=
+=E5=AD=90=E7=A7=91=E6=8A=80=E6=9C=89=E9=99=90=E5=85=AC=E5=8F=B8 (Shanghai S=
+ensylink Microelectronics Technology
+> Co., Ltd.)
+>=20
+> New Name: =E4=B8=8A=E6=B5=B7=E7=94=B3=E7=9F=BD=E5=87=8C=E5=BE=AE=E7=94=B5=
+=E5=AD=90=E7=A7=91=E6=8A=80=E8=82=A1=E4=BB=BD=E6=9C=89=E9=99=90=E5=85=AC=E5=
+=8F=B8 (Shanghai Sensylink Microelectronics Technology
+> Co., Ltd. by Shares / Joint-Stock Company)
+>=20
+> I don't know if Linux has a policy about Legal vs. Marketing names. Perso=
+nally
+> I don't have an opinion. Your call, really.
 
-[2/4] spi: dt-bindings: spacemit: add K3 SPI compatible
-      https://git.kernel.org/broonie/spi/c/6389eaf11d6c
+I don't know what the policy is, or if there is one, but personally I
+wouldn't use the westernised abbreviation since they may decide to rebrand
+that etc and the vendor prefix information should remain static.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+So this is probably fine as-is, just I'd like to see that link added to
+their website.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+Thanks (and thanks for doing the extra digging),
+Conor.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+--EpgLK6YPQDxaGwyB
+Content-Type: application/pgp-signature; name=signature.asc
 
-Thanks,
-Mark
+-----BEGIN PGP SIGNATURE-----
 
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCamDsowAKCRB4tDGHoIJi
+0tcBAP44s90TlKfjWN2tr4LUjXBc0U/1shHw59sier4x+iVQ/gEAr8zXcYYlzXk4
+TCp4Mym7totPI/aTPLaNyKSkbm8gLgM=
+=aJPc
+-----END PGP SIGNATURE-----
+
+--EpgLK6YPQDxaGwyB--
