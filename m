@@ -1,113 +1,94 @@
-Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A6C2BCF46;
-	Thu, 23 Jul 2026 01:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=211.75.126.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F872286A7
+	for <spacemit@lists.linux.dev>; Thu, 23 Jul 2026 01:31:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784769674; cv=none; b=jK7QpTK2jbUl99oi1rG5R2dgTOQXHVZphwAT2pwMrg7xItl7ggwXOx9H+srKdHjpFMIaKd3QPOXK9Z8fuwhQo5iliryhSb+nFpTOcHuoHBMDynMn99vRGsTbrLLMoKiUOk5xYQyUK9CD/4LDMSHp5yiknqIspsoxtCrLLu8jI3U=
+	t=1784770318; cv=none; b=SAWcNxVwvMtLSh+E7TyrYq5K2hVG43AQ886MvzJAWQKThPqTlRga68oylAgV9ELmXJjQee6min5rijEvco9hCB3Lggv9uuK4Vga7WSA+CISVEMBLi/RcoivRDE7vAe1VlnGMkcSlejqvWUGI5K/LH81SuVQx8lUpf1fjXw+6eh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784769674; c=relaxed/simple;
-	bh=l+BcWxEYxghnenlldtXOwu+zC99qYehVhMZWM49Kkzk=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=On6T/Tt7LaKEjyhiWfgOQUb2DZYaD1Irof5mXfqyA33GRGZ3dcKxq501M6Xvd10UffSCRhzW9WzRoxmbEFmGzuz9jyQiRTFmuJoHsO8TdCsQmOnQaUhYAUi/jQR+fv4AZACE+ZMo8bPvr8xglU5uey9QXLNY77xbD0KLcR1N2cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com; spf=pass smtp.mailfrom=realtek.com; dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b=HV/hg6pu; arc=none smtp.client-ip=211.75.126.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtek.com
+	s=arc-20240116; t=1784770318; c=relaxed/simple;
+	bh=dDIJ/HYqQHokQ9Y+SBy8Qss/CKOXlITYcWV4Pgc8yXM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=kB5ypfjgJH9Bmu6CvJRjrsYRSZY0G4W0SyTEAW9v/IpP9cYBvuQkN/HLxQVlQK/ZHEfVI+aVCq9vmn+vUYL5e8phBTJPVNOEa9s/qtsF1HqlSvySwwWeiZ+EQpk9TBfWth1vZvW/K5Jsh/UUanXtU3y0e6mX3WMsjPU72Ycg0Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=euB0T8Bx; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b="HV/hg6pu"
-X-SpamFilter-By: ArmorX SpamTrap 5.80 with qID 66N1JmFU2096485, This message is accepted by code: ctloc85258
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=realtek.com; s=dkim;
-	t=1784769588; bh=l+BcWxEYxghnenlldtXOwu+zC99qYehVhMZWM49Kkzk=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	b=HV/hg6puvpwQe9ORCUlxRgkV/B22MlLrGYspS1yYlv80QkBDjvjTBORNAWpBvckxP
-	 hcf3621kkn+yWd8jQiKIbCzljy1OpmY9yGZiGD7ZSk0rSovfktxcUKiJESd7162HCK
-	 OEZ4mmxIHg7iA9qXia99x9Rn82qU39ewR0CuGvRCJTPoAR+sa/jM026szBRPb0JQlY
-	 2R/0Ie1yW3L9pW/XMQuFefhditcPVTdUOmVH6bwcgynk17W89d9FAMBifc94kfxXPD
-	 HHi7dbOtXZ0aTBy1jlBcnoQFLk9u45FELFf4xMrlxUhxWy04AaWSv/n2T28NxMncSs
-	 I6WM2YNJz5DnA==
-Received: from mail.realtek.com (rtkexhmbs02.realtek.com.tw[172.21.6.41])
-	by rtits2.realtek.com.tw (8.15.2/3.29/5.94) with ESMTPS id 66N1JmFU2096485
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Thu, 23 Jul 2026 09:19:48 +0800
-Received: from RTKEXHMBS01.realtek.com.tw (172.21.6.40) by
- RTKEXHMBS02.realtek.com.tw (172.21.6.41) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Thu, 23 Jul 2026 09:19:48 +0800
-Received: from RTKEXHMBS06.realtek.com.tw (10.21.1.56) by
- RTKEXHMBS01.realtek.com.tw (172.21.6.40) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Thu, 23 Jul 2026 09:19:48 +0800
-Received: from RTKEXHMBS06.realtek.com.tw ([::1]) by
- RTKEXHMBS06.realtek.com.tw ([fe80::e6fd:5a3f:8946:92c4%10]) with mapi id
- 15.02.2562.017; Thu, 23 Jul 2026 09:19:48 +0800
-From: Ping-Ke Shih <pkshih@realtek.com>
-To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, Bjorn Helgaas
-	<bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>, Lorenzo Pieralisi
-	<lpieralisi@kernel.org>, =?utf-8?B?S3J6eXN6dG9mIFdpbGN6ecWEc2tp?=
-	<kwilczynski@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, "Rob
- Herring" <robh@kernel.org>, Inochi Amaoto <inochiama@gmail.com>, "Aurelien
- Jarno" <aurelien@aurel32.net>
-CC: "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
-	"spacemit@lists.linux.dev" <spacemit@lists.linux.dev>,
-	"linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>
-Subject: RE: [PATCH v2 1/2] PCI: Move Spacemit vendor and device IDs to
- linux/pci_ids.h
-Thread-Topic: [PATCH v2 1/2] PCI: Move Spacemit vendor and device IDs to
- linux/pci_ids.h
-Thread-Index: AQHdFXehTbmbDPtnB0KyE0vFNWAFDLZ6Vr7g
-Date: Thu, 23 Jul 2026 01:19:47 +0000
-Message-ID: <073fbf4b41804285b2df6fbb4efce0ed@realtek.com>
-References: <20260716-rtw89-spacemit-k3-v2-0-392b577ebf75@oss.tenstorrent.com>
- <20260716-rtw89-spacemit-k3-v2-1-392b577ebf75@oss.tenstorrent.com>
-In-Reply-To: <20260716-rtw89-spacemit-k3-v2-1-392b577ebf75@oss.tenstorrent.com>
-Accept-Language: en-US, zh-TW
-Content-Language: zh-TW
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="euB0T8Bx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1784770271;
+	bh=yAUgDyUzgV75t775RLHTRzDx+K4j+WGYlepCAavK6fk=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=euB0T8Bx/i9rRTN6jwE6AlDP1WWON/3T3R7ire95ch6WU67NVsFN1nhS2SRWnFBDE
+	 sUW3MdVUZRt57YJKSeGLJGiyJNcdz9tu15yhW/miX53Ez9jtRvmEZBMKgRF4W6gasu
+	 v64Ki8u2PbexVxAzQ2ZgFWGaEFt+BNpgTI50url4=
+X-QQ-mid: zesmtpgz8t1784770263t38c77256
+X-QQ-Originating-IP: bVYjHVoJ/jFoyrpIdXFPpgw76CxkbZdkCUD8fa/J0hs=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 23 Jul 2026 09:31:01 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 15860423990033171300
+EX-QQ-RecipientCnt: 9
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 22 Jul 2026 05:15:29 -0700
+Message-Id: <DK53C3CZF06Q.37189IIFM8VQ3@linux.spacemit.com>
+Subject: Re: [PATCH] i2c: spacemit: request IRQ after controller
+ initialization
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Linmao Li" <lilinmao@kylinos.cn>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>, "Andi Shyti" <andi.shyti@kernel.org>
+Cc: "Yixun Lan" <dlan@kernel.org>, "Alex Elder" <elder@riscstar.com>,
+ <linux-i2c@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260722094302.2284191-1-lilinmao@kylinos.cn>
+In-Reply-To: <20260722094302.2284191-1-lilinmao@kylinos.cn>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: N4ZILu3POr3OIwaScrzSHsGFbS/q61DUNQMJU2jFaZjB2/oKABASSbJP
+	0K+0muEUQkohCHwbrte8Ln6u0NE/P3OpSkPwBdnfs+EcXZwcR/47PboHuWJ1QgDPVz5kg3I
+	d7O+ANDZXGAQkFOjEH+Dq/0KJ0WRpztB9ooMtIyNOeOUsCBgOz287NSiQwaZrWhBddMvkRS
+	XuCaMarClzNoAJKmnnyyYVua7g4WBZ8pm7wcNwnI0CTNKrV+EMNFlAXssfwGIGS9TySscEj
+	RdFOnoeluM1cX7nCMr1oyIq6b6Xl9qI0gl1mucxOF+tIiVarDUlOpmRW5Olq7/DSb5qM8qu
+	rKqB9yp2ZGfnmdHu/+uVeFzb4W82OHLTR/T6OY6Zri9dOAfrEdbmNsVh2QuddOCpRwjvJ0B
+	HOJlzYPBqjfAF20fo2ox5PbXyt8uMKJdnUvNz42j6AOMMIrFU2vYrIOGSmseCVKWbXyb9Q3
+	A46LH/uhoRdcGiK2OABnjrE59pFTkIfwOWtusz7zCeK6kS9LcD4A1rjgfbprI2eUxOfr0n2
+	b053nRk3PEsN9I0wzbX7XscKmmadu+WnFNkFvseRSkiiNKnsrP55OPbVgyMtUkGzWw6FxwO
+	JZbT+/Vqk3UpobQQX8apVMLyo7Rx+CLgeHXrARLfn9mQwTizHou2PrVLFCZEgQZWP5/J7PH
+	64F6Fb1IHKLPECjxDAPw3W9zMTjz//SL25D6w0txmyNg0rQbEWkNaI0dGGglawPexl7KXOc
+	6QdcUVgdekVR+FIj1S4Qt2UTX6XV8U/we12hDpd40zT+nblKYAbjhPQ3VFuPoXRvI2U7GJu
+	anrN54LmqsO9ZEVfSbNq+knYpM3kUzf4QacxnfAyoErbhcMbuS6oYLth0OXlFJiIffTEv9F
+	YBb5RYq0oCsR7jUwrz9ohhVbYi97Is3yi1yhmRJ8ssAC0i/ceZTof5ebocvvD/jzfCl1NMe
+	uAuLU/tYd9hbet8BsXq2rXUHyf/Xw+V8mIHVk9TPemmAzXYr9Zpp3X9bkdqPhcE6fMQW5WB
+	GUguvK3qtZc3I6Hu26eEfmaNDzE6U8TZHlB6MqVQ==
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
 
-SGkgUENJIG1haW50YWluZXJzLA0KDQpBbmlydWRoIFNyaW5pdmFzYW4gPGFzcmluaXZhc2FuQG9z
-cy50ZW5zdG9ycmVudC5jb20+IHdyb3RlOg0KPiBNb3ZlIHRoZSB2ZW5kb3IgYW5kIGRldmljZSBJ
-RCBmb3IgdGhlIGV4aXN0aW5nIFNwYWNlbWl0IEsxIFBDSWUgUm9vdA0KPiBDb21wbGV4IHRvIGlu
-Y2x1ZGUvbGludXgvcGNpX2lkcy5oLiBBbHNvIGFkZCBLMydzIFJvb3QgQ29tcGxleCBkZXZpY2Ug
-SUQNCj4gdG8gdGhpcyBoZWFkZXIuIFRoaXMgaXMgZG9uZSBzbyB0aGF0IHRoZXNlIHZhbHVlcyBj
-YW4gYmUgcmVmZXJlbmNlZCBpbg0KPiB0aGUgcnR3ODkgZHJpdmVyIHRvIGVuYWJsZSAzNi1iaXQg
-RE1BIGFiaWxpdHkgaW4gaXQgZm9yIFdpRmkgdG8gZnVuY3Rpb24NCj4gb24gdGhlIEszIFBpY28g
-SVRYIGJvYXJkLg0KPiANCj4gQWNrZWQtYnk6IEJqb3JuIEhlbGdhYXMgPGJoZWxnYWFzQGdvb2ds
-ZS5jb20+DQo+IFNpZ25lZC1vZmYtYnk6IEFuaXJ1ZGggU3Jpbml2YXNhbiA8YXNyaW5pdmFzYW5A
-b3NzLnRlbnN0b3JyZW50LmNvbT4NCj4gLS0tDQo+ICBkcml2ZXJzL3BjaS9jb250cm9sbGVyL2R3
-Yy9wY2llLXNwYWNlbWl0LWsxLmMgfCAzIC0tLQ0KPiAgaW5jbHVkZS9saW51eC9wY2lfaWRzLmgg
-ICAgICAgICAgICAgICAgICAgICAgIHwgNCArKysrDQo+ICAyIGZpbGVzIGNoYW5nZWQsIDQgaW5z
-ZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL3Bj
-aS9jb250cm9sbGVyL2R3Yy9wY2llLXNwYWNlbWl0LWsxLmMNCj4gYi9kcml2ZXJzL3BjaS9jb250
-cm9sbGVyL2R3Yy9wY2llLXNwYWNlbWl0LWsxLmMNCj4gaW5kZXggYmUyMGE1MjAyNTViNi4uZjg5
-YzZkNDZjNzY4NCAxMDA2NDQNCj4gLS0tIGEvZHJpdmVycy9wY2kvY29udHJvbGxlci9kd2MvcGNp
-ZS1zcGFjZW1pdC1rMS5jDQo+ICsrKyBiL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvZHdjL3BjaWUt
-c3BhY2VtaXQtazEuYw0KPiBAQCAtMjEsOSArMjEsNiBAQA0KPiANCj4gICNpbmNsdWRlICJwY2ll
-LWRlc2lnbndhcmUuaCINCj4gDQo+IC0jZGVmaW5lIFBDSV9WRU5ET1JfSURfU1BBQ0VNSVQgICAg
-ICAgICAweDIwMWYNCj4gLSNkZWZpbmUgUENJX0RFVklDRV9JRF9TUEFDRU1JVF9LMSAgICAgIDB4
-MDAwMQ0KPiAtDQo+ICAvKiBPZmZzZXRzIGFuZCBmaWVsZCBkZWZpbml0aW9ucyBmb3IgbGluayBt
-YW5hZ2VtZW50IHJlZ2lzdGVycyAqLw0KPiAgI2RlZmluZSBLMV9QSFlfQUhCX0lSUV9FTiAgICAg
-ICAgICAgICAgICAgICAgICAweDAwMDANCj4gICNkZWZpbmUgUENJRV9JTlRFUlJVUFRfRU4gICAg
-ICAgICAgICAgIEJJVCgwKQ0KPiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9saW51eC9wY2lfaWRzLmgg
-Yi9pbmNsdWRlL2xpbnV4L3BjaV9pZHMuaA0KPiBpbmRleCAxYzlkNDBlMDkxMDdkLi5kNmYyNmNh
-Y2M4ZTM1IDEwMDY0NA0KPiAtLS0gYS9pbmNsdWRlL2xpbnV4L3BjaV9pZHMuaA0KPiArKysgYi9p
-bmNsdWRlL2xpbnV4L3BjaV9pZHMuaA0KPiBAQCAtMjY0MCw2ICsyNjQwLDEwIEBADQo+ICAjZGVm
-aW5lIFBDSV9WRU5ET1JfSURfU1VOSVggICAgICAgICAgICAweDFmZDQNCj4gICNkZWZpbmUgUENJ
-X0RFVklDRV9JRF9TVU5JWF8xOTk5ICAgICAgIDB4MTk5OQ0KPiANCj4gKyNkZWZpbmUgUENJX1ZF
-TkRPUl9JRF9TUEFDRU1JVCAgICAgICAgIDB4MjAxZg0KPiArI2RlZmluZSBQQ0lfREVWSUNFX0lE
-X1NQQUNFTUlUX0sxICAgICAgMHgwMDAxDQo+ICsjZGVmaW5lIFBDSV9ERVZJQ0VfSURfU1BBQ0VN
-SVRfSzMgICAgICAweDAwMDINCj4gKw0KPiAgI2RlZmluZSBQQ0lfVkVORE9SX0lEX0hJTlQgICAg
-ICAgICAgICAgMHgzMzg4DQo+ICAjZGVmaW5lIFBDSV9ERVZJQ0VfSURfSElOVF9WWFBST0lJX0lE
-RSAweDgwMTMNCg0KQXMgcGF0Y2ggMi8yIG9idmlvdXNseSBnb2VzIHRvIHdpcmVsZXNzLW5leHQg
-dHJlZSwgY2FuIEkgdGFrZSB0aGlzIA0KZGVwZW5kZW5jeSBwYXRjaCB0byBteSB0cmVlPyANCg0K
-UGluZy1LZQ0KDQoNCg==
+On Wed Jul 22, 2026 at 2:43 AM PDT, Linmao Li wrote:
+> spacemit_i2c_probe() requests the IRQ before it enables the clocks, reset=
+s
+> the controller and runs init_completion(). If an interrupt is already
+> pending, the handler runs too early: it reads registers while the clocks
+> are still off and calls complete() on an uninitialized completion. Reques=
+t
+> the IRQ after the controller and completion are initialized, but still
+> before the adapter is registered.
+>
+> Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+> Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
+This should also be applied to the stable trees. Please add:
+Cc: stable@vger.kernel.org # v6.15+
+
+                            - Troy
