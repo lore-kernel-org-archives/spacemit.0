@@ -1,91 +1,100 @@
-Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE9B479869
-	for <spacemit@lists.linux.dev>; Wed, 22 Jul 2026 07:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071383C1974
+	for <spacemit@lists.linux.dev>; Wed, 22 Jul 2026 09:43:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784706927; cv=none; b=m1UTWb/9bTH1aJYShj3tzq5DKGntLQy/75+OU+OqolZdx0gZ6ZyJZx5ne4zpUzRJNvklOttSCTKLVnAZtYrnyY+GecPbiaf8Q+w4TggOSPVEFtv5OOk/dP8NQqVoP4FP7i27BUOjWT2hkjNpKF+o9vBXI06mVMZr2LtVoTsImoI=
+	t=1784713396; cv=none; b=NQHNfgHwVVW0Mc4yGi+iKElSHV0io9HHF092wqeUu/t3lMaw3wiWNDk2NqSQbHGd0WWSMg0z0PqbTM7hxwjh2oA+0hNNl07PLG45Rj3d6hSF9OsXcenc74e3r+VHjbLrc2jiay6PLkuX5nYQJlzBXMBL6+BWcI1TDhi7mXDFWy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784706927; c=relaxed/simple;
-	bh=rhR/IVeQON/e/VVaD9lRG06BmJIksqMCeWq7EoMsaQ8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=FRfGTn2YjxGpbFOywtjRHB2qstqanXJ4+azNn2AFrJvskohF7TNVBpsTiKJFXNK/AKwmbjle9Z7vwVx3s2+qkPnjVIqunKdk5C47f193D+O+p1U8EbKZFmxEREqPihZ9sr6VxV0gGSt4+cvuKy9BPjIsqQXTgn1tui7JpNXXUEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=QKp+JNpZ; arc=none smtp.client-ip=18.132.163.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="QKp+JNpZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1784706893;
-	bh=ob3qR/e2vsX+1qjsXoG7FAFSH5W64ceTqvxJxmOmCUo=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=QKp+JNpZ85QW5ioAKzxWenfnv2R59MLgaiUEE9IzcpQRlgzWNCem8akyfTIRqvJhF
-	 yRmOH7MlrW1uyRBDAIYjGMeNy31kjruVcNsgGpvqnnA5eA0RCjLYfEhdqbYYBDs7nc
-	 VXkQQsuEcR9EToojHp1QjYwi28w5z84pjbXC6+5E=
-X-QQ-mid: zesmtpsz7t1784706885tf937dd1c
-X-QQ-Originating-IP: lTD3ycMX/Wwp32bRf60m3b1xQMLcYAzEX37sN8hX1YM=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 22 Jul 2026 15:54:42 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7589895340956616953
-EX-QQ-RecipientCnt: 10
+	s=arc-20240116; t=1784713396; c=relaxed/simple;
+	bh=pDAbN96tUf4wV59tx9fGSz65rmt+fJIM7n7WWvf5Q6Y=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=W4OnYxosH6hLlSReuckhG42xRUboSfdd8WDt+INSs7Ky1Uy1BGTOkCktZozWCrb3NTImmpBgVBGVYZeHAY4AEF5ZbaIMbyhcaIHQ163+B8bl6WCG8dBkpqvjGYDr3ht2qZr/tW/jl/RgD4P+9HNkI5mUJvmr9HLXGkbS3b9RFFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: bdf39a9885b111f1aa26b74ffac11d73-20260722
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:23cf166a-4ec7-4d78-bcc9-9abab6d1eadf,IP:0,U
+	RL:0,TC:0,Content:-25,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:-25
+X-CID-META: VersionHash:e7bac3a,CLOUDID:82e04f2cc73d71d06bc394688386a4f5,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|136|850|865|898,TC:nil,Content:0|15|
+	50,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0
+	,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: bdf39a9885b111f1aa26b74ffac11d73-20260722
+X-User: lilinmao@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <lilinmao@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 258169648; Wed, 22 Jul 2026 17:43:06 +0800
+From: Linmao Li <lilinmao@kylinos.cn>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Cc: Yixun Lan <dlan@kernel.org>,
+	Alex Elder <elder@riscstar.com>,
+	linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	Linmao Li <lilinmao@kylinos.cn>
+Subject: [PATCH] i2c: spacemit: request IRQ after controller initialization
+Date: Wed, 22 Jul 2026 17:43:02 +0800
+Message-Id: <20260722094302.2284191-1-lilinmao@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 22 Jul 2026 00:54:41 -0700
-Message-Id: <DK4XSEPSTY3I.O9ZFCZ9BJGNW@linux.spacemit.com>
-Subject: Re: [PATCH v2] thermal: spacemit: k1: add shutdown action and
- reorder registration order
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Pei Xiao" <xiaopei01@kylinos.cn>, <shuwei.wu@mailbox.org>,
- <troy.mitchell@linux.spacemit.com>, <rafael@kernel.org>,
- <linux-pm@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
- <dlan@kernel.org>, <daniel.lezcano@kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <1967d2bcc8fede6fbd25fc8eee07f2873fb41472.1784184867.git.xiaopei01@kylinos.cn>
-In-Reply-To: <1967d2bcc8fede6fbd25fc8eee07f2873fb41472.1784184867.git.xiaopei01@kylinos.cn>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: M4EB473hmYa3VkLIpdYraaUyE41H4rPeW2jcURyl1coWEmil6ER8NctQ
-	eQW6Ad+zsIIguNXv0cBLUrXDznyXKYkd3SNbnTY3zTitTywF4tV0QYw38FDWHmwV/5GF/GA
-	Q1tD+Tlr48iNKpEjS2MIBdMSvqn/w3/PdFC0XBHhKUjGnQ10qZHcGVYHLSFt8GdM6kXgSTJ
-	rwhKpcsjsaOG31ojG2aNZTwOUk3IwiKOJ1pSGns5hvYn9Iy0I6wufz/jH5iF5yTGt/hTzAB
-	PAzsil8bK94gDYUg45iHhHL3wUFp58COEqJsVbPpb/Wc61nfG1yBPD/BQ1Co8LPJ90jQrZd
-	00if9Umsq5qfDUtUk+/8yaeZzUzORFWY9tOvMnXtOHi8ESReG6REO3H3DQC6FJlvStfEpCQ
-	YMn5+5BWmMxaysPcCHzzHT+NsWhV8+mLju/1ttkRPR8yyzNp5YwliFzahUZ+nEaHTNCCb0W
-	nGvx9D9LzEygJy/1+mYWnrnTDYBqgwcgXDFe3aSHP0ZA3fOJR/N1n0faBh3TxsbEgj2ylX7
-	BSotYi2AWOBPYgQ59K+AePZw7xBiVnspvSX6W5HSkxolc8W+4x0gRIotDRBukpNLyZX5gID
-	QXLy+iMIkc5Xg1GQiy2/US2/M2bIZBEu5eODNXdCnyAsesBW2+sc3qNvM/coknyl5erKkfI
-	R0MYOv6Srr+LzInVdoqjnh1I1qZ2yw0AfCoVVjUANn47jCS5dNRQe9Ax0Pa22ffuVuNflUd
-	4i+hFxrGo36S8ytY+weu6fKPo2vFnd6pgPxcDnoFK6Jizx+wGRXRHBqIsnRLOjcdsAR2tvj
-	oI9ZWlcn7Pm3TjGsV5v/ngad50G3tDc6DJq0MZ2tLcCLySnKcQmyIn6FAmqU95KkYVims4O
-	gzBEwqvGDb8HUngJE71MJDfMEr8ueN6jMhtwCtRCuSMZOIoI/BECGin/hOzKiwHA8VoahJH
-	FBs26iyJVqXuw6BNYyiIPFrz3QjeJE0AWTrpUHgSXbckRD9nNhfm5drL03SNqGeZNeROAX8
-	z+bPDqQmTJdWOHScOsFz9nueF6ORVFDuNfn/MYuuvKyM3AE8LzyrP/0iI2nZ4=
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Thu Jul 16, 2026 at 12:04 AM PDT, Pei Xiao wrote:
-> Add a devm action to clean hardware interrupts, sampling, and control
-> registers on driver unbind, mirroring what k1_tsensor_init() sets up.
->
-> Reorder the registration order within probe(): register the thermal
-> zones first, then request the IRQ, and register the shutdown action
-> last.  On removal, the hardware interrupt is disabled first, then the
-> IRQ is released, and finally the thermal zones are released.  This
-> avoids the IRQ thread accessing an already unregistered thermal zone
-> during devres cleanup.
->
-> Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+spacemit_i2c_probe() requests the IRQ before it enables the clocks, resets
+the controller and runs init_completion(). If an interrupt is already
+pending, the handler runs too early: it reads registers while the clocks
+are still off and calls complete() on an uninitialized completion. Request
+the IRQ after the controller and completion are initialized, but still
+before the adapter is registered.
 
-Thanks.
+Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+---
+ drivers/i2c/busses/i2c-k1.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+index 51a0c3d80fc9..3fe716cc153d 100644
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -723,11 +723,6 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+ 	if (i2c->irq < 0)
+ 		return dev_err_probe(dev, i2c->irq, "failed to get irq resource");
+ 
+-	ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
+-			       IRQF_NO_SUSPEND, dev_name(i2c->dev), i2c);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "failed to request irq");
+-
+ 	clk = devm_clk_get_enabled(dev, "func");
+ 	if (IS_ERR(clk))
+ 		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable func clock");
+@@ -755,6 +750,11 @@ static int spacemit_i2c_probe(struct platform_device *pdev)
+ 
+ 	init_completion(&i2c->complete);
+ 
++	ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
++			       IRQF_NO_SUSPEND, dev_name(i2c->dev), i2c);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to request irq");
++
+ 	platform_set_drvdata(pdev, i2c);
+ 
+ 	ret = i2c_add_numbered_adapter(&i2c->adapt);
+-- 
+2.25.1
+
