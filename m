@@ -1,91 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0152FFDFC;
-	Fri, 24 Jul 2026 00:59:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299D824A05D;
+	Fri, 24 Jul 2026 02:24:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=211.75.126.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784854755; cv=none; b=lOFL3X5qzXIppHBAKJC1YarAOUy4OZRT+D8SVWs5evgLkOQHGSt7C2qN4iyTNB0rCG38bSAlal5tG0cGNmcnuN04F0OfqAzFaITP3c00KQuxukuTq7OdiJ/AfkLNnp3x0Ck78JS8ERD6QicnnVpsKjZ8Ukgs3W0LtldB62Ulj34=
+	t=1784859886; cv=none; b=DCupE5txJHver2m8G7I2ajcAg65l9fl3RK0QOz+Jt0/DOT3gBP7mkfiyTH3v8Q8kcRdtgafnU5GOiydeBRNRAZc5F5aIa+bDAE8rN3Yzkilhh3AsWqebuZ+iIUqtXmCITWi0fhp4nckau/9doG1gpPKnTur4hlqFf5gFD4xviDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784854755; c=relaxed/simple;
-	bh=RDjoztJQbU4GVnyRy3kaRitfm74jeRfqA+SnJn+SxY4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Wr6w8N7WhYJjLpOzHv3aOEFcGs2/XhhyEdaSug+N5ug/d7Y4sBQLBRJq6EAcTx65+DNXUEFCXTz+0mwUF20h6QP76FScI72UcvuguinL1NayUQe9+wOzxl8jdwlhOrEW6avTHEzoQbSpkWSq2FYRfQlLYT+vJILIjgUghJSFlz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HAgI6yWl; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784859886; c=relaxed/simple;
+	bh=lsy8uY8uOmXJUwdtH59sTFn235H6O3pKzwIl7V6tKc0=;
+	h=From:To:CC:Subject:In-Reply-To:References:Message-ID:Date:
+	 MIME-Version:Content-Type; b=jeCe8aHWKm+fqt6/I7qoDMyEFmnJyeulNjzNOm1Q+N+3zkTOIcpOCRUQf0nZeH3jNr96PddIpQackbYPyB3X0BxHltc9b0qzPMTPJu4AU1uPungIeY7dctXsky6ui+fooP4Wk2GK+JUZLvw5AnFUWnAsIJp14BCpXjanB0TQgdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com; spf=pass smtp.mailfrom=realtek.com; dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b=ZjyF9+GG; arc=none smtp.client-ip=211.75.126.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtek.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HAgI6yWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D34A1F000E9;
-	Fri, 24 Jul 2026 00:59:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784854753;
-	bh=4IqQuzWa9zukp/8Xa7Vx1hseOADWYDWrtLWPKRKUA2E=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=HAgI6yWl4lzJe7ze7y3KINpyTvDzSkThi3xs2Y400VTeWIiRfjZnKE7W+5gMSSXHr
-	 eHfk4hzoVB9ciJIiT/SMOdmfatwrIZTNXK2tMo+Oioam+CU1SWGZWu0Log3M6HUGw7
-	 Mz7U1hOT6Gto7LlCfUKS4sUsm+nK2v7Sn/YaasZJGYZ3lnMiE8b6ZN9qTJZcw1tPve
-	 wOIWI25ZHmaCQCqjA6fPjNE904JIHAuuQBfo1XDTkja9D6e/JTojuIY+p1/w5JzP/E
-	 qsEe7v+NzT8glP/uVRGFb1sd45JhCRsi4xLMWBebW1Gwx6qTkiJVFzSqgTPF/9/KwB
-	 HB2skUgbZMfGQ==
-From: Mark Brown <broonie@kernel.org>
-To: dlan@kernel.org, kr494167@gmail.com
-Cc: elder@riscstar.com, linux-spi@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20260722162444.11415-1-kr494167@gmail.com>
-References: <20260722162444.11415-1-kr494167@gmail.com>
-Subject: Re: [PATCH v2] spi: spacemit: prepare both DMA descriptors before
- submitting
-Message-Id: <178475444741.5645.6128130514340592590.b4-ty@b4>
-Date: Wed, 22 Jul 2026 22:07:27 +0100
+	dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b="ZjyF9+GG"
+X-SpamFilter-By: ArmorX SpamTrap 5.80 with qID 66O2NhNeA920495, This message is accepted by code: ctloc85258
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=realtek.com; s=dkim;
+	t=1784859823; bh=NxucgfmUZTTQksm+oT0kkIAMiRNz/Lw+gJQy4Q1nerQ=;
+	h=From:To:CC:Subject:In-Reply-To:References:Message-ID:Date:
+	 MIME-Version:Content-Type;
+	b=ZjyF9+GG3k2dFJttsAYKW2+RcQKhh0TaSCg/z7srQHpWLaia3zLsaHeYPlHO9TJVp
+	 Gq2p6AikuHRGA6G/uBELsEcAh88XBWbNy28OoVXDYC47psBYN+Nq8DkR7w/6InF5yA
+	 ogC+ZVcV7Dd5cw7NCHAOWW2jZWbTT3l2me8brdLzVCrZLe4ix0ttLIxt/bN3JcNqIB
+	 bZ4xG6aBiIs853U/QE0W2J6TfJgP8M2LZ9Wf14Xl27olkNT8ZshgkCcAL/98eMXob3
+	 CdIRDLC57mYNotlcLVjdS/Ui7Zrrbq1eGtYBi/d9GfiuHajNRwuEpVGuqSihBrnVzj
+	 +6qNFBuPZYIxQ==
+Received: from mail.realtek.com (rtkexhmbs02.realtek.com.tw[172.21.6.41])
+	by rtits2.realtek.com.tw (8.15.2/3.29/5.94) with ESMTPS id 66O2NhNeA920495
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Fri, 24 Jul 2026 10:23:43 +0800
+Received: from RTKEXHMBS06.realtek.com.tw (10.21.1.56) by
+ RTKEXHMBS02.realtek.com.tw (172.21.6.41) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Fri, 24 Jul 2026 10:23:43 +0800
+Received: from RTKEXHMBS06.realtek.com.tw (10.21.1.56) by
+ RTKEXHMBS06.realtek.com.tw (10.21.1.56) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Fri, 24 Jul 2026 10:23:41 +0800
+Received: from [127.0.1.1] (172.21.40.75) by RTKEXHMBS06.realtek.com.tw
+ (10.21.1.56) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17 via Frontend
+ Transport; Fri, 24 Jul 2026 10:23:36 +0800
+From: Ping-Ke Shih <pkshih@realtek.com>
+To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, Bjorn Helgaas
+	<bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>, Ping-Ke Shih
+	<pkshih@realtek.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?utf-8?q?Krzysztof_Wilczy?= =?utf-8?q?=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+	Inochi Amaoto <inochiama@gmail.com>, Aurelien Jarno <aurelien@aurel32.net>
+CC: <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+	<linux-wireless@vger.kernel.org>, Anirudh Srinivasan
+	<asrinivasan@oss.tenstorrent.com>
+Subject: Re: [PATCH v2 1/2] PCI: Move Spacemit vendor and device IDs to linux/pci_ids.h
+In-Reply-To: <20260716-rtw89-spacemit-k3-v2-1-392b577ebf75@oss.tenstorrent.com>
+References: <20260716-rtw89-spacemit-k3-v2-0-392b577ebf75@oss.tenstorrent.com> <20260716-rtw89-spacemit-k3-v2-1-392b577ebf75@oss.tenstorrent.com>
+Message-ID: <9659279d-224e-4029-bdc0-d7bfa627c016@RTKEXHMBS06.realtek.com.tw>
+Date: Fri, 24 Jul 2026 10:23:36 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1142; i=broonie@kernel.org;
- h=from:subject:message-id; bh=RDjoztJQbU4GVnyRy3kaRitfm74jeRfqA+SnJn+SxY4=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqYrjfh7V8VBPJzP4T3BLa4gWuOESEqMO26JPTt
- Hkk7G4aCz2JATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCamK43wAKCRAk1otyXVSH
- 0KXnB/998YytmnS/jo+Qbh1QYspKr/9sSePM4fYW6xAvLWvgWL+fzCqe/MdoqHaKZitrOnvVFnt
- ukjgiisqaP1omjiNBfXujwQ3sQ/DX880xX94XxECsMob5cYBWSgq6A+3QbtHKsb6IaoYPuB7cZr
- SwZCTu7rz2c9OA+jq64yjyLa70pHNrFg4jolwIeHRujWJJB9bYW7CoFzg96oRnWKVAiKw8jA8vx
- Vh33vGkioMsnxGTYjxcV78oTST/Gm00fikDPmg0f93CAWkscZECWbeswjN3CSIyd57Gcom68HeV
- hXDo50SjJfKoY1omkCuGI0J4r2v29QTxLMXR/BDwhVgpuZQr
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+Content-Type: text/plain
 
-On Wed, 22 Jul 2026 21:54:44 +0530, kr494167@gmail.com wrote:
-> spi: spacemit: prepare both DMA descriptors before submitting
+Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com> wrote:
 
-Applied to
+> Move the vendor and device ID for the existing Spacemit K1 PCIe Root
+> Complex to include/linux/pci_ids.h. Also add K3's Root Complex device ID
+> to this header. This is done so that these values can be referenced in
+> the rtw89 driver to enable 36-bit DMA ability in it for WiFi to function
+> on the K3 Pico ITX board.
+> 
+> Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+> Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-7.2
+2 patch(es) applied to rtw-next branch of rtw.git, thanks.
 
-Thanks!
+888b1934642b PCI: Move Spacemit vendor and device IDs to linux/pci_ids.h
+27a5046cc56e wifi: rtw89: pci: enable 36-bit DMA on spacemit K3
 
-[1/1] spi: spacemit: prepare both DMA descriptors before submitting
-      https://git.kernel.org/broonie/spi/c/d3c87e71539c
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+---
+https://github.com/pkshih/rtw.git
 
