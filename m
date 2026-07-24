@@ -1,123 +1,82 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E87F437102
-	for <spacemit@lists.linux.dev>; Fri, 24 Jul 2026 13:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF904756D2;
+	Fri, 24 Jul 2026 22:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784901503; cv=none; b=QJfNCCMBZwSVOiFR+nHsbbqRLvDNzFwAh+p3nUvxGLdtG/miKRBBOuWuPVd0dEEJyPXpE7Oa9drADgiGu1ASgThI4iSBLz9VUNW5un4aL0x8tGQyj6wTmsSfMO+yoBOZi0lUUmOKWM8in2giXcVkh+mrwqh1LEtNlzB3K4Q0smg=
+	t=1784933538; cv=none; b=sim3E3NiiyalG9enPwDmes51X6t+ht7MhKz+NDgMVAt/dAz1RSMs05QZvKwMoYNZ3k/66H2K3b5vUN3NvfKAF0JGg0WG+cZIjZ94MVsMxkN45mudtBaIf1mwr+KCtpPgs0sgrd8qfhizSzld77CbKr16AkXk1jjEpuCSlSzMh4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784901503; c=relaxed/simple;
-	bh=9bVq3PKKCCjYfUKFC8lsteul1thSQleu0PchsXsqgeA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EEt2LVsPll8TnG7PznEoVkpzjkkJWSKabnyfFSU+eOvi7ZMWKsX+7fsYqw4MEIO2rf7iVocRhbm7NetudRPvfuobThfBpTUivzvwsJrfcJbvk1WAGRduUmULefeDV1CkEztsAd6Tsf32Y/Ex44XA1HpnuRHMuWGWP9o+zIya0Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nxrpmwlj; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784933538; c=relaxed/simple;
+	bh=WdvIp/kHz6bdqgK6nK7yN6X0JJaQRVefDEDBBWP4sGQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CkqlByCHDQ+MGaousALLcbLFtbfvvB0yBpluuhZQ3PJrY2yn9q+Uo8VbPa1VJZVqjdj27+2owoFh25AONNaZZvdsNCLQ47/f+gxWLBRBscFTvJ8YVns6HgAHmwQwd4dOJPwNH5I6hSh89mWk6AuNeUXcwvM8nz7HvGX79GT/aNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vx2PrZUN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nxrpmwlj"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-81e83f1f15aso3967147b3.1
-        for <spacemit@lists.linux.dev>; Fri, 24 Jul 2026 06:58:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784901499; x=1785506299; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=jOq8PKa6aIygrh3C9B6cO75yjjM9OGV5sf4Vbyk2dT0=;
-        b=NxrpmwljafBqI2w8aDUd1yWUvF23l2aTDYR8py+1O9BdxzndsCM+xRLm2a37MrrAae
-         7xaRgVrM4B+zvHZ1hRj72/gawcy7PmHgj6AyooLfNvkSCKJ0SAF8WJHiR1IkJ4ESmI/U
-         30fzGwq65LnwnkrRVkxqsaM0AyVc7uDIdM6YDhnp8lr/jF6SIbrOvBiaKJ9wQa2dY99F
-         JtKgvKvZuIZXKsp+SgPWUagtX+34BJQpgY4rS28Mbr5GR3Ackz/aeX/pmHYejTWIsoCD
-         zgm+JxaWSvDdYNiFdhuuBpyB0Oozn4FlKIaYyCuVPNNVE9R4YcHwTS4iad7EZy6aj48j
-         ArQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784901499; x=1785506299;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jOq8PKa6aIygrh3C9B6cO75yjjM9OGV5sf4Vbyk2dT0=;
-        b=dzfghSlRQ6jUkq7LlPXRFjtQHT6p8BxbRKaDN05kAcuQhWGSw2usK/93uh3HtOcVaP
-         0YCmuYGvGG6iwPMBIt3gyYtHNSXGedRYOb/SJl1qJPjcMp7GpSghP70GEGaQesltyd0E
-         YDZHAVV5Zw4M70kCF1vFf1MGoxktsi09YB1DqcTSg61Ro0yzl9hfS00scNJEKZTdgJ/Y
-         4EadlfcqpvBxxxEkoYIOQaSCY93pPwgOpsSc6UqbN+ndium6hjvT2dluQuwBYX/0Ogur
-         5xfDLFAWJrByvkwmJsyGmR7q5Rue2FgfOeqYilFy+gZ0etC4O9h/HYQZMPtJiXrPaJT8
-         hRLA==
-X-Forwarded-Encrypted: i=1; AHgh+Rr+J9YSw6gwzm5r9fwKXNS1zpgEIy1Uq+mOu7F1a5GLkfe+HqczEkBmAFgeMcBH2/WpoORwmgsyUQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YydbpxvEwZiOeMIuQpmP/aOswebYyn7MQNEm/QCzNMITlYSWvUM
-	kPXsZG5gN8ep0hDXUHWW0eM5WnXy095Ox2RBsoIPW6dMSJslbN+uJtE=
-X-Gm-Gg: AR+sD102pBesDFN9mNlaQ3AkTfErE6CYuCncYGDH9GA4yn7+dESv2Q56dwvP3obbxsw
-	bjyQ+ztw4G5umnoeIsP6PIpEP0ljauqV2e2ohrMMvAa9lm6w5z1Ad5/JORtT93nk5W3jQQDzNRO
-	OpBIVyoPNDsrrhKIAZsK2Xtrv8A4xuITf5u4QjEz7CvhptKSJ5NviJPFADw4vh8N9eKufahx5Eq
-	z5HU+6LziUofPGOcyUe/C4jJCrMJcoQmupct8bjrQ/Hq/063iU37ECBABTTaXQHUTDp8vAm8thT
-	7ZseCk1GLmwrf3jpwlnbyyFPV9iKO6epB1n6fSxG/u1MZlWxYvfRU/u4bFqu3/5gy1Rof6BjtYq
-	OGj15jC89RXBZRfANoHEIRQk74VlgV4reCVNdsKK4Ytm3c0H8+GeIWfSjnmLhQ3td9etGrAVYR7
-	bYxu8fhGEFAmeFa3CpTTGUwIrq0/4=
-X-Received: by 2002:a05:690c:e3d0:b0:81c:2a00:aa42 with SMTP id 00721157ae682-81f63faecc5mr1632347b3.20.1784901498554;
-        Fri, 24 Jul 2026 06:58:18 -0700 (PDT)
-Received: from t-rex ([2401:4900:1a5e:93db:310f:3bc6:10c2:6175])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-81f658fc799sm191397b3.34.2026.07.24.06.58.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 06:58:18 -0700 (PDT)
-From: kr494167@gmail.com
-To: alexandre.belloni@bootlin.com,
-	dlan@kernel.org,
-	elder@riscstar.com
-Cc: linux-rtc@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Surendra Singh Chouhan <kr494167@gmail.com>
-Subject: [PATCH v2] rtc: spacemit: handle regmap_test_bits() error return
-Date: Fri, 24 Jul 2026 19:28:03 +0530
-Message-ID: <20260724135803.81223-1-kr494167@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vx2PrZUN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C821F000E9;
+	Fri, 24 Jul 2026 22:52:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784933529;
+	bh=j7VH+I1lcj9KOCqFU/y/KDTXauZwmnuiNnkt0ffMsyQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Vx2PrZUNdbhNA5e32im1FcrlqlzID9yIgWaOccGgWy7tnwVk696zvUlJSPHsKYlGi
+	 gKzSo5R5i92N7fE27fNPAnKJWCvj/pKBWM9eX44lq+/LkGJ4v44Gzsc0YBaBiWIvpo
+	 ffI8bb44JNyeAGjZudK3SM3U2o96mFxxyubGxfJNlTgYEsHiQ2UDq0dBD1GzwgZhm7
+	 4abwKjyOoolzDVXVsPUsfSzF+8M2w5ngb67UfNJ7kwAvpVt+v9YJO3XBBIVzXn1EyX
+	 qZKmxhumcavIvL+zLez0aTYn76FQlNqsqt7iS6zP1SSeOFk+VKFegE3oApyhwtJ02p
+	 2j3efIWm/xDHg==
+Date: Sat, 25 Jul 2026 00:52:05 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Linmao Li <lilinmao@kylinos.cn>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+	Yixun Lan <dlan@kernel.org>, Alex Elder <elder@riscstar.com>, linux-i2c@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	stable@vger.kernel.org
+Subject: Re: [PATCH v2] i2c: spacemit: request IRQ after controller
+ initialization
+Message-ID: <amPsP5o2wWqszbfU@zenone.zhora.eu>
+References: <20260722094302.2284191-1-lilinmao@kylinos.cn>
+ <20260723021140.2293844-1-lilinmao@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260723021140.2293844-1-lilinmao@kylinos.cn>
 
-From: Surendra Singh Chouhan <kr494167@gmail.com>
+Hi Linmao,
 
-p1_rtc_read_time() called if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
-to check if the RTC was enabled.
+Please, next time don't send the v2 as a reply to v1, it makes
+things confusing.
 
-regmap_test_bits() returns 1 if the bit is set, 0 if not set, and a
-negative error code (e.g. -EIO) if reading the control register fails.
-Using !regmap_test_bits(...) evaluates a negative error code as boolean
-false, causing I2C/regmap read failures to be ignored and incorrectly
-proceeding to read time registers from a failing device.
+On Thu, Jul 23, 2026 at 10:11:40AM +0800, Linmao Li wrote:
+> spacemit_i2c_probe() requests the IRQ before it enables the clocks, resets
+> the controller and runs init_completion(). If an interrupt is already
+> pending, the handler runs too early: it reads registers while the clocks
+> are still off and calls complete() on an uninitialized completion. Request
+> the IRQ after the controller and completion are initialized, but still
+> before the adapter is registered.
+> 
+> Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+> Cc: stable@vger.kernel.org # v6.15+
+> Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> Reviewed-by: Alex Elder <elder@riscstar.com>
+> ---
+> v2:
+> - add Cc: stable # v6.15+ as requested by Troy Mitchell
+> - collect Reviewed-by from Troy Mitchell and Alex Elder
 
-Fix this by capturing the return value of regmap_test_bits() and returning
-the error code if negative, or -EINVAL if the RTC is disabled.
+No need to send a v2 just to update the tag section.
 
-Fixes: a6de182daa2b ("rtc: spacemit: support the SpacemiT P1 RTC")
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Signed-off-by: Surendra Singh Chouhan <kr494167@gmail.com>
----
-v2:
- - Use ternary shorthand (ret ?: -EINVAL) as suggested by Alex Elder.
- - Collect Reviewed-by tag from Alex Elder.
+Merged to i2c/i2c-fixes.
 
- drivers/rtc/rtc-spacemit-p1.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Thanks,
+Andi
 
-diff --git a/drivers/rtc/rtc-spacemit-p1.c b/drivers/rtc/rtc-spacemit-p1.c
-index 43ab62494bb4..1de7bd995d29 100644
---- a/drivers/rtc/rtc-spacemit-p1.c
-+++ b/drivers/rtc/rtc-spacemit-p1.c
-@@ -57,8 +57,9 @@ static int p1_rtc_read_time(struct device *dev, struct rtc_time *t)
- 	u8 time[6];
- 	int ret;
- 
--	if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
--		return -EINVAL;		/* RTC is disabled */
-+	ret = regmap_test_bits(regmap, RTC_CTRL, RTC_EN);
-+	if (ret <= 0)
-+		return ret ?: -EINVAL;	/* RTC is disabled or error */
- 
- 	ret = regmap_bulk_read(regmap, RTC_TIME, time, sizeof(time));
- 	if (ret)
--- 
-2.55.0
-
+>  drivers/i2c/busses/i2c-k1.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
