@@ -1,93 +1,64 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5516386C3D;
-	Sat, 25 Jul 2026 15:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECC81EF39E;
+	Sat, 25 Jul 2026 20:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784995080; cv=none; b=ajI9EhPrdaldyEL+VzqcZZYEB3rFCXvPSrCq85a8IYS510MOsUDzzcyWBaUb4CchPYofF70KxLjqck5Kx2v+P2DCMfsFwTRnjZUWV3KjpO2v4uVVjOIqadWyeq0sPba5A4bx00Lqw+/ByKVP8o0XZ8VU/htgmV2zD+0Qbmx8BHM=
+	t=1785012518; cv=none; b=mQTlPssjIvxZwv51oV21MqWqcPdD61SWxnTDJeTHz/VYbVMJxszuoXawXrpM6eEazgC7iaDWlCpsQqKdYyBwqOU7HJaVdn+nvoSXMNNRCRsXdi9rzsJWry30+NGopPlUcvMNPaUcFsSNuscOdsT15Dt0W7HIg08AjNcYaKfyuJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784995080; c=relaxed/simple;
-	bh=8v4akMFID5xsxgiJnCDCF/p/7xIBw54PZPOaiynEh3M=;
+	s=arc-20240116; t=1785012518; c=relaxed/simple;
+	bh=t6PhaJPPov93qe/frNB6MZWbq9BsECuXnqykEm8bOes=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tS2chY1iXYw+Lm6Gz/t7da3IInICh+olH30hyNGXW1W44XF+5FWfhqaeH++Nf1mcr9xr5y4iPoRfyJPzrl1ewS/t8Bo532A7lc88kcjVM57wLSMEdQ1UMbumuaA2rBhUKCMsquzEtqAaEUg2t7N2wb0f6nDswz6GAsomvr27LmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=aXXlbmLd; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	 Content-Type:Content-Disposition:In-Reply-To; b=ojHxr+tPrZbnZoQDqjfus9Hfny2oxYuafJAd25IV0TWScvQsQyb6dXlVfK3OS2UFvqLFCPEJlj5MDovMznYCebDmZ5BABuouqL3nONZQkEqFXbTN5gS7HvIxMeJv5j/5KWR8Li8OQYl4AedfJZhgmbcG1s3welzd5Mn6xi5JXJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mdxongxr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="aXXlbmLd"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=jgtuDnxQHEcklSeiDd1KgmBuuv8iaStyhrluO90ziCo=; b=aXXlbmLdbUaQPC3cjZ4BdXrF6i
-	kqFuWuGky72WVRw8gdnecWTFVPorfj/UXuSshZda+KE3VOXB1ngc/y/ZwyG08337V0V7oYJGAas2X
-	28kh/uP3z8AVwibMp+3/W1UbOcui9FcXds/vMJhbSiJqy1xRKyy9fC11DileQTMQlGQo=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1wnekw-00E9wW-NK; Sat, 25 Jul 2026 17:57:42 +0200
-Date: Sat, 25 Jul 2026 17:57:42 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mdxongxr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184461F000E9;
+	Sat, 25 Jul 2026 20:48:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785012516;
+	bh=KOmL0CnJCd+9BgF1lWQ87vbI2jwqTrH0CBCL3BgOgnQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=mdxongxrGDOmaWvmpqv6awjE+xsf1uuypD+R6mW5bkMRUe3s2DDoelCWTrs6ODPJp
+	 8uLoXU6reu41chqvJdBvsbGyZh3lJQmISmkFLUVB4E8d0WOiG5zVvAac1qpe9mXYxZ
+	 ebJOsXvTZutFzZE7gb25HyKMM4gp3LQzDL+G/xRQkupyeoYL5n7f3I3eiZT5e2uwHf
+	 WE4VjLLDL5O465oi6ZlqC7K0C8FoklfehWS1Gg937pnO2Dq91ciEmg+rptvpKgbKaQ
+	 VEB7zkvr3u0aa1/9Cf8VU+/8l2EYRutphLukHBwxvv9uKBc9tgoUey7QomGdHsjND2
+	 uE26XfRS0u9Uw==
+Date: Sat, 25 Jul 2026 20:48:34 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: Rob Herring <robh@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>, E Shattow <e@freeshell.de>
-Subject: Re: [PATCH 1/2] riscv: dts: spacemit: Fix phy id check for the phy
- on pico-itx board
-Message-ID: <0d11de51-546a-42b6-80cb-8ca258389a17@lunn.ch>
-References: <20260725005804.373698-1-inochiama@gmail.com>
- <20260725005804.373698-2-inochiama@gmail.com>
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/1] riscv: dts: spacemit: enable PCIe on OrangePi R2S
+Message-ID: <20260725204834-GKC77474@kernel.org>
+References: <20260602100000.2402784-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260725005804.373698-2-inochiama@gmail.com>
+In-Reply-To: <20260602100000.2402784-1-amadeus@jmu.edu.cn>
 
-On Sat, Jul 25, 2026 at 08:58:02AM +0800, Inochi Amaoto wrote:
-> Current phy framework can not reinit the phy correctly, as it will
-> assert the phy reset GPIO so the phy id can not be readed. Setting
-> the phy id of board pico-itx manually so the phy id dectection can
-> be skipped.
+Hi Chukun,
+
+On 18:00 Tue 02 Jun     , Chukun Pan wrote:
+> Enable the two RTL8125 network controllers and corresponding
+> PHYs connected via the PCIe controllers on the OrangePi R2S.
 > 
-> Fixes: 74657a376960 ("riscv: dts: spacemit: Add ethernet device for K3")
-> Reported-by: E Shattow <e@freeshell.de>
-> Reported-by: Inochi Amaoto <inochiama@gmail.com>
-> Closes: https://lore.kernel.org/netdev/20260712045233.800748-1-inochiama@gmail.com
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> Tested-by: E Shattow <e@freeshell.de>
-> ---
->  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> index b2a7d2d0d3a8..b9d2de878f38 100644
-> --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> @@ -196,7 +196,8 @@ &eth0 {
->  
->  	mdio {
->  		phy0: phy@1 {
-> -			compatible = "ethernet-phy-ieee802.3-c22";
-> +			compatible = "ethernet-phy-id001c.c916",
-> +				     "ethernet-phy-ieee802.3-c22";
+> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Sorry for missing this one, and thanks
 
-There was a patch recently from one of the DT Maintainers removing the
--c22 compatible when there was a specific PHY ID. I did not look into
-why. Does this pass all the binding tool checks?
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 
-     Andrew
+-- 
+Yixun Lan (dlan)
