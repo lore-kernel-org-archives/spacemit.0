@@ -1,67 +1,66 @@
-Received: from mail-pj2-f11.google.com (mail-pj2-f11.google.com [74.125.227.139])
+Received: from mail-pj2-f0.google.com (mail-pj2-f0.google.com [74.125.227.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC896360ED5
-	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 05:18:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C265353A67
+	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 05:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784956724; cv=none; b=e6YkoOCe17E4I9zdvk/dMzn51+khnhj3RGp9f1hFSNH1FBCibbh7ePKoWEycZ86j8kjC3RFj3W7KjBoWADiOD/NbvvTDyJXEklKeiiKpxTDP6XcnHahOEy85XzePU6OaLD9oUMQodc3b+mXrmU51LlXz6SIxZUGTNzWDZa+E1to=
+	t=1784956786; cv=none; b=Z4m1nhHFbigE3uoip+PxgDqQvYZmns1tAZng64HuLVj3F1CUKQlBRU5VFU+jio9ez+xCVFLMrYSafAAWGJ1abnizr7pjqDsv27TtrWeL0avW6pNfNwI7NlXbZsim/i7vqU2SmUQMGZxBW7JBsu/Jg21IAxyBrGD4kKmhEcoDHbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784956724; c=relaxed/simple;
-	bh=e2HtZIpFAeEzBhd8fEr6izzVbI4e6Mu4fEJXjQ+ijhI=;
+	s=arc-20240116; t=1784956786; c=relaxed/simple;
+	bh=xr0oQcfFPCJzaAeEJhH42CRWzbYWKnP3e2i7y0AjEKQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TF0aCHdpcB9Tn3dS4nK2MkukJNhwv5PqjiHE1vB/M5mnWANjPOY9vbqdxHGu6+KyKgVvaE8V+0EC4SRS8ppwpEQnOnMhomnGNTQp7eLPzeLCAvlZrboBj7oMAyG+jWdyGaoU6/WXQ3UfpO7KgOPBQ1ciwd9kILv7gbsKoHIGSmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FprYUMPB; arc=none smtp.client-ip=74.125.227.139
+	 In-Reply-To:To:Cc; b=mD1sywfBc1rzjN11pQrdenGPxz7mb/rhTHyxKQjMH1dc/5ra+fl3zgXCafkEsbH8pCvuW+ezEpEGSm33u0bBq7lFPXzGTt/wSbGo270Nde/QD+YuBuXQ9dR+D97CJCgqgOOPUlMkKUp333mLoBcZ7/ol54To7XBfYiEf5NmZZKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lx9TH2Wl; arc=none smtp.client-ip=74.125.227.128
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FprYUMPB"
-Received: by mail-pj2-f11.google.com with SMTP id 98e67ed59e1d1-38de693676dso887286a91.0
-        for <spacemit@lists.linux.dev>; Fri, 24 Jul 2026 22:18:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lx9TH2Wl"
+Received: by mail-pj2-f0.google.com with SMTP id 98e67ed59e1d1-380f4166f80so967983a91.1
+        for <spacemit@lists.linux.dev>; Fri, 24 Jul 2026 22:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784956722; x=1785561522; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784956784; x=1785561584; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Ycy+Qjco0x+8uNmV749kGmpBtIQZVaDIzcG2OSIxUnc=;
-        b=FprYUMPB5KQixdnUKE7dS9noF14+3ZpJ4rObzEFtlbraFv++4KPhGuD2jhJn6up0Fz
-         s23bzniai4b4THI7IzCXhvLDjKgaTNH7z3rs2uZ1nhf+iLY+tmJyUHyIAlm7oY0wbQW1
-         zkCCNSguE0hPfb7pW1hkd2DU7qP1OvgJO7xnbs4+iIWYtXiN3tDvpoJ/V5pUVG43NFgx
-         yamYazHAMneN7Ia8XTYZXbmhaI4ZGb8s3xmrPKz+TGXad0NOcd7Cle435X6TriWaiQKx
-         VSMxCqXXmYGF836JquptCC5FrmYJdAz1YxhRO9LsPTdVg1O53sslXVWM22nnaWmiQ8J6
-         ubWA==
+        bh=Fhok3rvowf2V2ZvTr/zIVWuKYiTyiporNQXpy3ArInQ=;
+        b=Lx9TH2WlhWep387E8d5ZCEnjRm5TfjJXng8Q01vn9LkPVCVcLD3EFvFprqoGpmAcnx
+         XL/RJh9RbV/6jqkLgCorF3v3d+xtLigAxKKZZMmAiUwn6KOb2YBSwCjXhbTLSUVoZpy9
+         q0ZKzmjGz/FUNq5Hs3OTZqRzTxxitOZDNkrgRgsBXyj7wlTAVFyxifVqM7VH3B9YU7oL
+         b6QxnlTj8/BwbJnh/focuIdkGpXxZvc3lO/oaYOdUdGlCmroCrCLV6ba9Vuoz/zkyT8C
+         Sa/XMw1YQuFYtnVZx9nRrim6c/WAEh6vzTSoHG+Yom//I5AJ/dIpldNDThqqOnIPvIqE
+         F64w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784956722; x=1785561522;
+        d=1e100.net; s=20251104; t=1784956784; x=1785561584;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Ycy+Qjco0x+8uNmV749kGmpBtIQZVaDIzcG2OSIxUnc=;
-        b=CgLVxlT7vdu1RrqLuBOMBHkMlLTy94ewocAKG2VBvrp38bIj01W4VoQ2YJfF6eWepR
-         YrKoAI7fTQeO+tr04AgI04ZGDpAn8ZIrv/obGMtuZXtFWg82dZnmU3iC0+0AOzKFIcaB
-         yo558HBJJxSeZzcNDP1UHMK74fHLYtgCE5pdgQ5hUpj3RxrjcEeM5JBa0iMFM8cwdBSC
-         sZDad0nczWPMY41w9snL1pRL0IF5qvLkJeFCqw1r60IHpfTcCGHqOMH/cCc5WQEO7Fzb
-         EQV6GwUR5sInW27SljbsuWcu+M7VRt/90IVz99RpF6VwgtI/xfS2OWYYRnSNH/b/9IO1
-         cbsw==
-X-Forwarded-Encrypted: i=1; AHgh+Rrcm1ysTUfdzzSPoFy9vqDDlv8vXNAFVi+2wlmnyOnVwP0n5cfWkemo7YOp76xIly8jiUnY/Vs3NA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwjHdXXPU+6VkiOr533AdTU58ca+RYTX0Adl4HexIh6mZVnBwyw
-	Yl17WvJVk+BYI2JajGDxmOy0dzIMfEwN1iLHFMYbbm8v457cZVCfdAYVc07ZZW5pxSnxwA==
-X-Gm-Gg: AR+sD10as/Od2bZPUfOAO/1IA5cbBIper9yYuEkYcgtMkWPtiEtOF25ZPUUKltr+93T
-	RDMTQYLkeC9+9pknT2i5kloKqpbaDC7MmrBCTfcIsiM3OWPFw0cYTXBPkrckghd71h1Kpvq3rn7
-	F3LQo3C7IY1UwW5ZtOMmGLl3tqkDcLs1iXgJ3lX4065UQz292kNAaDZrUyMb/LLOnJdvhLEWq5g
-	qGt6GuoZ2JiSqHlRtwRRe2N0YQqzt5kuwMBeoZdWUm0LQnAfxkhOyDBEguLZMcQrYNcEYGvEzc9
-	RU4pj2MMtsvXBL4fBYoZ3CYzpVL84p7axoNIf1LjQ+lTxtMvv8vxxY8470Zi7w0U1dfvA4oXSeo
-	I5kr1WvtNxsnBIvqqu1Vq/2WLiSqWGvvC10IYWUyVBil8f6EVbPjTsTQ=
-X-Received: by 2002:a05:6a00:2d9b:b0:848:2a71:a48a with SMTP id d2e1a72fcca58-84e593ff0ccmr644911b3a.13.1784949438724;
-        Fri, 24 Jul 2026 20:17:18 -0700 (PDT)
+        bh=Fhok3rvowf2V2ZvTr/zIVWuKYiTyiporNQXpy3ArInQ=;
+        b=KuoaartMeZAuegwH6PI5rs9Zfuc+sZqulGdUg6ElMunJVXpzLwz8IXHW/uoA5VGZNE
+         mrChJ0b2IsuScmAf7EjqfbpjrbV1MnBD4iMIaX7gzPyfxF5a988eZFvNDQhx9woMlJjp
+         a+wWNryt3A0y/diZdJR9wHbKLgc3oyM1/k1LhXpSGzlub/fuychr1LPQloxfgM3elPo5
+         ueiuS3reO5hNrJhiRr0fW1lpKPRHF9BnDAPSFkpt7WenE0BtV+ruGbGs75MJqGgaOElf
+         v5OuRNq5gaTU3fuytmOj9BVFStHRsBWbazuV00/fjMtmljutSMuZsFBK/Z/kmg5q2/XU
+         zrHA==
+X-Forwarded-Encrypted: i=1; AHgh+RoqXzmxfIabCSJyfWDXOKHgRU9LlT5idbZXctnihG3rsRorc9VQ7k2AbAtSJ/wREjCZQ61nlNklIQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxpf1TCfTwPt4+9P0rcyJSvfl7RIQnrmekrJg2nbOoFZqUehp5n
+	oTnv17Iu6R19Hp+ykV1qrwRvk2dxPMRjJEzLRNKSGuT+7/4eh2qaCh+N
+X-Gm-Gg: AR+sD11Sf8qlgM/flR050Fwdtb8Ipc4tOuSStD7LOPmr7kq91KkxT7NTNp+mkSBrynH
+	NegcXmLECA3WD6EN4CD4rc0bz2NAOcFjzX8YTEi1pMRjW3noYxMMhRZcSuJGRARcJQ9P0Z3MkZm
+	s8ChbRp1yMjQu8rLLh+44AMO6c0BlyMQDBzmjuHMFISWB8T6oDYfd7G9sFWfUb1VjDNtZTmGkC7
+	xdsp+JoME8txHESTq50YXzIEMrPkVoSrTtLzvx1KBYBG3XFOmCO/3YE0GjyeJpP4wwo1E6uOejy
+	zu3vpL50XggDRY2R8W3DhvkZQoFch2jesmyaM5V8xhdJcoyZGZYMQx1kLc2X/wvCn+I6GoTGRGs
+	x9SaC3Y213aOuJLcSNgCda4jGtwrzmW6XnqhaNOWE9qHzbA4BC87cKkQ=
+X-Received: by 2002:aa7:8885:0:b0:84e:2bb:2d3e with SMTP id d2e1a72fcca58-84e594330edmr623584b3a.9.1784949446508;
+        Fri, 24 Jul 2026 20:17:26 -0700 (PDT)
 Received: from [127.0.1.1] ([2a12:a305:4::403c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e53432834sm640542b3a.50.2026.07.24.20.17.09
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e53432834sm640542b3a.50.2026.07.24.20.17.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 20:17:18 -0700 (PDT)
+        Fri, 24 Jul 2026 20:17:26 -0700 (PDT)
 From: Cody Kang <codykang.hk@gmail.com>
-Date: Fri, 24 Jul 2026 23:16:33 -0400
-Subject: [PATCH 01/17] dt-bindings: display: spacemit: add K3 Saturn DPU
- controller
+Date: Fri, 24 Jul 2026 23:16:34 -0400
+Subject: [PATCH 02/17] dt-bindings: phy: add SpacemiT K3 Innosilicon DP PHY
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,7 +69,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260724-k3-display-v1-1-f22a10a52867@gmail.com>
+Message-Id: <20260724-k3-display-v1-2-f22a10a52867@gmail.com>
 References: <20260724-k3-display-v1-0-f22a10a52867@gmail.com>
 In-Reply-To: <20260724-k3-display-v1-0-f22a10a52867@gmail.com>
 To: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
@@ -90,153 +89,77 @@ Cc: dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org,
  linux-clk@vger.kernel.org, Cody Kang <codykang.hk@gmail.com>
 X-Mailer: b4 0.15.1
 
-Document the Saturn display processing unit found on the SpacemiT K3 SoC.
-The K3 instantiates two of them, one per display path. They share a
-compatible: an instance differs only in which register window, interrupt,
-clock and reset lines it takes.
+The SpacemiT K3 DisplayPort controller drives its four transmit lanes
+through an integrated Innosilicon DP PHY, one PHY per controller. Add a
+binding so the controller can reference its transmit PHY and the pixel
+clock the PHY's PLL sources.
+
+The PHY's registers are interleaved with its parent controller's inside
+one MMIO window, so it owns neither a reg nor a reset and is modelled as
+a child of the controller.
+
+It exposes its PLL-generated pixel clock through #clock-cells, so the
+APMU pixel-clock mux can select it as a parent through the clock
+framework.
 
 Signed-off-by: Cody Kang <codykang.hk@gmail.com>
 ---
- .../display/spacemit/spacemit,k3-saturn-dpu.yaml   | 132 +++++++++++++++++++++
- 1 file changed, 132 insertions(+)
+ .../bindings/phy/spacemit,k3-inno-dp-phy.yaml      | 48 ++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/spacemit/spacemit,k3-saturn-dpu.yaml b/Documentation/devicetree/bindings/display/spacemit/spacemit,k3-saturn-dpu.yaml
+diff --git a/Documentation/devicetree/bindings/phy/spacemit,k3-inno-dp-phy.yaml b/Documentation/devicetree/bindings/phy/spacemit,k3-inno-dp-phy.yaml
 new file mode 100644
-index 000000000000..97ea9da4b68e
+index 000000000000..f8f1ef372951
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/display/spacemit/spacemit,k3-saturn-dpu.yaml
-@@ -0,0 +1,132 @@
++++ b/Documentation/devicetree/bindings/phy/spacemit,k3-inno-dp-phy.yaml
+@@ -0,0 +1,48 @@
 +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/display/spacemit/spacemit,k3-saturn-dpu.yaml#
++$id: http://devicetree.org/schemas/phy/spacemit,k3-inno-dp-phy.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: SpacemiT K3 Saturn Display Processing Unit
++title: SpacemiT K3 Innosilicon DisplayPort PHY
 +
 +maintainers:
 +  - Cody Kang <codykang.hk@gmail.com>
 +
 +description:
-+  The Saturn DPU is the display processing unit of the SpacemiT K3 SoC. It
-+  composes the display planes and drives the timing for one display path. Its
-+  output goes to a DisplayPort or embedded DisplayPort controller. The K3 has
-+  two instances.
++  Innosilicon four-lane DisplayPort transmit PHY integrated in the SpacemiT
++  K3 SoC, one per DisplayPort controller. Its registers are interleaved with
++  the controller's own inside a single register window, so it is described as
++  a child of the controller and owns neither a reg nor a reset.
++
++  The PHY provides the pixel clock its PLL generates, which the APMU
++  pixel-clock mux takes as one of its inputs.
 +
 +properties:
 +  compatible:
-+    const: spacemit,k3-saturn-dpu
++    const: spacemit,k3-inno-dp-phy
 +
-+  reg:
++  "#phy-cells":
++    const: 0
++
++  "#clock-cells":
++    const: 0
++
++  clock-output-names:
 +    maxItems: 1
-+
-+  interrupts:
-+    items:
-+      - description: Online (live display) compose path.
-+      - description: Offline (writeback) compose path.
-+
-+  interrupt-names:
-+    items:
-+      - const: online
-+      - const: offline
-+
-+  clocks:
-+    items:
-+      - description: Pixel clock.
-+      - description: Memory clock for the compose pipeline.
-+      - description: AXI bus clock.
-+      - description: DSI escape clock.
-+      - description: DSC clock.
-+
-+  clock-names:
-+    items:
-+      - const: pxclk
-+      - const: mclk
-+      - const: aclk
-+      - const: escclk
-+      - const: dscclk
-+
-+  resets:
-+    items:
-+      - description: Memory clock domain.
-+      - description: LCD domain, shared with the downstream controller.
-+      - description: DSI escape clock domain.
-+      - description: AXI clock domain.
-+      - description: DSC domain.
-+
-+  reset-names:
-+    items:
-+      - const: mclk
-+      - const: lcd
-+      - const: esc
-+      - const: aclk
-+      - const: dsc
-+
-+  ports:
-+    $ref: /schemas/graph.yaml#/properties/ports
-+
-+    properties:
-+      port@0:
-+        $ref: /schemas/graph.yaml#/properties/port
-+        description: Video output to the DisplayPort or eDP controller.
-+
-+    required:
-+      - port@0
 +
 +required:
 +  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - clocks
-+  - clock-names
-+  - resets
-+  - reset-names
-+  - ports
++  - "#phy-cells"
++  - "#clock-cells"
 +
 +additionalProperties: false
 +
 +examples:
 +  - |
-+    #include <dt-bindings/clock/spacemit,k3-clocks.h>
-+    #include <dt-bindings/reset/spacemit,k3-resets.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    soc {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
-+
-+        dpu@c0340000 {
-+            compatible = "spacemit,k3-saturn-dpu";
-+            reg = <0x0 0xc0340000 0x0 0x54000>;
-+            interrupts = <90 IRQ_TYPE_LEVEL_HIGH>,
-+                         <89 IRQ_TYPE_LEVEL_HIGH>;
-+            interrupt-names = "online", "offline";
-+            clocks = <&syscon_apmu CLK_APMU_LCD_PXCLK>,
-+                     <&syscon_apmu CLK_APMU_LCD_MCLK>,
-+                     <&syscon_apmu CLK_APMU_DPU_ACLK>,
-+                     <&syscon_apmu CLK_APMU_DSI_ESC>,
-+                     <&syscon_apmu CLK_APMU_LCD_DSC>;
-+            clock-names = "pxclk", "mclk", "aclk", "escclk", "dscclk";
-+            resets = <&syscon_apmu RESET_APMU_LCD_MCLK>,
-+                     <&syscon_apmu RESET_APMU_LCD>,
-+                     <&syscon_apmu RESET_APMU_DSI_ESC>,
-+                     <&syscon_apmu RESET_APMU_DPU_ACLK>,
-+                     <&syscon_apmu RESET_APMU_LCD_DSCCLK>;
-+            reset-names = "mclk", "lcd", "esc", "aclk", "dsc";
-+
-+            ports {
-+                #address-cells = <1>;
-+                #size-cells = <0>;
-+
-+                port@0 {
-+                    reg = <0>;
-+                    endpoint {
-+                        remote-endpoint = <&edp0_in>;
-+                    };
-+                };
-+            };
-+        };
++    phy {
++        compatible = "spacemit,k3-inno-dp-phy";
++        #phy-cells = <0>;
++        #clock-cells = <0>;
++        clock-output-names = "edp0_pll_pxclk";
 +    };
 
 -- 
