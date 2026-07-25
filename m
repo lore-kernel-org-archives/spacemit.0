@@ -1,62 +1,62 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5B2318EFF
-	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 00:58:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1DB6318EE2
+	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 00:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784941096; cv=none; b=fkAM4hAwYxONEbkGPHajWNb748svP/EW8++onMyXdibbBUsTScniq/vfI5gBuRmGrGKROpNZBTdkdUwdxVokr2xVLvfrSysYpWniC50U7DvVHXjK+vkERBlqM4EjW4MHhW6I/nMosifaSc75rwwtXaxtRHfJJTMmmMMz9yBi8nE=
+	t=1784941100; cv=none; b=pP4rkKEj29pSSi7qCkdExaC/QBQPbvUS57Cc2W4OBRDXkaz824u+zM/vIw1Q/4Dcqchd9WcfakUlw52wEPLfioOI2bsD9CWQ2AVGa3WYNhYY9tp0Gxcd75SswStw5Jmfwx0aiaqd3RUEz3Z/78VBpzTZrahh/ZzMJA5afrOBD24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784941096; c=relaxed/simple;
-	bh=qvt1xeKZaGMzjY4GmRnBlOy13neWiePcPbv4luremNg=;
+	s=arc-20240116; t=1784941100; c=relaxed/simple;
+	bh=zcEDujLPvsRN+GgGPxQ6SWQmTBHbV7jX86seTQ7X3C8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QH/byUyGJjBE1O5NSIGjKm0wOotDrLp12h5EVpsLT3zif3RLShiKwepLcVm2Z/n2s0hQNxbVvTdqd9w6uHroWOy3LcPDJmAqiVCKI96URvS9BToQ3kTmKRhOcbBZ9FtacnItHI0rclNCPSMEVNu+2/F+v7JLFDkTW2aT/Q4NgSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZNdy+a9s; arc=none smtp.client-ip=209.85.214.172
+	 MIME-Version; b=c2n9uVRnbyQthrPpbhXSs9BsAdCkl+4T8QxdTW1HjEQiLrtYf2o/yBQdgmFdI2yoNfHMalU+lbdS3xaicv4rYEWwD4GMJ4GKrNRnTWz24o7TBEoXumRTPe50P8Ax/ps87QP0EJ9Xxis4SXerJF4JE7MnJ2mRnIFKV3ecULfGpS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EeL8d2NF; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZNdy+a9s"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2cca0c5799eso10389135ad.0
-        for <spacemit@lists.linux.dev>; Fri, 24 Jul 2026 17:58:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EeL8d2NF"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2cab973140bso14751205ad.3
+        for <spacemit@lists.linux.dev>; Fri, 24 Jul 2026 17:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784941094; x=1785545894; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784941098; x=1785545898; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=tJzCpl1A9lMuSv16O58Xsv9A30hSmOZtX21l624BoiU=;
-        b=ZNdy+a9sUSyAAWYQ8Xz7bkINZsggXq9LOoA0Irsf0+8vjinqy1xxGhg2WgpzcFmwvf
-         vm+DP9/7eNsWW43aATMewFZYfccJVhcgJpTu6zYd/ZDpo07c+c5fj+SzXN9qQMHqd/7i
-         1ix5th9qTabsUh3CoTe7yesG6Z/X3l1LiGQ6jeoAj8FHSeB3cwJom7afBaqXdoRIP3xO
-         p8OLy53C7mL4M9QcXi7T8wt83qgdNtL4zytElKXpwUQipy9Oc6Jq07mnnY5NGLsDHCBQ
-         4d62w0sUsEcS9huQSQlky7atiOlVaylD7FQM7Pn0tn9BXP9rG5XWxJJo4zJmIplgNGNI
-         RnLw==
+        bh=1gUr4fQRyHAoHpwP1gqFm6NIZTzHOUhteVVgfXrJmeE=;
+        b=EeL8d2NFpEe1dOCqImGgIwMr4iDUK27buLj+EV4Hcqin0Ou3xEbD0GLeOLW8tRbUnY
+         zT/CSNuMGYyVtx2xqSjL0NW23fVB68g8kdZLLYs38vk2n5Afwt/1tibvPB4uXzbIycFS
+         fdCHmmbfwPSW0EdB1Xq6ncMTF9FuB/9Fn7FRkRBBymFQ+0ic3ixT6IdlBcVn1/j1Fvvv
+         4mlWJHkMNU09h3KzNJafUysHwWtRSOmwbmNrKpIX2kS61yrEBElWVBARbgnMPwUVsSUx
+         hoDtOqsEpRYwIxbQ00pE0W1Gv4HO3qr680ICfhZZrF02n6reb54oOQ7Wkhyb3Ji2Viyh
+         ZLjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784941094; x=1785545894;
+        d=1e100.net; s=20251104; t=1784941098; x=1785545898;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=tJzCpl1A9lMuSv16O58Xsv9A30hSmOZtX21l624BoiU=;
-        b=HqwTsi6+jBF/7uC8d+j0rNSf7un0MYH2SZj07ivtDDAr7BTAiwopbDKq4Anw0B6xVu
-         fXUH7XVRQ/veSu2c7qOWQ6gfmO5fMTXHoF0fujilYkAptxXSUT8FkK75nVN9HYWfIqkj
-         8WQu5Vphtz9EPWUDRiv1VE+XfEe8YEPiSFXLJk7nbhraIVpD5NkBYpQot5nXJqyWEiYj
-         cKkwToWR6XYe2BUINbGv1AOi3/lgobDEDp+UcoyUObK1apgfWDV5UfuyfwXQKEO4GBiP
-         dM9RXncr/SjPJ7ngh2W86j81j9BN7spbAwEAy2oJm3mspPMtPrEjpXCYXYX23A6bKGQ0
-         hmNw==
-X-Forwarded-Encrypted: i=1; AHgh+RpoXp7uui8fOjiFdu87vHCCyAvlvlLxkHEpCBTpG0y9ofPRFWPriVYONCXk8OQGCwT9Tc0S2odpBg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwW89kHcdqtmZFf6EJR9pp70zqP7PTCwZ0EuyBHDksYn8MCG5kE
-	hirq7uzjvg/M5NFluVLSvbyhNs8MTr/F+bd2FI/Ek051VFEU+Y1zTo6E
-X-Gm-Gg: AR+sD11wH5T1nnMotQr/N8Nqdan52nBwEbWObUUbJHPr6+79GLrA3tfCi7/5FthjAap
-	cUuZriVZJA7ls3pe0q0P/JfBh7YSfuMFWUPkBcS8WUfey/5AO2tnR7LeDMldbkUfT4QrXdT4nG8
-	Fq3htl/Kmr+9VJlZZ4YH+vSmdIwNC+mKhK10hEPHI8pYm1sAchYRA48VPSleDENe7jTkumHFhP/
-	BB73i4bEkRpPEuSPZEJD/LxggYcodB2K1KGyWqEkzwCq3qFwkrKTc12yYWOgoJwT7+MadV4XVDA
-	3NJbnr9ABhvDee//3nV7SW5aQQyqkwHMkEH2qhUrVvTFtMqwnA0FKFsWQKz0P7vRbgVhJXC0Bs0
-	StYsQ99r3zMnfctp0OUR8i2EBDdXOpkq0pvOvPbm6jB5McF7fsFxh/mo/1n36mg==
-X-Received: by 2002:a05:6a21:6196:b0:3c1:d78:6457 with SMTP id adf61e73a8af0-3c67daecd72mr595029637.32.1784941094334;
-        Fri, 24 Jul 2026 17:58:14 -0700 (PDT)
+        bh=1gUr4fQRyHAoHpwP1gqFm6NIZTzHOUhteVVgfXrJmeE=;
+        b=l5KzIQNK948TLpzXlb4K1qqNZlb0CCHIW07E5lNyNHd2XiqYyHPDOVTESiPke+Q17G
+         7zcLjx3Cn7TORexcQZsjOzU2AmUn1uzFo7Y8LoxCvLlm9KmtUFpr20KKHGcLQ1pQ1fpI
+         rsSaiSpBAaNRmEiUN55u4lx7eUctSS9CgOfwp3mh6GLWfxXzb7i4W2rT5KaGmmz1mpw4
+         TY4V0HuspWgmKCh3LAkk4YODO4NTUXVfFeaGVr8wpiYOcbztEuRNJqT/efrv3Oesebqd
+         Cp7xRvRpTe9BzG+3BkyJxb6AXnfBiZHENF7mDaKlv5n29mZodp7UqO44fD5E8Snv+g01
+         YbQA==
+X-Forwarded-Encrypted: i=1; AHgh+RpLTTkifd4mMTzo7/PwiArqhAnEZOyUDb/VP4IV/PxmpakEy3XPTUc7Wd7PQkjHBrwLCV1yyFFgEw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yywvc3rb45EnZYjg/LAYpzOEdn0Ap9twZdRMDvJmpH1yM8eAneR
+	usLM/6IGwL9ntxCDKD9g9z1SDz+CjE+npCi52Up1hhqH6bZVNW6MCJWy
+X-Gm-Gg: AR+sD13KrhwqZkGiewpYMLikaWJuJIW3Flxp/52mcb7DMlY+oWfCOJuBpxV0Vwq7LxO
+	zzc54VwSseWs74K68UgIJjVMu/nE/7LuyJLSEtpCJYD3WjCPTluDbSNGciXwVP+L7vAOFYlXrJ6
+	Ef8SwXFymgMO8W7zwQfk06p/lHF+Nx6ar2cFWsNh9Bvd4jD5EHRgfSkU7xa9Uq3xaMXuGX0R0pC
+	LdV0ozO/Kjz1EijxqDZ+BTLdGZYWTjUgMoJ3XpkbtIRZ3KQS7o9cItTwMSVU7POxcHa7Pa06FwF
+	3dF194pOAWisMqtYAuZ6/SnSrOkcNDRTy0jmybK7Y2EsKL9fOlgbyhwAcd+BPDkjmuIJoJDU62y
+	iUuq7uHa7ENkugUQ/10jFPWMqwPtNHEF2Qin2Ohx/7QhW6q9Jtqpmeydx08HHKn/5NCapigGq
+X-Received: by 2002:a17:902:c402:b0:2cf:a2d2:84c0 with SMTP id d9443c01a7336-2cfde55bb4amr6478145ad.0.1784941098056;
+        Fri, 24 Jul 2026 17:58:18 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:2000::1:5491])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbbb66dc15asm654002a12.30.2026.07.24.17.58.13
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cfde59bc68sm2289265ad.2.2026.07.24.17.58.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 17:58:14 -0700 (PDT)
+        Fri, 24 Jul 2026 17:58:17 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -80,11 +80,10 @@ Cc: devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	netdev@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>,
-	E Shattow <e@freeshell.de>
-Subject: [PATCH 1/2] riscv: dts: spacemit: Fix phy id check for the phy on pico-itx board
-Date: Sat, 25 Jul 2026 08:58:02 +0800
-Message-ID: <20260725005804.373698-2-inochiama@gmail.com>
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH 2/2] riscv: dts: spacemit: Fix phy id check for the phy on com260 board
+Date: Sat, 25 Jul 2026 08:58:03 +0800
+Message-ID: <20260725005804.373698-3-inochiama@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260725005804.373698-1-inochiama@gmail.com>
 References: <20260725005804.373698-1-inochiama@gmail.com>
@@ -98,32 +97,28 @@ Content-Transfer-Encoding: 8bit
 
 Current phy framework can not reinit the phy correctly, as it will
 assert the phy reset GPIO so the phy id can not be readed. Setting
-the phy id of board pico-itx manually so the phy id dectection can
+the phy id of board com260 manually so the phy id dectection can
 be skipped.
 
-Fixes: 74657a376960 ("riscv: dts: spacemit: Add ethernet device for K3")
-Reported-by: E Shattow <e@freeshell.de>
-Reported-by: Inochi Amaoto <inochiama@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260712045233.800748-1-inochiama@gmail.com
+Fixes: cfe5c91cb73c ("riscv: dts: spacemit: k3: Initial support for CoM260-IFX board")
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Tested-by: E Shattow <e@freeshell.de>
 ---
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 3 ++-
+ arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-index b2a7d2d0d3a8..b9d2de878f38 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -196,7 +196,8 @@ &eth0 {
+diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+index b704b537385c..a26b18aabec1 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+@@ -174,7 +174,8 @@ &eth1 {
  
  	mdio {
- 		phy0: phy@1 {
+ 		phy1: phy@1 {
 -			compatible = "ethernet-phy-ieee802.3-c22";
 +			compatible = "ethernet-phy-id001c.c916",
 +				     "ethernet-phy-ieee802.3-c22";
  			reg = <1>;
- 			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
+ 			reset-gpios = <&gpio 1 5 GPIO_ACTIVE_LOW>;
  			reset-assert-us = <10000>;
 -- 
 2.55.0
