@@ -1,55 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98A04908B1;
-	Sat, 25 Jul 2026 12:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4174908B1;
+	Sat, 25 Jul 2026 13:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784983963; cv=none; b=hGhRPymYblQ1Ibbqhyc8uz5cM68u7oH4xIQhdbivhOcQgVHXeJ12RcLzt0VvC5fZtXSwBop0KVaYlIwJRoDNSgWqJCY13guxE2C3rtHNZI0pWBTgapHB3fMJvz6scA09Y+r6ghSpkkS8guQoIH5xXTuQB8uTEpDf0kxGl7SYS7c=
+	t=1784985233; cv=none; b=cJeA9Tu0URq9dQ/eb39/Sk9Z7GMiefp41xCCHY2X492N6md9TzhZarVYFJVB7tffu0DKkzJHebj4iLtl+JnBtPsfoQQtM+JmiqnUS6uE1l/QRpebYuxhFMQXy//Us+tNiK2VV1fEdx9e6oyyYGvH3ve3vXUC8beHqVo0oATy1T0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784983963; c=relaxed/simple;
-	bh=tKV47GvuhHzmQIQkHMcaHdIf0iBX0DZ5dQNigjA0iLs=;
+	s=arc-20240116; t=1784985233; c=relaxed/simple;
+	bh=FZdPSc1qD/zLZ3k6+kz1NCSODEny9nYVCgk+v2wMbLU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hLuNOE3sIvbxZMaI6u+zOzOTEEpa3DqD/DYlXF8MqrES0u83U/fnkpbxFPSMV5MEPLFCqdgepoQgxgn7Q0ej+d51zsmdOGDtyKol4A7pqhcTLL2NV2IndUsbMlvtuL4TE7MOs9lb1Y7Oa4pvSHOXWNaOzUJllnbRgfxvkNIBqk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E8ej9lUK; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=FMSU2LjdI0TBtpZFOBirscu/zsn1lEl/kanE4UtCLvpA64HOpmd7rsM+15VZO5QVwjS1rJZJR8vZDW14uWZAW/NHYWfUfkvPRTnO/bAUtqsOGXHIq5fdJo1jGfrUKv4N8CJnUkmgKxHbMvVh4ovtl7On4WCMsCYAllOvFOU4HFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fZRGults; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E8ej9lUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23841F000E9;
-	Sat, 25 Jul 2026 12:52:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fZRGults"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829371F000E9;
+	Sat, 25 Jul 2026 13:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784983961;
-	bh=gT38tjeb++jK/k2GuhtDfea7iMxOcK2Bu0owLvQjsQM=;
+	s=k20260515; t=1784985232;
+	bh=j+kTo6kY0mhTML33kxN6aZC9o+YRDsN5TZ49E2l5lW4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=E8ej9lUKixqo3RxPh//MNsA71v7PrPdyLkXDtAeGb3Yemsy9aEzLvk2K5oz84l5x3
-	 +FzzucF/0rBESyA5JsMmGfCIvEIri2OV6fKCcYdjt3vBqejmaa86y0MHGDa0PMhkab
-	 31usKxz6ndNOGZigUb0uEUvaa092ddmGqMXUG0PcRx7hnuG3v0kLW0SD98ABoO0TJd
-	 hsKil2gkGtSzIIVg/fGfmFysDRP/80BIT40/O3WeYZ6UD4dhlv8seIhoFmFTJEvg68
-	 mn0LqPLvrruEwBxA4b9dqIuzN/1+ZhLL+pS96jfw809ydAF7SV9jsEEvjDu2OS+d2O
-	 rH2JfYXTWt0zQ==
-Date: Sat, 25 Jul 2026 12:52:38 +0000
+	b=fZRGultstwiuYxU+EJDJTssXezN1d4sWZq328ZGIHIGQDjqjd5ltSyFn5hUEgXMw2
+	 VCIjmReTZLg6GAfCXhntN3Hsu6wTwOj/tkFp0EOb8biA6AOZXqcr2M67w+H4O60n8n
+	 Kmf7Kue+wTXKHn3yIxyq1I4N7ywALBhqnpZ7tWnmvZUJQ1tO3UtKa4nnabTdDnNLpp
+	 W7BAiNCCXbFyJGVAzUCL6xjLjaebBCq9v2PCSE7kWCNdwaKNq7UHTiDJN/7F7gnIh0
+	 DHBE45foWoIktqi75vmphApK5oibocJcdS86P9uuIcD2Ff7z/VWDOreY6lEXePeSzA
+	 /peY5TSLygB9w==
+Date: Sat, 25 Jul 2026 13:13:49 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: E Shattow <e@freeshell.de>
-Cc: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: Zhengyu He <hezhy472013@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Mark Brown <broonie@kernel.org>, Alex Elder <elder@kernel.org>,
 	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH 1/2] riscv: dts: spacemit: Fix phy id check for the phy
- on pico-itx board
-Message-ID: <20260725125238-GKC77545@kernel.org>
-References: <20260725005804.373698-1-inochiama@gmail.com>
- <20260725005804.373698-2-inochiama@gmail.com>
- <9545227f-77ef-480d-bb55-6caf1124627c@freeshell.de>
+	linux-spi@vger.kernel.org, wefu@redhat.com,
+	Cody Kang <cody.kang.hk@outlook.com>
+Subject: Re: [PATCH 4/4] riscv: dts: spacemit: enable SPI0 on K3 CoM260-IFX
+Message-ID: <20260725131349-GKD77545@kernel.org>
+References: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-0-969a1b0f783f@gmail.com>
+ <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-4-969a1b0f783f@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -58,49 +50,112 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <9545227f-77ef-480d-bb55-6caf1124627c@freeshell.de>
+In-Reply-To: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-4-969a1b0f783f@gmail.com>
 
-Hi E Shattow,
+Hi Zhengyu,
 
-On 01:12 Sat 25 Jul     , E Shattow wrote:
-> Hi Inochi,
+
+On 07:45 Fri 17 Jul     , Zhengyu He wrote:
+> SPI0 is the first enabled PDMA consumer on CoM260-IFX, so enable the
+> PDMA controller together with SPI0.
 > 
-> On 7/24/26 17:58, Inochi Amaoto wrote:
-> > Current phy framework can not reinit the phy correctly, as it will
-> > assert the phy reset GPIO so the phy id can not be readed. Setting
-> > the phy id of board pico-itx manually so the phy id dectection can
-> > be skipped.
-> > 
-> > Fixes: 74657a376960 ("riscv: dts: spacemit: Add ethernet device for K3")
-> > Reported-by: E Shattow <e@freeshell.de>
-> > Reported-by: Inochi Amaoto <inochiama@gmail.com>
-> > Closes: https://lore.kernel.org/netdev/20260712045233.800748-1-inochiama@gmail.com
-> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > Tested-by: E Shattow <e@freeshell.de>
-> > ---
-> >  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> > index b2a7d2d0d3a8..b9d2de878f38 100644
-> > --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> > +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> > @@ -196,7 +196,8 @@ &eth0 {
-> >  
-> >  	mdio {
-> >  		phy0: phy@1 {
-> > -			compatible = "ethernet-phy-ieee802.3-c22";
-> > +			compatible = "ethernet-phy-id001c.c916",
-> > +				     "ethernet-phy-ieee802.3-c22";
-> >  			reg = <1>;
-> >  			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
-> >  			reset-assert-us = <10000>;
+> The board exposes SPI0 on its 40-pin header:
 > 
-> Looks good to me, aside from commit message spelling and grammar nits
-> ("re-initialize", "read", "detection"). Yixun may just fix in-flight, my
-> R-by and T-by tags can stay.
+>   pin 19: MOSI
+>   pin 21: MISO
+>   pin 23: SCLK
+>   pin 24: CS0
 > 
-Yes, I will fix them while applying, no need to resend, thanks for review
+> Define the pinctrl state used by this header wiring, and describe the SPI
+> NOR on chip select 0 for the current validation setup.
+> 
+> (This was tested using a Winbond W25Q64JV SPI NOR chip.)
+> 
+It's fine to test spi controller with an external attached NOR flash,
+but doesn't make sense to enable it permanently in board dts level.
+
+I think it's probably better to provide as an independent dtso file,
+which more flexible to let user decide to enable it or not..
+
+Anyway, I will leave out this patch for further discussion, and
+only pick patch 1 & 3 for now, thanks
+
+> Signed-off-by: Cody Kang <cody.kang.hk@outlook.com>
+> Signed-off-by: Zhengyu He <hezhy472013@gmail.com>
+> ---
+>  arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts | 13 ++++++++++++-
+>  arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi   | 21 +++++++++++++++++++++
+>  2 files changed, 33 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
+> index 238bb03d0e9e..01a7135df864 100644
+> --- a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
+> @@ -11,11 +11,22 @@ / {
+>  	compatible = "spacemit,k3-com260-ifx", "spacemit,k3-com260", "spacemit,k3";
+>  
+>  	aliases {
+> -		serial0 = &uart0;
+>  		ethernet0 = &eth1;
+> +		serial0 = &uart0;
+> +		spi0 = &spi0;
+>  	};
+>  
+>  	chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+>  };
+> +
+> +&pdma {
+> +	status = "okay";
+> +};
+> +
+> +&spi0 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&ssp0_2_cfg>;
+> +	status = "okay";
+> +};
+
+..
+> diff --git a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
+> index 3ee1471f3798..9b7617f3846c 100644
+> --- a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
+> @@ -679,6 +679,27 @@ pwm19-2-pins {
+>  		};
+>  	};
+>  
+> +	/omit-if-no-ref/
+> +	ssp0_2_cfg: ssp0-2-cfg {
+> +		ssp0-0-pins {
+> +			pinmux = <K3_PADCONF(104, 1)>,  /* ssp0 tx */
+> +				 <K3_PADCONF(105, 1)>,  /* ssp0 rx */
+> +				 <K3_PADCONF(106, 1)>;  /* ssp0 clk */
+> +
+> +			bias-disable;
+> +			drive-strength = <25>;
+> +			power-source = <1800>;
+> +		};
+> +
+> +		ssp0-1-pins {
+> +			pinmux = <K3_PADCONF(107, 1)>;  /* ssp0 frm */
+> +
+> +			bias-pull-up = <0>;
+> +			drive-strength = <25>;
+> +			power-source = <1800>;
+> +		};
+> +	};
+> +
+If you can put spi pinctrl data as a separate patch, then I'd be happy
+to include, just be sure to list all spi controller pinctrl info
+
+>  	/omit-if-no-ref/
+>  	uart0_0_cfg: uart0-0-cfg {
+>  		uart0-0-pins {
+> 
+> -- 
+> 2.53.0
+> 
 
 -- 
 Yixun Lan (dlan)
