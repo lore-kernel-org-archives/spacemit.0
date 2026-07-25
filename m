@@ -1,82 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF904756D2;
-	Fri, 24 Jul 2026 22:52:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0486030FC33
+	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 00:58:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784933538; cv=none; b=sim3E3NiiyalG9enPwDmes51X6t+ht7MhKz+NDgMVAt/dAz1RSMs05QZvKwMoYNZ3k/66H2K3b5vUN3NvfKAF0JGg0WG+cZIjZ94MVsMxkN45mudtBaIf1mwr+KCtpPgs0sgrd8qfhizSzld77CbKr16AkXk1jjEpuCSlSzMh4E=
+	t=1784941093; cv=none; b=EDKm4sOxAzfqgvjwjfEkTr+zBieaFXen/CRs5hOh71EpYi99P63I4jKWg5zEOKbD7/O5z/nft07F0yuUgfi20Dhxrg48j/lffWUR/GFB32IWTQvamhNBZa1oYr2auyOStZLkWfmPSmKAX6yRYj+X+R1LvvFtrfaki2AIc3a7bQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784933538; c=relaxed/simple;
-	bh=WdvIp/kHz6bdqgK6nK7yN6X0JJaQRVefDEDBBWP4sGQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CkqlByCHDQ+MGaousALLcbLFtbfvvB0yBpluuhZQ3PJrY2yn9q+Uo8VbPa1VJZVqjdj27+2owoFh25AONNaZZvdsNCLQ47/f+gxWLBRBscFTvJ8YVns6HgAHmwQwd4dOJPwNH5I6hSh89mWk6AuNeUXcwvM8nz7HvGX79GT/aNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vx2PrZUN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784941093; c=relaxed/simple;
+	bh=kuTSarj9ZfJEd/4fshM2vXhKd0SE7Hs9HNHQbQ1dtwM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oG0qdfNj+HtTj3Lv6lzhJr36+1oglLyk8ffvtK8UXbJNaZQbkrATvNDYMHpHaLTLFzJpCtjLEvNwXa6DT9tr/8ccz8i2tCTvID2Qfsl53Fxs0NQyXSMKr08425JWXwouXfioFf75QfoVxOMvtV7XVThshd2aDc54hYZU7lSSJyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tFIdcfci; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vx2PrZUN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C821F000E9;
-	Fri, 24 Jul 2026 22:52:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784933529;
-	bh=j7VH+I1lcj9KOCqFU/y/KDTXauZwmnuiNnkt0ffMsyQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Vx2PrZUNdbhNA5e32im1FcrlqlzID9yIgWaOccGgWy7tnwVk696zvUlJSPHsKYlGi
-	 gKzSo5R5i92N7fE27fNPAnKJWCvj/pKBWM9eX44lq+/LkGJ4v44Gzsc0YBaBiWIvpo
-	 ffI8bb44JNyeAGjZudK3SM3U2o96mFxxyubGxfJNlTgYEsHiQ2UDq0dBD1GzwgZhm7
-	 4abwKjyOoolzDVXVsPUsfSzF+8M2w5ngb67UfNJ7kwAvpVt+v9YJO3XBBIVzXn1EyX
-	 qZKmxhumcavIvL+zLez0aTYn76FQlNqsqt7iS6zP1SSeOFk+VKFegE3oApyhwtJ02p
-	 2j3efIWm/xDHg==
-Date: Sat, 25 Jul 2026 00:52:05 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Linmao Li <lilinmao@kylinos.cn>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
-	Yixun Lan <dlan@kernel.org>, Alex Elder <elder@riscstar.com>, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] i2c: spacemit: request IRQ after controller
- initialization
-Message-ID: <amPsP5o2wWqszbfU@zenone.zhora.eu>
-References: <20260722094302.2284191-1-lilinmao@kylinos.cn>
- <20260723021140.2293844-1-lilinmao@kylinos.cn>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tFIdcfci"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8485bd28dd0so1070486b3a.2
+        for <spacemit@lists.linux.dev>; Fri, 24 Jul 2026 17:58:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784941091; x=1785545891; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=3RPSKOAGTuMe7DirYFHsiGB/35uTeF1WdVdXjVBBsZg=;
+        b=tFIdcfcissD07BWvPtrO5SrHHeIrORjIFFZO5lC8RbMI6wbZI6ChkXcbQSTC5jArZs
+         Z/BK5EpUlKfUas0zgQ6TB6oNfdR53IN9GH6x0tgkq2HLiSZRq33AX3MmBEdx5IddEjEB
+         hRrZVGJ4Yj8DrOUmyxouA8ENChW9tpPtR6i+IQjOsI89QcKozFqsqmjzHsQHdeX/Io8w
+         H4GH8nyH7Dn/Eo3Q2pePshkd33z8LzVN/TVjP/QxE6k4A9kNmr1NmtfCqwBy5En7hGPP
+         Id5h3af8Ld2d3hl3p503AIHPerqC5CYTv7MK2YKzhz5FTWtztRx7bMDNvcvLt/Jh3G4d
+         DcpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784941091; x=1785545891;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3RPSKOAGTuMe7DirYFHsiGB/35uTeF1WdVdXjVBBsZg=;
+        b=rLKMJC6BIO4Xvc7LIVx2SfFsxNt5yDTPGx9YzoUcyQjHC31QjP8QgNviNw9srodI0B
+         +Qt6HSJHw+r1GQGMPUspNwBXWVAola3slvCkdw9S2eUk5xvmLTmRs31RV3zp7kc6HEZM
+         XHNrXrBF6U8i08SMMBEhxH5EzOrI36y9v/+16VHgxZxfp8FOfH/oqxmxBD5XuhvrFML3
+         4ZaZywcTvC/zcTJK3/IZ7P1Y5SVnoHs9HGdG2jE3gES3M2HNhorcqS2zGdnHF/XGHFa2
+         8cFvYYJSvYGCgq3aN3I6QYv05w1RpQfichap2QSOZEcNTs3qxaSO2tZq7W3A3kaEeKHJ
+         KynA==
+X-Forwarded-Encrypted: i=1; AHgh+RpBBPWD1KZLOgd2ldqJZrDqUKGugv7Vqtsz6ECDADPPQHJuZaNV8J0vxcogimRRZbRzq7NOw6xqGA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywi2/4aFAYuSMoLeQ1wCRHBaBuoxs5ARKUzdpvoNCyE5IjIeDed
+	iBiwnyOVwE0hkb2DeQUJZVh1GICkiTymhRTriEj4vn5NEIYlG72WjqRU
+X-Gm-Gg: AR+sD111enmosFC4QxLdjhq+GNwXQOOgRf2eL+XgKvyGIFB1ADGDnurclkz/h1U+GFP
+	0Ll/DD4w9HjCcCgvFjLV5tkKqjdoVugK1PTprVSTXiJrX0eRB1G53ApiusZNcbA+FgzpSJX5oKK
+	CSCSCxa9LRYc5C1v+cM0UBM5j7l3NyZjFXOGA0C2n9kP++ZgL0KAXRH9L/ctI0BLVNvyoJ7Xb4S
+	7raaCxONf70LalBL/6Ai+L5ZtXxz14qFcdOMmitilxIuMr2OrE299eYv2DjEUuLSCunte0NQh/s
+	DgkZCU8uxMNEj/KnAP+LFqHMYyxfCDPm7aAQEQsVscloaB9p1TNq5EOSev+m3BDOkDH0MhhMy14
+	3Ykph77ejbP9ByW/xex+fDkvTf93YJIVbCHbXuGDAMPSp4W5XZ5plMpVSUtpcMLxI3YF2B7vU
+X-Received: by 2002:a05:6a00:4c07:b0:847:df4c:40c9 with SMTP id d2e1a72fcca58-84e595543b9mr406839b3a.46.1784941091167;
+        Fri, 24 Jul 2026 17:58:11 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:2000::1:5491])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e53254f57sm566254b3a.1.2026.07.24.17.58.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jul 2026 17:58:10 -0700 (PDT)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH 0/2] riscv: dts: spacemit: Fix phy id check for the phy
+Date: Sat, 25 Jul 2026 08:58:01 +0800
+Message-ID: <20260725005804.373698-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260723021140.2293844-1-lilinmao@kylinos.cn>
+Content-Transfer-Encoding: 8bit
 
-Hi Linmao,
+As reported, the phy framework can not detected the phy id correctly
+when reiniting this. So add the phy id compatible string to the
+etherenet phy, so the phy can be reinit successfully.
 
-Please, next time don't send the v2 as a reply to v1, it makes
-things confusing.
+Note: separate this patchset as two patch for backport if necessary.
 
-On Thu, Jul 23, 2026 at 10:11:40AM +0800, Linmao Li wrote:
-> spacemit_i2c_probe() requests the IRQ before it enables the clocks, resets
-> the controller and runs init_completion(). If an interrupt is already
-> pending, the handler runs too early: it reads registers while the clocks
-> are still off and calls complete() on an uninitialized completion. Request
-> the IRQ after the controller and completion are initialized, but still
-> before the adapter is registered.
-> 
-> Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-> Cc: stable@vger.kernel.org # v6.15+
-> Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> Reviewed-by: Alex Elder <elder@riscstar.com>
-> ---
-> v2:
-> - add Cc: stable # v6.15+ as requested by Troy Mitchell
-> - collect Reviewed-by from Troy Mitchell and Alex Elder
+Inochi Amaoto (2):
+  riscv: dts: spacemit: Fix phy id check for the phy on pico-itx board
+  riscv: dts: spacemit: Fix phy id check for the phy on com260 board
 
-No need to send a v2 just to update the tag section.
+ arch/riscv/boot/dts/spacemit/k3-com260.dtsi  | 3 ++-
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-Merged to i2c/i2c-fixes.
+--
+2.55.0
 
-Thanks,
-Andi
-
->  drivers/i2c/busses/i2c-k1.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
