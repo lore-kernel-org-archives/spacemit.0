@@ -1,171 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9392EC0A6;
-	Sat, 25 Jul 2026 13:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB60330B529;
+	Sat, 25 Jul 2026 13:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784985361; cv=none; b=XhuFqOfVnAHSSI1Jy21eGEKm8ZpDEyDOU5xdcjHvdVitqFeIH04IKLNguTeZoi3C9+i3h9G4jWpI0/+nEPvAJu0uc398bAwpYRopmAXU6YGHw8vaBakd5SWIOMjVABUE+Nyk/dT6CyvRZKfjzNSiysk7t0pOoFITgdPJLjfRW1I=
+	t=1784986066; cv=none; b=QGVe6r9Sr/X6rpcohSSNoZrqCtq2s9PAWYxE+uX49LvHHTkunHz6wGYVivArmImbh0fTARhP7New8ucyRt25/r5HY6BFKD552efSJVbk6YKsxZdtk0hNJXF/RAqQGTEAixByW8hmsU3DyXGzCn5R8RxSndBrTdM+JWOgUlE+emE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784985361; c=relaxed/simple;
-	bh=Jza9dBmNX95LB2vhP/MvN/dtx1frZDbFAwWceC7KWz4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q+jx//T0bRjO3crMeMt0I66fbKSkrDyuyFthnb5tCChLxSTRPJqe4Q4lXrbMXU2bO0sQ7unzeB1ENYLHUDUANRpJqxAN3rkFjXM/sJcwAv1shqRZGsXfYEaCJ4dqVGQIQYgqHaIry42x7qswL4aBDL4S7X5D57cFDyhpmyDCh6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SFJfQxef; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784986066; c=relaxed/simple;
+	bh=9WAUYmGdYHeNw4c8/Qc1K8kSlawGxPNaRVBmKIGiUII=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=N2lvNyYJSMo/XD6XF1YWFho6CpYRCJ3pVqDhJQJjCGolAnmZwTP6nVaFLEODR4lnZxfPGdodg/FeKAHUx8Fcr17abqW3kNnAe6XDm0T5anETmi6cjopjlZHe9LQBXHha+nydgIumi4oxA0Doz7DkviKfB/f8tKhxX00HR86WfMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BGThAtup; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SFJfQxef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80ADE1F000E9;
-	Sat, 25 Jul 2026 13:15:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BGThAtup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3C11F000E9;
+	Sat, 25 Jul 2026 13:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784985359;
-	bh=kT5XrLFshmt7cvuC4cpsKMz5cnoF+ktfQ+kqzEfCPuQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=SFJfQxef8TkdhDhuHbCYgas9g0LlIQnUIIhdbCouH/cKjxxpZbbujjdsrJpiW9nLE
-	 +yfo5ZMcHjUKhAhKGmrfJvMw7pu2Y4s424P5tM4KL2tCbDYPCYkZdhOCcmJrqOG95b
-	 2OTNB/fhFOhPyGGVryhbRfVE14Ag9lAgc2/JDvXOmi4yDcrq/55Ty4ETL0a8FADyCO
-	 OOHTTQGukDWXnARLvg3GnsHUFF2VkGCZEWmc//4FMXZJ8YQFwXb51qcIaR8gW6w8zT
-	 DvckpRVH3c4HHuRBHyRhfItKxBnhHqObNnH76AabdflG1pqb2eyfpqk0TveoLeyI1Z
-	 YXzavmMCwjQrQ==
-Date: Sat, 25 Jul 2026 13:15:55 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Zhengyu He <hezhy472013@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Mark Brown <broonie@kernel.org>, Alex Elder <elder@kernel.org>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-spi@vger.kernel.org, wefu@redhat.com,
-	liyeshan <yeshan.li@spacemit.com>,
-	Guodong Xu <docular.xu@gmail.com>
-Subject: Re: [PATCH 1/4] riscv: dts: spacemit: add K3 PDMA request numbers
-Message-ID: <20260725131555-GKF77545@kernel.org>
-References: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-0-969a1b0f783f@gmail.com>
- <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-1-969a1b0f783f@gmail.com>
+	s=k20260515; t=1784986064;
+	bh=DsJhSTaLOqEFyvKvQH1QRB+ENNlkLh84i18wRSEe3Fo=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject;
+	b=BGThAtup56cMrZOpHQ3HrO1XCzugN8xYb+nlsrR59wMwLo95nvMiyMj1j1P1U0tMl
+	 36B7d663p9g0Mzd8SLpeThazz4+fWhykbjf2aym9VGzslsosVFXnunmLudx5s8PH63
+	 0Ix+aKMuSvIdNXr5nZl9yb7XFPn/tZwb/mAjcKQ4ERNnG+H1UMD7h93e40NOwnqINb
+	 V0di6zDAkIH9OXVcd3hw7v12RAKQlkOPvyCXtrAKrXXgyTHjjhHEAVBJ0xa/xK5sqj
+	 T9vh+GwPX318xX/JuaFlxK5GOQYpT6PvrJqyxjVUj9T8LN4xNNJBuvUX8NcLDL9REr
+	 1IqOae2wEI8Aw==
+Date: Sat, 25 Jul 2026 08:27:43 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-1-969a1b0f783f@gmail.com>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Bart Van Assche <bvanassche@acm.org>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alim Akhtar <alim.akhtar@samsung.com>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+ spacemit@lists.linux.dev, Aurelien Jarno <aurelien@aurel32.net>, 
+ Paul Walmsley <pjw@kernel.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ Jennifer Berringer <jberring@redhat.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, devicetree@vger.kernel.org, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ linux-riscv@lists.infradead.org, Avri Altman <avri.altman@sandisk.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, linux-scsi@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Yixun Lan <dlan@kernel.org>
+In-Reply-To: <20260725-08-k3-ufs-support-v2-1-45036a2a2418@kernel.org>
+References: <20260725-08-k3-ufs-support-v2-0-45036a2a2418@kernel.org>
+ <20260725-08-k3-ufs-support-v2-1-45036a2a2418@kernel.org>
+Message-Id: <178498606385.3230542.8227126824689788827.robh@kernel.org>
+Subject: Re: [PATCH v2 1/3] scsi: ufs: spacemit: dt-bindings: Add UFS
+ controller for K3 SoC
 
-Hi Zhengyu,
 
-On 07:45 Fri 17 Jul     , Zhengyu He wrote:
-> From: liyeshan <yeshan.li@spacemit.com>
+On Sat, 25 Jul 2026 10:37:44 +0000, Yixun Lan wrote:
+> Document the compatible for UFS (Universal Flash Storage) Host Controller
+> which found in SpacemiT K3 SoC chip. Its features are listed below:
 > 
-> Add a local DTS header that gives symbolic names to the SpacemiT K3
-> PDMA request lines of the non-secure peripherals. Device trees can use
-> these K3_PDMA_* macros instead of hard-coded request numbers when wiring
-> a peripheral "dmas" property.
+> - Compliant with MIPI UniPro v1.61 specification.
+> - Compliant with M-PHY v3.0 specification.
+> - Compliant with UFS HCI v2.1 specification.
+> - Supports up to 2 Tx and 2 Rx lanes, up to HS-GEAR3 5.8 Gbps per lane.
+> - Supports standard low-power hibernate to reduce power consumption.
 > 
-> Signed-off-by: liyeshan <yeshan.li@spacemit.com>
-> Signed-off-by: Guodong Xu <docular.xu@gmail.com>
-> Signed-off-by: Zhengyu He <hezhy472013@gmail.com>
-
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
 > ---
->  arch/riscv/boot/dts/spacemit/k3-pdma.h | 83 ++++++++++++++++++++++++++++++++++
->  1 file changed, 83 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k3-pdma.h b/arch/riscv/boot/dts/spacemit/k3-pdma.h
-> new file mode 100644
-> index 000000000000..a5b723ad616a
-> --- /dev/null
-> +++ b/arch/riscv/boot/dts/spacemit/k3-pdma.h
-> @@ -0,0 +1,83 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * DMA request number (DRQ) definitions for non-secure peripherals of
-> + * the SpacemiT K3 PDMA.
-> + *
-> + * Copyright (c) 2025 SpacemiT
-> + * Copyright (c) 2026 Guodong Xu <docular.xu@gmail.com>
-> + */
-> +
-> +#ifndef _DTS_SPACEMIT_K3_PDMA_H
-> +#define _DTS_SPACEMIT_K3_PDMA_H
-> +
-> +/* UART DMA request numbers */
-> +#define K3_PDMA_UART0_TX	3
-> +#define K3_PDMA_UART0_RX	4
-> +#define K3_PDMA_UART2_TX	5
-> +#define K3_PDMA_UART2_RX	6
-> +#define K3_PDMA_UART3_TX	7
-> +#define K3_PDMA_UART3_RX	8
-> +#define K3_PDMA_UART4_TX	9
-> +#define K3_PDMA_UART4_RX	10
-> +#define K3_PDMA_UART5_TX	25
-> +#define K3_PDMA_UART5_RX	26
-> +#define K3_PDMA_UART6_TX	27
-> +#define K3_PDMA_UART6_RX	28
-> +#define K3_PDMA_UART7_TX	29
-> +#define K3_PDMA_UART7_RX	30
-> +#define K3_PDMA_UART8_TX	31
-> +#define K3_PDMA_UART8_RX	32
-> +#define K3_PDMA_UART9_TX	33
-> +#define K3_PDMA_UART9_RX	34
-> +#define K3_PDMA_UART10_TX	53
-> +#define K3_PDMA_UART10_RX	54
-> +
-> +/* I2C DMA request numbers */
-> +#define K3_PDMA_I2C0_TX	11
-> +#define K3_PDMA_I2C0_RX	12
-> +#define K3_PDMA_I2C1_TX	13
-> +#define K3_PDMA_I2C1_RX	14
-> +#define K3_PDMA_I2C2_TX	15
-> +#define K3_PDMA_I2C2_RX	16
-> +#define K3_PDMA_I2C4_TX	17
-> +#define K3_PDMA_I2C4_RX	18
-> +#define K3_PDMA_I2C5_TX	35
-> +#define K3_PDMA_I2C5_RX	36
-> +#define K3_PDMA_I2C6_TX	37
-> +#define K3_PDMA_I2C6_RX	38
-> +#define K3_PDMA_I2C8_TX	41
-> +#define K3_PDMA_I2C8_RX	42
-> +
-> +/* SSP/SPI DMA request numbers */
-> +#define K3_PDMA_SSP3_TX	19
-> +#define K3_PDMA_SSP3_RX	20
-> +#define K3_PDMA_SSPA0_TX	21
-> +#define K3_PDMA_SSPA0_RX	22
-> +#define K3_PDMA_SSPA1_TX	23
-> +#define K3_PDMA_SSPA1_RX	24
-> +#define K3_PDMA_SSPA2_TX	56
-> +#define K3_PDMA_SSPA2_RX	57
-> +#define K3_PDMA_SSPA3_TX	58
-> +#define K3_PDMA_SSPA3_RX	59
-> +#define K3_PDMA_SSPA4_TX	60
-> +#define K3_PDMA_SSPA4_RX	61
-> +#define K3_PDMA_SSPA5_TX	62
-> +#define K3_PDMA_SSPA5_RX	63
-> +
-> +/* CAN DMA request numbers */
-> +#define K3_PDMA_CAN0_RX	43
-> +#define K3_PDMA_CAN1_RX	44
-> +#define K3_PDMA_CAN2_RX	51
-> +#define K3_PDMA_CAN3_RX	52
-> +
-> +/* SSP0/1 DMA request numbers */
-> +#define K3_PDMA_SSP0_TX	64
-> +#define K3_PDMA_SSP0_RX	65
-> +#define K3_PDMA_SSP1_TX	66
-> +#define K3_PDMA_SSP1_RX	67
-> +
-> +/* QSPI DMA request numbers */
-> +#define K3_PDMA_QSPI_RX	84
-> +#define K3_PDMA_QSPI_TX	85
-> +
-> +#endif /* _DTS_SPACEMIT_K3_PDMA_H */
-> 
-> -- 
-> 2.53.0
+>  .../devicetree/bindings/ufs/spacemit,k3-ufshc.yaml | 56 ++++++++++++++++++++++
+>  1 file changed, 56 insertions(+)
 > 
 
--- 
-Yixun Lan (dlan)
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Lexical error: Documentation/devicetree/bindings/ufs/spacemit,k3-ufshc.example.dts:31.27-46 Unexpected 'CLK_APMU_UFS_REFCLK'
+FATAL ERROR: Syntax error parsing input tree
+make[2]: *** [scripts/Makefile.dtbs:140: Documentation/devicetree/bindings/ufs/spacemit,k3-ufshc.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1669: dt_binding_check] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20260725-08-k3-ufs-support-v2-1-45036a2a2418@kernel.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
