@@ -1,67 +1,67 @@
-Received: from mail-pz2-f1.google.com (mail-pz2-f1.google.com [74.125.228.1])
+Received: from mail-pz2-f0.google.com (mail-pz2-f0.google.com [74.125.228.0])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6EC318BB3
-	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 03:17:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669593563D4
+	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 03:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.0
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784949476; cv=none; b=Jx4KmpUnfHkyVqDsHdveS0oKsBahzzDafhWWbeHgOIVJIhm1txQTVyC+PyKp/YecoMR2AvS2U5JdkGslyphGmcy7rSODmikI8kCHFkww01rS/kQw+VI9lqxzQ/g44WzJqBYIX2+Qkm93BDXEY49Bbjpef1vHD86Ny3mYXge1m0M=
+	t=1784949492; cv=none; b=YyXg+bCBKr43eWOZ/rttjl5eYEDuyrX+0uvE6KdRoxRQ5xoQ467AYYEmIC5YVoOyEcLahAABoGOtsIiOBu0Ljw6TylJFhMjB44s1YeO+U1/WoBHrPN+Pf5SSnN2Z/GORjuAAFJuo8VihO0PYeo4MUU0oR9y/5O8NgYfx1ipQReo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784949476; c=relaxed/simple;
-	bh=To2Wz4JMP1yzDvV2UFHvJJLkK8aaYjCf2yPZVKorUr8=;
+	s=arc-20240116; t=1784949492; c=relaxed/simple;
+	bh=qBlMtjoJcxolZr+biObNXORMiyzxuZ3oViPL72enT0k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WXWN3gz5icImEyE8orhVWvSX99F2x05ACVMdgAmVf1SJCSulE/8LnsrQIzg3d6/kAjR7mkWvhzeXxOiXVIVtn5JKq2g/inWKhFHKsb6BXRrDi6PDVVNrQ6xbx7Rhj9Lo4LpKx/GE7qt+Nvg6cGFfjhvA95fPrLfVigekSG5f9BI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RZ8dlFVy; arc=none smtp.client-ip=74.125.228.1
+	 In-Reply-To:To:Cc; b=nunCSykpD9zlhyyuHqhgMDjkQwKmGdFp94VauJmm08OEJv07qll51+lKBoy/0fRuHxORBIJpxz+0zt3l3UWQZ3PMvXuKlzIHrXFn/tsnxIjK8+v+Q6DDfeAzK4uS2uVxpynn6Qr6Hd4xVMy4EF8dkMfJEMVm45HfejYuRabFFkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yhndpy+H; arc=none smtp.client-ip=74.125.228.0
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZ8dlFVy"
-Received: by mail-pz2-f1.google.com with SMTP id 41be03b00d2f7-ca7a25cd87dso1015070a12.1
-        for <spacemit@lists.linux.dev>; Fri, 24 Jul 2026 20:17:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yhndpy+H"
+Received: by mail-pz2-f0.google.com with SMTP id 41be03b00d2f7-ca24d39d8a4so634589a12.1
+        for <spacemit@lists.linux.dev>; Fri, 24 Jul 2026 20:18:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784949464; x=1785554264; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784949482; x=1785554282; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=+s3XIzGgmCw98QusnVJUh5PtZQnQQOXqs7KUawjh9Mc=;
-        b=RZ8dlFVyCbIZccJYvk7RsrBGcB9Dh598KILJH+sdLlEproQgs7kVSZEZ8PcCDyKO3d
-         ccPoUkG1chnL4mHoMPYASl1uOBHCks7kCkvQV/8Hj4VU0tiH24e5THqTABb9BckLhauc
-         w7cS4RqZ9VXiQ/iBcfcxBOKFuSWyJP1KAxWyUHxtRTOp0jNVprXuO0NKRaYtNymL4lpn
-         oF8YR3qVvYPhbZ9Hcb+BfHFs8FC7NkfNYN9UZWOuu8/nLTf/K6jEx+Y+zz3rYvDWBndK
-         gOdW55LNSJuvYcsaudo1/I0iix18bsGv4QvAR9l/0PuxTx5WBQhOWtwXsdNDd/MXf4Yr
-         dRhw==
+        bh=G9jy5raEKPdDIP6H9Rn1M27tE88CgVPDyIdAEUIQ/3U=;
+        b=Yhndpy+HSItiQAz51Ve9DNpwC2kpFZBiO0B5mDiBMLmuqBh8RsipoBtBp/+iPOphcO
+         CCn1d7o8OuNI2j9apHlTRaIXjqbhUPIXGorex/a5l6KWeOYnxc8ctOIvW246HSchnNNX
+         WgFYIHxHBzYDEyf84yTMlti9AfUFZ0QKcSxQvYftAgHCaLOybvOF+a/TpvrOO7iSB0iD
+         9SsWg+4ualMlTUp94kJF/OqaMQtJj4x8TwJFczsjFEr0DPvajw2CHcA6yqh1Dkb/nql2
+         hvi75kp9TPtDz2QobSeloWzsyvBeGll1gGY5MnZX9QKWEAAJhDvozee2cV3NpD7/0lBI
+         r/Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784949464; x=1785554264;
+        d=1e100.net; s=20251104; t=1784949482; x=1785554282;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+s3XIzGgmCw98QusnVJUh5PtZQnQQOXqs7KUawjh9Mc=;
-        b=JWHpH/vGLp6rOPEX9I/50cfOwSCdVX6+D7/WSqjUUf1JdLCLzVanT7r8d9zIWwMKee
-         tA/ZZQ1dFZ4eWTTz/WeOfiuvgMNXGbhDom87N3JqLrxS6l6/IaVACtpuvtERJ87jH5TW
-         3nPW1g2fU6im46vQLrJrbU/R8OXkwKWvjw1MUw9GlDCic/x2MfNOljZ6HuyniiCL/9fS
-         wP22y7A1xvgj0xETElhlMajNBg1lpUTEqiKzyAlW+uOzmP1dZ4ZSxUpQiHD9V9UUiEWm
-         i71BN2YSEBC0SfyGCvvPJ5XBupavR26duH+UgBUqYb5vZCf8AKzvd5bfnbAukdUixoAL
-         NVDQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqofA1+RnQ49Hu7FL3S88Edk9D4t9NpEe3sLqlijnMRKZsdCKY3KqffEYqvypHeccpf6ZNty1jt2w==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxa9CNkDKUR7ub17xHLcEA3IYw6WVCF89sAV8F00PX4B/UQJYAw
-	jcS5FPZSOAZ7zxPN+cPMfsvy1FcVCMuugK/m4NzpwPSzOZ18V3EOcd+8
-X-Gm-Gg: AR+sD12PbgdJLaJghxnX9sARQad8daSg0IYdZIgnzG9fYcCRFJktCuTPZAvWZ6h5m42
-	jTBRREBHCBKW/bRfkTeXO1HHuUrDxgEKMy0k4NiD/eihwlOHss71wKgnO10BqeOMCrI0nIVYH5X
-	4DVoWkclD59ACJKN869SNHLF1sQcgcGQzC4v4EKC/Zb++oQOrqGmCHoQWXs+3PdLPlX1lyGRsqq
-	PP+XNhxmgar3T2QikW1o5UQn9oxetbrI3qAKr1pLHHoX++zuFc2NGBCjARTEwBHOAR+nlNse0j7
-	vV3Djz4JXurYcd8KU8Y5wn1sbHKCO05r9S8h2qqdH9Nx/Jqc6YfqEdRHkgazRHa1v7FPGUir+wt
-	9MNstAhnLmiU3DgouXQsZNEK+m9kZ40HOwIzfJRWpHbbQHhxpw2FutKo=
-X-Received: by 2002:a05:6a00:9288:b0:848:2f77:e2da with SMTP id d2e1a72fcca58-84e595d33e9mr653832b3a.67.1784949464300;
-        Fri, 24 Jul 2026 20:17:44 -0700 (PDT)
+        bh=G9jy5raEKPdDIP6H9Rn1M27tE88CgVPDyIdAEUIQ/3U=;
+        b=qhOSrR2vKFGZQOrk6nRzILe72kB0fSDRiVqCmK4fJN+Vb2dAKMoth9jqJwO+jWuxph
+         4Nt6bHAZZ4P3hbSNxs67Paty1aweQ5S0IOg4FoA0DDDWGSLjGnXhF8YX0Jlhjlf9aKgk
+         p5dsaQeqnayo060oF73foRc6JGDPkiskMnvI9BWyFmTHbMHO8bbO5jl3g6VCTqZSs6Kr
+         xbrMqIQ3wzf9/lf7O+mX06xNs6LfJJU/ruXHBEA0O2VoIfXo2P+k545LCFKcTQaLxjzD
+         2EB3i+y2HAo61XWdhsO8gbEu/UHtDlKROEYlbXmukZAVEzfqbmZIFq3o+7nKaKnzqx7P
+         l/8w==
+X-Forwarded-Encrypted: i=1; AHgh+Rr5fxqGyM/eWHBaX224OvTjQZyI3sxh/Lg4z/4G3iugcccXbkGPMBs+9hVSebz13PmEqFAdERH28Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyEH79qGR8iKnSEAjckA4hOSvnwa32QMfNpPtt6Mc6YJQHQgAug
+	NymkI37AJZ5d0frhFWO6fxQBqFIvCuu+Dx8L41IoB8JDZ2bOEIL9vc+M
+X-Gm-Gg: AR+sD11SdUUeqRYX5TXk3dGa8oqEQw30GwmPULqRkRSwZg5E+xx5hnW1oNuid8GQJzt
+	yCsIkAH5pslSgNDdluDyim9Z6Phe1OGKxXVKrFpVsolhzomeQ8d/Z91PBEd/JuS96rJly8pu2xz
+	mDy5RY527iTxQIPhtRPqlx7pNCt/gkUZuxs6sfv3QxmUC4Jw2QPtYtYk0bFypJvbTTZY2o0umxo
+	5dl6AcPAA1gajbKUGe/wrY6Zg+PuJYuCvpDULxxR/Wnn6pSlu6HY/++NcUX+8gAjUwo6FbH40pc
+	7fimRnPrro8fjIgO0Q4j29t8DOmOzDjc94aj11hMSFT6ep21nKjcqXTUr+mHITvl6YBTgYZkp2p
+	JSdxcHqxcrLNTAGAB+KZP8CaGQd4GkXz75AVaRVcTKNZnN5IQ8bhJZ9WIDYhkbVANHw==
+X-Received: by 2002:a05:6a00:35cc:b0:848:44d2:72a2 with SMTP id d2e1a72fcca58-84e5944c07fmr653876b3a.27.1784949482608;
+        Fri, 24 Jul 2026 20:18:02 -0700 (PDT)
 Received: from [127.0.1.1] ([2a12:a305:4::403c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e53432834sm640542b3a.50.2026.07.24.20.17.36
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e53432834sm640542b3a.50.2026.07.24.20.17.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 20:17:43 -0700 (PDT)
+        Fri, 24 Jul 2026 20:18:01 -0700 (PDT)
 From: Cody Kang <codykang.hk@gmail.com>
-Date: Fri, 24 Jul 2026 23:16:36 -0400
-Subject: [PATCH 04/17] dt-bindings: soc: spacemit: allow eDP/DP PHY PLL
- pixel clocks on K3 APMU
+Date: Fri, 24 Jul 2026 23:16:38 -0400
+Subject: [PATCH 06/17] clk: spacemit: k3: parent eDP/DP pixel clock to the
+ PHY PLL
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260724-k3-display-v1-4-f22a10a52867@gmail.com>
+Message-Id: <20260724-k3-display-v1-6-f22a10a52867@gmail.com>
 References: <20260724-k3-display-v1-0-f22a10a52867@gmail.com>
 In-Reply-To: <20260724-k3-display-v1-0-f22a10a52867@gmail.com>
 To: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
@@ -90,71 +90,35 @@ Cc: dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org,
  linux-clk@vger.kernel.org, Cody Kang <codykang.hk@gmail.com>
 X-Mailer: b4 0.15.1
 
-The APMU's eDP pixel-clock muxes select the DP PHY PLLs as parents, so the
-K3 syscon takes two clock inputs the other variants do not have.
-
-Gate them behind the K3 compatible instead of widening the shared clock
-list, so a non-K3 syscon cannot silently accept clocks it has no mux for.
+The APMU eDP/DP pixel-clock muxes were parented to a placeholder, because
+their real parents (the DP PHY PLLs) did not exist as clocks yet. They do
+now, so point each mux at its PLL and let the pixel clock reach the
+controller through the clock framework.
 
 Signed-off-by: Cody Kang <codykang.hk@gmail.com>
 ---
- .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  | 30 +++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ drivers/clk/spacemit/ccu-k3.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
-index d3a7c93c3c54..b8fc6632a392 100644
---- a/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
-+++ b/Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
-@@ -31,14 +31,18 @@ properties:
-     maxItems: 1
+diff --git a/drivers/clk/spacemit/ccu-k3.c b/drivers/clk/spacemit/ccu-k3.c
+index cb0c4277f72a..afbbbd797826 100644
+--- a/drivers/clk/spacemit/ccu-k3.c
++++ b/drivers/clk/spacemit/ccu-k3.c
+@@ -937,13 +937,13 @@ CCU_MUX_DIV_GATE_FC_DEFINE(ufs_aclk, ufs_aclk_parents, APMU_UFS_CLK_RES_CTRL, 5,
  
-   clocks:
--    maxItems: 4
-+    minItems: 4
-+    maxItems: 6
+ static const struct clk_parent_data edp0_pclk_parents[] = {
+ 	CCU_PARENT_HW(lcd_pxclk),
+-	CCU_PARENT_NAME(external_clk),
++	CCU_PARENT_NAME(edp0_pll_pxclk),
+ };
+ CCU_MUX_GATE_DEFINE(edp0_pxclk, edp0_pclk_parents, APMU_LCD_EDP_CTRL, 2, 1, BIT(1), 0);
  
-   clock-names:
-+    minItems: 4
-     items:
-       - const: osc
-       - const: vctcxo_1m
-       - const: vctcxo_3m
-       - const: vctcxo_24m
-+      - const: edp0_pll_pxclk
-+      - const: edp1_pll_pxclk
- 
-   "#clock-cells":
-     const: 1
-@@ -95,6 +99,30 @@ allOf:
-         - clocks
-         - clock-names
-         - "#clock-cells"
-+  # Only the K3 APMU exposes the two eDP/DP PHY PLL pixel clocks as extra
-+  # inputs (parents of its eDP pixel-clock muxes); every other variant has
-+  # the four base oscillator inputs only.
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: spacemit,k3-syscon-apmu
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 4
-+          maxItems: 6
-+        clock-names:
-+          minItems: 4
-+          maxItems: 6
-+    else:
-+      properties:
-+        clocks:
-+          minItems: 4
-+          maxItems: 4
-+        clock-names:
-+          minItems: 4
-+          maxItems: 4
- 
- additionalProperties: false
+ static const struct clk_parent_data edp1_pclk_parents[] = {
+ 	CCU_PARENT_HW(dsi4ln2_lcd_pxclk),
+-	CCU_PARENT_NAME(external_clk),
++	CCU_PARENT_NAME(edp1_pll_pxclk),
+ };
+ CCU_MUX_GATE_DEFINE(edp1_pxclk, edp1_pclk_parents, APMU_LCD_EDP_CTRL, 18, 1, BIT(17), 0);
  
 
 -- 
