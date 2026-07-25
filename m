@@ -1,61 +1,63 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE35310652
-	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 23:34:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FA936F405
+	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 23:34:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785022441; cv=none; b=rKcNGM7FiPjLSGzY6qhmgkqS60pL9ne1Ol2U3f+YeFBwpIV3vTdVCTUDTCakGt/vmMDqB+pFwmxVFMLs2DU38Tv+3yJHKpZ27g/pyi+cI97b33s8jTB64ki0ncgP48sJ7mv2D/7/+ltUpfufLfw94fCNm2DOwMWV2fHth4fB2ig=
+	t=1785022445; cv=none; b=Z2uS16P4IXaQFtLzc/w1qPi4Ojnke8vPdjwRTzXlhw4C2WhCJbbHPi9PEyzww+lcRa+IiyHegpF0mQlmdh+hU7yEieYzy7RQ7732fvaWff0eAvi5Na9bf1sytuLy9yFEMTnoRtadeNAxoNSpDWN7PRrYrV7kF7lUtmIRSI3O5EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785022441; c=relaxed/simple;
-	bh=CWuNqTa1Di5xbCXotLCoazjjEqZ0QEGdVNvasAZYVrQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Z/JLIE1T6KtwqabV+hGrXmcamqhKqvf3tckbQS3XJs7kXvoqlIwbCEafNeEWGdoXH4rVRpMecHePP4rfzlcVSgQX+Afq7TrnNi4A7/h7cqOeDw3crDP18ASlz/QfWjKAliQUH1lC2UCMU02JtLngZSFaO0CI6X0qwk9dHk3GXW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ul6njfFk; arc=none smtp.client-ip=209.85.214.176
+	s=arc-20240116; t=1785022445; c=relaxed/simple;
+	bh=lEjLl6qQ1+Iust3EDUG6IS6NZWSGdOBAlgQahlehZjM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RyB+1CcYyVlRNEjdP/ikI0JvenHsn8UFw2ZcUZB+eTmUzXLahHveWBJkS+Wxf+umNk3VmeRha5wIA62rN2lXutPj39x9fCcF9Oj9XsbRfCuHpG3JNGIg00MZAlk+2VVIxoSRd8K6imQDuSyNtVArhuwyYk1OW2qrTVO+OGLOQ0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CPWapgr5; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ul6njfFk"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2cc7e86e7aeso16786625ad.2
-        for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 16:34:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CPWapgr5"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8453427d3f4so1670166b3a.3
+        for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 16:34:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785022440; x=1785627240; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FZe3o6MEZnJBcnhQqox2Guu7ytbKOYx/UVedKiDOk/8=;
-        b=Ul6njfFk1ibKXFnuHgehm0ajYNRyyj2/sBBAU7RPdJTOE6y5dE6gBzOrGXnFcy6VYc
-         sS4xzoND4mhqXi1iEM1BpEqYruC1ejtDjvXavSNTjjq+6QhHCvh6AzrMQEKj0Zoz7iX3
-         NjJfdFc8lF5veQSo6Z47CnYrhiWNQZqL07peKNCHxOIbBO0qoUnvUszMJ6zb+Lq23Ca5
-         VIXnGPHe5bTAMA3hzZLkku//ZsGsoU7USYEt5dSNbRg1/gv77P2ysj/kQliVeubJV5d+
-         2RWxxE8ZRKwL2T1uat+/NAqJsAatgZ5ftXdbfcYjBnR9tY+b3JBZdutHpCJCp7ef30gr
-         GgGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785022440; x=1785627240;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1785022443; x=1785627243; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=FZe3o6MEZnJBcnhQqox2Guu7ytbKOYx/UVedKiDOk/8=;
-        b=V7Y4VFsdwl5dmlDAqXfChLnEcUG1iTaJWVkwENVfj7bB4OK1m0kOhk0/luBbEvZTtT
-         hFOIs7clGfXb/Pd24ck+AOwpNbnHhUUuTNxuRNvyEbukLE0JJ8BrTmbbffSogWtoIll+
-         CAmJ3Y+chOJnoRCIEhJuhRqrjhSQRQudlhbZ/tqz15YJjIRr4tj4e0h0thuN60H7ii/I
-         s1QaLWSuJ1T2JZ4J48x1FK9Dq2MwDRtOdRK6VOpBL8vgHydZegPiogcLVH/jzTSZwRXc
-         yJsSDoyJwEb7g87JF0p+WGNF2Nu+6Lhca+4AInunL9sniDVW/EqslWiPGV0em9QNDq6I
-         4qRQ==
-X-Forwarded-Encrypted: i=1; AHgh+RrFkIzPNxtTkUrxg9jxvyjztjwmSssJW4pJ8qILDS1LT9eXc6IDjKXbVVMsNY805t/cH1IfEDl3Sg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz/uEFc9DvG4pevxhapJZBIxA5Oj3IPxTFRVDgohKs3ydFh2b9A
-	oeppaiO4SC9YP5NUlLFS4Uq/GC2n/BAjUxaLx43QNELNPUt6vzSEQpx0
-X-Gm-Gg: AR+sD12dlzHslB7n+pYqmFPAnpFcEMg5gqDYhDX/BCbiKAHcPRGepH/eedYKgInXNPm
-	X/1/XBdnB1L2rzm/PZndG84oEx6a4A/slLomKyyoQkYA9kPi7EpkZmmFgYN5n5pkaA/dh+9Oh/b
-	bhySYIrkPoxRaKCnjXWaXqzEQwfOT1i7FwbnfNiF733VpltiwWgOmBDdISt8lNA83VOF2dr7WIL
-	8gBt/jBuQ4rWHtyosjjwhKJTT7doHvJsukkLX81rN06WbJec7Ltl6Znu+VLCIekUpXDplX8urAZ
-	C82AGKglvbLjclk5Zd/SpEkCZXcEUCPTt30WDaRJE6DqMwK9DC3qoXHqci/unj2QUMf6+ttB1e4
-	9bD8Dg9MPTWyJ8tnu0jj7WMYPbmB3Ilnh+7ZXFKOIp2DfXY2w6gwAOfsq+zQZndIgClaalnlE0C
-	Q0
-X-Received: by 2002:a17:903:3803:b0:2b2:67ca:5ff9 with SMTP id d9443c01a7336-2cfde55df36mr33858585ad.0.1785022439897;
-        Sat, 25 Jul 2026 16:33:59 -0700 (PDT)
+        bh=SrP9mQEhRTjv8fkN36wAMdshu9I2D9ppkLqB082ThAM=;
+        b=CPWapgr5FyhAblMPX9PSPAC0w80XQtKtBkqLXwqZJBzEPzaW7yLj6eRC/69CG8H2AV
+         uo1QMOx26doJgJkRi61HYI++dAf0/yPQkFFE0dIcwDSTLHNGTOGVFayo2E8jWMs22iwU
+         g5NCCoWTzxNjOFGjXgzcH/4Swj0PHWpis77VSR9GDWSkhZRj8/QTaOmLdHorwuu/gRUH
+         a9wPB0CKON7ZGOISnMLq1zm1bRXGK9gMjGsv75boJ7aMpSJFDolUSv5qkpIgHikmKkkg
+         HGKjtyL1284e2vYmSU+5udX9giQ8j0Y9oJOGlHfd6ktFIaMICTyMSpN/dsiL2GP+EDGm
+         voLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785022443; x=1785627243;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=SrP9mQEhRTjv8fkN36wAMdshu9I2D9ppkLqB082ThAM=;
+        b=SL/y4aYxg8OerPgZYkLWrac81MqWr9RyUsAp2hFEIESHOKRpwe+osOi0RSREeIzByz
+         rCQtQWeJ18OUpeM2CGEtFxRKCPA1gUFjDRNsRpgtJY3N7XKovtKn694YF6548rQjoXkZ
+         6wjyIbjQeArJidSzPEXWmu2P5+P1IMoH1EH5a1kMRZ5PhJ4jJsonpOnZBUHGCCF4apvx
+         5XAy4ReD0ov1A0vOFIzhgs5jZIWpzKEDUGQU8b9pEQAETmrP5JiqhNoUl3BCxwkbaZFD
+         udFMc7CbieEPBKouh8u5RkTjymFZz5CdPbsZdUjiz9C7FZa428DJzw5enKSSV4qLNWMv
+         jqVw==
+X-Forwarded-Encrypted: i=1; AHgh+RpbuneRSro4uCXXy1wZM/Bu+ERUUhoCIRjRlKty1OGjlumm9fql2phumJtBhk187oGhd5TwENyCUQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzqiAppqo95JPaSJpK+Vk40zkTAgPlDqbzjmV5e1k6fm/vfBf0A
+	uodYhzxj8jpgWXjg89kqBAcnOgAB60bHqHJ5iC6wQ5pWh1sLnxVdtZ3m
+X-Gm-Gg: AR+sD13vpwHQxW8YBA1AIpeEYAuypZIYw5pF6CDF/OFOo0UMR+ZtY3mnDk+kqOhKccA
+	d5bYlB5suDu0K36cYWM57Z6T25IiN9J7eAGLMz8Grcf+bTVZwbzVUL9+AXCEhIXo3+sQlW3vwSG
+	pHs6r90aRUfmdB08xIysXFIM+3/c6m8l+pVBLKVmlyLIJkYG+I3T41257ACt9XHS/a9zus6z+zb
+	ZQULrlTZR9zRkNPcBl/3edJQVT+FgDm551LIBLuakqLEELvn7Xe4G3OskuHGBXpewcK9nExzY8D
+	aMVIuM7KPMNNT5B+vaqXa0sLYI/PBwauk0HRmg9M08t6Wsf+g/YdDD4jcDNlxj2ACDHJmbo+txO
+	qwTp3Vji7oXPBwi5GQINxPwQFil35LoEfpAgoctEaBz98HsPgMo2FaKYJq8NSbc+wVNIUC/Octi
+	4K
+X-Received: by 2002:a05:6a00:9283:b0:848:63fb:fd91 with SMTP id d2e1a72fcca58-84e59546fc9mr2996113b3a.41.1785022443208;
+        Sat, 25 Jul 2026 16:34:03 -0700 (PDT)
 Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cfde59bb2asm13811605ad.10.2026.07.25.16.33.59
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e533ce57asm1410168b3a.28.2026.07.25.16.34.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jul 2026 16:33:59 -0700 (PDT)
+        Sat, 25 Jul 2026 16:34:02 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -71,11 +73,14 @@ Cc: devicetree@vger.kernel.org,
 	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v2 0/2] riscv: dts: spacemit: Fix phy id check for the phy
-Date: Sun, 26 Jul 2026 07:33:48 +0800
-Message-ID: <20260725233351.55004-1-inochiama@gmail.com>
+	Longbin Li <looong.bin@gmail.com>,
+	E Shattow <e@freeshell.de>
+Subject: [PATCH v2 1/2] riscv: dts: spacemit: Fix phy id check for the phy on pico-itx board
+Date: Sun, 26 Jul 2026 07:33:49 +0800
+Message-ID: <20260725233351.55004-2-inochiama@gmail.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260725233351.55004-1-inochiama@gmail.com>
+References: <20260725233351.55004-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -84,24 +89,33 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As reported, the phy framework can not detected the phy id correctly
-when re-initialize this. So add the phy id compatible string to the
-etherenet phy, so the phy can be reinit successfully.
+Current phy framework can not re-initialize the phy correctly, as it will
+assert the phy reset GPIO so the phy id can not be read. Setting the
+phy id of board pico-itx manually so the phy id detection can be skipped.
 
-Note: separate this patchset as two patch for backport if necessary.
-
-Changed from v1:
-- https://lore.kernel.org/spacemit/20260725005804.373698-1-inochiama@gmail.com
-1. Remove all the c22 fallback compatible.
-
-Inochi Amaoto (2):
-  riscv: dts: spacemit: Fix phy id check for the phy on pico-itx board
-  riscv: dts: spacemit: Fix phy id check for the phy on com260 board
-
- arch/riscv/boot/dts/spacemit/k3-com260.dtsi  | 2 +-
+Fixes: 74657a376960 ("riscv: dts: spacemit: Add ethernet device for K3")
+Reported-by: E Shattow <e@freeshell.de>
+Reported-by: Inochi Amaoto <inochiama@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260712045233.800748-1-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Tested-by: E Shattow <e@freeshell.de>
+---
  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index b2a7d2d0d3a8..d78416f3118e 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -196,7 +196,7 @@ &eth0 {
+ 
+ 	mdio {
+ 		phy0: phy@1 {
+-			compatible = "ethernet-phy-ieee802.3-c22";
++			compatible = "ethernet-phy-id001c.c916";
+ 			reg = <1>;
+ 			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
+ 			reset-assert-us = <10000>;
+-- 
 2.55.0
 
