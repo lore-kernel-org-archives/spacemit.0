@@ -1,102 +1,121 @@
-Received: from freeshell.de (freeshell.de [116.202.128.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej2-f2.google.com (mail-ej2-f2.google.com [74.125.228.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A98137104C
-	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 08:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDB637AA92
+	for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 08:14:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784967247; cv=none; b=in+AsxmX8CHrRBV92VwH4LYRfVbf3erc/WMyxwGf0q1t/afhmm1n6sVyY7aC+BDg5ylKPuEFoRFF6PEasUVZZZoPtCqB9UN86wsjQ1jk9gsvXeBBGAHTIlXX5bsmoLr1hPAvxjkoYgYs2l/rXMCwL6DkVysFtg67G8YHtrp/STY=
+	t=1784967261; cv=none; b=M5SBfoBC6Gp7yMX0e7onGboO7jOoOsg0KEj19EU7ZRL36Wb+p7fJ4hxN0FhI3agS/oTd0XrPkIayCXPAHIyWKpkJCh4agA3AIsidNcQaH3n1hu4Ug7wg2wz2QjHXIMkdiXsuerx10YCfFrEvYTWwXYuZ0a7oUJWihP0pneOkqVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784967247; c=relaxed/simple;
-	bh=UNioxEkaO8EJAWuBo1DYcEOj9l7/qEHDoucEsmStjFs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KOc/DjXw4XfMoaTjSGFjBSXueShA4AxgTjMnTK5PdaVEMJFKlMJX+X8lzoVhITuWT6bBlWPHeUUMOn9xk91s8SYPSkta5DCiytqBLbPhaNEmtNMeqApyz9UHeznoVEbJ57ZWa1J+ZasDrnszpKYpfxDOhwjqRGdOknhXgOoheBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=OnV+l0Wo; arc=none smtp.client-ip=116.202.128.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
+	s=arc-20240116; t=1784967261; c=relaxed/simple;
+	bh=gPeXPPGLbFmRB2bRAKpa2gFojTcQTquw5RAY2mSvs50=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XP5aU1lRzvkJx1nJOfrG7V9Qcig9hipxa1K91NsdE5S3DRCXuxuUAj5UcodKOtXK+1ICwCtD5aLqHOH1z4digQMbZ533uQnbFf1a/a5XjyJ3HDUp4om6rQadVb616xOSedSeDOJvDK4QjjORkQ1DJQvZyFUBTj88KOXfAE2jU4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o+diVcEl; arc=none smtp.client-ip=74.125.228.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="OnV+l0Wo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
-	s=s2025; t=1784967180;
-	bh=Q1wNwR7tIvEW59tXnUAq4uObdZlbHctBQ2RgzD/ZM+U=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OnV+l0WoJv/sdyIlExO4Gq+PhEkYP7GycUj9fdFV+6B+X9lmoUo2HdVM465G4NDmp
-	 jSPSjOP0LHhtUg0wjigtySnOYMnYwSnh/qZU68PbFEQGRZ9VquOnmzubejei6WVtSm
-	 al5IOoSka+a8eFZYsL8HAyxWVHMTK6XJ4V9fRPQj76UHF0o97ia+HnXhnuSOj9GTNj
-	 IJln88Xh4R5+xdRyCtrfiz/FL1h3w3MaQ6Ab+DtLUjAjJfC4eIW0e2ASMlTztvJP/z
-	 Fmxt7yNYLbW6psc9gNctMhp7KpFzNelIWFneA4Akg/plsstQDkFrnNG6nrOAdqYiHL
-	 tJNrTkBVQl1AA==
-Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
-	(Authenticated sender: e)
-	by freeshell.de (Postfix) with ESMTPSA id 9F302B2200E0;
-	Sat, 25 Jul 2026 10:12:55 +0200 (CEST)
-Message-ID: <9545227f-77ef-480d-bb55-6caf1124627c@freeshell.de>
-Date: Sat, 25 Jul 2026 01:12:46 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o+diVcEl"
+Received: by mail-ej2-f2.google.com with SMTP id a640c23a62f3a-c159467cca6so52438566b.0
+        for <spacemit@lists.linux.dev>; Sat, 25 Jul 2026 01:14:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784967258; x=1785572058; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=gPeXPPGLbFmRB2bRAKpa2gFojTcQTquw5RAY2mSvs50=;
+        b=o+diVcElQJC8eTX8PSwh55RDbFOSnuij9+X+U+XmQfbKsdImnRsiNMbb1PmWqGGC83
+         YyS57n+Sgd/P0EZCMleTNtzIo4HEGtp2+xeIJSPK6aqPO5LfUZOVQ1ZrbAhKSJilH7Fu
+         Z7RGgNQ/baNS/DXyheflOxd+6VZup44VI3rBwhstwWdv+CGOTX8nuloKyTbbtXeFtKxo
+         C8Q4jKc9EHZ2b4BA1Rf21ZKlLoRe25xUjHu6tZV5SfNPY0zjRKXiWpuIvksS/ktYWMkr
+         nsHyf+vk6gpRLvXWGETypiH988gXC/COZzYktzJZvf2B+6dZtvWof8hNOIQZNobm2QFq
+         QONQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784967258; x=1785572058;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gPeXPPGLbFmRB2bRAKpa2gFojTcQTquw5RAY2mSvs50=;
+        b=itURDo+R1G3raISHUnkbZ5rStVo8tVlgulDeqt7cJk58dbaBjpI5ReCu3V98XPydv1
+         ixD557RhZDcZRyLAKHctl6UOPod7vVWEs4SBJB47conevE4KBdPkZZNIGhAwuO7P50Su
+         QU7Eo6E2L4LwD1180Pecnxlv1o3s4ADSiBjAd1zpL+0UPtjBhF6a17SlCL9fo9vuCBSu
+         oirFzcb6Zez7uSSZRKFpdfjs+m9NOYlU4GEpeap9BIS4VEOgWgGAL0vgHKgyo8Y1Z5I/
+         3Dw5k+CiApUqto3SpLri6Vzw3TQBFOP/vlZ3UjRb8P/H9aDQrLJS05Vgjb/5FGC7bhgT
+         ylPg==
+X-Forwarded-Encrypted: i=1; AHgh+RotZj30tXBWyzhpwSTCNj+iM2tSVaqnYiRZJ3jFm3jid/T30p70AsciVLHfT9e+fCXKHWdNMcSshw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwFrijF03agAb9Jz3mhWqire7iyUf1/vqaBKosLfSj6lGVwll4/
+	JpsO5Xbku8lVHoZdljp9Z20ygTML2vW23Znn0jahJzWbJ9TMASJOJzE+5hJ2uHST0EzNwQ==
+X-Gm-Gg: AR+sD117b+RYsg1t0IbH7Rkcmu3kEpUgMrq6hb1SyNoSdFfcJV7BJzi94HaotBgwSog
+	kX6i0b+cW9GhKDyByWLp78DSmKcuxjCn7Qo/jwPR/FwRL+8vRovuKqUhuzTExLSDrDZ0cIfs/SJ
+	nIJsiysv7KY3xlfgQGbY+nUtb7fe4hYHatnjZDdHR64V1cSF2D8LuNIHpn4P1qmtKEGiycez5xx
+	yjb+wrlmjuYTtxUxSKIgx7Dw453TW6ivqpKO6+cHzyDKJBmd++HK/x65uOvdf74LfRkGnyecEg2
+	SYAmmDN0FrB0PwIL21eM3ug+bqeYrTvOe1a25npp0KdyJFU1lU7mymyalC6ayyjDa8kaA/2JdY1
+	3KKvq3tSOxiowT0KcKxbwkf3TT+bWH3cic/ApG9dwsi27MiattbQL
+X-Received: by 2002:a17:907:1caa:b0:c15:ccd6:79c5 with SMTP id a640c23a62f3a-c1f1eecc34bmr64140366b.33.1784961423771;
+        Fri, 24 Jul 2026 23:37:03 -0700 (PDT)
+Received: from localhost ([2a0c:59c0:1::208f])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1c32ebc828sm440790366b.43.2026.07.24.23.36.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jul 2026 23:37:03 -0700 (PDT)
+From: Cody Kang <codykang.hk@gmail.com>
+To: David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Haylen Chu <heylenay@4d2.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: Cody Kang <codykang.hk@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-riscv@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-clk@vger.kernel.org
+Subject: Re: [PATCH 00/17] drm/spacemit: add SpacemiT K3 display support
+Date: Sat, 25 Jul 2026 02:36:26 -0400
+Message-ID: <20260725063628.3499-1-codykang.hk@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260724-k3-display-v1-0-f22a10a52867@gmail.com>
+References: <20260724-k3-display-v1-0-f22a10a52867@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] riscv: dts: spacemit: Fix phy id check for the phy on
- pico-itx board
-To: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>,
- Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
- Russell King <linux@armlinux.org.uk>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org, Yixun Lan <dlan@gentoo.org>,
- Longbin Li <looong.bin@gmail.com>
-References: <20260725005804.373698-1-inochiama@gmail.com>
- <20260725005804.373698-2-inochiama@gmail.com>
-Content-Language: en-US
-From: E Shattow <e@freeshell.de>
-In-Reply-To: <20260725005804.373698-2-inochiama@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Inochi,
-
-On 7/24/26 17:58, Inochi Amaoto wrote:
-> Current phy framework can not reinit the phy correctly, as it will
-> assert the phy reset GPIO so the phy id can not be readed. Setting
-> the phy id of board pico-itx manually so the phy id dectection can
-> be skipped.
-> 
-> Fixes: 74657a376960 ("riscv: dts: spacemit: Add ethernet device for K3")
-> Reported-by: E Shattow <e@freeshell.de>
-> Reported-by: Inochi Amaoto <inochiama@gmail.com>
-> Closes: https://lore.kernel.org/netdev/20260712045233.800748-1-inochiama@gmail.com
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> Tested-by: E Shattow <e@freeshell.de>
-> ---
->  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> index b2a7d2d0d3a8..b9d2de878f38 100644
-> --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> @@ -196,7 +196,8 @@ &eth0 {
->  
->  	mdio {
->  		phy0: phy@1 {
-> -			compatible = "ethernet-phy-ieee802.3-c22";
-> +			compatible = "ethernet-phy-id001c.c916",
-> +				     "ethernet-phy-ieee802.3-c22";
->  			reg = <1>;
->  			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
->  			reset-assert-us = <10000>;
-
-Looks good to me, aside from commit message spelling and grammar nits
-("re-initialize", "read", "detection"). Yixun may just fix in-flight, my
-R-by and T-by tags can stay.
-
-Thanks! -E
+Apologies for the duplicate posting. The patches are identical in both=0D
+threads, this series and a resend series, see [1].=0D
+=0D
+Please use the resend [1] for furthing review comments:=0D
+[1] https://lore.kernel.org/r/20260725-k3-display-v1-0-6de34d80e86c@gmail.c=
+om=0D
+=0D
+A delivery failure on gmail side appeared to have lost the cover letter=0D
+and eight of the patches from this thread. For about two hours I can=0D
+only find 9 (4, 6, 7, 11, 13, 14, 15, 16, 17) of the 17 emails in the lore=
+=0D
+link. So I decided to resend the series with a different mail server.=0D
+=0D
+Sorry for the noise.=0D
+=0D
+Thanks,=0D
+Cody=0D
