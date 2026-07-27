@@ -1,174 +1,65 @@
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4331A3E6399
-	for <spacemit@lists.linux.dev>; Mon, 27 Jul 2026 08:27:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0168022ACEB;
+	Mon, 27 Jul 2026 09:35:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785140848; cv=none; b=gEx0zQgYZHe1VEIk3WIaNfJVlpbHb1vxx46TOm0DbdXugmvwe7N1BoBNzgiAGdDJNGtnTHGVif4mFyMV75ezuQALxAJpgli6gpi2+ByIrMwwPCr6ToU07GSDiMMPWfQowmQInhkWPD5X/s/nLc/wJWCGI7EyTNnWXbNfTkj4R4o=
+	t=1785144902; cv=none; b=sjY+KPf8c3jWGFb+83ZdzEMLH+KuOr31m4ATeaz8SGsJ+AozoYZpMCd2uBnfPhufPDck+NaFsM+1L2LYzunGvQJe9mNrPumXa9KWi/by05uAbrc6jTmcZNjv4UcG0cmkUUJJlbagElXT3PNf2DVWMLrk9ybL2NgZMkKg4ASFWWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785140848; c=relaxed/simple;
-	bh=+oSqKlFKVKGmLb1zJK2OH5TMFrqKaNXk0B6a6IpQ02A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=n2MeXiwCdLG70QYwvYwwgOlCUFmqJotxoDZtO1yBn6z3Y6ERcjiJ3KLbUx+cKxtnm+xPm8OzbqOMGdetDhMZl/YB2O8qN7+w/BKajqAEgkzX6jNOwncyE+pK4lzvd4hi/GpuSy8ipy9oo9osWDj51uTjNBQoGzPTSKNK/BTP0ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=c5EZqN/P; arc=none smtp.client-ip=54.254.200.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1785144902; c=relaxed/simple;
+	bh=61PcQcDvXzE5votusvTPAxF6joW4E+Gik2S0AJ2e7VQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c4oO5sZauvxM1jEmlI8F0iN62d+1AH+ROFMm8RQd7JBtT2vr6hA/5cOk3pqozBZQzaWQ4pEOqjXPQeifsRiT+fzqOHySjNWtuO60OARoAZmRwtVjTOVCGPRtCgD/t6MqbXO7c2djjCvGDf8z2jA3NBt12qHbdt6cTDP4b/CrTYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gjclF8DR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="c5EZqN/P"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1785140796;
-	bh=YYXkTcKV3/eTCF09YjQkyMu51mTKVZop32wWW/f5xtk=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=c5EZqN/PzGgpmJYp0mZWXJvwdKL85Zpk6Be08xWVoPKAbWXC3I88pMvkzsX4324Gw
-	 ZT90OWhhes2kWQBw9G7LNT+/SGk0WZ1D7PqgV/ZgEHcbcVxicOyYR2lYnClFkrEjTs
-	 +Nmb1yehSMt5WM7PWlv1eZvGILzpgWy8BL9cpiE4=
-X-QQ-mid: zesmtpgz6t1785140786t7bebbc01
-X-QQ-Originating-IP: xYW3LPiWNtEz4e/dmDCCluOcc7KY6gzIGz8Oy6QMEWk=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 27 Jul 2026 16:26:23 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11789586640069058678
-EX-QQ-RecipientCnt: 13
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Mon, 27 Jul 2026 01:26:15 -0700
-Subject: [PATCH v2] dmaengine: mmp_pdma: fix wrong extended DRCMR base for
- SpacemiT K3
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gjclF8DR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C00C1F000E9;
+	Mon, 27 Jul 2026 09:34:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785144900;
+	bh=WFlsQzSJEl+MXDtyzozfCwWlLOJBpDw/B1n32t0hzIU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=gjclF8DR3p2IGOdZt8j98/z5Rxy0e3VxXFn2u4RmPbKPZmhikNypurPu6HXDBUVzk
+	 qhI7SfqeH13octvLnjwe57ZNmRm6wZ9zD4vZ3jsaEII/c6xMUwuAwLkD7WjRuH4uYX
+	 FTA+46oSW5vkwfumQ6SbhZp0fCdQJe5VK6FSh6/HC7+oLJWnTThNbhl7TPmqjBD3RJ
+	 cgkw8qyNwdooi6lNrtPVclgfxkSW+rFK1uKlm3+Z7gROiqZBvKItsNcEeJ/vAdb9u4
+	 6o46xS3ve0Eq3zadqXT61tOtQ1o7iMTLB8ifTZKCYd0PMGZc+hfcT/d6AorN/pdKmV
+	 3Pf3ku5G2mevQ==
+Date: Mon, 27 Jul 2026 09:34:57 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-clk@vger.kernel.org,
+	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [GIT PULL] clk: spacemit: fixes for v7.2-1
+Message-ID: <20260727093457-GKA76518@kernel.org>
+References: <20260706203425-KYC2957292@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260727-k3-pdma-fix-drcmr-base-v2-1-afba55cba1f3@linux.spacemit.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNQQ6CMBBFr0K6dghToARX3sOwKGWQUQukBYIh3
- N2CB3D5kvff34Qnx+TFNdqEo4U9D30AeYmE6XT/IOAmsJCJVInCHF4pjI3V0PIKjTPWQa09QSp
- VnqqiSDJZiDAeHQXjDN+rH/u5fpKZjtphdOynwX3O5wUP7+/JgoBAhLpFmWFZtrc39/Ma+1Ebs
- jzFZrCi2vf9CzMZlsPXAAAA
-X-Change-ID: 20260615-k3-pdma-fix-drcmr-base-326536770427
-To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Yixun Lan <dlan@kernel.org>, Guodong Xu <guodong@riscstar.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3475;
- i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
- bh=+oSqKlFKVKGmLb1zJK2OH5TMFrqKaNXk0B6a6IpQ02A=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFnpYnpB2xlbj/5IeZXdkndG5vTl3SIGCX3Xwx48TJpcs
- lNs78ndHaUsDGJcDLJiiizdD3i2FfhE2RYIFPrCzGFlAhnCwMUpABO54Mzwz6bIzv5e03mFxou+
- 5/k+BOwP6nRuvFR3+gFP1Wb+vwp9CxkZrisnHTrAtXv+7ffmnw7E1z6YuOHI9n9zvl3Z3xVhpWL
- 6hB8A
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
- fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Of2cEohDBRJBLX9i7Ma60UghAsqdBBxFuiBgglamvZxfThXDCuzB+gkv
-	AiaxALPL85ly+m2uTKcDGnY8gMO7F6Db+rWwoQ6Rg6NLvTsxV5wmR0FKIiGKZtNqZxjblcT
-	y0QN9NG9cdvayraarpZele0xl3yNNaPHfjEj38g6eAK5t9mGSXtqgvkyzMwY6YdmYqTL+yp
-	1SDNiWJwhDyK9NJ0VT1Kn+MDj8aPEUa+Bz+ZnaY2aY5OUQiyV8fHowlpzx7lbqmnQQH4V2h
-	qUtWVrqOZ5dpjkNYejWtm4u+IOODTH58U3TL003CbE+/7F2iFa6xft1u/zmFxrdDU1RIExo
-	iL8FFKhMBQS6fP6w5VDd63y5WOY3fmm2kCQc78jCqg/n9ZoDPyVc62IDBVNI3JyTNVfrGHj
-	xNH9mWzPP4sXD9pBdLY88uXQL+jKq9bcySICquCVd2gjP0ZPw4yHs1ckl5eLeUkNLogcj0I
-	PjPfzCU/Ue2XcOGS14u7IVpn5wcJHbShfH/v/J1sG39tKLUXRI5RMS5CPzLxXJLP/Ms4WKD
-	9yFLYesSj/NOrQiD6cVtMYTsKJYNcwXook2rhXaGWjiTiOvRlRB93tXUJc+4/8jQsb0oLqp
-	nxw0JGPd6PUcB6pno0SJbzRQltsBCxmN8AD/zU7fBMgbuZ0bRW/2cof4hU9LUAytKQxeyKp
-	dNvhSRNVR1aF1/248Y1TuueDfoUJTPSh9uwIwTVEBeZvv3ndFmh12aD1SZ8VlfkiRAy2COG
-	GHIc4DU8gDmUPtGNWMX1KUnrDJOO6l685/NmzJqSRXyQ9hZkv5/cwu0S8m6GdBucuOB/RzA
-	AlmdGamhLBDffPI6HwnpUhL47K5F7Lco44zsGphpUTq8Dkz8FB4ghC0aQVkx7lGfqj0dkv/
-	TqXrpkN75FF+jhAEWxUnuM0DnvtPX2/XXNV4FIVYlzkg9pOCaM7KNEXQIBK+Tkx6V+BxhNe
-	a6hycUAbxvEwIaAZrTLuyGVhHKV+lPuZcTIEuG3iQprznPIPSUjqzq0hql7wvFjcnV2u0o+
-	DL6yH2dZIHhB6bhQrUCOMvyGl+c4lu7L4C1iSlEzj4nSVz8DQF0GMKOhY7OvUpG2kG+3l6j
-	dWnart+HG/4yzjlN1z7Jy8=
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260706203425-KYC2957292@kernel.org>
 
-The extended DRCMR window on SpacemiT K3 starts at 0x1100. Commit
-6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support") incorrectly
-set it to 0x1000, causing DRCMR accesses for request IDs >= 64 to target
-offsets 0x100 too low.
+Hi Stephen,
 
-The 0x1100 base has been verified on K3 silicon using real SPI and QSPI
-DMA transactions. The K3 DMA documentation [1] was updated on June 24,
-2026, to reflect the corrected register addresses.
+On 20:35 Mon 06 Jul     , Yixun Lan wrote:
+> Hi Stephen,
+> 
+>    Please pull two small SpacemiT's clock fixes for v7.2
+> First patch for USB2 clock fix need to go in pair with USB2 reset fix, the
+> reset part patch was already accepted by Philipp Zabel as a fix for v7.2.
+> Second patch fixes a system hang due to HDMA clock being shut off.
 
-Drop the bogus DRCMR_EXT_BASE_K3 macro and reuse
-DRCMR_EXT_BASE_DEFAULT for the K3 ops.
+Generally just want to ping for this, the USB2 clock fix need to go in for v7.2
+as the counter-part fix in reset driver already merged by Philipp..
+https://git.kernel.org/pub/scm/linux/kernel/git/pza/linux.git/commit/?h=reset/fixes&id=1ca22c6aa006b05143367268066fb74e32cfe66b
 
-Fixes: 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support")
-Link: https://www.spacemit.com/community/document/info?nodepath=hardware/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/dma.md&lang=en [1]
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
-This is a minimal fix for the wrong DRCMR_EXT_BASE_K3 value introduced
-by commit 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support").
-K3 silicon uses 0x1100 as the extended DRCMR base, so the K3 ops now
-reuse DRCMR_EXT_BASE_DEFAULT.
-
-I deliberately kept the per-ops drcmr_ext_base field and the
-DRCMR_EXT_BASE_DEFAULT macro to preserve the extensibility that was
-introduced together with the helper refactor, in case a future PDMA
-variant ends up using a different extended base. If reviewers prefer
-to drop this abstraction entirely and collapse it back to a single
-constant now that all known users share the same value, I am happy to
-send a v3 that removes the drcmr_ext_base ops field as a cleanup.
----
-Changes in v2:
-- Reword the commit message to remove the inaccurate K1 comparison.
-- Mention successful SPI and QSPI DMA tests on K3 silicon in the commit
-  message.
-- Add a link to the corrected K3 DMA documentation, updated June 24,
-  2026.
-- Link to v1: https://patch.msgid.link/20260615-k3-pdma-fix-drcmr-base-v1-1-ee1af124199f@linux.spacemit.com
-
-To: Vinod Koul <vkoul@kernel.org>
-To: Frank Li <Frank.Li@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-To: Guodong Xu <guodong@riscstar.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-To: Paul Walmsley <pjw@kernel.org>
-To: Palmer Dabbelt <palmer@dabbelt.com>
-To: Albert Ou <aou@eecs.berkeley.edu>
-To: Alexandre Ghiti <alex@ghiti.fr>
-Cc: dmaengine@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-riscv@lists.infradead.org
-Cc: spacemit@lists.linux.dev
----
- drivers/dma/mmp_pdma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index 386e85cd4882..78e3e07e681d 100644
---- a/drivers/dma/mmp_pdma.c
-+++ b/drivers/dma/mmp_pdma.c
-@@ -52,7 +52,6 @@
- #define DCSR_EORINTR	BIT(9)	/* The end of Receive */
- 
- #define DRCMR_BASE		0x0100
--#define DRCMR_EXT_BASE_K3	0x1000
- #define DRCMR_EXT_BASE_DEFAULT	0x1100
- #define DRCMR_REQ_LIMIT		64
- #define DRCMR_MAPVLD	BIT(7)	/* Map Valid (read / write) */
-@@ -1219,7 +1218,7 @@ static const struct mmp_pdma_ops spacemit_k3_pdma_ops = {
- 	.get_desc_dst_addr = get_desc_dst_addr_64,
- 	.run_bits = (DCSR_RUN | DCSR_LPAEEN | DCSR_EORIRQEN | DCSR_EORSTOPEN),
- 	.dma_width = 64,
--	.drcmr_ext_base = DRCMR_EXT_BASE_K3,
-+	.drcmr_ext_base = DRCMR_EXT_BASE_DEFAULT,
- };
- 
- static const struct of_device_id mmp_pdma_dt_ids[] = {
-
----
-base-commit: c425609d6ac4012c8bbf01ec2e10e801b1923a7b
-change-id: 20260615-k3-pdma-fix-drcmr-base-326536770427
-
-Best regards,
---  
-Troy Mitchell <troy.mitchell@linux.spacemit.com>
-
+-- 
+Yixun Lan (dlan)
