@@ -1,70 +1,179 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106A13F1640;
-	Mon, 27 Jul 2026 10:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785147229; cv=none; b=BfWoGp7VKIit/RtClhG00ePf3aRCAGvRbUp7dOnQmamC5Zq9wb1k7yza4R4PKy049oceHXPqde4GfxjwEQ9gwyBsmIeIngoKPc6Ccc4A90PGtAitLY6JjgLF/W2C5QHQhC42Y+s6b7mIhSajhyWB3uLpbvlTo3LScSS8jJQtxLE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785147229; c=relaxed/simple;
-	bh=lCKFKB34tgMhmeSUKvwPBxohzs2CVJUNS9UyZb8KbBI=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E680F403E8A
+	for <spacemit@lists.linux.dev>; Mon, 27 Jul 2026 12:31:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785155495; cv=pass; b=a6hfr6WKf1hDqZbG++0IDK8jRyh56iaq6Xjg/Pe3kVX5XZBbExFhUjhtW0VMuLyDaWezh0kN4nd3V9iEWTLsHhcAVnLGDkDX+lbgkZKYNja7cuyIGH1c+LuTaIpo917n3JjU+KJQb8xmx/y+Ku+xa1kj2abmIjaGe+FWveQgT1s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785155495; c=relaxed/simple;
+	bh=D4P2wKzY6sHspo+sVgkF93Ag6fQBCdh19kn8MnbfQ/k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d33vy5TPb01FiBZ6FeJwTEvYhgMBxfKm7Uv1ELAQx/hVucHPlFzdSLpEPHxUhkQXYJWNBJUWYYR6gB7td2qlXMyrjcawGoOKGg1K26Fzr6sLJL5qYssWFUpOEp4/8s144gPJFN03B44eHBpTfH3DfG4RNBUJ8p+SuIxGGlo7g8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j8sB76Qs; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jt/+nJ7YLfkc4xMTtEAchScVkECg9ssAkh+i/GvrEqPVzwfgE63tJuevjb5903jOg4TezvIQd/YAJtV/kqJBh4vBdX5bBAipD2Geao5Ju8BdOtoy8aA5mXnKbNUeiz5+CAWH5H9dNfeTpxgj8BnY/pt6074sVg7KtZ6xENeKmGI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=jAXBgzvo; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j8sB76Qs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C6D1F000E9;
-	Mon, 27 Jul 2026 10:13:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785147227;
-	bh=woRPzSTKoA0odkTUKY/2dKCO4O2CXSKgHWIUqmfe7i4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=j8sB76QshQgP0t1qFZyR6uVoVuZ1zDdfJ9ancaxDqxbD3VHIDck96hXIiWYIueOEM
-	 oNnThK93QZJwHeE8mD3oeUu61Tf+W6DM3jKPjJV7s9X8CL+ackQ7kU5P1mM67Rfqg2
-	 bOhSt6zu2RpPQw4bDZ4iKFjZ5CFRFu1tbWrzP5hyVom5P65ed6UNLmw1A2NN/FZrVU
-	 AlNviDgtwwuAcpeupAcvqPXMRWgqLPqdvq/FsL+agqC7K6spdiMc0h5sQn91o3AuXM
-	 ARKDIet8y2+QtkMuG6PysotfTlpBbIdMJc4JygWRBiRTLX+gaB89mPn95tIxVHJAEd
-	 nRiYn3nIuJUXw==
-Date: Mon, 27 Jul 2026 10:13:44 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v2 1/2] riscv: dts: spacemit: k3: add USB controller and
- USB phy support
-Message-ID: <20260727101344-GKB76518@kernel.org>
-References: <20260727094726.890179-1-inochiama@gmail.com>
- <20260727094726.890179-2-inochiama@gmail.com>
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="jAXBgzvo"
+ARC-Seal: i=1; a=rsa-sha256; t=1785155401; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=kiSORZqGzRgPZiGsYQ3k34+qAmA2+ohQ9ieV0/nCrHQBSFb7Zkwli0ibhrlZP5pO4cOwBhBXzVzr6PXbPejR8bQmRoye97O+R2qFzh3ZVLLs4JtEh5COmhAUGIes0IVCWx4s0QJdKqtTtTAu8njVcrYOGjoUYVpgNn6APdeDwHA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1785155401; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=lzUtZjHaCNtOvDUH6TlXLFDO4ardciovEJAHYjHQUHE=; 
+	b=jJJ3KFfiXlqK9M+ZjyKjV/+R1xZh3I9fvccqIsI1eKv8BsyigICQBlFKH3ejLvcoFEcpaSdCvswTIO5cJgmmJl1g2ODOc5XH3XnaktRW3hwN1THE6Q2toTVjVXFoiiXixKK32i3cgM6saBuFvLK5r5vkok0Xjo+zieAjvXb22ho=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ziyao.cc;
+	spf=pass  smtp.mailfrom=me@ziyao.cc;
+	dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1785155401;
+	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=lzUtZjHaCNtOvDUH6TlXLFDO4ardciovEJAHYjHQUHE=;
+	b=jAXBgzvoP/KRL/kzNykKMvSVgmywY7QNg1wFwP2hPYt4rF72DlOu6U0y1o4BWw1E
+	BQ7rvWs3Ls7IuOeSsseXOlLFbNxXI0DD2v2fKG1oxkXduWlwDmeJVaFav1DW8svk5Kz
+	W3u7RmE5qxxdIh3kIuPQUAj7BQihuwFJQVH8PANw=
+Received: by mx.zohomail.com with SMTPS id 1785155397890121.03202805715694;
+	Mon, 27 Jul 2026 05:29:57 -0700 (PDT)
+Date: Mon, 27 Jul 2026 12:29:48 +0000
+From: Yao Zi <me@ziyao.cc>
+To: codykang.hk@gmail.com, David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Haylen Chu <heylenay@4d2.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-clk@vger.kernel.org, Yao Zi <me@ziyao.cc>
+Subject: Re: [PATCH RESEND 12/17] drm/spacemit: add Innosilicon DP/eDP
+ controller bridge driver
+Message-ID: <amdPPBOH-Dk4oU7y@pie>
+References: <20260725-k3-display-v1-0-6de34d80e86c@gmail.com>
+ <20260725-k3-display-v1-12-6de34d80e86c@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260727094726.890179-2-inochiama@gmail.com>
+In-Reply-To: <20260725-k3-display-v1-12-6de34d80e86c@gmail.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.10.1.5.2/285.144.37
+X-ZohoMailClient: External
 
-Hi Inochi,
-
-On 17:47 Mon 27 Jul     , Inochi Amaoto wrote:
-> Add all USB device node to the Spacemit K3.
+On Sat, Jul 25, 2026 at 12:51:21AM -0400, Cody Kang via B4 Relay wrote:
+> From: Cody Kang <codykang.hk@gmail.com>
 > 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-
+> Add the DP/eDP controller that sits downstream of the Saturn DPU. Two
+> identical instances share one compatible; the eDP-vs-DP role is board
+> wiring, so it is taken from the devicetree: an eDP panel always sits
+> under an aux-bus child node, an external DP connector never does.
+> 
+> The link is driven through the generic PHY framework, so the controller
+> never touches a PLL register. The controller's HPD interrupt is gated by
+> the DP pixel clock, which can be off exactly when a plug has to be
+> caught, so the connector is also polled and the interrupt path re-reads
+> the live level when it does fire.
+> 
+> Signed-off-by: Cody Kang <codykang.hk@gmail.com>
 > ---
->  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 13 ++++++
->  arch/riscv/boot/dts/spacemit/k3.dtsi         | 42 ++++++++++++++++++++
->  2 files changed, 55 insertions(+)
-> 
+>  drivers/gpu/drm/spacemit/Kconfig            |   19 +
+>  drivers/gpu/drm/spacemit/Makefile           |    3 +
+>  drivers/gpu/drm/spacemit/spacemit_inno_dp.c | 2443 +++++++++++++++++++++++++++
+>  drivers/gpu/drm/spacemit/spacemit_inno_dp.h |  328 ++++
+>  4 files changed, 2793 insertions(+)
 
--- 
-Yixun Lan (dlan)
+...
+
+> +static int inno_dp_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct device_node *aux_bus_np;
+> +	struct spacemit_dp_dev *dp;
+> +	struct resource *res;
+> +	int ret;
+
+...
+
+> +	dp->pxclk = devm_clk_get(dev, "pxclk");
+> +	if (IS_ERR(dp->pxclk)) {
+> +		ret = dev_err_probe(dev, PTR_ERR(dp->pxclk),
+> +				    "failed to get pxclk\n");
+> +		return ret;
+> +	}
+
+It seems pxclk is only enabled in probe() and disabled in remove(),
+please consider using devm_clk_get_optional_enabled().
+
+...
+
+> +	if (dp->pxclk) {
+> +		ret = clk_prepare_enable(dp->pxclk);
+> +		if (ret) {
+> +			dev_err(dev, "failed to enable pxclk: %d\n", ret);
+> +			goto err_reset;
+> +		}
+> +	}
+
+So this check could be dropped.
+
+...
+
+> +	/*
+> +	 * The PHY exposes its PLL as the APMU pixel-clock mux's external
+> +	 * parent.
+> +	 */
+> +	dp->pll_clk = devm_clk_get(dev, "pll");
+> +	if (IS_ERR(dp->pll_clk)) {
+> +		ret = dev_err_probe(dev, PTR_ERR(dp->pll_clk),
+> +				    "failed to get PHY pixel clock\n");
+> +		goto err_clk;
+> +	}
+
+Same for the "pll" clock.
+
+> +	if (dp->pxclk) {
+> +		ret = clk_set_parent(dp->pxclk, dp->pll_clk);
+> +		if (ret) {
+> +			dev_err(dev, "failed to route eDP pixel mux to PHY PLL: %d\n", ret);
+> +			goto err_clk;
+> +		}
+> +	}
+> +	 */
+> +	ret = devm_request_threaded_irq(dev, dp->irq, spacemit_dp_irq_handler,
+> +					spacemit_dp_hotplug_event_handler,
+> +					IRQF_NO_AUTOEN, dev_name(dev), dp);
+> +	if (ret) {
+> +		dev_err(dev, "failed to request irq %d: %d\n", dp->irq, ret);
+> +		goto err_clk;
+> +	}
+
+Since 55b48e23f5c4 ("genirq/devres: Add error handling in
+devm_request_*_irq()") devm_request_threaded_irq() automatically throws
+an error message when it fails, so this error message is redundant.
+
+...
+
+> +err_clk:
+> +	clk_disable_unprepare(dp->pxclk);
+
+With devm_clk_get_optional_enabled(), you could remove this and
+simplify some error handling paths.
+
+Regards,
+Yao Zi
