@@ -1,68 +1,74 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E680F403E8A
-	for <spacemit@lists.linux.dev>; Mon, 27 Jul 2026 12:31:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785155495; cv=pass; b=a6hfr6WKf1hDqZbG++0IDK8jRyh56iaq6Xjg/Pe3kVX5XZBbExFhUjhtW0VMuLyDaWezh0kN4nd3V9iEWTLsHhcAVnLGDkDX+lbgkZKYNja7cuyIGH1c+LuTaIpo917n3JjU+KJQb8xmx/y+Ku+xa1kj2abmIjaGe+FWveQgT1s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785155495; c=relaxed/simple;
-	bh=D4P2wKzY6sHspo+sVgkF93Ag6fQBCdh19kn8MnbfQ/k=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE4E3815E8;
+	Mon, 27 Jul 2026 15:24:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785165893; cv=none; b=RN5PLACqZdVbtQaKlRE4PvOxzZ9gUH9U01POcGLcZljUav6ACLei3W9cGFKFVnFj5QHJMP1+9sakqrXNxPquShzOr/Ey9/2gn4bkUfbVf9+2vi203hUNMon8XS/IffLRmaxqc4cdMNBzZ/tzn7nX9Wc6e2j6rKH8HCGaCKg02Mg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785165893; c=relaxed/simple;
+	bh=FJpOlBy2S/XoBZDiGh6c9vnD4PM+zA7zeXI+r4BVUPQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jt/+nJ7YLfkc4xMTtEAchScVkECg9ssAkh+i/GvrEqPVzwfgE63tJuevjb5903jOg4TezvIQd/YAJtV/kqJBh4vBdX5bBAipD2Geao5Ju8BdOtoy8aA5mXnKbNUeiz5+CAWH5H9dNfeTpxgj8BnY/pt6074sVg7KtZ6xENeKmGI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=jAXBgzvo; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oc/renG/CgiPfj0Px/cuqOTFxMxi9ApIO/PalNd3q123dVibNVfjsg5N61LHUfgbUrr3O0+DVqJOnHwYLwOV/5ajzUC/n92vHv+OiQfaOh5BwAbHgEyx7MJd3FDbkoWug7M4phtS9n0M2gZGFqw18c4nk94HK2FOgrPOHpEC7Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=ddq2pVYQ; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="jAXBgzvo"
-ARC-Seal: i=1; a=rsa-sha256; t=1785155401; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=kiSORZqGzRgPZiGsYQ3k34+qAmA2+ohQ9ieV0/nCrHQBSFb7Zkwli0ibhrlZP5pO4cOwBhBXzVzr6PXbPejR8bQmRoye97O+R2qFzh3ZVLLs4JtEh5COmhAUGIes0IVCWx4s0QJdKqtTtTAu8njVcrYOGjoUYVpgNn6APdeDwHA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1785155401; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=lzUtZjHaCNtOvDUH6TlXLFDO4ardciovEJAHYjHQUHE=; 
-	b=jJJ3KFfiXlqK9M+ZjyKjV/+R1xZh3I9fvccqIsI1eKv8BsyigICQBlFKH3ejLvcoFEcpaSdCvswTIO5cJgmmJl1g2ODOc5XH3XnaktRW3hwN1THE6Q2toTVjVXFoiiXixKK32i3cgM6saBuFvLK5r5vkok0Xjo+zieAjvXb22ho=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ziyao.cc;
-	spf=pass  smtp.mailfrom=me@ziyao.cc;
-	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1785155401;
-	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=lzUtZjHaCNtOvDUH6TlXLFDO4ardciovEJAHYjHQUHE=;
-	b=jAXBgzvoP/KRL/kzNykKMvSVgmywY7QNg1wFwP2hPYt4rF72DlOu6U0y1o4BWw1E
-	BQ7rvWs3Ls7IuOeSsseXOlLFbNxXI0DD2v2fKG1oxkXduWlwDmeJVaFav1DW8svk5Kz
-	W3u7RmE5qxxdIh3kIuPQUAj7BQihuwFJQVH8PANw=
-Received: by mx.zohomail.com with SMTPS id 1785155397890121.03202805715694;
-	Mon, 27 Jul 2026 05:29:57 -0700 (PDT)
-Date: Mon, 27 Jul 2026 12:29:48 +0000
-From: Yao Zi <me@ziyao.cc>
-To: codykang.hk@gmail.com, David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Rob Herring <robh@kernel.org>,
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="ddq2pVYQ"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=93gQyKs/Loc50T0J0Ycz+Bfql8No0r2Sptp8WTz9pkU=; b=ddq2pVYQC9FeOWffCFBQ5sGKJX
+	T5kZnOZDOP04yCpIfBjoYeGAV1f9C6QYWwdonbdvcds1Q6ADdHgABKrbJ+S+trTG8Tp+vhkTo1ErT
+	TPLx9Gn95sBGPJYc5z5rxeE8W7CkAo1VMt56BH3/kBqkvWthkdnHW6kJI5QmiaZgnsS6cLsnP4eAO
+	UcU3GLz1GxaC1WlxaJxdrnx0IedePVJIXr2qxbcF5QZP77rYwIGB7Vn7Ybdi2FWpEdTR/erJ5ADhd
+	Xh+RyDt1lTpCqZK5Q/vmFLlxUoTMilOvNoeTNYHrpgtu+w+12/RyCa8rUiOFb/TV+Ui1XyWcWHsgP
+	9flGjf0Q==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1woMpm-0000000HTK4-3XKG;
+	Mon, 27 Jul 2026 17:01:38 +0200
+Date: Mon, 27 Jul 2026 17:01:34 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Haylen Chu <heylenay@4d2.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Philipp Zabel <p.zabel@pengutronix.de>,
 	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org,
-	devicetree@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-clk@vger.kernel.org, Yao Zi <me@ziyao.cc>
-Subject: Re: [PATCH RESEND 12/17] drm/spacemit: add Innosilicon DP/eDP
- controller bridge driver
-Message-ID: <amdPPBOH-Dk4oU7y@pie>
-References: <20260725-k3-display-v1-0-6de34d80e86c@gmail.com>
- <20260725-k3-display-v1-12-6de34d80e86c@gmail.com>
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Jennifer Berringer <jberring@redhat.com>,
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] Add UFS Host driver support for SpacemiT K3 SoC
+Message-ID: <amdyzkFplQqJvMl1@aurel32.net>
+Mail-Followup-To: Yixun Lan <dlan@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Jennifer Berringer <jberring@redhat.com>,
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+References: <20260725-08-k3-ufs-support-v2-0-45036a2a2418@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -71,109 +77,69 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260725-k3-display-v1-12-6de34d80e86c@gmail.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.10.1.5.2/285.144.37
-X-ZohoMailClient: External
+In-Reply-To: <20260725-08-k3-ufs-support-v2-0-45036a2a2418@kernel.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Sat, Jul 25, 2026 at 12:51:21AM -0400, Cody Kang via B4 Relay wrote:
-> From: Cody Kang <codykang.hk@gmail.com>
+On 2026-07-25 10:37, Yixun Lan wrote:
+> This series try to add UFS support for SpacemiT K3 SoC, the controller
+> components consists of System Bus Interface Unit, UFS Host Controller
+> Interface, UFS Transport Protocol Layer, UFS Host Registers, Device
+> Management Entity (DME), Transport Layer, Network Layer, Data Link
+> Layer, PHY Adapter Layer, and M-PHY Interface. A more detail functional
+> block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
 > 
-> Add the DP/eDP controller that sits downstream of the Saturn DPU. Two
-> identical instances share one compatible; the eDP-vs-DP role is board
-> wiring, so it is taken from the devicetree: an eDP panel always sits
-> under an aux-bus child node, an external DP connector never does.
+> Please note, in order to test this driver, the UFS clock driver[2] here
+> should be applied first as a prerequisite patch.
 > 
-> The link is driven through the generic PHY framework, so the controller
-> never touches a PLL register. The controller's HPD interrupt is gated by
-> the DP pixel clock, which can be off exactly when a plug has to be
-> caught, so the connector is also polled and the interrupt path re-reads
-> the live level when it does fire.
+> One known issue is that the device will occasionally raise BKOPS interrupt
+> when doing some high load test, log from dmesg shows
 > 
-> Signed-off-by: Cody Kang <codykang.hk@gmail.com>
+> [  806.710763] ufshcd-spacemit c0e00000.ufshc: ufshcd_bkops_exception_event_handler: device raised urgent BKOPS exception for bkops status 1
+> 
+> Link: https://spacemit.com/community/document/info?nodepath=hardware/key_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md&lang=en [1]
+> Link: https://lore.kernel.org/all/20260630-06-clk-ufs-support-v1-0-cf7521d1d0fe@kernel.org/ [2]
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
 > ---
->  drivers/gpu/drm/spacemit/Kconfig            |   19 +
->  drivers/gpu/drm/spacemit/Makefile           |    3 +
->  drivers/gpu/drm/spacemit/spacemit_inno_dp.c | 2443 +++++++++++++++++++++++++++
->  drivers/gpu/drm/spacemit/spacemit_inno_dp.h |  328 ++++
->  4 files changed, 2793 insertions(+)
+> Changes in v2:
+> - fix missing interrupts property
+> - move ufs node to k3-com260.dtsi
+> - convert freq-table-hz to operating-points-v2
+> - rework reset_control, fix header and drop global variable
+> - drop dump_host_regs() debug interface
+> - converge and refactor dme_set() operations
+> - massive reduce of busy delay() loops
+> - drop vendor specific hce_enable_notify(), fallback to default
+> - drop unused member from struct ufs_spacemit_host
+> - add COMPILE_TEST support to Kconfig
+> - comment style fix
+> - Link to v1: https://patch.msgid.link/20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org
+> 
+> ---
+> Yixun Lan (3):
+>       scsi: ufs: spacemit: dt-bindings: Add UFS controller for K3 SoC
+>       scsi: ufs: spacemit: k3: Add UFS Host Controller driver
+>       riscv: dts: spacemit: k3: Add UFS support
+> 
+>  .../devicetree/bindings/ufs/spacemit,k3-ufshc.yaml |  56 ++
+>  arch/riscv/boot/dts/spacemit/k3-com260.dtsi        |   4 +
+>  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts       |   4 +
+>  arch/riscv/boot/dts/spacemit/k3.dtsi               |  27 +
+>  drivers/ufs/host/Kconfig                           |  12 +
+>  drivers/ufs/host/Makefile                          |   1 +
+>  drivers/ufs/host/ufs-spacemit.c                    | 686 +++++++++++++++++++++
+>  drivers/ufs/host/ufs-spacemit.h                    |  79 +++
+>  8 files changed, 869 insertions(+)
+> ---
+> base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
+> change-id: 20260605-08-k3-ufs-support-c8b308e415e2
 
-...
+Thanks for this new version. Patches 2 and 3 are:
 
-> +static int inno_dp_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct device_node *aux_bus_np;
-> +	struct spacemit_dp_dev *dp;
-> +	struct resource *res;
-> +	int ret;
+Tested-by: Aurelien Jarno <aurelien@aurel32.net>
 
-...
+Regards
+Aurelien 
 
-> +	dp->pxclk = devm_clk_get(dev, "pxclk");
-> +	if (IS_ERR(dp->pxclk)) {
-> +		ret = dev_err_probe(dev, PTR_ERR(dp->pxclk),
-> +				    "failed to get pxclk\n");
-> +		return ret;
-> +	}
-
-It seems pxclk is only enabled in probe() and disabled in remove(),
-please consider using devm_clk_get_optional_enabled().
-
-...
-
-> +	if (dp->pxclk) {
-> +		ret = clk_prepare_enable(dp->pxclk);
-> +		if (ret) {
-> +			dev_err(dev, "failed to enable pxclk: %d\n", ret);
-> +			goto err_reset;
-> +		}
-> +	}
-
-So this check could be dropped.
-
-...
-
-> +	/*
-> +	 * The PHY exposes its PLL as the APMU pixel-clock mux's external
-> +	 * parent.
-> +	 */
-> +	dp->pll_clk = devm_clk_get(dev, "pll");
-> +	if (IS_ERR(dp->pll_clk)) {
-> +		ret = dev_err_probe(dev, PTR_ERR(dp->pll_clk),
-> +				    "failed to get PHY pixel clock\n");
-> +		goto err_clk;
-> +	}
-
-Same for the "pll" clock.
-
-> +	if (dp->pxclk) {
-> +		ret = clk_set_parent(dp->pxclk, dp->pll_clk);
-> +		if (ret) {
-> +			dev_err(dev, "failed to route eDP pixel mux to PHY PLL: %d\n", ret);
-> +			goto err_clk;
-> +		}
-> +	}
-> +	 */
-> +	ret = devm_request_threaded_irq(dev, dp->irq, spacemit_dp_irq_handler,
-> +					spacemit_dp_hotplug_event_handler,
-> +					IRQF_NO_AUTOEN, dev_name(dev), dp);
-> +	if (ret) {
-> +		dev_err(dev, "failed to request irq %d: %d\n", dp->irq, ret);
-> +		goto err_clk;
-> +	}
-
-Since 55b48e23f5c4 ("genirq/devres: Add error handling in
-devm_request_*_irq()") devm_request_threaded_irq() automatically throws
-an error message when it fails, so this error message is redundant.
-
-...
-
-> +err_clk:
-> +	clk_disable_unprepare(dp->pxclk);
-
-With devm_clk_get_optional_enabled(), you could remove this and
-simplify some error handling paths.
-
-Regards,
-Yao Zi
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
