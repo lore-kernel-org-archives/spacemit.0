@@ -1,65 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0168022ACEB;
-	Mon, 27 Jul 2026 09:35:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2461A3F6600
+	for <spacemit@lists.linux.dev>; Mon, 27 Jul 2026 09:47:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785144902; cv=none; b=sjY+KPf8c3jWGFb+83ZdzEMLH+KuOr31m4ATeaz8SGsJ+AozoYZpMCd2uBnfPhufPDck+NaFsM+1L2LYzunGvQJe9mNrPumXa9KWi/by05uAbrc6jTmcZNjv4UcG0cmkUUJJlbagElXT3PNf2DVWMLrk9ybL2NgZMkKg4ASFWWI=
+	t=1785145664; cv=none; b=EoxL5fR9UivoWRigyZYbBO7JqpBVLP2GOZyhd6ttlrGnEqzGFGwdY3eWYfSsUZzxB49xfA/kGZ/KCts8/IlKkWjyHkj3KC8b+ThDABcoXMcUrkwV1iHoBkwR9HWyMKJ6XFYwBCkCEsT9Ht8mHP1gX8QAT+R9Q+K5DcxYQgqnc2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785144902; c=relaxed/simple;
-	bh=61PcQcDvXzE5votusvTPAxF6joW4E+Gik2S0AJ2e7VQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c4oO5sZauvxM1jEmlI8F0iN62d+1AH+ROFMm8RQd7JBtT2vr6hA/5cOk3pqozBZQzaWQ4pEOqjXPQeifsRiT+fzqOHySjNWtuO60OARoAZmRwtVjTOVCGPRtCgD/t6MqbXO7c2djjCvGDf8z2jA3NBt12qHbdt6cTDP4b/CrTYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gjclF8DR; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785145664; c=relaxed/simple;
+	bh=QD3t63uWxKq2du3y4d4m9Juyuvd2MQBM+dVhxe550ao=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AooXIrMvwqW5Zvj+KdNjubxiMlGMgx9h3tRzizsB8nyAoIBMLoDTjp67JUPnpyYaOnUyh3D8gupxNKQfW6j5ery92qjrooeY+mlmlCIXAD5zLOSqyZdCUj7wfvnqhyzdtHH6b19qN6Yggg77NRblQLR4I71kgVaNYPKtLTLyTWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KLQ73OzM; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gjclF8DR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C00C1F000E9;
-	Mon, 27 Jul 2026 09:34:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785144900;
-	bh=WFlsQzSJEl+MXDtyzozfCwWlLOJBpDw/B1n32t0hzIU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=gjclF8DR3p2IGOdZt8j98/z5Rxy0e3VxXFn2u4RmPbKPZmhikNypurPu6HXDBUVzk
-	 qhI7SfqeH13octvLnjwe57ZNmRm6wZ9zD4vZ3jsaEII/c6xMUwuAwLkD7WjRuH4uYX
-	 FTA+46oSW5vkwfumQ6SbhZp0fCdQJe5VK6FSh6/HC7+oLJWnTThNbhl7TPmqjBD3RJ
-	 cgkw8qyNwdooi6lNrtPVclgfxkSW+rFK1uKlm3+Z7gROiqZBvKItsNcEeJ/vAdb9u4
-	 6o46xS3ve0Eq3zadqXT61tOtQ1o7iMTLB8ifTZKCYd0PMGZc+hfcT/d6AorN/pdKmV
-	 3Pf3ku5G2mevQ==
-Date: Mon, 27 Jul 2026 09:34:57 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-clk@vger.kernel.org,
-	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [GIT PULL] clk: spacemit: fixes for v7.2-1
-Message-ID: <20260727093457-GKA76518@kernel.org>
-References: <20260706203425-KYC2957292@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KLQ73OzM"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-381c51fde6bso2694382a91.2
+        for <spacemit@lists.linux.dev>; Mon, 27 Jul 2026 02:47:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785145659; x=1785750459; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=jLPhM0E6IPzEl+l07UYYijZDLOCaVV9s+4+FtNKHwms=;
+        b=KLQ73OzMgicOBwSYzSpr6mMppKoORb/9p7tzbwG5mCysbHxYbeiFuxLFOCyXCvoEI5
+         McQ2CQeK1mHfQWo/3tRdCuOSwNT5oLRxZWNve8HXQ5z/Q5JEMrcc0yMs1iP2qiXA/Xkg
+         8qrE7SpHRk6WQgaoFuK9lK/NjN87sC5P7NFGfDZjwbr2CkuYHZR/guHb2YSm8XFJrsfl
+         SHdiI+Yuk4aH334ipipnweh7vc8QIbkgzaFFDaPIe/UPaHZ/uiA1BY+rN+WaTLcdTnBA
+         Nujwmztns2YBYXwhIwCeK+lgSitxJiPeUd7jm5BWvPYRfZOyo8/Cg7K4hry+7JToM3A7
+         5ehQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785145659; x=1785750459;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=jLPhM0E6IPzEl+l07UYYijZDLOCaVV9s+4+FtNKHwms=;
+        b=tY/7mRzQTeKoItzwsgCf3UAnsxusHJdhIrOkzASJT+UjAsKLrjKYTeWbiAqtbjy778
+         nvYGG0qxGJ8TiYgu8XdYP0ZYvmwcQJpyTJ+PrEGPtclCDT49u8Wm81Lw/sLXlRbwLiei
+         qOSkMYI33KahvMbs3QM9egeLmlNQuayUOCY8PIyXM0Tl0xP0L28ISJi5RCgDPsS0Tfh+
+         aBgE9Vc0bMxzPN0LUo4WfYJ5TRRB1stPJX+ONc/FO5ryX7F95R0WKtsj/5GlnN3exWHm
+         /Zw3QOoQlphIYiD5TB/ibVRYodWFsSTGUPiMYcKoltKqDpq7fMMvC+kLvkEHH2hiEuev
+         Pk6Q==
+X-Forwarded-Encrypted: i=1; AHgh+RrKHmtTHcplxBIYbaITVQCE4WIGbPVpCLzWM7I8xXwreGHYifQIFbLYjYt4OVhncQbvj2uc4rmRqw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxGyt26b8rfoiQklT9le0HdLrbfFNcskVwTPAZ1tCusvNPQ2Cgp
+	7q8XEKb+aUWOX1nBp4gSa1azAEMuiHhafPbpshPY2T4uFeQjLO6T+QKA
+X-Gm-Gg: AR+sD112JNdv1xkvd3OYVqewifR94ZesLD7MomSTGfc9KTPxqzgLh9Hy2oncdTmFiZC
+	aquMux1AB5bjbpaDsStVoLsA/X9q3ihCQtgOtZY6UPAyp7a0osIxwVAmsSpBmg9WbgbS/sGKlCo
+	VDAhQgv6IcgOVysQaclvmeincHvDkYCHl1e5oKNGrmz698aKXTHkh3Lqyc7H8rkOkM80BJ98ewg
+	RYSn67RrN7V4biw9pm8kGFzJGwX4QCOVLyHytpEmopdTX85m16AsuPiW4ku575Q8nAA0QyYr2hP
+	AhEzgSvtHRVLLTrx4GYORUuvnjZVLHAlTrHDrO8rn7hW7G8rSpT2klsWfx6iQ/c8G+AIRWCuA9Y
+	L9D3I8O/Qhzx4OXGevUsk+cCKAS7GVxj+gok4YRA7VSEkerD3E9E0L86BqkqQ/NLZJ8CUkd6cCU
+	xe
+X-Received: by 2002:a17:90b:58ac:b0:38f:57f3:4dc6 with SMTP id 98e67ed59e1d1-38f57f34fd4mr1073921a91.21.1785145658748;
+        Mon, 27 Jul 2026 02:47:38 -0700 (PDT)
+Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f03b0eaa8sm4893167a91.8.2026.07.27.02.47.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jul 2026 02:47:38 -0700 (PDT)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH v2 0/2] riscv: dts: spacemit: k3: Add USB/PCIe devices
+Date: Mon, 27 Jul 2026 17:47:22 +0800
+Message-ID: <20260727094726.890179-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260706203425-KYC2957292@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-Hi Stephen,
+DTS for series:
+https://lore.kernel.org/linux-pci/20260709040027.958400-1-inochiama@gmail.com
+https://lore.kernel.org/linux-phy/20260703021024.495433-1-inochiama@gmail.com
 
-On 20:35 Mon 06 Jul     , Yixun Lan wrote:
-> Hi Stephen,
-> 
->    Please pull two small SpacemiT's clock fixes for v7.2
-> First patch for USB2 clock fix need to go in pair with USB2 reset fix, the
-> reset part patch was already accepted by Philipp Zabel as a fix for v7.2.
-> Second patch fixes a system hang due to HDMA clock being shut off.
+Changed from v1:
+1. Fix clock of usb3d_u2phy.
 
-Generally just want to ping for this, the USB2 clock fix need to go in for v7.2
-as the counter-part fix in reset driver already merged by Philipp..
-https://git.kernel.org/pub/scm/linux/kernel/git/pza/linux.git/commit/?h=reset/fixes&id=1ca22c6aa006b05143367268066fb74e32cfe66b
+Inochi Amaoto (2):
+  riscv: dts: spacemit: k3: add USB controller and USB phy support
+  riscv: dts: spacemit: k3: Add PCIe device node
 
--- 
-Yixun Lan (dlan)
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  51 ++++
+ arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi |  33 +++
+ arch/riscv/boot/dts/spacemit/k3.dtsi         | 237 +++++++++++++++++++
+ 3 files changed, 321 insertions(+)
+
+--
+2.55.0
+
