@@ -1,75 +1,128 @@
-Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B0912CDBE
-	for <spacemit@lists.linux.dev>; Mon, 27 Jul 2026 07:26:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890713546D6
+	for <spacemit@lists.linux.dev>; Mon, 27 Jul 2026 07:35:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785137200; cv=none; b=MYI6N9iaJQ0w/5bXZEYKBYpE3fciiUgH1kYNjC79NKtxxl/oU7MkDdULnUYDpXwg91ebn0d4+WZRLc+MYTxVLnsYb3WGRcmP+pgaqOvlDXTPTUn4y1VChOo0HMpafsnxR87yZbCV5GJudWKEjz1PDPyOoDVi6WBm5bHD37nO9VM=
+	t=1785137741; cv=none; b=m71USmThRcJucSjawXtAjPnD1wcqZpUz/5U+nZakSLI5qiV4VXGGMRAGuejcnUdY9AzHOKxSWeMm+jRpBCQsXwSZxCfq49LhxY3jZkI4j66ku48fSZ15Q9ATmvPnhrGM1E7h5Vxr90o0TUHHAooy7ouXSLDN3Rp6QU9qUcuM0dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785137200; c=relaxed/simple;
-	bh=OSMOMMdhr3sgJudgtPi3Zf5hGhHVJV2Gi7WpSc6PQUc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 In-Reply-To:References; b=kcGePcx8yk3AiJdO6asGhlDhuQlOeQaHo0nT0fJ1JMTKbRhSNwZhmd3x4ZvK0uPdFXIvobsDihKRPFJG279LYdg3it81ABRpLzj/FPgePZfoerjpS5Rh2U92JP49dQLzsQbwtYV4DV1iYuWFDI/WhB0pCX7bKFlK+htCMieOHXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=To1h0LPG; arc=none smtp.client-ip=95.215.58.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="To1h0LPG"
+	s=arc-20240116; t=1785137741; c=relaxed/simple;
+	bh=KpM88UNWtFhUZh+I87vyefx720qL9DegkTtGz+0lth0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=cGymvl7jzo6A5vRx9UEzmx4P5PS5PnwJElUihpTn+8DuZp6raQopCLQjd8zL1wdnuyIsxLfcwQPZQs9WaMm1q4MTp6gIpU4Jx65ELPWhEnccmAeQf0eNRgduq5uk9g3/BFzYn5oB8Tyitllw4K1tDfDeuZLxKsRTZ+iDFDLPZcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
+	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id E504A202053;
+	Mon, 27 Jul 2026 09:35:35 +0200 (CEST)
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1woFs7-001VMT-2c;
+	Mon, 27 Jul 2026 09:35:35 +0200
+Received: from pza by lupine with local (Exim 4.98.2)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1woFs7-000000006sn-2xjW;
+	Mon, 27 Jul 2026 09:35:35 +0200
+Message-ID: <3d4204dbd1c73d50193144d1944d8237c625f6e3.camel@pengutronix.de>
+Subject: Re: [PATCH RESEND 08/17] drm/spacemit: add Saturn DPU core types,
+ cmdlist and display MMU
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: codykang.hk@gmail.com, David Airlie <airlied@gmail.com>, Simona Vetter	
+ <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann
+ <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,  Krzysztof Kozlowski	
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan	
+ <dlan@kernel.org>, Vinod Koul <vkoul@kernel.org>, Neil Armstrong	
+ <neil.armstrong@linaro.org>, Haylen Chu <heylenay@4d2.org>, Michael
+ Turquette	 <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
+ Brian Masney	 <bmasney@redhat.com>, Paul Walmsley <pjw@kernel.org>, Palmer
+ Dabbelt	 <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Alexandre
+ Ghiti	 <alex@ghiti.fr>
+Cc: dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org, 
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-clk@vger.kernel.org
+Date: Mon, 27 Jul 2026 09:35:35 +0200
+In-Reply-To: <20260725-k3-display-v1-8-6de34d80e86c@gmail.com>
+References: <20260725-k3-display-v1-0-6de34d80e86c@gmail.com>
+	 <20260725-k3-display-v1-8-6de34d80e86c@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-0+deb13u1 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785137197;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UmJ8uGmDc0hqwz3dbUX6RW8a5ofURnJwzsVN39eibdM=;
-	b=To1h0LPGWVHT/8VQA8oTLB+BbCw2hm9pD82X8CxV1puWY/GYeNwhPv9NBXOvSyjgPNlvcr
-	ou9uK0WGT+tiVM9nOTEfuw69UitfFjB50ncPBaNf2MIwXe/bYRuQ31dRkXP9CKQQPd97HU
-	qJHuPjMtDX74mnUjSu4Q4n1ROcbQ0Gk=
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 27 Jul 2026 00:26:29 -0700
-Message-Id: <DK96BJJI4EKH.3FO6NPOTYTY0V@linux.dev>
-Cc: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-hwmon@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-doc@vger.kernel.org>
-Subject: Re: [PATCH v2 3/6] dt-bindings: hwmon: Add Sensylink CTF2301
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Troy Mitchell" <troy.mitchell@linux.dev>
-To: "Troy Mitchell" <troy.mitchell@linux.dev>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Guenter Roeck" <linux@roeck-us.net>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan"
- <dlan@kernel.org>, "Jonathan Corbet" <corbet@lwn.net>, "Shuah Khan"
- <skhan@linuxfoundation.org>
-In-Reply-To: <20260721-handbook-dancing-0c6805fbc94e@spud>
-References: <20260721-ctl2301-v2-0-ef5fb342872a@linux.dev>
-	<20260721-ctl2301-v2-3-ef5fb342872a@linux.dev>
-	<20260721-handbook-dancing-0c6805fbc94e@spud>
-X-Migadu-Flow: FLOW_OUT
+MIME-Version: 1.0
 
-> On Tue, Jul 21, 2026 at 02:48:29AM -0700, Troy Mitchell wrote:
->> Add the Sensylink CTF2301 temperature sensor and fan controller to the
->> LM63 family binding. The chip follows the LM63 register model and can
->> provide a thermal cooling device when #cooling-cells is present.
->
-> Commit message should explain why a fallback compatible is not suitable.
+On Sa, 2026-07-25 at 00:51 -0400, Cody Kang via B4 Relay wrote:
+> From: Cody Kang <codykang.hk@gmail.com>
+>=20
+> Register programming of the Saturn DPU is batched: the driver builds
+> per-module register lists in memory and the hardware command-list
+> engine replays them at frame boundaries, while scanout buffers are
+> mapped through the DPU's private address translation unit (DMMU)
+> rather than scanned out by physical address.
+>=20
+> Add the shared driver types, the MMIO field accessors, the trace
+> events, the command-list builder and the DMMU table code. Some DPU
+> configuration registers are write-only, so a read-modify-write would
+> corrupt neighbouring fields; byte- and halfword-aligned fields are
+> therefore written at their native width instead.
+>=20
+> Signed-off-by: Cody Kang <codykang.hk@gmail.com>
+> ---
+>  drivers/gpu/drm/spacemit/dpu/dpu_saturn.h   |  35 +++
+>  drivers/gpu/drm/spacemit/dpu/dpu_trace.h    | 350 ++++++++++++++++++++++=
+++++++
+>  drivers/gpu/drm/spacemit/spacemit_cmdlist.c | 304 ++++++++++++++++++++++=
+++
+>  drivers/gpu/drm/spacemit/spacemit_cmdlist.h | 146 ++++++++++++
+>  drivers/gpu/drm/spacemit/spacemit_crtc.h    | 259 ++++++++++++++++++++
+>  drivers/gpu/drm/spacemit/spacemit_dmmu.c    | 103 ++++++++
+>  drivers/gpu/drm/spacemit/spacemit_dmmu.h    |  40 ++++
+>  drivers/gpu/drm/spacemit/spacemit_dpu_reg.h | 108 +++++++++
+>  drivers/gpu/drm/spacemit/spacemit_drm.h     |  68 ++++++
+>  9 files changed, 1413 insertions(+)
+>=20
+[...]
+> diff --git a/drivers/gpu/drm/spacemit/spacemit_cmdlist.h b/drivers/gpu/dr=
+m/spacemit/spacemit_cmdlist.h
+> new file mode 100644
+> index 000000000000..d5acdbeb3b0e
+> --- /dev/null
+> +++ b/drivers/gpu/drm/spacemit/spacemit_cmdlist.h
+> @@ -0,0 +1,146 @@
+[...]
+> +struct spacemit_crtc {
+> +	struct device *dev;
+> +	struct drm_crtc crtc;
+> +	const struct dpu_core_ops *core;
+> +	struct dpu_mmu_tbl mmu_tbl;
+> +	int dev_id;
+> +	int irq_online;
+> +	struct timer_list cfg_rdy_timer;
+> +
+> +	bool is_1st_f;
+> +	bool first_modeset;
+> +	struct dpu_clk_context clk_ctx;
+> +	u32 aclk;
+> +	u32 out_format;
+> +
+> +	struct reset_control *mclk_reset;
+> +	struct reset_control *lcd_reset;
+> +	struct reset_control *esc_reset;
+> +	struct reset_control *aclk_reset;
+> +	struct reset_control *dsc_reset;
 
-The CTF2301 shares the overall register layout with LM63, but it is
-not fully compatible. In particular, it uses different conversion-rate
-encodings, extended local-temperature registers, additional fan lookup
-table entries, and device-specific PWM and ALERT/TACH configuration. An
-older driver matching the "national,lm63" fallback would therefore not
-operate the device correctly.
+Why are these duplicated from spacemit_drm_private?
+dpu_pm_suspend/resume() in patch 10 have access to priv.
 
-I will explain why a fallback compatible is not suitable in the commit
-message in the next version.
-
-                                            - Troy
+regards
+Philipp
