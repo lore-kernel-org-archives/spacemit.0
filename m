@@ -1,79 +1,151 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F913191D3;
-	Tue, 28 Jul 2026 08:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B32235BDA4
+	for <spacemit@lists.linux.dev>; Tue, 28 Jul 2026 09:38:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785226151; cv=none; b=BCEghmAfBh/7x4ipHNhcB1dzGTC7B8iii1g1/V+jVUMdTkKcyVlJJ6oZrmdParppF8BynfPF9WUmKrppf2Sv/c/MywMOnSAkYNHmP1980RIGc8ikpWKtOP8qimbkl6W1mi6JH2cfnPdqmX8D9CdYgb5T0X/Nq7FzWSx2vhvfzXA=
+	t=1785231518; cv=none; b=KQAm5x7xoG/hN5QxZWwuVtXVFJ5Zuxh1YGxIm6jlWqnwHiNXYFTdfwa+/XVHLXFRmonECFqgBtLrxNBnUooKxDZtfgvovNBqWC6/1T/rmxPkJfXiFBYllTa2JWg7hYJcw0cCkKetKYr+Lx0/4FoFUTx2XQaoY6mIksPnX2CTyB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785226151; c=relaxed/simple;
-	bh=cSUVRjOcDeoTxAVynDZptDNvQLNMpWqvy266CQiAPMw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fnvIYypsCvoLHqYKkSygA4PadYri1OmOIDXAHbm0krsiHXipy+T1JxOqGAyoB2xbVklm44w00JDn5mk2gi0fOR6I+zBmfbN5bbyeNC8gfTKCGqiy1qiJZHgbJnjQBhiHnTtHkDza5+6+6z81oPiEcd7uuq1tXB7hGpIxp7xZhso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npDBOj5n; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785231518; c=relaxed/simple;
+	bh=u7q9AsM+ki5AlsnpwWFMF+9oIaQLH+1sEJj2Rb5cdm0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bp1x1ii6uqPH7qO8PZsmwRkF5C+C0YOhBg/xm3XkacEqYOXaO8p1uwm0cfhEVrND9ZY3CUHsW/nXwohTnaSdoJpHvVf2uQ9RAN9WIfMnZNzLLse7LFREn4K+TC9NNgCM9YKinmH9hdXGn7SxpYgfV2LtkfMK0KnwxbupFOZ1i3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=iybyurhY; arc=none smtp.client-ip=54.204.34.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npDBOj5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8921F000E9;
-	Tue, 28 Jul 2026 08:09:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785226149;
-	bh=kLUsG0cxbOOBudd9ddbSRV7/2qqz/2T6DEko4eZD+JA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=npDBOj5nREIEihM99fSB/33zEtJ+Yy5WSSoqibreMFXFDTZcyr7qpYw36GAUO22ec
-	 YJDJ6AgzLYiahlEMG8ZL63DYhVybsnNVX7StxXCjcm9eaY/RJfJePe6uBTgkqsyrqw
-	 CiaYpqOSCFgzP8/ly7F1FidIYDfj1W5mPIj2uXBqMuLplZ/4xqh163KAB2KkaOxk49
-	 5s90PPNgPkqsFHfImU3I5OXlpdh8jtWs8QpRiKmg05nSAJPaz0q4VqLlEE7kyCY9Px
-	 qEGiovcVvJiPiIZdP1RMC8PX4TL2b6e8Qr6mUX099rUEJJmG2n8k0rbLHQ+Ah1uHip
-	 rfHLOvqeBmPUw==
-Date: Tue, 28 Jul 2026 10:09:05 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Sterling-Ash <liangbaihui@linux.spacemit.com>
-Cc: Frank Binns <frank.binns@imgtec.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v3 1/2] dt-bindings: gpu: img,powervr-rogue: add
- spacemit,k3-gpu
-Message-ID: <20260728-chivalrous-mongrel-of-leadership-dd3bf2@quoll>
-References: <75c9382d2bda766aa459b00321153d715254d1a4.camel@imgtec.com>
- <20260728010513.1627950-1-liangbaihui@linux.spacemit.com>
- <20260728010513.1627950-2-liangbaihui@linux.spacemit.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="iybyurhY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1785231432;
+	bh=8fCOUsx0444xOiYJjLi/BxZmA+7UPJFelel0WkroNHA=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=iybyurhYeTkkLCpxtmrXVpJNZn0Pak5WlIyEFJyOFGzTYCQ4NH/5ew58O+tZDLOvi
+	 QsM+CCAHbVC2u1wYWeJJwAbxmheGSoulExDk8MUETgz1b7Ovk3L/XeTAlEFM2Nt82/
+	 Xf6EelXmDGdnk6bAoeg0K480KVD2ri3QV9zk4IZc=
+X-QQ-mid: zesmtpsz3t1785231429tf850c34d
+X-QQ-Originating-IP: LCEw3mgx4E2Gruu0oCqUhT5bIyN/Q0xwg1kCeX7B0s4=
+Received: from [127.0.1.1] ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 28 Jul 2026 17:37:07 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 3040970083133766586
+EX-QQ-RecipientCnt: 15
+From: Peixin Xie <peixin.xie@linux.spacemit.com>
+Date: Tue, 28 Jul 2026 17:36:12 +0800
+Subject: [PATCH] riscv: acpi: Handle LPI architectural context loss flags
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260728010513.1627950-2-liangbaihui@linux.spacemit.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260728-riscv-acpi-lpi-timer-v1-1-c722bce01e48@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ6CQAyF4auQrmnCDMkMeBXDYqwFShBJi8SEc
+ HdHXbzFt3j/AcYqbHApDlDexeS5ZLiyABrTMjDKPRt85UMVfUQVox0TrYJz3iYPVgy9i3WbAjW
+ 1g3xdlXt5/7LX7m973Sam7duC8/wAZl5243gAAAA=
+X-Change-ID: 20260727-riscv-acpi-lpi-timer-6f1739a6c831
+To: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Yixun Lan <dlan@kernel.org>, Sudeep Holla <sudeep.holla@kernel.org>, 
+ Oza Pawandeep <quic_poza@quicinc.com>, Will Deacon <will@kernel.org>, 
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Cc: linux-acpi@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
+ stable@vger.kernel.org, Peixin Xie <peixin.xie@linux.spacemit.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785231427; l=2112;
+ i=peixin.xie@linux.spacemit.com; s=20260727; h=from:subject:message-id;
+ bh=u7q9AsM+ki5AlsnpwWFMF+9oIaQLH+1sEJj2Rb5cdm0=;
+ b=OyPyxwPg/spQvU2rXgykpOsHasu2MJGcUToy65otILXBQKyoFvo1iMbczUh077ZHsuIlpJ38e
+ 7klUMbgC2lYACnaK43HFfPkezqSD+wDCxuw5Q2MlUkRFUbc2RBEgCC5
+X-Developer-Key: i=peixin.xie@linux.spacemit.com; a=ed25519;
+ pk=jczO0FmEQZBoClfXslkwCsHKDmSRchQ1hQr8W7yiiXg=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: NayxjVUrh0RcWweAd6all5DRu47gE8JkDz5vriH9OEjWGQsafBEY1mfh
+	vVuNCupxPFPkl3CEYYu9bl8Cf/6kXnhOQhPkj5UW6OSJG7e8mRKVDKLsOwiL98PqvLhnjUn
+	n6Yr0y9+3lFhbycvbT2U1qv0aoNT8iTLPRvnzAEfGV/f2940zRKhv55pLbIZ8lMQOJi3hXm
+	v0wygafTyuL6QQJsJIHsVPLmErwl3w5H6f1bYb1d6LNXSHaW93taaDhqaGWytlsXbo1t/wB
+	TgOHqxdxpHS9hFuJzA3od+sIrVlYA5gZhD38jJZ3hDO7/oMu4vWoPCejbVoDsDdFhAl/1GC
+	OQqGTn3TYB3xkLylMHFzxKtKoTjm3MIsmKdlfx8HwE1eknHURA2U4o8GuVXaO7dHOjcM6ZY
+	WZLVhSv54LtDJTq8+VDbdbFiBK2Tubo5+gv/DseNofOKIgZpCJy+zn6olyg2UY/ij94YaYA
+	JZCLPzIqhgL2exiGnMSdwEhKesofPbR2nas1JKl3a1Dc2D24xtTxlVdb9GyA6k+KgmsZipf
+	X/Qbyg0WpEVI2nbFXGdTOHc6uO8OVQsOAKy+F8lU7P98q0K4JGujBK0V27GjLmAZJvqhUNn
+	EWlDDNge4mp94igqjRwHMII/M2rHQhUbHfWPbhIWClylxAINfpiI9PQRJ9GqPO8azDCB4pk
+	xYSogwJWfhQ33kxQdOoLnp9CneZKbcrg286bTD7kNY9ksLcQaqxNTW7w7ljwCTSieu4woVX
+	Cn3Nrm7qRpngIyGnAnvkNXSukz5Q/bsjHv167+YeNdjCbSaZSYyPPqbGbtezSfeIxcbNnSl
+	oi/Y6zOABwe5+e/0pdiZBvG0wAYu7PF01OJkip7urUPPhRweoaMuQFdU/FFkQpH97OuBO4D
+	xLAWeaaCf4s00FFVF4HcwfXOqBFJBUDAH+rzUruf1EspZ5ihpOZWQwMM5cHmkYFDJjKA12U
+	7lhrbDhDX0eMLzrh5KZq5O4/1JnUV8TehhEbMJFTvoMI6bxBssKOyZa7mfzYfbfXYi7Jgx5
+	3T07ErRYuYq88+v1SSmbG2jJA2ydExg5+5C2zlEsgkLhR2/ewEwHAZJSOyQb3EY2hHGctbV
+	X1SZRDH9gEjjSPfezIttlyegeC//JjsxZRhs6Tk9OCE
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
 
-On Tue, Jul 28, 2026 at 09:05:12AM +0800, Sterling-Ash wrote:
-> Add a compatible string for the IMG BXM-4-64 GPU integrated into the
-> SpacemiT K3 SoC. It shares the same core as thead,th1520-gpu but is
-> kept as a separate compatible entry, since the K3 integration differs
-> from TH1520 in its clock and power-domain requirements: K3 has a
-> single "core" clock rather than three, and its GPU power domain is
-> enabled by the bootloader before Linux boots rather than being
-> modelled and switched by Linux, so no power-domains property is
-> required for this platform (unlike the other img,img-bxm-4-64 user).
-> 
-> spacemit,k3-gpu is added to the existing ti,am62-gpu/ti,am62p-gpu/
-> ti,j721s2-gpu "if" block that restricts clocks to a single entry,
-> since K3 has the same single-clock requirement. It does not match any
-> "if" block that constrains power-domains, so that property falls back
-> to this schema's general constraints, where it is optional. This
-> leaves room for a power-domains provider to be added later without a
-> further binding change, should one ever be modelled in Linux for this
-> SoC.
-> 
-> Signed-off-by: Sterling-Ash <liangbaihui@linux.spacemit.com>
+Commit 4785aa802853 ("cpuidle, ACPI: Evaluate LPI arch_flags for
+broadcast timer") replaced the generic nonzero check for LPI
+architectural context loss flags with arch_get_idle_state_flags().
+RISC-V does not implement the helper, so it falls back to the stub
+that returns 0. Consequently, CPUIDLE_FLAG_TIMER_STOP is not set when
+an LPI state loses the hart timer context, preventing cpuidle from
+using a broadcast timer for that state.
 
-Also, are you sure your Latin transliteration of your name includes a
-hyphen? Email differs and we do not take anonymous contributions, so
-this must much your name in the known identity.
+Implement the RISC-V helper and map the hart timer context loss flag
+to CPUIDLE_FLAG_TIMER_STOP.
+
+Fixes: 4785aa802853 ("cpuidle, ACPI: Evaluate LPI arch_flags for broadcast timer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peixin Xie <peixin.xie@linux.spacemit.com>
+---
+ arch/riscv/include/asm/acpi.h | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/arch/riscv/include/asm/acpi.h b/arch/riscv/include/asm/acpi.h
+index 26ab37c171bc..3a3da834c340 100644
+--- a/arch/riscv/include/asm/acpi.h
++++ b/arch/riscv/include/asm/acpi.h
+@@ -12,6 +12,8 @@
+ #ifndef _ASM_ACPI_H
+ #define _ASM_ACPI_H
+ 
++#include <linux/cpuidle.h>
++
+ /* Basic configuration for ACPI */
+ #ifdef CONFIG_ACPI
+ 
+@@ -67,6 +69,23 @@ int acpi_get_riscv_isa(struct acpi_table_header *table,
+ 
+ void acpi_get_cbo_block_size(struct acpi_table_header *table, u32 *cbom_size,
+ 			     u32 *cboz_size, u32 *cbop_size);
++
++/*
++ * RISC-V Functional Fixed Hardware Specification Version v1.0.1
++ * Table 4: LPI Arch. Context Lost Flags
++ */
++#define RISCV_LPI_HART_TIMER_CTXT_LOST		BIT(0)
++
++static inline unsigned int arch_get_idle_state_flags(u32 arch_flags)
++{
++	if (arch_flags & RISCV_LPI_HART_TIMER_CTXT_LOST)
++		return CPUIDLE_FLAG_TIMER_STOP;
++
++	return 0;
++}
++
++#define arch_get_idle_state_flags arch_get_idle_state_flags
++
+ #else
+ static inline void acpi_init_rintc_map(void) { }
+ static inline struct acpi_madt_rintc *acpi_cpu_get_madt_rintc(int cpu)
+
+---
+base-commit: 1d6f0a217c662693d2307ee06851cb4bfcbf9529
+change-id: 20260727-riscv-acpi-lpi-timer-6f1739a6c831
 
 Best regards,
-Krzysztof
+--  
+Peixin Xie <peixin.xie@linux.spacemit.com>
 
