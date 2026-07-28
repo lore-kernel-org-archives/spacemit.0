@@ -1,65 +1,65 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB48041E6C0
-	for <spacemit@lists.linux.dev>; Tue, 28 Jul 2026 22:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC2C3C4163
+	for <spacemit@lists.linux.dev>; Tue, 28 Jul 2026 22:15:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785276912; cv=none; b=LXysMz2sES9xvj4d9vS13hB89GxSYkvFnG6M2O5zrS4bNWsYZ/jDi7l1CRbVShBI1yzBsSOiv34cyBuxtG0wwXSbX/P92+OedQmcO4A7UxLrus+6GN12ebt+clfoCJM3k/DFHsec4druH7YYGK7rCdfiFHXMs3kHFsSzbELJ71I=
+	t=1785276955; cv=none; b=XXNo9zZlsjFUfBk6NGTL7oJfLtUjPFTIxl/DQbb/vkK2JMsd+s95091sibtgmuCwk8k1h7bg+MqP6w3DmT2Otx5qHaPOtLgllspR9r1Qo5nVPUYTHZCGpJWRYBz23fFWl6JzqOqBCmIxJEYSypDL7BoovtnoEvTzf1H1GFaOxRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785276912; c=relaxed/simple;
-	bh=qyGMjhTOnnZPm6V71sYf9uJH6BivSGNSOmxkf0a+A/M=;
+	s=arc-20240116; t=1785276955; c=relaxed/simple;
+	bh=iz5eEsTOMdWHCyx2WpA/dZYo9o9pe5LN+o8YsCcB1vo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ffMxN05S4Ax1S0JcRTIhEcACppc+eaoMUraQa21ar8dYOP0F55cE9qEJVy70QKD2JLLipmglK58HMX2GchhCPPvs73yEIHPzUuFZ4PBoXdc+kq89ma2H0mgZ9v32AW92xNTzJhcCJdD03gqP8b492lNZAx+4sTPqErhux7iWY38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YxatLWp3; arc=none smtp.client-ip=209.85.214.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bmx7G3lfzRM7fa8P+yf9nEAGb3Qu4Hpjz3a+dnBvW9ubM6DPAkKKktnPoxX9ArCu0YV5Yga0TGILjqZCcS9J++gNY5OBDwju44uQUDLXhc38Kmgas92jyxmo53MdS4MQgAne6iYJGFLtMGWqGQZ3GigJptyUykGN9ezzzcLNJwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QoSxUNKw; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxatLWp3"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2cc891373e0so4490715ad.2
-        for <spacemit@lists.linux.dev>; Tue, 28 Jul 2026 15:15:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QoSxUNKw"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-8423f236418so258019b3a.1
+        for <spacemit@lists.linux.dev>; Tue, 28 Jul 2026 15:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785276910; x=1785881710; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1785276954; x=1785881754; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=HUzpeU8PWsaIt3wcpet0Z2+r1iwdbUXIMb1YKO4g2Uk=;
-        b=YxatLWp3dJU2HBryg4ypIgR+8pefhFdTPzk+iePLjQ0vzriMT6TQ5B+Uz/9K8leioq
-         ypCUk2X0MLtnBQgKj+viJnmlVwQ9SqlPqBLkiPTWwn6SM6S0BRGlYyk7KhKg2V4HnnZV
-         4HZ2iCawIDP/Riqoqdo7qim54N1WUwiBa9EwWHnhHsDq+/FAPqcUHTyctGkivti5DPwG
-         Ko91sMwSpe2nhuVoZL7ZnOiuMW1nhSxn5lRdDzIimrxGVlpol7eO9doluU51ZQGJohF9
-         n1iNSaDnVrDaBdDjiL/mP9J7nzznZ84JLWaNF6aRj6MJlefHRUan/Qzvik3GUD4Dljii
-         jSfw==
+        bh=Rje7HhQ48HT1sXup0TRphJEI0h4NvdmNL/JFa+vFWNM=;
+        b=QoSxUNKwmbLnDjnTxX5z32tzcNd89+PGoaiqhHXdjip4v+a3zZMMqk96kudcUpAE+i
+         39panm/fx1gwsHrw60/qg5r6LqqIUIbljWEy4wQlKRlZWy3RcXiELwzWNiP441jQfPQ7
+         IgCyDni0bbntqVDBpP38Jp5kaJsNVfdqLDKHUHIn6dIV/BxDyI5NW4YJb8LFot9HiUis
+         R8dQqPOifdbQxI01MwPILYgB3P3euDBuqbGSNw5ZGkNr87scKJrRn1/ndry3ofMM6ris
+         sw4TeqqlHnSxq15l6xnC5DJcmOCPP/NS30oBek0VdsCFYYDKuMPU+BCOmGRBUg2WonuK
+         xfNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785276910; x=1785881710;
+        d=1e100.net; s=20251104; t=1785276954; x=1785881754;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=HUzpeU8PWsaIt3wcpet0Z2+r1iwdbUXIMb1YKO4g2Uk=;
-        b=Eiqf6pgoNacRhTL4+PN9T/5ccMQHH4b/jl6Jx1+nPkFxBBBHdAencD5LZnNpFBeMBB
-         n5BrJHnvzZZYDKxjw/r0/oAlmUpg9Hk0Hupwe71T/Vdk1GnB41i+eo7zbPmhGCULLyw0
-         oCGj41dGKE7TMKuc3E/PiOjwX3FPlwPeY/wZvny6ZxCY/feUURW4uVnnbtZIv84kGo8J
-         qkbW8omsMPG7YLnIkwj3vIJaT6qdwqh2xsZOtWSzAnjYrkh87bj9Zwh9TOoZo/sHibL5
-         iZR7iPlIb6yu2yG77g26nEcp9jh60+EG3HwjAEfQL1TesMcMBEs3gyen2YktrqZod8CH
-         qKnA==
-X-Forwarded-Encrypted: i=1; AHgh+RrxVhuL667wQJHHZ1QEBXs+rhtLhl8/yti9taYSxNqew6wW/srtXQzxFOcEgzd8G7ARamEsH3yHuw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yww9wobHJrKQqoYrdwl+NQwgbC38eqz4eoI7z9UKqzVtI1/+4Jo
-	lDOX9dA5fo/Yooc9DS8IGKN9QyMJPcLAF4BFYt/LD0/G5bIqOfnFUI29S6E/aYsl
-X-Gm-Gg: AR+sD11dkIAJ0mG6W1Bi96yIr6xoLIVUF1XpCGtHKCPrROzEU2JW1YVxHgwYezEp999
-	4Dl86EnY4//nYOLv/6JbcZxUZgL4gf30AfloGdumea9KX9GUbS3XcXWTDaiK5lhWCtR4bboZL6Q
-	TMW5touYxK7QeXB0/CdgP2KHMl0dzhkzjOURI0uFvT3ELkmPSD+IST5x/qx1ER60Ex74t9YV+pu
-	sGm4UbbOL3TsIcBbLWcJ0fuG7XL7XSXkpp1lQvEzDy1nWjCESBP/IAEC2to5AW28uOKevqsjYUN
-	IGRMf7gUVifV1i5MhWF5LRrOY38DminVmq19uDyBMrbY+cZrWcZbH8Pqnvhzo567DiN6ElJtxRB
-	2p6txxSCWtR3bjdkKUrIU3BXwjsGKCFBk3302YapRSMh6GQOzF/2AXcEqrxnZjNwcIM6FdebfMw
-	fqsb27rid1J7UJBdwVebJhPP4WEn0r0GEkODpw40fFGwQakNZIpQJGdaYuFFY=
-X-Received: by 2002:a17:903:4b46:b0:2cc:a853:1311 with SMTP id d9443c01a7336-2d015eddc78mr55167005ad.47.1785276910228;
-        Tue, 28 Jul 2026 15:15:10 -0700 (PDT)
+        bh=Rje7HhQ48HT1sXup0TRphJEI0h4NvdmNL/JFa+vFWNM=;
+        b=AEgh5csqgRBd9lN3tKkrmv24dhP13xcEwMM7KdaxEUskq+1P3YIE18XKmn8jg6BLiU
+         9vU6uog3WQ7VovmiG27m0JiLRqSazXhtLmWgD684pkmDK8gzjCUXl6hmfu7iJXqn0ijq
+         fefvs3HZaeuCGD/y10h6l/Wwq2RosrQmmenHdG/iQjLozzv24bGKbcqhyZpD5yIdgkIp
+         to8ChIDxzbKvQg7LXg28DuaBE0yA0a1PetYaJV4S2UwYAuYUCnFlpTTNtWeU8gd0RxAN
+         SSitEAxWOt0AG24mPPrQDsugTeWtYMGR/t44KmZLgOFjMeZXl5Dp5tVLndpU9XUslYNY
+         BSPQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpznnMUlmjga3r1xrfPd+buaSvk/LI1VA+UtProur+A+jlmChMAaGZs/IHGQCYjyIyViT3j48kSCw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwTpbCQMGey3wJGHlktyjbcaY0qtcalS8lvnzujtsCFKGeVSHxz
+	ZpZrd3FA1AuslTLuO934U1975ncMzTpW5Yf0U+B70rWmz2sYbm1pZ4Qk
+X-Gm-Gg: AR+sD13gmNK98lRnfRJBWMNrmu76hiDvFq/EW+fy6bSa9pyRT34bU+R6tQvuT1dYvux
+	GukE8BV0VWJyNmeb2C+L9qvs27FItt9gEZmDg/AbuLySNnv0WP3iwQzJ/6qulcPLLQohWpqGy6l
+	IciYF5uE8lynsHustzbE0HZPJ/N3+T4orpiCtMEat+q5H+jGKxiBourkFkdejDWvqZ3v9kt5qIF
+	JsLNJ+UAUaaI0D4lINLhNyerE6hv+D0WcQj+pqTbp8qgcs4EId7Ro+tUUKLkmAdfi5cMB0dW/5c
+	ptiTjAav7U/T2wZTSOl8DOCQSkM+nJV9J0FfPfnqCb52YKhoPlCG24WQv8YRPVuJHErBM8zQFIa
+	e6dXBzE7CDaUIQrZON69MrNmy1yLBHyTYg7jx2SnysNkW4QOa0Ha/AyGPZ7ezgnhY2ygzGKmarx
+	gCAbi5YfxhPOf6MG8NUItcCS2pjQOW5amu0DAAd3LmgIIrdO17khPNJqPVLuI=
+X-Received: by 2002:a05:6a00:3992:b0:848:7f8a:8d0e with SMTP id d2e1a72fcca58-84e932c5f3emr4027335b3a.55.1785276953823;
+        Tue, 28 Jul 2026 15:15:53 -0700 (PDT)
 Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d022a18abasm2246025ad.5.2026.07.28.15.15.09
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84ea005287csm484155b3a.16.2026.07.28.15.15.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 15:15:09 -0700 (PDT)
-Date: Wed, 29 Jul 2026 06:14:59 +0800
+        Tue, 28 Jul 2026 15:15:53 -0700 (PDT)
+Date: Wed, 29 Jul 2026 06:15:43 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Junhui Liu <junhui.liu@pigmoral.tech>, 
 	Daniel Lezcano <daniel.lezcano@kernel.org>, Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -71,11 +71,11 @@ To: Junhui Liu <junhui.liu@pigmoral.tech>,
 Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
 	Conor Dooley <conor.dooley@microchip.com>, Inochi Amaoto <inochiama@gmail.com>
-Subject: Re: [PATCH RFC 5/7] irqchip/aclint-sswi: Add generic
- riscv,aclint-sswi match
-Message-ID: <amkprTVtjkRVEo7G@inochi.infowork>
+Subject: Re: [PATCH RFC 7/7] riscv: dts: spacemit: k3: Add ACLINT MSWI and
+ MTIMER nodes
+Message-ID: <amkp9dLCVKTilhO-@inochi.infowork>
 References: <20260729-k3-aclint-v1-0-aef88614d3a5@pigmoral.tech>
- <20260729-k3-aclint-v1-5-aef88614d3a5@pigmoral.tech>
+ <20260729-k3-aclint-v1-7-aef88614d3a5@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -84,38 +84,53 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260729-k3-aclint-v1-5-aef88614d3a5@pigmoral.tech>
+In-Reply-To: <20260729-k3-aclint-v1-7-aef88614d3a5@pigmoral.tech>
 
-On Wed, Jul 29, 2026 at 12:36:31AM +0800, Junhui Liu wrote:
-> Add match entry for the generic "riscv,aclint-sswi" compatible string.
-> This allows future SoCs with standard ACLINT SSWI implementations to
-> directly reuse the driver via the generic fallback compatible (at least
-> until hardware-specific quirks are identified).
+On Wed, Jul 29, 2026 at 12:36:33AM +0800, Junhui Liu wrote:
+> The SpacemiT K3 SoC provides ACLINT MSWI and MTIMER controllers. Add
+> these nodes to complete the ACLINT description in the Device Tree for
+> M-mode firmware such as OpenSBI.
 > 
 > Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
 > ---
->  drivers/irqchip/irq-aclint-sswi.c | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/riscv/boot/dts/spacemit/k3.dtsi | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 > 
-> diff --git a/drivers/irqchip/irq-aclint-sswi.c b/drivers/irqchip/irq-aclint-sswi.c
-> index ca06efd86fa1..2bd40c3ea288 100644
-> --- a/drivers/irqchip/irq-aclint-sswi.c
-> +++ b/drivers/irqchip/irq-aclint-sswi.c
-> @@ -179,6 +179,7 @@ static int __init generic_aclint_sswi_early_probe(struct device_node *node,
->  }
->  IRQCHIP_DECLARE(mips_p8700_sswi, "mips,p8700-aclint-sswi", generic_aclint_sswi_early_probe);
->  IRQCHIP_DECLARE(nuclei_ux900_sswi, "nuclei,ux900-aclint-sswi", generic_aclint_sswi_early_probe);
-> +IRQCHIP_DECLARE(riscv_sswi, "riscv,aclint-sswi", generic_aclint_sswi_early_probe);
->  
-
-Again, use vendor specific name for irqchip declaration.
-
->  /* THEAD variant */
->  #define THEAD_C9XX_CSR_SXSTATUS			0x5c0
+> diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> index 5fb719f79467..ecb5f4fcd8fd 100644
+> --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> @@ -1303,5 +1303,24 @@ maplic: interrupt-controller@f1800000 {
+>  			riscv,num-sources = <512>;
+>  			status = "reserved";
+>  		};
+> +
+> +		aclint_mswi: interrupt-controller@f1810000 {
+> +			compatible = "spacemit,k3-aclint-mswi", "riscv,aclint-mswi";
+> +			reg = <0x0 0xf1810000 0x0 0x4000>;
+> +			interrupts-extended = <&cpu0_intc 3>, <&cpu1_intc 3>,
+> +					      <&cpu2_intc 3>, <&cpu3_intc 3>,
+> +					      <&cpu4_intc 3>, <&cpu5_intc 3>,
+> +					      <&cpu6_intc 3>, <&cpu7_intc 3>;
+> +		};
+> +
+> +		aclint_mtimer: timer@f1814000 {
+> +			compatible = "spacemit,k3-aclint-mtimer", "riscv,aclint-mtimer";
+> +			reg = <0x0 0xf1814000 0x0 0x8000>;
+> +			reg-names = "mtimecmp";
+> +			interrupts-extended = <&cpu0_intc 7>, <&cpu1_intc 7>,
+> +					      <&cpu2_intc 7>, <&cpu3_intc 7>,
+> +					      <&cpu4_intc 7>, <&cpu5_intc 7>,
+> +					      <&cpu6_intc 7>, <&cpu7_intc 7>;
+> +		};
+>  	};
+>  };
 > 
 > -- 
 > 2.55.0
 > 
 
-Reagrds,
+Squash this patch into the previous one, it is the same device.
+
+Regards,
 Inochi
