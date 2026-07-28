@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD2A3E5A2A;
-	Tue, 28 Jul 2026 11:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133983B5F5D;
+	Tue, 28 Jul 2026 11:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785238848; cv=none; b=F2TV2oIpD6sOILtsalCAOOqIbC1dP3t/n5UibByUnD90zCLP7hq84eokT2zRX54PF06AsIz1ELBbfdq2amyGoSaapnWH0hnvlCHayaR3XlBA4cfbDKZvfcy8H1KP76hb3ZiEq3TF23i+S+Znzday2tqGL6oXhgMstYnFiSZ/z30=
+	t=1785238898; cv=none; b=p3G3yAE9ZMOwgUFE+Z25KDwVVLTq8NUDt2LDDK/11uhRt6VdAbXgb7do6LI9TBSbeSIRgm9HT/iIRUtWbfH5w9T17MJwYbgqSDlqh5IHp+96tL3MVGzv6loFypX4X5axODI/oiLxzJrcLzrCQ5E4WYmE3oy4J19TWldHtmv3AjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785238848; c=relaxed/simple;
-	bh=8pe0k7ldu5bkUFUiYhM/9qFDCo1PYWE1zU0SFKtRiCA=;
+	s=arc-20240116; t=1785238898; c=relaxed/simple;
+	bh=6ed9hhwH5gQIokZSXJUk3+SHA1CGzpgkFdl5Tnl/Ing=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L++iOzRPHnP8ANC4peDduK/5CijsR6Qh3GuJDAYizT/X/aB5TuC2lkkkGh49MezBgVT7MTudW5JbdsZDYAH8/6mErtMe0FLxqVhZI1DKLVJ1t/KRpcKaK9V9LJvngxSs7IrBIDax01hgrNKIzLvajEo3nsrYZ29PAOVDcIq7rmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OynG/Nt+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uGkxe7TjiaBwrGTi76irZ1/vXMIlUScd7b9g0+4zsFrxlj38xC7W5WsnuayAdPvmxPK3vGMC2To8z0+cysVMhdTCXrf+sZG1oQtOYtKwpWMsyoCJUXiKBHE2ByDh/C3D8w/7LEbU6Q7srbregdcVIH3v6Ukd4FXfh5HF9iTN4y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CfM2wpok; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OynG/Nt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D88D1F000E9;
-	Tue, 28 Jul 2026 11:40:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CfM2wpok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4D51F000E9;
+	Tue, 28 Jul 2026 11:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785238847;
-	bh=eNeWYbTR74tZP7nHL7GdGElQBSXq6Vsaucp/Nwsmf7g=;
+	s=k20260515; t=1785238896;
+	bh=azXT0ZNHvel2jvUvD7O+6uNPNDf+us/70LW0g7DokLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OynG/Nt+c3Ep7wsaOFwFD57+iTBqHdirtUCye4OEcO6JdhCCbBcoXaYjvAYpTU1rm
-	 9yDhQ0uU5gAeh1WS/zO6jwaAGkzZLH/DOFxlwt+35q4oHtm6P4SbgXInW4QYYW8JTY
-	 4SrIkJW/ahu6r5XMFOUVfAb6vy8qdHAzumAjBf0kJJUTYOgO9VKNkTu877NSzhE6/q
-	 QnUFhmOxcRE2ruqz2YqxKtphODCoDnxAyW1/cTgqUiP0xael3iiidSOsZDsQrPkrUW
-	 PmZLjZBb/tT88EQBpZ/OotqsRI2/Fal6/7vo9tVODYhUR54od/MtQYqhS9CcCvfoKZ
-	 bR2COLcrCFNZg==
+	b=CfM2wpok3HDUErucZuqaT028yhD7BEMnip1rAVB5y/EtiZ8FGMBnBGIwAdWxdt5rw
+	 uu1LnExjYcBA4eJTYVW+ymQD8YOxVRBtulNBLti7c7RV+PSFdFSbodOAymX8UzlZ7s
+	 NvGYl+6/5oWljJq6mBVMa5AS0gDEUQi4ykwKZkzRGhc73Iz6MgZwcdI/azTGDeWW0X
+	 F2kjIGvzRWoNon12rJVCzl3zboXnIdKuMFTHM43jgRMby6fAfMD9jkK82gLLVGjyBD
+	 Kef0s7thBlKGbBkB3nqz1foAo18dWaWATQNEimCZVahJoOnKN93c3VED+v+aDNxfe6
+	 zhw08mG2p1ALg==
 From: Yixun Lan <dlan@kernel.org>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -34,25 +34,18 @@ To: Rob Herring <robh@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	Mark Brown <broonie@kernel.org>,
-	Alex Elder <elder@kernel.org>,
-	Zhengyu He <hezhy472013@gmail.com>
+	Jennifer Berringer <jberring@redhat.com>
 Cc: Yixun Lan <dlan@kernel.org>,
 	devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-spi@vger.kernel.org,
-	wefu@redhat.com,
-	liyeshan <yeshan.li@spacemit.com>,
-	Guodong Xu <docular.xu@gmail.com>,
-	Cody Kang <cody.kang.hk@outlook.com>
-Subject: Re: (subset) [PATCH 0/4] spi: spacemit: support K3 SPI controllers
-Date: Tue, 28 Jul 2026 11:40:36 +0000
-Message-ID: <178523880270.625143.9262496497470921817.b4-ty@b4>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] riscv: dts: spacemit: add eeprom for K3 CoM260
+Date: Tue, 28 Jul 2026 11:41:30 +0000
+Message-ID: <178523887414.625374.3693595453960002085.b4-ty@b4>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-0-969a1b0f783f@gmail.com>
-References: <20260717-k3-com260-spi-v7-2-rc2-b4-preview-20260716-v1-0-969a1b0f783f@gmail.com>
+In-Reply-To: <20260722202848.1817988-1-jberring@redhat.com>
+References: <20260722202848.1817988-1-jberring@redhat.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -63,23 +56,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 17 Jul 2026 07:45:24 -0700, Zhengyu He wrote:
-> This series adds K3 PDMA request numbers, documents the K3 SPI
-> compatible, and enables SPI0 on the K3 CoM260-IFX.
+On Wed, 22 Jul 2026 16:28:46 -0400, Jennifer Berringer wrote:
+> SpacemiT K3 CoM260 Dev Kit has two eeproms: one on the compute
+> module and one on the carrier board. Both use a Giantec
+> GT24C02B-2TFLI-TR.
 > 
-> This series is available here:
->   https://github.com/imguoguo/linux/tree/k3-com260-spi-v1
-> 
-> This series is based on v7.2-rc2.
+> Jennifer Berringer (2):
+>   riscv: dts: spacemit: k3-com260: add eeprom on i2c2
+>   riscv: dts: spacemit: k3-com260-ifx: add eeprom on i2c1
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] riscv: dts: spacemit: add K3 PDMA request numbers
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=e57a4beb33df5b5b91e8af7c8abac5f49838d524
-[3/4] riscv: dts: spacemit: add SPI controllers for K3
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=324c9c10839bec6da848b8947ca33e0b23d6b735
+[1/2] riscv: dts: spacemit: k3-com260: add eeprom on i2c2
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=259f5639b4b1a04cef9a7f79a95ef9ab928264cd
+[2/2] riscv: dts: spacemit: k3-com260-ifx: add eeprom on i2c1
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=b1d7f3e7da4230815ad732f764f7978049737bb6
 
 Best regards,
 -- 
