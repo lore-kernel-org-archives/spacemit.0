@@ -1,50 +1,57 @@
 Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E7F412264;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788FD40A95F;
 	Tue, 28 Jul 2026 21:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785273048; cv=none; b=TRSnc8CR+xMpNSbgK/Tyxy8lIW3dkLlr+qI/z6MJSm9cGkAXclxZJwsT9hcTAkHQa1slfrBdWCIgtIZ5ngxkCyqZ0vjYEf5lSQdrFJee1atnM61Wo94JeSeHMQ0ba9IqdptxO+JY/iFDABcDNuTnfILe1ABh3tLfvjrDFHr4p+U=
+	t=1785273049; cv=none; b=d3wKDei6plxVWGqzkkkwe8hFJW5yLMM/98yLoXkXIWuBDkNACoUGaTaA2JRpprXD9HldTnHgHl4IVAJNXQMPqkJAOVFKzguAbDU34jv0HsvBIkOh1Sjbx0IC7Mwq70j00PoPaVSkJ+w4PR/WiC61a3KVmmNN3Ihm9Hvt39IGTOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785273048; c=relaxed/simple;
-	bh=0KSe5X6gbj8d1KGc+z9Whe/7bvi3pGqnqP8FyUaepbs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S3BdciTlFFLTKAmiacGFNqhrNnsSvsKml1KKWf+aMiuJD97hrC+JcEuNGesP+STGN6oHGAxltJLB15TgPmmD8tpyeVjWQs4VCfUNW1djXCaztBv9aDGzXw037IDoAwWjx6/4H0TK9APVhvP5NbpWqcULM0ftF53U/GEKLr8L/7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=nD6uQ6r9; arc=none smtp.client-ip=195.154.119.183
+	s=arc-20240116; t=1785273049; c=relaxed/simple;
+	bh=iGSVGdddVUHcK7dc1o3z/cWwjSDXK+CaAKhTLGvl+Zw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CvKeRAhjOLb3XdHVtkSCDL+sH4YZypQhaHmczx77ywHAtAA+5Gfo/aB/azVH26wDGA5tU5jVCJ/7yuxfz9wtCwYtZw39DMc5WE48q55GEXfk5QMOd/W38zcmCJffbV+8pObxfx4EX6gP/Pic2zuNcqwo4Wvq/a2Ifv+TNn6e1TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=VSVaOoh+; arc=none smtp.client-ip=195.154.119.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="nD6uQ6r9"
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="VSVaOoh+"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
-	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
-	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
-	bh=TXhqo12SdAHNMxE8AMJ+oh/lXzA6j5PNy0D6aKIdi/0=; b=nD6uQ6r9XW+Ls0Sj0/9UHEj9Aq
-	XN0gcjcvlOcsoarn0XMRUNytrZOM2pLBwlKdKWKzFrhd1tx806em6RjKcsg61/shf/ZA4zHSPLHBz
-	MlqSsWlkCg0z/GuiwPBjpJd16zWfA1w0OwEUlVdiifxqoEeuLF06V+HT4A3Kbdpxl4cZSE3ARU6vW
-	2XYdDCR9N+OeF0y6RhafVhYxOnC7Y21c4kGMoiec0xkt84z2sgIJMC/g4hwDOWuwDyKYnW8giKwU2
-	4jkcDEKsQ6Rpcg7XasNGmhIiyxzoThi9TYcaEUJgXkvyjTFIPf7nWQIEhdP3n2MaBqdl2pyHdEU/r
-	fr5yBYZQ==;
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:References:
+	In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Content-Type:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=izXEhBJnl8BPt8GBQVh1RwE3TxtiWG+xYjspBpZLhXw=; b=VSVaOoh+Gj8i0H7XCI/OObdr/N
+	BKa2feeB+JPQ2z+DUpDK+Tt3C/gA0PnHiP7gqiYYVypLK1iO2btd5lXUhOBdMYq3Rd0kBhaD/CO7n
+	WXdx1ww3Q7Nr34eCsfpcqICMoz9T2pHCEdkFPWoI8pxuCT88hJOYl+xUkwYLrbc3WCBbTr0xZQcww
+	Du2hFgQsI/KEVJl3sfpqbPCrokN3x/pt9x8k1lMlC+M4QZgjpLjxujhtymVaWNveQMYzpnjDRJ+YB
+	IOQyeerx4grbFr2fabbUz2yIwWEg0NyEtbcr3q0UZP1NVPwMs5MMxrB8OcUvskIcSqY8mG13Ea+Jz
+	CvKpmLdw==;
 Received: from authenticated user
 	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <aurelien@aurel32.net>)
-	id 1wop4O-00000001a4I-2XGt;
-	Tue, 28 Jul 2026 23:10:36 +0200
+	id 1wop4P-00000001a4J-0iuY;
+	Tue, 28 Jul 2026 23:10:37 +0200
 From: Aurelien Jarno <aurelien@aurel32.net>
 To: linux-kernel@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
 	Yixun Lan <dlan@kernel.org>
 Cc: Aurelien Jarno <aurelien@aurel32.net>,
-	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE:Keyword:riscv),
-	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit)
-Subject: [PATCH 0/3] riscv: dts: spacemit: Add cpu scaling for Milk-V Jupiter
-Date: Tue, 28 Jul 2026 23:05:05 +0200
-Message-ID: <20260728211020.1248676-1-aurelien@aurel32.net>
+	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
+	linux-riscv@lists.infradead.org (open list:RISC-V SPACEMIT SoC Support),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support)
+Subject: [PATCH 1/3] riscv: dts: spacemit: Add cpu scaling for Milk-V Jupiter
+Date: Tue, 28 Jul 2026 23:05:06 +0200
+Message-ID: <20260728211020.1248676-2-aurelien@aurel32.net>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260728211020.1248676-1-aurelien@aurel32.net>
+References: <20260728211020.1248676-1-aurelien@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -53,33 +60,74 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series adds cpu scaling support for the Milk-V Jupiter boards.
+Enable CPU DVFS on Milk-V Jupiter by including the OPP tables and wiring the
+CPU nodes to the CPU regulator supply.
 
-The first commit adds it to the existing "Milk-V Jupiter (K1)" board.
+Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+---
+ .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 35 ++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-The two following commits add a "Milk-V Jupiter (M1)" board, by moving
-the common part, i.e. everything but the model name and the operating
-point tables, in a shared DTSI file. This file is then included for both
-K1 and M1 variants.
-
-CPU frequency scaling was verified up to 1.8 GHz on the M1 board.
-
-Aurelien Jarno (3):
-  riscv: dts: spacemit: Add cpu scaling for Milk-V Jupiter
-  riscv: dts: spacemit: Add a common board dtsi for Milk-V Jupiter
-    boards
-  riscv: dts: spacemit: Add Milk-V Jupiter board (M1)
-
- arch/riscv/boot/dts/spacemit/Makefile         |   1 +
- .../dts/spacemit/k1-milkv-jupiter-common.dtsi | 469 ++++++++++++++++++
- .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 433 +---------------
- .../boot/dts/spacemit/m1-milkv-jupiter.dts    |  11 +
- arch/riscv/boot/dts/spacemit/m1-opp.dtsi      | 117 +++++
- 5 files changed, 601 insertions(+), 430 deletions(-)
- create mode 100644 arch/riscv/boot/dts/spacemit/k1-milkv-jupiter-common.dtsi
- create mode 100644 arch/riscv/boot/dts/spacemit/m1-milkv-jupiter.dts
- create mode 100644 arch/riscv/boot/dts/spacemit/m1-opp.dtsi
-
+diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+index b61f5995ec771..3c16d0c20050e 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "k1.dtsi"
++#include "k1-opp.dtsi"
+ #include "k1-pinctrl.dtsi"
+ 
+ / {
+@@ -107,6 +108,38 @@ &combo_phy {
+ 	status = "okay";
+ };
+ 
++&cpu_0 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_1 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_2 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_3 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_4 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_5 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_6 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_7 {
++	cpu-supply = <&buck1_0v9>;
++};
++
+ &emmc {
+ 	bus-width = <8>;
+ 	mmc-hs400-1_8v;
+@@ -209,7 +242,7 @@ pmic@41 {
+ 		dldoin2-supply = <&buck5>;
+ 
+ 		regulators {
+-			buck1 {
++			buck1_0v9: buck1 {
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <3450000>;
+ 				regulator-ramp-delay = <5000>;
 -- 
 2.53.0
 
