@@ -1,116 +1,113 @@
-Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038DD1A0B0E
-	for <spacemit@lists.linux.dev>; Tue, 28 Jul 2026 01:06:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08202D8378;
+	Tue, 28 Jul 2026 08:07:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785200794; cv=none; b=rraFOj+pmlDX4Q800buIxVo14dpMW6Y0tIhxEIIhLNon2vuYAAEyq7mOoebtAtyaZODcbzfS3mCRj303bh1OuU/FfTrbZs9jzuw0DjEwf/Q8Kg5YMnUm0cyAg4CVJnA+7TsMLFRK/PfHgIRG8ZS/gb6O2wevgtNYgRogSVObpmM=
+	t=1785226071; cv=none; b=pRxjRQVcUErephpm5nbXIh2EllpM+V76P1P50HxFM0/h3+yzBceuf993T76gB/xaEG7D8B/A82Na4YIWQCLGZTVoA3RVVGaKX6lxP/KPP11OvEwNuz9JrJxeV3yzwmIM1J7JTu5+/fh6tbKVXgSqdwJuBGiK+s8u9Z2P8gIiZy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785200794; c=relaxed/simple;
-	bh=UrRyg+CrQFaQgG9azpXpU+O3UhXCdb9UNm4zKZMmA+I=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tPbXQdP0wX4hk8Ygse4iGgUPffQQauYsXOWvm54c3cob/92iTiGbhldoS4S4VvgTFYJGkaS7PqTf0sZb0qUIH0PWYeFSW2rqT2pHfeK4DljoIa0epI3wD11MJWw2KcNsS5/FTwLRgkw8iIb7P6kj9/82kvEsK9M3Sk0pbAFRIvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=JNI2Wuwt; arc=none smtp.client-ip=54.207.22.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1785226071; c=relaxed/simple;
+	bh=kvaGIAO7DhivERVQPlrFnK72ZVlxwMn2cpk2MW6Hmow=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XBtsK7X5m3x3DhtttKDawIPfhil6dDeZSQE8ySH3mz+vL50SbKwVmVRix+vqUYHg0gDFgLk9/suKUyDM+pqMg78Q9u8sfSB878YkNxUXUQp9Nw/G3sEzlOvC02LX0GE4nBIxeRvs3m1kjKNZnYx7jFrAMEGRB/wbYMSC9COvO7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ibKaJtCs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="JNI2Wuwt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1785200737;
-	bh=abrj0YhkjdX5tIEw1QYlhdxieuLgqQ+aot0tju4kSGo=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=JNI2WuwtuIBzEoKe9qh4X4evFWllqWx6ySLc+Um73cA0whw54D40RFj0PlXxzqPOd
-	 1hx7drZbbbWkbvCmdreTsTBMDg0DAT9w1/IfZFpRJ0pHucmDuvJI0MxO9I9iSiWrk0
-	 E3i6haleN0oOEPbuMVy4QoRXr7MZUOtK4LwJ0k7A=
-X-QQ-mid: esmtpsz20t1785200729t3d4b9290
-X-QQ-Originating-IP: a2tKt8NaLB4fW8LMxzOmxD7eLoRxrdnEhFFebeT55yw=
-Received: from snode5.. ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 28 Jul 2026 09:05:25 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 17787826967055244228
-From: Sterling-Ash <liangbaihui@linux.spacemit.com>
-To: Frank Binns <frank.binns@imgtec.com>
-Cc: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: [PATCH v3 2/2] drm/imagination: allow probe when no power-domains are described
-Date: Tue, 28 Jul 2026 09:05:13 +0800
-Message-Id: <20260728010513.1627950-3-liangbaihui@linux.spacemit.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260728010513.1627950-1-liangbaihui@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ibKaJtCs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D17D1F00A3A;
+	Tue, 28 Jul 2026 08:07:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785226069;
+	bh=5tUbDStS0GQHCB8UWlXzniMXPIvID1g2YNoMDc83vHg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ibKaJtCs/Qd5j69W9sTrfRdHt2aqYwhpM13lzbZurR679wG5biaM6HF6vj8PpT4Bl
+	 7cRJEMKJG77s1/T/242kV67r1MeEfhLBT/UDmNakaOid+m123sxDa+wElTdxQ/oX/j
+	 Nts9AUb2hhxPGuW7ei+eXtgeDYNf/2S2pIwL3ynlLyJN0leG4nJUzAZlZFKauXRwOJ
+	 PgABLe65zTF3lDWd3YkPxz51vZistWQxkiGExxRc9fQUOHeVQxgHhWeVSIibIhyttu
+	 fL+UZbnz9xk12CzKrPPTvQQfR/FcWAtuhcNf8nb1AHTatH2WN9pSHk6Z3jrlTi8Als
+	 z+8EsaSs6cpHA==
+Date: Tue, 28 Jul 2026 10:07:45 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Sterling-Ash <liangbaihui@linux.spacemit.com>
+Cc: Frank Binns <frank.binns@imgtec.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v3 1/2] dt-bindings: gpu: img,powervr-rogue: add
+ spacemit,k3-gpu
+Message-ID: <20260728-proud-coyote-of-happiness-e99c24@quoll>
 References: <75c9382d2bda766aa459b00321153d715254d1a4.camel@imgtec.com>
  <20260728010513.1627950-1-liangbaihui@linux.spacemit.com>
+ <20260728010513.1627950-2-liangbaihui@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz6b-0
-X-QQ-XMAILINFO: NAtipnnbTPeaCe3+ePoEXunKLK732IY2Mx39vHQruFW1ZY1NJW5TTLgu
-	ZO6zVyaZryJEzz1eXOFHlfs43NYKhUHSovd/2td74GNOR4Wg8HCTwbVb3dQYuz3i9FVQC8T
-	NXXKoM/MLapVNNIjG17WcIb+Yc3vXVPWqIogFcb0+z61n1hLiUraG7aE7X4qIaTqVmXMSxl
-	QYmkNSjv694jVqQyFlqtb1ajpilqdcQ84Gvd8VWeLeMjVpNKZJXJX8BKkOX7mhyiuQOAa41
-	7Jy4AF1Eolly4CKuCjBY32V8zElFV8Ewra8iYG7q763ArejUEoDWKSzroi/tkNO/Tyy7CRk
-	R0derfZfqBSQAOY5uXwmd84mwopOZiJ/5U+0q+nD8F4ZGR8FbJmN+069Bxr4UHxLIh93P6Q
-	Dp8FjEpj1F7wxRdgsJegooTAMj+w/cpQeHZhvaxpZYnbRJ+s0oEjp99w7HcXJxW/lOJv+CY
-	44ojXGeqoq6lsZynU4HVmbxzYTJHXK8JtN+5vVhvXuDGmZBu5fw11wB/eerdthLJcqeFcan
-	mn5U9RI3W4oTPtD9qbvx3izCfIaza69eOP7EPe3XlvTetRnijyLK8/uHP9u/cZ1Nsnv8Rez
-	F5h19eFIbSKt+q1lQU3XQn2ZUWz5bjCZUWBS1boZdyjSyIr/paoZaxaaugxPSv4YIIkebfB
-	Mf0u8mrKNiDnO0Kbov+B85i43jZP5HdUhPGqUvbCzopS7m6dqCw+bzqxoG5OpWpdYQDFbdp
-	chVLEbvHyPMQ/YLt245Ky1UUlXYIB0czREA3rd1ewZxkmY2jc+EzPdw10oOtRoF3210pXq+
-	YbgDrRlsQh/31uuslbbTdpLpfCxzxp1+w3RVLwe3+LhBFIfTUSeVX1PRqTlkoetAgS8iNVU
-	/hL2yKqftGbJ2/NfQbh8/JuXaI/cIkvaEA1v5lpVLAjA3p7rLwGkULU160SvhnkaAbkISDl
-	RWewezgbRqwyLw8BTgxemW/fWYb3B+/0iBP9sKINjjK6sc82OMONGG85dZ+UA7lhRGnEWcZ
-	nmsf+qWQ==
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260728010513.1627950-2-liangbaihui@linux.spacemit.com>
 
-pvr_power_domains_init() currently fails probe with -ENOENT when the
-device tree node has no "power-domains" property. On some platforms
-(e.g. SpacemiT K3) the GPU power domain is brought up by the bootloader
-and is not modeled or managed by Linux, so there is legitimately no
-power-domains phandle to attach.
+On Tue, Jul 28, 2026 at 09:05:12AM +0800, Sterling-Ash wrote:
+> Add a compatible string for the IMG BXM-4-64 GPU integrated into the
+> SpacemiT K3 SoC. It shares the same core as thead,th1520-gpu but is
+> kept as a separate compatible entry, since the K3 integration differs
+> from TH1520 in its clock and power-domain requirements: K3 has a
+> single "core" clock rather than three, and its GPU power domain is
+> enabled by the bootloader before Linux boots rather than being
+> modelled and switched by Linux, so no power-domains property is
+> required for this platform (unlike the other img,img-bxm-4-64 user).
+> 
+> spacemit,k3-gpu is added to the existing ti,am62-gpu/ti,am62p-gpu/
+> ti,j721s2-gpu "if" block that restricts clocks to a single entry,
+> since K3 has the same single-clock requirement. It does not match any
+> "if" block that constrains power-domains, so that property falls back
 
-Treat a missing "power-domains" property as "nothing to attach" and
-continue probing, rather than failing.
+I don't get this explanation. Are you explaining what the patch is doing
+or explaining WHY you did this that way?
 
-Signed-off-by: Sterling-Ash <liangbaihui@linux.spacemit.com>
----
- drivers/gpu/drm/imagination/pvr_power.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+> to this schema's general constraints, where it is optional. This
+> leaves room for a power-domains provider to be added later without a
+> further binding change, should one ever be modelled in Linux for this
+> SoC.
 
-diff --git a/drivers/gpu/drm/imagination/pvr_power.c b/drivers/gpu/drm/imagination/pvr_power.c
-index a71d5b35601e..5751e2d814b0 100644
---- a/drivers/gpu/drm/imagination/pvr_power.c
-+++ b/drivers/gpu/drm/imagination/pvr_power.c
-@@ -635,6 +635,15 @@ int pvr_power_domains_init(struct pvr_device *pvr_dev)
- 
- 	domain_count = of_count_phandle_with_args(dev->of_node, "power-domains",
- 						  "#power-domain-cells");
-+	if (domain_count == -ENOENT) {
-+		/*
-+		 * No "power-domains" property in the device tree: the platform
-+		 * handles power domains transparently or at the firmware/bootloader level,
-+		 * so there is no domain to attach. Treat this as non-fatal.
-+		 */
-+		err = 0;
-+		goto out;
-+	}
- 	if (domain_count < 0) {
- 		err = domain_count;
- 		goto out;
--- 
-2.34.1
+No, you need to provide constraints now. Please read carefully
+writing-bindings.
+
+> 
+> Signed-off-by: Sterling-Ash <liangbaihui@linux.spacemit.com>
+> ---
+
+Do not attach (thread) your patchsets to some other threads (unrelated
+or older versions). This buries them deep in the mailbox and might
+interfere with applying entire sets. See also:
+https://elixir.bootlin.com/linux/v6.16-rc2/source/Documentation/process/submitting-patches.rst#L830
+
+> v3: also add spacemit,k3-gpu to the existing ti,am62-gpu/ti,am62p-gpu/
+>     ti,j721s2-gpu "if" block restricting clocks to a single entry --
+>     previously it fell back to this schema's general clocks constraint
+>     (1-3 items), which would have let an invalid DT with 2 or 3 clocks
+>     pass validation (found by automated review on v2).
+> 
+>  .../devicetree/bindings/gpu/img,powervr-rogue.yaml          | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/gpu/img,powervr-rogue.yaml b/Documentation/devicetree/bindings/gpu/img,powervr-rogue.yaml
+> index a1f54dbae3f3..d29f0d163b91 100644
+> --- a/Documentation/devicetree/bindings/gpu/img,powervr-rogue.yaml
+> +++ b/Documentation/devicetree/bindings/gpu/img,powervr-rogue.yaml
+> @@ -38,6 +38,11 @@ properties:
+>                - thead,th1520-gpu
+>            - const: img,img-bxm-4-64
+>            - const: img,img-rogue
+> +      - items:
+> +          - enum:
+> +              - spacemit,k3-gpu
+
+Why isn't this part of other enum (and remember about the alphabetical
+order of entries)?
+
+Best regards,
+Krzysztof
 
