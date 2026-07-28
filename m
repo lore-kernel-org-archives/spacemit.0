@@ -1,133 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8990631AF24;
-	Tue, 28 Jul 2026 11:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757753B102F;
+	Tue, 28 Jul 2026 11:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785237475; cv=none; b=APtwSCoLng9vm7uE9ofCybeN8/vVPVsZ/GVOkdUCYT9FYmrHiwGNsbaaGmTa7P65bZhr4PNY8m4X4/g0erCi2DXDrsXbBbrqSFxW5wv+aritBeg11K0f0GT+JSiwdsRtNDpbOkId/IAwxDQNGGZgvfsgI95wzyUOh357SN8ocY0=
+	t=1785238281; cv=none; b=Xjp9f1nVx4nxwMVowzUl+/YxI0HhPHQh4XwuY51dIekjSTuGDkqT/rT0MivUUz1pwylgcO8MKdrh2DHi1o9yCz+0BNtByOUgjKOC3HB11XtO7tBQ6Xma/SkIiRvzRXa6X6UE97IiOgLM/EmcEq5Q+nJ7LQUMzKbzGagQWalyzRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785237475; c=relaxed/simple;
-	bh=atL7xaZ/1Mdyxo1UEOFoCAMRzxxhzojRkIlUA9mPeD8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YsEMg6tLp9zzb5+3qS2oxQ263F360VGPdOxDhpEwmedm+eSUMnKVk6TmemA6EZXSIMW4sZy0GD+ffTFF7v5nyxzJz1Q31rzDmIgK+FyT9zg5A/8Ly0wn68iZL2xVGBN/yGsxlGeUUKVvzOpvQZoFLB6b1WrP6t4WPYNcnVd06fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iPbDKVLv; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785238281; c=relaxed/simple;
+	bh=i81mPMVY/ze5o3qsEOtbEOcHmlHBojo9HokZUUfR0JU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=pucuUOoWHsRj8yNXFMhJ4zAnXEOGsAM1mDUF/Q+NZVNFCKWc0dUgSNV3KNUczKQoWH3xfigslf1sPgcA+0hBWpXwGobuhboPlrn4ylpD1feFz3wCgv+h9EutCUbdw827aaaxSZEiDlBBtiB9ARtF6C07wlnEpU0JjltqD/SgJDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJgQc7Ye; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iPbDKVLv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90631F000E9;
-	Tue, 28 Jul 2026 11:17:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJgQc7Ye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6ED1F000E9;
+	Tue, 28 Jul 2026 11:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785237474;
-	bh=VJB5QQyhbCwyyIdOpL3gynrSH4a3kKTKTWVbCcBni5A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=iPbDKVLvhJ3Bbmuqo41XqwB3PUgWJ5xG7VipP4LoMGUPUb43CDwZq+AdvhLUSUYhM
-	 YyYazR3MI6PqbARXesyT4GrfCXFQsZB4XAH+AgmuXFZ2BOBGsV5/pKyeqBV7pF1p45
-	 jzyPk32keo7QYSeuKIrruK7Rwm6Zy3MlGB+2eaFc6zG/lIw6MxlEeA/xzCqD4T+KL3
-	 PEuLrs6R3u3WCfYMUnskrSFVURQ1VufcjNHbxA/UB2mp9TKBeyrds8imt2QzryfSii
-	 LXZ2vOtYIbLIYYr/TAJvxLcbNdGTCCTM13a3AK3DnxhJTwJhzVWyBJFCSJ5TA09cNH
-	 LycsdkAlFu0/Q==
-Date: Tue, 28 Jul 2026 11:17:51 +0000
+	s=k20260515; t=1785238280;
+	bh=/5/caRe3ZcVfEMk0Kh5LSH6IafAiN5eUy+1jfGZrCU0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=jJgQc7YeAN9KYM4G4ymJIKnpULPieJt8h9uDbLNYDlMW+eriAs3710n6Q67jOqJ44
+	 Z+KQ6T2b7TFvyb87eOpj78cVTkVg43rYn2XF4LxyvApsNoIIGsUtA4wF80sMvZ57N+
+	 SlR/J2bX19Hcfwtz7HTRRXSl83qS8xabn7AU0e4/SJeluqFO1KmXAyPwjMpbqdS/m4
+	 lVjzXNomXLfowUWiE0/murGUaU3h+gSQERbU2LYTDTAbZLLZU3dCs7aTpa6VQHQee0
+	 ZgdxkiR3Ha3jaw4zQU5S2Z3RBZXLA7Cylhsct/d+z1KLVoYyOKoAWNQK1wUnZtBISG
+	 dI2K4B2/lNjEA==
 From: Yixun Lan <dlan@kernel.org>
-To: Peixin Xie <peixin.xie@linux.spacemit.com>
-Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Oza Pawandeep <quic_poza@quicinc.com>,
-	Will Deacon <will@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	linux-acpi@vger.kernel.org, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] riscv: acpi: Handle LPI architectural context loss flags
-Message-ID: <20260728111751-GKC76518@kernel.org>
-References: <20260728-riscv-acpi-lpi-timer-v1-1-c722bce01e48@linux.spacemit.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Guodong Xu <guodong@riscstar.com>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>
+Cc: Yixun Lan <dlan@kernel.org>,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Subject: Re: [PATCH v3 0/3] spacemit: k1: Add support for Banana Pi BPI-CM6 IO board
+Date: Tue, 28 Jul 2026 11:31:11 +0000
+Message-ID: <178523813343.622718.11560262898938675370.b4-ty@b4>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260712-bpi-cm6-v3-0-8d1e2045179d@pigmoral.tech>
+References: <20260712-bpi-cm6-v3-0-8d1e2045179d@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260728-riscv-acpi-lpi-timer-v1-1-c722bce01e48@linux.spacemit.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Peixin,
 
-On 17:36 Tue 28 Jul     , Peixin Xie wrote:
-> Commit 4785aa802853 ("cpuidle, ACPI: Evaluate LPI arch_flags for
-> broadcast timer") replaced the generic nonzero check for LPI
-> architectural context loss flags with arch_get_idle_state_flags().
-> RISC-V does not implement the helper, so it falls back to the stub
-> that returns 0. Consequently, CPUIDLE_FLAG_TIMER_STOP is not set when
-> an LPI state loses the hart timer context, preventing cpuidle from
-> using a broadcast timer for that state.
+On Sun, 12 Jul 2026 12:00:00 +0800, Junhui Liu wrote:
+> This adds initial support for the Banana Pi BPI-CM6 IO board. The
+> BPI-CM6 is an industrial-grade RISC-V compute module powered by the
+> SpacemiT K1 SoC, featuring board-to-board connectors similar to the
+> Raspberry Pi CM4 form factor. For evaluation and development, the module
+> is paired with a companion IO carrier board.
 > 
-> Implement the RISC-V helper and map the hart timer context loss flag
-> to CPUIDLE_FLAG_TIMER_STOP.
+> During the board bring-up, GPIO45 and GPIO46 were found to be used by
+> the BPI-CM6 hardware as Ethernet PHY reset GPIOs, while the common K1
+> GMAC pinctrl groups currently mux them as optional GMAC reference clock
+> pins. Since the reference clock pins are not required on all K1 boards,
+> the second patch separates them into independent pinctrl groups so board
+> DTS files can select them only when the signal is actually wired.
 > 
-> Fixes: 4785aa802853 ("cpuidle, ACPI: Evaluate LPI arch_flags for broadcast timer")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Peixin Xie <peixin.xie@linux.spacemit.com>
-Looks good to me, with one minor comment
+> [...]
 
-Reviewed-by: Yixun Lan <dlan@kernel.org>
+Applied, thanks!
 
-> ---
->  arch/riscv/include/asm/acpi.h | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/arch/riscv/include/asm/acpi.h b/arch/riscv/include/asm/acpi.h
-> index 26ab37c171bc..3a3da834c340 100644
-> --- a/arch/riscv/include/asm/acpi.h
-> +++ b/arch/riscv/include/asm/acpi.h
-> @@ -12,6 +12,8 @@
->  #ifndef _ASM_ACPI_H
->  #define _ASM_ACPI_H
->  
-> +#include <linux/cpuidle.h>
-> +
->  /* Basic configuration for ACPI */
->  #ifdef CONFIG_ACPI
->  
-> @@ -67,6 +69,23 @@ int acpi_get_riscv_isa(struct acpi_table_header *table,
->  
->  void acpi_get_cbo_block_size(struct acpi_table_header *table, u32 *cbom_size,
->  			     u32 *cboz_size, u32 *cbop_size);
-> +
-> +/*
-> + * RISC-V Functional Fixed Hardware Specification Version v1.0.1
-> + * Table 4: LPI Arch. Context Lost Flags
+[1/3] dt-bindings: riscv: spacemit: Add Banana Pi BPI-CM6 compatible
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=c5b108626dc5f21c34cf5119c6f5e0cd7561daa8
+[2/3] riscv: dts: spacemit: k1: Split gmac_clk_ref into independent pinctrl groups
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=8270311d70fdf36bc8aab1e52b554e654a8839ff
+[3/3] riscv: dts: spacemit: k1: Add Banana Pi BPI-CM6 IO board
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=46a8c01700ac21e1b83385df00aa0baa5d287b44
 
-As I checked https://docs.riscv.org/reference/acpi-ffh/v1.0.1/ffh_use_cases.html
-It's table 3, and I'd suggest to put more precisely as:
-
-"Chapter 2.1.1.2. Arch. Context Lost Flags, Table 3"
-
-> + */
-> +#define RISCV_LPI_HART_TIMER_CTXT_LOST		BIT(0)
-> +
-> +static inline unsigned int arch_get_idle_state_flags(u32 arch_flags)
-> +{
-> +	if (arch_flags & RISCV_LPI_HART_TIMER_CTXT_LOST)
-> +		return CPUIDLE_FLAG_TIMER_STOP;
-> +
-> +	return 0;
-> +}
-> +
-> +#define arch_get_idle_state_flags arch_get_idle_state_flags
-> +
->  #else
->  static inline void acpi_init_rintc_map(void) { }
->  static inline struct acpi_madt_rintc *acpi_cpu_get_madt_rintc(int cpu)
-> 
-> ---
-> base-commit: 1d6f0a217c662693d2307ee06851cb4bfcbf9529
-> change-id: 20260727-riscv-acpi-lpi-timer-6f1739a6c831
-> 
-> Best regards,
-> --  
-> Peixin Xie <peixin.xie@linux.spacemit.com>
-> 
-
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan <dlan@kernel.org>
