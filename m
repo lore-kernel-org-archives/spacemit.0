@@ -1,123 +1,85 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338B7381AEF
-	for <spacemit@lists.linux.dev>; Tue, 28 Jul 2026 16:41:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785256888; cv=pass; b=iGof4YBcVEfXf68U85jfktBbgCkeSI4OBakhmAAiFsuYgWn2Z64gRha0rVgsc2Hrr4kN5kVQ8g8fT+WRH5EuPkFzQ85S9gozZgs9Eb9Um4j//H9Rcy3e2vlb+/rlC5Ea4gQoiIomqyDOBaHntN5xd4jsamZx5kr974yotNsXecw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785256888; c=relaxed/simple;
-	bh=tNg5fQbD/+z6GIaSXIU1W+5GhX2fSWegOJzAhmVQZ8U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=YoOLz2B3LxBRijOlbmrPNfwj8EjvoDnSk9G77Ap0N8DpUtjbQDBixF5P8iEcYeNUv286dZbBzqjGFH7uOXbQ9Nwmqt8TZ05qpNOz6Fx+22agnS1Q1frKw6yd4Rb+rZpriEU5U5PU+ZbYcXxyog8kg7S5gldDBBgM8qdC3h8MIjo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=YvUN7Plm; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E7F412264;
+	Tue, 28 Jul 2026 21:10:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785273048; cv=none; b=TRSnc8CR+xMpNSbgK/Tyxy8lIW3dkLlr+qI/z6MJSm9cGkAXclxZJwsT9hcTAkHQa1slfrBdWCIgtIZ5ngxkCyqZ0vjYEf5lSQdrFJee1atnM61Wo94JeSeHMQ0ba9IqdptxO+JY/iFDABcDNuTnfILe1ABh3tLfvjrDFHr4p+U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785273048; c=relaxed/simple;
+	bh=0KSe5X6gbj8d1KGc+z9Whe/7bvi3pGqnqP8FyUaepbs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S3BdciTlFFLTKAmiacGFNqhrNnsSvsKml1KKWf+aMiuJD97hrC+JcEuNGesP+STGN6oHGAxltJLB15TgPmmD8tpyeVjWQs4VCfUNW1djXCaztBv9aDGzXw037IDoAwWjx6/4H0TK9APVhvP5NbpWqcULM0ftF53U/GEKLr8L/7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=nD6uQ6r9; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="YvUN7Plm"
-ARC-Seal: i=1; a=rsa-sha256; t=1785256875; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ODQU9J8WquXICZDIDUqri1aGzugYN1IgEo8gXefLQk2VCj3ywRKyi+H0bK18c2TJ7vd5WRPS2A0Q0WEQky/AK5TbBlFo9WeniKj+2HZAVmDdSzGv2JMdpaGAMuDR0Cn4/CtxJyVlBbN8cytBXg4h3ewLYyQR/JWy/BXrSxsycLI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1785256875; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=6XiCb3evbpJrCfe6+gAZAYoNBFBzKa5QdpNuV3NP9Ao=; 
-	b=Yl1epMAc0V9MDm9eRby5Yl/+ssAWK3xpIfGyblvSX9jAG9+SNor9/I0IPOmSwkxrCCltJOzbPNxmv6fn1drBMbxfuKzDB3CwgyaGuJpZtyQk7k0L4qVrv25TAlpbqQ6x/DJuUgcxyc71904KqF5zQrD2MNoGjw4jNyKTYJRI8Jk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1785256875;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:To:To:Cc:Cc:Reply-To;
-	bh=6XiCb3evbpJrCfe6+gAZAYoNBFBzKa5QdpNuV3NP9Ao=;
-	b=YvUN7Plmsr0Pczl17igM7no3ZSrGEVzP6U++iGaKF9lTo6z+9SUVAx9QhunNT/fq
-	IDI/On5ulNUW+x+Fc/qv4qNTXva9/U0AdopxQEyGsHyngFIRHKDECIavQNG+pJexlTl
-	G8KkvZM9SXR1Q3JO6KFu5QrDbNSuWCb4gMYipvTc=
-Received: by mx.zohomail.com with SMTPS id 1785256872287716.7797613609929;
-	Tue, 28 Jul 2026 09:41:12 -0700 (PDT)
-From: Junhui Liu <junhui.liu@pigmoral.tech>
-Date: Wed, 29 Jul 2026 00:40:15 +0800
-Subject: [PATCH] riscv: dts: spacemit: k3: Drop guest properties from
- M-level IMSIC
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="nD6uQ6r9"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
+	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+	bh=TXhqo12SdAHNMxE8AMJ+oh/lXzA6j5PNy0D6aKIdi/0=; b=nD6uQ6r9XW+Ls0Sj0/9UHEj9Aq
+	XN0gcjcvlOcsoarn0XMRUNytrZOM2pLBwlKdKWKzFrhd1tx806em6RjKcsg61/shf/ZA4zHSPLHBz
+	MlqSsWlkCg0z/GuiwPBjpJd16zWfA1w0OwEUlVdiifxqoEeuLF06V+HT4A3Kbdpxl4cZSE3ARU6vW
+	2XYdDCR9N+OeF0y6RhafVhYxOnC7Y21c4kGMoiec0xkt84z2sgIJMC/g4hwDOWuwDyKYnW8giKwU2
+	4jkcDEKsQ6Rpcg7XasNGmhIiyxzoThi9TYcaEUJgXkvyjTFIPf7nWQIEhdP3n2MaBqdl2pyHdEU/r
+	fr5yBYZQ==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wop4O-00000001a4I-2XGt;
+	Tue, 28 Jul 2026 23:10:36 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: linux-kernel@vger.kernel.org,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE:Keyword:riscv),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit)
+Subject: [PATCH 0/3] riscv: dts: spacemit: Add cpu scaling for Milk-V Jupiter
+Date: Tue, 28 Jul 2026 23:05:05 +0200
+Message-ID: <20260728211020.1248676-1-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260729-k3-mimsic-fix-v1-1-368c0aec04b9@pigmoral.tech>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcyNL3Wxj3dzM3OLMZN20zApdM0ODlCSL5MRE4+QUJaCegqJUoDDYvOh
- YCL+4NCkrNbkEZIhSbS0AYbws5HEAAAA=
-X-Change-ID: 20260729-k3-mimsic-fix-610db8caa3cd
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
- Guodong Xu <guodong@riscstar.com>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Junhui Liu <junhui.liu@pigmoral.tech>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2057;
- i=junhui.liu@pigmoral.tech; h=from:subject:message-id;
- bh=tNg5fQbD/+z6GIaSXIU1W+5GhX2fSWegOJzAhmVQZ8U=;
- b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLIybs+78Ud+EvO72WcCphxWvSmz3D7gv3tEw2fd36vET
- h0T8buU2lHKwiDGxSArpsjC5S/+z1qH59sRgdb7MHNYmUCGMHBxCsBE7ncxMqzPXykqFnC8MkW+
- x31P9tSWdxcTVp3WEf+8Y+nC1yl+M34yMvSGnxZ4kMWXHfdI4RnzQz1vvRATlrRPi8u3OKzew/Z
- 5OicA
-X-Developer-Key: i=junhui.liu@pigmoral.tech; a=openpgp;
- fpr=15B30CC69C4BF0CC3C08F85A2A90CDC122DF37BF
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
 
-The mimsic node describes the machine-level IMSIC, whose MMIO region is
-0x10000 (64 KiB) for all 8 harts. However, the node also specifies
-riscv,guest-index-bits = <6>, and per the AIA specification the
-per-hart stride is 2^(guest-index-bits + 12) bytes when guest interrupt
-files exist, i.e. 2^(6 + 12) = 256 KiB per hart and 2 MiB for all 8
-harts. The described region cannot hold even a single hart's files, so
-the node contradicts itself. OpenSBI enforces exactly this constraint in
-imsic_data_check() and rejects the node with -EINVAL, preventing the
-M-level IMSIC from initializing:
+This series adds cpu scaling support for the Milk-V Jupiter boards.
 
-  fdt_driver_init_by_offset: interrupt-controller@f1000000 (riscv,imsics) init failed: -3
-  init_coldboot: irqchip init failed (error -3)
+The first commit adds it to the existing "Milk-V Jupiter (K1)" board.
 
-Moreover, guest interrupt files exist to act as the supervisor-level
-interrupt files of virtual harts; there is no machine-level counterpart.
-riscv,num-guest-ids is equally meaningless for the machine-level IMSIC.
+The two following commits add a "Milk-V Jupiter (M1)" board, by moving
+the common part, i.e. everything but the model name and the operating
+point tables, in a shared DTSI file. This file is then included for both
+K1 and M1 variants.
 
-Drop both "riscv,guest-index-bits" and "riscv,num-guest-ids" properties
-from the mimsic node so the node matches the actual hardware layout.
+CPU frequency scaling was verified up to 1.8 GHz on the M1 board.
 
-Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K3 SoC")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
----
- arch/riscv/boot/dts/spacemit/k3.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+Aurelien Jarno (3):
+  riscv: dts: spacemit: Add cpu scaling for Milk-V Jupiter
+  riscv: dts: spacemit: Add a common board dtsi for Milk-V Jupiter
+    boards
+  riscv: dts: spacemit: Add Milk-V Jupiter board (M1)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index c3f2dce0969c..2d022e1364f1 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -1287,9 +1287,7 @@ mimsic: interrupt-controller@f1000000 {
- 					      <&cpu4_intc 11>, <&cpu5_intc 11>,
- 					      <&cpu6_intc 11>, <&cpu7_intc 11>;
- 			msi-controller;
--			riscv,guest-index-bits = <6>;
- 			riscv,hart-index-bits = <4>;
--			riscv,num-guest-ids = <511>;
- 			riscv,num-ids = <511>;
- 			status = "reserved";
- 		};
+ arch/riscv/boot/dts/spacemit/Makefile         |   1 +
+ .../dts/spacemit/k1-milkv-jupiter-common.dtsi | 469 ++++++++++++++++++
+ .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 433 +---------------
+ .../boot/dts/spacemit/m1-milkv-jupiter.dts    |  11 +
+ arch/riscv/boot/dts/spacemit/m1-opp.dtsi      | 117 +++++
+ 5 files changed, 601 insertions(+), 430 deletions(-)
+ create mode 100644 arch/riscv/boot/dts/spacemit/k1-milkv-jupiter-common.dtsi
+ create mode 100644 arch/riscv/boot/dts/spacemit/m1-milkv-jupiter.dts
+ create mode 100644 arch/riscv/boot/dts/spacemit/m1-opp.dtsi
 
----
-base-commit: 46380e4b1534c1626cecd7f4d0abb5e0cce09af6
-change-id: 20260729-k3-mimsic-fix-610db8caa3cd
-
-Best regards,
---  
-Junhui Liu <junhui.liu@pigmoral.tech>
+-- 
+2.53.0
 
