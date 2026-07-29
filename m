@@ -1,99 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAD833C18E;
-	Wed, 29 Jul 2026 17:20:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E56F469831;
+	Wed, 29 Jul 2026 17:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785345630; cv=none; b=ItolE/GkWUkjDSPz38vINuVgB45XkSimZ11V2ExSP5Bx5IUizfANd4471QlXHMGaM38mOtb0WllK5VTGlB7/hjFXntUxJI8oFMOyWOzth/L1Db1fpCvalbjvKNPpc4ARejKrb233JjnfxlVMj+O5Gn3qN/awRt9XqkkwLZWt8rg=
+	t=1785345899; cv=none; b=PCaRV4JFWlGol4xXfa8WU7beP40ihhlWK2YcU12gN8xGX+koHc/lXMW3FNWpjXfUzaj2dvzdD+fnw2MTdN4Y0WL2ph9v4kRDqQD2r9RGCAMJXdIfFEFJ8cMCze0tVeBpbYU3CNPKPbYZLPCVNjCFKPUjBAedG4SyH0UuxMcFBG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785345630; c=relaxed/simple;
-	bh=XMMiTmUZGXJKCI9DY3EC2RFLBsbWb8oMtDrWgZaZFD8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oXO6YIXX1/nSheEHYJuwSBMR8M8+Xt4rixsvIbViB4fg4Ce+96hOSSBMAtG6EjBK2hFXcX4iWgHt8e9Hwejz1muTa75B0eugLt3ybvXmt15EUlpLSCb6MeThC8OTyIHRPjKsCtd74TAHwgyi3LtK9v8UUXM2+BVVxV4jh/jecyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RV0wWywd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785345899; c=relaxed/simple;
+	bh=HmzIinMreitXYlSVWpjypTHQx2OkWFgBQ4YFRdocSUM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nZuPnJqnQA6uCd3nbU88DGqvtq3oX3usbH69zid6YuH6YoLlQvK3usfhoSCcAvlyR8Lu6VNBIyNO8OuObsYz7CEMLwibzQaqbPqXRCTB622jCnxL804ZqhNI64kjQqWH9ozvMIn2XfbdQzwMUFSrgxAosVuSfKB4n5oLIXzdkb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=WmI6vuZq; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RV0wWywd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A753B1F000E9;
-	Wed, 29 Jul 2026 17:20:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785345628;
-	bh=6LmnnzmtLruyVMKB+f0uEMK6JgvjHc+y3ZREpchl5Po=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=RV0wWywd1X4OPHJtdaaPb0FhKGMCVJdvDj+ycBLEvlAFiaqzMybzOe+wIsD6HnOzx
-	 s20+tp50W+A6bJkyGuo1nlEOrmmqaatwTCm8WbFi25BERlqqXlbRnWJqlXC+vJJrgq
-	 Z0ofCpzBPLrrtPxi8FsQCz3Q1oPZzeKNwU0/yGBmy7Hm5oB5Rt9FQzbMFaMuZbpuag
-	 bJjLavjpzauGcznxqkEKnRCsHbwKCnQMjg6UkKjoFRKchovd9CN72ubPTLfumU+Y9j
-	 0JC8HqPCizIx1xMvpnp6aiYo/SRDZmjMzx/6/F/t+GZw+zTSAypzxAkQ5Vk5pvJ45m
-	 BNmmPF+LmIdFA==
-Date: Wed, 29 Jul 2026 10:20:27 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.dev>
-Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Subject: Re: [PATCH v3] riscv: mm: fix SWIOTLB initialization for systems
- with DRAM above 4GB
-Message-ID: <amo2W_XZDiJ_2sLg@thelio>
-References: <20260727-fix-riscv-swiotlb-v3-1-59479b23736c@linux.dev>
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="WmI6vuZq"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
+	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+	bh=aLCUqsHes7MSmPIPuyE6Y7oiHgf3ZzmbZtoVZyCV8oQ=; b=WmI6vuZqobvqOM8DE7nxezDcSc
+	2h5Sx76p4rl0AfLURaYeO/PxIoCoZCdTBXA1PpYzwyVtRy+eR5OKsAFwNzytynYUlSiR43Bk7tFMO
+	gd7WvHwHgDLVgPRvA3tw3VvgS7LAzEyUCR66/316DfxJxNx2WM5MXrihPfCbl9MtNn7zMKGv5vp6U
+	OJNs8k6v1KA3vsH7A2Qg1IbseguwsjRGJt63fb4pnf8KTwCc3doyLla1ycZyc97Pw8g3gn0QLlXgr
+	42qJXysnanVbEqFv2KgsX14CYVOoQ2hSJO3U2KxWMP3jmGtsJPwb3iken6tDYA9M/z5ZMB4s/4E+I
+	ueCZk8Bg==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wp81W-00000002mWi-1kXs;
+	Wed, 29 Jul 2026 19:24:54 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: linux-kernel@vger.kernel.org,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE:Keyword:riscv),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit)
+Subject: [PATCH v2 0/4] Enable Bluetooth and WiFi rfkill on K3 Pico ITX
+Date: Wed, 29 Jul 2026 19:20:22 +0200
+Message-ID: <20260729172450.1660418-1-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260727-fix-riscv-swiotlb-v3-1-59479b23736c@linux.dev>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 27, 2026 at 01:08:44AM -0700, Troy Mitchell wrote:
-> On RISC-V platforms where the entire physical memory (DRAM) resides
-> above the 32-bit address space (i.e., above dma32_phys_limit), the
-> current SWIOTLB initialization logic fails.
-> 
-> This patch addresses two interconnected issues on such platforms:
-> 
-> 1. Incorrect 32-bit DMA bounce assumption:
-> The existing condition `max_pfn > PFN_DOWN(dma32_phys_limit)` assumes
-> that a 32-bit DMA bounce buffer is required simply because the maximum
-> PFN exceeds the 32-bit limit. However, if all DRAM starts above 4GB,
-> no memory exists below the limit to satisfy this allocation. Fix
-> this by adding a check to ensure `memblock_start_of_DRAM()` is actually
-> below the 32-bit limit before enforcing 32-bit SWIOTLB.
-> 
-> 2. kmalloc() bounce buffer allocation failure on non-coherent systems:
-> For non-coherent DMA, kmalloc() buffers whose sizes are not
-> cache-line-aligned still require bouncing, even if 32-bit DMA bouncing
-> is skipped. Without the `SWIOTLB_ANY` flag, swiotlb_init() defaults to
-> allocating from low memory, which fails completely when DRAM only exists
-> in high memory. By appending `SWIOTLB_ANY` to swiotlb_flags, the allocator
-> is permitted to allocate this bounce buffer from high memory.
-> 
-> With this patch, systems with non-coherent DMA and DRAM entirely above
-> 4GB can successfully map the software IO TLB in high memory and boot
-> normally.
-> 
-> Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
-> ---
-> Changes in v3:
-> - clarify when kmalloc() buffers require bouncing for non-coherent DMA
-> - Link to v2: https://patch.msgid.link/20260429-fix-riscv-swiotlb-v2-1-fa99dfdfc94d@linux.dev
-> 
-> Changes in v2:
-> - add Anirudh's TB tag
-> - Link to v1: https://lore.kernel.org/r/20260331-fix-riscv-swiotlb-v1-1-74dd5e6be0f1@linux.dev
+This patchset enables Bluetooth through USB on the K3 Pico ITX board and adds the
+rfkill nodes for Bluetooth and WiFi so that the devices can be activated.
 
-Maybe fixes tag should be added like this?
+Note that the patch 4 is only useful with the following patch series
+(but it doesn't hurt appying it before):
+- https://lore.kernel.org/spacemit/20260709040027.958400-1-inochiama@gmail.com/
 
-Fixes: dcb2743d1e70 ("riscv: mm: still create swiotlb buffer for kmalloc() bouncing if required")
+Changes v1 -> v2:
+ - Rebase on current spacemit/dt-for-next branch
+ - Collect Tested-by tag
+ - Add link to USB3 PHYs in DT now that K3 PHY support is merged
 
-Aside from that, LGTM and resolves the issue for Linux running on the
-X280 clusters in the Tenstorrent Blackhole.
+Aurelien Jarno (4):
+  riscv: defconfig: enable RFKILL and RFKILL_GPIO
+  riscv: dts: spacemit: k3: add rfkill node for Bluetooth on Pico-ITX
+    board
+  riscv: dts: spacemit: k3: add USB3 B and C controllers for Pico-ITX
+    board
+  riscv: dts: spacemit: k3: add rfkill node for WLAN
 
-Reviewed-by: Drew Fustini <fustini@kernel.org>
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 32 ++++++++++
+ arch/riscv/boot/dts/spacemit/k3.dtsi         | 66 ++++++++++++++++++++
+ arch/riscv/configs/defconfig                 |  2 +
+ 3 files changed, 100 insertions(+)
 
-Thanks,
-Drew
+-- 
+2.53.0
+
